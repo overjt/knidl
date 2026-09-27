@@ -41,9 +41,9 @@ extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
 
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_08005654(s32 a);
-extern void sub_080062c4(void);
-extern void sub_08006338(s32 a);
+extern void TaskFree(s32 a);
+extern void TaskStop(void);
+extern void TaskSetFrame(s32 a);
 extern void sub_08063fe0(void);
 extern void sub_080656b4(void);
 extern void sub_0806d4e4(s32 a, s32 b);
@@ -57,7 +57,7 @@ extern s32 sub_08064d34(u32 type, u8 keepPrio);
 extern void sub_0806395c(u8 v);
 extern void sub_08063908(u32 def);
 extern void sub_0806523c(void);
-extern void sub_08006148(void *fn, s32 i);
+extern void TaskSetEntry(void *fn, s32 i);
 extern void sub_0806a8d8(void);
 extern u8 sub_0806437c(s32 a);
 extern u32 sub_08002ee8(s32 a);
@@ -65,9 +65,9 @@ extern void sub_0806a7f4(void);
 extern void sub_0801a828(u8 a, s16 b, s16 c, void *d);
 extern void sub_08068e04(void);
 extern s32 sub_08069b44(void);
-extern void sub_08006138(void);
+extern void TaskSleepForever(void);
 extern void sub_080031b8(s32 a);
-extern void sub_080061c0(s32 a, s32 b);
+extern void TaskSetMotionXFacing(s32 a, s32 b);
 extern void sub_0806d65c(void);
 extern void sub_0806d730(void);
 extern void sub_08065e1c(s32 a, s32 b);
@@ -94,13 +94,13 @@ void sub_0806a344(void)
     t->unk00 = (u32)sub_080656b4;
     t->unk04 = 0;
     t->unk08 = 0;
-    sub_080062c4();
-    sub_08006338(0);
+    TaskStop();
+    TaskSetFrame(0);
     if (p != NULL)
         sub_08002e98(p[1], 11, gUnk_0873E5BC);
     if (a->unk10 != -1)
     {
-        sub_08005654(a->unk10);
+        TaskFree(a->unk10);
         a->unk10 = 0xFFFF;
     }
     sub_08063fe0();
@@ -126,8 +126,8 @@ void sub_0806a3dc(void)
     s32 i;
     u16 *p;
 
-    sub_080062c4();
-    sub_08006338(0);
+    TaskStop();
+    TaskSetFrame(0);
     gUnk_03002490->unk7A = 0;
     t = gUnk_03002490;
     a = t->unk8C;
@@ -186,7 +186,7 @@ void sub_0806a500(void)
 {
     gUnk_03002490->unk04 = (u32)sub_0806a524;
     sub_0806a3dc();
-    sub_080062c4();
+    TaskStop();
     sub_0806a0cc();
 }
 
@@ -203,7 +203,7 @@ void sub_0806a530(void)
     t->unk04 = (u32)sub_0806a55c;
     sub_0806df28(t->unk82, 0);
     sub_0806a3dc();
-    sub_080062c4();
+    TaskStop();
     sub_0806a0cc();
 }
 
@@ -220,7 +220,7 @@ void sub_0806a568(void)
     t->unk04 = (u32)sub_0806a594;
     sub_0806df28(t->unk82, 0);
     sub_0806a3dc();
-    sub_080062c4();
+    TaskStop();
     sub_0806a0cc();
 }
 
@@ -311,7 +311,7 @@ void sub_0806a6a0(void)
     if ((u8)(gUnk_03002170[gUnk_03002490->unk28].unk0D - 13) > 1)
     {
         sub_0806395c(2);
-        sub_08006148(sub_0806a8d8, gCurTaskIdx);
+        TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
     }
 }
 
@@ -357,7 +357,7 @@ void sub_0806a6e0(void)
     u->unk44 = u->unk7E;
     u->unk88 = &gUnk_03002170[u->unk44];
     sub_0806395c(1);
-    sub_08006148(sub_0806a8d8, gCurTaskIdx);
+    TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
 }
 
 void sub_0806a7a0(void)
@@ -367,10 +367,10 @@ void sub_0806a7a0(void)
     t = gUnk_03002490;
     t->unk04 = 0;
     t->unk46 = 0xFFFF;
-    sub_08006338(0);
+    TaskSetFrame(0);
     TaskYieldTrampoline(6);
     gUnk_03002490->unk04 = (u32)sub_0806a7f4;
-    sub_080062c4();
+    TaskStop();
     gUnk_03002490->unk42 = 7;
     sub_0806a638();
     sub_08002e98(gUnk_03002490->unk14, 3, gUnk_0873E670);
@@ -391,7 +391,7 @@ void sub_0806a7f4(void)
         if ((s8)t->unk7C != 0)
         {
             sub_0806395c(2);
-            sub_08006148(sub_0806a8d8, gCurTaskIdx);
+            TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
         }
         else
         {
@@ -414,7 +414,7 @@ void sub_0806a7f4(void)
             a = gUnk_03002490->unk8C;
             if (a->unk10 != -1)
             {
-                sub_08005654(a->unk10);
+                TaskFree(a->unk10);
                 a->unk10 = 0xFFFF;
             }
         }
@@ -444,13 +444,13 @@ void sub_0806a8f4(void)
     gUnk_03002490->unk58 = 0;
     TaskYieldTrampoline(120);
     sub_0806395c(2);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0806a958(void)
 {
     if (gUnk_03002490->unk14 != 0)
-        sub_08006148(sub_0806a8d8, gCurTaskIdx);
+        TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
 }
 
 void sub_0806a980(void)
@@ -466,13 +466,13 @@ void sub_0806a980(void)
     gUnk_03002490->unk12 = one;
     if (a->unk10 != -1)
     {
-        sub_08005654(a->unk10);
+        TaskFree(a->unk10);
         a->unk10 = 0xFFFF;
     }
-    sub_080062c4();
+    TaskStop();
     sub_080031b8(229);
-    sub_080061c0(0x40000, 0x5A5A5A5A);
-    sub_08006138();
+    TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
+    TaskSleepForever();
 }
 
 void sub_0806a9d4(void)
@@ -489,7 +489,7 @@ void sub_0806a9d8(void)
     zero = 0;
     t->unk04 = zero;
     sub_080031b8(242);
-    sub_080062c4();
+    TaskStop();
     u = gUnk_03002490;
     u->unk38 = gUnk_0874C9D8;
     u->unk40 = zero;
@@ -515,12 +515,12 @@ void sub_0806aa40(void)
 {
     struct Task *t;
 
-    sub_080062c4();
+    TaskStop();
     t = gUnk_03002490;
     if (t->unk72 == 0)
     {
         t->unk04 = 0;
-        sub_08006338(0);
+        TaskSetFrame(0);
         TaskYieldTrampoline(1);
     }
     gUnk_03002490->unk78 = 127;
@@ -580,7 +580,7 @@ void sub_0806ab34(void)
     zero = 0;
     t->unk04 = zero;
     t->unk88 = (struct PlayerState *)zero;
-    sub_08006338(0);
+    TaskSetFrame(0);
     TaskYieldTrampoline(1);
     gUnk_03002490->unk12 = 1;
     u = gUnk_03002490;
@@ -621,7 +621,7 @@ void sub_0806abec(void)
     a = t->unk8C;
     zero = 0;
     t->unk04 = zero;
-    sub_08006338(0);
+    TaskSetFrame(0);
     TaskYieldTrampoline(1);
     gUnk_03002490->unk12 = 1;
     u = gUnk_03002490;
@@ -657,7 +657,7 @@ void sub_0806ac6c(void)
     if (t->unk72 == 0)
     {
         t->unk04 = 0;
-        sub_08006338(0);
+        TaskSetFrame(0);
         TaskYieldTrampoline(1);
     }
     u = gUnk_03002490;
@@ -679,8 +679,8 @@ void sub_0806acc8(void)
 {
     struct Task *t;
 
-    sub_080062c4();
-    sub_08006338(0);
+    TaskStop();
+    TaskSetFrame(0);
     t = gUnk_03002490;
     t->unk38 = gUnk_0874C9D8;
     t->unk40 = 0;

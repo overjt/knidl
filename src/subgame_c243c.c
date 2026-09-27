@@ -176,11 +176,11 @@ extern u8 gUnk_080CFE81[11][3];
 extern u8 gUnk_080CFEA2[11][3];
 extern u8 gUnk_080CFEC3[11][3];
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 sub_08003110(s32 songId);
 s32 sub_080031b8(s32 id);
-void sub_08006138(void);                                     /* end the running task */
+void TaskSleepForever(void);                                     /* end the running task */
 s32 sub_08009eb8(s32 a, u32 b);
 void SubGameReplay(s32 a0);
 void SubGameQuit(void);
@@ -240,7 +240,7 @@ void AirGrindResults(void)
     }
     gUnk_02017140.unk10 = 0x200;
     gUnk_02017140.unk14 = -4;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080c25c4(void)
@@ -499,9 +499,9 @@ void sub_080c2ba8(void)
         t = gUnk_03002490;
         tbl = t->unk38;
         if (tbl != NULL && t->unk3C != -1) {
-            sub_08001a94(t->unk42, tbl[t->unk3C + 2], t->unk3E, 0x6000, t->unk48, t->unk4A);
+            QueueSprite(t->unk42, tbl[t->unk3C + 2], t->unk3E, 0x6000, t->unk48, t->unk4A);
             t = gUnk_03002490;
-            sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, 0x5000, t->unk48, t->unk4A);
+            QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, 0x5000, t->unk48, t->unk4A);
         }
     }
 }

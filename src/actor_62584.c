@@ -5,7 +5,7 @@
  *
  * Two straight-line cutscene bodies: ~230 steps each of
  * `gUnk_03002490->unk3C = <frame>; TaskYieldTrampoline(<delay>)` with velocity
- * (unk54/unk58/unk5C/unk60) and screen-shake (sub_0800625C) changes in between.
+ * (unk54/unk58/unk5C/unk60) and screen-shake (TaskSetMotion) changes in between.
  * Transcribed mechanically from the split asm (lessons-learned 4.27).
  */
 #include "gba/gba.h"
@@ -13,8 +13,8 @@
 #include "task.h"
 
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_0800625c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void sub_080062c4(void);
+extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
+extern void TaskStop(void);
 extern void sub_0805afac(s32 a, s32 b, s32 c);
 
 void sub_08062584(void)
@@ -22,7 +22,7 @@ void sub_08062584(void)
     struct Task *t;
 
     gUnk_03002490->unk3E &= 0x7FFF;
-    sub_0800625c(0xFFFF0000, 0, 0x5A5A5A5A, 0x40000, 0, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFF0000, 0, 0x5A5A5A5A, 0x40000, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x133;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk58 = 0xFFFF9800;
@@ -31,10 +31,10 @@ void sub_08062584(void)
     gUnk_03002490->unk58 = 0xFFFF9800;
     gUnk_03002490->unk3C = 0x135;
     TaskYieldTrampoline(4);
-    sub_0800625c(0xFFFF8000, 0x8000, 0x5A5A5A5A, 0x2000, 0, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFF8000, 0x8000, 0x5A5A5A5A, 0x2000, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x126;
     TaskYieldTrampoline(2);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x126;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk58 = 0xFFFF8000;
@@ -60,7 +60,7 @@ void sub_08062584(void)
     gUnk_03002490->unk58 = 0x8000;
     gUnk_03002490->unk3C = 0x130;
     TaskYieldTrampoline(2);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x130;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk54 = 0xFFFFE000;
@@ -76,7 +76,7 @@ void sub_08062584(void)
     gUnk_03002490->unk58 = 0;
     gUnk_03002490->unk3C = 0x133;
     TaskYieldTrampoline(1);
-    sub_0800625c(0xFFFE0000, 0, 0x5A5A5A5A, 0xFFFEE000, 0x2000, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFE0000, 0, 0x5A5A5A5A, 0xFFFEE000, 0x2000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x133;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x134;
@@ -105,7 +105,7 @@ void sub_08062584(void)
     gUnk_03002490->unk60 = 0;
     gUnk_03002490->unk3C = 0x136;
     TaskYieldTrampoline(2);
-    sub_0800625c(0x20000, 0, 0x5A5A5A5A, 0xFFF78000, 0x4000, 0x5A5A5A5A);
+    TaskSetMotion(0x20000, 0, 0x5A5A5A5A, 0xFFF78000, 0x4000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x12A;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk58 = 0xFFFDC000;
@@ -127,10 +127,10 @@ void sub_08062584(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x131;
     TaskYieldTrampoline(2);
-    sub_0800625c(0x10000, 0xFFFFC000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0x10000, 0xFFFFC000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x2B;
     TaskYieldTrampoline(2);
-    sub_0800625c(0x8000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
+    TaskSetMotion(0x8000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x29;
@@ -145,13 +145,13 @@ void sub_08062584(void)
     TaskYieldTrampoline(3);
     gUnk_03002490->unk3C = 0x2A;
     TaskYieldTrampoline(3);
-    sub_0800625c(0x4000, 0, 0x5A5A5A5A, 0x8000, 0, 0x5A5A5A5A);
+    TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0x8000, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x2B;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk58 = 0xFFFF8000;
     gUnk_03002490->unk3C = 0x2B;
     TaskYieldTrampoline(2);
-    sub_0800625c(0x8000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
+    TaskSetMotion(0x8000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x23;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x2E;
@@ -166,13 +166,13 @@ void sub_08062584(void)
     TaskYieldTrampoline(3);
     gUnk_03002490->unk3C = 0x25;
     TaskYieldTrampoline(3);
-    sub_0800625c(0x4000, 0, 0x5A5A5A5A, 0x8000, 0, 0x5A5A5A5A);
+    TaskSetMotion(0x4000, 0, 0x5A5A5A5A, 0x8000, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk58 = 0xFFFF8000;
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
-    sub_0800625c(0x8000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
+    TaskSetMotion(0x8000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x134;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x133;
@@ -198,7 +198,7 @@ void sub_08062584(void)
     gUnk_03002490->unk58 = 0;
     gUnk_03002490->unk3C = 0x136;
     TaskYieldTrampoline(2);
-    sub_0800625c(0xFFFD1000, 0, 0x5A5A5A5A, 0xFFFA0000, 0, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFD1000, 0, 0x5A5A5A5A, 0xFFFA0000, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x23;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk58 = 0xFFFDC000;
@@ -295,7 +295,7 @@ void sub_08062584(void)
     gUnk_03002490->unk54 = 0x8000;
     gUnk_03002490->unk3C = 0x13;
     TaskYieldTrampoline(4);
-    sub_0800625c(0x10000, 0xFFFFF000, 0x5A5A5A5A, 0x18000, 0xFFFF8000, 0x5A5A5A5A);
+    TaskSetMotion(0x10000, 0xFFFFF000, 0x5A5A5A5A, 0x18000, 0xFFFF8000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(5);
     gUnk_03002490->unk54 = 0x4000;
@@ -319,12 +319,12 @@ void sub_08062584(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(2);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(2);
-    sub_0800625c(0xFFFF4000, 0, 0x5A5A5A5A, 0xFFFE4800, 0x2800, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFF4000, 0, 0x5A5A5A5A, 0xFFFE4800, 0x2800, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x29;
@@ -349,7 +349,7 @@ void sub_08062584(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(1);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C = 5;
@@ -368,10 +368,10 @@ void sub_08062584(void)
     gUnk_03002490->unk5C = 0x400;
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(0xB);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
-    sub_080062c4();
+    TaskStop();
     t = gUnk_03002490;
     t->unk3E |= 0x8000;
     sub_0805afac(t->unk88->unk00, 16, 0);
@@ -381,7 +381,7 @@ void sub_08062584(void)
 void sub_08062f88(void)
 {
     gUnk_03002490->unk3E |= 0x8000;
-    sub_0800625c(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x10;
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C = 0x11;
@@ -398,7 +398,7 @@ void sub_08062f88(void)
     TaskYieldTrampoline(3);
     gUnk_03002490->unk3C = 0x14;
     TaskYieldTrampoline(3);
-    sub_0800625c(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x15;
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C = 0xC;
@@ -415,7 +415,7 @@ void sub_08062f88(void)
     TaskYieldTrampoline(3);
     gUnk_03002490->unk3C = 0xF;
     TaskYieldTrampoline(3);
-    sub_0800625c(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE0800, 0x4800, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFF0000, 0xC00, 0x5A5A5A5A, 0xFFFE0800, 0x4800, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x10;
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C = 0x11;
@@ -433,7 +433,7 @@ void sub_08062f88(void)
     gUnk_03002490->unk3C = 0x14;
     TaskYieldTrampoline(3);
     gUnk_03002490->unk3E &= 0x7FFF;
-    sub_0800625c(0xFFFF0000, 0x1600, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFF0000, 0x1600, 0x5A5A5A5A, 0xFFFE7800, 0x3800, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x6D;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C = 0x6C;
@@ -468,7 +468,7 @@ void sub_08062f88(void)
     gUnk_03002490->unk54 = 0x8000;
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
-    sub_0800625c(0xC000, 0, 0x5A5A5A5A, 0xFFFB8000, 0x4000, 0x5A5A5A5A);
+    TaskSetMotion(0xC000, 0, 0x5A5A5A5A, 0xFFFB8000, 0x4000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x1F;
     TaskYieldTrampoline(8);
     gUnk_03002490->unk3C = 0x25;
@@ -493,10 +493,10 @@ void sub_08062f88(void)
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C = 0x2A;
     TaskYieldTrampoline(2);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x2B;
     TaskYieldTrampoline(2);
-    sub_0800625c(0x5000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
+    TaskSetMotion(0x5000, 0, 0x5A5A5A5A, 0xFFFDC000, 0x4000, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x2C;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x2D;
@@ -513,7 +513,7 @@ void sub_08062f88(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(3);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3E |= 0x8000;
@@ -537,7 +537,7 @@ void sub_08062f88(void)
     gUnk_03002490->unk3E |= 0x8000;
     gUnk_03002490->unk3C = 0x6F;
     TaskYieldTrampoline(2);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk54 = 0xFFFD0000;
@@ -555,7 +555,7 @@ void sub_08062f88(void)
     gUnk_03002490->unk3E &= 0x7FFF;
     gUnk_03002490->unk3C = 0x6F;
     TaskYieldTrampoline(2);
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk54 = 0x43000;
@@ -578,7 +578,7 @@ void sub_08062f88(void)
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(2);
-    sub_0800625c(0xFFFE0000, 0x800, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
+    TaskSetMotion(0xFFFE0000, 0x800, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x1E;
     TaskYieldTrampoline(0xA);
     gUnk_03002490->unk54 = 0x8000;
@@ -628,12 +628,12 @@ void sub_08062f88(void)
     gUnk_03002490->unk3C = 0x28;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3E |= 0x8000;
-    sub_0800625c(0, 0, 0x5A5A5A5A, 0x8400, 0xFFFFF400, 0x5A5A5A5A);
+    TaskSetMotion(0, 0, 0x5A5A5A5A, 0x8400, 0xFFFFF400, 0x5A5A5A5A);
     gUnk_03002490->unk3C = 0x7B;
     TaskYieldTrampoline(0x13);
     gUnk_03002490->unk3C = 5;
     TaskYieldTrampoline(2);
-    sub_080062c4();
+    TaskStop();
     sub_0805afac(gUnk_03002490->unk88->unk00, 16, 0);
     gUnk_03002490->unk3C = 0x92;
     TaskYieldTrampoline(0x15);

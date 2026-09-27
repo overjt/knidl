@@ -9,8 +9,8 @@
  * blocks of 0x90 bytes at gUnk_03002790; gUnk_03004CA0[slot] is the slot's
  * task type, -1 when free, and gUnk_030026F0 the live count).
  *
- * sub_08005654 frees slot `id` (tasks free themselves with
- * sub_08005654(gCurTaskIdx), and the ARM dispatcher at 0x08000288 calls it
+ * TaskFree frees slot `id` (tasks free themselves with
+ * TaskFree(gCurTaskIdx), and the ARM dispatcher at 0x08000288 calls it
  * for a task whose coroutine returns): it clears the
  * slot's resume address gTaskFlagsTable[id], resets every field of the
  * control block to its default (callbacks and counters 0, class -1, graphics
@@ -19,7 +19,7 @@
  * its entry in gUnk_030024A0[class][] (found through the back-reference
  * gUnk_03002710[id] = class << 8 | position) as removed.
  *
- * sub_0800579c claims the first free slot at or after the allocation cursor
+ * TaskCreate claims the first free slot at or after the allocation cursor
  * gUnk_03002494 (wrapping at 64; -1 when the table is full) for task type
  * `type`: the class byte and the entry address come from the task-type table
  * gUnk_0872FF30[type], the stack is the slot's 256 bytes at 0x0203BFE0, the
@@ -31,7 +31,7 @@
  * Matching notes (issue #63): TaskFree's tail is `cls = ... >> 8;
  * gUnk_030024A0[cls][...] = 0xFF;` (lesson 3.485); in TaskCreate the search's
  * start slot and the returned slot are one variable and the stack base is the
- * plain number the landed sub_08006148 uses (lesson 3.486). */
+ * plain number the landed TaskSetEntry uses (lesson 3.486). */
 
 extern vs16 gUnk_03004CA0[];
 extern s32 gUnk_030026F0;
@@ -45,7 +45,7 @@ extern struct TaskType gUnk_0872FF30[];
 extern vu8 gUnk_03002700[];
 
 /* Free the task in slot `id`. */
-void sub_08005654(s32 id)
+void TaskFree(s32 id)
 {
     struct Task *t;
     u8 cls;
@@ -117,7 +117,7 @@ void sub_08005654(s32 id)
 }
 
 /* Allocate a task of the given type; returns its slot index or -1. */
-s32 sub_0800579c(u32 type)
+s32 TaskCreate(u32 type)
 {
     s32 id;     /* the search's start slot, then the slot returned: ONE
                  * variable, which is what puts both in the ROM's r4 */
@@ -138,7 +138,7 @@ s32 sub_0800579c(u32 type)
     t = &gUnk_03002790[gUnk_03002494];
     t->unk12 = gUnk_0872FF30[type].unk00;
     /* The task's 256-byte stack in EWRAM, spelled as the literal that
-     * src/early_5d9c.c's sub_08006148 uses: a CONST_INT operand that reload
+     * src/early_5d9c.c's TaskSetEntry uses: a CONST_INT operand that reload
      * materialises (the ROM's `ldr r7, =0x0203BFE0` in the dead `type`
      * register); `(u32)gUnk_0203BFE0` makes it a local pseudo instead
      * (lesson 3.486). */

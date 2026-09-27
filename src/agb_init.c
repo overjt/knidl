@@ -120,8 +120,8 @@ extern vs16 gUnk_0300244C;
 extern vu32 gUnk_03000B00;
 
 extern void m4aSoundInit(void);
-extern void sub_08001a0c(void);
-extern void sub_08001b08(void);
+extern void ResetOamShadow(void);
+extern void BuildOam(void);
 extern void sub_08002028(void);
 extern void sub_08002268(void);
 extern void sub_08002eac(u32 arg);
@@ -281,9 +281,9 @@ void AgbInit(void)
     *fillB = zeroC;
     CpuSet(fillB, (void *)0x03001A90, 0x01000200);
 
-    sub_08001a0c();
+    ResetOamShadow();
 
-    CpuSet((const void *)((u32)sub_08001b08 & ~1), (void *)0x03001F40, 0x100);
+    CpuSet((const void *)((u32)BuildOam & ~1), (void *)0x03001F40, 0x100);
 
     sub_08002028();
 

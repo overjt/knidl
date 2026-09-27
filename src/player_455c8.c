@@ -60,9 +60,9 @@ extern u32 gUnk_0873BF00[];
 
 void TaskYieldTrampoline(s32 frames);
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
-void sub_08006338(s32 a);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
+void TaskSetFrame(s32 a);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_080261d4(u16 a);
 void sub_0803e050(s32 a0);
@@ -98,7 +98,7 @@ void sub_080455c8(void)
         sub_080413a4(34);
         sub_0805afac(gUnk_03002490->unk88->unk00, 32, 2);
         sub_0805afac(gUnk_03002490->unk88->unk00, 32, 0);
-        sub_08006338(0x5CB);
+        TaskSetFrame(0x5CB);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(1);
@@ -122,7 +122,7 @@ void sub_080455c8(void)
         gUnk_03002490->unk88->unk42 |= 16;
         gUnk_03002490->unk6C = 0;
         gUnk_03002490->unk2C = 0;
-        sub_08006338(0x5CF);
+        TaskSetFrame(0x5CF);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(1);
@@ -134,7 +134,7 @@ void sub_080455c8(void)
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C = 0;
         gUnk_03002490->unk2C = 1;
-        sub_08006338(0x5D3);
+        TaskSetFrame(0x5D3);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk6C = 0;
         gUnk_03002490->unk2C = 2;
@@ -170,7 +170,7 @@ void sub_080455c8(void)
         TaskYieldTrampoline(2);
         gUnk_03002490->unk6C = 0;
         gUnk_03002490->unk2C = 1;
-        sub_08006338(0x5DF);
+        TaskSetFrame(0x5DF);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk2C = -1;
         gUnk_03002490->unk88->unk42 &= 0xFFEF;
@@ -192,7 +192,7 @@ void sub_080455c8(void)
         sub_0805afac(gUnk_03002490->unk88->unk00, 32, 6);
         sub_0805afac(gUnk_03002490->unk88->unk00, 32, 7);
         sub_0805afac(gUnk_03002490->unk88->unk00, 32, 8);
-        sub_08006338(0x53C);
+        TaskSetFrame(0x53C);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(2);
@@ -204,7 +204,7 @@ void sub_080455c8(void)
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(2);
-        sub_08006338(0x544);
+        TaskSetFrame(0x544);
         gUnk_03002490->unk73 = 4;
         break;
     case 3:
@@ -217,10 +217,10 @@ void sub_080455c8(void)
         sub_080261d4(4);
         sub_08040b40(11, 17);
         sub_080413a4(23);
-        sub_08006338(0x544);
+        TaskSetFrame(0x544);
         break;
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08045a50(void)
@@ -255,7 +255,7 @@ void sub_08045a50(void)
             } else if (*(u16 *)&gUnk_03005550 != 0 || t->unk28 != 0
                        || (t->unk88->unk48 & 11) != 0) {
                 gUnk_03002490->unk73 = 3;
-                sub_08006148(sub_080455c8, gCurTaskIdx);
+                TaskSetEntry(sub_080455c8, gCurTaskIdx);
             }
         }
         {
@@ -296,13 +296,13 @@ void sub_08045c40(void)
     gUnk_03002490->unk15 = 34;
     gUnk_03002490->unk28 = 0;
     gUnk_03002490->unk80 = 0;
-    sub_08006338(0x658);
+    TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C--;
     TaskYieldTrampoline(2);
-    sub_08006338(0x65A);
+    TaskSetFrame(0x65A);
     TaskYieldTrampoline(2);
     sub_08053940(gUnk_03002490->unk88->unk00, 6, 0);
     sub_0803e34c(172, gUnk_03002490->unk88->unk00);
@@ -311,10 +311,10 @@ void sub_08045c40(void)
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(1);
     } while ((s16)++gUnk_03002490->unk6C <= 15);
-    sub_08006338(0x658);
+    TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk28++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08045d18(void)

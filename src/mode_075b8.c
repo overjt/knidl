@@ -43,12 +43,12 @@ extern u8 gExtraMode;
 
 void sub_0800214c(void);
 void sub_080021dc(void);
-void sub_080022ac(void);
+void ResetTasksAndOam(void);
 void sub_080022fc(void);
 void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
-void sub_08002d18(void);
+void RunLinkFrame(void);
 void sub_08002e0c(void);
 void sub_080034f0(s32 player, s32 songId);
 void sub_08003688(void);
@@ -101,7 +101,7 @@ void sub_08007624(void)
     sub_08002e0c();
     do {
         sub_0801a7b4();
-        sub_08002d18();
+        RunLinkFrame();
         sub_08040788();
         sub_080075b8();
         switch (gUnk_03002438) {
@@ -185,7 +185,7 @@ void sub_0800783c(void)
     sub_0800214c();
     sub_08002e0c();
     do {
-        sub_08002d18();
+        RunLinkFrame();
         switch (gUnk_03002438) {
         case 0:
         case 1:
@@ -235,13 +235,13 @@ void sub_0800791c(void)
     gUnk_03001ED8 |= 0x1D00;
     sub_0800214c();
     while (gUnk_03001E90 != 0) {
-        sub_08002d18();
+        RunLinkFrame();
         InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
     do {
         sub_0801a7b4();
-        sub_08002d18();
+        RunLinkFrame();
         InputRecorderUpdate();
         sub_08040788();
         sub_080075b8();
@@ -316,7 +316,7 @@ void sub_0800791c(void)
     sub_08002338();
     sub_080021dc();
     while (gUnk_03001E90 != 0) {
-        sub_08002d18();
+        RunLinkFrame();
         InputRecorderUpdate();
     }
     gUnk_03000048 = 0;
@@ -327,7 +327,7 @@ void sub_0800791c(void)
         gUnk_03002364 |= 64 << gExtraMode;
         sub_080b7b7c(gCurSaveSlot);
         sub_08003688();
-        sub_080022ac();
+        ResetTasksAndOam();
         sub_080c6750();
     }
 }

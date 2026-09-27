@@ -38,7 +38,7 @@ extern u16 gUnk_085A6F5C[];         /* the clock's colon tiles */
 extern s8 gUnk_03001F08[];
 extern vu16 gUnk_03000038;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08002028(void);
 void sub_0800214c(void);
 void sub_08002198(void);
@@ -47,15 +47,15 @@ void sub_080021dc(void);
    `u32 sub_080022a0(u32 arg)` (it returns arg unchanged, lesson 3.391) and
    this call sets up no argument (lesson 3.428). */
 void sub_080022a0(void);
-void sub_080022ac(void);
-void sub_080022d0(void);
+void ResetTasksAndOam(void);
+void RunFrameNoTasks(void);
 void sub_080022fc(void);
 void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
-void sub_08002d18(void);                                     /* run one frame */
-void sub_08002d74(s32 count);
-void sub_08002d94(s32 count);
+void RunLinkFrame(void);                                     /* run one frame */
+void RunFramesNoTasks(s32 count);
+void RunLinkFrames(s32 count);
 void sub_08002de0(void);
 void sub_08002e0c(void);
 void sub_08002f14(s16 n);
@@ -94,7 +94,7 @@ void sub_080c6420(void)
         sub_080c6600();
     }
     sub_08002028();
-    sub_080022ac();
+    ResetTasksAndOam();
     sub_08008c4c(7);
     gUnk_0300117C = gUnk_03000010 = 0;
     gUnk_03000F8C = gUnk_03001E94 = 0;
@@ -116,20 +116,20 @@ void sub_080c6420(void)
     sub_08002e0c();
     if (gUnk_03002150 == 20 || gUnk_03001F30 == 1) {
         sub_08003110(29);
-        sub_08002d94(174);
+        RunLinkFrames(174);
     } else {
         sub_08003110(40);
-        sub_08002d94(32);
+        RunLinkFrames(32);
     }
     do
-        sub_08002d18();
+        RunLinkFrame();
     while (!(gUnk_03001EB8[0] & 8));
     sub_080031b8(102);
     sub_08002338();
     sub_0800374c(8);
     sub_08002198();
     sub_08002e0c();
-    sub_08002d74(2);
+    RunFramesNoTasks(2);
     sub_08003770(255);
     sub_080022a0();
 }
@@ -141,20 +141,20 @@ void sub_080c6600(void)
 {
     sub_08008c64(53);
     sub_08002f14(gUnk_02006068[3]);
-    sub_080017e4(1, (u32)gUnk_02020000 + (gUnk_03001F08[1] << 5), 0x0600AEA0, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 16) << 5), 0x0600B0A0, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + (gUnk_03001F08[0] << 5), 0x0600AEC0, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 16) << 5), 0x0600B0C0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gUnk_03001F08[1] << 5), 0x0600AEA0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 16) << 5), 0x0600B0A0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gUnk_03001F08[0] << 5), 0x0600AEC0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 16) << 5), 0x0600B0C0, 32);
     sub_08002f14(gUnk_02006068[2]);
-    sub_080017e4(1, (u32)gUnk_02020000 + (gUnk_03001F08[1] << 5), 0x0600AF00, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 16) << 5), 0x0600B100, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + (gUnk_03001F08[0] << 5), 0x0600AF20, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 16) << 5), 0x0600B120, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gUnk_03001F08[1] << 5), 0x0600AF00, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 16) << 5), 0x0600B100, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gUnk_03001F08[0] << 5), 0x0600AF20, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 16) << 5), 0x0600B120, 32);
     sub_08002f14(gUnk_02006068[1]);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 32) << 5), 0x0600AF60, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 48) << 5), 0x0600B160, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 32) << 5), 0x0600AF80, 32);
-    sub_080017e4(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 48) << 5), 0x0600B180, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 32) << 5), 0x0600AF60, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[1] + 48) << 5), 0x0600B160, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 32) << 5), 0x0600AF80, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gUnk_03001F08[0] + 48) << 5), 0x0600B180, 32);
 }
 
 /* A full-screen picture (screen 57 or 59, by gExtraMode) shown until a
@@ -178,9 +178,9 @@ void sub_080c6750(void)
     gUnk_03001ED8 |= 0x800;
     sub_0800214c();
     sub_08002e0c();
-    sub_08002d94(32);
+    RunLinkFrames(32);
     do {
-        sub_08002d18();
+        RunLinkFrame();
         for (i = 0; i < gUnk_030023AC; i++) {
             if (gUnk_03001EB8[i] & 9) {
                 sub_080031b8(102);
@@ -212,9 +212,9 @@ void sub_080c680c(s32 slot)
     gUnk_03001ED8 |= 0x800;
     sub_0800214c();
     sub_08002de0();
-    sub_08002d74(32);
+    RunFramesNoTasks(32);
     do
-        sub_080022d0();
+        RunFrameNoTasks();
     while (!(gUnk_03000038 & 9));
     sub_080031b8(102);
     sub_080021dc();
@@ -348,5 +348,5 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
 /* Copy n tiles from src to the BG map at 0x06001000, row y, column x. */
 void sub_080c6c3c(u16 *src, s32 x, s32 y, s32 n)
 {
-    sub_080017e4(1, (u32)src, (x + (y << 5)) * 2 + 0x06001000, n * 2);
+    RequestCopy(1, (u32)src, (x + (y << 5)) * 2 + 0x06001000, n * 2);
 }

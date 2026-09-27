@@ -43,17 +43,17 @@ extern u32 gUnk_06010000[];
 extern u16 gUnk_080DC628[][16];
 extern struct GfxHeader *const gUnk_08731F78[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_0800214c(void);
 void sub_080021dc(void);
-void sub_080022ac(void);
+void ResetTasksAndOam(void);
 void sub_080022fc(void);
 void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
-void sub_08002d18(void);
+void RunLinkFrame(void);
 void sub_08002e0c(void);
-s32 sub_080058e4(u32 type, s32 idx);
+s32 TaskCreateFrom(u32 type, s32 idx);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
 void sub_08008d98(s32 a0);
@@ -66,7 +66,7 @@ void sub_080100ac(void)
 {
     s32 i;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     if (gUnk_03001F30 != 1) {
         gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = gUnk_03001EEC = 0;
         sub_08008c64(0);
@@ -104,7 +104,7 @@ void sub_080100ac(void)
         for (i = 0; i <= 3; i++)
             sub_0803d0a0(i);
         sub_080102c0();
-        sub_080058e4(91, 32);
+        TaskCreateFrom(91, 32);
         sub_08002358();
         sub_08002378();
         sub_080022fc();
@@ -112,7 +112,7 @@ void sub_080100ac(void)
         sub_08002e0c();
         gUnk_03005274 = 0x8800;
         do
-            sub_08002d18();
+            RunLinkFrame();
         while (gUnk_030023D8 == 7);
         sub_08002338();
         sub_080021dc();
@@ -130,10 +130,10 @@ void sub_080102c0(void)
 
     if (h != NULL) {
         LZ77UnCompWram(h->unk0C, gUnk_02020000);
-        sub_080017e4(4, (u32)gUnk_02020000, (u32)gUnk_06010000, h->unk02 << 5);
-        sub_080017e4(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
+        RequestCopy(4, (u32)gUnk_02020000, (u32)gUnk_06010000, h->unk02 << 5);
+        RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001570, h->unk00 << 5);
         if (gUnk_030023AC > 1)
-            sub_080017e4(2, (u32)gUnk_080DC628[gUnk_03002360], (u32)gUnk_03001570, 22);
+            RequestCopy(2, (u32)gUnk_080DC628[gUnk_03002360], (u32)gUnk_03001570, 22);
     }
     if (gUnk_030023B8 == 7)
         LZ77UnCompWram((void *)0x085E0090, gUnk_02020000);

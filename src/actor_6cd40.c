@@ -22,9 +22,9 @@ extern void TaskYieldTrampoline(u32 a);
 extern void TaskDispatchTrampoline(void);
 extern void sub_080656b4(void);
 extern void sub_0806523c(void);
-extern void sub_080061c0(s32 a, s32 b);
-extern void sub_0800617c(u32 a);
-extern void sub_080062c4(void);
+extern void TaskSetMotionXFacing(s32 a, s32 b);
+extern void TaskSetFrameByFacing(u32 a);
+extern void TaskStop(void);
 extern void sub_0806cd30(void);
 extern u8 sub_08065f2c(s32 i);
 extern void sub_08064a60(void);
@@ -32,7 +32,7 @@ extern s16 sub_080064dc(s32 base, u8 scale, u8 amount);
 extern u16 sub_080064ac(s32 base, u8 scale, u8 amount);
 extern s32 sub_08064c1c(u32 type, int xArg, int yArg, int prioArg);
 extern s32 sub_08064d6c(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
-extern void sub_08006338(s32 a);
+extern void TaskSetFrame(s32 a);
 
 void sub_0806cd40(void)
 {
@@ -61,8 +61,8 @@ void sub_0806cd40(void)
         v->unk4C = (gUnk_03002790[j].unk48 + v->unk1C) << 16;
         v->unk50 = (gUnk_03002790[j].unk4A + v->unk20) << 16;
         v->unk60 = -0x2000;
-        sub_080061c0(0xFFFD0000, 0x5A5A5A5A);
-        sub_0800617c(0);
+        TaskSetMotionXFacing(0xFFFD0000, 0x5A5A5A5A);
+        TaskSetFrameByFacing(0);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C += 2;
         TaskYieldTrampoline(2);
@@ -76,7 +76,7 @@ void sub_0806cd40(void)
         TaskYieldTrampoline(1);
         gUnk_03002490->unk3C = 0xFFFF;
         TaskYieldTrampoline(1);
-        sub_080062c4();
+        TaskStop();
         u = gUnk_03002490;
         u->unk18--;
     }
@@ -97,9 +97,9 @@ void sub_0806ceb8(void)
     sub_08064a60();
     gUnk_03002490->unk4C = (sub_080064dc(-8, 1, 8) + gUnk_03002490->unk48) << 16;
     gUnk_03002490->unk50 = (sub_080064ac(-8, 1, 8) + gUnk_03002490->unk4A) << 16;
-    sub_080061c0(0x5A5A5A5A, 0x4000);
+    TaskSetMotionXFacing(0x5A5A5A5A, 0x4000);
     gUnk_03002490->unk60 = -0x4000;
-    sub_0800617c(4);
+    TaskSetFrameByFacing(4);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C -= 2;
     TaskYieldTrampoline(2);
@@ -121,15 +121,15 @@ void sub_0806cf70(void)
     u = gUnk_03002490;
     u->unk38 = gUnk_0874CB90;
     sub_08064a60();
-    sub_080061c0(0xFFFDC000, 0x1800);
+    TaskSetMotionXFacing(0xFFFDC000, 0x1800);
     v = gUnk_03002490;
     v->unk58 = -0x4000;
     v->unk60 = -0x2000;
-    sub_0800617c(0);
+    TaskSetFrameByFacing(0);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(2);
-    sub_0800617c(6);
+    TaskSetFrameByFacing(6);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(1);
@@ -183,15 +183,15 @@ void sub_0806d148(void)
     u->unk38 = gUnk_0874CB90;
     if (u->unk43 != 1 && u->unk43 != -1)
         u->unk43 = 1;
-    sub_080061c0(0x24000, 0xFFFFE800);
+    TaskSetMotionXFacing(0x24000, 0xFFFFE800);
     v = gUnk_03002490;
     v->unk58 = -0x4000;
     v->unk60 = -0x2000;
-    sub_08006338(1);
+    TaskSetFrame(1);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(2);
-    sub_08006338(7);
+    TaskSetFrame(7);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(1);

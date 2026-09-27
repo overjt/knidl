@@ -10,8 +10,8 @@
  * &gUnk_03002790[Task.unk44], the first time only) and dispatches the
  * variant, the top byte of Task.unk18, through the 13 variant bodies
  * gPlayerObjectVariants.  sub_08050814 is the common exit most variants re-bind on
- * contact: it installs the sprite (sub_08005ca0 for PlayerState.unk37 == 2,
- * sub_08005f30 otherwise, animation table gUnk_0874C650), registers the
+ * contact: it installs the sprite (TaskDrawScreen for PlayerState.unk37 == 2,
+ * TaskDrawWorldInViewOrFree otherwise, animation table gUnk_0874C650), registers the
  * collider row Task.unk24 if there is one and steps animation frames
  * 0-10 before TaskDispatchTrampoline.  sub_0805091c is a second, drifting burst
  * (gUnk_0874C7CC). */
@@ -24,11 +24,11 @@ void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void sub_080059d8(void);
-void sub_08005ca0(void);
-void sub_08005f30(void);
-void sub_0800617c(s16 a);
-void sub_080062c4(void);
+void TaskMove(void);
+void TaskDrawScreen(void);
+void TaskDrawWorldInViewOrFree(void);
+void TaskSetFrameByFacing(s16 a);
+void TaskStop(void);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 
 void Task_PlayerObject(void)
@@ -49,9 +49,9 @@ void sub_08050814(void)
 
     t->unk00 = 0;
     if (t->unk88->unk37 != 2)
-        t->unk0C = (u32)sub_08005f30;
+        t->unk0C = (u32)TaskDrawWorldInViewOrFree;
     else
-        t->unk0C = (u32)sub_08005ca0;
+        t->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk04 = 0;
     gUnk_03002490->unk08 = 0;
     gUnk_03002490->unk42 = 5;
@@ -61,7 +61,7 @@ void sub_08050814(void)
     t->unk40 = 0;
     if (t->unk24 != 0)
         sub_0801a828(gCurTaskIdx, t->unk48, t->unk4A, (void *)t->unk24);
-    sub_080062c4();
+    TaskStop();
     gUnk_03002490->unk3C = 0;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
@@ -91,8 +91,8 @@ void sub_0805091c(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005f30;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorldInViewOrFree;
     gUnk_03002490->unk04 = 0;
     gUnk_03002490->unk08 = 0;
     gUnk_03002490->unk42 = 5;
@@ -103,12 +103,12 @@ void sub_0805091c(void)
     t->unk28 = 0;
     if (t->unk58 < 0)
         t->unk28 = 1;
-    sub_080062c4();
+    TaskStop();
     if (gUnk_03002490->unk28 == 1)
         gUnk_03002490->unk58 = 0x8000;
     else
         gUnk_03002490->unk58 = -0x8000;
-    sub_0800617c(0);
+    TaskSetFrameByFacing(0);
     TaskYieldTrampoline(3);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(3);

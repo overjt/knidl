@@ -94,7 +94,7 @@ extern vu16 gUnk_04000208;      /* REG_IME */
 void sub_08006724(void);
 void sub_08006868(void);
 void sub_08006914(u16 *a, u16 *b, u16 *c);
-void sub_080022e4(void);
+void RunFrame(void);
 
 void sub_08006d18(void);
 void SerialCB(void);
@@ -217,7 +217,7 @@ u32 sub_080071dc(void)
     gLink[1] = 2;
     gUnk_0200EBA0 = 1;
     gUnk_03004D70 = 0;
-    while (sub_080022e4(), gLink[1] != 4) {
+    while (RunFrame(), gLink[1] != 4) {
         switch (gLink[1]) {
         case 1:
             *(u8 *)gUnk_03004D88 = 1;

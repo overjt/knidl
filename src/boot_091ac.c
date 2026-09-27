@@ -52,24 +52,24 @@ extern u32 gUnk_087555B4[];
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 u32 sub_080008e8(u16 steps, u16 delta, u16 *mask);
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_080020b8(void);
 void sub_0800214c(void);
 void sub_08002198(void);
 void sub_080021dc(void);
-void sub_080022ac(void);
-void sub_080022e4(void);
-void sub_08002d54(s32 count);
+void ResetTasksAndOam(void);
+void RunFrame(void);
+void RunFrames(s32 count);
 void sub_08002db4(void);
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 sub_08003110(s32 songId);
 s32 sub_080031b8(s32 id);
 void sub_08003688(void);
 void sub_08003770(u16 volume);
-s32 sub_080058e4(u32 type, s32 idx);
-void sub_080059d8(void);
-void sub_08005ca0(void);
-void sub_08006138(void);
+s32 TaskCreateFrom(u32 type, s32 idx);
+void TaskMove(void);
+void TaskDrawScreen(void);
+void TaskSleepForever(void);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
 void BootLogoInitObjects(void);
@@ -91,12 +91,12 @@ void sub_080091ac(void)
         vol = 256;
         for (i = 0; i < 16; i++) {
             sub_08003770(vol);
-            sub_080022e4();
+            RunFrame();
             vol -= 16;
         }
         sub_08003688();
         sub_08003770(256);
-        sub_080022ac();
+        ResetTasksAndOam();
     } else {
         gUnk_03002150 = 1;
     }
@@ -106,7 +106,7 @@ s32 sub_08009200(void)
 {
     s32 i;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     BootLogoInitObjects();
     gUnk_0300243C = 0x9999;
     sub_08008c4c(0);
@@ -117,9 +117,9 @@ s32 sub_08009200(void)
     gUnk_03001ED8 |= 0x1100;
     sub_0800214c();
     sub_08002db4();
-    sub_08002d54(60);
-    sub_080058e4(0, 0);
-    sub_08002d54(60);
+    RunFrames(60);
+    TaskCreateFrom(0, 0);
+    RunFrames(60);
     gUnk_0300243C = 1;
     if (sub_08009398(70) != 0)
         return 1;
@@ -137,7 +137,7 @@ s32 sub_08009200(void)
     gUnk_03001ED8 |= 0x2000;
     for (i = 85; i >= 0; i--) {
         gUnk_03000FD4 = i * 3;
-        sub_080022e4();
+        RunFrame();
     }
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1E00;
@@ -152,7 +152,7 @@ s32 sub_08009398(s32 n)
     for (i = 0; i < n; i++) {
         if (gUnk_03000038 & 11)
             return 1;
-        sub_080022e4();
+        RunFrame();
     }
     return 0;
 }
@@ -162,7 +162,7 @@ s32 sub_080093cc(void)
     while (gUnk_03001E90 != 0) {
         if (gUnk_03000038 & 11)
             return 1;
-        sub_080022e4();
+        RunFrame();
     }
     return 0;
 }
@@ -188,7 +188,7 @@ void Task_TitlePalette(void)
     t->unk00 = 0;
     t->unk0C = 0;
     for (t->unk6C = 0; (s16)gUnk_03002490->unk6C <= 10; gUnk_03002490->unk6C++) {
-        sub_080017e4(2, (u32)gUnk_08541D98[(s16)gUnk_03002490->unk6C], (u32)gUnk_03001430, 32);
+        RequestCopy(2, (u32)gUnk_08541D98[(s16)gUnk_03002490->unk6C], (u32)gUnk_03001430, 32);
         TaskYieldTrampoline(1);
     }
     for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 11; gUnk_03002490->unk6C++) {
@@ -239,7 +239,7 @@ void sub_080095e4(void)
 
     TaskYieldTrampoline(gUnk_03002490->unk1C);
     for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C < 10; gUnk_03002490->unk6C++) {
-        idx = sub_080058e4(2, 0);
+        idx = TaskCreateFrom(2, 0);
         t = gUnk_03002490;
         t->unk28 = idx;
         gUnk_03002790[idx].unk18 = (s16)t->unk6C;
@@ -253,8 +253,8 @@ void sub_08009640(void)
     struct Task *t, *u, *v;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_080059d8;
-    t->unk0C = (u32)sub_08005ca0;
+    t->unk00 = (u32)TaskMove;
+    t->unk0C = (u32)TaskDrawScreen;
     t->unk38 = gUnk_087555B4;
     t->unk42 = 8;
     u = gUnk_03002490;
@@ -273,7 +273,7 @@ void sub_08009640(void)
     TaskYieldTrampoline(1);
     v = gUnk_03002490;
     v->unk3C = gUnk_08731CC8[v->unk18];
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080096e0(void)
@@ -299,7 +299,7 @@ s32 sub_0800973c(void)
     s32 idx, i, ret;
 
     if (gUnk_03002150 != 1) {
-        sub_080022ac();
+        ResetTasksAndOam();
         sub_08008c4c(0);
         sub_08008c64(7);
         gUnk_03000010 = gUnk_0300117C = gUnk_03000FC0 = gUnk_03001EE0 = gUnk_03001E94 = gUnk_03000F8C = gUnk_03000FA8 = gUnk_03000B78 = 0;
@@ -309,25 +309,25 @@ s32 sub_0800973c(void)
     if (gUnk_03002150 != 1) {
         sub_0800214c();
         sub_08002db4();
-        idx = sub_080058e4(2, 0);
+        idx = TaskCreateFrom(2, 0);
         gUnk_03002790[idx].unk18 = -1;
         gUnk_03002790[idx].unk1C = 0;
     } else {
-        idx = sub_080058e4(2, 0);
+        idx = TaskCreateFrom(2, 0);
         gUnk_03002790[idx].unk18 = -1;
         gUnk_03002790[idx].unk1C = 90;
     }
-    sub_080058e4(1, 0);
+    TaskCreateFrom(1, 0);
     sub_08003110(26);
     if (gUnk_03002150 != 1)
-        sub_08002d54(60);
+        RunFrames(60);
     else
-        sub_08002d54(210);
+        RunFrames(210);
     i = 600;
     while (1) {
         if (--i == 0)
             goto timeout;
-        sub_080022e4();
+        RunFrame();
         if (gUnk_03000038 & 9)
             goto pressed;
     }
@@ -349,7 +349,7 @@ void sub_080098a8(void)
     s32 j;
     s32 t;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     sub_08008c4c(1);
     sub_08008c64(8);
     gUnk_03001ED8 &= 0xE0FF;
@@ -362,7 +362,7 @@ void sub_080098a8(void)
     sub_08002db4();
     for (i = 0; i < 9; i++) {
         sub_08008c64(gUnk_08731CDC[i]);
-        t = sub_080058e4(237, 0);
+        t = TaskCreateFrom(237, 0);
         gUnk_03002790[t].unk18 = i;
         for (j = 0; j <= 16; j++) {
             gUnk_03000B08 = j;
@@ -394,7 +394,7 @@ s32 sub_080099c8(s32 n)
     for (i = 0; i < n; i++) {
         if (gUnk_03000038 & 11)
             return 1;
-        sub_080022e4();
+        RunFrame();
     }
     return 0;
 }

@@ -18,11 +18,11 @@ extern struct Unk0200D120 gUnk_0200D120[];
 extern u32 gUnk_087537E8[];
 
 /* Externals */
-extern void sub_080059d8(void);
-extern void sub_08005d9c(void);
+extern void TaskMove(void);
+extern void TaskDrawWorld(void);
 extern u32 sub_08002ee8(u32 range);
-extern void sub_080061c0(s32 a, s32 b);
-extern void sub_08006338(s32 a);
+extern void TaskSetMotionXFacing(s32 a, s32 b);
+extern void TaskSetFrame(s32 a);
 extern void TaskYieldTrampoline(u32 frames);
 extern void sub_080974c8(void);
 
@@ -76,8 +76,8 @@ void sub_080970c4(void)
     s16 *b2;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_080059d8;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskMove;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 10;
     u = gUnk_03002490;
     u->unk38 = gUnk_087537E8;
@@ -155,25 +155,25 @@ void sub_080970c4(void)
         if ((z->unk28 & 1) != 0)
             z->unk43 = -z->unk43;
         gUnk_03002490->unk28++;
-        sub_080061c0(0x14000, -0x1C00);
+        TaskSetMotionXFacing(0x14000, -0x1C00);
         gUnk_03002490->unk58 = -0x10000;
-        sub_08006338(1);
+        TaskSetFrame(1);
         TaskYieldTrampoline(1);
-        sub_08006338(2);
+        TaskSetFrame(2);
         TaskYieldTrampoline(2);
-        sub_08006338(3);
+        TaskSetFrame(3);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk58 = -0x20000;
-        sub_08006338(4);
+        TaskSetFrame(4);
         TaskYieldTrampoline(2);
-        sub_08006338(1);
+        TaskSetFrame(1);
         TaskYieldTrampoline(1);
-        sub_080061c0(-0x4000, 0x5A5A5A5A);
+        TaskSetMotionXFacing(-0x4000, 0x5A5A5A5A);
         gUnk_03002490->unk58 = -0x40000;
-        sub_08006338(0);
+        TaskSetFrame(0);
         TaskYieldTrampoline(2);
-        sub_080061c0(0x4000, 0x5A5A5A5A);
-        sub_08006338(0);
+        TaskSetMotionXFacing(0x4000, 0x5A5A5A5A);
+        TaskSetFrame(0);
         TaskYieldTrampoline(2);
     }
 }

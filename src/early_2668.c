@@ -5,7 +5,7 @@
  *
  * Two sibling blocking loops that drive the multiplayer handshake state
  * machine in gUnk_03005274 while pumping the link layer once per frame:
- * sub_080022d0 (frame wait), sub_08006914(&gUnk_03004D88, gUnk_03004D90,
+ * RunFrameNoTasks (frame wait), sub_08006914(&gUnk_03004D88, gUnk_03004D90,
  * gUnk_03004D50) (SIO transfer step), sub_080072e0 (abort poll) and
  * sub_08008b8c (error/reset path, taken after 31 frames without the counter
  * at gUnk_03004D7C moving).
@@ -76,7 +76,7 @@
  *   clamp's and the outer 0x7755 case's uses) and none moved it.
  */
 
-extern void sub_080022d0(void);
+extern void RunFrameNoTasks(void);
 extern void sub_08006914(void *, void *, void *);
 extern int sub_080072e0(void);
 extern void sub_08008b8c(void);
@@ -161,7 +161,7 @@ void sub_08002668(void)
             break;
         }
         old = gUnk_03004D7C;
-        sub_080022d0();
+        RunFrameNoTasks();
         sub_08006914(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
         if (sub_080072e0() != 0)
             sub_08008b8c();

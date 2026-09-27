@@ -145,7 +145,7 @@ extern vu16 gUnk_03001EB8[];
 
 void TaskYieldTrampoline(s32 frames);
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void sub_08006138(void);                                     /* end the running task */
+void TaskSleepForever(void);                                     /* end the running task */
 void sub_080c3efc(void);
 void sub_080c3f20(void);
 u32 sub_080c4cd4(s32 i, u32 range);
@@ -260,7 +260,7 @@ void sub_080c3018(void)
     while (gAirGrindCoursePtr->unk018[player].unk00 < gAirGrindCoursePtr->unk010 + 240)
         TaskYieldTrampoline(1);
     gUnk_03002490->unk54 = 0;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080c3318(s32 player)

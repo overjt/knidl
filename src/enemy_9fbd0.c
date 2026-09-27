@@ -21,11 +21,11 @@ extern u32 gUnk_087538E0[];
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
 extern s32 sub_080031b8(s32 id);
 extern void sub_080034f0(s32 player, s32 songId);
-extern void sub_080055b0(u32 a, u32 b);
-extern void sub_08005654(s32 id);
-extern void sub_080059d8(void);
-extern void sub_08006148(void *fn, s32 i);
-extern void sub_08006338(s32 a);
+extern void TaskSetSkipMask(u32 a, u32 b);
+extern void TaskFree(s32 id);
+extern void TaskMove(void);
+extern void TaskSetEntry(void *fn, s32 i);
+extern void TaskSetFrame(s32 a);
 extern void sub_0800a698(void);
 extern void sub_080261d4(s32 a);
 extern void sub_0806395c(u16 v);
@@ -79,7 +79,7 @@ void sub_0809fc44(void)
     v = (v * 85) >> 8;
     t = gUnk_03002490;
     t->unk70 = v;
-    t->unk00 = (u32)sub_080059d8;
+    t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_08065438;
     t->unk42 = 11;
     gUnk_03002490->unk38 = gUnk_087538E0;
@@ -98,7 +98,7 @@ void sub_0809fcb4(void)
     s32 one;
 
     sub_080261d4(4);
-    sub_080055b0(7, gCurTaskIdx);
+    TaskSetSkipMask(7, gCurTaskIdx);
     t = gUnk_03002490;
     t->unk08 = (u32)sub_080a0a84;
     gUnk_02006190[0] = t->unk48;
@@ -106,7 +106,7 @@ void sub_0809fcb4(void)
     gUnk_02006190[2] = t->unk3C;
     one = 1;
     gUnk_02006190[7] = one;
-    sub_08006338(8);
+    TaskSetFrame(8);
     gUnk_02006190[3] = one;
     gUnk_02006190[4] = -2;
     gUnk_02006190[5] = 0;
@@ -118,7 +118,7 @@ void sub_0809fd20(void)
     struct Task *t;
     s32 z;
 
-    sub_080055b0(0, gCurTaskIdx);
+    TaskSetSkipMask(0, gCurTaskIdx);
     t = gUnk_03002490;
     z = 0;
     t->unk08 = z;
@@ -135,12 +135,12 @@ u8 sub_0809fd64(void)
     s16 *p;
 
     sub_080639a4(gUnk_08748974);
-    sub_08006338(9);
+    TaskSetFrame(9);
     t = gUnk_03002490;
     p = &t->unk46;
     if (*p != -1)
     {
-        sub_08005654(*p);
+        TaskFree(*p);
         gUnk_03002490->unk46 = 0xFFFF;
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
@@ -158,7 +158,7 @@ u8 sub_0809fd64(void)
         sub_0800a698();
         sub_080b7c00(gCurSaveSlot[0]);
     }
-    sub_08006148(sub_0806a344, gCurTaskIdx);
+    TaskSetEntry(sub_0806a344, gCurTaskIdx);
     return 1;
 }
 
@@ -238,11 +238,11 @@ u8 sub_0809fe10(void)
         sub_0806395c(1);
         a->unk1C = gUnk_03002490->unk1C;
     install:
-        sub_08006148(sub_080a0b10, gCurTaskIdx);
+        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
         break;
     case 8:
     case 9:
-        sub_080055b0(0, gCurTaskIdx);
+        TaskSetSkipMask(0, gCurTaskIdx);
         y = gUnk_03002490;
         y->unk08 = 0;
         y->unk3C = gUnk_02006190[2];
@@ -255,7 +255,7 @@ u8 sub_0809fe10(void)
         z->unk2C = 1;
         gUnk_02006190[2] = 4;
         sub_0806395c(1);
-        sub_08006148(sub_080a0b10, gCurTaskIdx);
+        TaskSetEntry(sub_080a0b10, gCurTaskIdx);
         break;
     case 5:
     case 6:
@@ -284,7 +284,7 @@ void sub_080a0028(void)
         gUnk_03002490->unk43 = 1;
     else
         gUnk_03002490->unk43 = -1;
-    sub_08006338(29);
+    TaskSetFrame(29);
     sp.unk00 = 10;
     sp.unk04 = 112;
     sp.unk08 = 0;

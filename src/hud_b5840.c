@@ -534,9 +534,9 @@ extern u32 gHBlankScrollEffects[];
 /* External functions */
 extern void TaskDispatchTrampoline(void);
 extern void TaskYieldTrampoline(u32 frames);
-extern void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-extern s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-extern s32 sub_08001cc8(s32 a, s16 b, s16 c, s32 d);
+extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+extern s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
 extern void sub_08002028(void);
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
 extern u32 sub_08002ee8(u32 range);
@@ -548,25 +548,25 @@ extern void sub_080034d0(void);
 extern void sub_080034f0(s32 player, s32 songId);
 extern void sub_0800374c(s32 speed);
 extern void sub_08003770(u16 volume);
-extern void sub_080055b0(u8 val, s32 idx);
-extern void sub_08005654(s32 id);
-extern void sub_080059a0(void);
-extern void sub_080059d8(void);
-extern void sub_080059fc(void);
-extern u32 sub_08005acc(void);
-extern void sub_08005d9c(void);
-extern void sub_08006138(void);
-extern void sub_08006148(void *a, u32 i);
-extern void sub_080061a8(s32 a, s32 b, s32 c);
-extern void sub_080061c0(s32 a, s32 b);
-extern void sub_0800622c(s32 a, s32 b, s32 c);
-extern void sub_08006244(void);
-extern void sub_0800625c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
-extern void sub_080062c4(void);
-extern void sub_08006304(void);
-extern void sub_08006338(s32 a);
-extern void sub_0800634c(s32 a);
-extern void sub_08006364(s32 a);
+extern void TaskSetSkipMask(u8 val, s32 idx);
+extern void TaskFree(s32 id);
+extern void TaskIntegrateMotion(void);
+extern void TaskMove(void);
+extern void TaskMoveRelativeToParent(void);
+extern u32 TaskIsOnScreen(void);
+extern void TaskDrawWorld(void);
+extern void TaskSleepForever(void);
+extern void TaskSetEntry(void *a, u32 i);
+extern void TaskSetMotionX(s32 a, s32 b, s32 c);
+extern void TaskSetMotionXFacing(s32 a, s32 b);
+extern void TaskSetMotionY(s32 a, s32 b, s32 c);
+extern void TaskStopY(void);
+extern void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
+extern void TaskStop(void);
+extern void TaskUpdateFlip(void);
+extern void TaskSetFrame(s32 a);
+extern void TaskSetFrameNoFlip(s32 a);
+extern void TaskSetFrameFlip(s32 a);
 extern s32 sub_08009ee8(s32 a, s32 b);
 extern void sub_08009fcc();
 extern void sub_0800a280(void);
@@ -1474,11 +1474,11 @@ s32 sub_080b5840(u8 *e, s32 i, s32 k)
         if (*(u16 *)(d5 + 6) != 0)
         {
             LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
         }
         else
         {
-            sub_080017e4(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
         }
     }
     if (*(u16 *)d5 != 0)
@@ -1487,7 +1487,7 @@ s32 sub_080b5840(u8 *e, s32 i, s32 k)
         pX = (u8 *)((u32)gUnk_020060A0 + o7);
         pX[1] = r;
         w9 = pX[1];
-        sub_080017e4(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gUnk_03001470, *(u16 *)d5 << 5);
+        RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gUnk_03001470, *(u16 *)d5 << 5);
     }
     return 1;
 }
@@ -1520,11 +1520,11 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
         if (*(u16 *)(d5 + 6) != 0)
         {
             LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
         }
         else
         {
-            sub_080017e4(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
         }
     }
     if (*(u16 *)d5 != 0)
@@ -1533,7 +1533,7 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
         pX = (u8 *)((u32)gUnk_020060A0 + o7);
         pX[1] = r;
         w9 = pX[1];
-        sub_080017e4(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gUnk_03001470, *(u16 *)d5 << 5);
+        RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gUnk_03001470, *(u16 *)d5 << 5);
     }
     return 1;
 }
@@ -1553,15 +1553,15 @@ void sub_080b59d8(u8 *e, s32 idx, s32 n)
         if (d->unk6 != 0)
         {
             LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, 0x06010000, d->unk2 << 5);
+            RequestCopy(4, (u32)gUnk_02020000, 0x06010000, d->unk2 << 5);
         }
         else
         {
-            sub_080017e4(4, d->unkC, 0x06010000, d->unk2 << 5);
+            RequestCopy(4, d->unkC, 0x06010000, d->unk2 << 5);
         }
     }
     if (d->unk0 != 0)
-        sub_080017e4(2, d->unk8, (u32)gUnk_03001570, d->unk0 << 5);
+        RequestCopy(2, d->unk8, (u32)gUnk_03001570, d->unk0 << 5);
     for (i = 1; i <= 4; i++)
     {
         d = gUnk_0873F104[i];
@@ -1600,17 +1600,17 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (d->unk6 != 0)
         {
             LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
         }
         else
         {
-            sub_080017e4(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
+            RequestCopy(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->unk2 << 5);
         }
     }
     if (d->unk0 != 0)
     {
         gUnk_020060A0[n].unk1 = sub_080b5654(d->unk0);
-        sub_080017e4(2, d->unk8, (gUnk_020060A0[n].unk1 << 5) + (u32)gUnk_03001470, d->unk0 << 5);
+        RequestCopy(2, d->unk8, (gUnk_020060A0[n].unk1 << 5) + (u32)gUnk_03001470, d->unk0 << 5);
     }
     return 1;
 }

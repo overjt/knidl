@@ -67,10 +67,10 @@ extern void SoftReset(u32 resetFlags);
 extern void sub_08003484(void);
 extern void sub_08004734(void);
 extern void sub_08006cd4(void);
-extern void sub_080011dc(void);
-extern void sub_08001280(void);
-extern void sub_080011ac(void);
-extern void sub_080013f8(void);
+extern void ReadKeys(void);
+extern void FlushDisplayRegs(void);
+extern void CopyOamAndPalette(void);
+extern void ProcessCopyQueue(void);
 
 void sub_08000934(void);
 

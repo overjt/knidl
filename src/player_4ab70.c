@@ -20,7 +20,7 @@
  * Task.unk2C, shakes the screen (sub_080261d4(5), sub_08027204(2)),
  * flashes the player's palette gUnk_080DC628[player] towards
  * gUnk_082030B8 twice (sub_08003014, presets 51/52), waits for the
- * blast task through PlayerState.unk16 and sub_080055b0, restores the
+ * blast task through PlayerState.unk16 and TaskSetSkipMask, restores the
  * default script gUnk_0873CB1C and resets the HUD ability panel
  * (sub_0800a008(0, -1, player)).  Its handler sub_0804b474 fades the
  * palette in and back out (gUnk_08203098, Task.unk28 in steps of 10 and
@@ -60,9 +60,9 @@ extern u16 gUnk_08203098[];
 void TaskYieldTrampoline(s32 frames);
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 sub_080031b8(s32 id);
-void sub_080055b0(u8 val, s32 idx);
-void sub_08006138(void);
-void sub_08006338(s32 a);
+void TaskSetSkipMask(u8 val, s32 idx);
+void TaskSleepForever(void);
+void TaskSetFrame(s32 a);
 s32 sub_0800a008(s32 a, s32 b, u32 c);       /* landed (hud_099fc.c); M12 calls it as sub_0800a008(0, -1, p->unk00) */
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_080261d4(u16 a);
@@ -95,7 +95,7 @@ void sub_0804ab70(void)
         sub_0803e1b8(3, 0, gUnk_03002490->unk88->unk00);
         sub_08040b40(11, 63);
         gUnk_03002490->unk3E &= 0x7FFF;
-        sub_08006338(0xDC5);
+        TaskSetFrame(0xDC5);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk6C = 0;
         do {
@@ -142,11 +142,11 @@ void sub_0804ab70(void)
             gUnk_03002490->unk3C -= 2;
             TaskYieldTrampoline(2);
         } while ((s16)++gUnk_03002490->unk6C <= 10);
-        sub_08006338(0xDE5);
+        TaskSetFrame(0xDE5);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk73 = 3;
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804ada8(void)
@@ -240,19 +240,19 @@ void sub_0804af54(void)
     sub_080031b8(248);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08006338(0xDE7);
+        TaskSetFrame(0xDE7);
         TaskYieldTrampoline(4);
-        sub_08006338(0xDFA);
+        TaskSetFrame(0xDFA);
         TaskYieldTrampoline(4);
     } while ((s16)++gUnk_03002490->unk6C <= 1);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08006338(0xDE7);
+        TaskSetFrame(0xDE7);
         TaskYieldTrampoline(2);
-        sub_08006338(0xDFA);
+        TaskSetFrame(0xDFA);
         TaskYieldTrampoline(2);
     } while ((s16)++gUnk_03002490->unk6C <= 3);
-    sub_08006338(0xDE8);
+    TaskSetFrame(0xDE8);
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(4);
@@ -297,7 +297,7 @@ void sub_0804af54(void)
     TaskYieldTrampoline(2);
     sub_0805afac(gUnk_03002490->unk88->unk00, 46, 1);
     sub_080413a4(53);
-    sub_08006338(0xDE7);
+    TaskSetFrame(0xDE7);
     TaskYieldTrampoline(3);
     gUnk_03002490->unk88->unk42 |= 16;
     gUnk_03002490->unk73 = 1;
@@ -309,9 +309,9 @@ void sub_0804af54(void)
 
         gUnk_03002490->unk6C = 0;
         do {
-            sub_08006338(0xDE7);
+            TaskSetFrame(0xDE7);
             TaskYieldTrampoline(2);
-            sub_08006338(0xDEF);
+            TaskSetFrame(0xDEF);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk6E = 0;
             do {
@@ -320,9 +320,9 @@ void sub_0804af54(void)
             } while (++gUnk_03002490->unk6E <= 9);
         } while ((s16)++gUnk_03002490->unk6C <= 1);
         if ((s8)(*c)->unk88->unk16 == 0) {
-            sub_08006338(0xDE7);
+            TaskSetFrame(0xDE7);
             TaskYieldTrampoline(2);
-            sub_08006338(0xDEF);
+            TaskSetFrame(0xDEF);
             TaskYieldTrampoline(2);
             (*c)->unk6E = 0;
             do {
@@ -330,15 +330,15 @@ void sub_0804af54(void)
                 TaskYieldTrampoline(2);
             } while (++(*c)->unk6E <= 9);
         } else {
-            sub_080055b0(2, gCurTaskIdx);
+            TaskSetSkipMask(2, gCurTaskIdx);
             do {
                 if ((s8)(*c)->unk88->unk16 == 0) {
-                    sub_080055b0(0, gCurTaskIdx);
+                    TaskSetSkipMask(0, gCurTaskIdx);
                     (*c)->unk88->unk16 = 2;
                 }
-                sub_08006338(0xDE7);
+                TaskSetFrame(0xDE7);
                 TaskYieldTrampoline(2);
-                sub_08006338(0xDEF);
+                TaskSetFrame(0xDEF);
                 TaskYieldTrampoline(2);
                 (*c)->unk6E = 0;
                 do {
@@ -348,9 +348,9 @@ void sub_0804af54(void)
             } while ((s8)(*c)->unk88->unk16 != 2);
         }
     }
-    sub_08006338(0xDE7);
+    TaskSetFrame(0xDE7);
     TaskYieldTrampoline(2);
-    sub_08006338(0xDFB);
+    TaskSetFrame(0xDFB);
     TaskYieldTrampoline(2);
     sub_0803e050(2);
     gUnk_03002490->unk88->unk68 = (u32)gUnk_0873CB1C;
@@ -365,7 +365,7 @@ void sub_0804af54(void)
     sub_0803e1b8(255, 0, gUnk_03002490->unk88->unk00);
     gUnk_03002490->unk88->unk42 &= 0xFCFF;
     gUnk_03002490->unk73 = 3;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804b474(void)

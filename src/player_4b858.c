@@ -17,10 +17,10 @@
  * velocity presets 2 and 56-68, sounds 178/179, a landing with effect
  * 27 and sub_080261d4(2)), each back to state 7, which clears
  * PlayerState.unk42 bit 9, calls sub_0803e1b8(255, 0, player) and ends
- * the action (sub_08006138, falling into state 0, lesson 3.403).  The
+ * the action (TaskSleepForever, falling into state 0, lesson 3.403).  The
  * long `bl`s at 0x0804C49E and 0x0804C488 are cross-jumped `goto loop`
  * tails.  Its handler sub_0804c4ac lets sub_0804042c end state 7,
- * steers state 4 in the air (sub_080061c0 and the 8.8 speed Task.unk64
+ * steers state 4 in the air (TaskSetMotionXFacing and the 8.8 speed Task.unk64
  * for the direction in gUnk_03001F2C), re-binds state 7 from the other
  * moves once PlayerState.unk16 >= 0 and unk08 == 0, and requests action
  * 23 through sub_0803fce4. */
@@ -31,10 +31,10 @@ extern u8 gUnk_0873B65E[];
 
 void TaskYieldTrampoline(s32 frames);
 u32 sub_08002ee8(u32 range);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
-void sub_080061c0(s32 a, s32 b);
-void sub_08006338(s32 a);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
+void TaskSetMotionXFacing(s32 a, s32 b);
+void TaskSetFrame(s32 a);
 void sub_080261d4(u16 a);
 void sub_0803e050(s32 a0);
 void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
@@ -78,7 +78,7 @@ loop:
 
             sub_0803e1b8(3, 0, gUnk_03002490->unk88->unk00);
             gUnk_03002490->unk88->unk16 = 0;
-            sub_08006338(0xE84);
+            TaskSetFrame(0xE84);
             sub_0803e650(12);
             a = gUnk_03002490;
             if (a->unk7A & 1)
@@ -149,10 +149,10 @@ loop:
             d->unk88->unk42 &= 0xFDFF;
             sub_0803e1b8(255, 0, d->unk88->unk00);
         }
-        sub_08006138();
+        TaskSleepForever();
     case 0:
         gUnk_03002490->unk88->unk16 = 1;
-        sub_08006338(0xE97);
+        TaskSetFrame(0xE97);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk88->unk16 = 2;
         gUnk_03002490->unk3C++;
@@ -176,7 +176,7 @@ loop:
         TaskYieldTrampoline(17);
         sub_080413a4(59);
         gUnk_03002490->unk88->unk16 = 24;
-        sub_08006338(0xEBA);
+        TaskSetFrame(0xEBA);
         while (!(gUnk_03002490->unk7A & 1))
             TaskYieldTrampoline(1);
         sub_0805afac(gUnk_03002490->unk88->unk00, 27, 0);
@@ -184,14 +184,14 @@ loop:
         sub_0803e34c(179, gUnk_03002490->unk88->unk00);
         sub_0803e050(2);
         gUnk_03002490->unk88->unk16 = 25;
-        sub_08006338(0xEBB);
+        TaskSetFrame(0xEBB);
         TaskYieldTrampoline(20);
         gUnk_03002490->unk88->unk16 = 255;
         gUnk_03002490->unk73 = 7;
         goto loop;
     case 1:
         gUnk_03002490->unk88->unk16 = 1;
-        sub_08006338(0xE97);
+        TaskSetFrame(0xE97);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk88->unk16 = 2;
         gUnk_03002490->unk3C++;
@@ -230,7 +230,7 @@ loop:
         sub_0803e34c(179, gUnk_03002490->unk88->unk00);
         sub_0803e050(3);
         gUnk_03002490->unk88->unk16 = 11;
-        sub_08006338(0xEA1);
+        TaskSetFrame(0xEA1);
         TaskYieldTrampoline(20);
         gUnk_03002490->unk88->unk16 = 255;
         sub_080413a4(56);
@@ -245,7 +245,7 @@ loop:
         goto loop;
     case 3:
         gUnk_03002490->unk88->unk16 = 1;
-        sub_08006338(0xE97);
+        TaskSetFrame(0xE97);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk88->unk16 = 2;
         gUnk_03002490->unk3C++;
@@ -268,7 +268,7 @@ loop:
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(11);
         gUnk_03002490->unk88->unk16 = 12;
-        sub_08006338(0xEA8);
+        TaskSetFrame(0xEA8);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk88->unk16 = 13;
         gUnk_03002490->unk3C++;
@@ -280,7 +280,7 @@ loop:
         do
         {
             gUnk_03002490->unk88->unk16 = 15;
-            sub_08006338(0xEAB);
+            TaskSetFrame(0xEAB);
             TaskYieldTrampoline(1);
             if (gUnk_03002490->unk7A & 1)
                 goto done3;
@@ -299,7 +299,7 @@ loop:
         sub_0803e34c(179, gUnk_03002490->unk88->unk00);
         sub_0803e050(2);
         gUnk_03002490->unk88->unk16 = 23;
-        sub_08006338(0xEB3);
+        TaskSetFrame(0xEB3);
         TaskYieldTrampoline(20);
         gUnk_03002490->unk88->unk16 = 255;
         sub_080413a4(56);
@@ -316,7 +316,7 @@ loop:
         gUnk_03002490->unk28 = 0;
         sub_08040b40(11, 67);
         gUnk_03002490->unk88->unk16 = 37;
-        sub_08006338(0xECE);
+        TaskSetFrame(0xECE);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk88->unk16 = 38;
         gUnk_03002490->unk3C++;
@@ -350,7 +350,7 @@ loop:
         TaskYieldTrampoline(2);
         sub_080413a4(65);
         gUnk_03002490->unk88->unk16 = 47;
-        sub_08006338(0xED8);
+        TaskSetFrame(0xED8);
         while (!(gUnk_03002490->unk7A & 1))
             TaskYieldTrampoline(1);
         sub_0805afac(gUnk_03002490->unk88->unk00, 27, 0);
@@ -359,7 +359,7 @@ loop:
         sub_0803e050(3);
         gUnk_03002490->unk28++;
         gUnk_03002490->unk88->unk16 = 48;
-        sub_08006338(0xED9);
+        TaskSetFrame(0xED9);
         TaskYieldTrampoline(20);
         gUnk_03002490->unk88->unk16 = 255;
         sub_080413a4(57);
@@ -375,7 +375,7 @@ loop:
     case 2:
         sub_08040b40(11, 68);
         gUnk_03002490->unk88->unk16 = 26;
-        sub_08006338(0xEBD);
+        TaskSetFrame(0xEBD);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk88->unk16 = 27;
         gUnk_03002490->unk3C++;
@@ -404,7 +404,7 @@ loop:
         TaskYieldTrampoline(2);
         sub_080413a4(67);
         gUnk_03002490->unk88->unk16 = 34;
-        sub_08006338(0xEC5);
+        TaskSetFrame(0xEC5);
         while (!(gUnk_03002490->unk7A & 1))
             TaskYieldTrampoline(1);
         sub_0805afac(gUnk_03002490->unk88->unk00, 27, 0);
@@ -412,7 +412,7 @@ loop:
         sub_0803e34c(179, gUnk_03002490->unk88->unk00);
         sub_0803e050(3);
         gUnk_03002490->unk88->unk16 = 35;
-        sub_08006338(0xEC6);
+        TaskSetFrame(0xEC6);
         TaskYieldTrampoline(20);
         gUnk_03002490->unk88->unk16 = 36;
         gUnk_03002490->unk3C++;
@@ -432,7 +432,7 @@ loop:
         sub_0803e050(3);
         sub_080413a4(68);
         gUnk_03002490->unk88->unk16 = 49;
-        sub_08006338(0xEE4);
+        TaskSetFrame(0xEE4);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk88->unk16++;
         gUnk_03002490->unk3C++;
@@ -491,7 +491,7 @@ void sub_0804c4ac(void)
                 v = x << 8;
                 if (x & 0x8000)
                     v |= 0xFF000000;
-                sub_080061c0(v, 0);
+                TaskSetMotionXFacing(v, 0);
                 {
                     struct Task *u = gUnk_03002490;
                     s32 w = x << 8;
@@ -517,7 +517,7 @@ void sub_0804c4ac(void)
                 }
                 sub_0803e050(1);
                 gUnk_03002490->unk73 = 7;
-                sub_08006148(sub_0804b858, gCurTaskIdx);
+                TaskSetEntry(sub_0804b858, gCurTaskIdx);
             }
         }
         break;

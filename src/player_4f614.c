@@ -17,8 +17,8 @@ extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) *
 extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
-void sub_0800634c(s32 a);
-void sub_08006364(s32 a);
+void TaskSetFrameNoFlip(s32 a);
+void TaskSetFrameFlip(s32 a);
 void sub_0803e050(s32 a0);
 s32 sub_0803e34c(s32 a0, u16 a1);
 s32 sub_0803fa44(void);
@@ -52,7 +52,7 @@ s32 sub_0804f614(void)
             sub_0803e34c(107, (u16)gUnk_03002490->unk88->unk00);
             if (gUnk_03002490->unk40 & 0x8000)
             {
-                sub_0800634c(0xCEA);
+                TaskSetFrameNoFlip(0xCEA);
                 TaskYieldTrampoline(2);
                 gUnk_03002490->unk3E |= 0x8000;
             }
@@ -67,7 +67,7 @@ s32 sub_0804f614(void)
             sub_0803e34c(107, (u16)gUnk_03002490->unk88->unk00);
             if (!(gUnk_03002490->unk40 & 0x8000))
             {
-                sub_08006364(0xCEA);
+                TaskSetFrameFlip(0xCEA);
                 TaskYieldTrampoline(2);
                 gUnk_03002490->unk3E &= 0x7FFF;
             }

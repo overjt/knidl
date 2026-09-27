@@ -9,9 +9,9 @@
  * the ROM).  Variants 16, 17 and 19 are spawned by M16 (16 also by M17's
  * actor core), 18 and 20 by M10, 21 by M11. 16 (sub_0805569c), 17
  * (sub_08055460) and 18 (sub_08055520) are animations that stay put
- * (sub_08005a74), from gUnk_0874C804, gUnk_0874C960 and gUnk_0874C980; 19
+ * (TaskUpdatePixelPos), from gUnk_0874C804, gUnk_0874C960 and gUnk_0874C980; 19
  * (sub_0805574c) has no draw hook and draws itself through its Task.unk04
- * callback sub_080557d4 (sub_08001a94); 20 (sub_0805587c) is a
+ * callback sub_080557d4 (QueueSprite); 20 (sub_0805587c) is a
  * three-sub-state puff whose sub-states 0 and 1 (one differing store, then a
  * shared body) spawn its sub-state 2; 21 (sub_08055a40) rides on its
  * spawner, and sub_08055abc kills it (or, while gUnk_0300244C is set, hides
@@ -29,15 +29,15 @@ extern s16 gUnk_0300244C;
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-void sub_08005654(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void sub_080059d8(void);
-void sub_080059fc(void);
-void sub_08005a74(void);
-void sub_08005d9c(void);
-void sub_0800617c(s16 a);
-void sub_080061c0(s32 a, s32 b);
-void sub_080062c4(void);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
+void TaskMove(void);
+void TaskMoveRelativeToParent(void);
+void TaskUpdatePixelPos(void);
+void TaskDrawWorld(void);
+void TaskSetFrameByFacing(s16 a);
+void TaskSetMotionXFacing(s32 a, s32 b);
+void TaskStop(void);
 u16 sub_080064ac(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 sub_080064dc(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 s32 sub_0805afac(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
@@ -48,8 +48,8 @@ void sub_08055460(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk00 = (u32)sub_08005a74;
-    gUnk_03002490->unk0C = (u32)sub_08005d9c;
+    gUnk_03002490->unk00 = (u32)TaskUpdatePixelPos;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorld;
     gUnk_03002490->unk42 = 5;
     t = gUnk_03002490;
     t->unk38 = gUnk_0874C960;
@@ -78,8 +78,8 @@ void sub_08055520(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk00 = (u32)sub_08005a74;
-    gUnk_03002490->unk0C = (u32)sub_08005d9c;
+    gUnk_03002490->unk00 = (u32)TaskUpdatePixelPos;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorld;
     gUnk_03002490->unk42 = 8;
     t = gUnk_03002490;
     t->unk38 = gUnk_0874C980;
@@ -139,8 +139,8 @@ void sub_0805569c(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk00 = (u32)sub_08005a74;
-    gUnk_03002490->unk0C = (u32)sub_08005d9c;
+    gUnk_03002490->unk00 = (u32)TaskUpdatePixelPos;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorld;
     gUnk_03002490->unk42 = 8;
     t = gUnk_03002490;
     t->unk38 = gUnk_0874C804;
@@ -191,10 +191,10 @@ void sub_0805574c(void)
 
 void sub_080557d4(void)
 {
-    sub_08001a94(gUnk_03002490->unk42, gUnk_0874C784[gUnk_03002490->unk3C], 0, 0,
+    QueueSprite(gUnk_03002490->unk42, gUnk_0874C784[gUnk_03002490->unk3C], 0, 0,
                  gUnk_03002490->unk48 - 48 - gUnk_03002348,
                  gUnk_03002490->unk4A - gUnk_030023E4);
-    sub_08001a94(gUnk_03002490->unk42, gUnk_0874C784[gUnk_03002490->unk3C], 0, 0,
+    QueueSprite(gUnk_03002490->unk42, gUnk_0874C784[gUnk_03002490->unk3C], 0, 0,
                  gUnk_03002490->unk48 + 48 - gUnk_03002348,
                  gUnk_03002490->unk4A - gUnk_030023E4);
 }
@@ -205,8 +205,8 @@ void sub_0805587c(void)
     struct Task *u;
     struct Task *p;
 
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005d9c;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorld;
     gUnk_03002490->unk42 = 5;
     t = gUnk_03002490;
     t->unk38 = gUnk_0874C600;
@@ -218,7 +218,7 @@ void sub_0805587c(void)
     case 1:
         t->unk43 = -1;
     common:
-        sub_080062c4();
+        TaskStop();
         u = gUnk_03002490;
         if (u->unk43 == 1)
             u->unk4C = ((p = (struct Task *)u->unk8C)->unk48 - 6) << 16;
@@ -226,15 +226,15 @@ void sub_0805587c(void)
             u->unk4C = ((p = (struct Task *)u->unk8C)->unk48 + 6) << 16;
         u->unk50 = (((struct Task *)u->unk8C)->unk4A + 8) << 16;
         gUnk_03002490->unk60 = -0x2000;
-        sub_080061c0(-0x30000, 0x5A5A5A5A);
-        sub_0800617c(0);
+        TaskSetMotionXFacing(-0x30000, 0x5A5A5A5A);
+        TaskSetFrameByFacing(0);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C += 2;
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C += 2;
         TaskYieldTrampoline(1);
         sub_0805afac(gUnk_03002490->unk88->unk00, 20, 2);
-        sub_080061c0(0x5A5A5A5A, 0);
+        TaskSetMotionXFacing(0x5A5A5A5A, 0);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk3C -= 2;
         TaskYieldTrampoline(2);
@@ -246,9 +246,9 @@ void sub_0805587c(void)
     case 2:
         gUnk_03002490->unk4C = (gUnk_03002490->unk48 + sub_080064dc(-8, 1, 8)) << 16;
         gUnk_03002490->unk50 = (gUnk_03002490->unk4A + sub_080064ac(-8, 1, 8)) << 16;
-        sub_080061c0(0x5A5A5A5A, 0x4000);
+        TaskSetMotionXFacing(0x5A5A5A5A, 0x4000);
         gUnk_03002490->unk60 = -0x4000;
-        sub_0800617c(4);
+        TaskSetFrameByFacing(4);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C -= 2;
         TaskYieldTrampoline(2);
@@ -263,8 +263,8 @@ void sub_08055a40(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk00 = (u32)sub_080059fc;
-    gUnk_03002490->unk0C = (u32)sub_08005d9c;
+    gUnk_03002490->unk00 = (u32)TaskMoveRelativeToParent;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorld;
     gUnk_03002490->unk04 = (u32)sub_08055abc;
     gUnk_03002490->unk42 = 5;
     t = gUnk_03002490;
@@ -290,7 +290,7 @@ void sub_08055abc(void)
         u8 a = gUnk_03002490->unk88->unk04;
 
         if (a == 13 || a == 20 || a == 16 || a == 18)
-            sub_08005654(gCurTaskIdx);
+            TaskFree(gCurTaskIdx);
     }
     else
     {

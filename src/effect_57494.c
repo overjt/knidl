@@ -12,7 +12,7 @@
  * task once the player leaves mode 13 or the spawner's Task.unk7B bit 0 is
  * set.  Variant 33 (sub_08057a48, spawned by M14's task type #6) is a short
  * animation from gUnk_08751BF4.  Variant 34 (sub_08057ad4, M12) has two
- * sub-states with the draw hooks sub_08005f30 and sub_0805af80 (shared with
+ * sub-states with the draw hooks TaskDrawWorldInViewOrFree and sub_0805af80 (shared with
  * variant 48) and the kill test sub_08057c98 (player mode 13). */
 
 extern u32 gUnk_08751CF0[];
@@ -26,15 +26,15 @@ extern u32 gUnk_08751D50[];
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-void sub_08005654(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
-void sub_080059d8(void);
-void sub_080059fc(void);
-void sub_08005d9c(void);
-void sub_08005f30(void);
-void sub_0800617c(s16 a);
-void sub_080061c0(s32 a, s32 b);
-void sub_080062c4(void);
-void sub_08006338(s32 a);
+void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
+void TaskMove(void);
+void TaskMoveRelativeToParent(void);
+void TaskDrawWorld(void);
+void TaskDrawWorldInViewOrFree(void);
+void TaskSetFrameByFacing(s16 a);
+void TaskSetMotionXFacing(s32 a, s32 b);
+void TaskStop(void);
+void TaskSetFrame(s32 a);
 u16 sub_080064ac(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 sub_080064dc(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.unk43 != 1 */
 void sub_0805af80(void);
@@ -48,7 +48,7 @@ void sub_08057494(void)
     u16 *row;
     s32 s;
 
-    gUnk_03002490->unk0C = (u32)sub_08005d9c;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorld;
     gUnk_03002490->unk42 = 5;
     t = gUnk_03002490;
     t->unk38 = gUnk_08751CF0;
@@ -60,7 +60,7 @@ void sub_08057494(void)
         {
             struct Task *u = gUnk_03002490;
 
-            u->unk00 = (u32)sub_080059d8;
+            u->unk00 = (u32)TaskMove;
             u->unk38 = gUnk_0874C600;
             u->unk04 = (u32)sub_08057a10;
             u->unk6C = 0;
@@ -83,7 +83,7 @@ void sub_08057494(void)
 
                 if (a & 0x8000)
                     b |= 0xFF000000;
-                sub_080061c0(b, 0x5A5A5A5A);
+                TaskSetMotionXFacing(b, 0x5A5A5A5A);
             }
             {
                 struct Task *w = gUnk_03002490;
@@ -97,7 +97,7 @@ void sub_08057494(void)
                     w->unk60 = b;
                 }
             }
-            sub_0800617c(row[2]);
+            TaskSetFrameByFacing(row[2]);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C += 2;
             TaskYieldTrampoline(2);
@@ -111,7 +111,7 @@ void sub_08057494(void)
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C = 0xFFFF;
             TaskYieldTrampoline(1);
-            sub_080062c4();
+            TaskStop();
             gUnk_03002490->unk6C++;
         } while ((s16)gUnk_03002490->unk6C <= 1);
         break;
@@ -119,7 +119,7 @@ void sub_08057494(void)
         {
             struct Task *u = gUnk_03002490;
 
-            u->unk00 = (u32)sub_080059d8;
+            u->unk00 = (u32)TaskMove;
             u->unk38 = gUnk_0874C600;
         }
         gUnk_03002490->unk4C = (gUnk_03002490->unk48 + sub_080064dc(-8, 1, 8)) << 16;
@@ -130,7 +130,7 @@ void sub_08057494(void)
 
             if (a & 0x8000)
                 b |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, b);
+            TaskSetMotionXFacing(0x5A5A5A5A, b);
         }
         {
             struct Task *w = gUnk_03002490;
@@ -144,7 +144,7 @@ void sub_08057494(void)
                 w->unk60 = b;
             }
         }
-        sub_0800617c(row[2]);
+        TaskSetFrameByFacing(row[2]);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C -= 2;
         TaskYieldTrampoline(2);
@@ -155,12 +155,12 @@ void sub_08057494(void)
         {
             struct Task *u = gUnk_03002490;
 
-            u->unk00 = (u32)sub_080059d8;
+            u->unk00 = (u32)TaskMove;
             u->unk38 = gUnk_0874C718;
         }
         gUnk_03002490->unk4C = (sub_080064dc(-8, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
         gUnk_03002490->unk50 = (sub_080064ac(-4, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk4A - 8) << 16;
-        sub_080061c0(-0x20000, 0x5A5A5A5A);
+        TaskSetMotionXFacing(-0x20000, 0x5A5A5A5A);
         gUnk_03002490->unk60 = -0x6000;
         gUnk_03002490->unk3C = 0;
         TaskYieldTrampoline(1);
@@ -177,17 +177,17 @@ void sub_08057494(void)
         {
             struct Task *u = gUnk_03002490;
 
-            u->unk00 = (u32)sub_080059d8;
+            u->unk00 = (u32)TaskMove;
             u->unk40 = ((struct Task *)u->unk8C)->unk40 | 0x1808;
             u->unk04 = (u32)sub_08057a10;
             u->unk6C = 0;
         }
         do
         {
-            sub_080061c0(-0x10000, -0x2000);
+            TaskSetMotionXFacing(-0x10000, -0x2000);
             gUnk_03002490->unk4C = (sub_080064dc(-16, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
             gUnk_03002490->unk50 = (sub_080064ac(0, 1, 8) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
-            sub_0800617c(16);
+            TaskSetFrameByFacing(16);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C += 2;
             TaskYieldTrampoline(2);
@@ -202,17 +202,17 @@ void sub_08057494(void)
         {
             struct Task *u = gUnk_03002490;
 
-            u->unk00 = (u32)sub_080059d8;
+            u->unk00 = (u32)TaskMove;
             u->unk40 = ((struct Task *)u->unk8C)->unk40 | 0x1808;
             u->unk04 = (u32)sub_08057a10;
             u->unk6C = 0;
         }
         do
         {
-            sub_080061c0(-0x20000, -0x2000);
+            TaskSetMotionXFacing(-0x20000, -0x2000);
             gUnk_03002490->unk4C = (sub_080064dc(-16, 1, 24) + ((struct Task *)gUnk_03002490->unk8C)->unk48) << 16;
             gUnk_03002490->unk50 = (sub_080064ac(-4, 1, 16) + ((struct Task *)gUnk_03002490->unk8C)->unk4A) << 16;
-            sub_0800617c(16);
+            TaskSetFrameByFacing(16);
             TaskYieldTrampoline(1);
             gUnk_03002490->unk3C += 2;
             TaskYieldTrampoline(1);
@@ -230,7 +230,7 @@ void sub_08057494(void)
         {
             struct Task *u = gUnk_03002490;
 
-            u->unk00 = (u32)sub_080059fc;
+            u->unk00 = (u32)TaskMoveRelativeToParent;
             u->unk40 = ((struct Task *)u->unk8C)->unk40 | 0xF008;
         }
         {
@@ -239,7 +239,7 @@ void sub_08057494(void)
 
             if (a & 0x8000)
                 b |= 0xFF000000;
-            sub_080061c0(b, 0x5A5A5A5A);
+            TaskSetMotionXFacing(b, 0x5A5A5A5A);
         }
         {
             struct Task *w = gUnk_03002490;
@@ -273,15 +273,15 @@ void sub_08057494(void)
 void sub_08057a10(void)
 {
     if (gUnk_03002490->unk88->unk04 != 13 || (((struct Task *)gUnk_03002490->unk8C)->unk7B & 1))
-        sub_08005654(gCurTaskIdx);
+        TaskFree(gCurTaskIdx);
 }
 
 void sub_08057a48(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005d9c;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawWorld;
     gUnk_03002490->unk42 = 8;
     t = gUnk_03002490;
     t->unk38 = gUnk_08751BF4;
@@ -299,7 +299,7 @@ void sub_08057ad4(void)
 {
     struct Task *t = gUnk_03002490;
 
-    t->unk00 = (u32)sub_080059d8;
+    t->unk00 = (u32)TaskMove;
     switch (t->unk18 & 15)
     {
     case 0:
@@ -323,7 +323,7 @@ void sub_08057ad4(void)
                 v->unk4C = ((struct Task *)v->unk8C)->unk48 << 16;
                 v->unk50 = ((struct Task *)v->unk8C)->unk4A << 16;
             }
-            sub_08006338(0);
+            TaskSetFrame(0);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
@@ -340,7 +340,7 @@ void sub_08057ad4(void)
             }
         }
     case 1:
-        gUnk_03002490->unk0C = (u32)sub_08005f30;
+        gUnk_03002490->unk0C = (u32)TaskDrawWorldInViewOrFree;
         gUnk_03002490->unk42 = 5;
         {
             struct Task *u = gUnk_03002490;
@@ -358,12 +358,12 @@ void sub_08057ad4(void)
             if (((struct Task *)v->unk8C)->unk28 == 0)
             {
                 v->unk40 = (((struct Task *)v->unk8C)->unk40 + 0x1800) | 8;
-                sub_0800617c(0);
+                TaskSetFrameByFacing(0);
             }
             else
             {
                 v->unk40 = 0;
-                sub_0800617c(6);
+                TaskSetFrameByFacing(6);
             }
         }
         TaskYieldTrampoline(2);
@@ -382,7 +382,7 @@ void sub_08057c98(void)
     u8 s;
 
     if (t->unk88->unk04 != 13 || (s = ((struct Task *)t->unk8C)->unk73) == 3 || s == 4)
-        sub_08005654(gCurTaskIdx);
+        TaskFree(gCurTaskIdx);
     else
         t->unk43 = ((struct Task *)t->unk8C)->unk43;
 }

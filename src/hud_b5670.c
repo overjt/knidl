@@ -65,7 +65,7 @@ extern u8 gUnk_06010000[];
 extern struct Unk0873EEA0 *gUnk_0873EEA0[];
 extern s8 gUnk_0873EF48[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08065dbc(u32 slot, u32 sub, u32 level);
 s32 sub_080b5628(u32 a);
 s32 sub_080b5654(u32 a);
@@ -106,11 +106,11 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (d->unk6 != 0)
         {
             LZ77UnCompVram((void *)d->unkC, gUnk_02020000);
-            sub_080017e4(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
         }
         else
         {
-            sub_080017e4(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
+            RequestCopy(4, d->unkC, (gUnk_020060A0[n].unk2 << 6) + vram, d->unk2 << 5);
         }
     }
     if (d->unk0 != 0)
@@ -132,7 +132,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (cnt == 0)
         {
             gUnk_020060A0[n].unk1 = sub_080b5654(d->unk0);
-            sub_080017e4(2, d->unk8, (u32)gUnk_03001470 + (gUnk_020060A0[n].unk1 << 5), d->unk0 << 5);
+            RequestCopy(2, d->unk8, (u32)gUnk_03001470 + (gUnk_020060A0[n].unk1 << 5), d->unk0 << 5);
         }
         if (e->unk2 >> 4)
             sub_08065dbc(gUnk_020060A0[n].unk1, e->unk1, e->unk2 >> 4);

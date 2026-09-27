@@ -87,11 +87,11 @@ extern vs16 gUnk_03000FB8;
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(u32 frames);
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void sub_080031b8(u32 a);
-void sub_08005654(s32 id);
-void sub_08006138(void);
+void TaskFree(s32 id);
+void TaskSleepForever(void);
 void sub_08025dc4(void);
 s32 sub_080261c0(s32 x, s32 y);
 s32 sub_0802621c(s32 type);
@@ -178,7 +178,7 @@ void sub_0802d4bc(void)
     sub_08030f78(gUnk_03002490->unk48 >> 4, gUnk_03002490->unk4A >> 4);
     sub_08030f78(gUnk_03002490->unk48 >> 4, (gUnk_03002490->unk4A - 16) >> 4);
     TaskYieldTrampoline(1);
-    sub_08005654(gUnk_03002490->unk46);
+    TaskFree(gUnk_03002490->unk46);
     TaskDispatchTrampoline();
 }
 
@@ -306,7 +306,7 @@ void sub_0802d96c(void)
         t->unk6C = 0;
     else
         t->unk6C = 0x100;
-    sub_08006138();
+    TaskSleepForever();
     TaskDispatchTrampoline();
 }
 
@@ -347,7 +347,7 @@ void sub_0802da8c(void)
         else
         {
             gUnk_02006098[0] = gUnk_02006098[2];
-            sub_08005654(gCurTaskIdx);
+            TaskFree(gCurTaskIdx);
         }
     }
     else if (gUnk_02006098[4] < 0 && (s16)(v = gUnk_03002490)->unk6C == 0)
@@ -367,7 +367,7 @@ void sub_0802da8c(void)
         else
         {
             gUnk_02006098[0] = gUnk_02006098[1];
-            sub_08005654(gCurTaskIdx);
+            TaskFree(gCurTaskIdx);
         }
     }
 }
@@ -498,7 +498,7 @@ void sub_0802dcb4(void)
         TaskYieldTrampoline(1);
     }
     sub_080307a4();
-    sub_080017e4(6, 0, 0x06001800, 0x800);
+    RequestCopy(6, 0, 0x06001800, 0x800);
     if (gUnk_03002490->unk24 != 0 && gUnk_02007FC4 == 0)
         gUnk_02007FC4++;
     TaskYieldTrampoline(20);
@@ -683,7 +683,7 @@ void sub_0802e3ac(void)
         TaskYieldTrampoline(1);
     }
     sub_080307a4();
-    sub_080017e4(6, 0, 0x06001800, 0x800);
+    RequestCopy(6, 0, 0x06001800, 0x800);
     if (gUnk_03002490->unk24 != 0 && gUnk_02007FC4 == 0)
         gUnk_02007FC4++;
     TaskYieldTrampoline(20);

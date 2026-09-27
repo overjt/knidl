@@ -106,7 +106,7 @@ extern u32 gUnk_030023C8[];
 extern u8 gUnk_03002400[8][7];
 extern u32 gUnk_0873232C[];
 extern s8 gUnk_030023E0;
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
 void sub_08027a6c(void)
 {
@@ -120,9 +120,9 @@ void sub_08027a6c(void)
     u32 a, b;
 
     n = 0;
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     if (gUnk_030055EC->unk05 != 0)
-        sub_080017e4(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02006AA0, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02006AA0, 0);
     else
         CpuSet(gUnk_030055EC->unk08, gUnk_02006AA0, (gUnk_030055E4 * 2) & 0x1FFFFF);
     alt = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468 + 1]->unk08;

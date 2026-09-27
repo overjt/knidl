@@ -8,7 +8,7 @@ extern u16 gUnk_03002458[];
 extern u8 gUnk_0873BEEC[];
 extern u8 gUnk_0873CC54[];
 
-void sub_08006148(void *func, u32 arg);
+void TaskSetEntry(void *func, u32 arg);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);
 u16 sub_08030898(void *table, s32 id);
 void sub_0803e4a8(void);
@@ -71,7 +71,7 @@ void sub_0804e3a0(void)
                     if (!(gUnk_03002458[v->unk88->unk00] & 2))
                     {
                         v->unk73 = 2;
-                        sub_08006148(sub_0804e0e0, gCurTaskIdx);
+                        TaskSetEntry(sub_0804e0e0, gCurTaskIdx);
                     }
                 }
                 else

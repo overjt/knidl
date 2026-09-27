@@ -132,10 +132,10 @@ extern u16 gUnk_02007FB0;
 extern s16 gUnk_030023CC;
 extern s16 gUnk_03002388;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-void sub_080022ac(void);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+void ResetTasksAndOam(void);
 s32 sub_08003110(s32 songId);
-void sub_08006138(void);
+void TaskSleepForever(void);
 void sub_08008c64(u16 a0);
 void sub_08009b2c(s32 i);
 s32 sub_08009e60(s32 a, u32 b);
@@ -192,7 +192,7 @@ void sub_08023948(void)
     s32 i;
     u32 a;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     gUnk_03002444 = 1;
     gUnk_030023B8 = gUnk_030023EC;
     gUnk_03001F20 = 16;
@@ -361,7 +361,7 @@ void sub_08023e34(void)
         t->unk08 = (u32)sub_08023f5c;
     else
         t->unk08 = (u32)sub_08023f18;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08023e78(void)
@@ -372,7 +372,7 @@ void sub_08023e78(void)
     t->unk0C = 0;
     t->unk04 = (u32)sub_08023efc;
     t->unk08 = (u32)sub_08023fa0;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08023ea0(void)
@@ -472,10 +472,10 @@ void sub_08023fd4(void)
     gUnk_03005608[1] = gUnk_030055EC->unk36;
     gUnk_03005660 = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
-        sub_080017e4(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
     else
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gUnk_0200B040 = 0;

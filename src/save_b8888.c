@@ -63,7 +63,7 @@ extern u16 gUnk_03004D50[];
 extern u16 gUnk_03004D90[];
 extern void sub_08002338(void);
 extern void sub_08002348(void);
-extern void sub_08002d18(void);
+extern void RunLinkFrame(void);
 
 s32 CalcCompletionPercent(s32 a);
 s32 WriteSaveSlot(s32 a);
@@ -80,7 +80,7 @@ void sub_080b8888(void)
     gUnk_0200EB80 = 0;
     do
     {
-        sub_08002d18();
+        RunLinkFrame();
         n = 0;
         if (gUnk_0200EB80 <= 26)
         {

@@ -152,7 +152,7 @@ extern s32 gUnk_030055E8;
 extern u16 gUnk_03005608[2];
 extern s32 gUnk_03005630;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 sub_08003110(s32 songId);
 s32 sub_08003194(void);
 void sub_080031b8(s32 id);
@@ -430,14 +430,14 @@ void sub_08029194(void)
 
 void sub_080291d0(void)
 {
-    sub_080017e4(8, (u32)gUnk_030055EC->unk1C, 0x06004000, 0);
-    sub_080017e4(2, (u32)(gUnk_030055EC->unk18 + 1), (u32)gUnk_030012B0, gUnk_030055EC->unk18[0]);
+    RequestCopy(8, (u32)gUnk_030055EC->unk1C, 0x06004000, 0);
+    RequestCopy(2, (u32)(gUnk_030055EC->unk18 + 1), (u32)gUnk_030012B0, gUnk_030055EC->unk18[0]);
 }
 
 void sub_08029204(void)
 {
-    sub_080017e4(8, (u32)gUnk_030055EC->unk2C, 0x06008000, 0);
-    sub_080017e4(2, (u32)(gUnk_030055EC->unk28 + 1), (u32)(gUnk_03001470 - gUnk_030055EC->unk28[0]), gUnk_030055EC->unk28[0]);
+    RequestCopy(8, (u32)gUnk_030055EC->unk2C, 0x06008000, 0);
+    RequestCopy(2, (u32)(gUnk_030055EC->unk28 + 1), (u32)(gUnk_03001470 - gUnk_030055EC->unk28[0]), gUnk_030055EC->unk28[0]);
 }
 
 void sub_0802923c(void)
@@ -468,7 +468,7 @@ void sub_08029270(void)
 
 void sub_080292b0(void)
 {
-    sub_080017e4(8, (u32)gUnk_030055EC->unk30 + 8, 0x06003000, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk30 + 8, 0x06003000, 0);
 }
 
 void sub_080292d0(void)

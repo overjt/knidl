@@ -15,7 +15,7 @@
  *   sub_080c20b4   the state set-up: gAirGrindPtr = &gAirGrind,
  *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode
  *       cells, the four players' course records, the per-frame hook
- *       sub_080c2d38 (gUnk_0300003C, called by the frame driver sub_08000de4)
+ *       sub_080c2d38 (gUnk_0300003C, called by the frame driver EndFrame)
  *       and the VBlank hook sub_080c2fb8 (gUnk_03000FA4, called by the VBlank
  *       handler), and two 16-colour rows of gUnk_08609E40.
  *   AirGrindRace   the screen's task body: waits for the scroll position
@@ -151,13 +151,13 @@ extern u16 gUnk_0860A042[];
 extern u32 gUnk_03000AF4;
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08001488(void);
+void ClearHBlankIntr(void);
 s32 sub_08003110(s32 songId);
 void sub_080034d0(void);
 void sub_08003688(void);
-s32 sub_080058e4(u32 type, s32 idx);                         /* spawn a task */
-void sub_08005ca0(void);
-void sub_08006138(void);                                     /* end the running task */
+s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
+void TaskDrawScreen(void);
+void TaskSleepForever(void);                                     /* end the running task */
 void SubGameCheckEnd(void);
 void sub_080c2d38(void);
 void sub_080c2fb8(void);
@@ -178,7 +178,7 @@ void CreateAirGrindRacers(void)
     struct Task *t;
 
     for (i = 0; i < 4; i++) {
-        id = sub_080058e4(96, 0);
+        id = TaskCreateFrom(96, 0);
         if (id != -1) {
             t = &gUnk_03002790[id];
             t->unk18 = id;
@@ -193,7 +193,7 @@ void sub_080c2038(s32 unused)
     s32 id;
     struct Task *t;
 
-    id = sub_080058e4(96, 32);
+    id = TaskCreateFrom(96, 32);
     if (id != -1) {
         t = &gUnk_03002790[id];
         t->unk73 = 1;
@@ -206,7 +206,7 @@ void sub_080c2078(s32 a, s32 b, s32 c)
     s32 id;
     struct Task *t;
 
-    id = sub_080058e4(96, 32);
+    id = TaskCreateFrom(96, 32);
     if (id != -1) {
         t = &gUnk_03002790[id];
         t->unk18 = b;
@@ -250,7 +250,7 @@ void AirGrindRace(void)
     s32 i;
 
     sub_080c20b4();
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk38 = gUnk_08755FEC;
     gUnk_03002490->unk3C = 0xFFFF;
     sub_08003110(0x82B);
@@ -307,10 +307,10 @@ void AirGrindRace(void)
     TaskYieldTrampoline(180);
     sub_080034d0();
     sub_08003688();
-    sub_08001488();
+    ClearHBlankIntr();
     gUnk_03000AF4 = 0;
     gUnk_03002490->unk18 = 2;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080c241c(void)

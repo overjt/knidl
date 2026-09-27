@@ -40,12 +40,12 @@ extern u32 gUnk_087559DC[];
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(u32 frames);
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_08005904(u32 type, s32 start, s32 end);
-void sub_080059d8(void);
-void sub_08005a74(void);
-void sub_08005d9c(void);
-void sub_08006138(void);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+s32 TaskCreateInRange(u32 type, s32 start, s32 end);
+void TaskMove(void);
+void TaskUpdatePixelPos(void);
+void TaskDrawWorld(void);
+void TaskSleepForever(void);
 void sub_08008f10(s32 a0);
 s32 sub_080306b4(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
 void sub_0802f684(void);
@@ -64,7 +64,7 @@ void sub_0802f62c(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
+    t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk0C = (u32)sub_0802f718;
     t->unk38 = gUnk_08755948;
     t->unk42 = 15;
@@ -124,7 +124,7 @@ void sub_0802f6f4(void)
     t->unk34 = (s32)gUnk_087558C4;
     t->unk28 = 0;
     t->unk3C = t->unk18 << 1;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0802f718(void)
@@ -152,7 +152,7 @@ s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = sub_08005904(230, 32, 63);
+    id = TaskCreateInRange(230, 32, 63);
     if (id != -1)
     {
         t = &gUnk_03002790[id];
@@ -176,7 +176,7 @@ void sub_0802f84c(void)
     struct Task *v;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
+    t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk0C = (u32)sub_0802f93c;
     t->unk38 = gUnk_08755978;
     t->unk42 = 14;
@@ -206,10 +206,10 @@ void sub_0802f8c8(void)
 
     if (gUnk_03002490->unk34 != -1)
     {
-        sub_080017e4(4, (u32)gUnk_085A2DF8[gUnk_03002490->unk34 * 9], 0x06013980, 96);
+        RequestCopy(4, (u32)gUnk_085A2DF8[gUnk_03002490->unk34 * 9], 0x06013980, 96);
         src = (u8 *)gUnk_085A2DF8;
-        sub_080017e4(4, (u32)(src + (gUnk_03002490->unk34 * 9 + 3) * 32), 0x06013D80, 96);
-        sub_080017e4(4, (u32)(src + (gUnk_03002490->unk34 * 9 + 6) * 32), 0x06014180, 96);
+        RequestCopy(4, (u32)(src + (gUnk_03002490->unk34 * 9 + 3) * 32), 0x06013D80, 96);
+        RequestCopy(4, (u32)(src + (gUnk_03002490->unk34 * 9 + 6) * 32), 0x06014180, 96);
         gUnk_03002490->unk34 = -1;
     }
 }
@@ -240,7 +240,7 @@ s32 sub_0802fa3c(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = sub_08005904(231, 32, 63);
+    id = TaskCreateInRange(231, 32, 63);
     if (id != -1)
     {
         t = &gUnk_03002790[id];
@@ -262,7 +262,7 @@ void sub_0802faa8(void)
     struct Task *v;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_080059d8;
+    t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_0802fd98;
     t->unk38 = gUnk_0875597C;
     t->unk42 = 14;
@@ -412,7 +412,7 @@ s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = sub_08005904(232, 32, 63);
+    id = TaskCreateInRange(232, 32, 63);
     if (id != -1)
     {
         t = &gUnk_03002790[id];
@@ -435,14 +435,14 @@ void sub_0802fe64(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
+    t->unk00 = (u32)TaskUpdatePixelPos;
     t->unk0C = (u32)sub_0802fea4;
     t->unk38 = gUnk_0875599C;
     t->unk42 = 15;
     u = gUnk_03002490;
     u->unk40 = 0x8800;
     u->unk3C = u->unk18;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0802fea4(void)
@@ -481,7 +481,7 @@ s32 sub_0802ffe8(s32 a, s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = sub_08005904(233, 32, 63);
+    id = TaskCreateInRange(233, 32, 63);
     if (id != -1)
     {
         t = &gUnk_03002790[id];
@@ -500,14 +500,14 @@ void sub_08030034(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskUpdatePixelPos;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk38 = gUnk_087559A4;
     t->unk42 = 15;
     u = gUnk_03002490;
     u->unk40 = 0xD800;
     u->unk3C = u->unk18;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 s32 sub_08030074(s32 a)
@@ -515,7 +515,7 @@ s32 sub_08030074(s32 a)
     s32 id;
     struct Task *t;
 
-    id = sub_08005904(234, 32, 63);
+    id = TaskCreateInRange(234, 32, 63);
     if (id != -1)
     {
         t = &gUnk_03002790[id];
@@ -534,14 +534,14 @@ void sub_080300c0(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskUpdatePixelPos;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk38 = gUnk_087559C0;
     t->unk42 = 15;
     u = gUnk_03002490;
     u->unk40 = 0xD800;
     u->unk3C = u->unk18;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 s32 sub_08030100(u8 a)
@@ -564,7 +564,7 @@ s32 sub_08030140(u8 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = sub_08005904(235, 32, 63);
+    id = TaskCreateInRange(235, 32, 63);
     if (id != -1)
     {
         t = &gUnk_03002790[id];
@@ -583,14 +583,14 @@ void sub_080301a4(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskUpdatePixelPos;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk38 = gUnk_087559DC;
     t->unk42 = 15;
     u = gUnk_03002490;
     u->unk40 = 0xD3C0;
     u->unk3C = u->unk18;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 s32 sub_080301e8(s32 a, s32 x, s32 y)
@@ -598,7 +598,7 @@ s32 sub_080301e8(s32 a, s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = sub_08005904(236, 32, 63);
+    id = TaskCreateInRange(236, 32, 63);
     if (id != -1)
     {
         t = &gUnk_03002790[id];

@@ -4,8 +4,8 @@
 /*
  * Cooperative task system, user side (issue #32, batch F2:
  * 0x08005654-0x08005D9C).  Recipe: old_agbcc -O2 (`--old2`), established with
- * the leaf `push {lr}` fingerprint of lessons-learned 3.18 (sub_08005954 and
- * sub_08005acc are leaves that end in a bare `bx lr`).
+ * the leaf `push {lr}` fingerprint of lessons-learned 3.18 (TaskClampVelocity and
+ * TaskIsOnScreen are leaves that end in a bare `bx lr`).
  *
  * The zone manages a 64-entry task table:
  *   gUnk_03002494  s32   allocation cursor (rotates 0..63), volatile
@@ -120,16 +120,16 @@ extern u16 gUnk_030023E4;
 extern s16 gUnk_03002158[];
 extern u8 gUnk_03001470[];
 
-extern void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* NOTE: src/early_1518.c declares the last parameter `u16 f`; the two call
  * sites in this file pass a sign-extended s16, so the real prototype must be
  * signed (see the report). */
-extern s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 
-void sub_08005654(s32 id);
-s32 sub_0800579c(u32 type);
-void sub_080059a0(void);
-void sub_08005954(void);
+void TaskFree(s32 id);
+s32 TaskCreate(u32 type);
+void TaskIntegrateMotion(void);
+void TaskClampVelocity(void);
 
 /* Free the task in slot `id`. */
 
@@ -148,20 +148,20 @@ void sub_08005954(void);
 /* Task body: integrate if moving, then publish position relative to the
  * parent task's position (Task.unk44 indexes the task array). */
 
-/* Hidden (unreferenced) export inside sub_080059fc's symbols.csv size. */
+/* Hidden (unreferenced) export inside TaskMoveRelativeToParent's symbols.csv size. */
 
 /* Task body: integrate, publish position relative to the camera. */
 
 /* Is the running task on screen (with a 63/64-pixel margin) relative to
  * gUnk_03002348/gUnk_030023E4? */
 
-/* Hidden (unreferenced) export inside sub_08005acc's symbols.csv size:
+/* Hidden (unreferenced) export inside TaskIsOnScreen's symbols.csv size:
  * upload the running task's tile stream plus its palette. */
 
 /* Upload the running task's tile stream. */
 
 /* Is the running task inside the rectangle at gUnk_03002158 (+/- 64)? */
-u32 sub_08005c4c(void)
+u32 TaskIsInView(void)
 {
     if (gUnk_03002158[0] - 64 >= gUnk_03002490->unk48)
         return 0;
@@ -175,7 +175,7 @@ u32 sub_08005c4c(void)
 }
 
 /* Task body: enqueue the running task's sprite if it is on screen. */
-void sub_08005ca0(void)
+void TaskDrawScreen(void)
 {
     struct Task *t;
     s16 y;
@@ -192,11 +192,11 @@ void sub_08005ca0(void)
         return;
     if (y > 223)
         return;
-    sub_08001a94(t->unk42, t->unk38[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+    QueueSprite(t->unk42, t->unk38[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
 }
 
 /* Same, but free the task when it leaves the screen. */
-void sub_08005d18(void)
+void TaskDrawScreenOrFree(void)
 {
     struct Task *t;
     s16 y;
@@ -213,8 +213,8 @@ void sub_08005d18(void)
         goto kill;
     if (y > 223)
         goto kill;
-    sub_08001a94(t->unk42, t->unk38[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+    QueueSprite(t->unk42, t->unk38[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
     return;
 kill:
-    sub_08005654(gCurTaskIdx);
+    TaskFree(gCurTaskIdx);
 }

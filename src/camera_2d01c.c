@@ -122,7 +122,7 @@ extern s16 gUnk_03005620;
 extern struct MapTile *gUnk_03005660;
 extern void (*gMapEventVariants[])(void);
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void sub_080031b8(u32 a);
@@ -257,7 +257,7 @@ void sub_0802d188(void)
 
 void sub_0802d25c(struct Unk0802D25C *a)
 {
-    sub_080017e4(1, (u32)a->unk4, 0x06004000 + a->unk0 * 32, a->unk2);
+    RequestCopy(1, (u32)a->unk4, 0x06004000 + a->unk0 * 32, a->unk2);
 }
 
 void sub_0802d278(struct Unk02007D70 *p, struct Unk0802D278 *q)

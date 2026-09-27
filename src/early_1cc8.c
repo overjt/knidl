@@ -16,7 +16,7 @@
  *
  * The definition's parameters are (u16 *, s16, s16, s16): the ROM truncates
  * all three at entry and sign-extends them at every use (lesson 3.27).  The
- * callers in src/ declare `s32 sub_08001cc8(s32, s16, s16, s32)`; those
+ * callers in src/ declare `s32 DrawAffineSprite(s32, s16, s16, s32)`; those
  * declarations only decide how a caller extends its arguments, the callers
  * match their own ROM bytes as written, and they were left alone (lesson
  * 3.428).
@@ -38,7 +38,7 @@ extern s16 gUnk_0872FB30[];  /* trig table (mid pointer) */
  * centre (double-size unless both scales are >= 256), then write the
  * rotation/scale matrix for `rot` into affine slot gUnk_03000B1C.  Returns
  * the address of the first staged entry. */
-s32 sub_08001cc8(u16 *p, s16 sx, s16 sy, s16 rot)
+s32 DrawAffineSprite(u16 *p, s16 sx, s16 sy, s16 rot)
 {
     vs16 *first;
     u16 a0;

@@ -6,7 +6,7 @@
  * The 0x7700-series link-play handshake, twin of sub_08002668
  * (src/early_2668.c, which keeps the payload in the record gUnk_02006068;
  * this one keeps it in gUnk_03000FB4 and gUnk_03001EA4).  It blocks, pumping
- * the link layer once per frame (sub_080022d0, sub_08006914, the abort poll
+ * the link layer once per frame (RunFrameNoTasks, sub_08006914, the abort poll
  * sub_080072e0 and the reset path sub_08008b8c after 31 frames without the
  * frame counter gUnk_03004D7C moving), and drives the state word
  * gUnk_03005274 through the 0xBB00 exchange of the per-player bytes
@@ -36,7 +36,7 @@ extern u16 gUnk_03004D88;
 extern u16 gUnk_03004D90[4];
 extern u16 gUnk_03005274;
 
-void sub_080022d0(void);
+void RunFrameNoTasks(void);
 void sub_08006914(void *, void *, void *);
 int sub_080072e0(void);
 void sub_08008b8c(void);
@@ -110,7 +110,7 @@ void sub_08002378(void)
             break;
         }
         old = gUnk_03004D7C;
-        sub_080022d0();
+        RunFrameNoTasks();
         sub_08006914(&gUnk_03004D88, gUnk_03004D90, gUnk_03004D50);
         if (sub_080072e0() != 0)
             sub_08008b8c();

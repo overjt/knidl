@@ -94,7 +94,7 @@ extern vu16 gUnk_04000208;      /* REG_IME */
 void sub_08006724(void);
 void sub_08006868(void);
 void sub_08006914(u16 *a, u16 *b, u16 *c);
-void sub_080022e4(void);
+void RunFrame(void);
 
 void sub_08006d18(void);
 void SerialCB(void);

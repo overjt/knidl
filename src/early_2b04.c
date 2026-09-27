@@ -70,13 +70,13 @@ void sub_080b84f0(void);
 void sub_080b8694(void);
 void sub_08006914(u16 *a, u16 *b, u16 *c);
 void sub_08008b8c(void);
-void sub_08005228(void);
-void sub_08001a84(void);
-void sub_08000de4(void);
-void sub_08001a34(void);
+void RunTasks(void);
+void RunBuildOamInIwram(void);
+void EndFrame(void);
+void ResetSpriteQueue(void);
 u32 sub_080072e0(void);
-void sub_080022e4(void);
-void sub_080022d0(void);
+void RunFrame(void);
+void RunFrameNoTasks(void);
 
 void sub_08002b04(void)
 {
@@ -168,56 +168,56 @@ void sub_08002b8c(void)
     }
 }
 
-void sub_08002d18(void)
+void RunLinkFrame(void)
 {
-    sub_08005228();
-    sub_08001a84();
+    RunTasks();
+    RunBuildOamInIwram();
     if (gUnk_03004D2C == 0)
         sub_08002b04();
     gUnk_03004D2C = 0;
-    sub_08000de4();
-    sub_08001a34();
+    EndFrame();
+    ResetSpriteQueue();
     sub_08002b8c();
     if (sub_080072e0() != 0)
         sub_08008b8c();
 }
 
-void sub_08002d54(s32 count)
+void RunFrames(s32 count)
 {
     while (--count != -1)
-        sub_080022e4();
+        RunFrame();
 }
 
-void sub_08002d74(s32 count)
+void RunFramesNoTasks(s32 count)
 {
     while (--count != -1)
-        sub_080022d0();
+        RunFrameNoTasks();
 }
 
-void sub_08002d94(s32 count)
+void RunLinkFrames(s32 count)
 {
     while (--count != -1)
-        sub_08002d18();
+        RunLinkFrame();
 }
 
 void sub_08002db4(void)
 {
     while (gUnk_03001E90 != 0)
-        sub_080022e4();
+        RunFrame();
     gUnk_03000048 = 0;
 }
 
 void sub_08002de0(void)
 {
     while (gUnk_03001E90 != 0)
-        sub_080022d0();
+        RunFrameNoTasks();
     gUnk_03000048 = 0;
 }
 
 void sub_08002e0c(void)
 {
     while (gUnk_03001E90 != 0)
-        sub_08002d18();
+        RunLinkFrame();
     gUnk_03000048 = 0;
 }
 

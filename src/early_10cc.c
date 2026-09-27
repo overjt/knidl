@@ -5,8 +5,8 @@
  * agbcc -O2 -mthumb-interwork (game-code recipe).
  *
  * Pointer-called entry: runs the sound driver's vsync/main, flushes the OAM
- * and palette shadows via sub_080011ac, pumps the copy queue, and clears the
- * frame flag gUnk_03001EC4 that sub_08000de4 spins on. */
+ * and palette shadows via CopyOamAndPalette, pumps the copy queue, and clears the
+ * frame flag gUnk_03001EC4 that EndFrame spins on. */
 
 extern vu16 gUnk_03001174;
 extern vu16 gUnk_03001E98;
@@ -60,14 +60,14 @@ extern void SoftReset(u32 resetFlags);
 extern void sub_08003484(void);
 extern void sub_08004734(void);
 extern void sub_08006cd4(void);
-extern void sub_080011dc(void);
-extern void sub_08001280(void);
-extern void sub_080011ac(void);
-extern void sub_080013f8(void);
+extern void ReadKeys(void);
+extern void FlushDisplayRegs(void);
+extern void CopyOamAndPalette(void);
+extern void ProcessCopyQueue(void);
 
 void sub_08000934(void);
 
-void sub_080010cc(void)
+void VBlankIntr(void)
 {
     if (gUnk_03001EE4 != 0)
         m4aSoundVSync();
@@ -93,16 +93,16 @@ void sub_080010cc(void)
     if (gUnk_03000FD0 != 0)
     {
         if (gUnk_03001008 != 0)
-            sub_080011dc();
+            ReadKeys();
     }
     else
     {
-        sub_080011dc();
+        ReadKeys();
         if (gUnk_03000F90 != 0)
             gUnk_03000F90();
-        sub_08001280();
-        sub_080011ac();
-        sub_080013f8();
+        FlushDisplayRegs();
+        CopyOamAndPalette();
+        ProcessCopyQueue();
         if (gUnk_030004A0 != 0)
             gUnk_030004A0();
     }

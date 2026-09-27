@@ -5,9 +5,9 @@
 extern struct Task *gUnk_03002490;
 extern u32 gUnk_08732104[];
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 s32 sub_08002ee8(s32 a);
-u32 sub_0800641c(s16 x, s16 y);
+u32 IsWorldPosOnScreen(s16 x, s16 y);
 
 /* 16-byte per-slot record, 3 slots per player, at gUnk_02007E90.
    unk00/unk04 are 16.16 (x,y) offsets whose high halves are read directly,
@@ -84,8 +84,8 @@ void sub_080109c8(void)
             d = p->unk0D;
             x = gUnk_03002490->unk48 + ((s16 *)&p->unk00)[1];
             y = gUnk_03002490->unk4A + ((s16 *)&p->unk04)[1] + 4;
-            if (sub_0800641c(x, y))
-                sub_08001a94(gUnk_03002490->unk42 - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
+            if (IsWorldPosOnScreen(x, y))
+                QueueSprite(gUnk_03002490->unk42 - 1, gUnk_08732104[d], 0, 12, x, (s16)y);
         }
         i++;
     } while (i <= 2);

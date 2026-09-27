@@ -63,7 +63,7 @@ extern u16 gUnk_03001F38;
 extern u16 gUnk_03004D50[];
 extern u16 gUnk_03004D90[];
 
-extern void sub_08001518(void);
+extern void IntrDummy(void);
 extern void sub_08003ab8(void);
 extern void sub_08003bd8(void);
 extern void sub_08003dc4(void);
@@ -327,7 +327,7 @@ void sub_080044b8(void)
         gUnk_03001EF8 = REG_IME = REG_IME | 1;
         REG_SIOCNT = 0x2000;
         REG_TM3CNT = 0;
-        gUnk_030004B0[0] = (u32)sub_08001518;
+        gUnk_030004B0[0] = (u32)IntrDummy;
         gUnk_030004B0[1] = (u32)sub_080045e8;
         REG_SIOCNT = 0x1000;
         REG_SIOCNT = 0x1001;
@@ -338,7 +338,7 @@ void sub_080044b8(void)
         REG_IE = gUnk_03000018 = gUnk_03000018 & 0xFF3F;
         gUnk_03001EF8 = REG_IME = REG_IME | 1;
         gUnk_030004B0[0] = (u32)sub_0800469c;
-        gUnk_030004B0[1] = (u32)sub_08001518;
+        gUnk_030004B0[1] = (u32)IntrDummy;
         REG_SIOCNT = 0x2000;
     }
     gUnk_0200EC44 = 0;

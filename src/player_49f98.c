@@ -14,7 +14,7 @@
  * with handler 7 (animation 0xAD2, then the ability's loop from
  * gUnk_0873D3B8[ability][1]).  Its handler sub_0804a258
  * flashes the palette gUnk_081F59F0 (the VRAM transfer queue
- * sub_080017e4) in state 1, re-binds state 3 on a newly-pressed B after
+ * RequestCopy) in state 1, re-binds state 3 on a newly-pressed B after
  * the PlayerState.unk14 frames, registers the collider gUnk_0873C228,
  * steers with the held left/right keys, picks one of five animation
  * rows 0xB2E-0xB3E by |Task.unk54| and cycles Task.unk46 through them,
@@ -51,11 +51,11 @@ extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) *
 extern struct Unk03005550 gUnk_03005550;
 
 void TaskYieldTrampoline(s32 frames);
-void sub_080017e4(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
-void sub_08006148(void *a, u32 i);
-void sub_08006338(s32 a);
-void sub_0800634c(s32 a);
-void sub_08006364(s32 a);
+void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
+void TaskSetEntry(void *a, u32 i);
+void TaskSetFrame(s32 a);
+void TaskSetFrameNoFlip(s32 a);
+void TaskSetFrameFlip(s32 a);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803e050(s32 a0);
 void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
@@ -91,7 +91,7 @@ void sub_08049f98(void)
         sub_0805afac(gUnk_03002490->unk88->unk00, 42, 5);
         sub_0803e050(2);
         sub_0803e650(5);
-        sub_08006338(0xB2D);
+        TaskSetFrame(0xB2D);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk73 = 1;
         gUnk_03002490->unk88->unk14 = 4;
@@ -132,7 +132,7 @@ void sub_08049f98(void)
         gUnk_03002490->unk88->unk6C = 0;
         gUnk_03002490->unk73 = 4;
         gUnk_03002490->unk88->unk14 = 300;
-        sub_08006338(0xAD2);
+        TaskSetFrame(0xAD2);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk6C = 0;
         do {
@@ -160,7 +160,7 @@ void sub_08049f98(void)
             t->unk46 = gUnk_0873D3B8[t->unk88->unk0D][1];
         }
         while (1) {
-            sub_08006338(gUnk_03002490->unk46);
+            TaskSetFrame(gUnk_03002490->unk46);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
@@ -176,7 +176,7 @@ void sub_0804a258(void)
     case 1:
         t->unk88->unk42 &= 0xFFEF;
         if ((gUnk_03001EA4 & 7) <= 3) {
-            sub_080017e4(2, gUnk_081F59F0, gUnk_03001470 + (t->unk40 >> 12) * 32, 64);
+            RequestCopy(2, gUnk_081F59F0, gUnk_03001470 + (t->unk40 >> 12) * 32, 64);
             gUnk_03002490->unk88->unk42 |= 16;
         }
         /* fallthrough */
@@ -187,7 +187,7 @@ void sub_0804a258(void)
             if ((s16)p->unk14 == 0) {
                 if (gUnk_030023C0[p->unk00] & 2) {
                     u->unk73 = 3;
-                    sub_08006148(sub_08049f98, gCurTaskIdx);
+                    TaskSetEntry(sub_08049f98, gCurTaskIdx);
                     sub_0803e1b8(255, 0, gUnk_03002490->unk88->unk00);
                     sub_0803e3ac();
                     sub_0805afac(gUnk_03002490->unk88->unk00, 42, 3);
@@ -232,11 +232,11 @@ void sub_0804a258(void)
                 {
                     struct Task *w = gUnk_03002490;
                     if (w->unk54 == 0)
-                        sub_08006338((s16)(w->unk46 + a));
+                        TaskSetFrame((s16)(w->unk46 + a));
                     else if (w->unk54 < 0)
-                        sub_08006364(w->unk46 + a);
+                        TaskSetFrameFlip(w->unk46 + a);
                     else
-                        sub_0800634c((s16)(w->unk46 + a));
+                        TaskSetFrameNoFlip((s16)(w->unk46 + a));
                 }
             }
         }
@@ -251,7 +251,7 @@ void sub_0804a258(void)
             if (w->unk58 < 0 && (gUnk_03005550.unk1 != 0 || (w->unk88->unk48 & 4))) {
                 w->unk58 = 0;
                 w->unk73 = 4;
-                sub_08006148(sub_08049f98, gCurTaskIdx);
+                TaskSetEntry(sub_08049f98, gCurTaskIdx);
                 sub_0803e1b8(255, 0, gUnk_03002490->unk88->unk00);
                 sub_0803e3ac();
                 return;

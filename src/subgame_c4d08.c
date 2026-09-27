@@ -124,8 +124,8 @@ extern vu16 gUnk_03000B1C;             /* affine matrix index */
 extern vu16 gUnk_03000050[];           /* OAM shadow (attrs + affine params) */
 extern u16 *gUnk_087572EC[];
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
-void sub_08005654(s32 id);                                   /* kill task */
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
+void TaskFree(s32 id);                                   /* kill task */
 s32 sub_080c623c(s32 x);
 s32 sub_080c6258(s32 value);                                 /* PR #133: value / 2 */
 u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
@@ -154,10 +154,10 @@ void sub_080c4d08(void)
                 break;
             }
             if (n != 0)
-                sub_08001a94(gUnk_03002490->unk42, sub_080c4f60((u16 *)p[n], gUnk_03002490->unk28),
+                QueueSprite(gUnk_03002490->unk42, sub_080c4f60((u16 *)p[n], gUnk_03002490->unk28),
                              gUnk_03002490->unk3E, gUnk_03002490->unk40, gUnk_03002490->unk48, gUnk_03002490->unk4A);
         }
-        sub_08001a94(gUnk_03002490->unk42, sub_080c4f60((u16 *)p[gUnk_03002490->unk3C], gUnk_03002490->unk28),
+        QueueSprite(gUnk_03002490->unk42, sub_080c4f60((u16 *)p[gUnk_03002490->unk3C], gUnk_03002490->unk28),
                      gUnk_03002490->unk3E, gUnk_03002490->unk40, gUnk_03002490->unk48, gUnk_03002490->unk4A);
     }
 }
@@ -169,10 +169,10 @@ void sub_080c4e10(void)
 
     if (tbl != NULL && t->unk3C != -1) {
         if ((u16)(t->unk48 + 63) <= 366 && t->unk4A > -64 && t->unk4A < 224)
-            sub_08001a94(gUnk_03002490->unk42, sub_080c4f60((u16 *)tbl[t->unk3C], t->unk28),
+            QueueSprite(gUnk_03002490->unk42, sub_080c4f60((u16 *)tbl[t->unk3C], t->unk28),
                          gUnk_03002490->unk3E, gUnk_03002490->unk40, gUnk_03002490->unk48, gUnk_03002490->unk4A);
         else
-            sub_08005654(gCurTaskIdx);
+            TaskFree(gCurTaskIdx);
     }
 }
 

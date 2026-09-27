@@ -36,9 +36,9 @@ extern s16 gUnk_02005588[];             /* per-player health (M02's HUD) */
 void TaskYieldTrampoline(s32 frames);
 /* task / sprite services (landed prototypes) */
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
-void sub_08006338(s32 a);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
+void TaskSetFrame(s32 a);
 s32 sub_08009ee8(s32 a, s32 b);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803e050(s32 a0);
@@ -74,13 +74,13 @@ void sub_0804f948(void)
         t->unk28 = 0;
         sub_0803e34c(155, (u16)t->unk88->unk00);
     }
-    sub_08006338(0x1026);
+    TaskSetFrame(0x1026);
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk3C += 2;
     TaskYieldTrampoline(1);
-    sub_08006338(0x102A);
+    TaskSetFrame(0x102A);
     TaskYieldTrampoline(1);
     sub_08053a44(gUnk_03002490->unk88->unk00, 11, 0);
     for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 4; gUnk_03002490->unk6C++)
@@ -111,7 +111,7 @@ void sub_0804f948(void)
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(1);
     gUnk_03002490->unk70++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804fab0(void)
@@ -128,7 +128,7 @@ void sub_0804fab0(void)
         {
             if (gUnk_030023C0[t->unk88->unk00] & 2)
             {
-                sub_08006148(sub_0804f948, gCurTaskIdx);
+                TaskSetEntry(sub_0804f948, gCurTaskIdx);
             }
             else if ((t->unk7A & 1) && (gUnk_03002458[t->unk88->unk00] & 0x30))
             {
@@ -175,7 +175,7 @@ void sub_0804fba4(void)
             t->unk28++;
             sub_0803e34c(0x11D, (u16)t->unk88->unk00);
         }
-        sub_08006338(0xFE5);
+        TaskSetFrame(0xFE5);
         TaskYieldTrampoline(1);
         for (gUnk_03002490->unk6E = 0; gUnk_03002490->unk6E <= 6; gUnk_03002490->unk6E++)
         {

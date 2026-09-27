@@ -223,9 +223,9 @@ extern s16 gUnk_03002158[4];
 extern struct CamRect gUnk_03005640[4];
 extern s8 gUnk_0200B02C;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-void sub_080022ac(void);
-void sub_08006138(void);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+void ResetTasksAndOam(void);
+void TaskSleepForever(void);
 void sub_08008c64(u16 a0);
 void sub_08009adc(void);
 s32 sub_08009e60(s32 a, u32 b);
@@ -293,7 +293,7 @@ void sub_080242d0(void)
     t->unk0C = (u32)sub_080236d4;
     t->unk04 = (u32)sub_0802457c;
     t->unk08 = (u32)sub_080245d0;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08024300(void)
@@ -329,10 +329,10 @@ void sub_08024300(void)
     gUnk_03005608[1] = gUnk_030055EC->unk36;
     gUnk_03005660 = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
-        sub_080017e4(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
     else
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gUnk_0200B040 = 0;
@@ -383,7 +383,7 @@ void sub_08024540(void)
         t->unk08 = (u32)sub_080245d0;
     else
         t->unk08 = (u32)sub_08024598;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0802457c(void)
@@ -446,7 +446,7 @@ void sub_08024698(s32 a0)
 {
     u32 a;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     gUnk_03002444 = 0;
     gUnk_030023B8 = gUnk_0300238C;
     gUnk_03001F20 = gUnk_030023EC;
@@ -473,15 +473,15 @@ void sub_08024698(s32 a0)
     gUnk_03005660 = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
     {
-        sub_080017e4(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
-        sub_080017e4(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
     }
     else
     {
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
         CpuSet(gUnk_030055EC->unk0C, gUnk_02008160, gUnk_030055E4 & 0x1FFFFF);
     }
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gUnk_0200B040 = 0;
@@ -553,7 +553,7 @@ void sub_08024904(void)
         gUnk_03002490->unk08 = (u32)sub_08023748;
         break;
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0802497c(void)
@@ -561,7 +561,7 @@ void sub_0802497c(void)
     s32 i;
     u32 a;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     gUnk_03002444 = 0;
     if (gUnk_0300238C == 8)
     {
@@ -598,15 +598,15 @@ void sub_0802497c(void)
     gUnk_03005660 = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
     {
-        sub_080017e4(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
-        sub_080017e4(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
     }
     else
     {
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
         CpuSet(gUnk_030055EC->unk0C, gUnk_02008160, gUnk_030055E4 & 0x1FFFFF);
     }
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gUnk_0200B040 = 0;
@@ -733,7 +733,7 @@ void sub_08024da4(void)
         gUnk_03002490->unk08 = (u32)sub_080238a4;
         break;
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 s32 sub_08024e40(s32 x, s32 y)

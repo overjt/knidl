@@ -64,9 +64,9 @@ extern u32 gUnk_0873F910[];
 
 extern u32 sub_08002ee8(u32 range);
 extern void sub_080031b8(s32 id);
-extern void sub_080055b0(s32 a, s32 b);
-extern void sub_08006148(void *fn, s32 i);
-extern void sub_08006338(s32 a);
+extern void TaskSetSkipMask(s32 a, s32 b);
+extern void TaskSetEntry(void *fn, s32 i);
+extern void TaskSetFrame(s32 a);
 extern void sub_08009e60(s32 a, s32 b);
 extern void sub_0800a42c(void);
 extern void sub_0801bcac(struct InputState *p);
@@ -717,12 +717,12 @@ void sub_08069dc4(void)
 
     t = gUnk_03002490;
     a = t->unk8C;
-    sub_080055b0(7, gCurTaskIdx);
+    TaskSetSkipMask(7, gCurTaskIdx);
     u = gUnk_03002490;
     u->unk4C = u->unk48 << 16;
     u->unk50 = u->unk4A << 16;
     a->unk14 = u->unk3C;
-    sub_08006338(0);
+    TaskSetFrame(0);
     gUnk_03002490->unk08 = (u32)sub_08069fb0;
     a->unk01 = 11;
     v = gUnk_03002490;
@@ -740,7 +740,7 @@ void sub_08069e48(void)
 
     t = gUnk_03002490;
     a = t->unk8C;
-    sub_080055b0(0, gCurTaskIdx);
+    TaskSetSkipMask(0, gCurTaskIdx);
     u = gUnk_03002490;
     u->unk08 = 0;
     u->unk48 = u->unk4C >> 16;
@@ -901,7 +901,7 @@ void sub_0806a0f0(s32 a)
         sub_0806395c(1);
     else
         sub_0806395c(0);
-    sub_08006148(sub_0806b26c, gCurTaskIdx);
+    TaskSetEntry(sub_0806b26c, gCurTaskIdx);
 }
 
 /* No return value: the ROM's epilogue is `pop {r0}; bx r0`.  Its caller
@@ -932,13 +932,13 @@ void sub_0806a158(void)
         if (gUnk_03002360 == t->unk7E)
             sub_080031b8(198);
         sub_0806395c(0);
-        sub_08006148(sub_080b4240, gCurTaskIdx);
+        TaskSetEntry(sub_080b4240, gCurTaskIdx);
         break;
     case 4:
         if (gUnk_03002360 == t->unk7E)
             sub_080031b8(198);
         sub_0806395c(1);
-        sub_08006148(sub_080b4240, gCurTaskIdx);
+        TaskSetEntry(sub_080b4240, gCurTaskIdx);
         break;
     default:
         sub_08063fe0();
@@ -968,7 +968,7 @@ u32 sub_0806a25c(void)
     {
         if (p->unk01 != -1)
         {
-            sub_08006148(sub_0806a344, gCurTaskIdx);
+            TaskSetEntry(sub_0806a344, gCurTaskIdx);
             r = 1;
         }
         else

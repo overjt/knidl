@@ -89,15 +89,15 @@ extern u32 sub_08069b44(void);
 extern u8 sub_08065f2c(u32 i);
 extern void TaskYieldTrampoline(u32 frames);
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
-extern void sub_08005654(s32 id);
-extern void sub_08006138(void);
-extern void sub_08006148(void *fn, u32 i);
-extern void sub_080061c0(s32 a, s32 b);
-extern void sub_08006214(void);
-extern void sub_0800622c(s32 a, s32 b, s32 c);
-extern void sub_08006244(void);
-extern void sub_080062c4(void);
-extern void sub_08006338(s32 a);
+extern void TaskFree(s32 id);
+extern void TaskSleepForever(void);
+extern void TaskSetEntry(void *fn, u32 i);
+extern void TaskSetMotionXFacing(s32 a, s32 b);
+extern void TaskStopX(void);
+extern void TaskSetMotionY(s32 a, s32 b, s32 c);
+extern void TaskStopY(void);
+extern void TaskStop(void);
+extern void TaskSetFrame(s32 a);
 extern void sub_080261d4(s32 a);
 extern void sub_08063908(u32 *def);
 extern void sub_0806395c(u32 v);
@@ -130,13 +130,13 @@ s32 sub_08080b70(void)
     {
     case 0:
         sub_0806395c(2);
-        sub_08006148(sub_080804a4, gCurTaskIdx);
+        TaskSetEntry(sub_080804a4, gCurTaskIdx);
         break;
     case 1:
         break;
     case 2:
         sub_0806395c(2);
-        sub_08006148(sub_08080870, gCurTaskIdx);
+        TaskSetEntry(sub_08080870, gCurTaskIdx);
         break;
     }
     return 1;
@@ -144,18 +144,18 @@ s32 sub_08080b70(void)
 
 s32 sub_08080bcc(void)
 {
-    sub_08006244();
+    TaskStopY();
     switch (gUnk_03002490->unk73)
     {
     case 0:
         sub_0806395c(0);
-        sub_08006148(sub_080804a4, gCurTaskIdx);
+        TaskSetEntry(sub_080804a4, gCurTaskIdx);
         break;
     case 1:
         break;
     case 2:
         sub_0806395c(0);
-        sub_08006148(sub_08080870, gCurTaskIdx);
+        TaskSetEntry(sub_08080870, gCurTaskIdx);
         break;
     }
     return 1;
@@ -198,21 +198,21 @@ void sub_08080c48(void)
         v = gUnk_03002490;
         v->unk4A = *(u16 *)&o->unk4A + 4 - n;
         v->unk50 = v->unk4A << 16;
-        sub_080061c0(0xFFFF0000, 0x5A5A5A5A);
+        TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);
         gUnk_03002490->unk58 = 0xFFFF8000;
-        sub_08006338(18);
+        TaskSetFrame(18);
         TaskYieldTrampoline(2);
-        sub_08006338(20);
+        TaskSetFrame(20);
         TaskYieldTrampoline(2);
-        sub_08006338(14);
-        TaskYieldTrampoline(2);
-        gUnk_03002490->unk58 = 0xFFFF0000;
-        sub_08006338(16);
-        TaskYieldTrampoline(2);
-        sub_08006338(18);
+        TaskSetFrame(14);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk58 = 0xFFFF0000;
-        sub_08006338(24);
+        TaskSetFrame(16);
+        TaskYieldTrampoline(2);
+        TaskSetFrame(18);
+        TaskYieldTrampoline(2);
+        gUnk_03002490->unk58 = 0xFFFF0000;
+        TaskSetFrame(24);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C = 0xFFFF;
         TaskYieldTrampoline(10);
@@ -235,11 +235,11 @@ void sub_08080d58(void)
         q = (struct Actor **)((u8 *)p + 140);
         a = *(struct Actor **)((u8 *)q + k);
         if ((s16)gUnk_03004CA0[n] == -1 || a->unk05 == 2)
-            sub_08005654(gCurTaskIdx);
+            TaskFree(gCurTaskIdx);
     }
     else
     {
-        sub_08005654(gCurTaskIdx);
+        TaskFree(gCurTaskIdx);
     }
 }
 
@@ -291,7 +291,7 @@ void sub_08080ea4(void)
 {
     gUnk_03002490->unk15 = 0;
     sub_08063e14();
-    sub_080061c0(gUnk_087414F8[gUnk_03002490->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_087414F8[gUnk_03002490->unk74], 0x5A5A5A5A);
     sub_08081814();
 }
 
@@ -303,7 +303,7 @@ void sub_08080edc(void)
         if (abs(sub_08063cd0()) <= 47)
         {
             sub_0806395c(1);
-            sub_08006148(sub_08080e40, gCurTaskIdx);
+            TaskSetEntry(sub_08080e40, gCurTaskIdx);
         }
     }
 }
@@ -318,13 +318,13 @@ void sub_08080f34(void)
     a = gUnk_03002490;
     a->unk2C = 0;
     a->unk54 = 0;
-    sub_08006338(11);
+    TaskSetFrame(11);
     TaskYieldTrampoline(16);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(6);
     gUnk_03002490->unk7A = 0;
     sub_08063e14();
-    sub_080061c0(0x20000, 0x5A5A5A5A);
+    TaskSetMotionXFacing(0x20000, 0x5A5A5A5A);
     b = gUnk_03002490;
     b->unk58 = 0xFFFE0000;
     b->unk30 = 16;
@@ -351,10 +351,10 @@ void sub_08080fa4(void)
         return;
     if (gUnk_03002158[i] - 9 > t->unk4A)
     {
-        sub_080062c4();
+        TaskStop();
         gUnk_03002490->unk3C = 0xFFFF;
         sub_0806395c(2);
-        sub_08006148(sub_08080e40, gCurTaskIdx);
+        TaskSetEntry(sub_08080e40, gCurTaskIdx);
         return;
     }
     if (sub_08063cd0() < 0)
@@ -370,7 +370,7 @@ void sub_08080fa4(void)
     v = gUnk_03002490;
     if (abs(v->unk54) > 0x20000)
     {
-        sub_080061c0(0x20000, 0x5A5A5A5A);
+        TaskSetMotionXFacing(0x20000, 0x5A5A5A5A);
     }
     else
     {
@@ -381,9 +381,9 @@ void sub_08080fa4(void)
     }
     w = gUnk_03002490;
     if (abs(w->unk54) <= 0x5FFF)
-        sub_08006338(13);
+        TaskSetFrame(13);
     else
-        sub_08006338(*(s16 *)&w->unk30);
+        TaskSetFrame(*(s16 *)&w->unk30);
 }
 
 void sub_08081084(void)
@@ -394,11 +394,11 @@ void sub_08081084(void)
     gUnk_03002490->unk15 = 2;
     a = gUnk_03002490;
     a->unk2C++;
-    sub_080062c4();
+    TaskStop();
     b = gUnk_03002490;
     b->unk3C = 0xFFFF;
     b->unk30 = gUnk_08741500[b->unk74];
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080810c4(void)
@@ -415,7 +415,7 @@ void sub_080810c4(void)
     if (n == 0)
     {
         sub_0806395c(3);
-        sub_08006148(sub_08080e40, gCurTaskIdx);
+        TaskSetEntry(sub_08080e40, gCurTaskIdx);
     }
     else
     {
@@ -435,15 +435,15 @@ void sub_08081140(void)
     struct Task *c;
 
     gUnk_03002490->unk15 = 3;
-    sub_0800622c(0x20000, 0x1500, 0x30000);
-    sub_08006338(20);
+    TaskSetMotionY(0x20000, 0x1500, 0x30000);
+    TaskSetFrame(20);
     while ((s8)gUnk_03002490->unk7A == 0)
         TaskYieldTrampoline(1);
     if (gUnk_03002490->unk2C != 0)
         sub_080261d4(1);
     gUnk_03002490->unk7A = 0;
-    sub_08006338(13);
-    sub_0800622c(0xFFFE0000, 0x1500, 0x30000);
+    TaskSetFrame(13);
+    TaskSetMotionY(0xFFFE0000, 0x1500, 0x30000);
     while (gUnk_03002490->unk58 < 0)
         TaskYieldTrampoline(1);
     a = gUnk_03002490;
@@ -462,11 +462,11 @@ void sub_08081140(void)
             TaskYieldTrampoline(1);
         } while ((s8)gUnk_03002490->unk7A == 0);
     }
-    sub_080062c4();
+    TaskStop();
     c = gUnk_03002490;
     if (c->unk28++ == 0)
     {
-        sub_08006338(13);
+        TaskSetFrame(13);
         TaskYieldTrampoline(60);
         sub_0806395c(0);
     }
@@ -474,13 +474,13 @@ void sub_08081140(void)
     {
         sub_0806395c(5);
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0808124c(void)
 {
     if (gUnk_03002490->unk14 != 3)
-        sub_08006148(sub_08080e40, gCurTaskIdx);
+        TaskSetEntry(sub_08080e40, gCurTaskIdx);
 }
 
 void sub_08081274(void)
@@ -492,17 +492,17 @@ void sub_08081274(void)
         gUnk_03002490->unk43 = -1;
     else
         gUnk_03002490->unk43 = 1;
-    sub_08006338(11);
+    TaskSetFrame(11);
     TaskYieldTrampoline(16);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(6);
     gUnk_03002490->unk7A = 0;
-    sub_080061c0(0x6600, 0);
+    TaskSetMotionXFacing(0x6600, 0);
     t = gUnk_03002490;
     t->unk58 = 0;
     t->unk60 = 0xFFFFE700;
-    sub_08006338(13);
-    sub_08006138();
+    TaskSetFrame(13);
+    TaskSleepForever();
 }
 
 void sub_080812ec(void)
@@ -520,7 +520,7 @@ void sub_080812f0(void)
     a = gUnk_03002490;
     a->unk5C = 0;
     a->unk58 = 0x18000;
-    sub_08006338(16);
+    TaskSetFrame(16);
     b = gUnk_03002490;
     b->unk30 = 4;
     if ((s8)b->unk7A == 0)
@@ -531,15 +531,15 @@ void sub_080812f0(void)
             if (--c->unk30 == 0)
             {
                 if (++c->unk3C > 18)
-                    sub_08006338(16);
+                    TaskSetFrame(16);
                 gUnk_03002490->unk30 = 4;
             }
             TaskYieldTrampoline(1);
         } while ((s8)gUnk_03002490->unk7A == 0);
     }
-    sub_08006244();
-    sub_080061c0(0x5A5A5A5A, gUnk_08741504[gUnk_03002490->unk74]);
-    sub_08006338(16);
+    TaskStopY();
+    TaskSetMotionXFacing(0x5A5A5A5A, gUnk_08741504[gUnk_03002490->unk74]);
+    TaskSetFrame(16);
     while (1)
     {
         sub_0806cc90(1, 1, -2, 5);
@@ -557,10 +557,10 @@ void sub_080813a4(void)
         d = t->unk43;
         if ((d == 1 && t->unk54 <= 0) || (d == -1 && t->unk54 >= 0))
         {
-            sub_08006214();
+            TaskStopX();
             sub_080639e0(gUnk_08741B3C);
             sub_0806395c(0);
-            sub_08006148(sub_08080e40, gCurTaskIdx);
+            TaskSetEntry(sub_08080e40, gCurTaskIdx);
         }
     }
 }
@@ -594,7 +594,7 @@ void sub_0808148c(void)
 {
     gUnk_03002490->unk15 = 0;
     sub_08063e14();
-    sub_080061c0(0x8000, 0x5A5A5A5A);
+    TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     sub_08081814();
 }
 
@@ -608,7 +608,7 @@ void sub_080814b4(void)
     if (n == t->unk2C)
     {
         sub_0806395c(1);
-        sub_08006148(sub_08081440, gCurTaskIdx);
+        TaskSetEntry(sub_08081440, gCurTaskIdx);
     }
     else if (n == 217)
     {
@@ -621,14 +621,14 @@ void sub_08081508(void)
 {
     gUnk_03002490->unk15 = 1;
     gUnk_03002490->unk54 = 0;
-    sub_08006338(11);
+    TaskSetFrame(11);
     TaskYieldTrampoline(16);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(6);
     gUnk_03002490->unk7A = 0;
-    sub_0800622c(0xFFFE0000, 0x1000, 0x30000);
-    sub_08006338(13);
-    sub_08006138();
+    TaskSetMotionY(0xFFFE0000, 0x1000, 0x30000);
+    TaskSetFrame(13);
+    TaskSleepForever();
 }
 
 void sub_08081560(void)
@@ -638,7 +638,7 @@ void sub_08081560(void)
     if ((s8)t->unk7A == 0 && t->unk58 >= 0)
     {
         sub_0806395c(2);
-        sub_08006148(sub_08081440, gCurTaskIdx);
+        TaskSetEntry(sub_08081440, gCurTaskIdx);
     }
 }
 
@@ -653,7 +653,7 @@ void sub_0808159c(void)
     t->unk68 = 0x30000;
     while (1)
     {
-        sub_08006338(14);
+        TaskSetFrame(14);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(4);
@@ -664,9 +664,9 @@ void sub_080815dc(void)
 {
     if ((s8)gUnk_03002490->unk7A != 0)
     {
-        sub_08006244();
+        TaskStopY();
         sub_0806395c(0);
-        sub_08006148(sub_08081440, gCurTaskIdx);
+        TaskSetEntry(sub_08081440, gCurTaskIdx);
     }
 }
 
@@ -702,10 +702,10 @@ void sub_0808168c(void)
     t->unk28 = 6;
     t->unk2C = 0;
     t->unk30 = 6;
-    sub_080061c0(gUnk_0874151C[t->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_0874151C[t->unk74], 0x5A5A5A5A);
     while (1)
     {
-        sub_08006338(16);
+        TaskSetFrame(16);
         TaskYieldTrampoline(6);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(6);
@@ -806,15 +806,15 @@ void sub_08081814(void)
 {
     while (1)
     {
-        sub_08006338(4);
+        TaskSetFrame(4);
         TaskYieldTrampoline(4);
-        sub_08006338(8);
+        TaskSetFrame(8);
         TaskYieldTrampoline(6);
-        sub_08006338(10);
+        TaskSetFrame(10);
         TaskYieldTrampoline(10);
-        sub_08006338(9);
+        TaskSetFrame(9);
         TaskYieldTrampoline(6);
-        sub_08006338(4);
+        TaskSetFrame(4);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(6);
@@ -845,14 +845,14 @@ s32 sub_080818a8(void)
         if (t->unk14 == 1)
         {
             sub_0806395c(3);
-            sub_08006148(sub_08080e40, gCurTaskIdx);
+            TaskSetEntry(sub_08080e40, gCurTaskIdx);
             r = 1;
         }
         break;
     case 1:
         t->unk58 = 0;
         sub_0806395c(2);
-        sub_08006148(sub_08081440, gCurTaskIdx);
+        TaskSetEntry(sub_08081440, gCurTaskIdx);
         r = 1;
         break;
     case 2:
@@ -872,14 +872,14 @@ s32 sub_08081900(void)
         if (t->unk14 == 0 || t->unk14 == 4)
         {
             sub_0806395c(4);
-            sub_08006148(sub_08080e40, gCurTaskIdx);
+            TaskSetEntry(sub_08080e40, gCurTaskIdx);
             r = 1;
         }
         break;
     case 1:
         t->unk30++;
         sub_0806395c(2);
-        sub_08006148(sub_08081440, gCurTaskIdx);
+        TaskSetEntry(sub_08081440, gCurTaskIdx);
         r = 1;
         break;
     case 2:
@@ -975,16 +975,16 @@ void sub_08081aac(void)
     while (1)
     {
         gUnk_03002490->unk34 = -1;
-        sub_080062c4();
-        sub_08006338(7);
+        TaskStop();
+        TaskSetFrame(7);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk7A = 0;
-        sub_080061c0(gUnk_087415AC[gUnk_03002490->unk74], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gUnk_087415AC[gUnk_03002490->unk74], 0x5A5A5A5A);
         t = gUnk_03002490;
         t->unk58 = 0xFFFF3300;
         t->unk34 = 0;
         t->unk24 = 6;
-        sub_08006338(5);
+        TaskSetFrame(5);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk3C--;
         TaskYieldTrampoline(12);
@@ -1021,20 +1021,20 @@ void sub_08081b5c(void)
         }
     }
     if (gUnk_03002490->unk14 != 0)
-        sub_08006148(sub_08081a58, gCurTaskIdx);
+        TaskSetEntry(sub_08081a58, gCurTaskIdx);
 }
 
 void sub_08081bc4(void)
 {
     gUnk_03002490->unk15 = 1;
-    sub_08006244();
+    TaskStopY();
     TaskYieldTrampoline(6);
-    sub_080061c0(gUnk_087415AC[gUnk_03002490->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_087415AC[gUnk_03002490->unk74], 0x5A5A5A5A);
     while (1)
     {
-        sub_08006338(7);
+        TaskSetFrame(7);
         TaskYieldTrampoline(6);
-        sub_08006338(5);
+        TaskSetFrame(5);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk3C--;
         TaskYieldTrampoline(12);
@@ -1050,15 +1050,15 @@ void sub_08081c3c(void)
     if (gUnk_03002490->unk7A != 0 && (u8)sub_08081e64() == 0)
     {
         sub_0806395c(0);
-        sub_08006148(sub_08081a58, gCurTaskIdx);
+        TaskSetEntry(sub_08081a58, gCurTaskIdx);
     }
 }
 
 void sub_08081c78(void)
 {
     gUnk_03002490->unk15 = 2;
-    sub_0800622c(0xFFFE0000, 0x1500, 0x30000);
-    sub_08006338(6);
+    TaskSetMotionY(0xFFFE0000, 0x1500, 0x30000);
+    TaskSetFrame(6);
     TaskYieldTrampoline(3);
     gUnk_03002490->unk3C--;
     TaskYieldTrampoline(4);
@@ -1067,7 +1067,7 @@ void sub_08081c78(void)
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(4);
     gUnk_03002490->unk3C++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08081ce0(void)
@@ -1082,7 +1082,7 @@ void sub_08081ce0(void)
     {
         u->unk30 = 0;
         sub_0806395c(0);
-        sub_08006148(sub_08081a58, gCurTaskIdx);
+        TaskSetEntry(sub_08081a58, gCurTaskIdx);
     }
 }
 
@@ -1120,14 +1120,14 @@ void sub_08081db4(void)
     gUnk_03002490->unk24 = 0;
     while (1)
     {
-        sub_080062c4();
-        sub_08006338(7);
+        TaskStop();
+        TaskSetFrame(7);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk7A = 0;
         t = gUnk_03002490;
         t->unk58 = 0xFFFF3300;
         t->unk24 = 6;
-        sub_08006338(5);
+        TaskSetFrame(5);
         TaskYieldTrampoline(4);
         gUnk_03002490->unk3C--;
         TaskYieldTrampoline(12);

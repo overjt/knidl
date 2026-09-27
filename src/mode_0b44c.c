@@ -73,7 +73,7 @@ extern vu16 gUnk_03005274;
 
 void sub_08001fd0(void);
 void sub_08002028(void);
-void sub_080022ac(void);
+void ResetTasksAndOam(void);
 void sub_080022bc(void);
 void sub_08008c64(u16 a0);
 void sub_08008c7c(void);
@@ -94,7 +94,7 @@ void sub_08066144(void);
 void sub_0800b44c(void)
 {
     gUnk_03000B24 = 1;
-    sub_080022ac();
+    ResetTasksAndOam();
     gUnk_03002360 = 0;
     gUnk_03001F38 = 0;
     gUnk_0300243C = 1;
@@ -109,7 +109,7 @@ void sub_0800b4a8(void)
 {
     s32 i;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     for (i = 0; i <= 3; i++) {
         gUnk_02006020[i] = 0;
         sub_0803d0a0(i);
@@ -132,7 +132,7 @@ void sub_0800b514(void)
 {
     s32 i;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     for (i = 0; i <= 3; i++) {
         gUnk_02007D48[i] = 3;
         gUnk_02005588[i] = 0;
@@ -170,7 +170,7 @@ void sub_0800b628(void)
 {
     s32 i;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     sub_08022f9c();
     for (i = 0; i <= 3; i++)
         sub_0803d0a0(i);
@@ -252,7 +252,7 @@ void sub_0800b788(void)
     gUnk_03001ED8 |= 0x80;
     sub_08002028();
     sub_08001fd0();
-    sub_080022ac();
+    ResetTasksAndOam();
     gUnk_0300117C = gUnk_03001EE0 = gUnk_03000F8C = gUnk_03000B78 = 0;
     gUnk_03000010 = gUnk_03000FC0 = gUnk_03001E94 = gUnk_03000FA8 = 0;
     sub_08008c64(0);

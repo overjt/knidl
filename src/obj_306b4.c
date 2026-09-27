@@ -30,7 +30,7 @@ extern struct Unk020061F0 gUnk_020061F0[];
 extern u32 gUnk_030004A0;
 extern u8 gUnk_02000024;
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 void sub_080318b4(void);
 void sub_08031de4(void);
 void sub_08032428(void);
@@ -43,7 +43,7 @@ s32 sub_080306b4(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y)
     sx = x - gUnk_03002348;
     sy = y - gUnk_030023E4;
     if ((u16)(sx + 63) <= 366 && sy > -64 && sy <= 223)
-        return sub_08001a94(a, b, c, d, sx, sy);
+        return QueueSprite(a, b, c, d, sx, sy);
 }
 
 void sub_08030724(void)

@@ -16,7 +16,7 @@
  * then jumps to state unk28.  States 0-2 are the three releases
  * (animations 0xF7C/0xF76/0xF84, sound 236, then 0xF80), which end in
  * state 5: clear PlayerState.unk42 bit 9, sub_0803e1b8(255, 0, player)
- * and end the action (sub_08006138, which falls into state 0,
+ * and end the action (TaskSleepForever, which falls into state 0,
  * lesson 3.403).  Its handler sub_0804ca84 re-binds state 5 from states
  * 0-2 once PlayerState.unk16 >= 0 and unk08 == 0, re-reads the direction
  * every frame in state 4 and cycles the charge animation through
@@ -27,9 +27,9 @@ extern u16 gUnk_03002458[];             /* held keys, latched per player (M11) *
 extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per player */
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
-void sub_08006338(s32 a);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
+void TaskSetFrame(s32 a);
 void sub_0803e050(s32 a0);
 void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
 s32 sub_0803e34c(s32 a0, u16 a1);
@@ -72,7 +72,7 @@ void sub_0804c64c(void)
                     sub_0803e050(2);
             }
             gUnk_03002490->unk88->unk16 = 0;
-            sub_08006338(0xF73);
+            TaskSetFrame(0xF73);
             TaskYieldTrampoline(1);
             gUnk_03002490->unk88->unk16 = 1;
             gUnk_03002490->unk3C++;
@@ -117,13 +117,13 @@ void sub_0804c64c(void)
             do {
                 sub_0803e1b8(255, 0, gUnk_03002490->unk88->unk00);
             } while (0);
-            sub_08006138();
+            TaskSleepForever();
             /* fallthrough */
         case 0:
             sub_0803e650(9);
             sub_0805afac(gUnk_03002490->unk88->unk00, 47, 1);
             gUnk_03002490->unk88->unk16 = 8;
-            sub_08006338(0xF7C);
+            TaskSetFrame(0xF7C);
             TaskYieldTrampoline(1);
             gUnk_03002490->unk88->unk16 = 9;
             gUnk_03002490->unk3C++;
@@ -135,7 +135,7 @@ void sub_0804c64c(void)
             gUnk_03002490->unk88->unk16 = 253;
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
-            sub_08006338(0xF80);
+            TaskSetFrame(0xF80);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
@@ -145,7 +145,7 @@ void sub_0804c64c(void)
             sub_0803e650(10);
             sub_0805afac(gUnk_03002490->unk88->unk00, 47, 1);
             gUnk_03002490->unk88->unk16 = 3;
-            sub_08006338(0xF76);
+            TaskSetFrame(0xF76);
             TaskYieldTrampoline(1);
             gUnk_03002490->unk88->unk16 = 4;
             gUnk_03002490->unk3C++;
@@ -157,7 +157,7 @@ void sub_0804c64c(void)
             gUnk_03002490->unk88->unk16 = 252;
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
-            sub_08006338(0xF80);
+            TaskSetFrame(0xF80);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
@@ -167,7 +167,7 @@ void sub_0804c64c(void)
             sub_0803e650(11);
             sub_0805afac(gUnk_03002490->unk88->unk00, 47, 1);
             gUnk_03002490->unk88->unk16 = 13;
-            sub_08006338(0xF84);
+            TaskSetFrame(0xF84);
             TaskYieldTrampoline(1);
             gUnk_03002490->unk88->unk16 = 14;
             gUnk_03002490->unk3C++;
@@ -179,7 +179,7 @@ void sub_0804c64c(void)
             gUnk_03002490->unk88->unk16 = 251;
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(7);
-            sub_08006338(0xF80);
+            TaskSetFrame(0xF80);
             TaskYieldTrampoline(2);
             gUnk_03002490->unk3C++;
             TaskYieldTrampoline(2);
@@ -214,26 +214,26 @@ void sub_0804ca84(void)
             case 1:
                 if (v->unk28 == 0) {
                     v->unk88->unk16 = 6;
-                    sub_08006338(0xF7A);
+                    TaskSetFrame(0xF7A);
                 } else if (v->unk28 == 2) {
                     v->unk88->unk16 = 11;
-                    sub_08006338(0xF82);
+                    TaskSetFrame(0xF82);
                 } else {
                     v->unk88->unk16 = 1;
-                    sub_08006338(0xF74);
+                    TaskSetFrame(0xF74);
                 }
                 break;
             case 2:
             case 3:
                 if (v->unk28 == 0) {
                     v->unk88->unk16 = 7;
-                    sub_08006338(0xF7B);
+                    TaskSetFrame(0xF7B);
                 } else if (v->unk28 == 2) {
                     v->unk88->unk16 = 12;
-                    sub_08006338(0xF83);
+                    TaskSetFrame(0xF83);
                 } else {
                     v->unk88->unk16 = 2;
-                    sub_08006338(0xF75);
+                    TaskSetFrame(0xF75);
                 }
                 break;
             }
@@ -255,7 +255,7 @@ void sub_0804ca84(void)
                 t->unk73 = 5;
             } while (0);
         } while (0);
-        sub_08006148(sub_0804c64c, gCurTaskIdx);
+        TaskSetEntry(sub_0804c64c, gCurTaskIdx);
         break;
     case 5:
         sub_0804042c();

@@ -39,9 +39,9 @@ void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void sub_080059d8(void);
-void sub_08005ca0(void);
-void sub_08006138(void);                                     /* end the running task */
+void TaskMove(void);
+void TaskDrawScreen(void);
+void TaskSleepForever(void);                                     /* end the running task */
 void DrawScoreToBgMap(s32 v, s32 x, s32 y);
 void sub_080cb610(void);
 
@@ -49,21 +49,21 @@ void sub_080cb610(void);
    Task.unk18. */
 void Task_GameOverSprite(void)
 {
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk42 = 9;
     gUnk_03002490->unk38 = gUnk_087556E0;
     gUnk_03002490->unk3C = gUnk_03002490->unk18;
     gUnk_03002490->unk4C = gUnk_08758274[gUnk_03002490->unk18] << 16;
     gUnk_03002490->unk50 = gUnk_08758284[gUnk_03002490->unk18] << 16;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 /* Task type #261 (class 4): the cursor; its frame follows gGameOverCursor. */
 void Task_GameOverCursor(void)
 {
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk42 = 8;
     gUnk_03002490->unk38 = gUnk_087556E0;
     if (gUnk_03001F30 == 0) {
@@ -136,11 +136,11 @@ void Task_HalveScore(void)
 /* Task type #264 (class 4): six variants, gGameOverObjectVariants[Task.unk73]. */
 void Task_GameOverObject(void)
 {
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk40 = 0x4800;
     sub_08002e98(gUnk_03002490->unk73, 6, gGameOverObjectVariants);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 /* Task type #264 variant 0: sub-states gUnk_087582AC[Task.unk14], per-frame
@@ -155,7 +155,7 @@ void sub_080cb5c4(void)
     gUnk_03002490->unk43 = 1;
     gUnk_03002490->unk14 = 0;
     sub_08002e98(gUnk_03002490->unk14, 3, gUnk_087582AC);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 /* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.unk15]. */
@@ -164,7 +164,7 @@ void sub_080cb610(void)
     sub_08002e98(gUnk_03002490->unk15, 3, gUnk_087582B8);
 }
 
-/* Re-enter task type #264 variant 0 (sub_08006148 installs this as its
+/* Re-enter task type #264 variant 0 (TaskSetEntry installs this as its
    body): Task.unk24 = 1, then sub-state gUnk_087582AC[Task.unk14]. */
 void sub_080cb62c(void)
 {

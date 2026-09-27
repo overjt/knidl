@@ -40,7 +40,7 @@ extern u16 gUnk_030004F0[][6];   /* 12-byte sprite records */
 extern u16 gUnk_03000050[];      /* OAM shadow (128 entries * 4 halfwords) */
 extern vu16 gUnk_03001EC8;       /* number of OAM entries used */
 
-void sub_08001b08(void)
+void BuildOam(void)
 {
     u16 *dst;
     s32 i;

@@ -23,7 +23,7 @@ extern u16 gUnk_03005624;
 extern u16 gUnk_030055C0;
 
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
-void sub_08006138(void);
+void TaskSleepForever(void);
 void sub_0800a6a4(void);
 void sub_0800a778(void);
 void sub_0800a854(void);
@@ -90,7 +90,7 @@ void sub_08023634(void)
         gUnk_03002490->unk08 = (u32)sub_080238a4;
         break;
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080236d4(void)

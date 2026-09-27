@@ -166,12 +166,12 @@ extern u32 gUnk_0875603C[];
 extern s16 gUnk_080CFF70[];
 extern u16 *gUnk_08755F54[];
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
 u32 sub_08002ec0(void);                                      /* LCG step */
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void sub_080055b0(u8 val, s32 idx);
-void sub_08005ca0(void);
-void sub_08006138(void);                                     /* end the running task */
+void TaskSetSkipMask(u8 val, s32 idx);
+void TaskDrawScreen(void);
+void TaskSleepForever(void);                                     /* end the running task */
 u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
 void sub_080c4790(void);
 void sub_080c4a20(s32 i);
@@ -182,7 +182,7 @@ void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
     u32 *tbl = gUnk_08755FA8;
     u32 c = 0x6000;
 
-    sub_08001a94(9, tbl[idx], c, attr, x, y);
+    QueueSprite(9, tbl[idx], c, attr, x, y);
 }
 
 void sub_080c4664(s32 i)
@@ -217,7 +217,7 @@ void sub_080c46ec(void)
     s32 x;
     s32 *p;
 
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk3E &= 0x7FFF;
     gUnk_03002490->unk42 = 3;
     gUnk_03002490->unk3E = 0;
@@ -233,8 +233,8 @@ void sub_080c46ec(void)
     }
     *last = gAirGrindCoursePtr->unk000;
     gUnk_03002490->unk04 = (u32)sub_080c4790;
-    sub_080055b0(1, gCurTaskIdx);
-    sub_08006138();
+    TaskSetSkipMask(1, gCurTaskIdx);
+    TaskSleepForever();
 }
 
 void sub_080c4790(void)
@@ -356,12 +356,12 @@ void sub_080c4a48(s32 pal)
 
 void sub_080c4a5c(s32 digit, s32 x, s32 y)
 {
-    sub_08001a94(2, gUnk_08755FEC[digit], 0x2000, gAirGrindPtr->unk018, x, y);
+    QueueSprite(2, gUnk_08755FEC[digit], 0x2000, gAirGrindPtr->unk018, x, y);
 }
 
 void sub_080c4a94(s32 idx, s32 x, s32 y)
 {
-    sub_08001a94(2, gUnk_0875603C[idx], 0x2000, 0, x, y);
+    QueueSprite(2, gUnk_0875603C[idx], 0x2000, 0, x, y);
 }
 
 void sub_080c4ac4(s32 t, s32 x, s32 y)
@@ -428,7 +428,7 @@ void sub_080c4bec(s32 a, s32 b, s32 x, s32 y)
 
 void sub_080c4c30(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer)
 {
-    sub_08001a94(layer, sub_080c4f60(gUnk_08755F54[idx], scale), 0x2000, (pal << 12) & 0xF000, x, y);
+    QueueSprite(layer, sub_080c4f60(gUnk_08755F54[idx], scale), 0x2000, (pal << 12) & 0xF000, x, y);
 }
 
 void sub_080c4c78(void)

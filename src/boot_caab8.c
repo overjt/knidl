@@ -15,7 +15,7 @@
  * bit 8 switches to script `arg`, bits 9/10 set and run a loop of `arg`
  * passes, bit 11 restarts the script, bit 12 returns to the saved cursor
  * and bit 13 switches the object off.  The object then moves in 24.8 fixed
- * point and is drawn (sub_08001a94, sprite gUnk_087554B8[unk06], layer
+ * point and is drawn (QueueSprite, sprite gUnk_087554B8[unk06], layer
  * unk08), or switched off once it leaves the screen.
  *
  * Matching notes (#100's final campaign, lesson 3.494): the locals are
@@ -52,7 +52,7 @@ extern struct M38LogoObj gUnk_02030000[];
 extern s16 *gUnk_0201BFD0[];
 extern s16 *gUnk_087577D8[];
 extern u32 gUnk_087554B8[];
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 s32 sub_080031b8(s32 id);
 
 /* Run the 115 boot-logo objects one frame: interpret each active object's
@@ -146,7 +146,7 @@ void BootLogoUpdateObjects(void)
         y = obj->unk10 >> 8;
         if (obj->unk06 != -1) {
             if ((u32)(x + 15) <= 286 && y > -32 && y <= 191)
-                sub_08001a94(obj->unk08, gUnk_087554B8[obj->unk06], 0, 0, x, y);
+                QueueSprite(obj->unk08, gUnk_087554B8[obj->unk06], 0, 0, x, y);
             else {
                 s32 m;
 

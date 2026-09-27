@@ -25,8 +25,8 @@ extern u32 gUnk_0873C28C[];
 
 /* task / sprite services (landed prototypes) */
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
-void sub_0800634c(s32 a);
-void sub_08006364(s32 a);
+void TaskSetFrameNoFlip(s32 a);
+void TaskSetFrameFlip(s32 a);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0803e1b8(s32 a0, s32 a1, s32 a2);
 s32 sub_0803fce4(s32 a);
@@ -61,9 +61,9 @@ void sub_0804e640(void)
         if (t->unk24 == 0)
         {
             if (t->unk6E == 1)
-                sub_0800634c((s16)gUnk_0873DB0A[t->unk46]);
+                TaskSetFrameNoFlip((s16)gUnk_0873DB0A[t->unk46]);
             else
-                sub_08006364(gUnk_0873DB0A[t->unk46]);
+                TaskSetFrameFlip(gUnk_0873DB0A[t->unk46]);
         }
         if (gUnk_03002490->unk46 == 9)
             gUnk_03002490->unk6E = gUnk_03002490->unk43;

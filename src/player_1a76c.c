@@ -22,14 +22,14 @@ extern struct Collider gUnk_030054B0[];
 extern u8 gUnk_030054F4;
 extern u32 gUnk_0874CFEC[];
 
-void sub_080059d8(void);
+void TaskMove(void);
 void sub_0803ddc0(void);
 
 void sub_0801a76c(s32 i)
 {
     struct Task *t = gUnk_03002490;
 
-    t->unk00 = (u32)sub_080059d8;
+    t->unk00 = (u32)TaskMove;
     t->unk0C = (u32)sub_0803ddc0;
     t->unk42 = 7;
     gUnk_03002490->unk38 = gUnk_0874CFEC;

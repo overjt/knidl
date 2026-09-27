@@ -50,9 +50,9 @@ extern s16 gUnk_0873D5CA[][2];
 extern u8 gUnk_0873BE9C[];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
-void sub_08006338(s32 a);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
+void TaskSetFrame(s32 a);
 u32 sub_0801a828(u8 idx, s16 x, s16 y, u8 *p);
 void sub_080359f8(void);
 void sub_0803e050(s32 a0);
@@ -106,7 +106,7 @@ void sub_08036280(void)
         else if (gUnk_03002490->unk7B & 1)
         {
             gUnk_03002490->unk73 = 4;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
         else
@@ -129,7 +129,7 @@ void sub_08036280(void)
         if (gUnk_030023C0[gUnk_03002490->unk88->unk00] & 2)
         {
             gUnk_03002490->unk73 = 4;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
         break;
@@ -146,20 +146,20 @@ void sub_08036280(void)
         if (t->unk7A & 1)
         {
             t->unk73 = 3;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             sub_0803e050(2);
             break;
         }
         if (gUnk_03002458[t->unk88->unk00] & 65)
         {
             t->unk73 = 1;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
         if (gUnk_030023C0[t->unk88->unk00] & 2)
         {
             t->unk73 = 4;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
         if (!(t->unk7B & 1))
@@ -167,7 +167,7 @@ void sub_08036280(void)
         sub_0803e050(2);
         gUnk_03002490->unk28 = -1;
         gUnk_03002490->unk73 = 5;
-        sub_08006148(sub_080359f8, gCurTaskIdx);
+        TaskSetEntry(sub_080359f8, gCurTaskIdx);
         break;
     case 3:
         if (sub_08040298() != 0)
@@ -182,19 +182,19 @@ void sub_08036280(void)
         if (!(u->unk7A & 1))
         {
             u->unk73 = 2;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
         if (gUnk_03002458[u->unk88->unk00] & 65)
         {
             u->unk73 = 1;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
         if (gUnk_030023C0[u->unk88->unk00] & 2)
         {
             u->unk73 = 4;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
             break;
         }
         break;
@@ -230,13 +230,13 @@ void sub_08036280(void)
         {
             sub_0803e050(2);
             gUnk_03002490->unk73 = 1;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
         }
         else if (gUnk_030023C0[gUnk_03002490->unk88->unk00] & 2)
         {
             sub_0803e050(2);
             gUnk_03002490->unk73 = 4;
-            sub_08006148(sub_080359f8, gCurTaskIdx);
+            TaskSetEntry(sub_080359f8, gCurTaskIdx);
         }
         break;
     case 6:
@@ -288,7 +288,7 @@ void sub_080366c4(void)
     case 19:
         while (1)
         {
-            sub_08006338(gUnk_03002490->unk46);
+            TaskSetFrame(gUnk_03002490->unk46);
             TaskYieldTrampoline(2);
             for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 2; gUnk_03002490->unk6C++)
             {
@@ -299,7 +299,7 @@ void sub_080366c4(void)
     case 15:
         while (1)
         {
-            sub_08006338(gUnk_03002490->unk46);
+            TaskSetFrame(gUnk_03002490->unk46);
             TaskYieldTrampoline(6);
             for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 2; gUnk_03002490->unk6C++)
             {
@@ -309,8 +309,8 @@ void sub_080366c4(void)
         }
     case 0:
     default:
-        sub_08006338(gUnk_03002490->unk46);
-        sub_08006138();
+        TaskSetFrame(gUnk_03002490->unk46);
+        TaskSleepForever();
     }
 }
 
@@ -352,9 +352,9 @@ void sub_08036888(void)
             if (w->unk88->unk4B != w->unk2C || dir != w->unk43)
             {
                 if (gUnk_03001F30 == 0)
-                    sub_08006148(sub_080366c4, gCurTaskIdx);
+                    TaskSetEntry(sub_080366c4, gCurTaskIdx);
                 else
-                    sub_08006148(sub_08041e8c, gCurTaskIdx);
+                    TaskSetEntry(sub_08041e8c, gCurTaskIdx);
             }
         }
         break;
@@ -390,14 +390,14 @@ void sub_080369b0(void)
         {
         case 0:
         default:
-            sub_08006338(gUnk_03002490->unk46);
-            sub_08006138();
+            TaskSetFrame(gUnk_03002490->unk46);
+            TaskSleepForever();
         case 1:
         case 2:
         case 5:
             while (1)
             {
-                sub_08006338(gUnk_03002490->unk46);
+                TaskSetFrame(gUnk_03002490->unk46);
                 TaskYieldTrampoline(2);
                 for (gUnk_03002490->unk6C = 0; (s16)gUnk_03002490->unk6C <= 2; gUnk_03002490->unk6C++)
                 {
@@ -414,19 +414,19 @@ void sub_080369b0(void)
         case 23:
             while (1)
             {
-                sub_08006338(gUnk_03002490->unk46);
+                TaskSetFrame(gUnk_03002490->unk46);
                 TaskYieldTrampoline(2);
                 gUnk_03002490->unk3C++;
                 TaskYieldTrampoline(2);
             }
         }
     case 1:
-        sub_08006338(gUnk_0873D5CA[gUnk_03002490->unk88->unk0D][1]);
+        TaskSetFrame(gUnk_0873D5CA[gUnk_03002490->unk88->unk0D][1]);
         break;
     }
     gUnk_03002490->unk88->unk6C = 0;
     gUnk_03002490->unk28++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08036b9c(void)
@@ -460,7 +460,7 @@ void sub_08036b9c(void)
             if (abs(t->unk54) <= 0x7FFF)
             {
                 t->unk73 = 1;
-                sub_08006148(sub_080369b0, gCurTaskIdx);
+                TaskSetEntry(sub_080369b0, gCurTaskIdx);
             }
             if (abs(gUnk_03002490->unk54) > 0xE000)
                 sub_0801a828(gCurTaskIdx, gUnk_03002490->unk48, gUnk_03002490->unk4A, gUnk_0873BE9C);

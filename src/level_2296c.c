@@ -170,11 +170,11 @@ extern u16 gUnk_03005690[2];
 extern u16 gUnk_02004B80;
 extern u8 gUnk_02007E8C;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-void sub_080022ac(void);
-void sub_080055b0(u8 val, s32 idx);
-void sub_080055c4(u16 val, s32 idx);
-s32 sub_080058e4(u32 type, s32 idx);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+void ResetTasksAndOam(void);
+void TaskSetSkipMask(u8 val, s32 idx);
+void TaskSetOthersSkipMask(u16 val, s32 idx);
+s32 TaskCreateFrom(u32 type, s32 idx);
 void sub_08008c64(u16 a0);
 void sub_08009ab8(void);
 void sub_08009b2c(s32 i);
@@ -438,7 +438,7 @@ void sub_08022fa8(void)
     s32 i;
     u32 a;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     gUnk_03002444 = 0;
     if (gUnk_0300238C == 8)
     {
@@ -476,15 +476,15 @@ void sub_08022fa8(void)
     gUnk_03005660 = gUnk_02000040;
     if (gUnk_030055EC->unk05 != 0)
     {
-        sub_080017e4(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
-        sub_080017e4(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk08, (u32)gUnk_02000040, 0);
+        RequestCopy(8, (u32)gUnk_030055EC->unk0C, (u32)gUnk_02008160, 0);
     }
     else
     {
         CpuSet(gUnk_030055EC->unk08, gUnk_02000040, (gUnk_030055E4 * 2) & 0x1FFFFF);
         CpuSet(gUnk_030055EC->unk0C, gUnk_02008160, gUnk_030055E4 & 0x1FFFFF);
     }
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_02000020 = 0;
     gUnk_0200B078 = 0;
     gUnk_0200B040 = 0;
@@ -587,8 +587,8 @@ void sub_080233e0(void)
 {
     u32 a;
 
-    sub_080055b0(0, gUnk_02007E8C);
-    sub_080055c4(15, gUnk_02007E8C);
+    TaskSetSkipMask(0, gUnk_02007E8C);
+    TaskSetOthersSkipMask(15, gUnk_02007E8C);
     sub_08077d38(gUnk_02007E8C);
     gUnk_03002444 = 0;
     gUnk_030023B8 = gUnk_0300238C;
@@ -614,7 +614,7 @@ void sub_080233e0(void)
     gUnk_020055D8.unk2 = gUnk_030055EC->unk3E;
     gUnk_020055D8.unk4 = gUnk_030055EC->unk48;
     gUnk_03005660 = gUnk_02000040;
-    sub_080017e4(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk20, (u32)gUnk_0200B080, 0);
     gUnk_03005624 = 0;
     sub_08030724();
     sub_0802cd24();
@@ -663,7 +663,7 @@ void sub_080233e0(void)
 
 void sub_080235ec(s32 a)
 {
-    s32 id = sub_080058e4(3, 63);
+    s32 id = TaskCreateFrom(3, 63);
     struct Task *t;
 
     if (id != -1)

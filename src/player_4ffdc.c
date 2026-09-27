@@ -30,8 +30,8 @@ extern u16 gUnk_030023C0[];             /* newly-pressed keys, latched per playe
 extern u16 gUnk_0873B724[][4];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
 s32 sub_08009ee8(s32 a, s32 b);
 void sub_08032d48(void);
 void sub_0803332c(void);
@@ -189,7 +189,7 @@ void sub_0804ffdc(void)
         t->unk70++;
         t->unk88->unk64 = (u32)gUnk_0873BD00;
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080502f0(void)
@@ -201,7 +201,7 @@ void sub_080502f0(void)
         t->unk73 = 1;
         gUnk_03002490->unk04 = (u32)sub_08032d48;
         gUnk_03002490->unk08 = (u32)sub_0803332c;
-        sub_08006148(sub_0804fee8, gCurTaskIdx);
+        TaskSetEntry(sub_0804fee8, gCurTaskIdx);
         gUnk_03001F34 = 0;
     }
 }
@@ -212,7 +212,7 @@ void sub_08050340(void)
 
     t->unk46 = 0;
     t->unk28 = 0;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0805035c(void)
@@ -269,7 +269,7 @@ void sub_08050418(void)
         TaskYieldTrampoline(1);
     }
     gUnk_03002490->unk70++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080504d4(void)
@@ -279,7 +279,7 @@ void sub_080504d4(void)
     if ((s16)t->unk70 != 0)
     {
         t->unk73 = 1;
-        sub_08006148(sub_0804fe68, gCurTaskIdx);
+        TaskSetEntry(sub_0804fe68, gCurTaskIdx);
     }
 }
 
@@ -319,7 +319,7 @@ void sub_08050508(void)
     sub_0803e050(1);
     sub_0803e1b8(1, 96, gUnk_03002490->unk88->unk00);
     gUnk_03002490->unk70++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08050630(void)
@@ -329,7 +329,7 @@ void sub_08050630(void)
     if ((s16)t->unk70 != 0)
     {
         t->unk73 = 1;
-        sub_08006148(sub_0804fee8, gCurTaskIdx);
+        TaskSetEntry(sub_0804fee8, gCurTaskIdx);
     }
 }
 
@@ -341,7 +341,7 @@ s32 sub_08050664(void)
         return 0;
     gUnk_03002490->unk88->unk14 = 0;
     gUnk_03002490->unk73 = 2;
-    sub_08006148(sub_0804fee8, gCurTaskIdx);
+    TaskSetEntry(sub_0804fee8, gCurTaskIdx);
     return 1;
 }
 

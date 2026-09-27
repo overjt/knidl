@@ -60,20 +60,20 @@ extern u8 gUnk_087954C0[];
 extern u8 gUnk_087C0A4C[];
 extern u8 gUnk_087E1D58[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_0800214c(void);
 void sub_080021dc(void);
-void sub_080022ac(void);
-void sub_080022d0(void);
-void sub_080022e4(void);
+void ResetTasksAndOam(void);
+void RunFrameNoTasks(void);
+void RunFrame(void);
 void sub_080022fc(void);
 void sub_08002338(void);
 void sub_08002358(void);
 void sub_08002378(void);
-void sub_08002d18(void);
-void sub_08002d54(s32 count);
-void sub_08002d74(s32 count);
-void sub_08002d94(s32 count);
+void RunLinkFrame(void);
+void RunFrames(s32 count);
+void RunFramesNoTasks(s32 count);
+void RunLinkFrames(s32 count);
 void sub_08002db4(void);
 void sub_08002de0(void);
 void sub_08002e0c(void);
@@ -106,15 +106,15 @@ s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
 
     sub_08004390(src, dst, size);
     do {
-        sub_080022e4();
+        RunFrame();
         sub_08006914((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
         if (sub_080072e0() != 0)
             goto fail;
     } while (sub_08004400() == 0);
-    sub_08002d54(2);
+    RunFrames(2);
     sub_080044b8();
     while (sub_08004714() == 0)
-        sub_080022e4();
+        RunFrame();
     if (sub_080071dc() != 0)
         goto fail;
     gUnk_03004D90[0] = 0x5503;
@@ -133,7 +133,7 @@ s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
         }
         if (n == gUnk_0300243C)
             goto done;
-        sub_080022e4();
+        RunFrame();
         sub_08006914((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
     } while (sub_080072e0() == 0);
 fail:
@@ -158,7 +158,7 @@ s32 sub_08007c5c(void)
         gUnk_03004D90[1] = gUnk_02006090;
     }
     do {
-        sub_080022e4();
+        RunFrame();
         sub_08006914((u8 *)gUnk_03004D88, gUnk_03004D90, gUnk_03004D50[0]);
         if (sub_080072e0() != 0)
             return 1;
@@ -184,7 +184,7 @@ s32 sub_08007c5c(void)
     gUnk_03001ED8 &= 0xFEFF;
     gUnk_0300117C = ret;
     sub_080022fc();
-    sub_08002d94(64);
+    RunLinkFrames(64);
     return 0;
 }
 
@@ -199,7 +199,7 @@ void sub_08007d4c(void)
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x800;
     sub_0800214c();
-    sub_08002d74(32);
+    RunFramesNoTasks(32);
     gUnk_03000048 = 0;
     while (1) {
         if (gUnk_03000038 & 9) {
@@ -210,7 +210,7 @@ void sub_08007d4c(void)
             sub_080031b8(215);
             break;
         }
-        sub_080022d0();
+        RunFrameNoTasks();
     }
     sub_080021dc();
     sub_08002de0();
@@ -276,7 +276,7 @@ void sub_08007f9c(void)
     s32 n;
     u8 k;
 
-    sub_080022ac();
+    ResetTasksAndOam();
     sub_08008c4c(4);
     sub_08008e1c(gUnk_02006090);
     sub_08008c64(63);
@@ -286,7 +286,7 @@ void sub_08007f9c(void)
     gUnk_03001ED8 |= 0x1800;
     if (gUnk_02006090 == 6 || gUnk_02006090 == 7) {
         sub_08008c64(4);
-        sub_080017e4(6, 0, 0x06001000, 0x800);
+        RequestCopy(6, 0, 0x06001000, 0x800);
         /* Two complete copies: jump2 cross-jumps the identical tails, which
            is what leaves the ROM's `ldr r0, =F18; b join` arm.  A pointer
            local (if/else or ?:) is folded into "p = b; if (c) p = a". */
@@ -316,13 +316,13 @@ void sub_08007f9c(void)
         gUnk_03005280 = 0;
         sub_0800214c();
         while (gUnk_03001E90 != 0) {
-            sub_080022e4();
+            RunFrame();
             sub_08004000(gUnk_02000004);
         }
         gUnk_03000048 = 0;
         sub_08003a98();
         do {
-            sub_080022e4();
+            RunFrame();
             sub_08004000(gUnk_02000004);
         } while (gUnk_0200EBC0[2] != 3 && gUnk_0200EBC0[44] == 0);
         if (gUnk_0200EBC0[3] != 0) {
@@ -352,12 +352,12 @@ void sub_08007f9c(void)
         gUnk_03005280 = 3;
         sub_0800214c();
         sub_08002e0c();
-        sub_08002d94(16);
+        RunLinkFrames(16);
     }
 select:
     gUnk_03005280 = 3;
     while (1) {
-        sub_08002d18();
+        RunLinkFrame();
         if (gUnk_03002150 == 4) {
             if (gUnk_02006090 <= 2) {
                 if ((gUnk_03001EB8[0] & 0x20) && gUnk_02006168 != 0) {
@@ -391,7 +391,7 @@ select:
     /* store address first, then the one read of gUnk_02007FCC, kept in k */
     gUnk_030023D8 = (k = gUnk_02007FCC) + 14;
     if (gUnk_03002150 == 4 && k <= 2)
-        sub_08002d94(32);
+        RunLinkFrames(32);
     sub_080021dc();
     sub_08002e0c();
 }

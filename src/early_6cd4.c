@@ -12,7 +12,7 @@
  * one side, so this range is a good regression pair for that flag.
  *
  * ROM order / semantics:
- *   sub_08006464  in-view test: 1 when (x,y) is inside the camera rect
+ *   IsInView  in-view test: 1 when (x,y) is inside the camera rect
  *                 gUnk_03002158[0..3] widened by 64 px on every side.
  *   sub_080064ac  base + ((rand(256) * amount) >> 8) * scale   (u16)
  *   sub_080064dc  same, signed by the running task's facing byte

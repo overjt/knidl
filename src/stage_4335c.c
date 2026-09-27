@@ -24,7 +24,7 @@
 extern u16 gUnk_030023C0[];   /* newly pressed keys, latched per player */
 extern u16 gUnk_03002458[];   /* held keys, latched per player */
 
-void sub_08006148(void *a, u32 i);
+void TaskSetEntry(void *a, u32 i);
 s32 sub_0803e4ec(s32 a0);
 void sub_0803f870(void);
 void sub_0803f9c0(void);
@@ -164,7 +164,7 @@ void sub_0804335c(void)
         break;
     }
     if (gUnk_03002490->unk2C != gUnk_03002490->unk73)
-        sub_08006148(sub_08043014, gCurTaskIdx);
+        TaskSetEntry(sub_08043014, gCurTaskIdx);
     if (!sub_080400c0() && !sub_08040298())
     {
         m = gUnk_03002490->unk7B & 1;

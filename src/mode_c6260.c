@@ -16,7 +16,7 @@
  *   sub_080c62f0 / sub_080c6388   one scene each: preset and load a room
  *       (sub_08024610(0, 0) / sub_08024654(632, 248)), palette set 15 / 16
  *       (sub_08008c4c), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
- *       task and run frames (sub_08002d18) until it clears gEndingSceneActive,
+ *       task and run frames (RunLinkFrame) until it clears gEndingSceneActive,
  *       then tear the level down (sub_08027178).
  *   sub_080c6354 / sub_080c63ec   spawn M38's task type #100 / #101,
  *       retrying every frame until a slot is free, with Task.unk73 = 0. */
@@ -40,10 +40,10 @@ void sub_080021dc(void);
 void sub_08002358(void);
 void sub_08002668(void);
 void sub_0800293c(void);
-void sub_08002d18(void);
+void RunLinkFrame(void);
 void sub_08002e0c(void);
 void sub_08003484(void);
-s32 sub_080058e4(u32 type, s32 idx);                         /* spawn a task */
+s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
 void sub_08008c4c(s32 a0);
 void sub_08024610(s32 x, s32 y);
 void sub_08024654(s32 x, s32 y);
@@ -85,7 +85,7 @@ void sub_080c62f0(void)
     sub_0800214c();
     sub_08002e0c();
     while (gEndingSceneActive != 0)
-        sub_08002d18();
+        RunLinkFrame();
     sub_080021dc();
     sub_08002e0c();
     sub_08027178();
@@ -96,8 +96,8 @@ void sub_080c6354(void)
     s32 id;
     struct Task *t;
 
-    while ((id = sub_080058e4(100, 32)) == -1)
-        sub_08002d18();
+    while ((id = TaskCreateFrom(100, 32)) == -1)
+        RunLinkFrame();
     t = &gUnk_03002790[id];
     t->unk73 = 0;
 }
@@ -113,7 +113,7 @@ void sub_080c6388(void)
     sub_0800214c();
     sub_08002e0c();
     while (gEndingSceneActive != 0)
-        sub_08002d18();
+        RunLinkFrame();
     sub_080021dc();
     sub_08002e0c();
     sub_08027178();
@@ -124,8 +124,8 @@ void sub_080c63ec(void)
     s32 id;
     struct Task *t;
 
-    while ((id = sub_080058e4(101, 32)) == -1)
-        sub_08002d18();
+    while ((id = TaskCreateFrom(101, 32)) == -1)
+        RunLinkFrame();
     t = &gUnk_03002790[id];
     t->unk73 = 0;
 }

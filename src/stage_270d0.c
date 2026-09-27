@@ -93,12 +93,12 @@ extern u8 gUnk_0200AF00;
 extern u8 gUnk_020069F0;
 extern u8 gUnk_03001F20;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 sub_08003110(s32 songId);
 void sub_080034d0(void);
 void sub_08003688(void);
-void sub_080055c4(u16 val, s32 idx);
-void sub_08005654(s32 id);
+void TaskSetOthersSkipMask(u16 val, s32 idx);
+void TaskFree(s32 id);
 void sub_0800ab08(void);
 void sub_08026998(void);
 void sub_08029930(void);
@@ -135,13 +135,13 @@ void sub_08027128(void)
 {
     sub_080307a4();
     StopHBlankScroll();
-    sub_08005654(63);
+    TaskFree(63);
     if (gUnk_02007FB0 & 1)
         sub_08026998();
     if (gUnk_02007FB0 & 2)
         sub_08003688();
     if (gUnk_02007FB0 & 4)
-        sub_080055c4(31, 63);
+        TaskSetOthersSkipMask(31, 63);
     gUnk_02007FB0 = 0;
 }
 
@@ -149,7 +149,7 @@ void sub_08027178(void)
 {
     sub_080307a4();
     StopHBlankScroll();
-    sub_08005654(63);
+    TaskFree(63);
     gUnk_02007FB0 = 0;
 }
 
@@ -158,11 +158,11 @@ void sub_08027198(void)
     s32 i;
     s32 j;
 
-    sub_08005654(63);
+    TaskFree(63);
     for (j = 0; j <= 31; j++)
         for (i = 0; i <= 2; i++)
             if (gUnk_02006A20[j][i] != -1)
-                sub_08005654(gUnk_02006A20[j][i]);
+                TaskFree(gUnk_02006A20[j][i]);
     sub_080307a4();
 }
 
@@ -194,7 +194,7 @@ void sub_08027240(void)
 {
     gUnk_03001ED8 &= 0xE0FF;
     gUnk_03001ED8 |= 0x1F00;
-    sub_080017e4(8, (u32)gUnk_030055EC->unk2C, 0x06008000, 0);
+    RequestCopy(8, (u32)gUnk_030055EC->unk2C, 0x06008000, 0);
     CpuSet(gUnk_02008060, gUnk_03001370, 128);
     if (gUnk_020055B0 == 1)
         sub_0802b49c(0x8000);

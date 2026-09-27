@@ -31,13 +31,13 @@ extern u32 gUnk_08745CEC[];
 
 /* Externals */
 extern void TaskYieldTrampoline(u32 a);
-extern void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern void sub_08002e98(u32 a, u32 b, u32 *c);
 extern void sub_08003014(void *src, void *dst, s32 ratio, s32 count, void *out);
-extern void sub_08006138(void);
-extern void sub_08006148(void *fn, s32 i);
-extern void sub_080062c4(void);
-extern void sub_0800634c(s32 a);
+extern void TaskSleepForever(void);
+extern void TaskSetEntry(void *fn, s32 i);
+extern void TaskStop(void);
+extern void TaskSetFrameNoFlip(s32 a);
 extern void sub_0800a42c(void);
 extern void sub_0800a554(void);
 extern void sub_080262e8(u8 a);
@@ -81,7 +81,7 @@ void sub_0809ba94(void)
     else
     {
         sub_0806395c(1);
-        sub_08006148(sub_0809baec, gCurTaskIdx);
+        TaskSetEntry(sub_0809baec, gCurTaskIdx);
     }
     if (gUnk_03002490->unk14 != 1)
         sub_08068e04();
@@ -105,10 +105,10 @@ void sub_0809bb08(void)
     t->unk58 = 0xFFFD0000;
     t->unk60 = 0xC0 << 6;
     t->unk68 = 0xC0 << 10;
-    sub_0800634c(4);
+    TaskSetFrameNoFlip(4);
     TaskYieldTrampoline(6);
-    sub_0800634c(5);
-    sub_08006138();
+    TaskSetFrameNoFlip(5);
+    TaskSleepForever();
 }
 
 void sub_0809bb68(void)
@@ -122,7 +122,7 @@ void sub_0809bb6c(void)
     gUnk_03002490->unk15 = 1;
     gUnk_03002490->unk7A = 0;
     gUnk_03002490->unk28 = 0;
-    sub_080062c4();
+    TaskStop();
     t = gUnk_03002490;
     t->unk58 = 0xFFFD0000;
     t->unk60 = 0xC0 << 6;
@@ -136,7 +136,7 @@ void sub_0809bb6c(void)
     t->unk3C += 1;
     TaskYieldTrampoline(2);
     sub_08063fe0();
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0809bbd4(void)
@@ -158,7 +158,7 @@ void sub_0809bbd8(void)
     t = gUnk_03002490;
     t->unk04 = (u32)sub_0809bc1c;
     t->unk08 = (u32)sub_0809bf2c;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0809bc1c(void)
@@ -271,13 +271,13 @@ void sub_0809bfac(void)
     struct GfxHeader *g;
     u16 *p;
 
-    sub_080017e4(4, (u32)gUnk_02020000, 0x06010000, 240 << 6);
+    RequestCopy(4, (u32)gUnk_02020000, 0x06010000, 240 << 6);
     g = (struct GfxHeader *)gUnk_0827AC64;
-    sub_080017e4(2, (u32)g->unk08, (u32)(p = (u16 *)gUnk_03001570), g->unk00 << 5);
+    RequestCopy(2, (u32)g->unk08, (u32)(p = (u16 *)gUnk_03001570), g->unk00 << 5);
     g = (struct GfxHeader *)gUnk_0827B8F8;
-    sub_080017e4(2, (u32)g->unk08, (u32)(p + 16), g->unk00 << 5);
+    RequestCopy(2, (u32)g->unk08, (u32)(p + 16), g->unk00 << 5);
     g = (struct GfxHeader *)gUnk_0827CA48;
-    sub_080017e4(2, (u32)g->unk08, (u32)(p + 32), g->unk00 << 5);
+    RequestCopy(2, (u32)g->unk08, (u32)(p + 32), g->unk00 << 5);
     g = (struct GfxHeader *)gUnk_0827D808;
-    sub_080017e4(2, (u32)g->unk08, (u32)(p + 48), g->unk00 << 5);
+    RequestCopy(2, (u32)g->unk08, (u32)(p + 48), g->unk00 << 5);
 }

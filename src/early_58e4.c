@@ -4,8 +4,8 @@
 /*
  * Cooperative task system, user side (issue #32, batch F2:
  * 0x08005654-0x08005D9C).  Recipe: old_agbcc -O2 (`--old2`), established with
- * the leaf `push {lr}` fingerprint of lessons-learned 3.18 (sub_08005954 and
- * sub_08005acc are leaves that end in a bare `bx lr`).
+ * the leaf `push {lr}` fingerprint of lessons-learned 3.18 (TaskClampVelocity and
+ * TaskIsOnScreen are leaves that end in a bare `bx lr`).
  *
  * The zone manages a 64-entry task table:
  *   gUnk_03002494  s32   allocation cursor (rotates 0..63), volatile
@@ -120,27 +120,27 @@ extern u16 gUnk_030023E4;
 extern s16 gUnk_03002158[];
 extern u8 gUnk_03001470[];
 
-extern void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* NOTE: src/early_1518.c declares the last parameter `u16 f`; the two call
  * sites in this file pass a sign-extended s16, so the real prototype must be
  * signed (see the report). */
-extern s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 
-void sub_08005654(s32 id);
-s32 sub_0800579c(u32 type);
-void sub_080059a0(void);
-void sub_08005954(void);
+void TaskFree(s32 id);
+s32 TaskCreate(u32 type);
+void TaskIntegrateMotion(void);
+void TaskClampVelocity(void);
 
 /* Allocate, optionally forcing the cursor to `idx` first. */
-s32 sub_080058e4(u32 type, s32 idx)
+s32 TaskCreateFrom(u32 type, s32 idx)
 {
     if (idx != -1)
         gUnk_03002494 = idx;
-    return sub_0800579c(type);
+    return TaskCreate(type);
 }
 
 /* Allocate, scanning [start, end] for a free slot first. */
-s32 sub_08005904(u32 type, s32 start, s32 end)
+s32 TaskCreateInRange(u32 type, s32 start, s32 end)
 {
     s32 i;
 
@@ -155,12 +155,12 @@ s32 sub_08005904(u32 type, s32 start, s32 end)
         }
         gUnk_03002494 = start;
     }
-    i = sub_0800579c(type);
+    i = TaskCreate(type);
     return i;
 }
 
 /* Clamp the running task's velocity to its per-axis maximum. */
-void sub_08005954(void)
+void TaskClampVelocity(void)
 {
     s32 v;
     struct Task *t;
@@ -201,25 +201,25 @@ void sub_08005954(void)
 }
 
 /* Integrate acceleration into velocity and velocity into position. */
-void sub_080059a0(void)
+void TaskIntegrateMotion(void)
 {
     struct Task *t;
 
     t = gUnk_03002490;
     t->unk54 = t->unk54 + t->unk5C;
     t->unk58 = t->unk58 + t->unk60;
-    sub_08005954();
+    TaskClampVelocity();
     t = gUnk_03002490;
     t->unk4C = t->unk4C + t->unk54;
     t->unk50 = t->unk50 + t->unk58;
 }
 
 /* Task body: integrate, then publish the 16.16 position as screen coords. */
-void sub_080059d8(void)
+void TaskMove(void)
 {
     struct Task *t;
 
-    sub_080059a0();
+    TaskIntegrateMotion();
     t = gUnk_03002490;
     t->unk48 = t->unk4C >> 16;
     t->unk4A = t->unk50 >> 16;
@@ -227,21 +227,21 @@ void sub_080059d8(void)
 
 /* Task body: integrate if moving, then publish position relative to the
  * parent task's position (Task.unk44 indexes the task array). */
-void sub_080059fc(void)
+void TaskMoveRelativeToParent(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gUnk_03002490;
     if (t->unk54 != 0 || t->unk58 != 0 || t->unk5C != 0 || t->unk60 != 0)
-        sub_080059a0();
+        TaskIntegrateMotion();
     u = gUnk_03002490;
     u->unk48 = (u->unk4C + gUnk_03002790[u->unk44].unk4C) >> 16;
     u->unk4A = (u->unk50 + gUnk_03002790[u->unk44].unk50) >> 16;
 }
 
-/* Hidden (unreferenced) export inside sub_080059fc's symbols.csv size. */
-void sub_08005a74(void)
+/* Hidden (unreferenced) export inside TaskMoveRelativeToParent's symbols.csv size. */
+void TaskUpdatePixelPos(void)
 {
     struct Task *t;
 
@@ -251,11 +251,11 @@ void sub_08005a74(void)
 }
 
 /* Task body: integrate, publish position relative to the camera. */
-void sub_08005a90(void)
+void TaskMoveRelativeToBg3(void)
 {
     struct Task *t;
 
-    sub_080059a0();
+    TaskIntegrateMotion();
     t = gUnk_03002490;
     t->unk48 = (t->unk4C >> 16) - (gUnk_03000B78 >> 16);
     t->unk4A = (t->unk50 >> 16) - (gUnk_03000FA8 >> 16);

@@ -3,35 +3,35 @@
 
 /* Early subsystem code, 0x08001518-0x08001B08 (issue #32, batch A3).
  *
- * - sub_08001518 is the DEFAULT (no-op) IRQ handler: the 14-entry handler
+ * - IntrDummy is the DEFAULT (no-op) IRQ handler: the 14-entry handler
  *   table at 0x080CFDE8 (copied to 0x030004B0 by AgbInit) points at it, as
- *   do the un-hook paths of sub_08001488/sub_080014e8.
+ *   do the un-hook paths of ClearHBlankIntr/ClearVCountIntr.
  * - sub_0800151c / sub_08001560 (no symbols.csv entries; the census merged
  *   0x1518-0x157C into one "function") set/clear the DISPCNT forced-blank
  *   bit through the gUnk_03001ED8 shadow; 0x151C also restores REG_IE /
  *   REG_DISPSTAT from their shadows.  Neither is referenced anywhere in the
  *   ROM (dead exports kept by whole-object linking, lesson 3.17c).
- * - sub_0800157c (node-list) and sub_080017e4 (direct args) feed the VBlank
+ * - RequestCopyList (node-list) and RequestCopy (direct args) feed the VBlank
  *   transfer ring buffer at 0x03000B80..0x03000F7B (85 12-byte entries
  *   {control, src, dst}; write cursor gUnk_03000FC4, consumer cursor
  *   gUnk_03000F88, consumed by the IWRAM-copied routine at 0x03001F40 =
- *   sub_08001b08).  When DISPCNT forced-blank is set the copy happens
+ *   BuildOam).  When DISPCNT forced-blank is set the copy happens
  *   immediately via CpuSet instead.  Control-word low nibble: 0 = 16-bit
  *   CpuSet, 1 = 32-bit, 2/3 = 16/32-bit fill; modes 3/4 copy 0x200-byte
  *   rows to every other 0x200-block (dst stride 0x400); mode 6 fills with
  *   a halfword value; mode 8 = LZ77UnCompVram.
- * - sub_08001a94 pushes a 12-byte record into the table at 0x030004F0
+ * - QueueSprite pushes a 12-byte record into the table at 0x030004F0
  *   (128 entries, counter gUnk_03001EE8) and appends its index to the
  *   per-lane byte list gUnk_03001680[lane][64] with counts gUnk_03000B30;
- *   sub_08001a34/sub_08001a0c reset those structures (free-list entries at
- *   0x03000050 get 236 = 0xEC in their first word); sub_08001a84 calls the
+ *   ResetSpriteQueue/ResetOamShadow reset those structures (free-list entries at
+ *   0x03000050 get 236 = 0xEC in their first word); RunBuildOamInIwram calls the
  *   IWRAM-copied consumer at 0x03001F41 (Thumb).
  *
  * Matching notes (agbcc -O2 -mthumb-interwork, docs/lessons-learned.md):
- * - In sub_0800157c the ONE variable `cmd` is reused as switch operand
+ * - In RequestCopyList the ONE variable `cmd` is reused as switch operand
  *   (`cmd &= 0xF` compiles to the in-place `ands r2, r0`), chunk size and
  *   control word - that keeps all of them in r2 as in the ROM.  In
- *   sub_080017e4 the `mode` PARAMETER is reused as the control word, which
+ *   RequestCopy the `mode` PARAMETER is reused as the control word, which
  *   pins it (and the ctrl computations) to callee-saved r4.
  * - The chunk selection must be the if/else form `if (size <= 0x1FF) cmd =
  *   size; else cmd = 0x200;`: gcc 2.9's jump.c rewrites it to "x = 0x200;
@@ -41,7 +41,7 @@
  *   loads in the wrong order.
  * - The busy-wait `while (gUnk_03000F88 == (u32)q);` reads the NON-volatile
  *   consumer cursor: the ROM's spin loop compares a stale register copy.
- * - In sub_08001a94 the counter cell gUnk_03001EE8 is volatile (five
+ * - In QueueSprite the counter cell gUnk_03001EE8 is volatile (five
  *   separate reloads through r5) and the byte-list store needs the
  *   embedded-assignment index `[(cnt = gUnk_03000B30[a]) + a * 64]`: the
  *   destination address of an assignment is expanded first, so the
@@ -49,7 +49,7 @@
  *   (same rule as the chained-assignment pool order, lesson 3.8).  The
  *   volatile indexed byte store emits the ROM's dead ldrb pre-read
  *   (lesson 3.7).
- * - In sub_08001a0c the fill bounds must come from the gUnk_03000050
+ * - In ResetOamShadow the fill bounds must come from the gUnk_03000050
  *   symbol: integer-literal pointers let gcc fold `p + 0x100` into a
  *   single pool constant and drop the entry guard the ROM has. */
 
@@ -70,8 +70,8 @@ extern u32 gUnk_03000B30[]; /* per-lane counts (16 words, CpuFastSet-cleared) */
 extern vu8 gUnk_03001680[]; /* per-lane byte lists [lane][64] */
 extern u8 gUnk_030004F0[];  /* 12-byte records, indexed by gUnk_03001EE8 */
 
-extern void sub_08001488(void);
-extern void sub_080014e8(void);
+extern void ClearHBlankIntr(void);
+extern void ClearVCountIntr(void);
 
 struct TransferNode
 {
@@ -80,7 +80,7 @@ struct TransferNode
     u32 dst;
 };
 
-void sub_08001518(void)
+void IntrDummy(void)
 {
 }
 
@@ -88,8 +88,8 @@ void sub_0800151c(void)
 {
     gUnk_03001ED8 |= 0x80;
     REG_DISPCNT = gUnk_03001ED8;
-    sub_080014e8();
-    sub_08001488();
+    ClearVCountIntr();
+    ClearHBlankIntr();
     REG_IE = gUnk_03000018;
     REG_DISPSTAT = gUnk_03001E9C;
 }
@@ -100,7 +100,7 @@ void sub_08001560(void)
     REG_DISPCNT = gUnk_03001ED8;
 }
 
-void sub_0800157c(struct TransferNode *node)
+void RequestCopyList(struct TransferNode *node)
 {
     u32 *q = (u32 *)gUnk_03000FC4;
     u32 cmd;
@@ -208,7 +208,7 @@ void sub_0800157c(struct TransferNode *node)
     gUnk_03000FC4 = (u32)q;
 }
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size)
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size)
 {
     u32 *q = (u32 *)gUnk_03000FC4;
 
@@ -308,14 +308,14 @@ void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size)
     gUnk_03000FC4 = (u32)q;
 }
 
-void sub_08001a34(void);
+void ResetSpriteQueue(void);
 
-void sub_08001a0c(void)
+void ResetOamShadow(void)
 {
     u32 *p;
     u32 *end;
 
-    sub_08001a34();
+    ResetSpriteQueue();
     p = gUnk_03000050;
     end = p + 0x100;
     while (p < end)
@@ -323,10 +323,10 @@ void sub_08001a0c(void)
         *p = 236;
         p += 2;
     }
-    sub_08001a34();
+    ResetSpriteQueue();
 }
 
-void sub_08001a34(void)
+void ResetSpriteQueue(void)
 {
     u32 zeroWord;
     u32 zero;
@@ -339,12 +339,12 @@ void sub_08001a34(void)
     gUnk_03000B1C = gUnk_03001A80 = zero;
 }
 
-void sub_08001a84(void)
+void RunBuildOamInIwram(void)
 {
     ((void (*)(void))0x03001F41)();
 }
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, u16 f)
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u16 f)
 {
     u16 *p;
     u32 cnt;

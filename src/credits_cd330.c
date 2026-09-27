@@ -66,11 +66,11 @@ extern u32 *gUnk_087583B4[];        /* credits: the 14 compressed text pages */
 extern u16 gUnk_02005600[];
 
 u32 sub_080008e8(u16 steps, s16 delta, u16 *mask);   /* delta passed as movs/negs (-2); early_08e8.c defines it u16, src/effect_5a358.c and src/player_47fe8.c spell it s16 too (lesson 3.428) */
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08001fd0(void);
-void sub_080022ac(void);
-void sub_08002d18(void);                                     /* run one frame */
-void sub_08002d74(s32 count);
+void ResetTasksAndOam(void);
+void RunLinkFrame(void);                                     /* run one frame */
+void RunFramesNoTasks(s32 count);
 s32 sub_08003110(s32 songId);
 void sub_08003484(void);
 void sub_0800374c(s32 speed);
@@ -104,7 +104,7 @@ void CreditsMain(void)
 
     gUnk_03001ED8 |= 0x80;
     gUnk_0300118C = gUnk_03000040 = gUnk_03000B08 = gUnk_03001EAC = gUnk_03001EEC = 0;
-    sub_080022ac();
+    ResetTasksAndOam();
     sub_08008c4c(17);
     gUnk_03001EDC = 1;
     gUnk_0201C1A4 = gUnk_02006020[gUnk_02000028];
@@ -138,7 +138,7 @@ void CreditsMain(void)
             sub_080008e8(15, 2, gUnk_08758334);
         n = 15;
         while (n-- != 0) {
-            sub_08002d18();
+            RunLinkFrame();
             if ((s16)gUnk_030004A4 < 0) {
                 if (gUnk_03000FB8 < -5) {
                     gUnk_03001E90 = 0;
@@ -155,7 +155,7 @@ void CreditsMain(void)
         n = frames[gUnk_0201C1B0];
         while (--n != 0) {
             sub_0801a7b4();
-            sub_08002d18();
+            RunLinkFrame();
             sub_080cd75c();
             InputRecorderUpdate();
             sub_08040788();
@@ -164,14 +164,14 @@ void CreditsMain(void)
             sub_080008e8(15, -2, gUnk_08758334);
             n = 15;
             while (n-- != 0) {
-                sub_08002d18();
+                RunLinkFrame();
                 sub_080cd75c();
                 InputRecorderUpdate();
             }
             gUnk_03001ED8 &= 0xE0FF;
             gUnk_03001ED8 |= 0x100;
-            sub_080022ac();
-            sub_08002d18();
+            ResetTasksAndOam();
+            RunLinkFrame();
             continue;
         }
         break;
@@ -181,7 +181,7 @@ void CreditsMain(void)
     sub_080008e8(30, 2, gUnk_08758374);
     n = 30;
     while (n-- != 0) {
-        sub_08002d18();
+        RunLinkFrame();
         InputRecorderUpdate();
         sub_08040788();
     }
@@ -189,8 +189,8 @@ void CreditsMain(void)
     gUnk_03000AF4 = 0;
     gUnk_03001EDC = 0;
     sub_08003484();
-    sub_080022ac();
-    sub_08002d74(2);
+    ResetTasksAndOam();
+    RunFramesNoTasks(2);
     sub_08003770(255);
     gUnk_02006020[gUnk_02000028] = gUnk_0201C1A4;
 }
@@ -258,9 +258,9 @@ void sub_080cd75c(void)
     }
     if ((gUnk_0201C1B4 & 0x1000) && gUnk_0201C19C != 0) {
         if (gUnk_0201C1A8 & 1)
-            sub_080017e4(1, (u32)gUnk_02005600, 0x06001000, 0x800);
+            RequestCopy(1, (u32)gUnk_02005600, 0x06001000, 0x800);
         else
-            sub_080017e4(1, (u32)gUnk_02005600, 0x06001800, 0x800);
+            RequestCopy(1, (u32)gUnk_02005600, 0x06001800, 0x800);
         gUnk_0201C19C = 0;
         gUnk_0201C1B4 = 0;
     }

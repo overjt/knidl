@@ -10,7 +10,7 @@
  * whether a door is usable - in multi-player every present player must be
  * within 128 pixels - and step its animation (frame in the low nibble of
  * byte 4, timer in the high one, the star doors from gUnk_0873264C);
- * sub_08026eec draws the visible ones with sub_08001a94. */
+ * sub_08026eec draws the visible ones with QueueSprite. */
 
 struct BgMap
 {
@@ -98,8 +98,8 @@ extern u32 gUnk_0874CDF8[];
 extern s16 gUnk_03002348;
 extern u16 gUnk_030023E4;
 
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
-u32 sub_0800641c(s16 x, s16 y);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+u32 IsWorldPosOnScreen(s16 x, s16 y);
 s32 sub_08021b18(u16 x, u16 y);
 
 void sub_08026b60(void)
@@ -236,7 +236,7 @@ void sub_08026eec(void)
         p = &gUnk_02004B90[i];
         x = d->unk2 << 4;
         y = d->unk4 << 4;
-        if (sub_0800641c(x, y) == 0)
+        if (IsWorldPosOnScreen(x, y) == 0)
             continue;
         k = sub_08021b18(x, y);
         if (k != 16 && k != 144)
@@ -270,7 +270,7 @@ void sub_08026eec(void)
             gUnk_03001F10 += gUnk_0873264C[p->unk4_0][0];
             break;
         }
-        sub_08001a94(15, gUnk_0874CDF8[gUnk_03001F10], 0, 0, x + gUnk_03001F2C - gUnk_03002348,
+        QueueSprite(15, gUnk_0874CDF8[gUnk_03001F10], 0, 0, x + gUnk_03001F2C - gUnk_03002348,
                      -gUnk_030023E4 + y);
     }
 }

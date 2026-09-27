@@ -154,8 +154,8 @@ extern s8 gUnk_02007FF8;
 extern struct Unk03005680 gUnk_03005680;
 
 void sub_080031b8(s32 id);
-s32 sub_080058e4(u32 type, s32 idx);
-void sub_08006148(void *a, u32 i);
+s32 TaskCreateFrom(u32 type, s32 idx);
+void TaskSetEntry(void *a, u32 i);
 void sub_08029930(void);
 void sub_0802cda0(s32 x0, s32 x1, s32 y0, s32 y1);
 void sub_0802d074(void);
@@ -208,7 +208,7 @@ s32 sub_0802621c(s32 type)
         if (i <= 31)
             return -1;
     }
-    return sub_080058e4(type, i);
+    return TaskCreateFrom(type, i);
 }
 
 void sub_08026264(s32 x, s32 y)
@@ -347,12 +347,12 @@ s32 sub_08026584(void)
         case 0:
             break;
         case 1:
-            sub_08006148(sub_0802f6c0, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f6c0, gUnk_02006A20[gUnk_0200B034][0]);
             break;
         case 2:
             sub_080301e8(4, (d->unk2 << 4) + 16, (d->unk4 << 4) + 8);
             n = 1;
-            sub_08006148(sub_0802f6f4, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f6f4, gUnk_02006A20[gUnk_0200B034][0]);
             break;
         }
         break;
@@ -362,13 +362,13 @@ s32 sub_08026584(void)
         switch (*(u8 *)&gUnk_030055EC->unk44[gUnk_0200B034].unk6)
         {
         case 3:
-            sub_08006148(sub_0802f2fc, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f2fc, gUnk_02006A20[gUnk_0200B034][0]);
             break;
         case 4:
-            sub_08006148(sub_0802f400, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f400, gUnk_02006A20[gUnk_0200B034][0]);
             break;
         case 5:
-            sub_08006148(sub_0802f1dc, gUnk_02006A20[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f1dc, gUnk_02006A20[gUnk_0200B034][0]);
             break;
         default:
             return;

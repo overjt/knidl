@@ -23,7 +23,7 @@ extern u8 gUnk_0200B044[];
 extern u32 gUnk_08756568[];
 
 void sub_08002e98(u32 a, u32 b, u32 *c);
-void sub_08006138(void);
+void TaskSleepForever(void);
 
 void BombRallyInit(void)
 {
@@ -38,5 +38,5 @@ void BombRallyInit(void)
 void BombRallyMain(void)
 {
     sub_08002e98(gSubGamePhase, 2, gUnk_08756568);
-    sub_08006138();
+    TaskSleepForever();
 }

@@ -17,9 +17,9 @@
  *  - The BG scroll shadows (gUnk_03000010 etc.) are volatile s32: without
  *    volatile, `>> 16` narrows into an `ldrsh [rX, #2]` of the upper half;
  *    the ROM reads the whole word and shifts (`ldr; asrs #16`).
- *  - sub_08001460 (install HBlank handler) and sub_080014bc (install VCount
- *    handler) are dead exports inside the census sizes of sub_080013f8 and
- *    sub_08001488 respectively (lesson 2.13 pattern: nothing in ROM calls
+ *  - SetHBlankIntr (install HBlank handler) and SetVCountIntr (install VCount
+ *    handler) are dead exports inside the census sizes of ProcessCopyQueue and
+ *    ClearHBlankIntr respectively (lesson 2.13 pattern: nothing in ROM calls
  *    them, but they sit between live functions of the same unit). */
 
 extern vu16 gUnk_0300100C; /* keys currently held */
@@ -66,18 +66,18 @@ extern u32 gUnk_03000FC4;  /* copy-request queue write pointer */
 extern vu16 gUnk_03000018; /* IE shadow */
 extern u32 gUnk_030004B0[]; /* IRQ dispatch table (copied from 0x080CFDE8) */
 
-extern void sub_08001518(void); /* no-op IRQ handler (bx lr) */
+extern void IntrDummy(void); /* no-op IRQ handler (bx lr) */
 
 /* Copy the OAM shadow (0x03000050) and the palette shadow buffer to
  * OAM/palette RAM. */
-void sub_080011ac(void)
+void CopyOamAndPalette(void)
 {
     CpuFastSet((u32 *)0x03000050, (u32 *)0x07000000, 0x100);
     CpuFastSet((u32 *)gUnk_03000FB0, (u32 *)0x05000000, 0x100);
 }
 
 /* Poll REG_KEYINPUT into the held/new/repeat key state cells. */
-void sub_080011dc(void)
+void ReadKeys(void)
 {
     gUnk_0300100C = REG_KEYINPUT ^ 0x3FF;
     gUnk_03000038 = gUnk_0300100C & ~gUnk_03001EF4;
@@ -107,7 +107,7 @@ void sub_080011dc(void)
 
 /* Flush the display I/O register shadows to the hardware registers
  * (the write-only half of the AgbInit shadow scheme). */
-void sub_08001280(void)
+void FlushDisplayRegs(void)
 {
     REG_DISPCNT = gUnk_03001ED8;
     REG_DISPSTAT = gUnk_03001E9C;
@@ -139,7 +139,7 @@ void sub_08001280(void)
  * gUnk_03000FC4): each entry is  [ctrl][src or inline word][dst], ctrl bit0
  * selects CpuFastSet vs CpuSet, bit1 means "source is the inline word",
  * ctrl>>4 is the syscall length/mode word. */
-void sub_080013f8(void)
+void ProcessCopyQueue(void)
 {
     u32 *p = (u32 *)gUnk_03000F88;
 
@@ -172,8 +172,8 @@ void sub_080013f8(void)
 
 /* Install an HBlank IRQ handler (dispatch slot 3) and enable the IRQ.
  * Dead export: nothing in ROM calls it (census folded it into
- * sub_080013f8's size). */
-void sub_08001460(void (*fn)(void))
+ * ProcessCopyQueue's size). */
+void SetHBlankIntr(void (*fn)(void))
 {
     gUnk_030004B0[3] = (u32)fn;
     REG_IE |= 2;
@@ -181,17 +181,17 @@ void sub_08001460(void (*fn)(void))
 }
 
 /* Remove the HBlank IRQ handler and disable the IRQ. */
-void sub_08001488(void)
+void ClearHBlankIntr(void)
 {
     REG_IE &= 0xFFFD;
     gUnk_03001E9C &= 0xFFEF;
-    gUnk_030004B0[3] = (u32)sub_08001518;
+    gUnk_030004B0[3] = (u32)IntrDummy;
 }
 
 /* Install a VCount IRQ handler (dispatch slot 4) for scanline `vcount`.
  * Dead export: nothing in ROM calls it (census folded it into
- * sub_08001488's size). */
-void sub_080014bc(void (*fn)(void), u8 vcount)
+ * ClearHBlankIntr's size). */
+void SetVCountIntr(void (*fn)(void), u8 vcount)
 {
     gUnk_030004B0[4] = (u32)fn;
     gUnk_03000018 |= 4;
@@ -199,9 +199,9 @@ void sub_080014bc(void (*fn)(void), u8 vcount)
 }
 
 /* Remove the VCount IRQ handler and disable the IRQ. */
-void sub_080014e8(void)
+void ClearVCountIntr(void)
 {
-    gUnk_030004B0[4] = (u32)sub_08001518;
+    gUnk_030004B0[4] = (u32)IntrDummy;
     gUnk_03000018 &= 0xFFFB;
     gUnk_03001E9C &= 0xDF;
 }

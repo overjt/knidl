@@ -4,7 +4,7 @@
 /* Early game-code block 0x08001CC8-0x08002377 (issue #32, batch B2).
  *
  * Contents, in ROM order:
- *   sub_08001cc8  affine/rotscale OBJ emitter: walks a sprite template list,
+ *   DrawAffineSprite  affine/rotscale OBJ emitter: walks a sprite template list,
  *                 converts each entry into the affine OAM staging buffer at
  *                 0x03001190 and fills one 0x03000050 affine matrix.
  *   sub_08001fd0  clears the eight BG scroll shadow cells.
@@ -70,12 +70,12 @@ extern vu16 gUnk_03005274;
 extern vu16 gUnk_03001F38;
 extern const u8 gUnk_0872EB2C[];
 
-extern void sub_08004fec(void);
-extern void sub_08001a0c(void);
-extern void sub_08001a84(void);
-extern void sub_08000de4(void);
-extern void sub_08001a34(void);
-extern void sub_08005228(void);
+extern void InitTasks(void);
+extern void ResetOamShadow(void);
+extern void RunBuildOamInIwram(void);
+extern void EndFrame(void);
+extern void ResetSpriteQueue(void);
+extern void RunTasks(void);
 
 void sub_08001fd0(void)
 {
@@ -178,10 +178,10 @@ u32 sub_080022a0(u32 arg)
     return arg;
 }
 
-void sub_080022ac(void)
+void ResetTasksAndOam(void)
 {
-    sub_08004fec();
-    sub_08001a0c();
+    InitTasks();
+    ResetOamShadow();
 }
 
 void sub_080022bc(void)
@@ -192,19 +192,19 @@ void sub_080022bc(void)
     gUnk_03000498[0] = 0;
 }
 
-void sub_080022d0(void)
+void RunFrameNoTasks(void)
 {
-    sub_08001a84();
-    sub_08000de4();
-    sub_08001a34();
+    RunBuildOamInIwram();
+    EndFrame();
+    ResetSpriteQueue();
 }
 
-void sub_080022e4(void)
+void RunFrame(void)
 {
-    sub_08005228();
-    sub_08001a84();
-    sub_08000de4();
-    sub_08001a34();
+    RunTasks();
+    RunBuildOamInIwram();
+    EndFrame();
+    ResetSpriteQueue();
 }
 
 void sub_080022fc(void)

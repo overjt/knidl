@@ -11,7 +11,7 @@ extern u32 gUnk_080D2148[];
 extern s16 gUnk_08748268[2][16];
 
 /* Externals */
-extern s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 extern u32 sub_08002ee8(u32 range);
 
 void sub_080a00ec(void)
@@ -60,6 +60,6 @@ void sub_080a00ec(void)
         sh = gUnk_02006040[i + 3] >> 16;
         sh += 16;
         *pb = uy + sh - gUnk_03002158[2];
-        sub_08001a94(t->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, (s16)*pb);
+        QueueSprite(t->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, (s16)*pb);
     }
 }

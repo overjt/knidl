@@ -21,11 +21,11 @@ extern u32 gUnk_0874C804[];
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(u32 frames);
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
-void sub_080059d8(void);
-void sub_08005a74(void);
-void sub_08005d9c(void);
-void sub_08006138(void);
-void sub_080062c4(void);
+void TaskMove(void);
+void TaskUpdatePixelPos(void);
+void TaskDrawWorld(void);
+void TaskSleepForever(void);
+void TaskStop(void);
 
 void sub_08030238(void)
 {
@@ -38,8 +38,8 @@ void sub_08030254(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskUpdatePixelPos;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 12;
     u = gUnk_03002490;
     u->unk38 = gUnk_0874CD54;
@@ -63,12 +63,12 @@ void sub_080302cc(void)
     struct Task *v;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_080059d8;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskMove;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 12;
     u = gUnk_03002490;
     u->unk38 = gUnk_0874CD68;
-    sub_080062c4();
+    TaskStop();
     gUnk_03002490->unk3C = 0;
     TaskYieldTrampoline(2);
     gUnk_03002490->unk3C++;
@@ -107,7 +107,7 @@ void sub_080302cc(void)
     v->unk18 = 1;
     v->unk3C++;
     TaskYieldTrampoline(1);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_08030404(void)
@@ -117,12 +117,12 @@ void sub_08030404(void)
     struct Task *v;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_080059d8;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskMove;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 11;
     u = gUnk_03002490;
     u->unk38 = gUnk_0874CD68;
-    sub_080062c4();
+    TaskStop();
     v = gUnk_03002490;
     v->unk60 = -0x400;
     v->unk3C = 18;
@@ -159,12 +159,12 @@ void sub_080304ec(void)
     struct Task *v;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_080059d8;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskMove;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 12;
     u = gUnk_03002490;
     u->unk38 = gUnk_08752548;
-    sub_080062c4();
+    TaskStop();
     v = gUnk_03002490;
     v->unk58 = -0x10000;
     v->unk3C = 0;
@@ -188,8 +188,8 @@ void sub_08030580(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskUpdatePixelPos;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 12;
     u = gUnk_03002490;
     u->unk38 = gUnk_0874CDE0;
@@ -214,8 +214,8 @@ void sub_08030604(void)
     struct Task *u;
 
     t = gUnk_03002490;
-    t->unk00 = (u32)sub_08005a74;
-    t->unk0C = (u32)sub_08005d9c;
+    t->unk00 = (u32)TaskUpdatePixelPos;
+    t->unk0C = (u32)TaskDrawWorld;
     t->unk42 = 12;
     u = gUnk_03002490;
     u->unk38 = gUnk_0874C804;

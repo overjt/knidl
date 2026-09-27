@@ -28,14 +28,14 @@ extern u16 gUnk_085E2B20[];
 
 void TaskYieldTrampoline(s32 frames);
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void sub_080059d8(void);
-void sub_08006138(void);
+void TaskMove(void);
+void TaskSleepForever(void);
 
 void sub_08019eec(void)
 {
     struct Task *t = gUnk_03002490;
 
-    t->unk00 = (u32)sub_080059d8;
+    t->unk00 = (u32)TaskMove;
     t->unk0C = 0;
     gUnk_0300118C = 66;
     gUnk_03000040 = 29;
@@ -80,5 +80,5 @@ void sub_08019eec(void)
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C++;
     } while ((s16)gUnk_03002490->unk6C <= 15);
-    sub_08006138();
+    TaskSleepForever();
 }

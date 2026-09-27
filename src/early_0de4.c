@@ -50,7 +50,7 @@ extern void sub_08000934(void);
 extern void sub_08003484(void);
 extern void sub_08004734(void);
 
-void sub_08000de4(void)
+void EndFrame(void)
 {
     s32 i;
     u16 keys;

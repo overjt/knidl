@@ -14,23 +14,23 @@
  * by the ARM task switcher at 0x08000234 (reached through its thumb veneer
  * TaskSwitchTrampoline); gTaskSavedR0 is that switcher's "sleep" result.
  *
- *   sub_08004fec  cold init: clears the bucket tables, the id map and every
+ *   InitTasks  cold init: clears the bucket tables, the id map and every
  *                 task slot (two CpuSet fills plus a per-slot field reset).
- *   sub_08005228  the per-frame driver (called from sub_08002d18): rebuilds
+ *   RunTasks  the per-frame driver (called from RunLinkFrame): rebuilds
  *                 the buckets from the slot table, then runs phases 1..5 --
  *                 resume/countdown + callback[0]/[1], then callback[2] and
  *                 callback[3] -- restarting whenever a callback added tasks.
- *   sub_080055b0  set one task's +0x13 skip mask.
- *   sub_080055c4  set +0x13 on every allocated task, preserving one slot's.
- *   sub_08005618  set +0x13 on every allocated task (dead export).
+ *   TaskSetSkipMask  set one task's +0x13 skip mask.
+ *   TaskSetOthersSkipMask  set +0x13 on every allocated task, preserving one slot's.
+ *   TaskSetAllSkipMask  set +0x13 on every allocated task (dead export).
  *
  * Recipe: old_agbcc -O2 -mthumb-interwork (fnmatch --old2).  Evidence: the
- * leaf sub_080055b0 ends in a bare `bx lr`; agbcc always emits
+ * leaf TaskSetSkipMask ends in a bare `bx lr`; agbcc always emits
  * `push {lr}` / `pop {r0}; bx r0` even for leaves.
  *
  * Matching notes (docs/lessons-learned.md §3):
- *  - sub_08005618 is a dead export hidden inside symbols.csv's 0x90 size for
- *    sub_080055c4 (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
+ *  - TaskSetAllSkipMask is a dead export hidden inside symbols.csv's 0x90 size for
+ *    TaskSetOthersSkipMask (lesson 2.13 / zone lesson 14): nothing in ROM calls it.
  *  - `gUnk_03002710[i] = 0xFFFF; gUnk_03004CA0[i] = gUnk_03002710[i];` is the
  *    shape behind the ROM's `ldrh/orrs/strh` triplet: agbcc emits the
  *    volatile indexed store's dead pre-read (3.7) and then REUSES that
@@ -45,15 +45,15 @@
  *  - `fill` must be `vu16`: a plain `u16` stack temp makes agbcc load 0xFFFF
  *    straight into the destination, while the ROM shows the movhi scratch
  *    pair `ldr rS,=0xFFFF; adds rD,rS,#0` (3.24).
- *  - the restart of sub_08005228's phase-1..3 pass is a `goto`, not a
+ *  - the restart of RunTasks's phase-1..3 pass is a `goto`, not a
  *    do/while: a loop note re-weights every reference inside it by one more
  *    loop level and moves three long-lived address pseudos onto different
  *    hard registers (3.21 applied to allocation rather than to hoisting).
- *  - sub_08005228 folds the restart counter into `j`; that is what raises
+ *  - RunTasks folds the restart counter into `j`; that is what raises
  *    j's global-alloc priority past &gTaskSavedR0's and puts j on r5.
  *
- * STATUS: sub_08004fec, sub_080055b0, sub_080055c4 and sub_08005618 are
- * byte-exact.  sub_08005228 reproduces the ROM's instruction sequence
+ * STATUS: InitTasks, TaskSetSkipMask, TaskSetOthersSkipMask and TaskSetAllSkipMask are
+ * byte-exact.  RunTasks reproduces the ROM's instruction sequence
  * one-for-one but diverges on register NAMES only (908 vs 904 bytes).  Root
  * cause: agbcc's local allocator gives the current-task pointer r1 (reusing
  * the dying `ldr r1,=gUnk_03002790`) where the ROM uses a fresh r2; that
@@ -144,7 +144,7 @@ extern vu8  gUnk_0200D110;
 
 void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
 
-void sub_08004fec(void)
+void InitTasks(void)
 {
     u32 i;
     u32 j;

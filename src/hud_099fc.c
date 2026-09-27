@@ -63,10 +63,10 @@ extern struct GfxHeader *gUnk_087555FC[];
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 sub_080031b8(s32 id);
-void sub_080059d8(void);
-void sub_08005ca0(void);
+void TaskMove(void);
+void TaskDrawScreen(void);
 void sub_08008ebc(void);
 void sub_08008ed4(s32 a);
 void sub_0800a130(s32 a, s32 id);
@@ -94,17 +94,17 @@ void Task_IntroStoryPicture(void)
 {
     struct GfxHeader *h;
 
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk42 = 8;
     gUnk_03002490->unk38 = gUnk_087555D8;
     gUnk_03002490->unk40 = 0x800;
     gUnk_03002490->unk4C = 0x300000;
     gUnk_03002490->unk50 = 0x780000;
     h = gUnk_087555FC[gUnk_03002490->unk18];
-    sub_080017e4(2, (u32)h->unk08, (u32)gUnk_03001470, h->unk00 << 5);
+    RequestCopy(2, (u32)h->unk08, (u32)gUnk_03001470, h->unk00 << 5);
     LZ77UnCompVram(h->unk0C, gUnk_02020000);
-    sub_080017e4(3, (u32)gUnk_02020000, (u32)gUnk_06010000, h->unk02 << 5);
+    RequestCopy(3, (u32)gUnk_02020000, (u32)gUnk_06010000, h->unk02 << 5);
     gUnk_03002490->unk3C = gUnk_03002490->unk18;
     TaskYieldTrampoline(gUnk_08731CE6[gUnk_03002490->unk18] + 67);
     TaskDispatchTrampoline();

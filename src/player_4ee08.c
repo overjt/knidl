@@ -38,8 +38,8 @@ extern u32 gUnk_0873BD00[];             /* stored to PlayerState.unk64 as (u32)g
 extern u32 gUnk_0873CB1C[];
 
 void TaskYieldTrampoline(s32 frames);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
 void sub_080261d4(u16 a);
 void sub_0803e050(s32 a0);
 s32 sub_0803e34c(s32 a0, u16 a1);
@@ -97,7 +97,7 @@ void sub_0804ee08(void)
     }
     gUnk_03002490->unk70++;
     sub_0803e050(2);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804ef00(void)
@@ -139,7 +139,7 @@ void sub_0804ef00(void)
         break;
     }
     if (gUnk_03002490->unk73 != 4)
-        sub_08006148(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(sub_0804e600, gCurTaskIdx);
     sub_08040b40(12, 0);
 }
 
@@ -234,7 +234,7 @@ void sub_0804f124(void)
     {
         struct Task *t = gUnk_03002490;
         t->unk24 = 0;
-        sub_08006148(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(sub_0804e600, gCurTaskIdx);
     }
     sub_08040b40(12, 0);
 }
@@ -274,7 +274,7 @@ void sub_0804f258(void)
     {
         struct Task *t = gUnk_03002490;
         t->unk24 = 0;
-        sub_08006148(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(sub_0804e600, gCurTaskIdx);
     }
     sub_08040b40(12, 0);
 }
@@ -325,7 +325,7 @@ void sub_0804f30c(void)
             t->unk28 = 0;
     }
     gUnk_03002490->unk70++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804f3e4(void)
@@ -347,7 +347,7 @@ void sub_0804f3e4(void)
             t->unk73 = 2;
         else
             t->unk73 = 1;
-        sub_08006148(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(sub_0804e600, gCurTaskIdx);
     }
 }
 
@@ -398,7 +398,7 @@ void sub_0804f450(void)
         t->unk88->unk68 = (u32)gUnk_0873CB1C;
         t->unk70++;
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804f5bc(void)

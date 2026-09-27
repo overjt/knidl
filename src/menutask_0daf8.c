@@ -56,11 +56,11 @@ extern u32 gUnk_08755650[];
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void sub_08003014(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
-void sub_080059d8(void);
-void sub_08005ca0(void);
+void TaskMove(void);
+void TaskDrawScreen(void);
 void sub_08008c64(u16 a0);
 s32 sub_0800bf10(s32 slot, u32 pal);
 u8 sub_0800ffe8(void);
@@ -74,8 +74,8 @@ s32 sub_0800e2dc(s32 id, s32 part);
 
 void sub_0800daf8(void)
 {
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk42 = 8;
     gUnk_03002490->unk38 = gUnk_08755620;
     gUnk_03002490->unk3C = gUnk_03002490->unk1C + 3;
@@ -89,8 +89,8 @@ void sub_0800daf8(void)
 
 void sub_0800db64(void)
 {
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk04 = (u32)sub_0800dbdc;
     gUnk_03002490->unk42 = 9;
     gUnk_03002490->unk38 = gUnk_08755620;
@@ -123,7 +123,7 @@ void sub_0800dbdc(void)
 
     if (gSaveSlots[gUnk_03002490->unk1C].unk12[1] != 0 && gSaveSlots[gUnk_03002490->unk1C].unk04 != 0x99999999) {
         t = gUnk_03002490;
-        sub_08001a94(t->unk42 - 1, gUnk_08755620[t->unk1C + 6], t->unk3E, t->unk40, t->unk48, t->unk4A);
+        QueueSprite(t->unk42 - 1, gUnk_08755620[t->unk1C + 6], t->unk3E, t->unk40, t->unk48, t->unk4A);
     }
 }
 
@@ -143,8 +143,8 @@ void sub_0800dc98(void)
 
 void Task_FileSelectCursor(void)
 {
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk00 = (u32)TaskMove;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk04 = (u32)sub_0800dda0;
     gUnk_03002490->unk42 = 6;
     gUnk_03002490->unk38 = gUnk_08755620;
@@ -189,9 +189,9 @@ void sub_0800dda0(void)
     cur = gUnk_0200B074;
     if (cur != gUnk_03002490->unk28) {
         u8 *p;
-        sub_080017e4(3, (u32)&gUnk_08550B9C[cur * 192], 0x06013580, 96);
+        RequestCopy(3, (u32)&gUnk_08550B9C[cur * 192], 0x06013580, 96);
         p = gUnk_08550B9C;
-        sub_080017e4(3, (u32)&p[gUnk_0200B074 * 192 + 96], 0x06013980, 96);
+        RequestCopy(3, (u32)&p[gUnk_0200B074 * 192 + 96], 0x06013980, 96);
         gUnk_03002490->unk28 = gUnk_0200B074;
     }
 }
@@ -271,14 +271,14 @@ void sub_0800dfdc(void)
 
     if (sub_0800ffe8()) {
         tbl = gUnk_08755650;
-        sub_08001a94(12, tbl[3], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk18 >> 16) + 304, (gUnk_03002490->unk1C >> 16) + 40);
-        sub_08001a94(12, tbl[2], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk18 >> 16) + 304, (gUnk_03002490->unk1C >> 16) + 40);
-        sub_08001a94(11, tbl[5], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk18 >> 16) + 304, (gUnk_03002490->unk1C >> 16) + 40);
-        sub_08001a94(13, tbl[4], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk20 >> 16) + 296, 40);
+        QueueSprite(12, tbl[3], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk18 >> 16) + 304, (gUnk_03002490->unk1C >> 16) + 40);
+        QueueSprite(12, tbl[2], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk18 >> 16) + 304, (gUnk_03002490->unk1C >> 16) + 40);
+        QueueSprite(11, tbl[5], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk18 >> 16) + 304, (gUnk_03002490->unk1C >> 16) + 40);
+        QueueSprite(13, tbl[4], gUnk_03002490->unk3E, 0, (gUnk_03002490->unk20 >> 16) + 296, 40);
         t = gUnk_03002490;
         if (t->unk28 == 0) {
             tbl = gUnk_08755620;
-            sub_08001a94(11, tbl[gCurSaveSlot + 3], t->unk3E, 0, (t->unk18 >> 16) + 234, (t->unk1C >> 16) + 13);
+            QueueSprite(11, tbl[gCurSaveSlot + 3], t->unk3E, 0, (t->unk18 >> 16) + 234, (t->unk1C >> 16) + 13);
         }
     }
 }
@@ -287,7 +287,7 @@ void Task_FileMenuHighlight(void)
 {
     s8 s;
 
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
+    gUnk_03002490->unk00 = (u32)TaskMove;
     gUnk_03002490->unk0C = 0;
     gUnk_03002490->unk04 = (u32)sub_0800e148;
     gUnk_03002490->unk38 = gUnk_08755650;
@@ -339,8 +339,8 @@ void sub_0800e148(void)
     }
     if (sub_0800ffe8()) {
         tbl = gUnk_08755650;
-        sub_08001a94(6, tbl[1], 0, 0, gUnk_03002490->unk48, gUnk_03002490->unk4A);
-        sub_08001a94(10, tbl[0], 0, 0, gUnk_03002490->unk48, gUnk_03002490->unk4A);
+        QueueSprite(6, tbl[1], 0, 0, gUnk_03002490->unk48, gUnk_03002490->unk4A);
+        QueueSprite(10, tbl[0], 0, 0, gUnk_03002490->unk48, gUnk_03002490->unk4A);
     }
 }
 
@@ -352,14 +352,14 @@ void sub_0800e28c(void)
     for (i = 0; i <= 3; i++) {
         p = gUnk_03001270;
         if (i == gUnk_020055E4)
-            sub_080017e4(2, (u32)gUnk_08554D7A, (u32)&p[i * 3 + 1], 6);
+            RequestCopy(2, (u32)gUnk_08554D7A, (u32)&p[i * 3 + 1], 6);
         else
-            sub_080017e4(2, (u32)gUnk_08554D80, (u32)&p[i * 3 + 1], 6);
+            RequestCopy(2, (u32)gUnk_08554D80, (u32)&p[i * 3 + 1], 6);
     }
 }
 
 s32 sub_0800e2dc(s32 id, s32 part)
 {
     LZ77UnCompWram(gUnk_08731E34[id], gUnk_02020000);
-    sub_080017e4(1, (u32)gUnk_02020000 + (part << 11), 0x06004200, 0x800);
+    RequestCopy(1, (u32)gUnk_02020000 + (part << 11), 0x06004200, 0x800);
 }

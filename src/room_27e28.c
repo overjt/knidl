@@ -135,7 +135,7 @@ extern s8 gUnk_0300238C;
 extern s8 gUnk_03002468;
 extern u16 gUnk_030012B0[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08008c64(u16 a0);
 void sub_08025e0c(void);
 void sub_0802b460(u16 a);
@@ -276,8 +276,8 @@ void sub_08028130(void)
         if (gUnk_02006098[0] == 1)
         {
             next = gUnk_087E1D58[gUnk_0300238C][gUnk_030023EC][gUnk_03002468 + 1];
-            sub_080017e4(2, (u32)(next->unk18 + 1), (u32)gUnk_030012B0, *gUnk_030055EC->unk18);
-            sub_080017e4(2, (u32)(next->unk28 + 1), (u32)gUnk_030012B0 + 0x1C0 - *gUnk_030055EC->unk28, *gUnk_030055EC->unk28);
+            RequestCopy(2, (u32)(next->unk18 + 1), (u32)gUnk_030012B0, *gUnk_030055EC->unk18);
+            RequestCopy(2, (u32)(next->unk28 + 1), (u32)gUnk_030012B0 + 0x1C0 - *gUnk_030055EC->unk28, *gUnk_030055EC->unk28);
         }
     }
 }

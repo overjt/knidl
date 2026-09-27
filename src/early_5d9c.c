@@ -9,15 +9,15 @@
  * `(s8)mem == 1` down to a bare `ldrb`+`cmp`, losing the ROM's
  * `lsls #24 / asrs #24`.  Only this recipe gets both right.
  *
- * The range holds 26 functions; symbols.csv lists 23 (sub_08005e1c,
- * sub_080063f0 and sub_0800641c are unreferenced dead exports).
+ * The range holds 26 functions; symbols.csv lists 23 (TaskDrawWorldOrFree,
+ * IsOnScreen and IsWorldPosOnScreen are unreferenced dead exports).
  */
 #include "gba/gba.h"
 #include "global.h"
 
 /* Sprite / draw-request record.  gUnk_03002490 points at the entry that is
  * currently being filled in; gUnk_03002790[] is the array those entries live
- * in (stride 0x90, indexed by the same slot number used by sub_08006148).
+ * in (stride 0x90, indexed by the same slot number used by TaskSetEntry).
  *
  * Evidence for the field types is in the ROM itself:
  *   unk38  ldr  [p,#0x38] + ldr [base + idx*4]   -> array of pointers
@@ -57,19 +57,19 @@ extern struct Sprite gUnk_03002790[];
 extern void *gTaskFlagsTable[];
 extern u32 gUnk_03004B90[];
 /* Camera scroll origin: subtracted from the world coordinates to get the
- * screen coordinates handed to sub_08001a94. */
+ * screen coordinates handed to QueueSprite. */
 extern s16 gUnk_03002348;
 extern s16 gUnk_030023E4;
 extern u32 gCurTaskIdx;
 
-extern s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
-extern void sub_08005654(u32 a);
-extern u8 sub_08005acc(void);
-extern u32 sub_08005bc4(u32 a);
-extern u8 sub_08005c4c(void);
+extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
+extern void TaskFree(u32 a);
+extern u8 TaskIsOnScreen(void);
+extern u32 TaskLoadFrameTiles(u32 a);
+extern u8 TaskIsInView(void);
 extern void TaskYieldTrampoline(u32 a);
 
-void sub_08005d9c(void)
+void TaskDrawWorld(void)
 {
     struct Sprite *p;
     struct Sprite *q;
@@ -78,14 +78,14 @@ void sub_08005d9c(void)
     p = gUnk_03002490;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
-    if (sub_08005acc() == 0) return;
+    if (TaskIsOnScreen() == 0) return;
     q = gUnk_03002490;
     tbl = q->unk38;
-    sub_08001a94(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+    QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
                  q->unk48 - gUnk_03002348, (s16)(q->unk4A - gUnk_030023E4));
 }
 
-void sub_08005e1c(void)
+void TaskDrawWorldOrFree(void)
 {
     struct Sprite *p;
     struct Sprite *q;
@@ -94,18 +94,18 @@ void sub_08005e1c(void)
     p = gUnk_03002490;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
-    if (sub_08005acc() != 0) {
+    if (TaskIsOnScreen() != 0) {
         q = gUnk_03002490;
         tbl = q->unk38;
-        sub_08001a94(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+        QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
                      q->unk48 - gUnk_03002348,
                      (s16)(q->unk4A - gUnk_030023E4));
     } else {
-        sub_08005654(gCurTaskIdx);
+        TaskFree(gCurTaskIdx);
     }
 }
 
-void sub_08005ea8(void)
+void TaskDrawWorldInView(void)
 {
     struct Sprite *p;
     struct Sprite *q;
@@ -114,16 +114,16 @@ void sub_08005ea8(void)
     p = gUnk_03002490;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
-    if (sub_08005c4c() == 0) return;
-    if (sub_08005acc() == 0) return;
+    if (TaskIsInView() == 0) return;
+    if (TaskIsOnScreen() == 0) return;
     q = gUnk_03002490;
     tbl = q->unk38;
-    sub_08001a94(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+    QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
                  q->unk48 - gUnk_03002348,
                  (s16)(q->unk4A - gUnk_030023E4));
 }
 
-void sub_08005f30(void)
+void TaskDrawWorldInViewOrFree(void)
 {
     struct Sprite *p;
     struct Sprite *q;
@@ -132,19 +132,19 @@ void sub_08005f30(void)
     p = gUnk_03002490;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
-    if (sub_08005c4c() != 0) {
-        if (sub_08005acc() == 0) return;
+    if (TaskIsInView() != 0) {
+        if (TaskIsOnScreen() == 0) return;
         q = gUnk_03002490;
         tbl = q->unk38;
-        sub_08001a94(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
+        QueueSprite(q->unk42, (u32)tbl[q->unk3C], q->unk3E, q->unk40,
                      q->unk48 - gUnk_03002348,
                      (s16)(q->unk4A - gUnk_030023E4));
     } else {
-        sub_08005654(gCurTaskIdx);
+        TaskFree(gCurTaskIdx);
     }
 }
 
-void sub_08005fc8(void)
+void TaskDrawWorldLoadTiles(void)
 {
     struct Sprite *p;
     struct Sprite *q;
@@ -153,10 +153,10 @@ void sub_08005fc8(void)
     p = gUnk_03002490;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
-    if (sub_08005acc() == 0) return;
-    v = sub_08005bc4(0);
+    if (TaskIsOnScreen() == 0) return;
+    v = TaskLoadFrameTiles(0);
     q = gUnk_03002490;
-    sub_08001a94(q->unk42, v, q->unk3E, q->unk40,
+    QueueSprite(q->unk42, v, q->unk3E, q->unk40,
                  q->unk48 - gUnk_03002348,
                  (s16)(q->unk4A - gUnk_030023E4));
 }
@@ -171,11 +171,11 @@ void sub_08006040(void)
     p = gUnk_03002490;
     if (p->unk38 == NULL) return;
     if (p->unk3C == -1) return;
-    if (sub_08005acc() == 0) return;
+    if (TaskIsOnScreen() == 0) return;
     q = gUnk_03002490;
     tbl = q->unk38;
     r = tbl[q->unk3C];
-    sub_08001a94(q->unk42, *r, q->unk3E, q->unk40,
+    QueueSprite(q->unk42, *r, q->unk3E, q->unk40,
                  q->unk48 - gUnk_03002348,
                  (s16)(q->unk4A - gUnk_030023E4));
 }
@@ -194,24 +194,24 @@ void sub_080060c0(void)
     if (p->unk4A <= -32) return;
     if (p->unk4A > 191) return;
     tbl = p->unk38;
-    sub_08001a94(p->unk42, (u32)tbl[p->unk3C], p->unk3E, p->unk40,
+    QueueSprite(p->unk42, (u32)tbl[p->unk3C], p->unk3E, p->unk40,
                  p->unk48, p->unk4A);
 }
 
-void sub_08006138(void)
+void TaskSleepForever(void)
 {
     while (1)
         TaskYieldTrampoline(0x7FFF);
 }
 
-void sub_08006148(void *a, u32 i)
+void TaskSetEntry(void *a, u32 i)
 {
     gUnk_03002790[i].unk10 = 0;
     gTaskFlagsTable[i] = a;
     gUnk_03004B90[i] = 0x0203BFE0 + (i << 8);
 }
 
-void sub_0800617c(s16 a)
+void TaskSetFrameByFacing(s16 a)
 {
     struct Sprite *p;
 
@@ -222,7 +222,7 @@ void sub_0800617c(s16 a)
         p->unk3C = a | 1;
 }
 
-void sub_080061a8(s32 a, s32 b, s32 c)
+void TaskSetMotionX(s32 a, s32 b, s32 c)
 {
     struct Sprite *p;
 
@@ -232,7 +232,7 @@ void sub_080061a8(s32 a, s32 b, s32 c)
     p->unk64 = abs(c);
 }
 
-void sub_080061c0(s32 a, s32 b)
+void TaskSetMotionXFacing(s32 a, s32 b)
 {
     struct Sprite *p;
 
@@ -246,7 +246,7 @@ void sub_080061c0(s32 a, s32 b)
     }
 }
 
-void sub_08006214(void)
+void TaskStopX(void)
 {
     struct Sprite *p;
 
@@ -256,7 +256,7 @@ void sub_08006214(void)
     p->unk64 = 0x80000000;
 }
 
-void sub_0800622c(s32 a, s32 b, s32 c)
+void TaskSetMotionY(s32 a, s32 b, s32 c)
 {
     struct Sprite *p;
 
@@ -266,7 +266,7 @@ void sub_0800622c(s32 a, s32 b, s32 c)
     p->unk68 = abs(c);
 }
 
-void sub_08006244(void)
+void TaskStopY(void)
 {
     struct Sprite *p;
 
@@ -276,7 +276,7 @@ void sub_08006244(void)
     p->unk68 = 0x80000000;
 }
 
-void sub_0800625c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
+void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
 {
     if (a != 0x5A5A5A5A) gUnk_03002490->unk54 = a;
     if (b != 0x5A5A5A5A) gUnk_03002490->unk5C = b;
@@ -286,7 +286,7 @@ void sub_0800625c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
     if (f != 0x5A5A5A5A) gUnk_03002490->unk68 = abs(f);
 }
 
-void sub_080062c4(void)
+void TaskStop(void)
 {
     struct Sprite *p;
 
@@ -299,7 +299,7 @@ void sub_080062c4(void)
     p->unk64 = 0x80000000;
 }
 
-void sub_080062e0(u32 i)
+void TaskStopSlot(u32 i)
 {
     struct Sprite *p;
 
@@ -312,7 +312,7 @@ void sub_080062e0(u32 i)
     p->unk64 = 0x80000000;
 }
 
-void sub_08006304(void)
+void TaskUpdateFlip(void)
 {
     struct Sprite *p;
 
@@ -323,13 +323,13 @@ void sub_08006304(void)
         p->unk3E |= 0x8000;
 }
 
-void sub_08006338(s32 a)
+void TaskSetFrame(s32 a)
 {
     gUnk_03002490->unk3C = a;
-    sub_08006304();
+    TaskUpdateFlip();
 }
 
-void sub_0800634c(s32 a)
+void TaskSetFrameNoFlip(s32 a)
 {
     struct Sprite *p;
 
@@ -338,7 +338,7 @@ void sub_0800634c(s32 a)
     p->unk3C = a;
 }
 
-void sub_08006364(s32 a)
+void TaskSetFrameFlip(s32 a)
 {
     struct Sprite *p;
 
@@ -369,7 +369,7 @@ void sub_080063ac(s16 a)
         p->unk4C = (p->unk48 - a) << 16;
 }
 
-u8 sub_080063f0(s16 a, s16 b)
+u8 IsOnScreen(s16 a, s16 b)
 {
     u16 t;
 
@@ -380,7 +380,7 @@ u8 sub_080063f0(s16 a, s16 b)
     return 1;
 }
 
-u8 sub_0800641c(s16 a, s16 b)
+u8 IsWorldPosOnScreen(s16 a, s16 b)
 {
     s16 x;
     s16 y;

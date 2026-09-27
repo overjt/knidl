@@ -135,9 +135,9 @@ extern u16 gUnk_0200AF18[];
 void sub_08002e98(u32 idx, u32 count, void (**fns)(void));
 u32 sub_08002ee8(u32 range);
 s32 sub_08003110(s32 songId);
-void sub_080055b0(u8 val, s32 idx);
-void sub_08006138(void);
-void sub_08006148(void *a, u32 i);
+void TaskSetSkipMask(u8 val, s32 idx);
+void TaskSleepForever(void);
+void TaskSetEntry(void *a, u32 i);
 s32 sub_08009ee8(s32 a, u32 b);
 s32 sub_08009fcc(s32 a, s32 b, u32 c);
 s32 sub_0800a008(s32 a, s32 b, u32 c);
@@ -196,9 +196,9 @@ void Task_Player(void)
                 sub_080b9610();
             else
                 sub_080b9118();
-            sub_08006138();
+            TaskSleepForever();
         }
-        sub_08006138();
+        TaskSleepForever();
     }
     else
     {
@@ -274,13 +274,13 @@ void Task_Player(void)
         gUnk_03002490->unk88->unk68 = 0;
         gUnk_03002490->unk88->unk6C = 0;
         sub_0805b278();
-        sub_08006138();
+        TaskSleepForever();
     case 2:
         gUnk_03002490->unk88->unk37 = 2;
         sub_0800a008(25, -1, gUnk_03002490->unk88->unk00);
         gUnk_03002490->unk88->unk06 = 3;
         sub_0804fe68();
-        sub_08006138();
+        TaskSleepForever();
     case 3:
         gUnk_03002490->unk88->unk37 = 3;
         sub_08009fcc(25, -1, gUnk_03002490->unk88->unk00);
@@ -294,7 +294,7 @@ void Task_Player(void)
         if (gUnk_03002490->unk88->unk00 == 0 || gUnk_020061E0 == 0)
             sub_08071cc0(gUnk_03002490->unk4C, gUnk_03002490->unk50, sub_080260b0());
         sub_0806ee30();
-        sub_08006138();
+        TaskSleepForever();
     case 3:
         gUnk_03002490->unk88->unk64 = 0;
         gUnk_03002490->unk88->unk68 = 0;
@@ -302,7 +302,7 @@ void Task_Player(void)
         gUnk_03001F34 = 1;
         gUnk_03002490->unk14 = 4;
         sub_08076318();
-        sub_08006138();
+        TaskSleepForever();
     case 1:
         gUnk_03001F34 = 1;
         gUnk_03002490->unk88->unk02 = 21;
@@ -582,7 +582,7 @@ void sub_0803332c(void)
             p = gUnk_03002490->unk88;
             if (!(p->unk40 & 1) && gUnk_03001F30 == 0 && p->unk04 == 7 && p->unk44 == 0)
             {
-                sub_08006148(sub_08032bd0, gCurTaskIdx);
+                TaskSetEntry(sub_08032bd0, gCurTaskIdx);
                 gUnk_03002490->unk88->unk01 = 18;
             }
         }
@@ -659,7 +659,7 @@ void sub_08033414(void)
             gUnk_03002490->unk88->unk29 = 1;
             gUnk_03002490->unk88->unk2B = 0;
             gUnk_03002490->unk88->unk24 = gUnk_03002490->unk88->unk26 = 0;
-            sub_080055b0(0, gCurTaskIdx);
+            TaskSetSkipMask(0, gCurTaskIdx);
         }
         if (gUnk_03002490->unk88->unk2C != -1)
             sub_0803e3ac();
@@ -681,7 +681,7 @@ void sub_08033414(void)
             sub_0803ce98();
     }
     if (gUnk_03002490->unk88->unk01 != 0)
-        sub_08006148(sub_08032bd0, gCurTaskIdx);
+        TaskSetEntry(sub_08032bd0, gCurTaskIdx);
     if (gUnk_03001F30 == 0)
     {
         if (gUnk_03002490->unk88->unk40 & 4)

@@ -13,7 +13,7 @@ extern u16 gUnk_02005600[];
 extern u8 gUnk_03001F30;
 extern s8 gUnk_03002444;
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08008c64(u16 a0);
 
 /* Copy n tiles from src into the HUD tilemap buffer at column x, row y.
@@ -73,7 +73,7 @@ void sub_0800b3a8(void)
 void sub_0800b3f8(void)
 {
     if (gUnk_0200002C != 0) {
-        sub_080017e4(1, (u32)gUnk_02005600, 0x06001000, 0x800);
+        RequestCopy(1, (u32)gUnk_02005600, 0x06001000, 0x800);
         gUnk_0200002C = 0;
     }
 }

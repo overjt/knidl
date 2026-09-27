@@ -7,7 +7,7 @@
  * The player's motion preset setter, called some 200 times from M09-M14's
  * action bodies: a0 picks one of 14 kinds of motion and a1 an entry of the
  * preset table gUnk_0873AFC4 (two halfword pairs).  Each kind writes the
- * 16.16 motion cells Task.unk54/unk5C (through sub_080061c0, which mirrors
+ * 16.16 motion cells Task.unk54/unk5C (through TaskSetMotionXFacing, which mirrors
  * them by the facing and leaves a component alone when passed 0x5A5A5A5A)
  * and Task.unk64/unk68 from signed 8.8 halfwords of gUnk_0873AFC4[a1] or of
  * the preset row gUnk_0873AF6C[gUnk_03001F30] (22 halfwords), some of them
@@ -26,7 +26,7 @@ extern u16 gUnk_0873AF58[][2];
 extern u32 gUnk_0873AF6C[];
 extern u32 gUnk_0873AFC4[];
 
-void sub_080061c0(s32 a, s32 b);
+void TaskSetMotionXFacing(s32 a, s32 b);
 void sub_0803e050(s32 a0);
 
 /* Byte-exact.  The key-mask table gUnk_03002458[...] is read inline at every
@@ -57,14 +57,14 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[2] << 8;
             if (q[2] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         else
         {
             s32 v = q[4] << 8;
             if (q[4] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         gUnk_03002490->unk64 = 0;
         break;
@@ -74,14 +74,14 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[1] << 8;
             if (q[1] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         else
         {
             s32 v = q[3] << 8;
             if (q[3] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         {
             struct Task *t = gUnk_03002490;
@@ -100,14 +100,14 @@ void sub_08040b40(s32 a0, s32 a1)
                 s32 v = q[1] << 8;
                 if (q[1] & 0x8000)
                     v |= 0xFF000000;
-                sub_080061c0(0x5A5A5A5A, v);
+                TaskSetMotionXFacing(0x5A5A5A5A, v);
             }
             else
             {
                 s32 v = q[3] << 8;
                 if (q[3] & 0x8000)
                     v |= 0xFF000000;
-                sub_080061c0(0x5A5A5A5A, v);
+                TaskSetMotionXFacing(0x5A5A5A5A, v);
             }
             {
                 struct Task *t = gUnk_03002490;
@@ -131,14 +131,14 @@ void sub_08040b40(s32 a0, s32 a1)
                 s32 v = q[6] << 8;
                 if (q[6] & 0x8000)
                     v |= 0xFF000000;
-                sub_080061c0(0x5A5A5A5A, v);
+                TaskSetMotionXFacing(0x5A5A5A5A, v);
             }
             else
             {
                 s32 v = q[3] << 8;
                 if (q[3] & 0x8000)
                     v |= 0xFF000000;
-                sub_080061c0(0x5A5A5A5A, v);
+                TaskSetMotionXFacing(0x5A5A5A5A, v);
             }
             {
                 struct Task *t = gUnk_03002490;
@@ -160,22 +160,22 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[10] << 8;
             if (q[10] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         else
         {
             s32 v = q[11] << 8;
             if (q[11] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         gUnk_03002490->unk64 = 0;
         break;
     case 5:
         if (gUnk_03002490->unk88->unk49 == 0)
-            sub_080061c0(0x20000, 0x1000);
+            TaskSetMotionXFacing(0x20000, 0x1000);
         else
-            sub_080061c0(0x20000, 0x800);
+            TaskSetMotionXFacing(0x20000, 0x800);
         gUnk_03002490->unk64 = 0;
         break;
     case 6:
@@ -184,7 +184,7 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[17] << 8;
             if (q[17] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
             gUnk_03002490->unk64 = 0x10000;
         }
         else
@@ -192,7 +192,7 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[18] << 8;
             if (q[18] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
             gUnk_03002490->unk64 = 0;
         }
         break;
@@ -204,7 +204,7 @@ void sub_08040b40(s32 a0, s32 a1)
                 s32 v = q[14] << 8;
                 if (q[14] & 0x8000)
                     v |= 0xFF000000;
-                sub_080061c0(0x5A5A5A5A, v);
+                TaskSetMotionXFacing(0x5A5A5A5A, v);
                 {
                     struct Task *t2 = gUnk_03002490;
 
@@ -216,7 +216,7 @@ void sub_08040b40(s32 a0, s32 a1)
             }
             else
             {
-                sub_080061c0(0x5A5A5A5A, 0x800);
+                TaskSetMotionXFacing(0x5A5A5A5A, 0x800);
                 gUnk_03002490->unk64 = 0x10C00;
             }
             break;
@@ -226,11 +226,11 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[15] << 8;
             if (q[15] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         else
         {
-            sub_080061c0(0x5A5A5A5A, 0x900);
+            TaskSetMotionXFacing(0x5A5A5A5A, 0x900);
         }
         gUnk_03002490->unk64 = 0;
         break;
@@ -239,7 +239,7 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[20] << 8;
             if (q[20] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         gUnk_03002490->unk64 = 0;
         break;
@@ -250,7 +250,7 @@ void sub_08040b40(s32 a0, s32 a1)
                 s32 v = q[19] << 8;
                 if (q[19] & 0x8000)
                     v |= 0xFF000000;
-                sub_080061c0(0x5A5A5A5A, v);
+                TaskSetMotionXFacing(0x5A5A5A5A, v);
             }
             {
                 struct Task *t = gUnk_03002490;
@@ -266,7 +266,7 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = q[20] << 8;
             if (q[20] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
             gUnk_03002490->unk64 = 0;
         }
         break;
@@ -305,14 +305,14 @@ void sub_08040b40(s32 a0, s32 a1)
             s32 v = r[0] << 8;
             if (r[0] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(v, 0x5A5A5A5A);
+            TaskSetMotionXFacing(v, 0x5A5A5A5A);
         }
         if (r[1] != 0x9999)
         {
             s32 v = r[1] << 8;
             if (r[1] & 0x8000)
                 v |= 0xFF000000;
-            sub_080061c0(0x5A5A5A5A, v);
+            TaskSetMotionXFacing(0x5A5A5A5A, v);
         }
         if (r[2] != 0x9999)
         {
@@ -367,17 +367,17 @@ void sub_08040b40(s32 a0, s32 a1)
                             s32 v = gUnk_0873AF58[n][0] << 8;
                             if (gUnk_0873AF58[n][0] & 0x8000)
                                 v |= 0xFF000000;
-                            sub_080061c0(0x5A5A5A5A, v);
+                            TaskSetMotionXFacing(0x5A5A5A5A, v);
                         }
                         else
                         {
-                            sub_080061c0(0x5A5A5A5A, 0xE00);
+                            TaskSetMotionXFacing(0x5A5A5A5A, 0xE00);
                         }
                     }
                 }
                 else
                 {
-                    sub_080061c0(0x5A5A5A5A, 0xE00);
+                    TaskSetMotionXFacing(0x5A5A5A5A, 0xE00);
                     gUnk_03002490->unk64 = 0;
                 }
             }
@@ -385,12 +385,12 @@ void sub_08040b40(s32 a0, s32 a1)
             {
                 if (gUnk_03002458[gUnk_03002490->unk88->unk00] & 48)
                 {
-                    sub_080061c0(0x5A5A5A5A, 0xC00);
+                    TaskSetMotionXFacing(0x5A5A5A5A, 0xC00);
                     gUnk_03002490->unk64 = 0x20000;
                 }
                 else
                 {
-                    sub_080061c0(0x5A5A5A5A, 0x400);
+                    TaskSetMotionXFacing(0x5A5A5A5A, 0x400);
                     gUnk_03002490->unk64 = 0;
                 }
             }

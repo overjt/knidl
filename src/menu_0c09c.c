@@ -58,11 +58,11 @@ extern u8 gExtraMode;
 
 void sub_0800214c(void);
 void sub_080021dc(void);
-void sub_080022e4(void);
-void sub_08002d54(s32 count);
+void RunFrame(void);
+void RunFrames(s32 count);
 void sub_08002db4(void);
 s32 sub_080031b8(s32 id);
-s32 sub_080058e4(u32 type, s32 idx);
+s32 TaskCreateFrom(u32 type, s32 idx);
 void sub_08008c4c(s32 a0);
 void sub_08008c64(u16 a0);
 void sub_0800bcf0(void);
@@ -152,14 +152,14 @@ void sub_0800c09c(void)
             if (++gUnk_0200B074 > 2)
                 gUnk_0200B074 = 0;
         }
-        sub_080022e4();
+        RunFrame();
     }
 }
 
 void sub_0800c20c(void)
 {
     gUnk_0200618C = 0;
-    sub_080058e4(241, 32);
+    TaskCreateFrom(241, 32);
     sub_0800e28c();
     sub_08008c64(21);
     sub_0800bda4(gCurSaveSlot);
@@ -173,7 +173,7 @@ void sub_0800c20c(void)
         gUnk_03001ED8 &= 0xE0FF;
         gUnk_03001ED8 |= 0x1E00;
         StartHBlankScroll(0);
-        sub_08002d54(8);
+        RunFrames(8);
         gUnk_02006180 = 9;
         break;
     case 4:
@@ -181,7 +181,7 @@ void sub_0800c20c(void)
         sub_08008c64(25);
         gUnk_03001ED8 &= 0xE0FF;
         gUnk_03001ED8 |= 0x1F00;
-        sub_080058e4(242, 32);
+        TaskCreateFrom(242, 32);
         StartHBlankScroll(3);
         gUnk_02006180 = 17;
         break;
@@ -218,9 +218,9 @@ void sub_0800c34c(void)
             if (gUnk_02006180 == 0)
             {
                 if (gUnk_02007E88 != 4)
-                    sub_080058e4(242, 32);
+                    TaskCreateFrom(242, 32);
                 if (gUnk_02004B70 != 0)
-                    sub_08002d54(4);
+                    RunFrames(4);
             }
         }
         if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9))
@@ -235,15 +235,15 @@ void sub_0800c34c(void)
                 {
                     gUnk_020060D0 = 2;
                     gUnk_02007D34 = 0;
-                    sub_080058e4(245, 32);
-                    sub_08002d54(10);
+                    TaskCreateFrom(245, 32);
+                    RunFrames(10);
                 }
                 else
                 {
                     gUnk_020060D0 = 3;
                     gUnk_02004B44 = 0;
-                    sub_080058e4(246, 32);
-                    sub_08002d54(10);
+                    TaskCreateFrom(246, 32);
+                    RunFrames(10);
                 }
                 break;
             case 3:
@@ -269,7 +269,7 @@ void sub_0800c34c(void)
             StartHBlankScroll(1);
             sub_08008c64(25);
             sub_0800fe54(0xFFF80000);
-            sub_08002d54(18);
+            RunFrames(18);
             return;
         }
         if (gUnk_02006180 == 0)
@@ -287,7 +287,7 @@ void sub_0800c34c(void)
                     gUnk_020055E4 = 0;
             }
         }
-        sub_080022e4();
+        RunFrame();
     }
 }
 
@@ -302,7 +302,7 @@ void sub_0800c558(void)
         {
             sub_080031b8(215);
             *state = 1;
-            sub_08002d54(10);
+            RunFrames(10);
             return;
         }
         if ((gUnk_03001EF4 & 0x80) && gUnk_02007D34 == 0)
@@ -315,14 +315,14 @@ void sub_0800c558(void)
             sub_080031b8(101);
             gUnk_02007D34 = 0;
         }
-        sub_080022e4();
+        RunFrame();
     }
     sub_080031b8(102);
     gExtraMode = gUnk_02007D34;
     *state = 3;
     gUnk_02004B44 = 0;
-    sub_080058e4(246, 32);
-    sub_08002d54(10);
+    TaskCreateFrom(246, 32);
+    RunFrames(10);
 }
 
 void sub_0800c610(void)
@@ -343,16 +343,16 @@ void sub_0800c610(void)
             {
                 gUnk_03001ED8 &= 0xE0FF;
                 gUnk_03001ED8 |= 0x1F00;
-                sub_080058e4(242, 32);
+                TaskCreateFrom(242, 32);
                 if (gSaveSlots[gCurSaveSlot].unk10 & 4)
                 {
                     gUnk_02007D34 = gExtraMode;
-                    sub_080058e4(245, 32);
+                    TaskCreateFrom(245, 32);
                 }
                 gUnk_02004B44 = 1;
-                sub_080058e4(246, 32);
+                TaskCreateFrom(246, 32);
                 if (gUnk_02004B70 != 0)
-                    sub_08002d54(1);
+                    RunFrames(1);
             }
         }
         if ((gUnk_03000038 & 9) || (gUnk_02004B70 & 9))
@@ -374,18 +374,18 @@ void sub_0800c610(void)
                 gUnk_03001E94 = gUnk_03000FA8 = 0;
                 sub_0800fd24(0xFFF00000, 256, 2);
                 sub_0800fd24(0xFFF00000, 256, 3);
-                sub_080058e4(250, 32);
+                TaskCreateFrom(250, 32);
                 sub_08008c64(26);
                 StartHBlankScroll(4);
-                sub_08002d54(16);
+                RunFrames(16);
                 sub_08008c64(39);
                 sub_08008c64(37);
                 gUnk_03001ED8 &= 0xE0FF;
                 gUnk_03001ED8 |= 0x1E00;
-                sub_080058e4(249, 32);
-                sub_08002d54(8);
+                TaskCreateFrom(249, 32);
+                RunFrames(8);
                 sub_08008c64(40);
-                sub_080058e4(251, 32);
+                TaskCreateFrom(251, 32);
             }
             return;
         }
@@ -396,7 +396,7 @@ void sub_0800c610(void)
                 gUnk_020060D0 = 2;
             else
                 gUnk_020060D0 = 1;
-            sub_08002d54(10);
+            RunFrames(10);
             return;
         }
         if (gUnk_02006180 == 0)
@@ -412,7 +412,7 @@ void sub_0800c610(void)
                 gUnk_02004B44 = 0;
             }
         }
-        sub_080022e4();
+        RunFrame();
     }
 }
 
@@ -423,8 +423,8 @@ void sub_0800c8a0(void)
     gUnk_0200618C = 0;
     gUnk_02007D34 = 1;
     sub_08008c64(29);
-    sub_080058e4(243, 32);
-    sub_08002d54(10);
+    TaskCreateFrom(243, 32);
+    RunFrames(10);
     keys = &gUnk_03000038;
     while (1)
     {
@@ -435,12 +435,12 @@ void sub_0800c8a0(void)
             {
                 sub_08008c64(30);
                 gUnk_02007D34 = 1;
-                sub_08002d54(10);
+                RunFrames(10);
             }
             else
             {
-                sub_080058e4(244, 32);
-                sub_08002d54(10);
+                TaskCreateFrom(244, 32);
+                RunFrames(10);
                 sub_080031b8(268);
                 EraseSaveSlot(gCurSaveSlot);
                 gUnk_020060D0 = 0;
@@ -450,9 +450,9 @@ void sub_0800c8a0(void)
                 StartHBlankScroll(1);
                 sub_08008c64(25);
                 sub_0800fe54(0xFFF80000);
-                sub_08002d54(28);
+                RunFrames(28);
                 sub_0800da9c(1);
-                sub_08002d54(16);
+                RunFrames(16);
                 return;
             }
         }
@@ -463,7 +463,7 @@ void sub_0800c8a0(void)
             else
                 sub_080031b8(215);
             gUnk_020060D0 = 1;
-            sub_08002d54(10);
+            RunFrames(10);
             return;
         }
         if ((gUnk_03001EF4 & 0x20) && gUnk_02007D34 == 1)
@@ -476,6 +476,6 @@ void sub_0800c8a0(void)
             sub_080031b8(101);
             gUnk_02007D34 = 1;
         }
-        sub_080022e4();
+        RunFrame();
     }
 }

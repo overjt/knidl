@@ -31,7 +31,7 @@ extern u16 gUnk_085A6FF0[];
 extern u16 gUnk_085A6FF8[];
 extern u16 gUnk_085A6FFC[];
 
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void sub_08002f14(s16 n);
 void sub_08008e6c(s32 a0);
 void sub_0800b318(u16 *src, s32 x, s32 y, s32 n);
@@ -334,7 +334,7 @@ void sub_0800b230(s32 a, s32 b)
             sub_0800b34c(12, row + 1, 16);
         } else {
             b--;
-            sub_080017e4(1, (u32)gUnk_085A6714 + (b << 10), 0x06000C00, 0x400);
+            RequestCopy(1, (u32)gUnk_085A6714 + (b << 10), 0x06000C00, 0x400);
             sub_0800b318(gUnk_085A6FFC, 12, row, 16);
             sub_0800b318(gUnk_085A6FFC + 16, 12, row + 1, 16);
             if (b == 0) {

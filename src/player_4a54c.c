@@ -52,9 +52,9 @@ extern s16 gUnk_0873B654[];
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
 void TaskYieldTrampoline(s32 frames);
-void sub_08006138(void);
-void sub_08006338(s32 a);
-void sub_0800634c(s32 a);
+void TaskSleepForever(void);
+void TaskSetFrame(s32 a);
+void TaskSetFrameNoFlip(s32 a);
 void sub_0801a828(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_080261d4(u16 a);
 u16 sub_08030848(struct HitBoxSet *p, s32 e);
@@ -78,7 +78,7 @@ void sub_0804a54c(void)
     gUnk_03002490->unk15 = 44;
     gUnk_03002490->unk28 = 0;
     gUnk_03002490->unk80 = 0;
-    sub_08006338(0xBBD);
+    TaskSetFrame(0xBBD);
     TaskYieldTrampoline(6);
     gUnk_03002490->unk3C++;
     TaskYieldTrampoline(2);
@@ -87,29 +87,29 @@ void sub_0804a54c(void)
     sub_08053940(gUnk_03002490->unk88->unk00, 8, 2);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08006338(0xBBF);
+        TaskSetFrame(0xBBF);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(3);
     } while ((s16)++gUnk_03002490->unk6C <= 1);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08006338(0xBC1);
+        TaskSetFrame(0xBC1);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(3);
     } while ((s16)++gUnk_03002490->unk6C <= 1);
     gUnk_03002490->unk6C = 0;
     do {
-        sub_08006338(0xBC3);
+        TaskSetFrame(0xBC3);
         TaskYieldTrampoline(2);
         gUnk_03002490->unk3C++;
         TaskYieldTrampoline(3);
     } while ((s16)++gUnk_03002490->unk6C <= 1);
-    sub_08006338(0xBBF);
+    TaskSetFrame(0xBBF);
     TaskYieldTrampoline(4);
     gUnk_03002490->unk28++;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804a6a0(void)
@@ -141,12 +141,12 @@ void sub_0804a6bc(void)
             sub_0803e050(1);
         if (gUnk_03002490->unk7A & 1) {
             sub_080413a4(39);
-            sub_08006338(0xC53);
+            TaskSetFrame(0xC53);
             TaskYieldTrampoline(3);
         } else {
             sub_0803e050(2);
         }
-        sub_08006338(0xC40);
+        TaskSetFrame(0xC40);
         TaskYieldTrampoline(1);
         gUnk_03002490->unk6C = 0;
         do {
@@ -164,7 +164,7 @@ void sub_0804a6bc(void)
         /* fallthrough */
     case 1:
         sub_0803e050(1);
-        sub_08006338(0xC48);
+        TaskSetFrame(0xC48);
         while (1) {
             if (gUnk_03002490->unk28 == 0) {
                 if (gUnk_030023C0[gUnk_03002490->unk88->unk00] & 2)
@@ -189,7 +189,7 @@ void sub_0804a6bc(void)
                 gUnk_03002490->unk58 = gUnk_03002490->unk68;
             }
         }
-        sub_08006338(0xC4D);
+        TaskSetFrame(0xC4D);
         TaskYieldTrampoline(2);
         sub_0805afac(gUnk_03002490->unk88->unk00, 43, 0);
         sub_0805afac(gUnk_03002490->unk88->unk00, 43, 1);
@@ -207,7 +207,7 @@ void sub_0804a6bc(void)
         gUnk_03002490->unk73 = 3;
         sub_0803e1b8(255, 0, gUnk_03002490->unk88->unk00);
     }
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_0804a970(void)
@@ -235,9 +235,9 @@ void sub_0804a970(void)
                 sub_0803e050(2);
             }
             if (gUnk_03005550.unk4 == 0)
-                sub_08006338(0xC48);
+                TaskSetFrame(0xC48);
             else
-                sub_0800634c(gUnk_0873B654[gUnk_03005550.unk4]);
+                TaskSetFrameNoFlip(gUnk_0873B654[gUnk_03005550.unk4]);
             {
                 struct PlayerState *p = gUnk_03002490->unk88;
                 if (p->unk3F != 2)
@@ -245,7 +245,7 @@ void sub_0804a970(void)
             }
             sub_08030848((struct HitBoxSet *)gUnk_0873CF6C, gUnk_03002490->unk88->unk00);
         } else {
-            sub_08006338(0xC48);
+            TaskSetFrame(0xC48);
             if (gUnk_03002490->unk7B & 1)
                 sub_0803e4a8();
             if ((gUnk_03002490->unk7B & 1) == 0)

@@ -29,7 +29,7 @@ extern u32 gUnk_080D2148[];
 
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(s32 frames);
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
 s32 sub_08002ee8(s32 n);
 
 void sub_08018e14(void)
@@ -76,7 +76,7 @@ void sub_08018e14(void)
             {
                 gUnk_03001F2C = gUnk_03002790[gUnk_03002490->unk44].unk48 + (gUnk_02006040[i] >> 16) - 8;
                 gUnk_03002448 = gUnk_03002790[gUnk_03002490->unk44].unk4A + (gUnk_02006040[i + 3] >> 16) + 16;
-                sub_08001a94(gUnk_03002490->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
+                QueueSprite(gUnk_03002490->unk42, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
             }
         }
         gUnk_03002490->unk6C++;

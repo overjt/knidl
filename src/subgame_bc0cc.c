@@ -22,7 +22,7 @@
  *                    reaction time from 0x087564B0[unk74 * 5 + unk18]; own
  *                    graphics loader sub_080bd188, draw callback sub_080bd938
  *   6  sub_080bd110  a three-frame sprite
- *   7  sub_080bd7f0  a sprite drawn by sub_08005ca0 (0x08755B90)
+ *   7  sub_080bd7f0  a sprite drawn by TaskDrawScreen (0x08755B90)
  *   8  sub_080bd8ac  the same graphics as a per-player award: in
  *                    gUnk_03002150 == 5, sub_080bd828 passes 1000 / 3000 /
  *                    5000 or 10 to sub_0800a0ac, or 1 to sub_08009eb8
@@ -99,17 +99,17 @@ extern u16 gUnk_0875651C[];
 void TaskDispatchTrampoline(void);
 void TaskYieldTrampoline(u32 frames);
 void LZ77UnCompWram(const void *src, void *dest);
-void sub_080017e4(u32 mode, u32 src, u32 dst, u32 size);
-s32 sub_08001a94(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
+void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void sub_08002e98(u32 a, u32 b, u32 *c);
 s32 sub_080031b8(s32 id);
-void sub_08005654(s32 id);
-s32 sub_080058e4(u32 type, s32 idx);
-void sub_080059d8(void);
-void sub_08005ca0(void);
-void sub_08006138(void);
-void sub_08006148(void *fn, u32 i);
-void sub_080062c4(void);
+void TaskFree(s32 id);
+s32 TaskCreateFrom(u32 type, s32 idx);
+void TaskMove(void);
+void TaskDrawScreen(void);
+void TaskSleepForever(void);
+void TaskSetEntry(void *fn, u32 i);
+void TaskStop(void);
 void sub_08009eb8(u32 a, u32 b);
 void sub_0800a0ac(u32 a, u32 b);
 
@@ -312,7 +312,7 @@ void sub_080bc3c8(void)
         t->unk68 = 0x50000;
         break;
     default:
-        sub_080062c4();
+        TaskStop();
         break;
     }
     gUnk_03002490->unk4C = gUnk_03002490->unk48 << 16;
@@ -345,7 +345,7 @@ void sub_080bc460(void)
 
 void sub_080bc4b0(void)
 {
-    s32 id = sub_080058e4(94, 32);
+    s32 id = TaskCreateFrom(94, 32);
 
     if (id != -1)
     {
@@ -367,7 +367,7 @@ void sub_080bc4b0(void)
 
 void sub_080bc54c(void)
 {
-    s32 id = sub_080058e4(94, 32);
+    s32 id = TaskCreateFrom(94, 32);
 
     if (id != -1)
     {
@@ -385,7 +385,7 @@ void sub_080bc54c(void)
 
 void sub_080bc5cc(void)
 {
-    s32 idx = sub_080058e4(94, 32);
+    s32 idx = TaskCreateFrom(94, 32);
 
     if (idx != -1)
     {
@@ -430,7 +430,7 @@ void sub_080bc5cc(void)
 
 void sub_080bc680(void)
 {
-    s32 idx = sub_080058e4(94, 32);
+    s32 idx = TaskCreateFrom(94, 32);
 
     if (idx != -1)
     {
@@ -486,11 +486,11 @@ void sub_080bc740(s32 a0, u16 a1)
     if (p->unk18 != 2)
     {
         t->unk14 = a1;
-        sub_08006148(sub_080bc8c4, a0);
+        TaskSetEntry(sub_080bc8c4, a0);
         if (t->unk34 != -1)
-            sub_08005654(t->unk34);
+            TaskFree(t->unk34);
         if (t->unk30 != -1)
-            sub_08005654(t->unk30);
+            TaskFree(t->unk30);
         t->unk30 = -1;
         t->unk34 = -1;
     }
@@ -531,7 +531,7 @@ void sub_080bc850(void)
 {
     struct Task *t = gUnk_03002490;
 
-    t->unk0C = (u32)sub_08005ca0;
+    t->unk0C = (u32)TaskDrawScreen;
     t->unk04 = (u32)sub_080bc8a8;
     t->unk42 = 7;
     t = gUnk_03002490;
@@ -548,7 +548,7 @@ void sub_080bc850(void)
         break;
     }
     sub_08002e98(gUnk_03002490->unk14, 6, gUnk_08756468);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bc8a8(void)
@@ -576,7 +576,7 @@ void sub_080bc8e0(void)
         TaskYieldTrampoline(gUnk_03002490->unk1C);
     }
     sub_080bc70c();
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bc948(void)
@@ -584,7 +584,7 @@ void sub_080bc948(void)
     if (gUnk_03000FB8 == 0 && gUnk_03002490->unk24 == 0)
         sub_080bc0ec();
     if (gUnk_03002490->unk14 != 0)
-        sub_08006148(sub_080bc8c4, gCurTaskIdx);
+        TaskSetEntry(sub_080bc8c4, gCurTaskIdx);
 }
 
 void sub_080bc988(void)
@@ -593,7 +593,7 @@ void sub_080bc988(void)
     sub_080bc1c4();
     while (gUnk_03000FB8 != 0)
         TaskYieldTrampoline(1);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bc9c0(void)
@@ -624,7 +624,7 @@ void sub_080bc9c4(void)
     }
     gUnk_03002490->unk48 = saved;
     gUnk_03002490->unk4C = gUnk_03002490->unk48 << 16;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bca68(void)
@@ -635,7 +635,7 @@ void sub_080bca6c(void)
 {
     s32 i;
 
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
+    gUnk_03002490->unk00 = (u32)TaskMove;
     gUnk_03002490->unk15 = 3;
     sub_080bc3c8();
     while (1)
@@ -657,7 +657,7 @@ void sub_080bcaac(void)
         u8 r = sub_080bc7c8();
         if (r == 0)
         {
-            sub_080062c4();
+            TaskStop();
             gUnk_03002490->unk00 = r;
         }
     }
@@ -693,7 +693,7 @@ void sub_080bcadc(void)
     TaskYieldTrampoline(30);
     p = &gUnk_03002790[gUnk_03002490->unk44];
     p->unk75 = 1;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bcbbc(void)
@@ -706,7 +706,7 @@ void sub_080bcbc0(void)
     sub_080bc800();
     while (gUnk_03000FB8 != 0)
         TaskYieldTrampoline(1);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bcbf8(void)
@@ -722,12 +722,12 @@ void sub_080bcbfc(void)
     if (tbl != NULL && t->unk3C != -1 && (u16)(t->unk48 + 63) <= 366
         && t->unk4A > -64 && t->unk4A < 224)
     {
-        sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+        QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
         u = gUnk_03002490;
         if (u->unk24 != -1)
         {
             tbl = (u32 *)u->unk30;
-            sub_08001a94(u->unk42, tbl[u->unk24], u->unk3E, u->unk34,
+            QueueSprite(u->unk42, tbl[u->unk24], u->unk3E, u->unk34,
                          u->unk48 + u->unk28, (s16)(u->unk4A + u->unk2C));
         }
     }
@@ -790,7 +790,7 @@ void sub_080bcdac(void)
     if (gUnk_03002490->unk20 != -1)
         TaskDispatchTrampoline();
     else
-        sub_08006138();
+        TaskSleepForever();
 }
 
 void sub_080bcde0(void)
@@ -845,12 +845,12 @@ void sub_080bce74(void)
     if (tbl != NULL && t->unk3C != -1 && (u16)(t->unk48 + 63) <= 366
         && t->unk4A > -64 && t->unk4A < 224)
     {
-        sub_08001a94(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+        QueueSprite(t->unk42, tbl[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
         u = gUnk_03002490;
-        sub_08001a94(u->unk42, tbl[u->unk24], u->unk3E, u->unk40,
+        QueueSprite(u->unk42, tbl[u->unk24], u->unk3E, u->unk40,
                      u->unk48 + u->unk28, (s16)(u->unk4A + u->unk2C));
         v = gUnk_03002490;
-        sub_08001a94(v->unk42 + 1, gUnk_08755AD8[0], v->unk3E, v->unk40,
+        QueueSprite(v->unk42 + 1, gUnk_08755AD8[0], v->unk3E, v->unk40,
                      v->unk48, (s16)(v->unk4A + 8));
     }
 }
@@ -863,7 +863,7 @@ void sub_080bcf60(void)
     t->unk04 = (u32)sub_080bcf8c;
     t->unk42 = 4;
     sub_080bcde0();
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bcf8c(void)
@@ -879,8 +879,8 @@ void sub_080bcfa4(void)
     struct Task *v;
     struct Task *w;
 
-    t->unk0C = (u32)sub_08005ca0;
-    t->unk00 = (u32)sub_080059d8;
+    t->unk0C = (u32)TaskDrawScreen;
+    t->unk00 = (u32)TaskMove;
     t->unk42 = 4;
     u = gUnk_03002490;
     u->unk38 = gUnk_08755A7C;
@@ -909,7 +909,7 @@ void sub_080bcfa4(void)
 
 void sub_080bd06c(void)
 {
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk42 = 4;
     gUnk_03002490->unk38 = gUnk_08755ADC;
     gUnk_03002490->unk40 |= 0x800;
@@ -934,8 +934,8 @@ void sub_080bd110(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
+    gUnk_03002490->unk00 = (u32)TaskMove;
     gUnk_03002490->unk42 = 4;
     t = gUnk_03002490;
     t->unk38 = gUnk_08755AC8;
@@ -945,8 +945,8 @@ void sub_080bd110(void)
     t->unk3C = t->unk18;
     t->unk58 = gUnk_087564A0[t->unk18];
     TaskYieldTrampoline(3);
-    sub_080062c4();
-    sub_08006138();
+    TaskStop();
+    TaskSleepForever();
 }
 
 void sub_080bd188(s32 a0)
@@ -954,8 +954,8 @@ void sub_080bd188(s32 a0)
     struct GfxDesc *d = gUnk_087564D0[a0];
 
     LZ77UnCompWram(d->unk0C, gUnk_02020000);
-    sub_080017e4(3, (u32)gUnk_02020000, 0x06013000, d->unk02 << 5);
-    sub_080017e4(2, d->unk08, (u32)gUnk_03001570, d->unk00 << 5);
+    RequestCopy(3, (u32)gUnk_02020000, 0x06013000, d->unk02 << 5);
+    RequestCopy(2, d->unk08, (u32)gUnk_03001570, d->unk00 << 5);
 }
 
 void sub_080bd1d0(s32 a0, u16 a1)
@@ -966,7 +966,7 @@ void sub_080bd1d0(s32 a0, u16 a1)
     if (u->unk18 != 2)
     {
         t->unk14 = a1;
-        sub_08006148(sub_080bd524, a0);
+        TaskSetEntry(sub_080bd524, a0);
     }
 }
 
@@ -1035,7 +1035,7 @@ void sub_080bd290(void)
 
 void sub_080bd370(void)
 {
-    s32 idx = sub_080058e4(94, 32);
+    s32 idx = TaskCreateFrom(94, 32);
 
     if (idx != -1)
     {
@@ -1122,7 +1122,7 @@ void sub_080bd4bc(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk04 = (u32)sub_080bd508;
     gUnk_03002490->unk42 = 12;
     t = gUnk_03002490;
@@ -1132,7 +1132,7 @@ void sub_080bd4bc(void)
     else
         t->unk14 = 0;
     sub_08002e98(gUnk_03002490->unk14, 6, gUnk_087564E4);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd508(void)
@@ -1158,7 +1158,7 @@ void sub_080bd544(void)
     sub_080bd370();
     TaskYieldTrampoline(gUnk_03002490->unk20);
     gUnk_03002490->unk14 = 1;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd594(void)
@@ -1166,7 +1166,7 @@ void sub_080bd594(void)
     if (gUnk_03000FB8 == 0 && gUnk_03002490->unk24 == 0)
         sub_080bd210();
     if (gUnk_03002490->unk14 != 0)
-        sub_08006148(sub_080bd524, gCurTaskIdx);
+        TaskSetEntry(sub_080bd524, gCurTaskIdx);
 }
 
 void sub_080bd5d4(void)
@@ -1175,7 +1175,7 @@ void sub_080bd5d4(void)
     sub_080bd290();
     while (gUnk_03000FB8 != 0)
         TaskYieldTrampoline(1);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd60c(void)
@@ -1186,7 +1186,7 @@ void sub_080bd610(void)
 {
     gUnk_03002490->unk15 = 2;
     sub_080bd3dc(1);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd62c(void)
@@ -1195,11 +1195,11 @@ void sub_080bd62c(void)
 
 void sub_080bd630(void)
 {
-    gUnk_03002490->unk00 = (u32)sub_080059d8;
+    gUnk_03002490->unk00 = (u32)TaskMove;
     gUnk_03002490->unk15 = 3;
     sub_080bd494();
     gUnk_0200B048 = ++gUnk_03002490->unk18;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd664(void)
@@ -1209,7 +1209,7 @@ void sub_080bd664(void)
         u8 r = sub_080bc7c8();
         if (r == 0)
         {
-            sub_080062c4();
+            TaskStop();
             gUnk_03002490->unk00 = r;
         }
     }
@@ -1219,7 +1219,7 @@ void sub_080bd694(void)
 {
     gUnk_03002490->unk15 = 4;
     sub_080bd3dc(0);
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd6b0(void)
@@ -1287,11 +1287,11 @@ void sub_080bd7ec(void)
 
 void sub_080bd7f0(void)
 {
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk42 = 4;
     gUnk_03002490->unk38 = gUnk_08755B90;
     gUnk_03002490->unk40 |= 0x800;
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd828(void)
@@ -1323,7 +1323,7 @@ void sub_080bd8ac(void)
 {
     struct Task *t;
 
-    gUnk_03002490->unk0C = (u32)sub_08005ca0;
+    gUnk_03002490->unk0C = (u32)TaskDrawScreen;
     gUnk_03002490->unk42 = 4;
     t = gUnk_03002490;
     t->unk38 = gUnk_08755B90;
@@ -1335,7 +1335,7 @@ void sub_080bd8ac(void)
         sub_080031b8(220);
     gUnk_03002490->unk40 |= 0x800;
     sub_080bd828();
-    sub_08006138();
+    TaskSleepForever();
 }
 
 void sub_080bd938(void)
@@ -1346,7 +1346,7 @@ void sub_080bd938(void)
     if (p != NULL && t->unk3C != -1)
     {
         if (t->unk48 >= -63 && t->unk48 <= 303 && t->unk4A > -64 && t->unk4A < 224)
-            sub_08001a94(t->unk42, p[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
+            QueueSprite(t->unk42, p[t->unk3C], t->unk3E, t->unk40, t->unk48, t->unk4A);
     }
 }
 
@@ -1356,5 +1356,5 @@ void sub_080bd9b0(void)
     gUnk_03002490->unk42 = 4;
     gUnk_03002490->unk38 = gUnk_08755A68;
     gUnk_03002490->unk40 |= 0x800;
-    sub_08006138();
+    TaskSleepForever();
 }
