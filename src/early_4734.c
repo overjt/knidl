@@ -1,7 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 
-/* Link boot sequencer + the AGB SDK MultiBoot client library
+/* The link block-transfer step + the AGB SDK MultiBoot client library
  * (0x08004734-0x08004FEB, issue #32 batch E2).
  *
  * Recipe: old_agbcc -O2 -mthumb-interwork (fnmatch --old2).  Evidence: the
@@ -21,8 +21,10 @@
  *   0x08004EAC  MultiBootHandShake      (static)
  *   0x08004F98  MultiBootWaitCycles     (static)
  *   0x08004FB0  MultiBootWaitSendDone   (static)
- * LinkBlockMain is game code: the 5-step link/multiboot session sequencer
- * driven by the counter at 0x0200EBA8.
+ * LinkBlockMain is game code: the 5-step block-transfer state machine
+ * (32-bit normal-mode SIO after the 0x5500/0x5501 handshake, run from
+ * EndFrame while gLinkDriverMode is 2), not multiboot, driven by the
+ * state gLinkBlockState (0x0200EBA8).
  *
  * STATUS: 9 of the 10 functions are byte-exact.
  * MultiBootMain is NOT matched: same size (1000 bytes) and the same
