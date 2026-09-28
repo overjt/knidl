@@ -15,7 +15,7 @@
  * Level resets and room loaders, part 1.  sub_0802296c (M02's
  * ResetScoresAndMaxHealth) and its twin sub_08022c3c clear the level state, rebuild
  * the per-stage door masks gUsedSubGameDoors[] and the cleared-stage mask
- * gUnk_0200B04C from the save flags (gUnk_08732348[level][6] names each
+ * gWarpStarStationLevels from the save flags (gHubDoorUnlocks[level][6] names each
  * stage's flag) and place the player at the matching door of the hub
  * room gRoomTable[8][stage][0]; sub_08022f50 (AgbMain) resets level,
  * stage and room; sub_08022f98/sub_08022f9c are M02's screen-setup hooks;
@@ -47,7 +47,7 @@ void sub_0802296c(void)
     gUnk_02007FF0 = 0;
     gUnk_02007D60 = 0;
     gUnk_0200AF0C = -1;
-    gUnk_0200B04C = 0;
+    gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)
             gUnk_02007BF0[i][j] = 0;
@@ -57,14 +57,14 @@ void sub_0802296c(void)
             gUsedSubGameDoors[i] = 15;
         else
             gUsedSubGameDoors[i] = 0;
-        if (gUnk_08732348[i][6] & 0x100)
+        if (gHubDoorUnlocks[i][6] & 0x100)
         {
-            if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
-                gUnk_0200B04C |= 1 << i;
+            if (gBigSwitchFlags[0] & (1 << (gHubDoorUnlocks[i][6] & 0xFF)))
+                gWarpStarStationLevels |= 1 << i;
         }
-        else if (gStageClearStatus[i][gUnk_08732348[i][6]] != 0)
+        else if (gStageClearStatus[i][gHubDoorUnlocks[i][6]] != 0)
         {
-            gUnk_0200B04C |= 1 << i;
+            gWarpStarStationLevels |= 1 << i;
         }
     }
     gLevelIndex = 8;
@@ -137,7 +137,7 @@ void sub_08022c3c(void)
     gUnk_02007FF0 = 0;
     gUnk_02007D60 = 0;
     gUnk_0200AF0C = -1;
-    gUnk_0200B04C = 0;
+    gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)
             gUnk_02007BF0[i][j] = 0;
@@ -147,14 +147,14 @@ void sub_08022c3c(void)
             gUsedSubGameDoors[i] = 15;
         else
             gUsedSubGameDoors[i] = 0;
-        if (gUnk_08732348[i][6] & 0x100)
+        if (gHubDoorUnlocks[i][6] & 0x100)
         {
-            if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
-                gUnk_0200B04C |= 1 << i;
+            if (gBigSwitchFlags[0] & (1 << (gHubDoorUnlocks[i][6] & 0xFF)))
+                gWarpStarStationLevels |= 1 << i;
         }
-        else if (gStageClearStatus[i][gUnk_08732348[i][6]] != 0)
+        else if (gStageClearStatus[i][gHubDoorUnlocks[i][6]] != 0)
         {
-            gUnk_0200B04C |= 1 << i;
+            gWarpStarStationLevels |= 1 << i;
         }
     }
     if (gCurLevel == 7)

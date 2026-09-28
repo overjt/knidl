@@ -365,8 +365,8 @@ gHBlankScrollStarted = 0x0200B040
 gBombRallyFinishOrder = 0x0200B044
 	.global	gUnk_0200B048
 gUnk_0200B048 = 0x0200B048
-	.global	gUnk_0200B04C
-gUnk_0200B04C = 0x0200B04C
+	.global	gWarpStarStationLevels
+gWarpStarStationLevels = 0x0200B04C
 	.global	gRoomBgLayout
 gRoomBgLayout = 0x0200B050
 	.global	gUnk_0200B060

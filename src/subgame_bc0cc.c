@@ -14,8 +14,8 @@
  *   1  sub_080bcdac  a label / icon sprite (draw callback sub_080bcbfc)
  *   2  QuickDrawTimer  a two-digit counter (QuickDrawTimerCount counts to 99 and
  *                    mirrors the value into the parent's Task.unk20)
- *   3  sub_080bcfa4  a scripted fly-in
- *   4  sub_080bd06c  a four-frame effect at (120, 96)
+ *   3  QuickDrawSlash  a scripted fly-in
+ *   4  QuickDrawBurst  a four-frame effect at (120, 96)
  *   5  QuickDrawOpponent  the single-player opponent CreateQuickDrawOpponent spawns: a
  *                    five-state machine over 0x087564E4 / 0x087564FC, one
  *                    animation set per level Task.unk18 (0-4) and its
@@ -803,7 +803,7 @@ void sub_080bcf8c(void)
         QuickDrawTimerCount();
 }
 
-void sub_080bcfa4(void)
+void QuickDrawSlash(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -838,11 +838,11 @@ void sub_080bcfa4(void)
     TaskExitTrampoline();
 }
 
-void sub_080bd06c(void)
+void QuickDrawBurst(void)
 {
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 4;
-    gCurTask->frameTable = gUnk_08755ADC;
+    gCurTask->frameTable = gQuickDrawBurstFrames;
     gCurTask->tileWord |= 0x800;
     gCurTask->pixelX = 120;
     gCurTask->pixelY = 96;

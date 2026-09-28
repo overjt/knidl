@@ -10048,8 +10048,8 @@ gUnk_0875585C:
 	.word	gUnk_08599FDC
 	.word	gUnk_08599FEC
 	.word	gUnk_0859A02C
-	.global	gUnk_087558BC
-gUnk_087558BC:
+	.global	gArenaDoorSignFrames
+gArenaDoorSignFrames:
 	.word	gUnk_085A3278
 	.global	gUnk_087558C0
 gUnk_087558C0:
@@ -10102,8 +10102,8 @@ gUnk_08755930:
 gUnk_0875593C:
 	.word	gUnk_085A3478
 	.word	gUnk_085A3490
-	.global	gUnk_08755944
-gUnk_08755944:
+	.global	gMuseumDoorSignFrames
+gMuseumDoorSignFrames:
 	.word	gUnk_085A34A8
 	.global	gUnk_08755948
 gUnk_08755948:
@@ -10119,11 +10119,11 @@ gUnk_08755948:
 	.word	gUnk_085A3540
 	.word	gUnk_085A3550
 	.word	gUnk_085A3560
-	.global	gUnk_08755978
-gUnk_08755978:
+	.global	gWarpStarStationDoorSignFrames
+gWarpStarStationDoorSignFrames:
 	.word	gUnk_085A3570
-	.global	gUnk_0875597C
-gUnk_0875597C:
+	.global	gWarpStarStationDoorSparkleFrames
+gWarpStarStationDoorSparkleFrames:
 	.word	gUnk_085A3578
 	.word	gUnk_085A3580
 	.word	gUnk_085A3588
@@ -10136,8 +10136,8 @@ gUnk_0875597C:
 gUnk_0875599C:
 	.word	gUnk_085A35B8
 	.word	gUnk_085A35D8
-	.global	gUnk_087559A4
-gUnk_087559A4:
+	.global	gWarpStarStationNumberFrames
+gWarpStarStationNumberFrames:
 	.word	gUnk_085A3AE0
 	.word	gUnk_085A3AE8
 	.word	gUnk_085A3AF0
@@ -10145,8 +10145,8 @@ gUnk_087559A4:
 	.word	gUnk_085A3B00
 	.word	gUnk_085A3B08
 	.word	gUnk_085A3B10
-	.global	gUnk_087559C0
-gUnk_087559C0:
+	.global	gWarpStarStationLevelSignFrames
+gWarpStarStationLevelSignFrames:
 	.word	gUnk_085A3B18
 	.word	gUnk_085A3B38
 	.word	gUnk_085A3B58
@@ -10250,8 +10250,8 @@ gUnk_08755AC8:
 	.global	gUnk_08755AD8
 gUnk_08755AD8:
 	.word	gUnk_085F36DC
-	.global	gUnk_08755ADC
-gUnk_08755ADC:
+	.global	gQuickDrawBurstFrames
+gQuickDrawBurstFrames:
 	.word	gUnk_085F4E1C
 	.word	gUnk_085F4E94
 	.word	gUnk_085F4F3C

@@ -40,7 +40,7 @@ extern s16 gPlayerLives[];
 extern u16 gUnk_02007D60;
 extern u32 gUnk_02007D64[];
 extern s16 gUnk_0200AF0C;
-extern u8 gUnk_0200B04C;
+extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
 extern u8 gUnk_0200D080;
 extern s16 gCameraAnchorY;
@@ -83,7 +83,7 @@ extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
 extern s32 CreateMapEvent();
-extern void sub_0802ffe8();
+extern void CreateWarpStarStationNumber();
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void TaskBreakBlocksNoPlayer();
@@ -167,9 +167,9 @@ void sub_080b5024(void)
             case 4:
                 if (gUnk_0200B078 == 3)
                 {
-                    if (!((gUnk_0200B04C >> (e->unk3 - 1)) & 1))
+                    if (!((gWarpStarStationLevels >> (e->unk3 - 1)) & 1))
                         continue;
-                    sub_0802ffe8(e->unk3 - 1, e->x, e->y);
+                    CreateWarpStarStationNumber(e->unk3 - 1, e->x, e->y);
                 }
                 else
                 {

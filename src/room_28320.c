@@ -12,7 +12,7 @@
  * Room start-up services.  SpawnDoorObjects clears the door-object slots
  * gDoorObjectTasks[32][3], finds the door the player entered by and spawns
  * an M08 stage object for every locked or special door (a 9-way switch on
- * the door kind, gated by the save flags gUnk_08732348/gStageClearStatus);
+ * the door kind, gated by the save flags gHubDoorUnlocks/gStageClearStatus);
  * CalcBg3Parallax computes the BG3 parallax factors, CalcRoomBounds the room
  * bounds, CameraResetBoundsToGroup the multi-player group bounds and CameraResetBounds
  * copies the room bounds into the camera and per-player bounds. */
@@ -62,7 +62,7 @@ void SpawnDoorObjects(void)
         x = (d->unk2 << 4) + 16;
         y = (d->unk4 << 4) + 8;
         k = d->unk6 & 0xFF;
-        v = gUnk_08732348[gCurLevel][k];
+        v = gHubDoorUnlocks[gCurLevel][k];
         if (v != 0xFFFF)
         {
             if (v & 0x100)
@@ -162,18 +162,18 @@ void SpawnDoorObjects(void)
                 else
                     gUnk_020055D4 = 0x2000;
             }
-            if (gUnk_0200B04C & ~(1 << gStageIndex))
-                gDoorObjectTasks[i][0] = sub_0802f7dc(x, y, 0, i);
+            if (gWarpStarStationLevels & ~(1 << gStageIndex))
+                gDoorObjectTasks[i][0] = CreateWarpStarStationDoorSign(x, y, 0, i);
             else
-                gDoorObjectTasks[i][0] = sub_0802f7dc(x, y, 1, i);
-            gDoorObjectTasks[i][1] = sub_0802fa3c(x, y, 0, m);
-            gDoorObjectTasks[i][2] = sub_0802fa3c(x, y, 1, m);
+                gDoorObjectTasks[i][0] = CreateWarpStarStationDoorSign(x, y, 1, i);
+            gDoorObjectTasks[i][1] = CreateWarpStarStationDoorSparkle(x, y, 0, m);
+            gDoorObjectTasks[i][2] = CreateWarpStarStationDoorSparkle(x, y, 1, m);
             break;
         case 8:
-            gDoorObjectTasks[i][0] = sub_0802eac8(x, y, i);
+            gDoorObjectTasks[i][0] = CreateArenaDoorSign(x, y, i);
             break;
         case 7:
-            gDoorObjectTasks[i][0] = sub_0802f420(x, y, i);
+            gDoorObjectTasks[i][0] = CreateMuseumDoorSign(x, y, i);
             break;
         }
     }

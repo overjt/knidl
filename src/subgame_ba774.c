@@ -74,13 +74,13 @@ void sub_080ba7b0(void)
 
 void sub_080ba7fc(u8 a0)
 {
-    sub_080baa38();
-    sub_080ba94c();
+    QuickDrawAwardRound();
+    CreateQuickDrawSlash();
     TaskYieldTrampoline(12);
     TaskSetOthersSkipMask(0, gCurTaskIdx);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1400;
-    sub_080ba978();
+    CreateQuickDrawBurst();
     if (a0 == 1)
         PlaySfx(253);
     gCurTask->unk30 = 0;
@@ -90,13 +90,13 @@ void sub_080ba7fc(u8 a0)
 void sub_080ba860(void)
 {
     sub_080baabc();
-    sub_080ba94c();
+    CreateQuickDrawSlash();
     TaskYieldTrampoline(12);
     TaskSetOthersSkipMask(0, gCurTaskIdx);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1400;
     PlaySfx(0x101);
-    sub_080ba978();
+    CreateQuickDrawBurst();
     TaskYieldTrampoline(68);
     sub_080ba900();
     TaskYieldTrampoline(120);
@@ -137,7 +137,7 @@ void sub_080ba900(void)
     }
 }
 
-void sub_080ba94c(void)
+void CreateQuickDrawSlash(void)
 {
     s32 i = TaskCreateFrom(94, 32);
     struct Task *t;
@@ -149,7 +149,7 @@ void sub_080ba94c(void)
     }
 }
 
-void sub_080ba978(void)
+void CreateQuickDrawBurst(void)
 {
     s32 i = TaskCreateFrom(94, 32);
     struct Task *t;
@@ -190,7 +190,7 @@ void QuickDrawUpdateRanking(s32 a0)
         gQuickDrawRanking[j] = buf[j];
 }
 
-void sub_080baa38(void)
+void QuickDrawAwardRound(void)
 {
     s32 i;
 

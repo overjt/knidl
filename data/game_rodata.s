@@ -1339,8 +1339,8 @@ gUnk_08732302:
 	.global	gUnk_0873232C
 gUnk_0873232C:
 	.incbin	"baserom.gba", 0x73232C, 0x1C
-	.global	gUnk_08732348
-gUnk_08732348:
+	.global	gHubDoorUnlocks
+gHubDoorUnlocks:
 	.incbin	"baserom.gba", 0x732348, 0x7E
 	.global	gUnk_087323C6
 gUnk_087323C6:

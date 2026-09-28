@@ -83,7 +83,7 @@ void InputRecorderStart(void)
         gInputRecordingPtr->unk12 = gUnk_020069F0;
         gInputRecordingPtr->unk13 = gUnk_02000020;
         gInputRecordingPtr->unk14 = gMaxHealth;
-        gInputRecordingPtr->unk36 = gUnk_0200B04C;
+        gInputRecordingPtr->unk36 = gWarpStarStationLevels;
         gInputRecordingPtr->unk11C = gLocalPlayer;
         gInputRecordingPtr->unk11E = gMetaKnightmareMode;
         for (i = 0; i <= 7; i++)

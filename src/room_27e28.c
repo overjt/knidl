@@ -93,7 +93,7 @@ void InitRoomBgLayout(void)
         gUnk_0200B078 = 3;
         gRoomBounds[2] = gRoomHeight * 16 - gRoomBorder[1] - 80;
         LoadGfxSet(3);
-        sub_08030074(gCurLevel);
+        CreateWarpStarStationLevelSign(gCurLevel);
         break;
     case 4:
         gUnk_0200B078 = 6;

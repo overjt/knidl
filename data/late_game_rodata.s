@@ -209,8 +209,8 @@ gQuickDrawObjectKinds:
 	.word	QuickDrawPlayer+1
 	.word	sub_080bcdac+1
 	.word	QuickDrawTimer+1
-	.word	sub_080bcfa4+1
-	.word	sub_080bd06c+1
+	.word	QuickDrawSlash+1
+	.word	QuickDrawBurst+1
 	.word	QuickDrawOpponent+1
 	.word	sub_080bd110+1
 	.word	sub_080bd7f0+1

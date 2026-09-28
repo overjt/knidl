@@ -20,7 +20,7 @@
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void PlaySfx(u32 a);
 
-s32 sub_0802eac8(s32 x, s32 y, s32 a)
+s32 CreateArenaDoorSign(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -41,7 +41,7 @@ s32 sub_0802eac8(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802eb28(void)
+void Task_ArenaDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -49,7 +49,7 @@ void sub_0802eb28(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)DoorObjectDraw;
-    t->frameTable = gUnk_087558BC;
+    t->frameTable = gArenaDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -498,7 +498,7 @@ void sub_0802f400(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f420(s32 x, s32 y, s32 a)
+s32 CreateMuseumDoorSign(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -519,7 +519,7 @@ s32 sub_0802f420(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802f480(void)
+void Task_MuseumDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -527,7 +527,7 @@ void sub_0802f480(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)DoorObjectDraw;
-    t->frameTable = gUnk_08755944;
+    t->frameTable = gMuseumDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;

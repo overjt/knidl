@@ -231,20 +231,20 @@ void Task_PengyIceBreathSparkle(void);
 void Task_BlipperDroplet(void);
 void Task_GlunkShotSpray(void);
 void sub_080b08e4(void);
-void sub_0802eb28(void);
+void Task_ArenaDoorSign(void);
 void sub_0802ec7c(void);
 void Task_DoorOpening(void);
 void Task_StageClearFlag(void);
 void Task_QuickDrawDoorSign(void);
 void Task_BombRallyDoorSign(void);
 void Task_AirGrindDoorSign(void);
-void sub_0802f480(void);
+void Task_MuseumDoorSign(void);
 void Task_StageDoorSign(void);
-void sub_0802f84c(void);
-void sub_0802faa8(void);
+void Task_WarpStarStationDoorSign(void);
+void Task_WarpStarStationDoorSparkle(void);
 void Task_LevelDoorSign(void);
-void sub_08030034(void);
-void sub_080300c0(void);
+void Task_WarpStarStationNumber(void);
+void Task_WarpStarStationLevelSign(void);
 void sub_080301a4(void);
 void Task_StageEffect(void);
 void Task_IntroStoryPicture(void);
@@ -501,20 +501,20 @@ const struct TaskType gTaskTypes[] = {
     /* 218 */ { 3, { 0, 0, 0 }, (u32)Task_BlipperDroplet },
     /* 219 */ { 3, { 0, 0, 0 }, (u32)Task_GlunkShotSpray },
     /* 220 */ { 3, { 0, 0, 0 }, (u32)sub_080b08e4 },
-    /* 221 */ { 3, { 0, 0, 0 }, (u32)sub_0802eb28 },
+    /* 221 */ { 3, { 0, 0, 0 }, (u32)Task_ArenaDoorSign },
     /* 222 */ { 3, { 0, 0, 0 }, (u32)sub_0802ec7c },
     /* 223 */ { 3, { 0, 0, 0 }, (u32)Task_DoorOpening },
     /* 224 */ { 3, { 0, 0, 0 }, (u32)Task_StageClearFlag },
     /* 225 */ { 3, { 0, 0, 0 }, (u32)Task_QuickDrawDoorSign },
     /* 226 */ { 3, { 0, 0, 0 }, (u32)Task_BombRallyDoorSign },
     /* 227 */ { 3, { 0, 0, 0 }, (u32)Task_AirGrindDoorSign },
-    /* 228 */ { 3, { 0, 0, 0 }, (u32)sub_0802f480 },
+    /* 228 */ { 3, { 0, 0, 0 }, (u32)Task_MuseumDoorSign },
     /* 229 */ { 3, { 0, 0, 0 }, (u32)Task_StageDoorSign },
-    /* 230 */ { 3, { 0, 0, 0 }, (u32)sub_0802f84c },
-    /* 231 */ { 3, { 0, 0, 0 }, (u32)sub_0802faa8 },
+    /* 230 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarStationDoorSign },
+    /* 231 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarStationDoorSparkle },
     /* 232 */ { 3, { 0, 0, 0 }, (u32)Task_LevelDoorSign },
-    /* 233 */ { 3, { 0, 0, 0 }, (u32)sub_08030034 },
-    /* 234 */ { 3, { 0, 0, 0 }, (u32)sub_080300c0 },
+    /* 233 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarStationNumber },
+    /* 234 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarStationLevelSign },
     /* 235 */ { 3, { 0, 0, 0 }, (u32)sub_080301a4 },
     /* 236 */ { 4, { 0, 0, 0 }, (u32)Task_StageEffect },
     /* 237 */ { 4, { 0, 0, 0 }, (u32)Task_IntroStoryPicture },

@@ -24,7 +24,7 @@ void sub_080b72bc(void)
     gRoomEntryY = gInputRecordingPtr->unk10;
     gUnk_02000020 = gInputRecordingPtr->unk13;
     gMaxHealth = gInputRecordingPtr->unk14;
-    gUnk_0200B04C = gInputRecordingPtr->unk36;
+    gWarpStarStationLevels = gInputRecordingPtr->unk36;
     gMetaKnightmareMode = gInputRecordingPtr->unk11E;
     for (i = 0; i <= 7; i++)
         gUsedSubGameDoors[i] = gInputRecordingPtr->unk38[i];

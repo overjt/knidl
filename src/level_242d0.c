@@ -29,7 +29,7 @@
  * split at 0x08024E40, EnterDoor and ExitClearedStage swap hoisted address
  * registers, lesson 4.79).  FindDoorAt(x, y) finds an enterable door at a
  * pixel - the door metatiles 16/144, 54/182 and 55/183, the door records
- * RoomDef.doors and their locks gUsedSubGameDoors[]/gUnk_0200B04C - and records
+ * RoomDef.doors and their locks gUsedSubGameDoors[]/gWarpStarStationLevels - and records
  * it in gUnk_02000030 (type << 8 | index); EnterDoor enters it, a 9-way
  * switch on the door kind (RoomDef door byte +6) that sets the next
  * level/stage/room, the arrival position gRoomEntryX/gRoomEntryY and
@@ -575,7 +575,7 @@ s32 FindDoorAt(s32 x, s32 y)
                 return 0;
             break;
         case 6:
-            if ((gUnk_0200B04C & ~(1 << gCurLevel)) == 0)
+            if ((gWarpStarStationLevels & ~(1 << gCurLevel)) == 0)
                 return 0;
             break;
         }
@@ -742,10 +742,10 @@ s32 EnterDoor(void)
                 gUnk_0200AF00 = 1;
                 gUnk_0200AF08 = 1;
                 gUnk_0200001C = gStageIndex + 1;
-                if (gUnk_08732348[gLevelIndex][6] == (s8)gUnk_03001F20)
+                if (gHubDoorUnlocks[gLevelIndex][6] == (s8)gUnk_03001F20)
                 {
                     gUnk_0200AF08 = 17;
-                    gUnk_0200B04C |= 1 << gLevelIndex;
+                    gWarpStarStationLevels |= 1 << gLevelIndex;
                 }
                 if (gUnk_08732302[gLevelIndex][gStageIndex] == -1
                     || (gBigSwitchFlags[0] & (1 << gUnk_08732302[gLevelIndex][gStageIndex])))
@@ -953,10 +953,10 @@ void sub_08025bc8(s32 id)
     if (gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] == 1)
         gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] = 2;
     lvl = gCurLevel;
-    if (gUnk_08732348[lvl][6] == gUnk_0200001C)
+    if (gHubDoorUnlocks[lvl][6] == gUnk_0200001C)
     {
         gUnk_0200AF08 |= 16;
-        gUnk_0200B04C |= 1 << lvl;
+        gWarpStarStationLevels |= 1 << lvl;
     }
     gUnk_020069F0 = 4;
     gUnk_0200AF00 = 3;
