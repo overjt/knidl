@@ -32675,6 +32675,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32682,7 +32683,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/actor_653ec.c:1785); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/actor_653ec.c:1785); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0873F6BC",
@@ -32866,6 +32867,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32873,13 +32875,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9c0a8.c:248); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9c0a8.c:248); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747DB4",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32887,13 +32890,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:192); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:192); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747E0C",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32901,13 +32905,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:754); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:754); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747E64",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32915,13 +32920,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9cc24.c:285); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9cc24.c:285); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x087487BC",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32929,7 +32935,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDefSlot (src/enemy_a1590.c:457); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDefSlot (src/enemy_a1590.c:457); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748918",
@@ -32954,6 +32960,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32961,13 +32968,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3049); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3049); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748B60",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32975,13 +32983,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3141); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3141); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748B8C",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32989,7 +32998,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3217); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3217); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08749AE8",
@@ -33041,6 +33050,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33048,13 +33058,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2407); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2407); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B998",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33062,13 +33073,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2440); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2440); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B9C4",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33076,13 +33088,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2464); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2464); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B9F0",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33090,13 +33103,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2489); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2489); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA1C",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33104,13 +33118,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2514); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2514); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA48",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33118,13 +33133,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2538); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2538); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA74",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33132,13 +33148,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2603); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2603); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BAA0",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33146,7 +33163,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2708); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2708); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874C1FC",

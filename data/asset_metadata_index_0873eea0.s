@@ -3,7 +3,7 @@
 @ Segment asset_metadata_index_0873eea0: 0x0873EEA0-0x08760000 (data, 0x21160 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 3841 label(s), 1988 code pointer(s), 17590 data pointer(s), 2157 .incbin slice(s) (0xDF78 bytes).
+@ 3841 label(s), 1988 code pointer(s), 17595 data pointer(s), 2157 .incbin slice(s) (0xDF64 bytes).
 @ 802 of the pointers are in next-label tables (docs/data.md 5.1).
 
 	.section .asset_metadata_index_0873eea0, "a"
@@ -6565,7 +6565,8 @@ gUnk_08747D30:
 	.incbin	"baserom.gba", 0x747D30, 0x2C
 	.global	gUnk_08747D5C
 gUnk_08747D5C:
-	.incbin	"baserom.gba", 0x747D5C, 0x14
+	.incbin	"baserom.gba", 0x747D5C, 0x10
+	.word	gUnk_08748198
 	.word	gUnk_08747EBC
 	.word	gUnk_08748178
 	.word	gUnk_087481A0
@@ -6581,7 +6582,8 @@ gUnk_08747D88:
 	.incbin	"baserom.gba", 0x747DAC, 0x8
 	.global	gUnk_08747DB4
 gUnk_08747DB4:
-	.incbin	"baserom.gba", 0x747DB4, 0x14
+	.incbin	"baserom.gba", 0x747DB4, 0x10
+	.word	gUnk_08748198
 	.word	gUnk_08747EBC
 	.word	gUnk_08748180
 	.word	gUnk_087481BC
@@ -6595,7 +6597,8 @@ gUnk_08747DE0:
 	.incbin	"baserom.gba", 0x747DF8, 0x14
 	.global	gUnk_08747E0C
 gUnk_08747E0C:
-	.incbin	"baserom.gba", 0x747E0C, 0x14
+	.incbin	"baserom.gba", 0x747E0C, 0x10
+	.word	gUnk_08748198
 	.word	gUnk_08747EBC
 	.word	gUnk_08748188
 	.word	gUnk_087481D8
@@ -6611,7 +6614,8 @@ gUnk_08747E38:
 	.incbin	"baserom.gba", 0x747E5C, 0x8
 	.global	gUnk_08747E64
 gUnk_08747E64:
-	.incbin	"baserom.gba", 0x747E64, 0x14
+	.incbin	"baserom.gba", 0x747E64, 0x10
+	.word	gUnk_08748198
 	.word	gUnk_08747EBC
 	.word	gUnk_08748190
 	.word	gUnk_087481F4
@@ -7044,7 +7048,8 @@ gMrShineAndMrBrightDef:
 	.incbin	"baserom.gba", 0x7487B4, 0x8
 	.global	gUnk_087487BC
 gUnk_087487BC:
-	.incbin	"baserom.gba", 0x7487BC, 0x14
+	.incbin	"baserom.gba", 0x7487BC, 0x10
+	.word	gUnk_08748928
 	.word	gUnk_087488AC
 	.word	gUnk_08748910
 	.word	gUnk_0874894C
