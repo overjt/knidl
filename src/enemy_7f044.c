@@ -34,7 +34,7 @@
  *     Actor.terrainBox) and the jump-table state machine `sub_0807fe18`
  *     (five states over Task.unk30);
  *   * the six-frame flap loop `sub_08080b2c` and the "spawn a puff of six
- *     class-6 actors" routines `sub_08080570` / `sub_08080930`.
+ *     class-6 actors" routines `HotHeadWalkShoot` / `HotHeadStandShoot`.
  *
  * `sub_0807fb44`, `sub_08080300` and `sub_080807bc` are dead exports: each is
  * a copy of its host's tail dispatch that nothing in the ROM references
@@ -175,7 +175,7 @@ void sub_0807f1f0(void)
         TaskSetEntry(KabuJumpEnterState, gCurTaskIdx);
 }
 
-void sub_0807f218(void)
+void KabuJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -213,7 +213,7 @@ void sub_0807f2b4(void)
     }
 }
 
-void sub_0807f2ec(void)
+void KabuJumpFall(void)
 {
     struct Task *a;
     struct Task *b;
@@ -1228,7 +1228,7 @@ void HotHeadWalkUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080804f0(void)
+void HotHeadWalk(void)
 {
     struct Task *t;
 
@@ -1261,7 +1261,7 @@ void sub_0808051c(void)
     }
 }
 
-void sub_08080570(void)
+void HotHeadWalkShoot(void)
 {
     struct ActorSpawn sp;
 
@@ -1329,7 +1329,7 @@ void sub_080806e8(void)
         TaskSetEntry(HotHeadWalkEnterState, gCurTaskIdx);
 }
 
-void sub_08080740(void)
+void HotHeadWalkFall(void)
 {
     gCurTask->updateState = 2;
     TaskStopX();
@@ -1439,7 +1439,7 @@ void sub_080808dc(void)
     }
 }
 
-void sub_08080930(void)
+void HotHeadStandShoot(void)
 {
     struct ActorSpawn sp;
 
@@ -1508,7 +1508,7 @@ void sub_08080aa8(void)
         TaskSetEntry(HotHeadStandEnterState, gCurTaskIdx);
 }
 
-void sub_08080b00(void)
+void HotHeadStandFall(void)
 {
     gCurTask->updateState = 2;
     TaskStopX();

@@ -82,9 +82,9 @@ gWaddleDooVariants:
 	.word	WaddleDooShoot+1
 	.global	gWaddleDooWalkStates
 gWaddleDooWalkStates:
-	.word	sub_08085530+1
-	.word	sub_08085660+1
-	.word	sub_080856e0+1
+	.word	WaddleDooWalk+1
+	.word	WaddleDooWalkJump+1
+	.word	WaddleDooWalkShoot+1
 	.global	gWaddleDooWalkStateUpdates
 gWaddleDooWalkStateUpdates:
 	.word	sub_08085608+1
@@ -107,9 +107,9 @@ gUnk_0874202C:
 	.incbin	"baserom.gba", 0x74202C, 0x4
 	.global	gParasolWaddleDooStates
 gParasolWaddleDooStates:
-	.word	sub_080858fc+1
-	.word	sub_08085a04+1
-	.word	sub_08085a84+1
+	.word	ParasolWaddleDooWalk+1
+	.word	ParasolWaddleDooJump+1
+	.word	ParasolWaddleDooShoot+1
 	.word	sub_08085be4+1
 	.global	gParasolWaddleDooStateUpdates
 gParasolWaddleDooStateUpdates:
@@ -330,7 +330,7 @@ gSquishyVariants:
 	.word	SquishyIdle+1
 	.global	gSquishyWalkStates
 gSquishyWalkStates:
-	.word	sub_08088708+1
+	.word	SquishyWalk+1
 	.word	sub_0808880c+1
 	.word	sub_080888c8+1
 	.word	sub_08088948+1
@@ -402,7 +402,7 @@ gGlunkVariants:
 	.global	gGlunkStates
 gGlunkStates:
 	.word	sub_0808990c+1
-	.word	sub_080899fc+1
+	.word	GlunkShoot+1
 	.global	gGlunkStateUpdates
 gGlunkStateUpdates:
 	.word	sub_080899d4+1
@@ -429,7 +429,7 @@ gSlippyStates:
 	.word	sub_0808a3c4+1
 	.word	sub_0808a4d0+1
 	.word	sub_0808a610+1
-	.word	sub_0808a768+1
+	.word	SlippyFall+1
 	.global	gSlippyStateUpdates
 gSlippyStateUpdates:
 	.word	sub_08089ea0+1
@@ -538,9 +538,9 @@ gGipVariants:
 	.word	GipIdle+1
 	.global	gGipStates
 gGipStates:
-	.word	sub_0808bea0+1
-	.word	sub_0808bea0+1
-	.word	sub_0808bea0+1
+	.word	GipWalk+1
+	.word	GipWalk+1
+	.word	GipWalk+1
 	.word	sub_0808bfc4+1
 	.word	sub_0808c02c+1
 	.word	sub_0808c260+1

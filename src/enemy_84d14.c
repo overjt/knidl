@@ -482,7 +482,7 @@ void WaddleDooWalkUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08085530(void)
+void WaddleDooWalk(void)
 {
     struct Task *u1;
     struct Task *u2;
@@ -552,7 +552,7 @@ void sub_08085608(void)
     }
 }
 
-void sub_08085660(void)
+void WaddleDooWalkJump(void)
 {
     struct Task *t;
 
@@ -581,7 +581,7 @@ void sub_080856dc(void)
 {
 }
 
-void sub_080856e0(void)
+void WaddleDooWalkShoot(void)
 {
     struct Task *t;
     struct Task *u;
@@ -677,7 +677,7 @@ void ParasolWaddleDooUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080858fc(void)
+void ParasolWaddleDooWalk(void)
 {
     struct Task *u1;
     struct Task *u2;
@@ -747,7 +747,7 @@ void sub_08085998(void)
     }
 }
 
-void sub_08085a04(void)
+void ParasolWaddleDooJump(void)
 {
     struct Task *t;
 
@@ -776,7 +776,7 @@ void sub_08085a80(void)
 {
 }
 
-void sub_08085a84(void)
+void ParasolWaddleDooShoot(void)
 {
     struct Task *t;
     struct Task *u;

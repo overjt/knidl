@@ -864,7 +864,7 @@ void GipUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808bea0(void)
+void GipWalk(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk18 = 1;

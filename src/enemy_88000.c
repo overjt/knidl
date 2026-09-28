@@ -380,7 +380,7 @@ void SquishyWalkUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08088708(void)
+void SquishyWalk(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk34 = 100;
@@ -1271,7 +1271,7 @@ void sub_080899d4(void)
         TaskSetEntry(GlunkEnterState, gCurTaskIdx);
 }
 
-void sub_080899fc(void)
+void GlunkShoot(void)
 {
     struct ActorSpawn sp;
     u8 zero;
@@ -1850,7 +1850,7 @@ void sub_0808a710(void)
     }
 }
 
-void sub_0808a768(void)
+void SlippyFall(void)
 {
     gCurTask->updateState = 10;
     gCurTask->unk28 = 1;

@@ -235,8 +235,8 @@ gKabuVariants:
 	.global	gKabuJumpStates
 gKabuJumpStates:
 	.word	sub_0807f0c4+1
-	.word	sub_0807f218+1
-	.word	sub_0807f2ec+1
+	.word	KabuJump+1
+	.word	KabuJumpFall+1
 	.global	gKabuJumpStateUpdates
 gKabuJumpStateUpdates:
 	.word	sub_0807f1f0+1
@@ -317,9 +317,9 @@ gHotHeadVariants:
 	.word	HotHeadStandInit+1
 	.global	gHotHeadWalkStates
 gHotHeadWalkStates:
-	.word	sub_080804f0+1
-	.word	sub_08080570+1
-	.word	sub_08080740+1
+	.word	HotHeadWalk+1
+	.word	HotHeadWalkShoot+1
+	.word	HotHeadWalkFall+1
 	.global	gHotHeadWalkStateUpdates
 gHotHeadWalkStateUpdates:
 	.word	sub_0808051c+1
@@ -334,8 +334,8 @@ gHotHeadIdleStateUpdates:
 	.global	gHotHeadStandStates
 gHotHeadStandStates:
 	.word	sub_080808bc+1
-	.word	sub_08080930+1
-	.word	sub_08080b00+1
+	.word	HotHeadStandShoot+1
+	.word	HotHeadStandFall+1
 	.global	gHotHeadStandStateUpdates
 gHotHeadStandStateUpdates:
 	.word	sub_080808dc+1
@@ -386,9 +386,9 @@ gUnk_0874156C:
 	.word	sub_080812ec+1
 	.global	gStarmanJumpStates
 gStarmanJumpStates:
-	.word	sub_0808148c+1
-	.word	sub_08081508+1
-	.word	sub_0808159c+1
+	.word	StarmanJumpWalk+1
+	.word	StarmanJump+1
+	.word	StarmanJumpFall+1
 	.global	gStarmanJumpStateUpdates
 gStarmanJumpStateUpdates:
 	.word	sub_080814b4+1
@@ -417,7 +417,7 @@ gPoppyBrosJrVariants:
 	.global	gPoppyBrosJrStates
 gPoppyBrosJrStates:
 	.word	sub_08081aac+1
-	.word	sub_08081bc4+1
+	.word	PoppyBrosJrWalk+1
 	.word	PoppyBrosJrJump+1
 	.global	gPoppyBrosJrStateUpdates
 gPoppyBrosJrStateUpdates:
@@ -446,7 +446,7 @@ gUnk_087415FC:
 gPoppyBrosJrRideVariants:
 	.word	PoppyBrosJrRideInit+1
 	.word	PoppyBrosJrDroppedObjectInit+1
-	.word	sub_0808248c+1
+	.word	PoppyBrosJrRideIdleInit+1
 	.global	gPoppyBrosJrRideStates
 gPoppyBrosJrRideStates:
 	.word	sub_08082270+1
@@ -459,11 +459,11 @@ gPoppyBrosJrDroppedObjectStates:
 	.global	gPoppyBrosJrDroppedObjectStateUpdates
 gPoppyBrosJrDroppedObjectStateUpdates:
 	.word	sub_08082458+1
-	.global	gUnk_08741620
-gUnk_08741620:
-	.word	sub_0808253c+1
-	.global	gUnk_08741624
-gUnk_08741624:
+	.global	gPoppyBrosJrRideIdleStates
+gPoppyBrosJrRideIdleStates:
+	.word	PoppyBrosJrRideIdle+1
+	.global	gPoppyBrosJrRideIdleStateUpdates
+gPoppyBrosJrRideIdleStateUpdates:
 	.word	sub_08082548+1
 	.global	gUnk_08741628
 gUnk_08741628:
@@ -582,7 +582,7 @@ gFlamerVariants:
 gFlamerStates:
 	.word	sub_08082f04+1
 	.word	sub_08082fdc+1
-	.word	sub_080832d0+1
+	.word	FlamerFall+1
 	.word	sub_08083370+1
 	.word	sub_08083428+1
 	.word	sub_08083614+1

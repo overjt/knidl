@@ -8,7 +8,7 @@
  * This batch holds:
  *   * script 2's rows `LaserBallInit` / `LaserBallIdleInit` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
- *     with `sub_0808e480` / `sub_0808e54c` / `sub_0808e610` / `sub_0808e730`
+ *     with `sub_0808e480` / `sub_0808e54c` / `LaserBallShoot` / `sub_0808e730`
  *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
  *     `sub_0808e800` as their guards;
  *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
@@ -174,7 +174,7 @@ void sub_0808e5cc(void)
     }
 }
 
-void sub_0808e610(void)
+void LaserBallShoot(void)
 {
     struct Task *t;
     struct Task *u;

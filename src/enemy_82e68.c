@@ -279,7 +279,7 @@ void sub_08083020(void)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_080832d0(void)
+void FlamerFall(void)
 {
     struct Task *t;
 

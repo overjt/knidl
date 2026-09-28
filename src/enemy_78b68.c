@@ -20,7 +20,7 @@
  *   * the shared eight-frame "bob" coroutine `sub_08078b68`, which nine of
  *     the bank's idle bodies tail-call;
  *   * the `0x08740648` / `0x08740668` cue+delay pair Task_WaddleDee's walk
- *     states (rows 0/1: `sub_08078c80`, `sub_08078d88`) index by Task.unk74;
+ *     states (rows 0/1: `WaddleDeeWalk`, `WaddleDeePaceWalk`) index by Task.unk74;
  *   * Task_Pengy's (#12) four-state row `PengyInit`+`PengyUpdate` with its
  *     state table gPengyStates (`0x08740758`) and the `sub_080795d8` check
  *     (the nearest player within 64 px horizontally, plus a cooldown timer);
@@ -114,7 +114,7 @@ void WaddleDeeWalkEnterState(void)
     CallTableEntry(gCurTask->state, 2, gWaddleDeeWalkStates);
 }
 
-void sub_08078c80(void)
+void WaddleDeeWalk(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -126,7 +126,7 @@ void sub_08078cb8(void)
 {
 }
 
-void sub_08078cbc(void)
+void WaddleDeeWalkFall(void)
 {
     gCurTask->updateState = 1;
     TaskSetMotionY(0, 0x1500, 0x30000);
@@ -162,7 +162,7 @@ void WaddleDeePaceEnterState(void)
     CallTableEntry(gCurTask->state, 2, gWaddleDeePaceStates);
 }
 
-void sub_08078d88(void)
+void WaddleDeePaceWalk(void)
 {
     struct Task *t;
 
@@ -192,7 +192,7 @@ void sub_08078dd4(void)
     }
 }
 
-void sub_08078e10(void)
+void WaddleDeePaceFall(void)
 {
     gCurTask->updateState = 1;
     TaskSetMotionY(0, 0x1500, 0x30000);
@@ -257,7 +257,7 @@ void sub_08078f24(void)
     }
 }
 
-void sub_08078f8c(void)
+void WaddleDeeJump(void)
 {
     s32 saved;
 
@@ -315,7 +315,7 @@ void sub_0807906c(void)
     }
 }
 
-void sub_080790c0(void)
+void WaddleDeeJumpFall(void)
 {
     gCurTask->updateState = 2;
     TaskSetMotionY(0, 0x1500, 0x30000);
@@ -352,7 +352,7 @@ void ParasolWaddleDeeWalkEnterState(void)
     CallTableEntry(gCurTask->state, 2, gParasolWaddleDeeWalkStates);
 }
 
-void sub_08079194(void)
+void ParasolWaddleDeeWalk(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1164,7 +1164,7 @@ void SparkyJumpEnterState(void)
     CallTableEntry(gCurTask->state, 4, gSparkyJumpStates);
 }
 
-void sub_0807a128(void)
+void SparkyJump(void)
 {
     gCurTask->updateState = 2;
     TaskStop();

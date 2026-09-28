@@ -710,7 +710,7 @@ void sub_0807b7a8(void)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807b7d0(void)
+void SwordAndBladeKnightWalkFall(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
@@ -1229,7 +1229,7 @@ void sub_0807c29c(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_0807c2b8(void)
+void NeedlousDash(void)
 {
     gCurTask->updateState = 5;
     sub_0807c030();
@@ -1565,7 +1565,7 @@ void sub_0807c8d0(void)
     }
 }
 
-void sub_0807c9b4(void)
+void UFOShoot(void)
 {
     gCurTask->updateState = 3;
     TaskStop();

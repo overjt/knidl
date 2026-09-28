@@ -96,7 +96,7 @@ gLaserBallVariants:
 	.global	gLaserBallStates
 gLaserBallStates:
 	.word	sub_0808e480+1
-	.word	sub_0808e610+1
+	.word	LaserBallShoot+1
 	.word	sub_0808e54c+1
 	.word	sub_0808e730+1
 	.global	gLaserBallStateUpdates
@@ -162,8 +162,8 @@ gShotzoVariants:
 	.global	gShotzoAimStates
 gShotzoAimStates:
 	.word	sub_0808f3d4+1
-	.word	sub_0808f4f8+1
-	.word	sub_0808f41c+1
+	.word	ShotzoAimFall+1
+	.word	ShotzoAimShoot+1
 	.global	gShotzoAimStateUpdates
 gShotzoAimStateUpdates:
 	.word	sub_0808f400+1
@@ -172,8 +172,8 @@ gShotzoAimStateUpdates:
 	.global	gShotzoFixedStates
 gShotzoFixedStates:
 	.word	sub_0808f528+1
-	.word	sub_0808f6c0+1
-	.word	sub_0808f5cc+1
+	.word	ShotzoFixedFall+1
+	.word	ShotzoFixedShoot+1
 	.global	gShotzoFixedStateUpdates
 gShotzoFixedStateUpdates:
 	.word	sub_0808f578+1
@@ -182,7 +182,7 @@ gShotzoFixedStateUpdates:
 	.global	gParasolShotzoStates
 gParasolShotzoStates:
 	.word	sub_0808f728+1
-	.word	sub_0808f7ac+1
+	.word	ParasolShotzoShoot+1
 	.word	sub_0808f888+1
 	.global	gParasolShotzoStateUpdates
 gParasolShotzoStateUpdates:

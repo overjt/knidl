@@ -14,7 +14,7 @@
  *     (`0x08741610`/`0x08741614`; its hook is the one that spawns the
  *     class-0 sub-actors 30/31/32 through CreateActorByKind and hands them to
  *     sub_080b5540), `PoppyBrosJrDroppedObjectInit`+`PoppyBrosJrDroppedObjectUpdate` (`0x08741618`),
- *     `sub_0808248c`+`sub_080824ec` (`0x08741620`), `WheelieInit`+
+ *     `PoppyBrosJrRideIdleInit`+`PoppyBrosJrRideIdleUpdate` (`0x08741620`), `WheelieInit`+
  *     `WheelieUpdate` (`0x0874164C`/`0x08741664`, six states) and
  *     `WheelieIdleInit`+`WheelieIdleUpdate` (`0x0874167C`);
  *   * `sub_08082554` / `sub_080825ec`, the hop cycle that drives the actor
@@ -217,28 +217,28 @@ void sub_08082458(void)
     }
 }
 
-void sub_0808248c(void)
+void PoppyBrosJrRideIdleInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080824ec;
+    t->updateCallback = (u32)PoppyBrosJrRideIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741620);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
 }
 
 void sub_080824d0(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741620);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
 }
 
-void sub_080824ec(void)
+void PoppyBrosJrRideIdleUpdate(void)
 {
     struct Task *t;
 
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741624);
+    CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrRideIdleStateUpdates);
     ActorCheckHits();
     t = gCurTask;
     switch (t->hitKind)
@@ -253,7 +253,7 @@ void sub_080824ec(void)
     ActorReactToHit();
 }
 
-void sub_0808253c(void)
+void PoppyBrosJrRideIdle(void)
 {
     sub_08082554();
 }

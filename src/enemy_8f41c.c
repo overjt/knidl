@@ -51,7 +51,7 @@ extern u8 sub_08069660(void);
 extern u8 sub_08069888(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0808f41c(void)
+void ShotzoAimShoot(void)
 {
     struct Task *t;
     struct Task *u;
@@ -97,7 +97,7 @@ void sub_0808f4b4(void)
     }
 }
 
-void sub_0808f4f8(void)
+void ShotzoAimFall(void)
 {
     struct Task *t;
 
@@ -156,7 +156,7 @@ void sub_0808f578(void)
     }
 }
 
-void sub_0808f5cc(void)
+void ShotzoFixedShoot(void)
 {
     struct Task *t;
     struct Task *u;
@@ -211,7 +211,7 @@ void sub_0808f678(void)
     }
 }
 
-void sub_0808f6c0(void)
+void ShotzoFixedFall(void)
 {
     struct Task *t;
 
@@ -263,7 +263,7 @@ void sub_0808f75c(void)
         sub_0808f1b4(1, ParasolShotzoEnterState);
 }
 
-void sub_0808f7ac(void)
+void ParasolShotzoShoot(void)
 {
     struct Task *t;
     struct Task *u;

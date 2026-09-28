@@ -522,7 +522,7 @@ void StarmanJumpUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808148c(void)
+void StarmanJumpWalk(void)
 {
     gCurTask->updateState = 0;
     TaskFaceNearestPlayer();
@@ -549,7 +549,7 @@ void sub_080814b4(void)
     }
 }
 
-void sub_08081508(void)
+void StarmanJump(void)
 {
     gCurTask->updateState = 1;
     gCurTask->velX = 0;
@@ -574,7 +574,7 @@ void sub_08081560(void)
     }
 }
 
-void sub_0808159c(void)
+void StarmanJumpFall(void)
 {
     struct Task *t;
 
@@ -956,7 +956,7 @@ void sub_08081b5c(void)
         TaskSetEntry(PoppyBrosJrEnterState, gCurTaskIdx);
 }
 
-void sub_08081bc4(void)
+void PoppyBrosJrWalk(void)
 {
     gCurTask->updateState = 1;
     TaskStopY();

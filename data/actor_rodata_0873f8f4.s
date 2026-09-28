@@ -430,8 +430,8 @@ gUnk_08740648:
 	.incbin	"baserom.gba", 0x740648, 0x10
 	.global	gWaddleDeeWalkStates
 gWaddleDeeWalkStates:
-	.word	sub_08078c80+1
-	.word	sub_08078cbc+1
+	.word	WaddleDeeWalk+1
+	.word	WaddleDeeWalkFall+1
 	.global	gWaddleDeeWalkStateUpdates
 gWaddleDeeWalkStateUpdates:
 	.word	sub_08078cb8+1
@@ -441,8 +441,8 @@ gUnk_08740668:
 	.incbin	"baserom.gba", 0x740668, 0x8
 	.global	gWaddleDeePaceStates
 gWaddleDeePaceStates:
-	.word	sub_08078d88+1
-	.word	sub_08078e10+1
+	.word	WaddleDeePaceWalk+1
+	.word	WaddleDeePaceFall+1
 	.global	gWaddleDeePaceStateUpdates
 gWaddleDeePaceStateUpdates:
 	.word	sub_08078dd4+1
@@ -459,8 +459,8 @@ gUnk_087406A0:
 	.global	gWaddleDeeJumpStates
 gWaddleDeeJumpStates:
 	.word	sub_08078eec+1
-	.word	sub_08078f8c+1
-	.word	sub_080790c0+1
+	.word	WaddleDeeJump+1
+	.word	WaddleDeeJumpFall+1
 	.global	gWaddleDeeJumpStateUpdates
 gWaddleDeeJumpStateUpdates:
 	.word	sub_08078f24+1
@@ -468,7 +468,7 @@ gWaddleDeeJumpStateUpdates:
 	.word	sub_080790e8+1
 	.global	gParasolWaddleDeeWalkStates
 gParasolWaddleDeeWalkStates:
-	.word	sub_08079194+1
+	.word	ParasolWaddleDeeWalk+1
 	.word	sub_080791c0+1
 	.global	gParasolWaddleDeeWalkStateUpdates
 gParasolWaddleDeeWalkStateUpdates:
@@ -571,7 +571,7 @@ gUnk_087407DC:
 gSparkyJumpStates:
 	.word	sub_0807a1c0+1
 	.word	sub_0807a3bc+1
-	.word	sub_0807a128+1
+	.word	SparkyJump+1
 	.word	sub_0807a424+1
 	.global	gSparkyJumpStateUpdates
 gSparkyJumpStateUpdates:
@@ -662,7 +662,7 @@ gSwordAndBladeKnightWalkStates:
 	.word	sub_0807b5d8+1
 	.word	sub_0807b66c+1
 	.word	sub_0807b6e8+1
-	.word	sub_0807b7d0+1
+	.word	SwordAndBladeKnightWalkFall+1
 	.global	gSwordAndBladeKnightWalkStateUpdates
 gSwordAndBladeKnightWalkStateUpdates:
 	.word	sub_0807b430+1
@@ -724,7 +724,7 @@ gNeedlousStates:
 	.word	sub_0807c210+1
 	.word	sub_0807c248+1
 	.word	sub_0807c280+1
-	.word	sub_0807c2b8+1
+	.word	NeedlousDash+1
 	.global	gNeedlousStateUpdates
 gNeedlousStateUpdates:
 	.word	sub_0807c138+1
@@ -757,7 +757,7 @@ gUFOStates:
 	.word	sub_0807c710+1
 	.word	sub_0807c80c+1
 	.word	sub_0807c8b0+1
-	.word	sub_0807c9b4+1
+	.word	UFOShoot+1
 	.global	gUFOStateUpdates
 gUFOStateUpdates:
 	.word	sub_0807c7d8+1
