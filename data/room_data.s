@@ -10,23 +10,23 @@
 	.section .room_data, "a"
 	.global	room_data
 room_data:
-	.global	gUnk_0835CFD4
-gUnk_0835CFD4:
+	.global	gLevel7Stage1Room0MetatileMap
+gLevel7Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x35CFD4, 0x74
-	.global	gUnk_0835D048
-gUnk_0835D048:
+	.global	gLevel7Stage1Room0BlockLayer
+gLevel7Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x35D048, 0x34
 	.global	gUnk_0835D07C
 gUnk_0835D07C:
 	.incbin	"baserom.gba", 0x35D07C, 0x8
-	.global	gUnk_0835D084
-gUnk_0835D084:
+	.global	gLevel7Stage1Room0Objects
+gLevel7Stage1Room0Objects:
 	.incbin	"baserom.gba", 0x35D084, 0x8
 	.global	gLevel7Stage1Room0
 gLevel7Stage1Room0:
 	.incbin	"baserom.gba", 0x35D08C, 0x8
-	.word	gUnk_0835CFD4
-	.word	gUnk_0835D048
+	.word	gLevel7Stage1Room0MetatileMap
+	.word	gLevel7Stage1Room0BlockLayer
 	.word	gUnk_0835D07C
 	.incbin	"baserom.gba", 0x35D0A0, 0x4
 	.word	gUnk_0835D548
@@ -37,25 +37,25 @@ gLevel7Stage1Room0:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x35D0C0, 0x14
-	.word	gUnk_0835D084
+	.word	gLevel7Stage1Room0Objects
 	.incbin	"baserom.gba", 0x35D0D8, 0xC
-	.global	gUnk_0835D0E4
-gUnk_0835D0E4:
+	.global	gLevel7Stage1Room1MetatileMap
+gLevel7Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x35D0E4, 0x1AC
-	.global	gUnk_0835D290
-gUnk_0835D290:
+	.global	gLevel7Stage1Room1BlockLayer
+gLevel7Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x35D290, 0x60
 	.global	gUnk_0835D2F0
 gUnk_0835D2F0:
 	.incbin	"baserom.gba", 0x35D2F0, 0x8
-	.global	gUnk_0835D2F8
-gUnk_0835D2F8:
+	.global	gLevel7Stage1Room1Objects
+gLevel7Stage1Room1Objects:
 	.incbin	"baserom.gba", 0x35D2F8, 0x8
 	.global	gLevel7Stage1Room1
 gLevel7Stage1Room1:
 	.incbin	"baserom.gba", 0x35D300, 0x8
-	.word	gUnk_0835D0E4
-	.word	gUnk_0835D290
+	.word	gLevel7Stage1Room1MetatileMap
+	.word	gLevel7Stage1Room1BlockLayer
 	.word	gUnk_0835D2F0
 	.incbin	"baserom.gba", 0x35D314, 0x4
 	.word	gUnk_0835D918
@@ -66,25 +66,25 @@ gLevel7Stage1Room1:
 	.word	gUnk_084809DC
 	.word	gUnk_083D0A64
 	.incbin	"baserom.gba", 0x35D334, 0x14
-	.word	gUnk_0835D2F8
+	.word	gLevel7Stage1Room1Objects
 	.incbin	"baserom.gba", 0x35D34C, 0xC
-	.global	gUnk_0835D358
-gUnk_0835D358:
+	.global	gLevel7Stage1Room2MetatileMap
+gLevel7Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x35D358, 0x128
-	.global	gUnk_0835D480
-gUnk_0835D480:
+	.global	gLevel7Stage1Room2BlockLayer
+gLevel7Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x35D480, 0x60
 	.global	gUnk_0835D4E0
 gUnk_0835D4E0:
 	.incbin	"baserom.gba", 0x35D4E0, 0x8
-	.global	gUnk_0835D4E8
-gUnk_0835D4E8:
+	.global	gLevel7Stage1Room2Objects
+gLevel7Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x35D4E8, 0x8
 	.global	gLevel7Stage1Room2
 gLevel7Stage1Room2:
 	.incbin	"baserom.gba", 0x35D4F0, 0x8
-	.word	gUnk_0835D358
-	.word	gUnk_0835D480
+	.word	gLevel7Stage1Room2MetatileMap
+	.word	gLevel7Stage1Room2BlockLayer
 	.word	gUnk_0835D4E0
 	.incbin	"baserom.gba", 0x35D504, 0x4
 	.word	gUnk_0852BD00
@@ -95,7 +95,7 @@ gLevel7Stage1Room2:
 	.word	gUnk_08412BD8
 	.word	gUnk_083C89E8
 	.incbin	"baserom.gba", 0x35D524, 0x14
-	.word	gUnk_0835D4E8
+	.word	gLevel7Stage1Room2Objects
 	.incbin	"baserom.gba", 0x35D53C, 0xC
 	.global	gUnk_0835D548
 gUnk_0835D548:
@@ -112,26 +112,26 @@ gUnk_0835D814:
 	.global	gUnk_0835D918
 gUnk_0835D918:
 	.incbin	"baserom.gba", 0x35D918, 0xC4
-	.global	gUnk_0835D9DC
-gUnk_0835D9DC:
+	.global	gLevel0Stage0Room0MetatileMap
+gLevel0Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x35D9DC, 0x2C8
-	.global	gUnk_0835DCA4
-gUnk_0835DCA4:
+	.global	gLevel0Stage0Room0BlockLayer
+gLevel0Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x35DCA4, 0xB0
 	.global	gUnk_0835DD54
 gUnk_0835DD54:
 	.incbin	"baserom.gba", 0x35DD54, 0x8
-	.global	gUnk_0835DD5C
-gUnk_0835DD5C:
+	.global	gLevel0Stage0Room0Doors
+gLevel0Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x35DD5C, 0xC
-	.global	gUnk_0835DD68
-gUnk_0835DD68:
+	.global	gLevel0Stage0Room0Objects
+gLevel0Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x35DD68, 0x58
 	.global	gLevel0Stage0Room0
 gLevel0Stage0Room0:
 	.incbin	"baserom.gba", 0x35DDC0, 0x8
-	.word	gUnk_0835D9DC
-	.word	gUnk_0835DCA4
+	.word	gLevel0Stage0Room0MetatileMap
+	.word	gLevel0Stage0Room0BlockLayer
 	.word	gUnk_0835DD54
 	.incbin	"baserom.gba", 0x35DDD4, 0x4
 	.word	gUnk_0849A940
@@ -142,29 +142,29 @@ gLevel0Stage0Room0:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x35DDF4, 0x10
-	.word	gUnk_0835DD5C
-	.word	gUnk_0835DD68
+	.word	gLevel0Stage0Room0Doors
+	.word	gLevel0Stage0Room0Objects
 	.incbin	"baserom.gba", 0x35DE0C, 0xC
-	.global	gUnk_0835DE18
-gUnk_0835DE18:
+	.global	gLevel0Stage0Room1MetatileMap
+gLevel0Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x35DE18, 0x344
-	.global	gUnk_0835E15C
-gUnk_0835E15C:
+	.global	gLevel0Stage0Room1BlockLayer
+gLevel0Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x35E15C, 0xCC
 	.global	gUnk_0835E228
 gUnk_0835E228:
 	.incbin	"baserom.gba", 0x35E228, 0x8
-	.global	gUnk_0835E230
-gUnk_0835E230:
+	.global	gLevel0Stage0Room1Doors
+gLevel0Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x35E230, 0x18
-	.global	gUnk_0835E248
-gUnk_0835E248:
+	.global	gLevel0Stage0Room1Objects
+gLevel0Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x35E248, 0x58
 	.global	gLevel0Stage0Room1
 gLevel0Stage0Room1:
 	.incbin	"baserom.gba", 0x35E2A0, 0x8
-	.word	gUnk_0835DE18
-	.word	gUnk_0835E15C
+	.word	gLevel0Stage0Room1MetatileMap
+	.word	gLevel0Stage0Room1BlockLayer
 	.word	gUnk_0835E228
 	.incbin	"baserom.gba", 0x35E2B4, 0x4
 	.word	gUnk_0853DAB4
@@ -175,29 +175,29 @@ gLevel0Stage0Room1:
 	.word	gUnk_084A33B8
 	.word	gUnk_0849B4E8
 	.incbin	"baserom.gba", 0x35E2D4, 0x10
-	.word	gUnk_0835E230
-	.word	gUnk_0835E248
+	.word	gLevel0Stage0Room1Doors
+	.word	gLevel0Stage0Room1Objects
 	.incbin	"baserom.gba", 0x35E2EC, 0xC
-	.global	gUnk_0835E2F8
-gUnk_0835E2F8:
+	.global	gLevel0Stage0Room2MetatileMap
+gLevel0Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x35E2F8, 0x2E4
-	.global	gUnk_0835E5DC
-gUnk_0835E5DC:
+	.global	gLevel0Stage0Room2BlockLayer
+gLevel0Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x35E5DC, 0xB0
 	.global	gUnk_0835E68C
 gUnk_0835E68C:
 	.incbin	"baserom.gba", 0x35E68C, 0x8
-	.global	gUnk_0835E694
-gUnk_0835E694:
+	.global	gLevel0Stage0Room2Doors
+gLevel0Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x35E694, 0x18
-	.global	gUnk_0835E6AC
-gUnk_0835E6AC:
+	.global	gLevel0Stage0Room2Objects
+gLevel0Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x35E6AC, 0x60
 	.global	gLevel0Stage0Room2
 gLevel0Stage0Room2:
 	.incbin	"baserom.gba", 0x35E70C, 0x8
-	.word	gUnk_0835E2F8
-	.word	gUnk_0835E5DC
+	.word	gLevel0Stage0Room2MetatileMap
+	.word	gLevel0Stage0Room2BlockLayer
 	.word	gUnk_0835E68C
 	.incbin	"baserom.gba", 0x35E720, 0x4
 	.word	gUnk_0853DAB4
@@ -208,29 +208,29 @@ gLevel0Stage0Room2:
 	.word	gUnk_084A33B8
 	.word	gUnk_0849B4E8
 	.incbin	"baserom.gba", 0x35E740, 0x10
-	.word	gUnk_0835E694
-	.word	gUnk_0835E6AC
+	.word	gLevel0Stage0Room2Doors
+	.word	gLevel0Stage0Room2Objects
 	.incbin	"baserom.gba", 0x35E758, 0xC
-	.global	gUnk_0835E764
-gUnk_0835E764:
+	.global	gLevel0Stage0Room3MetatileMap
+gLevel0Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x35E764, 0x168
-	.global	gUnk_0835E8CC
-gUnk_0835E8CC:
+	.global	gLevel0Stage0Room3BlockLayer
+gLevel0Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x35E8CC, 0x34
 	.global	gUnk_0835E900
 gUnk_0835E900:
 	.incbin	"baserom.gba", 0x35E900, 0x8
-	.global	gUnk_0835E908
-gUnk_0835E908:
+	.global	gLevel0Stage0Room3Doors
+gLevel0Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x35E908, 0xC
-	.global	gUnk_0835E914
-gUnk_0835E914:
+	.global	gLevel0Stage0Room3Objects
+gLevel0Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x35E914, 0x10
 	.global	gLevel0Stage0Room3
 gLevel0Stage0Room3:
 	.incbin	"baserom.gba", 0x35E924, 0x8
-	.word	gUnk_0835E764
-	.word	gUnk_0835E8CC
+	.word	gLevel0Stage0Room3MetatileMap
+	.word	gLevel0Stage0Room3BlockLayer
 	.word	gUnk_0835E900
 	.incbin	"baserom.gba", 0x35E938, 0x4
 	.word	gUnk_0852BD00
@@ -241,29 +241,29 @@ gLevel0Stage0Room3:
 	.word	gUnk_0846F8DC
 	.word	gUnk_083CEF10
 	.incbin	"baserom.gba", 0x35E958, 0x10
-	.word	gUnk_0835E908
-	.word	gUnk_0835E914
+	.word	gLevel0Stage0Room3Doors
+	.word	gLevel0Stage0Room3Objects
 	.incbin	"baserom.gba", 0x35E970, 0xC
-	.global	gUnk_0835E97C
-gUnk_0835E97C:
+	.global	gLevel0Stage1Room0MetatileMap
+gLevel0Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x35E97C, 0x37C
-	.global	gUnk_0835ECF8
-gUnk_0835ECF8:
+	.global	gLevel0Stage1Room0BlockLayer
+gLevel0Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x35ECF8, 0x148
 	.global	gUnk_0835EE40
 gUnk_0835EE40:
 	.incbin	"baserom.gba", 0x35EE40, 0x80
-	.global	gUnk_0835EEC0
-gUnk_0835EEC0:
+	.global	gLevel0Stage1Room0Doors
+gLevel0Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x35EEC0, 0xC
-	.global	gUnk_0835EECC
-gUnk_0835EECC:
+	.global	gLevel0Stage1Room0Objects
+gLevel0Stage1Room0Objects:
 	.incbin	"baserom.gba", 0x35EECC, 0x50
 	.global	gLevel0Stage1Room0
 gLevel0Stage1Room0:
 	.incbin	"baserom.gba", 0x35EF1C, 0x8
-	.word	gUnk_0835E97C
-	.word	gUnk_0835ECF8
+	.word	gLevel0Stage1Room0MetatileMap
+	.word	gLevel0Stage1Room0BlockLayer
 	.word	gUnk_0835EE40
 	.incbin	"baserom.gba", 0x35EF30, 0x4
 	.word	gUnk_0849A940
@@ -274,29 +274,29 @@ gLevel0Stage1Room0:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x35EF50, 0x10
-	.word	gUnk_0835EEC0
-	.word	gUnk_0835EECC
+	.word	gLevel0Stage1Room0Doors
+	.word	gLevel0Stage1Room0Objects
 	.incbin	"baserom.gba", 0x35EF68, 0xC
-	.global	gUnk_0835EF74
-gUnk_0835EF74:
+	.global	gLevel0Stage1Room1MetatileMap
+gLevel0Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x35EF74, 0x188
-	.global	gUnk_0835F0FC
-gUnk_0835F0FC:
+	.global	gLevel0Stage1Room1BlockLayer
+gLevel0Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x35F0FC, 0x84
 	.global	gUnk_0835F180
 gUnk_0835F180:
 	.incbin	"baserom.gba", 0x35F180, 0x8
-	.global	gUnk_0835F188
-gUnk_0835F188:
+	.global	gLevel0Stage1Room1Doors
+gLevel0Stage1Room1Doors:
 	.incbin	"baserom.gba", 0x35F188, 0xC
-	.global	gUnk_0835F194
-gUnk_0835F194:
+	.global	gLevel0Stage1Room1Objects
+gLevel0Stage1Room1Objects:
 	.incbin	"baserom.gba", 0x35F194, 0x10
 	.global	gLevel0Stage1Room1
 gLevel0Stage1Room1:
 	.incbin	"baserom.gba", 0x35F1A4, 0x8
-	.word	gUnk_0835EF74
-	.word	gUnk_0835F0FC
+	.word	gLevel0Stage1Room1MetatileMap
+	.word	gLevel0Stage1Room1BlockLayer
 	.word	gUnk_0835F180
 	.incbin	"baserom.gba", 0x35F1B8, 0x4
 	.word	gUnk_0849A940
@@ -307,29 +307,29 @@ gLevel0Stage1Room1:
 	.word	gUnk_084A33B8
 	.word	gUnk_0849B4E8
 	.incbin	"baserom.gba", 0x35F1D8, 0x10
-	.word	gUnk_0835F188
-	.word	gUnk_0835F194
+	.word	gLevel0Stage1Room1Doors
+	.word	gLevel0Stage1Room1Objects
 	.incbin	"baserom.gba", 0x35F1F0, 0xC
-	.global	gUnk_0835F1FC
-gUnk_0835F1FC:
+	.global	gLevel0Stage1Room2MetatileMap
+gLevel0Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x35F1FC, 0x25C
-	.global	gUnk_0835F458
-gUnk_0835F458:
+	.global	gLevel0Stage1Room2BlockLayer
+gLevel0Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x35F458, 0x84
 	.global	gUnk_0835F4DC
 gUnk_0835F4DC:
 	.incbin	"baserom.gba", 0x35F4DC, 0x8
-	.global	gUnk_0835F4E4
-gUnk_0835F4E4:
+	.global	gLevel0Stage1Room2Doors
+gLevel0Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x35F4E4, 0x18
-	.global	gUnk_0835F4FC
-gUnk_0835F4FC:
+	.global	gLevel0Stage1Room2Objects
+gLevel0Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x35F4FC, 0x48
 	.global	gLevel0Stage1Room2
 gLevel0Stage1Room2:
 	.incbin	"baserom.gba", 0x35F544, 0x8
-	.word	gUnk_0835F1FC
-	.word	gUnk_0835F458
+	.word	gLevel0Stage1Room2MetatileMap
+	.word	gLevel0Stage1Room2BlockLayer
 	.word	gUnk_0835F4DC
 	.incbin	"baserom.gba", 0x35F558, 0x4
 	.word	gUnk_0853DAB4
@@ -340,29 +340,29 @@ gLevel0Stage1Room2:
 	.word	gUnk_084A33B8
 	.word	gUnk_0849B4E8
 	.incbin	"baserom.gba", 0x35F578, 0x10
-	.word	gUnk_0835F4E4
-	.word	gUnk_0835F4FC
+	.word	gLevel0Stage1Room2Doors
+	.word	gLevel0Stage1Room2Objects
 	.incbin	"baserom.gba", 0x35F590, 0xC
-	.global	gUnk_0835F59C
-gUnk_0835F59C:
+	.global	gLevel0Stage1Room3MetatileMap
+gLevel0Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x35F59C, 0x540
-	.global	gUnk_0835FADC
-gUnk_0835FADC:
+	.global	gLevel0Stage1Room3BlockLayer
+gLevel0Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x35FADC, 0xB4
 	.global	gUnk_0835FB90
 gUnk_0835FB90:
 	.incbin	"baserom.gba", 0x35FB90, 0x10
-	.global	gUnk_0835FBA0
-gUnk_0835FBA0:
+	.global	gLevel0Stage1Room3Doors
+gLevel0Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x35FBA0, 0xC
-	.global	gUnk_0835FBAC
-gUnk_0835FBAC:
+	.global	gLevel0Stage1Room3Objects
+gLevel0Stage1Room3Objects:
 	.incbin	"baserom.gba", 0x35FBAC, 0x78
 	.global	gLevel0Stage1Room3
 gLevel0Stage1Room3:
 	.incbin	"baserom.gba", 0x35FC24, 0x8
-	.word	gUnk_0835F59C
-	.word	gUnk_0835FADC
+	.word	gLevel0Stage1Room3MetatileMap
+	.word	gLevel0Stage1Room3BlockLayer
 	.word	gUnk_0835FB90
 	.incbin	"baserom.gba", 0x35FC38, 0x4
 	.word	gUnk_0849A52C
@@ -373,29 +373,29 @@ gLevel0Stage1Room3:
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x35FC58, 0x10
-	.word	gUnk_0835FBA0
-	.word	gUnk_0835FBAC
+	.word	gLevel0Stage1Room3Doors
+	.word	gLevel0Stage1Room3Objects
 	.incbin	"baserom.gba", 0x35FC70, 0xC
-	.global	gUnk_0835FC7C
-gUnk_0835FC7C:
+	.global	gLevel0Stage1Room4MetatileMap
+gLevel0Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x35FC7C, 0x2B0
-	.global	gUnk_0835FF2C
-gUnk_0835FF2C:
+	.global	gLevel0Stage1Room4BlockLayer
+gLevel0Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x35FF2C, 0x64
 	.global	gUnk_0835FF90
 gUnk_0835FF90:
 	.incbin	"baserom.gba", 0x35FF90, 0x8
-	.global	gUnk_0835FF98
-gUnk_0835FF98:
+	.global	gLevel0Stage1Room4Doors
+gLevel0Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x35FF98, 0x24
-	.global	gUnk_0835FFBC
-gUnk_0835FFBC:
+	.global	gLevel0Stage1Room4Objects
+gLevel0Stage1Room4Objects:
 	.incbin	"baserom.gba", 0x35FFBC, 0x28
 	.global	gLevel0Stage1Room4
 gLevel0Stage1Room4:
 	.incbin	"baserom.gba", 0x35FFE4, 0x8
-	.word	gUnk_0835FC7C
-	.word	gUnk_0835FF2C
+	.word	gLevel0Stage1Room4MetatileMap
+	.word	gLevel0Stage1Room4BlockLayer
 	.word	gUnk_0835FF90
 	.incbin	"baserom.gba", 0x35FFF8, 0x4
 	.word	gUnk_0849A52C
@@ -406,29 +406,29 @@ gLevel0Stage1Room4:
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x360018, 0x10
-	.word	gUnk_0835FF98
-	.word	gUnk_0835FFBC
+	.word	gLevel0Stage1Room4Doors
+	.word	gLevel0Stage1Room4Objects
 	.incbin	"baserom.gba", 0x360030, 0xC
-	.global	gUnk_0836003C
-gUnk_0836003C:
+	.global	gLevel0Stage1Room5MetatileMap
+gLevel0Stage1Room5MetatileMap:
 	.incbin	"baserom.gba", 0x36003C, 0x144
-	.global	gUnk_08360180
-gUnk_08360180:
+	.global	gLevel0Stage1Room5BlockLayer
+gLevel0Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x360180, 0x38
 	.global	gUnk_083601B8
 gUnk_083601B8:
 	.incbin	"baserom.gba", 0x3601B8, 0x8
-	.global	gUnk_083601C0
-gUnk_083601C0:
+	.global	gLevel0Stage1Room5Doors
+gLevel0Stage1Room5Doors:
 	.incbin	"baserom.gba", 0x3601C0, 0xC
-	.global	gUnk_083601CC
-gUnk_083601CC:
+	.global	gLevel0Stage1Room5Objects
+gLevel0Stage1Room5Objects:
 	.incbin	"baserom.gba", 0x3601CC, 0x10
 	.global	gLevel0Stage1Room5
 gLevel0Stage1Room5:
 	.incbin	"baserom.gba", 0x3601DC, 0x8
-	.word	gUnk_0836003C
-	.word	gUnk_08360180
+	.word	gLevel0Stage1Room5MetatileMap
+	.word	gLevel0Stage1Room5BlockLayer
 	.word	gUnk_083601B8
 	.incbin	"baserom.gba", 0x3601F0, 0x4
 	.word	gUnk_084BB068
@@ -439,29 +439,29 @@ gLevel0Stage1Room5:
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x360210, 0x10
-	.word	gUnk_083601C0
-	.word	gUnk_083601CC
+	.word	gLevel0Stage1Room5Doors
+	.word	gLevel0Stage1Room5Objects
 	.incbin	"baserom.gba", 0x360228, 0xC
-	.global	gUnk_08360234
-gUnk_08360234:
+	.global	gLevel0Stage2Room0MetatileMap
+gLevel0Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x360234, 0x308
-	.global	gUnk_0836053C
-gUnk_0836053C:
+	.global	gLevel0Stage2Room0BlockLayer
+gLevel0Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36053C, 0xD4
 	.global	gUnk_08360610
 gUnk_08360610:
 	.incbin	"baserom.gba", 0x360610, 0x14
-	.global	gUnk_08360624
-gUnk_08360624:
+	.global	gLevel0Stage2Room0Doors
+gLevel0Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x360624, 0xC
-	.global	gUnk_08360630
-gUnk_08360630:
+	.global	gLevel0Stage2Room0Objects
+gLevel0Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x360630, 0x60
 	.global	gLevel0Stage2Room0
 gLevel0Stage2Room0:
 	.incbin	"baserom.gba", 0x360690, 0x8
-	.word	gUnk_08360234
-	.word	gUnk_0836053C
+	.word	gLevel0Stage2Room0MetatileMap
+	.word	gLevel0Stage2Room0BlockLayer
 	.word	gUnk_08360610
 	.incbin	"baserom.gba", 0x3606A4, 0x4
 	.word	gUnk_0849A940
@@ -472,29 +472,29 @@ gLevel0Stage2Room0:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x3606C4, 0x10
-	.word	gUnk_08360624
-	.word	gUnk_08360630
+	.word	gLevel0Stage2Room0Doors
+	.word	gLevel0Stage2Room0Objects
 	.incbin	"baserom.gba", 0x3606DC, 0xC
-	.global	gUnk_083606E8
-gUnk_083606E8:
+	.global	gLevel0Stage2Room1MetatileMap
+gLevel0Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3606E8, 0x308
-	.global	gUnk_083609F0
-gUnk_083609F0:
+	.global	gLevel0Stage2Room1BlockLayer
+gLevel0Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3609F0, 0xCC
 	.global	gUnk_08360ABC
 gUnk_08360ABC:
 	.incbin	"baserom.gba", 0x360ABC, 0x8
-	.global	gUnk_08360AC4
-gUnk_08360AC4:
+	.global	gLevel0Stage2Room1Doors
+gLevel0Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x360AC4, 0xC
-	.global	gUnk_08360AD0
-gUnk_08360AD0:
+	.global	gLevel0Stage2Room1Objects
+gLevel0Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x360AD0, 0x68
 	.global	gLevel0Stage2Room1
 gLevel0Stage2Room1:
 	.incbin	"baserom.gba", 0x360B38, 0x8
-	.word	gUnk_083606E8
-	.word	gUnk_083609F0
+	.word	gLevel0Stage2Room1MetatileMap
+	.word	gLevel0Stage2Room1BlockLayer
 	.word	gUnk_08360ABC
 	.incbin	"baserom.gba", 0x360B4C, 0x4
 	.word	gUnk_0853DAB4
@@ -505,29 +505,29 @@ gLevel0Stage2Room1:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x360B6C, 0x10
-	.word	gUnk_08360AC4
-	.word	gUnk_08360AD0
+	.word	gLevel0Stage2Room1Doors
+	.word	gLevel0Stage2Room1Objects
 	.incbin	"baserom.gba", 0x360B84, 0xC
-	.global	gUnk_08360B90
-gUnk_08360B90:
+	.global	gLevel0Stage2Room2MetatileMap
+gLevel0Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x360B90, 0x2DC
-	.global	gUnk_08360E6C
-gUnk_08360E6C:
+	.global	gLevel0Stage2Room2BlockLayer
+gLevel0Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x360E6C, 0x74
 	.global	gUnk_08360EE0
 gUnk_08360EE0:
 	.incbin	"baserom.gba", 0x360EE0, 0x8
-	.global	gUnk_08360EE8
-gUnk_08360EE8:
+	.global	gLevel0Stage2Room2Doors
+gLevel0Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x360EE8, 0x18
-	.global	gUnk_08360F00
-gUnk_08360F00:
+	.global	gLevel0Stage2Room2Objects
+gLevel0Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x360F00, 0x38
 	.global	gLevel0Stage2Room2
 gLevel0Stage2Room2:
 	.incbin	"baserom.gba", 0x360F38, 0x8
-	.word	gUnk_08360B90
-	.word	gUnk_08360E6C
+	.word	gLevel0Stage2Room2MetatileMap
+	.word	gLevel0Stage2Room2BlockLayer
 	.word	gUnk_08360EE0
 	.incbin	"baserom.gba", 0x360F4C, 0x4
 	.word	gUnk_084D50EC
@@ -538,29 +538,29 @@ gLevel0Stage2Room2:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x360F6C, 0x10
-	.word	gUnk_08360EE8
-	.word	gUnk_08360F00
+	.word	gLevel0Stage2Room2Doors
+	.word	gLevel0Stage2Room2Objects
 	.incbin	"baserom.gba", 0x360F84, 0xC
-	.global	gUnk_08360F90
-gUnk_08360F90:
+	.global	gLevel0Stage2Room3MetatileMap
+gLevel0Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x360F90, 0x2CC
-	.global	gUnk_0836125C
-gUnk_0836125C:
+	.global	gLevel0Stage2Room3BlockLayer
+gLevel0Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36125C, 0xB4
 	.global	gUnk_08361310
 gUnk_08361310:
 	.incbin	"baserom.gba", 0x361310, 0x8
-	.global	gUnk_08361318
-gUnk_08361318:
+	.global	gLevel0Stage2Room3Doors
+gLevel0Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x361318, 0x18
-	.global	gUnk_08361330
-gUnk_08361330:
+	.global	gLevel0Stage2Room3Objects
+gLevel0Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x361330, 0x70
 	.global	gLevel0Stage2Room3
 gLevel0Stage2Room3:
 	.incbin	"baserom.gba", 0x3613A0, 0x8
-	.word	gUnk_08360F90
-	.word	gUnk_0836125C
+	.word	gLevel0Stage2Room3MetatileMap
+	.word	gLevel0Stage2Room3BlockLayer
 	.word	gUnk_08361310
 	.incbin	"baserom.gba", 0x3613B4, 0x4
 	.word	gUnk_0853DAB4
@@ -571,29 +571,29 @@ gLevel0Stage2Room3:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x3613D4, 0x10
-	.word	gUnk_08361318
-	.word	gUnk_08361330
+	.word	gLevel0Stage2Room3Doors
+	.word	gLevel0Stage2Room3Objects
 	.incbin	"baserom.gba", 0x3613EC, 0xC
-	.global	gUnk_083613F8
-gUnk_083613F8:
+	.global	gLevel0Stage3Room0MetatileMap
+gLevel0Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3613F8, 0x2EC
-	.global	gUnk_083616E4
-gUnk_083616E4:
+	.global	gLevel0Stage3Room0BlockLayer
+gLevel0Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3616E4, 0x64
 	.global	gUnk_08361748
 gUnk_08361748:
 	.incbin	"baserom.gba", 0x361748, 0x10
-	.global	gUnk_08361758
-gUnk_08361758:
+	.global	gLevel0Stage3Room0Doors
+gLevel0Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x361758, 0xC
-	.global	gUnk_08361764
-gUnk_08361764:
+	.global	gLevel0Stage3Room0Objects
+gLevel0Stage3Room0Objects:
 	.incbin	"baserom.gba", 0x361764, 0x38
 	.global	gLevel0Stage3Room0
 gLevel0Stage3Room0:
 	.incbin	"baserom.gba", 0x36179C, 0x8
-	.word	gUnk_083613F8
-	.word	gUnk_083616E4
+	.word	gLevel0Stage3Room0MetatileMap
+	.word	gLevel0Stage3Room0BlockLayer
 	.word	gUnk_08361748
 	.incbin	"baserom.gba", 0x3617B0, 0x4
 	.word	gUnk_0853D12C
@@ -604,29 +604,29 @@ gLevel0Stage3Room0:
 	.word	gUnk_084809DC
 	.word	gUnk_083D0A64
 	.incbin	"baserom.gba", 0x3617D0, 0x10
-	.word	gUnk_08361758
-	.word	gUnk_08361764
+	.word	gLevel0Stage3Room0Doors
+	.word	gLevel0Stage3Room0Objects
 	.incbin	"baserom.gba", 0x3617E8, 0xC
-	.global	gUnk_083617F4
-gUnk_083617F4:
+	.global	gLevel0Stage3Room1MetatileMap
+gLevel0Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3617F4, 0x370
-	.global	gUnk_08361B64
-gUnk_08361B64:
+	.global	gLevel0Stage3Room1BlockLayer
+gLevel0Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x361B64, 0xB0
 	.global	gUnk_08361C14
 gUnk_08361C14:
 	.incbin	"baserom.gba", 0x361C14, 0x8
-	.global	gUnk_08361C1C
-gUnk_08361C1C:
+	.global	gLevel0Stage3Room1Doors
+gLevel0Stage3Room1Doors:
 	.incbin	"baserom.gba", 0x361C1C, 0xC
-	.global	gUnk_08361C28
-gUnk_08361C28:
+	.global	gLevel0Stage3Room1Objects
+gLevel0Stage3Room1Objects:
 	.incbin	"baserom.gba", 0x361C28, 0x90
 	.global	gLevel0Stage3Room1
 gLevel0Stage3Room1:
 	.incbin	"baserom.gba", 0x361CB8, 0x8
-	.word	gUnk_083617F4
-	.word	gUnk_08361B64
+	.word	gLevel0Stage3Room1MetatileMap
+	.word	gLevel0Stage3Room1BlockLayer
 	.word	gUnk_08361C14
 	.incbin	"baserom.gba", 0x361CCC, 0x4
 	.word	gUnk_0853D12C
@@ -637,29 +637,29 @@ gLevel0Stage3Room1:
 	.word	gUnk_084809DC
 	.word	gUnk_083D0A64
 	.incbin	"baserom.gba", 0x361CEC, 0x10
-	.word	gUnk_08361C1C
-	.word	gUnk_08361C28
+	.word	gLevel0Stage3Room1Doors
+	.word	gLevel0Stage3Room1Objects
 	.incbin	"baserom.gba", 0x361D04, 0xC
-	.global	gUnk_08361D10
-gUnk_08361D10:
+	.global	gLevel0Stage3Room2MetatileMap
+gLevel0Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x361D10, 0x300
-	.global	gUnk_08362010
-gUnk_08362010:
+	.global	gLevel0Stage3Room2BlockLayer
+gLevel0Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x362010, 0x90
 	.global	gUnk_083620A0
 gUnk_083620A0:
 	.incbin	"baserom.gba", 0x3620A0, 0x10
-	.global	gUnk_083620B0
-gUnk_083620B0:
+	.global	gLevel0Stage3Room2Doors
+gLevel0Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x3620B0, 0xC
-	.global	gUnk_083620BC
-gUnk_083620BC:
+	.global	gLevel0Stage3Room2Objects
+gLevel0Stage3Room2Objects:
 	.incbin	"baserom.gba", 0x3620BC, 0x48
 	.global	gLevel0Stage3Room2
 gLevel0Stage3Room2:
 	.incbin	"baserom.gba", 0x362104, 0x8
-	.word	gUnk_08361D10
-	.word	gUnk_08362010
+	.word	gLevel0Stage3Room2MetatileMap
+	.word	gLevel0Stage3Room2BlockLayer
 	.word	gUnk_083620A0
 	.incbin	"baserom.gba", 0x362118, 0x4
 	.word	gUnk_0853E728
@@ -670,29 +670,29 @@ gLevel0Stage3Room2:
 	.word	gUnk_084809DC
 	.word	gUnk_083D0A64
 	.incbin	"baserom.gba", 0x362138, 0x10
-	.word	gUnk_083620B0
-	.word	gUnk_083620BC
+	.word	gLevel0Stage3Room2Doors
+	.word	gLevel0Stage3Room2Objects
 	.incbin	"baserom.gba", 0x362150, 0xC
-	.global	gUnk_0836215C
-gUnk_0836215C:
+	.global	gLevel0Stage3Room3MetatileMap
+gLevel0Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x36215C, 0x47C
-	.global	gUnk_083625D8
-gUnk_083625D8:
+	.global	gLevel0Stage3Room3BlockLayer
+gLevel0Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3625D8, 0x104
 	.global	gUnk_083626DC
 gUnk_083626DC:
 	.incbin	"baserom.gba", 0x3626DC, 0x8
-	.global	gUnk_083626E4
-gUnk_083626E4:
+	.global	gLevel0Stage3Room3Doors
+gLevel0Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x3626E4, 0xC
-	.global	gUnk_083626F0
-gUnk_083626F0:
+	.global	gLevel0Stage3Room3Objects
+gLevel0Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x3626F0, 0x98
 	.global	gLevel0Stage3Room3
 gLevel0Stage3Room3:
 	.incbin	"baserom.gba", 0x362788, 0x8
-	.word	gUnk_0836215C
-	.word	gUnk_083625D8
+	.word	gLevel0Stage3Room3MetatileMap
+	.word	gLevel0Stage3Room3BlockLayer
 	.word	gUnk_083626DC
 	.incbin	"baserom.gba", 0x36279C, 0x4
 	.word	gUnk_0853D12C
@@ -703,26 +703,26 @@ gLevel0Stage3Room3:
 	.word	gUnk_084809DC
 	.word	gUnk_083D0A64
 	.incbin	"baserom.gba", 0x3627BC, 0x10
-	.word	gUnk_083626E4
-	.word	gUnk_083626F0
+	.word	gLevel0Stage3Room3Doors
+	.word	gLevel0Stage3Room3Objects
 	.incbin	"baserom.gba", 0x3627D4, 0xC
-	.global	gUnk_083627E0
-gUnk_083627E0:
+	.global	gLevel0Stage4Room0MetatileMap
+gLevel0Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3627E0, 0x280
-	.global	gUnk_08362A60
-gUnk_08362A60:
+	.global	gLevel0Stage4Room0BlockLayer
+gLevel0Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x362A60, 0x60
 	.global	gUnk_08362AC0
 gUnk_08362AC0:
 	.incbin	"baserom.gba", 0x362AC0, 0x8
-	.global	gUnk_08362AC8
-gUnk_08362AC8:
+	.global	gLevel0Stage4Room0Objects
+gLevel0Stage4Room0Objects:
 	.incbin	"baserom.gba", 0x362AC8, 0x8
 	.global	gLevel0Stage4Room0
 gLevel0Stage4Room0:
 	.incbin	"baserom.gba", 0x362AD0, 0x8
-	.word	gUnk_083627E0
-	.word	gUnk_08362A60
+	.word	gLevel0Stage4Room0MetatileMap
+	.word	gLevel0Stage4Room0BlockLayer
 	.word	gUnk_08362AC0
 	.incbin	"baserom.gba", 0x362AE4, 0x4
 	.word	gUnk_0835D918
@@ -733,28 +733,28 @@ gLevel0Stage4Room0:
 	.word	gUnk_084809DC
 	.word	gUnk_083D0A64
 	.incbin	"baserom.gba", 0x362B04, 0x14
-	.word	gUnk_08362AC8
+	.word	gLevel0Stage4Room0Objects
 	.incbin	"baserom.gba", 0x362B1C, 0xC
-	.global	gUnk_08362B28
-gUnk_08362B28:
+	.global	gLevel1Stage0Room0MetatileMap
+gLevel1Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x362B28, 0x3E0
-	.global	gUnk_08362F08
-gUnk_08362F08:
+	.global	gLevel1Stage0Room0BlockLayer
+gLevel1Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x362F08, 0x100
 	.global	gUnk_08363008
 gUnk_08363008:
 	.incbin	"baserom.gba", 0x363008, 0x8
-	.global	gUnk_08363010
-gUnk_08363010:
+	.global	gLevel1Stage0Room0Doors
+gLevel1Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x363010, 0x18
-	.global	gUnk_08363028
-gUnk_08363028:
+	.global	gLevel1Stage0Room0Objects
+gLevel1Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x363028, 0x78
 	.global	gLevel1Stage0Room0
 gLevel1Stage0Room0:
 	.incbin	"baserom.gba", 0x3630A0, 0x8
-	.word	gUnk_08362B28
-	.word	gUnk_08362F08
+	.word	gLevel1Stage0Room0MetatileMap
+	.word	gLevel1Stage0Room0BlockLayer
 	.word	gUnk_08363008
 	.incbin	"baserom.gba", 0x3630B4, 0x4
 	.word	gUnk_0853E318
@@ -765,32 +765,32 @@ gLevel1Stage0Room0:
 	.word	gUnk_08454A70
 	.word	gUnk_083CCA9C
 	.incbin	"baserom.gba", 0x3630D4, 0x10
-	.word	gUnk_08363010
-	.word	gUnk_08363028
+	.word	gLevel1Stage0Room0Doors
+	.word	gLevel1Stage0Room0Objects
 	.incbin	"baserom.gba", 0x3630EC, 0xC
-	.global	gUnk_083630F8
-gUnk_083630F8:
+	.global	gLevel1Stage0Room1MetatileMap
+gLevel1Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3630F8, 0x2C4
-	.global	gUnk_083633BC
-gUnk_083633BC:
+	.global	gLevel1Stage0Room1BlockLayer
+gLevel1Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3633BC, 0xB0
 	.global	gUnk_0836346C
 gUnk_0836346C:
 	.incbin	"baserom.gba", 0x36346C, 0x8
-	.global	gUnk_08363474
-gUnk_08363474:
+	.global	gLevel1Stage0Room1Doors
+gLevel1Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x363474, 0xC
-	.global	gUnk_08363480
-gUnk_08363480:
+	.global	gLevel1Stage0Room1Objects
+gLevel1Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x363480, 0x60
 	.global	gLevel1Stage0Room1
 gLevel1Stage0Room1:
 	.incbin	"baserom.gba", 0x3634E0, 0x8
-	.word	gUnk_083630F8
-	.word	gUnk_083633BC
+	.word	gLevel1Stage0Room1MetatileMap
+	.word	gLevel1Stage0Room1BlockLayer
 	.word	gUnk_0836346C
 	.incbin	"baserom.gba", 0x3634F4, 0x4
-	.word	gUnk_0852BC3C
+	.word	gLevel1Stage0Room1Bg2Palette
 	.word	gUnk_08442F18
 	.word	gUnk_083B2254
 	.incbin	"baserom.gba", 0x363504, 0x4
@@ -798,29 +798,29 @@ gLevel1Stage0Room1:
 	.word	gUnk_08454A70
 	.word	gUnk_083CCA9C
 	.incbin	"baserom.gba", 0x363514, 0x10
-	.word	gUnk_08363474
-	.word	gUnk_08363480
+	.word	gLevel1Stage0Room1Doors
+	.word	gLevel1Stage0Room1Objects
 	.incbin	"baserom.gba", 0x36352C, 0xC
-	.global	gUnk_08363538
-gUnk_08363538:
+	.global	gLevel1Stage0Room2MetatileMap
+gLevel1Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x363538, 0x39C
-	.global	gUnk_083638D4
-gUnk_083638D4:
+	.global	gLevel1Stage0Room2BlockLayer
+gLevel1Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3638D4, 0xAC
 	.global	gUnk_08363980
 gUnk_08363980:
 	.incbin	"baserom.gba", 0x363980, 0x8
-	.global	gUnk_08363988
-gUnk_08363988:
+	.global	gLevel1Stage0Room2Doors
+gLevel1Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x363988, 0xC
-	.global	gUnk_08363994
-gUnk_08363994:
+	.global	gLevel1Stage0Room2Objects
+gLevel1Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x363994, 0x78
 	.global	gLevel1Stage0Room2
 gLevel1Stage0Room2:
 	.incbin	"baserom.gba", 0x363A0C, 0x8
-	.word	gUnk_08363538
-	.word	gUnk_083638D4
+	.word	gLevel1Stage0Room2MetatileMap
+	.word	gLevel1Stage0Room2BlockLayer
 	.word	gUnk_08363980
 	.incbin	"baserom.gba", 0x363A20, 0x4
 	.word	gUnk_0853D12C
@@ -831,29 +831,29 @@ gLevel1Stage0Room2:
 	.word	gUnk_08454A70
 	.word	gUnk_083CCA9C
 	.incbin	"baserom.gba", 0x363A40, 0x10
-	.word	gUnk_08363988
-	.word	gUnk_08363994
+	.word	gLevel1Stage0Room2Doors
+	.word	gLevel1Stage0Room2Objects
 	.incbin	"baserom.gba", 0x363A58, 0xC
-	.global	gUnk_08363A64
-gUnk_08363A64:
+	.global	gLevel1Stage0Room3MetatileMap
+gLevel1Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x363A64, 0x2B4
-	.global	gUnk_08363D18
-gUnk_08363D18:
+	.global	gLevel1Stage0Room3BlockLayer
+gLevel1Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x363D18, 0x7C
 	.global	gUnk_08363D94
 gUnk_08363D94:
 	.incbin	"baserom.gba", 0x363D94, 0x38
-	.global	gUnk_08363DCC
-gUnk_08363DCC:
+	.global	gLevel1Stage0Room3Doors
+gLevel1Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x363DCC, 0x18
-	.global	gUnk_08363DE4
-gUnk_08363DE4:
+	.global	gLevel1Stage0Room3Objects
+gLevel1Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x363DE4, 0x20
 	.global	gLevel1Stage0Room3
 gLevel1Stage0Room3:
 	.incbin	"baserom.gba", 0x363E04, 0x8
-	.word	gUnk_08363A64
-	.word	gUnk_08363D18
+	.word	gLevel1Stage0Room3MetatileMap
+	.word	gLevel1Stage0Room3BlockLayer
 	.word	gUnk_08363D94
 	.incbin	"baserom.gba", 0x363E18, 0x4
 	.word	gUnk_0849A52C
@@ -864,29 +864,29 @@ gLevel1Stage0Room3:
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x363E38, 0x10
-	.word	gUnk_08363DCC
-	.word	gUnk_08363DE4
+	.word	gLevel1Stage0Room3Doors
+	.word	gLevel1Stage0Room3Objects
 	.incbin	"baserom.gba", 0x363E50, 0xC
-	.global	gUnk_08363E5C
-gUnk_08363E5C:
+	.global	gLevel1Stage1Room0MetatileMap
+gLevel1Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x363E5C, 0x150
-	.global	gUnk_08363FAC
-gUnk_08363FAC:
+	.global	gLevel1Stage1Room0BlockLayer
+gLevel1Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x363FAC, 0x34
 	.global	gUnk_08363FE0
 gUnk_08363FE0:
 	.incbin	"baserom.gba", 0x363FE0, 0x8
-	.global	gUnk_08363FE8
-gUnk_08363FE8:
+	.global	gLevel1Stage1Room0Doors
+gLevel1Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x363FE8, 0xC
-	.global	gUnk_08363FF4
-gUnk_08363FF4:
+	.global	gLevel1Stage1Room0Objects
+gLevel1Stage1Room0Objects:
 	.incbin	"baserom.gba", 0x363FF4, 0x20
 	.global	gLevel1Stage1Room0
 gLevel1Stage1Room0:
 	.incbin	"baserom.gba", 0x364014, 0x8
-	.word	gUnk_08363E5C
-	.word	gUnk_08363FAC
+	.word	gLevel1Stage1Room0MetatileMap
+	.word	gLevel1Stage1Room0BlockLayer
 	.word	gUnk_08363FE0
 	.incbin	"baserom.gba", 0x364028, 0x4
 	.word	gUnk_0853E728
@@ -897,29 +897,29 @@ gLevel1Stage1Room0:
 	.word	gUnk_0844F9D0
 	.word	gUnk_083CC17C
 	.incbin	"baserom.gba", 0x364048, 0x10
-	.word	gUnk_08363FE8
-	.word	gUnk_08363FF4
+	.word	gLevel1Stage1Room0Doors
+	.word	gLevel1Stage1Room0Objects
 	.incbin	"baserom.gba", 0x364060, 0xC
-	.global	gUnk_0836406C
-gUnk_0836406C:
+	.global	gLevel1Stage1Room1MetatileMap
+gLevel1Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x36406C, 0x1C4
-	.global	gUnk_08364230
-gUnk_08364230:
+	.global	gLevel1Stage1Room1BlockLayer
+gLevel1Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x364230, 0xB4
 	.global	gUnk_083642E4
 gUnk_083642E4:
 	.incbin	"baserom.gba", 0x3642E4, 0xB4
-	.global	gUnk_08364398
-gUnk_08364398:
+	.global	gLevel1Stage1Room1Doors
+gLevel1Stage1Room1Doors:
 	.incbin	"baserom.gba", 0x364398, 0xC
-	.global	gUnk_083643A4
-gUnk_083643A4:
+	.global	gLevel1Stage1Room1Objects
+gLevel1Stage1Room1Objects:
 	.incbin	"baserom.gba", 0x3643A4, 0x18
 	.global	gLevel1Stage1Room1
 gLevel1Stage1Room1:
 	.incbin	"baserom.gba", 0x3643BC, 0x8
-	.word	gUnk_0836406C
-	.word	gUnk_08364230
+	.word	gLevel1Stage1Room1MetatileMap
+	.word	gLevel1Stage1Room1BlockLayer
 	.word	gUnk_083642E4
 	.incbin	"baserom.gba", 0x3643D0, 0x4
 	.word	gUnk_0849A6B4
@@ -930,29 +930,29 @@ gLevel1Stage1Room1:
 	.word	gUnk_0844F9D0
 	.word	gUnk_083CC17C
 	.incbin	"baserom.gba", 0x3643F0, 0x10
-	.word	gUnk_08364398
-	.word	gUnk_083643A4
+	.word	gLevel1Stage1Room1Doors
+	.word	gLevel1Stage1Room1Objects
 	.incbin	"baserom.gba", 0x364408, 0xC
-	.global	gUnk_08364414
-gUnk_08364414:
+	.global	gLevel1Stage1Room2MetatileMap
+gLevel1Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x364414, 0x18C
-	.global	gUnk_083645A0
-gUnk_083645A0:
+	.global	gLevel1Stage1Room2BlockLayer
+gLevel1Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3645A0, 0x80
 	.global	gUnk_08364620
 gUnk_08364620:
 	.incbin	"baserom.gba", 0x364620, 0x8
-	.global	gUnk_08364628
-gUnk_08364628:
+	.global	gLevel1Stage1Room2Doors
+gLevel1Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x364628, 0xC
-	.global	gUnk_08364634
-gUnk_08364634:
+	.global	gLevel1Stage1Room2Objects
+gLevel1Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x364634, 0x8
 	.global	gLevel1Stage1Room2
 gLevel1Stage1Room2:
 	.incbin	"baserom.gba", 0x36463C, 0x8
-	.word	gUnk_08364414
-	.word	gUnk_083645A0
+	.word	gLevel1Stage1Room2MetatileMap
+	.word	gLevel1Stage1Room2BlockLayer
 	.word	gUnk_08364620
 	.incbin	"baserom.gba", 0x364650, 0x4
 	.word	gUnk_0849A6B4
@@ -963,29 +963,29 @@ gLevel1Stage1Room2:
 	.word	gUnk_0844F9D0
 	.word	gUnk_083CC17C
 	.incbin	"baserom.gba", 0x364670, 0x10
-	.word	gUnk_08364628
-	.word	gUnk_08364634
+	.word	gLevel1Stage1Room2Doors
+	.word	gLevel1Stage1Room2Objects
 	.incbin	"baserom.gba", 0x364688, 0xC
-	.global	gUnk_08364694
-gUnk_08364694:
+	.global	gLevel1Stage1Room3MetatileMap
+gLevel1Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x364694, 0x2A0
-	.global	gUnk_08364934
-gUnk_08364934:
+	.global	gLevel1Stage1Room3BlockLayer
+gLevel1Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x364934, 0x9C
 	.global	gUnk_083649D0
 gUnk_083649D0:
 	.incbin	"baserom.gba", 0x3649D0, 0x20
-	.global	gUnk_083649F0
-gUnk_083649F0:
+	.global	gLevel1Stage1Room3Doors
+gLevel1Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x3649F0, 0x18
-	.global	gUnk_08364A08
-gUnk_08364A08:
+	.global	gLevel1Stage1Room3Objects
+gLevel1Stage1Room3Objects:
 	.incbin	"baserom.gba", 0x364A08, 0x30
 	.global	gLevel1Stage1Room3
 gLevel1Stage1Room3:
 	.incbin	"baserom.gba", 0x364A38, 0x8
-	.word	gUnk_08364694
-	.word	gUnk_08364934
+	.word	gLevel1Stage1Room3MetatileMap
+	.word	gLevel1Stage1Room3BlockLayer
 	.word	gUnk_083649D0
 	.incbin	"baserom.gba", 0x364A4C, 0x4
 	.word	gUnk_0850A9A8
@@ -996,29 +996,29 @@ gLevel1Stage1Room3:
 	.word	gUnk_0844B2FC
 	.word	gUnk_083CB85C
 	.incbin	"baserom.gba", 0x364A6C, 0x10
-	.word	gUnk_083649F0
-	.word	gUnk_08364A08
+	.word	gLevel1Stage1Room3Doors
+	.word	gLevel1Stage1Room3Objects
 	.incbin	"baserom.gba", 0x364A84, 0xC
-	.global	gUnk_08364A90
-gUnk_08364A90:
+	.global	gLevel1Stage1Room4MetatileMap
+gLevel1Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x364A90, 0x784
-	.global	gUnk_08365214
-gUnk_08365214:
+	.global	gLevel1Stage1Room4BlockLayer
+gLevel1Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x365214, 0x240
 	.global	gUnk_08365454
 gUnk_08365454:
 	.incbin	"baserom.gba", 0x365454, 0x38
-	.global	gUnk_0836548C
-gUnk_0836548C:
+	.global	gLevel1Stage1Room4Doors
+gLevel1Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x36548C, 0xC
-	.global	gUnk_08365498
-gUnk_08365498:
+	.global	gLevel1Stage1Room4Objects
+gLevel1Stage1Room4Objects:
 	.incbin	"baserom.gba", 0x365498, 0xC0
 	.global	gLevel1Stage1Room4
 gLevel1Stage1Room4:
 	.incbin	"baserom.gba", 0x365558, 0x8
-	.word	gUnk_08364A90
-	.word	gUnk_08365214
+	.word	gLevel1Stage1Room4MetatileMap
+	.word	gLevel1Stage1Room4BlockLayer
 	.word	gUnk_08365454
 	.incbin	"baserom.gba", 0x36556C, 0x4
 	.word	gUnk_0850A9A8
@@ -1029,29 +1029,29 @@ gLevel1Stage1Room4:
 	.word	gUnk_0844B2FC
 	.word	gUnk_083CB85C
 	.incbin	"baserom.gba", 0x36558C, 0x10
-	.word	gUnk_0836548C
-	.word	gUnk_08365498
+	.word	gLevel1Stage1Room4Doors
+	.word	gLevel1Stage1Room4Objects
 	.incbin	"baserom.gba", 0x3655A4, 0xC
-	.global	gUnk_083655B0
-gUnk_083655B0:
+	.global	gLevel1Stage2Room0MetatileMap
+gLevel1Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3655B0, 0x170
-	.global	gUnk_08365720
-gUnk_08365720:
+	.global	gLevel1Stage2Room0BlockLayer
+gLevel1Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x365720, 0x6C
 	.global	gUnk_0836578C
 gUnk_0836578C:
 	.incbin	"baserom.gba", 0x36578C, 0x8
-	.global	gUnk_08365794
-gUnk_08365794:
+	.global	gLevel1Stage2Room0Doors
+gLevel1Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x365794, 0xC
-	.global	gUnk_083657A0
-gUnk_083657A0:
+	.global	gLevel1Stage2Room0Objects
+gLevel1Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x3657A0, 0x20
 	.global	gLevel1Stage2Room0
 gLevel1Stage2Room0:
 	.incbin	"baserom.gba", 0x3657C0, 0x8
-	.word	gUnk_083655B0
-	.word	gUnk_08365720
+	.word	gLevel1Stage2Room0MetatileMap
+	.word	gLevel1Stage2Room0BlockLayer
 	.word	gUnk_0836578C
 	.incbin	"baserom.gba", 0x3657D4, 0x4
 	.word	gUnk_0849A52C
@@ -1062,29 +1062,29 @@ gLevel1Stage2Room0:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x3657F4, 0x10
-	.word	gUnk_08365794
-	.word	gUnk_083657A0
+	.word	gLevel1Stage2Room0Doors
+	.word	gLevel1Stage2Room0Objects
 	.incbin	"baserom.gba", 0x36580C, 0xC
-	.global	gUnk_08365818
-gUnk_08365818:
+	.global	gLevel1Stage2Room1MetatileMap
+gLevel1Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x365818, 0x714
-	.global	gUnk_08365F2C
-gUnk_08365F2C:
+	.global	gLevel1Stage2Room1BlockLayer
+gLevel1Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x365F2C, 0x1F8
 	.global	gUnk_08366124
 gUnk_08366124:
 	.incbin	"baserom.gba", 0x366124, 0x18C
-	.global	gUnk_083662B0
-gUnk_083662B0:
+	.global	gLevel1Stage2Room1Doors
+gLevel1Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x3662B0, 0x30
-	.global	gUnk_083662E0
-gUnk_083662E0:
+	.global	gLevel1Stage2Room1Objects
+gLevel1Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x3662E0, 0x60
 	.global	gLevel1Stage2Room1
 gLevel1Stage2Room1:
 	.incbin	"baserom.gba", 0x366340, 0x8
-	.word	gUnk_08365818
-	.word	gUnk_08365F2C
+	.word	gLevel1Stage2Room1MetatileMap
+	.word	gLevel1Stage2Room1BlockLayer
 	.word	gUnk_08366124
 	.incbin	"baserom.gba", 0x366354, 0x4
 	.word	gUnk_0849A52C
@@ -1095,29 +1095,29 @@ gLevel1Stage2Room1:
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x366374, 0x10
-	.word	gUnk_083662B0
-	.word	gUnk_083662E0
+	.word	gLevel1Stage2Room1Doors
+	.word	gLevel1Stage2Room1Objects
 	.incbin	"baserom.gba", 0x36638C, 0xC
-	.global	gUnk_08366398
-gUnk_08366398:
+	.global	gLevel1Stage2Room2MetatileMap
+gLevel1Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x366398, 0x1F4
-	.global	gUnk_0836658C
-gUnk_0836658C:
+	.global	gLevel1Stage2Room2BlockLayer
+gLevel1Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36658C, 0x5C
 	.global	gUnk_083665E8
 gUnk_083665E8:
 	.incbin	"baserom.gba", 0x3665E8, 0x8
-	.global	gUnk_083665F0
-gUnk_083665F0:
+	.global	gLevel1Stage2Room2Doors
+gLevel1Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x3665F0, 0xC
-	.global	gUnk_083665FC
-gUnk_083665FC:
+	.global	gLevel1Stage2Room2Objects
+gLevel1Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x3665FC, 0x40
 	.global	gLevel1Stage2Room2
 gLevel1Stage2Room2:
 	.incbin	"baserom.gba", 0x36663C, 0x8
-	.word	gUnk_08366398
-	.word	gUnk_0836658C
+	.word	gLevel1Stage2Room2MetatileMap
+	.word	gLevel1Stage2Room2BlockLayer
 	.word	gUnk_083665E8
 	.incbin	"baserom.gba", 0x366650, 0x4
 	.word	gUnk_0853E318
@@ -1128,29 +1128,29 @@ gLevel1Stage2Room2:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x366670, 0x10
-	.word	gUnk_083665F0
-	.word	gUnk_083665FC
+	.word	gLevel1Stage2Room2Doors
+	.word	gLevel1Stage2Room2Objects
 	.incbin	"baserom.gba", 0x366688, 0xC
-	.global	gUnk_08366694
-gUnk_08366694:
+	.global	gLevel1Stage2Room3MetatileMap
+gLevel1Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x366694, 0x230
-	.global	gUnk_083668C4
-gUnk_083668C4:
+	.global	gLevel1Stage2Room3BlockLayer
+gLevel1Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3668C4, 0x6C
 	.global	gUnk_08366930
 gUnk_08366930:
 	.incbin	"baserom.gba", 0x366930, 0x8
-	.global	gUnk_08366938
-gUnk_08366938:
+	.global	gLevel1Stage2Room3Doors
+gLevel1Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x366938, 0xC
-	.global	gUnk_08366944
-gUnk_08366944:
+	.global	gLevel1Stage2Room3Objects
+gLevel1Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x366944, 0x30
 	.global	gLevel1Stage2Room3
 gLevel1Stage2Room3:
 	.incbin	"baserom.gba", 0x366974, 0x8
-	.word	gUnk_08366694
-	.word	gUnk_083668C4
+	.word	gLevel1Stage2Room3MetatileMap
+	.word	gLevel1Stage2Room3BlockLayer
 	.word	gUnk_08366930
 	.incbin	"baserom.gba", 0x366988, 0x4
 	.word	gUnk_0853E318
@@ -1161,29 +1161,29 @@ gLevel1Stage2Room3:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x3669A8, 0x10
-	.word	gUnk_08366938
-	.word	gUnk_08366944
+	.word	gLevel1Stage2Room3Doors
+	.word	gLevel1Stage2Room3Objects
 	.incbin	"baserom.gba", 0x3669C0, 0xC
-	.global	gUnk_083669CC
-gUnk_083669CC:
+	.global	gLevel1Stage2Room4MetatileMap
+gLevel1Stage2Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3669CC, 0x164
-	.global	gUnk_08366B30
-gUnk_08366B30:
+	.global	gLevel1Stage2Room4BlockLayer
+gLevel1Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x366B30, 0x34
 	.global	gUnk_08366B64
 gUnk_08366B64:
 	.incbin	"baserom.gba", 0x366B64, 0x8
-	.global	gUnk_08366B6C
-gUnk_08366B6C:
+	.global	gLevel1Stage2Room4Doors
+gLevel1Stage2Room4Doors:
 	.incbin	"baserom.gba", 0x366B6C, 0xC
-	.global	gUnk_08366B78
-gUnk_08366B78:
+	.global	gLevel1Stage2Room4Objects
+gLevel1Stage2Room4Objects:
 	.incbin	"baserom.gba", 0x366B78, 0x20
 	.global	gLevel1Stage2Room4
 gLevel1Stage2Room4:
 	.incbin	"baserom.gba", 0x366B98, 0x8
-	.word	gUnk_083669CC
-	.word	gUnk_08366B30
+	.word	gLevel1Stage2Room4MetatileMap
+	.word	gLevel1Stage2Room4BlockLayer
 	.word	gUnk_08366B64
 	.incbin	"baserom.gba", 0x366BAC, 0x4
 	.word	gUnk_0849A52C
@@ -1194,29 +1194,29 @@ gLevel1Stage2Room4:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x366BCC, 0x10
-	.word	gUnk_08366B6C
-	.word	gUnk_08366B78
+	.word	gLevel1Stage2Room4Doors
+	.word	gLevel1Stage2Room4Objects
 	.incbin	"baserom.gba", 0x366BE4, 0xC
-	.global	gUnk_08366BF0
-gUnk_08366BF0:
+	.global	gLevel1Stage2Room5MetatileMap
+gLevel1Stage2Room5MetatileMap:
 	.incbin	"baserom.gba", 0x366BF0, 0xCC
-	.global	gUnk_08366CBC
-gUnk_08366CBC:
+	.global	gLevel1Stage2Room5BlockLayer
+gLevel1Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x366CBC, 0x3C
 	.global	gUnk_08366CF8
 gUnk_08366CF8:
 	.incbin	"baserom.gba", 0x366CF8, 0x10
-	.global	gUnk_08366D08
-gUnk_08366D08:
+	.global	gLevel1Stage2Room5Doors
+gLevel1Stage2Room5Doors:
 	.incbin	"baserom.gba", 0x366D08, 0xC
-	.global	gUnk_08366D14
-gUnk_08366D14:
+	.global	gLevel1Stage2Room5Objects
+gLevel1Stage2Room5Objects:
 	.incbin	"baserom.gba", 0x366D14, 0x8
 	.global	gLevel1Stage2Room5
 gLevel1Stage2Room5:
 	.incbin	"baserom.gba", 0x366D1C, 0x8
-	.word	gUnk_08366BF0
-	.word	gUnk_08366CBC
+	.word	gLevel1Stage2Room5MetatileMap
+	.word	gLevel1Stage2Room5BlockLayer
 	.word	gUnk_08366CF8
 	.incbin	"baserom.gba", 0x366D30, 0x4
 	.word	gUnk_0853E318
@@ -1227,29 +1227,29 @@ gLevel1Stage2Room5:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x366D50, 0x10
-	.word	gUnk_08366D08
-	.word	gUnk_08366D14
+	.word	gLevel1Stage2Room5Doors
+	.word	gLevel1Stage2Room5Objects
 	.incbin	"baserom.gba", 0x366D68, 0xC
-	.global	gUnk_08366D74
-gUnk_08366D74:
+	.global	gLevel1Stage3Room0MetatileMap
+gLevel1Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x366D74, 0x314
-	.global	gUnk_08367088
-gUnk_08367088:
+	.global	gLevel1Stage3Room0BlockLayer
+gLevel1Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x367088, 0x118
 	.global	gUnk_083671A0
 gUnk_083671A0:
 	.incbin	"baserom.gba", 0x3671A0, 0x34
-	.global	gUnk_083671D4
-gUnk_083671D4:
+	.global	gLevel1Stage3Room0Doors
+gLevel1Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x3671D4, 0x18
-	.global	gUnk_083671EC
-gUnk_083671EC:
+	.global	gLevel1Stage3Room0Objects
+gLevel1Stage3Room0Objects:
 	.incbin	"baserom.gba", 0x3671EC, 0x88
 	.global	gLevel1Stage3Room0
 gLevel1Stage3Room0:
 	.incbin	"baserom.gba", 0x367274, 0x8
-	.word	gUnk_08366D74
-	.word	gUnk_08367088
+	.word	gLevel1Stage3Room0MetatileMap
+	.word	gLevel1Stage3Room0BlockLayer
 	.word	gUnk_083671A0
 	.incbin	"baserom.gba", 0x367288, 0x4
 	.word	gUnk_0835D548
@@ -1260,29 +1260,29 @@ gLevel1Stage3Room0:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x3672A8, 0x10
-	.word	gUnk_083671D4
-	.word	gUnk_083671EC
+	.word	gLevel1Stage3Room0Doors
+	.word	gLevel1Stage3Room0Objects
 	.incbin	"baserom.gba", 0x3672C0, 0xC
-	.global	gUnk_083672CC
-gUnk_083672CC:
+	.global	gLevel1Stage3Room1MetatileMap
+gLevel1Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3672CC, 0x1C0
-	.global	gUnk_0836748C
-gUnk_0836748C:
+	.global	gLevel1Stage3Room1BlockLayer
+gLevel1Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36748C, 0x5C
 	.global	gUnk_083674E8
 gUnk_083674E8:
 	.incbin	"baserom.gba", 0x3674E8, 0x8
-	.global	gUnk_083674F0
-gUnk_083674F0:
+	.global	gLevel1Stage3Room1Doors
+gLevel1Stage3Room1Doors:
 	.incbin	"baserom.gba", 0x3674F0, 0xC
-	.global	gUnk_083674FC
-gUnk_083674FC:
+	.global	gLevel1Stage3Room1Objects
+gLevel1Stage3Room1Objects:
 	.incbin	"baserom.gba", 0x3674FC, 0x40
 	.global	gLevel1Stage3Room1
 gLevel1Stage3Room1:
 	.incbin	"baserom.gba", 0x36753C, 0x8
-	.word	gUnk_083672CC
-	.word	gUnk_0836748C
+	.word	gLevel1Stage3Room1MetatileMap
+	.word	gLevel1Stage3Room1BlockLayer
 	.word	gUnk_083674E8
 	.incbin	"baserom.gba", 0x367550, 0x4
 	.word	gUnk_0835D548
@@ -1293,29 +1293,29 @@ gLevel1Stage3Room1:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x367570, 0x10
-	.word	gUnk_083674F0
-	.word	gUnk_083674FC
+	.word	gLevel1Stage3Room1Doors
+	.word	gLevel1Stage3Room1Objects
 	.incbin	"baserom.gba", 0x367588, 0xC
-	.global	gUnk_08367594
-gUnk_08367594:
+	.global	gLevel1Stage3Room2MetatileMap
+gLevel1Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x367594, 0x1AC
-	.global	gUnk_08367740
-gUnk_08367740:
+	.global	gLevel1Stage3Room2BlockLayer
+gLevel1Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x367740, 0x60
 	.global	gUnk_083677A0
 gUnk_083677A0:
 	.incbin	"baserom.gba", 0x3677A0, 0x8
-	.global	gUnk_083677A8
-gUnk_083677A8:
+	.global	gLevel1Stage3Room2Doors
+gLevel1Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x3677A8, 0xC
-	.global	gUnk_083677B4
-gUnk_083677B4:
+	.global	gLevel1Stage3Room2Objects
+gLevel1Stage3Room2Objects:
 	.incbin	"baserom.gba", 0x3677B4, 0x40
 	.global	gLevel1Stage3Room2
 gLevel1Stage3Room2:
 	.incbin	"baserom.gba", 0x3677F4, 0x8
-	.word	gUnk_08367594
-	.word	gUnk_08367740
+	.word	gLevel1Stage3Room2MetatileMap
+	.word	gLevel1Stage3Room2BlockLayer
 	.word	gUnk_083677A0
 	.incbin	"baserom.gba", 0x367808, 0x4
 	.word	gUnk_0853E318
@@ -1326,29 +1326,29 @@ gLevel1Stage3Room2:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x367828, 0x10
-	.word	gUnk_083677A8
-	.word	gUnk_083677B4
+	.word	gLevel1Stage3Room2Doors
+	.word	gLevel1Stage3Room2Objects
 	.incbin	"baserom.gba", 0x367840, 0xC
-	.global	gUnk_0836784C
-gUnk_0836784C:
+	.global	gLevel1Stage3Room3MetatileMap
+gLevel1Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x36784C, 0x148
-	.global	gUnk_08367994
-gUnk_08367994:
+	.global	gLevel1Stage3Room3BlockLayer
+gLevel1Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x367994, 0x60
 	.global	gUnk_083679F4
 gUnk_083679F4:
 	.incbin	"baserom.gba", 0x3679F4, 0x8
-	.global	gUnk_083679FC
-gUnk_083679FC:
+	.global	gLevel1Stage3Room3Doors
+gLevel1Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x3679FC, 0xC
-	.global	gUnk_08367A08
-gUnk_08367A08:
+	.global	gLevel1Stage3Room3Objects
+gLevel1Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x367A08, 0x48
 	.global	gLevel1Stage3Room3
 gLevel1Stage3Room3:
 	.incbin	"baserom.gba", 0x367A50, 0x8
-	.word	gUnk_0836784C
-	.word	gUnk_08367994
+	.word	gLevel1Stage3Room3MetatileMap
+	.word	gLevel1Stage3Room3BlockLayer
 	.word	gUnk_083679F4
 	.incbin	"baserom.gba", 0x367A64, 0x4
 	.word	gUnk_0835D548
@@ -1359,29 +1359,29 @@ gLevel1Stage3Room3:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x367A84, 0x10
-	.word	gUnk_083679FC
-	.word	gUnk_08367A08
+	.word	gLevel1Stage3Room3Doors
+	.word	gLevel1Stage3Room3Objects
 	.incbin	"baserom.gba", 0x367A9C, 0xC
-	.global	gUnk_08367AA8
-gUnk_08367AA8:
+	.global	gLevel1Stage3Room4MetatileMap
+gLevel1Stage3Room4MetatileMap:
 	.incbin	"baserom.gba", 0x367AA8, 0x20C
-	.global	gUnk_08367CB4
-gUnk_08367CB4:
+	.global	gLevel1Stage3Room4BlockLayer
+gLevel1Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x367CB4, 0xC8
 	.global	gUnk_08367D7C
 gUnk_08367D7C:
 	.incbin	"baserom.gba", 0x367D7C, 0x84
-	.global	gUnk_08367E00
-gUnk_08367E00:
+	.global	gLevel1Stage3Room4Doors
+gLevel1Stage3Room4Doors:
 	.incbin	"baserom.gba", 0x367E00, 0xC
-	.global	gUnk_08367E0C
-gUnk_08367E0C:
+	.global	gLevel1Stage3Room4Objects
+gLevel1Stage3Room4Objects:
 	.incbin	"baserom.gba", 0x367E0C, 0x80
 	.global	gLevel1Stage3Room4
 gLevel1Stage3Room4:
 	.incbin	"baserom.gba", 0x367E8C, 0x8
-	.word	gUnk_08367AA8
-	.word	gUnk_08367CB4
+	.word	gLevel1Stage3Room4MetatileMap
+	.word	gLevel1Stage3Room4BlockLayer
 	.word	gUnk_08367D7C
 	.incbin	"baserom.gba", 0x367EA0, 0x4
 	.word	gUnk_0853E318
@@ -1392,29 +1392,29 @@ gLevel1Stage3Room4:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x367EC0, 0x10
-	.word	gUnk_08367E00
-	.word	gUnk_08367E0C
+	.word	gLevel1Stage3Room4Doors
+	.word	gLevel1Stage3Room4Objects
 	.incbin	"baserom.gba", 0x367ED8, 0xC
-	.global	gUnk_08367EE4
-gUnk_08367EE4:
+	.global	gLevel1Stage3Room5MetatileMap
+gLevel1Stage3Room5MetatileMap:
 	.incbin	"baserom.gba", 0x367EE4, 0x460
-	.global	gUnk_08368344
-gUnk_08368344:
+	.global	gLevel1Stage3Room5BlockLayer
+gLevel1Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x368344, 0x110
 	.global	gUnk_08368454
 gUnk_08368454:
 	.incbin	"baserom.gba", 0x368454, 0x8
-	.global	gUnk_0836845C
-gUnk_0836845C:
+	.global	gLevel1Stage3Room5Doors
+gLevel1Stage3Room5Doors:
 	.incbin	"baserom.gba", 0x36845C, 0x18
-	.global	gUnk_08368474
-gUnk_08368474:
+	.global	gLevel1Stage3Room5Objects
+gLevel1Stage3Room5Objects:
 	.incbin	"baserom.gba", 0x368474, 0x60
 	.global	gLevel1Stage3Room5
 gLevel1Stage3Room5:
 	.incbin	"baserom.gba", 0x3684D4, 0x8
-	.word	gUnk_08367EE4
-	.word	gUnk_08368344
+	.word	gLevel1Stage3Room5MetatileMap
+	.word	gLevel1Stage3Room5BlockLayer
 	.word	gUnk_08368454
 	.incbin	"baserom.gba", 0x3684E8, 0x4
 	.word	gUnk_0850A9A8
@@ -1425,29 +1425,29 @@ gLevel1Stage3Room5:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x368508, 0x10
-	.word	gUnk_0836845C
-	.word	gUnk_08368474
+	.word	gLevel1Stage3Room5Doors
+	.word	gLevel1Stage3Room5Objects
 	.incbin	"baserom.gba", 0x368520, 0xC
-	.global	gUnk_0836852C
-gUnk_0836852C:
+	.global	gLevel1Stage3Room6MetatileMap
+gLevel1Stage3Room6MetatileMap:
 	.incbin	"baserom.gba", 0x36852C, 0x174
-	.global	gUnk_083686A0
-gUnk_083686A0:
+	.global	gLevel1Stage3Room6BlockLayer
+gLevel1Stage3Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3686A0, 0x34
 	.global	gUnk_083686D4
 gUnk_083686D4:
 	.incbin	"baserom.gba", 0x3686D4, 0x8
-	.global	gUnk_083686DC
-gUnk_083686DC:
+	.global	gLevel1Stage3Room6Doors
+gLevel1Stage3Room6Doors:
 	.incbin	"baserom.gba", 0x3686DC, 0xC
-	.global	gUnk_083686E8
-gUnk_083686E8:
+	.global	gLevel1Stage3Room6Objects
+gLevel1Stage3Room6Objects:
 	.incbin	"baserom.gba", 0x3686E8, 0x28
 	.global	gLevel1Stage3Room6
 gLevel1Stage3Room6:
 	.incbin	"baserom.gba", 0x368710, 0x8
-	.word	gUnk_0836852C
-	.word	gUnk_083686A0
+	.word	gLevel1Stage3Room6MetatileMap
+	.word	gLevel1Stage3Room6BlockLayer
 	.word	gUnk_083686D4
 	.incbin	"baserom.gba", 0x368724, 0x4
 	.word	gUnk_0853E728
@@ -1458,29 +1458,29 @@ gLevel1Stage3Room6:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x368744, 0x10
-	.word	gUnk_083686DC
-	.word	gUnk_083686E8
+	.word	gLevel1Stage3Room6Doors
+	.word	gLevel1Stage3Room6Objects
 	.incbin	"baserom.gba", 0x36875C, 0xC
-	.global	gUnk_08368768
-gUnk_08368768:
+	.global	gLevel1Stage4Room0MetatileMap
+gLevel1Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x368768, 0x484
-	.global	gUnk_08368BEC
-gUnk_08368BEC:
+	.global	gLevel1Stage4Room0BlockLayer
+gLevel1Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x368BEC, 0xD8
 	.global	gUnk_08368CC4
 gUnk_08368CC4:
 	.incbin	"baserom.gba", 0x368CC4, 0x8
-	.global	gUnk_08368CCC
-gUnk_08368CCC:
+	.global	gLevel1Stage4Room0Doors
+gLevel1Stage4Room0Doors:
 	.incbin	"baserom.gba", 0x368CCC, 0xC
-	.global	gUnk_08368CD8
-gUnk_08368CD8:
+	.global	gLevel1Stage4Room0Objects
+gLevel1Stage4Room0Objects:
 	.incbin	"baserom.gba", 0x368CD8, 0x58
 	.global	gLevel1Stage4Room0
 gLevel1Stage4Room0:
 	.incbin	"baserom.gba", 0x368D30, 0x8
-	.word	gUnk_08368768
-	.word	gUnk_08368BEC
+	.word	gLevel1Stage4Room0MetatileMap
+	.word	gLevel1Stage4Room0BlockLayer
 	.word	gUnk_08368CC4
 	.incbin	"baserom.gba", 0x368D44, 0x4
 	.word	gUnk_0853D12C
@@ -1491,29 +1491,29 @@ gLevel1Stage4Room0:
 	.word	gUnk_0844F9D0
 	.word	gUnk_083CC17C
 	.incbin	"baserom.gba", 0x368D64, 0x10
-	.word	gUnk_08368CCC
-	.word	gUnk_08368CD8
+	.word	gLevel1Stage4Room0Doors
+	.word	gLevel1Stage4Room0Objects
 	.incbin	"baserom.gba", 0x368D7C, 0xC
-	.global	gUnk_08368D88
-gUnk_08368D88:
+	.global	gLevel1Stage4Room1MetatileMap
+gLevel1Stage4Room1MetatileMap:
 	.incbin	"baserom.gba", 0x368D88, 0x378
-	.global	gUnk_08369100
-gUnk_08369100:
+	.global	gLevel1Stage4Room1BlockLayer
+gLevel1Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x369100, 0x100
 	.global	gUnk_08369200
 gUnk_08369200:
 	.incbin	"baserom.gba", 0x369200, 0x50
-	.global	gUnk_08369250
-gUnk_08369250:
+	.global	gLevel1Stage4Room1Doors
+gLevel1Stage4Room1Doors:
 	.incbin	"baserom.gba", 0x369250, 0x18
-	.global	gUnk_08369268
-gUnk_08369268:
+	.global	gLevel1Stage4Room1Objects
+gLevel1Stage4Room1Objects:
 	.incbin	"baserom.gba", 0x369268, 0x70
 	.global	gLevel1Stage4Room1
 gLevel1Stage4Room1:
 	.incbin	"baserom.gba", 0x3692D8, 0x8
-	.word	gUnk_08368D88
-	.word	gUnk_08369100
+	.word	gLevel1Stage4Room1MetatileMap
+	.word	gLevel1Stage4Room1BlockLayer
 	.word	gUnk_08369200
 	.incbin	"baserom.gba", 0x3692EC, 0x4
 	.word	gUnk_0853E318
@@ -1524,29 +1524,29 @@ gLevel1Stage4Room1:
 	.word	gUnk_0844F9D0
 	.word	gUnk_083CC17C
 	.incbin	"baserom.gba", 0x36930C, 0x10
-	.word	gUnk_08369250
-	.word	gUnk_08369268
+	.word	gLevel1Stage4Room1Doors
+	.word	gLevel1Stage4Room1Objects
 	.incbin	"baserom.gba", 0x369324, 0xC
-	.global	gUnk_08369330
-gUnk_08369330:
+	.global	gLevel1Stage4Room2MetatileMap
+gLevel1Stage4Room2MetatileMap:
 	.incbin	"baserom.gba", 0x369330, 0x548
-	.global	gUnk_08369878
-gUnk_08369878:
+	.global	gLevel1Stage4Room2BlockLayer
+gLevel1Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x369878, 0x208
 	.global	gUnk_08369A80
 gUnk_08369A80:
 	.incbin	"baserom.gba", 0x369A80, 0x88
-	.global	gUnk_08369B08
-gUnk_08369B08:
+	.global	gLevel1Stage4Room2Doors
+gLevel1Stage4Room2Doors:
 	.incbin	"baserom.gba", 0x369B08, 0x18
-	.global	gUnk_08369B20
-gUnk_08369B20:
+	.global	gLevel1Stage4Room2Objects
+gLevel1Stage4Room2Objects:
 	.incbin	"baserom.gba", 0x369B20, 0xC0
 	.global	gLevel1Stage4Room2
 gLevel1Stage4Room2:
 	.incbin	"baserom.gba", 0x369BE0, 0x8
-	.word	gUnk_08369330
-	.word	gUnk_08369878
+	.word	gLevel1Stage4Room2MetatileMap
+	.word	gLevel1Stage4Room2BlockLayer
 	.word	gUnk_08369A80
 	.incbin	"baserom.gba", 0x369BF4, 0x4
 	.word	gUnk_0853DAB4
@@ -1557,29 +1557,29 @@ gLevel1Stage4Room2:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x369C14, 0x10
-	.word	gUnk_08369B08
-	.word	gUnk_08369B20
+	.word	gLevel1Stage4Room2Doors
+	.word	gLevel1Stage4Room2Objects
 	.incbin	"baserom.gba", 0x369C2C, 0xC
-	.global	gUnk_08369C38
-gUnk_08369C38:
+	.global	gLevel1Stage4Room3MetatileMap
+gLevel1Stage4Room3MetatileMap:
 	.incbin	"baserom.gba", 0x369C38, 0x174
-	.global	gUnk_08369DAC
-gUnk_08369DAC:
+	.global	gLevel1Stage4Room3BlockLayer
+gLevel1Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x369DAC, 0x148
 	.global	gUnk_08369EF4
 gUnk_08369EF4:
 	.incbin	"baserom.gba", 0x369EF4, 0x168
-	.global	gUnk_0836A05C
-gUnk_0836A05C:
+	.global	gLevel1Stage4Room3Doors
+gLevel1Stage4Room3Doors:
 	.incbin	"baserom.gba", 0x36A05C, 0xC
-	.global	gUnk_0836A068
-gUnk_0836A068:
+	.global	gLevel1Stage4Room3Objects
+gLevel1Stage4Room3Objects:
 	.incbin	"baserom.gba", 0x36A068, 0x40
 	.global	gLevel1Stage4Room3
 gLevel1Stage4Room3:
 	.incbin	"baserom.gba", 0x36A0A8, 0x8
-	.word	gUnk_08369C38
-	.word	gUnk_08369DAC
+	.word	gLevel1Stage4Room3MetatileMap
+	.word	gLevel1Stage4Room3BlockLayer
 	.word	gUnk_08369EF4
 	.incbin	"baserom.gba", 0x36A0BC, 0x4
 	.word	gUnk_0835D548
@@ -1590,29 +1590,29 @@ gLevel1Stage4Room3:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x36A0DC, 0x10
-	.word	gUnk_0836A05C
-	.word	gUnk_0836A068
+	.word	gLevel1Stage4Room3Doors
+	.word	gLevel1Stage4Room3Objects
 	.incbin	"baserom.gba", 0x36A0F4, 0xC
-	.global	gUnk_0836A100
-gUnk_0836A100:
+	.global	gLevel1Stage4Room4MetatileMap
+gLevel1Stage4Room4MetatileMap:
 	.incbin	"baserom.gba", 0x36A100, 0x150
-	.global	gUnk_0836A250
-gUnk_0836A250:
+	.global	gLevel1Stage4Room4BlockLayer
+gLevel1Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36A250, 0x74
 	.global	gUnk_0836A2C4
 gUnk_0836A2C4:
 	.incbin	"baserom.gba", 0x36A2C4, 0x8
-	.global	gUnk_0836A2CC
-gUnk_0836A2CC:
+	.global	gLevel1Stage4Room4Doors
+gLevel1Stage4Room4Doors:
 	.incbin	"baserom.gba", 0x36A2CC, 0xC
-	.global	gUnk_0836A2D8
-gUnk_0836A2D8:
+	.global	gLevel1Stage4Room4Objects
+gLevel1Stage4Room4Objects:
 	.incbin	"baserom.gba", 0x36A2D8, 0x40
 	.global	gLevel1Stage4Room4
 gLevel1Stage4Room4:
 	.incbin	"baserom.gba", 0x36A318, 0x8
-	.word	gUnk_0836A100
-	.word	gUnk_0836A250
+	.word	gLevel1Stage4Room4MetatileMap
+	.word	gLevel1Stage4Room4BlockLayer
 	.word	gUnk_0836A2C4
 	.incbin	"baserom.gba", 0x36A32C, 0x4
 	.word	gUnk_0835D548
@@ -1623,29 +1623,29 @@ gLevel1Stage4Room4:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x36A34C, 0x10
-	.word	gUnk_0836A2CC
-	.word	gUnk_0836A2D8
+	.word	gLevel1Stage4Room4Doors
+	.word	gLevel1Stage4Room4Objects
 	.incbin	"baserom.gba", 0x36A364, 0xC
-	.global	gUnk_0836A370
-gUnk_0836A370:
+	.global	gLevel1Stage4Room5MetatileMap
+gLevel1Stage4Room5MetatileMap:
 	.incbin	"baserom.gba", 0x36A370, 0x15C
-	.global	gUnk_0836A4CC
-gUnk_0836A4CC:
+	.global	gLevel1Stage4Room5BlockLayer
+gLevel1Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36A4CC, 0x34
 	.global	gUnk_0836A500
 gUnk_0836A500:
 	.incbin	"baserom.gba", 0x36A500, 0x8
-	.global	gUnk_0836A508
-gUnk_0836A508:
+	.global	gLevel1Stage4Room5Doors
+gLevel1Stage4Room5Doors:
 	.incbin	"baserom.gba", 0x36A508, 0xC
-	.global	gUnk_0836A514
-gUnk_0836A514:
+	.global	gLevel1Stage4Room5Objects
+gLevel1Stage4Room5Objects:
 	.incbin	"baserom.gba", 0x36A514, 0x20
 	.global	gLevel1Stage4Room5
 gLevel1Stage4Room5:
 	.incbin	"baserom.gba", 0x36A534, 0x8
-	.word	gUnk_0836A370
-	.word	gUnk_0836A4CC
+	.word	gLevel1Stage4Room5MetatileMap
+	.word	gLevel1Stage4Room5BlockLayer
 	.word	gUnk_0836A500
 	.incbin	"baserom.gba", 0x36A548, 0x4
 	.word	gUnk_0853E318
@@ -1656,29 +1656,29 @@ gLevel1Stage4Room5:
 	.word	gUnk_0844F9D0
 	.word	gUnk_083CC17C
 	.incbin	"baserom.gba", 0x36A568, 0x10
-	.word	gUnk_0836A508
-	.word	gUnk_0836A514
+	.word	gLevel1Stage4Room5Doors
+	.word	gLevel1Stage4Room5Objects
 	.incbin	"baserom.gba", 0x36A580, 0xC
-	.global	gUnk_0836A58C
-gUnk_0836A58C:
+	.global	gLevel1Stage4Room6MetatileMap
+gLevel1Stage4Room6MetatileMap:
 	.incbin	"baserom.gba", 0x36A58C, 0xF0
-	.global	gUnk_0836A67C
-gUnk_0836A67C:
+	.global	gLevel1Stage4Room6BlockLayer
+gLevel1Stage4Room6BlockLayer:
 	.incbin	"baserom.gba", 0x36A67C, 0x34
 	.global	gUnk_0836A6B0
 gUnk_0836A6B0:
 	.incbin	"baserom.gba", 0x36A6B0, 0x8
-	.global	gUnk_0836A6B8
-gUnk_0836A6B8:
+	.global	gLevel1Stage4Room6Doors
+gLevel1Stage4Room6Doors:
 	.incbin	"baserom.gba", 0x36A6B8, 0xC
-	.global	gUnk_0836A6C4
-gUnk_0836A6C4:
+	.global	gLevel1Stage4Room6Objects
+gLevel1Stage4Room6Objects:
 	.incbin	"baserom.gba", 0x36A6C4, 0x18
 	.global	gLevel1Stage4Room6
 gLevel1Stage4Room6:
 	.incbin	"baserom.gba", 0x36A6DC, 0x8
-	.word	gUnk_0836A58C
-	.word	gUnk_0836A67C
+	.word	gLevel1Stage4Room6MetatileMap
+	.word	gLevel1Stage4Room6BlockLayer
 	.word	gUnk_0836A6B0
 	.incbin	"baserom.gba", 0x36A6F0, 0x4
 	.word	gUnk_0835D548
@@ -1689,58 +1689,58 @@ gLevel1Stage4Room6:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x36A710, 0x10
-	.word	gUnk_0836A6B8
-	.word	gUnk_0836A6C4
+	.word	gLevel1Stage4Room6Doors
+	.word	gLevel1Stage4Room6Objects
 	.incbin	"baserom.gba", 0x36A728, 0xC
-	.global	gUnk_0836A734
-gUnk_0836A734:
+	.global	gLevel1Stage5Room0MetatileMap
+gLevel1Stage5Room0MetatileMap:
 	.incbin	"baserom.gba", 0x36A734, 0x120
-	.global	gUnk_0836A854
-gUnk_0836A854:
+	.global	gLevel1Stage5Room0BlockLayer
+gLevel1Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36A854, 0x38
 	.global	gUnk_0836A88C
 gUnk_0836A88C:
 	.incbin	"baserom.gba", 0x36A88C, 0x8
-	.global	gUnk_0836A894
-gUnk_0836A894:
+	.global	gLevel1Stage5Room0Objects
+gLevel1Stage5Room0Objects:
 	.incbin	"baserom.gba", 0x36A894, 0x8
 	.global	gLevel1Stage5Room0
 gLevel1Stage5Room0:
 	.incbin	"baserom.gba", 0x36A89C, 0x8
-	.word	gUnk_0836A734
-	.word	gUnk_0836A854
+	.word	gLevel1Stage5Room0MetatileMap
+	.word	gLevel1Stage5Room0BlockLayer
 	.word	gUnk_0836A88C
 	.incbin	"baserom.gba", 0x36A8B0, 0x4
-	.word	gUnk_0853DC7C
-	.word	gUnk_08442694
-	.word	gUnk_083B1F94
+	.word	gLevel1Stage5Room0Bg2Palette
+	.word	gLevel1Stage5Room0Bg2Tiles
+	.word	gLevel1Stage5Room0MetatileTiles
 	.incbin	"baserom.gba", 0x36A8C0, 0x4
-	.word	gUnk_084ECA54
-	.word	gUnk_084ED258
-	.word	gUnk_084ECB58
+	.word	gLevel1Stage5Room0Bg3Palette
+	.word	gLevel1Stage5Room0Bg3Tiles
+	.word	gLevel1Stage5Room0Bg3Map
 	.incbin	"baserom.gba", 0x36A8D0, 0x14
-	.word	gUnk_0836A894
+	.word	gLevel1Stage5Room0Objects
 	.incbin	"baserom.gba", 0x36A8E8, 0xC
-	.global	gUnk_0836A8F4
-gUnk_0836A8F4:
+	.global	gLevel2Stage0Room0MetatileMap
+gLevel2Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x36A8F4, 0x280
-	.global	gUnk_0836AB74
-gUnk_0836AB74:
+	.global	gLevel2Stage0Room0BlockLayer
+gLevel2Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36AB74, 0x84
 	.global	gUnk_0836ABF8
 gUnk_0836ABF8:
 	.incbin	"baserom.gba", 0x36ABF8, 0x8
-	.global	gUnk_0836AC00
-gUnk_0836AC00:
+	.global	gLevel2Stage0Room0Doors
+gLevel2Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x36AC00, 0x18
-	.global	gUnk_0836AC18
-gUnk_0836AC18:
+	.global	gLevel2Stage0Room0Objects
+gLevel2Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x36AC18, 0x40
 	.global	gLevel2Stage0Room0
 gLevel2Stage0Room0:
 	.incbin	"baserom.gba", 0x36AC58, 0x8
-	.word	gUnk_0836A8F4
-	.word	gUnk_0836AB74
+	.word	gLevel2Stage0Room0MetatileMap
+	.word	gLevel2Stage0Room0BlockLayer
 	.word	gUnk_0836ABF8
 	.incbin	"baserom.gba", 0x36AC6C, 0x4
 	.word	gUnk_0853DBB8
@@ -1751,29 +1751,29 @@ gLevel2Stage0Room0:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x36AC8C, 0x10
-	.word	gUnk_0836AC00
-	.word	gUnk_0836AC18
+	.word	gLevel2Stage0Room0Doors
+	.word	gLevel2Stage0Room0Objects
 	.incbin	"baserom.gba", 0x36ACA4, 0xC
-	.global	gUnk_0836ACB0
-gUnk_0836ACB0:
+	.global	gLevel2Stage0Room1MetatileMap
+gLevel2Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x36ACB0, 0x11C
-	.global	gUnk_0836ADCC
-gUnk_0836ADCC:
+	.global	gLevel2Stage0Room1BlockLayer
+gLevel2Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36ADCC, 0x6C
 	.global	gUnk_0836AE38
 gUnk_0836AE38:
 	.incbin	"baserom.gba", 0x36AE38, 0x78
-	.global	gUnk_0836AEB0
-gUnk_0836AEB0:
+	.global	gLevel2Stage0Room1Doors
+gLevel2Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x36AEB0, 0xC
-	.global	gUnk_0836AEBC
-gUnk_0836AEBC:
+	.global	gLevel2Stage0Room1Objects
+gLevel2Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x36AEBC, 0x28
 	.global	gLevel2Stage0Room1
 gLevel2Stage0Room1:
 	.incbin	"baserom.gba", 0x36AEE4, 0x8
-	.word	gUnk_0836ACB0
-	.word	gUnk_0836ADCC
+	.word	gLevel2Stage0Room1MetatileMap
+	.word	gLevel2Stage0Room1BlockLayer
 	.word	gUnk_0836AE38
 	.incbin	"baserom.gba", 0x36AEF8, 0x4
 	.word	gUnk_0853D53C
@@ -1784,29 +1784,29 @@ gLevel2Stage0Room1:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36AF18, 0x10
-	.word	gUnk_0836AEB0
-	.word	gUnk_0836AEBC
+	.word	gLevel2Stage0Room1Doors
+	.word	gLevel2Stage0Room1Objects
 	.incbin	"baserom.gba", 0x36AF30, 0xC
-	.global	gUnk_0836AF3C
-gUnk_0836AF3C:
+	.global	gLevel2Stage0Room2MetatileMap
+gLevel2Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x36AF3C, 0x160
-	.global	gUnk_0836B09C
-gUnk_0836B09C:
+	.global	gLevel2Stage0Room2BlockLayer
+gLevel2Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36B09C, 0x5C
 	.global	gUnk_0836B0F8
 gUnk_0836B0F8:
 	.incbin	"baserom.gba", 0x36B0F8, 0x8
-	.global	gUnk_0836B100
-gUnk_0836B100:
+	.global	gLevel2Stage0Room2Doors
+gLevel2Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x36B100, 0x18
-	.global	gUnk_0836B118
-gUnk_0836B118:
+	.global	gLevel2Stage0Room2Objects
+gLevel2Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x36B118, 0x48
 	.global	gLevel2Stage0Room2
 gLevel2Stage0Room2:
 	.incbin	"baserom.gba", 0x36B160, 0x8
-	.word	gUnk_0836AF3C
-	.word	gUnk_0836B09C
+	.word	gLevel2Stage0Room2MetatileMap
+	.word	gLevel2Stage0Room2BlockLayer
 	.word	gUnk_0836B0F8
 	.incbin	"baserom.gba", 0x36B174, 0x4
 	.word	gUnk_0853DBB8
@@ -1817,29 +1817,29 @@ gLevel2Stage0Room2:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x36B194, 0x10
-	.word	gUnk_0836B100
-	.word	gUnk_0836B118
+	.word	gLevel2Stage0Room2Doors
+	.word	gLevel2Stage0Room2Objects
 	.incbin	"baserom.gba", 0x36B1AC, 0xC
-	.global	gUnk_0836B1B8
-gUnk_0836B1B8:
+	.global	gLevel2Stage0Room3MetatileMap
+gLevel2Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x36B1B8, 0x1EC
-	.global	gUnk_0836B3A4
-gUnk_0836B3A4:
+	.global	gLevel2Stage0Room3BlockLayer
+gLevel2Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36B3A4, 0x64
 	.global	gUnk_0836B408
 gUnk_0836B408:
 	.incbin	"baserom.gba", 0x36B408, 0x10
-	.global	gUnk_0836B418
-gUnk_0836B418:
+	.global	gLevel2Stage0Room3Doors
+gLevel2Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x36B418, 0x24
-	.global	gUnk_0836B43C
-gUnk_0836B43C:
+	.global	gLevel2Stage0Room3Objects
+gLevel2Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x36B43C, 0x10
 	.global	gLevel2Stage0Room3
 gLevel2Stage0Room3:
 	.incbin	"baserom.gba", 0x36B44C, 0x8
-	.word	gUnk_0836B1B8
-	.word	gUnk_0836B3A4
+	.word	gLevel2Stage0Room3MetatileMap
+	.word	gLevel2Stage0Room3BlockLayer
 	.word	gUnk_0836B408
 	.incbin	"baserom.gba", 0x36B460, 0x4
 	.word	gUnk_0853D53C
@@ -1850,26 +1850,26 @@ gLevel2Stage0Room3:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36B480, 0x10
-	.word	gUnk_0836B418
-	.word	gUnk_0836B43C
+	.word	gLevel2Stage0Room3Doors
+	.word	gLevel2Stage0Room3Objects
 	.incbin	"baserom.gba", 0x36B498, 0xC
-	.global	gUnk_0836B4A4
-gUnk_0836B4A4:
+	.global	gLevel2Stage0Room4MetatileMap
+gLevel2Stage0Room4MetatileMap:
 	.incbin	"baserom.gba", 0x36B4A4, 0x158
-	.global	gUnk_0836B5FC
-gUnk_0836B5FC:
+	.global	gLevel2Stage0Room4BlockLayer
+gLevel2Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36B5FC, 0xAC
 	.global	gUnk_0836B6A8
 gUnk_0836B6A8:
 	.incbin	"baserom.gba", 0x36B6A8, 0xF4
-	.global	gUnk_0836B79C
-gUnk_0836B79C:
+	.global	gLevel2Stage0Room4Doors
+gLevel2Stage0Room4Doors:
 	.incbin	"baserom.gba", 0x36B79C, 0x18
 	.global	gLevel2Stage0Room4
 gLevel2Stage0Room4:
 	.incbin	"baserom.gba", 0x36B7B4, 0x8
-	.word	gUnk_0836B4A4
-	.word	gUnk_0836B5FC
+	.word	gLevel2Stage0Room4MetatileMap
+	.word	gLevel2Stage0Room4BlockLayer
 	.word	gUnk_0836B6A8
 	.incbin	"baserom.gba", 0x36B7C8, 0x4
 	.word	gUnk_0853D53C
@@ -1880,28 +1880,28 @@ gLevel2Stage0Room4:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36B7E8, 0x10
-	.word	gUnk_0836B79C
+	.word	gLevel2Stage0Room4Doors
 	.incbin	"baserom.gba", 0x36B7FC, 0x10
-	.global	gUnk_0836B80C
-gUnk_0836B80C:
+	.global	gLevel2Stage0Room5MetatileMap
+gLevel2Stage0Room5MetatileMap:
 	.incbin	"baserom.gba", 0x36B80C, 0xF4
-	.global	gUnk_0836B900
-gUnk_0836B900:
+	.global	gLevel2Stage0Room5BlockLayer
+gLevel2Stage0Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36B900, 0x34
 	.global	gUnk_0836B934
 gUnk_0836B934:
 	.incbin	"baserom.gba", 0x36B934, 0x10
-	.global	gUnk_0836B944
-gUnk_0836B944:
+	.global	gLevel2Stage0Room5Doors
+gLevel2Stage0Room5Doors:
 	.incbin	"baserom.gba", 0x36B944, 0xC
-	.global	gUnk_0836B950
-gUnk_0836B950:
+	.global	gLevel2Stage0Room5Objects
+gLevel2Stage0Room5Objects:
 	.incbin	"baserom.gba", 0x36B950, 0x18
 	.global	gLevel2Stage0Room5
 gLevel2Stage0Room5:
 	.incbin	"baserom.gba", 0x36B968, 0x8
-	.word	gUnk_0836B80C
-	.word	gUnk_0836B900
+	.word	gLevel2Stage0Room5MetatileMap
+	.word	gLevel2Stage0Room5BlockLayer
 	.word	gUnk_0836B934
 	.incbin	"baserom.gba", 0x36B97C, 0x4
 	.word	gUnk_0853D53C
@@ -1912,29 +1912,29 @@ gLevel2Stage0Room5:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36B99C, 0x10
-	.word	gUnk_0836B944
-	.word	gUnk_0836B950
+	.word	gLevel2Stage0Room5Doors
+	.word	gLevel2Stage0Room5Objects
 	.incbin	"baserom.gba", 0x36B9B4, 0xC
-	.global	gUnk_0836B9C0
-gUnk_0836B9C0:
+	.global	gLevel2Stage1Room0MetatileMap
+gLevel2Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x36B9C0, 0x1E8
-	.global	gUnk_0836BBA8
-gUnk_0836BBA8:
+	.global	gLevel2Stage1Room0BlockLayer
+gLevel2Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36BBA8, 0x64
 	.global	gUnk_0836BC0C
 gUnk_0836BC0C:
 	.incbin	"baserom.gba", 0x36BC0C, 0x8
-	.global	gUnk_0836BC14
-gUnk_0836BC14:
+	.global	gLevel2Stage1Room0Doors
+gLevel2Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x36BC14, 0xC
-	.global	gUnk_0836BC20
-gUnk_0836BC20:
+	.global	gLevel2Stage1Room0Objects
+gLevel2Stage1Room0Objects:
 	.incbin	"baserom.gba", 0x36BC20, 0x50
 	.global	gLevel2Stage1Room0
 gLevel2Stage1Room0:
 	.incbin	"baserom.gba", 0x36BC70, 0x8
-	.word	gUnk_0836B9C0
-	.word	gUnk_0836BBA8
+	.word	gLevel2Stage1Room0MetatileMap
+	.word	gLevel2Stage1Room0BlockLayer
 	.word	gUnk_0836BC0C
 	.incbin	"baserom.gba", 0x36BC84, 0x4
 	.word	gUnk_085111F8
@@ -1945,29 +1945,29 @@ gLevel2Stage1Room0:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36BCA4, 0x10
-	.word	gUnk_0836BC14
-	.word	gUnk_0836BC20
+	.word	gLevel2Stage1Room0Doors
+	.word	gLevel2Stage1Room0Objects
 	.incbin	"baserom.gba", 0x36BCBC, 0xC
-	.global	gUnk_0836BCC8
-gUnk_0836BCC8:
+	.global	gLevel2Stage1Room1MetatileMap
+gLevel2Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x36BCC8, 0x2AC
-	.global	gUnk_0836BF74
-gUnk_0836BF74:
+	.global	gLevel2Stage1Room1BlockLayer
+gLevel2Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36BF74, 0xC8
 	.global	gUnk_0836C03C
 gUnk_0836C03C:
 	.incbin	"baserom.gba", 0x36C03C, 0x8
-	.global	gUnk_0836C044
-gUnk_0836C044:
+	.global	gLevel2Stage1Room1Doors
+gLevel2Stage1Room1Doors:
 	.incbin	"baserom.gba", 0x36C044, 0xC
-	.global	gUnk_0836C050
-gUnk_0836C050:
+	.global	gLevel2Stage1Room1Objects
+gLevel2Stage1Room1Objects:
 	.incbin	"baserom.gba", 0x36C050, 0x60
 	.global	gLevel2Stage1Room1
 gLevel2Stage1Room1:
 	.incbin	"baserom.gba", 0x36C0B0, 0x8
-	.word	gUnk_0836BCC8
-	.word	gUnk_0836BF74
+	.word	gLevel2Stage1Room1MetatileMap
+	.word	gLevel2Stage1Room1BlockLayer
 	.word	gUnk_0836C03C
 	.incbin	"baserom.gba", 0x36C0C4, 0x4
 	.word	gUnk_0853DBB8
@@ -1978,29 +1978,29 @@ gLevel2Stage1Room1:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x36C0E4, 0x10
-	.word	gUnk_0836C044
-	.word	gUnk_0836C050
+	.word	gLevel2Stage1Room1Doors
+	.word	gLevel2Stage1Room1Objects
 	.incbin	"baserom.gba", 0x36C0FC, 0xC
-	.global	gUnk_0836C108
-gUnk_0836C108:
+	.global	gLevel2Stage1Room2MetatileMap
+gLevel2Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x36C108, 0x310
-	.global	gUnk_0836C418
-gUnk_0836C418:
+	.global	gLevel2Stage1Room2BlockLayer
+gLevel2Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36C418, 0x90
 	.global	gUnk_0836C4A8
 gUnk_0836C4A8:
 	.incbin	"baserom.gba", 0x36C4A8, 0x8
-	.global	gUnk_0836C4B0
-gUnk_0836C4B0:
+	.global	gLevel2Stage1Room2Doors
+gLevel2Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x36C4B0, 0xC
-	.global	gUnk_0836C4BC
-gUnk_0836C4BC:
+	.global	gLevel2Stage1Room2Objects
+gLevel2Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x36C4BC, 0x50
 	.global	gLevel2Stage1Room2
 gLevel2Stage1Room2:
 	.incbin	"baserom.gba", 0x36C50C, 0x8
-	.word	gUnk_0836C108
-	.word	gUnk_0836C418
+	.word	gLevel2Stage1Room2MetatileMap
+	.word	gLevel2Stage1Room2BlockLayer
 	.word	gUnk_0836C4A8
 	.incbin	"baserom.gba", 0x36C520, 0x4
 	.word	gUnk_085111F8
@@ -2011,29 +2011,29 @@ gLevel2Stage1Room2:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36C540, 0x10
-	.word	gUnk_0836C4B0
-	.word	gUnk_0836C4BC
+	.word	gLevel2Stage1Room2Doors
+	.word	gLevel2Stage1Room2Objects
 	.incbin	"baserom.gba", 0x36C558, 0xC
-	.global	gUnk_0836C564
-gUnk_0836C564:
+	.global	gLevel2Stage1Room3MetatileMap
+gLevel2Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x36C564, 0x3B4
-	.global	gUnk_0836C918
-gUnk_0836C918:
+	.global	gLevel2Stage1Room3BlockLayer
+gLevel2Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36C918, 0xD4
 	.global	gUnk_0836C9EC
 gUnk_0836C9EC:
 	.incbin	"baserom.gba", 0x36C9EC, 0x40
-	.global	gUnk_0836CA2C
-gUnk_0836CA2C:
+	.global	gLevel2Stage1Room3Doors
+gLevel2Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x36CA2C, 0x24
-	.global	gUnk_0836CA50
-gUnk_0836CA50:
+	.global	gLevel2Stage1Room3Objects
+gLevel2Stage1Room3Objects:
 	.incbin	"baserom.gba", 0x36CA50, 0x48
 	.global	gLevel2Stage1Room3
 gLevel2Stage1Room3:
 	.incbin	"baserom.gba", 0x36CA98, 0x8
-	.word	gUnk_0836C564
-	.word	gUnk_0836C918
+	.word	gLevel2Stage1Room3MetatileMap
+	.word	gLevel2Stage1Room3BlockLayer
 	.word	gUnk_0836C9EC
 	.incbin	"baserom.gba", 0x36CAAC, 0x4
 	.word	gUnk_085111F8
@@ -2044,29 +2044,29 @@ gLevel2Stage1Room3:
 	.word	gUnk_0849BE08
 	.word	gUnk_0849ABCC
 	.incbin	"baserom.gba", 0x36CACC, 0x10
-	.word	gUnk_0836CA2C
-	.word	gUnk_0836CA50
+	.word	gLevel2Stage1Room3Doors
+	.word	gLevel2Stage1Room3Objects
 	.incbin	"baserom.gba", 0x36CAE4, 0xC
-	.global	gUnk_0836CAF0
-gUnk_0836CAF0:
+	.global	gLevel2Stage1Room4MetatileMap
+gLevel2Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x36CAF0, 0x114
-	.global	gUnk_0836CC04
-gUnk_0836CC04:
+	.global	gLevel2Stage1Room4BlockLayer
+gLevel2Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36CC04, 0xA0
 	.global	gUnk_0836CCA4
 gUnk_0836CCA4:
 	.incbin	"baserom.gba", 0x36CCA4, 0xD8
-	.global	gUnk_0836CD7C
-gUnk_0836CD7C:
+	.global	gLevel2Stage1Room4Doors
+gLevel2Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x36CD7C, 0xC
-	.global	gUnk_0836CD88
-gUnk_0836CD88:
+	.global	gLevel2Stage1Room4Objects
+gLevel2Stage1Room4Objects:
 	.incbin	"baserom.gba", 0x36CD88, 0x20
 	.global	gLevel2Stage1Room4
 gLevel2Stage1Room4:
 	.incbin	"baserom.gba", 0x36CDA8, 0x8
-	.word	gUnk_0836CAF0
-	.word	gUnk_0836CC04
+	.word	gLevel2Stage1Room4MetatileMap
+	.word	gLevel2Stage1Room4BlockLayer
 	.word	gUnk_0836CCA4
 	.incbin	"baserom.gba", 0x36CDBC, 0x4
 	.word	gUnk_085111F8
@@ -2077,29 +2077,29 @@ gLevel2Stage1Room4:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x36CDDC, 0x10
-	.word	gUnk_0836CD7C
-	.word	gUnk_0836CD88
+	.word	gLevel2Stage1Room4Doors
+	.word	gLevel2Stage1Room4Objects
 	.incbin	"baserom.gba", 0x36CDF4, 0xC
-	.global	gUnk_0836CE00
-gUnk_0836CE00:
+	.global	gLevel2Stage1Room5MetatileMap
+gLevel2Stage1Room5MetatileMap:
 	.incbin	"baserom.gba", 0x36CE00, 0x280
-	.global	gUnk_0836D080
-gUnk_0836D080:
+	.global	gLevel2Stage1Room5BlockLayer
+gLevel2Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36D080, 0x90
 	.global	gUnk_0836D110
 gUnk_0836D110:
 	.incbin	"baserom.gba", 0x36D110, 0x8
-	.global	gUnk_0836D118
-gUnk_0836D118:
+	.global	gLevel2Stage1Room5Doors
+gLevel2Stage1Room5Doors:
 	.incbin	"baserom.gba", 0x36D118, 0xC
-	.global	gUnk_0836D124
-gUnk_0836D124:
+	.global	gLevel2Stage1Room5Objects
+gLevel2Stage1Room5Objects:
 	.incbin	"baserom.gba", 0x36D124, 0x78
 	.global	gLevel2Stage1Room5
 gLevel2Stage1Room5:
 	.incbin	"baserom.gba", 0x36D19C, 0x8
-	.word	gUnk_0836CE00
-	.word	gUnk_0836D080
+	.word	gLevel2Stage1Room5MetatileMap
+	.word	gLevel2Stage1Room5BlockLayer
 	.word	gUnk_0836D110
 	.incbin	"baserom.gba", 0x36D1B0, 0x4
 	.word	gUnk_085111F8
@@ -2110,29 +2110,29 @@ gLevel2Stage1Room5:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x36D1D0, 0x10
-	.word	gUnk_0836D118
-	.word	gUnk_0836D124
+	.word	gLevel2Stage1Room5Doors
+	.word	gLevel2Stage1Room5Objects
 	.incbin	"baserom.gba", 0x36D1E8, 0xC
-	.global	gUnk_0836D1F4
-gUnk_0836D1F4:
+	.global	gLevel2Stage1Room6MetatileMap
+gLevel2Stage1Room6MetatileMap:
 	.incbin	"baserom.gba", 0x36D1F4, 0xD8
-	.global	gUnk_0836D2CC
-gUnk_0836D2CC:
+	.global	gLevel2Stage1Room6BlockLayer
+gLevel2Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x36D2CC, 0x34
 	.global	gUnk_0836D300
 gUnk_0836D300:
 	.incbin	"baserom.gba", 0x36D300, 0x10
-	.global	gUnk_0836D310
-gUnk_0836D310:
+	.global	gLevel2Stage1Room6Doors
+gLevel2Stage1Room6Doors:
 	.incbin	"baserom.gba", 0x36D310, 0xC
-	.global	gUnk_0836D31C
-gUnk_0836D31C:
+	.global	gLevel2Stage1Room6Objects
+gLevel2Stage1Room6Objects:
 	.incbin	"baserom.gba", 0x36D31C, 0x18
 	.global	gLevel2Stage1Room6
 gLevel2Stage1Room6:
 	.incbin	"baserom.gba", 0x36D334, 0x8
-	.word	gUnk_0836D1F4
-	.word	gUnk_0836D2CC
+	.word	gLevel2Stage1Room6MetatileMap
+	.word	gLevel2Stage1Room6BlockLayer
 	.word	gUnk_0836D300
 	.incbin	"baserom.gba", 0x36D348, 0x4
 	.word	gUnk_085111F8
@@ -2143,29 +2143,29 @@ gLevel2Stage1Room6:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36D368, 0x10
-	.word	gUnk_0836D310
-	.word	gUnk_0836D31C
+	.word	gLevel2Stage1Room6Doors
+	.word	gLevel2Stage1Room6Objects
 	.incbin	"baserom.gba", 0x36D380, 0xC
-	.global	gUnk_0836D38C
-gUnk_0836D38C:
+	.global	gLevel2Stage1Room7MetatileMap
+gLevel2Stage1Room7MetatileMap:
 	.incbin	"baserom.gba", 0x36D38C, 0x118
-	.global	gUnk_0836D4A4
-gUnk_0836D4A4:
+	.global	gLevel2Stage1Room7BlockLayer
+gLevel2Stage1Room7BlockLayer:
 	.incbin	"baserom.gba", 0x36D4A4, 0x34
 	.global	gUnk_0836D4D8
 gUnk_0836D4D8:
 	.incbin	"baserom.gba", 0x36D4D8, 0x8
-	.global	gUnk_0836D4E0
-gUnk_0836D4E0:
+	.global	gLevel2Stage1Room7Doors
+gLevel2Stage1Room7Doors:
 	.incbin	"baserom.gba", 0x36D4E0, 0xC
-	.global	gUnk_0836D4EC
-gUnk_0836D4EC:
+	.global	gLevel2Stage1Room7Objects
+gLevel2Stage1Room7Objects:
 	.incbin	"baserom.gba", 0x36D4EC, 0x10
 	.global	gLevel2Stage1Room7
 gLevel2Stage1Room7:
 	.incbin	"baserom.gba", 0x36D4FC, 0x8
-	.word	gUnk_0836D38C
-	.word	gUnk_0836D4A4
+	.word	gLevel2Stage1Room7MetatileMap
+	.word	gLevel2Stage1Room7BlockLayer
 	.word	gUnk_0836D4D8
 	.incbin	"baserom.gba", 0x36D510, 0x4
 	.word	gUnk_085111F8
@@ -2176,29 +2176,29 @@ gLevel2Stage1Room7:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36D530, 0x10
-	.word	gUnk_0836D4E0
-	.word	gUnk_0836D4EC
+	.word	gLevel2Stage1Room7Doors
+	.word	gLevel2Stage1Room7Objects
 	.incbin	"baserom.gba", 0x36D548, 0xC
-	.global	gUnk_0836D554
-gUnk_0836D554:
+	.global	gLevel2Stage2Room0MetatileMap
+gLevel2Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x36D554, 0x454
-	.global	gUnk_0836D9A8
-gUnk_0836D9A8:
+	.global	gLevel2Stage2Room0BlockLayer
+gLevel2Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36D9A8, 0xB8
 	.global	gUnk_0836DA60
 gUnk_0836DA60:
 	.incbin	"baserom.gba", 0x36DA60, 0x8
-	.global	gUnk_0836DA68
-gUnk_0836DA68:
+	.global	gLevel2Stage2Room0Doors
+gLevel2Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x36DA68, 0xC
-	.global	gUnk_0836DA74
-gUnk_0836DA74:
+	.global	gLevel2Stage2Room0Objects
+gLevel2Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x36DA74, 0x68
 	.global	gLevel2Stage2Room0
 gLevel2Stage2Room0:
 	.incbin	"baserom.gba", 0x36DADC, 0x8
-	.word	gUnk_0836D554
-	.word	gUnk_0836D9A8
+	.word	gLevel2Stage2Room0MetatileMap
+	.word	gLevel2Stage2Room0BlockLayer
 	.word	gUnk_0836DA60
 	.incbin	"baserom.gba", 0x36DAF0, 0x4
 	.word	gUnk_08511134
@@ -2209,29 +2209,29 @@ gLevel2Stage2Room0:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x36DB10, 0x10
-	.word	gUnk_0836DA68
-	.word	gUnk_0836DA74
+	.word	gLevel2Stage2Room0Doors
+	.word	gLevel2Stage2Room0Objects
 	.incbin	"baserom.gba", 0x36DB28, 0xC
-	.global	gUnk_0836DB34
-gUnk_0836DB34:
+	.global	gLevel2Stage2Room1MetatileMap
+gLevel2Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x36DB34, 0x1B0
-	.global	gUnk_0836DCE4
-gUnk_0836DCE4:
+	.global	gLevel2Stage2Room1BlockLayer
+gLevel2Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36DCE4, 0x34
 	.global	gUnk_0836DD18
 gUnk_0836DD18:
 	.incbin	"baserom.gba", 0x36DD18, 0x8
-	.global	gUnk_0836DD20
-gUnk_0836DD20:
+	.global	gLevel2Stage2Room1Doors
+gLevel2Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x36DD20, 0xC
-	.global	gUnk_0836DD2C
-gUnk_0836DD2C:
+	.global	gLevel2Stage2Room1Objects
+gLevel2Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x36DD2C, 0x18
 	.global	gLevel2Stage2Room1
 gLevel2Stage2Room1:
 	.incbin	"baserom.gba", 0x36DD44, 0x8
-	.word	gUnk_0836DB34
-	.word	gUnk_0836DCE4
+	.word	gLevel2Stage2Room1MetatileMap
+	.word	gLevel2Stage2Room1BlockLayer
 	.word	gUnk_0836DD18
 	.incbin	"baserom.gba", 0x36DD58, 0x4
 	.word	gUnk_0850AA6C
@@ -2242,29 +2242,29 @@ gLevel2Stage2Room1:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x36DD78, 0x10
-	.word	gUnk_0836DD20
-	.word	gUnk_0836DD2C
+	.word	gLevel2Stage2Room1Doors
+	.word	gLevel2Stage2Room1Objects
 	.incbin	"baserom.gba", 0x36DD90, 0xC
-	.global	gUnk_0836DD9C
-gUnk_0836DD9C:
+	.global	gLevel2Stage2Room2MetatileMap
+gLevel2Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x36DD9C, 0x214
-	.global	gUnk_0836DFB0
-gUnk_0836DFB0:
+	.global	gLevel2Stage2Room2BlockLayer
+gLevel2Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36DFB0, 0x60
 	.global	gUnk_0836E010
 gUnk_0836E010:
 	.incbin	"baserom.gba", 0x36E010, 0x8
-	.global	gUnk_0836E018
-gUnk_0836E018:
+	.global	gLevel2Stage2Room2Doors
+gLevel2Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x36E018, 0x54
-	.global	gUnk_0836E06C
-gUnk_0836E06C:
+	.global	gLevel2Stage2Room2Objects
+gLevel2Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x36E06C, 0x30
 	.global	gLevel2Stage2Room2
 gLevel2Stage2Room2:
 	.incbin	"baserom.gba", 0x36E09C, 0x8
-	.word	gUnk_0836DD9C
-	.word	gUnk_0836DFB0
+	.word	gLevel2Stage2Room2MetatileMap
+	.word	gLevel2Stage2Room2BlockLayer
 	.word	gUnk_0836E010
 	.incbin	"baserom.gba", 0x36E0B0, 0x4
 	.word	gUnk_08511134
@@ -2275,29 +2275,29 @@ gLevel2Stage2Room2:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36E0D0, 0x10
-	.word	gUnk_0836E018
-	.word	gUnk_0836E06C
+	.word	gLevel2Stage2Room2Doors
+	.word	gLevel2Stage2Room2Objects
 	.incbin	"baserom.gba", 0x36E0E8, 0xC
-	.global	gUnk_0836E0F4
-gUnk_0836E0F4:
+	.global	gLevel2Stage2Room3MetatileMap
+gLevel2Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x36E0F4, 0x20C
-	.global	gUnk_0836E300
-gUnk_0836E300:
+	.global	gLevel2Stage2Room3BlockLayer
+gLevel2Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36E300, 0x68
 	.global	gUnk_0836E368
 gUnk_0836E368:
 	.incbin	"baserom.gba", 0x36E368, 0x1C
-	.global	gUnk_0836E384
-gUnk_0836E384:
+	.global	gLevel2Stage2Room3Doors
+gLevel2Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x36E384, 0x48
-	.global	gUnk_0836E3CC
-gUnk_0836E3CC:
+	.global	gLevel2Stage2Room3Objects
+gLevel2Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x36E3CC, 0x28
 	.global	gLevel2Stage2Room3
 gLevel2Stage2Room3:
 	.incbin	"baserom.gba", 0x36E3F4, 0x8
-	.word	gUnk_0836E0F4
-	.word	gUnk_0836E300
+	.word	gLevel2Stage2Room3MetatileMap
+	.word	gLevel2Stage2Room3BlockLayer
 	.word	gUnk_0836E368
 	.incbin	"baserom.gba", 0x36E408, 0x4
 	.word	gUnk_08511134
@@ -2308,29 +2308,29 @@ gLevel2Stage2Room3:
 	.word	gUnk_0849BE08
 	.word	gUnk_0852C1D4
 	.incbin	"baserom.gba", 0x36E428, 0x10
-	.word	gUnk_0836E384
-	.word	gUnk_0836E3CC
+	.word	gLevel2Stage2Room3Doors
+	.word	gLevel2Stage2Room3Objects
 	.incbin	"baserom.gba", 0x36E440, 0xC
-	.global	gUnk_0836E44C
-gUnk_0836E44C:
+	.global	gLevel2Stage2Room4MetatileMap
+gLevel2Stage2Room4MetatileMap:
 	.incbin	"baserom.gba", 0x36E44C, 0x134
-	.global	gUnk_0836E580
-gUnk_0836E580:
+	.global	gLevel2Stage2Room4BlockLayer
+gLevel2Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36E580, 0x54
 	.global	gUnk_0836E5D4
 gUnk_0836E5D4:
 	.incbin	"baserom.gba", 0x36E5D4, 0x4C
-	.global	gUnk_0836E620
-gUnk_0836E620:
+	.global	gLevel2Stage2Room4Doors
+gLevel2Stage2Room4Doors:
 	.incbin	"baserom.gba", 0x36E620, 0x18
-	.global	gUnk_0836E638
-gUnk_0836E638:
+	.global	gLevel2Stage2Room4Objects
+gLevel2Stage2Room4Objects:
 	.incbin	"baserom.gba", 0x36E638, 0x28
 	.global	gLevel2Stage2Room4
 gLevel2Stage2Room4:
 	.incbin	"baserom.gba", 0x36E660, 0x8
-	.word	gUnk_0836E44C
-	.word	gUnk_0836E580
+	.word	gLevel2Stage2Room4MetatileMap
+	.word	gLevel2Stage2Room4BlockLayer
 	.word	gUnk_0836E5D4
 	.incbin	"baserom.gba", 0x36E674, 0x4
 	.word	gUnk_08511134
@@ -2341,29 +2341,29 @@ gLevel2Stage2Room4:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x36E694, 0x10
-	.word	gUnk_0836E620
-	.word	gUnk_0836E638
+	.word	gLevel2Stage2Room4Doors
+	.word	gLevel2Stage2Room4Objects
 	.incbin	"baserom.gba", 0x36E6AC, 0xC
-	.global	gUnk_0836E6B8
-gUnk_0836E6B8:
+	.global	gLevel2Stage3Room0MetatileMap
+gLevel2Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x36E6B8, 0x118
-	.global	gUnk_0836E7D0
-gUnk_0836E7D0:
+	.global	gLevel2Stage3Room0BlockLayer
+gLevel2Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36E7D0, 0x38
 	.global	gUnk_0836E808
 gUnk_0836E808:
 	.incbin	"baserom.gba", 0x36E808, 0x8
-	.global	gUnk_0836E810
-gUnk_0836E810:
+	.global	gLevel2Stage3Room0Doors
+gLevel2Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x36E810, 0xC
-	.global	gUnk_0836E81C
-gUnk_0836E81C:
+	.global	gLevel2Stage3Room0Objects
+gLevel2Stage3Room0Objects:
 	.incbin	"baserom.gba", 0x36E81C, 0x8
 	.global	gLevel2Stage3Room0
 gLevel2Stage3Room0:
 	.incbin	"baserom.gba", 0x36E824, 0x8
-	.word	gUnk_0836E6B8
-	.word	gUnk_0836E7D0
+	.word	gLevel2Stage3Room0MetatileMap
+	.word	gLevel2Stage3Room0BlockLayer
 	.word	gUnk_0836E808
 	.incbin	"baserom.gba", 0x36E838, 0x4
 	.word	gUnk_0853DBB8
@@ -2374,26 +2374,26 @@ gLevel2Stage3Room0:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x36E858, 0x10
-	.word	gUnk_0836E810
-	.word	gUnk_0836E81C
+	.word	gLevel2Stage3Room0Doors
+	.word	gLevel2Stage3Room0Objects
 	.incbin	"baserom.gba", 0x36E870, 0xC
-	.global	gUnk_0836E87C
-gUnk_0836E87C:
+	.global	gLevel2Stage3Room1MetatileMap
+gLevel2Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x36E87C, 0x4A8
-	.global	gUnk_0836ED24
-gUnk_0836ED24:
+	.global	gLevel2Stage3Room1BlockLayer
+gLevel2Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36ED24, 0x1A0
 	.global	gUnk_0836EEC4
 gUnk_0836EEC4:
 	.incbin	"baserom.gba", 0x36EEC4, 0x8
-	.global	gUnk_0836EECC
-gUnk_0836EECC:
+	.global	gLevel2Stage3Room1Doors
+gLevel2Stage3Room1Doors:
 	.incbin	"baserom.gba", 0x36EECC, 0xC
 	.global	gLevel2Stage3Room1
 gLevel2Stage3Room1:
 	.incbin	"baserom.gba", 0x36EED8, 0x8
-	.word	gUnk_0836E87C
-	.word	gUnk_0836ED24
+	.word	gLevel2Stage3Room1MetatileMap
+	.word	gLevel2Stage3Room1BlockLayer
 	.word	gUnk_0836EEC4
 	.incbin	"baserom.gba", 0x36EEEC, 0x4
 	.word	gUnk_0853DBB8
@@ -2404,25 +2404,25 @@ gLevel2Stage3Room1:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x36EF0C, 0x10
-	.word	gUnk_0836EECC
+	.word	gLevel2Stage3Room1Doors
 	.incbin	"baserom.gba", 0x36EF20, 0x10
-	.global	gUnk_0836EF30
-gUnk_0836EF30:
+	.global	gLevel2Stage3Room2MetatileMap
+gLevel2Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x36EF30, 0x110
-	.global	gUnk_0836F040
-gUnk_0836F040:
+	.global	gLevel2Stage3Room2BlockLayer
+gLevel2Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36F040, 0x38
 	.global	gUnk_0836F078
 gUnk_0836F078:
 	.incbin	"baserom.gba", 0x36F078, 0x8
-	.global	gUnk_0836F080
-gUnk_0836F080:
+	.global	gLevel2Stage3Room2Doors
+gLevel2Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x36F080, 0x24
 	.global	gLevel2Stage3Room2
 gLevel2Stage3Room2:
 	.incbin	"baserom.gba", 0x36F0A4, 0x8
-	.word	gUnk_0836EF30
-	.word	gUnk_0836F040
+	.word	gLevel2Stage3Room2MetatileMap
+	.word	gLevel2Stage3Room2BlockLayer
 	.word	gUnk_0836F078
 	.incbin	"baserom.gba", 0x36F0B8, 0x4
 	.word	gUnk_0853DBB8
@@ -2433,28 +2433,28 @@ gLevel2Stage3Room2:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x36F0D8, 0x10
-	.word	gUnk_0836F080
+	.word	gLevel2Stage3Room2Doors
 	.incbin	"baserom.gba", 0x36F0EC, 0x10
-	.global	gUnk_0836F0FC
-gUnk_0836F0FC:
+	.global	gLevel2Stage3Room3MetatileMap
+gLevel2Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x36F0FC, 0xFC
-	.global	gUnk_0836F1F8
-gUnk_0836F1F8:
+	.global	gLevel2Stage3Room3BlockLayer
+gLevel2Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36F1F8, 0x34
 	.global	gUnk_0836F22C
 gUnk_0836F22C:
 	.incbin	"baserom.gba", 0x36F22C, 0x8
-	.global	gUnk_0836F234
-gUnk_0836F234:
+	.global	gLevel2Stage3Room3Doors
+gLevel2Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x36F234, 0xC
-	.global	gUnk_0836F240
-gUnk_0836F240:
+	.global	gLevel2Stage3Room3Objects
+gLevel2Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x36F240, 0x30
 	.global	gLevel2Stage3Room3
 gLevel2Stage3Room3:
 	.incbin	"baserom.gba", 0x36F270, 0x8
-	.word	gUnk_0836F0FC
-	.word	gUnk_0836F1F8
+	.word	gLevel2Stage3Room3MetatileMap
+	.word	gLevel2Stage3Room3BlockLayer
 	.word	gUnk_0836F22C
 	.incbin	"baserom.gba", 0x36F284, 0x4
 	.word	gUnk_08511134
@@ -2465,29 +2465,29 @@ gLevel2Stage3Room3:
 	.word	gUnk_084A861C
 	.word	gUnk_0852C930
 	.incbin	"baserom.gba", 0x36F2A4, 0x10
-	.word	gUnk_0836F234
-	.word	gUnk_0836F240
+	.word	gLevel2Stage3Room3Doors
+	.word	gLevel2Stage3Room3Objects
 	.incbin	"baserom.gba", 0x36F2BC, 0xC
-	.global	gUnk_0836F2C8
-gUnk_0836F2C8:
+	.global	gLevel2Stage3Room4MetatileMap
+gLevel2Stage3Room4MetatileMap:
 	.incbin	"baserom.gba", 0x36F2C8, 0x23C
-	.global	gUnk_0836F504
-gUnk_0836F504:
+	.global	gLevel2Stage3Room4BlockLayer
+gLevel2Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36F504, 0xBC
 	.global	gUnk_0836F5C0
 gUnk_0836F5C0:
 	.incbin	"baserom.gba", 0x36F5C0, 0x8
-	.global	gUnk_0836F5C8
-gUnk_0836F5C8:
+	.global	gLevel2Stage3Room4Doors
+gLevel2Stage3Room4Doors:
 	.incbin	"baserom.gba", 0x36F5C8, 0xC
-	.global	gUnk_0836F5D4
-gUnk_0836F5D4:
+	.global	gLevel2Stage3Room4Objects
+gLevel2Stage3Room4Objects:
 	.incbin	"baserom.gba", 0x36F5D4, 0x60
 	.global	gLevel2Stage3Room4
 gLevel2Stage3Room4:
 	.incbin	"baserom.gba", 0x36F634, 0x8
-	.word	gUnk_0836F2C8
-	.word	gUnk_0836F504
+	.word	gLevel2Stage3Room4MetatileMap
+	.word	gLevel2Stage3Room4BlockLayer
 	.word	gUnk_0836F5C0
 	.incbin	"baserom.gba", 0x36F648, 0x4
 	.word	gUnk_0853DBB8
@@ -2498,29 +2498,29 @@ gLevel2Stage3Room4:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x36F668, 0x10
-	.word	gUnk_0836F5C8
-	.word	gUnk_0836F5D4
+	.word	gLevel2Stage3Room4Doors
+	.word	gLevel2Stage3Room4Objects
 	.incbin	"baserom.gba", 0x36F680, 0xC
-	.global	gUnk_0836F68C
-gUnk_0836F68C:
+	.global	gLevel2Stage3Room5MetatileMap
+gLevel2Stage3Room5MetatileMap:
 	.incbin	"baserom.gba", 0x36F68C, 0xF4
-	.global	gUnk_0836F780
-gUnk_0836F780:
+	.global	gLevel2Stage3Room5BlockLayer
+gLevel2Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36F780, 0x40
 	.global	gUnk_0836F7C0
 gUnk_0836F7C0:
 	.incbin	"baserom.gba", 0x36F7C0, 0x10
-	.global	gUnk_0836F7D0
-gUnk_0836F7D0:
+	.global	gLevel2Stage3Room5Doors
+gLevel2Stage3Room5Doors:
 	.incbin	"baserom.gba", 0x36F7D0, 0xC
-	.global	gUnk_0836F7DC
-gUnk_0836F7DC:
+	.global	gLevel2Stage3Room5Objects
+gLevel2Stage3Room5Objects:
 	.incbin	"baserom.gba", 0x36F7DC, 0x8
 	.global	gLevel2Stage3Room5
 gLevel2Stage3Room5:
 	.incbin	"baserom.gba", 0x36F7E4, 0x8
-	.word	gUnk_0836F68C
-	.word	gUnk_0836F780
+	.word	gLevel2Stage3Room5MetatileMap
+	.word	gLevel2Stage3Room5BlockLayer
 	.word	gUnk_0836F7C0
 	.incbin	"baserom.gba", 0x36F7F8, 0x4
 	.word	gUnk_08511134
@@ -2531,29 +2531,29 @@ gLevel2Stage3Room5:
 	.word	gUnk_084A861C
 	.word	gUnk_0852C930
 	.incbin	"baserom.gba", 0x36F818, 0x10
-	.word	gUnk_0836F7D0
-	.word	gUnk_0836F7DC
+	.word	gLevel2Stage3Room5Doors
+	.word	gLevel2Stage3Room5Objects
 	.incbin	"baserom.gba", 0x36F830, 0xC
-	.global	gUnk_0836F83C
-gUnk_0836F83C:
+	.global	gLevel2Stage4Room0MetatileMap
+gLevel2Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x36F83C, 0x10C
-	.global	gUnk_0836F948
-gUnk_0836F948:
+	.global	gLevel2Stage4Room0BlockLayer
+gLevel2Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36F948, 0x34
 	.global	gUnk_0836F97C
 gUnk_0836F97C:
 	.incbin	"baserom.gba", 0x36F97C, 0x8
-	.global	gUnk_0836F984
-gUnk_0836F984:
+	.global	gLevel2Stage4Room0Doors
+gLevel2Stage4Room0Doors:
 	.incbin	"baserom.gba", 0x36F984, 0xC
-	.global	gUnk_0836F990
-gUnk_0836F990:
+	.global	gLevel2Stage4Room0Objects
+gLevel2Stage4Room0Objects:
 	.incbin	"baserom.gba", 0x36F990, 0x20
 	.global	gLevel2Stage4Room0
 gLevel2Stage4Room0:
 	.incbin	"baserom.gba", 0x36F9B0, 0x8
-	.word	gUnk_0836F83C
-	.word	gUnk_0836F948
+	.word	gLevel2Stage4Room0MetatileMap
+	.word	gLevel2Stage4Room0BlockLayer
 	.word	gUnk_0836F97C
 	.incbin	"baserom.gba", 0x36F9C4, 0x4
 	.word	gUnk_08511070
@@ -2564,29 +2564,29 @@ gLevel2Stage4Room0:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x36F9E4, 0x10
-	.word	gUnk_0836F984
-	.word	gUnk_0836F990
+	.word	gLevel2Stage4Room0Doors
+	.word	gLevel2Stage4Room0Objects
 	.incbin	"baserom.gba", 0x36F9FC, 0xC
-	.global	gUnk_0836FA08
-gUnk_0836FA08:
+	.global	gLevel2Stage4Room1MetatileMap
+gLevel2Stage4Room1MetatileMap:
 	.incbin	"baserom.gba", 0x36FA08, 0x238
-	.global	gUnk_0836FC40
-gUnk_0836FC40:
+	.global	gLevel2Stage4Room1BlockLayer
+gLevel2Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36FC40, 0xB8
 	.global	gUnk_0836FCF8
 gUnk_0836FCF8:
 	.incbin	"baserom.gba", 0x36FCF8, 0x8
-	.global	gUnk_0836FD00
-gUnk_0836FD00:
+	.global	gLevel2Stage4Room1Doors
+gLevel2Stage4Room1Doors:
 	.incbin	"baserom.gba", 0x36FD00, 0xC
-	.global	gUnk_0836FD0C
-gUnk_0836FD0C:
+	.global	gLevel2Stage4Room1Objects
+gLevel2Stage4Room1Objects:
 	.incbin	"baserom.gba", 0x36FD0C, 0x38
 	.global	gLevel2Stage4Room1
 gLevel2Stage4Room1:
 	.incbin	"baserom.gba", 0x36FD44, 0x8
-	.word	gUnk_0836FA08
-	.word	gUnk_0836FC40
+	.word	gLevel2Stage4Room1MetatileMap
+	.word	gLevel2Stage4Room1BlockLayer
 	.word	gUnk_0836FCF8
 	.incbin	"baserom.gba", 0x36FD58, 0x4
 	.word	gUnk_0853DBB8
@@ -2597,29 +2597,29 @@ gLevel2Stage4Room1:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x36FD78, 0x10
-	.word	gUnk_0836FD00
-	.word	gUnk_0836FD0C
+	.word	gLevel2Stage4Room1Doors
+	.word	gLevel2Stage4Room1Objects
 	.incbin	"baserom.gba", 0x36FD90, 0xC
-	.global	gUnk_0836FD9C
-gUnk_0836FD9C:
+	.global	gLevel2Stage4Room2MetatileMap
+gLevel2Stage4Room2MetatileMap:
 	.incbin	"baserom.gba", 0x36FD9C, 0x1AC
-	.global	gUnk_0836FF48
-gUnk_0836FF48:
+	.global	gLevel2Stage4Room2BlockLayer
+gLevel2Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36FF48, 0x5C
 	.global	gUnk_0836FFA4
 gUnk_0836FFA4:
 	.incbin	"baserom.gba", 0x36FFA4, 0x8
-	.global	gUnk_0836FFAC
-gUnk_0836FFAC:
+	.global	gLevel2Stage4Room2Doors
+gLevel2Stage4Room2Doors:
 	.incbin	"baserom.gba", 0x36FFAC, 0xC
-	.global	gUnk_0836FFB8
-gUnk_0836FFB8:
+	.global	gLevel2Stage4Room2Objects
+gLevel2Stage4Room2Objects:
 	.incbin	"baserom.gba", 0x36FFB8, 0x48
 	.global	gLevel2Stage4Room2
 gLevel2Stage4Room2:
 	.incbin	"baserom.gba", 0x370000, 0x8
-	.word	gUnk_0836FD9C
-	.word	gUnk_0836FF48
+	.word	gLevel2Stage4Room2MetatileMap
+	.word	gLevel2Stage4Room2BlockLayer
 	.word	gUnk_0836FFA4
 	.incbin	"baserom.gba", 0x370014, 0x4
 	.word	gUnk_08511070
@@ -2630,29 +2630,29 @@ gLevel2Stage4Room2:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x370034, 0x10
-	.word	gUnk_0836FFAC
-	.word	gUnk_0836FFB8
+	.word	gLevel2Stage4Room2Doors
+	.word	gLevel2Stage4Room2Objects
 	.incbin	"baserom.gba", 0x37004C, 0xC
-	.global	gUnk_08370058
-gUnk_08370058:
+	.global	gLevel2Stage4Room3MetatileMap
+gLevel2Stage4Room3MetatileMap:
 	.incbin	"baserom.gba", 0x370058, 0x134
-	.global	gUnk_0837018C
-gUnk_0837018C:
+	.global	gLevel2Stage4Room3BlockLayer
+gLevel2Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37018C, 0x8C
 	.global	gUnk_08370218
 gUnk_08370218:
 	.incbin	"baserom.gba", 0x370218, 0xC0
-	.global	gUnk_083702D8
-gUnk_083702D8:
+	.global	gLevel2Stage4Room3Doors
+gLevel2Stage4Room3Doors:
 	.incbin	"baserom.gba", 0x3702D8, 0xC
-	.global	gUnk_083702E4
-gUnk_083702E4:
+	.global	gLevel2Stage4Room3Objects
+gLevel2Stage4Room3Objects:
 	.incbin	"baserom.gba", 0x3702E4, 0x18
 	.global	gLevel2Stage4Room3
 gLevel2Stage4Room3:
 	.incbin	"baserom.gba", 0x3702FC, 0x8
-	.word	gUnk_08370058
-	.word	gUnk_0837018C
+	.word	gLevel2Stage4Room3MetatileMap
+	.word	gLevel2Stage4Room3BlockLayer
 	.word	gUnk_08370218
 	.incbin	"baserom.gba", 0x370310, 0x4
 	.word	gUnk_08511070
@@ -2663,29 +2663,29 @@ gLevel2Stage4Room3:
 	.word	gUnk_084A861C
 	.word	gUnk_0852C930
 	.incbin	"baserom.gba", 0x370330, 0x10
-	.word	gUnk_083702D8
-	.word	gUnk_083702E4
+	.word	gLevel2Stage4Room3Doors
+	.word	gLevel2Stage4Room3Objects
 	.incbin	"baserom.gba", 0x370348, 0xC
-	.global	gUnk_08370354
-gUnk_08370354:
+	.global	gLevel2Stage4Room4MetatileMap
+gLevel2Stage4Room4MetatileMap:
 	.incbin	"baserom.gba", 0x370354, 0x124
-	.global	gUnk_08370478
-gUnk_08370478:
+	.global	gLevel2Stage4Room4BlockLayer
+gLevel2Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x370478, 0x38
 	.global	gUnk_083704B0
 gUnk_083704B0:
 	.incbin	"baserom.gba", 0x3704B0, 0x10
-	.global	gUnk_083704C0
-gUnk_083704C0:
+	.global	gLevel2Stage4Room4Doors
+gLevel2Stage4Room4Doors:
 	.incbin	"baserom.gba", 0x3704C0, 0xC
-	.global	gUnk_083704CC
-gUnk_083704CC:
+	.global	gLevel2Stage4Room4Objects
+gLevel2Stage4Room4Objects:
 	.incbin	"baserom.gba", 0x3704CC, 0x18
 	.global	gLevel2Stage4Room4
 gLevel2Stage4Room4:
 	.incbin	"baserom.gba", 0x3704E4, 0x8
-	.word	gUnk_08370354
-	.word	gUnk_08370478
+	.word	gLevel2Stage4Room4MetatileMap
+	.word	gLevel2Stage4Room4BlockLayer
 	.word	gUnk_083704B0
 	.incbin	"baserom.gba", 0x3704F8, 0x4
 	.word	gUnk_08511070
@@ -2696,29 +2696,29 @@ gLevel2Stage4Room4:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x370518, 0x10
-	.word	gUnk_083704C0
-	.word	gUnk_083704CC
+	.word	gLevel2Stage4Room4Doors
+	.word	gLevel2Stage4Room4Objects
 	.incbin	"baserom.gba", 0x370530, 0xC
-	.global	gUnk_0837053C
-gUnk_0837053C:
+	.global	gLevel2Stage5Room0MetatileMap
+gLevel2Stage5Room0MetatileMap:
 	.incbin	"baserom.gba", 0x37053C, 0xE0
-	.global	gUnk_0837061C
-gUnk_0837061C:
+	.global	gLevel2Stage5Room0BlockLayer
+gLevel2Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37061C, 0x34
 	.global	gUnk_08370650
 gUnk_08370650:
 	.incbin	"baserom.gba", 0x370650, 0x8
-	.global	gUnk_08370658
-gUnk_08370658:
+	.global	gLevel2Stage5Room0Doors
+gLevel2Stage5Room0Doors:
 	.incbin	"baserom.gba", 0x370658, 0xC
-	.global	gUnk_08370664
-gUnk_08370664:
+	.global	gLevel2Stage5Room0Objects
+gLevel2Stage5Room0Objects:
 	.incbin	"baserom.gba", 0x370664, 0x20
 	.global	gLevel2Stage5Room0
 gLevel2Stage5Room0:
 	.incbin	"baserom.gba", 0x370684, 0x8
-	.word	gUnk_0837053C
-	.word	gUnk_0837061C
+	.word	gLevel2Stage5Room0MetatileMap
+	.word	gLevel2Stage5Room0BlockLayer
 	.word	gUnk_08370650
 	.incbin	"baserom.gba", 0x370698, 0x4
 	.word	gUnk_08510FAC
@@ -2729,29 +2729,29 @@ gLevel2Stage5Room0:
 	.word	gUnk_084A861C
 	.word	gUnk_0852C930
 	.incbin	"baserom.gba", 0x3706B8, 0x10
-	.word	gUnk_08370658
-	.word	gUnk_08370664
+	.word	gLevel2Stage5Room0Doors
+	.word	gLevel2Stage5Room0Objects
 	.incbin	"baserom.gba", 0x3706D0, 0xC
-	.global	gUnk_083706DC
-gUnk_083706DC:
+	.global	gLevel2Stage5Room1MetatileMap
+gLevel2Stage5Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3706DC, 0x334
-	.global	gUnk_08370A10
-gUnk_08370A10:
+	.global	gLevel2Stage5Room1BlockLayer
+gLevel2Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x370A10, 0x8C
 	.global	gUnk_08370A9C
 gUnk_08370A9C:
 	.incbin	"baserom.gba", 0x370A9C, 0x14
-	.global	gUnk_08370AB0
-gUnk_08370AB0:
+	.global	gLevel2Stage5Room1Doors
+gLevel2Stage5Room1Doors:
 	.incbin	"baserom.gba", 0x370AB0, 0xC
-	.global	gUnk_08370ABC
-gUnk_08370ABC:
+	.global	gLevel2Stage5Room1Objects
+gLevel2Stage5Room1Objects:
 	.incbin	"baserom.gba", 0x370ABC, 0x38
 	.global	gLevel2Stage5Room1
 gLevel2Stage5Room1:
 	.incbin	"baserom.gba", 0x370AF4, 0x8
-	.word	gUnk_083706DC
-	.word	gUnk_08370A10
+	.word	gLevel2Stage5Room1MetatileMap
+	.word	gLevel2Stage5Room1BlockLayer
 	.word	gUnk_08370A9C
 	.incbin	"baserom.gba", 0x370B08, 0x4
 	.word	gUnk_08510FAC
@@ -2762,29 +2762,29 @@ gLevel2Stage5Room1:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x370B28, 0x10
-	.word	gUnk_08370AB0
-	.word	gUnk_08370ABC
+	.word	gLevel2Stage5Room1Doors
+	.word	gLevel2Stage5Room1Objects
 	.incbin	"baserom.gba", 0x370B40, 0xC
-	.global	gUnk_08370B4C
-gUnk_08370B4C:
+	.global	gLevel2Stage5Room2MetatileMap
+gLevel2Stage5Room2MetatileMap:
 	.incbin	"baserom.gba", 0x370B4C, 0x214
-	.global	gUnk_08370D60
-gUnk_08370D60:
+	.global	gLevel2Stage5Room2BlockLayer
+gLevel2Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x370D60, 0x5C
 	.global	gUnk_08370DBC
 gUnk_08370DBC:
 	.incbin	"baserom.gba", 0x370DBC, 0x8
-	.global	gUnk_08370DC4
-gUnk_08370DC4:
+	.global	gLevel2Stage5Room2Doors
+gLevel2Stage5Room2Doors:
 	.incbin	"baserom.gba", 0x370DC4, 0xC
-	.global	gUnk_08370DD0
-gUnk_08370DD0:
+	.global	gLevel2Stage5Room2Objects
+gLevel2Stage5Room2Objects:
 	.incbin	"baserom.gba", 0x370DD0, 0x38
 	.global	gLevel2Stage5Room2
 gLevel2Stage5Room2:
 	.incbin	"baserom.gba", 0x370E08, 0x8
-	.word	gUnk_08370B4C
-	.word	gUnk_08370D60
+	.word	gLevel2Stage5Room2MetatileMap
+	.word	gLevel2Stage5Room2BlockLayer
 	.word	gUnk_08370DBC
 	.incbin	"baserom.gba", 0x370E1C, 0x4
 	.word	gUnk_08510FAC
@@ -2795,29 +2795,29 @@ gLevel2Stage5Room2:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x370E3C, 0x10
-	.word	gUnk_08370DC4
-	.word	gUnk_08370DD0
+	.word	gLevel2Stage5Room2Doors
+	.word	gLevel2Stage5Room2Objects
 	.incbin	"baserom.gba", 0x370E54, 0xC
-	.global	gUnk_08370E60
-gUnk_08370E60:
+	.global	gLevel2Stage5Room3MetatileMap
+gLevel2Stage5Room3MetatileMap:
 	.incbin	"baserom.gba", 0x370E60, 0x1C4
-	.global	gUnk_08371024
-gUnk_08371024:
+	.global	gLevel2Stage5Room3BlockLayer
+gLevel2Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x371024, 0x34
 	.global	gUnk_08371058
 gUnk_08371058:
 	.incbin	"baserom.gba", 0x371058, 0x8
-	.global	gUnk_08371060
-gUnk_08371060:
+	.global	gLevel2Stage5Room3Doors
+gLevel2Stage5Room3Doors:
 	.incbin	"baserom.gba", 0x371060, 0xC
-	.global	gUnk_0837106C
-gUnk_0837106C:
+	.global	gLevel2Stage5Room3Objects
+gLevel2Stage5Room3Objects:
 	.incbin	"baserom.gba", 0x37106C, 0x20
 	.global	gLevel2Stage5Room3
 gLevel2Stage5Room3:
 	.incbin	"baserom.gba", 0x37108C, 0x8
-	.word	gUnk_08370E60
-	.word	gUnk_08371024
+	.word	gLevel2Stage5Room3MetatileMap
+	.word	gLevel2Stage5Room3BlockLayer
 	.word	gUnk_08371058
 	.incbin	"baserom.gba", 0x3710A0, 0x4
 	.word	gUnk_0850AA6C
@@ -2828,29 +2828,29 @@ gLevel2Stage5Room3:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x3710C0, 0x10
-	.word	gUnk_08371060
-	.word	gUnk_0837106C
+	.word	gLevel2Stage5Room3Doors
+	.word	gLevel2Stage5Room3Objects
 	.incbin	"baserom.gba", 0x3710D8, 0xC
-	.global	gUnk_083710E4
-gUnk_083710E4:
+	.global	gLevel2Stage5Room4MetatileMap
+gLevel2Stage5Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3710E4, 0x19C
-	.global	gUnk_08371280
-gUnk_08371280:
+	.global	gLevel2Stage5Room4BlockLayer
+gLevel2Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x371280, 0x98
 	.global	gUnk_08371318
 gUnk_08371318:
 	.incbin	"baserom.gba", 0x371318, 0x18
-	.global	gUnk_08371330
-gUnk_08371330:
+	.global	gLevel2Stage5Room4Doors
+gLevel2Stage5Room4Doors:
 	.incbin	"baserom.gba", 0x371330, 0x18
-	.global	gUnk_08371348
-gUnk_08371348:
+	.global	gLevel2Stage5Room4Objects
+gLevel2Stage5Room4Objects:
 	.incbin	"baserom.gba", 0x371348, 0x40
 	.global	gLevel2Stage5Room4
 gLevel2Stage5Room4:
 	.incbin	"baserom.gba", 0x371388, 0x8
-	.word	gUnk_083710E4
-	.word	gUnk_08371280
+	.word	gLevel2Stage5Room4MetatileMap
+	.word	gLevel2Stage5Room4BlockLayer
 	.word	gUnk_08371318
 	.incbin	"baserom.gba", 0x37139C, 0x4
 	.word	gUnk_0853DBB8
@@ -2861,47 +2861,47 @@ gLevel2Stage5Room4:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x3713BC, 0x10
-	.word	gUnk_08371330
-	.word	gUnk_08371348
+	.word	gLevel2Stage5Room4Doors
+	.word	gLevel2Stage5Room4Objects
 	.incbin	"baserom.gba", 0x3713D4, 0xC
-	.global	gUnk_083713E0
-gUnk_083713E0:
+	.global	gLevel2Stage5Room5MetatileMap
+gLevel2Stage5Room5MetatileMap:
 	.incbin	"baserom.gba", 0x3713E0, 0x258
-	.global	gUnk_08371638
-gUnk_08371638:
+	.global	gLevel2Stage5Room5BlockLayer
+gLevel2Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x371638, 0x84
 	.global	gUnk_083716BC
 gUnk_083716BC:
 	.incbin	"baserom.gba", 0x3716BC, 0x8
-	.global	gUnk_083716C4
-gUnk_083716C4:
+	.global	gLevel2Stage5Room5Doors
+gLevel2Stage5Room5Doors:
 	.incbin	"baserom.gba", 0x3716C4, 0xC
-	.global	gUnk_083716D0
-gUnk_083716D0:
+	.global	gLevel2Stage5Room5Objects
+gLevel2Stage5Room5Objects:
 	.incbin	"baserom.gba", 0x3716D0, 0x58
 	.global	gLevel2Stage5Room5
 gLevel2Stage5Room5:
 	.incbin	"baserom.gba", 0x371728, 0x8
-	.word	gUnk_083713E0
-	.word	gUnk_08371638
+	.word	gLevel2Stage5Room5MetatileMap
+	.word	gLevel2Stage5Room5BlockLayer
 	.word	gUnk_083716BC
 	.incbin	"baserom.gba", 0x37173C, 0x4
-	.word	gUnk_084B8BC4
+	.word	gLevel2Stage5Room5Bg2Palette
 	.word	gUnk_0842E1C0
 	.word	gUnk_083ACDCC
 	.incbin	"baserom.gba", 0x37174C, 0x4
-	.word	gUnk_084BADDC
+	.word	gLevel2Stage5Room5Bg3Palette
 	.word	gUnk_0849BE08
 	.word	gUnk_0849ABCC
 	.incbin	"baserom.gba", 0x37175C, 0x10
-	.word	gUnk_083716C4
-	.word	gUnk_083716D0
+	.word	gLevel2Stage5Room5Doors
+	.word	gLevel2Stage5Room5Objects
 	.incbin	"baserom.gba", 0x371774, 0xC
-	.global	gUnk_08371780
-gUnk_08371780:
+	.global	gLevel2Stage5Room6MetatileMap
+gLevel2Stage5Room6MetatileMap:
 	.incbin	"baserom.gba", 0x371780, 0x60
-	.global	gUnk_083717E0
-gUnk_083717E0:
+	.global	gLevel2Stage5Room6BlockLayer
+gLevel2Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3717E0, 0x34
 	.global	gUnk_08371814
 gUnk_08371814:
@@ -2909,8 +2909,8 @@ gUnk_08371814:
 	.global	gLevel2Stage5Room6
 gLevel2Stage5Room6:
 	.incbin	"baserom.gba", 0x37181C, 0x8
-	.word	gUnk_08371780
-	.word	gUnk_083717E0
+	.word	gLevel2Stage5Room6MetatileMap
+	.word	gLevel2Stage5Room6BlockLayer
 	.word	gUnk_08371814
 	.incbin	"baserom.gba", 0x371830, 0x4
 	.word	gUnk_08510FAC
@@ -2921,26 +2921,26 @@ gLevel2Stage5Room6:
 	.word	gUnk_0849BE08
 	.word	gUnk_0849ABCC
 	.incbin	"baserom.gba", 0x371850, 0x24
-	.global	gUnk_08371874
-gUnk_08371874:
+	.global	gLevel2Stage5Room7MetatileMap
+gLevel2Stage5Room7MetatileMap:
 	.incbin	"baserom.gba", 0x371874, 0x330
-	.global	gUnk_08371BA4
-gUnk_08371BA4:
+	.global	gLevel2Stage5Room7BlockLayer
+gLevel2Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x371BA4, 0x130
 	.global	gUnk_08371CD4
 gUnk_08371CD4:
 	.incbin	"baserom.gba", 0x371CD4, 0x8
-	.global	gUnk_08371CDC
-gUnk_08371CDC:
+	.global	gLevel2Stage5Room7Doors
+gLevel2Stage5Room7Doors:
 	.incbin	"baserom.gba", 0x371CDC, 0xC
-	.global	gUnk_08371CE8
-gUnk_08371CE8:
+	.global	gLevel2Stage5Room7Objects
+gLevel2Stage5Room7Objects:
 	.incbin	"baserom.gba", 0x371CE8, 0xA8
 	.global	gLevel2Stage5Room7
 gLevel2Stage5Room7:
 	.incbin	"baserom.gba", 0x371D90, 0x8
-	.word	gUnk_08371874
-	.word	gUnk_08371BA4
+	.word	gLevel2Stage5Room7MetatileMap
+	.word	gLevel2Stage5Room7BlockLayer
 	.word	gUnk_08371CD4
 	.incbin	"baserom.gba", 0x371DA4, 0x4
 	.word	gUnk_0853DBB8
@@ -2951,29 +2951,29 @@ gLevel2Stage5Room7:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x371DC4, 0x10
-	.word	gUnk_08371CDC
-	.word	gUnk_08371CE8
+	.word	gLevel2Stage5Room7Doors
+	.word	gLevel2Stage5Room7Objects
 	.incbin	"baserom.gba", 0x371DDC, 0xC
-	.global	gUnk_08371DE8
-gUnk_08371DE8:
+	.global	gLevel2Stage5Room8MetatileMap
+gLevel2Stage5Room8MetatileMap:
 	.incbin	"baserom.gba", 0x371DE8, 0x17C
-	.global	gUnk_08371F64
-gUnk_08371F64:
+	.global	gLevel2Stage5Room8BlockLayer
+gLevel2Stage5Room8BlockLayer:
 	.incbin	"baserom.gba", 0x371F64, 0x60
 	.global	gUnk_08371FC4
 gUnk_08371FC4:
 	.incbin	"baserom.gba", 0x371FC4, 0x5C
-	.global	gUnk_08372020
-gUnk_08372020:
+	.global	gLevel2Stage5Room8Doors
+gLevel2Stage5Room8Doors:
 	.incbin	"baserom.gba", 0x372020, 0x18
-	.global	gUnk_08372038
-gUnk_08372038:
+	.global	gLevel2Stage5Room8Objects
+gLevel2Stage5Room8Objects:
 	.incbin	"baserom.gba", 0x372038, 0x8
 	.global	gLevel2Stage5Room8
 gLevel2Stage5Room8:
 	.incbin	"baserom.gba", 0x372040, 0x8
-	.word	gUnk_08371DE8
-	.word	gUnk_08371F64
+	.word	gLevel2Stage5Room8MetatileMap
+	.word	gLevel2Stage5Room8BlockLayer
 	.word	gUnk_08371FC4
 	.incbin	"baserom.gba", 0x372054, 0x4
 	.word	gUnk_08510FAC
@@ -2984,29 +2984,29 @@ gLevel2Stage5Room8:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x372074, 0x10
-	.word	gUnk_08372020
-	.word	gUnk_08372038
+	.word	gLevel2Stage5Room8Doors
+	.word	gLevel2Stage5Room8Objects
 	.incbin	"baserom.gba", 0x37208C, 0xC
-	.global	gUnk_08372098
-gUnk_08372098:
+	.global	gLevel2Stage5Room9MetatileMap
+gLevel2Stage5Room9MetatileMap:
 	.incbin	"baserom.gba", 0x372098, 0x158
-	.global	gUnk_083721F0
-gUnk_083721F0:
+	.global	gLevel2Stage5Room9BlockLayer
+gLevel2Stage5Room9BlockLayer:
 	.incbin	"baserom.gba", 0x3721F0, 0x34
 	.global	gUnk_08372224
 gUnk_08372224:
 	.incbin	"baserom.gba", 0x372224, 0x8
-	.global	gUnk_0837222C
-gUnk_0837222C:
+	.global	gLevel2Stage5Room9Doors
+gLevel2Stage5Room9Doors:
 	.incbin	"baserom.gba", 0x37222C, 0xC
-	.global	gUnk_08372238
-gUnk_08372238:
+	.global	gLevel2Stage5Room9Objects
+gLevel2Stage5Room9Objects:
 	.incbin	"baserom.gba", 0x372238, 0x8
 	.global	gLevel2Stage5Room9
 gLevel2Stage5Room9:
 	.incbin	"baserom.gba", 0x372240, 0x8
-	.word	gUnk_08372098
-	.word	gUnk_083721F0
+	.word	gLevel2Stage5Room9MetatileMap
+	.word	gLevel2Stage5Room9BlockLayer
 	.word	gUnk_08372224
 	.incbin	"baserom.gba", 0x372254, 0x4
 	.word	gUnk_08510FAC
@@ -3017,43 +3017,43 @@ gLevel2Stage5Room9:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x372274, 0x10
-	.word	gUnk_0837222C
-	.word	gUnk_08372238
+	.word	gLevel2Stage5Room9Doors
+	.word	gLevel2Stage5Room9Objects
 	.incbin	"baserom.gba", 0x37228C, 0xC
-	.global	gUnk_08372298
-gUnk_08372298:
+	.global	gLevel2Stage6Room0MetatileMap
+gLevel2Stage6Room0MetatileMap:
 	.incbin	"baserom.gba", 0x372298, 0xD4
-	.global	gUnk_0837236C
-gUnk_0837236C:
+	.global	gLevel2Stage6Room0BlockLayer
+gLevel2Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37236C, 0x34
 	.global	gUnk_083723A0
 gUnk_083723A0:
 	.incbin	"baserom.gba", 0x3723A0, 0x8
-	.global	gUnk_083723A8
-gUnk_083723A8:
+	.global	gLevel2Stage6Room0Objects
+gLevel2Stage6Room0Objects:
 	.incbin	"baserom.gba", 0x3723A8, 0x8
 	.global	gLevel2Stage6Room0
 gLevel2Stage6Room0:
 	.incbin	"baserom.gba", 0x3723B0, 0x8
-	.word	gUnk_08372298
-	.word	gUnk_0837236C
+	.word	gLevel2Stage6Room0MetatileMap
+	.word	gLevel2Stage6Room0BlockLayer
 	.word	gUnk_083723A0
 	.incbin	"baserom.gba", 0x3723C4, 0x4
 	.word	gUnk_0849AA04
 	.word	gUnk_08442F18
 	.word	gUnk_083B2254
 	.incbin	"baserom.gba", 0x3723D4, 0x4
-	.word	gUnk_084CE580
+	.word	gLevel2Stage6Room0Bg3Palette
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3723E4, 0x14
-	.word	gUnk_083723A8
+	.word	gLevel2Stage6Room0Objects
 	.incbin	"baserom.gba", 0x3723FC, 0xC
-	.global	gUnk_08372408
-gUnk_08372408:
+	.global	gLevel2Stage6Room1MetatileMap
+gLevel2Stage6Room1MetatileMap:
 	.incbin	"baserom.gba", 0x372408, 0xD4
-	.global	gUnk_083724DC
-gUnk_083724DC:
+	.global	gLevel2Stage6Room1BlockLayer
+gLevel2Stage6Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3724DC, 0x34
 	.global	gUnk_08372510
 gUnk_08372510:
@@ -3061,8 +3061,8 @@ gUnk_08372510:
 	.global	gLevel2Stage6Room1
 gLevel2Stage6Room1:
 	.incbin	"baserom.gba", 0x372518, 0x8
-	.word	gUnk_08372408
-	.word	gUnk_083724DC
+	.word	gLevel2Stage6Room1MetatileMap
+	.word	gLevel2Stage6Room1BlockLayer
 	.word	gUnk_08372510
 	.incbin	"baserom.gba", 0x37252C, 0x4
 	.word	gUnk_0849AA04
@@ -3073,11 +3073,11 @@ gLevel2Stage6Room1:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x37254C, 0x24
-	.global	gUnk_08372570
-gUnk_08372570:
+	.global	gLevel2Stage6Room2MetatileMap
+gLevel2Stage6Room2MetatileMap:
 	.incbin	"baserom.gba", 0x372570, 0xD4
-	.global	gUnk_08372644
-gUnk_08372644:
+	.global	gLevel2Stage6Room2BlockLayer
+gLevel2Stage6Room2BlockLayer:
 	.incbin	"baserom.gba", 0x372644, 0x34
 	.global	gUnk_08372678
 gUnk_08372678:
@@ -3085,38 +3085,38 @@ gUnk_08372678:
 	.global	gLevel2Stage6Room2
 gLevel2Stage6Room2:
 	.incbin	"baserom.gba", 0x372680, 0x8
-	.word	gUnk_08372570
-	.word	gUnk_08372644
+	.word	gLevel2Stage6Room2MetatileMap
+	.word	gLevel2Stage6Room2BlockLayer
 	.word	gUnk_08372678
 	.incbin	"baserom.gba", 0x372694, 0x4
 	.word	gUnk_0849AA04
 	.word	gUnk_08442F18
 	.word	gUnk_083B2254
 	.incbin	"baserom.gba", 0x3726A4, 0x4
-	.word	gUnk_084CE47C
+	.word	gLevel2Stage6Room2Bg3Palette
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3726B4, 0x24
-	.global	gUnk_083726D8
-gUnk_083726D8:
+	.global	gLevel3Stage0Room0MetatileMap
+gLevel3Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3726D8, 0x268
-	.global	gUnk_08372940
-gUnk_08372940:
+	.global	gLevel3Stage0Room0BlockLayer
+gLevel3Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x372940, 0xCC
 	.global	gUnk_08372A0C
 gUnk_08372A0C:
 	.incbin	"baserom.gba", 0x372A0C, 0x8
-	.global	gUnk_08372A14
-gUnk_08372A14:
+	.global	gLevel3Stage0Room0Doors
+gLevel3Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x372A14, 0xC
-	.global	gUnk_08372A20
-gUnk_08372A20:
+	.global	gLevel3Stage0Room0Objects
+gLevel3Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x372A20, 0x58
 	.global	gLevel3Stage0Room0
 gLevel3Stage0Room0:
 	.incbin	"baserom.gba", 0x372A78, 0x8
-	.word	gUnk_083726D8
-	.word	gUnk_08372940
+	.word	gLevel3Stage0Room0MetatileMap
+	.word	gLevel3Stage0Room0BlockLayer
 	.word	gUnk_08372A0C
 	.incbin	"baserom.gba", 0x372A8C, 0x4
 	.word	gUnk_0835D548
@@ -3127,29 +3127,29 @@ gLevel3Stage0Room0:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x372AAC, 0x10
-	.word	gUnk_08372A14
-	.word	gUnk_08372A20
+	.word	gLevel3Stage0Room0Doors
+	.word	gLevel3Stage0Room0Objects
 	.incbin	"baserom.gba", 0x372AC4, 0xC
-	.global	gUnk_08372AD0
-gUnk_08372AD0:
+	.global	gLevel3Stage0Room1MetatileMap
+gLevel3Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x372AD0, 0x1C4
-	.global	gUnk_08372C94
-gUnk_08372C94:
+	.global	gLevel3Stage0Room1BlockLayer
+gLevel3Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x372C94, 0x68
 	.global	gUnk_08372CFC
 gUnk_08372CFC:
 	.incbin	"baserom.gba", 0x372CFC, 0x8
-	.global	gUnk_08372D04
-gUnk_08372D04:
+	.global	gLevel3Stage0Room1Doors
+gLevel3Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x372D04, 0xC
-	.global	gUnk_08372D10
-gUnk_08372D10:
+	.global	gLevel3Stage0Room1Objects
+gLevel3Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x372D10, 0x48
 	.global	gLevel3Stage0Room1
 gLevel3Stage0Room1:
 	.incbin	"baserom.gba", 0x372D58, 0x8
-	.word	gUnk_08372AD0
-	.word	gUnk_08372C94
+	.word	gLevel3Stage0Room1MetatileMap
+	.word	gLevel3Stage0Room1BlockLayer
 	.word	gUnk_08372CFC
 	.incbin	"baserom.gba", 0x372D6C, 0x4
 	.word	gUnk_0835D548
@@ -3160,29 +3160,29 @@ gLevel3Stage0Room1:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x372D8C, 0x10
-	.word	gUnk_08372D04
-	.word	gUnk_08372D10
+	.word	gLevel3Stage0Room1Doors
+	.word	gLevel3Stage0Room1Objects
 	.incbin	"baserom.gba", 0x372DA4, 0xC
-	.global	gUnk_08372DB0
-gUnk_08372DB0:
+	.global	gLevel3Stage0Room2MetatileMap
+gLevel3Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x372DB0, 0x18C
-	.global	gUnk_08372F3C
-gUnk_08372F3C:
+	.global	gLevel3Stage0Room2BlockLayer
+gLevel3Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x372F3C, 0x84
 	.global	gUnk_08372FC0
 gUnk_08372FC0:
 	.incbin	"baserom.gba", 0x372FC0, 0x8
-	.global	gUnk_08372FC8
-gUnk_08372FC8:
+	.global	gLevel3Stage0Room2Doors
+gLevel3Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x372FC8, 0xC
-	.global	gUnk_08372FD4
-gUnk_08372FD4:
+	.global	gLevel3Stage0Room2Objects
+gLevel3Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x372FD4, 0x48
 	.global	gLevel3Stage0Room2
 gLevel3Stage0Room2:
 	.incbin	"baserom.gba", 0x37301C, 0x8
-	.word	gUnk_08372DB0
-	.word	gUnk_08372F3C
+	.word	gLevel3Stage0Room2MetatileMap
+	.word	gLevel3Stage0Room2BlockLayer
 	.word	gUnk_08372FC0
 	.incbin	"baserom.gba", 0x373030, 0x4
 	.word	gUnk_0835D548
@@ -3193,29 +3193,29 @@ gLevel3Stage0Room2:
 	.word	gUnk_0846F8DC
 	.word	gUnk_083CEF10
 	.incbin	"baserom.gba", 0x373050, 0x10
-	.word	gUnk_08372FC8
-	.word	gUnk_08372FD4
+	.word	gLevel3Stage0Room2Doors
+	.word	gLevel3Stage0Room2Objects
 	.incbin	"baserom.gba", 0x373068, 0xC
-	.global	gUnk_08373074
-gUnk_08373074:
+	.global	gLevel3Stage0Room3MetatileMap
+gLevel3Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x373074, 0x1F8
-	.global	gUnk_0837326C
-gUnk_0837326C:
+	.global	gLevel3Stage0Room3BlockLayer
+gLevel3Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37326C, 0x1D4
 	.global	gUnk_08373440
 gUnk_08373440:
 	.incbin	"baserom.gba", 0x373440, 0x1E0
-	.global	gUnk_08373620
-gUnk_08373620:
+	.global	gLevel3Stage0Room3Doors
+gLevel3Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x373620, 0x18
-	.global	gUnk_08373638
-gUnk_08373638:
+	.global	gLevel3Stage0Room3Objects
+gLevel3Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x373638, 0x70
 	.global	gLevel3Stage0Room3
 gLevel3Stage0Room3:
 	.incbin	"baserom.gba", 0x3736A8, 0x8
-	.word	gUnk_08373074
-	.word	gUnk_0837326C
+	.word	gLevel3Stage0Room3MetatileMap
+	.word	gLevel3Stage0Room3BlockLayer
 	.word	gUnk_08373440
 	.incbin	"baserom.gba", 0x3736BC, 0x4
 	.word	gUnk_084B2F9C
@@ -3226,29 +3226,29 @@ gLevel3Stage0Room3:
 	.word	gUnk_0846F8DC
 	.word	gUnk_083CEF10
 	.incbin	"baserom.gba", 0x3736DC, 0x10
-	.word	gUnk_08373620
-	.word	gUnk_08373638
+	.word	gLevel3Stage0Room3Doors
+	.word	gLevel3Stage0Room3Objects
 	.incbin	"baserom.gba", 0x3736F4, 0xC
-	.global	gUnk_08373700
-gUnk_08373700:
+	.global	gLevel3Stage0Room4MetatileMap
+gLevel3Stage0Room4MetatileMap:
 	.incbin	"baserom.gba", 0x373700, 0x174
-	.global	gUnk_08373874
-gUnk_08373874:
+	.global	gLevel3Stage0Room4BlockLayer
+gLevel3Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x373874, 0x5C
 	.global	gUnk_083738D0
 gUnk_083738D0:
 	.incbin	"baserom.gba", 0x3738D0, 0x8
-	.global	gUnk_083738D8
-gUnk_083738D8:
+	.global	gLevel3Stage0Room4Doors
+gLevel3Stage0Room4Doors:
 	.incbin	"baserom.gba", 0x3738D8, 0xC
-	.global	gUnk_083738E4
-gUnk_083738E4:
+	.global	gLevel3Stage0Room4Objects
+gLevel3Stage0Room4Objects:
 	.incbin	"baserom.gba", 0x3738E4, 0x30
 	.global	gLevel3Stage0Room4
 gLevel3Stage0Room4:
 	.incbin	"baserom.gba", 0x373914, 0x8
-	.word	gUnk_08373700
-	.word	gUnk_08373874
+	.word	gLevel3Stage0Room4MetatileMap
+	.word	gLevel3Stage0Room4BlockLayer
 	.word	gUnk_083738D0
 	.incbin	"baserom.gba", 0x373928, 0x4
 	.word	gUnk_0835D548
@@ -3259,29 +3259,29 @@ gLevel3Stage0Room4:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x373948, 0x10
-	.word	gUnk_083738D8
-	.word	gUnk_083738E4
+	.word	gLevel3Stage0Room4Doors
+	.word	gLevel3Stage0Room4Objects
 	.incbin	"baserom.gba", 0x373960, 0xC
-	.global	gUnk_0837396C
-gUnk_0837396C:
+	.global	gLevel3Stage0Room5MetatileMap
+gLevel3Stage0Room5MetatileMap:
 	.incbin	"baserom.gba", 0x37396C, 0x104
-	.global	gUnk_08373A70
-gUnk_08373A70:
+	.global	gLevel3Stage0Room5BlockLayer
+gLevel3Stage0Room5BlockLayer:
 	.incbin	"baserom.gba", 0x373A70, 0x38
 	.global	gUnk_08373AA8
 gUnk_08373AA8:
 	.incbin	"baserom.gba", 0x373AA8, 0x8
-	.global	gUnk_08373AB0
-gUnk_08373AB0:
+	.global	gLevel3Stage0Room5Doors
+gLevel3Stage0Room5Doors:
 	.incbin	"baserom.gba", 0x373AB0, 0xC
-	.global	gUnk_08373ABC
-gUnk_08373ABC:
+	.global	gLevel3Stage0Room5Objects
+gLevel3Stage0Room5Objects:
 	.incbin	"baserom.gba", 0x373ABC, 0x8
 	.global	gLevel3Stage0Room5
 gLevel3Stage0Room5:
 	.incbin	"baserom.gba", 0x373AC4, 0x8
-	.word	gUnk_0837396C
-	.word	gUnk_08373A70
+	.word	gLevel3Stage0Room5MetatileMap
+	.word	gLevel3Stage0Room5BlockLayer
 	.word	gUnk_08373AA8
 	.incbin	"baserom.gba", 0x373AD8, 0x4
 	.word	gUnk_0835D548
@@ -3292,29 +3292,29 @@ gLevel3Stage0Room5:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x373AF8, 0x10
-	.word	gUnk_08373AB0
-	.word	gUnk_08373ABC
+	.word	gLevel3Stage0Room5Doors
+	.word	gLevel3Stage0Room5Objects
 	.incbin	"baserom.gba", 0x373B10, 0xC
-	.global	gUnk_08373B1C
-gUnk_08373B1C:
+	.global	gLevel3Stage1Room0MetatileMap
+gLevel3Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x373B1C, 0x46C
-	.global	gUnk_08373F88
-gUnk_08373F88:
+	.global	gLevel3Stage1Room0BlockLayer
+gLevel3Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x373F88, 0x118
 	.global	gUnk_083740A0
 gUnk_083740A0:
 	.incbin	"baserom.gba", 0x3740A0, 0x20
-	.global	gUnk_083740C0
-gUnk_083740C0:
+	.global	gLevel3Stage1Room0Doors
+gLevel3Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x3740C0, 0xC
-	.global	gUnk_083740CC
-gUnk_083740CC:
+	.global	gLevel3Stage1Room0Objects
+gLevel3Stage1Room0Objects:
 	.incbin	"baserom.gba", 0x3740CC, 0x40
 	.global	gLevel3Stage1Room0
 gLevel3Stage1Room0:
 	.incbin	"baserom.gba", 0x37410C, 0x8
-	.word	gUnk_08373B1C
-	.word	gUnk_08373F88
+	.word	gLevel3Stage1Room0MetatileMap
+	.word	gLevel3Stage1Room0BlockLayer
 	.word	gUnk_083740A0
 	.incbin	"baserom.gba", 0x374120, 0x4
 	.word	gUnk_084B57E8
@@ -3325,29 +3325,29 @@ gLevel3Stage1Room0:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x374140, 0x10
-	.word	gUnk_083740C0
-	.word	gUnk_083740CC
+	.word	gLevel3Stage1Room0Doors
+	.word	gLevel3Stage1Room0Objects
 	.incbin	"baserom.gba", 0x374158, 0xC
-	.global	gUnk_08374164
-gUnk_08374164:
+	.global	gLevel3Stage1Room1MetatileMap
+gLevel3Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x374164, 0x104
-	.global	gUnk_08374268
-gUnk_08374268:
+	.global	gLevel3Stage1Room1BlockLayer
+gLevel3Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x374268, 0x38
 	.global	gUnk_083742A0
 gUnk_083742A0:
 	.incbin	"baserom.gba", 0x3742A0, 0x8
-	.global	gUnk_083742A8
-gUnk_083742A8:
+	.global	gLevel3Stage1Room1Doors
+gLevel3Stage1Room1Doors:
 	.incbin	"baserom.gba", 0x3742A8, 0xC
-	.global	gUnk_083742B4
-gUnk_083742B4:
+	.global	gLevel3Stage1Room1Objects
+gLevel3Stage1Room1Objects:
 	.incbin	"baserom.gba", 0x3742B4, 0x18
 	.global	gLevel3Stage1Room1
 gLevel3Stage1Room1:
 	.incbin	"baserom.gba", 0x3742CC, 0x8
-	.word	gUnk_08374164
-	.word	gUnk_08374268
+	.word	gLevel3Stage1Room1MetatileMap
+	.word	gLevel3Stage1Room1BlockLayer
 	.word	gUnk_083742A0
 	.incbin	"baserom.gba", 0x3742E0, 0x4
 	.word	gUnk_08497C74
@@ -3358,29 +3358,29 @@ gLevel3Stage1Room1:
 	.word	gUnk_084278D8
 	.word	gUnk_083CA620
 	.incbin	"baserom.gba", 0x374300, 0x10
-	.word	gUnk_083742A8
-	.word	gUnk_083742B4
+	.word	gLevel3Stage1Room1Doors
+	.word	gLevel3Stage1Room1Objects
 	.incbin	"baserom.gba", 0x374318, 0xC
-	.global	gUnk_08374324
-gUnk_08374324:
+	.global	gLevel3Stage1Room2MetatileMap
+gLevel3Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x374324, 0x330
-	.global	gUnk_08374654
-gUnk_08374654:
+	.global	gLevel3Stage1Room2BlockLayer
+gLevel3Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x374654, 0xE0
 	.global	gUnk_08374734
 gUnk_08374734:
 	.incbin	"baserom.gba", 0x374734, 0x44
-	.global	gUnk_08374778
-gUnk_08374778:
+	.global	gLevel3Stage1Room2Doors
+gLevel3Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x374778, 0x18
-	.global	gUnk_08374790
-gUnk_08374790:
+	.global	gLevel3Stage1Room2Objects
+gLevel3Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x374790, 0x40
 	.global	gLevel3Stage1Room2
 gLevel3Stage1Room2:
 	.incbin	"baserom.gba", 0x3747D0, 0x8
-	.word	gUnk_08374324
-	.word	gUnk_08374654
+	.word	gLevel3Stage1Room2MetatileMap
+	.word	gLevel3Stage1Room2BlockLayer
 	.word	gUnk_08374734
 	.incbin	"baserom.gba", 0x3747E4, 0x4
 	.word	gUnk_08497C74
@@ -3391,29 +3391,29 @@ gLevel3Stage1Room2:
 	.word	gUnk_084278D8
 	.word	gUnk_083CA620
 	.incbin	"baserom.gba", 0x374804, 0x10
-	.word	gUnk_08374778
-	.word	gUnk_08374790
+	.word	gLevel3Stage1Room2Doors
+	.word	gLevel3Stage1Room2Objects
 	.incbin	"baserom.gba", 0x37481C, 0xC
-	.global	gUnk_08374828
-gUnk_08374828:
+	.global	gLevel3Stage1Room3MetatileMap
+gLevel3Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x374828, 0x1D0
-	.global	gUnk_083749F8
-gUnk_083749F8:
+	.global	gLevel3Stage1Room3BlockLayer
+gLevel3Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3749F8, 0xB0
 	.global	gUnk_08374AA8
 gUnk_08374AA8:
 	.incbin	"baserom.gba", 0x374AA8, 0x8
-	.global	gUnk_08374AB0
-gUnk_08374AB0:
+	.global	gLevel3Stage1Room3Doors
+gLevel3Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x374AB0, 0x18
-	.global	gUnk_08374AC8
-gUnk_08374AC8:
+	.global	gLevel3Stage1Room3Objects
+gLevel3Stage1Room3Objects:
 	.incbin	"baserom.gba", 0x374AC8, 0x60
 	.global	gLevel3Stage1Room3
 gLevel3Stage1Room3:
 	.incbin	"baserom.gba", 0x374B28, 0x8
-	.word	gUnk_08374828
-	.word	gUnk_083749F8
+	.word	gLevel3Stage1Room3MetatileMap
+	.word	gLevel3Stage1Room3BlockLayer
 	.word	gUnk_08374AA8
 	.incbin	"baserom.gba", 0x374B3C, 0x4
 	.word	gUnk_08497C74
@@ -3424,29 +3424,29 @@ gLevel3Stage1Room3:
 	.word	gUnk_084278D8
 	.word	gUnk_083CA620
 	.incbin	"baserom.gba", 0x374B5C, 0x10
-	.word	gUnk_08374AB0
-	.word	gUnk_08374AC8
+	.word	gLevel3Stage1Room3Doors
+	.word	gLevel3Stage1Room3Objects
 	.incbin	"baserom.gba", 0x374B74, 0xC
-	.global	gUnk_08374B80
-gUnk_08374B80:
+	.global	gLevel3Stage1Room4MetatileMap
+gLevel3Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x374B80, 0x84
-	.global	gUnk_08374C04
-gUnk_08374C04:
+	.global	gLevel3Stage1Room4BlockLayer
+gLevel3Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x374C04, 0x34
 	.global	gUnk_08374C38
 gUnk_08374C38:
 	.incbin	"baserom.gba", 0x374C38, 0x8
-	.global	gUnk_08374C40
-gUnk_08374C40:
+	.global	gLevel3Stage1Room4Doors
+gLevel3Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x374C40, 0xC
-	.global	gUnk_08374C4C
-gUnk_08374C4C:
+	.global	gLevel3Stage1Room4Objects
+gLevel3Stage1Room4Objects:
 	.incbin	"baserom.gba", 0x374C4C, 0x28
 	.global	gLevel3Stage1Room4
 gLevel3Stage1Room4:
 	.incbin	"baserom.gba", 0x374C74, 0x8
-	.word	gUnk_08374B80
-	.word	gUnk_08374C04
+	.word	gLevel3Stage1Room4MetatileMap
+	.word	gLevel3Stage1Room4BlockLayer
 	.word	gUnk_08374C38
 	.incbin	"baserom.gba", 0x374C88, 0x4
 	.word	gUnk_08497C74
@@ -3457,29 +3457,29 @@ gLevel3Stage1Room4:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x374CA8, 0x10
-	.word	gUnk_08374C40
-	.word	gUnk_08374C4C
+	.word	gLevel3Stage1Room4Doors
+	.word	gLevel3Stage1Room4Objects
 	.incbin	"baserom.gba", 0x374CC0, 0xC
-	.global	gUnk_08374CCC
-gUnk_08374CCC:
+	.global	gLevel3Stage1Room5MetatileMap
+gLevel3Stage1Room5MetatileMap:
 	.incbin	"baserom.gba", 0x374CCC, 0x7C
-	.global	gUnk_08374D48
-gUnk_08374D48:
+	.global	gLevel3Stage1Room5BlockLayer
+gLevel3Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x374D48, 0x38
 	.global	gUnk_08374D80
 gUnk_08374D80:
 	.incbin	"baserom.gba", 0x374D80, 0x10
-	.global	gUnk_08374D90
-gUnk_08374D90:
+	.global	gLevel3Stage1Room5Doors
+gLevel3Stage1Room5Doors:
 	.incbin	"baserom.gba", 0x374D90, 0xC
-	.global	gUnk_08374D9C
-gUnk_08374D9C:
+	.global	gLevel3Stage1Room5Objects
+gLevel3Stage1Room5Objects:
 	.incbin	"baserom.gba", 0x374D9C, 0x20
 	.global	gLevel3Stage1Room5
 gLevel3Stage1Room5:
 	.incbin	"baserom.gba", 0x374DBC, 0x8
-	.word	gUnk_08374CCC
-	.word	gUnk_08374D48
+	.word	gLevel3Stage1Room5MetatileMap
+	.word	gLevel3Stage1Room5BlockLayer
 	.word	gUnk_08374D80
 	.incbin	"baserom.gba", 0x374DD0, 0x4
 	.word	gUnk_08497C74
@@ -3490,29 +3490,29 @@ gLevel3Stage1Room5:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x374DF0, 0x10
-	.word	gUnk_08374D90
-	.word	gUnk_08374D9C
+	.word	gLevel3Stage1Room5Doors
+	.word	gLevel3Stage1Room5Objects
 	.incbin	"baserom.gba", 0x374E08, 0xC
-	.global	gUnk_08374E14
-gUnk_08374E14:
+	.global	gLevel3Stage2Room0MetatileMap
+gLevel3Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x374E14, 0x250
-	.global	gUnk_08375064
-gUnk_08375064:
+	.global	gLevel3Stage2Room0BlockLayer
+gLevel3Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x375064, 0xC8
 	.global	gUnk_0837512C
 gUnk_0837512C:
 	.incbin	"baserom.gba", 0x37512C, 0x1A8
-	.global	gUnk_083752D4
-gUnk_083752D4:
+	.global	gLevel3Stage2Room0Doors
+gLevel3Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x3752D4, 0x18
-	.global	gUnk_083752EC
-gUnk_083752EC:
+	.global	gLevel3Stage2Room0Objects
+gLevel3Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x3752EC, 0x30
 	.global	gLevel3Stage2Room0
 gLevel3Stage2Room0:
 	.incbin	"baserom.gba", 0x37531C, 0x8
-	.word	gUnk_08374E14
-	.word	gUnk_08375064
+	.word	gLevel3Stage2Room0MetatileMap
+	.word	gLevel3Stage2Room0BlockLayer
 	.word	gUnk_0837512C
 	.incbin	"baserom.gba", 0x375330, 0x4
 	.word	gUnk_0853DAB4
@@ -3523,29 +3523,29 @@ gLevel3Stage2Room0:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x375350, 0x10
-	.word	gUnk_083752D4
-	.word	gUnk_083752EC
+	.word	gLevel3Stage2Room0Doors
+	.word	gLevel3Stage2Room0Objects
 	.incbin	"baserom.gba", 0x375368, 0xC
-	.global	gUnk_08375374
-gUnk_08375374:
+	.global	gLevel3Stage2Room1MetatileMap
+gLevel3Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x375374, 0xA64
-	.global	gUnk_08375DD8
-gUnk_08375DD8:
+	.global	gLevel3Stage2Room1BlockLayer
+gLevel3Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x375DD8, 0x324
 	.global	gUnk_083760FC
 gUnk_083760FC:
 	.incbin	"baserom.gba", 0x3760FC, 0x8
-	.global	gUnk_08376104
-gUnk_08376104:
+	.global	gLevel3Stage2Room1Doors
+gLevel3Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x376104, 0x24
-	.global	gUnk_08376128
-gUnk_08376128:
+	.global	gLevel3Stage2Room1Objects
+gLevel3Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x376128, 0xA8
 	.global	gLevel3Stage2Room1
 gLevel3Stage2Room1:
 	.incbin	"baserom.gba", 0x3761D0, 0x8
-	.word	gUnk_08375374
-	.word	gUnk_08375DD8
+	.word	gLevel3Stage2Room1MetatileMap
+	.word	gLevel3Stage2Room1BlockLayer
 	.word	gUnk_083760FC
 	.incbin	"baserom.gba", 0x3761E4, 0x4
 	.word	gUnk_0852D7AC
@@ -3556,29 +3556,29 @@ gLevel3Stage2Room1:
 	.word	gUnk_083FE694
 	.word	gUnk_083BA534
 	.incbin	"baserom.gba", 0x376204, 0x10
-	.word	gUnk_08376104
-	.word	gUnk_08376128
+	.word	gLevel3Stage2Room1Doors
+	.word	gLevel3Stage2Room1Objects
 	.incbin	"baserom.gba", 0x37621C, 0xC
-	.global	gUnk_08376228
-gUnk_08376228:
+	.global	gLevel3Stage2Room2MetatileMap
+gLevel3Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x376228, 0x6AC
-	.global	gUnk_083768D4
-gUnk_083768D4:
+	.global	gLevel3Stage2Room2BlockLayer
+gLevel3Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3768D4, 0x194
 	.global	gUnk_08376A68
 gUnk_08376A68:
 	.incbin	"baserom.gba", 0x376A68, 0x10
-	.global	gUnk_08376A78
-gUnk_08376A78:
+	.global	gLevel3Stage2Room2Doors
+gLevel3Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x376A78, 0xC
-	.global	gUnk_08376A84
-gUnk_08376A84:
+	.global	gLevel3Stage2Room2Objects
+gLevel3Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x376A84, 0xA0
 	.global	gLevel3Stage2Room2
 gLevel3Stage2Room2:
 	.incbin	"baserom.gba", 0x376B24, 0x8
-	.word	gUnk_08376228
-	.word	gUnk_083768D4
+	.word	gLevel3Stage2Room2MetatileMap
+	.word	gLevel3Stage2Room2BlockLayer
 	.word	gUnk_08376A68
 	.incbin	"baserom.gba", 0x376B38, 0x4
 	.word	gUnk_0852D624
@@ -3589,29 +3589,29 @@ gLevel3Stage2Room2:
 	.word	gUnk_083FE694
 	.word	gUnk_083BA534
 	.incbin	"baserom.gba", 0x376B58, 0x10
-	.word	gUnk_08376A78
-	.word	gUnk_08376A84
+	.word	gLevel3Stage2Room2Doors
+	.word	gLevel3Stage2Room2Objects
 	.incbin	"baserom.gba", 0x376B70, 0xC
-	.global	gUnk_08376B7C
-gUnk_08376B7C:
+	.global	gLevel3Stage2Room3MetatileMap
+gLevel3Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x376B7C, 0x16C
-	.global	gUnk_08376CE8
-gUnk_08376CE8:
+	.global	gLevel3Stage2Room3BlockLayer
+gLevel3Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x376CE8, 0x64
 	.global	gUnk_08376D4C
 gUnk_08376D4C:
 	.incbin	"baserom.gba", 0x376D4C, 0x8
-	.global	gUnk_08376D54
-gUnk_08376D54:
+	.global	gLevel3Stage2Room3Doors
+gLevel3Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x376D54, 0x18
-	.global	gUnk_08376D6C
-gUnk_08376D6C:
+	.global	gLevel3Stage2Room3Objects
+gLevel3Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x376D6C, 0x28
 	.global	gLevel3Stage2Room3
 gLevel3Stage2Room3:
 	.incbin	"baserom.gba", 0x376D94, 0x8
-	.word	gUnk_08376B7C
-	.word	gUnk_08376CE8
+	.word	gLevel3Stage2Room3MetatileMap
+	.word	gLevel3Stage2Room3BlockLayer
 	.word	gUnk_08376D4C
 	.incbin	"baserom.gba", 0x376DA8, 0x4
 	.word	gUnk_0835D548
@@ -3622,29 +3622,29 @@ gLevel3Stage2Room3:
 	.word	gUnk_083FE694
 	.word	gUnk_083BA534
 	.incbin	"baserom.gba", 0x376DC8, 0x10
-	.word	gUnk_08376D54
-	.word	gUnk_08376D6C
+	.word	gLevel3Stage2Room3Doors
+	.word	gLevel3Stage2Room3Objects
 	.incbin	"baserom.gba", 0x376DE0, 0xC
-	.global	gUnk_08376DEC
-gUnk_08376DEC:
+	.global	gLevel3Stage2Room4MetatileMap
+gLevel3Stage2Room4MetatileMap:
 	.incbin	"baserom.gba", 0x376DEC, 0xD0
-	.global	gUnk_08376EBC
-gUnk_08376EBC:
+	.global	gLevel3Stage2Room4BlockLayer
+gLevel3Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x376EBC, 0x34
 	.global	gUnk_08376EF0
 gUnk_08376EF0:
 	.incbin	"baserom.gba", 0x376EF0, 0x8
-	.global	gUnk_08376EF8
-gUnk_08376EF8:
+	.global	gLevel3Stage2Room4Doors
+gLevel3Stage2Room4Doors:
 	.incbin	"baserom.gba", 0x376EF8, 0x18
-	.global	gUnk_08376F10
-gUnk_08376F10:
+	.global	gLevel3Stage2Room4Objects
+gLevel3Stage2Room4Objects:
 	.incbin	"baserom.gba", 0x376F10, 0x8
 	.global	gLevel3Stage2Room4
 gLevel3Stage2Room4:
 	.incbin	"baserom.gba", 0x376F18, 0x8
-	.word	gUnk_08376DEC
-	.word	gUnk_08376EBC
+	.word	gLevel3Stage2Room4MetatileMap
+	.word	gLevel3Stage2Room4BlockLayer
 	.word	gUnk_08376EF0
 	.incbin	"baserom.gba", 0x376F2C, 0x4
 	.word	gUnk_0835D548
@@ -3655,29 +3655,29 @@ gLevel3Stage2Room4:
 	.word	gUnk_083FE694
 	.word	gUnk_083BA534
 	.incbin	"baserom.gba", 0x376F4C, 0x10
-	.word	gUnk_08376EF8
-	.word	gUnk_08376F10
+	.word	gLevel3Stage2Room4Doors
+	.word	gLevel3Stage2Room4Objects
 	.incbin	"baserom.gba", 0x376F64, 0xC
-	.global	gUnk_08376F70
-gUnk_08376F70:
+	.global	gLevel3Stage2Room5MetatileMap
+gLevel3Stage2Room5MetatileMap:
 	.incbin	"baserom.gba", 0x376F70, 0x180
-	.global	gUnk_083770F0
-gUnk_083770F0:
+	.global	gLevel3Stage2Room5BlockLayer
+gLevel3Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3770F0, 0x38
 	.global	gUnk_08377128
 gUnk_08377128:
 	.incbin	"baserom.gba", 0x377128, 0x8
-	.global	gUnk_08377130
-gUnk_08377130:
+	.global	gLevel3Stage2Room5Doors
+gLevel3Stage2Room5Doors:
 	.incbin	"baserom.gba", 0x377130, 0xC
-	.global	gUnk_0837713C
-gUnk_0837713C:
+	.global	gLevel3Stage2Room5Objects
+gLevel3Stage2Room5Objects:
 	.incbin	"baserom.gba", 0x37713C, 0x8
 	.global	gLevel3Stage2Room5
 gLevel3Stage2Room5:
 	.incbin	"baserom.gba", 0x377144, 0x8
-	.word	gUnk_08376F70
-	.word	gUnk_083770F0
+	.word	gLevel3Stage2Room5MetatileMap
+	.word	gLevel3Stage2Room5BlockLayer
 	.word	gUnk_08377128
 	.incbin	"baserom.gba", 0x377158, 0x4
 	.word	gUnk_0852D7AC
@@ -3688,29 +3688,29 @@ gLevel3Stage2Room5:
 	.word	gUnk_083FE694
 	.word	gUnk_083BA534
 	.incbin	"baserom.gba", 0x377178, 0x10
-	.word	gUnk_08377130
-	.word	gUnk_0837713C
+	.word	gLevel3Stage2Room5Doors
+	.word	gLevel3Stage2Room5Objects
 	.incbin	"baserom.gba", 0x377190, 0xC
-	.global	gUnk_0837719C
-gUnk_0837719C:
+	.global	gLevel3Stage2Room6MetatileMap
+gLevel3Stage2Room6MetatileMap:
 	.incbin	"baserom.gba", 0x37719C, 0x128
-	.global	gUnk_083772C4
-gUnk_083772C4:
+	.global	gLevel3Stage2Room6BlockLayer
+gLevel3Stage2Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3772C4, 0x34
 	.global	gUnk_083772F8
 gUnk_083772F8:
 	.incbin	"baserom.gba", 0x3772F8, 0x8
-	.global	gUnk_08377300
-gUnk_08377300:
+	.global	gLevel3Stage2Room6Doors
+gLevel3Stage2Room6Doors:
 	.incbin	"baserom.gba", 0x377300, 0xC
-	.global	gUnk_0837730C
-gUnk_0837730C:
+	.global	gLevel3Stage2Room6Objects
+gLevel3Stage2Room6Objects:
 	.incbin	"baserom.gba", 0x37730C, 0x28
 	.global	gLevel3Stage2Room6
 gLevel3Stage2Room6:
 	.incbin	"baserom.gba", 0x377334, 0x8
-	.word	gUnk_0837719C
-	.word	gUnk_083772C4
+	.word	gLevel3Stage2Room6MetatileMap
+	.word	gLevel3Stage2Room6BlockLayer
 	.word	gUnk_083772F8
 	.incbin	"baserom.gba", 0x377348, 0x4
 	.word	gUnk_0852D624
@@ -3721,29 +3721,29 @@ gLevel3Stage2Room6:
 	.word	gUnk_083FE694
 	.word	gUnk_083BA534
 	.incbin	"baserom.gba", 0x377368, 0x10
-	.word	gUnk_08377300
-	.word	gUnk_0837730C
+	.word	gLevel3Stage2Room6Doors
+	.word	gLevel3Stage2Room6Objects
 	.incbin	"baserom.gba", 0x377380, 0xC
-	.global	gUnk_0837738C
-gUnk_0837738C:
+	.global	gLevel3Stage3Room0MetatileMap
+gLevel3Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x37738C, 0x5B0
-	.global	gUnk_0837793C
-gUnk_0837793C:
+	.global	gLevel3Stage3Room0BlockLayer
+gLevel3Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37793C, 0x118
 	.global	gUnk_08377A54
 gUnk_08377A54:
 	.incbin	"baserom.gba", 0x377A54, 0x8
-	.global	gUnk_08377A5C
-gUnk_08377A5C:
+	.global	gLevel3Stage3Room0Doors
+gLevel3Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x377A5C, 0xC
-	.global	gUnk_08377A68
-gUnk_08377A68:
+	.global	gLevel3Stage3Room0Objects
+gLevel3Stage3Room0Objects:
 	.incbin	"baserom.gba", 0x377A68, 0x88
 	.global	gLevel3Stage3Room0
 gLevel3Stage3Room0:
 	.incbin	"baserom.gba", 0x377AF0, 0x8
-	.word	gUnk_0837738C
-	.word	gUnk_0837793C
+	.word	gLevel3Stage3Room0MetatileMap
+	.word	gLevel3Stage3Room0BlockLayer
 	.word	gUnk_08377A54
 	.incbin	"baserom.gba", 0x377B04, 0x4
 	.word	gUnk_084BB270
@@ -3754,29 +3754,29 @@ gLevel3Stage3Room0:
 	.word	gUnk_084CF0A8
 	.word	gUnk_084CE788
 	.incbin	"baserom.gba", 0x377B24, 0x10
-	.word	gUnk_08377A5C
-	.word	gUnk_08377A68
+	.word	gLevel3Stage3Room0Doors
+	.word	gLevel3Stage3Room0Objects
 	.incbin	"baserom.gba", 0x377B3C, 0xC
-	.global	gUnk_08377B48
-gUnk_08377B48:
+	.global	gLevel3Stage3Room1MetatileMap
+gLevel3Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x377B48, 0x348
-	.global	gUnk_08377E90
-gUnk_08377E90:
+	.global	gLevel3Stage3Room1BlockLayer
+gLevel3Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x377E90, 0xB0
 	.global	gUnk_08377F40
 gUnk_08377F40:
 	.incbin	"baserom.gba", 0x377F40, 0x8
-	.global	gUnk_08377F48
-gUnk_08377F48:
+	.global	gLevel3Stage3Room1Doors
+gLevel3Stage3Room1Doors:
 	.incbin	"baserom.gba", 0x377F48, 0xC
-	.global	gUnk_08377F54
-gUnk_08377F54:
+	.global	gLevel3Stage3Room1Objects
+gLevel3Stage3Room1Objects:
 	.incbin	"baserom.gba", 0x377F54, 0x68
 	.global	gLevel3Stage3Room1
 gLevel3Stage3Room1:
 	.incbin	"baserom.gba", 0x377FBC, 0x8
-	.word	gUnk_08377B48
-	.word	gUnk_08377E90
+	.word	gLevel3Stage3Room1MetatileMap
+	.word	gLevel3Stage3Room1BlockLayer
 	.word	gUnk_08377F40
 	.incbin	"baserom.gba", 0x377FD0, 0x4
 	.word	gUnk_084BB270
@@ -3787,62 +3787,62 @@ gLevel3Stage3Room1:
 	.word	gUnk_084CF0A8
 	.word	gUnk_084CE788
 	.incbin	"baserom.gba", 0x377FF0, 0x10
-	.word	gUnk_08377F48
-	.word	gUnk_08377F54
+	.word	gLevel3Stage3Room1Doors
+	.word	gLevel3Stage3Room1Objects
 	.incbin	"baserom.gba", 0x378008, 0xC
-	.global	gUnk_08378014
-gUnk_08378014:
+	.global	gLevel3Stage3Room2MetatileMap
+gLevel3Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x378014, 0x570
-	.global	gUnk_08378584
-gUnk_08378584:
+	.global	gLevel3Stage3Room2BlockLayer
+gLevel3Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x378584, 0x214
 	.global	gUnk_08378798
 gUnk_08378798:
 	.incbin	"baserom.gba", 0x378798, 0x258
-	.global	gUnk_083789F0
-gUnk_083789F0:
+	.global	gLevel3Stage3Room2Doors
+gLevel3Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x3789F0, 0x18
-	.global	gUnk_08378A08
-gUnk_08378A08:
+	.global	gLevel3Stage3Room2Objects
+gLevel3Stage3Room2Objects:
 	.incbin	"baserom.gba", 0x378A08, 0x78
 	.global	gLevel3Stage3Room2
 gLevel3Stage3Room2:
 	.incbin	"baserom.gba", 0x378A80, 0x8
-	.word	gUnk_08378014
-	.word	gUnk_08378584
+	.word	gLevel3Stage3Room2MetatileMap
+	.word	gLevel3Stage3Room2BlockLayer
 	.word	gUnk_08378798
 	.incbin	"baserom.gba", 0x378A94, 0x4
 	.word	gUnk_0853E318
 	.word	gUnk_0846CFD8
 	.word	gUnk_083B282C
 	.incbin	"baserom.gba", 0x378AA4, 0x4
-	.word	gUnk_085174E0
+	.word	gLevel3Stage3Room2Bg3Palette
 	.word	gUnk_0851EF74
 	.word	gUnk_08517F00
 	.incbin	"baserom.gba", 0x378AB4, 0x10
-	.word	gUnk_083789F0
-	.word	gUnk_08378A08
+	.word	gLevel3Stage3Room2Doors
+	.word	gLevel3Stage3Room2Objects
 	.incbin	"baserom.gba", 0x378ACC, 0xC
-	.global	gUnk_08378AD8
-gUnk_08378AD8:
+	.global	gLevel3Stage3Room3MetatileMap
+gLevel3Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x378AD8, 0x26C
-	.global	gUnk_08378D44
-gUnk_08378D44:
+	.global	gLevel3Stage3Room3BlockLayer
+gLevel3Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x378D44, 0xB8
 	.global	gUnk_08378DFC
 gUnk_08378DFC:
 	.incbin	"baserom.gba", 0x378DFC, 0x68
-	.global	gUnk_08378E64
-gUnk_08378E64:
+	.global	gLevel3Stage3Room3Doors
+gLevel3Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x378E64, 0xC
-	.global	gUnk_08378E70
-gUnk_08378E70:
+	.global	gLevel3Stage3Room3Objects
+gLevel3Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x378E70, 0x40
 	.global	gLevel3Stage3Room3
 gLevel3Stage3Room3:
 	.incbin	"baserom.gba", 0x378EB0, 0x8
-	.word	gUnk_08378AD8
-	.word	gUnk_08378D44
+	.word	gLevel3Stage3Room3MetatileMap
+	.word	gLevel3Stage3Room3BlockLayer
 	.word	gUnk_08378DFC
 	.incbin	"baserom.gba", 0x378EC4, 0x4
 	.word	gUnk_0849A5F0
@@ -3853,29 +3853,29 @@ gLevel3Stage3Room3:
 	.word	gUnk_083DB044
 	.word	gUnk_083B5E54
 	.incbin	"baserom.gba", 0x378EE4, 0x10
-	.word	gUnk_08378E64
-	.word	gUnk_08378E70
+	.word	gLevel3Stage3Room3Doors
+	.word	gLevel3Stage3Room3Objects
 	.incbin	"baserom.gba", 0x378EFC, 0xC
-	.global	gUnk_08378F08
-gUnk_08378F08:
+	.global	gLevel3Stage3Room4MetatileMap
+gLevel3Stage3Room4MetatileMap:
 	.incbin	"baserom.gba", 0x378F08, 0x278
-	.global	gUnk_08379180
-gUnk_08379180:
+	.global	gLevel3Stage3Room4BlockLayer
+gLevel3Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x379180, 0x5C
 	.global	gUnk_083791DC
 gUnk_083791DC:
 	.incbin	"baserom.gba", 0x3791DC, 0x8
-	.global	gUnk_083791E4
-gUnk_083791E4:
+	.global	gLevel3Stage3Room4Doors
+gLevel3Stage3Room4Doors:
 	.incbin	"baserom.gba", 0x3791E4, 0xC
-	.global	gUnk_083791F0
-gUnk_083791F0:
+	.global	gLevel3Stage3Room4Objects
+gLevel3Stage3Room4Objects:
 	.incbin	"baserom.gba", 0x3791F0, 0x28
 	.global	gLevel3Stage3Room4
 gLevel3Stage3Room4:
 	.incbin	"baserom.gba", 0x379218, 0x8
-	.word	gUnk_08378F08
-	.word	gUnk_08379180
+	.word	gLevel3Stage3Room4MetatileMap
+	.word	gLevel3Stage3Room4BlockLayer
 	.word	gUnk_083791DC
 	.incbin	"baserom.gba", 0x37922C, 0x4
 	.word	gUnk_0849A5F0
@@ -3886,29 +3886,29 @@ gLevel3Stage3Room4:
 	.word	gUnk_083DB044
 	.word	gUnk_083B5E54
 	.incbin	"baserom.gba", 0x37924C, 0x10
-	.word	gUnk_083791E4
-	.word	gUnk_083791F0
+	.word	gLevel3Stage3Room4Doors
+	.word	gLevel3Stage3Room4Objects
 	.incbin	"baserom.gba", 0x379264, 0xC
-	.global	gUnk_08379270
-gUnk_08379270:
+	.global	gLevel3Stage4Room0MetatileMap
+gLevel3Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x379270, 0x5E4
-	.global	gUnk_08379854
-gUnk_08379854:
+	.global	gLevel3Stage4Room0BlockLayer
+gLevel3Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x379854, 0x240
 	.global	gUnk_08379A94
 gUnk_08379A94:
 	.incbin	"baserom.gba", 0x379A94, 0x58
-	.global	gUnk_08379AEC
-gUnk_08379AEC:
+	.global	gLevel3Stage4Room0Doors
+gLevel3Stage4Room0Doors:
 	.incbin	"baserom.gba", 0x379AEC, 0x18
-	.global	gUnk_08379B04
-gUnk_08379B04:
+	.global	gLevel3Stage4Room0Objects
+gLevel3Stage4Room0Objects:
 	.incbin	"baserom.gba", 0x379B04, 0x80
 	.global	gLevel3Stage4Room0
 gLevel3Stage4Room0:
 	.incbin	"baserom.gba", 0x379B84, 0x8
-	.word	gUnk_08379270
-	.word	gUnk_08379854
+	.word	gLevel3Stage4Room0MetatileMap
+	.word	gLevel3Stage4Room0BlockLayer
 	.word	gUnk_08379A94
 	.incbin	"baserom.gba", 0x379B98, 0x4
 	.word	gUnk_0852D314
@@ -3919,29 +3919,29 @@ gLevel3Stage4Room0:
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x379BB8, 0x10
-	.word	gUnk_08379AEC
-	.word	gUnk_08379B04
+	.word	gLevel3Stage4Room0Doors
+	.word	gLevel3Stage4Room0Objects
 	.incbin	"baserom.gba", 0x379BD0, 0xC
-	.global	gUnk_08379BDC
-gUnk_08379BDC:
+	.global	gLevel3Stage4Room1MetatileMap
+gLevel3Stage4Room1MetatileMap:
 	.incbin	"baserom.gba", 0x379BDC, 0x1CC
-	.global	gUnk_08379DA8
-gUnk_08379DA8:
+	.global	gLevel3Stage4Room1BlockLayer
+gLevel3Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x379DA8, 0x60
 	.global	gUnk_08379E08
 gUnk_08379E08:
 	.incbin	"baserom.gba", 0x379E08, 0x10
-	.global	gUnk_08379E18
-gUnk_08379E18:
+	.global	gLevel3Stage4Room1Doors
+gLevel3Stage4Room1Doors:
 	.incbin	"baserom.gba", 0x379E18, 0x18
-	.global	gUnk_08379E30
-gUnk_08379E30:
+	.global	gLevel3Stage4Room1Objects
+gLevel3Stage4Room1Objects:
 	.incbin	"baserom.gba", 0x379E30, 0x30
 	.global	gLevel3Stage4Room1
 gLevel3Stage4Room1:
 	.incbin	"baserom.gba", 0x379E60, 0x8
-	.word	gUnk_08379BDC
-	.word	gUnk_08379DA8
+	.word	gLevel3Stage4Room1MetatileMap
+	.word	gLevel3Stage4Room1BlockLayer
 	.word	gUnk_08379E08
 	.incbin	"baserom.gba", 0x379E74, 0x4
 	.word	gUnk_0852D314
@@ -3952,29 +3952,29 @@ gLevel3Stage4Room1:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x379E94, 0x10
-	.word	gUnk_08379E18
-	.word	gUnk_08379E30
+	.word	gLevel3Stage4Room1Doors
+	.word	gLevel3Stage4Room1Objects
 	.incbin	"baserom.gba", 0x379EAC, 0xC
-	.global	gUnk_08379EB8
-gUnk_08379EB8:
+	.global	gLevel3Stage4Room2MetatileMap
+gLevel3Stage4Room2MetatileMap:
 	.incbin	"baserom.gba", 0x379EB8, 0x174
-	.global	gUnk_0837A02C
-gUnk_0837A02C:
+	.global	gLevel3Stage4Room2BlockLayer
+gLevel3Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37A02C, 0x58
 	.global	gUnk_0837A084
 gUnk_0837A084:
 	.incbin	"baserom.gba", 0x37A084, 0x8
-	.global	gUnk_0837A08C
-gUnk_0837A08C:
+	.global	gLevel3Stage4Room2Doors
+gLevel3Stage4Room2Doors:
 	.incbin	"baserom.gba", 0x37A08C, 0x18
-	.global	gUnk_0837A0A4
-gUnk_0837A0A4:
+	.global	gLevel3Stage4Room2Objects
+gLevel3Stage4Room2Objects:
 	.incbin	"baserom.gba", 0x37A0A4, 0x28
 	.global	gLevel3Stage4Room2
 gLevel3Stage4Room2:
 	.incbin	"baserom.gba", 0x37A0CC, 0x8
-	.word	gUnk_08379EB8
-	.word	gUnk_0837A02C
+	.word	gLevel3Stage4Room2MetatileMap
+	.word	gLevel3Stage4Room2BlockLayer
 	.word	gUnk_0837A084
 	.incbin	"baserom.gba", 0x37A0E0, 0x4
 	.word	gUnk_0852D314
@@ -3985,29 +3985,29 @@ gLevel3Stage4Room2:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x37A100, 0x10
-	.word	gUnk_0837A08C
-	.word	gUnk_0837A0A4
+	.word	gLevel3Stage4Room2Doors
+	.word	gLevel3Stage4Room2Objects
 	.incbin	"baserom.gba", 0x37A118, 0xC
-	.global	gUnk_0837A124
-gUnk_0837A124:
+	.global	gLevel3Stage4Room3MetatileMap
+gLevel3Stage4Room3MetatileMap:
 	.incbin	"baserom.gba", 0x37A124, 0x274
-	.global	gUnk_0837A398
-gUnk_0837A398:
+	.global	gLevel3Stage4Room3BlockLayer
+gLevel3Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37A398, 0xD0
 	.global	gUnk_0837A468
 gUnk_0837A468:
 	.incbin	"baserom.gba", 0x37A468, 0x50
-	.global	gUnk_0837A4B8
-gUnk_0837A4B8:
+	.global	gLevel3Stage4Room3Doors
+gLevel3Stage4Room3Doors:
 	.incbin	"baserom.gba", 0x37A4B8, 0xC
-	.global	gUnk_0837A4C4
-gUnk_0837A4C4:
+	.global	gLevel3Stage4Room3Objects
+gLevel3Stage4Room3Objects:
 	.incbin	"baserom.gba", 0x37A4C4, 0x68
 	.global	gLevel3Stage4Room3
 gLevel3Stage4Room3:
 	.incbin	"baserom.gba", 0x37A52C, 0x8
-	.word	gUnk_0837A124
-	.word	gUnk_0837A398
+	.word	gLevel3Stage4Room3MetatileMap
+	.word	gLevel3Stage4Room3BlockLayer
 	.word	gUnk_0837A468
 	.incbin	"baserom.gba", 0x37A540, 0x4
 	.word	gUnk_0852D314
@@ -4018,29 +4018,29 @@ gLevel3Stage4Room3:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x37A560, 0x10
-	.word	gUnk_0837A4B8
-	.word	gUnk_0837A4C4
+	.word	gLevel3Stage4Room3Doors
+	.word	gLevel3Stage4Room3Objects
 	.incbin	"baserom.gba", 0x37A578, 0xC
-	.global	gUnk_0837A584
-gUnk_0837A584:
+	.global	gLevel3Stage4Room4MetatileMap
+gLevel3Stage4Room4MetatileMap:
 	.incbin	"baserom.gba", 0x37A584, 0x414
-	.global	gUnk_0837A998
-gUnk_0837A998:
+	.global	gLevel3Stage4Room4BlockLayer
+gLevel3Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x37A998, 0x174
 	.global	gUnk_0837AB0C
 gUnk_0837AB0C:
 	.incbin	"baserom.gba", 0x37AB0C, 0x8
-	.global	gUnk_0837AB14
-gUnk_0837AB14:
+	.global	gLevel3Stage4Room4Doors
+gLevel3Stage4Room4Doors:
 	.incbin	"baserom.gba", 0x37AB14, 0xC
-	.global	gUnk_0837AB20
-gUnk_0837AB20:
+	.global	gLevel3Stage4Room4Objects
+gLevel3Stage4Room4Objects:
 	.incbin	"baserom.gba", 0x37AB20, 0x68
 	.global	gLevel3Stage4Room4
 gLevel3Stage4Room4:
 	.incbin	"baserom.gba", 0x37AB88, 0x8
-	.word	gUnk_0837A584
-	.word	gUnk_0837A998
+	.word	gLevel3Stage4Room4MetatileMap
+	.word	gLevel3Stage4Room4BlockLayer
 	.word	gUnk_0837AB0C
 	.incbin	"baserom.gba", 0x37AB9C, 0x4
 	.word	gUnk_0852D314
@@ -4051,29 +4051,29 @@ gLevel3Stage4Room4:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x37ABBC, 0x10
-	.word	gUnk_0837AB14
-	.word	gUnk_0837AB20
+	.word	gLevel3Stage4Room4Doors
+	.word	gLevel3Stage4Room4Objects
 	.incbin	"baserom.gba", 0x37ABD4, 0xC
-	.global	gUnk_0837ABE0
-gUnk_0837ABE0:
+	.global	gLevel3Stage4Room5MetatileMap
+gLevel3Stage4Room5MetatileMap:
 	.incbin	"baserom.gba", 0x37ABE0, 0x108
-	.global	gUnk_0837ACE8
-gUnk_0837ACE8:
+	.global	gLevel3Stage4Room5BlockLayer
+gLevel3Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x37ACE8, 0x34
 	.global	gUnk_0837AD1C
 gUnk_0837AD1C:
 	.incbin	"baserom.gba", 0x37AD1C, 0x8
-	.global	gUnk_0837AD24
-gUnk_0837AD24:
+	.global	gLevel3Stage4Room5Doors
+gLevel3Stage4Room5Doors:
 	.incbin	"baserom.gba", 0x37AD24, 0xC
-	.global	gUnk_0837AD30
-gUnk_0837AD30:
+	.global	gLevel3Stage4Room5Objects
+gLevel3Stage4Room5Objects:
 	.incbin	"baserom.gba", 0x37AD30, 0x8
 	.global	gLevel3Stage4Room5
 gLevel3Stage4Room5:
 	.incbin	"baserom.gba", 0x37AD38, 0x8
-	.word	gUnk_0837ABE0
-	.word	gUnk_0837ACE8
+	.word	gLevel3Stage4Room5MetatileMap
+	.word	gLevel3Stage4Room5BlockLayer
 	.word	gUnk_0837AD1C
 	.incbin	"baserom.gba", 0x37AD4C, 0x4
 	.word	gUnk_0852D314
@@ -4084,29 +4084,29 @@ gLevel3Stage4Room5:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x37AD6C, 0x10
-	.word	gUnk_0837AD24
-	.word	gUnk_0837AD30
+	.word	gLevel3Stage4Room5Doors
+	.word	gLevel3Stage4Room5Objects
 	.incbin	"baserom.gba", 0x37AD84, 0xC
-	.global	gUnk_0837AD90
-gUnk_0837AD90:
+	.global	gLevel3Stage4Room6MetatileMap
+gLevel3Stage4Room6MetatileMap:
 	.incbin	"baserom.gba", 0x37AD90, 0x11C
-	.global	gUnk_0837AEAC
-gUnk_0837AEAC:
+	.global	gLevel3Stage4Room6BlockLayer
+gLevel3Stage4Room6BlockLayer:
 	.incbin	"baserom.gba", 0x37AEAC, 0x40
 	.global	gUnk_0837AEEC
 gUnk_0837AEEC:
 	.incbin	"baserom.gba", 0x37AEEC, 0x10
-	.global	gUnk_0837AEFC
-gUnk_0837AEFC:
+	.global	gLevel3Stage4Room6Doors
+gLevel3Stage4Room6Doors:
 	.incbin	"baserom.gba", 0x37AEFC, 0xC
-	.global	gUnk_0837AF08
-gUnk_0837AF08:
+	.global	gLevel3Stage4Room6Objects
+gLevel3Stage4Room6Objects:
 	.incbin	"baserom.gba", 0x37AF08, 0x8
 	.global	gLevel3Stage4Room6
 gLevel3Stage4Room6:
 	.incbin	"baserom.gba", 0x37AF10, 0x8
-	.word	gUnk_0837AD90
-	.word	gUnk_0837AEAC
+	.word	gLevel3Stage4Room6MetatileMap
+	.word	gLevel3Stage4Room6BlockLayer
 	.word	gUnk_0837AEEC
 	.incbin	"baserom.gba", 0x37AF24, 0x4
 	.word	gUnk_0852D314
@@ -4117,29 +4117,29 @@ gLevel3Stage4Room6:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x37AF44, 0x10
-	.word	gUnk_0837AEFC
-	.word	gUnk_0837AF08
+	.word	gLevel3Stage4Room6Doors
+	.word	gLevel3Stage4Room6Objects
 	.incbin	"baserom.gba", 0x37AF5C, 0xC
-	.global	gUnk_0837AF68
-gUnk_0837AF68:
+	.global	gLevel3Stage5Room0MetatileMap
+gLevel3Stage5Room0MetatileMap:
 	.incbin	"baserom.gba", 0x37AF68, 0x378
-	.global	gUnk_0837B2E0
-gUnk_0837B2E0:
+	.global	gLevel3Stage5Room0BlockLayer
+gLevel3Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37B2E0, 0x1F8
 	.global	gUnk_0837B4D8
 gUnk_0837B4D8:
 	.incbin	"baserom.gba", 0x37B4D8, 0x284
-	.global	gUnk_0837B75C
-gUnk_0837B75C:
+	.global	gLevel3Stage5Room0Doors
+gLevel3Stage5Room0Doors:
 	.incbin	"baserom.gba", 0x37B75C, 0x18
-	.global	gUnk_0837B774
-gUnk_0837B774:
+	.global	gLevel3Stage5Room0Objects
+gLevel3Stage5Room0Objects:
 	.incbin	"baserom.gba", 0x37B774, 0x58
 	.global	gLevel3Stage5Room0
 gLevel3Stage5Room0:
 	.incbin	"baserom.gba", 0x37B7CC, 0x8
-	.word	gUnk_0837AF68
-	.word	gUnk_0837B2E0
+	.word	gLevel3Stage5Room0MetatileMap
+	.word	gLevel3Stage5Room0BlockLayer
 	.word	gUnk_0837B4D8
 	.incbin	"baserom.gba", 0x37B7E0, 0x4
 	.word	gUnk_084BAEE0
@@ -4150,29 +4150,29 @@ gLevel3Stage5Room0:
 	.word	gUnk_0841AD98
 	.word	gUnk_083C93D8
 	.incbin	"baserom.gba", 0x37B800, 0x10
-	.word	gUnk_0837B75C
-	.word	gUnk_0837B774
+	.word	gLevel3Stage5Room0Doors
+	.word	gLevel3Stage5Room0Objects
 	.incbin	"baserom.gba", 0x37B818, 0xC
-	.global	gUnk_0837B824
-gUnk_0837B824:
+	.global	gLevel3Stage5Room1MetatileMap
+gLevel3Stage5Room1MetatileMap:
 	.incbin	"baserom.gba", 0x37B824, 0x214
-	.global	gUnk_0837BA38
-gUnk_0837BA38:
+	.global	gLevel3Stage5Room1BlockLayer
+gLevel3Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x37BA38, 0xCC
 	.global	gUnk_0837BB04
 gUnk_0837BB04:
 	.incbin	"baserom.gba", 0x37BB04, 0x8
-	.global	gUnk_0837BB0C
-gUnk_0837BB0C:
+	.global	gLevel3Stage5Room1Doors
+gLevel3Stage5Room1Doors:
 	.incbin	"baserom.gba", 0x37BB0C, 0x18
-	.global	gUnk_0837BB24
-gUnk_0837BB24:
+	.global	gLevel3Stage5Room1Objects
+gLevel3Stage5Room1Objects:
 	.incbin	"baserom.gba", 0x37BB24, 0x78
 	.global	gLevel3Stage5Room1
 gLevel3Stage5Room1:
 	.incbin	"baserom.gba", 0x37BB9C, 0x8
-	.word	gUnk_0837B824
-	.word	gUnk_0837BA38
+	.word	gLevel3Stage5Room1MetatileMap
+	.word	gLevel3Stage5Room1BlockLayer
 	.word	gUnk_0837BB04
 	.incbin	"baserom.gba", 0x37BBB0, 0x4
 	.word	gUnk_0849A778
@@ -4183,14 +4183,14 @@ gLevel3Stage5Room1:
 	.word	gUnk_08421338
 	.word	gUnk_083C9CFC
 	.incbin	"baserom.gba", 0x37BBD0, 0x10
-	.word	gUnk_0837BB0C
-	.word	gUnk_0837BB24
+	.word	gLevel3Stage5Room1Doors
+	.word	gLevel3Stage5Room1Objects
 	.incbin	"baserom.gba", 0x37BBE8, 0xC
-	.global	gUnk_0837BBF4
-gUnk_0837BBF4:
+	.global	gLevel3Stage5Room2MetatileMap
+gLevel3Stage5Room2MetatileMap:
 	.incbin	"baserom.gba", 0x37BBF4, 0x60
-	.global	gUnk_0837BC54
-gUnk_0837BC54:
+	.global	gLevel3Stage5Room2BlockLayer
+gLevel3Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37BC54, 0x34
 	.global	gUnk_0837BC88
 gUnk_0837BC88:
@@ -4198,8 +4198,8 @@ gUnk_0837BC88:
 	.global	gLevel3Stage5Room2
 gLevel3Stage5Room2:
 	.incbin	"baserom.gba", 0x37BC90, 0x8
-	.word	gUnk_0837BBF4
-	.word	gUnk_0837BC54
+	.word	gLevel3Stage5Room2MetatileMap
+	.word	gLevel3Stage5Room2BlockLayer
 	.word	gUnk_0837BC88
 	.incbin	"baserom.gba", 0x37BCA4, 0x4
 	.word	gUnk_08497C74
@@ -4210,26 +4210,26 @@ gLevel3Stage5Room2:
 	.word	gUnk_08421338
 	.word	gUnk_083C9CFC
 	.incbin	"baserom.gba", 0x37BCC4, 0x24
-	.global	gUnk_0837BCE8
-gUnk_0837BCE8:
+	.global	gLevel3Stage5Room3MetatileMap
+gLevel3Stage5Room3MetatileMap:
 	.incbin	"baserom.gba", 0x37BCE8, 0xB4
-	.global	gUnk_0837BD9C
-gUnk_0837BD9C:
+	.global	gLevel3Stage5Room3BlockLayer
+gLevel3Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37BD9C, 0xBC
 	.global	gUnk_0837BE58
 gUnk_0837BE58:
 	.incbin	"baserom.gba", 0x37BE58, 0x114
-	.global	gUnk_0837BF6C
-gUnk_0837BF6C:
+	.global	gLevel3Stage5Room3Doors
+gLevel3Stage5Room3Doors:
 	.incbin	"baserom.gba", 0x37BF6C, 0xC
-	.global	gUnk_0837BF78
-gUnk_0837BF78:
+	.global	gLevel3Stage5Room3Objects
+gLevel3Stage5Room3Objects:
 	.incbin	"baserom.gba", 0x37BF78, 0x30
 	.global	gLevel3Stage5Room3
 gLevel3Stage5Room3:
 	.incbin	"baserom.gba", 0x37BFA8, 0x8
-	.word	gUnk_0837BCE8
-	.word	gUnk_0837BD9C
+	.word	gLevel3Stage5Room3MetatileMap
+	.word	gLevel3Stage5Room3BlockLayer
 	.word	gUnk_0837BE58
 	.incbin	"baserom.gba", 0x37BFBC, 0x4
 	.word	gUnk_08497C74
@@ -4240,29 +4240,29 @@ gLevel3Stage5Room3:
 	.word	gUnk_0841AD98
 	.word	gUnk_083C93D8
 	.incbin	"baserom.gba", 0x37BFDC, 0x10
-	.word	gUnk_0837BF6C
-	.word	gUnk_0837BF78
+	.word	gLevel3Stage5Room3Doors
+	.word	gLevel3Stage5Room3Objects
 	.incbin	"baserom.gba", 0x37BFF4, 0xC
-	.global	gUnk_0837C000
-gUnk_0837C000:
+	.global	gLevel3Stage5Room4MetatileMap
+gLevel3Stage5Room4MetatileMap:
 	.incbin	"baserom.gba", 0x37C000, 0x1D4
-	.global	gUnk_0837C1D4
-gUnk_0837C1D4:
+	.global	gLevel3Stage5Room4BlockLayer
+gLevel3Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x37C1D4, 0x60
 	.global	gUnk_0837C234
 gUnk_0837C234:
 	.incbin	"baserom.gba", 0x37C234, 0x8
-	.global	gUnk_0837C23C
-gUnk_0837C23C:
+	.global	gLevel3Stage5Room4Doors
+gLevel3Stage5Room4Doors:
 	.incbin	"baserom.gba", 0x37C23C, 0xC
-	.global	gUnk_0837C248
-gUnk_0837C248:
+	.global	gLevel3Stage5Room4Objects
+gLevel3Stage5Room4Objects:
 	.incbin	"baserom.gba", 0x37C248, 0x40
 	.global	gLevel3Stage5Room4
 gLevel3Stage5Room4:
 	.incbin	"baserom.gba", 0x37C288, 0x8
-	.word	gUnk_0837C000
-	.word	gUnk_0837C1D4
+	.word	gLevel3Stage5Room4MetatileMap
+	.word	gLevel3Stage5Room4BlockLayer
 	.word	gUnk_0837C234
 	.incbin	"baserom.gba", 0x37C29C, 0x4
 	.word	gUnk_084BAEE0
@@ -4273,29 +4273,29 @@ gLevel3Stage5Room4:
 	.word	gUnk_0841AD98
 	.word	gUnk_083C93D8
 	.incbin	"baserom.gba", 0x37C2BC, 0x10
-	.word	gUnk_0837C23C
-	.word	gUnk_0837C248
+	.word	gLevel3Stage5Room4Doors
+	.word	gLevel3Stage5Room4Objects
 	.incbin	"baserom.gba", 0x37C2D4, 0xC
-	.global	gUnk_0837C2E0
-gUnk_0837C2E0:
+	.global	gLevel3Stage5Room5MetatileMap
+gLevel3Stage5Room5MetatileMap:
 	.incbin	"baserom.gba", 0x37C2E0, 0xE8
-	.global	gUnk_0837C3C8
-gUnk_0837C3C8:
+	.global	gLevel3Stage5Room5BlockLayer
+gLevel3Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x37C3C8, 0x38
 	.global	gUnk_0837C400
 gUnk_0837C400:
 	.incbin	"baserom.gba", 0x37C400, 0x10
-	.global	gUnk_0837C410
-gUnk_0837C410:
+	.global	gLevel3Stage5Room5Doors
+gLevel3Stage5Room5Doors:
 	.incbin	"baserom.gba", 0x37C410, 0xC
-	.global	gUnk_0837C41C
-gUnk_0837C41C:
+	.global	gLevel3Stage5Room5Objects
+gLevel3Stage5Room5Objects:
 	.incbin	"baserom.gba", 0x37C41C, 0x8
 	.global	gLevel3Stage5Room5
 gLevel3Stage5Room5:
 	.incbin	"baserom.gba", 0x37C424, 0x8
-	.word	gUnk_0837C2E0
-	.word	gUnk_0837C3C8
+	.word	gLevel3Stage5Room5MetatileMap
+	.word	gLevel3Stage5Room5BlockLayer
 	.word	gUnk_0837C400
 	.incbin	"baserom.gba", 0x37C438, 0x4
 	.word	gUnk_0849A778
@@ -4306,14 +4306,14 @@ gLevel3Stage5Room5:
 	.word	gUnk_08421338
 	.word	gUnk_083C9CFC
 	.incbin	"baserom.gba", 0x37C458, 0x10
-	.word	gUnk_0837C410
-	.word	gUnk_0837C41C
+	.word	gLevel3Stage5Room5Doors
+	.word	gLevel3Stage5Room5Objects
 	.incbin	"baserom.gba", 0x37C470, 0xC
-	.global	gUnk_0837C47C
-gUnk_0837C47C:
+	.global	gLevel3Stage5Room6MetatileMap
+gLevel3Stage5Room6MetatileMap:
 	.incbin	"baserom.gba", 0x37C47C, 0x68
-	.global	gUnk_0837C4E4
-gUnk_0837C4E4:
+	.global	gLevel3Stage5Room6BlockLayer
+gLevel3Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x37C4E4, 0x34
 	.global	gUnk_0837C518
 gUnk_0837C518:
@@ -4321,8 +4321,8 @@ gUnk_0837C518:
 	.global	gLevel3Stage5Room6
 gLevel3Stage5Room6:
 	.incbin	"baserom.gba", 0x37C520, 0x8
-	.word	gUnk_0837C47C
-	.word	gUnk_0837C4E4
+	.word	gLevel3Stage5Room6MetatileMap
+	.word	gLevel3Stage5Room6BlockLayer
 	.word	gUnk_0837C518
 	.incbin	"baserom.gba", 0x37C534, 0x4
 	.word	gUnk_08497C74
@@ -4333,26 +4333,26 @@ gLevel3Stage5Room6:
 	.word	gUnk_08421338
 	.word	gUnk_083C9CFC
 	.incbin	"baserom.gba", 0x37C554, 0x24
-	.global	gUnk_0837C578
-gUnk_0837C578:
+	.global	gLevel3Stage5Room7MetatileMap
+gLevel3Stage5Room7MetatileMap:
 	.incbin	"baserom.gba", 0x37C578, 0xB8
-	.global	gUnk_0837C630
-gUnk_0837C630:
+	.global	gLevel3Stage5Room7BlockLayer
+gLevel3Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x37C630, 0x34
 	.global	gUnk_0837C664
 gUnk_0837C664:
 	.incbin	"baserom.gba", 0x37C664, 0x10
-	.global	gUnk_0837C674
-gUnk_0837C674:
+	.global	gLevel3Stage5Room7Doors
+gLevel3Stage5Room7Doors:
 	.incbin	"baserom.gba", 0x37C674, 0xC
-	.global	gUnk_0837C680
-gUnk_0837C680:
+	.global	gLevel3Stage5Room7Objects
+gLevel3Stage5Room7Objects:
 	.incbin	"baserom.gba", 0x37C680, 0x18
 	.global	gLevel3Stage5Room7
 gLevel3Stage5Room7:
 	.incbin	"baserom.gba", 0x37C698, 0x8
-	.word	gUnk_0837C578
-	.word	gUnk_0837C630
+	.word	gLevel3Stage5Room7MetatileMap
+	.word	gLevel3Stage5Room7BlockLayer
 	.word	gUnk_0837C664
 	.incbin	"baserom.gba", 0x37C6AC, 0x4
 	.word	gUnk_084BAEE0
@@ -4363,26 +4363,26 @@ gLevel3Stage5Room7:
 	.word	gUnk_0841AD98
 	.word	gUnk_083C93D8
 	.incbin	"baserom.gba", 0x37C6CC, 0x10
-	.word	gUnk_0837C674
-	.word	gUnk_0837C680
+	.word	gLevel3Stage5Room7Doors
+	.word	gLevel3Stage5Room7Objects
 	.incbin	"baserom.gba", 0x37C6E4, 0xC
-	.global	gUnk_0837C6F0
-gUnk_0837C6F0:
+	.global	gLevel3Stage6Room0MetatileMap
+gLevel3Stage6Room0MetatileMap:
 	.incbin	"baserom.gba", 0x37C6F0, 0x4A8
-	.global	gUnk_0837CB98
-gUnk_0837CB98:
+	.global	gLevel3Stage6Room0BlockLayer
+gLevel3Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37CB98, 0x5F0
 	.global	gUnk_0837D188
 gUnk_0837D188:
 	.incbin	"baserom.gba", 0x37D188, 0x780
-	.global	gUnk_0837D908
-gUnk_0837D908:
+	.global	gLevel3Stage6Room0Objects
+gLevel3Stage6Room0Objects:
 	.incbin	"baserom.gba", 0x37D908, 0x60
 	.global	gLevel3Stage6Room0
 gLevel3Stage6Room0:
 	.incbin	"baserom.gba", 0x37D968, 0x8
-	.word	gUnk_0837C6F0
-	.word	gUnk_0837CB98
+	.word	gLevel3Stage6Room0MetatileMap
+	.word	gLevel3Stage6Room0BlockLayer
 	.word	gUnk_0837D188
 	.incbin	"baserom.gba", 0x37D97C, 0x4
 	.word	gUnk_0835D548
@@ -4393,28 +4393,28 @@ gLevel3Stage6Room0:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x37D99C, 0x14
-	.word	gUnk_0837D908
+	.word	gLevel3Stage6Room0Objects
 	.incbin	"baserom.gba", 0x37D9B4, 0xC
-	.global	gUnk_0837D9C0
-gUnk_0837D9C0:
+	.global	gLevel4Stage0Room0MetatileMap
+gLevel4Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x37D9C0, 0x2DC
-	.global	gUnk_0837DC9C
-gUnk_0837DC9C:
+	.global	gLevel4Stage0Room0BlockLayer
+gLevel4Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37DC9C, 0x110
 	.global	gUnk_0837DDAC
 gUnk_0837DDAC:
 	.incbin	"baserom.gba", 0x37DDAC, 0x8
-	.global	gUnk_0837DDB4
-gUnk_0837DDB4:
+	.global	gLevel4Stage0Room0Doors
+gLevel4Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x37DDB4, 0x18
-	.global	gUnk_0837DDCC
-gUnk_0837DDCC:
+	.global	gLevel4Stage0Room0Objects
+gLevel4Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x37DDCC, 0x70
 	.global	gLevel4Stage0Room0
 gLevel4Stage0Room0:
 	.incbin	"baserom.gba", 0x37DE3C, 0x8
-	.word	gUnk_0837D9C0
-	.word	gUnk_0837DC9C
+	.word	gLevel4Stage0Room0MetatileMap
+	.word	gLevel4Stage0Room0BlockLayer
 	.word	gUnk_0837DDAC
 	.incbin	"baserom.gba", 0x37DE50, 0x4
 	.word	gUnk_0835D548
@@ -4425,62 +4425,62 @@ gLevel4Stage0Room0:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x37DE70, 0x10
-	.word	gUnk_0837DDB4
-	.word	gUnk_0837DDCC
+	.word	gLevel4Stage0Room0Doors
+	.word	gLevel4Stage0Room0Objects
 	.incbin	"baserom.gba", 0x37DE88, 0xC
-	.global	gUnk_0837DE94
-gUnk_0837DE94:
+	.global	gLevel4Stage0Room1MetatileMap
+gLevel4Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x37DE94, 0x318
-	.global	gUnk_0837E1AC
-gUnk_0837E1AC:
+	.global	gLevel4Stage0Room1BlockLayer
+gLevel4Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x37E1AC, 0x1F4
 	.global	gUnk_0837E3A0
 gUnk_0837E3A0:
 	.incbin	"baserom.gba", 0x37E3A0, 0x168
-	.global	gUnk_0837E508
-gUnk_0837E508:
+	.global	gLevel4Stage0Room1Doors
+gLevel4Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x37E508, 0x18
-	.global	gUnk_0837E520
-gUnk_0837E520:
+	.global	gLevel4Stage0Room1Objects
+gLevel4Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x37E520, 0x78
 	.global	gLevel4Stage0Room1
 gLevel4Stage0Room1:
 	.incbin	"baserom.gba", 0x37E598, 0x8
-	.word	gUnk_0837DE94
-	.word	gUnk_0837E1AC
+	.word	gLevel4Stage0Room1MetatileMap
+	.word	gLevel4Stage0Room1BlockLayer
 	.word	gUnk_0837E3A0
 	.incbin	"baserom.gba", 0x37E5AC, 0x4
 	.word	gUnk_0835D548
 	.word	gUnk_083E0A24
 	.word	gUnk_083AA000
 	.incbin	"baserom.gba", 0x37E5BC, 0x4
-	.word	gUnk_0853CBD0
+	.word	gLevel4Stage0Room1Bg3Palette
 	.word	gUnk_083EE8B4
 	.word	gUnk_083B82B0
 	.incbin	"baserom.gba", 0x37E5CC, 0x10
-	.word	gUnk_0837E508
-	.word	gUnk_0837E520
+	.word	gLevel4Stage0Room1Doors
+	.word	gLevel4Stage0Room1Objects
 	.incbin	"baserom.gba", 0x37E5E4, 0xC
-	.global	gUnk_0837E5F0
-gUnk_0837E5F0:
+	.global	gLevel4Stage0Room2MetatileMap
+gLevel4Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x37E5F0, 0x3CC
-	.global	gUnk_0837E9BC
-gUnk_0837E9BC:
+	.global	gLevel4Stage0Room2BlockLayer
+gLevel4Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37E9BC, 0x114
 	.global	gUnk_0837EAD0
 gUnk_0837EAD0:
 	.incbin	"baserom.gba", 0x37EAD0, 0x8
-	.global	gUnk_0837EAD8
-gUnk_0837EAD8:
+	.global	gLevel4Stage0Room2Doors
+gLevel4Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x37EAD8, 0xC
-	.global	gUnk_0837EAE4
-gUnk_0837EAE4:
+	.global	gLevel4Stage0Room2Objects
+gLevel4Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x37EAE4, 0x50
 	.global	gLevel4Stage0Room2
 gLevel4Stage0Room2:
 	.incbin	"baserom.gba", 0x37EB34, 0x8
-	.word	gUnk_0837E5F0
-	.word	gUnk_0837E9BC
+	.word	gLevel4Stage0Room2MetatileMap
+	.word	gLevel4Stage0Room2BlockLayer
 	.word	gUnk_0837EAD0
 	.incbin	"baserom.gba", 0x37EB48, 0x4
 	.word	gUnk_0853DAB4
@@ -4491,29 +4491,29 @@ gLevel4Stage0Room2:
 	.word	gUnk_0850B598
 	.word	gUnk_0850AC74
 	.incbin	"baserom.gba", 0x37EB68, 0x10
-	.word	gUnk_0837EAD8
-	.word	gUnk_0837EAE4
+	.word	gLevel4Stage0Room2Doors
+	.word	gLevel4Stage0Room2Objects
 	.incbin	"baserom.gba", 0x37EB80, 0xC
-	.global	gUnk_0837EB8C
-gUnk_0837EB8C:
+	.global	gLevel4Stage0Room3MetatileMap
+gLevel4Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x37EB8C, 0xAC
-	.global	gUnk_0837EC38
-gUnk_0837EC38:
+	.global	gLevel4Stage0Room3BlockLayer
+gLevel4Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37EC38, 0x34
 	.global	gUnk_0837EC6C
 gUnk_0837EC6C:
 	.incbin	"baserom.gba", 0x37EC6C, 0x8
-	.global	gUnk_0837EC74
-gUnk_0837EC74:
+	.global	gLevel4Stage0Room3Doors
+gLevel4Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x37EC74, 0xC
-	.global	gUnk_0837EC80
-gUnk_0837EC80:
+	.global	gLevel4Stage0Room3Objects
+gLevel4Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x37EC80, 0x28
 	.global	gLevel4Stage0Room3
 gLevel4Stage0Room3:
 	.incbin	"baserom.gba", 0x37ECA8, 0x8
-	.word	gUnk_0837EB8C
-	.word	gUnk_0837EC38
+	.word	gLevel4Stage0Room3MetatileMap
+	.word	gLevel4Stage0Room3BlockLayer
 	.word	gUnk_0837EC6C
 	.incbin	"baserom.gba", 0x37ECBC, 0x4
 	.word	gUnk_0835D548
@@ -4524,29 +4524,29 @@ gLevel4Stage0Room3:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x37ECDC, 0x10
-	.word	gUnk_0837EC74
-	.word	gUnk_0837EC80
+	.word	gLevel4Stage0Room3Doors
+	.word	gLevel4Stage0Room3Objects
 	.incbin	"baserom.gba", 0x37ECF4, 0xC
-	.global	gUnk_0837ED00
-gUnk_0837ED00:
+	.global	gLevel4Stage0Room4MetatileMap
+gLevel4Stage0Room4MetatileMap:
 	.incbin	"baserom.gba", 0x37ED00, 0x108
-	.global	gUnk_0837EE08
-gUnk_0837EE08:
+	.global	gLevel4Stage0Room4BlockLayer
+gLevel4Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x37EE08, 0x34
 	.global	gUnk_0837EE3C
 gUnk_0837EE3C:
 	.incbin	"baserom.gba", 0x37EE3C, 0x8
-	.global	gUnk_0837EE44
-gUnk_0837EE44:
+	.global	gLevel4Stage0Room4Doors
+gLevel4Stage0Room4Doors:
 	.incbin	"baserom.gba", 0x37EE44, 0xC
-	.global	gUnk_0837EE50
-gUnk_0837EE50:
+	.global	gLevel4Stage0Room4Objects
+gLevel4Stage0Room4Objects:
 	.incbin	"baserom.gba", 0x37EE50, 0x10
 	.global	gLevel4Stage0Room4
 gLevel4Stage0Room4:
 	.incbin	"baserom.gba", 0x37EE60, 0x8
-	.word	gUnk_0837ED00
-	.word	gUnk_0837EE08
+	.word	gLevel4Stage0Room4MetatileMap
+	.word	gLevel4Stage0Room4BlockLayer
 	.word	gUnk_0837EE3C
 	.incbin	"baserom.gba", 0x37EE74, 0x4
 	.word	gUnk_084B2F9C
@@ -4557,26 +4557,26 @@ gLevel4Stage0Room4:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x37EE94, 0x10
-	.word	gUnk_0837EE44
-	.word	gUnk_0837EE50
+	.word	gLevel4Stage0Room4Doors
+	.word	gLevel4Stage0Room4Objects
 	.incbin	"baserom.gba", 0x37EEAC, 0xC
-	.global	gUnk_0837EEB8
-gUnk_0837EEB8:
+	.global	gLevel4Stage1Room0MetatileMap
+gLevel4Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x37EEB8, 0x128
-	.global	gUnk_0837EFE0
-gUnk_0837EFE0:
+	.global	gLevel4Stage1Room0BlockLayer
+gLevel4Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37EFE0, 0x34
 	.global	gUnk_0837F014
 gUnk_0837F014:
 	.incbin	"baserom.gba", 0x37F014, 0x8
-	.global	gUnk_0837F01C
-gUnk_0837F01C:
+	.global	gLevel4Stage1Room0Doors
+gLevel4Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x37F01C, 0xC
 	.global	gLevel4Stage1Room0
 gLevel4Stage1Room0:
 	.incbin	"baserom.gba", 0x37F028, 0x8
-	.word	gUnk_0837EEB8
-	.word	gUnk_0837EFE0
+	.word	gLevel4Stage1Room0MetatileMap
+	.word	gLevel4Stage1Room0BlockLayer
 	.word	gUnk_0837F014
 	.incbin	"baserom.gba", 0x37F03C, 0x4
 	.word	gUnk_0853DAB4
@@ -4587,28 +4587,28 @@ gLevel4Stage1Room0:
 	.word	gUnk_0850B598
 	.word	gUnk_0850AC74
 	.incbin	"baserom.gba", 0x37F05C, 0x10
-	.word	gUnk_0837F01C
+	.word	gLevel4Stage1Room0Doors
 	.incbin	"baserom.gba", 0x37F070, 0x10
-	.global	gUnk_0837F080
-gUnk_0837F080:
+	.global	gLevel4Stage1Room1MetatileMap
+gLevel4Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x37F080, 0x51C
-	.global	gUnk_0837F59C
-gUnk_0837F59C:
+	.global	gLevel4Stage1Room1BlockLayer
+gLevel4Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x37F59C, 0x100
 	.global	gUnk_0837F69C
 gUnk_0837F69C:
 	.incbin	"baserom.gba", 0x37F69C, 0x8
-	.global	gUnk_0837F6A4
-gUnk_0837F6A4:
+	.global	gLevel4Stage1Room1Doors
+gLevel4Stage1Room1Doors:
 	.incbin	"baserom.gba", 0x37F6A4, 0x30
-	.global	gUnk_0837F6D4
-gUnk_0837F6D4:
+	.global	gLevel4Stage1Room1Objects
+gLevel4Stage1Room1Objects:
 	.incbin	"baserom.gba", 0x37F6D4, 0x68
 	.global	gLevel4Stage1Room1
 gLevel4Stage1Room1:
 	.incbin	"baserom.gba", 0x37F73C, 0x8
-	.word	gUnk_0837F080
-	.word	gUnk_0837F59C
+	.word	gLevel4Stage1Room1MetatileMap
+	.word	gLevel4Stage1Room1BlockLayer
 	.word	gUnk_0837F69C
 	.incbin	"baserom.gba", 0x37F750, 0x4
 	.word	gUnk_0849A52C
@@ -4619,29 +4619,29 @@ gLevel4Stage1Room1:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x37F770, 0x10
-	.word	gUnk_0837F6A4
-	.word	gUnk_0837F6D4
+	.word	gLevel4Stage1Room1Doors
+	.word	gLevel4Stage1Room1Objects
 	.incbin	"baserom.gba", 0x37F788, 0xC
-	.global	gUnk_0837F794
-gUnk_0837F794:
+	.global	gLevel4Stage1Room2MetatileMap
+gLevel4Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x37F794, 0x1F0
-	.global	gUnk_0837F984
-gUnk_0837F984:
+	.global	gLevel4Stage1Room2BlockLayer
+gLevel4Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37F984, 0x5C
 	.global	gUnk_0837F9E0
 gUnk_0837F9E0:
 	.incbin	"baserom.gba", 0x37F9E0, 0x8
-	.global	gUnk_0837F9E8
-gUnk_0837F9E8:
+	.global	gLevel4Stage1Room2Doors
+gLevel4Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x37F9E8, 0x24
-	.global	gUnk_0837FA0C
-gUnk_0837FA0C:
+	.global	gLevel4Stage1Room2Objects
+gLevel4Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x37FA0C, 0x38
 	.global	gLevel4Stage1Room2
 gLevel4Stage1Room2:
 	.incbin	"baserom.gba", 0x37FA44, 0x8
-	.word	gUnk_0837F794
-	.word	gUnk_0837F984
+	.word	gLevel4Stage1Room2MetatileMap
+	.word	gLevel4Stage1Room2BlockLayer
 	.word	gUnk_0837F9E0
 	.incbin	"baserom.gba", 0x37FA58, 0x4
 	.word	gUnk_084BAFA4
@@ -4652,29 +4652,29 @@ gLevel4Stage1Room2:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x37FA78, 0x10
-	.word	gUnk_0837F9E8
-	.word	gUnk_0837FA0C
+	.word	gLevel4Stage1Room2Doors
+	.word	gLevel4Stage1Room2Objects
 	.incbin	"baserom.gba", 0x37FA90, 0xC
-	.global	gUnk_0837FA9C
-gUnk_0837FA9C:
+	.global	gLevel4Stage1Room3MetatileMap
+gLevel4Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x37FA9C, 0x268
-	.global	gUnk_0837FD04
-gUnk_0837FD04:
+	.global	gLevel4Stage1Room3BlockLayer
+gLevel4Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37FD04, 0x70
 	.global	gUnk_0837FD74
 gUnk_0837FD74:
 	.incbin	"baserom.gba", 0x37FD74, 0x8
-	.global	gUnk_0837FD7C
-gUnk_0837FD7C:
+	.global	gLevel4Stage1Room3Doors
+gLevel4Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x37FD7C, 0x24
-	.global	gUnk_0837FDA0
-gUnk_0837FDA0:
+	.global	gLevel4Stage1Room3Objects
+gLevel4Stage1Room3Objects:
 	.incbin	"baserom.gba", 0x37FDA0, 0x28
 	.global	gLevel4Stage1Room3
 gLevel4Stage1Room3:
 	.incbin	"baserom.gba", 0x37FDC8, 0x8
-	.word	gUnk_0837FA9C
-	.word	gUnk_0837FD04
+	.word	gLevel4Stage1Room3MetatileMap
+	.word	gLevel4Stage1Room3BlockLayer
 	.word	gUnk_0837FD74
 	.incbin	"baserom.gba", 0x37FDDC, 0x4
 	.word	gUnk_084BAFA4
@@ -4685,29 +4685,29 @@ gLevel4Stage1Room3:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x37FDFC, 0x10
-	.word	gUnk_0837FD7C
-	.word	gUnk_0837FDA0
+	.word	gLevel4Stage1Room3Doors
+	.word	gLevel4Stage1Room3Objects
 	.incbin	"baserom.gba", 0x37FE14, 0xC
-	.global	gUnk_0837FE20
-gUnk_0837FE20:
+	.global	gLevel4Stage1Room4MetatileMap
+gLevel4Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x37FE20, 0x20C
-	.global	gUnk_0838002C
-gUnk_0838002C:
+	.global	gLevel4Stage1Room4BlockLayer
+gLevel4Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38002C, 0x5C
 	.global	gUnk_08380088
 gUnk_08380088:
 	.incbin	"baserom.gba", 0x380088, 0x8
-	.global	gUnk_08380090
-gUnk_08380090:
+	.global	gLevel4Stage1Room4Doors
+gLevel4Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x380090, 0x18
-	.global	gUnk_083800A8
-gUnk_083800A8:
+	.global	gLevel4Stage1Room4Objects
+gLevel4Stage1Room4Objects:
 	.incbin	"baserom.gba", 0x3800A8, 0x28
 	.global	gLevel4Stage1Room4
 gLevel4Stage1Room4:
 	.incbin	"baserom.gba", 0x3800D0, 0x8
-	.word	gUnk_0837FE20
-	.word	gUnk_0838002C
+	.word	gLevel4Stage1Room4MetatileMap
+	.word	gLevel4Stage1Room4BlockLayer
 	.word	gUnk_08380088
 	.incbin	"baserom.gba", 0x3800E4, 0x4
 	.word	gUnk_084BAFA4
@@ -4718,29 +4718,29 @@ gLevel4Stage1Room4:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x380104, 0x10
-	.word	gUnk_08380090
-	.word	gUnk_083800A8
+	.word	gLevel4Stage1Room4Doors
+	.word	gLevel4Stage1Room4Objects
 	.incbin	"baserom.gba", 0x38011C, 0xC
-	.global	gUnk_08380128
-gUnk_08380128:
+	.global	gLevel4Stage1Room5MetatileMap
+gLevel4Stage1Room5MetatileMap:
 	.incbin	"baserom.gba", 0x380128, 0x35C
-	.global	gUnk_08380484
-gUnk_08380484:
+	.global	gLevel4Stage1Room5BlockLayer
+gLevel4Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x380484, 0xC4
 	.global	gUnk_08380548
 gUnk_08380548:
 	.incbin	"baserom.gba", 0x380548, 0x8
-	.global	gUnk_08380550
-gUnk_08380550:
+	.global	gLevel4Stage1Room5Doors
+gLevel4Stage1Room5Doors:
 	.incbin	"baserom.gba", 0x380550, 0x24
-	.global	gUnk_08380574
-gUnk_08380574:
+	.global	gLevel4Stage1Room5Objects
+gLevel4Stage1Room5Objects:
 	.incbin	"baserom.gba", 0x380574, 0x48
 	.global	gLevel4Stage1Room5
 gLevel4Stage1Room5:
 	.incbin	"baserom.gba", 0x3805BC, 0x8
-	.word	gUnk_08380128
-	.word	gUnk_08380484
+	.word	gLevel4Stage1Room5MetatileMap
+	.word	gLevel4Stage1Room5BlockLayer
 	.word	gUnk_08380548
 	.incbin	"baserom.gba", 0x3805D0, 0x4
 	.word	gUnk_0853DAB4
@@ -4751,29 +4751,29 @@ gLevel4Stage1Room5:
 	.word	gUnk_0850B598
 	.word	gUnk_0850AC74
 	.incbin	"baserom.gba", 0x3805F0, 0x10
-	.word	gUnk_08380550
-	.word	gUnk_08380574
+	.word	gLevel4Stage1Room5Doors
+	.word	gLevel4Stage1Room5Objects
 	.incbin	"baserom.gba", 0x380608, 0xC
-	.global	gUnk_08380614
-gUnk_08380614:
+	.global	gLevel4Stage1Room6MetatileMap
+gLevel4Stage1Room6MetatileMap:
 	.incbin	"baserom.gba", 0x380614, 0xDC
-	.global	gUnk_083806F0
-gUnk_083806F0:
+	.global	gLevel4Stage1Room6BlockLayer
+gLevel4Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3806F0, 0x34
 	.global	gUnk_08380724
 gUnk_08380724:
 	.incbin	"baserom.gba", 0x380724, 0x10
-	.global	gUnk_08380734
-gUnk_08380734:
+	.global	gLevel4Stage1Room6Doors
+gLevel4Stage1Room6Doors:
 	.incbin	"baserom.gba", 0x380734, 0xC
-	.global	gUnk_08380740
-gUnk_08380740:
+	.global	gLevel4Stage1Room6Objects
+gLevel4Stage1Room6Objects:
 	.incbin	"baserom.gba", 0x380740, 0x18
 	.global	gLevel4Stage1Room6
 gLevel4Stage1Room6:
 	.incbin	"baserom.gba", 0x380758, 0x8
-	.word	gUnk_08380614
-	.word	gUnk_083806F0
+	.word	gLevel4Stage1Room6MetatileMap
+	.word	gLevel4Stage1Room6BlockLayer
 	.word	gUnk_08380724
 	.incbin	"baserom.gba", 0x38076C, 0x4
 	.word	gUnk_0853E318
@@ -4784,29 +4784,29 @@ gLevel4Stage1Room6:
 	.word	gUnk_0850B598
 	.word	gUnk_0850AC74
 	.incbin	"baserom.gba", 0x38078C, 0x10
-	.word	gUnk_08380734
-	.word	gUnk_08380740
+	.word	gLevel4Stage1Room6Doors
+	.word	gLevel4Stage1Room6Objects
 	.incbin	"baserom.gba", 0x3807A4, 0xC
-	.global	gUnk_083807B0
-gUnk_083807B0:
+	.global	gLevel4Stage2Room0MetatileMap
+gLevel4Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3807B0, 0x384
-	.global	gUnk_08380B34
-gUnk_08380B34:
+	.global	gLevel4Stage2Room0BlockLayer
+gLevel4Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x380B34, 0xFC
 	.global	gUnk_08380C30
 gUnk_08380C30:
 	.incbin	"baserom.gba", 0x380C30, 0x8
-	.global	gUnk_08380C38
-gUnk_08380C38:
+	.global	gLevel4Stage2Room0Doors
+gLevel4Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x380C38, 0xC
-	.global	gUnk_08380C44
-gUnk_08380C44:
+	.global	gLevel4Stage2Room0Objects
+gLevel4Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x380C44, 0xB8
 	.global	gLevel4Stage2Room0
 gLevel4Stage2Room0:
 	.incbin	"baserom.gba", 0x380CFC, 0x8
-	.word	gUnk_083807B0
-	.word	gUnk_08380B34
+	.word	gLevel4Stage2Room0MetatileMap
+	.word	gLevel4Stage2Room0BlockLayer
 	.word	gUnk_08380C30
 	.incbin	"baserom.gba", 0x380D10, 0x4
 	.word	gUnk_084D50EC
@@ -4817,29 +4817,29 @@ gLevel4Stage2Room0:
 	.word	gUnk_0851EF74
 	.word	gUnk_08517F00
 	.incbin	"baserom.gba", 0x380D30, 0x10
-	.word	gUnk_08380C38
-	.word	gUnk_08380C44
+	.word	gLevel4Stage2Room0Doors
+	.word	gLevel4Stage2Room0Objects
 	.incbin	"baserom.gba", 0x380D48, 0xC
-	.global	gUnk_08380D54
-gUnk_08380D54:
+	.global	gLevel4Stage2Room1MetatileMap
+gLevel4Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x380D54, 0x34C
-	.global	gUnk_083810A0
-gUnk_083810A0:
+	.global	gLevel4Stage2Room1BlockLayer
+gLevel4Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3810A0, 0xAC
 	.global	gUnk_0838114C
 gUnk_0838114C:
 	.incbin	"baserom.gba", 0x38114C, 0x8
-	.global	gUnk_08381154
-gUnk_08381154:
+	.global	gLevel4Stage2Room1Doors
+gLevel4Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x381154, 0xC
-	.global	gUnk_08381160
-gUnk_08381160:
+	.global	gLevel4Stage2Room1Objects
+gLevel4Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x381160, 0x48
 	.global	gLevel4Stage2Room1
 gLevel4Stage2Room1:
 	.incbin	"baserom.gba", 0x3811A8, 0x8
-	.word	gUnk_08380D54
-	.word	gUnk_083810A0
+	.word	gLevel4Stage2Room1MetatileMap
+	.word	gLevel4Stage2Room1BlockLayer
 	.word	gUnk_0838114C
 	.incbin	"baserom.gba", 0x3811BC, 0x4
 	.word	gUnk_08510DA4
@@ -4850,32 +4850,32 @@ gLevel4Stage2Room1:
 	.word	gUnk_0851EF74
 	.word	gUnk_08517F00
 	.incbin	"baserom.gba", 0x3811DC, 0x10
-	.word	gUnk_08381154
-	.word	gUnk_08381160
+	.word	gLevel4Stage2Room1Doors
+	.word	gLevel4Stage2Room1Objects
 	.incbin	"baserom.gba", 0x3811F4, 0xC
-	.global	gUnk_08381200
-gUnk_08381200:
+	.global	gLevel4Stage2Room2MetatileMap
+gLevel4Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x381200, 0x828
-	.global	gUnk_08381A28
-gUnk_08381A28:
+	.global	gLevel4Stage2Room2BlockLayer
+gLevel4Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x381A28, 0x1F8
 	.global	gUnk_08381C20
 gUnk_08381C20:
 	.incbin	"baserom.gba", 0x381C20, 0x8
-	.global	gUnk_08381C28
-gUnk_08381C28:
+	.global	gLevel4Stage2Room2Doors
+gLevel4Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x381C28, 0xC
-	.global	gUnk_08381C34
-gUnk_08381C34:
+	.global	gLevel4Stage2Room2Objects
+gLevel4Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x381C34, 0x98
 	.global	gLevel4Stage2Room2
 gLevel4Stage2Room2:
 	.incbin	"baserom.gba", 0x381CCC, 0x8
-	.word	gUnk_08381200
-	.word	gUnk_08381A28
+	.word	gLevel4Stage2Room2MetatileMap
+	.word	gLevel4Stage2Room2BlockLayer
 	.word	gUnk_08381C20
 	.incbin	"baserom.gba", 0x381CE0, 0x4
-	.word	gUnk_084F8494
+	.word	gLevel4Stage2Room2Bg2Palette
 	.word	gUnk_0840FCD8
 	.word	gUnk_083AB444
 	.incbin	"baserom.gba", 0x381CF0, 0x4
@@ -4883,29 +4883,29 @@ gLevel4Stage2Room2:
 	.word	gUnk_08518880
 	.word	gUnk_085175E4
 	.incbin	"baserom.gba", 0x381D00, 0x10
-	.word	gUnk_08381C28
-	.word	gUnk_08381C34
+	.word	gLevel4Stage2Room2Doors
+	.word	gLevel4Stage2Room2Objects
 	.incbin	"baserom.gba", 0x381D18, 0xC
-	.global	gUnk_08381D24
-gUnk_08381D24:
+	.global	gLevel4Stage2Room3MetatileMap
+gLevel4Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x381D24, 0x31C
-	.global	gUnk_08382040
-gUnk_08382040:
+	.global	gLevel4Stage2Room3BlockLayer
+gLevel4Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x382040, 0xEC
 	.global	gUnk_0838212C
 gUnk_0838212C:
 	.incbin	"baserom.gba", 0x38212C, 0x34
-	.global	gUnk_08382160
-gUnk_08382160:
+	.global	gLevel4Stage2Room3Doors
+gLevel4Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x382160, 0x24
-	.global	gUnk_08382184
-gUnk_08382184:
+	.global	gLevel4Stage2Room3Objects
+gLevel4Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x382184, 0x38
 	.global	gLevel4Stage2Room3
 gLevel4Stage2Room3:
 	.incbin	"baserom.gba", 0x3821BC, 0x8
-	.word	gUnk_08381D24
-	.word	gUnk_08382040
+	.word	gLevel4Stage2Room3MetatileMap
+	.word	gLevel4Stage2Room3BlockLayer
 	.word	gUnk_0838212C
 	.incbin	"baserom.gba", 0x3821D0, 0x4
 	.word	gUnk_08510DA4
@@ -4916,62 +4916,62 @@ gLevel4Stage2Room3:
 	.word	gUnk_08518880
 	.word	gUnk_085175E4
 	.incbin	"baserom.gba", 0x3821F0, 0x10
-	.word	gUnk_08382160
-	.word	gUnk_08382184
+	.word	gLevel4Stage2Room3Doors
+	.word	gLevel4Stage2Room3Objects
 	.incbin	"baserom.gba", 0x382208, 0xC
-	.global	gUnk_08382214
-gUnk_08382214:
+	.global	gLevel4Stage2Room4MetatileMap
+gLevel4Stage2Room4MetatileMap:
 	.incbin	"baserom.gba", 0x382214, 0x2F8
-	.global	gUnk_0838250C
-gUnk_0838250C:
+	.global	gLevel4Stage2Room4BlockLayer
+gLevel4Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38250C, 0x90
 	.global	gUnk_0838259C
 gUnk_0838259C:
 	.incbin	"baserom.gba", 0x38259C, 0x8
-	.global	gUnk_083825A4
-gUnk_083825A4:
+	.global	gLevel4Stage2Room4Doors
+gLevel4Stage2Room4Doors:
 	.incbin	"baserom.gba", 0x3825A4, 0xC
-	.global	gUnk_083825B0
-gUnk_083825B0:
+	.global	gLevel4Stage2Room4Objects
+gLevel4Stage2Room4Objects:
 	.incbin	"baserom.gba", 0x3825B0, 0x28
 	.global	gLevel4Stage2Room4
 gLevel4Stage2Room4:
 	.incbin	"baserom.gba", 0x3825D8, 0x8
-	.word	gUnk_08382214
-	.word	gUnk_0838250C
+	.word	gLevel4Stage2Room4MetatileMap
+	.word	gLevel4Stage2Room4BlockLayer
 	.word	gUnk_0838259C
 	.incbin	"baserom.gba", 0x3825EC, 0x4
 	.word	gUnk_084D50EC
 	.word	gUnk_083D1FD8
 	.word	gUnk_083A8B50
 	.incbin	"baserom.gba", 0x3825FC, 0x4
-	.word	gUnk_084BABD4
+	.word	gLevel4Stage2Room4Bg3Palette
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x38260C, 0x10
-	.word	gUnk_083825A4
-	.word	gUnk_083825B0
+	.word	gLevel4Stage2Room4Doors
+	.word	gLevel4Stage2Room4Objects
 	.incbin	"baserom.gba", 0x382624, 0xC
-	.global	gUnk_08382630
-gUnk_08382630:
+	.global	gLevel4Stage2Room5MetatileMap
+gLevel4Stage2Room5MetatileMap:
 	.incbin	"baserom.gba", 0x382630, 0xEC
-	.global	gUnk_0838271C
-gUnk_0838271C:
+	.global	gLevel4Stage2Room5BlockLayer
+gLevel4Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38271C, 0xA4
 	.global	gUnk_083827C0
 gUnk_083827C0:
 	.incbin	"baserom.gba", 0x3827C0, 0xD0
-	.global	gUnk_08382890
-gUnk_08382890:
+	.global	gLevel4Stage2Room5Doors
+gLevel4Stage2Room5Doors:
 	.incbin	"baserom.gba", 0x382890, 0xC
-	.global	gUnk_0838289C
-gUnk_0838289C:
+	.global	gLevel4Stage2Room5Objects
+gLevel4Stage2Room5Objects:
 	.incbin	"baserom.gba", 0x38289C, 0x28
 	.global	gLevel4Stage2Room5
 gLevel4Stage2Room5:
 	.incbin	"baserom.gba", 0x3828C4, 0x8
-	.word	gUnk_08382630
-	.word	gUnk_0838271C
+	.word	gLevel4Stage2Room5MetatileMap
+	.word	gLevel4Stage2Room5BlockLayer
 	.word	gUnk_083827C0
 	.incbin	"baserom.gba", 0x3828D8, 0x4
 	.word	gUnk_084B2F9C
@@ -4982,29 +4982,29 @@ gLevel4Stage2Room5:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x3828F8, 0x10
-	.word	gUnk_08382890
-	.word	gUnk_0838289C
+	.word	gLevel4Stage2Room5Doors
+	.word	gLevel4Stage2Room5Objects
 	.incbin	"baserom.gba", 0x382910, 0xC
-	.global	gUnk_0838291C
-gUnk_0838291C:
+	.global	gLevel4Stage3Room0MetatileMap
+gLevel4Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x38291C, 0x75C
-	.global	gUnk_08383078
-gUnk_08383078:
+	.global	gLevel4Stage3Room0BlockLayer
+gLevel4Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x383078, 0x180
 	.global	gUnk_083831F8
 gUnk_083831F8:
 	.incbin	"baserom.gba", 0x3831F8, 0x44
-	.global	gUnk_0838323C
-gUnk_0838323C:
+	.global	gLevel4Stage3Room0Doors
+gLevel4Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x38323C, 0x18
-	.global	gUnk_08383254
-gUnk_08383254:
+	.global	gLevel4Stage3Room0Objects
+gLevel4Stage3Room0Objects:
 	.incbin	"baserom.gba", 0x383254, 0x38
 	.global	gLevel4Stage3Room0
 gLevel4Stage3Room0:
 	.incbin	"baserom.gba", 0x38328C, 0x8
-	.word	gUnk_0838291C
-	.word	gUnk_08383078
+	.word	gLevel4Stage3Room0MetatileMap
+	.word	gLevel4Stage3Room0BlockLayer
 	.word	gUnk_083831F8
 	.incbin	"baserom.gba", 0x3832A0, 0x4
 	.word	gUnk_0849A6B4
@@ -5015,29 +5015,29 @@ gLevel4Stage3Room0:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x3832C0, 0x10
-	.word	gUnk_0838323C
-	.word	gUnk_08383254
+	.word	gLevel4Stage3Room0Doors
+	.word	gLevel4Stage3Room0Objects
 	.incbin	"baserom.gba", 0x3832D8, 0xC
-	.global	gUnk_083832E4
-gUnk_083832E4:
+	.global	gLevel4Stage3Room1MetatileMap
+gLevel4Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3832E4, 0x5FC
-	.global	gUnk_083838E0
-gUnk_083838E0:
+	.global	gLevel4Stage3Room1BlockLayer
+gLevel4Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3838E0, 0x1A0
 	.global	gUnk_08383A80
 gUnk_08383A80:
 	.incbin	"baserom.gba", 0x383A80, 0x8
-	.global	gUnk_08383A88
-gUnk_08383A88:
+	.global	gLevel4Stage3Room1Doors
+gLevel4Stage3Room1Doors:
 	.incbin	"baserom.gba", 0x383A88, 0x18
-	.global	gUnk_08383AA0
-gUnk_08383AA0:
+	.global	gLevel4Stage3Room1Objects
+gLevel4Stage3Room1Objects:
 	.incbin	"baserom.gba", 0x383AA0, 0x88
 	.global	gLevel4Stage3Room1
 gLevel4Stage3Room1:
 	.incbin	"baserom.gba", 0x383B28, 0x8
-	.word	gUnk_083832E4
-	.word	gUnk_083838E0
+	.word	gLevel4Stage3Room1MetatileMap
+	.word	gLevel4Stage3Room1BlockLayer
 	.word	gUnk_08383A80
 	.incbin	"baserom.gba", 0x383B3C, 0x4
 	.word	gUnk_084BB16C
@@ -5048,29 +5048,29 @@ gLevel4Stage3Room1:
 	.word	gUnk_084FF824
 	.word	gUnk_084FEF08
 	.incbin	"baserom.gba", 0x383B5C, 0x10
-	.word	gUnk_08383A88
-	.word	gUnk_08383AA0
+	.word	gLevel4Stage3Room1Doors
+	.word	gLevel4Stage3Room1Objects
 	.incbin	"baserom.gba", 0x383B74, 0xC
-	.global	gUnk_08383B80
-gUnk_08383B80:
+	.global	gLevel4Stage3Room2MetatileMap
+gLevel4Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x383B80, 0x444
-	.global	gUnk_08383FC4
-gUnk_08383FC4:
+	.global	gLevel4Stage3Room2BlockLayer
+gLevel4Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x383FC4, 0xB8
 	.global	gUnk_0838407C
 gUnk_0838407C:
 	.incbin	"baserom.gba", 0x38407C, 0x8
-	.global	gUnk_08384084
-gUnk_08384084:
+	.global	gLevel4Stage3Room2Doors
+gLevel4Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x384084, 0xC
-	.global	gUnk_08384090
-gUnk_08384090:
+	.global	gLevel4Stage3Room2Objects
+gLevel4Stage3Room2Objects:
 	.incbin	"baserom.gba", 0x384090, 0x30
 	.global	gLevel4Stage3Room2
 gLevel4Stage3Room2:
 	.incbin	"baserom.gba", 0x3840C0, 0x8
-	.word	gUnk_08383B80
-	.word	gUnk_08383FC4
+	.word	gLevel4Stage3Room2MetatileMap
+	.word	gLevel4Stage3Room2BlockLayer
 	.word	gUnk_0838407C
 	.incbin	"baserom.gba", 0x3840D4, 0x4
 	.word	gUnk_0849A6B4
@@ -5081,29 +5081,29 @@ gLevel4Stage3Room2:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x3840F4, 0x10
-	.word	gUnk_08384084
-	.word	gUnk_08384090
+	.word	gLevel4Stage3Room2Doors
+	.word	gLevel4Stage3Room2Objects
 	.incbin	"baserom.gba", 0x38410C, 0xC
-	.global	gUnk_08384118
-gUnk_08384118:
+	.global	gLevel4Stage3Room3MetatileMap
+gLevel4Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x384118, 0x4A4
-	.global	gUnk_083845BC
-gUnk_083845BC:
+	.global	gLevel4Stage3Room3BlockLayer
+gLevel4Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3845BC, 0x13C
 	.global	gUnk_083846F8
 gUnk_083846F8:
 	.incbin	"baserom.gba", 0x3846F8, 0x8
-	.global	gUnk_08384700
-gUnk_08384700:
+	.global	gLevel4Stage3Room3Doors
+gLevel4Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x384700, 0xC
-	.global	gUnk_0838470C
-gUnk_0838470C:
+	.global	gLevel4Stage3Room3Objects
+gLevel4Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x38470C, 0xA8
 	.global	gLevel4Stage3Room3
 gLevel4Stage3Room3:
 	.incbin	"baserom.gba", 0x3847B4, 0x8
-	.word	gUnk_08384118
-	.word	gUnk_083845BC
+	.word	gLevel4Stage3Room3MetatileMap
+	.word	gLevel4Stage3Room3BlockLayer
 	.word	gUnk_083846F8
 	.incbin	"baserom.gba", 0x3847C8, 0x4
 	.word	gUnk_084BB16C
@@ -5114,29 +5114,29 @@ gLevel4Stage3Room3:
 	.word	gUnk_084FF824
 	.word	gUnk_084FEF08
 	.incbin	"baserom.gba", 0x3847E8, 0x10
-	.word	gUnk_08384700
-	.word	gUnk_0838470C
+	.word	gLevel4Stage3Room3Doors
+	.word	gLevel4Stage3Room3Objects
 	.incbin	"baserom.gba", 0x384800, 0xC
-	.global	gUnk_0838480C
-gUnk_0838480C:
+	.global	gLevel4Stage3Room4MetatileMap
+gLevel4Stage3Room4MetatileMap:
 	.incbin	"baserom.gba", 0x38480C, 0x224
-	.global	gUnk_08384A30
-gUnk_08384A30:
+	.global	gLevel4Stage3Room4BlockLayer
+gLevel4Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x384A30, 0x64
 	.global	gUnk_08384A94
 gUnk_08384A94:
 	.incbin	"baserom.gba", 0x384A94, 0x8
-	.global	gUnk_08384A9C
-gUnk_08384A9C:
+	.global	gLevel4Stage3Room4Doors
+gLevel4Stage3Room4Doors:
 	.incbin	"baserom.gba", 0x384A9C, 0x18
-	.global	gUnk_08384AB4
-gUnk_08384AB4:
+	.global	gLevel4Stage3Room4Objects
+gLevel4Stage3Room4Objects:
 	.incbin	"baserom.gba", 0x384AB4, 0x28
 	.global	gLevel4Stage3Room4
 gLevel4Stage3Room4:
 	.incbin	"baserom.gba", 0x384ADC, 0x8
-	.word	gUnk_0838480C
-	.word	gUnk_08384A30
+	.word	gLevel4Stage3Room4MetatileMap
+	.word	gLevel4Stage3Room4BlockLayer
 	.word	gUnk_08384A94
 	.incbin	"baserom.gba", 0x384AF0, 0x4
 	.word	gUnk_0849A6B4
@@ -5147,29 +5147,29 @@ gLevel4Stage3Room4:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x384B10, 0x10
-	.word	gUnk_08384A9C
-	.word	gUnk_08384AB4
+	.word	gLevel4Stage3Room4Doors
+	.word	gLevel4Stage3Room4Objects
 	.incbin	"baserom.gba", 0x384B28, 0xC
-	.global	gUnk_08384B34
-gUnk_08384B34:
+	.global	gLevel4Stage3Room5MetatileMap
+gLevel4Stage3Room5MetatileMap:
 	.incbin	"baserom.gba", 0x384B34, 0x12C
-	.global	gUnk_08384C60
-gUnk_08384C60:
+	.global	gLevel4Stage3Room5BlockLayer
+gLevel4Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x384C60, 0x34
 	.global	gUnk_08384C94
 gUnk_08384C94:
 	.incbin	"baserom.gba", 0x384C94, 0x8
-	.global	gUnk_08384C9C
-gUnk_08384C9C:
+	.global	gLevel4Stage3Room5Doors
+gLevel4Stage3Room5Doors:
 	.incbin	"baserom.gba", 0x384C9C, 0xC
-	.global	gUnk_08384CA8
-gUnk_08384CA8:
+	.global	gLevel4Stage3Room5Objects
+gLevel4Stage3Room5Objects:
 	.incbin	"baserom.gba", 0x384CA8, 0x8
 	.global	gLevel4Stage3Room5
 gLevel4Stage3Room5:
 	.incbin	"baserom.gba", 0x384CB0, 0x8
-	.word	gUnk_08384B34
-	.word	gUnk_08384C60
+	.word	gLevel4Stage3Room5MetatileMap
+	.word	gLevel4Stage3Room5BlockLayer
 	.word	gUnk_08384C94
 	.incbin	"baserom.gba", 0x384CC4, 0x4
 	.word	gUnk_084BB16C
@@ -5180,29 +5180,29 @@ gLevel4Stage3Room5:
 	.word	gUnk_084FF824
 	.word	gUnk_084FEF08
 	.incbin	"baserom.gba", 0x384CE4, 0x10
-	.word	gUnk_08384C9C
-	.word	gUnk_08384CA8
+	.word	gLevel4Stage3Room5Doors
+	.word	gLevel4Stage3Room5Objects
 	.incbin	"baserom.gba", 0x384CFC, 0xC
-	.global	gUnk_08384D08
-gUnk_08384D08:
+	.global	gLevel4Stage3Room6MetatileMap
+gLevel4Stage3Room6MetatileMap:
 	.incbin	"baserom.gba", 0x384D08, 0xD8
-	.global	gUnk_08384DE0
-gUnk_08384DE0:
+	.global	gLevel4Stage3Room6BlockLayer
+gLevel4Stage3Room6BlockLayer:
 	.incbin	"baserom.gba", 0x384DE0, 0x38
 	.global	gUnk_08384E18
 gUnk_08384E18:
 	.incbin	"baserom.gba", 0x384E18, 0x10
-	.global	gUnk_08384E28
-gUnk_08384E28:
+	.global	gLevel4Stage3Room6Doors
+gLevel4Stage3Room6Doors:
 	.incbin	"baserom.gba", 0x384E28, 0xC
-	.global	gUnk_08384E34
-gUnk_08384E34:
+	.global	gLevel4Stage3Room6Objects
+gLevel4Stage3Room6Objects:
 	.incbin	"baserom.gba", 0x384E34, 0x8
 	.global	gLevel4Stage3Room6
 gLevel4Stage3Room6:
 	.incbin	"baserom.gba", 0x384E3C, 0x8
-	.word	gUnk_08384D08
-	.word	gUnk_08384DE0
+	.word	gLevel4Stage3Room6MetatileMap
+	.word	gLevel4Stage3Room6BlockLayer
 	.word	gUnk_08384E18
 	.incbin	"baserom.gba", 0x384E50, 0x4
 	.word	gUnk_0849A6B4
@@ -5213,29 +5213,29 @@ gLevel4Stage3Room6:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x384E70, 0x10
-	.word	gUnk_08384E28
-	.word	gUnk_08384E34
+	.word	gLevel4Stage3Room6Doors
+	.word	gLevel4Stage3Room6Objects
 	.incbin	"baserom.gba", 0x384E88, 0xC
-	.global	gUnk_08384E94
-gUnk_08384E94:
+	.global	gLevel4Stage4Room0MetatileMap
+gLevel4Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x384E94, 0x83C
-	.global	gUnk_083856D0
-gUnk_083856D0:
+	.global	gLevel4Stage4Room0BlockLayer
+gLevel4Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3856D0, 0x1E4
 	.global	gUnk_083858B4
 gUnk_083858B4:
 	.incbin	"baserom.gba", 0x3858B4, 0x8
-	.global	gUnk_083858BC
-gUnk_083858BC:
+	.global	gLevel4Stage4Room0Doors
+gLevel4Stage4Room0Doors:
 	.incbin	"baserom.gba", 0x3858BC, 0x18
-	.global	gUnk_083858D4
-gUnk_083858D4:
+	.global	gLevel4Stage4Room0Objects
+gLevel4Stage4Room0Objects:
 	.incbin	"baserom.gba", 0x3858D4, 0x90
 	.global	gLevel4Stage4Room0
 gLevel4Stage4Room0:
 	.incbin	"baserom.gba", 0x385964, 0x8
-	.word	gUnk_08384E94
-	.word	gUnk_083856D0
+	.word	gLevel4Stage4Room0MetatileMap
+	.word	gLevel4Stage4Room0BlockLayer
 	.word	gUnk_083858B4
 	.incbin	"baserom.gba", 0x385978, 0x4
 	.word	gUnk_0852D088
@@ -5246,29 +5246,29 @@ gLevel4Stage4Room0:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x385998, 0x10
-	.word	gUnk_083858BC
-	.word	gUnk_083858D4
+	.word	gLevel4Stage4Room0Doors
+	.word	gLevel4Stage4Room0Objects
 	.incbin	"baserom.gba", 0x3859B0, 0xC
-	.global	gUnk_083859BC
-gUnk_083859BC:
+	.global	gLevel4Stage4Room1MetatileMap
+gLevel4Stage4Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3859BC, 0x51C
-	.global	gUnk_08385ED8
-gUnk_08385ED8:
+	.global	gLevel4Stage4Room1BlockLayer
+gLevel4Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x385ED8, 0xD8
 	.global	gUnk_08385FB0
 gUnk_08385FB0:
 	.incbin	"baserom.gba", 0x385FB0, 0x8
-	.global	gUnk_08385FB8
-gUnk_08385FB8:
+	.global	gLevel4Stage4Room1Doors
+gLevel4Stage4Room1Doors:
 	.incbin	"baserom.gba", 0x385FB8, 0xC
-	.global	gUnk_08385FC4
-gUnk_08385FC4:
+	.global	gLevel4Stage4Room1Objects
+gLevel4Stage4Room1Objects:
 	.incbin	"baserom.gba", 0x385FC4, 0x8
 	.global	gLevel4Stage4Room1
 gLevel4Stage4Room1:
 	.incbin	"baserom.gba", 0x385FCC, 0x8
-	.word	gUnk_083859BC
-	.word	gUnk_08385ED8
+	.word	gLevel4Stage4Room1MetatileMap
+	.word	gLevel4Stage4Room1BlockLayer
 	.word	gUnk_08385FB0
 	.incbin	"baserom.gba", 0x385FE0, 0x4
 	.word	gUnk_0852D088
@@ -5279,26 +5279,26 @@ gLevel4Stage4Room1:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x386000, 0x10
-	.word	gUnk_08385FB8
-	.word	gUnk_08385FC4
+	.word	gLevel4Stage4Room1Doors
+	.word	gLevel4Stage4Room1Objects
 	.incbin	"baserom.gba", 0x386018, 0xC
-	.global	gUnk_08386024
-gUnk_08386024:
+	.global	gLevel4Stage4Room2MetatileMap
+gLevel4Stage4Room2MetatileMap:
 	.incbin	"baserom.gba", 0x386024, 0x254
-	.global	gUnk_08386278
-gUnk_08386278:
+	.global	gLevel4Stage4Room2BlockLayer
+gLevel4Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x386278, 0x8C
 	.global	gUnk_08386304
 gUnk_08386304:
 	.incbin	"baserom.gba", 0x386304, 0x14
-	.global	gUnk_08386318
-gUnk_08386318:
+	.global	gLevel4Stage4Room2Doors
+gLevel4Stage4Room2Doors:
 	.incbin	"baserom.gba", 0x386318, 0x30
 	.global	gLevel4Stage4Room2
 gLevel4Stage4Room2:
 	.incbin	"baserom.gba", 0x386348, 0x8
-	.word	gUnk_08386024
-	.word	gUnk_08386278
+	.word	gLevel4Stage4Room2MetatileMap
+	.word	gLevel4Stage4Room2BlockLayer
 	.word	gUnk_08386304
 	.incbin	"baserom.gba", 0x38635C, 0x4
 	.word	gUnk_084B57E8
@@ -5309,28 +5309,28 @@ gLevel4Stage4Room2:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x38637C, 0x10
-	.word	gUnk_08386318
+	.word	gLevel4Stage4Room2Doors
 	.incbin	"baserom.gba", 0x386390, 0x10
-	.global	gUnk_083863A0
-gUnk_083863A0:
+	.global	gLevel4Stage4Room3MetatileMap
+gLevel4Stage4Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3863A0, 0x284
-	.global	gUnk_08386624
-gUnk_08386624:
+	.global	gLevel4Stage4Room3BlockLayer
+gLevel4Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x386624, 0x90
 	.global	gUnk_083866B4
 gUnk_083866B4:
 	.incbin	"baserom.gba", 0x3866B4, 0x8
-	.global	gUnk_083866BC
-gUnk_083866BC:
+	.global	gLevel4Stage4Room3Doors
+gLevel4Stage4Room3Doors:
 	.incbin	"baserom.gba", 0x3866BC, 0xC
-	.global	gUnk_083866C8
-gUnk_083866C8:
+	.global	gLevel4Stage4Room3Objects
+gLevel4Stage4Room3Objects:
 	.incbin	"baserom.gba", 0x3866C8, 0x38
 	.global	gLevel4Stage4Room3
 gLevel4Stage4Room3:
 	.incbin	"baserom.gba", 0x386700, 0x8
-	.word	gUnk_083863A0
-	.word	gUnk_08386624
+	.word	gLevel4Stage4Room3MetatileMap
+	.word	gLevel4Stage4Room3BlockLayer
 	.word	gUnk_083866B4
 	.incbin	"baserom.gba", 0x386714, 0x4
 	.word	gUnk_0852D250
@@ -5341,29 +5341,29 @@ gLevel4Stage4Room3:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x386734, 0x10
-	.word	gUnk_083866BC
-	.word	gUnk_083866C8
+	.word	gLevel4Stage4Room3Doors
+	.word	gLevel4Stage4Room3Objects
 	.incbin	"baserom.gba", 0x38674C, 0xC
-	.global	gUnk_08386758
-gUnk_08386758:
+	.global	gLevel4Stage4Room4MetatileMap
+gLevel4Stage4Room4MetatileMap:
 	.incbin	"baserom.gba", 0x386758, 0x33C
-	.global	gUnk_08386A94
-gUnk_08386A94:
+	.global	gLevel4Stage4Room4BlockLayer
+gLevel4Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x386A94, 0xB0
 	.global	gUnk_08386B44
 gUnk_08386B44:
 	.incbin	"baserom.gba", 0x386B44, 0x8
-	.global	gUnk_08386B4C
-gUnk_08386B4C:
+	.global	gLevel4Stage4Room4Doors
+gLevel4Stage4Room4Doors:
 	.incbin	"baserom.gba", 0x386B4C, 0xC
-	.global	gUnk_08386B58
-gUnk_08386B58:
+	.global	gLevel4Stage4Room4Objects
+gLevel4Stage4Room4Objects:
 	.incbin	"baserom.gba", 0x386B58, 0x68
 	.global	gLevel4Stage4Room4
 gLevel4Stage4Room4:
 	.incbin	"baserom.gba", 0x386BC0, 0x8
-	.word	gUnk_08386758
-	.word	gUnk_08386A94
+	.word	gLevel4Stage4Room4MetatileMap
+	.word	gLevel4Stage4Room4BlockLayer
 	.word	gUnk_08386B44
 	.incbin	"baserom.gba", 0x386BD4, 0x4
 	.word	gUnk_0852D088
@@ -5374,29 +5374,29 @@ gLevel4Stage4Room4:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x386BF4, 0x10
-	.word	gUnk_08386B4C
-	.word	gUnk_08386B58
+	.word	gLevel4Stage4Room4Doors
+	.word	gLevel4Stage4Room4Objects
 	.incbin	"baserom.gba", 0x386C0C, 0xC
-	.global	gUnk_08386C18
-gUnk_08386C18:
+	.global	gLevel4Stage4Room5MetatileMap
+gLevel4Stage4Room5MetatileMap:
 	.incbin	"baserom.gba", 0x386C18, 0x284
-	.global	gUnk_08386E9C
-gUnk_08386E9C:
+	.global	gLevel4Stage4Room5BlockLayer
+gLevel4Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x386E9C, 0x90
 	.global	gUnk_08386F2C
 gUnk_08386F2C:
 	.incbin	"baserom.gba", 0x386F2C, 0x8
-	.global	gUnk_08386F34
-gUnk_08386F34:
+	.global	gLevel4Stage4Room5Doors
+gLevel4Stage4Room5Doors:
 	.incbin	"baserom.gba", 0x386F34, 0xC
-	.global	gUnk_08386F40
-gUnk_08386F40:
+	.global	gLevel4Stage4Room5Objects
+gLevel4Stage4Room5Objects:
 	.incbin	"baserom.gba", 0x386F40, 0x40
 	.global	gLevel4Stage4Room5
 gLevel4Stage4Room5:
 	.incbin	"baserom.gba", 0x386F80, 0x8
-	.word	gUnk_08386C18
-	.word	gUnk_08386E9C
+	.word	gLevel4Stage4Room5MetatileMap
+	.word	gLevel4Stage4Room5BlockLayer
 	.word	gUnk_08386F2C
 	.incbin	"baserom.gba", 0x386F94, 0x4
 	.word	gUnk_0852D250
@@ -5407,29 +5407,29 @@ gLevel4Stage4Room5:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x386FB4, 0x10
-	.word	gUnk_08386F34
-	.word	gUnk_08386F40
+	.word	gLevel4Stage4Room5Doors
+	.word	gLevel4Stage4Room5Objects
 	.incbin	"baserom.gba", 0x386FCC, 0xC
-	.global	gUnk_08386FD8
-gUnk_08386FD8:
+	.global	gLevel4Stage4Room6MetatileMap
+gLevel4Stage4Room6MetatileMap:
 	.incbin	"baserom.gba", 0x386FD8, 0x154
-	.global	gUnk_0838712C
-gUnk_0838712C:
+	.global	gLevel4Stage4Room6BlockLayer
+gLevel4Stage4Room6BlockLayer:
 	.incbin	"baserom.gba", 0x38712C, 0x80
 	.global	gUnk_083871AC
 gUnk_083871AC:
 	.incbin	"baserom.gba", 0x3871AC, 0x124
-	.global	gUnk_083872D0
-gUnk_083872D0:
+	.global	gLevel4Stage4Room6Doors
+gLevel4Stage4Room6Doors:
 	.incbin	"baserom.gba", 0x3872D0, 0x18
-	.global	gUnk_083872E8
-gUnk_083872E8:
+	.global	gLevel4Stage4Room6Objects
+gLevel4Stage4Room6Objects:
 	.incbin	"baserom.gba", 0x3872E8, 0x20
 	.global	gLevel4Stage4Room6
 gLevel4Stage4Room6:
 	.incbin	"baserom.gba", 0x387308, 0x8
-	.word	gUnk_08386FD8
-	.word	gUnk_0838712C
+	.word	gLevel4Stage4Room6MetatileMap
+	.word	gLevel4Stage4Room6BlockLayer
 	.word	gUnk_083871AC
 	.incbin	"baserom.gba", 0x38731C, 0x4
 	.word	gUnk_0853E728
@@ -5440,29 +5440,29 @@ gLevel4Stage4Room6:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x38733C, 0x10
-	.word	gUnk_083872D0
-	.word	gUnk_083872E8
+	.word	gLevel4Stage4Room6Doors
+	.word	gLevel4Stage4Room6Objects
 	.incbin	"baserom.gba", 0x387354, 0xC
-	.global	gUnk_08387360
-gUnk_08387360:
+	.global	gLevel4Stage4Room7MetatileMap
+gLevel4Stage4Room7MetatileMap:
 	.incbin	"baserom.gba", 0x387360, 0xDC
-	.global	gUnk_0838743C
-gUnk_0838743C:
+	.global	gLevel4Stage4Room7BlockLayer
+gLevel4Stage4Room7BlockLayer:
 	.incbin	"baserom.gba", 0x38743C, 0x34
 	.global	gUnk_08387470
 gUnk_08387470:
 	.incbin	"baserom.gba", 0x387470, 0x8
-	.global	gUnk_08387478
-gUnk_08387478:
+	.global	gLevel4Stage4Room7Doors
+gLevel4Stage4Room7Doors:
 	.incbin	"baserom.gba", 0x387478, 0x18
-	.global	gUnk_08387490
-gUnk_08387490:
+	.global	gLevel4Stage4Room7Objects
+gLevel4Stage4Room7Objects:
 	.incbin	"baserom.gba", 0x387490, 0x8
 	.global	gLevel4Stage4Room7
 gLevel4Stage4Room7:
 	.incbin	"baserom.gba", 0x387498, 0x8
-	.word	gUnk_08387360
-	.word	gUnk_0838743C
+	.word	gLevel4Stage4Room7MetatileMap
+	.word	gLevel4Stage4Room7BlockLayer
 	.word	gUnk_08387470
 	.incbin	"baserom.gba", 0x3874AC, 0x4
 	.word	gUnk_0853D12C
@@ -5473,29 +5473,29 @@ gLevel4Stage4Room7:
 	.word	gUnk_0849138C
 	.word	gUnk_08490A70
 	.incbin	"baserom.gba", 0x3874CC, 0x10
-	.word	gUnk_08387478
-	.word	gUnk_08387490
+	.word	gLevel4Stage4Room7Doors
+	.word	gLevel4Stage4Room7Objects
 	.incbin	"baserom.gba", 0x3874E4, 0xC
-	.global	gUnk_083874F0
-gUnk_083874F0:
+	.global	gLevel4Stage5Room0MetatileMap
+gLevel4Stage5Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3874F0, 0x364
-	.global	gUnk_08387854
-gUnk_08387854:
+	.global	gLevel4Stage5Room0BlockLayer
+gLevel4Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x387854, 0x100
 	.global	gUnk_08387954
 gUnk_08387954:
 	.incbin	"baserom.gba", 0x387954, 0x8
-	.global	gUnk_0838795C
-gUnk_0838795C:
+	.global	gLevel4Stage5Room0Doors
+gLevel4Stage5Room0Doors:
 	.incbin	"baserom.gba", 0x38795C, 0xC
-	.global	gUnk_08387968
-gUnk_08387968:
+	.global	gLevel4Stage5Room0Objects
+gLevel4Stage5Room0Objects:
 	.incbin	"baserom.gba", 0x387968, 0x80
 	.global	gLevel4Stage5Room0
 gLevel4Stage5Room0:
 	.incbin	"baserom.gba", 0x3879E8, 0x8
-	.word	gUnk_083874F0
-	.word	gUnk_08387854
+	.word	gLevel4Stage5Room0MetatileMap
+	.word	gLevel4Stage5Room0BlockLayer
 	.word	gUnk_08387954
 	.incbin	"baserom.gba", 0x3879FC, 0x4
 	.word	gUnk_0853E318
@@ -5506,29 +5506,29 @@ gLevel4Stage5Room0:
 	.word	gUnk_08454A70
 	.word	gUnk_083CCA9C
 	.incbin	"baserom.gba", 0x387A1C, 0x10
-	.word	gUnk_0838795C
-	.word	gUnk_08387968
+	.word	gLevel4Stage5Room0Doors
+	.word	gLevel4Stage5Room0Objects
 	.incbin	"baserom.gba", 0x387A34, 0xC
-	.global	gUnk_08387A40
-gUnk_08387A40:
+	.global	gLevel4Stage5Room1MetatileMap
+gLevel4Stage5Room1MetatileMap:
 	.incbin	"baserom.gba", 0x387A40, 0x4D8
-	.global	gUnk_08387F18
-gUnk_08387F18:
+	.global	gLevel4Stage5Room1BlockLayer
+gLevel4Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x387F18, 0x190
 	.global	gUnk_083880A8
 gUnk_083880A8:
 	.incbin	"baserom.gba", 0x3880A8, 0xF0
-	.global	gUnk_08388198
-gUnk_08388198:
+	.global	gLevel4Stage5Room1Doors
+gLevel4Stage5Room1Doors:
 	.incbin	"baserom.gba", 0x388198, 0xC
-	.global	gUnk_083881A4
-gUnk_083881A4:
+	.global	gLevel4Stage5Room1Objects
+gLevel4Stage5Room1Objects:
 	.incbin	"baserom.gba", 0x3881A4, 0x30
 	.global	gLevel4Stage5Room1
 gLevel4Stage5Room1:
 	.incbin	"baserom.gba", 0x3881D4, 0x8
-	.word	gUnk_08387A40
-	.word	gUnk_08387F18
+	.word	gLevel4Stage5Room1MetatileMap
+	.word	gLevel4Stage5Room1BlockLayer
 	.word	gUnk_083880A8
 	.incbin	"baserom.gba", 0x3881E8, 0x4
 	.word	gUnk_0852D18C
@@ -5539,29 +5539,29 @@ gLevel4Stage5Room1:
 	.word	gUnk_08454A70
 	.word	gUnk_083CCA9C
 	.incbin	"baserom.gba", 0x388208, 0x10
-	.word	gUnk_08388198
-	.word	gUnk_083881A4
+	.word	gLevel4Stage5Room1Doors
+	.word	gLevel4Stage5Room1Objects
 	.incbin	"baserom.gba", 0x388220, 0xC
-	.global	gUnk_0838822C
-gUnk_0838822C:
+	.global	gLevel4Stage5Room2MetatileMap
+gLevel4Stage5Room2MetatileMap:
 	.incbin	"baserom.gba", 0x38822C, 0x398
-	.global	gUnk_083885C4
-gUnk_083885C4:
+	.global	gLevel4Stage5Room2BlockLayer
+gLevel4Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3885C4, 0xFC
 	.global	gUnk_083886C0
 gUnk_083886C0:
 	.incbin	"baserom.gba", 0x3886C0, 0x8
-	.global	gUnk_083886C8
-gUnk_083886C8:
+	.global	gLevel4Stage5Room2Doors
+gLevel4Stage5Room2Doors:
 	.incbin	"baserom.gba", 0x3886C8, 0x24
-	.global	gUnk_083886EC
-gUnk_083886EC:
+	.global	gLevel4Stage5Room2Objects
+gLevel4Stage5Room2Objects:
 	.incbin	"baserom.gba", 0x3886EC, 0x70
 	.global	gLevel4Stage5Room2
 gLevel4Stage5Room2:
 	.incbin	"baserom.gba", 0x38875C, 0x8
-	.word	gUnk_0838822C
-	.word	gUnk_083885C4
+	.word	gLevel4Stage5Room2MetatileMap
+	.word	gLevel4Stage5Room2BlockLayer
 	.word	gUnk_083886C0
 	.incbin	"baserom.gba", 0x388770, 0x4
 	.word	gUnk_0853E318
@@ -5572,26 +5572,26 @@ gLevel4Stage5Room2:
 	.word	gUnk_08454A70
 	.word	gUnk_083CCA9C
 	.incbin	"baserom.gba", 0x388790, 0x10
-	.word	gUnk_083886C8
-	.word	gUnk_083886EC
+	.word	gLevel4Stage5Room2Doors
+	.word	gLevel4Stage5Room2Objects
 	.incbin	"baserom.gba", 0x3887A8, 0xC
-	.global	gUnk_083887B4
-gUnk_083887B4:
+	.global	gLevel4Stage5Room3MetatileMap
+gLevel4Stage5Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3887B4, 0x124
-	.global	gUnk_083888D8
-gUnk_083888D8:
+	.global	gLevel4Stage5Room3BlockLayer
+gLevel4Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3888D8, 0x4C
 	.global	gUnk_08388924
 gUnk_08388924:
 	.incbin	"baserom.gba", 0x388924, 0x28
-	.global	gUnk_0838894C
-gUnk_0838894C:
+	.global	gLevel4Stage5Room3Doors
+gLevel4Stage5Room3Doors:
 	.incbin	"baserom.gba", 0x38894C, 0x24
 	.global	gLevel4Stage5Room3
 gLevel4Stage5Room3:
 	.incbin	"baserom.gba", 0x388970, 0x8
-	.word	gUnk_083887B4
-	.word	gUnk_083888D8
+	.word	gLevel4Stage5Room3MetatileMap
+	.word	gLevel4Stage5Room3BlockLayer
 	.word	gUnk_08388924
 	.incbin	"baserom.gba", 0x388984, 0x4
 	.word	gUnk_0853E318
@@ -5602,28 +5602,28 @@ gLevel4Stage5Room3:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x3889A4, 0x10
-	.word	gUnk_0838894C
+	.word	gLevel4Stage5Room3Doors
 	.incbin	"baserom.gba", 0x3889B8, 0x10
-	.global	gUnk_083889C8
-gUnk_083889C8:
+	.global	gLevel4Stage5Room4MetatileMap
+gLevel4Stage5Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3889C8, 0x190
-	.global	gUnk_08388B58
-gUnk_08388B58:
+	.global	gLevel4Stage5Room4BlockLayer
+gLevel4Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x388B58, 0x34
 	.global	gUnk_08388B8C
 gUnk_08388B8C:
 	.incbin	"baserom.gba", 0x388B8C, 0x8
-	.global	gUnk_08388B94
-gUnk_08388B94:
+	.global	gLevel4Stage5Room4Doors
+gLevel4Stage5Room4Doors:
 	.incbin	"baserom.gba", 0x388B94, 0xC
-	.global	gUnk_08388BA0
-gUnk_08388BA0:
+	.global	gLevel4Stage5Room4Objects
+gLevel4Stage5Room4Objects:
 	.incbin	"baserom.gba", 0x388BA0, 0x18
 	.global	gLevel4Stage5Room4
 gLevel4Stage5Room4:
 	.incbin	"baserom.gba", 0x388BB8, 0x8
-	.word	gUnk_083889C8
-	.word	gUnk_08388B58
+	.word	gLevel4Stage5Room4MetatileMap
+	.word	gLevel4Stage5Room4BlockLayer
 	.word	gUnk_08388B8C
 	.incbin	"baserom.gba", 0x388BCC, 0x4
 	.word	gUnk_0852D18C
@@ -5634,55 +5634,55 @@ gLevel4Stage5Room4:
 	.word	gUnk_08511CDC
 	.word	gUnk_085113C0
 	.incbin	"baserom.gba", 0x388BEC, 0x10
-	.word	gUnk_08388B94
-	.word	gUnk_08388BA0
+	.word	gLevel4Stage5Room4Doors
+	.word	gLevel4Stage5Room4Objects
 	.incbin	"baserom.gba", 0x388C04, 0xC
-	.global	gUnk_08388C10
-gUnk_08388C10:
+	.global	gLevel4Stage6Room0MetatileMap
+gLevel4Stage6Room0MetatileMap:
 	.incbin	"baserom.gba", 0x388C10, 0x47C
-	.global	gUnk_0838908C
-gUnk_0838908C:
+	.global	gLevel4Stage6Room0BlockLayer
+gLevel4Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38908C, 0x1EC
 	.global	gUnk_08389278
 gUnk_08389278:
 	.incbin	"baserom.gba", 0x389278, 0xC
-	.global	gUnk_08389284
-gUnk_08389284:
+	.global	gLevel4Stage6Room0Objects
+gLevel4Stage6Room0Objects:
 	.incbin	"baserom.gba", 0x389284, 0x8
 	.global	gLevel4Stage6Room0
 gLevel4Stage6Room0:
 	.incbin	"baserom.gba", 0x38928C, 0x8
-	.word	gUnk_08388C10
-	.word	gUnk_0838908C
+	.word	gLevel4Stage6Room0MetatileMap
+	.word	gLevel4Stage6Room0BlockLayer
 	.word	gUnk_08389278
 	.incbin	"baserom.gba", 0x3892A0, 0x4
-	.word	gUnk_084BABB0
-	.word	gUnk_084B8ED0
-	.word	gUnk_084B8C88
+	.word	gLevel4Stage6Room0Bg2Palette
+	.word	gLevel4Stage6Room0Bg2Tiles
+	.word	gLevel4Stage6Room0MetatileTiles
 	.incbin	"baserom.gba", 0x3892B0, 0x4
 	.word	gUnk_08524FEC
 	.word	gUnk_08525A0C
 	.word	gUnk_085250F0
 	.incbin	"baserom.gba", 0x3892C0, 0x14
-	.word	gUnk_08389284
+	.word	gLevel4Stage6Room0Objects
 	.incbin	"baserom.gba", 0x3892D8, 0xC
-	.global	gUnk_083892E4
-gUnk_083892E4:
+	.global	gLevel4Stage6Room1MetatileMap
+gLevel4Stage6Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3892E4, 0xB4
-	.global	gUnk_08389398
-gUnk_08389398:
+	.global	gLevel4Stage6Room1BlockLayer
+gLevel4Stage6Room1BlockLayer:
 	.incbin	"baserom.gba", 0x389398, 0x34
 	.global	gUnk_083893CC
 gUnk_083893CC:
 	.incbin	"baserom.gba", 0x3893CC, 0x8
-	.global	gUnk_083893D4
-gUnk_083893D4:
+	.global	gLevel4Stage6Room1Objects
+gLevel4Stage6Room1Objects:
 	.incbin	"baserom.gba", 0x3893D4, 0x8
 	.global	gLevel4Stage6Room1
 gLevel4Stage6Room1:
 	.incbin	"baserom.gba", 0x3893DC, 0x8
-	.word	gUnk_083892E4
-	.word	gUnk_08389398
+	.word	gLevel4Stage6Room1MetatileMap
+	.word	gLevel4Stage6Room1BlockLayer
 	.word	gUnk_083893CC
 	.incbin	"baserom.gba", 0x3893F0, 0x4
 	.word	gUnk_0849A52C
@@ -5693,28 +5693,28 @@ gLevel4Stage6Room1:
 	.word	gUnk_08525A0C
 	.word	gUnk_085250F0
 	.incbin	"baserom.gba", 0x389410, 0x14
-	.word	gUnk_083893D4
+	.word	gLevel4Stage6Room1Objects
 	.incbin	"baserom.gba", 0x389428, 0xC
-	.global	gUnk_08389434
-gUnk_08389434:
+	.global	gLevel5Stage0Room0MetatileMap
+gLevel5Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x389434, 0x474
-	.global	gUnk_083898A8
-gUnk_083898A8:
+	.global	gLevel5Stage0Room0BlockLayer
+gLevel5Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3898A8, 0x114
 	.global	gUnk_083899BC
 gUnk_083899BC:
 	.incbin	"baserom.gba", 0x3899BC, 0x14
-	.global	gUnk_083899D0
-gUnk_083899D0:
+	.global	gLevel5Stage0Room0Doors
+gLevel5Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x3899D0, 0x18
-	.global	gUnk_083899E8
-gUnk_083899E8:
+	.global	gLevel5Stage0Room0Objects
+gLevel5Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x3899E8, 0x78
 	.global	gLevel5Stage0Room0
 gLevel5Stage0Room0:
 	.incbin	"baserom.gba", 0x389A60, 0x8
-	.word	gUnk_08389434
-	.word	gUnk_083898A8
+	.word	gLevel5Stage0Room0MetatileMap
+	.word	gLevel5Stage0Room0BlockLayer
 	.word	gUnk_083899BC
 	.incbin	"baserom.gba", 0x389A74, 0x4
 	.word	gUnk_08505A1C
@@ -5725,29 +5725,29 @@ gLevel5Stage0Room0:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x389A94, 0x10
-	.word	gUnk_083899D0
-	.word	gUnk_083899E8
+	.word	gLevel5Stage0Room0Doors
+	.word	gLevel5Stage0Room0Objects
 	.incbin	"baserom.gba", 0x389AAC, 0xC
-	.global	gUnk_08389AB8
-gUnk_08389AB8:
+	.global	gLevel5Stage0Room1MetatileMap
+gLevel5Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x389AB8, 0x2E8
-	.global	gUnk_08389DA0
-gUnk_08389DA0:
+	.global	gLevel5Stage0Room1BlockLayer
+gLevel5Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x389DA0, 0xF4
 	.global	gUnk_08389E94
 gUnk_08389E94:
 	.incbin	"baserom.gba", 0x389E94, 0x8
-	.global	gUnk_08389E9C
-gUnk_08389E9C:
+	.global	gLevel5Stage0Room1Doors
+gLevel5Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x389E9C, 0x18
-	.global	gUnk_08389EB4
-gUnk_08389EB4:
+	.global	gLevel5Stage0Room1Objects
+gLevel5Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x389EB4, 0x78
 	.global	gLevel5Stage0Room1
 gLevel5Stage0Room1:
 	.incbin	"baserom.gba", 0x389F2C, 0x8
-	.word	gUnk_08389AB8
-	.word	gUnk_08389DA0
+	.word	gLevel5Stage0Room1MetatileMap
+	.word	gLevel5Stage0Room1BlockLayer
 	.word	gUnk_08389E94
 	.incbin	"baserom.gba", 0x389F40, 0x4
 	.word	gUnk_0849AA04
@@ -5758,29 +5758,29 @@ gLevel5Stage0Room1:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x389F60, 0x10
-	.word	gUnk_08389E9C
-	.word	gUnk_08389EB4
+	.word	gLevel5Stage0Room1Doors
+	.word	gLevel5Stage0Room1Objects
 	.incbin	"baserom.gba", 0x389F78, 0xC
-	.global	gUnk_08389F84
-gUnk_08389F84:
+	.global	gLevel5Stage0Room2MetatileMap
+gLevel5Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x389F84, 0x334
-	.global	gUnk_0838A2B8
-gUnk_0838A2B8:
+	.global	gLevel5Stage0Room2BlockLayer
+gLevel5Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38A2B8, 0xCC
 	.global	gUnk_0838A384
 gUnk_0838A384:
 	.incbin	"baserom.gba", 0x38A384, 0x8
-	.global	gUnk_0838A38C
-gUnk_0838A38C:
+	.global	gLevel5Stage0Room2Doors
+gLevel5Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x38A38C, 0xC
-	.global	gUnk_0838A398
-gUnk_0838A398:
+	.global	gLevel5Stage0Room2Objects
+gLevel5Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x38A398, 0x88
 	.global	gLevel5Stage0Room2
 gLevel5Stage0Room2:
 	.incbin	"baserom.gba", 0x38A420, 0x8
-	.word	gUnk_08389F84
-	.word	gUnk_0838A2B8
+	.word	gLevel5Stage0Room2MetatileMap
+	.word	gLevel5Stage0Room2BlockLayer
 	.word	gUnk_0838A384
 	.incbin	"baserom.gba", 0x38A434, 0x4
 	.word	gUnk_08505A1C
@@ -5791,29 +5791,29 @@ gLevel5Stage0Room2:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x38A454, 0x10
-	.word	gUnk_0838A38C
-	.word	gUnk_0838A398
+	.word	gLevel5Stage0Room2Doors
+	.word	gLevel5Stage0Room2Objects
 	.incbin	"baserom.gba", 0x38A46C, 0xC
-	.global	gUnk_0838A478
-gUnk_0838A478:
+	.global	gLevel5Stage0Room3MetatileMap
+gLevel5Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x38A478, 0x16C
-	.global	gUnk_0838A5E4
-gUnk_0838A5E4:
+	.global	gLevel5Stage0Room3BlockLayer
+gLevel5Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38A5E4, 0x40
 	.global	gUnk_0838A624
 gUnk_0838A624:
 	.incbin	"baserom.gba", 0x38A624, 0x1C
-	.global	gUnk_0838A640
-gUnk_0838A640:
+	.global	gLevel5Stage0Room3Doors
+gLevel5Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x38A640, 0x18
-	.global	gUnk_0838A658
-gUnk_0838A658:
+	.global	gLevel5Stage0Room3Objects
+gLevel5Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x38A658, 0x10
 	.global	gLevel5Stage0Room3
 gLevel5Stage0Room3:
 	.incbin	"baserom.gba", 0x38A668, 0x8
-	.word	gUnk_0838A478
-	.word	gUnk_0838A5E4
+	.word	gLevel5Stage0Room3MetatileMap
+	.word	gLevel5Stage0Room3BlockLayer
 	.word	gUnk_0838A624
 	.incbin	"baserom.gba", 0x38A67C, 0x4
 	.word	gUnk_0849A5F0
@@ -5824,29 +5824,29 @@ gLevel5Stage0Room3:
 	.word	gUnk_083DB044
 	.word	gUnk_083B5E54
 	.incbin	"baserom.gba", 0x38A69C, 0x10
-	.word	gUnk_0838A640
-	.word	gUnk_0838A658
+	.word	gLevel5Stage0Room3Doors
+	.word	gLevel5Stage0Room3Objects
 	.incbin	"baserom.gba", 0x38A6B4, 0xC
-	.global	gUnk_0838A6C0
-gUnk_0838A6C0:
+	.global	gLevel5Stage0Room4MetatileMap
+gLevel5Stage0Room4MetatileMap:
 	.incbin	"baserom.gba", 0x38A6C0, 0x14C
-	.global	gUnk_0838A80C
-gUnk_0838A80C:
+	.global	gLevel5Stage0Room4BlockLayer
+gLevel5Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38A80C, 0x34
 	.global	gUnk_0838A840
 gUnk_0838A840:
 	.incbin	"baserom.gba", 0x38A840, 0x8
-	.global	gUnk_0838A848
-gUnk_0838A848:
+	.global	gLevel5Stage0Room4Doors
+gLevel5Stage0Room4Doors:
 	.incbin	"baserom.gba", 0x38A848, 0xC
-	.global	gUnk_0838A854
-gUnk_0838A854:
+	.global	gLevel5Stage0Room4Objects
+gLevel5Stage0Room4Objects:
 	.incbin	"baserom.gba", 0x38A854, 0x8
 	.global	gLevel5Stage0Room4
 gLevel5Stage0Room4:
 	.incbin	"baserom.gba", 0x38A85C, 0x8
-	.word	gUnk_0838A6C0
-	.word	gUnk_0838A80C
+	.word	gLevel5Stage0Room4MetatileMap
+	.word	gLevel5Stage0Room4BlockLayer
 	.word	gUnk_0838A840
 	.incbin	"baserom.gba", 0x38A870, 0x4
 	.word	gUnk_084BAFA4
@@ -5857,29 +5857,29 @@ gLevel5Stage0Room4:
 	.word	gUnk_083DB044
 	.word	gUnk_083B5E54
 	.incbin	"baserom.gba", 0x38A890, 0x10
-	.word	gUnk_0838A848
-	.word	gUnk_0838A854
+	.word	gLevel5Stage0Room4Doors
+	.word	gLevel5Stage0Room4Objects
 	.incbin	"baserom.gba", 0x38A8A8, 0xC
-	.global	gUnk_0838A8B4
-gUnk_0838A8B4:
+	.global	gLevel5Stage0Room5MetatileMap
+gLevel5Stage0Room5MetatileMap:
 	.incbin	"baserom.gba", 0x38A8B4, 0xC4
-	.global	gUnk_0838A978
-gUnk_0838A978:
+	.global	gLevel5Stage0Room5BlockLayer
+gLevel5Stage0Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38A978, 0x34
 	.global	gUnk_0838A9AC
 gUnk_0838A9AC:
 	.incbin	"baserom.gba", 0x38A9AC, 0x8
-	.global	gUnk_0838A9B4
-gUnk_0838A9B4:
+	.global	gLevel5Stage0Room5Doors
+gLevel5Stage0Room5Doors:
 	.incbin	"baserom.gba", 0x38A9B4, 0xC
-	.global	gUnk_0838A9C0
-gUnk_0838A9C0:
+	.global	gLevel5Stage0Room5Objects
+gLevel5Stage0Room5Objects:
 	.incbin	"baserom.gba", 0x38A9C0, 0x10
 	.global	gLevel5Stage0Room5
 gLevel5Stage0Room5:
 	.incbin	"baserom.gba", 0x38A9D0, 0x8
-	.word	gUnk_0838A8B4
-	.word	gUnk_0838A978
+	.word	gLevel5Stage0Room5MetatileMap
+	.word	gLevel5Stage0Room5BlockLayer
 	.word	gUnk_0838A9AC
 	.incbin	"baserom.gba", 0x38A9E4, 0x4
 	.word	gUnk_08505A1C
@@ -5890,32 +5890,32 @@ gLevel5Stage0Room5:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x38AA04, 0x10
-	.word	gUnk_0838A9B4
-	.word	gUnk_0838A9C0
+	.word	gLevel5Stage0Room5Doors
+	.word	gLevel5Stage0Room5Objects
 	.incbin	"baserom.gba", 0x38AA1C, 0xC
-	.global	gUnk_0838AA28
-gUnk_0838AA28:
+	.global	gLevel5Stage1Room0MetatileMap
+gLevel5Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x38AA28, 0x358
-	.global	gUnk_0838AD80
-gUnk_0838AD80:
+	.global	gLevel5Stage1Room0BlockLayer
+gLevel5Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38AD80, 0xE8
 	.global	gUnk_0838AE68
 gUnk_0838AE68:
 	.incbin	"baserom.gba", 0x38AE68, 0x40
-	.global	gUnk_0838AEA8
-gUnk_0838AEA8:
+	.global	gLevel5Stage1Room0Doors
+gLevel5Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x38AEA8, 0x18
-	.global	gUnk_0838AEC0
-gUnk_0838AEC0:
+	.global	gLevel5Stage1Room0Objects
+gLevel5Stage1Room0Objects:
 	.incbin	"baserom.gba", 0x38AEC0, 0x60
 	.global	gLevel5Stage1Room0
 gLevel5Stage1Room0:
 	.incbin	"baserom.gba", 0x38AF20, 0x8
-	.word	gUnk_0838AA28
-	.word	gUnk_0838AD80
+	.word	gLevel5Stage1Room0MetatileMap
+	.word	gLevel5Stage1Room0BlockLayer
 	.word	gUnk_0838AE68
 	.incbin	"baserom.gba", 0x38AF34, 0x4
-	.word	gUnk_08510EA8
+	.word	gLevel5Stage1Room0Bg2Palette
 	.word	gUnk_0843A824
 	.word	gUnk_083B0700
 	.incbin	"baserom.gba", 0x38AF44, 0x4
@@ -5923,29 +5923,29 @@ gLevel5Stage1Room0:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x38AF54, 0x10
-	.word	gUnk_0838AEA8
-	.word	gUnk_0838AEC0
+	.word	gLevel5Stage1Room0Doors
+	.word	gLevel5Stage1Room0Objects
 	.incbin	"baserom.gba", 0x38AF6C, 0xC
-	.global	gUnk_0838AF78
-gUnk_0838AF78:
+	.global	gLevel5Stage1Room1MetatileMap
+gLevel5Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x38AF78, 0x2E4
-	.global	gUnk_0838B25C
-gUnk_0838B25C:
+	.global	gLevel5Stage1Room1BlockLayer
+gLevel5Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x38B25C, 0xB8
 	.global	gUnk_0838B314
 gUnk_0838B314:
 	.incbin	"baserom.gba", 0x38B314, 0x8
-	.global	gUnk_0838B31C
-gUnk_0838B31C:
+	.global	gLevel5Stage1Room1Doors
+gLevel5Stage1Room1Doors:
 	.incbin	"baserom.gba", 0x38B31C, 0x18
-	.global	gUnk_0838B334
-gUnk_0838B334:
+	.global	gLevel5Stage1Room1Objects
+gLevel5Stage1Room1Objects:
 	.incbin	"baserom.gba", 0x38B334, 0x60
 	.global	gLevel5Stage1Room1
 gLevel5Stage1Room1:
 	.incbin	"baserom.gba", 0x38B394, 0x8
-	.word	gUnk_0838AF78
-	.word	gUnk_0838B25C
+	.word	gLevel5Stage1Room1MetatileMap
+	.word	gLevel5Stage1Room1BlockLayer
 	.word	gUnk_0838B314
 	.incbin	"baserom.gba", 0x38B3A8, 0x4
 	.word	gUnk_0852D3D8
@@ -5956,29 +5956,29 @@ gLevel5Stage1Room1:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x38B3C8, 0x10
-	.word	gUnk_0838B31C
-	.word	gUnk_0838B334
+	.word	gLevel5Stage1Room1Doors
+	.word	gLevel5Stage1Room1Objects
 	.incbin	"baserom.gba", 0x38B3E0, 0xC
-	.global	gUnk_0838B3EC
-gUnk_0838B3EC:
+	.global	gLevel5Stage1Room2MetatileMap
+gLevel5Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x38B3EC, 0x248
-	.global	gUnk_0838B634
-gUnk_0838B634:
+	.global	gLevel5Stage1Room2BlockLayer
+gLevel5Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38B634, 0x90
 	.global	gUnk_0838B6C4
 gUnk_0838B6C4:
 	.incbin	"baserom.gba", 0x38B6C4, 0x8
-	.global	gUnk_0838B6CC
-gUnk_0838B6CC:
+	.global	gLevel5Stage1Room2Doors
+gLevel5Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x38B6CC, 0x18
-	.global	gUnk_0838B6E4
-gUnk_0838B6E4:
+	.global	gLevel5Stage1Room2Objects
+gLevel5Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x38B6E4, 0x60
 	.global	gLevel5Stage1Room2
 gLevel5Stage1Room2:
 	.incbin	"baserom.gba", 0x38B744, 0x8
-	.word	gUnk_0838B3EC
-	.word	gUnk_0838B634
+	.word	gLevel5Stage1Room2MetatileMap
+	.word	gLevel5Stage1Room2BlockLayer
 	.word	gUnk_0838B6C4
 	.incbin	"baserom.gba", 0x38B758, 0x4
 	.word	gUnk_0849AA04
@@ -5989,29 +5989,29 @@ gLevel5Stage1Room2:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x38B778, 0x10
-	.word	gUnk_0838B6CC
-	.word	gUnk_0838B6E4
+	.word	gLevel5Stage1Room2Doors
+	.word	gLevel5Stage1Room2Objects
 	.incbin	"baserom.gba", 0x38B790, 0xC
-	.global	gUnk_0838B79C
-gUnk_0838B79C:
+	.global	gLevel5Stage1Room3MetatileMap
+gLevel5Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x38B79C, 0x27C
-	.global	gUnk_0838BA18
-gUnk_0838BA18:
+	.global	gLevel5Stage1Room3BlockLayer
+gLevel5Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38BA18, 0xD0
 	.global	gUnk_0838BAE8
 gUnk_0838BAE8:
 	.incbin	"baserom.gba", 0x38BAE8, 0x10
-	.global	gUnk_0838BAF8
-gUnk_0838BAF8:
+	.global	gLevel5Stage1Room3Doors
+gLevel5Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x38BAF8, 0xC
-	.global	gUnk_0838BB04
-gUnk_0838BB04:
+	.global	gLevel5Stage1Room3Objects
+gLevel5Stage1Room3Objects:
 	.incbin	"baserom.gba", 0x38BB04, 0x70
 	.global	gLevel5Stage1Room3
 gLevel5Stage1Room3:
 	.incbin	"baserom.gba", 0x38BB74, 0x8
-	.word	gUnk_0838B79C
-	.word	gUnk_0838BA18
+	.word	gLevel5Stage1Room3MetatileMap
+	.word	gLevel5Stage1Room3BlockLayer
 	.word	gUnk_0838BAE8
 	.incbin	"baserom.gba", 0x38BB88, 0x4
 	.word	gUnk_08505A1C
@@ -6022,29 +6022,29 @@ gLevel5Stage1Room3:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x38BBA8, 0x10
-	.word	gUnk_0838BAF8
-	.word	gUnk_0838BB04
+	.word	gLevel5Stage1Room3Doors
+	.word	gLevel5Stage1Room3Objects
 	.incbin	"baserom.gba", 0x38BBC0, 0xC
-	.global	gUnk_0838BBCC
-gUnk_0838BBCC:
+	.global	gLevel5Stage1Room4MetatileMap
+gLevel5Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x38BBCC, 0xE4
-	.global	gUnk_0838BCB0
-gUnk_0838BCB0:
+	.global	gLevel5Stage1Room4BlockLayer
+gLevel5Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38BCB0, 0x44
 	.global	gUnk_0838BCF4
 gUnk_0838BCF4:
 	.incbin	"baserom.gba", 0x38BCF4, 0x28
-	.global	gUnk_0838BD1C
-gUnk_0838BD1C:
+	.global	gLevel5Stage1Room4Doors
+gLevel5Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x38BD1C, 0x18
-	.global	gUnk_0838BD34
-gUnk_0838BD34:
+	.global	gLevel5Stage1Room4Objects
+gLevel5Stage1Room4Objects:
 	.incbin	"baserom.gba", 0x38BD34, 0x18
 	.global	gLevel5Stage1Room4
 gLevel5Stage1Room4:
 	.incbin	"baserom.gba", 0x38BD4C, 0x8
-	.word	gUnk_0838BBCC
-	.word	gUnk_0838BCB0
+	.word	gLevel5Stage1Room4MetatileMap
+	.word	gLevel5Stage1Room4BlockLayer
 	.word	gUnk_0838BCF4
 	.incbin	"baserom.gba", 0x38BD60, 0x4
 	.word	gUnk_084B2F9C
@@ -6055,29 +6055,29 @@ gLevel5Stage1Room4:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x38BD80, 0x10
-	.word	gUnk_0838BD1C
-	.word	gUnk_0838BD34
+	.word	gLevel5Stage1Room4Doors
+	.word	gLevel5Stage1Room4Objects
 	.incbin	"baserom.gba", 0x38BD98, 0xC
-	.global	gUnk_0838BDA4
-gUnk_0838BDA4:
+	.global	gLevel5Stage1Room5MetatileMap
+gLevel5Stage1Room5MetatileMap:
 	.incbin	"baserom.gba", 0x38BDA4, 0x10C
-	.global	gUnk_0838BEB0
-gUnk_0838BEB0:
+	.global	gLevel5Stage1Room5BlockLayer
+gLevel5Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38BEB0, 0x34
 	.global	gUnk_0838BEE4
 gUnk_0838BEE4:
 	.incbin	"baserom.gba", 0x38BEE4, 0x8
-	.global	gUnk_0838BEEC
-gUnk_0838BEEC:
+	.global	gLevel5Stage1Room5Doors
+gLevel5Stage1Room5Doors:
 	.incbin	"baserom.gba", 0x38BEEC, 0x18
-	.global	gUnk_0838BF04
-gUnk_0838BF04:
+	.global	gLevel5Stage1Room5Objects
+gLevel5Stage1Room5Objects:
 	.incbin	"baserom.gba", 0x38BF04, 0x8
 	.global	gLevel5Stage1Room5
 gLevel5Stage1Room5:
 	.incbin	"baserom.gba", 0x38BF0C, 0x8
-	.word	gUnk_0838BDA4
-	.word	gUnk_0838BEB0
+	.word	gLevel5Stage1Room5MetatileMap
+	.word	gLevel5Stage1Room5BlockLayer
 	.word	gUnk_0838BEE4
 	.incbin	"baserom.gba", 0x38BF20, 0x4
 	.word	gUnk_084B2F9C
@@ -6088,29 +6088,29 @@ gLevel5Stage1Room5:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x38BF40, 0x10
-	.word	gUnk_0838BEEC
-	.word	gUnk_0838BF04
+	.word	gLevel5Stage1Room5Doors
+	.word	gLevel5Stage1Room5Objects
 	.incbin	"baserom.gba", 0x38BF58, 0xC
-	.global	gUnk_0838BF64
-gUnk_0838BF64:
+	.global	gLevel5Stage1Room6MetatileMap
+gLevel5Stage1Room6MetatileMap:
 	.incbin	"baserom.gba", 0x38BF64, 0xAC
-	.global	gUnk_0838C010
-gUnk_0838C010:
+	.global	gLevel5Stage1Room6BlockLayer
+gLevel5Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x38C010, 0x34
 	.global	gUnk_0838C044
 gUnk_0838C044:
 	.incbin	"baserom.gba", 0x38C044, 0x8
-	.global	gUnk_0838C04C
-gUnk_0838C04C:
+	.global	gLevel5Stage1Room6Doors
+gLevel5Stage1Room6Doors:
 	.incbin	"baserom.gba", 0x38C04C, 0xC
-	.global	gUnk_0838C058
-gUnk_0838C058:
+	.global	gLevel5Stage1Room6Objects
+gLevel5Stage1Room6Objects:
 	.incbin	"baserom.gba", 0x38C058, 0x10
 	.global	gLevel5Stage1Room6
 gLevel5Stage1Room6:
 	.incbin	"baserom.gba", 0x38C068, 0x8
-	.word	gUnk_0838BF64
-	.word	gUnk_0838C010
+	.word	gLevel5Stage1Room6MetatileMap
+	.word	gLevel5Stage1Room6BlockLayer
 	.word	gUnk_0838C044
 	.incbin	"baserom.gba", 0x38C07C, 0x4
 	.word	gUnk_0852D3D8
@@ -6121,29 +6121,29 @@ gLevel5Stage1Room6:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x38C09C, 0x10
-	.word	gUnk_0838C04C
-	.word	gUnk_0838C058
+	.word	gLevel5Stage1Room6Doors
+	.word	gLevel5Stage1Room6Objects
 	.incbin	"baserom.gba", 0x38C0B4, 0xC
-	.global	gUnk_0838C0C0
-gUnk_0838C0C0:
+	.global	gLevel5Stage2Room0MetatileMap
+gLevel5Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x38C0C0, 0x378
-	.global	gUnk_0838C438
-gUnk_0838C438:
+	.global	gLevel5Stage2Room0BlockLayer
+gLevel5Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38C438, 0xD4
 	.global	gUnk_0838C50C
 gUnk_0838C50C:
 	.incbin	"baserom.gba", 0x38C50C, 0x14
-	.global	gUnk_0838C520
-gUnk_0838C520:
+	.global	gLevel5Stage2Room0Doors
+gLevel5Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x38C520, 0xC
-	.global	gUnk_0838C52C
-gUnk_0838C52C:
+	.global	gLevel5Stage2Room0Objects
+gLevel5Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x38C52C, 0x48
 	.global	gLevel5Stage2Room0
 gLevel5Stage2Room0:
 	.incbin	"baserom.gba", 0x38C574, 0x8
-	.word	gUnk_0838C0C0
-	.word	gUnk_0838C438
+	.word	gLevel5Stage2Room0MetatileMap
+	.word	gLevel5Stage2Room0BlockLayer
 	.word	gUnk_0838C50C
 	.incbin	"baserom.gba", 0x38C588, 0x4
 	.word	gUnk_0852D6E8
@@ -6154,29 +6154,29 @@ gLevel5Stage2Room0:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38C5A8, 0x10
-	.word	gUnk_0838C520
-	.word	gUnk_0838C52C
+	.word	gLevel5Stage2Room0Doors
+	.word	gLevel5Stage2Room0Objects
 	.incbin	"baserom.gba", 0x38C5C0, 0xC
-	.global	gUnk_0838C5CC
-gUnk_0838C5CC:
+	.global	gLevel5Stage2Room1MetatileMap
+gLevel5Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x38C5CC, 0x32C
-	.global	gUnk_0838C8F8
-gUnk_0838C8F8:
+	.global	gLevel5Stage2Room1BlockLayer
+gLevel5Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x38C8F8, 0x120
 	.global	gUnk_0838CA18
 gUnk_0838CA18:
 	.incbin	"baserom.gba", 0x38CA18, 0xE4
-	.global	gUnk_0838CAFC
-gUnk_0838CAFC:
+	.global	gLevel5Stage2Room1Doors
+gLevel5Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x38CAFC, 0x24
-	.global	gUnk_0838CB20
-gUnk_0838CB20:
+	.global	gLevel5Stage2Room1Objects
+gLevel5Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x38CB20, 0x38
 	.global	gLevel5Stage2Room1
 gLevel5Stage2Room1:
 	.incbin	"baserom.gba", 0x38CB58, 0x8
-	.word	gUnk_0838C5CC
-	.word	gUnk_0838C8F8
+	.word	gLevel5Stage2Room1MetatileMap
+	.word	gLevel5Stage2Room1BlockLayer
 	.word	gUnk_0838CA18
 	.incbin	"baserom.gba", 0x38CB6C, 0x4
 	.word	gUnk_0852D560
@@ -6187,29 +6187,29 @@ gLevel5Stage2Room1:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38CB8C, 0x10
-	.word	gUnk_0838CAFC
-	.word	gUnk_0838CB20
+	.word	gLevel5Stage2Room1Doors
+	.word	gLevel5Stage2Room1Objects
 	.incbin	"baserom.gba", 0x38CBA4, 0xC
-	.global	gUnk_0838CBB0
-gUnk_0838CBB0:
+	.global	gLevel5Stage2Room2MetatileMap
+gLevel5Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x38CBB0, 0x430
-	.global	gUnk_0838CFE0
-gUnk_0838CFE0:
+	.global	gLevel5Stage2Room2BlockLayer
+gLevel5Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38CFE0, 0xEC
 	.global	gUnk_0838D0CC
 gUnk_0838D0CC:
 	.incbin	"baserom.gba", 0x38D0CC, 0x8
-	.global	gUnk_0838D0D4
-gUnk_0838D0D4:
+	.global	gLevel5Stage2Room2Doors
+gLevel5Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x38D0D4, 0x54
-	.global	gUnk_0838D128
-gUnk_0838D128:
+	.global	gLevel5Stage2Room2Objects
+gLevel5Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x38D128, 0x68
 	.global	gLevel5Stage2Room2
 gLevel5Stage2Room2:
 	.incbin	"baserom.gba", 0x38D190, 0x8
-	.word	gUnk_0838CBB0
-	.word	gUnk_0838CFE0
+	.word	gLevel5Stage2Room2MetatileMap
+	.word	gLevel5Stage2Room2BlockLayer
 	.word	gUnk_0838D0CC
 	.incbin	"baserom.gba", 0x38D1A4, 0x4
 	.word	gUnk_0852D6E8
@@ -6220,29 +6220,29 @@ gLevel5Stage2Room2:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38D1C4, 0x10
-	.word	gUnk_0838D0D4
-	.word	gUnk_0838D128
+	.word	gLevel5Stage2Room2Doors
+	.word	gLevel5Stage2Room2Objects
 	.incbin	"baserom.gba", 0x38D1DC, 0xC
-	.global	gUnk_0838D1E8
-gUnk_0838D1E8:
+	.global	gLevel5Stage2Room3MetatileMap
+gLevel5Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x38D1E8, 0x40C
-	.global	gUnk_0838D5F4
-gUnk_0838D5F4:
+	.global	gLevel5Stage2Room3BlockLayer
+gLevel5Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38D5F4, 0x198
 	.global	gUnk_0838D78C
 gUnk_0838D78C:
 	.incbin	"baserom.gba", 0x38D78C, 0x14
-	.global	gUnk_0838D7A0
-gUnk_0838D7A0:
+	.global	gLevel5Stage2Room3Doors
+gLevel5Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x38D7A0, 0xC
-	.global	gUnk_0838D7AC
-gUnk_0838D7AC:
+	.global	gLevel5Stage2Room3Objects
+gLevel5Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x38D7AC, 0x50
 	.global	gLevel5Stage2Room3
 gLevel5Stage2Room3:
 	.incbin	"baserom.gba", 0x38D7FC, 0x8
-	.word	gUnk_0838D1E8
-	.word	gUnk_0838D5F4
+	.word	gLevel5Stage2Room3MetatileMap
+	.word	gLevel5Stage2Room3BlockLayer
 	.word	gUnk_0838D78C
 	.incbin	"baserom.gba", 0x38D810, 0x4
 	.word	gUnk_0852D6E8
@@ -6253,29 +6253,29 @@ gLevel5Stage2Room3:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38D830, 0x10
-	.word	gUnk_0838D7A0
-	.word	gUnk_0838D7AC
+	.word	gLevel5Stage2Room3Doors
+	.word	gLevel5Stage2Room3Objects
 	.incbin	"baserom.gba", 0x38D848, 0xC
-	.global	gUnk_0838D854
-gUnk_0838D854:
+	.global	gLevel5Stage2Room4MetatileMap
+gLevel5Stage2Room4MetatileMap:
 	.incbin	"baserom.gba", 0x38D854, 0x284
-	.global	gUnk_0838DAD8
-gUnk_0838DAD8:
+	.global	gLevel5Stage2Room4BlockLayer
+gLevel5Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38DAD8, 0x9C
 	.global	gUnk_0838DB74
 gUnk_0838DB74:
 	.incbin	"baserom.gba", 0x38DB74, 0x8
-	.global	gUnk_0838DB7C
-gUnk_0838DB7C:
+	.global	gLevel5Stage2Room4Doors
+gLevel5Stage2Room4Doors:
 	.incbin	"baserom.gba", 0x38DB7C, 0x18
-	.global	gUnk_0838DB94
-gUnk_0838DB94:
+	.global	gLevel5Stage2Room4Objects
+gLevel5Stage2Room4Objects:
 	.incbin	"baserom.gba", 0x38DB94, 0x58
 	.global	gLevel5Stage2Room4
 gLevel5Stage2Room4:
 	.incbin	"baserom.gba", 0x38DBEC, 0x8
-	.word	gUnk_0838D854
-	.word	gUnk_0838DAD8
+	.word	gLevel5Stage2Room4MetatileMap
+	.word	gLevel5Stage2Room4BlockLayer
 	.word	gUnk_0838DB74
 	.incbin	"baserom.gba", 0x38DC00, 0x4
 	.word	gUnk_08505A1C
@@ -6286,26 +6286,26 @@ gLevel5Stage2Room4:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38DC20, 0x10
-	.word	gUnk_0838DB7C
-	.word	gUnk_0838DB94
+	.word	gLevel5Stage2Room4Doors
+	.word	gLevel5Stage2Room4Objects
 	.incbin	"baserom.gba", 0x38DC38, 0xC
-	.global	gUnk_0838DC44
-gUnk_0838DC44:
+	.global	gLevel5Stage2Room5MetatileMap
+gLevel5Stage2Room5MetatileMap:
 	.incbin	"baserom.gba", 0x38DC44, 0xA8
-	.global	gUnk_0838DCEC
-gUnk_0838DCEC:
+	.global	gLevel5Stage2Room5BlockLayer
+gLevel5Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38DCEC, 0x58
 	.global	gUnk_0838DD44
 gUnk_0838DD44:
 	.incbin	"baserom.gba", 0x38DD44, 0x8
-	.global	gUnk_0838DD4C
-gUnk_0838DD4C:
+	.global	gLevel5Stage2Room5Doors
+gLevel5Stage2Room5Doors:
 	.incbin	"baserom.gba", 0x38DD4C, 0xC
 	.global	gLevel5Stage2Room5
 gLevel5Stage2Room5:
 	.incbin	"baserom.gba", 0x38DD58, 0x8
-	.word	gUnk_0838DC44
-	.word	gUnk_0838DCEC
+	.word	gLevel5Stage2Room5MetatileMap
+	.word	gLevel5Stage2Room5BlockLayer
 	.word	gUnk_0838DD44
 	.incbin	"baserom.gba", 0x38DD6C, 0x4
 	.word	gUnk_0852D560
@@ -6316,28 +6316,28 @@ gLevel5Stage2Room5:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38DD8C, 0x10
-	.word	gUnk_0838DD4C
+	.word	gLevel5Stage2Room5Doors
 	.incbin	"baserom.gba", 0x38DDA0, 0x10
-	.global	gUnk_0838DDB0
-gUnk_0838DDB0:
+	.global	gLevel5Stage2Room6MetatileMap
+gLevel5Stage2Room6MetatileMap:
 	.incbin	"baserom.gba", 0x38DDB0, 0xB8
-	.global	gUnk_0838DE68
-gUnk_0838DE68:
+	.global	gLevel5Stage2Room6BlockLayer
+gLevel5Stage2Room6BlockLayer:
 	.incbin	"baserom.gba", 0x38DE68, 0x34
 	.global	gUnk_0838DE9C
 gUnk_0838DE9C:
 	.incbin	"baserom.gba", 0x38DE9C, 0x8
-	.global	gUnk_0838DEA4
-gUnk_0838DEA4:
+	.global	gLevel5Stage2Room6Doors
+gLevel5Stage2Room6Doors:
 	.incbin	"baserom.gba", 0x38DEA4, 0x18
-	.global	gUnk_0838DEBC
-gUnk_0838DEBC:
+	.global	gLevel5Stage2Room6Objects
+gLevel5Stage2Room6Objects:
 	.incbin	"baserom.gba", 0x38DEBC, 0x8
 	.global	gLevel5Stage2Room6
 gLevel5Stage2Room6:
 	.incbin	"baserom.gba", 0x38DEC4, 0x8
-	.word	gUnk_0838DDB0
-	.word	gUnk_0838DE68
+	.word	gLevel5Stage2Room6MetatileMap
+	.word	gLevel5Stage2Room6BlockLayer
 	.word	gUnk_0838DE9C
 	.incbin	"baserom.gba", 0x38DED8, 0x4
 	.word	gUnk_0852D560
@@ -6348,29 +6348,29 @@ gLevel5Stage2Room6:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38DEF8, 0x10
-	.word	gUnk_0838DEA4
-	.word	gUnk_0838DEBC
+	.word	gLevel5Stage2Room6Doors
+	.word	gLevel5Stage2Room6Objects
 	.incbin	"baserom.gba", 0x38DF10, 0xC
-	.global	gUnk_0838DF1C
-gUnk_0838DF1C:
+	.global	gLevel5Stage2Room7MetatileMap
+gLevel5Stage2Room7MetatileMap:
 	.incbin	"baserom.gba", 0x38DF1C, 0xB8
-	.global	gUnk_0838DFD4
-gUnk_0838DFD4:
+	.global	gLevel5Stage2Room7BlockLayer
+gLevel5Stage2Room7BlockLayer:
 	.incbin	"baserom.gba", 0x38DFD4, 0x34
 	.global	gUnk_0838E008
 gUnk_0838E008:
 	.incbin	"baserom.gba", 0x38E008, 0x8
-	.global	gUnk_0838E010
-gUnk_0838E010:
+	.global	gLevel5Stage2Room7Doors
+gLevel5Stage2Room7Doors:
 	.incbin	"baserom.gba", 0x38E010, 0x18
-	.global	gUnk_0838E028
-gUnk_0838E028:
+	.global	gLevel5Stage2Room7Objects
+gLevel5Stage2Room7Objects:
 	.incbin	"baserom.gba", 0x38E028, 0x10
 	.global	gLevel5Stage2Room7
 gLevel5Stage2Room7:
 	.incbin	"baserom.gba", 0x38E038, 0x8
-	.word	gUnk_0838DF1C
-	.word	gUnk_0838DFD4
+	.word	gLevel5Stage2Room7MetatileMap
+	.word	gLevel5Stage2Room7BlockLayer
 	.word	gUnk_0838E008
 	.incbin	"baserom.gba", 0x38E04C, 0x4
 	.word	gUnk_0852D560
@@ -6381,29 +6381,29 @@ gLevel5Stage2Room7:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38E06C, 0x10
-	.word	gUnk_0838E010
-	.word	gUnk_0838E028
+	.word	gLevel5Stage2Room7Doors
+	.word	gLevel5Stage2Room7Objects
 	.incbin	"baserom.gba", 0x38E084, 0xC
-	.global	gUnk_0838E090
-gUnk_0838E090:
+	.global	gLevel5Stage2Room8MetatileMap
+gLevel5Stage2Room8MetatileMap:
 	.incbin	"baserom.gba", 0x38E090, 0x164
-	.global	gUnk_0838E1F4
-gUnk_0838E1F4:
+	.global	gLevel5Stage2Room8BlockLayer
+gLevel5Stage2Room8BlockLayer:
 	.incbin	"baserom.gba", 0x38E1F4, 0x48
 	.global	gUnk_0838E23C
 gUnk_0838E23C:
 	.incbin	"baserom.gba", 0x38E23C, 0x50
-	.global	gUnk_0838E28C
-gUnk_0838E28C:
+	.global	gLevel5Stage2Room8Doors
+gLevel5Stage2Room8Doors:
 	.incbin	"baserom.gba", 0x38E28C, 0x24
-	.global	gUnk_0838E2B0
-gUnk_0838E2B0:
+	.global	gLevel5Stage2Room8Objects
+gLevel5Stage2Room8Objects:
 	.incbin	"baserom.gba", 0x38E2B0, 0x18
 	.global	gLevel5Stage2Room8
 gLevel5Stage2Room8:
 	.incbin	"baserom.gba", 0x38E2C8, 0x8
-	.word	gUnk_0838E090
-	.word	gUnk_0838E1F4
+	.word	gLevel5Stage2Room8MetatileMap
+	.word	gLevel5Stage2Room8BlockLayer
 	.word	gUnk_0838E23C
 	.incbin	"baserom.gba", 0x38E2DC, 0x4
 	.word	gUnk_0852D560
@@ -6414,29 +6414,29 @@ gLevel5Stage2Room8:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38E2FC, 0x10
-	.word	gUnk_0838E28C
-	.word	gUnk_0838E2B0
+	.word	gLevel5Stage2Room8Doors
+	.word	gLevel5Stage2Room8Objects
 	.incbin	"baserom.gba", 0x38E314, 0xC
-	.global	gUnk_0838E320
-gUnk_0838E320:
+	.global	gLevel5Stage2Room9MetatileMap
+gLevel5Stage2Room9MetatileMap:
 	.incbin	"baserom.gba", 0x38E320, 0xE4
-	.global	gUnk_0838E404
-gUnk_0838E404:
+	.global	gLevel5Stage2Room9BlockLayer
+gLevel5Stage2Room9BlockLayer:
 	.incbin	"baserom.gba", 0x38E404, 0x38
 	.global	gUnk_0838E43C
 gUnk_0838E43C:
 	.incbin	"baserom.gba", 0x38E43C, 0x8
-	.global	gUnk_0838E444
-gUnk_0838E444:
+	.global	gLevel5Stage2Room9Doors
+gLevel5Stage2Room9Doors:
 	.incbin	"baserom.gba", 0x38E444, 0x24
-	.global	gUnk_0838E468
-gUnk_0838E468:
+	.global	gLevel5Stage2Room9Objects
+gLevel5Stage2Room9Objects:
 	.incbin	"baserom.gba", 0x38E468, 0x10
 	.global	gLevel5Stage2Room9
 gLevel5Stage2Room9:
 	.incbin	"baserom.gba", 0x38E478, 0x8
-	.word	gUnk_0838E320
-	.word	gUnk_0838E404
+	.word	gLevel5Stage2Room9MetatileMap
+	.word	gLevel5Stage2Room9BlockLayer
 	.word	gUnk_0838E43C
 	.incbin	"baserom.gba", 0x38E48C, 0x4
 	.word	gUnk_0852D560
@@ -6447,29 +6447,29 @@ gLevel5Stage2Room9:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38E4AC, 0x10
-	.word	gUnk_0838E444
-	.word	gUnk_0838E468
+	.word	gLevel5Stage2Room9Doors
+	.word	gLevel5Stage2Room9Objects
 	.incbin	"baserom.gba", 0x38E4C4, 0xC
-	.global	gUnk_0838E4D0
-gUnk_0838E4D0:
+	.global	gLevel5Stage2Room10MetatileMap
+gLevel5Stage2Room10MetatileMap:
 	.incbin	"baserom.gba", 0x38E4D0, 0x158
-	.global	gUnk_0838E628
-gUnk_0838E628:
+	.global	gLevel5Stage2Room10BlockLayer
+gLevel5Stage2Room10BlockLayer:
 	.incbin	"baserom.gba", 0x38E628, 0x3C
 	.global	gUnk_0838E664
 gUnk_0838E664:
 	.incbin	"baserom.gba", 0x38E664, 0x8
-	.global	gUnk_0838E66C
-gUnk_0838E66C:
+	.global	gLevel5Stage2Room10Doors
+gLevel5Stage2Room10Doors:
 	.incbin	"baserom.gba", 0x38E66C, 0xC
-	.global	gUnk_0838E678
-gUnk_0838E678:
+	.global	gLevel5Stage2Room10Objects
+gLevel5Stage2Room10Objects:
 	.incbin	"baserom.gba", 0x38E678, 0x10
 	.global	gLevel5Stage2Room10
 gLevel5Stage2Room10:
 	.incbin	"baserom.gba", 0x38E688, 0x8
-	.word	gUnk_0838E4D0
-	.word	gUnk_0838E628
+	.word	gLevel5Stage2Room10MetatileMap
+	.word	gLevel5Stage2Room10BlockLayer
 	.word	gUnk_0838E664
 	.incbin	"baserom.gba", 0x38E69C, 0x4
 	.word	gUnk_0852D560
@@ -6480,29 +6480,29 @@ gLevel5Stage2Room10:
 	.word	gUnk_0845A054
 	.word	gUnk_083CD3B8
 	.incbin	"baserom.gba", 0x38E6BC, 0x10
-	.word	gUnk_0838E66C
-	.word	gUnk_0838E678
+	.word	gLevel5Stage2Room10Doors
+	.word	gLevel5Stage2Room10Objects
 	.incbin	"baserom.gba", 0x38E6D4, 0xC
-	.global	gUnk_0838E6E0
-gUnk_0838E6E0:
+	.global	gLevel5Stage2Room11MetatileMap
+gLevel5Stage2Room11MetatileMap:
 	.incbin	"baserom.gba", 0x38E6E0, 0xDC
-	.global	gUnk_0838E7BC
-gUnk_0838E7BC:
+	.global	gLevel5Stage2Room11BlockLayer
+gLevel5Stage2Room11BlockLayer:
 	.incbin	"baserom.gba", 0x38E7BC, 0x34
 	.global	gUnk_0838E7F0
 gUnk_0838E7F0:
 	.incbin	"baserom.gba", 0x38E7F0, 0x8
-	.global	gUnk_0838E7F8
-gUnk_0838E7F8:
+	.global	gLevel5Stage2Room11Doors
+gLevel5Stage2Room11Doors:
 	.incbin	"baserom.gba", 0x38E7F8, 0x18
-	.global	gUnk_0838E810
-gUnk_0838E810:
+	.global	gLevel5Stage2Room11Objects
+gLevel5Stage2Room11Objects:
 	.incbin	"baserom.gba", 0x38E810, 0x8
 	.global	gLevel5Stage2Room11
 gLevel5Stage2Room11:
 	.incbin	"baserom.gba", 0x38E818, 0x8
-	.word	gUnk_0838E6E0
-	.word	gUnk_0838E7BC
+	.word	gLevel5Stage2Room11MetatileMap
+	.word	gLevel5Stage2Room11BlockLayer
 	.word	gUnk_0838E7F0
 	.incbin	"baserom.gba", 0x38E82C, 0x4
 	.word	gUnk_0852D3D8
@@ -6513,29 +6513,29 @@ gLevel5Stage2Room11:
 	.word	gUnk_083EB890
 	.word	gUnk_083B7994
 	.incbin	"baserom.gba", 0x38E84C, 0x10
-	.word	gUnk_0838E7F8
-	.word	gUnk_0838E810
+	.word	gLevel5Stage2Room11Doors
+	.word	gLevel5Stage2Room11Objects
 	.incbin	"baserom.gba", 0x38E864, 0xC
-	.global	gUnk_0838E870
-gUnk_0838E870:
+	.global	gLevel5Stage3Room0MetatileMap
+gLevel5Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x38E870, 0x478
-	.global	gUnk_0838ECE8
-gUnk_0838ECE8:
+	.global	gLevel5Stage3Room0BlockLayer
+gLevel5Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38ECE8, 0x140
 	.global	gUnk_0838EE28
 gUnk_0838EE28:
 	.incbin	"baserom.gba", 0x38EE28, 0x28
-	.global	gUnk_0838EE50
-gUnk_0838EE50:
+	.global	gLevel5Stage3Room0Doors
+gLevel5Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x38EE50, 0xC
-	.global	gUnk_0838EE5C
-gUnk_0838EE5C:
+	.global	gLevel5Stage3Room0Objects
+gLevel5Stage3Room0Objects:
 	.incbin	"baserom.gba", 0x38EE5C, 0x88
 	.global	gLevel5Stage3Room0
 gLevel5Stage3Room0:
 	.incbin	"baserom.gba", 0x38EEE4, 0x8
-	.word	gUnk_0838E870
-	.word	gUnk_0838ECE8
+	.word	gLevel5Stage3Room0MetatileMap
+	.word	gLevel5Stage3Room0BlockLayer
 	.word	gUnk_0838EE28
 	.incbin	"baserom.gba", 0x38EEF8, 0x4
 	.word	gUnk_08505A1C
@@ -6546,29 +6546,29 @@ gLevel5Stage3Room0:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x38EF18, 0x10
-	.word	gUnk_0838EE50
-	.word	gUnk_0838EE5C
+	.word	gLevel5Stage3Room0Doors
+	.word	gLevel5Stage3Room0Objects
 	.incbin	"baserom.gba", 0x38EF30, 0xC
-	.global	gUnk_0838EF3C
-gUnk_0838EF3C:
+	.global	gLevel5Stage3Room1MetatileMap
+gLevel5Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x38EF3C, 0x558
-	.global	gUnk_0838F494
-gUnk_0838F494:
+	.global	gLevel5Stage3Room1BlockLayer
+gLevel5Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x38F494, 0x178
 	.global	gUnk_0838F60C
 gUnk_0838F60C:
 	.incbin	"baserom.gba", 0x38F60C, 0xC8
-	.global	gUnk_0838F6D4
-gUnk_0838F6D4:
+	.global	gLevel5Stage3Room1Doors
+gLevel5Stage3Room1Doors:
 	.incbin	"baserom.gba", 0x38F6D4, 0x24
-	.global	gUnk_0838F6F8
-gUnk_0838F6F8:
+	.global	gLevel5Stage3Room1Objects
+gLevel5Stage3Room1Objects:
 	.incbin	"baserom.gba", 0x38F6F8, 0x90
 	.global	gLevel5Stage3Room1
 gLevel5Stage3Room1:
 	.incbin	"baserom.gba", 0x38F788, 0x8
-	.word	gUnk_0838EF3C
-	.word	gUnk_0838F494
+	.word	gLevel5Stage3Room1MetatileMap
+	.word	gLevel5Stage3Room1BlockLayer
 	.word	gUnk_0838F60C
 	.incbin	"baserom.gba", 0x38F79C, 0x4
 	.word	gUnk_0849A6B4
@@ -6579,29 +6579,29 @@ gLevel5Stage3Room1:
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x38F7BC, 0x10
-	.word	gUnk_0838F6D4
-	.word	gUnk_0838F6F8
+	.word	gLevel5Stage3Room1Doors
+	.word	gLevel5Stage3Room1Objects
 	.incbin	"baserom.gba", 0x38F7D4, 0xC
-	.global	gUnk_0838F7E0
-gUnk_0838F7E0:
+	.global	gLevel5Stage3Room2MetatileMap
+gLevel5Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x38F7E0, 0xD4
-	.global	gUnk_0838F8B4
-gUnk_0838F8B4:
+	.global	gLevel5Stage3Room2BlockLayer
+gLevel5Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38F8B4, 0x34
 	.global	gUnk_0838F8E8
 gUnk_0838F8E8:
 	.incbin	"baserom.gba", 0x38F8E8, 0x8
-	.global	gUnk_0838F8F0
-gUnk_0838F8F0:
+	.global	gLevel5Stage3Room2Doors
+gLevel5Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x38F8F0, 0xC
-	.global	gUnk_0838F8FC
-gUnk_0838F8FC:
+	.global	gLevel5Stage3Room2Objects
+gLevel5Stage3Room2Objects:
 	.incbin	"baserom.gba", 0x38F8FC, 0x18
 	.global	gLevel5Stage3Room2
 gLevel5Stage3Room2:
 	.incbin	"baserom.gba", 0x38F914, 0x8
-	.word	gUnk_0838F7E0
-	.word	gUnk_0838F8B4
+	.word	gLevel5Stage3Room2MetatileMap
+	.word	gLevel5Stage3Room2BlockLayer
 	.word	gUnk_0838F8E8
 	.incbin	"baserom.gba", 0x38F928, 0x4
 	.word	gUnk_08505A1C
@@ -6612,29 +6612,29 @@ gLevel5Stage3Room2:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x38F948, 0x10
-	.word	gUnk_0838F8F0
-	.word	gUnk_0838F8FC
+	.word	gLevel5Stage3Room2Doors
+	.word	gLevel5Stage3Room2Objects
 	.incbin	"baserom.gba", 0x38F960, 0xC
-	.global	gUnk_0838F96C
-gUnk_0838F96C:
+	.global	gLevel5Stage3Room3MetatileMap
+gLevel5Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x38F96C, 0x288
-	.global	gUnk_0838FBF4
-gUnk_0838FBF4:
+	.global	gLevel5Stage3Room3BlockLayer
+gLevel5Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38FBF4, 0x90
 	.global	gUnk_0838FC84
 gUnk_0838FC84:
 	.incbin	"baserom.gba", 0x38FC84, 0x8
-	.global	gUnk_0838FC8C
-gUnk_0838FC8C:
+	.global	gLevel5Stage3Room3Doors
+gLevel5Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x38FC8C, 0x18
-	.global	gUnk_0838FCA4
-gUnk_0838FCA4:
+	.global	gLevel5Stage3Room3Objects
+gLevel5Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x38FCA4, 0x50
 	.global	gLevel5Stage3Room3
 gLevel5Stage3Room3:
 	.incbin	"baserom.gba", 0x38FCF4, 0x8
-	.word	gUnk_0838F96C
-	.word	gUnk_0838FBF4
+	.word	gLevel5Stage3Room3MetatileMap
+	.word	gLevel5Stage3Room3BlockLayer
 	.word	gUnk_0838FC84
 	.incbin	"baserom.gba", 0x38FD08, 0x4
 	.word	gUnk_08505A1C
@@ -6645,29 +6645,29 @@ gLevel5Stage3Room3:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x38FD28, 0x10
-	.word	gUnk_0838FC8C
-	.word	gUnk_0838FCA4
+	.word	gLevel5Stage3Room3Doors
+	.word	gLevel5Stage3Room3Objects
 	.incbin	"baserom.gba", 0x38FD40, 0xC
-	.global	gUnk_0838FD4C
-gUnk_0838FD4C:
+	.global	gLevel5Stage3Room4MetatileMap
+gLevel5Stage3Room4MetatileMap:
 	.incbin	"baserom.gba", 0x38FD4C, 0x230
-	.global	gUnk_0838FF7C
-gUnk_0838FF7C:
+	.global	gLevel5Stage3Room4BlockLayer
+gLevel5Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38FF7C, 0x9C
 	.global	gUnk_08390018
 gUnk_08390018:
 	.incbin	"baserom.gba", 0x390018, 0x8
-	.global	gUnk_08390020
-gUnk_08390020:
+	.global	gLevel5Stage3Room4Doors
+gLevel5Stage3Room4Doors:
 	.incbin	"baserom.gba", 0x390020, 0xC
-	.global	gUnk_0839002C
-gUnk_0839002C:
+	.global	gLevel5Stage3Room4Objects
+gLevel5Stage3Room4Objects:
 	.incbin	"baserom.gba", 0x39002C, 0x80
 	.global	gLevel5Stage3Room4
 gLevel5Stage3Room4:
 	.incbin	"baserom.gba", 0x3900AC, 0x8
-	.word	gUnk_0838FD4C
-	.word	gUnk_0838FF7C
+	.word	gLevel5Stage3Room4MetatileMap
+	.word	gLevel5Stage3Room4BlockLayer
 	.word	gUnk_08390018
 	.incbin	"baserom.gba", 0x3900C0, 0x4
 	.word	gUnk_08505A1C
@@ -6678,29 +6678,29 @@ gLevel5Stage3Room4:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x3900E0, 0x10
-	.word	gUnk_08390020
-	.word	gUnk_0839002C
+	.word	gLevel5Stage3Room4Doors
+	.word	gLevel5Stage3Room4Objects
 	.incbin	"baserom.gba", 0x3900F8, 0xC
-	.global	gUnk_08390104
-gUnk_08390104:
+	.global	gLevel5Stage3Room5MetatileMap
+gLevel5Stage3Room5MetatileMap:
 	.incbin	"baserom.gba", 0x390104, 0x15C
-	.global	gUnk_08390260
-gUnk_08390260:
+	.global	gLevel5Stage3Room5BlockLayer
+gLevel5Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x390260, 0x34
 	.global	gUnk_08390294
 gUnk_08390294:
 	.incbin	"baserom.gba", 0x390294, 0x8
-	.global	gUnk_0839029C
-gUnk_0839029C:
+	.global	gLevel5Stage3Room5Doors
+gLevel5Stage3Room5Doors:
 	.incbin	"baserom.gba", 0x39029C, 0xC
-	.global	gUnk_083902A8
-gUnk_083902A8:
+	.global	gLevel5Stage3Room5Objects
+gLevel5Stage3Room5Objects:
 	.incbin	"baserom.gba", 0x3902A8, 0x8
 	.global	gLevel5Stage3Room5
 gLevel5Stage3Room5:
 	.incbin	"baserom.gba", 0x3902B0, 0x8
-	.word	gUnk_08390104
-	.word	gUnk_08390260
+	.word	gLevel5Stage3Room5MetatileMap
+	.word	gLevel5Stage3Room5BlockLayer
 	.word	gUnk_08390294
 	.incbin	"baserom.gba", 0x3902C4, 0x4
 	.word	gUnk_0849A6B4
@@ -6711,29 +6711,29 @@ gLevel5Stage3Room5:
 	.word	gUnk_083D4E14
 	.word	gUnk_083B5538
 	.incbin	"baserom.gba", 0x3902E4, 0x10
-	.word	gUnk_0839029C
-	.word	gUnk_083902A8
+	.word	gLevel5Stage3Room5Doors
+	.word	gLevel5Stage3Room5Objects
 	.incbin	"baserom.gba", 0x3902FC, 0xC
-	.global	gUnk_08390308
-gUnk_08390308:
+	.global	gLevel5Stage4Room0MetatileMap
+gLevel5Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x390308, 0x1E0
-	.global	gUnk_083904E8
-gUnk_083904E8:
+	.global	gLevel5Stage4Room0BlockLayer
+gLevel5Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3904E8, 0x70
 	.global	gUnk_08390558
 gUnk_08390558:
 	.incbin	"baserom.gba", 0x390558, 0x8
-	.global	gUnk_08390560
-gUnk_08390560:
+	.global	gLevel5Stage4Room0Doors
+gLevel5Stage4Room0Doors:
 	.incbin	"baserom.gba", 0x390560, 0xC
-	.global	gUnk_0839056C
-gUnk_0839056C:
+	.global	gLevel5Stage4Room0Objects
+gLevel5Stage4Room0Objects:
 	.incbin	"baserom.gba", 0x39056C, 0x30
 	.global	gLevel5Stage4Room0
 gLevel5Stage4Room0:
 	.incbin	"baserom.gba", 0x39059C, 0x8
-	.word	gUnk_08390308
-	.word	gUnk_083904E8
+	.word	gLevel5Stage4Room0MetatileMap
+	.word	gLevel5Stage4Room0BlockLayer
 	.word	gUnk_08390558
 	.incbin	"baserom.gba", 0x3905B0, 0x4
 	.word	gUnk_084B2F9C
@@ -6744,29 +6744,29 @@ gLevel5Stage4Room0:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x3905D0, 0x10
-	.word	gUnk_08390560
-	.word	gUnk_0839056C
+	.word	gLevel5Stage4Room0Doors
+	.word	gLevel5Stage4Room0Objects
 	.incbin	"baserom.gba", 0x3905E8, 0xC
-	.global	gUnk_083905F4
-gUnk_083905F4:
+	.global	gLevel5Stage4Room1MetatileMap
+gLevel5Stage4Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3905F4, 0x3FC
-	.global	gUnk_083909F0
-gUnk_083909F0:
+	.global	gLevel5Stage4Room1BlockLayer
+gLevel5Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3909F0, 0x15C
 	.global	gUnk_08390B4C
 gUnk_08390B4C:
 	.incbin	"baserom.gba", 0x390B4C, 0x8
-	.global	gUnk_08390B54
-gUnk_08390B54:
+	.global	gLevel5Stage4Room1Doors
+gLevel5Stage4Room1Doors:
 	.incbin	"baserom.gba", 0x390B54, 0xC
-	.global	gUnk_08390B60
-gUnk_08390B60:
+	.global	gLevel5Stage4Room1Objects
+gLevel5Stage4Room1Objects:
 	.incbin	"baserom.gba", 0x390B60, 0x48
 	.global	gLevel5Stage4Room1
 gLevel5Stage4Room1:
 	.incbin	"baserom.gba", 0x390BA8, 0x8
-	.word	gUnk_083905F4
-	.word	gUnk_083909F0
+	.word	gLevel5Stage4Room1MetatileMap
+	.word	gLevel5Stage4Room1BlockLayer
 	.word	gUnk_08390B4C
 	.incbin	"baserom.gba", 0x390BBC, 0x4
 	.word	gUnk_0852BB78
@@ -6777,29 +6777,29 @@ gLevel5Stage4Room1:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x390BDC, 0x10
-	.word	gUnk_08390B54
-	.word	gUnk_08390B60
+	.word	gLevel5Stage4Room1Doors
+	.word	gLevel5Stage4Room1Objects
 	.incbin	"baserom.gba", 0x390BF4, 0xC
-	.global	gUnk_08390C00
-gUnk_08390C00:
+	.global	gLevel5Stage4Room2MetatileMap
+gLevel5Stage4Room2MetatileMap:
 	.incbin	"baserom.gba", 0x390C00, 0x21C
-	.global	gUnk_08390E1C
-gUnk_08390E1C:
+	.global	gLevel5Stage4Room2BlockLayer
+gLevel5Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x390E1C, 0x138
 	.global	gUnk_08390F54
 gUnk_08390F54:
 	.incbin	"baserom.gba", 0x390F54, 0x19C
-	.global	gUnk_083910F0
-gUnk_083910F0:
+	.global	gLevel5Stage4Room2Doors
+gLevel5Stage4Room2Doors:
 	.incbin	"baserom.gba", 0x3910F0, 0x18
-	.global	gUnk_08391108
-gUnk_08391108:
+	.global	gLevel5Stage4Room2Objects
+gLevel5Stage4Room2Objects:
 	.incbin	"baserom.gba", 0x391108, 0x30
 	.global	gLevel5Stage4Room2
 gLevel5Stage4Room2:
 	.incbin	"baserom.gba", 0x391138, 0x8
-	.word	gUnk_08390C00
-	.word	gUnk_08390E1C
+	.word	gLevel5Stage4Room2MetatileMap
+	.word	gLevel5Stage4Room2BlockLayer
 	.word	gUnk_08390F54
 	.incbin	"baserom.gba", 0x39114C, 0x4
 	.word	gUnk_084B2F9C
@@ -6810,29 +6810,29 @@ gLevel5Stage4Room2:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39116C, 0x10
-	.word	gUnk_083910F0
-	.word	gUnk_08391108
+	.word	gLevel5Stage4Room2Doors
+	.word	gLevel5Stage4Room2Objects
 	.incbin	"baserom.gba", 0x391184, 0xC
-	.global	gUnk_08391190
-gUnk_08391190:
+	.global	gLevel5Stage4Room3MetatileMap
+gLevel5Stage4Room3MetatileMap:
 	.incbin	"baserom.gba", 0x391190, 0x4DC
-	.global	gUnk_0839166C
-gUnk_0839166C:
+	.global	gLevel5Stage4Room3BlockLayer
+gLevel5Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39166C, 0x264
 	.global	gUnk_083918D0
 gUnk_083918D0:
 	.incbin	"baserom.gba", 0x3918D0, 0x2D0
-	.global	gUnk_08391BA0
-gUnk_08391BA0:
+	.global	gLevel5Stage4Room3Doors
+gLevel5Stage4Room3Doors:
 	.incbin	"baserom.gba", 0x391BA0, 0x18
-	.global	gUnk_08391BB8
-gUnk_08391BB8:
+	.global	gLevel5Stage4Room3Objects
+gLevel5Stage4Room3Objects:
 	.incbin	"baserom.gba", 0x391BB8, 0x88
 	.global	gLevel5Stage4Room3
 gLevel5Stage4Room3:
 	.incbin	"baserom.gba", 0x391C40, 0x8
-	.word	gUnk_08391190
-	.word	gUnk_0839166C
+	.word	gLevel5Stage4Room3MetatileMap
+	.word	gLevel5Stage4Room3BlockLayer
 	.word	gUnk_083918D0
 	.incbin	"baserom.gba", 0x391C54, 0x4
 	.word	gUnk_084BB068
@@ -6843,29 +6843,29 @@ gLevel5Stage4Room3:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x391C74, 0x10
-	.word	gUnk_08391BA0
-	.word	gUnk_08391BB8
+	.word	gLevel5Stage4Room3Doors
+	.word	gLevel5Stage4Room3Objects
 	.incbin	"baserom.gba", 0x391C8C, 0xC
-	.global	gUnk_08391C98
-gUnk_08391C98:
+	.global	gLevel5Stage4Room4MetatileMap
+gLevel5Stage4Room4MetatileMap:
 	.incbin	"baserom.gba", 0x391C98, 0xA8
-	.global	gUnk_08391D40
-gUnk_08391D40:
+	.global	gLevel5Stage4Room4BlockLayer
+gLevel5Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x391D40, 0x34
 	.global	gUnk_08391D74
 gUnk_08391D74:
 	.incbin	"baserom.gba", 0x391D74, 0x8
-	.global	gUnk_08391D7C
-gUnk_08391D7C:
+	.global	gLevel5Stage4Room4Doors
+gLevel5Stage4Room4Doors:
 	.incbin	"baserom.gba", 0x391D7C, 0x18
-	.global	gUnk_08391D94
-gUnk_08391D94:
+	.global	gLevel5Stage4Room4Objects
+gLevel5Stage4Room4Objects:
 	.incbin	"baserom.gba", 0x391D94, 0x8
 	.global	gLevel5Stage4Room4
 gLevel5Stage4Room4:
 	.incbin	"baserom.gba", 0x391D9C, 0x8
-	.word	gUnk_08391C98
-	.word	gUnk_08391D40
+	.word	gLevel5Stage4Room4MetatileMap
+	.word	gLevel5Stage4Room4BlockLayer
 	.word	gUnk_08391D74
 	.incbin	"baserom.gba", 0x391DB0, 0x4
 	.word	gUnk_0852D49C
@@ -6876,29 +6876,29 @@ gLevel5Stage4Room4:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x391DD0, 0x10
-	.word	gUnk_08391D7C
-	.word	gUnk_08391D94
+	.word	gLevel5Stage4Room4Doors
+	.word	gLevel5Stage4Room4Objects
 	.incbin	"baserom.gba", 0x391DE8, 0xC
-	.global	gUnk_08391DF4
-gUnk_08391DF4:
+	.global	gLevel5Stage5Room0MetatileMap
+gLevel5Stage5Room0MetatileMap:
 	.incbin	"baserom.gba", 0x391DF4, 0x370
-	.global	gUnk_08392164
-gUnk_08392164:
+	.global	gLevel5Stage5Room0BlockLayer
+gLevel5Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x392164, 0x134
 	.global	gUnk_08392298
 gUnk_08392298:
 	.incbin	"baserom.gba", 0x392298, 0x10
-	.global	gUnk_083922A8
-gUnk_083922A8:
+	.global	gLevel5Stage5Room0Doors
+gLevel5Stage5Room0Doors:
 	.incbin	"baserom.gba", 0x3922A8, 0x18
-	.global	gUnk_083922C0
-gUnk_083922C0:
+	.global	gLevel5Stage5Room0Objects
+gLevel5Stage5Room0Objects:
 	.incbin	"baserom.gba", 0x3922C0, 0x48
 	.global	gLevel5Stage5Room0
 gLevel5Stage5Room0:
 	.incbin	"baserom.gba", 0x392308, 0x8
-	.word	gUnk_08391DF4
-	.word	gUnk_08392164
+	.word	gLevel5Stage5Room0MetatileMap
+	.word	gLevel5Stage5Room0BlockLayer
 	.word	gUnk_08392298
 	.incbin	"baserom.gba", 0x39231C, 0x4
 	.word	gUnk_084B2F9C
@@ -6909,29 +6909,29 @@ gLevel5Stage5Room0:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39233C, 0x10
-	.word	gUnk_083922A8
-	.word	gUnk_083922C0
+	.word	gLevel5Stage5Room0Doors
+	.word	gLevel5Stage5Room0Objects
 	.incbin	"baserom.gba", 0x392354, 0xC
-	.global	gUnk_08392360
-gUnk_08392360:
+	.global	gLevel5Stage5Room1MetatileMap
+gLevel5Stage5Room1MetatileMap:
 	.incbin	"baserom.gba", 0x392360, 0x2A4
-	.global	gUnk_08392604
-gUnk_08392604:
+	.global	gLevel5Stage5Room1BlockLayer
+gLevel5Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x392604, 0xCC
 	.global	gUnk_083926D0
 gUnk_083926D0:
 	.incbin	"baserom.gba", 0x3926D0, 0x8
-	.global	gUnk_083926D8
-gUnk_083926D8:
+	.global	gLevel5Stage5Room1Doors
+gLevel5Stage5Room1Doors:
 	.incbin	"baserom.gba", 0x3926D8, 0x18
-	.global	gUnk_083926F0
-gUnk_083926F0:
+	.global	gLevel5Stage5Room1Objects
+gLevel5Stage5Room1Objects:
 	.incbin	"baserom.gba", 0x3926F0, 0x88
 	.global	gLevel5Stage5Room1
 gLevel5Stage5Room1:
 	.incbin	"baserom.gba", 0x392778, 0x8
-	.word	gUnk_08392360
-	.word	gUnk_08392604
+	.word	gLevel5Stage5Room1MetatileMap
+	.word	gLevel5Stage5Room1BlockLayer
 	.word	gUnk_083926D0
 	.incbin	"baserom.gba", 0x39278C, 0x4
 	.word	gUnk_0852D49C
@@ -6942,26 +6942,26 @@ gLevel5Stage5Room1:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x3927AC, 0x10
-	.word	gUnk_083926D8
-	.word	gUnk_083926F0
+	.word	gLevel5Stage5Room1Doors
+	.word	gLevel5Stage5Room1Objects
 	.incbin	"baserom.gba", 0x3927C4, 0xC
-	.global	gUnk_083927D0
-gUnk_083927D0:
+	.global	gLevel5Stage5Room2MetatileMap
+gLevel5Stage5Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3927D0, 0x170
-	.global	gUnk_08392940
-gUnk_08392940:
+	.global	gLevel5Stage5Room2BlockLayer
+gLevel5Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x392940, 0x90
 	.global	gUnk_083929D0
 gUnk_083929D0:
 	.incbin	"baserom.gba", 0x3929D0, 0xC0
-	.global	gUnk_08392A90
-gUnk_08392A90:
+	.global	gLevel5Stage5Room2Doors
+gLevel5Stage5Room2Doors:
 	.incbin	"baserom.gba", 0x392A90, 0x18
 	.global	gLevel5Stage5Room2
 gLevel5Stage5Room2:
 	.incbin	"baserom.gba", 0x392AA8, 0x8
-	.word	gUnk_083927D0
-	.word	gUnk_08392940
+	.word	gLevel5Stage5Room2MetatileMap
+	.word	gLevel5Stage5Room2BlockLayer
 	.word	gUnk_083929D0
 	.incbin	"baserom.gba", 0x392ABC, 0x4
 	.word	gUnk_0849A5F0
@@ -6972,28 +6972,28 @@ gLevel5Stage5Room2:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x392ADC, 0x10
-	.word	gUnk_08392A90
+	.word	gLevel5Stage5Room2Doors
 	.incbin	"baserom.gba", 0x392AF0, 0x10
-	.global	gUnk_08392B00
-gUnk_08392B00:
+	.global	gLevel5Stage5Room3MetatileMap
+gLevel5Stage5Room3MetatileMap:
 	.incbin	"baserom.gba", 0x392B00, 0x2E0
-	.global	gUnk_08392DE0
-gUnk_08392DE0:
+	.global	gLevel5Stage5Room3BlockLayer
+gLevel5Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x392DE0, 0xC8
 	.global	gUnk_08392EA8
 gUnk_08392EA8:
 	.incbin	"baserom.gba", 0x392EA8, 0x8
-	.global	gUnk_08392EB0
-gUnk_08392EB0:
+	.global	gLevel5Stage5Room3Doors
+gLevel5Stage5Room3Doors:
 	.incbin	"baserom.gba", 0x392EB0, 0xC
-	.global	gUnk_08392EBC
-gUnk_08392EBC:
+	.global	gLevel5Stage5Room3Objects
+gLevel5Stage5Room3Objects:
 	.incbin	"baserom.gba", 0x392EBC, 0x50
 	.global	gLevel5Stage5Room3
 gLevel5Stage5Room3:
 	.incbin	"baserom.gba", 0x392F0C, 0x8
-	.word	gUnk_08392B00
-	.word	gUnk_08392DE0
+	.word	gLevel5Stage5Room3MetatileMap
+	.word	gLevel5Stage5Room3BlockLayer
 	.word	gUnk_08392EA8
 	.incbin	"baserom.gba", 0x392F20, 0x4
 	.word	gUnk_0849A5F0
@@ -7004,29 +7004,29 @@ gLevel5Stage5Room3:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x392F40, 0x10
-	.word	gUnk_08392EB0
-	.word	gUnk_08392EBC
+	.word	gLevel5Stage5Room3Doors
+	.word	gLevel5Stage5Room3Objects
 	.incbin	"baserom.gba", 0x392F58, 0xC
-	.global	gUnk_08392F64
-gUnk_08392F64:
+	.global	gLevel5Stage5Room4MetatileMap
+gLevel5Stage5Room4MetatileMap:
 	.incbin	"baserom.gba", 0x392F64, 0x33C
-	.global	gUnk_083932A0
-gUnk_083932A0:
+	.global	gLevel5Stage5Room4BlockLayer
+gLevel5Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3932A0, 0x104
 	.global	gUnk_083933A4
 gUnk_083933A4:
 	.incbin	"baserom.gba", 0x3933A4, 0x10
-	.global	gUnk_083933B4
-gUnk_083933B4:
+	.global	gLevel5Stage5Room4Doors
+gLevel5Stage5Room4Doors:
 	.incbin	"baserom.gba", 0x3933B4, 0xC
-	.global	gUnk_083933C0
-gUnk_083933C0:
+	.global	gLevel5Stage5Room4Objects
+gLevel5Stage5Room4Objects:
 	.incbin	"baserom.gba", 0x3933C0, 0x70
 	.global	gLevel5Stage5Room4
 gLevel5Stage5Room4:
 	.incbin	"baserom.gba", 0x393430, 0x8
-	.word	gUnk_08392F64
-	.word	gUnk_083932A0
+	.word	gLevel5Stage5Room4MetatileMap
+	.word	gLevel5Stage5Room4BlockLayer
 	.word	gUnk_083933A4
 	.incbin	"baserom.gba", 0x393444, 0x4
 	.word	gUnk_084B2F9C
@@ -7037,26 +7037,26 @@ gLevel5Stage5Room4:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x393464, 0x10
-	.word	gUnk_083933B4
-	.word	gUnk_083933C0
+	.word	gLevel5Stage5Room4Doors
+	.word	gLevel5Stage5Room4Objects
 	.incbin	"baserom.gba", 0x39347C, 0xC
-	.global	gUnk_08393488
-gUnk_08393488:
+	.global	gLevel5Stage5Room5MetatileMap
+gLevel5Stage5Room5MetatileMap:
 	.incbin	"baserom.gba", 0x393488, 0xD0
-	.global	gUnk_08393558
-gUnk_08393558:
+	.global	gLevel5Stage5Room5BlockLayer
+gLevel5Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x393558, 0x34
 	.global	gUnk_0839358C
 gUnk_0839358C:
 	.incbin	"baserom.gba", 0x39358C, 0x8
-	.global	gUnk_08393594
-gUnk_08393594:
+	.global	gLevel5Stage5Room5Doors
+gLevel5Stage5Room5Doors:
 	.incbin	"baserom.gba", 0x393594, 0x18
 	.global	gLevel5Stage5Room5
 gLevel5Stage5Room5:
 	.incbin	"baserom.gba", 0x3935AC, 0x8
-	.word	gUnk_08393488
-	.word	gUnk_08393558
+	.word	gLevel5Stage5Room5MetatileMap
+	.word	gLevel5Stage5Room5BlockLayer
 	.word	gUnk_0839358C
 	.incbin	"baserom.gba", 0x3935C0, 0x4
 	.word	gUnk_084B2F9C
@@ -7067,28 +7067,28 @@ gLevel5Stage5Room5:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x3935E0, 0x10
-	.word	gUnk_08393594
+	.word	gLevel5Stage5Room5Doors
 	.incbin	"baserom.gba", 0x3935F4, 0x10
-	.global	gUnk_08393604
-gUnk_08393604:
+	.global	gLevel5Stage5Room6MetatileMap
+gLevel5Stage5Room6MetatileMap:
 	.incbin	"baserom.gba", 0x393604, 0x104
-	.global	gUnk_08393708
-gUnk_08393708:
+	.global	gLevel5Stage5Room6BlockLayer
+gLevel5Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x393708, 0x3C
 	.global	gUnk_08393744
 gUnk_08393744:
 	.incbin	"baserom.gba", 0x393744, 0x8
-	.global	gUnk_0839374C
-gUnk_0839374C:
+	.global	gLevel5Stage5Room6Doors
+gLevel5Stage5Room6Doors:
 	.incbin	"baserom.gba", 0x39374C, 0xC
-	.global	gUnk_08393758
-gUnk_08393758:
+	.global	gLevel5Stage5Room6Objects
+gLevel5Stage5Room6Objects:
 	.incbin	"baserom.gba", 0x393758, 0x8
 	.global	gLevel5Stage5Room6
 gLevel5Stage5Room6:
 	.incbin	"baserom.gba", 0x393760, 0x8
-	.word	gUnk_08393604
-	.word	gUnk_08393708
+	.word	gLevel5Stage5Room6MetatileMap
+	.word	gLevel5Stage5Room6BlockLayer
 	.word	gUnk_08393744
 	.incbin	"baserom.gba", 0x393774, 0x4
 	.word	gUnk_084B2F9C
@@ -7099,29 +7099,29 @@ gLevel5Stage5Room6:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x393794, 0x10
-	.word	gUnk_0839374C
-	.word	gUnk_08393758
+	.word	gLevel5Stage5Room6Doors
+	.word	gLevel5Stage5Room6Objects
 	.incbin	"baserom.gba", 0x3937AC, 0xC
-	.global	gUnk_083937B8
-gUnk_083937B8:
+	.global	gLevel5Stage5Room7MetatileMap
+gLevel5Stage5Room7MetatileMap:
 	.incbin	"baserom.gba", 0x3937B8, 0xB4
-	.global	gUnk_0839386C
-gUnk_0839386C:
+	.global	gLevel5Stage5Room7BlockLayer
+gLevel5Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x39386C, 0x38
 	.global	gUnk_083938A4
 gUnk_083938A4:
 	.incbin	"baserom.gba", 0x3938A4, 0x8
-	.global	gUnk_083938AC
-gUnk_083938AC:
+	.global	gLevel5Stage5Room7Doors
+gLevel5Stage5Room7Doors:
 	.incbin	"baserom.gba", 0x3938AC, 0xC
-	.global	gUnk_083938B8
-gUnk_083938B8:
+	.global	gLevel5Stage5Room7Objects
+gLevel5Stage5Room7Objects:
 	.incbin	"baserom.gba", 0x3938B8, 0x8
 	.global	gLevel5Stage5Room7
 gLevel5Stage5Room7:
 	.incbin	"baserom.gba", 0x3938C0, 0x8
-	.word	gUnk_083937B8
-	.word	gUnk_0839386C
+	.word	gLevel5Stage5Room7MetatileMap
+	.word	gLevel5Stage5Room7BlockLayer
 	.word	gUnk_083938A4
 	.incbin	"baserom.gba", 0x3938D4, 0x4
 	.word	gUnk_0849A5F0
@@ -7132,29 +7132,29 @@ gLevel5Stage5Room7:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x3938F4, 0x10
-	.word	gUnk_083938AC
-	.word	gUnk_083938B8
+	.word	gLevel5Stage5Room7Doors
+	.word	gLevel5Stage5Room7Objects
 	.incbin	"baserom.gba", 0x39390C, 0xC
-	.global	gUnk_08393918
-gUnk_08393918:
+	.global	gLevel5Stage5Room8MetatileMap
+gLevel5Stage5Room8MetatileMap:
 	.incbin	"baserom.gba", 0x393918, 0xF0
-	.global	gUnk_08393A08
-gUnk_08393A08:
+	.global	gLevel5Stage5Room8BlockLayer
+gLevel5Stage5Room8BlockLayer:
 	.incbin	"baserom.gba", 0x393A08, 0x38
 	.global	gUnk_08393A40
 gUnk_08393A40:
 	.incbin	"baserom.gba", 0x393A40, 0x10
-	.global	gUnk_08393A50
-gUnk_08393A50:
+	.global	gLevel5Stage5Room8Doors
+gLevel5Stage5Room8Doors:
 	.incbin	"baserom.gba", 0x393A50, 0xC
-	.global	gUnk_08393A5C
-gUnk_08393A5C:
+	.global	gLevel5Stage5Room8Objects
+gLevel5Stage5Room8Objects:
 	.incbin	"baserom.gba", 0x393A5C, 0x20
 	.global	gLevel5Stage5Room8
 gLevel5Stage5Room8:
 	.incbin	"baserom.gba", 0x393A7C, 0x8
-	.word	gUnk_08393918
-	.word	gUnk_08393A08
+	.word	gLevel5Stage5Room8MetatileMap
+	.word	gLevel5Stage5Room8BlockLayer
 	.word	gUnk_08393A40
 	.incbin	"baserom.gba", 0x393A90, 0x4
 	.word	gUnk_0849A5F0
@@ -7165,29 +7165,29 @@ gLevel5Stage5Room8:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x393AB0, 0x10
-	.word	gUnk_08393A50
-	.word	gUnk_08393A5C
+	.word	gLevel5Stage5Room8Doors
+	.word	gLevel5Stage5Room8Objects
 	.incbin	"baserom.gba", 0x393AC8, 0xC
-	.global	gUnk_08393AD4
-gUnk_08393AD4:
+	.global	gLevel5Stage5Room9MetatileMap
+gLevel5Stage5Room9MetatileMap:
 	.incbin	"baserom.gba", 0x393AD4, 0xE4
-	.global	gUnk_08393BB8
-gUnk_08393BB8:
+	.global	gLevel5Stage5Room9BlockLayer
+gLevel5Stage5Room9BlockLayer:
 	.incbin	"baserom.gba", 0x393BB8, 0x38
 	.global	gUnk_08393BF0
 gUnk_08393BF0:
 	.incbin	"baserom.gba", 0x393BF0, 0x10
-	.global	gUnk_08393C00
-gUnk_08393C00:
+	.global	gLevel5Stage5Room9Doors
+gLevel5Stage5Room9Doors:
 	.incbin	"baserom.gba", 0x393C00, 0xC
-	.global	gUnk_08393C0C
-gUnk_08393C0C:
+	.global	gLevel5Stage5Room9Objects
+gLevel5Stage5Room9Objects:
 	.incbin	"baserom.gba", 0x393C0C, 0x20
 	.global	gLevel5Stage5Room9
 gLevel5Stage5Room9:
 	.incbin	"baserom.gba", 0x393C2C, 0x8
-	.word	gUnk_08393AD4
-	.word	gUnk_08393BB8
+	.word	gLevel5Stage5Room9MetatileMap
+	.word	gLevel5Stage5Room9BlockLayer
 	.word	gUnk_08393BF0
 	.incbin	"baserom.gba", 0x393C40, 0x4
 	.word	gUnk_0849A5F0
@@ -7198,29 +7198,29 @@ gLevel5Stage5Room9:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x393C60, 0x10
-	.word	gUnk_08393C00
-	.word	gUnk_08393C0C
+	.word	gLevel5Stage5Room9Doors
+	.word	gLevel5Stage5Room9Objects
 	.incbin	"baserom.gba", 0x393C78, 0xC
-	.global	gUnk_08393C84
-gUnk_08393C84:
+	.global	gLevel5Stage5Room10MetatileMap
+gLevel5Stage5Room10MetatileMap:
 	.incbin	"baserom.gba", 0x393C84, 0xE0
-	.global	gUnk_08393D64
-gUnk_08393D64:
+	.global	gLevel5Stage5Room10BlockLayer
+gLevel5Stage5Room10BlockLayer:
 	.incbin	"baserom.gba", 0x393D64, 0x40
 	.global	gUnk_08393DA4
 gUnk_08393DA4:
 	.incbin	"baserom.gba", 0x393DA4, 0x10
-	.global	gUnk_08393DB4
-gUnk_08393DB4:
+	.global	gLevel5Stage5Room10Doors
+gLevel5Stage5Room10Doors:
 	.incbin	"baserom.gba", 0x393DB4, 0xC
-	.global	gUnk_08393DC0
-gUnk_08393DC0:
+	.global	gLevel5Stage5Room10Objects
+gLevel5Stage5Room10Objects:
 	.incbin	"baserom.gba", 0x393DC0, 0x8
 	.global	gLevel5Stage5Room10
 gLevel5Stage5Room10:
 	.incbin	"baserom.gba", 0x393DC8, 0x8
-	.word	gUnk_08393C84
-	.word	gUnk_08393D64
+	.word	gLevel5Stage5Room10MetatileMap
+	.word	gLevel5Stage5Room10BlockLayer
 	.word	gUnk_08393DA4
 	.incbin	"baserom.gba", 0x393DDC, 0x4
 	.word	gUnk_084B2F9C
@@ -7231,58 +7231,58 @@ gLevel5Stage5Room10:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x393DFC, 0x10
-	.word	gUnk_08393DB4
-	.word	gUnk_08393DC0
+	.word	gLevel5Stage5Room10Doors
+	.word	gLevel5Stage5Room10Objects
 	.incbin	"baserom.gba", 0x393E14, 0xC
-	.global	gUnk_08393E20
-gUnk_08393E20:
+	.global	gLevel5Stage6Room0MetatileMap
+gLevel5Stage6Room0MetatileMap:
 	.incbin	"baserom.gba", 0x393E20, 0x90
-	.global	gUnk_08393EB0
-gUnk_08393EB0:
+	.global	gLevel5Stage6Room0BlockLayer
+gLevel5Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x393EB0, 0x34
 	.global	gUnk_08393EE4
 gUnk_08393EE4:
 	.incbin	"baserom.gba", 0x393EE4, 0x8
-	.global	gUnk_08393EEC
-gUnk_08393EEC:
+	.global	gLevel5Stage6Room0Objects
+gLevel5Stage6Room0Objects:
 	.incbin	"baserom.gba", 0x393EEC, 0x8
 	.global	gLevel5Stage6Room0
 gLevel5Stage6Room0:
 	.incbin	"baserom.gba", 0x393EF4, 0x8
-	.word	gUnk_08393E20
-	.word	gUnk_08393EB0
+	.word	gLevel5Stage6Room0MetatileMap
+	.word	gLevel5Stage6Room0BlockLayer
 	.word	gUnk_08393EE4
 	.incbin	"baserom.gba", 0x393F08, 0x4
-	.word	gUnk_084BB374
+	.word	gLevel5Stage6Room0Bg2Palette
 	.word	gUnk_084985B0
 	.word	gUnk_08497D38
 	.incbin	"baserom.gba", 0x393F18, 0x4
-	.word	gUnk_084F16AC
-	.word	gUnk_084F2028
-	.word	gUnk_084F17B0
+	.word	gLevel5Stage6Room0Bg3Palette
+	.word	gLevel5Stage6Room0Bg3Tiles
+	.word	gLevel5Stage6Room0Bg3Map
 	.incbin	"baserom.gba", 0x393F28, 0x14
-	.word	gUnk_08393EEC
+	.word	gLevel5Stage6Room0Objects
 	.incbin	"baserom.gba", 0x393F40, 0xC
-	.global	gUnk_08393F4C
-gUnk_08393F4C:
+	.global	gLevel6Stage0Room0MetatileMap
+gLevel6Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x393F4C, 0x3AC
-	.global	gUnk_083942F8
-gUnk_083942F8:
+	.global	gLevel6Stage0Room0BlockLayer
+gLevel6Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3942F8, 0xD8
 	.global	gUnk_083943D0
 gUnk_083943D0:
 	.incbin	"baserom.gba", 0x3943D0, 0xC
-	.global	gUnk_083943DC
-gUnk_083943DC:
+	.global	gLevel6Stage0Room0Doors
+gLevel6Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x3943DC, 0xC
-	.global	gUnk_083943E8
-gUnk_083943E8:
+	.global	gLevel6Stage0Room0Objects
+gLevel6Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x3943E8, 0x70
 	.global	gLevel6Stage0Room0
 gLevel6Stage0Room0:
 	.incbin	"baserom.gba", 0x394458, 0x8
-	.word	gUnk_08393F4C
-	.word	gUnk_083942F8
+	.word	gLevel6Stage0Room0MetatileMap
+	.word	gLevel6Stage0Room0BlockLayer
 	.word	gUnk_083943D0
 	.incbin	"baserom.gba", 0x39446C, 0x4
 	.word	gUnk_084B2F9C
@@ -7293,29 +7293,29 @@ gLevel6Stage0Room0:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39448C, 0x10
-	.word	gUnk_083943DC
-	.word	gUnk_083943E8
+	.word	gLevel6Stage0Room0Doors
+	.word	gLevel6Stage0Room0Objects
 	.incbin	"baserom.gba", 0x3944A4, 0xC
-	.global	gUnk_083944B0
-gUnk_083944B0:
+	.global	gLevel6Stage0Room1MetatileMap
+gLevel6Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3944B0, 0x268
-	.global	gUnk_08394718
-gUnk_08394718:
+	.global	gLevel6Stage0Room1BlockLayer
+gLevel6Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x394718, 0x1FC
 	.global	gUnk_08394914
 gUnk_08394914:
 	.incbin	"baserom.gba", 0x394914, 0x2DC
-	.global	gUnk_08394BF0
-gUnk_08394BF0:
+	.global	gLevel6Stage0Room1Doors
+gLevel6Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x394BF0, 0x18
-	.global	gUnk_08394C08
-gUnk_08394C08:
+	.global	gLevel6Stage0Room1Objects
+gLevel6Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x394C08, 0x50
 	.global	gLevel6Stage0Room1
 gLevel6Stage0Room1:
 	.incbin	"baserom.gba", 0x394C58, 0x8
-	.word	gUnk_083944B0
-	.word	gUnk_08394718
+	.word	gLevel6Stage0Room1MetatileMap
+	.word	gLevel6Stage0Room1BlockLayer
 	.word	gUnk_08394914
 	.incbin	"baserom.gba", 0x394C6C, 0x4
 	.word	gUnk_084B2F9C
@@ -7326,29 +7326,29 @@ gLevel6Stage0Room1:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x394C8C, 0x10
-	.word	gUnk_08394BF0
-	.word	gUnk_08394C08
+	.word	gLevel6Stage0Room1Doors
+	.word	gLevel6Stage0Room1Objects
 	.incbin	"baserom.gba", 0x394CA4, 0xC
-	.global	gUnk_08394CB0
-gUnk_08394CB0:
+	.global	gLevel6Stage0Room2MetatileMap
+gLevel6Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x394CB0, 0x2C4
-	.global	gUnk_08394F74
-gUnk_08394F74:
+	.global	gLevel6Stage0Room2BlockLayer
+gLevel6Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x394F74, 0xD8
 	.global	gUnk_0839504C
 gUnk_0839504C:
 	.incbin	"baserom.gba", 0x39504C, 0x20
-	.global	gUnk_0839506C
-gUnk_0839506C:
+	.global	gLevel6Stage0Room2Doors
+gLevel6Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x39506C, 0xC
-	.global	gUnk_08395078
-gUnk_08395078:
+	.global	gLevel6Stage0Room2Objects
+gLevel6Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x395078, 0x80
 	.global	gLevel6Stage0Room2
 gLevel6Stage0Room2:
 	.incbin	"baserom.gba", 0x3950F8, 0x8
-	.word	gUnk_08394CB0
-	.word	gUnk_08394F74
+	.word	gLevel6Stage0Room2MetatileMap
+	.word	gLevel6Stage0Room2BlockLayer
 	.word	gUnk_0839504C
 	.incbin	"baserom.gba", 0x39510C, 0x4
 	.word	gUnk_0852BB78
@@ -7359,29 +7359,29 @@ gLevel6Stage0Room2:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39512C, 0x10
-	.word	gUnk_0839506C
-	.word	gUnk_08395078
+	.word	gLevel6Stage0Room2Doors
+	.word	gLevel6Stage0Room2Objects
 	.incbin	"baserom.gba", 0x395144, 0xC
-	.global	gUnk_08395150
-gUnk_08395150:
+	.global	gLevel6Stage0Room3MetatileMap
+gLevel6Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x395150, 0xF8
-	.global	gUnk_08395248
-gUnk_08395248:
+	.global	gLevel6Stage0Room3BlockLayer
+gLevel6Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x395248, 0x34
 	.global	gUnk_0839527C
 gUnk_0839527C:
 	.incbin	"baserom.gba", 0x39527C, 0x8
-	.global	gUnk_08395284
-gUnk_08395284:
+	.global	gLevel6Stage0Room3Doors
+gLevel6Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x395284, 0xC
-	.global	gUnk_08395290
-gUnk_08395290:
+	.global	gLevel6Stage0Room3Objects
+gLevel6Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x395290, 0x8
 	.global	gLevel6Stage0Room3
 gLevel6Stage0Room3:
 	.incbin	"baserom.gba", 0x395298, 0x8
-	.word	gUnk_08395150
-	.word	gUnk_08395248
+	.word	gLevel6Stage0Room3MetatileMap
+	.word	gLevel6Stage0Room3BlockLayer
 	.word	gUnk_0839527C
 	.incbin	"baserom.gba", 0x3952AC, 0x4
 	.word	gUnk_084B2F9C
@@ -7392,26 +7392,26 @@ gLevel6Stage0Room3:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x3952CC, 0x10
-	.word	gUnk_08395284
-	.word	gUnk_08395290
+	.word	gLevel6Stage0Room3Doors
+	.word	gLevel6Stage0Room3Objects
 	.incbin	"baserom.gba", 0x3952E4, 0xC
-	.global	gUnk_083952F0
-gUnk_083952F0:
+	.global	gLevel6Stage1Room0MetatileMap
+gLevel6Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3952F0, 0xF4
-	.global	gUnk_083953E4
-gUnk_083953E4:
+	.global	gLevel6Stage1Room0BlockLayer
+gLevel6Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3953E4, 0x34
 	.global	gUnk_08395418
 gUnk_08395418:
 	.incbin	"baserom.gba", 0x395418, 0x8
-	.global	gUnk_08395420
-gUnk_08395420:
+	.global	gLevel6Stage1Room0Doors
+gLevel6Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x395420, 0x30
 	.global	gLevel6Stage1Room0
 gLevel6Stage1Room0:
 	.incbin	"baserom.gba", 0x395450, 0x8
-	.word	gUnk_083952F0
-	.word	gUnk_083953E4
+	.word	gLevel6Stage1Room0MetatileMap
+	.word	gLevel6Stage1Room0BlockLayer
 	.word	gUnk_08395418
 	.incbin	"baserom.gba", 0x395464, 0x4
 	.word	gUnk_084BB4FC
@@ -7422,25 +7422,25 @@ gLevel6Stage1Room0:
 	.word	gUnk_08407278
 	.word	gUnk_083BB70C
 	.incbin	"baserom.gba", 0x395484, 0x10
-	.word	gUnk_08395420
+	.word	gLevel6Stage1Room0Doors
 	.incbin	"baserom.gba", 0x395498, 0x10
-	.global	gUnk_083954A8
-gUnk_083954A8:
+	.global	gLevel6Stage1Room1MetatileMap
+gLevel6Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3954A8, 0x1E8
-	.global	gUnk_08395690
-gUnk_08395690:
+	.global	gLevel6Stage1Room1BlockLayer
+gLevel6Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x395690, 0x5C
 	.global	gUnk_083956EC
 gUnk_083956EC:
 	.incbin	"baserom.gba", 0x3956EC, 0x8
-	.global	gUnk_083956F4
-gUnk_083956F4:
+	.global	gLevel6Stage1Room1Doors
+gLevel6Stage1Room1Doors:
 	.incbin	"baserom.gba", 0x3956F4, 0x18
 	.global	gLevel6Stage1Room1
 gLevel6Stage1Room1:
 	.incbin	"baserom.gba", 0x39570C, 0x8
-	.word	gUnk_083954A8
-	.word	gUnk_08395690
+	.word	gLevel6Stage1Room1MetatileMap
+	.word	gLevel6Stage1Room1BlockLayer
 	.word	gUnk_083956EC
 	.incbin	"baserom.gba", 0x395720, 0x4
 	.word	gUnk_084BB438
@@ -7451,54 +7451,54 @@ gLevel6Stage1Room1:
 	.word	gUnk_08407278
 	.word	gUnk_083BB70C
 	.incbin	"baserom.gba", 0x395740, 0x10
-	.word	gUnk_083956F4
+	.word	gLevel6Stage1Room1Doors
 	.incbin	"baserom.gba", 0x395754, 0x10
-	.global	gUnk_08395764
-gUnk_08395764:
+	.global	gLevel6Stage1Room2MetatileMap
+gLevel6Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x395764, 0x1E8
-	.global	gUnk_0839594C
-gUnk_0839594C:
+	.global	gLevel6Stage1Room2BlockLayer
+gLevel6Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39594C, 0x5C
 	.global	gUnk_083959A8
 gUnk_083959A8:
 	.incbin	"baserom.gba", 0x3959A8, 0x8
-	.global	gUnk_083959B0
-gUnk_083959B0:
+	.global	gLevel6Stage1Room2Doors
+gLevel6Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x3959B0, 0x18
 	.global	gLevel6Stage1Room2
 gLevel6Stage1Room2:
 	.incbin	"baserom.gba", 0x3959C8, 0x8
-	.word	gUnk_08395764
-	.word	gUnk_0839594C
+	.word	gLevel6Stage1Room2MetatileMap
+	.word	gLevel6Stage1Room2BlockLayer
 	.word	gUnk_083959A8
 	.incbin	"baserom.gba", 0x3959DC, 0x4
 	.word	gUnk_084BB438
 	.word	gUnk_0842E1C0
 	.word	gUnk_083ACDCC
 	.incbin	"baserom.gba", 0x3959EC, 0x4
-	.word	gUnk_0853CCD4
-	.word	gUnk_083F2144
-	.word	gUnk_083B8C30
+	.word	gLevel6Stage1Room2Bg3Palette
+	.word	gLevel6Stage1Room2Bg3Tiles
+	.word	gLevel6Stage1Room2Bg3Map
 	.incbin	"baserom.gba", 0x3959FC, 0x10
-	.word	gUnk_083959B0
+	.word	gLevel6Stage1Room2Doors
 	.incbin	"baserom.gba", 0x395A10, 0x10
-	.global	gUnk_08395A20
-gUnk_08395A20:
+	.global	gLevel6Stage1Room3MetatileMap
+gLevel6Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x395A20, 0x1F4
-	.global	gUnk_08395C14
-gUnk_08395C14:
+	.global	gLevel6Stage1Room3BlockLayer
+gLevel6Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x395C14, 0x5C
 	.global	gUnk_08395C70
 gUnk_08395C70:
 	.incbin	"baserom.gba", 0x395C70, 0x8
-	.global	gUnk_08395C78
-gUnk_08395C78:
+	.global	gLevel6Stage1Room3Doors
+gLevel6Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x395C78, 0x18
 	.global	gLevel6Stage1Room3
 gLevel6Stage1Room3:
 	.incbin	"baserom.gba", 0x395C90, 0x8
-	.word	gUnk_08395A20
-	.word	gUnk_08395C14
+	.word	gLevel6Stage1Room3MetatileMap
+	.word	gLevel6Stage1Room3BlockLayer
 	.word	gUnk_08395C70
 	.incbin	"baserom.gba", 0x395CA4, 0x4
 	.word	gUnk_084BB438
@@ -7509,83 +7509,83 @@ gLevel6Stage1Room3:
 	.word	gUnk_083EE8B4
 	.word	gUnk_083B82B0
 	.incbin	"baserom.gba", 0x395CC4, 0x10
-	.word	gUnk_08395C78
+	.word	gLevel6Stage1Room3Doors
 	.incbin	"baserom.gba", 0x395CD8, 0x10
-	.global	gUnk_08395CE8
-gUnk_08395CE8:
+	.global	gLevel6Stage1Room4MetatileMap
+gLevel6Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x395CE8, 0x1D0
-	.global	gUnk_08395EB8
-gUnk_08395EB8:
+	.global	gLevel6Stage1Room4BlockLayer
+gLevel6Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x395EB8, 0x5C
 	.global	gUnk_08395F14
 gUnk_08395F14:
 	.incbin	"baserom.gba", 0x395F14, 0x8
-	.global	gUnk_08395F1C
-gUnk_08395F1C:
+	.global	gLevel6Stage1Room4Doors
+gLevel6Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x395F1C, 0x18
 	.global	gLevel6Stage1Room4
 gLevel6Stage1Room4:
 	.incbin	"baserom.gba", 0x395F34, 0x8
-	.word	gUnk_08395CE8
-	.word	gUnk_08395EB8
+	.word	gLevel6Stage1Room4MetatileMap
+	.word	gLevel6Stage1Room4BlockLayer
 	.word	gUnk_08395F14
 	.incbin	"baserom.gba", 0x395F48, 0x4
 	.word	gUnk_084BB438
 	.word	gUnk_0842E1C0
 	.word	gUnk_083ACDCC
 	.incbin	"baserom.gba", 0x395F58, 0x4
-	.word	gUnk_084D51B0
+	.word	gLevel6Stage1Room4Bg3Palette
 	.word	gUnk_083E2A30
 	.word	gUnk_083B6770
 	.incbin	"baserom.gba", 0x395F68, 0x10
-	.word	gUnk_08395F1C
+	.word	gLevel6Stage1Room4Doors
 	.incbin	"baserom.gba", 0x395F7C, 0x10
-	.global	gUnk_08395F8C
-gUnk_08395F8C:
+	.global	gLevel6Stage1Room5MetatileMap
+gLevel6Stage1Room5MetatileMap:
 	.incbin	"baserom.gba", 0x395F8C, 0x1DC
-	.global	gUnk_08396168
-gUnk_08396168:
+	.global	gLevel6Stage1Room5BlockLayer
+gLevel6Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x396168, 0x5C
 	.global	gUnk_083961C4
 gUnk_083961C4:
 	.incbin	"baserom.gba", 0x3961C4, 0x8
-	.global	gUnk_083961CC
-gUnk_083961CC:
+	.global	gLevel6Stage1Room5Doors
+gLevel6Stage1Room5Doors:
 	.incbin	"baserom.gba", 0x3961CC, 0x18
 	.global	gLevel6Stage1Room5
 gLevel6Stage1Room5:
 	.incbin	"baserom.gba", 0x3961E4, 0x8
-	.word	gUnk_08395F8C
-	.word	gUnk_08396168
+	.word	gLevel6Stage1Room5MetatileMap
+	.word	gLevel6Stage1Room5BlockLayer
 	.word	gUnk_083961C4
 	.incbin	"baserom.gba", 0x3961F8, 0x4
 	.word	gUnk_084BB438
 	.word	gUnk_0842E1C0
 	.word	gUnk_083ACDCC
 	.incbin	"baserom.gba", 0x396208, 0x4
-	.word	gUnk_084D53B8
+	.word	gLevel6Stage1Room5Bg3Palette
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x396218, 0x10
-	.word	gUnk_083961CC
+	.word	gLevel6Stage1Room5Doors
 	.incbin	"baserom.gba", 0x39622C, 0x10
-	.global	gUnk_0839623C
-gUnk_0839623C:
+	.global	gLevel6Stage1Room6MetatileMap
+gLevel6Stage1Room6MetatileMap:
 	.incbin	"baserom.gba", 0x39623C, 0x1F4
-	.global	gUnk_08396430
-gUnk_08396430:
+	.global	gLevel6Stage1Room6BlockLayer
+gLevel6Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x396430, 0x5C
 	.global	gUnk_0839648C
 gUnk_0839648C:
 	.incbin	"baserom.gba", 0x39648C, 0x8
-	.global	gUnk_08396494
-gUnk_08396494:
+	.global	gLevel6Stage1Room6Doors
+gLevel6Stage1Room6Doors:
 	.incbin	"baserom.gba", 0x396494, 0x18
 	.global	gLevel6Stage1Room6
 gLevel6Stage1Room6:
 	.incbin	"baserom.gba", 0x3964AC, 0x8
-	.word	gUnk_0839623C
-	.word	gUnk_08396430
+	.word	gLevel6Stage1Room6MetatileMap
+	.word	gLevel6Stage1Room6BlockLayer
 	.word	gUnk_0839648C
 	.incbin	"baserom.gba", 0x3964C0, 0x4
 	.word	gUnk_084BB438
@@ -7596,25 +7596,25 @@ gLevel6Stage1Room6:
 	.word	gUnk_083F7470
 	.word	gUnk_083B954C
 	.incbin	"baserom.gba", 0x3964E0, 0x10
-	.word	gUnk_08396494
+	.word	gLevel6Stage1Room6Doors
 	.incbin	"baserom.gba", 0x3964F4, 0x10
-	.global	gUnk_08396504
-gUnk_08396504:
+	.global	gLevel6Stage1Room7MetatileMap
+gLevel6Stage1Room7MetatileMap:
 	.incbin	"baserom.gba", 0x396504, 0x1D4
-	.global	gUnk_083966D8
-gUnk_083966D8:
+	.global	gLevel6Stage1Room7BlockLayer
+gLevel6Stage1Room7BlockLayer:
 	.incbin	"baserom.gba", 0x3966D8, 0x5C
 	.global	gUnk_08396734
 gUnk_08396734:
 	.incbin	"baserom.gba", 0x396734, 0x8
-	.global	gUnk_0839673C
-gUnk_0839673C:
+	.global	gLevel6Stage1Room7Doors
+gLevel6Stage1Room7Doors:
 	.incbin	"baserom.gba", 0x39673C, 0x18
 	.global	gLevel6Stage1Room7
 gLevel6Stage1Room7:
 	.incbin	"baserom.gba", 0x396754, 0x8
-	.word	gUnk_08396504
-	.word	gUnk_083966D8
+	.word	gLevel6Stage1Room7MetatileMap
+	.word	gLevel6Stage1Room7BlockLayer
 	.word	gUnk_08396734
 	.incbin	"baserom.gba", 0x396768, 0x4
 	.word	gUnk_084BB438
@@ -7625,25 +7625,25 @@ gLevel6Stage1Room7:
 	.word	gUnk_08407278
 	.word	gUnk_083BB70C
 	.incbin	"baserom.gba", 0x396788, 0x10
-	.word	gUnk_0839673C
+	.word	gLevel6Stage1Room7Doors
 	.incbin	"baserom.gba", 0x39679C, 0x10
-	.global	gUnk_083967AC
-gUnk_083967AC:
+	.global	gLevel6Stage1Room8MetatileMap
+gLevel6Stage1Room8MetatileMap:
 	.incbin	"baserom.gba", 0x3967AC, 0x1D8
-	.global	gUnk_08396984
-gUnk_08396984:
+	.global	gLevel6Stage1Room8BlockLayer
+gLevel6Stage1Room8BlockLayer:
 	.incbin	"baserom.gba", 0x396984, 0x5C
 	.global	gUnk_083969E0
 gUnk_083969E0:
 	.incbin	"baserom.gba", 0x3969E0, 0x8
-	.global	gUnk_083969E8
-gUnk_083969E8:
+	.global	gLevel6Stage1Room8Doors
+gLevel6Stage1Room8Doors:
 	.incbin	"baserom.gba", 0x3969E8, 0x18
 	.global	gLevel6Stage1Room8
 gLevel6Stage1Room8:
 	.incbin	"baserom.gba", 0x396A00, 0x8
-	.word	gUnk_083967AC
-	.word	gUnk_08396984
+	.word	gLevel6Stage1Room8MetatileMap
+	.word	gLevel6Stage1Room8BlockLayer
 	.word	gUnk_083969E0
 	.incbin	"baserom.gba", 0x396A14, 0x4
 	.word	gUnk_084BB438
@@ -7654,25 +7654,25 @@ gLevel6Stage1Room8:
 	.word	gUnk_083EE8B4
 	.word	gUnk_083B82B0
 	.incbin	"baserom.gba", 0x396A34, 0x10
-	.word	gUnk_083969E8
+	.word	gLevel6Stage1Room8Doors
 	.incbin	"baserom.gba", 0x396A48, 0x10
-	.global	gUnk_08396A58
-gUnk_08396A58:
+	.global	gLevel6Stage1Room9MetatileMap
+gLevel6Stage1Room9MetatileMap:
 	.incbin	"baserom.gba", 0x396A58, 0x1E4
-	.global	gUnk_08396C3C
-gUnk_08396C3C:
+	.global	gLevel6Stage1Room9BlockLayer
+gLevel6Stage1Room9BlockLayer:
 	.incbin	"baserom.gba", 0x396C3C, 0x5C
 	.global	gUnk_08396C98
 gUnk_08396C98:
 	.incbin	"baserom.gba", 0x396C98, 0x8
-	.global	gUnk_08396CA0
-gUnk_08396CA0:
+	.global	gLevel6Stage1Room9Doors
+gLevel6Stage1Room9Doors:
 	.incbin	"baserom.gba", 0x396CA0, 0x18
 	.global	gLevel6Stage1Room9
 gLevel6Stage1Room9:
 	.incbin	"baserom.gba", 0x396CB8, 0x8
-	.word	gUnk_08396A58
-	.word	gUnk_08396C3C
+	.word	gLevel6Stage1Room9MetatileMap
+	.word	gLevel6Stage1Room9BlockLayer
 	.word	gUnk_08396C98
 	.incbin	"baserom.gba", 0x396CCC, 0x4
 	.word	gUnk_084BB438
@@ -7683,28 +7683,28 @@ gLevel6Stage1Room9:
 	.word	gUnk_083F7470
 	.word	gUnk_083B954C
 	.incbin	"baserom.gba", 0x396CEC, 0x10
-	.word	gUnk_08396CA0
+	.word	gLevel6Stage1Room9Doors
 	.incbin	"baserom.gba", 0x396D00, 0x10
-	.global	gUnk_08396D10
-gUnk_08396D10:
+	.global	gLevel6Stage1Room10MetatileMap
+gLevel6Stage1Room10MetatileMap:
 	.incbin	"baserom.gba", 0x396D10, 0x254
-	.global	gUnk_08396F64
-gUnk_08396F64:
+	.global	gLevel6Stage1Room10BlockLayer
+gLevel6Stage1Room10BlockLayer:
 	.incbin	"baserom.gba", 0x396F64, 0xEC
 	.global	gUnk_08397050
 gUnk_08397050:
 	.incbin	"baserom.gba", 0x397050, 0x8
-	.global	gUnk_08397058
-gUnk_08397058:
+	.global	gLevel6Stage1Room10Doors
+gLevel6Stage1Room10Doors:
 	.incbin	"baserom.gba", 0x397058, 0xC
-	.global	gUnk_08397064
-gUnk_08397064:
+	.global	gLevel6Stage1Room10Objects
+gLevel6Stage1Room10Objects:
 	.incbin	"baserom.gba", 0x397064, 0x8
 	.global	gLevel6Stage1Room10
 gLevel6Stage1Room10:
 	.incbin	"baserom.gba", 0x39706C, 0x8
-	.word	gUnk_08396D10
-	.word	gUnk_08396F64
+	.word	gLevel6Stage1Room10MetatileMap
+	.word	gLevel6Stage1Room10BlockLayer
 	.word	gUnk_08397050
 	.incbin	"baserom.gba", 0x397080, 0x4
 	.word	gUnk_084BB4FC
@@ -7715,29 +7715,29 @@ gLevel6Stage1Room10:
 	.word	gUnk_0846F8DC
 	.word	gUnk_083CEF10
 	.incbin	"baserom.gba", 0x3970A0, 0x10
-	.word	gUnk_08397058
-	.word	gUnk_08397064
+	.word	gLevel6Stage1Room10Doors
+	.word	gLevel6Stage1Room10Objects
 	.incbin	"baserom.gba", 0x3970B8, 0xC
-	.global	gUnk_083970C4
-gUnk_083970C4:
+	.global	gLevel6Stage1Room11MetatileMap
+gLevel6Stage1Room11MetatileMap:
 	.incbin	"baserom.gba", 0x3970C4, 0x200
-	.global	gUnk_083972C4
-gUnk_083972C4:
+	.global	gLevel6Stage1Room11BlockLayer
+gLevel6Stage1Room11BlockLayer:
 	.incbin	"baserom.gba", 0x3972C4, 0x5C
 	.global	gUnk_08397320
 gUnk_08397320:
 	.incbin	"baserom.gba", 0x397320, 0x8
-	.global	gUnk_08397328
-gUnk_08397328:
+	.global	gLevel6Stage1Room11Doors
+gLevel6Stage1Room11Doors:
 	.incbin	"baserom.gba", 0x397328, 0x18
-	.global	gUnk_08397340
-gUnk_08397340:
+	.global	gLevel6Stage1Room11Objects
+gLevel6Stage1Room11Objects:
 	.incbin	"baserom.gba", 0x397340, 0x18
 	.global	gLevel6Stage1Room11
 gLevel6Stage1Room11:
 	.incbin	"baserom.gba", 0x397358, 0x8
-	.word	gUnk_083970C4
-	.word	gUnk_083972C4
+	.word	gLevel6Stage1Room11MetatileMap
+	.word	gLevel6Stage1Room11BlockLayer
 	.word	gUnk_08397320
 	.incbin	"baserom.gba", 0x39736C, 0x4
 	.word	gUnk_0852BD00
@@ -7748,29 +7748,29 @@ gLevel6Stage1Room11:
 	.word	gUnk_0846F8DC
 	.word	gUnk_083CEF10
 	.incbin	"baserom.gba", 0x39738C, 0x10
-	.word	gUnk_08397328
-	.word	gUnk_08397340
+	.word	gLevel6Stage1Room11Doors
+	.word	gLevel6Stage1Room11Objects
 	.incbin	"baserom.gba", 0x3973A4, 0xC
-	.global	gUnk_083973B0
-gUnk_083973B0:
+	.global	gLevel6Stage1Room12MetatileMap
+gLevel6Stage1Room12MetatileMap:
 	.incbin	"baserom.gba", 0x3973B0, 0xE8
-	.global	gUnk_08397498
-gUnk_08397498:
+	.global	gLevel6Stage1Room12BlockLayer
+gLevel6Stage1Room12BlockLayer:
 	.incbin	"baserom.gba", 0x397498, 0x34
 	.global	gUnk_083974CC
 gUnk_083974CC:
 	.incbin	"baserom.gba", 0x3974CC, 0x8
-	.global	gUnk_083974D4
-gUnk_083974D4:
+	.global	gLevel6Stage1Room12Doors
+gLevel6Stage1Room12Doors:
 	.incbin	"baserom.gba", 0x3974D4, 0xC
-	.global	gUnk_083974E0
-gUnk_083974E0:
+	.global	gLevel6Stage1Room12Objects
+gLevel6Stage1Room12Objects:
 	.incbin	"baserom.gba", 0x3974E0, 0x28
 	.global	gLevel6Stage1Room12
 gLevel6Stage1Room12:
 	.incbin	"baserom.gba", 0x397508, 0x8
-	.word	gUnk_083973B0
-	.word	gUnk_08397498
+	.word	gLevel6Stage1Room12MetatileMap
+	.word	gLevel6Stage1Room12BlockLayer
 	.word	gUnk_083974CC
 	.incbin	"baserom.gba", 0x39751C, 0x4
 	.word	gUnk_0853D53C
@@ -7781,29 +7781,29 @@ gLevel6Stage1Room12:
 	.word	gUnk_0846F8DC
 	.word	gUnk_083CEF10
 	.incbin	"baserom.gba", 0x39753C, 0x10
-	.word	gUnk_083974D4
-	.word	gUnk_083974E0
+	.word	gLevel6Stage1Room12Doors
+	.word	gLevel6Stage1Room12Objects
 	.incbin	"baserom.gba", 0x397554, 0xC
-	.global	gUnk_08397560
-gUnk_08397560:
+	.global	gLevel6Stage1Room13MetatileMap
+gLevel6Stage1Room13MetatileMap:
 	.incbin	"baserom.gba", 0x397560, 0xB8
-	.global	gUnk_08397618
-gUnk_08397618:
+	.global	gLevel6Stage1Room13BlockLayer
+gLevel6Stage1Room13BlockLayer:
 	.incbin	"baserom.gba", 0x397618, 0x34
 	.global	gUnk_0839764C
 gUnk_0839764C:
 	.incbin	"baserom.gba", 0x39764C, 0x10
-	.global	gUnk_0839765C
-gUnk_0839765C:
+	.global	gLevel6Stage1Room13Doors
+gLevel6Stage1Room13Doors:
 	.incbin	"baserom.gba", 0x39765C, 0xC
-	.global	gUnk_08397668
-gUnk_08397668:
+	.global	gLevel6Stage1Room13Objects
+gLevel6Stage1Room13Objects:
 	.incbin	"baserom.gba", 0x397668, 0x18
 	.global	gLevel6Stage1Room13
 gLevel6Stage1Room13:
 	.incbin	"baserom.gba", 0x397680, 0x8
-	.word	gUnk_08397560
-	.word	gUnk_08397618
+	.word	gLevel6Stage1Room13MetatileMap
+	.word	gLevel6Stage1Room13BlockLayer
 	.word	gUnk_0839764C
 	.incbin	"baserom.gba", 0x397694, 0x4
 	.word	gUnk_0853D53C
@@ -7814,29 +7814,29 @@ gLevel6Stage1Room13:
 	.word	gUnk_08407278
 	.word	gUnk_083BB70C
 	.incbin	"baserom.gba", 0x3976B4, 0x10
-	.word	gUnk_0839765C
-	.word	gUnk_08397668
+	.word	gLevel6Stage1Room13Doors
+	.word	gLevel6Stage1Room13Objects
 	.incbin	"baserom.gba", 0x3976CC, 0xC
-	.global	gUnk_083976D8
-gUnk_083976D8:
+	.global	gLevel6Stage1Room14MetatileMap
+gLevel6Stage1Room14MetatileMap:
 	.incbin	"baserom.gba", 0x3976D8, 0xC4
-	.global	gUnk_0839779C
-gUnk_0839779C:
+	.global	gLevel6Stage1Room14BlockLayer
+gLevel6Stage1Room14BlockLayer:
 	.incbin	"baserom.gba", 0x39779C, 0x34
 	.global	gUnk_083977D0
 gUnk_083977D0:
 	.incbin	"baserom.gba", 0x3977D0, 0x10
-	.global	gUnk_083977E0
-gUnk_083977E0:
+	.global	gLevel6Stage1Room14Doors
+gLevel6Stage1Room14Doors:
 	.incbin	"baserom.gba", 0x3977E0, 0xC
-	.global	gUnk_083977EC
-gUnk_083977EC:
+	.global	gLevel6Stage1Room14Objects
+gLevel6Stage1Room14Objects:
 	.incbin	"baserom.gba", 0x3977EC, 0x18
 	.global	gLevel6Stage1Room14
 gLevel6Stage1Room14:
 	.incbin	"baserom.gba", 0x397804, 0x8
-	.word	gUnk_083976D8
-	.word	gUnk_0839779C
+	.word	gLevel6Stage1Room14MetatileMap
+	.word	gLevel6Stage1Room14BlockLayer
 	.word	gUnk_083977D0
 	.incbin	"baserom.gba", 0x397818, 0x4
 	.word	gUnk_0852D560
@@ -7847,29 +7847,29 @@ gLevel6Stage1Room14:
 	.word	gUnk_08407278
 	.word	gUnk_083BB70C
 	.incbin	"baserom.gba", 0x397838, 0x10
-	.word	gUnk_083977E0
-	.word	gUnk_083977EC
+	.word	gLevel6Stage1Room14Doors
+	.word	gLevel6Stage1Room14Objects
 	.incbin	"baserom.gba", 0x397850, 0xC
-	.global	gUnk_0839785C
-gUnk_0839785C:
+	.global	gLevel6Stage1Room15MetatileMap
+gLevel6Stage1Room15MetatileMap:
 	.incbin	"baserom.gba", 0x39785C, 0xAC
-	.global	gUnk_08397908
-gUnk_08397908:
+	.global	gLevel6Stage1Room15BlockLayer
+gLevel6Stage1Room15BlockLayer:
 	.incbin	"baserom.gba", 0x397908, 0x34
 	.global	gUnk_0839793C
 gUnk_0839793C:
 	.incbin	"baserom.gba", 0x39793C, 0x10
-	.global	gUnk_0839794C
-gUnk_0839794C:
+	.global	gLevel6Stage1Room15Doors
+gLevel6Stage1Room15Doors:
 	.incbin	"baserom.gba", 0x39794C, 0xC
-	.global	gUnk_08397958
-gUnk_08397958:
+	.global	gLevel6Stage1Room15Objects
+gLevel6Stage1Room15Objects:
 	.incbin	"baserom.gba", 0x397958, 0x18
 	.global	gLevel6Stage1Room15
 gLevel6Stage1Room15:
 	.incbin	"baserom.gba", 0x397970, 0x8
-	.word	gUnk_0839785C
-	.word	gUnk_08397908
+	.word	gLevel6Stage1Room15MetatileMap
+	.word	gLevel6Stage1Room15BlockLayer
 	.word	gUnk_0839793C
 	.incbin	"baserom.gba", 0x397984, 0x4
 	.word	gUnk_084B2F9C
@@ -7880,29 +7880,29 @@ gLevel6Stage1Room15:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x3979A4, 0x10
-	.word	gUnk_0839794C
-	.word	gUnk_08397958
+	.word	gLevel6Stage1Room15Doors
+	.word	gLevel6Stage1Room15Objects
 	.incbin	"baserom.gba", 0x3979BC, 0xC
-	.global	gUnk_083979C8
-gUnk_083979C8:
+	.global	gLevel6Stage1Room16MetatileMap
+gLevel6Stage1Room16MetatileMap:
 	.incbin	"baserom.gba", 0x3979C8, 0x124
-	.global	gUnk_08397AEC
-gUnk_08397AEC:
+	.global	gLevel6Stage1Room16BlockLayer
+gLevel6Stage1Room16BlockLayer:
 	.incbin	"baserom.gba", 0x397AEC, 0x34
 	.global	gUnk_08397B20
 gUnk_08397B20:
 	.incbin	"baserom.gba", 0x397B20, 0x10
-	.global	gUnk_08397B30
-gUnk_08397B30:
+	.global	gLevel6Stage1Room16Doors
+gLevel6Stage1Room16Doors:
 	.incbin	"baserom.gba", 0x397B30, 0xC
-	.global	gUnk_08397B3C
-gUnk_08397B3C:
+	.global	gLevel6Stage1Room16Objects
+gLevel6Stage1Room16Objects:
 	.incbin	"baserom.gba", 0x397B3C, 0x18
 	.global	gLevel6Stage1Room16
 gLevel6Stage1Room16:
 	.incbin	"baserom.gba", 0x397B54, 0x8
-	.word	gUnk_083979C8
-	.word	gUnk_08397AEC
+	.word	gLevel6Stage1Room16MetatileMap
+	.word	gLevel6Stage1Room16BlockLayer
 	.word	gUnk_08397B20
 	.incbin	"baserom.gba", 0x397B68, 0x4
 	.word	gUnk_0853DAB4
@@ -7913,29 +7913,29 @@ gLevel6Stage1Room16:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x397B88, 0x10
-	.word	gUnk_08397B30
-	.word	gUnk_08397B3C
+	.word	gLevel6Stage1Room16Doors
+	.word	gLevel6Stage1Room16Objects
 	.incbin	"baserom.gba", 0x397BA0, 0xC
-	.global	gUnk_08397BAC
-gUnk_08397BAC:
+	.global	gLevel6Stage1Room17MetatileMap
+gLevel6Stage1Room17MetatileMap:
 	.incbin	"baserom.gba", 0x397BAC, 0xE8
-	.global	gUnk_08397C94
-gUnk_08397C94:
+	.global	gLevel6Stage1Room17BlockLayer
+gLevel6Stage1Room17BlockLayer:
 	.incbin	"baserom.gba", 0x397C94, 0x34
 	.global	gUnk_08397CC8
 gUnk_08397CC8:
 	.incbin	"baserom.gba", 0x397CC8, 0x10
-	.global	gUnk_08397CD8
-gUnk_08397CD8:
+	.global	gLevel6Stage1Room17Doors
+gLevel6Stage1Room17Doors:
 	.incbin	"baserom.gba", 0x397CD8, 0xC
-	.global	gUnk_08397CE4
-gUnk_08397CE4:
+	.global	gLevel6Stage1Room17Objects
+gLevel6Stage1Room17Objects:
 	.incbin	"baserom.gba", 0x397CE4, 0x18
 	.global	gLevel6Stage1Room17
 gLevel6Stage1Room17:
 	.incbin	"baserom.gba", 0x397CFC, 0x8
-	.word	gUnk_08397BAC
-	.word	gUnk_08397C94
+	.word	gLevel6Stage1Room17MetatileMap
+	.word	gLevel6Stage1Room17BlockLayer
 	.word	gUnk_08397CC8
 	.incbin	"baserom.gba", 0x397D10, 0x4
 	.word	gUnk_0849A52C
@@ -7946,29 +7946,29 @@ gLevel6Stage1Room17:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x397D30, 0x10
-	.word	gUnk_08397CD8
-	.word	gUnk_08397CE4
+	.word	gLevel6Stage1Room17Doors
+	.word	gLevel6Stage1Room17Objects
 	.incbin	"baserom.gba", 0x397D48, 0xC
-	.global	gUnk_08397D54
-gUnk_08397D54:
+	.global	gLevel6Stage1Room18MetatileMap
+gLevel6Stage1Room18MetatileMap:
 	.incbin	"baserom.gba", 0x397D54, 0x114
-	.global	gUnk_08397E68
-gUnk_08397E68:
+	.global	gLevel6Stage1Room18BlockLayer
+gLevel6Stage1Room18BlockLayer:
 	.incbin	"baserom.gba", 0x397E68, 0x34
 	.global	gUnk_08397E9C
 gUnk_08397E9C:
 	.incbin	"baserom.gba", 0x397E9C, 0x10
-	.global	gUnk_08397EAC
-gUnk_08397EAC:
+	.global	gLevel6Stage1Room18Doors
+gLevel6Stage1Room18Doors:
 	.incbin	"baserom.gba", 0x397EAC, 0xC
-	.global	gUnk_08397EB8
-gUnk_08397EB8:
+	.global	gLevel6Stage1Room18Objects
+gLevel6Stage1Room18Objects:
 	.incbin	"baserom.gba", 0x397EB8, 0x18
 	.global	gLevel6Stage1Room18
 gLevel6Stage1Room18:
 	.incbin	"baserom.gba", 0x397ED0, 0x8
-	.word	gUnk_08397D54
-	.word	gUnk_08397E68
+	.word	gLevel6Stage1Room18MetatileMap
+	.word	gLevel6Stage1Room18BlockLayer
 	.word	gUnk_08397E9C
 	.incbin	"baserom.gba", 0x397EE4, 0x4
 	.word	gUnk_0853D12C
@@ -7979,29 +7979,29 @@ gLevel6Stage1Room18:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x397F04, 0x10
-	.word	gUnk_08397EAC
-	.word	gUnk_08397EB8
+	.word	gLevel6Stage1Room18Doors
+	.word	gLevel6Stage1Room18Objects
 	.incbin	"baserom.gba", 0x397F1C, 0xC
-	.global	gUnk_08397F28
-gUnk_08397F28:
+	.global	gLevel6Stage1Room19MetatileMap
+gLevel6Stage1Room19MetatileMap:
 	.incbin	"baserom.gba", 0x397F28, 0xBC
-	.global	gUnk_08397FE4
-gUnk_08397FE4:
+	.global	gLevel6Stage1Room19BlockLayer
+gLevel6Stage1Room19BlockLayer:
 	.incbin	"baserom.gba", 0x397FE4, 0x34
 	.global	gUnk_08398018
 gUnk_08398018:
 	.incbin	"baserom.gba", 0x398018, 0x10
-	.global	gUnk_08398028
-gUnk_08398028:
+	.global	gLevel6Stage1Room19Doors
+gLevel6Stage1Room19Doors:
 	.incbin	"baserom.gba", 0x398028, 0xC
-	.global	gUnk_08398034
-gUnk_08398034:
+	.global	gLevel6Stage1Room19Objects
+gLevel6Stage1Room19Objects:
 	.incbin	"baserom.gba", 0x398034, 0x18
 	.global	gLevel6Stage1Room19
 gLevel6Stage1Room19:
 	.incbin	"baserom.gba", 0x39804C, 0x8
-	.word	gUnk_08397F28
-	.word	gUnk_08397FE4
+	.word	gLevel6Stage1Room19MetatileMap
+	.word	gLevel6Stage1Room19BlockLayer
 	.word	gUnk_08398018
 	.incbin	"baserom.gba", 0x398060, 0x4
 	.word	gUnk_0853D53C
@@ -8012,29 +8012,29 @@ gLevel6Stage1Room19:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x398080, 0x10
-	.word	gUnk_08398028
-	.word	gUnk_08398034
+	.word	gLevel6Stage1Room19Doors
+	.word	gLevel6Stage1Room19Objects
 	.incbin	"baserom.gba", 0x398098, 0xC
-	.global	gUnk_083980A4
-gUnk_083980A4:
+	.global	gLevel6Stage1Room20MetatileMap
+gLevel6Stage1Room20MetatileMap:
 	.incbin	"baserom.gba", 0x3980A4, 0x114
-	.global	gUnk_083981B8
-gUnk_083981B8:
+	.global	gLevel6Stage1Room20BlockLayer
+gLevel6Stage1Room20BlockLayer:
 	.incbin	"baserom.gba", 0x3981B8, 0x34
 	.global	gUnk_083981EC
 gUnk_083981EC:
 	.incbin	"baserom.gba", 0x3981EC, 0x10
-	.global	gUnk_083981FC
-gUnk_083981FC:
+	.global	gLevel6Stage1Room20Doors
+gLevel6Stage1Room20Doors:
 	.incbin	"baserom.gba", 0x3981FC, 0xC
-	.global	gUnk_08398208
-gUnk_08398208:
+	.global	gLevel6Stage1Room20Objects
+gLevel6Stage1Room20Objects:
 	.incbin	"baserom.gba", 0x398208, 0x18
 	.global	gLevel6Stage1Room20
 gLevel6Stage1Room20:
 	.incbin	"baserom.gba", 0x398220, 0x8
-	.word	gUnk_083980A4
-	.word	gUnk_083981B8
+	.word	gLevel6Stage1Room20MetatileMap
+	.word	gLevel6Stage1Room20BlockLayer
 	.word	gUnk_083981EC
 	.incbin	"baserom.gba", 0x398234, 0x4
 	.word	gUnk_0853DAB4
@@ -8045,29 +8045,29 @@ gLevel6Stage1Room20:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x398254, 0x10
-	.word	gUnk_083981FC
-	.word	gUnk_08398208
+	.word	gLevel6Stage1Room20Doors
+	.word	gLevel6Stage1Room20Objects
 	.incbin	"baserom.gba", 0x39826C, 0xC
-	.global	gUnk_08398278
-gUnk_08398278:
+	.global	gLevel6Stage1Room21MetatileMap
+gLevel6Stage1Room21MetatileMap:
 	.incbin	"baserom.gba", 0x398278, 0xF8
-	.global	gUnk_08398370
-gUnk_08398370:
+	.global	gLevel6Stage1Room21BlockLayer
+gLevel6Stage1Room21BlockLayer:
 	.incbin	"baserom.gba", 0x398370, 0x34
 	.global	gUnk_083983A4
 gUnk_083983A4:
 	.incbin	"baserom.gba", 0x3983A4, 0x10
-	.global	gUnk_083983B4
-gUnk_083983B4:
+	.global	gLevel6Stage1Room21Doors
+gLevel6Stage1Room21Doors:
 	.incbin	"baserom.gba", 0x3983B4, 0xC
-	.global	gUnk_083983C0
-gUnk_083983C0:
+	.global	gLevel6Stage1Room21Objects
+gLevel6Stage1Room21Objects:
 	.incbin	"baserom.gba", 0x3983C0, 0x18
 	.global	gLevel6Stage1Room21
 gLevel6Stage1Room21:
 	.incbin	"baserom.gba", 0x3983D8, 0x8
-	.word	gUnk_08398278
-	.word	gUnk_08398370
+	.word	gLevel6Stage1Room21MetatileMap
+	.word	gLevel6Stage1Room21BlockLayer
 	.word	gUnk_083983A4
 	.incbin	"baserom.gba", 0x3983EC, 0x4
 	.word	gUnk_0849A52C
@@ -8078,29 +8078,29 @@ gLevel6Stage1Room21:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x39840C, 0x10
-	.word	gUnk_083983B4
-	.word	gUnk_083983C0
+	.word	gLevel6Stage1Room21Doors
+	.word	gLevel6Stage1Room21Objects
 	.incbin	"baserom.gba", 0x398424, 0xC
-	.global	gUnk_08398430
-gUnk_08398430:
+	.global	gLevel6Stage1Room22MetatileMap
+gLevel6Stage1Room22MetatileMap:
 	.incbin	"baserom.gba", 0x398430, 0x138
-	.global	gUnk_08398568
-gUnk_08398568:
+	.global	gLevel6Stage1Room22BlockLayer
+gLevel6Stage1Room22BlockLayer:
 	.incbin	"baserom.gba", 0x398568, 0x34
 	.global	gUnk_0839859C
 gUnk_0839859C:
 	.incbin	"baserom.gba", 0x39859C, 0x10
-	.global	gUnk_083985AC
-gUnk_083985AC:
+	.global	gLevel6Stage1Room22Doors
+gLevel6Stage1Room22Doors:
 	.incbin	"baserom.gba", 0x3985AC, 0xC
-	.global	gUnk_083985B8
-gUnk_083985B8:
+	.global	gLevel6Stage1Room22Objects
+gLevel6Stage1Room22Objects:
 	.incbin	"baserom.gba", 0x3985B8, 0x18
 	.global	gLevel6Stage1Room22
 gLevel6Stage1Room22:
 	.incbin	"baserom.gba", 0x3985D0, 0x8
-	.word	gUnk_08398430
-	.word	gUnk_08398568
+	.word	gLevel6Stage1Room22MetatileMap
+	.word	gLevel6Stage1Room22BlockLayer
 	.word	gUnk_0839859C
 	.incbin	"baserom.gba", 0x3985E4, 0x4
 	.word	gUnk_0853D12C
@@ -8111,29 +8111,29 @@ gLevel6Stage1Room22:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x398604, 0x10
-	.word	gUnk_083985AC
-	.word	gUnk_083985B8
+	.word	gLevel6Stage1Room22Doors
+	.word	gLevel6Stage1Room22Objects
 	.incbin	"baserom.gba", 0x39861C, 0xC
-	.global	gUnk_08398628
-gUnk_08398628:
+	.global	gLevel6Stage1Room23MetatileMap
+gLevel6Stage1Room23MetatileMap:
 	.incbin	"baserom.gba", 0x398628, 0xCC
-	.global	gUnk_083986F4
-gUnk_083986F4:
+	.global	gLevel6Stage1Room23BlockLayer
+gLevel6Stage1Room23BlockLayer:
 	.incbin	"baserom.gba", 0x3986F4, 0x34
 	.global	gUnk_08398728
 gUnk_08398728:
 	.incbin	"baserom.gba", 0x398728, 0x10
-	.global	gUnk_08398738
-gUnk_08398738:
+	.global	gLevel6Stage1Room23Doors
+gLevel6Stage1Room23Doors:
 	.incbin	"baserom.gba", 0x398738, 0xC
-	.global	gUnk_08398744
-gUnk_08398744:
+	.global	gLevel6Stage1Room23Objects
+gLevel6Stage1Room23Objects:
 	.incbin	"baserom.gba", 0x398744, 0x18
 	.global	gLevel6Stage1Room23
 gLevel6Stage1Room23:
 	.incbin	"baserom.gba", 0x39875C, 0x8
-	.word	gUnk_08398628
-	.word	gUnk_083986F4
+	.word	gLevel6Stage1Room23MetatileMap
+	.word	gLevel6Stage1Room23BlockLayer
 	.word	gUnk_08398728
 	.incbin	"baserom.gba", 0x398770, 0x4
 	.word	gUnk_0853D53C
@@ -8144,26 +8144,26 @@ gLevel6Stage1Room23:
 	.word	gUnk_084A861C
 	.word	gUnk_084A7CFC
 	.incbin	"baserom.gba", 0x398790, 0x10
-	.word	gUnk_08398738
-	.word	gUnk_08398744
+	.word	gLevel6Stage1Room23Doors
+	.word	gLevel6Stage1Room23Objects
 	.incbin	"baserom.gba", 0x3987A8, 0xC
-	.global	gUnk_083987B4
-gUnk_083987B4:
+	.global	gLevel6Stage1Room24MetatileMap
+gLevel6Stage1Room24MetatileMap:
 	.incbin	"baserom.gba", 0x3987B4, 0x5C
-	.global	gUnk_08398810
-gUnk_08398810:
+	.global	gLevel6Stage1Room24BlockLayer
+gLevel6Stage1Room24BlockLayer:
 	.incbin	"baserom.gba", 0x398810, 0x34
 	.global	gUnk_08398844
 gUnk_08398844:
 	.incbin	"baserom.gba", 0x398844, 0x8
-	.global	gUnk_0839884C
-gUnk_0839884C:
+	.global	gLevel6Stage1Room24Doors
+gLevel6Stage1Room24Doors:
 	.incbin	"baserom.gba", 0x39884C, 0xC
 	.global	gLevel6Stage1Room24
 gLevel6Stage1Room24:
 	.incbin	"baserom.gba", 0x398858, 0x8
-	.word	gUnk_083987B4
-	.word	gUnk_08398810
+	.word	gLevel6Stage1Room24MetatileMap
+	.word	gLevel6Stage1Room24BlockLayer
 	.word	gUnk_08398844
 	.incbin	"baserom.gba", 0x39886C, 0x4
 	.word	gUnk_0853D53C
@@ -8174,28 +8174,28 @@ gLevel6Stage1Room24:
 	.word	gUnk_0846F8DC
 	.word	gUnk_083CEF10
 	.incbin	"baserom.gba", 0x39888C, 0x10
-	.word	gUnk_0839884C
+	.word	gLevel6Stage1Room24Doors
 	.incbin	"baserom.gba", 0x3988A0, 0x10
-	.global	gUnk_083988B0
-gUnk_083988B0:
+	.global	gLevel6Stage2Room0MetatileMap
+gLevel6Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3988B0, 0x408
-	.global	gUnk_08398CB8
-gUnk_08398CB8:
+	.global	gLevel6Stage2Room0BlockLayer
+gLevel6Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x398CB8, 0xB0
 	.global	gUnk_08398D68
 gUnk_08398D68:
 	.incbin	"baserom.gba", 0x398D68, 0x8
-	.global	gUnk_08398D70
-gUnk_08398D70:
+	.global	gLevel6Stage2Room0Doors
+gLevel6Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x398D70, 0xC
-	.global	gUnk_08398D7C
-gUnk_08398D7C:
+	.global	gLevel6Stage2Room0Objects
+gLevel6Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x398D7C, 0x60
 	.global	gLevel6Stage2Room0
 gLevel6Stage2Room0:
 	.incbin	"baserom.gba", 0x398DDC, 0x8
-	.word	gUnk_083988B0
-	.word	gUnk_08398CB8
+	.word	gLevel6Stage2Room0MetatileMap
+	.word	gLevel6Stage2Room0BlockLayer
 	.word	gUnk_08398D68
 	.incbin	"baserom.gba", 0x398DF0, 0x4
 	.word	gUnk_0852BD00
@@ -8206,29 +8206,29 @@ gLevel6Stage2Room0:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x398E10, 0x10
-	.word	gUnk_08398D70
-	.word	gUnk_08398D7C
+	.word	gLevel6Stage2Room0Doors
+	.word	gLevel6Stage2Room0Objects
 	.incbin	"baserom.gba", 0x398E28, 0xC
-	.global	gUnk_08398E34
-gUnk_08398E34:
+	.global	gLevel6Stage2Room1MetatileMap
+gLevel6Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x398E34, 0x2A0
-	.global	gUnk_083990D4
-gUnk_083990D4:
+	.global	gLevel6Stage2Room1BlockLayer
+gLevel6Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3990D4, 0xC0
 	.global	gUnk_08399194
 gUnk_08399194:
 	.incbin	"baserom.gba", 0x399194, 0x8
-	.global	gUnk_0839919C
-gUnk_0839919C:
+	.global	gLevel6Stage2Room1Doors
+gLevel6Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x39919C, 0xC
-	.global	gUnk_083991A8
-gUnk_083991A8:
+	.global	gLevel6Stage2Room1Objects
+gLevel6Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x3991A8, 0x60
 	.global	gLevel6Stage2Room1
 gLevel6Stage2Room1:
 	.incbin	"baserom.gba", 0x399208, 0x8
-	.word	gUnk_08398E34
-	.word	gUnk_083990D4
+	.word	gLevel6Stage2Room1MetatileMap
+	.word	gLevel6Stage2Room1BlockLayer
 	.word	gUnk_08399194
 	.incbin	"baserom.gba", 0x39921C, 0x4
 	.word	gUnk_084B2F9C
@@ -8239,29 +8239,29 @@ gLevel6Stage2Room1:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39923C, 0x10
-	.word	gUnk_0839919C
-	.word	gUnk_083991A8
+	.word	gLevel6Stage2Room1Doors
+	.word	gLevel6Stage2Room1Objects
 	.incbin	"baserom.gba", 0x399254, 0xC
-	.global	gUnk_08399260
-gUnk_08399260:
+	.global	gLevel6Stage2Room2MetatileMap
+gLevel6Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x399260, 0x254
-	.global	gUnk_083994B4
-gUnk_083994B4:
+	.global	gLevel6Stage2Room2BlockLayer
+gLevel6Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3994B4, 0xC4
 	.global	gUnk_08399578
 gUnk_08399578:
 	.incbin	"baserom.gba", 0x399578, 0x8
-	.global	gUnk_08399580
-gUnk_08399580:
+	.global	gLevel6Stage2Room2Doors
+gLevel6Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x399580, 0xC
-	.global	gUnk_0839958C
-gUnk_0839958C:
+	.global	gLevel6Stage2Room2Objects
+gLevel6Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x39958C, 0x60
 	.global	gLevel6Stage2Room2
 gLevel6Stage2Room2:
 	.incbin	"baserom.gba", 0x3995EC, 0x8
-	.word	gUnk_08399260
-	.word	gUnk_083994B4
+	.word	gLevel6Stage2Room2MetatileMap
+	.word	gLevel6Stage2Room2BlockLayer
 	.word	gUnk_08399578
 	.incbin	"baserom.gba", 0x399600, 0x4
 	.word	gUnk_084B2F9C
@@ -8272,29 +8272,29 @@ gLevel6Stage2Room2:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x399620, 0x10
-	.word	gUnk_08399580
-	.word	gUnk_0839958C
+	.word	gLevel6Stage2Room2Doors
+	.word	gLevel6Stage2Room2Objects
 	.incbin	"baserom.gba", 0x399638, 0xC
-	.global	gUnk_08399644
-gUnk_08399644:
+	.global	gLevel6Stage2Room3MetatileMap
+gLevel6Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x399644, 0x310
-	.global	gUnk_08399954
-gUnk_08399954:
+	.global	gLevel6Stage2Room3BlockLayer
+gLevel6Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x399954, 0x170
 	.global	gUnk_08399AC4
 gUnk_08399AC4:
 	.incbin	"baserom.gba", 0x399AC4, 0x160
-	.global	gUnk_08399C24
-gUnk_08399C24:
+	.global	gLevel6Stage2Room3Doors
+gLevel6Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x399C24, 0xC
-	.global	gUnk_08399C30
-gUnk_08399C30:
+	.global	gLevel6Stage2Room3Objects
+gLevel6Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x399C30, 0x88
 	.global	gLevel6Stage2Room3
 gLevel6Stage2Room3:
 	.incbin	"baserom.gba", 0x399CB8, 0x8
-	.word	gUnk_08399644
-	.word	gUnk_08399954
+	.word	gLevel6Stage2Room3MetatileMap
+	.word	gLevel6Stage2Room3BlockLayer
 	.word	gUnk_08399AC4
 	.incbin	"baserom.gba", 0x399CCC, 0x4
 	.word	gUnk_084BB068
@@ -8305,29 +8305,29 @@ gLevel6Stage2Room3:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x399CEC, 0x10
-	.word	gUnk_08399C24
-	.word	gUnk_08399C30
+	.word	gLevel6Stage2Room3Doors
+	.word	gLevel6Stage2Room3Objects
 	.incbin	"baserom.gba", 0x399D04, 0xC
-	.global	gUnk_08399D10
-gUnk_08399D10:
+	.global	gLevel6Stage3Room0MetatileMap
+gLevel6Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x399D10, 0x3C0
-	.global	gUnk_0839A0D0
-gUnk_0839A0D0:
+	.global	gLevel6Stage3Room0BlockLayer
+gLevel6Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39A0D0, 0xB0
 	.global	gUnk_0839A180
 gUnk_0839A180:
 	.incbin	"baserom.gba", 0x39A180, 0x8
-	.global	gUnk_0839A188
-gUnk_0839A188:
+	.global	gLevel6Stage3Room0Doors
+gLevel6Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x39A188, 0xC
-	.global	gUnk_0839A194
-gUnk_0839A194:
+	.global	gLevel6Stage3Room0Objects
+gLevel6Stage3Room0Objects:
 	.incbin	"baserom.gba", 0x39A194, 0x80
 	.global	gLevel6Stage3Room0
 gLevel6Stage3Room0:
 	.incbin	"baserom.gba", 0x39A214, 0x8
-	.word	gUnk_08399D10
-	.word	gUnk_0839A0D0
+	.word	gLevel6Stage3Room0MetatileMap
+	.word	gLevel6Stage3Room0BlockLayer
 	.word	gUnk_0839A180
 	.incbin	"baserom.gba", 0x39A228, 0x4
 	.word	gUnk_0852BD00
@@ -8338,29 +8338,29 @@ gLevel6Stage3Room0:
 	.word	gUnk_0848B7C0
 	.word	gUnk_0848AEA4
 	.incbin	"baserom.gba", 0x39A248, 0x10
-	.word	gUnk_0839A188
-	.word	gUnk_0839A194
+	.word	gLevel6Stage3Room0Doors
+	.word	gLevel6Stage3Room0Objects
 	.incbin	"baserom.gba", 0x39A260, 0xC
-	.global	gUnk_0839A26C
-gUnk_0839A26C:
+	.global	gLevel6Stage3Room1MetatileMap
+gLevel6Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x39A26C, 0x1E4
-	.global	gUnk_0839A450
-gUnk_0839A450:
+	.global	gLevel6Stage3Room1BlockLayer
+gLevel6Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39A450, 0x3C
 	.global	gUnk_0839A48C
 gUnk_0839A48C:
 	.incbin	"baserom.gba", 0x39A48C, 0x10
-	.global	gUnk_0839A49C
-gUnk_0839A49C:
+	.global	gLevel6Stage3Room1Doors
+gLevel6Stage3Room1Doors:
 	.incbin	"baserom.gba", 0x39A49C, 0xC
-	.global	gUnk_0839A4A8
-gUnk_0839A4A8:
+	.global	gLevel6Stage3Room1Objects
+gLevel6Stage3Room1Objects:
 	.incbin	"baserom.gba", 0x39A4A8, 0x20
 	.global	gLevel6Stage3Room1
 gLevel6Stage3Room1:
 	.incbin	"baserom.gba", 0x39A4C8, 0x8
-	.word	gUnk_0839A26C
-	.word	gUnk_0839A450
+	.word	gLevel6Stage3Room1MetatileMap
+	.word	gLevel6Stage3Room1BlockLayer
 	.word	gUnk_0839A48C
 	.incbin	"baserom.gba", 0x39A4DC, 0x4
 	.word	gUnk_0852BD00
@@ -8371,29 +8371,29 @@ gLevel6Stage3Room1:
 	.word	gUnk_0848B7C0
 	.word	gUnk_0848AEA4
 	.incbin	"baserom.gba", 0x39A4FC, 0x10
-	.word	gUnk_0839A49C
-	.word	gUnk_0839A4A8
+	.word	gLevel6Stage3Room1Doors
+	.word	gLevel6Stage3Room1Objects
 	.incbin	"baserom.gba", 0x39A514, 0xC
-	.global	gUnk_0839A520
-gUnk_0839A520:
+	.global	gLevel6Stage3Room2MetatileMap
+gLevel6Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x39A520, 0x1DC
-	.global	gUnk_0839A6FC
-gUnk_0839A6FC:
+	.global	gLevel6Stage3Room2BlockLayer
+gLevel6Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39A6FC, 0x3C
 	.global	gUnk_0839A738
 gUnk_0839A738:
 	.incbin	"baserom.gba", 0x39A738, 0x10
-	.global	gUnk_0839A748
-gUnk_0839A748:
+	.global	gLevel6Stage3Room2Doors
+gLevel6Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x39A748, 0xC
-	.global	gUnk_0839A754
-gUnk_0839A754:
+	.global	gLevel6Stage3Room2Objects
+gLevel6Stage3Room2Objects:
 	.incbin	"baserom.gba", 0x39A754, 0x20
 	.global	gLevel6Stage3Room2
 gLevel6Stage3Room2:
 	.incbin	"baserom.gba", 0x39A774, 0x8
-	.word	gUnk_0839A520
-	.word	gUnk_0839A6FC
+	.word	gLevel6Stage3Room2MetatileMap
+	.word	gLevel6Stage3Room2BlockLayer
 	.word	gUnk_0839A738
 	.incbin	"baserom.gba", 0x39A788, 0x4
 	.word	gUnk_0852BD00
@@ -8404,29 +8404,29 @@ gLevel6Stage3Room2:
 	.word	gUnk_0848B7C0
 	.word	gUnk_0848AEA4
 	.incbin	"baserom.gba", 0x39A7A8, 0x10
-	.word	gUnk_0839A748
-	.word	gUnk_0839A754
+	.word	gLevel6Stage3Room2Doors
+	.word	gLevel6Stage3Room2Objects
 	.incbin	"baserom.gba", 0x39A7C0, 0xC
-	.global	gUnk_0839A7CC
-gUnk_0839A7CC:
+	.global	gLevel6Stage3Room3MetatileMap
+gLevel6Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x39A7CC, 0x1DC
-	.global	gUnk_0839A9A8
-gUnk_0839A9A8:
+	.global	gLevel6Stage3Room3BlockLayer
+gLevel6Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39A9A8, 0x44
 	.global	gUnk_0839A9EC
 gUnk_0839A9EC:
 	.incbin	"baserom.gba", 0x39A9EC, 0x28
-	.global	gUnk_0839AA14
-gUnk_0839AA14:
+	.global	gLevel6Stage3Room3Doors
+gLevel6Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x39AA14, 0xC
-	.global	gUnk_0839AA20
-gUnk_0839AA20:
+	.global	gLevel6Stage3Room3Objects
+gLevel6Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x39AA20, 0x20
 	.global	gLevel6Stage3Room3
 gLevel6Stage3Room3:
 	.incbin	"baserom.gba", 0x39AA40, 0x8
-	.word	gUnk_0839A7CC
-	.word	gUnk_0839A9A8
+	.word	gLevel6Stage3Room3MetatileMap
+	.word	gLevel6Stage3Room3BlockLayer
 	.word	gUnk_0839A9EC
 	.incbin	"baserom.gba", 0x39AA54, 0x4
 	.word	gUnk_0852BD00
@@ -8437,29 +8437,29 @@ gLevel6Stage3Room3:
 	.word	gUnk_0848B7C0
 	.word	gUnk_0848AEA4
 	.incbin	"baserom.gba", 0x39AA74, 0x10
-	.word	gUnk_0839AA14
-	.word	gUnk_0839AA20
+	.word	gLevel6Stage3Room3Doors
+	.word	gLevel6Stage3Room3Objects
 	.incbin	"baserom.gba", 0x39AA8C, 0xC
-	.global	gUnk_0839AA98
-gUnk_0839AA98:
+	.global	gLevel6Stage3Room4MetatileMap
+gLevel6Stage3Room4MetatileMap:
 	.incbin	"baserom.gba", 0x39AA98, 0x1E8
-	.global	gUnk_0839AC80
-gUnk_0839AC80:
+	.global	gLevel6Stage3Room4BlockLayer
+gLevel6Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x39AC80, 0x44
 	.global	gUnk_0839ACC4
 gUnk_0839ACC4:
 	.incbin	"baserom.gba", 0x39ACC4, 0x28
-	.global	gUnk_0839ACEC
-gUnk_0839ACEC:
+	.global	gLevel6Stage3Room4Doors
+gLevel6Stage3Room4Doors:
 	.incbin	"baserom.gba", 0x39ACEC, 0xC
-	.global	gUnk_0839ACF8
-gUnk_0839ACF8:
+	.global	gLevel6Stage3Room4Objects
+gLevel6Stage3Room4Objects:
 	.incbin	"baserom.gba", 0x39ACF8, 0x20
 	.global	gLevel6Stage3Room4
 gLevel6Stage3Room4:
 	.incbin	"baserom.gba", 0x39AD18, 0x8
-	.word	gUnk_0839AA98
-	.word	gUnk_0839AC80
+	.word	gLevel6Stage3Room4MetatileMap
+	.word	gLevel6Stage3Room4BlockLayer
 	.word	gUnk_0839ACC4
 	.incbin	"baserom.gba", 0x39AD2C, 0x4
 	.word	gUnk_0852BD00
@@ -8470,29 +8470,29 @@ gLevel6Stage3Room4:
 	.word	gUnk_0848B7C0
 	.word	gUnk_0848AEA4
 	.incbin	"baserom.gba", 0x39AD4C, 0x10
-	.word	gUnk_0839ACEC
-	.word	gUnk_0839ACF8
+	.word	gLevel6Stage3Room4Doors
+	.word	gLevel6Stage3Room4Objects
 	.incbin	"baserom.gba", 0x39AD64, 0xC
-	.global	gUnk_0839AD70
-gUnk_0839AD70:
+	.global	gLevel6Stage3Room5MetatileMap
+gLevel6Stage3Room5MetatileMap:
 	.incbin	"baserom.gba", 0x39AD70, 0x35C
-	.global	gUnk_0839B0CC
-gUnk_0839B0CC:
+	.global	gLevel6Stage3Room5BlockLayer
+gLevel6Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x39B0CC, 0xD8
 	.global	gUnk_0839B1A4
 gUnk_0839B1A4:
 	.incbin	"baserom.gba", 0x39B1A4, 0x70
-	.global	gUnk_0839B214
-gUnk_0839B214:
+	.global	gLevel6Stage3Room5Doors
+gLevel6Stage3Room5Doors:
 	.incbin	"baserom.gba", 0x39B214, 0xC
-	.global	gUnk_0839B220
-gUnk_0839B220:
+	.global	gLevel6Stage3Room5Objects
+gLevel6Stage3Room5Objects:
 	.incbin	"baserom.gba", 0x39B220, 0x40
 	.global	gLevel6Stage3Room5
 gLevel6Stage3Room5:
 	.incbin	"baserom.gba", 0x39B260, 0x8
-	.word	gUnk_0839AD70
-	.word	gUnk_0839B0CC
+	.word	gLevel6Stage3Room5MetatileMap
+	.word	gLevel6Stage3Room5BlockLayer
 	.word	gUnk_0839B1A4
 	.incbin	"baserom.gba", 0x39B274, 0x4
 	.word	gUnk_0852BD00
@@ -8503,29 +8503,29 @@ gLevel6Stage3Room5:
 	.word	gUnk_0848B7C0
 	.word	gUnk_0848AEA4
 	.incbin	"baserom.gba", 0x39B294, 0x10
-	.word	gUnk_0839B214
-	.word	gUnk_0839B220
+	.word	gLevel6Stage3Room5Doors
+	.word	gLevel6Stage3Room5Objects
 	.incbin	"baserom.gba", 0x39B2AC, 0xC
-	.global	gUnk_0839B2B8
-gUnk_0839B2B8:
+	.global	gLevel6Stage3Room6MetatileMap
+gLevel6Stage3Room6MetatileMap:
 	.incbin	"baserom.gba", 0x39B2B8, 0x508
-	.global	gUnk_0839B7C0
-gUnk_0839B7C0:
+	.global	gLevel6Stage3Room6BlockLayer
+gLevel6Stage3Room6BlockLayer:
 	.incbin	"baserom.gba", 0x39B7C0, 0x188
 	.global	gUnk_0839B948
 gUnk_0839B948:
 	.incbin	"baserom.gba", 0x39B948, 0x17C
-	.global	gUnk_0839BAC4
-gUnk_0839BAC4:
+	.global	gLevel6Stage3Room6Doors
+gLevel6Stage3Room6Doors:
 	.incbin	"baserom.gba", 0x39BAC4, 0xC
-	.global	gUnk_0839BAD0
-gUnk_0839BAD0:
+	.global	gLevel6Stage3Room6Objects
+gLevel6Stage3Room6Objects:
 	.incbin	"baserom.gba", 0x39BAD0, 0x58
 	.global	gLevel6Stage3Room6
 gLevel6Stage3Room6:
 	.incbin	"baserom.gba", 0x39BB28, 0x8
-	.word	gUnk_0839B2B8
-	.word	gUnk_0839B7C0
+	.word	gLevel6Stage3Room6MetatileMap
+	.word	gLevel6Stage3Room6BlockLayer
 	.word	gUnk_0839B948
 	.incbin	"baserom.gba", 0x39BB3C, 0x4
 	.word	gUnk_0852BD00
@@ -8536,29 +8536,29 @@ gLevel6Stage3Room6:
 	.word	gUnk_0848B7C0
 	.word	gUnk_0848AEA4
 	.incbin	"baserom.gba", 0x39BB5C, 0x10
-	.word	gUnk_0839BAC4
-	.word	gUnk_0839BAD0
+	.word	gLevel6Stage3Room6Doors
+	.word	gLevel6Stage3Room6Objects
 	.incbin	"baserom.gba", 0x39BB74, 0xC
-	.global	gUnk_0839BB80
-gUnk_0839BB80:
+	.global	gLevel6Stage4Room0MetatileMap
+gLevel6Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x39BB80, 0x284
-	.global	gUnk_0839BE04
-gUnk_0839BE04:
+	.global	gLevel6Stage4Room0BlockLayer
+gLevel6Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39BE04, 0x84
 	.global	gUnk_0839BE88
 gUnk_0839BE88:
 	.incbin	"baserom.gba", 0x39BE88, 0x8
-	.global	gUnk_0839BE90
-gUnk_0839BE90:
+	.global	gLevel6Stage4Room0Doors
+gLevel6Stage4Room0Doors:
 	.incbin	"baserom.gba", 0x39BE90, 0xC
-	.global	gUnk_0839BE9C
-gUnk_0839BE9C:
+	.global	gLevel6Stage4Room0Objects
+gLevel6Stage4Room0Objects:
 	.incbin	"baserom.gba", 0x39BE9C, 0x38
 	.global	gLevel6Stage4Room0
 gLevel6Stage4Room0:
 	.incbin	"baserom.gba", 0x39BED4, 0x8
-	.word	gUnk_0839BB80
-	.word	gUnk_0839BE04
+	.word	gLevel6Stage4Room0MetatileMap
+	.word	gLevel6Stage4Room0BlockLayer
 	.word	gUnk_0839BE88
 	.incbin	"baserom.gba", 0x39BEE8, 0x4
 	.word	gUnk_0852BD00
@@ -8569,29 +8569,29 @@ gLevel6Stage4Room0:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x39BF08, 0x10
-	.word	gUnk_0839BE90
-	.word	gUnk_0839BE9C
+	.word	gLevel6Stage4Room0Doors
+	.word	gLevel6Stage4Room0Objects
 	.incbin	"baserom.gba", 0x39BF20, 0xC
-	.global	gUnk_0839BF2C
-gUnk_0839BF2C:
+	.global	gLevel6Stage4Room1MetatileMap
+gLevel6Stage4Room1MetatileMap:
 	.incbin	"baserom.gba", 0x39BF2C, 0x130
-	.global	gUnk_0839C05C
-gUnk_0839C05C:
+	.global	gLevel6Stage4Room1BlockLayer
+gLevel6Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39C05C, 0x38
 	.global	gUnk_0839C094
 gUnk_0839C094:
 	.incbin	"baserom.gba", 0x39C094, 0x10
-	.global	gUnk_0839C0A4
-gUnk_0839C0A4:
+	.global	gLevel6Stage4Room1Doors
+gLevel6Stage4Room1Doors:
 	.incbin	"baserom.gba", 0x39C0A4, 0xC
-	.global	gUnk_0839C0B0
-gUnk_0839C0B0:
+	.global	gLevel6Stage4Room1Objects
+gLevel6Stage4Room1Objects:
 	.incbin	"baserom.gba", 0x39C0B0, 0x20
 	.global	gLevel6Stage4Room1
 gLevel6Stage4Room1:
 	.incbin	"baserom.gba", 0x39C0D0, 0x8
-	.word	gUnk_0839BF2C
-	.word	gUnk_0839C05C
+	.word	gLevel6Stage4Room1MetatileMap
+	.word	gLevel6Stage4Room1BlockLayer
 	.word	gUnk_0839C094
 	.incbin	"baserom.gba", 0x39C0E4, 0x4
 	.word	gUnk_0852BD00
@@ -8602,29 +8602,29 @@ gLevel6Stage4Room1:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x39C104, 0x10
-	.word	gUnk_0839C0A4
-	.word	gUnk_0839C0B0
+	.word	gLevel6Stage4Room1Doors
+	.word	gLevel6Stage4Room1Objects
 	.incbin	"baserom.gba", 0x39C11C, 0xC
-	.global	gUnk_0839C128
-gUnk_0839C128:
+	.global	gLevel6Stage4Room2MetatileMap
+gLevel6Stage4Room2MetatileMap:
 	.incbin	"baserom.gba", 0x39C128, 0x30C
-	.global	gUnk_0839C434
-gUnk_0839C434:
+	.global	gLevel6Stage4Room2BlockLayer
+gLevel6Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39C434, 0xCC
 	.global	gUnk_0839C500
 gUnk_0839C500:
 	.incbin	"baserom.gba", 0x39C500, 0x8
-	.global	gUnk_0839C508
-gUnk_0839C508:
+	.global	gLevel6Stage4Room2Doors
+gLevel6Stage4Room2Doors:
 	.incbin	"baserom.gba", 0x39C508, 0xC
-	.global	gUnk_0839C514
-gUnk_0839C514:
+	.global	gLevel6Stage4Room2Objects
+gLevel6Stage4Room2Objects:
 	.incbin	"baserom.gba", 0x39C514, 0x68
 	.global	gLevel6Stage4Room2
 gLevel6Stage4Room2:
 	.incbin	"baserom.gba", 0x39C57C, 0x8
-	.word	gUnk_0839C128
-	.word	gUnk_0839C434
+	.word	gLevel6Stage4Room2MetatileMap
+	.word	gLevel6Stage4Room2BlockLayer
 	.word	gUnk_0839C500
 	.incbin	"baserom.gba", 0x39C590, 0x4
 	.word	gUnk_0852BD00
@@ -8635,29 +8635,29 @@ gLevel6Stage4Room2:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x39C5B0, 0x10
-	.word	gUnk_0839C508
-	.word	gUnk_0839C514
+	.word	gLevel6Stage4Room2Doors
+	.word	gLevel6Stage4Room2Objects
 	.incbin	"baserom.gba", 0x39C5C8, 0xC
-	.global	gUnk_0839C5D4
-gUnk_0839C5D4:
+	.global	gLevel6Stage4Room3MetatileMap
+gLevel6Stage4Room3MetatileMap:
 	.incbin	"baserom.gba", 0x39C5D4, 0x3C8
-	.global	gUnk_0839C99C
-gUnk_0839C99C:
+	.global	gLevel6Stage4Room3BlockLayer
+gLevel6Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39C99C, 0xA8
 	.global	gUnk_0839CA44
 gUnk_0839CA44:
 	.incbin	"baserom.gba", 0x39CA44, 0x90
-	.global	gUnk_0839CAD4
-gUnk_0839CAD4:
+	.global	gLevel6Stage4Room3Doors
+gLevel6Stage4Room3Doors:
 	.incbin	"baserom.gba", 0x39CAD4, 0x18
-	.global	gUnk_0839CAEC
-gUnk_0839CAEC:
+	.global	gLevel6Stage4Room3Objects
+gLevel6Stage4Room3Objects:
 	.incbin	"baserom.gba", 0x39CAEC, 0x48
 	.global	gLevel6Stage4Room3
 gLevel6Stage4Room3:
 	.incbin	"baserom.gba", 0x39CB34, 0x8
-	.word	gUnk_0839C5D4
-	.word	gUnk_0839C99C
+	.word	gLevel6Stage4Room3MetatileMap
+	.word	gLevel6Stage4Room3BlockLayer
 	.word	gUnk_0839CA44
 	.incbin	"baserom.gba", 0x39CB48, 0x4
 	.word	gUnk_0852BD00
@@ -8668,29 +8668,29 @@ gLevel6Stage4Room3:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x39CB68, 0x10
-	.word	gUnk_0839CAD4
-	.word	gUnk_0839CAEC
+	.word	gLevel6Stage4Room3Doors
+	.word	gLevel6Stage4Room3Objects
 	.incbin	"baserom.gba", 0x39CB80, 0xC
-	.global	gUnk_0839CB8C
-gUnk_0839CB8C:
+	.global	gLevel6Stage4Room4MetatileMap
+gLevel6Stage4Room4MetatileMap:
 	.incbin	"baserom.gba", 0x39CB8C, 0x140
-	.global	gUnk_0839CCCC
-gUnk_0839CCCC:
+	.global	gLevel6Stage4Room4BlockLayer
+gLevel6Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x39CCCC, 0x34
 	.global	gUnk_0839CD00
 gUnk_0839CD00:
 	.incbin	"baserom.gba", 0x39CD00, 0x8
-	.global	gUnk_0839CD08
-gUnk_0839CD08:
+	.global	gLevel6Stage4Room4Doors
+gLevel6Stage4Room4Doors:
 	.incbin	"baserom.gba", 0x39CD08, 0x18
-	.global	gUnk_0839CD20
-gUnk_0839CD20:
+	.global	gLevel6Stage4Room4Objects
+gLevel6Stage4Room4Objects:
 	.incbin	"baserom.gba", 0x39CD20, 0x28
 	.global	gLevel6Stage4Room4
 gLevel6Stage4Room4:
 	.incbin	"baserom.gba", 0x39CD48, 0x8
-	.word	gUnk_0839CB8C
-	.word	gUnk_0839CCCC
+	.word	gLevel6Stage4Room4MetatileMap
+	.word	gLevel6Stage4Room4BlockLayer
 	.word	gUnk_0839CD00
 	.incbin	"baserom.gba", 0x39CD5C, 0x4
 	.word	gUnk_0852BD00
@@ -8701,29 +8701,29 @@ gLevel6Stage4Room4:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x39CD7C, 0x10
-	.word	gUnk_0839CD08
-	.word	gUnk_0839CD20
+	.word	gLevel6Stage4Room4Doors
+	.word	gLevel6Stage4Room4Objects
 	.incbin	"baserom.gba", 0x39CD94, 0xC
-	.global	gUnk_0839CDA0
-gUnk_0839CDA0:
+	.global	gLevel6Stage5Room0MetatileMap
+gLevel6Stage5Room0MetatileMap:
 	.incbin	"baserom.gba", 0x39CDA0, 0x328
-	.global	gUnk_0839D0C8
-gUnk_0839D0C8:
+	.global	gLevel6Stage5Room0BlockLayer
+gLevel6Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39D0C8, 0x100
 	.global	gUnk_0839D1C8
 gUnk_0839D1C8:
 	.incbin	"baserom.gba", 0x39D1C8, 0x8
-	.global	gUnk_0839D1D0
-gUnk_0839D1D0:
+	.global	gLevel6Stage5Room0Doors
+gLevel6Stage5Room0Doors:
 	.incbin	"baserom.gba", 0x39D1D0, 0xC
-	.global	gUnk_0839D1DC
-gUnk_0839D1DC:
+	.global	gLevel6Stage5Room0Objects
+gLevel6Stage5Room0Objects:
 	.incbin	"baserom.gba", 0x39D1DC, 0x78
 	.global	gLevel6Stage5Room0
 gLevel6Stage5Room0:
 	.incbin	"baserom.gba", 0x39D254, 0x8
-	.word	gUnk_0839CDA0
-	.word	gUnk_0839D0C8
+	.word	gLevel6Stage5Room0MetatileMap
+	.word	gLevel6Stage5Room0BlockLayer
 	.word	gUnk_0839D1C8
 	.incbin	"baserom.gba", 0x39D268, 0x4
 	.word	gUnk_0853E7EC
@@ -8734,29 +8734,29 @@ gLevel6Stage5Room0:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39D288, 0x10
-	.word	gUnk_0839D1D0
-	.word	gUnk_0839D1DC
+	.word	gLevel6Stage5Room0Doors
+	.word	gLevel6Stage5Room0Objects
 	.incbin	"baserom.gba", 0x39D2A0, 0xC
-	.global	gUnk_0839D2AC
-gUnk_0839D2AC:
+	.global	gLevel6Stage5Room1MetatileMap
+gLevel6Stage5Room1MetatileMap:
 	.incbin	"baserom.gba", 0x39D2AC, 0x23C
-	.global	gUnk_0839D4E8
-gUnk_0839D4E8:
+	.global	gLevel6Stage5Room1BlockLayer
+gLevel6Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39D4E8, 0x88
 	.global	gUnk_0839D570
 gUnk_0839D570:
 	.incbin	"baserom.gba", 0x39D570, 0x8
-	.global	gUnk_0839D578
-gUnk_0839D578:
+	.global	gLevel6Stage5Room1Doors
+gLevel6Stage5Room1Doors:
 	.incbin	"baserom.gba", 0x39D578, 0xC
-	.global	gUnk_0839D584
-gUnk_0839D584:
+	.global	gLevel6Stage5Room1Objects
+gLevel6Stage5Room1Objects:
 	.incbin	"baserom.gba", 0x39D584, 0x30
 	.global	gLevel6Stage5Room1
 gLevel6Stage5Room1:
 	.incbin	"baserom.gba", 0x39D5B4, 0x8
-	.word	gUnk_0839D2AC
-	.word	gUnk_0839D4E8
+	.word	gLevel6Stage5Room1MetatileMap
+	.word	gLevel6Stage5Room1BlockLayer
 	.word	gUnk_0839D570
 	.incbin	"baserom.gba", 0x39D5C8, 0x4
 	.word	gUnk_0853E7EC
@@ -8767,29 +8767,29 @@ gLevel6Stage5Room1:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39D5E8, 0x10
-	.word	gUnk_0839D578
-	.word	gUnk_0839D584
+	.word	gLevel6Stage5Room1Doors
+	.word	gLevel6Stage5Room1Objects
 	.incbin	"baserom.gba", 0x39D600, 0xC
-	.global	gUnk_0839D60C
-gUnk_0839D60C:
+	.global	gLevel6Stage5Room2MetatileMap
+gLevel6Stage5Room2MetatileMap:
 	.incbin	"baserom.gba", 0x39D60C, 0x1DC
-	.global	gUnk_0839D7E8
-gUnk_0839D7E8:
+	.global	gLevel6Stage5Room2BlockLayer
+gLevel6Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39D7E8, 0x80
 	.global	gUnk_0839D868
 gUnk_0839D868:
 	.incbin	"baserom.gba", 0x39D868, 0x8
-	.global	gUnk_0839D870
-gUnk_0839D870:
+	.global	gLevel6Stage5Room2Doors
+gLevel6Stage5Room2Doors:
 	.incbin	"baserom.gba", 0x39D870, 0xC
-	.global	gUnk_0839D87C
-gUnk_0839D87C:
+	.global	gLevel6Stage5Room2Objects
+gLevel6Stage5Room2Objects:
 	.incbin	"baserom.gba", 0x39D87C, 0x40
 	.global	gLevel6Stage5Room2
 gLevel6Stage5Room2:
 	.incbin	"baserom.gba", 0x39D8BC, 0x8
-	.word	gUnk_0839D60C
-	.word	gUnk_0839D7E8
+	.word	gLevel6Stage5Room2MetatileMap
+	.word	gLevel6Stage5Room2BlockLayer
 	.word	gUnk_0839D868
 	.incbin	"baserom.gba", 0x39D8D0, 0x4
 	.word	gUnk_0853E7EC
@@ -8800,29 +8800,29 @@ gLevel6Stage5Room2:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39D8F0, 0x10
-	.word	gUnk_0839D870
-	.word	gUnk_0839D87C
+	.word	gLevel6Stage5Room2Doors
+	.word	gLevel6Stage5Room2Objects
 	.incbin	"baserom.gba", 0x39D908, 0xC
-	.global	gUnk_0839D914
-gUnk_0839D914:
+	.global	gLevel6Stage5Room3MetatileMap
+gLevel6Stage5Room3MetatileMap:
 	.incbin	"baserom.gba", 0x39D914, 0x13C
-	.global	gUnk_0839DA50
-gUnk_0839DA50:
+	.global	gLevel6Stage5Room3BlockLayer
+gLevel6Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39DA50, 0x5C
 	.global	gUnk_0839DAAC
 gUnk_0839DAAC:
 	.incbin	"baserom.gba", 0x39DAAC, 0x8
-	.global	gUnk_0839DAB4
-gUnk_0839DAB4:
+	.global	gLevel6Stage5Room3Doors
+gLevel6Stage5Room3Doors:
 	.incbin	"baserom.gba", 0x39DAB4, 0x18
-	.global	gUnk_0839DACC
-gUnk_0839DACC:
+	.global	gLevel6Stage5Room3Objects
+gLevel6Stage5Room3Objects:
 	.incbin	"baserom.gba", 0x39DACC, 0x30
 	.global	gLevel6Stage5Room3
 gLevel6Stage5Room3:
 	.incbin	"baserom.gba", 0x39DAFC, 0x8
-	.word	gUnk_0839D914
-	.word	gUnk_0839DA50
+	.word	gLevel6Stage5Room3MetatileMap
+	.word	gLevel6Stage5Room3BlockLayer
 	.word	gUnk_0839DAAC
 	.incbin	"baserom.gba", 0x39DB10, 0x4
 	.word	gUnk_0853E7EC
@@ -8833,29 +8833,29 @@ gLevel6Stage5Room3:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39DB30, 0x10
-	.word	gUnk_0839DAB4
-	.word	gUnk_0839DACC
+	.word	gLevel6Stage5Room3Doors
+	.word	gLevel6Stage5Room3Objects
 	.incbin	"baserom.gba", 0x39DB48, 0xC
-	.global	gUnk_0839DB54
-gUnk_0839DB54:
+	.global	gLevel6Stage5Room4MetatileMap
+gLevel6Stage5Room4MetatileMap:
 	.incbin	"baserom.gba", 0x39DB54, 0x234
-	.global	gUnk_0839DD88
-gUnk_0839DD88:
+	.global	gLevel6Stage5Room4BlockLayer
+gLevel6Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x39DD88, 0xD0
 	.global	gUnk_0839DE58
 gUnk_0839DE58:
 	.incbin	"baserom.gba", 0x39DE58, 0x10
-	.global	gUnk_0839DE68
-gUnk_0839DE68:
+	.global	gLevel6Stage5Room4Doors
+gLevel6Stage5Room4Doors:
 	.incbin	"baserom.gba", 0x39DE68, 0xC
-	.global	gUnk_0839DE74
-gUnk_0839DE74:
+	.global	gLevel6Stage5Room4Objects
+gLevel6Stage5Room4Objects:
 	.incbin	"baserom.gba", 0x39DE74, 0x60
 	.global	gLevel6Stage5Room4
 gLevel6Stage5Room4:
 	.incbin	"baserom.gba", 0x39DED4, 0x8
-	.word	gUnk_0839DB54
-	.word	gUnk_0839DD88
+	.word	gLevel6Stage5Room4MetatileMap
+	.word	gLevel6Stage5Room4BlockLayer
 	.word	gUnk_0839DE58
 	.incbin	"baserom.gba", 0x39DEE8, 0x4
 	.word	gUnk_0853E7EC
@@ -8866,29 +8866,29 @@ gLevel6Stage5Room4:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39DF08, 0x10
-	.word	gUnk_0839DE68
-	.word	gUnk_0839DE74
+	.word	gLevel6Stage5Room4Doors
+	.word	gLevel6Stage5Room4Objects
 	.incbin	"baserom.gba", 0x39DF20, 0xC
-	.global	gUnk_0839DF2C
-gUnk_0839DF2C:
+	.global	gLevel6Stage5Room5MetatileMap
+gLevel6Stage5Room5MetatileMap:
 	.incbin	"baserom.gba", 0x39DF2C, 0x14C
-	.global	gUnk_0839E078
-gUnk_0839E078:
+	.global	gLevel6Stage5Room5BlockLayer
+gLevel6Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x39E078, 0x7C
 	.global	gUnk_0839E0F4
 gUnk_0839E0F4:
 	.incbin	"baserom.gba", 0x39E0F4, 0x3C
-	.global	gUnk_0839E130
-gUnk_0839E130:
+	.global	gLevel6Stage5Room5Doors
+gLevel6Stage5Room5Doors:
 	.incbin	"baserom.gba", 0x39E130, 0x18
-	.global	gUnk_0839E148
-gUnk_0839E148:
+	.global	gLevel6Stage5Room5Objects
+gLevel6Stage5Room5Objects:
 	.incbin	"baserom.gba", 0x39E148, 0x48
 	.global	gLevel6Stage5Room5
 gLevel6Stage5Room5:
 	.incbin	"baserom.gba", 0x39E190, 0x8
-	.word	gUnk_0839DF2C
-	.word	gUnk_0839E078
+	.word	gLevel6Stage5Room5MetatileMap
+	.word	gLevel6Stage5Room5BlockLayer
 	.word	gUnk_0839E0F4
 	.incbin	"baserom.gba", 0x39E1A4, 0x4
 	.word	gUnk_0853E7EC
@@ -8899,29 +8899,29 @@ gLevel6Stage5Room5:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39E1C4, 0x10
-	.word	gUnk_0839E130
-	.word	gUnk_0839E148
+	.word	gLevel6Stage5Room5Doors
+	.word	gLevel6Stage5Room5Objects
 	.incbin	"baserom.gba", 0x39E1DC, 0xC
-	.global	gUnk_0839E1E8
-gUnk_0839E1E8:
+	.global	gLevel6Stage5Room6MetatileMap
+gLevel6Stage5Room6MetatileMap:
 	.incbin	"baserom.gba", 0x39E1E8, 0x2A8
-	.global	gUnk_0839E490
-gUnk_0839E490:
+	.global	gLevel6Stage5Room6BlockLayer
+gLevel6Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x39E490, 0x9C
 	.global	gUnk_0839E52C
 gUnk_0839E52C:
 	.incbin	"baserom.gba", 0x39E52C, 0x8
-	.global	gUnk_0839E534
-gUnk_0839E534:
+	.global	gLevel6Stage5Room6Doors
+gLevel6Stage5Room6Doors:
 	.incbin	"baserom.gba", 0x39E534, 0xC
-	.global	gUnk_0839E540
-gUnk_0839E540:
+	.global	gLevel6Stage5Room6Objects
+gLevel6Stage5Room6Objects:
 	.incbin	"baserom.gba", 0x39E540, 0x50
 	.global	gLevel6Stage5Room6
 gLevel6Stage5Room6:
 	.incbin	"baserom.gba", 0x39E590, 0x8
-	.word	gUnk_0839E1E8
-	.word	gUnk_0839E490
+	.word	gLevel6Stage5Room6MetatileMap
+	.word	gLevel6Stage5Room6BlockLayer
 	.word	gUnk_0839E52C
 	.incbin	"baserom.gba", 0x39E5A4, 0x4
 	.word	gUnk_0853E7EC
@@ -8932,29 +8932,29 @@ gLevel6Stage5Room6:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39E5C4, 0x10
-	.word	gUnk_0839E534
-	.word	gUnk_0839E540
+	.word	gLevel6Stage5Room6Doors
+	.word	gLevel6Stage5Room6Objects
 	.incbin	"baserom.gba", 0x39E5DC, 0xC
-	.global	gUnk_0839E5E8
-gUnk_0839E5E8:
+	.global	gLevel6Stage5Room7MetatileMap
+gLevel6Stage5Room7MetatileMap:
 	.incbin	"baserom.gba", 0x39E5E8, 0x228
-	.global	gUnk_0839E810
-gUnk_0839E810:
+	.global	gLevel6Stage5Room7BlockLayer
+gLevel6Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x39E810, 0xAC
 	.global	gUnk_0839E8BC
 gUnk_0839E8BC:
 	.incbin	"baserom.gba", 0x39E8BC, 0x30
-	.global	gUnk_0839E8EC
-gUnk_0839E8EC:
+	.global	gLevel6Stage5Room7Doors
+gLevel6Stage5Room7Doors:
 	.incbin	"baserom.gba", 0x39E8EC, 0x18
-	.global	gUnk_0839E904
-gUnk_0839E904:
+	.global	gLevel6Stage5Room7Objects
+gLevel6Stage5Room7Objects:
 	.incbin	"baserom.gba", 0x39E904, 0x40
 	.global	gLevel6Stage5Room7
 gLevel6Stage5Room7:
 	.incbin	"baserom.gba", 0x39E944, 0x8
-	.word	gUnk_0839E5E8
-	.word	gUnk_0839E810
+	.word	gLevel6Stage5Room7MetatileMap
+	.word	gLevel6Stage5Room7BlockLayer
 	.word	gUnk_0839E8BC
 	.incbin	"baserom.gba", 0x39E958, 0x4
 	.word	gUnk_0853E7EC
@@ -8965,29 +8965,29 @@ gLevel6Stage5Room7:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39E978, 0x10
-	.word	gUnk_0839E8EC
-	.word	gUnk_0839E904
+	.word	gLevel6Stage5Room7Doors
+	.word	gLevel6Stage5Room7Objects
 	.incbin	"baserom.gba", 0x39E990, 0xC
-	.global	gUnk_0839E99C
-gUnk_0839E99C:
+	.global	gLevel6Stage5Room8MetatileMap
+gLevel6Stage5Room8MetatileMap:
 	.incbin	"baserom.gba", 0x39E99C, 0x184
-	.global	gUnk_0839EB20
-gUnk_0839EB20:
+	.global	gLevel6Stage5Room8BlockLayer
+gLevel6Stage5Room8BlockLayer:
 	.incbin	"baserom.gba", 0x39EB20, 0x68
 	.global	gUnk_0839EB88
 gUnk_0839EB88:
 	.incbin	"baserom.gba", 0x39EB88, 0x8
-	.global	gUnk_0839EB90
-gUnk_0839EB90:
+	.global	gLevel6Stage5Room8Doors
+gLevel6Stage5Room8Doors:
 	.incbin	"baserom.gba", 0x39EB90, 0xC
-	.global	gUnk_0839EB9C
-gUnk_0839EB9C:
+	.global	gLevel6Stage5Room8Objects
+gLevel6Stage5Room8Objects:
 	.incbin	"baserom.gba", 0x39EB9C, 0x18
 	.global	gLevel6Stage5Room8
 gLevel6Stage5Room8:
 	.incbin	"baserom.gba", 0x39EBB4, 0x8
-	.word	gUnk_0839E99C
-	.word	gUnk_0839EB20
+	.word	gLevel6Stage5Room8MetatileMap
+	.word	gLevel6Stage5Room8BlockLayer
 	.word	gUnk_0839EB88
 	.incbin	"baserom.gba", 0x39EBC8, 0x4
 	.word	gUnk_0853E7EC
@@ -8998,26 +8998,26 @@ gLevel6Stage5Room8:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x39EBE8, 0x10
-	.word	gUnk_0839EB90
-	.word	gUnk_0839EB9C
+	.word	gLevel6Stage5Room8Doors
+	.word	gLevel6Stage5Room8Objects
 	.incbin	"baserom.gba", 0x39EC00, 0xC
-	.global	gUnk_0839EC0C
-gUnk_0839EC0C:
+	.global	gLevel6Stage6Room0MetatileMap
+gLevel6Stage6Room0MetatileMap:
 	.incbin	"baserom.gba", 0x39EC0C, 0x198
-	.global	gUnk_0839EDA4
-gUnk_0839EDA4:
+	.global	gLevel6Stage6Room0BlockLayer
+gLevel6Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39EDA4, 0x60
 	.global	gUnk_0839EE04
 gUnk_0839EE04:
 	.incbin	"baserom.gba", 0x39EE04, 0x8
-	.global	gUnk_0839EE0C
-gUnk_0839EE0C:
+	.global	gLevel6Stage6Room0Objects
+gLevel6Stage6Room0Objects:
 	.incbin	"baserom.gba", 0x39EE0C, 0x8
 	.global	gLevel6Stage6Room0
 gLevel6Stage6Room0:
 	.incbin	"baserom.gba", 0x39EE14, 0x8
-	.word	gUnk_0839EC0C
-	.word	gUnk_0839EDA4
+	.word	gLevel6Stage6Room0MetatileMap
+	.word	gLevel6Stage6Room0BlockLayer
 	.word	gUnk_0839EE04
 	.incbin	"baserom.gba", 0x39EE28, 0x4
 	.word	gUnk_0852BD00
@@ -9028,25 +9028,25 @@ gLevel6Stage6Room0:
 	.word	gUnk_08412BD8
 	.word	gUnk_083C89E8
 	.incbin	"baserom.gba", 0x39EE48, 0x14
-	.word	gUnk_0839EE0C
+	.word	gLevel6Stage6Room0Objects
 	.incbin	"baserom.gba", 0x39EE60, 0xC
-	.global	gUnk_0839EE6C
-gUnk_0839EE6C:
+	.global	gLevel7Stage0Room0MetatileMap
+gLevel7Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x39EE6C, 0x410
-	.global	gUnk_0839F27C
-gUnk_0839F27C:
+	.global	gLevel7Stage0Room0BlockLayer
+gLevel7Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39F27C, 0x120
 	.global	gUnk_0839F39C
 gUnk_0839F39C:
 	.incbin	"baserom.gba", 0x39F39C, 0x34
-	.global	gUnk_0839F3D0
-gUnk_0839F3D0:
+	.global	gLevel7Stage0Room0Objects
+gLevel7Stage0Room0Objects:
 	.incbin	"baserom.gba", 0x39F3D0, 0x8
 	.global	gLevel7Stage0Room0
 gLevel7Stage0Room0:
 	.incbin	"baserom.gba", 0x39F3D8, 0x8
-	.word	gUnk_0839EE6C
-	.word	gUnk_0839F27C
+	.word	gLevel7Stage0Room0MetatileMap
+	.word	gLevel7Stage0Room0BlockLayer
 	.word	gUnk_0839F39C
 	.incbin	"baserom.gba", 0x39F3EC, 0x4
 	.word	gUnk_084BB808
@@ -9055,48 +9055,48 @@ gLevel7Stage0Room0:
 	.incbin	"baserom.gba", 0x39F3FC, 0x4
 	.word	gUnk_084BB600
 	.word	gUnk_084BFECC
-	.word	gUnk_084BBEBC
+	.word	gLevel7Stage0Room0Bg3Map
 	.incbin	"baserom.gba", 0x39F40C, 0x14
-	.word	gUnk_0839F3D0
+	.word	gLevel7Stage0Room0Objects
 	.incbin	"baserom.gba", 0x39F424, 0xC
-	.global	gUnk_0839F430
-gUnk_0839F430:
+	.global	gLevel7Stage0Room1MetatileMap
+gLevel7Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x39F430, 0x178
-	.global	gUnk_0839F5A8
-gUnk_0839F5A8:
+	.global	gLevel7Stage0Room1BlockLayer
+gLevel7Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39F5A8, 0xC0
 	.global	gUnk_0839F668
 gUnk_0839F668:
 	.incbin	"baserom.gba", 0x39F668, 0x8
-	.global	gUnk_0839F670
-gUnk_0839F670:
+	.global	gLevel7Stage0Room1Doors
+gLevel7Stage0Room1Doors:
 	.incbin	"baserom.gba", 0x39F670, 0xC
-	.global	gUnk_0839F67C
-gUnk_0839F67C:
+	.global	gLevel7Stage0Room1Objects
+gLevel7Stage0Room1Objects:
 	.incbin	"baserom.gba", 0x39F67C, 0x8
 	.global	gLevel7Stage0Room1
 gLevel7Stage0Room1:
 	.incbin	"baserom.gba", 0x39F684, 0x8
-	.word	gUnk_0839F430
-	.word	gUnk_0839F5A8
+	.word	gLevel7Stage0Room1MetatileMap
+	.word	gLevel7Stage0Room1BlockLayer
 	.word	gUnk_0839F668
 	.incbin	"baserom.gba", 0x39F698, 0x4
 	.word	gUnk_084BB5C0
 	.word	gUnk_084BB5F4
 	.word	gUnk_084BB5E4
 	.incbin	"baserom.gba", 0x39F6A8, 0x4
-	.word	gUnk_084BB704
-	.word	gUnk_084C5638
-	.word	gUnk_084BE6C4
+	.word	gLevel7Stage0Room1Bg3Palette
+	.word	gLevel7Stage0Room1Bg3Tiles
+	.word	gLevel7Stage0Room1Bg3Map
 	.incbin	"baserom.gba", 0x39F6B8, 0x10
-	.word	gUnk_0839F670
-	.word	gUnk_0839F67C
+	.word	gLevel7Stage0Room1Doors
+	.word	gLevel7Stage0Room1Objects
 	.incbin	"baserom.gba", 0x39F6D0, 0xC
-	.global	gUnk_0839F6DC
-gUnk_0839F6DC:
+	.global	gLevel7Stage0Room2MetatileMap
+gLevel7Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x39F6DC, 0x410
-	.global	gUnk_0839FAEC
-gUnk_0839FAEC:
+	.global	gLevel7Stage0Room2BlockLayer
+gLevel7Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39FAEC, 0x120
 	.global	gUnk_0839FC0C
 gUnk_0839FC0C:
@@ -9104,8 +9104,8 @@ gUnk_0839FC0C:
 	.global	gLevel7Stage0Room2
 gLevel7Stage0Room2:
 	.incbin	"baserom.gba", 0x39FC40, 0x8
-	.word	gUnk_0839F6DC
-	.word	gUnk_0839FAEC
+	.word	gLevel7Stage0Room2MetatileMap
+	.word	gLevel7Stage0Room2BlockLayer
 	.word	gUnk_0839FC0C
 	.incbin	"baserom.gba", 0x39FC54, 0x4
 	.word	gUnk_084BB808
@@ -9114,28 +9114,28 @@ gLevel7Stage0Room2:
 	.incbin	"baserom.gba", 0x39FC64, 0x4
 	.word	gUnk_084BB600
 	.word	gUnk_084BFECC
-	.word	gUnk_08539E90
+	.word	gLevel7Stage0Room2Bg3Map
 	.incbin	"baserom.gba", 0x39FC74, 0x24
-	.global	gUnk_0839FC98
-gUnk_0839FC98:
+	.global	gLevel7Stage2Room0MetatileMap
+gLevel7Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x39FC98, 0x214
-	.global	gUnk_0839FEAC
-gUnk_0839FEAC:
+	.global	gLevel7Stage2Room0BlockLayer
+gLevel7Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39FEAC, 0x10C
 	.global	gUnk_0839FFB8
 gUnk_0839FFB8:
 	.incbin	"baserom.gba", 0x39FFB8, 0x48
-	.global	gUnk_083A0000
-gUnk_083A0000:
+	.global	gLevel7Stage2Room0Doors
+gLevel7Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x3A0000, 0x48
-	.global	gUnk_083A0048
-gUnk_083A0048:
+	.global	gLevel7Stage2Room0Objects
+gLevel7Stage2Room0Objects:
 	.incbin	"baserom.gba", 0x3A0048, 0x10
 	.global	gLevel7Stage2Room0
 gLevel7Stage2Room0:
 	.incbin	"baserom.gba", 0x3A0058, 0x8
-	.word	gUnk_0839FC98
-	.word	gUnk_0839FEAC
+	.word	gLevel7Stage2Room0MetatileMap
+	.word	gLevel7Stage2Room0BlockLayer
 	.word	gUnk_0839FFB8
 	.incbin	"baserom.gba", 0x3A006C, 0x4
 	.word	gUnk_0853C698
@@ -9146,29 +9146,29 @@ gLevel7Stage2Room0:
 	.word	gUnk_08479B7C
 	.word	gUnk_083D0148
 	.incbin	"baserom.gba", 0x3A008C, 0x10
-	.word	gUnk_083A0000
-	.word	gUnk_083A0048
+	.word	gLevel7Stage2Room0Doors
+	.word	gLevel7Stage2Room0Objects
 	.incbin	"baserom.gba", 0x3A00A4, 0xC
-	.global	gUnk_083A00B0
-gUnk_083A00B0:
+	.global	gLevel7Stage2Room1MetatileMap
+gLevel7Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A00B0, 0x1A4
-	.global	gUnk_083A0254
-gUnk_083A0254:
+	.global	gLevel7Stage2Room1BlockLayer
+gLevel7Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A0254, 0xD4
 	.global	gUnk_083A0328
 gUnk_083A0328:
 	.incbin	"baserom.gba", 0x3A0328, 0x28
-	.global	gUnk_083A0350
-gUnk_083A0350:
+	.global	gLevel7Stage2Room1Doors
+gLevel7Stage2Room1Doors:
 	.incbin	"baserom.gba", 0x3A0350, 0x18
-	.global	gUnk_083A0368
-gUnk_083A0368:
+	.global	gLevel7Stage2Room1Objects
+gLevel7Stage2Room1Objects:
 	.incbin	"baserom.gba", 0x3A0368, 0x8
 	.global	gLevel7Stage2Room1
 gLevel7Stage2Room1:
 	.incbin	"baserom.gba", 0x3A0370, 0x8
-	.word	gUnk_083A00B0
-	.word	gUnk_083A0254
+	.word	gLevel7Stage2Room1MetatileMap
+	.word	gLevel7Stage2Room1BlockLayer
 	.word	gUnk_083A0328
 	.incbin	"baserom.gba", 0x3A0384, 0x4
 	.word	gUnk_0853C698
@@ -9179,29 +9179,29 @@ gLevel7Stage2Room1:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3A03A4, 0x10
-	.word	gUnk_083A0350
-	.word	gUnk_083A0368
+	.word	gLevel7Stage2Room1Doors
+	.word	gLevel7Stage2Room1Objects
 	.incbin	"baserom.gba", 0x3A03BC, 0xC
-	.global	gUnk_083A03C8
-gUnk_083A03C8:
+	.global	gLevel7Stage2Room2MetatileMap
+gLevel7Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A03C8, 0x224
-	.global	gUnk_083A05EC
-gUnk_083A05EC:
+	.global	gLevel7Stage2Room2BlockLayer
+gLevel7Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A05EC, 0xC0
 	.global	gUnk_083A06AC
 gUnk_083A06AC:
 	.incbin	"baserom.gba", 0x3A06AC, 0x8
-	.global	gUnk_083A06B4
-gUnk_083A06B4:
+	.global	gLevel7Stage2Room2Doors
+gLevel7Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x3A06B4, 0x18
-	.global	gUnk_083A06CC
-gUnk_083A06CC:
+	.global	gLevel7Stage2Room2Objects
+gLevel7Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x3A06CC, 0x10
 	.global	gLevel7Stage2Room2
 gLevel7Stage2Room2:
 	.incbin	"baserom.gba", 0x3A06DC, 0x8
-	.word	gUnk_083A03C8
-	.word	gUnk_083A05EC
+	.word	gLevel7Stage2Room2MetatileMap
+	.word	gLevel7Stage2Room2BlockLayer
 	.word	gUnk_083A06AC
 	.incbin	"baserom.gba", 0x3A06F0, 0x4
 	.word	gUnk_0853C698
@@ -9212,29 +9212,29 @@ gLevel7Stage2Room2:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3A0710, 0x10
-	.word	gUnk_083A06B4
-	.word	gUnk_083A06CC
+	.word	gLevel7Stage2Room2Doors
+	.word	gLevel7Stage2Room2Objects
 	.incbin	"baserom.gba", 0x3A0728, 0xC
-	.global	gUnk_083A0734
-gUnk_083A0734:
+	.global	gLevel7Stage2Room3MetatileMap
+gLevel7Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A0734, 0xE8
-	.global	gUnk_083A081C
-gUnk_083A081C:
+	.global	gLevel7Stage2Room3BlockLayer
+gLevel7Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A081C, 0x10C
 	.global	gUnk_083A0928
 gUnk_083A0928:
 	.incbin	"baserom.gba", 0x3A0928, 0x148
-	.global	gUnk_083A0A70
-gUnk_083A0A70:
+	.global	gLevel7Stage2Room3Doors
+gLevel7Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x3A0A70, 0x18
-	.global	gUnk_083A0A88
-gUnk_083A0A88:
+	.global	gLevel7Stage2Room3Objects
+gLevel7Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x3A0A88, 0x18
 	.global	gLevel7Stage2Room3
 gLevel7Stage2Room3:
 	.incbin	"baserom.gba", 0x3A0AA0, 0x8
-	.word	gUnk_083A0734
-	.word	gUnk_083A081C
+	.word	gLevel7Stage2Room3MetatileMap
+	.word	gLevel7Stage2Room3BlockLayer
 	.word	gUnk_083A0928
 	.incbin	"baserom.gba", 0x3A0AB4, 0x4
 	.word	gUnk_0853C698
@@ -9245,29 +9245,29 @@ gLevel7Stage2Room3:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3A0AD4, 0x10
-	.word	gUnk_083A0A70
-	.word	gUnk_083A0A88
+	.word	gLevel7Stage2Room3Doors
+	.word	gLevel7Stage2Room3Objects
 	.incbin	"baserom.gba", 0x3A0AEC, 0xC
-	.global	gUnk_083A0AF8
-gUnk_083A0AF8:
+	.global	gLevel7Stage2Room4MetatileMap
+gLevel7Stage2Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3A0AF8, 0x188
-	.global	gUnk_083A0C80
-gUnk_083A0C80:
+	.global	gLevel7Stage2Room4BlockLayer
+gLevel7Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A0C80, 0x84
 	.global	gUnk_083A0D04
 gUnk_083A0D04:
 	.incbin	"baserom.gba", 0x3A0D04, 0x8
-	.global	gUnk_083A0D0C
-gUnk_083A0D0C:
+	.global	gLevel7Stage2Room4Doors
+gLevel7Stage2Room4Doors:
 	.incbin	"baserom.gba", 0x3A0D0C, 0x18
-	.global	gUnk_083A0D24
-gUnk_083A0D24:
+	.global	gLevel7Stage2Room4Objects
+gLevel7Stage2Room4Objects:
 	.incbin	"baserom.gba", 0x3A0D24, 0x8
 	.global	gLevel7Stage2Room4
 gLevel7Stage2Room4:
 	.incbin	"baserom.gba", 0x3A0D2C, 0x8
-	.word	gUnk_083A0AF8
-	.word	gUnk_083A0C80
+	.word	gLevel7Stage2Room4MetatileMap
+	.word	gLevel7Stage2Room4BlockLayer
 	.word	gUnk_083A0D04
 	.incbin	"baserom.gba", 0x3A0D40, 0x4
 	.word	gUnk_0853C698
@@ -9278,26 +9278,26 @@ gLevel7Stage2Room4:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3A0D60, 0x10
-	.word	gUnk_083A0D0C
-	.word	gUnk_083A0D24
+	.word	gLevel7Stage2Room4Doors
+	.word	gLevel7Stage2Room4Objects
 	.incbin	"baserom.gba", 0x3A0D78, 0xC
-	.global	gUnk_083A0D84
-gUnk_083A0D84:
+	.global	gLevel7Stage2Room5MetatileMap
+gLevel7Stage2Room5MetatileMap:
 	.incbin	"baserom.gba", 0x3A0D84, 0xDC
-	.global	gUnk_083A0E60
-gUnk_083A0E60:
+	.global	gLevel7Stage2Room5BlockLayer
+gLevel7Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A0E60, 0x68
 	.global	gUnk_083A0EC8
 gUnk_083A0EC8:
 	.incbin	"baserom.gba", 0x3A0EC8, 0x20
-	.global	gUnk_083A0EE8
-gUnk_083A0EE8:
+	.global	gLevel7Stage2Room5Doors
+gLevel7Stage2Room5Doors:
 	.incbin	"baserom.gba", 0x3A0EE8, 0x18
 	.global	gLevel7Stage2Room5
 gLevel7Stage2Room5:
 	.incbin	"baserom.gba", 0x3A0F00, 0x8
-	.word	gUnk_083A0D84
-	.word	gUnk_083A0E60
+	.word	gLevel7Stage2Room5MetatileMap
+	.word	gLevel7Stage2Room5BlockLayer
 	.word	gUnk_083A0EC8
 	.incbin	"baserom.gba", 0x3A0F14, 0x4
 	.word	gUnk_0853C698
@@ -9308,28 +9308,28 @@ gLevel7Stage2Room5:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3A0F34, 0x10
-	.word	gUnk_083A0EE8
+	.word	gLevel7Stage2Room5Doors
 	.incbin	"baserom.gba", 0x3A0F48, 0x10
-	.global	gUnk_083A0F58
-gUnk_083A0F58:
+	.global	gLevel7Stage2Room6MetatileMap
+gLevel7Stage2Room6MetatileMap:
 	.incbin	"baserom.gba", 0x3A0F58, 0x170
-	.global	gUnk_083A10C8
-gUnk_083A10C8:
+	.global	gLevel7Stage2Room6BlockLayer
+gLevel7Stage2Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3A10C8, 0x11C
 	.global	gUnk_083A11E4
 gUnk_083A11E4:
 	.incbin	"baserom.gba", 0x3A11E4, 0x1F0
-	.global	gUnk_083A13D4
-gUnk_083A13D4:
+	.global	gLevel7Stage2Room6Doors
+gLevel7Stage2Room6Doors:
 	.incbin	"baserom.gba", 0x3A13D4, 0x18
-	.global	gUnk_083A13EC
-gUnk_083A13EC:
+	.global	gLevel7Stage2Room6Objects
+gLevel7Stage2Room6Objects:
 	.incbin	"baserom.gba", 0x3A13EC, 0x40
 	.global	gLevel7Stage2Room6
 gLevel7Stage2Room6:
 	.incbin	"baserom.gba", 0x3A142C, 0x8
-	.word	gUnk_083A0F58
-	.word	gUnk_083A10C8
+	.word	gLevel7Stage2Room6MetatileMap
+	.word	gLevel7Stage2Room6BlockLayer
 	.word	gUnk_083A11E4
 	.incbin	"baserom.gba", 0x3A1440, 0x4
 	.word	gUnk_0853C698
@@ -9340,26 +9340,26 @@ gLevel7Stage2Room6:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x3A1460, 0x10
-	.word	gUnk_083A13D4
-	.word	gUnk_083A13EC
+	.word	gLevel7Stage2Room6Doors
+	.word	gLevel7Stage2Room6Objects
 	.incbin	"baserom.gba", 0x3A1478, 0xC
-	.global	gUnk_083A1484
-gUnk_083A1484:
+	.global	gLevel7Stage2Room7MetatileMap
+gLevel7Stage2Room7MetatileMap:
 	.incbin	"baserom.gba", 0x3A1484, 0x124
-	.global	gUnk_083A15A8
-gUnk_083A15A8:
+	.global	gLevel7Stage2Room7BlockLayer
+gLevel7Stage2Room7BlockLayer:
 	.incbin	"baserom.gba", 0x3A15A8, 0x88
 	.global	gUnk_083A1630
 gUnk_083A1630:
 	.incbin	"baserom.gba", 0x3A1630, 0x8
-	.global	gUnk_083A1638
-gUnk_083A1638:
+	.global	gLevel7Stage2Room7Doors
+gLevel7Stage2Room7Doors:
 	.incbin	"baserom.gba", 0x3A1638, 0xC
 	.global	gLevel7Stage2Room7
 gLevel7Stage2Room7:
 	.incbin	"baserom.gba", 0x3A1644, 0x8
-	.word	gUnk_083A1484
-	.word	gUnk_083A15A8
+	.word	gLevel7Stage2Room7MetatileMap
+	.word	gLevel7Stage2Room7BlockLayer
 	.word	gUnk_083A1630
 	.incbin	"baserom.gba", 0x3A1658, 0x4
 	.word	gUnk_0853C698
@@ -9370,28 +9370,28 @@ gLevel7Stage2Room7:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x3A1678, 0x10
-	.word	gUnk_083A1638
+	.word	gLevel7Stage2Room7Doors
 	.incbin	"baserom.gba", 0x3A168C, 0x10
-	.global	gUnk_083A169C
-gUnk_083A169C:
+	.global	gLevel7Stage2Room8MetatileMap
+gLevel7Stage2Room8MetatileMap:
 	.incbin	"baserom.gba", 0x3A169C, 0xB4
-	.global	gUnk_083A1750
-gUnk_083A1750:
+	.global	gLevel7Stage2Room8BlockLayer
+gLevel7Stage2Room8BlockLayer:
 	.incbin	"baserom.gba", 0x3A1750, 0x58
 	.global	gUnk_083A17A8
 gUnk_083A17A8:
 	.incbin	"baserom.gba", 0x3A17A8, 0x8
-	.global	gUnk_083A17B0
-gUnk_083A17B0:
+	.global	gLevel7Stage2Room8Doors
+gLevel7Stage2Room8Doors:
 	.incbin	"baserom.gba", 0x3A17B0, 0xC
-	.global	gUnk_083A17BC
-gUnk_083A17BC:
+	.global	gLevel7Stage2Room8Objects
+gLevel7Stage2Room8Objects:
 	.incbin	"baserom.gba", 0x3A17BC, 0x10
 	.global	gLevel7Stage2Room8
 gLevel7Stage2Room8:
 	.incbin	"baserom.gba", 0x3A17CC, 0x8
-	.word	gUnk_083A169C
-	.word	gUnk_083A1750
+	.word	gLevel7Stage2Room8MetatileMap
+	.word	gLevel7Stage2Room8BlockLayer
 	.word	gUnk_083A17A8
 	.incbin	"baserom.gba", 0x3A17E0, 0x4
 	.word	gUnk_0853C698
@@ -9402,14 +9402,14 @@ gLevel7Stage2Room8:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x3A1800, 0x10
-	.word	gUnk_083A17B0
-	.word	gUnk_083A17BC
+	.word	gLevel7Stage2Room8Doors
+	.word	gLevel7Stage2Room8Objects
 	.incbin	"baserom.gba", 0x3A1818, 0xC
-	.global	gUnk_083A1824
-gUnk_083A1824:
+	.global	gLevel7Stage2Room9MetatileMap
+gLevel7Stage2Room9MetatileMap:
 	.incbin	"baserom.gba", 0x3A1824, 0x274
-	.global	gUnk_083A1A98
-gUnk_083A1A98:
+	.global	gLevel7Stage2Room9BlockLayer
+gLevel7Stage2Room9BlockLayer:
 	.incbin	"baserom.gba", 0x3A1A98, 0xC4
 	.global	gUnk_083A1B5C
 gUnk_083A1B5C:
@@ -9417,8 +9417,8 @@ gUnk_083A1B5C:
 	.global	gLevel7Stage2Room9
 gLevel7Stage2Room9:
 	.incbin	"baserom.gba", 0x3A1B64, 0x8
-	.word	gUnk_083A1824
-	.word	gUnk_083A1A98
+	.word	gLevel7Stage2Room9MetatileMap
+	.word	gLevel7Stage2Room9BlockLayer
 	.word	gUnk_083A1B5C
 	.incbin	"baserom.gba", 0x3A1B78, 0x4
 	.word	gUnk_0853C698
@@ -9429,11 +9429,11 @@ gLevel7Stage2Room9:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x3A1B98, 0x24
-	.global	gUnk_083A1BBC
-gUnk_083A1BBC:
+	.global	gLevel7Stage2Room10MetatileMap
+gLevel7Stage2Room10MetatileMap:
 	.incbin	"baserom.gba", 0x3A1BBC, 0x2D8
-	.global	gUnk_083A1E94
-gUnk_083A1E94:
+	.global	gLevel7Stage2Room10BlockLayer
+gLevel7Stage2Room10BlockLayer:
 	.incbin	"baserom.gba", 0x3A1E94, 0x13C
 	.global	gUnk_083A1FD0
 gUnk_083A1FD0:
@@ -9441,8 +9441,8 @@ gUnk_083A1FD0:
 	.global	gLevel7Stage2Room10
 gLevel7Stage2Room10:
 	.incbin	"baserom.gba", 0x3A1FD8, 0x8
-	.word	gUnk_083A1BBC
-	.word	gUnk_083A1E94
+	.word	gLevel7Stage2Room10MetatileMap
+	.word	gLevel7Stage2Room10BlockLayer
 	.word	gUnk_083A1FD0
 	.incbin	"baserom.gba", 0x3A1FEC, 0x4
 	.word	gUnk_0853C698
@@ -9453,23 +9453,23 @@ gLevel7Stage2Room10:
 	.word	gUnk_0846697C
 	.word	gUnk_083CE5F4
 	.incbin	"baserom.gba", 0x3A200C, 0x24
-	.global	gUnk_083A2030
-gUnk_083A2030:
+	.global	gLevel8Stage0Room0MetatileMap
+gLevel8Stage0Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A2030, 0x384
-	.global	gUnk_083A23B4
-gUnk_083A23B4:
+	.global	gLevel8Stage0Room0BlockLayer
+gLevel8Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A23B4, 0xB0
 	.global	gUnk_083A2464
 gUnk_083A2464:
 	.incbin	"baserom.gba", 0x3A2464, 0x8
-	.global	gUnk_083A246C
-gUnk_083A246C:
+	.global	gLevel8Stage0Room0Doors
+gLevel8Stage0Room0Doors:
 	.incbin	"baserom.gba", 0x3A246C, 0x84
 	.global	gLevel8Stage0Room0
 gLevel8Stage0Room0:
 	.incbin	"baserom.gba", 0x3A24F0, 0x8
-	.word	gUnk_083A2030
-	.word	gUnk_083A23B4
+	.word	gLevel8Stage0Room0MetatileMap
+	.word	gLevel8Stage0Room0BlockLayer
 	.word	gUnk_083A2464
 	.incbin	"baserom.gba", 0x3A2504, 0x4
 	.word	gUnk_0853D600
@@ -9480,13 +9480,13 @@ gLevel8Stage0Room0:
 	.word	gUnk_0840F3A8
 	.word	gUnk_083BC030
 	.incbin	"baserom.gba", 0x3A2524, 0x10
-	.word	gUnk_083A246C
+	.word	gLevel8Stage0Room0Doors
 	.incbin	"baserom.gba", 0x3A2538, 0x10
-	.global	gUnk_083A2548
-gUnk_083A2548:
+	.global	gLevel8Stage0Room1MetatileMap
+gLevel8Stage0Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A2548, 0x10
-	.global	gUnk_083A2558
-gUnk_083A2558:
+	.global	gLevel8Stage0Room1BlockLayer
+gLevel8Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A2558, 0x8
 	.global	gUnk_083A2560
 gUnk_083A2560:
@@ -9494,8 +9494,8 @@ gUnk_083A2560:
 	.global	gLevel8Stage0Room1
 gLevel8Stage0Room1:
 	.incbin	"baserom.gba", 0x3A2578, 0x8
-	.word	gUnk_083A2548
-	.word	gUnk_083A2558
+	.word	gLevel8Stage0Room1MetatileMap
+	.word	gLevel8Stage0Room1BlockLayer
 	.word	gUnk_083A2560
 	.incbin	"baserom.gba", 0x3A258C, 0x4
 	.word	gUnk_0853D600
@@ -9506,59 +9506,59 @@ gLevel8Stage0Room1:
 	.word	gUnk_0840F3A8
 	.word	gUnk_083BC030
 	.incbin	"baserom.gba", 0x3A25AC, 0x24
-	.global	gUnk_083A25D0
-gUnk_083A25D0:
+	.global	gLevel8Stage0Room2MetatileMap
+gLevel8Stage0Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A25D0, 0x70
-	.global	gUnk_083A2640
-gUnk_083A2640:
+	.global	gLevel8Stage0Room2BlockLayer
+gLevel8Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A2640, 0x38
 	.global	gUnk_083A2678
 gUnk_083A2678:
 	.incbin	"baserom.gba", 0x3A2678, 0x8
-	.global	gUnk_083A2680
-gUnk_083A2680:
+	.global	gLevel8Stage0Room2Doors
+gLevel8Stage0Room2Doors:
 	.incbin	"baserom.gba", 0x3A2680, 0xC
-	.global	gUnk_083A268C
-gUnk_083A268C:
+	.global	gLevel8Stage0Room2Objects
+gLevel8Stage0Room2Objects:
 	.incbin	"baserom.gba", 0x3A268C, 0x8
 	.global	gLevel8Stage0Room2
 gLevel8Stage0Room2:
 	.incbin	"baserom.gba", 0x3A2694, 0x8
-	.word	gUnk_083A25D0
-	.word	gUnk_083A2640
+	.word	gLevel8Stage0Room2MetatileMap
+	.word	gLevel8Stage0Room2BlockLayer
 	.word	gUnk_083A2678
 	.incbin	"baserom.gba", 0x3A26A8, 0x4
 	.word	gUnk_084BB5C0
 	.word	gUnk_084BB5F4
 	.word	gUnk_084BB5E4
 	.incbin	"baserom.gba", 0x3A26B8, 0x4
-	.word	gUnk_084D55C0
+	.word	gLevel8Stage0Room2Bg3Palette
 	.word	gUnk_084D8E30
-	.word	gUnk_084D5BD8
+	.word	gLevel8Stage0Room2Bg3Map
 	.incbin	"baserom.gba", 0x3A26C8, 0x10
-	.word	gUnk_083A2680
-	.word	gUnk_083A268C
+	.word	gLevel8Stage0Room2Doors
+	.word	gLevel8Stage0Room2Objects
 	.incbin	"baserom.gba", 0x3A26E0, 0xC
-	.global	gUnk_083A26EC
-gUnk_083A26EC:
+	.global	gLevel8Stage0Room3MetatileMap
+gLevel8Stage0Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A26EC, 0x15C
-	.global	gUnk_083A2848
-gUnk_083A2848:
+	.global	gLevel8Stage0Room3BlockLayer
+gLevel8Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A2848, 0x90
 	.global	gUnk_083A28D8
 gUnk_083A28D8:
 	.incbin	"baserom.gba", 0x3A28D8, 0x8
-	.global	gUnk_083A28E0
-gUnk_083A28E0:
+	.global	gLevel8Stage0Room3Doors
+gLevel8Stage0Room3Doors:
 	.incbin	"baserom.gba", 0x3A28E0, 0xC
-	.global	gUnk_083A28EC
-gUnk_083A28EC:
+	.global	gLevel8Stage0Room3Objects
+gLevel8Stage0Room3Objects:
 	.incbin	"baserom.gba", 0x3A28EC, 0x30
 	.global	gLevel8Stage0Room3
 gLevel8Stage0Room3:
 	.incbin	"baserom.gba", 0x3A291C, 0x8
-	.word	gUnk_083A26EC
-	.word	gUnk_083A2848
+	.word	gLevel8Stage0Room3MetatileMap
+	.word	gLevel8Stage0Room3BlockLayer
 	.word	gUnk_083A28D8
 	.incbin	"baserom.gba", 0x3A2930, 0x4
 	.word	gUnk_0849A940
@@ -9569,14 +9569,14 @@ gLevel8Stage0Room3:
 	.word	gUnk_08506F4C
 	.word	gUnk_08505C24
 	.incbin	"baserom.gba", 0x3A2950, 0x10
-	.word	gUnk_083A28E0
-	.word	gUnk_083A28EC
+	.word	gLevel8Stage0Room3Doors
+	.word	gLevel8Stage0Room3Objects
 	.incbin	"baserom.gba", 0x3A2968, 0xC
-	.global	gUnk_083A2974
-gUnk_083A2974:
+	.global	gLevel8Stage0Room4MetatileMap
+gLevel8Stage0Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3A2974, 0x114
-	.global	gUnk_083A2A88
-gUnk_083A2A88:
+	.global	gLevel8Stage0Room4BlockLayer
+gLevel8Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A2A88, 0x34
 	.global	gUnk_083A2ABC
 gUnk_083A2ABC:
@@ -9584,8 +9584,8 @@ gUnk_083A2ABC:
 	.global	gLevel8Stage0Room4
 gLevel8Stage0Room4:
 	.incbin	"baserom.gba", 0x3A2AC4, 0x8
-	.word	gUnk_083A2974
-	.word	gUnk_083A2A88
+	.word	gLevel8Stage0Room4MetatileMap
+	.word	gLevel8Stage0Room4BlockLayer
 	.word	gUnk_083A2ABC
 	.incbin	"baserom.gba", 0x3A2AD8, 0x4
 	.word	gUnk_0853D12C
@@ -9596,23 +9596,23 @@ gLevel8Stage0Room4:
 	.word	gUnk_0844619C
 	.word	gUnk_083CAF40
 	.incbin	"baserom.gba", 0x3A2AF8, 0x24
-	.global	gUnk_083A2B1C
-gUnk_083A2B1C:
+	.global	gLevel8Stage1Room0MetatileMap
+gLevel8Stage1Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A2B1C, 0x5D8
-	.global	gUnk_083A30F4
-gUnk_083A30F4:
+	.global	gLevel8Stage1Room0BlockLayer
+gLevel8Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A30F4, 0x10C
 	.global	gUnk_083A3200
 gUnk_083A3200:
 	.incbin	"baserom.gba", 0x3A3200, 0x8
-	.global	gUnk_083A3208
-gUnk_083A3208:
+	.global	gLevel8Stage1Room0Doors
+gLevel8Stage1Room0Doors:
 	.incbin	"baserom.gba", 0x3A3208, 0xB4
 	.global	gLevel8Stage1Room0
 gLevel8Stage1Room0:
 	.incbin	"baserom.gba", 0x3A32BC, 0x8
-	.word	gUnk_083A2B1C
-	.word	gUnk_083A30F4
+	.word	gLevel8Stage1Room0MetatileMap
+	.word	gLevel8Stage1Room0BlockLayer
 	.word	gUnk_083A3200
 	.incbin	"baserom.gba", 0x3A32D0, 0x4
 	.word	gUnk_0853D6C4
@@ -9623,13 +9623,13 @@ gLevel8Stage1Room0:
 	.word	gUnk_0840F3A8
 	.word	gUnk_083BD638
 	.incbin	"baserom.gba", 0x3A32F0, 0x10
-	.word	gUnk_083A3208
+	.word	gLevel8Stage1Room0Doors
 	.incbin	"baserom.gba", 0x3A3304, 0x10
-	.global	gUnk_083A3314
-gUnk_083A3314:
+	.global	gLevel8Stage1Room1MetatileMap
+gLevel8Stage1Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A3314, 0x10
-	.global	gUnk_083A3324
-gUnk_083A3324:
+	.global	gLevel8Stage1Room1BlockLayer
+gLevel8Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A3324, 0x8
 	.global	gUnk_083A332C
 gUnk_083A332C:
@@ -9637,8 +9637,8 @@ gUnk_083A332C:
 	.global	gLevel8Stage1Room1
 gLevel8Stage1Room1:
 	.incbin	"baserom.gba", 0x3A3344, 0x8
-	.word	gUnk_083A3314
-	.word	gUnk_083A3324
+	.word	gLevel8Stage1Room1MetatileMap
+	.word	gLevel8Stage1Room1BlockLayer
 	.word	gUnk_083A332C
 	.incbin	"baserom.gba", 0x3A3358, 0x4
 	.word	gUnk_0853D6C4
@@ -9649,26 +9649,26 @@ gLevel8Stage1Room1:
 	.word	gUnk_0840F3A8
 	.word	gUnk_083BD638
 	.incbin	"baserom.gba", 0x3A3378, 0x24
-	.global	gUnk_083A339C
-gUnk_083A339C:
+	.global	gLevel8Stage1Room2MetatileMap
+gLevel8Stage1Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A339C, 0xD0
-	.global	gUnk_083A346C
-gUnk_083A346C:
+	.global	gLevel8Stage1Room2BlockLayer
+gLevel8Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A346C, 0x40
 	.global	gUnk_083A34AC
 gUnk_083A34AC:
 	.incbin	"baserom.gba", 0x3A34AC, 0x14
-	.global	gUnk_083A34C0
-gUnk_083A34C0:
+	.global	gLevel8Stage1Room2Doors
+gLevel8Stage1Room2Doors:
 	.incbin	"baserom.gba", 0x3A34C0, 0xC
-	.global	gUnk_083A34CC
-gUnk_083A34CC:
+	.global	gLevel8Stage1Room2Objects
+gLevel8Stage1Room2Objects:
 	.incbin	"baserom.gba", 0x3A34CC, 0x18
 	.global	gLevel8Stage1Room2
 gLevel8Stage1Room2:
 	.incbin	"baserom.gba", 0x3A34E4, 0x8
-	.word	gUnk_083A339C
-	.word	gUnk_083A346C
+	.word	gLevel8Stage1Room2MetatileMap
+	.word	gLevel8Stage1Room2BlockLayer
 	.word	gUnk_083A34AC
 	.incbin	"baserom.gba", 0x3A34F8, 0x4
 	.word	gUnk_084E56DC
@@ -9679,62 +9679,62 @@ gLevel8Stage1Room2:
 	.word	gUnk_084E6184
 	.word	gUnk_084E5928
 	.incbin	"baserom.gba", 0x3A3518, 0x10
-	.word	gUnk_083A34C0
-	.word	gUnk_083A34CC
+	.word	gLevel8Stage1Room2Doors
+	.word	gLevel8Stage1Room2Objects
 	.incbin	"baserom.gba", 0x3A3530, 0xC
-	.global	gUnk_083A353C
-gUnk_083A353C:
+	.global	gLevel8Stage1Room3MetatileMap
+gLevel8Stage1Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A353C, 0x74
-	.global	gUnk_083A35B0
-gUnk_083A35B0:
+	.global	gLevel8Stage1Room3BlockLayer
+gLevel8Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A35B0, 0x38
 	.global	gUnk_083A35E8
 gUnk_083A35E8:
 	.incbin	"baserom.gba", 0x3A35E8, 0x8
-	.global	gUnk_083A35F0
-gUnk_083A35F0:
+	.global	gLevel8Stage1Room3Doors
+gLevel8Stage1Room3Doors:
 	.incbin	"baserom.gba", 0x3A35F0, 0xC
-	.global	gUnk_083A35FC
-gUnk_083A35FC:
+	.global	gLevel8Stage1Room3Objects
+gLevel8Stage1Room3Objects:
 	.incbin	"baserom.gba", 0x3A35FC, 0x10
 	.global	gLevel8Stage1Room3
 gLevel8Stage1Room3:
 	.incbin	"baserom.gba", 0x3A360C, 0x8
-	.word	gUnk_083A353C
-	.word	gUnk_083A35B0
+	.word	gLevel8Stage1Room3MetatileMap
+	.word	gLevel8Stage1Room3BlockLayer
 	.word	gUnk_083A35E8
 	.incbin	"baserom.gba", 0x3A3620, 0x4
 	.word	gUnk_084BB5C0
 	.word	gUnk_084BB5F4
 	.word	gUnk_084BB5E4
 	.incbin	"baserom.gba", 0x3A3630, 0x4
-	.word	gUnk_084D56C4
+	.word	gLevel8Stage1Room3Bg3Palette
 	.word	gUnk_084DEE4C
-	.word	gUnk_084D643C
+	.word	gLevel8Stage1Room3Bg3Map
 	.incbin	"baserom.gba", 0x3A3640, 0x10
-	.word	gUnk_083A35F0
-	.word	gUnk_083A35FC
+	.word	gLevel8Stage1Room3Doors
+	.word	gLevel8Stage1Room3Objects
 	.incbin	"baserom.gba", 0x3A3658, 0xC
-	.global	gUnk_083A3664
-gUnk_083A3664:
+	.global	gLevel8Stage1Room4MetatileMap
+gLevel8Stage1Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3A3664, 0x1B8
-	.global	gUnk_083A381C
-gUnk_083A381C:
+	.global	gLevel8Stage1Room4BlockLayer
+gLevel8Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A381C, 0x90
 	.global	gUnk_083A38AC
 gUnk_083A38AC:
 	.incbin	"baserom.gba", 0x3A38AC, 0x8
-	.global	gUnk_083A38B4
-gUnk_083A38B4:
+	.global	gLevel8Stage1Room4Doors
+gLevel8Stage1Room4Doors:
 	.incbin	"baserom.gba", 0x3A38B4, 0x18
-	.global	gUnk_083A38CC
-gUnk_083A38CC:
+	.global	gLevel8Stage1Room4Objects
+gLevel8Stage1Room4Objects:
 	.incbin	"baserom.gba", 0x3A38CC, 0x30
 	.global	gLevel8Stage1Room4
 gLevel8Stage1Room4:
 	.incbin	"baserom.gba", 0x3A38FC, 0x8
-	.word	gUnk_083A3664
-	.word	gUnk_083A381C
+	.word	gLevel8Stage1Room4MetatileMap
+	.word	gLevel8Stage1Room4BlockLayer
 	.word	gUnk_083A38AC
 	.incbin	"baserom.gba", 0x3A3910, 0x4
 	.word	gUnk_0853E318
@@ -9745,14 +9745,14 @@ gLevel8Stage1Room4:
 	.word	gUnk_08506F4C
 	.word	gUnk_08505C24
 	.incbin	"baserom.gba", 0x3A3930, 0x10
-	.word	gUnk_083A38B4
-	.word	gUnk_083A38CC
+	.word	gLevel8Stage1Room4Doors
+	.word	gLevel8Stage1Room4Objects
 	.incbin	"baserom.gba", 0x3A3948, 0xC
-	.global	gUnk_083A3954
-gUnk_083A3954:
+	.global	gLevel8Stage1Room5MetatileMap
+gLevel8Stage1Room5MetatileMap:
 	.incbin	"baserom.gba", 0x3A3954, 0xE0
-	.global	gUnk_083A3A34
-gUnk_083A3A34:
+	.global	gLevel8Stage1Room5BlockLayer
+gLevel8Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A3A34, 0x38
 	.global	gUnk_083A3A6C
 gUnk_083A3A6C:
@@ -9760,8 +9760,8 @@ gUnk_083A3A6C:
 	.global	gLevel8Stage1Room5
 gLevel8Stage1Room5:
 	.incbin	"baserom.gba", 0x3A3A74, 0x8
-	.word	gUnk_083A3954
-	.word	gUnk_083A3A34
+	.word	gLevel8Stage1Room5MetatileMap
+	.word	gLevel8Stage1Room5BlockLayer
 	.word	gUnk_083A3A6C
 	.incbin	"baserom.gba", 0x3A3A88, 0x4
 	.word	gUnk_0853E318
@@ -9772,23 +9772,23 @@ gLevel8Stage1Room5:
 	.word	gUnk_083E6548
 	.word	gUnk_083B708C
 	.incbin	"baserom.gba", 0x3A3AA8, 0x24
-	.global	gUnk_083A3ACC
-gUnk_083A3ACC:
+	.global	gLevel8Stage2Room0MetatileMap
+gLevel8Stage2Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A3ACC, 0x3A4
-	.global	gUnk_083A3E70
-gUnk_083A3E70:
+	.global	gLevel8Stage2Room0BlockLayer
+gLevel8Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A3E70, 0xBC
 	.global	gUnk_083A3F2C
 gUnk_083A3F2C:
 	.incbin	"baserom.gba", 0x3A3F2C, 0x8
-	.global	gUnk_083A3F34
-gUnk_083A3F34:
+	.global	gLevel8Stage2Room0Doors
+gLevel8Stage2Room0Doors:
 	.incbin	"baserom.gba", 0x3A3F34, 0xC0
 	.global	gLevel8Stage2Room0
 gLevel8Stage2Room0:
 	.incbin	"baserom.gba", 0x3A3FF4, 0x8
-	.word	gUnk_083A3ACC
-	.word	gUnk_083A3E70
+	.word	gLevel8Stage2Room0MetatileMap
+	.word	gLevel8Stage2Room0BlockLayer
 	.word	gUnk_083A3F2C
 	.incbin	"baserom.gba", 0x3A4008, 0x4
 	.word	gUnk_08539C88
@@ -9799,13 +9799,13 @@ gLevel8Stage2Room0:
 	.word	gUnk_0840F3A8
 	.word	gUnk_083BF8C0
 	.incbin	"baserom.gba", 0x3A4028, 0x10
-	.word	gUnk_083A3F34
+	.word	gLevel8Stage2Room0Doors
 	.incbin	"baserom.gba", 0x3A403C, 0x10
-	.global	gUnk_083A404C
-gUnk_083A404C:
+	.global	gLevel8Stage2Room1MetatileMap
+gLevel8Stage2Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A404C, 0x10
-	.global	gUnk_083A405C
-gUnk_083A405C:
+	.global	gLevel8Stage2Room1BlockLayer
+gLevel8Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A405C, 0x8
 	.global	gUnk_083A4064
 gUnk_083A4064:
@@ -9813,8 +9813,8 @@ gUnk_083A4064:
 	.global	gLevel8Stage2Room1
 gLevel8Stage2Room1:
 	.incbin	"baserom.gba", 0x3A407C, 0x8
-	.word	gUnk_083A404C
-	.word	gUnk_083A405C
+	.word	gLevel8Stage2Room1MetatileMap
+	.word	gLevel8Stage2Room1BlockLayer
 	.word	gUnk_083A4064
 	.incbin	"baserom.gba", 0x3A4090, 0x4
 	.word	gUnk_08539C88
@@ -9825,26 +9825,26 @@ gLevel8Stage2Room1:
 	.word	gUnk_0840F3A8
 	.word	gUnk_083BF8C0
 	.incbin	"baserom.gba", 0x3A40B0, 0x24
-	.global	gUnk_083A40D4
-gUnk_083A40D4:
+	.global	gLevel8Stage2Room2MetatileMap
+gLevel8Stage2Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A40D4, 0xD0
-	.global	gUnk_083A41A4
-gUnk_083A41A4:
+	.global	gLevel8Stage2Room2BlockLayer
+gLevel8Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A41A4, 0x40
 	.global	gUnk_083A41E4
 gUnk_083A41E4:
 	.incbin	"baserom.gba", 0x3A41E4, 0x14
-	.global	gUnk_083A41F8
-gUnk_083A41F8:
+	.global	gLevel8Stage2Room2Doors
+gLevel8Stage2Room2Doors:
 	.incbin	"baserom.gba", 0x3A41F8, 0xC
-	.global	gUnk_083A4204
-gUnk_083A4204:
+	.global	gLevel8Stage2Room2Objects
+gLevel8Stage2Room2Objects:
 	.incbin	"baserom.gba", 0x3A4204, 0x18
 	.global	gLevel8Stage2Room2
 gLevel8Stage2Room2:
 	.incbin	"baserom.gba", 0x3A421C, 0x8
-	.word	gUnk_083A40D4
-	.word	gUnk_083A41A4
+	.word	gLevel8Stage2Room2MetatileMap
+	.word	gLevel8Stage2Room2BlockLayer
 	.word	gUnk_083A41E4
 	.incbin	"baserom.gba", 0x3A4230, 0x4
 	.word	gUnk_084E56DC
@@ -9855,62 +9855,62 @@ gLevel8Stage2Room2:
 	.word	gUnk_084E6184
 	.word	gUnk_084E5928
 	.incbin	"baserom.gba", 0x3A4250, 0x10
-	.word	gUnk_083A41F8
-	.word	gUnk_083A4204
+	.word	gLevel8Stage2Room2Doors
+	.word	gLevel8Stage2Room2Objects
 	.incbin	"baserom.gba", 0x3A4268, 0xC
-	.global	gUnk_083A4274
-gUnk_083A4274:
+	.global	gLevel8Stage2Room3MetatileMap
+gLevel8Stage2Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A4274, 0x74
-	.global	gUnk_083A42E8
-gUnk_083A42E8:
+	.global	gLevel8Stage2Room3BlockLayer
+gLevel8Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A42E8, 0x38
 	.global	gUnk_083A4320
 gUnk_083A4320:
 	.incbin	"baserom.gba", 0x3A4320, 0x8
-	.global	gUnk_083A4328
-gUnk_083A4328:
+	.global	gLevel8Stage2Room3Doors
+gLevel8Stage2Room3Doors:
 	.incbin	"baserom.gba", 0x3A4328, 0xC
-	.global	gUnk_083A4334
-gUnk_083A4334:
+	.global	gLevel8Stage2Room3Objects
+gLevel8Stage2Room3Objects:
 	.incbin	"baserom.gba", 0x3A4334, 0x8
 	.global	gLevel8Stage2Room3
 gLevel8Stage2Room3:
 	.incbin	"baserom.gba", 0x3A433C, 0x8
-	.word	gUnk_083A4274
-	.word	gUnk_083A42E8
+	.word	gLevel8Stage2Room3MetatileMap
+	.word	gLevel8Stage2Room3BlockLayer
 	.word	gUnk_083A4320
 	.incbin	"baserom.gba", 0x3A4350, 0x4
 	.word	gUnk_084BB5C0
 	.word	gUnk_084BB5F4
 	.word	gUnk_084BB5E4
 	.incbin	"baserom.gba", 0x3A4360, 0x4
-	.word	gUnk_084D57C8
+	.word	gLevel8Stage2Room3Bg3Palette
 	.word	gUnk_084D8E30
-	.word	gUnk_084D6CA0
+	.word	gLevel8Stage2Room3Bg3Map
 	.incbin	"baserom.gba", 0x3A4370, 0x10
-	.word	gUnk_083A4328
-	.word	gUnk_083A4334
+	.word	gLevel8Stage2Room3Doors
+	.word	gLevel8Stage2Room3Objects
 	.incbin	"baserom.gba", 0x3A4388, 0xC
-	.global	gUnk_083A4394
-gUnk_083A4394:
+	.global	gLevel8Stage2Room4MetatileMap
+gLevel8Stage2Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3A4394, 0x174
-	.global	gUnk_083A4508
-gUnk_083A4508:
+	.global	gLevel8Stage2Room4BlockLayer
+gLevel8Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A4508, 0x90
 	.global	gUnk_083A4598
 gUnk_083A4598:
 	.incbin	"baserom.gba", 0x3A4598, 0x8
-	.global	gUnk_083A45A0
-gUnk_083A45A0:
+	.global	gLevel8Stage2Room4Doors
+gLevel8Stage2Room4Doors:
 	.incbin	"baserom.gba", 0x3A45A0, 0xC
-	.global	gUnk_083A45AC
-gUnk_083A45AC:
+	.global	gLevel8Stage2Room4Objects
+gLevel8Stage2Room4Objects:
 	.incbin	"baserom.gba", 0x3A45AC, 0x30
 	.global	gLevel8Stage2Room4
 gLevel8Stage2Room4:
 	.incbin	"baserom.gba", 0x3A45DC, 0x8
-	.word	gUnk_083A4394
-	.word	gUnk_083A4508
+	.word	gLevel8Stage2Room4MetatileMap
+	.word	gLevel8Stage2Room4BlockLayer
 	.word	gUnk_083A4598
 	.incbin	"baserom.gba", 0x3A45F0, 0x4
 	.word	gUnk_0853DBB8
@@ -9921,14 +9921,14 @@ gLevel8Stage2Room4:
 	.word	gUnk_08506F4C
 	.word	gUnk_08505C24
 	.incbin	"baserom.gba", 0x3A4610, 0x10
-	.word	gUnk_083A45A0
-	.word	gUnk_083A45AC
+	.word	gLevel8Stage2Room4Doors
+	.word	gLevel8Stage2Room4Objects
 	.incbin	"baserom.gba", 0x3A4628, 0xC
-	.global	gUnk_083A4634
-gUnk_083A4634:
+	.global	gLevel8Stage2Room5MetatileMap
+gLevel8Stage2Room5MetatileMap:
 	.incbin	"baserom.gba", 0x3A4634, 0x8C
-	.global	gUnk_083A46C0
-gUnk_083A46C0:
+	.global	gLevel8Stage2Room5BlockLayer
+gLevel8Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A46C0, 0x34
 	.global	gUnk_083A46F4
 gUnk_083A46F4:
@@ -9936,8 +9936,8 @@ gUnk_083A46F4:
 	.global	gLevel8Stage2Room5
 gLevel8Stage2Room5:
 	.incbin	"baserom.gba", 0x3A46FC, 0x8
-	.word	gUnk_083A4634
-	.word	gUnk_083A46C0
+	.word	gLevel8Stage2Room5MetatileMap
+	.word	gLevel8Stage2Room5BlockLayer
 	.word	gUnk_083A46F4
 	.incbin	"baserom.gba", 0x3A4710, 0x4
 	.word	gUnk_0853DBB8
@@ -9948,23 +9948,23 @@ gLevel8Stage2Room5:
 	.word	gUnk_083F9FC8
 	.word	gUnk_083B9C18
 	.incbin	"baserom.gba", 0x3A4730, 0x24
-	.global	gUnk_083A4754
-gUnk_083A4754:
+	.global	gLevel8Stage3Room0MetatileMap
+gLevel8Stage3Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A4754, 0x458
-	.global	gUnk_083A4BAC
-gUnk_083A4BAC:
+	.global	gLevel8Stage3Room0BlockLayer
+gLevel8Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A4BAC, 0x10C
 	.global	gUnk_083A4CB8
 gUnk_083A4CB8:
 	.incbin	"baserom.gba", 0x3A4CB8, 0x8
-	.global	gUnk_083A4CC0
-gUnk_083A4CC0:
+	.global	gLevel8Stage3Room0Doors
+gLevel8Stage3Room0Doors:
 	.incbin	"baserom.gba", 0x3A4CC0, 0xC0
 	.global	gLevel8Stage3Room0
 gLevel8Stage3Room0:
 	.incbin	"baserom.gba", 0x3A4D80, 0x8
-	.word	gUnk_083A4754
-	.word	gUnk_083A4BAC
+	.word	gLevel8Stage3Room0MetatileMap
+	.word	gLevel8Stage3Room0BlockLayer
 	.word	gUnk_083A4CB8
 	.incbin	"baserom.gba", 0x3A4D94, 0x4
 	.word	gUnk_08539D8C
@@ -9975,13 +9975,13 @@ gLevel8Stage3Room0:
 	.word	gUnk_0840F56C
 	.word	gUnk_083C0E48
 	.incbin	"baserom.gba", 0x3A4DB4, 0x10
-	.word	gUnk_083A4CC0
+	.word	gLevel8Stage3Room0Doors
 	.incbin	"baserom.gba", 0x3A4DC8, 0x10
-	.global	gUnk_083A4DD8
-gUnk_083A4DD8:
+	.global	gLevel8Stage3Room1MetatileMap
+gLevel8Stage3Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A4DD8, 0x10
-	.global	gUnk_083A4DE8
-gUnk_083A4DE8:
+	.global	gLevel8Stage3Room1BlockLayer
+gLevel8Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A4DE8, 0x8
 	.global	gUnk_083A4DF0
 gUnk_083A4DF0:
@@ -9989,8 +9989,8 @@ gUnk_083A4DF0:
 	.global	gLevel8Stage3Room1
 gLevel8Stage3Room1:
 	.incbin	"baserom.gba", 0x3A4E08, 0x8
-	.word	gUnk_083A4DD8
-	.word	gUnk_083A4DE8
+	.word	gLevel8Stage3Room1MetatileMap
+	.word	gLevel8Stage3Room1BlockLayer
 	.word	gUnk_083A4DF0
 	.incbin	"baserom.gba", 0x3A4E1C, 0x4
 	.word	gUnk_08539D8C
@@ -10001,26 +10001,26 @@ gLevel8Stage3Room1:
 	.word	gUnk_0840F56C
 	.word	gUnk_083C0E48
 	.incbin	"baserom.gba", 0x3A4E3C, 0x24
-	.global	gUnk_083A4E60
-gUnk_083A4E60:
+	.global	gLevel8Stage3Room2MetatileMap
+gLevel8Stage3Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A4E60, 0xD0
-	.global	gUnk_083A4F30
-gUnk_083A4F30:
+	.global	gLevel8Stage3Room2BlockLayer
+gLevel8Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A4F30, 0x40
 	.global	gUnk_083A4F70
 gUnk_083A4F70:
 	.incbin	"baserom.gba", 0x3A4F70, 0x14
-	.global	gUnk_083A4F84
-gUnk_083A4F84:
+	.global	gLevel8Stage3Room2Doors
+gLevel8Stage3Room2Doors:
 	.incbin	"baserom.gba", 0x3A4F84, 0xC
-	.global	gUnk_083A4F90
-gUnk_083A4F90:
+	.global	gLevel8Stage3Room2Objects
+gLevel8Stage3Room2Objects:
 	.incbin	"baserom.gba", 0x3A4F90, 0x18
 	.global	gLevel8Stage3Room2
 gLevel8Stage3Room2:
 	.incbin	"baserom.gba", 0x3A4FA8, 0x8
-	.word	gUnk_083A4E60
-	.word	gUnk_083A4F30
+	.word	gLevel8Stage3Room2MetatileMap
+	.word	gLevel8Stage3Room2BlockLayer
 	.word	gUnk_083A4F70
 	.incbin	"baserom.gba", 0x3A4FBC, 0x4
 	.word	gUnk_084E56DC
@@ -10031,62 +10031,62 @@ gLevel8Stage3Room2:
 	.word	gUnk_084E6184
 	.word	gUnk_084E5928
 	.incbin	"baserom.gba", 0x3A4FDC, 0x10
-	.word	gUnk_083A4F84
-	.word	gUnk_083A4F90
+	.word	gLevel8Stage3Room2Doors
+	.word	gLevel8Stage3Room2Objects
 	.incbin	"baserom.gba", 0x3A4FF4, 0xC
-	.global	gUnk_083A5000
-gUnk_083A5000:
+	.global	gLevel8Stage3Room3MetatileMap
+gLevel8Stage3Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A5000, 0x74
-	.global	gUnk_083A5074
-gUnk_083A5074:
+	.global	gLevel8Stage3Room3BlockLayer
+gLevel8Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A5074, 0x38
 	.global	gUnk_083A50AC
 gUnk_083A50AC:
 	.incbin	"baserom.gba", 0x3A50AC, 0x8
-	.global	gUnk_083A50B4
-gUnk_083A50B4:
+	.global	gLevel8Stage3Room3Doors
+gLevel8Stage3Room3Doors:
 	.incbin	"baserom.gba", 0x3A50B4, 0xC
-	.global	gUnk_083A50C0
-gUnk_083A50C0:
+	.global	gLevel8Stage3Room3Objects
+gLevel8Stage3Room3Objects:
 	.incbin	"baserom.gba", 0x3A50C0, 0x10
 	.global	gLevel8Stage3Room3
 gLevel8Stage3Room3:
 	.incbin	"baserom.gba", 0x3A50D0, 0x8
-	.word	gUnk_083A5000
-	.word	gUnk_083A5074
+	.word	gLevel8Stage3Room3MetatileMap
+	.word	gLevel8Stage3Room3BlockLayer
 	.word	gUnk_083A50AC
 	.incbin	"baserom.gba", 0x3A50E4, 0x4
 	.word	gUnk_084BB5C0
 	.word	gUnk_084BB5F4
 	.word	gUnk_084BB5E4
 	.incbin	"baserom.gba", 0x3A50F4, 0x4
-	.word	gUnk_084D58CC
+	.word	gLevel8Stage3Room3Bg3Palette
 	.word	gUnk_084DEE4C
-	.word	gUnk_084D7504
+	.word	gLevel8Stage3Room3Bg3Map
 	.incbin	"baserom.gba", 0x3A5104, 0x10
-	.word	gUnk_083A50B4
-	.word	gUnk_083A50C0
+	.word	gLevel8Stage3Room3Doors
+	.word	gLevel8Stage3Room3Objects
 	.incbin	"baserom.gba", 0x3A511C, 0xC
-	.global	gUnk_083A5128
-gUnk_083A5128:
+	.global	gLevel8Stage3Room4MetatileMap
+gLevel8Stage3Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3A5128, 0x158
-	.global	gUnk_083A5280
-gUnk_083A5280:
+	.global	gLevel8Stage3Room4BlockLayer
+gLevel8Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A5280, 0x90
 	.global	gUnk_083A5310
 gUnk_083A5310:
 	.incbin	"baserom.gba", 0x3A5310, 0x8
-	.global	gUnk_083A5318
-gUnk_083A5318:
+	.global	gLevel8Stage3Room4Doors
+gLevel8Stage3Room4Doors:
 	.incbin	"baserom.gba", 0x3A5318, 0xC
-	.global	gUnk_083A5324
-gUnk_083A5324:
+	.global	gLevel8Stage3Room4Objects
+gLevel8Stage3Room4Objects:
 	.incbin	"baserom.gba", 0x3A5324, 0x30
 	.global	gLevel8Stage3Room4
 gLevel8Stage3Room4:
 	.incbin	"baserom.gba", 0x3A5354, 0x8
-	.word	gUnk_083A5128
-	.word	gUnk_083A5280
+	.word	gLevel8Stage3Room4MetatileMap
+	.word	gLevel8Stage3Room4BlockLayer
 	.word	gUnk_083A5310
 	.incbin	"baserom.gba", 0x3A5368, 0x4
 	.word	gUnk_0835D548
@@ -10097,14 +10097,14 @@ gLevel8Stage3Room4:
 	.word	gUnk_08506F4C
 	.word	gUnk_08505C24
 	.incbin	"baserom.gba", 0x3A5388, 0x10
-	.word	gUnk_083A5318
-	.word	gUnk_083A5324
+	.word	gLevel8Stage3Room4Doors
+	.word	gLevel8Stage3Room4Objects
 	.incbin	"baserom.gba", 0x3A53A0, 0xC
-	.global	gUnk_083A53AC
-gUnk_083A53AC:
+	.global	gLevel8Stage3Room5MetatileMap
+gLevel8Stage3Room5MetatileMap:
 	.incbin	"baserom.gba", 0x3A53AC, 0x98
-	.global	gUnk_083A5444
-gUnk_083A5444:
+	.global	gLevel8Stage3Room5BlockLayer
+gLevel8Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A5444, 0x34
 	.global	gUnk_083A5478
 gUnk_083A5478:
@@ -10112,8 +10112,8 @@ gUnk_083A5478:
 	.global	gLevel8Stage3Room5
 gLevel8Stage3Room5:
 	.incbin	"baserom.gba", 0x3A5480, 0x8
-	.word	gUnk_083A53AC
-	.word	gUnk_083A5444
+	.word	gLevel8Stage3Room5MetatileMap
+	.word	gLevel8Stage3Room5BlockLayer
 	.word	gUnk_083A5478
 	.incbin	"baserom.gba", 0x3A5494, 0x4
 	.word	gUnk_0835D548
@@ -10124,23 +10124,23 @@ gLevel8Stage3Room5:
 	.word	gUnk_083FE694
 	.word	gUnk_083BA534
 	.incbin	"baserom.gba", 0x3A54B4, 0x24
-	.global	gUnk_083A54D8
-gUnk_083A54D8:
+	.global	gLevel8Stage4Room0MetatileMap
+gLevel8Stage4Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A54D8, 0x530
-	.global	gUnk_083A5A08
-gUnk_083A5A08:
+	.global	gLevel8Stage4Room0BlockLayer
+gLevel8Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A5A08, 0x10C
 	.global	gUnk_083A5B14
 gUnk_083A5B14:
 	.incbin	"baserom.gba", 0x3A5B14, 0x8
-	.global	gUnk_083A5B1C
-gUnk_083A5B1C:
+	.global	gLevel8Stage4Room0Doors
+gLevel8Stage4Room0Doors:
 	.incbin	"baserom.gba", 0x3A5B1C, 0xCC
 	.global	gLevel8Stage4Room0
 gLevel8Stage4Room0:
 	.incbin	"baserom.gba", 0x3A5BE8, 0x8
-	.word	gUnk_083A54D8
-	.word	gUnk_083A5A08
+	.word	gLevel8Stage4Room0MetatileMap
+	.word	gLevel8Stage4Room0BlockLayer
 	.word	gUnk_083A5B14
 	.incbin	"baserom.gba", 0x3A5BFC, 0x4
 	.word	gUnk_0853D7C8
@@ -10151,13 +10151,13 @@ gLevel8Stage4Room0:
 	.word	gUnk_0840F754
 	.word	gUnk_083C2DD0
 	.incbin	"baserom.gba", 0x3A5C1C, 0x10
-	.word	gUnk_083A5B1C
+	.word	gLevel8Stage4Room0Doors
 	.incbin	"baserom.gba", 0x3A5C30, 0x10
-	.global	gUnk_083A5C40
-gUnk_083A5C40:
+	.global	gLevel8Stage4Room1MetatileMap
+gLevel8Stage4Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A5C40, 0x10
-	.global	gUnk_083A5C50
-gUnk_083A5C50:
+	.global	gLevel8Stage4Room1BlockLayer
+gLevel8Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A5C50, 0x8
 	.global	gUnk_083A5C58
 gUnk_083A5C58:
@@ -10165,8 +10165,8 @@ gUnk_083A5C58:
 	.global	gLevel8Stage4Room1
 gLevel8Stage4Room1:
 	.incbin	"baserom.gba", 0x3A5C70, 0x8
-	.word	gUnk_083A5C40
-	.word	gUnk_083A5C50
+	.word	gLevel8Stage4Room1MetatileMap
+	.word	gLevel8Stage4Room1BlockLayer
 	.word	gUnk_083A5C58
 	.incbin	"baserom.gba", 0x3A5C84, 0x4
 	.word	gUnk_0853D7C8
@@ -10177,26 +10177,26 @@ gLevel8Stage4Room1:
 	.word	gUnk_0840F754
 	.word	gUnk_083C2DD0
 	.incbin	"baserom.gba", 0x3A5CA4, 0x24
-	.global	gUnk_083A5CC8
-gUnk_083A5CC8:
+	.global	gLevel8Stage4Room2MetatileMap
+gLevel8Stage4Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A5CC8, 0xD0
-	.global	gUnk_083A5D98
-gUnk_083A5D98:
+	.global	gLevel8Stage4Room2BlockLayer
+gLevel8Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A5D98, 0x40
 	.global	gUnk_083A5DD8
 gUnk_083A5DD8:
 	.incbin	"baserom.gba", 0x3A5DD8, 0x14
-	.global	gUnk_083A5DEC
-gUnk_083A5DEC:
+	.global	gLevel8Stage4Room2Doors
+gLevel8Stage4Room2Doors:
 	.incbin	"baserom.gba", 0x3A5DEC, 0xC
-	.global	gUnk_083A5DF8
-gUnk_083A5DF8:
+	.global	gLevel8Stage4Room2Objects
+gLevel8Stage4Room2Objects:
 	.incbin	"baserom.gba", 0x3A5DF8, 0x18
 	.global	gLevel8Stage4Room2
 gLevel8Stage4Room2:
 	.incbin	"baserom.gba", 0x3A5E10, 0x8
-	.word	gUnk_083A5CC8
-	.word	gUnk_083A5D98
+	.word	gLevel8Stage4Room2MetatileMap
+	.word	gLevel8Stage4Room2BlockLayer
 	.word	gUnk_083A5DD8
 	.incbin	"baserom.gba", 0x3A5E24, 0x4
 	.word	gUnk_084E56DC
@@ -10207,62 +10207,62 @@ gLevel8Stage4Room2:
 	.word	gUnk_084E6184
 	.word	gUnk_084E5928
 	.incbin	"baserom.gba", 0x3A5E44, 0x10
-	.word	gUnk_083A5DEC
-	.word	gUnk_083A5DF8
+	.word	gLevel8Stage4Room2Doors
+	.word	gLevel8Stage4Room2Objects
 	.incbin	"baserom.gba", 0x3A5E5C, 0xC
-	.global	gUnk_083A5E68
-gUnk_083A5E68:
+	.global	gLevel8Stage4Room3MetatileMap
+gLevel8Stage4Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A5E68, 0x78
-	.global	gUnk_083A5EE0
-gUnk_083A5EE0:
+	.global	gLevel8Stage4Room3BlockLayer
+gLevel8Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A5EE0, 0x38
 	.global	gUnk_083A5F18
 gUnk_083A5F18:
 	.incbin	"baserom.gba", 0x3A5F18, 0x8
-	.global	gUnk_083A5F20
-gUnk_083A5F20:
+	.global	gLevel8Stage4Room3Doors
+gLevel8Stage4Room3Doors:
 	.incbin	"baserom.gba", 0x3A5F20, 0xC
-	.global	gUnk_083A5F2C
-gUnk_083A5F2C:
+	.global	gLevel8Stage4Room3Objects
+gLevel8Stage4Room3Objects:
 	.incbin	"baserom.gba", 0x3A5F2C, 0x10
 	.global	gLevel8Stage4Room3
 gLevel8Stage4Room3:
 	.incbin	"baserom.gba", 0x3A5F3C, 0x8
-	.word	gUnk_083A5E68
-	.word	gUnk_083A5EE0
+	.word	gLevel8Stage4Room3MetatileMap
+	.word	gLevel8Stage4Room3BlockLayer
 	.word	gUnk_083A5F18
 	.incbin	"baserom.gba", 0x3A5F50, 0x4
 	.word	gUnk_084BB5C0
 	.word	gUnk_084BB5F4
 	.word	gUnk_084BB5E4
 	.incbin	"baserom.gba", 0x3A5F60, 0x4
-	.word	gUnk_084D59D0
+	.word	gLevel8Stage4Room3Bg3Palette
 	.word	gUnk_084DEE4C
-	.word	gUnk_084D7D68
+	.word	gLevel8Stage4Room3Bg3Map
 	.incbin	"baserom.gba", 0x3A5F70, 0x10
-	.word	gUnk_083A5F20
-	.word	gUnk_083A5F2C
+	.word	gLevel8Stage4Room3Doors
+	.word	gLevel8Stage4Room3Objects
 	.incbin	"baserom.gba", 0x3A5F88, 0xC
-	.global	gUnk_083A5F94
-gUnk_083A5F94:
+	.global	gLevel8Stage4Room4MetatileMap
+gLevel8Stage4Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3A5F94, 0x17C
-	.global	gUnk_083A6110
-gUnk_083A6110:
+	.global	gLevel8Stage4Room4BlockLayer
+gLevel8Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A6110, 0x90
 	.global	gUnk_083A61A0
 gUnk_083A61A0:
 	.incbin	"baserom.gba", 0x3A61A0, 0x8
-	.global	gUnk_083A61A8
-gUnk_083A61A8:
+	.global	gLevel8Stage4Room4Doors
+gLevel8Stage4Room4Doors:
 	.incbin	"baserom.gba", 0x3A61A8, 0xC
-	.global	gUnk_083A61B4
-gUnk_083A61B4:
+	.global	gLevel8Stage4Room4Objects
+gLevel8Stage4Room4Objects:
 	.incbin	"baserom.gba", 0x3A61B4, 0x30
 	.global	gLevel8Stage4Room4
 gLevel8Stage4Room4:
 	.incbin	"baserom.gba", 0x3A61E4, 0x8
-	.word	gUnk_083A5F94
-	.word	gUnk_083A6110
+	.word	gLevel8Stage4Room4MetatileMap
+	.word	gLevel8Stage4Room4BlockLayer
 	.word	gUnk_083A61A0
 	.incbin	"baserom.gba", 0x3A61F8, 0x4
 	.word	gUnk_0853DAB4
@@ -10273,14 +10273,14 @@ gLevel8Stage4Room4:
 	.word	gUnk_08506F4C
 	.word	gUnk_08505C24
 	.incbin	"baserom.gba", 0x3A6218, 0x10
-	.word	gUnk_083A61A8
-	.word	gUnk_083A61B4
+	.word	gLevel8Stage4Room4Doors
+	.word	gLevel8Stage4Room4Objects
 	.incbin	"baserom.gba", 0x3A6230, 0xC
-	.global	gUnk_083A623C
-gUnk_083A623C:
+	.global	gLevel8Stage4Room5MetatileMap
+gLevel8Stage4Room5MetatileMap:
 	.incbin	"baserom.gba", 0x3A623C, 0xC4
-	.global	gUnk_083A6300
-gUnk_083A6300:
+	.global	gLevel8Stage4Room5BlockLayer
+gLevel8Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A6300, 0x34
 	.global	gUnk_083A6334
 gUnk_083A6334:
@@ -10288,8 +10288,8 @@ gUnk_083A6334:
 	.global	gLevel8Stage4Room5
 gLevel8Stage4Room5:
 	.incbin	"baserom.gba", 0x3A633C, 0x8
-	.word	gUnk_083A623C
-	.word	gUnk_083A6300
+	.word	gLevel8Stage4Room5MetatileMap
+	.word	gLevel8Stage4Room5BlockLayer
 	.word	gUnk_083A6334
 	.incbin	"baserom.gba", 0x3A6350, 0x4
 	.word	gUnk_0853DAB4
@@ -10300,23 +10300,23 @@ gLevel8Stage4Room5:
 	.word	gUnk_08401D3C
 	.word	gUnk_083BADEC
 	.incbin	"baserom.gba", 0x3A6370, 0x24
-	.global	gUnk_083A6394
-gUnk_083A6394:
+	.global	gLevel8Stage5Room0MetatileMap
+gLevel8Stage5Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A6394, 0x56C
-	.global	gUnk_083A6900
-gUnk_083A6900:
+	.global	gLevel8Stage5Room0BlockLayer
+gLevel8Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A6900, 0x10C
 	.global	gUnk_083A6A0C
 gUnk_083A6A0C:
 	.incbin	"baserom.gba", 0x3A6A0C, 0x8
-	.global	gUnk_083A6A14
-gUnk_083A6A14:
+	.global	gLevel8Stage5Room0Doors
+gLevel8Stage5Room0Doors:
 	.incbin	"baserom.gba", 0x3A6A14, 0xCC
 	.global	gLevel8Stage5Room0
 gLevel8Stage5Room0:
 	.incbin	"baserom.gba", 0x3A6AE0, 0x8
-	.word	gUnk_083A6394
-	.word	gUnk_083A6900
+	.word	gLevel8Stage5Room0MetatileMap
+	.word	gLevel8Stage5Room0BlockLayer
 	.word	gUnk_083A6A0C
 	.incbin	"baserom.gba", 0x3A6AF4, 0x4
 	.word	gUnk_0853D8CC
@@ -10327,13 +10327,13 @@ gLevel8Stage5Room0:
 	.word	gUnk_0840F99C
 	.word	gUnk_083C5058
 	.incbin	"baserom.gba", 0x3A6B14, 0x10
-	.word	gUnk_083A6A14
+	.word	gLevel8Stage5Room0Doors
 	.incbin	"baserom.gba", 0x3A6B28, 0x10
-	.global	gUnk_083A6B38
-gUnk_083A6B38:
+	.global	gLevel8Stage5Room1MetatileMap
+gLevel8Stage5Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A6B38, 0x10
-	.global	gUnk_083A6B48
-gUnk_083A6B48:
+	.global	gLevel8Stage5Room1BlockLayer
+gLevel8Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A6B48, 0x8
 	.global	gUnk_083A6B50
 gUnk_083A6B50:
@@ -10341,8 +10341,8 @@ gUnk_083A6B50:
 	.global	gLevel8Stage5Room1
 gLevel8Stage5Room1:
 	.incbin	"baserom.gba", 0x3A6B68, 0x8
-	.word	gUnk_083A6B38
-	.word	gUnk_083A6B48
+	.word	gLevel8Stage5Room1MetatileMap
+	.word	gLevel8Stage5Room1BlockLayer
 	.word	gUnk_083A6B50
 	.incbin	"baserom.gba", 0x3A6B7C, 0x4
 	.word	gUnk_0853D8CC
@@ -10353,26 +10353,26 @@ gLevel8Stage5Room1:
 	.word	gUnk_0840F99C
 	.word	gUnk_083C5058
 	.incbin	"baserom.gba", 0x3A6B9C, 0x24
-	.global	gUnk_083A6BC0
-gUnk_083A6BC0:
+	.global	gLevel8Stage5Room2MetatileMap
+gLevel8Stage5Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A6BC0, 0xD0
-	.global	gUnk_083A6C90
-gUnk_083A6C90:
+	.global	gLevel8Stage5Room2BlockLayer
+gLevel8Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A6C90, 0x40
 	.global	gUnk_083A6CD0
 gUnk_083A6CD0:
 	.incbin	"baserom.gba", 0x3A6CD0, 0x14
-	.global	gUnk_083A6CE4
-gUnk_083A6CE4:
+	.global	gLevel8Stage5Room2Doors
+gLevel8Stage5Room2Doors:
 	.incbin	"baserom.gba", 0x3A6CE4, 0xC
-	.global	gUnk_083A6CF0
-gUnk_083A6CF0:
+	.global	gLevel8Stage5Room2Objects
+gLevel8Stage5Room2Objects:
 	.incbin	"baserom.gba", 0x3A6CF0, 0x18
 	.global	gLevel8Stage5Room2
 gLevel8Stage5Room2:
 	.incbin	"baserom.gba", 0x3A6D08, 0x8
-	.word	gUnk_083A6BC0
-	.word	gUnk_083A6C90
+	.word	gLevel8Stage5Room2MetatileMap
+	.word	gLevel8Stage5Room2BlockLayer
 	.word	gUnk_083A6CD0
 	.incbin	"baserom.gba", 0x3A6D1C, 0x4
 	.word	gUnk_084E56DC
@@ -10383,62 +10383,62 @@ gLevel8Stage5Room2:
 	.word	gUnk_084E6184
 	.word	gUnk_084E5928
 	.incbin	"baserom.gba", 0x3A6D3C, 0x10
-	.word	gUnk_083A6CE4
-	.word	gUnk_083A6CF0
+	.word	gLevel8Stage5Room2Doors
+	.word	gLevel8Stage5Room2Objects
 	.incbin	"baserom.gba", 0x3A6D54, 0xC
-	.global	gUnk_083A6D60
-gUnk_083A6D60:
+	.global	gLevel8Stage5Room3MetatileMap
+gLevel8Stage5Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A6D60, 0x70
-	.global	gUnk_083A6DD0
-gUnk_083A6DD0:
+	.global	gLevel8Stage5Room3BlockLayer
+gLevel8Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A6DD0, 0x38
 	.global	gUnk_083A6E08
 gUnk_083A6E08:
 	.incbin	"baserom.gba", 0x3A6E08, 0x8
-	.global	gUnk_083A6E10
-gUnk_083A6E10:
+	.global	gLevel8Stage5Room3Doors
+gLevel8Stage5Room3Doors:
 	.incbin	"baserom.gba", 0x3A6E10, 0xC
-	.global	gUnk_083A6E1C
-gUnk_083A6E1C:
+	.global	gLevel8Stage5Room3Objects
+gLevel8Stage5Room3Objects:
 	.incbin	"baserom.gba", 0x3A6E1C, 0x8
 	.global	gLevel8Stage5Room3
 gLevel8Stage5Room3:
 	.incbin	"baserom.gba", 0x3A6E24, 0x8
-	.word	gUnk_083A6D60
-	.word	gUnk_083A6DD0
+	.word	gLevel8Stage5Room3MetatileMap
+	.word	gLevel8Stage5Room3BlockLayer
 	.word	gUnk_083A6E08
 	.incbin	"baserom.gba", 0x3A6E38, 0x4
 	.word	gUnk_084BB5C0
 	.word	gUnk_084BB5F4
 	.word	gUnk_084BB5E4
 	.incbin	"baserom.gba", 0x3A6E48, 0x4
-	.word	gUnk_084D5AD4
+	.word	gLevel8Stage5Room3Bg3Palette
 	.word	gUnk_084D8E30
-	.word	gUnk_084D85CC
+	.word	gLevel8Stage5Room3Bg3Map
 	.incbin	"baserom.gba", 0x3A6E58, 0x10
-	.word	gUnk_083A6E10
-	.word	gUnk_083A6E1C
+	.word	gLevel8Stage5Room3Doors
+	.word	gLevel8Stage5Room3Objects
 	.incbin	"baserom.gba", 0x3A6E70, 0xC
-	.global	gUnk_083A6E7C
-gUnk_083A6E7C:
+	.global	gLevel8Stage5Room4MetatileMap
+gLevel8Stage5Room4MetatileMap:
 	.incbin	"baserom.gba", 0x3A6E7C, 0x150
-	.global	gUnk_083A6FCC
-gUnk_083A6FCC:
+	.global	gLevel8Stage5Room4BlockLayer
+gLevel8Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A6FCC, 0x90
 	.global	gUnk_083A705C
 gUnk_083A705C:
 	.incbin	"baserom.gba", 0x3A705C, 0x8
-	.global	gUnk_083A7064
-gUnk_083A7064:
+	.global	gLevel8Stage5Room4Doors
+gLevel8Stage5Room4Doors:
 	.incbin	"baserom.gba", 0x3A7064, 0xC
-	.global	gUnk_083A7070
-gUnk_083A7070:
+	.global	gLevel8Stage5Room4Objects
+gLevel8Stage5Room4Objects:
 	.incbin	"baserom.gba", 0x3A7070, 0x30
 	.global	gLevel8Stage5Room4
 gLevel8Stage5Room4:
 	.incbin	"baserom.gba", 0x3A70A0, 0x8
-	.word	gUnk_083A6E7C
-	.word	gUnk_083A6FCC
+	.word	gLevel8Stage5Room4MetatileMap
+	.word	gLevel8Stage5Room4BlockLayer
 	.word	gUnk_083A705C
 	.incbin	"baserom.gba", 0x3A70B4, 0x4
 	.word	gUnk_0852D6E8
@@ -10449,14 +10449,14 @@ gLevel8Stage5Room4:
 	.word	gUnk_08506F4C
 	.word	gUnk_08505C24
 	.incbin	"baserom.gba", 0x3A70D4, 0x10
-	.word	gUnk_083A7064
-	.word	gUnk_083A7070
+	.word	gLevel8Stage5Room4Doors
+	.word	gLevel8Stage5Room4Objects
 	.incbin	"baserom.gba", 0x3A70EC, 0xC
-	.global	gUnk_083A70F8
-gUnk_083A70F8:
+	.global	gLevel8Stage5Room5MetatileMap
+gLevel8Stage5Room5MetatileMap:
 	.incbin	"baserom.gba", 0x3A70F8, 0xB0
-	.global	gUnk_083A71A8
-gUnk_083A71A8:
+	.global	gLevel8Stage5Room5BlockLayer
+gLevel8Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A71A8, 0x34
 	.global	gUnk_083A71DC
 gUnk_083A71DC:
@@ -10464,8 +10464,8 @@ gUnk_083A71DC:
 	.global	gLevel8Stage5Room5
 gLevel8Stage5Room5:
 	.incbin	"baserom.gba", 0x3A71E4, 0x8
-	.word	gUnk_083A70F8
-	.word	gUnk_083A71A8
+	.word	gLevel8Stage5Room5MetatileMap
+	.word	gLevel8Stage5Room5BlockLayer
 	.word	gUnk_083A71DC
 	.incbin	"baserom.gba", 0x3A71F8, 0x4
 	.word	gUnk_0852D6E8
@@ -10476,23 +10476,23 @@ gLevel8Stage5Room5:
 	.word	gUnk_08460458
 	.word	gUnk_083CDCD4
 	.incbin	"baserom.gba", 0x3A7218, 0x24
-	.global	gUnk_083A723C
-gUnk_083A723C:
+	.global	gLevel8Stage6Room0MetatileMap
+gLevel8Stage6Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A723C, 0x444
-	.global	gUnk_083A7680
-gUnk_083A7680:
+	.global	gLevel8Stage6Room0BlockLayer
+gLevel8Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A7680, 0xB8
 	.global	gUnk_083A7738
 gUnk_083A7738:
 	.incbin	"baserom.gba", 0x3A7738, 0x8
-	.global	gUnk_083A7740
-gUnk_083A7740:
+	.global	gLevel8Stage6Room0Doors
+gLevel8Stage6Room0Doors:
 	.incbin	"baserom.gba", 0x3A7740, 0x84
 	.global	gLevel8Stage6Room0
 gLevel8Stage6Room0:
 	.incbin	"baserom.gba", 0x3A77C4, 0x8
-	.word	gUnk_083A723C
-	.word	gUnk_083A7680
+	.word	gLevel8Stage6Room0MetatileMap
+	.word	gLevel8Stage6Room0BlockLayer
 	.word	gUnk_083A7738
 	.incbin	"baserom.gba", 0x3A77D8, 0x4
 	.word	gUnk_0853D9D0
@@ -10503,13 +10503,13 @@ gLevel8Stage6Room0:
 	.word	gUnk_0840FB54
 	.word	gUnk_083C72E0
 	.incbin	"baserom.gba", 0x3A77F8, 0x10
-	.word	gUnk_083A7740
+	.word	gLevel8Stage6Room0Doors
 	.incbin	"baserom.gba", 0x3A780C, 0x10
-	.global	gUnk_083A781C
-gUnk_083A781C:
+	.global	gLevel8Stage6Room1MetatileMap
+gLevel8Stage6Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A781C, 0x10
-	.global	gUnk_083A782C
-gUnk_083A782C:
+	.global	gLevel8Stage6Room1BlockLayer
+gLevel8Stage6Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A782C, 0x8
 	.global	gUnk_083A7834
 gUnk_083A7834:
@@ -10517,8 +10517,8 @@ gUnk_083A7834:
 	.global	gLevel8Stage6Room1
 gLevel8Stage6Room1:
 	.incbin	"baserom.gba", 0x3A784C, 0x8
-	.word	gUnk_083A781C
-	.word	gUnk_083A782C
+	.word	gLevel8Stage6Room1MetatileMap
+	.word	gLevel8Stage6Room1BlockLayer
 	.word	gUnk_083A7834
 	.incbin	"baserom.gba", 0x3A7860, 0x4
 	.word	gUnk_0853D9D0
@@ -10529,26 +10529,26 @@ gLevel8Stage6Room1:
 	.word	gUnk_0840FB54
 	.word	gUnk_083C72E0
 	.incbin	"baserom.gba", 0x3A7880, 0x24
-	.global	gUnk_083A78A4
-gUnk_083A78A4:
+	.global	gLevel8Stage6Room2MetatileMap
+gLevel8Stage6Room2MetatileMap:
 	.incbin	"baserom.gba", 0x3A78A4, 0x164
-	.global	gUnk_083A7A08
-gUnk_083A7A08:
+	.global	gLevel8Stage6Room2BlockLayer
+gLevel8Stage6Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A7A08, 0x90
 	.global	gUnk_083A7A98
 gUnk_083A7A98:
 	.incbin	"baserom.gba", 0x3A7A98, 0x8
-	.global	gUnk_083A7AA0
-gUnk_083A7AA0:
+	.global	gLevel8Stage6Room2Doors
+gLevel8Stage6Room2Doors:
 	.incbin	"baserom.gba", 0x3A7AA0, 0xC
-	.global	gUnk_083A7AAC
-gUnk_083A7AAC:
+	.global	gLevel8Stage6Room2Objects
+gLevel8Stage6Room2Objects:
 	.incbin	"baserom.gba", 0x3A7AAC, 0x30
 	.global	gLevel8Stage6Room2
 gLevel8Stage6Room2:
 	.incbin	"baserom.gba", 0x3A7ADC, 0x8
-	.word	gUnk_083A78A4
-	.word	gUnk_083A7A08
+	.word	gLevel8Stage6Room2MetatileMap
+	.word	gLevel8Stage6Room2BlockLayer
 	.word	gUnk_083A7A98
 	.incbin	"baserom.gba", 0x3A7AF0, 0x4
 	.word	gUnk_0852BD00
@@ -10559,14 +10559,14 @@ gLevel8Stage6Room2:
 	.word	gUnk_08506F4C
 	.word	gUnk_08505C24
 	.incbin	"baserom.gba", 0x3A7B10, 0x10
-	.word	gUnk_083A7AA0
-	.word	gUnk_083A7AAC
+	.word	gLevel8Stage6Room2Doors
+	.word	gLevel8Stage6Room2Objects
 	.incbin	"baserom.gba", 0x3A7B28, 0xC
-	.global	gUnk_083A7B34
-gUnk_083A7B34:
+	.global	gLevel8Stage6Room3MetatileMap
+gLevel8Stage6Room3MetatileMap:
 	.incbin	"baserom.gba", 0x3A7B34, 0xB8
-	.global	gUnk_083A7BEC
-gUnk_083A7BEC:
+	.global	gLevel8Stage6Room3BlockLayer
+gLevel8Stage6Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A7BEC, 0x34
 	.global	gUnk_083A7C20
 gUnk_083A7C20:
@@ -10574,8 +10574,8 @@ gUnk_083A7C20:
 	.global	gLevel8Stage6Room3
 gLevel8Stage6Room3:
 	.incbin	"baserom.gba", 0x3A7C28, 0x8
-	.word	gUnk_083A7B34
-	.word	gUnk_083A7BEC
+	.word	gLevel8Stage6Room3MetatileMap
+	.word	gLevel8Stage6Room3BlockLayer
 	.word	gUnk_083A7C20
 	.incbin	"baserom.gba", 0x3A7C3C, 0x4
 	.word	gUnk_0852BB78
@@ -10586,11 +10586,11 @@ gLevel8Stage6Room3:
 	.word	gUnk_08474C08
 	.word	gUnk_083CF82C
 	.incbin	"baserom.gba", 0x3A7C5C, 0x24
-	.global	gUnk_083A7C80
-gUnk_083A7C80:
+	.global	gLevel8Stage7Room0MetatileMap
+gLevel8Stage7Room0MetatileMap:
 	.incbin	"baserom.gba", 0x3A7C80, 0x5BC
-	.global	gUnk_083A823C
-gUnk_083A823C:
+	.global	gLevel8Stage7Room0BlockLayer
+gLevel8Stage7Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A823C, 0x120
 	.global	gUnk_083A835C
 gUnk_083A835C:
@@ -10598,23 +10598,23 @@ gUnk_083A835C:
 	.global	gLevel8Stage7Room0
 gLevel8Stage7Room0:
 	.incbin	"baserom.gba", 0x3A8364, 0x8
-	.word	gUnk_083A7C80
-	.word	gUnk_083A823C
+	.word	gLevel8Stage7Room0MetatileMap
+	.word	gLevel8Stage7Room0BlockLayer
 	.word	gUnk_083A835C
 	.incbin	"baserom.gba", 0x3A8378, 0x4
-	.word	gUnk_084F15E8
-	.word	gUnk_08419038
-	.word	gUnk_083AC5C0
+	.word	gLevel8Stage7Room0Bg2Palette
+	.word	gLevel8Stage7Room0Bg2Tiles
+	.word	gLevel8Stage7Room0MetatileTiles
 	.incbin	"baserom.gba", 0x3A8388, 0x4
-	.word	gUnk_084F8598
-	.word	gUnk_084FABA4
-	.word	gUnk_084F869C
+	.word	gLevel8Stage7Room0Bg3Palette
+	.word	gLevel8Stage7Room0Bg3Tiles
+	.word	gLevel8Stage7Room0Bg3Map
 	.incbin	"baserom.gba", 0x3A8398, 0x24
-	.global	gUnk_083A83BC
-gUnk_083A83BC:
+	.global	gLevel8Stage7Room1MetatileMap
+gLevel8Stage7Room1MetatileMap:
 	.incbin	"baserom.gba", 0x3A83BC, 0x18C
-	.global	gUnk_083A8548
-gUnk_083A8548:
+	.global	gLevel8Stage7Room1BlockLayer
+gLevel8Stage7Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A8548, 0x84
 	.global	gUnk_083A85CC
 gUnk_083A85CC:
@@ -10622,8 +10622,8 @@ gUnk_083A85CC:
 	.global	gLevel8Stage7Room1
 gLevel8Stage7Room1:
 	.incbin	"baserom.gba", 0x3A85D4, 0x8
-	.word	gUnk_083A83BC
-	.word	gUnk_083A8548
+	.word	gLevel8Stage7Room1MetatileMap
+	.word	gLevel8Stage7Room1BlockLayer
 	.word	gUnk_083A85CC
 	.incbin	"baserom.gba", 0x3A85E8, 0x4
 	.word	gUnk_0852BD00
@@ -10632,5 +10632,5 @@ gLevel8Stage7Room1:
 	.incbin	"baserom.gba", 0x3A85F8, 0x4
 	.word	gUnk_0835D710
 	.word	gUnk_08412BD8
-	.word	gUnk_08538C24
+	.word	gLevel8Stage7Room1Bg3Map
 	.incbin	"baserom.gba", 0x3A8608, 0x24

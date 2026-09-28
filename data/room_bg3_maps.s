@@ -28,8 +28,8 @@ gUnk_083B7994:
 	.global	gUnk_083B82B0
 gUnk_083B82B0:
 	.incbin	"baserom.gba", 0x3B82B0, 0x980
-	.global	gUnk_083B8C30
-gUnk_083B8C30:
+	.global	gLevel6Stage1Room2Bg3Map
+gLevel6Stage1Room2Bg3Map:
 	.incbin	"baserom.gba", 0x3B8C30, 0x91C
 	.global	gUnk_083B954C
 gUnk_083B954C:
