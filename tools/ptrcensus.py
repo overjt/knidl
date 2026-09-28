@@ -287,6 +287,10 @@ def main():
     ap.add_argument("--unreachable",
                     help="write the unreachable words and their evidence "
                          "here (JSON)")
+    ap.add_argument("--strict", action="store_true",
+                    help="exit with an error if any word is a proven "
+                         "pointer or unknown (make shifttest: the ROM stays "
+                         "proven movable, docs/data.md 8.3)")
     ap.add_argument("--by-target", action="store_true",
                     help="also count the unproven words by the segment they "
                          "point into")
@@ -474,6 +478,11 @@ def main():
         with open(args.unreachable, "w") as f:
             json.dump(unreachable, f, indent=0)
             f.write("\n")
+    if args.strict and (tot["pointer"] or tot["unknown"]):
+        sys.exit("error: %d proven pointer(s) still raw and %d unknown "
+                 "word(s): the ROM is no longer proven movable (symbolize "
+                 "the pointers; prove or explain the unknown words, "
+                 "docs/data.md 8.3)" % (tot["pointer"], tot["unknown"]))
 
 
 if __name__ == "__main__":

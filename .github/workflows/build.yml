@@ -30,7 +30,7 @@ jobs:
       # ----- Checks that never require baserom.gba (always run) -----
 
       - name: Python tooling check (tools/*.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py tools/ldblocks.py tools/shiftcheck.py tools/ptrcensus.py tools/census_rooms.py tools/census_seg18.py tools/census_m4a.py tools/m4a_struct.py tools/census_sprites.py tools/census_sheets.py tools/census_bounds.py tools/ldgroup.py
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py tools/ldblocks.py tools/shiftcheck.py tools/ptrcensus.py tools/census_rooms.py tools/census_seg18.py tools/census_m4a.py tools/m4a_struct.py tools/census_sprites.py tools/census_sheets.py tools/census_bounds.py tools/ldgroup.py tools/boottest.py tools/branchcheck.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
@@ -127,6 +127,8 @@ jobs:
 
       - name: Progress report (make progress)
         if: steps.baserom.outputs.have == 'true'
+        # bash -eo pipefail: without it a failing make before `| tee` passes
+        shell: bash
         run: |
           {
             echo "### Decompilation progress"
@@ -161,6 +163,8 @@ jobs:
 
       - name: Data structure metrics (make datastats)
         if: steps.baserom.outputs.have == 'true'
+        # bash -eo pipefail: without it a failing make before `| tee` passes
+        shell: bash
         run: |
           {
             echo "### Data structure metrics"
@@ -173,16 +177,54 @@ jobs:
       # The shift test (issue #36, docs/data.md section 8): relink with
       # padding at a few section boundaries and count the pointer-like
       # words that did not move; ptrcensus.py sorts them into proven
-      # pointers, coincidences and unknowns.  Fails only on a word that
-      # moved wrongly (a symbol+offset across the insertion point).
+      # pointers, coincidences, unreachable words and unknowns.  Fails on a
+      # word that moved wrongly (a symbol+offset across the insertion
+      # point), a relative branch that no longer reaches its target
+      # (tools/branchcheck.py), a failing unreachable claim, or any proven
+      # pointer or unknown word (--strict: the ROM stays proven movable).
       - name: Shift test and pointer census (make shifttest)
         if: steps.baserom.outputs.have == 'true'
+        # bash -eo pipefail: without it a failing make before `| tee` passes
+        shell: bash
         run: |
           {
             echo "### Shift test and pointer census"
             echo
             echo '```'
             make shifttest
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # The boot test (issue #36, docs/data.md section 8.4): run knidl.gba
+      # and the shifted images of make shifttest's points in mGBA, in
+      # lockstep with a scripted input, and fail at the first frame whose
+      # video, audio or RAM differs.  The emulator image (mGBA built from a
+      # release tag, tools/boottest/Dockerfile) comes from the gha layer
+      # cache, so it is rebuilt only when that directory changes.
+      - name: Set up Docker Buildx (boot test image cache)
+        if: steps.baserom.outputs.have == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build the knidl-boottest image (mGBA; gha cache)
+        if: steps.baserom.outputs.have == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: tools/boottest
+          tags: knidl-boottest
+          load: true
+          cache-from: type=gha,scope=knidl-boottest
+          cache-to: type=gha,mode=max,scope=knidl-boottest
+
+      - name: Boot test of the shifted ROMs (make boottest)
+        if: steps.baserom.outputs.have == 'true'
+        shell: bash
+        run: |
+          {
+            echo "### Boot test"
+            echo
+            echo '```'
+            docker run --rm -v "$PWD":/src -w /src knidl-builder make -s boottest-roms INSIDE_DOCKER=1
+            docker run --rm -v "$PWD":/src -w /src knidl-boottest make -s boottest-run INSIDE_DOCKER=1
             echo '```'
           } | tee -a "$GITHUB_STEP_SUMMARY"
 
