@@ -1302,9 +1302,9 @@ void sub_080668c8(void)
         if (gTaskSlotTypes[i] == 4)
             continue;
         t = &gTasks[i];
-        if (gCurTask->actorKind == 2 && a->unk3C != 0)
+        if (gCurTask->actorKind == 2 && a->defeatSweepCallback != 0)
         {
-            if ((u8)((u8 (*)(s32))a->unk3C)(i) != 1)
+            if ((u8)((u8 (*)(s32))a->defeatSweepCallback)(i) != 1)
                 continue;
         }
         p = &cls;

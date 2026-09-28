@@ -208,7 +208,7 @@ struct Actor
     /*0x30*/ u32 score;
     /*0x34*/ s32 unk34;
     /*0x38*/ s32 sfxOverride;
-    /*0x3C*/ u32 unk3C;
+    /*0x3C*/ u32 defeatSweepCallback;
     /*0x40*/ void (*teardown)(void);
     /*0x44*/ struct ActorDef *def;
     /*0x48*/ u32 attackBox;

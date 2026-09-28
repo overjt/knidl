@@ -556,7 +556,7 @@ void sub_080a1d84(void)
 
     a = gCurTask->u8C.actor;
     ActorSetHitReactions((u32)gUnk_0874898C);
-    a->unk3C = (u32)sub_080a1dbc;
+    a->defeatSweepCallback = (u32)sub_080a1dbc;
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 

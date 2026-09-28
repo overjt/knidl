@@ -2274,7 +2274,7 @@ void Task_HeavyMole(void)
     CreateChildTaskHere(189, 1);
     gUnk_02007D00[8] = CreateChildTaskHere(191, 1);
     CreateChildTaskHere(192, 1);
-    gCurTask->u8C.actor->unk3C = (u32)sub_080ae380;
+    gCurTask->u8C.actor->defeatSweepCallback = (u32)sub_080ae380;
     sub_08066544();
     gCurTask->updateCallback = (u32)sub_080ad710;
     for (;;)

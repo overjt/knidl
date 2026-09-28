@@ -226,7 +226,7 @@ void Task_Kracko(void)
     gCurTask->layer = 10;
     t = gCurTask;
     t->frameTable = gKrackoFrames;
-    t->u8C.actor->unk3C = (u32)sub_080a9e88;
+    t->u8C.actor->defeatSweepCallback = (u32)sub_080a9e88;
     t->tileWord |= 128 << 4;
     CallTableEntry(t->variant, 2, gKrackoVariants);
 }

@@ -141,7 +141,7 @@ void sub_080637e4(u32 i)
         gNextActorSerial = 0;
     else
         gNextActorSerial = gNextActorSerial + 1;
-    a->unk3C = 0;
+    a->defeatSweepCallback = 0;
     a->unk34 = -1;
     a->sfxOverride = -1;
     a->unk0D = 0;
