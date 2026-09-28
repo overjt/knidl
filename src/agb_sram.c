@@ -7,7 +7,9 @@
 
 #define SRAM_RETRY_MAX 3
 
-static void ReadSram_Core(const u8 *src, u8 *dest, u32 size)
+/* Not static (the SDK source has it static): the ROM's sram_driver_fn_table
+   (0x0872EA04) points at it, so a shiftable build needs a symbol for it. */
+void ReadSram_Core(const u8 *src, u8 *dest, u32 size)
 {
     while (size--)
         *dest++ = *src++;
@@ -43,7 +45,8 @@ void WriteSram(const u8 *src, u8 *dest, u32 size)
         *dest++ = *src++;
 }
 
-static u32 VerifySram_Core(const u8 *src, u8 *dest, u32 size)
+/* Not static, like ReadSram_Core: sram_driver_fn_table[2] points at it. */
+u32 VerifySram_Core(const u8 *src, u8 *dest, u32 size)
 {
     while (size--)
     {

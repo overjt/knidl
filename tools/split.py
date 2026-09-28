@@ -392,6 +392,10 @@ class SegmentEmitter(object):
         self.level = level  # 0 = real instructions, 1 = raw .short
         self.extra_labels = extra_labels or {}  # addr -> name (config)
         self.data_symbols = data_symbols or {}  # word value -> name (config)
+        # extra_labels that name data inside a structure-only data segment
+        # (the m4a engine tables): pool words equal to one are pointers to
+        # that label, like data_symbols (#36 phase 2 run 2)
+        self.data_labels = {}
         # Chunked emission (issue #25): several files share one linker
         # section; chunk_index None means the legacy one-file-per-segment
         # layout with file-local .L_ labels.
@@ -421,6 +425,10 @@ class SegmentEmitter(object):
         # forces them to raw .short bytes.  Persists across emit() calls so
         # the assembly repair loop can grow it incrementally.
         self.forced_raw_addrs = set()
+        # [(start, end)] of config "raw_ranges": bytes of a function that
+        # are not instructions of its ISA (SoundMainRAM's ARM mixer inside a
+        # Thumb function); never decoded for labels or pools, always raw
+        self.raw_ranges = []
         # Address of every instruction line appended to self.lines, in
         # order (parallel to the file's instruction lines; used by
         # addrs_from_asm_errors).
@@ -538,6 +546,8 @@ class SegmentEmitter(object):
                     size, info = thumb_decode(self.rom, off)
                 else:
                     size, info = arm_decode(self.rom, off)
+                if info and self.in_raw_range(ROM_BASE + off):
+                    info = None
                 if info:
                     if "pool" in info:
                         target = info["pool"]
@@ -564,6 +574,9 @@ class SegmentEmitter(object):
         if v in self.data_symbols:
             self.stats["named_words"] += 1
             return "\t.word\t%s" % self.data_symbols[v]
+        if v in self.data_labels:
+            self.stats["named_words"] += 1
+            return "\t.word\t%s" % self.data_labels[v]
         if v & 1:
             target = v & ~1
             if target in self.db:
@@ -723,13 +736,16 @@ class SegmentEmitter(object):
                 self.raw_bytes_lines(addr, size)
                 addr += size
 
+    def in_raw_range(self, addr):
+        return any(s <= addr < e for s, e in self.raw_ranges)
+
     def emit_instruction(self, addr, decode_size, entry_size, text, info):
         """Emit one objdump-derived instruction line.
 
         Returns True if the instruction was emitted (caller advances by
         entry_size), False if the caller should use raw bytes instead.
         """
-        if addr in self.forced_raw_addrs:
+        if addr in self.forced_raw_addrs or self.in_raw_range(addr):
             # gas rejected this line in an earlier repair round; emit the
             # halfwords verbatim instead.
             return False
@@ -1045,7 +1061,7 @@ class DataPlan(object):
     """
 
     def __init__(self, rom, segments, db_rows, data_symbols, extra_labels,
-                 pointer_tables, not_pointers, c_ranges=()):
+                 pointer_tables, not_pointers, c_ranges=(), m4a=None):
         self.rom = rom
         self.c_ranges = list(c_ranges)  # [(start, end)] of c_data segments
         self.segments = segments  # [(name, start, end, asset)]
@@ -1062,9 +1078,33 @@ class DataPlan(object):
         # Slots of "extent": "next-label" tables (docs/data.md 5.1), kept
         # apart so the metrics can count them separately.
         self.heuristic_slots = set()
+        # Pointer slots whose bit 0 is a flag, not part of the address
+        # (a "targets" "tagged" field): emitted as `label+1` when set.
+        self.tagged_slots = set()
+        # Slots of tables marked "proof": "format": pointers proven by a
+        # format parse that no code reads (docs/data.md 5.3), counted apart
+        # from the consumer-proven ones.
+        self.format_slots = set()
+        # The m4a song structure (config "m4a", tools/m4a_struct.py,
+        # docs/data.md 3.4): a label at every song header, track position,
+        # voicegroup and wave, and a pointer slot at every pointer field,
+        # at ANY alignment (track operands are unaligned; gas and ld handle
+        # an unaligned R_ARM_ABS32).  Config names win over the generated
+        # ones at the same address.
+        self.m4a_labels = {}
+        self.m4a_slots = {}
+        if m4a:
+            import m4a_struct
+            try:
+                self.m4a_labels, self.m4a_slots = m4a_struct.split_plan(
+                    rom, {"m4a": m4a},
+                    set(data_symbols) | set(extra_labels))
+            except m4a_struct.M4AError as e:
+                raise ConfigError("m4a: %s" % e)
         self._build_labels()
         self.slots = self._build_slots(pointer_tables)
         self._build_words()
+        self._build_unaligned_words()
 
     # ---- helpers -------------------------------------------------------
 
@@ -1115,6 +1155,9 @@ class DataPlan(object):
                 names = self.labels.setdefault(addr, [])
                 if name not in names:
                     names.append(name)
+        for addr, name in sorted(self.m4a_labels.items()):
+            if self.segment_of(addr) is not None:
+                self.labels.setdefault(addr, []).append(name)
 
     def _table_slots(self, table, index):
         """[(slot addr, why)] for one "pointer_tables" entry."""
@@ -1190,8 +1233,16 @@ class DataPlan(object):
                 raise ConfigError("pointer slot 0x%08X (%s) is not inside a "
                                   "data segment" % (addr, why))
             slots.setdefault(addr, why)
+            (self.format_slots if fmt else proven).add(addr)
 
+        fmt = False
+        proven = set()  # slots some consumer-proven table claims
         for index, table in enumerate(pointer_tables):
+            proof = table.get("proof", "consumer")
+            if proof not in ("consumer", "format"):
+                raise ConfigError("pointer_tables[%d].proof must be "
+                                  "\"consumer\" or \"format\"" % index)
+            fmt = proof == "format"
             base, layout = self._table_slots(table, index)
             in_c = [r for r in self.c_ranges
                     if r[0] <= base[0][0] < r[1]] if base else []
@@ -1215,6 +1266,14 @@ class DataPlan(object):
                                   "\"why\"" % index)
             loffs = [parse_int(o, "pointer_tables[%d].targets" % index)
                      for o in layout.get("pointers", [])]
+            # "tagged": {"<off>": ["<off>", ...]}: the pointer field at <off>
+            # carries a flag in bit 0; when the flag is set the record has
+            # the listed extra pointer fields too (a longer record variant).
+            tagged = {}
+            for toff, extra in sorted(layout.get("tagged", {}).items()):
+                what = "pointer_tables[%d].targets.tagged" % index
+                tagged[parse_int(toff, what)] = [parse_int(o, what)
+                                                 for o in extra]
             for addr, _why in base:
                 if addr in self.not_pointers:
                     continue
@@ -1223,6 +1282,18 @@ class DataPlan(object):
                     continue
                 for off in loffs:
                     add(target + off, lwhy)
+                for toff, extra in sorted(tagged.items()):
+                    add(target + toff, lwhy)
+                    self.tagged_slots.add(target + toff)
+                    if self.word(target + toff) & 1:
+                        for off in extra:
+                            add(target + off, lwhy)
+        fmt = False  # the m4a slots are a verified format parse (3.4)
+        for addr, (_target, why) in sorted(self.m4a_slots.items()):
+            if addr % 4 == 0:
+                add(addr, why)
+        # format-only means no consumer-proven table reaches the slot too
+        self.format_slots -= proven
         return slots
 
     def _build_words(self):
@@ -1241,14 +1312,22 @@ class DataPlan(object):
         if slot_why is not None:
             if v == 0:
                 return  # NULL stays inside the .incbin
-            if inside:
-                self.errors.append(
-                    "pointer slot 0x%08X (%s) has a label inside it at 0x%08X"
-                    % (addr, slot_why, inside[0])
-                )
-                return
-            operand = self.function_operand(v)
-            kind = "code"
+            # a label strictly inside the word (a table the C declares
+            # from a mid-word address, gUnk_0875841E) is emitted after the
+            # word as `.set name, . - k` (emit_data_segment), so it stays a
+            # section-relative symbol
+            if addr in self.tagged_slots and v & 1:
+                # a flagged data pointer: the label is at v & ~1
+                operand = self.label_operand(v & ~1)
+                kind = "data"
+                if operand is None:
+                    self.missing.setdefault(v & ~1, []).append(
+                        (addr, slot_why))
+                    return
+                operand += "+1"
+            else:
+                operand = self.function_operand(v)
+                kind = "code"
             if operand is None:
                 operand = self.label_operand(v)
                 kind = "data"
@@ -1265,6 +1344,36 @@ class DataPlan(object):
         if operand is not None:
             self.words[addr] = operand
             self.kinds[addr] = "code"
+
+    def _build_unaligned_words(self):
+        """The m4a slots that are not 4-aligned (track operands)."""
+        for addr, (target, why) in sorted(self.m4a_slots.items()):
+            if addr % 4 == 0:
+                continue
+            seg = self.segment_of(addr)
+            if seg is None or addr + 4 > seg[2]:
+                raise ConfigError("m4a slot 0x%08X is not inside a data "
+                                  "segment" % addr)
+            if u32(self.rom, vma_off(addr)) != target:
+                raise ConfigError("m4a slot 0x%08X does not hold 0x%08X"
+                                  % (addr, target))
+            clash = [a for a in range((addr & ~3) - 4, addr + 4)
+                     if a in self.words and a < addr + 4 and a + 4 > addr]
+            inside = [a for a in (addr + 1, addr + 2, addr + 3)
+                      if a in self.labels]
+            if clash or inside:
+                self.errors.append(
+                    "m4a slot 0x%08X (%s) overlaps %s" % (
+                        addr, why, "the word at 0x%08X" % clash[0] if clash
+                        else "the label at 0x%08X" % inside[0]))
+                continue
+            operand = self.label_operand(target)
+            if operand is None:
+                self.missing.setdefault(target, []).append((addr, why))
+                continue
+            self.words[addr] = operand
+            self.kinds[addr] = "data"
+            self.why[addr] = why
 
     def missing_label_entries(self):
         """data_symbols entries that would resolve every missing target."""
@@ -1293,8 +1402,14 @@ def emit_data_segment(plan, name, start, end, kind, asset):
     cur = start
     for addr in sorted(set(labels) | set(words)):
         if addr < cur:
-            raise ConfigError("%s: 0x%08X falls inside the symbolic word "
-                              "before it" % (name, addr))
+            # a label inside the pointer word just emitted: a symbol
+            # relative to the location counter, `k` bytes back from the
+            # word's end (DataPlan._plan_word allows it only in a slot)
+            for label in labels.get(addr, []):
+                body.append("\t.global\t%s" % label)
+                body.append("\t.set\t%s, . - %d" % (label, cur - addr))
+                stats["labels"] += 1
+            continue
         if addr > cur:
             incbin(cur, addr - cur)
             cur = addr
@@ -1594,6 +1709,20 @@ def main():
     except (AttributeError, ValueError):
         sys.exit("error: abs_symbols must map names to \"0x...\" hex values")
     not_pointers = parse_addr_map(cfg.get("not_pointers", {}), "not_pointers")
+    # "raw_ranges": [{"start", "end", "why"}] code bytes that are not
+    # instructions of their function's ISA (ARM code inside a Thumb
+    # function): emitted raw and never decoded, because a halfword that
+    # decodes as a branch would be relocated and a shifted ROM would
+    # rewrite it (#36 phase 2 run 2)
+    raw_ranges = []
+    for i, r in enumerate(cfg.get("raw_ranges", [])):
+        try:
+            a, b = int(r["start"], 16), int(r["end"], 16)
+        except (KeyError, TypeError, ValueError):
+            sys.exit("error: raw_ranges[%d] needs hex \"start\" and \"end\"" % i)
+        if not r.get("why"):
+            sys.exit("error: raw_ranges[%d] needs a \"why\"" % i)
+        raw_ranges.append((a, b, r["why"]))
     pointer_tables = cfg.get("pointer_tables", [])
     if not isinstance(pointer_tables, list):
         sys.exit("error: pointer_tables must be a list of tables")
@@ -1637,6 +1766,10 @@ def main():
         all_ranges = (
             [(s, e) for _n, s, e, _k, _c in entries]
             + [(s, e) for _n, s, e, _k, _a in data_entries]
+        )
+        data_labels = dict(
+            (a, n) for a, n in extra_labels.items()
+            if any(s <= a < e for _n, s, e, _k, _a in data_entries)
         )
 
         # Config sanity: every extra label must live inside one configured
@@ -1694,7 +1827,7 @@ def main():
                 rom,
                 [(n, s, e, a) for n, s, e, _k, a in data_entries],
                 rows, data_symbols, extra_labels, pointer_tables,
-                not_pointers, c_ranges,
+                not_pointers, c_ranges, m4a=cfg.get("m4a"),
             )
         except ConfigError as e:
             sys.exit("error: %s" % e)
@@ -1914,6 +2047,10 @@ def main():
                     ),
                 )
                 em.forced_raw_addrs = raw_addrs[uid]
+                em.raw_ranges = [
+                    (a, b) for a, b, _w in raw_ranges
+                    if a < u["end"] and b > u["start"]]
+                em.data_labels = data_labels
                 text = None
                 obj = os.path.join(
                     tmpdir, "%s_%d_%d.o" % (uid, em.level, attempt % 2)

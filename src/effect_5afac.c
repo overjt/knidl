@@ -22,6 +22,7 @@ extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
 extern u16 gLatchedPressedKeys[];
 extern u32 gStageRequest[];
+extern u32 gUnk_085B9B2C[];
 extern u32 gUnk_085B9B6C[];
 extern s16 gUnk_0873DBAC[];
 extern s16 gUnk_0873DBD4[];
@@ -712,7 +713,7 @@ void sub_0805be48(void)
     if (((gActivePlayerMask >> gLocalPlayer) & 1) != 0
      && gLocalPlayer == gCurTask->player->playerIndex
      && (gFrameCount & 4) != 0)
-        QueueSprite(8, 0x085B9B2C, 0, 0x00009010, 120, 70);
+        QueueSprite(8, (u32)gUnk_085B9B2C, 0, 0x00009010, 120, 70);
 }
 
 void sub_0805beb0(void)

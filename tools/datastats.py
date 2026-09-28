@@ -188,6 +188,7 @@ def main():
         cfg.get("pointer_tables", []),
         dict((int(a, 16), r) for a, r in cfg.get("not_pointers", {}).items()),
         [(s, e) for s, e, _n in c_segs],
+        m4a=cfg.get("m4a"),
     )
 
     # ---- functional tables defined in C (c_data rows, src/data/*.c) ------
@@ -210,7 +211,8 @@ def main():
     ]
     files = segment_files(set(n for _s, _e, _k, n in data_segs))
     total = {"symbolic": 0, "code": 0, "data": 0}
-    proof = {"rule": 0, "table": 0, "heuristic": 0, "ram": 0}
+    proof = {"rule": 0, "table": 0, "heuristic": 0, "ram": 0, "m4a": 0,
+             "format": 0}
     rows = []
     labels_total = 0
     incbins_total = 0
@@ -245,8 +247,12 @@ def main():
             if a in symbolic_at:
                 if PTR_LO <= v < PTR_HI:
                     row["symbolic"] += 1
-                    if a in plan.heuristic_slots:
+                    if a in plan.format_slots:
+                        proof["format"] += 1
+                    elif a in plan.heuristic_slots:
                         proof["heuristic"] += 1
+                    elif a in plan.m4a_slots:
+                        proof["m4a"] += 1
                     elif a in plan.slots:
                         proof["table"] += 1
                     else:
@@ -275,10 +281,16 @@ def main():
     print("        %d in consumer-proven pointer tables" % proof["table"])
     print("        %d in next-label pointer tables (extent heuristic)"
           % proof["heuristic"])
+    print("        %d in the m4a song structure (tools/m4a_struct.py)"
+          % proof["m4a"])
+    print("        %d format-only (no consumer; tables with \"proof\": "
+          "\"format\")" % proof["format"])
     print("    %d not symbolic, points at code" % total["code"])
     print("    %d not symbolic, points at data" % total["data"])
     print("symbolic words pointing at RAM (outside the count above): %d"
           % proof["ram"])
+    print("unaligned symbolic words (m4a track operands, outside the count"
+          " above): %d" % sum(1 for a in plan.m4a_slots if a % 4))
     print("functional tables in C (src/data/): %d segment(s), %d ROM symbols,"
           " 0x%X bytes, %d pointer-like words"
           % (len(c_segs), c_labels, sum(e - s for s, e, _n in c_segs),

@@ -966,7 +966,7 @@ void sub_080af188(void)
 
 void sub_080af1b8(void)
 {
-    sub_080aefd4(0x0874B07C);
+    sub_080aefd4((u32)gUnk_0874B07C);
 }
 
 void sub_080af1c8(void)

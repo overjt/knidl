@@ -229,8 +229,9 @@ python3 tools/carve.py 0x08007300 0x080075B8 <name> --write  # applies them
 
 carve.py splits the containing segment in `docs/analysis/segments.txt`,
 updates `tools/split_config.json` (segments + `external_defined` for every
-DB function the C now defines) and pins the `.<name>` section to
-`build/src/<name>.o(.text)` in `linker.ld`. It validates function
+DB function the C now defines) and adds the `.<name>` section for
+`build/src/<name>.o(.text)` to `linker.ld`, with the matching-mode
+`ASSERT` of its address (tools/ldblocks.py; docs/data.md section 8). It validates function
 boundaries, even addresses and single-segment containment, and refuses
 anything else. Cross-segment carves (boundary corrections like #28's) stay
 manual.

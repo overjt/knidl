@@ -107,7 +107,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers check-data progress datastats report symbols split modmap clean
+.PHONY: all compare check-headers check-data progress datastats shifttest report symbols split modmap clean
 
 all: $(ROM)
 
@@ -156,8 +156,13 @@ $(BUILD_DIR)/header_smoke_old_agbcc.o: tools/header_smoke.c $(GBA_HEADERS)
 	  { cat; printf '.text\n\t.align\t2, 0\n'; } | \
 	  $(AS) -mcpu=arm7tdmi -o $@ -
 
+# MATCHING=1 (the default) turns on linker.ld's per-section address
+# assertions, so a matching build fails at the first section that moved;
+# a modified ROM links with `make MATCHING=0` (docs/data.md section 8).
+MATCHING ?= 1
+
 $(ELF): $(ALL_OBJS) linker.ld
-	$(LD) -T linker.ld -Map $(BUILD_DIR)/knidl.map -o $@ $(ALL_OBJS)
+	$(LD) --defsym MATCHING=$(MATCHING) -T linker.ld -Map $(BUILD_DIR)/knidl.map -o $@ $(ALL_OBJS)
 
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
@@ -178,6 +183,13 @@ progress: $(ELF)
 # asm/rom_syms.s against baserom.gba; needs no build.
 datastats: baserom.gba tools/datastats.py tools/split_config.json docs/analysis/segments.txt
 	python3 tools/datastats.py --rom baserom.gba
+
+# The shift test (issue #36, docs/data.md section 8): link the same objects
+# again with padding inserted at a few section boundaries and count, per
+# zone, the pointer-like words that did not move with their targets.
+shifttest: $(ELF)
+	python3 tools/shiftcheck.py --elf $(ELF) --json $(BUILD_DIR)/shifttest.json --objs $(ALL_OBJS)
+	python3 tools/ptrcensus.py --elf $(ELF) --shift $(BUILD_DIR)/shifttest.json --by-target --unknown $(BUILD_DIR)/ptrcensus_unknown.json
 
 # Data policy (AGENTS.md, docs/data.md): assets are never committed, and
 # data/ may hold only labels, symbolic .words and .incbin slices of
@@ -221,13 +233,13 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare check-headers check-data progress datastats symbols split modmap clean
+.PHONY: image all compare check-headers check-data progress datastats shifttest symbols split modmap clean
 
 image:
 	docker build -t $(IMAGE) .
 
 all: image
-	$(DOCKER_RUN) make all INSIDE_DOCKER=1
+	$(DOCKER_RUN) make all INSIDE_DOCKER=1 $(if $(MATCHING),MATCHING=$(MATCHING))
 
 compare: image
 	$(DOCKER_RUN) make compare INSIDE_DOCKER=1
@@ -243,6 +255,9 @@ datastats: image
 
 check-data: image
 	$(DOCKER_RUN) make check-data INSIDE_DOCKER=1
+
+shifttest: image
+	$(DOCKER_RUN) make shifttest INSIDE_DOCKER=1
 
 # report.json generation only needs Python + the repo's ground-truth CSVs,
 # so it runs directly on the host (no toolchain image required).

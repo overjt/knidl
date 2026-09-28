@@ -46,6 +46,9 @@ import difflib
 import json
 import re
 import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ldblocks  # noqa: E402  (tools/ldblocks.py: linker.ld section blocks)
 
 SEGMENTS = 'docs/analysis/segments.txt'
 CONFIG = 'tools/split_config.json'
@@ -77,9 +80,7 @@ def seg_line(start, end, kind, name, comment=''):
 
 
 def section_block(name, vma):
-    return ('    .%s 0x%08X : {\n'
-            '        KEEP(*(.%s)) KEEP(*(.%s.tail))\n'
-            '    } > ROM' % (name, vma, name, name))
+    return ldblocks.data_block(name, vma)
 
 
 def main():
@@ -192,16 +193,14 @@ def main():
     old_ld = open(LINKER).read()
     spans = []
     for s in covered:
-        m = re.search(r'([ \t]*\.%s[ \t]+0x[0-9A-Fa-f]+[ \t]*:[ \t]*\{[^}]*\}'
-                      r'[ \t]*>[ \t]*ROM)' % re.escape(s['name']), old_ld)
+        m = ldblocks.block_re(s['name']).search(old_ld)
         if not m:
             die('linker.ld section .%s not found' % s['name'])
-        spans.append((m.start(1), m.end(1)))
+        spans.append((m.start(), m.end()))
     cblock = ('    /* %s - functional table in C (src/data/%s.c, carved by '
-              'tools/carve_data.py) */\n'
-              '    .%s 0x%08X : {\n'
-              '        build/src/data/%s.o(.rodata)\n'
-              '    } > ROM' % (name, name, name, start, name))
+              'tools/carve_data.py) */\n' % (name, name)
+              + ldblocks.block(name, start,
+                               'build/src/data/%s.o(.rodata)' % name))
     # one replacement per covered section block (comments between the
     # blocks stay where they are): the first gets pre + the C section, the
     # last gets post, the ones in between vanish

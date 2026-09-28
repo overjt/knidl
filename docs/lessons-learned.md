@@ -4559,6 +4559,19 @@ warning, so it keeps its `f();`).  So prototypes went to the headers
 (5,128 of them, each the definition's own line) and the local ones from
 18,724 to 2,400.
 
+### 3.520 A raw ROM address and its symbol compile to the same code (here)
+Ten C pool words were ROM addresses written as numbers
+(`RequestCopy(2, 0x085E0070, ...)`, `CpuSet((const void *)0x080CFDE8, ...)`,
+`(gLocalPlayer << 5) + 0x080DC628`).  Rewritten as `(u32)gUnk_085E0070`
+and friends, agbcc's output of all six files was identical except that
+the `.word` in the pool became the symbol: no gcse, cse or allocation
+change, even for the sum.  That is not the general rule - lessons
+3.479-3.488 found I/O and EWRAM addresses where the symbol and the
+CONST_INT spellings compile differently - so check each file with the
+assembly oracle (4.128) before trusting it; but a ROM table address used
+once, as a call argument, is the easy case.  Also dropping `static` from
+the SDK's two RAM-copied SRAM cores only added two `.globl` lines.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -10663,6 +10676,119 @@ move, the check that a re-partition of asset segments is structure only.
 - `calcrom.pl` scans the whole checkout for `.incbin` lines: a katam
   clone under `pending/` tripled `make progress`'s incbin count locally
   (CI has no `pending/`).
+
+### 4.132 The shift test: link twice, compare word by word
+Whether the ROM can move is a property of the link, so the test is a
+second link of the same objects with padding inserted at a section
+boundary (`tools/shiftcheck.py`, `make shifttest`): every 4-aligned word
+whose value points at or after the insertion point must read value + N in
+the second image.  A word that still reads its old value is a number the
+linker never saw - a real pointer written raw, or a coincidence - and the
+count is exact about what moved without an emulator.  Two details: with
+`> ROM` on every block, ld places an unpinned section at the region's
+next free address, which a bare `. = . + N;` between blocks does not
+advance, so the padding is a section of its own (`.shift_pad : { BYTE(0);
+. = . + N - 1; } > ROM`); and one insertion point after crt0 tests every
+word of the ROM, while points further up test subsets of the same words
+but also catch a `symbol+offset` whose base and target lie on different
+sides of the point ("broken"/"wrong" in the report, which fail CI).
+
+### 4.133 Sizes and order alone reproduce the ROM
+With every pin but the cartridge header removed from `linker.ld`, ld's
+contiguous placement gave the byte-identical ROM on the first try: every
+section's size equals its segments.txt span (gas's `.tail` sections and
+agbcc's trailing `.align 2` already took care of odd ends and pads), and
+no section needs more alignment than its pinned address had.  The
+addresses a matching build needs are `ASSERT(!MATCHING || ADDR(.x) ==
+0x...)` lines after each block, with `--defsym MATCHING=1` from the
+Makefile unless `MATCHING=0` is given; `tools/ldblocks.py` writes that
+block form for carve.py, carve_data.py and resegment.py.
+
+### 4.134 A false Thumb branch inside ARM code would have corrupted a shifted ROM
+SoundMainRAM (0x080CD930) is a Thumb function whose body after `adr r1;
+bx r1` is the ARM mixer that m4aSoundInit copies to IWRAM.  split.py
+decoded all of it as Thumb, and two halfwords of one ARM instruction read
+as `b.n 0x080CD70C`, the entry of CreditsInitText in another object: gas
+emitted a `R_ARM_THM_JUMP11` against it, so any padding between the two
+objects would have rewritten the mixer's bytes (and, with enough padding,
+failed the link as "relocation truncated").  The same decode placed a
+false label that cut gMPlayJumpTableTemplate's pool word into a `.short`
+and an instruction.  Config `raw_ranges` now keeps the ARM body raw and
+undecoded.  The check that finds such branches: every non-`bl` branch in
+`asm/*.s` whose target is not a label of the same file (one hit).
+
+### 4.135 Instruction pairs that look like pointers
+After the raw constants of lesson 3.520 were symbols, the code segments
+still held 19 words whose value points into the ROM: pairs of Thumb
+instructions (`0x0860D002` is `beq` + `lsrs r0, r4, #1`) and ARM
+instructions.  The linked ELF's `$a`/`$t`/`$d` mapping symbols tell an
+instruction stream from a literal pool, which is how `tools/ptrcensus.py`
+classifies them without a disassembler; SoundMainRAM's ARM mixer, kept
+raw by `raw_ranges`, is data to gas and is covered by the config range
+instead.
+
+### 4.136 The song structure is a parser in split.py, not a pointer table
+m4a data cannot be described by `pointer_tables`: track operands are
+unaligned, every song has its own shape, and the targets (loop points,
+patterns) are positions inside byte streams.  So the config lists only the
+two roots (`gSongTable`, `gSfxTable`) and `tools/m4a_struct.py` walks the
+rest with this ROM's engine - the command set and operand sizes come from
+the jump table, MPlayExtender's patches, MPlayMain's dispatch and the
+`ply_*`/xcmd handlers - and re-encodes every parsed structure against the
+ROM (145,361 bytes, 0 mismatches) before `split.py` emits a label per
+target and a `.word` per pointer field, 1,343 of them unaligned.  The
+parse also corrected two survey claims: 129 `WaveData`, not 100, and no
+song data at all in seg 19, whose tail is four separately linked GBA
+programs the game only sends to other GBAs (each starts with its own
+cartridge header; their words are the receiver's addresses, not ours).
+
+### 4.137 Seg 19's head is the player's frame records, and one format needs a flag bit
+The 10,700 dense pointer words at the head of `song_tail_misc_audio` are
+3,116 twenty-byte records `{oam | 1, palette, tiles, palette2, tiles2}`
+that `PlayerLoadFrameTilesAndPalette` (`src/stage_3cd60.c`) reads through
+the 4,713-entry player frame table `gUnk_0874CFEC`: bit 0 of the first
+word says the record has the second palette/tiles pair, and the function
+returns `oam & ~1`.  A pointer whose bit 0 is a flag has no plain `.word`
+spelling, so `targets` got a `"tagged"` field that emits `label+1`.  With
+the 329 frame tables before it and the TaskGfx records they reach, this
+one network was 30,000 of the 56,000 unrelocated words: the census names
+of lesson 4.121 were wrong for seg 19 too.
+
+### 4.138 A census needs three classes, and heuristics stay out of "proven"
+The shift test says what did not move; it cannot say whether a word is a
+pointer.  `tools/ptrcensus.py` therefore takes evidence from providers
+(`tools/census_*.py`, one per zone, each deriving byte ranges from a
+consumer or a format: LZ77 streams that decode exactly to their declared
+size, PCM bodies from the WaveData size, OAM template streams to their
+end mark, a record's value fields) and leaves everything else unknown.
+Two rules kept it honest: a value table whose extent is only the span to
+the next label counts as unknown (column "heur."), and the union of
+coincidence ranges is built separately for proven and heuristic ranges -
+merged together, a next-label range swallowed the four program images'
+proven range and reported 727 proven coincidences as heuristic.
+
+### 4.139 Harness notes from #36 phase 2 run 2
+- Phase A was the coordinator's alone (shift test, linker, the code
+  constants, the census skeleton); four proposal agents then worked in
+  full scratch copies of the tree (`pending/data3/wip/<x>/tree`, rsync'd,
+  built through Docker with the copy mounted), so each proposal came with
+  its own `make compare` and shift-test numbers.  They finished in 25-28
+  minutes each; the harness refused their REPORT.md files, so the reports
+  came in their replies.
+- Integration order B, C, A, D (as they finished; D's 18,703 labels last).  Two agents
+  proposed entries for the same tables (C and B the ActorDef/ActorAux
+  records, C and the config four next-label tables): keep the superset,
+  and turn a duplicate that only adds `targets` into an amendment of the
+  existing entry.  Labels never conflicted.
+- One `make split` of the 25,000-label tree takes about 9 s, `make
+  shifttest` (7 links plus the census) about 5 s: every integration step
+  ran the whole chain.
+- Rounds 2 and 3 were resumes (SendMessage to the same agent) with a
+  refreshed scratch copy and the census's own unknown list as the
+  worklist, cheaper than new agents: they kept their format parsers, and
+  each round took 2-7 minutes.  Round 1 cut the unrelocated words from
+  56,075 to 20,110, round 2 to 17,044, round 3 to 16,997 (unknown 3,909
+  -> 577 -> 429).
 
 ## 5. Workflow that worked
 

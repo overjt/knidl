@@ -29,6 +29,7 @@ extern u16 gPlayTime[4];
 extern u32 gBlockAnimHook; /* per-frame stage hook (UpdateBlockAnims / UpdateBlockAnimsWithEdges / UpdateBg1BlockAnims) */
 extern vs16 gFadeStep;
 extern u32 gIntrTable[]; /* IRQ dispatch table (copied from 0x080CFDE8) */
+extern const u32 gIntrTableTemplate[]; /* its ROM template, copied by AgbInit */
 extern u16 gSpriteQueue[][6]; /* 12-byte records, indexed by gSpriteQueueTop */
 extern u32 gVBlankEndCallback;
 extern vu16 gSoundDisabled;

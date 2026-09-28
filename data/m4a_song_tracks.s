@@ -3,11 +3,430 @@
 @ Segment m4a_song_tracks: 0x0860A418-0x0860B430 (data, 0x1018 bytes)
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 0 label(s), 0 code pointer(s), 0 data pointer(s), 1 .incbin slice(s) (0x1018 bytes).
+@ 10 label(s), 0 code pointer(s), 195 data pointer(s), 205 .incbin slice(s) (0xD0C bytes).
 @ Asset segment: its bytes stay extracted from baserom.gba forever; only
 @ labels and consumer-proven pointer tables are structure.
 
 	.section .m4a_song_tracks, "a"
 	.global	m4a_song_tracks
 m4a_song_tracks:
-	.incbin	"baserom.gba", 0x60A418, 0x1018
+	.global	gVoiceGroup_0860A418
+gVoiceGroup_0860A418:
+	.incbin	"baserom.gba", 0x60A418, 0x4
+	.word	gWave_0860C67C
+	.incbin	"baserom.gba", 0x60A420, 0x8
+	.word	gWave_0860D2E4
+	.incbin	"baserom.gba", 0x60A42C, 0x8
+	.word	gWave_0860DD58
+	.incbin	"baserom.gba", 0x60A438, 0x8
+	.word	gWave_0860EEF4
+	.incbin	"baserom.gba", 0x60A444, 0x8
+	.word	gWave_08610258
+	.incbin	"baserom.gba", 0x60A450, 0x8
+	.word	gWave_08613928
+	.incbin	"baserom.gba", 0x60A45C, 0x8
+	.word	gWave_08617FBC
+	.incbin	"baserom.gba", 0x60A468, 0x8
+	.word	gWave_0861A680
+	.incbin	"baserom.gba", 0x60A474, 0x8
+	.word	gWave_08610258
+	.incbin	"baserom.gba", 0x60A480, 0x8
+	.word	gWave_0861D030
+	.incbin	"baserom.gba", 0x60A48C, 0x8
+	.word	gWave_0861EB4C
+	.incbin	"baserom.gba", 0x60A498, 0x8
+	.word	gWave_08621910
+	.incbin	"baserom.gba", 0x60A4A4, 0x8
+	.word	gWave_08625408
+	.incbin	"baserom.gba", 0x60A4B0, 0x8
+	.word	gWave_08626784
+	.incbin	"baserom.gba", 0x60A4BC, 0x8
+	.word	gWave_08629560
+	.incbin	"baserom.gba", 0x60A4C8, 0x14
+	.word	gWave_08629F74
+	.incbin	"baserom.gba", 0x60A4E0, 0x8
+	.word	gWave_0862B1E4
+	.incbin	"baserom.gba", 0x60A4EC, 0x8
+	.word	gWave_0862E9A4
+	.incbin	"baserom.gba", 0x60A4F8, 0x8
+	.word	gWave_086315DC
+	.incbin	"baserom.gba", 0x60A504, 0x8
+	.word	gWave_086342D8
+	.incbin	"baserom.gba", 0x60A510, 0x8
+	.word	gWave_08636124
+	.incbin	"baserom.gba", 0x60A51C, 0x14
+	.word	gWave_08636D28
+	.incbin	"baserom.gba", 0x60A534, 0x8
+	.word	gWave_0863B278
+	.incbin	"baserom.gba", 0x60A540, 0x8
+	.word	gWave_0863F2A0
+	.incbin	"baserom.gba", 0x60A54C, 0x8
+	.word	gWave_08617FBC
+	.incbin	"baserom.gba", 0x60A558, 0x8
+	.word	gWave_086418EC
+	.incbin	"baserom.gba", 0x60A564, 0x8
+	.word	gWave_08643094
+	.incbin	"baserom.gba", 0x60A570, 0x8
+	.word	gWave_086458C4
+	.incbin	"baserom.gba", 0x60A57C, 0x8
+	.word	gWave_08647390
+	.incbin	"baserom.gba", 0x60A588, 0x8
+	.word	gWave_08648A94
+	.incbin	"baserom.gba", 0x60A594, 0x8
+	.word	gWave_0864BB10
+	.incbin	"baserom.gba", 0x60A5A0, 0x8
+	.word	gWave_0864E450
+	.incbin	"baserom.gba", 0x60A5AC, 0x8
+	.word	gWave_0864E8CC
+	.incbin	"baserom.gba", 0x60A5B8, 0x8
+	.word	gWave_08651EB4
+	.incbin	"baserom.gba", 0x60A5C4, 0x8
+	.word	gWave_086549E0
+	.incbin	"baserom.gba", 0x60A5D0, 0x8
+	.word	gWave_086579A8
+	.incbin	"baserom.gba", 0x60A5DC, 0x8
+	.word	gWave_086593DC
+	.incbin	"baserom.gba", 0x60A5E8, 0x8
+	.word	gWave_0865A808
+	.incbin	"baserom.gba", 0x60A5F4, 0x8
+	.word	gWave_0861A680
+	.incbin	"baserom.gba", 0x60A600, 0x8
+	.word	gWave_086342D8
+	.incbin	"baserom.gba", 0x60A60C, 0x8
+	.word	gWave_0865BE5C
+	.incbin	"baserom.gba", 0x60A618, 0x8
+	.word	gWave_0865D2E8
+	.incbin	"baserom.gba", 0x60A624, 0x8
+	.word	gWave_0865BE5C
+	.incbin	"baserom.gba", 0x60A630, 0x8
+	.word	gWave_086600AC
+	.incbin	"baserom.gba", 0x60A63C, 0x8
+	.word	gWave_08661004
+	.incbin	"baserom.gba", 0x60A648, 0x8
+	.word	gWave_08661A00
+	.incbin	"baserom.gba", 0x60A654, 0x8
+	.word	gWave_08661D9C
+	.incbin	"baserom.gba", 0x60A660, 0x8
+	.word	gWave_08664F7C
+	.incbin	"baserom.gba", 0x60A66C, 0x8
+	.word	gWave_08666168
+	.incbin	"baserom.gba", 0x60A678, 0x8
+	.word	gWave_0865BE5C
+	.incbin	"baserom.gba", 0x60A684, 0x8
+	.word	gWave_0866A768
+	.incbin	"baserom.gba", 0x60A690, 0x8
+	.word	gWave_0866D67C
+	.incbin	"baserom.gba", 0x60A69C, 0x8
+	.word	gWave_0866E660
+	.incbin	"baserom.gba", 0x60A6A8, 0x8
+	.word	gWave_08672450
+	.incbin	"baserom.gba", 0x60A6B4, 0x8
+	.word	gWave_08675214
+	.incbin	"baserom.gba", 0x60A6C0, 0x8
+	.word	gWave_086752B8
+	.incbin	"baserom.gba", 0x60A6CC, 0x8
+	.word	gWave_086773C0
+	.incbin	"baserom.gba", 0x60A6D8, 0x164
+	.word	gProgWave_0860B3D0
+	.incbin	"baserom.gba", 0x60A840, 0x8
+	.word	gProgWave_0860B3C0
+	.incbin	"baserom.gba", 0x60A84C, 0x8
+	.word	gProgWave_0860B3B0
+	.incbin	"baserom.gba", 0x60A858, 0x8
+	.word	gProgWave_0860B3A0
+	.incbin	"baserom.gba", 0x60A864, 0x8
+	.word	gProgWave_0860B390
+	.incbin	"baserom.gba", 0x60A870, 0x8
+	.word	gProgWave_0860B3A0
+	.incbin	"baserom.gba", 0x60A87C, 0x50
+	.word	gWave_0867AFA0
+	.incbin	"baserom.gba", 0x60A8D0, 0x8
+	.word	gWave_0867C1C0
+	.incbin	"baserom.gba", 0x60A8DC, 0x8
+	.word	gWave_0867D810
+	.incbin	"baserom.gba", 0x60A8E8, 0x8
+	.word	gWave_0867DB94
+	.incbin	"baserom.gba", 0x60A8F4, 0x4
+	.global	gVoiceGroup_0860A8F8
+gVoiceGroup_0860A8F8:
+	.incbin	"baserom.gba", 0x60A8F8, 0x4
+	.word	gWave_0868122C
+	.incbin	"baserom.gba", 0x60A900, 0x104
+	.word	gVoiceGroup_0860AA78
+	.incbin	"baserom.gba", 0x60AA08, 0x8
+	.word	gVoiceGroup_0860A8F8
+	.incbin	"baserom.gba", 0x60AA14, 0x8
+	.word	gWave_086859F8
+	.incbin	"baserom.gba", 0x60AA20, 0x14
+	.word	gWave_0868645C
+	.incbin	"baserom.gba", 0x60AA38, 0x8
+	.word	gWave_08686E28
+	.incbin	"baserom.gba", 0x60AA44, 0x8
+	.word	gWave_086877D4
+	.incbin	"baserom.gba", 0x60AA50, 0x8
+	.word	gWave_08675214
+	.incbin	"baserom.gba", 0x60AA5C, 0x8
+	.word	gWave_08689054
+	.incbin	"baserom.gba", 0x60AA68, 0x10
+	.global	gVoiceGroup_0860AA78
+gVoiceGroup_0860AA78:
+	.incbin	"baserom.gba", 0x60AA78, 0x4
+	.word	gWave_0868C530
+	.incbin	"baserom.gba", 0x60AA80, 0x14
+	.word	gWave_0868CD28
+	.incbin	"baserom.gba", 0x60AA98, 0x8
+	.word	gWave_0868F7B4
+	.incbin	"baserom.gba", 0x60AAA4, 0x8
+	.word	gWave_08690C8C
+	.incbin	"baserom.gba", 0x60AAB0, 0x8
+	.word	gWave_08691C10
+	.incbin	"baserom.gba", 0x60AABC, 0x8
+	.word	gWave_08692044
+	.incbin	"baserom.gba", 0x60AAC8, 0x8
+	.word	gWave_08692530
+	.incbin	"baserom.gba", 0x60AAD4, 0x44
+	.word	gWave_08692C20
+	.incbin	"baserom.gba", 0x60AB1C, 0x8
+	.word	gWave_08695A98
+	.incbin	"baserom.gba", 0x60AB28, 0x8
+	.word	gWave_08698908
+	.incbin	"baserom.gba", 0x60AB34, 0x8
+	.word	gWave_0869B788
+	.incbin	"baserom.gba", 0x60AB40, 0x8
+	.word	gWave_0869CE68
+	.incbin	"baserom.gba", 0x60AB4C, 0x8
+	.word	gWave_0869E02C
+	.incbin	"baserom.gba", 0x60AB58, 0x8
+	.word	gWave_0869FD84
+	.incbin	"baserom.gba", 0x60AB64, 0x8
+	.word	gWave_086A1488
+	.incbin	"baserom.gba", 0x60AB70, 0x8
+	.word	gWave_086A410C
+	.incbin	"baserom.gba", 0x60AB7C, 0x8
+	.word	gWave_086A6DBC
+	.incbin	"baserom.gba", 0x60AB88, 0x8
+	.word	gWave_086A9C84
+	.incbin	"baserom.gba", 0x60AB94, 0x8
+	.word	gWave_086AC6B0
+	.incbin	"baserom.gba", 0x60ABA0, 0x8
+	.word	gWave_086AE3EC
+	.incbin	"baserom.gba", 0x60ABAC, 0x8
+	.word	gWave_086B00DC
+	.incbin	"baserom.gba", 0x60ABB8, 0x8
+	.word	gWave_086B0548
+	.incbin	"baserom.gba", 0x60ABC4, 0x8
+	.word	gWave_086B2C74
+	.incbin	"baserom.gba", 0x60ABD0, 0x8
+	.word	gWave_086B6364
+	.incbin	"baserom.gba", 0x60ABDC, 0x14
+	.word	gWave_086B70BC
+	.incbin	"baserom.gba", 0x60ABF4, 0x8
+	.word	gWave_086B8430
+	.incbin	"baserom.gba", 0x60AC00, 0x8
+	.word	gWave_086B89F0
+	.incbin	"baserom.gba", 0x60AC0C, 0x8
+	.word	gWave_086B928C
+	.incbin	"baserom.gba", 0x60AC18, 0x8
+	.word	gWave_086BB9F8
+	.incbin	"baserom.gba", 0x60AC24, 0x8
+	.word	gWave_086BD24C
+	.incbin	"baserom.gba", 0x60AC30, 0x8
+	.word	gWave_086BF6D8
+	.incbin	"baserom.gba", 0x60AC3C, 0x20
+	.word	gWave_086C1108
+	.incbin	"baserom.gba", 0x60AC60, 0x14
+	.word	gWave_086C2700
+	.incbin	"baserom.gba", 0x60AC78, 0x38
+	.word	gWave_086C4AC0
+	.incbin	"baserom.gba", 0x60ACB4, 0x4
+	.global	gVoiceGroup_0860ACB8
+gVoiceGroup_0860ACB8:
+	.incbin	"baserom.gba", 0x60ACB8, 0x4
+	.word	gWave_0860C67C
+	.incbin	"baserom.gba", 0x60ACC0, 0x8
+	.word	gWave_0860D2E4
+	.incbin	"baserom.gba", 0x60ACCC, 0x8
+	.word	gWave_0860DD58
+	.incbin	"baserom.gba", 0x60ACD8, 0x8
+	.word	gWave_0860EEF4
+	.incbin	"baserom.gba", 0x60ACE4, 0x8
+	.word	gWave_08610258
+	.incbin	"baserom.gba", 0x60ACF0, 0x8
+	.word	gWave_08613928
+	.incbin	"baserom.gba", 0x60ACFC, 0x8
+	.word	gWave_08617FBC
+	.incbin	"baserom.gba", 0x60AD08, 0x8
+	.word	gWave_086C5518
+	.incbin	"baserom.gba", 0x60AD14, 0x8
+	.word	gWave_08610258
+	.incbin	"baserom.gba", 0x60AD20, 0x8
+	.word	gWave_0861D030
+	.incbin	"baserom.gba", 0x60AD2C, 0x8
+	.word	gWave_0861EB4C
+	.incbin	"baserom.gba", 0x60AD38, 0x8
+	.word	gWave_08621910
+	.incbin	"baserom.gba", 0x60AD44, 0x8
+	.word	gWave_08625408
+	.incbin	"baserom.gba", 0x60AD50, 0x8
+	.word	gWave_08626784
+	.incbin	"baserom.gba", 0x60AD5C, 0x8
+	.word	gWave_08629560
+	.incbin	"baserom.gba", 0x60AD68, 0x14
+	.word	gWave_08629F74
+	.incbin	"baserom.gba", 0x60AD80, 0x8
+	.word	gWave_0862B1E4
+	.incbin	"baserom.gba", 0x60AD8C, 0x8
+	.word	gWave_0862E9A4
+	.incbin	"baserom.gba", 0x60AD98, 0x8
+	.word	gWave_086315DC
+	.incbin	"baserom.gba", 0x60ADA4, 0x8
+	.word	gWave_086342D8
+	.incbin	"baserom.gba", 0x60ADB0, 0x8
+	.word	gWave_08636124
+	.incbin	"baserom.gba", 0x60ADBC, 0x14
+	.word	gWave_08675214
+	.incbin	"baserom.gba", 0x60ADD4, 0x8
+	.word	gWave_0863B278
+	.incbin	"baserom.gba", 0x60ADE0, 0x8
+	.word	gWave_0863F2A0
+	.incbin	"baserom.gba", 0x60ADEC, 0x8
+	.word	gWave_08617FBC
+	.incbin	"baserom.gba", 0x60ADF8, 0x8
+	.word	gWave_086418EC
+	.incbin	"baserom.gba", 0x60AE04, 0x8
+	.word	gWave_08643094
+	.incbin	"baserom.gba", 0x60AE10, 0x8
+	.word	gWave_086458C4
+	.incbin	"baserom.gba", 0x60AE1C, 0x8
+	.word	gWave_08647390
+	.incbin	"baserom.gba", 0x60AE28, 0x8
+	.word	gWave_086C86E8
+	.incbin	"baserom.gba", 0x60AE34, 0x8
+	.word	gWave_086CA68C
+	.incbin	"baserom.gba", 0x60AE40, 0x8
+	.word	gWave_0864E450
+	.incbin	"baserom.gba", 0x60AE4C, 0x8
+	.word	gWave_0864E8CC
+	.incbin	"baserom.gba", 0x60AE58, 0x8
+	.word	gWave_0868C530
+	.incbin	"baserom.gba", 0x60AE64, 0x8
+	.word	gWave_086CE894
+	.incbin	"baserom.gba", 0x60AE70, 0x8
+	.word	gWave_086D03B4
+	.incbin	"baserom.gba", 0x60AE7C, 0x14
+	.word	gWave_086D2484
+	.incbin	"baserom.gba", 0x60AE94, 0x8
+	.word	gWave_086D3AF4
+	.incbin	"baserom.gba", 0x60AEA0, 0x8
+	.word	gWave_086D57D4
+	.incbin	"baserom.gba", 0x60AEAC, 0x8
+	.word	gWave_086D5E20
+	.incbin	"baserom.gba", 0x60AEB8, 0x8
+	.word	gWave_086D8D10
+	.incbin	"baserom.gba", 0x60AEC4, 0x8
+	.word	gWave_086DA11C
+	.incbin	"baserom.gba", 0x60AED0, 0x8
+	.word	gWave_086DD3DC
+	.incbin	"baserom.gba", 0x60AEDC, 0x8
+	.word	gWave_086DDE8C
+	.incbin	"baserom.gba", 0x60AEE8, 0x8
+	.word	gWave_086E0074
+	.incbin	"baserom.gba", 0x60AEF4, 0x8
+	.word	gWave_086E2818
+	.incbin	"baserom.gba", 0x60AF00, 0x8
+	.word	gWave_086B0548
+	.incbin	"baserom.gba", 0x60AF0C, 0x8
+	.word	gWave_086B70BC
+	.incbin	"baserom.gba", 0x60AF18, 0x8
+	.word	gWave_086E69F8
+	.incbin	"baserom.gba", 0x60AF24, 0x8
+	.word	gWave_086E751C
+	.incbin	"baserom.gba", 0x60AF30, 0x8
+	.word	gWave_086E838C
+	.incbin	"baserom.gba", 0x60AF3C, 0x8
+	.word	gWave_086E946C
+	.incbin	"baserom.gba", 0x60AF48, 0x8
+	.word	gWave_086D8D10
+	.incbin	"baserom.gba", 0x60AF54, 0x8
+	.word	gWave_086EBAE4
+	.incbin	"baserom.gba", 0x60AF60, 0x8
+	.word	gWave_0868645C
+	.incbin	"baserom.gba", 0x60AF6C, 0x8
+	.word	gWave_086EE278
+	.incbin	"baserom.gba", 0x60AF78, 0x8
+	.word	gWave_086EEC88
+	.incbin	"baserom.gba", 0x60AF84, 0x8
+	.word	gWave_086F1714
+	.incbin	"baserom.gba", 0x60AF90, 0x8
+	.word	gWave_086F4AD0
+	.incbin	"baserom.gba", 0x60AF9C, 0x8
+	.word	gWave_086F5248
+	.incbin	"baserom.gba", 0x60AFA8, 0x8
+	.word	gWave_086F5E50
+	.incbin	"baserom.gba", 0x60AFB4, 0x8
+	.word	gWave_0867DB94
+	.incbin	"baserom.gba", 0x60AFC0, 0x8
+	.word	gWave_0868122C
+	.incbin	"baserom.gba", 0x60AFCC, 0x8
+	.word	gWave_086A6DBC
+	.incbin	"baserom.gba", 0x60AFD8, 0x8
+	.word	gWave_086A9C84
+	.incbin	"baserom.gba", 0x60AFE4, 0x8
+	.word	gWave_08686E28
+	.incbin	"baserom.gba", 0x60AFF0, 0x8
+	.word	gWave_086E0074
+	.incbin	"baserom.gba", 0x60AFFC, 0x8
+	.word	gWave_086F6780
+	.incbin	"baserom.gba", 0x60B008, 0x8
+	.word	gWave_086F8950
+	.incbin	"baserom.gba", 0x60B014, 0x8
+	.word	gWave_086F962C
+	.incbin	"baserom.gba", 0x60B020, 0x8
+	.word	gWave_086FEDAC
+	.incbin	"baserom.gba", 0x60B02C, 0x8
+	.word	gWave_08704670
+	.incbin	"baserom.gba", 0x60B038, 0x8
+	.word	gWave_086AC6B0
+	.incbin	"baserom.gba", 0x60B044, 0x8
+	.word	gWave_086AE3EC
+	.incbin	"baserom.gba", 0x60B050, 0x11C
+	.word	gWave_0867AFA0
+	.incbin	"baserom.gba", 0x60B170, 0x8
+	.word	gWave_0867C1C0
+	.incbin	"baserom.gba", 0x60B17C, 0x8
+	.word	gWave_0867D810
+	.incbin	"baserom.gba", 0x60B188, 0x11C
+	.word	gVoiceGroup_0860AA78
+	.incbin	"baserom.gba", 0x60B2A8, 0x8
+	.word	gVoiceGroup_0860A8F8
+	.incbin	"baserom.gba", 0x60B2B4, 0x4
+	.global	gVoiceGroup_0860B2B8
+gVoiceGroup_0860B2B8:
+	.incbin	"baserom.gba", 0x60B2B8, 0x4
+	.word	gWave_08709DA0
+	.incbin	"baserom.gba", 0x60B2C0, 0x8
+	.word	gWave_086E0074
+	.incbin	"baserom.gba", 0x60B2CC, 0x8
+	.word	gWave_086F6780
+	.incbin	"baserom.gba", 0x60B2D8, 0x8
+	.word	gWave_0870B4E8
+	.incbin	"baserom.gba", 0x60B2E4, 0x8
+	.word	gWave_0870CC84
+	.incbin	"baserom.gba", 0x60B2F0, 0x8
+	.word	gWave_086E2818
+	.incbin	"baserom.gba", 0x60B2FC, 0x94
+	.global	gProgWave_0860B390
+gProgWave_0860B390:
+	.incbin	"baserom.gba", 0x60B390, 0x10
+	.global	gProgWave_0860B3A0
+gProgWave_0860B3A0:
+	.incbin	"baserom.gba", 0x60B3A0, 0x10
+	.global	gProgWave_0860B3B0
+gProgWave_0860B3B0:
+	.incbin	"baserom.gba", 0x60B3B0, 0x10
+	.global	gProgWave_0860B3C0
+gProgWave_0860B3C0:
+	.incbin	"baserom.gba", 0x60B3C0, 0x10
+	.global	gProgWave_0860B3D0
+gProgWave_0860B3D0:
+	.incbin	"baserom.gba", 0x60B3D0, 0x60
