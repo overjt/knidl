@@ -199,6 +199,7 @@ identifier.
 | a stage's room list `gRoomTable[L][S]` | `gLevel<L>Stage<S>Rooms` | `gLevel0Stage1Rooms` |
 | a room header (`struct RoomDef`) `gRoomTable[L][S][R]` | `gLevel<L>Stage<S>Room<R>` | `gLevel0Stage1Room2` |
 | a record that one RoomDef field alone points at | `gLevel<L>Stage<S>Room<R><Field>`, the field in PascalCase | `gLevel0Stage1Room2Doors`, `...Room2MetatileMap` |
+| a BG animation set `gRoomBgAnimScripts[N]` and its script `[N][I]` | `gRoomBgAnimSet<N>` / `gRoomBgAnimSet<N>Script<I>` | `gRoomBgAnimSet3Script0` |
 | an ActorDef bound by a named family through its kind table's slot | `g<Enemy>Def` | `gWaddleDeeDef` |
 | a graphics descriptor in a kind's descriptor table (`gEnemyGfx`, `gMidBossGfx`, `gBossGfx`, `gMetaKnightsGfx`) | `g<Enemy>Gfx` | `gCappyGfx` |
 | the palette and sprite-sheet tiles that descriptor alone points at | `g<Enemy>GfxPalette` / `g<Enemy>GfxTiles` | `gCappyGfxTiles` |
