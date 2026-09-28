@@ -148,7 +148,7 @@ void SubGameDimAndHalt(void)
 {
     s32 i;
 
-    TaskSetSkipMask(7, gUnk_020055EC);
+    TaskSetSkipMask(7, gSubGameTaskIdx);
     gDispCnt |= 0x200;
     gBldCntTarget1 = 0xFD;
     for (i = 0; i <= 4; i++)
@@ -294,7 +294,7 @@ tail:
     gFadeBlankAtWhite = 0;
     gFrameCallback = gVBlankCallback = 0;
     REG_DMA0CNT_L = REG_DMA0CNT_H = 0;
-    TaskSetEntry(Task_SubGame, gUnk_020055EC);
+    TaskSetEntry(Task_SubGame, gSubGameTaskIdx);
 }
 
 void SubGameRunLinkFrame(void)
@@ -425,7 +425,7 @@ void SubGameMain(void)
     }
     LinkRequestSync();
     LinkSyncRandom();
-    gUnk_020055EC = TaskCreateFrom(93, 63);
+    gSubGameTaskIdx = TaskCreateFrom(93, 63);
     SubGameInit();
     SubGameRunScreen(0);
     SubGameRunScreen(1);
@@ -456,7 +456,7 @@ void SubGameStartBody(void)
 
 void QuickDrawInit(void)
 {
-    struct Task *t = &gTasks[gUnk_020055EC];
+    struct Task *t = &gTasks[gSubGameTaskIdx];
     s32 i;
 
     for (i = 0; i <= 3; i++)
@@ -464,7 +464,7 @@ void QuickDrawInit(void)
         gQuickDrawWins[i] = 0;
         gQuickDrawRanking[i] = i;
     }
-    gUnk_02004B5C = 0xFF;
+    gQuickDrawMatchWinner = 0xFF;
     gQuickDrawBestTime = 99;
     gUnk_0200B048 = 0;
     t->unk34 = 3;

@@ -74,8 +74,8 @@ gUnk_080D00F6:
 	.global	gUnk_080D0198
 gUnk_080D0198:
 	.incbin	"baserom.gba", 0xD0198, 0x200
-	.global	gUnk_080D0398
-gUnk_080D0398:
+	.global	gAirGrindSineTable
+gAirGrindSineTable:
 	.incbin	"baserom.gba", 0xD0398, 0x202
 	.global	gUnk_080D059A
 gUnk_080D059A:

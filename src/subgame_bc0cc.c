@@ -133,31 +133,31 @@ void QuickDrawPlacePlayer(void)
     case 68:
         gCurTask->pixelY = 120;
         gCurTask->facing = 1;
-        gCurTask->frameTable = gUnk_08755AF0;
+        gCurTask->frameTable = gQuickDrawPlayerNearFrames;
         gCurTask->layer = 8;
         break;
     case 164:
         gCurTask->pixelY = 56;
         gCurTask->facing = -1;
-        gCurTask->frameTable = gUnk_08755B68;
+        gCurTask->frameTable = gQuickDrawPlayerFarFrames;
         gCurTask->layer = 11;
         break;
     case 188:
         gCurTask->pixelY = 104;
         gCurTask->facing = -1;
-        gCurTask->frameTable = gUnk_08755B40;
+        gCurTask->frameTable = gQuickDrawPlayerRightFrames;
         gCurTask->layer = 9;
         break;
     case 60:
         gCurTask->pixelY = 72;
         gCurTask->facing = 1;
-        gCurTask->frameTable = gUnk_08755B18;
+        gCurTask->frameTable = gQuickDrawPlayerLeftFrames;
         gCurTask->layer = 10;
         break;
     default:
         gCurTask->pixelY = 0;
         gCurTask->facing = 1;
-        gCurTask->frameTable = gUnk_08755AF0;
+        gCurTask->frameTable = gQuickDrawPlayerNearFrames;
         gCurTask->layer = 12;
         break;
     }
@@ -449,7 +449,7 @@ u8 QuickDrawIsTaskOnScreen(void)
 void QuickDrawPlacePlayerForResults(void)
 {
     gCurTask->tileWord = gCurTask->unk18 << 12;
-    gCurTask->frameTable = gUnk_08755B18;
+    gCurTask->frameTable = gQuickDrawPlayerLeftFrames;
     gCurTask->layer = 8;
     gCurTask->frame = 0;
     gCurTask->pixelX = 120;
@@ -943,19 +943,19 @@ void QuickDrawPlaceOpponent(void)
     switch (gCurTask->unk18)
     {
     case 0:
-        gCurTask->frameTable = gUnk_087559E4;
+        gCurTask->frameTable = gQuickDrawWaddleDooFrames;
         break;
     case 1:
-        gCurTask->frameTable = gUnk_087559F4;
+        gCurTask->frameTable = gQuickDrawWheelieFrames;
         break;
     case 2:
-        gCurTask->frameTable = gUnk_08755A04;
+        gCurTask->frameTable = gQuickDrawChefKawasakiFrames;
         break;
     case 3:
-        gCurTask->frameTable = gUnk_08755A24;
+        gCurTask->frameTable = gQuickDrawKingDededeFrames;
         break;
     case 4:
-        gCurTask->frameTable = gUnk_08755A14;
+        gCurTask->frameTable = gQuickDrawMetaKnightFrames;
         break;
     }
     gCurTask->tileWord = 0x8180;
@@ -964,7 +964,7 @@ void QuickDrawPlaceOpponent(void)
     gCurTask->unk1C = gQuickDrawOpponentReactionTimes[i];
 }
 
-void sub_080bd370(void)
+void CreateQuickDrawOpponentTag(void)
 {
     s32 idx = TaskCreateFrom(94, 32);
 
@@ -1086,7 +1086,7 @@ void QuickDrawOpponentArrive(void)
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(60);
-    sub_080bd370();
+    CreateQuickDrawOpponentTag();
     TaskYieldTrampoline(gCurTask->unk20);
     gCurTask->state = 1;
     TaskSleepForever();
@@ -1157,7 +1157,7 @@ void QuickDrawOpponentTieUpdate(void)
 {
 }
 
-void sub_080bd6b4(void)
+void QuickDrawOpponentTag(void)
 {
     struct Task *t;
 
@@ -1166,19 +1166,19 @@ void sub_080bd6b4(void)
     switch (gUnk_0200B048)
     {
     case 0:
-        gCurTask->frameTable = gUnk_087559E4;
+        gCurTask->frameTable = gQuickDrawWaddleDooFrames;
         break;
     case 1:
-        gCurTask->frameTable = gUnk_087559F4;
+        gCurTask->frameTable = gQuickDrawWheelieFrames;
         break;
     case 2:
-        gCurTask->frameTable = gUnk_08755A04;
+        gCurTask->frameTable = gQuickDrawChefKawasakiFrames;
         break;
     case 3:
-        gCurTask->frameTable = gUnk_08755A24;
+        gCurTask->frameTable = gQuickDrawKingDededeFrames;
         break;
     case 4:
-        gCurTask->frameTable = gUnk_08755A14;
+        gCurTask->frameTable = gQuickDrawMetaKnightFrames;
         break;
     }
     t = gCurTask;
@@ -1212,7 +1212,7 @@ void sub_080bd6b4(void)
     TaskExitTrampoline();
 }
 
-void sub_080bd7ec(void)
+void QuickDrawOpponentTagUpdate(void)
 {
 }
 

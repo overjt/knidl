@@ -51,8 +51,8 @@ gUnk_02004B4C = 0x02004B4C
 gPlayerAbilities = 0x02004B50
 	.global	gHudHpBarIndex
 gHudHpBarIndex = 0x02004B58
-	.global	gUnk_02004B5C
-gUnk_02004B5C = 0x02004B5C
+	.global	gQuickDrawMatchWinner
+gQuickDrawMatchWinner = 0x02004B5C
 	.global	gPausingPlayer
 gPausingPlayer = 0x02004B60
 	.global	gUnk_02004B64
@@ -119,8 +119,8 @@ gRoomEntryX = 0x020055E0
 gFileMenuCursor = 0x020055E4
 	.global	gCameraPanDone
 gCameraPanDone = 0x020055E8
-	.global	gUnk_020055EC
-gUnk_020055EC = 0x020055EC
+	.global	gSubGameTaskIdx
+gSubGameTaskIdx = 0x020055EC
 	.global	gUnk_020055F0
 gUnk_020055F0 = 0x020055F0
 	.global	gHudTilemap
@@ -481,8 +481,8 @@ gAirGrindFrame = 0x02017170
 gUnk_02017180 = 0x02017180
 	.global	gUnk_02017980
 gUnk_02017980 = 0x02017980
-	.global	gUnk_02018920
-gUnk_02018920 = 0x02018920
+	.global	gAirGrindSegmentBits
+gAirGrindSegmentBits = 0x02018920
 	.global	gUnk_02019140
 gUnk_02019140 = 0x02019140
 	.global	gUnk_0201A0E0
@@ -491,10 +491,10 @@ gUnk_0201A0E0 = 0x0201A0E0
 gAirGrindCourse = 0x0201B0E0
 	.global	gUnk_0201B1F4
 gUnk_0201B1F4 = 0x0201B1F4
-	.global	gUnk_0201B200
-gUnk_0201B200 = 0x0201B200
-	.global	gUnk_0201B690
-gUnk_0201B690 = 0x0201B690
+	.global	gAirGrindLaneSegmentEnds
+gAirGrindLaneSegmentEnds = 0x0201B200
+	.global	gAirGrindSegmentEnds
+gAirGrindSegmentEnds = 0x0201B690
 	.global	gUnk_0201B7C0
 gUnk_0201B7C0 = 0x0201B7C0
 	.global	gUnk_0201BFC0

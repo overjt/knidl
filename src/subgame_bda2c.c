@@ -353,7 +353,7 @@ void BombRallySeatPlayers(void)
 void BombRallyResults(void)
 {
     gCurTask->updateCallback = (u32)BombRallyResultsUpdate;
-    sub_080be4a4();
+    CreateBombRallyResultsPoses();
     gBg3ScrollX = 0x780000;
     gBg3ScrollY = 0;
     gCurTask->state = 0;
@@ -381,7 +381,7 @@ void BombRallyResultsShow(void)
 
     gCurTask->updateState = 0;
     TaskYieldTrampoline(60);
-    sub_080be5fc();
+    CreateBombRallyPlaceLabels();
     switch (gBombRallyFinishOrder[gLocalPlayer]) {
     case 3:
         PlayBgm(29);
@@ -513,7 +513,7 @@ void BombRallyResultsMenuUpdate(void)
 {
 }
 
-void sub_080be4a4(void)
+void CreateBombRallyResultsPoses(void)
 {
     struct Task *t;
     s32 i;
@@ -575,7 +575,7 @@ void CreateBombRallyLivesIcons(void)
     }
 }
 
-void sub_080be5fc(void)
+void CreateBombRallyPlaceLabels(void)
 {
     struct Task *t;
     s32 i;

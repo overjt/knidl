@@ -261,11 +261,11 @@ gQuickDrawOpponentReactionTimes:
 	.incbin	"baserom.gba", 0x7564B0, 0x20
 	.global	gQuickDrawOpponentGfx
 gQuickDrawOpponentGfx:
-	.word	gUnk_085EEE20
-	.word	gUnk_085EF874
-	.word	gUnk_085F07FC
-	.word	gUnk_085F2B18
-	.word	gUnk_085F1520
+	.word	gQuickDrawWaddleDooGfx
+	.word	gQuickDrawWheelieGfx
+	.word	gQuickDrawChefKawasakiGfx
+	.word	gQuickDrawKingDededeGfx
+	.word	gQuickDrawMetaKnightGfx
 	.global	gQuickDrawOpponentStates
 gQuickDrawOpponentStates:
 	.word	QuickDrawOpponentArrive+1
@@ -273,7 +273,7 @@ gQuickDrawOpponentStates:
 	.word	QuickDrawOpponentStrike+1
 	.word	QuickDrawOpponentLose+1
 	.word	QuickDrawOpponentTie+1
-	.word	sub_080bd6b4+1
+	.word	QuickDrawOpponentTag+1
 	.global	gQuickDrawOpponentStateUpdates
 gQuickDrawOpponentStateUpdates:
 	.word	QuickDrawOpponentArriveUpdate+1
@@ -281,7 +281,7 @@ gQuickDrawOpponentStateUpdates:
 	.word	QuickDrawOpponentStrikeUpdate+1
 	.word	QuickDrawOpponentLoseUpdate+1
 	.word	QuickDrawOpponentTieUpdate+1
-	.word	sub_080bd7ec+1
+	.word	QuickDrawOpponentTagUpdate+1
 	.global	gQuickDrawRankBonuses
 gQuickDrawRankBonuses:
 	.incbin	"baserom.gba", 0x756514, 0x8
@@ -476,8 +476,8 @@ gBombRallySeatBombX:
 	.global	gBombRallySeatBombY
 gBombRallySeatBombY:
 	.incbin	"baserom.gba", 0x7567A0, 0x8
-	.global	gUnk_087567A8
-gUnk_087567A8:
+	.global	gBombRallyArcVelX
+gBombRallyArcVelX:
 	.incbin	"baserom.gba", 0x7567A8, 0x54
 	.global	gUnk_087567FC
 gUnk_087567FC:
@@ -561,8 +561,8 @@ gUnk_08756F34:
 	.global	gUnk_08756FA4
 gUnk_08756FA4:
 	.incbin	"baserom.gba", 0x756FA4, 0x70
-	.global	gUnk_08757014
-gUnk_08757014:
+	.global	gBombRallySeatShadowY
+gBombRallySeatShadowY:
 	.incbin	"baserom.gba", 0x757014, 0x8
 	.global	gUnk_0875701C
 gUnk_0875701C:
@@ -578,11 +578,11 @@ gUnk_0875716C:
 	.word	gUnk_0875701C
 	.word	gUnk_0875708C
 	.word	gUnk_087570FC
-	.global	gUnk_08757178
-gUnk_08757178:
+	.global	gBombRallyPanStepX
+gBombRallyPanStepX:
 	.incbin	"baserom.gba", 0x757178, 0x40
-	.global	gUnk_087571B8
-gUnk_087571B8:
+	.global	gBombRallyPanStepY
+gBombRallyPanStepY:
 	.incbin	"baserom.gba", 0x7571B8, 0x40
 	.global	gBombRallyStarBurstStates
 gBombRallyStarBurstStates:
@@ -604,13 +604,13 @@ gBombRallyStarBurstStates:
 	.word	sub_080c168c+1
 	.global	gBombRallyResultsPlayerStates
 gBombRallyResultsPlayerStates:
-	.word	sub_080c183c+1
-	.word	sub_080c1ab8+1
+	.word	BombRallyResultsPlayerPose+1
+	.word	BombRallyResultsPlayerPlace+1
 	.word	BombRallyResultsPlayerLives+1
 	.global	gBombRallyResultsPlayerStateUpdates
 gBombRallyResultsPlayerStateUpdates:
-	.word	sub_080c18c4+1
-	.word	sub_080c1b2c+1
+	.word	BombRallyResultsPlayerPoseUpdate+1
+	.word	BombRallyResultsPlayerPlaceUpdate+1
 	.word	BombRallyResultsPlayerLivesUpdate+1
 	.global	gBombRallyResultsSlotX
 gBombRallyResultsSlotX:
@@ -626,8 +626,8 @@ gBombRallyMenuItemStates:
 gBombRallyMenuItemStateUpdates:
 	.word	BombRallyMenuItemContinueUpdate+1
 	.word	BombRallyMenuItemLevelUpdate+1
-	.global	gUnk_08757280
-gUnk_08757280:
+	.global	gBombRallyBlastShake
+gBombRallyBlastShake:
 	.incbin	"baserom.gba", 0x757280, 0x4C
 	.global	gAirGrindPhases
 gAirGrindPhases:

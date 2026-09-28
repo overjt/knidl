@@ -28,7 +28,7 @@
  * order kept by QuickDrawUpdateRanking, and gQuickDrawBestTime the best reaction time
  * (reset to 99, lowered to Task.unk20 by each winner).  QuickDrawFindMatchWinner and
  * QuickDrawFindMatchWinnerVsCpu (single player: first to 5) report the match winner in
- * gUnk_02004B5C.
+ * gQuickDrawMatchWinner.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -294,7 +294,7 @@ u8 QuickDrawFindMatchWinner(void)
     {
         if (gQuickDrawWins[i] >= gCurTask->unk34)
         {
-            gUnk_02004B5C = i;
+            gQuickDrawMatchWinner = i;
             found = 1;
             break;
         }
@@ -553,7 +553,7 @@ u8 QuickDrawFindMatchWinnerVsCpu(void)
     {
         if (gQuickDrawWins[i] > 4)
         {
-            gUnk_02004B5C = i;
+            gQuickDrawMatchWinner = i;
             found = 1;
             break;
         }

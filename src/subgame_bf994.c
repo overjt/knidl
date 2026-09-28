@@ -24,10 +24,10 @@
  *       Div((gUnk_08756770[next] - gUnk_08756770[cur]) << 4, frames).
  *   BombRallyBombPassUpdate / BombRallyBombExplode / BombRallyBombExplodeUpdate   the three placement bodies
  *       that walk a turn: BombRallyScrollAlongPass for the thrower, BombRallyBombSetArcPos for the
- *       projectile and sub_080c0a10 for its shadow.
+ *       projectile and BombRallyBombDrawShadow for its shadow.
  *   BombRallyBombPlaceAtSeat / BombRallyScrollToSeat   set a slot's sprite frame / animation.
  *   BombRallyBombSetArcPos   position on the 16.16 parabola p0 + v*t + (a*t*t)/2:
- *       p0 from gBombRallySeatBombX / gBombRallySeatBombY, v from gUnk_087567A8[c][b],
+ *       p0 from gBombRallySeatBombX / gBombRallySeatBombY, v from gBombRallyArcVelX[c][b],
  *       and the two coefficient rows from gUnk_08756D3C[c][0..1].
  *   BombRallyPanToSeat / BombRallyBombSmoke / BombRallyBombSmokeUpdate / BombRallyStarBurst   the
  *       remaining table-driven animation helpers.
@@ -467,7 +467,7 @@ void BombRallyBombPassUpdate(void)
             k = u->unk28 - 3;
             BombRallyScrollAlongPass(u->unk34, k, u->unk2C, u->unk30, u->unk24, 1);
             BombRallyBombSetArcPos((u->unk34 + 3) & 3, k, u->unk2C, u->unk24 - u->unk30);
-            sub_080c0a10((u->unk34 + 3) & 3, k, u->unk2C, u->unk24 - u->unk30,
+            BombRallyBombDrawShadow((u->unk34 + 3) & 3, k, u->unk2C, u->unk24 - u->unk30,
                          (s16)(gUnk_08756778[gCurTask->unk24]
                                + ((gCurTask->unk2C * u->unk30) >> 5)));
             if (u->unk34 == 0 || u->unk34 == 3) {
@@ -485,7 +485,7 @@ void BombRallyBombPassUpdate(void)
             k = u->unk28;
             BombRallyScrollAlongPass(u->unk34, k, u->unk2C, u->unk30, u->unk24, 0);
             BombRallyBombSetArcPos(u->unk34, k, u->unk2C, u->unk30);
-            sub_080c0a10(u->unk34, k, u->unk2C, u->unk30,
+            BombRallyBombDrawShadow(u->unk34, k, u->unk2C, u->unk30,
                          (s16)(gUnk_08756778[gCurTask->unk24]
                                + ((gCurTask->unk2C * u->unk30) >> 5)));
             if (u->unk34 == 0 || u->unk34 == 3) {
@@ -563,11 +563,11 @@ void BombRallyBombExplode(void)
     CreateBombRallyStarBurst(x->posX, x->posY, x->unk28, x->facing);
     y = gCurTask;
     if (y->unk28 == 0)
-        y->frameTable = gUnk_08755E0C;
+        y->frameTable = gBombRallyBlastNearFrames;
     else if (y->unk28 == 2)
-        y->frameTable = gUnk_08755E7C;
+        y->frameTable = gBombRallyBlastFarFrames;
     else
-        y->frameTable = gUnk_08755E44;
+        y->frameTable = gBombRallyBlastSideFrames;
     gCurTask->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame++;
@@ -612,7 +612,7 @@ void BombRallyBombExplodeUpdate(void)
 
     t = gCurTask;
     u = &gTasks[t->parent];
-    n = sub_080c1ebc(t->unk28, t->unk2C);
+    n = BombRallyShakeScreen(t->unk28, t->unk2C);
     v = gCurTask;
     v->unk2C = n;
     if (v->unk30 <= 7) {
@@ -649,9 +649,9 @@ void BombRallyBombSetArcPos(s32 a, s32 b, s32 c, s32 d)
     p1 = gUnk_08756D3C[c][0];
     p2 = gUnk_08756D3C[c][1];
     if (a == 0 || a == 3)
-        gCurTask->posX = (gBombRallySeatBombX[a] << 16) - gUnk_087567A8[c][b] * d;
+        gCurTask->posX = (gBombRallySeatBombX[a] << 16) - gBombRallyArcVelX[c][b] * d;
     else
-        gCurTask->posX = (gBombRallySeatBombX[a] << 16) + gUnk_087567A8[c][b] * d;
+        gCurTask->posX = (gBombRallySeatBombX[a] << 16) + gBombRallyArcVelX[c][b] * d;
     gCurTask->posY = (gBombRallySeatBombY[a] << 16) + p1[b * 4 + a] * d
              + ((p2[b * 4 + a] * d * d) >> 1);
 }
@@ -719,7 +719,7 @@ void BombRallyScrollAlongPass(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
     }
 }
 
-void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e)
+void BombRallyBombDrawShadow(s32 a, s32 b, s32 c, s32 d, s16 e)
 {
     s32 x;
     s32 y;
@@ -728,11 +728,11 @@ void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e)
     if ((s16)gCurTask->frame != -1) {
         p = gUnk_0875716C[b];
         if (a == 0 || a == 3)
-            x = (gBombRallySeatBombX[a] << 16) - gUnk_087567A8[c][b] * d;
+            x = (gBombRallySeatBombX[a] << 16) - gBombRallyArcVelX[c][b] * d;
         else
-            x = (gBombRallySeatBombX[a] << 16) + gUnk_087567A8[c][b] * d;
-        y = (gUnk_08757014[a] << 16) + p[c * 4 + a] * d;
-        QueueSprite(10, DrawAffineSprite(gUnk_08755EB4, (s16)e, (s16)e, 0), 0, 0,
+            x = (gBombRallySeatBombX[a] << 16) + gBombRallyArcVelX[c][b] * d;
+        y = (gBombRallySeatShadowY[a] << 16) + p[c * 4 + a] * d;
+        QueueSprite(10, DrawAffineSprite(gBombRallyBombShadowFrames, (s16)e, (s16)e, 0), 0, 0,
                      (x >> 16) - (gBg3ScrollX >> 16),
                      (s16)((y >> 16) - (gBg3ScrollY >> 16)));
     }
@@ -746,17 +746,17 @@ void BombRallyPanToSeat(u32 a)
     struct Task *z;
 
     t = gCurTask;
-    t->unk1C = -gUnk_08757178[t->unk18][a];
-    t->unk20 = -gUnk_087571B8[t->unk18][a];
+    t->unk1C = -gBombRallyPanStepX[t->unk18][a];
+    t->unk20 = -gBombRallyPanStepY[t->unk18][a];
     t->unk6C = 0;
     do {
         u = gCurTask;
         if ((s16)u->unk6C <= 16) {
-            u->unk1C += gUnk_08757178[u->unk18][a];
-            u->unk20 += gUnk_087571B8[u->unk18][a];
+            u->unk1C += gBombRallyPanStepX[u->unk18][a];
+            u->unk20 += gBombRallyPanStepY[u->unk18][a];
         } else {
-            u->unk1C -= gUnk_08757178[u->unk18][a];
-            u->unk20 -= gUnk_087571B8[u->unk18][a];
+            u->unk1C -= gBombRallyPanStepX[u->unk18][a];
+            u->unk20 -= gBombRallyPanStepY[u->unk18][a];
         }
         gBg3ScrollX += gCurTask->unk1C;
         gBg3ScrollY += gCurTask->unk20;

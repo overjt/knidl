@@ -10158,32 +10158,32 @@ gWarpStarStationLevelSignFrames:
 gMuseumAbilitySignFrames:
 	.word	gUnk_085A48C4
 	.word	gUnk_085A48E4
-	.global	gUnk_087559E4
-gUnk_087559E4:
+	.global	gQuickDrawWaddleDooFrames
+gQuickDrawWaddleDooFrames:
 	.word	gUnk_085EED98
 	.word	gUnk_085EEDB0
 	.word	gUnk_085EEDE8
 	.word	gUnk_085EEE08
-	.global	gUnk_087559F4
-gUnk_087559F4:
+	.global	gQuickDrawWheelieFrames
+gQuickDrawWheelieFrames:
 	.word	gUnk_085EF7C4
 	.word	gUnk_085EF7EC
 	.word	gUnk_085EF83C
 	.word	gUnk_085EF85C
-	.global	gUnk_08755A04
-gUnk_08755A04:
+	.global	gQuickDrawChefKawasakiFrames
+gQuickDrawChefKawasakiFrames:
 	.word	gUnk_085F072C
 	.word	gUnk_085F075C
 	.word	gUnk_085F07BC
 	.word	gUnk_085F07DC
-	.global	gUnk_08755A14
-gUnk_08755A14:
+	.global	gQuickDrawMetaKnightFrames
+gQuickDrawMetaKnightFrames:
 	.word	gUnk_085F1460
 	.word	gUnk_085F1488
 	.word	gUnk_085F14E0
 	.word	gUnk_085F1500
-	.global	gUnk_08755A24
-gUnk_08755A24:
+	.global	gQuickDrawKingDededeFrames
+gQuickDrawKingDededeFrames:
 	.word	gUnk_085F29F8
 	.word	gUnk_085F2A38
 	.word	gUnk_085F2AA0
@@ -10257,8 +10257,8 @@ gQuickDrawBurstFrames:
 	.word	gUnk_085F4F3C
 	.word	gUnk_085F4FCC
 	.word	gUnk_085F5034
-	.global	gUnk_08755AF0
-gUnk_08755AF0:
+	.global	gQuickDrawPlayerNearFrames
+gQuickDrawPlayerNearFrames:
 	.word	gUnk_085F373C
 	.word	gUnk_085F37CC
 	.word	gUnk_085F38AC
@@ -10269,8 +10269,8 @@ gUnk_08755AF0:
 	.word	gUnk_085F3B94
 	.word	gUnk_085F3C1C
 	.word	gUnk_085F3CA4
-	.global	gUnk_08755B18
-gUnk_08755B18:
+	.global	gQuickDrawPlayerLeftFrames
+gQuickDrawPlayerLeftFrames:
 	.word	gUnk_085F3D5C
 	.word	gUnk_085F3DAC
 	.word	gUnk_085F3E4C
@@ -10281,8 +10281,8 @@ gUnk_08755B18:
 	.word	gUnk_085F4134
 	.word	gUnk_085F41BC
 	.word	gUnk_085F4244
-	.global	gUnk_08755B40
-gUnk_08755B40:
+	.global	gQuickDrawPlayerRightFrames
+gQuickDrawPlayerRightFrames:
 	.word	gUnk_085F42FC
 	.word	gUnk_085F4364
 	.word	gUnk_085F4404
@@ -10293,8 +10293,8 @@ gUnk_08755B40:
 	.word	gUnk_085F46EC
 	.word	gUnk_085F4774
 	.word	gUnk_085F47FC
-	.global	gUnk_08755B68
-gUnk_08755B68:
+	.global	gQuickDrawPlayerFarFrames
+gQuickDrawPlayerFarFrames:
 	.word	gUnk_085F48B4
 	.word	gUnk_085F48F4
 	.word	gUnk_085F496C
@@ -10486,8 +10486,8 @@ gBombRallyBombFrames:
 	.word	gUnk_085FE4E8
 	.word	gUnk_085FE4F0
 	.word	gUnk_085FE4F8
-	.global	gUnk_08755E0C
-gUnk_08755E0C:
+	.global	gBombRallyBlastNearFrames
+gBombRallyBlastNearFrames:
 	.word	gUnk_085FE590
 	.word	gUnk_085FE610
 	.word	gUnk_085FE710
@@ -10502,8 +10502,8 @@ gUnk_08755E0C:
 	.word	gUnk_085FF010
 	.word	gUnk_085FF110
 	.word	gUnk_085FF210
-	.global	gUnk_08755E44
-gUnk_08755E44:
+	.global	gBombRallyBlastSideFrames
+gBombRallyBlastSideFrames:
 	.word	gUnk_085FF310
 	.word	gUnk_085FF390
 	.word	gUnk_085FF490
@@ -10518,8 +10518,8 @@ gUnk_08755E44:
 	.word	gUnk_085FFD90
 	.word	gUnk_085FFE90
 	.word	gUnk_085FFF90
-	.global	gUnk_08755E7C
-gUnk_08755E7C:
+	.global	gBombRallyBlastFarFrames
+gBombRallyBlastFarFrames:
 	.word	gUnk_08600090
 	.word	gUnk_08600110
 	.word	gUnk_08600210
@@ -10534,8 +10534,8 @@ gUnk_08755E7C:
 	.word	gUnk_08600B10
 	.word	gUnk_08600C10
 	.word	gUnk_08600C50
-	.global	gUnk_08755EB4
-gUnk_08755EB4:
+	.global	gBombRallyBombShadowFrames
+gBombRallyBombShadowFrames:
 	.word	gUnk_085FE518
 	.global	gBombRallyBombSmokeFrames
 gBombRallyBombSmokeFrames:
@@ -10568,20 +10568,20 @@ gUnk_08755EFC:
 	.word	gUnk_08603460
 	.word	gUnk_086034D8
 	.word	gUnk_086034B8
-	.global	gUnk_08755F1C
-gUnk_08755F1C:
+	.global	gBombRallyResultsPoseFrames
+gBombRallyResultsPoseFrames:
 	.word	gUnk_08603040
 	.word	gUnk_08602FF0
 	.word	gUnk_08602FA0
 	.word	gUnk_08602F50
-	.global	gUnk_08755F2C
-gUnk_08755F2C:
+	.global	gBombRallyContinueItemFrames
+gBombRallyContinueItemFrames:
 	.word	gUnk_086034E0
 	.word	gUnk_08603510
 	.word	gUnk_08603540
 	.word	gUnk_08603510
-	.global	gUnk_08755F3C
-gUnk_08755F3C:
+	.global	gBombRallyLevelItemFrames
+gBombRallyLevelItemFrames:
 	.word	gUnk_08603570
 	.word	gUnk_086035A8
 	.word	gUnk_086035E0

@@ -17,16 +17,16 @@
  *       ties share a place in unk0C), picks each one's score (course record
  *       unk20 or unk24) and installs AirGrindResultsDraw / AirGrindResultsUpdate.
  *   AirGrindResultsDraw   draws the table: time (AirGrindDrawTime), score
- *       (sub_080c4bec), the racer's sprite (AirGrindDrawRacerSprite, the winner pulsing)
+ *       (AirGrindDrawRatio), the racer's sprite (AirGrindDrawRacerSprite, the winner pulsing)
  *       and the place or the stars won, then the two palette cycles
- *       (sub_080c2ba8).
+ *       (AirGrindResultsDrawCursor).
  *   AirGrindResultsStep   the results state machine (gAirGrindResults.unk00): a place
  *       jingle (songs 0x81D/0x81C/0x817), in the extra mode (gPrevGameState ==
  *       5) the stars counted up and handed to the linked players
  *       (AddPlayerLivesNoHud) before M35's SubGameQuit ends the screen, otherwise a
  *       retry/quit choice and a three-way level choice passed to M35's
  *       SubGameReplay.
- *   AirGrindResultsUpdate / sub_080c2ba8 / sub_080c2ccc   the per-frame callback, the
+ *   AirGrindResultsUpdate / AirGrindResultsDrawCursor / AirGrindResultsSetCursorBlend   the per-frame callback, the
  *       two palette cycles through gUnk_08609F40 with the cursor sprite, and
  *       the cycle's start row for a menu choice.
  *   AirGrindBuildSky   the per-frame hook AirGrindSetupRace installs: builds the
@@ -43,7 +43,7 @@ void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);
 void TaskSleepForever(void);                                     /* end the running task */
 void AirGrindDrawTime(s32 t, s32 x, s32 y);                   /* draw a frame count as ss:cc */
-void sub_080c4bec(s32 a, s32 b, s32 x, s32 y);            /* draw min(a * 1000 / b, 1000) */
+void AirGrindDrawRatio(s32 a, s32 b, s32 x, s32 y);            /* draw min(a * 1000 / b, 1000) */
 
 void AirGrindResults(void)
 {
@@ -111,7 +111,7 @@ void AirGrindResultsDraw(void)
             scale = gAirGrindResults.unk10;
         AirGrindSetDigitPalette(8);
         AirGrindDrawTime(gAirGrindPtr->raceTimes[p], 114, y);
-        sub_080c4bec(gAirGrindResults.unk1C[p], gAirGrindCoursePtr->players[p].unk20, 180, y);
+        AirGrindDrawRatio(gAirGrindResults.unk1C[p], gAirGrindCoursePtr->players[p].unk20, 180, y);
         pal = gUnk_080CFE2C[gAirGrindPtr->localPlayer][p];
         layer = 4;
         if (p == 0)
@@ -147,7 +147,7 @@ void AirGrindResultsDraw(void)
             AirGrindDrawSymbol(1, 28, y);
         }
     }
-    sub_080c2ba8();
+    AirGrindResultsDrawCursor();
 }
 
 void AirGrindResultsStep(void)
@@ -224,7 +224,7 @@ void AirGrindResultsStep(void)
                     t->frame = 1;
                     t->spriteFlags = 0x2000;
                     t->layer = 1;
-                    sub_080c2ccc(-1);
+                    AirGrindResultsSetCursorBlend(-1);
                     PlaySfx(102);
                 }
                 gAirGrindResults.unk00++;
@@ -255,7 +255,7 @@ void AirGrindResultsStep(void)
             if (--gCurTask->unk28 < 0)
                 gCurTask->unk28 = 1;
             if (gAirGrindPtr->localPlayer == 0) {
-                sub_080c2ccc(gCurTask->unk28);
+                AirGrindResultsSetCursorBlend(gCurTask->unk28);
                 PlaySfx(101);
             }
         }
@@ -263,7 +263,7 @@ void AirGrindResultsStep(void)
             if (++gCurTask->unk28 > 1)
                 gCurTask->unk28 = 0;
             if (gAirGrindPtr->localPlayer == 0) {
-                sub_080c2ccc(gCurTask->unk28);
+                AirGrindResultsSetCursorBlend(gCurTask->unk28);
                 PlaySfx(101);
             }
         }
@@ -272,7 +272,7 @@ void AirGrindResultsStep(void)
                 gCurTask->unk2C = gAirGrind.level;
                 if (gAirGrindPtr->localPlayer == 0) {
                     gCurTask->frame = 0;
-                    sub_080c2ccc(gCurTask->unk2C);
+                    AirGrindResultsSetCursorBlend(gCurTask->unk2C);
                 }
                 gAirGrindResults.unk00++;
             } else {
@@ -288,7 +288,7 @@ void AirGrindResultsStep(void)
             if (--gCurTask->unk2C < 0)
                 gCurTask->unk2C = 2;
             if (gAirGrindPtr->localPlayer == 0) {
-                sub_080c2ccc(gCurTask->unk2C);
+                AirGrindResultsSetCursorBlend(gCurTask->unk2C);
                 PlaySfx(101);
             }
         }
@@ -296,7 +296,7 @@ void AirGrindResultsStep(void)
             if (++gCurTask->unk2C > 2)
                 gCurTask->unk2C = 0;
             if (gAirGrindPtr->localPlayer == 0) {
-                sub_080c2ccc(gCurTask->unk2C);
+                AirGrindResultsSetCursorBlend(gCurTask->unk2C);
                 PlaySfx(101);
             }
         }
@@ -308,7 +308,7 @@ void AirGrindResultsStep(void)
         } else if (gPlayerPressedKeys[0] & 2) {
             if (gAirGrindPtr->localPlayer == 0) {
                 gCurTask->frame = 1;
-                sub_080c2ccc(gCurTask->unk28);
+                AirGrindResultsSetCursorBlend(gCurTask->unk28);
                 PlaySfx(215);
             }
             gAirGrindResults.unk00--;
@@ -324,7 +324,7 @@ void AirGrindResultsUpdate(void)
     SubGameCheckEnd();
 }
 
-void sub_080c2ba8(void)
+void AirGrindResultsDrawCursor(void)
 {
     struct Task *t;
     u32 *tbl;
@@ -356,7 +356,7 @@ void sub_080c2ba8(void)
     }
 }
 
-void sub_080c2ccc(s32 mode)
+void AirGrindResultsSetCursorBlend(s32 mode)
 {
     switch (mode) {
     case 0:

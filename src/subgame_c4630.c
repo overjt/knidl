@@ -276,7 +276,7 @@ loop:
         goto loop;
 }
 
-void sub_080c4bec(s32 a, s32 b, s32 x, s32 y)
+void AirGrindDrawRatio(s32 a, s32 b, s32 x, s32 y)
 {
     s16 n;
 
