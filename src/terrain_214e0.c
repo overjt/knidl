@@ -16,7 +16,7 @@
  *
  * Matching notes (agbcc -O2 -mthumb-interwork -fprologue-bugfix):
  *  - the helpers return int, not s8: callers compare the result without
- *    re-extending it (sub_0802069c, sub_0801c690); the sign extension comes
+ *    re-extending it (sub_0802069c, TerrainProbeWallRightOnGround); the sign extension comes
  *    from the s8 element type (lesson 3.356);
  *  - `p = table[i]; return p[j];` orders the pointer load before the index
  *    load; writing table[i][j] in one expression loads the index first;

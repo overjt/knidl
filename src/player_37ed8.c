@@ -754,7 +754,7 @@ void PlayerActionHurtUpdate(void)
         TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     case 6:
-        sub_08040710();
+        PlayerRequestStandOrFall();
         break;
     }
     PlayerStopAtCeilingAndWall();

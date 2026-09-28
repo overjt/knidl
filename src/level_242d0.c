@@ -12,18 +12,18 @@
 
 /* level_242d0.c (0x080242D0-0x080261BF, issue #93).
  *
- * Room loaders, part 3: sub_08024300 (M02's stage sequence state,
- * CutsceneMain), sub_08024698 (entered through sub_08024610 and
- * sub_08024654, which preset the level/stage/room and the player
- * position) and sub_0802497c, plus the room-task variants 3-6 of task type
+ * Room loaders, part 3: LoadCutsceneRoom (M02's stage sequence state,
+ * CutsceneMain), LoadEndingRoom (entered through LoadEndingEpilogueRoom and
+ * LoadEndingStarRodReturnRoom, which preset the level/stage/room and the player
+ * position) and LoadCreditsRoom, plus the room-task variants 3-6 of task type
  * #3 (sub_080242d0, sub_08024540, sub_08024904, sub_08024da4) and their
  * per-frame bodies.  A loader looks the room header up in
  * gRoomTable[level][stage][room] and stores it in gCurRoomDef, copies
  * its size, origin, BG3 origin and object list into the camera cells,
  * decompresses (or CpuSet-copies) its metatile map into gRoomMapBuffer and
  * its metatile table into gMetatileTiles, resets the camera (M08) and the
- * players, streams the whole view and spawns task type #3.  sub_0802497c is
- * the same shape as sub_08022fa8.
+ * players, streams the whole view and spawns task type #3.  LoadCreditsRoom is
+ * the same shape as LoadRoom.
  * 
  * The doors, from FindDoorAt on (one translation unit with the loaders:
  * split at 0x08024E40, EnterDoor and ExitClearedStage swap hoisted address
@@ -61,7 +61,7 @@ void sub_080242d0(void)
     TaskSleepForever();
 }
 
-void sub_08024300(void)
+void LoadCutsceneRoom(void)
 {
     u32 a;
 
@@ -185,7 +185,7 @@ void sub_080245d0(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_08024610(s32 x, s32 y)
+void LoadEndingEpilogueRoom(s32 x, s32 y)
 {
     gLevelIndex = 7;
     gStageIndex = 0;
@@ -193,10 +193,10 @@ void sub_08024610(s32 x, s32 y)
     gRoomEntryX = x;
     gRoomEntryY = y;
     gRoomEntrySet = 1;
-    sub_08024698(0);
+    LoadEndingRoom(0);
 }
 
-void sub_08024654(s32 x, s32 y)
+void LoadEndingStarRodReturnRoom(s32 x, s32 y)
 {
     gLevelIndex = 6;
     gStageIndex = 6;
@@ -204,10 +204,10 @@ void sub_08024654(s32 x, s32 y)
     gRoomEntryX = x;
     gRoomEntryY = y;
     gRoomEntrySet = 1;
-    sub_08024698(1);
+    LoadEndingRoom(1);
 }
 
-void sub_08024698(s32 a0)
+void LoadEndingRoom(s32 a0)
 {
     u32 a;
 
@@ -255,10 +255,10 @@ void sub_08024698(s32 a0)
     StopScreenShake();
     CalcBg3Parallax();
     CalcRoomBounds();
-    sub_08028280(a0);
+    InitEndingRoomBgLayout(a0);
     SetRoomEntryPoint();
     LoadRoomBgAnims();
-    sub_08028304();
+    StartRoomBlockAnims();
     CameraResetBounds();
     HudReset();
     switch (gCameraMode)
@@ -305,23 +305,23 @@ void sub_08024904(void)
     switch (gRoomBgLayout)
     {
     case 1:
-        gCurTask->lateUpdateCallback = (u32)sub_080237fc;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2Bg3;
         break;
     case 4:
-        gCurTask->lateUpdateCallback = (u32)sub_0802385c;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg23HBlank;
         break;
     default:
     case 0:
     case 2:
     case 3:
     case 5:
-        gCurTask->lateUpdateCallback = (u32)sub_08023748;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2;
         break;
     }
     TaskSleepForever();
 }
 
-void sub_0802497c(void)
+void LoadCreditsRoom(void)
 {
     s32 i;
     u32 a;
@@ -385,7 +385,7 @@ void sub_0802497c(void)
     SetRoomEntryPoint();
     LoadRoomBgAnims();
     InitDoors();
-    sub_08028304();
+    StartRoomBlockAnims();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gLivingPlayerCount = 0;
@@ -455,7 +455,7 @@ void sub_0802497c(void)
         LoadBg3Map();
         break;
     case 3:
-        sub_0802b074(gCameraPos[0]);
+        DrawBg2ViewLooping(gCameraPos[0]);
         LoadBg3Map();
         break;
     case 5:
@@ -480,22 +480,22 @@ void sub_08024da4(void)
     {
     default:
     case 0:
-        gCurTask->lateUpdateCallback = (u32)sub_08023748;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2;
         break;
     case 1:
-        gCurTask->lateUpdateCallback = (u32)sub_080237fc;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2Bg3;
         break;
     case 2:
-        gCurTask->lateUpdateCallback = (u32)sub_080238ec;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg3AutoScroll;
         break;
     case 3:
-        gCurTask->lateUpdateCallback = (u32)sub_080237a4;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateLooping;
         break;
     case 4:
-        gCurTask->lateUpdateCallback = (u32)sub_0802385c;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg23HBlank;
         break;
     case 5:
-        gCurTask->lateUpdateCallback = (u32)sub_080238a4;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg23RowsHBlank;
         break;
     }
     TaskSleepForever();

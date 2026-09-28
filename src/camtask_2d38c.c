@@ -50,7 +50,7 @@ void sub_08029b30(void);
 void CameraLeaveScrollLock(void);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
 void PauseBlockAnims(void);
-void sub_080307e8(void);
+void StartBg1BlockAnims(void);
 s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802d5b4(s32 x, s32 y);
 void sub_0802da8c(void);
@@ -401,7 +401,7 @@ void sub_0802dcb4(void)
         }
     }
     TaskYieldTrampoline(15);
-    sub_080307e8();
+    StartBg1BlockAnims();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
     if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
@@ -586,7 +586,7 @@ void sub_0802e3ac(void)
         }
     }
     TaskYieldTrampoline(15);
-    sub_080307e8();
+    StartBg1BlockAnims();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
     if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))

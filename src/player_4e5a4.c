@@ -10,14 +10,14 @@
  * per-frame handler 46.  Action 49 is a move set one level down: its enter
  * body PlayerActionBall (mode 13, Task.u80.attackAbility = 18) clears Task.variant/unk74/
  * unk24 and PlayerState.bumpKind and dispatches Task.variant through its own
- * table of nine sub-actions gUnk_0873B664; sub_0804e600, the callback the
+ * table of nine sub-actions gPlayerBallVariants; PlayerActionBallEnterVariant, the callback the
  * sub-handlers re-bind, does the same after clearing PlayerState.running.
  * Its handler PlayerActionBallUpdate plays the animation gUnk_0873DB0A[Task.unk46]
  * mirrored by Task.unk6E, registers the body collider (gUnk_0873C28C, and
  * the block hit-box set gUnk_0873CF7C while moving) when the vertical
  * speed exceeds 2 pixels a frame, requests action 23 through M11's
  * PlayerHasCrossedWaterSurface and otherwise runs the sub-handler Task.variant of
- * gUnk_0873B688. */
+ * gPlayerBallVariantUpdates. */
 
 /* task / sprite services (landed prototypes) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
@@ -33,15 +33,15 @@ void PlayerActionBall(void)
     gCurTask->unk24 = 0;
     gCurTask->variant = 0;
     gCurTask->u80.attackAbility = 18;
-    CallTableEntry(gCurTask->variant, 9, gUnk_0873B664);
+    CallTableEntry(gCurTask->variant, 9, gPlayerBallVariants);
 }
 
-void sub_0804e600(void)
+void PlayerActionBallEnterVariant(void)
 {
     gCurTask->player->running = 0;
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    CallTableEntry(gCurTask->variant, 9, gUnk_0873B664);
+    CallTableEntry(gCurTask->variant, 9, gPlayerBallVariants);
 }
 
 void PlayerActionBallUpdate(void)
@@ -77,5 +77,5 @@ void PlayerActionBallUpdate(void)
     if (PlayerHasCrossedWaterSurface(0) != 0)
         gCurTask->player->requestedAction = 23;
     else
-        CallTableEntry(gCurTask->variant, 9, gUnk_0873B688);
+        CallTableEntry(gCurTask->variant, 9, gPlayerBallVariantUpdates);
 }

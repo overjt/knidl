@@ -19,7 +19,7 @@
  * stage's flag) and place the player at the matching door of the hub
  * room gRoomTable[8][stage][0]; sub_08022f50 (AgbMain) resets level,
  * stage and room; sub_08022f98/sub_08022f9c are M02's screen-setup hooks;
- * sub_08022fa8 and sub_080233e0 are the loaders of M02's first screen
+ * LoadRoom and sub_080233e0 are the loaders of M02's first screen
  * setup StageInit (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
 
@@ -248,7 +248,7 @@ void sub_08022f9c(void)
     gUnk_020055C8 = 0;
 }
 
-void sub_08022fa8(void)
+void LoadRoom(void)
 {
     s32 i;
     u32 a;
@@ -311,10 +311,10 @@ void sub_08022fa8(void)
     InitRoomBgLayout();
     sub_080b4e40();
     SetRoomEntryPoint();
-    sub_08029110();
+    PlayRoomBgm();
     LoadRoomBgAnims();
     InitDoors();
-    sub_08028304();
+    StartRoomBlockAnims();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gLivingPlayerCount = 0;
@@ -384,7 +384,7 @@ void sub_08022fa8(void)
         LoadBg3Map();
         break;
     case 3:
-        sub_0802b074(gCameraPos[0]);
+        DrawBg2ViewLooping(gCameraPos[0]);
         LoadBg3Map();
         break;
     case 5:
@@ -438,7 +438,7 @@ void sub_080233e0(void)
     sub_08028130();
     LoadRoomObjectGfx();
     InitDoors();
-    sub_080307b0();
+    StartBlockAnims();
     sub_080290ac();
     if (gPlayerCount == 1)
         CameraResetBounds();

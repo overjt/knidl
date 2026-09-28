@@ -13,7 +13,7 @@
  * sub_08027588/sub_080275cc keep the two-player race record
  * gUnk_02006098 (flags|0x80, lo, hi, previous, direction),
  * sub_080276ac/sub_080276cc/sub_08027750/sub_08027a30 the per-player
- * camera modes gPlayerCameraMode, and sub_08027798, sub_080277f0,
+ * camera modes gPlayerCameraMode, and CameraStartHoldAnchorAt, sub_080277f0,
  * sub_08027850 and sub_08027908 set the camera mode and target
  * (gCameraAnchorX/gCameraAnchorY) for one or all players. */
 
@@ -221,7 +221,7 @@ s32 sub_08027750(void)
     return 1;
 }
 
-void sub_08027798(s32 x, s32 y)
+void CameraStartHoldAnchorAt(s32 x, s32 y)
 {
     gCameraAnchorX = x;
     gCameraAnchorY = y;

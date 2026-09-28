@@ -98,7 +98,7 @@ void MetaKnightActionStand(void)
     {
         s16 *p = (s16 *)gUnk_0873D206;
 
-        TaskSetFrame(p[sub_0803fd20(gCurTask->player->playerIndex)]);
+        TaskSetFrame(p[PlayerGetFacingSlope(gCurTask->player->playerIndex)]);
     }
     TaskSleepForever();
 }
@@ -137,7 +137,7 @@ void MetaKnightActionWalk(void)
 
 void MetaKnightActionWalkUpdate(void)
 {
-    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
+    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0 && PlayerCheckFallOrWater() == 0
            && PlayerCheckEnterDoor() == 0 && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0
            && PlayerCheckBButton() == 0)
     {
@@ -268,7 +268,7 @@ void MetaKnightActionRunUpdate(void)
     }
     while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
-        if (gCurTask->unk28 == 0 && sub_0803fe68() != 0)
+        if (gCurTask->unk28 == 0 && PlayerCheckFallOrWater() != 0)
             break;
         if (PlayerCheckEnterDoor() != 0)
             break;
@@ -588,7 +588,7 @@ void MetaKnightActionDuck(void)
     }
     gCurTask->unk28 = 8;
     q = (s16 *)gUnk_0873D5C0;
-    TaskSetFrame(q[sub_0803fd20(gCurTask->player->playerIndex)]);
+    TaskSetFrame(q[PlayerGetFacingSlope(gCurTask->player->playerIndex)]);
     TaskSleepForever();
 }
 
@@ -648,7 +648,7 @@ void MetaKnightActionSlideUpdate(void)
     s32 x;
     s32 k;
 
-    v = sub_0803fe68();
+    v = PlayerCheckFallOrWater();
     if (v == 0)
     {
         t = gCurTask;
@@ -1110,7 +1110,7 @@ void MetaKnightActionHurtUpdate(void)
     switch (gCurTask->variant)
     {
     case 6:
-        sub_08040710();
+        PlayerRequestStandOrFall();
         break;
     case 5:
         break;
@@ -1384,7 +1384,7 @@ void MetaKnightActionExitDoor(void)
     TaskYieldTrampoline(2);
     {
         s16 *p = (s16 *)gUnk_0873D206;
-        TaskSetFrame(p[((s32 (*)(s32))sub_0803fd20)((s8)gCurTask->player->playerIndex)]);
+        TaskSetFrame(p[((s32 (*)(s32))PlayerGetFacingSlope)((s8)gCurTask->player->playerIndex)]);
     }
     if (gUnk_0200AF00 == 1)
     {

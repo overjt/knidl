@@ -51,12 +51,12 @@ void sub_0801bcac(const s8 *p)
         if (v != 0)
         {
             if (v < 0)
-                sub_0801c7cc();
+                TerrainProbeWallLeftOnGround();
             else
-                sub_0801c690();
+                TerrainProbeWallRightOnGround();
         }
         sub_0801c8dc();
-        sub_0801d394();
+        TerrainProbeFloor();
     }
     else
     {
@@ -64,12 +64,12 @@ void sub_0801bcac(const s8 *p)
         if (v != 0)
         {
             if (v < 0)
-                sub_0801dc88();
+                TerrainProbeWallLeftInAir();
             else
-                sub_0801d9c8();
+                TerrainProbeWallRightInAir();
         }
-        sub_0801dee8();
-        sub_0801ecd0();
+        TerrainProbeCeiling();
+        TerrainProbeLanding();
     }
     TerrainProbeWater();
     TerrainProbeEnd(p);
@@ -100,9 +100,9 @@ void sub_0801bde0(const s8 *p)
         if (v != 0)
         {
             if (v < 0)
-                sub_0801c7cc();
+                TerrainProbeWallLeftOnGround();
             else
-                sub_0801c690();
+                TerrainProbeWallRightOnGround();
         }
         sub_0801c8dc();
         sub_0801c930();
@@ -113,11 +113,11 @@ void sub_0801bde0(const s8 *p)
         if (v != 0)
         {
             if (v < 0)
-                sub_0801dc88();
+                TerrainProbeWallLeftInAir();
             else
-                sub_0801d9c8();
+                TerrainProbeWallRightInAir();
         }
-        sub_0801dee8();
+        TerrainProbeCeiling();
         sub_0801e178();
     }
     TerrainProbeWater();

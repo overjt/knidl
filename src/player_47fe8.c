@@ -25,7 +25,7 @@
  * and the mode (the fade back, BeginFade(4, 2, ...)) and unfreezes
  * the stage.  Its handler PlayerActionGetAbilityUpdate hands
  * over to the ability's own follow-up once Task.unk28 is set (action 42
- * for ability 11, 55 for 24, M11's sub_08040710 otherwise) and, while
+ * for ability 11, 55 for 24, M11's PlayerRequestStandOrFall otherwise) and, while
  * Task.unk2C is set, drives the pose: ability 2 blends its palettes
  * gUnk_081BE6BC[] over the animation frames 0x36B-0x372 (the twin of
  * M12's PlayerActionSparkUpdate), abilities 4, 12 and 14 register their collider
@@ -710,7 +710,7 @@ void PlayerActionGetAbilityUpdate(void)
             p->requestedAction = 55;
             break;
         default:
-            sub_08040710();
+            PlayerRequestStandOrFall();
             break;
         }
     } else if (t->unk2C != 0) {

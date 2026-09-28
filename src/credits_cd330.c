@@ -169,7 +169,7 @@ void CreditsLoadScene(void)
     ResetBgScroll();
     ClearColliderLists();
     LoadBgLayout(17);
-    sub_0802497c();
+    LoadCreditsRoom();
     b = gUnk_02007FB8;
     zero = 0;
     p = b + 2;

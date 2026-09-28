@@ -42,7 +42,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern s32 sub_08063698(u32 type, s32 start);
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorLoadDefSlot(u32 i, struct ActorDef *d);

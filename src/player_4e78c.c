@@ -9,13 +9,13 @@
 
 /* player_4e78c.c (0x0804E78C-0x0804EE07, issue #90).
  *
- * Action 49's sub-actions 0-3 (gUnk_0873B664) and sub-handlers 9-12
- * (gUnk_0873B688), each sub-action followed by its sub-handler.  The
+ * Action 49's sub-actions 0-3 (gPlayerBallVariants) and sub-handlers 9-12
+ * (gPlayerBallVariantUpdates), each sub-action followed by its sub-handler.  The
  * sub-actions are yield scripts (sub_0804e78c: sound 171, animations
  * 0xCCA-0xCDA and effect 44 four times; sub_0804eca4: sound 119,
  * effect 6 and camera preset PlayerSetMotionXPreset(11, 62)); the sub-handlers read
  * the keys and the ground flag Task.onGround, pick the next sub-action
- * (Task.variant) and re-bind it through sub_0804e600, most of them through
+ * (Task.variant) and re-bind it through PlayerActionBallEnterVariant, most of them through
  * the helper sub_0804f7f8's four key probes. */
 
 void TaskSetEntry(void *a, u32 i);
@@ -82,7 +82,7 @@ void sub_0804e8f4(void)
         else
             t->variant = 6;
         gCurTask->unk46 = 0;
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
     sub_0804f8ec(0);
 }
@@ -155,7 +155,7 @@ void sub_0804ea7c(void)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
 }
 
@@ -185,7 +185,7 @@ void sub_0804eb60(void)
             t->accelX = -t->accelX;
             t->facing = -t->facing;
             gCurTask->unk24 = 0;
-            TaskSetEntry(sub_0804e600, gCurTaskIdx);
+            TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
             break;
         }
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
@@ -209,7 +209,7 @@ void sub_0804eb60(void)
         if (gCurTask->unk2C != gCurTask->player->slope)
         {
             gCurTask->unk24 = 0;
-            TaskSetEntry(sub_0804e600, gCurTaskIdx);
+            TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
         }
         break;
     }
@@ -217,7 +217,7 @@ void sub_0804eb60(void)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
     PlayerSetMotionXPreset(12, 1);
     gCurTask->unk28 = sub_0804f76c();
@@ -268,7 +268,7 @@ void sub_0804ecec(void)
     }
     if (gCurTask->variant != 3)
     {
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
         gTasks[gCurTask->unk34].unk28 = -1;
     }
 }

@@ -97,7 +97,7 @@ struct Unk0802D25C;
 struct Unk0802D278;
 
 /* src/camera_296a0.c */
-void sub_080296a0(void);
+void StreamBg2MapLooping(void);
 void StreamBg123Maps(void);
 void StreamBg23Maps(void);
 void StreamBg23Rows(void);
@@ -126,7 +126,7 @@ void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
 void DrawBg2View(s32 px, s32 py);
 void DrawBg2Row(s32 x0, s32 x1, s32 y);
 void DrawBg2Column(s32 x, s32 y0, s32 y1);
-void sub_0802aae8(s32 x);
+void DrawBg2EdgeColumn(s32 x);
 void DrawBg3View(s32 px, s32 py);
 void DrawBg3Row(s32 x0, s32 x1, s32 y);
 void DrawBg3Column(s32 x, s32 y0, s32 y1);
@@ -141,10 +141,10 @@ void DrawBg23FullRow(s32 y);
 void DrawBg1Tile(s32 x, s32 y);
 void DrawBg2Tile(s32 x, s32 y);
 void DrawBg3Tile(s32 x, s32 y);
-void sub_0802b074(s32 px);
-void sub_0802b168(s32 x, s32 y);
-void sub_0802b25c(s32 x);
-void sub_0802b29c(s32 x, s32 y);
+void DrawBg2ViewLooping(s32 px);
+void DrawBg2EdgeTile(s32 x, s32 y);
+void RestoreMapColumn(s32 x);
+void RestoreMapCell(s32 x, s32 y);
 
 /* src/bgmap_2b2f0.c */
 void sub_0802b2f0(void);
@@ -177,11 +177,11 @@ void CameraStartHoldAnchor(void);
 void sub_0802d0c4(void);
 void LoadRoomBgAnims(void);
 void UpdateBgAnims(void);
-void sub_0802d25c(struct Unk0802D25C *a);
-void sub_0802d278(struct Unk02007D70 *p, struct Unk0802D278 *q);
-void sub_0802d294(struct Unk02007D70 *p);
-void sub_0802d2f0(u32 x, u32 y, u32 v);
-void sub_0802d32c(struct Unk02007D70 *p);
+void BgAnimCopyTiles(struct Unk0802D25C *a);
+void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q);
+void BgAnimStepPaletteFade(struct Unk02007D70 *p);
+void SetCollisionTile(u32 x, u32 y, u32 v);
+void BgAnimStop(struct Unk02007D70 *p);
 s32 CreateMapEvent(s32 a);
 void Task_MapEvent(void);
 
@@ -267,8 +267,8 @@ s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
 void ResetBlockAnims(void);
 void ResumeBlockAnims(void);
 void PauseBlockAnims(void);
-void sub_080307b0(void);
-void sub_080307cc(void);
-void sub_080307e8(void);
+void StartBlockAnims(void);
+void StartBlockAnimsWithEdges(void);
+void StartBg1BlockAnims(void);
 
 #endif /* GUARD_CAMERA_H */

@@ -43,10 +43,10 @@ extern u8 gUnk_030023D0;
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void sub_0801b7dc(void);
+extern void PlaceAttackBox(void);
 extern u8 sub_0801b24c(void);
 extern u8 sub_0801af14(void);
-extern u8 sub_0801a8c8(void);
+extern u8 HitTestPlayerColliders(void);
 extern void PlaySfx(u32 a);
 extern u8 gTerrainResult;
 extern void ClampTaskToRoom(struct Task *t);
@@ -1216,7 +1216,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
 }
 u32 ActorTestColliders(u8 a)
 {
-    sub_0801b7dc();
+    PlaceAttackBox();
     if (sub_0801b24c() != 0)
     {
         ActorStoreHit(a);
@@ -1227,7 +1227,7 @@ u32 ActorTestColliders(u8 a)
         ActorStoreHit(a);
         return 1;
     }
-    if (sub_0801a8c8() != 0)
+    if (HitTestPlayerColliders() != 0)
     {
         ActorStoreHit(a);
         return 1;
@@ -1386,7 +1386,7 @@ u32 sub_08068f68(void)
     gAttackX = gCurTask->pixelX;
     w = gCurTask;
     gAttackY = w->pixelY;
-    sub_0801b7dc();
+    PlaceAttackBox();
     if (a->unk60 != NULL)
     {
         gAttackHitDuration = a->unk60->hitDuration;
@@ -1400,7 +1400,7 @@ u32 sub_08068f68(void)
         gAttackHitDuration = 30;
         gAttackBox = a->unk4C;
     }
-    if (sub_0801a8c8() == 0)
+    if (HitTestPlayerColliders() == 0)
         return 0;
     ActorStoreHit(1);
     return 1;
@@ -1431,8 +1431,8 @@ u32 sub_0806914c(s32 a)
     else
         gAttackHitDuration = 30;
     gAttackBox = a;
-    sub_0801b7dc();
-    if (sub_0801a8c8() == 0)
+    PlaceAttackBox();
+    if (HitTestPlayerColliders() == 0)
         return 0;
     ActorStoreHit(0);
     return 1;

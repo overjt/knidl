@@ -8,12 +8,12 @@
 /* hitbox_1a8c8.c (0x0801A8C8-0x0801B24B, issue #84).
  *
  * The actor-vs-collider hit tests M17/M18's actors run (src/actor_673ec.c
- * calls them after sub_0801b7dc has placed the actor's attack box): each walks
+ * calls them after PlaceAttackBox has placed the actor's attack box): each walks
  * one of the collider lists M05's RegisterCollider fills, places the collider's
  * body box the same way, tests the overlap and, on a hit, writes the hit
  * result (gHitKind = hit kind, gHitEffect, gHitHealthLeft) through
- * the shared tails sub_0801b8e4/sub_0801b9e4 and returns 1.
- * sub_0801a8c8 tests the players' list gPlayerColliders (by the attack's class
+ * the shared tails CalcHitDamageAndDirection/sub_0801b9e4 and returns 1.
+ * HitTestPlayerColliders tests the players' list gPlayerColliders (by the attack's class
  * gAttackBox->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
  * block, 2/3 a touch that marks the player in gUnk_03001F24);
  * sub_0801af14 tests the second list gUnk_030053A0.  The third list's test,
@@ -127,17 +127,17 @@ extern u8 gUnk_030054A8;
 extern u16 gUnk_08732218[];
 extern u16 gUnk_08732224[];
 
-void sub_0801b8e4(void);
+void CalcHitDamageAndDirection(void);
 void sub_0801b9e4(void);
 
 /* Hit test of the actor's attack box against the players' hit list
    gPlayerColliders.  By the attack's class (unk06 & 7): 0 = a damaging hit
-   (hit kind 2/6, health and knock-back through sub_0801b8e4), 1 = hit kind
+   (hit kind 2/6, health and knock-back through CalcHitDamageAndDirection), 1 = hit kind
    8 unless the body box blocks it, 2/3 = a touch (kind 7) that marks the
    player in gUnk_03001F24 (class 2 returns at the first one, class 3 after
    the list).  Class 2/3 comes last in the switch: merge_blocks moves its
    head up behind the dispatch, which is why its tail sits after class 1. */
-u8 sub_0801a8c8(void)
+u8 HitTestPlayerColliders(void)
 {
     struct HitEntry *e;
     struct Task *t;
@@ -226,7 +226,7 @@ u8 sub_0801a8c8(void)
                 else
                 {
                     gHitKind = 2;
-                    sub_0801b8e4();
+                    CalcHitDamageAndDirection();
                     t->unk76 = (t->unk76 & 0x4000) | 1;
                 }
             }
@@ -270,7 +270,7 @@ u8 sub_0801a8c8(void)
                 else
                 {
                     gHitKind = 2;
-                    sub_0801b8e4();
+                    CalcHitDamageAndDirection();
                 }
             }
             else if (s == 1 || s == 3)
@@ -286,7 +286,7 @@ u8 sub_0801a8c8(void)
                 else
                 {
                     gHitKind = 2;
-                    sub_0801b8e4();
+                    CalcHitDamageAndDirection();
                 }
             }
             sub_0801b9e4();
@@ -438,7 +438,7 @@ u8 sub_0801af14(void)
             if (!(mask & gAttackBox->unk0E))
             {
                 gHitKind = 2;
-                sub_0801b8e4();
+                CalcHitDamageAndDirection();
             }
             else
             {

@@ -16,7 +16,7 @@
  * and 2: PlayerActionStand enters mode 0 (per-frame handler 1, PlayerActionStandUpdate)
  * and PlayerActionWalk mode 1 (handler 2, PlayerActionWalkUpdate).  Their animations
  * come from gUnk_0873D0F8[ability][5] (column picked by M11's
- * sub_0803fd20, row 26 when PlayerState.mouthState == 1) and gUnk_0873D2E8. */
+ * PlayerGetFacingSlope, row 26 when PlayerState.mouthState == 1) and gUnk_0873D2E8. */
 
 void TaskSetEntry(void *a, u32 i);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
@@ -70,14 +70,14 @@ void PlayerActionStand(void)
         t2->player->unk0F = 0;
         PlayerPlayBump();
     }
-    gCurTask->player->unk33 = sub_0803fd20(gCurTask->player->playerIndex);
+    gCurTask->player->unk33 = PlayerGetFacingSlope(gCurTask->player->playerIndex);
     p = gCurTask->player;
     p->unk35 = 0;
     p->unk34 = 0;
     if (gCurTask->player->mouthState == 1)
-        gCurTask->unk46 = gUnk_0873D0F8[26][sub_0803fd20(gCurTask->player->playerIndex)];
+        gCurTask->unk46 = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     else
-        gCurTask->unk46 = gUnk_0873D0F8[gCurTask->player->ability][sub_0803fd20(gCurTask->player->playerIndex)];
+        gCurTask->unk46 = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
     case 1:
@@ -121,7 +121,7 @@ void PlayerActionStandUpdate(void)
 
     if (PlayerFaceHeldDirection() != 0)
         PlayerUpdateFlip();
-    while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && PlayerCheckEnterDoor() == 0
+    while (PlayerCheckJump() == 0 && PlayerCheckFallOrWater() == 0 && PlayerCheckEnterDoor() == 0
            && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0 && PlayerCheckFloat() == 0
            && PlayerCheckBButton() == 0)
     {
@@ -182,13 +182,13 @@ void PlayerActionStandUpdate(void)
             if (gMetaKnightmareMode == 0)
             {
                 if (gCurTask->player->mouthState == 1)
-                    gCurTask->unk46 = gUnk_0873D0F8[26][sub_0803fd20(gCurTask->player->playerIndex)];
+                    gCurTask->unk46 = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
                 else
-                    gCurTask->unk46 = gUnk_0873D0F8[gCurTask->player->ability][sub_0803fd20(gCurTask->player->playerIndex)];
+                    gCurTask->unk46 = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
             }
             else
             {
-                gCurTask->unk46 = gUnk_0873D206[sub_0803fd20(gCurTask->player->playerIndex)];
+                gCurTask->unk46 = gUnk_0873D206[PlayerGetFacingSlope(gCurTask->player->playerIndex)];
             }
             TaskSetFrame(gCurTask->unk46);
             gCurTask->player->unk46 = 0;
@@ -229,7 +229,7 @@ void PlayerActionWalk(void)
         gCurTask->player->unk46 = 0;
         gCurTask->unk28 = 0;
         PlayerPlayBump();
-        if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
+        if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
             gCurTask->variant = 1;
         else
             gCurTask->variant = 0;
@@ -359,7 +359,7 @@ void PlayerActionWalk(void)
 
 void PlayerActionWalkUpdate(void)
 {
-    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
+    while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0 && PlayerCheckFallOrWater() == 0
            && PlayerCheckEnterDoor() == 0 && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0
            && PlayerCheckFloat() == 0)
     {
@@ -404,13 +404,13 @@ void PlayerActionWalkUpdate(void)
                 }
                 if (gCurTask->variant == 0)
                 {
-                    if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
+                    if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
                     {
                         gCurTask->variant = 1;
                         TaskSetEntry(PlayerActionWalk, gCurTaskIdx);
                     }
                 }
-                else if (sub_0803fd20(gCurTask->player->playerIndex) != 4)
+                else if (PlayerGetFacingSlope(gCurTask->player->playerIndex) != 4)
                 {
                     gCurTask->variant = 0;
                     TaskSetEntry(PlayerActionWalk, gCurTaskIdx);

@@ -53,7 +53,7 @@ void PlayerActionRun(void)
         PlayerPlayBump();
         PlayerStartSfx(117, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, 7, 0);
-        if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
+        if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
             gCurTask->variant = 1;
         else
             gCurTask->variant = 0;
@@ -180,7 +180,7 @@ void PlayerActionRunUpdate(void)
     }
     while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
-        if (gCurTask->unk28 == 0 && sub_0803fe68() != 0)
+        if (gCurTask->unk28 == 0 && PlayerCheckFallOrWater() != 0)
             break;
         if (PlayerCheckEnterDoor() != 0)
             break;
@@ -217,13 +217,13 @@ void PlayerActionRunUpdate(void)
         }
         if (gCurTask->variant == 0)
         {
-            if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
+            if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
             {
                 gCurTask->variant = 1;
                 TaskSetEntry(PlayerActionRun, gCurTaskIdx);
             }
         }
-        else if (sub_0803fd20(gCurTask->player->playerIndex) != 4)
+        else if (PlayerGetFacingSlope(gCurTask->player->playerIndex) != 4)
         {
             gCurTask->variant = m5;
             TaskSetEntry(PlayerActionRun, gCurTaskIdx);
@@ -271,7 +271,7 @@ void PlayerActionSkid(void)
 
 void PlayerActionSkidUpdate(void)
 {
-    while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
+    while (PlayerCheckJump() == 0 && PlayerCheckFallOrWater() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
         if (gCurTask->velX == 0)
         {

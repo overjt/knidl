@@ -42,7 +42,7 @@ extern u8 gExtraMode;
 void sub_0802296c(void);
 void sub_08022f98(void);
 void sub_08022f9c(void);
-void sub_08022fa8(void);
+void LoadRoom(void);
 void sub_080233e0(void);
 void sub_08023948(void);
 void sub_08023ca0(void);
@@ -154,7 +154,7 @@ void StageInit(void)
     sub_08008c7c();
     gUnk_02007F50 = -1;
     if (gUnk_02004B64 == 0)
-        sub_08022fa8();
+        LoadRoom();
     else
         sub_080233e0();
     if ((u8)(gUnk_02000020 - 2) <= 1)

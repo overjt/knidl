@@ -17,7 +17,7 @@
    test the floor under the box's left and right corners, keeping the
    corner/slope flags in gTerrainProbeResult.unkB.  The corner results share their flag updates through
    the labels at the end of each half. */
-void sub_0801ecd0(void)
+void TerrainProbeLanding(void)
 {
     s32 side;
     s32 a;

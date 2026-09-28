@@ -5,8 +5,8 @@
 
 /* hitbox_1b24c.c (0x0801B24C-0x0801B7DB, issue #84).
  *
- * The third actor-vs-collider hit test (the first two, sub_0801a8c8 and
- * sub_0801af14, are src/hitbox_1a8c8.c; the shared tails sub_0801b8e4 and
+ * The third actor-vs-collider hit test (the first two, HitTestPlayerColliders and
+ * sub_0801af14, are src/hitbox_1a8c8.c; the shared tails CalcHitDamageAndDirection and
  * sub_0801b9e4 are src/hitbox_1b7dc.c).  sub_0801b24c walks the third
  * collider list gUnk_030052A0 (gUnk_030054F4 entries) that M05's
  * RegisterCollider fills, places each entry's body box (mirrored by its task's
@@ -17,7 +17,7 @@
  * the collider's task (unk7C = 6/7) or its player (unk76), writes the hit
  * result gHitKind (3/4 with a knock-back direction from ArcTan2 into
  * gHitDirection, 6 or 7, or gUnk_08732230[k] with the damage of
- * sub_0801b8e4) and returns 1; it returns 0 when nothing is hit.
+ * CalcHitDamageAndDirection) and returns 1; it returns 0 when nothing is hit.
  *
  * Matching notes (#84's final campaign, lesson 3.492): parked by #84 at 44
  * differing bytes; the player index is read from gColliderPlayer at every
@@ -111,7 +111,7 @@ extern u32 gUnk_08732254[];
 extern u32 gUnk_08732278[];
 extern u32 gUnk_0873229C[];
 
-void sub_0801b8e4(void);
+void CalcHitDamageAndDirection(void);
 void sub_0801b9e4(void);
 
 /* Hit test of the actor's attack box against the third collider list.
@@ -245,7 +245,7 @@ u8 sub_0801b24c(void)
                 if (!(gColliderBodyBox->unk10 & 0x10))
                     t->hitKind = 7;
                 gHitKind = gUnk_08732230[k];
-                sub_0801b8e4();
+                CalcHitDamageAndDirection();
                 break;
             }
             sub_0801b9e4();

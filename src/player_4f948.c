@@ -17,9 +17,9 @@
  * row gUnk_0873C304; its handler PlayerActionStarRodJumpUpdate is a `switch (Task.variant)`
  * with M11's steering and camera presets.  Action 58 is a second move set
  * one level down: PlayerActionStarRodFlight (mode 13) dispatches Task.variant through its
- * four sub-actions gUnk_0873B6AC and sub_0804fee8 is the re-entry callback;
+ * four sub-actions gPlayerStarRodFlightVariants and PlayerActionStarRodFlightEnterVariant is the re-entry callback;
  * its handler PlayerActionStarRodFlightUpdate runs the sub-handler Task.variant of
- * gUnk_0873B6BC, the steering helper sub_080506dc, clamps the player to
+ * gPlayerStarRodFlightVariantUpdates, the steering helper sub_080506dc, clamps the player to
  * 16-224 x 18-132 and, once gSpriteCameraY passes 888, subtracts the
  * player's whole health (AddPlayerHealth) and requests action 17. */
 
@@ -254,19 +254,19 @@ void PlayerActionStarRodFlight(void)
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
     }
-    CallTableEntry(gCurTask->variant, 4, gUnk_0873B6AC);
+    CallTableEntry(gCurTask->variant, 4, gPlayerStarRodFlightVariants);
 }
 
-void sub_0804fee8(void)
+void PlayerActionStarRodFlightEnterVariant(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    CallTableEntry(gCurTask->variant, 4, gUnk_0873B6AC);
+    CallTableEntry(gCurTask->variant, 4, gPlayerStarRodFlightVariants);
 }
 
 void PlayerActionStarRodFlightUpdate(void)
 {
-    CallTableEntry(gCurTask->variant, 4, gUnk_0873B6BC);
+    CallTableEntry(gCurTask->variant, 4, gPlayerStarRodFlightVariantUpdates);
     sub_080506dc();
     {
         struct Task *t = gCurTask;

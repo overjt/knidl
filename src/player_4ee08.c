@@ -9,8 +9,8 @@
 
 /* player_4ee08.c (0x0804EE08-0x0804F613, issue #90).
  *
- * Action 49's sub-actions 4-8 (gUnk_0873B664) and sub-handlers 13-17
- * (gUnk_0873B688), each sub-action followed by its sub-handler: more
+ * Action 49's sub-actions 4-8 (gPlayerBallVariants) and sub-handlers 13-17
+ * (gPlayerBallVariantUpdates), each sub-action followed by its sub-handler: more
  * attacks of the same move set (sounds 168-170, 183, 184, 202 and 246,
  * M11's PlayerSetMotionYPreset steering, effect 44), the last one (sub_0804f450)
  * installing the hit boxes gPlayerDefaultBodyBox/gPlayerDefaultTerrainBox in PlayerState.
@@ -104,7 +104,7 @@ void sub_0804ef00(void)
         break;
     }
     if (gCurTask->variant != 4)
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     PlayerSetMotionXPreset(12, 0);
 }
 
@@ -199,7 +199,7 @@ void sub_0804f124(void)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
     PlayerSetMotionXPreset(12, 0);
 }
@@ -239,7 +239,7 @@ void sub_0804f258(void)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
     PlayerSetMotionXPreset(12, 0);
 }
@@ -312,7 +312,7 @@ void sub_0804f3e4(void)
             t->variant = 2;
         else
             t->variant = 1;
-        TaskSetEntry(sub_0804e600, gCurTaskIdx);
+        TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
 }
 

@@ -1346,7 +1346,7 @@ void Task_WarpStarCamera(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = 0;
     t->updateCallback = (u32)WarpStarCameraUpdate;
-    sub_08027798(t->pixelX, t->pixelY);
+    CameraStartHoldAnchorAt(t->pixelX, t->pixelY);
     CallTableEntry(gTasks[gCurTask->parent].state, 25, gWarpStarCameraPaths);
 }
 

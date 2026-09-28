@@ -171,10 +171,10 @@ extern u16 gUnk_0873B534[][32];
 extern u8 gUnk_0873B634[];
 extern s16 gUnk_0873B654[];
 extern u8 gUnk_0873B65E[];
-extern void (*gUnk_0873B664[])(void); /* enter 49's sub-actions [9], indexed by Task.variant */
-extern void (*gUnk_0873B688[])(void); /* handler 46's per-frame sub-handlers [9] */
-extern void (*gUnk_0873B6AC[])(void); /* enter 58's sub-actions [4] */
-extern void (*gUnk_0873B6BC[])(void); /* handler 55's per-frame sub-handlers [4] */
+extern void (*gPlayerBallVariants[])(void); /* enter 49's sub-actions [9], indexed by Task.variant */
+extern void (*gPlayerBallVariantUpdates[])(void); /* handler 46's per-frame sub-handlers [9] */
+extern void (*gPlayerStarRodFlightVariants[])(void); /* enter 58's sub-actions [4] */
+extern void (*gPlayerStarRodFlightVariantUpdates[])(void); /* handler 55's per-frame sub-handlers [4] */
 extern u16 gUnk_0873B6CC[][2];
 extern u8 gUnk_0873B6DC[];
 extern u16 gUnk_0873B6E8[][6];
@@ -393,11 +393,11 @@ void sub_0801a76c(s32 i);
 void ClearColliderLists(void);
 
 /* src/block_30804.c */
-u16 sub_0803093c(struct HitBoxSet *p, s32 x, s32 y);
+u16 TaskBreakBlocksAtNoPlayer(struct HitBoxSet *p, s32 x, s32 y);
 u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
-u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
-u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir);
-s32 sub_08030f1c(u32 x, u32 y);
+u16 BreakFirstBlockInHitBox(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
+u16 BreakTopBlockRow(struct HitBoxSet *p, s32 x, s32 y, s32 dir);
+s32 IsUnbrokenBlockAt(u32 x, u32 y);
 s32 BreakBlockAt(u32 x, u32 y);
 s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
 s32 sub_08031310(s32 x, s32 y);
@@ -407,22 +407,22 @@ s32 BreakBlockAtCursor(void);
 void UpdateBlockAnims(void);
 void FreeBlockAnimAndBlock(struct Unk020061F0 *b);
 void FreeBlockAnim(struct Unk020061F0 *b);
-void sub_080319d0(struct Unk020061F0 *b, s32 n);
-void sub_08031ab8(struct Unk020061F0 *b, s32 n);
-void sub_08031b58(struct Unk020061F0 *b, s32 n);
+void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n);
+void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n);
+void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n);
 void BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void sub_08031c7c(struct Unk020061F0 *b);
-void sub_08031d04(struct Unk020061F0 *b);
+void BlockAnimDrawTiles(struct Unk020061F0 *b);
+void BlockAnimBreakNeighbors(struct Unk020061F0 *b);
 void UpdateBlockAnimsWithEdges(void);
 void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
-void sub_08031f3c(struct Unk020061F0 *b);
+void BlockAnimDrawWithEdges(struct Unk020061F0 *b);
 s32 CanBreakBg1Block(s32 x, s32 y);
 s16 BreakBg1BlockAtCursor(void);
 void UpdateBg1BlockAnims(void);
-void sub_080324e4(struct Unk020061F0 *b);
+void FreeBg1BlockAnimAndBlock(struct Unk020061F0 *b);
 void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void sub_08032520(struct Unk020061F0 *b);
-void sub_080325b8(struct Unk020061F0 *b);
+void Bg1BlockAnimDrawTiles(struct Unk020061F0 *b);
+void Bg1BlockAnimBreakNeighbors(struct Unk020061F0 *b);
 
 /* src/player_32688.c */
 void Task_Player(void);
@@ -564,13 +564,13 @@ void PlayerCheckBump(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerStopAtWall(void);
 s32 PlayerCheckLanding(void);
-s32 sub_0803fa74(void);
+s32 PlayerCheckDie(void);
 void sub_0803fb54(void);
 s32 PlayerHasCrossedWaterSurface(s32 a);
-s32 sub_0803fd20(s32 a0);
+s32 PlayerGetFacingSlope(s32 a0);
 s32 PlayerCheckSkid(void);
 s32 PlayerCheckJump(void);
-s32 sub_0803fe68(void);
+s32 PlayerCheckFallOrWater(void);
 s32 PlayerCheckDuckOrSwallow(void);
 s32 PlayerCheckLadder(void);
 s32 PlayerCheckFloat(void);
@@ -583,7 +583,7 @@ s32 PlayerCheckStartSwim(void);
 s32 PlayerRequestLocomotion(void);
 s32 sub_080404e4(void);
 s32 PlayerCheckShareItem(void);
-void sub_08040710(void);
+void PlayerRequestStandOrFall(void);
 void LatchPlayerKeys(void);
 void sub_08040808(s32 a0);
 void sub_08040858(s32 a0);
@@ -736,7 +736,7 @@ void PlayerActionThrowUpdate(void);
 
 /* src/player_4e5a4.c */
 void PlayerActionBall(void);
-void sub_0804e600(void);
+void PlayerActionBallEnterVariant(void);
 void PlayerActionBallUpdate(void);
 
 /* src/player_4e78c.c */
@@ -774,7 +774,7 @@ void PlayerActionStarRodUpdate(void);
 void PlayerActionStarRodJump(void);
 void PlayerActionStarRodJumpUpdate(void);
 void PlayerActionStarRodFlight(void);
-void sub_0804fee8(void);
+void PlayerActionStarRodFlightEnterVariant(void);
 void PlayerActionStarRodFlightUpdate(void);
 
 /* src/player_4ffdc.c */

@@ -77,7 +77,7 @@ extern void StartScrollLock();
 extern s32 CreateMapEvent();
 extern void CreateWarpStarStationNumber();
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);

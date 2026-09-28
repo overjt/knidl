@@ -293,7 +293,7 @@ void PlayerUpdate(void)
     gCurTask->player->unk4E = 0xFFFF;
     if (gCurTask->player->terrainBox != 0)
     {
-        sub_0801baa4(gCurTask->player->terrainBox);
+        PlayerProbeTerrain(gCurTask->player->terrainBox);
         gCurTask->player->boundsClamp = gTerrainBoundsClamp;
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
             gCurTask->player->unk4E = gUnk_03005544;
@@ -327,7 +327,7 @@ void PlayerUpdate(void)
     gCurTask->player->slope = gTerrainResult.slope;
     gCurTask->player->onSlipperyFloor = gTerrainProbeResult.onSlipperyFloor;
     gCurTask->player->atDoor = gTerrainResult.atDoor;
-    if (sub_0803fa74() != 0)
+    if (PlayerCheckDie() != 0)
         goto tail;
     p = gCurTask->player;
     if (p->bodyBox != 0)

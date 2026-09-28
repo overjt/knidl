@@ -6,8 +6,8 @@
 /* terrain_1c690.c (0x0801C690-0x0801C8DB, issue #84).
  *
  * The wall probes src/terrain_1bcac.c's entry points run for a box
- * standing on the ground (gTerrainProbeResult.unk6 != 0): sub_0801c690 (right
- * edge) and sub_0801c7cc (left edge) push the probe x out of a wall cell
+ * standing on the ground (gTerrainProbeResult.unk6 != 0): TerrainProbeWallRightOnGround (right
+ * edge) and TerrainProbeWallLeftOnGround (left edge) push the probe x out of a wall cell
  * (gCollisionTileShapeClass attribute 1) at the box's top, else its middle corner.
  * 
  * Matching note: cse records `attribute == 1` after the test and then swaps
@@ -17,9 +17,9 @@
  * attribute register). */
 
 /* Right wall probe of a box standing on the ground (gTerrainProbeResult.unk6 !=
-   0), the mirror image of sub_0801c7cc: step the probe x out of a wall
+   0), the mirror image of TerrainProbeWallLeftOnGround: step the probe x out of a wall
    cell at the box's top-right, else its middle-right corner. */
-void sub_0801c690(void)
+void TerrainProbeWallRightOnGround(void)
 {
     s32 a;
     s32 d;
@@ -61,9 +61,9 @@ void sub_0801c690(void)
 }
 
 /* Left wall probe of a box standing on the ground (gTerrainProbeResult.unk6 !=
-   0), the mirror image of sub_0801c690: step the probe x out of a wall
+   0), the mirror image of TerrainProbeWallRightOnGround: step the probe x out of a wall
    cell at the box's top-left, else its middle-left corner. */
-void sub_0801c7cc(void)
+void TerrainProbeWallLeftOnGround(void)
 {
     s32 a;
     u8 m;

@@ -415,7 +415,7 @@ void PlayerActionShareItemUpdate(void)
     struct PlayerState *p = gCurTask->player;
 
     if (p->ability != 24)
-        sub_08040710();
+        PlayerRequestStandOrFall();
     else
         p->requestedAction = 55;
 }

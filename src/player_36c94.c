@@ -18,7 +18,7 @@
  * ability (PlayerState.ability = 0) and the player's three spark records
  * gUnk_02007E90[player][] before its animation; its handler PlayerActionInhaleUpdate
  * runs the block-breaking hit box gUnk_0873CC54 through M09's
- * sub_08030898 (spawning the debris with M17's CreateBlockStar at the
+ * TaskBreakFirstBlock (spawning the debris with M17's CreateBlockStar at the
  * broken block) and M09's collision registry RegisterCollider.  Actions 14
  * and 15 (PlayerActionSpit, PlayerActionSwallow) are short animation scripts, and
  * handlers 14 and 15 pick the next velocity preset from the ground flags
@@ -58,7 +58,7 @@ void TaskSetEntry(void *a, u32 i);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
-u16 sub_08030898(struct HitBoxSet *p, s32 e);
+u16 TaskBreakFirstBlock(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void PlayerStartSfx(s32 a0, u16 a1);
@@ -649,7 +649,7 @@ void PlayerActionInhaleUpdate(void)
             {
                 if (u->unk28 == 0)
                 {
-                    if (sub_08030898(&gUnk_0873CC54, u->player->playerIndex) != 0)
+                    if (TaskBreakFirstBlock(&gUnk_0873CC54, u->player->playerIndex) != 0)
                     {
                         gCurTask->player->unk09 = 2;
                         CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, 3, 1);

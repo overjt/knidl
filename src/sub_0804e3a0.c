@@ -14,7 +14,7 @@ void TaskSetEntry(void *func, u32 arg);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);
-u16 sub_08030898(void *table, s32 id);
+u16 TaskBreakFirstBlock(void *table, s32 id);
 void PlayerSetWaterMotionY(void);
 s32 PlayerLand(s32 a0);
 void PlayerStartOffsetScript(s32 a0);
@@ -53,7 +53,7 @@ void PlayerActionThrowUpdate(void)
             {
                 if (t->unk28 == 0)
                 {
-                    if (sub_08030898(gUnk_0873CC54, p->playerIndex) != 0)
+                    if (TaskBreakFirstBlock(gUnk_0873CC54, p->playerIndex) != 0)
                     {
                         CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 2);
                         gCurTask->player->unk09 = 2;

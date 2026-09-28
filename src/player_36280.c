@@ -230,11 +230,11 @@ void PlayerActionDuck(void)
         PlayerSetMotionXPreset(0, 72);
     }
     gCurTask->unk28 = 8;
-    gCurTask->player->unk33 = sub_0803fd20(gCurTask->player->playerIndex);
+    gCurTask->player->unk33 = PlayerGetFacingSlope(gCurTask->player->playerIndex);
     p = gCurTask->player;
     p->unk35 = 0;
     p->unk34 = 0;
-    gCurTask->unk46 = gUnk_0873D4BC[gCurTask->player->ability][sub_0803fd20(gCurTask->player->playerIndex)];
+    gCurTask->unk46 = gUnk_0873D4BC[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
     case 1:
@@ -274,7 +274,7 @@ void PlayerActionDuckUpdate(void)
     s32 dir = gCurTask->facing;
 
     PlayerFaceHeldDirection();
-    while (sub_0803fe68() == 0 && PlayerCheckDropAbility() == 0)
+    while (PlayerCheckFallOrWater() == 0 && PlayerCheckDropAbility() == 0)
     {
         u16 *q = gLatchedPressedKeys;
         struct Task *t = gCurTask;
@@ -391,7 +391,7 @@ void PlayerActionSlideUpdate(void)
 
     while (1)
     {
-        if (sub_0803fe68() != 0)
+        if (PlayerCheckFallOrWater() != 0)
         {
             if (gCurTask->accelX == 0)
                 PlayerSetMotionXPreset(5, 72);

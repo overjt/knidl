@@ -14,8 +14,8 @@
  * shake (gScreenShake, levels 1-4 only upgrade), TaskCreateHighSlot spawns a task
  * in one of the free high slots 32-62, SetCameraFocus/SetCameraFocusOrAnchor place the
  * player or the camera target, sub_080262e8 spawns a map event at a
- * tabled position, sub_08026308 wraps every camera, object and task
- * coordinate back by 0x200 pixels in a looping room, sub_08026900 clamps
+ * tabled position, WrapLoopingRoom wraps every camera, object and task
+ * coordinate back by 0x200 pixels in a looping room, ClampCameraFocusToRoom clamps
  * the player to the room bounds and sub_0802695c starts the next stage.
  * sub_080264b0, sub_0802651c, sub_0802653c, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
@@ -105,7 +105,7 @@ void sub_080262e8(s32 a)
     sub_0802d478(gUnk_08732638[a][0], gUnk_08732638[a][1]);
 }
 
-void sub_08026308(void)
+void WrapLoopingRoom(void)
 {
     s32 i;
 
@@ -318,7 +318,7 @@ s32 sub_08026834(void)
     return id;
 }
 
-void sub_08026900(void)
+void ClampCameraFocusToRoom(void)
 {
     if (gCameraFocusX < gRoomBounds[0])
         gCameraFocusX = gRoomBounds[0];

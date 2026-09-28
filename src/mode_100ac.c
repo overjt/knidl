@@ -31,7 +31,7 @@ void CutsceneMain(void)
         gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
         LoadGfxSet(0);
         gUnk_0200AF04 = 1;
-        sub_08024300();
+        LoadCutsceneRoom();
         if (gCurLevel != 7)
             LoadBgLayout(8);
         else

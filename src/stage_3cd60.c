@@ -2413,7 +2413,7 @@ s32 PlayerCheckLanding(void)
     return 0;
 }
 
-s32 sub_0803fa74(void)
+s32 PlayerCheckDie(void)
 {
     if (gCurTask->health != 0
      && ((gCurTask->player->unk42 & 1024)
@@ -2505,7 +2505,7 @@ s32 PlayerHasCrossedWaterSurface(s32 a)
     return 0;
 }
 
-s32 sub_0803fd20(s32 a0)
+s32 PlayerGetFacingSlope(s32 a0)
 {
     if (gTasks[a0].onGround == 0)
         return 0;
@@ -2541,7 +2541,7 @@ s32 PlayerCheckJump(void)
     return gCurTask->player->requestedAction;
 }
 
-s32 sub_0803fe68(void)
+s32 PlayerCheckFallOrWater(void)
 {
     struct Task *t = gCurTask;
 
@@ -2860,7 +2860,7 @@ s32 PlayerCheckShareItem(void)
     return gCurTask->player->requestedAction;
 }
 
-void sub_08040710(void)
+void PlayerRequestStandOrFall(void)
 {
     struct Task *t = gCurTask;
 

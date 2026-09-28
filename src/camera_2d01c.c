@@ -12,11 +12,11 @@
  * its test store 0).  LoadRoomBgAnims resets the ten BG animation slots
  * gBgAnims[] and loads the room's scripts from
  * gRoomBgAnimScripts[gCurRoomDef->unk40]; UpdateBgAnims runs them every frame,
- * eight-byte commands: 0 copies tiles to 0x06004000 (sub_0802d25c), 1
- * starts a palette fade (sub_0802d278, stepped by sub_0802d294 into the
+ * eight-byte commands: 0 copies tiles to 0x06004000 (BgAnimCopyTiles), 1
+ * starts a palette fade (BgAnimStartPaletteFade, stepped by BgAnimStepPaletteFade into the
  * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
- * solid flag (sub_0802d2f0), 6 plays a sound effect, anything else stops
- * the slot (sub_0802d32c).  CreateMapEvent spawns task type #4 through M07's
+ * solid flag (SetCollisionTile), 6 plays a sound effect, anything else stops
+ * the slot (BgAnimStop).  CreateMapEvent spawns task type #4 through M07's
  * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.state
  * into the seven camera tasks of the anchor table gMapEventVariants. */
 
@@ -130,11 +130,11 @@ void PlaySfx(u32 a);
 s32 TaskCreateHighSlot(s32 type);
 void CalcRoomBounds(void);
 void CameraResetBounds(void);
-void sub_0802d25c(struct Unk0802D25C *a);
-void sub_0802d278(struct Unk02007D70 *p, struct Unk0802D278 *q);
-void sub_0802d294(struct Unk02007D70 *p);
-void sub_0802d2f0(u32 x, u32 y, u32 v);
-void sub_0802d32c(struct Unk02007D70 *p);
+void BgAnimCopyTiles(struct Unk0802D25C *a);
+void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q);
+void BgAnimStepPaletteFade(struct Unk02007D70 *p);
+void SetCollisionTile(u32 x, u32 y, u32 v);
+void BgAnimStop(struct Unk02007D70 *p);
 
 void CameraLeaveScrollLock(void)
 {
@@ -217,19 +217,19 @@ void UpdateBgAnims(void)
                 continue;
         loop:
             if ((s16)p->unk8 != -1)
-                sub_0802d294(p);
+                BgAnimStepPaletteFade(p);
             if (--p->unk2 > 0)
                 continue;
             cmd = &p->unk4[p->unk0];
             switch (cmd->unk0)
             {
             case 0:
-                sub_0802d25c(cmd->unk4);
+                BgAnimCopyTiles(cmd->unk4);
                 p->unk2 = cmd->unk2 + 1;
                 p->unk0++;
                 goto loop;
             case 1:
-                sub_0802d278(p, cmd->unk4);
+                BgAnimStartPaletteFade(p, cmd->unk4);
                 p->unk2 = cmd->unk2 + 1;
                 p->unk0++;
                 goto loop;
@@ -241,7 +241,7 @@ void UpdateBgAnims(void)
                 p->unk0 = 0;
                 goto loop;
             case 5:
-                sub_0802d2f0(cmd->unk2 >> 8, cmd->unk2 & 0xFF, (u16)(u32)cmd->unk4);
+                SetCollisionTile(cmd->unk2 >> 8, cmd->unk2 & 0xFF, (u16)(u32)cmd->unk4);
                 p->unk0++;
                 goto loop;
             case 6:
@@ -249,19 +249,19 @@ void UpdateBgAnims(void)
                 p->unk0++;
                 goto loop;
             default:
-                sub_0802d32c(p);
+                BgAnimStop(p);
                 break;
             }
         } while (0);
     }
 }
 
-void sub_0802d25c(struct Unk0802D25C *a)
+void BgAnimCopyTiles(struct Unk0802D25C *a)
 {
     RequestCopy(1, (u32)a->unk4, 0x06004000 + a->unk0 * 32, a->unk2);
 }
 
-void sub_0802d278(struct Unk02007D70 *p, struct Unk0802D278 *q)
+void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q)
 {
     p->unkC = q->unk0;
     p->unk10 = q->unk4;
@@ -271,7 +271,7 @@ void sub_0802d278(struct Unk02007D70 *p, struct Unk0802D278 *q)
     p->unk8 = 0;
 }
 
-void sub_0802d294(struct Unk02007D70 *p)
+void BgAnimStepPaletteFade(struct Unk02007D70 *p)
 {
     s32 t;
 
@@ -284,13 +284,13 @@ void sub_0802d294(struct Unk02007D70 *p)
         p->unk8 = -1;
 }
 
-void sub_0802d2f0(u32 x, u32 y, u32 v)
+void SetCollisionTile(u32 x, u32 y, u32 v)
 {
     if (x < gRoomWidth && y < gRoomHeight)
         gRoomMap[y * gRoomWidth + x].collisionTile = v;
 }
 
-void sub_0802d32c(struct Unk02007D70 *p)
+void BgAnimStop(struct Unk02007D70 *p)
 {
     p->unk4 = 0;
     p->unk0 = 0x7FFF;

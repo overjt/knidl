@@ -24,7 +24,7 @@
  * CameraUpdatePos/CameraUpdatePosNoParallax/CameraUpdatePosBg3AutoScrollX
  * set the camera and BG3 positions (BG3 moves by the parallax factors of
  * room_28320.c), StreamBg2Map/StreamBg3Map stream the BG and BG3 maps
- * for a camera move (M08's StreamBg23Maps again), sub_08029110/
+ * for a camera move (M08's StreamBg23Maps again), PlayRoomBgm/
  * sub_08029194 start the room's BGM, LoadBg2Gfx ... SpawnRoomObjectsInView load
  * the room palettes, tiles and BG map (SelectBg3MapShape picks the BG layout
  * gBg3MapShape from the map size) and InitDoors builds the door
@@ -247,7 +247,7 @@ void CameraInitPos(void)
     gBg3StreamPos[1] = gBg3Pos[1];
 }
 
-void sub_08029110(void)
+void PlayRoomBgm(void)
 {
     s32 bgm;
     s32 cur;

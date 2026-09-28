@@ -3915,8 +3915,8 @@ gUnk_0873B654:
 	.global	gUnk_0873B65E
 gUnk_0873B65E:
 	.incbin	"baserom.gba", 0x73B65E, 0x6
-	.global	gUnk_0873B664
-gUnk_0873B664:
+	.global	gPlayerBallVariants
+gPlayerBallVariants:
 	.word	sub_0804e78c+1
 	.word	sub_0804e97c+1
 	.word	sub_0804eb28+1
@@ -3926,8 +3926,8 @@ gUnk_0873B664:
 	.word	sub_0804f22c+1
 	.word	sub_0804f30c+1
 	.word	sub_0804f450+1
-	.global	gUnk_0873B688
-gUnk_0873B688:
+	.global	gPlayerBallVariantUpdates
+gPlayerBallVariantUpdates:
 	.word	sub_0804e8f4+1
 	.word	sub_0804ea7c+1
 	.word	sub_0804eb60+1
@@ -3937,14 +3937,14 @@ gUnk_0873B688:
 	.word	sub_0804f258+1
 	.word	sub_0804f3e4+1
 	.word	sub_0804f5bc+1
-	.global	gUnk_0873B6AC
-gUnk_0873B6AC:
+	.global	gPlayerStarRodFlightVariants
+gPlayerStarRodFlightVariants:
 	.word	sub_0804ffdc+1
 	.word	sub_08050340+1
 	.word	sub_08050418+1
 	.word	sub_08050508+1
-	.global	gUnk_0873B6BC
-gUnk_0873B6BC:
+	.global	gPlayerStarRodFlightVariantUpdates
+gPlayerStarRodFlightVariantUpdates:
 	.word	sub_080502f0+1
 	.word	sub_0805035c+1
 	.word	sub_080504d4+1

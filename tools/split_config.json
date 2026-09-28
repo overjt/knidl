@@ -224,7 +224,13 @@
     "BeginFadeOutToWhite",
     "BeginFastFadeInFromWhite",
     "BeginFastFadeOutToWhite",
+    "Bg1BlockAnimBreakNeighbors",
+    "Bg1BlockAnimDrawTiles",
     "Bg1BlockAnimWriteMetatile",
+    "BgAnimCopyTiles",
+    "BgAnimStartPaletteFade",
+    "BgAnimStepPaletteFade",
+    "BgAnimStop",
     "BgScrollFinish",
     "BgScrollInit",
     "BgScrollStart",
@@ -240,6 +246,12 @@
     "BlendColors",
     "BlipperIdle",
     "BlipperIdleUpdate",
+    "BlockAnimBreakNeighbors",
+    "BlockAnimDrawColumn",
+    "BlockAnimDrawTiles",
+    "BlockAnimDrawWithEdges",
+    "BlockAnimWriteAndDrawColumn",
+    "BlockAnimWriteColumn",
     "BlockAnimWriteMetatile",
     "BlockAnimWriteMetatileWrapped",
     "BlockStarInit",
@@ -368,6 +380,8 @@
     "BreakBlockAt",
     "BreakBlockAtCursor",
     "BreakBlocksInHitBoxes",
+    "BreakFirstBlockInHitBox",
+    "BreakTopBlockRow",
     "BrontoBurtChaseInit",
     "BrontoBurtChaseUpdate",
     "BrontoBurtDiagonalInit",
@@ -402,6 +416,7 @@
     "BurstStickToParentUpdate",
     "CalcBg3Parallax",
     "CalcCompletionPercent",
+    "CalcHitDamageAndDirection",
     "CalcRoomBounds",
     "CalcSaveSlotChecksum",
     "CallTableEntry",
@@ -418,6 +433,7 @@
     "CameraSnapPlayersToAnchor",
     "CameraSnapToFocus",
     "CameraStartHoldAnchor",
+    "CameraStartHoldAnchorAt",
     "CameraUpdatePos",
     "CameraUpdatePosBg3AutoScrollX",
     "CameraUpdatePosNoParallax",
@@ -454,6 +470,7 @@
     "ChillyIdleUpdate",
     "ChillyInit",
     "ChillyUpdate",
+    "ClampCameraFocusToRoom",
     "ClampTaskToRoom",
     "Clear64byte",
     "ClearBg2Bg3Maps",
@@ -623,9 +640,12 @@
     "DrawBg23Row",
     "DrawBg23View",
     "DrawBg2Column",
+    "DrawBg2EdgeColumn",
+    "DrawBg2EdgeTile",
     "DrawBg2Row",
     "DrawBg2Tile",
     "DrawBg2View",
+    "DrawBg2ViewLooping",
     "DrawBg3Column",
     "DrawBg3Row",
     "DrawBg3Tile",
@@ -685,6 +705,7 @@
     "FlamerInit",
     "FlamerUpdate",
     "FlushDisplayRegs",
+    "FreeBg1BlockAnimAndBlock",
     "FreeBlockAnim",
     "FreeBlockAnimAndBlock",
     "FreeOtherTasks",
@@ -776,6 +797,7 @@
     "HitFlamesCheckParent",
     "HitFrostCheckParent",
     "HitSparksCheckParent",
+    "HitTestPlayerColliders",
     "HoldHBlankScroll",
     "HotHeadIdle",
     "HotHeadIdleInit",
@@ -837,6 +859,7 @@
     "HudUpdateHpBars",
     "InhalableStarUpdate",
     "InitDoors",
+    "InitEndingRoomBgLayout",
     "InitLinkDriver",
     "InitNewSaveFile",
     "InitPlayerState",
@@ -860,6 +883,7 @@
     "IsOnScreen",
     "IsPointInRect",
     "IsTaskBelowPlayerBounds",
+    "IsUnbrokenBlockAt",
     "IsWaterAtPixel",
     "IsWorldPosOnScreen",
     "JavelinKnightEnterState",
@@ -949,11 +973,17 @@
     "LoadBg3Gfx",
     "LoadBg3Map",
     "LoadBgLayout",
+    "LoadCreditsRoom",
+    "LoadCutsceneRoom",
+    "LoadEndingEpilogueRoom",
+    "LoadEndingRoom",
+    "LoadEndingStarRodReturnRoom",
     "LoadGfxSet",
     "LoadGoalGameRoom",
     "LoadMuseumAbilitySignGfx",
     "LoadPlayerBodyBoxRect",
     "LoadPlayerHitBoxSet",
+    "LoadRoom",
     "LoadRoomBgAnims",
     "LoadRoomBossGfx",
     "LoadRoomEnemyGfx",
@@ -1162,11 +1192,13 @@
     "PickupHeal",
     "PickupInit",
     "PickupUpdate",
+    "PlaceAttackBox",
     "PlayBgm",
     "PlayBgmFadeIn",
     "PlayBootLogo",
     "PlayExplosionAnim",
     "PlayRayBurstAnim",
+    "PlayRoomBgm",
     "PlaySfx",
     "PlaySfxIfLocalPlayer",
     "PlaySmallBlastAnim",
@@ -1177,6 +1209,7 @@
     "PlayerActionBackdropHoldUpdate",
     "PlayerActionBackdropUpdate",
     "PlayerActionBall",
+    "PlayerActionBallEnterVariant",
     "PlayerActionBallUpdate",
     "PlayerActionBeam",
     "PlayerActionBeamUpdate",
@@ -1254,6 +1287,7 @@
     "PlayerActionStandUpdate",
     "PlayerActionStarRod",
     "PlayerActionStarRodFlight",
+    "PlayerActionStarRodFlightEnterVariant",
     "PlayerActionStarRodFlightUpdate",
     "PlayerActionStarRodJump",
     "PlayerActionStarRodJumpUpdate",
@@ -1287,10 +1321,12 @@
     "PlayerCheckAirFloat",
     "PlayerCheckBButton",
     "PlayerCheckBump",
+    "PlayerCheckDie",
     "PlayerCheckDropAbility",
     "PlayerCheckDuckOrSwallow",
     "PlayerCheckEnterDoor",
     "PlayerCheckEnterWater",
+    "PlayerCheckFallOrWater",
     "PlayerCheckFloat",
     "PlayerCheckJump",
     "PlayerCheckLadder",
@@ -1325,6 +1361,7 @@
     "PlayerEffectTornadoDust",
     "PlayerEffectTornadoDustUpdate",
     "PlayerFaceHeldDirection",
+    "PlayerGetFacingSlope",
     "PlayerGetHeldDirection",
     "PlayerGoalGameEnterState",
     "PlayerGoalGameInit",
@@ -1355,7 +1392,9 @@
     "PlayerObjectWaterShot",
     "PlayerObjectWaterShotUpdate",
     "PlayerPlayBump",
+    "PlayerProbeTerrain",
     "PlayerRequestLocomotion",
+    "PlayerRequestStandOrFall",
     "PlayerResumeControl",
     "PlayerSetMotionXPreset",
     "PlayerSetMotionYPreset",
@@ -1573,6 +1612,8 @@
     "ResetSerial",
     "ResetSpriteQueue",
     "ResetTasksAndOam",
+    "RestoreMapCell",
+    "RestoreMapColumn",
     "RestoreRoomHBlankScroll",
     "ResumeAllSound",
     "ResumeBlockAnims",
@@ -1589,6 +1630,12 @@
     "RockyWalkInit",
     "RockyWalkUpdate",
     "RoomTaskDraw",
+    "RoomTaskLateUpdateBg2",
+    "RoomTaskLateUpdateBg23HBlank",
+    "RoomTaskLateUpdateBg23RowsHBlank",
+    "RoomTaskLateUpdateBg2Bg3",
+    "RoomTaskLateUpdateBg3AutoScroll",
+    "RoomTaskLateUpdateLooping",
     "RoomTaskUpdateCamera",
     "RunBuildOamInIwram",
     "RunFrame",
@@ -1624,6 +1671,7 @@
     "SetCameraBoundsToGroup",
     "SetCameraFocus",
     "SetCameraFocusOrAnchor",
+    "SetCollisionTile",
     "SetHBlankIntr",
     "SetPaletteAnimSource",
     "SetPlayerAbility",
@@ -1714,8 +1762,12 @@
     "StarmanJumpUpdate",
     "StarmanJumpWalk",
     "Start",
+    "StartBg1BlockAnims",
     "StartBgPaletteBlend",
+    "StartBlockAnims",
+    "StartBlockAnimsWithEdges",
     "StartHBlankScroll",
+    "StartRoomBlockAnims",
     "StartRoomHBlankScroll",
     "StartScrollLock",
     "StartTransfer",
@@ -1734,6 +1786,7 @@
     "StreamBg23Maps",
     "StreamBg23Rows",
     "StreamBg2Map",
+    "StreamBg2MapLooping",
     "StreamBg3Map",
     "SubGameAnyPressedAOrStart",
     "SubGameAnyPressedB",
@@ -1769,7 +1822,10 @@
     "TaskAdvanceFrameScript",
     "TaskBreakBlocks",
     "TaskBreakBlocksAt",
+    "TaskBreakBlocksAtNoPlayer",
     "TaskBreakBlocksNoPlayer",
+    "TaskBreakFirstBlock",
+    "TaskBreakTopBlockRow",
     "TaskClampVelocity",
     "TaskCopyParentPixelPos",
     "TaskCreate",
@@ -2113,8 +2169,16 @@
     "Task_WhispyWoodsApple",
     "Task_WhispyWoodsLeaves",
     "TerrainProbeBegin",
+    "TerrainProbeCeiling",
     "TerrainProbeEnd",
+    "TerrainProbeFloor",
+    "TerrainProbeLanding",
+    "TerrainProbeWallLeftInAir",
+    "TerrainProbeWallLeftOnGround",
+    "TerrainProbeWallRightInAir",
+    "TerrainProbeWallRightOnGround",
     "TerrainProbeWater",
+    "TerrainProbeWaterAndDrift",
     "TerrainQueryPixel",
     "TerrainQueryPixelAndBelow",
     "TerrainQueryPixelAndSides",
@@ -2216,6 +2280,7 @@
     "WhispyWoodsLeavesDraw",
     "WhispyWoodsLeavesUpdate",
     "WhispyWoodsUpdate",
+    "WrapLoopingRoom",
     "WriteInputRecording",
     "WriteInputRecordingEntry",
     "WriteNewSaveFile",
@@ -2373,13 +2438,9 @@
     "sub_0801a310",
     "sub_0801a3e4",
     "sub_0801a76c",
-    "sub_0801a8c8",
     "sub_0801af14",
     "sub_0801b24c",
-    "sub_0801b7dc",
-    "sub_0801b8e4",
     "sub_0801b9e4",
-    "sub_0801baa4",
     "sub_0801bcac",
     "sub_0801bde0",
     "sub_0801bf1c",
@@ -2389,16 +2450,9 @@
     "sub_0801c30c",
     "sub_0801c3a4",
     "sub_0801c444",
-    "sub_0801c690",
-    "sub_0801c7cc",
     "sub_0801c8dc",
     "sub_0801c930",
-    "sub_0801d394",
-    "sub_0801d9c8",
-    "sub_0801dc88",
-    "sub_0801dee8",
     "sub_0801e178",
-    "sub_0801ecd0",
     "sub_0801f540",
     "sub_0801f6b0",
     "sub_0801f800",
@@ -2410,7 +2464,6 @@
     "sub_0802069c",
     "sub_080207a0",
     "sub_08020b38",
-    "sub_08021130",
     "sub_080214e0",
     "sub_08021564",
     "sub_080218f8",
@@ -2435,15 +2488,8 @@
     "sub_08022f50",
     "sub_08022f98",
     "sub_08022f9c",
-    "sub_08022fa8",
     "sub_080233e0",
     "sub_08023634",
-    "sub_08023748",
-    "sub_080237a4",
-    "sub_080237fc",
-    "sub_0802385c",
-    "sub_080238a4",
-    "sub_080238ec",
     "sub_08023948",
     "sub_08023ca0",
     "sub_08023e34",
@@ -2454,16 +2500,11 @@
     "sub_08023f5c",
     "sub_08023fa0",
     "sub_080242d0",
-    "sub_08024300",
     "sub_08024540",
     "sub_0802457c",
     "sub_08024598",
     "sub_080245d0",
-    "sub_08024610",
-    "sub_08024654",
-    "sub_08024698",
     "sub_08024904",
-    "sub_0802497c",
     "sub_08024da4",
     "sub_08025a30",
     "sub_08025acc",
@@ -2479,7 +2520,6 @@
     "sub_0802610c",
     "sub_080262dc",
     "sub_080262e8",
-    "sub_08026308",
     "sub_080264b0",
     "sub_0802651c",
     "sub_0802653c",
@@ -2487,7 +2527,6 @@
     "sub_08026704",
     "sub_0802672c",
     "sub_08026834",
-    "sub_08026900",
     "sub_0802695c",
     "sub_08026994",
     "sub_08026998",
@@ -2511,7 +2550,6 @@
     "sub_080276ac",
     "sub_080276cc",
     "sub_08027750",
-    "sub_08027798",
     "sub_080277f0",
     "sub_08027850",
     "sub_08027908",
@@ -2519,15 +2557,11 @@
     "sub_08027a60",
     "sub_08027a6c",
     "sub_08028130",
-    "sub_08028280",
-    "sub_08028304",
     "sub_08028b8c",
     "sub_08028e3c",
     "sub_08029034",
     "sub_080290ac",
-    "sub_08029110",
     "sub_08029194",
-    "sub_080296a0",
     "sub_08029b30",
     "sub_08029ef4",
     "sub_0802a260",
@@ -2535,11 +2569,6 @@
     "sub_0802a484",
     "sub_0802a568",
     "sub_0802a63c",
-    "sub_0802aae8",
-    "sub_0802b074",
-    "sub_0802b168",
-    "sub_0802b25c",
-    "sub_0802b29c",
     "sub_0802b2f0",
     "sub_0802b368",
     "sub_0802b3e4",
@@ -2547,11 +2576,6 @@
     "sub_0802c680",
     "sub_0802c7f4",
     "sub_0802d0c4",
-    "sub_0802d25c",
-    "sub_0802d278",
-    "sub_0802d294",
-    "sub_0802d2f0",
-    "sub_0802d32c",
     "sub_0802d38c",
     "sub_0802d478",
     "sub_0802d4bc",
@@ -2584,26 +2608,8 @@
     "sub_080304ec",
     "sub_08030580",
     "sub_08030604",
-    "sub_080307b0",
-    "sub_080307cc",
-    "sub_080307e8",
-    "sub_08030898",
-    "sub_0803093c",
-    "sub_08030b14",
-    "sub_08030db8",
-    "sub_08030e00",
-    "sub_08030f1c",
     "sub_08031310",
     "sub_08031738",
-    "sub_080319d0",
-    "sub_08031ab8",
-    "sub_08031b58",
-    "sub_08031c7c",
-    "sub_08031d04",
-    "sub_08031f3c",
-    "sub_080324e4",
-    "sub_08032520",
-    "sub_080325b8",
     "sub_0803332c",
     "sub_08033414",
     "sub_080337f4",
@@ -2641,12 +2647,8 @@
     "sub_0803f6e0",
     "sub_0803f7e0",
     "sub_0803f834",
-    "sub_0803fa74",
     "sub_0803fb54",
-    "sub_0803fd20",
-    "sub_0803fe68",
     "sub_080404e4",
-    "sub_08040710",
     "sub_08040808",
     "sub_08040858",
     "sub_0804087c",
@@ -2656,7 +2658,6 @@
     "sub_08040a44",
     "sub_08042c50",
     "sub_08049a58",
-    "sub_0804e600",
     "sub_0804e78c",
     "sub_0804e8f4",
     "sub_0804e97c",
@@ -2680,7 +2681,6 @@
     "sub_0804f79c",
     "sub_0804f7f8",
     "sub_0804f8ec",
-    "sub_0804fee8",
     "sub_0804ffdc",
     "sub_080502f0",
     "sub_08050340",
@@ -25624,10 +25624,10 @@
     "0x0873B634": "gUnk_0873B634",
     "0x0873B654": "gUnk_0873B654",
     "0x0873B65E": "gUnk_0873B65E",
-    "0x0873B664": "gUnk_0873B664",
-    "0x0873B688": "gUnk_0873B688",
-    "0x0873B6AC": "gUnk_0873B6AC",
-    "0x0873B6BC": "gUnk_0873B6BC",
+    "0x0873B664": "gPlayerBallVariants",
+    "0x0873B688": "gPlayerBallVariantUpdates",
+    "0x0873B6AC": "gPlayerStarRodFlightVariants",
+    "0x0873B6BC": "gPlayerStarRodFlightVariantUpdates",
     "0x0873B6CC": "gUnk_0873B6CC",
     "0x0873B6DC": "gUnk_0873B6DC",
     "0x0873B6E8": "gUnk_0873B6E8",
@@ -31872,8 +31872,8 @@
     "0x087E3078": "gUnk_087E3078"
   },
   "not_pointers": {
-    "0x0833F4B8": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to sub_0802d2f0 as the metatile's new collision tile",
-    "0x0833FD24": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to sub_0802d2f0 as the metatile's new collision tile"
+    "0x0833F4B8": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to SetCollisionTile as the metatile's new collision tile",
+    "0x0833FD24": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to SetCollisionTile as the metatile's new collision tile"
   },
   "raw_ranges": [
     {
@@ -32289,7 +32289,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08335B48",
@@ -32298,7 +32298,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08335DB0",
@@ -32307,7 +32307,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08336618",
@@ -32316,7 +32316,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08336E80",
@@ -32325,7 +32325,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x083376E8",
@@ -32334,7 +32334,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08337B50",
@@ -32343,7 +32343,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x083396B8",
@@ -32352,7 +32352,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08339B20",
@@ -32361,7 +32361,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08339D88",
@@ -32370,7 +32370,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0833A0E8",
@@ -32379,7 +32379,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0833ABB8",
@@ -32388,7 +32388,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0833EC10",
@@ -32397,7 +32397,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0833F45C",
@@ -32406,7 +32406,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[13] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[13] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0833FCC8",
@@ -32415,7 +32415,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[13] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[13] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08340060",
@@ -32424,13 +32424,13 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6",
       "targets": {
         "pointers": [
           "0x0",
           "0x4"
         ],
-        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c BgAnimStartPaletteFade): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; BgAnimStepPaletteFade blends from/to (count colours each) with BlendColors"
       }
     },
     {
@@ -32440,13 +32440,13 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6",
       "targets": {
         "pointers": [
           "0x0",
           "0x4"
         ],
-        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c BgAnimStartPaletteFade): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; BgAnimStepPaletteFade blends from/to (count colours each) with BlendColors"
       }
     },
     {
@@ -32456,13 +32456,13 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[6] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[6] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6",
       "targets": {
         "pointers": [
           "0x0",
           "0x4"
         ],
-        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c BgAnimStartPaletteFade): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; BgAnimStepPaletteFade blends from/to (count colours each) with BlendColors"
       }
     },
     {
@@ -32472,13 +32472,13 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[6] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6",
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[6] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-4 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6",
       "targets": {
         "pointers": [
           "0x0",
           "0x4"
         ],
-        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c sub_0802d278): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; sub_0802d294 blends from/to (count colours each) with BlendColors"
+        "why": "struct Unk0802D278 (16 bytes, src/camera_2d01c.c BgAnimStartPaletteFade): {u16 *from, u16 *to, u16 index, u16 count, u32 rate}; BgAnimStepPaletteFade blends from/to (count colours each) with BlendColors"
       }
     },
     {
@@ -32488,7 +32488,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08344C08",
@@ -32497,7 +32497,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[5] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08348248",
@@ -32506,7 +32506,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0834B898",
@@ -32515,7 +32515,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0834EEE8",
@@ -32524,7 +32524,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08350AF8",
@@ -32533,7 +32533,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08353248",
@@ -32542,7 +32542,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x08355998",
@@ -32551,7 +32551,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x083580E8",
@@ -32560,7 +32560,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0835B5BC",
@@ -32569,7 +32569,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[9] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0835CF9C",
@@ -32578,7 +32578,7 @@
       "pointers": [
         "0x4"
       ],
-      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, sub_0802d25c) or a palette fade (op 1, sub_0802d278), NULL for ops 2/3/4/6"
+      "why": "a BG animation script of room_bg_anim_lists: struct Unk02007D70Cmd[7] {u16 op, u16 arg, void *ptr} (include/camera.h) that UpdateBgAnims (src/camera_2d01c.c) runs up to its op-3 terminator; ptr is a tile frame (op 0, BgAnimCopyTiles) or a palette fade (op 1, BgAnimStartPaletteFade), NULL for ops 2/3/4/6"
     },
     {
       "start": "0x0854BB60",
@@ -34057,7 +34057,7 @@
     {
       "start": "0x08749B84",
       "count": 1,
-      "why": "HitBoxSet passed to the block-break tests (src/enemy_a7998.c:305 (sub_08030db8)): struct HitBoxSet {u16 unk0; s8 offsetX, offsetY; s8 (*boxes)[4];} (include/player.h:18): BreakBlocksInHitBoxes walks p->boxes until box[0] == 127 (src/block_30804.c:204); +0 is flags/offsets",
+      "why": "HitBoxSet passed to the block-break tests (src/enemy_a7998.c:305 (TaskBreakTopBlockRow)): struct HitBoxSet {u16 unk0; s8 offsetX, offsetY; s8 (*boxes)[4];} (include/player.h:18): BreakBlocksInHitBoxes walks p->boxes until box[0] == 127 (src/block_30804.c:204); +0 is flags/offsets",
       "stride": 8,
       "pointers": [
         "0x4"

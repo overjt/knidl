@@ -87,7 +87,7 @@ extern void CreateWarpStarStationNumber();
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);

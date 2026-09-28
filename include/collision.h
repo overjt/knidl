@@ -220,19 +220,19 @@ extern u16 gUnk_08735098[];
 struct Task;
 
 /* src/hitbox_1a8c8.c */
-u8 sub_0801a8c8(void);
+u8 HitTestPlayerColliders(void);
 u8 sub_0801af14(void);
 
 /* src/hitbox_1b24c.c */
 u8 sub_0801b24c(void);
 
 /* src/hitbox_1b7dc.c */
-void sub_0801b7dc(void);
-void sub_0801b8e4(void);
+void PlaceAttackBox(void);
+void CalcHitDamageAndDirection(void);
 void sub_0801b9e4(void);
 
 /* src/terrain_1baa4.c */
-void sub_0801baa4(u32 p);
+void PlayerProbeTerrain(u32 p);
 
 /* src/terrain_1c444.c */
 void sub_0801c444(const s8 *p);
@@ -242,8 +242,8 @@ void TerrainProbeBegin(const s8 *p);
 void TerrainProbeEnd(const s8 *p);
 
 /* src/terrain_1c690.c */
-void sub_0801c690(void);
-void sub_0801c7cc(void);
+void TerrainProbeWallRightOnGround(void);
+void TerrainProbeWallLeftOnGround(void);
 
 /* src/terrain_1c8dc.c */
 void sub_0801c8dc(void);
@@ -252,18 +252,18 @@ void sub_0801c8dc(void);
 void sub_0801c930(void);
 
 /* src/terrain_1d394.c */
-void sub_0801d394(void);
+void TerrainProbeFloor(void);
 
 /* src/terrain_1d9c8.c */
-void sub_0801d9c8(void);
-void sub_0801dc88(void);
-void sub_0801dee8(void);
+void TerrainProbeWallRightInAir(void);
+void TerrainProbeWallLeftInAir(void);
+void TerrainProbeCeiling(void);
 
 /* src/terrain_1e178.c */
 void sub_0801e178(void);
 
 /* src/terrain_1ecd0.c */
-void sub_0801ecd0(void);
+void TerrainProbeLanding(void);
 
 /* src/terrain_1f540.c */
 void sub_0801f540(void);
@@ -285,7 +285,7 @@ void sub_080207a0(void);
 void sub_08020b38(void);
 
 /* src/terrain_21130.c */
-void sub_08021130(void);
+void TerrainProbeWaterAndDrift(void);
 
 /* src/terrain_2136c.c */
 void TerrainProbeWater(void);

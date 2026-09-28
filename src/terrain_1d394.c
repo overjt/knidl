@@ -10,7 +10,7 @@
  * src/terrain_1c930.c. */
 
 /* Floor probe of a box standing on the ground (gTerrainProbeResult.unk6 != 0). */
-void sub_0801d394(void)
+void TerrainProbeFloor(void)
 {
     s32 tile;
     s32 tile2;

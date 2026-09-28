@@ -9,8 +9,8 @@
 
 /* player_4ffdc.c (0x0804FFDC-0x080507BB, issue #90).
  *
- * Action 58's sub-actions 18-21 (gUnk_0873B6AC) and sub-handlers 22-25
- * (gUnk_0873B6BC), interleaved in the ROM as 18, 22, 19, 23, 20, 24, 21,
+ * Action 58's sub-actions 18-21 (gPlayerStarRodFlightVariants) and sub-handlers 22-25
+ * (gPlayerStarRodFlightVariantUpdates), interleaved in the ROM as 18, 22, 19, 23, 20, 24, 21,
  * 25, and their two helpers.  sub_0804ffdc is a long yield script driven by
  * the 8.8 velocity pairs gUnk_0873B6CC; sub_08050418 spawns task type #6's
  * variant 12 through sub_08053a44; sub_08050508 switches the player to mode
@@ -179,7 +179,7 @@ void sub_080502f0(void)
         t->variant = 1;
         gCurTask->updateCallback = (u32)PlayerUpdate;
         gCurTask->lateUpdateCallback = (u32)sub_0803332c;
-        TaskSetEntry(sub_0804fee8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);
         gPauseDisabled = 0;
     }
 }
@@ -307,7 +307,7 @@ void sub_08050630(void)
     if ((s16)t->unk70 != 0)
     {
         t->variant = 1;
-        TaskSetEntry(sub_0804fee8, gCurTaskIdx);
+        TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);
     }
 }
 
@@ -319,7 +319,7 @@ s32 sub_08050664(void)
         return 0;
     gCurTask->player->unk14 = 0;
     gCurTask->variant = 2;
-    TaskSetEntry(sub_0804fee8, gCurTaskIdx);
+    TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);
     return 1;
 }
 

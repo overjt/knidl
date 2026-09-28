@@ -6,9 +6,9 @@
 /* terrain_1d9c8.c (0x0801D9C8-0x0801E177, issue #84).
  *
  * The probes src/terrain_1bcac.c's entry points run for a box in the air
- * (gTerrainProbeResult.unk6 == 0) before its landing probe: the right and left wall probes sub_0801d9c8 /
- * sub_0801dc88 (top, middle and, in the moving direction, bottom corner of
- * the box edge) and the ceiling probe sub_0801dee8.
+ * (gTerrainProbeResult.unk6 == 0) before its landing probe: the right and left wall probes TerrainProbeWallRightInAir /
+ * TerrainProbeWallLeftInAir (top, middle and, in the moving direction, bottom corner of
+ * the box edge) and the ceiling probe TerrainProbeCeiling.
  * 
  * Matching notes: a tile attribute the ROM tests with `cmp #1` and then ANDs
  * with a flag is `(flags & 1)`, the constant: cse knows the attribute
@@ -18,9 +18,9 @@
  * `gTerrainProbeY += ...; gTerrainProbeResult.unk1++;` (lesson 3.430). */
 
 /* Right wall probe of a box in the air (gTerrainProbeResult.unk6 == 0), the
-   mirror image of sub_0801dc88: the wall cell's attribute (1) goes to
+   mirror image of TerrainProbeWallLeftInAir: the wall cell's attribute (1) goes to
    gTerrainProbeResult.unk0. */
-void sub_0801d9c8(void)
+void TerrainProbeWallRightInAir(void)
 {
     s32 d;
     s32 a;
@@ -76,7 +76,7 @@ void sub_0801d9c8(void)
 /* Left wall probe of a box in the air (gTerrainProbeResult.unk6 == 0): the top,
    middle and (when moving left) bottom of the box's left edge, each pushing
    the probe x out of a wall cell and setting gTerrainProbeResult.unk0 = 2. */
-void sub_0801dc88(void)
+void TerrainProbeWallLeftInAir(void)
 {
     s32 d;
     s32 a;
@@ -132,7 +132,7 @@ void sub_0801dc88(void)
    maps the cell's byte 2 to), push the probe y down out of it and count
    the hit in gTerrainProbeResult.unk1, else test the box's two top corners
    against a ceiling edge. */
-void sub_0801dee8(void)
+void TerrainProbeCeiling(void)
 {
     s32 slope;
     u16 *p;

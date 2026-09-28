@@ -185,7 +185,7 @@ extern u8 gUsedSubGameDoors[];
 extern u16 gUnk_02007D60;
 extern s8 gUnk_02007D64;
 extern u8 gUnk_02007E8C;
-extern u16 gBrokenBlockX; /* the block sub_08030b14 broke: x (pixels) */
+extern u16 gBrokenBlockX; /* the block BreakFirstBlockInHitBox broke: x (pixels) */
 extern u16 gSavedPlayerAbilityUses[];
 extern u16 gStageExitFlags;
 extern u8 gUnk_02007FB4;
@@ -698,7 +698,7 @@ void sub_08022c3c(void);
 void sub_08022f50(void);
 void sub_08022f98(void);
 void sub_08022f9c(void);
-void sub_08022fa8(void);
+void LoadRoom(void);
 void sub_080233e0(void);
 void CreateRoomTask(s32 a);
 
@@ -707,12 +707,12 @@ void Task_Room(void);
 void sub_08023634(void);
 void RoomTaskDraw(void);
 void RoomTaskUpdateCamera(void);
-void sub_08023748(void);
-void sub_080237a4(void);
-void sub_080237fc(void);
-void sub_0802385c(void);
-void sub_080238a4(void);
-void sub_080238ec(void);
+void RoomTaskLateUpdateBg2(void);
+void RoomTaskLateUpdateLooping(void);
+void RoomTaskLateUpdateBg2Bg3(void);
+void RoomTaskLateUpdateBg23HBlank(void);
+void RoomTaskLateUpdateBg23RowsHBlank(void);
+void RoomTaskLateUpdateBg3AutoScroll(void);
 
 /* src/level_23948.c */
 void sub_08023948(void);
@@ -728,16 +728,16 @@ void LoadGoalGameRoom(void);
 
 /* src/level_242d0.c */
 void sub_080242d0(void);
-void sub_08024300(void);
+void LoadCutsceneRoom(void);
 void sub_08024540(void);
 void sub_0802457c(void);
 void sub_08024598(void);
 void sub_080245d0(void);
-void sub_08024610(s32 x, s32 y);
-void sub_08024654(s32 x, s32 y);
-void sub_08024698(s32 a0);
+void LoadEndingEpilogueRoom(s32 x, s32 y);
+void LoadEndingStarRodReturnRoom(s32 x, s32 y);
+void LoadEndingRoom(s32 a0);
 void sub_08024904(void);
-void sub_0802497c(void);
+void LoadCreditsRoom(void);
 void sub_08024da4(void);
 s32 FindDoorAt(s32 x, s32 y);
 s32 EnterDoor(void);
@@ -762,7 +762,7 @@ void SetCameraFocus(s32 x, s32 y);
 void SetCameraFocusOrAnchor(s32 x, s32 y);
 void sub_080262dc(void);
 void sub_080262e8(s32 a);
-void sub_08026308(void);
+void WrapLoopingRoom(void);
 s32 sub_080264b0(void);
 void sub_0802651c(s32 i);
 s32 sub_0802653c(void);
@@ -770,7 +770,7 @@ s32 sub_08026584(void);
 void sub_08026704(s32 i);
 s32 sub_0802672c(void);
 s32 sub_08026834(void);
-void sub_08026900(void);
+void ClampCameraFocusToRoom(void);
 void sub_0802695c(void);
 void sub_08026994(void);
 void sub_08026998(void);
@@ -804,7 +804,7 @@ s32 sub_080275cc(s32 a);
 s32 sub_080276ac(s32 a);
 s32 sub_080276cc(s32 i);
 s32 sub_08027750(void);
-void sub_08027798(s32 x, s32 y);
+void CameraStartHoldAnchorAt(s32 x, s32 y);
 void sub_080277f0(s32 x, s32 y);
 void sub_08027850(s32 a);
 void sub_08027908(void);
@@ -817,8 +817,8 @@ void sub_08027a6c(void);
 /* src/room_27e28.c */
 void InitRoomBgLayout(void);
 void sub_08028130(void);
-void sub_08028280(s32 a);
-void sub_08028304(void);
+void InitEndingRoomBgLayout(s32 a);
+void StartRoomBlockAnims(void);
 
 /* src/room_28320.c */
 void SpawnDoorObjects(void);
@@ -834,7 +834,7 @@ void SetRoomEntryPoint(void);
 void sub_08029034(void);
 void sub_080290ac(void);
 void CameraInitPos(void);
-void sub_08029110(void);
+void PlayRoomBgm(void);
 void sub_08029194(void);
 void LoadBg2Gfx(void);
 void LoadBg3Gfx(void);

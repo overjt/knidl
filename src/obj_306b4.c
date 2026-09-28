@@ -13,7 +13,7 @@
  * when it is not.  The rest manage the per-frame stage hook gBlockAnimHook:
  * ResetBlockAnims clears it and the 64 records gBreakingBlocks[] (unk6 =
  * 0x7FFF), ResumeBlockAnims re-installs it from its id gBlockAnimHookId,
- * PauseBlockAnims clears it and sub_080307b0/cc/e8 install one of three M09
+ * PauseBlockAnims clears it and StartBlockAnims/cc/e8 install one of three M09
  * routines (ids 1-3).
  * 
  * Its own file, not the tail of obj_30238.c: compiled as one translation
@@ -69,19 +69,19 @@ void PauseBlockAnims(void)
     gBlockAnimHook = 0;
 }
 
-void sub_080307b0(void)
+void StartBlockAnims(void)
 {
     gBlockAnimHook = (u32)UpdateBlockAnims;
     gBlockAnimHookId = 1;
 }
 
-void sub_080307cc(void)
+void StartBlockAnimsWithEdges(void)
 {
     gBlockAnimHook = (u32)UpdateBlockAnimsWithEdges;
     gBlockAnimHookId = 2;
 }
 
-void sub_080307e8(void)
+void StartBg1BlockAnims(void)
 {
     gBlockAnimHook = (u32)UpdateBg1BlockAnims;
     gBlockAnimHookId = 3;

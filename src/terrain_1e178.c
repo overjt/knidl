@@ -7,14 +7,14 @@
 /* terrain_1e178.c (0x0801E178-0x0801ECCF, issue #84).
  *
  * The landing probe sub_0801bde0 runs for a box in the air
- * (gTerrainProbeResult.unk6 == 0), the twin of sub_0801ecd0 in src/terrain_1ecd0.c
+ * (gTerrainProbeResult.unk6 == 0), the twin of TerrainProbeLanding in src/terrain_1ecd0.c
  * with a wall step at the box's bottom corner in front (the head
  * src/terrain_1c930.c's sub_0801c930 has too).  Its shared epilogue at
  * 0x0801ECBA is reached by a long `bl` from 0x0801E470 as well as by `b.n`s
  * (a far branch inside the function, lesson 4.39). */
 
 /* Landing probe of a box in the air (sub_0801bde0, on-ground flag
-   gTerrainProbeResult.unk6 == 0), the twin of sub_0801ecd0: first step the box
+   gTerrainProbeResult.unk6 == 0), the twin of TerrainProbeLanding: first step the box
    out of a wall it moves into at its bottom corner (the same head as
    sub_0801c930), then the flag gTerrainProbeResult.unkD, then snap the box to
    the floor under its centre; failing that, follow the cell's slope link

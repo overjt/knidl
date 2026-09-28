@@ -30,7 +30,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -302,7 +302,7 @@ void sub_080a7e44(void)
         gCurTask->velX = -0xC000;
         gCurTask->velY = 128 << 7;
         TaskYieldTrampoline(4);
-        sub_08030db8((u32)gUnk_08749B84);
+        TaskBreakTopBlockRow((u32)gUnk_08749B84);
         gCurTask->unk6C = 0;
         do
         {

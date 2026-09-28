@@ -39,7 +39,7 @@
  * round until sub_08054298 sets Task.unk28 - when the player's mode differs
  * from the one saved at the start or is 16, or, by the second byte of
  * Task.unk18, when the spawner's Task.onGround clears, a countdown in
- * Task.unk30 runs out or M11's sub_0803fd20 no longer returns 4. */
+ * Task.unk30 runs out or M11's PlayerGetFacingSlope no longer returns 4. */
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
 u32 RandomRange(u32 range);                       /* RNG: 0 .. range-1 */
@@ -394,7 +394,7 @@ void sub_08054298(void)
             break;
         }
         case 0x200:
-            if (sub_0803fd20(t->parent) != 4)
+            if (PlayerGetFacingSlope(t->parent) != 4)
                 gCurTask->unk28++;
             break;
         }
