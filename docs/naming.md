@@ -171,8 +171,41 @@ and bosses use the same table (`Task_KingDedede`, `KingDededeEnterState`,
 (`Task_HitFlames`, `Task_StarFlash`), and a callback that frees a task
 whose parent has died is `<Thing>CheckParent`.
 
-An enemy that two species could be (Sword Knight and Blade Knight share
-one script) stays unnamed until a second source tells them apart.
+Run 3 of #155 added these words, each defined by the whole body:
+
+- **Idle** (a row word): the row only plays its animation and reacts to
+  hits - no velocity or `TaskSetMotion*` call, no attack or spawn, no
+  state change of its own (`WaddleDeeIdleInit`, `gPengyIdleStates`); a
+  row that also hops, spawns or steers is not Idle.  Nothing re-arms these
+  rows, so they have no EnterState.
+- **Teleport**: the body hides the sprite, moves it and shows it again
+  (`KabuTeleport`).
+- **Float** / **Exhale** (King Dedede): a puffed-up flight that drifts
+  after the player until a timer ends, and letting the held air out as a
+  puff object before dropping (`KingDededeFloat`, `KingDededeExhale`);
+  Exhale is not run 2's **Spit**, which spits a swallowed object out as a
+  star.
+- Two species that share one script get a pair prefix
+  (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`); a verb
+  that fits two states of one family names neither of them.
+
+**A species identity needs three agreeing sources** (run 3): the local
+render (`visual:`), the behaviour and `ActorDef.ability` from the code
+(`code:`), and a text description from a public reference, cited by URL
+(`public: https://wikirby.com/wiki/...`; text only, never images).  That
+rule corrected run 2 twice: subtype 36 is Needlous, not Togezo (which
+appears only in Kirby's Dream Land 3), and the BALL enemy is Bubbles
+(Bounder is not in this game).  Sword Knight (purple) and Blade Knight
+(green armour, red plume, magenta mask) were told apart by WiKirby's
+colour text, the case run 2 left open.
+
+Meta Knightmare's action machine (`gMetaKnightActions`,
+`gMetaKnightActionHandlers`, dispatched instead of the player's while
+`gMetaKnightmareMode` is set) follows the player's words:
+`MetaKnightAction<Name>` / `MetaKnightAction<Name>Update`, named after the
+Kirby twin at the same index when the body is its twin
+(`MetaKnightActionWalk`), or after the input and motion for Meta Knight's
+own four sword attacks (`MetaKnightActionDashSlash`).
 
 The ability ids (`PlayerState.ability`, `ActorDef.ability`) are fixed by
 the HUD ability pictures `gAbilityPictures[id]`, whose banners carry the
