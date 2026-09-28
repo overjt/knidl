@@ -25927,7 +25927,7 @@
     "0x0873EDDC": "gUnk_0873EDDC",
     "0x0873EE70": "gUnk_0873EE70",
     "0x0873EE88": "gUnk_0873EE88",
-    "0x0873EEA0": "gUnk_0873EEA0",
+    "0x0873EEA0": "gEnemyGfx",
     "0x0873EF48": "gUnk_0873EF48",
     "0x0873EF74": "gUnk_0873EF74",
     "0x0873F01C": "gUnk_0873F01C",
@@ -34095,7 +34095,7 @@
     {
       "start": "0x0873EEA0",
       "extent": "next-label",
-      "why": "include/enemy.h:78 `struct Unk0873EEA0 *gUnk_0873EEA0[]`, the room objects' graphics descriptors by subtype (sub_080b5670, src/hud_b5670.c:54)",
+      "why": "include/enemy.h:78 `struct Unk0873EEA0 *gEnemyGfx[]`, the room objects' graphics descriptors by subtype (sub_080b5670, src/hud_b5670.c:54)",
       "targets": {
         "pointers": [
           "0x8",

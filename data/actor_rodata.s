@@ -9,8 +9,8 @@
 	.section .actor_rodata, "a"
 	.global	actor_rodata
 actor_rodata:
-	.global	gUnk_0873EEA0
-gUnk_0873EEA0:
+	.global	gEnemyGfx
+gEnemyGfx:
 	.word	gUnk_0824BCB0
 	.word	gUnk_0824CC84
 	.word	gUnk_0824C4C0

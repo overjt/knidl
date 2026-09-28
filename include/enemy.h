@@ -75,7 +75,7 @@ extern u32 gUnk_082FFDF0[];
 extern u16 gUnk_08334480[];
 extern u32 gUnk_083344C0[];
 extern u16 gUnk_087324DA[][4];
-extern struct Unk0873EEA0 *gUnk_0873EEA0[];
+extern struct Unk0873EEA0 *gEnemyGfx[];
 extern s8 gUnk_0873EF48[];
 extern u32 *gMidBossGfx[];
 extern struct Unk0873EEA0 *gMetaKnightsGfx[];

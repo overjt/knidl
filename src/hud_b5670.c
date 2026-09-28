@@ -14,7 +14,7 @@
  * (called by src/hud_b4ea8.c's sub_080b4ea8 for every kind-1 entry, which
  * counts the return values): e is the entry, idx its index in the list and n
  * the next free graphics slot of gUnk_020060A0.  If an earlier kind-1 entry
- * already uses the same graphics descriptor gUnk_0873EEA0[e->unk1], the
+ * already uses the same graphics descriptor gEnemyGfx[e->unk1], the
  * entry shares that slot (gUnk_02006130[idx]) and the function returns 0.
  * Otherwise it claims slot n: it allocates OBJ tiles (sub_080b5628) and
  * copies the descriptor's tiles (through gUnk_02020000 when compressed), then
@@ -51,7 +51,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
        `ldr r0, =gObjVram` at both uses, which the ROM's reload order
        needs (lesson 3.258) */
     vram = (u32)gObjVram;
-    d = gUnk_0873EEA0[e->unk1];
+    d = gEnemyGfx[e->unk1];
     if (d == NULL)
         return 0;
     for (i = 0; i < idx; i++)
@@ -59,7 +59,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (gRoomObjectList.entries[i].kind == 1)
         {
             if (gUnk_02006130[i] != -1
-             && gUnk_0873EEA0[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
+             && gEnemyGfx[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
             {
                 /* the compiler's QImode copy of this byte is what spills to
                    the ROM's `mov r5, sp; strb r0, [r5, #4]` slot */
