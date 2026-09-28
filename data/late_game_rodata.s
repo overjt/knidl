@@ -41,8 +41,8 @@ gUnk_087560D0:
 gUnk_087560D8:
 	.word	sub_080b4788+1
 	.word	sub_080b47c0+1
-	.global	gUnk_087560E0
-gUnk_087560E0:
+	.global	gStarRodPieceVariants
+gStarRodPieceVariants:
 	.word	sub_080b4a5c+1
 	.word	sub_080b4be4+1
 	.word	sub_080b4e04+1

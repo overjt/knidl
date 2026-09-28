@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x0806AD18 0x0806B2E4 src/actor_6ad18.c --newpb
  *
  * The screen-transition half of the module. sub_0806ad18 nudges the carried
- * actor one frame either way; sub_0806adb0 and sub_0806af78 are the two
+ * actor one frame either way; sub_0806adb0 and BossDefeatScreenFlash are the two
  * DISPCNT-shadow fades (gDispCnt masked to 0xE0FF and re-ORed with the
  * BG-enable pattern, alternating a ROM window descriptor with a copy of
  * gBgPalette on the stack); sub_0806aec0 plays the six-step
@@ -141,7 +141,7 @@ void sub_0806aec0(void)
     TaskYieldTrampoline(20);
 }
 
-void sub_0806af78(void)
+void BossDefeatScreenFlash(void)
 {
     struct Task *t;
     u16 v;
@@ -180,7 +180,7 @@ void sub_0806af78(void)
 void sub_0806b05c(void)
 {
     PlaySfx(0x1FF);
-    sub_0806af78();
+    BossDefeatScreenFlash();
 }
 
 void sub_0806b070(void)
@@ -236,7 +236,7 @@ void sub_0806b12c(void)
     sub_0806b05c();
     sub_0806b098();
     gCurTask->tileWord = gUnk_02007D00[9];
-    sub_08066f78();
+    LoadStarRodPieceGfx();
     CallTableEntry(gCurTask->unk76, 9, gUnk_0873E758);
 }
 

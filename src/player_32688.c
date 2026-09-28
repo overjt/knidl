@@ -140,7 +140,7 @@ void Task_Player(void)
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
-        sub_0805b278();
+        PlayerGoalGameInit();
         TaskSleepForever();
     case 2:
         gCurTask->player->unk37 = 2;

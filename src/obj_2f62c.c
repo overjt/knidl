@@ -21,7 +21,7 @@
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_0802f62c(void)
+void Task_StageDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -370,7 +370,7 @@ void sub_0802fd98(void)
     }
 }
 
-s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b)
+s32 CreateLevelDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -392,7 +392,7 @@ s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802fe64(void)
+void Task_LevelDoorSign(void)
 {
     struct Task *t;
     struct Task *u;

@@ -259,7 +259,7 @@ s32 sub_080a97d8(void)
 void sub_080a9814(void)
 {
     gCurTask->unk34 = 2;
-    sub_08066fc0(0, gCurTask->pixelX, gCurTask->pixelY);
+    CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
 void sub_080a983c(void)

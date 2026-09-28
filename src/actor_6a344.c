@@ -508,7 +508,7 @@ void sub_0806aa98(void)
     ActorDefeatFrozen();
 }
 
-void sub_0806aaa4(void)
+void ExplosionScreenFlash(void)
 {
     struct Task *t;
     u16 x;

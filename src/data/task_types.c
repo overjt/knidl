@@ -83,7 +83,7 @@ void Task_OneUp(void);
 void Task_MaximTomato(void);
 void Task_InvincibleCandy(void);
 void Task_EnergyDrink(void);
-void sub_080b47cc(void);
+void Task_StarRodPiece(void);
 void Task_WarpStar(void);
 void Task_Cannon(void);
 void Task_CannonFuse(void);
@@ -91,23 +91,23 @@ void Task_BigSwitch(void);
 void Task_Stake(void);
 void sub_08078598(void);
 void Task_NightmarePowerOrbIntroScroll(void);
-void sub_0805beb0(void);
-void sub_0805c204(void);
-void sub_0805c410(void);
-void sub_0805cb30(void);
-void sub_0805cca0(void);
-void sub_0805cf3c(void);
-void sub_0805cbec(void);
+void Task_GoalGameLaunchStars(void);
+void Task_GoalGameBigTrailStar(void);
+void Task_GoalGameSmallTrailStar(void);
+void Task_GoalGameSpring(void);
+void Task_GoalGameSign(void);
+void Task_GoalGameHelperKirby(void);
+void Task_GoalGamePlayerMarker(void);
 void sub_0805d564(void);
-void sub_0805d668(void);
-void sub_0805c5fc(void);
+void Task_GoalGameOneUp(void);
+void Task_GoalGameCamera(void);
 void Task_CutsceneDirector(void);
 void Task_CutsceneActor(void);
 void Task_SubGame(void);
 void Task_QuickDrawObject(void);
 void Task_BombRallyObject(void);
 void Task_AirGrindObject(void);
-void sub_0807450c(void);
+void Task_WarpStarCamera(void);
 void sub_08075000(void);
 void sub_080752f4(void);
 void sub_080c6c64(void);
@@ -164,7 +164,7 @@ void Task_SmallBlast(void);
 void Task_StarScatterOnParent(void);
 void Task_RayBurstOnParent(void);
 void Task_SmallBlastOnParent(void);
-void sub_0806d7ec(void);
+void Task_ImpactStar(void);
 void Task_RingStar(void);
 void sub_0806daec(void);
 void sub_0806dd90(void);
@@ -172,15 +172,15 @@ void Task_TrailFlash(void);
 void Task_HitFrost(void);
 void Task_HitFlames(void);
 void Task_HitSparks(void);
-void sub_0806da04(void);
-void sub_0806da20(void);
+void Task_BossScreenFlash(void);
+void Task_ExplosionScreenFlash(void);
 void Task_WarpStarSparkle(void);
-void sub_08074c0c(void);
+void Task_WarpStarTrailStar(void);
 void Task_AbilityReleaseFlash(void);
 void sub_0806e73c(void);
 void sub_0806e84c(void);
 void sub_0806e9fc(void);
-void sub_080b3c68(void);
+void Task_WhispyWoodsLeaves(void);
 void Task_IceBlock(void);
 void sub_0806ee1c(void);
 void Task_SwordAndBladeKnightSlash(void);
@@ -233,16 +233,16 @@ void Task_GlunkShotSpray(void);
 void sub_080b08e4(void);
 void sub_0802eb28(void);
 void sub_0802ec7c(void);
-void sub_0802ede4(void);
-void sub_0802eff8(void);
-void sub_0802f0cc(void);
-void sub_0802f26c(void);
-void sub_0802f38c(void);
+void Task_DoorOpening(void);
+void Task_StageClearFlag(void);
+void Task_QuickDrawDoorSign(void);
+void Task_BombRallyDoorSign(void);
+void Task_AirGrindDoorSign(void);
 void sub_0802f480(void);
-void sub_0802f62c(void);
+void Task_StageDoorSign(void);
 void sub_0802f84c(void);
 void sub_0802faa8(void);
-void sub_0802fe64(void);
+void Task_LevelDoorSign(void);
 void sub_08030034(void);
 void sub_080300c0(void);
 void sub_080301a4(void);
@@ -353,7 +353,7 @@ const struct TaskType gTaskTypes[] = {
     /*  70 */ { 4, { 0, 0, 0 }, (u32)Task_MaximTomato },
     /*  71 */ { 4, { 0, 0, 0 }, (u32)Task_InvincibleCandy },
     /*  72 */ { 4, { 0, 0, 0 }, (u32)Task_EnergyDrink },
-    /*  73 */ { 3, { 0, 0, 0 }, (u32)sub_080b47cc },
+    /*  73 */ { 3, { 0, 0, 0 }, (u32)Task_StarRodPiece },
     /*  74 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStar },
     /*  75 */ { 3, { 0, 0, 0 }, (u32)Task_Cannon },
     /*  76 */ { 3, { 0, 0, 0 }, (u32)Task_CannonFuse },
@@ -361,23 +361,23 @@ const struct TaskType gTaskTypes[] = {
     /*  78 */ { 3, { 0, 0, 0 }, (u32)Task_Stake },
     /*  79 */ { 3, { 0, 0, 0 }, (u32)sub_08078598 },
     /*  80 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbIntroScroll },
-    /*  81 */ { 3, { 0, 0, 0 }, (u32)sub_0805beb0 },
-    /*  82 */ { 3, { 0, 0, 0 }, (u32)sub_0805c204 },
-    /*  83 */ { 3, { 0, 0, 0 }, (u32)sub_0805c410 },
-    /*  84 */ { 3, { 0, 0, 0 }, (u32)sub_0805cb30 },
-    /*  85 */ { 4, { 0, 0, 0 }, (u32)sub_0805cca0 },
-    /*  86 */ { 3, { 0, 0, 0 }, (u32)sub_0805cf3c },
-    /*  87 */ { 3, { 0, 0, 0 }, (u32)sub_0805cbec },
+    /*  81 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameLaunchStars },
+    /*  82 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameBigTrailStar },
+    /*  83 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameSmallTrailStar },
+    /*  84 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameSpring },
+    /*  85 */ { 4, { 0, 0, 0 }, (u32)Task_GoalGameSign },
+    /*  86 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameHelperKirby },
+    /*  87 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGamePlayerMarker },
     /*  88 */ { 3, { 0, 0, 0 }, (u32)sub_0805d564 },
-    /*  89 */ { 3, { 0, 0, 0 }, (u32)sub_0805d668 },
-    /*  90 */ { 4, { 0, 0, 0 }, (u32)sub_0805c5fc },
+    /*  89 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameOneUp },
+    /*  90 */ { 4, { 0, 0, 0 }, (u32)Task_GoalGameCamera },
     /*  91 */ { 1, { 0, 0, 0 }, (u32)Task_CutsceneDirector },
     /*  92 */ { 2, { 0, 0, 0 }, (u32)Task_CutsceneActor },
     /*  93 */ { 3, { 0, 0, 0 }, (u32)Task_SubGame },
     /*  94 */ { 3, { 0, 0, 0 }, (u32)Task_QuickDrawObject },
     /*  95 */ { 4, { 0, 0, 0 }, (u32)Task_BombRallyObject },
     /*  96 */ { 3, { 0, 0, 0 }, (u32)Task_AirGrindObject },
-    /*  97 */ { 3, { 0, 0, 0 }, (u32)sub_0807450c },
+    /*  97 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarCamera },
     /*  98 */ { 3, { 0, 0, 0 }, (u32)sub_08075000 },
     /*  99 */ { 3, { 0, 0, 0 }, (u32)sub_080752f4 },
     /* 100 */ { 3, { 0, 0, 0 }, (u32)sub_080c6c64 },
@@ -434,7 +434,7 @@ const struct TaskType gTaskTypes[] = {
     /* 151 */ { 1, { 0, 0, 0 }, (u32)Task_StarScatterOnParent },
     /* 152 */ { 1, { 0, 0, 0 }, (u32)Task_RayBurstOnParent },
     /* 153 */ { 1, { 0, 0, 0 }, (u32)Task_SmallBlastOnParent },
-    /* 154 */ { 1, { 0, 0, 0 }, (u32)sub_0806d7ec },
+    /* 154 */ { 1, { 0, 0, 0 }, (u32)Task_ImpactStar },
     /* 155 */ { 1, { 0, 0, 0 }, (u32)Task_RingStar },
     /* 156 */ { 1, { 0, 0, 0 }, (u32)sub_0806daec },
     /* 157 */ { 1, { 0, 0, 0 }, (u32)sub_0806dd90 },
@@ -442,15 +442,15 @@ const struct TaskType gTaskTypes[] = {
     /* 159 */ { 4, { 0, 0, 0 }, (u32)Task_HitFrost },
     /* 160 */ { 4, { 0, 0, 0 }, (u32)Task_HitFlames },
     /* 161 */ { 4, { 0, 0, 0 }, (u32)Task_HitSparks },
-    /* 162 */ { 1, { 0, 0, 0 }, (u32)sub_0806da04 },
-    /* 163 */ { 1, { 0, 0, 0 }, (u32)sub_0806da20 },
+    /* 162 */ { 1, { 0, 0, 0 }, (u32)Task_BossScreenFlash },
+    /* 163 */ { 1, { 0, 0, 0 }, (u32)Task_ExplosionScreenFlash },
     /* 164 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarSparkle },
-    /* 165 */ { 3, { 0, 0, 0 }, (u32)sub_08074c0c },
+    /* 165 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarTrailStar },
     /* 166 */ { 3, { 0, 0, 0 }, (u32)Task_AbilityReleaseFlash },
     /* 167 */ { 3, { 0, 0, 0 }, (u32)sub_0806e73c },
     /* 168 */ { 3, { 0, 0, 0 }, (u32)sub_0806e84c },
     /* 169 */ { 3, { 0, 0, 0 }, (u32)sub_0806e9fc },
-    /* 170 */ { 3, { 0, 0, 0 }, (u32)sub_080b3c68 },
+    /* 170 */ { 3, { 0, 0, 0 }, (u32)Task_WhispyWoodsLeaves },
     /* 171 */ { 4, { 0, 0, 0 }, (u32)Task_IceBlock },
     /* 172 */ { 3, { 0, 0, 0 }, (u32)sub_0806ee1c },
     /* 173 */ { 4, { 0, 0, 0 }, (u32)Task_SwordAndBladeKnightSlash },
@@ -503,16 +503,16 @@ const struct TaskType gTaskTypes[] = {
     /* 220 */ { 3, { 0, 0, 0 }, (u32)sub_080b08e4 },
     /* 221 */ { 3, { 0, 0, 0 }, (u32)sub_0802eb28 },
     /* 222 */ { 3, { 0, 0, 0 }, (u32)sub_0802ec7c },
-    /* 223 */ { 3, { 0, 0, 0 }, (u32)sub_0802ede4 },
-    /* 224 */ { 3, { 0, 0, 0 }, (u32)sub_0802eff8 },
-    /* 225 */ { 3, { 0, 0, 0 }, (u32)sub_0802f0cc },
-    /* 226 */ { 3, { 0, 0, 0 }, (u32)sub_0802f26c },
-    /* 227 */ { 3, { 0, 0, 0 }, (u32)sub_0802f38c },
+    /* 223 */ { 3, { 0, 0, 0 }, (u32)Task_DoorOpening },
+    /* 224 */ { 3, { 0, 0, 0 }, (u32)Task_StageClearFlag },
+    /* 225 */ { 3, { 0, 0, 0 }, (u32)Task_QuickDrawDoorSign },
+    /* 226 */ { 3, { 0, 0, 0 }, (u32)Task_BombRallyDoorSign },
+    /* 227 */ { 3, { 0, 0, 0 }, (u32)Task_AirGrindDoorSign },
     /* 228 */ { 3, { 0, 0, 0 }, (u32)sub_0802f480 },
-    /* 229 */ { 3, { 0, 0, 0 }, (u32)sub_0802f62c },
+    /* 229 */ { 3, { 0, 0, 0 }, (u32)Task_StageDoorSign },
     /* 230 */ { 3, { 0, 0, 0 }, (u32)sub_0802f84c },
     /* 231 */ { 3, { 0, 0, 0 }, (u32)sub_0802faa8 },
-    /* 232 */ { 3, { 0, 0, 0 }, (u32)sub_0802fe64 },
+    /* 232 */ { 3, { 0, 0, 0 }, (u32)Task_LevelDoorSign },
     /* 233 */ { 3, { 0, 0, 0 }, (u32)sub_08030034 },
     /* 234 */ { 3, { 0, 0, 0 }, (u32)sub_080300c0 },
     /* 235 */ { 3, { 0, 0, 0 }, (u32)sub_080301a4 },

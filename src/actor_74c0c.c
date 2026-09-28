@@ -3,9 +3,9 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x08074C0C 0x080763E8 src/actor_74c0c.c --newpb
  *
- * M19 batch 3: task type #165 (sub_08074c0c, the four-ring sparkle draw loop),
- * type #97 (sub_0807450c) and type #98 (sub_08075000) with their coroutine
- * bodies and the gUnk_0873FC94 dispatch row.
+ * M19 batch 3: task type #165 (Task_WarpStarTrailStar, the four-ring sparkle draw loop),
+ * type #97 (Task_WarpStarCamera) and type #98 (sub_08075000) with their coroutine
+ * bodies and the gWarpStarCameraPaths dispatch row.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -40,7 +40,7 @@ extern void SetCameraFocus(s32 a, s32 b);
 extern void AngleToVector(s16 t, s16 mag);
 extern void LoadBackdropColor(u32 src);
 
-void sub_08074c0c(void)
+void Task_WarpStarTrailStar(void)
 {
     {
         struct Task *t = gCurTask;

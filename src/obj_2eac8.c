@@ -154,7 +154,7 @@ void sub_0802ed20(void)
     }
 }
 
-s32 sub_0802ed94(s32 x, s32 y, s32 a)
+s32 CreateDoorOpening(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -172,7 +172,7 @@ s32 sub_0802ed94(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802ede4(void)
+void Task_DoorOpening(void)
 {
     struct Task *t;
     struct Task *u;
@@ -245,7 +245,7 @@ void sub_0802ee88(void)
     }
 }
 
-s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b)
+s32 CreateStageClearFlag(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -264,7 +264,7 @@ s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802eff8(void)
+void Task_StageClearFlag(void)
 {
     struct Task *t;
 
@@ -286,7 +286,7 @@ void sub_0802eff8(void)
     }
 }
 
-s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b)
+s32 CreateQuickDrawDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -308,7 +308,7 @@ s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802f0cc(void)
+void Task_QuickDrawDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -370,7 +370,7 @@ void sub_0802f1dc(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b)
+s32 CreateBombRallyDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -392,7 +392,7 @@ s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802f26c(void)
+void Task_BombRallyDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -436,7 +436,7 @@ void sub_0802f2fc(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b)
+s32 CreateAirGrindDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -458,7 +458,7 @@ s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802f38c(void)
+void Task_AirGrindDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -536,7 +536,7 @@ void sub_0802f480(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b)
+s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -559,7 +559,7 @@ s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b)
+s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -582,7 +582,7 @@ s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-s32 sub_0802f5b4(s32 x, s32 y, s32 a, s32 b)
+s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;

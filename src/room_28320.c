@@ -85,17 +85,17 @@ void SpawnDoorObjects(void)
                 {
                 default:
                 case 0:
-                    gDoorObjectTasks[i][0] = sub_0802f4c8(x, y, d->unk8, i);
+                    gDoorObjectTasks[i][0] = CreateStageDoorSign(x, y, d->unk8, i);
                     break;
                 case 1:
                     if (i == gUnk_0200B034 && gUnk_0200AF00 == 1)
                     {
-                        gDoorObjectTasks[i][0] = sub_0802f4c8(x, y, d->unk8, i);
+                        gDoorObjectTasks[i][0] = CreateStageDoorSign(x, y, d->unk8, i);
                     }
                     else
                     {
-                        gDoorObjectTasks[i][0] = sub_0802f53c(x, y, d->unk8, i);
-                        gDoorObjectTasks[i][1] = sub_0802ef90(x, y, 15, 0x4000);
+                        gDoorObjectTasks[i][0] = CreateClearedStageDoorSign(x, y, d->unk8, i);
+                        gDoorObjectTasks[i][1] = CreateStageClearFlag(x, y, 15, 0x4000);
                     }
                     break;
                 case 2:
@@ -103,54 +103,54 @@ void SpawnDoorObjects(void)
                     {
                         if (gUnk_020069F0 == 4)
                         {
-                            gDoorObjectTasks[i][0] = sub_0802f53c(x, y, d->unk8, i);
-                            gDoorObjectTasks[i][1] = sub_0802ef90(x, y, 15, 0x4000);
+                            gDoorObjectTasks[i][0] = CreateClearedStageDoorSign(x, y, d->unk8, i);
+                            gDoorObjectTasks[i][1] = CreateStageClearFlag(x, y, 15, 0x4000);
                             break;
                         }
                         if (gUnk_0200AF00 == 1)
                         {
-                            gDoorObjectTasks[i][0] = sub_0802f4c8(x, y, d->unk8, i);
+                            gDoorObjectTasks[i][0] = CreateStageDoorSign(x, y, d->unk8, i);
                             break;
                         }
                     }
-                    gDoorObjectTasks[i][0] = sub_0802f5b4(x, y, d->unk8, i);
-                    gDoorObjectTasks[i][1] = sub_0802ef90(x, y, 15, 0x4000);
+                    gDoorObjectTasks[i][0] = CreateCompletedStageDoorSign(x, y, d->unk8, i);
+                    gDoorObjectTasks[i][1] = CreateStageClearFlag(x, y, 15, 0x4000);
                     break;
                 }
             }
             break;
         case 1:
-            gDoorObjectTasks[i][0] = sub_0802fdf4(x, y, 0, i);
+            gDoorObjectTasks[i][0] = CreateLevelDoorSign(x, y, 0, i);
             break;
         case 2:
             if (gUnk_030023B8 >= gUnk_030023E0)
                 gDoorObjectTasks[i][0] = sub_0802ec1c(x, y, i);
             else
-                gDoorObjectTasks[i][0] = sub_0802fdf4(x, y, 1, i);
+                gDoorObjectTasks[i][0] = CreateLevelDoorSign(x, y, 1, i);
             break;
         case 3:
             if (!(gUsedSubGameDoors[gStageIndex] & 1))
-                gDoorObjectTasks[i][0] = sub_0802f1fc(x, y, 1, i);
+                gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 1, i);
             else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
-                gDoorObjectTasks[i][0] = sub_0802f1fc(x, y, 1, i);
+                gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 1, i);
             else
-                gDoorObjectTasks[i][0] = sub_0802f1fc(x, y, 0, i);
+                gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 0, i);
             break;
         case 4:
             if (!(gUsedSubGameDoors[gStageIndex] & 2))
-                gDoorObjectTasks[i][0] = sub_0802f31c(x, y, 1, i);
+                gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 1, i);
             else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
-                gDoorObjectTasks[i][0] = sub_0802f31c(x, y, 1, i);
+                gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 1, i);
             else
-                gDoorObjectTasks[i][0] = sub_0802f31c(x, y, 0, i);
+                gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 0, i);
             break;
         case 5:
             if (!(gUsedSubGameDoors[gStageIndex] & 4))
-                gDoorObjectTasks[i][0] = sub_0802f05c(x, y, 1, i);
+                gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 1, i);
             else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
-                gDoorObjectTasks[i][0] = sub_0802f05c(x, y, 1, i);
+                gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 1, i);
             else
-                gDoorObjectTasks[i][0] = sub_0802f05c(x, y, 0, i);
+                gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 0, i);
             break;
         case 6:
             gUnk_020055D4 = 0x4000;

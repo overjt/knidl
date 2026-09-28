@@ -181,8 +181,8 @@ gWarpStarStateUpdates:
 	.word	sub_0807156c+1
 	.word	sub_08071640+1
 	.word	sub_08071774+1
-	.global	gUnk_0873FBC4
-gUnk_0873FBC4:
+	.global	gWarpStarFlights
+gWarpStarFlights:
 	.word	sub_08071d60+1
 	.word	sub_08071e80+1
 	.word	sub_08071d60+1
@@ -209,8 +209,8 @@ gUnk_0873FBC4:
 	.word	sub_08073f18+1
 	.word	sub_080740bc+1
 	.word	sub_08074420+1
-	.global	gUnk_0873FC2C
-gUnk_0873FC2C:
+	.global	gWarpStarFlightUpdates
+gWarpStarFlightUpdates:
 	.word	sub_08071e74+1
 	.word	sub_08071ebc+1
 	.word	sub_08071e74+1
@@ -237,8 +237,8 @@ gUnk_0873FC2C:
 	.word	sub_0807409c+1
 	.word	sub_080743c8+1
 	.word	sub_080743f0+1
-	.global	gUnk_0873FC94
-gUnk_0873FC94:
+	.global	gWarpStarCameraPaths
+gWarpStarCameraPaths:
 	.word	sub_080745dc+1
 	.word	sub_08074628+1
 	.word	sub_080745dc+1

@@ -724,7 +724,7 @@ void sub_08023efc(void);
 void sub_08023f18(void);
 void sub_08023f5c(void);
 void sub_08023fa0(void);
-void sub_08023fd4(void);
+void LoadGoalGameRoom(void);
 
 /* src/level_242d0.c */
 void sub_080242d0(void);

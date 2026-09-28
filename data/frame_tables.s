@@ -8857,8 +8857,8 @@ gUnk_08754738:
 	.word	gUnk_0833441C
 	.word	gUnk_0833444C
 	.word	gUnk_08334464
-	.global	gUnk_08754780
-gUnk_08754780:
+	.global	gStarRodPieceFrames
+gStarRodPieceFrames:
 	.word	gUnk_08334CA0
 	.word	gUnk_08334CB0
 	.word	gUnk_08334CC0

@@ -86,7 +86,7 @@ void AgbMain(void)
             break;
         case 10:
             if (gUnk_03001F30 == 0)
-                sub_0805b110();
+                GoalGameMain();
             else
                 sub_0800b628();
             gGameState = 5;

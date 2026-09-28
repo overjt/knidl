@@ -2093,7 +2093,7 @@ s32 sub_080ad13c(void)
 
 void sub_080ad160(void)
 {
-    sub_08066fc0(0, 128, 104);
+    CreateStarRodPiece(0, 128, 104);
 }
 
 void sub_080ad170(void)

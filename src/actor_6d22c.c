@@ -9,7 +9,7 @@
  * animation-table players PlayRayBurstAnim/6e4/730/77c and their dispatch
  * wrappers Task_StarScatter/564/574/5a4/5b8/5cc, the CreateChildTaskHere spawner
  * helpers CreateBurstEffect/d928/da3c, the eight-way "carried" body
- * sub_0806d7ec, the gTasks[].unk73-keyed body sub_0806daec (with its
+ * Task_ImpactStar, the gTasks[].unk73-keyed body sub_0806daec (with its
  * per-frame mover sub_0806da74), the two-sprite draw callback sub_0806dca0,
  * and the two random-walk bodies sub_0806dd90 and Task_HitFrost.
  */
@@ -303,7 +303,7 @@ void PlaySmallBlastAnim(void)
     TaskYieldTrampoline(1);
 }
 
-void sub_0806d7ec(void)
+void Task_ImpactStar(void)
 {
     struct Task *t;
     struct Task *u;
@@ -432,25 +432,25 @@ void RingStarUpdate(void)
     }
 }
 
-void sub_0806da04(void)
+void Task_BossScreenFlash(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = 0;
     t->drawCallback = 0;
-    sub_0806af78();
+    BossDefeatScreenFlash();
     TaskExitTrampoline();
 }
 
-void sub_0806da20(void)
+void Task_ExplosionScreenFlash(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = 0;
     t->drawCallback = 0;
-    sub_0806aaa4();
+    ExplosionScreenFlash();
     TaskExitTrampoline();
 }
 

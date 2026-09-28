@@ -25,14 +25,14 @@ extern u32 gStageRequest[];
 extern u32 gUnk_085B9B2C[];
 extern u32 gUnk_085B9B6C[];
 extern s16 gUnk_0873DBAC[];
-extern s16 gUnk_0873DBD4[];
-extern u32 gUnk_0873DBE4[];
-extern u32 gUnk_0873DC10[];
+extern s16 gGoalGameLayerHeights[];
+extern u32 gPlayerGoalGameStates[];
+extern u32 gPlayerGoalGameStateUpdates[];
 extern u32 gUnk_0873DC3C[];
 extern u8 gUnk_0873DC4C[];
 extern u8 gUnk_0873DC66[];
 extern u8 gUnk_0873DC80[];
-extern u16 gUnk_0873DC9A[];
+extern u16 gGoalGameLayerScores[];
 extern u32 gUnk_0873DCA8[];
 extern u32 gUnk_0873DCC0[];
 extern u32 gUnk_0873DCC8[];
@@ -67,14 +67,14 @@ u32 TaskIsOnScreen(void);
 void TaskSetEntry(void *fn, u32 i);
 s32 IsOnScreen(s16 a, s16 b);
 u32 IsWorldPosOnScreen(s16 x, s16 y);
-void sub_08023fd4(void);
+void LoadGoalGameRoom(void);
 void ExitClearedStage(void);
 void SetCameraFocus(s32 a, s32 b);
 void sub_08026998(void);
 void sub_08027178(void);
-void sub_0805b16c(void);
+void GoalGameInit(void);
 void sub_0805b370(void);
-s32 sub_0805b4bc(void);
+s32 PlayerGoalGameUpdate(void);
 void sub_0805b514(void);
 s32 sub_0805b5b0(void);
 void sub_0805b61c(void);
@@ -91,14 +91,14 @@ void sub_0805bca4(void);
 void sub_0805bce0(void);
 void sub_0805bd34(void);
 void sub_0805be48(void);
-void sub_0805c114(void);
-void sub_0805c150(void);
+void GoalGameLaunchStarsUpdate(void);
+void GoalGameLaunchStarsDraw(void);
 void sub_0805c584(void);
-void sub_0805c814(void);
-void sub_0805c990(void);
-s32 sub_0805cc54(void);
+void GoalGameCameraFollowPlayer(void);
+void GoalGameCameraUpdate(void);
+s32 GoalGamePlayerMarkerFollowParent(void);
 void sub_0805ceec(void);
-void sub_0805d420(void);
+void GoalGameHelperKirbyUpdate(void);
 void sub_0805d5fc(void);
 void TaskStartFrameScript(s32 a0);
 void TaskStartFrameScriptId(s32 a0);
@@ -181,10 +181,10 @@ s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2)
     return idx;
 }
 
-void sub_0805b110(void)
+void GoalGameMain(void)
 {
     LoadBgLayout(3);
-    sub_0805b16c();
+    GoalGameInit();
     HudInit(gLocalPlayer);
     LinkRequestSync();
     LinkSyncRandom();
@@ -203,7 +203,7 @@ void sub_0805b110(void)
     sub_08027178();
 }
 
-void sub_0805b16c(void)
+void GoalGameInit(void)
 {
     s32 i;
     s8 *p;
@@ -218,7 +218,7 @@ void sub_0805b16c(void)
     gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
     LoadGfxSet(0);
-    sub_08023fd4();
+    LoadGoalGameRoom();
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerStates[i].ability == 24)
@@ -240,7 +240,7 @@ void sub_0805b16c(void)
     } while ((s32)p >= (s32)q);
 }
 
-void sub_0805b278(void)
+void PlayerGoalGameInit(void)
 {
     gUnk_030023D4 = 0;
     gCurTask->unk6C = 0;
@@ -253,16 +253,16 @@ void sub_0805b278(void)
         gCurTask->unk6C++;
     }
     gCurTask->facing = 1;
-    gCurTask->updateCallback = (u32)sub_0805b4bc;
+    gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
     gUnk_02007D00[8] |= 1 << gCurTask->player->playerIndex;
     sub_0805b370();
     gCurTask->state = 0;
-    CallTableEntry(gCurTask->state, 11, gUnk_0873DBE4);
+    CallTableEntry(gCurTask->state, 11, gPlayerGoalGameStates);
 }
 
-void sub_0805b354(void)
+void PlayerGoalGameEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 11, gUnk_0873DBE4);
+    CallTableEntry(gCurTask->state, 11, gPlayerGoalGameStates);
 }
 
 void sub_0805b370(void)
@@ -298,9 +298,9 @@ void sub_0805b370(void)
     }
 }
 
-s32 sub_0805b4bc(void)
+s32 PlayerGoalGameUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 11, gUnk_0873DC10);
+    CallTableEntry(gCurTask->updateState, 11, gPlayerGoalGameStateUpdates);
 }
 
 void sub_0805b4d8(void)
@@ -337,18 +337,18 @@ void sub_0805b534(void)
         if (gCurTask->unk30 > 35)
         {
             gCurTask->state = 4;
-            TaskSetEntry(sub_0805b354, gCurTaskIdx);
+            TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
         }
     }
     else if (gUnk_030023D4 != 0)
     {
         gCurTask->state = 2;
-        TaskSetEntry(sub_0805b354, gCurTaskIdx);
+        TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
     }
     else
     {
         gCurTask->state = 3;
-        TaskSetEntry(sub_0805b354, gCurTaskIdx);
+        TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
     }
 }
 
@@ -412,7 +412,7 @@ void sub_0805b688(void)
     if (gCurTask->unk30 > 35)
     {
         gCurTask->state = 4;
-        TaskSetEntry(sub_0805b354, gCurTaskIdx);
+        TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
     }
 }
 
@@ -531,11 +531,11 @@ void sub_0805b9c0(void)
 
     TaskUpdateFrameScript();
     v = gCurTask->pixelY;
-    tbl = (s16 *)gUnk_0873DBD4;
+    tbl = (s16 *)gGoalGameLayerHeights;
     if (v > tbl[gCurTask->unk30] - 2)
     {
         gCurTask->state = 7;
-        TaskSetEntry(sub_0805b354, gCurTaskIdx);
+        TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
     }
 }
 
@@ -543,7 +543,7 @@ void sub_0805ba08(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
-    gCurTask->posY = (gUnk_0873DBD4[gCurTask->unk30] - 2) << 16;
+    gCurTask->posY = (gGoalGameLayerHeights[gCurTask->unk30] - 2) << 16;
     TaskStartFrameScriptId(5);
     TaskYieldTrampoline(2);
     TaskStartFrameScriptId(6);
@@ -597,9 +597,9 @@ void sub_0805bb90(void)
         {
             gCurTask->pixelX = gCurTask->unk24;
             gCurTask->posX = gCurTask->pixelX << 16;
-            gCurTask->updateCallback = (u32)sub_0805b4bc;
+            gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
             gCurTask->state = 8;
-            TaskSetEntry(sub_0805b354, gCurTaskIdx);
+            TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
         }
     }
     else
@@ -608,9 +608,9 @@ void sub_0805bb90(void)
         {
             gCurTask->pixelX = gCurTask->unk24;
             gCurTask->posX = gCurTask->pixelX << 16;
-            gCurTask->updateCallback = (u32)sub_0805b4bc;
+            gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
             gCurTask->state = 8;
-            TaskSetEntry(sub_0805b354, gCurTaskIdx);
+            TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
         }
     }
 }
@@ -639,7 +639,7 @@ void sub_0805bc5c(void)
     if (t->unk2C == 0)
     {
         gCurTask->state = 9;
-        TaskSetEntry(sub_0805b354, gCurTaskIdx);
+        TaskSetEntry(PlayerGoalGameEnterState, gCurTaskIdx);
     }
 }
 
@@ -672,7 +672,7 @@ void sub_0805bd28(void)
 
 void sub_0805bd34(void)
 {
-    gCurTask->updateCallback = (u32)sub_0805b4bc;
+    gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
     gCurTask->updateState = 10;
     if ((gCurTask->spriteFlags & (128 << 8)) != 0)
         gCurTask->facing = -1;
@@ -682,7 +682,7 @@ void sub_0805bd34(void)
     if (gCurTask->unk30 == 0)
         TaskYieldTrampoline(30);
     else if (gCurTask->unk30 != 6)
-        AddPlayerScore(gUnk_0873DC9A[gCurTask->unk30],
+        AddPlayerScore(gGoalGameLayerScores[gCurTask->unk30],
                      gCurTask->player->playerIndex);
     if (gUnk_02006A14[gCurTask->player->playerIndex] == 0)
     {
@@ -716,11 +716,11 @@ void sub_0805be48(void)
         QueueSprite(8, (u32)gUnk_085B9B2C, 0, 0x00009010, 120, 70);
 }
 
-void sub_0805beb0(void)
+void Task_GoalGameLaunchStars(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0805c150;
-    gCurTask->updateCallback = (u32)sub_0805c114;
+    gCurTask->drawCallback = (u32)GoalGameLaunchStarsDraw;
+    gCurTask->updateCallback = (u32)GoalGameLaunchStarsUpdate;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_0874C890;
     gCurTask->tileWord = 0;
@@ -778,7 +778,7 @@ void sub_0805beb0(void)
     }
 }
 
-void sub_0805c0a8(void)
+void GoalGameLaunchStarsFall(void)
 {
     gCurTask->updateCallback = 0;
     gCurTask->accelY = 128 << 7;
@@ -799,13 +799,13 @@ void sub_0805c0a8(void)
     TaskExitTrampoline();
 }
 
-void sub_0805c114(void)
+void GoalGameLaunchStarsUpdate(void)
 {
     if (gTasks[gCurTask->parent].accelY != 0)
-        TaskSetEntry(sub_0805c0a8, gCurTaskIdx);
+        TaskSetEntry(GoalGameLaunchStarsFall, gCurTaskIdx);
 }
 
-void sub_0805c150(void)
+void GoalGameLaunchStarsDraw(void)
 {
     TaskDrawWorld();
     {
@@ -825,7 +825,7 @@ void sub_0805c150(void)
     }
 }
 
-void sub_0805c204(void)
+void Task_GoalGameBigTrailStar(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
@@ -895,7 +895,7 @@ void sub_0805c204(void)
     TaskExitTrampoline();
 }
 
-void sub_0805c410(void)
+void Task_GoalGameSmallTrailStar(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
@@ -954,10 +954,10 @@ void sub_0805c584(void)
     }
 }
 
-void sub_0805c5fc(void)
+void Task_GoalGameCamera(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->updateCallback = (u32)sub_0805c990;
+    gCurTask->updateCallback = (u32)GoalGameCameraUpdate;
     if ((gActivePlayerMask >> gLocalPlayer) & 1)
     {
         TaskStop();
@@ -992,7 +992,7 @@ void sub_0805c5fc(void)
         }
         gCurTask->accelY = 128 << 7;
         while (gCurTask->pixelY
-               < gUnk_0873DBD4[gTasks[gLocalPlayer].unk30] - 2)
+               < gGoalGameLayerHeights[gTasks[gLocalPlayer].unk30] - 2)
             TaskYieldTrampoline(1);
         TaskStop();
         TaskSleepForever();
@@ -1008,11 +1008,11 @@ void sub_0805c5fc(void)
             }
         }
         gCurTask->unk2C = 0;
-        sub_0805c814();
+        GoalGameCameraFollowPlayer();
     }
 }
 
-void sub_0805c814(void)
+void GoalGameCameraFollowPlayer(void)
 {
     TaskStop();
     gCurTask->pixelX = 144;
@@ -1045,13 +1045,13 @@ void sub_0805c814(void)
     }
     gCurTask->accelY = 128 << 7;
     while (gCurTask->pixelY
-           < gUnk_0873DBD4[gTasks[gCurTask->unk28].unk30] - 2)
+           < gGoalGameLayerHeights[gTasks[gCurTask->unk28].unk30] - 2)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSleepForever();
 }
 
-void sub_0805c990(void)
+void GoalGameCameraUpdate(void)
 {
     u16 x;
     u16 y;
@@ -1090,7 +1090,7 @@ void sub_0805c990(void)
                     gCurTask->unk28 = gUnk_030023D4;
                     gCurTask->pixelY = gTasks[gUnk_030023D4].pixelY;
                     gCurTask->posY = gCurTask->pixelY << 16;
-                    TaskSetEntry(sub_0805c814, gCurTaskIdx);
+                    TaskSetEntry(GoalGameCameraFollowPlayer, gCurTaskIdx);
                 }
             }
             else
@@ -1106,14 +1106,14 @@ void sub_0805c990(void)
                     gCurTask->unk28 = gUnk_030023D4;
                     gCurTask->pixelY = gTasks[gUnk_030023D4].pixelY;
                     gCurTask->posY = gCurTask->pixelY << 16;
-                    TaskSetEntry(sub_0805c814, gCurTaskIdx);
+                    TaskSetEntry(GoalGameCameraFollowPlayer, gCurTaskIdx);
                 }
             }
         }
     }
 }
 
-void sub_0805cb30(void)
+void Task_GoalGameSpring(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
@@ -1139,12 +1139,12 @@ void sub_0805cb30(void)
     }
 }
 
-void sub_0805cbec(void)
+void Task_GoalGamePlayerMarker(void)
 {
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_0875488C;
-    gCurTask->updateCallback = (u32)sub_0805cc54;
+    gCurTask->updateCallback = (u32)GoalGamePlayerMarkerFollowParent;
     gCurTask->tileWord = 0x0000A010;
     if (gLocalPlayer == gCurTask->variant)
     {
@@ -1159,13 +1159,13 @@ void sub_0805cbec(void)
     TaskExitTrampoline();
 }
 
-s32 sub_0805cc54(void)
+s32 GoalGamePlayerMarkerFollowParent(void)
 {
     gCurTask->pixelX = (gTasks + gCurTask->parent)->pixelX;
     gCurTask->pixelY = (gTasks + gCurTask->parent)->pixelY - 24;
 }
 
-void sub_0805cca0(void)
+void Task_GoalGameSign(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
@@ -1173,7 +1173,7 @@ void sub_0805cca0(void)
     gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];
     gCurTask->posX = 200 << 16;
     {
-        s16 *t = (s16 *)gUnk_0873DBD4;
+        s16 *t = (s16 *)gGoalGameLayerHeights;
 
         gCurTask->posY = (t[gCurTask->variant] - 8) << 16;
     }
@@ -1262,9 +1262,9 @@ void sub_0805ceec(void)
     gCurTask->pixelY = (gTasks + gCurTask->unk46)->pixelY - 16;
 }
 
-void sub_0805cf3c(void)
+void Task_GoalGameHelperKirby(void)
 {
-    gCurTask->updateCallback = (u32)sub_0805d420;
+    gCurTask->updateCallback = (u32)GoalGameHelperKirbyUpdate;
     gCurTask->posX = 248 << 16;
     gCurTask->facing = 255;
     gCurTask->unk2C = 0;
@@ -1401,7 +1401,7 @@ void sub_0805cf3c(void)
     case 0:
         gCurTask->posX = 240 << 16;
         {
-            s16 *t = (s16 *)gUnk_0873DBD4;
+            s16 *t = (s16 *)gGoalGameLayerHeights;
 
             gCurTask->posY = (t[gCurTask->unk74] - 2) << 16;
         }
@@ -1437,7 +1437,7 @@ void sub_0805cf3c(void)
     }
 }
 
-void sub_0805d420(void)
+void GoalGameHelperKirbyUpdate(void)
 {
     TaskUpdateFrameScript();
     if (gCurTask->unk2C == 0)
@@ -1500,7 +1500,7 @@ void sub_0805d5fc(void)
     }
 }
 
-void sub_0805d668(void)
+void Task_GoalGameOneUp(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;

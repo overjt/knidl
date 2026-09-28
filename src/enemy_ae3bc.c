@@ -4356,7 +4356,7 @@ void sub_080b2e58(void)
     t = *c;
     t->updateState = 0;
     t2 = *c;
-    sub_08066fc0(1, (s16)((u16)t2->pixelX - 32), (s16)((u16)t2->pixelY + 16));
+    CreateStarRodPiece(1, (s16)((u16)t2->pixelX - 32), (s16)((u16)t2->pixelY + 16));
     TaskSetFrame(10);
     TaskYieldTrampoline(4);
     TaskSetFrame(11);

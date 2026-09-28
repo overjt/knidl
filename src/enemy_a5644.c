@@ -1524,7 +1524,7 @@ void sub_080a75c8(void)
     TaskYieldTrampoline(30);
     FadeOutBgm(8);
     TaskYieldTrampoline(32);
-    sub_08066fc0(0, 128, 104);
+    CreateStarRodPiece(0, 128, 104);
     ActorDestroy();
 }
 

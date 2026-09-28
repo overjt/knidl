@@ -130,7 +130,7 @@ extern u32 sub_08066718(void);
 extern void ActorLoadPalette(void *src, u32 size, u8 force);
 extern u8 sub_08066a6c(void);
 extern void sub_08066f50(s32 x, s32 y);
-extern void sub_08066fc0(u8 p3, s16 x, s16 y);
+extern void CreateStarRodPiece(u8 p3, s16 x, s16 y);
 extern void sub_0806704c(void);
 extern void sub_080670ac(u16 a);
 extern void sub_080670d4(void);
@@ -2670,7 +2670,7 @@ void sub_080a46e0(void)
 /* sub_080a4708 (0x080A4708-0x080A472C) */
 void sub_080a4708(void)
 {
-    sub_08066fc0(0, gCurTask->pixelX, gCurTask->pixelY);
+    CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
 /* sub_080a472c (0x080A472C-0x080A4808) */

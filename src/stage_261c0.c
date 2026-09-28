@@ -159,7 +159,7 @@ s32 sub_080264b0(void)
     if (gDoorObjectTasks[gUnk_0200B034][0] != -1 && gUnk_0200B034 != -1)
     {
         d = &gCurRoomDef->doors[gUnk_0200B034];
-        r = sub_0802ed94((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gUnk_0200B034][0]].unk20);
+        r = CreateDoorOpening((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gUnk_0200B034][0]].unk20);
     }
     return r;
 }
@@ -178,7 +178,7 @@ s32 sub_0802653c(void)
     if (gUnk_0200B034 != -1)
     {
         d = &gCurRoomDef->doors[gUnk_0200B034];
-        r = sub_0802ef90((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, 3, 0x2000);
+        r = CreateStageClearFlag((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, 3, 0x2000);
     }
     return r;
 }

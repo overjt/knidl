@@ -1663,17 +1663,17 @@ void sub_08066f50(s32 x, s32 y)
     PlayBgm(1);
 }
 
-void sub_08066f78(void)
+void LoadStarRodPieceGfx(void)
 {
     struct GfxHeader *h;
 
     h = (struct GfxHeader *)gUnk_08334DC0;
     RequestCopy(4, (u32)h->tiles, 0x06017800, h->tileCount << 5);
-    RequestCopy(2, gUnk_0873E264[gLevelIndex], (u32)gUnk_03001610,
+    RequestCopy(2, gStarRodPiecePalettes[gLevelIndex], (u32)gUnk_03001610,
                  h->paletteBankCount << 5);
 }
 
-void sub_08066fc0(u8 p3, s16 x, s16 y)
+void CreateStarRodPiece(u8 p3, s16 x, s16 y)
 {
     struct Task *t;
     s32 i;
@@ -1697,8 +1697,8 @@ void sub_08066fc0(u8 p3, s16 x, s16 y)
 
 void sub_0806704c(void)
 {
-    sub_08066f78();
-    sub_08066fc0(0, 128, 104);
+    LoadStarRodPieceGfx();
+    CreateStarRodPiece(0, 128, 104);
 }
 
 u8 sub_08067060(void)

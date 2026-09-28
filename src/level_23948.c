@@ -13,12 +13,12 @@
 /* level_23948.c (0x08023948-0x080242CF, issue #93).
  *
  * Room loaders, part 2: sub_08023948 and sub_08023ca0 (M02's screen
- * setups sub_0800b788 and sub_0800b87c) and sub_08023fd4, plus the
+ * setups sub_0800b788 and sub_0800b87c) and LoadGoalGameRoom, plus the
  * room-task variants 1 and 2 of task type #3 (sub_08023e34, sub_08023e78)
  * and their per-frame bodies (sub_08023ea0 ... sub_08023fa0).
  * sub_08023948 and sub_08023ca0 build their map in the second buffer
  * gUnk_02006AA0 through sub_08027a6c instead of gRoomMapBuffer, spawn the
- * door objects and set up the multi-player cameras; sub_08023fd4 loads
+ * door objects and set up the multi-player cameras; LoadGoalGameRoom loads
  * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
  * rebuilds the player mask gActivePlayerMask and restarts the player tasks
@@ -286,7 +286,7 @@ void sub_08023fa0(void)
     CameraWriteScrollBg123();
 }
 
-void sub_08023fd4(void)
+void LoadGoalGameRoom(void)
 {
     s32 i;
     u32 a;

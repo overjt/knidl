@@ -7,7 +7,7 @@
  * `0x0873FBD4` / `0x0873FC3C` script tables, each one a linear
  * TaskYieldTrampoline script that walks the 16.16 velocity pair
  * Task.velX/unk58 (and the 16.16 rotation/scale cells unk5C/unk60) through a
- * table of steps, plus the `sub_0807186c` pose setter they all drive.
+ * table of steps, plus the `WarpStarSetTrail` pose setter they all drive.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -49,13 +49,13 @@ void sub_08072d8c(void)
         r = PlaySfx(251);
         gUnk_02004B4C = r;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x10000;
     TaskYieldTrampoline(8);
-    sub_0807186c(1, 5, 4, 0x300);
+    WarpStarSetTrail(1, 5, 4, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -63,7 +63,7 @@ void sub_08072d8c(void)
         t->velY = 0x8000;
     }
     TaskYieldTrampoline(8);
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     gCurTask->velX = -0x10000;
     TaskYieldTrampoline(8);
@@ -82,7 +82,7 @@ void sub_08072d8c(void)
     TaskYieldTrampoline(8);
     gCurTask->velX = 0x10000;
     TaskYieldTrampoline(8);
-    sub_0807186c(0, 0, 5, 0x500);
+    WarpStarSetTrail(0, 0, 5, 0x500);
     gCurTask->velX = 0x8000;
     TaskYieldTrampoline(8);
     {
@@ -217,7 +217,7 @@ void sub_08072d8c(void)
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 3);
-    sub_0807186c(0, 0, 6, 0x500);
+    WarpStarSetTrail(0, 0, 6, 0x500);
     {
         struct Task *t = gCurTask;
 
@@ -279,7 +279,7 @@ void sub_08072d8c(void)
 
 void sub_080731c4(void)
 {
-    sub_080718c0();
+    WarpStarEmitTrailStars();
 }
 
 void sub_080731d0(void)
@@ -292,7 +292,7 @@ void sub_080731d0(void)
         t->posY = -0x40000;
         t->moveCallback = (u32)TaskMoveRelativeToView;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -318,7 +318,7 @@ void sub_080731d0(void)
 
 void sub_0807328c(void)
 {
-    sub_080718c0();
+    WarpStarEmitTrailStars();
 }
 
 void sub_08073298(void)
@@ -339,7 +339,7 @@ void sub_08073298(void)
         r = PlaySfx(250);
         gUnk_02004B4C = r;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     gCurTask->velY = 0x60000;
     TaskYieldTrampoline(2);
@@ -360,7 +360,7 @@ void sub_08073298(void)
     TaskYieldTrampoline(1);
     gCurTask->velX = -0x1FF00;
     TaskYieldTrampoline(1);
-    sub_0807186c(0, 8, 6, 0x600);
+    WarpStarSetTrail(0, 8, 6, 0x600);
     gCurTask->unk6C = 0;
     do
     {
@@ -389,12 +389,12 @@ void sub_08073298(void)
     CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
-    sub_08071898();
+    WarpStarStopTrail();
     TaskYieldTrampoline(10);
-    sub_0807186c(1, 9, 4, 0x300);
+    WarpStarSetTrail(1, 9, 4, 0x300);
     gCurTask->accelY = -0x4000;
     TaskYieldTrampoline(10);
-    sub_0807186c(1, 7, 4, 0x300);
+    WarpStarSetTrail(1, 7, 4, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -403,11 +403,11 @@ void sub_08073298(void)
         t->accelY = -0x5000;
     }
     TaskYieldTrampoline(10);
-    sub_0807186c(1, 6, 4, 0x300);
+    WarpStarSetTrail(1, 6, 4, 0x300);
     TaskYieldTrampoline(5);
-    sub_0807186c(1, 5, 4, 0x300);
+    WarpStarSetTrail(1, 5, 4, 0x300);
     TaskYieldTrampoline(5);
-    sub_0807186c(1, 4, 4, 0x300);
+    WarpStarSetTrail(1, 4, 4, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -416,7 +416,7 @@ void sub_08073298(void)
         t->accelY = 0xCC00;
     }
     TaskYieldTrampoline(10);
-    sub_08071898();
+    WarpStarStopTrail();
     TaskYieldTrampoline(5);
     {
         struct Task *t = gCurTask;
@@ -425,7 +425,7 @@ void sub_08073298(void)
         t->accelY = -0x7000;
     }
     TaskYieldTrampoline(5);
-    sub_0807186c(1, 6, 4, 0x300);
+    WarpStarSetTrail(1, 6, 4, 0x300);
     TaskYieldTrampoline(15);
     {
         struct Task *t = gCurTask;
@@ -435,9 +435,9 @@ void sub_08073298(void)
         t->accelY = 0x4000;
     }
     TaskYieldTrampoline(5);
-    sub_08071898();
+    WarpStarStopTrail();
     TaskYieldTrampoline(10);
-    sub_0807186c(1, 6, 3, 0x300);
+    WarpStarSetTrail(1, 6, 3, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -445,7 +445,7 @@ void sub_08073298(void)
         t->accelY = 0;
     }
     TaskYieldTrampoline(20);
-    sub_0807186c(1, 5, 3, 0x300);
+    WarpStarSetTrail(1, 5, 3, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -462,7 +462,7 @@ void sub_08073298(void)
 
 void sub_08073578(void)
 {
-    sub_080718c0();
+    WarpStarEmitTrailStars();
 }
 
 void sub_08073584(void)
@@ -483,7 +483,7 @@ void sub_08073584(void)
         r = PlaySfx(250);
         gUnk_02004B4C = r;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -508,7 +508,7 @@ void sub_08073584(void)
         t->velY = 0x8000;
     }
     TaskYieldTrampoline(8);
-    sub_0807186c(1, 8, 4, 0x300);
+    WarpStarSetTrail(1, 8, 4, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -602,7 +602,7 @@ void sub_08073584(void)
         t->velY = 0x10000;
     }
     TaskYieldTrampoline(4);
-    sub_08071898();
+    WarpStarStopTrail();
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(4);
     {
@@ -619,7 +619,7 @@ void sub_08073584(void)
         t->velY = -0x2000;
     }
     TaskYieldTrampoline(4);
-    sub_0807186c(1, 5, 4, 0x300);
+    WarpStarSetTrail(1, 5, 4, 0x300);
     gCurTask->velX = -0x20000;
     TaskYieldTrampoline(2);
     {
@@ -644,7 +644,7 @@ void sub_08073584(void)
 
 void sub_080737f8(void)
 {
-    sub_080718c0();
+    WarpStarEmitTrailStars();
 }
 
 void sub_08073804(void)
@@ -661,7 +661,7 @@ void sub_08073804(void)
         t->unk28 = -0x5000;
     }
     TaskStop();
-    sub_0807186c(0, 4, 4, 0x300);
+    WarpStarSetTrail(0, 4, 4, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -673,14 +673,14 @@ void sub_08073804(void)
     TaskYieldTrampoline(8);
     gCurTask->velY = -0x10000;
     TaskYieldTrampoline(8);
-    sub_0807186c(0, 4, 8, 0x200);
+    WarpStarSetTrail(0, 4, 8, 0x200);
     gCurTask->velY = -0xC000;
     TaskYieldTrampoline(8);
     gCurTask->velY = -0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = -0x4000;
     TaskYieldTrampoline(8);
-    sub_08071898();
+    WarpStarStopTrail();
     gCurTask->velY = -0x2000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x2000;
@@ -702,7 +702,7 @@ void sub_08073804(void)
 
 void sub_0807395c(void)
 {
-    sub_080718c0();
+    WarpStarEmitTrailStars();
 }
 
 void sub_08073968(void)
@@ -726,7 +726,7 @@ void sub_080739bc(void)
 {
     struct Task *t;
 
-    sub_080718c0();
+    WarpStarEmitTrailStars();
     sub_0801bcac(gUnk_0873F5CC);
     t = gCurTask;
     if (t->onGround & 1)
@@ -764,7 +764,7 @@ void sub_08073a54(void)
         r = PlaySfx(250);
         gUnk_02004B4C = r;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     gCurTask->velY = 0x10000;
     TaskYieldTrampoline(8);
@@ -842,7 +842,7 @@ void sub_08073a54(void)
     TaskYieldTrampoline(6);
     gCurTask->velY = 0x800;
     TaskYieldTrampoline(15);
-    sub_0807186c(1, 4, 4, 0x300);
+    WarpStarSetTrail(1, 4, 4, 0x300);
     TaskYieldTrampoline(15);
     TaskStop();
     TaskYieldTrampoline(2);
@@ -855,7 +855,7 @@ void sub_08073a54(void)
     PlaySfx(272);
     gCurTask->velY = 0x2000;
     TaskYieldTrampoline(4);
-    sub_0807186c(1, 6, 5, 0x300);
+    WarpStarSetTrail(1, 6, 5, 0x300);
     {
         struct Task *t = gCurTask;
 
@@ -865,7 +865,7 @@ void sub_08073a54(void)
     TaskYieldTrampoline(16);
     gCurTask->velX = 0x8000;
     TaskYieldTrampoline(16);
-    sub_0807186c(1, 8, 6, 0x300);
+    WarpStarSetTrail(1, 8, 6, 0x300);
     gCurTask->velX = 0x10000;
     TaskYieldTrampoline(16);
     gCurTask->velX = 0x14000;
@@ -882,7 +882,7 @@ void sub_08073a54(void)
 
 void sub_08073cd4(void)
 {
-    sub_080718c0();
+    WarpStarEmitTrailStars();
 }
 
 void sub_08073ce0(void)
@@ -896,7 +896,7 @@ void sub_08073ce0(void)
         t->moveCallback = (u32)TaskMoveRelativeToView;
         t->unk24 = 0;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -905,25 +905,25 @@ void sub_08073ce0(void)
         t->velY = -0x20000;
     }
     TaskYieldTrampoline(7);
-    sub_0807186c(2, 0, -1, 0);
+    WarpStarSetTrail(2, 0, -1, 0);
     TaskYieldTrampoline(1);
     gCurTask->velY = -0x10000;
     TaskYieldTrampoline(5);
-    sub_0807186c(2, 0, -1, 0);
+    WarpStarSetTrail(2, 0, -1, 0);
     TaskYieldTrampoline(3);
     gCurTask->velY = -0x8000;
     TaskYieldTrampoline(3);
-    sub_0807186c(2, 0, -1, 0);
+    WarpStarSetTrail(2, 0, -1, 0);
     TaskYieldTrampoline(1);
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(4);
     gCurTask->velY = 0x10000;
     TaskYieldTrampoline(1);
-    sub_0807186c(2, 0, -1, 0);
+    WarpStarSetTrail(2, 0, -1, 0);
     TaskYieldTrampoline(5);
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(1);
-    sub_0807186c(2, 0, -1, 0);
+    WarpStarSetTrail(2, 0, -1, 0);
     TaskYieldTrampoline(7);
     sub_08025f00();
     gCurTask->unk24 = 1;
@@ -932,7 +932,7 @@ void sub_08073ce0(void)
 
 void sub_08073e00(void)
 {
-    sub_080718c0();
+    WarpStarEmitTrailStars();
 }
 
 void sub_08073e0c(void)
@@ -966,7 +966,7 @@ void sub_08073e80(void)
 {
     struct Task *t;
 
-    sub_080718c0();
+    WarpStarEmitTrailStars();
     sub_0801bcac(gUnk_0873F5CC);
     t = gCurTask;
     if (t->onGround & 1)
@@ -997,7 +997,7 @@ void sub_08073f18(void)
         r = PlaySfx(126);
         gUnk_02004B4C = r;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -1095,7 +1095,7 @@ void sub_080740bc(void)
         t->posY = -0x220000;
         t->moveCallback = (u32)TaskMoveRelativeToView;
     }
-    sub_08071898();
+    WarpStarStopTrail();
     TaskStop();
     TaskYieldTrampoline(16);
     gCurTask->unk6C = 0;
@@ -1306,7 +1306,7 @@ void sub_08074420(void)
         gUnk_02004B4C = r;
     }
     gCurTask->facing = 1;
-    sub_0807186c(1, 11, 4, 0x400);
+    WarpStarSetTrail(1, 11, 4, 0x400);
     {
         struct Task *t = gCurTask;
 
@@ -1320,7 +1320,7 @@ void sub_0807447c(void)
 {
     struct Task *t;
 
-    sub_080718c0();
+    WarpStarEmitTrailStars();
     sub_0801bcac(gUnk_0873F5CC);
     t = gCurTask;
     if (t->onGround & 1)
@@ -1339,18 +1339,18 @@ void sub_0807447c(void)
     }
 }
 
-void sub_0807450c(void)
+void Task_WarpStarCamera(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_08074568;
+    t->updateCallback = (u32)WarpStarCameraUpdate;
     sub_08027798(t->pixelX, t->pixelY);
-    CallTableEntry(gTasks[gCurTask->parent].state, 25, gUnk_0873FC94);
+    CallTableEntry(gTasks[gCurTask->parent].state, 25, gWarpStarCameraPaths);
 }
 
-void sub_08074568(void)
+void WarpStarCameraUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -1655,7 +1655,7 @@ void sub_08074b60(void)
     TaskExitTrampoline();
 }
 
-void sub_08074bb0(int a, int b, int c)
+void CreateWarpStarTrailStar(int a, int b, int c)
 {
     u16 x = a;
     u16 y = b;

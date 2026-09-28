@@ -779,7 +779,7 @@ void sub_080b3a00(void)
     *(u16 *)((u8 *)u6 + 130) = w6;
 }
 
-void sub_080b3a64(void)
+void WhispyWoodsLeavesDraw(void)
 {
     if (gUnk_0874C260[65 - (s16)gCurTask->unk6C] != -1)
         QueueSprite(gCurTask->layer,
@@ -807,17 +807,17 @@ void sub_080b3a64(void)
                      gCurTask->unk1C - gSpriteCameraY);
 }
 
-void sub_080b3c68(void)
+void Task_WhispyWoodsLeaves(void)
 {
     s32 m;
     s32 z;
 
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->tileWord = 0;
-    gCurTask->drawCallback = (u32)sub_080b3a64;
+    gCurTask->drawCallback = (u32)WhispyWoodsLeavesDraw;
     gCurTask->layer = 8;
     gCurTask->frameTable = (u32 *)gUnk_0874CE68;
-    gCurTask->updateCallback = (u32)sub_080b3e30;
+    gCurTask->updateCallback = (u32)WhispyWoodsLeavesUpdate;
     sub_080b38f0();
     sub_080b3a00();
     gCurTask->unk6C = 66;
@@ -890,7 +890,7 @@ void sub_080b3c68(void)
     TaskSleepForever();
 }
 
-void sub_080b3e30(void)
+void WhispyWoodsLeavesUpdate(void)
 {
     struct Task **c;
     u8 *su;
@@ -1542,7 +1542,7 @@ void sub_080b47c0(void)
     sub_080b4648();
 }
 
-void sub_080b47cc(void)
+void Task_StarRodPiece(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -1554,8 +1554,8 @@ void sub_080b47cc(void)
     ta->drawCallback = (u32)ActorDrawWorldInView;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
-    tb->frameTable = (u32 *)gUnk_08754780;
-    CallTableEntry(*(u8 *)((u8 *)tb + 115), 3, gUnk_087560E0);
+    tb->frameTable = (u32 *)gStarRodPieceFrames;
+    CallTableEntry(*(u8 *)((u8 *)tb + 115), 3, gStarRodPieceVariants);
 }
 
 void sub_080b480c(void)

@@ -4621,11 +4621,11 @@ gUnk_0873DB44:
 	.global	gUnk_0873DBAC
 gUnk_0873DBAC:
 	.incbin	"baserom.gba", 0x73DBAC, 0x28
-	.global	gUnk_0873DBD4
-gUnk_0873DBD4:
+	.global	gGoalGameLayerHeights
+gGoalGameLayerHeights:
 	.incbin	"baserom.gba", 0x73DBD4, 0x10
-	.global	gUnk_0873DBE4
-gUnk_0873DBE4:
+	.global	gPlayerGoalGameStates
+gPlayerGoalGameStates:
 	.word	sub_0805b4d8+1
 	.word	sub_0805b514+1
 	.word	sub_0805b644+1
@@ -4637,8 +4637,8 @@ gUnk_0873DBE4:
 	.word	sub_0805bc1c+1
 	.word	sub_0805bce0+1
 	.word	sub_0805bd34+1
-	.global	gUnk_0873DC10
-gUnk_0873DC10:
+	.global	gPlayerGoalGameStateUpdates
+gPlayerGoalGameStateUpdates:
 	.word	sub_0805b508+1
 	.word	sub_0805b534+1
 	.word	sub_0805b660+1
@@ -4665,8 +4665,8 @@ gUnk_0873DC66:
 	.global	gUnk_0873DC80
 gUnk_0873DC80:
 	.incbin	"baserom.gba", 0x73DC80, 0x1A
-	.global	gUnk_0873DC9A
-gUnk_0873DC9A:
+	.global	gGoalGameLayerScores
+gGoalGameLayerScores:
 	.incbin	"baserom.gba", 0x73DC9A, 0xE
 	.global	gUnk_0873DCA8
 gUnk_0873DCA8:
@@ -4842,8 +4842,8 @@ gUnk_0873E1F8:
 	.global	gUnk_0873E220
 gUnk_0873E220:
 	.incbin	"baserom.gba", 0x73E220, 0x44
-	.global	gUnk_0873E264
-gUnk_0873E264:
+	.global	gStarRodPiecePalettes
+gStarRodPiecePalettes:
 	.word	gUnk_08334DD4
 	.word	gUnk_08334DF4
 	.word	gUnk_08334E14
