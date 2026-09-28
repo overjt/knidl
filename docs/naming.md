@@ -185,6 +185,16 @@ Run 3 of #155 added these words, each defined by the whole body:
   puff object before dropping (`KingDededeFloat`, `KingDededeExhale`);
   Exhale is not run 2's **Spit**, which spits a swallowed object out as a
   star.
+- **Defeat**: the state that starts a mid-boss's defeat (removes the HP
+  bar, marks the actor defeated, clears its score, then star-flashes and
+  knocks the boss back); **Summon**: creates a helper actor that moves on
+  its own (not a shot aimed at the player), then goes back to idle
+  (`BugzzySummon`, `KrackoSummon`); Nightmare Wizard's three star attacks
+  are named by their pose (`NightmareWizardOpenCloak`, `...OpenPalm`,
+  `...Point`), because one Shoot would fit all three.
+- A per-frame check whose whole body re-enters the state machine when the
+  state has changed is `<State>Update` (`BonkersWalkUpdate`), as run 2's
+  `ScarfyChaseUpdate`.
 - Two species that share one script get a pair prefix
   (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`); a verb
   that fits two states of one family names neither of them.
