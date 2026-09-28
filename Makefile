@@ -263,7 +263,7 @@ DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 # apart from the toolchain image.
 BOOTTEST_IMAGE := knidl-boottest
 
-.PHONY: image boottest-image all compare check-headers check-data progress datastats shifttest boottest symbols split modmap clean
+.PHONY: image boottest-image all compare check-headers check-data progress datastats shifttest boottest symbols split modmap assets assets-check clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -302,6 +302,21 @@ boottest: image boottest-image
 # so it runs directly on the host (no toolchain image required).
 report:
 	python3 tools/gen_report.py
+
+# Asset extraction (docs/assets.md): decode the ROM's graphics assets into
+# the gitignored assets/ directory — the policy-sanctioned editable view
+# (never committed).  Needs baserom.gba; host Python only, no toolchain
+# image.  assets-check re-extracts into a temp dir and compares byte for
+# byte, failing on any drift or hand edit (the make compare of assets).
+ASSET_PREREQ := baserom.gba tools/extract_assets.py tools/census_rooms.py \
+                tools/census_sprites.py tools/census_sheets.py \
+                tools/split_config.json docs/analysis/segments.txt
+
+assets: $(ASSET_PREREQ)
+	python3 tools/extract_assets.py --rom baserom.gba
+
+assets-check: $(ASSET_PREREQ)
+	python3 tools/extract_assets.py --rom baserom.gba --check
 
 symbols: image
 	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
