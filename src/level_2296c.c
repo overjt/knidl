@@ -50,7 +50,7 @@ void sub_0802296c(void)
     gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)
-            gUnk_02007BF0[i][j] = 0;
+            gUsedRoomObjects[i][j] = 0;
     for (i = 0; i <= 6; i++)
     {
         if (gMetaKnightmareMode)
@@ -140,7 +140,7 @@ void sub_08022c3c(void)
     gWarpStarStationLevels = 0;
     for (i = 0; i <= 7; i++)
         for (j = 7; j >= 0; j--)
-            gUnk_02007BF0[i][j] = 0;
+            gUsedRoomObjects[i][j] = 0;
     for (i = 0; i <= 6; i++)
     {
         if (gMetaKnightmareMode)
@@ -317,7 +317,7 @@ void sub_08022fa8(void)
     sub_08028304();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
-    gUnk_0300234C = 0;
+    gLivingPlayerCount = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
@@ -338,7 +338,7 @@ void sub_08022fa8(void)
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
-            gUnk_0300234C++;
+            gLivingPlayerCount++;
             gPlayerCameraMode[i] = 0;
         }
         else

@@ -74,7 +74,7 @@ void sub_08023948(void)
     sub_08029194();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
-    gUnk_0300234C = 0;
+    gLivingPlayerCount = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
@@ -95,7 +95,7 @@ void sub_08023948(void)
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
-            gUnk_0300234C++;
+            gLivingPlayerCount++;
             gPlayerCameraMode[i] = 0;
         }
         else
@@ -322,7 +322,7 @@ void LoadGoalGameRoom(void)
     gRoomBgLayout = 0;
     gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
-    gUnk_02007FB0 = 0;
+    gStageExitFlags = 0;
     ResetBlockAnims();
     StopScreenShake();
     CalcBg3Parallax();
@@ -336,7 +336,7 @@ void LoadGoalGameRoom(void)
     gUnk_02000020 = 1;
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
-    gUnk_0300234C = 0;
+    gLivingPlayerCount = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
@@ -357,7 +357,7 @@ void LoadGoalGameRoom(void)
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
-            gUnk_0300234C++;
+            gLivingPlayerCount++;
         }
         else
         {

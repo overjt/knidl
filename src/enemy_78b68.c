@@ -951,7 +951,7 @@ void sub_08079cac(void)
 
     gCurTask->updateState = 3;
     TaskStop();
-    v = gUnk_02006178;
+    v = gScreenAttackActive;
     if (v == 0)
     {
         ActorSetAttackBox(gUnk_0873F7AC);

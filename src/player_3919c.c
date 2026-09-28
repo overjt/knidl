@@ -19,7 +19,7 @@
  * the screen, state 2 waits PlayerState.unk14 frames, state 4 leaves for
  * the results screen), counts the players whose health gPlayerHealth[] is
  * not 0, plays the lost-life or game-over music, loops the fall animation
- * until the callback reaches state 3, and when gUnk_0300234C drops to 0
+ * until the callback reaches state 3, and when gLivingPlayerCount drops to 0
  * raises M02's stage request gStageRequest = 6; Task.variant = 4 or 5 then
  * says whether the player has lives left (gPlayerLives[]).
  * PlayerActionEnterDoor (action 20) enters a door: it stops the player, plays the
@@ -186,12 +186,12 @@ void PlayerActionDie(void)
             TaskYieldTrampoline(1);
         }
     } while (gCurTask->variant != 3);
-    gUnk_0300234C--;
+    gLivingPlayerCount--;
     t2 = gCurTask;
     t2->moveCallback = 0;
     t2->drawCallback = 0;
     t2->lateUpdateCallback = 0;
-    if (gUnk_0300234C == 0)
+    if (gLivingPlayerCount == 0)
     {
         gStageRequest = 6;
         TaskExitTrampoline();
@@ -293,7 +293,7 @@ void PlayerActionEnterDoor(void)
             gDispCnt |= 0x1D00;
         }
         n = 0;
-        if (gPlayerCount > 1 && gUnk_0300234C > 1)
+        if (gPlayerCount > 1 && gLivingPlayerCount > 1)
         {
             for (i = 0; i < gPlayerCount; i++)
             {

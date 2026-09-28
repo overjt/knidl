@@ -94,7 +94,7 @@ void PoppyBrosJrRideUpdate(void)
         TaskSetFrame(1);
         break;
     case 1:
-        if (gUnk_02006178 == 1)
+        if (gScreenAttackActive == 1)
         {
             t->u8C.actor->unk0D = 1;
             gCurTask->u8C.actor->extraFrame = 8;

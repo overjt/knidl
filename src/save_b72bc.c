@@ -31,7 +31,7 @@ void InputRecorderRestoreState(void)
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 7; j++)
-            gUnk_02007BF0[i][j] = gInputRecordingPtr->unk40[i][j];
+            gUsedRoomObjects[i][j] = gInputRecordingPtr->unk40[i][j];
     }
     for (i = 0; i < gPlayerCount; i++)
     {

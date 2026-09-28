@@ -117,7 +117,7 @@ void HudStartTaskHpBar(s32 max, s32 cur)
     s32 idx;
     struct HudBar *p;
 
-    if (gUnk_020055D0 == 1)
+    if (gHudHpBarCount == 1)
         idx = 0;
     else
         idx = gUnk_02005590[gCurTaskIdx - 32];
@@ -153,11 +153,11 @@ void HudAnimateTaskHpBar(void)
     s32 v;
 
     if (gHudHpBarMaxHp != 0) {
-        if (gUnk_020055D0 == 1)
+        if (gHudHpBarCount == 1)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
-        if (gUnk_02008014[idx] != -1 && gCurTask->health > 0) {
+        if (gHudHpBarTasks[idx] != -1 && gCurTask->health > 0) {
             v = Div(gCurTask->health << 5, gHudHpBarMaxHp);
             if (v != gHudHpBarValues[idx])
                 HudAnimateHpBar(gHudHpBarValues[idx], v, idx);
@@ -172,11 +172,11 @@ void HudSetTaskHpBar(void)
     s32 v;
 
     if (gHudHpBarMaxHp != 0) {
-        if (gUnk_020055D0 == 1)
+        if (gHudHpBarCount == 1)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
-        if (gUnk_02008014[idx] != -1) {
+        if (gHudHpBarTasks[idx] != -1) {
             if (gCurTask->health > 0)
                 v = Div(gCurTask->health << 5, gHudHpBarMaxHp);
             else
@@ -192,16 +192,16 @@ void HudRemoveHpBar(void)
     s32 idx;
     s32 i;
 
-    if (gUnk_020055D0 == 1)
+    if (gHudHpBarCount == 1)
         idx = 0;
     else
         idx = gUnk_02005590[gCurTaskIdx - 32];
-    if (gUnk_02008014[idx] != -1) {
-        gUnk_02008014[idx] = -1;
-        if (--gUnk_02000034 != 0) {
+    if (gHudHpBarTasks[idx] != -1) {
+        gHudHpBarTasks[idx] = -1;
+        if (--gHudHpBarsLeft != 0) {
             if (gHudHpBarIndex == idx) {
                 for (i = 0; i < 2; i++) {
-                    if (i != idx && gUnk_02005590[gUnk_02008014[i] - 32] != -1)
+                    if (i != idx && gUnk_02005590[gHudHpBarTasks[i] - 32] != -1)
                         break;
                 }
                 if (gHudMode == 1)
@@ -269,7 +269,7 @@ void sub_0800a6a4(void)
 
 void HudUpdateAbilityPanel(void)
 {
-    if (gHudMode != 0 && gUnk_0200617C != 0) {
+    if (gHudMode != 0 && gHudAbilityPanelActive != 0) {
         switch (gHudAbilityPanelState) {
         case 0:
         case 1:

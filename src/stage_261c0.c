@@ -121,8 +121,8 @@ void sub_08026308(void)
         gViewRect[1] &= 0x1FF;
         gCameraBounds[0] &= 0x1FF;
         gCameraBounds[1] &= 0x1FF;
-        gUnk_020055B8[0] &= 0x1FF;
-        gUnk_020055B8[1] &= 0x1FF;
+        gBlockAnimClipRect[0] &= 0x1FF;
+        gBlockAnimClipRect[1] &= 0x1FF;
         for (i = 0; i < gPlayerCount; i++)
         {
             gPlayerBounds[i].x0 &= 0x1FF;
@@ -283,7 +283,7 @@ s32 sub_0802672c(void)
         if (gCameraAnchorY > gRoomBounds[3])
             gCameraAnchorY = gRoomBounds[3];
         CameraStartHoldAnchor();
-        gUnk_020055E8 = 0;
+        gCameraPanDone = 0;
     }
     return id;
 }
@@ -313,7 +313,7 @@ s32 sub_08026834(void)
         if (gCameraAnchorY > gRoomBounds[3])
             gCameraAnchorY = gRoomBounds[3];
         CameraStartHoldAnchor();
-        gUnk_020055E8 = 0;
+        gCameraPanDone = 0;
     }
     return id;
 }
@@ -336,7 +336,7 @@ void sub_0802695c(void)
     gFurthestStage = 0;
     gCurLevel = gFurthestLevel;
     gUnk_03001F20 = 16;
-    gUnk_02007FB0 |= 1;
+    gStageExitFlags |= 1;
 }
 
 void sub_08026994(void)

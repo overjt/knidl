@@ -46,7 +46,7 @@ s32 sub_08063698(u32 type, s32 start)
     if (i == -1)
         return i;
     t = &gTasks[i];
-    if (gUnk_02006178 != 1)
+    if (gScreenAttackActive != 1)
         return i;
     gTaskSkipMaskStack[0][i] = gTaskSkipMaskStack[1][i] = 0;
     t->skipMask = 15;

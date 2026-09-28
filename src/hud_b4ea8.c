@@ -86,8 +86,8 @@ void LoadRoomObjectGfx(void)
     n = 0;
     if (gRoomObjectList.count == 0)
         return;
-    gUnk_0200000C = n;
-    gUnk_02007D40 = 8;
+    gObjTileCursor = n;
+    gObjPaletteCursor = 8;
     e = gRoomObjectList.entries;
     for (i = 0; i < gRoomObjectList.count; e++, i++)
     {

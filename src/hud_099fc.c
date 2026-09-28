@@ -59,7 +59,7 @@ void HudReset(void)
     s32 i;
 
     gHudMode = 0;
-    gUnk_0200617C = 0;
+    gHudAbilityPanelActive = 0;
     for (i = 0; i < 2; i++) {
         gHudHpBarValues[i] = 0;
         HudResetHpBar(i);
@@ -78,7 +78,7 @@ void HudInit(s32 i)
         sub_0800ab3c();
     if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
         gHudMode = 1;
-        gUnk_0200617C = 1;
+        gHudAbilityPanelActive = 1;
         HudLoadGfx();
         HudDrawPlayerIcon(i);
         HudDrawLives(gPlayerLives[i]);
@@ -118,7 +118,7 @@ void HudInit(s32 i)
         gUnk_020055F0[1] = 0;
     } else {
         gHudMode = 2;
-        gUnk_0200617C = 0;
+        gHudAbilityPanelActive = 0;
     }
     HudFlushTilemap();
 }
@@ -126,7 +126,7 @@ void HudInit(s32 i)
 void HudRedraw(s32 i)
 {
     gHudMode = 1;
-    gUnk_0200617C = 1;
+    gHudAbilityPanelActive = 1;
     HudClearTilemap();
     HudLoadGfx();
     if (gUnk_03002444 != 0)
@@ -168,18 +168,18 @@ void HudRedraw(s32 i)
 
 void sub_08009e14(void)
 {
-    gUnk_0200617C = 0;
+    gHudAbilityPanelActive = 0;
 }
 
 void sub_08009e20(void)
 {
-    gUnk_0200617C = 1;
+    gHudAbilityPanelActive = 1;
 }
 
 void sub_08009e2c(void)
 {
     gHudMode = 2;
-    gUnk_0200617C = 0;
+    gHudAbilityPanelActive = 0;
     HudClearTilemap();
     if (gUnk_03002444 != 0)
         sub_0800ab3c();

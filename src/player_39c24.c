@@ -387,7 +387,7 @@ void PlayerActionExitDoor(void)
                 {
                 case 0:
                 default:
-                    while (gUnk_020055E8 == 0)
+                    while (gCameraPanDone == 0)
                         TaskYieldTrampoline(1);
                     break;
                 case 1:
@@ -400,17 +400,17 @@ void PlayerActionExitDoor(void)
                     {
                         gCurTask->frame = gCurTask->unk46;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                         gCurTask->frame++;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                     }
                     break;
@@ -418,7 +418,7 @@ void PlayerActionExitDoor(void)
             }
             else
             {
-                while (gUnk_020055E8 == 0)
+                while (gCameraPanDone == 0)
                     TaskYieldTrampoline(1);
             }
         }

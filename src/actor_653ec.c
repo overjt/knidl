@@ -1645,7 +1645,7 @@ void sub_08066e88(u8 a)
         v = (s->hitterPlayer == -1) ? TaskFindNearestPlayer() : s->hitterPlayer;
         u->unk1C = v;
         u->unk28 = a;
-        if (gUnk_02006178 == 1)
+        if (gScreenAttackActive == 1)
         {
             gCurTask->u8C.actor->unk0D = 1;
             u->variant = 3;

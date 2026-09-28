@@ -104,7 +104,7 @@ void ResetPlayerRecords(void)
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gUnk_02005E00.unk00 = 0;
-    gUnk_02006178 = 0;
+    gScreenAttackActive = 0;
     gExtraModeTitleSeen = 0;
     gPauseDisabled = 0;
 }
@@ -180,7 +180,7 @@ void StageInit(void)
     gNextActorSerial = 0;
     gLinkCommand = 0;
     gPauseDisabled = 0;
-    gUnk_02006178 = 0;
+    gScreenAttackActive = 0;
     gUnk_02007CF0 = 0;
     gUnk_02008010 = -1;
     gUnk_020055C4 = 0;

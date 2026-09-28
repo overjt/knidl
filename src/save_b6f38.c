@@ -93,7 +93,7 @@ void InputRecorderStart(void)
         for (i = 0; i <= 7; i++)
         {
             for (j = 0; j <= 7; j++)
-                gInputRecordingPtr->unk40[i][j] = gUnk_02007BF0[i][j];
+                gInputRecordingPtr->unk40[i][j] = gUsedRoomObjects[i][j];
         }
         for (i = 0; i < gPlayerCount; i++)
         {

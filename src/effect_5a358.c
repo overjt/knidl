@@ -15,7 +15,7 @@
  * through three sub-states (gUnk_08751FCC); PlayerEffectTornadoDustUpdate kills it once the
  * player leaves mode 13.  Variant 46 (PlayerEffectCrashBlast, M13) is the twin of
  * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
- * kinds 1, 2, 7 and 8 through gUnk_0200B000 and the task skip mask, around a
+ * kinds 1, 2, 7 and 8 through gScreenAttackTasks and the task skip mask, around a
  * palette effect - it saves the palette buffer (CpuSet of gUnk_03001570 into
  * gUnk_0200AF20) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
  * sub_08065e6c and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
@@ -242,9 +242,9 @@ void PlayerEffectCrashBlast(void)
         } while ((s16)gCurTask->unk6C <= 10);
         gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(1);
-        gUnk_02006178 = 0;
+        gScreenAttackActive = 0;
         for (i = 0; i < 20; i++)
-            gUnk_0200B000[i] |= -1;
+            gScreenAttackTasks[i] |= -1;
         k = 0;
         for (i = 0; i <= 62; i++)
         {
@@ -256,41 +256,41 @@ void PlayerEffectCrashBlast(void)
                 case 2:
                 case 7:
                 case 8:
-                    gUnk_0200B000[k++] = i;
+                    gScreenAttackTasks[k++] = i;
                     break;
                 }
             }
         }
         m = 0;
         n = 0;
-        while ((s16)gUnk_0200B000[n] != -1 && n != 20)
+        while ((s16)gScreenAttackTasks[n] != -1 && n != 20)
         {
-            gUnk_02006178 = 1;
-            TaskRestoreSkipMask((s16)gUnk_0200B000[n++]);
+            gScreenAttackActive = 1;
+            TaskRestoreSkipMask((s16)gScreenAttackTasks[n++]);
             m++;
         }
         TaskYieldTrampoline(1);
         while (n != 0)
         {
             n--;
-            switch (gTasks[(s16)gUnk_0200B000[n]].actorKind)
+            switch (gTasks[(s16)gScreenAttackTasks[n]].actorKind)
             {
             case 1:
             case 2:
             case 7:
             case 8:
-                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
+                TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             default:
-                gTasks[(s16)gUnk_0200B000[n]].skipMask = 0;
-                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
+                gTasks[(s16)gScreenAttackTasks[n]].skipMask = 0;
+                TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             }
-            TaskSetSkipMask(15, (s16)gUnk_0200B000[n]);
+            TaskSetSkipMask(15, (s16)gScreenAttackTasks[n]);
         }
         if (m != 0)
             TaskYieldTrampoline(3);
-        gUnk_02006178 = 0;
+        gScreenAttackActive = 0;
         for (i = 32; i <= 62; i++)
         {
             if (gUnk_03002444 != 0)
@@ -304,7 +304,7 @@ void PlayerEffectCrashBlast(void)
                 continue;
             if (q->pixelX >= (s16)x0 && q->pixelX < (s16)x0 + 240
                 && q->pixelY >= (s16)y0 && q->pixelY < (s16)y0 + 160)
-                gUnk_02006178 = 1;
+                gScreenAttackActive = 1;
             switch (gTasks[i].actorKind)
             {
             case 5:
@@ -341,10 +341,10 @@ void PlayerEffectCrashBlast(void)
                 TaskSaveSkipMask(i);
                 TaskSetSkipMask(15, i);
                 TaskYieldTrampoline(2);
-                gUnk_02006178 = 0;
+                gScreenAttackActive = 0;
             }
         }
-        gUnk_02006178 = 0;
+        gScreenAttackActive = 0;
         gCurTask->player->unk16 = 0;
         while (gCurTask->player->terrainBox == 0)
             TaskYieldTrampoline(1);

@@ -388,7 +388,7 @@ void sub_0802497c(void)
     sub_08028304();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
-    gUnk_0300234C = 0;
+    gLivingPlayerCount = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
@@ -409,7 +409,7 @@ void sub_0802497c(void)
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
-            gUnk_0300234C++;
+            gLivingPlayerCount++;
             gPlayerCameraMode[i] = 0;
         }
         else
@@ -881,7 +881,7 @@ void sub_08025a30(void)
         gStageRequest = 7;
     }
     gUnk_02007FF0 = 0;
-    gUnk_02007FB0 |= 2;
+    gStageExitFlags |= 2;
 }
 
 void sub_08025acc(void)
@@ -891,7 +891,7 @@ void sub_08025acc(void)
     gStageRequest = 3;
     gUnk_0200AF00 = 0;
     gUnk_020069F0 = 0;
-    gUnk_02007FB0 |= 2;
+    gStageExitFlags |= 2;
 }
 
 void sub_08025b0c(void)
@@ -916,7 +916,7 @@ void sub_08025b5c(void)
             gMilestoneFlags |= 1;
         gCurLevel = 6;
         gUnk_03001F20 = 32;
-        gUnk_02007FB0 |= 1;
+        gStageExitFlags |= 1;
     }
     gUnk_02007FF0 = 0;
     gStageRequest = 7;
@@ -966,7 +966,7 @@ void sub_08025bc8(s32 id)
     if (gRoomBgLayout == 2)
         gUnk_02004B80 = gBg3Pos[0];
     gStageRequest = 4;
-    gUnk_02007FB0 |= 5;
+    gStageExitFlags |= 5;
 }
 
 void sub_08025dc4(void)

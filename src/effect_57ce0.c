@@ -15,10 +15,10 @@
  * Variants 35 (sub_08057ce0, two sub-states), 36 (sub_08057e90) and 39
  * (sub_08058720) are animations in world space (gUnk_08751D88,
  * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
- * tasks: it fills the 20-slot table gUnk_0200B000 with 0xFFFF, collects the
+ * tasks: it fills the 20-slot table gScreenAttackTasks with 0xFFFF, collects the
  * indices of the tasks of kinds 1, 2, 7 and 8 (Task.actorKind) whose
  * gTaskSlotTypes entry is not -1 (while gUnk_03002444 is clear), stops them
- * through the task skip mask (TaskRestoreSkipMask, with gUnk_02006178 = 1), and
+ * through the task skip mask (TaskRestoreSkipMask, with gScreenAttackActive = 1), and
  * after the yield releases them (TaskSaveSkipMask, TaskSetSkipMask(15, i)); then it
  * walks the tasks 32-62 of kinds 0, 3, 4, 6 and 9 one at a time the same
  * way.  Its callback PlayerEffectMikeAttackUpdate kills it once the player leaves mode 13
@@ -171,9 +171,9 @@ void PlayerEffectMikeAttack(void)
         u = gCurTask;
         u->unk28 = gPlayerCameraPos[u->parent].x;
         u->unk2C = gPlayerCameraPos[u->parent].y;
-        gUnk_02006178 = 0;
+        gScreenAttackActive = 0;
         for (i = 0; i < 20; i++)
-            gUnk_0200B000[i] |= 0xFFFF;
+            gScreenAttackTasks[i] |= 0xFFFF;
         k = 0;
         for (i = 0; i <= 62; i++)
         {
@@ -185,41 +185,41 @@ void PlayerEffectMikeAttack(void)
                 case 2:
                 case 7:
                 case 8:
-                    gUnk_0200B000[k++] = i;
+                    gScreenAttackTasks[k++] = i;
                     break;
                 }
             }
         }
         m = 0;
         n = 0;
-        while ((s16)gUnk_0200B000[n] != -1 && n != 20)
+        while ((s16)gScreenAttackTasks[n] != -1 && n != 20)
         {
-            gUnk_02006178 = 1;
-            TaskRestoreSkipMask((s16)gUnk_0200B000[n++]);
+            gScreenAttackActive = 1;
+            TaskRestoreSkipMask((s16)gScreenAttackTasks[n++]);
             m++;
         }
         TaskYieldTrampoline(1);
         while (n != 0)
         {
             n--;
-            switch (gTasks[(s16)gUnk_0200B000[n]].actorKind)
+            switch (gTasks[(s16)gScreenAttackTasks[n]].actorKind)
             {
             case 1:
             case 2:
             case 7:
             case 8:
-                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
+                TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             default:
-                gTasks[(s16)gUnk_0200B000[n]].skipMask = 0;
-                TaskSaveSkipMask((s16)gUnk_0200B000[n]);
+                gTasks[(s16)gScreenAttackTasks[n]].skipMask = 0;
+                TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             }
-            TaskSetSkipMask(15, (s16)gUnk_0200B000[n]);
+            TaskSetSkipMask(15, (s16)gScreenAttackTasks[n]);
         }
         if (m != 0)
             TaskYieldTrampoline(3);
-        gUnk_02006178 = 0;
+        gScreenAttackActive = 0;
         x0 = gPlayerCameraPos[gCurTask->parent].x - 120;
         y0 = gPlayerCameraPos[gCurTask->parent].y - 80;
         for (i = 32; i <= 62; i++)
@@ -235,7 +235,7 @@ void PlayerEffectMikeAttack(void)
                 continue;
             if (q->pixelX >= (s16)x0 && q->pixelX < (s16)x0 + 240
                 && q->pixelY >= (s16)y0 && q->pixelY < (s16)y0 + 160)
-                gUnk_02006178 = 1;
+                gScreenAttackActive = 1;
             switch (gTasks[i].actorKind)
             {
             case 6:
@@ -265,13 +265,13 @@ void PlayerEffectMikeAttack(void)
                 TaskSaveSkipMask(i);
                 TaskSetSkipMask(15, i);
                 TaskYieldTrampoline(2);
-                gUnk_02006178 = 0;
+                gScreenAttackActive = 0;
             }
         }
         if (m == 0)
             TaskYieldTrampoline(1);
         gCurTask->player->unk16--;
-        gUnk_02006178 = 0;
+        gScreenAttackActive = 0;
         TaskExitTrampoline();
     }
     pal = gBgPalette[0];

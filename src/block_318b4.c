@@ -21,7 +21,7 @@
  * events call.  FreeBlockAnimAndBlock/FreeBlockAnim/sub_080324e4 free a record,
  * BlockAnimWriteMetatile/BlockAnimWriteMetatileWrapped write its metatile back into the map, and
  * sub_08031c7c/sub_08032520 draw its 2x2 tiles inside the visible
- * window gUnk_020055B8. */
+ * window gBlockAnimClipRect. */
 
 /* M08's view of a map cell (src/bgmap_2a9cc.c): the metatile index is a u16 */
 struct MapTile
@@ -75,7 +75,7 @@ extern s16 gRoomHeight;               /* map height in metatiles */
 extern s16 gRoomWidth;               /* map width in metatiles */
 extern struct RoomDef *gCurRoomDef;   /* the current room header */
 extern struct MapTile *gRoomMap;   /* the room's metatile map */
-extern s16 gUnk_020055B8[4];
+extern s16 gBlockAnimClipRect[4];
 extern u16 gMetatileTiles[];
 extern u16 gUnk_080D71A0[];
 extern s32 gCameraCenterX;
@@ -264,13 +264,13 @@ void sub_08031c7c(struct Unk020061F0 *b)
     {
         s32 ty = b->unk2 * 2 + i;
 
-        if (ty >= gUnk_020055B8[2] && ty <= gUnk_020055B8[3])
+        if (ty >= gBlockAnimClipRect[2] && ty <= gBlockAnimClipRect[3])
         {
             for (j = 0; j <= 1; j++)
             {
                 s32 tx = b->unk0 * 2 + j;
 
-                if (tx >= gUnk_020055B8[0] && tx <= gUnk_020055B8[1])
+                if (tx >= gBlockAnimClipRect[0] && tx <= gBlockAnimClipRect[1])
                     (&b->unkC[j])[i * 32] = gMetatileTiles[b->unk16 * 4 + j + i * 2];
             }
         }
@@ -384,12 +384,12 @@ void sub_08031f3c(struct Unk020061F0 *b)
         for (i = 0; i <= 1; i++)
         {
             y = b->unk2 * 2 + i;
-            if (y >= gUnk_020055B8[2] && y <= gUnk_020055B8[3])
+            if (y >= gBlockAnimClipRect[2] && y <= gBlockAnimClipRect[3])
             {
                 for (j = 0; j <= 1; j++)
                 {
                     x = b->unk0 * 2 + j;
-                    if (x >= gUnk_020055B8[0] && x <= gUnk_020055B8[1])
+                    if (x >= gBlockAnimClipRect[0] && x <= gBlockAnimClipRect[1])
                         (&b->unkC[j])[i * 32] = gMetatileTiles[b->unk16 * 4 + j + i * 2];
                 }
             }
@@ -429,7 +429,7 @@ void sub_08031f3c(struct Unk020061F0 *b)
             {
                 x = b->unk0 * 2 + j;
                 y = b->unk2 * 2 + i;
-                if (y >= 0 && y < gRoomHeight * 2 && gUnk_020055B8[0] <= x && x <= gUnk_020055B8[1])
+                if (y >= 0 && y < gRoomHeight * 2 && gBlockAnimClipRect[0] <= x && x <= gBlockAnimClipRect[1])
                 {
                     v = gUnk_0200B060[gUnk_0873A6D4[n][0]] + gUnk_0200B060[gUnk_0873A6D4[n][1]] * 2;
                     if (v == 0)
@@ -442,7 +442,7 @@ void sub_08031f3c(struct Unk020061F0 *b)
                     x = b->unk0 * 2 + j + gUnk_0873A734[gUnk_0873A6D4[n][l]][0];
                     y = b->unk2 * 2 + i + gUnk_0873A734[gUnk_0873A6D4[n][l]][1];
 
-                    if (y >= 0 && gRoomHeight * 2 > y && x >= gUnk_020055B8[0] && gUnk_020055B8[1] >= x)
+                    if (y >= 0 && gRoomHeight * 2 > y && x >= gBlockAnimClipRect[0] && gBlockAnimClipRect[1] >= x)
                     {
                         if ((&gRoomMap[x >> 1])[(y >> 1) * gRoomWidth].collisionTile == 0)
                         {
@@ -585,13 +585,13 @@ void sub_08032520(struct Unk020061F0 *b)
     {
         s32 ty = b->unk2 * 2 + i;
 
-        if (ty >= gUnk_020055B8[2] && ty <= gUnk_020055B8[3])
+        if (ty >= gBlockAnimClipRect[2] && ty <= gBlockAnimClipRect[3])
         {
             for (j = 0; j <= 1; j++)
             {
                 s32 tx = b->unk0 * 2 + j;
 
-                if (tx >= gUnk_020055B8[0] && tx <= gUnk_020055B8[1])
+                if (tx >= gBlockAnimClipRect[0] && tx <= gBlockAnimClipRect[1])
                     (&b->unkC[j])[i * 32] = gMetatileTiles[b->unk16 * 4 + j + i * 2];
             }
         }

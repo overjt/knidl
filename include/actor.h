@@ -34,7 +34,7 @@ extern u32 gUnk_02004C90;
 extern u16 gUnk_020055C0;
 extern s32 gUnk_02006040[];
 extern s8 gCannonFuseState;
-extern u8 gUnk_02006178;
+extern u8 gScreenAttackActive;
 extern s32 gUnk_02006190[];
 extern s8 gPaletteAnimTasks[];
 extern u8 gUnk_02007CF4[];

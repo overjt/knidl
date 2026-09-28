@@ -35,7 +35,7 @@ struct Unk020055D8
 extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u8 gUnk_020069F0;
-extern u32 gUnk_02007BF0[8][8];
+extern u32 gUsedRoomObjects[8][8];
 extern s16 gPlayerLives[];
 extern u16 gUnk_02007D60;
 extern u32 gUnk_02007D64[];
@@ -147,15 +147,15 @@ void sub_080b5024(void)
             break;
         case 3:
             r = CreateActorByKind(2, e->unk1, e->unk2, e->unk3, e->x, e->y,
-                             (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
-            gUnk_02008014[0] = r;
-            gUnk_020055D0 = gUnk_02000034 = 1;
+                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1 << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+            gHudHpBarTasks[0] = r;
+            gHudHpBarCount = gHudHpBarsLeft = 1;
             break;
         case 8:
             r = CreateActorByKind(3, 8, e->unk2, e->unk3, e->x, e->y,
-                             (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
-            gUnk_02008014[0] = r;
-            gUnk_020055D0 = gUnk_02000034 = 1;
+                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1 << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+            gHudHpBarTasks[0] = r;
+            gHudHpBarCount = gHudHpBarsLeft = 1;
             break;
         case 5:
             if (gUnk_08756178[e->unk1] == -1)
@@ -192,13 +192,13 @@ void sub_080b5024(void)
                 break;
             case 2:
                 if (e->unk2 == 1)
-                    sub_08065dfc(gUnk_020060A0[gUnk_02006130[i]].unk1);
+                    sub_08065dfc(gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1);
                 break;
             case 3:
             }
             if (d != NULL)
                 r = CreateActorByKind(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
-                                 (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+                                 (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1 << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             else
                 r = CreateActorByKind(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
             break;
@@ -230,7 +230,7 @@ s32 SpawnRoomObject(s32 i)
 
     i6 = i;
     res5 = -1;
-    if (((u8 *)gRoomObjectSpawned)[i6] != 0)
+    if (((u8 *)gRoomObjectTried)[i6] != 0)
         goto fail;
     pd = (u8 *)&gRoomObjectList;
     w8 = i6 << 3;
@@ -252,7 +252,7 @@ s32 SpawnRoomObject(s32 i)
     case 2:
         gUnk_0200D080 = 1;
         res5 = CreateActorByKind(1, *(s8 *)(e4 + 1), e4[2], e4[3], *(u16 *)(e4 + 4), *(u16 *)(e4 + 6),
-            (pw2 = (u8 *)gUnk_020060A0, (((s32)*(s8 *)((b = (u8 *)((u32)pw2 + ((s32)(s8)*((u8 *)gUnk_02006130 + i6) << 2))) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
+            (pw2 = (u8 *)gRoomObjectGfxSlots, (((s32)*(s8 *)((b = (u8 *)((u32)pw2 + ((s32)(s8)*((u8 *)gRoomObjectGfxSlotIds + i6) << 2))) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
         break;
     case 4:
         if (*(s8 *)(e4 + 1) == 5)
@@ -260,7 +260,7 @@ s32 SpawnRoomObject(s32 i)
             sub_0806704c();
             break;
         }
-        pw = (u8 *)gUnk_02007BF0;
+        pw = (u8 *)gUsedRoomObjects;
         pw3 = (u32 *)(((s32)*(s8 *)gStageIndex << 2) + ((s32)gLevelIndex << 5) + (u32)pw);
         m = 1 << *(s8 *)(e4 + 3);
         w3 = *pw3;
@@ -275,7 +275,7 @@ s32 SpawnRoomObject(s32 i)
         res5 = sub_080b5d84(e4);
         break;
     }
-    pz = (u8 *)gRoomObjectSpawned + i6;
+    pz = (u8 *)gRoomObjectTried + i6;
     *pz = 1;
     if (res5 != -1)
         goto ok;
@@ -296,7 +296,7 @@ void ReleaseRoomObject(s32 a)
 {
     if (gUnk_02005590[a - 32] != -1)
     {
-        gRoomObjectSpawned[gUnk_02005590[a - 32]] = 0;
+        gRoomObjectTried[gUnk_02005590[a - 32]] = 0;
         gUnk_02005590[a - 32] = -1;
     }
 }
@@ -326,7 +326,7 @@ void MarkRoomObjectUsed(s32 a)
     e3 = (s8 *)(w + (u32)pbase);
     if (*e3 == -1)
         return;
-    pb2 = (u8 *)gUnk_02007BF0;
+    pb2 = (u8 *)gUsedRoomObjects;
     p2 = (u8 *)((((s32)*(s8 *)gStageIndex << 2) + ((s32)gLevelIndex << 5)) + (u32)pb2);
     pd = (u8 *)&gRoomObjectList;
     wi = *e3;
@@ -359,11 +359,11 @@ void sub_080b5558(void)
 
     mask = 0;
     CpuSet(gUnk_03001570, gUnk_02005E10, 96);
-    for (i = 0; i < 10 && gUnk_020060A0[i].unk0 != -1; i++)
+    for (i = 0; i < 10 && gRoomObjectGfxSlots[i].unk0 != -1; i++)
     {
-        if (!((mask >> gUnk_020060A0[i].unk1) & 1))
+        if (!((mask >> gRoomObjectGfxSlots[i].unk1) & 1))
         {
-            sub_08065dd0(gUnk_020060A0[i].unk1, gUnk_020060A0[i].unk0);
+            sub_08065dd0(gRoomObjectGfxSlots[i].unk1, gRoomObjectGfxSlots[i].unk0);
             mask |= 1 << i;
         }
     }
@@ -375,18 +375,18 @@ s32 AllocObjTilesAndPalettes(u32 a, u32 b)
     s32 r;
     u32 n;
 
-    if (a + gUnk_0200000C > 512)
-        gUnk_0200000C = 0;
-    if (b + gUnk_02007D40 > 14)
-        gUnk_02007D40 = 8;
+    if (a + gObjTileCursor > 512)
+        gObjTileCursor = 0;
+    if (b + gObjPaletteCursor > 14)
+        gObjPaletteCursor = 8;
     /* stand-in: the volatile read keeps cse from reusing this load for the
        `+= b` below (the ROM loads the palette cursor twice) */
-    r = (gUnk_0200000C << 16) | *(vu16 *)&gUnk_02007D40;
-    n = gUnk_0200000C + a;
-    gUnk_02007D40 += b;
+    r = (gObjTileCursor << 16) | *(vu16 *)&gObjPaletteCursor;
+    n = gObjTileCursor + a;
+    gObjPaletteCursor += b;
     n &= 0xFFF0;
     n += 16;
-    gUnk_0200000C = n;
+    gObjTileCursor = n;
     return r;
 }
 
@@ -395,11 +395,11 @@ s32 AllocObjTiles(u32 a)
     s32 r;
     u32 n;
 
-    if (a + gUnk_0200000C > 512)
-        gUnk_0200000C = 0;
-    r = gUnk_0200000C;
+    if (a + gObjTileCursor > 512)
+        gObjTileCursor = 0;
+    r = gObjTileCursor;
     n = ((r + a) & 0xFFF0) + 16;
-    gUnk_0200000C = n;
+    gObjTileCursor = n;
     return r;
 }
 
@@ -407,9 +407,9 @@ s32 AllocObjPalettes(u32 a)
 {
     s32 r;
 
-    if (a + gUnk_02007D40 > 14)
-        gUnk_02007D40 = 8;
-    r = gUnk_02007D40;
-    gUnk_02007D40 = r + a;
+    if (a + gObjPaletteCursor > 14)
+        gObjPaletteCursor = 8;
+    r = gObjPaletteCursor;
+    gObjPaletteCursor = r + a;
     return r;
 }

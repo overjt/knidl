@@ -37,12 +37,12 @@ struct Unk0200D120
 };
 
 /* EWRAM */
-extern u16 gUnk_0200000C;
+extern u16 gObjTileCursor;
 extern u8 gHudTilemapDirty;
-extern u8 gUnk_02000034;
+extern u8 gHudHpBarsLeft;
 extern s8 gHudHpBarIndex;
 extern s16 gHudHpBarMaxHp;
-extern s8 gUnk_020055D0;
+extern s8 gHudHpBarCount;
 extern s8 gUnk_020055F0[];
 extern u16 gHudTilemap[];
 extern u32 gUnk_02005F10[];
@@ -50,17 +50,17 @@ extern u8 gHudMode;
 extern s32 gPlayerScores[]; /* score per player */
 extern u8 gHudShowsClock;
 extern u16 gHudClock[]; /* clock (four fields) */
-extern struct Unk020060A0 gUnk_020060A0[];
-extern s8 gUnk_02006130[];
-extern s8 gUnk_0200617C;
+extern struct Unk020060A0 gRoomObjectGfxSlots[];
+extern s8 gRoomObjectGfxSlotIds[];
+extern s8 gHudAbilityPanelActive;
 extern s8 gHudAbilityPanelState;
 extern struct HudBar gHudHpBars[];
 extern s16 gHudHpBarLength;
-extern u16 gUnk_02007D40;
+extern u16 gObjPaletteCursor;
 extern s16 gHudHpBarValues[];
-extern s16 gUnk_02008014[];
+extern s16 gHudHpBarTasks[];
 extern s16 gUnk_0200801C;
-extern u8 gRoomObjectSpawned[];
+extern u8 gRoomObjectTried[];
 extern u8 gHudShowsHpBar;
 extern struct Unk0200D120 gUnk_0200D120[];
 

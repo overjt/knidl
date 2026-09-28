@@ -1390,7 +1390,7 @@ void MetaKnightActionExitDoor(void)
     {
         TaskSetSkipMask(14, gCurTaskIdx);
         sub_0802672c();
-        while (gUnk_020055E8 == 0)
+        while (gCameraPanDone == 0)
             TaskYieldTrampoline(1);
         ((void (*)(void))sub_08027a60)();
         TaskSetSkipMask(0, gCurTaskIdx);

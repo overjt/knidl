@@ -180,7 +180,7 @@ void CreditsLoadScene(void)
     gUnk_020061E0 = 0;
     sub_08066144();
     gNextActorSerial = 0;
-    gUnk_02006178 = 0;
+    gScreenAttackActive = 0;
     gUnk_02007CF0 = 0;
     gPauseDisabled = 1;
     for (i = 0; i < 4; i++)

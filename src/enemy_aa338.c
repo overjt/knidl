@@ -20,7 +20,7 @@ extern s8 gUnk_02005590[];
 extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u8 gUnk_020069F0;
-extern u32 gUnk_02007BF0[8][8];
+extern u32 gUsedRoomObjects[8][8];
 extern s16 gPlayerLives[];
 extern u16 gUnk_02007D60;
 extern s8 gUnk_02007D64;

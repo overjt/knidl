@@ -494,7 +494,7 @@ void sub_0802dcb4(void)
     TaskYieldTrampoline(10);
     if (gUnk_020055D4 == 0x2000)
         gUnk_020055D4 = 0x4000;
-    gUnk_020055E8 = 1;
+    gCameraPanDone = 1;
     TaskExitTrampoline();
 }
 
@@ -683,6 +683,6 @@ void sub_0802e3ac(void)
     if (gUnk_020055D4 == 0x2000)
         gUnk_020055D4 = 0x4000;
     sub_08025dc4();
-    gUnk_020055E8 = 1;
+    gCameraPanDone = 1;
     TaskExitTrampoline();
 }

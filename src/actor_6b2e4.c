@@ -691,7 +691,7 @@ u8 sub_0806be84(void)
     u32 m;
     u32 w;
 
-    if (gUnk_02006178 == 1)
+    if (gScreenAttackActive == 1)
     {
         sub_0806be4c(gCurTaskIdx);
         t = gCurTask;
@@ -705,7 +705,7 @@ u8 sub_0806be84(void)
             ActorSetHitReactions(gUnk_0873F938);
         sub_0806b8bc();
     }
-    return gUnk_02006178;
+    return gScreenAttackActive;
 }
 
 void ActorAttachedEnterState(void)

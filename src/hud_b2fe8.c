@@ -20,7 +20,7 @@ extern s8 gUnk_02005590[];
 extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u8 gUnk_020069F0;
-extern u32 gUnk_02007BF0[8][8];
+extern u32 gUsedRoomObjects[8][8];
 extern s16 gPlayerLives[];
 extern u16 gUnk_02007D60;
 extern s8 gUnk_02007D64;
@@ -1988,7 +1988,7 @@ void sub_080b4e40(void)
     m5 = 255;
     z4 = 0;
     z3 = 0;
-    p1 = (u8 *)gUnk_020060A0;
+    p1 = (u8 *)gRoomObjectGfxSlots;
     k2 = 9;
     do
     {
@@ -2003,8 +2003,8 @@ void sub_080b4e40(void)
     i2 = 0;
     do
     {
-        ((u8 *)gRoomObjectSpawned)[i2] = 0;
-        q = (u8 *)gUnk_02006130 + i2;
+        ((u8 *)gRoomObjectTried)[i2] = 0;
+        q = (u8 *)gRoomObjectGfxSlotIds + i2;
         w = *q;
         w |= 255;
         *q = w;
