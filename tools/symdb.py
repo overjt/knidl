@@ -59,6 +59,14 @@ ARM_ENTRIES = [
     (0x08000288, 0x20, "TaskExit"),  # helper 3: call task fn via ARM veneer
     (0x080002A8, 0x40, None),  # helper 4: task-done check + hang loop
     (0x080CFDDC, 0x08, None),  # ARM interworking veneer -> 0x08005655
+    # The ARM halves of the three task trampolines (asm/sdk_libc.s): after
+    # `bx pc; nop` each is one ARM `b` back to its helper above.  Decoded as
+    # Thumb they were a stmia plus a raw 0xEAFC halfword, a PC-relative
+    # branch the linker never saw, so any insertion between the helpers and
+    # the trampolines broke the task switch (the boot test, docs/data.md 8.4).
+    (0x080CFDC8, 0x04, None),  # b TaskSwitch
+    (0x080CFDD0, 0x04, None),  # b TaskYield
+    (0x080CFDD8, 0x04, None),  # b TaskExit
 ]
 
 # Canonical names, all previously validated in this repo (asm/crt0.s,

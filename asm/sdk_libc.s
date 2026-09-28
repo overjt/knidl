@@ -10,11 +10,15 @@
 @   0x080CFD00 _div0
 @   0x080CFD04 __umodsi3
 @   0x080CFDC4 TaskSwitchTrampoline
+@   0x080CFDC8 sub_080cfdc8
 @   0x080CFDCC TaskYieldTrampoline
+@   0x080CFDD0 sub_080cfdd0
 @   0x080CFDD4 TaskExitTrampoline
+@   0x080CFDD8 sub_080cfdd8
 
 	.section .sdk_libc, "ax"
 	.global	sdk_libc
+	.align	2
 	.syntax	unified
 	.cpu	arm7tdmi
 sdk_libc:
@@ -302,21 +306,27 @@ TaskSwitchTrampoline:
 	.thumb
 	bx	pc
 	nop
-	stmia	r1!, {r0, r3, r4}
-	.short	0xEAFC
+	.global	sub_080cfdc8
+sub_080cfdc8:
+	.arm
+	b	TaskSwitch	@ 0x08000234
 	.thumb_func
 	.global	TaskYieldTrampoline
 TaskYieldTrampoline:
 	.thumb
 	.short	0x4778
 	nop
-	stmia	r1!, {r5}
-	.short	0xEAFC
+	.global	sub_080cfdd0
+sub_080cfdd0:
+	.arm
+	b	TaskYield	@ 0x08000258
 	.thumb_func
 	.global	TaskExitTrampoline
 TaskExitTrampoline:
 	.thumb
 	.short	0x4778
 	nop
-	stmia	r1!, {r1, r3, r5}
-	.short	0xEAFC
+	.global	sub_080cfdd8
+sub_080cfdd8:
+	.arm
+	b	TaskExit	@ 0x08000288
