@@ -122,11 +122,11 @@ gUnk_08748E48:
 	.global	gUnk_08748E68
 gUnk_08748E68:
 	.incbin	"baserom.gba", 0x748E68, 0x20
-	.global	gUnk_08748E88
-gUnk_08748E88:
+	.global	gMetaKnightNearStates
+gMetaKnightNearStates:
 	.incbin	"baserom.gba", 0x748E88, 0x10
-	.global	gUnk_08748E98
-gUnk_08748E98:
+	.global	gMetaKnightNearStatesLowHealth
+gMetaKnightNearStatesLowHealth:
 	.incbin	"baserom.gba", 0x748E98, 0x10
 	.global	gUnk_08748EA8
 gUnk_08748EA8:
@@ -172,7 +172,7 @@ gMetaKnightStateUpdates:
 	.word	sub_080a5ef0+1
 	.word	sub_080a5f7c+1
 	.word	sub_080a6020+1
-	.word	sub_080a6130+1
+	.word	MetaKnightRunUpdate+1
 	.word	sub_080a6330+1
 	.word	sub_080a6264+1
 	.word	sub_080a638c+1
@@ -286,7 +286,7 @@ gKrackoStateUpdates:
 	.word	sub_080a8c84+1
 	.word	sub_080a8f18+1
 	.word	sub_080a9304+1
-	.word	sub_080a8fb4+1
+	.word	KrackoSummonUpdate+1
 	.global	gUnk_087491A0
 gUnk_087491A0:
 	.incbin	"baserom.gba", 0x7491A0, 0x8
@@ -415,9 +415,9 @@ gNightmareWizardStateUpdates:
 	.word	sub_080aa6a8+1
 	.word	sub_080aa71c+1
 	.word	sub_080aa970+1
-	.word	sub_080aaf38+1
-	.word	sub_080aad64+1
-	.word	sub_080aab4c+1
+	.word	NightmareWizardOpenCloakUpdate+1
+	.word	NightmareWizardOpenPalmUpdate+1
+	.word	NightmareWizardPointUpdate+1
 	.word	sub_080ab158+1
 	.word	sub_080ab394+1
 	.word	sub_080ab418+1

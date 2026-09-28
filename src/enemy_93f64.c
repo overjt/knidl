@@ -882,7 +882,7 @@ void GrandWheelieSummon(void)
     TaskSleepForever();
 }
 
-void sub_08095220(void)
+void GrandWheelieSummonUpdate(void)
 {
     struct Task *t;
     s32 x;

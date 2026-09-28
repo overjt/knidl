@@ -542,16 +542,16 @@ void MetaKnightRun(void)
     }
 }
 
-void sub_080a6130(void)
+void MetaKnightRunUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (abs(TaskGetNearestPlayerDx()) <= 43)
     {
         gCurTask->unk34 = 0;
         if (gCurTask->health >= gUnk_02007D00[3] >> 1)
-            ActorSetState(gUnk_08748E88[RandomRange(8)]);
+            ActorSetState(gMetaKnightNearStates[RandomRange(8)]);
         else
-            ActorSetState(gUnk_08748E98[RandomRange(8)]);
+            ActorSetState(gMetaKnightNearStatesLowHealth[RandomRange(8)]);
         sub_080a7168();
     }
 }

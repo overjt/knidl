@@ -153,7 +153,7 @@ void sub_0809cec4(void)
     ActorReactToHit();
 }
 
-void sub_0809cf04(void)
+void CreateAxeKnightAxe(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -491,7 +491,7 @@ void sub_0809d4a0(void)
     TaskYieldTrampoline(6);
     TaskSetFrame(6);
     TaskYieldTrampoline(4);
-    sub_0809d944();
+    CreateJavelinKnightJavelin();
     TaskSetFrame(6);
     TaskYieldTrampoline(2);
     while (1)
@@ -724,7 +724,7 @@ void sub_0809d8f8(void)
     t->onGround = 0;
 }
 
-void sub_0809d944(void)
+void CreateJavelinKnightJavelin(void)
 {
     struct ActorSpawn sp;
     struct Task *t;

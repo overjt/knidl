@@ -463,7 +463,7 @@ void sub_0809c880(void)
     TaskYieldTrampoline(10);
     gCurTask->frame = 13;
     TaskYieldTrampoline(2);
-    sub_0809cf04();
+    CreateAxeKnightAxe();
     gCurTask->frame = 14;
     TaskYieldTrampoline(60);
     ActorSetState(0);
@@ -523,7 +523,7 @@ void sub_0809c984(void)
     TaskYieldTrampoline(1);
     gCurTask->frame = 13;
     TaskYieldTrampoline(2);
-    sub_0809cf04();
+    CreateAxeKnightAxe();
     gCurTask->frame = 14;
     TaskSleepForever();
 }
@@ -559,7 +559,7 @@ void sub_0809ca10(void)
     TaskYieldTrampoline(1);
     gCurTask->frame = 13;
     TaskYieldTrampoline(2);
-    sub_0809cf04();
+    CreateAxeKnightAxe();
     u = gCurTask;
     w = 14;
     u->frame = w;

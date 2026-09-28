@@ -473,7 +473,7 @@ void NightmareWizardPoint(void)
     TaskSleepForever();
 }
 
-void sub_080aab4c(void)
+void NightmareWizardPointUpdate(void)
 {
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
     if (gCurTask->state != 7)
@@ -545,7 +545,7 @@ void NightmareWizardOpenPalm(void)
     TaskSleepForever();
 }
 
-void sub_080aad64(void)
+void NightmareWizardOpenPalmUpdate(void)
 {
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
     if (gCurTask->state != 6)
@@ -613,7 +613,7 @@ void NightmareWizardOpenCloak(void)
     TaskSleepForever();
 }
 
-void sub_080aaf38(void)
+void NightmareWizardOpenCloakUpdate(void)
 {
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
     if (gCurTask->state != 5)

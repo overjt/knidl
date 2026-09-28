@@ -3813,10 +3813,10 @@ void sub_080b25e8(void)
     {
     case 100:
     case 150:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     case 50:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     }
     u = gCurTask;
@@ -3900,7 +3900,7 @@ void sub_080b2664(void)
     }
 }
 
-void sub_080b2768(void)
+void CreateWhispyWoodsAirPuff(void)
 {
     struct ActorSpawn sp;
     s32 z;
@@ -3918,7 +3918,7 @@ void sub_080b2768(void)
     CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-void sub_080b27b0(void)
+void CreateWhispyWoodsApple(void)
 {
     struct ActorSpawn sp;
     s32 z;
@@ -4161,7 +4161,7 @@ void sub_080b2b40(void)
         q2 = *c;
         q2->frame++;
         TaskYieldTrampoline(8);
-        sub_080b2768();
+        CreateWhispyWoodsAirPuff();
         TaskYieldTrampoline(8);
         q3 = *c;
         q3->frame--;
@@ -4218,7 +4218,7 @@ void sub_080b2c18(void)
         q2 = *c;
         q2->frame++;
         TaskYieldTrampoline(8);
-        sub_080b2768();
+        CreateWhispyWoodsAirPuff();
         TaskYieldTrampoline(8);
         q3 = *c;
         q3->frame--;
@@ -4302,10 +4302,10 @@ void sub_080b2d80(void)
     {
     case 100:
     case 150:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     case 50:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     }
     if (gCurTask->state != 3)

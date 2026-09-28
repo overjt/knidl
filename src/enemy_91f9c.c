@@ -390,7 +390,7 @@ void BugzzySummon(void)
     TaskSleepForever();
 }
 
-void sub_080926d4(void)
+void BugzzySummonUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -961,7 +961,7 @@ void BugzzyDefeat(void)
     TaskSleepForever();
 }
 
-void sub_08093488(void)
+void BugzzyDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_082959A8, 16);
     if (gUnk_02007D00[4] == 1)

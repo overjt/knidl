@@ -347,7 +347,7 @@ void sub_0809df54(void)
     gCurTask->updateCallback = (u32)sub_0809dfc8;
     TaskFaceScreenCenter();
     TaskSetMotionXFacing(176 << 9, 0x5A5A5A5A);
-    sub_0809e214();
+    CreateMaceKnightMace();
     while (1)
     {
         TaskSetFrame(15);
@@ -416,7 +416,7 @@ void sub_0809e04c(void)
     TaskYieldTrampoline(3);
     TaskSetFrame(34);
     TaskYieldTrampoline(16);
-    sub_0809e214();
+    CreateMaceKnightMace();
     TaskSetFrame(15);
     TaskYieldTrampoline(3);
     TaskSetFrame(13);
@@ -475,7 +475,7 @@ void sub_0809e04c(void)
     TaskYieldTrampoline(10);
 }
 
-s32 sub_0809e214(void)
+s32 CreateMaceKnightMace(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -998,7 +998,7 @@ void sub_0809ebc0(void)
     TaskYieldTrampoline(4);
     TaskSetFrame(14);
     TaskYieldTrampoline(14);
-    sub_0809f29c(0);
+    CreateTridentKnightTrident(0);
     TaskSetFrame(15);
     TaskYieldTrampoline(3);
     TaskSetFrame(27);
@@ -1019,7 +1019,7 @@ void sub_0809ec2c(void)
     TaskYieldTrampoline(3);
     TaskSetFrame(14);
     TaskYieldTrampoline(19);
-    sub_0809f29c(0);
+    CreateTridentKnightTrident(0);
     TaskSetFrame(15);
     TaskYieldTrampoline(5);
     TaskSetFrame(16);
@@ -1158,7 +1158,7 @@ void sub_0809eddc(void)
         TaskYieldTrampoline(4);
         TaskSetFrame(14);
         TaskYieldTrampoline(14);
-        sub_0809f29c(gUnk_08747C28[gCurTask->unk2C]);
+        CreateTridentKnightTrident(gUnk_08747C28[gCurTask->unk2C]);
         w = gCurTask;
         n = w->unk2C + 1;
         w->unk2C = n;
@@ -1356,7 +1356,7 @@ void sub_0809f26c(void)
     ActorReactToHit();
 }
 
-s32 sub_0809f29c(s32 a)
+s32 CreateTridentKnightTrident(s32 a)
 {
     struct ActorSpawn sp;
     s32 r;

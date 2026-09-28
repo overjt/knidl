@@ -86,7 +86,7 @@ gMrFrostyStateUpdates:
 	.word	sub_08099690+1
 	.word	sub_08099734+1
 	.word	sub_080997e4+1
-	.word	sub_08099890+1
+	.word	MrFrostyDefeatUpdate+1
 	.word	sub_08099908+1
 	.word	sub_0809998c+1
 	.word	sub_08099a0c+1
@@ -156,7 +156,7 @@ gMrTickTockStateUpdates:
 	.word	sub_0809a434+1
 	.word	sub_0809a4f0+1
 	.word	sub_0809a624+1
-	.word	sub_0809a744+1
+	.word	MrTickTockDashUpdate+1
 	.word	sub_0809a7d8+1
 	.word	sub_0809a82c+1
 	.word	sub_0809a8b4+1
@@ -169,7 +169,7 @@ gMrTickTockStateUpdates:
 	.word	sub_0809aefc+1
 	.word	sub_0809b09c+1
 	.word	sub_0809b210+1
-	.word	sub_0809b298+1
+	.word	MrTickTockDefeatUpdate+1
 	.word	sub_0809b310+1
 	.word	sub_0809b394+1
 	.word	sub_0809b404+1

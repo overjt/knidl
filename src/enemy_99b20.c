@@ -10,7 +10,7 @@
  * remaining jump-table dispatchers; sub_08099dec picks the next animation from
  * one of gUnk_087456D4 / gUnk_087456E4 / gUnk_087456F4 / gUnk_08745704 by
  * classifying |TaskGetNearestPlayerDx()| against 128 and |TaskGetNearestPlayerDy()| against 64;
- * sub_08099e9c and sub_08099ee4 build struct ActorSpawn records for the actors
+ * CreateMrTickTockRing and CreateMrTickTockNote build struct ActorSpawn records for the actors
  * 16 and 17; sub_0809a080 is the shared hit reaction (rumble RequestScreenShake(2)
  * or (4), then SE 0x1F7).  sub_08099fe0 and sub_08099fe4 are two dead `bx lr`
  * state handlers nothing in the ROM points at.
@@ -239,7 +239,7 @@ void sub_08099dec(void)
     TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
 }
 
-s32 sub_08099e9c(void)
+s32 CreateMrTickTockRing(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -258,7 +258,7 @@ s32 sub_08099e9c(void)
     return CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-void sub_08099ee4(u8 a)
+void CreateMrTickTockNote(u8 a)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -795,7 +795,7 @@ void MrTickTockDash(void)
     TaskSleepForever();
 }
 
-void sub_0809a744(void)
+void MrTickTockDashUpdate(void)
 {
     s32 v;
 
@@ -851,7 +851,7 @@ void sub_0809a7dc(void)
     t->updateState = 8;
     u = gCurTask;
     u->unk30 = 120;
-    gCurTask->unk6C = sub_08099e9c();
+    gCurTask->unk6C = CreateMrTickTockRing();
     while (1)
     {
         TaskSetFrameFlip(8);
@@ -969,19 +969,19 @@ void sub_0809a974(void)
     {
     case 100:
         PlaySfx(0x1FB);
-        sub_08099ee4(0);
+        CreateMrTickTockNote(0);
         break;
     case 76:
         PlaySfx(0x1FB);
-        sub_08099ee4(1);
+        CreateMrTickTockNote(1);
         break;
     case 52:
         PlaySfx(0x1FB);
-        sub_08099ee4(2);
+        CreateMrTickTockNote(2);
         break;
     case 28:
         PlaySfx(0x1FB);
-        sub_08099ee4(3);
+        CreateMrTickTockNote(3);
         break;
     case 0:
         StopSfxOnPlayer(t->unk1C, 0x219);
@@ -1106,7 +1106,7 @@ void sub_0809ab70(void)
     }
     while ((s16)++gCurTask->unk6C <= 5);
     gCurTask->unk28 = 1;
-    sub_08099e9c();
+    CreateMrTickTockRing();
     while (1)
     {
         TaskSetFrameFlip(8);
@@ -1481,7 +1481,7 @@ void MrTickTockDefeat(void)
     TaskSleepForever();
 }
 
-void sub_0809b298(void)
+void MrTickTockDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_082797C8, 16);
 }

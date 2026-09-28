@@ -26,7 +26,7 @@
  * 143 and gTasks[] says this task is its parent, sub_08098b60 walks the
  * gUnk_08745618 / gUnk_0874561F rows with the decimal-digit buffer
  * gDigits[1] as the index, sub_08098c54 fires the timed
- * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, sub_08098d58
+ * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, CreateMrFrostyIceCube
  * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and sub_08098da4 is the "close
  * enough" probe (|TaskGetDxTo(Task.unk1C)| <= 10).  sub_080992a8 and
  * sub_08099a0c are empty state handlers, and sub_08099ad0 is the timer leaf
@@ -266,7 +266,7 @@ void sub_08098cf4(void)
     TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
 }
 
-void sub_08098d58(void)
+void CreateMrFrostyIceCube(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -785,7 +785,7 @@ void sub_08099524(void)
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
     v = gCurTask;
     v->velY = -131072;
-    sub_08098d58();
+    CreateMrFrostyIceCube();
     while (1)
     {
         TaskSetFrame(10);
@@ -833,7 +833,7 @@ void sub_080995f4(void)
     u->unk30 = 48;
     u->onGround = 0;
     PlaySfx(506);
-    sub_08098d58();
+    CreateMrFrostyIceCube();
     TaskTurnAround();
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     v = gCurTask;
@@ -885,7 +885,7 @@ void sub_080996d0(void)
     u->unk30 = 48;
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
     PlaySfx(506);
-    sub_08098d58();
+    CreateMrFrostyIceCube();
     while (1)
     {
         TaskSetFrame(6);
@@ -980,7 +980,7 @@ void MrFrostyDefeat(void)
     TaskSleepForever();
 }
 
-void sub_08099890(void)
+void MrFrostyDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_08274840, 16);
 }

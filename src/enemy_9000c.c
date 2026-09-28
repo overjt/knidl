@@ -16,7 +16,7 @@
  * per-frame row gUnk_087437D0[Task.frame].
  *
  * States 0-10 then follow as <body, guard> pairs (sub_080901e0 /
- * sub_08090270, BonkersWalk / sub_080903c8, ...): the body is a run of
+ * sub_08090270, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
  * TaskYieldTrampoline waits that steps Task.frame, clears and then waits on
  * Task.onGround (set when the boss lands) and pushes 16.16 velocities through
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
@@ -226,7 +226,7 @@ void BonkersWalk(void)
     TaskSleepForever();
 }
 
-void sub_080903c8(void)
+void BonkersWalkUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -260,7 +260,7 @@ void BonkersJump(void)
     TaskSleepForever();
 }
 
-void sub_080904ac(void)
+void BonkersJumpUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -300,7 +300,7 @@ void BonkersHop(void)
     TaskSleepForever();
 }
 
-void sub_080905b0(void)
+void BonkersHopUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -372,7 +372,7 @@ void BonkersDash(void)
     TaskSleepForever();
 }
 
-void sub_08090724(void)
+void BonkersDashUpdate(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -435,7 +435,7 @@ void BonkersThrow(void)
     TaskSleepForever();
 }
 
-void sub_080908ec(void)
+void BonkersThrowUpdate(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -476,7 +476,7 @@ void BonkersSlam(void)
     TaskSleepForever();
 }
 
-void sub_080909ac(void)
+void BonkersSlamUpdate(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -526,7 +526,7 @@ void BonkersJumpSlam(void)
     TaskSleepForever();
 }
 
-void sub_08090b18(void)
+void BonkersJumpSlamUpdate(void)
 {
     if (gCurTask->state != 7)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -564,7 +564,7 @@ void BonkersTripleSlam(void)
     TaskSleepForever();
 }
 
-void sub_08090bf0(void)
+void BonkersTripleSlamUpdate(void)
 {
     if (gCurTask->state != 8)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -632,7 +632,7 @@ void BonkersDefeat(void)
     TaskSleepForever();
 }
 
-void sub_08090de4(void)
+void BonkersDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_0826A668, 16);
     if (gCurTask->unk34 == 2)

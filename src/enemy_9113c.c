@@ -401,7 +401,7 @@ void PoppyBrosSrDefeat(void)
     TaskSleepForever();
 }
 
-void sub_0809191c(void)
+void PoppyBrosSrDefeatUpdate(void)
 {
     sub_08066480(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
     if (gCurTask->unk2C == 2)

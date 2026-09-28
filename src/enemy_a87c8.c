@@ -412,7 +412,7 @@ void KrackoSummon(void)
     TaskSleepForever();
 }
 
-void sub_080a8fb4(void)
+void KrackoSummonUpdate(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);

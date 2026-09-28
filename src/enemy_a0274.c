@@ -698,7 +698,7 @@ void KingDededeJump(void)
     TaskSleepForever();
 }
 
-void sub_080a0dbc(void)
+void KingDededeJumpUpdate(void)
 {
     struct Task *t;
     s16 *p;
@@ -764,7 +764,7 @@ void KingDededeFloat(void)
     }
 }
 
-void sub_080a0ec8(void)
+void KingDededeFloatUpdate(void)
 {
     struct Task *t;
     s32 m2;
@@ -836,7 +836,7 @@ void KingDededeExhale(void)
     TaskSleepForever();
 }
 
-void sub_080a1030(void)
+void KingDededeExhaleUpdate(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
@@ -1042,7 +1042,7 @@ void KingDededeSpit(void)
 {
     gCurTask->updateState = 9;
     TaskStop();
-    sub_080a0028();
+    CreateKingDededeStar();
     TaskYieldTrampoline(51);
     ActorSetState(1);
     TaskSleepForever();
@@ -1097,7 +1097,7 @@ void KingDededeFall(void)
     TaskSleepForever();
 }
 
-void sub_080a14e4(void)
+void KingDededeFallUpdate(void)
 {
     if (gCurTask->state != 10)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);

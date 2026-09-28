@@ -1716,8 +1716,8 @@ void MrShineFall(void)
     TaskSleepForever();
 }
 
-/* sub_080a33a4 (0x080A33A4-0x080A33DC) */
-void sub_080a33a4(void)
+/* MrShineFallUpdate (0x080A33A4-0x080A33DC) */
+void MrShineFallUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -2198,8 +2198,8 @@ void MrBrightFall(void)
     TaskSleepForever();
 }
 
-/* sub_080a3d3c (0x080A3D3C-0x080A3D84) */
-void sub_080a3d3c(void)
+/* MrBrightFallUpdate (0x080A3D3C-0x080A3D84) */
+void MrBrightFallUpdate(void)
 {
     struct Task *t = gCurTask;
 

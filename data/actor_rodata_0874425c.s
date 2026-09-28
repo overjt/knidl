@@ -106,7 +106,7 @@ gGrandWheelieStateUpdates:
 	.word	sub_08094dec+1
 	.word	sub_08094f68+1
 	.word	sub_080950b4+1
-	.word	sub_08095220+1
+	.word	GrandWheelieSummonUpdate+1
 	.word	sub_0809532c+1
 	.word	sub_08095484+1
 	.global	gUnk_0874449C

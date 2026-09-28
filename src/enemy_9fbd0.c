@@ -259,7 +259,7 @@ void sub_0809ffec(void)
         gPlayerStates[t->hitterSlot].requestedAction = 18;
 }
 
-void sub_080a0028(void)
+void CreateKingDededeStar(void)
 {
     struct ActorSpawn sp;
 
