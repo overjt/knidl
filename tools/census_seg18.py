@@ -79,7 +79,6 @@ SCALAR_TABLES = [
      "src/subgame_c4630.c:261-264) followed by u8 gUnk_080CFF76[4][4][2] OBJ {width, height} "
      "(include/subgame.h:221, src/subgame_c4d08.c:130)"),
     (0x0873231A, 0x08732320, "value", "s8 gUnk_08732302[level][6], row 4: level 4 has 7 stages (gUnk_08334EB4[4], src/level_2296c.c), so all six columns are read (src/level_242d0.c:750)"),
-    (0x08732428, None, "value-nextlabel", "s8 gUnk_08732428[][3] camera step counts (src/camtask_2d38c.c:345-365)"),
     (0x0873B634, 0x0873B652, "value", "u8 gUnk_0873B634[] roulette delays read until 0 (src/player_47fe8.c:116); the 0 is at +0x1E"),
     (0x0873B7C0, 0x0873B808, "value", "u16 gUnk_0873B7C0[3][2][6] 8.8 velocities (src/plobj_5239c.c:234-311)"),
     (0x0873B872, 0x0873B88A, "value", "u8 gUnk_0873B872[3][8] step counts (src/plobj_52f6c.c:65-79)"),
