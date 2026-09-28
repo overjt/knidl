@@ -145,7 +145,7 @@ void sub_0803ce98(void)
     v = gUnk_0873AF0C[ps2->unk33][c];
     if (ps2->mouthState == 1)
         v += 10;
-    if (gLocalPlayer != ps2->playerIndex || gUnk_03002444 != 0) {
+    if (gLocalPlayer != ps2->playerIndex || gInHub != 0) {
         if (IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) == 0)
             return;
     }
@@ -807,7 +807,7 @@ void sub_0803ddc0(void)
     if (gCurTask->lateUpdateCallback != 0 && (gCurTask->skipMask & 8) == 0)
         sub_08033414();
     if ((gLocalPlayer != gCurTask->player->playerIndex
-         || gUnk_03002444 != 0)
+         || gInHub != 0)
      && gCurTask->player->unk37 != 2
      && IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) == 0)
     {

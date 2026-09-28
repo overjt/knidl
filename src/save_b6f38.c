@@ -80,7 +80,7 @@ void InputRecorderStart(void)
         gInputRecordingPtr->unk0A = gRoomIndex;
         gInputRecordingPtr->unk0B = gExtraMode;
         gInputRecordingPtr->unk0C = gPlayerCount;
-        gInputRecordingPtr->unk12 = gUnk_020069F0;
+        gInputRecordingPtr->unk12 = gRoomEntryMode;
         gInputRecordingPtr->unk13 = gUnk_02000020;
         gInputRecordingPtr->unk14 = gMaxHealth;
         gInputRecordingPtr->unk36 = gWarpStarStationLevels;

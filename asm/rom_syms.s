@@ -21,8 +21,8 @@ gObjTileCursor = 0x0200000C
 gUnk_02000010 = 0x02000010
 	.global	gModeListExtraRows
 gModeListExtraRows = 0x02000018
-	.global	gUnk_0200001C
-gUnk_0200001C = 0x0200001C
+	.global	gHubUnlockSource
+gHubUnlockSource = 0x0200001C
 	.global	gUnk_02000020
 gUnk_02000020 = 0x02000020
 	.global	gBlockAnimHookId
@@ -83,8 +83,8 @@ gBg1MetatileMap = 0x02004CA0
 gPlayerHitBoxSets = 0x02005550
 	.global	gUnk_02005574
 gUnk_02005574 = 0x02005574
-	.global	gUnk_02005578
-gUnk_02005578 = 0x02005578
+	.global	gContinueLevel
+gContinueLevel = 0x02005578
 	.global	gGameOverTimer
 gGameOverTimer = 0x0200557C
 	.global	gMaxHealth
@@ -201,8 +201,8 @@ gBombRallySafeBeatsLeft = 0x020061DC
 gUnk_020061E0 = 0x020061E0
 	.global	gBreakingBlocks
 gBreakingBlocks = 0x020061F0
-	.global	gUnk_020069F0
-gUnk_020069F0 = 0x020069F0
+	.global	gRoomEntryMode
+gRoomEntryMode = 0x020069F0
 	.global	gHudHpBars
 gHudHpBars = 0x02006A00
 	.global	gBombRallySeats
@@ -277,8 +277,8 @@ gUnk_02007FB8 = 0x02007FB8
 gHudHpBarValues = 0x02007FBC
 	.global	gCutscenePending
 gCutscenePending = 0x02007FC0
-	.global	gUnk_02007FC4
-gUnk_02007FC4 = 0x02007FC4
+	.global	gWarpStarStationDoorRevealed
+gWarpStarStationDoorRevealed = 0x02007FC4
 	.global	gUnk_02007FC8
 gUnk_02007FC8 = 0x02007FC8
 	.global	gUnk_02007FCC
@@ -321,12 +321,12 @@ gRoomEntryY = 0x0200AEF0
 gUnk_0200AEF4 = 0x0200AEF4
 	.global	gBlockCursorY
 gBlockCursorY = 0x0200AEFC
-	.global	gUnk_0200AF00
-gUnk_0200AF00 = 0x0200AF00
+	.global	gEntryDoorEvent
+gEntryDoorEvent = 0x0200AF00
 	.global	gUnk_0200AF04
 gUnk_0200AF04 = 0x0200AF04
-	.global	gUnk_0200AF08
-gUnk_0200AF08 = 0x0200AF08
+	.global	gHubUnlockFlags
+gHubUnlockFlags = 0x0200AF08
 	.global	gUnk_0200AF0C
 gUnk_0200AF0C = 0x0200AF0C
 	.global	gBombRallyOutMask
@@ -353,8 +353,8 @@ gHudShowsHpBar = 0x0200B028
 gUnk_0200B02C = 0x0200B02C
 	.global	gUnk_0200B030
 gUnk_0200B030 = 0x0200B030
-	.global	gUnk_0200B034
-gUnk_0200B034 = 0x0200B034
+	.global	gEntryDoorIndex
+gEntryDoorIndex = 0x0200B034
 	.global	gUnk_0200B038
 gUnk_0200B038 = 0x0200B038
 	.global	gQuickDrawWins
@@ -911,8 +911,8 @@ gStageRequest = 0x03002438
 gLinkPlayerCount = 0x0300243C
 	.global	gAttackLastHitter
 gAttackLastHitter = 0x03002440
-	.global	gUnk_03002444
-gUnk_03002444 = 0x03002444
+	.global	gInHub
+gInHub = 0x03002444
 	.global	gUnk_03002448
 gUnk_03002448 = 0x03002448
 	.global	gUnk_0300244C

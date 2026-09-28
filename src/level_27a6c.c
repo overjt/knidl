@@ -12,11 +12,11 @@
  * marker names a flag that is still clear (a gBigSwitchFlags bit for markers
  * with bit 8 set, a gStageClearStatus[gCurLevel][] byte otherwise) takes the
  * matching cell of the next room's 2x2 pattern (gRoomTable[level][stage]
- * [room + 1]'s map).  With gUnk_0200AF08 set it first clears the BG map at
+ * [room + 1]'s map).  With gHubUnlockFlags set it first clears the BG map at
  * 0x06001800 and gBg1MetatileMap, records up to two cells whose marker is
- * gUnk_0200001C | 0x80 in gUnk_0200AFE0 (y then x; src/camtask_2d38c.c
+ * gHubUnlockSource | 0x80 in gUnk_0200AFE0 (y then x; src/camtask_2d38c.c
  * reads them as a flat s16[4]) and copies the pattern cell of every
- * gUnk_0200001C marker into gBg1MetatileMap; otherwise it returns early when
+ * gHubUnlockSource marker into gBg1MetatileMap; otherwise it returns early when
  * gCurLevel < gFurthestLevel and gUnk_0873232C[gCurLevel]'s flags
  * are all set (or it has none).
  *
@@ -95,14 +95,14 @@ extern struct RoomDef **gRoomTable[][8];
 extern s8 gStageIndex;
 extern s8 gLevelIndex;
 extern s8 gRoomIndex;
-extern u8 gUnk_0200AF08;
+extern u8 gHubUnlockFlags;
 extern u16 gBg1MetatileMap[];
 extern s16 gUnk_0200AFE0[][2];
 extern s16 gRoomWidth;
 extern s16 gRoomHeight;
 extern s8 gCurLevel;
 extern u16 *gUnk_0873240C[];
-extern u16 gUnk_0200001C;
+extern u16 gHubUnlockSource;
 extern u32 gBigSwitchFlags[];
 extern u8 gStageClearStatus[8][7];
 extern u32 gUnk_0873232C[];
@@ -127,7 +127,7 @@ void sub_08027a6c(void)
     else
         CpuSet(gCurRoomDef->metatileMap, gUnk_02006AA0, (gRoomMetatileCount * 2) & 0x1FFFFF);
     alt = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->metatileMap;
-    if (gUnk_0200AF08 != 0)
+    if (gHubUnlockFlags != 0)
     {
         a = 0;
         CpuFastSet(&a, (u32 *)0x06001800, 0x01000200);
@@ -160,7 +160,7 @@ void sub_08027a6c(void)
                 v = gUnk_0873240C[gCurLevel][idx];
                 if (v != 0)
                 {
-                    if (v == (gUnk_0200001C | 0x80) && n <= 1)
+                    if (v == (gHubUnlockSource | 0x80) && n <= 1)
                     {
                         gUnk_0200AFE0[n][1] = y;
                         gUnk_0200AFE0[n][0] = x;
@@ -169,14 +169,14 @@ void sub_08027a6c(void)
                     v &= 0xFF7F;
                     if (v & 0x100)
                     {
-                        if (gUnk_0200001C == v)
+                        if (gHubUnlockSource == v)
                             gBg1MetatileMap[idx] = *(u16 *)p;
                         if (!(gBigSwitchFlags[0] & (1 << (v & 0xFF7F))))
                             gUnk_02006AA0[idx] = *p;
                     }
                     else
                     {
-                        if (gUnk_0200001C == v)
+                        if (gHubUnlockSource == v)
                             gBg1MetatileMap[idx] = *(u16 *)p;
                         if (!gStageClearStatus[gCurLevel][v - 1])
                             gUnk_02006AA0[idx] = *p;

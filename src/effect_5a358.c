@@ -19,7 +19,7 @@
  * palette effect - it saves the palette buffer (CpuSet of gUnk_03001570 into
  * gUnk_0200AF20) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
  * sub_08065e6c and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
- * blends the saved palette towards gUnk_0873BC3E (while gUnk_03002444 is
+ * blends the saved palette towards gUnk_0873BC3E (while gInHub is
  * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
  * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
  * (with the collider row gUnk_0873C2B4 at the player's camera position
@@ -248,7 +248,7 @@ void PlayerEffectCrashBlast(void)
         k = 0;
         for (i = 0; i <= 62; i++)
         {
-            if (gUnk_03002444 == 0 && gTaskSlotTypes[i] != -1)
+            if (gInHub == 0 && gTaskSlotTypes[i] != -1)
             {
                 switch (gTasks[i].actorKind)
                 {
@@ -293,7 +293,7 @@ void PlayerEffectCrashBlast(void)
         gScreenAttackActive = 0;
         for (i = 32; i <= 62; i++)
         {
-            if (gUnk_03002444 != 0)
+            if (gInHub != 0)
                 continue;
             if (gTaskSlotTypes[i] == -1)
                 continue;
@@ -374,7 +374,7 @@ void PlayerEffectCrashBlastUpdate(void)
     case 0:
         break;
     case 1:
-        if (gUnk_03002444 != 0)
+        if (gInHub != 0)
             BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);
         else
             BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);
@@ -389,7 +389,7 @@ void PlayerEffectCrashBlastUpdate(void)
                      gPlayerCameraPos[gCurTask->player->playerIndex].y, gUnk_0873C2B4);
         break;
     case 2:
-        if (gUnk_03002444 != 0)
+        if (gInHub != 0)
             BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);
         else
             BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gUnk_03001570);

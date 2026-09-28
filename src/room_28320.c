@@ -24,7 +24,7 @@ void SpawnDoorObjects(void)
     struct Door *d;
 
     LoadGfxSet(2);
-    gUnk_0200B034 = -1;
+    gEntryDoorIndex = -1;
     for (i = 0; i < 32; i++)
     {
         gDoorObjectTasks[i][0] = -1;
@@ -36,7 +36,7 @@ void SpawnDoorObjects(void)
     gRoomDriftVelX = 0;
     gRoomDriftVelY = 0;
     gUnk_020055D4 = 0x4000;
-    if (gUnk_020069F0 == 1 || gUnk_020069F0 == 4)
+    if (gRoomEntryMode == 1 || gRoomEntryMode == 4)
     {
         r = GetCollisionTileAtPixel(gRoomEntryX, gRoomEntryY);
         if (r == 55 || r == 183)
@@ -49,7 +49,7 @@ void SpawnDoorObjects(void)
         {
             if (d->unk2 == x && d->unk4 == y)
             {
-                gUnk_0200B034 = i;
+                gEntryDoorIndex = i;
                 break;
             }
         }
@@ -88,7 +88,7 @@ void SpawnDoorObjects(void)
                     gDoorObjectTasks[i][0] = CreateStageDoorSign(x, y, d->unk8, i);
                     break;
                 case 1:
-                    if (i == gUnk_0200B034 && gUnk_0200AF00 == 1)
+                    if (i == gEntryDoorIndex && gEntryDoorEvent == 1)
                     {
                         gDoorObjectTasks[i][0] = CreateStageDoorSign(x, y, d->unk8, i);
                     }
@@ -99,15 +99,15 @@ void SpawnDoorObjects(void)
                     }
                     break;
                 case 2:
-                    if (i == gUnk_0200B034)
+                    if (i == gEntryDoorIndex)
                     {
-                        if (gUnk_020069F0 == 4)
+                        if (gRoomEntryMode == 4)
                         {
                             gDoorObjectTasks[i][0] = CreateClearedStageDoorSign(x, y, d->unk8, i);
                             gDoorObjectTasks[i][1] = CreateStageClearFlag(x, y, 15, 0x4000);
                             break;
                         }
-                        if (gUnk_0200AF00 == 1)
+                        if (gEntryDoorEvent == 1)
                         {
                             gDoorObjectTasks[i][0] = CreateStageDoorSign(x, y, d->unk8, i);
                             break;
@@ -131,7 +131,7 @@ void SpawnDoorObjects(void)
         case 3:
             if (!(gUsedSubGameDoors[gStageIndex] & 1))
                 gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 1, i);
-            else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
+            else if (i == gEntryDoorIndex && gEntryDoorEvent == 2)
                 gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 1, i);
             else
                 gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 0, i);
@@ -139,7 +139,7 @@ void SpawnDoorObjects(void)
         case 4:
             if (!(gUsedSubGameDoors[gStageIndex] & 2))
                 gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 1, i);
-            else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
+            else if (i == gEntryDoorIndex && gEntryDoorEvent == 2)
                 gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 1, i);
             else
                 gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 0, i);
@@ -147,7 +147,7 @@ void SpawnDoorObjects(void)
         case 5:
             if (!(gUsedSubGameDoors[gStageIndex] & 4))
                 gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 1, i);
-            else if (i == gUnk_0200B034 && gUnk_0200AF00 == 2)
+            else if (i == gEntryDoorIndex && gEntryDoorEvent == 2)
                 gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 1, i);
             else
                 gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 0, i);
@@ -155,9 +155,9 @@ void SpawnDoorObjects(void)
         case 6:
             gUnk_020055D4 = 0x4000;
             m = 0;
-            if (gUnk_0200AF08 != 0)
+            if (gHubUnlockFlags != 0)
             {
-                if (gUnk_0200AF08 & 16)
+                if (gHubUnlockFlags & 16)
                     m = 1;
                 else
                     gUnk_020055D4 = 0x2000;
@@ -186,7 +186,7 @@ void CalcBg3Parallax(void)
     s32 a;
     s32 k;
 
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
     {
         gBg3ParallaxX = 0x10000;
         gBg3ParallaxY = 0x10000;

@@ -138,6 +138,6 @@ void sub_080272dc(void)
     gRoomEntryX = (d->unk2 << 4) + 22;
     gRoomEntryY = (d->unk4 << 4) + 5;
     gRoomEntrySet = 1;
-    gUnk_0200AF00 = 0;
-    gUnk_020069F0 = 1;
+    gEntryDoorEvent = 0;
+    gRoomEntryMode = 1;
 }

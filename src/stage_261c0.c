@@ -19,7 +19,7 @@
  * the player to the room bounds and sub_0802695c starts the next stage.
  * sub_080264b0, sub_0802651c, sub_0802653c, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
- * (gUnk_0200B034, its slots in gDoorObjectTasks); sub_0802672c/sub_08026834
+ * (gEntryDoorIndex, its slots in gDoorObjectTasks); sub_0802672c/sub_08026834
  * spawn a map-event task and put the camera on the player or a partner.
  * sub_08026a0c, sub_08026a80 and sub_08026aec arm the scroll lock of one
  * room each.  sub_08026994 is an empty dead export. */
@@ -76,7 +76,7 @@ void SetCameraFocus(s32 x, s32 y)
 
 void SetCameraFocusOrAnchor(s32 x, s32 y)
 {
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
     {
         if (gCameraMode != 2 && gCameraMode != 4)
         {
@@ -156,10 +156,10 @@ s32 sub_080264b0(void)
     s32 r = -1;
     struct Door *d;
 
-    if (gDoorObjectTasks[gUnk_0200B034][0] != -1 && gUnk_0200B034 != -1)
+    if (gDoorObjectTasks[gEntryDoorIndex][0] != -1 && gEntryDoorIndex != -1)
     {
-        d = &gCurRoomDef->doors[gUnk_0200B034];
-        r = CreateDoorOpening((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gUnk_0200B034][0]].unk20);
+        d = &gCurRoomDef->doors[gEntryDoorIndex];
+        r = CreateDoorOpening((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gEntryDoorIndex][0]].unk20);
     }
     return r;
 }
@@ -175,9 +175,9 @@ s32 sub_0802653c(void)
     s32 r = -1;
     struct Door *d;
 
-    if (gUnk_0200B034 != -1)
+    if (gEntryDoorIndex != -1)
     {
-        d = &gCurRoomDef->doors[gUnk_0200B034];
+        d = &gCurRoomDef->doors[gEntryDoorIndex];
         r = CreateStageClearFlag((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, 3, 0x2000);
     }
     return r;
@@ -189,48 +189,48 @@ s32 sub_08026584(void)
     struct Door *d;
     struct Door *doors;
 
-    switch (gUnk_0200AF00)
+    switch (gEntryDoorEvent)
     {
     case 0:
         break;
     case 1:
     case 3:
-        if (gDoorObjectTasks[gUnk_0200B034][0] == -1 || gUnk_0200B034 == -1)
+        if (gDoorObjectTasks[gEntryDoorIndex][0] == -1 || gEntryDoorIndex == -1)
             break;
         doors = gCurRoomDef->doors;
-        d = (struct Door *)(gUnk_0200B034 * sizeof(struct Door) + (u32)doors);
+        d = (struct Door *)(gEntryDoorIndex * sizeof(struct Door) + (u32)doors);
         switch (gStageClearStatus[gStageIndex][d->unk8])
         {
         case 0:
             break;
         case 1:
-            TaskSetEntry(sub_0802f6c0, gDoorObjectTasks[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f6c0, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 2:
             CreateStageEffect(4, (d->unk2 << 4) + 16, (d->unk4 << 4) + 8);
             n = 1;
-            TaskSetEntry(sub_0802f6f4, gDoorObjectTasks[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f6f4, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         }
         break;
     case 2:
-        if (gDoorObjectTasks[gUnk_0200B034][0] == -1 || gUnk_0200B034 == -1)
+        if (gDoorObjectTasks[gEntryDoorIndex][0] == -1 || gEntryDoorIndex == -1)
             break;
-        switch (*(u8 *)&gCurRoomDef->doors[gUnk_0200B034].unk6)
+        switch (*(u8 *)&gCurRoomDef->doors[gEntryDoorIndex].unk6)
         {
         case 3:
-            TaskSetEntry(sub_0802f2fc, gDoorObjectTasks[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f2fc, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 4:
-            TaskSetEntry(sub_0802f400, gDoorObjectTasks[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f400, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 5:
-            TaskSetEntry(sub_0802f1dc, gDoorObjectTasks[gUnk_0200B034][0]);
+            TaskSetEntry(sub_0802f1dc, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         default:
             return;
         }
-        CreateStageEffect(4, (gCurRoomDef->doors[gUnk_0200B034].unk2 << 4) + 16, (gCurRoomDef->doors[gUnk_0200B034].unk4 << 4) + 8);
+        CreateStageEffect(4, (gCurRoomDef->doors[gEntryDoorIndex].unk2 << 4) + 16, (gCurRoomDef->doors[gEntryDoorIndex].unk4 << 4) + 8);
         n++;
         PlaySfx(0x11B);
         break;
@@ -259,7 +259,7 @@ s32 sub_0802672c(void)
     if (id != -1)
     {
         t = &gTasks[id];
-        f = gUnk_0200AF08 & 16;
+        f = gHubUnlockFlags & 16;
         if (f != 0)
             t->unk24 = 1;
         else
@@ -297,7 +297,7 @@ s32 sub_08026834(void)
     if (id != -1)
     {
         t = &gTasks[id];
-        f = gUnk_0200AF08 & 16;
+        f = gHubUnlockFlags & 16;
         if (f != 0)
             t->unk24 = 1;
         else
@@ -347,7 +347,7 @@ void sub_08026998(void)
 {
     if (gMetaKnightmareMode == 0)
         SaveProgress(gCurSaveSlot);
-    gUnk_02005578 = gCurLevel;
+    gContinueLevel = gCurLevel;
     gUnk_02007FF8 = gUnk_03001F20;
 }
 

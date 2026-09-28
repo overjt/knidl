@@ -40,8 +40,8 @@ void sub_0802296c(void)
     struct Door *d;
 
     gUnk_02004C98 = 0;
-    gUnk_0200AF08 = 0;
-    gUnk_0200001C = 0;
+    gHubUnlockFlags = 0;
+    gHubUnlockSource = 0;
     gUnk_02004B64 = 0;
     gUnk_0200B038 = 0;
     gUnk_02007FF0 = 0;
@@ -71,14 +71,14 @@ void sub_0802296c(void)
     gStageIndex = gCurLevel;
     gRoomIndex = 0;
     gUnk_0200AF04 = 0;
-    gUnk_02005578 = gStageIndex;
+    gContinueLevel = gStageIndex;
     gUnk_02007FF8 = gUnk_03001F20;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     d = room->doors;
     if (gFurthestLevel == 0 && gFurthestStage == 0)
     {
         gRoomEntrySet = 0;
-        gUnk_020069F0 = 2;
+        gRoomEntryMode = 2;
     }
     else
     {
@@ -91,8 +91,8 @@ void sub_0802296c(void)
             }
             gRoomEntryX = d->unk2 * 16 + 22;
             gRoomEntryY = d->unk4 * 16 + 5;
-            gUnk_020069F0 = 1;
-            gUnk_0200AF00 = 0;
+            gRoomEntryMode = 1;
+            gEntryDoorEvent = 0;
         }
         else if ((s8)gUnk_03001F20 == 32)
         {
@@ -103,7 +103,7 @@ void sub_0802296c(void)
             }
             gRoomEntryX = d->unk2 * 16 + 16;
             gRoomEntryY = d->unk4 * 16 + 53;
-            gUnk_020069F0 = 0;
+            gRoomEntryMode = 0;
         }
         else
         {
@@ -114,8 +114,8 @@ void sub_0802296c(void)
             }
             gRoomEntryX = d->unk2 * 16 + 22;
             gRoomEntryY = d->unk4 * 16 + 5;
-            gUnk_020069F0 = 1;
-            gUnk_0200AF00 = 0;
+            gRoomEntryMode = 1;
+            gEntryDoorEvent = 0;
         }
         gRoomEntrySet = 1;
     }
@@ -130,8 +130,8 @@ void sub_08022c3c(void)
     struct Door *d;
 
     gUnk_02004C98 = 0;
-    gUnk_0200AF08 = 0;
-    gUnk_0200001C = 0;
+    gHubUnlockFlags = 0;
+    gHubUnlockSource = 0;
     gUnk_02004B64 = 0;
     gUnk_0200B038 = 0;
     gUnk_02007FF0 = 0;
@@ -164,21 +164,21 @@ void sub_08022c3c(void)
         gRoomIndex = 0;
         gRoomEntrySet = 0;
         gStageRequest = 2;
-        gUnk_0200AF00 = 0;
-        gUnk_020069F0 = 0;
+        gEntryDoorEvent = 0;
+        gRoomEntryMode = 0;
     }
     else
     {
         gLevelIndex = 8;
-        gStageIndex = gUnk_02005578;
+        gStageIndex = gContinueLevel;
         gRoomIndex = 0;
         gUnk_0200AF04 = 0;
         if (gFurthestLevel == 0 && gFurthestStage == 0)
         {
             gRoomEntryX = 70;
             gRoomEntryY = 0x105;
-            gUnk_020069F0 = 0;
-            gUnk_0200AF00 = 0;
+            gRoomEntryMode = 0;
+            gEntryDoorEvent = 0;
         }
         else
         {
@@ -193,8 +193,8 @@ void sub_08022c3c(void)
                 }
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
-                gUnk_020069F0 = 1;
-                gUnk_0200AF00 = 0;
+                gRoomEntryMode = 1;
+                gEntryDoorEvent = 0;
             }
             else if (gUnk_02007FF8 == 32)
             {
@@ -205,8 +205,8 @@ void sub_08022c3c(void)
                 }
                 gRoomEntryX = d->unk2 * 16 + 16;
                 gRoomEntryY = d->unk4 * 16 + 53;
-                gUnk_020069F0 = 0;
-                gUnk_0200AF00 = 0;
+                gRoomEntryMode = 0;
+                gEntryDoorEvent = 0;
             }
             else
             {
@@ -217,8 +217,8 @@ void sub_08022c3c(void)
                 }
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
-                gUnk_020069F0 = 1;
-                gUnk_0200AF00 = 0;
+                gRoomEntryMode = 1;
+                gEntryDoorEvent = 0;
             }
         }
         gStageRequest = 1;
@@ -233,7 +233,7 @@ void sub_08022f50(void)
     gLevelIndex = 0;
     gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
     gRoomIndex = 0;
-    gUnk_020069F0 = 0;
+    gRoomEntryMode = 0;
     gRoomEntrySet = 0;
     gCutscenePending = 0;
     HudShowClock();
@@ -254,7 +254,7 @@ void LoadRoom(void)
     u32 a;
 
     ResetTasksAndOam();
-    gUnk_03002444 = 0;
+    gInHub = 0;
     if (gLevelIndex == 8)
     {
         gCurLevel = gStageIndex;
@@ -265,7 +265,7 @@ void LoadRoom(void)
         gCurLevel = gLevelIndex;
         gUnk_03001F20 = gStageIndex;
     }
-    if (gUnk_020069F0 == 2)
+    if (gRoomEntryMode == 2)
         gCameraMode = 5;
     else
         gCameraMode = 0;
@@ -405,7 +405,7 @@ void sub_080233e0(void)
     TaskSetSkipMask(0, gUnk_02007E8C);
     TaskSetOthersSkipMask(15, gUnk_02007E8C);
     sub_08077d38(gUnk_02007E8C);
-    gUnk_03002444 = 0;
+    gInHub = 0;
     gCurLevel = gLevelIndex;
     gUnk_03001F20 = gStageIndex;
     gCameraMode = 0;

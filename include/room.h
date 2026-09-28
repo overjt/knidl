@@ -146,7 +146,7 @@ struct Unk03005680
 
 /* EWRAM */
 extern s8 gUnk_02000000;
-extern u16 gUnk_0200001C;
+extern u16 gHubUnlockSource;
 extern u8 gUnk_02000020;
 extern u16 gUnk_02000030;
 extern struct MapCell gRoomMapBuffer[];
@@ -158,7 +158,7 @@ extern struct Unk02004B90 gDoorStates[];
 extern s8 gUnk_02004C98;
 extern u16 gBg1MetatileMap[];
 extern u8 gUnk_02005574[];
-extern u8 gUnk_02005578;
+extern u8 gContinueLevel;
 extern s16 gMaxHealth;
 extern s16 gPlayerHealth[]; /* health per player (M02's HUD) */
 extern s8 gUnk_02005590[];
@@ -173,7 +173,7 @@ extern s8 gUnk_02006098[];
 extern s8 gSubGameLevel;
 extern u8 gRoomEntrySet;
 extern struct Unk020061F0 gBreakingBlocks[];
-extern u8 gUnk_020069F0;
+extern u8 gRoomEntryMode;
 extern s8 gDoorObjectTasks[][3];
 extern struct MapCell gUnk_02006AA0[];
 extern u32 gUsedRoomObjects[8][8];
@@ -199,15 +199,15 @@ extern u16 gUnk_02008054;
 extern u16 gUnk_02008060[];
 extern u16 gBlockLayer[]; /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern s16 gRoomEntryY;
-extern u8 gUnk_0200AF00;
+extern u8 gEntryDoorEvent;
 extern u8 gUnk_0200AF04;
-extern u8 gUnk_0200AF08;
+extern u8 gHubUnlockFlags;
 extern s16 gUnk_0200AF0C;
 extern u16 gPlayerAbilityUses[];
 extern s16 gUnk_0200AFE0[4];
 extern u16 gUnk_0200AFF4;
 extern s8 gUnk_0200B02C;
-extern s8 gUnk_0200B034;
+extern s8 gEntryDoorIndex;
 extern s8 gUnk_0200B038;
 extern u8 gHBlankScrollStarted;
 extern u8 gWarpStarStationLevels;
@@ -245,7 +245,7 @@ extern s32 gCurSaveSlot;
 extern s8 gStageIndex;
 extern u8 gStageClearStatus[8][7];
 extern s8 gStageRequest; /* stage request (M02) */
-extern s8 gUnk_03002444;
+extern s8 gInHub;
 extern s32 gUnk_03002448;
 extern u16 gLatchedHeldKeys[]; /* latched state mask per player (M11) */
 extern u8 gExtraMode;

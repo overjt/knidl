@@ -56,7 +56,7 @@ void HudClearTilemap(void)
 {
     vu16 zero;
 
-    if (gUnk_03002444 != 0) {
+    if (gInHub != 0) {
         zero = 0;
         CpuSet((void *)&zero, &gHudTilemap[64], 0x010003C0);
     } else {

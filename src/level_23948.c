@@ -32,10 +32,10 @@ void sub_08023948(void)
     u32 a;
 
     ResetTasksAndOam();
-    gUnk_03002444 = 1;
+    gInHub = 1;
     gCurLevel = gStageIndex;
     gUnk_03001F20 = 16;
-    if (gUnk_0200AF08 != 0 || gUnk_020069F0 == 2)
+    if (gHubUnlockFlags != 0 || gRoomEntryMode == 2)
         gCameraMode = 4;
     else
         gCameraMode = 0;
@@ -128,7 +128,7 @@ void sub_08023948(void)
     CameraWriteScrollParallax();
     a = 0;
     CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
-    if (gUnk_0200AF08 != 0)
+    if (gHubUnlockFlags != 0)
         DrawBg123View(gCameraPos[0], gCameraPos[1]);
     else
         DrawBg23View(gCameraPos[0], gCameraPos[1]);
@@ -140,7 +140,7 @@ void sub_08023ca0(void)
     u32 w;
     u32 zero;
 
-    gUnk_03002444 = 1;
+    gInHub = 1;
     gCurLevel = gStageIndex;
     gUnk_03001F20 = 16;
     gCameraMode = 2;
@@ -196,7 +196,7 @@ void sub_08023e34(void)
     t->moveCallback = 0;
     t->drawCallback = (u32)RoomTaskDraw;
     t->updateCallback = (u32)sub_08023ea0;
-    if (gUnk_0200AF08 != 0)
+    if (gHubUnlockFlags != 0)
         t->lateUpdateCallback = (u32)sub_08023f5c;
     else
         t->lateUpdateCallback = (u32)sub_08023f18;
@@ -301,7 +301,7 @@ void LoadGoalGameRoom(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gUnk_03002444 = 0;
+    gInHub = 0;
     gRoomWidth = gCurRoomDef->width;
     gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;

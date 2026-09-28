@@ -19,7 +19,7 @@ void InputRecorderRestoreState(void)
     gStageIndex = gInputRecordingPtr->unk09;
     gRoomIndex = gInputRecordingPtr->unk0A;
     gPlayerCount = gInputRecordingPtr->unk0C;
-    gUnk_020069F0 = gInputRecordingPtr->unk12;
+    gRoomEntryMode = gInputRecordingPtr->unk12;
     gRoomEntryX = gInputRecordingPtr->unk0E;
     gRoomEntryY = gInputRecordingPtr->unk10;
     gUnk_02000020 = gInputRecordingPtr->unk13;

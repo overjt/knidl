@@ -1307,7 +1307,7 @@ void MetaKnightActionEnterDoor(void)
     PlayerStopAxes(3);
     gCurTask->player->unk42 |= 0x100;
     RequestScreenShake(0);
-    if (gUnk_03002444 == 0)
+    if (gInHub == 0)
     {
         StopAllSfx();
         FreezeOtherTasks(15);
@@ -1319,9 +1319,9 @@ void MetaKnightActionEnterDoor(void)
         TaskYieldTrampoline(1);
     }
     EnterDoor();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         ((void (*)(void))sub_080264b0)();
-    if (gUnk_03002444 == 0)
+    if (gInHub == 0)
         PlaySfx(181);
     if ((gCurTask->waterFlags & 1) == 0)
     {
@@ -1356,7 +1356,7 @@ void MetaKnightActionExitDoor(void)
     sub_08021c74((s32)gPlayerDefaultTerrainBox, gCurTaskIdx);
     gCurTask->unk28 = 0;
     gCurTask->frame = -1;
-    if (gUnk_0200AF00 == 1)
+    if (gEntryDoorEvent == 1)
     {
         ((void (*)(void))sub_08027a60)();
         a = ((s32 (*)(void))sub_0802653c)();
@@ -1386,7 +1386,7 @@ void MetaKnightActionExitDoor(void)
         s16 *p = (s16 *)gUnk_0873D206;
         TaskSetFrame(p[((s32 (*)(s32))PlayerGetFacingSlope)((s8)gCurTask->player->playerIndex)]);
     }
-    if (gUnk_0200AF00 == 1)
+    if (gEntryDoorEvent == 1)
     {
         TaskSetSkipMask(14, gCurTaskIdx);
         sub_0802672c();

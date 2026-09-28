@@ -113,7 +113,7 @@ extern s32 gCameraCenterX;
 extern s16 gCameraAnchorX;
 extern s32 gCameraCenterY;
 extern s16 gCameraAnchorY;
-extern s8 gUnk_03002444;
+extern s8 gInHub;
 extern struct RoomDef *gCurRoomDef;
 extern struct Unk02007D70 gBgAnims[];
 extern struct Unk02007D70Cmd **gRoomBgAnimScripts[];
@@ -156,7 +156,7 @@ void CameraStartHoldAnchor(void)
 {
     gCameraCenterX = gCameraAnchorX << 16;
     gCameraCenterY = gCameraAnchorY << 16;
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         gCameraMode = 4;
     else
         gCameraMode = 5;
@@ -167,7 +167,7 @@ void sub_0802d0c4(void)
     CalcRoomBounds();
     CameraResetBounds();
     /* both arms store 0 in the ROM too (CameraStartHoldAnchor stores 4 / 5) */
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         gCameraMode = 0;
     else
         gCameraMode = 0;

@@ -213,7 +213,7 @@ s32 CreateWarpStarStationDoorSparkle(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->unk24 = a;
         t->unk20 = b;
-        gUnk_02007FC4 = 0;
+        gWarpStarStationDoorRevealed = 0;
     }
     return id;
 }
@@ -235,7 +235,7 @@ void Task_WarpStarStationDoorSparkle(void)
     v = gCurTask;
     v->frame = -1;
     if (v->unk20 != 0)
-        while (gUnk_02007FC4 == 0)
+        while (gWarpStarStationDoorRevealed == 0)
             TaskYieldTrampoline(1);
     if (gCurTask->unk24 != 0)
     {

@@ -41,7 +41,7 @@ struct Unk03004B00
 extern u8 gBlockAnimHookId;
 extern u8 gUnk_02005E10[];
 extern struct Unk02007D70 gBgAnims[];
-extern u8 gUnk_02007FC4;
+extern u8 gWarpStarStationDoorRevealed;
 extern struct Unk020061F0 gBg1BreakingBlocks[];
 extern s32 gUnk_02016C30;
 

@@ -17,7 +17,7 @@
  * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
  * tasks: it fills the 20-slot table gScreenAttackTasks with 0xFFFF, collects the
  * indices of the tasks of kinds 1, 2, 7 and 8 (Task.actorKind) whose
- * gTaskSlotTypes entry is not -1 (while gUnk_03002444 is clear), stops them
+ * gTaskSlotTypes entry is not -1 (while gInHub is clear), stops them
  * through the task skip mask (TaskRestoreSkipMask, with gScreenAttackActive = 1), and
  * after the yield releases them (TaskSaveSkipMask, TaskSetSkipMask(15, i)); then it
  * walks the tasks 32-62 of kinds 0, 3, 4, 6 and 9 one at a time the same
@@ -177,7 +177,7 @@ void PlayerEffectMikeAttack(void)
         k = 0;
         for (i = 0; i <= 62; i++)
         {
-            if (gUnk_03002444 == 0 && gTaskSlotTypes[i] != -1)
+            if (gInHub == 0 && gTaskSlotTypes[i] != -1)
             {
                 switch (gTasks[i].actorKind)
                 {
@@ -224,7 +224,7 @@ void PlayerEffectMikeAttack(void)
         y0 = gPlayerCameraPos[gCurTask->parent].y - 80;
         for (i = 32; i <= 62; i++)
         {
-            if (gUnk_03002444 != 0)
+            if (gInHub != 0)
                 continue;
             if (gTaskSlotTypes[i] == -1)
                 continue;

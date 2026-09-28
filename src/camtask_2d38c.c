@@ -39,7 +39,7 @@ extern u16 gUnk_02005E10[];
 extern u8 gUnk_087328BC[];
 extern s8 gUnk_08732428[][3];
 extern u16 gUnk_087323C6[][2];
-extern u8 gUnk_02007FC4;
+extern u8 gWarpStarStationDoorRevealed;
 extern struct Unk0200A6F0 gBg1BreakingBlocks[];
 extern s8 gUnk_087324A6[][3];
 
@@ -341,7 +341,7 @@ void sub_0802dcb4(void)
     t1 = gCurTask;
     t1->moveCallback = 0;
     t1->drawCallback = 0;
-    t1->unk1C = gStageIndex * 6 + gUnk_0200001C - 1;
+    t1->unk1C = gStageIndex * 6 + gHubUnlockSource - 1;
     t1->velX = t1->unk28 = gUnk_08732428[t1->unk1C][1];
     if (t1->unk28 > 0)
         t1->unk2C = 4;
@@ -411,7 +411,7 @@ void sub_0802dcb4(void)
     while (1)
     {
         t8 = gCurTask;
-        if (t8->unk24 != 0 && gUnk_02007FC4 == 0)
+        if (t8->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
         {
             t8->posX = gUnk_087323C6[gCurLevel][0];
             t8->posY = gUnk_087323C6[gCurLevel][1];
@@ -425,7 +425,7 @@ void sub_0802dcb4(void)
                         goto skip;
                 }
             }
-            gUnk_02007FC4++;
+            gWarpStarStationDoorRevealed++;
             gCurTask->unk24 = 0;
         }
     skip:
@@ -445,11 +445,11 @@ void sub_0802dcb4(void)
     }
     PauseBlockAnims();
     RequestCopy(6, 0, 0x06001800, 0x800);
-    if (gCurTask->unk24 != 0 && gUnk_02007FC4 == 0)
-        gUnk_02007FC4++;
+    if (gCurTask->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
+        gWarpStarStationDoorRevealed++;
     TaskYieldTrampoline(20);
     sub_08029b30();
-    gUnk_0200AF08 = 0;
+    gHubUnlockFlags = 0;
     if (gUnk_08732428[gCurTask->unk1C][0] == 0)
     {
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)
@@ -523,7 +523,7 @@ void sub_0802e3ac(void)
     t1 = gCurTask;
     t1->moveCallback = 0;
     t1->drawCallback = 0;
-    t1->unk1C = (u8)gUnk_0200001C;
+    t1->unk1C = (u8)gHubUnlockSource;
     t1->velX = t1->unk28 = gUnk_087324A6[t1->unk1C][1];
     if (t1->unk28 > 0)
         t1->unk2C = 4;
@@ -596,7 +596,7 @@ void sub_0802e3ac(void)
     while (1)
     {
         t8 = gCurTask;
-        if (t8->unk24 != 0 && gUnk_02007FC4 == 0)
+        if (t8->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
         {
             t8->posX = gUnk_087323C6[gCurLevel][0];
             t8->posY = gUnk_087323C6[gCurLevel][1];
@@ -610,7 +610,7 @@ void sub_0802e3ac(void)
                         goto skip;
                 }
             }
-            gUnk_02007FC4++;
+            gWarpStarStationDoorRevealed++;
             gCurTask->unk24 = 0;
         }
     skip:
@@ -630,10 +630,10 @@ void sub_0802e3ac(void)
     }
     PauseBlockAnims();
     RequestCopy(6, 0, 0x06001800, 0x800);
-    if (gCurTask->unk24 != 0 && gUnk_02007FC4 == 0)
-        gUnk_02007FC4++;
+    if (gCurTask->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
+        gWarpStarStationDoorRevealed++;
     TaskYieldTrampoline(20);
-    gUnk_0200AF08 = 0;
+    gHubUnlockFlags = 0;
     if (gUnk_087324A6[gCurTask->unk1C][0] == 0)
     {
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)

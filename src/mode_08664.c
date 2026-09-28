@@ -115,7 +115,7 @@ void PauseScreen(void)
             }
         }
     } while (pressed == 0);
-    if (gUnk_03002444 != 0 || gGameState != 5) {
+    if (gInHub != 0 || gGameState != 5) {
         LinkStopKeyExchange();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();

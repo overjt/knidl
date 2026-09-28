@@ -49,7 +49,7 @@ void sub_08028b8c(void)
     CalcRoomBounds();
     if (gCameraMode != 5)
     {
-        if (gUnk_03002444 != 0 || gPlayerCount == 1)
+        if (gInHub != 0 || gPlayerCount == 1)
         {
             *(long long *)gCameraBounds = *(long long *)gRoomBounds;
             gPlayerBounds[gLocalPlayer].x0 = gCameraBounds[0] - 117;
@@ -167,7 +167,7 @@ void SetRoomEntryPoint(void)
     if (gUnk_0200B038 == 0)
     {
         gUnk_02008054 = gRoomIndex;
-        if (gUnk_020069F0 == 2)
+        if (gRoomEntryMode == 2)
         {
             gUnk_0200AFF4 = gCurRoomDef->entryX;
             gUnk_02008050 = gCurRoomDef->entryY;
@@ -181,7 +181,7 @@ void SetRoomEntryPoint(void)
     }
     gCameraFocusX = gRoomEntryX;
     gCameraFocusY = gRoomEntryY;
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
     {
         if (gCameraMode == 2 || gCameraMode == 4)
         {

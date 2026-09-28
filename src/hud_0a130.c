@@ -244,7 +244,7 @@ void sub_0800a6a4(void)
             }
             if (gUnk_02005E00.unk04[gLocalPlayer] == 0) {
                 gUnk_020055F0[0] = 0;
-                row = gUnk_03002444 ? 2 : 0;
+                row = gInHub ? 2 : 0;
                 HudClearTiles(12, row, 16);
                 HudClearTiles(12, row + 1, 16);
             } else {

@@ -140,7 +140,7 @@ void DrawDoors(void)
     struct Door *d;
     s16 i;
 
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         return;
     d = gCurRoomDef->doors;
     for (i = 0; i < gCurRoomDef->doorCount; d++, i++)

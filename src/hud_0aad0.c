@@ -306,7 +306,7 @@ void sub_0800b230(s32 a, s32 b)
     s32 row;
 
     if (gHudMode == 1) {
-        row = gUnk_03002444 ? 2 : 0;
+        row = gInHub ? 2 : 0;
         if (b == 0) {
             HudClearTiles(12, row, 16);
             HudClearTiles(12, row + 1, 16);

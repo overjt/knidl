@@ -284,7 +284,7 @@ void PlayerActionEnterDoor(void)
     PlayerStopAxes(3);
     gCurTask->player->unk42 |= 0x100;
     RequestScreenShake(0);
-    if (gUnk_03002444 == 0)
+    if (gInHub == 0)
     {
         FreezeOtherTasks(15);
         if (!(gDispCnt & 0x400))
@@ -358,9 +358,9 @@ void PlayerActionEnterDoor(void)
         break;
     }
     EnterDoor();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_080264b0();
-    if (gUnk_03002444 == 0)
+    if (gInHub == 0)
         PlaySfx(181);
     t = gCurTask;
     if (!(t->waterFlags & 1))

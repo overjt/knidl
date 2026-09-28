@@ -74,7 +74,7 @@ void HudInit(s32 i)
     s32 j;
 
     HudClearWholeTilemap();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_0800ab3c();
     if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
         gHudMode = 1;
@@ -129,7 +129,7 @@ void HudRedraw(s32 i)
     gHudAbilityPanelActive = 1;
     HudClearTilemap();
     HudLoadGfx();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_0800ab3c();
     HudDrawPlayerIcon(i);
     HudDrawLives(gPlayerLives[i]);
@@ -181,7 +181,7 @@ void sub_08009e2c(void)
     gHudMode = 2;
     gHudAbilityPanelActive = 0;
     HudClearTilemap();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_0800ab3c();
 }
 
