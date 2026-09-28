@@ -9,14 +9,14 @@
 
 /* hud_0aad0.c (0x0800AAD0-0x0800B317, issue #96).
  *
- * HUD drawing into the tilemap buffer: the clock copy/clamp (sub_0800aad0),
+ * HUD drawing into the tilemap buffer: the clock copy/clamp (HudUpdateClock),
  * the lives, health and bar renderers, the 8-digit decimal score renderer
  * HudDrawScore and the clock renderer HudDrawClock. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void HudDrawTiles(u16 *src, s32 x, s32 y, s32 n);
 
-void sub_0800aad0(void)
+void HudUpdateClock(void)
 {
     if (gPlayTime[3] > 99) {
         gHudClock[3] = 99;
@@ -83,7 +83,7 @@ void HudDrawHealth(s32 n)
     }
 }
 
-void sub_0800acbc(s32 a, s32 d)
+void HudDrawHealthChange(s32 a, s32 d)
 {
     s32 i;
     s32 max;
@@ -243,7 +243,7 @@ void HudDrawAbilityPanel(s32 n)
     }
 }
 
-void sub_0800b0fc(void)
+void HudDrawHpBarFrame(void)
 {
     if (gHudMode == 1) {
         HudDrawTiles(gUnk_085A6FC8, 20, 18, 10);
@@ -267,7 +267,7 @@ void HudDrawHpBar(s32 x)
     }
 }
 
-void sub_0800b190(s32 from, s32 to)
+void HudDrawHpBarChange(s32 from, s32 to)
 {
     s32 i;
     s32 end;

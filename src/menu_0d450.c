@@ -11,17 +11,17 @@
 
 /* menu_0d450.c (0x0800D450-0x0800DAF7, issue #99).
  *
- * The sound-test input loop sub_0800d450 (two columns in
+ * The sound-test input loop MenuSoundTest (two columns in
  * gSoundTestSelection[]: music 0-43, mapped to song ids through gUnk_08731DC0,
  * and sound effects 0-273; A plays or stops, B returns to the file menu)
- * and the link-play connection screen sub_0800d85c, which starts the SIO
- * multi-play session for the mode sub_0800da18 picks, waits for the
+ * and the link-play connection screen MenuLinkPlay, which starts the SIO
+ * multi-play session for the mode MenuSetLinkSessionMode picks, waits for the
  * partners (sub_0800da74) and leaves for game state 5 or 13.
  * CreateFileSelectSprites spawns the file-select sprite tasks #238-#240. */
 
 s32 PlaySfx(s32 id);
 
-void sub_0800d450(void)
+void MenuSoundTest(void)
 {
     while (1) {
         if (gMenuTransitionTimer != 0) {
@@ -32,9 +32,9 @@ void sub_0800d450(void)
             }
             if (gMenuTransitionTimer == 0) {
                 gMenuCursor = 0;
-                sub_0800d35c(0);
-                sub_0800d35c(1);
-                sub_0800d310();
+                SoundTestDrawNumber(0);
+                SoundTestDrawNumber(1);
+                SoundTestHighlightCursor();
                 TaskCreateFrom(254, 32);
                 TaskCreateFrom(255, 32);
                 gDispCnt &= 0xE0FF;
@@ -54,7 +54,7 @@ void sub_0800d450(void)
                 }
             } else {
                 StopAllSfx();
-                sub_0800d404();
+                SoundTestPlaySfx();
                 LoadGfxSet(48);
             }
             RunFrames(3);
@@ -84,13 +84,13 @@ void sub_0800d450(void)
         if (gMenuTransitionTimer == 0) {
             if ((gPressedKeys & 16) && gMenuCursor == 0) {
                 gMenuCursor = 1;
-                sub_0800d310();
+                SoundTestHighlightCursor();
                 gSoundTestRepeatCount = 0;
                 gKeyRepeatDelay = 10;
                 gKeyRepeatInterval = 6;
             } else if ((gPressedKeys & 32) && gMenuCursor == 1) {
                 gMenuCursor = 0;
-                sub_0800d310();
+                SoundTestHighlightCursor();
                 gSoundTestRepeatCount = 0;
                 gKeyRepeatDelay = 10;
                 gKeyRepeatInterval = 6;
@@ -106,7 +106,7 @@ void sub_0800d450(void)
                     else
                         gSoundTestSelection[gMenuCursor] = 0x111;
                 }
-                sub_0800d35c(gMenuCursor);
+                SoundTestDrawNumber(gMenuCursor);
             } else if (gRepeatedKeys & 64) {
                 gSoundTestSelection[gMenuCursor]++;
                 if (++gSoundTestRepeatCount == 5) {
@@ -117,7 +117,7 @@ void sub_0800d450(void)
                     gSoundTestSelection[gMenuCursor] = 0;
                 else if (gMenuCursor == 1 && gSoundTestSelection[gMenuCursor] > 0x111)
                     gSoundTestSelection[gMenuCursor] = 0;
-                sub_0800d35c(gMenuCursor);
+                SoundTestDrawNumber(gMenuCursor);
             }
             if (!(gHeldKeys & 0xC0)) {
                 gSoundTestRepeatCount = 0;
@@ -129,10 +129,10 @@ void sub_0800d450(void)
     }
 }
 
-void sub_0800d85c(void)
+void MenuLinkPlay(void)
 {
     CopySaveSlotToLinkSlot();
-    sub_0800da18();
+    MenuSetLinkSessionMode();
     LinkSetupInit();
     MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690);
     gUnk_02007FC8 = 0;
@@ -191,7 +191,7 @@ void sub_0800d85c(void)
     }
 }
 
-void sub_0800da18(void)
+void MenuSetLinkSessionMode(void)
 {
     if (gPrevMenuScreen == 3) {
         if (gExtraMode == 0)

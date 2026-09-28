@@ -15,7 +15,7 @@
  * sub_0800b44c (reset the game-state cells), ResetScoresAndMaxHealth (scores, the
  * maximum health 24 or 48, the HUD mode), ResetPlayerRecords (three lives and
  * cleared records per player), sub_0800b5dc/sub_0800b628, and the three
- * screen setups sub_0800b648/sub_0800b788/sub_0800b87c. */
+ * screen setups StageInit/HubInit/BigSwitchViewInit. */
 
 /* Not from room.h or effect.h: this file's view of gSavedPlayerAbilityUses
    and gUnk_020060CC differs (lesson 3.517). */
@@ -132,7 +132,7 @@ void sub_0800b628(void)
         InitPlayerState(i);
 }
 
-void sub_0800b648(void)
+void StageInit(void)
 {
     s32 i;
     s8 *b;
@@ -198,7 +198,7 @@ void sub_0800b648(void)
     }
 }
 
-void sub_0800b788(void)
+void HubInit(void)
 {
     s32 i;
     s8 *b;
@@ -230,7 +230,7 @@ void sub_0800b788(void)
     gStageRequest = 0;
 }
 
-void sub_0800b87c(void)
+void BigSwitchViewInit(void)
 {
     s32 i;
     s8 *b;

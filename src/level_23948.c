@@ -13,7 +13,7 @@
 /* level_23948.c (0x08023948-0x080242CF, issue #93).
  *
  * Room loaders, part 2: sub_08023948 and sub_08023ca0 (M02's screen
- * setups sub_0800b788 and sub_0800b87c) and LoadGoalGameRoom, plus the
+ * setups HubInit and BigSwitchViewInit) and LoadGoalGameRoom, plus the
  * room-task variants 1 and 2 of task type #3 (sub_08023e34, sub_08023e78)
  * and their per-frame bodies (sub_08023ea0 ... sub_08023fa0).
  * sub_08023948 and sub_08023ca0 build their map in the second buffer

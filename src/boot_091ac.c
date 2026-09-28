@@ -309,17 +309,17 @@ void IntroStory(void)
         for (j = 0; j <= 16; j++) {
             gBldAlphaEva = j;
             gBldAlphaEvb = 16 - j;
-            if (sub_080099c8(2))
+            if (IntroStoryWait(2))
                 goto end;
         }
-        if (sub_080099c8(gUnk_08731CE6[i]))
+        if (IntroStoryWait(gUnk_08731CE6[i]))
             break;
         if (i == 8)
             break;
         for (j = 0; j <= 16; j++) {
             gBldAlphaEva = 16 - j;
             gBldAlphaEvb = j;
-            if (sub_080099c8(2))
+            if (IntroStoryWait(2))
                 goto end;
         }
     }
@@ -329,7 +329,7 @@ end:
     gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
 }
 
-s32 sub_080099c8(s32 n)
+s32 IntroStoryWait(s32 n)
 {
     s32 i;
 

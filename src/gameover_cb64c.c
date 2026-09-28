@@ -12,10 +12,10 @@
  * Its sub-states gGameOverPlayerStates[Task.state] and per-frame handlers
  * gGameOverPlayerStateUpdates[Task.updateState] (GameOverPlayer starts it, GameOverPlayerEnterState re-enters
  * it with Task.unk24 = 1):
- *   GameOverPlayerWait / sub_080cb6d8   sub-state 0, the idle loop; once re-entered
+ *   GameOverPlayerWait / GameOverPlayerWaitUpdate   sub-state 0, the idle loop; once re-entered
  *       (Task.unk24) the handler counts Task.unk20 down and then ends the
  *       screen (gGameOverDone = 1) with game state 1.
- *   GameOverPlayerContinue / sub_080cbabc   sub-state 1, the "continue" animation, which
+ *   GameOverPlayerContinue / GameOverPlayerContinueUpdate   sub-state 1, the "continue" animation, which
  *       ends the screen with game state 5 (back into the game).
  *   GameOverPlayerGiveUp / GameOverPlayerGiveUpUpdate   sub-state 2, the "give up" animation (it
  *       spawns variants 3 and 4); its handler re-enters sub-state 0 with a
@@ -52,7 +52,7 @@ void GameOverPlayerWait(void)
 }
 
 /* Task type #264 variant 0, handler 0. */
-void sub_080cb6d8(void)
+void GameOverPlayerWaitUpdate(void)
 {
     if (gCurTask->unk24 != 0) {
         if (gCurTask->unk20 <= 0) {
@@ -161,7 +161,7 @@ void GameOverPlayerContinue(void)
     TaskSleepForever();
 }
 
-void sub_080cbabc(void)
+void GameOverPlayerContinueUpdate(void)
 {
 }
 

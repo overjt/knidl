@@ -1699,8 +1699,8 @@ gUnk_08570F1C:
 	.global	gUnk_0857111C
 gUnk_0857111C:
 	.incbin	"baserom.gba", 0x57111C, 0x100
-	.global	gUnk_0857121C
-gUnk_0857121C:
+	.global	gPauseChoicePalettes
+gPauseChoicePalettes:
 	.incbin	"baserom.gba", 0x57121C, 0x2C
 	.global	gUnk_08571248
 gUnk_08571248:

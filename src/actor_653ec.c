@@ -26,7 +26,7 @@ extern void sub_08068f68(void);
 extern void ActorReactToHit(void);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-extern void sub_0800a340(s16 a, s16 b);
+extern void HudStartTaskHpBar(s16 a, s16 b);
 extern void HudStartHpBar(s16 a, s16 b);
 void sub_08066c08(u32 def, u8 b);
 extern void ActorSetAttackBox(u32 v);
@@ -850,12 +850,12 @@ u16 sub_08066088(u32 mode)
     {
         if (mode == 1)
         {
-            sh = sub_080b5628(p[0] << 4);
+            sh = AllocObjTiles(p[0] << 4);
             lo = a->gfx.paletteBank;
         }
         else
         {
-            sh = sub_080b55d8(p[0] << 4, p[1]);
+            sh = AllocObjTilesAndPalettes(p[0] << 4, p[1]);
             lo = sh & 0xFFFF;
             sh = sh >> 16;
         }
@@ -1119,7 +1119,7 @@ void ActorShowHpBar(void)
     if (t->actorKind == 1 || (t->actorKind == 2 && t->unk76 == 7))
     {
         v = t->health;
-        sub_0800a340(v, v);
+        HudStartTaskHpBar(v, v);
     }
     else
     {

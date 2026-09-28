@@ -681,8 +681,8 @@ gEndingEpilogueVariants:
 	.word	sub_080c8958+1
 	.word	sub_080c8cd4+1
 	.word	sub_080c8ea8+1
-	.global	gUnk_0875735C
-gUnk_0875735C:
+	.global	gEndingEpilogueObjectVariants
+gEndingEpilogueObjectVariants:
 	.incbin	"baserom.gba", 0x75735C, 0xC
 	.global	gUnk_08757368
 gUnk_08757368:
@@ -713,8 +713,8 @@ gEndingStarRodReturnVariants:
 	.word	sub_080c9e8c+1
 	.word	sub_080ca344+1
 	.word	sub_080c9a28+1
-	.global	gUnk_08757424
-gUnk_08757424:
+	.global	gEndingStarRodReturnObjectVariants
+gEndingStarRodReturnObjectVariants:
 	.incbin	"baserom.gba", 0x757424, 0xE
 	.global	gUnk_08757432
 gUnk_08757432:
@@ -844,8 +844,8 @@ gGameOverPlayerStates:
 	.word	GameOverPlayerGiveUp+1
 	.global	gGameOverPlayerStateUpdates
 gGameOverPlayerStateUpdates:
-	.word	sub_080cb6d8+1
-	.word	sub_080cbabc+1
+	.word	GameOverPlayerWaitUpdate+1
+	.word	GameOverPlayerContinueUpdate+1
 	.word	GameOverPlayerGiveUpUpdate+1
 	.global	gGameOverChoiceStates
 gGameOverChoiceStates:

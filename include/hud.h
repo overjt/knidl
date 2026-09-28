@@ -60,7 +60,7 @@ extern u16 gUnk_02007D40;
 extern s16 gHudHpBarValues[];
 extern s16 gUnk_02008014[];
 extern s16 gUnk_0200801C;
-extern u8 gUnk_02008020[];
+extern u8 gRoomObjectSpawned[];
 extern u8 gHudShowsHpBar;
 extern struct Unk0200D120 gUnk_0200D120[];
 
@@ -110,36 +110,36 @@ void HudShowAbilityAnimated(s32 a, s32 b);
 /* src/hud_0a130.c */
 void HudShowAbility(s32 a, s32 id);
 void sub_0800a178(s32 a, s32 id);
-void sub_0800a19c(s32 id);
-void sub_0800a21c(s32 id);
+void HudOpenAbilityPanel(s32 id);
+void HudCloseAbilityPanel(s32 id);
 void HudShowHpBar(void);
 void HudAnimateTaskHpBar(void);
 void HudSetTaskHpBar(void);
 void HudRemoveHpBar(void);
-void sub_0800a698(void);
+void HudStopClock(void);
 void sub_0800a6a4(void);
 void HudUpdateAbilityPanel(void);
 void HudUpdateHpBars(void);
 void HudAnimateHpBar(s32 from, s32 to, s32 i);
-s32 sub_0800aa18(s32 from, s32 to);
+s32 HudStartHpBarFill(s32 from, s32 to);
 void HudSetHpBar(s32 x, s32 i);
 void HudResetHpBar(s32 i);
 void sub_0800aaac(s32 i);
 
 /* src/hud_0aad0.c */
-void sub_0800aad0(void);
+void HudUpdateClock(void);
 void HudRedrawClock(void);
 void sub_0800ab3c(void);
 void HudDrawPlayerIcon(s32 a);
 void HudDrawLives(s32 n);
 void HudDrawHealth(s32 n);
-void sub_0800acbc(s32 a, s32 d);
+void HudDrawHealthChange(s32 a, s32 d);
 void HudDrawScore(s32 v);
 void HudDrawClock(u16 *time);
 void HudDrawAbilityPanel(s32 n);
-void sub_0800b0fc(void);
+void HudDrawHpBarFrame(void);
 void HudDrawHpBar(s32 x);
-void sub_0800b190(s32 from, s32 to);
+void HudDrawHpBarChange(s32 from, s32 to);
 void sub_0800b230(s32 a, s32 b);
 
 /* src/hud_0b318.c */
@@ -243,17 +243,17 @@ void sub_080b4e04(void);
 void sub_080b4e40(void);
 
 /* src/hud_b4ea8.c */
-void sub_080b4ea8(void);
+void LoadRoomObjectGfx(void);
 
 /* src/hud_b5024.c */
 void sub_080b5024(void);
-s32 sub_080b5338(s32 i);
-void sub_080b54d0(s32 a);
-void sub_080b5540(s32 a, s32 b);
+s32 SpawnRoomObject(s32 i);
+void MarkRoomObjectUsed(s32 a);
+void TransferRoomObject(s32 a, s32 b);
 void sub_080b5558(void);
-s32 sub_080b55d8(u32 a, u32 b);
-s32 sub_080b5628(u32 a);
-s32 sub_080b5654(u32 a);
+s32 AllocObjTilesAndPalettes(u32 a, u32 b);
+s32 AllocObjTiles(u32 a);
+s32 AllocObjPalettes(u32 a);
 
 /* src/hud_b5840.c */
 void HBlankScrollVBlankCallback(void);

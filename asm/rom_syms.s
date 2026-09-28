@@ -301,8 +301,8 @@ gUnk_02008014 = 0x02008014
 gEndingSceneActive = 0x02008018
 	.global	gUnk_0200801C
 gUnk_0200801C = 0x0200801C
-	.global	gUnk_02008020
-gUnk_02008020 = 0x02008020
+	.global	gRoomObjectSpawned
+gRoomObjectSpawned = 0x02008020
 	.global	gUnk_02008050
 gUnk_02008050 = 0x02008050
 	.global	gUnk_02008054

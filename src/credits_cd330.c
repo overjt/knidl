@@ -22,7 +22,7 @@
  *       gUnk_0875841E[n][scene] frames and fade out; then fade the music and
  *       the screen and put back the player's score the demos overwrote.
  *   CreditsLoadScene   load a scene's room and reset the per-scene state (a twin
- *       of M02's sub_0800b788).
+ *       of M02's HubInit).
  *   CreditsInitText / CreditsStreamText / CreditsScrollText   the text layer: load it,
  *       stream the 14 compressed pages gUnk_087583B4[] into the two BG0 map
  *       halves, and scroll BG0 from the per-frame callback gVBlankEndCallback. */
@@ -158,7 +158,7 @@ void CreditsMain(void)
 }
 
 /* Load the staff credits' next demo scene: the room, palette set 17, and
-   the per-scene state M02's stage loaders reset (sub_0800b788's twin). */
+   the per-scene state M02's stage loaders reset (HubInit's twin). */
 void CreditsLoadScene(void)
 {
     s32 i;

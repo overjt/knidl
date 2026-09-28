@@ -10,14 +10,14 @@
 	.global	game_rodata
 game_rodata:
 	.incbin	"baserom.gba", 0x730780, 0xC
-	.global	gUnk_0873078C
-gUnk_0873078C:
+	.global	gExtraModeTitleSpriteStates
+gExtraModeTitleSpriteStates:
 	.word	ExtraModeTitleTransferIcon+1
 	.word	ExtraModeTitleLevelBar+1
-	.global	gUnk_08730794
-gUnk_08730794:
-	.word	sub_08008460+1
-	.word	sub_08008558+1
+	.global	gExtraModeTitleSpriteStateUpdates
+gExtraModeTitleSpriteStateUpdates:
+	.word	ExtraModeTitleTransferIconUpdate+1
+	.word	ExtraModeTitleLevelBarUpdate+1
 	.global	gUnk_0873079C
 gUnk_0873079C:
 	.incbin	"baserom.gba", 0x73079C, 0x10
@@ -894,8 +894,8 @@ gUnk_087319C8:
 	.word	gUnk_085CC33C
 	.word	gUnk_085CC37C
 	.word	gUnk_085CCA5C
-	.global	gUnk_08731A28
-gUnk_08731A28:
+	.global	gExtraModeTitlePictures
+gExtraModeTitlePictures:
 	.word	gUnk_085B4ACC
 	.word	gUnk_085B4B4C
 	.word	gUnk_085B64C8
@@ -920,8 +920,8 @@ gUnk_08731A28:
 	.word	gUnk_08567F98
 	.word	gUnk_08568018
 	.word	gUnk_0856981C
-	.global	gUnk_08731A88
-gUnk_08731A88:
+	.global	gExtraModeTitlePaletteSizes
+gExtraModeTitlePaletteSizes:
 	.incbin	"baserom.gba", 0x731A88, 0x8
 	.global	gAbilityPictures
 gAbilityPictures:

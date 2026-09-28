@@ -101,15 +101,15 @@ extern u32 gUnk_087556D4[];
 /* src/menu_0b920.c */
 void MainMenuMain(void);
 void MenuDrawSaveSlots(void);
-void sub_0800bda4(s32 slot);
-void sub_0800be8c(s32 slot, u32 pal);
-s32 sub_0800bf10(s32 slot, u32 pal);
-void sub_0800bf6c(s32 slot, s32 value, s32 mode);
+void MenuLoadSaveSlotLabel(s32 slot);
+void MenuLoadSaveSlotPicture(s32 slot, u32 pal);
+s32 MenuLoadSaveSlotPalette(s32 slot, u32 pal);
+void MenuLoadSaveSlotPercent(s32 slot, s32 value, s32 mode);
 
 /* src/menu_0c09c.c */
-void sub_0800c09c(void);
+void MenuFileSelect(void);
 void MenuSetupFileMenu(void);
-void sub_0800c34c(void);
+void MenuFileMenuSelect(void);
 void MenuNormalExtraSelect(void);
 void MenuPlayerCountSelect(void);
 void MenuEraseSelect(void);
@@ -117,32 +117,32 @@ void MenuEraseSelect(void);
 /* src/menu_0ca10.c */
 void MenuEnterModeList(void);
 void MenuDrawModeList(void);
-void sub_0800cd60(void);
-void sub_0800cff4(void);
+void MenuModeListSelect(void);
+void MenuEnterLinkPlay(void);
 void MenuModePlayerCountSelect(void);
-void sub_0800d280(void);
-void sub_0800d310(void);
-void sub_0800d35c(s32 a);
-void sub_0800d404(void);
+void MenuEnterSoundTest(void);
+void SoundTestHighlightCursor(void);
+void SoundTestDrawNumber(s32 a);
+void SoundTestPlaySfx(void);
 
 /* src/menu_0d450.c */
-void sub_0800d450(void);
-void sub_0800d85c(void);
-void sub_0800da18(void);
+void MenuSoundTest(void);
+void MenuLinkPlay(void);
+void MenuSetLinkSessionMode(void);
 s32 sub_0800da74(void);
 void CreateFileSelectSprites(s32 mode);
 
 /* src/menutask_0daf8.c */
 void Task_FileSelectSlotLabel(void);
 void Task_FileSelectSlot(void);
-void sub_0800dbdc(void);
-void sub_0800dc98(void);
+void FileSelectSlotUpdate(void);
+void FileSelectSlotSlideIn(void);
 void Task_FileSelectCursor(void);
-void sub_0800dda0(void);
+void FileSelectCursorUpdate(void);
 void Task_FileMenuSlot(void);
-void sub_0800dfdc(void);
+void FileMenuSlotUpdate(void);
 void Task_FileMenuHighlight(void);
-void sub_0800e148(void);
+void FileMenuHighlightUpdate(void);
 void MenuUpdateFileMenuPalette(void);
 s32 MenuLoadPicture(s32 id, s32 part);
 
@@ -152,8 +152,8 @@ void NormalExtraPanelUpdate(void);
 void Task_PlayerCountPanel(void);
 void PlayerCountPanelUpdate(void);
 void Task_ModeListCursor(void);
-void sub_0800e674(void);
-void sub_0800e7b0(void);
+void ModeListCursorUpdate(void);
+void ModeListHighlightRow(void);
 void Task_ModePlayerCountPanel(void);
 void ModePlayerCountPanelUpdate(void);
 void Task_EraseConfirmDialog(void);
@@ -170,13 +170,13 @@ void sub_0800f084(void);
 
 /* src/menutask_0f180.c */
 void Task_LinkPlayPlayerList(void);
-void sub_0800f2b4(void);
+void LinkPlayPlayerListUpdate(void);
 void Task_LinkPlayConsole(void);
 void LinkPlayConsoleUpdate(void);
 void Task_LinkPlayCable(void);
 void LinkPlayCableUpdate(void);
 void Task_MenuScreenTitle(void);
-void sub_0800f840(void);
+void MenuScreenTitleUpdate(void);
 void Task_MenuBgPaletteCycle(void);
 void Task_MenuBackground(void);
 

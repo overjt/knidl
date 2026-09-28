@@ -13,8 +13,8 @@
 
 /* mode_075b8.c (0x080075B8-0x08007B67, issue #96).
  *
- * The per-frame bodies AgbMain pumps while game states 5 (sub_08007624),
- * 9 (sub_0800783c) and 8/17/18/19 (sub_0800791c) hold.  Each runs a setup
+ * The per-frame bodies AgbMain pumps while game states 5 (HubMain),
+ * 9 (BigSwitchViewMain) and 8/17/18/19 (StageMain) hold.  Each runs a setup
  * helper from mode_0b44c.c, fades in, then loops until the stage-request
  * byte gStageRequest asks for something: 1-4 switch the game state, 5 opens
  * the pause screen (PauseScreen), 6 is a lost life (state 22 when nobody
@@ -36,14 +36,14 @@ void CheckPauseButton(void)
     }
 }
 
-void sub_08007624(void)
+void HubMain(void)
 {
     s32 done = 0;
     s32 i;
 
     gPausingPlayer = 0;
     LoadBgLayout(3);
-    sub_0800b788();
+    HubInit();
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();
@@ -123,12 +123,12 @@ void sub_08007624(void)
     sub_08027178();
 }
 
-void sub_0800783c(void)
+void BigSwitchViewMain(void)
 {
     s32 done = 0;
 
     LoadBgLayout(3);
-    sub_0800b87c();
+    BigSwitchViewInit();
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();
@@ -169,7 +169,7 @@ void sub_0800783c(void)
         ShowMilestonePicture();
 }
 
-void sub_0800791c(void)
+void StageMain(void)
 {
     s32 done = 0;
     s32 i;
@@ -179,7 +179,7 @@ void sub_0800791c(void)
     gInputRecorderMode = 0;
     InputRecorderStart();
     LoadBgLayout(3);
-    sub_0800b648();
+    StageInit();
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();

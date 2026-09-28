@@ -97,13 +97,13 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
 void NightmareWizardInit(void)
@@ -990,7 +990,7 @@ s32 sub_080ab8a8(void)
     gUnk_02007D00[0] |= 2;
     if (gGameState == 20)
     {
-        sub_0800a698();
+        HudStopClock();
         SaveBossEnduranceBestTime(gCurSaveSlot[0]);
     }
     if (gUnk_02007D00[1] != 0)

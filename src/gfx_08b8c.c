@@ -16,7 +16,7 @@
  * maps into VRAM from the ROM tables at 0x08731980-0x08731BA8.
  * LoadBgLayout(i) sets the DISPCNT mode bits and the BGnCNT shadows from
  * preset i and LoadGfxSet(i) queues a VRAM transfer list (both called
- * ROM-wide); sub_08008fc4 loads the pause
+ * ROM-wide); PauseScreenLoadGraphics loads the pause
  * pictures; LinkErrorScreen is the soft-reset prompt. */
 
 void SoftReset(u32 resetFlags);
@@ -113,11 +113,11 @@ void sub_08008d98(s32 a0)
         LZ77UnCompVram(gUnk_085CCB58, (void *)0x06001800);
 }
 
-void sub_08008e1c(s32 a0)
+void ExtraModeTitleLoadPicture(s32 a0)
 {
-    RequestCopy(2, gUnk_08731A28[a0][0], (u32)gUnk_03001370, gUnk_08731A88[a0] << 5);
-    LZ77UnCompVram((void *)gUnk_08731A28[a0][1], (void *)0x06008000);
-    LZ77UnCompVram((void *)gUnk_08731A28[a0][2], (void *)0x06003000);
+    RequestCopy(2, gExtraModeTitlePictures[a0][0], (u32)gUnk_03001370, gExtraModeTitlePaletteSizes[a0] << 5);
+    LZ77UnCompVram((void *)gExtraModeTitlePictures[a0][1], (void *)0x06008000);
+    LZ77UnCompVram((void *)gExtraModeTitlePictures[a0][2], (void *)0x06003000);
 }
 
 void sub_08008e6c(s32 a0)
@@ -153,7 +153,7 @@ void LoadMuseumAbilitySignGfx(s32 a0)
     }
 }
 
-void sub_08008fc4(s32 a0, s32 a1)
+void PauseScreenLoadGraphics(s32 a0, s32 a1)
 {
     switch (a0) {
     case 28:

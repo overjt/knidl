@@ -969,7 +969,7 @@ void CappyCappedUpdate(void)
         {
             gCurTask->unk46 = CreateActorByKind(0, 8, 1, 0, t->pixelX, t->pixelY,
                                                 t->tileWord);
-            sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+            TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         }
     }
     ActorReactToHit();

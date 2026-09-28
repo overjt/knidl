@@ -21,7 +21,7 @@
  *       until A or START; M02's game-state bodies and M03's file menu show it.
  *   DrawScoreToBgMap / DrawClockToBgMap   draw an 8-digit score / a clock into the BG
  *       map at 0x06001000 (M02's src/hud_0aad0.c renderers, drawn to VRAM);
- *       M02's sub_08007f9c calls DrawClockToBgMap too.
+ *       M02's ExtraModeTitleMain calls DrawClockToBgMap too.
  *   CopyToBgMap   copy n map entries to column x, row y of that BG map. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);

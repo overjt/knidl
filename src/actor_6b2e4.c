@@ -98,7 +98,7 @@ void sub_0806b3c4(void)
     t = gCurTask;
     t->updateCallback = 0;
     if (t->unk76 != 0)
-        sub_080b54d0(gCurTaskIdx);
+        MarkRoomObjectUsed(gCurTaskIdx);
     TaskYieldTrampoline(1);
     u = gCurTask;
     u->frameTable = gUnk_0874C9D8;

@@ -13,7 +13,7 @@
  *
  * HUD/score state updates: the life/health/score/timer changes, the
  * per-player bar records gHudHpBars[] and the two 5-way state switches
- * (sub_0800a19c, sub_0800a21c) over gHudAbilityPanelState. */
+ * (HudOpenAbilityPanel, HudCloseAbilityPanel) over gHudAbilityPanelState. */
 
 void PlaySfx(s32 id);
 
@@ -37,7 +37,7 @@ void sub_0800a178(s32 a, s32 id)
         gUnk_0200801C = a;
 }
 
-void sub_0800a19c(s32 id)
+void HudOpenAbilityPanel(s32 id)
 {
     if (id == gLocalPlayer && gHudMode == 1) {
         switch (gHudAbilityPanelState) {
@@ -61,7 +61,7 @@ void sub_0800a19c(s32 id)
     }
 }
 
-void sub_0800a21c(s32 id)
+void HudCloseAbilityPanel(s32 id)
 {
     if (id == gLocalPlayer && gHudMode == 1) {
         switch (gHudAbilityPanelState) {
@@ -84,7 +84,7 @@ void sub_0800a21c(s32 id)
 void HudShowHpBar(void)
 {
     gHudShowsHpBar = 1;
-    sub_0800b0fc();
+    HudDrawHpBarFrame();
 }
 
 void HudStartHpBar(s32 max, s32 cur)
@@ -108,11 +108,11 @@ void HudStartHpBar(s32 max, s32 cur)
             gHudHpBarValues[0] = gHudHpBarLength;
         HudResetHpBar(0);
         HudDrawHpBar(0);
-        sub_0800aa18(0, gHudHpBarValues[0]);
+        HudStartHpBarFill(0, gHudHpBarValues[0]);
     }
 }
 
-void sub_0800a340(s32 max, s32 cur)
+void HudStartTaskHpBar(s32 max, s32 cur)
 {
     s32 idx;
     struct HudBar *p;
@@ -222,7 +222,7 @@ void HudRemoveHpBar(void)
     }
 }
 
-void sub_0800a698(void)
+void HudStopClock(void)
 {
     gFrameEndCallback = 0;
 }
@@ -286,7 +286,7 @@ void HudUpdateAbilityPanel(void)
             break;
         case 3:
             if (--gUnk_0200801C <= 0)
-                sub_0800a21c(gLocalPlayer);
+                HudCloseAbilityPanel(gLocalPlayer);
             break;
         case 4:
             gUnk_0200801C -= 8;
@@ -322,7 +322,7 @@ void HudUpdateHpBars(void)
                 if (v > p->unk2)
                     v = p->unk2;
                 if (gHudHpBarIndex == i)
-                    sub_0800b190(p->unk4, v);
+                    HudDrawHpBarChange(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2) {
                     p->unk0 = 0;
@@ -339,7 +339,7 @@ void HudUpdateHpBars(void)
                 if (v > p->unk2)
                     v = p->unk2;
                 if (gHudHpBarIndex == i)
-                    sub_0800b190(p->unk4, v);
+                    HudDrawHpBarChange(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2)
                     p->unk0 = 0;
@@ -353,7 +353,7 @@ void HudUpdateHpBars(void)
                 if (v < p->unk2)
                     v = p->unk2;
                 if (gHudHpBarIndex == i)
-                    sub_0800b190(p->unk4, v);
+                    HudDrawHpBarChange(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2)
                     p->unk0 = 0;
@@ -398,7 +398,7 @@ void HudAnimateHpBar(s32 from, s32 to, s32 i)
     }
 }
 
-s32 sub_0800aa18(s32 from, s32 to)
+s32 HudStartHpBarFill(s32 from, s32 to)
 {
     s32 i;
 

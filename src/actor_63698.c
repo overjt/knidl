@@ -24,7 +24,7 @@
 extern u16 ActorComputeHealth(u32 a);
 extern u16 ActorComputeHealthSlot(u32 i);
 extern void sub_08069ac4(u32 i);
-extern void sub_080b54a4(u32 i);
+extern void ReleaseRoomObject(u32 i);
 extern s32 sub_08021a40(s16 x, s16 y);
 extern u32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
@@ -581,11 +581,11 @@ void ActorDestroySlot(s32 i)
         switch (t->actorKind)
         {
         case 0:
-            sub_080b54a4(i);
+            ReleaseRoomObject(i);
             break;
         case 6:
             if (gCurTask->unk76 != 0)
-                sub_080b54a4(i);
+                ReleaseRoomObject(i);
             break;
         }
     }

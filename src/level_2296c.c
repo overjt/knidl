@@ -20,7 +20,7 @@
  * room gRoomTable[8][stage][0]; sub_08022f50 (AgbMain) resets level,
  * stage and room; sub_08022f98/sub_08022f9c are M02's screen-setup hooks;
  * sub_08022fa8 and sub_080233e0 are the loaders of M02's first screen
- * setup sub_0800b648 (see level_242d0.c); CreateRoomTask spawns task type
+ * setup StageInit (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
 
 struct Unk020055D8Entry
@@ -436,7 +436,7 @@ void sub_080233e0(void)
     CalcBg3Parallax();
     CalcRoomBounds();
     sub_08028130();
-    sub_080b4ea8();
+    LoadRoomObjectGfx();
     InitDoors();
     sub_080307b0();
     sub_080290ac();

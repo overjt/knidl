@@ -68,7 +68,7 @@ extern u8 gUnk_085709EC[];
 extern u8 gUnk_08570B28[];
 extern u8 gUnk_08570F1C[];
 extern u8 gUnk_0857111C[];
-extern u16 gUnk_0857121C[][11];
+extern u16 gPauseChoicePalettes[][11];
 extern u8 gUnk_08571248[];
 extern u8 gUnk_0857172C[];
 extern u8 gUnk_08571838[];
@@ -93,16 +93,16 @@ extern u8 gUnk_085B6AC8[];
 extern u16 gUnk_085B6E78[][3][16];
 extern u16 gUnk_085B6F98[];
 extern u8 gUnk_085CCB58[];
-extern void (*gUnk_0873078C[])(void);
-extern void (*gUnk_08730794[])(void);
+extern void (*gExtraModeTitleSpriteStates[])(void);
+extern void (*gExtraModeTitleSpriteStateUpdates[])(void);
 extern u8 gUnk_0873079C[];
 extern u16 *gUnk_08730884[];
 extern struct TransferNode *gUnk_0873185C[];
 extern u32 gUnk_08731980[][2][2];
 extern u16 gUnk_087319B0[][2][2];
 extern u32 gUnk_087319C8[][3];
-extern u32 gUnk_08731A28[][3];
-extern u8 gUnk_08731A88[];
+extern u32 gExtraModeTitlePictures[][3];
+extern u8 gExtraModeTitlePaletteSizes[];
 extern u32 gAbilityPictures[][2];
 extern u32 gUnk_08731B70[];
 extern u16 gUnk_08731B88[][2];
@@ -122,30 +122,30 @@ extern u8 gUnk_087C0A4C[];
 
 /* src/mode_075b8.c */
 void CheckPauseButton(void);
-void sub_08007624(void);
-void sub_0800783c(void);
-void sub_0800791c(void);
+void HubMain(void);
+void BigSwitchViewMain(void);
+void StageMain(void);
 
 /* src/mode_07b68.c */
-s32 sub_08007b68(u32 *src, u32 *dst, u32 size);
-s32 sub_08007c5c(void);
-void sub_08007d4c(void);
-void sub_08007e04(void);
-void sub_08007f9c(void);
+s32 SendLinkBlockAndVerify(u32 *src, u32 *dst, u32 size);
+s32 ExtraModeTitleSendModeData(void);
+void ExtraModeTitleLinkErrorScreen(void);
+void ExtraModeTitleLoadMultiBootImage(void);
+void ExtraModeTitleMain(void);
 
 /* src/mode_082d0.c */
 void CreateExtraModeTitleSprites(void);
 void Task_ExtraModeTitleSprite(void);
-void sub_08008394(void);
+void ExtraModeTitleSpriteUpdate(void);
 void ExtraModeTitleTransferIcon(void);
-void sub_08008460(void);
+void ExtraModeTitleTransferIconUpdate(void);
 void ExtraModeTitleLevelBar(void);
-void sub_08008558(void);
+void ExtraModeTitleLevelBarUpdate(void);
 
 /* src/mode_08664.c */
 void PauseScreen(void);
-void sub_080089e0(s32 n);
-void sub_08008a00(void);
+void PauseScreenLoadChoicePalette(s32 n);
+void BossEnduranceMain(void);
 
 /* src/gfx_08b8c.c */
 void LinkErrorScreen(void);
@@ -155,12 +155,12 @@ void sub_08008c7c(void);
 void sub_08008cb8(void);
 void sub_08008d10(s32 a0, s32 a1);
 void sub_08008d98(s32 a0);
-void sub_08008e1c(s32 a0);
+void ExtraModeTitleLoadPicture(s32 a0);
 void sub_08008e6c(s32 a0);
 void HudClearAbilityPicture(void);
 void HudLoadAbilityPicture(s32 a0);
 void LoadMuseumAbilitySignGfx(s32 a0);
-void sub_08008fc4(s32 a0, s32 a1);
+void PauseScreenLoadGraphics(s32 a0, s32 a1);
 
 /* src/boot_091ac.c */
 void BootLogoMain(void);
@@ -175,7 +175,7 @@ void sub_08009640(void);
 void TitleMain(void);
 s32 TitleScreen(void);
 void IntroStory(void);
-s32 sub_080099c8(s32 n);
+s32 IntroStoryWait(s32 n);
 
 /* src/mode_0b44c.c */
 void sub_0800b44c(void);
@@ -183,8 +183,8 @@ void ResetScoresAndMaxHealth(void);
 void ResetPlayerRecords(void);
 void sub_0800b5dc(void);
 void sub_0800b628(void);
-void sub_0800b648(void);
-void sub_0800b788(void);
-void sub_0800b87c(void);
+void StageInit(void);
+void HubInit(void);
+void BigSwitchViewInit(void);
 
 #endif /* GUARD_MODE_H */

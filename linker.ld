@@ -2246,25 +2246,25 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.player_frame_lists) == 0x08769250, "MATCHING: .player_frame_lists moved")
 
-    /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, sub_08007e04 src/mode_07b68.c */
+    /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, ExtraModeTitleLoadMultiBootImage src/mode_07b68.c */
     .multiboot_program : {
         KEEP(*(.multiboot_program)) KEEP(*(.multiboot_program.tail))
     } > ROM
     ASSERT(!MATCHING || ADDR(.multiboot_program) == 0x0876B1FC, "MATCHING: .multiboot_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .quick_draw_program : {
         KEEP(*(.quick_draw_program)) KEEP(*(.quick_draw_program.tail))
     } > ROM
     ASSERT(!MATCHING || ADDR(.quick_draw_program) == 0x0876F690, "MATCHING: .quick_draw_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .bomb_rally_program : {
         KEEP(*(.bomb_rally_program)) KEEP(*(.bomb_rally_program.tail))
     } > ROM
     ASSERT(!MATCHING || ADDR(.bomb_rally_program) == 0x087954C0, "MATCHING: .bomb_rally_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .air_grind_program : {
         KEEP(*(.air_grind_program)) KEEP(*(.air_grind_program.tail))
     } > ROM

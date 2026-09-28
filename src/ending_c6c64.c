@@ -14,7 +14,7 @@
  * EndingEpilogueScene spawns in AgbMain state 11 and waits on (gEndingSceneActive).
  *   Task_EndingEpilogue   the body: variant 0 (Task.variant == 0) loads the graphics
  *       (EndingEpilogueLoadGraphics) and spawns variants 1, 6, 7, 9 and 10 from the list
- *       gUnk_0875735C (CreateEndingEpilogueObjects); variants 1-10 run gEndingEpilogueVariants[unk73].
+ *       gEndingEpilogueObjectVariants (CreateEndingEpilogueObjects); variants 1-10 run gEndingEpilogueVariants[unk73].
  *   sub_080c6d84 / sub_080c769c   variant 1, the scene's main sprite, and its
  *       scaling draw callback; sub_080c77cc spawns its four variant-2 helpers.
  *   sub_080c7810   variant 2: while the spawner is drawn (Task.unk34), one of
@@ -68,7 +68,7 @@ void EndingEpilogueLoadGraphics(void)
     LoadGfxSet(71);
 }
 
-/* Spawn one task type #100 per variant listed in gUnk_0875735C[] (1, 6, 7,
+/* Spawn one task type #100 per variant listed in gEndingEpilogueObjectVariants[] (1, 6, 7,
    9 and 10, ended by 11, the anchor table's size). */
 void CreateEndingEpilogueObjects(void)
 {
@@ -77,7 +77,7 @@ void CreateEndingEpilogueObjects(void)
     s32 v;
     struct Task *t;
 
-    for (i = 0; v = gUnk_0875735C[i], (s16)gUnk_0875735C[i] <= 10; i++) {
+    for (i = 0; v = gEndingEpilogueObjectVariants[i], (s16)gEndingEpilogueObjectVariants[i] <= 10; i++) {
         id = TaskCreateFrom(100, 32);
         if (id == -1)
             for (;;)

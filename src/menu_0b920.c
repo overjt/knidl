@@ -18,9 +18,9 @@
  * extra mode, straight to the mode list) and dispatches on the menu
  * screen gMenuScreen until it reaches 9 (start a game: state 5 or 13)
  * or 10 (back to the title).  The rest draws the file-select screen's
- * three save slots: MenuDrawSaveSlots all three, sub_0800bda4 a slot's label
+ * three save slots: MenuDrawSaveSlots all three, MenuLoadSaveSlotLabel a slot's label
  * (empty, finished, or its number through the digit buffer gDigits),
- * sub_0800be8c/sub_0800bf10 its picture and palette, sub_0800bf6c its
+ * MenuLoadSaveSlotPicture/MenuLoadSaveSlotPalette its picture and palette, MenuLoadSaveSlotPercent its
  * second number. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -94,10 +94,10 @@ void MainMenuMain(void)
         switch (gMenuScreen)
         {
         case 0:
-            sub_0800c09c();
+            MenuFileSelect();
             break;
         case 1:
-            sub_0800c34c();
+            MenuFileMenuSelect();
             break;
         case 2:
             MenuNormalExtraSelect();
@@ -106,7 +106,7 @@ void MainMenuMain(void)
             MenuPlayerCountSelect();
             break;
         case 4:
-            sub_0800cd60();
+            MenuModeListSelect();
             break;
         case 5:
             MenuModePlayerCountSelect();
@@ -115,10 +115,10 @@ void MainMenuMain(void)
             MenuEraseSelect();
             break;
         case 7:
-            sub_0800d450();
+            MenuSoundTest();
             break;
         case 8:
-            sub_0800d85c();
+            MenuLinkPlay();
             break;
         }
     } while (gMenuScreen != 9 && gMenuScreen != 10);
@@ -188,13 +188,13 @@ void MenuDrawSaveSlots(void)
     LoadGfxSet(18);
     for (i = 0; i < 3; i++)
     {
-        sub_0800bda4(i);
-        sub_0800be8c(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
-        sub_0800bf6c(i, gSaveSlots[i].completionPercent[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
+        MenuLoadSaveSlotLabel(i);
+        MenuLoadSaveSlotPicture(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
+        MenuLoadSaveSlotPercent(i, gSaveSlots[i].completionPercent[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
     }
 }
 
-void sub_0800bda4(s32 slot)
+void MenuLoadSaveSlotLabel(s32 slot)
 {
     s32 n;
 
@@ -218,7 +218,7 @@ void sub_0800bda4(s32 slot)
     }
 }
 
-void sub_0800be8c(s32 slot, u32 pal)
+void MenuLoadSaveSlotPicture(s32 slot, u32 pal)
 {
     s32 i;
 
@@ -228,10 +228,10 @@ void sub_0800be8c(s32 slot, u32 pal)
     RequestCopy(3, (u32)&gUnk_08553810[i * 32], (u32)gObjVram + (gUnk_08731E18[slot] << 5), 160);
     RequestCopy(3, (u32)&gUnk_08553810[(i + 5) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 32) << 5), 160);
     RequestCopy(3, (u32)&gUnk_08553810[(i + 10) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 64) << 5), 160);
-    sub_0800bf10(slot, pal);
+    MenuLoadSaveSlotPalette(slot, pal);
 }
 
-s32 sub_0800bf10(s32 slot, u32 pal)
+s32 MenuLoadSaveSlotPalette(s32 slot, u32 pal)
 {
     if (pal > 6)
         pal = 7;
@@ -241,7 +241,7 @@ s32 sub_0800bf10(s32 slot, u32 pal)
         RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gUnk_03001490[slot * 16], 32);
 }
 
-void sub_0800bf6c(s32 slot, s32 value, s32 mode)
+void MenuLoadSaveSlotPercent(s32 slot, s32 value, s32 mode)
 {
     IntToDigits(value);
     if (value < 0 || value > 100)

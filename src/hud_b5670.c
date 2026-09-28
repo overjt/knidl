@@ -11,15 +11,15 @@
 /* hud_b5670.c (0x080B5670-0x080B583F, issue #97).
  *
  * Graphics loader for one object of the room's object list gRoomObjectList
- * (called by src/hud_b4ea8.c's sub_080b4ea8 for every kind-1 entry, which
+ * (called by src/hud_b4ea8.c's LoadRoomObjectGfx for every kind-1 entry, which
  * counts the return values): e is the entry, idx its index in the list and n
  * the next free graphics slot of gUnk_020060A0.  If an earlier kind-1 entry
  * already uses the same graphics descriptor gEnemyGfx[e->unk1], the
  * entry shares that slot (gUnk_02006130[idx]) and the function returns 0.
- * Otherwise it claims slot n: it allocates OBJ tiles (sub_080b5628) and
+ * Otherwise it claims slot n: it allocates OBJ tiles (AllocObjTiles) and
  * copies the descriptor's tiles (through gUnk_02020000 when compressed), then
  * shares the palette of an earlier slot in the same palette group
- * gUnk_0873EF48[kind] or allocates one (sub_080b5654) and copies it into the
+ * gUnk_0873EF48[kind] or allocates one (AllocObjPalettes) and copies it into the
  * palette buffer gObjPalette; a non-zero high nibble of e->unk2 is passed
  * to sub_08065dbc with the slot's palette.  It returns 1.
  *
@@ -40,7 +40,7 @@ struct Unk020055D8Entry
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
+s32 LoadRoomEnemyGfx(struct Unk020055D8Entry *e, s32 idx, s32 n)
 {
     struct Unk0873EEA0 *d;
     s32 i;
@@ -72,7 +72,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
     gUnk_020060A0[n].unk0 = e->unk1;
     if (d->tileCount != 0)
     {
-        gUnk_020060A0[n].unk2 = sub_080b5628(d->tileCount);
+        gUnk_020060A0[n].unk2 = AllocObjTiles(d->tileCount);
         if (d->tilesCompressed != 0)
         {
             LZ77UnCompVram((void *)d->tiles, gUnk_02020000);
@@ -101,7 +101,7 @@ s32 sub_080b5670(struct Unk020055D8Entry *e, s32 idx, s32 n)
         }
         if (cnt == 0)
         {
-            gUnk_020060A0[n].unk1 = sub_080b5654(d->paletteBankCount);
+            gUnk_020060A0[n].unk1 = AllocObjPalettes(d->paletteBankCount);
             RequestCopy(2, d->palette, (u32)gObjPalette + (gUnk_020060A0[n].unk1 << 5), d->paletteBankCount << 5);
         }
         if (e->unk2 >> 4)

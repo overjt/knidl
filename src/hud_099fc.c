@@ -50,7 +50,7 @@ void HudShowScore(void)
 void HudShowClock(void)
 {
     gHudShowsClock = 1;
-    gFrameEndCallback = sub_0800aad0;
+    gFrameEndCallback = HudUpdateClock;
     gFrameEndCallback();
 }
 
@@ -238,7 +238,7 @@ s32 AddPlayerHealth(s32 a, u32 b)
         }
         gTasks[b].health = gPlayerHealth[b];
         if (b == gLocalPlayer && gHudMode == 1)
-            sub_0800acbc(old >> 3, delta >> 3);
+            HudDrawHealthChange(old >> 3, delta >> 3);
         return gTasks[b].health;
     }
 }
@@ -304,7 +304,7 @@ void HudShowAbilityAnimated(s32 a, s32 b)
             HudDrawAbilityPanel(0);
         } else {
             HudLoadAbilityPicture(a);
-            sub_0800a19c(b);
+            HudOpenAbilityPanel(b);
         }
     }
 }

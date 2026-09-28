@@ -883,7 +883,7 @@ void PickupCollect(void)
     struct Task *t;
 
     if (gCurTask->unk76 != 0)
-        sub_080b54d0(gCurTaskIdx);
+        MarkRoomObjectUsed(gCurTaskIdx);
     t = gCurTask;
     switch (t->unk76)
     {

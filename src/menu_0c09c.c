@@ -11,10 +11,10 @@
 
 /* menu_0c09c.c (0x0800C09C-0x0800CA0F, issue #99).
  *
- * Main-menu screens, first part.  sub_0800c09c is the file-select input
+ * Main-menu screens, first part.  MenuFileSelect is the file-select input
  * loop (screen 0: three save slots, A/START loads or creates the slot,
  * B returns to the title screen); MenuSetupFileMenu opens the file menu
- * (screen 1) and sub_0800c34c is its input loop over four entries
+ * (screen 1) and MenuFileMenuSelect is its input loop over four entries
  * (gFileMenuCursor: start, the mode list, the sound test, erase);
  * MenuNormalExtraSelect and MenuPlayerCountSelect run the two-choice screens 2/3 that
  * lead into a game, and MenuEraseSelect the two-step erase confirmation
@@ -22,7 +22,7 @@
 
 s32 PlaySfx(s32 id);
 
-void sub_0800c09c(void)
+void MenuFileSelect(void)
 {
     vu16 *keys = &gPressedKeys;
     s8 *state = &gMenuScreen;
@@ -99,8 +99,8 @@ void MenuSetupFileMenu(void)
     TaskCreateFrom(241, 32);
     MenuUpdateFileMenuPalette();
     LoadGfxSet(21);
-    sub_0800bda4(gCurSaveSlot);
-    sub_0800bf6c(gCurSaveSlot, gSaveSlots[gCurSaveSlot].completionPercent[0], 1);
+    MenuLoadSaveSlotLabel(gCurSaveSlot);
+    MenuLoadSaveSlotPercent(gCurSaveSlot, gSaveSlots[gCurSaveSlot].completionPercent[0], 1);
     SetBlend(66, 12, 13, 3);
     switch (gPrevMenuScreen)
     {
@@ -138,7 +138,7 @@ void MenuSetupFileMenu(void)
     }
 }
 
-void sub_0800c34c(void)
+void MenuFileMenuSelect(void)
 {
     gMenuBufferedKeys = 0;
     while (1)
@@ -190,7 +190,7 @@ void sub_0800c34c(void)
                 MenuEnterModeList();
                 break;
             case 2:
-                sub_0800d280();
+                MenuEnterSoundTest();
                 break;
             }
             return;

@@ -12,11 +12,11 @@
 /* mode_07b68.c (0x08007B68-0x080082CF, issue #96).
  *
  * AgbMain state 13, the title screen of the six extra modes
- * (sub_08007f9c): the mode's picture, two task-#265 decorations and a
+ * (ExtraModeTitleMain): the mode's picture, two task-#265 decorations and a
  * level select for the first three modes.  In single-pak link play it
- * first stages a multiboot image at 0x02020000 (sub_08007e04, a common
+ * first stages a multiboot image at 0x02020000 (ExtraModeTitleLoadMultiBootImage, a common
  * blob plus one of three per-mode chunk sets), sends it and runs the
- * 0x5503 SIO handshake (sub_08007b68/sub_08007c5c); sub_08007d4c is the
+ * 0x5503 SIO handshake (SendLinkBlockAndVerify/ExtraModeTitleSendModeData); ExtraModeTitleLinkErrorScreen is the
  * failure prompt that returns to state 4. */
 
 /* Not from room.h or actor.h: this file's view of gRoomTable and
@@ -30,7 +30,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void PlaySfx(s32 id);
 void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
 
-s32 sub_08007b68(u32 *src, u32 *dst, u32 size)
+s32 SendLinkBlockAndVerify(u32 *src, u32 *dst, u32 size)
 {
     s32 i;
     s32 n;
@@ -76,7 +76,7 @@ done:
     return 0;
 }
 
-s32 sub_08007c5c(void)
+s32 ExtraModeTitleSendModeData(void)
 {
     u8 *src;
     u32 size;
@@ -109,7 +109,7 @@ s32 sub_08007c5c(void)
         size = gRoomTable - gUnk_087C0A4C;
         break;
     }
-    ret = sub_08007b68((u32 *)src, gUnk_02004000, size);
+    ret = SendLinkBlockAndVerify((u32 *)src, gUnk_02004000, size);
     if (ret != 0)
         return 1;
     gExtraModeTitlePhase = 2;
@@ -120,7 +120,7 @@ s32 sub_08007c5c(void)
     return 0;
 }
 
-void sub_08007d4c(void)
+void ExtraModeTitleLinkErrorScreen(void)
 {
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
@@ -155,7 +155,7 @@ void sub_08007d4c(void)
    at 0x020200C8 (inside the copied blob) gets each chunk's address as seen
    once the payload runs from 0x02000000, hence the - 0x20000.  The addresses
    are written as literals: the ROM rebuilds each one as size + constant. */
-void sub_08007e04(void)
+void ExtraModeTitleLoadMultiBootImage(void)
 {
     u32 *tbl = (u32 *)0x020200C8;
     u8 *dst = (u8 *)gUnk_02020000;
@@ -202,7 +202,7 @@ void sub_08007e04(void)
     MultiBootSetParams((u8 *)gUnk_02020000, dst);
 }
 
-void sub_08007f9c(void)
+void ExtraModeTitleMain(void)
 {
     s32 i;
     s32 n;
@@ -210,7 +210,7 @@ void sub_08007f9c(void)
 
     ResetTasksAndOam();
     LoadBgLayout(4);
-    sub_08008e1c(gUnk_02006090);
+    ExtraModeTitleLoadPicture(gUnk_02006090);
     LoadGfxSet(63);
     gBg0ScrollX = gBg0ScrollY = 0;
     gBg3ScrollX = gBg3ScrollY = 0;
@@ -242,7 +242,7 @@ void sub_08007f9c(void)
     gUnk_02007D00 = 0;
     if (gLinkSetupMode == 2) {
         gLinkPlayerCount = 999;
-        sub_08007e04();
+        ExtraModeTitleLoadMultiBootImage();
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1900;
         gExtraModeTitlePhase = 0;
@@ -258,7 +258,7 @@ void sub_08007f9c(void)
             LinkSetupMain(gLinkSessionMode);
         } while (gMultiBootStruct[2] != 3 && gMultiBootStruct[44] == 0);
         if (gMultiBootStruct[3] != 0) {
-            sub_08007d4c();
+            ExtraModeTitleLinkErrorScreen();
             EnableSoundDriver();
             return;
         }
@@ -266,9 +266,9 @@ void sub_08007f9c(void)
         gExtraModeTitlePhase = 1;
         PlayBgm(40);
         /* `cancel` sits here in the ROM, between this arm and the else arm */
-        if (sub_08007c5c() == 0)
+        if (ExtraModeTitleSendModeData() == 0)
             goto select;
-        sub_08007d4c();
+        ExtraModeTitleLinkErrorScreen();
         return;
     cancel:
         PlaySfx(215);

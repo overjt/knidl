@@ -11,7 +11,7 @@
  * Task type #265, the two decorations of the state-13 title screen:
  * CreateExtraModeTitleSprites spawns them, Task_ExtraModeTitleSprite is the body (it dispatches one of
  * two scripts from the anchor table at 0x0873078C through CallTableEntry),
- * and ExtraModeTitleTransferIcon/sub_08008460/ExtraModeTitleLevelBar/sub_08008558 are the four
+ * and ExtraModeTitleTransferIcon/ExtraModeTitleTransferIconUpdate/ExtraModeTitleLevelBar/ExtraModeTitleLevelBarUpdate are the four
  * script bodies (a sprite pair, a BG scroll plus palette cycle, a sprite
  * loop and a palette pulse). */
 
@@ -56,7 +56,7 @@ void Task_ExtraModeTitleSprite(void)
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_08008394;
+    t->updateCallback = (u32)ExtraModeTitleSpriteUpdate;
     t->unk2C = 0;
     t->unk30 = 1;
     t->unk34 = 0;
@@ -64,13 +64,13 @@ void Task_ExtraModeTitleSprite(void)
         t->state = 0;
     else
         t->state = 1;
-    CallTableEntry(gCurTask->state, 2, gUnk_0873078C);
+    CallTableEntry(gCurTask->state, 2, gExtraModeTitleSpriteStates);
     TaskSleepForever();
 }
 
-void sub_08008394(void)
+void ExtraModeTitleSpriteUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08730794);
+    CallTableEntry(gCurTask->updateState, 2, gExtraModeTitleSpriteStateUpdates);
 }
 
 void ExtraModeTitleTransferIcon(void)
@@ -93,7 +93,7 @@ void ExtraModeTitleTransferIcon(void)
     }
 }
 
-void sub_08008460(void)
+void ExtraModeTitleTransferIconUpdate(void)
 {
     if (gExtraModeTitlePhase == 1) {
         gBg0ScrollX += 0x20000;
@@ -124,7 +124,7 @@ void ExtraModeTitleLevelBar(void)
    call's (u16) zero-extension, it is not folded into `lsls #22`.  The
    `r -= 4; r = 4 - r` pair must stay two statements (a single expression
    folds to `8 - r`; split, CSE reuses the register known to hold 4). */
-void sub_08008558(void)
+void ExtraModeTitleLevelBarUpdate(void)
 {
     u32 r;
     u32 i;

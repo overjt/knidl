@@ -10,10 +10,10 @@
  *
  * Menu sprite tasks, last part: the link-play connection screen (menu
  * screens 8 and 9) and the menu's background tasks.  Task type #251
- * (Task_LinkPlayPlayerList, body sub_0800f2b4) spawns a #252 (Task_LinkPlayConsole, body
+ * (Task_LinkPlayPlayerList, body LinkPlayPlayerListUpdate) spawns a #252 (Task_LinkPlayConsole, body
  * LinkPlayConsoleUpdate) and a #253 (Task_LinkPlayCable, body LinkPlayCableUpdate) per player
  * and slides them as partners join (sub_0800ffd8); #256 (Task_MenuScreenTitle,
- * body sub_0800f840) is the menu screen's title sprite; #259
+ * body MenuScreenTitleUpdate) is the menu screen's title sprite; #259
  * (Task_MenuBgPaletteCycle) and #258 (Task_MenuBackground) cycle and cross-fade the
  * background palettes when the menu screen changes. */
 
@@ -40,7 +40,7 @@ void Task_LinkPlayPlayerList(void)
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800f2b4;
+    gCurTask->updateCallback = (u32)LinkPlayPlayerListUpdate;
     gCurTask->layer = 7;
     t = gCurTask;
     t->frameTable = gUnk_08755688;
@@ -91,7 +91,7 @@ void Task_LinkPlayPlayerList(void)
     TaskExitTrampoline();
 }
 
-void sub_0800f2b4(void)
+void LinkPlayPlayerListUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -270,7 +270,7 @@ void Task_MenuScreenTitle(void)
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800f840;
+    gCurTask->updateCallback = (u32)MenuScreenTitleUpdate;
     gCurTask->frameTable = gUnk_08755620;
     gCurTask->layer = 7;
     t = gCurTask;
@@ -291,7 +291,7 @@ void Task_MenuScreenTitle(void)
     TaskSleepForever();
 }
 
-void sub_0800f840(void)
+void MenuScreenTitleUpdate(void)
 {
     u32 *tbl = gUnk_08731D70;
     struct Task *t = gCurTask;

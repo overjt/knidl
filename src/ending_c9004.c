@@ -12,9 +12,9 @@
  *
  * The second ending scene: task type #101 (class 3), which M37's
  * EndingStarRodReturnScene spawns in AgbMain state 11 and waits on (gEndingSceneActive).
- *   Task_EndingStarRodReturn   the body: variant 0 loads the graphics (sub_080c9040) and
- *       spawns variants 1, 3, 6, 7, 8 and 11 from the list gUnk_08757424
- *       (sub_080c90c8); variants 1-11 run gEndingStarRodReturnVariants[Task.variant].
+ *   Task_EndingStarRodReturn   the body: variant 0 loads the graphics (EndingStarRodReturnLoadGraphics) and
+ *       spawns variants 1, 3, 6, 7, 8 and 11 from the list gEndingStarRodReturnObjectVariants
+ *       (CreateEndingStarRodReturnObjects); variants 1-11 run gEndingStarRodReturnVariants[Task.variant].
  *   sub_080c9114 / sub_080c9418   variant 1, a sprite that falls in, then
  *       rides the BG3 layer and flashes its palette.
  *   sub_080c9d10   variant 2, a 22-frame animation played six times.
@@ -68,8 +68,8 @@ void Task_EndingStarRodReturn(void)
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
     if (gCurTask->variant == 0) {
-        sub_080c9040();
-        sub_080c90c8();
+        EndingStarRodReturnLoadGraphics();
+        CreateEndingStarRodReturnObjects();
     } else {
         CallTableEntry(gCurTask->variant, 12, gEndingStarRodReturnVariants);
     }
@@ -77,7 +77,7 @@ void Task_EndingStarRodReturn(void)
 }
 
 /* Task type #101's graphics. */
-void sub_080c9040(void)
+void EndingStarRodReturnLoadGraphics(void)
 {
     struct GfxHeader *h = &gUnk_0859A09C;
 
@@ -90,16 +90,16 @@ void sub_080c9040(void)
     LZ77UnCompWram(gUnk_085E0090, gUnk_02020000);
 }
 
-/* Spawn one task type #101 per variant listed in gUnk_08757424[] (1, 3, 6,
+/* Spawn one task type #101 per variant listed in gEndingStarRodReturnObjectVariants[] (1, 3, 6,
    7, 8 and 11, ended by 12, the anchor table's size). */
-void sub_080c90c8(void)
+void CreateEndingStarRodReturnObjects(void)
 {
     s32 i;
     s32 id;
     s32 v;
     struct Task *t;
 
-    for (i = 0; v = gUnk_08757424[i], (s16)gUnk_08757424[i] <= 11; i++) {
+    for (i = 0; v = gEndingStarRodReturnObjectVariants[i], (s16)gEndingStarRodReturnObjectVariants[i] <= 11; i++) {
         id = TaskCreateFrom(101, 32);
         if (id == -1)
             for (;;)

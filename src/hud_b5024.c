@@ -112,13 +112,13 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
 void sub_080b5024(void)
@@ -208,7 +208,7 @@ void sub_080b5024(void)
     }
 }
 
-s32 sub_080b5338(s32 i)
+s32 SpawnRoomObject(s32 i)
 {
     s32 i6;
     s32 res5;
@@ -230,7 +230,7 @@ s32 sub_080b5338(s32 i)
 
     i6 = i;
     res5 = -1;
-    if (((u8 *)gUnk_02008020)[i6] != 0)
+    if (((u8 *)gRoomObjectSpawned)[i6] != 0)
         goto fail;
     pd = (u8 *)&gRoomObjectList;
     w8 = i6 << 3;
@@ -247,7 +247,7 @@ s32 sub_080b5338(s32 i)
     case 1:
         if (gActivePlayerCount <= (s8)e4[3] >> 5)
             goto fail;
-        res5 = sub_080b5bdc(e4, i6);
+        res5 = SpawnRoomEnemy(e4, i6);
         break;
     case 2:
         gUnk_0200D080 = 1;
@@ -275,7 +275,7 @@ s32 sub_080b5338(s32 i)
         res5 = sub_080b5d84(e4);
         break;
     }
-    pz = (u8 *)gUnk_02008020 + i6;
+    pz = (u8 *)gRoomObjectSpawned + i6;
     *pz = 1;
     if (res5 != -1)
         goto ok;
@@ -292,16 +292,16 @@ out:
     return r;
 }
 
-void sub_080b54a4(s32 a)
+void ReleaseRoomObject(s32 a)
 {
     if (gUnk_02005590[a - 32] != -1)
     {
-        gUnk_02008020[gUnk_02005590[a - 32]] = 0;
+        gRoomObjectSpawned[gUnk_02005590[a - 32]] = 0;
         gUnk_02005590[a - 32] = -1;
     }
 }
 
-void sub_080b54d0(s32 a)
+void MarkRoomObjectUsed(s32 a)
 {
     s32 av;
     u8 *pbase;
@@ -337,7 +337,7 @@ void sub_080b54d0(s32 a)
     *(u32 *)p2 = *(u32 *)p2 | m;
 }
 
-void sub_080b5540(s32 a, s32 b)
+void TransferRoomObject(s32 a, s32 b)
 {
     u8 *pbase;
     u8 *pa;
@@ -370,7 +370,7 @@ void sub_080b5558(void)
     CpuSet(gUnk_03001570, gUnk_02005F10, 96);
 }
 
-s32 sub_080b55d8(u32 a, u32 b)
+s32 AllocObjTilesAndPalettes(u32 a, u32 b)
 {
     s32 r;
     u32 n;
@@ -390,7 +390,7 @@ s32 sub_080b55d8(u32 a, u32 b)
     return r;
 }
 
-s32 sub_080b5628(u32 a)
+s32 AllocObjTiles(u32 a)
 {
     s32 r;
     u32 n;
@@ -403,7 +403,7 @@ s32 sub_080b5628(u32 a)
     return r;
 }
 
-s32 sub_080b5654(u32 a)
+s32 AllocObjPalettes(u32 a)
 {
     s32 r;
 

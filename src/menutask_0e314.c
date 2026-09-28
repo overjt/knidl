@@ -12,8 +12,8 @@
  * Menu sprite tasks, middle part.  Task types #245 (Task_NormalExtraPanel, body
  * NormalExtraPanelUpdate) and #246 (Task_PlayerCountPanel, body PlayerCountPanelUpdate) show the
  * pictures and palette pulses of menu screens 2 and 3; #247
- * (Task_ModeListCursor, body sub_0800e674) the mode list's picture and row
- * highlight (sub_0800e7b0); #248 (Task_ModePlayerCountPanel, body ModePlayerCountPanelUpdate) the
+ * (Task_ModeListCursor, body ModeListCursorUpdate) the mode list's picture and row
+ * highlight (ModeListHighlightRow); #248 (Task_ModePlayerCountPanel, body ModePlayerCountPanelUpdate) the
  * picture of screen 5; and Task_EraseConfirmDialog is the entry of #243, whose
  * body EraseConfirmDialogUpdate is in menutask_0ea0c.c. */
 
@@ -118,10 +118,10 @@ void Task_ModeListCursor(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = 0;
-    gCurTask->updateCallback = (u32)sub_0800e674;
+    gCurTask->updateCallback = (u32)ModeListCursorUpdate;
     gCurTask->frameTable = gUnk_08755650;
     LoadGfxSet(32);
-    sub_0800e7b0();
+    ModeListHighlightRow();
     if (gMenuScreen == 4)
         MenuLoadPicture(3, gMenuCursor);
     gCurTask->unk28 = gMenuCursor;
@@ -138,7 +138,7 @@ void Task_ModeListCursor(void)
     TaskExitTrampoline();
 }
 
-void sub_0800e674(void)
+void ModeListCursorUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;
@@ -159,7 +159,7 @@ void sub_0800e674(void)
         w = gCurTask;
         BlendColors(gUnk_0855D2F8[w->unk2C], gUnk_0855D2F8[w->unk30], (u16)w->unk34, 10, gUnk_0300153C);
         if (gMenuCursor != gCurTask->unk28) {
-            sub_0800e7b0();
+            ModeListHighlightRow();
             if (gMenuScreen == 4)
                 MenuLoadPicture(3, gMenuCursor);
             gCurTask->unk28 = gMenuCursor;
@@ -175,7 +175,7 @@ void sub_0800e674(void)
     }
 }
 
-void sub_0800e7b0(void)
+void ModeListHighlightRow(void)
 {
     s32 i;
     u16 *p;

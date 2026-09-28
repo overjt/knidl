@@ -13,7 +13,7 @@
  *   * five scripts in the entry/hook shape: `PoppyBrosJrRideInit`+`PoppyBrosJrRideUpdate`
  *     (`0x08741610`/`0x08741614`; its hook is the one that spawns the
  *     class-0 sub-actors 30/31/32 through CreateActorByKind and hands them to
- *     sub_080b5540), `PoppyBrosJrDroppedObjectInit`+`PoppyBrosJrDroppedObjectUpdate` (`0x08741618`),
+ *     TransferRoomObject), `PoppyBrosJrDroppedObjectInit`+`PoppyBrosJrDroppedObjectUpdate` (`0x08741618`),
  *     `PoppyBrosJrRideIdleInit`+`PoppyBrosJrRideIdleUpdate` (`0x08741620`), `WheelieInit`+
  *     `WheelieUpdate` (`0x0874164C`/`0x08741664`, six states) and
  *     `WheelieIdleInit`+`WheelieIdleUpdate` (`0x0874167C`);
@@ -86,7 +86,7 @@ void PoppyBrosJrRideUpdate(void)
         else
             gCurTask->unk46 =
                 CreateActorByKind(0, 32, 1, t->unk74, t->pixelX, t->pixelY, t->tileWord);
-        sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         u = gCurTask;
         u->tileWord = u->unk2C;
         if (gUnk_0300244C != 0)
@@ -104,7 +104,7 @@ void PoppyBrosJrRideUpdate(void)
             gCurTask->unk46 =
                 CreateActorByKind(0, 30, 1, t->unk74, t->pixelX, t->pixelY - 14, t->unk2C);
         }
-        sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         break;
     }
     ActorReactToHit();
@@ -196,7 +196,7 @@ void sub_08082338(void)
     if (x->unk28 == 1)
     {
         gCurTask->unk46 = CreateActorByKind(6, 2, 0, 0, x->pixelX, x->pixelY, 0);
-        sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         ActorDestroy();
     }
     TaskSleepForever();
