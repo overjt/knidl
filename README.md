@@ -61,23 +61,23 @@ make progress
 ```
 
 ```
-851204 total bytes of code
-    847028 bytes of code in src (99.5094%)
-    4176 bytes of code in asm (0.4906%)
+857532 total bytes of code
+    853356 bytes of code in src (99.5130%)
+    4176 bytes of code in asm (0.4870%)
         0 bytes of code remaining to be decompiled
         0 bytes in 0 functions in asm/nonmatching
         4176 bytes excluded from decompilation tracking
 
-11067 total symbols
-    2134 symbols documented (19.2826%)
-    8933 symbols undocumented (80.7174%)
+34084 total symbols
+    7743 symbols documented (22.7174%)
+    26341 symbols undocumented (77.2826%)
 
-7537436 total bytes of data
-    4428 bytes of data in src (0.0587%)
-    7532772 bytes of data in data (99.9381%)
+7531108 total bytes of data
+    4428 bytes of data in src (0.0588%)
+    7526444 bytes of data in data (99.9381%)
     236 bytes of data from asm (0.0031%)
 
-7502324 bytes of data in 5964 baserom incbins (99.5342%)
+7336404 bytes of data in 26917 baserom incbins (97.4147%)
 ```
 
 (Output from the current tree; run `make progress` for live values.)
@@ -94,10 +94,17 @@ What is left:
   helpers.  Run 2 named 242 struct fields (`tools/rename_field.py`; 153 of
   the 222 fields in `include/task.h`), identified the enemies, mid-bosses,
   bosses and the 25 copy abilities from local sprite renders, and named
-  their families (806 more symbols).  The rest still have address-based
-  names (`sub_08XXXXXX`, `gUnk_XXXXXXXX`), shown as "symbols undocumented"
-  above, and the fields whose role changes with the task family stay
-  `unkXX`.
+  their families (806 more symbols).  Run 3 named 248 of the 266 task
+  bodies and their families, the last unidentified enemies (each species
+  on three agreeing sources: a local render, the code, and a public text
+  reference), two per-family views of `struct Task`, and 1,977 data
+  records by their slot in a consumer-proven table (the room table's
+  lists, RoomDefs and their maps and doors, the kind tables' ActorDefs
+  and graphics); of the 7,743 documented symbols above, 1,976 are such
+  position names.  The rest still have address-based names
+  (`sub_08XXXXXX`, `gUnk_XXXXXXXX`), shown as "symbols undocumented"
+  above (23,263 of the 26,341 are ROM data labels, most of them from #36), and
+  the fields whose role changes with the task family stay `unkXX`.
 
 ## CI
 

@@ -765,6 +765,53 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   (fields; actor records; kind-0 enemies; bosses and abilities) in five or
   six rounds each plus the coordinator, who alone applied names; new
   lessons 3.516, 4.125-4.127.
+- Names, run 3 (issue #155): the task bodies and their families, the
+  unidentified enemies, two per-family views of `struct Task` and the data
+  records by position.  **248 of the 266 task bodies** have a name (141
+  before); the 18 left are visual-only or unsettled effects (#79, #88,
+  #99, #127, #145, #193, Nightmare's #202/#204/#206/#208-#213/#220, the
+  link-play palette tasks #249/#250).  A species identity now needs three
+  agreeing sources (a LOCAL render, the code and `ActorDef.ability`, and
+  WiKirby text cited by URL; docs/naming.md 2.3): the ten open kind-0
+  subtypes are Coconut, Bubbles, Slippy, Sword Knight, Blade Knight, Poppy
+  Bros. Jr. on an apple and on a Maxim Tomato, Coner, Gip and the block
+  star, and run 2's Togezo is Needlous (Togezo is only in Kirby's Dream
+  Land 3).  Named on the way: the boss and mid-boss children (Heavy Mole's
+  arms and missiles, Paint Roller's paintings, Kracko Jr., the Nightmare
+  forms' stars and hands, Meta Knight's sword, cape and mask), the
+  kind-0 Idle rows and verbs, the carried bodies, the goal game, the
+  Star Rod piece, the hub's Warp Star Station / Museum / Arena (stage
+  requests 12-14), Meta Knightmare's action machine and Boss Endurance,
+  the level-intro cutscenes, the ending scenes, the three sub-games'
+  internals (Quick Draw's opponents Waddle Doo, Wheelie, Chef Kawasaki,
+  King Dedede and Meta Knight; Bomb Rally's bomb and Bubbles seat; Air
+  Grind's racer), the menus, the terrain engine's entry points and the
+  Ball / Star Rod flight sub-moves.  **Views** (a type change, its own
+  commit, approved by the owner's coordinator): `Task.u8C` is `union {
+  struct Actor *actor; struct Task *parentTask; }` (247 `(struct Task *)`
+  and 2 `(struct Actor *)` casts gone) and `Task.u80` a packed `union {
+  s8 nearestPlayer; s8 attackAbility; }`; all 311 files' agbcc assembly is
+  identical to the parent commit's, and `tools/header_smoke_game.c`
+  checks the layout (agbcc pads every union to 4 bytes: lesson 3.522,
+  docs/header-conventions.md).  **Position names** (docs/naming.md 2.4,
+  approved as a family of about 1,700): a record whose only identity is
+  its slot in a consumer-proven table is named after the slot, 0-based
+  (`gLevel0Stage1Room2Doors`): the 57 room lists, 333 RoomDefs and 1,295
+  single-referrer RoomDef records, the kind tables' ActorDefs
+  (`g<Enemy>Def`, `gChildActorDefs`), the kind-0 graphics descriptors
+  with the palettes and tiles 55 descriptors alone point at, and the 12
+  BG animation sets; level indices 0-6 are the game's Levels 1-7 by their
+  bosses.  3,440 `renames.csv` rows (1,977 position names, 1,103
+  functions, 291 ROM tables and 56 RAM cells by role, 13 fields) in 43
+  batches; `include/task.h` has 58 `unkXX` fields (69 before); 2,448 of
+  5,347 functions are named (1,356 before).  `make progress`: 4,333 ->
+  7,743 of 34,084 symbols documented (12.71% -> 22.72%), of which 1,976
+  are position names; the semantic names alone give 5,767 (16.92%).  (The
+  README's old 2,134 of 11,067 predates #36's 23,000 data labels.)
+  `tools/rename.py` now also renames the symbols in linker.ld's MATCHING
+  asserts (lesson 4.147).  No rename changed a byte.  Done by eight
+  proposal agents (A-D, then E-H) in 2-6 rounds each plus the coordinator,
+  who alone applied names; new lessons 3.522 and 4.147-4.150.
 - Data structure, phase 2, run 1 (issue #36): **shared headers**,
   the first **functional tables as C** and the seg 13/20 re-partition.
   Eighteen subsystem headers (`include/main.h`, `link.h`, `sound.h`,
@@ -876,10 +923,12 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   readability: the BG animation scripts, the RoomDef headers, the frame
   tables and seg 18's behaviour tables as C with run 3's grouped design
   (docs/data.md §5.2, §7), and a boot-test script that reaches further
-  (sub-games, bosses, the credits); (2) #155 run 3: the enemies' remaining rows and
-  state verbs, the unidentified subtypes (15, 22, 26, 28/29, 31-33, 39,
-  40), the boss children and the per-family `Task` fields (the headers
-  now hold one declaration to rename), and the remaining `gUnk_` cells;
+  (sub-games, bosses, the credits); (2) #155, the rest of the names: the
+  ~2,900 functions still `sub_*` (mostly enemy and boss state bodies and
+  one-caller helpers, named only where a verb or contract is proven), the
+  18 task bodies left, the ~200 `gUnk_` RAM cells (many proven to be
+  shared scratch), the per-family `Task` fields `unk18`-`unk34`,
+  `unk46`, `unk74`, `unk76` (views need the owner) and the asset labels;
   then #37's final audit.
   The three functions #154 left pinned or levered are listed in its
   bullet above.
