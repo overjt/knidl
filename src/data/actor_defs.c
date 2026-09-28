@@ -14,7 +14,7 @@
  * tools/carve_data.py. */
 
 /* kind 0: the enemies, by subtype */
-struct ActorDef *const gUnk_0873ECEC[] = {
+struct ActorDef *const gEnemyDefs[] = {
     (struct ActorDef *)gWaddleDeeDef,
     &gRockyDef,
     &gNoddyDef,

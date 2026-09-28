@@ -25921,7 +25921,7 @@
     "0x0873ECC0": "gUnk_0873ECC0",
     "0x0873ECD0": "gUnk_0873ECD0",
     "0x0873ECE0": "gUnk_0873ECE0",
-    "0x0873ECEC": "gUnk_0873ECEC",
+    "0x0873ECEC": "gEnemyDefs",
     "0x0873ED90": "gMidBossDefs",
     "0x0873EDB8": "gBossDefs",
     "0x0873EDDC": "gUnk_0873EDDC",
@@ -25938,7 +25938,7 @@
     "0x0873F138": "gUnk_0873F138",
     "0x0873F15C": "gBossGfx",
     "0x0873F180": "gUnk_0873F180",
-    "0x0873F198": "gUnk_0873F198",
+    "0x0873F198": "gEnemyTaskTypes",
     "0x0873F23C": "gMidBossTaskTypes",
     "0x0873F264": "gBossTaskTypes",
     "0x0873F288": "gUnk_0873F288",
@@ -32011,7 +32011,7 @@
     {
       "start": "0x0873ECEC",
       "extent": "next-label",
-      "why": "src/actor_63698.c:26 `extern struct ActorDef *gUnk_0873ECEC[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
+      "why": "src/actor_63698.c:26 `extern struct ActorDef *gEnemyDefs[];`; extent: the span up to the next label, every word NULL or a pointer (docs/data.md 5.1)",
       "targets": {
         "pointers": [
           "0x10",

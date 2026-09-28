@@ -174,8 +174,8 @@ gUnk_0873F180:
 	.word	gUnk_0825CF70
 	.word	gUnk_0825D084
 	.word	gUnk_0825DBFC
-	.global	gUnk_0873F198
-gUnk_0873F198:
+	.global	gEnemyTaskTypes
+gEnemyTaskTypes:
 	.incbin	"baserom.gba", 0x73F198, 0xA4
 	.global	gMidBossTaskTypes
 gMidBossTaskTypes:

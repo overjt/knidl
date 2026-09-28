@@ -72,7 +72,7 @@ void sub_08063704(u32 i)
     switch (t->actorKind)
     {
     case 0:
-        a->def = gUnk_0873ECEC[t->unk76];
+        a->def = gEnemyDefs[t->unk76];
         break;
     case 1:
     case 3:
@@ -1540,7 +1540,7 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
     switch (cls)
     {
     case 0:
-        type = gUnk_0873F198[sub];
+        type = gEnemyTaskTypes[sub];
         break;
     case 1:
     case 3:
