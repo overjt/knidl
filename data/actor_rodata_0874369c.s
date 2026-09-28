@@ -106,7 +106,7 @@ gBonkersStates:
 	.word	BonkersJumpSlam+1
 	.word	BonkersTripleSlam+1
 	.word	sub_08090c18+1
-	.word	sub_08090cd0+1
+	.word	BonkersDefeat+1
 	.global	gBonkersStateUpdates
 gBonkersStateUpdates:
 	.word	sub_08090270+1
@@ -197,7 +197,7 @@ gPoppyBrosSrStates:
 	.word	sub_080915a4+1
 	.word	sub_080915f8+1
 	.word	sub_080916ec+1
-	.word	sub_08091824+1
+	.word	PoppyBrosSrDefeat+1
 	.global	gPoppyBrosSrStateUpdates
 gPoppyBrosSrStateUpdates:
 	.word	sub_080912f8+1
@@ -305,7 +305,7 @@ gBugzzyVariants:
 gBugzzyStates:
 	.word	sub_08092198+1
 	.word	sub_08092250+1
-	.word	sub_080925b8+1
+	.word	BugzzySummon+1
 	.word	sub_080926fc+1
 	.word	sub_08092a14+1
 	.word	sub_08092b58+1
@@ -315,7 +315,7 @@ gBugzzyStates:
 	.word	sub_08092f2c+1
 	.word	sub_080930ac+1
 	.word	sub_0809301c+1
-	.word	sub_08093380+1
+	.word	BugzzyDefeat+1
 	.global	gBugzzyStateUpdates
 gBugzzyStateUpdates:
 	.word	sub_08092228+1

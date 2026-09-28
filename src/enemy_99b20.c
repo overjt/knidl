@@ -1455,7 +1455,7 @@ void sub_0809b210(void)
 {
 }
 
-void sub_0809b214(void)
+void MrTickTockDefeat(void)
 {
     struct Task *t;
     struct Task *u;

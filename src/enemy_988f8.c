@@ -955,7 +955,7 @@ void sub_080997e4(void)
     }
 }
 
-void sub_08099818(void)
+void MrFrostyDefeat(void)
 {
     struct Task *t;
     struct Task *u;

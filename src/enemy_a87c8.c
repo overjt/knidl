@@ -389,7 +389,7 @@ void sub_080a8f18(void)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8f40(void)
+void KrackoSummon(void)
 {
     struct ActorSpawn sp;
 

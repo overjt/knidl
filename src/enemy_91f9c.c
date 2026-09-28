@@ -19,7 +19,7 @@
  * gUnk_02007D00[6] (0/1/2) against the RNG, and plays one of three yield
  * sequences; sub_080926fc is the three-phase charge, sub_08092cdc the
  * multi-hit dive, sub_080930ac the four-way finisher whose case 3 spawns the
- * actor 154 at gUnk_030023B4/gUnk_030023D4, and sub_08093380 the defeat
+ * actor 154 at gUnk_030023B4/gUnk_030023D4, and BugzzyDefeat the defeat
  * sequence.  sub_080934b8 is the shake helper the first states yield to and
  * sub_080934f8 is the collision probe: ten GetCollisionTileAtOffset samples along
  * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
@@ -344,7 +344,7 @@ void sub_08092590(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_080925b8(void)
+void BugzzySummon(void)
 {
     struct Task *t;
     struct ActorSpawn spawn;
@@ -922,7 +922,7 @@ void sub_08093354(void)
     }
 }
 
-void sub_08093380(void)
+void BugzzyDefeat(void)
 {
     struct Task *t;
     struct Task *u;

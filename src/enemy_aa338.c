@@ -405,7 +405,7 @@ void sub_080aa970(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080aa998(void)
+void NightmareWizardPoint(void)
 {
     struct ActorSpawn sp;
     s32 d;
@@ -480,7 +480,7 @@ void sub_080aab4c(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080aab80(void)
+void NightmareWizardOpenPalm(void)
 {
     struct ActorSpawn sp;
 
@@ -552,7 +552,7 @@ void sub_080aad64(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080aad98(void)
+void NightmareWizardOpenCloak(void)
 {
     struct ActorSpawn sp;
 

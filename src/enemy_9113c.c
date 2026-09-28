@@ -369,7 +369,7 @@ void sub_080917fc(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_08091824(void)
+void PoppyBrosSrDefeat(void)
 {
     struct Task *t;
 

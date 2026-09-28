@@ -65,7 +65,7 @@ gMrFrostyStates:
 	.word	sub_080995f4+1
 	.word	sub_080996d0+1
 	.word	sub_08099770+1
-	.word	sub_08099818+1
+	.word	MrFrostyDefeat+1
 	.word	sub_080998a4+1
 	.word	sub_08099944+1
 	.word	sub_080999c4+1
@@ -143,7 +143,7 @@ gMrTickTockStates:
 	.word	sub_0809ae40+1
 	.word	sub_0809af4c+1
 	.word	sub_0809b104+1
-	.word	sub_0809b214+1
+	.word	MrTickTockDefeat+1
 	.word	sub_0809b2ac+1
 	.word	sub_0809b34c+1
 	.word	sub_0809b3d4+1

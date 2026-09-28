@@ -277,7 +277,7 @@ gKrackoStates:
 	.word	sub_080a8bf4+1
 	.word	sub_080a8d1c+1
 	.word	sub_080a8fdc+1
-	.word	sub_080a8f40+1
+	.word	KrackoSummon+1
 	.global	gKrackoStateUpdates
 gKrackoStateUpdates:
 	.word	sub_080a8948+1
@@ -401,9 +401,9 @@ gNightmareWizardStates:
 	.word	sub_080aa67c+1
 	.word	sub_080aa6d0+1
 	.word	sub_080aa744+1
-	.word	sub_080aad98+1
-	.word	sub_080aab80+1
-	.word	sub_080aa998+1
+	.word	NightmareWizardOpenCloak+1
+	.word	NightmareWizardOpenPalm+1
+	.word	NightmareWizardPoint+1
 	.word	sub_080aaf6c+1
 	.word	sub_080ab1a8+1
 	.word	sub_080ab3c8+1

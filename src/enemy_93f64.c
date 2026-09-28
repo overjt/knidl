@@ -841,7 +841,7 @@ void sub_080950b4(void)
     }
 }
 
-void sub_0809513c(void)
+void GrandWheelieSummon(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -939,7 +939,7 @@ void sub_0809532c(void)
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
 
-void sub_08095360(void)
+void GrandWheelieDefeat(void)
 {
     struct Task *t;
     s32 z1;

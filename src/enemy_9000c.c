@@ -597,7 +597,7 @@ void sub_08090ca8(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_08090cd0(void)
+void BonkersDefeat(void)
 {
     struct Task *t;
 

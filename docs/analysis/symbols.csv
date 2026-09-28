@@ -3291,7 +3291,7 @@ vma,size,isa,evidence,name
 0x08090BF0,0x28,thumb,rom-pointer,sub_08090bf0
 0x08090C18,0x90,thumb,rom-pointer,sub_08090c18
 0x08090CA8,0x28,thumb,rom-pointer,sub_08090ca8
-0x08090CD0,0x114,thumb,rom-pointer,sub_08090cd0
+0x08090CD0,0x114,thumb,rom-pointer,BonkersDefeat
 0x08090DE4,0x34,thumb,rom-pointer,sub_08090de4
 0x08090E18,0x3C,thumb,bl-target,sub_08090e18
 0x08090E54,0x48,thumb,bl-target,sub_08090e54
@@ -3317,7 +3317,7 @@ vma,size,isa,evidence,name
 0x080916C4,0x28,thumb,rom-pointer,sub_080916c4
 0x080916EC,0x110,thumb,rom-pointer,sub_080916ec
 0x080917FC,0x28,thumb,rom-pointer,sub_080917fc
-0x08091824,0xF8,thumb,rom-pointer,sub_08091824
+0x08091824,0xF8,thumb,rom-pointer,PoppyBrosSrDefeat
 0x0809191C,0x38,thumb,rom-pointer,sub_0809191c
 0x08091954,0xDC,thumb,bl-target,sub_08091954
 0x08091A30,0x68,thumb,bl-target,sub_08091a30
@@ -3337,7 +3337,7 @@ vma,size,isa,evidence,name
 0x08092228,0x28,thumb,rom-pointer,sub_08092228
 0x08092250,0x340,thumb,rom-pointer,sub_08092250
 0x08092590,0x28,thumb,rom-pointer,sub_08092590
-0x080925B8,0x11C,thumb,rom-pointer,sub_080925b8
+0x080925B8,0x11C,thumb,rom-pointer,BugzzySummon
 0x080926D4,0x28,thumb,rom-pointer,sub_080926d4
 0x080926FC,0x2F0,thumb,rom-pointer,sub_080926fc
 0x080929EC,0x28,thumb,rom-pointer,sub_080929ec
@@ -3357,7 +3357,7 @@ vma,size,isa,evidence,name
 0x08093084,0x28,thumb,rom-pointer,sub_08093084
 0x080930AC,0x2A8,thumb,rom-pointer,sub_080930ac
 0x08093354,0x2C,thumb,rom-pointer,sub_08093354
-0x08093380,0x108,thumb,rom-pointer,sub_08093380
+0x08093380,0x108,thumb,rom-pointer,BugzzyDefeat
 0x08093488,0x30,thumb,rom-pointer,sub_08093488
 0x080934B8,0x40,thumb,bl-target,sub_080934b8
 0x080934F8,0x154,thumb,bl-target,sub_080934f8
@@ -3424,11 +3424,11 @@ vma,size,isa,evidence,name
 0x08094F68,0x48,thumb,rom-pointer,sub_08094f68
 0x08094FB0,0x104,thumb,rom-pointer,sub_08094fb0
 0x080950B4,0x88,thumb,rom-pointer,sub_080950b4
-0x0809513C,0xE4,thumb,rom-pointer,sub_0809513c
+0x0809513C,0xE4,thumb,rom-pointer,GrandWheelieSummon
 0x08095220,0x34,thumb,rom-pointer,sub_08095220
 0x08095254,0xD8,thumb,rom-pointer,sub_08095254
 0x0809532C,0x34,thumb,rom-pointer,sub_0809532c
-0x08095360,0x124,thumb,rom-pointer,sub_08095360
+0x08095360,0x124,thumb,rom-pointer,GrandWheelieDefeat
 0x08095484,0x6C,thumb,rom-pointer,sub_08095484
 0x080954F0,0xB8,thumb,rom-pointer,sub_080954f0
 0x080955A8,0xCC,thumb,rom-pointer,sub_080955a8
@@ -3577,7 +3577,7 @@ vma,size,isa,evidence,name
 0x08099734,0x3C,thumb,rom-pointer,sub_08099734
 0x08099770,0x74,thumb,rom-pointer,sub_08099770
 0x080997E4,0x34,thumb,rom-pointer,sub_080997e4
-0x08099818,0x78,thumb,rom-pointer,sub_08099818
+0x08099818,0x78,thumb,rom-pointer,MrFrostyDefeat
 0x08099890,0x14,thumb,rom-pointer,sub_08099890
 0x080998A4,0x64,thumb,rom-pointer,sub_080998a4
 0x08099908,0x3C,thumb,rom-pointer,sub_08099908
@@ -3648,7 +3648,7 @@ vma,size,isa,evidence,name
 0x0809B09C,0x68,thumb,rom-pointer,sub_0809b09c
 0x0809B104,0x10C,thumb,rom-pointer,sub_0809b104
 0x0809B210,0x4,thumb,rom-pointer,sub_0809b210
-0x0809B214,0x84,thumb,rom-pointer,sub_0809b214
+0x0809B214,0x84,thumb,rom-pointer,MrTickTockDefeat
 0x0809B298,0x14,thumb,rom-pointer,sub_0809b298
 0x0809B2AC,0x64,thumb,rom-pointer,sub_0809b2ac
 0x0809B310,0x3C,thumb,rom-pointer,sub_0809b310
@@ -4211,7 +4211,7 @@ vma,size,isa,evidence,name
 0x080A8C84,0x98,thumb,rom-pointer,sub_080a8c84
 0x080A8D1C,0x1FC,thumb,rom-pointer,sub_080a8d1c
 0x080A8F18,0x28,thumb,rom-pointer,sub_080a8f18
-0x080A8F40,0x74,thumb,rom-pointer,sub_080a8f40
+0x080A8F40,0x74,thumb,rom-pointer,KrackoSummon
 0x080A8FB4,0x28,thumb,rom-pointer,sub_080a8fb4
 0x080A8FDC,0x328,thumb,rom-pointer,sub_080a8fdc
 0x080A9304,0x28,thumb,rom-pointer,sub_080a9304
@@ -4255,11 +4255,11 @@ vma,size,isa,evidence,name
 0x080AA71C,0x28,thumb,rom-pointer,sub_080aa71c
 0x080AA744,0x22C,thumb,rom-pointer,sub_080aa744
 0x080AA970,0x28,thumb,rom-pointer,sub_080aa970
-0x080AA998,0x1B4,thumb,rom-pointer,sub_080aa998
+0x080AA998,0x1B4,thumb,rom-pointer,NightmareWizardPoint
 0x080AAB4C,0x34,thumb,rom-pointer,sub_080aab4c
-0x080AAB80,0x1E4,thumb,rom-pointer,sub_080aab80
+0x080AAB80,0x1E4,thumb,rom-pointer,NightmareWizardOpenPalm
 0x080AAD64,0x34,thumb,rom-pointer,sub_080aad64
-0x080AAD98,0x1A0,thumb,rom-pointer,sub_080aad98
+0x080AAD98,0x1A0,thumb,rom-pointer,NightmareWizardOpenCloak
 0x080AAF38,0x34,thumb,rom-pointer,sub_080aaf38
 0x080AAF6C,0x1EC,thumb,rom-pointer,sub_080aaf6c
 0x080AB158,0x50,thumb,rom-pointer,sub_080ab158
