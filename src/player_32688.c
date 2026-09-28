@@ -21,12 +21,12 @@
  * has no lives and no health left, installs the callbacks (Task.moveCallback =
  * M11's PlayerMove, unk04 = PlayerUpdate, unk08 = sub_0803332c, unk0C =
  * M11's sub_0803ddc0), sets up the ability (PlayerState.ability) and the
- * stage entry mode (gUnk_02000020, gUnk_020069F0), and starts the first
+ * stage entry mode (gUnk_02000020, gRoomEntryMode), and starts the first
  * action.  The actions are two tables of void (*)(void) dispatched
  * through CallTableEntry(index, count, table), entry 0 NULL: the "enter"
  * coroutine of action PlayerState.action from gPlayerActions[62] (M11's
- * gUnk_0873B42C[30] when gUnk_03001F30 != 0) and the "per-frame" handler
- * Task.updateState from gPlayerActionHandlers[57] (M11's gUnk_0873B4A4[27]).  A handler requests
+ * gMetaKnightActions[30] when gMetaKnightmareMode != 0) and the "per-frame" handler
+ * Task.updateState from gPlayerActionHandlers[57] (M11's gMetaKnightActionHandlers[27]).  A handler requests
  * the next action in PlayerState.requestedAction; PlayerStartRequestedAction is the coroutine
  * that switches to it (unk03 = previous, unk02 = new, unk01 = 0).
  * PlayerUpdate (Task.updateCallback) runs every frame: the attack hit-boxes
@@ -85,7 +85,7 @@ void Task_Player(void)
     gCurTask->tileWord = (gCurTask->player->playerIndex << 13) | (gCurTask->player->playerIndex << 7);
     gCurTask->unk76 = 0;
     gCurTask->player->requestedAction = 0;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
     else
         gCurTask->player->bodyBox = (u32)gUnk_0873CA54;
@@ -140,7 +140,7 @@ void Task_Player(void)
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
-        sub_0805b278();
+        PlayerGoalGameInit();
         TaskSleepForever();
     case 2:
         gCurTask->player->unk37 = 2;
@@ -152,7 +152,7 @@ void Task_Player(void)
         gCurTask->player->unk37 = 3;
         SetPlayerAbilityNoHud(25, -1, gCurTask->player->playerIndex);
     }
-    switch (gUnk_020069F0)
+    switch (gRoomEntryMode)
     {
     case 2:
         gCurTask->player->bodyBox = 0;
@@ -166,12 +166,12 @@ void Task_Player(void)
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
-        gUnk_03001F34 = 1;
+        gPauseDisabled = 1;
         gCurTask->state = 4;
         sub_08076318();
         TaskSleepForever();
     case 1:
-        gUnk_03001F34 = 1;
+        gPauseDisabled = 1;
         gCurTask->player->action = 21;
         break;
     case 0:
@@ -199,7 +199,7 @@ void Task_Player(void)
         sub_08040808(gCurTask->player->playerIndex);
         break;
     }
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
@@ -209,7 +209,7 @@ void Task_Player(void)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
-        CallTableEntry(p->action, 30, gUnk_0873B42C);
+        CallTableEntry(p->action, 30, gMetaKnightActions);
     }
 }
 
@@ -233,7 +233,7 @@ void PlayerStartRequestedAction(void)
     }
     else if (gCurTask->player->unk37 != 2)
     {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
         else
             gCurTask->player->bodyBox = (u32)gUnk_0873CA54;
@@ -243,14 +243,14 @@ void PlayerStartRequestedAction(void)
     gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
     if (gCurTask->player->invulnerability == 3 && (s16)gCurTask->player->invulnerabilityTimer == -0x8000)
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->prevAction == 28 && gCurTask->player->ability != 0)
             LoadAbilityTiles();
         if (gCurTask->player->ability != 0)
             gCurTask->player->unk36 = 1;
     }
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
@@ -260,7 +260,7 @@ void PlayerStartRequestedAction(void)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
-        CallTableEntry(p->action, 30, gUnk_0873B42C);
+        CallTableEntry(p->action, 30, gMetaKnightActions);
     }
 }
 
@@ -293,24 +293,24 @@ void PlayerUpdate(void)
     gCurTask->player->unk4E = 0xFFFF;
     if (gCurTask->player->terrainBox != 0)
     {
-        sub_0801baa4(gCurTask->player->terrainBox);
+        PlayerProbeTerrain(gCurTask->player->terrainBox);
         gCurTask->player->boundsClamp = gTerrainBoundsClamp;
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
             gCurTask->player->unk4E = gUnk_03005544;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
-        if (gTerrainResult.unkC != 0 && !(gCurTask->player->unk42 & 0x200)
-         && gCurTask->player->invulnerability != 1 && gCurTask->player->unk17 == 0)
+        if (gTerrainResult.damage != 0 && !(gCurTask->player->unk42 & 0x200)
+         && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)
         {
             r = AddPlayerHealth(-8, gCurTask->player->playerIndex);
             if (r != 0)
             {
-                gCurTask->unk82 = gTerrainResult.unkC | 0x80;
+                gCurTask->hitEffect = gTerrainResult.damage | 0x80;
                 gCurTask->hitKind = 2;
             }
             else
             {
                 gCurTask->hitKind = 1;
-                gCurTask->unk82 = 0;
+                gCurTask->hitEffect = 0;
                 goto post;
             }
         }
@@ -319,7 +319,7 @@ void PlayerUpdate(void)
     {
         gTerrainResult.unk0 = gTerrainResult.ceilingHits = gTerrainResult.unk2 = 0;
         gTerrainResult.unk3 = gTerrainResult.slope = gTerrainResult.unk5 = 0;
-        gTerrainResult.unk8 = gTerrainResult.onSlipperyFloor = gTerrainResult.unkC = 0;
+        gTerrainResult.unk8 = gTerrainResult.onSlipperyFloor = gTerrainResult.damage = 0;
         gTerrainResult.atDoor = 0;
         gTerrainProbeResult.onSlipperyFloor = 0;
     }
@@ -327,7 +327,7 @@ void PlayerUpdate(void)
     gCurTask->player->slope = gTerrainResult.slope;
     gCurTask->player->onSlipperyFloor = gTerrainProbeResult.onSlipperyFloor;
     gCurTask->player->atDoor = gTerrainResult.atDoor;
-    if (sub_0803fa74() != 0)
+    if (PlayerCheckDie() != 0)
         goto tail;
     p = gCurTask->player;
     if (p->bodyBox != 0)
@@ -341,17 +341,17 @@ void PlayerUpdate(void)
         }
         RegisterCollider(gCurTaskIdx, x, y, (u8 *)p->bodyBox);
     }
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         CallTableEntry(gCurTask->updateState, 57, gPlayerActionHandlers);
     else
-        CallTableEntry(gCurTask->updateState, 27, gUnk_0873B4A4);
+        CallTableEntry(gCurTask->updateState, 27, gMetaKnightActionHandlers);
     PlayerUpdateInvulnerability();
 post:
     gCurTask->player->hitsThisFrame = 0;
     sub_0803fb54();
     if (!(gCurTask->player->unk42 & 32))
         sub_0803e080();
-    if ((gUnk_03001F30 == 1 || gUnk_0300244C != 0)
+    if ((gMetaKnightmareMode == 1 || gUnk_0300244C != 0)
      && (gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
         goto check;
     if (gCurTask->velY >= 0)
@@ -381,7 +381,7 @@ post:
         gPlayerBubbleTimers[gCurTask->player->playerIndex] = 60;
     }
 check:
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->ability == 10)
         {
@@ -447,7 +447,7 @@ void sub_0803332c(void)
         {
             sub_0803cbd8();
             p = gCurTask->player;
-            if (!(p->unk40 & 1) && gUnk_03001F30 == 0 && p->mode == 7 && p->blocksBroken == 0)
+            if (!(p->unk40 & 1) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
             {
                 TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
                 gCurTask->player->requestedAction = 18;
@@ -459,7 +459,7 @@ void sub_0803332c(void)
         }
     }
     if (gCurTask->player->requestedAction == 0)
-        sub_08040514();
+        PlayerCheckShareItem();
 }
 
 void sub_08033414(void)
@@ -472,7 +472,7 @@ void sub_08033414(void)
     switch (gCurTask->hitKind)
     {
     default:
-        if (gUnk_03001F30 == 0 && (gCurTask->player->unk40 & 32))
+        if (gMetaKnightmareMode == 0 && (gCurTask->player->unk40 & 32))
         {
             if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != 0)
             {
@@ -494,7 +494,7 @@ void sub_08033414(void)
             SetPlayerInvulnerability(5, 0, gCurTask->player->playerIndex);
             gCurTask->player->unk40 &= 0xFFBF;
             PlayBgm(19);
-            sub_08040894(gCurTask->player->playerIndex, 3);
+            PlayerStartItemShare(gCurTask->player->playerIndex, 3);
         }
         break;
     case 1:
@@ -533,9 +533,9 @@ void sub_08033414(void)
         gCurTask->unk76 = 0;
         gCurTask->player->unk40 = 0;
         gCurTask->player->unk50 = 0;
-        gCurTask->unk80 = 0;
+        gCurTask->u80.attackAbility = 0;
     }
-    else if (gUnk_03001F30 == 0)
+    else if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->unk76 & 2)
         {
@@ -549,7 +549,7 @@ void sub_08033414(void)
     }
     if (gCurTask->player->requestedAction != 0)
         TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->unk40 & 4)
         {

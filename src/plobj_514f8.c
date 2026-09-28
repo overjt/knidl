@@ -9,17 +9,17 @@
  *
  * Task type #6, variants 3-6, each variant body followed by the callbacks
  * only it installs; variants 3-5 read their spawner's task through
- * Task.unk8C (position, facing, OAM flags).  Variant 3 (sub_080514f8,
+ * Task.u8C.parentTask (position, facing, OAM flags).  Variant 3 (PlayerObjectWaterShot,
  * animation table gUnk_087519E8) is a four-way `switch (Task.unk28)` of
  * endless loops that the ROM lays out in the order 3, 1, 0, 2, with M11's
- * callback sub_0803dfc8 and the collision callback sub_0805176c (sound
- * 133).  Variant 4 (sub_0805181c, gUnk_08751A28/gUnk_08751CA4) installs
- * sub_08051b0c, which registers the collider row gUnk_0873BDD4 and calls
+ * callback sub_0803dfc8 and the collision callback PlayerObjectWaterShotUpdate (sound
+ * 133).  Variant 4 (PlayerObjectFireBreath, gUnk_08751A28/gUnk_08751CA4) installs
+ * PlayerObjectFireBreathUpdate, which registers the collider row gUnk_0873BDD4 and calls
  * the hit test TaskBreakBlocksAt at the spawner's position with only three
- * arguments.  Variant 5 (sub_08051c1c, gUnk_08751A98) and its callback
- * sub_08051d84 re-bind the body or the shared exit sub_08050814.  Variant
- * 6 (sub_08051f4c, gUnk_08751AF8, the animation/velocity pairs
- * gUnk_0873B7B0) and its callback sub_080520dc (a nine-way `switch` on
+ * arguments.  Variant 5 (PlayerObjectCutterBlade, gUnk_08751A98) and its callback
+ * PlayerObjectCutterBladeUpdate re-bind the body or the shared exit sub_08050814.  Variant
+ * 6 (PlayerObjectLaserBeam, gUnk_08751AF8, the animation/velocity pairs
+ * gUnk_0873B7B0) and its callback PlayerObjectLaserBeamUpdate (a nine-way `switch` on
  * the collision result gTerrainResult.unk4, sounds 173 and 211) turn the
  * object into variant 10's body sub_08052f6c or the burst sub_0805091c on
  * contact. */
@@ -31,25 +31,25 @@ void TaskSetEntry(void *a, u32 i);
 u16 RandomSpread(u16 base, u8 scale, u8 amount);
 s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_0801c230(const s8 *p);
+void TerrainCollideBoxAlongVelocity(const s8 *p);
 void sub_0802205c(s8 *box);
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y);   /* this file's call passes only x and y: the ROM leaves r3 as it was (the definition in src/block_30804.c takes a fourth, `e`) */
-s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
+s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
-void sub_080514f8(void)
+void PlayerObjectWaterShot(void)
 {
     {
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMoveRelativeToParent;
         t->drawCallback = (u32)sub_0803dfc8;
-        t->updateCallback = (u32)sub_0805176c;
+        t->updateCallback = (u32)PlayerObjectWaterShotUpdate;
         t->layer = 7;
     }
     {
         struct Task *t = gCurTask;
         t->frameTable = gUnk_087519E8;
-        t->tileWord = ((struct Task *)t->unk8C)->tileWord | 0xE006;
-        t->unk28 = ((struct Task *)t->unk8C)->unk28;
+        t->tileWord = (t->u8C.parentTask)->tileWord | 0xE006;
+        t->unk28 = (t->u8C.parentTask)->unk28;
         t->unk2C = 1;
         gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873BDA0;
     }
@@ -156,11 +156,11 @@ void sub_080514f8(void)
     }
 }
 
-void sub_0805176c(void)
+void PlayerObjectWaterShotUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->player->mode != 11 || t->unk28 != ((struct Task *)t->unk8C)->unk28)
+    if (t->player->mode != 11 || t->unk28 != (t->u8C.parentTask)->unk28)
     {
         TaskFree(gCurTaskIdx);
         return;
@@ -175,15 +175,15 @@ void sub_0805176c(void)
     TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex], gCurTask->parent);
 }
 
-void sub_0805181c(void)
+void PlayerObjectFireBreath(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
-    t->updateCallback = (u32)sub_08051b0c;
+    t->updateCallback = (u32)PlayerObjectFireBreathUpdate;
     t->unk28 = 0;
-    t->unk80 = 1;
+    t->u80.attackAbility = 1;
     t = gCurTask;
     switch (t->unk18 & 15)
     {
@@ -193,14 +193,14 @@ void sub_0805181c(void)
         t->layer = 7;
         {
             struct Task *u = gCurTask;
-            u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 8;
+            u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
             u->frame = 0xFFFF;
         }
         TaskYieldTrampoline(18);
         while (gCurTask->unk28 == 0)
         {
-            gCurTask->posX = (RandomSpreadFacing(24, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpreadFacing(24, 1, 8) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(0x10000, 0x4000);
             gCurTask->velY = 0;
             gCurTask->accelY = (RandomRange(36) - 24) << 8;
@@ -215,8 +215,8 @@ void sub_0805181c(void)
             TaskYieldTrampoline(1);
             if (gCurTask->unk28 != 0)
                 break;
-            gCurTask->posX = (RandomSpreadFacing(24, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpreadFacing(24, 1, 8) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(0x10000, 0x4000);
             gCurTask->velY = 0;
             gCurTask->accelY = (RandomRange(36) - 24) << 8;
@@ -237,11 +237,11 @@ void sub_0805181c(void)
         t->layer = 5;
         {
             struct Task *u = gCurTask;
-            u->facing = ((struct Task *)u->unk8C)->facing;
+            u->facing = (u->u8C.parentTask)->facing;
         }
         {
             struct Task *u = gCurTask;
-            u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 12;
+            u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 12;
         }
         do
         {
@@ -249,13 +249,13 @@ void sub_0805181c(void)
                 struct Task *u = gCurTask;
                 if (u->facing == 1)
                 {
-                    u->posX = (((struct Task *)u->unk8C)->pixelX + 24) << 16;
-                    u->posY = ((struct Task *)u->unk8C)->pixelY << 16;
+                    u->posX = ((u->u8C.parentTask)->pixelX + 24) << 16;
+                    u->posY = (u->u8C.parentTask)->pixelY << 16;
                 }
                 else
                 {
-                    u->posX = (((struct Task *)u->unk8C)->pixelX - 24) << 16;
-                    u->posY = ((struct Task *)u->unk8C)->pixelY << 16;
+                    u->posX = ((u->u8C.parentTask)->pixelX - 24) << 16;
+                    u->posY = (u->u8C.parentTask)->pixelY << 16;
                 }
             }
             TaskSetMotionXFacing(0x10000, (RandomRange(32) + 16) << 8);
@@ -279,11 +279,11 @@ void sub_0805181c(void)
     TaskExitTrampoline();
 }
 
-void sub_08051b0c(void)
+void PlayerObjectFireBreathUpdate(void)
 {
     {
         struct Task *t = gCurTask;
-        if (!(t->player->unk40 & 0x100) && (((struct Task *)t->unk8C)->waterFlags & 1))
+        if (!(t->player->unk40 & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
         {
             TaskFree(gCurTaskIdx);
             return;
@@ -305,21 +305,21 @@ void sub_08051b0c(void)
             t = gCurTask;
             dx = (t->facing == 1) ? 12 : -12;
             /* the ROM passes no 4th argument: r3 is whatever the last ldrsh left (0) */
-            TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CBDC, ((struct Task *)t->unk8C)->pixelX + dx,
-                         ((struct Task *)t->unk8C)->pixelY + 2);
+            TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CBDC, (t->u8C.parentTask)->pixelX + dx,
+                         (t->u8C.parentTask)->pixelY + 2);
         }
     }
     {
         struct Task *t = gCurTask;
         if (t->unk28 == 0)
         {
-            if (t->player->mode != 13 || t->facing != ((struct Task *)t->unk8C)->facing)
+            if (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing)
                 t->unk28 = 1;
         }
     }
 }
 
-void sub_08051c1c(void)
+void PlayerObjectCutterBlade(void)
 {
     {
         struct Task *t = gCurTask;
@@ -327,15 +327,15 @@ void sub_08051c1c(void)
         {
             t->moveCallback = (u32)TaskMove;
             t->drawCallback = (u32)TaskDrawWorldInView;
-            t->updateCallback = (u32)sub_08051d84;
+            t->updateCallback = (u32)PlayerObjectCutterBladeUpdate;
             t->layer = 5;
             {
                 struct Task *u = gCurTask;
                 u->frameTable = gUnk_08751A98;
-                u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 8;
+                u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
             }
             sub_0802205c(gUnk_0873CB54);
-            gCurTask->unk80 = 3;
+            gCurTask->u80.attackAbility = 3;
             {
                 struct Task *u = gCurTask;
                 u->unk28 = 0;
@@ -389,7 +389,7 @@ void sub_08051c1c(void)
     TaskExitTrampoline();
 }
 
-void sub_08051d84(void)
+void PlayerObjectCutterBladeUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -408,7 +408,7 @@ void sub_08051d84(void)
             TaskSetEntry(sub_08050814, gCurTaskIdx);
             return;
         }
-        sub_0801c230(gUnk_0873CB54);
+        TerrainCollideBoxAlongVelocity(gUnk_0873CB54);
         if ((*(u32 *)&gTerrainResult & 0xFFFFFF) != 0)
         {
             {
@@ -419,7 +419,7 @@ void sub_08051d84(void)
                     u->facing = -1;
             }
             gCurTask->unk28 = 1;
-            TaskSetEntry(sub_08051c1c, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectCutterBlade, gCurTaskIdx);
             break;
         }
         {
@@ -439,7 +439,7 @@ void sub_08051d84(void)
         }
         {
             struct Task *u = gCurTask;
-            struct Task *p = (struct Task *)u->unk8C;
+            struct Task *p = u->u8C.parentTask;
             if (p->pixelX + 8 > u->pixelX && u->pixelX > p->pixelX - 8
                 && p->pixelY + 8 > u->pixelY && u->pixelY > p->pixelY - 8)
             {
@@ -471,7 +471,7 @@ void sub_08051d84(void)
     RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BDE8);
 }
 
-void sub_08051f4c(void)
+void PlayerObjectLaserBeam(void)
 {
     u16 *e;
 
@@ -486,26 +486,26 @@ void sub_08051f4c(void)
         {
             struct Task *t = gCurTask;
             t->frameTable = gUnk_08751AF8;
-            t->tileWord = (((struct Task *)t->unk8C)->tileWord + 0x800) | 12;
+            t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
             if (t->facing == 1)
             {
-                t->posX = (((struct Task *)t->unk8C)->pixelX + 6) << 16;
+                t->posX = ((t->u8C.parentTask)->pixelX + 6) << 16;
                 t->unk28 = 1;
             }
             else
             {
-                t->posX = (((struct Task *)t->unk8C)->pixelX - 6) << 16;
+                t->posX = ((t->u8C.parentTask)->pixelX - 6) << 16;
                 t->unk28 = 3;
             }
         }
         {
             struct Task *t = gCurTask;
-            t->posY = (((struct Task *)t->unk8C)->pixelY + 2) << 16;
+            t->posY = ((t->u8C.parentTask)->pixelY + 2) << 16;
             t->unk2C = 3;
         }
         TaskInitWaterFlags();
         sub_0802233c(gUnk_0873CB5C);
-        gCurTask->unk80 = 6;
+        gCurTask->u80.attackAbility = 6;
     }
     else
     {
@@ -540,7 +540,7 @@ void sub_08051f4c(void)
             t->velY = v;
         }
     }
-    gCurTask->updateCallback = (u32)sub_080520dc;
+    gCurTask->updateCallback = (u32)PlayerObjectLaserBeamUpdate;
     while (1)
     {
         gCurTask->frame = e[0];
@@ -554,7 +554,7 @@ void sub_08051f4c(void)
     }
 }
 
-void sub_080520dc(void)
+void PlayerObjectLaserBeamUpdate(void)
 {
     s32 hit;
 
@@ -572,7 +572,7 @@ void sub_080520dc(void)
             hit = 1;
         }
         else
-            sub_0801c444(gUnk_0873CB5C);
+            TerrainCollideBoxTileEdge(gUnk_0873CB5C);
         break;
     case 0:
     case 2:
@@ -582,7 +582,7 @@ void sub_080520dc(void)
             hit = 1;
         }
         else
-            sub_0801c444(gUnk_0873CB64);
+            TerrainCollideBoxTileEdge(gUnk_0873CB64);
         break;
     }
     if (gTerrainResult.slope != 0)
@@ -591,7 +591,7 @@ void sub_080520dc(void)
         if (t->unk2C-- == 0)
             t->hitKind = 1;
         else if (t->player->ability == 6)
-            TaskSetEntry(sub_08051f4c, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectLaserBeam, gCurTaskIdx);
         else
             TaskSetEntry(sub_08052f6c, gCurTaskIdx);
         hit = 1;

@@ -17,7 +17,7 @@
  *                     sub_0806fb0c and sub_0806fd04.
  *   <per-frame hook>  sub_0806f174, sub_0806f36c, sub_0806f5c4,
  *                     sub_0806faac and sub_0806fc98: re-aim the camera at
- *                     the owning player, run sub_0801bcac over a ROM
+ *                     the owning player, run TerrainCollideBox over a ROM
  *                     descriptor, and advance Task.unk24 on the
  *                     `Task.onGround & 1` edge.
  *
@@ -41,7 +41,7 @@
 #include "player.h"
 #include "actor.h"
 
-extern void sub_0801bcac(u8 *);
+extern void TerrainCollideBox(u8 *);
 extern void sub_080706a8(void);
 
 void sub_0806ef5c(void)
@@ -149,7 +149,7 @@ void sub_0806f174(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -230,7 +230,7 @@ void sub_0806f36c(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -324,7 +324,7 @@ void sub_0806f5c4(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -504,7 +504,7 @@ void sub_0806faac(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -581,7 +581,7 @@ void sub_0806fc98(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;

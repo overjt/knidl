@@ -5,25 +5,25 @@
  *   ./tools/fnmatch.sh 0x080BB528 0x080BC0CC src/subgame_bb528.c --newpb
  *
  * The duel's results screen (sub-game 0, screen 1).  QuickDrawResults is its
- * task: sub_080bb528 builds the screen, then seven <entry, check> states
+ * task: QuickDrawSetupResults builds the screen, then seven <entry, check> states
  * run through the anchor tables 0x08756378 / 0x08756394 (QuickDrawResultsEnterState /
  * QuickDrawResultsUpdate):
  *
  *   0  wait, play song Task.unk2C | 0x800, then go to state Task.unk30
- *   1  spawn a kind-7 object (sub_080bb718) when gPrevGameState == 5
- *   2  count the markers in (sub_080bb760 / sub_080bb7a0)
- *   3  place the per-player markers (sub_080bb8f8 -> sub_080bb874)
- *   4  two-option cursor (sub_080bb554, sub_080bb5b8): option 0 goes to
+ *   1  spawn a kind-7 object (CreateQuickDrawBonusSign) when gPrevGameState == 5
+ *   2  count the markers in (QuickDrawInitBonusSteps / QuickDrawCreateNextBonus)
+ *   3  place the per-player markers (QuickDrawCreateRankLabels -> QuickDrawPlaceRankLabel)
+ *   4  two-option cursor (QuickDrawInitContinueMenu, QuickDrawContinueMenuInput): option 0 goes to
  *      state 5, option 1 quits (SubGameQuit)
- *   5  three-option cursor (sub_080bb63c, sub_080bb66c): the choice goes to
+ *   5  three-option cursor (QuickDrawInitLevelMenu, QuickDrawLevelMenuInput): the choice goes to
  *      SubGameReplay, i.e. into gSubGameLevel, the row QuickDrawWaitForSignal picks
  *      the signal delay from
  *   6  idle until A/Start, then quit (SubGameQuit)
  *
- * sub_080bb718 / sub_080bb7cc / sub_080bb820 spawn task type #94 objects of
- * kinds 7, 8 and 9; sub_080bbc70 / sub_080bbcdc / sub_080bbd4c (kinds 1
+ * CreateQuickDrawBonusSign / CreateQuickDrawBonus / CreateQuickDrawRankLabel spawn task type #94 objects of
+ * kinds 7, 8 and 9; CreateQuickDrawDefeatedLabel / CreateQuickDrawBestTimeLabel / CreateQuickDrawResultsPlayer (kinds 1
  * and 0, the second one the reaction-time readout of gQuickDrawBestTime) and the
- * single-player placers sub_080bbbb8 / sub_080bbc04 fill the screen.
+ * single-player placers sub_080bbbb8 / QuickDrawSetupResultsVsCpu fill the screen.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -41,24 +41,24 @@ void CallTableEntry(u32 a, u32 b, u32 *c);
 s32 PlaySfx(s32 id);
 void TaskSetEntry(void *fn, u32 i);
 
-void sub_080bb528(void)
+void QuickDrawSetupResults(void)
 {
     struct Task *t;
 
     if (gPlayerCount != 1)
-        sub_080bbb70();
+        QuickDrawSetupResultsLink();
     else
-        sub_080bbc04();
+        QuickDrawSetupResultsVsCpu();
     t = gCurTask;
     t->unk24 = 40;
     t->state = 0;
 }
 
-void sub_080bb554(void)
+void QuickDrawInitContinueMenu(void)
 {
     struct Task *t;
 
-    gCurTask->frameTable = gUnk_08755BAC;
+    gCurTask->frameTable = gQuickDrawResultsMenuFrames;
     gCurTask->layer = 4;
     t = gCurTask;
     t->tileWord |= 0x800;
@@ -68,19 +68,19 @@ void sub_080bb554(void)
     t->unk1C = 0;
 }
 
-void sub_080bb59c(s32 a0)
+void QuickDrawPlaySfxIfPlayer0(s32 a0)
 {
     if (gLocalPlayer == 0)
         PlaySfx(a0);
 }
 
-void sub_080bb5b8(void)
+void QuickDrawContinueMenuInput(void)
 {
     struct Task *t;
 
     if (gPlayerPressedKeys[0] & 9)
     {
-        sub_080bb59c(102);
+        QuickDrawPlaySfxIfPlayer0(102);
         t = gCurTask;
         t->unk28 = 0;
         if (t->unk1C == 0)
@@ -97,7 +97,7 @@ void sub_080bb5b8(void)
             {
                 t->unk1C = 0;
                 t->frame = 0;
-                sub_080bb59c(101);
+                QuickDrawPlaySfxIfPlayer0(101);
             }
         }
         else
@@ -107,13 +107,13 @@ void sub_080bb5b8(void)
             {
                 t->unk1C = 1;
                 t->frame = 1;
-                sub_080bb59c(101);
+                QuickDrawPlaySfxIfPlayer0(101);
             }
         }
     }
 }
 
-void sub_080bb63c(void)
+void QuickDrawInitLevelMenu(void)
 {
     struct Task *t = gCurTask;
     s32 v;
@@ -126,19 +126,19 @@ void sub_080bb63c(void)
     t->frame = v + 2;
 }
 
-void sub_080bb66c(void)
+void QuickDrawLevelMenuInput(void)
 {
     struct Task *t;
 
     if (gPlayerPressedKeys[0] & 9)
     {
-        sub_080bb59c(102);
+        QuickDrawPlaySfxIfPlayer0(102);
         SubGameReplay(gCurTask->unk1C);
         gCurTask->unk28 = 0;
     }
     else if (gPlayerPressedKeys[0] & 2)
     {
-        sub_080bb59c(215);
+        QuickDrawPlaySfxIfPlayer0(215);
         gCurTask->state = 4;
         gCurTask->unk28 = 0;
     }
@@ -150,7 +150,7 @@ void sub_080bb66c(void)
             if (t->unk1C > 0)
             {
                 t->unk1C--;
-                sub_080bb59c(101);
+                QuickDrawPlaySfxIfPlayer0(101);
             }
         }
         else
@@ -159,14 +159,14 @@ void sub_080bb66c(void)
             if (t->unk1C <= 1)
             {
                 t->unk1C++;
-                sub_080bb59c(101);
+                QuickDrawPlaySfxIfPlayer0(101);
             }
         }
         gCurTask->frame = gCurTask->unk1C + 2;
     }
 }
 
-void sub_080bb718(u16 a0, u16 a1, u16 a2)
+void CreateQuickDrawBonusSign(u16 a0, u16 a1, u16 a2)
 {
     s32 i = TaskCreateFrom(94, 32);
 
@@ -181,15 +181,15 @@ void sub_080bb718(u16 a0, u16 a1, u16 a2)
     }
 }
 
-void sub_080bb760(void)
+void QuickDrawInitBonusSteps(void)
 {
     if (gPlayerCount != 1)
         gCurTask->unk20 = 3;
     else
-        gCurTask->unk20 = gUnk_0875636C[gUnk_0200B048];
+        gCurTask->unk20 = gQuickDrawDefeatBonusSteps[gUnk_0200B048];
 }
 
-void sub_080bb7a0(void)
+void QuickDrawCreateNextBonus(void)
 {
     if (gPlayerCount != 1)
         sub_080bba1c();
@@ -198,7 +198,7 @@ void sub_080bb7a0(void)
     gCurTask->unk20--;
 }
 
-void sub_080bb7cc(u8 a0, s16 a1, s16 a2, s8 a3)
+void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3)
 {
     s32 i = TaskCreateFrom(94, 32);
 
@@ -214,7 +214,7 @@ void sub_080bb7cc(u8 a0, s16 a1, s16 a2, s8 a3)
     }
 }
 
-void sub_080bb820(u8 a0, s16 a1, s16 a2, s8 a3)
+void CreateQuickDrawRankLabel(u8 a0, s16 a1, s16 a2, s8 a3)
 {
     s32 i = TaskCreateFrom(94, 32);
 
@@ -231,7 +231,7 @@ void sub_080bb820(u8 a0, s16 a1, s16 a2, s8 a3)
     }
 }
 
-void sub_080bb874(u8 a0, s8 a1)
+void QuickDrawPlaceRankLabel(u8 a0, s8 a1)
 {
     struct Task *t = &gTasks[a1];
     s16 x = t->pixelX - 24;
@@ -258,21 +258,21 @@ void sub_080bb874(u8 a0, s8 a1)
     }
     if (gQuickDrawWins[a1] == 0)
     {
-        sub_080bb820(gUnk_0200B048 + 1, x, y, a1);
+        CreateQuickDrawRankLabel(gUnk_0200B048 + 1, x, y, a1);
     }
     else
     {
-        sub_080bb820(a0, x, y, a1);
+        CreateQuickDrawRankLabel(a0, x, y, a1);
         gUnk_0200B048 = a0;
     }
 }
 
-void sub_080bb8f8(void)
+void QuickDrawCreateRankLabels(void)
 {
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++)
-        sub_080bb874(i, gQuickDrawRanking[i]);
+        QuickDrawPlaceRankLabel(i, gQuickDrawRanking[i]);
 }
 
 void sub_080bb930(u8 a0, s8 a1)
@@ -298,9 +298,9 @@ void sub_080bb930(u8 a0, s8 a1)
         break;
     }
     if (gQuickDrawWins[a1] == 0)
-        sub_080bb7cc(3, x, y, a1);
+        CreateQuickDrawBonus(3, x, y, a1);
     else
-        sub_080bb7cc(a0, x, y, a1);
+        CreateQuickDrawBonus(a0, x, y, a1);
 }
 
 void sub_080bb9b4(void)
@@ -343,7 +343,7 @@ void sub_080bba1c(void)
         y = 52;
         break;
     }
-    sub_080bb7cc(0, x, y, gQuickDrawRanking[0]);
+    CreateQuickDrawBonus(0, x, y, gQuickDrawRanking[0]);
     if (gCurTask->unk20 == 3)
     {
         switch (gPlayerCount)
@@ -361,7 +361,7 @@ void sub_080bba1c(void)
     }
 }
 
-void sub_080bbad4(void)
+void QuickDrawPickResultsSong(void)
 {
     s32 i = 0;
     s32 found = 0;
@@ -391,12 +391,12 @@ void sub_080bbad4(void)
     }
 }
 
-void sub_080bbb70(void)
+void QuickDrawSetupResultsLink(void)
 {
     if (gPrevGameState == 5)
-        sub_080bb718(0, 120, 16);
+        CreateQuickDrawBonusSign(0, 120, 16);
     CreateQuickDrawPlayers(1);
-    sub_080bbad4();
+    QuickDrawPickResultsSong();
     if (gPrevGameState == 5)
         gCurTask->unk30 = 2;
     else
@@ -419,15 +419,15 @@ void sub_080bbbb8(void)
         y = (3 - gCurTask->unk20) * 18 + 144;
         break;
     }
-    sub_080bb7cc(gUnk_0200B048, y, 64, 0);
+    CreateQuickDrawBonus(gUnk_0200B048, y, 64, 0);
 }
 
-void sub_080bbc04(void)
+void QuickDrawSetupResultsVsCpu(void)
 {
-    sub_080bbc70();
-    sub_080bbcdc();
+    CreateQuickDrawDefeatedLabel();
+    CreateQuickDrawBestTimeLabel();
     if (gPrevGameState != 5)
-        sub_080bbd4c();
+        CreateQuickDrawResultsPlayer();
     switch (gUnk_0200B048)
     {
     case 5:
@@ -443,7 +443,7 @@ void sub_080bbc04(void)
     gCurTask->unk30 = 1;
 }
 
-void sub_080bbc70(void)
+void CreateQuickDrawDefeatedLabel(void)
 {
     s32 id = TaskCreateFrom(94, 32);
 
@@ -465,7 +465,7 @@ void sub_080bbc70(void)
     }
 }
 
-void sub_080bbcdc(void)
+void CreateQuickDrawBestTimeLabel(void)
 {
     s32 id = TaskCreateFrom(94, 32);
 
@@ -482,7 +482,7 @@ void sub_080bbcdc(void)
         t->pixelY = 96;
         t->unk28 = -8;
         t->unk2C = 0;
-        t->unk30 = (s32)gUnk_08755A34;
+        t->unk30 = (s32)gQuickDrawDigitFrames;
         t->unk34 = 0;
         v = gQuickDrawBestTime;
         n = 0;
@@ -496,7 +496,7 @@ void sub_080bbcdc(void)
     }
 }
 
-void sub_080bbd4c(void)
+void CreateQuickDrawResultsPlayer(void)
 {
     s32 id = TaskCreateFrom(94, 0);
 
@@ -516,27 +516,27 @@ void QuickDrawResults(void)
 {
     struct Task *t;
 
-    sub_080bb528();
+    QuickDrawSetupResults();
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
     t = gCurTask;
     t->updateCallback = (u32)QuickDrawResultsUpdate;
-    CallTableEntry(t->state, 7, gUnk_08756378);
+    CallTableEntry(t->state, 7, gQuickDrawResultsStates);
     TaskSleepForever();
 }
 
 void QuickDrawResultsUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 7, gUnk_08756394);
+    CallTableEntry(gCurTask->updateState, 7, gQuickDrawResultsStateUpdates);
     SubGameCheckEnd();
 }
 
 void QuickDrawResultsEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 7, gUnk_08756378);
+    CallTableEntry(gCurTask->state, 7, gQuickDrawResultsStates);
 }
 
-void sub_080bbe20(void)
+void QuickDrawResultsPlaySong(void)
 {
     gCurTask->updateState = 0;
     TaskYieldTrampoline(30);
@@ -546,13 +546,13 @@ void sub_080bbe20(void)
     TaskSleepForever();
 }
 
-void sub_080bbe58(void)
+void QuickDrawResultsPlaySongUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
-void sub_080bbe80(void)
+void QuickDrawResultsBonusSign(void)
 {
     gCurTask->updateState = 1;
     TaskYieldTrampoline(16);
@@ -560,12 +560,12 @@ void sub_080bbe80(void)
     {
         if (gUnk_0200B048 != 0)
         {
-            sub_080bb718(0, 96, 64);
+            CreateQuickDrawBonusSign(0, 96, 64);
             gCurTask->state = 2;
         }
         else
         {
-            sub_080bb718(1, 120, 64);
+            CreateQuickDrawBonusSign(1, 120, 64);
             gCurTask->state = 6;
         }
     }
@@ -574,98 +574,98 @@ void sub_080bbe80(void)
     TaskSleepForever();
 }
 
-void sub_080bbedc(void)
+void QuickDrawResultsBonusSignUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
-void sub_080bbf04(void)
+void QuickDrawResultsAwardBonuses(void)
 {
     gCurTask->updateState = 2;
-    sub_080bb760();
+    QuickDrawInitBonusSteps();
     TaskYieldTrampoline(16);
     while (gCurTask->unk20 != 0)
     {
-        sub_080bb7a0();
+        QuickDrawCreateNextBonus();
         TaskYieldTrampoline(20);
     }
     gCurTask->state = 6;
     TaskSleepForever();
 }
 
-void sub_080bbf44(void)
+void QuickDrawResultsAwardBonusesUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
-void sub_080bbf6c(void)
+void QuickDrawResultsRanking(void)
 {
     gCurTask->updateState = 3;
     TaskYieldTrampoline(16);
-    sub_080bb8f8();
+    QuickDrawCreateRankLabels();
     TaskYieldTrampoline(20);
     gCurTask->state = 4;
     TaskSleepForever();
 }
 
-void sub_080bbf9c(void)
+void QuickDrawResultsRankingUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
-void sub_080bbfc4(void)
+void QuickDrawResultsContinueMenu(void)
 {
     gCurTask->updateState = 4;
     gCurTask->unk28 = 0;
     TaskYieldTrampoline(gCurTask->unk24);
     if (gLocalPlayer == 0)
         gCurTask->drawCallback = (u32)TaskDrawScreen;
-    sub_080bb554();
+    QuickDrawInitContinueMenu();
     gCurTask->unk28 = 1;
     TaskSleepForever();
 }
 
-void sub_080bc008(void)
+void QuickDrawResultsContinueMenuUpdate(void)
 {
     if (gCurTask->unk28 != 0)
     {
-        sub_080bb5b8();
+        QuickDrawContinueMenuInput();
         if (gCurTask->state != 4)
             TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080bc03c(void)
+void QuickDrawResultsLevelMenu(void)
 {
     gCurTask->updateState = 5;
     gCurTask->unk28 = 0;
     TaskYieldTrampoline(8);
-    sub_080bb63c();
+    QuickDrawInitLevelMenu();
     gCurTask->unk28 = 1;
     TaskSleepForever();
 }
 
-void sub_080bc06c(void)
+void QuickDrawResultsLevelMenuUpdate(void)
 {
     if (gCurTask->unk28 != 0)
     {
-        sub_080bb66c();
+        QuickDrawLevelMenuInput();
         if (gCurTask->state != 5)
             TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080bc0a0(void)
+void QuickDrawResultsWaitQuit(void)
 {
     gCurTask->updateState = 6;
     TaskSleepForever();
 }
 
-void sub_080bc0b8(void)
+void QuickDrawResultsWaitQuitUpdate(void)
 {
-    if (sub_080b9d68())
+    if (SubGameAnyPressedAOrStart())
         SubGameQuit();
 }

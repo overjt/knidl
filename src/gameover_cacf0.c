@@ -14,7 +14,7 @@
  *
  * AgbMain state 22, the game-over / continue screen.
  *   GameOverMain   the state body: one of three screens - GameOverScreen
- *       when gUnk_03001F30 is 0, sub_080caeec when it is set, sub_080cb058 after
+ *       when gMetaKnightmareMode is 0, GameOverMetaKnightmareScreen when it is set, GameOverBossEnduranceScreen after
  *       AgbMain state 20 - then, when the choice set game state 5 (continue),
  *       back into the stage (state 6 unless gStageRequest is 1), else the SIO
  *       session is torn down.
@@ -43,12 +43,12 @@ void GameOverMain(void)
     gKeyRepeatInterval = 6;
     gGameOverCursor = 0;
     if (gPrevGameState != 20) {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             GameOverScreen();
         else
-            sub_080caeec();
+            GameOverMetaKnightmareScreen();
     } else {
-        sub_080cb058();
+        GameOverBossEnduranceScreen();
     }
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
@@ -64,7 +64,7 @@ void GameOverMain(void)
     }
 }
 
-/* The game-over screen when gUnk_03001F30 == 0: scroll the
+/* The game-over screen when gMetaKnightmareMode == 0: scroll the
    banner in, spawn the eight letters (#260) and the #261/#264 objects,
    then wait for the continue choice. */
 void GameOverScreen(void)
@@ -114,10 +114,10 @@ void GameOverScreen(void)
     } while (gGameOverDone == 0);
 }
 
-/* The game-over screen when gUnk_03001F30 != 0: scroll the
+/* The game-over screen when gMetaKnightmareMode != 0: scroll the
    banner in, spawn the eight letters (#260) and the cursor (#261), then
    run the continue choice with the clock on screen. */
-void sub_080caeec(void)
+void GameOverMetaKnightmareScreen(void)
 {
     s32 i;
 
@@ -174,7 +174,7 @@ void GameOverShowClock(s32 n)
 
 /* The game-over screen after game state 20 (gPrevGameState == 20): the
    clock on screen until the countdown or a button ends it. */
-void sub_080cb058(void)
+void GameOverBossEnduranceScreen(void)
 {
     gBg3ScrollX = gBg3ScrollY = 0;
     LoadBgLayout(6);

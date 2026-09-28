@@ -16,7 +16,7 @@
  * counter PlayerState.abilityUses (the HUD update SetPlayerAbilityNoHud) and plays one
  * of three sequences picked by the charges left (Task.variant = unk0E - 1),
  * each with its own song (StopSfx) and sound; meanwhile it freezes
- * the stage (gUnk_03001F34 = 1), switches the DISPCNT shadow
+ * the stage (gPauseDisabled = 1), switches the DISPCNT shadow
  * gDispCnt to BG0, BG2, BG3 and OBJ unless BG2 is already on, raises
  * PlayerState.unk42 bits 8-10 and repeats the last loop until the effect
  * counter PlayerState.unk16 runs out.  With the last charge spent it
@@ -41,7 +41,7 @@ void PlayerActionMike(void)
         struct PlayerState *p = gCurTask->player;
         SetPlayerAbilityNoHud(p->ability, p->abilityUses, p->playerIndex);
     }
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     PlayerStopAxes(3);
     FreezeOtherTasks(15);
     if (!(gDispCnt & 0x400)) {
@@ -201,7 +201,7 @@ void PlayerActionMike(void)
             p->unk22 = 2;
     }
     gCurTask->unk28++;
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
     gCurTask->player->unk42 &= 0xF8FF;
     TaskSleepForever();
 }

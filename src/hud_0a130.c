@@ -13,7 +13,7 @@
  *
  * HUD/score state updates: the life/health/score/timer changes, the
  * per-player bar records gHudHpBars[] and the two 5-way state switches
- * (sub_0800a19c, sub_0800a21c) over gHudAbilityPanelState. */
+ * (HudOpenAbilityPanel, HudCloseAbilityPanel) over gHudAbilityPanelState. */
 
 void PlaySfx(s32 id);
 
@@ -37,7 +37,7 @@ void sub_0800a178(s32 a, s32 id)
         gUnk_0200801C = a;
 }
 
-void sub_0800a19c(s32 id)
+void HudOpenAbilityPanel(s32 id)
 {
     if (id == gLocalPlayer && gHudMode == 1) {
         switch (gHudAbilityPanelState) {
@@ -61,7 +61,7 @@ void sub_0800a19c(s32 id)
     }
 }
 
-void sub_0800a21c(s32 id)
+void HudCloseAbilityPanel(s32 id)
 {
     if (id == gLocalPlayer && gHudMode == 1) {
         switch (gHudAbilityPanelState) {
@@ -84,16 +84,16 @@ void sub_0800a21c(s32 id)
 void HudShowHpBar(void)
 {
     gHudShowsHpBar = 1;
-    sub_0800b0fc();
+    HudDrawHpBarFrame();
 }
 
 void HudStartHpBar(s32 max, s32 cur)
 {
     if (gUnk_030023B0 != 0) {
         gHudHpBarMaxHp = max;
-        gUnk_02007D30 = 32;
+        gHudHpBarLength = 32;
         gHudHpBarValues[0] = 32;
-        gUnk_0200AFF8 = 1;
+        gHudHpBarFilled = 1;
         HudDrawHpBar(32);
         gHudHpBarIndex = 0;
         gHudHpBars[0].unk0 = 0;
@@ -102,32 +102,32 @@ void HudStartHpBar(s32 max, s32 cur)
         gHudHpBars[0].unk6 = 0;
     } else {
         gHudHpBarMaxHp = max;
-        gUnk_02007D30 = 32;
+        gHudHpBarLength = 32;
         gHudHpBarValues[0] = Div(cur << 5, gHudHpBarMaxHp);
-        if (gHudHpBarValues[0] > gUnk_02007D30)
-            gHudHpBarValues[0] = gUnk_02007D30;
+        if (gHudHpBarValues[0] > gHudHpBarLength)
+            gHudHpBarValues[0] = gHudHpBarLength;
         HudResetHpBar(0);
         HudDrawHpBar(0);
-        sub_0800aa18(0, gHudHpBarValues[0]);
+        HudStartHpBarFill(0, gHudHpBarValues[0]);
     }
 }
 
-void sub_0800a340(s32 max, s32 cur)
+void HudStartTaskHpBar(s32 max, s32 cur)
 {
     s32 idx;
     struct HudBar *p;
 
-    if (gUnk_020055D0 == 1)
+    if (gHudHpBarCount == 1)
         idx = 0;
     else
         idx = gUnk_02005590[gCurTaskIdx - 32];
     if (gUnk_030023B0 != 0) {
         if (gHudHpBarMaxHp == 0) {
             gHudHpBarMaxHp = max;
-            gUnk_02007D30 = 32;
+            gHudHpBarLength = 32;
         }
-        gHudHpBarValues[idx] = gUnk_02007D30;
-        gUnk_0200AFF8 = 1;
+        gHudHpBarValues[idx] = gHudHpBarLength;
+        gHudHpBarFilled = 1;
         HudDrawHpBar(32);
         gHudHpBarIndex = idx;
         p = &gHudHpBars[idx];
@@ -138,7 +138,7 @@ void sub_0800a340(s32 max, s32 cur)
     } else {
         if (gHudHpBarMaxHp == 0) {
             gHudHpBarMaxHp = max;
-            gUnk_02007D30 = 32;
+            gHudHpBarLength = 32;
         }
         gHudHpBarValues[idx] = Div(cur << 5, gHudHpBarMaxHp);
         HudResetHpBar(idx);
@@ -153,11 +153,11 @@ void HudAnimateTaskHpBar(void)
     s32 v;
 
     if (gHudHpBarMaxHp != 0) {
-        if (gUnk_020055D0 == 1)
+        if (gHudHpBarCount == 1)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
-        if (gUnk_02008014[idx] != -1 && gCurTask->health > 0) {
+        if (gHudHpBarTasks[idx] != -1 && gCurTask->health > 0) {
             v = Div(gCurTask->health << 5, gHudHpBarMaxHp);
             if (v != gHudHpBarValues[idx])
                 HudAnimateHpBar(gHudHpBarValues[idx], v, idx);
@@ -172,11 +172,11 @@ void HudSetTaskHpBar(void)
     s32 v;
 
     if (gHudHpBarMaxHp != 0) {
-        if (gUnk_020055D0 == 1)
+        if (gHudHpBarCount == 1)
             idx = 0;
         else
             idx = gUnk_02005590[gCurTaskIdx - 32];
-        if (gUnk_02008014[idx] != -1) {
+        if (gHudHpBarTasks[idx] != -1) {
             if (gCurTask->health > 0)
                 v = Div(gCurTask->health << 5, gHudHpBarMaxHp);
             else
@@ -192,16 +192,16 @@ void HudRemoveHpBar(void)
     s32 idx;
     s32 i;
 
-    if (gUnk_020055D0 == 1)
+    if (gHudHpBarCount == 1)
         idx = 0;
     else
         idx = gUnk_02005590[gCurTaskIdx - 32];
-    if (gUnk_02008014[idx] != -1) {
-        gUnk_02008014[idx] = -1;
-        if (--gUnk_02000034 != 0) {
+    if (gHudHpBarTasks[idx] != -1) {
+        gHudHpBarTasks[idx] = -1;
+        if (--gHudHpBarsLeft != 0) {
             if (gHudHpBarIndex == idx) {
                 for (i = 0; i < 2; i++) {
-                    if (i != idx && gUnk_02005590[gUnk_02008014[i] - 32] != -1)
+                    if (i != idx && gUnk_02005590[gHudHpBarTasks[i] - 32] != -1)
                         break;
                 }
                 if (gHudMode == 1)
@@ -217,12 +217,12 @@ void HudRemoveHpBar(void)
                     HudDrawClock(gHudClock);
             }
             gHudShowsHpBar = 0;
-            gHudHpBarMaxHp = gUnk_02007D30 = 0;
+            gHudHpBarMaxHp = gHudHpBarLength = 0;
         }
     }
 }
 
-void sub_0800a698(void)
+void HudStopClock(void)
 {
     gFrameEndCallback = 0;
 }
@@ -244,7 +244,7 @@ void sub_0800a6a4(void)
             }
             if (gUnk_02005E00.unk04[gLocalPlayer] == 0) {
                 gUnk_020055F0[0] = 0;
-                row = gUnk_03002444 ? 2 : 0;
+                row = gInHub ? 2 : 0;
                 HudClearTiles(12, row, 16);
                 HudClearTiles(12, row + 1, 16);
             } else {
@@ -269,7 +269,7 @@ void sub_0800a6a4(void)
 
 void HudUpdateAbilityPanel(void)
 {
-    if (gHudMode != 0 && gUnk_0200617C != 0) {
+    if (gHudMode != 0 && gHudAbilityPanelActive != 0) {
         switch (gHudAbilityPanelState) {
         case 0:
         case 1:
@@ -286,7 +286,7 @@ void HudUpdateAbilityPanel(void)
             break;
         case 3:
             if (--gUnk_0200801C <= 0)
-                sub_0800a21c(gLocalPlayer);
+                HudCloseAbilityPanel(gLocalPlayer);
             break;
         case 4:
             gUnk_0200801C -= 8;
@@ -322,11 +322,11 @@ void HudUpdateHpBars(void)
                 if (v > p->unk2)
                     v = p->unk2;
                 if (gHudHpBarIndex == i)
-                    sub_0800b190(p->unk4, v);
+                    HudDrawHpBarChange(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2) {
                     p->unk0 = 0;
-                    gUnk_0200AFF8 = 1;
+                    gHudHpBarFilled = 1;
                 } else {
                     p->unk6 = 4;
                 }
@@ -339,7 +339,7 @@ void HudUpdateHpBars(void)
                 if (v > p->unk2)
                     v = p->unk2;
                 if (gHudHpBarIndex == i)
-                    sub_0800b190(p->unk4, v);
+                    HudDrawHpBarChange(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2)
                     p->unk0 = 0;
@@ -353,7 +353,7 @@ void HudUpdateHpBars(void)
                 if (v < p->unk2)
                     v = p->unk2;
                 if (gHudHpBarIndex == i)
-                    sub_0800b190(p->unk4, v);
+                    HudDrawHpBarChange(p->unk4, v);
                 p->unk4 = v;
                 if (p->unk4 == p->unk2)
                     p->unk0 = 0;
@@ -398,7 +398,7 @@ void HudAnimateHpBar(s32 from, s32 to, s32 i)
     }
 }
 
-s32 sub_0800aa18(s32 from, s32 to)
+s32 HudStartHpBarFill(s32 from, s32 to)
 {
     s32 i;
 
@@ -410,7 +410,7 @@ s32 sub_0800aa18(s32 from, s32 to)
             gHudHpBars[i].unk0 = 1;
         }
         gHudHpBarIndex = 0;
-        gUnk_0200AFF8 = 0;
+        gHudHpBarFilled = 0;
     }
 }
 

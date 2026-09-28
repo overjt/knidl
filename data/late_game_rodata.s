@@ -41,8 +41,8 @@ gUnk_087560D0:
 gUnk_087560D8:
 	.word	sub_080b4788+1
 	.word	sub_080b47c0+1
-	.global	gUnk_087560E0
-gUnk_087560E0:
+	.global	gStarRodPieceVariants
+gStarRodPieceVariants:
 	.word	sub_080b4a5c+1
 	.word	sub_080b4be4+1
 	.word	sub_080b4e04+1
@@ -118,11 +118,11 @@ gUnk_0875628C:
 	.word	sub_080b9798+1
 	.word	sub_080b97d0+1
 	.word	sub_080b97f8+1
-	.global	gUnk_087562A8
-gUnk_087562A8:
+	.global	gSubGameBgLayouts
+gSubGameBgLayouts:
 	.incbin	"baserom.gba", 0x7562A8, 0x18
-	.global	gUnk_087562C0
-gUnk_087562C0:
+	.global	gSubGameGfxSets
+gSubGameGfxSets:
 	.incbin	"baserom.gba", 0x7562C0, 0xC
 	.global	gSubGameInitHooks
 gSubGameInitHooks:
@@ -141,11 +141,11 @@ gUnk_087562E4:
 gQuickDrawPhases:
 	.word	QuickDrawRound+1
 	.word	QuickDrawResults+1
-	.global	gUnk_087562F0
-gUnk_087562F0:
+	.global	gQuickDrawSignalDelayMin
+gQuickDrawSignalDelayMin:
 	.incbin	"baserom.gba", 0x7562F0, 0x6
-	.global	gUnk_087562F6
-gUnk_087562F6:
+	.global	gQuickDrawSignalDelayRange
+gQuickDrawSignalDelayRange:
 	.incbin	"baserom.gba", 0x7562F6, 0x6
 	.global	gQuickDrawStates
 gQuickDrawStates:
@@ -165,62 +165,62 @@ gQuickDrawStateUpdates:
 	.word	QuickDrawRoundWinUpdate+1
 	.word	QuickDrawRoundTieUpdate+1
 	.word	QuickDrawRoundNextUpdate+1
-	.global	gUnk_08756334
-gUnk_08756334:
-	.word	sub_080bb258+1
-	.word	sub_080bb2d8+1
-	.word	sub_080bb328+1
-	.word	sub_080bb380+1
-	.word	sub_080bb3e8+1
-	.word	sub_080bb42c+1
-	.word	sub_080bb47c+1
-	.global	gUnk_08756350
-gUnk_08756350:
-	.word	sub_080bb29c+1
-	.word	sub_080bb2f4+1
-	.word	sub_080bb358+1
-	.word	sub_080bb3a8+1
-	.word	sub_080bb410+1
-	.word	sub_080bb454+1
-	.word	sub_080bb4fc+1
-	.global	gUnk_0875636C
-gUnk_0875636C:
+	.global	gQuickDrawStatesVsCpu
+gQuickDrawStatesVsCpu:
+	.word	QuickDrawRoundWaitVsCpu+1
+	.word	QuickDrawRoundSignalVsCpu+1
+	.word	QuickDrawRoundFalseStartVsCpu+1
+	.word	QuickDrawRoundWinVsCpu+1
+	.word	QuickDrawRoundLoseVsCpu+1
+	.word	QuickDrawRoundTieVsCpu+1
+	.word	QuickDrawRoundNextVsCpu+1
+	.global	gQuickDrawStateUpdatesVsCpu
+gQuickDrawStateUpdatesVsCpu:
+	.word	QuickDrawRoundWaitVsCpuUpdate+1
+	.word	QuickDrawRoundSignalVsCpuUpdate+1
+	.word	QuickDrawRoundFalseStartVsCpuUpdate+1
+	.word	QuickDrawRoundWinVsCpuUpdate+1
+	.word	QuickDrawRoundLoseVsCpuUpdate+1
+	.word	QuickDrawRoundTieVsCpuUpdate+1
+	.word	QuickDrawRoundNextVsCpuUpdate+1
+	.global	gQuickDrawDefeatBonusSteps
+gQuickDrawDefeatBonusSteps:
 	.incbin	"baserom.gba", 0x75636C, 0xC
-	.global	gUnk_08756378
-gUnk_08756378:
-	.word	sub_080bbe20+1
-	.word	sub_080bbe80+1
-	.word	sub_080bbf04+1
-	.word	sub_080bbf6c+1
-	.word	sub_080bbfc4+1
-	.word	sub_080bc03c+1
-	.word	sub_080bc0a0+1
-	.global	gUnk_08756394
-gUnk_08756394:
-	.word	sub_080bbe58+1
-	.word	sub_080bbedc+1
-	.word	sub_080bbf44+1
-	.word	sub_080bbf9c+1
-	.word	sub_080bc008+1
-	.word	sub_080bc06c+1
-	.word	sub_080bc0b8+1
+	.global	gQuickDrawResultsStates
+gQuickDrawResultsStates:
+	.word	QuickDrawResultsPlaySong+1
+	.word	QuickDrawResultsBonusSign+1
+	.word	QuickDrawResultsAwardBonuses+1
+	.word	QuickDrawResultsRanking+1
+	.word	QuickDrawResultsContinueMenu+1
+	.word	QuickDrawResultsLevelMenu+1
+	.word	QuickDrawResultsWaitQuit+1
+	.global	gQuickDrawResultsStateUpdates
+gQuickDrawResultsStateUpdates:
+	.word	QuickDrawResultsPlaySongUpdate+1
+	.word	QuickDrawResultsBonusSignUpdate+1
+	.word	QuickDrawResultsAwardBonusesUpdate+1
+	.word	QuickDrawResultsRankingUpdate+1
+	.word	QuickDrawResultsContinueMenuUpdate+1
+	.word	QuickDrawResultsLevelMenuUpdate+1
+	.word	QuickDrawResultsWaitQuitUpdate+1
 	.global	gQuickDrawObjectKinds
 gQuickDrawObjectKinds:
 	.word	QuickDrawPlayer+1
-	.word	sub_080bcdac+1
+	.word	QuickDrawLabel+1
 	.word	QuickDrawTimer+1
-	.word	sub_080bcfa4+1
-	.word	sub_080bd06c+1
+	.word	QuickDrawSlash+1
+	.word	QuickDrawBurst+1
 	.word	QuickDrawOpponent+1
-	.word	sub_080bd110+1
-	.word	sub_080bd7f0+1
-	.word	sub_080bd8ac+1
-	.word	sub_080bd9b0+1
-	.global	gUnk_087563D8
-gUnk_087563D8:
+	.word	QuickDrawSweatDrop+1
+	.word	QuickDrawBonusSign+1
+	.word	QuickDrawBonus+1
+	.word	QuickDrawRankLabel+1
+	.global	gQuickDrawSeatX
+gQuickDrawSeatX:
 	.incbin	"baserom.gba", 0x7563D8, 0x38
-	.global	gUnk_08756410
-gUnk_08756410:
+	.global	gQuickDrawStrikeX
+gQuickDrawStrikeX:
 	.incbin	"baserom.gba", 0x756410, 0x38
 	.global	gUnk_08756448
 gUnk_08756448:
@@ -234,59 +234,59 @@ gUnk_08756458:
 	.global	gUnk_08756460
 gUnk_08756460:
 	.incbin	"baserom.gba", 0x756460, 0x8
-	.global	gUnk_08756468
-gUnk_08756468:
-	.word	sub_080bc8e0+1
-	.word	sub_080bc988+1
-	.word	sub_080bc9c4+1
-	.word	sub_080bca6c+1
-	.word	sub_080bcadc+1
-	.word	sub_080bcbc0+1
-	.global	gUnk_08756480
-gUnk_08756480:
-	.word	sub_080bc948+1
-	.word	sub_080bc9c0+1
-	.word	sub_080bca68+1
-	.word	sub_080bcaac+1
-	.word	sub_080bcbbc+1
-	.word	sub_080bcbf8+1
+	.global	gQuickDrawPlayerStates
+gQuickDrawPlayerStates:
+	.word	QuickDrawPlayerArrive+1
+	.word	QuickDrawPlayerReady+1
+	.word	QuickDrawPlayerStrike+1
+	.word	QuickDrawPlayerLose+1
+	.word	QuickDrawPlayerFalseStart+1
+	.word	QuickDrawPlayerResults+1
+	.global	gQuickDrawPlayerStateUpdates
+gQuickDrawPlayerStateUpdates:
+	.word	QuickDrawPlayerArriveUpdate+1
+	.word	QuickDrawPlayerReadyUpdate+1
+	.word	QuickDrawPlayerStrikeUpdate+1
+	.word	QuickDrawPlayerLoseUpdate+1
+	.word	QuickDrawPlayerFalseStartUpdate+1
+	.word	QuickDrawPlayerResultsUpdate+1
 	.global	gUnk_08756498
 gUnk_08756498:
 	.incbin	"baserom.gba", 0x756498, 0x8
 	.global	gUnk_087564A0
 gUnk_087564A0:
 	.incbin	"baserom.gba", 0x7564A0, 0x10
-	.global	gUnk_087564B0
-gUnk_087564B0:
+	.global	gQuickDrawOpponentReactionTimes
+gQuickDrawOpponentReactionTimes:
 	.incbin	"baserom.gba", 0x7564B0, 0x20
-	.global	gUnk_087564D0
-gUnk_087564D0:
-	.word	gUnk_085EEE20
-	.word	gUnk_085EF874
-	.word	gUnk_085F07FC
-	.word	gUnk_085F2B18
-	.word	gUnk_085F1520
-	.global	gUnk_087564E4
-gUnk_087564E4:
-	.word	sub_080bd544+1
-	.word	sub_080bd5d4+1
-	.word	sub_080bd610+1
-	.word	sub_080bd630+1
-	.word	sub_080bd694+1
-	.word	sub_080bd6b4+1
-	.global	gUnk_087564FC
-gUnk_087564FC:
-	.word	sub_080bd594+1
-	.word	sub_080bd60c+1
-	.word	sub_080bd62c+1
-	.word	sub_080bd664+1
-	.word	sub_080bd6b0+1
-	.word	sub_080bd7ec+1
-	.global	gUnk_08756514
-gUnk_08756514:
+	.global	gQuickDrawOpponentGfx
+gQuickDrawOpponentGfx:
+	.word	gQuickDrawWaddleDooGfx
+	.word	gQuickDrawWheelieGfx
+	.word	gQuickDrawChefKawasakiGfx
+	.word	gQuickDrawKingDededeGfx
+	.word	gQuickDrawMetaKnightGfx
+	.global	gQuickDrawOpponentStates
+gQuickDrawOpponentStates:
+	.word	QuickDrawOpponentArrive+1
+	.word	QuickDrawOpponentReady+1
+	.word	QuickDrawOpponentStrike+1
+	.word	QuickDrawOpponentLose+1
+	.word	QuickDrawOpponentTie+1
+	.word	QuickDrawOpponentTag+1
+	.global	gQuickDrawOpponentStateUpdates
+gQuickDrawOpponentStateUpdates:
+	.word	QuickDrawOpponentArriveUpdate+1
+	.word	QuickDrawOpponentReadyUpdate+1
+	.word	QuickDrawOpponentStrikeUpdate+1
+	.word	QuickDrawOpponentLoseUpdate+1
+	.word	QuickDrawOpponentTieUpdate+1
+	.word	QuickDrawOpponentTagUpdate+1
+	.global	gQuickDrawRankBonuses
+gQuickDrawRankBonuses:
 	.incbin	"baserom.gba", 0x756514, 0x8
-	.global	gUnk_0875651C
-gUnk_0875651C:
+	.global	gQuickDrawDefeatBonuses
+gQuickDrawDefeatBonuses:
 	.incbin	"baserom.gba", 0x75651C, 0xC
 	.global	gUnk_08756528
 gUnk_08756528:
@@ -297,11 +297,11 @@ gUnk_08756528:
 	.global	gUnk_08756538
 gUnk_08756538:
 	.incbin	"baserom.gba", 0x756538, 0x8
-	.global	gUnk_08756540
-gUnk_08756540:
+	.global	gBombRallySeatScrollX
+gBombRallySeatScrollX:
 	.incbin	"baserom.gba", 0x756540, 0x10
-	.global	gUnk_08756550
-gUnk_08756550:
+	.global	gBombRallySeatScrollY
+gBombRallySeatScrollY:
 	.incbin	"baserom.gba", 0x756550, 0x10
 	.global	gUnk_08756560
 gUnk_08756560:
@@ -313,8 +313,8 @@ gUnk_08756564:
 gBombRallyPhases:
 	.word	BombRallyRound+1
 	.word	BombRallyResults+1
-	.global	gUnk_08756570
-gUnk_08756570:
+	.global	gBombRallyBeatFrames
+gBombRallyBeatFrames:
 	.incbin	"baserom.gba", 0x756570, 0x7
 	.global	gUnk_08756577
 gUnk_08756577:
@@ -346,19 +346,19 @@ gUnk_08756625:
 	.global	gUnk_0875663A
 gUnk_0875663A:
 	.incbin	"baserom.gba", 0x75663A, 0x16
-	.global	gUnk_08756650
-gUnk_08756650:
+	.global	gBombRallyBlastOdds
+gBombRallyBlastOdds:
 	.word	gUnk_08756610
 	.word	gUnk_08756625
 	.word	gUnk_0875663A
-	.global	gUnk_0875665C
-gUnk_0875665C:
+	.global	gBombRallyStartSpeeds
+gBombRallyStartSpeeds:
 	.incbin	"baserom.gba", 0x75665C, 0x3
-	.global	gUnk_0875665F
-gUnk_0875665F:
+	.global	gBombRallySpeedUpBeats
+gBombRallySpeedUpBeats:
 	.incbin	"baserom.gba", 0x75665F, 0x3
-	.global	gUnk_08756662
-gUnk_08756662:
+	.global	gBombRallySafeBeats
+gBombRallySafeBeats:
 	.incbin	"baserom.gba", 0x756662, 0x6
 	.global	gBombRallyStates
 gBombRallyStates:
@@ -379,10 +379,10 @@ gBombRallyResultsStateUpdates:
 	.global	gBombRallyObjectVariants
 gBombRallyObjectVariants:
 	.word	BombRallyPlayer+1
-	.word	sub_080bfd80+1
-	.word	sub_080c0c58+1
-	.word	sub_080c0d30+1
-	.word	sub_080c173c+1
+	.word	BombRallyBomb+1
+	.word	BombRallyBombSmoke+1
+	.word	BombRallyStarBurst+1
+	.word	BombRallyStartSign+1
 	.word	BombRallyResultsPlayer+1
 	.word	BombRallyMenuItem+1
 	.global	gBombRallyPlayerStates
@@ -397,9 +397,9 @@ gBombRallyPlayerStates:
 	.word	BombRallyPlayerCpuThrow+1
 	.word	BombRallyPlayerCpuFollowThrough+1
 	.word	BombRallyPlayerBlownUp+1
-	.word	BombRallyPlayerAutoServe+1
-	.word	BombRallyPlayerAutoWait+1
-	.word	BombRallyPlayerAutoThrow+1
+	.word	BombRallyPlayerBubblesServe+1
+	.word	BombRallyPlayerBubblesWait+1
+	.word	BombRallyPlayerBubblesThrow+1
 	.global	gBombRallyPlayerStateUpdates
 gBombRallyPlayerStateUpdates:
 	.word	BombRallyPlayerServeUpdate+1
@@ -412,17 +412,17 @@ gBombRallyPlayerStateUpdates:
 	.word	BombRallyPlayerCpuThrowUpdate+1
 	.word	BombRallyPlayerCpuFollowThroughUpdate+1
 	.word	BombRallyPlayerBlownUpUpdate+1
-	.word	BombRallyPlayerAutoServeUpdate+1
-	.word	BombRallyPlayerAutoWaitUpdate+1
-	.word	BombRallyPlayerAutoThrowUpdate+1
-	.global	gUnk_0875670C
-gUnk_0875670C:
+	.word	BombRallyPlayerBubblesServeUpdate+1
+	.word	BombRallyPlayerBubblesWaitUpdate+1
+	.word	BombRallyPlayerBubblesThrowUpdate+1
+	.global	gBombRallyPlayerFrames
+gBombRallyPlayerFrames:
 	.word	gUnk_08755BC0
 	.word	gUnk_08755C40
 	.word	gUnk_08755CC0
 	.word	gUnk_08755D40
-	.global	gUnk_0875671C
-gUnk_0875671C:
+	.global	gBombRallyBubblesFrames
+gBombRallyBubblesFrames:
 	.word	gUnk_08755DC4
 	.word	gUnk_08755DD8
 	.word	gUnk_08755DEC
@@ -460,24 +460,24 @@ gUnk_08756770:
 	.global	gUnk_08756778
 gUnk_08756778:
 	.incbin	"baserom.gba", 0x756778, 0x8
-	.global	gUnk_08756780
-gUnk_08756780:
-	.word	sub_080bfde8+1
-	.word	sub_080bff28+1
-	.word	sub_080c0388+1
-	.global	gUnk_0875678C
-gUnk_0875678C:
-	.word	sub_080bfe64+1
-	.word	sub_080c0074+1
-	.word	sub_080c0540+1
-	.global	gUnk_08756798
-gUnk_08756798:
+	.global	gBombRallyBombStates
+gBombRallyBombStates:
+	.word	BombRallyBombStart+1
+	.word	BombRallyBombPass+1
+	.word	BombRallyBombExplode+1
+	.global	gBombRallyBombStateUpdates
+gBombRallyBombStateUpdates:
+	.word	BombRallyBombStartUpdate+1
+	.word	BombRallyBombPassUpdate+1
+	.word	BombRallyBombExplodeUpdate+1
+	.global	gBombRallySeatBombX
+gBombRallySeatBombX:
 	.incbin	"baserom.gba", 0x756798, 0x8
-	.global	gUnk_087567A0
-gUnk_087567A0:
+	.global	gBombRallySeatBombY
+gBombRallySeatBombY:
 	.incbin	"baserom.gba", 0x7567A0, 0x8
-	.global	gUnk_087567A8
-gUnk_087567A8:
+	.global	gBombRallyArcVelX
+gBombRallyArcVelX:
 	.incbin	"baserom.gba", 0x7567A8, 0x54
 	.global	gUnk_087567FC
 gUnk_087567FC:
@@ -561,8 +561,8 @@ gUnk_08756F34:
 	.global	gUnk_08756FA4
 gUnk_08756FA4:
 	.incbin	"baserom.gba", 0x756FA4, 0x70
-	.global	gUnk_08757014
-gUnk_08757014:
+	.global	gBombRallySeatShadowY
+gBombRallySeatShadowY:
 	.incbin	"baserom.gba", 0x757014, 0x8
 	.global	gUnk_0875701C
 gUnk_0875701C:
@@ -578,14 +578,14 @@ gUnk_0875716C:
 	.word	gUnk_0875701C
 	.word	gUnk_0875708C
 	.word	gUnk_087570FC
-	.global	gUnk_08757178
-gUnk_08757178:
+	.global	gBombRallyPanStepX
+gBombRallyPanStepX:
 	.incbin	"baserom.gba", 0x757178, 0x40
-	.global	gUnk_087571B8
-gUnk_087571B8:
+	.global	gBombRallyPanStepY
+gBombRallyPanStepY:
 	.incbin	"baserom.gba", 0x7571B8, 0x40
-	.global	gUnk_087571F8
-gUnk_087571F8:
+	.global	gBombRallyStarBurstStates
+gBombRallyStarBurstStates:
 	.word	sub_080c0de8+1
 	.word	sub_080c1114+1
 	.word	sub_080c1424+1
@@ -602,42 +602,42 @@ gUnk_087571F8:
 	.word	sub_080c1558+1
 	.word	sub_080c1608+1
 	.word	sub_080c168c+1
-	.global	gUnk_08757238
-gUnk_08757238:
-	.word	sub_080c183c+1
-	.word	sub_080c1ab8+1
-	.word	sub_080c18c8+1
-	.global	gUnk_08757244
-gUnk_08757244:
-	.word	sub_080c18c4+1
-	.word	sub_080c1b2c+1
-	.word	sub_080c1950+1
-	.global	gUnk_08757250
-gUnk_08757250:
+	.global	gBombRallyResultsPlayerStates
+gBombRallyResultsPlayerStates:
+	.word	BombRallyResultsPlayerPose+1
+	.word	BombRallyResultsPlayerPlace+1
+	.word	BombRallyResultsPlayerLives+1
+	.global	gBombRallyResultsPlayerStateUpdates
+gBombRallyResultsPlayerStateUpdates:
+	.word	BombRallyResultsPlayerPoseUpdate+1
+	.word	BombRallyResultsPlayerPlaceUpdate+1
+	.word	BombRallyResultsPlayerLivesUpdate+1
+	.global	gBombRallyResultsSlotX
+gBombRallyResultsSlotX:
 	.incbin	"baserom.gba", 0x757250, 0x10
-	.global	gUnk_08757260
-gUnk_08757260:
+	.global	gBombRallyResultsSlotY
+gBombRallyResultsSlotY:
 	.incbin	"baserom.gba", 0x757260, 0x10
-	.global	gUnk_08757270
-gUnk_08757270:
-	.word	sub_080c1b94+1
-	.word	sub_080c1cec+1
-	.global	gUnk_08757278
-gUnk_08757278:
-	.word	sub_080c1be8+1
-	.word	sub_080c1d84+1
-	.global	gUnk_08757280
-gUnk_08757280:
+	.global	gBombRallyMenuItemStates
+gBombRallyMenuItemStates:
+	.word	BombRallyMenuItemContinue+1
+	.word	BombRallyMenuItemLevel+1
+	.global	gBombRallyMenuItemStateUpdates
+gBombRallyMenuItemStateUpdates:
+	.word	BombRallyMenuItemContinueUpdate+1
+	.word	BombRallyMenuItemLevelUpdate+1
+	.global	gBombRallyBlastShake
+gBombRallyBlastShake:
 	.incbin	"baserom.gba", 0x757280, 0x4C
 	.global	gAirGrindPhases
 gAirGrindPhases:
 	.word	AirGrindRace+1
 	.word	AirGrindResults+1
-	.global	gUnk_087572D4
-gUnk_087572D4:
+	.global	gAirGrindObjectVariants
+gAirGrindObjectVariants:
 	.word	AirGrindRacer+1
-	.word	sub_080c46ec+1
-	.word	sub_080c3f44+1
+	.word	AirGrindScenery+1
+	.word	AirGrindEffect+1
 	.global	gUnk_087572E0
 gUnk_087572E0:
 	.word	gUnk_080CFF3A
@@ -668,8 +668,8 @@ gUnk_08757320:
 	.word	gBg1Cnt
 	.word	gBg2Cnt
 	.word	gBg3Cnt
-	.global	gUnk_08757330
-gUnk_08757330:
+	.global	gEndingEpilogueVariants
+gEndingEpilogueVariants:
 	.incbin	"baserom.gba", 0x757330, 0x4
 	.word	sub_080c6d84+1
 	.word	sub_080c7810+1
@@ -681,8 +681,8 @@ gUnk_08757330:
 	.word	sub_080c8958+1
 	.word	sub_080c8cd4+1
 	.word	sub_080c8ea8+1
-	.global	gUnk_0875735C
-gUnk_0875735C:
+	.global	gEndingEpilogueObjectVariants
+gEndingEpilogueObjectVariants:
 	.incbin	"baserom.gba", 0x75735C, 0xC
 	.global	gUnk_08757368
 gUnk_08757368:
@@ -699,8 +699,8 @@ gUnk_087573B4:
 	.global	gUnk_087573D4
 gUnk_087573D4:
 	.incbin	"baserom.gba", 0x7573D4, 0x20
-	.global	gUnk_087573F4
-gUnk_087573F4:
+	.global	gEndingStarRodReturnVariants
+gEndingStarRodReturnVariants:
 	.incbin	"baserom.gba", 0x7573F4, 0x4
 	.word	sub_080c9114+1
 	.word	sub_080c9d10+1
@@ -713,8 +713,8 @@ gUnk_087573F4:
 	.word	sub_080c9e8c+1
 	.word	sub_080ca344+1
 	.word	sub_080c9a28+1
-	.global	gUnk_08757424
-gUnk_08757424:
+	.global	gEndingStarRodReturnObjectVariants
+gEndingStarRodReturnObjectVariants:
 	.incbin	"baserom.gba", 0x757424, 0xE
 	.global	gUnk_08757432
 gUnk_08757432:
@@ -837,28 +837,28 @@ gGameOverObjectVariants:
 	.word	sub_080ccec8+1
 	.word	sub_080cd24c+1
 	.word	sub_080cd2f8+1
-	.global	gUnk_087582AC
-gUnk_087582AC:
-	.word	sub_080cb64c+1
-	.word	sub_080cb70c+1
-	.word	sub_080cbac0+1
-	.global	gUnk_087582B8
-gUnk_087582B8:
-	.word	sub_080cb6d8+1
-	.word	sub_080cbabc+1
-	.word	sub_080cbea4+1
-	.global	gUnk_087582C4
-gUnk_087582C4:
-	.word	sub_080cbfe4+1
-	.word	sub_080cc0a4+1
+	.global	gGameOverPlayerStates
+gGameOverPlayerStates:
+	.word	GameOverPlayerWait+1
+	.word	GameOverPlayerContinue+1
+	.word	GameOverPlayerGiveUp+1
+	.global	gGameOverPlayerStateUpdates
+gGameOverPlayerStateUpdates:
+	.word	GameOverPlayerWaitUpdate+1
+	.word	GameOverPlayerContinueUpdate+1
+	.word	GameOverPlayerGiveUpUpdate+1
+	.global	gGameOverChoiceStates
+gGameOverChoiceStates:
+	.word	GameOverChoiceWait+1
+	.word	GameOverChoiceMove+1
 	.word	sub_080cc180+1
 	.word	sub_080cc2e0+1
 	.word	sub_080cc608+1
 	.word	sub_080cc768+1
-	.global	gUnk_087582DC
-gUnk_087582DC:
-	.word	sub_080cc024+1
-	.word	sub_080cc14c+1
+	.global	gGameOverChoiceStateUpdates
+gGameOverChoiceStateUpdates:
+	.word	GameOverChoiceWaitUpdate+1
+	.word	GameOverChoiceMoveUpdate+1
 	.word	sub_080cc2b8+1
 	.word	sub_080cc5d4+1
 	.word	sub_080cc740+1

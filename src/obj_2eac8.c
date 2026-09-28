@@ -13,14 +13,14 @@
  * graphics table Task.frameTable and the palette, then runs its animation as
  * a TaskYieldTrampoline coroutine) and its callbacks.  The animated ones
  * keep the frame to upload in Task.unk28 and a Task.updateCallback callback
- * (sub_0802eba4, sub_0802ed20, sub_0802ee88) that DMAs that frame's tiles
+ * (sub_0802eba4, BossDoorSignUpdate, sub_0802ee88) that DMAs that frame's tiles
  * into OBJ VRAM with RequestCopy and resets unk28 to -1.  The last three
  * spawners are the three variants of type #229 (obj_2f62c.c). */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void PlaySfx(u32 a);
 
-s32 sub_0802eac8(s32 x, s32 y, s32 a)
+s32 CreateArenaDoorSign(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -41,7 +41,7 @@ s32 sub_0802eac8(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802eb28(void)
+void Task_ArenaDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -49,7 +49,7 @@ void sub_0802eb28(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)DoorObjectDraw;
-    t->frameTable = gUnk_087558BC;
+    t->frameTable = gArenaDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -83,7 +83,7 @@ void sub_0802eba4(void)
     }
 }
 
-s32 sub_0802ec1c(s32 x, s32 y, s32 a)
+s32 CreateBossDoorSign(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -104,7 +104,7 @@ s32 sub_0802ec1c(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802ec7c(void)
+void Task_BossDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -120,7 +120,7 @@ void sub_0802ec7c(void)
     u->unk34 = (s32)gUnk_087558DC;
     u->unk28 = 0;
     u->frame = 0;
-    u->updateCallback = (u32)sub_0802ed20;
+    u->updateCallback = (u32)BossDoorSignUpdate;
     for (;;)
     {
         gCurTask->unk2C = 0;
@@ -140,7 +140,7 @@ void sub_0802ec7c(void)
     }
 }
 
-void sub_0802ed20(void)
+void BossDoorSignUpdate(void)
 {
     u8 *src;
 
@@ -154,7 +154,7 @@ void sub_0802ed20(void)
     }
 }
 
-s32 sub_0802ed94(s32 x, s32 y, s32 a)
+s32 CreateDoorOpening(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -172,7 +172,7 @@ s32 sub_0802ed94(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802ede4(void)
+void Task_DoorOpening(void)
 {
     struct Task *t;
     struct Task *u;
@@ -245,7 +245,7 @@ void sub_0802ee88(void)
     }
 }
 
-s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b)
+s32 CreateStageClearFlag(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -264,7 +264,7 @@ s32 sub_0802ef90(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802eff8(void)
+void Task_StageClearFlag(void)
 {
     struct Task *t;
 
@@ -286,7 +286,7 @@ void sub_0802eff8(void)
     }
 }
 
-s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b)
+s32 CreateQuickDrawDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -308,7 +308,7 @@ s32 sub_0802f05c(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802f0cc(void)
+void Task_QuickDrawDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -370,7 +370,7 @@ void sub_0802f1dc(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b)
+s32 CreateBombRallyDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -392,7 +392,7 @@ s32 sub_0802f1fc(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802f26c(void)
+void Task_BombRallyDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -436,7 +436,7 @@ void sub_0802f2fc(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b)
+s32 CreateAirGrindDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -458,7 +458,7 @@ s32 sub_0802f31c(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802f38c(void)
+void Task_AirGrindDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -498,7 +498,7 @@ void sub_0802f400(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f420(s32 x, s32 y, s32 a)
+s32 CreateMuseumDoorSign(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -519,7 +519,7 @@ s32 sub_0802f420(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802f480(void)
+void Task_MuseumDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -527,7 +527,7 @@ void sub_0802f480(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)DoorObjectDraw;
-    t->frameTable = gUnk_08755944;
+    t->frameTable = gMuseumDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -536,7 +536,7 @@ void sub_0802f480(void)
     TaskSleepForever();
 }
 
-s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b)
+s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -559,7 +559,7 @@ s32 sub_0802f4c8(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b)
+s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -582,7 +582,7 @@ s32 sub_0802f53c(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-s32 sub_0802f5b4(s32 x, s32 y, s32 a, s32 b)
+s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;

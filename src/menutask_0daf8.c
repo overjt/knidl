@@ -11,12 +11,12 @@
 /* menutask_0daf8.c (0x0800DAF8-0x0800E313, issue #99).
  *
  * Menu sprite tasks, first part: the file-select screen.  Task types #238
- * and #239 (sub_0800daf8, sub_0800db64 with body sub_0800dbdc; three of
+ * and #239 (Task_FileSelectSlotLabel, Task_FileSelectSlot with body FileSelectSlotUpdate; three of
  * each, spawned by CreateFileSelectSprites) slide the three save-slot sprites in with
- * sub_0800dc98 and recolour a slot when the cursor moves; #240
- * (Task_FileSelectCursor, body sub_0800dda0) is the cursor; #241 (sub_0800de6c,
- * body sub_0800dfdc) a sprite group that slides with the screen; #242
- * (Task_FileMenuHighlight, body sub_0800e148) the file-menu highlight, which
+ * FileSelectSlotSlideIn and recolour a slot when the cursor moves; #240
+ * (Task_FileSelectCursor, body FileSelectCursorUpdate) is the cursor; #241 (Task_FileMenuSlot,
+ * body FileMenuSlotUpdate) a sprite group that slides with the screen; #242
+ * (Task_FileMenuHighlight, body FileMenuHighlightUpdate) the file-menu highlight, which
  * marks the selected entry (MenuUpdateFileMenuPalette) and loads its picture
  * (MenuLoadPicture: LZ77 into 0x02020000, one 2 KiB part to 0x06004200). */
 
@@ -26,14 +26,14 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 
-void sub_0800daf8(void)
+void Task_FileSelectSlotLabel(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_08755620;
     gCurTask->frame = gCurTask->unk1C + 3;
-    sub_0800dc98();
+    FileSelectSlotSlideIn();
     while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
     gCurTask->velX = 0x1AE000;
@@ -41,16 +41,16 @@ void sub_0800daf8(void)
     TaskExitTrampoline();
 }
 
-void sub_0800db64(void)
+void Task_FileSelectSlot(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800dbdc;
+    gCurTask->updateCallback = (u32)FileSelectSlotUpdate;
     gCurTask->layer = 9;
     gCurTask->frameTable = gUnk_08755620;
     gCurTask->frame = gCurTask->unk1C;
     gCurTask->unk28 = -1;
-    sub_0800dc98();
+    FileSelectSlotSlideIn();
     while (gMenuScreen != 1)
         TaskYieldTrampoline(1);
     gCurTask->velX = 0x1AE000;
@@ -58,7 +58,7 @@ void sub_0800db64(void)
     TaskExitTrampoline();
 }
 
-void sub_0800dbdc(void)
+void FileSelectSlotUpdate(void)
 {
     struct Task *t;
     struct SaveSlot *s;
@@ -71,7 +71,7 @@ void sub_0800dbdc(void)
         i = slot * 256;
         if (gSaveSlots[slot].completionPercent[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
             i++;
-        sub_0800bf10(slot, (s8)s->unk16[i]);
+        MenuLoadSaveSlotPalette(slot, (s8)s->unk16[i]);
         gCurTask->unk28 = gMenuCursor;
     }
 
@@ -81,7 +81,7 @@ void sub_0800dbdc(void)
     }
 }
 
-void sub_0800dc98(void)
+void FileSelectSlotSlideIn(void)
 {
     struct Task *t = gCurTask;
     s32 n;
@@ -99,7 +99,7 @@ void Task_FileSelectCursor(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800dda0;
+    gCurTask->updateCallback = (u32)FileSelectCursorUpdate;
     gCurTask->layer = 6;
     gCurTask->frameTable = gUnk_08755620;
     gCurTask->frame = 9;
@@ -121,7 +121,7 @@ void Task_FileSelectCursor(void)
     TaskExitTrampoline();
 }
 
-void sub_0800dda0(void)
+void FileSelectCursorUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;
@@ -150,7 +150,7 @@ void sub_0800dda0(void)
     }
 }
 
-void sub_0800de6c(void)
+void Task_FileMenuSlot(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;
@@ -158,7 +158,7 @@ void sub_0800de6c(void)
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_0800dfdc;
+    t->updateCallback = (u32)FileMenuSlotUpdate;
     t->spriteFlags = 0x2000;
     t->unk28 = 0;
     t->unk18 = 0;
@@ -218,7 +218,7 @@ void sub_0800de6c(void)
     TaskExitTrampoline();
 }
 
-void sub_0800dfdc(void)
+void FileMenuSlotUpdate(void)
 {
     struct Task *t;
     u32 *tbl;
@@ -243,7 +243,7 @@ void Task_FileMenuHighlight(void)
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = 0;
-    gCurTask->updateCallback = (u32)sub_0800e148;
+    gCurTask->updateCallback = (u32)FileMenuHighlightUpdate;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->unk28 = -1;
     gCurTask->unk2C = 0;
@@ -260,7 +260,7 @@ void Task_FileMenuHighlight(void)
     TaskExitTrampoline();
 }
 
-void sub_0800e148(void)
+void FileMenuHighlightUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;

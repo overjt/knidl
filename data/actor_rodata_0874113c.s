@@ -31,7 +31,7 @@ gUnk_087411B4:
 	.global	gRockyVariants
 gRockyVariants:
 	.word	RockyWalkInit+1
-	.word	sub_0807daac+1
+	.word	RockyIdleInit+1
 	.word	RockyStandInit+1
 	.global	gRockyWalkStates
 gRockyWalkStates:
@@ -47,11 +47,11 @@ gRockyWalkStateUpdates:
 	.word	sub_0807da08+1
 	.word	sub_0807da5c+1
 	.word	sub_0807daa8+1
-	.global	gUnk_087411F4
-gUnk_087411F4:
-	.word	sub_0807db30+1
-	.global	gUnk_087411F8
-gUnk_087411F8:
+	.global	gRockyIdleStates
+gRockyIdleStates:
+	.word	RockyIdle+1
+	.global	gRockyIdleStateUpdates
+gRockyIdleStateUpdates:
 	.word	sub_0807db44+1
 	.global	gRockyStandStates
 gRockyStandStates:
@@ -80,7 +80,7 @@ gUnk_08741220:
 gSirKibbleVariants:
 	.word	SirKibbleStandInit+1
 	.word	SirKibbleWalkInit+1
-	.word	sub_0807e3e4+1
+	.word	SirKibbleIdleInit+1
 	.global	gSirKibbleStandStates
 gSirKibbleStandStates:
 	.word	SirKibbleWait+1
@@ -101,11 +101,11 @@ gSirKibbleWalkStateUpdates:
 	.word	sub_0807e100+1
 	.word	sub_0807e244+1
 	.word	sub_0807e3b0+1
-	.global	gUnk_08741264
-gUnk_08741264:
-	.word	sub_0807e468+1
-	.global	gUnk_08741268
-gUnk_08741268:
+	.global	gSirKibbleIdleStates
+gSirKibbleIdleStates:
+	.word	SirKibbleIdle+1
+	.global	gSirKibbleIdleStateUpdates
+gSirKibbleIdleStateUpdates:
 	.word	sub_0807e480+1
 	.global	gCappyVariants
 gCappyVariants:
@@ -228,43 +228,43 @@ gUnk_08741378:
 	.incbin	"baserom.gba", 0x741378, 0x8
 	.global	gKabuVariants
 gKabuVariants:
-	.word	sub_0807f044+1
-	.word	sub_0807f380+1
-	.word	sub_0807f88c+1
-	.word	sub_0807fb00+1
-	.global	gUnk_08741390
-gUnk_08741390:
+	.word	KabuJumpInit+1
+	.word	KabuTeleportInit+1
+	.word	KabuSlideInit+1
+	.word	KabuIdleInit+1
+	.global	gKabuJumpStates
+gKabuJumpStates:
 	.word	sub_0807f0c4+1
-	.word	sub_0807f218+1
-	.word	sub_0807f2ec+1
-	.global	gUnk_0874139C
-gUnk_0874139C:
+	.word	KabuJump+1
+	.word	KabuJumpFall+1
+	.global	gKabuJumpStateUpdates
+gKabuJumpStateUpdates:
 	.word	sub_0807f1f0+1
 	.word	sub_0807f2b4+1
 	.word	sub_0807f348+1
-	.global	gUnk_087413A8
-gUnk_087413A8:
+	.global	gKabuTeleportStates
+gKabuTeleportStates:
 	.word	sub_0807f42c+1
-	.word	sub_0807f4dc+1
+	.word	KabuTeleport+1
 	.word	sub_0807f78c+1
-	.global	gUnk_087413B4
-gUnk_087413B4:
+	.global	gKabuTeleportStateUpdates
+gKabuTeleportStateUpdates:
 	.word	sub_0807f488+1
 	.word	sub_0807f634+1
 	.word	sub_0807f888+1
-	.global	gUnk_087413C0
-gUnk_087413C0:
+	.global	gKabuSlideStates
+gKabuSlideStates:
 	.word	sub_0807f920+1
 	.word	sub_0807fa98+1
-	.global	gUnk_087413C8
-gUnk_087413C8:
+	.global	gKabuSlideStateUpdates
+gKabuSlideStateUpdates:
 	.word	sub_0807f9a0+1
 	.word	sub_0807fafc+1
-	.global	gUnk_087413D0
-gUnk_087413D0:
-	.word	sub_0807fb84+1
-	.global	gUnk_087413D4
-gUnk_087413D4:
+	.global	gKabuIdleStates
+gKabuIdleStates:
+	.word	KabuIdle+1
+	.global	gKabuIdleStateUpdates
+gKabuIdleStateUpdates:
 	.word	sub_0807fbcc+1
 	.global	gUnk_087413D8
 gUnk_087413D8:
@@ -290,7 +290,7 @@ gUnk_08741454:
 	.global	gTwisterVariants
 gTwisterVariants:
 	.word	TwisterInit+1
-	.word	sub_080802bc+1
+	.word	TwisterIdleInit+1
 	.global	gTwisterStates
 gTwisterStates:
 	.word	sub_0807fdc8+1
@@ -301,11 +301,11 @@ gTwisterStateUpdates:
 	.word	sub_0807fe18+1
 	.word	sub_0808003c+1
 	.word	sub_08080278+1
-	.global	gUnk_087414A8
-gUnk_087414A8:
-	.word	sub_08080340+1
-	.global	gUnk_087414AC
-gUnk_087414AC:
+	.global	gTwisterIdleStates
+gTwisterIdleStates:
+	.word	TwisterIdle+1
+	.global	gTwisterIdleStateUpdates
+gTwisterIdleStateUpdates:
 	.word	sub_08080358+1
 	.global	gUnk_087414B0
 gUnk_087414B0:
@@ -313,29 +313,29 @@ gUnk_087414B0:
 	.global	gHotHeadVariants
 gHotHeadVariants:
 	.word	HotHeadWalkInit+1
-	.word	sub_0808076c+1
+	.word	HotHeadIdleInit+1
 	.word	HotHeadStandInit+1
 	.global	gHotHeadWalkStates
 gHotHeadWalkStates:
-	.word	sub_080804f0+1
-	.word	sub_08080570+1
-	.word	sub_08080740+1
+	.word	HotHeadWalk+1
+	.word	HotHeadWalkShoot+1
+	.word	HotHeadWalkFall+1
 	.global	gHotHeadWalkStateUpdates
 gHotHeadWalkStateUpdates:
 	.word	sub_0808051c+1
 	.word	sub_080806e8+1
 	.word	sub_08080768+1
-	.global	gUnk_087414D8
-gUnk_087414D8:
-	.word	sub_080807fc+1
-	.global	gUnk_087414DC
-gUnk_087414DC:
+	.global	gHotHeadIdleStates
+gHotHeadIdleStates:
+	.word	HotHeadIdle+1
+	.global	gHotHeadIdleStateUpdates
+gHotHeadIdleStateUpdates:
 	.word	sub_08080814+1
 	.global	gHotHeadStandStates
 gHotHeadStandStates:
 	.word	sub_080808bc+1
-	.word	sub_08080930+1
-	.word	sub_08080b00+1
+	.word	HotHeadStandShoot+1
+	.word	HotHeadStandFall+1
 	.global	gHotHeadStandStateUpdates
 gHotHeadStandStateUpdates:
 	.word	sub_080808dc+1
@@ -365,9 +365,9 @@ gUnk_08741524:
 	.global	gStarmanVariants
 gStarmanVariants:
 	.word	sub_08080e10+1
-	.word	sub_08081408+1
+	.word	StarmanJumpInit+1
 	.word	StarmanFlyInit+1
-	.word	sub_08081774+1
+	.word	StarmanIdleInit+1
 	.global	gUnk_08741554
 gUnk_08741554:
 	.word	sub_08080ea4+1
@@ -384,13 +384,13 @@ gUnk_0874156C:
 	.word	sub_0808124c+1
 	.word	sub_080813a4+1
 	.word	sub_080812ec+1
-	.global	gUnk_08741584
-gUnk_08741584:
-	.word	sub_0808148c+1
-	.word	sub_08081508+1
-	.word	sub_0808159c+1
-	.global	gUnk_08741590
-gUnk_08741590:
+	.global	gStarmanJumpStates
+gStarmanJumpStates:
+	.word	StarmanJumpWalk+1
+	.word	StarmanJump+1
+	.word	StarmanJumpFall+1
+	.global	gStarmanJumpStateUpdates
+gStarmanJumpStateUpdates:
 	.word	sub_080814b4+1
 	.word	sub_08081560+1
 	.word	sub_080815dc+1
@@ -400,27 +400,27 @@ gStarmanFlyStates:
 	.global	gStarmanFlyStateUpdates
 gStarmanFlyStateUpdates:
 	.word	sub_080816e8+1
-	.global	gUnk_087415A4
-gUnk_087415A4:
-	.word	sub_080817f8+1
-	.global	gUnk_087415A8
-gUnk_087415A8:
+	.global	gStarmanIdleStates
+gStarmanIdleStates:
+	.word	StarmanIdle+1
+	.global	gStarmanIdleStateUpdates
+gStarmanIdleStateUpdates:
 	.word	sub_08081810+1
 	.global	gUnk_087415AC
 gUnk_087415AC:
 	.incbin	"baserom.gba", 0x7415AC, 0xC
 	.global	gPoppyBrosJrVariants
 gPoppyBrosJrVariants:
-	.word	sub_080819f4+1
-	.word	sub_080819f4+1
+	.word	PoppyBrosJrInit+1
+	.word	PoppyBrosJrInit+1
 	.word	sub_08081d24+1
-	.global	gUnk_087415C4
-gUnk_087415C4:
+	.global	gPoppyBrosJrStates
+gPoppyBrosJrStates:
 	.word	sub_08081aac+1
-	.word	sub_08081bc4+1
-	.word	sub_08081c78+1
-	.global	gUnk_087415D0
-gUnk_087415D0:
+	.word	PoppyBrosJrWalk+1
+	.word	PoppyBrosJrJump+1
+	.global	gPoppyBrosJrStateUpdates
+gPoppyBrosJrStateUpdates:
 	.word	sub_08081b5c+1
 	.word	sub_08081c3c+1
 	.word	sub_08081ce0+1
@@ -442,28 +442,28 @@ gUnk_087415F4:
 	.global	gUnk_087415FC
 gUnk_087415FC:
 	.incbin	"baserom.gba", 0x7415FC, 0x8
-	.global	gUnk_08741604
-gUnk_08741604:
-	.word	sub_080820b8+1
-	.word	sub_080822b0+1
-	.word	sub_0808248c+1
-	.global	gUnk_08741610
-gUnk_08741610:
+	.global	gPoppyBrosJrRideVariants
+gPoppyBrosJrRideVariants:
+	.word	PoppyBrosJrRideInit+1
+	.word	PoppyBrosJrDroppedObjectInit+1
+	.word	PoppyBrosJrRideIdleInit+1
+	.global	gPoppyBrosJrRideStates
+gPoppyBrosJrRideStates:
 	.word	sub_08082270+1
-	.global	gUnk_08741614
-gUnk_08741614:
+	.global	gPoppyBrosJrRideStateUpdates
+gPoppyBrosJrRideStateUpdates:
 	.word	sub_080822a4+1
-	.global	gUnk_08741618
-gUnk_08741618:
+	.global	gPoppyBrosJrDroppedObjectStates
+gPoppyBrosJrDroppedObjectStates:
 	.word	sub_08082338+1
-	.global	gUnk_0874161C
-gUnk_0874161C:
+	.global	gPoppyBrosJrDroppedObjectStateUpdates
+gPoppyBrosJrDroppedObjectStateUpdates:
 	.word	sub_08082458+1
-	.global	gUnk_08741620
-gUnk_08741620:
-	.word	sub_0808253c+1
-	.global	gUnk_08741624
-gUnk_08741624:
+	.global	gPoppyBrosJrRideIdleStates
+gPoppyBrosJrRideIdleStates:
+	.word	PoppyBrosJrRideIdle+1
+	.global	gPoppyBrosJrRideIdleStateUpdates
+gPoppyBrosJrRideIdleStateUpdates:
 	.word	sub_08082548+1
 	.global	gUnk_08741628
 gUnk_08741628:
@@ -481,7 +481,7 @@ gUnk_0874163B:
 gWheelieVariants:
 	.word	WheelieInit+1
 	.word	WheelieInit+1
-	.word	sub_08082bb8+1
+	.word	WheelieIdleInit+1
 	.global	gWheelieStates
 gWheelieStates:
 	.word	sub_0808279c+1
@@ -498,11 +498,11 @@ gWheelieStateUpdates:
 	.word	sub_080829d4+1
 	.word	sub_08082aec+1
 	.word	sub_08082b48+1
-	.global	gUnk_0874167C
-gUnk_0874167C:
-	.word	sub_08082c3c+1
-	.global	gUnk_08741680
-gUnk_08741680:
+	.global	gWheelieIdleStates
+gWheelieIdleStates:
+	.word	WheelieIdle+1
+	.global	gWheelieIdleStateUpdates
+gWheelieIdleStateUpdates:
 	.word	sub_08082c58+1
 	.global	gUnk_08741684
 gUnk_08741684:
@@ -577,12 +577,12 @@ gUnk_08741758:
 gFlamerVariants:
 	.word	FlamerInit+1
 	.word	FlamerInit+1
-	.word	sub_0808398c+1
+	.word	FlamerIdleInit+1
 	.global	gFlamerStates
 gFlamerStates:
 	.word	sub_08082f04+1
 	.word	sub_08082fdc+1
-	.word	sub_080832d0+1
+	.word	FlamerFall+1
 	.word	sub_08083370+1
 	.word	sub_08083428+1
 	.word	sub_08083614+1
@@ -596,9 +596,9 @@ gFlamerStateUpdates:
 	.word	sub_08083488+1
 	.word	sub_0808379c+1
 	.word	sub_080838bc+1
-	.global	gUnk_087417B0
-gUnk_087417B0:
-	.word	sub_08083a10+1
-	.global	gUnk_087417B4
-gUnk_087417B4:
+	.global	gFlamerIdleStates
+gFlamerIdleStates:
+	.word	FlamerIdle+1
+	.global	gFlamerIdleStateUpdates
+gFlamerIdleStateUpdates:
 	.word	sub_08083a44+1

@@ -106,28 +106,28 @@ gBonkersStates:
 	.word	BonkersJumpSlam+1
 	.word	BonkersTripleSlam+1
 	.word	sub_08090c18+1
-	.word	sub_08090cd0+1
+	.word	BonkersDefeat+1
 	.global	gBonkersStateUpdates
 gBonkersStateUpdates:
 	.word	sub_08090270+1
-	.word	sub_080903c8+1
-	.word	sub_080904ac+1
-	.word	sub_080905b0+1
-	.word	sub_08090724+1
-	.word	sub_080908ec+1
-	.word	sub_080909ac+1
-	.word	sub_08090b18+1
-	.word	sub_08090bf0+1
+	.word	BonkersWalkUpdate+1
+	.word	BonkersJumpUpdate+1
+	.word	BonkersHopUpdate+1
+	.word	BonkersDashUpdate+1
+	.word	BonkersThrowUpdate+1
+	.word	BonkersSlamUpdate+1
+	.word	BonkersJumpSlamUpdate+1
+	.word	BonkersTripleSlamUpdate+1
 	.word	sub_08090ca8+1
-	.word	sub_08090de4+1
-	.global	gUnk_087438A4
-gUnk_087438A4:
+	.word	BonkersDefeatUpdate+1
+	.global	gBonkersHammerHitBoxOffsetsX
+gBonkersHammerHitBoxOffsetsX:
 	.incbin	"baserom.gba", 0x7438A4, 0xE
-	.global	gUnk_087438B2
-gUnk_087438B2:
+	.global	gBonkersHammerHitBoxOffsetsY
+gBonkersHammerHitBoxOffsetsY:
 	.incbin	"baserom.gba", 0x7438B2, 0xE
-	.global	gUnk_087438C0
-gUnk_087438C0:
+	.global	gBonkersHammerHitBoxes
+gBonkersHammerHitBoxes:
 	.word	gUnk_08743DC8
 	.word	gUnk_08743DAC
 	.word	gUnk_08743DAC
@@ -197,7 +197,7 @@ gPoppyBrosSrStates:
 	.word	sub_080915a4+1
 	.word	sub_080915f8+1
 	.word	sub_080916ec+1
-	.word	sub_08091824+1
+	.word	PoppyBrosSrDefeat+1
 	.global	gPoppyBrosSrStateUpdates
 gPoppyBrosSrStateUpdates:
 	.word	sub_080912f8+1
@@ -206,7 +206,7 @@ gPoppyBrosSrStateUpdates:
 	.word	sub_080915d0+1
 	.word	sub_080916c4+1
 	.word	sub_080917fc+1
-	.word	sub_0809191c+1
+	.word	PoppyBrosSrDefeatUpdate+1
 	.global	gUnk_087439C0
 gUnk_087439C0:
 	.incbin	"baserom.gba", 0x7439C0, 0x6
@@ -219,8 +219,8 @@ gUnk_087439E0:
 	.global	gUnk_087439E6
 gUnk_087439E6:
 	.incbin	"baserom.gba", 0x7439E6, 0x1A
-	.global	gUnk_08743A00
-gUnk_08743A00:
+	.global	gPoppyBrosSrHeadAnims
+gPoppyBrosSrHeadAnims:
 	.word	gUnk_087439C0
 	.word	gUnk_087439C6
 	.word	gUnk_087439E0
@@ -305,7 +305,7 @@ gBugzzyVariants:
 gBugzzyStates:
 	.word	sub_08092198+1
 	.word	sub_08092250+1
-	.word	sub_080925b8+1
+	.word	BugzzySummon+1
 	.word	sub_080926fc+1
 	.word	sub_08092a14+1
 	.word	sub_08092b58+1
@@ -315,12 +315,12 @@ gBugzzyStates:
 	.word	sub_08092f2c+1
 	.word	sub_080930ac+1
 	.word	sub_0809301c+1
-	.word	sub_08093380+1
+	.word	BugzzyDefeat+1
 	.global	gBugzzyStateUpdates
 gBugzzyStateUpdates:
 	.word	sub_08092228+1
 	.word	sub_08092590+1
-	.word	sub_080926d4+1
+	.word	BugzzySummonUpdate+1
 	.word	sub_080929ec+1
 	.word	sub_08092b30+1
 	.word	sub_08092bd8+1
@@ -330,7 +330,7 @@ gBugzzyStateUpdates:
 	.word	sub_08092ff4+1
 	.word	sub_08093354+1
 	.word	sub_08093084+1
-	.word	sub_08093488+1
+	.word	BugzzyDefeatUpdate+1
 	.global	gUnk_08743B48
 gUnk_08743B48:
 	.incbin	"baserom.gba", 0x743B48, 0x4

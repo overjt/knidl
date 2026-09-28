@@ -9,7 +9,7 @@
  *
  * Per-frame camera -> BG glue.  gCameraPos is the camera position in
  * pixels and gCameraStreamPos the position the BG maps were last streamed at.
- * sub_080296a0, StreamBg123Maps, StreamBg23Maps and StreamBg23Rows compare the two
+ * StreamBg2MapLooping, StreamBg123Maps, StreamBg23Maps and StreamBg23Rows compare the two
  * in 8-pixel tiles and stream the tile columns and rows that scrolled into
  * view (bgmap_2a9cc.c), one per room layout; sub_08029b30 streams the whole
  * view.  CameraWriteScrollParallax, CameraWriteScrollHBlank, CameraWriteScrollBg23 and CameraWriteScrollBg123 write
@@ -27,7 +27,7 @@ struct Unk020055D8Entry
     /*0x06*/ u16 y;
 };
 
-void sub_080296a0(void)
+void StreamBg2MapLooping(void)
 {
     s32 x, x0, x1, d;
 
@@ -41,15 +41,15 @@ void sub_080296a0(void)
         gUnk_03002448 = x + 38;
         if (!(x1 & 1))
         {
-            sub_0802b25c(gUnk_03001F2C >> 1);
-            sub_0802b25c(gUnk_03002448 >> 1);
+            RestoreMapColumn(gUnk_03001F2C >> 1);
+            RestoreMapColumn(gUnk_03002448 >> 1);
         }
-        sub_0802aae8(x1);
+        DrawBg2EdgeColumn(x1);
         gCameraStreamPos[0] = gCameraPos[0];
     }
     else if (d < 0)
     {
-        sub_0802aae8(x0);
+        DrawBg2EdgeColumn(x0);
         gCameraStreamPos[0] = gCameraPos[0];
     }
 }

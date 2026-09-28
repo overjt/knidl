@@ -212,7 +212,7 @@ void Task_MetaKnightsKnight(void)
     t->moveCallback = (u32)TaskMove;
     t->layer = 11;
     u = gCurTask;
-    a = u->unk8C;
+    a = u->u8C.actor;
     a->savedPaletteBits = 0xF000 & u->tileWord;
     sub_0809f818(1);
     switch (gCurTask->unk74)
@@ -256,7 +256,7 @@ void sub_0809c4d0(void)
     struct Task *t = gCurTask;
     struct Task *u;
 
-    t->updateCallback = (u32)sub_0809c528;
+    t->updateCallback = (u32)AxeKnightUpdate;
     t->updateState = 3;
     gCurTask->unk30 = 0;
     TaskFaceScreenCenter();
@@ -267,17 +267,17 @@ void sub_0809c4d0(void)
     sub_0809c5a4();
 }
 
-void sub_0809c50c(void)
+void AxeKnightEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 5, gUnk_08747AB4);
+    CallTableEntry(gCurTask->state, 5, gAxeKnightStates);
 }
 
-void sub_0809c528(void)
+void AxeKnightUpdate(void)
 {
     struct Task *t;
 
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 5, gUnk_08747AC8);
+        CallTableEntry(gCurTask->updateState, 5, gAxeKnightStateUpdates);
     t = gCurTask;
     if (t->unk24 > 0)
     {
@@ -377,11 +377,11 @@ void sub_0809c638(void)
     else
         ActorSetState(4);
 install:
-    TaskSetEntry(sub_0809c50c, gCurTaskIdx);
+    TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     return;
 stumble:
     ActorSetState(3);
-    TaskSetEntry(sub_0809c50c, gCurTaskIdx);
+    TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
 }
 
 void sub_0809c74c(void)
@@ -442,7 +442,7 @@ void sub_0809c74c(void)
 void sub_0809c840(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0809c50c, gCurTaskIdx);
+        TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     if ((u16)(gCurTask->frame - 22) <= 1)
         ActorCheckHitsWithBox((s32)gUnk_08747EF4);
 }
@@ -463,7 +463,7 @@ void sub_0809c880(void)
     TaskYieldTrampoline(10);
     gCurTask->frame = 13;
     TaskYieldTrampoline(2);
-    sub_0809cf04();
+    CreateAxeKnightAxe();
     gCurTask->frame = 14;
     TaskYieldTrampoline(60);
     ActorSetState(0);
@@ -473,7 +473,7 @@ void sub_0809c880(void)
 void sub_0809c8f8(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_0809c50c, gCurTaskIdx);
+        TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     if (gCurTask->unk18 != 0)
         TaskSetEntry(sub_0809c938, gCurTaskIdx);
 }
@@ -523,7 +523,7 @@ void sub_0809c984(void)
     TaskYieldTrampoline(1);
     gCurTask->frame = 13;
     TaskYieldTrampoline(2);
-    sub_0809cf04();
+    CreateAxeKnightAxe();
     gCurTask->frame = 14;
     TaskSleepForever();
 }
@@ -559,7 +559,7 @@ void sub_0809ca10(void)
     TaskYieldTrampoline(1);
     gCurTask->frame = 13;
     TaskYieldTrampoline(2);
-    sub_0809cf04();
+    CreateAxeKnightAxe();
     u = gCurTask;
     w = 14;
     u->frame = w;

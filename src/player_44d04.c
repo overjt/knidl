@@ -43,7 +43,7 @@ void PlayerActionSword(void)
             t->unk30 = 0;
     }
     gCurTask->unk34 = gCurTask->facing;
-    gCurTask->unk80 = 4;
+    gCurTask->u80.attackAbility = 4;
     if (gCurTask->onGround & 1)
         gCurTask->variant = 0;
     else

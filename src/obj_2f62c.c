@@ -14,14 +14,14 @@
  * several types share the last two) draw the frame Task.frame of the
  * Task.frameTable table through QueueWorldSprite, and a second sprite from
  * Task.unk34 at Task.velX/unk58 where the type has one.  #231
- * (sub_0802faa8) flies a fixed path, eight velocity changes per lap.
- * sub_0802ffe8 is also called from M33 (src/hud_b5024.c), and
- * sub_08030100 spawns up to two #235 objects from the table
+ * (Task_WarpStarStationDoorSparkle) flies a fixed path, eight velocity changes per lap.
+ * CreateWarpStarStationNumber is also called from M33 (src/hud_b5024.c), and
+ * CreateMuseumAbilitySigns spawns up to two #235 objects from the table
  * gUnk_087328C0. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_0802f62c(void)
+void Task_StageDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -110,7 +110,7 @@ void sub_0802f718(void)
         QueueWorldSprite(u->layer, tbl[2], u->spriteFlags, u->tileWord, u->velX, u->velY);
 }
 
-s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b)
+s32 CreateWarpStarStationDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -132,7 +132,7 @@ s32 sub_0802f7dc(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802f84c(void)
+void Task_WarpStarStationDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -141,7 +141,7 @@ void sub_0802f84c(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)sub_0802f93c;
-    t->frameTable = gUnk_08755978;
+    t->frameTable = gWarpStarStationDoorSignFrames;
     t->layer = 14;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -198,7 +198,7 @@ void sub_0802f93c(void)
     }
 }
 
-s32 sub_0802fa3c(s32 x, s32 y, s32 a, s32 b)
+s32 CreateWarpStarStationDoorSparkle(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -213,12 +213,12 @@ s32 sub_0802fa3c(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->unk24 = a;
         t->unk20 = b;
-        gUnk_02007FC4 = 0;
+        gWarpStarStationDoorRevealed = 0;
     }
     return id;
 }
 
-void sub_0802faa8(void)
+void Task_WarpStarStationDoorSparkle(void)
 {
     struct Task *t;
     struct Task *u;
@@ -227,7 +227,7 @@ void sub_0802faa8(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_0802fd98;
-    t->frameTable = gUnk_0875597C;
+    t->frameTable = gWarpStarStationDoorSparkleFrames;
     t->layer = 14;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -235,7 +235,7 @@ void sub_0802faa8(void)
     v = gCurTask;
     v->frame = -1;
     if (v->unk20 != 0)
-        while (gUnk_02007FC4 == 0)
+        while (gWarpStarStationDoorRevealed == 0)
             TaskYieldTrampoline(1);
     if (gCurTask->unk24 != 0)
     {
@@ -370,7 +370,7 @@ void sub_0802fd98(void)
     }
 }
 
-s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b)
+s32 CreateLevelDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -392,7 +392,7 @@ s32 sub_0802fdf4(s32 x, s32 y, s32 a, s32 b)
     return id;
 }
 
-void sub_0802fe64(void)
+void Task_LevelDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -439,7 +439,7 @@ void sub_0802ff70(void)
     QueueWorldSprite(15, gUnk_087558D0[1], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
 }
 
-s32 sub_0802ffe8(s32 a, s32 x, s32 y)
+s32 CreateWarpStarStationNumber(s32 a, s32 x, s32 y)
 {
     s32 id;
     struct Task *t;
@@ -457,7 +457,7 @@ s32 sub_0802ffe8(s32 a, s32 x, s32 y)
     return id;
 }
 
-void sub_08030034(void)
+void Task_WarpStarStationNumber(void)
 {
     struct Task *t;
     struct Task *u;
@@ -465,7 +465,7 @@ void sub_08030034(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_087559A4;
+    t->frameTable = gWarpStarStationNumberFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0xD800;
@@ -473,7 +473,7 @@ void sub_08030034(void)
     TaskSleepForever();
 }
 
-s32 sub_08030074(s32 a)
+s32 CreateWarpStarStationLevelSign(s32 a)
 {
     s32 id;
     struct Task *t;
@@ -491,7 +491,7 @@ s32 sub_08030074(s32 a)
     return id;
 }
 
-void sub_080300c0(void)
+void Task_WarpStarStationLevelSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -499,7 +499,7 @@ void sub_080300c0(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_087559C0;
+    t->frameTable = gWarpStarStationLevelSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0xD800;
@@ -507,22 +507,22 @@ void sub_080300c0(void)
     TaskSleepForever();
 }
 
-s32 sub_08030100(u8 a)
+s32 CreateMuseumAbilitySigns(u8 a)
 {
     s32 i;
 
     if (a <= 5)
     {
-        sub_08008f10(a);
+        LoadMuseumAbilitySignGfx(a);
         for (i = 0; i <= 1; i++)
         {
             if (gUnk_087328C0[a][i] != -1)
-                sub_08030140(a, i);
+                CreateMuseumAbilitySign(a, i);
         }
     }
 }
 
-s32 sub_08030140(u8 a, s32 b)
+s32 CreateMuseumAbilitySign(u8 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -540,7 +540,7 @@ s32 sub_08030140(u8 a, s32 b)
     return id;
 }
 
-void sub_080301a4(void)
+void Task_MuseumAbilitySign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -548,7 +548,7 @@ void sub_080301a4(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_087559DC;
+    t->frameTable = gMuseumAbilitySignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0xD3C0;

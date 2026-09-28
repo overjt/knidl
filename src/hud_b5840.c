@@ -49,7 +49,7 @@ extern void RequestScreenShake(u32 a);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -63,7 +63,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -71,20 +71,20 @@ extern u32 ActorCollideTerrain(void);
 extern u32 sub_0806951c(void);
 extern u32 sub_08069888(void);
 extern u32 ActorReactToHit(void);
-extern void sub_080b7cb4();
+extern void SaveBossEnduranceBestTime();
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
-s32 sub_080b5840(u8 *e, s32 i, s32 k)
+s32 LoadRoomMidBossGfx(u8 *e, s32 i, s32 k)
 {
     u8 *d5;
     u8 *p6;
@@ -99,8 +99,8 @@ s32 sub_080b5840(u8 *e, s32 i, s32 k)
     d5 = (u8 *)gMidBossGfx[(s8)e[1]];
     if (d5 == 0)
         return 0;
-    ((u8 *)gUnk_02006130)[i] = k;
-    bA = (u8 *)gUnk_020060A0;
+    ((u8 *)gRoomObjectGfxSlotIds)[i] = k;
+    bA = (u8 *)gRoomObjectGfxSlots;
     o1 = k << 2;
     p6 = (u8 *)(o1 + (u32)bA);
     p6[0] = e[1];
@@ -108,7 +108,7 @@ s32 sub_080b5840(u8 *e, s32 i, s32 k)
     o7 = o1;
     if (w2 != 0)
     {
-        *(u16 *)(p6 + 2) = sub_080b5628(w2);
+        *(u16 *)(p6 + 2) = AllocObjTiles(w2);
         if (*(u16 *)(d5 + 6) != 0)
         {
             LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
@@ -121,8 +121,8 @@ s32 sub_080b5840(u8 *e, s32 i, s32 k)
     }
     if (*(u16 *)d5 != 0)
     {
-        r = sub_080b5654(*(u16 *)d5);
-        pX = (u8 *)((u32)gUnk_020060A0 + o7);
+        r = AllocObjPalettes(*(u16 *)d5);
+        pX = (u8 *)((u32)gRoomObjectGfxSlots + o7);
         pX[1] = r;
         w9 = pX[1];
         RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gObjPalette, *(u16 *)d5 << 5);
@@ -130,7 +130,7 @@ s32 sub_080b5840(u8 *e, s32 i, s32 k)
     return 1;
 }
 
-s32 sub_080b590c(u8 *e, s32 i, s32 k)
+s32 LoadRoomBossGfx(u8 *e, s32 i, s32 k)
 {
     u8 *d5;
     u8 *p6;
@@ -145,8 +145,8 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
     d5 = (u8 *)gBossGfx[(s8)e[1]];
     if (d5 == 0)
         return 0;
-    ((u8 *)gUnk_02006130)[i] = k;
-    bA = (u8 *)gUnk_020060A0;
+    ((u8 *)gRoomObjectGfxSlotIds)[i] = k;
+    bA = (u8 *)gRoomObjectGfxSlots;
     o1 = k << 2;
     p6 = (u8 *)(o1 + (u32)bA);
     p6[0] = e[1];
@@ -154,7 +154,7 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
     o7 = o1;
     if (w2 != 0)
     {
-        *(u16 *)(p6 + 2) = sub_080b5628(w2);
+        *(u16 *)(p6 + 2) = AllocObjTiles(w2);
         if (*(u16 *)(d5 + 6) != 0)
         {
             LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
@@ -167,8 +167,8 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
     }
     if (*(u16 *)d5 != 0)
     {
-        r = sub_080b5654(*(u16 *)d5);
-        pX = (u8 *)((u32)gUnk_020060A0 + o7);
+        r = AllocObjPalettes(*(u16 *)d5);
+        pX = (u8 *)((u32)gRoomObjectGfxSlots + o7);
         pX[1] = r;
         w9 = pX[1];
         RequestCopy(2, *(u32 *)(d5 + 8), ((s8)w9 << 5) + (u32)gObjPalette, *(u16 *)d5 << 5);
@@ -176,15 +176,15 @@ s32 sub_080b590c(u8 *e, s32 i, s32 k)
     return 1;
 }
 
-void sub_080b59d8(u8 *e, s32 idx, s32 n)
+void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
 {
     struct Unk0873EEA0 *d;
     s32 i;
 
-    gUnk_02006130[idx] = n;
-    gUnk_020060A0[n].unk0 = e[1];
-    gUnk_020060A0[n].unk2 = 0;
-    gUnk_020060A0[n].unk1 = 8;
+    gRoomObjectGfxSlotIds[idx] = n;
+    gRoomObjectGfxSlots[n].unk0 = e[1];
+    gRoomObjectGfxSlots[n].unk2 = 0;
+    gRoomObjectGfxSlots[n].paletteBank = 8;
     d = gMetaKnightsGfx[0];
     if (d->tileCount != 0)
     {
@@ -222,62 +222,62 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
     {
         if (gRoomObjectList.entries[i].kind == 5)
         {
-            if (gUnk_02006130[i] != -1
-             && gUnk_0873F180[gUnk_020060A0[gUnk_02006130[i]].unk0] == d)
+            if (gRoomObjectGfxSlotIds[i] != -1
+             && gUnk_0873F180[gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk0] == d)
             {
-                gUnk_02006130[idx] = gUnk_02006130[i];
+                gRoomObjectGfxSlotIds[idx] = gRoomObjectGfxSlotIds[i];
                 return 0;
             }
         }
     }
-    gUnk_02006130[idx] = n;
-    gUnk_020060A0[n].unk0 = e->unk1;
+    gRoomObjectGfxSlotIds[idx] = n;
+    gRoomObjectGfxSlots[n].unk0 = e->unk1;
     if (d->tileCount != 0)
     {
-        gUnk_020060A0[n].unk2 = sub_080b5628(d->tileCount);
+        gRoomObjectGfxSlots[n].unk2 = AllocObjTiles(d->tileCount);
         if (d->tilesCompressed != 0)
         {
             LZ77UnCompVram((void *)d->tiles, gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (gRoomObjectGfxSlots[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
         }
         else
         {
-            RequestCopy(4, d->tiles, (gUnk_020060A0[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
+            RequestCopy(4, d->tiles, (gRoomObjectGfxSlots[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
         }
     }
     if (d->paletteBankCount != 0)
     {
-        gUnk_020060A0[n].unk1 = sub_080b5654(d->paletteBankCount);
-        RequestCopy(2, d->palette, (gUnk_020060A0[n].unk1 << 5) + (u32)gObjPalette, d->paletteBankCount << 5);
+        gRoomObjectGfxSlots[n].paletteBank = AllocObjPalettes(d->paletteBankCount);
+        RequestCopy(2, d->palette, (gRoomObjectGfxSlots[n].paletteBank << 5) + (u32)gObjPalette, d->paletteBankCount << 5);
     }
     return 1;
 }
 
-s32 sub_080b5bdc(struct Unk020055D8Entry *e, s32 i)
+s32 SpawnRoomEnemy(struct Unk020055D8Entry *e, s32 i)
 {
     s32 res = -1;
 
-    if (gUnk_02006130[i] != -1)
+    if (gRoomObjectGfxSlotIds[i] != -1)
     {
         if (e->unk1 == 32)
         {
-            if (!(gUnk_02007BF0[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
+            if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
                 res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
-                                   (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
         }
         else if (e->unk1 == 37)
         {
-            if (!(gUnk_02007BF0[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
+            if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
             {
                 res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
-                                   (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
-                gUnk_02007BF0[gLevelIndex][gStageIndex] |= 1 << (e->unk3 & 31);
+                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                gUsedRoomObjects[gLevelIndex][gStageIndex] |= 1 << (e->unk3 & 31);
             }
         }
         else
         {
             res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y,
-                               (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+                               (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
         }
     }
     else
@@ -351,7 +351,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
         }
     }
     for (i = 0; i < 2; i++)
-        gUnk_02008014[i] = 0xFFFF;
+        gHudHpBarTasks[i] = 0xFFFF;
     f = &gRoomObjectList.entries[e->unk2];
     n = 0;
     for (i = e->unk2; i < e->unk2 + e->unk3; f++, i++)
@@ -378,16 +378,16 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 y = f->y;
             }
             r = CreateActorByKind(1, f->unk1, f->unk2, f->unk3, f->x, y,
-                             (gUnk_020060A0[gUnk_02006130[i]].unk1 << 12) | ((gUnk_020060A0[gUnk_02006130[i]].unk2 * 2) + 16));
+                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             if (r != -1)
             {
                 gUnk_02005590[r - 32] = n;
-                gUnk_02008014[n] = r;
+                gHudHpBarTasks[n] = r;
             }
             n++;
         }
     }
-    gUnk_020055D0 = gUnk_02000034 = n;
+    gHudHpBarCount = gHudHpBarsLeft = n;
     return slot;
 }
 

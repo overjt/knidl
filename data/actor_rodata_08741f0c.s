@@ -59,7 +59,7 @@ gUnk_08741FB4:
 	.global	gChillyVariants
 gChillyVariants:
 	.word	ChillyInit+1
-	.word	sub_080852cc+1
+	.word	ChillyIdle+1
 	.global	gChillyStates
 gChillyStates:
 	.word	sub_08084dc0+1
@@ -76,17 +76,17 @@ gChillyStateUpdates:
 	.word	sub_080852c8+1
 	.global	gWaddleDooVariants
 gWaddleDooVariants:
-	.word	sub_08085498+1
-	.word	sub_08085858+1
-	.word	sub_08085c2c+1
-	.word	sub_08085cd8+1
-	.global	gUnk_08741FF8
-gUnk_08741FF8:
-	.word	sub_08085530+1
-	.word	sub_08085660+1
-	.word	sub_080856e0+1
-	.global	gUnk_08742004
-gUnk_08742004:
+	.word	WaddleDooWalkInit+1
+	.word	ParasolWaddleDooInit+1
+	.word	WaddleDooIdle+1
+	.word	WaddleDooShoot+1
+	.global	gWaddleDooWalkStates
+gWaddleDooWalkStates:
+	.word	WaddleDooWalk+1
+	.word	WaddleDooWalkJump+1
+	.word	WaddleDooWalkShoot+1
+	.global	gWaddleDooWalkStateUpdates
+gWaddleDooWalkStateUpdates:
 	.word	sub_08085608+1
 	.word	sub_080856dc+1
 	.word	sub_0808582c+1
@@ -105,14 +105,14 @@ gUnk_08742028:
 	.global	gUnk_0874202C
 gUnk_0874202C:
 	.incbin	"baserom.gba", 0x74202C, 0x4
-	.global	gUnk_08742030
-gUnk_08742030:
-	.word	sub_080858fc+1
-	.word	sub_08085a04+1
-	.word	sub_08085a84+1
+	.global	gParasolWaddleDooStates
+gParasolWaddleDooStates:
+	.word	ParasolWaddleDooWalk+1
+	.word	ParasolWaddleDooJump+1
+	.word	ParasolWaddleDooShoot+1
 	.word	sub_08085be4+1
-	.global	gUnk_08742040
-gUnk_08742040:
+	.global	gParasolWaddleDooStateUpdates
+gParasolWaddleDooStateUpdates:
 	.word	sub_08085998+1
 	.word	sub_08085a80+1
 	.word	sub_08085bb8+1
@@ -128,7 +128,7 @@ gBrontoBurtVariants:
 	.word	BrontoBurtDiagonalInit+1
 	.word	BrontoBurtChaseInit+1
 	.word	BrontoBurtTakeOffInit+1
-	.word	sub_08086efc+1
+	.word	BrontoBurtIdle+1
 	.global	gBrontoBurtWaveStates
 gBrontoBurtWaveStates:
 	.word	sub_08086170+1
@@ -213,7 +213,7 @@ gTwizzyVariants:
 	.word	sub_08087e2c+1
 	.word	sub_08087fcc+1
 	.word	sub_08088360+1
-	.word	sub_08088498+1
+	.word	TwizzyIdle+1
 	.global	gUnk_08742598
 gUnk_08742598:
 	.incbin	"baserom.gba", 0x742598, 0xC
@@ -324,19 +324,19 @@ gUnk_087426B0:
 	.word	sub_08088478+1
 	.global	gSquishyVariants
 gSquishyVariants:
-	.word	sub_08088658+1
+	.word	SquishyWalkInit+1
 	.word	sub_08088a64+1
 	.word	sub_08088ce8+1
-	.word	sub_08088f4c+1
-	.global	gUnk_087426C4
-gUnk_087426C4:
-	.word	sub_08088708+1
+	.word	SquishyIdle+1
+	.global	gSquishyWalkStates
+gSquishyWalkStates:
+	.word	SquishyWalk+1
 	.word	sub_0808880c+1
 	.word	sub_080888c8+1
 	.word	sub_08088948+1
 	.word	sub_080889cc+1
-	.global	gUnk_087426D8
-gUnk_087426D8:
+	.global	gSquishyWalkStateUpdates
+gSquishyWalkStateUpdates:
 	.word	sub_080887a0+1
 	.word	sub_080888a0+1
 	.word	sub_08088920+1
@@ -371,19 +371,19 @@ gUnk_08742728:
 	.global	gUnk_08742734
 gUnk_08742734:
 	.incbin	"baserom.gba", 0x742734, 0x8
-	.global	gUnk_0874273C
-gUnk_0874273C:
-	.word	sub_080891c0+1
-	.word	sub_08089680+1
-	.global	gUnk_08742744
-gUnk_08742744:
+	.global	gBubblesVariants
+gBubblesVariants:
+	.word	BubblesInit+1
+	.word	BubblesIdle+1
+	.global	gBubblesStates
+gBubblesStates:
 	.word	sub_0808924c+1
 	.word	sub_08089334+1
 	.word	sub_08089460+1
 	.word	sub_08089544+1
 	.word	sub_080895ec+1
-	.global	gUnk_08742758
-gUnk_08742758:
+	.global	gBubblesStateUpdates
+gBubblesStateUpdates:
 	.word	sub_08089330+1
 	.word	sub_0808945c+1
 	.word	sub_08089530+1
@@ -398,11 +398,11 @@ gUnk_08742778:
 	.global	gGlunkVariants
 gGlunkVariants:
 	.word	GlunkInit+1
-	.word	sub_08089b44+1
+	.word	GlunkIdle+1
 	.global	gGlunkStates
 gGlunkStates:
 	.word	sub_0808990c+1
-	.word	sub_080899fc+1
+	.word	GlunkShoot+1
 	.global	gGlunkStateUpdates
 gGlunkStateUpdates:
 	.word	sub_080899d4+1
@@ -413,12 +413,12 @@ gUnk_087427B0:
 	.global	gUnk_087427B2
 gUnk_087427B2:
 	.incbin	"baserom.gba", 0x7427B2, 0x2
-	.global	gUnk_087427B4
-gUnk_087427B4:
-	.word	sub_08089c98+1
-	.word	sub_0808a7a8+1
-	.global	gUnk_087427BC
-gUnk_087427BC:
+	.global	gSlippyVariants
+gSlippyVariants:
+	.word	SlippyInit+1
+	.word	SlippyIdle+1
+	.global	gSlippyStates
+gSlippyStates:
 	.word	sub_08089da8+1
 	.word	sub_08089ec8+1
 	.word	sub_0808a048+1
@@ -429,9 +429,9 @@ gUnk_087427BC:
 	.word	sub_0808a3c4+1
 	.word	sub_0808a4d0+1
 	.word	sub_0808a610+1
-	.word	sub_0808a768+1
-	.global	gUnk_087427E8
-gUnk_087427E8:
+	.word	SlippyFall+1
+	.global	gSlippyStateUpdates
+gSlippyStateUpdates:
 	.word	sub_08089ea0+1
 	.word	sub_0808a020+1
 	.word	sub_0808a0a8+1
@@ -492,7 +492,7 @@ gBlipperVariants:
 	.word	sub_0808af34+1
 	.word	sub_0808b1d0+1
 	.word	sub_0808b1d0+1
-	.word	sub_0808bb24+1
+	.word	BlipperIdle+1
 	.global	gUnk_087428D8
 gUnk_087428D8:
 	.word	sub_0808ab70+1
@@ -532,15 +532,15 @@ gUnk_08742930:
 	.global	gUnk_08742938
 gUnk_08742938:
 	.incbin	"baserom.gba", 0x742938, 0x8
-	.global	gUnk_08742940
-gUnk_08742940:
-	.word	sub_0808bdf4+1
-	.word	sub_0808c6ac+1
-	.global	gUnk_08742948
-gUnk_08742948:
-	.word	sub_0808bea0+1
-	.word	sub_0808bea0+1
-	.word	sub_0808bea0+1
+	.global	gGipVariants
+gGipVariants:
+	.word	GipInit+1
+	.word	GipIdle+1
+	.global	gGipStates
+gGipStates:
+	.word	GipWalk+1
+	.word	GipWalk+1
+	.word	GipWalk+1
 	.word	sub_0808bfc4+1
 	.word	sub_0808c02c+1
 	.word	sub_0808c260+1
@@ -549,9 +549,9 @@ gUnk_08742948:
 	.word	sub_0808c478+1
 	.word	sub_0808c4e4+1
 	.word	sub_0808c53c+1
-	.word	sub_0808c610+1
-	.global	gUnk_08742978
-gUnk_08742978:
+	.word	GipShoot+1
+	.global	gGipStateUpdates
+gGipStateUpdates:
 	.word	sub_0808bf1c+1
 	.word	sub_0808c004+1
 	.word	sub_0808c1d0+1

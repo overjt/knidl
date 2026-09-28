@@ -23,8 +23,8 @@ extern void ActorSetTerrainBox(void *p);
 extern void sub_080639f0(void *p);
 extern void sub_08063a00(void *p);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
-extern void sub_080689c8(s32 i, s32 d);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
+extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern u32 ActorCheckHitsWithBox(void *p);
 extern u32 sub_08068f68(void);
 extern u8 ActorCollideTerrain(void);
@@ -1038,7 +1038,7 @@ s32 sub_08096e24(void)
     ActorFaceHitter();
     t = gCurTask;
     if (t->unk18 >= 0) {
-        sub_080689c8(t->unk18, -t->facing);
+        ReleaseHeldPlayer(t->unk18, -t->facing);
         gCurTask->unk18 = -1;
     }
     ActorSetState(10);
@@ -1066,27 +1066,27 @@ void sub_08096e9c(void)
     struct Actor *a;
     s16 *q;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     if ((a->paletteLocked & 1) == 0) {
     a->paletteOverridden = 1;
     t = gCurTask;
-    if ((t->hitTimer != 0 && t->unk8C->hitState != 0) || t->unk1C != 0) {
+    if ((t->hitTimer != 0 && t->u8C.actor->hitState != 0) || t->unk1C != 0) {
         u = gCurTask;
         q = (s16 *)&u->unk70;
         if (*q <= 3) {
-            BlendColors(gUnk_08744598[u->unk8C->paletteVariant][0],
-                         gUnk_08744598[u->unk8C->paletteVariant][1],
+            BlendColors(gUnk_08744598[u->u8C.actor->paletteVariant][0],
+                         gUnk_08744598[u->u8C.actor->paletteVariant][1],
                          gUnk_087445D8[*q], 16,
                          &gObjPalette[(u->tileWord >> 12) * 32]);
         } else {
-            BlendColors(gUnk_08744598[u->unk8C->paletteVariant][0],
+            BlendColors(gUnk_08744598[u->u8C.actor->paletteVariant][0],
                          gUnk_082B07BC,
                          gUnk_087445D8[*q], 16,
                          &gObjPalette[(u->tileWord >> 12) * 32]);
         }
     } else {
-        BlendColors(gUnk_08744598[t->unk8C->paletteVariant][0],
-                     gUnk_08744598[t->unk8C->paletteVariant][1],
+        BlendColors(gUnk_08744598[t->u8C.actor->paletteVariant][0],
+                     gUnk_08744598[t->u8C.actor->paletteVariant][1],
                      gUnk_087445D8[(s16)t->unk70], 16,
                      &gObjPalette[(t->tileWord >> 12) * 32]);
     }
@@ -1140,5 +1140,5 @@ void sub_08097088(void)
     t = gCurTask;
     x = t->pixelX + d * 24;
     y = t->pixelY + 3;
-    sub_08067120(x, y, d, 3);
+    CreateInhalableStar(x, y, d, 3);
 }

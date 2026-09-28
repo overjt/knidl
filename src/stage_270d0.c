@@ -12,7 +12,7 @@
  *
  * Stage helpers, part 2.  sub_080270d0 restarts the room's BGM (with
  * the 0x800 flag), sub_08027128/sub_08027178/sub_08027198 tear the level
- * down before a state change (flags in gUnk_02007FB0), PauseRoom/
+ * down before a state change (flags in gStageExitFlags), PauseRoom/
  * SetRoomUpdateFlags/ResumeRoom set the per-frame flags gRoomUpdateFlags, and
  * sub_08027228/sub_08027240 save and restore the OBJ palette and tiles
  * around M02's pause screen.  sub_080272dc picks the hub door the player
@@ -47,13 +47,13 @@ void sub_08027128(void)
     PauseBlockAnims();
     StopHBlankScroll();
     TaskFree(63);
-    if (gUnk_02007FB0 & 1)
+    if (gStageExitFlags & 1)
         sub_08026998();
-    if (gUnk_02007FB0 & 2)
+    if (gStageExitFlags & 2)
         StopAllSfx();
-    if (gUnk_02007FB0 & 4)
+    if (gStageExitFlags & 4)
         TaskSetOthersSkipMask(31, 63);
-    gUnk_02007FB0 = 0;
+    gStageExitFlags = 0;
 }
 
 void sub_08027178(void)
@@ -61,7 +61,7 @@ void sub_08027178(void)
     PauseBlockAnims();
     StopHBlankScroll();
     TaskFree(63);
-    gUnk_02007FB0 = 0;
+    gStageExitFlags = 0;
 }
 
 void sub_08027198(void)
@@ -126,7 +126,7 @@ void sub_080272dc(void)
     s32 i;
 
     gLevelIndex = 8;
-    gStageIndex = gUnk_030023B8;
+    gStageIndex = gCurLevel;
     gRoomIndex = 0;
     r = gRoomTable[gLevelIndex][gStageIndex][0];
     d = r->doors;
@@ -138,6 +138,6 @@ void sub_080272dc(void)
     gRoomEntryX = (d->unk2 << 4) + 22;
     gRoomEntryY = (d->unk4 << 4) + 5;
     gRoomEntrySet = 1;
-    gUnk_0200AF00 = 0;
-    gUnk_020069F0 = 1;
+    gEntryDoorEvent = 0;
+    gRoomEntryMode = 1;
 }

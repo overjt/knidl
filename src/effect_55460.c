@@ -37,8 +37,8 @@ void sub_08055460(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C960;
-    t->posX = ((struct Task *)t->unk8C)->pixelX << 16;
-    t->posY = (((struct Task *)t->unk8C)->pixelY - 8) << 16;
+    t->posX = (t->u8C.parentTask)->pixelX << 16;
+    t->posY = ((t->u8C.parentTask)->pixelY - 8) << 16;
     t->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -67,8 +67,8 @@ void sub_08055520(void)
     gCurTask->layer = 8;
     t = gCurTask;
     t->frameTable = gUnk_0874C980;
-    t->posX = ((struct Task *)t->unk8C)->pixelX << 16;
-    t->posY = ((struct Task *)t->unk8C)->pixelY << 16;
+    t->posX = (t->u8C.parentTask)->pixelX << 16;
+    t->posY = (t->u8C.parentTask)->pixelY << 16;
     t->frame = 0;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -158,8 +158,8 @@ void sub_0805574c(void)
     gCurTask->updateCallback = (u32)sub_080557d4;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->pixelX = ((struct Task *)t->unk8C)->pixelX;
-    t->pixelY = ((struct Task *)t->unk8C)->pixelY;
+    t->pixelX = (t->u8C.parentTask)->pixelX;
+    t->pixelY = (t->u8C.parentTask)->pixelY;
     t->frame = 0;
     TaskYieldTrampoline(4);
     gCurTask->unk6C = 0;
@@ -205,10 +205,10 @@ void sub_0805587c(void)
         TaskStop();
         u = gCurTask;
         if (u->facing == 1)
-            u->posX = ((p = (struct Task *)u->unk8C)->pixelX - 6) << 16;
+            u->posX = ((p = u->u8C.parentTask)->pixelX - 6) << 16;
         else
-            u->posX = ((p = (struct Task *)u->unk8C)->pixelX + 6) << 16;
-        u->posY = (((struct Task *)u->unk8C)->pixelY + 8) << 16;
+            u->posX = ((p = u->u8C.parentTask)->pixelX + 6) << 16;
+        u->posY = ((u->u8C.parentTask)->pixelY + 8) << 16;
         gCurTask->accelY = -0x2000;
         TaskSetMotionXFacing(-0x30000, 0x5A5A5A5A);
         TaskSetFrameByFacing(0);

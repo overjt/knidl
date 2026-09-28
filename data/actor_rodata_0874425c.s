@@ -93,9 +93,9 @@ gGrandWheelieStates:
 	.word	sub_08094da4+1
 	.word	sub_08094f28+1
 	.word	sub_08094fb0+1
-	.word	sub_0809513c+1
+	.word	GrandWheelieSummon+1
 	.word	sub_08095254+1
-	.word	sub_08095360+1
+	.word	GrandWheelieDefeat+1
 	.global	gGrandWheelieStateUpdates
 gGrandWheelieStateUpdates:
 	.word	sub_08094640+1
@@ -106,7 +106,7 @@ gGrandWheelieStateUpdates:
 	.word	sub_08094dec+1
 	.word	sub_08094f68+1
 	.word	sub_080950b4+1
-	.word	sub_08095220+1
+	.word	GrandWheelieSummonUpdate+1
 	.word	sub_0809532c+1
 	.word	sub_08095484+1
 	.global	gUnk_0874449C

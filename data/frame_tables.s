@@ -519,8 +519,8 @@ gUnk_0874CB3C:
 	.word	gUnk_080D6FB8
 	.word	gUnk_080D6FF0
 	.word	gUnk_080D7040
-	.global	gUnk_0874CB5C
-gUnk_0874CB5C:
+	.global	gBlockStarFrames
+gBlockStarFrames:
 	.word	gUnk_080D7080
 	.word	gUnk_080D7080
 	.word	gUnk_080D7080
@@ -627,8 +627,8 @@ gUnk_0874CCA4:
 	.word	gUnk_080D69E0
 	.word	gUnk_080D6A00
 	.word	gUnk_080D6A18
-	.global	gUnk_0874CCBC
-gUnk_0874CCBC:
+	.global	gInhalableStarFrames
+gInhalableStarFrames:
 	.word	gUnk_080D6A30
 	.word	gUnk_080D6A30
 	.word	gUnk_080D6A30
@@ -6391,8 +6391,8 @@ gBomberFrames:
 	.word	gUnk_082517E0
 	.word	gUnk_082517E8
 	.word	gUnk_08251808
-	.global	gUnk_087524A4
-gUnk_087524A4:
+	.global	gCoconutFrames
+gCoconutFrames:
 	.word	gUnk_08251D5C
 	.word	gUnk_08251D5C
 	.word	gUnk_08251D5C
@@ -6438,8 +6438,8 @@ gShotzoCannonballFrames:
 	.word	gUnk_08252168
 	.word	gUnk_08252170
 	.word	gUnk_08252178
-	.global	gUnk_08752548
-gUnk_08752548:
+	.global	gSmokeRingFrames
+gSmokeRingFrames:
 	.word	gUnk_082521A4
 	.word	gUnk_082521AC
 	.word	gUnk_082521B4
@@ -6540,8 +6540,8 @@ gScarfyAngryFrames:
 	.word	gUnk_08254FE4
 	.word	gUnk_08255004
 	.word	gUnk_0825500C
-	.global	gUnk_087526A8
-gUnk_087526A8:
+	.global	gBubblesFrames
+gBubblesFrames:
 	.word	gUnk_08255700
 	.word	gUnk_08255700
 	.word	gUnk_08255700
@@ -6645,8 +6645,8 @@ gGlunkShotFrames:
 	.word	gUnk_0825672C
 	.word	gUnk_08256734
 	.word	gUnk_0825673C
-	.global	gUnk_08752828
-gUnk_08752828:
+	.global	gSlippyFrames
+gSlippyFrames:
 	.word	gUnk_08256CEC
 	.word	gUnk_08256CEC
 	.word	gUnk_08256CEC
@@ -6703,8 +6703,8 @@ gPoppyBrosJrFrames:
 	.word	gUnk_08257C24
 	.word	gUnk_08257C44
 	.word	gUnk_08257C64
-	.global	gUnk_087528F0
-gUnk_087528F0:
+	.global	gPoppyBrosJrOnAppleFrames
+gPoppyBrosJrOnAppleFrames:
 	.word	gUnk_08257CBC
 	.word	gUnk_08257C7C
 	.word	gUnk_08257C7C
@@ -6722,8 +6722,8 @@ gUnk_087528F0:
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D64
 	.word	gUnk_08257D84
-	.global	gUnk_08752934
-gUnk_08752934:
+	.global	gPoppyBrosJrOnMaximTomatoFrames
+gPoppyBrosJrOnMaximTomatoFrames:
 	.word	gUnk_08257D9C
 	.word	gUnk_08257C7C
 	.word	gUnk_08257C7C
@@ -6741,8 +6741,8 @@ gUnk_08752934:
 	.word	gUnk_08257E3C
 	.word	gUnk_08257E5C
 	.word	gUnk_08257E7C
-	.global	gUnk_08752978
-gUnk_08752978:
+	.global	gPoppyBrosJrAppleFrames
+gPoppyBrosJrAppleFrames:
 	.word	gUnk_08257CBC
 	.word	gUnk_08257CBC
 	.word	gUnk_08257CBC
@@ -6755,8 +6755,8 @@ gUnk_08752978:
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D64
 	.word	gUnk_08257D84
-	.global	gUnk_087529A8
-gUnk_087529A8:
+	.global	gPoppyBrosJrMaximTomatoFrames
+gPoppyBrosJrMaximTomatoFrames:
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D4C
@@ -6769,8 +6769,8 @@ gUnk_087529A8:
 	.word	gUnk_08257E3C
 	.word	gUnk_08257E5C
 	.word	gUnk_08257E7C
-	.global	gUnk_087529D8
-gUnk_087529D8:
+	.global	gSwordKnightFrames
+gSwordKnightFrames:
 	.word	gUnk_082587B4
 	.word	gUnk_082587B4
 	.word	gUnk_082587B4
@@ -6790,8 +6790,8 @@ gUnk_087529D8:
 	.word	gUnk_08258784
 	.word	gUnk_082587B4
 	.word	gUnk_082587DC
-	.global	gUnk_08752A24
-gUnk_08752A24:
+	.global	gBladeKnightFrames
+gBladeKnightFrames:
 	.word	gUnk_08259214
 	.word	gUnk_08259214
 	.word	gUnk_08259214
@@ -6811,8 +6811,8 @@ gUnk_08752A24:
 	.word	gUnk_082591E4
 	.word	gUnk_08259214
 	.word	gUnk_0825923C
-	.global	gUnk_08752A70
-gUnk_08752A70:
+	.global	gConerFrames
+gConerFrames:
 	.word	gUnk_08259504
 	.word	gUnk_08259504
 	.word	gUnk_08259504
@@ -6855,8 +6855,8 @@ gFlamerFrames:
 	.word	gUnk_0825A410
 	.word	gUnk_0825A420
 	.word	gUnk_0825A430
-	.global	gTogezoFrames
-gTogezoFrames:
+	.global	gNeedlousFrames
+gNeedlousFrames:
 	.word	gUnk_0825AB2C
 	.word	gUnk_0825AB2C
 	.word	gUnk_0825AB2C
@@ -6914,8 +6914,8 @@ gParasolFrames:
 	.word	gUnk_0825B5C4
 	.word	gUnk_0825B604
 	.word	gUnk_0825B634
-	.global	gUnk_08752BD4
-gUnk_08752BD4:
+	.global	gGipFrames
+gGipFrames:
 	.word	gUnk_0825BE64
 	.word	gUnk_0825BE64
 	.word	gUnk_0825BE64
@@ -6933,8 +6933,8 @@ gUnk_08752BD4:
 	.word	gUnk_0825BDC4
 	.word	gUnk_0825BDE4
 	.word	gUnk_0825BE14
-	.global	gUnk_08752C18
-gUnk_08752C18:
+	.global	gGipStarFrames
+gGipStarFrames:
 	.word	gUnk_0825BE3C
 	.word	gUnk_0825BE3C
 	.word	gUnk_0825BE3C
@@ -7291,8 +7291,8 @@ gPoppyBrosSrFrames:
 	.word	gUnk_0827557C
 	.word	gUnk_082755F4
 	.word	gUnk_0827560C
-	.global	gUnk_08753128
-gUnk_08753128:
+	.global	gPoppyBrosSrHeadFrames
+gPoppyBrosSrHeadFrames:
 	.word	gUnk_0827548C
 	.word	gUnk_08275494
 	.word	gUnk_0827549C
@@ -7301,8 +7301,8 @@ gUnk_08753128:
 	.word	gUnk_082754B4
 	.word	gUnk_082754BC
 	.word	gUnk_082754C4
-	.global	gUnk_08753148
-gUnk_08753148:
+	.global	gPoppyBrosSrHandFrames
+gPoppyBrosSrHandFrames:
 	.word	gUnk_0827559C
 	.word	gUnk_082755A4
 	.word	gUnk_082755AC
@@ -7761,8 +7761,8 @@ gFireLionFrames:
 	.word	gUnk_082B0690
 	.word	gUnk_082B069C
 	.word	gUnk_082B06A8
-	.global	gUnk_087537E8
-gUnk_087537E8:
+	.global	gFireLionFlameFrames
+gFireLionFlameFrames:
 	.word	gUnk_082B091C
 	.word	gUnk_082B0924
 	.word	gUnk_082B092C
@@ -7815,8 +7815,8 @@ gPhanPhanFrames:
 	.word	gUnk_082BFB18
 	.word	gUnk_082BFB24
 	.word	gUnk_082BFB30
-	.global	gUnk_087538B0
-gUnk_087538B0:
+	.global	gPhanPhanAppleFrames
+gPhanPhanAppleFrames:
 	.word	gUnk_082BFD8C
 	.word	gUnk_082BFD8C
 	.word	gUnk_082BFD8C
@@ -7875,8 +7875,8 @@ gKingDededeFrames:
 	.word	gUnk_082D60A8
 	.word	gUnk_082D60B4
 	.word	gUnk_082D60C0
-	.global	gUnk_08753990
-gUnk_08753990:
+	.global	gKingDededeAirPuffFrames
+gKingDededeAirPuffFrames:
 	.word	gUnk_082D8604
 	.global	gPaintRollerFrames
 gPaintRollerFrames:
@@ -7942,8 +7942,8 @@ gPaintRollerFrames:
 	.word	gUnk_082DEBA4
 	.word	gUnk_082DEBB0
 	.word	gUnk_082DEBBC
-	.global	gUnk_08753A8C
-gUnk_08753A8C:
+	.global	gPaintRollerPaintingBaseballFrames
+gPaintRollerPaintingBaseballFrames:
 	.word	gUnk_082DFDD4
 	.word	gUnk_082DFDD4
 	.word	gUnk_082DFDD4
@@ -7952,8 +7952,8 @@ gUnk_08753A8C:
 	.word	gUnk_082DF9A4
 	.word	gUnk_082DF9D4
 	.word	gUnk_082DFA14
-	.global	gUnk_08753AAC
-gUnk_08753AAC:
+	.global	gPaintRollerPaintingCarFrames
+gPaintRollerPaintingCarFrames:
 	.word	gUnk_082DFE34
 	.word	gUnk_082DFE34
 	.word	gUnk_082DFE34
@@ -7961,8 +7961,8 @@ gUnk_08753AAC:
 	.word	gUnk_082DFA44
 	.word	gUnk_082DFA5C
 	.word	gUnk_082DFA7C
-	.global	gUnk_08753AC8
-gUnk_08753AC8:
+	.global	gPaintRollerPaintingKirbyFrames
+gPaintRollerPaintingKirbyFrames:
 	.word	gUnk_082DFE64
 	.word	gUnk_082DFE64
 	.word	gUnk_082DFE64
@@ -7971,8 +7971,8 @@ gUnk_08753AC8:
 	.word	gUnk_082DFABC
 	.word	gUnk_082DFADC
 	.word	gUnk_082DFAFC
-	.global	gUnk_08753AE8
-gUnk_08753AE8:
+	.global	gPaintRollerPaintingCloudFrames
+gPaintRollerPaintingCloudFrames:
 	.word	gUnk_082DFEA4
 	.word	gUnk_082DFEA4
 	.word	gUnk_082DFEA4
@@ -7980,8 +7980,8 @@ gUnk_08753AE8:
 	.word	gUnk_082DFB1C
 	.word	gUnk_082DFB2C
 	.word	gUnk_082DFB3C
-	.global	gUnk_08753B04
-gUnk_08753B04:
+	.global	gPaintRollerPaintingBombFrames
+gPaintRollerPaintingBombFrames:
 	.word	gUnk_082DFEC4
 	.word	gUnk_082DFEC4
 	.word	gUnk_082DFEC4
@@ -7989,8 +7989,8 @@ gUnk_08753B04:
 	.word	gUnk_082DFBB4
 	.word	gUnk_082DFBC4
 	.word	gUnk_082DFBEC
-	.global	gUnk_08753B20
-gUnk_08753B20:
+	.global	gPaintRollerPaintingParasolFrames
+gPaintRollerPaintingParasolFrames:
 	.word	gUnk_082DFEE4
 	.word	gUnk_082DFEE4
 	.word	gUnk_082DFEE4
@@ -8001,8 +8001,8 @@ gUnk_08753B20:
 	.word	gUnk_082DFC54
 	.word	gUnk_082DFC6C
 	.word	gUnk_082DFC84
-	.global	gUnk_08753B48
-gUnk_08753B48:
+	.global	gPaintRollerPaintingMikeFrames
+gPaintRollerPaintingMikeFrames:
 	.word	gUnk_082DFF14
 	.word	gUnk_082DFF14
 	.word	gUnk_082DFF14
@@ -8011,8 +8011,8 @@ gUnk_08753B48:
 	.word	gUnk_082DFCBC
 	.word	gUnk_082DFCD4
 	.word	gUnk_082DFCEC
-	.global	gUnk_08753B68
-gUnk_08753B68:
+	.global	gPaintRollerPaintingWaddleDeeFrames
+gPaintRollerPaintingWaddleDeeFrames:
 	.word	gUnk_082DFF54
 	.word	gUnk_082DFF54
 	.word	gUnk_082DFF54
@@ -8021,8 +8021,8 @@ gUnk_08753B68:
 	.word	gUnk_082DFD2C
 	.word	gUnk_082DFD4C
 	.word	gUnk_082DFD64
-	.global	gUnk_08753B88
-gUnk_08753B88:
+	.global	gPaintRollerLightningFrames
+gPaintRollerLightningFrames:
 	.word	gUnk_082DFB4C
 	.word	gUnk_082DFB5C
 	.word	gUnk_082DFB6C
@@ -8030,8 +8030,8 @@ gUnk_08753B88:
 	.word	gUnk_082DFB7C
 	.word	gUnk_082DFB9C
 	.word	gUnk_082DFBAC
-	.global	gUnk_08753BA4
-gUnk_08753BA4:
+	.global	gPaintRollerPaintingFrames
+gPaintRollerPaintingFrames:
 	.word	gUnk_082DFD84
 	.word	gUnk_082DFD8C
 	.word	gUnk_082DFD94
@@ -8627,8 +8627,8 @@ gUnk_08754418:
 	.word	gUnk_082FD23C
 	.word	gUnk_082FD25C
 	.word	gUnk_082FD27C
-	.global	gUnk_08754448
-gUnk_08754448:
+	.global	gKrackoLightningFrames
+gKrackoLightningFrames:
 	.word	gUnk_082FD18C
 	.word	gUnk_082FD194
 	.word	gUnk_082FD19C
@@ -8642,8 +8642,8 @@ gUnk_08754448:
 	.word	gUnk_082FD1DC
 	.word	gUnk_082FD1E4
 	.word	gUnk_082FD214
-	.global	gUnk_0875447C
-gUnk_0875447C:
+	.global	gKrackoStarmanFrames
+gKrackoStarmanFrames:
 	.word	gUnk_082FD3E4
 	.word	gUnk_082FD3E4
 	.word	gUnk_082FD3E4
@@ -8857,8 +8857,8 @@ gUnk_08754738:
 	.word	gUnk_0833441C
 	.word	gUnk_0833444C
 	.word	gUnk_08334464
-	.global	gUnk_08754780
-gUnk_08754780:
+	.global	gStarRodPieceFrames
+gStarRodPieceFrames:
 	.word	gUnk_08334CA0
 	.word	gUnk_08334CB0
 	.word	gUnk_08334CC0
@@ -10048,8 +10048,8 @@ gUnk_0875585C:
 	.word	gUnk_08599FDC
 	.word	gUnk_08599FEC
 	.word	gUnk_0859A02C
-	.global	gUnk_087558BC
-gUnk_087558BC:
+	.global	gArenaDoorSignFrames
+gArenaDoorSignFrames:
 	.word	gUnk_085A3278
 	.global	gUnk_087558C0
 gUnk_087558C0:
@@ -10102,8 +10102,8 @@ gUnk_08755930:
 gUnk_0875593C:
 	.word	gUnk_085A3478
 	.word	gUnk_085A3490
-	.global	gUnk_08755944
-gUnk_08755944:
+	.global	gMuseumDoorSignFrames
+gMuseumDoorSignFrames:
 	.word	gUnk_085A34A8
 	.global	gUnk_08755948
 gUnk_08755948:
@@ -10119,11 +10119,11 @@ gUnk_08755948:
 	.word	gUnk_085A3540
 	.word	gUnk_085A3550
 	.word	gUnk_085A3560
-	.global	gUnk_08755978
-gUnk_08755978:
+	.global	gWarpStarStationDoorSignFrames
+gWarpStarStationDoorSignFrames:
 	.word	gUnk_085A3570
-	.global	gUnk_0875597C
-gUnk_0875597C:
+	.global	gWarpStarStationDoorSparkleFrames
+gWarpStarStationDoorSparkleFrames:
 	.word	gUnk_085A3578
 	.word	gUnk_085A3580
 	.word	gUnk_085A3588
@@ -10136,8 +10136,8 @@ gUnk_0875597C:
 gUnk_0875599C:
 	.word	gUnk_085A35B8
 	.word	gUnk_085A35D8
-	.global	gUnk_087559A4
-gUnk_087559A4:
+	.global	gWarpStarStationNumberFrames
+gWarpStarStationNumberFrames:
 	.word	gUnk_085A3AE0
 	.word	gUnk_085A3AE8
 	.word	gUnk_085A3AF0
@@ -10145,8 +10145,8 @@ gUnk_087559A4:
 	.word	gUnk_085A3B00
 	.word	gUnk_085A3B08
 	.word	gUnk_085A3B10
-	.global	gUnk_087559C0
-gUnk_087559C0:
+	.global	gWarpStarStationLevelSignFrames
+gWarpStarStationLevelSignFrames:
 	.word	gUnk_085A3B18
 	.word	gUnk_085A3B38
 	.word	gUnk_085A3B58
@@ -10154,42 +10154,42 @@ gUnk_087559C0:
 	.word	gUnk_085A3B98
 	.word	gUnk_085A3BB8
 	.word	gUnk_085A3BD8
-	.global	gUnk_087559DC
-gUnk_087559DC:
+	.global	gMuseumAbilitySignFrames
+gMuseumAbilitySignFrames:
 	.word	gUnk_085A48C4
 	.word	gUnk_085A48E4
-	.global	gUnk_087559E4
-gUnk_087559E4:
+	.global	gQuickDrawWaddleDooFrames
+gQuickDrawWaddleDooFrames:
 	.word	gUnk_085EED98
 	.word	gUnk_085EEDB0
 	.word	gUnk_085EEDE8
 	.word	gUnk_085EEE08
-	.global	gUnk_087559F4
-gUnk_087559F4:
+	.global	gQuickDrawWheelieFrames
+gQuickDrawWheelieFrames:
 	.word	gUnk_085EF7C4
 	.word	gUnk_085EF7EC
 	.word	gUnk_085EF83C
 	.word	gUnk_085EF85C
-	.global	gUnk_08755A04
-gUnk_08755A04:
+	.global	gQuickDrawChefKawasakiFrames
+gQuickDrawChefKawasakiFrames:
 	.word	gUnk_085F072C
 	.word	gUnk_085F075C
 	.word	gUnk_085F07BC
 	.word	gUnk_085F07DC
-	.global	gUnk_08755A14
-gUnk_08755A14:
+	.global	gQuickDrawMetaKnightFrames
+gQuickDrawMetaKnightFrames:
 	.word	gUnk_085F1460
 	.word	gUnk_085F1488
 	.word	gUnk_085F14E0
 	.word	gUnk_085F1500
-	.global	gUnk_08755A24
-gUnk_08755A24:
+	.global	gQuickDrawKingDededeFrames
+gQuickDrawKingDededeFrames:
 	.word	gUnk_085F29F8
 	.word	gUnk_085F2A38
 	.word	gUnk_085F2AA0
 	.word	gUnk_085F2AF8
-	.global	gUnk_08755A34
-gUnk_08755A34:
+	.global	gQuickDrawDigitFrames
+gQuickDrawDigitFrames:
 	.word	gUnk_085F2B2C
 	.word	gUnk_085F2B3C
 	.word	gUnk_085F2B4C
@@ -10200,19 +10200,19 @@ gUnk_08755A34:
 	.word	gUnk_085F2B9C
 	.word	gUnk_085F2BAC
 	.word	gUnk_085F2BBC
-	.global	gUnk_08755A5C
-gUnk_08755A5C:
+	.global	gQuickDrawWinCountFrames
+gQuickDrawWinCountFrames:
 	.word	gUnk_085F2BCC
 	.word	gUnk_085F2BE4
 	.word	gUnk_085F2BFC
-	.global	gUnk_08755A68
-gUnk_08755A68:
+	.global	gQuickDrawRankFrames
+gQuickDrawRankFrames:
 	.word	gUnk_085F2C24
 	.word	gUnk_085F2C44
 	.word	gUnk_085F2C6C
 	.word	gUnk_085F2C8C
-	.global	gUnk_08755A78
-gUnk_08755A78:
+	.global	gQuickDrawRedrawFrames
+gQuickDrawRedrawFrames:
 	.word	gUnk_085F2CA4
 	.global	gUnk_08755A7C
 gUnk_08755A7C:
@@ -10228,37 +10228,37 @@ gUnk_08755A88:
 	.word	gUnk_085F2E64
 	.word	gUnk_085F2EC4
 	.word	gUnk_085F2FFC
-	.global	gUnk_08755AA4
-gUnk_08755AA4:
+	.global	gQuickDrawPlayerTagFrames
+gQuickDrawPlayerTagFrames:
 	.word	gUnk_085F322C
 	.word	gUnk_085F3254
 	.word	gUnk_085F327C
 	.word	gUnk_085F32A4
 	.word	gUnk_085F32CC
-	.global	gUnk_08755AB8
-gUnk_08755AB8:
+	.global	gQuickDrawFalseStartMarkFrames
+gQuickDrawFalseStartMarkFrames:
 	.word	gUnk_085F32DC
 	.word	gUnk_085F330C
 	.word	gUnk_085F330C
 	.word	gUnk_085F333C
-	.global	gUnk_08755AC8
-gUnk_08755AC8:
+	.global	gQuickDrawSweatDropFrames
+gQuickDrawSweatDropFrames:
 	.word	gUnk_085F3344
 	.word	gUnk_085F3364
 	.word	gUnk_085F3364
 	.word	gUnk_085F3384
-	.global	gUnk_08755AD8
-gUnk_08755AD8:
+	.global	gQuickDrawTimerBoardFrames
+gQuickDrawTimerBoardFrames:
 	.word	gUnk_085F36DC
-	.global	gUnk_08755ADC
-gUnk_08755ADC:
+	.global	gQuickDrawBurstFrames
+gQuickDrawBurstFrames:
 	.word	gUnk_085F4E1C
 	.word	gUnk_085F4E94
 	.word	gUnk_085F4F3C
 	.word	gUnk_085F4FCC
 	.word	gUnk_085F5034
-	.global	gUnk_08755AF0
-gUnk_08755AF0:
+	.global	gQuickDrawPlayerNearFrames
+gQuickDrawPlayerNearFrames:
 	.word	gUnk_085F373C
 	.word	gUnk_085F37CC
 	.word	gUnk_085F38AC
@@ -10269,8 +10269,8 @@ gUnk_08755AF0:
 	.word	gUnk_085F3B94
 	.word	gUnk_085F3C1C
 	.word	gUnk_085F3CA4
-	.global	gUnk_08755B18
-gUnk_08755B18:
+	.global	gQuickDrawPlayerLeftFrames
+gQuickDrawPlayerLeftFrames:
 	.word	gUnk_085F3D5C
 	.word	gUnk_085F3DAC
 	.word	gUnk_085F3E4C
@@ -10281,8 +10281,8 @@ gUnk_08755B18:
 	.word	gUnk_085F4134
 	.word	gUnk_085F41BC
 	.word	gUnk_085F4244
-	.global	gUnk_08755B40
-gUnk_08755B40:
+	.global	gQuickDrawPlayerRightFrames
+gQuickDrawPlayerRightFrames:
 	.word	gUnk_085F42FC
 	.word	gUnk_085F4364
 	.word	gUnk_085F4404
@@ -10293,8 +10293,8 @@ gUnk_08755B40:
 	.word	gUnk_085F46EC
 	.word	gUnk_085F4774
 	.word	gUnk_085F47FC
-	.global	gUnk_08755B68
-gUnk_08755B68:
+	.global	gQuickDrawPlayerFarFrames
+gQuickDrawPlayerFarFrames:
 	.word	gUnk_085F48B4
 	.word	gUnk_085F48F4
 	.word	gUnk_085F496C
@@ -10305,8 +10305,8 @@ gUnk_08755B68:
 	.word	gUnk_085F4C54
 	.word	gUnk_085F4CDC
 	.word	gUnk_085F4D64
-	.global	gUnk_08755B90
-gUnk_08755B90:
+	.global	gQuickDrawBonusFrames
+gQuickDrawBonusFrames:
 	.word	gUnk_085F3394
 	.word	gUnk_085F33AC
 	.word	gUnk_085F33DC
@@ -10314,8 +10314,8 @@ gUnk_08755B90:
 	.word	gUnk_085F345C
 	.word	gUnk_085F349C
 	.word	gUnk_085F34BC
-	.global	gUnk_08755BAC
-gUnk_08755BAC:
+	.global	gQuickDrawResultsMenuFrames
+gQuickDrawResultsMenuFrames:
 	.word	gUnk_085F34C4
 	.word	gUnk_085F351C
 	.word	gUnk_085F3574
@@ -10481,13 +10481,13 @@ gUnk_08755DEC:
 	.word	gUnk_08603380
 	.word	gUnk_086033B0
 	.word	gUnk_086033F0
-	.global	gUnk_08755E00
-gUnk_08755E00:
+	.global	gBombRallyBombFrames
+gBombRallyBombFrames:
 	.word	gUnk_085FE4E8
 	.word	gUnk_085FE4F0
 	.word	gUnk_085FE4F8
-	.global	gUnk_08755E0C
-gUnk_08755E0C:
+	.global	gBombRallyBlastNearFrames
+gBombRallyBlastNearFrames:
 	.word	gUnk_085FE590
 	.word	gUnk_085FE610
 	.word	gUnk_085FE710
@@ -10502,8 +10502,8 @@ gUnk_08755E0C:
 	.word	gUnk_085FF010
 	.word	gUnk_085FF110
 	.word	gUnk_085FF210
-	.global	gUnk_08755E44
-gUnk_08755E44:
+	.global	gBombRallyBlastSideFrames
+gBombRallyBlastSideFrames:
 	.word	gUnk_085FF310
 	.word	gUnk_085FF390
 	.word	gUnk_085FF490
@@ -10518,8 +10518,8 @@ gUnk_08755E44:
 	.word	gUnk_085FFD90
 	.word	gUnk_085FFE90
 	.word	gUnk_085FFF90
-	.global	gUnk_08755E7C
-gUnk_08755E7C:
+	.global	gBombRallyBlastFarFrames
+gBombRallyBlastFarFrames:
 	.word	gUnk_08600090
 	.word	gUnk_08600110
 	.word	gUnk_08600210
@@ -10534,16 +10534,16 @@ gUnk_08755E7C:
 	.word	gUnk_08600B10
 	.word	gUnk_08600C10
 	.word	gUnk_08600C50
-	.global	gUnk_08755EB4
-gUnk_08755EB4:
+	.global	gBombRallyBombShadowFrames
+gBombRallyBombShadowFrames:
 	.word	gUnk_085FE518
-	.global	gUnk_08755EB8
-gUnk_08755EB8:
+	.global	gBombRallyBombSmokeFrames
+gBombRallyBombSmokeFrames:
 	.word	gUnk_085FE500
 	.word	gUnk_085FE508
 	.word	gUnk_085FE510
-	.global	gUnk_08755EC4
-gUnk_08755EC4:
+	.global	gBombRallyStarFrames
+gBombRallyStarFrames:
 	.word	gUnk_085FE520
 	.word	gUnk_085FE528
 	.word	gUnk_085FE530
@@ -10568,20 +10568,20 @@ gUnk_08755EFC:
 	.word	gUnk_08603460
 	.word	gUnk_086034D8
 	.word	gUnk_086034B8
-	.global	gUnk_08755F1C
-gUnk_08755F1C:
+	.global	gBombRallyResultsPoseFrames
+gBombRallyResultsPoseFrames:
 	.word	gUnk_08603040
 	.word	gUnk_08602FF0
 	.word	gUnk_08602FA0
 	.word	gUnk_08602F50
-	.global	gUnk_08755F2C
-gUnk_08755F2C:
+	.global	gBombRallyContinueItemFrames
+gBombRallyContinueItemFrames:
 	.word	gUnk_086034E0
 	.word	gUnk_08603510
 	.word	gUnk_08603540
 	.word	gUnk_08603510
-	.global	gUnk_08755F3C
-gUnk_08755F3C:
+	.global	gBombRallyLevelItemFrames
+gBombRallyLevelItemFrames:
 	.word	gUnk_08603570
 	.word	gUnk_086035A8
 	.word	gUnk_086035E0

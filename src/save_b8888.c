@@ -13,7 +13,7 @@ extern u16 gRecvCmds[];
 extern u16 gSendCmd[4];
 extern void RunLinkFrame(void);
 
-void sub_080b8888(void)
+void ExchangeLinkSaveSlots(void)
 {
     s32 n;
     s32 i;

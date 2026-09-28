@@ -20,9 +20,9 @@
  *   * the two stand-alone class-2 bodies `Task_ChillyFreezeSparkle` (a two-variant intro
  *     that walks Task.posX/unk50 with RandomSpread and waits on the room byte
  *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `Task_WaddleDooBeam`,
- *     plus the smaller `Task_GlunkShot` and `sub_0808d218`;
+ *     plus the smaller `Task_GlunkShot` and `Task_GipStar`;
  *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
- *     the row bodies `sub_0808d558` / `sub_0808da00` / `sub_0808df58`, the
+ *     the row bodies `sub_0808d558` / `sub_0808da00` / `BroomHatterIdleInit`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
  *   * its movement library: `sub_0808d364` / `sub_0808d388` snap Task.unk2C to
@@ -61,7 +61,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void TaskSetEntry(void *a, u32 i);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
-extern s32 sub_08021a40(s32 x, s32 y);
+extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorSetState(u16 v);
 extern void ActorSetAttackBox(void *p);
 extern void AngleToVector(s32 a, s32 b);
@@ -259,7 +259,7 @@ void sub_0808d200(void)
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_0808d218(void)
+void Task_GipStar(void)
 {
     struct Task *t;
 
@@ -268,8 +268,8 @@ void sub_0808d218(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     t = gCurTask;
-    t->frameTable = gUnk_08752C18;
-    t->updateCallback = (u32)sub_0808d2a8;
+    t->frameTable = gGipStarFrames;
+    t->updateCallback = (u32)GipStarUpdate;
     gCurTask->facing = TaskGetParentFacing();
     TaskSetMotionXFacing(192 << 9, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 168 << 5, 192 << 10);
@@ -286,7 +286,7 @@ void sub_0808d218(void)
     }
 }
 
-void sub_0808d2a8(void)
+void GipStarUpdate(void)
 {
     ActorCheckHits();
     ActorReactToHit();
@@ -406,22 +406,22 @@ void sub_0808d460(void)
 
 void sub_0808d494(void)
 {
-    gCurTask->unk8C->extraFrame = 9;
+    gCurTask->u8C.actor->extraFrame = 9;
 }
 
 void sub_0808d4a8(void)
 {
-    gCurTask->unk8C->extraFrame = 8;
+    gCurTask->u8C.actor->extraFrame = 8;
 }
 
 void sub_0808d4bc(void)
 {
-    gCurTask->unk8C->extraFrame = 10;
+    gCurTask->u8C.actor->extraFrame = 10;
 }
 
 void sub_0808d4d0(void)
 {
-    gCurTask->unk8C->extraFrame = -1;
+    gCurTask->u8C.actor->extraFrame = -1;
 }
 
 void Task_BroomHatter(void)
@@ -430,9 +430,9 @@ void Task_BroomHatter(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk8C->unk16 = 0;
-    t->unk8C->extraOffsetY = 0;
-    t->unk8C->extraTileWord = (t->tileWord & 0xFFF) | (240 << 8);
+    t->u8C.actor->unk16 = 0;
+    t->u8C.actor->extraOffsetY = 0;
+    t->u8C.actor->extraTileWord = (t->tileWord & 0xFFF) | (240 << 8);
     t->unk34 = 1;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_08065640;
@@ -930,25 +930,25 @@ void sub_0808df54(void)
 {
 }
 
-void sub_0808df58(void)
+void BroomHatterIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808df9c;
+    gCurTask->updateCallback = (u32)BroomHatterIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087431C4);
+    CallTableEntry(gCurTask->state, 1, gBroomHatterIdleStates);
 }
 
-void sub_0808df9c(void)
+void BroomHatterIdleUpdate(void)
 {
     ActorCollideTerrain();
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087431C8);
+    CallTableEntry(gCurTask->updateState, 1, gBroomHatterIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808dfc4(void)
+void BroomHatterIdle(void)
 {
     gCurTask->updateState = 0;
     TaskFaceNearestPlayer();
@@ -1069,7 +1069,7 @@ void sub_0808e254(void)
     struct Task *t;
 
     t = gCurTask;
-    if (sub_08021a40(t->pixelX + (t->facing << 4), t->pixelY) == 0)
+    if (GetShapeAtPixelIgnoringOneWay(t->pixelX + (t->facing << 4), t->pixelY) == 0)
     {
         sp.subtype = 1;
         sp.taskType = 103;
@@ -1135,6 +1135,6 @@ void Task_LaserBall(void)
     t->layer = 11;
     gCurTask->frameTable = gLaserBallFrames;
     AcquirePaletteAnim(3, 1);
-    SetPaletteAnimSource(1, 0, gCurTask->unk8C->paletteVariant);
+    SetPaletteAnimSource(1, 0, gCurTask->u8C.actor->paletteVariant);
     CallTableEntry(gCurTask->variant, 2, gLaserBallVariants);
 }

@@ -15,14 +15,14 @@ gUnk_02000000 = 0x02000000
 gLinkSessionMode = 0x02000004
 	.global	gNextActorSerial
 gNextActorSerial = 0x02000008
-	.global	gUnk_0200000C
-gUnk_0200000C = 0x0200000C
+	.global	gObjTileCursor
+gObjTileCursor = 0x0200000C
 	.global	gUnk_02000010
 gUnk_02000010 = 0x02000010
 	.global	gModeListExtraRows
 gModeListExtraRows = 0x02000018
-	.global	gUnk_0200001C
-gUnk_0200001C = 0x0200001C
+	.global	gHubUnlockSource
+gHubUnlockSource = 0x0200001C
 	.global	gUnk_02000020
 gUnk_02000020 = 0x02000020
 	.global	gBlockAnimHookId
@@ -33,16 +33,16 @@ gUnk_02000028 = 0x02000028
 gHudTilemapDirty = 0x0200002C
 	.global	gUnk_02000030
 gUnk_02000030 = 0x02000030
-	.global	gUnk_02000034
-gUnk_02000034 = 0x02000034
+	.global	gHudHpBarsLeft
+gHudHpBarsLeft = 0x02000034
 	.global	gRoomMapBuffer
 gRoomMapBuffer = 0x02000040
 	.global	gUnk_02004000
 gUnk_02004000 = 0x02004000
 	.global	gBlockCursorPlayer
 gBlockCursorPlayer = 0x02004B40
-	.global	gUnk_02004B44
-gUnk_02004B44 = 0x02004B44
+	.global	gPlayerCountCursor
+gPlayerCountCursor = 0x02004B44
 	.global	gUnk_02004B48
 gUnk_02004B48 = 0x02004B48
 	.global	gUnk_02004B4C
@@ -51,16 +51,16 @@ gUnk_02004B4C = 0x02004B4C
 gPlayerAbilities = 0x02004B50
 	.global	gHudHpBarIndex
 gHudHpBarIndex = 0x02004B58
-	.global	gUnk_02004B5C
-gUnk_02004B5C = 0x02004B5C
+	.global	gQuickDrawMatchWinner
+gQuickDrawMatchWinner = 0x02004B5C
 	.global	gPausingPlayer
 gPausingPlayer = 0x02004B60
 	.global	gUnk_02004B64
 gUnk_02004B64 = 0x02004B64
 	.global	gHudHpBarMaxHp
 gHudHpBarMaxHp = 0x02004B68
-	.global	gUnk_02004B6C
-gUnk_02004B6C = 0x02004B6C
+	.global	gBrokenBlockY
+gBrokenBlockY = 0x02004B6C
 	.global	gMenuBufferedKeys
 gMenuBufferedKeys = 0x02004B70
 	.global	gBgScrollActive
@@ -83,8 +83,8 @@ gBg1MetatileMap = 0x02004CA0
 gPlayerHitBoxSets = 0x02005550
 	.global	gUnk_02005574
 gUnk_02005574 = 0x02005574
-	.global	gUnk_02005578
-gUnk_02005578 = 0x02005578
+	.global	gContinueLevel
+gContinueLevel = 0x02005578
 	.global	gGameOverTimer
 gGameOverTimer = 0x0200557C
 	.global	gMaxHealth
@@ -97,18 +97,18 @@ gPlayerHealth = 0x02005588
 gUnk_02005590 = 0x02005590
 	.global	gBg3MapShape
 gBg3MapShape = 0x020055B0
-	.global	gUnk_020055B8
-gUnk_020055B8 = 0x020055B8
+	.global	gBlockAnimClipRect
+gBlockAnimClipRect = 0x020055B8
 	.global	gUnk_020055C0
 gUnk_020055C0 = 0x020055C0
 	.global	gUnk_020055C4
 gUnk_020055C4 = 0x020055C4
 	.global	gUnk_020055C8
 gUnk_020055C8 = 0x020055C8
-	.global	gUnk_020055CC
-gUnk_020055CC = 0x020055CC
-	.global	gUnk_020055D0
-gUnk_020055D0 = 0x020055D0
+	.global	gExtraModeTitleSeen
+gExtraModeTitleSeen = 0x020055CC
+	.global	gHudHpBarCount
+gHudHpBarCount = 0x020055D0
 	.global	gUnk_020055D4
 gUnk_020055D4 = 0x020055D4
 	.global	gRoomObjectList
@@ -117,10 +117,10 @@ gRoomObjectList = 0x020055D8
 gRoomEntryX = 0x020055E0
 	.global	gFileMenuCursor
 gFileMenuCursor = 0x020055E4
-	.global	gUnk_020055E8
-gUnk_020055E8 = 0x020055E8
-	.global	gUnk_020055EC
-gUnk_020055EC = 0x020055EC
+	.global	gCameraPanDone
+gCameraPanDone = 0x020055E8
+	.global	gSubGameTaskIdx
+gSubGameTaskIdx = 0x020055EC
 	.global	gUnk_020055F0
 gUnk_020055F0 = 0x020055F0
 	.global	gHudTilemap
@@ -151,8 +151,8 @@ gUnk_02006090 = 0x02006090
 gCannonFuseState = 0x02006094
 	.global	gUnk_02006098
 gUnk_02006098 = 0x02006098
-	.global	gUnk_020060A0
-gUnk_020060A0 = 0x020060A0
+	.global	gRoomObjectGfxSlots
+gRoomObjectGfxSlots = 0x020060A0
 	.global	gBlockCursorIndex
 gBlockCursorIndex = 0x020060C8
 	.global	gUnk_020060CC
@@ -161,8 +161,8 @@ gUnk_020060CC = 0x020060CC
 gMenuScreen = 0x020060D0
 	.global	gPlayerBodyBoxes
 gPlayerBodyBoxes = 0x020060E0
-	.global	gUnk_02006130
-gUnk_02006130 = 0x02006130
+	.global	gRoomObjectGfxSlotIds
+gRoomObjectGfxSlotIds = 0x02006130
 	.global	gUnk_02006160
 gUnk_02006160 = 0x02006160
 	.global	gGameOverCursor
@@ -175,10 +175,10 @@ gUnk_0200616C = 0x0200616C
 gRoomEntrySet = 0x02006170
 	.global	gUnk_02006174
 gUnk_02006174 = 0x02006174
-	.global	gUnk_02006178
-gUnk_02006178 = 0x02006178
-	.global	gUnk_0200617C
-gUnk_0200617C = 0x0200617C
+	.global	gScreenAttackActive
+gScreenAttackActive = 0x02006178
+	.global	gHudAbilityPanelActive
+gHudAbilityPanelActive = 0x0200617C
 	.global	gMenuTransitionTimer
 gMenuTransitionTimer = 0x02006180
 	.global	gQuickDrawBestTime
@@ -195,14 +195,14 @@ gBlockCursorTile = 0x020061D0
 gHudAbilityPanelState = 0x020061D4
 	.global	gPaletteAnimTasks
 gPaletteAnimTasks = 0x020061D8
-	.global	gUnk_020061DC
-gUnk_020061DC = 0x020061DC
+	.global	gBombRallySafeBeatsLeft
+gBombRallySafeBeatsLeft = 0x020061DC
 	.global	gUnk_020061E0
 gUnk_020061E0 = 0x020061E0
 	.global	gBreakingBlocks
 gBreakingBlocks = 0x020061F0
-	.global	gUnk_020069F0
-gUnk_020069F0 = 0x020069F0
+	.global	gRoomEntryMode
+gRoomEntryMode = 0x020069F0
 	.global	gHudHpBars
 gHudHpBars = 0x02006A00
 	.global	gBombRallySeats
@@ -217,8 +217,8 @@ gUnk_02006A80 = 0x02006A80
 gUnk_02006AA0 = 0x02006AA0
 	.global	gGameOverDone
 gGameOverDone = 0x02007BE0
-	.global	gUnk_02007BF0
-gUnk_02007BF0 = 0x02007BF0
+	.global	gUsedRoomObjects
+gUsedRoomObjects = 0x02007BF0
 	.global	gUnk_02007CF0
 gUnk_02007CF0 = 0x02007CF0
 	.global	gUnk_02007CF4
@@ -229,20 +229,20 @@ gUnk_02007D00 = 0x02007D00
 gGameOverPlayerTask = 0x02007D28
 	.global	gSubGamePhase
 gSubGamePhase = 0x02007D2C
-	.global	gUnk_02007D30
-gUnk_02007D30 = 0x02007D30
+	.global	gHudHpBarLength
+gHudHpBarLength = 0x02007D30
 	.global	gMenuChoiceCursor
 gMenuChoiceCursor = 0x02007D34
 	.global	gUnk_02007D38
 gUnk_02007D38 = 0x02007D38
 	.global	gUnk_02007D3C
 gUnk_02007D3C = 0x02007D3C
-	.global	gUnk_02007D40
-gUnk_02007D40 = 0x02007D40
+	.global	gObjPaletteCursor
+gObjPaletteCursor = 0x02007D40
 	.global	gPlayerLives
 gPlayerLives = 0x02007D48
-	.global	gUnk_02007D50
-gUnk_02007D50 = 0x02007D50
+	.global	gBigSwitchReturnRoom
+gBigSwitchReturnRoom = 0x02007D50
 	.global	gUsedSubGameDoors
 gUsedSubGameDoors = 0x02007D58
 	.global	gUnk_02007D60
@@ -263,22 +263,22 @@ gUnk_02007E90 = 0x02007E90
 gUnk_02007F50 = 0x02007F50
 	.global	gUnk_02007F60
 gUnk_02007F60 = 0x02007F60
-	.global	gUnk_02007FA0
-gUnk_02007FA0 = 0x02007FA0
+	.global	gBrokenBlockX
+gBrokenBlockX = 0x02007FA0
 	.global	gSavedPlayerAbilityUses
 gSavedPlayerAbilityUses = 0x02007FA8
-	.global	gUnk_02007FB0
-gUnk_02007FB0 = 0x02007FB0
-	.global	gUnk_02007FB4
-gUnk_02007FB4 = 0x02007FB4
+	.global	gStageExitFlags
+gStageExitFlags = 0x02007FB0
+	.global	gBigSwitchReturnStage
+gBigSwitchReturnStage = 0x02007FB4
 	.global	gUnk_02007FB8
 gUnk_02007FB8 = 0x02007FB8
 	.global	gHudHpBarValues
 gHudHpBarValues = 0x02007FBC
 	.global	gCutscenePending
 gCutscenePending = 0x02007FC0
-	.global	gUnk_02007FC4
-gUnk_02007FC4 = 0x02007FC4
+	.global	gWarpStarStationDoorRevealed
+gWarpStarStationDoorRevealed = 0x02007FC4
 	.global	gUnk_02007FC8
 gUnk_02007FC8 = 0x02007FC8
 	.global	gUnk_02007FCC
@@ -289,20 +289,20 @@ gUnk_02007FD0 = 0x02007FD0
 gUnk_02007FF0 = 0x02007FF0
 	.global	gUnk_02007FF8
 gUnk_02007FF8 = 0x02007FF8
-	.global	gUnk_02008000
-gUnk_02008000 = 0x02008000
+	.global	gBigSwitchReturnLevel
+gBigSwitchReturnLevel = 0x02008000
 	.global	gSavedPlayerAbilities
 gSavedPlayerAbilities = 0x02008008
 	.global	gUnk_02008010
 gUnk_02008010 = 0x02008010
-	.global	gUnk_02008014
-gUnk_02008014 = 0x02008014
+	.global	gHudHpBarTasks
+gHudHpBarTasks = 0x02008014
 	.global	gEndingSceneActive
 gEndingSceneActive = 0x02008018
 	.global	gUnk_0200801C
 gUnk_0200801C = 0x0200801C
-	.global	gUnk_02008020
-gUnk_02008020 = 0x02008020
+	.global	gRoomObjectTried
+gRoomObjectTried = 0x02008020
 	.global	gUnk_02008050
 gUnk_02008050 = 0x02008050
 	.global	gUnk_02008054
@@ -321,12 +321,12 @@ gRoomEntryY = 0x0200AEF0
 gUnk_0200AEF4 = 0x0200AEF4
 	.global	gBlockCursorY
 gBlockCursorY = 0x0200AEFC
-	.global	gUnk_0200AF00
-gUnk_0200AF00 = 0x0200AF00
+	.global	gEntryDoorEvent
+gEntryDoorEvent = 0x0200AF00
 	.global	gUnk_0200AF04
 gUnk_0200AF04 = 0x0200AF04
-	.global	gUnk_0200AF08
-gUnk_0200AF08 = 0x0200AF08
+	.global	gHubUnlockFlags
+gHubUnlockFlags = 0x0200AF08
 	.global	gUnk_0200AF0C
 gUnk_0200AF0C = 0x0200AF0C
 	.global	gBombRallyOutMask
@@ -343,18 +343,18 @@ gPlayerBubbleTimers = 0x0200AFE8
 gBombRallyOutCount = 0x0200AFF0
 	.global	gUnk_0200AFF4
 gUnk_0200AFF4 = 0x0200AFF4
-	.global	gUnk_0200AFF8
-gUnk_0200AFF8 = 0x0200AFF8
-	.global	gUnk_0200B000
-gUnk_0200B000 = 0x0200B000
+	.global	gHudHpBarFilled
+gHudHpBarFilled = 0x0200AFF8
+	.global	gScreenAttackTasks
+gScreenAttackTasks = 0x0200B000
 	.global	gHudShowsHpBar
 gHudShowsHpBar = 0x0200B028
 	.global	gUnk_0200B02C
 gUnk_0200B02C = 0x0200B02C
 	.global	gUnk_0200B030
 gUnk_0200B030 = 0x0200B030
-	.global	gUnk_0200B034
-gUnk_0200B034 = 0x0200B034
+	.global	gEntryDoorIndex
+gEntryDoorIndex = 0x0200B034
 	.global	gUnk_0200B038
 gUnk_0200B038 = 0x0200B038
 	.global	gQuickDrawWins
@@ -365,8 +365,8 @@ gHBlankScrollStarted = 0x0200B040
 gBombRallyFinishOrder = 0x0200B044
 	.global	gUnk_0200B048
 gUnk_0200B048 = 0x0200B048
-	.global	gUnk_0200B04C
-gUnk_0200B04C = 0x0200B04C
+	.global	gWarpStarStationLevels
+gWarpStarStationLevels = 0x0200B04C
 	.global	gRoomBgLayout
 gRoomBgLayout = 0x0200B050
 	.global	gUnk_0200B060
@@ -439,20 +439,20 @@ gUnk_0200EC50 = 0x0200EC50
 gInputRecorderRunning = 0x0200EC54
 	.global	gInputRecorderMode
 gInputRecorderMode = 0x0200EC58
-	.global	gUnk_0200EC60
-gUnk_0200EC60 = 0x0200EC60
-	.global	gUnk_0200EC68
-gUnk_0200EC68 = 0x0200EC68
+	.global	gInputRecorderKeys
+gInputRecorderKeys = 0x0200EC60
+	.global	gInputRecorderEntryFrames
+gInputRecorderEntryFrames = 0x0200EC68
 	.global	gInputRecordingPtr
 gInputRecordingPtr = 0x0200EC6C
-	.global	gUnk_0200EC70
-gUnk_0200EC70 = 0x0200EC70
-	.global	gUnk_0200EC78
-gUnk_0200EC78 = 0x0200EC78
+	.global	gInputRecorderEndPos
+gInputRecorderEndPos = 0x0200EC70
+	.global	gInputRecorderNextPos
+gInputRecorderNextPos = 0x0200EC78
 	.global	gInputRecording
 gInputRecording = 0x0200EC80
-	.global	gUnk_02016480
-gUnk_02016480 = 0x02016480
+	.global	gInputRecorderCurPos
+gInputRecorderCurPos = 0x02016480
 	.global	gHBlankScrollState
 gHBlankScrollState = 0x02016490
 	.global	gHBlankScrollTimer
@@ -481,8 +481,8 @@ gAirGrindFrame = 0x02017170
 gUnk_02017180 = 0x02017180
 	.global	gUnk_02017980
 gUnk_02017980 = 0x02017980
-	.global	gUnk_02018920
-gUnk_02018920 = 0x02018920
+	.global	gAirGrindSegmentBits
+gAirGrindSegmentBits = 0x02018920
 	.global	gUnk_02019140
 gUnk_02019140 = 0x02019140
 	.global	gUnk_0201A0E0
@@ -491,10 +491,10 @@ gUnk_0201A0E0 = 0x0201A0E0
 gAirGrindCourse = 0x0201B0E0
 	.global	gUnk_0201B1F4
 gUnk_0201B1F4 = 0x0201B1F4
-	.global	gUnk_0201B200
-gUnk_0201B200 = 0x0201B200
-	.global	gUnk_0201B690
-gUnk_0201B690 = 0x0201B690
+	.global	gAirGrindLaneSegmentEnds
+gAirGrindLaneSegmentEnds = 0x0201B200
+	.global	gAirGrindSegmentEnds
+gAirGrindSegmentEnds = 0x0201B690
 	.global	gUnk_0201B7C0
 gUnk_0201B7C0 = 0x0201B7C0
 	.global	gUnk_0201BFC0
@@ -795,18 +795,18 @@ gUnk_03001F04 = 0x03001F04
 gDigits = 0x03001F08
 	.global	gUnk_03001F10
 gUnk_03001F10 = 0x03001F10
-	.global	gUnk_03001F18
-gUnk_03001F18 = 0x03001F18
+	.global	gBossEnduranceBestTime
+gBossEnduranceBestTime = 0x03001F18
 	.global	gUnk_03001F20
 gUnk_03001F20 = 0x03001F20
 	.global	gUnk_03001F24
 gUnk_03001F24 = 0x03001F24
 	.global	gUnk_03001F2C
 gUnk_03001F2C = 0x03001F2C
-	.global	gUnk_03001F30
-gUnk_03001F30 = 0x03001F30
-	.global	gUnk_03001F34
-gUnk_03001F34 = 0x03001F34
+	.global	gMetaKnightmareMode
+gMetaKnightmareMode = 0x03001F30
+	.global	gPauseDisabled
+gPauseDisabled = 0x03001F34
 	.global	gLinkIsMaster
 gLinkIsMaster = 0x03001F38
 	.global	gAttackHitDuration
@@ -831,8 +831,8 @@ gActivePlayerMask = 0x03002340
 gUnk_03002344 = 0x03002344
 	.global	gSpriteCameraX
 gSpriteCameraX = 0x03002348
-	.global	gUnk_0300234C
-gUnk_0300234C = 0x0300234C
+	.global	gLivingPlayerCount
+gLivingPlayerCount = 0x0300234C
 	.global	gActivePlayerCount
 gActivePlayerCount = 0x03002350
 	.global	gHitTimer
@@ -849,12 +849,12 @@ gMilestoneFlags = 0x03002364
 gAttackHealth = 0x03002368
 	.global	gAttackBox
 gAttackBox = 0x0300236C
-	.global	gUnk_03002378
-gUnk_03002378 = 0x03002378
+	.global	gMetaKnightmareBestTime
+gMetaKnightmareBestTime = 0x03002378
 	.global	gHitKind
 gHitKind = 0x03002380
-	.global	gUnk_03002384
-gUnk_03002384 = 0x03002384
+	.global	gFurthestStage
+gFurthestStage = 0x03002384
 	.global	gCameraFocusY
 gCameraFocusY = 0x03002388
 	.global	gLevelIndex
@@ -877,8 +877,8 @@ gPlayerCount = 0x030023AC
 gUnk_030023B0 = 0x030023B0
 	.global	gUnk_030023B4
 gUnk_030023B4 = 0x030023B4
-	.global	gUnk_030023B8
-gUnk_030023B8 = 0x030023B8
+	.global	gCurLevel
+gCurLevel = 0x030023B8
 	.global	gLatchedPressedKeys
 gLatchedPressedKeys = 0x030023C0
 	.global	gBigSwitchFlags
@@ -893,8 +893,8 @@ gUnk_030023D4 = 0x030023D4
 gGameState = 0x030023D8
 	.global	gHitterSlot
 gHitterSlot = 0x030023DC
-	.global	gUnk_030023E0
-gUnk_030023E0 = 0x030023E0
+	.global	gFurthestLevel
+gFurthestLevel = 0x030023E0
 	.global	gSpriteCameraY
 gSpriteCameraY = 0x030023E4
 	.global	gCurSaveSlot
@@ -903,22 +903,22 @@ gCurSaveSlot = 0x030023E8
 gStageIndex = 0x030023EC
 	.global	gUnk_030023F0
 gUnk_030023F0 = 0x030023F0
-	.global	gUnk_03002400
-gUnk_03002400 = 0x03002400
+	.global	gStageClearStatus
+gStageClearStatus = 0x03002400
 	.global	gStageRequest
 gStageRequest = 0x03002438
 	.global	gLinkPlayerCount
 gLinkPlayerCount = 0x0300243C
 	.global	gAttackLastHitter
 gAttackLastHitter = 0x03002440
-	.global	gUnk_03002444
-gUnk_03002444 = 0x03002444
+	.global	gInHub
+gInHub = 0x03002444
 	.global	gUnk_03002448
 gUnk_03002448 = 0x03002448
 	.global	gUnk_0300244C
 gUnk_0300244C = 0x0300244C
-	.global	gUnk_03002450
-gUnk_03002450 = 0x03002450
+	.global	gHitEffect
+gHitEffect = 0x03002450
 	.global	gLatchedHeldKeys
 gLatchedHeldKeys = 0x03002458
 	.global	gUnk_03002460
@@ -1019,8 +1019,8 @@ gLinkCommand = 0x03005274
 gUnk_03005278 = 0x03005278
 	.global	gSendBufferEmpty
 gSendBufferEmpty = 0x0300527C
-	.global	gUnk_03005280
-gUnk_03005280 = 0x03005280
+	.global	gExtraModeTitlePhase
+gExtraModeTitlePhase = 0x03005280
 	.global	gPlayerColliderCount
 gPlayerColliderCount = 0x03005290
 	.global	gAttackBoxBottom

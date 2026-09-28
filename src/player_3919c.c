@@ -19,7 +19,7 @@
  * the screen, state 2 waits PlayerState.unk14 frames, state 4 leaves for
  * the results screen), counts the players whose health gPlayerHealth[] is
  * not 0, plays the lost-life or game-over music, loops the fall animation
- * until the callback reaches state 3, and when gUnk_0300234C drops to 0
+ * until the callback reaches state 3, and when gLivingPlayerCount drops to 0
  * raises M02's stage request gStageRequest = 6; Task.variant = 4 or 5 then
  * says whether the player has lives left (gPlayerLives[]).
  * PlayerActionEnterDoor (action 20) enters a door: it stops the player, plays the
@@ -50,7 +50,7 @@ void PlayerActionDie(void)
     t->spriteFlags &= 0x7FFF;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << t->player->playerIndex);
-    if (t->unk82 == 0x200)
+    if (t->hitEffect == 0x200)
         sub_08027548();
     u = gCurTask;
     u->player->unk40 |= 8;
@@ -75,8 +75,8 @@ void PlayerActionDie(void)
         StopAllSound();
         StopAllSfx();
         gCurTask->layer = 4;
-        gCurTask->player->unk17 = n;
-        gCurTask->player->unk18 = n;
+        gCurTask->player->invincible = n;
+        gCurTask->player->invincibleTimer = n;
         gCurTask->player->unk1A = gCurTask->player->unk1C = n;
     }
     else
@@ -186,12 +186,12 @@ void PlayerActionDie(void)
             TaskYieldTrampoline(1);
         }
     } while (gCurTask->variant != 3);
-    gUnk_0300234C--;
+    gLivingPlayerCount--;
     t2 = gCurTask;
     t2->moveCallback = 0;
     t2->drawCallback = 0;
     t2->lateUpdateCallback = 0;
-    if (gUnk_0300234C == 0)
+    if (gLivingPlayerCount == 0)
     {
         gStageRequest = 6;
         TaskExitTrampoline();
@@ -201,7 +201,7 @@ void PlayerActionDie(void)
         gCurTask->variant = 4;
     else
         gCurTask->variant = 5;
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
     TaskSleepForever();
 }
 
@@ -284,7 +284,7 @@ void PlayerActionEnterDoor(void)
     PlayerStopAxes(3);
     gCurTask->player->unk42 |= 0x100;
     RequestScreenShake(0);
-    if (gUnk_03002444 == 0)
+    if (gInHub == 0)
     {
         FreezeOtherTasks(15);
         if (!(gDispCnt & 0x400))
@@ -293,7 +293,7 @@ void PlayerActionEnterDoor(void)
             gDispCnt |= 0x1D00;
         }
         n = 0;
-        if (gPlayerCount > 1 && gUnk_0300234C > 1)
+        if (gPlayerCount > 1 && gLivingPlayerCount > 1)
         {
             for (i = 0; i < gPlayerCount; i++)
             {
@@ -358,9 +358,9 @@ void PlayerActionEnterDoor(void)
         break;
     }
     EnterDoor();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_080264b0();
-    if (gUnk_03002444 == 0)
+    if (gInHub == 0)
         PlaySfx(181);
     t = gCurTask;
     if (!(t->waterFlags & 1))

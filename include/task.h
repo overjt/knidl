@@ -10,7 +10,7 @@
  * (`src/early_58e4.c`, `src/early_5d9c.c`); the 64-entry table lives at
  * gTasks and gCurTask points at the task that is currently
  * running.  `struct Actor` is the larger per-task actor record hanging off
- * Task.unk8C that module M17 (issue #65) is the field API for, and
+ * Task.u8C.actor that module M17 (issue #65) is the field API for, and
  * `struct ActorDef` is the ROM descriptor an actor is bound to
  * (Actor.def).
  *
@@ -83,9 +83,16 @@ struct Task
     /*0x7D*/ u8 hitDirection;
     /*0x7E*/ s8 hitterSlot;
     /*0x7F*/ s8 hitterPlayer;
-    /*0x80*/ s8 unk80;
+    /* An actor's nearest player (sub_08063a9c, TaskFindNearestPlayer); for
+       the player and its objects and effects (#5-#7) the ability of the
+       running attack, which ActorPlayHitSfx reads off the hitter. */
+    /* packed: agbcc pads every union to 4 bytes (lesson 3.522). */
+    /*0x80*/ union {
+        s8 nearestPlayer;
+        s8 attackAbility;
+    } __attribute__((packed)) u80;
     /*0x81*/ u8 unk81;
-    /*0x82*/ u16 unk82;
+    /*0x82*/ u16 hitEffect;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
     /* The record of the player the task belongs to: Task_Player binds
@@ -94,7 +101,14 @@ struct Task
        store the nearest player's struct Task * here instead, which no actor
        reads back; ActorAttachToHitter rebinds it to the hitter's record. */
     /*0x88*/ struct PlayerState *player;
-    /*0x8C*/ struct Actor *unk8C;
+    /* The task's actor record &gActors[slot] (CreateActor, sub_08064a78,
+       sub_08064d9c, SetPaletteAnimSource); task types #6/#7 keep their parent
+       task &gTasks[Task.parent] here instead (Task_PlayerObject,
+       Task_PlayerEffect, sub_08056770). */
+    /*0x8C*/ union {
+        struct Actor *actor;
+        struct Task *parentTask;
+    } u8C;
 };
 
 /* 8 bytes per task type in ROM at 0x0872FF30. */
@@ -122,14 +136,14 @@ struct ActorDef
     /*0x06*/ u16 health4Players;
     /*0x08*/ u32 score;
     /*0x0C*/ u8 ability;
-    /*0x0D*/ u8 unk0D;
+    /*0x0D*/ u8 isItem;
     /*0x0E*/ u16 unk0E;
     /*0x10*/ struct ActorAux *unk10;
     /*0x14*/ u32 attackBox;
     /*0x18*/ s32 terrainBox;
     /*0x1C*/ u32 terrainHandlers;
     /*0x20*/ u32 hitReactions;
-    /*0x24*/ void (*unk24)(u32);
+    /*0x24*/ void (*initCallback)(u32);
     /*0x28*/ void (*teardown)(void);
 };
 
@@ -159,7 +173,7 @@ struct ActorTail
     /*0x08*/ u32 paletteBank;
 };
 
-/* Per-task actor record (Task.unk8C). */
+/* Per-task actor record (Task.u8C.actor). */
 struct Actor
 {
     /*0x00*/ u8 ability;
@@ -194,7 +208,7 @@ struct Actor
     /*0x30*/ u32 score;
     /*0x34*/ s32 unk34;
     /*0x38*/ s32 sfxOverride;
-    /*0x3C*/ u32 unk3C;
+    /*0x3C*/ u32 defeatSweepCallback;
     /*0x40*/ void (*teardown)(void);
     /*0x44*/ struct ActorDef *def;
     /*0x48*/ u32 attackBox;
@@ -241,8 +255,8 @@ struct PlayerState
     /*0x12*/ u16 invulnerabilityTimer;
     /*0x14*/ u16 unk14;
     /*0x16*/ u8 unk16;
-    /*0x17*/ u8 unk17;
-    /*0x18*/ u16 unk18;
+    /*0x17*/ u8 invincible;
+    /*0x18*/ u16 invincibleTimer;
     /*0x1A*/ u16 unk1A;
     /*0x1C*/ u16 unk1C;
     /*0x1E*/ u16 unk1E;
@@ -265,11 +279,11 @@ struct PlayerState
     /*0x35*/ s8 unk35;
     /*0x36*/ u8 unk36;
     /*0x37*/ u8 unk37;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u8 unk3A;
-    /*0x3B*/ u8 unk3B;
+    /*0x38*/ u16 shareTimer;
+    /*0x3A*/ u8 shareItem;
+    /*0x3B*/ u8 sharedMask;
     /*0x3C*/ u8 unk3C;
-    /* M11's sub_08043e28 writes 0/1 here (issue #85). */
+    /* M11's MetaKnightActionDashSlashUpdate writes 0/1 here (issue #85). */
     /*0x3D*/ u8 running;
     /*0x3E*/ u8 bumpKind;
     /*0x3F*/ u8 invulnerability;

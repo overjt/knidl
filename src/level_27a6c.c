@@ -4,20 +4,20 @@
 /* level_27a6c.c (0x08027A6C-0x08027E27, issue #93).
  *
  * sub_08027a6c builds the room's map in the second buffer gUnk_02006AA0 for
- * the room loaders sub_08023948 and sub_08023ca0 (src/level_23948.c).  It
+ * the room loaders LoadHubRoom and LoadBigSwitchViewRoom (src/level_23948.c).  It
  * decompresses the room's metatile table (RoomDef +0x20) into gMetatileTiles
  * and its metatile map (+0x08) into gUnk_02006AA0 (or CpuSet-copies it when
  * +0x05 says the map is stored raw), then walks the map from row 1 with the
- * per-cell marker table gUnk_0873240C[gUnk_030023B8][cell]: a cell whose
+ * per-cell marker table gUnk_0873240C[gCurLevel][cell]: a cell whose
  * marker names a flag that is still clear (a gBigSwitchFlags bit for markers
- * with bit 8 set, a gUnk_03002400[gUnk_030023B8][] byte otherwise) takes the
+ * with bit 8 set, a gStageClearStatus[gCurLevel][] byte otherwise) takes the
  * matching cell of the next room's 2x2 pattern (gRoomTable[level][stage]
- * [room + 1]'s map).  With gUnk_0200AF08 set it first clears the BG map at
+ * [room + 1]'s map).  With gHubUnlockFlags set it first clears the BG map at
  * 0x06001800 and gBg1MetatileMap, records up to two cells whose marker is
- * gUnk_0200001C | 0x80 in gUnk_0200AFE0 (y then x; src/camtask_2d38c.c
+ * gHubUnlockSource | 0x80 in gUnk_0200AFE0 (y then x; src/camtask_2d38c.c
  * reads them as a flat s16[4]) and copies the pattern cell of every
- * gUnk_0200001C marker into gBg1MetatileMap; otherwise it returns early when
- * gUnk_030023B8 < gUnk_030023E0 and gUnk_0873232C[gUnk_030023B8]'s flags
+ * gHubUnlockSource marker into gBg1MetatileMap; otherwise it returns early when
+ * gCurLevel < gFurthestLevel and gUnk_0873232C[gCurLevel]'s flags
  * are all set (or it has none).
  *
  * Matching notes (issue #93's final campaign, lesson 3.489): parked in #93 at
@@ -95,18 +95,18 @@ extern struct RoomDef **gRoomTable[][8];
 extern s8 gStageIndex;
 extern s8 gLevelIndex;
 extern s8 gRoomIndex;
-extern u8 gUnk_0200AF08;
+extern u8 gHubUnlockFlags;
 extern u16 gBg1MetatileMap[];
 extern s16 gUnk_0200AFE0[][2];
 extern s16 gRoomWidth;
 extern s16 gRoomHeight;
-extern s8 gUnk_030023B8;
+extern s8 gCurLevel;
 extern u16 *gUnk_0873240C[];
-extern u16 gUnk_0200001C;
+extern u16 gHubUnlockSource;
 extern u32 gBigSwitchFlags[];
-extern u8 gUnk_03002400[8][7];
+extern u8 gStageClearStatus[8][7];
 extern u32 gUnk_0873232C[];
-extern s8 gUnk_030023E0;
+extern s8 gFurthestLevel;
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
 void sub_08027a6c(void)
@@ -127,7 +127,7 @@ void sub_08027a6c(void)
     else
         CpuSet(gCurRoomDef->metatileMap, gUnk_02006AA0, (gRoomMetatileCount * 2) & 0x1FFFFF);
     alt = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->metatileMap;
-    if (gUnk_0200AF08 != 0)
+    if (gHubUnlockFlags != 0)
     {
         a = 0;
         CpuFastSet(&a, (u32 *)0x06001800, 0x01000200);
@@ -157,10 +157,10 @@ void sub_08027a6c(void)
                     else
                         p = &alt[0];
                 }
-                v = gUnk_0873240C[gUnk_030023B8][idx];
+                v = gUnk_0873240C[gCurLevel][idx];
                 if (v != 0)
                 {
-                    if (v == (gUnk_0200001C | 0x80) && n <= 1)
+                    if (v == (gHubUnlockSource | 0x80) && n <= 1)
                     {
                         gUnk_0200AFE0[n][1] = y;
                         gUnk_0200AFE0[n][0] = x;
@@ -169,16 +169,16 @@ void sub_08027a6c(void)
                     v &= 0xFF7F;
                     if (v & 0x100)
                     {
-                        if (gUnk_0200001C == v)
+                        if (gHubUnlockSource == v)
                             gBg1MetatileMap[idx] = *(u16 *)p;
                         if (!(gBigSwitchFlags[0] & (1 << (v & 0xFF7F))))
                             gUnk_02006AA0[idx] = *p;
                     }
                     else
                     {
-                        if (gUnk_0200001C == v)
+                        if (gHubUnlockSource == v)
                             gBg1MetatileMap[idx] = *(u16 *)p;
-                        if (!gUnk_03002400[gUnk_030023B8][v - 1])
+                        if (!gStageClearStatus[gCurLevel][v - 1])
                             gUnk_02006AA0[idx] = *p;
                     }
                 }
@@ -188,8 +188,8 @@ void sub_08027a6c(void)
     }
     else
     {
-        mask = gUnk_0873232C[gUnk_030023B8];
-        if (gUnk_030023B8 < gUnk_030023E0)
+        mask = gUnk_0873232C[gCurLevel];
+        if (gCurLevel < gFurthestLevel)
         {
             if (mask == 0)
                 return;
@@ -215,7 +215,7 @@ void sub_08027a6c(void)
                     else
                         p = &alt[0];
                 }
-                v = gUnk_0873240C[gUnk_030023B8][idx];
+                v = gUnk_0873240C[gCurLevel][idx];
                 v &= 0xFF7F;
                 if (v != 0)
                 {
@@ -226,7 +226,7 @@ void sub_08027a6c(void)
                     }
                     else
                     {
-                        if (!gUnk_03002400[gUnk_030023B8][v - 1])
+                        if (!gStageClearStatus[gCurLevel][v - 1])
                             gUnk_02006AA0[idx] = *p;
                     }
                 }

@@ -30,7 +30,7 @@ extern void RequestScreenShake(u32 a);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -44,7 +44,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -55,13 +55,13 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 void sub_080a860c(void)
 {
@@ -112,7 +112,7 @@ void sub_080a860c(void)
         gCurTask->posY = (gViewRect[2] - 62) << 16;
         break;
     case 3:
-        TaskSetEntry(sub_080a87c8, gCurTaskIdx);
+        TaskSetEntry(KrackoInit, gCurTaskIdx);
         break;
     }
 }

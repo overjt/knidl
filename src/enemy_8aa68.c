@@ -33,7 +33,7 @@ void Task_Blipper(void)
     gCurTask->frameTable = gBlipperFrames;
     gCurTask->onGround = 0;
     if (gCurTask->variant == 5)
-        sub_0808bb24();
+        BlipperIdle();
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
         CallTableEntry(gCurTask->variant, 6, gBlipperVariants);
@@ -213,7 +213,7 @@ void sub_0808ae80(void)
 
 void sub_0808aeec(void)
 {
-    if (gCurTask->unk8C->animScript != 0)
+    if (gCurTask->u8C.actor->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -291,7 +291,7 @@ void sub_0808b094(void)
     TaskSetEntry(sub_0808afac, gCurTaskIdx);
     return;
 anim:
-    if (gCurTask->unk8C->animScript != 0)
+    if (gCurTask->u8C.actor->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -444,7 +444,7 @@ void sub_0808b468(void)
     if (gCurTask->unk34 > 0 && gCurTask->velY > 0
         && (u8)IsWaterAtPixel(gCurTask->pixelX,
                             (u16)gCurTask->pixelY
-                                + ((s8 *)gCurTask->unk8C->terrainBox)[2]) != 0)
+                                + ((s8 *)gCurTask->u8C.actor->terrainBox)[2]) != 0)
     {
         gCurTask->velY >>= 2;
         ActorSetState(0);
@@ -627,7 +627,7 @@ void sub_0808b8c4(void)
 {
     if ((u8)IsWaterAtPixel(gCurTask->pixelX,
                          (u16)gCurTask->pixelY
-                             + ((s8 *)gCurTask->unk8C->terrainBox)[2]) != 0)
+                             + ((s8 *)gCurTask->u8C.actor->terrainBox)[2]) != 0)
     {
         switch (gCurTask->variant)
         {
@@ -710,9 +710,9 @@ void Task_BlipperDroplet(void)
     TaskExitTrampoline();
 }
 
-void sub_0808bb24(void)
+void BlipperIdle(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808bb5c;
+    gCurTask->updateCallback = (u32)BlipperIdleUpdate;
     ActorSetAttackBox((u32)gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -720,7 +720,7 @@ void sub_0808bb24(void)
     TaskSleepForever();
 }
 
-void sub_0808bb5c(void)
+void BlipperIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
@@ -824,47 +824,47 @@ s32 sub_0808bd04(void)
     }
 }
 
-void sub_0808bdb4(void)
+void Task_Gip(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752BD4;
-    CallTableEntry(gCurTask->variant, 2, gUnk_08742940);
+    gCurTask->frameTable = gGipFrames;
+    CallTableEntry(gCurTask->variant, 2, gGipVariants);
 }
 
-void sub_0808bdf4(void)
+void GipInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808be58;
+    gCurTask->updateCallback = (u32)GipUpdate;
     gCurTask->unk28 = 120;
     if (sub_0808c82c() != 0)
         ActorSetState(3);
     else
         ActorSetState(1);
-    CallTableEntry(gCurTask->state, 12, gUnk_08742948);
+    CallTableEntry(gCurTask->state, 12, gGipStates);
 }
 
-void sub_0808be3c(void)
+void GipEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 12, gUnk_08742948);
+    CallTableEntry(gCurTask->state, 12, gGipStates);
 }
 
-void sub_0808be58(void)
+void GipUpdate(void)
 {
     if (gCurTask->unk18 != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 8, gUnk_08742978);
+            CallTableEntry(gCurTask->updateState, 8, gGipStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 8, gUnk_08742978);
+        CallTableEntry(gCurTask->updateState, 8, gGipStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808bea0(void)
+void GipWalk(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk18 = 1;
@@ -894,7 +894,7 @@ void sub_0808bf1c(void)
     if (--gCurTask->unk28 == 0)
     {
         ActorSetState(11);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return;
     }
     if (--gCurTask->unk2C != 0)
@@ -939,7 +939,7 @@ void sub_0808bfc4(void)
 void sub_0808c004(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
 void sub_0808c02c(void)
@@ -1019,19 +1019,19 @@ void sub_0808c0fc(void)
 void sub_0808c1d0(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+        if (sub_0808ca00(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
             ActorSetState(8);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+    else if (sub_0808cab8(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
         ActorSetState(8);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
 
@@ -1109,19 +1109,19 @@ void sub_0808c32c(void)
 void sub_0808c3e8(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+        if (sub_0808ca00(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
             ActorSetState(9);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+    else if (sub_0808cab8(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
         ActorSetState(9);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
 
@@ -1141,7 +1141,7 @@ void sub_0808c478(void)
 void sub_0808c4bc(void)
 {
     if (gCurTask->state != 8)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
 void sub_0808c4e4(void)
@@ -1198,10 +1198,10 @@ void sub_0808c53c(void)
 void sub_0808c5e8(void)
 {
     if (gCurTask->state != 10)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void sub_0808c610(void)
+void GipShoot(void)
 {
     gCurTask->updateState = 7;
     gCurTask->unk18 = 0;
@@ -1211,7 +1211,7 @@ void sub_0808c610(void)
     TaskSetFrame(14);
     TaskYieldTrampoline(16);
     PlaySfx(233);
-    sub_0808c934();
+    CreateGipStar();
     TaskSetFrame(15);
     TaskYieldTrampoline(12);
     TaskSetFrame(14);
@@ -1226,12 +1226,12 @@ void sub_0808c610(void)
 void sub_0808c684(void)
 {
     if (gCurTask->state != 11)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void sub_0808c6ac(void)
+void GipIdle(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808c708;
+    gCurTask->updateCallback = (u32)GipIdleUpdate;
     ActorSetAttackBox((u32)gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -1248,7 +1248,7 @@ void sub_0808c6ac(void)
     }
 }
 
-void sub_0808c708(void)
+void GipIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
@@ -1260,7 +1260,7 @@ s32 sub_0808c71c(void)
     if (gCurTask->variant != 1)
     {
         ActorSetState(0);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1270,7 +1270,7 @@ s32 sub_0808c74c(void)
     if (gCurTask->variant != 1)
     {
         ActorSetState(7);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1292,12 +1292,12 @@ s32 sub_0808c79c(void)
         {
         case 0:
             ActorSetState(6);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
             return 1;
         case 9:
         case 10:
             ActorSetState(3);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
             return 1;
         }
         return 0;
@@ -1314,7 +1314,7 @@ s32 sub_0808c7ec(void)
             return 0;
         }
         ActorSetState(10);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1327,7 +1327,7 @@ s32 sub_0808c82c(void)
     if (r >= 0)
     {
         gCurTask->pixelX = (u16)gCurTask->pixelX
-            + (r - ((s8 *)gCurTask->unk8C->terrainBox)[5]);
+            + (r - ((s8 *)gCurTask->u8C.actor->terrainBox)[5]);
         gCurTask->posX = (s16)gCurTask->pixelX << 16;
         gCurTask->facing = 1;
         return 1;
@@ -1336,7 +1336,7 @@ s32 sub_0808c82c(void)
     if (r >= 0)
     {
         gCurTask->pixelX = (u16)gCurTask->pixelX
-            - (((s8 *)gCurTask->unk8C->terrainBox)[4] + r);
+            - (((s8 *)gCurTask->u8C.actor->terrainBox)[4] + r);
         gCurTask->posX = (s16)gCurTask->pixelX << 16;
         gCurTask->facing = -1;
         return 1;
@@ -1367,7 +1367,7 @@ void sub_0808c8bc(void)
     }
 }
 
-void sub_0808c934(void)
+void CreateGipStar(void)
 {
     struct ActorSpawn sp;
     u8 zero;
@@ -1424,9 +1424,9 @@ s32 sub_0808ca00(s32 a, s32 b)
     p = (u16)*pa + x;
     q = (u16)t->pixelY + (s8)b;
     i = GetCollisionTileAtPixel(p, q);
-    if (gUnk_087339F0[i] == 0 || gUnk_087336F0[i] != 0
+    if (gUnk_087339F0[i] == 0 || gCollisionTileOneWay[i] != 0
      || gUnk_087337F0[i] != 0 || gCollisionTileSlope[i] != 0
-     || gUnk_08732FF0[i] != 0)
+     || gCollisionTileDamaging[i] != 0)
         goto minus1;
     u = ((p << 16) >> 16) & 15;
     w = (u << 4) | u;
@@ -1456,9 +1456,9 @@ s32 sub_0808cab8(s32 a, s32 b)
     p = (u16)*pa - x;
     q = (u16)t->pixelY + (s8)b;
     i = GetCollisionTileAtPixel(p, q);
-    if (gUnk_087339F0[i] == 0 || gUnk_087336F0[i] != 0
+    if (gUnk_087339F0[i] == 0 || gCollisionTileOneWay[i] != 0
      || gUnk_087337F0[i] != 0 || gCollisionTileSlope[i] != 0
-     || gUnk_08732FF0[i] != 0)
+     || gCollisionTileDamaging[i] != 0)
         goto minus1;
     u = ((p << 16) >> 16) & 15;
     w = (u << 4) | u;

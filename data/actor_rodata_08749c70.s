@@ -336,8 +336,8 @@ gUnk_0874B0C4:
 	.global	gUnk_0874B1A8
 gUnk_0874B1A8:
 	.incbin	"baserom.gba", 0x74B1A8, 0x34
-	.global	gUnk_0874B1DC
-gUnk_0874B1DC:
+	.global	gNightmarePowerOrbStarVariants
+gNightmarePowerOrbStarVariants:
 	.word	sub_080af38c+1
 	.word	sub_080af4a4+1
 	.word	sub_080af5bc+1

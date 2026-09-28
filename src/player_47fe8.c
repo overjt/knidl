@@ -12,7 +12,7 @@
  *
  * Player action bodies, part 15: action 29 and per-frame handler 26.
  * PlayerActionGetAbility (action 29, mode 19) is the ability get: it freezes the
- * stage (gUnk_03001F34 = 1), starts the palette fade BeginFade over
+ * stage (gPauseDisabled = 1), starts the palette fade BeginFade over
  * the rows gUnk_0873B534[player] selects (unless gUnk_030023B0 is set)
  * and, when the swallowed object gives a random ability
  * (PlayerState.unk0A > 1), spins the HUD roulette: PlayerState.pendingAbility
@@ -25,7 +25,7 @@
  * and the mode (the fade back, BeginFade(4, 2, ...)) and unfreezes
  * the stage.  Its handler PlayerActionGetAbilityUpdate hands
  * over to the ability's own follow-up once Task.unk28 is set (action 42
- * for ability 11, 55 for 24, M11's sub_08040710 otherwise) and, while
+ * for ability 11, 55 for 24, M11's PlayerRequestStandOrFall otherwise) and, while
  * Task.unk2C is set, drives the pose: ability 2 blends its palettes
  * gUnk_081BE6BC[] over the animation frames 0x36B-0x372 (the twin of
  * M12's PlayerActionSparkUpdate), abilities 4, 12 and 14 register their collider
@@ -46,7 +46,7 @@ void PlayerActionGetAbility(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 19;
     gCurTask->updateState = 26;
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     gCurTask->player->running = 0;
     PlayerStopAxes(3);
     {
@@ -692,7 +692,7 @@ void PlayerActionGetAbility(void)
         t->unk28++;
         t->player->unk40 &= 0xFEFF;
     }
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
     TaskSleepForever();
 }
 
@@ -710,7 +710,7 @@ void PlayerActionGetAbilityUpdate(void)
             p->requestedAction = 55;
             break;
         default:
-            sub_08040710();
+            PlayerRequestStandOrFall();
             break;
         }
     } else if (t->unk2C != 0) {

@@ -8,12 +8,12 @@
  *   * Task_Scarfy's row `ScarfyInit`+`ScarfyUpdate` with its five-case
  *     `sub_0807a8fc` setup and `sub_0807aa5c`'s two-table float wave (an
  *     older reading called it a swinging platform);
- *   * row 0 of the two sword knights' shared table `gUnk_08740990` (task
- *     types #36/#37: `sub_0807b300`+`sub_0807b32c`), whose hook
+ *   * row 0 of the two sword knights' shared table `gSwordAndBladeKnightVariants` (task
+ *     types #36/#37: `SwordAndBladeKnightWalkInit`+`SwordAndBladeKnightWalkUpdate`), whose hook
  *     packs Task.pixelY into the low half of Task.unk24 and ORs 0x10000 in
  *     when the four-player flag `gTerrainResult[4]` is out of range;
  *   * the sword knights' remaining states and rows `sub_0807b3f8`..
- *     `sub_0807b8ec`, which probe for a partner with `TaskIsInRectSlot` over a
+ *     `SwordAndBladeKnightStandInit`, which probe for a partner with `TaskIsInRectSlot` over a
  *     stack `struct PointPair`
  *     and reacts through the shared `sub_0807b294` state entry;
  *   * Task_UFO's row 0 `UFOInit`+`UFOUpdate` with the
@@ -22,7 +22,7 @@
  *   * UFO's state check `sub_0807c828` (gUFOStateUpdates[1]), which walks a
  *     sixteen-entry cue ring through
  *     `sub_0807c508` (`15 & (rand + Task.unk24)`);
- *   * Task_Parasol's row 0 `sub_0807cc68`+`sub_0807cc9c` and its aim
+ *   * Task_Parasol's row 0 `ParasolRiseInit`+`ParasolRiseUpdate` and its aim
  *     `sub_0807cbf4` (a 512-step angle from `TaskGetAngleTo`).
  *
  * `sub_0807b888`, `sub_0807bd60`, `sub_0807c3d8`, `sub_0807cadc`,
@@ -46,7 +46,7 @@ extern u8 gTerrainResult[];
 /* Externals */
 extern s32 RandomRange(s32 a);
 extern s32 PlaySfx(s32 id);
-extern s32 sub_08021a40(s32 x, s32 y);
+extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern s32 TaskIsInRectSlot(struct PointPair *box, s32 i);
@@ -131,7 +131,7 @@ void sub_0807ab8c(void)
 
 void sub_0807abb4(void)
 {
-    if (sub_08064984(10) != 0)
+    if (TaskIsNearestPlayerWithinX(10) != 0)
     {
         ActorSetState(1);
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
@@ -298,22 +298,22 @@ void sub_0807af3c(void)
     gCurTask->unk34 = ActorTickAnimFacingNearestPlayer(gCurTask->unk34);
 }
 
-void sub_0807af58(void)
+void Task_SwordKnight(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_087529D8;
-    CallTableEntry(gCurTask->variant, 3, gUnk_08740990);
+    gCurTask->frameTable = gSwordKnightFrames;
+    CallTableEntry(gCurTask->variant, 3, gSwordAndBladeKnightVariants);
 }
 
-void sub_0807af98(void)
+void Task_BladeKnight(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752A24;
-    CallTableEntry(gCurTask->variant, 3, gUnk_08740990);
+    gCurTask->frameTable = gBladeKnightFrames;
+    CallTableEntry(gCurTask->variant, 3, gSwordAndBladeKnightVariants);
 }
 
 s32 sub_0807afd8(void)
@@ -321,7 +321,7 @@ s32 sub_0807afd8(void)
     if (gCurTask->variant != 0)
         return 0;
     ActorSetState(7);
-    TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+    TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -330,7 +330,7 @@ s32 sub_0807b010(void)
     if (gCurTask->variant != 0)
         return 0;
     ActorSetState(0);
-    TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+    TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -393,7 +393,7 @@ void sub_0807b11c(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk8C->animScript = 0;
+    t->u8C.actor->animScript = 0;
     t->unk34 = 0;
     t->unk30 = 0;
     t->unk2C = 0;
@@ -405,7 +405,7 @@ void sub_0807b11c(void)
 
 void sub_0807b144(void)
 {
-    if (gCurTask->unk8C->animScript == 0)
+    if (gCurTask->u8C.actor->animScript == 0)
         gCurTask->unk34 = ActorStartAnim(gUnk_0874099C);
 }
 
@@ -447,7 +447,7 @@ other:
     ActorSetState(3);
 }
 
-void sub_0807b1e4(void)
+void CreateSwordAndBladeKnightSlash(void)
 {
     gCurTask->unk46 = CreateChildTaskHere(173, 1);
 }
@@ -468,14 +468,14 @@ void sub_0807b200(void)
         if (TaskIsInRectSlot(&box, id) != 0)
         {
             ActorSetState(6);
-            TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+            TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
         }
     }
 }
 
 void sub_0807b294(void *fn)
 {
-    struct Actor *a = gCurTask->unk8C;
+    struct Actor *a = gCurTask->u8C.actor;
     struct Task *t;
 
     TaskFaceNearestPlayer();
@@ -497,14 +497,14 @@ void sub_0807b294(void *fn)
     }
 }
 
-void sub_0807b300(void)
+void SwordAndBladeKnightWalkInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807b32c;
+    gCurTask->updateCallback = (u32)SwordAndBladeKnightWalkUpdate;
     sub_0807b11c();
-    CallTableEntry(gCurTask->state, 8, gUnk_087409FC);
+    CallTableEntry(gCurTask->state, 8, gSwordAndBladeKnightWalkStates);
 }
 
-void sub_0807b32c(void)
+void SwordAndBladeKnightWalkUpdate(void)
 {
     u8 v = (u8)ActorCollideTerrain();
 
@@ -518,7 +518,7 @@ void sub_0807b32c(void)
     if (v == 0)
     {
         sub_0807b088();
-        CallTableEntry(gCurTask->updateState, 8, gUnk_08740A1C);
+        CallTableEntry(gCurTask->updateState, 8, gSwordAndBladeKnightWalkStateUpdates);
     }
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
@@ -528,9 +528,9 @@ void sub_0807b32c(void)
     }
 }
 
-void sub_0807b3dc(void)
+void SwordAndBladeKnightWalkEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 8, gUnk_087409FC);
+    CallTableEntry(gCurTask->state, 8, gSwordAndBladeKnightWalkStates);
 }
 
 void sub_0807b3f8(void)
@@ -549,7 +549,7 @@ void sub_0807b430(void)
     struct Task *t;
 
     if (abs(TaskGetNearestPlayerDx()) <= 63)
-        sub_0807b294(sub_0807b3dc);
+        sub_0807b294(SwordAndBladeKnightWalkEnterState);
     else
         sub_0807b200();
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
@@ -575,7 +575,7 @@ void sub_0807b49c(void)
 void sub_0807b4c8(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
 void sub_0807b4f0(void)
@@ -584,7 +584,7 @@ void sub_0807b4f0(void)
     sub_0807b0f0();
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    sub_0807b1e4();
+    CreateSwordAndBladeKnightSlash();
     gCurTask->frame -= 2;
     TaskYieldTrampoline(2);
     gCurTask->frame--;
@@ -600,7 +600,7 @@ void sub_0807b4f0(void)
 void sub_0807b558(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     else
         sub_0807b0b4();
 }
@@ -618,7 +618,7 @@ void sub_0807b584(void)
 void sub_0807b5b0(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
 void sub_0807b5d8(void)
@@ -627,7 +627,7 @@ void sub_0807b5d8(void)
     sub_0807b0f0();
     gCurTask->frame = 10;
     TaskYieldTrampoline(2);
-    sub_0807b1e4();
+    CreateSwordAndBladeKnightSlash();
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -643,7 +643,7 @@ void sub_0807b5d8(void)
 void sub_0807b640(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     else
         sub_0807b0b4();
 }
@@ -665,7 +665,7 @@ void sub_0807b6b4(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
 void sub_0807b6e8(void)
@@ -673,7 +673,7 @@ void sub_0807b6e8(void)
     gCurTask->updateState = 6;
     TaskStop();
     sub_0807b0f0();
-    sub_0807b1e4();
+    CreateSwordAndBladeKnightSlash();
     if (RandomRange(4) != 0)
     {
         TaskSetFrame(10);
@@ -707,10 +707,10 @@ void sub_0807b6e8(void)
 void sub_0807b7a8(void)
 {
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_0807b3dc, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807b7d0(void)
+void SwordAndBladeKnightWalkFall(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
@@ -723,19 +723,19 @@ void sub_0807b7fc(void)
 {
 }
 
-void sub_0807b800(void)
+void SwordAndBladeKnightIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807b844;
+    gCurTask->updateCallback = (u32)SwordAndBladeKnightIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740A3C);
+    CallTableEntry(gCurTask->state, 1, gSwordAndBladeKnightIdleStates);
 }
 
-void sub_0807b844(void)
+void SwordAndBladeKnightIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740A40);
+    CallTableEntry(gCurTask->updateState, 1, gSwordAndBladeKnightIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -745,10 +745,10 @@ void sub_0807b844(void)
 
 void sub_0807b888(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740A3C);
+    CallTableEntry(gCurTask->state, 1, gSwordAndBladeKnightIdleStates);
 }
 
-void sub_0807b8a4(void)
+void SwordAndBladeKnightIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -761,14 +761,14 @@ void sub_0807b8d0(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_0807b8ec(void)
+void SwordAndBladeKnightStandInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807b918;
+    gCurTask->updateCallback = (u32)SwordAndBladeKnightStandUpdate;
     sub_0807b11c();
-    CallTableEntry(gCurTask->state, 6, gUnk_08740A44);
+    CallTableEntry(gCurTask->state, 6, gSwordAndBladeKnightStandStates);
 }
 
-void sub_0807b918(void)
+void SwordAndBladeKnightStandUpdate(void)
 {
     u8 v = (u8)ActorCollideTerrain();
 
@@ -782,7 +782,7 @@ void sub_0807b918(void)
     if (v == 0)
     {
         sub_0807b088();
-        CallTableEntry(gCurTask->updateState, 6, gUnk_08740A5C);
+        CallTableEntry(gCurTask->updateState, 6, gSwordAndBladeKnightStandStateUpdates);
     }
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
@@ -792,10 +792,10 @@ void sub_0807b918(void)
     }
 }
 
-void sub_0807b9c8(void)
+void SwordAndBladeKnightStandEnterState(void)
 {
     gCurTask->facing = 255;
-    CallTableEntry(gCurTask->state, 6, gUnk_08740A44);
+    CallTableEntry(gCurTask->state, 6, gSwordAndBladeKnightStandStates);
 }
 
 void sub_0807b9ec(void)
@@ -813,7 +813,7 @@ void sub_0807ba18(void)
     struct Task *t;
 
     if (abs(TaskGetNearestPlayerDx()) <= 63)
-        sub_0807b294(sub_0807b9c8);
+        sub_0807b294(SwordAndBladeKnightStandEnterState);
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
     t = gCurTask;
     if (t->unk18 == 0)
@@ -837,7 +837,7 @@ void sub_0807ba7c(void)
 void sub_0807baa8(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0807b9c8, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
 void sub_0807bad0(void)
@@ -846,7 +846,7 @@ void sub_0807bad0(void)
     sub_0807b0f0();
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    sub_0807b1e4();
+    CreateSwordAndBladeKnightSlash();
     gCurTask->frame -= 2;
     TaskYieldTrampoline(2);
     gCurTask->frame--;
@@ -862,7 +862,7 @@ void sub_0807bad0(void)
 void sub_0807bb38(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_0807b9c8, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
 void sub_0807bb60(void)
@@ -878,7 +878,7 @@ void sub_0807bb60(void)
 void sub_0807bb8c(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_0807b9c8, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
 void sub_0807bbb4(void)
@@ -887,7 +887,7 @@ void sub_0807bbb4(void)
     sub_0807b0f0();
     gCurTask->frame = 10;
     TaskYieldTrampoline(2);
-    sub_0807b1e4();
+    CreateSwordAndBladeKnightSlash();
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -903,7 +903,7 @@ void sub_0807bbb4(void)
 void sub_0807bc1c(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_0807b9c8, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
 void sub_0807bc44(void)
@@ -921,44 +921,44 @@ void sub_0807bc78(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_0807b9c8, gCurTaskIdx);
+        TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void sub_0807bcac(void)
+void Task_BlockStar(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0874CB5C;
-    CallTableEntry(gCurTask->variant, 1, gUnk_08740A74);
+    gCurTask->frameTable = gBlockStarFrames;
+    CallTableEntry(gCurTask->variant, 1, gBlockStarVariants);
 }
 
-void sub_0807bcec(void)
+void BlockStarInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807bd14;
+    gCurTask->updateCallback = (u32)BlockStarUpdate;
     TaskFaceNearestPlayer();
     gCurTask->frame = 4;
     TaskSleepForever();
 }
 
-void sub_0807bd14(void)
+void BlockStarUpdate(void)
 {
     ActorAttachToHitter();
 }
 
-void Task_Togezo(void)
+void Task_Needlous(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gTogezoFrames;
-    CallTableEntry(gCurTask->variant, 2, gTogezoVariants);
+    gCurTask->frameTable = gNeedlousFrames;
+    CallTableEntry(gCurTask->variant, 2, gNeedlousVariants);
 }
 
 void sub_0807bd60(void)
 {
     TaskFaceNearestPlayer();
-    TaskSetEntry(TogezoEnterState, gCurTaskIdx);
+    TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
 }
 
 void sub_0807bd7c(void)
@@ -989,14 +989,14 @@ s32 sub_0807bdb8(void)
         TaskSetMotionXFacing(gUnk_08740A90[t->unk74], 0x5A5A5A5A);
     }
     ActorSetState(1);
-    TaskSetEntry(TogezoEnterState, gCurTaskIdx);
+    TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 sub_0807be08(void)
 {
     struct Task *t = gCurTask;
-    struct Actor *a = t->unk8C;
+    struct Actor *a = t->u8C.actor;
     u8 st = t->state;
 
     switch (st)
@@ -1017,7 +1017,7 @@ s32 sub_0807be08(void)
         break;
     }
     if (gCurTask->state != st)
-        TaskSetEntry(TogezoEnterState, gCurTaskIdx);
+        TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1123,17 +1123,17 @@ void sub_0807c030(void)
     }
 }
 
-void TogezoInit(void)
+void NeedlousInit(void)
 {
-    gCurTask->updateCallback = (u32)TogezoUpdate;
+    gCurTask->updateCallback = (u32)NeedlousUpdate;
     sub_0807bd7c();
-    CallTableEntry(gCurTask->state, 6, gTogezoStates);
+    CallTableEntry(gCurTask->state, 6, gNeedlousStates);
 }
 
-void TogezoUpdate(void)
+void NeedlousUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 6, gTogezoStateUpdates);
+        CallTableEntry(gCurTask->updateState, 6, gNeedlousStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1141,9 +1141,9 @@ void TogezoUpdate(void)
     }
 }
 
-void TogezoEnterState(void)
+void NeedlousEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 6, gTogezoStates);
+    CallTableEntry(gCurTask->state, 6, gNeedlousStates);
 }
 
 void sub_0807c118(void)
@@ -1171,7 +1171,7 @@ void sub_0807c138(void)
 
     reset:
         ActorSetState(2);
-        TaskSetEntry(TogezoEnterState, gCurTaskIdx);
+        TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
         return;
     }
     gCurTask->unk1C = gUnk_08740A88[gCurTask->unk74];
@@ -1181,7 +1181,7 @@ dec:
     t->unk18--;
 }
 
-void sub_0807c1d0(void)
+void NeedlousFall(void)
 {
     gCurTask->updateState = 1;
     TaskSetMotionY(0, 0x2500, 0x30000);
@@ -1229,7 +1229,7 @@ void sub_0807c29c(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_0807c2b8(void)
+void NeedlousDash(void)
 {
     gCurTask->updateState = 5;
     sub_0807c030();
@@ -1251,7 +1251,7 @@ void sub_0807c2e0(void)
         if (--t->unk20 <= 0)
         {
             ActorSetState(0);
-            TaskSetEntry(TogezoEnterState, gCurTaskIdx);
+            TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
         }
     }
     else if (--t->unk1C <= 0)
@@ -1261,19 +1261,19 @@ void sub_0807c2e0(void)
     }
 }
 
-void sub_0807c350(void)
+void NeedlousIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807c394;
+    gCurTask->updateCallback = (u32)NeedlousIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740AF8);
+    CallTableEntry(gCurTask->state, 1, gNeedlousIdleStates);
 }
 
-void sub_0807c394(void)
+void NeedlousIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740AFC);
+    CallTableEntry(gCurTask->updateState, 1, gNeedlousIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1283,10 +1283,10 @@ void sub_0807c394(void)
 
 void sub_0807c3d8(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740AF8);
+    CallTableEntry(gCurTask->state, 1, gNeedlousIdleStates);
 }
 
-void sub_0807c3f4(void)
+void NeedlousIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1324,7 +1324,7 @@ void sub_0807c484(void)
 
 void sub_0807c4a0(void)
 {
-    struct Actor *a = gCurTask->unk8C;
+    struct Actor *a = gCurTask->u8C.actor;
     u32 v;
 
     AcquirePaletteAnim(1, 0);
@@ -1405,7 +1405,7 @@ void sub_0807c618(void)
     struct ActorSpawn spawn;
     struct Task *t = gCurTask;
 
-    if (sub_08021a40(t->pixelX + t->facing * 16, t->pixelY) == 0)
+    if (GetShapeAtPixelIgnoringOneWay(t->pixelX + t->facing * 16, t->pixelY) == 0)
     {
         spawn.subtype = 31;
         spawn.taskType = 134;
@@ -1543,20 +1543,20 @@ void sub_0807c8d0(void)
         }
         else
         {
-            struct Actor *a = t->unk8C;
+            struct Actor *a = t->u8C.actor;
 
-            if (sub_08021a40(t->pixelX, t->pixelY + ((s8 *)a->terrainBox)[2]) != 0)
+            if (GetShapeAtPixelIgnoringOneWay(t->pixelX, t->pixelY + ((s8 *)a->terrainBox)[2]) != 0)
                 gCurTask->unk1C = 0;
             {
                 struct Task *u = gCurTask;
 
-                if (sub_08021a40(u->pixelX + ((s8 *)a->terrainBox)[5], u->pixelY) != 0)
+                if (GetShapeAtPixelIgnoringOneWay(u->pixelX + ((s8 *)a->terrainBox)[5], u->pixelY) != 0)
                     gCurTask->unk1C = 0;
             }
             {
                 struct Task *u = gCurTask;
 
-                if (sub_08021a40(u->pixelX + ((s8 *)a->terrainBox)[4], u->pixelY) != 0)
+                if (GetShapeAtPixelIgnoringOneWay(u->pixelX + ((s8 *)a->terrainBox)[4], u->pixelY) != 0)
                     gCurTask->unk1C = 0;
             }
             ActorSetState(0);
@@ -1565,7 +1565,7 @@ void sub_0807c8d0(void)
     }
 }
 
-void sub_0807c9b4(void)
+void UFOShoot(void)
 {
     gCurTask->updateState = 3;
     TaskStop();
@@ -1593,20 +1593,20 @@ void sub_0807ca18(void)
     }
 }
 
-void sub_0807ca50(void)
+void UFOIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807ca98;
+    gCurTask->updateCallback = (u32)UFOIdleUpdate;
     TaskFaceNearestPlayer();
     sub_0807c4a0();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BA4);
+    CallTableEntry(gCurTask->state, 1, gUFOIdleStates);
 }
 
-void sub_0807ca98(void)
+void UFOIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740BA8);
+    CallTableEntry(gCurTask->updateState, 1, gUFOIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1616,10 +1616,10 @@ void sub_0807ca98(void)
 
 void sub_0807cadc(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BA4);
+    CallTableEntry(gCurTask->state, 1, gUFOIdleStates);
 }
 
-void sub_0807caf8(void)
+void UFOIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1684,17 +1684,17 @@ void sub_0807cbf4(void)
     gCurTask->unk18 = 1;
 }
 
-void sub_0807cc68(void)
+void ParasolRiseInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807cc9c;
+    gCurTask->updateCallback = (u32)ParasolRiseUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BBC);
+    CallTableEntry(gCurTask->state, 1, gParasolRiseStates);
 }
 
-void sub_0807cc9c(void)
+void ParasolRiseUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740BC0);
+    CallTableEntry(gCurTask->updateState, 1, gParasolRiseStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1 && gCurTask->unk18 != 0)
     {
         ActorCheckHits();
@@ -1704,7 +1704,7 @@ void sub_0807cc9c(void)
 
 void sub_0807ccec(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BBC);
+    CallTableEntry(gCurTask->state, 1, gParasolRiseStates);
 }
 
 void sub_0807cd08(void)
@@ -1796,19 +1796,19 @@ void sub_0807ce68(void)
     gCurTask->unk24--;
 }
 
-void sub_0807cedc(void)
+void ParasolIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807cf20;
+    gCurTask->updateCallback = (u32)ParasolIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BCC);
+    CallTableEntry(gCurTask->state, 1, gParasolIdleStates);
 }
 
-void sub_0807cf20(void)
+void ParasolIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740BD0);
+    CallTableEntry(gCurTask->updateState, 1, gParasolIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1818,10 +1818,10 @@ void sub_0807cf20(void)
 
 void sub_0807cf64(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BCC);
+    CallTableEntry(gCurTask->state, 1, gParasolIdleStates);
 }
 
-void sub_0807cf80(void)
+void ParasolIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -2015,13 +2015,13 @@ void sub_0807d384(void)
 {
 }
 
-void sub_0807d388(void)
+void Task_SwordAndBladeKnightSlash(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_0807d3b0;
+    t->updateCallback = (u32)SwordAndBladeKnightSlashUpdate;
     t->unk18 = 0;
     TaskYieldTrampoline(3);
     TaskExitTrampoline();

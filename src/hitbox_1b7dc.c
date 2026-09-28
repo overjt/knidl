@@ -7,10 +7,10 @@
 /* hitbox_1b7dc.c (0x0801B7DC-0x0801BAA3, issue #84).
  *
  * The pieces the actor-vs-collider hit tests of src/hitbox_1a8c8.c share:
- * sub_0801b7dc places the actor's attack box gAttackBox (struct
+ * PlaceAttackBox places the actor's attack box gAttackBox (struct
  * AttackBox) at the actor's position gAttackX/gAttackY, mirrored
  * when the actor faces left, relative to the camera rectangle
- * gViewRect[]; sub_0801b8e4 computes a hit's damage (gAttackHealth
+ * gViewRect[]; CalcHitDamageAndDirection computes a hit's damage (gAttackHealth
  * minus the body box's defence) and knock-back direction (one of eight, from
  * ArcTan2 between the collider and the actor); sub_0801b9e4 copies the hit's
  * details out for the actor code. */
@@ -18,7 +18,7 @@
 /* Place the actor's attack box: move the actor position by the box's
    offset (mirrored when the actor faces left) and store the box edges
    relative to the camera rectangle. */
-void sub_0801b7dc(void)
+void PlaceAttackBox(void)
 {
     s32 y;
 
@@ -52,7 +52,7 @@ void sub_0801b7dc(void)
 /* Shared tail of the hit tests: the damage left after the body box's
    defence, the hit kind and the knock-back direction (one of eight, from
    the angle between the entry and the actor). */
-void sub_0801b8e4(void)
+void CalcHitDamageAndDirection(void)
 {
     gHitHealthLeft = gAttackHealth - gColliderBodyBox->unk0C;
     if ((s16)gHitHealthLeft <= 0)
@@ -60,7 +60,7 @@ void sub_0801b8e4(void)
         if (gAttackBox->unk0A & 2)
         {
             gHitKind = 6;
-            gUnk_03002450 = 1;
+            gHitEffect = 1;
             gHitHealthLeft = gAttackHealth;
             gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
             return;
@@ -69,7 +69,7 @@ void sub_0801b8e4(void)
         gHitHealthLeft = 0;
     }
     gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
-    gUnk_03002450 = gColliderBodyBox->unk0D;
+    gHitEffect = gColliderBodyBox->unk0D;
 }
 
 /* Shared tail of the hit tests: copy the hit's details out - the body

@@ -30,7 +30,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -44,7 +44,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -55,13 +55,13 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
 void MetaKnightInit(void)
@@ -114,7 +114,7 @@ void MetaKnightUpdate(void)
             break;
         case 6:
             gUnk_02007D00[0] = gCurTask->hitterPlayer;
-            switch (gCurTask->unk82)
+            switch (gCurTask->hitEffect)
             {
             case 4:
                 gUnk_03001F2C = sub_080a6e1c();
@@ -156,7 +156,7 @@ void sub_080a57d4(void)
     gCurTask->updateState = 0;
     gCurTask->posX = (gViewRect[0] + 216) << 16;
     gCurTask->posY = (gViewRect[2] + 44) << 16;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         for (i = 0; i < gActivePlayerCount; i++)
         {
@@ -166,7 +166,7 @@ void sub_080a57d4(void)
             sp.spawnArg = i;
             sp.x = gUnk_08748D28[i + (gActivePlayerCount - 1) * 4] + gViewRect[0];
             sp.y = gViewRect[2];
-            sp.tileWord = gCurTask->unk8C->savedTileWord;
+            sp.tileWord = gCurTask->u8C.actor->savedTileWord;
             sp.checkTerrain = 0;
             CreateActorFromDesc(&sp, 1);
         }
@@ -191,7 +191,7 @@ void sub_080a57d4(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(185, (s16)(t->pixelX + 8), t->pixelY, t->unk8C->savedTileWord);
+    CreateChildTask(185, (s16)(t->pixelX + 8), t->pixelY, t->u8C.actor->savedTileWord);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->frame++;
@@ -215,7 +215,7 @@ void sub_080a57d4(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(188, (s16)(t->pixelX - 32), t->pixelY, t->unk8C->savedTileWord | (240 << 8));
+    CreateChildTask(188, (s16)(t->pixelX - 32), t->pixelY, t->u8C.actor->savedTileWord | (240 << 8));
     gCurTask->velY = 128 << 10;
     gCurTask->accelY = -0x10000;
     TaskYieldTrampoline(3);
@@ -542,16 +542,16 @@ void MetaKnightRun(void)
     }
 }
 
-void sub_080a6130(void)
+void MetaKnightRunUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (abs(TaskGetNearestPlayerDx()) <= 43)
     {
         gCurTask->unk34 = 0;
         if (gCurTask->health >= gUnk_02007D00[3] >> 1)
-            ActorSetState(gUnk_08748E88[RandomRange(8)]);
+            ActorSetState(gMetaKnightNearStates[RandomRange(8)]);
         else
-            ActorSetState(gUnk_08748E98[RandomRange(8)]);
+            ActorSetState(gMetaKnightNearStatesLowHealth[RandomRange(8)]);
         sub_080a7168();
     }
 }
@@ -752,7 +752,7 @@ void sub_080a658c(void)
     TaskStop();
     RequestScreenShake(2);
     PlaySfx(504);
-    sub_0806e9b4(0, 0, 3);
+    CreateLandingImpact(0, 0, 3);
     gCurTask->unk30 = 0;
     gCurTask->frame++;
     TaskYieldTrampoline(12);
@@ -984,7 +984,7 @@ void sub_080a6b3c(void)
     if (t->onGround == 0)
     {
         CreateChildTask(188, (s16)(t->pixelX + t->facing * 4), (s16)(t->pixelY - 4),
-                     t->unk8C->savedTileWord | (240 << 8));
+                     t->u8C.actor->savedTileWord | (240 << 8));
         gCurTask->accelY = 168 << 5;
         gCurTask->speedLimitY = 192 << 10;
         gCurTask->unk6C = 0;
@@ -1000,7 +1000,7 @@ void sub_080a6b3c(void)
     else
     {
         CreateChildTask(188, (s16)(t->pixelX + t->facing * 16), (s16)(t->pixelY + 4),
-                     t->unk8C->savedTileWord | (240 << 8));
+                     t->u8C.actor->savedTileWord | (240 << 8));
         TaskStop();
         TaskSetFrame(69);
     }
@@ -1390,7 +1390,7 @@ void sub_080a7438(void)
     sp.spawnArg = 0;
     sp.x = 0;
     sp.y = 0;
-    sp.tileWord = gCurTask->unk8C->savedTileWord + (128 << 5);
+    sp.tileWord = gCurTask->u8C.actor->savedTileWord + (128 << 5);
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 1);
     TaskGetScreenPosSlot(gCurTaskIdx);
@@ -1441,7 +1441,7 @@ void sub_080a75c8(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     t = gCurTask;
-    CreateChildTask(186, (s16)(t->pixelX - t->facing * 2), (s16)(t->pixelY - 1), t->unk8C->savedTileWord);
+    CreateChildTask(186, (s16)(t->pixelX - t->facing * 2), (s16)(t->pixelY - 1), t->u8C.actor->savedTileWord);
     TaskSetFrame(24);
     TaskYieldTrampoline(8);
     gCurTask->frame++;
@@ -1524,7 +1524,7 @@ void sub_080a75c8(void)
     TaskYieldTrampoline(30);
     FadeOutBgm(8);
     TaskYieldTrampoline(32);
-    sub_08066fc0(0, 128, 104);
+    CreateStarRodPiece(0, 128, 104);
     ActorDestroy();
 }
 
@@ -1532,12 +1532,12 @@ void sub_080a787c(void)
 {
 }
 
-void sub_080a7880(void)
+void Task_MetaKnightSwordHitBox(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_080a78a0;
+    t->updateCallback = (u32)MetaKnightSwordHitBoxUpdate;
     TaskSleepForever();
 }

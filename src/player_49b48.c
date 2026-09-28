@@ -10,7 +10,7 @@
  *
  * Player action bodies, part 16: actions 44-45 and handlers 41-42, the
  * twins of M11's actions 32-33.  PlayerActionIce (action 44, mode 13) is
- * M11's PlayerActionFire with other constants (Task.unk80 = 13, animations
+ * M11's PlayerActionFire with other constants (Task.u80.attackAbility = 13, animations
  * 0xA0A-0xA0E, sound 140, M14's CreatePlayerObject(player, 7, 0..1), effects
  * 40 x3 and 28): state 0 winds up, state 1 loops the animation until
  * its handler PlayerActionIceUpdate (M11's PlayerActionFireUpdate) re-binds state 2 once
@@ -39,7 +39,7 @@ void PlayerActionIce(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->unk80 = 13;
+            u->u80.attackAbility = 13;
         }
     }
     switch (gCurTask->variant) {
@@ -130,7 +130,7 @@ void PlayerActionFreeze(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->unk80 = 14;
+            u->u80.attackAbility = 14;
         }
     }
     switch (gCurTask->variant) {

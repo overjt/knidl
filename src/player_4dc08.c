@@ -20,8 +20,8 @@
  * or, once PlayerState.attachedCount is set, plays sound 177, sets
  * PlayerState.unk42 bit 9 and stops; every pass counts Task.unk28.  Its
  * handler PlayerActionBackdropUpdate re-binds state 2 when PlayerState.attachedCount is set, runs
- * the hit test sub_08030898(gUnk_0873CC64) in state 1 (which spawns
- * sub_08065100's object and marks PlayerState.unk09) and, in state 2,
+ * the hit test TaskBreakFirstBlock(gUnk_0873CC64) in state 1 (which spawns
+ * CreateBlockStar's object and marks PlayerState.unk09) and, in state 2,
  * requests action 53, 8 or 1 once the swing is over.  PlayerActionThrow
  * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
  * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
@@ -29,8 +29,8 @@
  * bit 2 set until PlayerState.attachedCount is non-zero and equal to unk08, then
  * recovers or releases (sound 201, PlayerState.unk42 bit 9). */
 
-/* Not from room.h: this file's view of gUnk_02007FA0 differs (lesson 3.517). */
-extern s16 gUnk_02007FA0[];
+/* Not from room.h: this file's view of gBrokenBlockX differs (lesson 3.517). */
+extern s16 gBrokenBlockX[];
 extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -38,9 +38,9 @@ struct HitBoxSet;
 void TaskSetEntry(void *a, u32 i);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void RequestScreenShake(u16 a);
-u16 sub_08030898(struct HitBoxSet *p, s32 e);
+u16 TaskBreakFirstBlock(struct HitBoxSet *p, s32 e);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);   /* this caller passes x and y unnarrowed (ldrsh; adds #8) */
+s32 CreateBlockStar(s32 x, s32 y, u32 p2, u8 p3, u8 p4);   /* this caller passes x and y unnarrowed (ldrsh; adds #8) */
 
 void PlayerActionBackdrop(void)
 {
@@ -162,9 +162,9 @@ void PlayerActionBackdropUpdate(void)
         }
         else if (t->player->unk09 == 0)
         {
-            if (sub_08030898((struct HitBoxSet *)gUnk_0873CC64, t->player->playerIndex) != 0)
+            if (TaskBreakFirstBlock((struct HitBoxSet *)gUnk_0873CC64, t->player->playerIndex) != 0)
             {
-                sub_08065100(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 3);
+                CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 3);
                 gCurTask->player->unk09 = 2;
             }
             u = gCurTask;

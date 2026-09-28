@@ -27,7 +27,7 @@ extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *a, u32 i);
-extern void sub_0801bcac(u32 *p);
+extern void TerrainCollideBox(u32 *p);
 extern void RequestScreenShake(u32 a);
 extern void ActorSetState(u8 v);
 extern void AngleToVector(s16 t, s16 mag);
@@ -48,7 +48,7 @@ void sub_080763e8(void)
             if (t->unk2C <= 3)
                 t->unk2C++;
         }
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             gCurTask->frame = gUnk_0874009C[gCurTask->unk2C];
         else
             gCurTask->frame = gUnk_087400A6[gCurTask->unk2C];
@@ -67,7 +67,7 @@ void sub_08076454(void)
     t->unk28 = 1;
     t->unk24 = 1;
     t->unk2C = 2;
-    if (gUnk_0300244C != 0 && gUnk_03001F30 == 1)
+    if (gUnk_0300244C != 0 && gMetaKnightmareMode == 1)
         t->frame = 0x1265;
     else
         t->frame = 0x11C7;
@@ -231,7 +231,7 @@ void sub_08076798(void)
 
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             TaskSetFrame(gUnk_0873D384[t->player->ability]);
         else
             TaskSetFrame(0x11E4);
@@ -270,7 +270,7 @@ void sub_0807685c(s32 a)
     t->unk20 = t->pixelY;
     if (t->frame != -1)
     {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             sub_08070334();
         {
             struct Task *u = gCurTask;
@@ -278,7 +278,7 @@ void sub_0807685c(s32 a)
             if ((s16)u->unk70 <= 0)
             {
                 u->unk70 = 8;
-                sub_0806da3c(0, a);
+                CreateCannonSmoke(0, a);
             }
         }
         gCurTask->unk70--;
@@ -313,7 +313,7 @@ void sub_080768c8(void)
         }
         gCurTask->posX = x << 16;
     }
-    sub_08067108();
+    DisablePause();
 }
 
 void sub_08076958(void)
@@ -486,7 +486,7 @@ void sub_08076cd4(void)
 {
     gCurTask->updateState = 1;
     sub_080766ac();
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         sub_080769d0();
     TaskSleepForever();
 }
@@ -500,7 +500,7 @@ void sub_08076d0c(void)
 {
     gCurTask->updateState = 2;
     sub_08076710();
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         sub_080769d0();
     TaskSleepForever();
 }
@@ -514,7 +514,7 @@ void sub_08076d44(void)
 {
     gCurTask->updateState = 3;
     sub_08076798();
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         sub_08076958();
     else
         TaskSleepForever();
@@ -536,7 +536,7 @@ void sub_08076dac(void)
 {
     gCurTask->updateState = 4;
     sub_080768c8();
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         sub_08070264();
         sub_0807022c();
@@ -549,8 +549,8 @@ void sub_08076dac(void)
 
 void sub_08076ddc(void)
 {
-    sub_0801bcac(gUnk_0873F5E4);
-    if (gUnk_03001F30 == 0)
+    TerrainCollideBox(gUnk_0873F5E4);
+    if (gMetaKnightmareMode == 0)
     {
         sub_080703a8();
         if (gCurTask->unk24 == 0)
@@ -577,7 +577,7 @@ void sub_08076e30(void)
 void sub_08076e48(void)
 {
     if ((gCurTask->onGround & 1) == 0)
-        sub_0801bcac(gUnk_0873F5E4);
+        TerrainCollideBox(gUnk_0873F5E4);
     sub_08076c00();
     {
         struct Task *t = gCurTask;
@@ -615,7 +615,7 @@ void sub_08076f04(s32 id)
     sub_08076ec8(id);
     t->onGround = 0;
     TaskStopY();
-    sub_08068b88(id, 0, 1, 0);
+    PlayerResumeControl(id, 0, 1, 0);
     HudShowAbility(p->ability, id);
 }
 
@@ -635,11 +635,11 @@ void sub_08076f50(s32 id)
         t->posY = v->pixelY << 16;
     }
     TaskStopSlot(id);
-    sub_08068b88(id, 6, 1, 0);
+    PlayerResumeControl(id, 6, 1, 0);
     p->unk14 = 8;
     HudShowAbility(p->ability, id);
     if (u->unk1C > 0)
-        sub_08067108();
+        DisablePause();
 }
 
 void sub_08076fe4(int a)
@@ -732,21 +732,21 @@ void sub_080770f0(s32 id)
 void sub_0807717c(void)
 {
     if (gCurTask->unk1C == 0)
-        sub_0806da3c(1, 0);
-    sub_0806da3c(2, 2);
+        CreateCannonSmoke(1, 0);
+    CreateCannonSmoke(2, 2);
     RequestScreenShake(4);
     PlaySfx(296);
 }
 
 void sub_080771b0(void)
 {
-    sub_0806da3c(2, 2);
+    CreateCannonSmoke(2, 2);
     RequestScreenShake(4);
 }
 
 void sub_080771c4(void)
 {
-    sub_0806da3c(3, 3);
+    CreateCannonSmoke(3, 3);
     RequestScreenShake(4);
 }
 
@@ -1230,7 +1230,7 @@ void sub_080779dc(void)
     u->posY = u->pixelY << 16;
 }
 
-void sub_08077a48(void)
+void CreateCannonFuseSpark(void)
 {
     gCurTask->unk46 = CreateChildTaskHere(157, 1);
 }

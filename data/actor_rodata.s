@@ -9,48 +9,48 @@
 	.section .actor_rodata, "a"
 	.global	actor_rodata
 actor_rodata:
-	.global	gUnk_0873EEA0
-gUnk_0873EEA0:
-	.word	gUnk_0824BCB0
-	.word	gUnk_0824CC84
-	.word	gUnk_0824C4C0
-	.word	gUnk_0824D150
-	.word	gUnk_0824D980
-	.word	gUnk_0824F3FC
-	.word	gUnk_0824EF38
-	.word	gUnk_0824E314
-	.word	gUnk_0824F9AC
-	.word	gUnk_08250398
+	.global	gEnemyGfx
+gEnemyGfx:
+	.word	gWaddleDeeGfx
+	.word	gRockyGfx
+	.word	gNoddyGfx
+	.word	gBroomHatterGfx
+	.word	gPengyGfx
+	.word	gLaserBallGfx
+	.word	gChillyGfx
+	.word	gSirKibbleGfx
+	.word	gCappyGfx
+	.word	gWaddleDooGfx
 	.incbin	"baserom.gba", 0x73EEC8, 0x4
-	.word	gUnk_08250878
-	.word	gUnk_08250D80
-	.word	gUnk_082511CC
-	.word	gUnk_08251828
-	.word	gUnk_08251D9C
-	.word	gUnk_08252568
-	.word	gUnk_08252190
-	.word	gUnk_082530B4
-	.word	gUnk_08253728
-	.word	gUnk_08253D8C
-	.word	gUnk_0825502C
-	.word	gUnk_08255750
-	.word	gUnk_0825491C
-	.word	gUnk_082563A4
-	.word	gUnk_08256744
-	.word	gUnk_08256D2C
-	.word	gUnk_08257414
-	.word	gUnk_08258804
-	.word	gUnk_08259264
-	.word	gUnk_08257E9C
-	.word	gUnk_08257E9C
-	.word	gUnk_08257E9C
-	.word	gUnk_08259514
-	.word	gUnk_082598B4
-	.word	gUnk_0825A438
-	.word	gUnk_0825AC4C
+	.word	gCoolSpookGfx
+	.word	gBrontoBurtGfx
+	.word	gKabuGfx
+	.word	gBomberGfx
+	.word	gCoconutGfx
+	.word	gTwizzyGfx
+	.word	gShotzoGfx
+	.word	gSparkyGfx
+	.word	gTwisterGfx
+	.word	gSquishyGfx
+	.word	gScarfyGfx
+	.word	gBubblesGfx
+	.word	gStarmanGfx
+	.word	gHotHeadGfx
+	.word	gGlunkGfx
+	.word	gSlippyGfx
+	.word	gBlipperGfx
+	.word	gSwordKnightGfx
+	.word	gBladeKnightGfx
+	.word	gPoppyBrosJrGfx
+	.word	gPoppyBrosJrGfx
+	.word	gPoppyBrosJrGfx
+	.word	gConerGfx
+	.word	gWheelieGfx
+	.word	gFlamerGfx
+	.word	gNeedlousGfx
 	.word	gUFOGfx
 	.incbin	"baserom.gba", 0x73EF38, 0x4
-	.word	gUnk_0825BEB4
+	.word	gGipGfx
 	.incbin	"baserom.gba", 0x73EF40, 0x8
 	.global	gUnk_0873EF48
 gUnk_0873EF48:
@@ -174,8 +174,8 @@ gUnk_0873F180:
 	.word	gUnk_0825CF70
 	.word	gUnk_0825D084
 	.word	gUnk_0825DBFC
-	.global	gUnk_0873F198
-gUnk_0873F198:
+	.global	gEnemyTaskTypes
+gEnemyTaskTypes:
 	.incbin	"baserom.gba", 0x73F198, 0xA4
 	.global	gMidBossTaskTypes
 gMidBossTaskTypes:

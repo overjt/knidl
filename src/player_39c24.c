@@ -18,7 +18,7 @@
  * by the door side kept in Task.unk2C, drives the door's M08 stage
  * objects through M07's helpers (sub_080264b0 ... sub_08026704) and the
  * cameras through sub_08027850/sub_08027908/sub_08027a30/sub_08027a60;
- * the second mode of gUnk_0200AF00 also uploads an OBJ graphic
+ * the second mode of gEntryDoorEvent also uploads an OBJ graphic
  * (LZ77UnCompWram of gUnk_080D07C8 into gUnk_02020000, then 0x06014000).
  * PlayerActionExitDoorUpdate, per-frame handler 19, only releases the player once
  * Task.unk28 is set. */
@@ -45,7 +45,7 @@ void PlayerActionExitDoor(void)
     if (gUnk_020055C4 == 0)
     {
         sub_0803f6e0();
-        if (gPlayerCount > 1 && gUnk_0200AF00 == 1)
+        if (gPlayerCount > 1 && gEntryDoorEvent == 1)
         {
             for (i = 0; i < gPlayerCount; i++)
             {
@@ -124,7 +124,7 @@ void PlayerActionExitDoor(void)
             TaskYieldTrampoline(2);
         }
     }
-    switch (gUnk_0200AF00)
+    switch (gEntryDoorEvent)
     {
     case 0:
     default:
@@ -377,7 +377,7 @@ void PlayerActionExitDoor(void)
         }
         gCurTask->player->unk42 &= 0xFFEF;
         TaskSetSkipMask(14, gCurTaskIdx);
-        sub_0802672c();
+        CreateStageUnlockPan();
         {
             struct Task *t = gCurTask;
 
@@ -387,7 +387,7 @@ void PlayerActionExitDoor(void)
                 {
                 case 0:
                 default:
-                    while (gUnk_020055E8 == 0)
+                    while (gCameraPanDone == 0)
                         TaskYieldTrampoline(1);
                     break;
                 case 1:
@@ -400,17 +400,17 @@ void PlayerActionExitDoor(void)
                     {
                         gCurTask->frame = gCurTask->unk46;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                         gCurTask->frame++;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                         TaskYieldTrampoline(1);
-                        if (gUnk_020055E8 != 0)
+                        if (gCameraPanDone != 0)
                             break;
                     }
                     break;
@@ -418,7 +418,7 @@ void PlayerActionExitDoor(void)
             }
             else
             {
-                while (gUnk_020055E8 == 0)
+                while (gCameraPanDone == 0)
                     TaskYieldTrampoline(1);
             }
         }
@@ -535,6 +535,6 @@ void PlayerActionExitDoorUpdate(void)
     if (gCurTask->unk28 != 0)
     {
         PlayerRequestLocomotion();
-        gUnk_03001F34 = 0;
+        gPauseDisabled = 0;
     }
 }

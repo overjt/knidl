@@ -8,16 +8,16 @@
 
 /* player_4f614.c (0x0804F614-0x0804F947, issue #90).
  *
- * Helpers of action 49's sub-actions.  sub_0804f614 plays the reaction
+ * Helpers of action 49's sub-actions.  PlayerBallPlayBump plays the reaction
  * PlayerState.bumpKind asks for (effect 4 through CreatePlayerEffect, then one of
- * hit poses 0xCEA/0xCEB, mirrored through Task.spriteFlags bit 15), sub_0804f76c
- * picks a speed class 2-4 from |Task.velX|, sub_0804f79c steps the
- * 16-step direction Task.unk46 with the sign of Task.velX, sub_0804f7f8 is the
+ * hit poses 0xCEA/0xCEB, mirrored through Task.spriteFlags bit 15), PlayerBallGetRollDelay
+ * picks a speed class 2-4 from |Task.velX|, PlayerBallStepRoll steps the
+ * 16-step direction Task.unk46 with the sign of Task.velX, PlayerBallCheckVariant is the
  * four key probes the sub-handlers share (mode 0-3 -> next sub-action 4, 6
- * or 8) and sub_0804f8ec the landing check (M11's PlayerCheckLanding, effect 4
+ * or 8) and PlayerBallCheckLanding the landing check (M11's PlayerCheckLanding, effect 4
  * on a fast landing). */
 
-s32 sub_0804f614(void)
+s32 PlayerBallPlayBump(void)
 {
     u8 k = gCurTask->player->bumpKind;
 
@@ -74,7 +74,7 @@ s32 sub_0804f614(void)
     }
 }
 
-s32 sub_0804f76c(void)
+s32 PlayerBallGetRollDelay(void)
 {
     s32 v = abs(gCurTask->velX);
     s32 r;
@@ -88,7 +88,7 @@ s32 sub_0804f76c(void)
     return r;
 }
 
-void sub_0804f79c(void)
+void PlayerBallStepRoll(void)
 {
     struct Task *t = gCurTask;
 
@@ -111,7 +111,7 @@ void sub_0804f79c(void)
         t->unk46 = 0;
 }
 
-s32 sub_0804f7f8(s32 a)
+s32 PlayerBallCheckVariant(s32 a)
 {
     s32 r = 0;
 
@@ -158,7 +158,7 @@ s32 sub_0804f7f8(s32 a)
     return r;
 }
 
-s32 sub_0804f8ec(s32 a0)
+s32 PlayerBallCheckLanding(s32 a0)
 {
     if (PlayerCheckLanding())
     {

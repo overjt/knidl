@@ -15,7 +15,7 @@
  * sub_0800b44c (reset the game-state cells), ResetScoresAndMaxHealth (scores, the
  * maximum health 24 or 48, the HUD mode), ResetPlayerRecords (three lives and
  * cleared records per player), sub_0800b5dc/sub_0800b628, and the three
- * screen setups sub_0800b648/sub_0800b788/sub_0800b87c. */
+ * screen setups StageInit/HubInit/BigSwitchViewInit. */
 
 /* Not from room.h or effect.h: this file's view of gSavedPlayerAbilityUses
    and gUnk_020060CC differs (lesson 3.517). */
@@ -31,7 +31,7 @@ extern vs16 gSavedPlayerAbilityUses[];
 extern u16 gSavedPlayerAbilities[];
 extern s8 gUnk_02008010;
 extern u16 gPlayerAbilityUses[];
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
 extern u16 gLatchedPressedKeys[];
@@ -42,10 +42,10 @@ extern u8 gExtraMode;
 void sub_0802296c(void);
 void sub_08022f98(void);
 void sub_08022f9c(void);
-void sub_08022fa8(void);
+void LoadRoom(void);
 void sub_080233e0(void);
-void sub_08023948(void);
-void sub_08023ca0(void);
+void LoadHubRoom(void);
+void LoadBigSwitchViewRoom(void);
 
 void sub_0800b44c(void)
 {
@@ -55,7 +55,7 @@ void sub_0800b44c(void)
     gLinkIsMaster = 0;
     gLinkPlayerCount = 1;
     gPlayerCount = 1;
-    gUnk_03001F30 = 0;
+    gMetaKnightmareMode = 0;
     gInputRecorderMode = 0;
     gUnk_030023B0 = 0;
     gUnk_0200EC50 = 0;
@@ -71,7 +71,7 @@ void ResetScoresAndMaxHealth(void)
         InitPlayerState(i);
     }
     ResetPlayTime();
-    if (gUnk_03001F30 == 0) {
+    if (gMetaKnightmareMode == 0) {
         if (gExtraMode == 1)
             gMaxHealth = 24;
         else
@@ -104,9 +104,9 @@ void ResetPlayerRecords(void)
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gUnk_02005E00.unk00 = 0;
-    gUnk_02006178 = 0;
-    gUnk_020055CC = 0;
-    gUnk_03001F34 = 0;
+    gScreenAttackActive = 0;
+    gExtraModeTitleSeen = 0;
+    gPauseDisabled = 0;
 }
 
 void sub_0800b5dc(void)
@@ -132,7 +132,7 @@ void sub_0800b628(void)
         InitPlayerState(i);
 }
 
-void sub_0800b648(void)
+void StageInit(void)
 {
     s32 i;
     s8 *b;
@@ -154,7 +154,7 @@ void sub_0800b648(void)
     sub_08008c7c();
     gUnk_02007F50 = -1;
     if (gUnk_02004B64 == 0)
-        sub_08022fa8();
+        LoadRoom();
     else
         sub_080233e0();
     if ((u8)(gUnk_02000020 - 2) <= 1)
@@ -179,8 +179,8 @@ void sub_0800b648(void)
     sub_08066144();
     gNextActorSerial = 0;
     gLinkCommand = 0;
-    gUnk_03001F34 = 0;
-    gUnk_02006178 = 0;
+    gPauseDisabled = 0;
+    gScreenAttackActive = 0;
     gUnk_02007CF0 = 0;
     gUnk_02008010 = -1;
     gUnk_020055C4 = 0;
@@ -198,7 +198,7 @@ void sub_0800b648(void)
     }
 }
 
-void sub_0800b788(void)
+void HubInit(void)
 {
     s32 i;
     s8 *b;
@@ -213,7 +213,7 @@ void sub_0800b788(void)
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
     LoadGfxSet(0);
     sub_08008c7c();
-    sub_08023948();
+    LoadHubRoom();
     b = gUnk_02007FB8;
     zero = 0;
     p = b + 2;
@@ -230,7 +230,7 @@ void sub_0800b788(void)
     gStageRequest = 0;
 }
 
-void sub_0800b87c(void)
+void BigSwitchViewInit(void)
 {
     s32 i;
     s8 *b;
@@ -242,7 +242,7 @@ void sub_0800b87c(void)
     ResetBgScroll();
     LoadGfxSet(0);
     sub_08008c7c();
-    sub_08023ca0();
+    LoadBigSwitchViewRoom();
     /* A reversed clear loop only strength-reduces as a do/while over a
      * signed pointer compare with a zero variable (lesson 3.30). */
     b = gUnk_02007FB8;

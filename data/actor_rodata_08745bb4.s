@@ -588,15 +588,15 @@ gAxeKnightVariants:
 	.word	sub_0809cab0+1
 	.word	sub_0809cc24+1
 	.word	sub_0809cd8c+1
-	.global	gUnk_08747AB4
-gUnk_08747AB4:
+	.global	gAxeKnightStates
+gAxeKnightStates:
 	.word	sub_0809c570+1
 	.word	sub_0809c74c+1
 	.word	sub_0809c880+1
 	.word	sub_0809c984+1
 	.word	sub_0809ca10+1
-	.global	gUnk_08747AC8
-gUnk_08747AC8:
+	.global	gAxeKnightStateUpdates
+gAxeKnightStateUpdates:
 	.word	sub_0809c638+1
 	.word	sub_0809c840+1
 	.word	sub_0809c8f8+1
@@ -606,16 +606,16 @@ gUnk_08747AC8:
 gJavelinKnightVariants:
 	.word	sub_0809d18c+1
 	.word	sub_0809d7a4+1
-	.global	gUnk_08747AE4
-gUnk_08747AE4:
+	.global	gJavelinKnightStates
+gJavelinKnightStates:
 	.word	sub_0809d25c+1
 	.word	sub_0809d280+1
 	.word	sub_0809d30c+1
 	.word	sub_0809d4a0+1
 	.word	sub_0809d56c+1
 	.word	sub_0809d638+1
-	.global	gUnk_08747AFC
-gUnk_08747AFC:
+	.global	gJavelinKnightStateUpdates
+gJavelinKnightStateUpdates:
 	.word	sub_0809d308+1
 	.word	sub_0809d42c+1
 	.word	sub_0809d568+1
@@ -659,12 +659,12 @@ gMaceKnightVariants:
 	.word	sub_0809dcbc+1
 	.word	sub_0809dd7c+1
 	.word	sub_0809df54+1
-	.global	gUnk_08747BD8
-gUnk_08747BD8:
+	.global	gMaceKnightStates
+gMaceKnightStates:
 	.word	sub_0809de54+1
 	.word	sub_0809df08+1
-	.global	gUnk_08747BE0
-gUnk_08747BE0:
+	.global	gMaceKnightStateUpdates
+gMaceKnightStateUpdates:
 	.word	sub_0809dee0+1
 	.word	sub_0809df2c+1
 	.global	gUnk_08747BE8
@@ -678,14 +678,14 @@ gTridentKnightVariants:
 	.word	sub_0809eddc+1
 	.word	sub_0809efc8+1
 	.word	sub_0809f120+1
-	.global	gUnk_08747C04
-gUnk_08747C04:
+	.global	gTridentKnightStates
+gTridentKnightStates:
 	.word	sub_0809e914+1
 	.word	sub_0809eab8+1
 	.word	sub_0809eb14+1
 	.word	sub_0809eb7c+1
-	.global	gUnk_08747C14
-gUnk_08747C14:
+	.global	gTridentKnightStateUpdates
+gTridentKnightStateUpdates:
 	.word	sub_0809ea08+1
 	.word	sub_0809eb10+1
 	.word	sub_0809eb50+1

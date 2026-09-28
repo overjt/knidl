@@ -110,12 +110,12 @@ void Task_MetaKnights(void)
 
     sub_0809c028();
     sub_0809fbd0();
-    sub_08067108();
+    DisablePause();
     sub_08066544();
     sub_0809c0a8();
     sub_0809fc08();
     sub_0809bfac();
-    sub_08067114();
+    EnablePause();
     t = gCurTask;
     t->updateCallback = (u32)sub_0809bc1c;
     t->lateUpdateCallback = (u32)sub_0809bf2c;

@@ -30,7 +30,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -44,7 +44,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -55,13 +55,13 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
 void Task_NightmarePowerOrb(void)
@@ -153,7 +153,7 @@ void sub_080ae4c4(void)
     sub_08063a00((u32)gUnk_0874B450);
     c = &gCurTask;
     t = *c;
-    t->unk8C->animScript = 0;
+    t->u8C.actor->animScript = 0;
     t->unk28 = 0;
     t->facing = 1;
     u = *c;
@@ -368,10 +368,10 @@ void sub_080ae79c(void)
     sub_080aefd4((u32)gUnk_0874AEAC);
     gCurTask->updateState = 3;
     TaskYieldTrampoline(40);
-    sub_080af20c(0);
-    sub_080af20c(1);
-    sub_080af20c(2);
-    sub_080af20c(3);
+    CreateNightmarePowerOrbStar(0);
+    CreateNightmarePowerOrbStar(1);
+    CreateNightmarePowerOrbStar(2);
+    CreateNightmarePowerOrbStar(3);
     gUnk_02007D00[3] = 140;
     TaskYieldTrampoline(80);
 }
@@ -429,7 +429,7 @@ void sub_080ae870(void)
     TaskStop();
     TaskYieldTrampoline(8);
     PlaySfx(0x22D);
-    sub_080af20c(11);
+    CreateNightmarePowerOrbStar(11);
     c = &gCurTask;
     u1 = *c;
     u1->velX = 128 << 12;
@@ -834,8 +834,8 @@ void sub_080aefd4(u32 a)
     struct Task *u;
 
     t = gCurTask;
-    t->unk8C->animScript = (struct AnimCmd *)a;
-    t->unk8C->animScriptPos = 0;
+    t->u8C.actor->animScript = (struct AnimCmd *)a;
+    t->u8C.actor->animScriptPos = 0;
     u = gCurTask;
     u->unk28 = 0;
     sub_080af020();
@@ -846,7 +846,7 @@ void sub_080aeff8(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk8C->animScript != 0)
+    if (t->u8C.actor->animScript != 0)
     {
         t->unk28--;
         if (t->unk28 <= 0)
@@ -874,7 +874,7 @@ void sub_080af020(void)
 
 top:
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     i = a->animScriptPos;
     v = ((s32 *)a->animScript)[i];
     switch (v)
@@ -886,26 +886,26 @@ top:
         goto top;
     case -3:
         a->animScriptPos = i + 1;
-        a2 = gCurTask->unk8C;
+        a2 = gCurTask->u8C.actor;
         ((void (*)(void))((s32 *)a2->animScript)[a2->animScriptPos++])();
         goto top;
     case -4:
         a->animScriptPos = i + 1;
         t3 = gCurTask;
-        a3 = t3->unk8C;
+        a3 = t3->u8C.actor;
         t3->frame = ((s32 *)a3->animScript)[a3->animScriptPos++];
         t4 = gCurTask;
-        a4 = t4->unk8C;
+        a4 = t4->u8C.actor;
         r = ((s32 (*)(void))((s32 *)a4->animScript)[a4->animScriptPos++])();
         u = gCurTask;
         u->unk28 = r;
         break;
     default:
         t5 = gCurTask;
-        a5 = t5->unk8C;
+        a5 = t5->u8C.actor;
         t5->frame = ((s32 *)a5->animScript)[a5->animScriptPos++];
         t6 = gCurTask;
-        a6 = t6->unk8C;
+        a6 = t6->u8C.actor;
         t6->unk28 = ((s32 *)a6->animScript)[a6->animScriptPos++];
         break;
     }
@@ -941,7 +941,7 @@ void sub_080af144(void)
     if (gUnk_02007D00[3] == 0)
     {
         gUnk_02007D00[3] = 140;
-        sub_080af20c(4);
+        CreateNightmarePowerOrbStar(4);
     }
 }
 
@@ -990,7 +990,7 @@ void sub_080af1d4(void)
     }
 }
 
-void sub_080af20c(u8 a)
+void CreateNightmarePowerOrbStar(u8 a)
 {
     struct ActorSpawn sp;
 
@@ -1028,11 +1028,11 @@ void sub_080af294(void)
     TaskStop();
     c = &gCurTask;
     t = *c;
-    t->unk8C->animScript = 0;
+    t->u8C.actor->animScript = 0;
     t->updateState = 3;
     gUnk_02007D00[0] = 1;
     ActorSetAttackBox(0);
-    (*c)->unk8C->sfxOverride = 0x23E;
+    (*c)->u8C.actor->sfxOverride = 0x23E;
     HudRemoveHpBar();
     sub_0806b05c();
     sub_0806b098();
@@ -1047,7 +1047,7 @@ void sub_080af308(void)
 {
 }
 
-void sub_080af30c(void)
+void Task_NightmarePowerOrbStar(void)
 {
     struct Task **c;
     s32 z;
@@ -1068,7 +1068,7 @@ void sub_080af30c(void)
     u->facing = 1;
     v = *c;
     v->unk2C = z;
-    CallTableEntry(v->variant, 12, gUnk_0874B1DC);
+    CallTableEntry(v->variant, 12, gNightmarePowerOrbStarVariants);
 }
 
 void sub_080af358(void)
@@ -1410,32 +1410,32 @@ void sub_080af844(void)
     {
     case 0:
         PlaySfx(0x22A);
-        sub_080af20c(5);
+        CreateNightmarePowerOrbStar(5);
         TaskYieldTrampoline(16);
         t = gCurTask;
         t->posX = ((struct Task *)(t->parent * 144 + (u32)gTasks))->posX;
         t->posY = ((struct Task *)(t->parent * 144 + (u32)gTasks))->posY;
         PlaySfx(0x22A);
-        sub_080af20c(5);
+        CreateNightmarePowerOrbStar(5);
         TaskYieldTrampoline(16);
         u = gCurTask;
         u->posX = ((struct Task *)(u->parent * 144 + (u32)gTasks))->posX;
         u->posY = ((struct Task *)(u->parent * 144 + (u32)gTasks))->posY;
         PlaySfx(0x22A);
-        sub_080af20c(5);
+        CreateNightmarePowerOrbStar(5);
         gUnk_02007D00[4] = 1;
         break;
     case 1:
         PlaySfx(0x22B);
-        sub_080af20c(6);
-        sub_080af20c(7);
-        sub_080af20c(8);
+        CreateNightmarePowerOrbStar(6);
+        CreateNightmarePowerOrbStar(7);
+        CreateNightmarePowerOrbStar(8);
         gUnk_02007D00[4] = 2;
         break;
     case 2:
         PlaySfx(0x22B);
-        sub_080af20c(9);
-        sub_080af20c(10);
+        CreateNightmarePowerOrbStar(9);
+        CreateNightmarePowerOrbStar(10);
         gUnk_02007D00[4] = 0;
         break;
     }
@@ -2066,7 +2066,7 @@ void sub_080b05e8(void)
     (*c)->facing = 1;
     u = *c;
     u->frame = 0xFFFF;
-    u->unk8C->animScript = (struct AnimCmd *)z;
+    u->u8C.actor->animScript = (struct AnimCmd *)z;
     p[6] = z;
     p[7] = 3;
     sub_08063698(80, 32);
@@ -2355,7 +2355,7 @@ void sub_080b0b50(void)
     }
 }
 
-void sub_080b0cc8(void)
+void Task_PaintRollerPainting(void)
 {
     struct Task *t;
     s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
@@ -2363,7 +2363,7 @@ void sub_080b0cc8(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_08753BA4;
+    t->frameTable = gPaintRollerPaintingFrames;
     t->layer = 9;
     d = ((struct Task *)(gCurTask->parent * 144 + (u32)gTasks))->facing;
     gCurTask->facing = d;
@@ -2398,12 +2398,12 @@ void sub_080b0cc8(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
     sub_080b15c0();
-    CallTableEntry(gCurTask->state, 8, gUnk_0874B540);
+    CallTableEntry(gCurTask->state, 8, gPaintRollerPaintingStates);
 }
 
-void sub_080b0de4(void)
+void PaintRollerPaintingCar(void)
 {
-    gCurTask->frameTable = gUnk_08753AAC;
+    gCurTask->frameTable = gPaintRollerPaintingCarFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B96C);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2430,13 +2430,13 @@ void sub_080b0de4(void)
     }
 }
 
-void sub_080b0e80(void)
+void PaintRollerPaintingKirby(void)
 {
     struct Task **c;
     struct Task *u;
 
     c = &gCurTask;
-    (*c)->frameTable = gUnk_08753AC8;
+    (*c)->frameTable = gPaintRollerPaintingKirbyFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B998);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2458,9 +2458,9 @@ top:
     goto top;
 }
 
-void sub_080b0f04(void)
+void PaintRollerPaintingWaddleDee(void)
 {
-    gCurTask->frameTable = gUnk_08753B68;
+    gCurTask->frameTable = gPaintRollerPaintingWaddleDeeFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B9C4);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2483,9 +2483,9 @@ void sub_080b0f04(void)
     }
 }
 
-void sub_080b0f98(void)
+void PaintRollerPaintingMike(void)
 {
-    gCurTask->frameTable = gUnk_08753B48;
+    gCurTask->frameTable = gPaintRollerPaintingMikeFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B9F0);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2508,9 +2508,9 @@ void sub_080b0f98(void)
     }
 }
 
-void sub_080b102c(void)
+void PaintRollerPaintingBaseball(void)
 {
-    gCurTask->frameTable = gUnk_08753A8C;
+    gCurTask->frameTable = gPaintRollerPaintingBaseballFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BA1C);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2532,9 +2532,9 @@ void sub_080b102c(void)
     }
 }
 
-void sub_080b10c8(void)
+void PaintRollerPaintingBomb(void)
 {
-    gCurTask->frameTable = gUnk_08753B04;
+    gCurTask->frameTable = gPaintRollerPaintingBombFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BA48);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2595,11 +2595,11 @@ void sub_080b123c(void)
     ActorReactToHit();
 }
 
-void sub_080b1264(void)
+void PaintRollerPaintingCloud(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->frameTable = gUnk_08753AE8;
+    gCurTask->frameTable = gPaintRollerPaintingCloudFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BA74);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2659,7 +2659,7 @@ void sub_080b1398(void)
     ActorReactToHit();
 }
 
-void sub_080b13bc(void)
+void Task_PaintRollerLightning(void)
 {
     struct Task *t;
     s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
@@ -2668,11 +2668,11 @@ void sub_080b13bc(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
-    gCurTask->frameTable = gUnk_08753B88;
+    gCurTask->frameTable = gPaintRollerLightningFrames;
     d = ((struct Task *)(gCurTask->parent * 144 + (u32)gTasks))->facing;
     gCurTask->facing = d;
     gCurTask->onGround = 0;
-    ActorLoadDef((struct ActorDef *)gUnk_0874BACC);
+    ActorLoadDef((struct ActorDef *)gPaintRollerLightningDef);
     gCurTask->updateCallback = (u32)sub_080b1564;
     gCurTask->velY = 128 << 11;
     while (gCurTask->onGround == 0)
@@ -2697,14 +2697,14 @@ void sub_080b13bc(void)
     ActorDestroy();
 }
 
-void sub_080b14ac(void)
+void PaintRollerPaintingParasol(void)
 {
     struct Task **c;
     struct Task *u;
     s32 r;
 
     c = &gCurTask;
-    (*c)->frameTable = gUnk_08753B20;
+    (*c)->frameTable = gPaintRollerPaintingParasolFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BAA0);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2831,7 +2831,7 @@ void sub_080b15c0(void)
     gUnk_02007D00[3] = ((s16 *)gUnk_02007D00)[7] + (gUnk_030023B4 << 16);
 }
 
-void sub_080b1710(void)
+void Task_HeavyMoleUpperArm(void)
 {
     struct Task **c;
     s32 z;
@@ -2861,7 +2861,7 @@ void sub_080b1710(void)
     CallTableEntry(u3->state, 6, gUnk_0874B5E4);
 }
 
-void sub_080b1770(void)
+void Task_HeavyMoleLowerArm(void)
 {
     struct Task **c;
     s32 z;
@@ -3580,7 +3580,7 @@ void sub_080b22b8(void)
         t->drawCallback = (u32)TaskDrawWorld;
 }
 
-void sub_080b22f8(void)
+void Task_HeavyMoleYellowMissile(void)
 {
     struct Task **c;
     struct Task **c4;
@@ -3664,7 +3664,7 @@ void sub_080b22f8(void)
     }
 }
 
-void sub_080b2418(void)
+void Task_HeavyMoleRedMissile(void)
 {
     struct Task **c;
     struct Task **c4;
@@ -3813,10 +3813,10 @@ void sub_080b25e8(void)
     {
     case 100:
     case 150:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     case 50:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     }
     u = gCurTask;
@@ -3900,7 +3900,7 @@ void sub_080b2664(void)
     }
 }
 
-void sub_080b2768(void)
+void CreateWhispyWoodsAirPuff(void)
 {
     struct ActorSpawn sp;
     s32 z;
@@ -3918,7 +3918,7 @@ void sub_080b2768(void)
     CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-void sub_080b27b0(void)
+void CreateWhispyWoodsApple(void)
 {
     struct ActorSpawn sp;
     s32 z;
@@ -4161,7 +4161,7 @@ void sub_080b2b40(void)
         q2 = *c;
         q2->frame++;
         TaskYieldTrampoline(8);
-        sub_080b2768();
+        CreateWhispyWoodsAirPuff();
         TaskYieldTrampoline(8);
         q3 = *c;
         q3->frame--;
@@ -4218,7 +4218,7 @@ void sub_080b2c18(void)
         q2 = *c;
         q2->frame++;
         TaskYieldTrampoline(8);
-        sub_080b2768();
+        CreateWhispyWoodsAirPuff();
         TaskYieldTrampoline(8);
         q3 = *c;
         q3->frame--;
@@ -4302,10 +4302,10 @@ void sub_080b2d80(void)
     {
     case 100:
     case 150:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     case 50:
-        sub_080b27b0();
+        CreateWhispyWoodsApple();
         break;
     }
     if (gCurTask->state != 3)
@@ -4356,7 +4356,7 @@ void sub_080b2e58(void)
     t = *c;
     t->updateState = 0;
     t2 = *c;
-    sub_08066fc0(1, (s16)((u16)t2->pixelX - 32), (s16)((u16)t2->pixelY + 16));
+    CreateStarRodPiece(1, (s16)((u16)t2->pixelX - 32), (s16)((u16)t2->pixelY + 16));
     TaskSetFrame(10);
     TaskYieldTrampoline(4);
     TaskSetFrame(11);

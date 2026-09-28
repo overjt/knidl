@@ -8,9 +8,9 @@
  *     `0x08741FB8`, bodies `0x08741FC0`, guards `0x08741FD4`, per-frame hook
  *     `ChillyUpdate`;
  *   * class-3 task #17 (`Task_WaddleDoo`): `0x08741FE8` / `0x08741FF8` /
- *     `0x08742004`, per-frame hook `sub_08085500`;
- *   * the `sub_08085858` script: `0x08742030` / `0x08742040`, per-frame hook
- *     `sub_080858cc`;
+ *     `0x08742004`, per-frame hook `WaddleDooWalkUpdate`;
+ *   * the `ParasolWaddleDooInit` script: `0x08742030` / `0x08742040`, per-frame hook
+ *     `ParasolWaddleDooUpdate`;
  *   * class-3 task #20 (`Task_BrontoBurt` / `sub_080860d8`), whose seven unk73
  *     rows at `0x08742064` all point INTO module M23 - the first cross-module
  *     dispatch found in the behaviour banks.
@@ -45,7 +45,7 @@ extern void ActorSetAttackBox(u32 *p);
 extern void sub_08066b34(u32 *p);
 extern void sub_08066c3c(u32 *p);
 extern void sub_08066c08(u32 *p, s32 b);
-extern s32 sub_08021a40(s32 x, s32 y);
+extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
@@ -353,9 +353,9 @@ void sub_080852c8(void)
 {
 }
 
-void sub_080852cc(void)
+void ChillyIdle(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808537c;
+    gCurTask->updateCallback = (u32)ChillyIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
@@ -386,7 +386,7 @@ void sub_080852cc(void)
     }
 }
 
-void sub_0808537c(void)
+void ChillyIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
@@ -447,42 +447,42 @@ void Task_WaddleDoo(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gWaddleDooFrames;
-    u->unk8C->extraFrame = 4;
+    u->u8C.actor->extraFrame = 4;
     CallTableEntry(u->variant, 4, gWaddleDooVariants);
 }
 
-void sub_08085498(void)
+void WaddleDooWalkInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08085500;
+    t->updateCallback = (u32)WaddleDooWalkUpdate;
     t->unk28 = 15;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_08741FF8);
+    CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
 }
 
-void sub_080854d0(void)
+void WaddleDooWalkEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08085500;
+    t->updateCallback = (u32)WaddleDooWalkUpdate;
     if (t->state == 0)
         t->unk28 = 80;
-    CallTableEntry(gCurTask->state, 3, gUnk_08741FF8);
+    CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
 }
 
-void sub_08085500(void)
+void WaddleDooWalkUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08742004);
+        CallTableEntry(gCurTask->updateState, 3, gWaddleDooWalkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08085530(void)
+void WaddleDooWalk(void)
 {
     struct Task *u1;
     struct Task *u2;
@@ -548,11 +548,11 @@ void sub_08085608(void)
             return;
         }
         ActorSetState(n);
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
     }
 }
 
-void sub_08085660(void)
+void WaddleDooWalkJump(void)
 {
     struct Task *t;
 
@@ -581,7 +581,7 @@ void sub_080856dc(void)
 {
 }
 
-void sub_080856e0(void)
+void WaddleDooWalkShoot(void)
 {
     struct Task *t;
     struct Task *u;
@@ -622,7 +622,7 @@ void sub_080856e0(void)
         sp.x = 8;
         sp.y = 3;
         sp.checkTerrain = 1;
-        if (sub_08021a40(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
+        if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
@@ -643,41 +643,41 @@ void sub_0808582c(void)
 
     t = gCurTask;
     if (t->unk2C == 0 && t->state != 2)
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
 }
 
-void sub_08085858(void)
+void ParasolWaddleDooInit(void)
 {
     struct Task *t;
 
-    gCurTask->updateCallback = (u32)sub_080858cc;
-    sub_08066b34(gUnk_08742A6C);
+    gCurTask->updateCallback = (u32)ParasolWaddleDooUpdate;
+    sub_08066b34(gParasolWaddleDooDef);
     gCurTask->unk28 = 15;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 4, gUnk_08742030);
+    CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
 }
 
-void sub_0808589c(void)
+void ParasolWaddleDooEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080858cc;
+    t->updateCallback = (u32)ParasolWaddleDooUpdate;
     if (t->state == 0)
         t->unk28 = 80;
-    CallTableEntry(gCurTask->state, 4, gUnk_08742030);
+    CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
 }
 
-void sub_080858cc(void)
+void ParasolWaddleDooUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 4, gUnk_08742040);
+        CallTableEntry(gCurTask->updateState, 4, gParasolWaddleDooStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080858fc(void)
+void ParasolWaddleDooWalk(void)
 {
     struct Task *u1;
     struct Task *u2;
@@ -724,7 +724,7 @@ void sub_08085998(void)
     s32 n;
 
     t = gCurTask;
-    if (t->unk2C == 0 && t->unk8C->extraFrame == -1 && --t->unk28 == 0)
+    if (t->unk2C == 0 && t->u8C.actor->extraFrame == -1 && --t->unk28 == 0)
     {
         v = RandomRange(4);
         switch (v)
@@ -743,11 +743,11 @@ void sub_08085998(void)
             return;
         }
         ActorSetState(n);
-        TaskSetEntry(sub_0808589c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
     }
 }
 
-void sub_08085a04(void)
+void ParasolWaddleDooJump(void)
 {
     struct Task *t;
 
@@ -776,7 +776,7 @@ void sub_08085a80(void)
 {
 }
 
-void sub_08085a84(void)
+void ParasolWaddleDooShoot(void)
 {
     struct Task *t;
     struct Task *u;
@@ -817,7 +817,7 @@ void sub_08085a84(void)
         sp.y = 3;
         sp.checkTerrain = 1;
         w = gCurTask;
-        if (sub_08021a40(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
+        if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
@@ -838,7 +838,7 @@ void sub_08085bb8(void)
 
     t = gCurTask;
     if (t->unk2C == 0 && t->state != 2)
-        TaskSetEntry(sub_0808589c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
 }
 
 void sub_08085be4(void)
@@ -858,7 +858,7 @@ void sub_08085c10(void)
     gCurTask->unk30 = ActorTickAnim(gCurTask->unk30);
 }
 
-void sub_08085c2c(void)
+void WaddleDooIdle(void)
 {
     struct Task *u1;
     struct Task *u2;
@@ -868,7 +868,7 @@ void sub_08085c2c(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateCallback = (u32)sub_08085cc4;
+    gCurTask->updateCallback = (u32)WaddleDooIdleUpdate;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -900,14 +900,14 @@ void sub_08085c2c(void)
     }
 }
 
-void sub_08085cc4(void)
+void WaddleDooIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08085cd8(void)
+void WaddleDooShoot(void)
 {
     struct Task *w;
     struct Task *x;
@@ -920,7 +920,7 @@ void sub_08085cd8(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateCallback = (u32)sub_08085e60;
+    gCurTask->updateCallback = (u32)WaddleDooShootUpdate;
     TaskFaceNearestPlayer();
     while (1)
     {
@@ -978,7 +978,7 @@ void sub_08085cd8(void)
             sp.y = 3;
             sp.checkTerrain = 1;
             w = gCurTask;
-            if (sub_08021a40(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
+            if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
                 gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
             TaskYieldTrampoline(2);
             x = gCurTask;
@@ -992,7 +992,7 @@ void sub_08085cd8(void)
     }
 }
 
-void sub_08085e60(void)
+void WaddleDooShootUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
@@ -1013,14 +1013,14 @@ u8 sub_08085e74(void)
         t->unk2C = 0;
         TaskStopY();
         ActorSetState(0);
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
         return 1;
     case 1:
         ActorStopAnim();
-        sub_08066c3c(gUnk_08742A40);
+        sub_08066c3c(gWaddleDooDef);
         TaskStopY();
         ActorSetState(0);
-        TaskSetEntry(sub_0808589c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1040,16 +1040,16 @@ u8 sub_08085ef0(void)
         t->accelY = 0x1500;
         t->speedLimitY = 0x30000;
         ActorSetState(0);
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
         return 1;
     case 1:
-        if (t->unk8C->extraFrame == -1)
+        if (t->u8C.actor->extraFrame == -1)
         {
             t->unk2C = 1;
             t->accelY = 0x1500;
             t->speedLimitY = 0x30000;
             ActorSetState(0);
-            TaskSetEntry(sub_0808589c, gCurTaskIdx);
+            TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
         }
         else
         {
@@ -1071,7 +1071,7 @@ u8 sub_08085fa0(void)
         sub_0806a0f0(-2);
         return 1;
     case 1:
-        sub_08066c08(gUnk_08742A40, 0);
+        sub_08066c08(gWaddleDooDef, 0);
         sub_0806a0f0(-2);
         return 1;
     }
@@ -1121,7 +1121,7 @@ s32 sub_08086024(void)
 
 void sub_0808606c(void)
 {
-    sub_08066c08(gUnk_08742A40, 0);
+    sub_08066c08(gWaddleDooDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 

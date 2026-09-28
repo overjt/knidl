@@ -24,7 +24,7 @@
  * CameraUpdatePos/CameraUpdatePosNoParallax/CameraUpdatePosBg3AutoScrollX
  * set the camera and BG3 positions (BG3 moves by the parallax factors of
  * room_28320.c), StreamBg2Map/StreamBg3Map stream the BG and BG3 maps
- * for a camera move (M08's StreamBg23Maps again), sub_08029110/
+ * for a camera move (M08's StreamBg23Maps again), PlayRoomBgm/
  * sub_08029194 start the room's BGM, LoadBg2Gfx ... SpawnRoomObjectsInView load
  * the room palettes, tiles and BG map (SelectBg3MapShape picks the BG layout
  * gBg3MapShape from the map size) and InitDoors builds the door
@@ -49,7 +49,7 @@ void sub_08028b8c(void)
     CalcRoomBounds();
     if (gCameraMode != 5)
     {
-        if (gUnk_03002444 != 0 || gPlayerCount == 1)
+        if (gInHub != 0 || gPlayerCount == 1)
         {
             *(long long *)gCameraBounds = *(long long *)gRoomBounds;
             gPlayerBounds[gLocalPlayer].x0 = gCameraBounds[0] - 117;
@@ -167,7 +167,7 @@ void SetRoomEntryPoint(void)
     if (gUnk_0200B038 == 0)
     {
         gUnk_02008054 = gRoomIndex;
-        if (gUnk_020069F0 == 2)
+        if (gRoomEntryMode == 2)
         {
             gUnk_0200AFF4 = gCurRoomDef->entryX;
             gUnk_02008050 = gCurRoomDef->entryY;
@@ -181,7 +181,7 @@ void SetRoomEntryPoint(void)
     }
     gCameraFocusX = gRoomEntryX;
     gCameraFocusY = gRoomEntryY;
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
     {
         if (gCameraMode == 2 || gCameraMode == 4)
         {
@@ -247,7 +247,7 @@ void CameraInitPos(void)
     gBg3StreamPos[1] = gBg3Pos[1];
 }
 
-void sub_08029110(void)
+void PlayRoomBgm(void)
 {
     s32 bgm;
     s32 cur;

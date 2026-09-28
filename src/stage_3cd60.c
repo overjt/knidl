@@ -84,7 +84,7 @@ void PlayerPlayBump(void)
     if (v == 0)
         return;
     gCurTask->player->bumpKind = 0;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         p = &gUnk_0873D210[gCurTask->player->ability * 4];
     else
         p = gUnk_0873D2E0;
@@ -145,7 +145,7 @@ void sub_0803ce98(void)
     v = gUnk_0873AF0C[ps2->unk33][c];
     if (ps2->mouthState == 1)
         v += 10;
-    if (gLocalPlayer != ps2->playerIndex || gUnk_03002444 != 0) {
+    if (gLocalPlayer != ps2->playerIndex || gInHub != 0) {
         if (IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) == 0)
             return;
     }
@@ -204,8 +204,8 @@ void InitPlayerState(s32 a0)
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
     p->unk14 = 0;
-    p->unk17 = 0;
-    p->unk18 = 0;
+    p->invincible = 0;
+    p->invincibleTimer = 0;
     p->unk1C = 0;
     p->unk1A = 0;
     p->unk22 = 0;
@@ -222,9 +222,9 @@ void InitPlayerState(s32 a0)
     p->unk31 = 0;
     p->unk36 = 0;
     p->unk37 = 0;
-    p->unk38 = 0;
-    p->unk3B = 0;
-    p->unk3A = 0;
+    p->shareTimer = 0;
+    p->sharedMask = 0;
+    p->shareItem = 0;
     p->unk3C = 0;
     p->boundsClamp = 0;
     p->running = 0;
@@ -292,9 +292,9 @@ void sub_0803d1c4(s32 a0)
     p->unk30 = 0;
     p->unk31 = 0;
     p->unk36 = 0;
-    p->unk38 = 0;
-    p->unk3B = 0;
-    p->unk3A = 0;
+    p->shareTimer = 0;
+    p->sharedMask = 0;
+    p->shareItem = 0;
     p->unk3C = 0;
     p->boundsClamp = 0;
     p->running = 0;
@@ -340,8 +340,8 @@ void sub_0803d2d4(s32 a0)
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
     p->unk14 = 0;
-    p->unk17 = 0;
-    p->unk18 = 0;
+    p->invincible = 0;
+    p->invincibleTimer = 0;
     p->unk1C = 0;
     p->unk1A = 0;
     p->unk22 = 0;
@@ -355,9 +355,9 @@ void sub_0803d2d4(s32 a0)
     p->sfxPlayer = 0xFFFF;
     p->sfxId = 0;
     p->unk36 = 0;
-    p->unk38 = 0;
-    p->unk3B = 0;
-    p->unk3A = 0;
+    p->shareTimer = 0;
+    p->sharedMask = 0;
+    p->shareItem = 0;
     p->boundsClamp = 0;
     p->running = 0;
     p->bumpKind = 0;
@@ -567,7 +567,7 @@ void sub_0803d710(void)
         RequestCopy(2, (u32)(w + 1),
                      (u32)gObjPalette + ((t->tileWord & 0xF000) >> 7), *w);
     }
-    if (gUnk_03001F30 == 0) {
+    if (gMetaKnightmareMode == 0) {
         if (gPlayerCount > 1)
             sub_0803d7c4();
         sub_0803db74();
@@ -807,7 +807,7 @@ void sub_0803ddc0(void)
     if (gCurTask->lateUpdateCallback != 0 && (gCurTask->skipMask & 8) == 0)
         sub_08033414();
     if ((gLocalPlayer != gCurTask->player->playerIndex
-         || gUnk_03002444 != 0)
+         || gInHub != 0)
      && gCurTask->player->unk37 != 2
      && IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) == 0)
     {
@@ -838,7 +838,7 @@ void sub_0803ddc0(void)
         y = gCurTask->pixelY - gSpriteCameraY;
     }
     pal = PlayerLoadFrameTilesAndPalette(speed);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gUnk_030023B0 == 0)
         {
@@ -929,7 +929,7 @@ void sub_0803e080(void)
             struct PlayerState *q = t->player;
             u32 src;
 
-            if (q->unk17 != 0)
+            if (q->invincible != 0)
                 break;
             if (q->ability != 7 && q->ability != 20 && q->ability != 21)
             {
@@ -1000,8 +1000,8 @@ void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2)
         break;
     case 5:
         sub_0803e28c((s32)p);
-        p->unk17 = 1;
-        p->unk18 = 960;
+        p->invincible = 1;
+        p->invincibleTimer = 960;
         break;
     case 6:
         p->invulnerability = 6;
@@ -1338,25 +1338,25 @@ s32 sub_0803e7d8(void)
 
     if (p->unk42 & 32)
         return;
-    if ((s16)p->unk18 == 0)
+    if ((s16)p->invincibleTimer == 0)
     {
-        p->unk17 = 0;
+        p->invincible = 0;
         return;
     }
-    p->unk18--;
+    p->invincibleTimer--;
     if (gPlayerCount == 1)
     {
-        if ((s16)gCurTask->player->unk18 == 240)
+        if ((s16)gCurTask->player->invincibleTimer == 240)
             sub_080270d0();
         return;
     }
-    if ((s16)gCurTask->player->unk18 != 240)
+    if ((s16)gCurTask->player->invincibleTimer != 240)
         return;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (i != gCurTask->player->playerIndex
-         && gPlayerStates[i].unk17 != 0
-         && (s16)gPlayerStates[i].unk18 > 240)
+         && gPlayerStates[i].invincible != 0
+         && (s16)gPlayerStates[i].invincibleTimer > 240)
             return;
     }
     sub_080270d0();
@@ -1367,20 +1367,20 @@ void sub_0803e868(void)
     s32 i;
     s32 ok;
 
-    if ((s16)gCurTask->player->unk18 == 0)
+    if ((s16)gCurTask->player->invincibleTimer == 0)
         return;
     ok = 1;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (i != gCurTask->player->playerIndex
-         && gPlayerStates[i].unk17 != 0
-         && (s16)gPlayerStates[i].unk18 > 240)
+         && gPlayerStates[i].invincible != 0
+         && (s16)gPlayerStates[i].invincibleTimer > 240)
             ok = 0;
     }
     if (ok != 0 && gCurrentBgm == 19)
         sub_080270d0();
-    gCurTask->player->unk17 = 0;
-    gCurTask->player->unk18 = 0;
+    gCurTask->player->invincible = 0;
+    gCurTask->player->invincibleTimer = 0;
     {
         struct PlayerState *r = gCurTask->player;
 
@@ -1395,7 +1395,7 @@ void sub_0803e8ec(void)
     s32 needBig;
     s32 needSmall;
 
-    if (p->unk17 == 0)
+    if (p->invincible == 0)
         return;
     if (p->mode == 13)
     {
@@ -1408,7 +1408,7 @@ void sub_0803e8ec(void)
     {
         struct PlayerState *q = gCurTask->player;
 
-        if ((s16)q->unk18 == 0)
+        if ((s16)q->invincibleTimer == 0)
         {
             q->unk1C = 0;
             q->unk1A = 0;
@@ -1425,7 +1425,7 @@ void sub_0803e8ec(void)
         struct Task *t = gCurTask;
         struct PlayerState *q = t->player;
 
-        if ((s16)q->unk18 <= 239)
+        if ((s16)q->invincibleTimer <= 239)
         {
             if (needSmall == 0)
                 return;
@@ -2413,7 +2413,7 @@ s32 PlayerCheckLanding(void)
     return 0;
 }
 
-s32 sub_0803fa74(void)
+s32 PlayerCheckDie(void)
 {
     if (gCurTask->health != 0
      && ((gCurTask->player->unk42 & 1024)
@@ -2453,7 +2453,7 @@ void sub_0803fb54(void)
             if ((s8)gCurTask->player->unk0F <= 16)
                 gCurTask->player->unk0F++;
         }
-        else if (gCurTask->player->unk17 != 0)
+        else if (gCurTask->player->invincible != 0)
         {
             gCurTask->player->running = 1;
             gCurTask->player->unk40 |= 16;
@@ -2505,7 +2505,7 @@ s32 PlayerHasCrossedWaterSurface(s32 a)
     return 0;
 }
 
-s32 sub_0803fd20(s32 a0)
+s32 PlayerGetFacingSlope(s32 a0)
 {
     if (gTasks[a0].onGround == 0)
         return 0;
@@ -2541,7 +2541,7 @@ s32 PlayerCheckJump(void)
     return gCurTask->player->requestedAction;
 }
 
-s32 sub_0803fe68(void)
+s32 PlayerCheckFallOrWater(void)
 {
     struct Task *t = gCurTask;
 
@@ -2603,7 +2603,7 @@ s32 PlayerCheckFloat(void)
 {
     u16 v;
 
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         return 0;
     if (gCurTask->player->mouthState != 1)
     {
@@ -2642,7 +2642,7 @@ s32 PlayerCheckBButton(void)
 {
     u8 v;
 
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
     {
         if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 2) == 0)
             goto out;
@@ -2712,7 +2712,7 @@ s32 PlayerCheckEnterDoor(void)
      && FindDoorAt(gCurTask->pixelX, gCurTask->pixelY) != 0)
     {
         gUnk_02007CF0 = 1;
-        gUnk_03001F34 = 1;
+        gPauseDisabled = 1;
         gCurTask->player->unk42 |= 2;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = 20;
@@ -2722,7 +2722,7 @@ s32 PlayerCheckEnterDoor(void)
 
 s32 PlayerCheckDropAbility(void)
 {
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         return 0;
     if ((gCurTask->player->unk42 & 2) == 0
      && gCurTask->player->unk37 == 0
@@ -2770,7 +2770,7 @@ s32 PlayerRequestLocomotion(void)
 
 s32 sub_080404e4(void)
 {
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         return 0;
     if (gCurTask->player->mouthState == 2)
         return 1;
@@ -2784,9 +2784,9 @@ s32 sub_080404e4(void)
    test instead of `lsls #16; lsrs #16; cmp`.  Whether a plain
    `p->unk38` now matches is untested. */
 struct M11Ctr { u16 unk00; };
-#define CTR(p) (((struct M11Ctr *)&(p)->unk38)->unk00)
+#define CTR(p) (((struct M11Ctr *)&(p)->shareTimer)->unk00)
 
-s32 sub_08040514(void)
+s32 PlayerCheckShareItem(void)
 {
     struct Task *u;
     struct PlayerState *q;
@@ -2796,8 +2796,8 @@ s32 sub_08040514(void)
         return 0;
     if (--CTR(gCurTask->player) == 0)
     {
-        gCurTask->player->unk3A = 0;
-        gCurTask->player->unk3B = 0;
+        gCurTask->player->shareItem = 0;
+        gCurTask->player->sharedMask = 0;
         return 0;
     }
     if (gUnk_02007CF0 != 0)
@@ -2817,7 +2817,7 @@ s32 sub_08040514(void)
     {
         if (i == gCurTask->player->playerIndex)
             continue;
-        if ((gCurTask->player->unk3B >> i) & 1)
+        if ((gCurTask->player->sharedMask >> i) & 1)
             continue;
         if (gPlayerHealth[i] == 0)
             continue;
@@ -2860,7 +2860,7 @@ s32 sub_08040514(void)
     return gCurTask->player->requestedAction;
 }
 
-void sub_08040710(void)
+void PlayerRequestStandOrFall(void)
 {
     struct Task *t = gCurTask;
 
@@ -2922,24 +2922,24 @@ void sub_0804087c(s32 a0)
     (gPlayerStates + a0)->unk40 |= 64;
 }
 
-void sub_08040894(s32 a0, u8 a1)
+void PlayerStartItemShare(s32 a0, u8 a1)
 {
     struct PlayerState *p;
 
     if (gActivePlayerCount > 1)
     {
         p = gPlayerStates + a0;
-        p->unk38 = 300;
-        p->unk3A = a1;
-        p->unk3B = 0;
+        p->shareTimer = 300;
+        p->shareItem = a1;
+        p->sharedMask = 0;
     }
     else
     {
         /* `p` is genuinely uninitialized here in the ROM: the else arm stores
            through whatever register the pointer was allocated to. */
-        p->unk38 = 0;
-        p->unk3B = 0;
-        p->unk3A = 0;
+        p->shareTimer = 0;
+        p->sharedMask = 0;
+        p->shareItem = 0;
     }
 }
 
@@ -2950,7 +2950,7 @@ s32 sub_080408e4(void)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gPlayerStates[i].unk17 != 0 && (s16)gPlayerStates[i].unk18 > 240)
+        if (gPlayerStates[i].invincible != 0 && (s16)gPlayerStates[i].invincibleTimer > 240)
         {
             r = 1;
             break;

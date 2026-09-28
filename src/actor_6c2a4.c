@@ -4,9 +4,9 @@
  *   ./tools/fnmatch.sh 0x0806C2A4 0x0806CD40 src/actor_6c2a4.c --newpb
  *
  * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
- * (sub_0806c2a4 / sub_0806c930 set Task.velX/unk58 from the sign in unk43
+ * (ActorAttachedBackdropBounceOff / ActorAttachedThrowBounceOff set Task.velX/unk58 from the sign in unk43
  * and hand control to ActorMove), the star-ride state machine
- * (sub_0806c4a0 / sub_0806c5d4 / sub_0806c770 - a nine-step animation
+ * (ActorAttachedThrowFlight / sub_0806c5d4 / sub_0806c770 - a nine-step animation
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
  * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
  * walk Task.frame through a gfx list (gUnk_0874C520 / gUnk_0874CBC8) before
@@ -48,7 +48,7 @@ extern void ActorCollideTerrain(void);
 extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 extern s32 RandomSpread(s32 a, u32 b, u32 c);
 
-void sub_0806c2a4(void)
+void ActorAttachedBackdropBounceOff(void)
 {
     struct Task *t;
     s32 v;
@@ -68,7 +68,7 @@ void sub_0806c2a4(void)
         w = -w;
     t->velY = -w;
     t->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskYieldTrampoline(12);
     gCurTask->unk34 = 1;
     TaskSleepForever();
@@ -80,7 +80,7 @@ void sub_0806c30c(void)
         sub_0806b8bc();
 }
 
-void sub_0806c324(void)
+void ActorAttachedPullIn(void)
 {
     struct Task *t;
     struct Task *u;
@@ -93,7 +93,7 @@ void sub_0806c324(void)
     u = gCurTask;
     u->unk18 = 0;
     u->layer = 6;
-    while (sub_0806baec(18) == 0)
+    while (TaskIsParentWithinX(18) == 0)
     {
         sub_0806bc28();
         TaskYieldTrampoline(1);
@@ -113,11 +113,11 @@ void sub_0806c384(void)
     if (t->unk18 == 1)
         sub_0806b8bc();
     else if (t->state != 4)
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     sub_0806be84();
 }
 
-void sub_0806c3c4(void)
+void ActorAttachedThrowHeld(void)
 {
     struct Task *t;
 
@@ -154,7 +154,7 @@ void sub_0806c490(void)
     sub_0806be84();
 }
 
-void sub_0806c4a0(void)
+void ActorAttachedThrowFlight(void)
 {
     struct Task *t;
     struct Task *u;
@@ -168,7 +168,7 @@ void sub_0806c4a0(void)
     t->updateCallback = (u32)sub_0806c5d4;
     t->lateUpdateCallback = (u32)sub_0806c770;
     t->layer = 11;
-    if (gUnk_0300244C != 0 && gCurTask->unk8C->terrainBox == 0)
+    if (gUnk_0300244C != 0 && gCurTask->u8C.actor->terrainBox == 0)
         ActorSetTerrainBox((u32)gUnk_0873F894);
     u = gCurTask;
     i = (s16)u->unk70 - 3;
@@ -178,7 +178,7 @@ void sub_0806c4a0(void)
     v = gCurTask;
     v->velY = gUnk_0873EAC0[i].unk04;
     v->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     w = gCurTask;
     w->unk46 = 0;
     w->unk34 = 0;
@@ -237,7 +237,7 @@ void sub_0806c5d4(void)
         RequestScreenShake(2);
         gCurTask->lateUpdateCallback = 0;
         ActorSetState(7);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     }
     else
     {
@@ -363,7 +363,7 @@ void sub_0806c770(void)
         p->unk46 = 0;
 }
 
-void sub_0806c930(void)
+void ActorAttachedThrowBounceOff(void)
 {
     struct Task *t;
     s32 v;
@@ -401,7 +401,7 @@ void sub_0806c930(void)
         break;
     }
     gCurTask->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskYieldTrampoline(12);
     gCurTask->unk34 = 1;
     TaskSleepForever();

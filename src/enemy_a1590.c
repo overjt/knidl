@@ -20,7 +20,7 @@ extern u32 gUnk_02006040[];
 extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
 extern s8 gUnk_02007FB8[];
-extern u8 gUnk_0200AFF8;
+extern u8 gHudHpBarFilled;
 extern u8 gUnk_0200B030;
 extern struct PlayerState gPlayerStates[];
 extern s32 gUnk_030023B4;
@@ -42,7 +42,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern s32 sub_08063698(u32 type, s32 start);
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorLoadDefSlot(u32 i, struct ActorDef *d);
@@ -121,7 +121,7 @@ extern void sub_0806621c(void);
 extern s32 sub_08066394(void);
 extern void sub_080664e0(struct AnimCmd *p);
 extern void sub_08066544(void);
-extern void sub_08066564(void);
+extern void ActorResetAttackBox(void);
 extern void sub_08066580(void);
 extern u16 sub_0806660c(u16 a);
 extern u16 sub_08066630(u16 a);
@@ -130,13 +130,13 @@ extern u32 sub_08066718(void);
 extern void ActorLoadPalette(void *src, u32 size, u8 force);
 extern u8 sub_08066a6c(void);
 extern void sub_08066f50(s32 x, s32 y);
-extern void sub_08066fc0(u8 p3, s16 x, s16 y);
+extern void CreateStarRodPiece(u8 p3, s16 x, s16 y);
 extern void sub_0806704c(void);
-extern void sub_080670ac(u16 a);
-extern void sub_080670d4(void);
-extern void sub_08067108(void);
-extern void sub_08067114(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern void FreezeStage(u16 a);
+extern void ThawStage(void);
+extern void DisablePause(void);
+extern void EnablePause(void);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern void sub_080685ec(s32 i, s32 j, u8 c);
 extern void sub_08068920(s32 i, u8 c);
 extern void sub_08068950(s16 x, s16 y, s16 d);
@@ -160,19 +160,19 @@ extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void CreateBurstEffect(u32 a, s32 b);
 extern void PlayExplosionAnim(void);
-extern s32 sub_0806e6f8(s16 x, s16 y);
-extern s32 sub_0806e808(s16 x, s16 y);
-extern s32 sub_0806e9b4(u8 a, s16 x, s16 y);
+extern s32 CreateDashFlame(s16 x, s16 y);
+extern s32 CreateDashFireTrail(s16 x, s16 y);
+extern s32 CreateLandingImpact(u8 a, s16 x, s16 y);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
 /* sub_080a1590 (0x080A1590-0x080A15F0) */
@@ -411,19 +411,19 @@ void sub_080a19ec(void)
 
     tb = &gTasks[gUnk_02007D00[1]];
     ta = &gTasks[gUnk_02007D00[0]];
-    ab = tb->unk8C;
-    aa = ta->unk8C;
+    ab = tb->u8C.actor;
+    aa = ta->u8C.actor;
     ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->unk60->altAttackBox);
     ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->unk60->altAttackBox);
-    gUnk_0200AFF8 = 0;
+    gHudHpBarFilled = 0;
     HudShowHpBar();
     HudStartHpBar(tb->health * 2, tb->health);
-    while (gUnk_0200AFF8 == 0)
+    while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
-    gUnk_0200AFF8 = 0;
+    gHudHpBarFilled = 0;
     HudShowHpBar();
     HudStartHpBar(ta->health * 2, ta->health);
-    while (gUnk_0200AFF8 == 0)
+    while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
     if (gUnk_030023B0 != 0)
         TaskYieldTrampoline(120);
@@ -441,7 +441,7 @@ void CreateMrShineAndMrBright(void)
     u32 w;
     s32 r;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     gUnk_02007D00[1] = sub_0806505c(1, 0, gViewRect[0] + 192, gViewRect[2] + 48, a->savedTileWord);
     v = a->savedTileWord & 0xFFF;
     w = gCurTask->tileWord & 0xF000;
@@ -554,9 +554,9 @@ void sub_080a1d84(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     ActorSetHitReactions((u32)gUnk_0874898C);
-    a->unk3C = (u32)sub_080a1dbc;
+    a->defeatSweepCallback = (u32)sub_080a1dbc;
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
@@ -1088,7 +1088,7 @@ void sub_080a2814(void)
 {
     struct Task *t = gCurTask;
 
-    if (!(t->unk8C->paletteLocked & 1))
+    if (!(t->u8C.actor->paletteLocked & 1))
     {
         if ((s16)t->unk70 != 0 || t->unk20 != 0)
         {
@@ -1140,8 +1140,8 @@ void sub_080a28d0(void)
     TaskSetMotionXFacing(gUnk_0874852C[i], 0x5A5A5A5A);
 }
 
-/* sub_080a291c (0x080A291C-0x080A2954) */
-void sub_080a291c(void)
+/* CreateMrShineCrescent (0x080A291C-0x080A2954) */
+void CreateMrShineCrescent(void)
 {
     struct ActorSpawn sp;
 
@@ -1156,8 +1156,8 @@ void sub_080a291c(void)
     PlaySfx(0x226);
 }
 
-/* sub_080a2954 (0x080A2954-0x080A2994) */
-void sub_080a2954(void)
+/* CreateMrShineFallingStar (0x080A2954-0x080A2994) */
+void CreateMrShineFallingStar(void)
 {
     struct ActorSpawn sp;
     struct Task *t = gCurTask;
@@ -1192,7 +1192,7 @@ void sub_080a29cc(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     TaskStop();
     sub_080a2994();
     if (a->prevState != 6)
@@ -1292,9 +1292,9 @@ void sub_080a2b2c(void *a, u32 b)
     u32 *gt;
     s16 fr;
 
-    if (t->frameTable != 0 && t->frame != -1 && !(t->unk8C->paletteLocked & 1))
+    if (t->frameTable != 0 && t->frame != -1 && !(t->u8C.actor->paletteLocked & 1))
     {
-        t->unk8C->paletteOverridden |= 1;
+        t->u8C.actor->paletteOverridden |= 1;
         gt = gTasks[gUnk_02006040[5]].frameTable;
         fr = gTasks[gUnk_02006040[5]].frame;
         if (fr != -1)
@@ -1312,7 +1312,7 @@ void sub_080a2b2c(void *a, u32 b)
 void sub_080a2bc4(void)
 {
     struct Task *t = gCurTask;
-    struct Actor *act = t->unk8C;
+    struct Actor *act = t->u8C.actor;
     struct TaskGfx *g;
     u32 *gt;
     struct Task *o;
@@ -1349,12 +1349,12 @@ void sub_080a2bc4(void)
 /* sub_080a2c90 (0x080A2C90-0x080A2CA8) */
 void sub_080a2c90(void)
 {
-    gCurTask->unk8C->paletteOverridden = 0;
+    gCurTask->u8C.actor->paletteOverridden = 0;
     gCurTask->unk70 = 0;
 }
 
-/* sub_080a2ca8 (0x080A2CA8-0x080A2CE8) */
-void sub_080a2ca8(void)
+/* CreateMrBrightFireball (0x080A2CA8-0x080A2CE8) */
+void CreateMrBrightFireball(void)
 {
     struct ActorSpawn sp;
 
@@ -1370,8 +1370,8 @@ void sub_080a2ca8(void)
     PlaySfx(0x227);
 }
 
-/* sub_080a2ce8 (0x080A2CE8-0x080A2D38) */
-void sub_080a2ce8(void)
+/* CreateMrBrightBeam (0x080A2CE8-0x080A2D38) */
+void CreateMrBrightBeam(void)
 {
     struct ActorSpawn sp;
 
@@ -1472,7 +1472,7 @@ void sub_080a2edc(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     TaskStop();
     if (gCurTask->unk20 != 0)
     {
@@ -1716,8 +1716,8 @@ void MrShineFall(void)
     TaskSleepForever();
 }
 
-/* sub_080a33a4 (0x080A33A4-0x080A33DC) */
-void sub_080a33a4(void)
+/* MrShineFallUpdate (0x080A33A4-0x080A33DC) */
+void MrShineFallUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -1828,7 +1828,7 @@ void sub_080a3548(void)
         if (gCurTask->unk30 <= 0)
         {
             if (gCurTask->unk34 > 0)
-                sub_080a2954();
+                CreateMrShineFallingStar();
             else
                 sub_080a2400(f);
         }
@@ -1994,7 +1994,7 @@ void sub_080a387c(void)
     TaskStop();
     PlaySfx(500);
     TaskSetMotionXFacing(144 << 11, 0x5A5A5A5A);
-    gCurTask->unk46 = sub_0806e6f8(-16, 7);
+    gCurTask->unk46 = CreateDashFlame(-16, 7);
     gCurTask->spriteFlags &= 0x7FFF;
     if (gCurTask->facing == 1)
         gCurTask->unk1C = ActorStartAnimNoFlip(gUnk_0874853C);
@@ -2075,7 +2075,7 @@ void sub_080a3a40(void)
     TaskYieldTrampoline(3);
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
-    sub_080a291c();
+    CreateMrShineCrescent();
     gCurTask->frame++;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
@@ -2198,8 +2198,8 @@ void MrBrightFall(void)
     TaskSleepForever();
 }
 
-/* sub_080a3d3c (0x080A3D3C-0x080A3D84) */
-void sub_080a3d3c(void)
+/* MrBrightFallUpdate (0x080A3D3C-0x080A3D84) */
+void MrBrightFallUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -2303,7 +2303,7 @@ void sub_080a3f24(void)
     gCurTask->updateState = 5;
     sub_080a3000();
     TaskYieldTrampoline(6);
-    sub_080a2ce8();
+    CreateMrBrightBeam();
     sub_080a2d38();
     StartBgPaletteBlend(10, 80);
     TaskSleepForever();
@@ -2500,7 +2500,7 @@ void sub_080a4350(void)
 {
     gCurTask->updateState = 12;
     TaskStop();
-    gCurTask->unk46 = sub_0806e808(24, 5);
+    gCurTask->unk46 = CreateDashFireTrail(24, 5);
     gUnk_02006040[2] = -1;
     gUnk_02006040[1] = -1;
     gUnk_02006040[0] = -1;
@@ -2508,11 +2508,11 @@ void sub_080a4350(void)
     TaskSetMotionXFacing(144 << 11, 0x5A5A5A5A);
     TaskSetFrame(12);
     TaskYieldTrampoline(3);
-    gUnk_02006040[0] = sub_0806e808(24, 5);
+    gUnk_02006040[0] = CreateDashFireTrail(24, 5);
     TaskYieldTrampoline(3);
-    gUnk_02006040[1] = sub_0806e808(24, 5);
+    gUnk_02006040[1] = CreateDashFireTrail(24, 5);
     TaskYieldTrampoline(3);
-    gUnk_02006040[2] = sub_0806e808(24, 5);
+    gUnk_02006040[2] = CreateDashFireTrail(24, 5);
     TaskSleepForever();
 }
 
@@ -2571,7 +2571,7 @@ void sub_080a4508(void)
     TaskFaceNearestPlayer();
     gCurTask->unk1C = ActorStartAnim(gUnk_087485E4);
     TaskYieldTrampoline(64);
-    sub_080a2ca8();
+    CreateMrBrightFireball();
     TaskSetMotionXFacing(-0x40000, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
     TaskSetMotionXFacing(-0x20000, 0x5A5A5A5A);
@@ -2670,7 +2670,7 @@ void sub_080a46e0(void)
 /* sub_080a4708 (0x080A4708-0x080A472C) */
 void sub_080a4708(void)
 {
-    sub_08066fc0(0, gCurTask->pixelX, gCurTask->pixelY);
+    CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
 /* sub_080a472c (0x080A472C-0x080A4808) */
@@ -2724,8 +2724,8 @@ void sub_080a4814(void)
 {
     struct Task *pt = &gTasks[gUnk_02007D00[0]];
     struct Task *t = gCurTask;
-    struct Actor *myact = t->unk8C;
-    struct Actor *pact = gTasks[gUnk_02007D00[0]].unk8C;
+    struct Actor *myact = t->u8C.actor;
+    struct Actor *pact = gTasks[gUnk_02007D00[0]].u8C.actor;
 
     switch (pt->frame)
     {
@@ -2763,7 +2763,7 @@ void sub_080a488c(void)
         x = t->tileWord;
         x &= 0x7FF;
         dst = (x << 5) + 0x0600FE00;
-        act = t->unk8C;
+        act = t->u8C.actor;
         gt = t->frameTable;
         if (t->frame != -1)
         {
@@ -2880,8 +2880,8 @@ void sub_080a4b1c(void)
     }
 }
 
-/* sub_080a4b68 (0x080A4B68-0x080A4BA8) */
-void sub_080a4b68(void)
+/* Task_KingDededeAirPuff (0x080A4B68-0x080A4BA8) */
+void Task_KingDededeAirPuff(void)
 {
     struct Task *t;
 
@@ -2889,23 +2889,23 @@ void sub_080a4b68(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
-    gCurTask->frameTable = gUnk_08753990;
-    CallTableEntry(gCurTask->variant, 1, gUnk_087489D4);
+    gCurTask->frameTable = gKingDededeAirPuffFrames;
+    CallTableEntry(gCurTask->variant, 1, gKingDededeAirPuffVariants);
 }
 
-/* sub_080a4ba8 (0x080A4BA8-0x080A4BDC) */
-void sub_080a4ba8(void)
+/* KingDededeAirPuffInit (0x080A4BA8-0x080A4BDC) */
+void KingDededeAirPuffInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080a4bdc;
+    gCurTask->updateCallback = (u32)KingDededeAirPuffUpdate;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087489D8);
+    CallTableEntry(gCurTask->state, 1, gKingDededeAirPuffStates);
 }
 
-/* sub_080a4bdc (0x080A4BDC-0x080A4C20) */
-void sub_080a4bdc(void)
+/* KingDededeAirPuffUpdate (0x080A4BDC-0x080A4C20) */
+void KingDededeAirPuffUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087489DC);
+    CallTableEntry(gCurTask->updateState, 1, gKingDededeAirPuffStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -2916,7 +2916,7 @@ void sub_080a4bdc(void)
 /* sub_080a4c20 (0x080A4C20-0x080A4C3C) */
 void sub_080a4c20(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087489D8);
+    CallTableEntry(gCurTask->state, 1, gKingDededeAirPuffStates);
 }
 
 /* sub_080a4c3c (0x080A4C3C-0x080A4C80) */
@@ -2946,7 +2946,7 @@ void sub_080a4c80(void)
 void sub_080a4c84(void)
 {
     struct Task *t = gCurTask;
-    struct Actor *a = t->unk8C;
+    struct Actor *a = t->u8C.actor;
 
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
@@ -3246,11 +3246,11 @@ void sub_080a523c(void)
     t = gCurTask;
     x = t->pixelX + 16;
     y = t->pixelY + 32;
-    sub_08067120(x, y, 1, 1);
+    CreateInhalableStar(x, y, 1, 1);
     t = gCurTask;
     x = t->pixelX - 16;
     y = t->pixelY + 32;
-    sub_08067120(x, y, -1, 1);
+    CreateInhalableStar(x, y, -1, 1);
 }
 
 /* sub_080a528c (0x080A528C-0x080A52C8) */
@@ -3298,8 +3298,8 @@ void sub_080a5320(void)
 {
 }
 
-/* sub_080a5324 (0x080A5324-0x080A5388) */
-void sub_080a5324(void)
+/* Task_KingDededeLandingStar (0x080A5324-0x080A5388) */
+void Task_KingDededeLandingStar(void)
 {
     struct Task *t;
 
@@ -3319,19 +3319,19 @@ void sub_080a5324(void)
     TaskExitTrampoline();
 }
 
-/* sub_080a5388 (0x080A5388-0x080A53A8) */
-void sub_080a5388(void)
+/* Task_KingDededeHammerHitBox (0x080A5388-0x080A53A8) */
+void Task_KingDededeHammerHitBox(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_080a53a8;
+    t->updateCallback = (u32)KingDededeHammerHitBoxUpdate;
     TaskSleepForever();
 }
 
-/* sub_080a53a8 (0x080A53A8-0x080A5484) */
-void sub_080a53a8(void)
+/* KingDededeHammerHitBoxUpdate (0x080A53A8-0x080A5484) */
+void KingDededeHammerHitBoxUpdate(void)
 {
     vs16 *arr;
     s16 i;
@@ -3381,19 +3381,19 @@ void sub_080a53a8(void)
     }
 }
 
-/* sub_080a5484 (0x080A5484-0x080A54A4) */
-void sub_080a5484(void)
+/* Task_KingDededeInhaleHitBox (0x080A5484-0x080A54A4) */
+void Task_KingDededeInhaleHitBox(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_080a54a4;
+    t->updateCallback = (u32)KingDededeInhaleHitBoxUpdate;
     TaskSleepForever();
 }
 
-/* sub_080a54a4 (0x080A54A4-0x080A54E4) */
-void sub_080a54a4(void)
+/* KingDededeInhaleHitBoxUpdate (0x080A54A4-0x080A54E4) */
+void KingDededeInhaleHitBoxUpdate(void)
 {
     struct Task **c = &gCurTask;
 

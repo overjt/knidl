@@ -7,23 +7,23 @@
  *
  * Sub-game 2: task type #96 variant 1 and the module's shared helpers.
  * 
- *   sub_080c46ec / sub_080c4790 / sub_080c4664 / sub_080c4630   variant 1
+ *   AirGrindScenery / AirGrindSceneryUpdate / AirGrindRollSceneryObject / AirGrindDrawSceneryObject   variant 1
  *       (one task, index in M37Game.unk44C): seven background objects
  *       (M37Game.unk0EC) that scroll with the camera at their own rate,
  *       re-rolled from LCG stream 4 when they leave the screen (a sprite id
  *       1-4 and one of three height bands gUnk_080CFF60, never the same band
  *       twice in a row).
- *   sub_080c4860 / sub_080c4818   put the variant-1 task's own sprite (the
+ *   AirGrindShowCourseSign / AirGrindCourseSignUpdate   put the variant-1 task's own sprite (the
  *       course line sign) at a course position and move it with the scroll
  *       until it leaves the screen.
- *   AirGrindStartPaletteFade / AirGrindStepPaletteFades / AirGrindStopPaletteFade / sub_080c495c   four palette
+ *   AirGrindStartPaletteFade / AirGrindStepPaletteFades / AirGrindStopPaletteFade / AirGrindStopAllPaletteFades   four palette
  *       fades (gAirGrindPaletteFades[]): start one (source rows, destination in
  *       gObjPalette, period, steps, colour count, repeats), step them every
  *       frame with BlendColors, free one, free all.
- *   sub_080c4a48 ... sub_080c4c30   the HUD sprites: the digit palette, a
+ *   AirGrindSetDigitPalette ... AirGrindDrawRacerSprite   the HUD sprites: the digit palette, a
  *       digit, a symbol, a frame count as ss:cc, a number with leading blanks
  *       (a goto loop over the divisors gUnk_080CFF70), a ratio capped at 1000,
- *       and a racer's sprite scaled by sub_080c4f60.
+ *       and a racer's sprite scaled by AirGrindScaleSprite.
  *   AirGrindSeedRandom / AirGrindRandom / AirGrindRandomRange   five LCG streams
  *       M37Game.randomStates[] (x = (x * 61 + 0x579) & 0xFFF): seed all, step one,
  *       step one and scale it to a range. */
@@ -35,9 +35,9 @@ s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; call
 u32 Random(void);                                      /* LCG step */
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSleepForever(void);                                     /* end the running task */
-u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
+u32 AirGrindScaleSprite(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
 
-void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
+void AirGrindDrawSceneryObject(s32 idx, s32 x, s32 y, u16 attr)
 {
     u32 *tbl = gUnk_08755FA8;
     u32 c = 0x6000;
@@ -45,7 +45,7 @@ void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
     QueueSprite(9, tbl[idx], c, attr, x, y);
 }
 
-void sub_080c4664(s32 i)
+void AirGrindRollSceneryObject(s32 i)
 {
     struct M37Game *g = gAirGrindPtr;
     struct M37ObjSet *set = &g->unk0EC;
@@ -69,7 +69,7 @@ void sub_080c4664(s32 i)
     o->unk2 = 0xA000;
 }
 
-void sub_080c46ec(void)
+void AirGrindScenery(void)
 {
     struct M37Game *g = gAirGrindPtr;
     s32 *last = &g->unk0EC.unk00;
@@ -86,18 +86,18 @@ void sub_080c46ec(void)
     gCurTask->frame = 0xFFFF;
     g->unk0EC.unk74 = 0;
     for (i = 0, p = &g->unk0EC.unk04[0].unk8, x = 0; i <= 6; i++) {
-        sub_080c4664(i);
+        AirGrindRollSceneryObject(i);
         *p = x;
         p += 4;
         x += 0x340000;
     }
     *last = gAirGrindCoursePtr->scrollPos;
-    gCurTask->updateCallback = (u32)sub_080c4790;
+    gCurTask->updateCallback = (u32)AirGrindSceneryUpdate;
     TaskSetSkipMask(1, gCurTaskIdx);
     TaskSleepForever();
 }
 
-void sub_080c4790(void)
+void AirGrindSceneryUpdate(void)
 {
     struct M37Game *g = gAirGrindPtr;
     s32 *last = &g->unk0EC.unk00;
@@ -114,15 +114,15 @@ void sub_080c4790(void)
         x += (*last - c->scrollPos) << 16;
         o->unk8 = x;
         if (x >> 16 < -64) {
-            sub_080c4664(i);
+            AirGrindRollSceneryObject(i);
             o->unk8 += 0x1700000;
         }
-        sub_080c4630(o->unk0, o->unk8 >> 16, o->unkC >> 16, o->unk2);
+        AirGrindDrawSceneryObject(o->unk0, o->unk8 >> 16, o->unkC >> 16, o->unk2);
     }
     *last = gAirGrindCoursePtr->scrollPos;
 }
 
-void sub_080c4818(void)
+void AirGrindCourseSignUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -134,12 +134,12 @@ void sub_080c4818(void)
     }
 }
 
-void sub_080c4860(s32 y)
+void AirGrindShowCourseSign(s32 y)
 {
     struct Task *t = &gTasks[gAirGrindPtr->unk44C];
 
     t->posX = y << 16;
-    t->lateUpdateCallback = (u32)sub_080c4818;
+    t->lateUpdateCallback = (u32)AirGrindCourseSignUpdate;
 }
 
 void AirGrindStepPaletteFades(void)
@@ -170,7 +170,7 @@ void AirGrindStepPaletteFades(void)
     }
 }
 
-void sub_080c495c(void)
+void AirGrindStopAllPaletteFades(void)
 {
     s32 i;
 
@@ -209,22 +209,22 @@ void AirGrindStopPaletteFade(s32 i)
     gAirGrindPaletteFades[i].unk00 = 0;
 }
 
-void sub_080c4a48(s32 pal)
+void AirGrindSetDigitPalette(s32 pal)
 {
     gAirGrindPtr->unk018 = (pal << 12) & 0xF000;
 }
 
-void sub_080c4a5c(s32 digit, s32 x, s32 y)
+void AirGrindDrawDigit(s32 digit, s32 x, s32 y)
 {
     QueueSprite(2, gUnk_08755FEC[digit], 0x2000, gAirGrindPtr->unk018, x, y);
 }
 
-void sub_080c4a94(s32 idx, s32 x, s32 y)
+void AirGrindDrawSymbol(s32 idx, s32 x, s32 y)
 {
     QueueSprite(2, gUnk_0875603C[idx], 0x2000, 0, x, y);
 }
 
-void sub_080c4ac4(s32 t, s32 x, s32 y)
+void AirGrindDrawTime(s32 t, s32 x, s32 y)
 {
     s32 frac;
     s32 sec;
@@ -239,14 +239,14 @@ void sub_080c4ac4(s32 t, s32 x, s32 y)
         frac = Div(frac, 10000);
         frac += sec & 1;
     }
-    sub_080c4a5c(Mod(frac, 10) + 2, x + 36, y);
-    sub_080c4a5c(Div(frac, 10) + 2, x + 27, y);
-    sub_080c4a5c(12, x + 18, y);
-    sub_080c4a5c(Mod(sec, 10) + 2, x + 9, y);
-    sub_080c4a5c(Div(sec, 10) + 2, x, y);
+    AirGrindDrawDigit(Mod(frac, 10) + 2, x + 36, y);
+    AirGrindDrawDigit(Div(frac, 10) + 2, x + 27, y);
+    AirGrindDrawDigit(12, x + 18, y);
+    AirGrindDrawDigit(Mod(sec, 10) + 2, x + 9, y);
+    AirGrindDrawDigit(Div(sec, 10) + 2, x, y);
 }
 
-void sub_080c4b64(s32 n, s32 x, s32 y)
+void AirGrindDrawNumber(s32 n, s32 x, s32 y)
 {
     s16 d[3];
     s32 i;
@@ -263,32 +263,32 @@ void sub_080c4b64(s32 n, s32 x, s32 y)
 loop:
     *dp = Div(n, *div);
     if (shown != 0 || *dp != 0) {
-        sub_080c4a5c(*dp + 2, i * 9 + x, y);
+        AirGrindDrawDigit(*dp + 2, i * 9 + x, y);
         shown = 1;
     }
     n = Mod(n, *div);
     i++;
     if (div == tbl)
-        sub_080c4a5c(n + 2, i * 9 + x, y);
+        AirGrindDrawDigit(n + 2, i * 9 + x, y);
     dp--;
     div--;
     if (i <= 2)
         goto loop;
 }
 
-void sub_080c4bec(s32 a, s32 b, s32 x, s32 y)
+void AirGrindDrawRatio(s32 a, s32 b, s32 x, s32 y)
 {
     s16 n;
 
     n = b != 0 ? Div(a * 1000, b) : 0;
     if (n > 1000)
         n = 1000;
-    sub_080c4b64(n, x, y);
+    AirGrindDrawNumber(n, x, y);
 }
 
-void sub_080c4c30(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer)
+void AirGrindDrawRacerSprite(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer)
 {
-    QueueSprite(layer, sub_080c4f60(gUnk_08755F54[idx], scale), 0x2000, (pal << 12) & 0xF000, x, y);
+    QueueSprite(layer, AirGrindScaleSprite(gUnk_08755F54[idx], scale), 0x2000, (pal << 12) & 0xF000, x, y);
 }
 
 void AirGrindSeedRandom(void)

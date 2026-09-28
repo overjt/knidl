@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x0806AD18 0x0806B2E4 src/actor_6ad18.c --newpb
  *
  * The screen-transition half of the module. sub_0806ad18 nudges the carried
- * actor one frame either way; sub_0806adb0 and sub_0806af78 are the two
+ * actor one frame either way; sub_0806adb0 and BossDefeatScreenFlash are the two
  * DISPCNT-shadow fades (gDispCnt masked to 0xE0FF and re-ORed with the
  * BG-enable pattern, alternating a ROM window descriptor with a copy of
  * gBgPalette on the stack); sub_0806aec0 plays the six-step
@@ -48,7 +48,7 @@ void sub_0806ad18(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk8C->extraFrame = 0;
+    t->u8C.actor->extraFrame = 0;
     t->posY = (t->pixelY + 1) << 16;
     TaskYieldTrampoline(2);
     gCurTask->unk6C = 0;
@@ -66,7 +66,7 @@ void sub_0806ad18(void)
     t = gCurTask;
     t->posY = (t->pixelY - 1) << 16;
     TaskYieldTrampoline(2);
-    gCurTask->unk8C->extraFrame = 0xFFFF;
+    gCurTask->u8C.actor->extraFrame = 0xFFFF;
 }
 
 void sub_0806adb0(void)
@@ -74,7 +74,7 @@ void sub_0806adb0(void)
     struct Task *t;
     u16 v;
 
-    sub_080670ac(15);
+    FreezeStage(15);
     SetRoomUpdateFlags(2);
     RequestScreenShake(5);
     v = gBgPalette;
@@ -102,7 +102,7 @@ void sub_0806adb0(void)
     } while ((s16)t->unk6C <= 1);
     RequestScreenShake(0);
     LoadBackdropColor(&v);
-    sub_080670d4();
+    ThawStage();
 }
 
 void sub_0806ae94(void)
@@ -141,12 +141,12 @@ void sub_0806aec0(void)
     TaskYieldTrampoline(20);
 }
 
-void sub_0806af78(void)
+void BossDefeatScreenFlash(void)
 {
     struct Task *t;
     u16 v;
 
-    sub_080670ac(15);
+    FreezeStage(15);
     SetRoomUpdateFlags(2);
     RequestScreenShake(5);
     v = gBgPalette;
@@ -174,13 +174,13 @@ void sub_0806af78(void)
     } while ((s16)t->unk6C <= 1);
     RequestScreenShake(0);
     LoadBackdropColor(&v);
-    sub_080670d4();
+    ThawStage();
 }
 
 void sub_0806b05c(void)
 {
     PlaySfx(0x1FF);
-    sub_0806af78();
+    BossDefeatScreenFlash();
 }
 
 void sub_0806b070(void)
@@ -194,7 +194,7 @@ void sub_0806b070(void)
 
 void sub_0806b098(void)
 {
-    sub_080670ac(15);
+    FreezeStage(15);
     sub_080668c8();
     SetRoomUpdateFlags(2);
     ActorPlaySfx(0x1FD, 0);
@@ -204,8 +204,8 @@ void sub_0806b098(void)
     gCurTask->frame = 0xFFFF;
     sub_0806b070();
     TaskYieldTrampoline(24);
-    sub_080670d4();
-    sub_08067108();
+    ThawStage();
+    DisablePause();
 }
 
 s32 sub_0806b0f0(void)
@@ -236,7 +236,7 @@ void sub_0806b12c(void)
     sub_0806b05c();
     sub_0806b098();
     gCurTask->tileWord = gUnk_02007D00[9];
-    sub_08066f78();
+    LoadStarRodPieceGfx();
     CallTableEntry(gCurTask->unk76, 9, gUnk_0873E758);
 }
 
@@ -245,9 +245,9 @@ void sub_0806b178(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk82 > 3)
-        t->unk82 = 0;
-    CallTableEntry(gCurTask->unk82, 4, gUnk_0873E77C);
+    if (t->hitEffect > 3)
+        t->hitEffect = 0;
+    CallTableEntry(gCurTask->hitEffect, 4, gUnk_0873E77C);
 }
 
 void sub_0806b1a8(void)
@@ -296,7 +296,7 @@ void sub_0806b230(void)
     t = gCurTask;
     t->updateCallback = 0;
     t->health = 127;
-    sub_0806ed9c();
+    PlaySmokeRingAnim();
 }
 
 s32 sub_0806b24c(void)

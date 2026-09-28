@@ -7,16 +7,16 @@
 /* gameover_cbed4.c (0x080CBED4-0x080CCD4B, issue #100).
  *
  * The game-over screen, task type #264 variant 1: the cursor.  Its
- * sub-states gUnk_087582C4[Task.state] and per-frame handlers
- * gUnk_087582DC[Task.updateState] (GameOverChoice starts it, GameOverChoiceEnterState re-enters
+ * sub-states gGameOverChoiceStates[Task.state] and per-frame handlers
+ * gGameOverChoiceStateUpdates[Task.updateState] (GameOverChoice starts it, GameOverChoiceEnterState re-enters
  * it), plus the helpers the whole screen uses:
  *   CreateGameOverObject   spawn task type #264 with Task.variant = variant.
- *   sub_080cbf68 / sub_080cbfac   re-enter variant 0 (its task index is
+ *   GameOverPlayerShowChoice / sub_080cbfac   re-enter variant 0 (its task index is
  *       gGameOverPlayerTask) in sub-state 2 or 1 by this cursor's Task.unk24.
- *   sub_080cbfe4 / sub_080cc024   sub-state 0, the cursor at rest; up or down
+ *   GameOverChoiceWait / GameOverChoiceWaitUpdate   sub-state 0, the cursor at rest; up or down
  *       (GameOverIsUpDownPressed) moves it (sub-state 1), A or START picks: with
  *       Task.unk24 set sub-state 4, otherwise task type #263 and sub-state 2.
- *   sub_080cc0a4 / sub_080cc14c   sub-state 1, the move, which flips
+ *   GameOverChoiceMove / GameOverChoiceMoveUpdate   sub-state 1, the move, which flips
  *       gGameOverCursor.
  *   sub_080cc180 ... sub_080cc768 / sub_080ccd10   sub-states 2-5, the cursor's
  *       animations after a choice; handlers 3 and 5 hand over to variant 0. */
@@ -27,8 +27,8 @@ s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task *
 void TaskSleepForever(void);                                     /* end the running task */
 void TaskSetEntry(void *a, u32 i);
 
-/* Task type #264 variant 1: sub-states gUnk_087582C4[Task.state], per-frame
-   handlers gUnk_087582DC[Task.updateState] (GameOverChoiceUpdate). */
+/* Task type #264 variant 1: sub-states gGameOverChoiceStates[Task.state], per-frame
+   handlers gGameOverChoiceStateUpdates[Task.updateState] (GameOverChoiceUpdate). */
 void GameOverChoice(void)
 {
     gCurTask->updateCallback = (u32)GameOverChoiceUpdate;
@@ -37,14 +37,14 @@ void GameOverChoice(void)
     gCurTask->unk24 = 0;
     gCurTask->unk20 = 0;
     gCurTask->state = 0;
-    CallTableEntry(gCurTask->state, 6, gUnk_087582C4);
+    CallTableEntry(gCurTask->state, 6, gGameOverChoiceStates);
     TaskSleepForever();
 }
 
-/* Task type #264 variant 1's per-frame hook: handler gUnk_087582DC[Task.updateState]. */
+/* Task type #264 variant 1's per-frame hook: handler gGameOverChoiceStateUpdates[Task.updateState]. */
 void GameOverChoiceUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 6, gUnk_087582DC);
+    CallTableEntry(gCurTask->updateState, 6, gGameOverChoiceStateUpdates);
 }
 
 /* Spawn task type #264 with Task.variant = variant. */
@@ -61,7 +61,7 @@ void CreateGameOverObject(u8 variant)
 
 /* Re-enter task type #264 variant 0 (task gGameOverPlayerTask) in sub-state 2
    when this task's Task.unk24 is set, else 1. */
-void sub_080cbf68(void)
+void GameOverPlayerShowChoice(void)
 {
     struct Task *t = &gTasks[gGameOverPlayerTask];
 
@@ -75,19 +75,19 @@ void sub_080cbf68(void)
 /* Re-enter variant 0, clear Task.unk20 and spawn variant 3. */
 void sub_080cbfac(void)
 {
-    sub_080cbf68();
+    GameOverPlayerShowChoice();
     gCurTask->unk20 = 0;
     CreateGameOverObject(3);
 }
 
-/* Re-enter task type #264 variant 1: sub-state gUnk_087582C4[Task.state]. */
+/* Re-enter task type #264 variant 1: sub-state gGameOverChoiceStates[Task.state]. */
 void GameOverChoiceEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 6, gUnk_087582C4);
+    CallTableEntry(gCurTask->state, 6, gGameOverChoiceStates);
 }
 
 /* Task type #264 variant 1, sub-state 0. */
-void sub_080cbfe4(void)
+void GameOverChoiceWait(void)
 {
     gCurTask->updateState = 0;
     if (gCurTask->unk24 != 0) {
@@ -102,7 +102,7 @@ void sub_080cbfe4(void)
 }
 
 /* Task type #264 variant 1, handler 0. */
-void sub_080cc024(void)
+void GameOverChoiceWaitUpdate(void)
 {
     if (GameOverIsUpDownPressed()) {
         gCurTask->unk24 ^= 1;
@@ -121,7 +121,7 @@ void sub_080cc024(void)
 }
 
 /* Task type #264 variant 1, sub-state 1. */
-void sub_080cc0a4(void)
+void GameOverChoiceMove(void)
 {
     gCurTask->updateState = 1;
     if (gCurTask->unk24 != 0) {
@@ -142,7 +142,7 @@ void sub_080cc0a4(void)
 }
 
 /* Task type #264 variant 1, handler 1. */
-void sub_080cc14c(void)
+void GameOverChoiceMoveUpdate(void)
 {
     if (gCurTask->state != 1) {
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
@@ -483,7 +483,7 @@ void sub_080ccd10(void)
     if (gCurTask->state != 5)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
     if (gCurTask->unk20 != 0) {
-        sub_080cbf68();
+        GameOverPlayerShowChoice();
         gCurTask->unk20 = 0;
     }
 }

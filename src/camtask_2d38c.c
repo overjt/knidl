@@ -16,7 +16,7 @@
  * update one or three metatiles behind type-#236 effects;
  * sub_0802d6cc and sub_0802d96c/sub_0802da8c fade the room palettes
  * towards another room's (the table gRoomTable, BlendColors into the
- * palette buffer gBgPalette); sub_0802dcb4 and sub_0802e3ac pan the
+ * palette buffer gBgPalette); MapEventStageUnlockPan and MapEventBigSwitchUnlockPan pan the
  * camera four pixels a frame by the step counts of gUnk_08732428 /
  * gUnk_087324A6 (axis order, x steps, y steps) inside the room bounds,
  * wait, and pan back. */
@@ -39,7 +39,7 @@ extern u16 gUnk_02005E10[];
 extern u8 gUnk_087328BC[];
 extern s8 gUnk_08732428[][3];
 extern u16 gUnk_087323C6[][2];
-extern u8 gUnk_02007FC4;
+extern u8 gWarpStarStationDoorRevealed;
 extern struct Unk0200A6F0 gBg1BreakingBlocks[];
 extern s8 gUnk_087324A6[][3];
 
@@ -50,7 +50,7 @@ void sub_08029b30(void);
 void CameraLeaveScrollLock(void);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
 void PauseBlockAnims(void);
-void sub_080307e8(void);
+void StartBg1BlockAnims(void);
 s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802d5b4(s32 x, s32 y);
 void sub_0802da8c(void);
@@ -318,7 +318,7 @@ void sub_0802da8c(void)
     }
 }
 
-void sub_0802dcb4(void)
+void MapEventStageUnlockPan(void)
 {
     struct Task *t1;
     struct Task *t2;
@@ -341,7 +341,7 @@ void sub_0802dcb4(void)
     t1 = gCurTask;
     t1->moveCallback = 0;
     t1->drawCallback = 0;
-    t1->unk1C = gStageIndex * 6 + gUnk_0200001C - 1;
+    t1->unk1C = gStageIndex * 6 + gHubUnlockSource - 1;
     t1->velX = t1->unk28 = gUnk_08732428[t1->unk1C][1];
     if (t1->unk28 > 0)
         t1->unk2C = 4;
@@ -401,7 +401,7 @@ void sub_0802dcb4(void)
         }
     }
     TaskYieldTrampoline(15);
-    sub_080307e8();
+    StartBg1BlockAnims();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
     if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
@@ -411,10 +411,10 @@ void sub_0802dcb4(void)
     while (1)
     {
         t8 = gCurTask;
-        if (t8->unk24 != 0 && gUnk_02007FC4 == 0)
+        if (t8->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
         {
-            t8->posX = gUnk_087323C6[gUnk_030023B8][0];
-            t8->posY = gUnk_087323C6[gUnk_030023B8][1];
+            t8->posX = gUnk_087323C6[gCurLevel][0];
+            t8->posY = gUnk_087323C6[gCurLevel][1];
             t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {
@@ -425,7 +425,7 @@ void sub_0802dcb4(void)
                         goto skip;
                 }
             }
-            gUnk_02007FC4++;
+            gWarpStarStationDoorRevealed++;
             gCurTask->unk24 = 0;
         }
     skip:
@@ -445,11 +445,11 @@ void sub_0802dcb4(void)
     }
     PauseBlockAnims();
     RequestCopy(6, 0, 0x06001800, 0x800);
-    if (gCurTask->unk24 != 0 && gUnk_02007FC4 == 0)
-        gUnk_02007FC4++;
+    if (gCurTask->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
+        gWarpStarStationDoorRevealed++;
     TaskYieldTrampoline(20);
     sub_08029b30();
-    gUnk_0200AF08 = 0;
+    gHubUnlockFlags = 0;
     if (gUnk_08732428[gCurTask->unk1C][0] == 0)
     {
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)
@@ -494,11 +494,11 @@ void sub_0802dcb4(void)
     TaskYieldTrampoline(10);
     if (gUnk_020055D4 == 0x2000)
         gUnk_020055D4 = 0x4000;
-    gUnk_020055E8 = 1;
+    gCameraPanDone = 1;
     TaskExitTrampoline();
 }
 
-void sub_0802e3ac(void)
+void MapEventBigSwitchUnlockPan(void)
 {
     struct Task *t1;
     struct Task *t2;
@@ -523,7 +523,7 @@ void sub_0802e3ac(void)
     t1 = gCurTask;
     t1->moveCallback = 0;
     t1->drawCallback = 0;
-    t1->unk1C = (u8)gUnk_0200001C;
+    t1->unk1C = (u8)gHubUnlockSource;
     t1->velX = t1->unk28 = gUnk_087324A6[t1->unk1C][1];
     if (t1->unk28 > 0)
         t1->unk2C = 4;
@@ -586,7 +586,7 @@ void sub_0802e3ac(void)
         }
     }
     TaskYieldTrampoline(15);
-    sub_080307e8();
+    StartBg1BlockAnims();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
     if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
@@ -596,10 +596,10 @@ void sub_0802e3ac(void)
     while (1)
     {
         t8 = gCurTask;
-        if (t8->unk24 != 0 && gUnk_02007FC4 == 0)
+        if (t8->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
         {
-            t8->posX = gUnk_087323C6[gUnk_030023B8][0];
-            t8->posY = gUnk_087323C6[gUnk_030023B8][1];
+            t8->posX = gUnk_087323C6[gCurLevel][0];
+            t8->posY = gUnk_087323C6[gCurLevel][1];
             t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {
@@ -610,7 +610,7 @@ void sub_0802e3ac(void)
                         goto skip;
                 }
             }
-            gUnk_02007FC4++;
+            gWarpStarStationDoorRevealed++;
             gCurTask->unk24 = 0;
         }
     skip:
@@ -630,10 +630,10 @@ void sub_0802e3ac(void)
     }
     PauseBlockAnims();
     RequestCopy(6, 0, 0x06001800, 0x800);
-    if (gCurTask->unk24 != 0 && gUnk_02007FC4 == 0)
-        gUnk_02007FC4++;
+    if (gCurTask->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
+        gWarpStarStationDoorRevealed++;
     TaskYieldTrampoline(20);
-    gUnk_0200AF08 = 0;
+    gHubUnlockFlags = 0;
     if (gUnk_087324A6[gCurTask->unk1C][0] == 0)
     {
         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gCurTask->unk28 && gCameraAnchorX != gCurTask->pixelX; gCurTask->unk6C++)
@@ -682,7 +682,7 @@ void sub_0802e3ac(void)
     TaskYieldTrampoline(10);
     if (gUnk_020055D4 == 0x2000)
         gUnk_020055D4 = 0x4000;
-    sub_08025dc4();
-    gUnk_020055E8 = 1;
+    ReturnFromBigSwitchView();
+    gCameraPanDone = 1;
     TaskExitTrampoline();
 }

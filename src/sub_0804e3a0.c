@@ -2,10 +2,10 @@
 #include "global.h"
 #include "task.h"
 
-/* Not from room.h or player.h: this file's view of gUnk_02007FA0 and
+/* Not from room.h or player.h: this file's view of gBrokenBlockX and
    gUnk_0873CC54 differs (lesson 3.517). */
-extern s16 gUnk_02004B6C[];
-extern s16 gUnk_02007FA0[];
+extern s16 gBrokenBlockY[];
+extern s16 gBrokenBlockX[];
 extern u16 gLatchedHeldKeys[];
 extern u8 gUnk_0873BEEC[];
 extern u8 gUnk_0873CC54[];
@@ -14,7 +14,7 @@ void TaskSetEntry(void *func, u32 arg);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);
-u16 sub_08030898(void *table, s32 id);
+u16 TaskBreakFirstBlock(void *table, s32 id);
 void PlayerSetWaterMotionY(void);
 s32 PlayerLand(s32 a0);
 void PlayerStartOffsetScript(s32 a0);
@@ -23,7 +23,7 @@ s32 PlayerHasCrossedWaterSurface(s32 a0);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);
 void PlayerSetMotionYPreset(s32 a0);
 void PlayerActionThrow(void);
-s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);
+s32 CreateBlockStar(s32 x, s32 y, u32 p2, u8 p3, u8 p4);
 
 void PlayerActionThrowUpdate(void)
 {
@@ -53,9 +53,9 @@ void PlayerActionThrowUpdate(void)
             {
                 if (t->unk28 == 0)
                 {
-                    if (sub_08030898(gUnk_0873CC54, p->playerIndex) != 0)
+                    if (TaskBreakFirstBlock(gUnk_0873CC54, p->playerIndex) != 0)
                     {
-                        sub_08065100(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 2);
+                        CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 2);
                         gCurTask->player->unk09 = 2;
                     }
                 }

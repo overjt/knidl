@@ -11,10 +11,10 @@
 /* ending_c6c64.c (0x080C6C64-0x080C7E4B, issue #100).
  *
  * The first ending scene, part 1: task type #100 (class 3), which M37's
- * sub_080c62f0 spawns in AgbMain state 11 and waits on (gEndingSceneActive).
- *   sub_080c6c64   the body: variant 0 (Task.variant == 0) loads the graphics
- *       (sub_080c6ca0) and spawns variants 1, 6, 7, 9 and 10 from the list
- *       gUnk_0875735C (sub_080c6d38); variants 1-10 run gUnk_08757330[unk73].
+ * EndingEpilogueScene spawns in AgbMain state 11 and waits on (gEndingSceneActive).
+ *   Task_EndingEpilogue   the body: variant 0 (Task.variant == 0) loads the graphics
+ *       (EndingEpilogueLoadGraphics) and spawns variants 1, 6, 7, 9 and 10 from the list
+ *       gEndingEpilogueObjectVariants (CreateEndingEpilogueObjects); variants 1-10 run gEndingEpilogueVariants[unk73].
  *   sub_080c6d84 / sub_080c769c   variant 1, the scene's main sprite, and its
  *       scaling draw callback; sub_080c77cc spawns its four variant-2 helpers.
  *   sub_080c7810   variant 2: while the spawner is drawn (Task.unk34), one of
@@ -36,23 +36,23 @@ void TaskSleepForever(void);                                     /* end the runn
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
 
 /* Task type #100 (class 3): variant 0 loads the graphics and spawns the
-   other variants; variants 1-10 run the anchor table gUnk_08757330[]. */
-void sub_080c6c64(void)
+   other variants; variants 1-10 run the anchor table gEndingEpilogueVariants[]. */
+void Task_EndingEpilogue(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
     if (gCurTask->variant == 0) {
-        sub_080c6ca0();
-        sub_080c6d38();
+        EndingEpilogueLoadGraphics();
+        CreateEndingEpilogueObjects();
     } else {
-        CallTableEntry(gCurTask->variant, 11, gUnk_08757330);
+        CallTableEntry(gCurTask->variant, 11, gEndingEpilogueVariants);
     }
     TaskExitTrampoline();
 }
 
 /* Task type #100's graphics: two sprite sheets, the first one's palette and,
    with more than one player, this player's palette in slot 1. */
-void sub_080c6ca0(void)
+void EndingEpilogueLoadGraphics(void)
 {
     struct GfxHeader *h = &gUnk_085995AC;
 
@@ -68,16 +68,16 @@ void sub_080c6ca0(void)
     LoadGfxSet(71);
 }
 
-/* Spawn one task type #100 per variant listed in gUnk_0875735C[] (1, 6, 7,
+/* Spawn one task type #100 per variant listed in gEndingEpilogueObjectVariants[] (1, 6, 7,
    9 and 10, ended by 11, the anchor table's size). */
-void sub_080c6d38(void)
+void CreateEndingEpilogueObjects(void)
 {
     s32 i;
     s32 id;
     s32 v;
     struct Task *t;
 
-    for (i = 0; v = gUnk_0875735C[i], (s16)gUnk_0875735C[i] <= 10; i++) {
+    for (i = 0; v = gEndingEpilogueObjectVariants[i], (s16)gEndingEpilogueObjectVariants[i] <= 10; i++) {
         id = TaskCreateFrom(100, 32);
         if (id == -1)
             for (;;)
@@ -90,7 +90,7 @@ void sub_080c6d38(void)
 /* Task type #100 variant 1, the scene's main sprite: spawns variant 4 and
    the four variant-2 helpers (sub_080c77cc), draws itself through the
    scaling callback sub_080c769c, runs its timed motion phases and ends the
-   scene by clearing gEndingSceneActive, which M37's sub_080c62f0 waits for. */
+   scene by clearing gEndingSceneActive, which M37's EndingEpilogueScene waits for. */
 void sub_080c6d84(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;

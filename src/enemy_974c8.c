@@ -19,7 +19,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void sub_08063a00(void *p);
-extern void sub_080689c8(s32 i, s32 d);
+extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
 extern u32 sub_0806914c(void *p);
@@ -27,7 +27,7 @@ extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
 extern u8 sub_0806acf8(void);
 
-void sub_080974c8(void)
+void FireLionFlameCheckParent(void)
 {
     if (gTaskSlotTypes[gCurTask->parent] != 55)
         TaskFree(gCurTaskIdx);
@@ -91,10 +91,10 @@ void sub_080975fc(void)
     struct Task *t;
 
     t = gCurTask;
-    if ((t->hitTimer != 0 && t->unk8C->hitState != 0) || t->state == 8)
+    if ((t->hitTimer != 0 && t->u8C.actor->hitState != 0) || t->state == 8)
         ActorFlashPalette(gUnk_082BFBA4, 16);
     else
-        sub_08066468();
+        ActorClearPaletteOverride();
     if (sub_0806acf8() == 0) {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 9, gUnk_087448C0);
@@ -424,7 +424,7 @@ void sub_08097da4(void)
         TaskYieldTrampoline(1);
     PlaySfx(0x1F7);
     RequestScreenShake(2);
-    sub_0806cffc(16, 12);
+    CreateLandingDust(16, 12);
     TaskStop();
     TaskSetFrame(19);
     TaskYieldTrampoline(8);
@@ -591,7 +591,7 @@ void sub_08098194(void)
     TaskYieldTrampoline(gUnk_0874492C[RandomRange(8)]);
     ActorStopAnim();
     PlaySfx(506);
-    sub_08098450();
+    CreatePhanPhanApple();
     TaskSetFrame(14);
     TaskYieldTrampoline(3);
     TaskSetFrame(15);
@@ -697,7 +697,7 @@ void sub_080983a4(void)
     ActorSetState(2);
 }
 
-void sub_08098450(void)
+void CreatePhanPhanApple(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -710,7 +710,7 @@ void sub_08098450(void)
     t = gCurTask;
     p->variant = t->variant;
     p->spawnArg = t->unk74;
-    p->tileWord = t->unk8C->savedTileWord;
+    p->tileWord = t->u8C.actor->savedTileWord;
     p->x = 12;
     p->y = 8;
     p->checkTerrain = 1;
@@ -786,7 +786,7 @@ s32 sub_08098594(void)
     ActorFaceHitter();
     t = gCurTask;
     if (t->unk18 >= 0) {
-        sub_080689c8(t->unk18, -t->facing);
+        ReleaseHeldPlayer(t->unk18, -t->facing);
         gCurTask->unk18 = -1;
     }
     ActorSetState(8);
@@ -817,11 +817,11 @@ void Task_GrandWheelieMiniWheelie(void)
         u = gCurTask;
         switch (u->unk2C) {
         case 0:
-            if (u->unk8C->animScript != gUnk_087454B8)
+            if (u->u8C.actor->animScript != gUnk_087454B8)
                 gCurTask->unk28 = ActorStartAnim(gUnk_087454B8);
             break;
         case 1:
-            if (u->unk8C->animScript != gUnk_087454C4)
+            if (u->u8C.actor->animScript != gUnk_087454C4)
                 gCurTask->unk28 = ActorStartAnim(gUnk_087454C4);
             break;
         }
@@ -892,7 +892,7 @@ s32 sub_08098748(void)
     return 0;
 }
 
-void sub_0809876c(void)
+void Task_PhanPhanApple(void)
 {
     struct Task *t;
     struct Task *u;
@@ -909,8 +909,8 @@ void sub_0809876c(void)
     t->layer = 9;
     zero = 0;
     u = gCurTask;
-    u->frameTable = gUnk_087538B0;
-    u->updateCallback = (u32)sub_0809887c;
+    u->frameTable = gPhanPhanAppleFrames;
+    u->updateCallback = (u32)PhanPhanAppleUpdate;
     TaskFaceNearestPlayer();
     v = ActorStartAnim(gUnk_0874550C);
     w = gCurTask;
@@ -939,7 +939,7 @@ void sub_0809876c(void)
     }
 }
 
-void sub_0809887c(void)
+void PhanPhanAppleUpdate(void)
 {
     struct Task *t;
     s32 x;

@@ -18,15 +18,15 @@
  * extra mode, straight to the mode list) and dispatches on the menu
  * screen gMenuScreen until it reaches 9 (start a game: state 5 or 13)
  * or 10 (back to the title).  The rest draws the file-select screen's
- * three save slots: MenuDrawSaveSlots all three, sub_0800bda4 a slot's label
+ * three save slots: MenuDrawSaveSlots all three, MenuLoadSaveSlotLabel a slot's label
  * (empty, finished, or its number through the digit buffer gDigits),
- * sub_0800be8c/sub_0800bf10 its picture and palette, sub_0800bf6c its
+ * MenuLoadSaveSlotPicture/MenuLoadSaveSlotPalette its picture and palette, MenuLoadSaveSlotPercent its
  * second number. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-void sub_080b81a0(s32 a);
+void ResetLevelProgress(s32 a);
 
 void MainMenuMain(void)
 {
@@ -94,31 +94,31 @@ void MainMenuMain(void)
         switch (gMenuScreen)
         {
         case 0:
-            sub_0800c09c();
+            MenuFileSelect();
             break;
         case 1:
-            sub_0800c34c();
+            MenuFileMenuSelect();
             break;
         case 2:
-            sub_0800c558();
+            MenuNormalExtraSelect();
             break;
         case 3:
-            sub_0800c610();
+            MenuPlayerCountSelect();
             break;
         case 4:
-            sub_0800cd60();
+            MenuModeListSelect();
             break;
         case 5:
-            sub_0800d0f4();
+            MenuModePlayerCountSelect();
             break;
         case 6:
-            sub_0800c8a0();
+            MenuEraseSelect();
             break;
         case 7:
-            sub_0800d450();
+            MenuSoundTest();
             break;
         case 8:
-            sub_0800d85c();
+            MenuLinkPlay();
             break;
         }
     } while (gMenuScreen != 9 && gMenuScreen != 10);
@@ -132,7 +132,7 @@ void MainMenuMain(void)
             LinkSetupMain(gLinkSessionMode);
         }
         gFadeBlankAtWhite = 0;
-        gUnk_03001F30 = 0;
+        gMetaKnightmareMode = 0;
         gGameState = 13;
     }
     else
@@ -143,8 +143,8 @@ void MainMenuMain(void)
         {
             if (gGameState == 5)
             {
-                sub_080b8888();
-                sub_080b8918();
+                ExchangeLinkSaveSlots();
+                MergeLinkSaveSlots();
             }
             LinkStopKeyExchange();
             RunLinkFramesUntilFadeDone();
@@ -173,7 +173,7 @@ void MainMenuMain(void)
             LoadSaveSlot(gCurSaveSlot);
             CheckNewMilestones();
             if (gUnk_02006090 == 7)
-                sub_080b81a0(gCurSaveSlot);
+                ResetLevelProgress(gCurSaveSlot);
         }
         gPrevGameState = 4;
         break;
@@ -188,13 +188,13 @@ void MenuDrawSaveSlots(void)
     LoadGfxSet(18);
     for (i = 0; i < 3; i++)
     {
-        sub_0800bda4(i);
-        sub_0800be8c(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
-        sub_0800bf6c(i, gSaveSlots[i].completionPercent[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
+        MenuLoadSaveSlotLabel(i);
+        MenuLoadSaveSlotPicture(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
+        MenuLoadSaveSlotPercent(i, gSaveSlots[i].completionPercent[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
     }
 }
 
-void sub_0800bda4(s32 slot)
+void MenuLoadSaveSlotLabel(s32 slot)
 {
     s32 n;
 
@@ -218,7 +218,7 @@ void sub_0800bda4(s32 slot)
     }
 }
 
-void sub_0800be8c(s32 slot, u32 pal)
+void MenuLoadSaveSlotPicture(s32 slot, u32 pal)
 {
     s32 i;
 
@@ -228,10 +228,10 @@ void sub_0800be8c(s32 slot, u32 pal)
     RequestCopy(3, (u32)&gUnk_08553810[i * 32], (u32)gObjVram + (gUnk_08731E18[slot] << 5), 160);
     RequestCopy(3, (u32)&gUnk_08553810[(i + 5) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 32) << 5), 160);
     RequestCopy(3, (u32)&gUnk_08553810[(i + 10) * 32], (u32)gObjVram + ((gUnk_08731E18[slot] + 64) << 5), 160);
-    sub_0800bf10(slot, pal);
+    MenuLoadSaveSlotPalette(slot, pal);
 }
 
-s32 sub_0800bf10(s32 slot, u32 pal)
+s32 MenuLoadSaveSlotPalette(s32 slot, u32 pal)
 {
     if (pal > 6)
         pal = 7;
@@ -241,7 +241,7 @@ s32 sub_0800bf10(s32 slot, u32 pal)
         RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gUnk_03001490[slot * 16], 32);
 }
 
-void sub_0800bf6c(s32 slot, s32 value, s32 mode)
+void MenuLoadSaveSlotPercent(s32 slot, s32 value, s32 mode)
 {
     IntToDigits(value);
     if (value < 0 || value > 100)

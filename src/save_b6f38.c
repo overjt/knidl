@@ -48,15 +48,15 @@ extern struct LinkSave *gUnk_0200EC50;
 extern struct LinkSave *gInputRecordingPtr;
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
-extern u16 gUnk_0200EC60[];
-extern u8 gUnk_0200EC68[];
-extern u16 gUnk_0200EC70[];
-extern u16 gUnk_0200EC78[];
+extern u16 gInputRecorderKeys[];
+extern u8 gInputRecorderEntryFrames[];
+extern u16 gInputRecorderEndPos[];
+extern u16 gInputRecorderNextPos[];
 extern struct LinkSave gInputRecording;
-extern u16 gUnk_03001F18[];
+extern u16 gBossEnduranceBestTime[];
 extern u16 gCompletionPercent;
-extern u16 gUnk_03002378[];
-extern void sub_080b72bc(void);
+extern u16 gMetaKnightmareBestTime[];
+extern void InputRecorderRestoreState(void);
 extern void ReadInputRecording(void);
 extern void WriteInputRecording(void);
 
@@ -80,12 +80,12 @@ void InputRecorderStart(void)
         gInputRecordingPtr->unk0A = gRoomIndex;
         gInputRecordingPtr->unk0B = gExtraMode;
         gInputRecordingPtr->unk0C = gPlayerCount;
-        gInputRecordingPtr->unk12 = gUnk_020069F0;
+        gInputRecordingPtr->unk12 = gRoomEntryMode;
         gInputRecordingPtr->unk13 = gUnk_02000020;
         gInputRecordingPtr->unk14 = gMaxHealth;
-        gInputRecordingPtr->unk36 = gUnk_0200B04C;
+        gInputRecordingPtr->unk36 = gWarpStarStationLevels;
         gInputRecordingPtr->unk11C = gLocalPlayer;
-        gInputRecordingPtr->unk11E = gUnk_03001F30;
+        gInputRecordingPtr->unk11E = gMetaKnightmareMode;
         for (i = 0; i <= 7; i++)
         {
             gInputRecordingPtr->unk38[i] = gUsedSubGameDoors[i];
@@ -93,51 +93,51 @@ void InputRecorderStart(void)
         for (i = 0; i <= 7; i++)
         {
             for (j = 0; j <= 7; j++)
-                gInputRecordingPtr->unk40[i][j] = gUnk_02007BF0[i][j];
+                gInputRecordingPtr->unk40[i][j] = gUsedRoomObjects[i][j];
         }
         for (i = 0; i < gPlayerCount; i++)
         {
-            gUnk_0200EC78[i] = i;
-            gUnk_0200EC60[i] = 0xFFFF;
-            gUnk_0200EC68[i] = 0;
+            gInputRecorderNextPos[i] = i;
+            gInputRecorderKeys[i] = 0xFFFF;
+            gInputRecorderEntryFrames[i] = 0;
             gInputRecordingPtr->unk16[i] = gPlayerLives[i];
             gInputRecordingPtr->unk1E[i] = gPlayerHealth[i];
             gInputRecordingPtr->unk26[i] = gPlayerAbilities[i];
             gInputRecordingPtr->unk2E[i] = gPlayerAbilityUses[i];
         }
         gInputRecordingPtr->unkC0 = gMilestoneFlags;
-        gInputRecordingPtr->unkC4[gExtraMode] = gUnk_030023B8;
+        gInputRecordingPtr->unkC4[gExtraMode] = gCurLevel;
         gInputRecordingPtr->unkC6[gExtraMode] = gUnk_03001F20;
-        gInputRecordingPtr->unkC8[gExtraMode] = gUnk_030023E0;
-        gInputRecordingPtr->unkCA[gExtraMode] = gUnk_03002384;
+        gInputRecordingPtr->unkC8[gExtraMode] = gFurthestLevel;
+        gInputRecordingPtr->unkCA[gExtraMode] = gFurthestStage;
         gInputRecordingPtr->unkCC[gExtraMode] = gBigSwitchFlags[0];
         for (i = 0; i <= 7; i++)
         {
             for (j = 0; j <= 6; j++)
             {
                 gInputRecordingPtr->unkD4[i][j] &= 15 << ((1 ^ gExtraMode) * 4);
-                gInputRecordingPtr->unkD4[i][j] |= gUnk_03002400[i][j] << (gExtraMode * 4);
+                gInputRecordingPtr->unkD4[i][j] |= gStageClearStatus[i][j] << (gExtraMode * 4);
             }
         }
         for (i = 0; i <= 3; i++)
         {
-            gInputRecordingPtr->unk10C[i] = gUnk_03001F18[i];
-            gInputRecordingPtr->unk114[i] = gUnk_03002378[i];
+            gInputRecordingPtr->unk10C[i] = gBossEnduranceBestTime[i];
+            gInputRecordingPtr->unk114[i] = gMetaKnightmareBestTime[i];
         }
         gInputRecordingPtr->unkC2 = gCompletionPercent;
         WriteInputRecording();
         j = Div(0x3B6A, gPlayerCount);
         for (i = 0; i < gPlayerCount; i++)
-            gUnk_0200EC70[i] = j - 4;
+            gInputRecorderEndPos[i] = j - 4;
         break;
     case 2:
         ReadInputRecording();
         gInputRecordingPtr = &gInputRecording;
-        sub_080b72bc();
+        InputRecorderRestoreState();
         break;
     case 3:
         gInputRecordingPtr = gUnk_0200EC50;
-        sub_080b72bc();
+        InputRecorderRestoreState();
         break;
     }
 }

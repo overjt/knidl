@@ -57,7 +57,7 @@ extern void ActorLoadDef(u32 *def);
 extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
 
-void sub_0807d3b0(void)
+void SwordAndBladeKnightSlashUpdate(void)
 {
     s32 v;
 
@@ -377,29 +377,29 @@ void sub_0807daa8(void)
 {
 }
 
-void sub_0807daac(void)
+void RockyIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807db0c;
+    gCurTask->updateCallback = (u32)RockyIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087411F4);
+    CallTableEntry(gCurTask->state, 1, gRockyIdleStates);
 }
 
 void sub_0807daf0(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087411F4);
+    CallTableEntry(gCurTask->state, 1, gRockyIdleStates);
 }
 
-void sub_0807db0c(void)
+void RockyIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087411F8);
+    CallTableEntry(gCurTask->updateState, 1, gRockyIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807db30(void)
+void RockyIdle(void)
 {
     gCurTask->updateState = 0;
     while (1)
@@ -857,29 +857,29 @@ void sub_0807e3b0(void)
         TaskSetEntry((void *)gUnk_08741220[t->variant], gCurTaskIdx);
 }
 
-void sub_0807e3e4(void)
+void SirKibbleIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807e444;
+    gCurTask->updateCallback = (u32)SirKibbleIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741264);
+    CallTableEntry(gCurTask->state, 1, gSirKibbleIdleStates);
 }
 
 void sub_0807e428(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741264);
+    CallTableEntry(gCurTask->state, 1, gSirKibbleIdleStates);
 }
 
-void sub_0807e444(void)
+void SirKibbleIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741268);
+    CallTableEntry(gCurTask->updateState, 1, gSirKibbleIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807e468(void)
+void SirKibbleIdle(void)
 {
     gCurTask->updateState = 0;
     sub_0807e484();
@@ -969,7 +969,7 @@ void CappyCappedUpdate(void)
         {
             gCurTask->unk46 = CreateActorByKind(0, 8, 1, 0, t->pixelX, t->pixelY,
                                                 t->tileWord);
-            sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+            TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         }
     }
     ActorReactToHit();

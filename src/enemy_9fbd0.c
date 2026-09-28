@@ -12,7 +12,7 @@
 
 /* RAM cells / ROM tables */
 /* Not from room.h: this file's view of gCurSaveSlot differs (lesson 3.517). */
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern u8 gActivePlayerMask;
 extern u32 gCurSaveSlot[];
 
@@ -26,7 +26,7 @@ extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern s16 ActorComputeHealth(void);
-extern void sub_080689c8(s32 i, s32 d);
+extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern void sub_08068f68(void);
 extern u32 ActorReactToHit(void);
 
@@ -110,7 +110,7 @@ void sub_0809fd20(void)
     t->pixelY = gUnk_02006190[1];
     t->frame = gUnk_02006190[2];
     gUnk_02006190[7] = z;
-    sub_08066468();
+    ActorClearPaletteOverride();
 }
 
 u8 sub_0809fd64(void)
@@ -129,7 +129,7 @@ u8 sub_0809fd64(void)
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
-        sub_080689c8(gUnk_02007D00[8], -gCurTask->facing);
+        ReleaseHeldPlayer(gUnk_02007D00[8], -gCurTask->facing);
         gUnk_02007D00[8] = -1;
     }
     if (gUnk_02007D00[9] != -1)
@@ -137,10 +137,10 @@ u8 sub_0809fd64(void)
         StopSfxOnPlayer(gUnk_02007D00[9], 0x21B);
         gUnk_02007D00[9] = -1;
     }
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
     {
-        sub_0800a698();
-        sub_080b7c00(gCurSaveSlot[0]);
+        HudStopClock();
+        SaveMetaKnightmareBestTime(gCurSaveSlot[0]);
     }
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
@@ -159,7 +159,7 @@ u8 sub_0809fe10(void)
     u8 s0;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     s0 = t->state;
     sub_0809fcb4();
     switch (gCurTask->state)
@@ -255,11 +255,11 @@ void sub_0809ffec(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->hitKind == 6 && t->unk82 == 4)
+    if (t->hitKind == 6 && t->hitEffect == 4)
         gPlayerStates[t->hitterSlot].requestedAction = 18;
 }
 
-void sub_080a0028(void)
+void CreateKingDededeStar(void)
 {
     struct ActorSpawn sp;
 

@@ -21,7 +21,7 @@ struct HudBar
 struct Unk020060A0
 {
     /*0x00*/ s8 unk0;
-    /*0x01*/ s8 unk1;
+    /*0x01*/ s8 paletteBank;
     /*0x02*/ s16 unk2;
 };
 
@@ -37,12 +37,12 @@ struct Unk0200D120
 };
 
 /* EWRAM */
-extern u16 gUnk_0200000C;
+extern u16 gObjTileCursor;
 extern u8 gHudTilemapDirty;
-extern u8 gUnk_02000034;
+extern u8 gHudHpBarsLeft;
 extern s8 gHudHpBarIndex;
 extern s16 gHudHpBarMaxHp;
-extern s8 gUnk_020055D0;
+extern s8 gHudHpBarCount;
 extern s8 gUnk_020055F0[];
 extern u16 gHudTilemap[];
 extern u32 gUnk_02005F10[];
@@ -50,17 +50,17 @@ extern u8 gHudMode;
 extern s32 gPlayerScores[]; /* score per player */
 extern u8 gHudShowsClock;
 extern u16 gHudClock[]; /* clock (four fields) */
-extern struct Unk020060A0 gUnk_020060A0[];
-extern s8 gUnk_02006130[];
-extern s8 gUnk_0200617C;
+extern struct Unk020060A0 gRoomObjectGfxSlots[];
+extern s8 gRoomObjectGfxSlotIds[];
+extern s8 gHudAbilityPanelActive;
 extern s8 gHudAbilityPanelState;
 extern struct HudBar gHudHpBars[];
-extern s16 gUnk_02007D30;
-extern u16 gUnk_02007D40;
+extern s16 gHudHpBarLength;
+extern u16 gObjPaletteCursor;
 extern s16 gHudHpBarValues[];
-extern s16 gUnk_02008014[];
+extern s16 gHudHpBarTasks[];
 extern s16 gUnk_0200801C;
-extern u8 gUnk_02008020[];
+extern u8 gRoomObjectTried[];
 extern u8 gHudShowsHpBar;
 extern struct Unk0200D120 gUnk_0200D120[];
 
@@ -96,8 +96,8 @@ void HudShowClock(void);
 void HudReset(void);
 void HudInit(s32 i);
 void HudRedraw(s32 i);
-void sub_08009e14(void);
-void sub_08009e20(void);
+void HudDeactivateAbilityPanel(void);
+void HudActivateAbilityPanel(void);
 s32 AddPlayerLives(s32 a, u32 b);
 s32 AddPlayerLivesNoHud(s32 a, u32 b);
 s32 AddPlayerHealth(s32 a, u32 b);
@@ -110,36 +110,36 @@ void HudShowAbilityAnimated(s32 a, s32 b);
 /* src/hud_0a130.c */
 void HudShowAbility(s32 a, s32 id);
 void sub_0800a178(s32 a, s32 id);
-void sub_0800a19c(s32 id);
-void sub_0800a21c(s32 id);
+void HudOpenAbilityPanel(s32 id);
+void HudCloseAbilityPanel(s32 id);
 void HudShowHpBar(void);
 void HudAnimateTaskHpBar(void);
 void HudSetTaskHpBar(void);
 void HudRemoveHpBar(void);
-void sub_0800a698(void);
+void HudStopClock(void);
 void sub_0800a6a4(void);
 void HudUpdateAbilityPanel(void);
 void HudUpdateHpBars(void);
 void HudAnimateHpBar(s32 from, s32 to, s32 i);
-s32 sub_0800aa18(s32 from, s32 to);
+s32 HudStartHpBarFill(s32 from, s32 to);
 void HudSetHpBar(s32 x, s32 i);
 void HudResetHpBar(s32 i);
 void sub_0800aaac(s32 i);
 
 /* src/hud_0aad0.c */
-void sub_0800aad0(void);
+void HudUpdateClock(void);
 void HudRedrawClock(void);
 void sub_0800ab3c(void);
 void HudDrawPlayerIcon(s32 a);
 void HudDrawLives(s32 n);
 void HudDrawHealth(s32 n);
-void sub_0800acbc(s32 a, s32 d);
+void HudDrawHealthChange(s32 a, s32 d);
 void HudDrawScore(s32 v);
 void HudDrawClock(u16 *time);
 void HudDrawAbilityPanel(s32 n);
-void sub_0800b0fc(void);
+void HudDrawHpBarFrame(void);
 void HudDrawHpBar(s32 x);
-void sub_0800b190(s32 from, s32 to);
+void HudDrawHpBarChange(s32 from, s32 to);
 void sub_0800b230(s32 a, s32 b);
 
 /* src/hud_0b318.c */
@@ -173,9 +173,9 @@ void sub_080b3758(void);
 void sub_080b37ec(void);
 void sub_080b38f0(void);
 void sub_080b3a00(void);
-void sub_080b3a64(void);
-void sub_080b3c68(void);
-void sub_080b3e30(void);
+void WhispyWoodsLeavesDraw(void);
+void Task_WhispyWoodsLeaves(void);
+void WhispyWoodsLeavesUpdate(void);
 void Task_OneUp(void);
 void Task_MaximTomato(void);
 void Task_InvincibleCandy(void);
@@ -216,7 +216,7 @@ void sub_080b4770(void);
 void sub_080b4788(void);
 void sub_080b4794(void);
 void sub_080b47c0(void);
-void sub_080b47cc(void);
+void Task_StarRodPiece(void);
 void sub_080b480c(void);
 void sub_080b4878(void);
 void sub_080b48e0(void);
@@ -243,17 +243,17 @@ void sub_080b4e04(void);
 void sub_080b4e40(void);
 
 /* src/hud_b4ea8.c */
-void sub_080b4ea8(void);
+void LoadRoomObjectGfx(void);
 
 /* src/hud_b5024.c */
 void sub_080b5024(void);
-s32 sub_080b5338(s32 i);
-void sub_080b54d0(s32 a);
-void sub_080b5540(s32 a, s32 b);
+s32 SpawnRoomObject(s32 i);
+void MarkRoomObjectUsed(s32 a);
+void TransferRoomObject(s32 a, s32 b);
 void sub_080b5558(void);
-s32 sub_080b55d8(u32 a, u32 b);
-s32 sub_080b5628(u32 a);
-s32 sub_080b5654(u32 a);
+s32 AllocObjTilesAndPalettes(u32 a, u32 b);
+s32 AllocObjTiles(u32 a);
+s32 AllocObjPalettes(u32 a);
 
 /* src/hud_b5840.c */
 void HBlankScrollVBlankCallback(void);

@@ -11,10 +11,10 @@
  * the u16 metatile map gBg1MetatileMap) and DrawBg3Tile one of the 64x32
  * map at 0x06003000 (straight from the BG map gCurRoomDef->unk30).  The
  * rest loop them over a row, a column or the whole 36x26-tile window
- * around a pixel position, clamped to the room.  sub_0802b074 fills the
- * 0x06002000 map as 32x64 tiles instead, and sub_0802b168 builds such a
+ * around a pixel position, clamped to the room.  DrawBg2ViewLooping fills the
+ * 0x06002000 map as 32x64 tiles instead, and DrawBg2EdgeTile builds such a
  * tile at a metatile edge from the solid flags (MapTile.collisionTile) of the three
- * neighbours it touches (table gUnk_080D71A0).  sub_0802b25c/sub_0802b29c
+ * neighbours it touches (table gUnk_080D71A0).  RestoreMapColumn/RestoreMapCell
  * restore a metatile column from the backup copy 2048 cells further on. */
 
 struct BgMap
@@ -60,8 +60,8 @@ extern u16 gBlockLayer[];
 void DrawBg1Tile(s32 x, s32 y);
 void DrawBg2Tile(s32 x, s32 y);
 void DrawBg3Tile(s32 x, s32 y);
-void sub_0802b168(s32 x, s32 y);
-void sub_0802b29c(s32 x, s32 y);
+void DrawBg2EdgeTile(s32 x, s32 y);
+void RestoreMapCell(s32 x, s32 y);
 
 void DrawBg2View(s32 px, s32 py)
 {
@@ -115,14 +115,14 @@ void DrawBg2Column(s32 x, s32 y0, s32 y1)
         DrawBg2Tile(x, y);
 }
 
-void sub_0802aae8(s32 x)
+void DrawBg2EdgeColumn(s32 x)
 {
     s32 y;
 
     if (x < 0 || x >= gRoomWidth * 2)
         return;
     for (y = 0; y < gRoomHeight * 2; y++)
-        sub_0802b168(x, y);
+        DrawBg2EdgeTile(x, y);
 }
 
 void DrawBg3View(s32 px, s32 py)
@@ -377,7 +377,7 @@ void DrawBg3Tile(s32 x, s32 y)
     ((u16 *)0x06003000)[i] = *src;
 }
 
-void sub_0802b074(s32 px)
+void DrawBg2ViewLooping(s32 px)
 {
     s32 x0, x1;
     s32 x, i;
@@ -395,12 +395,12 @@ void sub_0802b074(s32 px)
                 = *(gMetatileTiles + ((&gRoomMap[x >> 1])[(i >> 1) * gRoomWidth].metatile << 2) + (x & 1) + ((i & 1) << 1));
     for (i = x0; i <= x1; i++)
     {
-        sub_0802b168(i, 26);
-        sub_0802b168(i, 37);
+        DrawBg2EdgeTile(i, 26);
+        DrawBg2EdgeTile(i, 37);
     }
 }
 
-void sub_0802b168(s32 x, s32 y)
+void DrawBg2EdgeTile(s32 x, s32 y)
 {
     u16 *dst;
     s32 q;
@@ -431,17 +431,17 @@ void sub_0802b168(s32 x, s32 y)
     }
 }
 
-void sub_0802b25c(s32 x)
+void RestoreMapColumn(s32 x)
 {
     s32 y;
 
     if (x < 0 || x >= gRoomWidth)
         return;
     for (y = 0; y < gRoomHeight; y++)
-        sub_0802b29c(x, y);
+        RestoreMapCell(x, y);
 }
 
-void sub_0802b29c(s32 x, s32 y)
+void RestoreMapCell(s32 x, s32 y)
 {
     s32 i;
 

@@ -128,8 +128,8 @@ gKingDededeStates:
 	.word	sub_080a0bb4+1
 	.word	sub_080a0c08+1
 	.word	KingDededeJump+1
-	.word	sub_080a0e08+1
-	.word	sub_080a0f7c+1
+	.word	KingDededeFloat+1
+	.word	KingDededeExhale+1
 	.word	sub_080a1058+1
 	.word	sub_080a1168+1
 	.word	KingDededeInhale+1
@@ -140,14 +140,14 @@ gKingDededeStateUpdates:
 	.word	sub_080a0b74+1
 	.word	sub_080a0bdc+1
 	.word	sub_080a0c28+1
-	.word	sub_080a0dbc+1
-	.word	sub_080a0ec8+1
-	.word	sub_080a1030+1
+	.word	KingDededeJumpUpdate+1
+	.word	KingDededeFloatUpdate+1
+	.word	KingDededeExhaleUpdate+1
 	.word	sub_080a1140+1
 	.word	sub_080a11a0+1
 	.word	sub_080a12e0+1
 	.word	sub_080a1400+1
-	.word	sub_080a14e4+1
+	.word	KingDededeFallUpdate+1
 	.global	gUnk_087484A4
 gUnk_087484A4:
 	.incbin	"baserom.gba", 0x7484A4, 0x20
@@ -259,7 +259,7 @@ gMrShineStates:
 	.word	sub_080a3bc0+1
 	.global	gMrShineStateUpdates
 gMrShineStateUpdates:
-	.word	sub_080a33a4+1
+	.word	MrShineFallUpdate+1
 	.word	sub_080a3424+1
 	.word	sub_080a348c+1
 	.word	sub_080a34b8+1
@@ -299,7 +299,7 @@ gMrBrightStates:
 	.word	sub_080a4678+1
 	.global	gMrBrightStateUpdates
 gMrBrightStateUpdates:
-	.word	sub_080a3d3c+1
+	.word	MrBrightFallUpdate+1
 	.word	sub_080a3dd0+1
 	.word	sub_080a3e3c+1
 	.word	sub_080a3e7c+1

@@ -5,7 +5,7 @@
  *
  * Actor defeat bodies, the variants ActorDie (gUnk_0873E5BC) runs (an older
  * reading called them warp-star exits, a level-clear dance and a death
- * sequence): ActorDefeatByEffect dispatches the hit effect code Task.unk82
+ * sequence): ActorDefeatByEffect dispatches the hit effect code Task.hitEffect
  * through gActorDefeatsByEffect to the knock-away defeats
  * ActorDefeatPlain/Burning/Shocked (the shake and launch
  * ActorDefeatKnockAway, then ActorDefeatBlinkAndBurst) and to
@@ -52,7 +52,7 @@ void ActorDie(void)
     struct Actor *a;
     s8 *p;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     p = (s8 *)a->hitReactions;
     a->hitState = 2;
     t = gCurTask;
@@ -76,9 +76,9 @@ void ActorDefeatByEffect(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk82 > 3)
-        t->unk82 = 0;
-    CallTableEntry(gCurTask->unk82, 4, gActorDefeatsByEffect);
+    if (t->hitEffect > 3)
+        t->hitEffect = 0;
+    CallTableEntry(gCurTask->hitEffect, 4, gActorDefeatsByEffect);
 }
 
 void ActorDefeatKnockAway(void)
@@ -95,7 +95,7 @@ void ActorDefeatKnockAway(void)
     TaskSetFrame(0);
     gCurTask->onGround = 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     a->savedPaletteBits = t->tileWord & 0xF000;
     t->unk2C = t->pixelY;
     t->unk30 = 14;
@@ -130,7 +130,7 @@ void ActorDefeatBlinkAndBurst(void)
         if ((t->unk30 & 1) == 0)
             t->tileWord = (t->tileWord & 0xFFF) | 0xF000;
         else
-            t->tileWord = (t->tileWord & 0xFFF) | t->unk8C->savedPaletteBits;
+            t->tileWord = (t->tileWord & 0xFFF) | t->u8C.actor->savedPaletteBits;
     }
     u = gCurTask;
     if (u->unk34 <= 0)
@@ -166,7 +166,7 @@ void ActorDefeatBurning(void)
 
     t = gCurTask;
     t->updateCallback = (u32)sub_0806a55c;
-    ActorAttachEffect(t->unk82, 0);
+    ActorAttachEffect(t->hitEffect, 0);
     ActorDefeatKnockAway();
     TaskStop();
     sub_0806a0cc();
@@ -183,7 +183,7 @@ void ActorDefeatShocked(void)
 
     t = gCurTask;
     t->updateCallback = (u32)sub_0806a594;
-    ActorAttachEffect(t->unk82, 0);
+    ActorAttachEffect(t->hitEffect, 0);
     ActorDefeatKnockAway();
     TaskStop();
     sub_0806a0cc();
@@ -234,7 +234,7 @@ void sub_0806a5a0(void)
         t->frameTable = gUnk_0874CB7C;
         t->tileWord = 0;
         if (gUnk_0300244C != 0)
-            t->unk8C->savedPaletteBits = 0;
+            t->u8C.actor->savedPaletteBits = 0;
         w = gCurTask;
         if (w->frame == -1)
             w->frame = 4;
@@ -250,7 +250,7 @@ void ActorFreezeIntoIceBlock(void)
     s32 z;
     u8 zero;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     v = CreateChildTaskHere(171, 0);
     t = gCurTask;
     t->unk46 = v;
@@ -262,7 +262,7 @@ void ActorFreezeIntoIceBlock(void)
     t->unk24 = z;
     t->unk28 = a->unk0E;
     ActorAttachEffect(3, 0);
-    gCurTask->unk80 = zero;
+    gCurTask->u80.attackAbility = zero;
     gCurTask->onGround = zero;
     ActorSetState(0);
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
@@ -376,7 +376,7 @@ void sub_0806a7f4(void)
         }
         else
         {
-            a = gCurTask->unk8C;
+            a = gCurTask->u8C.actor;
             if (a->attachedTask != -1)
             {
                 TaskFree(a->attachedTask);
@@ -425,7 +425,7 @@ void sub_0806a980(void)
     u8 one;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     one = 1;
     t->updateState = one;
     gCurTask->taskClass = one;
@@ -471,9 +471,9 @@ void sub_0806aa10(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk82 > 3)
-        t->unk82 = 0;
-    CallTableEntry(gCurTask->unk82, 4, gUnk_0873E688);
+    if (t->hitEffect > 3)
+        t->hitEffect = 0;
+    CallTableEntry(gCurTask->hitEffect, 4, gUnk_0873E688);
 }
 
 void sub_0806aa40(void)
@@ -508,7 +508,7 @@ void sub_0806aa98(void)
     ActorDefeatFrozen();
 }
 
-void sub_0806aaa4(void)
+void ExplosionScreenFlash(void)
 {
     struct Task *t;
     u16 x;
@@ -541,7 +541,7 @@ void sub_0806ab34(void)
     u8 zb;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     zero = 0;
     t->updateCallback = zero;
     t->player = (struct PlayerState *)zero;
@@ -553,7 +553,7 @@ void sub_0806ab34(void)
     u->health = 127;
     u->updateCallback = (u32)sub_0806aba4;
     a->attackBox = (u32)&gUnk_0873F6E8;
-    u->unk80 = zb;
+    u->u80.attackAbility = zb;
     v = gCurTask;
     v->unk2C = zero;
     CreateChildTaskHere(163, 1);
@@ -583,7 +583,7 @@ void sub_0806abec(void)
     s32 zero;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     zero = 0;
     t->updateCallback = zero;
     TaskSetFrame(0);
@@ -655,7 +655,7 @@ void sub_0806acc8(void)
 
 u32 sub_0806acf8(void)
 {
-    if (gCurTask->unk8C->extraFrame == -1)
+    if (gCurTask->u8C.actor->extraFrame == -1)
         return 0;
     return 1;
 }

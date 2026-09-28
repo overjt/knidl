@@ -41,7 +41,7 @@ void PlayerActionHammer(void)
             t->unk30 = 0;
     }
     gCurTask->unk34 = gCurTask->facing;
-    gCurTask->unk80 = 9;
+    gCurTask->u80.attackAbility = 9;
     if (gCurTask->onGround & 1)
         gCurTask->variant = 0;
     else

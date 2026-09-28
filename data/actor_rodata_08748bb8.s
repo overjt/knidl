@@ -122,11 +122,11 @@ gUnk_08748E48:
 	.global	gUnk_08748E68
 gUnk_08748E68:
 	.incbin	"baserom.gba", 0x748E68, 0x20
-	.global	gUnk_08748E88
-gUnk_08748E88:
+	.global	gMetaKnightNearStates
+gMetaKnightNearStates:
 	.incbin	"baserom.gba", 0x748E88, 0x10
-	.global	gUnk_08748E98
-gUnk_08748E98:
+	.global	gMetaKnightNearStatesLowHealth
+gMetaKnightNearStatesLowHealth:
 	.incbin	"baserom.gba", 0x748E98, 0x10
 	.global	gUnk_08748EA8
 gUnk_08748EA8:
@@ -172,7 +172,7 @@ gMetaKnightStateUpdates:
 	.word	sub_080a5ef0+1
 	.word	sub_080a5f7c+1
 	.word	sub_080a6020+1
-	.word	sub_080a6130+1
+	.word	MetaKnightRunUpdate+1
 	.word	sub_080a6330+1
 	.word	sub_080a6264+1
 	.word	sub_080a638c+1
@@ -259,34 +259,34 @@ gUnk_08749100:
 	.incbin	"baserom.gba", 0x749100, 0x50
 	.global	gKrackoVariants
 gKrackoVariants:
-	.word	sub_080a7d98+1
-	.word	sub_080a87c8+1
-	.global	gUnk_08749158
-gUnk_08749158:
+	.word	KrackoJrInit+1
+	.word	KrackoInit+1
+	.global	gKrackoJrStates
+gKrackoJrStates:
 	.word	sub_080a7e44+1
 	.word	sub_080a85e4+1
-	.global	gUnk_08749160
-gUnk_08749160:
+	.global	gKrackoJrStateUpdates
+gKrackoJrStateUpdates:
 	.word	sub_080a8038+1
 	.word	sub_080a860c+1
-	.global	gUnk_08749168
-gUnk_08749168:
+	.global	gKrackoStates
+gKrackoStates:
 	.word	sub_080a8878+1
 	.word	sub_080a8970+1
 	.word	sub_080a8b6c+1
 	.word	sub_080a8bf4+1
 	.word	sub_080a8d1c+1
 	.word	sub_080a8fdc+1
-	.word	sub_080a8f40+1
-	.global	gUnk_08749184
-gUnk_08749184:
+	.word	KrackoSummon+1
+	.global	gKrackoStateUpdates
+gKrackoStateUpdates:
 	.word	sub_080a8948+1
 	.word	sub_080a8b44+1
 	.word	sub_080a8bcc+1
 	.word	sub_080a8c84+1
 	.word	sub_080a8f18+1
 	.word	sub_080a9304+1
-	.word	sub_080a8fb4+1
+	.word	KrackoSummonUpdate+1
 	.global	gUnk_087491A0
 gUnk_087491A0:
 	.incbin	"baserom.gba", 0x7491A0, 0x8
@@ -401,9 +401,9 @@ gNightmareWizardStates:
 	.word	sub_080aa67c+1
 	.word	sub_080aa6d0+1
 	.word	sub_080aa744+1
-	.word	sub_080aad98+1
-	.word	sub_080aab80+1
-	.word	sub_080aa998+1
+	.word	NightmareWizardOpenCloak+1
+	.word	NightmareWizardOpenPalm+1
+	.word	NightmareWizardPoint+1
 	.word	sub_080aaf6c+1
 	.word	sub_080ab1a8+1
 	.word	sub_080ab3c8+1
@@ -415,9 +415,9 @@ gNightmareWizardStateUpdates:
 	.word	sub_080aa6a8+1
 	.word	sub_080aa71c+1
 	.word	sub_080aa970+1
-	.word	sub_080aaf38+1
-	.word	sub_080aad64+1
-	.word	sub_080aab4c+1
+	.word	NightmareWizardOpenCloakUpdate+1
+	.word	NightmareWizardOpenPalmUpdate+1
+	.word	NightmareWizardPointUpdate+1
 	.word	sub_080ab158+1
 	.word	sub_080ab394+1
 	.word	sub_080ab418+1

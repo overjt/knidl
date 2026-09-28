@@ -17,21 +17,21 @@
  *   AirGrindLayOutCourse   lays the course out: per lane the distance table
  *       gUnk_02017980[lane][500] (the running sum of 0x4000 / (depth + 512),
  *       scaled to 16000) and its inverse gUnk_02019140, then 2n + 1
- *       alternating segment lengths gUnk_0201B690[] from the LCG (n from the
- *       level table gUnk_080D075A), the bitmap gUnk_02018920 with a bit per
+ *       alternating segment lengths gAirGrindSegmentEnds[] from the LCG (n from the
+ *       level table gUnk_080D075A), the bitmap gAirGrindSegmentBits with a bit per
  *       pixel of the odd segments, and each lane's segment boundaries
- *       gUnk_0201B200[lane][] (terminated by 0x7D000).
- *   sub_080c52c4 / sub_080c5284   a lane's lateral offset, depth and third
+ *       gAirGrindLaneSegmentEnds[lane][] (terminated by 0x7D000).
+ *   AirGrindCalcLanePoint / AirGrindSin   a lane's lateral offset, depth and third
  *       coordinate at a course position (curves from the sine table
- *       gUnk_080D0398).
- *   sub_080c54a4 / sub_080c553c / sub_080c5580   segment queries: whether a
+ *       gAirGrindSineTable).
+ *   AirGrindFindLaneSegment / AirGrindFindSegmentEnd / AirGrindCountSegmentBits   segment queries: whether a
  *       position is on an even segment of the lane (the course record's
  *       unk14), the next boundary after it, and the set/clear bit counts of
- *       gUnk_02018920 over a span (the racers' scores).
+ *       gAirGrindSegmentBits over a span (the racers' scores).
  *   sub_080c55d8 / sub_080c5628   linear interpolation in gUnk_02017980 /
  *       gUnk_02019140 at 32-pixel steps.
  *   AirGrindDrawCourse   the course renderer (called every frame by player 0's
- *       racer step sub_080c383c, src/subgame_c3648.c, and once by
+ *       racer step AirGrindRacerUpdateDepth, src/subgame_c3648.c, and once by
  *       AirGrindBuildCourse): per lane, every course
  *       column that scrolled into view since the last frame
  *       (gAirGrindCourse.unk108 -> unk000) gets its BG map column at 0x0600E000
@@ -42,7 +42,7 @@
  *       (position, depth, the scroll/scale words gUnk_08757300[lane]/
  *       gUnk_08757310[lane]), the strips of the columns it passed are
  *       brightened, its score counts the segment bits over the passed span
- *       (sub_080c5580), and finally the four lanes are ranked by depth into
+ *       (AirGrindCountSegmentBits), and finally the four lanes are ranked by depth into
  *       the racers' unk18 and the priority bits of *gUnk_08757320[lane].
  *
  * Matching note (issue #98's final campaign, lesson 3.493): AirGrindDrawCourse
@@ -54,16 +54,16 @@
 
 u32 Random(void);                                      /* LCG step */
 
-s32 sub_080c5284(s32 angle)
+s32 AirGrindSin(s32 angle)
 {
     s32 i = angle & 0xFF;
 
     if (angle & 0x100)
         i = 0x100 - i;
-    return (angle & 0x200) ? -gUnk_080D0398[i] : gUnk_080D0398[i];
+    return (angle & 0x200) ? -gAirGrindSineTable[i] : gAirGrindSineTable[i];
 }
 
-void sub_080c52c4(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
+void AirGrindCalcLanePoint(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
 {
     s32 d = 0;
     s32 amp;
@@ -133,37 +133,37 @@ void sub_080c52c4(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
         break;
     }
     phase += gUnk_0201BFC0;
-    v = sub_080c5284(phase) * k * amp / 0x100000 - lane * 16;
+    v = AirGrindSin(phase) * k * amp / 0x100000 - lane * 16;
     off = d + 16;
     *px = v + off;
-    *py = sub_080c5284(phase + 256) * k * amp * 3 / 0x100000 + lane * 64;
-    *pz = sub_080c5284(phase) * k * amp / 0x100000;
+    *py = AirGrindSin(phase + 256) * k * amp * 3 / 0x100000 + lane * 64;
+    *pz = AirGrindSin(phase) * k * amp / 0x100000;
 }
 
-void sub_080c54a4(s32 lane, s32 *idx, s32 x, s32 *out)
+void AirGrindFindLaneSegment(s32 lane, s32 *idx, s32 x, s32 *out)
 {
     if (x < 1000)
     {
         *out = 1;
         return;
     }
-    while (x < gUnk_0201B200[lane][*idx])
+    while (x < gAirGrindLaneSegmentEnds[lane][*idx])
         (*idx)--;
-    while (gUnk_0201B200[lane][*idx] <= x)
+    while (gAirGrindLaneSegmentEnds[lane][*idx] <= x)
         (*idx)++;
     *out = (*idx % 2) == 0;
 }
 
-s32 sub_080c553c(s32 i, s32 x)
+s32 AirGrindFindSegmentEnd(s32 i, s32 x)
 {
-    while (x < gUnk_0201B690[i])
+    while (x < gAirGrindSegmentEnds[i])
         i--;
-    while (gUnk_0201B690[i] <= x)
+    while (gAirGrindSegmentEnds[i] <= x)
         i++;
-    return gUnk_0201B690[i];
+    return gAirGrindSegmentEnds[i];
 }
 
-void sub_080c5580(s32 start, s32 end, s32 *set, s32 *clear)
+void AirGrindCountSegmentBits(s32 start, s32 end, s32 *set, s32 *clear)
 {
     s32 i;
 
@@ -171,7 +171,7 @@ void sub_080c5580(s32 start, s32 end, s32 *set, s32 *clear)
     *set = 0;
     for (i = start; i < end; i++)
     {
-        if (gUnk_02018920[i / 32] & (1 << (i - (i / 32) * 32)))
+        if (gAirGrindSegmentBits[i / 32] & (1 << (i - (i / 32) * 32)))
             (*set)++;
         else
             (*clear)++;
@@ -219,7 +219,7 @@ void AirGrindLayOutCourse(s32 a)
     {
         for (j = 0; j < 500; j++)
         {
-            sub_080c52c4(i, j * 32, &x, &y, &z);
+            AirGrindCalcLanePoint(i, j * 32, &x, &y, &z);
             gUnk_02017980[i][j] = 0x4000 / (y + 512);
             if (j > 0)
                 gUnk_02017980[i][j] += gUnk_02017980[i][j - 1];
@@ -248,50 +248,50 @@ void AirGrindLayOutCourse(s32 a)
     {
         if (!(i & 1))
         {
-            gUnk_0201B690[i] = (Random() & 63) + 224;
-            gUnk_0201B690[i] -= 200 * i / (n * 2);
+            gAirGrindSegmentEnds[i] = (Random() & 63) + 224;
+            gAirGrindSegmentEnds[i] -= 200 * i / (n * 2);
         }
         else
-            gUnk_0201B690[i] = Random() % 320 + 96;
-        sums[i % 2] += gUnk_0201B690[i];
+            gAirGrindSegmentEnds[i] = Random() % 320 + 96;
+        sums[i % 2] += gAirGrindSegmentEnds[i];
     }
     for (i = 0; i < n * 2 + 1; i++)
     {
-        v = gUnk_0201B690[i];
+        v = gAirGrindSegmentEnds[i];
         if (!(i & 1))
-            gUnk_0201B690[i] = (gAirGrindCourse.finishLine - gAirGrindCourse.unk00C - m) * v;
+            gAirGrindSegmentEnds[i] = (gAirGrindCourse.finishLine - gAirGrindCourse.unk00C - m) * v;
         else
-            gUnk_0201B690[i] = m * v;
-        gUnk_0201B690[i] /= sums[i % 2];
+            gAirGrindSegmentEnds[i] = m * v;
+        gAirGrindSegmentEnds[i] /= sums[i % 2];
     }
-    gUnk_0201B690[0] += 1000;
+    gAirGrindSegmentEnds[0] += 1000;
     j = 0;
     for (i = 1; i < n * 2 + 1; i++)
     {
         if (i & 1)
         {
-            while (j < gUnk_0201B690[i - 1])
+            while (j < gAirGrindSegmentEnds[i - 1])
             {
-                gUnk_02018920[j / 32] = (gUnk_02018920[j / 32] >> 1) | 0x80000000;
+                gAirGrindSegmentBits[j / 32] = (gAirGrindSegmentBits[j / 32] >> 1) | 0x80000000;
                 j++;
             }
         }
         else
         {
-            while (j < gUnk_0201B690[i - 1])
+            while (j < gAirGrindSegmentEnds[i - 1])
             {
-                gUnk_02018920[j / 32] >>= 1;
+                gAirGrindSegmentBits[j / 32] >>= 1;
                 j++;
             }
         }
-        gUnk_0201B690[i] += gUnk_0201B690[i - 1];
+        gAirGrindSegmentEnds[i] += gAirGrindSegmentEnds[i - 1];
     }
     gUnk_0201B1F4 = n * 2;
     for (i = 0; i < 4; i++)
     {
         for (j = 0; j < gUnk_0201B1F4; j++)
-            gUnk_0201B200[i][j] = sub_080c55d8(i, gUnk_0201B690[j]);
-        gUnk_0201B200[i][j] = 0x7D000;
+            gAirGrindLaneSegmentEnds[i][j] = sub_080c55d8(i, gAirGrindSegmentEnds[j]);
+        gAirGrindLaneSegmentEnds[i][j] = 0x7D000;
     }
 }
 
@@ -396,8 +396,8 @@ void AirGrindDrawCourse(void)
             t = col / 8;
             c32 = t % 32;
             rem = col % 8;
-            sub_080c52c4(lane, col, &x, &y, &z);
-            sub_080c54a4(lane, &p->unk2C, col * 32, &flag);
+            AirGrindCalcLanePoint(lane, col, &x, &y, &z);
+            AirGrindFindLaneSegment(lane, &p->unk2C, col * 32, &flag);
             if (x < -90)
                 x = -90;
             if (x > 90)
@@ -484,10 +484,10 @@ void AirGrindDrawCourse(void)
         }
         *gUnk_08757300[lane] = (lo - 120) << 16;
         v = sub_080c55d8(lane, p->coursePos);
-        sub_080c52c4(lane, v / 32, &p->unk10, &depth[lane], &p->unk1C);
+        AirGrindCalcLanePoint(lane, v / 32, &p->unk10, &depth[lane], &p->unk1C);
         p->unk38 = p->unk14;
-        sub_080c54a4(lane, &p->unk2C, v, &p->unk14);
-        p->unk28 = sub_080c553c(p->unk2C, p->coursePos);
+        AirGrindFindLaneSegment(lane, &p->unk2C, v, &p->unk14);
+        p->unk28 = AirGrindFindSegmentEnd(p->unk2C, p->coursePos);
         v /= 32;
         p->unk08 = depth[lane] + 512;
         sn = gUnk_080D059A[p->unk08 / 4 - 32];
@@ -561,7 +561,7 @@ void AirGrindDrawCourse(void)
                 k = gAirGrindCourse.unk00C;
             if (m > gAirGrindCourse.finishLine)
                 m = gAirGrindCourse.finishLine;
-            sub_080c5580(k, m, &set, &clear);
+            AirGrindCountSegmentBits(k, m, &set, &clear);
             if (p->unk04 != 0)
                 p->unk24 += set;
             p->unk20 += set;

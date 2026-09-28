@@ -30,7 +30,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -44,7 +44,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -55,13 +55,13 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
 s32 sub_080a93ec(void)
@@ -259,10 +259,10 @@ s32 sub_080a97d8(void)
 void sub_080a9814(void)
 {
     gCurTask->unk34 = 2;
-    sub_08066fc0(0, gCurTask->pixelX, gCurTask->pixelY);
+    CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
-void sub_080a983c(void)
+void Task_KrackoJrOrbs(void)
 {
     s32 w;
     s32 n;
@@ -271,7 +271,7 @@ void sub_080a983c(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_08754418;
-    gCurTask->updateCallback = (u32)sub_080a9910;
+    gCurTask->updateCallback = (u32)KrackoJrOrbsUpdate;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = gUnk_02007D00[0] & 15;
     gCurTask->unk2C = 0;
@@ -298,7 +298,7 @@ void sub_080a983c(void)
     TaskSleepForever();
 }
 
-void sub_080a9910(void)
+void KrackoJrOrbsUpdate(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -319,10 +319,10 @@ void sub_080a9910(void)
         gUnk_02007D00[0] &= ~128;
     }
     if (gUnk_02007D00[0] == 0)
-        TaskSetEntry(sub_080a99a0, gCurTaskIdx);
+        TaskSetEntry(Task_KrackoCloud, gCurTaskIdx);
 }
 
-void sub_080a99a0(void)
+void Task_KrackoCloud(void)
 {
     s16 *p;
     s32 d;
@@ -433,14 +433,14 @@ void sub_080a9ba0(void)
     }
 }
 
-void sub_080a9c28(void)
+void Task_KrackoLightningTop(void)
 {
 
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754448;
-    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->frameTable = gKrackoLightningFrames;
+    gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->frame]);
@@ -451,13 +451,13 @@ void sub_080a9c28(void)
     TaskExitTrampoline();
 }
 
-void sub_080a9cf0(void)
+void Task_KrackoLightningMiddle(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754448;
-    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->frameTable = gKrackoLightningFrames;
+    gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += gUnk_087491E4[gCurTask->frame];
@@ -468,15 +468,15 @@ void sub_080a9cf0(void)
     TaskExitTrampoline();
 }
 
-void sub_080a9da4(void)
+void Task_KrackoLightningBottom(void)
 {
     s32 r;
 
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 10;
-    gCurTask->frameTable = gUnk_08754448;
-    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->frameTable = gKrackoLightningFrames;
+    gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     r = RandomRange(3);
     gCurTask->posX = (gCurTask->pixelX + gUnk_08749214[r]) << 16;
@@ -485,7 +485,7 @@ void sub_080a9da4(void)
     TaskExitTrampoline();
 }
 
-void sub_080a9e14(void)
+void KrackoLightningUpdate(void)
 {
     vs16 *arr;
     s16 i;
@@ -646,7 +646,7 @@ void Task_NightmareWizard(void)
 
     PlayBgm(34);
     o = &gTasks[TaskFindNearestPlayer()];
-    if (gUnk_020069F0 == 2) {
+    if (gRoomEntryMode == 2) {
         if (o->onGround == 0) {
             do
                 TaskYieldTrampoline(1);
@@ -659,7 +659,7 @@ void Task_NightmareWizard(void)
     gCurTask->drawCallback = (u32)sub_080a9ed8;
     gCurTask->layer = 11;
     gCurTask->frameTable = gNightmareWizardFrames;
-    gCurTask->unk8C->sfxOverride = 0x23E;
+    gCurTask->u8C.actor->sfxOverride = 0x23E;
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;

@@ -50,7 +50,7 @@ void HudShowScore(void)
 void HudShowClock(void)
 {
     gHudShowsClock = 1;
-    gFrameEndCallback = sub_0800aad0;
+    gFrameEndCallback = HudUpdateClock;
     gFrameEndCallback();
 }
 
@@ -59,12 +59,12 @@ void HudReset(void)
     s32 i;
 
     gHudMode = 0;
-    gUnk_0200617C = 0;
+    gHudAbilityPanelActive = 0;
     for (i = 0; i < 2; i++) {
         gHudHpBarValues[i] = 0;
         HudResetHpBar(i);
     }
-    gHudHpBarMaxHp = gUnk_02007D30 = 0;
+    gHudHpBarMaxHp = gHudHpBarLength = 0;
     gUnk_020055F0[0] = 0;
     gUnk_020055F0[1] = 0;
 }
@@ -74,11 +74,11 @@ void HudInit(s32 i)
     s32 j;
 
     HudClearWholeTilemap();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_0800ab3c();
     if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0) {
         gHudMode = 1;
-        gUnk_0200617C = 1;
+        gHudAbilityPanelActive = 1;
         HudLoadGfx();
         HudDrawPlayerIcon(i);
         HudDrawLives(gPlayerLives[i]);
@@ -113,12 +113,12 @@ void HudInit(s32 i)
             gHudHpBarValues[j] = 0;
             HudResetHpBar(j);
         }
-        gHudHpBarMaxHp = gUnk_02007D30 = 0;
+        gHudHpBarMaxHp = gHudHpBarLength = 0;
         gUnk_020055F0[0] = 0;
         gUnk_020055F0[1] = 0;
     } else {
         gHudMode = 2;
-        gUnk_0200617C = 0;
+        gHudAbilityPanelActive = 0;
     }
     HudFlushTilemap();
 }
@@ -126,10 +126,10 @@ void HudInit(s32 i)
 void HudRedraw(s32 i)
 {
     gHudMode = 1;
-    gUnk_0200617C = 1;
+    gHudAbilityPanelActive = 1;
     HudClearTilemap();
     HudLoadGfx();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_0800ab3c();
     HudDrawPlayerIcon(i);
     HudDrawLives(gPlayerLives[i]);
@@ -166,22 +166,22 @@ void HudRedraw(s32 i)
     HudFlushTilemap();
 }
 
-void sub_08009e14(void)
+void HudDeactivateAbilityPanel(void)
 {
-    gUnk_0200617C = 0;
+    gHudAbilityPanelActive = 0;
 }
 
-void sub_08009e20(void)
+void HudActivateAbilityPanel(void)
 {
-    gUnk_0200617C = 1;
+    gHudAbilityPanelActive = 1;
 }
 
 void sub_08009e2c(void)
 {
     gHudMode = 2;
-    gUnk_0200617C = 0;
+    gHudAbilityPanelActive = 0;
     HudClearTilemap();
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         sub_0800ab3c();
 }
 
@@ -232,13 +232,13 @@ s32 AddPlayerHealth(s32 a, u32 b)
                 gPlayerHealth[b] += delta;
             }
             if (gPlayerHealth[b] == 0)
-                gUnk_03001F34 = 1;
+                gPauseDisabled = 1;
             else if (gPlayerHealth[b] == 8 && gLocalPlayer == b)
                 PlaySfx(262);
         }
         gTasks[b].health = gPlayerHealth[b];
         if (b == gLocalPlayer && gHudMode == 1)
-            sub_0800acbc(old >> 3, delta >> 3);
+            HudDrawHealthChange(old >> 3, delta >> 3);
         return gTasks[b].health;
     }
 }
@@ -304,7 +304,7 @@ void HudShowAbilityAnimated(s32 a, s32 b)
             HudDrawAbilityPanel(0);
         } else {
             HudLoadAbilityPicture(a);
-            sub_0800a19c(b);
+            HudOpenAbilityPanel(b);
         }
     }
 }

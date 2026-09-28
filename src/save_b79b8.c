@@ -13,16 +13,16 @@ s32 CalcCompletionPercent(s32 a)
         gCompletionPercent = 100;
         return;
     }
-    if (gUnk_030023E0 > 1)
+    if (gFurthestLevel > 1)
     {
-        gCompletionPercent = gUnk_03002384 * 2 + ((gUnk_030023E0 - 2) * 12 + (gUnk_030023E0 + 14));
+        gCompletionPercent = gFurthestStage * 2 + ((gFurthestLevel - 2) * 12 + (gFurthestLevel + 14));
         if ((gMilestoneFlags >> a) & 1)
             gCompletionPercent += 3;
     }
-    else if (gUnk_030023E0 == 1)
-        gCompletionPercent = gUnk_03002384 * 2 + (gUnk_030023E0 + 4);
-    else if (gUnk_030023E0 == 0)
-        gCompletionPercent = gUnk_03002384;
+    else if (gFurthestLevel == 1)
+        gCompletionPercent = gFurthestStage * 2 + (gFurthestLevel + 4);
+    else if (gFurthestLevel == 0)
+        gCompletionPercent = gFurthestStage;
     for (i = 0; i <= 16; i++)
     {
         if (gBigSwitchFlags[0] & (1 << i))

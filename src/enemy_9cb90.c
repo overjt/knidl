@@ -30,10 +30,10 @@ void sub_0809cb90(void)
         ActorCheckHitsWithBox((s32)gUnk_08747EF4);
     if (sub_0809f994() != 0)
     {
-        if (gCurTask->pixelX < ((s8 *)gCurTask->unk8C->terrainBox)[4] + 24)
-            gCurTask->pixelX = ((s8 *)gCurTask->unk8C->terrainBox)[4] + 24;
+        if (gCurTask->pixelX < ((s8 *)gCurTask->u8C.actor->terrainBox)[4] + 24)
+            gCurTask->pixelX = ((s8 *)gCurTask->u8C.actor->terrainBox)[4] + 24;
         else
-            gCurTask->pixelX = 288 - ((s8 *)gCurTask->unk8C->terrainBox)[5];
+            gCurTask->pixelX = 288 - ((s8 *)gCurTask->u8C.actor->terrainBox)[5];
         gCurTask->posX = gCurTask->pixelX << 16;
         sub_0809f970();
     }

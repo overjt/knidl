@@ -22,7 +22,7 @@
  * the bounds once every player has crossed the scroll line held in the
  * camera control block gScrollLock.  SpawnRoomObjectsInRect spawns the entries
  * of the room's object list gRoomObjectList (sorted along one axis) that
- * lie inside a rectangle, through sub_080b5338. */
+ * lie inside a rectangle, through SpawnRoomObject. */
 
 struct Unk020055D8Entry
 {
@@ -574,7 +574,7 @@ void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
                 if (e->y < y0)
                     break;
                 if (e->x >= x0 && e->x < x1)
-                    sub_080b5338(i);
+                    SpawnRoomObject(i);
             }
         }
         else
@@ -587,7 +587,7 @@ void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
                 if (e->y >= y1)
                     break;
                 if (e->x >= x0 && e->x < x1)
-                    sub_080b5338(i);
+                    SpawnRoomObject(i);
             }
         }
     }
@@ -603,7 +603,7 @@ void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
                 if (e->x < x0)
                     break;
                 if (e->y >= y0 && e->y < y1)
-                    sub_080b5338(i);
+                    SpawnRoomObject(i);
             }
         }
         else
@@ -616,7 +616,7 @@ void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
                 if (e->x >= x1)
                     break;
                 if (e->y >= y0 && e->y < y1)
-                    sub_080b5338(i);
+                    SpawnRoomObject(i);
             }
         }
     }

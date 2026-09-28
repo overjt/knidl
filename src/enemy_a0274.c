@@ -19,20 +19,20 @@ extern void TaskSetEntry(void *fn, s32 i);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void sub_08063a00(u32 v);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u8 ActorCollideTerrain(void);
 
-void sub_080a0274(void)
+void CreateKingDededeLandingStar(void)
 {
     CreateChildTaskAtOffsetFacing(178, -24, -8, 0);
 }
 
-void sub_080a028c(void)
+void CreateKingDededeAirPuff(void)
 {
     struct ActorSpawn sp;
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     sp.subtype = 11;
     sp.taskType = 113;
     sp.variant = 0;
@@ -65,9 +65,9 @@ void sub_080a02d4(u8 a)
         d = 0;
     }
     yy = y;
-    sub_08067120((s16)x, yy, d, 0);
+    CreateInhalableStar((s16)x, yy, d, 0);
     if (a == 1)
-        sub_08067120(gCurTask->pixelX - 32, yy, -1, 0);
+        CreateInhalableStar(gCurTask->pixelX - 32, yy, -1, 0);
 }
 
 void sub_080a0358(void)
@@ -323,7 +323,7 @@ void sub_080a06f0(void)
     s32 n;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     n = t->unk18 + 1;
     t->unk18 = n;
     if (n == 6)
@@ -680,7 +680,7 @@ void KingDededeJump(void)
     r = CreateDustBurst(24, 32);
     u = gCurTask;
     u->unk46 = r;
-    sub_080a0274();
+    CreateKingDededeLandingStar();
     TaskSetMotionXFacing(160 << 9, k = 0x5A5A5A5A);
     v = gCurTask;
     v->frame++;
@@ -698,7 +698,7 @@ void KingDededeJump(void)
     TaskSleepForever();
 }
 
-void sub_080a0dbc(void)
+void KingDededeJumpUpdate(void)
 {
     struct Task *t;
     s16 *p;
@@ -716,7 +716,7 @@ void sub_080a0dbc(void)
     }
 }
 
-void sub_080a0e08(void)
+void KingDededeFloat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -764,7 +764,7 @@ void sub_080a0e08(void)
     }
 }
 
-void sub_080a0ec8(void)
+void KingDededeFloatUpdate(void)
 {
     struct Task *t;
     s32 m2;
@@ -804,7 +804,7 @@ void sub_080a0ec8(void)
     TaskSetFrame(gCurTask->frame);
 }
 
-void sub_080a0f7c(void)
+void KingDededeExhale(void)
 {
     struct Task *t;
     s32 z;
@@ -818,7 +818,7 @@ void sub_080a0f7c(void)
     TaskSetFrame(22);
     TaskSetFrame(29);
     PlaySfx(0x21A);
-    sub_080a028c();
+    CreateKingDededeAirPuff();
     for (i = 0; i <= 3; i++)
     {
         TaskSetMotionXFacing(gUnk_08748410[i], 0x5A5A5A5A);
@@ -836,7 +836,7 @@ void sub_080a0f7c(void)
     TaskSleepForever();
 }
 
-void sub_080a1030(void)
+void KingDededeExhaleUpdate(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
@@ -987,7 +987,7 @@ void sub_080a12e0(void)
         if (gUnk_02006190[5] <= 0)
         {
             gUnk_02006190[7] = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
         else
         {
@@ -1033,7 +1033,7 @@ void sub_080a12e0(void)
     }
     if (gCurTask->state != 8)
     {
-        sub_08066468();
+        ActorClearPaletteOverride();
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
 }
@@ -1042,7 +1042,7 @@ void KingDededeSpit(void)
 {
     gCurTask->updateState = 9;
     TaskStop();
-    sub_080a0028();
+    CreateKingDededeStar();
     TaskYieldTrampoline(51);
     ActorSetState(1);
     TaskSleepForever();
@@ -1056,7 +1056,7 @@ void sub_080a1400(void)
         if (gUnk_02006190[5] <= 0)
         {
             gUnk_02006190[7] = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
         else
         {
@@ -1068,7 +1068,7 @@ void sub_080a1400(void)
         if (gUnk_02006190[5] > 0)
         {
             gUnk_02006190[7] = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
@@ -1081,7 +1081,7 @@ void KingDededeFall(void)
     u8 f;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     t->updateState = 10;
     TaskStop();
     TaskSetFrame(43);
@@ -1097,7 +1097,7 @@ void KingDededeFall(void)
     TaskSleepForever();
 }
 
-void sub_080a14e4(void)
+void KingDededeFallUpdate(void)
 {
     if (gCurTask->state != 10)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);

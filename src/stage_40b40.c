@@ -13,7 +13,7 @@
  * 16.16 motion cells Task.velX/unk5C (through TaskSetMotionXFacing, which mirrors
  * them by the facing and leaves a component alone when passed 0x5A5A5A5A)
  * and Task.speedLimitX/unk68 from signed 8.8 halfwords of gPlayerMotionXPresets[a1] or of
- * the preset row gUnk_0873AF6C[gUnk_03001F30] (22 halfwords), some of them
+ * the preset row gUnk_0873AF6C[gMetaKnightmareMode] (22 halfwords), some of them
  * chosen by PlayerState.onSlipperyFloor, the held keys gLatchedHeldKeys[] or the
  * collision block gTerrainResult; kind 12 picks one of five rows of
  * gUnk_0873AF58 by the speed.
@@ -43,7 +43,7 @@ extern u8 gTerrainResult[];
 
 void PlayerSetMotionXPreset(s32 a0, s32 a1)
 {
-    u16 *q = (u16 *)(gUnk_0873AF6C + gUnk_03001F30 * 11);
+    u16 *q = (u16 *)(gUnk_0873AF6C + gMetaKnightmareMode * 11);
     u16 *r = (u16 *)(gPlayerMotionXPresets + a1 * 2);
 
     switch (a0)

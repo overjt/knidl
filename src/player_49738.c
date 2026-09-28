@@ -18,7 +18,7 @@
  * gUnk_081AC358 into OBJ palette slot (Task.tileWord >> 12) + 1.  Cases
  * with the same row layout share one body in the ROM (cross-jumping).
  * sub_08049a58 uploads ability 2's tiles gUnk_081BE45C at +0x100, and
- * again at +0x180 when gUnk_03002444 is set. */
+ * again at +0x180 when gInHub is set. */
 
 void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* early_1518; effect_5afac's pointer spelling */
 
@@ -131,7 +131,7 @@ void sub_08049a58(void)
         RequestCopy(1, src + 128, (void *)(off + 0x06010500), 128);
         RequestCopy(1, src + 256, (void *)(off + 0x06010900), 128);
         RequestCopy(1, src + 384, (void *)(off + 0x06010D00), 128);
-        if (gUnk_03002444 != 0) {
+        if (gInHub != 0) {
             RequestCopy(1, src, (void *)(off + 0x06010180), 128);
             RequestCopy(1, src + 128, (void *)(off + 0x06010580), 128);
             RequestCopy(1, src + 256, (void *)(off + 0x06010980), 128);

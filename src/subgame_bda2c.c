@@ -12,7 +12,7 @@
  * The mode is a four-slot round-robin: Task.unk34 is the slot 0-3 that the
  * turn walks forwards or backwards (Task.unk28 <= 2 selects the direction),
  * Task.unk2C is the speed level 0-6 that indexes the per-level beat length
- * at gUnk_08756570, and Task.unk1C counts the beats until the level steps
+ * at gBombRallyBeatFrames, and Task.unk1C counts the beats until the level steps
  * up (the per-player-count limits are the three parallel byte tables at
  * 0x0875665C/0x0875665F/0x08756662, indexed by the player count in
  * gSubGameLevel).
@@ -20,7 +20,7 @@
  *   BombRallyRound   entry: install the dispatchers and kick BGM 0x82E
  *   BombRallyRoundPass   the beat loop (states 0..6 in Task.unk28)
  *   BombRallyKnockOutTurnPlayer   knock out the player in the turn seat and test for the end of the match
- *   sub_080bdebc   / sub_080bdf3c / sub_080bdf9c   sprite placement helpers
+ *   CreateBombRallyBombSmoke   / CreateBombRallyStarBurst / CreateBombRallyBurstStar   sprite placement helpers
  *   BombRallySeatPlayers   seat the players at random (local player in seat 0) and pick the first turn
  *   BombRallyResultsShow   the vblank-flag wait (goto/do-while shape, lesson 6)
  *   BombRallyPlayerJudgePress   the button-timing judgement against the 5-byte records
@@ -53,7 +53,7 @@ extern u32 RandomRange(u32 range);
 void BombRallyRound(void)
 {
     gCurTask->updateCallback = (u32)BombRallyRoundUpdate;
-    sub_080bddb8();
+    BombRallyInitSpeed();
     BombRallySeatPlayers();
     gCurTask->unk28 = -3;
     PlayBgm(0x82E);
@@ -94,9 +94,9 @@ void BombRallyRoundPass(void)
             break;
         u = gCurTask;
         if (u->unk28 <= 2)
-            u->unk24 = gUnk_08756570[u->unk2C] * (u->unk28 + 2);
+            u->unk24 = gBombRallyBeatFrames[u->unk2C] * (u->unk28 + 2);
         else
-            u->unk24 = gUnk_08756570[u->unk2C] * (u->unk28 - 1);
+            u->unk24 = gBombRallyBeatFrames[u->unk2C] * (u->unk28 - 1);
         gCurTask->unk30 = 0;
         while (gCurTask->unk30 != gCurTask->unk24) {
             gCurTask->unk30++;
@@ -104,11 +104,11 @@ void BombRallyRoundPass(void)
         }
         if (gCurTask->unk20 != 6 && gCurTask->unk20 != -1)
             TaskYieldTrampoline(3);
-        if (gUnk_020061DC != 0)
-            gUnk_020061DC--;
+        if (gBombRallySafeBeatsLeft != 0)
+            gBombRallySafeBeatsLeft--;
         v = gCurTask;
         v->unk1C++;
-        if (v->unk1C == gUnk_0875665F[gSubGameLevel]) {
+        if (v->unk1C == gBombRallySpeedUpBeats[gSubGameLevel]) {
             v->unk1C = 0;
             if (v->unk2C + 1 != 7)
                 v->unk2C++;
@@ -158,7 +158,7 @@ void BombRallyRoundNext(void)
         BeginFastFadeOutToWhite();
         while (gFadeSteps != 0)
             TaskYieldTrampoline(1);
-        sub_080bde0c();
+        BombRallyRestartSpeed();
         BeginFastFadeInFromWhite();
         while (gFadeSteps != 0)
             TaskYieldTrampoline(1);
@@ -195,37 +195,37 @@ u32 BombRallyIsMatchOver(void)
     return 0;
 }
 
-void sub_080bddb8(void)
+void BombRallyInitSpeed(void)
 {
     struct Task *t;
 
-    gUnk_020061DC = gUnk_08756662[gSubGameLevel];
+    gBombRallySafeBeatsLeft = gBombRallySafeBeats[gSubGameLevel];
     t = gCurTask;
     t->unk28 = -4;
     t->unk20 = 1;
     t->unk30 = 0;
-    t->unk2C = gUnk_0875665C[gSubGameLevel];
-    t->unk24 = gUnk_08756570[t->unk2C] * (t->unk20 + 2);
+    t->unk2C = gBombRallyStartSpeeds[gSubGameLevel];
+    t->unk24 = gBombRallyBeatFrames[t->unk2C] * (t->unk20 + 2);
 }
 
-void sub_080bde0c(void)
+void BombRallyRestartSpeed(void)
 {
     struct Task *t;
     struct Task *u;
 
-    gUnk_020061DC = gUnk_08756662[gSubGameLevel];
+    gBombRallySafeBeatsLeft = gBombRallySafeBeats[gSubGameLevel];
     t = gCurTask;
     t->unk28 = -4;
     t->unk20 = 1;
     t->unk30 = 0;
     t->unk2C -= 2;
-    if (t->unk2C < gUnk_0875665C[gSubGameLevel])
-        t->unk2C = gUnk_0875665C[gSubGameLevel];
+    if (t->unk2C < gBombRallyStartSpeeds[gSubGameLevel])
+        t->unk2C = gBombRallyStartSpeeds[gSubGameLevel];
     u = gCurTask;
-    u->unk24 = gUnk_08756570[u->unk2C] * (u->unk20 + 2);
+    u->unk24 = gBombRallyBeatFrames[u->unk2C] * (u->unk20 + 2);
 }
 
-void sub_080bde78(u32 a)
+void CreateBombRallyBomb(u32 a)
 {
     s32 i = TaskCreateFrom(0x5F, 32);
 
@@ -238,7 +238,7 @@ void sub_080bde78(u32 a)
     }
 }
 
-void sub_080bdebc(s32 a, s32 b, u16 c, s32 d)
+void CreateBombRallyBombSmoke(s32 a, s32 b, u16 c, s32 d)
 {
     s32 i = TaskCreateFrom(0x5F, 32);
 
@@ -256,7 +256,7 @@ void sub_080bdebc(s32 a, s32 b, u16 c, s32 d)
     }
 }
 
-void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d)
+void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d)
 {
     s32 i = TaskCreateFrom(0x5F, 32);
 
@@ -274,7 +274,7 @@ void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d)
     }
 }
 
-void sub_080bdf9c(u32 a)
+void CreateBombRallyBurstStar(u32 a)
 {
     s32 i = TaskCreateFrom(0x5F, 32);
 
@@ -293,7 +293,7 @@ void sub_080bdf9c(u32 a)
     }
 }
 
-void sub_080be010(void)
+void CreateBombRallyStartSign(void)
 {
     s32 i = TaskCreateFrom(0x5F, 32);
 
@@ -333,7 +333,7 @@ void BombRallySeatPlayers(void)
         RequestCopy(2, gUnk_08756528[gBombRallySeats[i]],
                      (u32)(gObjPalette + (i << 5)), 32);
     }
-    sub_080bde78(0);
+    CreateBombRallyBomb(0);
     for (i = 0; i <= 3; i++) {
         for (j = 0; j < 4; j++)
             if (i == gBombRallySeats[j])
@@ -353,7 +353,7 @@ void BombRallySeatPlayers(void)
 void BombRallyResults(void)
 {
     gCurTask->updateCallback = (u32)BombRallyResultsUpdate;
-    sub_080be4a4();
+    CreateBombRallyResultsPoses();
     gBg3ScrollX = 0x780000;
     gBg3ScrollY = 0;
     gCurTask->state = 0;
@@ -381,7 +381,7 @@ void BombRallyResultsShow(void)
 
     gCurTask->updateState = 0;
     TaskYieldTrampoline(60);
-    sub_080be5fc();
+    CreateBombRallyPlaceLabels();
     switch (gBombRallyFinishOrder[gLocalPlayer]) {
     case 3:
         PlayBgm(29);
@@ -412,7 +412,7 @@ void BombRallyResultsShow(void)
     if (gPrevGameState == 4) {
         gCurTask->state = 1;
     } else {
-        sub_080be550();
+        CreateBombRallyLivesIcons();
         TaskYieldTrampoline(60);
         BombRallyAwardLives();
         p = gPlayerPressedKeys;
@@ -452,7 +452,7 @@ void BombRallyResultsMenu(void)
         while (gCurTask->unk28 == 0) {
             TaskYieldTrampoline(1);
             if (gPlayerPressedKeys[0] & 9) {
-                sub_080be7c0(102);
+                BombRallyPlaySfxIfPlayer0(102);
                 t = gCurTask;
                 if (t->unk2C == 0) {
                     t->unk28 = 1;
@@ -462,7 +462,7 @@ void BombRallyResultsMenu(void)
                     TaskSleepForever();
                 }
             } else if (gPlayerPressedKeys[0] & 0xF0) {
-                sub_080be7c0(101);
+                BombRallyPlaySfxIfPlayer0(101);
                 u = gCurTask;
                 u->unk2C ^= 1;
                 if (gPlayerPressedKeys[0] & 0x60)
@@ -478,17 +478,17 @@ void BombRallyResultsMenu(void)
             TaskYieldTrampoline(1);
             a = gPlayerPressedKeys[0] & 9;
             if (a) {
-                sub_080be7c0(102);
+                BombRallyPlaySfxIfPlayer0(102);
                 SubGameReplay(gCurTask->unk2C);
                 TaskSleepForever();
             } else {
                 b = gPlayerPressedKeys[0] & 2;
                 if (b) {
                     gCurTask->unk28 = a;
-                    sub_080be7c0(215);
+                    BombRallyPlaySfxIfPlayer0(215);
                     TaskYieldTrampoline(16);
                 } else if (gPlayerPressedKeys[0] & 0x90) {
-                    sub_080be7c0(101);
+                    BombRallyPlaySfxIfPlayer0(101);
                     v = gCurTask;
                     v->unk2C++;
                     if (v->unk2C == 3)
@@ -496,7 +496,7 @@ void BombRallyResultsMenu(void)
                     gCurTask->unk30 = b;
                     TaskYieldTrampoline(10);
                 } else if (gPlayerPressedKeys[0] & 0x60) {
-                    sub_080be7c0(101);
+                    BombRallyPlaySfxIfPlayer0(101);
                     w = gCurTask;
                     w->unk2C--;
                     if (w->unk2C < 0)
@@ -513,7 +513,7 @@ void BombRallyResultsMenuUpdate(void)
 {
 }
 
-void sub_080be4a4(void)
+void CreateBombRallyResultsPoses(void)
 {
     struct Task *t;
     s32 i;
@@ -544,7 +544,7 @@ void sub_080be4a4(void)
     }
 }
 
-void sub_080be550(void)
+void CreateBombRallyLivesIcons(void)
 {
     struct Task *t;
     s32 i;
@@ -575,7 +575,7 @@ void sub_080be550(void)
     }
 }
 
-void sub_080be5fc(void)
+void CreateBombRallyPlaceLabels(void)
 {
     struct Task *t;
     s32 i;
@@ -671,7 +671,7 @@ void BombRallyAwardLives(void)
     }
 }
 
-void sub_080be7c0(u32 a)
+void BombRallyPlaySfxIfPlayer0(u32 a)
 {
     if (gLocalPlayer == 0)
         PlaySfx(a);
@@ -735,7 +735,7 @@ void BombRallyPlayerServe(void)
     w = gCurTask;
     w->posX = gUnk_0875672C[gCurTask->unk1C] << 16;
     w->posY = gUnk_08756734[gCurTask->unk1C] << 16;
-    w->frameTable = gUnk_0875670C[gCurTask->unk1C];
+    w->frameTable = gBombRallyPlayerFrames[gCurTask->unk1C];
     if (gCurTask->unk1C == 3) {
         w->facing = -1;
         gCurTask->tileWord = 0xA0 << 6;
@@ -772,7 +772,7 @@ void BombRallyPlayerServe(void)
                 TaskYieldTrampoline(2);
                 PlaySfx(254);
                 z = gCurTask;
-                sub_080bdf3c(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
+                CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
                              z->posY + (gUnk_08756564[z->unk1C] << 16),
                              z->unk1C, z->facing);
                 gCurTask->frame++;
@@ -1022,7 +1022,7 @@ void BombRallyPlayerThrow(void)
         }
         PlaySfx(254);
         z = gCurTask;
-        sub_080bdf3c(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
+        CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
                      z->posY + (gUnk_08756564[z->unk1C] << 16),
                      z->unk1C, z->facing);
         TaskYieldTrampoline(3);
@@ -1277,8 +1277,8 @@ void BombRallyPlayerCpuThrow(void)
     u = &gTasks[gCurTask->parent];
     tbl = gUnk_087565F4[u->unk28];
     gCurTask->updateState = 7;
-    k = gUnk_08756650[gSubGameLevel][u->unk2C * 3 + gBombRallyOutCount];
-    if (gUnk_020061DC == 0 && RandomRange(k) == 0) {
+    k = gBombRallyBlastOdds[gSubGameLevel][u->unk2C * 3 + gBombRallyOutCount];
+    if (gBombRallySafeBeatsLeft == 0 && RandomRange(k) == 0) {
         u->unk20 = 6;
     } else {
         q = RandomRange(36);
@@ -1381,7 +1381,7 @@ void BombRallyPlayerCpuThrow(void)
         }
         PlaySfx(254);
         z = gCurTask;
-        sub_080bdf3c(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
+        CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
                      z->posY + (gUnk_08756564[z->unk1C] << 16),
                      z->unk1C, z->facing);
         TaskYieldTrampoline(3);

@@ -26,13 +26,13 @@ extern void sub_08068f68(void);
 extern void ActorReactToHit(void);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-extern void sub_0800a340(s16 a, s16 b);
+extern void HudStartTaskHpBar(s16 a, s16 b);
 extern void HudStartHpBar(s16 a, s16 b);
 void sub_08066c08(u32 def, u8 b);
 extern void ActorSetAttackBox(u32 v);
 extern void TaskSetEntry(void *fn, u32 i);
 extern void ActorLoadDef(u32 def);
-extern void sub_080637cc(void);
+extern void ActorResetHealth(void);
 extern void ActorSetState(u8 v);
 extern void ActorCheckHits(void);
 extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
@@ -113,7 +113,7 @@ void sub_08065470(void)
             dst += 0x400;
         } while (*p != 0xFFFF);
     }
-    if ((*(u16 *)&gCurTask->unk8C->paletteOverridden & 0x101) == 0)
+    if ((*(u16 *)&gCurTask->u8C.actor->paletteOverridden & 0x101) == 0)
         ActorLoadPalette(g->palette + 1, *g->palette, 0);
     t = gCurTask;
     QueueSprite(t->layer, g->oamTemplate, t->spriteFlags, 0x800 | t->tileWord,
@@ -129,7 +129,7 @@ void sub_0806555c(void)
     u32 *tbl;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     tbl = t->frameTable;
     QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, t->tileWord,
                  t->pixelX - gSpriteCameraX,
@@ -242,7 +242,7 @@ void SetPaletteAnimSource(u32 i, u32 p1, u8 p2)
     if (j != -1)
     {
         t = &gTasks[j];
-        t->unk8C = a = &gActors[j];
+        t->u8C.actor = a = &gActors[j];
         a->palette = p1;
         a->paletteVariant = p2;
     }
@@ -380,7 +380,7 @@ void sub_080659b4(void)
     u32 v;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     t->unk18 = 10;
     t->unk1C = 0;
     while (gUnk_02007FB8[gCurTask->unk74] != 0 && a->paletteVariant <= 3)
@@ -452,7 +452,7 @@ void sub_08065b14(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     t->unk28 = 10;
     t->unk2C = 1;
     t->unk30 = 2;
@@ -549,7 +549,7 @@ void sub_08065ce0(u32 i)
     u32 *q;
 
     t = &gTasks[i];
-    a = t->unk8C;
+    a = t->u8C.actor;
     switch (t->actorKind)
     {
     case 0:
@@ -652,7 +652,7 @@ void ActorPlaySfx(u32 def, u32 which)
     struct Actor *a;
     s32 v;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     if (which != 0)
     {
         v = a->unk34;
@@ -687,7 +687,7 @@ void sub_08065e6c(void)
         if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != 4)
         {
             t = &gTasks[i];
-            a = t->unk8C;
+            a = t->u8C.actor;
             if (a != NULL && (u8)(t->actorKind - 7) > 3)
             {
                 a->paletteOverridden |= 1;
@@ -708,7 +708,7 @@ void sub_08065ed0(void)
         if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != 4)
         {
             t = &gTasks[i];
-            a = t->unk8C;
+            a = t->u8C.actor;
             if (a != NULL && (u8)(t->actorKind - 7) > 3)
             {
                 a->paletteOverridden = 0;
@@ -749,7 +749,7 @@ s16 ActorComputeHealthSlot(u32 i)
     s32 m;
 
     t = &gTasks[i];
-    a = t->unk8C;
+    a = t->u8C.actor;
     switch (gActivePlayerCount)
     {
     case 2:
@@ -801,7 +801,7 @@ u32 *sub_0806601c(void)
     u32 *q;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (t->actorKind == 1)
     {
         r = gUnk_0873F0C4[t->unk76];
@@ -835,7 +835,7 @@ u16 sub_08066088(u32 mode)
     u32 lo;
     u32 w40;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     a->savedTileWord = gCurTask->tileWord;
     prio = gCurTask->tileWord;
     p = sub_0806601c();
@@ -850,12 +850,12 @@ u16 sub_08066088(u32 mode)
     {
         if (mode == 1)
         {
-            sh = sub_080b5628(p[0] << 4);
+            sh = AllocObjTiles(p[0] << 4);
             lo = a->gfx.paletteBank;
         }
         else
         {
-            sh = sub_080b55d8(p[0] << 4, p[1]);
+            sh = AllocObjTilesAndPalettes(p[0] << 4, p[1]);
             lo = sh & 0xFFFF;
             sh = sh >> 16;
         }
@@ -904,7 +904,7 @@ void sub_0806621c(void)
     struct Task *t;
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     TaskSetSkipMask(0, gCurTaskIdx);
     t = gCurTask;
     t->lateUpdateCallback = 0;
@@ -914,7 +914,7 @@ void sub_0806621c(void)
     if (gUnk_02004C90 != 0)
     {
         if (gUnk_02006190[5] != 0)
-            sub_08066468();
+            ActorClearPaletteOverride();
         else
             ActorLoadHeaderPalette(a->gfx.header);
     }
@@ -942,7 +942,7 @@ void sub_080662d8(void)
     struct Actor *a;
     u32 v;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     sub_08068f68();
     ActorReactToHit();
     if (gUnk_02004C90 != 0)
@@ -1020,7 +1020,7 @@ void ActorFlashPalette(void *src, u32 size)
         return;
     if (t->frame == -1)
         return;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (a->paletteLocked & 1)
         return;
     a->paletteOverridden |= 1;
@@ -1033,16 +1033,16 @@ void ActorFlashPalette(void *src, u32 size)
         ActorLoadPalette(src, size << 1, 1);
 }
 
-void sub_08066468(void)
+void ActorClearPaletteOverride(void)
 {
-    gCurTask->unk8C->paletteOverridden &= 254;
+    gCurTask->u8C.actor->paletteOverridden &= 254;
 }
 
 void sub_08066480(struct GfxHeader *h, u32 src, u32 size)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     if (a->paletteLocked & 1)
         return;
     if ((gFrameCount & 2) == 0)
@@ -1069,14 +1069,14 @@ void sub_080664e0(struct AnimCmd *p)
     ActorStopAnim();
     if (p != NULL)
         gCurTask->unk24 = ActorStartAnim(p);
-    if (gUnk_0200AFF8 == 0)
+    if (gHudHpBarFilled == 0)
     {
         do
         {
             TaskYieldTrampoline(1);
-        } while (gUnk_0200AFF8 == 0);
+        } while (gHudHpBarFilled == 0);
     }
-    sub_08066564();
+    ActorResetAttackBox();
     sub_080666a4();
 }
 
@@ -1084,16 +1084,16 @@ void sub_08066544(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     ActorSetAttackBox(a->unk60->altAttackBox);
     ActorShowHpBar();
 }
 
-void sub_08066564(void)
+void ActorResetAttackBox(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     ActorSetAttackBox(a->def->attackBox);
 }
 
@@ -1101,7 +1101,7 @@ void sub_08066580(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     ActorShowHpBar();
     ActorSetAttackBox(a->def->attackBox);
 }
@@ -1113,13 +1113,13 @@ void ActorShowHpBar(void)
     s32 v;
 
     g = &gCurTask;
-    gUnk_0200AFF8 = 0;
+    gHudHpBarFilled = 0;
     HudShowHpBar();
     t = *g;
     if (t->actorKind == 1 || (t->actorKind == 2 && t->unk76 == 7))
     {
         v = t->health;
-        sub_0800a340(v, v);
+        HudStartTaskHpBar(v, v);
     }
     else
     {
@@ -1137,7 +1137,7 @@ u16 sub_0806660c(u16 a)
 {
     struct Actor *p;
 
-    p = gCurTask->unk8C;
+    p = gCurTask->u8C.actor;
     return ((a + p->gfx.paletteBank) << 12) | p->gfx.tileBits;
 }
 
@@ -1164,7 +1164,7 @@ void sub_08066658(struct AnimCmd *p)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     t->unk20 = t->updateCallback;
     t->updateCallback = (u32)sub_08066754;
     ActorStopAnim();
@@ -1244,7 +1244,7 @@ void sub_080667c0(u8 a, u16 b)
     struct Task *t;
     struct Actor *p;
 
-    p = gCurTask->unk8C;
+    p = gCurTask->u8C.actor;
     HudRemoveHpBar();
     t = gCurTask;
     if (t->drawCallback == (u32)sub_08065438 || t->drawCallback == (u32)sub_080653ec)
@@ -1273,7 +1273,7 @@ void ActorLoadPalette(void *src, u32 size, u8 force)
     u32 slot;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     slot = t->tileWord >> 12;
     if (force == 0 && t->actorKind == 1 && a->paletteVariant != 0 && a->palette != 0)
         RequestCopy(2, a->palette, (u32)(gObjPalette + (slot << 5)), size);
@@ -1292,7 +1292,7 @@ void sub_080668c8(void)
     u32 v;
     s32 i;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     for (i = 32; i <= 62; i++)
     {
         if (gTaskSlotTypes[i] == -1)
@@ -1302,9 +1302,9 @@ void sub_080668c8(void)
         if (gTaskSlotTypes[i] == 4)
             continue;
         t = &gTasks[i];
-        if (gCurTask->actorKind == 2 && a->unk3C != 0)
+        if (gCurTask->actorKind == 2 && a->defeatSweepCallback != 0)
         {
-            if ((u8)((u8 (*)(s32))a->unk3C)(i) != 1)
+            if ((u8)((u8 (*)(s32))a->defeatSweepCallback)(i) != 1)
                 continue;
         }
         p = &cls;
@@ -1335,7 +1335,7 @@ void sub_08066988(u32 i)
     struct PlayerState *p;
 
     t = &gTasks[i];
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (a->unk04 != 0)
     {
         p = t->player;
@@ -1353,7 +1353,7 @@ void sub_08066988(u32 i)
     }
     t->lateUpdateCallback = 0;
     t->updateCallback = 0;
-    t->unk82 = 0;
+    t->hitEffect = 0;
     TaskSetEntry(ActorDie, i);
     TaskSetSkipMask(0, i);
 }
@@ -1389,7 +1389,7 @@ void sub_08066a94(u8 mode)
     u32 n;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (a->palette != 0)
         return;
     if (mode == 1)
@@ -1415,7 +1415,7 @@ void sub_08066ae0(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (t->variant != 0)
     {
         switch (gActivePlayerCount)
@@ -1436,7 +1436,7 @@ void sub_08066ae0(void)
         }
         gCurTask->variant = 0;
     }
-    sub_080637cc();
+    ActorResetHealth();
 }
 
 void sub_08066b34(u32 def)
@@ -1445,12 +1445,12 @@ void sub_08066b34(u32 def)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (a->extraFrame != -1)
     {
         t->drawCallback = (u32)sub_08066c74;
         ActorLoadDef(def);
-        gCurTask->unk8C->unk16 = 6;
+        gCurTask->u8C.actor->unk16 = 6;
     }
 }
 
@@ -1460,7 +1460,7 @@ void sub_08066b70(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (a->extraFrame != -1)
     {
         if (t->velX >= 0)
@@ -1503,7 +1503,7 @@ void sub_08066bdc(void)
 
 void sub_08066c08(u32 def, u8 b)
 {
-    gCurTask->unk8C->extraFrame = 0xFFFF;
+    gCurTask->u8C.actor->extraFrame = 0xFFFF;
     ActorLoadDef(def);
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     sub_08066e88(b);
@@ -1515,7 +1515,7 @@ void sub_08066c3c(u32 def)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if (a->extraFrame != -1 && t->unk74 != 2)
         sub_08066c08(def, 1);
 }
@@ -1551,16 +1551,16 @@ void sub_08066c74(void)
         {
             if (u->frame == 3)
             {
-                u->unk8C->extraFrame = 3;
+                u->u8C.actor->extraFrame = 3;
             }
             else
             {
-                a = u->unk8C;
+                a = u->u8C.actor;
                 if (a->unk16 <= 0)
                 {
                     a->unk16 = 6;
-                    u->unk8C->extraFrame++;
-                    a = u->unk8C;
+                    u->u8C.actor->extraFrame++;
+                    a = u->u8C.actor;
                     if (a->extraFrame > 7)
                         a->extraFrame = 4;
                 }
@@ -1570,9 +1570,9 @@ void sub_08066c74(void)
         t = gCurTask;
         x = t->pixelX - gSpriteCameraX + gUnk_030023B4;
         y = t->pixelY - gSpriteCameraY + gUnk_030023D4;
-        QueueSprite(t->layer, gParasolFrames[t->unk8C->extraFrame], t->spriteFlags, 0,
+        QueueSprite(t->layer, gParasolFrames[t->u8C.actor->extraFrame], t->spriteFlags, 0,
                      x, y);
-        a = gCurTask->unk8C;
+        a = gCurTask->u8C.actor;
         a->unk16--;
     }
     else
@@ -1645,9 +1645,9 @@ void sub_08066e88(u8 a)
         v = (s->hitterPlayer == -1) ? TaskFindNearestPlayer() : s->hitterPlayer;
         u->unk1C = v;
         u->unk28 = a;
-        if (gUnk_02006178 == 1)
+        if (gScreenAttackActive == 1)
         {
-            gCurTask->unk8C->unk0D = 1;
+            gCurTask->u8C.actor->unk0D = 1;
             u->variant = 3;
             u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
             u->layer = 11;
@@ -1663,17 +1663,17 @@ void sub_08066f50(s32 x, s32 y)
     PlayBgm(1);
 }
 
-void sub_08066f78(void)
+void LoadStarRodPieceGfx(void)
 {
     struct GfxHeader *h;
 
     h = (struct GfxHeader *)gUnk_08334DC0;
     RequestCopy(4, (u32)h->tiles, 0x06017800, h->tileCount << 5);
-    RequestCopy(2, gUnk_0873E264[gLevelIndex], (u32)gUnk_03001610,
+    RequestCopy(2, gStarRodPiecePalettes[gLevelIndex], (u32)gUnk_03001610,
                  h->paletteBankCount << 5);
 }
 
-void sub_08066fc0(u8 p3, s16 x, s16 y)
+void CreateStarRodPiece(u8 p3, s16 x, s16 y)
 {
     struct Task *t;
     s32 i;
@@ -1682,7 +1682,7 @@ void sub_08066fc0(u8 p3, s16 x, s16 y)
     if (i != -1)
     {
         t = &gTasks[i];
-        if (gGameState == 8 && gUnk_03001F30 == 0)
+        if (gGameState == 8 && gMetaKnightmareMode == 0)
         {
             t->variant = p3;
             PlayBgm(1);
@@ -1697,8 +1697,8 @@ void sub_08066fc0(u8 p3, s16 x, s16 y)
 
 void sub_0806704c(void)
 {
-    sub_08066f78();
-    sub_08066fc0(0, 128, 104);
+    LoadStarRodPieceGfx();
+    CreateStarRodPiece(0, 128, 104);
 }
 
 u8 sub_08067060(void)
@@ -1708,7 +1708,7 @@ u8 sub_08067060(void)
     return 1;
 }
 
-u8 sub_08067074(void)
+u8 CountActivePlayers(void)
 {
     s32 i;
     s32 n;
@@ -1721,19 +1721,19 @@ u8 sub_08067074(void)
     return n;
 }
 
-void sub_080670ac(u16 a)
+void FreezeStage(u16 a)
 {
     TaskFreezeOrThawOthers(a, gCurTaskIdx);
     TaskSetSkipMask(0, 63);
     PauseRoom();
-    sub_08067108();
+    DisablePause();
 }
 
-void sub_080670d4(void)
+void ThawStage(void)
 {
     TaskFreezeOrThawOthers(0, gCurTaskIdx);
     ResumeRoom();
-    sub_08067114();
+    EnablePause();
 }
 
 void LoadBackdropColor(u32 src)
@@ -1741,17 +1741,17 @@ void LoadBackdropColor(u32 src)
     RequestCopy(2, src, (u32)gBgPalette, 2);
 }
 
-void sub_08067108(void)
+void DisablePause(void)
 {
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
 }
 
-void sub_08067114(void)
+void EnablePause(void)
 {
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
 }
 
-s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8)
+s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -1793,7 +1793,7 @@ void sub_08067170(void)
         TaskFaceLikeParent();
 }
 
-void sub_080671c0(void)
+void Task_InhalableStar(void)
 {
     struct Task *t;
 
@@ -1802,14 +1802,14 @@ void sub_080671c0(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     t = gCurTask;
-    t->frameTable = gUnk_0874CCBC;
-    t->updateCallback = (u32)sub_08067214;
+    t->frameTable = gInhalableStarFrames;
+    t->updateCallback = (u32)InhalableStarUpdate;
     sub_08067170();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 1, gUnk_0873E280);
 }
 
-void sub_08067214(void)
+void InhalableStarUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 1, gUnk_0873E284);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)

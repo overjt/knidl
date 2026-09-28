@@ -181,8 +181,8 @@ gWarpStarStateUpdates:
 	.word	sub_0807156c+1
 	.word	sub_08071640+1
 	.word	sub_08071774+1
-	.global	gUnk_0873FBC4
-gUnk_0873FBC4:
+	.global	gWarpStarFlights
+gWarpStarFlights:
 	.word	sub_08071d60+1
 	.word	sub_08071e80+1
 	.word	sub_08071d60+1
@@ -209,8 +209,8 @@ gUnk_0873FBC4:
 	.word	sub_08073f18+1
 	.word	sub_080740bc+1
 	.word	sub_08074420+1
-	.global	gUnk_0873FC2C
-gUnk_0873FC2C:
+	.global	gWarpStarFlightUpdates
+gWarpStarFlightUpdates:
 	.word	sub_08071e74+1
 	.word	sub_08071ebc+1
 	.word	sub_08071e74+1
@@ -237,8 +237,8 @@ gUnk_0873FC2C:
 	.word	sub_0807409c+1
 	.word	sub_080743c8+1
 	.word	sub_080743f0+1
-	.global	gUnk_0873FC94
-gUnk_0873FC94:
+	.global	gWarpStarCameraPaths
+gWarpStarCameraPaths:
 	.word	sub_080745dc+1
 	.word	sub_08074628+1
 	.word	sub_080745dc+1
@@ -423,15 +423,15 @@ gWaddleDeeVariants:
 	.word	WaddleDeePaceInit+1
 	.word	WaddleDeeJumpInit+1
 	.word	ParasolWaddleDeeWalkInit+1
-	.word	sub_08079238+1
+	.word	WaddleDeeIdleInit+1
 	.word	ParasolWaddleDeeStandInit+1
 	.global	gUnk_08740648
 gUnk_08740648:
 	.incbin	"baserom.gba", 0x740648, 0x10
 	.global	gWaddleDeeWalkStates
 gWaddleDeeWalkStates:
-	.word	sub_08078c80+1
-	.word	sub_08078cbc+1
+	.word	WaddleDeeWalk+1
+	.word	WaddleDeeWalkFall+1
 	.global	gWaddleDeeWalkStateUpdates
 gWaddleDeeWalkStateUpdates:
 	.word	sub_08078cb8+1
@@ -441,8 +441,8 @@ gUnk_08740668:
 	.incbin	"baserom.gba", 0x740668, 0x8
 	.global	gWaddleDeePaceStates
 gWaddleDeePaceStates:
-	.word	sub_08078d88+1
-	.word	sub_08078e10+1
+	.word	WaddleDeePaceWalk+1
+	.word	WaddleDeePaceFall+1
 	.global	gWaddleDeePaceStateUpdates
 gWaddleDeePaceStateUpdates:
 	.word	sub_08078dd4+1
@@ -459,8 +459,8 @@ gUnk_087406A0:
 	.global	gWaddleDeeJumpStates
 gWaddleDeeJumpStates:
 	.word	sub_08078eec+1
-	.word	sub_08078f8c+1
-	.word	sub_080790c0+1
+	.word	WaddleDeeJump+1
+	.word	WaddleDeeJumpFall+1
 	.global	gWaddleDeeJumpStateUpdates
 gWaddleDeeJumpStateUpdates:
 	.word	sub_08078f24+1
@@ -468,7 +468,7 @@ gWaddleDeeJumpStateUpdates:
 	.word	sub_080790e8+1
 	.global	gParasolWaddleDeeWalkStates
 gParasolWaddleDeeWalkStates:
-	.word	sub_08079194+1
+	.word	ParasolWaddleDeeWalk+1
 	.word	sub_080791c0+1
 	.global	gParasolWaddleDeeWalkStateUpdates
 gParasolWaddleDeeWalkStateUpdates:
@@ -477,11 +477,11 @@ gParasolWaddleDeeWalkStateUpdates:
 	.global	gUnk_087406EC
 gUnk_087406EC:
 	.incbin	"baserom.gba", 0x7406EC, 0x14
-	.global	gUnk_08740700
-gUnk_08740700:
-	.word	sub_080792dc+1
-	.global	gUnk_08740704
-gUnk_08740704:
+	.global	gWaddleDeeIdleStates
+gWaddleDeeIdleStates:
+	.word	WaddleDeeIdle+1
+	.global	gWaddleDeeIdleStateUpdates
+gWaddleDeeIdleStateUpdates:
 	.word	sub_080792f4+1
 	.global	gParasolWaddleDeeStandStates
 gParasolWaddleDeeStandStates:
@@ -494,7 +494,7 @@ gParasolWaddleDeeStandStateUpdates:
 	.global	gPengyVariants
 gPengyVariants:
 	.word	PengyInit+1
-	.word	sub_08079918+1
+	.word	PengyIdleInit+1
 	.global	gUnk_08740720
 gUnk_08740720:
 	.incbin	"baserom.gba", 0x740720, 0x8
@@ -519,16 +519,16 @@ gPengyStateUpdates:
 	.word	sub_080797b4+1
 	.word	sub_080798b8+1
 	.word	sub_08079914+1
-	.global	gUnk_08740778
-gUnk_08740778:
-	.word	sub_080799bc+1
-	.global	gUnk_0874077C
-gUnk_0874077C:
+	.global	gPengyIdleStates
+gPengyIdleStates:
+	.word	PengyIdle+1
+	.global	gPengyIdleStateUpdates
+gPengyIdleStateUpdates:
 	.word	sub_080799dc+1
 	.global	gBomberVariants
 gBomberVariants:
 	.word	BomberInit+1
-	.word	sub_08079d30+1
+	.word	BomberIdleInit+1
 	.global	gBomberStates
 gBomberStates:
 	.word	BomberWalk+1
@@ -541,17 +541,17 @@ gBomberStateUpdates:
 	.word	sub_08079be0+1
 	.word	sub_08079c84+1
 	.word	sub_08079d2c+1
-	.global	gUnk_087407A8
-gUnk_087407A8:
-	.word	sub_08079dd4+1
-	.global	gUnk_087407AC
-gUnk_087407AC:
+	.global	gBomberIdleStates
+gBomberIdleStates:
+	.word	BomberIdle+1
+	.global	gBomberIdleStateUpdates
+gBomberIdleStateUpdates:
 	.word	sub_08079e20+1
 	.global	gSparkyVariants
 gSparkyVariants:
-	.word	sub_0807a06c+1
-	.word	sub_0807a45c+1
-	.word	sub_0807a578+1
+	.word	SparkyJumpInit+1
+	.word	SparkyIdleInit+1
+	.word	SparkyStandInit+1
 	.global	gUnk_087407BC
 gUnk_087407BC:
 	.incbin	"baserom.gba", 0x7407BC, 0x4
@@ -567,33 +567,33 @@ gUnk_087407D0:
 	.global	gUnk_087407DC
 gUnk_087407DC:
 	.incbin	"baserom.gba", 0x7407DC, 0x8
-	.global	gUnk_087407E4
-gUnk_087407E4:
+	.global	gSparkyJumpStates
+gSparkyJumpStates:
 	.word	sub_0807a1c0+1
 	.word	sub_0807a3bc+1
-	.word	sub_0807a128+1
+	.word	SparkyJump+1
 	.word	sub_0807a424+1
-	.global	gUnk_087407F4
-gUnk_087407F4:
+	.global	gSparkyJumpStateUpdates
+gSparkyJumpStateUpdates:
 	.word	sub_0807a380+1
 	.word	sub_0807a408+1
 	.word	sub_0807a1bc+1
 	.word	sub_0807a458+1
-	.global	gUnk_08740804
-gUnk_08740804:
-	.word	sub_0807a500+1
-	.global	gUnk_08740808
-gUnk_08740808:
+	.global	gSparkyIdleStates
+gSparkyIdleStates:
+	.word	SparkyIdle+1
+	.global	gSparkyIdleStateUpdates
+gSparkyIdleStateUpdates:
 	.word	sub_0807a574+1
 	.global	gUnk_0874080C
 gUnk_0874080C:
 	.incbin	"baserom.gba", 0x74080C, 0x4
-	.global	gUnk_08740810
-gUnk_08740810:
+	.global	gSparkyStandStates
+gSparkyStandStates:
 	.word	sub_0807a634+1
 	.word	sub_0807a830+1
-	.global	gUnk_08740818
-gUnk_08740818:
+	.global	gSparkyStandStateUpdates
+gSparkyStandStateUpdates:
 	.word	sub_0807a7f4+1
 	.word	sub_0807a87c+1
 	.global	gUnk_08740820
@@ -639,11 +639,11 @@ gScarfyStateUpdates:
 	.word	sub_0807adcc+1
 	.word	ScarfyChaseUpdate+1
 	.word	sub_0807af3c+1
-	.global	gUnk_08740990
-gUnk_08740990:
-	.word	sub_0807b300+1
-	.word	sub_0807b800+1
-	.word	sub_0807b8ec+1
+	.global	gSwordAndBladeKnightVariants
+gSwordAndBladeKnightVariants:
+	.word	SwordAndBladeKnightWalkInit+1
+	.word	SwordAndBladeKnightIdleInit+1
+	.word	SwordAndBladeKnightStandInit+1
 	.global	gUnk_0874099C
 gUnk_0874099C:
 	.incbin	"baserom.gba", 0x74099C, 0x24
@@ -653,8 +653,8 @@ gUnk_087409C0:
 	.global	gUnk_087409E4
 gUnk_087409E4:
 	.incbin	"baserom.gba", 0x7409E4, 0x18
-	.global	gUnk_087409FC
-gUnk_087409FC:
+	.global	gSwordAndBladeKnightWalkStates
+gSwordAndBladeKnightWalkStates:
 	.word	sub_0807b3f8+1
 	.word	sub_0807b49c+1
 	.word	sub_0807b584+1
@@ -662,9 +662,9 @@ gUnk_087409FC:
 	.word	sub_0807b5d8+1
 	.word	sub_0807b66c+1
 	.word	sub_0807b6e8+1
-	.word	sub_0807b7d0+1
-	.global	gUnk_08740A1C
-gUnk_08740A1C:
+	.word	SwordAndBladeKnightWalkFall+1
+	.global	gSwordAndBladeKnightWalkStateUpdates
+gSwordAndBladeKnightWalkStateUpdates:
 	.word	sub_0807b430+1
 	.word	sub_0807b4c8+1
 	.word	sub_0807b5b0+1
@@ -673,35 +673,35 @@ gUnk_08740A1C:
 	.word	sub_0807b6b4+1
 	.word	sub_0807b7a8+1
 	.word	sub_0807b7fc+1
-	.global	gUnk_08740A3C
-gUnk_08740A3C:
-	.word	sub_0807b8a4+1
-	.global	gUnk_08740A40
-gUnk_08740A40:
+	.global	gSwordAndBladeKnightIdleStates
+gSwordAndBladeKnightIdleStates:
+	.word	SwordAndBladeKnightIdle+1
+	.global	gSwordAndBladeKnightIdleStateUpdates
+gSwordAndBladeKnightIdleStateUpdates:
 	.word	sub_0807b8d0+1
-	.global	gUnk_08740A44
-gUnk_08740A44:
+	.global	gSwordAndBladeKnightStandStates
+gSwordAndBladeKnightStandStates:
 	.word	sub_0807b9ec+1
 	.word	sub_0807ba7c+1
 	.word	sub_0807bb60+1
 	.word	sub_0807bad0+1
 	.word	sub_0807bbb4+1
 	.word	sub_0807bc44+1
-	.global	gUnk_08740A5C
-gUnk_08740A5C:
+	.global	gSwordAndBladeKnightStandStateUpdates
+gSwordAndBladeKnightStandStateUpdates:
 	.word	sub_0807ba18+1
 	.word	sub_0807baa8+1
 	.word	sub_0807bb8c+1
 	.word	sub_0807bb38+1
 	.word	sub_0807bc1c+1
 	.word	sub_0807bc78+1
-	.global	gUnk_08740A74
-gUnk_08740A74:
-	.word	sub_0807bcec+1
-	.global	gTogezoVariants
-gTogezoVariants:
-	.word	TogezoInit+1
-	.word	sub_0807c350+1
+	.global	gBlockStarVariants
+gBlockStarVariants:
+	.word	BlockStarInit+1
+	.global	gNeedlousVariants
+gNeedlousVariants:
+	.word	NeedlousInit+1
+	.word	NeedlousIdleInit+1
 	.global	gUnk_08740A80
 gUnk_08740A80:
 	.incbin	"baserom.gba", 0x740A80, 0x8
@@ -717,32 +717,32 @@ gUnk_08740A98:
 	.global	gUnk_08740AAC
 gUnk_08740AAC:
 	.incbin	"baserom.gba", 0x740AAC, 0x1C
-	.global	gTogezoStates
-gTogezoStates:
+	.global	gNeedlousStates
+gNeedlousStates:
 	.word	sub_0807c118+1
-	.word	sub_0807c1d0+1
+	.word	NeedlousFall+1
 	.word	sub_0807c210+1
 	.word	sub_0807c248+1
 	.word	sub_0807c280+1
-	.word	sub_0807c2b8+1
-	.global	gTogezoStateUpdates
-gTogezoStateUpdates:
+	.word	NeedlousDash+1
+	.global	gNeedlousStateUpdates
+gNeedlousStateUpdates:
 	.word	sub_0807c138+1
 	.word	sub_0807c1f4+1
 	.word	sub_0807c22c+1
 	.word	sub_0807c264+1
 	.word	sub_0807c29c+1
 	.word	sub_0807c2e0+1
-	.global	gUnk_08740AF8
-gUnk_08740AF8:
-	.word	sub_0807c3f4+1
-	.global	gUnk_08740AFC
-gUnk_08740AFC:
+	.global	gNeedlousIdleStates
+gNeedlousIdleStates:
+	.word	NeedlousIdle+1
+	.global	gNeedlousIdleStateUpdates
+gNeedlousIdleStateUpdates:
 	.word	sub_0807c440+1
 	.global	gUFOVariants
 gUFOVariants:
 	.word	UFOInit+1
-	.word	sub_0807ca50+1
+	.word	UFOIdleInit+1
 	.global	gUnk_08740B08
 gUnk_08740B08:
 	.incbin	"baserom.gba", 0x740B08, 0x34
@@ -757,30 +757,30 @@ gUFOStates:
 	.word	sub_0807c710+1
 	.word	sub_0807c80c+1
 	.word	sub_0807c8b0+1
-	.word	sub_0807c9b4+1
+	.word	UFOShoot+1
 	.global	gUFOStateUpdates
 gUFOStateUpdates:
 	.word	sub_0807c7d8+1
 	.word	sub_0807c828+1
 	.word	sub_0807c8d0+1
 	.word	sub_0807ca18+1
-	.global	gUnk_08740BA4
-gUnk_08740BA4:
-	.word	sub_0807caf8+1
-	.global	gUnk_08740BA8
-gUnk_08740BA8:
+	.global	gUFOIdleStates
+gUFOIdleStates:
+	.word	UFOIdle+1
+	.global	gUFOIdleStateUpdates
+gUFOIdleStateUpdates:
 	.word	sub_0807cbb0+1
 	.global	gParasolVariants
 gParasolVariants:
-	.word	sub_0807cc68+1
+	.word	ParasolRiseInit+1
 	.word	ParasolChaseInit+1
-	.word	sub_0807cedc+1
+	.word	ParasolIdleInit+1
 	.word	sub_0807cfd0+1
-	.global	gUnk_08740BBC
-gUnk_08740BBC:
+	.global	gParasolRiseStates
+gParasolRiseStates:
 	.word	sub_0807cd08+1
-	.global	gUnk_08740BC0
-gUnk_08740BC0:
+	.global	gParasolRiseStateUpdates
+gParasolRiseStateUpdates:
 	.word	sub_0807cd60+1
 	.global	gParasolChaseStates
 gParasolChaseStates:
@@ -788,9 +788,9 @@ gParasolChaseStates:
 	.global	gParasolChaseStateUpdates
 gParasolChaseStateUpdates:
 	.word	sub_0807ce68+1
-	.global	gUnk_08740BCC
-gUnk_08740BCC:
-	.word	sub_0807cf80+1
-	.global	gUnk_08740BD0
-gUnk_08740BD0:
+	.global	gParasolIdleStates
+gParasolIdleStates:
+	.word	ParasolIdle+1
+	.global	gParasolIdleStateUpdates
+gParasolIdleStateUpdates:
 	.word	sub_0807cfcc+1

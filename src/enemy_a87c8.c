@@ -30,7 +30,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -44,7 +44,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -55,21 +55,21 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
-void sub_080a87c8(void)
+void KrackoInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080a8850;
+    t->updateCallback = (u32)KrackoUpdate;
     t->unk28 = 0;
     t->unk2C = 0;
     t->unk34 = 0;
@@ -81,18 +81,18 @@ void sub_080a87c8(void)
     else
         gCurTask->unk30 = 1;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 7, gUnk_08749168);
+    CallTableEntry(gCurTask->state, 7, gKrackoStates);
 }
 
-void sub_080a8834(void)
+void KrackoEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 7, gUnk_08749168);
+    CallTableEntry(gCurTask->state, 7, gKrackoStates);
 }
 
-void sub_080a8850(void)
+void KrackoUpdate(void)
 {
     sub_080a9738();
-    CallTableEntry(gCurTask->updateState, 7, gUnk_08749184);
+    CallTableEntry(gCurTask->updateState, 7, gKrackoStateUpdates);
     sub_08068f68();
     ActorReactToHit();
 }
@@ -123,9 +123,9 @@ void sub_080a8878(void)
     gCurTask->velY = 0;
     gCurTask->posY = (gViewRect[2] + 48) << 16;
     gUnk_02007D00[0] = 0;
-    while (gUnk_0200AFF8 == 0)
+    while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
-    sub_08066564();
+    ActorResetAttackBox();
     ActorSetAttackBox((u32)gUnk_08749720);
     sub_08063a00((u32)gUnk_08749758);
     ActorSetState(1);
@@ -135,7 +135,7 @@ void sub_080a8878(void)
 void sub_080a8948(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8970(void)
@@ -230,7 +230,7 @@ st3:
 void sub_080a8b44(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8b6c(void)
@@ -252,7 +252,7 @@ void sub_080a8b6c(void)
 void sub_080a8bcc(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8bf4(void)
@@ -311,7 +311,7 @@ void sub_080a8c84(void)
         u->unk2C = 2;
         u->unk30 ^= 1;
         ActorSetState(1);
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
     }
 }
 
@@ -386,10 +386,10 @@ void sub_080a8d1c(void)
 void sub_080a8f18(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8f40(void)
+void KrackoSummon(void)
 {
     struct ActorSpawn sp;
 
@@ -412,10 +412,10 @@ void sub_080a8f40(void)
     TaskSleepForever();
 }
 
-void sub_080a8fb4(void)
+void KrackoSummonUpdate(void)
 {
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8fdc(void)
@@ -528,5 +528,5 @@ void sub_080a8fdc(void)
 void sub_080a9304(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }

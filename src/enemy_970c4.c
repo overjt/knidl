@@ -8,7 +8,7 @@
 /* Externals */
 extern u32 RandomRange(u32 range);
 
-void sub_080970c4(void)
+void Task_FireLionFlame(void)
 {
     struct Task *t;
     struct Task *u;
@@ -59,7 +59,7 @@ void sub_080970c4(void)
     t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_087537E8;
+    u->frameTable = gFireLionFlameFrames;
     u->tileWord = gUnk_0200D120[u->parent - 32].savedTileWord;
     if (RandomRange(2) != 0)
         gCurTask->facing = 1;
@@ -67,7 +67,7 @@ void sub_080970c4(void)
         gCurTask->facing = -1;
     v = gCurTask;
     v->unk28 = 0;
-    v->updateCallback = (u32)sub_080974c8;
+    v->updateCallback = (u32)FireLionFlameCheckParent;
     while (1) {
         gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(RandomRange(8));

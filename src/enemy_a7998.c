@@ -30,7 +30,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -44,7 +44,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -55,16 +55,16 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
-void sub_080a7998(void)
+void Task_MetaKnightCape(void)
 {
     struct Task *t;
 
@@ -115,7 +115,7 @@ void sub_080a7998(void)
     TaskExitTrampoline();
 }
 
-void sub_080a7ae4(void)
+void Task_MetaKnightMask(void)
 {
     struct Task *t;
     s32 v;
@@ -141,7 +141,7 @@ void sub_080a7ae4(void)
     TaskSleepForever();
 }
 
-void sub_080a7b88(void)
+void Task_MetaKnightMaskHalf(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
@@ -189,7 +189,7 @@ void sub_080a7b88(void)
     TaskExitTrampoline();
 }
 
-void sub_080a7c9c(void)
+void Task_MetaKnightSparkle(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
@@ -226,16 +226,16 @@ void Task_Kracko(void)
     gCurTask->layer = 10;
     t = gCurTask;
     t->frameTable = gKrackoFrames;
-    t->unk8C->unk3C = (u32)sub_080a9e88;
+    t->u8C.actor->defeatSweepCallback = (u32)sub_080a9e88;
     t->tileWord |= 128 << 4;
     CallTableEntry(t->variant, 2, gKrackoVariants);
 }
 
-void sub_080a7d98(void)
+void KrackoJrInit(void)
 {
     struct Task *t;
 
-    gCurTask->updateCallback = (u32)sub_080a7e10;
+    gCurTask->updateCallback = (u32)KrackoJrUpdate;
     ActorSetAttackBox((u32)gUnk_08749704);
     t = gCurTask;
     t->unk28 = 0;
@@ -245,18 +245,18 @@ void sub_080a7d98(void)
     gUnk_02007D00[0] = 1;
     gCurTask->unk46 = CreateChildTaskHere(195, 1);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08749158);
+    CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }
 
-void sub_080a7df4(void)
+void KrackoJrEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08749158);
+    CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }
 
-void sub_080a7e10(void)
+void KrackoJrUpdate(void)
 {
     sub_080a9738();
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08749160);
+    CallTableEntry(gCurTask->updateState, 2, gKrackoJrStateUpdates);
     if (gCurTask->updateState == 0)
         ActorCheckHits();
     ActorReactToHit();
@@ -302,7 +302,7 @@ void sub_080a7e44(void)
         gCurTask->velX = -0xC000;
         gCurTask->velY = 128 << 7;
         TaskYieldTrampoline(4);
-        sub_08030db8((u32)gUnk_08749B84);
+        TaskBreakTopBlockRow((u32)gUnk_08749B84);
         gCurTask->unk6C = 0;
         do
         {
@@ -372,7 +372,7 @@ void sub_080a8038(void)
     {
         TaskStop();
         ActorSetState(1);
-        TaskSetEntry(sub_080a7df4, gCurTaskIdx);
+        TaskSetEntry(KrackoJrEnterState, gCurTaskIdx);
         return;
     }
     gUnk_02007D00[5] = TaskFindNearestPlayer();

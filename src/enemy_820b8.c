@@ -10,13 +10,13 @@
  *     `0x08741C44` (`sub_08082678` / `sub_080826a0` / `sub_080826bc` /
  *     `sub_080826c8`) and `0x08741C64` (`sub_08082d14` / `sub_08082d4c` /
  *     `sub_08082db0` / `sub_08082dd4`);
- *   * five scripts in the entry/hook shape: `sub_080820b8`+`sub_08082108`
+ *   * five scripts in the entry/hook shape: `PoppyBrosJrRideInit`+`PoppyBrosJrRideUpdate`
  *     (`0x08741610`/`0x08741614`; its hook is the one that spawns the
  *     class-0 sub-actors 30/31/32 through CreateActorByKind and hands them to
- *     sub_080b5540), `sub_080822b0`+`sub_08082300` (`0x08741618`),
- *     `sub_0808248c`+`sub_080824ec` (`0x08741620`), `WheelieInit`+
+ *     TransferRoomObject), `PoppyBrosJrDroppedObjectInit`+`PoppyBrosJrDroppedObjectUpdate` (`0x08741618`),
+ *     `PoppyBrosJrRideIdleInit`+`PoppyBrosJrRideIdleUpdate` (`0x08741620`), `WheelieInit`+
  *     `WheelieUpdate` (`0x0874164C`/`0x08741664`, six states) and
- *     `sub_08082bb8`+`sub_08082c18` (`0x0874167C`);
+ *     `WheelieIdleInit`+`WheelieIdleUpdate` (`0x0874167C`);
  *   * `sub_08082554` / `sub_080825ec`, the hop cycle that drives the actor
  *     record's unk16/unk18/unk1A/unk1E straight from the task, and
  *     `sub_08082cc4`, the four-step Task.unk2C-scaled animation loop;
@@ -52,27 +52,27 @@ extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
 extern void AngleToVector(s16 t, s16 mag);
 
-void sub_080820b8(void)
+void PoppyBrosJrRideInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08082108;
+    gCurTask->updateCallback = (u32)PoppyBrosJrRideUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741610);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideStates);
 }
 
 void sub_080820ec(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741610);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideStates);
 }
 
-void sub_08082108(void)
+void PoppyBrosJrRideUpdate(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08741614);
+        CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrRideStateUpdates);
     ActorCheckHits();
     t = gCurTask;
     switch (t->hitKind)
@@ -86,7 +86,7 @@ void sub_08082108(void)
         else
             gCurTask->unk46 =
                 CreateActorByKind(0, 32, 1, t->unk74, t->pixelX, t->pixelY, t->tileWord);
-        sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         u = gCurTask;
         u->tileWord = u->unk2C;
         if (gUnk_0300244C != 0)
@@ -94,17 +94,17 @@ void sub_08082108(void)
         TaskSetFrame(1);
         break;
     case 1:
-        if (gUnk_02006178 == 1)
+        if (gScreenAttackActive == 1)
         {
-            t->unk8C->unk0D = 1;
-            gCurTask->unk8C->extraFrame = 8;
+            t->u8C.actor->unk0D = 1;
+            gCurTask->u8C.actor->extraFrame = 8;
         }
         else
         {
             gCurTask->unk46 =
                 CreateActorByKind(0, 30, 1, t->unk74, t->pixelX, t->pixelY - 14, t->unk2C);
         }
-        sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         break;
     }
     ActorReactToHit();
@@ -122,27 +122,27 @@ void sub_080822a4(void)
     sub_080825ec();
 }
 
-void sub_080822b0(void)
+void PoppyBrosJrDroppedObjectInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08082300;
+    t->updateCallback = (u32)PoppyBrosJrDroppedObjectUpdate;
     t->unk1C = 0;
     t->unk20 = 0;
     t->unk24 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741618);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
 
 void sub_080822e4(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741618);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
 
-void sub_08082300(void)
+void PoppyBrosJrDroppedObjectUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_0874161C);
+        CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrDroppedObjectStateUpdates);
     if (gCurTask->unk24 == 2)
         ActorCheckHits();
     ActorReactToHit();
@@ -196,7 +196,7 @@ void sub_08082338(void)
     if (x->unk28 == 1)
     {
         gCurTask->unk46 = CreateActorByKind(6, 2, 0, 0, x->pixelX, x->pixelY, 0);
-        sub_080b5540(gCurTaskIdx, gCurTask->unk46);
+        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
         ActorDestroy();
     }
     TaskSleepForever();
@@ -217,28 +217,28 @@ void sub_08082458(void)
     }
 }
 
-void sub_0808248c(void)
+void PoppyBrosJrRideIdleInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080824ec;
+    t->updateCallback = (u32)PoppyBrosJrRideIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741620);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
 }
 
 void sub_080824d0(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741620);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
 }
 
-void sub_080824ec(void)
+void PoppyBrosJrRideIdleUpdate(void)
 {
     struct Task *t;
 
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741624);
+    CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrRideIdleStateUpdates);
     ActorCheckHits();
     t = gCurTask;
     switch (t->hitKind)
@@ -253,7 +253,7 @@ void sub_080824ec(void)
     ActorReactToHit();
 }
 
-void sub_0808253c(void)
+void PoppyBrosJrRideIdle(void)
 {
     sub_08082554();
 }
@@ -324,13 +324,13 @@ void sub_080825ec(void)
             u->unk34 = 0;
     }
     v = gCurTask;
-    a = v->unk8C;
+    a = v->u8C.actor;
     a->unk16 = 0;
     h = ((s16 *)&v->unk34)[1];
-    v->unk8C->extraOffsetY = h - 16;
-    v->unk8C->extraTileWord = v->unk2C;
-    v->unk8C->extraFrame = v->unk1C;
-    v->unk8C->extraLayerOffset = -1;
+    v->u8C.actor->extraOffsetY = h - 16;
+    v->u8C.actor->extraTileWord = v->unk2C;
+    v->u8C.actor->extraFrame = v->unk1C;
+    v->u8C.actor->extraLayerOffset = -1;
 }
 
 s32 sub_08082678(void)
@@ -599,31 +599,31 @@ void sub_08082b48(void)
     }
 }
 
-void sub_08082bb8(void)
+void WheelieIdleInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08082c18;
+    t->updateCallback = (u32)WheelieIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874167C);
+    CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);
 }
 
 void sub_08082bfc(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874167C);
+    CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);
 }
 
-void sub_08082c18(void)
+void WheelieIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741680);
+    CallTableEntry(gCurTask->updateState, 1, gWheelieIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08082c3c(void)
+void WheelieIdle(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk2C = 1;

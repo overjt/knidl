@@ -15,12 +15,12 @@
  * gMenuCursor the cursor, gPressedKeys/gRepeatedKeys the newly pressed
  * and auto-repeat keys).  MenuEnterModeList opens the mode list (screen 4)
  * and draws its 3-5 rows with MenuDrawModeList according to the save slot
- * unlock bits; sub_0800cd60 is its input loop (A/START picks a mode and
+ * unlock bits; MenuModeListSelect is its input loop (A/START picks a mode and
  * sets gUnk_02007FCC, row 4 leaves for game state 13, B goes back to the
- * file menu).  sub_0800d0f4 runs screen 5 (one player, or link play
- * through sub_0800cff4, which opens the link-play screen 8),
- * sub_0800d280 opens the sound test (screen 7), and
- * sub_0800d310/sub_0800d35c/sub_0800d404 draw its cursor and three-digit
+ * file menu).  MenuModePlayerCountSelect runs screen 5 (one player, or link play
+ * through MenuEnterLinkPlay, which opens the link-play screen 8),
+ * MenuEnterSoundTest opens the sound test (screen 7), and
+ * SoundTestHighlightCursor/SoundTestDrawNumber/SoundTestPlaySfx draw its cursor and three-digit
  * numbers and play the chosen sound. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -115,7 +115,7 @@ void MenuDrawModeList(void)
     }
 }
 
-void sub_0800cd60(void)
+void MenuModeListSelect(void)
 {
     s32 i;
 
@@ -135,7 +135,7 @@ void sub_0800cd60(void)
             if (gMenuCursor == 4) {
                 gMenuScreen = 9;
                 gExtraMode = 0;
-                gUnk_03001F30 = 1;
+                gMetaKnightmareMode = 1;
                 gGameState = 13;
                 gUnk_02006090 = 7;
                 gUnk_02007FCC = 7;
@@ -145,7 +145,7 @@ void sub_0800cd60(void)
                 gUnk_02006090 = gMenuCursor;
                 gUnk_02007FCC = gMenuCursor;
             } else if (gMenuCursor == 3) {
-                gUnk_03001F30 = 0;
+                gMetaKnightmareMode = 0;
                 gExtraMode = 0;
                 gUnk_02006090 = 6;
                 gUnk_02007FCC = 6;
@@ -191,7 +191,7 @@ void sub_0800cd60(void)
     }
 }
 
-void sub_0800cff4(void)
+void MenuEnterLinkPlay(void)
 {
     s32 i;
 
@@ -222,7 +222,7 @@ void sub_0800cff4(void)
     TaskCreateFrom(251, 32);
 }
 
-void sub_0800d0f4(void)
+void MenuModePlayerCountSelect(void)
 {
     gMenuBufferedKeys = 0;
     while (1) {
@@ -248,11 +248,11 @@ void sub_0800d0f4(void)
             PlaySfx(102);
             if (gMenuChoiceCursor == 0) {
                 gMenuScreen = 9;
-                gUnk_03001F30 = 0;
+                gMetaKnightmareMode = 0;
                 gGameState = 13;
                 return;
             }
-            sub_0800cff4();
+            MenuEnterLinkPlay();
             return;
         }
         if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2)) {
@@ -275,7 +275,7 @@ void sub_0800d0f4(void)
     }
 }
 
-void sub_0800d280(void)
+void MenuEnterSoundTest(void)
 {
     RunFrames(2);
     gDispCnt &= 0xE0FF;
@@ -293,7 +293,7 @@ void sub_0800d280(void)
     gMenuTransitionTimer = 8;
 }
 
-void sub_0800d310(void)
+void SoundTestHighlightCursor(void)
 {
     u16 *src = gUnk_08564F34;
 
@@ -302,7 +302,7 @@ void sub_0800d310(void)
     RequestCopy(2, (u32)src, (u32)gUnk_030015F0 + (((s8)(gMenuCursor ^ 1) * 16 + 1) * 2), 2);
 }
 
-void sub_0800d35c(s32 a)
+void SoundTestDrawNumber(s32 a)
 {
     s32 i;
 
@@ -317,7 +317,7 @@ void sub_0800d35c(s32 a)
     }
 }
 
-void sub_0800d404(void)
+void SoundTestPlaySfx(void)
 {
     s32 n = 0;
     s32 i = 0;

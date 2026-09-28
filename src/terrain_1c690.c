@@ -6,8 +6,8 @@
 /* terrain_1c690.c (0x0801C690-0x0801C8DB, issue #84).
  *
  * The wall probes src/terrain_1bcac.c's entry points run for a box
- * standing on the ground (gTerrainProbeResult.unk6 != 0): sub_0801c690 (right
- * edge) and sub_0801c7cc (left edge) push the probe x out of a wall cell
+ * standing on the ground (gTerrainProbeResult.unk6 != 0): TerrainProbeWallRightOnGround (right
+ * edge) and TerrainProbeWallLeftOnGround (left edge) push the probe x out of a wall cell
  * (gCollisionTileShapeClass attribute 1) at the box's top, else its middle corner.
  * 
  * Matching note: cse records `attribute == 1` after the test and then swaps
@@ -17,9 +17,9 @@
  * attribute register). */
 
 /* Right wall probe of a box standing on the ground (gTerrainProbeResult.unk6 !=
-   0), the mirror image of sub_0801c7cc: step the probe x out of a wall
+   0), the mirror image of TerrainProbeWallLeftOnGround: step the probe x out of a wall
    cell at the box's top-right, else its middle-right corner. */
-void sub_0801c690(void)
+void TerrainProbeWallRightOnGround(void)
 {
     s32 a;
     s32 d;
@@ -29,7 +29,7 @@ void sub_0801c690(void)
 
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY) != 0)
     {
-        if ((a = gCollisionTileShapeClass[gTerrainTile]) == 1 && gUnk_087336F0[gTerrainTile] == 0
+        if ((a = gCollisionTileShapeClass[gTerrainTile]) == 1 && gCollisionTileOneWay[gTerrainTile] == 0
             && (gCollisionTileShapeClass[gTerrainTileLeft] == 0
                 || (gCollisionTileSlope[gTerrainTileLeft] != 0 && !(gCollisionTileSlope[gTerrainTileLeft] & 1))))
         {
@@ -44,10 +44,10 @@ void sub_0801c690(void)
     }
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) != 0)
     {
-        if ((a2 = gCollisionTileShapeClass[gTerrainTile]) == 1 && gUnk_087336F0[gTerrainTile] == 0)
+        if ((a2 = gCollisionTileShapeClass[gTerrainTile]) == 1 && gCollisionTileOneWay[gTerrainTile] == 0)
         {
             b = gCollisionTileShapeClass[gTerrainTileLeft];
-            if (b == 0 || (gUnk_087336F0[gTerrainTileLeft] != 0 && b == 1))
+            if (b == 0 || (gCollisionTileOneWay[gTerrainTileLeft] != 0 && b == 1))
             {
                 d2 = GetTilePushLeft(gTerrainTile);
                 if (d2 != 0)
@@ -61,9 +61,9 @@ void sub_0801c690(void)
 }
 
 /* Left wall probe of a box standing on the ground (gTerrainProbeResult.unk6 !=
-   0), the mirror image of sub_0801c690: step the probe x out of a wall
+   0), the mirror image of TerrainProbeWallRightOnGround: step the probe x out of a wall
    cell at the box's top-left, else its middle-left corner. */
-void sub_0801c7cc(void)
+void TerrainProbeWallLeftOnGround(void)
 {
     s32 a;
     u8 m;
@@ -75,7 +75,7 @@ void sub_0801c7cc(void)
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY) != 0)
     {
         a = gCollisionTileShapeClass[gTerrainTile];
-        if ((s8)a == 1 && gUnk_087336F0[gTerrainTile] == 0
+        if ((s8)a == 1 && gCollisionTileOneWay[gTerrainTile] == 0
             && (gCollisionTileShapeClass[gTerrainTileRight] == 0
                 || ((m = gCollisionTileSlope[gTerrainTileRight]) != 0 && (a & m) != 0)))
         {
@@ -91,10 +91,10 @@ void sub_0801c7cc(void)
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) != 0)
     {
         a2 = gCollisionTileShapeClass[gTerrainTile];
-        if (a2 == 1 && gUnk_087336F0[gTerrainTile] == 0)
+        if (a2 == 1 && gCollisionTileOneWay[gTerrainTile] == 0)
         {
             b = gCollisionTileShapeClass[gTerrainTileRight];
-            if (b == 0 || (gUnk_087336F0[gTerrainTileRight] != 0 && b == 1))
+            if (b == 0 || (gCollisionTileOneWay[gTerrainTileRight] != 0 && b == 1))
             {
                 d2 = GetTilePushRight(gTerrainTile);
                 if (d2 != 0)

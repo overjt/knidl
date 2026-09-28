@@ -56,7 +56,7 @@ void HudClearTilemap(void)
 {
     vu16 zero;
 
-    if (gUnk_03002444 != 0) {
+    if (gInHub != 0) {
         zero = 0;
         CpuSet((void *)&zero, &gHudTilemap[64], 0x010003C0);
     } else {
@@ -77,7 +77,7 @@ void HudFlushTilemap(void)
 
 void HudLoadGfx(void)
 {
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         LoadGfxSet(4);
     else
         LoadGfxSet(5);

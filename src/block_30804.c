@@ -12,11 +12,11 @@
  * cell turns into, bit 15 = being broken.  gBreakingBlocks[64] holds the
  * blocks being broken (struct Unk020061F0).  An attack's hit-box set
  * (struct HitBoxSet) is placed at the task's position and facing by the
- * six wrappers TaskBreakBlocksAt ... sub_08030db8 and scanned tile by tile:
+ * six wrappers TaskBreakBlocksAt ... TaskBreakTopBlockRow and scanned tile by tile:
  * BreakBlocksInHitBoxes tries every metatile its boxes cover and returns how many
- * blocks broke; sub_08030b14 breaks the first block of the row at the
+ * blocks broke; BreakFirstBlockInHitBox breaks the first block of the row at the
  * set's centre (then the rows above and below) and records its pixel
- * position in gUnk_02007FA0/gUnk_02004B6C; sub_08030e00 finds the top of
+ * position in gBrokenBlockX/gBrokenBlockY; BreakTopBlockRow finds the top of
  * the block column under the box and breaks that row with attack id 6.
  * CanBreakBlock(x, y, id, player) decides whether the attack breaks the
  * block at a metatile - an 8-way switch on the block kind (id & 0xFF)
@@ -29,7 +29,7 @@
  * (PlaySfx), awards points to the player (AddPlayerScore) and starts
  * the animation script gUnk_0873A47C[kind].  BreakBlockAt (M08's map
  * events) and sub_08031738 (M07) break a block at a metatile directly;
- * sub_08030f1c tests a metatile for an unbroken block. */
+ * IsUnbrokenBlockAt tests a metatile for an unbroken block. */
 
 /* A hit-box set: unk0 & 0x8000 = mirror with the task's facing, unk0 & 0xFFF
    = the attack id passed to CanBreakBlock; unk2/unk3 = (x, y) offset of the
@@ -88,12 +88,12 @@ struct RoomDef
     /*0x10*/ struct MapTile *unk10;
 };
 
-/* Not from room.h or player.h: this file's view of gRoomMap and gUnk_02004B6C
+/* Not from room.h or player.h: this file's view of gRoomMap and gBrokenBlockY
    differs (lesson 3.517). */
 extern s16 gRoomWidth;               /* map width in metatiles */
 extern s16 gRoomHeight;               /* map height in metatiles */
-extern u16 gUnk_02007FA0;               /* the block sub_08030b14 broke: x (pixels) */
-extern u16 gUnk_02004B6C;               /*   y (pixels) */
+extern u16 gBrokenBlockX;               /* the block BreakFirstBlockInHitBox broke: x (pixels) */
+extern u16 gBrokenBlockY;               /*   y (pixels) */
 extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern struct RoomDef *gCurRoomDef;   /* the current room header */
@@ -115,12 +115,12 @@ s32 PlaySfx(s32 id);
 s32 CreateBlockBreakEffect(s32 x, s32 y);
 void RequestScreenShake(u16 a);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
-void sub_08031ab8(struct Unk020061F0 *b, s32 n);
+void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n);
 void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
 u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
-u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
-u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir);
-s32 sub_08030f1c(u32 x, u32 y);
+u16 BreakFirstBlockInHitBox(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e);
+u16 BreakTopBlockRow(struct HitBoxSet *p, s32 x, s32 y, s32 dir);
+s32 IsUnbrokenBlockAt(u32 x, u32 y);
 s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e);
 s32 sub_08031310(s32 x, s32 y);
 s32 BreakBlockAtCursor(void);
@@ -147,7 +147,7 @@ u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e)
     return BreakBlocksInHitBoxes(p, gCurTask->pixelX, gCurTask->pixelY, dir, e);
 }
 
-u16 sub_08030898(struct HitBoxSet *p, s32 e)
+u16 TaskBreakFirstBlock(struct HitBoxSet *p, s32 e)
 {
     s32 dir;
 
@@ -155,7 +155,7 @@ u16 sub_08030898(struct HitBoxSet *p, s32 e)
         dir = gCurTask->facing;
     else
         dir = 1;
-    return sub_08030b14(p, gCurTask->pixelX, gCurTask->pixelY, dir, e);
+    return BreakFirstBlockInHitBox(p, gCurTask->pixelX, gCurTask->pixelY, dir, e);
 }
 
 u16 TaskBreakBlocksNoPlayer(struct HitBoxSet *p)
@@ -169,7 +169,7 @@ u16 TaskBreakBlocksNoPlayer(struct HitBoxSet *p)
     return BreakBlocksInHitBoxes(p, gCurTask->pixelX, gCurTask->pixelY, dir, -1);
 }
 
-u16 sub_0803093c(struct HitBoxSet *p, s32 x, s32 y)
+u16 TaskBreakBlocksAtNoPlayer(struct HitBoxSet *p, s32 x, s32 y)
 {
     s32 dir;
 
@@ -234,7 +234,7 @@ u16 BreakBlocksInHitBoxes(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
     return count;
 }
 
-u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
+u16 BreakFirstBlockInHitBox(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
 {
     s8 (*box)[4];
     s16 x0, x1, y0, y1;
@@ -281,8 +281,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             if (CanBreakBlock(tx, y, 1, e) && BreakBlockAtCursor() != -1)
             {
-                gUnk_02007FA0 = tx * 16;
-                gUnk_02004B6C = y * 16;
+                gBrokenBlockX = tx * 16;
+                gBrokenBlockY = y * 16;
                 goto found;
             }
         }
@@ -292,8 +292,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y - 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y - 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y - 1) * 16;
                     goto found;
                 }
             }
@@ -304,8 +304,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y + 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y + 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y + 1) * 16;
                     goto found;
                 }
             }
@@ -317,8 +317,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             if (CanBreakBlock(tx, y, 1, e) && BreakBlockAtCursor() != -1)
             {
-                gUnk_02007FA0 = tx * 16;
-                gUnk_02004B6C = y * 16;
+                gBrokenBlockX = tx * 16;
+                gBrokenBlockY = y * 16;
                 goto found;
             }
         }
@@ -328,8 +328,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y - 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y - 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y - 1) * 16;
                     goto found;
                 }
             }
@@ -340,8 +340,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y + 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y + 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y + 1) * 16;
                     goto found;
                 }
             }
@@ -352,7 +352,7 @@ found:
     return 1;
 }
 
-u16 sub_08030db8(struct HitBoxSet *p)
+u16 TaskBreakTopBlockRow(struct HitBoxSet *p)
 {
     s32 dir;
 
@@ -360,10 +360,10 @@ u16 sub_08030db8(struct HitBoxSet *p)
         dir = gCurTask->facing;
     else
         dir = 1;
-    return sub_08030e00(p, gCurTask->pixelX, gCurTask->pixelY, dir);
+    return BreakTopBlockRow(p, gCurTask->pixelX, gCurTask->pixelY, dir);
 }
 
-u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
+u16 BreakTopBlockRow(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
 {
     s32 count = 0;
     s8 (*box)[4];
@@ -401,13 +401,13 @@ u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
         x1 = gRoomWidth - 1;
     tx = x0;
     ty = y >> 4;
-    while (tx < gRoomWidth && sub_08030f1c(tx, ty) == 0)
+    while (tx < gRoomWidth && IsUnbrokenBlockAt(tx, ty) == 0)
     {
         tx++;
         if (x1 < tx)
             return 0;
     }
-    while (--ty >= 0 && sub_08030f1c(tx, ty) != 0)
+    while (--ty >= 0 && IsUnbrokenBlockAt(tx, ty) != 0)
         ;
     ty++;
     for (tx = x0; tx <= x1; tx++)
@@ -418,7 +418,7 @@ u16 sub_08030e00(struct HitBoxSet *p, s32 x, s32 y, s32 dir)
     return count;
 }
 
-s32 sub_08030f1c(u32 x, u32 y)
+s32 IsUnbrokenBlockAt(u32 x, u32 y)
 {
     s32 i;
     if (gBlockAnimHook != 0 && x < gRoomWidth && y < gRoomHeight)
@@ -466,7 +466,7 @@ s32 BreakBlockAt(u32 x, u32 y)
                 b->unk14 = 0;
                 b->unk6 = 0;
                 if (b->unk10[0] == 1)
-                    sub_08031ab8(b, ((s16 *)b->unk10)[1]);
+                    BlockAnimWriteColumn(b, ((s16 *)b->unk10)[1]);
                 return i;
             }
         }
@@ -704,7 +704,7 @@ s32 BreakBlockAtCursor(void)
         if (gUnk_0200B078 == 1)
             BlockAnimWriteMetatileWrapped(b);
         else
-            sub_08031ab8(b, ((s16 *)b->unk10)[1]);
+            BlockAnimWriteColumn(b, ((s16 *)b->unk10)[1]);
     }
     return i;
 }

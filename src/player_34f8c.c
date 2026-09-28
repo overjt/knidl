@@ -21,7 +21,7 @@
  * the per-frame handler runs M11's transition predicates in order and
  * writes the next mode request into PlayerState.requestedAction, or re-binds the
  * task to another coroutine with TaskSetEntry.  PlayerActionFall/PlayerActionFallUpdate
- * are mode 5, sub_080355d8/sub_08035848 mode 8 (Task.variant is its
+ * are mode 5, PlayerActionHighFall/PlayerActionHighFallUpdate mode 8 (Task.variant is its
  * sub-state) and PlayerActionFloat mode 14, a six-state loop over Task.variant
  * whose per-frame handler is M10's PlayerActionFloatUpdate. */
 
@@ -226,7 +226,7 @@ void PlayerActionFallUpdate(void)
             PlayerRequestLocomotion();
             break;
         }
-        if (gUnk_03001F30 == 0 && gCurTask->player->ability != 10
+        if (gMetaKnightmareMode == 0 && gCurTask->player->ability != 10
             && gCurTask->player->mouthState == 0 && gCurTask->velY > 0
             && --gCurTask->player->unk14 == 0)
         {
@@ -258,7 +258,7 @@ void PlayerActionFallUpdate(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_080355d8(void)
+void PlayerActionHighFall(void)
 {
     s16 *anim;
 
@@ -343,7 +343,7 @@ void sub_080355d8(void)
     TaskSleepForever();
 }
 
-void sub_08035848(void)
+void PlayerActionHighFallUpdate(void)
 {
     if (PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0 && PlayerCheckEnterWater() == 0
         && PlayerCheckFloat() == 0 && PlayerCheckAirFloat() == 0 && PlayerCheckBButton() == 0)
@@ -364,7 +364,7 @@ void sub_08035848(void)
                 PlayerCheckBump();
                 PlaySfxIfLocalPlayer(116, gCurTask->player->playerIndex);
                 gCurTask->variant = 2;
-                TaskSetEntry(sub_080355d8, gCurTaskIdx);
+                TaskSetEntry(PlayerActionHighFall, gCurTaskIdx);
             }
             else
             {
@@ -373,7 +373,7 @@ void sub_08035848(void)
                 if (gCurTask->player->unk40 & 2)
                 {
                     gCurTask->variant = 1;
-                    TaskSetEntry(sub_080355d8, gCurTaskIdx);
+                    TaskSetEntry(PlayerActionHighFall, gCurTaskIdx);
                 }
                 else
                 {

@@ -60,12 +60,12 @@ gUnk_08749B98:
 	.word	sub_080ac94c+1
 	.word	sub_080aca38+1
 	.word	sub_080aca60+1
-	.global	gUnk_08749BA4
-gUnk_08749BA4:
+	.global	gKrackoStarmanStates
+gKrackoStarmanStates:
 	.word	sub_080acb20+1
-	.global	gUnk_08749BA8
-gUnk_08749BA8:
-	.word	sub_080acc18+1
+	.global	gKrackoStarmanStateUpdates
+gKrackoStarmanStateUpdates:
+	.word	KrackoStarmanCheckParent+1
 	.global	gUnk_08749BAC
 gUnk_08749BAC:
 	.incbin	"baserom.gba", 0x749BAC, 0x5
@@ -81,9 +81,9 @@ gUnk_08749BC4:
 	.global	gUnk_08749BD0
 gUnk_08749BD0:
 	.incbin	"baserom.gba", 0x749BD0, 0x14
-	.global	gUnk_08749BE4
-gUnk_08749BE4:
+	.global	gNightmareWizardStarStates
+gNightmareWizardStarStates:
 	.word	sub_080acd38+1
-	.global	gUnk_08749BE8
-gUnk_08749BE8:
+	.global	gNightmareWizardStarStateUpdates
+gNightmareWizardStarStateUpdates:
 	.word	sub_080ace60+1

@@ -11,7 +11,7 @@
  * Player action bodies, part 21: action 53 and per-frame handler 50.
  * PlayerActionBackdropHold (action 53, mode 13) is `loop: switch (Task.variant)` over
  * eight states, a stance with six moves.  A fresh entry starts in
- * state 6 with the 120-frame timer PlayerState.unk14 and Task.unk80 =
+ * state 6 with the 120-frame timer PlayerState.unk14 and Task.u80.attackAbility =
  * 22: the stance (animation 0xE84, effect 28 on the ground) picks the
  * next move from the input - up 0, back 1 or forward 2 (PlayerGetHeldDirection,
  * kept in gUnk_03001F2C), down 3, A 4, leaving the ground 5 - or a
@@ -51,7 +51,7 @@ void PlayerActionBackdropHold(void)
         u = gCurTask;
         u->player->unk14 = 120;
         u->unk28 = 0;
-        u->unk80 = 22;
+        u->u80.attackAbility = 22;
     }
 loop:
     switch (gCurTask->variant)

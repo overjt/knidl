@@ -6,7 +6,7 @@
  * The tail of the vehicle/ride block: Task_DustTrail's per-frame integrator
  * over the gTasks[] task table, the two sprite-list players
  * Task_DustPuff / sub_0806cf70, and the spawn/teardown helpers
- * sub_0806cffc / sub_0806d08c / sub_0806d148 / CreateDustBurst.  Every literal
+ * CreateLandingDust / sub_0806d08c / Task_LandingDust / CreateDustBurst.  Every literal
  * pool in this range ends exactly on the next function's entry, so any
  * symbols.csv boundary here is a valid carve point.
  */
@@ -40,10 +40,10 @@ void Task_DustTrail(void)
         if (TaskHasSameSerial(gCurTask->parent) != 1)
             break;
         if ((s8)gTasks[j = gCurTask->parent].hitKind == 3
-         && gTasks[j].unk82 == 1)
+         && gTasks[j].hitEffect == 1)
             break;
         if ((s8)gTasks[j].hitKind == 4
-         && (u16)(gTasks[j].unk82 - 2) <= 1)
+         && (u16)(gTasks[j].hitEffect - 2) <= 1)
             break;
         v = gCurTask;
         v->posX = (gTasks[j].pixelX + v->unk1C) << 16;
@@ -123,7 +123,7 @@ void sub_0806cf70(void)
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
-void sub_0806cffc(s16 dx, s16 dy)
+void CreateLandingDust(s16 dx, s16 dy)
 {
     struct Task *t;
     struct Task *u;
@@ -157,7 +157,7 @@ void sub_0806d08c(s16 a, s16 b, s16 c)
         gTasks[i].facing = -gCurTask->facing;
 }
 
-void sub_0806d148(void)
+void Task_LandingDust(void)
 {
     struct Task *t;
     struct Task *u;

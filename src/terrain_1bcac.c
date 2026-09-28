@@ -23,11 +23,11 @@
 
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-void sub_08022810(void);
+void TerrainClampBoxToCameraBounds(void);
 
-void sub_08022810(void);
+void TerrainClampBoxToCameraBounds(void);
 
-void sub_0801bcac(const s8 *p)
+void TerrainCollideBox(const s8 *p)
 {
     s32 v;
 
@@ -51,12 +51,12 @@ void sub_0801bcac(const s8 *p)
         if (v != 0)
         {
             if (v < 0)
-                sub_0801c7cc();
+                TerrainProbeWallLeftOnGround();
             else
-                sub_0801c690();
+                TerrainProbeWallRightOnGround();
         }
         sub_0801c8dc();
-        sub_0801d394();
+        TerrainProbeFloor();
     }
     else
     {
@@ -64,18 +64,18 @@ void sub_0801bcac(const s8 *p)
         if (v != 0)
         {
             if (v < 0)
-                sub_0801dc88();
+                TerrainProbeWallLeftInAir();
             else
-                sub_0801d9c8();
+                TerrainProbeWallRightInAir();
         }
-        sub_0801dee8();
-        sub_0801ecd0();
+        TerrainProbeCeiling();
+        TerrainProbeLanding();
     }
     TerrainProbeWater();
     TerrainProbeEnd(p);
 }
 
-void sub_0801bde0(const s8 *p)
+void TerrainCollideBoxInCameraBounds(const s8 *p)
 {
     s32 v;
 
@@ -93,16 +93,16 @@ void sub_0801bde0(const s8 *p)
         gTerrainProbeResult.unkB = 1;
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
     }
-    sub_08022810();
+    TerrainClampBoxToCameraBounds();
     if (gTerrainProbeResult.onGround != 0)
     {
         v = gTerrainVelX;
         if (v != 0)
         {
             if (v < 0)
-                sub_0801c7cc();
+                TerrainProbeWallLeftOnGround();
             else
-                sub_0801c690();
+                TerrainProbeWallRightOnGround();
         }
         sub_0801c8dc();
         sub_0801c930();
@@ -113,19 +113,19 @@ void sub_0801bde0(const s8 *p)
         if (v != 0)
         {
             if (v < 0)
-                sub_0801dc88();
+                TerrainProbeWallLeftInAir();
             else
-                sub_0801d9c8();
+                TerrainProbeWallRightInAir();
         }
-        sub_0801dee8();
+        TerrainProbeCeiling();
         sub_0801e178();
     }
     TerrainProbeWater();
-    sub_08021564();
+    TerrainProbeDamage();
     TerrainProbeEnd(p);
 }
 
-void sub_0801bf1c(const s8 *p)
+void TerrainCollideBoxWalls(const s8 *p)
 {
     s32 v;
 
@@ -155,7 +155,7 @@ void sub_0801bf1c(const s8 *p)
     TerrainProbeEnd(p);
 }
 
-void sub_0801c030(const s8 *p)
+void TerrainCollideBoxCeilingAndFloor(const s8 *p)
 {
     TerrainProbeBegin(p);
     gTerrainVelX = gCurTask->velX;
@@ -177,7 +177,7 @@ void sub_0801c030(const s8 *p)
     TerrainProbeEnd(p);
 }
 
-void sub_0801c12c(const s8 *p)
+void TerrainCollideBoxFloor(const s8 *p)
 {
     TerrainProbeBegin(p);
     gTerrainVelX = gCurTask->velX;
@@ -201,7 +201,7 @@ void sub_0801c12c(const s8 *p)
     TerrainProbeEnd(p);
 }
 
-void sub_0801c230(const s8 *p)
+void TerrainCollideBoxAlongVelocity(const s8 *p)
 {
     TerrainProbeBegin(p);
     gTerrainVelX = gCurTask->velX;
@@ -214,7 +214,7 @@ void sub_0801c230(const s8 *p)
     gTerrainPrevBoxBottom = gTerrainPrevY + gTerrainBoxBottom;
     if (gTerrainProbeResult.unkB & 0x80)
         gTerrainProbeResult.unkB = 0;
-    sub_0801ff84();
-    sub_080214e0();
+    TerrainProbeAlongVelocity();
+    TerrainProbeWaterAtPoint();
     TerrainProbeEnd(p);
 }

@@ -133,7 +133,7 @@ u8 sub_0809f52c(void)
         sub_0809f90c();
         gCurTask->unk28 = 1;
         ActorSetState(0);
-        TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+        TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -396,7 +396,7 @@ s32 sub_0809f994(void)
     t = gCurTask;
     p = &t->pixelX;
     h = *p;
-    a = t->unk8C;
+    a = t->u8C.actor;
     q = (s8 *)a->terrainBox;
     if (h < q[4] + 24)
     {

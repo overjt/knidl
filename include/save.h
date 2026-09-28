@@ -90,13 +90,13 @@ extern u8 gLinkSaveSlotPart;
 extern u32 gUnk_0200EC50;
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
-extern u16 gUnk_0200EC60[];
-extern u8 gUnk_0200EC68[];
+extern u16 gInputRecorderKeys[];
+extern u8 gInputRecorderEntryFrames[];
 extern struct LinkSave *gInputRecordingPtr;
-extern u16 gUnk_0200EC70[];
-extern u16 gUnk_0200EC78[];
+extern u16 gInputRecorderEndPos[];
+extern u16 gInputRecorderNextPos[];
 extern u8 gInputRecording[];
-extern u16 gUnk_02016480[];
+extern u16 gInputRecorderCurPos[];
 extern u8 gHBlankScrollState;
 extern s32 gHBlankScrollTimer;
 extern u16 gHBlankScrollTable[];
@@ -108,9 +108,9 @@ extern u32 gHBlankDmaDest;
 extern u32 gHBlankDmaCnt[];
 extern s32 gSramAvailable;
 extern u32 gHBlankDmaSrc[];
-extern u16 gUnk_03001F18[];
+extern u16 gBossEnduranceBestTime[];
 extern u16 gCompletionPercent;
-extern u16 gUnk_03002378[];
+extern u16 gMetaKnightmareBestTime[];
 
 /* ROM */
 extern u8 gUnk_080CFE20[];
@@ -182,7 +182,7 @@ void ResumeHBlankScroll(void);
 void InputRecorderStart(void);
 
 /* src/save_b72bc.c */
-void sub_080b72bc(void);
+void InputRecorderRestoreState(void);
 
 /* src/save_b75a4.c */
 void InputRecorderRecordFrame(void);
@@ -203,8 +203,8 @@ s32 WriteSaveSlot(s32 a);
 u32 WriteSramSignature(void);
 void WriteNewSaveFile(s32 a);
 void SaveProgress(s32 a);
-void sub_080b7c00(s32 a);
-void sub_080b7cb4(s32 a);
+void SaveMetaKnightmareBestTime(s32 a);
+void SaveBossEnduranceBestTime(s32 a);
 void EraseSaveSlot(s32 a);
 void ClearSaveSlot(s32 a);
 u32 CalcSaveSlotChecksum(s32 a);
@@ -228,10 +228,10 @@ void FillSendCmdWithSaveSlot(void);
 void ReceiveLinkSaveSlots(void);
 
 /* src/save_b8888.c */
-void sub_080b8888(void);
+void ExchangeLinkSaveSlots(void);
 
 /* src/save_b8918.c */
-void sub_080b8918(void);
+void MergeLinkSaveSlots(void);
 void MergeProgressIntoSaveSlot(s32 a);
 
 /* src/save_b8ea0.c */

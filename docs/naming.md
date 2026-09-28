@@ -171,8 +171,51 @@ and bosses use the same table (`Task_KingDedede`, `KingDededeEnterState`,
 (`Task_HitFlames`, `Task_StarFlash`), and a callback that frees a task
 whose parent has died is `<Thing>CheckParent`.
 
-An enemy that two species could be (Sword Knight and Blade Knight share
-one script) stays unnamed until a second source tells them apart.
+Run 3 of #155 added these words, each defined by the whole body:
+
+- **Idle** (a row word): the row only plays its animation and reacts to
+  hits - no velocity or `TaskSetMotion*` call, no attack or spawn, no
+  state change of its own (`WaddleDeeIdleInit`, `gPengyIdleStates`); a
+  row that also hops, spawns or steers is not Idle.  Nothing re-arms these
+  rows, so they have no EnterState.
+- **Teleport**: the body hides the sprite, moves it and shows it again
+  (`KabuTeleport`).
+- **Float** / **Exhale** (King Dedede): a puffed-up flight that drifts
+  after the player until a timer ends, and letting the held air out as a
+  puff object before dropping (`KingDededeFloat`, `KingDededeExhale`);
+  Exhale is not run 2's **Spit**, which spits a swallowed object out as a
+  star.
+- **Defeat**: the state that starts a mid-boss's defeat (removes the HP
+  bar, marks the actor defeated, clears its score, then star-flashes and
+  knocks the boss back); **Summon**: creates a helper actor that moves on
+  its own (not a shot aimed at the player), then goes back to idle
+  (`BugzzySummon`, `KrackoSummon`); Nightmare Wizard's three star attacks
+  are named by their pose (`NightmareWizardOpenCloak`, `...OpenPalm`,
+  `...Point`), because one Shoot would fit all three.
+- A per-frame check whose whole body re-enters the state machine when the
+  state has changed is `<State>Update` (`BonkersWalkUpdate`), as run 2's
+  `ScarfyChaseUpdate`.
+- Two species that share one script get a pair prefix
+  (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`); a verb
+  that fits two states of one family names neither of them.
+
+**A species identity needs three agreeing sources** (run 3): the local
+render (`visual:`), the behaviour and `ActorDef.ability` from the code
+(`code:`), and a text description from a public reference, cited by URL
+(`public: https://wikirby.com/wiki/...`; text only, never images).  That
+rule corrected run 2 twice: subtype 36 is Needlous, not Togezo (which
+appears only in Kirby's Dream Land 3), and the BALL enemy is Bubbles
+(Bounder is not in this game).  Sword Knight (purple) and Blade Knight
+(green armour, red plume, magenta mask) were told apart by WiKirby's
+colour text, the case run 2 left open.
+
+Meta Knightmare's action machine (`gMetaKnightActions`,
+`gMetaKnightActionHandlers`, dispatched instead of the player's while
+`gMetaKnightmareMode` is set) follows the player's words:
+`MetaKnightAction<Name>` / `MetaKnightAction<Name>Update`, named after the
+Kirby twin at the same index when the body is its twin
+(`MetaKnightActionWalk`), or after the input and motion for Meta Knight's
+own four sword attacks (`MetaKnightActionDashSlash`).
 
 The ability ids (`PlayerState.ability`, `ActorDef.ability`) are fixed by
 the HUD ability pictures `gAbilityPictures[id]`, whose banners carry the
@@ -183,6 +226,47 @@ name: 0 NORMAL, 1 FIRE, 2 SPARK, 3 CUTTER, 4 SWORD, 5 BURNING, 6 LASER,
 ability moves are `PlayerAction<Ability>` / `PlayerAction<Ability>Update`
 (`PlayerActionFire`, `PlayerActionHiJumpUpdate`, `PlayerActionStarRod`).
 An enum for the ids would be a code change and waits for #36 phase 2.
+
+### 2.4 Data records by position (run 3 of #155)
+
+Some records have no identity but their slot in a table that a decompiled
+consumer proves (docs/data.md 5): a stage's room list, a room's header,
+the map and the doors only that header points at.  Such a record is named
+after the slot, and the slot is its evidence (tag `slot:`, section 4).
+The indices are the table's own, **0-based**, exactly as the code indexes
+it (`gRoomTable[level][stage][room]`); no world name enters an
+identifier.
+
+| Record | Name | Example |
+|---|---|---|
+| a stage's room list `gRoomTable[L][S]` | `gLevel<L>Stage<S>Rooms` | `gLevel0Stage1Rooms` |
+| a room header (`struct RoomDef`) `gRoomTable[L][S][R]` | `gLevel<L>Stage<S>Room<R>` | `gLevel0Stage1Room2` |
+| a record that one RoomDef field alone points at | `gLevel<L>Stage<S>Room<R><Field>`, the field in PascalCase | `gLevel0Stage1Room2Doors`, `...Room2MetatileMap` |
+| a BG animation set `gRoomBgAnimScripts[N]` and its script `[N][I]` | `gRoomBgAnimSet<N>` / `gRoomBgAnimSet<N>Script<I>` | `gRoomBgAnimSet3Script0` |
+| an ActorDef bound by a named family through its kind table's slot | `g<Enemy>Def` | `gWaddleDeeDef` |
+| a graphics descriptor in a kind's descriptor table (`gEnemyGfx`, `gMidBossGfx`, `gBossGfx`, `gMetaKnightsGfx`) | `g<Enemy>Gfx` | `gCappyGfx` |
+| the palette and sprite-sheet tiles that descriptor alone points at | `g<Enemy>GfxPalette` / `g<Enemy>GfxTiles` | `gCappyGfxTiles` |
+
+Rules: a record gets a position name only when that one slot is its only
+referrer (or when every slot that shares it belongs to one named family,
+as the three Poppy Bros. Jr. subtypes share `gPoppyBrosJrGfx`) (no second table, no code reference; checked over `data/`,
+`asm/`, `src/` and `include/` before a batch); a record several slots
+share (a stage's common tiles and palettes) keeps its placeholder, and so
+does the target of a field that has no name yet (`RoomDef.unk10`).
+Position names are applied in their own batches, and the progress figures
+count them apart from the semantic names (a slot is an address-free
+identity, not a role).
+
+What the level indices are in the game is proven for 0-6 by the boss each
+level's last stage spawns (room objects of kind 3, `gBossDefs[subtype]`,
+whose identities run 2 fixed): 0 Whispy Woods, 1 Paint Roller, 2 Mr. Shine
+& Mr. Bright, 3 Kracko, 4 Heavy Mole, 5 Meta Knight, 6 King Dedede - the
+game's Levels 1-7 (Vegetable Valley, Ice Cream Island, Butter Building,
+Grape Garden, Yogurt Yard, Orange Ocean, Rainbow Resort;
+https://wikirby.com/wiki/Kirby:_Nightmare_in_Dream_Land).  Level 7's
+stage 0 holds the Nightmare Power Orb and Nightmare Wizard rooms and its
+stage 1 three rooms with Kracko, Whispy Woods and King Dedede; level 8
+spawns no boss.  What levels 7 and 8 are in the game is not proven here.
 
 ## 3. Words with a fixed meaning
 
@@ -227,6 +311,8 @@ check.  Start it with one of these tags:
 - `hw:` a hardware register the code drives: `hw: writes REG_SIOCNT
   0x4003 (multi-play, 115200 bps, IRQ) and REG_RCNT 0`.
 - `string:` a string or ID the code reads or compares (`"AGB  KIRBY"`).
+- `slot:` the record's slot in a consumer-proven table, for a position
+  name (section 2.4): `slot: gRoomTable[0][1][2].doors`.
 - `doc:` a finding already written down in `docs/analysis/rom-map.md`,
   `docs/analysis/module-map.md` or a lesson, by section.
 

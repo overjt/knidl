@@ -16,8 +16,8 @@
  * from gPlayerActionHandlers[57] (CallTableEntry(index, count, table); entry 0 of
  * both tables is NULL).  Here: actions 3-6 and 22.
  * PlayerActionRun enters mode 2 (handler 3, PlayerActionRunUpdate), PlayerActionSkid
- * mode 3 (handler 4, PlayerActionSkidUpdate), PlayerActionJump and sub_08034d34 mode 4
- * (handlers 5 and 6, PlayerActionJumpUpdate and sub_08034e60); sub_08034f70
+ * mode 3 (handler 4, PlayerActionSkidUpdate), PlayerActionJump and PlayerActionReleaseJump mode 4
+ * (handlers 5 and 6, PlayerActionJumpUpdate and PlayerActionReleaseJumpUpdate); sub_08034f70
  * (action 22) clears PlayerState.terrainBox and runs PlayerActionFall, the
  * mode-5 coroutine of the next file.  The enter coroutines switch on the
  * ability PlayerState.ability for the animation (TaskSetFrame) and loop
@@ -53,7 +53,7 @@ void PlayerActionRun(void)
         PlayerPlayBump();
         PlayerStartSfx(117, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, 7, 0);
-        if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
+        if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
             gCurTask->variant = 1;
         else
             gCurTask->variant = 0;
@@ -180,7 +180,7 @@ void PlayerActionRunUpdate(void)
     }
     while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
-        if (gCurTask->unk28 == 0 && sub_0803fe68() != 0)
+        if (gCurTask->unk28 == 0 && PlayerCheckFallOrWater() != 0)
             break;
         if (PlayerCheckEnterDoor() != 0)
             break;
@@ -217,13 +217,13 @@ void PlayerActionRunUpdate(void)
         }
         if (gCurTask->variant == 0)
         {
-            if (sub_0803fd20(gCurTask->player->playerIndex) == 4)
+            if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
             {
                 gCurTask->variant = 1;
                 TaskSetEntry(PlayerActionRun, gCurTaskIdx);
             }
         }
-        else if (sub_0803fd20(gCurTask->player->playerIndex) != 4)
+        else if (PlayerGetFacingSlope(gCurTask->player->playerIndex) != 4)
         {
             gCurTask->variant = m5;
             TaskSetEntry(PlayerActionRun, gCurTaskIdx);
@@ -271,7 +271,7 @@ void PlayerActionSkid(void)
 
 void PlayerActionSkidUpdate(void)
 {
-    while (PlayerCheckJump() == 0 && sub_0803fe68() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
+    while (PlayerCheckJump() == 0 && PlayerCheckFallOrWater() == 0 && PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)
     {
         if (gCurTask->velX == 0)
         {
@@ -412,7 +412,7 @@ end:
     PlayerStopAtWall();
 }
 
-void sub_08034d34(void)
+void PlayerActionReleaseJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 4;
@@ -452,7 +452,7 @@ void sub_08034d34(void)
     }
 }
 
-void sub_08034e60(void)
+void PlayerActionReleaseJumpUpdate(void)
 {
     PlayerTurnToHeldDirection();
     while (PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)

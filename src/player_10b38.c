@@ -147,7 +147,7 @@ void sub_08010cb4(void)
     TaskExitTrampoline();
 }
 
-void sub_08010eb8(void)
+void CutsceneDuelBladeKnight(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -264,7 +264,7 @@ void sub_08010eb8(void)
     TaskSleepForever();
 }
 
-void sub_08011154(void)
+void CutsceneBeachStart(void)
 {
     PlayBgm(21);
     CreateCutsceneActor(5, 0);
@@ -278,7 +278,7 @@ void sub_08011154(void)
     CreateCutsceneActor(13, 32);
 }
 
-void sub_080111a8(void)
+void CutsceneBeachKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -373,7 +373,7 @@ void sub_080111a8(void)
     TaskSleepForever();
 }
 
-void sub_080113cc(void)
+void CutsceneBeachChair(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -397,7 +397,7 @@ void sub_080113cc(void)
     TaskSleepForever();
 }
 
-void sub_08011458(void)
+void CutsceneBeachCandyDream(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -444,7 +444,7 @@ void sub_08011458(void)
     TaskSleepForever();
 }
 
-void sub_080115a0(void)
+void CutsceneBeachDonutDream(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -494,7 +494,7 @@ void sub_080115a0(void)
     TaskSleepForever();
 }
 
-void sub_0801170c(void)
+void CutsceneBeachMeatDream(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -593,7 +593,7 @@ s32 sub_08011880(void)
     TaskSleepForever();
 }
 
-void sub_080119b4(void)
+void CutsceneBeachWaddleDoo(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -664,7 +664,7 @@ void sub_080119b4(void)
     TaskSleepForever();
 }
 
-void sub_08011b60(void)
+void CutsceneBeachSunglasses(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -685,7 +685,7 @@ void sub_08011b60(void)
     TaskSleepForever();
 }
 
-void sub_08011bfc(void)
+void CutsceneBeachQuestionMarks(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -909,7 +909,7 @@ void sub_08011bfc(void)
     TaskSleepForever();
 }
 
-void sub_08011ff8(void)
+void CutsceneBombStart(void)
 {
     PlayBgm(11);
     CreateCutsceneActor(14, 0);
@@ -917,7 +917,7 @@ void sub_08011ff8(void)
     CreateCutsceneActor(17, 32);
 }
 
-void sub_0801201c(void)
+void CutsceneBombKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1152,7 +1152,7 @@ void sub_0801201c(void)
     TaskSleepForever();
 }
 
-void sub_08012628(void)
+void CutsceneBombPoppyBrosSr(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1300,7 +1300,7 @@ void sub_08012628(void)
     TaskSleepForever();
 }
 
-void sub_080129f8(void)
+void CutsceneBombHeldBomb(void)
 {
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1367,7 +1367,7 @@ void sub_080129f8(void)
     TaskSleepForever();
 }
 
-void sub_08012b94(void)
+void CutsceneBombThrownBomb(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1784,7 +1784,7 @@ void sub_08013348(void)
     TaskExitTrampoline();
 }
 
-void sub_08013430(void)
+void CutsceneBalloonsStart(void)
 {
     PlayBgm(17);
     CreateCutsceneActor(22, 0);
@@ -1797,7 +1797,7 @@ void sub_08013430(void)
     CreateCutsceneActor(29, 32);
 }
 
-void sub_0801347c(void)
+void CutsceneBalloonsKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2032,7 +2032,7 @@ void sub_0801347c(void)
     TaskSleepForever();
 }
 
-void sub_08013af8(void)
+void CutsceneBalloonsLooseBalloon(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2067,7 +2067,7 @@ void sub_08013af8(void)
     TaskSleepForever();
 }
 
-void sub_08013be4(void)
+void CutsceneBalloonsYellowBalloon(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2164,7 +2164,7 @@ void sub_08013be4(void)
     TaskSleepForever();
 }
 
-void sub_08013e38(void)
+void CutsceneBalloonsGreenBalloon(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2261,7 +2261,7 @@ void sub_08013e38(void)
     TaskSleepForever();
 }
 
-void sub_0801408c(void)
+void CutsceneBalloonsLastBalloon(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2406,7 +2406,7 @@ void sub_080143b4(void)
     TaskSleepForever();
 }
 
-void sub_0801448c(void)
+void CutsceneTomatoStart(void)
 {
     PlayBgm(22);
     CreateCutsceneActor(30, 0);
@@ -2414,7 +2414,7 @@ void sub_0801448c(void)
     CreateCutsceneActor(33, 32);
 }
 
-void sub_080144b0(void)
+void CutsceneTomatoKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2610,7 +2610,7 @@ void sub_080144b0(void)
     TaskSleepForever();
 }
 
-void sub_08014994(void)
+void CutsceneTomatoMaximTomato(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2746,7 +2746,7 @@ void sub_08014c08(void)
     TaskSleepForever();
 }
 
-void sub_08014d08(void)
+void CutsceneTomatoExclamation(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2808,7 +2808,7 @@ void sub_08014d08(void)
     TaskSleepForever();
 }
 
-void sub_08014e6c(void)
+void CutsceneShipStart(void)
 {
     PlayBgm(12);
     CreateCutsceneActor(34, 0);
@@ -2818,7 +2818,7 @@ void sub_08014e6c(void)
     CreateCutsceneActor(38, 32);
 }
 
-void sub_08014ea0(void)
+void CutsceneShipKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2962,7 +2962,7 @@ void sub_08014ea0(void)
     }
 }
 
-void sub_08015268(void)
+void CutsceneShipSpyglass(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3019,7 +3019,7 @@ void sub_08015268(void)
     TaskSleepForever();
 }
 
-void sub_08015400(void)
+void CutsceneShipPirateHat(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3064,7 +3064,7 @@ void sub_08015400(void)
     TaskSleepForever();
 }
 
-void sub_08015524(void)
+void CutsceneShipShark(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3115,7 +3115,7 @@ void sub_08015524(void)
     TaskSleepForever();
 }
 
-void sub_08015680(void)
+void CutsceneShipWaves(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3141,7 +3141,7 @@ void sub_08015680(void)
     }
 }
 
-void sub_08015704(void)
+void CutsceneSingingStart(void)
 {
     PlayBgm(18);
     CreateCutsceneActor(39, 0);
@@ -3155,7 +3155,7 @@ void sub_08015704(void)
     CreateCutsceneActor(49, 32);
 }
 
-void sub_08015758(void)
+void CutsceneSingingKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3533,7 +3533,7 @@ void sub_08015f18(void)
     TaskExitTrampoline();
 }
 
-void sub_0801607c(void)
+void CutsceneSingingRainbowBar(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;

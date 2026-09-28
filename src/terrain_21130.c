@@ -7,13 +7,13 @@
 /*
  * M06 terrain / collision query (issue #84), range 0x08021130-0x0802136C.
  *
- * The room probe for the player: sub_08021130 is TerrainProbeWater (still in asm)
+ * The room probe for the player: TerrainProbeWaterAndDrift is TerrainProbeWater (still in asm)
  * with a tile-set special case in front (tile sets 64..79 and 192..207 pick a
  * pair of signed offsets from the gCurTileDrifts table into gTerrainDriftX /
  * gTerrainDriftY) and the gCollisionTileDoor attribute copied to unkA behind.
  */
 
-void sub_08021130(void)
+void TerrainProbeWaterAndDrift(void)
 {
     u8 prev;
     u8 prev2;

@@ -83,7 +83,7 @@ void TaskFree(s32 id)
     t->unk70 = 0;
     t->unk6E = 0;
     t->unk6C = 0;
-    t->player = (struct PlayerState *)(t->unk8C = 0);
+    t->player = (struct PlayerState *)(t->u8C.actor = 0);
     t->unk76 = 0;
     t->unk74 = 0;
     t->variant = 0;
@@ -93,11 +93,11 @@ void TaskFree(s32 id)
     t->waterFlags = 0;
     t->onGround = 0;
     t->hitDirection = 0;
-    t->unk82 = 0;
+    t->hitEffect = 0;
     t->hitKind = 0;
     t->hitterSlot = -1;
     t->hitterPlayer = -1;
-    t->unk80 = -1;
+    t->u80.nearestPlayer = -1;
     if (gTaskRunPhase >= 0)
     {
         cls = gTaskListRefs[id] >> 8;

@@ -13,10 +13,10 @@
  * room (a 7-way switch on RoomDef.unk54, table 0x08027F28), the
  * metatile-map edits of the special rooms and the bottom bound
  * (sub_08025e0c); sub_08028130 is its reduced form for sub_080233e0,
- * sub_08028280 its layout-only form for sub_08024698, and
- * sub_08028304 picks the tile-upload routine for the layout.
+ * InitEndingRoomBgLayout its layout-only form for LoadEndingRoom, and
+ * StartRoomBlockAnims picks the tile-upload routine for the layout.
  * sub_08027a6c, the first function of the range (the second map buffer
- * gUnk_02006AA0 for sub_08023948/sub_08023ca0), landed separately as
+ * gUnk_02006AA0 for LoadHubRoom/LoadBigSwitchViewRoom), landed separately as
  * src/level_27a6c.c. */
 
 struct Unk020055D8Entry
@@ -93,7 +93,7 @@ void InitRoomBgLayout(void)
         gUnk_0200B078 = 3;
         gRoomBounds[2] = gRoomHeight * 16 - gRoomBorder[1] - 80;
         LoadGfxSet(3);
-        sub_08030074(gUnk_030023B8);
+        CreateWarpStarStationLevelSign(gCurLevel);
         break;
     case 4:
         gUnk_0200B078 = 6;
@@ -110,7 +110,7 @@ void InitRoomBgLayout(void)
         gRoomBounds[1] = gRoomBorder[0] + 120;
         StartRoomHBlankScroll(9);
         gUnk_02000020 = 3;
-        if (gUnk_020069F0 != 2)
+        if (gRoomEntryMode != 2)
             sub_08025e0c();
         break;
     case 6:
@@ -123,7 +123,7 @@ void InitRoomBgLayout(void)
         break;
     }
     if (gUnk_02007D64 == 3)
-        sub_08030100(gUnk_030023B8);
+        CreateMuseumAbilitySigns(gCurLevel);
 }
 
 void sub_08028130(void)
@@ -164,7 +164,7 @@ void sub_08028130(void)
     }
 }
 
-void sub_08028280(s32 a)
+void InitEndingRoomBgLayout(s32 a)
 {
     gScrollLockSpeedX = 0;
     gScrollLockSpeedY = 0;
@@ -190,10 +190,10 @@ void sub_08028280(s32 a)
     gCameraMode = 5;
 }
 
-void sub_08028304(void)
+void StartRoomBlockAnims(void)
 {
     if (gUnk_0200B078 == 1)
-        sub_080307cc();
+        StartBlockAnimsWithEdges();
     else
-        sub_080307b0();
+        StartBlockAnims();
 }

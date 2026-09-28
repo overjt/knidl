@@ -16,18 +16,18 @@
  *
  * Matching notes (agbcc -O2 -mthumb-interwork -fprologue-bugfix):
  *  - the helpers return int, not s8: callers compare the result without
- *    re-extending it (sub_0802069c, sub_0801c690); the sign extension comes
+ *    re-extending it (TerrainProbePointStop, TerrainProbeWallRightOnGround); the sign extension comes
  *    from the s8 element type (lesson 3.356);
  *  - `p = table[i]; return p[j];` orders the pointer load before the index
  *    load; writing table[i][j] in one expression loads the index first;
  *  - the row/column cell access is `(&gRoomMap[idx])[x]` with
  *    `idx = y * w` in its own statement: a `row` local hoists the map base
  *    load above the multiply and shifts the whole register allocation;
- *  - sub_08021ab4 is sub_08021a40 without the attribute guard, but its second
+ *  - GetTileShapeAtPixel is GetShapeAtPixelIgnoringOneWay without the attribute guard, but its second
  *    range check is written positively (the fail path sits before the pool).
  */
 
-void sub_080214e0(void)
+void TerrainProbeWaterAtPoint(void)
 {
     s32 y;
     s32 h;
@@ -53,13 +53,13 @@ void sub_080214e0(void)
     }
 }
 
-void sub_08021564(void)
+void TerrainProbeDamage(void)
 {
-    gTerrainProbeResult.unkF = 0;
-    gTerrainProbeResult.unkF = sub_080218f8(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.unkF;
-    gTerrainProbeResult.unkF = sub_080218f8(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.unkF;
-    gTerrainProbeResult.unkF = sub_080218f8(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.unkF;
-    gTerrainProbeResult.unkF = sub_080218f8(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.unkF;
+    gTerrainProbeResult.damage = 0;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.damage;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.damage;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.damage;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.damage;
 }
 
 s32 TerrainQueryPixel(u32 x, u32 y)
@@ -147,7 +147,7 @@ s32 TerrainQueryPixelAndSides(u32 x, u32 y)
     return 0;
 }
 
-s32 sub_080218f8(u32 x, u32 y)
+s32 TerrainQueryDamage(u32 x, u32 y)
 {
     u32 off = ((y & 15) << 4) + (x & 15);
     s16 w;
@@ -164,9 +164,9 @@ s32 sub_080218f8(u32 x, u32 y)
         return 0;
     idx = y * w;
     tile = (&gRoomMap[idx])[x].collisionTile;
-    if (gUnk_08732FF0[tile] == 0)
+    if (gCollisionTileDamaging[tile] == 0)
         return 0;
-    return gUnk_087330F0[tile][off];
+    return gCollisionTileDamageShapes[tile][off];
 }
 
 s32 GetTileFloorSnap(u16 a)
@@ -199,14 +199,14 @@ s32 GetTilePushLeft(u16 a)
     return p[gTerrainPixelIndex];
 }
 
-void sub_08021a10(u16 a)
+void TerrainLoadFloorAttributes(u16 a)
 {
     gTerrainProbeResult.slope = gCollisionTileSlope[a];
     gTerrainProbeResult.unk5 = gUnk_087337F0[a];
     gTerrainProbeResult.onSlipperyFloor = gCollisionTileSlippery[a];
 }
 
-s32 sub_08021a40(u32 x, u32 y)
+s32 GetShapeAtPixelIgnoringOneWay(u32 x, u32 y)
 {
     u32 cx = x >> 4;
     u32 cy;
@@ -222,13 +222,13 @@ s32 sub_08021a40(u32 x, u32 y)
         return 0;
     idx = cy * w;
     tile = (&gRoomMap[idx])[cx].collisionTile;
-    if (gUnk_087336F0[tile] != 0)
+    if (gCollisionTileOneWay[tile] != 0)
         return 0;
     p = gCollisionTileShapes[tile];
     return p[((y & 15) << 4) + (x & 15)];
 }
 
-s32 sub_08021ab4(u32 x, u32 y)
+s32 GetTileShapeAtPixel(u32 x, u32 y)
 {
     u32 cx = x >> 4;
     u32 cy;

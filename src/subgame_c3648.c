@@ -9,27 +9,27 @@
  *
  * Sub-game 2: the racers' movement (task type #96 variant 0's callbacks).
  * 
- *   sub_080c3efc / sub_080c3f20   the two per-frame bodies variant 0 installs
+ *   AirGrindRacerRaceUpdate / AirGrindRacerIdleUpdate   the two per-frame bodies variant 0 installs
  *       in Task.lateUpdateCallback (racing / before the start and after the finish): run
- *       sub_080c383c, then sub_080c38c8 or sub_080c3d58, then sub_080c3e18.
- *   sub_080c383c   player 0 drives the camera (sub_080c3670) and rebuilds the
+ *       AirGrindRacerUpdateDepth, then AirGrindRacerRaceStep or AirGrindRacerIdleStep, then AirGrindRacerUpdateScreenPos.
+ *   AirGrindRacerUpdateDepth   player 0 drives the camera (AirGrindScrollCourseTo) and rebuilds the
  *       course view (AirGrindDrawCourse) and keeps the leader's position in
  *       M37Game.unk1B8; every racer sets Task.layer/unk3E from the course
  *       record's unk18 and Task.unk28 from its unk08.
- *   sub_080c38c8   the racing step: holding A (M37Player.unk02 & 1) on the
+ *   AirGrindRacerRaceStep   the racing step: holding A (M37Player.unk02 & 1) on the
  *       course (record unk14 != 0) accelerates Task.velX by the level's
  *       thresholds gUnk_080CFE3C[level][], a well-timed press gives a boost
- *       (sub_080c3698, capped by gUnk_080CFE3C[level][0]), and holding A
+ *       (AirGrindRacerTryBoost, capped by gUnk_080CFE3C[level][0]), and holding A
  *       while the record's unk14 is 0 starts a 24-frame penalty
  *       (M37Player.unk08); the tilt and animation frame
  *       Task.frame come from the tables gUnk_080CFEE4/gUnk_080CFEE9/
  *       gUnk_080CFF01, and player 0's effects are variant 2 tasks
- *       (sub_080c2078).
- *   sub_080c3d58   the idle step used before the start and after the finish.
- *   sub_080c3e18   the racer's screen position from the course record and
- *       the scale sub_080c623c, and the computer racers' distance fade
+ *       (CreateAirGrindEffect).
+ *   AirGrindRacerIdleStep   the idle step used before the start and after the finish.
+ *   AirGrindRacerUpdateScreenPos   the racer's screen position from the course record and
+ *       the scale AirGrindGetDepthScale, and the computer racers' distance fade
  *       (BlendColors on their palette row gUnk_08609D42[pal]).
- *   sub_080c3648 / sub_080c3670 / sub_080c37b8   the speed floor 0x18000,
+ *   AirGrindRacerSlowDown / AirGrindScrollCourseTo / AirGrindUpdateEngineSound   the speed floor 0x18000,
  *       the camera clamp (scroll = min(pos, finish line), the script cursor's
  *       unk2/unk4 into the course record), and player 0's engine sound
  *       (song 400, pitch from the speed through m4aMPlayPitchControl). */
@@ -37,7 +37,7 @@
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);
 
-void sub_080c3648(void)
+void AirGrindRacerSlowDown(void)
 {
     struct Task *t = gCurTask;
 
@@ -48,7 +48,7 @@ void sub_080c3648(void)
     }
 }
 
-void sub_080c3670(s32 pos)
+void AirGrindScrollCourseTo(s32 pos)
 {
     struct M37Course *c = gAirGrindCoursePtr;
 
@@ -57,7 +57,7 @@ void sub_080c3670(s32 pos)
     c->unk008 = gAirGrindScript.unk2;
 }
 
-s32 sub_080c3698(s32 player)
+s32 AirGrindRacerTryBoost(s32 player)
 {
     s32 speed = gCurTask->velX;
     s32 ret = 0;
@@ -67,7 +67,7 @@ s32 sub_080c3698(s32 player)
     if (abs(gAirGrindPtr->players[player].unk10) <= abs((speed * 3) >> 16)) {
         if (abs(gAirGrindPtr->players[player].unk10) <= abs(speed >> 16)) {
             if (player == 0)
-                sub_080c2078(0, gCurTask->unk18, 6);
+                CreateAirGrindEffect(0, gCurTask->unk18, 6);
             gAirGrindPtr->players[player].unk01++;
             gCurTask->velX += 0x10000;
             if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][0])
@@ -75,7 +75,7 @@ s32 sub_080c3698(s32 player)
             ret = 2;
         } else {
             if (player == 0)
-                sub_080c2078(0, gCurTask->unk18, 7);
+                CreateAirGrindEffect(0, gCurTask->unk18, 7);
             gCurTask->velX += 0x8000;
             if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][0])
                 gCurTask->velX = gUnk_080CFE3C[gAirGrindPtr->level][0];
@@ -86,7 +86,7 @@ s32 sub_080c3698(s32 player)
     return ret;
 }
 
-void sub_080c37b8(s32 a, s32 on)
+void AirGrindUpdateEngineSound(s32 a, s32 on)
 {
     if (a == 0) {
         if (on) {
@@ -104,14 +104,14 @@ void sub_080c37b8(s32 a, s32 on)
     }
 }
 
-void sub_080c383c(s32 player)
+void AirGrindRacerUpdateDepth(s32 player)
 {
     s32 max;
     s32 i;
     u16 rank;
 
     if (player == 0) {
-        sub_080c3670((gCurTask->posX >> 16) + 48);
+        AirGrindScrollCourseTo((gCurTask->posX >> 16) + 48);
         AirGrindDrawCourse();
         max = 0;
         for (i = 0; i < 4; i++) {
@@ -128,18 +128,18 @@ void sub_080c383c(s32 player)
     gCurTask->unk28 = gAirGrindCoursePtr->players[player].unk08;
 }
 
-void sub_080c38c8(s32 player)
+void AirGrindRacerRaceStep(s32 player)
 {
     s32 ret;
 
     if (gAirGrindPtr->players[player].unk08 != 0) {
-        sub_080c3648();
+        AirGrindRacerSlowDown();
         if (player == 0 && gAirGrindPtr->players[0].unk08 > 19)
-            sub_080c2078(0, gCurTask->unk18, (gAirGrindPtr->players[0].unk08 & 1) ? 3 : 4);
+            CreateAirGrindEffect(0, gCurTask->unk18, (gAirGrindPtr->players[0].unk08 & 1) ? 3 : 4);
     } else if (gAirGrindPtr->players[player].unk02 & 1) {
         if (gAirGrindCoursePtr->players[player].unk14 != 0) {
             ret = 0;
-            sub_080c37b8(player, 1);
+            AirGrindUpdateEngineSound(player, 1);
             if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][1])
                 gCurTask->accelX = 0x200;
             else if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][2])
@@ -148,15 +148,15 @@ void sub_080c38c8(s32 player)
                 gCurTask->accelX = 0x8000;
             if (player == 0) {
                 if ((gAirGrindFrame & 3) == 0)
-                    sub_080c2078(0, gCurTask->unk18, 0);
+                    CreateAirGrindEffect(0, gCurTask->unk18, 0);
                 if ((gAirGrindFrame & 7) == 1)
-                    sub_080c2078(0, gCurTask->unk18, 1);
+                    CreateAirGrindEffect(0, gCurTask->unk18, 1);
             }
             if (gAirGrindPtr->players[player].unk0A == 0 && gAirGrindPtr->players[player].unk00 == 0)
-                ret = sub_080c3698(player);
+                ret = AirGrindRacerTryBoost(player);
             if (gAirGrindPtr->players[player].unk04 & 1) {
                 if (player == 0 && gAirGrindPtr->unk450 == 0)
-                    sub_080c2078(0, gCurTask->unk18, 2);
+                    CreateAirGrindEffect(0, gCurTask->unk18, 2);
                 gAirGrindPtr->players[player].unk0C = 4;
                 if (ret == 1) {
                     gAirGrindPtr->players[player].unk0C = 6;
@@ -171,12 +171,12 @@ void sub_080c38c8(s32 player)
             gAirGrindPtr->players[player].unk00 = 1;
         } else {
             gAirGrindPtr->players[player].unk0C = 0;
-            sub_080c37b8(player, 0);
-            sub_080c3648();
+            AirGrindUpdateEngineSound(player, 0);
+            AirGrindRacerSlowDown();
             gAirGrindPtr->players[player].unk08 = 24;
             if (player == 0)
-                sub_080c523c(3);
-            sub_080c2078(player, gCurTask->unk18, 8);
+                AirGrindStartScript(3);
+            CreateAirGrindEffect(player, gCurTask->unk18, 8);
             gAirGrindPtr->players[player].unk00 = 0;
         }
         gAirGrindPtr->players[player].unk14 -= 0x20000;
@@ -184,7 +184,7 @@ void sub_080c38c8(s32 player)
             gAirGrindPtr->players[player].unk14 = 0;
     } else {
         gAirGrindPtr->players[player].unk0C = 0;
-        sub_080c37b8(player, 0);
+        AirGrindUpdateEngineSound(player, 0);
         if (gCurTask->velX < 0x18000) {
             gCurTask->accelX = 0;
             gCurTask->velX = 0x18000;
@@ -196,9 +196,9 @@ void sub_080c38c8(s32 player)
             gAirGrindPtr->players[player].unk14 = 0x80000;
         if (gAirGrindPtr->players[player].unk00 == 1) {
             if (player == 0 && gAirGrindPtr->unk451 == 0)
-                sub_080c2078(0, gCurTask->unk18, 5);
+                CreateAirGrindEffect(0, gCurTask->unk18, 5);
             if (gAirGrindPtr->players[player].unk0A == 0)
-                sub_080c3698(player);
+                AirGrindRacerTryBoost(player);
         }
         gAirGrindPtr->players[player].unk00 = 0;
     }
@@ -243,9 +243,9 @@ void sub_080c38c8(s32 player)
     }
 }
 
-void sub_080c3d58(s32 player)
+void AirGrindRacerIdleStep(s32 player)
 {
-    sub_080c37b8(player, 0);
+    AirGrindUpdateEngineSound(player, 0);
     if (gCurTask->state == 0) {
         gAirGrindPtr->players[player].unk14 -= 0x20000;
         if (gAirGrindPtr->players[player].unk14 < 0)
@@ -264,13 +264,13 @@ void sub_080c3d58(s32 player)
     gCurTask->frame += gUnk_080CFEE4[gAirGrindPtr->players[player].unk06];
 }
 
-void sub_080c3e18(s32 player)
+void AirGrindRacerUpdateScreenPos(s32 player)
 {
     s32 scale;
     u8 pal;
     u16 ratio;
 
-    scale = sub_080c623c(gAirGrindCoursePtr->players[player].unk08);
+    scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[player].unk08);
     gCurTask->pixelX = gAirGrindCoursePtr->players[player].unk0C + ((scale * gAirGrindPtr->players[player].unk18) >> 24);
     gCurTask->pixelY = gAirGrindCoursePtr->players[player].unk10 - ((scale * gAirGrindPtr->players[player].unk14) >> 24);
     if (player != 0) {
@@ -285,20 +285,20 @@ void sub_080c3e18(s32 player)
     }
 }
 
-void sub_080c3efc(void)
+void AirGrindRacerRaceUpdate(void)
 {
     s32 player = gCurTask->unk1C;
 
-    sub_080c383c(player);
-    sub_080c38c8(player);
-    sub_080c3e18(player);
+    AirGrindRacerUpdateDepth(player);
+    AirGrindRacerRaceStep(player);
+    AirGrindRacerUpdateScreenPos(player);
 }
 
-void sub_080c3f20(void)
+void AirGrindRacerIdleUpdate(void)
 {
     s32 player = gCurTask->unk1C;
 
-    sub_080c383c(player);
-    sub_080c3d58(player);
-    sub_080c3e18(player);
+    AirGrindRacerUpdateDepth(player);
+    AirGrindRacerIdleStep(player);
+    AirGrindRacerUpdateScreenPos(player);
 }

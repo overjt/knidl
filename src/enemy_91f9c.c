@@ -19,21 +19,21 @@
  * gUnk_02007D00[6] (0/1/2) against the RNG, and plays one of three yield
  * sequences; sub_080926fc is the three-phase charge, sub_08092cdc the
  * multi-hit dive, sub_080930ac the four-way finisher whose case 3 spawns the
- * actor 154 at gUnk_030023B4/gUnk_030023D4, and sub_08093380 the defeat
+ * actor 154 at gUnk_030023B4/gUnk_030023D4, and BugzzyDefeat the defeat
  * sequence.  sub_080934b8 is the shake helper the first states yield to and
  * sub_080934f8 is the collision probe: ten GetCollisionTileAtOffset samples along
  * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
  * sub_080937d0 the hit hook, sub_08093858 the four-instruction "stop moving"
- * leaf the census had missed, and sub_0809397c the companion body.
+ * leaf the census had missed, and BugzzyAfterimageUpdate the companion body.
  *
  * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
  * gBonkersNutFrames): sub_08093a64 installs sub_08093a98 as its body,
  * sub_08093ac8 is its one state, Task_PoppyBrosSrBomb / sub_08093c30 are the second
  * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), sub_08093ccc and
  * sub_08093dcc are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
- * every six frames, and sub_08093cf8 / sub_08093e58 / sub_08093f00 are the
+ * every six frames, and sub_08093cf8 / Task_PoppyBrosSrBombSpark / sub_08093f00 are the
  * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
  */
 #include "gba/gba.h"
@@ -58,7 +58,7 @@ extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-extern void sub_080689c8(s32 i, s32 d);
+extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void PlaySfx(s32 id);
@@ -69,7 +69,7 @@ extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
-extern s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
 extern void sub_08068f68(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u8 ActorCollideTerrain(void);
@@ -86,7 +86,7 @@ void BugzzyInit(void)
     t->updateCallback = (u32)BugzzyUpdate;
     sub_080666cc(gUnk_08743AC8);
     u = gCurTask;
-    u->unk24 = u->unk8C->palette;
+    u->unk24 = u->u8C.actor->palette;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 13, gBugzzyStates);
 }
@@ -130,7 +130,7 @@ void BugzzyUpdate(void)
         else
         {
             u->unk30 = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
     }
     ActorSetAttackBox(gUnk_08743A10[gCurTask->unk34]);
@@ -156,7 +156,7 @@ void BugzzyUpdate(void)
             x->posX = m << 16;
             ClampTaskToRoom(x);
             y = gCurTask;
-            y->unk8C->palette = y->unk24;
+            y->u8C.actor->palette = y->unk24;
             TaskSetFrame(36);
             if (gCurTask->unk1C == gLocalPlayer)
                 PlaySfx(0x23D);
@@ -344,7 +344,7 @@ void sub_08092590(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_080925b8(void)
+void BugzzySummon(void)
 {
     struct Task *t;
     struct ActorSpawn spawn;
@@ -390,7 +390,7 @@ void sub_080925b8(void)
     TaskSleepForever();
 }
 
-void sub_080926d4(void)
+void BugzzySummonUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -423,12 +423,12 @@ void sub_080926fc(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u = gCurTask;
-        u->unk24 = u->unk8C->palette;
-        u->unk8C->palette = 0;
+        u->unk24 = u->u8C.actor->palette;
+        u->u8C.actor->palette = 0;
         u->frame++;
         TaskYieldTrampoline(2);
         v = gCurTask;
-        v->unk8C->palette = v->unk24;
+        v->u8C.actor->palette = v->unk24;
         gCurTask->unk6C++;
     }
     gCurTask->unk6C = 0;
@@ -441,12 +441,12 @@ void sub_080926fc(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u2 = gCurTask;
-        u2->unk24 = u2->unk8C->palette;
-        u2->unk8C->palette = 0;
+        u2->unk24 = u2->u8C.actor->palette;
+        u2->u8C.actor->palette = 0;
         u2->frame++;
         TaskYieldTrampoline(2);
         v2 = gCurTask;
-        v2->unk8C->palette = v2->unk24;
+        v2->u8C.actor->palette = v2->unk24;
     } while ((s16)++gCurTask->unk6C <= 0);
     gCurTask->unk6C = 0;
     while ((s16)gCurTask->unk6C < gUnk_08743A8E[gCurTask->unk74])
@@ -458,12 +458,12 @@ void sub_080926fc(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u3 = gCurTask;
-        u3->unk24 = u3->unk8C->palette;
-        u3->unk8C->palette = 0;
+        u3->unk24 = u3->u8C.actor->palette;
+        u3->u8C.actor->palette = 0;
         u3->frame++;
         TaskYieldTrampoline(2);
         v3 = gCurTask;
-        v3->unk8C->palette = v3->unk24;
+        v3->u8C.actor->palette = v3->unk24;
         gCurTask->unk6C++;
     }
     w = gCurTask;
@@ -922,7 +922,7 @@ void sub_08093354(void)
     }
 }
 
-void sub_08093380(void)
+void BugzzyDefeat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -961,7 +961,7 @@ void sub_08093380(void)
     TaskSleepForever();
 }
 
-void sub_08093488(void)
+void BugzzyDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_082959A8, 16);
     if (gUnk_02007D00[4] == 1)
@@ -1180,7 +1180,7 @@ s32 sub_0809388c(void)
     n = t->unk1C;
     if (n != -1)
     {
-        sub_080689c8(n, -t->facing);
+        ReleaseHeldPlayer(n, -t->facing);
         gCurTask->unk1C = -1;
     }
     ActorSetHitReactions(gUnk_0874410C);
@@ -1189,7 +1189,7 @@ s32 sub_0809388c(void)
     return 1;
 }
 
-void sub_080938e4(void)
+void Task_BugzzyAfterimage(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1202,7 +1202,7 @@ void sub_080938e4(void)
     t->layer = 12;
     u = gCurTask;
     u->frameTable = gUnk_087536FC;
-    u->updateCallback = (u32)sub_0809397c;
+    u->updateCallback = (u32)BugzzyAfterimageUpdate;
     TaskFaceLikeParent();
     v = gCurTask;
     v->unk28 = 4;
@@ -1224,7 +1224,7 @@ void sub_080938e4(void)
     TaskExitTrampoline();
 }
 
-void sub_0809397c(void)
+void BugzzyAfterimageUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1339,7 +1339,7 @@ void Task_PoppyBrosSrBomb(void)
     u->frameTable = gPoppyBrosSrBombFrames;
     TaskFaceLikeParent();
     v = gCurTask;
-    v->unk8C->sfxOverride = 0x20E;
+    v->u8C.actor->sfxOverride = 0x20E;
     v->onGround = 0;
     CallTableEntry(gCurTask->variant, 2, gUnk_087441A4);
 }
@@ -1464,7 +1464,7 @@ void sub_08093e54(void)
 {
 }
 
-void sub_08093e58(void)
+void Task_PoppyBrosSrBombSpark(void)
 {
     struct Task *t;
     struct Task *u;

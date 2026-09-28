@@ -69,14 +69,14 @@ extern void PlaySfx(s32 id);
 extern void TaskSetEntry(void *fn, s32 i);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-extern void sub_0801bcac(struct InputState *p);
-extern void sub_0801bde0(struct InputState *p);
-extern void sub_0801bf1c(struct InputState *p);
-extern void sub_0801c030(struct InputState *p);
-extern void sub_0801c12c(struct InputState *p);
-extern void sub_0801c230(struct InputState *p);
-extern void sub_0801c30c(struct InputState *p);
-extern u32 sub_0801c3a4(struct InputState *p);
+extern void TerrainCollideBox(struct InputState *p);
+extern void TerrainCollideBoxInCameraBounds(struct InputState *p);
+extern void TerrainCollideBoxWalls(struct InputState *p);
+extern void TerrainCollideBoxCeilingAndFloor(struct InputState *p);
+extern void TerrainCollideBoxFloor(struct InputState *p);
+extern void TerrainCollideBoxAlongVelocity(struct InputState *p);
+extern void TerrainCollidePointPushOut(struct InputState *p);
+extern u32 TerrainCollidePointStop(struct InputState *p);
 extern u32 sub_0802205c(struct InputState *p);
 extern void TaskInitWaterFlagsSlot(s32 i);
 extern void ActorSetState(u8 v);
@@ -100,13 +100,13 @@ u32 ActorCollideTerrain(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     r = 0;
     i = 4;
     k = t->onGround;
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
-    sub_0801bcac(&v);
+    TerrainCollideBox(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
         CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
@@ -198,7 +198,7 @@ u32 sub_0806951c(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        sub_0801c230(&v);
+        TerrainCollideBoxAlongVelocity(&v);
         if ((*(u32 *)gTerrainResult & 0x00FFFFFF) != 0)
             r = 1;
         else
@@ -216,7 +216,7 @@ u32 sub_0806956c(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        sub_0801c030(&v);
+        TerrainCollideBoxCeilingAndFloor(&v);
         if ((*(u32 *)gTerrainResult & 0x00FFFF00) != 0)
             r = 1;
         else
@@ -234,7 +234,7 @@ u32 sub_080695bc(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        sub_0801bf1c(&v);
+        TerrainCollideBoxWalls(&v);
         if (gTerrainResult[0] != 0)
             r = 1;
         else
@@ -253,7 +253,7 @@ u32 sub_08069604(void)
         return 0;
     r = 0;
     ActorGetTerrainBox(&v);
-    sub_0801c30c(&v);
+    TerrainCollidePointPushOut(&v);
     if (gTerrainResult[0] != 0 || gTerrainResult[4] != 0 || gTerrainResult[1] != 0)
         r = 1;
     return r;
@@ -267,7 +267,7 @@ u32 sub_08069660(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        r = (u8)sub_0801c3a4(&v);
+        r = (u8)TerrainCollidePointStop(&v);
     }
     else
     {
@@ -291,13 +291,13 @@ u32 sub_080696a0(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     r = 0;
     i = 4;
     k = t->onGround;
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
-    sub_0801bde0(&v);
+    TerrainCollideBoxInCameraBounds(&v);
     sub_080b460c();
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
@@ -387,13 +387,13 @@ u32 sub_08069888(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     r = 0;
     i = 4;
     k = t->onGround;
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
-    sub_0801c12c(&v);
+    TerrainCollideBoxFloor(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
         CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
@@ -475,7 +475,7 @@ void ActorGetTerrainBox(struct InputState *out)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     out->unk01 = ((struct InputState *)a->terrainBox)->unk01;
     out->unk02 = ((struct InputState *)a->terrainBox)->unk02;
     out->unk03 = ((struct InputState *)a->terrainBox)->unk03;
@@ -595,7 +595,7 @@ s8 sub_08069c48(void)
             v = g[12];
             c = ((s8 *)g)[12];
             t->hitKind = c;
-            gCurTask->unk82 = 0;
+            gCurTask->hitEffect = 0;
         }
         else
         {
@@ -611,10 +611,10 @@ void ActorPlayHitSfx(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->unk8C->unk06 == 16 || t->unk8C->unk06 == 32)
+    if (t->u8C.actor->unk06 == 16 || t->u8C.actor->unk06 == 32)
     {
         u = &gTasks[t->hitterSlot];
-        switch (u->unk80)
+        switch (u->u80.attackAbility)
         {
         case 3:
             PlaySfx(145);
@@ -687,7 +687,7 @@ void ActorStartHitStun(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     TaskSetSkipMask(7, gCurTaskIdx);
     u = gCurTask;
     u->posX = u->pixelX << 16;
@@ -697,10 +697,10 @@ void ActorStartHitStun(void)
     gCurTask->lateUpdateCallback = (u32)sub_08069fb0;
     a->hitStunTimer = 11;
     v = gCurTask;
-    v->unk8C->savedPaletteBits = v->tileWord & 0xF000;
-    if (v->unk82 > 3)
-        v->unk82 = 0;
-    ActorAttachEffect(gCurTask->unk82, 1);
+    v->u8C.actor->savedPaletteBits = v->tileWord & 0xF000;
+    if (v->hitEffect > 3)
+        v->hitEffect = 0;
+    ActorAttachEffect(gCurTask->hitEffect, 1);
 }
 
 void ActorEndHitStun(void)
@@ -710,14 +710,14 @@ void ActorEndHitStun(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     TaskSetSkipMask(0, gCurTaskIdx);
     u = gCurTask;
     u->lateUpdateCallback = 0;
     u->pixelX = u->posX >> 16;
     u->pixelY = u->posY >> 16;
     u->frame = a->savedFrame;
-    u->tileWord = (u->tileWord & 0xFFF) | u->unk8C->savedPaletteBits;
+    u->tileWord = (u->tileWord & 0xFFF) | u->u8C.actor->savedPaletteBits;
 }
 
 u32 ActorReactToDamage(void)
@@ -726,7 +726,7 @@ u32 ActorReactToDamage(void)
     struct ActorVt *p;
     u8 r;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
@@ -762,7 +762,7 @@ void sub_08069f0c(void)
     s16 j;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     j = gUnk_0873E5A4[(s8)a->hitStunTimer] * 2;
     t->pixelX += gUnk_0873E58C[j];
     t->pixelY += gUnk_0873E58C[j + 1];
@@ -776,7 +776,7 @@ void sub_08069f70(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if ((a->hitStunTimer & 1) == 0)
         t->tileWord = (t->tileWord & 0xFFF) | 0xF000;
     else
@@ -861,7 +861,7 @@ void sub_0806a0f0(s32 a)
     struct Actor *b;
 
     t = gCurTask;
-    b = t->unk8C;
+    b = t->u8C.actor;
     if (a == -2)
         t->unk18 = 0;
     else
@@ -883,7 +883,7 @@ void PickupCollect(void)
     struct Task *t;
 
     if (gCurTask->unk76 != 0)
-        sub_080b54d0(gCurTaskIdx);
+        MarkRoomObjectUsed(gCurTaskIdx);
     t = gCurTask;
     switch (t->unk76)
     {
@@ -924,7 +924,7 @@ u32 ActorReactToDefeat(void)
     struct Task *t;
     u8 r;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();

@@ -40,7 +40,7 @@ void PlayerActionBeam(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 44;
     gCurTask->unk28 = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskSetFrame(0xBBD);
     TaskYieldTrampoline(6);
     gCurTask->frame++;
@@ -94,7 +94,7 @@ void PlayerActionStone(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->unk80 = 17;
+            u->u80.attackAbility = 17;
         }
     }
     switch (gCurTask->variant) {

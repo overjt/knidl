@@ -41,7 +41,7 @@ extern void RequestScreenShake(u32 a);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -55,7 +55,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -66,16 +66,16 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
-void sub_080b4ea8(void)
+void LoadRoomObjectGfx(void)
 {
     s32 n;
     s32 i;
@@ -86,8 +86,8 @@ void sub_080b4ea8(void)
     n = 0;
     if (gRoomObjectList.count == 0)
         return;
-    gUnk_0200000C = n;
-    gUnk_02007D40 = 8;
+    gObjTileCursor = n;
+    gObjPaletteCursor = 8;
     e = gRoomObjectList.entries;
     for (i = 0; i < gRoomObjectList.count; e++, i++)
     {
@@ -98,7 +98,7 @@ void sub_080b4ea8(void)
         case 7:
             break;
         case 1:
-            if (sub_080b5670(e, i, n) != 0)
+            if (LoadRoomEnemyGfx(e, i, n) != 0)
                 n++;
             break;
         case 5:
@@ -106,7 +106,7 @@ void sub_080b4ea8(void)
                 n++;
             break;
         case 2:
-            if (sub_080b5840(e, i, n) != 0)
+            if (LoadRoomMidBossGfx(e, i, n) != 0)
                 n++;
             break;
         case 6:
@@ -115,17 +115,17 @@ void sub_080b4ea8(void)
                 f = &gRoomObjectList.entries[e->unk2];
                 for (j = e->unk2; j < e->unk2 + e->unk3; f++, j++)
                 {
-                    if (f->kind == 7 && sub_080b5840(f, j, n) != 0)
+                    if (f->kind == 7 && LoadRoomMidBossGfx(f, j, n) != 0)
                         n++;
                 }
             }
             break;
         case 3:
-            if (sub_080b590c(e, i, n) != 0)
+            if (LoadRoomBossGfx(e, i, n) != 0)
                 n++;
             break;
         case 8:
-            sub_080b59d8(e, i, n);
+            LoadRoomMetaKnightsGfx(e, i, n);
             n++;
             break;
         }

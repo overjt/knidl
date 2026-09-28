@@ -10,7 +10,7 @@
  * remaining jump-table dispatchers; sub_08099dec picks the next animation from
  * one of gUnk_087456D4 / gUnk_087456E4 / gUnk_087456F4 / gUnk_08745704 by
  * classifying |TaskGetNearestPlayerDx()| against 128 and |TaskGetNearestPlayerDy()| against 64;
- * sub_08099e9c and sub_08099ee4 build struct ActorSpawn records for the actors
+ * CreateMrTickTockRing and CreateMrTickTockNote build struct ActorSpawn records for the actors
  * 16 and 17; sub_0809a080 is the shared hit reaction (rumble RequestScreenShake(2)
  * or (4), then SE 0x1F7).  sub_08099fe0 and sub_08099fe4 are two dead `bx lr`
  * state handlers nothing in the ROM points at.
@@ -47,7 +47,7 @@ extern u32 RandomRange(u32 range);
 extern void TaskSetEntry(void *fn, s32 i);
 extern s32 PlaySfx(s32 id);
 extern void RequestScreenShake(s32 a);
-extern u32 sub_08021a40(s32 x, s32 y);
+extern u32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
@@ -80,7 +80,7 @@ u8 sub_08099b20(void)
     case 4:
         TaskSetFrame(4);
         sub_0809a080(1);
-        sub_0806cffc(0, 16);
+        CreateLandingDust(0, 16);
         TaskStop();
     stop:
         gCurTask->unk28 = 1;
@@ -88,7 +88,7 @@ u8 sub_08099b20(void)
     case 2:
         TaskSetFrame(4);
         sub_0809a080(1);
-        sub_0806cffc(0, 16);
+        CreateLandingDust(0, 16);
         goto stop;
     case 22:
         sub_0809a080(1);
@@ -239,14 +239,14 @@ void sub_08099dec(void)
     TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
 }
 
-s32 sub_08099e9c(void)
+s32 CreateMrTickTockRing(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     sp.subtype = 16;
     sp.taskType = 118;
     sp.variant = 0;
@@ -258,7 +258,7 @@ s32 sub_08099e9c(void)
     return CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-void sub_08099ee4(u8 a)
+void CreateMrTickTockNote(u8 a)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -270,17 +270,17 @@ void sub_08099ee4(u8 a)
     case 0:
     case 2:
         t = gCurTask;
-        if (sub_08021a40(t->pixelX - ((s8)t->facing << 4), t->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(t->pixelX - ((s8)t->facing << 4), t->pixelY) != 0)
             return;
         break;
     case 1:
     case 3:
         t = gCurTask;
-        if (sub_08021a40(t->pixelX + ((s8)t->facing << 4), t->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(t->pixelX + ((s8)t->facing << 4), t->pixelY) != 0)
             return;
         break;
     }
-    act = gCurTask->unk8C;
+    act = gCurTask->u8C.actor;
     zero = 0;
     gCurTask->unk70 = RandomRange(4);
     gCurTask->unk6C = (s8)gUnk_087456CC[(s16)gCurTask->unk70];
@@ -448,7 +448,7 @@ void MrTickTockUpdate(void)
         }
         else
         {
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
     }
     u = gCurTask;
@@ -795,7 +795,7 @@ void MrTickTockDash(void)
     TaskSleepForever();
 }
 
-void sub_0809a744(void)
+void MrTickTockDashUpdate(void)
 {
     s32 v;
 
@@ -851,7 +851,7 @@ void sub_0809a7dc(void)
     t->updateState = 8;
     u = gCurTask;
     u->unk30 = 120;
-    gCurTask->unk6C = sub_08099e9c();
+    gCurTask->unk6C = CreateMrTickTockRing();
     while (1)
     {
         TaskSetFrameFlip(8);
@@ -969,19 +969,19 @@ void sub_0809a974(void)
     {
     case 100:
         PlaySfx(0x1FB);
-        sub_08099ee4(0);
+        CreateMrTickTockNote(0);
         break;
     case 76:
         PlaySfx(0x1FB);
-        sub_08099ee4(1);
+        CreateMrTickTockNote(1);
         break;
     case 52:
         PlaySfx(0x1FB);
-        sub_08099ee4(2);
+        CreateMrTickTockNote(2);
         break;
     case 28:
         PlaySfx(0x1FB);
-        sub_08099ee4(3);
+        CreateMrTickTockNote(3);
         break;
     case 0:
         StopSfxOnPlayer(t->unk1C, 0x219);
@@ -1106,7 +1106,7 @@ void sub_0809ab70(void)
     }
     while ((s16)++gCurTask->unk6C <= 5);
     gCurTask->unk28 = 1;
-    sub_08099e9c();
+    CreateMrTickTockRing();
     while (1)
     {
         TaskSetFrameFlip(8);
@@ -1203,7 +1203,7 @@ void sub_0809ad6c(void)
         if (sub_08099fb4() != 0)
         {
             u = gCurTask;
-            if (sub_08021a40(u->pixelX - ((s8)u->facing << 4), u->pixelY) != 0)
+            if (GetShapeAtPixelIgnoringOneWay(u->pixelX - ((s8)u->facing << 4), u->pixelY) != 0)
             {
                 ActorSetState(18);
                 TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
@@ -1455,7 +1455,7 @@ void sub_0809b210(void)
 {
 }
 
-void sub_0809b214(void)
+void MrTickTockDefeat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1481,7 +1481,7 @@ void sub_0809b214(void)
     TaskSleepForever();
 }
 
-void sub_0809b298(void)
+void MrTickTockDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_082797C8, 16);
 }
@@ -1767,7 +1767,7 @@ void sub_0809b6f8(void)
     s32 zero;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     zero = 0;
     t->updateState = 1;
     u = gCurTask;
@@ -1810,7 +1810,7 @@ void sub_0809b794(void)
     s32 zero;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     zero = 0;
     t->updateState = 2;
     u = gCurTask;

@@ -68,7 +68,7 @@ void sub_08077b60(void)
     gCurTask->updateState = 1;
     TaskStop();
     sub_0807775c();
-    sub_08077a48();
+    CreateCannonFuseSpark();
     while (gCannonFuseState == 0)
     {
         PlaySfx(230);
@@ -142,18 +142,18 @@ s32 sub_08077ca4(void)
 void sub_08077cd4(void)
 {
     gCurTask->frame = 1;
-    sub_080670ac(15);
+    FreezeStage(15);
     SetRoomUpdateFlags(2);
 }
 
 void sub_08077cf4(void)
 {
-    sub_08067108();
+    DisablePause();
     gUnk_02004B64 = 1;
     PlaySfx(226);
     RequestScreenShake(4);
     sub_08077cd4();
-    sub_08009e14();
+    HudDeactivateAbilityPanel();
     ActorSetStateSlot(gCurTaskIdx, 1);
     TaskSetEntry(BigSwitchEnterState, gCurTaskIdx);
 }
@@ -168,7 +168,7 @@ void sub_08077d54(void)
 {
     u8 i;
 
-    sub_08067108();
+    DisablePause();
     TaskYieldTrampoline(15);
     FadeInSfx(16);
     TaskYieldTrampoline(15);
@@ -188,9 +188,9 @@ void sub_08077d54(void)
             } while (done == 0);
         }
     }
-    sub_080670d4();
-    sub_08009e20();
-    sub_08067114();
+    ThawStage();
+    HudActivateAbilityPanel();
+    EnablePause();
     ActorDie();
 }
 
@@ -232,7 +232,7 @@ void sub_08077e9c(void)
     gCurTask->updateState = 1;
     TaskYieldTrampoline(8);
     FadeOutSfx(16);
-    sub_08025bc8(gCurTaskIdx);
+    PressBigSwitch(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -767,14 +767,14 @@ void Task_WaddleDee(void)
         struct Task *t = gCurTask;
 
         t->frameTable = gWaddleDeeFrames;
-        t->unk8C->extraFrame = 4;
+        t->u8C.actor->extraFrame = 4;
         CallTableEntry(t->variant, 6, gWaddleDeeVariants);
     }
 }
 
 s32 sub_08078984(void)
 {
-    sub_08066c08(gUnk_08740BD4, 0);
+    sub_08066c08(gWaddleDeeDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -843,7 +843,7 @@ s32 sub_08078a48(void)
         r = 1;
         break;
     case 3:
-        sub_08066c3c(gUnk_08740BD4);
+        sub_08066c3c(gWaddleDeeDef);
         ActorSetState(0);
         TaskSetEntry(ParasolWaddleDeeWalkEnterState, gCurTaskIdx);
         r = 1;
@@ -862,7 +862,7 @@ s32 sub_08078b08(void)
     u8 v = gCurTask->variant;
 
     if (v == 3 || v == 5)
-        sub_08066c08(gUnk_08740BD4, 0);
+        sub_08066c08(gWaddleDeeDef, 0);
     sub_0806a0f0(-2);
     return 1;
 }

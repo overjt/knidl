@@ -56,7 +56,7 @@ gUnk_08743158:
 gBroomHatterVariants:
 	.word	sub_0808d558+1
 	.word	sub_0808da00+1
-	.word	sub_0808df58+1
+	.word	BroomHatterIdleInit+1
 	.global	gUnk_08743194
 gUnk_08743194:
 	.word	sub_0808d640+1
@@ -77,11 +77,11 @@ gUnk_087431B8:
 	.word	sub_0808dc68+1
 	.word	sub_0808de90+1
 	.word	sub_0808df54+1
-	.global	gUnk_087431C4
-gUnk_087431C4:
-	.word	sub_0808dfc4+1
-	.global	gUnk_087431C8
-gUnk_087431C8:
+	.global	gBroomHatterIdleStates
+gBroomHatterIdleStates:
+	.word	BroomHatterIdle+1
+	.global	gBroomHatterIdleStateUpdates
+gBroomHatterIdleStateUpdates:
 	.word	sub_0808e050+1
 	.global	gUnk_087431CC
 gUnk_087431CC:
@@ -92,11 +92,11 @@ gUnk_087431D8:
 	.global	gLaserBallVariants
 gLaserBallVariants:
 	.word	LaserBallInit+1
-	.word	sub_0808e804+1
+	.word	LaserBallIdleInit+1
 	.global	gLaserBallStates
 gLaserBallStates:
 	.word	sub_0808e480+1
-	.word	sub_0808e610+1
+	.word	LaserBallShoot+1
 	.word	sub_0808e54c+1
 	.word	sub_0808e730+1
 	.global	gLaserBallStateUpdates
@@ -105,11 +105,11 @@ gLaserBallStateUpdates:
 	.word	sub_0808e704+1
 	.word	sub_0808e5cc+1
 	.word	sub_0808e800+1
-	.global	gUnk_0874320C
-gUnk_0874320C:
-	.word	sub_0808e870+1
-	.global	gUnk_08743210
-gUnk_08743210:
+	.global	gLaserBallIdleStates
+gLaserBallIdleStates:
+	.word	LaserBallIdle+1
+	.global	gLaserBallIdleStateUpdates
+gLaserBallIdleStateUpdates:
 	.word	sub_0808e8a0+1
 	.global	gUnk_08743214
 gUnk_08743214:
@@ -117,24 +117,24 @@ gUnk_08743214:
 	.global	gUnk_0874321C
 gUnk_0874321C:
 	.incbin	"baserom.gba", 0x74321C, 0x8
-	.global	gUnk_08743224
-gUnk_08743224:
-	.word	sub_0808e914+1
-	.word	sub_0808e914+1
-	.word	sub_0808eb24+1
-	.global	gUnk_08743230
-gUnk_08743230:
-	.word	sub_0808e9b0+1
-	.word	sub_0808ea00+1
+	.global	gCoconutVariants
+gCoconutVariants:
+	.word	CoconutInit+1
+	.word	CoconutInit+1
+	.word	CoconutIdleInit+1
+	.global	gCoconutStates
+gCoconutStates:
+	.word	CoconutWait+1
+	.word	CoconutFall+1
 	.word	sub_0808eb10+1
-	.global	gUnk_0874323C
-gUnk_0874323C:
+	.global	gCoconutStateUpdates
+gCoconutStateUpdates:
 	.word	sub_0808e9d4+1
-	.global	gUnk_08743240
-gUnk_08743240:
-	.word	sub_0808eb94+1
-	.global	gUnk_08743244
-gUnk_08743244:
+	.global	gCoconutIdleStates
+gCoconutIdleStates:
+	.word	CoconutIdle+1
+	.global	gCoconutIdleStateUpdates
+gCoconutIdleStateUpdates:
 	.word	sub_0808ebdc+1
 	.global	gUnk_08743248
 gUnk_08743248:
@@ -153,60 +153,60 @@ gUnk_0874325A:
 	.incbin	"baserom.gba", 0x74325A, 0x2A
 	.global	gShotzoVariants
 gShotzoVariants:
-	.word	sub_0808f26c+1
-	.word	sub_0808f2c4+1
-	.word	sub_0808f2c4+1
-	.word	sub_0808f2c4+1
-	.word	sub_0808f320+1
-	.word	sub_0808f8e8+1
-	.global	gUnk_0874329C
-gUnk_0874329C:
+	.word	ShotzoAimInit+1
+	.word	ShotzoFixedInit+1
+	.word	ShotzoFixedInit+1
+	.word	ShotzoFixedInit+1
+	.word	ParasolShotzoInit+1
+	.word	ShotzoIdleInit+1
+	.global	gShotzoAimStates
+gShotzoAimStates:
 	.word	sub_0808f3d4+1
-	.word	sub_0808f4f8+1
-	.word	sub_0808f41c+1
-	.global	gUnk_087432A8
-gUnk_087432A8:
+	.word	ShotzoAimFall+1
+	.word	ShotzoAimShoot+1
+	.global	gShotzoAimStateUpdates
+gShotzoAimStateUpdates:
 	.word	sub_0808f400+1
 	.word	sub_0808f51c+1
 	.word	sub_0808f4b4+1
-	.global	gUnk_087432B4
-gUnk_087432B4:
+	.global	gShotzoFixedStates
+gShotzoFixedStates:
 	.word	sub_0808f528+1
-	.word	sub_0808f6c0+1
-	.word	sub_0808f5cc+1
-	.global	gUnk_087432C0
-gUnk_087432C0:
+	.word	ShotzoFixedFall+1
+	.word	ShotzoFixedShoot+1
+	.global	gShotzoFixedStateUpdates
+gShotzoFixedStateUpdates:
 	.word	sub_0808f578+1
 	.word	sub_0808f71c+1
 	.word	sub_0808f678+1
-	.global	gUnk_087432CC
-gUnk_087432CC:
+	.global	gParasolShotzoStates
+gParasolShotzoStates:
 	.word	sub_0808f728+1
-	.word	sub_0808f7ac+1
+	.word	ParasolShotzoShoot+1
 	.word	sub_0808f888+1
-	.global	gUnk_087432D8
-gUnk_087432D8:
+	.global	gParasolShotzoStateUpdates
+gParasolShotzoStateUpdates:
 	.word	sub_0808f75c+1
 	.word	sub_0808f844+1
 	.word	sub_0808f8dc+1
-	.global	gUnk_087432E4
-gUnk_087432E4:
-	.word	sub_0808f954+1
-	.global	gUnk_087432E8
-gUnk_087432E8:
+	.global	gShotzoIdleStates
+gShotzoIdleStates:
+	.word	ShotzoIdle+1
+	.global	gShotzoIdleStateUpdates
+gShotzoIdleStateUpdates:
 	.word	sub_0808f974+1
 	.global	gUnk_087432EC
 gUnk_087432EC:
 	.incbin	"baserom.gba", 0x7432EC, 0x8
-	.global	gUnk_087432F4
-gUnk_087432F4:
-	.word	sub_0808fa50+1
-	.word	sub_0808fbac+1
-	.global	gUnk_087432FC
-gUnk_087432FC:
-	.word	sub_0808fab4+1
+	.global	gConerVariants
+gConerVariants:
+	.word	ConerInit+1
+	.word	ConerIdleInit+1
+	.global	gConerStates
+gConerStates:
+	.word	ConerWalk+1
 	.word	sub_0808fb50+1
 	.word	sub_0808fb80+1
-	.global	gUnk_08743308
-gUnk_08743308:
-	.word	sub_0808fc00+1
+	.global	gConerIdleStates
+gConerIdleStates:
+	.word	ConerIdle+1

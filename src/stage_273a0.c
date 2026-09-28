@@ -13,7 +13,7 @@
  * sub_08027588/sub_080275cc keep the two-player race record
  * gUnk_02006098 (flags|0x80, lo, hi, previous, direction),
  * sub_080276ac/sub_080276cc/sub_08027750/sub_08027a30 the per-player
- * camera modes gPlayerCameraMode, and sub_08027798, sub_080277f0,
+ * camera modes gPlayerCameraMode, and CameraStartHoldAnchorAt, sub_080277f0,
  * sub_08027850 and sub_08027908 set the camera mode and target
  * (gCameraAnchorX/gCameraAnchorY) for one or all players. */
 
@@ -55,13 +55,13 @@ void sub_080273a0(void)
         gRoomEntryX = (d->unk2 << 4) + 22;
         gRoomEntryY = (d->unk4 << 4) + 5;
         gRoomEntrySet = 1;
-        gUnk_0200AF00 = 0;
-        gUnk_020069F0 = 1;
+        gEntryDoorEvent = 0;
+        gRoomEntryMode = 1;
         gGameState = 5;
     }
     else
     {
-        if (gUnk_030023B8 == 7)
+        if (gCurLevel == 7)
         {
             gUnk_02007FF0++;
             if (gUnk_02007FF0 > 5)
@@ -71,8 +71,8 @@ void sub_080273a0(void)
         gRoomEntryX = gUnk_0200AFF4;
         gRoomEntryY = gUnk_02008050;
         gRoomEntrySet = 1;
-        gUnk_0200AF00 = 0;
-        gUnk_020069F0 = 0;
+        gEntryDoorEvent = 0;
+        gRoomEntryMode = 0;
     }
 }
 
@@ -221,13 +221,13 @@ s32 sub_08027750(void)
     return 1;
 }
 
-void sub_08027798(s32 x, s32 y)
+void CameraStartHoldAnchorAt(s32 x, s32 y)
 {
     gCameraAnchorX = x;
     gCameraAnchorY = y;
     gCameraCenterX = gCameraAnchorX << 16;
     gCameraCenterY = gCameraAnchorY << 16;
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         gCameraMode = 4;
     else
         gCameraMode = 5;
@@ -237,13 +237,13 @@ void sub_080277f0(s32 x, s32 y)
 {
     gCameraFocusX = x;
     gCameraFocusY = y;
-    if (gUnk_03002444 != 0)
+    if (gInHub != 0)
         gCameraMode = 0;
     else
         gCameraMode = 0;
     if (gUnk_02007D64 != 2)
     {
-        if (gUnk_03002444 != 0)
+        if (gInHub != 0)
             sub_08028e3c();
         else
             sub_08028b8c();

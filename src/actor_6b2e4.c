@@ -8,7 +8,7 @@
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
  * actor back to the generic task body (sub_0806b8bc), the player-record
  * bookkeeping around gPlayerStates[] (sub_0806b9dc, sub_0806bd10, sub_0806be4c),
- * and the class-1 task bodies sub_0806bf54 / sub_0806c05c / sub_0806c158 with
+ * and the class-1 task bodies ActorAttachedSwallow / ActorAttachedBackdropHeld / ActorAttachedBackdropFlight with
  * their per-frame callbacks.
  */
 #include "gba/gba.h"
@@ -26,7 +26,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(u32 a);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void ActorSetState(s32 a);
-extern u32 sub_08021a40(s32 x, s32 y);
+extern u32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorSetTerrainBox(u32 *p);
 
 extern void ActorSetHitReactions(u32 *p);
@@ -98,7 +98,7 @@ void sub_0806b3c4(void)
     t = gCurTask;
     t->updateCallback = 0;
     if (t->unk76 != 0)
-        sub_080b54d0(gCurTaskIdx);
+        MarkRoomObjectUsed(gCurTaskIdx);
     TaskYieldTrampoline(1);
     u = gCurTask;
     u->frameTable = gUnk_0874C9D8;
@@ -169,7 +169,7 @@ void sub_0806b410(void)
         x = gCurTask;
         x->posX = x->pixelX << 16;
         x->posY = x->pixelY << 16;
-        if (sub_08021a40(x->pixelX, x->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(x->pixelX, x->pixelY) != 0)
         {
             y = gCurTask;
             if (CanBreakBlock(y->pixelX >> 4, y->pixelY >> 4, 3, -1) == 0)
@@ -179,7 +179,7 @@ void sub_0806b410(void)
             }
         }
         ActorSetState(6);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
     n = *(s8 *)&p->unk16 * 5;
@@ -231,7 +231,7 @@ void sub_0806b670(void)
         t->pixelY = t->unk1C;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (sub_08021a40(t->pixelX, t->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(t->pixelX, t->pixelY) != 0)
         {
             u = gCurTask;
             if (CanBreakBlock(u->pixelX >> 4, u->pixelY >> 4, 3, -1) == 0)
@@ -248,7 +248,7 @@ void sub_0806b670(void)
             w->facing = s->facing;
         }
         ActorSetState(2);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
     n = *(s8 *)&p->unk16 * 5;
@@ -300,7 +300,7 @@ void sub_0806b878(void)
     t = gCurTask;
     v = t->tileWord;
     m = 0xF000;
-    q = t->unk8C->savedPaletteBits;
+    q = t->u8C.actor->savedPaletteBits;
     m &= v;
     if (m == q)
         return;
@@ -309,7 +309,7 @@ void sub_0806b878(void)
     w = t->tileWord;
     n = 0xFFF;
     n &= w;
-    t->tileWord = n | t->unk8C->savedPaletteBits;
+    t->tileWord = n | t->u8C.actor->savedPaletteBits;
 }
 
 void sub_0806b8bc(void)
@@ -327,7 +327,7 @@ void sub_0806b8bc(void)
     }
     u = gCurTask;
     u->moveCallback = (u32)TaskMove;
-    u->unk82 = 0;
+    u->hitEffect = 0;
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;
     TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -359,7 +359,7 @@ void sub_0806b95c(void)
     u32 w;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     p = t->player;
     if (t->actorKind != 0 || t->unk76 != 40)
         p->unk09 = 1;
@@ -369,13 +369,13 @@ void sub_0806b95c(void)
     if (gCurTask->actorKind != 1)
         ActorSetHitReactions(gUnk_0873F92C);
     v = gCurTask;
-    c = v->unk8C;
+    c = v->u8C.actor;
     w = v->tileWord;
     m = 0xF000;
     m &= w;
     c->savedPaletteBits = m;
     v->unk2C = 2;
-    a->unk04 = v->unk82;
+    a->unk04 = v->hitEffect;
 }
 
 void sub_0806b9dc(void)
@@ -402,7 +402,7 @@ void sub_0806ba34(void)
     u32 z;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     v = t->tileWord;
     z = v >> 12;
     if (a->palette != 0)
@@ -427,7 +427,7 @@ void sub_0806ba9c(void)
     t->posY = (t->pixelY - s->pixelY) << 16;
 }
 
-s32 sub_0806baec(s32 a)
+s32 TaskIsParentWithinX(s32 a)
 {
     if (a > abs(TaskGetDxTo(gCurTask->parent)))
         return 1;
@@ -461,7 +461,7 @@ s32 ActorAttachToHitter(void)
 {
     sub_0806b9dc();
     sub_0806ba34();
-    switch (gCurTask->unk82)
+    switch (gCurTask->hitEffect)
     {
     case 1:
         sub_0806b95c();
@@ -570,7 +570,7 @@ void sub_0806bcdc(void)
     sub_0806bbe8();
     if (*(s16 *)&gCurTask->unk70 != 0)
         return;
-    if (sub_0806baec(18) == 0)
+    if (TaskIsParentWithinX(18) == 0)
         return;
     sub_0806bd10();
     gCurTask->unk70 = 1;
@@ -588,9 +588,9 @@ void sub_0806bd10(void)
     u8 q;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     p = t->player;
-    if ((s8)a->def->unk0D == 1)
+    if ((s8)a->def->isItem == 1)
     {
         if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->unk76 != 0)
         {
@@ -660,7 +660,7 @@ void sub_0806be4c(u32 i)
     struct PlayerState *p;
 
     s = &gTasks[i];
-    a = s->unk8C;
+    a = s->u8C.actor;
     p = s->player;
     if (a->unk04 == 1)
     {
@@ -691,21 +691,21 @@ u8 sub_0806be84(void)
     u32 m;
     u32 w;
 
-    if (gUnk_02006178 == 1)
+    if (gScreenAttackActive == 1)
     {
         sub_0806be4c(gCurTaskIdx);
         t = gCurTask;
         w = t->tileWord;
         m = 0xFFF;
         m &= w;
-        t->tileWord = m | t->unk8C->savedPaletteBits;
+        t->tileWord = m | t->u8C.actor->savedPaletteBits;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
         if (t->actorKind != 1 && t->actorKind != 6)
             ActorSetHitReactions(gUnk_0873F938);
         sub_0806b8bc();
     }
-    return gUnk_02006178;
+    return gScreenAttackActive;
 }
 
 void ActorAttachedEnterState(void)
@@ -718,12 +718,12 @@ void ActorAttachedEnterState(void)
     TaskSleepForever();
 }
 
-void sub_0806bf38(void)
+void ActorAttachedRunState(void)
 {
     CallTableEntry(gCurTask->state, 8, gActorAttachedStates);
 }
 
-void sub_0806bf54(void)
+void ActorAttachedSwallow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -738,7 +738,7 @@ void sub_0806bf54(void)
     u->unk70 = 0;
     u->unk30 = 0;
     u->layer = 6;
-    while (sub_0806baec(16) == 0)
+    while (TaskIsParentWithinX(16) == 0)
     {
         sub_0806bcdc();
         TaskYieldTrampoline(1);
@@ -784,7 +784,7 @@ void sub_0806bfd8(void)
     sub_0806b878();
 }
 
-void sub_0806c05c(void)
+void ActorAttachedBackdropHeld(void)
 {
     struct Task *t;
     struct Task *u;
@@ -831,7 +831,7 @@ void sub_0806c148(void)
     sub_0806be84();
 }
 
-void sub_0806c158(void)
+void ActorAttachedBackdropFlight(void)
 {
     struct Task *t;
 
@@ -839,12 +839,12 @@ void sub_0806c158(void)
     t->moveCallback = (u32)ActorMove;
     t->updateCallback = (u32)sub_0806c1d0;
     t->lateUpdateCallback = 0;
-    if (gUnk_0300244C != 0 && t->unk8C->terrainBox == 0)
+    if (gUnk_0300244C != 0 && t->u8C.actor->terrainBox == 0)
         ActorSetTerrainBox(gUnk_0873F894);
     TaskSetMotionXFacing(0x38000, 0x5A5A5A5A);
     TaskSetMotionY(0x30000, 0x8000, 0x60000);
     gCurTask->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskSleepForever();
 }
 
@@ -865,7 +865,7 @@ void sub_0806c1d0(void)
         PlaySfx(179);
         RequestScreenShake(2);
         ActorSetState(3);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
     t = gCurTask;

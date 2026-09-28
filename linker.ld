@@ -1960,7 +1960,7 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.sram_id_string) == 0x080CFE20, "MATCHING: .sram_id_string moved")
 
-    /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gUnk_080D0398, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer */
+    /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gAirGrindSineTable, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer */
     .air_grind_rodata : {
         KEEP(*(.air_grind_rodata)) KEEP(*(.air_grind_rodata.tail))
     } > ROM
@@ -2147,45 +2147,45 @@ SECTIONS
         KEEP(*(.actor_rodata_0874c3d0)) KEEP(*(.actor_rodata_0874c3d0.tail))
     } > ROM
     ASSERT(!MATCHING || ADDR(.actor_rodata) == 0x0873EEA0, "MATCHING: .actor_rodata moved")
-    ASSERT(!MATCHING || gUnk_0873F2B8 == 0x0873F2B8, "MATCHING: actor_rec_0873f2b8 moved")
+    ASSERT(!MATCHING || gAbilityStarDef == 0x0873F2B8, "MATCHING: actor_rec_0873f2b8 moved")
     ASSERT(!MATCHING || actor_rodata_0873f4c8 == 0x0873F4C8, "MATCHING: actor_rodata_0873f4c8 moved")
-    ASSERT(!MATCHING || gUnk_0873F664 == 0x0873F664, "MATCHING: actor_rec_0873f664 moved")
+    ASSERT(!MATCHING || gInhalableStarDef == 0x0873F664, "MATCHING: actor_rec_0873f664 moved")
     ASSERT(!MATCHING || actor_rodata_0873f6e8 == 0x0873F6E8, "MATCHING: actor_rodata_0873f6e8 moved")
     ASSERT(!MATCHING || gUnk_0873F8EC == 0x0873F8EC, "MATCHING: actor_rec_0873f8ec moved")
     ASSERT(!MATCHING || actor_rodata_0873f8f4 == 0x0873F8F4, "MATCHING: actor_rodata_0873f8f4 moved")
-    ASSERT(!MATCHING || gUnk_08740BD4 == 0x08740BD4, "MATCHING: actor_rec_08740bd4 moved")
+    ASSERT(!MATCHING || gWaddleDeeDef == 0x08740BD4, "MATCHING: actor_rec_08740bd4 moved")
     ASSERT(!MATCHING || actor_rodata_08740de4 == 0x08740DE4, "MATCHING: actor_rodata_08740de4 moved")
-    ASSERT(!MATCHING || gUnk_087410E4 == 0x087410E4, "MATCHING: actor_rec_087410e4 moved")
+    ASSERT(!MATCHING || gPengyIceBreathDef == 0x087410E4, "MATCHING: actor_rec_087410e4 moved")
     ASSERT(!MATCHING || actor_rodata_0874113c == 0x0874113C, "MATCHING: actor_rodata_0874113c moved")
-    ASSERT(!MATCHING || gUnk_087417B8 == 0x087417B8, "MATCHING: actor_rec_087417b8 moved")
+    ASSERT(!MATCHING || gRockyDef == 0x087417B8, "MATCHING: actor_rec_087417b8 moved")
     ASSERT(!MATCHING || actor_rodata_08741aa4 == 0x08741AA4, "MATCHING: actor_rodata_08741aa4 moved")
-    ASSERT(!MATCHING || gUnk_08741EB4 == 0x08741EB4, "MATCHING: actor_rec_08741eb4 moved")
+    ASSERT(!MATCHING || gSirKibbleCutterDef == 0x08741EB4, "MATCHING: actor_rec_08741eb4 moved")
     ASSERT(!MATCHING || actor_rodata_08741f0c == 0x08741F0C, "MATCHING: actor_rodata_08741f0c moved")
-    ASSERT(!MATCHING || gUnk_087429E8 == 0x087429E8, "MATCHING: actor_rec_087429e8 moved")
+    ASSERT(!MATCHING || gNoddyDef == 0x087429E8, "MATCHING: actor_rec_087429e8 moved")
     ASSERT(!MATCHING || actor_rodata_08742bf8 == 0x08742BF8, "MATCHING: actor_rodata_08742bf8 moved")
-    ASSERT(!MATCHING || gUnk_08742FBC == 0x08742FBC, "MATCHING: actor_rec_08742fbc moved")
+    ASSERT(!MATCHING || gChillyFreezeDef == 0x08742FBC, "MATCHING: actor_rec_08742fbc moved")
     ASSERT(!MATCHING || actor_rodata_0874306c == 0x0874306C, "MATCHING: actor_rodata_0874306c moved")
-    ASSERT(!MATCHING || gUnk_0874330C == 0x0874330C, "MATCHING: actor_rec_0874330c moved")
+    ASSERT(!MATCHING || gBroomHatterDef == 0x0874330C, "MATCHING: actor_rec_0874330c moved")
     ASSERT(!MATCHING || actor_rodata_08743414 == 0x08743414, "MATCHING: actor_rodata_08743414 moved")
-    ASSERT(!MATCHING || gUnk_08743644 == 0x08743644, "MATCHING: actor_rec_08743644 moved")
+    ASSERT(!MATCHING || gLaserBallLaserDef == 0x08743644, "MATCHING: actor_rec_08743644 moved")
     ASSERT(!MATCHING || actor_rodata_0874369c == 0x0874369C, "MATCHING: actor_rodata_0874369c moved")
     ASSERT(!MATCHING || gBonkersDef == 0x08743B4C, "MATCHING: actor_rec_08743b4c moved")
     ASSERT(!MATCHING || actor_rodata_08743bd0 == 0x08743BD0, "MATCHING: actor_rodata_08743bd0 moved")
     ASSERT(!MATCHING || gUnk_0874402C == 0x0874402C, "MATCHING: actor_rec_0874402c moved")
     ASSERT(!MATCHING || actor_rodata_0874407c == 0x0874407C, "MATCHING: actor_rodata_0874407c moved")
-    ASSERT(!MATCHING || gUnk_087441D8 == 0x087441D8, "MATCHING: actor_rec_087441d8 moved")
+    ASSERT(!MATCHING || gBonkersNutDef == 0x087441D8, "MATCHING: actor_rec_087441d8 moved")
     ASSERT(!MATCHING || actor_rodata_0874425c == 0x0874425C, "MATCHING: actor_rodata_0874425c moved")
     ASSERT(!MATCHING || gGrandWheelieDef == 0x08744964, "MATCHING: actor_rec_08744964 moved")
     ASSERT(!MATCHING || actor_rodata_087449e8 == 0x087449E8, "MATCHING: actor_rodata_087449e8 moved")
     ASSERT(!MATCHING || gUnk_0874531C == 0x0874531C, "MATCHING: actor_rec_0874531c moved")
     ASSERT(!MATCHING || actor_rodata_087453bc == 0x087453BC, "MATCHING: actor_rodata_087453bc moved")
-    ASSERT(!MATCHING || gUnk_08745530 == 0x08745530, "MATCHING: actor_rec_08745530 moved")
+    ASSERT(!MATCHING || gGrandWheelieMiniWheelieDef == 0x08745530, "MATCHING: actor_rec_08745530 moved")
     ASSERT(!MATCHING || actor_rodata_08745588 == 0x08745588, "MATCHING: actor_rodata_08745588 moved")
     ASSERT(!MATCHING || gMrFrostyDef == 0x08745810, "MATCHING: actor_rec_08745810 moved")
     ASSERT(!MATCHING || actor_rodata_08745868 == 0x08745868, "MATCHING: actor_rodata_08745868 moved")
     ASSERT(!MATCHING || gUnk_08745A2C == 0x08745A2C, "MATCHING: actor_rec_08745a2c moved")
     ASSERT(!MATCHING || actor_rodata_08745a34 == 0x08745A34, "MATCHING: actor_rodata_08745a34 moved")
-    ASSERT(!MATCHING || gUnk_08745B30 == 0x08745B30, "MATCHING: actor_rec_08745b30 moved")
+    ASSERT(!MATCHING || gMrFrostyIceCubeDef == 0x08745B30, "MATCHING: actor_rec_08745b30 moved")
     ASSERT(!MATCHING || actor_rodata_08745bb4 == 0x08745BB4, "MATCHING: actor_rodata_08745bb4 moved")
     ASSERT(!MATCHING || gUnk_08747C80 == 0x08747C80, "MATCHING: actor_rec_08747c80 moved")
     ASSERT(!MATCHING || actor_rodata_08747ebc == 0x08747EBC, "MATCHING: actor_rodata_08747ebc moved")
@@ -2195,25 +2195,25 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_087487e8 == 0x087487E8, "MATCHING: actor_rodata_087487e8 moved")
     ASSERT(!MATCHING || gUnk_08748918 == 0x08748918, "MATCHING: actor_rec_08748918 moved")
     ASSERT(!MATCHING || actor_rodata_08748930 == 0x08748930, "MATCHING: actor_rodata_08748930 moved")
-    ASSERT(!MATCHING || gUnk_08748AB0 == 0x08748AB0, "MATCHING: actor_rec_08748ab0 moved")
+    ASSERT(!MATCHING || gKingDededeStarDef == 0x08748AB0, "MATCHING: actor_rec_08748ab0 moved")
     ASSERT(!MATCHING || actor_rodata_08748bb8 == 0x08748BB8, "MATCHING: actor_rodata_08748bb8 moved")
     ASSERT(!MATCHING || gMetaKnightDef == 0x08749514, "MATCHING: actor_rec_08749514 moved")
     ASSERT(!MATCHING || actor_rodata_08749598 == 0x08749598, "MATCHING: actor_rodata_08749598 moved")
     ASSERT(!MATCHING || gUnk_08749AE8 == 0x08749AE8, "MATCHING: actor_rec_08749ae8 moved")
     ASSERT(!MATCHING || actor_rodata_08749b08 == 0x08749B08, "MATCHING: actor_rodata_08749b08 moved")
-    ASSERT(!MATCHING || gUnk_08749BEC == 0x08749BEC, "MATCHING: actor_rec_08749bec moved")
+    ASSERT(!MATCHING || gMetaKnightSwordDef == 0x08749BEC, "MATCHING: actor_rec_08749bec moved")
     ASSERT(!MATCHING || actor_rodata_08749c70 == 0x08749C70, "MATCHING: actor_rodata_08749c70 moved")
     ASSERT(!MATCHING || gPaintRollerDef == 0x0874B2DC, "MATCHING: actor_rec_0874b2dc moved")
     ASSERT(!MATCHING || actor_rodata_0874b38c == 0x0874B38C, "MATCHING: actor_rodata_0874b38c moved")
     ASSERT(!MATCHING || gUnk_0874B4C8 == 0x0874B4C8, "MATCHING: actor_rec_0874b4c8 moved")
     ASSERT(!MATCHING || actor_rodata_0874b4d8 == 0x0874B4D8, "MATCHING: actor_rodata_0874b4d8 moved")
-    ASSERT(!MATCHING || gUnk_0874B940 == 0x0874B940, "MATCHING: actor_rec_0874b940 moved")
+    ASSERT(!MATCHING || gPaintRollerPaintingDef == 0x0874B940, "MATCHING: actor_rec_0874b940 moved")
     ASSERT(!MATCHING || actor_rodata_0874bb7c == 0x0874BB7C, "MATCHING: actor_rodata_0874bb7c moved")
     ASSERT(!MATCHING || gWhispyWoodsDef == 0x0874C158, "MATCHING: actor_rec_0874c158 moved")
     ASSERT(!MATCHING || actor_rodata_0874c184 == 0x0874C184, "MATCHING: actor_rodata_0874c184 moved")
     ASSERT(!MATCHING || gUnk_0874C1FC == 0x0874C1FC, "MATCHING: actor_rec_0874c1fc moved")
     ASSERT(!MATCHING || actor_rodata_0874c204 == 0x0874C204, "MATCHING: actor_rodata_0874c204 moved")
-    ASSERT(!MATCHING || gUnk_0874C378 == 0x0874C378, "MATCHING: actor_rec_0874c378 moved")
+    ASSERT(!MATCHING || gWhispyWoodsAppleDef == 0x0874C378, "MATCHING: actor_rec_0874c378 moved")
     ASSERT(!MATCHING || actor_rodata_0874c3d0 == 0x0874C3D0, "MATCHING: actor_rodata_0874c3d0 moved")
 
     /* Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gUnk_0874CFEC among them */
@@ -2246,25 +2246,25 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.player_frame_lists) == 0x08769250, "MATCHING: .player_frame_lists moved")
 
-    /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, sub_08007e04 src/mode_07b68.c */
+    /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, ExtraModeTitleLoadMultiBootImage src/mode_07b68.c */
     .multiboot_program : {
         KEEP(*(.multiboot_program)) KEEP(*(.multiboot_program.tail))
     } > ROM
     ASSERT(!MATCHING || ADDR(.multiboot_program) == 0x0876B1FC, "MATCHING: .multiboot_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .quick_draw_program : {
         KEEP(*(.quick_draw_program)) KEEP(*(.quick_draw_program.tail))
     } > ROM
     ASSERT(!MATCHING || ADDR(.quick_draw_program) == 0x0876F690, "MATCHING: .quick_draw_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .bomb_rally_program : {
         KEEP(*(.bomb_rally_program)) KEEP(*(.bomb_rally_program.tail))
     } > ROM
     ASSERT(!MATCHING || ADDR(.bomb_rally_program) == 0x087954C0, "MATCHING: .bomb_rally_program moved")
 
-    /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .air_grind_program : {
         KEEP(*(.air_grind_program)) KEEP(*(.air_grind_program.tail))
     } > ROM

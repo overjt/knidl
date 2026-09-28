@@ -19,18 +19,18 @@ extern s16 gPlayerHealth[];
 extern s8 gUnk_02005590[];
 extern struct Unk020055D8 gRoomObjectList;
 extern u8 gUnk_02005E10[];
-extern u8 gUnk_020069F0;
-extern u32 gUnk_02007BF0[8][8];
+extern u8 gRoomEntryMode;
+extern u32 gUsedRoomObjects[8][8];
 extern s16 gPlayerLives[];
 extern u16 gUnk_02007D60;
 extern s8 gUnk_02007D64;
 extern s16 gUnk_0200AF0C;
-extern u8 gUnk_0200B04C;
+extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
 extern u8 gUnk_0200D080;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern u8 gActivePlayerMask;
@@ -66,7 +66,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void TaskInitWaterFlags(void);
 extern u8 ClampTaskToRoom(struct Task *t);
-extern u32 sub_0802294c();
+extern u32 IsTaskBelowRoom();
 extern void ExitClearedStage();
 extern void sub_08025a30();
 extern void sub_08025acc();
@@ -75,9 +75,9 @@ extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
 extern s32 CreateMapEvent();
-extern void sub_0802ffe8();
+extern void CreateWarpStarStationNumber();
 extern void TaskBreakBlocksNoPlayer();
-extern void sub_08030db8();
+extern void TaskBreakTopBlockRow();
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
@@ -91,7 +91,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
@@ -102,13 +102,13 @@ extern u32 ActorReactToHit(void);
 
 /* Module functions */
 void sub_080a2b2c();
-void sub_080b54a4();
-s32 sub_080b5670();
-s32 sub_080b5840();
-s32 sub_080b590c();
-void sub_080b59d8();
+void ReleaseRoomObject();
+s32 LoadRoomEnemyGfx();
+s32 LoadRoomMidBossGfx();
+s32 LoadRoomBossGfx();
+void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
-s32 sub_080b5bdc();
+s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
 void sub_080b2fe8(void)
@@ -630,8 +630,8 @@ void sub_080b3758(void)
 
 void sub_080b37ec(void)
 {
-    gCurTask->health = gCurTask->unk80;
-    gCurTask->unk80 = gCurTask->unk46;
+    gCurTask->health = gCurTask->u80.nearestPlayer;
+    gCurTask->u80.nearestPlayer = gCurTask->unk46;
     gCurTask->unk46 = gCurTask->unk70;
     gCurTask->unk70 = (u32)gCurTask->unk24 >> 16;
     gCurTask->unk24 = (gCurTask->unk24 & 0xFFFF) + (((u32)gCurTask->unk20 >> 16) << 16);
@@ -779,7 +779,7 @@ void sub_080b3a00(void)
     *(u16 *)((u8 *)u6 + 130) = w6;
 }
 
-void sub_080b3a64(void)
+void WhispyWoodsLeavesDraw(void)
 {
     if (gUnk_0874C260[65 - (s16)gCurTask->unk6C] != -1)
         QueueSprite(gCurTask->layer,
@@ -798,7 +798,7 @@ void sub_080b3a64(void)
                      gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->unk6C]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->health - gSpriteCameraX + gCurTask->waterFlags,
-                     gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->unk82);
+                     gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->hitEffect);
     if (gUnk_0874C332[65 - (s16)gCurTask->unk6C] != -1)
         QueueSprite(gCurTask->layer,
                      gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->unk6C]],
@@ -807,17 +807,17 @@ void sub_080b3a64(void)
                      gCurTask->unk1C - gSpriteCameraY);
 }
 
-void sub_080b3c68(void)
+void Task_WhispyWoodsLeaves(void)
 {
     s32 m;
     s32 z;
 
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->tileWord = 0;
-    gCurTask->drawCallback = (u32)sub_080b3a64;
+    gCurTask->drawCallback = (u32)WhispyWoodsLeavesDraw;
     gCurTask->layer = 8;
     gCurTask->frameTable = (u32 *)gUnk_0874CE68;
-    gCurTask->updateCallback = (u32)sub_080b3e30;
+    gCurTask->updateCallback = (u32)WhispyWoodsLeavesUpdate;
     sub_080b38f0();
     sub_080b3a00();
     gCurTask->unk6C = 66;
@@ -890,7 +890,7 @@ void sub_080b3c68(void)
     TaskSleepForever();
 }
 
-void sub_080b3e30(void)
+void WhispyWoodsLeavesUpdate(void)
 {
     struct Task **c;
     u8 *su;
@@ -973,11 +973,11 @@ void sub_080b3f54(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     if (a->animScript == NULL)
         gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
-    if (gUnk_03001F30 == 1 && gCurTask->unk76 == 1)
+    if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     a->extraLayerOffset = 1;
     a->extraTileWord = 0xF000;
@@ -1011,7 +1011,7 @@ void sub_080b3ffc(void)
 {
     if (gCurTask->frame != 5)
     {
-        if (gUnk_03001F30 == 1 && gCurTask->unk76 == 1)
+        if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
             gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     }
     else
@@ -1175,9 +1175,9 @@ void PickupHeal(void)
     e = (u8 *)gPlayerHealth;
     if (*(s16 *)((*h << 1) + (u32)e) != 0)
     {
-        sub_080670ac(15);
+        FreezeStage(15);
         CallTableEntry((*c)->state, 2, gUnk_087560B8);
-        sub_080670d4();
+        ThawStage();
     }
     ActorDestroy();
 }
@@ -1187,7 +1187,7 @@ void MaximTomatoHeal(void)
     struct Task **c;
     u8 k4;
 
-    sub_08067108();
+    DisablePause();
     c = &gCurTask;
     do
     {
@@ -1196,8 +1196,8 @@ void MaximTomatoHeal(void)
         k4 = sub_080b4204(*(s16 *)((u8 *)*c + 68));
         TaskYieldTrampoline(8);
     } while (k4 == 0);
-    sub_08040894(*(s16 *)((u8 *)gCurTask + 68), 1);
-    sub_08067114();
+    PlayerStartItemShare(*(s16 *)((u8 *)gCurTask + 68), 1);
+    EnablePause();
 }
 
 void EnergyDrinkHeal(void)
@@ -1216,9 +1216,9 @@ void EnergyDrinkHeal(void)
 
     w0 = *(u8 *)gExtraMode;
     n = 1;
-    if (w0 == 0 && gUnk_03001F30 == 0)
+    if (w0 == 0 && gMetaKnightmareMode == 0)
         n = 2;
-    sub_08067108();
+    DisablePause();
     c2 = &gCurTask;
     t = *c2;
     h0 = (u8 *)t + 108;
@@ -1241,8 +1241,8 @@ xbody:
     if (*(s16 *)h < n)
         goto xbody;
 xend:
-    sub_08040894(*(s16 *)((u8 *)gCurTask + 68), 2);
-    sub_08067114();
+    PlayerStartItemShare(*(s16 *)((u8 *)gCurTask + 68), 2);
+    EnablePause();
 }
 
 s32 sub_080b4390(void)
@@ -1451,7 +1451,7 @@ void sub_080b4648(void)
         TaskSetEntry(ActorDie, gCurTaskIdx);
         return;
     }
-    if (sub_0802294c(t) != 0)
+    if (IsTaskBelowRoom(t) != 0)
     {
         ActorDestroy();
         return;
@@ -1542,7 +1542,7 @@ void sub_080b47c0(void)
     sub_080b4648();
 }
 
-void sub_080b47cc(void)
+void Task_StarRodPiece(void)
 {
     struct Task **c;
     struct Task *ta;
@@ -1554,8 +1554,8 @@ void sub_080b47cc(void)
     ta->drawCallback = (u32)ActorDrawWorldInView;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
-    tb->frameTable = (u32 *)gUnk_08754780;
-    CallTableEntry(*(u8 *)((u8 *)tb + 115), 3, gUnk_087560E0);
+    tb->frameTable = (u32 *)gStarRodPieceFrames;
+    CallTableEntry(*(u8 *)((u8 *)tb + 115), 3, gStarRodPieceVariants);
 }
 
 void sub_080b480c(void)
@@ -1611,7 +1611,7 @@ void sub_080b4878(void)
         } while (i < gPlayerCount);
     }
     sub_080b480c();
-    sub_08067108();
+    DisablePause();
 }
 
 void sub_080b48e0(void)
@@ -1968,7 +1968,7 @@ void sub_080b4e04(void)
         TaskYieldTrampoline(60);
     if (sub_08066394() != 0)
     {
-        sub_080670ac(15);
+        FreezeStage(15);
         ExitClearedStage();
     }
     TaskSleepForever();
@@ -1988,7 +1988,7 @@ void sub_080b4e40(void)
     m5 = 255;
     z4 = 0;
     z3 = 0;
-    p1 = (u8 *)gUnk_020060A0;
+    p1 = (u8 *)gRoomObjectGfxSlots;
     k2 = 9;
     do
     {
@@ -2003,8 +2003,8 @@ void sub_080b4e40(void)
     i2 = 0;
     do
     {
-        ((u8 *)gUnk_02008020)[i2] = 0;
-        q = (u8 *)gUnk_02006130 + i2;
+        ((u8 *)gRoomObjectTried)[i2] = 0;
+        q = (u8 *)gRoomObjectGfxSlotIds + i2;
         w = *q;
         w |= 255;
         *q = w;
@@ -2019,5 +2019,5 @@ void sub_080b4e40(void)
         *q = w;
         i2++;
     } while (i2 <= 30);
-    sub_080b4ea8();
+    LoadRoomObjectGfx();
 }

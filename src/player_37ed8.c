@@ -12,8 +12,8 @@
  *
  * Player action body, part 6: action 16 and per-frame handler 16.
  * PlayerActionHurt (action 16, mode 17, 4368 bytes) is the twin of M11's
- * sub_08042580: a goto loop around a seven-state switch over Task.variant.
- * State 5, the entry, picks the next state from Task.unk82 (its low
+ * MetaKnightActionHurt: a goto loop around a seven-state switch over Task.variant.
+ * State 5, the entry, picks the next state from Task.hitEffect (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
  * (PlayerState.ability) with bit 1 of PlayerState.unk42 clear, releases it
  * through M17's CreateAbilityStar(PlayerState.unk30) and M02's HUD
@@ -52,7 +52,7 @@ loop:
         gCurTask->player->running = 0;
         if (gCurTask->player->unk37 == 2 || gCurTask->player->unk37 == 3)
         {
-            gCurTask->variant = gCurTask->unk82 & 15;
+            gCurTask->variant = gCurTask->hitEffect & 15;
         }
         else
         {
@@ -62,10 +62,10 @@ loop:
                 SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
             }
             u = gCurTask;
-            if (u->unk82 & 128)
+            if (u->hitEffect & 128)
                 u->variant = 4;
             else
-                u->variant = u->unk82 & 15;
+                u->variant = u->hitEffect & 15;
             if (!(gCurTask->player->unk42 & 2) && gCurTask->player->unk37 == 0)
             {
                 if (gCurTask->player->ability != 0)
@@ -754,7 +754,7 @@ void PlayerActionHurtUpdate(void)
         TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
         break;
     case 6:
-        sub_08040710();
+        PlayerRequestStandOrFall();
         break;
     }
     PlayerStopAtCeilingAndWall();

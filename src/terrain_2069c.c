@@ -15,17 +15,17 @@
  * attribute byte for that pixel, or 0 when the coordinate is outside the map.
  */
 
-u32 sub_0802069c(void)
+u32 TerrainProbePointStop(void)
 {
     u32 result = 0;
     s8 v;
 
     if (TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY) == 0)
     {
-        if (gUnk_087336F0[gTerrainTileBelow] != 0)
+        if (gCollisionTileOneWay[gTerrainTileBelow] != 0)
         {
             gTerrainProbeResult.unkB |= 1;
-            if (gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
+            if (gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
                 gTerrainProbeResult.unkC = (u16)gTerrainProbeY >> 4;
             else
                 gTerrainProbeResult.unkC = (gTerrainProbeY + 16) >> 4;
@@ -37,7 +37,7 @@ u32 sub_0802069c(void)
     }
     else
     {
-        v = gUnk_087336F0[gTerrainTile];
+        v = gCollisionTileOneWay[gTerrainTile];
         if (v == 0 || ((gTerrainProbeResult.unkB & 1) && gTerrainProbeResult.unkC <= gTerrainProbeY >> 4))
         {
             gTerrainProbeResult.unk2 = 1;

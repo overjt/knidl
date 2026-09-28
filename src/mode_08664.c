@@ -13,9 +13,9 @@
 /* mode_08664.c (0x08008664-0x08008B8B, issue #96).
  *
  * The pause screen PauseScreen: it fades out, loads the level's pause
- * picture (sub_08008fc4), waits for A/START or B and, when the stage
- * allows it, toggles a Continue/Exit choice drawn by sub_080089e0.  Also
- * the per-frame body of AgbMain state 20, sub_08008a00. */
+ * picture (PauseScreenLoadGraphics), waits for A/START or B and, when the stage
+ * allows it, toggles a Continue/Exit choice drawn by PauseScreenLoadChoicePalette.  Also
+ * the per-frame body of AgbMain state 20, BossEnduranceMain. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void PlaySfx(s32 id);
@@ -44,10 +44,10 @@ void PauseScreen(void)
     sub_08027228();
     mode = gGameState;
     flag = 0;
-    if (mode == 8 && gUnk_03002400[gUnk_030023B8][gUnk_03001F20] != 0)
+    if (mode == 8 && gStageClearStatus[gCurLevel][gUnk_03001F20] != 0)
         flag = gUnk_02007D64 != 5;
     LoadBgLayout(5);
-    if (gUnk_03001F30 == 1) {
+    if (gMetaKnightmareMode == 1) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0xC00;
         id = 28;
@@ -61,11 +61,11 @@ void PauseScreen(void)
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0xE00;
     }
-    sub_08008fc4(id, flag);
+    PauseScreenLoadGraphics(id, flag);
     gBg2ScrollX = gBg2ScrollY = 0;
     gBg3ScrollX = gBg3ScrollY = 0;
     sel = 0;
-    sub_080089e0(0);
+    PauseScreenLoadChoicePalette(0);
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();
@@ -92,7 +92,7 @@ void PauseScreen(void)
                     if (flag != 0 && (gPlayerPressedKeys[i] & 0xC0)) {
                         PlaySfx(286);
                         sel ^= 1;
-                        sub_080089e0(sel);
+                        PauseScreenLoadChoicePalette(sel);
                     }
                 }
             }
@@ -100,7 +100,7 @@ void PauseScreen(void)
             if (flag != 0 && (gPlayerPressedKeys[gPausingPlayer] & 0xC0)) {
                 PlaySfx(286);
                 sel ^= 1;
-                sub_080089e0(sel);
+                PauseScreenLoadChoicePalette(sel);
             }
             if (gPlayerPressedKeys[gPausingPlayer] & 9) {
                 if (sel != 0) {
@@ -115,7 +115,7 @@ void PauseScreen(void)
             }
         }
     } while (pressed == 0);
-    if (gUnk_03002444 != 0 || gGameState != 5) {
+    if (gInHub != 0 || gGameState != 5) {
         LinkStopKeyExchange();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
@@ -136,12 +136,12 @@ void PauseScreen(void)
     }
 }
 
-void sub_080089e0(s32 n)
+void PauseScreenLoadChoicePalette(s32 n)
 {
-    RequestCopy(2, (u32)gUnk_0857121C[n], (u32)gUnk_03001390, 22);
+    RequestCopy(2, (u32)gPauseChoicePalettes[n], (u32)gUnk_03001390, 22);
 }
 
-void sub_08008a00(void)
+void BossEnduranceMain(void)
 {
     s32 done = 0;
     s32 i;
@@ -150,7 +150,7 @@ void sub_08008a00(void)
     LoadBgLayout(3);
     gInputRecorderMode = 0;
     InputRecorderStart();
-    sub_0800b648();
+    StageInit();
     for (i = 0; i < gPlayerCount; i++)
         InitPlayerState(i);
     LinkRequestSync();

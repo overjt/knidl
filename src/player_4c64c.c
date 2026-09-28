@@ -12,7 +12,7 @@
  * PlayerActionThrowHold (action 54, mode 13) is a charged three-way move, a
  * `while (1) switch (Task.variant)` state machine.  A fresh entry starts
  * in state 3 with the 120-frame timer PlayerState.unk14 and
- * Task.unk80 = 23: state 3 winds up (animation 0xF73, the frame index
+ * Task.u80.attackAbility = 23: state 3 winds up (animation 0xF73, the frame index
  * PlayerState.unk16 stepping 0-1-2-1-2, effect 28 on the ground) and
  * picks the direction Task.unk28 from the held keys (up 0, down 2,
  * otherwise 1); state 4 (effect 47) holds until the timer runs out or
@@ -42,7 +42,7 @@ void PlayerActionThrowHold(void)
             t->variant = 3;
             u = gCurTask;
             u->player->unk14 = 120;
-            u->unk80 = 23;
+            u->u80.attackAbility = 23;
         }
     }
     while (1) {

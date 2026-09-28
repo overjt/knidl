@@ -9,13 +9,13 @@
 
 /* menutask_0e314.c (0x0800E314-0x0800EA0B, issue #99).
  *
- * Menu sprite tasks, middle part.  Task types #245 (sub_0800e314, body
- * sub_0800e390) and #246 (sub_0800e46c, body sub_0800e518) show the
+ * Menu sprite tasks, middle part.  Task types #245 (Task_NormalExtraPanel, body
+ * NormalExtraPanelUpdate) and #246 (Task_PlayerCountPanel, body PlayerCountPanelUpdate) show the
  * pictures and palette pulses of menu screens 2 and 3; #247
- * (Task_ModeListCursor, body sub_0800e674) the mode list's picture and row
- * highlight (sub_0800e7b0); #248 (sub_0800e81c, body sub_0800e8c0) the
- * picture of screen 5; and sub_0800e9a4 is the entry of #243, whose
- * body sub_0800ea0c is in menutask_0ea0c.c. */
+ * (Task_ModeListCursor, body ModeListCursorUpdate) the mode list's picture and row
+ * highlight (ModeListHighlightRow); #248 (Task_ModePlayerCountPanel, body ModePlayerCountPanelUpdate) the
+ * picture of screen 5; and Task_EraseConfirmDialog is the entry of #243, whose
+ * body EraseConfirmDialogUpdate is in menutask_0ea0c.c. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* Declared here, not through a header: the calls in this file pass other
@@ -23,11 +23,11 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 
-void sub_0800e314(void)
+void Task_NormalExtraPanel(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800e390;
+    gCurTask->updateCallback = (u32)NormalExtraPanelUpdate;
     gCurTask->layer = 6;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 7;
@@ -41,7 +41,7 @@ void sub_0800e314(void)
     TaskExitTrampoline();
 }
 
-void sub_0800e390(void)
+void NormalExtraPanelUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;
@@ -68,11 +68,11 @@ void sub_0800e390(void)
     }
 }
 
-void sub_0800e46c(void)
+void Task_PlayerCountPanel(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800e518;
+    gCurTask->updateCallback = (u32)PlayerCountPanelUpdate;
     gCurTask->layer = 5;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 6;
@@ -91,7 +91,7 @@ void sub_0800e46c(void)
     TaskExitTrampoline();
 }
 
-void sub_0800e518(void)
+void PlayerCountPanelUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;
@@ -108,20 +108,20 @@ void sub_0800e518(void)
     v = gCurTask;
     if ((v->unk34 += 32) > 256)
         v->unk34 = 256;
-    k = gUnk_02004B44 * 3;
+    k = gPlayerCountCursor * 3;
     w = gCurTask;
     BlendColors(gUnk_08559C24[k + w->unk2C], gUnk_08559C24[k + w->unk30], (u16)w->unk34, 16, gUnk_03001550);
-    MenuLoadPicture(2, gUnk_02004B44);
+    MenuLoadPicture(2, gPlayerCountCursor);
 }
 
 void Task_ModeListCursor(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = 0;
-    gCurTask->updateCallback = (u32)sub_0800e674;
+    gCurTask->updateCallback = (u32)ModeListCursorUpdate;
     gCurTask->frameTable = gUnk_08755650;
     LoadGfxSet(32);
-    sub_0800e7b0();
+    ModeListHighlightRow();
     if (gMenuScreen == 4)
         MenuLoadPicture(3, gMenuCursor);
     gCurTask->unk28 = gMenuCursor;
@@ -138,7 +138,7 @@ void Task_ModeListCursor(void)
     TaskExitTrampoline();
 }
 
-void sub_0800e674(void)
+void ModeListCursorUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;
@@ -159,7 +159,7 @@ void sub_0800e674(void)
         w = gCurTask;
         BlendColors(gUnk_0855D2F8[w->unk2C], gUnk_0855D2F8[w->unk30], (u16)w->unk34, 10, gUnk_0300153C);
         if (gMenuCursor != gCurTask->unk28) {
-            sub_0800e7b0();
+            ModeListHighlightRow();
             if (gMenuScreen == 4)
                 MenuLoadPicture(3, gMenuCursor);
             gCurTask->unk28 = gMenuCursor;
@@ -175,7 +175,7 @@ void sub_0800e674(void)
     }
 }
 
-void sub_0800e7b0(void)
+void ModeListHighlightRow(void)
 {
     s32 i;
     u16 *p;
@@ -189,11 +189,11 @@ void sub_0800e7b0(void)
     }
 }
 
-void sub_0800e81c(void)
+void Task_ModePlayerCountPanel(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800e8c0;
+    gCurTask->updateCallback = (u32)ModePlayerCountPanelUpdate;
     gCurTask->layer = 5;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 6;
@@ -207,7 +207,7 @@ void sub_0800e81c(void)
     TaskExitTrampoline();
 }
 
-void sub_0800e8c0(void)
+void ModePlayerCountPanelUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;
@@ -234,11 +234,11 @@ void sub_0800e8c0(void)
     }
 }
 
-void sub_0800e9a4(void)
+void Task_EraseConfirmDialog(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = 0;
-    gCurTask->updateCallback = (u32)sub_0800ea0c;
+    gCurTask->updateCallback = (u32)EraseConfirmDialogUpdate;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->unk2C = 0;
     gCurTask->unk30 = 1;

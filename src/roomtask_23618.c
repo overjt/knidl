@@ -10,14 +10,14 @@
  *
  * Task type #3 (class 4), the room's per-frame driver.  Task_Room, the
  * type's body, dispatches Task.state through the anchor table
- * gRoomTaskVariants: sub_08023634 (index 0), sub_08023e34 (1), sub_08023e78
- * (2), sub_08024540 (3), sub_080242d0 (4), sub_08024904 (5) and
- * sub_08024da4 (6); every room loader spawns the task with its own index
+ * gRoomTaskVariants: RoomTaskStageInit (index 0), RoomTaskHubInit (1), RoomTaskBigSwitchViewInit
+ * (2), RoomTaskCutsceneInit (3), RoomTaskGoalGameInit (4), sub_08024904 (5) and
+ * RoomTaskCreditsInit (6); every room loader spawns the task with its own index
  * through CreateRoomTask.  Each variant installs the task callbacks: unk0C
  * = RoomTaskDraw (door objects and HUD), unk04 = the camera update of the
  * camera mode gCameraMode (RoomTaskUpdateCamera here, M08's five camera modes)
  * and unk08 = one per-frame body chosen by the BG layout gRoomBgLayout
- * (sub_08023748 ... sub_080238ec here).  The bodies are gated by the flag
+ * (RoomTaskLateUpdateBg2 ... RoomTaskLateUpdateBg3AutoScroll here).  The bodies are gated by the flag
  * cell gRoomUpdateFlags: 1 = camera, BG animation and BG streaming, 2 =
  * screen shake, 8 = HUD, 16 = door objects (UpdateDoors). */
 
@@ -28,7 +28,7 @@ void Task_Room(void)
     CallTableEntry(gCurTask->state, 7, gRoomTaskVariants);
 }
 
-void sub_08023634(void)
+void RoomTaskStageInit(void)
 {
     struct Task *t = gCurTask;
 
@@ -39,22 +39,22 @@ void sub_08023634(void)
     {
     default:
     case 0:
-        gCurTask->lateUpdateCallback = (u32)sub_08023748;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2;
         break;
     case 1:
-        gCurTask->lateUpdateCallback = (u32)sub_080237fc;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2Bg3;
         break;
     case 2:
-        gCurTask->lateUpdateCallback = (u32)sub_080238ec;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg3AutoScroll;
         break;
     case 3:
-        gCurTask->lateUpdateCallback = (u32)sub_080237a4;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateLooping;
         break;
     case 4:
-        gCurTask->lateUpdateCallback = (u32)sub_0802385c;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg23HBlank;
         break;
     case 5:
-        gCurTask->lateUpdateCallback = (u32)sub_080238a4;
+        gCurTask->lateUpdateCallback = (u32)RoomTaskLateUpdateBg23RowsHBlank;
         break;
     }
     TaskSleepForever();
@@ -93,7 +93,7 @@ void RoomTaskUpdateCamera(void)
     }
 }
 
-void sub_08023748(void)
+void RoomTaskLateUpdateBg2(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -112,7 +112,7 @@ void sub_08023748(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_080237a4(void)
+void RoomTaskLateUpdateLooping(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -120,7 +120,7 @@ void sub_080237a4(void)
     {
         UpdateBgAnims();
         CameraUpdatePos();
-        sub_080296a0();
+        StreamBg2MapLooping();
     }
     CameraWriteScrollParallax();
     if (gRoomUpdateFlags & 16)
@@ -130,7 +130,7 @@ void sub_080237a4(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_080237fc(void)
+void RoomTaskLateUpdateBg2Bg3(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -150,7 +150,7 @@ void sub_080237fc(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_0802385c(void)
+void RoomTaskLateUpdateBg23HBlank(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -166,7 +166,7 @@ void sub_0802385c(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_080238a4(void)
+void RoomTaskLateUpdateBg23RowsHBlank(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -182,7 +182,7 @@ void sub_080238a4(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_080238ec(void)
+void RoomTaskLateUpdateBg3AutoScroll(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();

@@ -78,7 +78,7 @@ struct Task
     /*0x7F*/ s8 hitterPlayer;
     /*0x80*/ s8 unk80;
     /*0x81*/ u8 unk81;
-    /*0x82*/ u16 unk82;
+    /*0x82*/ u16 hitEffect;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
     /*0x88*/ u32 player;

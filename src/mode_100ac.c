@@ -13,10 +13,10 @@
 /* mode_100ac.c (0x080100AC-0x08010357, issue #99).
  *
  * AgbMain state 7 (CutsceneMain), entered instead of states 5/6 while
- * gCutscenePending is set: the scripted sequence of stage gUnk_030023B8.
+ * gCutscenePending is set: the scripted sequence of stage gCurLevel.
  * It clears the blend and window shadows, loads the sequence's palette
- * set and pictures (sub_08008d98, and sub_080102c0: the sprite sheet
- * gUnk_08731F78[stage] plus, in link play, the player palette), opens
+ * set and pictures (sub_08008d98, and CutsceneLoadGraphics: the sprite sheet
+ * gCutsceneSheets[stage] plus, in link play, the player palette), opens
  * window 0 (full width for sequence 7), spawns M04's director, task
  * type #91, and pumps frames until the director leaves state 7. */
 
@@ -27,30 +27,30 @@ void CutsceneMain(void)
     s32 i;
 
     ResetTasksAndOam();
-    if (gUnk_03001F30 != 1) {
+    if (gMetaKnightmareMode != 1) {
         gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = gBldY = 0;
         LoadGfxSet(0);
         gUnk_0200AF04 = 1;
-        sub_08024300();
-        if (gUnk_030023B8 != 7)
+        LoadCutsceneRoom();
+        if (gCurLevel != 7)
             LoadBgLayout(8);
         else
             LoadBgLayout(9);
-        sub_08008d98(gUnk_030023B8);
+        sub_08008d98(gCurLevel);
         gBg2ScrollX = gBg3ScrollX = 0;
         gBg2ScrollY = gBg3ScrollY = 0;
         gBg0ScrollY = 0x280000;
         gBg0ScrollX = 0x100000;
         gBg1ScrollY = 0x280000;
         gBg1ScrollX = 0x100000;
-        if (gUnk_030023B8 == 7) {
+        if (gCurLevel == 7) {
             gDispCnt &= 0xE0FF;
             gDispCnt |= 0x3F00;
         } else {
             gDispCnt &= 0xE0FF;
             gDispCnt |= 0x3D00;
         }
-        if (gUnk_030023B8 == 7) {
+        if (gCurLevel == 7) {
             gWin0H = 240;
             gWin0V = 0x1090;
             gWinIn0 = 63;
@@ -63,7 +63,7 @@ void CutsceneMain(void)
         }
         for (i = 0; i <= 3; i++)
             InitPlayerState(i);
-        sub_080102c0();
+        CutsceneLoadGraphics();
         TaskCreateFrom(91, 32);
         LinkRequestSync();
         LinkSyncRandom();
@@ -84,9 +84,9 @@ void CutsceneMain(void)
     }
 }
 
-void sub_080102c0(void)
+void CutsceneLoadGraphics(void)
 {
-    struct GfxHeader *h = gUnk_08731F78[gUnk_030023B8];
+    struct GfxHeader *h = gCutsceneSheets[gCurLevel];
 
     if (h != NULL) {
         LZ77UnCompWram(h->tiles, gUnk_02020000);
@@ -95,6 +95,6 @@ void sub_080102c0(void)
         if (gPlayerCount > 1)
             RequestCopy(2, (u32)gPlayerPalettes[gLocalPlayer], (u32)gUnk_03001570, 22);
     }
-    if (gUnk_030023B8 == 7)
+    if (gCurLevel == 7)
         LZ77UnCompWram(gUnk_085E0090, gUnk_02020000);
 }

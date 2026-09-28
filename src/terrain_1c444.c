@@ -7,13 +7,13 @@
 /*
  * M06 terrain / collision query (issue #84), range 0x0801C444-0x0801C51C.
  *
- * sub_0801c444: the same entry-point body as src/terrain_1bcac.c, clearing
- * the pending-collision flag and running the tile-edge probe sub_08020b38.
+ * TerrainCollideBoxTileEdge: the same entry-point body as src/terrain_1bcac.c, clearing
+ * the pending-collision flag and running the tile-edge probe TerrainProbeTileEdge.
  */
 
-void sub_08022810(void);
+void TerrainClampBoxToCameraBounds(void);
 
-void sub_0801c444(const s8 *p)
+void TerrainCollideBoxTileEdge(const s8 *p)
 {
     TerrainProbeBegin(p);
     if (gTerrainProbeResult.unkB & 0x80)
@@ -26,6 +26,6 @@ void sub_0801c444(const s8 *p)
     gTerrainPrevBoxRight = gTerrainPrevX + gTerrainBoxRight;
     gTerrainPrevBoxTop = gTerrainPrevY + gTerrainBoxTop;
     gTerrainPrevBoxBottom = gTerrainPrevY + gTerrainBoxBottom;
-    sub_08020b38();
+    TerrainProbeTileEdge();
     TerrainProbeEnd(p);
 }

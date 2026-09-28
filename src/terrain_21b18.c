@@ -17,7 +17,7 @@
  * a task's hit box against the floor and slopes (position
  * gTerrainProbeX/gTerrainProbeY, box offsets gTerrainBoxTop/84/1C/9C, results
  * in gTerrainProbeResult) and writes the corrected position back;
- * sub_0802205c and sub_0802233c do the same for walls, sub_080222b0 probes
+ * sub_0802205c and sub_0802233c do the same for walls, TerrainInitOneWayFloor probes
  * the ground and TaskInitWaterFlags/TaskInitWaterFlagsSlot set a task's in-wall state
  * (Task.waterFlags).  The rest clamp a body or a task to the per-player bounds
  * gPlayerBounds, the camera bounds gCameraBounds or the room bounds
@@ -216,9 +216,9 @@ void sub_0802205c(s8 *box)
     {
         if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY) == 0)
         {
-            if ((gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
+            if ((gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
                  && (gCollisionTileSlope[gTerrainTile] & 1))
-                || (gUnk_087336F0[gTerrainTileRight] != 0 && gCollisionTileSlope[gTerrainTileRight] != 0
+                || (gCollisionTileOneWay[gTerrainTileRight] != 0 && gCollisionTileSlope[gTerrainTileRight] != 0
                     && (gCollisionTileSlope[gTerrainTileRight] & 1)
                     && ((gUnk_08732DF0[gTerrainTileRight] & 0xCF) != 0x83 || (gTerrainProbeY & 15) <= 7)))
                 gTerrainProbeResult.unkB |= 4;
@@ -230,9 +230,9 @@ void sub_0802205c(s8 *box)
     {
         if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY) == 0)
         {
-            if ((gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
+            if ((gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
                  && !(gCollisionTileSlope[gTerrainTile] & 1))
-                || (gUnk_087336F0[gTerrainTileLeft] != 0 && gCollisionTileSlope[gTerrainTileLeft] != 0
+                || (gCollisionTileOneWay[gTerrainTileLeft] != 0 && gCollisionTileSlope[gTerrainTileLeft] != 0
                     && !(gCollisionTileSlope[gTerrainTileLeft] & 1)
                     && ((gUnk_08732DF0[gTerrainTileLeft] & 0xCF) != 0x83 || (gTerrainProbeY & 15) <= 7)))
                 gTerrainProbeResult.unkB |= 2;
@@ -240,10 +240,10 @@ void sub_0802205c(s8 *box)
                 goto end;
         }
     }
-    if (TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) == 0 && gUnk_087336F0[gTerrainTileBelow] != 0)
+    if (TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) == 0 && gCollisionTileOneWay[gTerrainTileBelow] != 0)
     {
         gTerrainProbeResult.unkB |= 1;
-        if (gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
+        if (gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
             gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
         else
             gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
@@ -252,14 +252,14 @@ end:
     gCurTask->unk84 = gTerrainProbeResult.unkB;
 }
 
-void sub_080222b0(s32 x, s32 y)
+void TerrainInitOneWayFloor(s32 x, s32 y)
 {
     gTerrainProbeResult.unkB = 0;
     gTerrainProbeResult.unkC = 0;
-    if (TerrainQueryPixelAndBelow(x, y) == 0 && gUnk_087336F0[gTerrainTileBelow] != 0)
+    if (TerrainQueryPixelAndBelow(x, y) == 0 && gCollisionTileOneWay[gTerrainTileBelow] != 0)
     {
         gTerrainProbeResult.unkB |= 1;
-        if (gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
+        if (gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
             gTerrainProbeResult.unkC = y >> 4;
         else
             gTerrainProbeResult.unkC = (y + 16) >> 4;
@@ -280,18 +280,18 @@ void sub_0802233c(s8 *off)
     {
         if (gCurTask->facing != -1)
         {
-            if ((gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
+            if ((gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
                  && (gCollisionTileSlope[gTerrainTile] & 1))
-                || (gUnk_087336F0[gTerrainTileRight] != 0 && gCollisionTileSlope[gTerrainTileRight] != 0
+                || (gCollisionTileOneWay[gTerrainTileRight] != 0 && gCollisionTileSlope[gTerrainTileRight] != 0
                     && (gCollisionTileSlope[gTerrainTileRight] & 1)
                     && ((gUnk_08732DF0[gTerrainTileRight] & 0xCF) != 0x83 || (gTerrainProbeY & 15) <= 7)))
                 gTerrainProbeResult.unkB |= 4;
         }
         else
         {
-            if ((gUnk_087336F0[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
+            if ((gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0
                  && !(gCollisionTileSlope[gTerrainTile] & 1))
-                || (gUnk_087336F0[gTerrainTileLeft] != 0 && gCollisionTileSlope[gTerrainTileLeft] != 0
+                || (gCollisionTileOneWay[gTerrainTileLeft] != 0 && gCollisionTileSlope[gTerrainTileLeft] != 0
                     && !(gCollisionTileSlope[gTerrainTileLeft] & 1)
                     && ((gUnk_08732DF0[gTerrainTileLeft] & 0xCF) != 0x83 || (gTerrainProbeY & 15) <= 7)))
                 gTerrainProbeResult.unkB |= 2;
@@ -374,7 +374,7 @@ s32 IsFullBlockAtPixel(u16 x, u16 y)
     return 0;
 }
 
-void sub_08022650(void)
+void TerrainClampBoxToPlayerBounds(void)
 {
     gTerrainBoundsClamp = 0;
     gUnk_03005544 = 0;
@@ -404,7 +404,7 @@ s32 IsTaskBelowPlayerBounds(struct Task *t)
     return 0;
 }
 
-s32 sub_08022788(s32 y, s32 i)
+s32 IsAtPlayerBoundsTop(s32 y, s32 i)
 {
     if (gPlayerBounds[i].y0 == y)
         return 1;
@@ -439,7 +439,7 @@ s32 ClampTaskToRoom(struct Task *t)
     return r;
 }
 
-s32 sub_08022810(void)
+s32 TerrainClampBoxToCameraBounds(void)
 {
     s32 lo;
     s32 hi;
@@ -502,7 +502,7 @@ s32 sub_080228c4(struct Task *t)
     return r;
 }
 
-s32 sub_0802294c(struct Task *t)
+s32 IsTaskBelowRoom(struct Task *t)
 {
     if (gRoomBounds[3] + 104 < t->pixelY)
         return 1;

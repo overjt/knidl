@@ -7,7 +7,7 @@
 
 /* player_18e14.c (0x08018E14-0x08018FFF, issue #125).
  *
- * Animation script 52 of the sequence bank (entry 60 of gUnk_08731FA8, run by
+ * Animation script 52 of the sequence bank (entry 60 of gCutsceneStarts, run by
  * task type #92, src/player_10358.c): three sparkles that close in on the
  * anchor task gTasks[Task.parent].  The particle array gUnk_02006040
  * holds per sparkle i an x offset [i], a y offset [i + 3] and an x

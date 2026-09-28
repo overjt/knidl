@@ -107,12 +107,12 @@ void SubGameQuit(void)
     gCurTask->unk18 = 4;
 }
 
-s32 sub_080b9d48(void)
+s32 SubGameInit(void)
 {
     return gSubGameInitHooks[gUnk_02007FCC]();
 }
 
-u8 sub_080b9d68(void)
+u8 SubGameAnyPressedAOrStart(void)
 {
     s32 found = 0;
     s32 i;
@@ -128,7 +128,7 @@ u8 sub_080b9d68(void)
     return found;
 }
 
-u8 sub_080b9da8(void)
+u8 SubGameAnyPressedB(void)
 {
     s32 found = 0;
     s32 i;
@@ -144,11 +144,11 @@ u8 sub_080b9da8(void)
     return found;
 }
 
-void sub_080b9de8(void)
+void SubGameDimAndHalt(void)
 {
     s32 i;
 
-    TaskSetSkipMask(7, gUnk_020055EC);
+    TaskSetSkipMask(7, gSubGameTaskIdx);
     gDispCnt |= 0x200;
     gBldCntTarget1 = 0xFD;
     for (i = 0; i <= 4; i++)
@@ -174,15 +174,15 @@ void SubGameLoadScreen(s32 a0)
 {
     s32 m = gUnk_02007FCC;
 
-    LoadBgLayout(gUnk_087562A8[m][a0]);
+    LoadBgLayout(gSubGameBgLayouts[m][a0]);
     m = m * 2 + a0;
-    if (gUnk_087562C0[m] != 0)
-        LoadGfxSet(gUnk_087562C0[m]);
+    if (gSubGameGfxSets[m] != 0)
+        LoadGfxSet(gSubGameGfxSets[m]);
     sub_08008d10(gUnk_02007FCC, a0);
     gSubGamePhase = a0;
 }
 
-void sub_080b9ea0(s32 a0)
+void SubGameSetDisplayLayers(s32 a0)
 {
     switch (gUnk_02007FCC)
     {
@@ -234,7 +234,7 @@ void SubGameRunScreen(s32 a0)
     LinkSyncRandom();
     SubGameRunFrame();
     LinkStartKeyExchange();
-    sub_080b9ea0(a0);
+    SubGameSetDisplayLayers(a0);
     if (gUnk_02007FCC != 2)
     {
         BeginFastFadeInFromWhite();
@@ -244,7 +244,7 @@ void SubGameRunScreen(s32 a0)
         /* The ROM places this call between the two arms: a labelled
            block reached from the phase test below (lesson 4.67). */
     de8:
-        sub_080b9de8();
+        SubGameDimAndHalt();
         goto tail;
     }
     else
@@ -294,7 +294,7 @@ tail:
     gFadeBlankAtWhite = 0;
     gFrameCallback = gVBlankCallback = 0;
     REG_DMA0CNT_L = REG_DMA0CNT_H = 0;
-    TaskSetEntry(Task_SubGame, gUnk_020055EC);
+    TaskSetEntry(Task_SubGame, gSubGameTaskIdx);
 }
 
 void SubGameRunLinkFrame(void)
@@ -425,8 +425,8 @@ void SubGameMain(void)
     }
     LinkRequestSync();
     LinkSyncRandom();
-    gUnk_020055EC = TaskCreateFrom(93, 63);
-    sub_080b9d48();
+    gSubGameTaskIdx = TaskCreateFrom(93, 63);
+    SubGameInit();
     SubGameRunScreen(0);
     SubGameRunScreen(1);
     ResetTasksAndOam();
@@ -456,7 +456,7 @@ void SubGameStartBody(void)
 
 void QuickDrawInit(void)
 {
-    struct Task *t = &gTasks[gUnk_020055EC];
+    struct Task *t = &gTasks[gSubGameTaskIdx];
     s32 i;
 
     for (i = 0; i <= 3; i++)
@@ -464,7 +464,7 @@ void QuickDrawInit(void)
         gQuickDrawWins[i] = 0;
         gQuickDrawRanking[i] = i;
     }
-    gUnk_02004B5C = 0xFF;
+    gQuickDrawMatchWinner = 0xFF;
     gQuickDrawBestTime = 99;
     gUnk_0200B048 = 0;
     t->unk34 = 3;
@@ -526,7 +526,7 @@ void CreateQuickDrawPlayers(s32 a0)
     }
 }
 
-void sub_080ba61c(void)
+void QuickDrawSetupRound(void)
 {
     struct Task *t;
 
@@ -572,7 +572,7 @@ void QuickDrawWaitForSignal(void)
 
     t->unk70 = 0;
     t->unk6E = 0;
-    TaskYieldTrampoline(RandomRange(gUnk_087562F6[gSubGameLevel]) + gUnk_087562F0[gSubGameLevel]);
+    TaskYieldTrampoline(RandomRange(gQuickDrawSignalDelayRange[gSubGameLevel]) + gQuickDrawSignalDelayMin[gSubGameLevel]);
     CreateQuickDrawSignal();
 }
 

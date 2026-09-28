@@ -61,7 +61,7 @@ extern void TaskSetMotionY(s32 a, s32 b, s32 c);
 extern void TaskStop(void);
 extern void TaskSetFrame(s32 a);
 extern s32 IsOnScreen(s16 x, s16 y);
-extern void sub_0801bcac(u8 *a);
+extern void TerrainCollideBox(u8 *a);
 extern void RequestScreenShake(s32 a);
 
 void sub_0806ff24(void)
@@ -208,7 +208,7 @@ void sub_08070208(void)
     struct Task *t;
 
     t = gCurTask;
-    t->moveCallback = (u32)sub_08070454;
+    t->moveCallback = (u32)TaskCopyParentPixelPos;
     t->taskClass = 4;
     gCurTask->lateUpdateCallback = 0;
     sub_080700e8();
@@ -345,7 +345,7 @@ void sub_0807042c(void)
     }
 }
 
-void sub_08070454(void)
+void TaskCopyParentPixelPos(void)
 {
     struct Task *t;
 
@@ -376,7 +376,7 @@ void sub_08070498(u32 a, s32 b)
     gUnk_020055C0 = b;
     if (gUnk_0300244C != 0)
     {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
         {
             tbl = gUnk_0873F950[p->ability];
             k = p->playerIndex;
@@ -420,7 +420,7 @@ void sub_08070614(u32 a)
 {
     struct PlayerState *p;
 
-    sub_08068b88(a, 0, 1, 0);
+    PlayerResumeControl(a, 0, 1, 0);
     p = gCurTask->player;
     if (p->ability == 25)
         p->unk37 = 3;
@@ -537,7 +537,7 @@ void sub_080708ec(void)
     struct Task *t;
     struct Task *u;
 
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -605,7 +605,7 @@ void sub_08070a84(void)
     struct Task *t;
     struct Task *u;
 
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -673,7 +673,7 @@ void sub_08070c0c(void)
     struct Task *t;
     struct Task *u;
 
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -734,7 +734,7 @@ void sub_08070d48(void)
 
     t = gCurTask;
     SetCameraFocus(t->pixelX, t->pixelY);
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     u = gCurTask;
     if (u->onGround & 1)
     {
@@ -786,7 +786,7 @@ void sub_08070e7c(void)
     struct Task *t;
     struct Task *u;
 
-    sub_0801bcac(gUnk_0873F5D4);
+    TerrainCollideBox(gUnk_0873F5D4);
     t = gCurTask;
     if (t->onGround & 1)
     {

@@ -41,7 +41,7 @@ s32 CreateCutsceneActor(s32 a, s32 b)
         dst->facing = t->facing;
         dst->parent = gCurTaskIdx;
         dst->unk18 = a;
-        if (gUnk_08731F78[*(s8 *)&gUnk_030023B8] != 0)
+        if (gCutsceneSheets[*(s8 *)&gCurLevel] != 0)
             dst->tileWord = 0x8810;
     }
     return i;
@@ -55,19 +55,19 @@ void Task_CutsceneDirector(void)
     u16 *q;
 
     gCurTask->unk28 = 0;
-    CallTableEntry(*(s8 *)&gUnk_030023B8, 9, gUnk_08731FA8);
+    CallTableEntry(*(s8 *)&gCurLevel, 9, gCutsceneStarts);
     TaskYieldTrampoline(60);
     gCurTask->updateCallback = (u32)CutsceneCheckSkip;
     gCurTask->unk6C = 0;
     p = (u16 *)gCutsceneDurations;
-    if ((s16)gCurTask->unk6C < p[*(s8 *)&gUnk_030023B8] - 60)
+    if ((s16)gCurTask->unk6C < p[*(s8 *)&gCurLevel] - 60)
     {
         q = (u16 *)gCutsceneDurations;
         do
         {
             TaskYieldTrampoline(1);
             gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C < q[*(s8 *)&gUnk_030023B8] - 60);
+        } while ((s16)gCurTask->unk6C < q[*(s8 *)&gCurLevel] - 60);
     }
     gGameState = 5;
     TaskSleepForever();
@@ -83,7 +83,7 @@ void CutsceneCheckSkip(void)
 
         if ((p[i] & 9) != 0)
         {
-            if (*(s8 *)&gUnk_030023B8 == 7 && gUnk_02007D00[0] != -1)
+            if (*(s8 *)&gCurLevel == 7 && gUnk_02007D00[0] != -1)
             {
                 StopSfxOnPlayer(gUnk_02007D00[0], 0x21B);
                 gUnk_02007D00[0] = -1;
@@ -96,17 +96,17 @@ void CutsceneCheckSkip(void)
 
 void Task_CutsceneActor(void)
 {
-    CallTableEntry(gCurTask->unk18, 63, gUnk_08731FC8);
+    CallTableEntry(gCurTask->unk18, 63, gCutsceneActors);
 }
 
-void sub_0801050c(void)
+void CutsceneDuelStart(void)
 {
     PlayBgm(0);
     CreateCutsceneActor(0, 0);
     CreateCutsceneActor(4, 32);
 }
 
-void sub_08010528(void)
+void CutsceneDuelKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;

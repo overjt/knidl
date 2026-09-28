@@ -62,7 +62,7 @@ void AgbMain(void)
                 sub_0800b5dc();
                 while (gGameState == 5) {
                     sub_0800b5dc();
-                    sub_08007624();
+                    HubMain();
                 }
             }
             break;
@@ -77,34 +77,34 @@ void AgbMain(void)
             break;
         case 8:
             while (gGameState == 8)
-                sub_0800791c();
+                StageMain();
             gPrevGameState = 8;
             break;
         case 9:
             while (gGameState == 9)
-                sub_0800783c();
+                BigSwitchViewMain();
             break;
         case 10:
-            if (gUnk_03001F30 == 0)
-                sub_0805b110();
+            if (gMetaKnightmareMode == 0)
+                GoalGameMain();
             else
                 sub_0800b628();
             gGameState = 5;
             break;
         case 13:
-            sub_08007f9c();
+            ExtraModeTitleMain();
             break;
         case 19:
             while (gGameState == 19)
-                sub_0800791c();
+                StageMain();
             break;
         case 18:
             while (gGameState == 18)
-                sub_0800791c();
+                StageMain();
             break;
         case 17:
             while (gGameState == 17)
-                sub_0800791c();
+                StageMain();
             break;
         case 22:
             GameOverMain();
@@ -122,7 +122,7 @@ void AgbMain(void)
             ResetPlayTime();
             sub_08022f50();
             while (gGameState == 20)
-                sub_08008a00();
+                BossEnduranceMain();
             gPrevGameState = 20;
             break;
         case 21:
@@ -135,7 +135,7 @@ void AgbMain(void)
             gGameState = 12;
             break;
         case 12:
-            if (gUnk_03001F30 != 1 && gPrevGameState != 20)
+            if (gMetaKnightmareMode != 1 && gPrevGameState != 20)
                 CreditsMain();
             FinalResultsScreen();
             gGameState = 0;

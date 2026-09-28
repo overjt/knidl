@@ -10,15 +10,15 @@
  *
  * Menu sprite tasks, last part: the link-play connection screen (menu
  * screens 8 and 9) and the menu's background tasks.  Task type #251
- * (Task_LinkPlayPlayerList, body sub_0800f2b4) spawns a #252 (sub_0800f390, body
- * sub_0800f408) and a #253 (sub_0800f5ec, body sub_0800f698) per player
+ * (Task_LinkPlayPlayerList, body LinkPlayPlayerListUpdate) spawns a #252 (Task_LinkPlayConsole, body
+ * LinkPlayConsoleUpdate) and a #253 (Task_LinkPlayCable, body LinkPlayCableUpdate) per player
  * and slides them as partners join (sub_0800ffd8); #256 (Task_MenuScreenTitle,
- * body sub_0800f840) is the menu screen's title sprite; #259
- * (sub_0800fa30) and #258 (sub_0800fb94) cycle and cross-fade the
+ * body MenuScreenTitleUpdate) is the menu screen's title sprite; #259
+ * (Task_MenuBgPaletteCycle) and #258 (Task_MenuBackground) cycle and cross-fade the
  * background palettes when the menu screen changes. */
 
 /* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
-   two shifts, which lengthens this address's live range in sub_0800f408 enough
+   two shifts, which lengthens this address's live range in LinkPlayConsoleUpdate enough
    to lose r6 to the hoisted copy of &gCurTask. */
 /* Not from link.h: this file's view of gMultiBootStruct differs (lesson
    3.517). */
@@ -40,7 +40,7 @@ void Task_LinkPlayPlayerList(void)
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800f2b4;
+    gCurTask->updateCallback = (u32)LinkPlayPlayerListUpdate;
     gCurTask->layer = 7;
     t = gCurTask;
     t->frameTable = gUnk_08755688;
@@ -91,7 +91,7 @@ void Task_LinkPlayPlayerList(void)
     TaskExitTrampoline();
 }
 
-void sub_0800f2b4(void)
+void LinkPlayPlayerListUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -126,11 +126,11 @@ void sub_0800f2b4(void)
         gCurTask->frame = 0xFFFF;
 }
 
-void sub_0800f390(void)
+void Task_LinkPlayConsole(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800f408;
+    gCurTask->updateCallback = (u32)LinkPlayConsoleUpdate;
     gCurTask->layer = gCurTask->unk18 * 2 + 9;
     gCurTask->frameTable = gUnk_08755688;
     gCurTask->posX = 0x780000;
@@ -141,7 +141,7 @@ void sub_0800f390(void)
     TaskExitTrampoline();
 }
 
-void sub_0800f408(void)
+void LinkPlayConsoleUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *p = &gTasks[t->parent];
@@ -200,13 +200,13 @@ void sub_0800f408(void)
     }
 }
 
-void sub_0800f5ec(void)
+void Task_LinkPlayCable(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800f698;
+    gCurTask->updateCallback = (u32)LinkPlayCableUpdate;
     gCurTask->layer = gCurTask->unk18 * 2 + 9;
     t = gCurTask;
     t->frameTable = gUnk_08755688;
@@ -227,7 +227,7 @@ void sub_0800f5ec(void)
     TaskExitTrampoline();
 }
 
-void sub_0800f698(void)
+void LinkPlayCableUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *p = &gTasks[t->parent];
@@ -270,7 +270,7 @@ void Task_MenuScreenTitle(void)
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->updateCallback = (u32)sub_0800f840;
+    gCurTask->updateCallback = (u32)MenuScreenTitleUpdate;
     gCurTask->frameTable = gUnk_08755620;
     gCurTask->layer = 7;
     t = gCurTask;
@@ -291,7 +291,7 @@ void Task_MenuScreenTitle(void)
     TaskSleepForever();
 }
 
-void sub_0800f840(void)
+void MenuScreenTitleUpdate(void)
 {
     u32 *tbl = gUnk_08731D70;
     struct Task *t = gCurTask;
@@ -379,7 +379,7 @@ void sub_0800f840(void)
     }
 }
 
-void sub_0800fa30(void)
+void Task_MenuBgPaletteCycle(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w, *x, *y, *z, *a;
@@ -437,7 +437,7 @@ void sub_0800fa30(void)
     }
 }
 
-void sub_0800fb94(void)
+void Task_MenuBackground(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *w;

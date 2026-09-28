@@ -12,11 +12,11 @@
  * jumps into the table.  BonkersUpdate is the per-frame body: it runs down
  * Task.unk18, asks sub_0806acf8 / ActorCollideTerrain whether the player interrupted,
  * dispatches Task.updateState through the same table, reloads the graphics through
- * ActorFlashPalette / sub_08066468 and drives the three animation calls from the
+ * ActorFlashPalette / ActorClearPaletteOverride and drives the three animation calls from the
  * per-frame row gUnk_087437D0[Task.frame].
  *
  * States 0-10 then follow as <body, guard> pairs (sub_080901e0 /
- * sub_08090270, BonkersWalk / sub_080903c8, ...): the body is a run of
+ * sub_08090270, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
  * TaskYieldTrampoline waits that steps Task.frame, clears and then waits on
  * Task.onGround (set when the boss lands) and pushes 16.16 velocities through
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
@@ -25,10 +25,10 @@
  * is the defeat sequence (sub_0806684c, CreateStarFlash, sub_0806ad18).
  *
  * The tail holds the pieces the states share - sub_08090e18 (fire a shot at
- * the boss's own position through sub_08067120), sub_08090e54 (advance the
+ * the boss's own position through CreateInhalableStar), sub_08090e54 (advance the
  * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
  * the sub_08090ef0 / sub_08090f14 / sub_08090f4c hit hooks, the companion
- * task sub_08090fc0 / sub_08090fe0 that mirrors the boss's position while
+ * task Task_BonkersHammerHitBox / BonkersHammerHitBoxUpdate that mirrors the boss's position while
  * gTaskSlotTypes[Task.parent] says the boss is alive - and Task_PoppyBrosSr, the
  * entry of the second boss, whose states live in src/enemy_9113c.c.
  */
@@ -55,7 +55,7 @@ extern void PlaySfx(s32 id);
 extern void RequestScreenShake(s32 a);
 extern void TaskSetEntry(void *fn, s32 i);
 extern u32 RandomRange(u32 range);
-extern s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
 extern void ActorSetHitReactions(u32 *p);
 extern u32 ActorCheckHitsWithBox(s32 a);
 
@@ -129,7 +129,7 @@ void BonkersUpdate(void)
         else
         {
             u->unk30 = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
     }
     ActorSetAttackBox(gUnk_087437F4[gUnk_087437D0[gCurTask->frame]]);
@@ -226,7 +226,7 @@ void BonkersWalk(void)
     TaskSleepForever();
 }
 
-void sub_080903c8(void)
+void BonkersWalkUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -253,14 +253,14 @@ void BonkersJump(void)
     TaskStop();
     PlaySfx(0x1F7);
     RequestScreenShake(2);
-    sub_0806cffc(16, 6);
+    CreateLandingDust(16, 6);
     gCurTask->frame--;
     TaskYieldTrampoline(30);
     sub_08090e54();
     TaskSleepForever();
 }
 
-void sub_080904ac(void)
+void BonkersJumpUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -290,7 +290,7 @@ void BonkersHop(void)
         TaskStop();
         PlaySfx(0x1F7);
         RequestScreenShake(2);
-        sub_0806cffc(16, 6);
+        CreateLandingDust(16, 6);
         TaskFaceNearestPlayer();
         gCurTask->unk6C++;
     }
@@ -300,7 +300,7 @@ void BonkersHop(void)
     TaskSleepForever();
 }
 
-void sub_080905b0(void)
+void BonkersHopUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -372,7 +372,7 @@ void BonkersDash(void)
     TaskSleepForever();
 }
 
-void sub_08090724(void)
+void BonkersDashUpdate(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -399,7 +399,7 @@ void BonkersThrow(void)
         TaskStop();
         PlaySfx(0x1F7);
         RequestScreenShake(2);
-        sub_0806cffc(16, 6);
+        CreateLandingDust(16, 6);
     }
     gCurTask->unk6C = 0;
     do
@@ -417,7 +417,7 @@ void BonkersThrow(void)
     spawn.spawnArg = 0;
     spawn.x = 24;
     spawn.y = 0;
-    spawn.tileWord = gCurTask->unk8C->savedTileWord;
+    spawn.tileWord = gCurTask->u8C.actor->savedTileWord;
     spawn.checkTerrain = 1;
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 1);
     PlaySfx(0x1FB);
@@ -435,7 +435,7 @@ void BonkersThrow(void)
     TaskSleepForever();
 }
 
-void sub_080908ec(void)
+void BonkersThrowUpdate(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -476,7 +476,7 @@ void BonkersSlam(void)
     TaskSleepForever();
 }
 
-void sub_080909ac(void)
+void BonkersSlamUpdate(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -526,7 +526,7 @@ void BonkersJumpSlam(void)
     TaskSleepForever();
 }
 
-void sub_08090b18(void)
+void BonkersJumpSlamUpdate(void)
 {
     if (gCurTask->state != 7)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -564,7 +564,7 @@ void BonkersTripleSlam(void)
     TaskSleepForever();
 }
 
-void sub_08090bf0(void)
+void BonkersTripleSlamUpdate(void)
 {
     if (gCurTask->state != 8)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -597,7 +597,7 @@ void sub_08090ca8(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_08090cd0(void)
+void BonkersDefeat(void)
 {
     struct Task *t;
 
@@ -632,7 +632,7 @@ void sub_08090cd0(void)
     TaskSleepForever();
 }
 
-void sub_08090de4(void)
+void BonkersDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_0826A668, 16);
     if (gCurTask->unk34 == 2)
@@ -648,7 +648,7 @@ void sub_08090e18(void)
     t = gCurTask;
     x = t->pixelX + t->facing * 40;
     y = t->pixelY + 8;
-    sub_08067120(x, y, 0, 2);
+    CreateInhalableStar(x, y, 0, 2);
 }
 
 void sub_08090e54(void)
@@ -724,18 +724,18 @@ s32 sub_08090f4c(void)
     return r;
 }
 
-void sub_08090fc0(void)
+void Task_BonkersHammerHitBox(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_08090fe0;
+    t->updateCallback = (u32)BonkersHammerHitBoxUpdate;
     TaskSleepForever();
 }
 
-void sub_08090fe0(void)
+void BonkersHammerHitBoxUpdate(void)
 {
     struct Task *u;
     s32 i;
@@ -751,9 +751,9 @@ void sub_08090fe0(void)
             {
                 i = (s16)u->frame - 16;
                 gCurTask->unk28 = i;
-                gCurTask->pixelX = u->pixelX + gUnk_087438A4[i] * (u16)u->facing;
-                gCurTask->pixelY = u->pixelY + gUnk_087438B2[gCurTask->unk28];
-                ActorCheckHitsWithBox(gUnk_087438C0[gCurTask->unk28]);
+                gCurTask->pixelX = u->pixelX + gBonkersHammerHitBoxOffsetsX[i] * (u16)u->facing;
+                gCurTask->pixelY = u->pixelY + gBonkersHammerHitBoxOffsetsY[gCurTask->unk28];
+                ActorCheckHitsWithBox(gBonkersHammerHitBoxes[gCurTask->unk28]);
             }
         }
         else

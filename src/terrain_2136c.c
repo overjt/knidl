@@ -7,14 +7,14 @@
 /* terrain_2136c.c (0x0802136C-0x080214DF, issue #84).
  *
  * The room probe of the non-player entry points (src/terrain_1bcac.c,
- * terrain_1c30c.c): src/terrain_21130.c's sub_08021130 without its tile-set
+ * terrain_1c30c.c): src/terrain_21130.c's TerrainProbeWaterAndDrift without its tile-set
  * special case in front and its gCollisionTileDoor copy behind. */
 
-/* Room probe: sub_08021130 without its tile-set special case in front
+/* Room probe: TerrainProbeWaterAndDrift without its tile-set special case in front
    and the gCollisionTileDoor copy behind.  Classifies the cells at the probe
    point (bit 7 of the tile set) into the flags gTerrainProbeResult.unk7 and the
    cell boundary gTerrainProbeResult.unk8 (0xFFFF when there is none).  prev2 is
-   u32 here: the u8 copy of sub_08021130 lets the 0x80 mask register win
+   u32 here: the u8 copy of TerrainProbeWaterAndDrift lets the 0x80 mask register win
    r8 over &gTerrainProbeY (global-alloc priority 0.1333 vs 0.1324). */
 void TerrainProbeWater(void)
 {

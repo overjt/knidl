@@ -8,12 +8,12 @@
 /* hitbox_1a8c8.c (0x0801A8C8-0x0801B24B, issue #84).
  *
  * The actor-vs-collider hit tests M17/M18's actors run (src/actor_673ec.c
- * calls them after sub_0801b7dc has placed the actor's attack box): each walks
+ * calls them after PlaceAttackBox has placed the actor's attack box): each walks
  * one of the collider lists M05's RegisterCollider fills, places the collider's
  * body box the same way, tests the overlap and, on a hit, writes the hit
- * result (gHitKind = hit kind, gUnk_03002450, gHitHealthLeft) through
- * the shared tails sub_0801b8e4/sub_0801b9e4 and returns 1.
- * sub_0801a8c8 tests the players' list gPlayerColliders (by the attack's class
+ * result (gHitKind = hit kind, gHitEffect, gHitHealthLeft) through
+ * the shared tails CalcHitDamageAndDirection/sub_0801b9e4 and returns 1.
+ * HitTestPlayerColliders tests the players' list gPlayerColliders (by the attack's class
  * gAttackBox->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
  * block, 2/3 a touch that marks the player in gUnk_03001F24);
  * sub_0801af14 tests the second list gUnk_030053A0.  The third list's test,
@@ -104,7 +104,7 @@ extern u16 gHitHealthLeft;
 extern u8 gUnk_030023A4;
 extern u8 gHitterSlot;
 extern u8 gAttackLastHitter;
-extern u8 gUnk_03002450;
+extern u8 gHitEffect;
 extern u8 gUnk_03002460;
 extern s16 gAttackBoxBottom;           /* attack box bottom */
 extern s16 gAttackBoxTop;           /* attack box top */
@@ -127,17 +127,17 @@ extern u8 gUnk_030054A8;
 extern u16 gUnk_08732218[];
 extern u16 gUnk_08732224[];
 
-void sub_0801b8e4(void);
+void CalcHitDamageAndDirection(void);
 void sub_0801b9e4(void);
 
 /* Hit test of the actor's attack box against the players' hit list
    gPlayerColliders.  By the attack's class (unk06 & 7): 0 = a damaging hit
-   (hit kind 2/6, health and knock-back through sub_0801b8e4), 1 = hit kind
+   (hit kind 2/6, health and knock-back through CalcHitDamageAndDirection), 1 = hit kind
    8 unless the body box blocks it, 2/3 = a touch (kind 7) that marks the
    player in gUnk_03001F24 (class 2 returns at the first one, class 3 after
    the list).  Class 2/3 comes last in the switch: merge_blocks moves its
    head up behind the dispatch, which is why its tail sits after class 1. */
-u8 sub_0801a8c8(void)
+u8 HitTestPlayerColliders(void)
 {
     struct HitEntry *e;
     struct Task *t;
@@ -207,26 +207,26 @@ u8 sub_0801a8c8(void)
                 continue;
             if (gAttackBoxBottom < gColliderTop)
                 continue;
-            if (ps->unk17 == 1)
+            if (ps->invincible == 1)
             {
                 if (gAttackBox->unk0A & 0x8000)
                     continue;
                 if (gAttackBox->unk0A & 8)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 12;
+                    gHitEffect = 12;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 4)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 11;
+                    gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
                     gHitKind = 2;
-                    sub_0801b8e4();
+                    CalcHitDamageAndDirection();
                     t->unk76 = (t->unk76 & 0x4000) | 1;
                 }
             }
@@ -235,7 +235,7 @@ u8 sub_0801a8c8(void)
                 if (!(gAttackBox->unk0C & 0x4005)
                     && !((gAttackBox->unk1A & 0x40) && (t->unk76 & 0x4000)))
                 {
-                    t->unk82 = gAttackBox->unk09;
+                    t->hitEffect = gAttackBox->unk09;
                     /* the actor's x is read signed here (ldrsh) */
                     if ((s16)gAttackX < gColliderX)
                         t->hitDirection = 0;
@@ -246,7 +246,7 @@ u8 sub_0801a8c8(void)
                     if (gPlayerHealth[gColliderPlayer] <= 0)
                     {
                         t->hitKind = 1;
-                        t->unk82 = gAttackBox->unk1A & 0x300;
+                        t->hitEffect = gAttackBox->unk1A & 0x300;
                     }
                     else
                     {
@@ -258,19 +258,19 @@ u8 sub_0801a8c8(void)
                 if (gAttackBox->unk0A & 4)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 11;
+                    gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 1)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 1;
+                    gHitEffect = 1;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
                     gHitKind = 2;
-                    sub_0801b8e4();
+                    CalcHitDamageAndDirection();
                 }
             }
             else if (s == 1 || s == 3)
@@ -280,13 +280,13 @@ u8 sub_0801a8c8(void)
                 if (gAttackBox->unk0A & 4)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 11;
+                    gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
                 {
                     gHitKind = 2;
-                    sub_0801b8e4();
+                    CalcHitDamageAndDirection();
                 }
             }
             sub_0801b9e4();
@@ -303,7 +303,7 @@ u8 sub_0801a8c8(void)
                 continue;
             if (gAttackBoxBottom < gColliderTop)
                 continue;
-            gUnk_03002450 = 0;
+            gHitEffect = 0;
             /* the body box's halfword at 0x0E (ldrh) */
             if (!(gColliderBodyBox->unk0E & 6))
             {
@@ -419,7 +419,7 @@ u8 sub_0801af14(void)
         /* the body box's halfword at 0x0E (ldrh) */
         if (!(gColliderBodyBox->unk0E & 0x8000) && !(mask & gAttackBox->unk10))
         {
-            t->unk82 = gAttackBox->unk09;
+            t->hitEffect = gAttackBox->unk09;
             t->health -= gAttackBox->unk08;
             if (t->health <= 0)
                 t->hitKind = 1;
@@ -438,12 +438,12 @@ u8 sub_0801af14(void)
             if (!(mask & gAttackBox->unk0E))
             {
                 gHitKind = 2;
-                sub_0801b8e4();
+                CalcHitDamageAndDirection();
             }
             else
             {
                 gHitKind = 6;
-                gUnk_03002450 = gUnk_08732218[k];
+                gHitEffect = gUnk_08732218[k];
                 gHitHealthLeft = gAttackHealth;
             }
             sub_0801b9e4();

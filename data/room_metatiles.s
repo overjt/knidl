@@ -25,8 +25,8 @@ gUnk_083AAAB0:
 	.global	gUnk_083AB444
 gUnk_083AB444:
 	.incbin	"baserom.gba", 0x3AB444, 0x117C
-	.global	gUnk_083AC5C0
-gUnk_083AC5C0:
+	.global	gLevel8Stage7Room0MetatileTiles
+gLevel8Stage7Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3AC5C0, 0x80C
 	.global	gUnk_083ACDCC
 gUnk_083ACDCC:
@@ -61,8 +61,8 @@ gUnk_083B1058:
 	.global	gUnk_083B18FC
 gUnk_083B18FC:
 	.incbin	"baserom.gba", 0x3B18FC, 0x698
-	.global	gUnk_083B1F94
-gUnk_083B1F94:
+	.global	gLevel1Stage5Room0MetatileTiles
+gLevel1Stage5Room0MetatileTiles:
 	.incbin	"baserom.gba", 0x3B1F94, 0x2C0
 	.global	gUnk_083B2254
 gUnk_083B2254:

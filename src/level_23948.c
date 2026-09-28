@@ -12,13 +12,13 @@
 
 /* level_23948.c (0x08023948-0x080242CF, issue #93).
  *
- * Room loaders, part 2: sub_08023948 and sub_08023ca0 (M02's screen
- * setups sub_0800b788 and sub_0800b87c) and sub_08023fd4, plus the
- * room-task variants 1 and 2 of task type #3 (sub_08023e34, sub_08023e78)
- * and their per-frame bodies (sub_08023ea0 ... sub_08023fa0).
- * sub_08023948 and sub_08023ca0 build their map in the second buffer
+ * Room loaders, part 2: LoadHubRoom and LoadBigSwitchViewRoom (M02's screen
+ * setups HubInit and BigSwitchViewInit) and LoadGoalGameRoom, plus the
+ * room-task variants 1 and 2 of task type #3 (RoomTaskHubInit, RoomTaskBigSwitchViewInit)
+ * and their per-frame bodies (RoomTaskHubUpdateCamera ... RoomTaskBigSwitchViewLateUpdate).
+ * LoadHubRoom and LoadBigSwitchViewRoom build their map in the second buffer
  * gUnk_02006AA0 through sub_08027a6c instead of gRoomMapBuffer, spawn the
- * door objects and set up the multi-player cameras; sub_08023fd4 loads
+ * door objects and set up the multi-player cameras; LoadGoalGameRoom loads
  * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
  * rebuilds the player mask gActivePlayerMask and restarts the player tasks
@@ -26,16 +26,16 @@
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_08023948(void)
+void LoadHubRoom(void)
 {
     s32 i;
     u32 a;
 
     ResetTasksAndOam();
-    gUnk_03002444 = 1;
-    gUnk_030023B8 = gStageIndex;
+    gInHub = 1;
+    gCurLevel = gStageIndex;
     gUnk_03001F20 = 16;
-    if (gUnk_0200AF08 != 0 || gUnk_020069F0 == 2)
+    if (gHubUnlockFlags != 0 || gRoomEntryMode == 2)
         gCameraMode = 4;
     else
         gCameraMode = 0;
@@ -74,7 +74,7 @@ void sub_08023948(void)
     sub_08029194();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
-    gUnk_0300234C = 0;
+    gLivingPlayerCount = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
@@ -95,7 +95,7 @@ void sub_08023948(void)
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
-            gUnk_0300234C++;
+            gLivingPlayerCount++;
             gPlayerCameraMode[i] = 0;
         }
         else
@@ -128,20 +128,20 @@ void sub_08023948(void)
     CameraWriteScrollParallax();
     a = 0;
     CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
-    if (gUnk_0200AF08 != 0)
+    if (gHubUnlockFlags != 0)
         DrawBg123View(gCameraPos[0], gCameraPos[1]);
     else
         DrawBg23View(gCameraPos[0], gCameraPos[1]);
 }
 
-void sub_08023ca0(void)
+void LoadBigSwitchViewRoom(void)
 {
     u8 z;
     u32 w;
     u32 zero;
 
-    gUnk_03002444 = 1;
-    gUnk_030023B8 = gStageIndex;
+    gInHub = 1;
+    gCurLevel = gStageIndex;
     gUnk_03001F20 = 16;
     gCameraMode = 2;
     LoadGfxSet(1);
@@ -179,7 +179,7 @@ void sub_08023ca0(void)
     SpawnDoorObjects();
     sub_08029034();
     sub_08026b60();
-    sub_08026834();
+    CreateBigSwitchUnlockPan();
     CameraResetBounds();
     CameraSnapBoundsToAnchor();
     CameraInitPos();
@@ -189,32 +189,32 @@ void sub_08023ca0(void)
     DrawBg123View(gCameraPos[0], gCameraPos[1]);
 }
 
-void sub_08023e34(void)
+void RoomTaskHubInit(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = (u32)RoomTaskDraw;
-    t->updateCallback = (u32)sub_08023ea0;
-    if (gUnk_0200AF08 != 0)
+    t->updateCallback = (u32)RoomTaskHubUpdateCamera;
+    if (gHubUnlockFlags != 0)
         t->lateUpdateCallback = (u32)sub_08023f5c;
     else
         t->lateUpdateCallback = (u32)sub_08023f18;
     TaskSleepForever();
 }
 
-void sub_08023e78(void)
+void RoomTaskBigSwitchViewInit(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_08023efc;
-    t->lateUpdateCallback = (u32)sub_08023fa0;
+    t->updateCallback = (u32)RoomTaskBigSwitchViewUpdateCamera;
+    t->lateUpdateCallback = (u32)RoomTaskBigSwitchViewLateUpdate;
     TaskSleepForever();
 }
 
-void sub_08023ea0(void)
+void RoomTaskHubUpdateCamera(void)
 {
     if (gRoomUpdateFlags & 1)
     {
@@ -238,7 +238,7 @@ void sub_08023ea0(void)
     }
 }
 
-void sub_08023efc(void)
+void RoomTaskBigSwitchViewUpdateCamera(void)
 {
     if (gRoomUpdateFlags & 1)
         CameraSnapBoundsToAnchor();
@@ -274,7 +274,7 @@ void sub_08023f5c(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_08023fa0(void)
+void RoomTaskBigSwitchViewLateUpdate(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -286,7 +286,7 @@ void sub_08023fa0(void)
     CameraWriteScrollBg123();
 }
 
-void sub_08023fd4(void)
+void LoadGoalGameRoom(void)
 {
     s32 i;
     u32 a;
@@ -301,7 +301,7 @@ void sub_08023fd4(void)
     LoadBg2Gfx();
     LoadBg3Gfx();
     SelectBg3MapShape();
-    gUnk_03002444 = 0;
+    gInHub = 0;
     gRoomWidth = gCurRoomDef->width;
     gRoomHeight = gCurRoomDef->height;
     gRoomMetatileCount = gRoomWidth * gRoomHeight;
@@ -322,7 +322,7 @@ void sub_08023fd4(void)
     gRoomBgLayout = 0;
     gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
-    gUnk_02007FB0 = 0;
+    gStageExitFlags = 0;
     ResetBlockAnims();
     StopScreenShake();
     CalcBg3Parallax();
@@ -336,7 +336,7 @@ void sub_08023fd4(void)
     gUnk_02000020 = 1;
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
-    gUnk_0300234C = 0;
+    gLivingPlayerCount = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (gPlayerLives[i] != 0 || gPlayerHealth[i] != 0)
@@ -357,7 +357,7 @@ void sub_08023fd4(void)
             }
             gActivePlayerMask |= 1 << i;
             gActivePlayerCount++;
-            gUnk_0300234C++;
+            gLivingPlayerCount++;
         }
         else
         {

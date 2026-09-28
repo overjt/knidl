@@ -9,33 +9,33 @@
  * Sub-game 2: the racers' motion and drawing, the sprite scaler and the
  * script cursor.
  * 
- *   sub_080c4ea8   a racer's Task.moveCallback callback: Task.velX (speed) +=
+ *   AirGrindRacerMove   a racer's Task.moveCallback callback: Task.velX (speed) +=
  *       Task.accelX (acceleration), with a catch-up bonus for the computer
  *       racers behind the leader (M37Game.unk1B8), capped by the level's
  *       gUnk_080CFE3C[level][0]; then Task.posX += speed.
- *   sub_080c4d08 / sub_080c4e10   the Task.drawCallback draw callbacks of the
+ *   AirGrindRacerDraw / AirGrindEffectDrawOrFree   the Task.drawCallback draw callbacks of the
  *       racers (with a blinking extra sprite for three poses) and of the
  *       effect sprites (which end themselves off screen), both drawn scaled
- *       through sub_080c4f60.
- *   sub_080c4f60   copies a sprite's OAM list into M37Game.unk304/unk306[]
+ *       through AirGrindScaleSprite.
+ *   AirGrindScaleSprite   copies a sprite's OAM list into M37Game.unk304/unk306[]
  *       with its size and offsets scaled by `scale` (the depth table through
- *       sub_080c623c, OBJ sizes from gUnk_080CFF76, double-size affine
+ *       AirGrindGetDepthScale, OBJ sizes from gUnk_080CFF76, double-size affine
  *       objects), fills the affine matrix gOamAffineCount of the OAM shadow
  *       gOamBuffer and returns the address of the first entry written.
  *       Its loop is a goto loop: a do/while hoists the (s16) conversion of
  *       the scale.
- *   sub_080c51c0 / sub_080c51d4 / sub_080c523c   the script cursor
+ *   AirGrindClearScript / AirGrindStepScript / AirGrindStartScript   the script cursor
  *       gAirGrindScript: clear it, step it (u16 pairs from gUnk_087572EC[id],
  *       0x8000 ends the script, 0x9999 restarts it; the pair lands in unk2/
- *       unk4, which sub_080c3670 copies into the course record), and start
+ *       unk4, which AirGrindScrollCourseTo copies into the course record), and start
  *       script id 1-4 unless a higher-priority one is running. */
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
 void TaskFree(s32 id);                                   /* kill task */
 s32 sub_080c6258(s32 value);                                 /* PR #133: value / 2 */
-u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
+u32 AirGrindScaleSprite(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
 
-void sub_080c4d08(void)
+void AirGrindRacerDraw(void)
 {
     struct Task *t = gCurTask;
     u32 *tbl = t->frameTable;
@@ -59,29 +59,29 @@ void sub_080c4d08(void)
                 break;
             }
             if (n != 0)
-                QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)p[n], gCurTask->unk28),
+                QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)p[n], gCurTask->unk28),
                              gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
         }
-        QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)p[gCurTask->frame], gCurTask->unk28),
+        QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)p[gCurTask->frame], gCurTask->unk28),
                      gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
     }
 }
 
-void sub_080c4e10(void)
+void AirGrindEffectDrawOrFree(void)
 {
     struct Task *t = gCurTask;
     u32 *tbl = t->frameTable;
 
     if (tbl != NULL && t->frame != -1) {
         if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY < 224)
-            QueueSprite(gCurTask->layer, sub_080c4f60((u16 *)tbl[t->frame], t->unk28),
+            QueueSprite(gCurTask->layer, AirGrindScaleSprite((u16 *)tbl[t->frame], t->unk28),
                          gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
         else
             TaskFree(gCurTaskIdx);
     }
 }
 
-void sub_080c4ea8(void)
+void AirGrindRacerMove(void)
 {
     struct M37Game *g = gAirGrindPtr;
     u16 n = g->playerCount;
@@ -112,7 +112,7 @@ void sub_080c4ea8(void)
     gCurTask->posX += gCurTask->velX;
 }
 
-u32 sub_080c4f60(u16 *src, s16 scale)
+u32 AirGrindScaleSprite(u16 *src, s16 scale)
 {
     u16 s = scale;
     u32 ret;
@@ -134,7 +134,7 @@ loop:
         dbl = 0;
     else
         dbl = 0x200;
-    k = sub_080c623c((s16)s);
+    k = AirGrindGetDepthScale((s16)s);
     v = a & 0xFF;
     if (v & 0x80)
         v |= 0xFFFFFF00;
@@ -180,7 +180,7 @@ loop:
     return ret;
 }
 
-void sub_080c51c0(void)
+void AirGrindClearScript(void)
 {
     gAirGrindScript.scriptId = 0;
     gAirGrindScript.unk2 = 0;
@@ -188,7 +188,7 @@ void sub_080c51c0(void)
     gAirGrindScript.step = 0;
 }
 
-void sub_080c51d4(void)
+void AirGrindStepScript(void)
 {
     u16 *p;
 
@@ -212,7 +212,7 @@ void sub_080c51d4(void)
     }
 }
 
-void sub_080c523c(u16 id)
+void AirGrindStartScript(u16 id)
 {
     if (id <= 4) {
         if (id == 0) {

@@ -18,7 +18,7 @@
  * ability (PlayerState.ability = 0) and the player's three spark records
  * gUnk_02007E90[player][] before its animation; its handler PlayerActionInhaleUpdate
  * runs the block-breaking hit box gUnk_0873CC54 through M09's
- * sub_08030898 (spawning the debris with M17's sub_08065100 at the
+ * TaskBreakFirstBlock (spawning the debris with M17's CreateBlockStar at the
  * broken block) and M09's collision registry RegisterCollider.  Actions 14
  * and 15 (PlayerActionSpit, PlayerActionSwallow) are short animation scripts, and
  * handlers 14 and 15 pick the next velocity preset from the ground flags
@@ -44,21 +44,21 @@ struct HitBoxSet
     /*0x04*/ s8 (*boxes)[4];
 };
 
-/* Not from player.h: this file's view of gUnk_02004B6C differs (lesson
+/* Not from player.h: this file's view of gBrokenBlockY differs (lesson
    3.517). */
 extern s16 gUnk_0873D880[];
 extern u16 gUnk_0873D8B4[];
 extern u16 gUnk_0873D908[];
 extern struct M04Spark gUnk_02007E90[][3];
 extern struct HitBoxSet gUnk_0873CC54;
-extern u16 gUnk_02004B6C;
+extern u16 gBrokenBlockY;
 extern u8 gUnk_0873BEC4[];
 
 void TaskSetEntry(void *a, u32 i);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
-u16 sub_08030898(struct HitBoxSet *p, s32 e);
+u16 TaskBreakFirstBlock(struct HitBoxSet *p, s32 e);
 void PlayerStopAxes(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 void PlayerStartSfx(s32 a0, u16 a1);
@@ -74,7 +74,7 @@ void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's 
 void PlayerSetMotionYPreset(s32 a0);
 void LoadAbilityTiles(void);                     /* M13, src/player_49738.c */
 void CreatePlayerObject(s32 a, s32 b, s32 c);      /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
-s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4);
+s32 CreateBlockStar(s16 x, s16 y, u32 p2, u8 p3, u8 p4);
 
 void PlayerActionLadder(void)
 {
@@ -649,10 +649,10 @@ void PlayerActionInhaleUpdate(void)
             {
                 if (u->unk28 == 0)
                 {
-                    if (sub_08030898(&gUnk_0873CC54, u->player->playerIndex) != 0)
+                    if (TaskBreakFirstBlock(&gUnk_0873CC54, u->player->playerIndex) != 0)
                     {
                         gCurTask->player->unk09 = 2;
-                        sub_08065100(gUnk_02007FA0 + 8, gUnk_02004B6C + 8, gCurTaskIdx, 3, 1);
+                        CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, 3, 1);
                     }
                 }
                 else
