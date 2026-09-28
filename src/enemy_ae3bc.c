@@ -2355,7 +2355,7 @@ void sub_080b0b50(void)
     }
 }
 
-void sub_080b0cc8(void)
+void Task_PaintRollerPainting(void)
 {
     struct Task *t;
     s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
@@ -2363,7 +2363,7 @@ void sub_080b0cc8(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_08753BA4;
+    t->frameTable = gPaintRollerPaintingFrames;
     t->layer = 9;
     d = ((struct Task *)(gCurTask->parent * 144 + (u32)gTasks))->facing;
     gCurTask->facing = d;
@@ -2398,12 +2398,12 @@ void sub_080b0cc8(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
     sub_080b15c0();
-    CallTableEntry(gCurTask->state, 8, gUnk_0874B540);
+    CallTableEntry(gCurTask->state, 8, gPaintRollerPaintingStates);
 }
 
-void sub_080b0de4(void)
+void PaintRollerPaintingCar(void)
 {
-    gCurTask->frameTable = gUnk_08753AAC;
+    gCurTask->frameTable = gPaintRollerPaintingCarFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B96C);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2430,13 +2430,13 @@ void sub_080b0de4(void)
     }
 }
 
-void sub_080b0e80(void)
+void PaintRollerPaintingKirby(void)
 {
     struct Task **c;
     struct Task *u;
 
     c = &gCurTask;
-    (*c)->frameTable = gUnk_08753AC8;
+    (*c)->frameTable = gPaintRollerPaintingKirbyFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B998);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2458,9 +2458,9 @@ top:
     goto top;
 }
 
-void sub_080b0f04(void)
+void PaintRollerPaintingWaddleDee(void)
 {
-    gCurTask->frameTable = gUnk_08753B68;
+    gCurTask->frameTable = gPaintRollerPaintingWaddleDeeFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B9C4);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2483,9 +2483,9 @@ void sub_080b0f04(void)
     }
 }
 
-void sub_080b0f98(void)
+void PaintRollerPaintingMike(void)
 {
-    gCurTask->frameTable = gUnk_08753B48;
+    gCurTask->frameTable = gPaintRollerPaintingMikeFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874B9F0);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2508,9 +2508,9 @@ void sub_080b0f98(void)
     }
 }
 
-void sub_080b102c(void)
+void PaintRollerPaintingBaseball(void)
 {
-    gCurTask->frameTable = gUnk_08753A8C;
+    gCurTask->frameTable = gPaintRollerPaintingBaseballFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BA1C);
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
@@ -2532,9 +2532,9 @@ void sub_080b102c(void)
     }
 }
 
-void sub_080b10c8(void)
+void PaintRollerPaintingBomb(void)
 {
-    gCurTask->frameTable = gUnk_08753B04;
+    gCurTask->frameTable = gPaintRollerPaintingBombFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BA48);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2595,11 +2595,11 @@ void sub_080b123c(void)
     ActorReactToHit();
 }
 
-void sub_080b1264(void)
+void PaintRollerPaintingCloud(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->frameTable = gUnk_08753AE8;
+    gCurTask->frameTable = gPaintRollerPaintingCloudFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BA74);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2659,7 +2659,7 @@ void sub_080b1398(void)
     ActorReactToHit();
 }
 
-void sub_080b13bc(void)
+void Task_PaintRollerLightning(void)
 {
     struct Task *t;
     s32 d; /* an int: the ROM sign-extends the copied byte before the strb */
@@ -2668,7 +2668,7 @@ void sub_080b13bc(void)
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
-    gCurTask->frameTable = gUnk_08753B88;
+    gCurTask->frameTable = gPaintRollerLightningFrames;
     d = ((struct Task *)(gCurTask->parent * 144 + (u32)gTasks))->facing;
     gCurTask->facing = d;
     gCurTask->onGround = 0;
@@ -2697,14 +2697,14 @@ void sub_080b13bc(void)
     ActorDestroy();
 }
 
-void sub_080b14ac(void)
+void PaintRollerPaintingParasol(void)
 {
     struct Task **c;
     struct Task *u;
     s32 r;
 
     c = &gCurTask;
-    (*c)->frameTable = gUnk_08753B20;
+    (*c)->frameTable = gPaintRollerPaintingParasolFrames;
     ActorLoadDef((struct ActorDef *)gUnk_0874BAA0);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
@@ -2831,7 +2831,7 @@ void sub_080b15c0(void)
     gUnk_02007D00[3] = ((s16 *)gUnk_02007D00)[7] + (gUnk_030023B4 << 16);
 }
 
-void sub_080b1710(void)
+void Task_HeavyMoleUpperArm(void)
 {
     struct Task **c;
     s32 z;
@@ -2861,7 +2861,7 @@ void sub_080b1710(void)
     CallTableEntry(u3->state, 6, gUnk_0874B5E4);
 }
 
-void sub_080b1770(void)
+void Task_HeavyMoleLowerArm(void)
 {
     struct Task **c;
     s32 z;
@@ -3580,7 +3580,7 @@ void sub_080b22b8(void)
         t->drawCallback = (u32)TaskDrawWorld;
 }
 
-void sub_080b22f8(void)
+void Task_HeavyMoleYellowMissile(void)
 {
     struct Task **c;
     struct Task **c4;
@@ -3664,7 +3664,7 @@ void sub_080b22f8(void)
     }
 }
 
-void sub_080b2418(void)
+void Task_HeavyMoleRedMissile(void)
 {
     struct Task **c;
     struct Task **c4;

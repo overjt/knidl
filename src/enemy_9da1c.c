@@ -122,7 +122,7 @@ u8 sub_0809db48(void)
             break;
         }
         ActorSetState(n);
-        TaskSetEntry(sub_0809d1c0, gCurTaskIdx);
+        TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
         return 1;
     case 1:
         TaskStopY();
@@ -248,18 +248,18 @@ void sub_0809dd08(void)
 
 void sub_0809dd7c(void)
 {
-    gCurTask->updateCallback = (u32)sub_0809ddbc;
+    gCurTask->updateCallback = (u32)MaceKnightUpdate;
     TaskFaceScreenCenter();
     ActorSetState(0);
     sub_0809de54();
 }
 
-void sub_0809dda0(void)
+void MaceKnightEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08747BD8);
+    CallTableEntry(gCurTask->state, 2, gMaceKnightStates);
 }
 
-void sub_0809ddbc(void)
+void MaceKnightUpdate(void)
 {
     struct Task *t;
     s32 i;
@@ -271,7 +271,7 @@ void sub_0809ddbc(void)
     {
         if (sub_0809f994() != 0)
             sub_0809f930();
-        CallTableEntry(gCurTask->updateState, 2, gUnk_08747BE0);
+        CallTableEntry(gCurTask->updateState, 2, gMaceKnightStateUpdates);
     }
     t = gCurTask;
     if (t->unk24 > 0)
@@ -324,7 +324,7 @@ void sub_0809de54(void)
 void sub_0809dee0(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_0809dda0, gCurTaskIdx);
+        TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
 void sub_0809df08(void)
@@ -339,7 +339,7 @@ void sub_0809df08(void)
 void sub_0809df2c(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0809dda0, gCurTaskIdx);
+        TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
 void sub_0809df54(void)
@@ -768,7 +768,7 @@ void sub_0809e874(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->updateCallback = (u32)sub_0809e8cc;
+    gCurTask->updateCallback = (u32)TridentKnightUpdate;
     TaskFaceScreenCenter();
     t = gCurTask;
     t->unk2C = 60;
@@ -780,17 +780,17 @@ void sub_0809e874(void)
     sub_0809e914();
 }
 
-void sub_0809e8b0(void)
+void TridentKnightEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_08747C04);
+    CallTableEntry(gCurTask->state, 4, gTridentKnightStates);
 }
 
-void sub_0809e8cc(void)
+void TridentKnightUpdate(void)
 {
     struct Task *t;
 
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 5, gUnk_08747C14);
+        CallTableEntry(gCurTask->updateState, 5, gTridentKnightStateUpdates);
     t = gCurTask;
     if (t->unk24 > 0)
     {
@@ -870,7 +870,7 @@ void sub_0809ea08(void)
         {
             t->unk28 = 1;
             ActorSetState(0);
-            TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+            TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         }
         return;
     }
@@ -898,7 +898,7 @@ void sub_0809ea08(void)
         v = gCurTask;
         v->unk28 = 1;
         ActorSetState(0);
-        TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+        TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
 }
 
@@ -958,7 +958,7 @@ void sub_0809eb50(void)
     if (t->state != 2)
     {
         t->updateState = 0;
-        TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+        TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
 }
 
@@ -1039,12 +1039,12 @@ void sub_0809ec84(void)
     else if (abs(TaskGetNearestPlayerDx()) <= 31)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+        TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
     else
     {
         ActorSetState(2);
-        TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+        TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
 }
 
@@ -1056,12 +1056,12 @@ void sub_0809ed08(void)
         if (abs(TaskGetNearestPlayerDx()) > 63)
         {
             ActorSetState(3);
-            TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+            TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         }
         else
         {
             ActorSetState(2);
-            TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+            TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         }
     }
 }
@@ -1083,7 +1083,7 @@ void sub_0809ed74(void)
         gCurTask->unk28 = 1;
     ActorSetState(0);
     gCurTask->updateState = 0;
-    TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+    TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
 }
 
 void sub_0809eddc(void)
@@ -1246,7 +1246,7 @@ void sub_0809efc8(void)
     gCurTask->variant = z;
     ActorSetState(0);
     v = gCurTask;
-    v->updateCallback = (u32)sub_0809e8cc;
+    v->updateCallback = (u32)TridentKnightUpdate;
     v->updateState = z;
     w = gCurTask;
     w->unk2C = 60;
@@ -1330,7 +1330,7 @@ void sub_0809f120(void)
     gCurTask->variant = z;
     ActorSetState(0);
     v = gCurTask;
-    v->updateCallback = (u32)sub_0809e8cc;
+    v->updateCallback = (u32)TridentKnightUpdate;
     v->updateState = z;
     w = gCurTask;
     w->unk2C = 60;

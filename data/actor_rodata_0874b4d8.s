@@ -42,16 +42,16 @@ gUnk_0874B530:
 gUnk_0874B538:
 	.incbin	"baserom.gba", 0x74B538, 0x4
 	.word	gUnk_0874B530
-	.global	gUnk_0874B540
-gUnk_0874B540:
-	.word	sub_080b0de4+1
-	.word	sub_080b0e80+1
-	.word	sub_080b0f04+1
-	.word	sub_080b0f98+1
-	.word	sub_080b102c+1
-	.word	sub_080b10c8+1
-	.word	sub_080b1264+1
-	.word	sub_080b14ac+1
+	.global	gPaintRollerPaintingStates
+gPaintRollerPaintingStates:
+	.word	PaintRollerPaintingCar+1
+	.word	PaintRollerPaintingKirby+1
+	.word	PaintRollerPaintingWaddleDee+1
+	.word	PaintRollerPaintingMike+1
+	.word	PaintRollerPaintingBaseball+1
+	.word	PaintRollerPaintingBomb+1
+	.word	PaintRollerPaintingCloud+1
+	.word	PaintRollerPaintingParasol+1
 	.global	gUnk_0874B560
 gUnk_0874B560:
 	.incbin	"baserom.gba", 0x74B560, 0x8

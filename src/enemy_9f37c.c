@@ -133,7 +133,7 @@ u8 sub_0809f52c(void)
         sub_0809f90c();
         gCurTask->unk28 = 1;
         ActorSetState(0);
-        TaskSetEntry(sub_0809e8b0, gCurTaskIdx);
+        TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         return 1;
     }
 }

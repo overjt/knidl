@@ -126,19 +126,19 @@ void Task_KingDededeStar(void);
 void Task_KingDededeAirPuff(void);
 void Task_GrandWheelieMiniWheelie(void);
 void Task_MrFrostyIceCube(void);
-void sub_080b0cc8(void);
-void sub_080b13bc(void);
+void Task_PaintRollerPainting(void);
+void Task_PaintRollerLightning(void);
 void Task_MrTickTockRing(void);
 void Task_MrTickTockNote(void);
 void Task_MetaKnightSword(void);
-void sub_080b1710(void);
-void sub_080b1770(void);
-void sub_080b22f8(void);
-void sub_080b2418(void);
+void Task_HeavyMoleUpperArm(void);
+void Task_HeavyMoleLowerArm(void);
+void Task_HeavyMoleYellowMissile(void);
+void Task_HeavyMoleRedMissile(void);
 void Task_WhispyWoodsApple(void);
 void Task_WhispyWoodsAirPuff(void);
 void sub_080a4c84(void);
-void sub_080aca90(void);
+void Task_KrackoStarman(void);
 void Task_AxeKnightAxe(void);
 void Task_MaceKnightMace(void);
 void Task_TridentKnightTrident(void);
@@ -146,7 +146,7 @@ void Task_JavelinKnightJavelin(void);
 void Task_BugzzyLadybug(void);
 void Task_UFOLaser(void);
 void sub_080af30c(void);
-void sub_080acc9c(void);
+void Task_NightmareWizardStar(void);
 void Task_GipStar(void);
 void Task_PhanPhanApple(void);
 void Task_InhalableStar(void);
@@ -199,17 +199,17 @@ void Task_MetaKnightCape(void);
 void Task_MetaKnightMask(void);
 void Task_MetaKnightMaskHalf(void);
 void Task_MetaKnightSparkle(void);
-void sub_080adca4(void);
-void sub_080adefc(void);
-void sub_080ae038(void);
-void sub_080ae1f0(void);
+void Task_HeavyMoleMissileHatch(void);
+void Task_HeavyMoleTurbines(void);
+void Task_HeavyMoleEye(void);
+void Task_HeavyMoleSmoke(void);
 void sub_080a54e4(void);
 void Task_NoddyBubble(void);
 void sub_080a983c(void);
 void sub_080a99a0(void);
-void sub_080a9c28(void);
-void sub_080a9cf0(void);
-void sub_080a9da4(void);
+void Task_KrackoLightningTop(void);
+void Task_KrackoLightningMiddle(void);
+void Task_KrackoLightningBottom(void);
 void Task_BugzzyAfterimage(void);
 void sub_080abe38(void);
 void sub_080abf10(void);
@@ -396,19 +396,19 @@ const struct TaskType gTaskTypes[] = {
     /* 113 */ { 2, { 0, 0, 0 }, (u32)Task_KingDededeAirPuff },
     /* 114 */ { 2, { 0, 0, 0 }, (u32)Task_GrandWheelieMiniWheelie },
     /* 115 */ { 2, { 0, 0, 0 }, (u32)Task_MrFrostyIceCube },
-    /* 116 */ { 2, { 0, 0, 0 }, (u32)sub_080b0cc8 },
-    /* 117 */ { 2, { 0, 0, 0 }, (u32)sub_080b13bc },
+    /* 116 */ { 2, { 0, 0, 0 }, (u32)Task_PaintRollerPainting },
+    /* 117 */ { 2, { 0, 0, 0 }, (u32)Task_PaintRollerLightning },
     /* 118 */ { 2, { 0, 0, 0 }, (u32)Task_MrTickTockRing },
     /* 119 */ { 2, { 0, 0, 0 }, (u32)Task_MrTickTockNote },
     /* 120 */ { 2, { 0, 0, 0 }, (u32)Task_MetaKnightSword },
-    /* 121 */ { 4, { 0, 0, 0 }, (u32)sub_080b1710 },
-    /* 122 */ { 4, { 0, 0, 0 }, (u32)sub_080b1770 },
-    /* 123 */ { 2, { 0, 0, 0 }, (u32)sub_080b22f8 },
-    /* 124 */ { 2, { 0, 0, 0 }, (u32)sub_080b2418 },
+    /* 121 */ { 4, { 0, 0, 0 }, (u32)Task_HeavyMoleUpperArm },
+    /* 122 */ { 4, { 0, 0, 0 }, (u32)Task_HeavyMoleLowerArm },
+    /* 123 */ { 2, { 0, 0, 0 }, (u32)Task_HeavyMoleYellowMissile },
+    /* 124 */ { 2, { 0, 0, 0 }, (u32)Task_HeavyMoleRedMissile },
     /* 125 */ { 2, { 0, 0, 0 }, (u32)Task_WhispyWoodsApple },
     /* 126 */ { 2, { 0, 0, 0 }, (u32)Task_WhispyWoodsAirPuff },
     /* 127 */ { 4, { 0, 0, 0 }, (u32)sub_080a4c84 },
-    /* 128 */ { 2, { 0, 0, 0 }, (u32)sub_080aca90 },
+    /* 128 */ { 2, { 0, 0, 0 }, (u32)Task_KrackoStarman },
     /* 129 */ { 2, { 0, 0, 0 }, (u32)Task_AxeKnightAxe },
     /* 130 */ { 4, { 0, 0, 0 }, (u32)Task_MaceKnightMace },
     /* 131 */ { 2, { 0, 0, 0 }, (u32)Task_TridentKnightTrident },
@@ -416,7 +416,7 @@ const struct TaskType gTaskTypes[] = {
     /* 133 */ { 2, { 0, 0, 0 }, (u32)Task_BugzzyLadybug },
     /* 134 */ { 2, { 0, 0, 0 }, (u32)Task_UFOLaser },
     /* 135 */ { 2, { 0, 0, 0 }, (u32)sub_080af30c },
-    /* 136 */ { 2, { 0, 0, 0 }, (u32)sub_080acc9c },
+    /* 136 */ { 2, { 0, 0, 0 }, (u32)Task_NightmareWizardStar },
     /* 137 */ { 2, { 0, 0, 0 }, (u32)Task_GipStar },
     /* 138 */ { 2, { 0, 0, 0 }, (u32)Task_PhanPhanApple },
     /* 139 */ { 2, { 0, 0, 0 }, (u32)Task_InhalableStar },
@@ -469,17 +469,17 @@ const struct TaskType gTaskTypes[] = {
     /* 186 */ { 4, { 0, 0, 0 }, (u32)Task_MetaKnightMask },
     /* 187 */ { 4, { 0, 0, 0 }, (u32)Task_MetaKnightMaskHalf },
     /* 188 */ { 2, { 0, 0, 0 }, (u32)Task_MetaKnightSparkle },
-    /* 189 */ { 4, { 0, 0, 0 }, (u32)sub_080adca4 },
-    /* 190 */ { 4, { 0, 0, 0 }, (u32)sub_080adefc },
-    /* 191 */ { 4, { 0, 0, 0 }, (u32)sub_080ae038 },
-    /* 192 */ { 4, { 0, 0, 0 }, (u32)sub_080ae1f0 },
+    /* 189 */ { 4, { 0, 0, 0 }, (u32)Task_HeavyMoleMissileHatch },
+    /* 190 */ { 4, { 0, 0, 0 }, (u32)Task_HeavyMoleTurbines },
+    /* 191 */ { 4, { 0, 0, 0 }, (u32)Task_HeavyMoleEye },
+    /* 192 */ { 4, { 0, 0, 0 }, (u32)Task_HeavyMoleSmoke },
     /* 193 */ { 4, { 0, 0, 0 }, (u32)sub_080a54e4 },
     /* 194 */ { 4, { 0, 0, 0 }, (u32)Task_NoddyBubble },
     /* 195 */ { 4, { 0, 0, 0 }, (u32)sub_080a983c },
     /* 196 */ { 4, { 0, 0, 0 }, (u32)sub_080a99a0 },
-    /* 197 */ { 4, { 0, 0, 0 }, (u32)sub_080a9c28 },
-    /* 198 */ { 4, { 0, 0, 0 }, (u32)sub_080a9cf0 },
-    /* 199 */ { 4, { 0, 0, 0 }, (u32)sub_080a9da4 },
+    /* 197 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoLightningTop },
+    /* 198 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoLightningMiddle },
+    /* 199 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoLightningBottom },
     /* 200 */ { 4, { 0, 0, 0 }, (u32)Task_BugzzyAfterimage },
     /* 201 */ { 3, { 0, 0, 0 }, (u32)sub_080abe38 },
     /* 202 */ { 3, { 0, 0, 0 }, (u32)sub_080abf10 },

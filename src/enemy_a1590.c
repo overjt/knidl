@@ -1140,8 +1140,8 @@ void sub_080a28d0(void)
     TaskSetMotionXFacing(gUnk_0874852C[i], 0x5A5A5A5A);
 }
 
-/* sub_080a291c (0x080A291C-0x080A2954) */
-void sub_080a291c(void)
+/* CreateMrShineCrescent (0x080A291C-0x080A2954) */
+void CreateMrShineCrescent(void)
 {
     struct ActorSpawn sp;
 
@@ -1156,8 +1156,8 @@ void sub_080a291c(void)
     PlaySfx(0x226);
 }
 
-/* sub_080a2954 (0x080A2954-0x080A2994) */
-void sub_080a2954(void)
+/* CreateMrShineFallingStar (0x080A2954-0x080A2994) */
+void CreateMrShineFallingStar(void)
 {
     struct ActorSpawn sp;
     struct Task *t = gCurTask;
@@ -1353,8 +1353,8 @@ void sub_080a2c90(void)
     gCurTask->unk70 = 0;
 }
 
-/* sub_080a2ca8 (0x080A2CA8-0x080A2CE8) */
-void sub_080a2ca8(void)
+/* CreateMrBrightFireball (0x080A2CA8-0x080A2CE8) */
+void CreateMrBrightFireball(void)
 {
     struct ActorSpawn sp;
 
@@ -1370,8 +1370,8 @@ void sub_080a2ca8(void)
     PlaySfx(0x227);
 }
 
-/* sub_080a2ce8 (0x080A2CE8-0x080A2D38) */
-void sub_080a2ce8(void)
+/* CreateMrBrightBeam (0x080A2CE8-0x080A2D38) */
+void CreateMrBrightBeam(void)
 {
     struct ActorSpawn sp;
 
@@ -1828,7 +1828,7 @@ void sub_080a3548(void)
         if (gCurTask->unk30 <= 0)
         {
             if (gCurTask->unk34 > 0)
-                sub_080a2954();
+                CreateMrShineFallingStar();
             else
                 sub_080a2400(f);
         }
@@ -2075,7 +2075,7 @@ void sub_080a3a40(void)
     TaskYieldTrampoline(3);
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
-    sub_080a291c();
+    CreateMrShineCrescent();
     gCurTask->frame++;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
@@ -2303,7 +2303,7 @@ void sub_080a3f24(void)
     gCurTask->updateState = 5;
     sub_080a3000();
     TaskYieldTrampoline(6);
-    sub_080a2ce8();
+    CreateMrBrightBeam();
     sub_080a2d38();
     StartBgPaletteBlend(10, 80);
     TaskSleepForever();
@@ -2571,7 +2571,7 @@ void sub_080a4508(void)
     TaskFaceNearestPlayer();
     gCurTask->unk1C = ActorStartAnim(gUnk_087485E4);
     TaskYieldTrampoline(64);
-    sub_080a2ca8();
+    CreateMrBrightFireball();
     TaskSetMotionXFacing(-0x40000, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
     TaskSetMotionXFacing(-0x20000, 0x5A5A5A5A);

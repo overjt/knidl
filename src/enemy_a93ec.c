@@ -433,14 +433,14 @@ void sub_080a9ba0(void)
     }
 }
 
-void sub_080a9c28(void)
+void Task_KrackoLightningTop(void)
 {
 
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754448;
-    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->frameTable = gKrackoLightningFrames;
+    gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->frame]);
@@ -451,13 +451,13 @@ void sub_080a9c28(void)
     TaskExitTrampoline();
 }
 
-void sub_080a9cf0(void)
+void Task_KrackoLightningMiddle(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754448;
-    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->frameTable = gKrackoLightningFrames;
+    gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += gUnk_087491E4[gCurTask->frame];
@@ -468,15 +468,15 @@ void sub_080a9cf0(void)
     TaskExitTrampoline();
 }
 
-void sub_080a9da4(void)
+void Task_KrackoLightningBottom(void)
 {
     s32 r;
 
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 10;
-    gCurTask->frameTable = gUnk_08754448;
-    gCurTask->updateCallback = (u32)sub_080a9e14;
+    gCurTask->frameTable = gKrackoLightningFrames;
+    gCurTask->updateCallback = (u32)KrackoLightningUpdate;
     gCurTask->facing = 1;
     r = RandomRange(3);
     gCurTask->posX = (gCurTask->pixelX + gUnk_08749214[r]) << 16;
@@ -485,7 +485,7 @@ void sub_080a9da4(void)
     TaskExitTrampoline();
 }
 
-void sub_080a9e14(void)
+void KrackoLightningUpdate(void)
 {
     vs16 *arr;
     s16 i;
