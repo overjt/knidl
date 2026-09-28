@@ -50,7 +50,8 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   - `make compare` — build and verify SHA-1 against `knidl.sha1` (USA `A7KE`, SHA-1 `37a476567d133c146fee6b5e2eb0b07a215da6b0`).
   - `make progress` — parse `build/knidl.map` with `tools/calcrom.pl` into code/data byte counts and percentages.
   - `make datastats` — data-structure metrics (`tools/datastats.py`): ROM data symbols still defined by absolute address, and pointer-like data words not yet symbolic (docs/data.md §6).
-  - `make shifttest` — the shift test and pointer census (`tools/shiftcheck.py`, `tools/ptrcensus.py`, docs/data.md §8): relinks with padding at a few section boundaries and sorts every pointer-like word that did not move into proven pointer / proven coincidence / unknown; run after a build, CI runs it after `make compare`.
+  - `make shifttest` — the shift test and pointer census (`tools/shiftcheck.py`, `tools/ptrcensus.py`, `tools/branchcheck.py`, docs/data.md §8): relinks with padding at a few section boundaries, checks every relative branch across them, and sorts every pointer-like word that did not move into proven pointer / proven coincidence / unreachable / unknown; fails on any proven pointer or unknown word (`--strict`); run after a build, CI runs it after `make compare`.
+  - `make boottest` — the boot test (docs/data.md §8.4): links one shifted ROM per shift-test point and runs it against `knidl.gba` in mGBA (emulator image `tools/boottest/Dockerfile`, mGBA built from a release tag), in lockstep with the scripted input `tools/boottest/input.txt`, failing at the first frame whose video, audio or RAM differs (`BOOTTEST_AT`, `BOOTTEST_FRAMES`); CI runs it after `make shifttest`.  Never commit a screenshot, frame dump, frame-hash list, savestate or capture: they are assets.
   - `make MATCHING=0` — link without `linker.ld`'s per-section address assertions (a modified ROM); the default `MATCHING=1` keeps every section at its original address.
   - `make check-data` — the no-ROM-bytes check (`tools/check_data_policy.py`): `data/*.s` may hold only labels, symbolic `.word`s and `.incbin` slices of `baserom.gba`; needs no baserom.
   - `make check-headers` — compile-only smoke test of `include/gba/*.h` (`tools/header_smoke.c`) with agbcc + old_agbcc, and of all the game headers `include/*.h` in one translation unit (`tools/header_smoke_game.c`); never linked into the ROM.
@@ -836,10 +837,46 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   linked GBA programs); new lessons 3.520 and 4.132-4.139.  Done by four
   proposal agents in scratch copies of the tree, in three rounds, plus the
   coordinator, who alone applied config, linker and tool changes.
-- Next milestones: (1) #36: the 429 unknown words of the census
-  (docs/data.md §8.3: sprite sheets no consumer reaches, unbounded value
-  tables, unreferenced records), then the records as C and content-true
-  names for seg 19 and `m4a_songs`; (2) #155 run 3: the enemies' remaining rows and
+- Data structure, phase 2, run 3 (issue #36): **the ROM is proven
+  movable and runs moved**.  The census after crt0: 16,961 unrelocated
+  words = 0 proven pointers, 16,898 proven coincidences (317 of them on
+  format evidence only), 63 unreachable and **0 unknown** (429 before);
+  every insertion point, from AgbInit on, is proven safe, and `make
+  shifttest --strict` keeps it so.  New providers `tools/census_sheets.py`
+  (the sprite sheets: consumer-read LZ77 sources and sized palettes, four
+  raw `.tiles` pointers now symbols, nine unreached TaskGfx records and
+  chained OAM streams format-only) and `tools/census_bounds.py` (consumer
+  extents: the completion pictures, seg 18's value tables, the credits
+  demos replayed, the wave table bounded by the camera clamp; and the
+  regions nothing reads), and a fourth census class, **unreachable**,
+  whose condition (a) `ptrcensus.py` checks mechanically over every byte
+  offset of the ROM (docs/data.md §8.3).  Five `ActorDef.unk10` words were
+  real pointers counted as value fields (lesson 4.141), now symbols.
+  **`make boottest`** (mGBA 0.10.5 in its own image, `tools/boottest/`):
+  knidl.gba and seven shifted images agree frame for frame over 14,066
+  scripted frames (boot, title, menus, a new game, stage 1-1 with doors,
+  an ability, the pause screen and a lost life, the intro story).  Its
+  first run found what the shift test cannot see: the three task
+  trampolines' ARM `b` back to crt0 were raw bytes, and every ROM shifted
+  inside the game code crashed at frame 88; they are `ARM_ENTRIES` now,
+  and `tools/branchcheck.py` checks every relative branch across an
+  insertion point (4.142).  Segments renamed by content
+  (`tools/resegment.py`, docs/data.md §4.1): `sram_id_string`,
+  `air_grind_rodata`, `sprite_sheets`/`sprite_sheets_2`,
+  `m4a_voicegroups`, `m4a_song_data`, `engine_rodata`, `game_rodata`,
+  `actor_rodata`, `frame_tables`, `late_game_rodata`, `credits_demos`,
+  `player_frame_records`, `player_frame_lists` and the four program
+  images.  The 179 ActorDef/ActorAux records are C
+  (`src/data/actor_records.c`, one named input section per run, all in
+  one output section via the new `tools/ldgroup.py`, docs/data.md §5.2).
+  CI steps that pipe into `tee` got `pipefail`.  New lessons 3.521 and
+  4.140-4.146.  Done by four proposal agents in scratch copies of the
+  tree plus the coordinator.
+- Next milestones: (1) #36 is closed on evidence; what remains is
+  readability: the BG animation scripts, the RoomDef headers, the frame
+  tables and seg 18's behaviour tables as C with run 3's grouped design
+  (docs/data.md §5.2, §7), and a boot-test script that reaches further
+  (sub-games, bosses, the credits); (2) #155 run 3: the enemies' remaining rows and
   state verbs, the unidentified subtypes (15, 22, 26, 28/29, 31-33, 39,
   40), the boss children and the per-family `Task` fields (the headers
   now hold one declaration to rename), and the remaining `gUnk_` cells;

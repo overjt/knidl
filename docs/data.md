@@ -241,25 +241,34 @@ pointer, and 25 such words there equal a function entry by chance
 Assets stay bytes-from-baserom forever; each asset file says so in its
 header comment.
 
-| segment | range | kind of content | state after #36 phase 2, run 2 |
+| segment | range | kind of content | state after #36 phase 2, run 3 |
 |---|---|---|---|
 | `gap_interworking_veneer_irq_handler_table_14` | `0x080CFDE4-0x080CFDE8` | the veneer's literal | 1 code pointer |
 | `irq_handler_table_14` | `0x080CFDE8-0x080CFE20` | IRQ handler table | 14 code pointers; its start is `gIntrTableTemplate`, which AgbInit copies |
-| `lib_misc`, `lib_rodata_fir_tables` | `0x080CFE20-0x080D0000` | SRAM id string, M37 rodata | 21 labels, bytes extracted |
-| `level_object_tables` (seg 11) | `0x080D0000-0x08120000` | level/object tables | 2,526 labels (targets of the sprite records); every pointer-like word but one a proven coincidence |
-| `level_graphics_palettes` (seg 12) | `0x08120000-0x08334EC0` | graphics and palettes (**asset**); its last 12 bytes are the stage-count table `gUnk_08334EB4` (`u8[9]`, `src/level_2296c.c`) | 12,135 labels, 5,926 data pointers (1,864 embedded TaskGfx records and their fields) |
+| `sram_id_string` | `0x080CFE20-0x080CFE2C` | the SRAM id string "AGB  KIRBY" (`gSramIdString`, `src/save_b7a9c.c`) | 2 labels |
+| `air_grind_rodata` | `0x080CFE2C-0x080D0788` | Air Grind's (M37) rodata (not sound-driver or FIR tables, #98) | 27 labels, bytes extracted |
+| `sprite_sheets` | `0x080D0788-0x08334EC0` | sprite sheets (**asset**): OAM template streams, tiles, palettes and `struct TaskGfx` records; its last 12 bytes are the stage-count table `gUnk_08334EB4` (`u8[9]`, `src/level_2296c.c`) | 14,675 labels, 5,957 data pointers |
 | `room_bg_anims` | `0x08334EC0-0x0835CFD4` | the rooms' BG animations: 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (**asset**) | 253 labels, 224 pointers (the 30 scripts and 14 fades as pointer tables) |
 | `room_data` | `0x0835CFD4-0x083A862C` | 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list (**asset**) | 1,914 labels, 3,574 RoomDef pointer fields |
 | `room_metatiles` | `0x083A862C-0x083B5538` | 23 LZ77 metatile tables (`RoomDef.metatileTiles`, **asset**) | 23 labels |
 | `room_bg3_maps` | `0x083B5538-0x083D0148` | 32 BG3 maps (`struct BgMap`, 25 LZ77 and 7 raw; **asset**) | 32 labels |
-| `compressed_graphics` (seg 14) | `0x083D0148-0x085C0000` | compressed graphics (**asset**) | 1,198 labels, 27 pointers (9 GfxHeaders) |
-| `m4a_songs`, `m4a_song_tracks`, `m4a_songs_2` (seg 15) | `0x085C0000-0x0872E9F8` minus the tables | songs (**asset**); all PCM samples of the game (129 `WaveData`) live in `m4a_songs_2`; `m4a_songs` holds sprite sheets, no m4a data, and `m4a_song_tracks` opens with the three voicegroups | 3,323 labels; the song structure (§3.4): headers, tracks, voicegroups, WaveData and their pointers, 1,343 of them unaligned; `m4a_songs` has 358 sprite record pointers |
+| `compressed_graphics` (seg 14) | `0x083D0148-0x085C0000` | compressed graphics and the file-select completion pictures (**asset**) | 1,198 labels, 27 pointers (9 GfxHeaders) |
+| `sprite_sheets_2` | `0x085C0000-0x0860A140` | more sprite sheets (**asset**; it opens with the tail of the LZ77 stream `gUnk_085BF484`) | 1,167 labels, 358 sprite record pointers |
 | `m4a_engine_rodata`, `m4a_song_table` | `0x0860A140-0x0860A418`, `0x0860B430-0x0860C678` | m4a tables | 48 code + 8 RAM pointers; `gSongTable`'s 579 header pointers |
+| `m4a_voicegroups` | `0x0860A418-0x0860B430` | the five voicegroups and five 4-bit CGB waves (**asset**) | 10 labels, 195 pointers |
+| `m4a_song_data` | `0x0860C678-0x0872E9F8` | song headers, track streams and all 129 PCM `WaveData` (**asset**) | 2,146 labels; the song structure (§3.4), 1,343 of its pointers unaligned |
 | `sram_v112_string`, its gap, `sram_driver_fn_table` | `0x0872E9F8-0x0872EA14` | SDK save-type marker and SRAM table | 4 code pointers |
-| `gap_sram_driver_fn_table_asset_metadata_index`, `asset_metadata_index`, `asset_metadata_index_0873eea0` (seg 18) | `0x0872EA14-0x08760000` minus the two C tables | the behaviour-table store | 4,481 labels, 2,460 code + 20,368 data pointers (behaviour tables, frame tables, the head of the player frame records) |
+| `engine_rodata` | `0x0872EA14-0x0872FF30` | the engine zone's rodata: sprite half-dimensions, `gBootSignature`, `gSfxTable`, `gCosTable` | 5 labels, 274 pointers |
 | `task_types` (**C**, `src/data/task_types.c`) | `0x0872FF30-0x08730780` | `gTaskTypes[266]` | 266 function pointers in C |
+| `game_rodata` | `0x08730780-0x0873ECEC` | the rodata of M02-M18, in link order | 635 labels, 472 code + 2,504 data pointers |
 | `actor_defs` (**C**, `src/data/actor_defs.c`) | `0x0873ECEC-0x0873EEA0` | the six `struct ActorDef *` tables by actor kind | 107 pointers in C |
-| `song_tail_misc_audio` (seg 19) | `0x08760000-0x087E1D58` | not songs (rom-map row 19): the rest of the player frame records, the frame lists (format-only, §5.3), four separately linked GBA programs from `0x0876B1FC` (**asset**) | 2,008 labels, 10,710 pointers |
+| `actor_rodata` | `0x0873EEA0-0x0874C44C` | actor and enemy rodata, M17-M32: behaviour tables, ActorDef/ActorAux records, HitBoxSets | 2,029 labels, 1,723 code + 1,518 data pointers |
+| `frame_tables` | `0x0874C44C-0x0875607C` | every sprite frame table (`struct TaskGfx *[]` or OAM stream pointers) the code installs | 343 labels, 9,981 pointers |
+| `late_game_rodata` | `0x0875607C-0x08758448` | the rodata of M33-M38: pickups, HUD, save, sub-games, ending, credits | 197 labels, 265 code + 118 data pointers |
+| `credits_demos` | `0x08758448-0x08759DC8` | the 14 recorded input demos the staff credits play (`gUnk_087583CC` rows 1-2) | 14 labels |
+| `player_frame_records` | `0x08759DC8-0x08769250` | the 20-byte tagged player frame records | 3,116 labels, 14,663 pointers |
+| `player_frame_lists` | `0x08769250-0x0876B1FC` | the player sheets' frame lists (format-only, §5.3) | 146 labels, 2,025 pointers |
+| `multiboot_program`, `quick_draw_program`, `bomb_rally_program`, `air_grind_program` | `0x0876B1FC-0x087E1D58` | four separately linked GBA programs: the single-pak link client and the three sub-games sent to the other players (`src/menu_0d450.c`, `src/mode_07b68.c`; **asset**) | 1 label each |
 | `room_table` (**C**, `src/data/room_table.c`) | `0x087E1D58-0x087E1E78` | `gRoomTable[9][8]` | 57 pointers in C |
 | `room_bg_anim_lists` | `0x087E1E78-0x087E1F58` | 12 NULL-ended lists of the 30 BG animation scripts and their index `gRoomBgAnimScripts` | 13 labels, 42 pointers |
 | `room_lists` (**C**, `src/data/room_lists.c`) | `0x087E1F58-0x087E2570` | the 57 stage room lists | 333 pointers in C |
@@ -285,6 +294,58 @@ way `docs/analysis/renames.csv` serves the function names:
 | `compressed_graphics` | `0x083D0000-0x085C0000` | `room_bg3_maps`, `compressed_graphics` | `0x083D0148-0x085C0000` (its first 0x148 bytes were the last BG3 map's tail) |
 | `sample_set_index` | `0x087E1D58-0x087E3088` | `room_table`, `room_bg_anim_lists`, `room_lists`, `sprite_frame_lists` | as in the table above |
 | `gap_sram_driver_fn_table_asset_metadata_index`, `asset_metadata_index` | `0x0872EA14-0x08730000`, `0x08730000-0x08760000` | the same two names, `task_types`, `actor_defs`, `asset_metadata_index_0873eea0` | carved by `tools/carve_data.py` |
+
+Run 3 renamed the rest, once the census knew what every zone holds
+(structure only again: `make datastats` changed only in its `.incbin`
+count, 27,251 -> 27,248 slices, because boundaries merged, and the census
+after crt0 did not change):
+
+| old name | old range | new name(s) | new range(s) |
+|---|---|---|---|
+| `lib_misc` | `0x080CFE20-0x080CFF00` | `sram_id_string`, `air_grind_rodata` | `0x080CFE20-0x080CFE2C`, `0x080CFE2C-` |
+| `lib_rodata_fir_tables` | `0x080CFF00-0x080D0000` | `air_grind_rodata` | (M37's rodata, not FIR tables, #98) |
+| `level_object_tables` (seg 11) | `0x080D0000-0x08120000` | `air_grind_rodata`, `sprite_sheets` | `-0x080D0788`, `0x080D0788-` |
+| `level_graphics_palettes` (seg 12) | `0x08120000-0x08334EC0` | `sprite_sheets` | `-0x08334EC0` |
+| `m4a_songs` | `0x085C0000-0x0860A140` | `sprite_sheets_2` | the same |
+| `m4a_song_tracks` | `0x0860A418-0x0860B430` | `m4a_voicegroups` | the same |
+| `m4a_songs_2` | `0x0860C678-0x0872E9F8` | `m4a_song_data` | the same |
+| `gap_sram_driver_fn_table_asset_metadata_index` | `0x0872EA14-0x0872FF30` | `engine_rodata` | the same |
+| `asset_metadata_index` | `0x08730780-0x0873ECEC` | `game_rodata` | the same |
+| `asset_metadata_index_0873eea0` | `0x0873EEA0-0x08760000` | `actor_rodata`, `frame_tables`, `late_game_rodata`, `credits_demos`, `player_frame_records` | `-0x0874C44C`, `-0x0875607C`, `-0x08758448`, `-0x08759DC8`, `0x08759DC8-` |
+| `song_tail_misc_audio` (seg 19) | `0x08760000-0x087E1D58` | `player_frame_records`, `player_frame_lists`, `multiboot_program`, `quick_draw_program`, `bomb_rally_program`, `air_grind_program` | `-0x08769250`, `-0x0876B1FC`, `-0x0876F690`, `-0x087954C0`, `-0x087C0A4C`, `-0x087E1D58` |
+
+`actor_rodata` is then cut into 35 data pieces (`actor_rodata`,
+`actor_rodata_<addr>`) around the 34 runs of ActorDef/ActorAux records
+that are C since run 3 (§5.2); the pieces are rows of one output section.
+
+The evidence for run 3's names:
+
+- `sram_id_string` is the "AGB  KIRBY" string `WriteSramSignature` writes
+  to `0x0E000000` (`WriteSramEx(gUnk_080CFE20, .., 10)`,
+  `src/save_b7a9c.c:29`); every label from `0x080CFE2C` to `0x080D0766`
+  is Air Grind's (M37: `src/subgame_c243c.c` ... `src/subgame_c5284.c`),
+  and the 32 bytes at `0x080D0768` have no consumer.
+- `sprite_sheets`, `sprite_sheets_2`: 96% of seg 12's and 93% of seg 11's
+  bytes are OAM streams, tiles, palettes and TaskGfx records the census's
+  sprite providers prove (`census_sprites.py`, `census_sheets.py`), and
+  `m4a_songs` holds sprite sheets and no m4a structure at all
+  (`tools/m4a_struct.py` reaches nothing there).  The `0x08120000`
+  boundary was an entropy guess; `0x085C0000` stays because the zones
+  interleave (it cuts the LZ77 stream `gUnk_085BF484`).
+- `m4a_voicegroups`, `m4a_song_data`: the m4a parse's labels (the five
+  voicegroups and five CGB waves; the song headers, tracks and all 129
+  WaveData).
+- Seg 18 is the game's rodata in link order: its 2,028 labels with a
+  consumer follow the consuming modules' order (engine zone, M02-M18,
+  M17-M32, the frame-table block, M33-M38), apart from local descents
+  where several files share a table.  Every frame table
+  (`Task.frameTable`) lies in `0x0874C44C-0x0875607C`, and
+  `credits_demos` is exactly the 14 targets of `gUnk_087583CC` rows 1-2.
+- The player frame records start at `0x08759DC8` (the first record a
+  frame table reaches), so the old `0x08760000` boundary cut them; the
+  four programs' extents come from their senders (`MultiBootInitWithParams`
+  in `src/menu_0d450.c`, `sub_08007c5c` and `sub_08007e04` in
+  `src/mode_07b68.c`, indexed by the sub-game `gUnk_02006090`).
 
 The evidence for the zone map (all addresses from the consumers):
 
@@ -431,10 +492,43 @@ spells it `const` (the consumers compile to the same assembly).
 | `gRoomTable[9][8]` | `0x087E1D58-0x087E1E78` | `src/data/room_table.c` | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/level_23948.c`, `src/level_242d0.c`) |
 | the 57 stage room lists | `0x087E1F58-0x087E2570` | `src/data/room_lists.c` | the same loaders index them with `gRoomIndex`; each ends with a NULL |
 
-What they point at stays where it is: the ActorDef records (seg 18,
-interleaved with other tables in 33 runs) and the RoomDefs (`room_data`)
-are structure-only data, declared in `include/actor.h` and
-`include/room.h`; the maps and graphics behind the RoomDefs are assets.
+| the 136 `struct ActorDef` and 43 `struct ActorAux` records | 34 runs in `0x0873F2B8-0x0874C3D0` | `src/data/actor_records.c`, one input section per run | `ActorLoadDefSlot` and `sub_080637e4` (`src/actor_63698.c`) read an ActorDef when a task binds it; `Actor.unk60 = def->unk10`, whose `altAttackBox` becomes `gAttackBox` (`src/actor_673ec.c`) |
+
+The ActorDef/ActorAux records (run 3) lie between other seg 18 tables,
+so one carve per run would give each run its own output section and
+split `actor_rodata` around it: 68 more output sections.  They are one
+file instead:
+
+- `src/data/actor_records.c` defines every record with named fields and
+  every pointer by its symbol, in address order, each run in a named
+  section, `__attribute__((section(".actor_rec_<addr>")))`; agbcc
+  honours the attribute and keeps definition order within a section;
+- each run is still a `c_data` row carved by `tools/carve_data.py` (so
+  `split.py` knows the bytes are C, and `actor_rodata` is cut into data
+  pieces between the runs), and `tools/ldgroup.py` then lists all 69 rows
+  of the zone, data pieces and runs, in order inside ONE output section
+  `.actor_rodata`, with a matching-mode assertion per row on its first
+  symbol (the data piece's segment label, the run's first record);
+- `tools/ldgroup.py --ungroup actor_rodata --write` writes the rows back
+  as one block each (the form `carve_data.py`, `resegment.py` and
+  `carve.py` edit, which refuse a grouped row with a message saying so);
+  grouping again gives the identical `linker.ld`;
+- `tools/fnmatch.sh <start> <end> src/data/actor_records.c --rodata
+  --section=.actor_rec_<addr>` verifies one run.
+
+The records are not `const`: under `-Werror` the qualifier would reach
+`ActorLoadDef`'s parameter and `Actor.def`, and the section attribute is
+what places them in ROM.  The same design is the proposal for the BG
+animation scripts (30 scripts and 14 fades in `room_bg_anims`, none
+adjacent: about 88 sections one carve each, 0 grouped) and the 333
+RoomDef headers (each after its own maps in `room_data`: 666 sections one
+carve each, 0 grouped; with 666 rows, which argues for teaching
+`split.py` to write one data file with `.section` pieces per zone first).
+
+What the records point at stays where it is: the RoomDefs (`room_data`)
+are structure-only data, declared in `include/room.h`, and the maps and
+graphics behind them are assets; the behaviour tables, hit boxes and
+scripts between the ActorDef runs are structure-only data too.
 
 ### 5.3 Format-only pointers (no consumer)
 
@@ -465,39 +559,42 @@ two numbers, measured from the committed files against the baserom:
    `0x08000000-0x08800000`): symbolic, and not symbolic split into
    "points at code" (a code or pool segment) and "points at data".
 
-| | before #36 phase 1 | after phase 1 | after phase 2, run 1 | after phase 2, run 2 |
-|---|---|---|---|---|
-| ROM data symbols defined by absolute address | 2,277 of 2,277 | 0 of 5,065 | 0 of 5,065 | 0 of 25,859 |
-| real ROM data labels in data files | 19 | 5,078 | 5,013 (65 more are C objects) | 27,962 (plus the m4a parse's generated ones) |
-| pointer-like words, symbolic | 63 | 8,385 | 8,385 | 47,465 |
-| - by the function-entry rule | 63 | 2,522 | 2,522 | 2,515 |
-| - in consumer-proven pointer tables | 0 | 4,272 | 3,616 | 36,373 |
-| - in next-label tables (§5.1) | 0 | 1,591 | 1,484 | 2,249 |
-| - in the m4a song structure (§3.4) | 0 | 0 | 0 | 2,551 |
-| - format-only, no consumer (§5.3) | 0 | 0 | 0 | 3,014 |
-| - in C tables (`src/data/`, §5.2) | 0 | 0 | 763 | 763 |
-| not symbolic, points at code | 13,882 | 11,154 | 11,154 | 11,152 |
-| not symbolic, points at data | 50,718 | 45,124 | 45,124 | 6,046 |
-| symbolic words pointing at RAM | 8 | 28 | 28 | 49 |
-| unaligned symbolic words (m4a track operands) | 0 | 0 | 0 | 1,343 |
+| | before #36 phase 1 | after phase 1 | after phase 2, run 1 | after phase 2, run 2 | after phase 2, run 3 |
+|---|---|---|---|---|---|
+| ROM data symbols defined by absolute address | 2,277 of 2,277 | 0 of 5,065 | 0 of 5,065 | 0 of 25,859 | 0 of 25,881 |
+| real ROM data labels in data files | 19 | 5,078 | 5,013 (65 more are C objects) | 27,962 (plus the m4a parse's generated ones) | 27,805 (179 more are C objects) |
+| pointer-like words, symbolic | 63 | 8,385 | 8,385 | 47,465 | 47,501 |
+| - by the function-entry rule | 63 | 2,522 | 2,522 | 2,515 | 2,515 |
+| - in consumer-proven pointer tables | 0 | 4,272 | 3,616 | 36,373 | 35,803 |
+| - in next-label tables (§5.1) | 0 | 1,591 | 1,484 | 2,249 | 2,249 |
+| - in the m4a song structure (§3.4) | 0 | 0 | 0 | 2,551 | 2,551 |
+| - format-only, no consumer (§5.3) | 0 | 0 | 0 | 3,014 | 3,038 |
+| - in C tables (`src/data/`, §5.2) | 0 | 0 | 763 | 763 | 1,345 |
+| not symbolic, points at code | 13,882 | 11,154 | 11,154 | 11,152 | 11,152 |
+| not symbolic, points at data | 50,718 | 45,124 | 45,124 | 6,046 | 6,010 |
+| symbolic words pointing at RAM | 8 | 28 | 28 | 49 | 49 |
+| unaligned symbolic words (m4a track operands) | 0 | 0 | 0 | 1,343 | 1,343 |
 
 The "not symbolic" lines count words by value only; which of them are
 coincidences is the census's job (section 8.3): after run 2 the shift
-test leaves 16,997 unrelocated words in the whole ROM, 16,568 of them
-proven coincidences and 429 unknown.
+test left 16,997 unrelocated words in the whole ROM, 16,568 of them
+proven coincidences and 429 unknown; after run 3 it leaves 16,961, of
+which 16,898 are proven coincidences, 63 unreachable and **0 unknown**.
+Run 3's symbolic words: 31 new ones in the sprite sheets (four raw
+`.tiles` pointers the code reads, 27 format-only record fields), five
+`ActorDef.unk10` pointers the census had counted as value fields, and
+577 that moved from `actor_rodata` into C with the ActorDef records.
 
-The last line of `make datastats` counts the C tables (4 segments, 65
-symbols, 0x113C bytes, 763 pointer words) apart from the data files.
+The last line of `make datastats` counts the C tables (38 segments, 244
+symbols, 0x29F4 bytes, 1,345 pointer words) apart from the data files.
 
-Most of the remaining "points at code" words are coincidences inside
-assets (7,772 in `level_graphics_palettes` alone) and in seg 18's byte
-tables (`0x08080808` runs); the "points at data" words are seg 18's
-data-to-data tables (18,617), seg 19's songs (11,161) and the graphics
-zones. `make progress`'s last line counts `.incbin` slices: under this
-design their number goes **up** as labels go in (5,963 today, down from
-6,295 after phase 1 because the C tables took 333 slices with them; 19
-before), while their bytes go down by four per symbolic word (lesson
-4.120).
+Most of the remaining "not symbolic" words are coincidences inside assets
+(the sprite sheets, LZ77 streams, PCM, the program images) and in seg
+18's byte tables (`0x08080808` runs); the census accounts for every one
+that points into the moved part of the ROM.  The data files'
+`.incbin` count (`make datastats`' second line) goes **up** as labels
+go in (26,916 slices today; 19 before phase 1), while their bytes go down
+by four per symbolic word (lesson 4.120).
 
 `make check-data` (`tools/check_data_policy.py`, run in CI on every
 push, no baserom needed) enforces the policy: data segments live in
@@ -535,21 +632,23 @@ records, seg 18's behaviour tables (the six mixed and seven of the ten
 short-span tables of §5.1 among them), the sprite frame network and,
 format-only, the frame lists (§5.3).
 
-Next, in order of what they unlock:
+Run 3 (#36 phase 2 run 3) closed the census and ran the shifted ROM:
+the 429 unknown words (0 left: section 8.3, with the new "unreachable"
+class), the boot test and the three raw ARM branches it found (8.4),
+content-true names for every data segment (§4.1), and the ActorDef and
+ActorAux records as C (§5.2).
 
-- **The 429 unknown words** of the census (section 8.3), zone by zone:
-  most sit in sheets no consumer reaches (tile bytes, unreferenced OAM
-  streams and records) or in tables whose index the code does not bound.
-- **More tables as C.**  The RoomDef and ActorDef records, the BG
-  animation scripts and the frame tables all have consumer-proven layouts
-  and symbolic pointers now; moving them to `src/data/` is a readability
-  step (it does not change the shift numbers).  The RoomDefs are
-  interleaved with their maps (one carve each), the ActorDefs with seg
-  18's other tables.
-- **Segment names.**  `song_tail_misc_audio` holds no audio (rom-map row
-  19: the player frame records, the frame lists and four program images)
-  and `m4a_songs` holds sprite sheets; `tools/resegment.py` can give them
-  content-true names as it did for seg 13 (§4.1).
+What is left is readability, not movability:
+
+- **More records as C**, with run 3's grouped design (§5.2): the BG
+  animation scripts (30 scripts and 14 fades in `room_bg_anims`), the
+  333 RoomDef headers (each after its own maps; worth teaching
+  `split.py` to write one data file with `.section` pieces per zone
+  before that), the frame tables and seg 18's behaviour tables.  The
+  object lists (enemy placements) are level layouts and stay structure.
+- **A wider boot test**: the script plays level 1 only (8.4); the
+  sub-games, bosses, the credits and link play are reached by the census
+  alone.
 
 ## 8. Shifting the ROM
 
@@ -576,29 +675,37 @@ value + 0x1000 in B:
   point but moved (a `symbol+offset` across the point); both fail the
   target.  "other" counts the bytes that differ outside those words: the
   relative branches across the point and the unaligned m4a track operands
-  (1,485 after crt0), which move correctly.
+  (1,488 after crt0), which move correctly;
+- **branches** (since run 3): `tools/branchcheck.py` decodes every
+  relative branch that crosses the point (ARM B/BL, the ARM after
+  `bx pc`, Thumb BL, B and B<cond> into code) and checks that image B
+  still reaches the moved target.  No word compare can see a raw one
+  (8.4); a bad one fails the test.  After crt0: 4 of 4.
 
 The default points are the start of AgbInit (everything after crt0
-moves, so it tests every word of the ROM), right after the code, the room
-data, the compressed graphics, inside the song zone, seg 18 and seg 19;
-`--at <section>` picks others.  No emulator is involved, and the result
-is exact about what moved.  `make shifttest` then runs the census (8.3);
-CI runs both after `make compare` and puts the tables in the step
-summary.  (A boot test of a shifted image in a headless emulator would
-be a further check; the image carries none.)
+moves, so it tests every word of the ROM), right after the code and the
+SDK tables (`sram_id_string`), the room data, the compressed graphics,
+inside the song zone, seg 18 (`engine_rodata`) and the player frame
+records; `--at <section>` picks others.  No emulator is involved, and
+the result is exact about what moved.  `make shifttest` then runs the
+census (8.3) with `--strict`, which fails on any proven pointer or
+unknown word; CI runs both after `make compare`, then the boot test
+(8.4), and puts the tables in the step summary.
 
-| insertion point | before run 2 | after run 2 |
-|---|---|---|
-| `0x08000310` (after crt0: the whole ROM) | 56,092 | 16,997 |
-| `0x080D0000` (right after the code) | 45,057 | 5,970 |
-| `0x08334EC0` (`room_bg_anims`) | 15,295 | 3,828 |
-| `0x083D0148` (`compressed_graphics`) | 14,955 | 3,712 |
-| `0x0860C678` (`m4a_songs_2`, songs) | 8,857 | 864 |
-| `0x0872EA14` (seg 18) | 5,969 | 188 |
-| `0x08760000` (seg 19) | 2,442 | 145 |
+| insertion point | before run 2 | after run 2 | after run 3 |
+|---|---|---|---|
+| `0x08000310` (after crt0: the whole ROM) | 56,092 | 16,997 | 16,961 |
+| right after the code (`0x080D0000` until run 2, `0x080CFE20` `sram_id_string` since) | 45,057 | 5,970 | 5,938 |
+| `0x08334EC0` (`room_bg_anims`) | 15,295 | 3,828 | 3,823 |
+| `0x083D0148` (`compressed_graphics`) | 14,955 | 3,712 | 3,707 |
+| `0x0860C678` (`m4a_song_data`, songs) | 8,857 | 864 | 859 |
+| `0x0872EA14` (seg 18, `engine_rodata`) | 5,969 | 188 | 183 |
+| seg 19 (`0x08760000` until run 2, `0x08759DC8` `player_frame_records` since) | 2,442 | 145 | 148 |
 
-Unrelocated words, before and after; relocated words after crt0 went
-from 16,866 to 55,961 (plus the 1,343 unaligned track operands).
+Unrelocated words; relocated words after crt0 went from 16,866 to 55,961
+in run 2 and 55,997 in run 3 (plus the 1,343 unaligned track operands).
+After run 3 no unrelocated word is unknown: each is a proven coincidence
+or unreachable (8.3).
 
 ### 8.2 The linker: sections follow each other
 
@@ -623,70 +730,224 @@ region is 32 MiB, and a last assertion checks that the matching image
 ends at `0x08800000`.  `tools/ldblocks.py` writes blocks in this form for
 `carve.py`, `carve_data.py` and `resegment.py`.
 
-No zone keeps a pin for a pointer reason: the census has **no proven
-pointer left raw**.  Pinning the zones that unknown words point into
-would pin 13 of them (the code included) and prove nothing, so they stay
-unpinned and section 8.3 lists them instead.
+A group of rows (`tools/ldgroup.py`, §5.2) is one block that lists
+several segments' input sections in order, with one assertion per row
+on its first symbol (`ASSERT(!MATCHING || actor_rodata_0873f4c8 ==
+0x0873F4C8, ...)`).
+
+No zone keeps a pin for a pointer reason: since run 3 the census has no
+proven pointer left raw and no unknown word (8.3), so every insertion
+point is proven safe, and the boot test (8.4) runs shifted images at all
+seven default points.
 
 ### 8.3 The census (`tools/ptrcensus.py`)
 
-Each unrelocated word is a proven pointer, a proven coincidence or
-unknown, from evidence only (lesson 4.138): the ELF's mapping symbols
-for the code, the config for records' value fields, and one provider per
-zone, `tools/census_*.py`:
+Each unrelocated word is a proven pointer, a proven coincidence,
+unreachable or unknown, from evidence only (lesson 4.138): the ELF's
+mapping symbols for the code, the config for records' value fields, and
+one provider per zone, `tools/census_*.py`:
 
 | provider | zones | what it proves |
 |---|---|---|
-| `census_m4a.py` | the song zones, seg 19's tail | PCM bodies (WaveData size), track events, ToneData numbers, the four program images (extents from their senders) |
-| `census_rooms.py` | seg 11, the room zones, seg 14 | room maps and block layers (LZ77 or raw by `mapsCompressed`), tiles, palettes, BG3 maps, doors, objects, RoomDef value fields, BG animation frames, LZ77 and Huffman streams at labels, RequestCopyList sources, consumer-sized palettes and tiles |
+| `census_m4a.py` | the song zones, the program images | PCM bodies (WaveData size), track events, ToneData numbers, the four program images (extents from their senders) |
+| `census_rooms.py` | `air_grind_rodata`, the room zones, seg 14 | room maps and block layers (LZ77 or raw by `mapsCompressed`), tiles, palettes, BG3 maps, doors, objects, RoomDef value fields, BG animation frames, LZ77 and Huffman streams at labels, RequestCopyList sources, consumer-sized palettes and tiles |
 | `census_seg18.py` | seg 18 | the collision pixel tables, HitBoxSet box lists, ActorDef numbers, per-move arrays, scalar tables by their index ranges |
-| `census_sprites.py` | the sprite network (seg 12, `m4a_songs`, seg 18/19) | OAM template streams, tile chunk streams and palette blocks of the proven frame records |
+| `census_sprites.py` | the sprite network (the sprite sheets, seg 18/19) | OAM template streams, tile chunk streams and palette blocks of the proven frame records; format only, the frame lists' blocks and sheet headers |
+| `census_sheets.py` (run 3) | `sprite_sheets`, `sprite_sheets_2` | what the frame network leaves: consumer-read LZ77 sources, consumer-sized palettes and tiles, the QueueSprite tables' OAM streams, the four raw-tiles sheet headers; format only, unreached TaskGfx records in counted record blocks and OAM streams that tile the bytes between two proven objects, each entry checked against BuildOam's flipped-x pair |
+| `census_bounds.py` (run 3) | seg 14, seg 18, seg 11, seg 19 | consumer extents: the completion pictures, value tables whose extent was only the next-label span, the credits demos (the recorder replayed on the ROM data), the wave table bounded by the camera clamp; and the unreachable regions |
 
-After run 2 (insertion after crt0):
+**The unreachable class** (run 3, counted apart): a word in bytes that
+nothing can read.  A provider claims the region with kind
+`"unreachable"` only if all of these hold, and its `why` records the
+evidence (`build/ptrcensus_unreachable.json` lists every word with it):
 
-| holding zone | unrelocated before | after | proven coincidence | unknown |
-|---|---|---|---|---|
-| code segments | 34 | 19 | 19 (instructions) | 0 |
-| `level_object_tables` (seg 11) | 85 | 85 | 84 | 1 |
-| `level_graphics_palettes` (seg 12) | 16,885 | 10,959 | 10,847 | 112 |
-| room zones (4 segments) | 427 | 203 | 203 | 0 |
-| `compressed_graphics` (seg 14) | 1,845 | 1,818 | 1,734 | 84 |
-| `m4a_songs` (sprite sheets) | 973 | 615 | 464 | 151 |
-| song zones (3 segments) | 4,660 | 2,383 | 2,383 | 0 |
-| seg 18 (3 segments) | 18,982 | 136 | 105 | 31 |
-| `song_tail_misc_audio` (seg 19) | 11,487 | 777 | 727 | 50 |
-| `sprite_frame_lists` | 710 | 0 | - | - |
-| the rest (SDK tables) | 4 | 2 | 2 | 0 |
-| **total** | **56,092** | **16,997** | **16,568** | **429** |
+- (a) no symbol, pointer word, pool literal or C initializer anywhere in
+  the ROM points into the region.  `ptrcensus.py` checks this itself and
+  stops on a failing claim: no 4-byte value at any byte offset outside
+  the region points into it (bytes proven coincidences excepted, since
+  they are proven not to be pointers), and no ELF symbol lies in it
+  (except the segment-name label `split.py` writes at a data file's
+  start, which names a file, not an object);
+- (b) no consumer-proven extent, and no table indexed without a bound,
+  can reach it: the `why` names the neighbouring tables and why each
+  one's index or extent stops before the region;
+- (c) the tool records it with that evidence.
 
-Of the 429 unknown words, 25 lie in value tables whose extent is only
-the span to the next label (counted apart, not as proven).  The rest, by
-cluster:
+A word nobody reads cannot break a moved ROM, whatever it is; the class
+never symbolizes anything.  Unreachable words do not block an insertion
+point.
 
-- sprite sheets in seg 12 and `m4a_songs` (263): tile bytes, OAM
-  streams and TaskGfx-shaped records that no frame table, list or
-  record reaches, and the tiles fields of the four raw sheets;
-- the menu digit tiles `gUnk_08551110` (84): read at `n * 0x180` with `n`
-  from the save's completion percent, which the code does not bound
-  (`src/menu_0b920.c`, `src/save_b79b8.c`);
-- seg 19 (50): fourteen tagged player records inside the record chain
-  that no table points at, and two frame-list entries that point at a
-  sheet header;
-- seg 18 (31): the 25 heuristic words above, two second ActorAux-shaped
-  records nothing indexes and a few words after tables no consumer lays
-  out; seg 11 (1): a word past the four player palettes the consumer
-  reads.
+After run 3 (insertion after crt0):
+
+| holding zone | unknown before run 3 | unrelocated after | proven coincidence (format-only) | unreachable | unknown |
+|---|---|---|---|---|---|
+| code segments | 0 | 19 | 19 | 0 | 0 |
+| `air_grind_rodata` (was `lib_rodata_fir_tables` + seg 11's head) | 0 | 7 | 7 | 0 | 0 |
+| `sprite_sheets` (was seg 11's rest + seg 12) | 113 | 11,008 | 11,007 (302) | 1 | 0 |
+| room zones (4 segments) | 0 | 203 | 203 | 0 | 0 |
+| `compressed_graphics` (seg 14) | 84 | 1,818 | 1,818 (2) | 0 | 0 |
+| `sprite_sheets_2` (was `m4a_songs`) | 151 | 615 | 615 (13) | 0 | 0 |
+| `m4a_song_data` (was `m4a_songs_2`) | 0 | 2,383 | 2,383 | 0 | 0 |
+| seg 18 (`engine_rodata`, `game_rodata`, `actor_rodata`, `late_game_rodata`, `credits_demos`) | 31 | 131 | 119 | 12 | 0 |
+| `player_frame_records`, `player_frame_lists` (seg 19's head) | 50 | 50 | 0 | 50 | 0 |
+| the four program images | 0 | 727 | 727 | 0 | 0 |
+| **total** | **429** | **16,961** (16,997 before) | **16,898 (317)** | **63** | **0** |
+
+(The zones are run 3's names; run 2's per-segment table is in this
+file's history.)  Per cluster, what closed the 429 unknown words:
+
+- **the sprite sheets (263)**: 148 words in 28 LZ77 streams a consumer
+  decompresses (the picture screens, the stage GfxHeaders, TransferNode
+  mode 8, direct loads), 3 in consumer-sized palettes, 13 in
+  consumer-sized palettes and tile blocks, 9 in the OAM streams of the two
+  QueueSprite tables (index at most 11); **4 were real pointers** still
+  written raw, the `.tiles` fields of the four raw-tiles sheet headers
+  the code copies from (`src/actor_6ff24.c`, `src/enemy_ae3bc.c`,
+  `src/actor_653ec.c`), now symbols; 27 are the fields of nine TaskGfx
+  records no frame table reaches, symbolized format-only (their blocks'
+  count words equal their length) and their 17 OAM words, plus 42 words
+  in OAM streams that tile the bytes between two proven objects, format
+  only (BuildOam's flipped-x pair, which 48,293 of 48,298 consumer-proven
+  entries satisfy);
+- **the completion pictures (84)**: `sub_0800bda4` copies halves
+  `2 * (percent / 10)` and `+1` of `gUnk_08551110` (`src/menu_0b920.c`),
+  percent 100 is displayed (`src/save_b79b8.c`, `src/save_b8918.c`) and
+  only checksum-valid slots or new files reach the menu
+  (`src/save_b77d4.c`), so all 22 halves are read raw: tiles;
+- **seg 18 (31)**: the hub camera-pan steps, two Nightmare Wizard frame
+  tables, one frame table of `src/enemy_ae3bc.c` and the wave table
+  `gUnk_087561CC` (its index is `(gSpriteCameraY + line) >> 3`, bounded
+  by the room's camera clamp and the largest screen shake to 135) got
+  their consumer extents; the credits demos' extents come from replaying
+  the input recorder over each scene's fixed length; unreachable: the
+  demo tails after the last entry a scene plays, the wave table's entries
+  136-143, two words after `gUnk_08740620[8]`, word 3 of two
+  palette-variant records (readers take words -1..2 and 4-5) and two
+  second ActorAux records nothing indexes;
+- **seg 19 (50)**: fourteen tagged player records no frame table points
+  at (reached only through `tbl[frame + a0]`, `src/stage_3cd60.c`) and
+  two frame-list entries that hold their sheet header's address, the
+  lists being read by no code: unreachable;
+- **seg 11 (1)**: bytes 0x80-0x1FF of `gUnk_080DCA28`, past the four
+  player palettes its only reader indexes with a player slot (at most
+  3): unreachable.
+
+The run also found **five real pointers counted as coincidences**: five
+single-record ActorDef entries listed the pointer fields
+`ActorLoadDefSlot` copies and left `.unk10` out, and the record provider
+reads every unlisted field as a value, although `sub_080637e4` copies
+`def->unk10` into `Actor.unk60` (a `struct ActorAux *`).  All seventeen
+such entries now list `+0x10` (lesson 4.141).
 
 What that means for moving the ROM:
 
-- **Proven movable**: none of the zones yet in the strict sense, because
-  every insertion point has unknown words pointing past it (429 after
-  crt0, 206 after the code, 35 after the start of the songs, 13 after
-  seg 18's start, 2 after the room table, both into the zero padding;
-  `make shifttest` prints the list).  The unknown words are in sprite sheets, value tables and data
-  nothing reads; none is a known pointer.
-- **What already moves correctly**: every pointer that a consumer or a
-  verified format parse proves - 55,961 aligned words and 1,343 unaligned
-  ones after crt0 - so code, tables, rooms, songs and sprite records can
-  grow or move as long as the unknown words above are indeed
-  coincidences, which is what the census says to check first.
+- **Proven movable**: every insertion point, from the start of AgbInit
+  to the end of the ROM (`make shifttest` prints "lowest proven-safe
+  insertion point: 0x08000000"), in the sense of this section: no word
+  that points into the moved part is a raw pointer or unknown.
+- **Checked empirically** by the boot test (8.4) at the seven default
+  points: the shifted images run the scripted 14,066 frames exactly like
+  the original.
+- **What stays trusted, not proven**: 317 proven coincidences rest on a
+  format parse alone (the frame lists' blocks, the unreached records' OAM
+  streams, the sheet headers' LZ77 tiles), and the 63 unreachable words
+  on (b), a reading of the consumers; `make shifttest --strict` keeps the
+  count of unknown words at 0 for every later change.
+
+### 8.4 The boot test (`make boottest`)
+
+The shift test proves which words the linker moves; the boot test runs
+the shifted images and watches the game.  `make boottest` links one
+image per insertion point (`tools/boottest.py`, the shift test's image B:
+the same objects, `linker.ld` with 0x1000 bytes in front of the section,
+`--defsym MATCHING=0`, into `build/boottest/`), then runs `knidl.gba` and
+every shifted image in lockstep in mGBA (`tools/boottest/boottest.c`
+against mGBA 0.10.5's core library, built from the release tag in its own
+image, `tools/boottest/Dockerfile`, so the toolchain image stays lean).
+All cores get the same scripted input (`tools/boottest/input.txt`), start
+from an empty save held in memory (no `.sav` is ever written) and run on
+the HLE BIOS; every frame compares the video buffer, the audio samples and
+EWRAM + IWRAM, where a RAM word may differ only by exactly the padding and
+only if it points at or after the insertion point (a pointer the linker
+moved, a return address on the stack).  The run fails at the first frame
+that differs and prints it with both PCs; `--step <frame>` then walks that
+frame an instruction at a time and prints the last PCs before the
+registers part.  Hashes are compared at run time only: no frame, frame
+hash, savestate or recording is written or committed.  `--shot` writes
+PNG frames of the reference for tuning the script, under `pending/` only.
+
+```
+make boottest                           # all of shiftcheck.py's points
+make boottest BOOTTEST_AT="agb_init"    # one point
+make boottest BOOTTEST_FRAMES=3000      # a shorter run
+```
+
+The script plays 14,066 frames (3.9 minutes of game time): the boot logo,
+the title screen, the file select, the game select menu and a new game
+from an empty file, the level 1 intro scene and hub, and stage 1-1's
+three rooms (walking, jumping, floating, inhaling and swallowing, the Beam
+ability get and its HUD roulette, the ability knocked out by a hit, the
+pause screen, a lost life and the retry, five door transitions), then the
+soft reset (A+B+SELECT+START) back to the title and the nine-scene intro
+story.  The title never plays recorded gameplay when idle (it alternates
+with the intro story); the recorded demos are the staff credits', which
+the script does not reach, nor do the sub-games, the sound test, the
+goal game, a boss or link play.
+
+What it found, at the first run:
+
+- **the task trampolines** (`TaskSwitchTrampoline`, `TaskYieldTrampoline`,
+  `TaskExitTrampoline`, `asm/sdk_libc.s`): after `bx pc; nop` each is an
+  ARM `b` back to its helper at `0x08000234`-`0x08000288`, which the
+  splitter had decoded as Thumb, a `stmia` and a raw `0xEAFC` halfword.
+  A PC-relative branch the linker never saw: with any insertion between
+  the helpers and `0x080CFDC4` (all the game code) it jumps 0x1000 bytes
+  too far, and the after-crt0 image crashed at frame 88 (the first task
+  switch, during the boot logo).  The shift test could not see it (the word is
+  no address) and counted nothing (its bytes did not change).  The three
+  ARM halves are now entries of `tools/symdb.py`'s `ARM_ENTRIES`, so
+  `make split` writes `b TaskSwitch` etc.; the ROM is unchanged.
+  `tools/branchcheck.py` (run by `tools/boottest.py` on every image)
+  decodes every ARM B/BL, every ARM island after `bx pc`, every Thumb BL
+  and B that crosses an insertion point and checks that the shifted image
+  still reaches the target; before the fix it lists exactly these three.
+- **an address used as a number**: the fade driver `sub_080b6154`
+  (`src/save_b6154.c`) falls off its end without a return value on its
+  last frame, and `UpdateHBlankScroll` (`src/hud_b5840.c`) takes the
+  function's own address, still in r0, as the HBlank DMA count
+  (`gHBlankDmaCnt = 0xA2600000 | 0x6155`, and `gHBlankDmaSrc` from it).
+  The ROM's own undefined behaviour, so a shifted image programs a
+  different count for one frame (frame 1126, the game select menu); the
+  picture and the sound stay identical.  The two cells are the only
+  `--ram-allow` entries (`BOOTTEST_RAM_ALLOW` in the Makefile).
+
+With the trampolines fixed, all seven points run the whole script with
+identical video, audio and RAM (the two allowed words apart, after crt0
+only) and identical emulator error counts (111 in every image: the HLE
+BIOS reports the same over-long LZ77 stream at `0x085BA25C` in all of
+them).  Timing does not enter: mGBA charges ROM wait states by region and
+by sequential/non-sequential access only (`src/gba/memory.c`, 0.10.5), and
+its prefetch model depends on PC distances, so the same code runs in the
+same cycles at any address.  (On hardware a sequential burst crossing a
+128 KiB boundary of the cartridge bus is non-sequential; a shift can move
+those boundaries, which only timing-sensitive code would notice, and the
+emulator cannot tell.)
+
+What it proves and what it does not: it is empirical and only as wide as
+the script.  Every pointer the reached code follows (code, tables, rooms,
+sprites, the songs of the title, the story and level 1, the sound effects
+played) works shifted, at every point, so none of the census's
+coincidence or unreachable words that these scenes read was a real
+pointer.  Data the script never reaches (other levels, bosses, the
+sub-games, the credits, link play) is untested by it, and the census
+(8.3) remains the proof for those.  It is also the only check of what
+the word compare cannot see: a relative branch written as raw bytes
+(which `tools/branchcheck.py` now checks statically at every shift-test
+point) and behaviour that depends on an address.
+
+`make boottest` takes about 40 s with both images built (8 threads; about
+100 s on one); the emulator image builds in about 90 s from scratch.  CI
+runs it after `make shifttest`, with the emulator image from the GitHub
+Actions layer cache (`docker/build-push-action`, `type=gha`), so it is
+rebuilt only when `tools/boottest/` changes.
+

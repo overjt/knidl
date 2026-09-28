@@ -384,7 +384,7 @@ if (-d $repo_root)
             if (-d $File::Find::name)
             {
                 my $name = basename($File::Find::name);
-                if ($name eq 'build' or $name eq '.git' or $name eq 'tools')
+                if ($name eq 'build' or $name eq '.git' or $name eq 'tools' or $name eq 'pending')
                 {
                     $File::Find::prune = 1;
                 }
