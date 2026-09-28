@@ -651,7 +651,12 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   by-design asm as excluded in `tools/calcrom.pl` and counted asm-split
   tables as data (lesson 4.114).  `make progress`: 847028 of 851204 code
   bytes in `src/` (99.5094%), **0 bytes of code remaining to be
-  decompiled**; 184 of 8282 symbols have real names.
+  decompiled**; 184 of 8282 symbols have real names.  The decomp.dev
+  report (`tools/gen_report.py`, docs/decomp-dev.md) counts the
+  asm-by-design zones as matched/complete — their source is this
+  repository's own asm, byte-verified by `make compare` — so the badge
+  reads 100% "code built from repository source"; the units keep their
+  `[asm]` suffix and assets/naming stay tracked separately.
 - Natural-C campaign (issue #154): the 133 functions in 45 files that
   matched only with `register ... asm("rN")` pins or zero-byte `asm("")`
   levers (mostly M28-M33) were redrafted as plain C that still matches byte

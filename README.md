@@ -56,6 +56,13 @@ engine's hand-scheduled core (`asm/m4a_1.s`, as in pret projects), the BIOS
 call thunks and the libgcc routines. Each one is justified in
 `docs/analysis/rom-map.md` section 2 and excluded in `tools/calcrom.pl`.
 
+The [decomp.dev](https://decomp.dev/overjt/knidl) badge reports **100%**:
+every byte of code in the ROM is built from source in this repository —
+C for the game, labeled assembly for the SDK/runtime zones above (each
+visible as its own `[asm]` unit there). The badge measures code only;
+what is still open — asset extraction tooling, data tables as C, symbol
+naming — is listed below under "What is left".
+
 ```sh
 make progress
 ```

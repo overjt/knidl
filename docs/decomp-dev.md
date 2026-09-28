@@ -31,9 +31,11 @@ docs/analysis/module-map.csv─┘            │
     (M01..M38) plus one unit per early carve-out / SDK segment,
   - hand-written asm zones that stay asm **by design** (SDK libc,
     `svc` thunks, m4a engine core, task-switch helpers) are reported
-    as their own units suffixed `[asm]`, with honest 0% — they are
-    excluded from the "decompilable" expectation, not silently
-    counted as done.
+    as their own units suffixed `[asm]` and counted as
+    matched/complete: they were never compiler output, so the
+    checked-in asm IS their source (`make compare` proves it
+    byte-exact). The suffix keeps the distinction visible on
+    decomp.dev instead of silently dropping the bytes from the totals.
 - **`report.json`** (gitignored, generated) is validated against the
   schema in CI before upload.
 - **`.github/workflows/report.yml`** runs on every push to `master`,
@@ -71,10 +73,17 @@ CI whenever the analysis CSVs change).
 
 | Measure | Meaning here |
 | --- | --- |
-| `matched_code` | bytes in `c_code` segments (verified matching C) |
+| `matched_code` | bytes built from repository source: verified matching C (`c_code` segments) plus the `[asm]` zones' own checked-in asm |
 | `total_code` | all code bytes in tracked segments (excl. pure data/pool) |
-| `matched_functions` | symbols.csv functions inside `c_code` ranges |
-| `[asm]` units | named-asm-forever zones; counted in totals at 0% |
+| `matched_functions` | symbols.csv functions inside `c_code` ranges plus `[asm]` zones' functions |
+| `[asm]` units | named-asm-forever zones; counted in totals as complete (their source is the repository's own asm, byte-verified by `make compare`) |
 
 Data (`8.3 MB` of assets) is intentionally not tracked as "code progress";
 the ROM's data segments are incbins by design until asset tooling exists.
+
+The headline percentage therefore means **"every byte of code is built from
+source in this repository (C or labeled asm)"** — the same semantics
+objdiff applies elsewhere to a unit whose base and target are identical. It
+says nothing about asset extraction or symbol naming coverage; those are
+tracked separately (`make progress` documentation line, README "What is
+left").
