@@ -108,6 +108,90 @@ SEG18_VALUES = [
      "the facing"),
 ]
 
+# ---- 2b. the room wavy-scroll wave table s8 gUnk_087561CC (seg 18) ------
+#
+# Readers: gHBlankScrollEffects[8] = sub_080b6b08 (src/save_b6b08.c:54-61) and
+# [10] = sub_080b6d04 (src/save_b6d04.c:55-69), the only two ROM words that
+# point at the table (their pools, 0x080B6C24 and 0x080B6E28).  Both read
+# gUnk_087561CC[i >> 3] with i = (u16)gSpriteCameraY + n, n = 0..159.
+# gHBlankScrollEffect is written only by StartHBlankScroll/StartRoomHBlankScroll
+# (src/save_b6e44.c:19-33); effects 8 and 10 are started only by
+# StartRoomHBlankScroll(8) for a room with RoomDef.unk54 == 4
+# (src/room_27e28.c:98-106) and StartRoomHBlankScroll(10) in sub_08028280(0)
+# (src/room_27e28.c:170-181), reached only through sub_08024610, which loads
+# level 7 stage 0 room 2 (src/level_242d0.c:186-196, 209-258).  The menu's
+# StartHBlankScroll passes 0-5 and 7.  Every room loader re-runs CalcRoomBounds
+# and, with the camera mode 5 these rooms set, CameraHoldAnchor + CameraInitPos
+# + a CameraWriteScroll* before its first frame (src/level_242d0.c:259-276).
+# The bound on gSpriteCameraY in those rooms:
+#   * gSpriteCameraY = gCameraPos[1] + gScreenShake.unk4 (the four
+#     CameraWriteScroll*, src/camera_296a0.c:160-201, its only writers), and
+#     gCameraPos[1] = (gCameraCenterY >> 16) - 80 (CameraUpdatePos*,
+#     src/camera_28b8c.c:390-410, its only writers);
+#   * every write of gCameraCenterY is y << 16 with y clamped to
+#     gRoomBounds[2..3] (CameraHoldAnchor, sub_08028b8c, CameraSnapBoundsToAnchor,
+#     CameraSnapPlayersToAnchor) or to gCameraBounds[2..3]
+#     (the follow and scroll-lock modes, src/camera_2b4bc.c, src/camera_2c42c.c,
+#     src/camera_28b8c.c), or approaches such a y in steps
+#     (src/camera_2c42c.c:195-232), or is gCameraAnchorY << 16 after its callers
+#     clamped it (CameraStartHoldAnchor, src/stage_261c0.c:270-285, 306-315), or
+#     sub_08027798(x, y) (src/stage_273a0.c:226-235), whose one caller passes
+#     the spawn point gViewRect[2] + 80 of task type #97 (src/actor_70ec0.c:436,
+#     src/actor_72d8c.c:1349), and gViewRect[2] + 80 is always such a clamped y,
+#     gRoomBounds[2] or the minimum of the player cameras
+#     (SetViewRectToPlayers/sub_0802a568, src/camera_29c74.c:406-475);
+#   * gCameraBounds[3] is only ever gRoomBounds[3], a scroll-lock y1 clamped to
+#     it (StartScrollLock src/camera_2c42c.c:496-503, src/camera_2b4bc.c:610), a
+#     player camera or group centre built from such values
+#     (src/room_28320.c:241-299, src/camera_29c74.c) or a smaller focus y
+#     (src/camera_2b4bc.c:32-36);
+#   * gRoomBounds[3] = height * 16 - borderY - 80 (CalcRoomBounds,
+#     src/room_28320.c:233-239); its only other writer is a kind-5 subtype-4
+#     room object (src/hud_b5024.c:176-183), which neither room has;
+#   * |gScreenShake.unk4| <= the largest y offset of gScreenShakePatterns[1..7]:
+#     RequestScreenShake ignores a > 7 (src/stage_261c0.c:38-55) and
+#     UpdateScreenShake (src/camera_2c42c.c:439-460) is the only other writer.
+# So i <= height * 16 - borderY - 160 + shake + 159, and >= borderY - shake
+# (no u16 wrap).  Both rooms are 68 metatiles high with borderY 8.
+WAVE_TABLE = 0x087561CC
+SHAKE_PATTERNS = 0x08732880   # u16 *gScreenShakePatterns[8], entry 0 NULL
+WAVE_ROOM = (7, 0, 2)         # sub_08024610: effect 10 (src/level_242d0.c:186-196)
+
+
+def wave_bound(rom):
+    """(highest index read, lowest i, why) of gUnk_087561CC."""
+    rooms = set()
+    for a in range(0x087E1D58, 0x087E1E78, 4):          # gRoomTable
+        lst = _u32(rom, a)
+        k = 0
+        while lst and _u32(rom, lst + 4 * k):
+            r = _u32(rom, lst + 4 * k)
+            if _u8(rom, r + 0x54) == 4:
+                rooms.add(r)
+            k += 1
+    lvl, stg, idx = WAVE_ROOM
+    rooms.add(_u32(rom, _u32(rom, 0x087E1D58 + 4 * (lvl * 8 + stg)) + 4 * idx))
+    shake = 0
+    for k in range(1, 8):
+        p = _u32(rom, SHAKE_PATTERNS + 4 * k)
+        j = 0
+        while _u16(rom, p + 4 * j) not in (0x8000, 0x9999):
+            v = _u16(rom, p + 4 * j + 2)
+            shake = max(shake, abs(v - 0x10000 if v & 0x8000 else v))
+            j += 1
+    hi = 0
+    lo = 0x10000
+    for r in sorted(rooms):
+        h, by = _u16(rom, r + 0x16), _u16(rom, r + 0x26)
+        hi = max(hi, h * 16 - by - 160 + shake + 159)
+        lo = min(lo, by - shake)
+    if lo < 0:
+        raise ValueError("wave table: gSpriteCameraY can be negative")
+    why = ("rooms %s, |shake| <= %d: i = gSpriteCameraY + n <= %d, >= %d"
+           % (", ".join("0x%08X" % r for r in sorted(rooms)), shake, hi, lo))
+    return hi >> 3, lo, why
+
+
 # ---- 3. the credits demos (struct LinkSave, include/save.h:25) ------------
 #
 # CreditsMain (src/credits_cd330.c:62-158) plays the scenes of
@@ -245,6 +329,22 @@ def provide(rom, cfg, segs):
     # 2
     for s, e, why in SEG18_VALUES:
         co.append((s, e, "value", why))
+    # 2b
+    top, _lo, wwhy = wave_bound(rom)
+    nxt = _next_label(labels, WAVE_TABLE)
+    co.append((WAVE_TABLE, WAVE_TABLE + top + 1, "value",
+               "s8 gUnk_087561CC[(gSpriteCameraY + line) >> 3] entries 0-%d, read by "
+               "sub_080b6b08/sub_080b6d04 (src/save_b6b08.c:54-61, src/save_b6d04.c:55-69) "
+               "in the two effect rooms; %s" % (top, wwhy)))
+    if WAVE_TABLE + top + 1 < nxt:
+        co.append((WAVE_TABLE + top + 1, nxt, "unreachable",
+                   "s8 gUnk_087561CC entries %d-%d: its two readers "
+                   "(src/save_b6b08.c:54-61, src/save_b6d04.c:55-69) index it "
+                   "((u16)gSpriteCameraY + 0..159) >> 3 <= %d (%s; the chain of clamps "
+                   "in tools/census_bounds.py 2b), no other code reads it, and the "
+                   "table before it, gHBlankScrollEffects[], is indexed only by "
+                   "gHBlankScrollEffect <= 10 (src/save_b6e44.c:19-33); next label "
+                   "gUnk_0875625C" % (top + 1, nxt - WAVE_TABLE - 1, top, wwhy)))
     # 3
     for v, k, d, frames, end in demos(rom):
         nxt = _next_label(labels, d)
