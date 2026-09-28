@@ -1588,7 +1588,7 @@ s32 sub_080ac678(void)
     TaskSetFrame(0);
 }
 
-void sub_080ac684(void)
+void Task_MetaKnightSword(void)
 {
     struct Task *t;
 

@@ -32,7 +32,7 @@ extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
 extern u8 sub_0806acf8(void);
 
-void sub_08093f64(void)
+void Task_BugzzyLadybug(void)
 {
     struct Task *t;
     struct Task *u;
@@ -51,19 +51,19 @@ void sub_08093f64(void)
     u->unk30 = 384;
     u->unk34 = 2;
     u->variant = zero;
-    CallTableEntry(gCurTask->variant, 1, gUnk_087441CC);
+    CallTableEntry(gCurTask->variant, 1, gBugzzyLadybugVariants);
 }
 
-void sub_08093fe0(void)
+void BugzzyLadybugInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08094010;
+    gCurTask->updateCallback = (u32)BugzzyLadybugUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087441D0);
+    CallTableEntry(gCurTask->state, 1, gBugzzyLadybugStates);
 }
 
-void sub_08094010(void)
+void BugzzyLadybugUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087441D4);
+    CallTableEntry(gCurTask->updateState, 1, gBugzzyLadybugStateUpdates);
     if (gCurTask->unk2C == 1)
         ActorCheckHits();
     ActorReactToHit();

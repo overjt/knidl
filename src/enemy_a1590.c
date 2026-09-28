@@ -2880,8 +2880,8 @@ void sub_080a4b1c(void)
     }
 }
 
-/* sub_080a4b68 (0x080A4B68-0x080A4BA8) */
-void sub_080a4b68(void)
+/* Task_KingDededeAirPuff (0x080A4B68-0x080A4BA8) */
+void Task_KingDededeAirPuff(void)
 {
     struct Task *t;
 
@@ -2889,23 +2889,23 @@ void sub_080a4b68(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
-    gCurTask->frameTable = gUnk_08753990;
-    CallTableEntry(gCurTask->variant, 1, gUnk_087489D4);
+    gCurTask->frameTable = gKingDededeAirPuffFrames;
+    CallTableEntry(gCurTask->variant, 1, gKingDededeAirPuffVariants);
 }
 
-/* sub_080a4ba8 (0x080A4BA8-0x080A4BDC) */
-void sub_080a4ba8(void)
+/* KingDededeAirPuffInit (0x080A4BA8-0x080A4BDC) */
+void KingDededeAirPuffInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080a4bdc;
+    gCurTask->updateCallback = (u32)KingDededeAirPuffUpdate;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087489D8);
+    CallTableEntry(gCurTask->state, 1, gKingDededeAirPuffStates);
 }
 
-/* sub_080a4bdc (0x080A4BDC-0x080A4C20) */
-void sub_080a4bdc(void)
+/* KingDededeAirPuffUpdate (0x080A4BDC-0x080A4C20) */
+void KingDededeAirPuffUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087489DC);
+    CallTableEntry(gCurTask->updateState, 1, gKingDededeAirPuffStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -2916,7 +2916,7 @@ void sub_080a4bdc(void)
 /* sub_080a4c20 (0x080A4C20-0x080A4C3C) */
 void sub_080a4c20(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087489D8);
+    CallTableEntry(gCurTask->state, 1, gKingDededeAirPuffStates);
 }
 
 /* sub_080a4c3c (0x080A4C3C-0x080A4C80) */
@@ -3298,8 +3298,8 @@ void sub_080a5320(void)
 {
 }
 
-/* sub_080a5324 (0x080A5324-0x080A5388) */
-void sub_080a5324(void)
+/* Task_KingDededeLandingStar (0x080A5324-0x080A5388) */
+void Task_KingDededeLandingStar(void)
 {
     struct Task *t;
 
@@ -3319,19 +3319,19 @@ void sub_080a5324(void)
     TaskExitTrampoline();
 }
 
-/* sub_080a5388 (0x080A5388-0x080A53A8) */
-void sub_080a5388(void)
+/* Task_KingDededeHammerHitBox (0x080A5388-0x080A53A8) */
+void Task_KingDededeHammerHitBox(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_080a53a8;
+    t->updateCallback = (u32)KingDededeHammerHitBoxUpdate;
     TaskSleepForever();
 }
 
-/* sub_080a53a8 (0x080A53A8-0x080A5484) */
-void sub_080a53a8(void)
+/* KingDededeHammerHitBoxUpdate (0x080A53A8-0x080A5484) */
+void KingDededeHammerHitBoxUpdate(void)
 {
     vs16 *arr;
     s16 i;
@@ -3381,19 +3381,19 @@ void sub_080a53a8(void)
     }
 }
 
-/* sub_080a5484 (0x080A5484-0x080A54A4) */
-void sub_080a5484(void)
+/* Task_KingDededeInhaleHitBox (0x080A5484-0x080A54A4) */
+void Task_KingDededeInhaleHitBox(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_080a54a4;
+    t->updateCallback = (u32)KingDededeInhaleHitBoxUpdate;
     TaskSleepForever();
 }
 
-/* sub_080a54a4 (0x080A54A4-0x080A54E4) */
-void sub_080a54a4(void)
+/* KingDededeInhaleHitBoxUpdate (0x080A54A4-0x080A54E4) */
+void KingDededeInhaleHitBoxUpdate(void)
 {
     struct Task **c = &gCurTask;
 

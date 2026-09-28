@@ -62,14 +62,14 @@ gUnk_087489BC:
 	.global	gUnk_087489C0
 gUnk_087489C0:
 	.incbin	"baserom.gba", 0x7489C0, 0x14
-	.global	gUnk_087489D4
-gUnk_087489D4:
-	.word	sub_080a4ba8+1
-	.global	gUnk_087489D8
-gUnk_087489D8:
+	.global	gKingDededeAirPuffVariants
+gKingDededeAirPuffVariants:
+	.word	KingDededeAirPuffInit+1
+	.global	gKingDededeAirPuffStates
+gKingDededeAirPuffStates:
 	.word	sub_080a4c3c+1
-	.global	gUnk_087489DC
-gUnk_087489DC:
+	.global	gKingDededeAirPuffStateUpdates
+gKingDededeAirPuffStateUpdates:
 	.word	sub_080a4c80+1
 	.global	gUnk_087489E0
 gUnk_087489E0:

@@ -123,14 +123,14 @@ void Task_ShotzoCannonball(void);
 void Task_BonkersNut(void);
 void Task_PoppyBrosSrBomb(void);
 void Task_KingDededeStar(void);
-void sub_080a4b68(void);
+void Task_KingDededeAirPuff(void);
 void Task_GrandWheelieMiniWheelie(void);
 void Task_MrFrostyIceCube(void);
 void sub_080b0cc8(void);
 void sub_080b13bc(void);
 void Task_MrTickTockRing(void);
 void Task_MrTickTockNote(void);
-void sub_080ac684(void);
+void Task_MetaKnightSword(void);
 void sub_080b1710(void);
 void sub_080b1770(void);
 void sub_080b22f8(void);
@@ -143,12 +143,12 @@ void Task_AxeKnightAxe(void);
 void Task_MaceKnightMace(void);
 void Task_TridentKnightTrident(void);
 void Task_JavelinKnightJavelin(void);
-void sub_08093f64(void);
+void Task_BugzzyLadybug(void);
 void Task_UFOLaser(void);
 void sub_080af30c(void);
 void sub_080acc9c(void);
 void sub_0808d218(void);
-void sub_0809876c(void);
+void Task_PhanPhanApple(void);
 void sub_080671c0(void);
 void Task_ActorSplash(void);
 void Task_StarFlash(void);
@@ -187,18 +187,18 @@ void sub_0807d388(void);
 void Task_PaletteAnim(void);
 void Task_HotHeadFlame(void);
 void Task_FlamerFlame(void);
-void sub_08090fc0(void);
-void sub_080a5324(void);
-void sub_08091ddc(void);
-void sub_08091b6c(void);
-void sub_08093e58(void);
-void sub_080a5388(void);
-void sub_080a5484(void);
-void sub_080a7880(void);
-void sub_080a7998(void);
-void sub_080a7ae4(void);
-void sub_080a7b88(void);
-void sub_080a7c9c(void);
+void Task_BonkersHammerHitBox(void);
+void Task_KingDededeLandingStar(void);
+void Task_PoppyBrosSrHead(void);
+void Task_PoppyBrosSrHand(void);
+void Task_PoppyBrosSrBombSpark(void);
+void Task_KingDededeHammerHitBox(void);
+void Task_KingDededeInhaleHitBox(void);
+void Task_MetaKnightSwordHitBox(void);
+void Task_MetaKnightCape(void);
+void Task_MetaKnightMask(void);
+void Task_MetaKnightMaskHalf(void);
+void Task_MetaKnightSparkle(void);
 void sub_080adca4(void);
 void sub_080adefc(void);
 void sub_080ae038(void);
@@ -210,7 +210,7 @@ void sub_080a99a0(void);
 void sub_080a9c28(void);
 void sub_080a9cf0(void);
 void sub_080a9da4(void);
-void sub_080938e4(void);
+void Task_BugzzyAfterimage(void);
 void sub_080abe38(void);
 void sub_080abf10(void);
 void sub_080ac020(void);
@@ -224,7 +224,7 @@ void sub_080afdf0(void);
 void sub_080aff40(void);
 void sub_080b0144(void);
 void sub_080b0338(void);
-void sub_080970c4(void);
+void Task_FireLionFlame(void);
 void Task_ChillyFreezeSparkle(void);
 void Task_PengyIceBreathPuff(void);
 void Task_PengyIceBreathSparkle(void);
@@ -393,14 +393,14 @@ const struct TaskType gTaskTypes[] = {
     /* 110 */ { 2, { 0, 0, 0 }, (u32)Task_BonkersNut },
     /* 111 */ { 2, { 0, 0, 0 }, (u32)Task_PoppyBrosSrBomb },
     /* 112 */ { 2, { 0, 0, 0 }, (u32)Task_KingDededeStar },
-    /* 113 */ { 2, { 0, 0, 0 }, (u32)sub_080a4b68 },
+    /* 113 */ { 2, { 0, 0, 0 }, (u32)Task_KingDededeAirPuff },
     /* 114 */ { 2, { 0, 0, 0 }, (u32)Task_GrandWheelieMiniWheelie },
     /* 115 */ { 2, { 0, 0, 0 }, (u32)Task_MrFrostyIceCube },
     /* 116 */ { 2, { 0, 0, 0 }, (u32)sub_080b0cc8 },
     /* 117 */ { 2, { 0, 0, 0 }, (u32)sub_080b13bc },
     /* 118 */ { 2, { 0, 0, 0 }, (u32)Task_MrTickTockRing },
     /* 119 */ { 2, { 0, 0, 0 }, (u32)Task_MrTickTockNote },
-    /* 120 */ { 2, { 0, 0, 0 }, (u32)sub_080ac684 },
+    /* 120 */ { 2, { 0, 0, 0 }, (u32)Task_MetaKnightSword },
     /* 121 */ { 4, { 0, 0, 0 }, (u32)sub_080b1710 },
     /* 122 */ { 4, { 0, 0, 0 }, (u32)sub_080b1770 },
     /* 123 */ { 2, { 0, 0, 0 }, (u32)sub_080b22f8 },
@@ -413,12 +413,12 @@ const struct TaskType gTaskTypes[] = {
     /* 130 */ { 4, { 0, 0, 0 }, (u32)Task_MaceKnightMace },
     /* 131 */ { 2, { 0, 0, 0 }, (u32)Task_TridentKnightTrident },
     /* 132 */ { 2, { 0, 0, 0 }, (u32)Task_JavelinKnightJavelin },
-    /* 133 */ { 2, { 0, 0, 0 }, (u32)sub_08093f64 },
+    /* 133 */ { 2, { 0, 0, 0 }, (u32)Task_BugzzyLadybug },
     /* 134 */ { 2, { 0, 0, 0 }, (u32)Task_UFOLaser },
     /* 135 */ { 2, { 0, 0, 0 }, (u32)sub_080af30c },
     /* 136 */ { 2, { 0, 0, 0 }, (u32)sub_080acc9c },
     /* 137 */ { 2, { 0, 0, 0 }, (u32)sub_0808d218 },
-    /* 138 */ { 2, { 0, 0, 0 }, (u32)sub_0809876c },
+    /* 138 */ { 2, { 0, 0, 0 }, (u32)Task_PhanPhanApple },
     /* 139 */ { 2, { 0, 0, 0 }, (u32)sub_080671c0 },
     /* 140 */ { 1, { 0, 0, 0 }, (u32)Task_ActorSplash },
     /* 141 */ { 1, { 0, 0, 0 }, (u32)Task_StarFlash },
@@ -457,18 +457,18 @@ const struct TaskType gTaskTypes[] = {
     /* 174 */ { 4, { 0, 0, 0 }, (u32)Task_PaletteAnim },
     /* 175 */ { 4, { 0, 0, 0 }, (u32)Task_HotHeadFlame },
     /* 176 */ { 2, { 0, 0, 0 }, (u32)Task_FlamerFlame },
-    /* 177 */ { 3, { 0, 0, 0 }, (u32)sub_08090fc0 },
-    /* 178 */ { 1, { 0, 0, 0 }, (u32)sub_080a5324 },
-    /* 179 */ { 4, { 0, 0, 0 }, (u32)sub_08091ddc },
-    /* 180 */ { 4, { 0, 0, 0 }, (u32)sub_08091b6c },
-    /* 181 */ { 2, { 0, 0, 0 }, (u32)sub_08093e58 },
-    /* 182 */ { 3, { 0, 0, 0 }, (u32)sub_080a5388 },
-    /* 183 */ { 3, { 0, 0, 0 }, (u32)sub_080a5484 },
-    /* 184 */ { 3, { 0, 0, 0 }, (u32)sub_080a7880 },
-    /* 185 */ { 4, { 0, 0, 0 }, (u32)sub_080a7998 },
-    /* 186 */ { 4, { 0, 0, 0 }, (u32)sub_080a7ae4 },
-    /* 187 */ { 4, { 0, 0, 0 }, (u32)sub_080a7b88 },
-    /* 188 */ { 2, { 0, 0, 0 }, (u32)sub_080a7c9c },
+    /* 177 */ { 3, { 0, 0, 0 }, (u32)Task_BonkersHammerHitBox },
+    /* 178 */ { 1, { 0, 0, 0 }, (u32)Task_KingDededeLandingStar },
+    /* 179 */ { 4, { 0, 0, 0 }, (u32)Task_PoppyBrosSrHead },
+    /* 180 */ { 4, { 0, 0, 0 }, (u32)Task_PoppyBrosSrHand },
+    /* 181 */ { 2, { 0, 0, 0 }, (u32)Task_PoppyBrosSrBombSpark },
+    /* 182 */ { 3, { 0, 0, 0 }, (u32)Task_KingDededeHammerHitBox },
+    /* 183 */ { 3, { 0, 0, 0 }, (u32)Task_KingDededeInhaleHitBox },
+    /* 184 */ { 3, { 0, 0, 0 }, (u32)Task_MetaKnightSwordHitBox },
+    /* 185 */ { 4, { 0, 0, 0 }, (u32)Task_MetaKnightCape },
+    /* 186 */ { 4, { 0, 0, 0 }, (u32)Task_MetaKnightMask },
+    /* 187 */ { 4, { 0, 0, 0 }, (u32)Task_MetaKnightMaskHalf },
+    /* 188 */ { 2, { 0, 0, 0 }, (u32)Task_MetaKnightSparkle },
     /* 189 */ { 4, { 0, 0, 0 }, (u32)sub_080adca4 },
     /* 190 */ { 4, { 0, 0, 0 }, (u32)sub_080adefc },
     /* 191 */ { 4, { 0, 0, 0 }, (u32)sub_080ae038 },
@@ -480,7 +480,7 @@ const struct TaskType gTaskTypes[] = {
     /* 197 */ { 4, { 0, 0, 0 }, (u32)sub_080a9c28 },
     /* 198 */ { 4, { 0, 0, 0 }, (u32)sub_080a9cf0 },
     /* 199 */ { 4, { 0, 0, 0 }, (u32)sub_080a9da4 },
-    /* 200 */ { 4, { 0, 0, 0 }, (u32)sub_080938e4 },
+    /* 200 */ { 4, { 0, 0, 0 }, (u32)Task_BugzzyAfterimage },
     /* 201 */ { 3, { 0, 0, 0 }, (u32)sub_080abe38 },
     /* 202 */ { 3, { 0, 0, 0 }, (u32)sub_080abf10 },
     /* 203 */ { 3, { 0, 0, 0 }, (u32)sub_080ac020 },
@@ -494,7 +494,7 @@ const struct TaskType gTaskTypes[] = {
     /* 211 */ { 3, { 0, 0, 0 }, (u32)sub_080aff40 },
     /* 212 */ { 3, { 0, 0, 0 }, (u32)sub_080b0144 },
     /* 213 */ { 3, { 0, 0, 0 }, (u32)sub_080b0338 },
-    /* 214 */ { 3, { 0, 0, 0 }, (u32)sub_080970c4 },
+    /* 214 */ { 3, { 0, 0, 0 }, (u32)Task_FireLionFlame },
     /* 215 */ { 3, { 0, 0, 0 }, (u32)Task_ChillyFreezeSparkle },
     /* 216 */ { 3, { 0, 0, 0 }, (u32)Task_PengyIceBreathPuff },
     /* 217 */ { 3, { 0, 0, 0 }, (u32)Task_PengyIceBreathSparkle },

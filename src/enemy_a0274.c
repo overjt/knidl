@@ -22,12 +22,12 @@ extern void sub_08063a00(u32 v);
 extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
 extern u8 ActorCollideTerrain(void);
 
-void sub_080a0274(void)
+void CreateKingDededeLandingStar(void)
 {
     CreateChildTaskAtOffsetFacing(178, -24, -8, 0);
 }
 
-void sub_080a028c(void)
+void CreateKingDededeAirPuff(void)
 {
     struct ActorSpawn sp;
     struct Actor *a;
@@ -680,7 +680,7 @@ void KingDededeJump(void)
     r = CreateDustBurst(24, 32);
     u = gCurTask;
     u->unk46 = r;
-    sub_080a0274();
+    CreateKingDededeLandingStar();
     TaskSetMotionXFacing(160 << 9, k = 0x5A5A5A5A);
     v = gCurTask;
     v->frame++;
@@ -716,7 +716,7 @@ void sub_080a0dbc(void)
     }
 }
 
-void sub_080a0e08(void)
+void KingDededeFloat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -804,7 +804,7 @@ void sub_080a0ec8(void)
     TaskSetFrame(gCurTask->frame);
 }
 
-void sub_080a0f7c(void)
+void KingDededeExhale(void)
 {
     struct Task *t;
     s32 z;
@@ -818,7 +818,7 @@ void sub_080a0f7c(void)
     TaskSetFrame(22);
     TaskSetFrame(29);
     PlaySfx(0x21A);
-    sub_080a028c();
+    CreateKingDededeAirPuff();
     for (i = 0; i <= 3; i++)
     {
         TaskSetMotionXFacing(gUnk_08748410[i], 0x5A5A5A5A);

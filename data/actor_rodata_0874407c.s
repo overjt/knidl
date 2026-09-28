@@ -114,12 +114,12 @@ gUnk_087441BC:
 	.global	gUnk_087441C4
 gUnk_087441C4:
 	.incbin	"baserom.gba", 0x7441C4, 0x8
-	.global	gUnk_087441CC
-gUnk_087441CC:
-	.word	sub_08093fe0+1
-	.global	gUnk_087441D0
-gUnk_087441D0:
+	.global	gBugzzyLadybugVariants
+gBugzzyLadybugVariants:
+	.word	BugzzyLadybugInit+1
+	.global	gBugzzyLadybugStates
+gBugzzyLadybugStates:
 	.word	sub_08094040+1
-	.global	gUnk_087441D4
-gUnk_087441D4:
+	.global	gBugzzyLadybugStateUpdates
+gBugzzyLadybugStateUpdates:
 	.word	sub_08094144+1

@@ -128,8 +128,8 @@ gKingDededeStates:
 	.word	sub_080a0bb4+1
 	.word	sub_080a0c08+1
 	.word	KingDededeJump+1
-	.word	sub_080a0e08+1
-	.word	sub_080a0f7c+1
+	.word	KingDededeFloat+1
+	.word	KingDededeExhale+1
 	.word	sub_080a1058+1
 	.word	sub_080a1168+1
 	.word	KingDededeInhale+1

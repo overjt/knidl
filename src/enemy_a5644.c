@@ -1532,12 +1532,12 @@ void sub_080a787c(void)
 {
 }
 
-void sub_080a7880(void)
+void Task_MetaKnightSwordHitBox(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_080a78a0;
+    t->updateCallback = (u32)MetaKnightSwordHitBoxUpdate;
     TaskSleepForever();
 }

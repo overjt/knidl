@@ -28,7 +28,7 @@
  * the boss's own position through sub_08067120), sub_08090e54 (advance the
  * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
  * the sub_08090ef0 / sub_08090f14 / sub_08090f4c hit hooks, the companion
- * task sub_08090fc0 / sub_08090fe0 that mirrors the boss's position while
+ * task Task_BonkersHammerHitBox / BonkersHammerHitBoxUpdate that mirrors the boss's position while
  * gTaskSlotTypes[Task.parent] says the boss is alive - and Task_PoppyBrosSr, the
  * entry of the second boss, whose states live in src/enemy_9113c.c.
  */
@@ -724,18 +724,18 @@ s32 sub_08090f4c(void)
     return r;
 }
 
-void sub_08090fc0(void)
+void Task_BonkersHammerHitBox(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_08090fe0;
+    t->updateCallback = (u32)BonkersHammerHitBoxUpdate;
     TaskSleepForever();
 }
 
-void sub_08090fe0(void)
+void BonkersHammerHitBoxUpdate(void)
 {
     struct Task *u;
     s32 i;
@@ -751,9 +751,9 @@ void sub_08090fe0(void)
             {
                 i = (s16)u->frame - 16;
                 gCurTask->unk28 = i;
-                gCurTask->pixelX = u->pixelX + gUnk_087438A4[i] * (u16)u->facing;
-                gCurTask->pixelY = u->pixelY + gUnk_087438B2[gCurTask->unk28];
-                ActorCheckHitsWithBox(gUnk_087438C0[gCurTask->unk28]);
+                gCurTask->pixelX = u->pixelX + gBonkersHammerHitBoxOffsetsX[i] * (u16)u->facing;
+                gCurTask->pixelY = u->pixelY + gBonkersHammerHitBoxOffsetsY[gCurTask->unk28];
+                ActorCheckHitsWithBox(gBonkersHammerHitBoxes[gCurTask->unk28]);
             }
         }
         else

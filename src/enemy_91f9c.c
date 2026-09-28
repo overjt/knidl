@@ -26,14 +26,14 @@
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
  * sub_080937d0 the hit hook, sub_08093858 the four-instruction "stop moving"
- * leaf the census had missed, and sub_0809397c the companion body.
+ * leaf the census had missed, and BugzzyAfterimageUpdate the companion body.
  *
  * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
  * gBonkersNutFrames): sub_08093a64 installs sub_08093a98 as its body,
  * sub_08093ac8 is its one state, Task_PoppyBrosSrBomb / sub_08093c30 are the second
  * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), sub_08093ccc and
  * sub_08093dcc are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
- * every six frames, and sub_08093cf8 / sub_08093e58 / sub_08093f00 are the
+ * every six frames, and sub_08093cf8 / Task_PoppyBrosSrBombSpark / sub_08093f00 are the
  * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
  */
 #include "gba/gba.h"
@@ -1189,7 +1189,7 @@ s32 sub_0809388c(void)
     return 1;
 }
 
-void sub_080938e4(void)
+void Task_BugzzyAfterimage(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1202,7 +1202,7 @@ void sub_080938e4(void)
     t->layer = 12;
     u = gCurTask;
     u->frameTable = gUnk_087536FC;
-    u->updateCallback = (u32)sub_0809397c;
+    u->updateCallback = (u32)BugzzyAfterimageUpdate;
     TaskFaceLikeParent();
     v = gCurTask;
     v->unk28 = 4;
@@ -1224,7 +1224,7 @@ void sub_080938e4(void)
     TaskExitTrampoline();
 }
 
-void sub_0809397c(void)
+void BugzzyAfterimageUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1464,7 +1464,7 @@ void sub_08093e54(void)
 {
 }
 
-void sub_08093e58(void)
+void Task_PoppyBrosSrBombSpark(void)
 {
     struct Task *t;
     struct Task *u;

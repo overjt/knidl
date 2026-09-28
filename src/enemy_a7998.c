@@ -64,7 +64,7 @@ s32 sub_080b5a94();
 s32 sub_080b5bdc();
 s32 sub_080b5d84();
 
-void sub_080a7998(void)
+void Task_MetaKnightCape(void)
 {
     struct Task *t;
 
@@ -115,7 +115,7 @@ void sub_080a7998(void)
     TaskExitTrampoline();
 }
 
-void sub_080a7ae4(void)
+void Task_MetaKnightMask(void)
 {
     struct Task *t;
     s32 v;
@@ -141,7 +141,7 @@ void sub_080a7ae4(void)
     TaskSleepForever();
 }
 
-void sub_080a7b88(void)
+void Task_MetaKnightMaskHalf(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
@@ -189,7 +189,7 @@ void sub_080a7b88(void)
     TaskExitTrampoline();
 }
 
-void sub_080a7c9c(void)
+void Task_MetaKnightSparkle(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;

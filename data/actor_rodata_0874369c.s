@@ -120,14 +120,14 @@ gBonkersStateUpdates:
 	.word	sub_08090bf0+1
 	.word	sub_08090ca8+1
 	.word	sub_08090de4+1
-	.global	gUnk_087438A4
-gUnk_087438A4:
+	.global	gBonkersHammerHitBoxOffsetsX
+gBonkersHammerHitBoxOffsetsX:
 	.incbin	"baserom.gba", 0x7438A4, 0xE
-	.global	gUnk_087438B2
-gUnk_087438B2:
+	.global	gBonkersHammerHitBoxOffsetsY
+gBonkersHammerHitBoxOffsetsY:
 	.incbin	"baserom.gba", 0x7438B2, 0xE
-	.global	gUnk_087438C0
-gUnk_087438C0:
+	.global	gBonkersHammerHitBoxes
+gBonkersHammerHitBoxes:
 	.word	gUnk_08743DC8
 	.word	gUnk_08743DAC
 	.word	gUnk_08743DAC
@@ -219,8 +219,8 @@ gUnk_087439E0:
 	.global	gUnk_087439E6
 gUnk_087439E6:
 	.incbin	"baserom.gba", 0x7439E6, 0x1A
-	.global	gUnk_08743A00
-gUnk_08743A00:
+	.global	gPoppyBrosSrHeadAnims
+gPoppyBrosSrHeadAnims:
 	.word	gUnk_087439C0
 	.word	gUnk_087439C6
 	.word	gUnk_087439E0

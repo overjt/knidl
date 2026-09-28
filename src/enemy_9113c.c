@@ -15,14 +15,14 @@
  * frames per step), and waits on Task.onGround between passes.
  *
  * sub_08091b00 / sub_08091b24 / sub_08091b60 are the hit hooks (they return
- * 1 when they take over the task), and sub_08091b6c is the class-4 companion
+ * 1 when they take over the task), and Task_PoppyBrosSrHand is the class-4 companion
  * the boss spawns: it builds an ActorSpawn on the stack, then flies the task
  * along three 16.16 ramps (Task.unk28 / Task.unk30) with a wait in the middle
- * for gTasks[Task.parent].unk20 to clear.  sub_08091d24 is that
+ * for gTasks[Task.parent].unk20 to clear.  PoppyBrosSrHandUpdate is that
  * companion's per-frame body (it integrates the ramps and copies the boss's
- * position and facing), and sub_08091ddc installs sub_08091e18, the animation
+ * position and facing), and Task_PoppyBrosSrHead installs PoppyBrosSrHeadUpdate, the animation
  * walker that mirrors the leader's animation onto the companion and steps the
- * companion's own AnimCmd script from gUnk_08743A00.
+ * companion's own AnimCmd script from gPoppyBrosSrHeadAnims.
  *
  * Task_Bugzzy (the last function here) is the entry of M25's third boss, whose
  * states live in src/enemy_91f9c.c: it installs ActorMove / sub_080653ec as
@@ -31,7 +31,7 @@
  * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.palette) and dispatches
  * Task.variant through the 27-entry anchor table at 0x08743ADC.
  *
- * The one empty `asm` in sub_08091e18 is load-bearing and emits no code; see
+ * The one empty `asm` in PoppyBrosSrHeadUpdate is load-bearing and emits no code; see
  * lessons-learned 3.156 for why the register allocation needs it.
  */#include "gba/gba.h"
 #include "global.h"
@@ -520,7 +520,7 @@ s32 sub_08091b60(void)
     return 0;
 }
 
-void sub_08091b6c(void)
+void Task_PoppyBrosSrHand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -543,8 +543,8 @@ void sub_08091b6c(void)
     t->drawCallback = (u32)ActorDrawWorldInView;
     t->layer = 14;
     u = gCurTask;
-    u->frameTable = gUnk_08753148;
-    u->updateCallback = (u32)sub_08091d24;
+    u->frameTable = gPoppyBrosSrHandFrames;
+    u->updateCallback = (u32)PoppyBrosSrHandUpdate;
     TaskFaceLikeParent();
     v = gCurTask;
     v->unk2C = 0x100000;
@@ -611,7 +611,7 @@ void sub_08091b6c(void)
     TaskExitTrampoline();
 }
 
-void sub_08091d24(void)
+void PoppyBrosSrHandUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -644,7 +644,7 @@ void sub_08091d24(void)
     }
 }
 
-void sub_08091ddc(void)
+void Task_PoppyBrosSrHead(void)
 {
     struct Task *t;
     struct Task *u;
@@ -654,13 +654,13 @@ void sub_08091ddc(void)
     t->drawCallback = (u32)ActorDrawWorldInView;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_08753128;
-    u->updateCallback = (u32)sub_08091e18;
+    u->frameTable = gPoppyBrosSrHeadFrames;
+    u->updateCallback = (u32)PoppyBrosSrHeadUpdate;
     u->unk30 = -1;
     TaskSleepForever();
 }
 
-void sub_08091e18(void)
+void PoppyBrosSrHeadUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -689,7 +689,7 @@ void sub_08091e18(void)
             {
                 v->unk30 = u->unk30;
                 v->unk2C = 0;
-                p = gUnk_08743A00[v->unk30];
+                p = gPoppyBrosSrHeadAnims[v->unk30];
                 v->unk28 = p->delay;
                 v->frame = p->frame;
             }
@@ -702,7 +702,7 @@ void sub_08091e18(void)
                 if (d2 == 0)
                 {
                     n = ++w->unk2C;
-                    b2 = (u32)gUnk_08743A00[w->unk30];
+                    b2 = (u32)gPoppyBrosSrHeadAnims[w->unk30];
                     q = (struct AnimCmd *)(n * 4 + b2);
                     frame = q->frame;
                     if (q->frame != -1)

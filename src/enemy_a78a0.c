@@ -63,7 +63,7 @@ void sub_080b59d8();
 s32 sub_080b5a94();
 s32 sub_080b5bdc();
 s32 sub_080b5d84();
-void sub_080a78a0(void)
+void MetaKnightSwordHitBoxUpdate(void)
 {
     struct Task *t;
     struct Task *o;
