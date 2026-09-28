@@ -191,44 +191,8 @@ QUEUE_TABLES = {
 }
 QUEUE_COUNT = 12
 
-# ---- 3. format only: BuildOam's flipped-x pair --------------------------------
-# BuildOam (src/early_1b08.c:66-81) reads an 8-byte entry {attr0, attr1,
-# attr1 for an x-flipped sprite, attr2}.  The exporter writes the flipped word
-# as attr1 with the h-flip bit toggled and x mirrored across the sprite's
-# width: (attr1 ^ 0x1000) & 0xFE00 == attr1_flipped & 0xFE00 and x + x_flipped
-# + width == 0 (mod 512).  48,293 of the 48,298 entries of the consumer-proven
-# streams satisfy it (the other five are one mis-claimed palette,
-# 0x085F5034); random bytes pass with a probability near 1e-7 per entry.
-OBJ_WIDTH = {(0, 0): 8, (0, 1): 16, (0, 2): 32, (0, 3): 64,
-             (1, 0): 16, (1, 1): 32, (1, 2): 32, (1, 3): 64,
-             (2, 0): 8, (2, 1): 8, (2, 2): 16, (2, 3): 32}
-
-
-def _entry_ok(rom, a):
-    a0, a1, a1f = _u16(rom, a), _u16(rom, a + 2), _u16(rom, a + 4)
-    shape = a0 >> 14
-    if shape == 3 or a0 & 0x2F00:   # no affine/disable, mode or 256-colour bits
-        return False
-    if (a1f ^ 0x1000) & 0xFE00 != a1 & 0xFE00:
-        return False
-    return (a1 + a1f + OBJ_WIDTH[(shape, a1 >> 14)]) & 0x1FF == 0
-
-
-def strict_oam_len(rom, a, lim=None):
-    """Bytes of the OAM stream at a when every entry passes the flipped-x
-    check (and the stream ends before lim), else None."""
-    if a & 1 or not ROM_BASE <= a < ROM_BASE + len(rom) - 8:
-        return None
-    p = a
-    for _ in range(128):
-        if lim is not None and p + 8 > lim:
-            return None
-        if not _entry_ok(rom, p):
-            return None
-        p += 8
-        if _u16(rom, p - 8) & 0x1000:
-            return p - a
-    return None
+# ---- 3. format only: BuildOam's flipped-x pair: census_sprites.strict_oam_len
+strict_oam_len = cs.strict_oam_len
 
 
 def provide(rom, cfg, segs):
