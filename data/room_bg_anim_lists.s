@@ -8,85 +8,85 @@
 	.section .room_bg_anim_lists, "a"
 	.global	room_bg_anim_lists
 room_bg_anim_lists:
-	.global	gUnk_087E1E78
-gUnk_087E1E78:
-	.word	gUnk_083356E0
-	.word	gUnk_08335B48
-	.word	gUnk_08335DB0
-	.word	gUnk_08336618
-	.word	gUnk_08336E80
-	.word	gUnk_083376E8
-	.word	gUnk_08337B50
-	.word	gUnk_083396B8
-	.word	gUnk_08339B20
-	.word	gUnk_08339D88
+	.global	gRoomBgAnimSet1
+gRoomBgAnimSet1:
+	.word	gRoomBgAnimSet1Script0
+	.word	gRoomBgAnimSet1Script1
+	.word	gRoomBgAnimSet1Script2
+	.word	gRoomBgAnimSet1Script3
+	.word	gRoomBgAnimSet1Script4
+	.word	gRoomBgAnimSet1Script5
+	.word	gRoomBgAnimSet1Script6
+	.word	gRoomBgAnimSet1Script7
+	.word	gRoomBgAnimSet1Script8
+	.word	gRoomBgAnimSet1Script9
 	.incbin	"baserom.gba", 0x7E1EA0, 0x4
-	.global	gUnk_087E1EA4
-gUnk_087E1EA4:
-	.word	gUnk_0833A0E8
+	.global	gRoomBgAnimSet2
+gRoomBgAnimSet2:
+	.word	gRoomBgAnimSet2Script0
 	.incbin	"baserom.gba", 0x7E1EA8, 0x4
-	.global	gUnk_087E1EAC
-gUnk_087E1EAC:
-	.word	gUnk_0833ABB8
+	.global	gRoomBgAnimSet3
+gRoomBgAnimSet3:
+	.word	gRoomBgAnimSet3Script0
 	.incbin	"baserom.gba", 0x7E1EB0, 0x4
-	.global	gUnk_087E1EB4
-gUnk_087E1EB4:
-	.word	gUnk_0833EC10
+	.global	gRoomBgAnimSet4
+gRoomBgAnimSet4:
+	.word	gRoomBgAnimSet4Script0
 	.incbin	"baserom.gba", 0x7E1EB8, 0x4
-	.global	gUnk_087E1EBC
-gUnk_087E1EBC:
-	.word	gUnk_08340060
-	.word	gUnk_08340238
-	.word	gUnk_0833F45C
+	.global	gRoomBgAnimSet5
+gRoomBgAnimSet5:
+	.word	gRoomBgAnimSet5Script0
+	.word	gRoomBgAnimSet5Script1
+	.word	gRoomBgAnimSet5Script2
 	.incbin	"baserom.gba", 0x7E1EC8, 0x4
-	.global	gUnk_087E1ECC
-gUnk_087E1ECC:
-	.word	gUnk_0833FCC8
-	.word	gUnk_083406A0
-	.word	gUnk_08340910
+	.global	gRoomBgAnimSet6
+gRoomBgAnimSet6:
+	.word	gRoomBgAnimSet6Script0
+	.word	gRoomBgAnimSet6Script1
+	.word	gRoomBgAnimSet6Script2
 	.incbin	"baserom.gba", 0x7E1ED8, 0x4
-	.global	gUnk_087E1EDC
-gUnk_087E1EDC:
-	.word	gUnk_083447D0
+	.global	gRoomBgAnimSet7
+gRoomBgAnimSet7:
+	.word	gRoomBgAnimSet7Script0
 	.incbin	"baserom.gba", 0x7E1EE0, 0x4
-	.global	gUnk_087E1EE4
-gUnk_087E1EE4:
-	.word	gUnk_08344C08
+	.global	gRoomBgAnimSet8
+gRoomBgAnimSet8:
+	.word	gRoomBgAnimSet8Script0
 	.incbin	"baserom.gba", 0x7E1EE8, 0x4
-	.global	gUnk_087E1EEC
-gUnk_087E1EEC:
-	.word	gUnk_08353248
-	.word	gUnk_08355998
-	.word	gUnk_083580E8
+	.global	gRoomBgAnimSet9
+gRoomBgAnimSet9:
+	.word	gRoomBgAnimSet9Script0
+	.word	gRoomBgAnimSet9Script1
+	.word	gRoomBgAnimSet9Script2
 	.incbin	"baserom.gba", 0x7E1EF8, 0x4
-	.global	gUnk_087E1EFC
-gUnk_087E1EFC:
-	.word	gUnk_08348248
-	.word	gUnk_0834B898
-	.word	gUnk_0834EEE8
+	.global	gRoomBgAnimSet10
+gRoomBgAnimSet10:
+	.word	gRoomBgAnimSet10Script0
+	.word	gRoomBgAnimSet10Script1
+	.word	gRoomBgAnimSet10Script2
 	.incbin	"baserom.gba", 0x7E1F08, 0x4
-	.global	gUnk_087E1F0C
-gUnk_087E1F0C:
-	.word	gUnk_0835CF9C
-	.word	gUnk_0835B5BC
+	.global	gRoomBgAnimSet11
+gRoomBgAnimSet11:
+	.word	gRoomBgAnimSet11Script0
+	.word	gRoomBgAnimSet11Script1
 	.incbin	"baserom.gba", 0x7E1F14, 0x4
-	.global	gUnk_087E1F18
-gUnk_087E1F18:
-	.word	gUnk_08350AF8
+	.global	gRoomBgAnimSet12
+gRoomBgAnimSet12:
+	.word	gRoomBgAnimSet12Script0
 	.incbin	"baserom.gba", 0x7E1F1C, 0x4
 	.global	gRoomBgAnimScripts
 gRoomBgAnimScripts:
 	.incbin	"baserom.gba", 0x7E1F20, 0x4
-	.word	gUnk_087E1E78
-	.word	gUnk_087E1EA4
-	.word	gUnk_087E1EAC
-	.word	gUnk_087E1EB4
-	.word	gUnk_087E1EBC
-	.word	gUnk_087E1ECC
-	.word	gUnk_087E1EDC
-	.word	gUnk_087E1EE4
-	.word	gUnk_087E1EEC
-	.word	gUnk_087E1EFC
-	.word	gUnk_087E1F0C
-	.word	gUnk_087E1F18
+	.word	gRoomBgAnimSet1
+	.word	gRoomBgAnimSet2
+	.word	gRoomBgAnimSet3
+	.word	gRoomBgAnimSet4
+	.word	gRoomBgAnimSet5
+	.word	gRoomBgAnimSet6
+	.word	gRoomBgAnimSet7
+	.word	gRoomBgAnimSet8
+	.word	gRoomBgAnimSet9
+	.word	gRoomBgAnimSet10
+	.word	gRoomBgAnimSet11
+	.word	gRoomBgAnimSet12
 	.incbin	"baserom.gba", 0x7E1F54, 0x4
