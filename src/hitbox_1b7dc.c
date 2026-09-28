@@ -60,7 +60,7 @@ void sub_0801b8e4(void)
         if (gAttackBox->unk0A & 2)
         {
             gHitKind = 6;
-            gUnk_03002450 = 1;
+            gHitEffect = 1;
             gHitHealthLeft = gAttackHealth;
             gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
             return;
@@ -69,7 +69,7 @@ void sub_0801b8e4(void)
         gHitHealthLeft = 0;
     }
     gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
-    gUnk_03002450 = gColliderBodyBox->unk0D;
+    gHitEffect = gColliderBodyBox->unk0D;
 }
 
 /* Shared tail of the hit tests: copy the hit's details out - the body

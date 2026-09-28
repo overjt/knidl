@@ -85,7 +85,7 @@ void AgbMain(void)
                 sub_0800783c();
             break;
         case 10:
-            if (gUnk_03001F30 == 0)
+            if (gMetaKnightmareMode == 0)
                 GoalGameMain();
             else
                 sub_0800b628();
@@ -135,7 +135,7 @@ void AgbMain(void)
             gGameState = 12;
             break;
         case 12:
-            if (gUnk_03001F30 != 1 && gPrevGameState != 20)
+            if (gMetaKnightmareMode != 1 && gPrevGameState != 20)
                 CreditsMain();
             FinalResultsScreen();
             gGameState = 0;

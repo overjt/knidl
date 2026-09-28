@@ -185,7 +185,7 @@ extern u8 gUsedSubGameDoors[];
 extern u16 gUnk_02007D60;
 extern s8 gUnk_02007D64;
 extern u8 gUnk_02007E8C;
-extern u16 gUnk_02007FA0; /* the block sub_08030b14 broke: x (pixels) */
+extern u16 gBrokenBlockX; /* the block sub_08030b14 broke: x (pixels) */
 extern u16 gSavedPlayerAbilityUses[];
 extern u16 gUnk_02007FB0;
 extern u8 gUnk_02007FB4;
@@ -223,7 +223,7 @@ extern s16 gCameraAnchorY;
 extern u32 gUnk_03001F10;
 extern s8 gUnk_03001F20;
 extern s32 gUnk_03001F2C; /* boot_091ac.c spelling */
-extern u8 gUnk_03001F30; /* set only by the mode list's fifth row
+extern u8 gMetaKnightmareMode; /* set only by the mode list's fifth row
                                        (src/menu_0ca10.c); not link play */
 extern u32 gUnk_03002160;
 extern u8 gActivePlayerMask;
@@ -231,19 +231,19 @@ extern s32 gUnk_03002344;
 extern u8 gUnk_0300234C;
 extern u8 gActivePlayerCount;
 extern u16 gMilestoneFlags;
-extern s8 gUnk_03002384;
+extern s8 gFurthestStage;
 extern s16 gCameraFocusY;
 extern s8 gLevelIndex;
 extern s16 gCameraAnchorX;
-extern s8 gUnk_030023B8;
+extern s8 gCurLevel;
 extern u16 gLatchedPressedKeys[]; /* newly-pressed keys, latched per player */
 extern u32 gBigSwitchFlags[];
 extern s16 gCameraFocusX;
 extern u16 gGameState; /* current game state (main dispatch) */
-extern s8 gUnk_030023E0;
+extern s8 gFurthestLevel;
 extern s32 gCurSaveSlot;
 extern s8 gStageIndex;
-extern u8 gUnk_03002400[8][7];
+extern u8 gStageClearStatus[8][7];
 extern s8 gStageRequest; /* stage request (M02) */
 extern s8 gUnk_03002444;
 extern s32 gUnk_03002448;

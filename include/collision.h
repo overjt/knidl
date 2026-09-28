@@ -131,7 +131,7 @@ extern u8 gUnk_030023A4;
 extern u8 gUnk_030023D0;
 extern u8 gHitterSlot;
 extern u8 gAttackLastHitter;
-extern u8 gUnk_03002450;
+extern u8 gHitEffect;
 extern u8 gUnk_03002460;
 extern u8 gPlayerColliderCount; /* number of hit-list entries */
 extern s16 gAttackBoxBottom; /* attack box bottom */

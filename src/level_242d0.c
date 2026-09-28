@@ -70,15 +70,15 @@ void sub_08024300(void)
     CreateRoomTask(3);
     if (gLevelIndex == 8)
     {
-        gUnk_030023B8 = gStageIndex;
+        gCurLevel = gStageIndex;
         gUnk_03001F20 = 48;
     }
     else
     {
-        gUnk_030023B8 = gLevelIndex;
+        gCurLevel = gLevelIndex;
         gUnk_03001F20 = 48;
     }
-    gCurRoomDef = gRoomTable[8][gUnk_030023B8][gUnk_08732630[gUnk_030023B8]];
+    gCurRoomDef = gRoomTable[8][gCurLevel][gUnk_08732630[gCurLevel]];
     gUnk_02007D64 = gCurRoomDef->unk57;
     gUnk_02000000 = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
@@ -213,7 +213,7 @@ void sub_08024698(s32 a0)
 
     ResetTasksAndOam();
     gUnk_03002444 = 0;
-    gUnk_030023B8 = gLevelIndex;
+    gCurLevel = gLevelIndex;
     gUnk_03001F20 = gStageIndex;
     gCameraMode = 0;
     LoadGfxSet(1);
@@ -330,12 +330,12 @@ void sub_0802497c(void)
     gUnk_03002444 = 0;
     if (gLevelIndex == 8)
     {
-        gUnk_030023B8 = gStageIndex;
+        gCurLevel = gStageIndex;
         *(s8 *)&gUnk_03001F20 = -1;
     }
     else
     {
-        gUnk_030023B8 = gLevelIndex;
+        gCurLevel = gLevelIndex;
         gUnk_03001F20 = gStageIndex;
     }
     if (gUnk_020069F0 == 2)
@@ -563,19 +563,19 @@ s32 FindDoorAt(s32 x, s32 y)
         switch ((u8)d->unk6)
         {
         case 3:
-            if (gUsedSubGameDoors[gUnk_030023B8] & 1)
+            if (gUsedSubGameDoors[gCurLevel] & 1)
                 return 0;
             break;
         case 4:
-            if (gUsedSubGameDoors[gUnk_030023B8] & 2)
+            if (gUsedSubGameDoors[gCurLevel] & 2)
                 return 0;
             break;
         case 5:
-            if (gUsedSubGameDoors[gUnk_030023B8] & 4)
+            if (gUsedSubGameDoors[gCurLevel] & 4)
                 return 0;
             break;
         case 6:
-            if ((gUnk_0200B04C & ~(1 << gUnk_030023B8)) == 0)
+            if ((gUnk_0200B04C & ~(1 << gCurLevel)) == 0)
                 return 0;
             break;
         }
@@ -634,7 +634,7 @@ s32 EnterDoor(void)
                 gCutscenePending = 0;
                 break;
             case 2:
-                if (gUnk_030023B8 >= gUnk_030023E0)
+                if (gCurLevel >= gFurthestLevel)
                 {
                     gLevelIndex = gStageIndex;
                     gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
@@ -666,7 +666,7 @@ s32 EnterDoor(void)
                 gUnk_0200AF00 = 0;
                 break;
             case 3:
-                gSubGameLevel = gUnk_087323E2[gUnk_030023B8][0][gExtraMode];
+                gSubGameLevel = gUnk_087323E2[gCurLevel][0][gExtraMode];
                 gUsedSubGameDoors[gStageIndex] |= 1;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
@@ -676,7 +676,7 @@ s32 EnterDoor(void)
                 gUnk_0200AF00 = 2;
                 break;
             case 4:
-                gSubGameLevel = gUnk_087323E2[gUnk_030023B8][1][gExtraMode];
+                gSubGameLevel = gUnk_087323E2[gCurLevel][1][gExtraMode];
                 gUsedSubGameDoors[gStageIndex] |= 2;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
@@ -686,7 +686,7 @@ s32 EnterDoor(void)
                 gUnk_0200AF00 = 2;
                 break;
             case 5:
-                gSubGameLevel = gUnk_087323E2[gUnk_030023B8][2][gExtraMode];
+                gSubGameLevel = gUnk_087323E2[gCurLevel][2][gExtraMode];
                 gUsedSubGameDoors[gStageIndex] |= 4;
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
@@ -736,7 +736,7 @@ s32 EnterDoor(void)
     {
         if (d->unk0 == 0x22B8)
         {
-            switch (gUnk_03002400[gLevelIndex][gStageIndex])
+            switch (gStageClearStatus[gLevelIndex][gStageIndex])
             {
             case 0:
                 gUnk_0200AF00 = 1;
@@ -749,23 +749,23 @@ s32 EnterDoor(void)
                 }
                 if (gUnk_08732302[gLevelIndex][gStageIndex] == -1
                     || (gBigSwitchFlags[0] & (1 << gUnk_08732302[gLevelIndex][gStageIndex])))
-                    gUnk_03002400[gLevelIndex][gStageIndex] = 2;
+                    gStageClearStatus[gLevelIndex][gStageIndex] = 2;
                 else
-                    gUnk_03002400[gLevelIndex][gStageIndex] = 1;
-                if (gUnk_030023E0 <= gLevelIndex && gUnk_03002384 <= gStageIndex)
-                    gUnk_03002384 = gStageIndex + 1;
+                    gStageClearStatus[gLevelIndex][gStageIndex] = 1;
+                if (gFurthestLevel <= gLevelIndex && gFurthestStage <= gStageIndex)
+                    gFurthestStage = gStageIndex + 1;
                 break;
             case 1:
                 if (gUnk_08732302[gLevelIndex][gStageIndex] == -1
                     || (gBigSwitchFlags[0] & (1 << gUnk_08732302[gLevelIndex][gStageIndex])))
-                    gUnk_03002400[gLevelIndex][gStageIndex] = 2;
+                    gStageClearStatus[gLevelIndex][gStageIndex] = 2;
             case 2:
             default:
                 gUnk_0200AF00 = 0;
                 break;
             }
             gLevelIndex = 8;
-            gStageIndex = gUnk_030023B8;
+            gStageIndex = gCurLevel;
             gRoomIndex = 0;
             room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
             e = room->doors;
@@ -777,14 +777,14 @@ s32 EnterDoor(void)
             gRoomEntryX = e->unk2 * 16 + 22;
             gRoomEntryY = e->unk4 * 16 + 5;
             gRoomEntrySet = 1;
-            if (gUnk_03001F30 == 0)
+            if (gMetaKnightmareMode == 0)
             {
                 gStageRequest = 8;
             }
             else
             {
                 gStageRequest = 1;
-                gUnk_02005578 = gUnk_030023B8;
+                gUnk_02005578 = gCurLevel;
                 gUnk_02007FF8 = gUnk_03001F20;
             }
             gUnk_020069F0 = 1;
@@ -819,7 +819,7 @@ void ExitClearedStage(void)
         struct Door *d;
         s32 i;
 
-        gStageIndex = gUnk_030023B8;
+        gStageIndex = gCurLevel;
         gLevelIndex = 8;
         gStageIndex++;
         if (gStageIndex > 7)
@@ -845,7 +845,7 @@ void ExitClearedStage(void)
     }
     else
     {
-        gLevelIndex = gUnk_030023B8 + 1;
+        gLevelIndex = gCurLevel + 1;
         gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
         gRoomIndex = 0;
         gUnk_020069F0 = 0;
@@ -857,7 +857,7 @@ void ExitClearedStage(void)
 
 void sub_08025a30(void)
 {
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         gLevelIndex = 7;
         gStageIndex = 0;
@@ -914,7 +914,7 @@ void sub_08025b5c(void)
             gMilestoneFlags |= 2;
         else
             gMilestoneFlags |= 1;
-        gUnk_030023B8 = 6;
+        gCurLevel = 6;
         gUnk_03001F20 = 32;
         gUnk_02007FB0 |= 1;
     }
@@ -936,7 +936,7 @@ void sub_08025bc8(s32 id)
     gUnk_02007FB4 = gStageIndex;
     gUnk_02007D50 = gRoomIndex;
     gLevelIndex = 8;
-    gStageIndex = gUnk_030023B8;
+    gStageIndex = gCurLevel;
     gRoomIndex = 0;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     d = room->doors;
@@ -950,9 +950,9 @@ void sub_08025bc8(s32 id)
     v = ((s8 *)gRoomObjectList.entries[gUnk_02005590[id - 32]].filler0)[2];
     gUnk_0200001C = v | 0x100;
     gBigSwitchFlags[0] |= 1 << v;
-    if (gUnk_03002400[gUnk_030023B8][(s8)gUnk_03001F20] == 1)
-        gUnk_03002400[gUnk_030023B8][(s8)gUnk_03001F20] = 2;
-    lvl = gUnk_030023B8;
+    if (gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] == 1)
+        gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] = 2;
+    lvl = gCurLevel;
     if (gUnk_08732348[lvl][6] == gUnk_0200001C)
     {
         gUnk_0200AF08 |= 16;

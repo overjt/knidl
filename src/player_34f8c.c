@@ -226,7 +226,7 @@ void PlayerActionFallUpdate(void)
             PlayerRequestLocomotion();
             break;
         }
-        if (gUnk_03001F30 == 0 && gCurTask->player->ability != 10
+        if (gMetaKnightmareMode == 0 && gCurTask->player->ability != 10
             && gCurTask->player->mouthState == 0 && gCurTask->velY > 0
             && --gCurTask->player->unk14 == 0)
         {

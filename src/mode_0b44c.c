@@ -31,7 +31,7 @@ extern vs16 gSavedPlayerAbilityUses[];
 extern u16 gSavedPlayerAbilities[];
 extern s8 gUnk_02008010;
 extern u16 gPlayerAbilityUses[];
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
 extern u16 gLatchedPressedKeys[];
@@ -55,7 +55,7 @@ void sub_0800b44c(void)
     gLinkIsMaster = 0;
     gLinkPlayerCount = 1;
     gPlayerCount = 1;
-    gUnk_03001F30 = 0;
+    gMetaKnightmareMode = 0;
     gInputRecorderMode = 0;
     gUnk_030023B0 = 0;
     gUnk_0200EC50 = 0;
@@ -71,7 +71,7 @@ void ResetScoresAndMaxHealth(void)
         InitPlayerState(i);
     }
     ResetPlayTime();
-    if (gUnk_03001F30 == 0) {
+    if (gMetaKnightmareMode == 0) {
         if (gExtraMode == 1)
             gMaxHealth = 24;
         else

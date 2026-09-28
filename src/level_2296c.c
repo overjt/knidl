@@ -53,7 +53,7 @@ void sub_0802296c(void)
             gUnk_02007BF0[i][j] = 0;
     for (i = 0; i <= 6; i++)
     {
-        if (gUnk_03001F30)
+        if (gMetaKnightmareMode)
             gUsedSubGameDoors[i] = 15;
         else
             gUsedSubGameDoors[i] = 0;
@@ -62,20 +62,20 @@ void sub_0802296c(void)
             if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
                 gUnk_0200B04C |= 1 << i;
         }
-        else if (gUnk_03002400[i][gUnk_08732348[i][6]] != 0)
+        else if (gStageClearStatus[i][gUnk_08732348[i][6]] != 0)
         {
             gUnk_0200B04C |= 1 << i;
         }
     }
     gLevelIndex = 8;
-    gStageIndex = gUnk_030023B8;
+    gStageIndex = gCurLevel;
     gRoomIndex = 0;
     gUnk_0200AF04 = 0;
     gUnk_02005578 = gStageIndex;
     gUnk_02007FF8 = gUnk_03001F20;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     d = room->doors;
-    if (gUnk_030023E0 == 0 && gUnk_03002384 == 0)
+    if (gFurthestLevel == 0 && gFurthestStage == 0)
     {
         gRoomEntrySet = 0;
         gUnk_020069F0 = 2;
@@ -143,7 +143,7 @@ void sub_08022c3c(void)
             gUnk_02007BF0[i][j] = 0;
     for (i = 0; i <= 6; i++)
     {
-        if (gUnk_03001F30)
+        if (gMetaKnightmareMode)
             gUsedSubGameDoors[i] = 15;
         else
             gUsedSubGameDoors[i] = 0;
@@ -152,12 +152,12 @@ void sub_08022c3c(void)
             if (gBigSwitchFlags[0] & (1 << (gUnk_08732348[i][6] & 0xFF)))
                 gUnk_0200B04C |= 1 << i;
         }
-        else if (gUnk_03002400[i][gUnk_08732348[i][6]] != 0)
+        else if (gStageClearStatus[i][gUnk_08732348[i][6]] != 0)
         {
             gUnk_0200B04C |= 1 << i;
         }
     }
-    if (gUnk_030023B8 == 7)
+    if (gCurLevel == 7)
     {
         gLevelIndex = 7;
         gStageIndex = 0;
@@ -173,7 +173,7 @@ void sub_08022c3c(void)
         gStageIndex = gUnk_02005578;
         gRoomIndex = 0;
         gUnk_0200AF04 = 0;
-        if (gUnk_030023E0 == 0 && gUnk_03002384 == 0)
+        if (gFurthestLevel == 0 && gFurthestStage == 0)
         {
             gRoomEntryX = 70;
             gRoomEntryY = 0x105;
@@ -257,12 +257,12 @@ void sub_08022fa8(void)
     gUnk_03002444 = 0;
     if (gLevelIndex == 8)
     {
-        gUnk_030023B8 = gStageIndex;
+        gCurLevel = gStageIndex;
         *(s8 *)&gUnk_03001F20 = -1;
     }
     else
     {
-        gUnk_030023B8 = gLevelIndex;
+        gCurLevel = gLevelIndex;
         gUnk_03001F20 = gStageIndex;
     }
     if (gUnk_020069F0 == 2)
@@ -406,7 +406,7 @@ void sub_080233e0(void)
     TaskSetOthersSkipMask(15, gUnk_02007E8C);
     sub_08077d38(gUnk_02007E8C);
     gUnk_03002444 = 0;
-    gUnk_030023B8 = gLevelIndex;
+    gCurLevel = gLevelIndex;
     gUnk_03001F20 = gStageIndex;
     gCameraMode = 0;
     LoadGfxSet(1);

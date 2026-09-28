@@ -131,7 +131,7 @@ void sub_08026308(void)
         gCameraFocusX &= 0x1FF;
         gCameraAnchorX &= 0x1FF;
         gSpriteCameraX &= 0x1FF;
-        gUnk_02007FA0 &= 31;
+        gBrokenBlockX &= 31;
         for (i = 0; i < 64; i++)
         {
             if (gBreakingBlocks[i].unk6 != 0xFFFF)
@@ -199,7 +199,7 @@ s32 sub_08026584(void)
             break;
         doors = gCurRoomDef->doors;
         d = (struct Door *)(gUnk_0200B034 * sizeof(struct Door) + (u32)doors);
-        switch (gUnk_03002400[gStageIndex][d->unk8])
+        switch (gStageClearStatus[gStageIndex][d->unk8])
         {
         case 0:
             break;
@@ -332,9 +332,9 @@ void sub_08026900(void)
 
 void sub_0802695c(void)
 {
-    gUnk_030023E0 = gUnk_030023B8 + 1;
-    gUnk_03002384 = 0;
-    gUnk_030023B8 = gUnk_030023E0;
+    gFurthestLevel = gCurLevel + 1;
+    gFurthestStage = 0;
+    gCurLevel = gFurthestLevel;
     gUnk_03001F20 = 16;
     gUnk_02007FB0 |= 1;
 }
@@ -345,9 +345,9 @@ void sub_08026994(void)
 
 void sub_08026998(void)
 {
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         SaveProgress(gCurSaveSlot);
-    gUnk_02005578 = gUnk_030023B8;
+    gUnk_02005578 = gCurLevel;
     gUnk_02007FF8 = gUnk_03001F20;
 }
 

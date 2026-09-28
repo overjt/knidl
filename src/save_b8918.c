@@ -63,17 +63,17 @@ void MergeProgressIntoSaveSlot(s32 a)
     s32 i;
     s32 j;
 
-    gSaveSlots[3].unk16[gExtraMode] = gUnk_030023B8;
+    gSaveSlots[3].unk16[gExtraMode] = gCurLevel;
     gSaveSlots[3].unk18[gExtraMode] = gUnk_03001F20;
-    gSaveSlots[3].unk1A[gExtraMode] = gUnk_030023E0;
-    gSaveSlots[3].unk1C[gExtraMode] = gUnk_03002384;
+    gSaveSlots[3].unk1A[gExtraMode] = gFurthestLevel;
+    gSaveSlots[3].unk1C[gExtraMode] = gFurthestStage;
     gSaveSlots[3].unk20[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
         {
             gSaveSlots[3].unk28[i][j] &= 15 << ((gExtraMode ^ 1) * 4);
-            gSaveSlots[3].unk28[i][j] |= gUnk_03002400[i][j] << (gExtraMode * 4);
+            gSaveSlots[3].unk28[i][j] |= gStageClearStatus[i][j] << (gExtraMode * 4);
         }
     }
     CalcCompletionPercent(gExtraMode);

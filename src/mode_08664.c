@@ -44,10 +44,10 @@ void PauseScreen(void)
     sub_08027228();
     mode = gGameState;
     flag = 0;
-    if (mode == 8 && gUnk_03002400[gUnk_030023B8][gUnk_03001F20] != 0)
+    if (mode == 8 && gStageClearStatus[gCurLevel][gUnk_03001F20] != 0)
         flag = gUnk_02007D64 != 5;
     LoadBgLayout(5);
-    if (gUnk_03001F30 == 1) {
+    if (gMetaKnightmareMode == 1) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0xC00;
         id = 28;

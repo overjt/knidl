@@ -45,7 +45,7 @@ extern u8 gUnk_0200B078;
 extern u8 gUnk_0200D080;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern u8 gActivePlayerMask;

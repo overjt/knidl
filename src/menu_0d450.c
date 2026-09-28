@@ -165,7 +165,7 @@ void sub_0800d85c(void)
             LinkSetupMain(gLinkSessionMode);
             if (gMultiBootStruct[2] == 3) {
                 gMenuScreen = 9;
-                gUnk_03001F30 = 0;
+                gMetaKnightmareMode = 0;
                 if (gPrevMenuScreen == 3)
                     gGameState = 5;
                 else

@@ -20,7 +20,7 @@
  *       (after LinkRequestSync/LinkSyncClock when gPrevGameState is 20, the value
  *       AgbMain's state 20 leaves there), stops the sound (StopAllSound),
  *       plays the two scenes below unless gPrevGameState is 20 or
- *       gUnk_03001F30 is 1, and ends with LoadSaveSlot(gCurSaveSlot).
+ *       gMetaKnightmareMode is 1, and ends with LoadSaveSlot(gCurSaveSlot).
  *   sub_080c62f0 / sub_080c6388   one scene each: preset and load a room
  *       (sub_08024610(0, 0) / sub_08024654(632, 248)), palette set 15 / 16
  *       (LoadBgLayout), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
@@ -43,7 +43,7 @@ void EndingMain(void)
     }
     DisconnectLink();
     StopAllSound();
-    if (gPrevGameState != 20 && gUnk_03001F30 != 1) {
+    if (gPrevGameState != 20 && gMetaKnightmareMode != 1) {
         sub_080c62f0();
         sub_080c6388();
     }

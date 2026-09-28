@@ -6,8 +6,8 @@
 
 /* stage_4335c.c (0x0804335C-0x08043653, issue #85).
  *
- * Per-frame player handler 20 of gUnk_0873B4A4[27], the handler table M09's
- * player task uses instead of gPlayerActionHandlers while gUnk_03001F30 is non-zero,
+ * Per-frame player handler 20 of gMetaKnightActionHandlers[27], the handler table M09's
+ * player task uses instead of gPlayerActionHandlers while gMetaKnightmareMode is non-zero,
  * and the copy of M10's handler 20 PlayerActionSwimUpdate (src/player_3aa64.c): it
  * re-picks the four-way state Task.variant from the latched held keys
  * gLatchedHeldKeys[] (left or right = 3, A or up = 1, down = 2, else 0; state 1

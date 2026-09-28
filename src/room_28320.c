@@ -12,7 +12,7 @@
  * Room start-up services.  SpawnDoorObjects clears the door-object slots
  * gDoorObjectTasks[32][3], finds the door the player entered by and spawns
  * an M08 stage object for every locked or special door (a 9-way switch on
- * the door kind, gated by the save flags gUnk_08732348/gUnk_03002400);
+ * the door kind, gated by the save flags gUnk_08732348/gStageClearStatus);
  * CalcBg3Parallax computes the BG3 parallax factors, CalcRoomBounds the room
  * bounds, CameraResetBoundsToGroup the multi-player group bounds and CameraResetBounds
  * copies the room bounds into the camera and per-player bounds. */
@@ -62,7 +62,7 @@ void SpawnDoorObjects(void)
         x = (d->unk2 << 4) + 16;
         y = (d->unk4 << 4) + 8;
         k = d->unk6 & 0xFF;
-        v = gUnk_08732348[gUnk_030023B8][k];
+        v = gUnk_08732348[gCurLevel][k];
         if (v != 0xFFFF)
         {
             if (v & 0x100)
@@ -72,16 +72,16 @@ void SpawnDoorObjects(void)
             }
             else
             {
-                if (!gUnk_03002400[gUnk_030023B8][v])
+                if (!gStageClearStatus[gCurLevel][v])
                     continue;
             }
         }
         switch (k)
         {
         case 0:
-            if (gUnk_030023E0 > gUnk_030023B8 || gUnk_03002384 >= d->unk8)
+            if (gFurthestLevel > gCurLevel || gFurthestStage >= d->unk8)
             {
-                switch (gUnk_03002400[gStageIndex][d->unk8])
+                switch (gStageClearStatus[gStageIndex][d->unk8])
                 {
                 default:
                 case 0:
@@ -123,7 +123,7 @@ void SpawnDoorObjects(void)
             gDoorObjectTasks[i][0] = CreateLevelDoorSign(x, y, 0, i);
             break;
         case 2:
-            if (gUnk_030023B8 >= gUnk_030023E0)
+            if (gCurLevel >= gFurthestLevel)
                 gDoorObjectTasks[i][0] = sub_0802ec1c(x, y, i);
             else
                 gDoorObjectTasks[i][0] = CreateLevelDoorSign(x, y, 1, i);

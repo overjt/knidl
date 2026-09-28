@@ -16,7 +16,7 @@
  * BreakBlocksInHitBoxes tries every metatile its boxes cover and returns how many
  * blocks broke; sub_08030b14 breaks the first block of the row at the
  * set's centre (then the rows above and below) and records its pixel
- * position in gUnk_02007FA0/gUnk_02004B6C; sub_08030e00 finds the top of
+ * position in gBrokenBlockX/gBrokenBlockY; sub_08030e00 finds the top of
  * the block column under the box and breaks that row with attack id 6.
  * CanBreakBlock(x, y, id, player) decides whether the attack breaks the
  * block at a metatile - an 8-way switch on the block kind (id & 0xFF)
@@ -88,12 +88,12 @@ struct RoomDef
     /*0x10*/ struct MapTile *unk10;
 };
 
-/* Not from room.h or player.h: this file's view of gRoomMap and gUnk_02004B6C
+/* Not from room.h or player.h: this file's view of gRoomMap and gBrokenBlockY
    differs (lesson 3.517). */
 extern s16 gRoomWidth;               /* map width in metatiles */
 extern s16 gRoomHeight;               /* map height in metatiles */
-extern u16 gUnk_02007FA0;               /* the block sub_08030b14 broke: x (pixels) */
-extern u16 gUnk_02004B6C;               /*   y (pixels) */
+extern u16 gBrokenBlockX;               /* the block sub_08030b14 broke: x (pixels) */
+extern u16 gBrokenBlockY;               /*   y (pixels) */
 extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern struct MapTile *gRoomMap;   /* the room's metatile map */
 extern struct RoomDef *gCurRoomDef;   /* the current room header */
@@ -281,8 +281,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             if (CanBreakBlock(tx, y, 1, e) && BreakBlockAtCursor() != -1)
             {
-                gUnk_02007FA0 = tx * 16;
-                gUnk_02004B6C = y * 16;
+                gBrokenBlockX = tx * 16;
+                gBrokenBlockY = y * 16;
                 goto found;
             }
         }
@@ -292,8 +292,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y - 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y - 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y - 1) * 16;
                     goto found;
                 }
             }
@@ -304,8 +304,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y + 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y + 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y + 1) * 16;
                     goto found;
                 }
             }
@@ -317,8 +317,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
         {
             if (CanBreakBlock(tx, y, 1, e) && BreakBlockAtCursor() != -1)
             {
-                gUnk_02007FA0 = tx * 16;
-                gUnk_02004B6C = y * 16;
+                gBrokenBlockX = tx * 16;
+                gBrokenBlockY = y * 16;
                 goto found;
             }
         }
@@ -328,8 +328,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y - 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y - 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y - 1) * 16;
                     goto found;
                 }
             }
@@ -340,8 +340,8 @@ u16 sub_08030b14(struct HitBoxSet *p, s32 x, s32 y, s32 dir, s32 e)
             {
                 if (CanBreakBlock(tx, y + 1, 1, e) && BreakBlockAtCursor() != -1)
                 {
-                    gUnk_02007FA0 = tx * 16;
-                    gUnk_02004B6C = (y + 1) * 16;
+                    gBrokenBlockX = tx * 16;
+                    gBrokenBlockY = (y + 1) * 16;
                     goto found;
                 }
             }

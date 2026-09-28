@@ -200,7 +200,7 @@ void Task_WarpStarSparkle(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
-    if (gUnk_030023B8 != 7)
+    if (gCurLevel != 7)
         t->drawCallback = (u32)ActorDrawWorldInView;
     else
         t->drawCallback = (u32)TaskDrawScreen;
@@ -660,7 +660,7 @@ void sub_0806ee30(void)
     p->prevMode = p->mode;
     q = gCurTask->player;
     q->mode = 20;
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         sub_08070648();
     t = gCurTask;
     t->drawCallback = (u32)sub_0806ff7c;

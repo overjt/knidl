@@ -3835,8 +3835,8 @@ gPlayerMotionXPresets:
 	.global	gPlayerMotionYPresets
 gPlayerMotionYPresets:
 	.incbin	"baserom.gba", 0x73B204, 0x228
-	.global	gUnk_0873B42C
-gUnk_0873B42C:
+	.global	gMetaKnightActions
+gMetaKnightActions:
 	.incbin	"baserom.gba", 0x73B42C, 0x4
 	.word	sub_08041438+1
 	.word	sub_080414e8+1
@@ -3865,8 +3865,8 @@ gUnk_0873B42C:
 	.word	sub_08043b80+1
 	.word	sub_08043fa8+1
 	.word	sub_08044288+1
-	.global	gUnk_0873B4A4
-gUnk_0873B4A4:
+	.global	gMetaKnightActionHandlers
+gMetaKnightActionHandlers:
 	.incbin	"baserom.gba", 0x73B4A4, 0x4
 	.word	PlayerActionStandUpdate+1
 	.word	sub_080415c8+1

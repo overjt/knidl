@@ -156,7 +156,7 @@ void sub_080a57d4(void)
     gCurTask->updateState = 0;
     gCurTask->posX = (gViewRect[0] + 216) << 16;
     gCurTask->posY = (gViewRect[2] + 44) << 16;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         for (i = 0; i < gActivePlayerCount; i++)
         {

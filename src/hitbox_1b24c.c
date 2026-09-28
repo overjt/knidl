@@ -87,7 +87,7 @@ extern struct AttackBox *gAttackBox;
 extern u8 gHitKind;            /* hit result */
 extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
-extern u8 gUnk_03002450;
+extern u8 gHitEffect;
 extern u8 gUnk_03002460;
 extern s16 gAttackBoxBottom;           /* attack box bottom */
 extern s16 gAttackBoxTop;           /* attack box top */
@@ -230,14 +230,14 @@ u8 sub_0801b24c(void)
             {
             case 1:
                 gHitKind = 3;
-                gUnk_03002450 = k;
+                gHitEffect = k;
                 gHitHealthLeft = gAttackHealth;
                 gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
                 break;
             case 2:
             case 3:
                 gHitKind = 4;
-                gUnk_03002450 = k;
+                gHitEffect = k;
                 gHitHealthLeft = gAttackHealth;
                 gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
                 break;
@@ -266,7 +266,7 @@ u8 sub_0801b24c(void)
         if (gAttackBox->unk14 & m)
             continue;
         gHitKind = 6;
-        gUnk_03002450 = gUnk_08732242[k];
+        gHitEffect = gUnk_08732242[k];
         gHitHealthLeft = gAttackHealth;
         sub_0801b9e4();
         return 1;

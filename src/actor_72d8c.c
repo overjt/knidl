@@ -308,7 +308,7 @@ void sub_080731d0(void)
     PlaySfx(219);
     CreateBurstEffect(0, 0);
     PlaySfx(272);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         sub_08071bb0(5);
     else
         sub_08071c38(5);
@@ -737,7 +737,7 @@ void sub_080739bc(void)
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         PlaySfx(272);
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             sub_08071bb0(6);
         else
             sub_08071c38(3);
@@ -977,7 +977,7 @@ void sub_08073e80(void)
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         PlaySfx(272);
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             sub_08071bb0(3);
         else
             sub_08071c38(3);
@@ -1260,7 +1260,7 @@ void sub_080740bc(void)
     PlaySfx(219);
     CreateBurstEffect(0, 0);
     PlaySfx(272);
-    if (gUnk_03001F30 != 0)
+    if (gMetaKnightmareMode != 0)
         while (1)
             ;
     sub_08071bb0(7);
@@ -1330,7 +1330,7 @@ void sub_0807447c(void)
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
         CreateBurstEffect(0, 0);
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             sub_08071bb0(1);
         else
             sub_08071c38(1);

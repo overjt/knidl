@@ -61,7 +61,7 @@ void sub_080273a0(void)
     }
     else
     {
-        if (gUnk_030023B8 == 7)
+        if (gCurLevel == 7)
         {
             gUnk_02007FF0++;
             if (gUnk_02007FF0 > 5)

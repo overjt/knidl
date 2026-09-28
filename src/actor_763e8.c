@@ -48,7 +48,7 @@ void sub_080763e8(void)
             if (t->unk2C <= 3)
                 t->unk2C++;
         }
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             gCurTask->frame = gUnk_0874009C[gCurTask->unk2C];
         else
             gCurTask->frame = gUnk_087400A6[gCurTask->unk2C];
@@ -67,7 +67,7 @@ void sub_08076454(void)
     t->unk28 = 1;
     t->unk24 = 1;
     t->unk2C = 2;
-    if (gUnk_0300244C != 0 && gUnk_03001F30 == 1)
+    if (gUnk_0300244C != 0 && gMetaKnightmareMode == 1)
         t->frame = 0x1265;
     else
         t->frame = 0x11C7;
@@ -231,7 +231,7 @@ void sub_08076798(void)
 
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             TaskSetFrame(gUnk_0873D384[t->player->ability]);
         else
             TaskSetFrame(0x11E4);
@@ -270,7 +270,7 @@ void sub_0807685c(s32 a)
     t->unk20 = t->pixelY;
     if (t->frame != -1)
     {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             sub_08070334();
         {
             struct Task *u = gCurTask;
@@ -486,7 +486,7 @@ void sub_08076cd4(void)
 {
     gCurTask->updateState = 1;
     sub_080766ac();
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         sub_080769d0();
     TaskSleepForever();
 }
@@ -500,7 +500,7 @@ void sub_08076d0c(void)
 {
     gCurTask->updateState = 2;
     sub_08076710();
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         sub_080769d0();
     TaskSleepForever();
 }
@@ -514,7 +514,7 @@ void sub_08076d44(void)
 {
     gCurTask->updateState = 3;
     sub_08076798();
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         sub_08076958();
     else
         TaskSleepForever();
@@ -536,7 +536,7 @@ void sub_08076dac(void)
 {
     gCurTask->updateState = 4;
     sub_080768c8();
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         sub_08070264();
         sub_0807022c();
@@ -550,7 +550,7 @@ void sub_08076dac(void)
 void sub_08076ddc(void)
 {
     sub_0801bcac(gUnk_0873F5E4);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         sub_080703a8();
         if (gCurTask->unk24 == 0)

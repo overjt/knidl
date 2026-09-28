@@ -1682,7 +1682,7 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
     if (i != -1)
     {
         t = &gTasks[i];
-        if (gGameState == 8 && gUnk_03001F30 == 0)
+        if (gGameState == 8 && gMetaKnightmareMode == 0)
         {
             t->variant = p3;
             PlayBgm(1);

@@ -44,14 +44,14 @@ struct HitBoxSet
     /*0x04*/ s8 (*boxes)[4];
 };
 
-/* Not from player.h: this file's view of gUnk_02004B6C differs (lesson
+/* Not from player.h: this file's view of gBrokenBlockY differs (lesson
    3.517). */
 extern s16 gUnk_0873D880[];
 extern u16 gUnk_0873D8B4[];
 extern u16 gUnk_0873D908[];
 extern struct M04Spark gUnk_02007E90[][3];
 extern struct HitBoxSet gUnk_0873CC54;
-extern u16 gUnk_02004B6C;
+extern u16 gBrokenBlockY;
 extern u8 gUnk_0873BEC4[];
 
 void TaskSetEntry(void *a, u32 i);
@@ -652,7 +652,7 @@ void PlayerActionInhaleUpdate(void)
                     if (sub_08030898(&gUnk_0873CC54, u->player->playerIndex) != 0)
                     {
                         gCurTask->player->unk09 = 2;
-                        CreateBlockStar(gUnk_02007FA0 + 8, gUnk_02004B6C + 8, gCurTaskIdx, 3, 1);
+                        CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, 3, 1);
                     }
                 }
                 else

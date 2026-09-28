@@ -165,7 +165,7 @@ void sub_0800783c(void)
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
     sub_08027198();
-    if (CheckNewMilestones() != 0 && gUnk_03001F30 == 0)
+    if (CheckNewMilestones() != 0 && gMetaKnightmareMode == 0)
         ShowMilestonePicture();
 }
 
@@ -273,7 +273,7 @@ void sub_0800791c(void)
     }
     gFadeBlankAtWhite = 0;
     sub_08027128();
-    if (gUnk_03001F30 == 0 && gGameState != 9
+    if (gMetaKnightmareMode == 0 && gGameState != 9
         && (gMilestoneFlags & (4 << gExtraMode))
         && !(gMilestoneFlags & (64 << gExtraMode))) {
         gMilestoneFlags |= 64 << gExtraMode;

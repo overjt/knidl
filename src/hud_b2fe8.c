@@ -30,7 +30,7 @@ extern u8 gUnk_0200B078;
 extern u8 gUnk_0200D080;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern u8 gActivePlayerMask;
@@ -977,7 +977,7 @@ void sub_080b3f54(void)
     if (a->animScript == NULL)
         gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
-    if (gUnk_03001F30 == 1 && gCurTask->unk76 == 1)
+    if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     a->extraLayerOffset = 1;
     a->extraTileWord = 0xF000;
@@ -1011,7 +1011,7 @@ void sub_080b3ffc(void)
 {
     if (gCurTask->frame != 5)
     {
-        if (gUnk_03001F30 == 1 && gCurTask->unk76 == 1)
+        if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
             gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     }
     else
@@ -1216,7 +1216,7 @@ void EnergyDrinkHeal(void)
 
     w0 = *(u8 *)gExtraMode;
     n = 1;
-    if (w0 == 0 && gUnk_03001F30 == 0)
+    if (w0 == 0 && gMetaKnightmareMode == 0)
         n = 2;
     sub_08067108();
     c2 = &gCurTask;

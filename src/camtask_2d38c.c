@@ -413,8 +413,8 @@ void sub_0802dcb4(void)
         t8 = gCurTask;
         if (t8->unk24 != 0 && gUnk_02007FC4 == 0)
         {
-            t8->posX = gUnk_087323C6[gUnk_030023B8][0];
-            t8->posY = gUnk_087323C6[gUnk_030023B8][1];
+            t8->posX = gUnk_087323C6[gCurLevel][0];
+            t8->posY = gUnk_087323C6[gCurLevel][1];
             t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {
@@ -598,8 +598,8 @@ void sub_0802e3ac(void)
         t8 = gCurTask;
         if (t8->unk24 != 0 && gUnk_02007FC4 == 0)
         {
-            t8->posX = gUnk_087323C6[gUnk_030023B8][0];
-            t8->posY = gUnk_087323C6[gUnk_030023B8][1];
+            t8->posX = gUnk_087323C6[gCurLevel][0];
+            t8->posY = gUnk_087323C6[gCurLevel][1];
             t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
             {

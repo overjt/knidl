@@ -11,7 +11,7 @@
  * calls them after sub_0801b7dc has placed the actor's attack box): each walks
  * one of the collider lists M05's RegisterCollider fills, places the collider's
  * body box the same way, tests the overlap and, on a hit, writes the hit
- * result (gHitKind = hit kind, gUnk_03002450, gHitHealthLeft) through
+ * result (gHitKind = hit kind, gHitEffect, gHitHealthLeft) through
  * the shared tails sub_0801b8e4/sub_0801b9e4 and returns 1.
  * sub_0801a8c8 tests the players' list gPlayerColliders (by the attack's class
  * gAttackBox->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
@@ -104,7 +104,7 @@ extern u16 gHitHealthLeft;
 extern u8 gUnk_030023A4;
 extern u8 gHitterSlot;
 extern u8 gAttackLastHitter;
-extern u8 gUnk_03002450;
+extern u8 gHitEffect;
 extern u8 gUnk_03002460;
 extern s16 gAttackBoxBottom;           /* attack box bottom */
 extern s16 gAttackBoxTop;           /* attack box top */
@@ -214,13 +214,13 @@ u8 sub_0801a8c8(void)
                 if (gAttackBox->unk0A & 8)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 12;
+                    gHitEffect = 12;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 4)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 11;
+                    gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
@@ -258,13 +258,13 @@ u8 sub_0801a8c8(void)
                 if (gAttackBox->unk0A & 4)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 11;
+                    gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 1)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 1;
+                    gHitEffect = 1;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
@@ -280,7 +280,7 @@ u8 sub_0801a8c8(void)
                 if (gAttackBox->unk0A & 4)
                 {
                     gHitKind = 6;
-                    gUnk_03002450 = 11;
+                    gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else
@@ -303,7 +303,7 @@ u8 sub_0801a8c8(void)
                 continue;
             if (gAttackBoxBottom < gColliderTop)
                 continue;
-            gUnk_03002450 = 0;
+            gHitEffect = 0;
             /* the body box's halfword at 0x0E (ldrh) */
             if (!(gColliderBodyBox->unk0E & 6))
             {
@@ -443,7 +443,7 @@ u8 sub_0801af14(void)
             else
             {
                 gHitKind = 6;
-                gUnk_03002450 = gUnk_08732218[k];
+                gHitEffect = gUnk_08732218[k];
                 gHitHealthLeft = gAttackHealth;
             }
             sub_0801b9e4();

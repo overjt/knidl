@@ -33,7 +33,7 @@ void sub_08023948(void)
 
     ResetTasksAndOam();
     gUnk_03002444 = 1;
-    gUnk_030023B8 = gStageIndex;
+    gCurLevel = gStageIndex;
     gUnk_03001F20 = 16;
     if (gUnk_0200AF08 != 0 || gUnk_020069F0 == 2)
         gCameraMode = 4;
@@ -141,7 +141,7 @@ void sub_08023ca0(void)
     u32 zero;
 
     gUnk_03002444 = 1;
-    gUnk_030023B8 = gStageIndex;
+    gCurLevel = gStageIndex;
     gUnk_03001F20 = 16;
     gCameraMode = 2;
     LoadGfxSet(1);

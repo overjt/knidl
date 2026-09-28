@@ -223,16 +223,16 @@ void sub_08007f9c(void)
            is what leaves the ROM's `ldr r0, =F18; b join` arm.  A pointer
            local (if/else or ?:) is folded into "p = b; if (c) p = a". */
         if (gUnk_02006090 == 6) {
-            if (gUnk_03001F18[0] != 0 || gUnk_03001F18[1] != 0
-                || gUnk_03001F18[2] != 0 || gUnk_03001F18[3] != 0) {
-                DrawClockToBgMap(gUnk_03001F18, 22, 18);
+            if (gBossEnduranceBestTime[0] != 0 || gBossEnduranceBestTime[1] != 0
+                || gBossEnduranceBestTime[2] != 0 || gBossEnduranceBestTime[3] != 0) {
+                DrawClockToBgMap(gBossEnduranceBestTime, 22, 18);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1900;
             }
         } else {
-            if (gUnk_03002378[0] != 0 || gUnk_03002378[1] != 0
-                || gUnk_03002378[2] != 0 || gUnk_03002378[3] != 0) {
-                DrawClockToBgMap(gUnk_03002378, 22, 18);
+            if (gMetaKnightmareBestTime[0] != 0 || gMetaKnightmareBestTime[1] != 0
+                || gMetaKnightmareBestTime[2] != 0 || gMetaKnightmareBestTime[3] != 0) {
+                DrawClockToBgMap(gMetaKnightmareBestTime, 22, 18);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1900;
             }

@@ -132,7 +132,7 @@ void MainMenuMain(void)
             LinkSetupMain(gLinkSessionMode);
         }
         gFadeBlankAtWhite = 0;
-        gUnk_03001F30 = 0;
+        gMetaKnightmareMode = 0;
         gGameState = 13;
     }
     else

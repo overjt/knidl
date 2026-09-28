@@ -29,8 +29,8 @@
  * bit 2 set until PlayerState.attachedCount is non-zero and equal to unk08, then
  * recovers or releases (sound 201, PlayerState.unk42 bit 9). */
 
-/* Not from room.h: this file's view of gUnk_02007FA0 differs (lesson 3.517). */
-extern s16 gUnk_02007FA0[];
+/* Not from room.h: this file's view of gBrokenBlockX differs (lesson 3.517). */
+extern s16 gBrokenBlockX[];
 extern s32 gUnk_03001F2C;               /* boot_091ac.c spelling */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -164,7 +164,7 @@ void PlayerActionBackdropUpdate(void)
         {
             if (sub_08030898((struct HitBoxSet *)gUnk_0873CC64, t->player->playerIndex) != 0)
             {
-                CreateBlockStar(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 3);
+                CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 3);
                 gCurTask->player->unk09 = 2;
             }
             u = gCurTask;

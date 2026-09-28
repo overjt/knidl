@@ -93,7 +93,7 @@ void InitRoomBgLayout(void)
         gUnk_0200B078 = 3;
         gRoomBounds[2] = gRoomHeight * 16 - gRoomBorder[1] - 80;
         LoadGfxSet(3);
-        sub_08030074(gUnk_030023B8);
+        sub_08030074(gCurLevel);
         break;
     case 4:
         gUnk_0200B078 = 6;
@@ -123,7 +123,7 @@ void InitRoomBgLayout(void)
         break;
     }
     if (gUnk_02007D64 == 3)
-        sub_08030100(gUnk_030023B8);
+        sub_08030100(gCurLevel);
 }
 
 void sub_08028130(void)

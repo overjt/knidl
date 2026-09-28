@@ -71,7 +71,7 @@ void sub_08008c7c(void)
 {
     u32 src;
 
-    if (gUnk_03001F30 == 1) {
+    if (gMetaKnightmareMode == 1) {
         src = (u32)gUnk_080D1B78;
         RequestCopy(3, src, 0x060160C0, 64);
         src += 64;

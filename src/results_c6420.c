@@ -14,7 +14,7 @@
  *
  * The screens around the ending and the tile-number helpers.
  *   FinalResultsScreen   AgbMain state 12, after the staff credits: the final screen
- *       (after AgbMain state 20 DrawLargeClockScreen's clock, the clock when gUnk_03001F30 is set,
+ *       (after AgbMain state 20 DrawLargeClockScreen's clock, the clock when gMetaKnightmareMode is set,
  *       else this player's score), held until START.
  *   DrawLargeClockScreen   the clock drawn with large digit tiles.
  *   ShowMilestonePicture / ShowMilestonePictureForMode   a full-screen picture (screen 57 or 59) held
@@ -37,14 +37,14 @@ void LoadBgLayout(s32 a0);                                   /* load palette set
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
 
 /* AgbMain state 12, after the staff credits: the final screen.  After
-   AgbMain state 20 it shows DrawLargeClockScreen's clock screen, when gUnk_03001F30 is
+   AgbMain state 20 it shows DrawLargeClockScreen's clock screen, when gMetaKnightmareMode is
    set the clock, otherwise this player's score; then it waits for START, fades out
    and returns (AgbMain goes back to state 0). */
 void FinalResultsScreen(void)
 {
     if (gPrevGameState != 20) {
         LoadGfxSet(4);
-        if (gUnk_03001F30 == 0) {
+        if (gMetaKnightmareMode == 0) {
             if (gExtraMode == 0)
                 LoadGfxSet(56);
             else
@@ -67,7 +67,7 @@ void FinalResultsScreen(void)
     if (gPrevGameState == 20) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x800;
-    } else if (gUnk_03001F30 == 1) {
+    } else if (gMetaKnightmareMode == 1) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x900;
     } else if (gMilestoneFlags & (16 << gExtraMode)) {
@@ -79,7 +79,7 @@ void FinalResultsScreen(void)
     }
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
-    if (gPrevGameState == 20 || gUnk_03001F30 == 1) {
+    if (gPrevGameState == 20 || gMetaKnightmareMode == 1) {
         PlayBgm(29);
         RunLinkFrames(174);
     } else {

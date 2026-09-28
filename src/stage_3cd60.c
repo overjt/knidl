@@ -84,7 +84,7 @@ void PlayerPlayBump(void)
     if (v == 0)
         return;
     gCurTask->player->bumpKind = 0;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         p = &gUnk_0873D210[gCurTask->player->ability * 4];
     else
         p = gUnk_0873D2E0;
@@ -567,7 +567,7 @@ void sub_0803d710(void)
         RequestCopy(2, (u32)(w + 1),
                      (u32)gObjPalette + ((t->tileWord & 0xF000) >> 7), *w);
     }
-    if (gUnk_03001F30 == 0) {
+    if (gMetaKnightmareMode == 0) {
         if (gPlayerCount > 1)
             sub_0803d7c4();
         sub_0803db74();
@@ -838,7 +838,7 @@ void sub_0803ddc0(void)
         y = gCurTask->pixelY - gSpriteCameraY;
     }
     pal = PlayerLoadFrameTilesAndPalette(speed);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gUnk_030023B0 == 0)
         {
@@ -2603,7 +2603,7 @@ s32 PlayerCheckFloat(void)
 {
     u16 v;
 
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         return 0;
     if (gCurTask->player->mouthState != 1)
     {
@@ -2642,7 +2642,7 @@ s32 PlayerCheckBButton(void)
 {
     u8 v;
 
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
     {
         if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 2) == 0)
             goto out;
@@ -2722,7 +2722,7 @@ s32 PlayerCheckEnterDoor(void)
 
 s32 PlayerCheckDropAbility(void)
 {
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         return 0;
     if ((gCurTask->player->unk42 & 2) == 0
      && gCurTask->player->unk37 == 0
@@ -2770,7 +2770,7 @@ s32 PlayerRequestLocomotion(void)
 
 s32 sub_080404e4(void)
 {
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
         return 0;
     if (gCurTask->player->mouthState == 2)
         return 1;

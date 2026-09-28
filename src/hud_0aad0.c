@@ -39,7 +39,7 @@ void HudRedrawClock(void)
 
 void sub_0800ab3c(void)
 {
-    sub_08008e6c(gUnk_030023B8);
+    sub_08008e6c(gCurLevel);
     HudDrawTiles(gUnk_085A5654, 0, 0, 64);
 }
 

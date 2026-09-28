@@ -12,23 +12,23 @@ void StoreProgressInSaveSlot(s32 a)
     s32 i;
     s32 j;
 
-    gSaveSlots[a].unk16[gExtraMode] = gUnk_030023B8;
+    gSaveSlots[a].unk16[gExtraMode] = gCurLevel;
     gSaveSlots[a].unk18[gExtraMode] = gUnk_03001F20;
-    gSaveSlots[a].unk1A[gExtraMode] = gUnk_030023E0;
-    gSaveSlots[a].unk1C[gExtraMode] = gUnk_03002384;
+    gSaveSlots[a].unk1A[gExtraMode] = gFurthestLevel;
+    gSaveSlots[a].unk1C[gExtraMode] = gFurthestStage;
     gSaveSlots[a].unk20[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
         {
             gSaveSlots[a].unk28[i][j] &= 15 << ((gExtraMode ^ 1) * 4);
-            gSaveSlots[a].unk28[i][j] |= gUnk_03002400[i][j] << (gExtraMode * 4);
+            gSaveSlots[a].unk28[i][j] |= gStageClearStatus[i][j] << (gExtraMode * 4);
         }
     }
     for (i = 0; i <= 3; i++)
     {
-        gSaveSlots[a].unk60[i] = gUnk_03001F18[i];
-        gSaveSlots[a].unk68[i] = gUnk_03002378[i];
+        gSaveSlots[a].unk60[i] = gBossEnduranceBestTime[i];
+        gSaveSlots[a].unk68[i] = gMetaKnightmareBestTime[i];
     }
     CalcCompletionPercent(gExtraMode);
     gSaveSlots[a].completionPercent[gExtraMode] = gCompletionPercent;
@@ -41,10 +41,10 @@ void StoreProgressInBothHalves(s32 a)
 
     for (i = 0; i <= 1; i++)
     {
-        gSaveSlots[a].unk16[i] = gUnk_030023B8;
+        gSaveSlots[a].unk16[i] = gCurLevel;
         gSaveSlots[a].unk18[i] = gUnk_03001F20;
-        gSaveSlots[a].unk1A[i] = gUnk_030023E0;
-        gSaveSlots[a].unk1C[i] = gUnk_03002384;
+        gSaveSlots[a].unk1A[i] = gFurthestLevel;
+        gSaveSlots[a].unk1C[i] = gFurthestStage;
         gSaveSlots[a].unk20[i] = gBigSwitchFlags[0];
         CalcCompletionPercent(i);
         gSaveSlots[a].completionPercent[i] = gCompletionPercent;
@@ -53,12 +53,12 @@ void StoreProgressInBothHalves(s32 a)
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
-            gSaveSlots[a].unk28[i][j] = (gUnk_03002400[i][j] << 4) | gUnk_03002400[i][j];
+            gSaveSlots[a].unk28[i][j] = (gStageClearStatus[i][j] << 4) | gStageClearStatus[i][j];
     }
     for (i = 0; i <= 3; i++)
     {
-        gSaveSlots[a].unk60[i] = gUnk_03001F18[i];
-        gSaveSlots[a].unk68[i] = gUnk_03002378[i];
+        gSaveSlots[a].unk60[i] = gBossEnduranceBestTime[i];
+        gSaveSlots[a].unk68[i] = gMetaKnightmareBestTime[i];
     }
 }
 void LoadSaveSlot(s32 a)
@@ -71,20 +71,20 @@ void LoadSaveSlot(s32 a)
     if (gPlayerCount != 1)
         a = 3;
     gMilestoneFlags = gSaveSlots[a].milestoneFlags;
-    gUnk_030023B8 = gSaveSlots[a].unk16[gExtraMode];
+    gCurLevel = gSaveSlots[a].unk16[gExtraMode];
     gUnk_03001F20 = gSaveSlots[a].unk18[gExtraMode];
-    gUnk_030023E0 = gSaveSlots[a].unk1A[gExtraMode];
-    gUnk_03002384 = gSaveSlots[a].unk1C[gExtraMode];
+    gFurthestLevel = gSaveSlots[a].unk1A[gExtraMode];
+    gFurthestStage = gSaveSlots[a].unk1C[gExtraMode];
     gBigSwitchFlags[0] = gSaveSlots[a].unk20[gExtraMode];
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
-            gUnk_03002400[i][j] = (gSaveSlots[a].unk28[i][j] >> (gExtraMode * 4)) & 15;
+            gStageClearStatus[i][j] = (gSaveSlots[a].unk28[i][j] >> (gExtraMode * 4)) & 15;
     }
     for (i = 0; i <= 3; i++)
     {
-        gUnk_03001F18[i] = gSaveSlots[a].unk60[i];
-        gUnk_03002378[i] = gSaveSlots[a].unk68[i];
+        gBossEnduranceBestTime[i] = gSaveSlots[a].unk60[i];
+        gMetaKnightmareBestTime[i] = gSaveSlots[a].unk68[i];
     }
     CalcCompletionPercent(gExtraMode);
 }
@@ -93,15 +93,15 @@ void sub_080b81a0(void)
     s32 i;
     s32 j;
 
-    gUnk_030023B8 = 0;
+    gCurLevel = 0;
     gUnk_03001F20 = 0;
-    gUnk_030023E0 = 0;
-    gUnk_03002384 = 0;
+    gFurthestLevel = 0;
+    gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
-            gUnk_03002400[i][j] = 0;
+            gStageClearStatus[i][j] = 0;
     }
     CalcCompletionPercent(0);
 }
@@ -114,19 +114,19 @@ void ResetProgress(void)
 
     gExtraMode = 0;
     gMilestoneFlags = 0;
-    gUnk_030023B8 = 0;
+    gCurLevel = 0;
     gUnk_03001F20 = 0;
-    gUnk_030023E0 = 0;
-    gUnk_03002384 = 0;
+    gFurthestLevel = 0;
+    gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;
     gCompletionPercent = 0;
     for (i = 0; i <= 7; i++)
     {
         for (j = 0; j <= 6; j++)
-            gUnk_03002400[i][j] = 0;
+            gStageClearStatus[i][j] = 0;
     }
-    p = gUnk_03001F18;
-    q = gUnk_03002378;
+    p = gBossEnduranceBestTime;
+    q = gMetaKnightmareBestTime;
     q[0] = 0;
     p[0] = 0;
     q[1] = 0;

@@ -376,7 +376,7 @@ void sub_08070498(u32 a, s32 b)
     gUnk_020055C0 = b;
     if (gUnk_0300244C != 0)
     {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
         {
             tbl = gUnk_0873F950[p->ability];
             k = p->playerIndex;

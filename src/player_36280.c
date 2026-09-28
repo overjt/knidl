@@ -306,7 +306,7 @@ void PlayerActionDuckUpdate(void)
 
             if (w->player->slope != w->unk2C || dir != w->facing)
             {
-                if (gUnk_03001F30 == 0)
+                if (gMetaKnightmareMode == 0)
                     TaskSetEntry(PlayerActionDuck, gCurTaskIdx);
                 else
                     TaskSetEntry(sub_08041e8c, gCurTaskIdx);

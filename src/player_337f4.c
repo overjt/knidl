@@ -179,7 +179,7 @@ void PlayerActionStandUpdate(void)
                 gCurTask->posX = (gCurTask->posX & 0xFFFF0000) | 0xF000;
             else
                 gCurTask->posX = (gCurTask->posX & 0xFFFF0000) | 0x1000;
-            if (gUnk_03001F30 == 0)
+            if (gMetaKnightmareMode == 0)
             {
                 if (gCurTask->player->mouthState == 1)
                     gCurTask->unk46 = gUnk_0873D0F8[26][sub_0803fd20(gCurTask->player->playerIndex)];
@@ -199,7 +199,7 @@ void PlayerActionStandUpdate(void)
 
             if (w->player->slope != w->unk2C || dir != w->facing)
             {
-                if (gUnk_03001F30 == 0)
+                if (gMetaKnightmareMode == 0)
                     TaskSetEntry(PlayerActionStand, gCurTaskIdx);
                 else
                     TaskSetEntry(sub_08041438, gCurTaskIdx);

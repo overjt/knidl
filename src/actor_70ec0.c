@@ -217,7 +217,7 @@ void sub_080711d0(void)
     CreateBurstEffect(0, 0);
     if (gLocalPlayer == gCurTask->hitterSlot)
         PlaySfx(219);
-    if (gUnk_030023B8 == 7)
+    if (gCurLevel == 7)
         gUnk_02007D00[9] = 1;
     ActorSetState(1);
     TaskSetEntry(WarpStarEnterState, gCurTaskIdx);
@@ -530,7 +530,7 @@ void sub_080719a0(void)
     v = t->unk18;
     if (v <= -2)
     {
-        if (gUnk_03001F30 != 0)
+        if (gMetaKnightmareMode != 0)
             return;
         g = t->frameTable;
         QueueSprite(t->layer, g[t->frame], t->spriteFlags, t->tileWord,
@@ -553,7 +553,7 @@ void sub_080719a0(void)
                 gCurTask->unk18 = 0x3F0000;
         }
     }
-    if (gUnk_03001F30 != 0)
+    if (gMetaKnightmareMode != 0)
         return;
     if (gCurTask->frameTable == NULL)
         return;
@@ -592,7 +592,7 @@ void sub_08071bb0(u16 a)
 {
     s32 i;
 
-    if (gUnk_03001F30 != 0)
+    if (gMetaKnightmareMode != 0)
         while (1)
             ;
     for (i = 0; i < gPlayerCount; i++)
@@ -614,7 +614,7 @@ void sub_08071c38(u16 a)
 {
     s32 i;
 
-    if (gUnk_03001F30 != 1)
+    if (gMetaKnightmareMode != 1)
         while (1)
             ;
     for (i = 0; i < gPlayerCount; i++)
@@ -729,7 +729,7 @@ void sub_08071ebc(void)
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         PlaySfx(272);
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             sub_08071bb0(3);
         else
             sub_08071c38(3);
@@ -1475,7 +1475,7 @@ void sub_08072b00(void)
     PlaySfx(219);
     CreateBurstEffect(0, 0);
     PlaySfx(272);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         sub_08071bb0(4);
     else
         sub_08071c38(4);

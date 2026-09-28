@@ -73,7 +73,7 @@ struct Unk0873A994
 extern u16 gUnk_02000028;
 extern u8 gBlockCursorPlayer; /*   the player that hit it */
 extern u8 gUnk_02004B48; /*   hit-box id bit 11 */
-extern s16 gUnk_02004B6C[]; /*   y (pixels) */
+extern s16 gBrokenBlockY[]; /*   y (pixels) */
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4;
 extern struct Unk02005E00 gUnk_02005E00;
@@ -164,8 +164,8 @@ extern u16 gUnk_0873AF58[][2];
 extern u32 gUnk_0873AF6C[];
 extern u32 gPlayerMotionXPresets[];
 extern u32 gPlayerMotionYPresets[];
-extern void (*gUnk_0873B42C[])(void);
-extern void (*gUnk_0873B4A4[])(void);
+extern void (*gMetaKnightActions[])(void);
+extern void (*gMetaKnightActionHandlers[])(void);
 extern struct M12Fade gUnk_0873B510[];
 extern u16 gUnk_0873B534[][32];
 extern u8 gUnk_0873B634[];

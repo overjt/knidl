@@ -166,7 +166,7 @@ void sub_0800c34c(void)
             switch (gFileMenuCursor)
             {
             case 0:
-                gUnk_03001F30 = 0;
+                gMetaKnightmareMode = 0;
                 gExtraMode = 0;
                 if (gSaveSlots[gCurSaveSlot].milestoneFlags & 4)
                 {
@@ -298,7 +298,7 @@ void sub_0800c610(void)
             if (gUnk_02004B44 == 0)
             {
                 gMenuScreen = 9;
-                gUnk_03001F30 = 0;
+                gMetaKnightmareMode = 0;
                 gGameState = 5;
             }
             else

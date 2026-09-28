@@ -2,10 +2,10 @@
 #include "global.h"
 #include "task.h"
 
-/* Not from room.h or player.h: this file's view of gUnk_02007FA0 and
+/* Not from room.h or player.h: this file's view of gBrokenBlockX and
    gUnk_0873CC54 differs (lesson 3.517). */
-extern s16 gUnk_02004B6C[];
-extern s16 gUnk_02007FA0[];
+extern s16 gBrokenBlockY[];
+extern s16 gBrokenBlockX[];
 extern u16 gLatchedHeldKeys[];
 extern u8 gUnk_0873BEEC[];
 extern u8 gUnk_0873CC54[];
@@ -55,7 +55,7 @@ void PlayerActionThrowUpdate(void)
                 {
                     if (sub_08030898(gUnk_0873CC54, p->playerIndex) != 0)
                     {
-                        CreateBlockStar(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 2);
+                        CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 2);
                         gCurTask->player->unk09 = 2;
                     }
                 }

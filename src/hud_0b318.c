@@ -77,7 +77,7 @@ void HudFlushTilemap(void)
 
 void HudLoadGfx(void)
 {
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         LoadGfxSet(4);
     else
         LoadGfxSet(5);

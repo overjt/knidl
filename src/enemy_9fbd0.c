@@ -12,7 +12,7 @@
 
 /* RAM cells / ROM tables */
 /* Not from room.h: this file's view of gCurSaveSlot differs (lesson 3.517). */
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern u8 gActivePlayerMask;
 extern u32 gCurSaveSlot[];
 
@@ -137,7 +137,7 @@ u8 sub_0809fd64(void)
         StopSfxOnPlayer(gUnk_02007D00[9], 0x21B);
         gUnk_02007D00[9] = -1;
     }
-    if (gUnk_03001F30 == 1)
+    if (gMetaKnightmareMode == 1)
     {
         sub_0800a698();
         sub_080b7c00(gCurSaveSlot[0]);

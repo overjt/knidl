@@ -135,7 +135,7 @@ void sub_0800cd60(void)
             if (gMenuCursor == 4) {
                 gMenuScreen = 9;
                 gExtraMode = 0;
-                gUnk_03001F30 = 1;
+                gMetaKnightmareMode = 1;
                 gGameState = 13;
                 gUnk_02006090 = 7;
                 gUnk_02007FCC = 7;
@@ -145,7 +145,7 @@ void sub_0800cd60(void)
                 gUnk_02006090 = gMenuCursor;
                 gUnk_02007FCC = gMenuCursor;
             } else if (gMenuCursor == 3) {
-                gUnk_03001F30 = 0;
+                gMetaKnightmareMode = 0;
                 gExtraMode = 0;
                 gUnk_02006090 = 6;
                 gUnk_02007FCC = 6;
@@ -248,7 +248,7 @@ void sub_0800d0f4(void)
             PlaySfx(102);
             if (gMenuChoiceCursor == 0) {
                 gMenuScreen = 9;
-                gUnk_03001F30 = 0;
+                gMetaKnightmareMode = 0;
                 gGameState = 13;
                 return;
             }

@@ -25,8 +25,8 @@
  * action.  The actions are two tables of void (*)(void) dispatched
  * through CallTableEntry(index, count, table), entry 0 NULL: the "enter"
  * coroutine of action PlayerState.action from gPlayerActions[62] (M11's
- * gUnk_0873B42C[30] when gUnk_03001F30 != 0) and the "per-frame" handler
- * Task.updateState from gPlayerActionHandlers[57] (M11's gUnk_0873B4A4[27]).  A handler requests
+ * gMetaKnightActions[30] when gMetaKnightmareMode != 0) and the "per-frame" handler
+ * Task.updateState from gPlayerActionHandlers[57] (M11's gMetaKnightActionHandlers[27]).  A handler requests
  * the next action in PlayerState.requestedAction; PlayerStartRequestedAction is the coroutine
  * that switches to it (unk03 = previous, unk02 = new, unk01 = 0).
  * PlayerUpdate (Task.updateCallback) runs every frame: the attack hit-boxes
@@ -85,7 +85,7 @@ void Task_Player(void)
     gCurTask->tileWord = (gCurTask->player->playerIndex << 13) | (gCurTask->player->playerIndex << 7);
     gCurTask->unk76 = 0;
     gCurTask->player->requestedAction = 0;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
     else
         gCurTask->player->bodyBox = (u32)gUnk_0873CA54;
@@ -199,7 +199,7 @@ void Task_Player(void)
         sub_08040808(gCurTask->player->playerIndex);
         break;
     }
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
@@ -209,7 +209,7 @@ void Task_Player(void)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
-        CallTableEntry(p->action, 30, gUnk_0873B42C);
+        CallTableEntry(p->action, 30, gMetaKnightActions);
     }
 }
 
@@ -233,7 +233,7 @@ void PlayerStartRequestedAction(void)
     }
     else if (gCurTask->player->unk37 != 2)
     {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
         else
             gCurTask->player->bodyBox = (u32)gUnk_0873CA54;
@@ -243,14 +243,14 @@ void PlayerStartRequestedAction(void)
     gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
     if (gCurTask->player->invulnerability == 3 && (s16)gCurTask->player->invulnerabilityTimer == -0x8000)
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->prevAction == 28 && gCurTask->player->ability != 0)
             LoadAbilityTiles();
         if (gCurTask->player->ability != 0)
             gCurTask->player->unk36 = 1;
     }
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
@@ -260,7 +260,7 @@ void PlayerStartRequestedAction(void)
     {
         struct PlayerState *p = gCurTask->player;
         gCurTask->state = p->action;
-        CallTableEntry(p->action, 30, gUnk_0873B42C);
+        CallTableEntry(p->action, 30, gMetaKnightActions);
     }
 }
 
@@ -341,17 +341,17 @@ void PlayerUpdate(void)
         }
         RegisterCollider(gCurTaskIdx, x, y, (u8 *)p->bodyBox);
     }
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         CallTableEntry(gCurTask->updateState, 57, gPlayerActionHandlers);
     else
-        CallTableEntry(gCurTask->updateState, 27, gUnk_0873B4A4);
+        CallTableEntry(gCurTask->updateState, 27, gMetaKnightActionHandlers);
     PlayerUpdateInvulnerability();
 post:
     gCurTask->player->hitsThisFrame = 0;
     sub_0803fb54();
     if (!(gCurTask->player->unk42 & 32))
         sub_0803e080();
-    if ((gUnk_03001F30 == 1 || gUnk_0300244C != 0)
+    if ((gMetaKnightmareMode == 1 || gUnk_0300244C != 0)
      && (gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
         goto check;
     if (gCurTask->velY >= 0)
@@ -381,7 +381,7 @@ post:
         gPlayerBubbleTimers[gCurTask->player->playerIndex] = 60;
     }
 check:
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->ability == 10)
         {
@@ -447,7 +447,7 @@ void sub_0803332c(void)
         {
             sub_0803cbd8();
             p = gCurTask->player;
-            if (!(p->unk40 & 1) && gUnk_03001F30 == 0 && p->mode == 7 && p->blocksBroken == 0)
+            if (!(p->unk40 & 1) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
             {
                 TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
                 gCurTask->player->requestedAction = 18;
@@ -472,7 +472,7 @@ void sub_08033414(void)
     switch (gCurTask->hitKind)
     {
     default:
-        if (gUnk_03001F30 == 0 && (gCurTask->player->unk40 & 32))
+        if (gMetaKnightmareMode == 0 && (gCurTask->player->unk40 & 32))
         {
             if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != 0)
             {
@@ -535,7 +535,7 @@ void sub_08033414(void)
         gCurTask->player->unk50 = 0;
         gCurTask->u80.attackAbility = 0;
     }
-    else if (gUnk_03001F30 == 0)
+    else if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->unk76 & 2)
         {
@@ -549,7 +549,7 @@ void sub_08033414(void)
     }
     if (gCurTask->player->requestedAction != 0)
         TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->unk40 & 4)
         {

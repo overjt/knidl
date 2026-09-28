@@ -126,7 +126,7 @@ void sub_080272dc(void)
     s32 i;
 
     gLevelIndex = 8;
-    gStageIndex = gUnk_030023B8;
+    gStageIndex = gCurLevel;
     gRoomIndex = 0;
     r = gRoomTable[gLevelIndex][gStageIndex][0];
     d = r->doors;

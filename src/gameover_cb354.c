@@ -48,7 +48,7 @@ void Task_GameOverCursor(void)
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_087556E0;
-    if (gUnk_03001F30 == 0) {
+    if (gMetaKnightmareMode == 0) {
         gCurTask->posX = 184 << 16;
         gCurTask->posY = 94 << 16;
     } else {

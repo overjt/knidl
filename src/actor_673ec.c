@@ -31,7 +31,7 @@ extern s8 gAttackHitDuration;
 extern u8 gUnk_03002460;
 extern s32 gAttackBox;
 extern u8 gHitKind;
-extern u8 gUnk_03002450;
+extern u8 gHitEffect;
 extern u16 gHitHealthLeft;
 extern u8 gHitDirection;
 extern u8 gHitTimer;
@@ -87,7 +87,7 @@ void sub_080674a8(void)
 {
     struct Task *t;
 
-    if (gUnk_03001F30 != 0)
+    if (gMetaKnightmareMode != 0)
         return;
     t = gCurTask;
     if (t->unk30 <= 0)
@@ -144,7 +144,7 @@ void sub_08067550(void)
 
     gCurTask->updateState = 3;
     gCurTask->facing = gTasks[gCurTask->parent].facing;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         u = gCurTask;
         p = u->player;
@@ -190,7 +190,7 @@ void sub_080675e4(void)
     p++;
     t->posX = t->pixelX << 16;
     t->posY = t->pixelY << 16;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (*p++ != 0)
             t->frame = t->unk28 + t->unk2C;
@@ -222,7 +222,7 @@ void sub_080676c0(void)
     u->updateState = 4;
     TaskStop();
     sub_08068a2c(-8, 512);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         sub_080675e4();
     t = gCurTask;
     t->unk28 = gTasks[t->parent].unk28;
@@ -235,7 +235,7 @@ void sub_080676c0(void)
         TaskYieldTrampoline(1);
     if (gCurTaskIdx == gLocalPlayer)
     {
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
         {
             if (gCurTask->player->mouthState == 1)
                 PlaySfx(158);
@@ -256,7 +256,7 @@ void sub_080676c0(void)
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0x18000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x2500, 0x30000);
-    if (gUnk_03001F30 == 0 && gCurTask->player->mouthState == 1)
+    if (gMetaKnightmareMode == 0 && gCurTask->player->mouthState == 1)
     {
         TaskSetFrame(0x11C2);
         TaskYieldTrampoline(3);
@@ -282,7 +282,7 @@ void sub_080676c0(void)
         w = gCurTask;
         w->unk2C = w->facing;
         w->unk28 = 8;
-        if (gUnk_03001F30 == 0)
+        if (gMetaKnightmareMode == 0)
             TaskSetFrameFlip(0x133);
         else
             TaskSetFrame(0x123B);
@@ -356,7 +356,7 @@ void sub_08067a48(void)
     struct PlayerState *p;
     s32 i;
 
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         t = gCurTask;
         p = t->player;
@@ -412,7 +412,7 @@ void sub_08067b24(void)
     t->unk34 = 0;
     if (t->health == 0)
         t->unk34 = 1;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gLocalPlayer == gCurTaskIdx)
         {
@@ -433,7 +433,7 @@ void sub_08067b24(void)
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0x18000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x2500, 0x30000);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         t = gCurTask;
         p = t->player;
@@ -527,7 +527,7 @@ void sub_08067db0(void)
     t = gCurTask;
     u = &gTasks[t->parent];
     i = (u->frame - 30) * 5;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         p = t->player;
         if (p->mouthState == 1)
@@ -544,7 +544,7 @@ void sub_08067db0(void)
     t->posY = t->pixelY << 16;
     t->facing = u->facing * (s16)gUnk_0873E3C8[i + 2];
     TaskSetFrame((s16)gUnk_0873E3C8[i + 3]);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         sub_080684a4();
     gCurTask->layer = gUnk_0873E3C8[i + 4];
 }
@@ -570,7 +570,7 @@ void sub_08067ea4(void)
     t->posY = (gTasks[t->parent].pixelY - 24) << 16;
     TaskSetMotionXFacing(0x50000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x1200, 0x30000);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         p = gCurTask->player;
         if (p->mouthState == 1)
@@ -653,7 +653,7 @@ void sub_080680ac(void)
     u->posY = (gTasks[u->parent].pixelY - 40) << 16;
     TaskSetMotionXFacing(0x50000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x1200, 0x30000);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         p = gCurTask->player;
         if (p->mouthState == 1)
@@ -731,7 +731,7 @@ void sub_080682a8(void)
     u->unk34 = 0;
     if (u->health == 0)
         u->unk34 = 1;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gLocalPlayer == gCurTaskIdx)
         {
@@ -751,7 +751,7 @@ void sub_080682a8(void)
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0x18000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x2500, 0x30000);
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (gCurTask->player->mouthState == 1)
         {
@@ -920,7 +920,7 @@ void sub_08068690(void)
     t->posY = (t->pixelY - u->pixelY) << 16;
     t->unk28 = 8;
     t->unk30 = 2;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
     {
         if (t->player->mouthState == 1)
         {
@@ -1025,7 +1025,7 @@ void sub_08068840(void)
     u = gCurTask;
     u->unk2C = -u->facing;
     u->unk28 = 8;
-    if (gUnk_03001F30 == 0)
+    if (gMetaKnightmareMode == 0)
         u->frame = 0x133;
     else
         TaskSetFrame(0x123B);
@@ -1060,7 +1060,7 @@ void sub_0806896c(void)
     struct Task *t;
     struct Task *u;
 
-    if (gUnk_03001F30 != 0)
+    if (gMetaKnightmareMode != 0)
         return;
     t = gCurTask;
     if (t->unk28 <= 0)
@@ -1446,7 +1446,7 @@ void ActorStoreHit(u8 a)
     t = gCurTask;
     b = t->u8C.actor;
     t->hitKind = gHitKind;
-    gCurTask->hitEffect = gUnk_03002450;
+    gCurTask->hitEffect = gHitEffect;
     gCurTask->health = gHitHealthLeft;
     gCurTask->hitDirection = gHitDirection;
     gCurTask->hitTimer = gHitTimer;

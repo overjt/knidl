@@ -30,7 +30,7 @@ extern u8 gUnk_0200B078;
 extern u8 gUnk_0200D080;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
-extern u8 gUnk_03001F30;
+extern u8 gMetaKnightmareMode;
 extern s16 gViewRect[];
 extern u32 gUnk_03002160;
 extern u8 gActivePlayerMask;
@@ -2585,7 +2585,7 @@ void sub_080adc44(void)
 {
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(150);
-    if (gGameState == 8 && gUnk_03001F30 == 0)
+    if (gGameState == 8 && gMetaKnightmareMode == 0)
     {
         if (sub_08066394() != 0)
         {
