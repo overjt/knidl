@@ -15,18 +15,18 @@
  *   AirGrindResults   the results task body: ranks the four racers by their
  *       frame counts M37Game.raceTimes[] (a bubble sort into gAirGrindResults.unk04,
  *       ties share a place in unk0C), picks each one's score (course record
- *       unk20 or unk24) and installs sub_080c25c4 / sub_080c2b8c.
- *   sub_080c25c4   draws the table: time (AirGrindDrawTime), score
+ *       unk20 or unk24) and installs AirGrindResultsDraw / AirGrindResultsUpdate.
+ *   AirGrindResultsDraw   draws the table: time (AirGrindDrawTime), score
  *       (sub_080c4bec), the racer's sprite (AirGrindDrawRacerSprite, the winner pulsing)
  *       and the place or the stars won, then the two palette cycles
  *       (sub_080c2ba8).
- *   sub_080c2740   the results state machine (gAirGrindResults.unk00): a place
+ *   AirGrindResultsStep   the results state machine (gAirGrindResults.unk00): a place
  *       jingle (songs 0x81D/0x81C/0x817), in the extra mode (gPrevGameState ==
  *       5) the stars counted up and handed to the linked players
  *       (AddPlayerLivesNoHud) before M35's SubGameQuit ends the screen, otherwise a
  *       retry/quit choice and a three-way level choice passed to M35's
  *       SubGameReplay.
- *   sub_080c2b8c / sub_080c2ba8 / sub_080c2ccc   the per-frame callback, the
+ *   AirGrindResultsUpdate / sub_080c2ba8 / sub_080c2ccc   the per-frame callback, the
  *       two palette cycles through gUnk_08609F40 with the cursor sprite, and
  *       the cycle's start row for a menu choice.
  *   AirGrindBuildSky   the per-frame hook AirGrindSetupRace installs: builds the
@@ -55,9 +55,9 @@ void AirGrindResults(void)
     gAirGrindResults.unk00 = 0;
     gAirGrindResults.unk01 = 0;
     gAirGrindResults.unk02 = 0;
-    gCurTask->updateCallback = (u32)sub_080c2b8c;
+    gCurTask->updateCallback = (u32)AirGrindResultsUpdate;
     gCurTask->frame = 0xFFFF;
-    gCurTask->drawCallback = (u32)sub_080c25c4;
+    gCurTask->drawCallback = (u32)AirGrindResultsDraw;
     x = gAirGrindCoursePtr->unk014 * 2;
     for (i = 0; i < 4; i++) {
         if (gAirGrindPtr->players[i].unk01 == x && gAirGrindPtr->players[i].unk0E == x + 1)
@@ -93,7 +93,7 @@ void AirGrindResults(void)
     TaskSleepForever();
 }
 
-void sub_080c25c4(void)
+void AirGrindResultsDraw(void)
 {
     s32 i;
     s32 y;
@@ -127,30 +127,30 @@ void sub_080c25c4(void)
         }
         if (p != 0) {
         place:
-            sub_080c4a94(gAirGrindResults.unk0C[i] + 2, 28, y);
+            AirGrindDrawSymbol(gAirGrindResults.unk0C[i] + 2, 28, y);
         } else if (gAirGrindResults.unk01 != 0 || gAirGrindResults.unk02 != 0) {
             switch (gAirGrindResults.unk01) {
             case 1:
-                sub_080c4a94(0, 28, y);
+                AirGrindDrawSymbol(0, 28, y);
                 break;
             case 2:
-                sub_080c4a94(0, 32, y);
-                sub_080c4a94(0, 24, y);
+                AirGrindDrawSymbol(0, 32, y);
+                AirGrindDrawSymbol(0, 24, y);
                 break;
             case 3:
-                sub_080c4a94(0, 36, y);
-                sub_080c4a94(0, 28, y);
-                sub_080c4a94(0, 20, y);
+                AirGrindDrawSymbol(0, 36, y);
+                AirGrindDrawSymbol(0, 28, y);
+                AirGrindDrawSymbol(0, 20, y);
                 break;
             }
         } else {
-            sub_080c4a94(1, 28, y);
+            AirGrindDrawSymbol(1, 28, y);
         }
     }
     sub_080c2ba8();
 }
 
-void sub_080c2740(void)
+void AirGrindResultsStep(void)
 {
     struct Task *t;
     s32 i;
@@ -317,9 +317,9 @@ void sub_080c2740(void)
     }
 }
 
-void sub_080c2b8c(void)
+void AirGrindResultsUpdate(void)
 {
-    sub_080c2740();
+    AirGrindResultsStep();
     gAirGrindFrame++;
     SubGameCheckEnd();
 }

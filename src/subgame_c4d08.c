@@ -19,7 +19,7 @@
  *       through AirGrindScaleSprite.
  *   AirGrindScaleSprite   copies a sprite's OAM list into M37Game.unk304/unk306[]
  *       with its size and offsets scaled by `scale` (the depth table through
- *       sub_080c623c, OBJ sizes from gUnk_080CFF76, double-size affine
+ *       AirGrindGetDepthScale, OBJ sizes from gUnk_080CFF76, double-size affine
  *       objects), fills the affine matrix gOamAffineCount of the OAM shadow
  *       gOamBuffer and returns the address of the first entry written.
  *       Its loop is a goto loop: a do/while hoists the (s16) conversion of
@@ -27,7 +27,7 @@
  *   AirGrindClearScript / AirGrindStepScript / AirGrindStartScript   the script cursor
  *       gAirGrindScript: clear it, step it (u16 pairs from gUnk_087572EC[id],
  *       0x8000 ends the script, 0x9999 restarts it; the pair lands in unk2/
- *       unk4, which sub_080c3670 copies into the course record), and start
+ *       unk4, which AirGrindScrollCourseTo copies into the course record), and start
  *       script id 1-4 unless a higher-priority one is running. */
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
@@ -134,7 +134,7 @@ loop:
         dbl = 0;
     else
         dbl = 0x200;
-    k = sub_080c623c((s16)s);
+    k = AirGrindGetDepthScale((s16)s);
     v = a & 0xFF;
     if (v & 0x80)
         v |= 0xFFFFFF00;

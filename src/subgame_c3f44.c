@@ -10,16 +10,16 @@
  *   AirGrindEffect   variant 2's body.  CreateAirGrindEffect(a, racer, kind) spawns it
  *       with Task.unk18 = the racer's task, Task.unk20 = the kind and
  *       Task.unk1C = a, and each kind sets its sprite table, animation and one
- *       of the callbacks below.  The kinds as AirGrindRacerRaceStep/sub_080c3698 use
+ *       of the callbacks below.  The kinds as AirGrindRacerRaceStep/AirGrindRacerTryBoost use
  *       them (player 0 only unless noted): 0 and 1 every 4th / 8th frame while
  *       A is held on the course, 2 on a press (M37Game.unk450 blocks a second
  *       copy), 5 on the release (M37Game.unk451), 6 / 7 the two boost ratings,
  *       3 / 4 thrown to either side at the start of a penalty, 8 the penalty
  *       itself (for every racer).  Kinds 0 and 3/4 are scaled by
- *       sub_080c623c and scattered with LCG stream 4.
+ *       AirGrindGetDepthScale and scattered with LCG stream 4.
  *   AirGrindEffectFollowRacer   the shared step: copy the racer's layer, priority and
  *       palette bits, and its position unless Task.updateState is set.
- *   sub_080c4364 ... sub_080c45fc   the per-kind callbacks (Task.updateCallback):
+ *   sub_080c4364 ... AirGrindPenaltyEffectUpdate   the per-kind callbacks (Task.updateCallback):
  *       movement, the Task.unk6C/unk6E animation counters, and
  *       TaskFree(gCurTaskIdx) when the effect ends. */
 
@@ -51,7 +51,7 @@ void AirGrindEffect(void)
         gCurTask->updateState = 0;
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->frameTable = gUnk_08755FC4;
-        gCurTask->updateCallback = (u32)sub_080c44f0;
+        gCurTask->updateCallback = (u32)AirGrindPressEffectUpdate;
         gAirGrindPtr->unk450 = 1;
         break;
     case 5:
@@ -62,11 +62,11 @@ void AirGrindEffect(void)
         gCurTask->tileWord = 0x8210;
         gCurTask->frameTable = gUnk_087572E0;
         gCurTask->frame = 0;
-        gCurTask->updateCallback = (u32)sub_080c4568;
+        gCurTask->updateCallback = (u32)AirGrindReleaseEffectUpdate;
         gAirGrindPtr->unk451 = 1;
         break;
     case 0:
-        scale = sub_080c623c(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
+        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->layer = u->layer;
         gCurTask->spriteFlags = u->spriteFlags & 0x6000;
@@ -85,7 +85,7 @@ void AirGrindEffect(void)
         break;
     case 3:
     case 4:
-        scale = sub_080c623c(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
+        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->moveCallback = (u32)TaskMove;
         gCurTask->layer = u->layer;
@@ -121,7 +121,7 @@ void AirGrindEffect(void)
         gCurTask->unk6E = 40;
         gCurTask->frameTable = gUnk_08755FEC;
         gCurTask->frame = gCurTask->unk20 == 6 ? 15 : 14;
-        gCurTask->updateCallback = (u32)sub_080c45d4;
+        gCurTask->updateCallback = (u32)AirGrindBoostRatingUpdate;
         break;
     case 8:
         gCurTask->unk6C = 12;
@@ -130,7 +130,7 @@ void AirGrindEffect(void)
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->frame = 9;
-        gCurTask->updateCallback = (u32)sub_080c45fc;
+        gCurTask->updateCallback = (u32)AirGrindPenaltyEffectUpdate;
         break;
     }
     TaskSetSkipMask(1, gCurTaskIdx);
@@ -204,7 +204,7 @@ void sub_080c44bc(void)
         AirGrindEffectFollowRacer(0);
 }
 
-void sub_080c44f0(void)
+void AirGrindPressEffectUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -222,7 +222,7 @@ void sub_080c44f0(void)
     AirGrindEffectFollowRacer(0);
 }
 
-void sub_080c4568(void)
+void AirGrindReleaseEffectUpdate(void)
 {
     if ((s16)gCurTask->unk6C <= 0) {
         gCurTask->unk6C = 2;
@@ -236,13 +236,13 @@ void sub_080c4568(void)
     AirGrindEffectFollowRacer(0);
 }
 
-void sub_080c45d4(void)
+void AirGrindBoostRatingUpdate(void)
 {
     if (--gCurTask->unk6E < 0)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_080c45fc(void)
+void AirGrindPenaltyEffectUpdate(void)
 {
     /* Task.unk6C is u16 in task.h; this callback counts it as s16 */
     if ((*(s16 *)&gCurTask->unk6C)-- <= 0)

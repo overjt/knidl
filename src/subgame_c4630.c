@@ -7,7 +7,7 @@
  *
  * Sub-game 2: task type #96 variant 1 and the module's shared helpers.
  * 
- *   AirGrindScenery / sub_080c4790 / sub_080c4664 / sub_080c4630   variant 1
+ *   AirGrindScenery / AirGrindSceneryUpdate / AirGrindRollSceneryObject / AirGrindDrawSceneryObject   variant 1
  *       (one task, index in M37Game.unk44C): seven background objects
  *       (M37Game.unk0EC) that scroll with the camera at their own rate,
  *       re-rolled from LCG stream 4 when they leave the screen (a sprite id
@@ -37,7 +37,7 @@ void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSleepForever(void);                                     /* end the running task */
 u32 AirGrindScaleSprite(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
 
-void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
+void AirGrindDrawSceneryObject(s32 idx, s32 x, s32 y, u16 attr)
 {
     u32 *tbl = gUnk_08755FA8;
     u32 c = 0x6000;
@@ -45,7 +45,7 @@ void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr)
     QueueSprite(9, tbl[idx], c, attr, x, y);
 }
 
-void sub_080c4664(s32 i)
+void AirGrindRollSceneryObject(s32 i)
 {
     struct M37Game *g = gAirGrindPtr;
     struct M37ObjSet *set = &g->unk0EC;
@@ -86,18 +86,18 @@ void AirGrindScenery(void)
     gCurTask->frame = 0xFFFF;
     g->unk0EC.unk74 = 0;
     for (i = 0, p = &g->unk0EC.unk04[0].unk8, x = 0; i <= 6; i++) {
-        sub_080c4664(i);
+        AirGrindRollSceneryObject(i);
         *p = x;
         p += 4;
         x += 0x340000;
     }
     *last = gAirGrindCoursePtr->scrollPos;
-    gCurTask->updateCallback = (u32)sub_080c4790;
+    gCurTask->updateCallback = (u32)AirGrindSceneryUpdate;
     TaskSetSkipMask(1, gCurTaskIdx);
     TaskSleepForever();
 }
 
-void sub_080c4790(void)
+void AirGrindSceneryUpdate(void)
 {
     struct M37Game *g = gAirGrindPtr;
     s32 *last = &g->unk0EC.unk00;
@@ -114,10 +114,10 @@ void sub_080c4790(void)
         x += (*last - c->scrollPos) << 16;
         o->unk8 = x;
         if (x >> 16 < -64) {
-            sub_080c4664(i);
+            AirGrindRollSceneryObject(i);
             o->unk8 += 0x1700000;
         }
-        sub_080c4630(o->unk0, o->unk8 >> 16, o->unkC >> 16, o->unk2);
+        AirGrindDrawSceneryObject(o->unk0, o->unk8 >> 16, o->unkC >> 16, o->unk2);
     }
     *last = gAirGrindCoursePtr->scrollPos;
 }
@@ -219,7 +219,7 @@ void AirGrindDrawDigit(s32 digit, s32 x, s32 y)
     QueueSprite(2, gUnk_08755FEC[digit], 0x2000, gAirGrindPtr->unk018, x, y);
 }
 
-void sub_080c4a94(s32 idx, s32 x, s32 y)
+void AirGrindDrawSymbol(s32 idx, s32 x, s32 y)
 {
     QueueSprite(2, gUnk_0875603C[idx], 0x2000, 0, x, y);
 }

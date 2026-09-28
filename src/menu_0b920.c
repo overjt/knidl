@@ -143,8 +143,8 @@ void MainMenuMain(void)
         {
             if (gGameState == 5)
             {
-                sub_080b8888();
-                sub_080b8918();
+                ExchangeLinkSaveSlots();
+                MergeLinkSaveSlots();
             }
             LinkStopKeyExchange();
             RunLinkFramesUntilFadeDone();

@@ -31,7 +31,7 @@
  *   sub_080c55d8 / sub_080c5628   linear interpolation in gUnk_02017980 /
  *       gUnk_02019140 at 32-pixel steps.
  *   AirGrindDrawCourse   the course renderer (called every frame by player 0's
- *       racer step sub_080c383c, src/subgame_c3648.c, and once by
+ *       racer step AirGrindRacerUpdateDepth, src/subgame_c3648.c, and once by
  *       AirGrindBuildCourse): per lane, every course
  *       column that scrolled into view since the last frame
  *       (gAirGrindCourse.unk108 -> unk000) gets its BG map column at 0x0600E000

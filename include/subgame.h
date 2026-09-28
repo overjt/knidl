@@ -77,7 +77,7 @@ struct M37Player
     /*0x30*/ s32 unk30;
 };
 
-/* 16-byte object records, M37ObjSet.unk04[7] (sub_080c4664, sub_080c4790) */
+/* 16-byte object records, M37ObjSet.unk04[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
 struct M37Obj
 {
     /*0x00*/ s16 unk0;
@@ -88,7 +88,7 @@ struct M37Obj
 };
 
 /* M37Game.unk0EC (0xB8 bytes with the compiler's 2-byte tail pad): task
-   type #96 variant 1's seven scrolling objects.  sub_080c4664 addresses an
+   type #96 variant 1's seven scrolling objects.  AirGrindRollSceneryObject addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
    AirGrindSetupRace fills end it exactly at M37Game.randomStates. */
@@ -127,7 +127,7 @@ struct M37Game
     /*0x452*/ u8 pad452[2];
 };
 
-/* the results screen's state (AirGrindResults, sub_080c25c4, sub_080c2740) */
+/* the results screen's state (AirGrindResults, AirGrindResultsDraw, AirGrindResultsStep) */
 struct M37Results
 {
     /*0x00*/ s8 unk00;          /* state */
@@ -711,9 +711,9 @@ void AirGrindRaceUpdate(void);
 
 /* src/subgame_c243c.c */
 void AirGrindResults(void);
-void sub_080c25c4(void);
-void sub_080c2740(void);
-void sub_080c2b8c(void);
+void AirGrindResultsDraw(void);
+void AirGrindResultsStep(void);
+void AirGrindResultsUpdate(void);
 void sub_080c2ba8(void);
 void sub_080c2ccc(s32 mode);
 void AirGrindBuildSky(void);
@@ -727,14 +727,14 @@ s32 AirGrindCpuHoldsA(s32 player, s32 pos);
 void AirGrindRacerUpdate(void);
 
 /* src/subgame_c3648.c */
-void sub_080c3648(void);
-void sub_080c3670(s32 pos);
-s32 sub_080c3698(s32 player);
+void AirGrindRacerSlowDown(void);
+void AirGrindScrollCourseTo(s32 pos);
+s32 AirGrindRacerTryBoost(s32 player);
 void AirGrindUpdateEngineSound(s32 a, s32 on);
-void sub_080c383c(s32 player);
+void AirGrindRacerUpdateDepth(s32 player);
 void AirGrindRacerRaceStep(s32 player);
 void AirGrindRacerIdleStep(s32 player);
-void sub_080c3e18(s32 player);
+void AirGrindRacerUpdateScreenPos(s32 player);
 void AirGrindRacerRaceUpdate(void);
 void AirGrindRacerIdleUpdate(void);
 
@@ -744,16 +744,16 @@ void AirGrindEffectFollowRacer(s32 layer);
 void sub_080c4364(void);
 void sub_080c43e8(void);
 void sub_080c44bc(void);
-void sub_080c44f0(void);
-void sub_080c4568(void);
-void sub_080c45d4(void);
-void sub_080c45fc(void);
+void AirGrindPressEffectUpdate(void);
+void AirGrindReleaseEffectUpdate(void);
+void AirGrindBoostRatingUpdate(void);
+void AirGrindPenaltyEffectUpdate(void);
 
 /* src/subgame_c4630.c */
-void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr);
-void sub_080c4664(s32 i);
+void AirGrindDrawSceneryObject(s32 idx, s32 x, s32 y, u16 attr);
+void AirGrindRollSceneryObject(s32 i);
 void AirGrindScenery(void);
-void sub_080c4790(void);
+void AirGrindSceneryUpdate(void);
 void AirGrindCourseSignUpdate(void);
 void AirGrindShowCourseSign(s32 y);
 void AirGrindStepPaletteFades(void);
@@ -762,7 +762,7 @@ s32 AirGrindStartPaletteFade(u16 *src, s32 pal, s32 period, s32 steps, s32 count
 void AirGrindStopPaletteFade(s32 i);
 void AirGrindSetDigitPalette(s32 pal);
 void AirGrindDrawDigit(s32 digit, s32 x, s32 y);
-void sub_080c4a94(s32 idx, s32 x, s32 y);
+void AirGrindDrawSymbol(s32 idx, s32 x, s32 y);
 void AirGrindDrawTime(s32 t, s32 x, s32 y);
 void AirGrindDrawNumber(s32 n, s32 x, s32 y);
 void sub_080c4bec(s32 a, s32 b, s32 x, s32 y);
@@ -793,7 +793,7 @@ void AirGrindBuildCourse(s32 a, s32 b);
 void AirGrindDrawCourse(void);
 
 /* src/subgame_c623c.c */
-s32 sub_080c623c(s32 x);
+s32 AirGrindGetDepthScale(s32 x);
 
 /* src/sub_080c6258.c */
 s32 sub_080c6258(s32 value);

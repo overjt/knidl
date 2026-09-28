@@ -228,10 +228,10 @@ void FillSendCmdWithSaveSlot(void);
 void ReceiveLinkSaveSlots(void);
 
 /* src/save_b8888.c */
-void sub_080b8888(void);
+void ExchangeLinkSaveSlots(void);
 
 /* src/save_b8918.c */
-void sub_080b8918(void);
+void MergeLinkSaveSlots(void);
 void MergeProgressIntoSaveSlot(s32 a);
 
 /* src/save_b8ea0.c */

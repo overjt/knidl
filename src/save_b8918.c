@@ -7,7 +7,7 @@
 #include "room.h"
 #include "save.h"
 
-void sub_080b8918(void)
+void MergeLinkSaveSlots(void)
 {
     s32 i;
     s32 j;
