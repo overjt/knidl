@@ -149,14 +149,14 @@ void sub_080af30c(void);
 void sub_080acc9c(void);
 void Task_GipStar(void);
 void Task_PhanPhanApple(void);
-void sub_080671c0(void);
+void Task_InhalableStar(void);
 void Task_ActorSplash(void);
 void Task_StarFlash(void);
 void Task_StarFlashOnParent(void);
 void Task_DustTrail(void);
 void Task_DustPuff(void);
 void sub_0806cf70(void);
-void sub_0806d148(void);
+void Task_LandingDust(void);
 void Task_DustBurst(void);
 void Task_StarScatter(void);
 void Task_RayBurst(void);
@@ -166,8 +166,8 @@ void Task_RayBurstOnParent(void);
 void Task_SmallBlastOnParent(void);
 void Task_ImpactStar(void);
 void Task_RingStar(void);
-void sub_0806daec(void);
-void sub_0806dd90(void);
+void Task_CannonSmoke(void);
+void Task_CannonFuseSpark(void);
 void Task_TrailFlash(void);
 void Task_HitFrost(void);
 void Task_HitFlames(void);
@@ -177,12 +177,12 @@ void Task_ExplosionScreenFlash(void);
 void Task_WarpStarSparkle(void);
 void Task_WarpStarTrailStar(void);
 void Task_AbilityReleaseFlash(void);
-void sub_0806e73c(void);
-void sub_0806e84c(void);
-void sub_0806e9fc(void);
+void Task_DashFlame(void);
+void Task_DashFireTrail(void);
+void Task_LandingImpact(void);
 void Task_WhispyWoodsLeaves(void);
 void Task_IceBlock(void);
-void sub_0806ee1c(void);
+void Task_SmokeRing(void);
 void Task_SwordAndBladeKnightSlash(void);
 void Task_PaletteAnim(void);
 void Task_HotHeadFlame(void);
@@ -248,10 +248,10 @@ void sub_080300c0(void);
 void sub_080301a4(void);
 void Task_StageEffect(void);
 void Task_IntroStoryPicture(void);
-void sub_0800daf8(void);
-void sub_0800db64(void);
+void Task_FileSelectSlotLabel(void);
+void Task_FileSelectSlot(void);
 void Task_FileSelectCursor(void);
-void sub_0800de6c(void);
+void Task_FileMenuSlot(void);
 void Task_FileMenuHighlight(void);
 void sub_0800e9a4(void);
 void sub_0800eae4(void);
@@ -268,8 +268,8 @@ void Task_SoundTestCursors(void);
 void Task_SoundTestPulse(void);
 void Task_MenuScreenTitle(void);
 void Task_BgScroll(void);
-void sub_0800fb94(void);
-void sub_0800fa30(void);
+void Task_MenuBackground(void);
+void Task_MenuBgPaletteCycle(void);
 void Task_GameOverSprite(void);
 void Task_GameOverCursor(void);
 void Task_GameOverPalette(void);
@@ -419,14 +419,14 @@ const struct TaskType gTaskTypes[] = {
     /* 136 */ { 2, { 0, 0, 0 }, (u32)sub_080acc9c },
     /* 137 */ { 2, { 0, 0, 0 }, (u32)Task_GipStar },
     /* 138 */ { 2, { 0, 0, 0 }, (u32)Task_PhanPhanApple },
-    /* 139 */ { 2, { 0, 0, 0 }, (u32)sub_080671c0 },
+    /* 139 */ { 2, { 0, 0, 0 }, (u32)Task_InhalableStar },
     /* 140 */ { 1, { 0, 0, 0 }, (u32)Task_ActorSplash },
     /* 141 */ { 1, { 0, 0, 0 }, (u32)Task_StarFlash },
     /* 142 */ { 1, { 0, 0, 0 }, (u32)Task_StarFlashOnParent },
     /* 143 */ { 1, { 0, 0, 0 }, (u32)Task_DustTrail },
     /* 144 */ { 1, { 0, 0, 0 }, (u32)Task_DustPuff },
     /* 145 */ { 1, { 0, 0, 0 }, (u32)sub_0806cf70 },
-    /* 146 */ { 1, { 0, 0, 0 }, (u32)sub_0806d148 },
+    /* 146 */ { 1, { 0, 0, 0 }, (u32)Task_LandingDust },
     /* 147 */ { 3, { 0, 0, 0 }, (u32)Task_DustBurst },
     /* 148 */ { 1, { 0, 0, 0 }, (u32)Task_StarScatter },
     /* 149 */ { 1, { 0, 0, 0 }, (u32)Task_RayBurst },
@@ -436,8 +436,8 @@ const struct TaskType gTaskTypes[] = {
     /* 153 */ { 1, { 0, 0, 0 }, (u32)Task_SmallBlastOnParent },
     /* 154 */ { 1, { 0, 0, 0 }, (u32)Task_ImpactStar },
     /* 155 */ { 1, { 0, 0, 0 }, (u32)Task_RingStar },
-    /* 156 */ { 1, { 0, 0, 0 }, (u32)sub_0806daec },
-    /* 157 */ { 1, { 0, 0, 0 }, (u32)sub_0806dd90 },
+    /* 156 */ { 1, { 0, 0, 0 }, (u32)Task_CannonSmoke },
+    /* 157 */ { 1, { 0, 0, 0 }, (u32)Task_CannonFuseSpark },
     /* 158 */ { 4, { 0, 0, 0 }, (u32)Task_TrailFlash },
     /* 159 */ { 4, { 0, 0, 0 }, (u32)Task_HitFrost },
     /* 160 */ { 4, { 0, 0, 0 }, (u32)Task_HitFlames },
@@ -447,12 +447,12 @@ const struct TaskType gTaskTypes[] = {
     /* 164 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarSparkle },
     /* 165 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarTrailStar },
     /* 166 */ { 3, { 0, 0, 0 }, (u32)Task_AbilityReleaseFlash },
-    /* 167 */ { 3, { 0, 0, 0 }, (u32)sub_0806e73c },
-    /* 168 */ { 3, { 0, 0, 0 }, (u32)sub_0806e84c },
-    /* 169 */ { 3, { 0, 0, 0 }, (u32)sub_0806e9fc },
+    /* 167 */ { 3, { 0, 0, 0 }, (u32)Task_DashFlame },
+    /* 168 */ { 3, { 0, 0, 0 }, (u32)Task_DashFireTrail },
+    /* 169 */ { 3, { 0, 0, 0 }, (u32)Task_LandingImpact },
     /* 170 */ { 3, { 0, 0, 0 }, (u32)Task_WhispyWoodsLeaves },
     /* 171 */ { 4, { 0, 0, 0 }, (u32)Task_IceBlock },
-    /* 172 */ { 3, { 0, 0, 0 }, (u32)sub_0806ee1c },
+    /* 172 */ { 3, { 0, 0, 0 }, (u32)Task_SmokeRing },
     /* 173 */ { 4, { 0, 0, 0 }, (u32)Task_SwordAndBladeKnightSlash },
     /* 174 */ { 4, { 0, 0, 0 }, (u32)Task_PaletteAnim },
     /* 175 */ { 4, { 0, 0, 0 }, (u32)Task_HotHeadFlame },
@@ -518,10 +518,10 @@ const struct TaskType gTaskTypes[] = {
     /* 235 */ { 3, { 0, 0, 0 }, (u32)sub_080301a4 },
     /* 236 */ { 4, { 0, 0, 0 }, (u32)Task_StageEffect },
     /* 237 */ { 4, { 0, 0, 0 }, (u32)Task_IntroStoryPicture },
-    /* 238 */ { 4, { 0, 0, 0 }, (u32)sub_0800daf8 },
-    /* 239 */ { 4, { 0, 0, 0 }, (u32)sub_0800db64 },
+    /* 238 */ { 4, { 0, 0, 0 }, (u32)Task_FileSelectSlotLabel },
+    /* 239 */ { 4, { 0, 0, 0 }, (u32)Task_FileSelectSlot },
     /* 240 */ { 4, { 0, 0, 0 }, (u32)Task_FileSelectCursor },
-    /* 241 */ { 4, { 0, 0, 0 }, (u32)sub_0800de6c },
+    /* 241 */ { 4, { 0, 0, 0 }, (u32)Task_FileMenuSlot },
     /* 242 */ { 4, { 0, 0, 0 }, (u32)Task_FileMenuHighlight },
     /* 243 */ { 4, { 0, 0, 0 }, (u32)sub_0800e9a4 },
     /* 244 */ { 4, { 0, 0, 0 }, (u32)sub_0800eae4 },
@@ -538,8 +538,8 @@ const struct TaskType gTaskTypes[] = {
     /* 255 */ { 4, { 0, 0, 0 }, (u32)Task_SoundTestPulse },
     /* 256 */ { 4, { 0, 0, 0 }, (u32)Task_MenuScreenTitle },
     /* 257 */ { 4, { 0, 0, 0 }, (u32)Task_BgScroll },
-    /* 258 */ { 4, { 0, 0, 0 }, (u32)sub_0800fb94 },
-    /* 259 */ { 4, { 0, 0, 0 }, (u32)sub_0800fa30 },
+    /* 258 */ { 4, { 0, 0, 0 }, (u32)Task_MenuBackground },
+    /* 259 */ { 4, { 0, 0, 0 }, (u32)Task_MenuBgPaletteCycle },
     /* 260 */ { 4, { 0, 0, 0 }, (u32)Task_GameOverSprite },
     /* 261 */ { 4, { 0, 0, 0 }, (u32)Task_GameOverCursor },
     /* 262 */ { 4, { 0, 0, 0 }, (u32)Task_GameOverPalette },

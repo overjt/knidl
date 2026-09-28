@@ -152,7 +152,7 @@ void sub_080304ec(void)
     t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
     u = gCurTask;
-    u->frameTable = gUnk_08752548;
+    u->frameTable = gSmokeRingFrames;
     TaskStop();
     v = gCurTask;
     v->velY = -0x10000;

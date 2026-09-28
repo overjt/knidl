@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x0806C2A4 0x0806CD40 src/actor_6c2a4.c --newpb
  *
  * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
- * (sub_0806c2a4 / sub_0806c930 set Task.velX/unk58 from the sign in unk43
+ * (ActorAttachedBounceOff / sub_0806c930 set Task.velX/unk58 from the sign in unk43
  * and hand control to ActorMove), the star-ride state machine
  * (sub_0806c4a0 / sub_0806c5d4 / sub_0806c770 - a nine-step animation
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
@@ -48,7 +48,7 @@ extern void ActorCollideTerrain(void);
 extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 extern s32 RandomSpread(s32 a, u32 b, u32 c);
 
-void sub_0806c2a4(void)
+void ActorAttachedBounceOff(void)
 {
     struct Task *t;
     s32 v;
@@ -80,7 +80,7 @@ void sub_0806c30c(void)
         sub_0806b8bc();
 }
 
-void sub_0806c324(void)
+void ActorAttachedPullIn(void)
 {
     struct Task *t;
     struct Task *u;

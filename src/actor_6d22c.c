@@ -9,9 +9,9 @@
  * animation-table players PlayRayBurstAnim/6e4/730/77c and their dispatch
  * wrappers Task_StarScatter/564/574/5a4/5b8/5cc, the CreateChildTaskHere spawner
  * helpers CreateBurstEffect/d928/da3c, the eight-way "carried" body
- * Task_ImpactStar, the gTasks[].unk73-keyed body sub_0806daec (with its
- * per-frame mover sub_0806da74), the two-sprite draw callback sub_0806dca0,
- * and the two random-walk bodies sub_0806dd90 and Task_HitFrost.
+ * Task_ImpactStar, the gTasks[].unk73-keyed body Task_CannonSmoke (with its
+ * per-frame mover sub_0806da74), the two-sprite draw callback CannonFuseSparkDraw,
+ * and the two random-walk bodies Task_CannonFuseSpark and Task_HitFrost.
  */
 
 #include "gba/gba.h"
@@ -454,7 +454,7 @@ void Task_ExplosionScreenFlash(void)
     TaskExitTrampoline();
 }
 
-void sub_0806da3c(u32 a, u32 b)
+void CreateCannonSmoke(u32 a, u32 b)
 {
     s32 i;
     struct Task *p;
@@ -491,7 +491,7 @@ void sub_0806da74(void)
     }
 }
 
-void sub_0806daec(void)
+void Task_CannonSmoke(void)
 {
     struct Task *t;
     struct Task *u;
@@ -572,7 +572,7 @@ void sub_0806daec(void)
     TaskExitTrampoline();
 }
 
-void sub_0806dca0(void)
+void CannonFuseSparkDraw(void)
 {
     struct Task *p;
     struct Task *t;
@@ -599,7 +599,7 @@ void sub_0806dca0(void)
                  (s16)(u->pixelY + u->unk20 - gSpriteCameraY));
 }
 
-void sub_0806dd90(void)
+void Task_CannonFuseSpark(void)
 {
     struct Task *t;
     struct Task *u;
@@ -607,11 +607,11 @@ void sub_0806dd90(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_0806dca0;
+    t->drawCallback = (u32)CannonFuseSparkDraw;
     t->frameTable = gUnk_08752D20;
     t->layer = 10;
     u = gCurTask;
-    u->updateCallback = (u32)sub_0806de18;
+    u->updateCallback = (u32)CannonFuseSparkCheckParent;
     u->tileWord = 0;
     u->unk24 = 0;
     u->unk20 = 0;
@@ -627,7 +627,7 @@ void sub_0806dd90(void)
     }
 }
 
-void sub_0806de18(void)
+void CannonFuseSparkCheckParent(void)
 {
     if (gTaskSlotTypes[gCurTask->parent] == -1
      || TaskHasSameSerial(gCurTask->parent) != 1)

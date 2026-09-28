@@ -15,7 +15,7 @@
  *                  `if (gTaskSlotTypes[t->unk44] == -1 || TaskHasSameSerial(...) != 1)
  *                       TaskFree(gCurTaskIdx);`  - i.e. kill this task when
  *                  the task it is attached to (Task.parent) is gone.
- *   <spawner>      sub_0806e6f8 / sub_0806e808 / sub_0806e9b4 allocate a task
+ *   <spawner>      CreateDashFlame / CreateDashFireTrail / CreateLandingImpact allocate a task
  *                  of type 167/168/169 and seed its unk24/unk20 position.
  *
  * The tail (Task_IceBlock-sub_0806ef38) is the "cursor"/menu-ish task group:
@@ -38,7 +38,7 @@ extern u16 gUnk_020055C0;
 
 /* ROM tables */
 extern s16 gUnk_0873E5F8[][2];
-extern u32 gUnk_0873ECE0[];
+extern u32 gLandingImpactVariants[];
 extern u8 gUnk_0873FAE8[];
 extern u32 gUnk_0873FB04[];
 extern u32 gUnk_0873FB24[];
@@ -70,12 +70,12 @@ void HitFlamesCheckParent(void);
 void HitSparksCheckParent(void);
 void WarpStarSparkleCheckParent(void);
 void AbilityReleaseFlashCheckParent(void);
-void sub_0806e7c0(void);
-void sub_0806e96c(void);
-s32 sub_0806e9b4(u8 a, s16 x, s16 y);
+void DashFlameCheckParent(void);
+void DashFireTrailCheckParent(void);
+s32 CreateLandingImpact(u8 a, s16 x, s16 y);
 void sub_0806ec88(void);
 void sub_0806ed28(void);
-void sub_0806ed9c(void);
+void PlaySmokeRingAnim(void);
 void sub_0806ef1c(void);
 
 void HitFrostCheckParent(void)
@@ -303,7 +303,7 @@ void AbilityReleaseFlashCheckParent(void)
         TaskFree(gCurTaskIdx);
 }
 
-s32 sub_0806e6f8(s16 x, s16 y)
+s32 CreateDashFlame(s16 x, s16 y)
 {
     struct Task *t;
     s32 i;
@@ -318,7 +318,7 @@ s32 sub_0806e6f8(s16 x, s16 y)
     return i;
 }
 
-void sub_0806e73c(void)
+void Task_DashFlame(void)
 {
     struct Task *t;
     struct Task *u;
@@ -329,7 +329,7 @@ void sub_0806e73c(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_0874CCA4;
-    u->updateCallback = (u32)sub_0806e7c0;
+    u->updateCallback = (u32)DashFlameCheckParent;
     u->tileWord = 0;
     TaskFaceLikeParent();
     while (1)
@@ -346,7 +346,7 @@ void sub_0806e73c(void)
     }
 }
 
-void sub_0806e7c0(void)
+void DashFlameCheckParent(void)
 {
     s32 i;
 
@@ -354,7 +354,7 @@ void sub_0806e7c0(void)
         TaskFree(gCurTaskIdx);
 }
 
-s32 sub_0806e808(s16 x, s16 y)
+s32 CreateDashFireTrail(s16 x, s16 y)
 {
     struct Task *t;
     s32 i;
@@ -369,7 +369,7 @@ s32 sub_0806e808(s16 x, s16 y)
     return i;
 }
 
-void sub_0806e84c(void)
+void Task_DashFireTrail(void)
 {
     struct Task *t;
     struct Task *u;
@@ -380,7 +380,7 @@ void sub_0806e84c(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_0874C718;
-    u->updateCallback = (u32)sub_0806e96c;
+    u->updateCallback = (u32)DashFireTrailCheckParent;
     u->tileWord = 0;
     TaskFaceLikeParent();
     gCurTask->facing = -gCurTask->facing;
@@ -414,7 +414,7 @@ void sub_0806e84c(void)
     }
 }
 
-void sub_0806e96c(void)
+void DashFireTrailCheckParent(void)
 {
     s32 i;
 
@@ -422,7 +422,7 @@ void sub_0806e96c(void)
         TaskFree(gCurTaskIdx);
 }
 
-s32 sub_0806e9b4(u8 a, s16 x, s16 y)
+s32 CreateLandingImpact(u8 a, s16 x, s16 y)
 {
     struct Task *t;
     s32 i;
@@ -438,7 +438,7 @@ s32 sub_0806e9b4(u8 a, s16 x, s16 y)
     return i;
 }
 
-void sub_0806e9fc(void)
+void Task_LandingImpact(void)
 {
     struct Task *t;
     struct Task *u;
@@ -453,7 +453,7 @@ void sub_0806e9fc(void)
     u->pixelY += u->unk20;
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;
-    CallTableEntry(u->variant, 3, gUnk_0873ECE0);
+    CallTableEntry(u->variant, 3, gLandingImpactVariants);
     TaskSleepForever();
 }
 
@@ -461,8 +461,8 @@ void sub_0806ea70(void)
 {
     gCurTask->frame = 16;
     TaskYieldTrampoline(1);
-    sub_0806e9b4(1, 0, 0);
-    sub_0806e9b4(2, 0, 0);
+    CreateLandingImpact(1, 0, 0);
+    CreateLandingImpact(2, 0, 0);
     gCurTask->frame += 1;
     TaskYieldTrampoline(2);
     gCurTask->frame += 1;
@@ -615,13 +615,13 @@ void sub_0806ed28(void)
     }
 }
 
-void sub_0806ed9c(void)
+void PlaySmokeRingAnim(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_08752548;
+    t->frameTable = gSmokeRingFrames;
     t->layer = 10;
     gCurTask->tileWord = 0;
     TaskSetFrame(0);
@@ -638,9 +638,9 @@ void sub_0806ed9c(void)
     TaskYieldTrampoline(1);
 }
 
-void sub_0806ee1c(void)
+void Task_SmokeRing(void)
 {
-    sub_0806ed9c();
+    PlaySmokeRingAnim();
     TaskExitTrampoline();
 }
 

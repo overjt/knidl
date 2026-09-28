@@ -19,7 +19,7 @@ extern void TaskSetEntry(void *fn, s32 i);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void sub_08063a00(u32 v);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u8 ActorCollideTerrain(void);
 
 void CreateKingDededeLandingStar(void)
@@ -65,9 +65,9 @@ void sub_080a02d4(u8 a)
         d = 0;
     }
     yy = y;
-    sub_08067120((s16)x, yy, d, 0);
+    CreateInhalableStar((s16)x, yy, d, 0);
     if (a == 1)
-        sub_08067120(gCurTask->pixelX - 32, yy, -1, 0);
+        CreateInhalableStar(gCurTask->pixelX - 32, yy, -1, 0);
 }
 
 void sub_080a0358(void)

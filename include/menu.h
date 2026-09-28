@@ -133,13 +133,13 @@ s32 sub_0800da74(void);
 void CreateFileSelectSprites(s32 mode);
 
 /* src/menutask_0daf8.c */
-void sub_0800daf8(void);
-void sub_0800db64(void);
+void Task_FileSelectSlotLabel(void);
+void Task_FileSelectSlot(void);
 void sub_0800dbdc(void);
 void sub_0800dc98(void);
 void Task_FileSelectCursor(void);
 void sub_0800dda0(void);
-void sub_0800de6c(void);
+void Task_FileMenuSlot(void);
 void sub_0800dfdc(void);
 void Task_FileMenuHighlight(void);
 void sub_0800e148(void);
@@ -177,8 +177,8 @@ void sub_0800f5ec(void);
 void sub_0800f698(void);
 void Task_MenuScreenTitle(void);
 void sub_0800f840(void);
-void sub_0800fa30(void);
-void sub_0800fb94(void);
+void Task_MenuBgPaletteCycle(void);
+void Task_MenuBackground(void);
 
 /* src/bgscroll_0fcbc.c */
 void BgScrollInit(void);

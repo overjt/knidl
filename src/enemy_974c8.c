@@ -424,7 +424,7 @@ void sub_08097da4(void)
         TaskYieldTrampoline(1);
     PlaySfx(0x1F7);
     RequestScreenShake(2);
-    sub_0806cffc(16, 12);
+    CreateLandingDust(16, 12);
     TaskStop();
     TaskSetFrame(19);
     TaskYieldTrampoline(8);

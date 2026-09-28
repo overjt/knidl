@@ -25,7 +25,7 @@
  * is the defeat sequence (sub_0806684c, CreateStarFlash, sub_0806ad18).
  *
  * The tail holds the pieces the states share - sub_08090e18 (fire a shot at
- * the boss's own position through sub_08067120), sub_08090e54 (advance the
+ * the boss's own position through CreateInhalableStar), sub_08090e54 (advance the
  * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
  * the sub_08090ef0 / sub_08090f14 / sub_08090f4c hit hooks, the companion
  * task Task_BonkersHammerHitBox / BonkersHammerHitBoxUpdate that mirrors the boss's position while
@@ -55,7 +55,7 @@ extern void PlaySfx(s32 id);
 extern void RequestScreenShake(s32 a);
 extern void TaskSetEntry(void *fn, s32 i);
 extern u32 RandomRange(u32 range);
-extern s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
 extern void ActorSetHitReactions(u32 *p);
 extern u32 ActorCheckHitsWithBox(s32 a);
 
@@ -253,7 +253,7 @@ void BonkersJump(void)
     TaskStop();
     PlaySfx(0x1F7);
     RequestScreenShake(2);
-    sub_0806cffc(16, 6);
+    CreateLandingDust(16, 6);
     gCurTask->frame--;
     TaskYieldTrampoline(30);
     sub_08090e54();
@@ -290,7 +290,7 @@ void BonkersHop(void)
         TaskStop();
         PlaySfx(0x1F7);
         RequestScreenShake(2);
-        sub_0806cffc(16, 6);
+        CreateLandingDust(16, 6);
         TaskFaceNearestPlayer();
         gCurTask->unk6C++;
     }
@@ -399,7 +399,7 @@ void BonkersThrow(void)
         TaskStop();
         PlaySfx(0x1F7);
         RequestScreenShake(2);
-        sub_0806cffc(16, 6);
+        CreateLandingDust(16, 6);
     }
     gCurTask->unk6C = 0;
     do
@@ -648,7 +648,7 @@ void sub_08090e18(void)
     t = gCurTask;
     x = t->pixelX + t->facing * 40;
     y = t->pixelY + 8;
-    sub_08067120(x, y, 0, 2);
+    CreateInhalableStar(x, y, 0, 2);
 }
 
 void sub_08090e54(void)

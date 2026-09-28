@@ -69,7 +69,7 @@ extern void (*gUnk_087328D8[])(void);
 extern u32 gUnk_0874CD54[];
 extern u32 gUnk_0874CD68[];
 extern u32 gUnk_0874CDE0[];
-extern u32 gUnk_08752548[];
+extern u32 gSmokeRingFrames[];
 extern u32 gUnk_087558BC[];
 extern u32 gUnk_087558C0[];
 extern u32 gUnk_087558C4[];

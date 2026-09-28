@@ -296,7 +296,7 @@ void sub_0806b230(void)
     t = gCurTask;
     t->updateCallback = 0;
     t->health = 127;
-    sub_0806ed9c();
+    PlaySmokeRingAnim();
 }
 
 s32 sub_0806b24c(void)

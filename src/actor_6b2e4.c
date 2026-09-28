@@ -8,7 +8,7 @@
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
  * actor back to the generic task body (sub_0806b8bc), the player-record
  * bookkeeping around gPlayerStates[] (sub_0806b9dc, sub_0806bd10, sub_0806be4c),
- * and the class-1 task bodies sub_0806bf54 / sub_0806c05c / sub_0806c158 with
+ * and the class-1 task bodies ActorAttachedSwallow / sub_0806c05c / sub_0806c158 with
  * their per-frame callbacks.
  */
 #include "gba/gba.h"
@@ -723,7 +723,7 @@ void sub_0806bf38(void)
     CallTableEntry(gCurTask->state, 8, gActorAttachedStates);
 }
 
-void sub_0806bf54(void)
+void ActorAttachedSwallow(void)
 {
     struct Task *t;
     struct Task *u;

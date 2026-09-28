@@ -499,7 +499,7 @@ void GrandWheelieCharge(void)
         gCurTask->unk28 = sub_080956c8(gUnk_08744384);
     TaskYieldTrampoline(45);
     gCurTask->unk2C = sub_08094b94();
-    gCurTask->unk46 = sub_0806e6f8(-10, 5);
+    gCurTask->unk46 = CreateDashFlame(-10, 5);
     TaskSetMotionXFacing(gUnk_087444A4[gCurTask->unk74], 0x5A5A5A5A);
     gCurTask->unk1C = -1;
     TaskSleepForever();
@@ -794,7 +794,7 @@ void sub_08094fb0(void)
     PlaySfx(0x20A);
     TaskYieldTrampoline(30);
     gCurTask->unk28 = sub_080956c8(gUnk_08744384);
-    gCurTask->unk46 = sub_0806e6f8(-10, 5);
+    gCurTask->unk46 = CreateDashFlame(-10, 5);
     TaskSetMotionXFacing(gUnk_087444A4[0], 0x5A5A5A5A);
     gCurTask->unk30 = one;
     gUnk_02007D00[1] = PlaySfx(0x209);

@@ -374,7 +374,7 @@ void sub_08077830(void);
 void sub_08077898(struct M19Script *p);
 void sub_08077980(void);
 void sub_080779dc(void);
-void sub_08077a48(void);
+void CreateCannonFuseSpark(void);
 void CannonFuseInit(void);
 void CannonFuseUpdate(void);
 void CannonFuseEnterState(void);

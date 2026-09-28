@@ -136,7 +136,7 @@ extern void sub_080670ac(u16 a);
 extern void sub_080670d4(void);
 extern void sub_08067108(void);
 extern void sub_08067114(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern void sub_080685ec(s32 i, s32 j, u8 c);
 extern void sub_08068920(s32 i, u8 c);
 extern void sub_08068950(s16 x, s16 y, s16 d);
@@ -160,9 +160,9 @@ extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void CreateBurstEffect(u32 a, s32 b);
 extern void PlayExplosionAnim(void);
-extern s32 sub_0806e6f8(s16 x, s16 y);
-extern s32 sub_0806e808(s16 x, s16 y);
-extern s32 sub_0806e9b4(u8 a, s16 x, s16 y);
+extern s32 CreateDashFlame(s16 x, s16 y);
+extern s32 CreateDashFireTrail(s16 x, s16 y);
+extern s32 CreateLandingImpact(u8 a, s16 x, s16 y);
 
 /* Module functions */
 void sub_080a2b2c();
@@ -1994,7 +1994,7 @@ void sub_080a387c(void)
     TaskStop();
     PlaySfx(500);
     TaskSetMotionXFacing(144 << 11, 0x5A5A5A5A);
-    gCurTask->unk46 = sub_0806e6f8(-16, 7);
+    gCurTask->unk46 = CreateDashFlame(-16, 7);
     gCurTask->spriteFlags &= 0x7FFF;
     if (gCurTask->facing == 1)
         gCurTask->unk1C = ActorStartAnimNoFlip(gUnk_0874853C);
@@ -2500,7 +2500,7 @@ void sub_080a4350(void)
 {
     gCurTask->updateState = 12;
     TaskStop();
-    gCurTask->unk46 = sub_0806e808(24, 5);
+    gCurTask->unk46 = CreateDashFireTrail(24, 5);
     gUnk_02006040[2] = -1;
     gUnk_02006040[1] = -1;
     gUnk_02006040[0] = -1;
@@ -2508,11 +2508,11 @@ void sub_080a4350(void)
     TaskSetMotionXFacing(144 << 11, 0x5A5A5A5A);
     TaskSetFrame(12);
     TaskYieldTrampoline(3);
-    gUnk_02006040[0] = sub_0806e808(24, 5);
+    gUnk_02006040[0] = CreateDashFireTrail(24, 5);
     TaskYieldTrampoline(3);
-    gUnk_02006040[1] = sub_0806e808(24, 5);
+    gUnk_02006040[1] = CreateDashFireTrail(24, 5);
     TaskYieldTrampoline(3);
-    gUnk_02006040[2] = sub_0806e808(24, 5);
+    gUnk_02006040[2] = CreateDashFireTrail(24, 5);
     TaskSleepForever();
 }
 
@@ -3246,11 +3246,11 @@ void sub_080a523c(void)
     t = gCurTask;
     x = t->pixelX + 16;
     y = t->pixelY + 32;
-    sub_08067120(x, y, 1, 1);
+    CreateInhalableStar(x, y, 1, 1);
     t = gCurTask;
     x = t->pixelX - 16;
     y = t->pixelY + 32;
-    sub_08067120(x, y, -1, 1);
+    CreateInhalableStar(x, y, -1, 1);
 }
 
 /* sub_080a528c (0x080A528C-0x080A52C8) */

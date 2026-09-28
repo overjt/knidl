@@ -278,7 +278,7 @@ void sub_0807685c(s32 a)
             if ((s16)u->unk70 <= 0)
             {
                 u->unk70 = 8;
-                sub_0806da3c(0, a);
+                CreateCannonSmoke(0, a);
             }
         }
         gCurTask->unk70--;
@@ -732,21 +732,21 @@ void sub_080770f0(s32 id)
 void sub_0807717c(void)
 {
     if (gCurTask->unk1C == 0)
-        sub_0806da3c(1, 0);
-    sub_0806da3c(2, 2);
+        CreateCannonSmoke(1, 0);
+    CreateCannonSmoke(2, 2);
     RequestScreenShake(4);
     PlaySfx(296);
 }
 
 void sub_080771b0(void)
 {
-    sub_0806da3c(2, 2);
+    CreateCannonSmoke(2, 2);
     RequestScreenShake(4);
 }
 
 void sub_080771c4(void)
 {
-    sub_0806da3c(3, 3);
+    CreateCannonSmoke(3, 3);
     RequestScreenShake(4);
 }
 
@@ -1230,7 +1230,7 @@ void sub_080779dc(void)
     u->posY = u->pixelY << 16;
 }
 
-void sub_08077a48(void)
+void CreateCannonFuseSpark(void)
 {
     gCurTask->unk46 = CreateChildTaskHere(157, 1);
 }

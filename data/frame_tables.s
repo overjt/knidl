@@ -627,8 +627,8 @@ gUnk_0874CCA4:
 	.word	gUnk_080D69E0
 	.word	gUnk_080D6A00
 	.word	gUnk_080D6A18
-	.global	gUnk_0874CCBC
-gUnk_0874CCBC:
+	.global	gInhalableStarFrames
+gInhalableStarFrames:
 	.word	gUnk_080D6A30
 	.word	gUnk_080D6A30
 	.word	gUnk_080D6A30
@@ -6438,8 +6438,8 @@ gShotzoCannonballFrames:
 	.word	gUnk_08252168
 	.word	gUnk_08252170
 	.word	gUnk_08252178
-	.global	gUnk_08752548
-gUnk_08752548:
+	.global	gSmokeRingFrames
+gSmokeRingFrames:
 	.word	gUnk_082521A4
 	.word	gUnk_082521AC
 	.word	gUnk_082521B4

@@ -23,7 +23,7 @@ extern void ActorSetTerrainBox(void *p);
 extern void sub_080639f0(void *p);
 extern void sub_08063a00(void *p);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern void sub_080689c8(s32 i, s32 d);
 extern u32 ActorCheckHitsWithBox(void *p);
 extern u32 sub_08068f68(void);
@@ -1140,5 +1140,5 @@ void sub_08097088(void)
     t = gCurTask;
     x = t->pixelX + d * 24;
     y = t->pixelY + 3;
-    sub_08067120(x, y, d, 3);
+    CreateInhalableStar(x, y, d, 3);
 }

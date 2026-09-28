@@ -80,7 +80,7 @@ u8 sub_08099b20(void)
     case 4:
         TaskSetFrame(4);
         sub_0809a080(1);
-        sub_0806cffc(0, 16);
+        CreateLandingDust(0, 16);
         TaskStop();
     stop:
         gCurTask->unk28 = 1;
@@ -88,7 +88,7 @@ u8 sub_08099b20(void)
     case 2:
         TaskSetFrame(4);
         sub_0809a080(1);
-        sub_0806cffc(0, 16);
+        CreateLandingDust(0, 16);
         goto stop;
     case 22:
         sub_0809a080(1);

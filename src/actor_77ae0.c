@@ -68,7 +68,7 @@ void sub_08077b60(void)
     gCurTask->updateState = 1;
     TaskStop();
     sub_0807775c();
-    sub_08077a48();
+    CreateCannonFuseSpark();
     while (gCannonFuseState == 0)
     {
         PlaySfx(230);

@@ -11,10 +11,10 @@
 /* menutask_0daf8.c (0x0800DAF8-0x0800E313, issue #99).
  *
  * Menu sprite tasks, first part: the file-select screen.  Task types #238
- * and #239 (sub_0800daf8, sub_0800db64 with body sub_0800dbdc; three of
+ * and #239 (Task_FileSelectSlotLabel, Task_FileSelectSlot with body sub_0800dbdc; three of
  * each, spawned by CreateFileSelectSprites) slide the three save-slot sprites in with
  * sub_0800dc98 and recolour a slot when the cursor moves; #240
- * (Task_FileSelectCursor, body sub_0800dda0) is the cursor; #241 (sub_0800de6c,
+ * (Task_FileSelectCursor, body sub_0800dda0) is the cursor; #241 (Task_FileMenuSlot,
  * body sub_0800dfdc) a sprite group that slides with the screen; #242
  * (Task_FileMenuHighlight, body sub_0800e148) the file-menu highlight, which
  * marks the selected entry (MenuUpdateFileMenuPalette) and loads its picture
@@ -26,7 +26,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 
-void sub_0800daf8(void)
+void Task_FileSelectSlotLabel(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -41,7 +41,7 @@ void sub_0800daf8(void)
     TaskExitTrampoline();
 }
 
-void sub_0800db64(void)
+void Task_FileSelectSlot(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -150,7 +150,7 @@ void sub_0800dda0(void)
     }
 }
 
-void sub_0800de6c(void)
+void Task_FileMenuSlot(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w;

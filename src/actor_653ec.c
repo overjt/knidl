@@ -1751,7 +1751,7 @@ void sub_08067114(void)
     gUnk_03001F34 = 0;
 }
 
-s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8)
+s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -1793,7 +1793,7 @@ void sub_08067170(void)
         TaskFaceLikeParent();
 }
 
-void sub_080671c0(void)
+void Task_InhalableStar(void)
 {
     struct Task *t;
 
@@ -1802,14 +1802,14 @@ void sub_080671c0(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     t = gCurTask;
-    t->frameTable = gUnk_0874CCBC;
-    t->updateCallback = (u32)sub_08067214;
+    t->frameTable = gInhalableStarFrames;
+    t->updateCallback = (u32)InhalableStarUpdate;
     sub_08067170();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 1, gUnk_0873E280);
 }
 
-void sub_08067214(void)
+void InhalableStarUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 1, gUnk_0873E284);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)

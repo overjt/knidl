@@ -69,7 +69,7 @@ extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
-extern s32 sub_08067120(s16 x, s16 y, u16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
 extern void sub_08068f68(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u8 ActorCollideTerrain(void);

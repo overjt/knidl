@@ -86,7 +86,7 @@ extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern s16 ActorComputeHealth(void);
-extern s32 sub_08067120(s16 x, s16 y, s16 dir, u8 p8);
+extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);

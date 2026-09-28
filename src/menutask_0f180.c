@@ -14,7 +14,7 @@
  * sub_0800f408) and a #253 (sub_0800f5ec, body sub_0800f698) per player
  * and slides them as partners join (sub_0800ffd8); #256 (Task_MenuScreenTitle,
  * body sub_0800f840) is the menu screen's title sprite; #259
- * (sub_0800fa30) and #258 (sub_0800fb94) cycle and cross-fade the
+ * (Task_MenuBgPaletteCycle) and #258 (Task_MenuBackground) cycle and cross-fade the
  * background palettes when the menu screen changes. */
 
 /* Plain u8 here (vu8 elsewhere): a volatile byte load expands to a load plus
@@ -379,7 +379,7 @@ void sub_0800f840(void)
     }
 }
 
-void sub_0800fa30(void)
+void Task_MenuBgPaletteCycle(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *v, *w, *x, *y, *z, *a;
@@ -437,7 +437,7 @@ void sub_0800fa30(void)
     }
 }
 
-void sub_0800fb94(void)
+void Task_MenuBackground(void)
 {
     struct Task *t = gCurTask;
     struct Task *u, *w;
