@@ -182,7 +182,7 @@ void CreditsLoadScene(void)
     gNextActorSerial = 0;
     gUnk_02006178 = 0;
     gUnk_02007CF0 = 0;
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
 }

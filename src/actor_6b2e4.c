@@ -8,7 +8,7 @@
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
  * actor back to the generic task body (sub_0806b8bc), the player-record
  * bookkeeping around gPlayerStates[] (sub_0806b9dc, sub_0806bd10, sub_0806be4c),
- * and the class-1 task bodies ActorAttachedSwallow / sub_0806c05c / sub_0806c158 with
+ * and the class-1 task bodies ActorAttachedSwallow / ActorAttachedBackdropHeld / ActorAttachedBackdropFlight with
  * their per-frame callbacks.
  */
 #include "gba/gba.h"
@@ -179,7 +179,7 @@ void sub_0806b410(void)
             }
         }
         ActorSetState(6);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
     n = *(s8 *)&p->unk16 * 5;
@@ -248,7 +248,7 @@ void sub_0806b670(void)
             w->facing = s->facing;
         }
         ActorSetState(2);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
     n = *(s8 *)&p->unk16 * 5;
@@ -427,7 +427,7 @@ void sub_0806ba9c(void)
     t->posY = (t->pixelY - s->pixelY) << 16;
 }
 
-s32 sub_0806baec(s32 a)
+s32 TaskIsParentWithinX(s32 a)
 {
     if (a > abs(TaskGetDxTo(gCurTask->parent)))
         return 1;
@@ -570,7 +570,7 @@ void sub_0806bcdc(void)
     sub_0806bbe8();
     if (*(s16 *)&gCurTask->unk70 != 0)
         return;
-    if (sub_0806baec(18) == 0)
+    if (TaskIsParentWithinX(18) == 0)
         return;
     sub_0806bd10();
     gCurTask->unk70 = 1;
@@ -718,7 +718,7 @@ void ActorAttachedEnterState(void)
     TaskSleepForever();
 }
 
-void sub_0806bf38(void)
+void ActorAttachedRunState(void)
 {
     CallTableEntry(gCurTask->state, 8, gActorAttachedStates);
 }
@@ -738,7 +738,7 @@ void ActorAttachedSwallow(void)
     u->unk70 = 0;
     u->unk30 = 0;
     u->layer = 6;
-    while (sub_0806baec(16) == 0)
+    while (TaskIsParentWithinX(16) == 0)
     {
         sub_0806bcdc();
         TaskYieldTrampoline(1);
@@ -784,7 +784,7 @@ void sub_0806bfd8(void)
     sub_0806b878();
 }
 
-void sub_0806c05c(void)
+void ActorAttachedBackdropHeld(void)
 {
     struct Task *t;
     struct Task *u;
@@ -831,7 +831,7 @@ void sub_0806c148(void)
     sub_0806be84();
 }
 
-void sub_0806c158(void)
+void ActorAttachedBackdropFlight(void)
 {
     struct Task *t;
 
@@ -865,7 +865,7 @@ void sub_0806c1d0(void)
         PlaySfx(179);
         RequestScreenShake(2);
         ActorSetState(3);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
     t = gCurTask;

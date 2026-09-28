@@ -535,6 +535,6 @@ void PlayerActionExitDoorUpdate(void)
     if (gCurTask->unk28 != 0)
     {
         PlayerRequestLocomotion();
-        gUnk_03001F34 = 0;
+        gPauseDisabled = 0;
     }
 }

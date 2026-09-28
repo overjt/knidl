@@ -805,8 +805,8 @@ gUnk_03001F24 = 0x03001F24
 gUnk_03001F2C = 0x03001F2C
 	.global	gMetaKnightmareMode
 gMetaKnightmareMode = 0x03001F30
-	.global	gUnk_03001F34
-gUnk_03001F34 = 0x03001F34
+	.global	gPauseDisabled
+gPauseDisabled = 0x03001F34
 	.global	gLinkIsMaster
 gLinkIsMaster = 0x03001F38
 	.global	gAttackHitDuration

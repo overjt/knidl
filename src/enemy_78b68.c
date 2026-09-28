@@ -955,7 +955,7 @@ void sub_08079cac(void)
     if (v == 0)
     {
         ActorSetAttackBox(gUnk_0873F7AC);
-        sub_080670ac(15);
+        FreezeStage(15);
         gCurTask->unk6C = v;
         do
         {
@@ -964,7 +964,7 @@ void sub_08079cac(void)
             TaskSetFrame(7);
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 3);
-        sub_080670d4();
+        ThawStage();
         ActorSetHitReactions(gUnk_08740F2C);
         ActorDie();
     }

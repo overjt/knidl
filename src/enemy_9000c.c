@@ -12,7 +12,7 @@
  * jumps into the table.  BonkersUpdate is the per-frame body: it runs down
  * Task.unk18, asks sub_0806acf8 / ActorCollideTerrain whether the player interrupted,
  * dispatches Task.updateState through the same table, reloads the graphics through
- * ActorFlashPalette / sub_08066468 and drives the three animation calls from the
+ * ActorFlashPalette / ActorClearPaletteOverride and drives the three animation calls from the
  * per-frame row gUnk_087437D0[Task.frame].
  *
  * States 0-10 then follow as <body, guard> pairs (sub_080901e0 /
@@ -129,7 +129,7 @@ void BonkersUpdate(void)
         else
         {
             u->unk30 = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
     }
     ActorSetAttackBox(gUnk_087437F4[gUnk_087437D0[gCurTask->frame]]);

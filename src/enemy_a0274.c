@@ -987,7 +987,7 @@ void sub_080a12e0(void)
         if (gUnk_02006190[5] <= 0)
         {
             gUnk_02006190[7] = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
         else
         {
@@ -1033,7 +1033,7 @@ void sub_080a12e0(void)
     }
     if (gCurTask->state != 8)
     {
-        sub_08066468();
+        ActorClearPaletteOverride();
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
 }
@@ -1056,7 +1056,7 @@ void sub_080a1400(void)
         if (gUnk_02006190[5] <= 0)
         {
             gUnk_02006190[7] = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
         else
         {
@@ -1068,7 +1068,7 @@ void sub_080a1400(void)
         if (gUnk_02006190[5] > 0)
         {
             gUnk_02006190[7] = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }

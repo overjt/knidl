@@ -131,7 +131,7 @@ void sub_0807ab8c(void)
 
 void sub_0807abb4(void)
 {
-    if (sub_08064984(10) != 0)
+    if (TaskIsNearestPlayerWithinX(10) != 0)
     {
         ActorSetState(1);
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);

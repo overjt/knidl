@@ -27,7 +27,7 @@ void CheckPauseButton(void)
     s32 i;
 
     for (i = 0; i < gPlayerCount; i++) {
-        if (((gActivePlayerMask >> i) & 1) && gUnk_03001F34 == 0
+        if (((gActivePlayerMask >> i) & 1) && gPauseDisabled == 0
             && (gPlayerPressedKeys[i] & 8)) {
             gStageRequest = 5;
             gPausingPlayer = i;

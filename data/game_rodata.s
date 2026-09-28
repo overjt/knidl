@@ -5023,13 +5023,13 @@ gUnk_0873E864:
 	.global	gActorAttachedStates
 gActorAttachedStates:
 	.word	ActorAttachedSwallow+1
-	.word	sub_0806c05c+1
-	.word	sub_0806c158+1
-	.word	ActorAttachedBounceOff+1
+	.word	ActorAttachedBackdropHeld+1
+	.word	ActorAttachedBackdropFlight+1
+	.word	ActorAttachedBackdropBounceOff+1
 	.word	ActorAttachedPullIn+1
-	.word	sub_0806c3c4+1
-	.word	sub_0806c4a0+1
-	.word	sub_0806c930+1
+	.word	ActorAttachedThrowHeld+1
+	.word	ActorAttachedThrowFlight+1
+	.word	ActorAttachedThrowBounceOff+1
 	.global	gUnk_0873EAC0
 gUnk_0873EAC0:
 	.incbin	"baserom.gba", 0x73EAC0, 0x18

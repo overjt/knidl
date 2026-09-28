@@ -32,7 +32,7 @@ void sub_08066c08(u32 def, u8 b);
 extern void ActorSetAttackBox(u32 v);
 extern void TaskSetEntry(void *fn, u32 i);
 extern void ActorLoadDef(u32 def);
-extern void sub_080637cc(void);
+extern void ActorResetHealth(void);
 extern void ActorSetState(u8 v);
 extern void ActorCheckHits(void);
 extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
@@ -914,7 +914,7 @@ void sub_0806621c(void)
     if (gUnk_02004C90 != 0)
     {
         if (gUnk_02006190[5] != 0)
-            sub_08066468();
+            ActorClearPaletteOverride();
         else
             ActorLoadHeaderPalette(a->gfx.header);
     }
@@ -1033,7 +1033,7 @@ void ActorFlashPalette(void *src, u32 size)
         ActorLoadPalette(src, size << 1, 1);
 }
 
-void sub_08066468(void)
+void ActorClearPaletteOverride(void)
 {
     gCurTask->u8C.actor->paletteOverridden &= 254;
 }
@@ -1076,7 +1076,7 @@ void sub_080664e0(struct AnimCmd *p)
             TaskYieldTrampoline(1);
         } while (gHudHpBarFilled == 0);
     }
-    sub_08066564();
+    ActorResetAttackBox();
     sub_080666a4();
 }
 
@@ -1089,7 +1089,7 @@ void sub_08066544(void)
     ActorShowHpBar();
 }
 
-void sub_08066564(void)
+void ActorResetAttackBox(void)
 {
     struct Actor *a;
 
@@ -1436,7 +1436,7 @@ void sub_08066ae0(void)
         }
         gCurTask->variant = 0;
     }
-    sub_080637cc();
+    ActorResetHealth();
 }
 
 void sub_08066b34(u32 def)
@@ -1708,7 +1708,7 @@ u8 sub_08067060(void)
     return 1;
 }
 
-u8 sub_08067074(void)
+u8 CountActivePlayers(void)
 {
     s32 i;
     s32 n;
@@ -1721,19 +1721,19 @@ u8 sub_08067074(void)
     return n;
 }
 
-void sub_080670ac(u16 a)
+void FreezeStage(u16 a)
 {
     TaskFreezeOrThawOthers(a, gCurTaskIdx);
     TaskSetSkipMask(0, 63);
     PauseRoom();
-    sub_08067108();
+    DisablePause();
 }
 
-void sub_080670d4(void)
+void ThawStage(void)
 {
     TaskFreezeOrThawOthers(0, gCurTaskIdx);
     ResumeRoom();
-    sub_08067114();
+    EnablePause();
 }
 
 void LoadBackdropColor(u32 src)
@@ -1741,14 +1741,14 @@ void LoadBackdropColor(u32 src)
     RequestCopy(2, src, (u32)gBgPalette, 2);
 }
 
-void sub_08067108(void)
+void DisablePause(void)
 {
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
 }
 
-void sub_08067114(void)
+void EnablePause(void)
 {
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
 }
 
 s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8)

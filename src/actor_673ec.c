@@ -1155,7 +1155,7 @@ void sub_08068a8c(s32 i, u8 flag)
     p->mode = 16;
     gPlayerStates[i].hitsThisFrame = b;
     p->unk16 = 255;
-    sub_08067108();
+    DisablePause();
 }
 void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
 {
@@ -1212,7 +1212,7 @@ void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
     p->prevPixelX = t->pixelX;
     p->prevPixelY = t->pixelY;
     if (gPlayerHealth[i] != 0)
-        sub_08067114();
+        EnablePause();
 }
 u32 ActorTestColliders(u8 a)
 {

@@ -226,7 +226,7 @@ void GoalGameInit(void)
         else
             gPlayerStates[i].ability = 0;
     }
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     gUnk_02007CF0 = 0;
     *(s8 *)gUnk_02008010 = -1;
     *(s8 *)gStageRequest = 0;

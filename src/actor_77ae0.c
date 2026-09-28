@@ -142,13 +142,13 @@ s32 sub_08077ca4(void)
 void sub_08077cd4(void)
 {
     gCurTask->frame = 1;
-    sub_080670ac(15);
+    FreezeStage(15);
     SetRoomUpdateFlags(2);
 }
 
 void sub_08077cf4(void)
 {
-    sub_08067108();
+    DisablePause();
     gUnk_02004B64 = 1;
     PlaySfx(226);
     RequestScreenShake(4);
@@ -168,7 +168,7 @@ void sub_08077d54(void)
 {
     u8 i;
 
-    sub_08067108();
+    DisablePause();
     TaskYieldTrampoline(15);
     FadeInSfx(16);
     TaskYieldTrampoline(15);
@@ -188,9 +188,9 @@ void sub_08077d54(void)
             } while (done == 0);
         }
     }
-    sub_080670d4();
+    ThawStage();
     sub_08009e20();
-    sub_08067114();
+    EnablePause();
     ActorDie();
 }
 

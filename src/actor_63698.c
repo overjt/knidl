@@ -102,7 +102,7 @@ void ActorResetHealthSlot(u32 i)
     t->health = ActorComputeHealthSlot(i);
 }
 
-void sub_080637cc(u32 a)
+void ActorResetHealth(u32 a)
 {
     gCurTask->health = ActorComputeHealth(a);
 }
@@ -529,7 +529,7 @@ u8 TaskIsInRect(struct Rect *r)
     return 0;
 }
 
-u8 sub_08063e74(struct Rect *r, s16 x, u16 y)
+u8 IsPointInRect(struct Rect *r, s16 x, u16 y)
 {
     if (x > r->left && x < r->right
         && (s16)y > r->top && (s16)y < r->bottom)
@@ -1195,7 +1195,7 @@ void TaskGetScreenPos(void)
     TaskGetScreenPosSlot(gCurTaskIdx);
 }
 
-s32 sub_08064984(s32 range)
+s32 TaskIsNearestPlayerWithinX(s32 range)
 {
     s32 i;
     s32 d;

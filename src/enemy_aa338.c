@@ -2340,7 +2340,7 @@ void sub_080ad710(void)
     s32 w2;
 
     if (gHudHpBarFilled != 0)
-        sub_08066564();
+        ActorResetAttackBox();
     sub_08068f68();
     ActorReactToHit();
     TaskBreakBlocksNoPlayer((u32)gUnk_0874B538);
@@ -2589,7 +2589,7 @@ void sub_080adc44(void)
     {
         if (sub_08066394() != 0)
         {
-            sub_080670ac(15);
+            FreezeStage(15);
             sub_08025acc();
         }
     }
@@ -2597,7 +2597,7 @@ void sub_080adc44(void)
     {
         if (sub_08066394() != 0)
         {
-            sub_080670ac(15);
+            FreezeStage(15);
             ExitClearedStage();
         }
     }

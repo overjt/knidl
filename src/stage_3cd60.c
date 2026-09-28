@@ -2712,7 +2712,7 @@ s32 PlayerCheckEnterDoor(void)
      && FindDoorAt(gCurTask->pixelX, gCurTask->pixelY) != 0)
     {
         gUnk_02007CF0 = 1;
-        gUnk_03001F34 = 1;
+        gPauseDisabled = 1;
         gCurTask->player->unk42 |= 2;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = 20;

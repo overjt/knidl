@@ -448,7 +448,7 @@ void MrTickTockUpdate(void)
         }
         else
         {
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
     }
     u = gCurTask;

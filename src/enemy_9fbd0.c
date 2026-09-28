@@ -110,7 +110,7 @@ void sub_0809fd20(void)
     t->pixelY = gUnk_02006190[1];
     t->frame = gUnk_02006190[2];
     gUnk_02006190[7] = z;
-    sub_08066468();
+    ActorClearPaletteOverride();
 }
 
 u8 sub_0809fd64(void)

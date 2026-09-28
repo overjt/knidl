@@ -94,7 +94,7 @@ void sub_080975fc(void)
     if ((t->hitTimer != 0 && t->u8C.actor->hitState != 0) || t->state == 8)
         ActorFlashPalette(gUnk_082BFBA4, 16);
     else
-        sub_08066468();
+        ActorClearPaletteOverride();
     if (sub_0806acf8() == 0) {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 9, gUnk_087448C0);

@@ -208,7 +208,7 @@ void sub_08070208(void)
     struct Task *t;
 
     t = gCurTask;
-    t->moveCallback = (u32)sub_08070454;
+    t->moveCallback = (u32)TaskCopyParentPixelPos;
     t->taskClass = 4;
     gCurTask->lateUpdateCallback = 0;
     sub_080700e8();
@@ -345,7 +345,7 @@ void sub_0807042c(void)
     }
 }
 
-void sub_08070454(void)
+void TaskCopyParentPixelPos(void)
 {
     struct Task *t;
 

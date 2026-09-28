@@ -125,7 +125,7 @@ void sub_080a8878(void)
     gUnk_02007D00[0] = 0;
     while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
-    sub_08066564();
+    ActorResetAttackBox();
     ActorSetAttackBox((u32)gUnk_08749720);
     sub_08063a00((u32)gUnk_08749758);
     ActorSetState(1);

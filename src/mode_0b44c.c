@@ -106,7 +106,7 @@ void ResetPlayerRecords(void)
     gUnk_02005E00.unk00 = 0;
     gUnk_02006178 = 0;
     gUnk_020055CC = 0;
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
 }
 
 void sub_0800b5dc(void)
@@ -179,7 +179,7 @@ void sub_0800b648(void)
     sub_08066144();
     gNextActorSerial = 0;
     gLinkCommand = 0;
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
     gUnk_02006178 = 0;
     gUnk_02007CF0 = 0;
     gUnk_02008010 = -1;

@@ -74,7 +74,7 @@ void sub_0806adb0(void)
     struct Task *t;
     u16 v;
 
-    sub_080670ac(15);
+    FreezeStage(15);
     SetRoomUpdateFlags(2);
     RequestScreenShake(5);
     v = gBgPalette;
@@ -102,7 +102,7 @@ void sub_0806adb0(void)
     } while ((s16)t->unk6C <= 1);
     RequestScreenShake(0);
     LoadBackdropColor(&v);
-    sub_080670d4();
+    ThawStage();
 }
 
 void sub_0806ae94(void)
@@ -146,7 +146,7 @@ void BossDefeatScreenFlash(void)
     struct Task *t;
     u16 v;
 
-    sub_080670ac(15);
+    FreezeStage(15);
     SetRoomUpdateFlags(2);
     RequestScreenShake(5);
     v = gBgPalette;
@@ -174,7 +174,7 @@ void BossDefeatScreenFlash(void)
     } while ((s16)t->unk6C <= 1);
     RequestScreenShake(0);
     LoadBackdropColor(&v);
-    sub_080670d4();
+    ThawStage();
 }
 
 void sub_0806b05c(void)
@@ -194,7 +194,7 @@ void sub_0806b070(void)
 
 void sub_0806b098(void)
 {
-    sub_080670ac(15);
+    FreezeStage(15);
     sub_080668c8();
     SetRoomUpdateFlags(2);
     ActorPlaySfx(0x1FD, 0);
@@ -204,8 +204,8 @@ void sub_0806b098(void)
     gCurTask->frame = 0xFFFF;
     sub_0806b070();
     TaskYieldTrampoline(24);
-    sub_080670d4();
-    sub_08067108();
+    ThawStage();
+    DisablePause();
 }
 
 s32 sub_0806b0f0(void)

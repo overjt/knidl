@@ -1195,7 +1195,7 @@ void MetaKnightActionDie(void)
     sub_080276ac(gCurTask->player->playerIndex);
     StopAllSfx();
     StopAllSound();
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     TaskSetFrame(0x123B);
     FreezeOtherTasks(15);
     SetRoomUpdateFlags(2);
@@ -1303,7 +1303,7 @@ void MetaKnightActionEnterDoor(void)
     gCurTask->updateCallback = 0;
     gCurTask->lateUpdateCallback = 0;
     gCurTask->player->running = 0;
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     PlayerStopAxes(3);
     gCurTask->player->unk42 |= 0x100;
     RequestScreenShake(0);

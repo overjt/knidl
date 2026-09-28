@@ -4,9 +4,9 @@
  *   ./tools/fnmatch.sh 0x0806C2A4 0x0806CD40 src/actor_6c2a4.c --newpb
  *
  * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
- * (ActorAttachedBounceOff / sub_0806c930 set Task.velX/unk58 from the sign in unk43
+ * (ActorAttachedBackdropBounceOff / ActorAttachedThrowBounceOff set Task.velX/unk58 from the sign in unk43
  * and hand control to ActorMove), the star-ride state machine
- * (sub_0806c4a0 / sub_0806c5d4 / sub_0806c770 - a nine-step animation
+ * (ActorAttachedThrowFlight / sub_0806c5d4 / sub_0806c770 - a nine-step animation
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
  * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
  * walk Task.frame through a gfx list (gUnk_0874C520 / gUnk_0874CBC8) before
@@ -48,7 +48,7 @@ extern void ActorCollideTerrain(void);
 extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 extern s32 RandomSpread(s32 a, u32 b, u32 c);
 
-void ActorAttachedBounceOff(void)
+void ActorAttachedBackdropBounceOff(void)
 {
     struct Task *t;
     s32 v;
@@ -93,7 +93,7 @@ void ActorAttachedPullIn(void)
     u = gCurTask;
     u->unk18 = 0;
     u->layer = 6;
-    while (sub_0806baec(18) == 0)
+    while (TaskIsParentWithinX(18) == 0)
     {
         sub_0806bc28();
         TaskYieldTrampoline(1);
@@ -113,11 +113,11 @@ void sub_0806c384(void)
     if (t->unk18 == 1)
         sub_0806b8bc();
     else if (t->state != 4)
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     sub_0806be84();
 }
 
-void sub_0806c3c4(void)
+void ActorAttachedThrowHeld(void)
 {
     struct Task *t;
 
@@ -154,7 +154,7 @@ void sub_0806c490(void)
     sub_0806be84();
 }
 
-void sub_0806c4a0(void)
+void ActorAttachedThrowFlight(void)
 {
     struct Task *t;
     struct Task *u;
@@ -237,7 +237,7 @@ void sub_0806c5d4(void)
         RequestScreenShake(2);
         gCurTask->lateUpdateCallback = 0;
         ActorSetState(7);
-        TaskSetEntry(sub_0806bf38, gCurTaskIdx);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     }
     else
     {
@@ -363,7 +363,7 @@ void sub_0806c770(void)
         p->unk46 = 0;
 }
 
-void sub_0806c930(void)
+void ActorAttachedThrowBounceOff(void)
 {
     struct Task *t;
     s32 v;

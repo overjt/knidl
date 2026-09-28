@@ -130,7 +130,7 @@ void BugzzyUpdate(void)
         else
         {
             u->unk30 = 0;
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
     }
     ActorSetAttackBox(gUnk_08743A10[gCurTask->unk34]);

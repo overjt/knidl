@@ -9,7 +9,7 @@
  *
  * Player action bodies, part 20: action 52 and per-frame handler 49.
  * PlayerActionLight (action 52, mode 13) is a linear yield script with the
- * stage frozen (gUnk_03001F34 = 1): M14's CreatePlayerObject(player, 9, 0),
+ * stage frozen (gPauseDisabled = 1): M14's CreatePlayerObject(player, 9, 0),
  * the animations 0xDFD-0xE05 in Task.unk6C counter loops and velocity
  * presets 54/55; it then restores the default script gPlayerDefaultTerrainBox in
  * PlayerState.terrainBox, resets the HUD ability panel (SetPlayerAbility(0, -1,
@@ -26,7 +26,7 @@ void PlayerActionLight(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 49;
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     gCurTask->u80.attackAbility = 0;
     PlayerStopAxes(3);
     {
@@ -101,7 +101,7 @@ void PlayerActionLight(void)
     {
         struct Task *t = gCurTask;
         t->unk28++;
-        gUnk_03001F34 = 0;
+        gPauseDisabled = 0;
         t->player->unk42 &= 0xF8FF;
     }
     TaskSleepForever();

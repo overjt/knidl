@@ -13,7 +13,7 @@
  *
  * MrFrostyInit installs MrFrostyUpdate as the per-frame body and dispatches
  * Task.state through the 19-word guard table gMrFrostyStates; MrFrostyUpdate
- * re-uploads (ActorFlashPalette) or drops (sub_08066468) the 16-byte graphics
+ * re-uploads (ActorFlashPalette) or drops (ActorClearPaletteOverride) the 16-byte graphics
  * record gUnk_08274840 while Task.unk18 is set, dispatches Task.updateState through
  * the 19-word body table gMrFrostyStateUpdates that follows it, and finishes with the
  * animation-row selector sub_08098de4 plus sub_08068f68 / ActorReactToHit.
@@ -389,7 +389,7 @@ void MrFrostyUpdate(void)
         }
         else
         {
-            sub_08066468();
+            ActorClearPaletteOverride();
         }
     }
     u = gCurTask;

@@ -354,7 +354,7 @@ void sub_0805a52c(void)
         TaskYieldTrampoline(8);
         gBrightness = 0;
         FreezeOtherTasks(0);
-        gUnk_03001F34 = 0;
+        gPauseDisabled = 0;
         break;
     }
     TaskExitTrampoline();

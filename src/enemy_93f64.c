@@ -213,7 +213,7 @@ void GrandWheelieUpdate(void)
         t->unk20--;
         ActorFlashPalette(gUnk_0826F170, 16);
     } else {
-        sub_08066468();
+        ActorClearPaletteOverride();
     }
     if (sub_0806acf8() == 0) {
         if (ActorCollideTerrain() == 0)

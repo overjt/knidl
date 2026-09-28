@@ -90,7 +90,7 @@ void sub_08070ffc(void)
     {
         struct Task *t = gCurTask;
 
-        t->moveCallback = (u32)sub_08070454;
+        t->moveCallback = (u32)TaskCopyParentPixelPos;
         t->taskClass = 4;
     }
     {
@@ -645,7 +645,7 @@ void sub_08071cc0(int x, int y, int c)
         t->tileWord = sub_08071360(gCurTaskIdx);
     }
     gUnk_020055C0 = id;
-    sub_08067108();
+    DisablePause();
 }
 
 void sub_08071d2c(void)

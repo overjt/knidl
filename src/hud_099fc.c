@@ -232,7 +232,7 @@ s32 AddPlayerHealth(s32 a, u32 b)
                 gPlayerHealth[b] += delta;
             }
             if (gPlayerHealth[b] == 0)
-                gUnk_03001F34 = 1;
+                gPauseDisabled = 1;
             else if (gPlayerHealth[b] == 8 && gLocalPlayer == b)
                 PlaySfx(262);
         }

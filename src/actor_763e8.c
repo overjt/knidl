@@ -313,7 +313,7 @@ void sub_080768c8(void)
         }
         gCurTask->posX = x << 16;
     }
-    sub_08067108();
+    DisablePause();
 }
 
 void sub_08076958(void)
@@ -639,7 +639,7 @@ void sub_08076f50(s32 id)
     p->unk14 = 8;
     HudShowAbility(p->ability, id);
     if (u->unk1C > 0)
-        sub_08067108();
+        DisablePause();
 }
 
 void sub_08076fe4(int a)

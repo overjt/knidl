@@ -1175,9 +1175,9 @@ void PickupHeal(void)
     e = (u8 *)gPlayerHealth;
     if (*(s16 *)((*h << 1) + (u32)e) != 0)
     {
-        sub_080670ac(15);
+        FreezeStage(15);
         CallTableEntry((*c)->state, 2, gUnk_087560B8);
-        sub_080670d4();
+        ThawStage();
     }
     ActorDestroy();
 }
@@ -1187,7 +1187,7 @@ void MaximTomatoHeal(void)
     struct Task **c;
     u8 k4;
 
-    sub_08067108();
+    DisablePause();
     c = &gCurTask;
     do
     {
@@ -1197,7 +1197,7 @@ void MaximTomatoHeal(void)
         TaskYieldTrampoline(8);
     } while (k4 == 0);
     sub_08040894(*(s16 *)((u8 *)gCurTask + 68), 1);
-    sub_08067114();
+    EnablePause();
 }
 
 void EnergyDrinkHeal(void)
@@ -1218,7 +1218,7 @@ void EnergyDrinkHeal(void)
     n = 1;
     if (w0 == 0 && gMetaKnightmareMode == 0)
         n = 2;
-    sub_08067108();
+    DisablePause();
     c2 = &gCurTask;
     t = *c2;
     h0 = (u8 *)t + 108;
@@ -1242,7 +1242,7 @@ xbody:
         goto xbody;
 xend:
     sub_08040894(*(s16 *)((u8 *)gCurTask + 68), 2);
-    sub_08067114();
+    EnablePause();
 }
 
 s32 sub_080b4390(void)
@@ -1611,7 +1611,7 @@ void sub_080b4878(void)
         } while (i < gPlayerCount);
     }
     sub_080b480c();
-    sub_08067108();
+    DisablePause();
 }
 
 void sub_080b48e0(void)
@@ -1968,7 +1968,7 @@ void sub_080b4e04(void)
         TaskYieldTrampoline(60);
     if (sub_08066394() != 0)
     {
-        sub_080670ac(15);
+        FreezeStage(15);
         ExitClearedStage();
     }
     TaskSleepForever();

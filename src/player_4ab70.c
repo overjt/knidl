@@ -21,7 +21,7 @@
  * lock in Task.unk28), stops a rise on a ceiling hit, registers the
  * collider gUnk_0873C2A0 and requests action 23 through PlayerHasCrossedWaterSurface.
  * PlayerActionCrash (action 51, mode 13) is a screen-wide blast with the
- * stage frozen (gUnk_03001F34 = 1): it switches the DISPCNT shadow
+ * stage frozen (gPauseDisabled = 1): it switches the DISPCNT shadow
  * gDispCnt to windowed BG1-BG3, remembers the height Task.posY in
  * Task.unk2C, shakes the screen (RequestScreenShake(5), SetRoomUpdateFlags(2)),
  * flashes the player's palette gPlayerPalettes[player] towards
@@ -180,7 +180,7 @@ void PlayerActionCrash(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 48;
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     gCurTask->u80.attackAbility = 20;
     PlayerStopAxes(3);
     FreezeOtherTasks(15);
@@ -317,7 +317,7 @@ void PlayerActionCrash(void)
     gCurTask->variant = 2;
     gCurTask->frame++;
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 31; gCurTask->unk6C++) {
-        if (gUnk_03001F34 == 0)
+        if (gPauseDisabled == 0)
             gCurTask->player->unk42 &= 0xFBFF;
         TaskYieldTrampoline(1);
     }

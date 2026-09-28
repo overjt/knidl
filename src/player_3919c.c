@@ -201,7 +201,7 @@ void PlayerActionDie(void)
         gCurTask->variant = 4;
     else
         gCurTask->variant = 5;
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
     TaskSleepForever();
 }
 

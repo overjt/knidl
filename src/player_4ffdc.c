@@ -26,7 +26,7 @@ s32 sub_08053a44(s8 player, u8 variant, s32 arg);
 
 void sub_0804ffdc(void)
 {
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     {
         struct Task *t = gCurTask;
         t->updateCallback = (u32)sub_080502f0;
@@ -180,7 +180,7 @@ void sub_080502f0(void)
         gCurTask->updateCallback = (u32)PlayerUpdate;
         gCurTask->lateUpdateCallback = (u32)sub_0803332c;
         TaskSetEntry(sub_0804fee8, gCurTaskIdx);
-        gUnk_03001F34 = 0;
+        gPauseDisabled = 0;
     }
 }
 

@@ -166,12 +166,12 @@ void Task_Player(void)
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
-        gUnk_03001F34 = 1;
+        gPauseDisabled = 1;
         gCurTask->state = 4;
         sub_08076318();
         TaskSleepForever();
     case 1:
-        gUnk_03001F34 = 1;
+        gPauseDisabled = 1;
         gCurTask->player->action = 21;
         break;
     case 0:

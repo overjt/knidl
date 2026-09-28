@@ -12,7 +12,7 @@
  *
  * Player action bodies, part 15: action 29 and per-frame handler 26.
  * PlayerActionGetAbility (action 29, mode 19) is the ability get: it freezes the
- * stage (gUnk_03001F34 = 1), starts the palette fade BeginFade over
+ * stage (gPauseDisabled = 1), starts the palette fade BeginFade over
  * the rows gUnk_0873B534[player] selects (unless gUnk_030023B0 is set)
  * and, when the swallowed object gives a random ability
  * (PlayerState.unk0A > 1), spins the HUD roulette: PlayerState.pendingAbility
@@ -46,7 +46,7 @@ void PlayerActionGetAbility(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 19;
     gCurTask->updateState = 26;
-    gUnk_03001F34 = 1;
+    gPauseDisabled = 1;
     gCurTask->player->running = 0;
     PlayerStopAxes(3);
     {
@@ -692,7 +692,7 @@ void PlayerActionGetAbility(void)
         t->unk28++;
         t->player->unk40 &= 0xFEFF;
     }
-    gUnk_03001F34 = 0;
+    gPauseDisabled = 0;
     TaskSleepForever();
 }
 
