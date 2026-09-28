@@ -22,7 +22,7 @@
  *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `Task_WaddleDooBeam`,
  *     plus the smaller `Task_GlunkShot` and `Task_GipStar`;
  *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
- *     the row bodies `sub_0808d558` / `sub_0808da00` / `sub_0808df58`, the
+ *     the row bodies `sub_0808d558` / `sub_0808da00` / `BroomHatterIdleInit`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
  *   * its movement library: `sub_0808d364` / `sub_0808d388` snap Task.unk2C to
@@ -930,25 +930,25 @@ void sub_0808df54(void)
 {
 }
 
-void sub_0808df58(void)
+void BroomHatterIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808df9c;
+    gCurTask->updateCallback = (u32)BroomHatterIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087431C4);
+    CallTableEntry(gCurTask->state, 1, gBroomHatterIdleStates);
 }
 
-void sub_0808df9c(void)
+void BroomHatterIdleUpdate(void)
 {
     ActorCollideTerrain();
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087431C8);
+    CallTableEntry(gCurTask->updateState, 1, gBroomHatterIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808dfc4(void)
+void BroomHatterIdle(void)
 {
     gCurTask->updateState = 0;
     TaskFaceNearestPlayer();

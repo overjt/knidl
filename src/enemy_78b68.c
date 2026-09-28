@@ -390,24 +390,24 @@ void sub_0807921c(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_08079238(void)
+void WaddleDeeIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08079298;
+    gCurTask->updateCallback = (u32)WaddleDeeIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740700);
+    CallTableEntry(gCurTask->state, 1, gWaddleDeeIdleStates);
 }
 
 void sub_0807927c(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740700);
+    CallTableEntry(gCurTask->state, 1, gWaddleDeeIdleStates);
 }
 
-void sub_08079298(void)
+void WaddleDeeIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740704);
+    CallTableEntry(gCurTask->updateState, 1, gWaddleDeeIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -415,7 +415,7 @@ void sub_08079298(void)
     }
 }
 
-void sub_080792dc(void)
+void WaddleDeeIdle(void)
 {
     gCurTask->updateState = 0;
     sub_08078b68();
@@ -765,19 +765,19 @@ void sub_08079914(void)
 {
 }
 
-void sub_08079918(void)
+void PengyIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807995c;
+    gCurTask->updateCallback = (u32)PengyIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740778);
+    CallTableEntry(gCurTask->state, 1, gPengyIdleStates);
 }
 
-void sub_0807995c(void)
+void PengyIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0874077C);
+    CallTableEntry(gCurTask->updateState, 1, gPengyIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -787,10 +787,10 @@ void sub_0807995c(void)
 
 void sub_080799a0(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740778);
+    CallTableEntry(gCurTask->state, 1, gPengyIdleStates);
 }
 
-void sub_080799bc(void)
+void PengyIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -978,19 +978,19 @@ void sub_08079d2c(void)
 {
 }
 
-void sub_08079d30(void)
+void BomberIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08079d74;
+    gCurTask->updateCallback = (u32)BomberIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087407A8);
+    CallTableEntry(gCurTask->state, 1, gBomberIdleStates);
 }
 
-void sub_08079d74(void)
+void BomberIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087407AC);
+    CallTableEntry(gCurTask->updateState, 1, gBomberIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1000,10 +1000,10 @@ void sub_08079d74(void)
 
 void sub_08079db8(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087407A8);
+    CallTableEntry(gCurTask->state, 1, gBomberIdleStates);
 }
 
-void sub_08079dd4(void)
+void BomberIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1315,19 +1315,19 @@ void sub_0807a458(void)
 {
 }
 
-void sub_0807a45c(void)
+void SparkyIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807a4a0;
+    gCurTask->updateCallback = (u32)SparkyIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740804);
+    CallTableEntry(gCurTask->state, 1, gSparkyIdleStates);
 }
 
-void sub_0807a4a0(void)
+void SparkyIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740808);
+    CallTableEntry(gCurTask->updateState, 1, gSparkyIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1337,10 +1337,10 @@ void sub_0807a4a0(void)
 
 void sub_0807a4e4(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740804);
+    CallTableEntry(gCurTask->state, 1, gSparkyIdleStates);
 }
 
-void sub_0807a500(void)
+void SparkyIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();

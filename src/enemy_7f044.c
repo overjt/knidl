@@ -23,11 +23,11 @@
  *   * nine scripts in the entry/hook shape: `KabuJumpInit`+`KabuJumpUpdate`
  *     (`0x08741390`/`0x0874139C`), `KabuTeleportInit`+`KabuTeleportUpdate`
  *     (`0x087413A8`/`0x087413B4`), `KabuSlideInit`+`KabuSlideUpdate`
- *     (`0x087413C0`/`0x087413C8`), `sub_0807fb00`+`sub_0807fb60`
+ *     (`0x087413C0`/`0x087413C8`), `KabuIdleInit`+`KabuIdleUpdate`
  *     (`0x087413D0`/`0x087413D4`), `TwisterInit`+`TwisterUpdate`
- *     (`0x08741490`/`0x0874149C`), `sub_080802bc`+`sub_0808031c`
+ *     (`0x08741490`/`0x0874149C`), `TwisterIdleInit`+`TwisterIdleUpdate`
  *     (`0x087414A8`), `HotHeadWalkInit`+`HotHeadWalkUpdate` (`0x087414C0`),
- *     `sub_0808076c`+`sub_080807d8` (`0x087414D8`) and `HotHeadStandInit`+
+ *     `HotHeadIdleInit`+`HotHeadIdleUpdate` (`0x087414D8`) and `HotHeadStandInit`+
  *     `HotHeadStandUpdate` (`0x087414E0`);
  *   * the bank's four-corner terrain probe `sub_0807f6a8` (four
  *     sub_08021c14 samples around a box whose six signed offsets come from
@@ -665,31 +665,31 @@ void sub_0807fafc(void)
 {
 }
 
-void sub_0807fb00(void)
+void KabuIdleInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0807fb60;
+    t->updateCallback = (u32)KabuIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087413D0);
+    CallTableEntry(gCurTask->state, 1, gKabuIdleStates);
 }
 
 void sub_0807fb44(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087413D0);
+    CallTableEntry(gCurTask->state, 1, gKabuIdleStates);
 }
 
-void sub_0807fb60(void)
+void KabuIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087413D4);
+    CallTableEntry(gCurTask->updateState, 1, gKabuIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807fb84(void)
+void KabuIdle(void)
 {
     struct Task *t;
 
@@ -1108,31 +1108,31 @@ void sub_08080278(void)
         TaskSetEntry(TwisterEnterState, gCurTaskIdx);
 }
 
-void sub_080802bc(void)
+void TwisterIdleInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0808031c;
+    t->updateCallback = (u32)TwisterIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087414A8);
+    CallTableEntry(gCurTask->state, 1, gTwisterIdleStates);
 }
 
 void sub_08080300(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087414A8);
+    CallTableEntry(gCurTask->state, 1, gTwisterIdleStates);
 }
 
-void sub_0808031c(void)
+void TwisterIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087414AC);
+    CallTableEntry(gCurTask->updateState, 1, gTwisterIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08080340(void)
+void TwisterIdle(void)
 {
     gCurTask->updateState = 0;
     TaskSleepForever();
@@ -1341,11 +1341,11 @@ void sub_08080768(void)
 {
 }
 
-void sub_0808076c(void)
+void HotHeadIdleInit(void)
 {
     struct Task *t;
 
-    gCurTask->updateCallback = (u32)sub_080807d8;
+    gCurTask->updateCallback = (u32)HotHeadIdleUpdate;
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->unk30 = 6;
@@ -1353,22 +1353,22 @@ void sub_0808076c(void)
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087414D8);
+    CallTableEntry(gCurTask->state, 1, gHotHeadIdleStates);
 }
 
 void sub_080807bc(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087414D8);
+    CallTableEntry(gCurTask->state, 1, gHotHeadIdleStates);
 }
 
-void sub_080807d8(void)
+void HotHeadIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087414DC);
+    CallTableEntry(gCurTask->updateState, 1, gHotHeadIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080807fc(void)
+void HotHeadIdle(void)
 {
     gCurTask->updateState = 0;
     sub_08080b2c();

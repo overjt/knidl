@@ -14,7 +14,7 @@
  *   * six scripts in the entry/hook shape: `sub_08080e10`+`sub_08080e5c`
  *     (`0x08741554`/`0x0874156C`, six states), `StarmanJumpInit`+`StarmanJumpUpdate`
  *     (`0x08741584`), `StarmanFlyInit`+`StarmanFlyUpdate` (`0x0874159C`),
- *     `sub_08081774`+`sub_080817d4` (`0x087415A4`), `PoppyBrosJrInit`+
+ *     `StarmanIdleInit`+`StarmanIdleUpdate` (`0x087415A4`), `PoppyBrosJrInit`+
  *     `PoppyBrosJrUpdate` (`0x087415C4`) and `sub_08081d24`+`sub_08081d84`
  *     (`0x087415DC`);
  *   * the shared helpers `sub_08080374` (drain Task.unk18 by N and fire cue
@@ -700,31 +700,31 @@ void sub_080816e8(void)
     x->velY = x->unk1C;
 }
 
-void sub_08081774(void)
+void StarmanIdleInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080817d4;
+    t->updateCallback = (u32)StarmanIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087415A4);
+    CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
 }
 
 void sub_080817b8(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087415A4);
+    CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
 }
 
-void sub_080817d4(void)
+void StarmanIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087415A8);
+    CallTableEntry(gCurTask->updateState, 1, gStarmanIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080817f8(void)
+void StarmanIdle(void)
 {
     gCurTask->updateState = 0;
     sub_08081814();

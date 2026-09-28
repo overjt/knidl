@@ -98,11 +98,11 @@ void sub_08007624(void)
         case 14:
             gUnk_03001F2C = gStageRequest + 5;
             gUnk_02006090 = gStageRequest - 9;
-            if (!((gUnk_020055CC >> gUnk_02006090) & 1)) {
+            if (!((gExtraModeTitleSeen >> gUnk_02006090) & 1)) {
                 gUnk_02007FCC = gUnk_03001F2C - 14;
                 gGameState = 13;
                 if (gUnk_02006090 > 2)
-                    gUnk_020055CC |= 1 << gUnk_02006090;
+                    gExtraModeTitleSeen |= 1 << gUnk_02006090;
             } else {
                 gGameState = gUnk_03001F2C;
             }

@@ -13,7 +13,7 @@
  * graphics table Task.frameTable and the palette, then runs its animation as
  * a TaskYieldTrampoline coroutine) and its callbacks.  The animated ones
  * keep the frame to upload in Task.unk28 and a Task.updateCallback callback
- * (sub_0802eba4, sub_0802ed20, sub_0802ee88) that DMAs that frame's tiles
+ * (sub_0802eba4, BossDoorSignUpdate, sub_0802ee88) that DMAs that frame's tiles
  * into OBJ VRAM with RequestCopy and resets unk28 to -1.  The last three
  * spawners are the three variants of type #229 (obj_2f62c.c). */
 
@@ -83,7 +83,7 @@ void sub_0802eba4(void)
     }
 }
 
-s32 sub_0802ec1c(s32 x, s32 y, s32 a)
+s32 CreateBossDoorSign(s32 x, s32 y, s32 a)
 {
     s32 id;
     struct Task *t;
@@ -104,7 +104,7 @@ s32 sub_0802ec1c(s32 x, s32 y, s32 a)
     return id;
 }
 
-void sub_0802ec7c(void)
+void Task_BossDoorSign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -120,7 +120,7 @@ void sub_0802ec7c(void)
     u->unk34 = (s32)gUnk_087558DC;
     u->unk28 = 0;
     u->frame = 0;
-    u->updateCallback = (u32)sub_0802ed20;
+    u->updateCallback = (u32)BossDoorSignUpdate;
     for (;;)
     {
         gCurTask->unk2C = 0;
@@ -140,7 +140,7 @@ void sub_0802ec7c(void)
     }
 }
 
-void sub_0802ed20(void)
+void BossDoorSignUpdate(void)
 {
     u8 *src;
 

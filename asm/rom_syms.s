@@ -105,8 +105,8 @@ gUnk_020055C0 = 0x020055C0
 gUnk_020055C4 = 0x020055C4
 	.global	gUnk_020055C8
 gUnk_020055C8 = 0x020055C8
-	.global	gUnk_020055CC
-gUnk_020055CC = 0x020055CC
+	.global	gExtraModeTitleSeen
+gExtraModeTitleSeen = 0x020055CC
 	.global	gUnk_020055D0
 gUnk_020055D0 = 0x020055D0
 	.global	gUnk_020055D4

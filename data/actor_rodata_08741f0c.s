@@ -59,7 +59,7 @@ gUnk_08741FB4:
 	.global	gChillyVariants
 gChillyVariants:
 	.word	ChillyInit+1
-	.word	sub_080852cc+1
+	.word	ChillyIdle+1
 	.global	gChillyStates
 gChillyStates:
 	.word	sub_08084dc0+1
@@ -78,7 +78,7 @@ gChillyStateUpdates:
 gWaddleDooVariants:
 	.word	WaddleDooWalkInit+1
 	.word	ParasolWaddleDooInit+1
-	.word	sub_08085c2c+1
+	.word	WaddleDooIdle+1
 	.word	WaddleDooShoot+1
 	.global	gWaddleDooWalkStates
 gWaddleDooWalkStates:
@@ -128,7 +128,7 @@ gBrontoBurtVariants:
 	.word	BrontoBurtDiagonalInit+1
 	.word	BrontoBurtChaseInit+1
 	.word	BrontoBurtTakeOffInit+1
-	.word	sub_08086efc+1
+	.word	BrontoBurtIdle+1
 	.global	gBrontoBurtWaveStates
 gBrontoBurtWaveStates:
 	.word	sub_08086170+1
@@ -213,7 +213,7 @@ gTwizzyVariants:
 	.word	sub_08087e2c+1
 	.word	sub_08087fcc+1
 	.word	sub_08088360+1
-	.word	sub_08088498+1
+	.word	TwizzyIdle+1
 	.global	gUnk_08742598
 gUnk_08742598:
 	.incbin	"baserom.gba", 0x742598, 0xC
@@ -324,19 +324,19 @@ gUnk_087426B0:
 	.word	sub_08088478+1
 	.global	gSquishyVariants
 gSquishyVariants:
-	.word	sub_08088658+1
+	.word	SquishyWalkInit+1
 	.word	sub_08088a64+1
 	.word	sub_08088ce8+1
-	.word	sub_08088f4c+1
-	.global	gUnk_087426C4
-gUnk_087426C4:
+	.word	SquishyIdle+1
+	.global	gSquishyWalkStates
+gSquishyWalkStates:
 	.word	sub_08088708+1
 	.word	sub_0808880c+1
 	.word	sub_080888c8+1
 	.word	sub_08088948+1
 	.word	sub_080889cc+1
-	.global	gUnk_087426D8
-gUnk_087426D8:
+	.global	gSquishyWalkStateUpdates
+gSquishyWalkStateUpdates:
 	.word	sub_080887a0+1
 	.word	sub_080888a0+1
 	.word	sub_08088920+1
@@ -374,7 +374,7 @@ gUnk_08742734:
 	.global	gBubblesVariants
 gBubblesVariants:
 	.word	BubblesInit+1
-	.word	sub_08089680+1
+	.word	BubblesIdle+1
 	.global	gBubblesStates
 gBubblesStates:
 	.word	sub_0808924c+1
@@ -398,7 +398,7 @@ gUnk_08742778:
 	.global	gGlunkVariants
 gGlunkVariants:
 	.word	GlunkInit+1
-	.word	sub_08089b44+1
+	.word	GlunkIdle+1
 	.global	gGlunkStates
 gGlunkStates:
 	.word	sub_0808990c+1
@@ -416,7 +416,7 @@ gUnk_087427B2:
 	.global	gSlippyVariants
 gSlippyVariants:
 	.word	SlippyInit+1
-	.word	sub_0808a7a8+1
+	.word	SlippyIdle+1
 	.global	gSlippyStates
 gSlippyStates:
 	.word	sub_08089da8+1
@@ -492,7 +492,7 @@ gBlipperVariants:
 	.word	sub_0808af34+1
 	.word	sub_0808b1d0+1
 	.word	sub_0808b1d0+1
-	.word	sub_0808bb24+1
+	.word	BlipperIdle+1
 	.global	gUnk_087428D8
 gUnk_087428D8:
 	.word	sub_0808ab70+1
@@ -535,7 +535,7 @@ gUnk_08742938:
 	.global	gGipVariants
 gGipVariants:
 	.word	GipInit+1
-	.word	sub_0808c6ac+1
+	.word	GipIdle+1
 	.global	gGipStates
 gGipStates:
 	.word	sub_0808bea0+1

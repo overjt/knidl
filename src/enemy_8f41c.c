@@ -14,7 +14,7 @@
  *   * the class-3 hook row `0x08743518` — `sub_0808f9b8`, `sub_0808f978`,
  *     `sub_0808f9d8` and `sub_0808f9f8`;
  *   * script 5: entry `Task_Coner` (`0x087432F4`, 2 rows), rows
- *     `ConerInit` / `sub_0808fbac`, bodies `0x087432FC` (3) and
+ *     `ConerInit` / `ConerIdleInit`, bodies `0x087432FC` (3) and
  *     `0x08743308` (1);
  *   * script 6: entry `Task_LaserBallLaser` (`0x08743600`, 1 row), row
  *     `sub_0808fc90`, bodies `0x08743604` (2), guards `0x0874360C` (2);
@@ -339,24 +339,24 @@ void sub_0808f8dc(void)
     ActorCollideTerrain();
 }
 
-void sub_0808f8e8(void)
+void ShotzoIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808f930;
+    gCurTask->updateCallback = (u32)ShotzoIdleUpdate;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
     gCurTask->facing = 255;
-    CallTableEntry(gCurTask->state, 1, gUnk_087432E4);
+    CallTableEntry(gCurTask->state, 1, gShotzoIdleStates);
 }
 
-void sub_0808f930(void)
+void ShotzoIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087432E8);
+    CallTableEntry(gCurTask->updateState, 1, gShotzoIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808f954(void)
+void ShotzoIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -483,23 +483,23 @@ void sub_0808fb80(void)
     TaskSleepForever();
 }
 
-void sub_0808fbac(void)
+void ConerIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808fbf0;
+    gCurTask->updateCallback = (u32)ConerIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08743308);
+    CallTableEntry(gCurTask->state, 1, gConerIdleStates);
 }
 
-void sub_0808fbf0(void)
+void ConerIdleUpdate(void)
 {
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808fc00(void)
+void ConerIdle(void)
 {
     TaskStop();
     while (1)

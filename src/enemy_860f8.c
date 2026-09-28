@@ -660,9 +660,9 @@ void sub_08086ec8(void)
     }
 }
 
-void sub_08086efc(void)
+void BrontoBurtIdle(void)
 {
-    gCurTask->updateCallback = (u32)sub_08086f40;
+    gCurTask->updateCallback = (u32)BrontoBurtIdleUpdate;
     ActorSetAttackBox((u32)gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -675,7 +675,7 @@ void sub_08086efc(void)
     }
 }
 
-void sub_08086f40(void)
+void BrontoBurtIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();

@@ -105,7 +105,7 @@ void ResetPlayerRecords(void)
     gActivePlayerCount = 0;
     gUnk_02005E00.unk00 = 0;
     gUnk_02006178 = 0;
-    gUnk_020055CC = 0;
+    gExtraModeTitleSeen = 0;
     gPauseDisabled = 0;
 }
 

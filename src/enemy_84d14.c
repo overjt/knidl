@@ -353,9 +353,9 @@ void sub_080852c8(void)
 {
 }
 
-void sub_080852cc(void)
+void ChillyIdle(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808537c;
+    gCurTask->updateCallback = (u32)ChillyIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
@@ -386,7 +386,7 @@ void sub_080852cc(void)
     }
 }
 
-void sub_0808537c(void)
+void ChillyIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
@@ -858,7 +858,7 @@ void sub_08085c10(void)
     gCurTask->unk30 = ActorTickAnim(gCurTask->unk30);
 }
 
-void sub_08085c2c(void)
+void WaddleDooIdle(void)
 {
     struct Task *u1;
     struct Task *u2;
@@ -868,7 +868,7 @@ void sub_08085c2c(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateCallback = (u32)sub_08085cc4;
+    gCurTask->updateCallback = (u32)WaddleDooIdleUpdate;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -900,7 +900,7 @@ void sub_08085c2c(void)
     }
 }
 
-void sub_08085cc4(void)
+void WaddleDooIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();

@@ -6,13 +6,13 @@
  * See src/enemy_8cce8.c for the three-table pattern all of M24 is built on.
  *
  * This batch holds:
- *   * script 2's rows `LaserBallInit` / `sub_0808e804` (bodies `0x087431EC`
+ *   * script 2's rows `LaserBallInit` / `LaserBallIdleInit` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
  *     with `sub_0808e480` / `sub_0808e54c` / `sub_0808e610` / `sub_0808e730`
  *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
  *     `sub_0808e800` as their guards;
  *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
- *     rows `CoconutInit` / `sub_0808eb24`, bodies `0x08743230` (3) and
+ *     rows `CoconutInit` / `CoconutIdleInit`, bodies `0x08743230` (3) and
  *     `0x08743240`, guards `0x0874323C` and `0x08743244`;
  *   * the class-3 hook row `0x087434FC` — `sub_0808ec34`, `sub_0808ebe0`,
  *     `sub_0808ecb4` and `sub_0808ec90`, every one returning s32;
@@ -289,25 +289,25 @@ void sub_0808e800(void)
 {
 }
 
-void sub_0808e804(void)
+void LaserBallIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808e848;
+    gCurTask->updateCallback = (u32)LaserBallIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874320C);
+    CallTableEntry(gCurTask->state, 1, gLaserBallIdleStates);
 }
 
-void sub_0808e848(void)
+void LaserBallIdleUpdate(void)
 {
     ActorCollideTerrain();
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08743210);
+    CallTableEntry(gCurTask->updateState, 1, gLaserBallIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808e870(void)
+void LaserBallIdle(void)
 {
     gCurTask->updateState = 0;
     TaskFaceNearestPlayer();
@@ -452,24 +452,24 @@ void sub_0808eb10(void)
     ActorDie();
 }
 
-void sub_0808eb24(void)
+void CoconutIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808eb64;
+    gCurTask->updateCallback = (u32)CoconutIdleUpdate;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08743240);
+    CallTableEntry(gCurTask->state, 1, gCoconutIdleStates);
 }
 
-void sub_0808eb64(void)
+void CoconutIdleUpdate(void)
 {
     if (sub_08069888() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08743244);
+        CallTableEntry(gCurTask->updateState, 1, gCoconutIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808eb94(void)
+void CoconutIdle(void)
 {
     gCurTask->updateState = 0;
     gCurTask->onGround = 1;

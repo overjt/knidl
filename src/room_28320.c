@@ -124,7 +124,7 @@ void SpawnDoorObjects(void)
             break;
         case 2:
             if (gCurLevel >= gFurthestLevel)
-                gDoorObjectTasks[i][0] = sub_0802ec1c(x, y, i);
+                gDoorObjectTasks[i][0] = CreateBossDoorSign(x, y, i);
             else
                 gDoorObjectTasks[i][0] = CreateLevelDoorSign(x, y, 1, i);
             break;

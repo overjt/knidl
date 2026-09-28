@@ -123,7 +123,7 @@ void InitRoomBgLayout(void)
         break;
     }
     if (gUnk_02007D64 == 3)
-        sub_08030100(gCurLevel);
+        CreateMuseumAbilitySigns(gCurLevel);
 }
 
 void sub_08028130(void)

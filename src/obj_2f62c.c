@@ -16,7 +16,7 @@
  * Task.unk34 at Task.velX/unk58 where the type has one.  #231
  * (Task_WarpStarStationDoorSparkle) flies a fixed path, eight velocity changes per lap.
  * CreateWarpStarStationNumber is also called from M33 (src/hud_b5024.c), and
- * sub_08030100 spawns up to two #235 objects from the table
+ * CreateMuseumAbilitySigns spawns up to two #235 objects from the table
  * gUnk_087328C0. */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -507,22 +507,22 @@ void Task_WarpStarStationLevelSign(void)
     TaskSleepForever();
 }
 
-s32 sub_08030100(u8 a)
+s32 CreateMuseumAbilitySigns(u8 a)
 {
     s32 i;
 
     if (a <= 5)
     {
-        sub_08008f10(a);
+        LoadMuseumAbilitySignGfx(a);
         for (i = 0; i <= 1; i++)
         {
             if (gUnk_087328C0[a][i] != -1)
-                sub_08030140(a, i);
+                CreateMuseumAbilitySign(a, i);
         }
     }
 }
 
-s32 sub_08030140(u8 a, s32 b)
+s32 CreateMuseumAbilitySign(u8 a, s32 b)
 {
     s32 id;
     struct Task *t;
@@ -540,7 +540,7 @@ s32 sub_08030140(u8 a, s32 b)
     return id;
 }
 
-void sub_080301a4(void)
+void Task_MuseumAbilitySign(void)
 {
     struct Task *t;
     struct Task *u;
@@ -548,7 +548,7 @@ void sub_080301a4(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_087559DC;
+    t->frameTable = gMuseumAbilitySignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0xD3C0;

@@ -723,19 +723,19 @@ void sub_0807b7fc(void)
 {
 }
 
-void sub_0807b800(void)
+void SwordAndBladeKnightIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807b844;
+    gCurTask->updateCallback = (u32)SwordAndBladeKnightIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740A3C);
+    CallTableEntry(gCurTask->state, 1, gSwordAndBladeKnightIdleStates);
 }
 
-void sub_0807b844(void)
+void SwordAndBladeKnightIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740A40);
+    CallTableEntry(gCurTask->updateState, 1, gSwordAndBladeKnightIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -745,10 +745,10 @@ void sub_0807b844(void)
 
 void sub_0807b888(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740A3C);
+    CallTableEntry(gCurTask->state, 1, gSwordAndBladeKnightIdleStates);
 }
 
-void sub_0807b8a4(void)
+void SwordAndBladeKnightIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1181,7 +1181,7 @@ dec:
     t->unk18--;
 }
 
-void sub_0807c1d0(void)
+void NeedlousFall(void)
 {
     gCurTask->updateState = 1;
     TaskSetMotionY(0, 0x2500, 0x30000);
@@ -1261,19 +1261,19 @@ void sub_0807c2e0(void)
     }
 }
 
-void sub_0807c350(void)
+void NeedlousIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807c394;
+    gCurTask->updateCallback = (u32)NeedlousIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740AF8);
+    CallTableEntry(gCurTask->state, 1, gNeedlousIdleStates);
 }
 
-void sub_0807c394(void)
+void NeedlousIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740AFC);
+    CallTableEntry(gCurTask->updateState, 1, gNeedlousIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1283,10 +1283,10 @@ void sub_0807c394(void)
 
 void sub_0807c3d8(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740AF8);
+    CallTableEntry(gCurTask->state, 1, gNeedlousIdleStates);
 }
 
-void sub_0807c3f4(void)
+void NeedlousIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1593,20 +1593,20 @@ void sub_0807ca18(void)
     }
 }
 
-void sub_0807ca50(void)
+void UFOIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807ca98;
+    gCurTask->updateCallback = (u32)UFOIdleUpdate;
     TaskFaceNearestPlayer();
     sub_0807c4a0();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BA4);
+    CallTableEntry(gCurTask->state, 1, gUFOIdleStates);
 }
 
-void sub_0807ca98(void)
+void UFOIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740BA8);
+    CallTableEntry(gCurTask->updateState, 1, gUFOIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1616,10 +1616,10 @@ void sub_0807ca98(void)
 
 void sub_0807cadc(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BA4);
+    CallTableEntry(gCurTask->state, 1, gUFOIdleStates);
 }
 
-void sub_0807caf8(void)
+void UFOIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1796,19 +1796,19 @@ void sub_0807ce68(void)
     gCurTask->unk24--;
 }
 
-void sub_0807cedc(void)
+void ParasolIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807cf20;
+    gCurTask->updateCallback = (u32)ParasolIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BCC);
+    CallTableEntry(gCurTask->state, 1, gParasolIdleStates);
 }
 
-void sub_0807cf20(void)
+void ParasolIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08740BD0);
+    CallTableEntry(gCurTask->updateState, 1, gParasolIdleStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1818,10 +1818,10 @@ void sub_0807cf20(void)
 
 void sub_0807cf64(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08740BCC);
+    CallTableEntry(gCurTask->state, 1, gParasolIdleStates);
 }
 
-void sub_0807cf80(void)
+void ParasolIdle(void)
 {
     gCurTask->updateState = 0;
     TaskStop();

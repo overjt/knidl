@@ -27,7 +27,7 @@
  *     tile class, `sub_08083d28` turns a direction code into an aim angle plus
  *     a 16.16 velocity through AngleToVector, and `sub_08083dfc` is the
  *     five-times-four-frame animation wait;
- *   * the one-state script `sub_0808398c` (`0x087417B0` / `0x087417B4`);
+ *   * the one-state script `FlamerIdleInit` (`0x087417B0` / `0x087417B4`);
  *   * the class-2 task #105 script `Task_SirKibbleCutter` (`0x08741E64` /
  *     `0x08741E68` / `0x08741E6C`);
  *   * the class-2 task #108 script `Task_HotHeadFire`, whose unk73 table
@@ -557,29 +557,29 @@ void sub_080838bc(void)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_0808398c(void)
+void FlamerIdleInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080839ec;
+    gCurTask->updateCallback = (u32)FlamerIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087417B0);
+    CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
 }
 
 void sub_080839d0(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087417B0);
+    CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
 }
 
-void sub_080839ec(void)
+void FlamerIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087417B4);
+    CallTableEntry(gCurTask->updateState, 1, gFlamerIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08083a10(void)
+void FlamerIdle(void)
 {
     struct Task *t;
 

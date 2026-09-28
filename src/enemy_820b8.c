@@ -16,7 +16,7 @@
  *     sub_080b5540), `PoppyBrosJrDroppedObjectInit`+`PoppyBrosJrDroppedObjectUpdate` (`0x08741618`),
  *     `sub_0808248c`+`sub_080824ec` (`0x08741620`), `WheelieInit`+
  *     `WheelieUpdate` (`0x0874164C`/`0x08741664`, six states) and
- *     `sub_08082bb8`+`sub_08082c18` (`0x0874167C`);
+ *     `WheelieIdleInit`+`WheelieIdleUpdate` (`0x0874167C`);
  *   * `sub_08082554` / `sub_080825ec`, the hop cycle that drives the actor
  *     record's unk16/unk18/unk1A/unk1E straight from the task, and
  *     `sub_08082cc4`, the four-step Task.unk2C-scaled animation loop;
@@ -599,31 +599,31 @@ void sub_08082b48(void)
     }
 }
 
-void sub_08082bb8(void)
+void WheelieIdleInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08082c18;
+    t->updateCallback = (u32)WheelieIdleUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874167C);
+    CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);
 }
 
 void sub_08082bfc(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874167C);
+    CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);
 }
 
-void sub_08082c18(void)
+void WheelieIdleUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741680);
+    CallTableEntry(gCurTask->updateState, 1, gWheelieIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08082c3c(void)
+void WheelieIdle(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk2C = 1;

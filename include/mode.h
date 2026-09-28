@@ -38,7 +38,7 @@ struct TransferNode
 extern s8 gLinkSessionMode;
 extern u32 gUnk_02004000[];
 extern u16 gPausingPlayer;
-extern u8 gUnk_020055CC;
+extern u8 gExtraModeTitleSeen;
 extern u8 gUnk_02006090;
 extern s8 gUnk_02006160;
 extern u8 gUnk_02007FCC;
@@ -159,7 +159,7 @@ void sub_08008e1c(s32 a0);
 void sub_08008e6c(s32 a0);
 void HudClearAbilityPicture(void);
 void HudLoadAbilityPicture(s32 a0);
-void sub_08008f10(s32 a0);
+void LoadMuseumAbilitySignGfx(s32 a0);
 void sub_08008fc4(s32 a0, s32 a1);
 
 /* src/boot_091ac.c */

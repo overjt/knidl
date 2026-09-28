@@ -56,7 +56,7 @@ gUnk_08743158:
 gBroomHatterVariants:
 	.word	sub_0808d558+1
 	.word	sub_0808da00+1
-	.word	sub_0808df58+1
+	.word	BroomHatterIdleInit+1
 	.global	gUnk_08743194
 gUnk_08743194:
 	.word	sub_0808d640+1
@@ -77,11 +77,11 @@ gUnk_087431B8:
 	.word	sub_0808dc68+1
 	.word	sub_0808de90+1
 	.word	sub_0808df54+1
-	.global	gUnk_087431C4
-gUnk_087431C4:
-	.word	sub_0808dfc4+1
-	.global	gUnk_087431C8
-gUnk_087431C8:
+	.global	gBroomHatterIdleStates
+gBroomHatterIdleStates:
+	.word	BroomHatterIdle+1
+	.global	gBroomHatterIdleStateUpdates
+gBroomHatterIdleStateUpdates:
 	.word	sub_0808e050+1
 	.global	gUnk_087431CC
 gUnk_087431CC:
@@ -92,7 +92,7 @@ gUnk_087431D8:
 	.global	gLaserBallVariants
 gLaserBallVariants:
 	.word	LaserBallInit+1
-	.word	sub_0808e804+1
+	.word	LaserBallIdleInit+1
 	.global	gLaserBallStates
 gLaserBallStates:
 	.word	sub_0808e480+1
@@ -105,11 +105,11 @@ gLaserBallStateUpdates:
 	.word	sub_0808e704+1
 	.word	sub_0808e5cc+1
 	.word	sub_0808e800+1
-	.global	gUnk_0874320C
-gUnk_0874320C:
-	.word	sub_0808e870+1
-	.global	gUnk_08743210
-gUnk_08743210:
+	.global	gLaserBallIdleStates
+gLaserBallIdleStates:
+	.word	LaserBallIdle+1
+	.global	gLaserBallIdleStateUpdates
+gLaserBallIdleStateUpdates:
 	.word	sub_0808e8a0+1
 	.global	gUnk_08743214
 gUnk_08743214:
@@ -121,7 +121,7 @@ gUnk_0874321C:
 gCoconutVariants:
 	.word	CoconutInit+1
 	.word	CoconutInit+1
-	.word	sub_0808eb24+1
+	.word	CoconutIdleInit+1
 	.global	gCoconutStates
 gCoconutStates:
 	.word	CoconutWait+1
@@ -130,11 +130,11 @@ gCoconutStates:
 	.global	gCoconutStateUpdates
 gCoconutStateUpdates:
 	.word	sub_0808e9d4+1
-	.global	gUnk_08743240
-gUnk_08743240:
-	.word	sub_0808eb94+1
-	.global	gUnk_08743244
-gUnk_08743244:
+	.global	gCoconutIdleStates
+gCoconutIdleStates:
+	.word	CoconutIdle+1
+	.global	gCoconutIdleStateUpdates
+gCoconutIdleStateUpdates:
 	.word	sub_0808ebdc+1
 	.global	gUnk_08743248
 gUnk_08743248:
@@ -158,7 +158,7 @@ gShotzoVariants:
 	.word	ShotzoFixedInit+1
 	.word	ShotzoFixedInit+1
 	.word	ParasolShotzoInit+1
-	.word	sub_0808f8e8+1
+	.word	ShotzoIdleInit+1
 	.global	gShotzoAimStates
 gShotzoAimStates:
 	.word	sub_0808f3d4+1
@@ -189,11 +189,11 @@ gParasolShotzoStateUpdates:
 	.word	sub_0808f75c+1
 	.word	sub_0808f844+1
 	.word	sub_0808f8dc+1
-	.global	gUnk_087432E4
-gUnk_087432E4:
-	.word	sub_0808f954+1
-	.global	gUnk_087432E8
-gUnk_087432E8:
+	.global	gShotzoIdleStates
+gShotzoIdleStates:
+	.word	ShotzoIdle+1
+	.global	gShotzoIdleStateUpdates
+gShotzoIdleStateUpdates:
 	.word	sub_0808f974+1
 	.global	gUnk_087432EC
 gUnk_087432EC:
@@ -201,12 +201,12 @@ gUnk_087432EC:
 	.global	gConerVariants
 gConerVariants:
 	.word	ConerInit+1
-	.word	sub_0808fbac+1
+	.word	ConerIdleInit+1
 	.global	gConerStates
 gConerStates:
 	.word	ConerWalk+1
 	.word	sub_0808fb50+1
 	.word	sub_0808fb80+1
-	.global	gUnk_08743308
-gUnk_08743308:
-	.word	sub_0808fc00+1
+	.global	gConerIdleStates
+gConerIdleStates:
+	.word	ConerIdle+1

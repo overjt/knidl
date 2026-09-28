@@ -141,7 +141,7 @@ void HudLoadAbilityPicture(s32 a0)
 /* The 0x02020000 / 0x02020100 buffer addresses must stay integer literals:
    as gUnk_02020000 symbols CSE keeps them in callee-saved registers across
    the calls and the if-block (-8 bytes, r7/r8 permutation). */
-void sub_08008f10(s32 a0)
+void LoadMuseumAbilitySignGfx(s32 a0)
 {
     RequestCopy(2, gUnk_08731B70[a0], (u32)gUnk_03001610, 32);
     RequestCopy(8, (u32)gUnk_085A3CB8, 0x02020000, 0);

@@ -33,7 +33,7 @@ void Task_Blipper(void)
     gCurTask->frameTable = gBlipperFrames;
     gCurTask->onGround = 0;
     if (gCurTask->variant == 5)
-        sub_0808bb24();
+        BlipperIdle();
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
         CallTableEntry(gCurTask->variant, 6, gBlipperVariants);
@@ -710,9 +710,9 @@ void Task_BlipperDroplet(void)
     TaskExitTrampoline();
 }
 
-void sub_0808bb24(void)
+void BlipperIdle(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808bb5c;
+    gCurTask->updateCallback = (u32)BlipperIdleUpdate;
     ActorSetAttackBox((u32)gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -720,7 +720,7 @@ void sub_0808bb24(void)
     TaskSleepForever();
 }
 
-void sub_0808bb5c(void)
+void BlipperIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
@@ -1229,9 +1229,9 @@ void sub_0808c684(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void sub_0808c6ac(void)
+void GipIdle(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808c708;
+    gCurTask->updateCallback = (u32)GipIdleUpdate;
     ActorSetAttackBox((u32)gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -1248,7 +1248,7 @@ void sub_0808c6ac(void)
     }
 }
 
-void sub_0808c708(void)
+void GipIdleUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();

@@ -87,7 +87,7 @@ extern u32 gWarpStarStationDoorSparkleFrames[];
 extern u32 gUnk_0875599C[];
 extern u32 gWarpStarStationNumberFrames[];
 extern u32 gWarpStarStationLevelSignFrames[];
-extern u32 gUnk_087559DC[];
+extern u32 gMuseumAbilitySignFrames[];
 extern struct Unk02007D70Cmd **gRoomBgAnimScripts[];
 
 
@@ -201,9 +201,9 @@ void sub_0802e3ac(void);
 s32 CreateArenaDoorSign(s32 x, s32 y, s32 a);
 void Task_ArenaDoorSign(void);
 void sub_0802eba4(void);
-s32 sub_0802ec1c(s32 x, s32 y, s32 a);
-void sub_0802ec7c(void);
-void sub_0802ed20(void);
+s32 CreateBossDoorSign(s32 x, s32 y, s32 a);
+void Task_BossDoorSign(void);
+void BossDoorSignUpdate(void);
 s32 CreateDoorOpening(s32 x, s32 y, s32 a);
 void Task_DoorOpening(void);
 void sub_0802ee88(void);
@@ -248,9 +248,9 @@ s32 CreateWarpStarStationNumber(s32 a, s32 x, s32 y);
 void Task_WarpStarStationNumber(void);
 s32 CreateWarpStarStationLevelSign(s32 a);
 void Task_WarpStarStationLevelSign(void);
-s32 sub_08030100(u8 a);
-s32 sub_08030140(u8 a, s32 b);
-void sub_080301a4(void);
+s32 CreateMuseumAbilitySigns(u8 a);
+s32 CreateMuseumAbilitySign(u8 a, s32 b);
+void Task_MuseumAbilitySign(void);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
 
 /* src/obj_30238.c */

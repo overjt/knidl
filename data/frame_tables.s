@@ -10154,8 +10154,8 @@ gWarpStarStationLevelSignFrames:
 	.word	gUnk_085A3B98
 	.word	gUnk_085A3BB8
 	.word	gUnk_085A3BD8
-	.global	gUnk_087559DC
-gUnk_087559DC:
+	.global	gMuseumAbilitySignFrames
+gMuseumAbilitySignFrames:
 	.word	gUnk_085A48C4
 	.word	gUnk_085A48E4
 	.global	gUnk_087559E4

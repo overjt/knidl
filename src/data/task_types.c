@@ -232,7 +232,7 @@ void Task_BlipperDroplet(void);
 void Task_GlunkShotSpray(void);
 void sub_080b08e4(void);
 void Task_ArenaDoorSign(void);
-void sub_0802ec7c(void);
+void Task_BossDoorSign(void);
 void Task_DoorOpening(void);
 void Task_StageClearFlag(void);
 void Task_QuickDrawDoorSign(void);
@@ -245,7 +245,7 @@ void Task_WarpStarStationDoorSparkle(void);
 void Task_LevelDoorSign(void);
 void Task_WarpStarStationNumber(void);
 void Task_WarpStarStationLevelSign(void);
-void sub_080301a4(void);
+void Task_MuseumAbilitySign(void);
 void Task_StageEffect(void);
 void Task_IntroStoryPicture(void);
 void Task_FileSelectSlotLabel(void);
@@ -502,7 +502,7 @@ const struct TaskType gTaskTypes[] = {
     /* 219 */ { 3, { 0, 0, 0 }, (u32)Task_GlunkShotSpray },
     /* 220 */ { 3, { 0, 0, 0 }, (u32)sub_080b08e4 },
     /* 221 */ { 3, { 0, 0, 0 }, (u32)Task_ArenaDoorSign },
-    /* 222 */ { 3, { 0, 0, 0 }, (u32)sub_0802ec7c },
+    /* 222 */ { 3, { 0, 0, 0 }, (u32)Task_BossDoorSign },
     /* 223 */ { 3, { 0, 0, 0 }, (u32)Task_DoorOpening },
     /* 224 */ { 3, { 0, 0, 0 }, (u32)Task_StageClearFlag },
     /* 225 */ { 3, { 0, 0, 0 }, (u32)Task_QuickDrawDoorSign },
@@ -515,7 +515,7 @@ const struct TaskType gTaskTypes[] = {
     /* 232 */ { 3, { 0, 0, 0 }, (u32)Task_LevelDoorSign },
     /* 233 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarStationNumber },
     /* 234 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarStationLevelSign },
-    /* 235 */ { 3, { 0, 0, 0 }, (u32)sub_080301a4 },
+    /* 235 */ { 3, { 0, 0, 0 }, (u32)Task_MuseumAbilitySign },
     /* 236 */ { 4, { 0, 0, 0 }, (u32)Task_StageEffect },
     /* 237 */ { 4, { 0, 0, 0 }, (u32)Task_IntroStoryPicture },
     /* 238 */ { 4, { 0, 0, 0 }, (u32)Task_FileSelectSlotLabel },
