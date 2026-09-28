@@ -200,9 +200,12 @@ identifier.
 | a room header (`struct RoomDef`) `gRoomTable[L][S][R]` | `gLevel<L>Stage<S>Room<R>` | `gLevel0Stage1Room2` |
 | a record that one RoomDef field alone points at | `gLevel<L>Stage<S>Room<R><Field>`, the field in PascalCase | `gLevel0Stage1Room2Doors`, `...Room2MetatileMap` |
 | an ActorDef bound by a named family through its kind table's slot | `g<Enemy>Def` | `gWaddleDeeDef` |
+| a graphics descriptor in a kind's descriptor table (`gEnemyGfx`, `gMidBossGfx`, `gBossGfx`, `gMetaKnightsGfx`) | `g<Enemy>Gfx` | `gCappyGfx` |
+| the palette and sprite-sheet tiles that descriptor alone points at | `g<Enemy>GfxPalette` / `g<Enemy>GfxTiles` | `gCappyGfxTiles` |
 
 Rules: a record gets a position name only when that one slot is its only
-referrer (no second table, no code reference; checked over `data/`,
+referrer (or when every slot that shares it belongs to one named family,
+as the three Poppy Bros. Jr. subtypes share `gPoppyBrosJrGfx`) (no second table, no code reference; checked over `data/`,
 `asm/`, `src/` and `include/` before a batch); a record several slots
 share (a stage's common tiles and palettes) keeps its placeholder, and so
 does the target of a field that has no name yet (`RoomDef.unk10`).
