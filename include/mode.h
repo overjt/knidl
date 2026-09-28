@@ -51,7 +51,7 @@ extern u16 gUnk_03001390[];
 extern u8 gUnk_030013B0[];
 extern u16 gUnk_03001430[];
 extern u16 gPrevGameState; /* requested/next game state */
-extern s32 gUnk_03005280;
+extern s32 gExtraModeTitlePhase;
 
 /* ROM */
 extern u8 gUnk_080D1B78[];
@@ -134,12 +134,12 @@ void sub_08007e04(void);
 void sub_08007f9c(void);
 
 /* src/mode_082d0.c */
-void sub_080082d0(void);
-void sub_08008348(void);
+void CreateExtraModeTitleSprites(void);
+void Task_ExtraModeTitleSprite(void);
 void sub_08008394(void);
-void sub_080083b0(void);
+void ExtraModeTitleTransferIcon(void);
 void sub_08008460(void);
-void sub_080084dc(void);
+void ExtraModeTitleLevelBar(void);
 void sub_08008558(void);
 
 /* src/mode_08664.c */

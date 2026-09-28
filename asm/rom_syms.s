@@ -41,8 +41,8 @@ gRoomMapBuffer = 0x02000040
 gUnk_02004000 = 0x02004000
 	.global	gBlockCursorPlayer
 gBlockCursorPlayer = 0x02004B40
-	.global	gUnk_02004B44
-gUnk_02004B44 = 0x02004B44
+	.global	gPlayerCountCursor
+gPlayerCountCursor = 0x02004B44
 	.global	gUnk_02004B48
 gUnk_02004B48 = 0x02004B48
 	.global	gUnk_02004B4C
@@ -1019,8 +1019,8 @@ gLinkCommand = 0x03005274
 gUnk_03005278 = 0x03005278
 	.global	gSendBufferEmpty
 gSendBufferEmpty = 0x0300527C
-	.global	gUnk_03005280
-gUnk_03005280 = 0x03005280
+	.global	gExtraModeTitlePhase
+gExtraModeTitlePhase = 0x03005280
 	.global	gPlayerColliderCount
 gPlayerColliderCount = 0x03005290
 	.global	gAttackBoxBottom

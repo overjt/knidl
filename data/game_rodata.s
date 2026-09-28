@@ -12,8 +12,8 @@ game_rodata:
 	.incbin	"baserom.gba", 0x730780, 0xC
 	.global	gUnk_0873078C
 gUnk_0873078C:
-	.word	sub_080083b0+1
-	.word	sub_080084dc+1
+	.word	ExtraModeTitleTransferIcon+1
+	.word	ExtraModeTitleLevelBar+1
 	.global	gUnk_08730794
 gUnk_08730794:
 	.word	sub_08008460+1

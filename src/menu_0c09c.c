@@ -16,8 +16,8 @@
  * B returns to the title screen); MenuSetupFileMenu opens the file menu
  * (screen 1) and sub_0800c34c is its input loop over four entries
  * (gFileMenuCursor: start, the mode list, the sound test, erase);
- * sub_0800c558 and sub_0800c610 run the two-choice screens 2/3 that
- * lead into a game, and sub_0800c8a0 the two-step erase confirmation
+ * MenuNormalExtraSelect and MenuPlayerCountSelect run the two-choice screens 2/3 that
+ * lead into a game, and MenuEraseSelect the two-step erase confirmation
  * that clears the slot with EraseSaveSlot. */
 
 s32 PlaySfx(s32 id);
@@ -178,7 +178,7 @@ void sub_0800c34c(void)
                 else
                 {
                     gMenuScreen = 3;
-                    gUnk_02004B44 = 0;
+                    gPlayerCountCursor = 0;
                     TaskCreateFrom(246, 32);
                     RunFrames(10);
                 }
@@ -228,7 +228,7 @@ void sub_0800c34c(void)
     }
 }
 
-void sub_0800c558(void)
+void MenuNormalExtraSelect(void)
 {
     vu16 *keys = &gPressedKeys;
     s8 *state = &gMenuScreen;
@@ -257,12 +257,12 @@ void sub_0800c558(void)
     PlaySfx(102);
     gExtraMode = gMenuChoiceCursor;
     *state = 3;
-    gUnk_02004B44 = 0;
+    gPlayerCountCursor = 0;
     TaskCreateFrom(246, 32);
     RunFrames(10);
 }
 
-void sub_0800c610(void)
+void MenuPlayerCountSelect(void)
 {
     gMenuBufferedKeys = 0;
     while (1)
@@ -286,7 +286,7 @@ void sub_0800c610(void)
                     gMenuChoiceCursor = gExtraMode;
                     TaskCreateFrom(245, 32);
                 }
-                gUnk_02004B44 = 1;
+                gPlayerCountCursor = 1;
                 TaskCreateFrom(246, 32);
                 if (gMenuBufferedKeys != 0)
                     RunFrames(1);
@@ -295,7 +295,7 @@ void sub_0800c610(void)
         if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9))
         {
             PlaySfx(102);
-            if (gUnk_02004B44 == 0)
+            if (gPlayerCountCursor == 0)
             {
                 gMenuScreen = 9;
                 gMetaKnightmareMode = 0;
@@ -338,22 +338,22 @@ void sub_0800c610(void)
         }
         if (gMenuTransitionTimer == 0)
         {
-            if ((gHeldKeys & 0x80) && gUnk_02004B44 == 0)
+            if ((gHeldKeys & 0x80) && gPlayerCountCursor == 0)
             {
                 PlaySfx(101);
-                gUnk_02004B44 = 1;
+                gPlayerCountCursor = 1;
             }
-            else if ((gHeldKeys & 0x40) && gUnk_02004B44 == 1)
+            else if ((gHeldKeys & 0x40) && gPlayerCountCursor == 1)
             {
                 PlaySfx(101);
-                gUnk_02004B44 = 0;
+                gPlayerCountCursor = 0;
             }
         }
         RunFrame();
     }
 }
 
-void sub_0800c8a0(void)
+void MenuEraseSelect(void)
 {
     vu16 *keys;
 

@@ -21,7 +21,7 @@
  *       AgbMain's state 20 leaves there), stops the sound (StopAllSound),
  *       plays the two scenes below unless gPrevGameState is 20 or
  *       gMetaKnightmareMode is 1, and ends with LoadSaveSlot(gCurSaveSlot).
- *   sub_080c62f0 / sub_080c6388   one scene each: preset and load a room
+ *   EndingEpilogueScene / EndingStarRodReturnScene   one scene each: preset and load a room
  *       (sub_08024610(0, 0) / sub_08024654(632, 248)), palette set 15 / 16
  *       (LoadBgLayout), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
  *       task and run frames (RunLinkFrame) until it clears gEndingSceneActive,
@@ -44,14 +44,14 @@ void EndingMain(void)
     DisconnectLink();
     StopAllSound();
     if (gPrevGameState != 20 && gMetaKnightmareMode != 1) {
-        sub_080c62f0();
-        sub_080c6388();
+        EndingEpilogueScene();
+        EndingStarRodReturnScene();
     }
     StopAllSound();
     LoadSaveSlot(gCurSaveSlot);
 }
 
-void sub_080c62f0(void)
+void EndingEpilogueScene(void)
 {
     gEndingSceneActive = 1;
     sub_08024610(0, 0);
@@ -79,7 +79,7 @@ void sub_080c6354(void)
     t->variant = 0;
 }
 
-void sub_080c6388(void)
+void EndingStarRodReturnScene(void)
 {
     gEndingSceneActive = 1;
     sub_08024654(632, 248);

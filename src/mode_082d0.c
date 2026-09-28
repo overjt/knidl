@@ -9,9 +9,9 @@
 /* mode_082d0.c (0x080082D0-0x08008663, issue #96).
  *
  * Task type #265, the two decorations of the state-13 title screen:
- * sub_080082d0 spawns them, sub_08008348 is the body (it dispatches one of
+ * CreateExtraModeTitleSprites spawns them, Task_ExtraModeTitleSprite is the body (it dispatches one of
  * two scripts from the anchor table at 0x0873078C through CallTableEntry),
- * and sub_080083b0/sub_08008460/sub_080084dc/sub_08008558 are the four
+ * and ExtraModeTitleTransferIcon/sub_08008460/ExtraModeTitleLevelBar/sub_08008558 are the four
  * script bodies (a sprite pair, a BG scroll plus palette cycle, a sprite
  * loop and a palette pulse). */
 
@@ -29,7 +29,7 @@ void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSleepForever(void);
 
-void sub_080082d0(void)
+void CreateExtraModeTitleSprites(void)
 {
     s32 idx;
     struct Task *t;
@@ -50,7 +50,7 @@ void sub_080082d0(void)
     }
 }
 
-void sub_08008348(void)
+void Task_ExtraModeTitleSprite(void)
 {
     struct Task *t = gCurTask;
 
@@ -73,16 +73,16 @@ void sub_08008394(void)
     CallTableEntry(gCurTask->updateState, 2, gUnk_08730794);
 }
 
-void sub_080083b0(void)
+void ExtraModeTitleTransferIcon(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk2C = 0;
     for (;;) {
-        if (gUnk_03005280 == 0) {
+        if (gExtraModeTitlePhase == 0) {
             QueueSprite(8, (u32)gUnk_085B6AC0, 0, 0, 120, 88);
-        } else if (gUnk_03005280 == 1) {
+        } else if (gExtraModeTitlePhase == 1) {
             QueueSprite(8, DrawAffineSprite((s32)gUnk_085B6AC0, 0x100, 0x100, (s16)((16 - (gFrameCount & 15)) << 4)), 0, 0, 120, 88);
-        } else if (gUnk_03005280 == 2) {
+        } else if (gExtraModeTitlePhase == 2) {
             QueueSprite(8, (u32)gUnk_085B6AC8, 0, 0, 120, 88);
         } else {
             TaskSleepForever();
@@ -95,18 +95,18 @@ void sub_080083b0(void)
 
 void sub_08008460(void)
 {
-    if (gUnk_03005280 == 1) {
+    if (gExtraModeTitlePhase == 1) {
         gBg0ScrollX += 0x20000;
         if (gBg0ScrollX > 0x2000000)
             gBg0ScrollX -= 0x2000000;
     }
-    if (gUnk_03005280 == 2) {
+    if (gExtraModeTitlePhase == 2) {
         BlendColors(gUnk_085B6F98, gUnk_085B6F98 + 16, gUnk_0873079C[gCurTask->unk2C], 16, gObjPalette);
         gCurTask->unk2C = (gCurTask->unk2C + 1) & 15;
     }
 }
 
-void sub_080084dc(void)
+void ExtraModeTitleLevelBar(void)
 {
     gCurTask->updateState = 1;
     for (;;) {
@@ -129,7 +129,7 @@ void sub_08008558(void)
     u32 r;
     u32 i;
 
-    if (gUnk_03005280 == 4) {
+    if (gExtraModeTitlePhase == 4) {
         r = gFrameCount & 7;
         if (r > 3) {
             r -= 4;
@@ -139,7 +139,7 @@ void sub_08008558(void)
             r <<= 6;
         }
         BlendColors(gUnk_085B6E78[gSubGameLevel][0], gUnk_085B6E78[gSubGameLevel][2], (u16)r, 16, gUnk_03001490);
-    } else if (gUnk_03005280 == 3) {
+    } else if (gExtraModeTitlePhase == 3) {
         r = gFrameCount & 15;
         if (r > 7) {
             r = 16 - r;

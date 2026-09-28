@@ -67,13 +67,13 @@ extern u32 gUnk_087556E0[];
 extern u32 gUnk_08755708[];
 extern u32 gUnk_0875581C[];
 extern u32 gUnk_0875585C[];
-extern void (*gUnk_08757330[])(void);
+extern void (*gEndingEpilogueVariants[])(void);
 extern u16 gUnk_0875735C[];
 extern s32 gUnk_08757374[];
 extern s32 gUnk_08757394[];
 extern s32 gUnk_087573B4[];
 extern s32 gUnk_087573D4[];
-extern void (*gUnk_087573F4[])(void);
+extern void (*gEndingStarRodReturnVariants[])(void);
 extern u16 gUnk_08757424[];
 extern u16 gUnk_08757432[];
 extern u16 gUnk_0875743E[];
@@ -100,9 +100,9 @@ extern u16 gUnk_0875841E[][7]; /* credits: per variant, the scenes' lengths in f
 
 /* src/mode_c6260.c */
 void EndingMain(void);
-void sub_080c62f0(void);
+void EndingEpilogueScene(void);
 void sub_080c6354(void);
-void sub_080c6388(void);
+void EndingStarRodReturnScene(void);
 void sub_080c63ec(void);
 
 /* src/results_c6420.c */
@@ -115,7 +115,7 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y);
 void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n);
 
 /* src/ending_c6c64.c */
-void sub_080c6c64(void);
+void Task_EndingEpilogue(void);
 void sub_080c6ca0(void);
 void sub_080c6d38(void);
 void sub_080c6d84(void);
@@ -139,7 +139,7 @@ void sub_080c8e88(void);
 void sub_080c8ea8(void);
 
 /* src/ending_c9004.c */
-void sub_080c9004(void);
+void Task_EndingStarRodReturn(void);
 void sub_080c9040(void);
 void sub_080c90c8(void);
 void sub_080c9114(void);

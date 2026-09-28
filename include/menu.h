@@ -9,7 +9,7 @@
 
 /* EWRAM */
 extern s8 gModeListExtraRows;
-extern s8 gUnk_02004B44;
+extern s8 gPlayerCountCursor;
 extern u32 gMenuBufferedKeys;
 extern u8 gBgScrollActive;
 extern s8 gFileMenuCursor;
@@ -110,16 +110,16 @@ void sub_0800bf6c(s32 slot, s32 value, s32 mode);
 void sub_0800c09c(void);
 void MenuSetupFileMenu(void);
 void sub_0800c34c(void);
-void sub_0800c558(void);
-void sub_0800c610(void);
-void sub_0800c8a0(void);
+void MenuNormalExtraSelect(void);
+void MenuPlayerCountSelect(void);
+void MenuEraseSelect(void);
 
 /* src/menu_0ca10.c */
 void MenuEnterModeList(void);
 void MenuDrawModeList(void);
 void sub_0800cd60(void);
 void sub_0800cff4(void);
-void sub_0800d0f4(void);
+void MenuModePlayerCountSelect(void);
 void sub_0800d280(void);
 void sub_0800d310(void);
 void sub_0800d35c(s32 a);
@@ -147,20 +147,20 @@ void MenuUpdateFileMenuPalette(void);
 s32 MenuLoadPicture(s32 id, s32 part);
 
 /* src/menutask_0e314.c */
-void sub_0800e314(void);
-void sub_0800e390(void);
-void sub_0800e46c(void);
-void sub_0800e518(void);
+void Task_NormalExtraPanel(void);
+void NormalExtraPanelUpdate(void);
+void Task_PlayerCountPanel(void);
+void PlayerCountPanelUpdate(void);
 void Task_ModeListCursor(void);
 void sub_0800e674(void);
 void sub_0800e7b0(void);
-void sub_0800e81c(void);
-void sub_0800e8c0(void);
-void sub_0800e9a4(void);
+void Task_ModePlayerCountPanel(void);
+void ModePlayerCountPanelUpdate(void);
+void Task_EraseConfirmDialog(void);
 
 /* src/menutask_0ea0c.c */
-void sub_0800ea0c(void);
-void sub_0800eae4(void);
+void EraseConfirmDialogUpdate(void);
+void Task_EraseFileWipe(void);
 void sub_0800ec08(void);
 void Task_SoundTestCursors(void);
 void sub_0800ecb8(void);
@@ -171,10 +171,10 @@ void sub_0800f084(void);
 /* src/menutask_0f180.c */
 void Task_LinkPlayPlayerList(void);
 void sub_0800f2b4(void);
-void sub_0800f390(void);
-void sub_0800f408(void);
-void sub_0800f5ec(void);
-void sub_0800f698(void);
+void Task_LinkPlayConsole(void);
+void LinkPlayConsoleUpdate(void);
+void Task_LinkPlayCable(void);
+void LinkPlayCableUpdate(void);
 void Task_MenuScreenTitle(void);
 void sub_0800f840(void);
 void Task_MenuBgPaletteCycle(void);

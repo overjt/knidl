@@ -110,8 +110,8 @@ void Task_AirGrindObject(void);
 void Task_WarpStarCamera(void);
 void sub_08075000(void);
 void sub_080752f4(void);
-void sub_080c6c64(void);
-void sub_080c9004(void);
+void Task_EndingEpilogue(void);
+void Task_EndingStarRodReturn(void);
 void Task_PengyIceBreath(void);
 void Task_LaserBallLaser(void);
 void Task_ChillyFreeze(void);
@@ -253,17 +253,17 @@ void Task_FileSelectSlot(void);
 void Task_FileSelectCursor(void);
 void Task_FileMenuSlot(void);
 void Task_FileMenuHighlight(void);
-void sub_0800e9a4(void);
-void sub_0800eae4(void);
-void sub_0800e314(void);
-void sub_0800e46c(void);
+void Task_EraseConfirmDialog(void);
+void Task_EraseFileWipe(void);
+void Task_NormalExtraPanel(void);
+void Task_PlayerCountPanel(void);
 void Task_ModeListCursor(void);
-void sub_0800e81c(void);
+void Task_ModePlayerCountPanel(void);
 void sub_0800ef30(void);
 void sub_0800f084(void);
 void Task_LinkPlayPlayerList(void);
-void sub_0800f390(void);
-void sub_0800f5ec(void);
+void Task_LinkPlayConsole(void);
+void Task_LinkPlayCable(void);
 void Task_SoundTestCursors(void);
 void Task_SoundTestPulse(void);
 void Task_MenuScreenTitle(void);
@@ -275,7 +275,7 @@ void Task_GameOverCursor(void);
 void Task_GameOverPalette(void);
 void Task_HalveScore(void);
 void Task_GameOverObject(void);
-void sub_08008348(void);
+void Task_ExtraModeTitleSprite(void);
 
 /* data-policy: functional - the task-type table: one {class, body} pair per
    task type, as TaskCreate reads it (266 entries x 4 numbers). */
@@ -380,8 +380,8 @@ const struct TaskType gTaskTypes[] = {
     /*  97 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarCamera },
     /*  98 */ { 3, { 0, 0, 0 }, (u32)sub_08075000 },
     /*  99 */ { 3, { 0, 0, 0 }, (u32)sub_080752f4 },
-    /* 100 */ { 3, { 0, 0, 0 }, (u32)sub_080c6c64 },
-    /* 101 */ { 3, { 0, 0, 0 }, (u32)sub_080c9004 },
+    /* 100 */ { 3, { 0, 0, 0 }, (u32)Task_EndingEpilogue },
+    /* 101 */ { 3, { 0, 0, 0 }, (u32)Task_EndingStarRodReturn },
     /* 102 */ { 2, { 0, 0, 0 }, (u32)Task_PengyIceBreath },
     /* 103 */ { 2, { 0, 0, 0 }, (u32)Task_LaserBallLaser },
     /* 104 */ { 2, { 0, 0, 0 }, (u32)Task_ChillyFreeze },
@@ -523,17 +523,17 @@ const struct TaskType gTaskTypes[] = {
     /* 240 */ { 4, { 0, 0, 0 }, (u32)Task_FileSelectCursor },
     /* 241 */ { 4, { 0, 0, 0 }, (u32)Task_FileMenuSlot },
     /* 242 */ { 4, { 0, 0, 0 }, (u32)Task_FileMenuHighlight },
-    /* 243 */ { 4, { 0, 0, 0 }, (u32)sub_0800e9a4 },
-    /* 244 */ { 4, { 0, 0, 0 }, (u32)sub_0800eae4 },
-    /* 245 */ { 4, { 0, 0, 0 }, (u32)sub_0800e314 },
-    /* 246 */ { 4, { 0, 0, 0 }, (u32)sub_0800e46c },
+    /* 243 */ { 4, { 0, 0, 0 }, (u32)Task_EraseConfirmDialog },
+    /* 244 */ { 4, { 0, 0, 0 }, (u32)Task_EraseFileWipe },
+    /* 245 */ { 4, { 0, 0, 0 }, (u32)Task_NormalExtraPanel },
+    /* 246 */ { 4, { 0, 0, 0 }, (u32)Task_PlayerCountPanel },
     /* 247 */ { 4, { 0, 0, 0 }, (u32)Task_ModeListCursor },
-    /* 248 */ { 4, { 0, 0, 0 }, (u32)sub_0800e81c },
+    /* 248 */ { 4, { 0, 0, 0 }, (u32)Task_ModePlayerCountPanel },
     /* 249 */ { 4, { 0, 0, 0 }, (u32)sub_0800ef30 },
     /* 250 */ { 4, { 0, 0, 0 }, (u32)sub_0800f084 },
     /* 251 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayPlayerList },
-    /* 252 */ { 4, { 0, 0, 0 }, (u32)sub_0800f390 },
-    /* 253 */ { 4, { 0, 0, 0 }, (u32)sub_0800f5ec },
+    /* 252 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayConsole },
+    /* 253 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayCable },
     /* 254 */ { 4, { 0, 0, 0 }, (u32)Task_SoundTestCursors },
     /* 255 */ { 4, { 0, 0, 0 }, (u32)Task_SoundTestPulse },
     /* 256 */ { 4, { 0, 0, 0 }, (u32)Task_MenuScreenTitle },
@@ -545,5 +545,5 @@ const struct TaskType gTaskTypes[] = {
     /* 262 */ { 4, { 0, 0, 0 }, (u32)Task_GameOverPalette },
     /* 263 */ { 4, { 0, 0, 0 }, (u32)Task_HalveScore },
     /* 264 */ { 4, { 0, 0, 0 }, (u32)Task_GameOverObject },
-    /* 265 */ { 4, { 0, 0, 0 }, (u32)sub_08008348 },
+    /* 265 */ { 4, { 0, 0, 0 }, (u32)Task_ExtraModeTitleSprite },
 };

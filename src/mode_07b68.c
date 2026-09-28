@@ -112,7 +112,7 @@ s32 sub_08007c5c(void)
     ret = sub_08007b68((u32 *)src, gUnk_02004000, size);
     if (ret != 0)
         return 1;
-    gUnk_03005280 = 2;
+    gExtraModeTitlePhase = 2;
     gDispCnt &= 0xFEFF;
     gBg0ScrollX = ret;
     LinkStartKeyExchange();
@@ -238,14 +238,14 @@ void sub_08007f9c(void)
             }
         }
     }
-    sub_080082d0();
+    CreateExtraModeTitleSprites();
     gUnk_02007D00 = 0;
     if (gLinkSetupMode == 2) {
         gLinkPlayerCount = 999;
         sub_08007e04();
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1900;
-        gUnk_03005280 = 0;
+        gExtraModeTitlePhase = 0;
         BeginFastFadeInFromWhite();
         while (gFadeSteps != 0) {
             RunFrame();
@@ -263,7 +263,7 @@ void sub_08007f9c(void)
             return;
         }
         EnableSoundDriver();
-        gUnk_03005280 = 1;
+        gExtraModeTitlePhase = 1;
         PlayBgm(40);
         /* `cancel` sits here in the ROM, between this arm and the else arm */
         if (sub_08007c5c() == 0)
@@ -281,13 +281,13 @@ void sub_08007f9c(void)
         LinkRequestSync();
         LinkSyncRandom();
         LinkStartKeyExchange();
-        gUnk_03005280 = 3;
+        gExtraModeTitlePhase = 3;
         BeginFastFadeInFromWhite();
         RunLinkFramesUntilFadeDone();
         RunLinkFrames(16);
     }
 select:
-    gUnk_03005280 = 3;
+    gExtraModeTitlePhase = 3;
     while (1) {
         RunLinkFrame();
         if (gPrevGameState == 4) {
@@ -318,7 +318,7 @@ select:
     }
     if (gLinkSetupMode == 2)
         gLinkDriverMode = 0;
-    gUnk_03005280 = 4;
+    gExtraModeTitlePhase = 4;
     LinkStopKeyExchange();
     /* store address first, then the one read of gUnk_02007FCC, kept in k */
     gGameState = (k = gUnk_02007FCC) + 14;

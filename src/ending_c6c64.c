@@ -11,10 +11,10 @@
 /* ending_c6c64.c (0x080C6C64-0x080C7E4B, issue #100).
  *
  * The first ending scene, part 1: task type #100 (class 3), which M37's
- * sub_080c62f0 spawns in AgbMain state 11 and waits on (gEndingSceneActive).
- *   sub_080c6c64   the body: variant 0 (Task.variant == 0) loads the graphics
+ * EndingEpilogueScene spawns in AgbMain state 11 and waits on (gEndingSceneActive).
+ *   Task_EndingEpilogue   the body: variant 0 (Task.variant == 0) loads the graphics
  *       (sub_080c6ca0) and spawns variants 1, 6, 7, 9 and 10 from the list
- *       gUnk_0875735C (sub_080c6d38); variants 1-10 run gUnk_08757330[unk73].
+ *       gUnk_0875735C (sub_080c6d38); variants 1-10 run gEndingEpilogueVariants[unk73].
  *   sub_080c6d84 / sub_080c769c   variant 1, the scene's main sprite, and its
  *       scaling draw callback; sub_080c77cc spawns its four variant-2 helpers.
  *   sub_080c7810   variant 2: while the spawner is drawn (Task.unk34), one of
@@ -36,8 +36,8 @@ void TaskSleepForever(void);                                     /* end the runn
 void LoadGfxSet(u16 a0);                                   /* load screen graphics */
 
 /* Task type #100 (class 3): variant 0 loads the graphics and spawns the
-   other variants; variants 1-10 run the anchor table gUnk_08757330[]. */
-void sub_080c6c64(void)
+   other variants; variants 1-10 run the anchor table gEndingEpilogueVariants[]. */
+void Task_EndingEpilogue(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
@@ -45,7 +45,7 @@ void sub_080c6c64(void)
         sub_080c6ca0();
         sub_080c6d38();
     } else {
-        CallTableEntry(gCurTask->variant, 11, gUnk_08757330);
+        CallTableEntry(gCurTask->variant, 11, gEndingEpilogueVariants);
     }
     TaskExitTrampoline();
 }
@@ -90,7 +90,7 @@ void sub_080c6d38(void)
 /* Task type #100 variant 1, the scene's main sprite: spawns variant 4 and
    the four variant-2 helpers (sub_080c77cc), draws itself through the
    scaling callback sub_080c769c, runs its timed motion phases and ends the
-   scene by clearing gEndingSceneActive, which M37's sub_080c62f0 waits for. */
+   scene by clearing gEndingSceneActive, which M37's EndingEpilogueScene waits for. */
 void sub_080c6d84(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;

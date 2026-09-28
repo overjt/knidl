@@ -11,10 +11,10 @@
 /* ending_c9004.c (0x080C9004-0x080CAA3B, issue #100).
  *
  * The second ending scene: task type #101 (class 3), which M37's
- * sub_080c6388 spawns in AgbMain state 11 and waits on (gEndingSceneActive).
- *   sub_080c9004   the body: variant 0 loads the graphics (sub_080c9040) and
+ * EndingStarRodReturnScene spawns in AgbMain state 11 and waits on (gEndingSceneActive).
+ *   Task_EndingStarRodReturn   the body: variant 0 loads the graphics (sub_080c9040) and
  *       spawns variants 1, 3, 6, 7, 8 and 11 from the list gUnk_08757424
- *       (sub_080c90c8); variants 1-11 run gUnk_087573F4[Task.variant].
+ *       (sub_080c90c8); variants 1-11 run gEndingStarRodReturnVariants[Task.variant].
  *   sub_080c9114 / sub_080c9418   variant 1, a sprite that falls in, then
  *       rides the BG3 layer and flashes its palette.
  *   sub_080c9d10   variant 2, a 22-frame animation played six times.
@@ -62,8 +62,8 @@ void TaskSleepForever(void);                                     /* end the runn
 void TaskStop(void);
 
 /* Task type #101 (class 3): variant 0 loads the graphics and spawns the
-   other variants; variants 1-11 run the anchor table gUnk_087573F4[]. */
-void sub_080c9004(void)
+   other variants; variants 1-11 run the anchor table gEndingStarRodReturnVariants[]. */
+void Task_EndingStarRodReturn(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
@@ -71,7 +71,7 @@ void sub_080c9004(void)
         sub_080c9040();
         sub_080c90c8();
     } else {
-        CallTableEntry(gCurTask->variant, 12, gUnk_087573F4);
+        CallTableEntry(gCurTask->variant, 12, gEndingStarRodReturnVariants);
     }
     TaskExitTrampoline();
 }

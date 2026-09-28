@@ -100,19 +100,19 @@ void MainMenuMain(void)
             sub_0800c34c();
             break;
         case 2:
-            sub_0800c558();
+            MenuNormalExtraSelect();
             break;
         case 3:
-            sub_0800c610();
+            MenuPlayerCountSelect();
             break;
         case 4:
             sub_0800cd60();
             break;
         case 5:
-            sub_0800d0f4();
+            MenuModePlayerCountSelect();
             break;
         case 6:
-            sub_0800c8a0();
+            MenuEraseSelect();
             break;
         case 7:
             sub_0800d450();

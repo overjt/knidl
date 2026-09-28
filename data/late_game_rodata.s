@@ -668,8 +668,8 @@ gUnk_08757320:
 	.word	gBg1Cnt
 	.word	gBg2Cnt
 	.word	gBg3Cnt
-	.global	gUnk_08757330
-gUnk_08757330:
+	.global	gEndingEpilogueVariants
+gEndingEpilogueVariants:
 	.incbin	"baserom.gba", 0x757330, 0x4
 	.word	sub_080c6d84+1
 	.word	sub_080c7810+1
@@ -699,8 +699,8 @@ gUnk_087573B4:
 	.global	gUnk_087573D4
 gUnk_087573D4:
 	.incbin	"baserom.gba", 0x7573D4, 0x20
-	.global	gUnk_087573F4
-gUnk_087573F4:
+	.global	gEndingStarRodReturnVariants
+gEndingStarRodReturnVariants:
 	.incbin	"baserom.gba", 0x7573F4, 0x4
 	.word	sub_080c9114+1
 	.word	sub_080c9d10+1

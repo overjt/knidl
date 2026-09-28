@@ -6,9 +6,9 @@
 
 /* menutask_0ea0c.c (0x0800EA0C-0x0800F17F, issue #99).
  *
- * Menu sprite and palette tasks, second part.  sub_0800ea0c is the
+ * Menu sprite and palette tasks, second part.  EraseConfirmDialogUpdate is the
  * per-frame body of task type #243 (two sprites plus a palette
- * cross-fade); task type #244 (sub_0800eae4, body sub_0800ec08) slides a
+ * cross-fade); task type #244 (Task_EraseFileWipe, body sub_0800ec08) slides a
  * sprite pair in, bobs it and slides it out; task types #254
  * (Task_SoundTestCursors, body sub_0800ecb8) and #255 (Task_SoundTestPulse) animate the
  * sound-test screen (menu screen 7: the cursor sprites and the palette
@@ -23,7 +23,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 
-void sub_0800ea0c(void)
+void EraseConfirmDialogUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -58,7 +58,7 @@ void sub_0800ea0c(void)
     BlendColors(gUnk_08559BA4[k + x->unk2C], gUnk_08559BA4[k + x->unk30], (u16)x->unk34, 16, gUnk_030015D0);
 }
 
-void sub_0800eae4(void)
+void Task_EraseFileWipe(void)
 {
     struct Task *t = gCurTask;
 
