@@ -1565,7 +1565,7 @@ functions; the reachability sweep of #77 corrected that to 414, see below).
   almost all of them are **moving scenery** rather than enemies (*correction,
   #155 run 2: they are enemies - Waddle Dee's rows, Rocky, Pengy, Sir Kibble,
   Cappy, Gordo, Cool Spook, Kabu, Bomber, Sparky, Scarfy, the sword knights,
-  Togezo, UFO and the parasol, identified from local sprite renders and
+  Needlous (run 2 said Togezo; corrected in run 3), UFO and the parasol, identified from local sprite renders and
   their ActorDef.ability; the table title above comes from
   `tools/modmap.py` and keeps the old reading until a non-rename PR*): the bodies
   drive the 16.16 velocity pair `Task.unk54`/`Task.unk58` and the gravity cell

@@ -152,7 +152,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   three-table shape.  #77 read the bank as moving scenery; #155 run 2's
   local sprite renders and the subtypes' `ActorDef.ability` show it is
   enemies (Waddle Dee's rows, Rocky, Pengy, Sir Kibble, Cappy, Gordo, Cool
-  Spook, Kabu, Bomber, Sparky, Scarfy, the two sword knights, Togezo, UFO
+  Spook, Kabu, Bomber, Sparky, Scarfy, the two sword knights, Needlous (run 2 said Togezo; run 3 corrected it), UFO
   and the parasol), whose bodies drive Task.velX/velY and Task.accelY from
   ROM constants and wait on Task.onGround.  Twenty-four census rows corrected in `tools/symdb.py` (five
   prologue-filter misses and nineteen dead exports) and 121 ROM tables named
