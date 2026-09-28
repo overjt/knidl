@@ -61,7 +61,7 @@ void sub_0804374c(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 23;
 Lloop:
-    gCurTask->unk80 = 4;
+    gCurTask->u80.attackAbility = 4;
     {
         struct Task *t = gCurTask;
 
@@ -269,7 +269,7 @@ void sub_08043b80(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 24;
-    gCurTask->unk80 = 4;
+    gCurTask->u80.attackAbility = 4;
     {
         struct Task *t = gCurTask;
         t->unk30 = 0;
@@ -439,7 +439,7 @@ void sub_08043fa8(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 25;
-    gCurTask->unk80 = 4;
+    gCurTask->u80.attackAbility = 4;
     {
         struct Task *t = gCurTask;
         t->unk28 = 0;
@@ -565,7 +565,7 @@ void sub_08044288(void)
                 *(u32 *)((u8 *)u->player + 108) = 0;
             }
             PlaySfx(0x10B);
-            gCurTask->unk80 = 4;
+            gCurTask->u80.attackAbility = 4;
         }
     }
     switch (gCurTask->variant) {
@@ -707,7 +707,7 @@ void PlayerActionFire(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->unk80 = 1;
+            u->u80.attackAbility = 1;
         }
     }
     switch (gCurTask->variant) {
@@ -798,7 +798,7 @@ void PlayerActionSpark(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->unk80 = 2;
+            u->u80.attackAbility = 2;
         }
     }
     switch (gCurTask->variant) {

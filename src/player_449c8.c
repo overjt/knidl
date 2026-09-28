@@ -108,7 +108,7 @@ void PlayerActionCutter(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 31;
     gCurTask->unk28 = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskSetFrame(0x3E9);
     TaskYieldTrampoline(2);
     gCurTask->frame++;

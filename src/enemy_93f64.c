@@ -495,7 +495,7 @@ void GrandWheelieCharge(void)
     t = gCurTask;
     t->unk30 = t->facing;
     gUnk_02007D00[1] = PlaySfx(0x209);
-    if (gCurTask->unk8C->animScript != gUnk_08744384)
+    if (gCurTask->u8C.actor->animScript != gUnk_08744384)
         gCurTask->unk28 = sub_080956c8(gUnk_08744384);
     TaskYieldTrampoline(45);
     gCurTask->unk2C = sub_08094b94();
@@ -551,7 +551,7 @@ other:
     if (w->unk2C < 0) {
         a = w->pixelX;
         p = &w->pixelY;
-        switch (GetCollisionTileAtPixel(a, ((s8 *)w->unk8C->terrainBox)[3] + *p)) {
+        switch (GetCollisionTileAtPixel(a, ((s8 *)w->u8C.actor->terrainBox)[3] + *p)) {
         case 2:
             if (gCurTask->facing == -1)
                 return;
@@ -604,27 +604,27 @@ void sub_08094bbc(void)
     gCurTask->unk1C = (s8)v;
     switch ((s8)v) {
     case 0:
-        if (gCurTask->unk8C->animScript != gUnk_08744360)
+        if (gCurTask->u8C.actor->animScript != gUnk_08744360)
             gCurTask->unk28 = sub_080956c8(gUnk_08744360);
         TaskSetMotionXFacing(gUnk_087444A4[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 1:
-        if (gCurTask->unk8C->animScript != gUnk_08744360)
+        if (gCurTask->u8C.actor->animScript != gUnk_08744360)
             gCurTask->unk28 = sub_080956c8(gUnk_08744360);
         TaskSetMotionXFacing(gUnk_087444AC[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 2:
-        if (gCurTask->unk8C->animScript != gUnk_08744360)
+        if (gCurTask->u8C.actor->animScript != gUnk_08744360)
             gCurTask->unk28 = sub_080956c8(gUnk_08744360);
         TaskSetMotionXFacing(gUnk_087444B4[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 3:
-        if (gCurTask->unk8C->animScript != gUnk_0874433C)
+        if (gCurTask->u8C.actor->animScript != gUnk_0874433C)
             gCurTask->unk28 = sub_080956c8(gUnk_0874433C);
         TaskSetMotionXFacing(gUnk_087444BC[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 4:
-        if (gCurTask->unk8C->animScript != gUnk_08744384)
+        if (gCurTask->u8C.actor->animScript != gUnk_08744384)
             gCurTask->unk28 = sub_080956c8(gUnk_08744384);
         TaskSetMotionXFacing(gUnk_087444C4[gCurTask->unk74], 0x5A5A5A5A);
         break;
@@ -686,7 +686,7 @@ void sub_08094dec(void)
     x = sub_08095794(gCurTask->unk28);
     t = gCurTask;
     t->unk28 = x;
-    if (t->unk8C->animScript == 0) {
+    if (t->u8C.actor->animScript == 0) {
         TaskTurnAround();
         gCurTask->unk28 = sub_080956c8(gUnk_0874433C);
     }
@@ -823,7 +823,7 @@ void sub_080950b4(void)
     switch (v) {
     case 0:
         gCurTask->unk28 = sub_08095794(t->unk28);
-        if (gCurTask->unk8C->animScript == 0) {
+        if (gCurTask->u8C.actor->animScript == 0) {
             TaskTurnAround();
             gCurTask->unk28 = sub_080956c8(gUnk_0874433C);
         }
@@ -867,7 +867,7 @@ void sub_0809513c(void)
     TaskYieldTrampoline(16);
     PlaySfx(506);
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     sp.subtype = 12;
     sp.taskType = 114;
     sp.variant = t->variant;
@@ -1016,7 +1016,7 @@ s32 sub_080954f0(void)
         TaskStopY();
         RequestScreenShake(2);
         PlaySfx(0x1F7);
-        if (gCurTask->unk8C->animScript != gUnk_08744384)
+        if (gCurTask->u8C.actor->animScript != gUnk_08744384)
             gCurTask->unk28 = sub_080956c8(gUnk_08744384);
         TaskSetEntry(sub_08094894, gCurTaskIdx);
         return 1;
@@ -1088,7 +1088,7 @@ s32 sub_080956c8(struct AnimCmd *p)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     a->animScript = p;
     a->animScriptPos = 0;
     return sub_080956e4();
@@ -1100,7 +1100,7 @@ s32 sub_080956e4(void)
     struct AnimCmd *c;
     s32 r;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     c = a->animScript;
     c += a->animScriptPos;
     if (c->frame == -3) {
@@ -1130,7 +1130,7 @@ tail:
 
 s32 sub_08095768(s32 a)
 {
-    if (gCurTask->unk8C->animScript != 0) {
+    if (gCurTask->u8C.actor->animScript != 0) {
         if (a <= 0) {
             TaskFaceNearestPlayer();
             a = sub_080956e4();
@@ -1142,7 +1142,7 @@ s32 sub_08095768(s32 a)
 
 s32 sub_08095794(s32 a)
 {
-    if (gCurTask->unk8C->animScript != 0) {
+    if (gCurTask->u8C.actor->animScript != 0) {
         if (a <= 0)
             a = sub_080956e4();
         a--;

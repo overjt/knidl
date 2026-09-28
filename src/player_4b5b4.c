@@ -27,7 +27,7 @@ void PlayerActionLight(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 49;
     gUnk_03001F34 = 1;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;

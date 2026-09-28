@@ -447,7 +447,7 @@ void Task_WaddleDoo(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gWaddleDooFrames;
-    u->unk8C->extraFrame = 4;
+    u->u8C.actor->extraFrame = 4;
     CallTableEntry(u->variant, 4, gWaddleDooVariants);
 }
 
@@ -724,7 +724,7 @@ void sub_08085998(void)
     s32 n;
 
     t = gCurTask;
-    if (t->unk2C == 0 && t->unk8C->extraFrame == -1 && --t->unk28 == 0)
+    if (t->unk2C == 0 && t->u8C.actor->extraFrame == -1 && --t->unk28 == 0)
     {
         v = RandomRange(4);
         switch (v)
@@ -1043,7 +1043,7 @@ u8 sub_08085ef0(void)
         TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
         return 1;
     case 1:
-        if (t->unk8C->extraFrame == -1)
+        if (t->u8C.actor->extraFrame == -1)
         {
             t->unk2C = 1;
             t->accelY = 0x1500;

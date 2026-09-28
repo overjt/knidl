@@ -858,7 +858,7 @@ void Task_Shotzo(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gShotzoFrames;
-    u->unk8C->extraFrame = 4;
+    u->u8C.actor->extraFrame = 4;
     CallTableEntry(u->variant, 6, gShotzoVariants);
 }
 

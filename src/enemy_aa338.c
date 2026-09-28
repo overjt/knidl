@@ -422,7 +422,7 @@ void sub_080aa998(void)
     gCurTask->frame++;
     TaskYieldTrampoline(8);
     CreateChildTask(203, gCurTask->pixelX, gCurTask->pixelY,
-                 gCurTask->unk8C->savedTileWord | (128 << 4));
+                 gCurTask->u8C.actor->savedTileWord | (128 << 4));
     CreateChildTask(204, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     PlaySfx(0x235);
     gCurTask->unk18 = ActorStartAnim((struct AnimCmd *)gUnk_087492C0);
@@ -442,7 +442,7 @@ void sub_080aa998(void)
         sp.spawnArg = 0;
         sp.x = 48;
         sp.y = 16;
-        sp.tileWord = gCurTask->unk8C->savedTileWord;
+        sp.tileWord = gCurTask->u8C.actor->savedTileWord;
         sp.checkTerrain = 1;
         d = (s16)gCurTask->health;
         if (d <= Div(gCurTask->unk1C, 3) && (gCurTask->unk6C & 1))
@@ -513,7 +513,7 @@ void sub_080aab80(void)
     gUnk_02007D00[7] = gUnk_0874921E[gUnk_03001F2C];
     gUnk_02007D00[5] = 0;
     CreateChildTask(201, gCurTask->pixelX, gCurTask->pixelY,
-                 gCurTask->unk8C->savedTileWord | 0x800);
+                 gCurTask->u8C.actor->savedTileWord | 0x800);
     CreateChildTask(202, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     gCurTask->unk20 = 0;
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < gUnk_02007D00[7]; gCurTask->unk6C++)
@@ -527,7 +527,7 @@ void sub_080aab80(void)
         sp.variant = 3;
         sp.x = 0;
         sp.y = 8;
-        sp.tileWord = gCurTask->unk8C->savedTileWord;
+        sp.tileWord = gCurTask->u8C.actor->savedTileWord;
         sp.checkTerrain = 1;
         sp.spawnArg = gCurTask->unk20;
         CreateActorFromDescAtOffsetFacing(&sp, 1);
@@ -567,14 +567,14 @@ void sub_080aad98(void)
     TaskStopY();
     gCurTask->unk18 = ActorStartAnim((struct AnimCmd *)gUnk_08749298);
     CreateChildTask(207, gCurTask->pixelX, gCurTask->pixelY,
-                 gCurTask->unk8C->savedTileWord | (128 << 4));
+                 gCurTask->u8C.actor->savedTileWord | (128 << 4));
     CreateChildTask(205, gCurTask->pixelX, gCurTask->pixelY,
-                 gCurTask->unk8C->savedTileWord | (128 << 4));
+                 gCurTask->u8C.actor->savedTileWord | (128 << 4));
     CreateChildTask(206, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     sp.subtype = 33;
     sp.taskType = 136;
     sp.variant = 4;
-    sp.tileWord = gCurTask->unk8C->savedTileWord;
+    sp.tileWord = gCurTask->u8C.actor->savedTileWord;
     sp.checkTerrain = 1;
     if (gCurTask->unk30 & 1)
     {
@@ -1043,7 +1043,7 @@ void sub_080ab93c(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 9);
     CreateChildTask(209, gCurTask->pixelX, gCurTask->pixelY,
-                 gCurTask->unk8C->savedTileWord);
+                 gCurTask->u8C.actor->savedTileWord);
     gCurTask->unk6C = 0;
     do
     {
@@ -2197,7 +2197,7 @@ void sub_080ad3e8(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     sp.subtype = 14;
     sp.taskType = 116;
     sp.variant = t->variant;
@@ -2274,7 +2274,7 @@ void Task_HeavyMole(void)
     CreateChildTaskHere(189, 1);
     gUnk_02007D00[8] = CreateChildTaskHere(191, 1);
     CreateChildTaskHere(192, 1);
-    gCurTask->unk8C->unk3C = (u32)sub_080ae380;
+    gCurTask->u8C.actor->unk3C = (u32)sub_080ae380;
     sub_08066544();
     gCurTask->updateCallback = (u32)sub_080ad710;
     for (;;)

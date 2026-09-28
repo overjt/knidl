@@ -367,7 +367,7 @@ void sub_080791bc(void)
 void sub_080791c0(void)
 {
     gCurTask->updateState = 1;
-    if (gCurTask->unk8C->extraFrame == -1)
+    if (gCurTask->u8C.actor->extraFrame == -1)
     {
         ActorStopAnim();
         TaskSetMotionY(0, 0x1500, 0x30000);
@@ -466,7 +466,7 @@ void sub_080793c4(void)
 void sub_080793d0(void)
 {
     gCurTask->updateState = 1;
-    if (gCurTask->unk8C->extraFrame == -1)
+    if (gCurTask->u8C.actor->extraFrame == -1)
     {
         ActorStopAnim();
         TaskSetMotionY(0, 0x1500, 0x30000);
@@ -659,7 +659,7 @@ void PengyWalk(void)
     u32 *cbase;
     s16 *dbase;
 
-    t->unk8C->animScript = 0;
+    t->u8C.actor->animScript = 0;
     t->updateState = 1;
     TaskStop();
     gCurTask->unk34 = ActorStartAnim(gUnk_0874074C);

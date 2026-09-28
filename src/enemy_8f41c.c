@@ -254,7 +254,7 @@ void sub_0808f728(void)
 
 void sub_0808f75c(void)
 {
-    if (gCurTask->unk8C->extraFrame == -1)
+    if (gCurTask->u8C.actor->extraFrame == -1)
     {
         if (sub_08069888() == 0)
             sub_0808f1b4(1, ParasolShotzoEnterState);
@@ -314,7 +314,7 @@ void sub_0808f888(void)
     struct Task *t;
 
     gCurTask->updateState = 2;
-    if (gCurTask->unk8C->extraFrame == -1)
+    if (gCurTask->u8C.actor->extraFrame == -1)
     {
         ActorStopAnim();
         TaskStop();

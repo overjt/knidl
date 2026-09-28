@@ -406,22 +406,22 @@ void sub_0808d460(void)
 
 void sub_0808d494(void)
 {
-    gCurTask->unk8C->extraFrame = 9;
+    gCurTask->u8C.actor->extraFrame = 9;
 }
 
 void sub_0808d4a8(void)
 {
-    gCurTask->unk8C->extraFrame = 8;
+    gCurTask->u8C.actor->extraFrame = 8;
 }
 
 void sub_0808d4bc(void)
 {
-    gCurTask->unk8C->extraFrame = 10;
+    gCurTask->u8C.actor->extraFrame = 10;
 }
 
 void sub_0808d4d0(void)
 {
-    gCurTask->unk8C->extraFrame = -1;
+    gCurTask->u8C.actor->extraFrame = -1;
 }
 
 void Task_BroomHatter(void)
@@ -430,9 +430,9 @@ void Task_BroomHatter(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk8C->unk16 = 0;
-    t->unk8C->extraOffsetY = 0;
-    t->unk8C->extraTileWord = (t->tileWord & 0xFFF) | (240 << 8);
+    t->u8C.actor->unk16 = 0;
+    t->u8C.actor->extraOffsetY = 0;
+    t->u8C.actor->extraTileWord = (t->tileWord & 0xFFF) | (240 << 8);
     t->unk34 = 1;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_08065640;
@@ -1135,6 +1135,6 @@ void Task_LaserBall(void)
     t->layer = 11;
     gCurTask->frameTable = gLaserBallFrames;
     AcquirePaletteAnim(3, 1);
-    SetPaletteAnimSource(1, 0, gCurTask->unk8C->paletteVariant);
+    SetPaletteAnimSource(1, 0, gCurTask->u8C.actor->paletteVariant);
     CallTableEntry(gCurTask->variant, 2, gLaserBallVariants);
 }

@@ -246,7 +246,7 @@ s32 sub_08099e9c(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     sp.subtype = 16;
     sp.taskType = 118;
     sp.variant = 0;
@@ -280,7 +280,7 @@ void sub_08099ee4(u8 a)
             return;
         break;
     }
-    act = gCurTask->unk8C;
+    act = gCurTask->u8C.actor;
     zero = 0;
     gCurTask->unk70 = RandomRange(4);
     gCurTask->unk6C = (s8)gUnk_087456CC[(s16)gCurTask->unk70];
@@ -1767,7 +1767,7 @@ void sub_0809b6f8(void)
     s32 zero;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     zero = 0;
     t->updateState = 1;
     u = gCurTask;
@@ -1810,7 +1810,7 @@ void sub_0809b794(void)
     s32 zero;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     zero = 0;
     t->updateState = 2;
     u = gCurTask;

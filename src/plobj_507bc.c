@@ -8,7 +8,7 @@
  *
  * Task type #6 (the objects the player's actions spawn through
  * CreatePlayerObject/sub_08053a44): the body and two shared callbacks.  The body
- * Task_PlayerObject links the task to its spawner (Task.unk8C =
+ * Task_PlayerObject links the task to its spawner (Task.u8C.parentTask =
  * &gTasks[Task.parent], the first time only) and dispatches the
  * variant, the top byte of Task.unk18, through the 13 variant bodies
  * gPlayerObjectVariants.  sub_08050814 is the common exit most variants re-bind on
@@ -24,10 +24,10 @@ void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling *
 
 void Task_PlayerObject(void)
 {
-    if (gCurTask->unk8C == NULL)
+    if (gCurTask->u8C.parentTask == NULL)
     {
-        gCurTask->unk80 = 0;
-        gCurTask->unk8C = (struct Actor *)&gTasks[gCurTask->parent];
+        gCurTask->u80.attackAbility = 0;
+        gCurTask->u8C.parentTask = &gTasks[gCurTask->parent];
         gCurTask->health = 1;
         gCurTask->unk24 = 0;
     }

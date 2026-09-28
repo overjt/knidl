@@ -86,7 +86,7 @@ void BugzzyInit(void)
     t->updateCallback = (u32)BugzzyUpdate;
     sub_080666cc(gUnk_08743AC8);
     u = gCurTask;
-    u->unk24 = u->unk8C->palette;
+    u->unk24 = u->u8C.actor->palette;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 13, gBugzzyStates);
 }
@@ -156,7 +156,7 @@ void BugzzyUpdate(void)
             x->posX = m << 16;
             ClampTaskToRoom(x);
             y = gCurTask;
-            y->unk8C->palette = y->unk24;
+            y->u8C.actor->palette = y->unk24;
             TaskSetFrame(36);
             if (gCurTask->unk1C == gLocalPlayer)
                 PlaySfx(0x23D);
@@ -423,12 +423,12 @@ void sub_080926fc(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u = gCurTask;
-        u->unk24 = u->unk8C->palette;
-        u->unk8C->palette = 0;
+        u->unk24 = u->u8C.actor->palette;
+        u->u8C.actor->palette = 0;
         u->frame++;
         TaskYieldTrampoline(2);
         v = gCurTask;
-        v->unk8C->palette = v->unk24;
+        v->u8C.actor->palette = v->unk24;
         gCurTask->unk6C++;
     }
     gCurTask->unk6C = 0;
@@ -441,12 +441,12 @@ void sub_080926fc(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u2 = gCurTask;
-        u2->unk24 = u2->unk8C->palette;
-        u2->unk8C->palette = 0;
+        u2->unk24 = u2->u8C.actor->palette;
+        u2->u8C.actor->palette = 0;
         u2->frame++;
         TaskYieldTrampoline(2);
         v2 = gCurTask;
-        v2->unk8C->palette = v2->unk24;
+        v2->u8C.actor->palette = v2->unk24;
     } while ((s16)++gCurTask->unk6C <= 0);
     gCurTask->unk6C = 0;
     while ((s16)gCurTask->unk6C < gUnk_08743A8E[gCurTask->unk74])
@@ -458,12 +458,12 @@ void sub_080926fc(void)
             CreateDustTrail(1, 1, -24, 24);
         TaskSetMotionXFacing(0xFFFE0000, 0x5A5A5A5A);
         u3 = gCurTask;
-        u3->unk24 = u3->unk8C->palette;
-        u3->unk8C->palette = 0;
+        u3->unk24 = u3->u8C.actor->palette;
+        u3->u8C.actor->palette = 0;
         u3->frame++;
         TaskYieldTrampoline(2);
         v3 = gCurTask;
-        v3->unk8C->palette = v3->unk24;
+        v3->u8C.actor->palette = v3->unk24;
         gCurTask->unk6C++;
     }
     w = gCurTask;
@@ -1339,7 +1339,7 @@ void Task_PoppyBrosSrBomb(void)
     u->frameTable = gPoppyBrosSrBombFrames;
     TaskFaceLikeParent();
     v = gCurTask;
-    v->unk8C->sfxOverride = 0x20E;
+    v->u8C.actor->sfxOverride = 0x20E;
     v->onGround = 0;
     CallTableEntry(gCurTask->variant, 2, gUnk_087441A4);
 }

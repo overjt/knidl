@@ -657,7 +657,7 @@ void ActorUpdateAttachedEffect(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     if (a->attachedTask == -1)
         return;
     if (*(s16 *)&a->attachedTaskLifetime == -2)
@@ -676,7 +676,7 @@ void ActorAttachEffect(s32 a, s32 b)
     struct Actor *p;
     s32 c;
 
-    p = gCurTask->unk8C;
+    p = gCurTask->u8C.actor;
     if (p->attachedTask != -1)
     {
         TaskFree(p->attachedTask);

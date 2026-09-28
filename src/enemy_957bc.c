@@ -1066,27 +1066,27 @@ void sub_08096e9c(void)
     struct Actor *a;
     s16 *q;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     if ((a->paletteLocked & 1) == 0) {
     a->paletteOverridden = 1;
     t = gCurTask;
-    if ((t->hitTimer != 0 && t->unk8C->hitState != 0) || t->unk1C != 0) {
+    if ((t->hitTimer != 0 && t->u8C.actor->hitState != 0) || t->unk1C != 0) {
         u = gCurTask;
         q = (s16 *)&u->unk70;
         if (*q <= 3) {
-            BlendColors(gUnk_08744598[u->unk8C->paletteVariant][0],
-                         gUnk_08744598[u->unk8C->paletteVariant][1],
+            BlendColors(gUnk_08744598[u->u8C.actor->paletteVariant][0],
+                         gUnk_08744598[u->u8C.actor->paletteVariant][1],
                          gUnk_087445D8[*q], 16,
                          &gObjPalette[(u->tileWord >> 12) * 32]);
         } else {
-            BlendColors(gUnk_08744598[u->unk8C->paletteVariant][0],
+            BlendColors(gUnk_08744598[u->u8C.actor->paletteVariant][0],
                          gUnk_082B07BC,
                          gUnk_087445D8[*q], 16,
                          &gObjPalette[(u->tileWord >> 12) * 32]);
         }
     } else {
-        BlendColors(gUnk_08744598[t->unk8C->paletteVariant][0],
-                     gUnk_08744598[t->unk8C->paletteVariant][1],
+        BlendColors(gUnk_08744598[t->u8C.actor->paletteVariant][0],
+                     gUnk_08744598[t->u8C.actor->paletteVariant][1],
                      gUnk_087445D8[(s16)t->unk70], 16,
                      &gObjPalette[(t->tileWord >> 12) * 32]);
     }

@@ -790,7 +790,7 @@ s32 sub_08089064(void)
 {
     if (gCurTask->variant != 3)
     {
-        gCurTask->unk8C->hitReactions = (u32)gUnk_08742E5C;
+        gCurTask->u8C.actor->hitReactions = (u32)gUnk_08742E5C;
         switch (gCurTask->variant)
         {
         case 0:
@@ -811,7 +811,7 @@ s32 sub_080890d4(void)
 {
     if (gCurTask->variant != 3)
     {
-        gCurTask->unk8C->hitReactions = (u32)gUnk_08742E50;
+        gCurTask->u8C.actor->hitReactions = (u32)gUnk_08742E50;
         if (gCurTask->variant != 0)
             return 0;
         ActorSetState(4);

@@ -617,7 +617,7 @@ void sub_08041f10(void)
         gCurTask->variant = 1;
         /* fallthrough */
     case 1:
-        gCurTask->unk80 = 4;
+        gCurTask->u80.attackAbility = 4;
         gCurTask->player->unk14 = 10;
         PlayerSetMotionXPreset(11, 0);
         gCurTask->player->hitBoxSet = gUnk_0873D03C;
@@ -632,7 +632,7 @@ void sub_08041f10(void)
         /* fallthrough */
     case 2:
         gCurTask->player->hitBoxSet = 0;
-        gCurTask->unk80 = 0;
+        gCurTask->u80.attackAbility = 0;
         break;
     }
     gCurTask->unk28++;

@@ -159,7 +159,7 @@ u8 sub_0809fe10(void)
     u8 s0;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     s0 = t->state;
     sub_0809fcb4();
     switch (gCurTask->state)

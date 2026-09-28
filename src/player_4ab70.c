@@ -47,7 +47,7 @@ void PlayerActionTornado(void)
     gCurTask->unk28 = 0;
     gCurTask->unk2C = 0;
     gCurTask->variant = 0;
-    gCurTask->unk80 = 19;
+    gCurTask->u80.attackAbility = 19;
     switch (gCurTask->variant) {
     case 0:
         PlaySfxIfLocalPlayer(150, gCurTask->player->playerIndex);
@@ -181,7 +181,7 @@ void PlayerActionCrash(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 48;
     gUnk_03001F34 = 1;
-    gCurTask->unk80 = 20;
+    gCurTask->u80.attackAbility = 20;
     PlayerStopAxes(3);
     FreezeOtherTasks(15);
     if ((gDispCnt & 0x400) == 0) {

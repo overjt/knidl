@@ -1283,7 +1283,7 @@ u32 ActorCheckHits(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     t->hitKind = 0;
     if (a->attackBox == 0)
         return 0;
@@ -1337,7 +1337,7 @@ u32 sub_08068f68(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     t->hitKind = 0;
     if (a->attackBox != 0)
     {
@@ -1414,7 +1414,7 @@ u32 sub_0806914c(s32 a)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    b = t->unk8C;
+    b = t->u8C.actor;
     t->hitKind = 0;
     if (a == 0)
         return 0;
@@ -1444,7 +1444,7 @@ void ActorStoreHit(u8 a)
     struct Task *u;
 
     t = gCurTask;
-    b = t->unk8C;
+    b = t->u8C.actor;
     t->hitKind = gHitKind;
     gCurTask->hitEffect = gUnk_03002450;
     gCurTask->health = gHitHealthLeft;

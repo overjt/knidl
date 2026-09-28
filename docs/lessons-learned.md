@@ -4587,6 +4587,25 @@ decompiled C reproduces it byte for byte, so it stays, documented; the
 boot test lists the two RAM cells it touches as the only allowed RAM
 differences (4.143).
 
+### 3.522 agbcc pads every union to 4 bytes: a byte-wide view must be `packed`
+gcc 2.95's ARM target sets `STRUCTURE_SIZE_BOUNDARY` to 32, so a union,
+like a struct, is rounded up to a multiple of 4 bytes and aligned to 4.
+#155 run 3 gave `struct Task`'s byte at 0x80 two named members
+(`union { s8 nearestPlayer; s8 attackAbility; } u80;`, agbcc has no
+anonymous unions): as a plain union it moved every later field, and 166
+of the 311 files' assembly changed.  `__attribute__((packed))` on the
+union keeps it one byte with byte alignment, and the accesses stay
+`ldrb` (+ the same sign extension); a halfword union needs `packed,
+aligned(2)` to keep 2-byte alignment and its `ldrh`.  A pointer-sized
+union (`u8C`, `union { struct Actor *actor; struct Task *parentTask; }`)
+needs nothing.  Measured in a scratch struct (`struct { s8 x; union { s8
+a; s8 b; } u; u8 y; u16 z; }` is 12 bytes with `y` at 4, 6 bytes with `y`
+at 2 when packed) and on the whole tree: with `packed`, all 311 files
+compile to the same assembly.  `tools/header_smoke_game.c` now checks
+the offsets around both views with negative-size arrays, so a layout
+change fails `make check-headers` as well as `make compare`
+(docs/header-conventions.md, "Per-family views of `struct Task`").
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`

@@ -32,7 +32,7 @@ void CreateKingDededeAirPuff(void)
     struct ActorSpawn sp;
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     sp.subtype = 11;
     sp.taskType = 113;
     sp.variant = 0;
@@ -323,7 +323,7 @@ void sub_080a06f0(void)
     s32 n;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     n = t->unk18 + 1;
     t->unk18 = n;
     if (n == 6)
@@ -1081,7 +1081,7 @@ void KingDededeFall(void)
     u8 f;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     t->updateState = 10;
     TaskStop();
     TaskSetFrame(43);

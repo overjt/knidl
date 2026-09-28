@@ -355,7 +355,7 @@ void sub_0807f4dc(void)
         m = RandomRange(9);
         d = gCurTask;
         d->unk34 = o->pixelY + (s8)gUnk_0874136D[m];
-        if (sub_0807f6a8(d->unk30, d->unk34, (s8 *)d->unk8C->terrainBox) != 0)
+        if (sub_0807f6a8(d->unk30, d->unk34, (s8 *)d->u8C.actor->terrainBox) != 0)
             break;
         if (++*(s16 *)&gCurTask->unk6C > 59)
             break;
@@ -1081,7 +1081,7 @@ void sub_080801cc(void)
         while (1)
         {
             c = gCurTask;
-            if ((u8)sub_0807f6a8(c->pixelX, c->pixelY, (s8 *)c->unk8C->terrainBox) != 0)
+            if ((u8)sub_0807f6a8(c->pixelX, c->pixelY, (s8 *)c->u8C.actor->terrainBox) != 0)
                 break;
             TaskYieldTrampoline(1);
         }

@@ -91,7 +91,7 @@ void sub_080975fc(void)
     struct Task *t;
 
     t = gCurTask;
-    if ((t->hitTimer != 0 && t->unk8C->hitState != 0) || t->state == 8)
+    if ((t->hitTimer != 0 && t->u8C.actor->hitState != 0) || t->state == 8)
         ActorFlashPalette(gUnk_082BFBA4, 16);
     else
         sub_08066468();
@@ -710,7 +710,7 @@ void CreatePhanPhanApple(void)
     t = gCurTask;
     p->variant = t->variant;
     p->spawnArg = t->unk74;
-    p->tileWord = t->unk8C->savedTileWord;
+    p->tileWord = t->u8C.actor->savedTileWord;
     p->x = 12;
     p->y = 8;
     p->checkTerrain = 1;
@@ -817,11 +817,11 @@ void Task_GrandWheelieMiniWheelie(void)
         u = gCurTask;
         switch (u->unk2C) {
         case 0:
-            if (u->unk8C->animScript != gUnk_087454B8)
+            if (u->u8C.actor->animScript != gUnk_087454B8)
                 gCurTask->unk28 = ActorStartAnim(gUnk_087454B8);
             break;
         case 1:
-            if (u->unk8C->animScript != gUnk_087454C4)
+            if (u->u8C.actor->animScript != gUnk_087454C4)
                 gCurTask->unk28 = ActorStartAnim(gUnk_087454C4);
             break;
         }

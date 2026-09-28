@@ -630,8 +630,8 @@ void sub_080b3758(void)
 
 void sub_080b37ec(void)
 {
-    gCurTask->health = gCurTask->unk80;
-    gCurTask->unk80 = gCurTask->unk46;
+    gCurTask->health = gCurTask->u80.nearestPlayer;
+    gCurTask->u80.nearestPlayer = gCurTask->unk46;
     gCurTask->unk46 = gCurTask->unk70;
     gCurTask->unk70 = (u32)gCurTask->unk24 >> 16;
     gCurTask->unk24 = (gCurTask->unk24 & 0xFFFF) + (((u32)gCurTask->unk20 >> 16) << 16);
@@ -973,7 +973,7 @@ void sub_080b3f54(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     if (a->animScript == NULL)
         gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;

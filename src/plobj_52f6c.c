@@ -11,7 +11,7 @@
  *
  * Task type #6 (the objects the player's actions spawn), variants 10-12,
  * and the two spawners.  sub_08052f6c (variant 10) takes its owner's OAM
- * flags (Task.unk8C is the spawning task) and runs one of six sub-states
+ * flags (Task.u8C.parentTask is the spawning task) and runs one of six sub-states
  * Task.unk18 & 15: states 0-2 trace an eight-step path (the 8.8 velocity
  * rows gUnk_0873B8C6[k] and the five-frame animation rows gUnk_0873B88A
  * that gUnk_0873B872[k] picks, callback sub_08052b08) and fall into state
@@ -55,7 +55,7 @@ void sub_08052f6c(void)
 
     {
         struct Task *t = gCurTask;
-        t->tileWord = ((struct Task *)t->unk8C)->tileWord | 0xF008;
+        t->tileWord = (t->u8C.parentTask)->tileWord | 0xF008;
         switch (t->unk18 & 15)
         {
         case 0:
@@ -94,7 +94,7 @@ void sub_08052f6c(void)
             {
                 struct Task *u = gCurTask;
                 u->unk2C = 4;
-                u->unk80 = 16;
+                u->u80.attackAbility = 16;
             }
             for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
             {
@@ -153,7 +153,7 @@ void sub_08052f6c(void)
                 }
                 gCurTask->unk2C = 3;
                 sub_0802233c(gUnk_0873CB5C);
-                gCurTask->unk80 = 6;
+                gCurTask->u80.attackAbility = 6;
             }
             else
             {
@@ -220,7 +220,7 @@ void sub_08052f6c(void)
             {
                 struct Task *u = gCurTask;
                 u->posY = (u->pixelY + 4) << 16;
-                u->unk80 = 24;
+                u->u80.attackAbility = 24;
             }
             gCurTask->unk28 = 0;
             TaskSetMotionXFacing(0x60000, 0x5A5A5A5A);

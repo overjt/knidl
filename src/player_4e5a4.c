@@ -8,7 +8,7 @@
  *
  * Player action bodies, part 25: action 49, its re-entry callback and
  * per-frame handler 46.  Action 49 is a move set one level down: its enter
- * body PlayerActionBall (mode 13, Task.unk80 = 18) clears Task.variant/unk74/
+ * body PlayerActionBall (mode 13, Task.u80.attackAbility = 18) clears Task.variant/unk74/
  * unk24 and PlayerState.bumpKind and dispatches Task.variant through its own
  * table of nine sub-actions gUnk_0873B664; sub_0804e600, the callback the
  * sub-handlers re-bind, does the same after clearing PlayerState.running.
@@ -32,7 +32,7 @@ void PlayerActionBall(void)
     gCurTask->player->bumpKind = 0;
     gCurTask->unk24 = 0;
     gCurTask->variant = 0;
-    gCurTask->unk80 = 18;
+    gCurTask->u80.attackAbility = 18;
     CallTableEntry(gCurTask->variant, 9, gUnk_0873B664);
 }
 

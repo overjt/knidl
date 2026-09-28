@@ -45,12 +45,12 @@ void sub_08059570(void)
         while (1)
         {
             u = gCurTask;
-            u->velX = -((struct Task *)u->unk8C)->velX;
+            u->velX = -(u->u8C.parentTask)->velX;
             u->speedLimitX = 0x40000;
             u->velY = 0x20000;
             u->speedLimitY = 0x20000;
-            u->posX = ((struct Task *)u->unk8C)->pixelX << 16;
-            u->posY = (((struct Task *)u->unk8C)->pixelY + 16) << 16;
+            u->posX = (u->u8C.parentTask)->pixelX << 16;
+            u->posY = ((u->u8C.parentTask)->pixelY + 16) << 16;
             u->frame = 16;
             TaskYieldTrampoline(1);
             gCurTask->frame++;
@@ -72,12 +72,12 @@ void sub_08059570(void)
         while (1)
         {
             v = gCurTask;
-            v->velX = -((struct Task *)v->unk8C)->velX;
+            v->velX = -(v->u8C.parentTask)->velX;
             v->speedLimitX = 0x40000;
             v->velY = 0x20000;
             v->speedLimitY = 0x20000;
-            gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelY + 16) << 16;
+            gCurTask->posX = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelY + 16) << 16;
             gCurTask->frame = 26;
             TaskYieldTrampoline(1);
             gCurTask->frame++;
@@ -99,12 +99,12 @@ void sub_08059570(void)
         while (1)
         {
             w = gCurTask;
-            w->velX = -((struct Task *)w->unk8C)->velX;
+            w->velX = -(w->u8C.parentTask)->velX;
             w->speedLimitX = 0x40000;
             w->velY = 0x20000;
             w->speedLimitY = 0x20000;
-            gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelY + 16) << 16;
+            gCurTask->posX = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelY + 16) << 16;
             gCurTask->frame = 22;
             TaskYieldTrampoline(1);
             gCurTask->frame++;
@@ -272,10 +272,10 @@ void sub_08059c28(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751ECC;
-    t->tileWord = (((struct Task *)t->unk8C)->tileWord + 0x800) | 12;
+    t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
     t->spriteFlags = 0;
-    gCurTask->posX = (RandomSpreadFacing(-4, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-    gCurTask->posY = (RandomSpread(-4, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+    gCurTask->posX = (RandomSpreadFacing(-4, 1, 8) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+    gCurTask->posY = (RandomSpread(-4, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
     u = gCurTask;
     switch (u->unk18 & 15)
     {
@@ -331,7 +331,7 @@ void sub_08059d7c(void)
             struct Task *u = gCurTask;
 
             u->frameTable = gUnk_08751F84;
-            u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 12;
+            u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 12;
             u->posX = 0;
             u->posY = 0;
         }
@@ -358,10 +358,10 @@ void sub_08059d7c(void)
         gCurTask->frameTable = gUnk_08751F0C;
         for (;;)
         {
-            while (abs(((struct Task *)gCurTask->unk8C)->velY) > 0x2FFFF)
+            while (abs((gCurTask->u8C.parentTask)->velY) > 0x2FFFF)
             {
-                gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-                gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+                gCurTask->posX = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+                gCurTask->posY = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelY) << 16;
                 gCurTask->frame = 26;
                 TaskYieldTrampoline(1);
                 gCurTask->frame++;
@@ -376,7 +376,7 @@ void sub_08059d7c(void)
                 TaskYieldTrampoline(2);
             }
             gCurTask->frame = 0xFFFF;
-            while (abs(((struct Task *)gCurTask->unk8C)->velY) <= 0x2FFFF)
+            while (abs((gCurTask->u8C.parentTask)->velY) <= 0x2FFFF)
                 TaskYieldTrampoline(1);
         }
     case 0x300:
@@ -387,10 +387,10 @@ void sub_08059d7c(void)
         gCurTask->frameTable = gUnk_08751F0C;
         for (;;)
         {
-            while (abs(((struct Task *)gCurTask->unk8C)->velY) > 0x2FFFF)
+            while (abs((gCurTask->u8C.parentTask)->velY) > 0x2FFFF)
             {
-                gCurTask->posX = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-                gCurTask->posY = (RandomSpread(-8, 1, 16) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+                gCurTask->posX = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+                gCurTask->posY = (RandomSpread(-8, 1, 16) + (gCurTask->u8C.parentTask)->pixelY) << 16;
                 gCurTask->frame = 22;
                 TaskYieldTrampoline(1);
                 gCurTask->frame++;
@@ -409,7 +409,7 @@ void sub_08059d7c(void)
                 TaskYieldTrampoline(1);
             }
             gCurTask->frame = 0xFFFF;
-            while (abs(((struct Task *)gCurTask->unk8C)->velY) <= 0x2FFFF)
+            while (abs((gCurTask->u8C.parentTask)->velY) <= 0x2FFFF)
                 TaskYieldTrampoline(1);
         }
     case 0x400:
@@ -420,10 +420,10 @@ void sub_08059d7c(void)
         gCurTask->frameTable = gUnk_08751F0C;
         for (;;)
         {
-            while (abs(((struct Task *)gCurTask->unk8C)->velY) > 0x37FFF)
+            while (abs((gCurTask->u8C.parentTask)->velY) > 0x37FFF)
             {
-                gCurTask->posX = ((struct Task *)gCurTask->unk8C)->pixelX << 16;
-                gCurTask->posY = ((struct Task *)gCurTask->unk8C)->pixelY << 16;
+                gCurTask->posX = (gCurTask->u8C.parentTask)->pixelX << 16;
+                gCurTask->posY = (gCurTask->u8C.parentTask)->pixelY << 16;
                 gCurTask->frame = 16;
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
@@ -438,7 +438,7 @@ void sub_08059d7c(void)
                 TaskYieldTrampoline(2);
             }
             gCurTask->frame = 0xFFFF;
-            while (abs(((struct Task *)gCurTask->unk8C)->velY) <= 0x37FFF)
+            while (abs((gCurTask->u8C.parentTask)->velY) <= 0x37FFF)
                 TaskYieldTrampoline(1);
         }
     case 0x500:
@@ -451,8 +451,8 @@ void sub_08059d7c(void)
             u8 *src;
 
             u->frameTable = gUnk_08751F0C;
-            u->tileWord = ((struct Task *)u->unk8C)->tileWord | 0xF008;
-            off = (((struct Task *)u->unk8C)->tileWord & 0x7FF) << 5;
+            u->tileWord = (u->u8C.parentTask)->tileWord | 0xF008;
+            off = ((u->u8C.parentTask)->tileWord & 0x7FF) << 5;
             src = gUnk_081FD870;
             RequestCopy(1, src, (void *)(off + 0x06010100), 128);
             RequestCopy(1, src + 128, (void *)(off + 0x06010500), 128);
@@ -502,6 +502,6 @@ void sub_0805a320(void)
 {
     struct Task *t = gCurTask;
 
-    if (((struct Task *)t->unk8C)->variant == 8 || (t->player->mode != 13 && t->player->mode != 3))
+    if ((t->u8C.parentTask)->variant == 8 || (t->player->mode != 13 && t->player->mode != 3))
         TaskFree(gCurTaskIdx);
 }

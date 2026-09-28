@@ -100,7 +100,7 @@ u32 ActorCollideTerrain(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     r = 0;
     i = 4;
     k = t->onGround;
@@ -291,7 +291,7 @@ u32 sub_080696a0(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     r = 0;
     i = 4;
     k = t->onGround;
@@ -387,7 +387,7 @@ u32 sub_08069888(void)
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     r = 0;
     i = 4;
     k = t->onGround;
@@ -475,7 +475,7 @@ void ActorGetTerrainBox(struct InputState *out)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     out->unk01 = ((struct InputState *)a->terrainBox)->unk01;
     out->unk02 = ((struct InputState *)a->terrainBox)->unk02;
     out->unk03 = ((struct InputState *)a->terrainBox)->unk03;
@@ -611,10 +611,10 @@ void ActorPlayHitSfx(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->unk8C->unk06 == 16 || t->unk8C->unk06 == 32)
+    if (t->u8C.actor->unk06 == 16 || t->u8C.actor->unk06 == 32)
     {
         u = &gTasks[t->hitterSlot];
-        switch (u->unk80)
+        switch (u->u80.attackAbility)
         {
         case 3:
             PlaySfx(145);
@@ -687,7 +687,7 @@ void ActorStartHitStun(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     TaskSetSkipMask(7, gCurTaskIdx);
     u = gCurTask;
     u->posX = u->pixelX << 16;
@@ -697,7 +697,7 @@ void ActorStartHitStun(void)
     gCurTask->lateUpdateCallback = (u32)sub_08069fb0;
     a->hitStunTimer = 11;
     v = gCurTask;
-    v->unk8C->savedPaletteBits = v->tileWord & 0xF000;
+    v->u8C.actor->savedPaletteBits = v->tileWord & 0xF000;
     if (v->hitEffect > 3)
         v->hitEffect = 0;
     ActorAttachEffect(gCurTask->hitEffect, 1);
@@ -710,14 +710,14 @@ void ActorEndHitStun(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     TaskSetSkipMask(0, gCurTaskIdx);
     u = gCurTask;
     u->lateUpdateCallback = 0;
     u->pixelX = u->posX >> 16;
     u->pixelY = u->posY >> 16;
     u->frame = a->savedFrame;
-    u->tileWord = (u->tileWord & 0xFFF) | u->unk8C->savedPaletteBits;
+    u->tileWord = (u->tileWord & 0xFFF) | u->u8C.actor->savedPaletteBits;
 }
 
 u32 ActorReactToDamage(void)
@@ -726,7 +726,7 @@ u32 ActorReactToDamage(void)
     struct ActorVt *p;
     u8 r;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
@@ -762,7 +762,7 @@ void sub_08069f0c(void)
     s16 j;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     j = gUnk_0873E5A4[(s8)a->hitStunTimer] * 2;
     t->pixelX += gUnk_0873E58C[j];
     t->pixelY += gUnk_0873E58C[j + 1];
@@ -776,7 +776,7 @@ void sub_08069f70(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     if ((a->hitStunTimer & 1) == 0)
         t->tileWord = (t->tileWord & 0xFFF) | 0xF000;
     else
@@ -861,7 +861,7 @@ void sub_0806a0f0(s32 a)
     struct Actor *b;
 
     t = gCurTask;
-    b = t->unk8C;
+    b = t->u8C.actor;
     if (a == -2)
         t->unk18 = 0;
     else
@@ -924,7 +924,7 @@ u32 ActorReactToDefeat(void)
     struct Task *t;
     u8 r;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();

@@ -12,7 +12,7 @@
  * gUnk_08751B40/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
  * and installs M11's sub_0803dfc8 and its own collision callback
  * sub_0805268c, which registers the collider row gUnk_0873BE24 and runs the
- * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.unk8C).
+ * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
  * Variant 8 (sub_080527a4, gUnk_08751BB0) traces six-step paths from the
  * 8.8 velocity rows gUnk_0873B7C0[k] and the animation rows
  * gUnk_0873B808[k] (sound 129) with the callback sub_08052b08 (collider row
@@ -48,7 +48,7 @@ void sub_0805239c(void)
         t->moveCallback = (u32)TaskMove;
         t->updateCallback = (u32)sub_0805268c;
         t->unk28 = 0;
-        t->unk80 = 13;
+        t->u80.attackAbility = 13;
     }
     {
         struct Task *t = gCurTask;
@@ -60,7 +60,7 @@ void sub_0805239c(void)
             t->layer = 7;
             {
                 struct Task *u = gCurTask;
-                u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 12;
+                u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 12;
                 u->frame = 0xFFFF;
             }
             TaskYieldTrampoline(8);
@@ -69,9 +69,9 @@ void sub_0805239c(void)
                 {
                     s16 d = RandomSpreadFacing(24, 1, 8);
                     struct Task *u = gCurTask;
-                    u->posX = (d + ((struct Task *)u->unk8C)->pixelX) << 16;
+                    u->posX = (d + (u->u8C.parentTask)->pixelX) << 16;
                 }
-                gCurTask->posY = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+                gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
                 TaskSetMotionXFacing(0x10000, 0x4000);
                 gCurTask->velY = 0;
                 gCurTask->accelY = (RandomRange(36) - 24) << 8;
@@ -89,9 +89,9 @@ void sub_0805239c(void)
                 {
                     s16 d = RandomSpreadFacing(24, 1, 8);
                     struct Task *u = gCurTask;
-                    u->posX = (d + ((struct Task *)u->unk8C)->pixelX) << 16;
+                    u->posX = (d + (u->u8C.parentTask)->pixelX) << 16;
                 }
-                gCurTask->posY = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+                gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
                 TaskSetMotionXFacing(0x10000, 0x4000);
                 gCurTask->velY = 0;
                 gCurTask->accelY = (RandomRange(36) - 24) << 8;
@@ -110,23 +110,23 @@ void sub_0805239c(void)
             t->drawCallback = (u32)TaskDrawWorld;
             t->frameTable = gUnk_08751E5C;
             t->layer = 7;
-            gCurTask->facing = ((struct Task *)gCurTask->unk8C)->facing;
+            gCurTask->facing = (gCurTask->u8C.parentTask)->facing;
             {
                 struct Task *u = gCurTask;
-                u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 8;
+                u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
             }
             do
             {
                 struct Task *u = gCurTask;
                 if (u->facing == 1)
                 {
-                    u->posX = (((struct Task *)u->unk8C)->pixelX + 24) << 16;
-                    u->posY = ((struct Task *)u->unk8C)->pixelY << 16;
+                    u->posX = ((u->u8C.parentTask)->pixelX + 24) << 16;
+                    u->posY = (u->u8C.parentTask)->pixelY << 16;
                 }
                 else
                 {
-                    u->posX = (((struct Task *)u->unk8C)->pixelX - 24) << 16;
-                    u->posY = ((struct Task *)u->unk8C)->pixelY << 16;
+                    u->posX = ((u->u8C.parentTask)->pixelX - 24) << 16;
+                    u->posY = (u->u8C.parentTask)->pixelY << 16;
                 }
                 TaskSetMotionXFacing(0x10000, (RandomRange(32) + 16) << 8);
                 gCurTask->velY = 0;
@@ -158,7 +158,7 @@ void sub_0805268c(void)
 {
     struct Task *t = gCurTask;
 
-    if (!(t->player->unk40 & 0x100) && (((struct Task *)t->unk8C)->waterFlags & 1))
+    if (!(t->player->unk40 & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
     {
         TaskFree(gCurTaskIdx);
         return;
@@ -182,8 +182,8 @@ void sub_0805268c(void)
                     off = 12;
                 else
                     off = -12;
-                TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CC1C, ((struct Task *)v->unk8C)->pixelX + off,
-                             ((struct Task *)v->unk8C)->pixelY + 2, v->parent);
+                TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CC1C, (v->u8C.parentTask)->pixelX + off,
+                             (v->u8C.parentTask)->pixelY + 2, v->parent);
             }
         }
     }
@@ -191,7 +191,7 @@ void sub_0805268c(void)
         struct Task *u = gCurTask;
         if (u->unk28 == 0)
         {
-            if (u->player->mode != 13 || u->facing != ((struct Task *)u->unk8C)->facing)
+            if (u->player->mode != 13 || u->facing != (u->u8C.parentTask)->facing)
                 u->unk28 = 1;
         }
     }
@@ -213,11 +213,11 @@ s32 sub_080527a4(void)
     {
         struct Task *t = gCurTask;
         t->frameTable = gUnk_08751BB0;
-        t->unk80 = 16;
+        t->u80.attackAbility = 16;
     }
     {
         struct Task *t = gCurTask;
-        t->tileWord = ((struct Task *)t->unk8C)->tileWord | 0xF008;
+        t->tileWord = (t->u8C.parentTask)->tileWord | 0xF008;
         if (t->facing == 1)
             t->unk28 = 14;
         else
@@ -376,7 +376,7 @@ void sub_08052b88(void)
     case 0:
         t->layer = 5;
         {
-            u32 off = (((struct Task *)gCurTask->unk8C)->tileWord & 0xFFF) << 5;
+            u32 off = ((gCurTask->u8C.parentTask)->tileWord & 0xFFF) << 5;
 
             RequestCopy(1, gUnk_08204B98, (void *)(off + 0x06010080), 320);
             RequestCopy(1, gUnk_08204B98 + 320, (void *)(off + 0x06010480), 320);
@@ -384,11 +384,11 @@ void sub_08052b88(void)
             RequestCopy(1, gUnk_08204B98 + 960, (void *)(off + 0x06010C80), 320);
         }
         RequestCopy(2, gUnk_08204B78,
-                     gObjPalette + (((((struct Task *)gCurTask->unk8C)->tileWord >> 12) + 1) << 5), 32);
+                     gObjPalette + ((((gCurTask->u8C.parentTask)->tileWord >> 12) + 1) << 5), 32);
         {
             struct Task *u = gCurTask;
 
-            u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 4;
+            u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 4;
             if (u->facing == 1)
                 u->posX = (u->pixelX - gSpriteCameraX + 3) << 16;
             else

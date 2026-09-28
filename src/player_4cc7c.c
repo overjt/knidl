@@ -42,7 +42,7 @@ void PlayerActionUFO(void)
         t->unk34 = 0;
         t->unk74 = 0;
         gCurTask->variant = 0;
-        gCurTask->unk80 = 24;
+        gCurTask->u80.attackAbility = 24;
     }
     switch (gCurTask->variant)
     {

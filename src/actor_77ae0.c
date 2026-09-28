@@ -767,7 +767,7 @@ void Task_WaddleDee(void)
         struct Task *t = gCurTask;
 
         t->frameTable = gWaddleDeeFrames;
-        t->unk8C->extraFrame = 4;
+        t->u8C.actor->extraFrame = 4;
         CallTableEntry(t->variant, 6, gWaddleDeeVariants);
     }
 }

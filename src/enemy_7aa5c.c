@@ -393,7 +393,7 @@ void sub_0807b11c(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk8C->animScript = 0;
+    t->u8C.actor->animScript = 0;
     t->unk34 = 0;
     t->unk30 = 0;
     t->unk2C = 0;
@@ -405,7 +405,7 @@ void sub_0807b11c(void)
 
 void sub_0807b144(void)
 {
-    if (gCurTask->unk8C->animScript == 0)
+    if (gCurTask->u8C.actor->animScript == 0)
         gCurTask->unk34 = ActorStartAnim(gUnk_0874099C);
 }
 
@@ -475,7 +475,7 @@ void sub_0807b200(void)
 
 void sub_0807b294(void *fn)
 {
-    struct Actor *a = gCurTask->unk8C;
+    struct Actor *a = gCurTask->u8C.actor;
     struct Task *t;
 
     TaskFaceNearestPlayer();
@@ -996,7 +996,7 @@ s32 sub_0807bdb8(void)
 s32 sub_0807be08(void)
 {
     struct Task *t = gCurTask;
-    struct Actor *a = t->unk8C;
+    struct Actor *a = t->u8C.actor;
     u8 st = t->state;
 
     switch (st)
@@ -1324,7 +1324,7 @@ void sub_0807c484(void)
 
 void sub_0807c4a0(void)
 {
-    struct Actor *a = gCurTask->unk8C;
+    struct Actor *a = gCurTask->u8C.actor;
     u32 v;
 
     AcquirePaletteAnim(1, 0);
@@ -1543,7 +1543,7 @@ void sub_0807c8d0(void)
         }
         else
         {
-            struct Actor *a = t->unk8C;
+            struct Actor *a = t->u8C.actor;
 
             if (sub_08021a40(t->pixelX, t->pixelY + ((s8 *)a->terrainBox)[2]) != 0)
                 gCurTask->unk1C = 0;

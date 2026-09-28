@@ -747,7 +747,7 @@ void Task_Bugzzy(void)
     u->unk30 = 0;
     u->unk34 = 1;
     u->unk1C = -1;
-    u->unk24 = u->unk8C->palette;
+    u->unk24 = u->u8C.actor->palette;
     if (sub_08067060() == 1)
         gCurTask->unk20 = 24;
     else

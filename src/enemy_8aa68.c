@@ -213,7 +213,7 @@ void sub_0808ae80(void)
 
 void sub_0808aeec(void)
 {
-    if (gCurTask->unk8C->animScript != 0)
+    if (gCurTask->u8C.actor->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -291,7 +291,7 @@ void sub_0808b094(void)
     TaskSetEntry(sub_0808afac, gCurTaskIdx);
     return;
 anim:
-    if (gCurTask->unk8C->animScript != 0)
+    if (gCurTask->u8C.actor->animScript != 0)
     {
         if (gCurTask->unk28 == 0)
             gCurTask->unk28 = ActorStepAnim();
@@ -444,7 +444,7 @@ void sub_0808b468(void)
     if (gCurTask->unk34 > 0 && gCurTask->velY > 0
         && (u8)IsWaterAtPixel(gCurTask->pixelX,
                             (u16)gCurTask->pixelY
-                                + ((s8 *)gCurTask->unk8C->terrainBox)[2]) != 0)
+                                + ((s8 *)gCurTask->u8C.actor->terrainBox)[2]) != 0)
     {
         gCurTask->velY >>= 2;
         ActorSetState(0);
@@ -627,7 +627,7 @@ void sub_0808b8c4(void)
 {
     if ((u8)IsWaterAtPixel(gCurTask->pixelX,
                          (u16)gCurTask->pixelY
-                             + ((s8 *)gCurTask->unk8C->terrainBox)[2]) != 0)
+                             + ((s8 *)gCurTask->u8C.actor->terrainBox)[2]) != 0)
     {
         switch (gCurTask->variant)
         {
@@ -1022,13 +1022,13 @@ void sub_0808c1d0(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+        if (sub_0808ca00(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
             ActorSetState(8);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+    else if (sub_0808cab8(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
         ActorSetState(8);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
@@ -1112,13 +1112,13 @@ void sub_0808c3e8(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+        if (sub_0808ca00(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
             ActorSetState(9);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
+    else if (sub_0808cab8(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
         ActorSetState(9);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
@@ -1327,7 +1327,7 @@ s32 sub_0808c82c(void)
     if (r >= 0)
     {
         gCurTask->pixelX = (u16)gCurTask->pixelX
-            + (r - ((s8 *)gCurTask->unk8C->terrainBox)[5]);
+            + (r - ((s8 *)gCurTask->u8C.actor->terrainBox)[5]);
         gCurTask->posX = (s16)gCurTask->pixelX << 16;
         gCurTask->facing = 1;
         return 1;
@@ -1336,7 +1336,7 @@ s32 sub_0808c82c(void)
     if (r >= 0)
     {
         gCurTask->pixelX = (u16)gCurTask->pixelX
-            - (((s8 *)gCurTask->unk8C->terrainBox)[4] + r);
+            - (((s8 *)gCurTask->u8C.actor->terrainBox)[4] + r);
         gCurTask->posX = (s16)gCurTask->pixelX << 16;
         gCurTask->facing = -1;
         return 1;

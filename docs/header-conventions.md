@@ -166,3 +166,40 @@ Rules (run 1 applied them mechanically; follow them by hand from now on):
 - `tools/header_smoke_game.c` includes every game header into one
   translation unit (`make check-headers`): a symbol declared twice with
   two types, a struct defined twice or a missing definition fails there.
+
+### Per-family views of `struct Task` (#155 run 3)
+
+Some `struct Task` fields hold a different thing in different task
+families.  Where two meanings each hold on every path of their families,
+`include/task.h` gives the field a **named union** (agbcc, gcc 2.95, has
+no anonymous unions), and every access says which member it means:
+
+| field | union | members, and who uses which |
+|---|---|---|
+| `0x80` | `u80` (`__attribute__((packed))`) | `nearestPlayer` (s8): the actor API's nearest-player index (sub_08063a9c, TaskFindNearestPlayer, TaskFree's clear, the #170 trail's history); `attackAbility` (s8): the ability id of the running attack for the player, its objects (#6) and effects (#7), read by ActorPlayHitSfx off the hitter |
+| `0x8C` | `u8C` | `actor` (`struct Actor *`): the task's `&gActors[slot]` for every actor family; `parentTask` (`struct Task *`): `&gTasks[Task.parent]` for task types #6 Task_PlayerObject and #7 Task_PlayerEffect (their bodies bind it, sub_08056770 rebinds it with `parent`) |
+
+Rules for a view:
+
+- It changes no instruction: every translation unit's agbcc assembly is
+  identical to the parent commit's (`pending/`'s whole-tree oracle,
+  lesson 4.128), gcc 12's `-fsyntax-only` error set over the tree is
+  unchanged, and `make compare` passes.  The accesses are respelled; the
+  only other code change allowed is a cast the view makes unnecessary
+  (`(struct Task *)t->unk8C` became `t->u8C.parentTask`: 247 casts to
+  `struct Task *` and 2 to `struct Actor *` went away).
+- **A union narrower than a word must be `packed`**: agbcc pads every
+  union, like every struct, to a multiple of 4 bytes
+  (`STRUCTURE_SIZE_BOUNDARY` 32), which moves every later field (lesson
+  3.522); `packed` keeps a byte union at 1 byte and its `ldrb`, `packed,
+  aligned(2)` a halfword union at 2.  `tools/header_smoke_game.c` checks
+  the offsets of `u80`, `unk81`, `hitEffect`, `u8C` and `sizeof(struct
+  Task)` with negative-size arrays, so a layout change fails `make
+  check-headers` too.
+- The task engine's local copies of `struct Task` (`src/early_4fec.c`,
+  `early_58e4.c`, `early_5c4c.c`) keep their plain `u8`/`u32` members:
+  the only accesses to them are InitTasks' clears (`w8C = 0`, `b80 |=
+  0xFF` in `src/early_4fec.c`).
+- A view is a type change, applied in its own commit (outside
+  `tools/rename.py --verify-diff`, which proves renames only), and a new
+  one goes to the owner first.

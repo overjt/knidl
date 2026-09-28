@@ -300,7 +300,7 @@ void sub_0806b878(void)
     t = gCurTask;
     v = t->tileWord;
     m = 0xF000;
-    q = t->unk8C->savedPaletteBits;
+    q = t->u8C.actor->savedPaletteBits;
     m &= v;
     if (m == q)
         return;
@@ -309,7 +309,7 @@ void sub_0806b878(void)
     w = t->tileWord;
     n = 0xFFF;
     n &= w;
-    t->tileWord = n | t->unk8C->savedPaletteBits;
+    t->tileWord = n | t->u8C.actor->savedPaletteBits;
 }
 
 void sub_0806b8bc(void)
@@ -359,7 +359,7 @@ void sub_0806b95c(void)
     u32 w;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     p = t->player;
     if (t->actorKind != 0 || t->unk76 != 40)
         p->unk09 = 1;
@@ -369,7 +369,7 @@ void sub_0806b95c(void)
     if (gCurTask->actorKind != 1)
         ActorSetHitReactions(gUnk_0873F92C);
     v = gCurTask;
-    c = v->unk8C;
+    c = v->u8C.actor;
     w = v->tileWord;
     m = 0xF000;
     m &= w;
@@ -402,7 +402,7 @@ void sub_0806ba34(void)
     u32 z;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     v = t->tileWord;
     z = v >> 12;
     if (a->palette != 0)
@@ -588,7 +588,7 @@ void sub_0806bd10(void)
     u8 q;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     p = t->player;
     if ((s8)a->def->unk0D == 1)
     {
@@ -660,7 +660,7 @@ void sub_0806be4c(u32 i)
     struct PlayerState *p;
 
     s = &gTasks[i];
-    a = s->unk8C;
+    a = s->u8C.actor;
     p = s->player;
     if (a->unk04 == 1)
     {
@@ -698,7 +698,7 @@ u8 sub_0806be84(void)
         w = t->tileWord;
         m = 0xFFF;
         m &= w;
-        t->tileWord = m | t->unk8C->savedPaletteBits;
+        t->tileWord = m | t->u8C.actor->savedPaletteBits;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
         if (t->actorKind != 1 && t->actorKind != 6)
@@ -839,12 +839,12 @@ void sub_0806c158(void)
     t->moveCallback = (u32)ActorMove;
     t->updateCallback = (u32)sub_0806c1d0;
     t->lateUpdateCallback = 0;
-    if (gUnk_0300244C != 0 && t->unk8C->terrainBox == 0)
+    if (gUnk_0300244C != 0 && t->u8C.actor->terrainBox == 0)
         ActorSetTerrainBox(gUnk_0873F894);
     TaskSetMotionXFacing(0x38000, 0x5A5A5A5A);
     TaskSetMotionY(0x30000, 0x8000, 0x60000);
     gCurTask->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskSleepForever();
 }
 

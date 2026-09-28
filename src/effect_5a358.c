@@ -163,7 +163,7 @@ void sub_0805a52c(void)
         t->layer = 8;
         u = gCurTask;
         u->frameTable = gUnk_08752020;
-        u->tileWord = ((struct Task *)u->unk8C)->tileWord | 0xF008;
+        u->tileWord = (u->u8C.parentTask)->tileWord | 0xF008;
         u->posX = 0;
         u->posY = 0;
         u->frame = 0xFFFF;
@@ -200,7 +200,7 @@ void sub_0805a52c(void)
             gCurTask->frame = 2;
             TaskYieldTrampoline(3);
         }
-        o = (((struct Task *)gCurTask->unk8C)->tileWord & 0x7FF) << 5;
+        o = ((gCurTask->u8C.parentTask)->tileWord & 0x7FF) << 5;
         RequestCopy(1, gUnk_082030D8, (void *)(o + 0x06010080), 0x180);
         RequestCopy(1, gUnk_082030D8 + 0x180, (void *)(o + 0x06010480), 0x180);
         RequestCopy(1, gUnk_082030D8 + 0x300, (void *)(o + 0x06010880), 0x180);
@@ -213,14 +213,14 @@ void sub_0805a52c(void)
         t->layer = 15;
         w = gCurTask;
         w->frameTable = gUnk_08752020;
-        w->tileWord = (((struct Task *)w->unk8C)->tileWord + 0x800) | 4;
+        w->tileWord = ((w->u8C.parentTask)->tileWord + 0x800) | 4;
         x0 = gPlayerCameraPos[w->parent].x;
         x0 -= 120;
         y0 = gPlayerCameraPos[w->parent].y - 80;
-        w->pixelX = ((struct Task *)w->unk8C)->pixelX - gSpriteCameraX;
-        w->pixelY = ((struct Task *)w->unk8C)->pixelY - gSpriteCameraY;
-        w->posX = ((struct Task *)w->unk8C)->pixelX;
-        w->posY = ((struct Task *)w->unk8C)->pixelY;
+        w->pixelX = (w->u8C.parentTask)->pixelX - gSpriteCameraX;
+        w->pixelY = (w->u8C.parentTask)->pixelY - gSpriteCameraY;
+        w->posX = (w->u8C.parentTask)->pixelX;
+        w->posY = (w->u8C.parentTask)->pixelY;
         sub_0803f834(w->player->playerIndex, gUnk_0873BB3E);
         if (gUnk_02007D64 == 2 || gUnk_02007D64 == 3)
             gUnk_02007F60[29] = 0;
@@ -444,13 +444,13 @@ void sub_0805acec(void)
         do
         {
             v = gCurTask;
-            if (((struct Task *)v->unk8C)->onGround != 0)
+            if ((v->u8C.parentTask)->onGround != 0)
             {
-                v->posY = (((struct Task *)v->unk8C)->pixelY + 10) << 16;
+                v->posY = ((v->u8C.parentTask)->pixelY + 10) << 16;
                 if (v->facing == 1)
-                    v->posX = (((struct Task *)v->unk8C)->pixelX - 8) << 16;
+                    v->posX = ((v->u8C.parentTask)->pixelX - 8) << 16;
                 else
-                    v->posX = (((struct Task *)v->unk8C)->pixelX + 8) << 16;
+                    v->posX = ((v->u8C.parentTask)->pixelX + 8) << 16;
                 TaskStop();
                 TaskSetMotionXFacing(-0x30000, 0x6000);
                 gCurTask->velY = -0x20000;
@@ -486,15 +486,15 @@ void sub_0805ae00(void)
 
     if (s == 0)
     {
-        if (t->unk28 != 0 && (t->player->mode != 13 || ((struct Task *)t->unk8C)->variant != 4))
+        if (t->unk28 != 0 && (t->player->mode != 13 || (t->u8C.parentTask)->variant != 4))
             t->unk28 = 0;
-        gCurTask->facing = ((struct Task *)gCurTask->unk8C)->facing;
+        gCurTask->facing = (gCurTask->u8C.parentTask)->facing;
     }
     else
     {
         TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CF8C,
-                     ((struct Task *)t->unk8C)->pixelX + ((s16)t->player->pixelOffsetX >> 8),
-                     ((struct Task *)t->unk8C)->pixelY + ((s16)t->player->pixelOffsetY >> 8), t->parent);
+                     (t->u8C.parentTask)->pixelX + ((s16)t->player->pixelOffsetX >> 8),
+                     (t->u8C.parentTask)->pixelY + ((s16)t->player->pixelOffsetY >> 8), t->parent);
     }
 }
 
@@ -508,7 +508,7 @@ void sub_0805ae94(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08752090;
-    t->tileWord = ((struct Task *)t->unk8C)->tileWord | 0xF004;
+    t->tileWord = (t->u8C.parentTask)->tileWord | 0xF004;
     t->posX = 0;
     t->posY = 0;
     t->frame = 0;

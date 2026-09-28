@@ -659,7 +659,7 @@ void Task_NightmareWizard(void)
     gCurTask->drawCallback = (u32)sub_080a9ed8;
     gCurTask->layer = 11;
     gCurTask->frameTable = gNightmareWizardFrames;
-    gCurTask->unk8C->sfxOverride = 0x23E;
+    gCurTask->u8C.actor->sfxOverride = 0x23E;
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;

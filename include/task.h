@@ -10,7 +10,7 @@
  * (`src/early_58e4.c`, `src/early_5d9c.c`); the 64-entry table lives at
  * gTasks and gCurTask points at the task that is currently
  * running.  `struct Actor` is the larger per-task actor record hanging off
- * Task.unk8C that module M17 (issue #65) is the field API for, and
+ * Task.u8C.actor that module M17 (issue #65) is the field API for, and
  * `struct ActorDef` is the ROM descriptor an actor is bound to
  * (Actor.def).
  *
@@ -83,7 +83,14 @@ struct Task
     /*0x7D*/ u8 hitDirection;
     /*0x7E*/ s8 hitterSlot;
     /*0x7F*/ s8 hitterPlayer;
-    /*0x80*/ s8 unk80;
+    /* An actor's nearest player (sub_08063a9c, TaskFindNearestPlayer); for
+       the player and its objects and effects (#5-#7) the ability of the
+       running attack, which ActorPlayHitSfx reads off the hitter. */
+    /* packed: agbcc pads every union to 4 bytes (lesson 3.522). */
+    /*0x80*/ union {
+        s8 nearestPlayer;
+        s8 attackAbility;
+    } __attribute__((packed)) u80;
     /*0x81*/ u8 unk81;
     /*0x82*/ u16 hitEffect;
     /*0x84*/ u16 unk84;
@@ -94,7 +101,14 @@ struct Task
        store the nearest player's struct Task * here instead, which no actor
        reads back; ActorAttachToHitter rebinds it to the hitter's record. */
     /*0x88*/ struct PlayerState *player;
-    /*0x8C*/ struct Actor *unk8C;
+    /* The task's actor record &gActors[slot] (CreateActor, sub_08064a78,
+       sub_08064d9c, SetPaletteAnimSource); task types #6/#7 keep their parent
+       task &gTasks[Task.parent] here instead (Task_PlayerObject,
+       Task_PlayerEffect, sub_08056770). */
+    /*0x8C*/ union {
+        struct Actor *actor;
+        struct Task *parentTask;
+    } u8C;
 };
 
 /* 8 bytes per task type in ROM at 0x0872FF30. */
@@ -159,7 +173,7 @@ struct ActorTail
     /*0x08*/ u32 paletteBank;
 };
 
-/* Per-task actor record (Task.unk8C). */
+/* Per-task actor record (Task.u8C.actor). */
 struct Actor
 {
     /*0x00*/ u8 ability;

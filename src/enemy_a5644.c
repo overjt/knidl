@@ -166,7 +166,7 @@ void sub_080a57d4(void)
             sp.spawnArg = i;
             sp.x = gUnk_08748D28[i + (gActivePlayerCount - 1) * 4] + gViewRect[0];
             sp.y = gViewRect[2];
-            sp.tileWord = gCurTask->unk8C->savedTileWord;
+            sp.tileWord = gCurTask->u8C.actor->savedTileWord;
             sp.checkTerrain = 0;
             CreateActorFromDesc(&sp, 1);
         }
@@ -191,7 +191,7 @@ void sub_080a57d4(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(185, (s16)(t->pixelX + 8), t->pixelY, t->unk8C->savedTileWord);
+    CreateChildTask(185, (s16)(t->pixelX + 8), t->pixelY, t->u8C.actor->savedTileWord);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->frame++;
@@ -215,7 +215,7 @@ void sub_080a57d4(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(188, (s16)(t->pixelX - 32), t->pixelY, t->unk8C->savedTileWord | (240 << 8));
+    CreateChildTask(188, (s16)(t->pixelX - 32), t->pixelY, t->u8C.actor->savedTileWord | (240 << 8));
     gCurTask->velY = 128 << 10;
     gCurTask->accelY = -0x10000;
     TaskYieldTrampoline(3);
@@ -984,7 +984,7 @@ void sub_080a6b3c(void)
     if (t->onGround == 0)
     {
         CreateChildTask(188, (s16)(t->pixelX + t->facing * 4), (s16)(t->pixelY - 4),
-                     t->unk8C->savedTileWord | (240 << 8));
+                     t->u8C.actor->savedTileWord | (240 << 8));
         gCurTask->accelY = 168 << 5;
         gCurTask->speedLimitY = 192 << 10;
         gCurTask->unk6C = 0;
@@ -1000,7 +1000,7 @@ void sub_080a6b3c(void)
     else
     {
         CreateChildTask(188, (s16)(t->pixelX + t->facing * 16), (s16)(t->pixelY + 4),
-                     t->unk8C->savedTileWord | (240 << 8));
+                     t->u8C.actor->savedTileWord | (240 << 8));
         TaskStop();
         TaskSetFrame(69);
     }
@@ -1390,7 +1390,7 @@ void sub_080a7438(void)
     sp.spawnArg = 0;
     sp.x = 0;
     sp.y = 0;
-    sp.tileWord = gCurTask->unk8C->savedTileWord + (128 << 5);
+    sp.tileWord = gCurTask->u8C.actor->savedTileWord + (128 << 5);
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 1);
     TaskGetScreenPosSlot(gCurTaskIdx);
@@ -1441,7 +1441,7 @@ void sub_080a75c8(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     t = gCurTask;
-    CreateChildTask(186, (s16)(t->pixelX - t->facing * 2), (s16)(t->pixelY - 1), t->unk8C->savedTileWord);
+    CreateChildTask(186, (s16)(t->pixelX - t->facing * 2), (s16)(t->pixelY - 1), t->u8C.actor->savedTileWord);
     TaskSetFrame(24);
     TaskYieldTrampoline(8);
     gCurTask->frame++;

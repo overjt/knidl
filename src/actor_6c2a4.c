@@ -68,7 +68,7 @@ void sub_0806c2a4(void)
         w = -w;
     t->velY = -w;
     t->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskYieldTrampoline(12);
     gCurTask->unk34 = 1;
     TaskSleepForever();
@@ -168,7 +168,7 @@ void sub_0806c4a0(void)
     t->updateCallback = (u32)sub_0806c5d4;
     t->lateUpdateCallback = (u32)sub_0806c770;
     t->layer = 11;
-    if (gUnk_0300244C != 0 && gCurTask->unk8C->terrainBox == 0)
+    if (gUnk_0300244C != 0 && gCurTask->u8C.actor->terrainBox == 0)
         ActorSetTerrainBox((u32)gUnk_0873F894);
     u = gCurTask;
     i = (s16)u->unk70 - 3;
@@ -178,7 +178,7 @@ void sub_0806c4a0(void)
     v = gCurTask;
     v->velY = gUnk_0873EAC0[i].unk04;
     v->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     w = gCurTask;
     w->unk46 = 0;
     w->unk34 = 0;
@@ -401,7 +401,7 @@ void sub_0806c930(void)
         break;
     }
     gCurTask->hitKind = 0;
-    gCurTask->unk80 = 0;
+    gCurTask->u80.attackAbility = 0;
     TaskYieldTrampoline(12);
     gCurTask->unk34 = 1;
     TaskSleepForever();

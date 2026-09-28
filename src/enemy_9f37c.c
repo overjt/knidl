@@ -396,7 +396,7 @@ s32 sub_0809f994(void)
     t = gCurTask;
     p = &t->pixelX;
     h = *p;
-    a = t->unk8C;
+    a = t->u8C.actor;
     q = (s8 *)a->terrainBox;
     if (h < q[4] + 24)
     {

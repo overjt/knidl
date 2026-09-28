@@ -61,7 +61,7 @@ void sub_080564ac(void)
         {
             struct Task *u = gCurTask;
 
-            u->waterFlags = ((struct Task *)u->unk8C)->waterFlags;
+            u->waterFlags = (u->u8C.parentTask)->waterFlags;
         }
         gCurTask->unk6C = 0;
         do
@@ -72,7 +72,7 @@ void sub_080564ac(void)
         } while ((s16)gCurTask->unk6C <= 6);
         break;
     case 1:
-        if (!(((struct Task *)t->unk8C)->waterFlags & 1))
+        if (!((t->u8C.parentTask)->waterFlags & 1))
         {
             t->velX = 0x60000;
             t->frame = 1;
@@ -120,7 +120,7 @@ void sub_080564ac(void)
         }
         break;
     case 2:
-        if (!(((struct Task *)t->unk8C)->waterFlags & 1))
+        if (!((t->u8C.parentTask)->waterFlags & 1))
         {
             t->velX = -0x60000;
             t->frame = 0;
@@ -188,7 +188,7 @@ void sub_08056770(void)
         {
             {
                 struct Task *u = gCurTask;
-                struct Task *p = (struct Task *)u->unk8C;
+                struct Task *p = u->u8C.parentTask;
 
                 if (p->onGround != 0)
                 {
@@ -196,11 +196,11 @@ void sub_08056770(void)
                     {
                         struct Task *v = gCurTask;
 
-                        v->posY = (((struct Task *)v->unk8C)->pixelY + 6) << 16;
+                        v->posY = ((v->u8C.parentTask)->pixelY + 6) << 16;
                         if (v->facing == 1)
-                            v->posX = (((struct Task *)v->unk8C)->pixelX + 8) << 16;
+                            v->posX = ((v->u8C.parentTask)->pixelX + 8) << 16;
                         else
-                            v->posX = (((struct Task *)v->unk8C)->pixelX - 8) << 16;
+                            v->posX = ((v->u8C.parentTask)->pixelX - 8) << 16;
                     }
                     TaskStop();
                     TaskSetMotionXFacing(0x30000, 0x5A5A5A5A);
@@ -239,14 +239,14 @@ void sub_08056770(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk8C = ((struct Task *)u->unk8C)->unk8C;
-            u->parent = ((struct Task *)u->unk8C)->parent;
+            u->u8C.parentTask = (u->u8C.parentTask)->u8C.parentTask;
+            u->parent = (u->u8C.parentTask)->parent;
             u->moveCallback = (u32)TaskMoveRelativeToParent;
         }
         while ((s8)gCurTask->player->unk16 == 0 && gCurTask->player->mode == 13)
         {
             struct Task *u = gCurTask;
-            struct Task *p = (struct Task *)u->unk8C;
+            struct Task *p = u->u8C.parentTask;
 
             if (p->onGround == 0)
             {
@@ -344,7 +344,7 @@ void sub_08056770(void)
             else
                 u->posX = (u->pixelX + 8) << 16;
         }
-        if (!(((struct Task *)gCurTask->unk8C)->waterFlags & 1))
+        if (!((gCurTask->u8C.parentTask)->waterFlags & 1))
         {
             TaskSetMotionXFacing(-0x24000, 0x1800);
             gCurTask->velY = -0x4000;
@@ -385,11 +385,11 @@ void sub_08056770(void)
             {
                 struct Task *u = gCurTask;
 
-                u->posY = (((struct Task *)u->unk8C)->pixelY + 10) << 16;
+                u->posY = ((u->u8C.parentTask)->pixelY + 10) << 16;
                 if (u->facing == 1)
-                    u->posX = (((struct Task *)u->unk8C)->pixelX - 8) << 16;
+                    u->posX = ((u->u8C.parentTask)->pixelX - 8) << 16;
                 else
-                    u->posX = (((struct Task *)u->unk8C)->pixelX + 8) << 16;
+                    u->posX = ((u->u8C.parentTask)->pixelX + 8) << 16;
             }
             TaskStop();
             TaskSetMotionXFacing(-0x30000, 0x6000);
@@ -407,11 +407,11 @@ void sub_08056770(void)
         {
             struct Task *u = gCurTask;
 
-            u->posY = (((struct Task *)u->unk8C)->pixelY + 10) << 16;
+            u->posY = ((u->u8C.parentTask)->pixelY + 10) << 16;
             if (u->facing == 1)
-                u->posX = (((struct Task *)u->unk8C)->pixelX - 8) << 16;
+                u->posX = ((u->u8C.parentTask)->pixelX - 8) << 16;
             else
-                u->posX = (((struct Task *)u->unk8C)->pixelX + 8) << 16;
+                u->posX = ((u->u8C.parentTask)->pixelX + 8) << 16;
         }
         TaskSetMotionXFacing(-0x20000, -0x800);
         gCurTask->velY = -0x4000;

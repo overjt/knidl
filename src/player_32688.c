@@ -533,7 +533,7 @@ void sub_08033414(void)
         gCurTask->unk76 = 0;
         gCurTask->player->unk40 = 0;
         gCurTask->player->unk50 = 0;
-        gCurTask->unk80 = 0;
+        gCurTask->u80.attackAbility = 0;
     }
     else if (gUnk_03001F30 == 0)
     {

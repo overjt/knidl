@@ -153,7 +153,7 @@ void sub_080ae4c4(void)
     sub_08063a00((u32)gUnk_0874B450);
     c = &gCurTask;
     t = *c;
-    t->unk8C->animScript = 0;
+    t->u8C.actor->animScript = 0;
     t->unk28 = 0;
     t->facing = 1;
     u = *c;
@@ -834,8 +834,8 @@ void sub_080aefd4(u32 a)
     struct Task *u;
 
     t = gCurTask;
-    t->unk8C->animScript = (struct AnimCmd *)a;
-    t->unk8C->animScriptPos = 0;
+    t->u8C.actor->animScript = (struct AnimCmd *)a;
+    t->u8C.actor->animScriptPos = 0;
     u = gCurTask;
     u->unk28 = 0;
     sub_080af020();
@@ -846,7 +846,7 @@ void sub_080aeff8(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk8C->animScript != 0)
+    if (t->u8C.actor->animScript != 0)
     {
         t->unk28--;
         if (t->unk28 <= 0)
@@ -874,7 +874,7 @@ void sub_080af020(void)
 
 top:
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     i = a->animScriptPos;
     v = ((s32 *)a->animScript)[i];
     switch (v)
@@ -886,26 +886,26 @@ top:
         goto top;
     case -3:
         a->animScriptPos = i + 1;
-        a2 = gCurTask->unk8C;
+        a2 = gCurTask->u8C.actor;
         ((void (*)(void))((s32 *)a2->animScript)[a2->animScriptPos++])();
         goto top;
     case -4:
         a->animScriptPos = i + 1;
         t3 = gCurTask;
-        a3 = t3->unk8C;
+        a3 = t3->u8C.actor;
         t3->frame = ((s32 *)a3->animScript)[a3->animScriptPos++];
         t4 = gCurTask;
-        a4 = t4->unk8C;
+        a4 = t4->u8C.actor;
         r = ((s32 (*)(void))((s32 *)a4->animScript)[a4->animScriptPos++])();
         u = gCurTask;
         u->unk28 = r;
         break;
     default:
         t5 = gCurTask;
-        a5 = t5->unk8C;
+        a5 = t5->u8C.actor;
         t5->frame = ((s32 *)a5->animScript)[a5->animScriptPos++];
         t6 = gCurTask;
-        a6 = t6->unk8C;
+        a6 = t6->u8C.actor;
         t6->unk28 = ((s32 *)a6->animScript)[a6->animScriptPos++];
         break;
     }
@@ -1028,11 +1028,11 @@ void sub_080af294(void)
     TaskStop();
     c = &gCurTask;
     t = *c;
-    t->unk8C->animScript = 0;
+    t->u8C.actor->animScript = 0;
     t->updateState = 3;
     gUnk_02007D00[0] = 1;
     ActorSetAttackBox(0);
-    (*c)->unk8C->sfxOverride = 0x23E;
+    (*c)->u8C.actor->sfxOverride = 0x23E;
     HudRemoveHpBar();
     sub_0806b05c();
     sub_0806b098();
@@ -2066,7 +2066,7 @@ void sub_080b05e8(void)
     (*c)->facing = 1;
     u = *c;
     u->frame = 0xFFFF;
-    u->unk8C->animScript = (struct AnimCmd *)z;
+    u->u8C.actor->animScript = (struct AnimCmd *)z;
     p[6] = z;
     p[7] = 3;
     sub_08063698(80, 32);

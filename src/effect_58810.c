@@ -33,7 +33,7 @@ void sub_08058810(void)
     t->drawCallback = (u32)TaskDrawWorld;
     t->updateCallback = (u32)sub_08058e80;
     t->frameTable = gUnk_08751E5C;
-    t->tileWord = (((struct Task *)t->unk8C)->tileWord + 0x1800) | 8;
+    t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 8;
     t->unk28 = 0;
     switch (t->unk18 & 15)
     {
@@ -239,9 +239,9 @@ void sub_08058e80(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0 && (t->player->mode != 13 || t->facing != ((struct Task *)t->unk8C)->facing))
+    if (t->unk28 == 0 && (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing))
         t->unk28 = 1;
-    if (!(gCurTask->player->unk40 & 0x100) && (((struct Task *)gCurTask->unk8C)->waterFlags & 1))
+    if (!(gCurTask->player->unk40 & 0x100) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);
     if (gCurTask->player->ability != 13)
         TaskFree(gCurTaskIdx);
@@ -257,15 +257,15 @@ void sub_08058f10(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751E7C;
-    t->tileWord = (((struct Task *)t->unk8C)->tileWord + 0x1800) | 12;
+    t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     t->unk28 = 0;
     switch (t->unk18 & 15)
     {
     case 0:
         while (1)
         {
-            gCurTask->posX = (RandomSpread(-24, 1, 32) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(4, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpread(-24, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(4, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(-0x18000, 0x2000);
             gCurTask->velY = -0xC000;
             gCurTask->accelY = -0x1800;
@@ -279,8 +279,8 @@ void sub_08058f10(void)
             TaskYieldTrampoline(3);
             if (gCurTask->unk28 != 0)
                 break;
-            gCurTask->posX = (RandomSpread(-24, 1, 32) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(-12, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpread(-24, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(-12, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(-0x18000, 0x2000);
             gCurTask->velY = -0xC000;
             gCurTask->accelY = -0x1800;
@@ -305,8 +305,8 @@ void sub_08058f10(void)
         TaskYieldTrampoline(5);
         while (gCurTask->unk28 == 0)
         {
-            gCurTask->posX = (RandomSpread(-20, 1, 32) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(16, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpread(-20, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(16, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(-0xC000, 0x1000);
             gCurTask->velY = -0x14000;
             gCurTask->accelY = -0x2000;
@@ -320,8 +320,8 @@ void sub_08058f10(void)
             TaskYieldTrampoline(3);
             if (gCurTask->unk28 != 0)
                 break;
-            gCurTask->posX = (RandomSpread(-20, 1, 32) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(0, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpread(-20, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(-0xC000, 0x1000);
             gCurTask->velY = -0x14000;
             gCurTask->accelY = -0x2000;
@@ -340,8 +340,8 @@ void sub_08058f10(void)
         TaskYieldTrampoline(10);
         while (gCurTask->unk28 == 0)
         {
-            gCurTask->posX = (RandomSpread(-12, 1, 32) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(20, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpread(-12, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(20, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(0xC000, -0x1000);
             gCurTask->velY = -0x14000;
             gCurTask->accelY = -0x2000;
@@ -355,7 +355,7 @@ void sub_08058f10(void)
             TaskYieldTrampoline(3);
             if (gCurTask->unk28 != 0)
                 break;
-            gCurTask->posY = (RandomSpread(4, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posY = (RandomSpread(4, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(0xC000, -0x1000);
             gCurTask->velY = -0x14000;
             gCurTask->accelY = -0x2000;
@@ -374,8 +374,8 @@ void sub_08058f10(void)
         TaskYieldTrampoline(15);
         while (gCurTask->unk28 == 0)
         {
-            gCurTask->posX = (RandomSpread(-8, 1, 32) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(4, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpread(-8, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(4, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(0x18000, -0x2000);
             gCurTask->velY = -0xC000;
             gCurTask->accelY = -0x1800;
@@ -389,8 +389,8 @@ void sub_08058f10(void)
             TaskYieldTrampoline(3);
             if (gCurTask->unk28 != 0)
                 break;
-            gCurTask->posX = (RandomSpread(-8, 1, 32) + ((struct Task *)gCurTask->unk8C)->pixelX) << 16;
-            gCurTask->posY = (RandomSpread(-12, 1, 8) + ((struct Task *)gCurTask->unk8C)->pixelY) << 16;
+            gCurTask->posX = (RandomSpread(-8, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
+            gCurTask->posY = (RandomSpread(-12, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(0x18000, -0x2000);
             gCurTask->velY = -0xC000;
             gCurTask->accelY = -0x1800;
@@ -419,7 +419,7 @@ void sub_080594e0(void)
 
     if (!(p->unk40 & 0x100))
     {
-        if (t->unk28 == 0 && (p->mode != 13 || ((struct Task *)t->unk8C)->variant != 1))
+        if (t->unk28 == 0 && (p->mode != 13 || (t->u8C.parentTask)->variant != 1))
             t->unk28 = 1;
     }
     else
@@ -427,6 +427,6 @@ void sub_080594e0(void)
         if (t->unk28 == 0 && p->mode != 13)
             t->unk28 = 1;
     }
-    if (!(gCurTask->player->unk40 & 0x100) && (((struct Task *)gCurTask->unk8C)->waterFlags & 1))
+    if (!(gCurTask->player->unk40 & 0x100) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);
 }

@@ -13,7 +13,7 @@
  * (src/effect_5afac.c), and by M14's CreatePlayerObject when its type-6 bands are
  * full, with Task.unk18 = variant << 24 | arg and the spawner's position,
  * facing Task.facing and PlayerState Task.player copied in.  The body
- * Task_PlayerEffect links the task to its spawner the first time (Task.unk8C =
+ * Task_PlayerEffect links the task to its spawner the first time (Task.u8C.parentTask =
  * &gTasks[Task.parent], read back as a struct Task) and dispatches the
  * variant, the top byte of Task.unk18, through the 49 entries of
  * gPlayerEffectVariants, which fill this file and the eleven effect_*.c files after
@@ -51,10 +51,10 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner
 
 void Task_PlayerEffect(void)
 {
-    if (gCurTask->unk8C == NULL)
+    if (gCurTask->u8C.parentTask == NULL)
     {
-        gCurTask->unk80 = 0;
-        gCurTask->unk8C = (struct Actor *)&gTasks[gCurTask->parent];
+        gCurTask->u80.attackAbility = 0;
+        gCurTask->u8C.parentTask = &gTasks[gCurTask->parent];
     }
     CallTableEntry(((u8 *)gCurTask)[27], 49, gPlayerEffectVariants);
 }
@@ -69,7 +69,7 @@ void sub_08053b40(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751C44;
-    t->tileWord = (((struct Task *)t->unk8C)->tileWord + 0x1800) | 4;
+    t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 4;
     TaskSetPosXFacing(4);
     gCurTask->posY = 0x40000;
     for (;;)
@@ -89,7 +89,7 @@ void sub_08053b40(void)
 
 void sub_08053be0(void)
 {
-    gCurTask->skipMask = ((struct Task *)gCurTask->unk8C)->skipMask & 0xFB;
+    gCurTask->skipMask = (gCurTask->u8C.parentTask)->skipMask & 0xFB;
     if (!(gCurTask->player->unk40 & 4))
         TaskFree(gCurTaskIdx);
 }
@@ -327,10 +327,10 @@ void sub_080540d0(void)
             struct Task *p;
 
             if (u->facing == 1)
-                u->posX = ((p = (struct Task *)u->unk8C)->pixelX - 6) << 16;
+                u->posX = ((p = u->u8C.parentTask)->pixelX - 6) << 16;
             else
-                u->posX = ((p = (struct Task *)u->unk8C)->pixelX + 6) << 16;
-            u->posY = (((struct Task *)u->unk8C)->pixelY + 8) << 16;
+                u->posX = ((p = u->u8C.parentTask)->pixelX + 6) << 16;
+            u->posY = ((u->u8C.parentTask)->pixelY + 8) << 16;
             TaskStop();
             gCurTask->accelY = -0x2000;
             TaskSetMotionXFacing(-0x30000, 0x5A5A5A5A);
@@ -383,7 +383,7 @@ void sub_08054298(void)
         switch (t->unk18 & 0xFF00)
         {
         case 0:
-            if (((struct Task *)t->unk8C)->onGround == 0)
+            if ((t->u8C.parentTask)->onGround == 0)
                 t->unk28 = 1;
         case 0x100:
         {

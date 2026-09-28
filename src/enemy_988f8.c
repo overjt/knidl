@@ -273,7 +273,7 @@ void sub_08098d58(void)
     struct Actor *a;
 
     t = gCurTask;
-    a = t->unk8C;
+    a = t->u8C.actor;
     sp.subtype = 13;
     sp.taskType = 115;
     sp.variant = 0;

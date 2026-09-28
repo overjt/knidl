@@ -54,10 +54,10 @@ void sub_08054330(void)
         {
             u = gCurTask;
             if (u->facing == 1)
-                u->posX = ((p = (struct Task *)u->unk8C)->pixelX - 6) << 16;
+                u->posX = ((p = u->u8C.parentTask)->pixelX - 6) << 16;
             else
-                u->posX = ((p = (struct Task *)u->unk8C)->pixelX + 6) << 16;
-            u->posY = (((struct Task *)u->unk8C)->pixelY + 8) << 16;
+                u->posX = ((p = u->u8C.parentTask)->pixelX + 6) << 16;
+            u->posY = ((u->u8C.parentTask)->pixelY + 8) << 16;
             TaskStop();
             gCurTask->accelY = -0x2000;
             TaskSetMotionXFacing(-0x30000, 0x5A5A5A5A);
@@ -102,7 +102,7 @@ void sub_08054504(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0 && (t->player->mode != 2 || ((struct Task *)t->unk8C)->onGround == 0))
+    if (t->unk28 == 0 && (t->player->mode != 2 || (t->u8C.parentTask)->onGround == 0))
         t->unk28 = 1;
 }
 
@@ -123,10 +123,10 @@ void sub_08054538(void)
     case 0:
         t->updateCallback = (u32)sub_08054838;
         if (t->facing == 1)
-            t->posX = ((p = (struct Task *)t->unk8C)->pixelX - 6) << 16;
+            t->posX = ((p = t->u8C.parentTask)->pixelX - 6) << 16;
         else
-            t->posX = ((p = (struct Task *)t->unk8C)->pixelX + 6) << 16;
-        t->posY = (((struct Task *)t->unk8C)->pixelY + 8) << 16;
+            t->posX = ((p = t->u8C.parentTask)->pixelX + 6) << 16;
+        t->posY = ((t->u8C.parentTask)->pixelY + 8) << 16;
         TaskSetMotionXFacing(-0x30000, 0x5A5A5A5A);
         gCurTask->accelY = -0x2000;
         TaskSetFrameByFacing(0);
@@ -146,10 +146,10 @@ void sub_08054538(void)
         TaskYieldTrampoline(1);
         u = gCurTask;
         if (u->facing == 1)
-            u->posX = ((p = (struct Task *)u->unk8C)->pixelX - 6) << 16;
+            u->posX = ((p = u->u8C.parentTask)->pixelX - 6) << 16;
         else
-            u->posX = ((p = (struct Task *)u->unk8C)->pixelX + 6) << 16;
-        u->posY = (((struct Task *)u->unk8C)->pixelY + 8) << 16;
+            u->posX = ((p = u->u8C.parentTask)->pixelX + 6) << 16;
+        u->posY = ((u->u8C.parentTask)->pixelY + 8) << 16;
         TaskSetMotionXFacing(-0x24000, 0x1000);
         gCurTask->velY = -0x4000;
         gCurTask->accelY = -0x2000;
@@ -168,10 +168,10 @@ void sub_08054538(void)
         TaskYieldTrampoline(1);
         v = gCurTask;
         if (v->facing == 1)
-            v->posX = ((p = (struct Task *)v->unk8C)->pixelX - 6) << 16;
+            v->posX = ((p = v->u8C.parentTask)->pixelX - 6) << 16;
         else
-            v->posX = ((p = (struct Task *)v->unk8C)->pixelX + 6) << 16;
-        v->posY = (((struct Task *)v->unk8C)->pixelY + 8) << 16;
+            v->posX = ((p = v->u8C.parentTask)->pixelX + 6) << 16;
+        v->posY = ((v->u8C.parentTask)->pixelY + 8) << 16;
         TaskSetMotionXFacing(-0x12000, 0x1800);
         gCurTask->velY = -0x4000;
         gCurTask->accelY = -0x2000;
@@ -216,10 +216,10 @@ void PlayerEffectSplash(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C520;
-    if (((struct Task *)t->unk8C)->velY > 0)
+    if ((t->u8C.parentTask)->velY > 0)
         PlaySfxIfLocalPlayer(134, t->parent);
     u = gCurTask;
-    u->posX = ((struct Task *)u->unk8C)->pixelX << 16;
+    u->posX = (u->u8C.parentTask)->pixelX << 16;
     u->posY = (u16)u->unk18 << 16;
     u->frame = 0;
     TaskYieldTrampoline(2);
@@ -242,7 +242,7 @@ void sub_080548f0(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C520;
-    t->posX = ((struct Task *)t->unk8C)->pixelX << 16;
+    t->posX = (t->u8C.parentTask)->pixelX << 16;
     t->posY = (u16)t->unk18 << 16;
     t->frame = 11;
     TaskYieldTrampoline(2);

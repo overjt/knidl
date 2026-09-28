@@ -35,7 +35,7 @@ void PlayerActionStarRod(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 53;
-    gCurTask->unk80 = 25;
+    gCurTask->u80.attackAbility = 25;
     {
         struct Task *t = gCurTask;
         t->unk70 = 0;
@@ -134,7 +134,7 @@ void PlayerActionStarRodJump(void)
     {
         struct Task *t = gCurTask;
         t->unk2C = t->facing;
-        t->unk80 = 25;
+        t->u80.attackAbility = 25;
     }
     {
         struct Task *t = gCurTask;
@@ -248,7 +248,7 @@ void PlayerActionStarRodFlight(void)
         gCurTask->player->unk10 = 0;
         PlayerStopAxes(3);
         gCurTask->variant = 0;
-        gCurTask->unk80 = 0;
+        gCurTask->u80.attackAbility = 0;
         gCurTask->lateUpdateCallback = 0;
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;

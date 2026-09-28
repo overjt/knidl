@@ -49,7 +49,7 @@ void PlayerActionParasol(void)
         else
             t->unk2C = 0;
     }
-    gCurTask->unk80 = 10;
+    gCurTask->u80.attackAbility = 10;
     PlayerSetMotionXPreset(0, 72);
     PlaySfxIfLocalPlayer(151, gCurTask->player->playerIndex);
     if (gCurTask->unk2C == 0) {
@@ -277,7 +277,7 @@ void PlayerActionNeedle(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             t->variant = 0;
-            gCurTask->unk80 = 12;
+            gCurTask->u80.attackAbility = 12;
         }
     }
     switch (gCurTask->variant) {

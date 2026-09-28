@@ -41,7 +41,7 @@ void sub_08057ce0(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751D88;
-    t->tileWord = (((struct Task *)t->unk8C)->tileWord + 0x1800) | 12;
+    t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     switch (t->unk18 & 15)
     {
     case 0:
@@ -61,7 +61,7 @@ void sub_08057ce0(void)
     }
     u = gCurTask;
     u->posY = u->pixelY << 16;
-    if (!(((struct Task *)u->unk8C)->waterFlags & 1))
+    if (!((u->u8C.parentTask)->waterFlags & 1))
     {
         TaskSetMotionXFacing(0x30000, -0x2800);
         gCurTask->velY = 0;
@@ -111,16 +111,16 @@ void sub_08057e90(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751DB0;
-    t->tileWord = ((struct Task *)t->unk8C)->tileWord | 0xF00C;
+    t->tileWord = (t->u8C.parentTask)->tileWord | 0xF00C;
     if (t->facing == 1)
     {
-        t->posX = (((struct Task *)t->unk8C)->pixelX + 40) << 16;
-        t->posY = (((struct Task *)t->unk8C)->pixelY + 4) << 16;
+        t->posX = ((t->u8C.parentTask)->pixelX + 40) << 16;
+        t->posY = ((t->u8C.parentTask)->pixelY + 4) << 16;
     }
     else
     {
-        t->posX = (((struct Task *)t->unk8C)->pixelX - 40) << 16;
-        t->posY = (((struct Task *)t->unk8C)->pixelY + 4) << 16;
+        t->posX = ((t->u8C.parentTask)->pixelX - 40) << 16;
+        t->posY = ((t->u8C.parentTask)->pixelY + 4) << 16;
     }
     p = &gUnk_0873BAEE[(gCurTask->unk18 & 3) * 2];
     a = p[0];
@@ -165,7 +165,7 @@ void sub_08057f90(void)
         t->moveCallback = 0;
         t->drawCallback = 0;
         t->updateCallback = (u32)sub_08058410;
-        t->unk80 = 7;
+        t->u80.attackAbility = 7;
         while ((s8)gCurTask->player->unk16 == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;
@@ -351,7 +351,7 @@ void sub_08058460(void)
         t->layer = 5;
         u = gCurTask;
         u->frameTable = gUnk_08751DD0;
-        u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 8;
+        u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
         if (u->facing == 1)
             u->posX = 0x60000;
         else
@@ -395,7 +395,7 @@ void sub_08058460(void)
         t->layer = 8;
         u = gCurTask;
         u->frameTable = gUnk_08751DBC;
-        u->tileWord = (((struct Task *)u->unk8C)->tileWord + 0x1800) | 12;
+        u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 12;
         u->posX = 0;
         u->posY = -0x80000;
         u->velY = -0x20000;

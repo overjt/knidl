@@ -330,7 +330,7 @@ void sub_0809d1dc(void)
             sub_0809dbc4();
         t = gCurTask;
         p = &t->pixelY;
-        a = t->unk8C;
+        a = t->u8C.actor;
         q = (s8 *)a->terrainBox;
         lim = q[2];
         if (*p < lim)

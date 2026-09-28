@@ -411,8 +411,8 @@ void sub_080a19ec(void)
 
     tb = &gTasks[gUnk_02007D00[1]];
     ta = &gTasks[gUnk_02007D00[0]];
-    ab = tb->unk8C;
-    aa = ta->unk8C;
+    ab = tb->u8C.actor;
+    aa = ta->u8C.actor;
     ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->unk60->altAttackBox);
     ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->unk60->altAttackBox);
     gUnk_0200AFF8 = 0;
@@ -441,7 +441,7 @@ void CreateMrShineAndMrBright(void)
     u32 w;
     s32 r;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     gUnk_02007D00[1] = sub_0806505c(1, 0, gViewRect[0] + 192, gViewRect[2] + 48, a->savedTileWord);
     v = a->savedTileWord & 0xFFF;
     w = gCurTask->tileWord & 0xF000;
@@ -554,7 +554,7 @@ void sub_080a1d84(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     ActorSetHitReactions((u32)gUnk_0874898C);
     a->unk3C = (u32)sub_080a1dbc;
     TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -1088,7 +1088,7 @@ void sub_080a2814(void)
 {
     struct Task *t = gCurTask;
 
-    if (!(t->unk8C->paletteLocked & 1))
+    if (!(t->u8C.actor->paletteLocked & 1))
     {
         if ((s16)t->unk70 != 0 || t->unk20 != 0)
         {
@@ -1192,7 +1192,7 @@ void sub_080a29cc(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     TaskStop();
     sub_080a2994();
     if (a->prevState != 6)
@@ -1292,9 +1292,9 @@ void sub_080a2b2c(void *a, u32 b)
     u32 *gt;
     s16 fr;
 
-    if (t->frameTable != 0 && t->frame != -1 && !(t->unk8C->paletteLocked & 1))
+    if (t->frameTable != 0 && t->frame != -1 && !(t->u8C.actor->paletteLocked & 1))
     {
-        t->unk8C->paletteOverridden |= 1;
+        t->u8C.actor->paletteOverridden |= 1;
         gt = gTasks[gUnk_02006040[5]].frameTable;
         fr = gTasks[gUnk_02006040[5]].frame;
         if (fr != -1)
@@ -1312,7 +1312,7 @@ void sub_080a2b2c(void *a, u32 b)
 void sub_080a2bc4(void)
 {
     struct Task *t = gCurTask;
-    struct Actor *act = t->unk8C;
+    struct Actor *act = t->u8C.actor;
     struct TaskGfx *g;
     u32 *gt;
     struct Task *o;
@@ -1349,7 +1349,7 @@ void sub_080a2bc4(void)
 /* sub_080a2c90 (0x080A2C90-0x080A2CA8) */
 void sub_080a2c90(void)
 {
-    gCurTask->unk8C->paletteOverridden = 0;
+    gCurTask->u8C.actor->paletteOverridden = 0;
     gCurTask->unk70 = 0;
 }
 
@@ -1472,7 +1472,7 @@ void sub_080a2edc(void)
 {
     struct Actor *a;
 
-    a = gCurTask->unk8C;
+    a = gCurTask->u8C.actor;
     TaskStop();
     if (gCurTask->unk20 != 0)
     {
@@ -2724,8 +2724,8 @@ void sub_080a4814(void)
 {
     struct Task *pt = &gTasks[gUnk_02007D00[0]];
     struct Task *t = gCurTask;
-    struct Actor *myact = t->unk8C;
-    struct Actor *pact = gTasks[gUnk_02007D00[0]].unk8C;
+    struct Actor *myact = t->u8C.actor;
+    struct Actor *pact = gTasks[gUnk_02007D00[0]].u8C.actor;
 
     switch (pt->frame)
     {
@@ -2763,7 +2763,7 @@ void sub_080a488c(void)
         x = t->tileWord;
         x &= 0x7FF;
         dst = (x << 5) + 0x0600FE00;
-        act = t->unk8C;
+        act = t->u8C.actor;
         gt = t->frameTable;
         if (t->frame != -1)
         {
@@ -2946,7 +2946,7 @@ void sub_080a4c80(void)
 void sub_080a4c84(void)
 {
     struct Task *t = gCurTask;
-    struct Actor *a = t->unk8C;
+    struct Actor *a = t->u8C.actor;
 
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;

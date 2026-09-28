@@ -212,7 +212,7 @@ void Task_MetaKnightsKnight(void)
     t->moveCallback = (u32)TaskMove;
     t->layer = 11;
     u = gCurTask;
-    a = u->unk8C;
+    a = u->u8C.actor;
     a->savedPaletteBits = 0xF000 & u->tileWord;
     sub_0809f818(1);
     switch (gCurTask->unk74)

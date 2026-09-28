@@ -417,7 +417,7 @@ void BonkersThrow(void)
     spawn.spawnArg = 0;
     spawn.x = 24;
     spawn.y = 0;
-    spawn.tileWord = gCurTask->unk8C->savedTileWord;
+    spawn.tileWord = gCurTask->u8C.actor->savedTileWord;
     spawn.checkTerrain = 1;
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 1);
     PlaySfx(0x1FB);
