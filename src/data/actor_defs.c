@@ -9,7 +9,7 @@
  * (src/actor_63698.c) binds a task to its definition with
  * table[Task.unk76] picked by Task.actorKind; the lengths are the spans
  * between the consumer-referenced labels (docs/data.md 5.1).  The records
- * stay structure-only data in seg 18 (asset_metadata_index).  The four
+ * stay structure-only data in seg 18 (actor_rodata).  The four
  * records that other files read as u32 arrays are cast.  Carved by
  * tools/carve_data.py. */
 

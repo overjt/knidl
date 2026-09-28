@@ -55,7 +55,6 @@ ASM_FOREVER = {
     "sdk_swi_wrappers",
     "sdk_reset_helper",
     "m4a_1",
-    "lib_misc",
     "task_switch_helpers",
     "crt0_master_isr",
     "interworking_veneer",

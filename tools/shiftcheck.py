@@ -57,12 +57,12 @@ ROM_BASE = 0x08000000
 # (label, section): the default insertion points.
 DEFAULT_POINTS = [
     ("after crt0 (all code and data move)", "agb_init"),
-    ("right after the code", "level_object_tables"),
+    ("right after the code and the SDK tables", "sram_id_string"),
     ("level data (rooms)", "room_bg_anims"),
     ("compressed graphics", "compressed_graphics"),
-    ("inside the song zone", "m4a_songs_2"),
-    ("behaviour tables (seg 18)", "gap_sram_driver_fn_table_asset_metadata_index"),
-    ("song tail (seg 19)", "song_tail_misc_audio"),
+    ("inside the song zone", "m4a_song_data"),
+    ("rodata (seg 18)", "engine_rodata"),
+    ("player frame records (seg 18/19)", "player_frame_records"),
 ]
 
 SECTION_LINE_RE = re.compile(

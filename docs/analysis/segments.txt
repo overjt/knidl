@@ -325,29 +325,36 @@
 0x080CFDDC 0x080CFDE4 arm_code interworking_veneer [split] # ldr ip,[pc]; bx ip -> 0x08005654|1
 0x080CFDE4 0x080CFDE8 data gap_interworking_veneer_irq_handler_table_14 [split] # NOT padding: the veneer's literal word (sub_08005654+1)
 0x080CFDE8 0x080CFE20 data irq_handler_table_14 [split] # 14 .word entries with symbolic targets
-0x080CFE20 0x080CFF00 data lib_misc [split] # gSramIdString "AGB  KIRBY" + sound-driver coefficient windows
-0x080CFF00 0x080D0000 data lib_rodata_fir_tables [split] # FIR/envelope-style coefficient tables (sound driver)
-0x080D0000 0x08120000 data level_object_tables
-0x08120000 0x08334EC0 data level_graphics_palettes # Level graphics and palettes (asset); its last 12 bytes are the stage-count table gUnk_08334EB4
+0x080CFE20 0x080CFE2C data sram_id_string # The SRAM id string "AGB  KIRBY" (gSramIdString), WriteSramEx(.., 0x0E000000, 10) src/save_b7a9c.c:29 (#36 phase 2 run 3; formerly the head of lib_misc)
+0x080CFE2C 0x080D0788 data air_grind_rodata # Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gUnk_080D0398, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer
+0x080D0788 0x08334EC0 data sprite_sheets # Sprite sheets (asset, #36 phase 2 run 3): OAM template streams, tiles, palettes and struct TaskGfx records the frame tables reach; its head holds a RequestCopyList palette and the LZ77 streams gUnk_080D07C8/gUnk_080D1B78, its last 12 bytes the stage-count table gUnk_08334EB4
 0x08334EC0 0x0835CFD4 data room_bg_anims # Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c)
 0x0835CFD4 0x083A862C data room_data # Room records (#36 phase 2): 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list
 0x083A862C 0x083B5538 data room_metatiles # Room metatile tables (#36 phase 2): 23 LZ77 RoomDef.metatileTiles streams
 0x083B5538 0x083D0148 data room_bg3_maps # Room BG3 maps (#36 phase 2): 32 struct BgMap, 25 LZ77 and 7 raw
 0x083D0148 0x085C0000 data compressed_graphics # Compressed graphics (LZ77/RLE-class)
-0x085C0000 0x0860A140 data m4a_songs # song track data head (songs/samples extraction is issue #36)
+0x085C0000 0x0860A140 data sprite_sheets_2 # Sprite sheets, part 2 (asset, #36 phase 2 run 3; formerly m4a_songs, no m4a data): OAM streams, raw and LZ77 tiles, palettes, TaskGfx records; opens with the tail of compressed_graphics' LZ77 stream gUnk_085BF484
 0x0860A140 0x0860A418 data m4a_engine_rodata [split] # m4a engine tables (issue #51, rom-map section 8.3): gMPlayJumpTableTemplate..gXcmdTable (gXcmdTable has 12 entries and ends 0x0860A418, not 0x0860A410 as the issue text assumed)
-0x0860A418 0x0860B430 data m4a_song_tracks # song track data referenced by song headers (stays incbin, issue #36)
+0x0860A418 0x0860B430 data m4a_voicegroups # m4a voicegroups (asset, #36 phase 2 run 3; formerly m4a_song_tracks): the five voicegroups and five 4-bit CGB waves tools/m4a_struct.py parses
 0x0860B430 0x0860C678 data m4a_song_table [split] # gMPlayTable (4 players) + gSongTable: 579 entries ending at the first song header 0x0860C678 (all header ptrs >= 0x0860C678; issue #51's "103 entries/0x0860B798" undercounted)
-0x0860C678 0x0872E9F8 data m4a_songs_2 # song headers + tone data + remaining track data (issue #36)
+0x0860C678 0x0872E9F8 data m4a_song_data # m4a song data (asset, #36 phase 2 run 3; formerly m4a_songs_2): song headers, track streams, ToneData and all 129 WaveData PCM samples (tools/m4a_struct.py)
 0x0872E9F8 0x0872EA02 data sram_v112_string
 0x0872EA02 0x0872EA04 data gap_sram_v112_string_sram_driver_fn_table
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
-0x0872EA14 0x0872FF30 data gap_sram_driver_fn_table_asset_metadata_index
+0x0872EA14 0x0872FF30 data engine_rodata # Engine-zone rodata (#36 phase 2 run 3; formerly gap_sram_driver_fn_table_asset_metadata_index): 256 zero bytes, sprite half-dimensions gUnk_0872EB14, gBootSignature, the SE table gSfxTable, gCosTable; gTaskTypes follows
 0x0872FF30 0x08730780 c_data task_types # src/data/task_types.c (carved by tools/carve_data.py)
-0x08730780 0x0873ECEC data asset_metadata_index
+0x08730780 0x0873ECEC data game_rodata # Game rodata in link order, M02-M18 (#36 phase 2 run 3; formerly asset_metadata_index): mode, menu, player, collision, room, camera and terrain tables, blocks, player actions, effects, actor core
 0x0873ECEC 0x0873EEA0 c_data actor_defs # src/data/actor_defs.c (carved by tools/carve_data.py)
-0x0873EEA0 0x08760000 data asset_metadata_index_0873eea0
-0x08760000 0x087E1D58 data song_tail_misc_audio
+0x0873EEA0 0x0874C44C data actor_rodata # Actor and enemy rodata, M17-M32 (#36 phase 2 run 3; formerly asset_metadata_index_0873eea0): behaviour tables, ActorDef/ActorAux records, HitBoxSets
+0x0874C44C 0x0875607C data frame_tables # Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gUnk_0874CFEC among them
+0x0875607C 0x08758448 data late_game_rodata # Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits
+0x08758448 0x08759DC8 data credits_demos # The 14 recorded input demos of the staff credits' rows 1 and 2 (gUnk_087583CC, CreditsMain src/credits_cd330.c; InputRecorderStart)
+0x08759DC8 0x08769250 data player_frame_records # Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/stage_3cd60.c) (#36 phase 2 run 3)
+0x08769250 0x0876B1FC data player_frame_lists # The player sheets' frame lists, format-only (docs/data.md 5.3) (#36 phase 2 run 3)
+0x0876B1FC 0x0876F690 data multiboot_program # Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, sub_08007e04 src/mode_07b68.c
+0x0876F690 0x087954C0 data quick_draw_program # Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by sub_08007c5c (src/mode_07b68.c)
+0x087954C0 0x087C0A4C data bomb_rally_program # Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by sub_08007c5c (src/mode_07b68.c)
+0x087C0A4C 0x087E1D58 data air_grind_program # Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by sub_08007c5c (src/mode_07b68.c)
 0x087E1D58 0x087E1E78 c_data room_table # src/data/room_table.c (carved by tools/carve_data.py)
 0x087E1E78 0x087E1F58 data room_bg_anim_lists # Room BG-animation script lists (#36 phase 2): 12 NULL-ended lists of the 30 scripts and their index gRoomBgAnimScripts
 0x087E1F58 0x087E2570 c_data room_lists # src/data/room_lists.c (carved by tools/carve_data.py)

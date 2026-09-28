@@ -1,6 +1,6 @@
 """Pointer-census evidence: seg 18's behaviour tables (issue #36 phase 2
 run 2, tools/ptrcensus.py provider), for (0x08730780-0x0874C000, 0x08756000-0x08759000) and
-lib_rodata_fir_tables (0x080CFE20-0x080D0000).
+air_grind_rodata (0x080CFE2C-0x080D0788).
 
 provide(rom, cfg, segs) -> {"coincidence": [(start, end, kind, why)],
                             "pointer": [(addr, why)]}

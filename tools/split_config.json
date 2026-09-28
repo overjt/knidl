@@ -39526,16 +39526,13 @@
       "name": "irq_handler_table_14"
     },
     {
-      "name": "lib_misc"
+      "name": "sram_id_string"
     },
     {
-      "name": "lib_rodata_fir_tables"
+      "name": "air_grind_rodata"
     },
     {
-      "name": "level_object_tables"
-    },
-    {
-      "name": "level_graphics_palettes",
+      "name": "sprite_sheets",
       "asset": true
     },
     {
@@ -39559,21 +39556,21 @@
       "asset": true
     },
     {
-      "name": "m4a_songs",
+      "name": "sprite_sheets_2",
       "asset": true
     },
     {
       "name": "m4a_engine_rodata"
     },
     {
-      "name": "m4a_song_tracks",
+      "name": "m4a_voicegroups",
       "asset": true
     },
     {
       "name": "m4a_song_table"
     },
     {
-      "name": "m4a_songs_2",
+      "name": "m4a_song_data",
       "asset": true
     },
     {
@@ -39586,16 +39583,43 @@
       "name": "sram_driver_fn_table"
     },
     {
-      "name": "gap_sram_driver_fn_table_asset_metadata_index"
+      "name": "engine_rodata"
     },
     {
-      "name": "asset_metadata_index"
+      "name": "game_rodata"
     },
     {
-      "name": "asset_metadata_index_0873eea0"
+      "name": "actor_rodata"
     },
     {
-      "name": "song_tail_misc_audio",
+      "name": "frame_tables"
+    },
+    {
+      "name": "late_game_rodata"
+    },
+    {
+      "name": "credits_demos"
+    },
+    {
+      "name": "player_frame_records"
+    },
+    {
+      "name": "player_frame_lists"
+    },
+    {
+      "name": "multiboot_program",
+      "asset": true
+    },
+    {
+      "name": "quick_draw_program",
+      "asset": true
+    },
+    {
+      "name": "bomb_rally_program",
+      "asset": true
+    },
+    {
+      "name": "air_grind_program",
       "asset": true
     },
     {

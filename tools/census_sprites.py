@@ -2,7 +2,7 @@
 tools/ptrcensus.py provider).
 
 The sprite frame network: the frame tables at 0x0874C44C-0x08756000 (seg 18
-tail), the struct TaskGfx records they point at (seg 12, m4a_songs, seg 18,
+tail), the struct TaskGfx records they point at (seg 12, sprite_sheets_2, seg 18,
 seg 19 head) and the OAM template streams, tile streams and palettes those
 records and tables name.
 

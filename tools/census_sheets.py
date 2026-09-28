@@ -1,5 +1,5 @@
-"""Pointer-census evidence: the sprite sheets of level_graphics_palettes (seg 12)
-and m4a_songs (issue #36 phase 2 run 3, tools/ptrcensus.py provider).
+"""Pointer-census evidence: the sprite sheets of sprite_sheets (segs 11-12)
+and sprite_sheets_2 (issue #36 phase 2 run 3, tools/ptrcensus.py provider).
 
 census_sprites.py proves the sprite frame network that the frame tables and
 the frame lists reach.  This provider covers what those walks leave in the
@@ -35,7 +35,7 @@ import census_rooms as cr    # noqa: E402  (tools/census_rooms.py: lz77())
 import census_sprites as cs  # noqa: E402  (tools/census_sprites.py)
 
 ROM_BASE = 0x08000000
-ZONES = ("level_graphics_palettes", "m4a_songs")
+ZONES = ("sprite_sheets", "sprite_sheets_2")
 
 
 def _u16(rom, a):
