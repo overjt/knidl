@@ -162,8 +162,8 @@ void sub_080637e4(u32 i)
         a->ability = d->ability;
         a->score = d->score;
         ActorResetHealthSlot(i);
-        if (a->def->unk24 != NULL)
-            a->def->unk24(i);
+        if (a->def->initCallback != NULL)
+            a->def->initCallback(i);
         a->teardown = a->def->teardown;
         a->unk60 = a->def->unk10;
     }

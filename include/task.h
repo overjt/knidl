@@ -136,14 +136,14 @@ struct ActorDef
     /*0x06*/ u16 health4Players;
     /*0x08*/ u32 score;
     /*0x0C*/ u8 ability;
-    /*0x0D*/ u8 unk0D;
+    /*0x0D*/ u8 isItem;
     /*0x0E*/ u16 unk0E;
     /*0x10*/ struct ActorAux *unk10;
     /*0x14*/ u32 attackBox;
     /*0x18*/ s32 terrainBox;
     /*0x1C*/ u32 terrainHandlers;
     /*0x20*/ u32 hitReactions;
-    /*0x24*/ void (*unk24)(u32);
+    /*0x24*/ void (*initCallback)(u32);
     /*0x28*/ void (*teardown)(void);
 };
 

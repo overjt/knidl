@@ -590,7 +590,7 @@ void sub_0806bd10(void)
     t = gCurTask;
     a = t->u8C.actor;
     p = t->player;
-    if ((s8)a->def->unk0D == 1)
+    if ((s8)a->def->isItem == 1)
     {
         if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->unk76 != 0)
         {

@@ -184,7 +184,7 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
     gRoomObjectGfxSlotIds[idx] = n;
     gRoomObjectGfxSlots[n].unk0 = e[1];
     gRoomObjectGfxSlots[n].unk2 = 0;
-    gRoomObjectGfxSlots[n].unk1 = 8;
+    gRoomObjectGfxSlots[n].paletteBank = 8;
     d = gMetaKnightsGfx[0];
     if (d->tileCount != 0)
     {
@@ -247,8 +247,8 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
     }
     if (d->paletteBankCount != 0)
     {
-        gRoomObjectGfxSlots[n].unk1 = AllocObjPalettes(d->paletteBankCount);
-        RequestCopy(2, d->palette, (gRoomObjectGfxSlots[n].unk1 << 5) + (u32)gObjPalette, d->paletteBankCount << 5);
+        gRoomObjectGfxSlots[n].paletteBank = AllocObjPalettes(d->paletteBankCount);
+        RequestCopy(2, d->palette, (gRoomObjectGfxSlots[n].paletteBank << 5) + (u32)gObjPalette, d->paletteBankCount << 5);
     }
     return 1;
 }
@@ -263,21 +263,21 @@ s32 SpawnRoomEnemy(struct Unk020055D8Entry *e, s32 i)
         {
             if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
                 res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
-                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1 << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
         }
         else if (e->unk1 == 37)
         {
             if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
             {
                 res = CreateActorByKind(0, e->unk1, e->unk2, 0, e->x, e->y,
-                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1 << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
                 gUsedRoomObjects[gLevelIndex][gStageIndex] |= 1 << (e->unk3 & 31);
             }
         }
         else
         {
             res = CreateActorByKind(0, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y,
-                               (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1 << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                               (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
         }
     }
     else
@@ -378,7 +378,7 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
                 y = f->y;
             }
             r = CreateActorByKind(1, f->unk1, f->unk2, f->unk3, f->x, y,
-                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk1 << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             if (r != -1)
             {
                 gUnk_02005590[r - 32] = n;

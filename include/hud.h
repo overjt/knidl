@@ -21,7 +21,7 @@ struct HudBar
 struct Unk020060A0
 {
     /*0x00*/ s8 unk0;
-    /*0x01*/ s8 unk1;
+    /*0x01*/ s8 paletteBank;
     /*0x02*/ s16 unk2;
 };
 

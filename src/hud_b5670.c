@@ -93,7 +93,7 @@ s32 LoadRoomEnemyGfx(struct Unk020055D8Entry *e, s32 idx, s32 n)
                 if (gRoomObjectList.entries[i].kind == 1
                  && gUnk_0873EF48[gRoomObjectGfxSlots[i].unk0] == gUnk_0873EF48[e->unk1])
                 {
-                    gRoomObjectGfxSlots[n].unk1 = gRoomObjectGfxSlots[i].unk1;
+                    gRoomObjectGfxSlots[n].paletteBank = gRoomObjectGfxSlots[i].paletteBank;
                     cnt++;
                     break;
                 }
@@ -101,11 +101,11 @@ s32 LoadRoomEnemyGfx(struct Unk020055D8Entry *e, s32 idx, s32 n)
         }
         if (cnt == 0)
         {
-            gRoomObjectGfxSlots[n].unk1 = AllocObjPalettes(d->paletteBankCount);
-            RequestCopy(2, d->palette, (u32)gObjPalette + (gRoomObjectGfxSlots[n].unk1 << 5), d->paletteBankCount << 5);
+            gRoomObjectGfxSlots[n].paletteBank = AllocObjPalettes(d->paletteBankCount);
+            RequestCopy(2, d->palette, (u32)gObjPalette + (gRoomObjectGfxSlots[n].paletteBank << 5), d->paletteBankCount << 5);
         }
         if (e->unk2 >> 4)
-            sub_08065dbc(gRoomObjectGfxSlots[n].unk1, e->unk1, e->unk2 >> 4);
+            sub_08065dbc(gRoomObjectGfxSlots[n].paletteBank, e->unk1, e->unk2 >> 4);
     }
     return 1;
 }
