@@ -20,10 +20,10 @@
  * object with two callbacks, sub_08053380 (the hit test, which ends the
  * object through the shared exit sub_08050814 once PlayerState.ability is
  * 0) and sub_080534d0 (a six-step trail drawn with QueueSprite).
- * Variants 11 and 12 (sub_080535b0, sub_080537dc) are two projectiles
+ * Variants 11 and 12 (PlayerObjectStarRodShot, PlayerObjectStarRodFlightShot) are two projectiles
  * that move 4 pixels a frame in the facing direction (animation table
  * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
- * callbacks sub_080536dc and sub_080538cc register the collider and hand
+ * callbacks PlayerObjectStarRodShotUpdate and PlayerObjectStarRodFlightShotUpdate register the collider and hand
  * over to sub_08050814 on contact (variant 11 bounces back once on
  * collision result 6).  CreatePlayerObject and sub_08053a44 are the spawners
  * the player's actions call (M09-M14): they start a task of type 6 in
@@ -304,13 +304,13 @@ void sub_080534d0(void)
     }
 }
 
-void sub_080535b0(void)
+void PlayerObjectStarRodShot(void)
 {
     {
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMove;
         t->drawCallback = (u32)TaskDrawWorldInViewOrFree;
-        t->updateCallback = (u32)sub_080536dc;
+        t->updateCallback = (u32)PlayerObjectStarRodShotUpdate;
         t->layer = 5;
     }
     gCurTask->frameTable = gUnk_0874C4E4;
@@ -355,7 +355,7 @@ void sub_080535b0(void)
     }
 }
 
-void sub_080536dc(void)
+void PlayerObjectStarRodShotUpdate(void)
 {
     gCurTask->health = 127;
     switch (gCurTask->hitKind)
@@ -398,13 +398,13 @@ void sub_080536dc(void)
     }
 }
 
-void sub_080537dc(void)
+void PlayerObjectStarRodFlightShot(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawScreenOrFree;
-    t->updateCallback = (u32)sub_080538cc;
+    t->updateCallback = (u32)PlayerObjectStarRodFlightShotUpdate;
     t->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C4E4;
@@ -438,7 +438,7 @@ void sub_080537dc(void)
     }
 }
 
-void sub_080538cc(void)
+void PlayerObjectStarRodFlightShotUpdate(void)
 {
     struct Task *t = gCurTask;
 

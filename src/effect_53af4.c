@@ -158,7 +158,7 @@ void sub_08053d08(void)
     TaskExitTrampoline();
 }
 
-void sub_08053db8(void)
+void PlayerEffectAbilityGetSparkle(void)
 {
     struct Task *t = gCurTask;
     s32 s;
@@ -240,7 +240,7 @@ void sub_08053e38(void)
     TaskExitTrampoline();
 }
 
-void sub_08053f70(void)
+void PlayerEffectDeathStar(void)
 {
     struct Task *u;
     struct Task *t;

@@ -119,10 +119,10 @@ void sub_08053be0(void);
 void sub_08053c1c(void);
 void sub_08053c48(void);
 void sub_08053d08(void);
-void sub_08053db8(void);
+void PlayerEffectAbilityGetSparkle(void);
 void sub_08053e34(void);
 void sub_08053e38(void);
-void sub_08053f70(void);
+void PlayerEffectDeathStar(void);
 void sub_080540d0(void);
 void sub_08054298(void);
 
@@ -166,7 +166,7 @@ void sub_08056320(void);
 void sub_08056428(void);
 
 /* src/effect_56448.c */
-void sub_08056448(void);
+void PlayerEffectHurtBurst(void);
 void sub_080564ac(void);
 void sub_08056770(void);
 void sub_08056da8(void);
@@ -176,7 +176,7 @@ void PlayerEffectFireBreathFlames(void);
 void PlayerEffectFireBreathFlamesUpdate(void);
 void PlayerEffectSparkAura(void);
 void PlayerEffectSparkAuraUpdate(void);
-void sub_08057430(void);
+void PlayerEffectSwordSparkle(void);
 
 /* src/effect_57494.c */
 void PlayerEffectBurningFlames(void);
@@ -209,8 +209,8 @@ void sub_08059d7c(void);
 void sub_0805a320(void);
 
 /* src/effect_5a358.c */
-void sub_0805a358(void);
-void sub_0805a508(void);
+void PlayerEffectTornadoDust(void);
+void PlayerEffectTornadoDustUpdate(void);
 void PlayerEffectCrashBlast(void);
 void PlayerEffectCrashBlastUpdate(void);
 void PlayerEffectCrashBlastDraw(void);

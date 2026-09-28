@@ -825,9 +825,9 @@ void sub_08052b88(void);
 void sub_08052f6c(void);
 void sub_08053380(void);
 void sub_080534d0(void);
-void sub_080535b0(void);
-void sub_080536dc(void);
-void sub_080537dc(void);
-void sub_080538cc(void);
+void PlayerObjectStarRodShot(void);
+void PlayerObjectStarRodShotUpdate(void);
+void PlayerObjectStarRodFlightShot(void);
+void PlayerObjectStarRodFlightShotUpdate(void);
 
 #endif /* GUARD_PLAYER_H */

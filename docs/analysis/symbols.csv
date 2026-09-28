@@ -1173,10 +1173,10 @@ vma,size,isa,evidence,name
 0x08052F6C,0x414,thumb,rom-pointer,sub_08052f6c
 0x08053380,0x150,thumb,rom-pointer,sub_08053380
 0x080534D0,0xE0,thumb,rom-pointer,sub_080534d0
-0x080535B0,0x12C,thumb,rom-pointer,sub_080535b0
-0x080536DC,0x100,thumb,rom-pointer,sub_080536dc
-0x080537DC,0xF0,thumb,rom-pointer,sub_080537dc
-0x080538CC,0x74,thumb,rom-pointer,sub_080538cc
+0x080535B0,0x12C,thumb,rom-pointer,PlayerObjectStarRodShot
+0x080536DC,0x100,thumb,rom-pointer,PlayerObjectStarRodShotUpdate
+0x080537DC,0xF0,thumb,rom-pointer,PlayerObjectStarRodFlightShot
+0x080538CC,0x74,thumb,rom-pointer,PlayerObjectStarRodFlightShotUpdate
 0x08053940,0x104,thumb,bl-target,CreatePlayerObject
 0x08053A44,0xB0,thumb,bl-target,sub_08053a44
 0x08053AF4,0x4C,thumb,rom-pointer,Task_PlayerEffect
@@ -1185,10 +1185,10 @@ vma,size,isa,evidence,name
 0x08053C1C,0x2C,thumb,rom-pointer,sub_08053c1c
 0x08053C48,0xC0,thumb,rom-pointer,sub_08053c48
 0x08053D08,0xB0,thumb,rom-pointer,sub_08053d08
-0x08053DB8,0x7C,thumb,rom-pointer,sub_08053db8
+0x08053DB8,0x7C,thumb,rom-pointer,PlayerEffectAbilityGetSparkle
 0x08053E34,0x4,thumb,rom-pointer,sub_08053e34
 0x08053E38,0x138,thumb,rom-pointer,sub_08053e38
-0x08053F70,0x160,thumb,rom-pointer,sub_08053f70
+0x08053F70,0x160,thumb,rom-pointer,PlayerEffectDeathStar
 0x080540D0,0x1C8,thumb,rom-pointer,sub_080540d0
 0x08054298,0x98,thumb,rom-pointer,sub_08054298
 0x08054330,0x1D4,thumb,rom-pointer,sub_08054330
@@ -1222,7 +1222,7 @@ vma,size,isa,evidence,name
 0x08056300,0x20,thumb,rom-pointer,sub_08056300
 0x08056320,0x108,thumb,rom-pointer,sub_08056320
 0x08056428,0x20,thumb,rom-pointer,sub_08056428
-0x08056448,0x64,thumb,rom-pointer,sub_08056448
+0x08056448,0x64,thumb,rom-pointer,PlayerEffectHurtBurst
 0x080564AC,0x2C4,thumb,rom-pointer,sub_080564ac
 0x08056770,0x638,thumb,rom-pointer,sub_08056770
 0x08056DA8,0x2C,thumb,rom-pointer,sub_08056da8
@@ -1230,7 +1230,7 @@ vma,size,isa,evidence,name
 0x0805707C,0x90,thumb,rom-pointer,PlayerEffectFireBreathFlamesUpdate
 0x0805710C,0x298,thumb,rom-pointer,PlayerEffectSparkAura
 0x080573A4,0x8C,thumb,rom-pointer,PlayerEffectSparkAuraUpdate
-0x08057430,0x64,thumb,rom-pointer,sub_08057430
+0x08057430,0x64,thumb,rom-pointer,PlayerEffectSwordSparkle
 0x08057494,0x57C,thumb,rom-pointer,PlayerEffectBurningFlames
 0x08057A10,0x38,thumb,rom-pointer,PlayerEffectBurningFlamesUpdate
 0x08057A48,0x8C,thumb,rom-pointer,sub_08057a48
@@ -1253,8 +1253,8 @@ vma,size,isa,evidence,name
 0x08059C28,0x154,thumb,rom-pointer,sub_08059c28
 0x08059D7C,0x5A4,thumb,rom-pointer,sub_08059d7c
 0x0805A320,0x38,thumb,rom-pointer,sub_0805a320
-0x0805A358,0x1B0,thumb,rom-pointer,sub_0805a358
-0x0805A508,0x24,thumb,rom-pointer,sub_0805a508
+0x0805A358,0x1B0,thumb,rom-pointer,PlayerEffectTornadoDust
+0x0805A508,0x24,thumb,rom-pointer,PlayerEffectTornadoDustUpdate
 0x0805A52C,0x5D8,thumb,rom-pointer,PlayerEffectCrashBlast
 0x0805AB04,0x14C,thumb,rom-pointer,PlayerEffectCrashBlastUpdate
 0x0805AC50,0x9C,thumb,rom-pointer,PlayerEffectCrashBlastDraw

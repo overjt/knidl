@@ -11,8 +11,8 @@
 /* effect_5a358.c (0x0805A358-0x0805AFAB, issue #89).
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
- * variants 45-48.  Variant 45 (sub_0805a358, M13) rides on its spawner
- * through three sub-states (gUnk_08751FCC); sub_0805a508 kills it once the
+ * variants 45-48.  Variant 45 (PlayerEffectTornadoDust, M13) rides on its spawner
+ * through three sub-states (gUnk_08751FCC); PlayerEffectTornadoDustUpdate kills it once the
  * player leaves mode 13.  Variant 46 (PlayerEffectCrashBlast, M13) is the twin of
  * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
  * kinds 1, 2, 7 and 8 through gUnk_0200B000 and the task skip mask, around a
@@ -49,14 +49,14 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src call
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 
-void sub_0805a358(void)
+void PlayerEffectTornadoDust(void)
 {
     struct Task *t;
     struct Task *u;
 
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
-    gCurTask->updateCallback = (u32)sub_0805a508;
+    gCurTask->updateCallback = (u32)PlayerEffectTornadoDustUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751FCC;
@@ -133,7 +133,7 @@ void sub_0805a358(void)
     TaskExitTrampoline();
 }
 
-void sub_0805a508(void)
+void PlayerEffectTornadoDustUpdate(void)
 {
     if (gCurTask->player->mode != 13)
         TaskFree(gCurTaskIdx);

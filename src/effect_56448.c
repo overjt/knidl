@@ -7,7 +7,7 @@
 /* effect_56448.c (0x08056448-0x08056DD3, issue #89).
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
- * variants 26-28.  Variant 26 (sub_08056448, M10) is a two-step animation
+ * variants 26-28.  Variant 26 (PlayerEffectHurtBurst, M10) is a two-step animation
  * from gUnk_0874C930.  Variant 27 (sub_080564ac, M13) has three sub-states
  * (animation table gUnk_0874C828) and spawns its own sub-states.  Variant 28
  * (sub_08056770) is the most common ability effect (twenty call sites in
@@ -20,7 +20,7 @@ u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amoun
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 
-void sub_08056448(void)
+void PlayerEffectHurtBurst(void)
 {
     struct Task *t;
 

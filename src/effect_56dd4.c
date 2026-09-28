@@ -20,7 +20,7 @@
  * leaves mode 13 or the spawner's Task.variant is not 1, and otherwise, while
  * Task.unk28 is clear, registers the collider row gUnk_0873C038 (M05's
  * RegisterCollider) and tests the block hit-box set gUnk_0873CC94 (M09's
- * TaskBreakBlocksAt) at the spawner's position.  Variant 31 (sub_08057430, M12)
+ * TaskBreakBlocksAt) at the spawner's position.  Variant 31 (PlayerEffectSwordSparkle, M12)
  * is a single animation on its spawner (gUnk_08751CEC). */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -216,7 +216,7 @@ void PlayerEffectSparkAuraUpdate(void)
     }
 }
 
-void sub_08057430(void)
+void PlayerEffectSwordSparkle(void)
 {
     struct Task *t;
 

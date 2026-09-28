@@ -3974,8 +3974,8 @@ gPlayerObjectVariants:
 	.word	PlayerObjectBeamOrb+1
 	.word	sub_08052b88+1
 	.word	sub_08052f6c+1
-	.word	sub_080535b0+1
-	.word	sub_080537dc+1
+	.word	PlayerObjectStarRodShot+1
+	.word	PlayerObjectStarRodFlightShot+1
 	.global	gUnk_0873B7B0
 gUnk_0873B7B0:
 	.incbin	"baserom.gba", 0x73B7B0, 0x10
@@ -4002,9 +4002,9 @@ gPlayerEffectVariants:
 	.word	sub_08053b40+1
 	.word	sub_08053c48+1
 	.word	sub_08053d08+1
-	.word	sub_08053db8+1
+	.word	PlayerEffectAbilityGetSparkle+1
 	.word	sub_08053e38+1
-	.word	sub_08053f70+1
+	.word	PlayerEffectDeathStar+1
 	.word	sub_080540d0+1
 	.word	sub_08054330+1
 	.word	sub_08054538+1
@@ -4025,12 +4025,12 @@ gPlayerEffectVariants:
 	.word	sub_08055d74+1
 	.word	sub_0805614c+1
 	.word	sub_08056320+1
-	.word	sub_08056448+1
+	.word	PlayerEffectHurtBurst+1
 	.word	sub_080564ac+1
 	.word	sub_08056770+1
 	.word	PlayerEffectFireBreathFlames+1
 	.word	PlayerEffectSparkAura+1
-	.word	sub_08057430+1
+	.word	PlayerEffectSwordSparkle+1
 	.word	PlayerEffectBurningFlames+1
 	.word	sub_08057a48+1
 	.word	sub_08057ad4+1
@@ -4044,7 +4044,7 @@ gPlayerEffectVariants:
 	.word	sub_08059570+1
 	.word	sub_08059c28+1
 	.word	sub_08059d7c+1
-	.word	sub_0805a358+1
+	.word	PlayerEffectTornadoDust+1
 	.word	PlayerEffectCrashBlast+1
 	.word	sub_0805acec+1
 	.word	sub_0805ae94+1
