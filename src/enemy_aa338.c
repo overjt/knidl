@@ -1186,7 +1186,7 @@ void sub_080abd04(void)
     TaskExitTrampoline();
 }
 
-void sub_080abe38(void)
+void Task_NightmareWizardPalm(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
@@ -1276,7 +1276,7 @@ void sub_080abf94(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_080ac020(void)
+void Task_NightmareWizardPointingHand(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
@@ -1392,7 +1392,7 @@ void sub_080ac1f0(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_080ac27c(void)
+void Task_NightmareWizardCloakHands(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
@@ -1446,7 +1446,7 @@ void sub_080ac30c(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_080ac3a4(void)
+void Task_NightmareWizardPendant(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;

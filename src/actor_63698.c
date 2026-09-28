@@ -83,7 +83,7 @@ void sub_08063704(u32 i)
         gUnk_02007F50 = t->unk76;
         break;
     case 4:
-        a->def = gUnk_0873EDDC[t->unk76];
+        a->def = gChildActorDefs[t->unk76];
         break;
     case 5:
         a->def = gUnk_0873EE70[t->unk76];

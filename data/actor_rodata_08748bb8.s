@@ -259,18 +259,18 @@ gUnk_08749100:
 	.incbin	"baserom.gba", 0x749100, 0x50
 	.global	gKrackoVariants
 gKrackoVariants:
-	.word	sub_080a7d98+1
-	.word	sub_080a87c8+1
-	.global	gUnk_08749158
-gUnk_08749158:
+	.word	KrackoJrInit+1
+	.word	KrackoInit+1
+	.global	gKrackoJrStates
+gKrackoJrStates:
 	.word	sub_080a7e44+1
 	.word	sub_080a85e4+1
-	.global	gUnk_08749160
-gUnk_08749160:
+	.global	gKrackoJrStateUpdates
+gKrackoJrStateUpdates:
 	.word	sub_080a8038+1
 	.word	sub_080a860c+1
-	.global	gUnk_08749168
-gUnk_08749168:
+	.global	gKrackoStates
+gKrackoStates:
 	.word	sub_080a8878+1
 	.word	sub_080a8970+1
 	.word	sub_080a8b6c+1
@@ -278,8 +278,8 @@ gUnk_08749168:
 	.word	sub_080a8d1c+1
 	.word	sub_080a8fdc+1
 	.word	sub_080a8f40+1
-	.global	gUnk_08749184
-gUnk_08749184:
+	.global	gKrackoStateUpdates
+gKrackoStateUpdates:
 	.word	sub_080a8948+1
 	.word	sub_080a8b44+1
 	.word	sub_080a8bcc+1

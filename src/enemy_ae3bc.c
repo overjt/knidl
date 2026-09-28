@@ -368,10 +368,10 @@ void sub_080ae79c(void)
     sub_080aefd4((u32)gUnk_0874AEAC);
     gCurTask->updateState = 3;
     TaskYieldTrampoline(40);
-    sub_080af20c(0);
-    sub_080af20c(1);
-    sub_080af20c(2);
-    sub_080af20c(3);
+    CreateNightmarePowerOrbStar(0);
+    CreateNightmarePowerOrbStar(1);
+    CreateNightmarePowerOrbStar(2);
+    CreateNightmarePowerOrbStar(3);
     gUnk_02007D00[3] = 140;
     TaskYieldTrampoline(80);
 }
@@ -429,7 +429,7 @@ void sub_080ae870(void)
     TaskStop();
     TaskYieldTrampoline(8);
     PlaySfx(0x22D);
-    sub_080af20c(11);
+    CreateNightmarePowerOrbStar(11);
     c = &gCurTask;
     u1 = *c;
     u1->velX = 128 << 12;
@@ -941,7 +941,7 @@ void sub_080af144(void)
     if (gUnk_02007D00[3] == 0)
     {
         gUnk_02007D00[3] = 140;
-        sub_080af20c(4);
+        CreateNightmarePowerOrbStar(4);
     }
 }
 
@@ -990,7 +990,7 @@ void sub_080af1d4(void)
     }
 }
 
-void sub_080af20c(u8 a)
+void CreateNightmarePowerOrbStar(u8 a)
 {
     struct ActorSpawn sp;
 
@@ -1047,7 +1047,7 @@ void sub_080af308(void)
 {
 }
 
-void sub_080af30c(void)
+void Task_NightmarePowerOrbStar(void)
 {
     struct Task **c;
     s32 z;
@@ -1068,7 +1068,7 @@ void sub_080af30c(void)
     u->facing = 1;
     v = *c;
     v->unk2C = z;
-    CallTableEntry(v->variant, 12, gUnk_0874B1DC);
+    CallTableEntry(v->variant, 12, gNightmarePowerOrbStarVariants);
 }
 
 void sub_080af358(void)
@@ -1410,32 +1410,32 @@ void sub_080af844(void)
     {
     case 0:
         PlaySfx(0x22A);
-        sub_080af20c(5);
+        CreateNightmarePowerOrbStar(5);
         TaskYieldTrampoline(16);
         t = gCurTask;
         t->posX = ((struct Task *)(t->parent * 144 + (u32)gTasks))->posX;
         t->posY = ((struct Task *)(t->parent * 144 + (u32)gTasks))->posY;
         PlaySfx(0x22A);
-        sub_080af20c(5);
+        CreateNightmarePowerOrbStar(5);
         TaskYieldTrampoline(16);
         u = gCurTask;
         u->posX = ((struct Task *)(u->parent * 144 + (u32)gTasks))->posX;
         u->posY = ((struct Task *)(u->parent * 144 + (u32)gTasks))->posY;
         PlaySfx(0x22A);
-        sub_080af20c(5);
+        CreateNightmarePowerOrbStar(5);
         gUnk_02007D00[4] = 1;
         break;
     case 1:
         PlaySfx(0x22B);
-        sub_080af20c(6);
-        sub_080af20c(7);
-        sub_080af20c(8);
+        CreateNightmarePowerOrbStar(6);
+        CreateNightmarePowerOrbStar(7);
+        CreateNightmarePowerOrbStar(8);
         gUnk_02007D00[4] = 2;
         break;
     case 2:
         PlaySfx(0x22B);
-        sub_080af20c(9);
-        sub_080af20c(10);
+        CreateNightmarePowerOrbStar(9);
+        CreateNightmarePowerOrbStar(10);
         gUnk_02007D00[4] = 0;
         break;
     }

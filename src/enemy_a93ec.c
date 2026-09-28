@@ -262,7 +262,7 @@ void sub_080a9814(void)
     CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
-void sub_080a983c(void)
+void Task_KrackoJrOrbs(void)
 {
     s32 w;
     s32 n;
@@ -271,7 +271,7 @@ void sub_080a983c(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_08754418;
-    gCurTask->updateCallback = (u32)sub_080a9910;
+    gCurTask->updateCallback = (u32)KrackoJrOrbsUpdate;
     TaskFaceNearestPlayer();
     gCurTask->unk28 = gUnk_02007D00[0] & 15;
     gCurTask->unk2C = 0;
@@ -298,7 +298,7 @@ void sub_080a983c(void)
     TaskSleepForever();
 }
 
-void sub_080a9910(void)
+void KrackoJrOrbsUpdate(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -319,10 +319,10 @@ void sub_080a9910(void)
         gUnk_02007D00[0] &= ~128;
     }
     if (gUnk_02007D00[0] == 0)
-        TaskSetEntry(sub_080a99a0, gCurTaskIdx);
+        TaskSetEntry(Task_KrackoCloud, gCurTaskIdx);
 }
 
-void sub_080a99a0(void)
+void Task_KrackoCloud(void)
 {
     s16 *p;
     s32 d;

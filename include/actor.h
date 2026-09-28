@@ -129,7 +129,7 @@ extern u32 gLandingImpactVariants[];
 extern struct ActorDef *const gEnemyDefs[];
 extern struct ActorDef *const gMidBossDefs[];
 extern struct ActorDef *const gBossDefs[];
-extern struct ActorDef *const gUnk_0873EDDC[];
+extern struct ActorDef *const gChildActorDefs[];
 extern struct ActorDef *const gUnk_0873EE70[];
 extern struct ActorDef *const gUnk_0873EE88[];
 extern u32 *gUnk_0873EF74[];

@@ -86,7 +86,7 @@ struct ActorDef *const gBossDefs[] = {
 };
 
 /* kind 4 */
-struct ActorDef *const gUnk_0873EDDC[] = {
+struct ActorDef *const gChildActorDefs[] = {
     &gUnk_087410E4,
     &gUnk_08743644,
     &gUnk_08742FBC,

@@ -231,11 +231,11 @@ void Task_Kracko(void)
     CallTableEntry(t->variant, 2, gKrackoVariants);
 }
 
-void sub_080a7d98(void)
+void KrackoJrInit(void)
 {
     struct Task *t;
 
-    gCurTask->updateCallback = (u32)sub_080a7e10;
+    gCurTask->updateCallback = (u32)KrackoJrUpdate;
     ActorSetAttackBox((u32)gUnk_08749704);
     t = gCurTask;
     t->unk28 = 0;
@@ -245,18 +245,18 @@ void sub_080a7d98(void)
     gUnk_02007D00[0] = 1;
     gCurTask->unk46 = CreateChildTaskHere(195, 1);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08749158);
+    CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }
 
-void sub_080a7df4(void)
+void KrackoJrEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08749158);
+    CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }
 
-void sub_080a7e10(void)
+void KrackoJrUpdate(void)
 {
     sub_080a9738();
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08749160);
+    CallTableEntry(gCurTask->updateState, 2, gKrackoJrStateUpdates);
     if (gCurTask->updateState == 0)
         ActorCheckHits();
     ActorReactToHit();
@@ -372,7 +372,7 @@ void sub_080a8038(void)
     {
         TaskStop();
         ActorSetState(1);
-        TaskSetEntry(sub_080a7df4, gCurTaskIdx);
+        TaskSetEntry(KrackoJrEnterState, gCurTaskIdx);
         return;
     }
     gUnk_02007D00[5] = TaskFindNearestPlayer();

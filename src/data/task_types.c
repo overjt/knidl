@@ -145,7 +145,7 @@ void Task_TridentKnightTrident(void);
 void Task_JavelinKnightJavelin(void);
 void Task_BugzzyLadybug(void);
 void Task_UFOLaser(void);
-void sub_080af30c(void);
+void Task_NightmarePowerOrbStar(void);
 void Task_NightmareWizardStar(void);
 void Task_GipStar(void);
 void Task_PhanPhanApple(void);
@@ -205,19 +205,19 @@ void Task_HeavyMoleEye(void);
 void Task_HeavyMoleSmoke(void);
 void sub_080a54e4(void);
 void Task_NoddyBubble(void);
-void sub_080a983c(void);
-void sub_080a99a0(void);
+void Task_KrackoJrOrbs(void);
+void Task_KrackoCloud(void);
 void Task_KrackoLightningTop(void);
 void Task_KrackoLightningMiddle(void);
 void Task_KrackoLightningBottom(void);
 void Task_BugzzyAfterimage(void);
-void sub_080abe38(void);
+void Task_NightmareWizardPalm(void);
 void sub_080abf10(void);
-void sub_080ac020(void);
+void Task_NightmareWizardPointingHand(void);
 void sub_080ac124(void);
-void sub_080ac27c(void);
+void Task_NightmareWizardCloakHands(void);
 void sub_080ac410(void);
-void sub_080ac3a4(void);
+void Task_NightmareWizardPendant(void);
 void sub_080ac510(void);
 void sub_080abd04(void);
 void sub_080afdf0(void);
@@ -415,7 +415,7 @@ const struct TaskType gTaskTypes[] = {
     /* 132 */ { 2, { 0, 0, 0 }, (u32)Task_JavelinKnightJavelin },
     /* 133 */ { 2, { 0, 0, 0 }, (u32)Task_BugzzyLadybug },
     /* 134 */ { 2, { 0, 0, 0 }, (u32)Task_UFOLaser },
-    /* 135 */ { 2, { 0, 0, 0 }, (u32)sub_080af30c },
+    /* 135 */ { 2, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStar },
     /* 136 */ { 2, { 0, 0, 0 }, (u32)Task_NightmareWizardStar },
     /* 137 */ { 2, { 0, 0, 0 }, (u32)Task_GipStar },
     /* 138 */ { 2, { 0, 0, 0 }, (u32)Task_PhanPhanApple },
@@ -475,19 +475,19 @@ const struct TaskType gTaskTypes[] = {
     /* 192 */ { 4, { 0, 0, 0 }, (u32)Task_HeavyMoleSmoke },
     /* 193 */ { 4, { 0, 0, 0 }, (u32)sub_080a54e4 },
     /* 194 */ { 4, { 0, 0, 0 }, (u32)Task_NoddyBubble },
-    /* 195 */ { 4, { 0, 0, 0 }, (u32)sub_080a983c },
-    /* 196 */ { 4, { 0, 0, 0 }, (u32)sub_080a99a0 },
+    /* 195 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoJrOrbs },
+    /* 196 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoCloud },
     /* 197 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoLightningTop },
     /* 198 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoLightningMiddle },
     /* 199 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoLightningBottom },
     /* 200 */ { 4, { 0, 0, 0 }, (u32)Task_BugzzyAfterimage },
-    /* 201 */ { 3, { 0, 0, 0 }, (u32)sub_080abe38 },
+    /* 201 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPalm },
     /* 202 */ { 3, { 0, 0, 0 }, (u32)sub_080abf10 },
-    /* 203 */ { 3, { 0, 0, 0 }, (u32)sub_080ac020 },
+    /* 203 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPointingHand },
     /* 204 */ { 3, { 0, 0, 0 }, (u32)sub_080ac124 },
-    /* 205 */ { 3, { 0, 0, 0 }, (u32)sub_080ac27c },
+    /* 205 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardCloakHands },
     /* 206 */ { 3, { 0, 0, 0 }, (u32)sub_080ac410 },
-    /* 207 */ { 3, { 0, 0, 0 }, (u32)sub_080ac3a4 },
+    /* 207 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPendant },
     /* 208 */ { 3, { 0, 0, 0 }, (u32)sub_080ac510 },
     /* 209 */ { 3, { 0, 0, 0 }, (u32)sub_080abd04 },
     /* 210 */ { 3, { 0, 0, 0 }, (u32)sub_080afdf0 },

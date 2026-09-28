@@ -112,7 +112,7 @@ void sub_080a860c(void)
         gCurTask->posY = (gViewRect[2] - 62) << 16;
         break;
     case 3:
-        TaskSetEntry(sub_080a87c8, gCurTaskIdx);
+        TaskSetEntry(KrackoInit, gCurTaskIdx);
         break;
     }
 }

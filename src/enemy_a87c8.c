@@ -64,12 +64,12 @@ s32 sub_080b5a94();
 s32 sub_080b5bdc();
 s32 sub_080b5d84();
 
-void sub_080a87c8(void)
+void KrackoInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080a8850;
+    t->updateCallback = (u32)KrackoUpdate;
     t->unk28 = 0;
     t->unk2C = 0;
     t->unk34 = 0;
@@ -81,18 +81,18 @@ void sub_080a87c8(void)
     else
         gCurTask->unk30 = 1;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 7, gUnk_08749168);
+    CallTableEntry(gCurTask->state, 7, gKrackoStates);
 }
 
-void sub_080a8834(void)
+void KrackoEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 7, gUnk_08749168);
+    CallTableEntry(gCurTask->state, 7, gKrackoStates);
 }
 
-void sub_080a8850(void)
+void KrackoUpdate(void)
 {
     sub_080a9738();
-    CallTableEntry(gCurTask->updateState, 7, gUnk_08749184);
+    CallTableEntry(gCurTask->updateState, 7, gKrackoStateUpdates);
     sub_08068f68();
     ActorReactToHit();
 }
@@ -135,7 +135,7 @@ void sub_080a8878(void)
 void sub_080a8948(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8970(void)
@@ -230,7 +230,7 @@ st3:
 void sub_080a8b44(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8b6c(void)
@@ -252,7 +252,7 @@ void sub_080a8b6c(void)
 void sub_080a8bcc(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8bf4(void)
@@ -311,7 +311,7 @@ void sub_080a8c84(void)
         u->unk2C = 2;
         u->unk30 ^= 1;
         ActorSetState(1);
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
     }
 }
 
@@ -386,7 +386,7 @@ void sub_080a8d1c(void)
 void sub_080a8f18(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8f40(void)
@@ -415,7 +415,7 @@ void sub_080a8f40(void)
 void sub_080a8fb4(void)
 {
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
 void sub_080a8fdc(void)
@@ -528,5 +528,5 @@ void sub_080a8fdc(void)
 void sub_080a9304(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_080a8834, gCurTaskIdx);
+        TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
