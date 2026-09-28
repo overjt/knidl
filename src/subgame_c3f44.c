@@ -7,7 +7,7 @@
  *
  * Sub-game 2: task type #96 variant 2, the racers' effect sprites.
  * 
- *   sub_080c3f44   variant 2's body.  sub_080c2078(a, racer, kind) spawns it
+ *   AirGrindEffect   variant 2's body.  CreateAirGrindEffect(a, racer, kind) spawns it
  *       with Task.unk18 = the racer's task, Task.unk20 = the kind and
  *       Task.unk1C = a, and each kind sets its sprite table, animation and one
  *       of the callbacks below.  The kinds as AirGrindRacerRaceStep/sub_080c3698 use
@@ -17,7 +17,7 @@
  *       3 / 4 thrown to either side at the start of a penalty, 8 the penalty
  *       itself (for every racer).  Kinds 0 and 3/4 are scaled by
  *       sub_080c623c and scattered with LCG stream 4.
- *   sub_080c42dc   the shared step: copy the racer's layer, priority and
+ *   AirGrindEffectFollowRacer   the shared step: copy the racer's layer, priority and
  *       palette bits, and its position unless Task.updateState is set.
  *   sub_080c4364 ... sub_080c45fc   the per-kind callbacks (Task.updateCallback):
  *       movement, the Task.unk6C/unk6E animation counters, and
@@ -26,9 +26,9 @@
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; callers pass f sign-extended (lsls/asrs #16), the early_1518 definition says u16 */
 void TaskFree(s32 id);                                   /* kill task */
 void TaskSleepForever(void);                                     /* end the running task */
-u32 sub_080c4f60(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
+u32 AirGrindScaleSprite(u16 *src, s16 scale);                    /* callers pass scale sign-extended (ldrsh / lsls-asrs); the callee narrows it with lsls/lsrs */
 
-void sub_080c3f44(void)
+void AirGrindEffect(void)
 {
     struct Task *u = &gTasks[gCurTask->unk18];
     s32 scale;
@@ -40,7 +40,7 @@ void sub_080c3f44(void)
     switch (gCurTask->unk20) {
     case 1:
         gCurTask->unk6E = 3;
-        gCurTask->drawCallback = (u32)sub_080c4e10;
+        gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->frame = 5;
         gCurTask->updateCallback = (u32)sub_080c44bc;
@@ -49,7 +49,7 @@ void sub_080c3f44(void)
         gCurTask->unk6C = 0;
         gCurTask->unk6E = 0;
         gCurTask->updateState = 0;
-        gCurTask->drawCallback = (u32)sub_080c4e10;
+        gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->updateCallback = (u32)sub_080c44f0;
         gAirGrindPtr->unk450 = 1;
@@ -58,7 +58,7 @@ void sub_080c3f44(void)
         gCurTask->unk6C = 2;
         gCurTask->unk6E = 2;
         gCurTask->updateState = 1;
-        gCurTask->drawCallback = (u32)sub_080c4e10;
+        gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->tileWord = 0x8210;
         gCurTask->frameTable = gUnk_087572E0;
         gCurTask->frame = 0;
@@ -67,7 +67,7 @@ void sub_080c3f44(void)
         break;
     case 0:
         scale = sub_080c623c(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
-        gCurTask->drawCallback = (u32)sub_080c4e10;
+        gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->layer = u->layer;
         gCurTask->spriteFlags = u->spriteFlags & 0x6000;
         gCurTask->moveCallback = (u32)TaskMove;
@@ -86,7 +86,7 @@ void sub_080c3f44(void)
     case 3:
     case 4:
         scale = sub_080c623c(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
-        gCurTask->drawCallback = (u32)sub_080c4e10;
+        gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->moveCallback = (u32)TaskMove;
         gCurTask->layer = u->layer;
         gCurTask->spriteFlags = u->spriteFlags & 0x6000;
@@ -127,7 +127,7 @@ void sub_080c3f44(void)
         gCurTask->unk6C = 12;
         gCurTask->unk6E = 9;
         gCurTask->updateState = 0;
-        gCurTask->drawCallback = (u32)sub_080c4e10;
+        gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->frame = 9;
         gCurTask->updateCallback = (u32)sub_080c45fc;
@@ -137,7 +137,7 @@ void sub_080c3f44(void)
     TaskSleepForever();
 }
 
-void sub_080c42dc(s32 layer)
+void AirGrindEffectFollowRacer(s32 layer)
 {
     struct Task *u = &gTasks[gCurTask->unk18];
 
@@ -189,7 +189,7 @@ void sub_080c43e8(void)
         u32 *tbl = gCurTask->frameTable;
 
         QueueSprite(gCurTask->layer,
-                     sub_080c4f60((u16 *)tbl[gCurTask->frame], gCurTask->unk28),
+                     AirGrindScaleSprite((u16 *)tbl[gCurTask->frame], gCurTask->unk28),
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX, gCurTask->pixelY);
     } else
@@ -201,7 +201,7 @@ void sub_080c44bc(void)
     if (--gCurTask->unk6E < 0)
         TaskFree(gCurTaskIdx);
     else
-        sub_080c42dc(0);
+        AirGrindEffectFollowRacer(0);
 }
 
 void sub_080c44f0(void)
@@ -219,7 +219,7 @@ void sub_080c44f0(void)
             return;
         }
     }
-    sub_080c42dc(0);
+    AirGrindEffectFollowRacer(0);
 }
 
 void sub_080c4568(void)
@@ -233,7 +233,7 @@ void sub_080c4568(void)
         }
     }
     gCurTask->unk6C--;
-    sub_080c42dc(0);
+    AirGrindEffectFollowRacer(0);
 }
 
 void sub_080c45d4(void)
@@ -248,5 +248,5 @@ void sub_080c45fc(void)
     if ((*(s16 *)&gCurTask->unk6C)-- <= 0)
         TaskFree(gCurTaskIdx);
     else
-        sub_080c42dc(-1);
+        AirGrindEffectFollowRacer(-1);
 }

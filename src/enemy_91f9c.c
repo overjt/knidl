@@ -58,7 +58,7 @@ extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-extern void sub_080689c8(s32 i, s32 d);
+extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void PlaySfx(s32 id);
@@ -1180,7 +1180,7 @@ s32 sub_0809388c(void)
     n = t->unk1C;
     if (n != -1)
     {
-        sub_080689c8(n, -t->facing);
+        ReleaseHeldPlayer(n, -t->facing);
         gCurTask->unk1C = -1;
     }
     ActorSetHitReactions(gUnk_0874410C);

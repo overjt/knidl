@@ -116,7 +116,7 @@ struct M37Game
     /*0x2FC*/ u16 backdropColor;
     /*0x2FE*/ u8 pad2FE[2];
     /*0x300*/ u32 frameCount;       /* frame counter */
-    /*0x304*/ s16 unk304;       /* sub_080c4f60's OAM list: entry count */
+    /*0x304*/ s16 unk304;       /* AirGrindScaleSprite's OAM list: entry count */
     /*0x306*/ s16 unk306[160];  /* ... and entries */
     /*0x446*/ u16 localPlayer;       /* gLocalPlayer */
     /*0x448*/ u16 playerCount;       /* gLinkPlayerCount */
@@ -144,7 +144,7 @@ struct M37Results
 };
 
 /* gAirGrindScript: a cursor into one of the u16-pair scripts gUnk_087572EC[]
-   (sub_080c51c0 clears it, sub_080c51d4 steps it, 0x8000 = end, 0x9999 =
+   (AirGrindClearScript clears it, AirGrindStepScript steps it, 0x8000 = end, 0x9999 =
    loop) */
 struct M37Script
 {
@@ -363,7 +363,7 @@ extern u32 gUnk_08757270[];
 extern u32 gUnk_08757278[];
 extern u8 gUnk_08757280[];
 extern u32 gAirGrindPhases[];
-extern void (*gUnk_087572D4[])(void);
+extern void (*gAirGrindObjectVariants[])(void);
 extern u32 gUnk_087572E0[];
 extern u16 *gUnk_087572EC[];
 extern s32 *gUnk_08757300[];
@@ -703,8 +703,8 @@ void AirGrindMain(void);
 
 /* src/subgame_c1ffc.c */
 void CreateAirGrindRacers(void);
-void sub_080c2038(s32 unused);
-void sub_080c2078(s32 a, s32 b, s32 c);
+void CreateAirGrindScenery(s32 unused);
+void CreateAirGrindEffect(s32 a, s32 b, s32 c);
 void AirGrindSetupRace(void);
 void AirGrindRace(void);
 void AirGrindRaceUpdate(void);
@@ -739,8 +739,8 @@ void AirGrindRacerRaceUpdate(void);
 void AirGrindRacerIdleUpdate(void);
 
 /* src/subgame_c3f44.c */
-void sub_080c3f44(void);
-void sub_080c42dc(s32 layer);
+void AirGrindEffect(void);
+void AirGrindEffectFollowRacer(s32 layer);
 void sub_080c4364(void);
 void sub_080c43e8(void);
 void sub_080c44bc(void);
@@ -752,33 +752,33 @@ void sub_080c45fc(void);
 /* src/subgame_c4630.c */
 void sub_080c4630(s32 idx, s32 x, s32 y, u16 attr);
 void sub_080c4664(s32 i);
-void sub_080c46ec(void);
+void AirGrindScenery(void);
 void sub_080c4790(void);
-void sub_080c4818(void);
-void sub_080c4860(s32 y);
+void AirGrindCourseSignUpdate(void);
+void AirGrindShowCourseSign(s32 y);
 void AirGrindStepPaletteFades(void);
-void sub_080c495c(void);
+void AirGrindStopAllPaletteFades(void);
 s32 AirGrindStartPaletteFade(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat);
 void AirGrindStopPaletteFade(s32 i);
-void sub_080c4a48(s32 pal);
-void sub_080c4a5c(s32 digit, s32 x, s32 y);
+void AirGrindSetDigitPalette(s32 pal);
+void AirGrindDrawDigit(s32 digit, s32 x, s32 y);
 void sub_080c4a94(s32 idx, s32 x, s32 y);
-void sub_080c4ac4(s32 t, s32 x, s32 y);
-void sub_080c4b64(s32 n, s32 x, s32 y);
+void AirGrindDrawTime(s32 t, s32 x, s32 y);
+void AirGrindDrawNumber(s32 n, s32 x, s32 y);
 void sub_080c4bec(s32 a, s32 b, s32 x, s32 y);
-void sub_080c4c30(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer);
+void AirGrindDrawRacerSprite(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer);
 void AirGrindSeedRandom(void);
 u32 AirGrindRandom(s32 i);
 u32 AirGrindRandomRange(s32 i, u32 range);
 
 /* src/subgame_c4d08.c */
-void sub_080c4d08(void);
-void sub_080c4e10(void);
-void sub_080c4ea8(void);
-u32 sub_080c4f60(u16 *src, s16 scale);
-void sub_080c51c0(void);
-void sub_080c51d4(void);
-void sub_080c523c(u16 id);
+void AirGrindRacerDraw(void);
+void AirGrindEffectDrawOrFree(void);
+void AirGrindRacerMove(void);
+u32 AirGrindScaleSprite(u16 *src, s16 scale);
+void AirGrindClearScript(void);
+void AirGrindStepScript(void);
+void AirGrindStartScript(u16 id);
 
 /* src/subgame_c5284.c */
 s32 sub_080c5284(s32 angle);

@@ -8,7 +8,7 @@
  * Sub-game 2: the depth scale.
  * 
  *   sub_080c623c   gUnk_080D059A[x / 4 - 32], the sprite scale for a course
- *       depth (sub_080c3e18, sub_080c3f44, sub_080c4f60).  It follows the
+ *       depth (sub_080c3e18, AirGrindEffect, AirGrindScaleSprite).  It follows the
  *       still-asm AirGrindDrawCourse and precedes PR #133's src/sub_080c6258.c. */
 
 s32 sub_080c623c(s32 x)

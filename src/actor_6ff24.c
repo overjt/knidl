@@ -420,7 +420,7 @@ void sub_08070614(u32 a)
 {
     struct PlayerState *p;
 
-    sub_08068b88(a, 0, 1, 0);
+    PlayerResumeControl(a, 0, 1, 0);
     p = gCurTask->player;
     if (p->ability == 25)
         p->unk37 = 3;

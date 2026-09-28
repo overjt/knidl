@@ -615,7 +615,7 @@ void sub_08076f04(s32 id)
     sub_08076ec8(id);
     t->onGround = 0;
     TaskStopY();
-    sub_08068b88(id, 0, 1, 0);
+    PlayerResumeControl(id, 0, 1, 0);
     HudShowAbility(p->ability, id);
 }
 
@@ -635,7 +635,7 @@ void sub_08076f50(s32 id)
         t->posY = v->pixelY << 16;
     }
     TaskStopSlot(id);
-    sub_08068b88(id, 6, 1, 0);
+    PlayerResumeControl(id, 6, 1, 0);
     p->unk14 = 8;
     HudShowAbility(p->ability, id);
     if (u->unk1C > 0)

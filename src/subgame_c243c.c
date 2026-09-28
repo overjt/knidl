@@ -16,8 +16,8 @@
  *       frame counts M37Game.raceTimes[] (a bubble sort into gAirGrindResults.unk04,
  *       ties share a place in unk0C), picks each one's score (course record
  *       unk20 or unk24) and installs sub_080c25c4 / sub_080c2b8c.
- *   sub_080c25c4   draws the table: time (sub_080c4ac4), score
- *       (sub_080c4bec), the racer's sprite (sub_080c4c30, the winner pulsing)
+ *   sub_080c25c4   draws the table: time (AirGrindDrawTime), score
+ *       (sub_080c4bec), the racer's sprite (AirGrindDrawRacerSprite, the winner pulsing)
  *       and the place or the stars won, then the two palette cycles
  *       (sub_080c2ba8).
  *   sub_080c2740   the results state machine (gAirGrindResults.unk00): a place
@@ -42,7 +42,7 @@ s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);  /* sprite draw; call
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 s32 PlaySfx(s32 id);
 void TaskSleepForever(void);                                     /* end the running task */
-void sub_080c4ac4(s32 t, s32 x, s32 y);                   /* draw a frame count as ss:cc */
+void AirGrindDrawTime(s32 t, s32 x, s32 y);                   /* draw a frame count as ss:cc */
 void sub_080c4bec(s32 a, s32 b, s32 x, s32 y);            /* draw min(a * 1000 / b, 1000) */
 
 void AirGrindResults(void)
@@ -109,14 +109,14 @@ void sub_080c25c4(void)
         scale = 0x200;
         if (p == 0)
             scale = gAirGrindResults.unk10;
-        sub_080c4a48(8);
-        sub_080c4ac4(gAirGrindPtr->raceTimes[p], 114, y);
+        AirGrindSetDigitPalette(8);
+        AirGrindDrawTime(gAirGrindPtr->raceTimes[p], 114, y);
         sub_080c4bec(gAirGrindResults.unk1C[p], gAirGrindCoursePtr->players[p].unk20, 180, y);
         pal = gUnk_080CFE2C[gAirGrindPtr->localPlayer][p];
         layer = 4;
         if (p == 0)
             layer = 3;
-        sub_080c4c30(0, pal, scale, 76, y, layer);
+        AirGrindDrawRacerSprite(0, pal, scale, 76, y, layer);
         if (gAirGrindResults.unk00 != 3) {
             if (gAirGrindResults.unk00 > 3 && gPrevGameState == 5)
                 blink = gAirGrindFrame & 64;

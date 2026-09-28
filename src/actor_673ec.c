@@ -904,7 +904,7 @@ void sub_0806865c(s32 i)
     struct Task *t;
 
     t = &gTasks[i];
-    sub_08068b88(i, 0, 0, 1);
+    PlayerResumeControl(i, 0, 0, 1);
     gUnk_02007D00[1] = -1;
     t->actorKind = 0;
 }
@@ -1078,7 +1078,7 @@ void sub_0806896c(void)
         t->unk28--;
     }
 }
-void sub_080689c8(s32 i, u8 d)
+void ReleaseHeldPlayer(s32 i, u8 d)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -1091,7 +1091,7 @@ void sub_080689c8(s32 i, u8 d)
     t->posY = t->pixelY << 16;
     t->actorKind = 0;
     TaskStopSlot(i);
-    sub_08068b88(i, 6, 0, 0);
+    PlayerResumeControl(i, 6, 0, 0);
     p->unk14 = 4;
 }
 s32 sub_08068a2c(s32 a, s32 b)
@@ -1157,7 +1157,7 @@ void sub_08068a8c(s32 i, u8 flag)
     p->unk16 = 255;
     DisablePause();
 }
-void sub_08068b88(s32 i, u16 b, u8 c, u8 d)
+void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
 {
     struct Task *t;
     struct PlayerState *p;

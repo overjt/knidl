@@ -516,7 +516,7 @@ void sub_08068950(s16 x, s16 y, s16 d);
 void sub_0806896c(void);
 s32 sub_08068a2c(s32 a, s32 b);
 void sub_08068a8c(s32 i, u8 flag);
-void sub_08068b88(s32 i, u16 b, u8 c, u8 d);
+void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d);
 u32 ActorTestColliders(u8 a);
 void ActorStoreHit(u8 a);
 

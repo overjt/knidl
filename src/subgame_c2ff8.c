@@ -8,8 +8,8 @@
  *
  * Sub-game 2: task type #96 (class 3) and its variant 0, the racers.
  * 
- *   Task_AirGrindObject   the body: CallTableEntry(Task.variant, 5, gUnk_087572D4), the
- *       three variants AirGrindRacer / sub_080c46ec / sub_080c3f44 (entries
+ *   Task_AirGrindObject   the body: CallTableEntry(Task.variant, 5, gAirGrindObjectVariants), the
+ *       three variants AirGrindRacer / AirGrindScenery / AirGrindEffect (entries
  *       2-4 of gAirGrindPhases; the two words after them are data).
  *   AirGrindRacer   variant 0, one per player (Task.unk1C): resets the
  *       player's M37Player record, picks the computer players' speed and
@@ -31,7 +31,7 @@ void TaskSleepForever(void);                                     /* end the runn
 
 void Task_AirGrindObject(void)
 {
-    CallTableEntry(gCurTask->variant, 5, gUnk_087572D4);
+    CallTableEntry(gCurTask->variant, 5, gAirGrindObjectVariants);
 }
 
 void AirGrindRacer(void)
@@ -39,8 +39,8 @@ void AirGrindRacer(void)
     s32 player = gCurTask->unk1C;
     s32 src;
 
-    gCurTask->drawCallback = (u32)sub_080c4d08;
-    gCurTask->moveCallback = (u32)sub_080c4ea8;
+    gCurTask->drawCallback = (u32)AirGrindRacerDraw;
+    gCurTask->moveCallback = (u32)AirGrindRacerMove;
     gCurTask->frameTable = (u32 *)gUnk_08755F54;
     gCurTask->spriteFlags &= 0x7FFF;
     gCurTask->tileWord = gUnk_080CFE2C[gAirGrindPtr->localPlayer][player] << 12;

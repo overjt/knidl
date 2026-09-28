@@ -633,11 +633,11 @@ gUnk_08757280:
 gAirGrindPhases:
 	.word	AirGrindRace+1
 	.word	AirGrindResults+1
-	.global	gUnk_087572D4
-gUnk_087572D4:
+	.global	gAirGrindObjectVariants
+gAirGrindObjectVariants:
 	.word	AirGrindRacer+1
-	.word	sub_080c46ec+1
-	.word	sub_080c3f44+1
+	.word	AirGrindScenery+1
+	.word	AirGrindEffect+1
 	.global	gUnk_087572E0
 gUnk_087572E0:
 	.word	gUnk_080CFF3A

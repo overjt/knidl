@@ -19,7 +19,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void sub_08063a00(void *p);
-extern void sub_080689c8(s32 i, s32 d);
+extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern u32 ActorCheckHits(void);
 extern u32 sub_08068f68(void);
 extern u32 sub_0806914c(void *p);
@@ -786,7 +786,7 @@ s32 sub_08098594(void)
     ActorFaceHitter();
     t = gCurTask;
     if (t->unk18 >= 0) {
-        sub_080689c8(t->unk18, -t->facing);
+        ReleaseHeldPlayer(t->unk18, -t->facing);
         gCurTask->unk18 = -1;
     }
     ActorSetState(8);

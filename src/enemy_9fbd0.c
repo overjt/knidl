@@ -26,7 +26,7 @@ extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern s16 ActorComputeHealth(void);
-extern void sub_080689c8(s32 i, s32 d);
+extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern void sub_08068f68(void);
 extern u32 ActorReactToHit(void);
 
@@ -129,7 +129,7 @@ u8 sub_0809fd64(void)
     }
     if (gUnk_02007D00[8] != -1 && gUnk_02007D00[1] != -1)
     {
-        sub_080689c8(gUnk_02007D00[8], -gCurTask->facing);
+        ReleaseHeldPlayer(gUnk_02007D00[8], -gCurTask->facing);
         gUnk_02007D00[8] = -1;
     }
     if (gUnk_02007D00[9] != -1)
