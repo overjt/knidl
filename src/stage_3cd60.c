@@ -222,9 +222,9 @@ void InitPlayerState(s32 a0)
     p->unk31 = 0;
     p->unk36 = 0;
     p->unk37 = 0;
-    p->unk38 = 0;
-    p->unk3B = 0;
-    p->unk3A = 0;
+    p->shareTimer = 0;
+    p->sharedMask = 0;
+    p->shareItem = 0;
     p->unk3C = 0;
     p->boundsClamp = 0;
     p->running = 0;
@@ -292,9 +292,9 @@ void sub_0803d1c4(s32 a0)
     p->unk30 = 0;
     p->unk31 = 0;
     p->unk36 = 0;
-    p->unk38 = 0;
-    p->unk3B = 0;
-    p->unk3A = 0;
+    p->shareTimer = 0;
+    p->sharedMask = 0;
+    p->shareItem = 0;
     p->unk3C = 0;
     p->boundsClamp = 0;
     p->running = 0;
@@ -355,9 +355,9 @@ void sub_0803d2d4(s32 a0)
     p->sfxPlayer = 0xFFFF;
     p->sfxId = 0;
     p->unk36 = 0;
-    p->unk38 = 0;
-    p->unk3B = 0;
-    p->unk3A = 0;
+    p->shareTimer = 0;
+    p->sharedMask = 0;
+    p->shareItem = 0;
     p->boundsClamp = 0;
     p->running = 0;
     p->bumpKind = 0;
@@ -2784,7 +2784,7 @@ s32 sub_080404e4(void)
    test instead of `lsls #16; lsrs #16; cmp`.  Whether a plain
    `p->unk38` now matches is untested. */
 struct M11Ctr { u16 unk00; };
-#define CTR(p) (((struct M11Ctr *)&(p)->unk38)->unk00)
+#define CTR(p) (((struct M11Ctr *)&(p)->shareTimer)->unk00)
 
 s32 PlayerCheckShareItem(void)
 {
@@ -2796,8 +2796,8 @@ s32 PlayerCheckShareItem(void)
         return 0;
     if (--CTR(gCurTask->player) == 0)
     {
-        gCurTask->player->unk3A = 0;
-        gCurTask->player->unk3B = 0;
+        gCurTask->player->shareItem = 0;
+        gCurTask->player->sharedMask = 0;
         return 0;
     }
     if (gUnk_02007CF0 != 0)
@@ -2817,7 +2817,7 @@ s32 PlayerCheckShareItem(void)
     {
         if (i == gCurTask->player->playerIndex)
             continue;
-        if ((gCurTask->player->unk3B >> i) & 1)
+        if ((gCurTask->player->sharedMask >> i) & 1)
             continue;
         if (gPlayerHealth[i] == 0)
             continue;
@@ -2929,17 +2929,17 @@ void PlayerStartItemShare(s32 a0, u8 a1)
     if (gActivePlayerCount > 1)
     {
         p = gPlayerStates + a0;
-        p->unk38 = 300;
-        p->unk3A = a1;
-        p->unk3B = 0;
+        p->shareTimer = 300;
+        p->shareItem = a1;
+        p->sharedMask = 0;
     }
     else
     {
         /* `p` is genuinely uninitialized here in the ROM: the else arm stores
            through whatever register the pointer was allocated to. */
-        p->unk38 = 0;
-        p->unk3B = 0;
-        p->unk3A = 0;
+        p->shareTimer = 0;
+        p->sharedMask = 0;
+        p->shareItem = 0;
     }
 }
 

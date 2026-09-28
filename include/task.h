@@ -279,9 +279,9 @@ struct PlayerState
     /*0x35*/ s8 unk35;
     /*0x36*/ u8 unk36;
     /*0x37*/ u8 unk37;
-    /*0x38*/ u16 unk38;
-    /*0x3A*/ u8 unk3A;
-    /*0x3B*/ u8 unk3B;
+    /*0x38*/ u16 shareTimer;
+    /*0x3A*/ u8 shareItem;
+    /*0x3B*/ u8 sharedMask;
     /*0x3C*/ u8 unk3C;
     /* M11's MetaKnightActionDashSlashUpdate writes 0/1 here (issue #85). */
     /*0x3D*/ u8 running;
