@@ -1114,7 +1114,7 @@ extern u32 gUnk_0874BA1C[];
 extern u32 gUnk_0874BA48[];
 extern u32 gUnk_0874BA74[];
 extern u32 gUnk_0874BAA0[];
-extern u32 gUnk_0874BACC[];
+extern u32 gPaintRollerLightningDef[];
 extern u32 gUnk_0874BB98[];
 extern u32 gUnk_0874BFD4[];
 extern u32 gUnk_0874C108[];

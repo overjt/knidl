@@ -2672,7 +2672,7 @@ void Task_PaintRollerLightning(void)
     d = ((struct Task *)(gCurTask->parent * 144 + (u32)gTasks))->facing;
     gCurTask->facing = d;
     gCurTask->onGround = 0;
-    ActorLoadDef((struct ActorDef *)gUnk_0874BACC);
+    ActorLoadDef((struct ActorDef *)gPaintRollerLightningDef);
     gCurTask->updateCallback = (u32)sub_080b1564;
     gCurTask->velY = 128 << 11;
     while (gCurTask->onGround == 0)
