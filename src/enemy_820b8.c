@@ -13,7 +13,7 @@
  *   * five scripts in the entry/hook shape: `PoppyBrosJrRideInit`+`PoppyBrosJrRideUpdate`
  *     (`0x08741610`/`0x08741614`; its hook is the one that spawns the
  *     class-0 sub-actors 30/31/32 through CreateActorByKind and hands them to
- *     sub_080b5540), `sub_080822b0`+`sub_08082300` (`0x08741618`),
+ *     sub_080b5540), `PoppyBrosJrDroppedObjectInit`+`PoppyBrosJrDroppedObjectUpdate` (`0x08741618`),
  *     `sub_0808248c`+`sub_080824ec` (`0x08741620`), `WheelieInit`+
  *     `WheelieUpdate` (`0x0874164C`/`0x08741664`, six states) and
  *     `sub_08082bb8`+`sub_08082c18` (`0x0874167C`);
@@ -122,27 +122,27 @@ void sub_080822a4(void)
     sub_080825ec();
 }
 
-void sub_080822b0(void)
+void PoppyBrosJrDroppedObjectInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08082300;
+    t->updateCallback = (u32)PoppyBrosJrDroppedObjectUpdate;
     t->unk1C = 0;
     t->unk20 = 0;
     t->unk24 = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741618);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
 
 void sub_080822e4(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741618);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
 
-void sub_08082300(void)
+void PoppyBrosJrDroppedObjectUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_0874161C);
+        CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrDroppedObjectStateUpdates);
     if (gCurTask->unk24 == 2)
         ActorCheckHits();
     ActorReactToHit();

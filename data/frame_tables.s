@@ -10481,8 +10481,8 @@ gUnk_08755DEC:
 	.word	gUnk_08603380
 	.word	gUnk_086033B0
 	.word	gUnk_086033F0
-	.global	gUnk_08755E00
-gUnk_08755E00:
+	.global	gBombRallyBombFrames
+gBombRallyBombFrames:
 	.word	gUnk_085FE4E8
 	.word	gUnk_085FE4F0
 	.word	gUnk_085FE4F8
@@ -10537,13 +10537,13 @@ gUnk_08755E7C:
 	.global	gUnk_08755EB4
 gUnk_08755EB4:
 	.word	gUnk_085FE518
-	.global	gUnk_08755EB8
-gUnk_08755EB8:
+	.global	gBombRallyBombSmokeFrames
+gBombRallyBombSmokeFrames:
 	.word	gUnk_085FE500
 	.word	gUnk_085FE508
 	.word	gUnk_085FE510
-	.global	gUnk_08755EC4
-gUnk_08755EC4:
+	.global	gBombRallyStarFrames
+gBombRallyStarFrames:
 	.word	gUnk_085FE520
 	.word	gUnk_085FE528
 	.word	gUnk_085FE530

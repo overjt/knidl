@@ -9,14 +9,14 @@
  *
  * Sub-game 2: the racers' movement (task type #96 variant 0's callbacks).
  * 
- *   sub_080c3efc / sub_080c3f20   the two per-frame bodies variant 0 installs
+ *   AirGrindRacerRaceUpdate / AirGrindRacerIdleUpdate   the two per-frame bodies variant 0 installs
  *       in Task.lateUpdateCallback (racing / before the start and after the finish): run
- *       sub_080c383c, then sub_080c38c8 or sub_080c3d58, then sub_080c3e18.
+ *       sub_080c383c, then AirGrindRacerRaceStep or AirGrindRacerIdleStep, then sub_080c3e18.
  *   sub_080c383c   player 0 drives the camera (sub_080c3670) and rebuilds the
  *       course view (AirGrindDrawCourse) and keeps the leader's position in
  *       M37Game.unk1B8; every racer sets Task.layer/unk3E from the course
  *       record's unk18 and Task.unk28 from its unk08.
- *   sub_080c38c8   the racing step: holding A (M37Player.unk02 & 1) on the
+ *   AirGrindRacerRaceStep   the racing step: holding A (M37Player.unk02 & 1) on the
  *       course (record unk14 != 0) accelerates Task.velX by the level's
  *       thresholds gUnk_080CFE3C[level][], a well-timed press gives a boost
  *       (sub_080c3698, capped by gUnk_080CFE3C[level][0]), and holding A
@@ -25,11 +25,11 @@
  *       Task.frame come from the tables gUnk_080CFEE4/gUnk_080CFEE9/
  *       gUnk_080CFF01, and player 0's effects are variant 2 tasks
  *       (sub_080c2078).
- *   sub_080c3d58   the idle step used before the start and after the finish.
+ *   AirGrindRacerIdleStep   the idle step used before the start and after the finish.
  *   sub_080c3e18   the racer's screen position from the course record and
  *       the scale sub_080c623c, and the computer racers' distance fade
  *       (BlendColors on their palette row gUnk_08609D42[pal]).
- *   sub_080c3648 / sub_080c3670 / sub_080c37b8   the speed floor 0x18000,
+ *   sub_080c3648 / sub_080c3670 / AirGrindUpdateEngineSound   the speed floor 0x18000,
  *       the camera clamp (scroll = min(pos, finish line), the script cursor's
  *       unk2/unk4 into the course record), and player 0's engine sound
  *       (song 400, pitch from the speed through m4aMPlayPitchControl). */
@@ -86,7 +86,7 @@ s32 sub_080c3698(s32 player)
     return ret;
 }
 
-void sub_080c37b8(s32 a, s32 on)
+void AirGrindUpdateEngineSound(s32 a, s32 on)
 {
     if (a == 0) {
         if (on) {
@@ -128,7 +128,7 @@ void sub_080c383c(s32 player)
     gCurTask->unk28 = gAirGrindCoursePtr->players[player].unk08;
 }
 
-void sub_080c38c8(s32 player)
+void AirGrindRacerRaceStep(s32 player)
 {
     s32 ret;
 
@@ -139,7 +139,7 @@ void sub_080c38c8(s32 player)
     } else if (gAirGrindPtr->players[player].unk02 & 1) {
         if (gAirGrindCoursePtr->players[player].unk14 != 0) {
             ret = 0;
-            sub_080c37b8(player, 1);
+            AirGrindUpdateEngineSound(player, 1);
             if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][1])
                 gCurTask->accelX = 0x200;
             else if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][2])
@@ -171,7 +171,7 @@ void sub_080c38c8(s32 player)
             gAirGrindPtr->players[player].unk00 = 1;
         } else {
             gAirGrindPtr->players[player].unk0C = 0;
-            sub_080c37b8(player, 0);
+            AirGrindUpdateEngineSound(player, 0);
             sub_080c3648();
             gAirGrindPtr->players[player].unk08 = 24;
             if (player == 0)
@@ -184,7 +184,7 @@ void sub_080c38c8(s32 player)
             gAirGrindPtr->players[player].unk14 = 0;
     } else {
         gAirGrindPtr->players[player].unk0C = 0;
-        sub_080c37b8(player, 0);
+        AirGrindUpdateEngineSound(player, 0);
         if (gCurTask->velX < 0x18000) {
             gCurTask->accelX = 0;
             gCurTask->velX = 0x18000;
@@ -243,9 +243,9 @@ void sub_080c38c8(s32 player)
     }
 }
 
-void sub_080c3d58(s32 player)
+void AirGrindRacerIdleStep(s32 player)
 {
-    sub_080c37b8(player, 0);
+    AirGrindUpdateEngineSound(player, 0);
     if (gCurTask->state == 0) {
         gAirGrindPtr->players[player].unk14 -= 0x20000;
         if (gAirGrindPtr->players[player].unk14 < 0)
@@ -285,20 +285,20 @@ void sub_080c3e18(s32 player)
     }
 }
 
-void sub_080c3efc(void)
+void AirGrindRacerRaceUpdate(void)
 {
     s32 player = gCurTask->unk1C;
 
     sub_080c383c(player);
-    sub_080c38c8(player);
+    AirGrindRacerRaceStep(player);
     sub_080c3e18(player);
 }
 
-void sub_080c3f20(void)
+void AirGrindRacerIdleUpdate(void)
 {
     s32 player = gCurTask->unk1C;
 
     sub_080c383c(player);
-    sub_080c3d58(player);
+    AirGrindRacerIdleStep(player);
     sub_080c3e18(player);
 }

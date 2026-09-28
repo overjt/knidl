@@ -10,7 +10,7 @@
  *   sub_080c3f44   variant 2's body.  sub_080c2078(a, racer, kind) spawns it
  *       with Task.unk18 = the racer's task, Task.unk20 = the kind and
  *       Task.unk1C = a, and each kind sets its sprite table, animation and one
- *       of the callbacks below.  The kinds as sub_080c38c8/sub_080c3698 use
+ *       of the callbacks below.  The kinds as AirGrindRacerRaceStep/sub_080c3698 use
  *       them (player 0 only unless noted): 0 and 1 every 4th / 8th frame while
  *       A is held on the course, 2 on a press (M37Game.unk450 blocks a second
  *       copy), 5 on the release (M37Game.unk451), 6 / 7 the two boost ratings,

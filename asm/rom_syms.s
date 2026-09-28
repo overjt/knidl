@@ -195,8 +195,8 @@ gBlockCursorTile = 0x020061D0
 gHudAbilityPanelState = 0x020061D4
 	.global	gPaletteAnimTasks
 gPaletteAnimTasks = 0x020061D8
-	.global	gUnk_020061DC
-gUnk_020061DC = 0x020061DC
+	.global	gBombRallySafeBeatsLeft
+gBombRallySafeBeatsLeft = 0x020061DC
 	.global	gUnk_020061E0
 gUnk_020061E0 = 0x020061E0
 	.global	gBreakingBlocks

@@ -45,7 +45,7 @@ void AirGrindRacer(void)
     gCurTask->spriteFlags &= 0x7FFF;
     gCurTask->tileWord = gUnk_080CFE2C[gAirGrindPtr->localPlayer][player] << 12;
     gCurTask->updateCallback = (u32)AirGrindRacerUpdate;
-    gCurTask->lateUpdateCallback = (u32)sub_080c3f20;
+    gCurTask->lateUpdateCallback = (u32)AirGrindRacerIdleUpdate;
     gCurTask->state = 0;
     gCurTask->unk28 = 256;
     gAirGrindPtr->players[player].unk14 = 0x80000;
@@ -124,13 +124,13 @@ void AirGrindRacer(void)
     while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->unk00C)
         TaskYieldTrampoline(1);
     gCurTask->state = 1;
-    gCurTask->lateUpdateCallback = (u32)sub_080c3efc;
+    gCurTask->lateUpdateCallback = (u32)AirGrindRacerRaceUpdate;
     while (gAirGrindCoursePtr->players[player].coursePos < gAirGrindCoursePtr->finishLine) {
         gAirGrindPtr->raceTimes[player]++;
         TaskYieldTrampoline(1);
     }
     gCurTask->state = 2;
-    gCurTask->lateUpdateCallback = (u32)sub_080c3f20;
+    gCurTask->lateUpdateCallback = (u32)AirGrindRacerIdleUpdate;
     gCurTask->accelX = 0;
     while (gAirGrindCoursePtr->players[player].coursePos < gAirGrindCoursePtr->finishLine + 240)
         TaskYieldTrampoline(1);

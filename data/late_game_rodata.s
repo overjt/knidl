@@ -313,8 +313,8 @@ gUnk_08756564:
 gBombRallyPhases:
 	.word	BombRallyRound+1
 	.word	BombRallyResults+1
-	.global	gUnk_08756570
-gUnk_08756570:
+	.global	gBombRallyBeatFrames
+gBombRallyBeatFrames:
 	.incbin	"baserom.gba", 0x756570, 0x7
 	.global	gUnk_08756577
 gUnk_08756577:
@@ -346,19 +346,19 @@ gUnk_08756625:
 	.global	gUnk_0875663A
 gUnk_0875663A:
 	.incbin	"baserom.gba", 0x75663A, 0x16
-	.global	gUnk_08756650
-gUnk_08756650:
+	.global	gBombRallyBlastOdds
+gBombRallyBlastOdds:
 	.word	gUnk_08756610
 	.word	gUnk_08756625
 	.word	gUnk_0875663A
-	.global	gUnk_0875665C
-gUnk_0875665C:
+	.global	gBombRallyStartSpeeds
+gBombRallyStartSpeeds:
 	.incbin	"baserom.gba", 0x75665C, 0x3
-	.global	gUnk_0875665F
-gUnk_0875665F:
+	.global	gBombRallySpeedUpBeats
+gBombRallySpeedUpBeats:
 	.incbin	"baserom.gba", 0x75665F, 0x3
-	.global	gUnk_08756662
-gUnk_08756662:
+	.global	gBombRallySafeBeats
+gBombRallySafeBeats:
 	.incbin	"baserom.gba", 0x756662, 0x6
 	.global	gBombRallyStates
 gBombRallyStates:
@@ -379,10 +379,10 @@ gBombRallyResultsStateUpdates:
 	.global	gBombRallyObjectVariants
 gBombRallyObjectVariants:
 	.word	BombRallyPlayer+1
-	.word	sub_080bfd80+1
-	.word	sub_080c0c58+1
-	.word	sub_080c0d30+1
-	.word	sub_080c173c+1
+	.word	BombRallyBomb+1
+	.word	BombRallyBombSmoke+1
+	.word	BombRallyStarBurst+1
+	.word	BombRallyStartSign+1
 	.word	BombRallyResultsPlayer+1
 	.word	BombRallyMenuItem+1
 	.global	gBombRallyPlayerStates
@@ -397,9 +397,9 @@ gBombRallyPlayerStates:
 	.word	BombRallyPlayerCpuThrow+1
 	.word	BombRallyPlayerCpuFollowThrough+1
 	.word	BombRallyPlayerBlownUp+1
-	.word	BombRallyPlayerAutoServe+1
-	.word	BombRallyPlayerAutoWait+1
-	.word	BombRallyPlayerAutoThrow+1
+	.word	BombRallyPlayerBubblesServe+1
+	.word	BombRallyPlayerBubblesWait+1
+	.word	BombRallyPlayerBubblesThrow+1
 	.global	gBombRallyPlayerStateUpdates
 gBombRallyPlayerStateUpdates:
 	.word	BombRallyPlayerServeUpdate+1
@@ -412,17 +412,17 @@ gBombRallyPlayerStateUpdates:
 	.word	BombRallyPlayerCpuThrowUpdate+1
 	.word	BombRallyPlayerCpuFollowThroughUpdate+1
 	.word	BombRallyPlayerBlownUpUpdate+1
-	.word	BombRallyPlayerAutoServeUpdate+1
-	.word	BombRallyPlayerAutoWaitUpdate+1
-	.word	BombRallyPlayerAutoThrowUpdate+1
-	.global	gUnk_0875670C
-gUnk_0875670C:
+	.word	BombRallyPlayerBubblesServeUpdate+1
+	.word	BombRallyPlayerBubblesWaitUpdate+1
+	.word	BombRallyPlayerBubblesThrowUpdate+1
+	.global	gBombRallyPlayerFrames
+gBombRallyPlayerFrames:
 	.word	gUnk_08755BC0
 	.word	gUnk_08755C40
 	.word	gUnk_08755CC0
 	.word	gUnk_08755D40
-	.global	gUnk_0875671C
-gUnk_0875671C:
+	.global	gBombRallyBubblesFrames
+gBombRallyBubblesFrames:
 	.word	gUnk_08755DC4
 	.word	gUnk_08755DD8
 	.word	gUnk_08755DEC
@@ -460,16 +460,16 @@ gUnk_08756770:
 	.global	gUnk_08756778
 gUnk_08756778:
 	.incbin	"baserom.gba", 0x756778, 0x8
-	.global	gUnk_08756780
-gUnk_08756780:
-	.word	sub_080bfde8+1
-	.word	sub_080bff28+1
-	.word	sub_080c0388+1
-	.global	gUnk_0875678C
-gUnk_0875678C:
-	.word	sub_080bfe64+1
-	.word	sub_080c0074+1
-	.word	sub_080c0540+1
+	.global	gBombRallyBombStates
+gBombRallyBombStates:
+	.word	BombRallyBombStart+1
+	.word	BombRallyBombPass+1
+	.word	BombRallyBombExplode+1
+	.global	gBombRallyBombStateUpdates
+gBombRallyBombStateUpdates:
+	.word	BombRallyBombStartUpdate+1
+	.word	BombRallyBombPassUpdate+1
+	.word	BombRallyBombExplodeUpdate+1
 	.global	gUnk_08756798
 gUnk_08756798:
 	.incbin	"baserom.gba", 0x756798, 0x8
@@ -584,8 +584,8 @@ gUnk_08757178:
 	.global	gUnk_087571B8
 gUnk_087571B8:
 	.incbin	"baserom.gba", 0x7571B8, 0x40
-	.global	gUnk_087571F8
-gUnk_087571F8:
+	.global	gBombRallyStarBurstStates
+gBombRallyStarBurstStates:
 	.word	sub_080c0de8+1
 	.word	sub_080c1114+1
 	.word	sub_080c1424+1

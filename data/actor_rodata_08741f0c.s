@@ -79,7 +79,7 @@ gWaddleDooVariants:
 	.word	WaddleDooWalkInit+1
 	.word	ParasolWaddleDooInit+1
 	.word	sub_08085c2c+1
-	.word	sub_08085cd8+1
+	.word	WaddleDooShoot+1
 	.global	gWaddleDooWalkStates
 gWaddleDooWalkStates:
 	.word	sub_08085530+1

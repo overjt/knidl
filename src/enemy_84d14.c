@@ -907,7 +907,7 @@ void sub_08085cc4(void)
     ActorReactToHit();
 }
 
-void sub_08085cd8(void)
+void WaddleDooShoot(void)
 {
     struct Task *w;
     struct Task *x;
@@ -920,7 +920,7 @@ void sub_08085cd8(void)
     struct Task *u6;
     struct Task *u7;
 
-    gCurTask->updateCallback = (u32)sub_08085e60;
+    gCurTask->updateCallback = (u32)WaddleDooShootUpdate;
     TaskFaceNearestPlayer();
     while (1)
     {
@@ -992,7 +992,7 @@ void sub_08085cd8(void)
     }
 }
 
-void sub_08085e60(void)
+void WaddleDooShootUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();

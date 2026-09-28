@@ -6,7 +6,7 @@
  *
  * Tail of M36: the sub-game's presentation layer.
  *
- *   sub_080c0de8 .. sub_080c173c   fourteen near-identical class-4 sprite
+ *   sub_080c0de8 .. BombRallyStartSign   fourteen near-identical class-4 sprite
  *       bodies, one per on-screen element; each sets Task.updateState/unk38 from
  *       its own gUnk_08755Exx animation script and walks a fixed 16.16
  *       position list with TaskYieldTrampoline.
@@ -34,7 +34,7 @@
 #include "room.h"
 
 /* Not from subgame.h: this file's view of gAirGrind differs (lesson 3.517). */
-extern u8 gUnk_020061DC;
+extern u8 gBombRallySafeBeatsLeft;
 extern s8 gBombRallySeats[];
 extern u8 gBombRallyOutMask;
 extern u8 gBombRallyOutCount;
@@ -42,7 +42,7 @@ extern u8 gBombRallyFinishOrder[];
 
 extern s8 gUnk_08756560[];
 extern s8 gUnk_08756564[];
-extern u32 gUnk_08755E00[];
+extern u32 gBombRallyBombFrames[];
 extern u32 gUnk_08755E0C[];
 extern u32 gUnk_08755E44[];
 extern u32 gUnk_08755E7C[];
@@ -67,9 +67,9 @@ extern u32 gAirGrindPhases[];
 extern u8 gAirGrind[];
 extern s32 gAirGrindCourse[];
 extern u8 gSubGamePhase;
-extern u32 gUnk_08755EB8[];
-extern u32 gUnk_08755EC4[];
-extern u32 gUnk_087571F8[];
+extern u32 gBombRallyBombSmokeFrames[];
+extern u32 gBombRallyStarFrames[];
+extern u32 gBombRallyStarBurstStates[];
 extern s16 gUnk_08757014[];
 extern s32 *gUnk_0875716C[];
 extern s32 gUnk_08757178[][4];
@@ -87,16 +87,16 @@ extern u16 gUnk_08756778[];
 extern s8 gUnk_0875673C[];
 extern s16 gUnk_087567A0[];
 extern u8 gUnk_0875676C[];
-extern u32 gUnk_08756780[];
-extern u32 gUnk_0875678C[];
-extern u32 *gUnk_0875671C[];
+extern u32 gBombRallyBombStates[];
+extern u32 gBombRallyBombStateUpdates[];
+extern u32 *gBombRallyBubblesFrames[];
 extern u32 gUnk_0875674C[];
 extern u32 gUnk_0875675C[];
 extern u32 gUnk_08756528[];
-extern u8 gUnk_08756570[];
-extern u8 gUnk_0875665C[];
-extern u8 gUnk_0875665F[];
-extern u8 gUnk_08756662[];
+extern u8 gBombRallyBeatFrames[];
+extern u8 gBombRallyStartSpeeds[];
+extern u8 gBombRallySpeedUpBeats[];
+extern u8 gBombRallySafeBeats[];
 extern u32 gBombRallyStates[];
 extern u32 gBombRallyStateUpdates[];
 extern u32 gBombRallyResultsStates[];
@@ -105,9 +105,9 @@ extern u32 gBombRallyObjectVariants[];
 extern u32 gUnk_08755DC0;
 extern u16 gUnk_08756538[];
 extern u8 gUnk_087565E0[];
-extern u8 *gUnk_08756650[];
+extern u8 *gBombRallyBlastOdds[];
 extern u8 *gUnk_087565F4[];
-extern u32 *gUnk_0875670C[];
+extern u32 *gBombRallyPlayerFrames[];
 extern s16 gUnk_0875672C[];
 extern s16 gUnk_08756734[];
 extern s8 gUnk_08756740[];
@@ -120,8 +120,8 @@ extern u32 gBombRallyPlayerStateUpdates[];
    types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *a, u32 i);
-extern void sub_080bdf9c(u32 a);
-extern void sub_080c0ca4(void);
+extern void CreateBombRallyBurstStar(u32 a);
+extern void BombRallyBombSmokeUpdate(void);
 extern void sub_080c17ac(void);
 extern void sub_080c1804(void);
 extern void sub_080c1b78(void);
@@ -138,9 +138,9 @@ extern void BombRallyRoundUpdate(void);
 extern void BombRallyEnterState(void);
 extern u32 BombRallyKnockOutTurnPlayer(void);
 extern u32 BombRallyIsMatchOver(void);
-extern void sub_080bddb8(void);
-extern void sub_080bde0c(void);
-extern void sub_080bde78(u32 a);
+extern void BombRallyInitSpeed(void);
+extern void BombRallyRestartSpeed(void);
+extern void CreateBombRallyBomb(u32 a);
 extern void BombRallySeatPlayers(void);
 extern void BombRallyResultsUpdate(void);
 extern void BombRallyResultsEnterState(void);
@@ -154,9 +154,9 @@ extern void BombRallyPlayerUpdate(void);
 extern u32 BombRallyPlayerJudgePress(void);
 extern void BombRallyPlayerUpdatePose(void);
 extern void BombRallyPlayerEnterState(void);
-extern void sub_080bfdb0(void);
-extern void sub_080bfdcc(void);
-extern void sub_080be010(void);
+extern void BombRallyBombUpdate(void);
+extern void BombRallyBombEnterState(void);
+extern void CreateBombRallyStartSign(void);
 extern void sub_080c05f0(u32 a);
 extern void sub_080c0704(u32 a);
 extern void sub_080c0b18(u32 a);
@@ -164,12 +164,12 @@ extern s32 sub_080c1ebc(s32 a, s32 b);
 extern void sub_080c061c(s32 a, s32 b, s32 c, s32 d);
 extern void sub_080c072c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 extern void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e);
-/* NOTE: sub_080bdebc's third parameter is `u16` at its definition
+/* NOTE: CreateBombRallyBombSmoke's third parameter is `u16` at its definition
    (src/subgame_bda2c.c) but the ROM's call sites here sign-extend the
    argument, so the declaration visible here is the wider `s32` - the
    original source had the same prototype mismatch. */
-extern void sub_080bdebc(s32 a, s32 b, s32 c, s32 d);
-extern void sub_080bdf3c(s32 a, s32 b, u32 c, u32 d);
+extern void CreateBombRallyBombSmoke(s32 a, s32 b, s32 c, s32 d);
+extern void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d);
 extern void sub_080be7c0(u32 a);
 
 void sub_080c0de8(void)
@@ -590,7 +590,7 @@ void sub_080c168c(void)
     TaskExitTrampoline();
 }
 
-void sub_080c173c(void)
+void BombRallyStartSign(void)
 {
     struct Task *t;
     struct Task *u;

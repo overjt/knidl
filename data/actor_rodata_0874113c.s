@@ -228,36 +228,36 @@ gUnk_08741378:
 	.incbin	"baserom.gba", 0x741378, 0x8
 	.global	gKabuVariants
 gKabuVariants:
-	.word	sub_0807f044+1
-	.word	sub_0807f380+1
-	.word	sub_0807f88c+1
+	.word	KabuJumpInit+1
+	.word	KabuTeleportInit+1
+	.word	KabuSlideInit+1
 	.word	sub_0807fb00+1
-	.global	gUnk_08741390
-gUnk_08741390:
+	.global	gKabuJumpStates
+gKabuJumpStates:
 	.word	sub_0807f0c4+1
 	.word	sub_0807f218+1
 	.word	sub_0807f2ec+1
-	.global	gUnk_0874139C
-gUnk_0874139C:
+	.global	gKabuJumpStateUpdates
+gKabuJumpStateUpdates:
 	.word	sub_0807f1f0+1
 	.word	sub_0807f2b4+1
 	.word	sub_0807f348+1
-	.global	gUnk_087413A8
-gUnk_087413A8:
+	.global	gKabuTeleportStates
+gKabuTeleportStates:
 	.word	sub_0807f42c+1
-	.word	sub_0807f4dc+1
+	.word	KabuTeleport+1
 	.word	sub_0807f78c+1
-	.global	gUnk_087413B4
-gUnk_087413B4:
+	.global	gKabuTeleportStateUpdates
+gKabuTeleportStateUpdates:
 	.word	sub_0807f488+1
 	.word	sub_0807f634+1
 	.word	sub_0807f888+1
-	.global	gUnk_087413C0
-gUnk_087413C0:
+	.global	gKabuSlideStates
+gKabuSlideStates:
 	.word	sub_0807f920+1
 	.word	sub_0807fa98+1
-	.global	gUnk_087413C8
-gUnk_087413C8:
+	.global	gKabuSlideStateUpdates
+gKabuSlideStateUpdates:
 	.word	sub_0807f9a0+1
 	.word	sub_0807fafc+1
 	.global	gUnk_087413D0
@@ -445,7 +445,7 @@ gUnk_087415FC:
 	.global	gPoppyBrosJrRideVariants
 gPoppyBrosJrRideVariants:
 	.word	PoppyBrosJrRideInit+1
-	.word	sub_080822b0+1
+	.word	PoppyBrosJrDroppedObjectInit+1
 	.word	sub_0808248c+1
 	.global	gPoppyBrosJrRideStates
 gPoppyBrosJrRideStates:
@@ -453,11 +453,11 @@ gPoppyBrosJrRideStates:
 	.global	gPoppyBrosJrRideStateUpdates
 gPoppyBrosJrRideStateUpdates:
 	.word	sub_080822a4+1
-	.global	gUnk_08741618
-gUnk_08741618:
+	.global	gPoppyBrosJrDroppedObjectStates
+gPoppyBrosJrDroppedObjectStates:
 	.word	sub_08082338+1
-	.global	gUnk_0874161C
-gUnk_0874161C:
+	.global	gPoppyBrosJrDroppedObjectStateUpdates
+gPoppyBrosJrDroppedObjectStateUpdates:
 	.word	sub_08082458+1
 	.global	gUnk_08741620
 gUnk_08741620:
