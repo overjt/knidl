@@ -305,7 +305,7 @@ void Task_WarpStarTrailStar(void);
 void sub_08074e8c(void);
 void sub_08074ee0(u32 flag);
 void sub_08074f48(u8 a);
-void sub_08075000(void);
+void Task_NightmarePowerOrbEscape(void);
 void sub_08075290(s32 a);
 void sub_080752f4(void);
 void sub_08076074(void);

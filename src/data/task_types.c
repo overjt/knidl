@@ -108,7 +108,7 @@ void Task_QuickDrawObject(void);
 void Task_BombRallyObject(void);
 void Task_AirGrindObject(void);
 void Task_WarpStarCamera(void);
-void sub_08075000(void);
+void Task_NightmarePowerOrbEscape(void);
 void sub_080752f4(void);
 void Task_EndingEpilogue(void);
 void Task_EndingStarRodReturn(void);
@@ -378,7 +378,7 @@ const struct TaskType gTaskTypes[] = {
     /*  95 */ { 4, { 0, 0, 0 }, (u32)Task_BombRallyObject },
     /*  96 */ { 3, { 0, 0, 0 }, (u32)Task_AirGrindObject },
     /*  97 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarCamera },
-    /*  98 */ { 3, { 0, 0, 0 }, (u32)sub_08075000 },
+    /*  98 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbEscape },
     /*  99 */ { 3, { 0, 0, 0 }, (u32)sub_080752f4 },
     /* 100 */ { 3, { 0, 0, 0 }, (u32)Task_EndingEpilogue },
     /* 101 */ { 3, { 0, 0, 0 }, (u32)Task_EndingStarRodReturn },

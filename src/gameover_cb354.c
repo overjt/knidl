@@ -19,8 +19,8 @@
  *       multiple of ten) and count the displayed score down to it.
  *   Task_GameOverObject   #264: six variants gGameOverObjectVariants[Task.variant]; variant 0
  *       (GameOverPlayer, the player character) is a small state machine of
- *       sub-states gUnk_087582AC[Task.state] and per-frame handlers
- *       gUnk_087582B8[Task.updateState] (GameOverPlayerUpdate), re-entered through
+ *       sub-states gGameOverPlayerStates[Task.state] and per-frame handlers
+ *       gGameOverPlayerStateUpdates[Task.updateState] (GameOverPlayerUpdate), re-entered through
  *       GameOverPlayerEnterState. */
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
@@ -125,8 +125,8 @@ void Task_GameOverObject(void)
     TaskSleepForever();
 }
 
-/* Task type #264 variant 0: sub-states gUnk_087582AC[Task.state], per-frame
-   handlers gUnk_087582B8[Task.updateState] (GameOverPlayerUpdate). */
+/* Task type #264 variant 0: sub-states gGameOverPlayerStates[Task.state], per-frame
+   handlers gGameOverPlayerStateUpdates[Task.updateState] (GameOverPlayerUpdate). */
 void GameOverPlayer(void)
 {
     gCurTask->updateCallback = (u32)GameOverPlayerUpdate;
@@ -136,20 +136,20 @@ void GameOverPlayer(void)
     gCurTask->unk18 = 0;
     gCurTask->facing = 1;
     gCurTask->state = 0;
-    CallTableEntry(gCurTask->state, 3, gUnk_087582AC);
+    CallTableEntry(gCurTask->state, 3, gGameOverPlayerStates);
     TaskSleepForever();
 }
 
-/* Task type #264 variant 0's per-frame hook: handler gUnk_087582B8[Task.updateState]. */
+/* Task type #264 variant 0's per-frame hook: handler gGameOverPlayerStateUpdates[Task.updateState]. */
 void GameOverPlayerUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_087582B8);
+    CallTableEntry(gCurTask->updateState, 3, gGameOverPlayerStateUpdates);
 }
 
 /* Re-enter task type #264 variant 0 (TaskSetEntry installs this as its
-   body): Task.unk24 = 1, then sub-state gUnk_087582AC[Task.state]. */
+   body): Task.unk24 = 1, then sub-state gGameOverPlayerStates[Task.state]. */
 void GameOverPlayerEnterState(void)
 {
     gCurTask->unk24 = 1;
-    CallTableEntry(gCurTask->state, 3, gUnk_087582AC);
+    CallTableEntry(gCurTask->state, 3, gGameOverPlayerStates);
 }

@@ -837,28 +837,28 @@ gGameOverObjectVariants:
 	.word	sub_080ccec8+1
 	.word	sub_080cd24c+1
 	.word	sub_080cd2f8+1
-	.global	gUnk_087582AC
-gUnk_087582AC:
-	.word	sub_080cb64c+1
-	.word	sub_080cb70c+1
-	.word	sub_080cbac0+1
-	.global	gUnk_087582B8
-gUnk_087582B8:
+	.global	gGameOverPlayerStates
+gGameOverPlayerStates:
+	.word	GameOverPlayerWait+1
+	.word	GameOverPlayerContinue+1
+	.word	GameOverPlayerGiveUp+1
+	.global	gGameOverPlayerStateUpdates
+gGameOverPlayerStateUpdates:
 	.word	sub_080cb6d8+1
 	.word	sub_080cbabc+1
-	.word	sub_080cbea4+1
-	.global	gUnk_087582C4
-gUnk_087582C4:
-	.word	sub_080cbfe4+1
-	.word	sub_080cc0a4+1
+	.word	GameOverPlayerGiveUpUpdate+1
+	.global	gGameOverChoiceStates
+gGameOverChoiceStates:
+	.word	GameOverChoiceWait+1
+	.word	GameOverChoiceMove+1
 	.word	sub_080cc180+1
 	.word	sub_080cc2e0+1
 	.word	sub_080cc608+1
 	.word	sub_080cc768+1
-	.global	gUnk_087582DC
-gUnk_087582DC:
-	.word	sub_080cc024+1
-	.word	sub_080cc14c+1
+	.global	gGameOverChoiceStateUpdates
+gGameOverChoiceStateUpdates:
+	.word	GameOverChoiceWaitUpdate+1
+	.word	GameOverChoiceMoveUpdate+1
 	.word	sub_080cc2b8+1
 	.word	sub_080cc5d4+1
 	.word	sub_080cc740+1

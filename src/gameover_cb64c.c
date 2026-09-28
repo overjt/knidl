@@ -9,15 +9,15 @@
 /* gameover_cb64c.c (0x080CB64C-0x080CBED3, issue #100).
  *
  * The game-over screen, task type #264 variant 0: the player character.
- * Its sub-states gUnk_087582AC[Task.state] and per-frame handlers
- * gUnk_087582B8[Task.updateState] (GameOverPlayer starts it, GameOverPlayerEnterState re-enters
+ * Its sub-states gGameOverPlayerStates[Task.state] and per-frame handlers
+ * gGameOverPlayerStateUpdates[Task.updateState] (GameOverPlayer starts it, GameOverPlayerEnterState re-enters
  * it with Task.unk24 = 1):
- *   sub_080cb64c / sub_080cb6d8   sub-state 0, the idle loop; once re-entered
+ *   GameOverPlayerWait / sub_080cb6d8   sub-state 0, the idle loop; once re-entered
  *       (Task.unk24) the handler counts Task.unk20 down and then ends the
  *       screen (gGameOverDone = 1) with game state 1.
- *   sub_080cb70c / sub_080cbabc   sub-state 1, the "continue" animation, which
+ *   GameOverPlayerContinue / sub_080cbabc   sub-state 1, the "continue" animation, which
  *       ends the screen with game state 5 (back into the game).
- *   sub_080cbac0 / sub_080cbea4   sub-state 2, the "give up" animation (it
+ *   GameOverPlayerGiveUp / GameOverPlayerGiveUpUpdate   sub-state 2, the "give up" animation (it
  *       spawns variants 3 and 4); its handler re-enters sub-state 0 with a
  *       120-frame count and spawns variant 2. */
 
@@ -26,7 +26,7 @@ void TaskSleepForever(void);                                     /* end the runn
 void TaskSetEntry(void *a, u32 i);
 
 /* Task type #264 variant 0, sub-state 0. */
-void sub_080cb64c(void)
+void GameOverPlayerWait(void)
 {
     gCurTask->frameTable = gUnk_08754914;
     gCurTask->updateState = 0;
@@ -64,7 +64,7 @@ void sub_080cb6d8(void)
 }
 
 /* Task type #264 variant 0, sub-state 1. */
-void sub_080cb70c(void)
+void GameOverPlayerContinue(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -166,7 +166,7 @@ void sub_080cbabc(void)
 }
 
 /* Task type #264 variant 0, sub-state 2. */
-void sub_080cbac0(void)
+void GameOverPlayerGiveUp(void)
 {
     gCurTask->updateState = 2;
     gCurTask->frameTable = gUnk_087548B8;
@@ -302,7 +302,7 @@ void sub_080cbac0(void)
 }
 
 /* Task type #264 variant 0, handler 2. */
-void sub_080cbea4(void)
+void GameOverPlayerGiveUpUpdate(void)
 {
     if (gCurTask->state != 2) {
         gCurTask->unk20 = 120;

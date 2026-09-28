@@ -82,10 +82,10 @@ extern s16 *gUnk_087577D8[];
 extern u16 gUnk_08758274[];
 extern u16 gUnk_08758284[];
 extern void (*gGameOverObjectVariants[])(void);
-extern void (*gUnk_087582AC[])(void);
-extern void (*gUnk_087582B8[])(void);
-extern void (*gUnk_087582C4[])(void);
-extern void (*gUnk_087582DC[])(void);
+extern void (*gGameOverPlayerStates[])(void);
+extern void (*gGameOverPlayerStateUpdates[])(void);
+extern void (*gGameOverChoiceStates[])(void);
+extern void (*gGameOverChoiceStateUpdates[])(void);
 extern s32 gUnk_087582F4[];
 extern void (*gUnk_08758324[])(void);
 extern void (*gUnk_0875832C[])(void);
@@ -116,8 +116,8 @@ void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n);
 
 /* src/ending_c6c64.c */
 void Task_EndingEpilogue(void);
-void sub_080c6ca0(void);
-void sub_080c6d38(void);
+void EndingEpilogueLoadGraphics(void);
+void CreateEndingEpilogueObjects(void);
 void sub_080c6d84(void);
 void sub_080c769c(void);
 void sub_080c77cc(void);
@@ -193,24 +193,24 @@ void GameOverPlayerUpdate(void);
 void GameOverPlayerEnterState(void);
 
 /* src/gameover_cb64c.c */
-void sub_080cb64c(void);
+void GameOverPlayerWait(void);
 void sub_080cb6d8(void);
-void sub_080cb70c(void);
+void GameOverPlayerContinue(void);
 void sub_080cbabc(void);
-void sub_080cbac0(void);
-void sub_080cbea4(void);
+void GameOverPlayerGiveUp(void);
+void GameOverPlayerGiveUpUpdate(void);
 
 /* src/gameover_cbed4.c */
 void GameOverChoice(void);
 void GameOverChoiceUpdate(void);
 void CreateGameOverObject(u8 variant);
-void sub_080cbf68(void);
+void GameOverPlayerShowChoice(void);
 void sub_080cbfac(void);
 void GameOverChoiceEnterState(void);
-void sub_080cbfe4(void);
-void sub_080cc024(void);
-void sub_080cc0a4(void);
-void sub_080cc14c(void);
+void GameOverChoiceWait(void);
+void GameOverChoiceWaitUpdate(void);
+void GameOverChoiceMove(void);
+void GameOverChoiceMoveUpdate(void);
 void sub_080cc180(void);
 void sub_080cc2b8(void);
 void sub_080cc2e0(void);

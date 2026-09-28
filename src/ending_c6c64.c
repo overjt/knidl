@@ -13,8 +13,8 @@
  * The first ending scene, part 1: task type #100 (class 3), which M37's
  * EndingEpilogueScene spawns in AgbMain state 11 and waits on (gEndingSceneActive).
  *   Task_EndingEpilogue   the body: variant 0 (Task.variant == 0) loads the graphics
- *       (sub_080c6ca0) and spawns variants 1, 6, 7, 9 and 10 from the list
- *       gUnk_0875735C (sub_080c6d38); variants 1-10 run gEndingEpilogueVariants[unk73].
+ *       (EndingEpilogueLoadGraphics) and spawns variants 1, 6, 7, 9 and 10 from the list
+ *       gUnk_0875735C (CreateEndingEpilogueObjects); variants 1-10 run gEndingEpilogueVariants[unk73].
  *   sub_080c6d84 / sub_080c769c   variant 1, the scene's main sprite, and its
  *       scaling draw callback; sub_080c77cc spawns its four variant-2 helpers.
  *   sub_080c7810   variant 2: while the spawner is drawn (Task.unk34), one of
@@ -42,8 +42,8 @@ void Task_EndingEpilogue(void)
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
     if (gCurTask->variant == 0) {
-        sub_080c6ca0();
-        sub_080c6d38();
+        EndingEpilogueLoadGraphics();
+        CreateEndingEpilogueObjects();
     } else {
         CallTableEntry(gCurTask->variant, 11, gEndingEpilogueVariants);
     }
@@ -52,7 +52,7 @@ void Task_EndingEpilogue(void)
 
 /* Task type #100's graphics: two sprite sheets, the first one's palette and,
    with more than one player, this player's palette in slot 1. */
-void sub_080c6ca0(void)
+void EndingEpilogueLoadGraphics(void)
 {
     struct GfxHeader *h = &gUnk_085995AC;
 
@@ -70,7 +70,7 @@ void sub_080c6ca0(void)
 
 /* Spawn one task type #100 per variant listed in gUnk_0875735C[] (1, 6, 7,
    9 and 10, ended by 11, the anchor table's size). */
-void sub_080c6d38(void)
+void CreateEndingEpilogueObjects(void)
 {
     s32 i;
     s32 id;

@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x08074C0C 0x080763E8 src/actor_74c0c.c --newpb
  *
  * M19 batch 3: task type #165 (Task_WarpStarTrailStar, the four-ring sparkle draw loop),
- * type #97 (Task_WarpStarCamera) and type #98 (sub_08075000) with their coroutine
+ * type #97 (Task_WarpStarCamera) and type #98 (Task_NightmarePowerOrbEscape) with their coroutine
  * bodies and the gWarpStarCameraPaths dispatch row.
  */
 #include "gba/gba.h"
@@ -192,7 +192,7 @@ void sub_08074f48(u8 a)
     BlendColors(gUnk_0200AF20 + 64, gUnk_0873FE98, v2, 32, gUnk_03001370 + 704);
 }
 
-void sub_08075000(void)
+void Task_NightmarePowerOrbEscape(void)
 {
     {
         struct Task *t = gCurTask;
