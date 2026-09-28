@@ -16,9 +16,11 @@ Method:
 Units:
   One unit per module from module-map.csv (M01..), one unit per
   non-module code segment (early carve-outs, SDK drivers, m4a C parts),
-  and one unit for hand-written asm zones that stay asm by design
-  (excluded from decompilation, reported as complete with an
-  auto_generated-style caveat in the unit name suffix).
+  and one unit for hand-written asm zones that stay asm by design.
+  The asm zones count as matched/complete: they were never compiler
+  output, so the checked-in asm IS their source (make compare proves it
+  byte-exact), and the "[asm]" suffix on the unit name keeps the
+  distinction visible on decomp.dev.
 
 Output:
   report.json at the repository root, objdiff Report schema v2 (JSON
@@ -48,8 +50,10 @@ REPORT_VERSION = 2
 
 # Segments that are hand-written / SDK asm that stays asm forever, by design
 # (docs/analysis/segments.txt annotations, issues #29/#30/#52).  They are
-# reported as their own units with complete=true so the overall numbers
-# are honest about what "decompilation" means for this project.
+# reported as their own units, counted as matched/complete (their source is
+# this repository's own asm, byte-verified by make compare) and suffixed
+# "[asm]" so the overall numbers stay honest about what "decompilation"
+# means for this project.
 ASM_FOREVER = {
     "sdk_libc",
     "sdk_swi_wrappers",
@@ -133,6 +137,11 @@ def build_units(segments, functions, c_ranges, modules):
     """
     units = []
 
+    # Spans of the hand-written asm zones.  A module covering one of them
+    # (module-map.csv's M265 is exactly the m4a_1 asm core) is the same
+    # asm-forever unit as the segment itself; see make_unit.
+    asm_spans = [(s["start"], s["end"]) for s in segments if s["name"] in ASM_FOREVER]
+
     def fn_in(fn, start, end):
         return start <= fn["vma"] < end
 
@@ -142,7 +151,8 @@ def build_units(segments, functions, c_ranges, modules):
         if not fns:
             continue
         matched = [f for f in fns if any(a <= f["vma"] < b for a, b, _ in c_ranges)]
-        units.append(make_unit(f"{m['id']}: {m['name']}", fns, matched, m))
+        asm_forever = any(a <= m["start"] < b for a, b in asm_spans)
+        units.append(make_unit(f"{m['id']}: {m['name']}", fns, matched, m, asm_forever=asm_forever))
 
     # --- non-module segments ---
     module_span = [(m["start"], m["end"]) for m in modules]
@@ -163,6 +173,13 @@ def build_units(segments, functions, c_ranges, modules):
 
 
 def make_unit(name, fns, matched, meta, asm_forever=False):
+    if asm_forever:
+        # These zones were never compiler output: the checked-in asm IS
+        # their source, and make compare proves it byte-exact on every
+        # build.  Count them as matched/complete so the global numbers mean
+        # "built from repository source" (C or labeled asm); the [asm]
+        # suffix on the unit name keeps the distinction visible.
+        matched = fns
     total_code = sum(f["size"] for f in fns)
     matched_code = sum(f["size"] for f in matched)
     total_functions = len(fns)
@@ -243,8 +260,9 @@ def main():
     if not check_coverage(functions, units):
         sys.exit(1)
 
-    # Global measures over tracked units only (asm-forever units included:
-    # they are real ROM bytes; their [asm] suffix documents the caveat).
+    # Global measures over tracked units only (asm-forever units included
+    # as matched/complete: they are real ROM bytes built from this
+    # repository's own asm; their [asm] suffix documents the caveat).
     tot = {k: 0 for k in (
         "total_code", "matched_code", "total_functions", "matched_functions",
         "complete_code", "total_units", "complete_units",

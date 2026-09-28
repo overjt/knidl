@@ -59,6 +59,12 @@ The project started as a full ROM split and was decompiled module by module
 into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
 [docs/history.md](docs/history.md)).
 
+The [decomp.dev](https://decomp.dev/overjt/knidl) badge reports **100%**:
+every byte of code in the ROM is built from source in this repository, C
+for the game and labeled assembly for the runtime zones kept as asm by
+design (each its own `[asm]` unit there, docs/decomp-dev.md). It measures
+code only; naming and data readability are the figures below.
+
 <!-- Figures from `make progress` at the end of #167; refresh after any asm, naming or data change. -->
 
 ```

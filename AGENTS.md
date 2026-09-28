@@ -87,7 +87,10 @@ module by module, is [`docs/history.md`](docs/history.md).
   (cartridge header, crt0 and master ISR, ARM task switcher, `m4a_1`, SWI
   thunks and SoftReset, lib1funcs/`_call_via_rN`/task trampolines,
   interworking veneer) is `docs/audit.md` section 2, checked against
-  `tools/calcrom.pl`'s exclusions.
+  `tools/calcrom.pl`'s exclusions.  The decomp.dev report
+  (`tools/gen_report.py`, docs/decomp-dev.md) counts those zones as
+  complete `[asm]` units, so its badge reads 100% ("every code byte built
+  from repository source", #164); `make progress` keeps them excluded.
 - **Code exceptions** (`docs/audit.md` section 3): no `register` pin is
   left; one function keeps two zero-byte `asm("")` levers by design,
   `BootLogoUpdateObjects` (formerly `sub_080caab8`, #152's approved
