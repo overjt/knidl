@@ -980,10 +980,10 @@ void sub_08042580(void)
             gCurTask->player->running = 0;
             RequestScreenShake(2);
             t5 = gCurTask;
-            if (t5->unk82 & 128)
+            if (t5->hitEffect & 128)
                 t5->variant = 4;
             else
-                t5->variant = t5->unk82 & 15;
+                t5->variant = t5->hitEffect & 15;
             ((u8 *)gCurTask->player)[63] = 1;
             gCurTask->player->invulnerabilityTimer = 0x8000;
             PlayerStopAxes(3);
@@ -1178,7 +1178,7 @@ void sub_080429fc(void)
     gCurTask->lateUpdateCallback = 0;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << gCurTask->player->playerIndex);
-    if (gCurTask->unk82 == 512)
+    if (gCurTask->hitEffect == 512)
         sub_08027548();
     gCurTask->player->unk40 |= 8;
     gCurTask->player->unk42 |= 0x100;

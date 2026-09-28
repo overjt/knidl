@@ -40,10 +40,10 @@ void Task_DustTrail(void)
         if (TaskHasSameSerial(gCurTask->parent) != 1)
             break;
         if ((s8)gTasks[j = gCurTask->parent].hitKind == 3
-         && gTasks[j].unk82 == 1)
+         && gTasks[j].hitEffect == 1)
             break;
         if ((s8)gTasks[j].hitKind == 4
-         && (u16)(gTasks[j].unk82 - 2) <= 1)
+         && (u16)(gTasks[j].hitEffect - 2) <= 1)
             break;
         v = gCurTask;
         v->posX = (gTasks[j].pixelX + v->unk1C) << 16;

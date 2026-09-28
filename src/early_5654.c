@@ -93,7 +93,7 @@ void TaskFree(s32 id)
     t->waterFlags = 0;
     t->onGround = 0;
     t->hitDirection = 0;
-    t->unk82 = 0;
+    t->hitEffect = 0;
     t->hitKind = 0;
     t->hitterSlot = -1;
     t->hitterPlayer = -1;

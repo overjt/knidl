@@ -798,7 +798,7 @@ void WhispyWoodsLeavesDraw(void)
                      gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->unk6C]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->health - gSpriteCameraX + gCurTask->waterFlags,
-                     gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->unk82);
+                     gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->hitEffect);
     if (gUnk_0874C332[65 - (s16)gCurTask->unk6C] != -1)
         QueueSprite(gCurTask->layer,
                      gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->unk6C]],

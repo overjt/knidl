@@ -1571,7 +1571,7 @@ void sub_0807aa0c(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->hitKind == 6 && (u16)(t->unk82 - 2) <= 1)
+    if (t->hitKind == 6 && (u16)(t->hitEffect - 2) <= 1)
     {
         ActorSetAttackBox(gUnk_08740E1C);
         ActorSetState(3);

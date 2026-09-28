@@ -204,8 +204,8 @@ void InitPlayerState(s32 a0)
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
     p->unk14 = 0;
-    p->unk17 = 0;
-    p->unk18 = 0;
+    p->invincible = 0;
+    p->invincibleTimer = 0;
     p->unk1C = 0;
     p->unk1A = 0;
     p->unk22 = 0;
@@ -340,8 +340,8 @@ void sub_0803d2d4(s32 a0)
     p->unk0F = 0;
     p->invulnerabilityTimer = 0;
     p->unk14 = 0;
-    p->unk17 = 0;
-    p->unk18 = 0;
+    p->invincible = 0;
+    p->invincibleTimer = 0;
     p->unk1C = 0;
     p->unk1A = 0;
     p->unk22 = 0;
@@ -929,7 +929,7 @@ void sub_0803e080(void)
             struct PlayerState *q = t->player;
             u32 src;
 
-            if (q->unk17 != 0)
+            if (q->invincible != 0)
                 break;
             if (q->ability != 7 && q->ability != 20 && q->ability != 21)
             {
@@ -1000,8 +1000,8 @@ void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2)
         break;
     case 5:
         sub_0803e28c((s32)p);
-        p->unk17 = 1;
-        p->unk18 = 960;
+        p->invincible = 1;
+        p->invincibleTimer = 960;
         break;
     case 6:
         p->invulnerability = 6;
@@ -1338,25 +1338,25 @@ s32 sub_0803e7d8(void)
 
     if (p->unk42 & 32)
         return;
-    if ((s16)p->unk18 == 0)
+    if ((s16)p->invincibleTimer == 0)
     {
-        p->unk17 = 0;
+        p->invincible = 0;
         return;
     }
-    p->unk18--;
+    p->invincibleTimer--;
     if (gPlayerCount == 1)
     {
-        if ((s16)gCurTask->player->unk18 == 240)
+        if ((s16)gCurTask->player->invincibleTimer == 240)
             sub_080270d0();
         return;
     }
-    if ((s16)gCurTask->player->unk18 != 240)
+    if ((s16)gCurTask->player->invincibleTimer != 240)
         return;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (i != gCurTask->player->playerIndex
-         && gPlayerStates[i].unk17 != 0
-         && (s16)gPlayerStates[i].unk18 > 240)
+         && gPlayerStates[i].invincible != 0
+         && (s16)gPlayerStates[i].invincibleTimer > 240)
             return;
     }
     sub_080270d0();
@@ -1367,20 +1367,20 @@ void sub_0803e868(void)
     s32 i;
     s32 ok;
 
-    if ((s16)gCurTask->player->unk18 == 0)
+    if ((s16)gCurTask->player->invincibleTimer == 0)
         return;
     ok = 1;
     for (i = 0; i < gPlayerCount; i++)
     {
         if (i != gCurTask->player->playerIndex
-         && gPlayerStates[i].unk17 != 0
-         && (s16)gPlayerStates[i].unk18 > 240)
+         && gPlayerStates[i].invincible != 0
+         && (s16)gPlayerStates[i].invincibleTimer > 240)
             ok = 0;
     }
     if (ok != 0 && gCurrentBgm == 19)
         sub_080270d0();
-    gCurTask->player->unk17 = 0;
-    gCurTask->player->unk18 = 0;
+    gCurTask->player->invincible = 0;
+    gCurTask->player->invincibleTimer = 0;
     {
         struct PlayerState *r = gCurTask->player;
 
@@ -1395,7 +1395,7 @@ void sub_0803e8ec(void)
     s32 needBig;
     s32 needSmall;
 
-    if (p->unk17 == 0)
+    if (p->invincible == 0)
         return;
     if (p->mode == 13)
     {
@@ -1408,7 +1408,7 @@ void sub_0803e8ec(void)
     {
         struct PlayerState *q = gCurTask->player;
 
-        if ((s16)q->unk18 == 0)
+        if ((s16)q->invincibleTimer == 0)
         {
             q->unk1C = 0;
             q->unk1A = 0;
@@ -1425,7 +1425,7 @@ void sub_0803e8ec(void)
         struct Task *t = gCurTask;
         struct PlayerState *q = t->player;
 
-        if ((s16)q->unk18 <= 239)
+        if ((s16)q->invincibleTimer <= 239)
         {
             if (needSmall == 0)
                 return;
@@ -2453,7 +2453,7 @@ void sub_0803fb54(void)
             if ((s8)gCurTask->player->unk0F <= 16)
                 gCurTask->player->unk0F++;
         }
-        else if (gCurTask->player->unk17 != 0)
+        else if (gCurTask->player->invincible != 0)
         {
             gCurTask->player->running = 1;
             gCurTask->player->unk40 |= 16;
@@ -2950,7 +2950,7 @@ s32 sub_080408e4(void)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gPlayerStates[i].unk17 != 0 && (s16)gPlayerStates[i].unk18 > 240)
+        if (gPlayerStates[i].invincible != 0 && (s16)gPlayerStates[i].invincibleTimer > 240)
         {
             r = 1;
             break;

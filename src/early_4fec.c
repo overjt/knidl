@@ -111,7 +111,7 @@ struct Task {
     /* 0x7F */ u8  hitterPlayer;
     /* 0x80 */ u8  b80;
     /* 0x81 */ u8  b81;
-    /* 0x82 */ u16 h82;
+    /* 0x82 */ u16 hitEffect;
     /* 0x84 */ u16 h84;
     /* 0x86 */ u16 h86;
     /* 0x88 */ u32 player;
@@ -224,7 +224,7 @@ void InitTasks(void)
         p->waterFlags = 0;
         p->onGround = 0;
         p->hitDirection = 0;
-        p->h82 = 0;
+        p->hitEffect = 0;
         p->hitKind = 0;
         p->hitterSlot |= 0xFF;
         p->hitterPlayer |= 0xFF;

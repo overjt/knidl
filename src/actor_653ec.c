@@ -1353,7 +1353,7 @@ void sub_08066988(u32 i)
     }
     t->lateUpdateCallback = 0;
     t->updateCallback = 0;
-    t->unk82 = 0;
+    t->hitEffect = 0;
     TaskSetEntry(ActorDie, i);
     TaskSetSkipMask(0, i);
 }

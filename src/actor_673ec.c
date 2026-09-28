@@ -1107,7 +1107,7 @@ s32 sub_08068a2c(s32 a, s32 b)
     }
     t = gCurTask;
     if (t->health == 0)
-        t->unk82 = b;
+        t->hitEffect = b;
     return r;
 }
 void sub_08068a8c(s32 i, u8 flag)
@@ -1446,7 +1446,7 @@ void ActorStoreHit(u8 a)
     t = gCurTask;
     b = t->unk8C;
     t->hitKind = gHitKind;
-    gCurTask->unk82 = gUnk_03002450;
+    gCurTask->hitEffect = gUnk_03002450;
     gCurTask->health = gHitHealthLeft;
     gCurTask->hitDirection = gHitDirection;
     gCurTask->hitTimer = gHitTimer;

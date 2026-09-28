@@ -327,7 +327,7 @@ void sub_0806b8bc(void)
     }
     u = gCurTask;
     u->moveCallback = (u32)TaskMove;
-    u->unk82 = 0;
+    u->hitEffect = 0;
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;
     TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -375,7 +375,7 @@ void sub_0806b95c(void)
     m &= w;
     c->savedPaletteBits = m;
     v->unk2C = 2;
-    a->unk04 = v->unk82;
+    a->unk04 = v->hitEffect;
 }
 
 void sub_0806b9dc(void)
@@ -461,7 +461,7 @@ s32 ActorAttachToHitter(void)
 {
     sub_0806b9dc();
     sub_0806ba34();
-    switch (gCurTask->unk82)
+    switch (gCurTask->hitEffect)
     {
     case 1:
         sub_0806b95c();

@@ -1595,7 +1595,7 @@ s32 CreateBlockStar(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
     {
         t = &gTasks[i];
         t->hitKind = p3;
-        t->unk82 = p4;
+        t->hitEffect = p4;
         t->hitterSlot = p2;
     }
     return i;

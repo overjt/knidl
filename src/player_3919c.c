@@ -50,7 +50,7 @@ void PlayerActionDie(void)
     t->spriteFlags &= 0x7FFF;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << t->player->playerIndex);
-    if (t->unk82 == 0x200)
+    if (t->hitEffect == 0x200)
         sub_08027548();
     u = gCurTask;
     u->player->unk40 |= 8;
@@ -75,8 +75,8 @@ void PlayerActionDie(void)
         StopAllSound();
         StopAllSfx();
         gCurTask->layer = 4;
-        gCurTask->player->unk17 = n;
-        gCurTask->player->unk18 = n;
+        gCurTask->player->invincible = n;
+        gCurTask->player->invincibleTimer = n;
         gCurTask->player->unk1A = gCurTask->player->unk1C = n;
     }
     else

@@ -5,7 +5,7 @@
  *
  * Actor defeat bodies, the variants ActorDie (gUnk_0873E5BC) runs (an older
  * reading called them warp-star exits, a level-clear dance and a death
- * sequence): ActorDefeatByEffect dispatches the hit effect code Task.unk82
+ * sequence): ActorDefeatByEffect dispatches the hit effect code Task.hitEffect
  * through gActorDefeatsByEffect to the knock-away defeats
  * ActorDefeatPlain/Burning/Shocked (the shake and launch
  * ActorDefeatKnockAway, then ActorDefeatBlinkAndBurst) and to
@@ -76,9 +76,9 @@ void ActorDefeatByEffect(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk82 > 3)
-        t->unk82 = 0;
-    CallTableEntry(gCurTask->unk82, 4, gActorDefeatsByEffect);
+    if (t->hitEffect > 3)
+        t->hitEffect = 0;
+    CallTableEntry(gCurTask->hitEffect, 4, gActorDefeatsByEffect);
 }
 
 void ActorDefeatKnockAway(void)
@@ -166,7 +166,7 @@ void ActorDefeatBurning(void)
 
     t = gCurTask;
     t->updateCallback = (u32)sub_0806a55c;
-    ActorAttachEffect(t->unk82, 0);
+    ActorAttachEffect(t->hitEffect, 0);
     ActorDefeatKnockAway();
     TaskStop();
     sub_0806a0cc();
@@ -183,7 +183,7 @@ void ActorDefeatShocked(void)
 
     t = gCurTask;
     t->updateCallback = (u32)sub_0806a594;
-    ActorAttachEffect(t->unk82, 0);
+    ActorAttachEffect(t->hitEffect, 0);
     ActorDefeatKnockAway();
     TaskStop();
     sub_0806a0cc();
@@ -471,9 +471,9 @@ void sub_0806aa10(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk82 > 3)
-        t->unk82 = 0;
-    CallTableEntry(gCurTask->unk82, 4, gUnk_0873E688);
+    if (t->hitEffect > 3)
+        t->hitEffect = 0;
+    CallTableEntry(gCurTask->hitEffect, 4, gUnk_0873E688);
 }
 
 void sub_0806aa40(void)

@@ -595,7 +595,7 @@ s8 sub_08069c48(void)
             v = g[12];
             c = ((s8 *)g)[12];
             t->hitKind = c;
-            gCurTask->unk82 = 0;
+            gCurTask->hitEffect = 0;
         }
         else
         {
@@ -698,9 +698,9 @@ void ActorStartHitStun(void)
     a->hitStunTimer = 11;
     v = gCurTask;
     v->unk8C->savedPaletteBits = v->tileWord & 0xF000;
-    if (v->unk82 > 3)
-        v->unk82 = 0;
-    ActorAttachEffect(gCurTask->unk82, 1);
+    if (v->hitEffect > 3)
+        v->hitEffect = 0;
+    ActorAttachEffect(gCurTask->hitEffect, 1);
 }
 
 void ActorEndHitStun(void)

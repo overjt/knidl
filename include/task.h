@@ -85,7 +85,7 @@ struct Task
     /*0x7F*/ s8 hitterPlayer;
     /*0x80*/ s8 unk80;
     /*0x81*/ u8 unk81;
-    /*0x82*/ u16 unk82;
+    /*0x82*/ u16 hitEffect;
     /*0x84*/ u16 unk84;
     /*0x86*/ u16 unk86;
     /* The record of the player the task belongs to: Task_Player binds
@@ -241,8 +241,8 @@ struct PlayerState
     /*0x12*/ u16 invulnerabilityTimer;
     /*0x14*/ u16 unk14;
     /*0x16*/ u8 unk16;
-    /*0x17*/ u8 unk17;
-    /*0x18*/ u16 unk18;
+    /*0x17*/ u8 invincible;
+    /*0x18*/ u16 invincibleTimer;
     /*0x1A*/ u16 unk1A;
     /*0x1C*/ u16 unk1C;
     /*0x1E*/ u16 unk1E;

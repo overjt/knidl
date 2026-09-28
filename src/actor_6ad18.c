@@ -245,9 +245,9 @@ void sub_0806b178(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk82 > 3)
-        t->unk82 = 0;
-    CallTableEntry(gCurTask->unk82, 4, gUnk_0873E77C);
+    if (t->hitEffect > 3)
+        t->hitEffect = 0;
+    CallTableEntry(gCurTask->hitEffect, 4, gUnk_0873E77C);
 }
 
 void sub_0806b1a8(void)

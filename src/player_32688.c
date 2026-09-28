@@ -299,18 +299,18 @@ void PlayerUpdate(void)
             gCurTask->player->unk4E = gUnk_03005544;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
         if (gTerrainResult.unkC != 0 && !(gCurTask->player->unk42 & 0x200)
-         && gCurTask->player->invulnerability != 1 && gCurTask->player->unk17 == 0)
+         && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)
         {
             r = AddPlayerHealth(-8, gCurTask->player->playerIndex);
             if (r != 0)
             {
-                gCurTask->unk82 = gTerrainResult.unkC | 0x80;
+                gCurTask->hitEffect = gTerrainResult.unkC | 0x80;
                 gCurTask->hitKind = 2;
             }
             else
             {
                 gCurTask->hitKind = 1;
-                gCurTask->unk82 = 0;
+                gCurTask->hitEffect = 0;
                 goto post;
             }
         }

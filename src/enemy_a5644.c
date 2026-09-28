@@ -114,7 +114,7 @@ void MetaKnightUpdate(void)
             break;
         case 6:
             gUnk_02007D00[0] = gCurTask->hitterPlayer;
-            switch (gCurTask->unk82)
+            switch (gCurTask->hitEffect)
             {
             case 4:
                 gUnk_03001F2C = sub_080a6e1c();

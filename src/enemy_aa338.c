@@ -1556,7 +1556,7 @@ void sub_080ac530(void)
             ActorCheckHitsWithBox((s32)gUnk_08749458[gCurTask->unk28]);
             u = gCurTask;
             v = u->hitKind;
-            if (v == 6 && u->unk82 == 9)
+            if (v == 6 && u->hitEffect == 9)
             {
                 o = &gTasks[u->hitterSlot];
                 o->hitKind = v;
@@ -1569,7 +1569,7 @@ void sub_080ac530(void)
                 ActorCheckHitsWithBox(w);
                 u = gCurTask;
                 v = u->hitKind;
-                if (v == 6 && u->unk82 == 9)
+                if (v == 6 && u->hitEffect == 9)
                 {
                     o = &gTasks[u->hitterSlot];
                     o->hitKind = v;

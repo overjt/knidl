@@ -207,7 +207,7 @@ u8 sub_0801a8c8(void)
                 continue;
             if (gAttackBoxBottom < gColliderTop)
                 continue;
-            if (ps->unk17 == 1)
+            if (ps->invincible == 1)
             {
                 if (gAttackBox->unk0A & 0x8000)
                     continue;
@@ -235,7 +235,7 @@ u8 sub_0801a8c8(void)
                 if (!(gAttackBox->unk0C & 0x4005)
                     && !((gAttackBox->unk1A & 0x40) && (t->unk76 & 0x4000)))
                 {
-                    t->unk82 = gAttackBox->unk09;
+                    t->hitEffect = gAttackBox->unk09;
                     /* the actor's x is read signed here (ldrsh) */
                     if ((s16)gAttackX < gColliderX)
                         t->hitDirection = 0;
@@ -246,7 +246,7 @@ u8 sub_0801a8c8(void)
                     if (gPlayerHealth[gColliderPlayer] <= 0)
                     {
                         t->hitKind = 1;
-                        t->unk82 = gAttackBox->unk1A & 0x300;
+                        t->hitEffect = gAttackBox->unk1A & 0x300;
                     }
                     else
                     {
@@ -419,7 +419,7 @@ u8 sub_0801af14(void)
         /* the body box's halfword at 0x0E (ldrh) */
         if (!(gColliderBodyBox->unk0E & 0x8000) && !(mask & gAttackBox->unk10))
         {
-            t->unk82 = gAttackBox->unk09;
+            t->hitEffect = gAttackBox->unk09;
             t->health -= gAttackBox->unk08;
             if (t->health <= 0)
                 t->hitKind = 1;

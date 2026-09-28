@@ -17,7 +17,7 @@
  * ability, and PlayerState.unk3A says what passes - 1 refills the
  * partner's health gPlayerHealth[] up to gMaxHealth step by step
  * through sub_080b4204 (src/hud_b2fe8.c), 2 gives one or two steps, 3
- * copies PlayerState.unk17/unk18.  sub_0803c9b4 (from M09's
+ * copies PlayerState.invincible/unk18.  sub_0803c9b4 (from M09's
  * sub_08033414, the twin of M04's sub_080109c8) steps and draws the
  * three spark records gUnk_02007E90[player][]; sub_0803cbd8 (M09's
  * sub_0803332c) steps the knock-back script
@@ -206,8 +206,8 @@ void sub_0803bde8(void)
             case 3:
                 if ((s8)q->unk22 != 0)
                     q->unk1E = q->unk20 = 0;
-                q->unk17 = gCurTask->player->unk17;
-                q->unk18 = gCurTask->player->unk18;
+                q->invincible = gCurTask->player->invincible;
+                q->invincibleTimer = gCurTask->player->invincibleTimer;
                 TaskYieldTrampoline(32);
                 break;
             }
@@ -299,8 +299,8 @@ void sub_0803bde8(void)
             case 3:
                 if ((s8)q->unk22 != 0)
                     q->unk1E = q->unk20 = 0;
-                q->unk17 = gCurTask->player->unk17;
-                q->unk18 = gCurTask->player->unk18;
+                q->invincible = gCurTask->player->invincible;
+                q->invincibleTimer = gCurTask->player->invincibleTimer;
                 for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
                 {
                     TaskSetFrame((s16)(gCurTask->unk46 + 3));
@@ -385,8 +385,8 @@ void sub_0803bde8(void)
         case 3:
             if ((s8)q->unk22 != 0)
                 q->unk1E = q->unk20 = 0;
-            q->unk17 = gCurTask->player->unk17;
-            q->unk18 = gCurTask->player->unk18;
+            q->invincible = gCurTask->player->invincible;
+            q->invincibleTimer = gCurTask->player->invincibleTimer;
             TaskYieldTrampoline(32);
             break;
         }
