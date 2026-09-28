@@ -249,7 +249,7 @@ extern u32 gUnk_0873CB24[];
 extern u32 gUnk_0873CB2C[];
 extern u32 gUnk_0873CB34[];
 extern u32 gUnk_0873CB3C[];
-extern s8 gUnk_0873CB44[]; /* collision box passed to sub_0802205c / sub_0801c230 */
+extern s8 gUnk_0873CB44[]; /* collision box passed to sub_0802205c / TerrainCollideBoxAlongVelocity */
 extern s8 gUnk_0873CB4C[];
 extern s8 gUnk_0873CB54[];
 extern s8 gUnk_0873CB5C[];
@@ -740,33 +740,33 @@ void PlayerActionBallEnterVariant(void);
 void PlayerActionBallUpdate(void);
 
 /* src/player_4e78c.c */
-void sub_0804e78c(void);
-void sub_0804e8f4(void);
-void sub_0804e97c(void);
-void sub_0804ea7c(void);
-void sub_0804eb28(void);
-void sub_0804eb60(void);
-void sub_0804eca4(void);
-void sub_0804ecec(void);
+void PlayerBallTransform(void);
+void PlayerBallTransformUpdate(void);
+void PlayerBallStand(void);
+void PlayerBallStandUpdate(void);
+void PlayerBallRoll(void);
+void PlayerBallRollUpdate(void);
+void PlayerBallSkid(void);
+void PlayerBallSkidUpdate(void);
 
 /* src/player_4ee08.c */
-void sub_0804ee08(void);
-void sub_0804ef00(void);
-void sub_0804efec(void);
-void sub_0804f124(void);
-void sub_0804f22c(void);
-void sub_0804f258(void);
-void sub_0804f30c(void);
-void sub_0804f3e4(void);
-void sub_0804f450(void);
-void sub_0804f5bc(void);
+void PlayerBallJump(void);
+void PlayerBallJumpUpdate(void);
+void PlayerBallBounce(void);
+void PlayerBallBounceUpdate(void);
+void PlayerBallFall(void);
+void PlayerBallFallUpdate(void);
+void PlayerBallLand(void);
+void PlayerBallLandUpdate(void);
+void PlayerBallRevert(void);
+void PlayerBallRevertUpdate(void);
 
 /* src/player_4f614.c */
-s32 sub_0804f614(void);
-s32 sub_0804f76c(void);
-void sub_0804f79c(void);
-s32 sub_0804f7f8(s32 a);
-s32 sub_0804f8ec(s32 a0);
+s32 PlayerBallPlayBump(void);
+s32 PlayerBallGetRollDelay(void);
+void PlayerBallStepRoll(void);
+s32 PlayerBallCheckVariant(s32 a);
+s32 PlayerBallCheckLanding(s32 a0);
 
 /* src/player_4f948.c */
 void PlayerActionStarRod(void);
@@ -778,16 +778,16 @@ void PlayerActionStarRodFlightEnterVariant(void);
 void PlayerActionStarRodFlightUpdate(void);
 
 /* src/player_4ffdc.c */
-void sub_0804ffdc(void);
-void sub_080502f0(void);
-void sub_08050340(void);
-void sub_0805035c(void);
-void sub_08050418(void);
-void sub_080504d4(void);
-void sub_08050508(void);
-void sub_08050630(void);
-s32 sub_08050664(void);
-void sub_080506dc(void);
+void PlayerStarRodFlightIntro(void);
+void PlayerStarRodFlightIntroUpdate(void);
+void PlayerStarRodFlightFly(void);
+void PlayerStarRodFlightFlyUpdate(void);
+void PlayerStarRodFlightShoot(void);
+void PlayerStarRodFlightShootUpdate(void);
+void PlayerStarRodFlightHurt(void);
+void PlayerStarRodFlightHurtUpdate(void);
+s32 PlayerStarRodFlightCheckShoot(void);
+void PlayerStarRodFlightSteer(void);
 
 /* src/plobj_507bc.c */
 void Task_PlayerObject(void);

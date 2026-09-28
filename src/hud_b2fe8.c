@@ -66,7 +66,7 @@ extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void TaskInitWaterFlags(void);
 extern u8 ClampTaskToRoom(struct Task *t);
-extern u32 sub_0802294c();
+extern u32 IsTaskBelowRoom();
 extern void ExitClearedStage();
 extern void sub_08025a30();
 extern void sub_08025acc();
@@ -1451,7 +1451,7 @@ void sub_080b4648(void)
         TaskSetEntry(ActorDie, gCurTaskIdx);
         return;
     }
-    if (sub_0802294c(t) != 0)
+    if (IsTaskBelowRoom(t) != 0)
     {
         ActorDestroy();
         return;

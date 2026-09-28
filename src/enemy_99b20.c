@@ -47,7 +47,7 @@ extern u32 RandomRange(u32 range);
 extern void TaskSetEntry(void *fn, s32 i);
 extern s32 PlaySfx(s32 id);
 extern void RequestScreenShake(s32 a);
-extern u32 sub_08021a40(s32 x, s32 y);
+extern u32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
@@ -270,13 +270,13 @@ void CreateMrTickTockNote(u8 a)
     case 0:
     case 2:
         t = gCurTask;
-        if (sub_08021a40(t->pixelX - ((s8)t->facing << 4), t->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(t->pixelX - ((s8)t->facing << 4), t->pixelY) != 0)
             return;
         break;
     case 1:
     case 3:
         t = gCurTask;
-        if (sub_08021a40(t->pixelX + ((s8)t->facing << 4), t->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(t->pixelX + ((s8)t->facing << 4), t->pixelY) != 0)
             return;
         break;
     }
@@ -1203,7 +1203,7 @@ void sub_0809ad6c(void)
         if (sub_08099fb4() != 0)
         {
             u = gCurTask;
-            if (sub_08021a40(u->pixelX - ((s8)u->facing << 4), u->pixelY) != 0)
+            if (GetShapeAtPixelIgnoringOneWay(u->pixelX - ((s8)u->facing << 4), u->pixelY) != 0)
             {
                 ActorSetState(18);
                 TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);

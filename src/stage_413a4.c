@@ -1389,7 +1389,7 @@ void MetaKnightActionExitDoor(void)
     if (gEntryDoorEvent == 1)
     {
         TaskSetSkipMask(14, gCurTaskIdx);
-        sub_0802672c();
+        CreateStageUnlockPan();
         while (gCameraPanDone == 0)
             TaskYieldTrampoline(1);
         ((void (*)(void))sub_08027a60)();

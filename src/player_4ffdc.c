@@ -11,12 +11,12 @@
  *
  * Action 58's sub-actions 18-21 (gPlayerStarRodFlightVariants) and sub-handlers 22-25
  * (gPlayerStarRodFlightVariantUpdates), interleaved in the ROM as 18, 22, 19, 23, 20, 24, 21,
- * 25, and their two helpers.  sub_0804ffdc is a long yield script driven by
- * the 8.8 velocity pairs gUnk_0873B6CC; sub_08050418 spawns task type #6's
- * variant 12 through sub_08053a44; sub_08050508 switches the player to mode
- * 17 with camera presets PlayerSetMotionXPreset(10, 24-27).  sub_08050664 re-binds
+ * 25, and their two helpers.  PlayerStarRodFlightIntro is a long yield script driven by
+ * the 8.8 velocity pairs gUnk_0873B6CC; PlayerStarRodFlightShoot spawns task type #6's
+ * variant 12 through sub_08053a44; PlayerStarRodFlightHurt switches the player to mode
+ * 17 with camera presets PlayerSetMotionXPreset(10, 24-27).  PlayerStarRodFlightCheckShoot re-binds
  * sub-action 2 when a direction is pressed or held for ten frames, and
- * sub_080506dc steers the player with the held direction (velocity pairs
+ * PlayerStarRodFlightSteer steers the player with the held direction (velocity pairs
  * gUnk_0873B724[Task.unk6E], PlayerState.unk10 counting the glide
  * frames). */
 
@@ -24,12 +24,12 @@ void TaskSetEntry(void *a, u32 i);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 s32 sub_08053a44(s8 player, u8 variant, s32 arg);
 
-void sub_0804ffdc(void)
+void PlayerStarRodFlightIntro(void)
 {
     gPauseDisabled = 1;
     {
         struct Task *t = gCurTask;
-        t->updateCallback = (u32)sub_080502f0;
+        t->updateCallback = (u32)PlayerStarRodFlightIntroUpdate;
         t->unk70 = 0;
         t->frame = 0xFFFF;
         if (gGameState != 20)
@@ -170,7 +170,7 @@ void sub_0804ffdc(void)
     TaskSleepForever();
 }
 
-void sub_080502f0(void)
+void PlayerStarRodFlightIntroUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -184,7 +184,7 @@ void sub_080502f0(void)
     }
 }
 
-void sub_08050340(void)
+void PlayerStarRodFlightFly(void)
 {
     struct Task *t = gCurTask;
 
@@ -193,9 +193,9 @@ void sub_08050340(void)
     TaskSleepForever();
 }
 
-void sub_0805035c(void)
+void PlayerStarRodFlightFlyUpdate(void)
 {
-    if (sub_08050664() == 0)
+    if (PlayerStarRodFlightCheckShoot() == 0)
     {
         u8 k = gUnk_0873B6DC[(gLatchedHeldKeys[gCurTask->player->playerIndex] & 0xF0) >> 4];
         struct Task *t = gCurTask;
@@ -224,7 +224,7 @@ void sub_0805035c(void)
     }
 }
 
-void sub_08050418(void)
+void PlayerStarRodFlightShoot(void)
 {
     {
         struct Task *t = gCurTask;
@@ -250,7 +250,7 @@ void sub_08050418(void)
     TaskSleepForever();
 }
 
-void sub_080504d4(void)
+void PlayerStarRodFlightShootUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -261,7 +261,7 @@ void sub_080504d4(void)
     }
 }
 
-void sub_08050508(void)
+void PlayerStarRodFlightHurt(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 17;
@@ -300,7 +300,7 @@ void sub_08050508(void)
     TaskSleepForever();
 }
 
-void sub_08050630(void)
+void PlayerStarRodFlightHurtUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -311,7 +311,7 @@ void sub_08050630(void)
     }
 }
 
-s32 sub_08050664(void)
+s32 PlayerStarRodFlightCheckShoot(void)
 {
     if (!(gLatchedPressedKeys[gCurTask->player->playerIndex] & 3)
         && (!(gLatchedHeldKeys[gCurTask->player->playerIndex] & 3)
@@ -323,7 +323,7 @@ s32 sub_08050664(void)
     return 1;
 }
 
-void sub_080506dc(void)
+void PlayerStarRodFlightSteer(void)
 {
     struct Task *t = gCurTask;
 

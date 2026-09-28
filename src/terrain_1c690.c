@@ -29,7 +29,7 @@ void TerrainProbeWallRightOnGround(void)
 
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY) != 0)
     {
-        if ((a = gCollisionTileShapeClass[gTerrainTile]) == 1 && gUnk_087336F0[gTerrainTile] == 0
+        if ((a = gCollisionTileShapeClass[gTerrainTile]) == 1 && gCollisionTileOneWay[gTerrainTile] == 0
             && (gCollisionTileShapeClass[gTerrainTileLeft] == 0
                 || (gCollisionTileSlope[gTerrainTileLeft] != 0 && !(gCollisionTileSlope[gTerrainTileLeft] & 1))))
         {
@@ -44,10 +44,10 @@ void TerrainProbeWallRightOnGround(void)
     }
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) != 0)
     {
-        if ((a2 = gCollisionTileShapeClass[gTerrainTile]) == 1 && gUnk_087336F0[gTerrainTile] == 0)
+        if ((a2 = gCollisionTileShapeClass[gTerrainTile]) == 1 && gCollisionTileOneWay[gTerrainTile] == 0)
         {
             b = gCollisionTileShapeClass[gTerrainTileLeft];
-            if (b == 0 || (gUnk_087336F0[gTerrainTileLeft] != 0 && b == 1))
+            if (b == 0 || (gCollisionTileOneWay[gTerrainTileLeft] != 0 && b == 1))
             {
                 d2 = GetTilePushLeft(gTerrainTile);
                 if (d2 != 0)
@@ -75,7 +75,7 @@ void TerrainProbeWallLeftOnGround(void)
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY) != 0)
     {
         a = gCollisionTileShapeClass[gTerrainTile];
-        if ((s8)a == 1 && gUnk_087336F0[gTerrainTile] == 0
+        if ((s8)a == 1 && gCollisionTileOneWay[gTerrainTile] == 0
             && (gCollisionTileShapeClass[gTerrainTileRight] == 0
                 || ((m = gCollisionTileSlope[gTerrainTileRight]) != 0 && (a & m) != 0)))
         {
@@ -91,10 +91,10 @@ void TerrainProbeWallLeftOnGround(void)
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) != 0)
     {
         a2 = gCollisionTileShapeClass[gTerrainTile];
-        if (a2 == 1 && gUnk_087336F0[gTerrainTile] == 0)
+        if (a2 == 1 && gCollisionTileOneWay[gTerrainTile] == 0)
         {
             b = gCollisionTileShapeClass[gTerrainTileRight];
-            if (b == 0 || (gUnk_087336F0[gTerrainTileRight] != 0 && b == 1))
+            if (b == 0 || (gCollisionTileOneWay[gTerrainTileRight] != 0 && b == 1))
             {
                 d2 = GetTilePushRight(gTerrainTile);
                 if (d2 != 0)

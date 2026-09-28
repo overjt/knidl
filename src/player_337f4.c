@@ -169,7 +169,7 @@ void PlayerActionStandUpdate(void)
             struct Task *u = gCurTask;
             s32 x = u->unk28;
 
-            if (x != -1 && dir == u->facing && sub_08022788(x, u->player->playerIndex) != 0)
+            if (x != -1 && dir == u->facing && IsAtPlayerBoundsTop(x, u->player->playerIndex) != 0)
                 turn = 0;
         }
         if (turn != 0)

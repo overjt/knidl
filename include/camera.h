@@ -194,8 +194,8 @@ void sub_0802d5f8(void);
 void sub_0802d6cc(void);
 void sub_0802d96c(void);
 void sub_0802da8c(void);
-void sub_0802dcb4(void);
-void sub_0802e3ac(void);
+void MapEventStageUnlockPan(void);
+void MapEventBigSwitchUnlockPan(void);
 
 /* src/obj_2eac8.c */
 s32 CreateArenaDoorSign(s32 x, s32 y, s32 a);

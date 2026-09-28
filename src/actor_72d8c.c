@@ -27,7 +27,7 @@ extern s32 PlaySfx(u32 a);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
-extern void sub_0801bcac(u32 *p);
+extern void TerrainCollideBox(u32 *p);
 extern void RequestScreenShake(u32 a);
 
 void sub_08072d8c(void)
@@ -727,7 +727,7 @@ void sub_080739bc(void)
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    sub_0801bcac(gUnk_0873F5CC);
+    TerrainCollideBox(gUnk_0873F5CC);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -967,7 +967,7 @@ void sub_08073e80(void)
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    sub_0801bcac(gUnk_0873F5CC);
+    TerrainCollideBox(gUnk_0873F5CC);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -1321,7 +1321,7 @@ void sub_0807447c(void)
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    sub_0801bcac(gUnk_0873F5CC);
+    TerrainCollideBox(gUnk_0873F5CC);
     t = gCurTask;
     if (t->onGround & 1)
     {

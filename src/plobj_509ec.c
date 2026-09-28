@@ -31,7 +31,7 @@ s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);
 void TaskSetEntry(void *a, u32 i);
 u32 IsWorldPosOnScreen(s16 a, s16 b);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_0801c230(const s8 *p);
+void TerrainCollideBoxAlongVelocity(const s8 *p);
 void sub_0802205c(s8 *box);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
@@ -134,7 +134,7 @@ void PlayerObjectAirPuffUpdate(void)
     if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB84, gCurTask->parent))
         gCurTask->hitKind = 1;
     else
-        sub_0801c230(gUnk_0873CB44);
+        TerrainCollideBoxAlongVelocity(gUnk_0873CB44);
     if (gTerrainResult.ceilingHits != 0 || (gCurTask->onGround & 1) || gTerrainResult.unk0 != 0
         || gCurTask->hitKind != 0)
     {
@@ -214,7 +214,7 @@ void PlayerObjectSpitStarUpdate(void)
     if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB94, gCurTask->parent))
         gCurTask->hitKind = 1;
     else
-        sub_0801c230(gUnk_0873CB4C);
+        TerrainCollideBoxAlongVelocity(gUnk_0873CB4C);
     hit = 0;
     {
         struct Task *t = gCurTask;
@@ -393,7 +393,7 @@ void PlayerObjectSpitMultiStarUpdate(void)
         t->health = 127;
         TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CBA4, t->parent);
     }
-    sub_0801c230(gUnk_0873CB4C);
+    TerrainCollideBoxAlongVelocity(gUnk_0873CB4C);
     {
         struct Task *t = gCurTask;
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)

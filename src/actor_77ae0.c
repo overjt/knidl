@@ -232,7 +232,7 @@ void sub_08077e9c(void)
     gCurTask->updateState = 1;
     TaskYieldTrampoline(8);
     FadeOutSfx(16);
-    sub_08025bc8(gCurTaskIdx);
+    PressBigSwitch(gCurTaskIdx);
     TaskSleepForever();
 }
 

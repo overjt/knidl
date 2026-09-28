@@ -377,7 +377,7 @@ void PlayerActionExitDoor(void)
         }
         gCurTask->player->unk42 &= 0xFFEF;
         TaskSetSkipMask(14, gCurTaskIdx);
-        sub_0802672c();
+        CreateStageUnlockPan();
         {
             struct Task *t = gCurTask;
 

@@ -34,7 +34,7 @@ extern u32 ActorCheckHits(void);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *a, u32 i);
-extern void sub_0801bcac(u32 *p);
+extern void TerrainCollideBox(u32 *p);
 extern void RequestScreenShake(u32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
@@ -719,7 +719,7 @@ void sub_08071ebc(void)
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    sub_0801bcac(gUnk_0873F5CC);
+    TerrainCollideBox(gUnk_0873F5CC);
     t = gCurTask;
     if (t->onGround & 1)
     {

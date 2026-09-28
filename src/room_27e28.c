@@ -16,7 +16,7 @@
  * InitEndingRoomBgLayout its layout-only form for LoadEndingRoom, and
  * StartRoomBlockAnims picks the tile-upload routine for the layout.
  * sub_08027a6c, the first function of the range (the second map buffer
- * gUnk_02006AA0 for sub_08023948/sub_08023ca0), landed separately as
+ * gUnk_02006AA0 for LoadHubRoom/LoadBigSwitchViewRoom), landed separately as
  * src/level_27a6c.c. */
 
 struct Unk020055D8Entry

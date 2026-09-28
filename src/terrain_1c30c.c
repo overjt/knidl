@@ -12,7 +12,7 @@
  * Task.velX/unk58, run the probes and write the results back (TerrainProbeEnd).
  */
 
-void sub_0801c30c(const s8 *p)
+void TerrainCollidePointPushOut(const s8 *p)
 {
 
     TerrainProbeBegin(p);
@@ -21,13 +21,13 @@ void sub_0801c30c(const s8 *p)
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     if (gTerrainProbeResult.unkB & 0x80)
-        sub_080222b0(gTerrainPrevX, gTerrainPrevY);
-    sub_080207a0();
-    sub_080214e0();
+        TerrainInitOneWayFloor(gTerrainPrevX, gTerrainPrevY);
+    TerrainProbePointPushOut();
+    TerrainProbeWaterAtPoint();
     TerrainProbeEnd(p);
 }
 
-u16 sub_0801c3a4(const s8 *p)
+u16 TerrainCollidePointStop(const s8 *p)
 {
     u16 r;
 
@@ -37,8 +37,8 @@ u16 sub_0801c3a4(const s8 *p)
     gTerrainPrevX = ((gTerrainProbeX << 16) + (gCurTask->posX & 0xFFFF) - gTerrainVelX) >> 16;
     gTerrainPrevY = ((gTerrainProbeY << 16) + (gCurTask->posY & 0xFFFF) - gTerrainVelY) >> 16;
     if (gTerrainProbeResult.unkB & 0x80)
-        sub_080222b0(gTerrainPrevX, gTerrainPrevY);
-    r = sub_0802069c();
+        TerrainInitOneWayFloor(gTerrainPrevX, gTerrainPrevY);
+    r = TerrainProbePointStop();
     TerrainProbeWater();
     TerrainProbeEnd(p);
     return r;

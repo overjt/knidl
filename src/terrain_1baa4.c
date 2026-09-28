@@ -41,7 +41,7 @@ void PlayerProbeTerrain(u32 p)
         gTerrainProbeResult.unkB = 1;
         gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
-    sub_08022650();
+    TerrainClampBoxToPlayerBounds();
     if (gTerrainProbeResult.onGround != 0)
     {
         if ((s8)gTerrainFacing == 1)
@@ -73,7 +73,7 @@ void PlayerProbeTerrain(u32 p)
         sub_0801e178();
     }
     TerrainProbeWaterAndDrift();
-    sub_08021564();
+    TerrainProbeDamage();
     ps = gCurTask->player;
     if (gTerrainDriftX & 0x8000)
         r = ((gTerrainDriftX << 8) | 0xFF000000) + gRoomDriftVelX;

@@ -12,16 +12,16 @@
  * Action 49's sub-actions 4-8 (gPlayerBallVariants) and sub-handlers 13-17
  * (gPlayerBallVariantUpdates), each sub-action followed by its sub-handler: more
  * attacks of the same move set (sounds 168-170, 183, 184, 202 and 246,
- * M11's PlayerSetMotionYPreset steering, effect 44), the last one (sub_0804f450)
+ * M11's PlayerSetMotionYPreset steering, effect 44), the last one (PlayerBallRevert)
  * installing the hit boxes gPlayerDefaultBodyBox/gPlayerDefaultTerrainBox in PlayerState.
- * Sub-handler 17 (sub_0804f5bc, a push-less leaf) requests action 7, 20
+ * Sub-handler 17 (PlayerBallRevertUpdate, a push-less leaf) requests action 7, 20
  * or 23 from the ground flag and the key state. */
 
 void TaskSetEntry(void *a, u32 i);
 void RequestScreenShake(u16 a);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 
-void sub_0804ee08(void)
+void PlayerBallJump(void)
 {
     s32 i;
 
@@ -51,13 +51,13 @@ void sub_0804ee08(void)
     {
         if (--gCurTask->player->unk14 == 0 || !(gLatchedHeldKeys[gCurTask->player->playerIndex] & 1))
             break;
-        sub_0804f79c();
+        PlayerBallStepRoll();
         TaskYieldTrampoline(1);
     }
     PlayerSetMotionYPreset(44);
     for (i = 4; i >= 0; i--)
     {
-        sub_0804f79c();
+        PlayerBallStepRoll();
         TaskYieldTrampoline(1);
     }
     gCurTask->unk70++;
@@ -65,12 +65,12 @@ void sub_0804ee08(void)
     TaskSleepForever();
 }
 
-void sub_0804ef00(void)
+void PlayerBallJumpUpdate(void)
 {
     if ((s16)gCurTask->player->unk14 == -1)
         return;
     PlayerTurnToHeldDirection();
-    while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
+    while (!PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
     {
         if (gTerrainResult.ceilingHits != 0 || (gCurTask->player->boundsClamp & 4))
         {
@@ -108,7 +108,7 @@ void sub_0804ef00(void)
     PlayerSetMotionXPreset(12, 0);
 }
 
-void sub_0804efec(void)
+void PlayerBallBounce(void)
 {
     {
         struct Task *t = gCurTask;
@@ -145,20 +145,20 @@ void sub_0804efec(void)
         else
             PlaySfxIfLocalPlayer(168, (u16)t->player->playerIndex);
     }
-    sub_0804f614();
+    PlayerBallPlayBump();
     while (1)
     {
-        sub_0804f79c();
+        PlayerBallStepRoll();
         TaskYieldTrampoline(1);
     }
 }
 
-void sub_0804f124(void)
+void PlayerBallBounceUpdate(void)
 {
     if (gCurTask->velY == 0)
         return;
     PlayerTurnToHeldDirection();
-    while (!sub_0804f7f8(3) && !sub_0804f7f8(2))
+    while (!PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
     {
         if (gTerrainResult.ceilingHits != 0 || (gCurTask->player->boundsClamp & 4))
         {
@@ -204,22 +204,22 @@ void sub_0804f124(void)
     PlayerSetMotionXPreset(12, 0);
 }
 
-void sub_0804f22c(void)
+void PlayerBallFall(void)
 {
     gCurTask->player->running = 1;
     PlayerSetMotionYPreset(45);
-    sub_0804f614();
+    PlayerBallPlayBump();
     while (1)
     {
-        sub_0804f79c();
+        PlayerBallStepRoll();
         TaskYieldTrampoline(1);
     }
 }
 
-void sub_0804f258(void)
+void PlayerBallFallUpdate(void)
 {
     PlayerTurnToHeldDirection();
-    if (!sub_0804f7f8(3) && !sub_0804f7f8(2))
+    if (!PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
     {
         if (PlayerHasCrossedWaterSurface(0) != 0)
             gCurTask->player->requestedAction = 23;
@@ -244,7 +244,7 @@ void sub_0804f258(void)
     PlayerSetMotionXPreset(12, 0);
 }
 
-void sub_0804f30c(void)
+void PlayerBallLand(void)
 {
     s32 flag;
     s32 m;
@@ -254,7 +254,7 @@ void sub_0804f30c(void)
         t->unk70 = 0;
         t->unk28 = t->velY;
     }
-    sub_0804f8ec(1);
+    PlayerBallCheckLanding(1);
     flag = 0;
     if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 1)
     {
@@ -293,7 +293,7 @@ void sub_0804f30c(void)
     TaskSleepForever();
 }
 
-void sub_0804f3e4(void)
+void PlayerBallLandUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -316,7 +316,7 @@ void sub_0804f3e4(void)
     }
 }
 
-void sub_0804f450(void)
+void PlayerBallRevert(void)
 {
     {
         struct Task *t = gCurTask;
@@ -366,7 +366,7 @@ void sub_0804f450(void)
     TaskSleepForever();
 }
 
-void sub_0804f5bc(void)
+void PlayerBallRevertUpdate(void)
 {
     struct Task *t = gCurTask;
 

@@ -10,9 +10,9 @@
  *
  * Task type #3 (class 4), the room's per-frame driver.  Task_Room, the
  * type's body, dispatches Task.state through the anchor table
- * gRoomTaskVariants: sub_08023634 (index 0), sub_08023e34 (1), sub_08023e78
- * (2), sub_08024540 (3), sub_080242d0 (4), sub_08024904 (5) and
- * sub_08024da4 (6); every room loader spawns the task with its own index
+ * gRoomTaskVariants: RoomTaskStageInit (index 0), RoomTaskHubInit (1), RoomTaskBigSwitchViewInit
+ * (2), RoomTaskCutsceneInit (3), RoomTaskGoalGameInit (4), sub_08024904 (5) and
+ * RoomTaskCreditsInit (6); every room loader spawns the task with its own index
  * through CreateRoomTask.  Each variant installs the task callbacks: unk0C
  * = RoomTaskDraw (door objects and HUD), unk04 = the camera update of the
  * camera mode gCameraMode (RoomTaskUpdateCamera here, M08's five camera modes)
@@ -28,7 +28,7 @@ void Task_Room(void)
     CallTableEntry(gCurTask->state, 7, gRoomTaskVariants);
 }
 
-void sub_08023634(void)
+void RoomTaskStageInit(void)
 {
     struct Task *t = gCurTask;
 

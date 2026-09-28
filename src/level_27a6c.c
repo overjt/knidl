@@ -4,7 +4,7 @@
 /* level_27a6c.c (0x08027A6C-0x08027E27, issue #93).
  *
  * sub_08027a6c builds the room's map in the second buffer gUnk_02006AA0 for
- * the room loaders sub_08023948 and sub_08023ca0 (src/level_23948.c).  It
+ * the room loaders LoadHubRoom and LoadBigSwitchViewRoom (src/level_23948.c).  It
  * decompresses the room's metatile table (RoomDef +0x20) into gMetatileTiles
  * and its metatile map (+0x08) into gUnk_02006AA0 (or CpuSet-copies it when
  * +0x05 says the map is stored raw), then walks the map from row 1 with the

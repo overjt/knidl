@@ -61,7 +61,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern u32 RandomRange(u32 range);
 extern void TaskSetEntry(void *a, u32 i);
 extern u16 RandomSpread(s32 base, u8 scale, u8 amount);
-extern s32 sub_08021a40(s32 x, s32 y);
+extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorSetState(u16 v);
 extern void ActorSetAttackBox(void *p);
 extern void AngleToVector(s32 a, s32 b);
@@ -1069,7 +1069,7 @@ void sub_0808e254(void)
     struct Task *t;
 
     t = gCurTask;
-    if (sub_08021a40(t->pixelX + (t->facing << 4), t->pixelY) == 0)
+    if (GetShapeAtPixelIgnoringOneWay(t->pixelX + (t->facing << 4), t->pixelY) == 0)
     {
         sp.subtype = 1;
         sp.taskType = 103;

@@ -16,7 +16,7 @@
  * update one or three metatiles behind type-#236 effects;
  * sub_0802d6cc and sub_0802d96c/sub_0802da8c fade the room palettes
  * towards another room's (the table gRoomTable, BlendColors into the
- * palette buffer gBgPalette); sub_0802dcb4 and sub_0802e3ac pan the
+ * palette buffer gBgPalette); MapEventStageUnlockPan and MapEventBigSwitchUnlockPan pan the
  * camera four pixels a frame by the step counts of gUnk_08732428 /
  * gUnk_087324A6 (axis order, x steps, y steps) inside the room bounds,
  * wait, and pan back. */
@@ -318,7 +318,7 @@ void sub_0802da8c(void)
     }
 }
 
-void sub_0802dcb4(void)
+void MapEventStageUnlockPan(void)
 {
     struct Task *t1;
     struct Task *t2;
@@ -498,7 +498,7 @@ void sub_0802dcb4(void)
     TaskExitTrampoline();
 }
 
-void sub_0802e3ac(void)
+void MapEventBigSwitchUnlockPan(void)
 {
     struct Task *t1;
     struct Task *t2;
@@ -682,7 +682,7 @@ void sub_0802e3ac(void)
     TaskYieldTrampoline(10);
     if (gUnk_020055D4 == 0x2000)
         gUnk_020055D4 = 0x4000;
-    sub_08025dc4();
+    ReturnFromBigSwitchView();
     gCameraPanDone = 1;
     TaskExitTrampoline();
 }

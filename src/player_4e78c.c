@@ -11,17 +11,17 @@
  *
  * Action 49's sub-actions 0-3 (gPlayerBallVariants) and sub-handlers 9-12
  * (gPlayerBallVariantUpdates), each sub-action followed by its sub-handler.  The
- * sub-actions are yield scripts (sub_0804e78c: sound 171, animations
- * 0xCCA-0xCDA and effect 44 four times; sub_0804eca4: sound 119,
+ * sub-actions are yield scripts (PlayerBallTransform: sound 171, animations
+ * 0xCCA-0xCDA and effect 44 four times; PlayerBallSkid: sound 119,
  * effect 6 and camera preset PlayerSetMotionXPreset(11, 62)); the sub-handlers read
  * the keys and the ground flag Task.onGround, pick the next sub-action
  * (Task.variant) and re-bind it through PlayerActionBallEnterVariant, most of them through
- * the helper sub_0804f7f8's four key probes. */
+ * the helper PlayerBallCheckVariant's four key probes. */
 
 void TaskSetEntry(void *a, u32 i);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 
-void sub_0804e78c(void)
+void PlayerBallTransform(void)
 {
     {
         struct Task *t = gCurTask;
@@ -66,7 +66,7 @@ void sub_0804e78c(void)
     TaskSleepForever();
 }
 
-void sub_0804e8f4(void)
+void PlayerBallTransformUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -84,17 +84,17 @@ void sub_0804e8f4(void)
         gCurTask->unk46 = 0;
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
-    sub_0804f8ec(0);
+    PlayerBallCheckLanding(0);
 }
 
-void sub_0804e97c(void)
+void PlayerBallStand(void)
 {
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
         t->unk28 = t->player->wallSide;
     }
-    sub_0804f614();
+    PlayerBallPlayBump();
     {
         struct Task *t = gCurTask;
         if (t->unk46 == 0)
@@ -136,10 +136,10 @@ void sub_0804e97c(void)
     }
 }
 
-void sub_0804ea7c(void)
+void PlayerBallStandUpdate(void)
 {
     PlayerFaceHeldDirection();
-    while (!sub_0804f7f8(0) && !sub_0804f7f8(1) && !sub_0804f7f8(3) && !sub_0804f7f8(2))
+    while (!PlayerBallCheckVariant(0) && !PlayerBallCheckVariant(1) && !PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
         {
@@ -159,22 +159,22 @@ void sub_0804ea7c(void)
     }
 }
 
-void sub_0804eb28(void)
+void PlayerBallRoll(void)
 {
-    sub_0804f614();
+    PlayerBallPlayBump();
     PlayerSetMotionXPreset(12, 1);
-    gCurTask->unk28 = sub_0804f76c();
+    gCurTask->unk28 = PlayerBallGetRollDelay();
     gCurTask->unk2C = gCurTask->player->slope;
     while (1)
     {
-        sub_0804f79c();
+        PlayerBallStepRoll();
         TaskYieldTrampoline(gCurTask->unk28);
     }
 }
 
-void sub_0804eb60(void)
+void PlayerBallRollUpdate(void)
 {
-    while (!sub_0804f7f8(0) && !sub_0804f7f8(1) && !sub_0804f7f8(3) && !sub_0804f7f8(2))
+    while (!PlayerBallCheckVariant(0) && !PlayerBallCheckVariant(1) && !PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
     {
         if (gTerrainResult.unk0 != 0)
         {
@@ -220,10 +220,10 @@ void sub_0804eb60(void)
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
     PlayerSetMotionXPreset(12, 1);
-    gCurTask->unk28 = sub_0804f76c();
+    gCurTask->unk28 = PlayerBallGetRollDelay();
 }
 
-void sub_0804eca4(void)
+void PlayerBallSkid(void)
 {
     PlayerSetMotionXPreset(11, 62);
     PlaySfxIfLocalPlayer(119, (u16)gCurTask->player->playerIndex);
@@ -231,9 +231,9 @@ void sub_0804eca4(void)
     TaskSleepForever();
 }
 
-void sub_0804ecec(void)
+void PlayerBallSkidUpdate(void)
 {
-    while (!sub_0804f7f8(0) && !sub_0804f7f8(1) && !sub_0804f7f8(3) && !sub_0804f7f8(2))
+    while (!PlayerBallCheckVariant(0) && !PlayerBallCheckVariant(1) && !PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
     {
         if (gTerrainResult.unk0 != 0)
         {

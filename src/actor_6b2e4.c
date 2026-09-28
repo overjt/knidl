@@ -26,7 +26,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaySfx(u32 a);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void ActorSetState(s32 a);
-extern u32 sub_08021a40(s32 x, s32 y);
+extern u32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorSetTerrainBox(u32 *p);
 
 extern void ActorSetHitReactions(u32 *p);
@@ -169,7 +169,7 @@ void sub_0806b410(void)
         x = gCurTask;
         x->posX = x->pixelX << 16;
         x->posY = x->pixelY << 16;
-        if (sub_08021a40(x->pixelX, x->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(x->pixelX, x->pixelY) != 0)
         {
             y = gCurTask;
             if (CanBreakBlock(y->pixelX >> 4, y->pixelY >> 4, 3, -1) == 0)
@@ -231,7 +231,7 @@ void sub_0806b670(void)
         t->pixelY = t->unk1C;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (sub_08021a40(t->pixelX, t->pixelY) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(t->pixelX, t->pixelY) != 0)
         {
             u = gCurTask;
             if (CanBreakBlock(u->pixelX >> 4, u->pixelY >> 4, 3, -1) == 0)

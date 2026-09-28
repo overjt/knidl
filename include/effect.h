@@ -42,7 +42,7 @@ extern u8 gUnk_0873C04C[];
 extern u32 gUnk_0873C23C[];
 extern u32 gUnk_0873C250[];
 extern u8 gUnk_0873C2B4[];
-extern s8 gUnk_0873CB74[]; /* collision box passed to sub_0801c3a4 */
+extern s8 gUnk_0873CB74[]; /* collision box passed to TerrainCollidePointStop */
 extern u32 gUnk_0873CC94[];
 extern u32 gUnk_0873CF8C[]; /* hit-box set, passed as (struct HitBoxSet *) */
 extern s16 gUnk_0873DBAC[];

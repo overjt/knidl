@@ -46,7 +46,7 @@ extern u8 gTerrainResult[];
 /* Externals */
 extern s32 RandomRange(s32 a);
 extern s32 PlaySfx(s32 id);
-extern s32 sub_08021a40(s32 x, s32 y);
+extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern s32 TaskIsInRectSlot(struct PointPair *box, s32 i);
@@ -1405,7 +1405,7 @@ void sub_0807c618(void)
     struct ActorSpawn spawn;
     struct Task *t = gCurTask;
 
-    if (sub_08021a40(t->pixelX + t->facing * 16, t->pixelY) == 0)
+    if (GetShapeAtPixelIgnoringOneWay(t->pixelX + t->facing * 16, t->pixelY) == 0)
     {
         spawn.subtype = 31;
         spawn.taskType = 134;
@@ -1545,18 +1545,18 @@ void sub_0807c8d0(void)
         {
             struct Actor *a = t->u8C.actor;
 
-            if (sub_08021a40(t->pixelX, t->pixelY + ((s8 *)a->terrainBox)[2]) != 0)
+            if (GetShapeAtPixelIgnoringOneWay(t->pixelX, t->pixelY + ((s8 *)a->terrainBox)[2]) != 0)
                 gCurTask->unk1C = 0;
             {
                 struct Task *u = gCurTask;
 
-                if (sub_08021a40(u->pixelX + ((s8 *)a->terrainBox)[5], u->pixelY) != 0)
+                if (GetShapeAtPixelIgnoringOneWay(u->pixelX + ((s8 *)a->terrainBox)[5], u->pixelY) != 0)
                     gCurTask->unk1C = 0;
             }
             {
                 struct Task *u = gCurTask;
 
-                if (sub_08021a40(u->pixelX + ((s8 *)a->terrainBox)[4], u->pixelY) != 0)
+                if (GetShapeAtPixelIgnoringOneWay(u->pixelX + ((s8 *)a->terrainBox)[4], u->pixelY) != 0)
                     gCurTask->unk1C = 0;
             }
             ActorSetState(0);

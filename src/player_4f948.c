@@ -19,7 +19,7 @@
  * one level down: PlayerActionStarRodFlight (mode 13) dispatches Task.variant through its
  * four sub-actions gPlayerStarRodFlightVariants and PlayerActionStarRodFlightEnterVariant is the re-entry callback;
  * its handler PlayerActionStarRodFlightUpdate runs the sub-handler Task.variant of
- * gPlayerStarRodFlightVariantUpdates, the steering helper sub_080506dc, clamps the player to
+ * gPlayerStarRodFlightVariantUpdates, the steering helper PlayerStarRodFlightSteer, clamps the player to
  * 16-224 x 18-132 and, once gSpriteCameraY passes 888, subtracts the
  * player's whole health (AddPlayerHealth) and requests action 17. */
 
@@ -267,7 +267,7 @@ void PlayerActionStarRodFlightEnterVariant(void)
 void PlayerActionStarRodFlightUpdate(void)
 {
     CallTableEntry(gCurTask->variant, 4, gPlayerStarRodFlightVariantUpdates);
-    sub_080506dc();
+    PlayerStarRodFlightSteer();
     {
         struct Task *t = gCurTask;
         if (t->pixelX < 16)

@@ -12,6 +12,6 @@
 
 void sub_0801c8dc(void)
 {
-    if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop) != 0 && gUnk_087336F0[gTerrainTile] == 0)
+    if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop) != 0 && gCollisionTileOneWay[gTerrainTile] == 0)
         gTerrainProbeResult.unk0++;
 }

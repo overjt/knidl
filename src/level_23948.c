@@ -12,11 +12,11 @@
 
 /* level_23948.c (0x08023948-0x080242CF, issue #93).
  *
- * Room loaders, part 2: sub_08023948 and sub_08023ca0 (M02's screen
+ * Room loaders, part 2: LoadHubRoom and LoadBigSwitchViewRoom (M02's screen
  * setups HubInit and BigSwitchViewInit) and LoadGoalGameRoom, plus the
- * room-task variants 1 and 2 of task type #3 (sub_08023e34, sub_08023e78)
- * and their per-frame bodies (sub_08023ea0 ... sub_08023fa0).
- * sub_08023948 and sub_08023ca0 build their map in the second buffer
+ * room-task variants 1 and 2 of task type #3 (RoomTaskHubInit, RoomTaskBigSwitchViewInit)
+ * and their per-frame bodies (RoomTaskHubUpdateCamera ... RoomTaskBigSwitchViewLateUpdate).
+ * LoadHubRoom and LoadBigSwitchViewRoom build their map in the second buffer
  * gUnk_02006AA0 through sub_08027a6c instead of gRoomMapBuffer, spawn the
  * door objects and set up the multi-player cameras; LoadGoalGameRoom loads
  * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
@@ -26,7 +26,7 @@
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_08023948(void)
+void LoadHubRoom(void)
 {
     s32 i;
     u32 a;
@@ -134,7 +134,7 @@ void sub_08023948(void)
         DrawBg23View(gCameraPos[0], gCameraPos[1]);
 }
 
-void sub_08023ca0(void)
+void LoadBigSwitchViewRoom(void)
 {
     u8 z;
     u32 w;
@@ -179,7 +179,7 @@ void sub_08023ca0(void)
     SpawnDoorObjects();
     sub_08029034();
     sub_08026b60();
-    sub_08026834();
+    CreateBigSwitchUnlockPan();
     CameraResetBounds();
     CameraSnapBoundsToAnchor();
     CameraInitPos();
@@ -189,13 +189,13 @@ void sub_08023ca0(void)
     DrawBg123View(gCameraPos[0], gCameraPos[1]);
 }
 
-void sub_08023e34(void)
+void RoomTaskHubInit(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = (u32)RoomTaskDraw;
-    t->updateCallback = (u32)sub_08023ea0;
+    t->updateCallback = (u32)RoomTaskHubUpdateCamera;
     if (gHubUnlockFlags != 0)
         t->lateUpdateCallback = (u32)sub_08023f5c;
     else
@@ -203,18 +203,18 @@ void sub_08023e34(void)
     TaskSleepForever();
 }
 
-void sub_08023e78(void)
+void RoomTaskBigSwitchViewInit(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_08023efc;
-    t->lateUpdateCallback = (u32)sub_08023fa0;
+    t->updateCallback = (u32)RoomTaskBigSwitchViewUpdateCamera;
+    t->lateUpdateCallback = (u32)RoomTaskBigSwitchViewLateUpdate;
     TaskSleepForever();
 }
 
-void sub_08023ea0(void)
+void RoomTaskHubUpdateCamera(void)
 {
     if (gRoomUpdateFlags & 1)
     {
@@ -238,7 +238,7 @@ void sub_08023ea0(void)
     }
 }
 
-void sub_08023efc(void)
+void RoomTaskBigSwitchViewUpdateCamera(void)
 {
     if (gRoomUpdateFlags & 1)
         CameraSnapBoundsToAnchor();
@@ -274,7 +274,7 @@ void sub_08023f5c(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_08023fa0(void)
+void RoomTaskBigSwitchViewLateUpdate(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();

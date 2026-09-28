@@ -24,13 +24,13 @@
  * Task.unk18; 11 (PlayerEffectBubble) asks M07's IsFullBlockAtPixel about its position
  * and, when that returns 0, rises while swaying left and right, until its
  * companion sub_08054a44 (the collision box gUnk_0873CB74 through
- * sub_0801c3a4) kills it once its Task.waterFlags is clear or gTerrainResult.unk1
+ * TerrainCollidePointStop) kills it once its Task.waterFlags is clear or gTerrainResult.unk1
  * is set. */
 
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
-u16 sub_0801c3a4(const s8 *p);
+u16 TerrainCollidePointStop(const s8 *p);
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 
 void sub_08054330(void)
@@ -293,7 +293,7 @@ void PlayerEffectBubble(void)
 
 void sub_08054a44(void)
 {
-    sub_0801c3a4(gUnk_0873CB74);
+    TerrainCollidePointStop(gUnk_0873CB74);
     if (gCurTask->waterFlags == 0 || gTerrainResult.ceilingHits != 0)
         TaskFree(gCurTaskIdx);
 }

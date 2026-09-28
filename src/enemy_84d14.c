@@ -45,7 +45,7 @@ extern void ActorSetAttackBox(u32 *p);
 extern void sub_08066b34(u32 *p);
 extern void sub_08066c3c(u32 *p);
 extern void sub_08066c08(u32 *p, s32 b);
-extern s32 sub_08021a40(s32 x, s32 y);
+extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
@@ -622,7 +622,7 @@ void WaddleDooWalkShoot(void)
         sp.x = 8;
         sp.y = 3;
         sp.checkTerrain = 1;
-        if (sub_08021a40(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
+        if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
@@ -817,7 +817,7 @@ void ParasolWaddleDooShoot(void)
         sp.y = 3;
         sp.checkTerrain = 1;
         w = gCurTask;
-        if (sub_08021a40(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
+        if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
             gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
@@ -978,7 +978,7 @@ void WaddleDooShoot(void)
             sp.y = 3;
             sp.checkTerrain = 1;
             w = gCurTask;
-            if (sub_08021a40(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
+            if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
                 gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
             TaskYieldTrampoline(2);
             x = gCurTask;

@@ -19,7 +19,7 @@
  * the player to the room bounds and sub_0802695c starts the next stage.
  * sub_080264b0, sub_0802651c, sub_0802653c, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
- * (gEntryDoorIndex, its slots in gDoorObjectTasks); sub_0802672c/sub_08026834
+ * (gEntryDoorIndex, its slots in gDoorObjectTasks); CreateStageUnlockPan/CreateBigSwitchUnlockPan
  * spawn a map-event task and put the camera on the player or a partner.
  * sub_08026a0c, sub_08026a80 and sub_08026aec arm the scroll lock of one
  * room each.  sub_08026994 is an empty dead export. */
@@ -250,7 +250,7 @@ void sub_08026704(s32 i)
     }
 }
 
-s32 sub_0802672c(void)
+s32 CreateStageUnlockPan(void)
 {
     s32 id = CreateMapEvent(5);
     struct Task *t;
@@ -288,7 +288,7 @@ s32 sub_0802672c(void)
     return id;
 }
 
-s32 sub_08026834(void)
+s32 CreateBigSwitchUnlockPan(void)
 {
     s32 id = CreateMapEvent(6);
     struct Task *t;

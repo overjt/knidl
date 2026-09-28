@@ -1371,13 +1371,13 @@ gUnk_087325A2:
 	.incbin	"baserom.gba", 0x7325A2, 0x72
 	.global	gRoomTaskVariants
 gRoomTaskVariants:
-	.word	sub_08023634+1
-	.word	sub_08023e34+1
-	.word	sub_08023e78+1
-	.word	sub_08024540+1
-	.word	sub_080242d0+1
+	.word	RoomTaskStageInit+1
+	.word	RoomTaskHubInit+1
+	.word	RoomTaskBigSwitchViewInit+1
+	.word	RoomTaskCutsceneInit+1
+	.word	RoomTaskGoalGameInit+1
 	.word	sub_08024904+1
-	.word	sub_08024da4+1
+	.word	RoomTaskCreditsInit+1
 	.global	gUnk_08732630
 gUnk_08732630:
 	.incbin	"baserom.gba", 0x732630, 0x8
@@ -1425,8 +1425,8 @@ gMapEventVariants:
 	.word	sub_0802d4bc+1
 	.word	sub_0802d5f8+1
 	.word	sub_0802d96c+1
-	.word	sub_0802dcb4+1
-	.word	sub_0802e3ac+1
+	.word	MapEventStageUnlockPan+1
+	.word	MapEventBigSwitchUnlockPan+1
 	.global	gUnk_087328BC
 gUnk_087328BC:
 	.incbin	"baserom.gba", 0x7328BC, 0x4
@@ -1708,11 +1708,11 @@ gUnk_08732DF0:
 	.global	gCollisionTileShapeClass
 gCollisionTileShapeClass:
 	.incbin	"baserom.gba", 0x732EF0, 0x100
-	.global	gUnk_08732FF0
-gUnk_08732FF0:
+	.global	gCollisionTileDamaging
+gCollisionTileDamaging:
 	.incbin	"baserom.gba", 0x732FF0, 0x100
-	.global	gUnk_087330F0
-gUnk_087330F0:
+	.global	gCollisionTileDamageShapes
+gCollisionTileDamageShapes:
 	.word	gUnk_08735118
 	.word	gUnk_08735118
 	.word	gUnk_08735118
@@ -1975,8 +1975,8 @@ gCollisionTileSlippery:
 	.global	gUnk_087335F0
 gUnk_087335F0:
 	.incbin	"baserom.gba", 0x7335F0, 0x100
-	.global	gUnk_087336F0
-gUnk_087336F0:
+	.global	gCollisionTileOneWay
+gCollisionTileOneWay:
 	.incbin	"baserom.gba", 0x7336F0, 0x100
 	.global	gUnk_087337F0
 gUnk_087337F0:
@@ -3917,38 +3917,38 @@ gUnk_0873B65E:
 	.incbin	"baserom.gba", 0x73B65E, 0x6
 	.global	gPlayerBallVariants
 gPlayerBallVariants:
-	.word	sub_0804e78c+1
-	.word	sub_0804e97c+1
-	.word	sub_0804eb28+1
-	.word	sub_0804eca4+1
-	.word	sub_0804ee08+1
-	.word	sub_0804efec+1
-	.word	sub_0804f22c+1
-	.word	sub_0804f30c+1
-	.word	sub_0804f450+1
+	.word	PlayerBallTransform+1
+	.word	PlayerBallStand+1
+	.word	PlayerBallRoll+1
+	.word	PlayerBallSkid+1
+	.word	PlayerBallJump+1
+	.word	PlayerBallBounce+1
+	.word	PlayerBallFall+1
+	.word	PlayerBallLand+1
+	.word	PlayerBallRevert+1
 	.global	gPlayerBallVariantUpdates
 gPlayerBallVariantUpdates:
-	.word	sub_0804e8f4+1
-	.word	sub_0804ea7c+1
-	.word	sub_0804eb60+1
-	.word	sub_0804ecec+1
-	.word	sub_0804ef00+1
-	.word	sub_0804f124+1
-	.word	sub_0804f258+1
-	.word	sub_0804f3e4+1
-	.word	sub_0804f5bc+1
+	.word	PlayerBallTransformUpdate+1
+	.word	PlayerBallStandUpdate+1
+	.word	PlayerBallRollUpdate+1
+	.word	PlayerBallSkidUpdate+1
+	.word	PlayerBallJumpUpdate+1
+	.word	PlayerBallBounceUpdate+1
+	.word	PlayerBallFallUpdate+1
+	.word	PlayerBallLandUpdate+1
+	.word	PlayerBallRevertUpdate+1
 	.global	gPlayerStarRodFlightVariants
 gPlayerStarRodFlightVariants:
-	.word	sub_0804ffdc+1
-	.word	sub_08050340+1
-	.word	sub_08050418+1
-	.word	sub_08050508+1
+	.word	PlayerStarRodFlightIntro+1
+	.word	PlayerStarRodFlightFly+1
+	.word	PlayerStarRodFlightShoot+1
+	.word	PlayerStarRodFlightHurt+1
 	.global	gPlayerStarRodFlightVariantUpdates
 gPlayerStarRodFlightVariantUpdates:
-	.word	sub_080502f0+1
-	.word	sub_0805035c+1
-	.word	sub_080504d4+1
-	.word	sub_08050630+1
+	.word	PlayerStarRodFlightIntroUpdate+1
+	.word	PlayerStarRodFlightFlyUpdate+1
+	.word	PlayerStarRodFlightShootUpdate+1
+	.word	PlayerStarRodFlightHurtUpdate+1
 	.global	gUnk_0873B6CC
 gUnk_0873B6CC:
 	.incbin	"baserom.gba", 0x73B6CC, 0x10

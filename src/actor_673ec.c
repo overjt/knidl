@@ -50,7 +50,7 @@ extern u8 HitTestPlayerColliders(void);
 extern void PlaySfx(u32 a);
 extern u8 gTerrainResult;
 extern void ClampTaskToRoom(struct Task *t);
-extern void sub_0801bcac(u32 *p);
+extern void TerrainCollideBox(u32 *p);
 extern void RequestScreenShake(u32 a);
 extern void TaskSetEntry(void *fn, s32 i);
 
@@ -300,7 +300,7 @@ void sub_080676c0(void)
 void sub_08067908(void)
 {
     ClampTaskToRoom(gCurTask);
-    sub_0801bcac(gPlayerDefaultTerrainBox);
+    TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
         gCurTask->velX = 0;
     if (gCurTask->unk34 != 0)
@@ -496,7 +496,7 @@ void sub_08067b24(void)
 void sub_08067d30(void)
 {
     ClampTaskToRoom(gCurTask);
-    sub_0801bcac(gPlayerDefaultTerrainBox);
+    TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
         gCurTask->velX = 0;
     if (gCurTask->unk34 != 0)
@@ -618,7 +618,7 @@ void sub_08068028(void)
 {
     struct Task *t;
 
-    sub_0801bcac(gPlayerDefaultTerrainBox);
+    TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
     {
         CreateChildTaskHere(148, 0);
@@ -698,7 +698,7 @@ void sub_08068224(void)
 {
     struct Task *t;
 
-    sub_0801bcac(gPlayerDefaultTerrainBox);
+    TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
     {
         CreateChildTaskHere(148, 0);
@@ -794,7 +794,7 @@ void sub_080682a8(void)
 void sub_08068460(void)
 {
     ClampTaskToRoom(gCurTask);
-    sub_0801bcac(gPlayerDefaultTerrainBox);
+    TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
         gCurTask->velX = 0;
     if (gCurTask->unk34 != 0)

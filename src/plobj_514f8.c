@@ -31,7 +31,7 @@ void TaskSetEntry(void *a, u32 i);
 u16 RandomSpread(u16 base, u8 scale, u8 amount);
 s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
-void sub_0801c230(const s8 *p);
+void TerrainCollideBoxAlongVelocity(const s8 *p);
 void sub_0802205c(s8 *box);
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y);   /* this file's call passes only x and y: the ROM leaves r3 as it was (the definition in src/block_30804.c takes a fourth, `e`) */
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
@@ -408,7 +408,7 @@ void PlayerObjectCutterBladeUpdate(void)
             TaskSetEntry(sub_08050814, gCurTaskIdx);
             return;
         }
-        sub_0801c230(gUnk_0873CB54);
+        TerrainCollideBoxAlongVelocity(gUnk_0873CB54);
         if ((*(u32 *)&gTerrainResult & 0xFFFFFF) != 0)
         {
             {
@@ -572,7 +572,7 @@ void PlayerObjectLaserBeamUpdate(void)
             hit = 1;
         }
         else
-            sub_0801c444(gUnk_0873CB5C);
+            TerrainCollideBoxTileEdge(gUnk_0873CB5C);
         break;
     case 0:
     case 2:
@@ -582,7 +582,7 @@ void PlayerObjectLaserBeamUpdate(void)
             hit = 1;
         }
         else
-            sub_0801c444(gUnk_0873CB64);
+            TerrainCollideBoxTileEdge(gUnk_0873CB64);
         break;
     }
     if (gTerrainResult.slope != 0)

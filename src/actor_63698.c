@@ -25,7 +25,7 @@ extern u16 ActorComputeHealth(u32 a);
 extern u16 ActorComputeHealthSlot(u32 i);
 extern void sub_08069ac4(u32 i);
 extern void ReleaseRoomObject(u32 i);
-extern s32 sub_08021a40(s16 x, s16 y);
+extern s32 GetShapeAtPixelIgnoringOneWay(s16 x, s16 y);
 extern u32 TaskIsOnScreen(void);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 
@@ -1256,7 +1256,7 @@ s32 sub_08064a78(struct ActorSpawn *p)
 
     if (p->checkTerrain == 1)
     {
-        if (sub_08021a40(p->x, p->y) != 0)
+        if (GetShapeAtPixelIgnoringOneWay(p->x, p->y) != 0)
             return -1;
     }
     i = sub_08063698(p->taskType, 32);

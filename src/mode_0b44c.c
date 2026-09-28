@@ -44,8 +44,8 @@ void sub_08022f98(void);
 void sub_08022f9c(void);
 void LoadRoom(void);
 void sub_080233e0(void);
-void sub_08023948(void);
-void sub_08023ca0(void);
+void LoadHubRoom(void);
+void LoadBigSwitchViewRoom(void);
 
 void sub_0800b44c(void)
 {
@@ -213,7 +213,7 @@ void HubInit(void)
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
     LoadGfxSet(0);
     sub_08008c7c();
-    sub_08023948();
+    LoadHubRoom();
     b = gUnk_02007FB8;
     zero = 0;
     p = b + 2;
@@ -242,7 +242,7 @@ void BigSwitchViewInit(void)
     ResetBgScroll();
     LoadGfxSet(0);
     sub_08008c7c();
-    sub_08023ca0();
+    LoadBigSwitchViewRoom();
     /* A reversed clear loop only strength-reduces as a do/while over a
      * signed pointer compare with a zero variable (lesson 3.30). */
     b = gUnk_02007FB8;

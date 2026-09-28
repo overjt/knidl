@@ -241,8 +241,8 @@ gUnk_02007D3C = 0x02007D3C
 gObjPaletteCursor = 0x02007D40
 	.global	gPlayerLives
 gPlayerLives = 0x02007D48
-	.global	gUnk_02007D50
-gUnk_02007D50 = 0x02007D50
+	.global	gBigSwitchReturnRoom
+gBigSwitchReturnRoom = 0x02007D50
 	.global	gUsedSubGameDoors
 gUsedSubGameDoors = 0x02007D58
 	.global	gUnk_02007D60
@@ -269,8 +269,8 @@ gBrokenBlockX = 0x02007FA0
 gSavedPlayerAbilityUses = 0x02007FA8
 	.global	gStageExitFlags
 gStageExitFlags = 0x02007FB0
-	.global	gUnk_02007FB4
-gUnk_02007FB4 = 0x02007FB4
+	.global	gBigSwitchReturnStage
+gBigSwitchReturnStage = 0x02007FB4
 	.global	gUnk_02007FB8
 gUnk_02007FB8 = 0x02007FB8
 	.global	gHudHpBarValues
@@ -289,8 +289,8 @@ gUnk_02007FD0 = 0x02007FD0
 gUnk_02007FF0 = 0x02007FF0
 	.global	gUnk_02007FF8
 gUnk_02007FF8 = 0x02007FF8
-	.global	gUnk_02008000
-gUnk_02008000 = 0x02008000
+	.global	gBigSwitchReturnLevel
+gBigSwitchReturnLevel = 0x02008000
 	.global	gSavedPlayerAbilities
 gSavedPlayerAbilities = 0x02008008
 	.global	gUnk_02008010

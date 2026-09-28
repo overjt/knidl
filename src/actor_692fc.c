@@ -69,14 +69,14 @@ extern void PlaySfx(s32 id);
 extern void TaskSetEntry(void *fn, s32 i);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-extern void sub_0801bcac(struct InputState *p);
-extern void sub_0801bde0(struct InputState *p);
-extern void sub_0801bf1c(struct InputState *p);
-extern void sub_0801c030(struct InputState *p);
-extern void sub_0801c12c(struct InputState *p);
-extern void sub_0801c230(struct InputState *p);
-extern void sub_0801c30c(struct InputState *p);
-extern u32 sub_0801c3a4(struct InputState *p);
+extern void TerrainCollideBox(struct InputState *p);
+extern void TerrainCollideBoxInCameraBounds(struct InputState *p);
+extern void TerrainCollideBoxWalls(struct InputState *p);
+extern void TerrainCollideBoxCeilingAndFloor(struct InputState *p);
+extern void TerrainCollideBoxFloor(struct InputState *p);
+extern void TerrainCollideBoxAlongVelocity(struct InputState *p);
+extern void TerrainCollidePointPushOut(struct InputState *p);
+extern u32 TerrainCollidePointStop(struct InputState *p);
 extern u32 sub_0802205c(struct InputState *p);
 extern void TaskInitWaterFlagsSlot(s32 i);
 extern void ActorSetState(u8 v);
@@ -106,7 +106,7 @@ u32 ActorCollideTerrain(void)
     k = t->onGround;
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
-    sub_0801bcac(&v);
+    TerrainCollideBox(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
         CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
@@ -198,7 +198,7 @@ u32 sub_0806951c(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        sub_0801c230(&v);
+        TerrainCollideBoxAlongVelocity(&v);
         if ((*(u32 *)gTerrainResult & 0x00FFFFFF) != 0)
             r = 1;
         else
@@ -216,7 +216,7 @@ u32 sub_0806956c(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        sub_0801c030(&v);
+        TerrainCollideBoxCeilingAndFloor(&v);
         if ((*(u32 *)gTerrainResult & 0x00FFFF00) != 0)
             r = 1;
         else
@@ -234,7 +234,7 @@ u32 sub_080695bc(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        sub_0801bf1c(&v);
+        TerrainCollideBoxWalls(&v);
         if (gTerrainResult[0] != 0)
             r = 1;
         else
@@ -253,7 +253,7 @@ u32 sub_08069604(void)
         return 0;
     r = 0;
     ActorGetTerrainBox(&v);
-    sub_0801c30c(&v);
+    TerrainCollidePointPushOut(&v);
     if (gTerrainResult[0] != 0 || gTerrainResult[4] != 0 || gTerrainResult[1] != 0)
         r = 1;
     return r;
@@ -267,7 +267,7 @@ u32 sub_08069660(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorGetTerrainBox(&v);
-        r = (u8)sub_0801c3a4(&v);
+        r = (u8)TerrainCollidePointStop(&v);
     }
     else
     {
@@ -297,7 +297,7 @@ u32 sub_080696a0(void)
     k = t->onGround;
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
-    sub_0801bde0(&v);
+    TerrainCollideBoxInCameraBounds(&v);
     sub_080b460c();
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
@@ -393,7 +393,7 @@ u32 sub_08069888(void)
     k = t->onGround;
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
-    sub_0801c12c(&v);
+    TerrainCollideBoxFloor(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
         CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);

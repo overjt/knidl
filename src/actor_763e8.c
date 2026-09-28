@@ -27,7 +27,7 @@ extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *a, u32 i);
-extern void sub_0801bcac(u32 *p);
+extern void TerrainCollideBox(u32 *p);
 extern void RequestScreenShake(u32 a);
 extern void ActorSetState(u8 v);
 extern void AngleToVector(s16 t, s16 mag);
@@ -549,7 +549,7 @@ void sub_08076dac(void)
 
 void sub_08076ddc(void)
 {
-    sub_0801bcac(gUnk_0873F5E4);
+    TerrainCollideBox(gUnk_0873F5E4);
     if (gMetaKnightmareMode == 0)
     {
         sub_080703a8();
@@ -577,7 +577,7 @@ void sub_08076e30(void)
 void sub_08076e48(void)
 {
     if ((gCurTask->onGround & 1) == 0)
-        sub_0801bcac(gUnk_0873F5E4);
+        TerrainCollideBox(gUnk_0873F5E4);
     sub_08076c00();
     {
         struct Task *t = gCurTask;

@@ -16,7 +16,7 @@
  * CutsceneMain), LoadEndingRoom (entered through LoadEndingEpilogueRoom and
  * LoadEndingStarRodReturnRoom, which preset the level/stage/room and the player
  * position) and LoadCreditsRoom, plus the room-task variants 3-6 of task type
- * #3 (sub_080242d0, sub_08024540, sub_08024904, sub_08024da4) and their
+ * #3 (RoomTaskGoalGameInit, RoomTaskCutsceneInit, sub_08024904, RoomTaskCreditsInit) and their
  * per-frame bodies.  A loader looks the room header up in
  * gRoomTable[level][stage][room] and stores it in gCurRoomDef, copies
  * its size, origin, BG3 origin and object list into the camera cells,
@@ -35,8 +35,8 @@
  * level/stage/room, the arrival position gRoomEntryX/gRoomEntryY and
  * the stage request gStageRequest for M02's state bodies.  ExitClearedStage
  * (a stage cleared: the hub's next stage door, or on to the next level),
- * sub_08025a30, sub_08025acc, sub_08025b0c, sub_08025b5c, sub_08025bc8 and
- * sub_08025dc4 are the other exits, each setting the level/stage/room and a
+ * sub_08025a30, sub_08025acc, sub_08025b0c, sub_08025b5c, PressBigSwitch and
+ * ReturnFromBigSwitchView are the other exits, each setting the level/stage/room and a
  * stage request; sub_08025e0c lowers the room's bottom bound, sub_08025e88
  * reads an object-list entry's parameter, and sub_08025f00, sub_080260b0
  * and sub_0802610c pick the position the player arrives at. */
@@ -50,13 +50,13 @@ struct Unk020055D8Entry
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_080242d0(void)
+void RoomTaskGoalGameInit(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = (u32)RoomTaskDraw;
-    t->updateCallback = (u32)sub_0802457c;
+    t->updateCallback = (u32)RoomTaskSnapCameraToFocus;
     t->lateUpdateCallback = (u32)sub_080245d0;
     TaskSleepForever();
 }
@@ -137,13 +137,13 @@ void LoadCutsceneRoom(void)
     }
 }
 
-void sub_08024540(void)
+void RoomTaskCutsceneInit(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_0802457c;
+    t->updateCallback = (u32)RoomTaskSnapCameraToFocus;
     if (gBg3MapShape != 0)
         t->lateUpdateCallback = (u32)sub_080245d0;
     else
@@ -151,7 +151,7 @@ void sub_08024540(void)
     TaskSleepForever();
 }
 
-void sub_0802457c(void)
+void RoomTaskSnapCameraToFocus(void)
 {
     if (gRoomUpdateFlags & 1)
         CameraSnapToFocus();
@@ -301,7 +301,7 @@ void sub_08024904(void)
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_0802457c;
+    t->updateCallback = (u32)RoomTaskSnapCameraToFocus;
     switch (gRoomBgLayout)
     {
     case 1:
@@ -469,7 +469,7 @@ void LoadCreditsRoom(void)
     }
 }
 
-void sub_08024da4(void)
+void RoomTaskCreditsInit(void)
 {
     struct Task *t = gCurTask;
 
@@ -922,7 +922,7 @@ void sub_08025b5c(void)
     gStageRequest = 7;
 }
 
-void sub_08025bc8(s32 id)
+void PressBigSwitch(s32 id)
 {
     struct RoomDef *room;
     struct Door *d;
@@ -932,9 +932,9 @@ void sub_08025bc8(s32 id)
 
     if (gUnk_02005590[id - 32] == -1)
         return;
-    gUnk_02008000 = gLevelIndex;
-    gUnk_02007FB4 = gStageIndex;
-    gUnk_02007D50 = gRoomIndex;
+    gBigSwitchReturnLevel = gLevelIndex;
+    gBigSwitchReturnStage = gStageIndex;
+    gBigSwitchReturnRoom = gRoomIndex;
     gLevelIndex = 8;
     gStageIndex = gCurLevel;
     gRoomIndex = 0;
@@ -969,11 +969,11 @@ void sub_08025bc8(s32 id)
     gStageExitFlags |= 5;
 }
 
-void sub_08025dc4(void)
+void ReturnFromBigSwitchView(void)
 {
-    gLevelIndex = gUnk_02008000;
-    gStageIndex = gUnk_02007FB4;
-    gRoomIndex = gUnk_02007D50;
+    gLevelIndex = gBigSwitchReturnLevel;
+    gStageIndex = gBigSwitchReturnStage;
+    gRoomIndex = gBigSwitchReturnRoom;
     gStageRequest = 3;
 }
 
