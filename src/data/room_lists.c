@@ -9,619 +9,619 @@
  * are assets.  Carved by tools/carve_data.py. */
 
 /* gRoomTable[7][1] */
-struct RoomDef *const gUnk_087E1F58[] = {
-    &gUnk_0835D08C,
-    &gUnk_0835D300,
-    &gUnk_0835D4F0,
+struct RoomDef *const gLevel7Stage1Rooms[] = {
+    &gLevel7Stage1Room0,
+    &gLevel7Stage1Room1,
+    &gLevel7Stage1Room2,
     NULL,
 };
 
 /* gRoomTable[0][0] */
-struct RoomDef *const gUnk_087E1F68[] = {
-    &gUnk_0835DDC0,
-    &gUnk_0835E2A0,
-    &gUnk_0835E70C,
-    &gUnk_0835E924,
+struct RoomDef *const gLevel0Stage0Rooms[] = {
+    &gLevel0Stage0Room0,
+    &gLevel0Stage0Room1,
+    &gLevel0Stage0Room2,
+    &gLevel0Stage0Room3,
     NULL,
 };
 
 /* gRoomTable[0][1] */
-struct RoomDef *const gUnk_087E1F7C[] = {
-    &gUnk_0835EF1C,
-    &gUnk_0835F1A4,
-    &gUnk_0835F544,
-    &gUnk_0835FC24,
-    &gUnk_0835FFE4,
-    &gUnk_083601DC,
+struct RoomDef *const gLevel0Stage1Rooms[] = {
+    &gLevel0Stage1Room0,
+    &gLevel0Stage1Room1,
+    &gLevel0Stage1Room2,
+    &gLevel0Stage1Room3,
+    &gLevel0Stage1Room4,
+    &gLevel0Stage1Room5,
     NULL,
 };
 
 /* gRoomTable[0][2] */
-struct RoomDef *const gUnk_087E1F98[] = {
-    &gUnk_08360690,
-    &gUnk_08360B38,
-    &gUnk_08360F38,
-    &gUnk_083613A0,
+struct RoomDef *const gLevel0Stage2Rooms[] = {
+    &gLevel0Stage2Room0,
+    &gLevel0Stage2Room1,
+    &gLevel0Stage2Room2,
+    &gLevel0Stage2Room3,
     NULL,
 };
 
 /* gRoomTable[0][3] */
-struct RoomDef *const gUnk_087E1FAC[] = {
-    &gUnk_0836179C,
-    &gUnk_08361CB8,
-    &gUnk_08362104,
-    &gUnk_08362788,
+struct RoomDef *const gLevel0Stage3Rooms[] = {
+    &gLevel0Stage3Room0,
+    &gLevel0Stage3Room1,
+    &gLevel0Stage3Room2,
+    &gLevel0Stage3Room3,
     NULL,
 };
 
 /* gRoomTable[0][4] */
-struct RoomDef *const gUnk_087E1FC0[] = {
-    &gUnk_08362AD0,
+struct RoomDef *const gLevel0Stage4Rooms[] = {
+    &gLevel0Stage4Room0,
     NULL,
 };
 
 /* gRoomTable[1][0] */
-struct RoomDef *const gUnk_087E1FC8[] = {
-    &gUnk_083630A0,
-    &gUnk_083634E0,
-    &gUnk_08363A0C,
-    &gUnk_08363E04,
+struct RoomDef *const gLevel1Stage0Rooms[] = {
+    &gLevel1Stage0Room0,
+    &gLevel1Stage0Room1,
+    &gLevel1Stage0Room2,
+    &gLevel1Stage0Room3,
     NULL,
 };
 
 /* gRoomTable[1][1] */
-struct RoomDef *const gUnk_087E1FDC[] = {
-    &gUnk_08364014,
-    &gUnk_083643BC,
-    &gUnk_0836463C,
-    &gUnk_08364A38,
-    &gUnk_08365558,
+struct RoomDef *const gLevel1Stage1Rooms[] = {
+    &gLevel1Stage1Room0,
+    &gLevel1Stage1Room1,
+    &gLevel1Stage1Room2,
+    &gLevel1Stage1Room3,
+    &gLevel1Stage1Room4,
     NULL,
 };
 
 /* gRoomTable[1][2] */
-struct RoomDef *const gUnk_087E1FF4[] = {
-    &gUnk_083657C0,
-    &gUnk_08366340,
-    &gUnk_0836663C,
-    &gUnk_08366974,
-    &gUnk_08366B98,
-    &gUnk_08366D1C,
+struct RoomDef *const gLevel1Stage2Rooms[] = {
+    &gLevel1Stage2Room0,
+    &gLevel1Stage2Room1,
+    &gLevel1Stage2Room2,
+    &gLevel1Stage2Room3,
+    &gLevel1Stage2Room4,
+    &gLevel1Stage2Room5,
     NULL,
 };
 
 /* gRoomTable[1][3] */
-struct RoomDef *const gUnk_087E2010[] = {
-    &gUnk_08367274,
-    &gUnk_0836753C,
-    &gUnk_083677F4,
-    &gUnk_08367A50,
-    &gUnk_08367E8C,
-    &gUnk_083684D4,
-    &gUnk_08368710,
+struct RoomDef *const gLevel1Stage3Rooms[] = {
+    &gLevel1Stage3Room0,
+    &gLevel1Stage3Room1,
+    &gLevel1Stage3Room2,
+    &gLevel1Stage3Room3,
+    &gLevel1Stage3Room4,
+    &gLevel1Stage3Room5,
+    &gLevel1Stage3Room6,
     NULL,
 };
 
 /* gRoomTable[1][4] */
-struct RoomDef *const gUnk_087E2030[] = {
-    &gUnk_08368D30,
-    &gUnk_083692D8,
-    &gUnk_08369BE0,
-    &gUnk_0836A0A8,
-    &gUnk_0836A318,
-    &gUnk_0836A534,
-    &gUnk_0836A6DC,
+struct RoomDef *const gLevel1Stage4Rooms[] = {
+    &gLevel1Stage4Room0,
+    &gLevel1Stage4Room1,
+    &gLevel1Stage4Room2,
+    &gLevel1Stage4Room3,
+    &gLevel1Stage4Room4,
+    &gLevel1Stage4Room5,
+    &gLevel1Stage4Room6,
     NULL,
 };
 
 /* gRoomTable[1][5] */
-struct RoomDef *const gUnk_087E2050[] = {
-    &gUnk_0836A89C,
+struct RoomDef *const gLevel1Stage5Rooms[] = {
+    &gLevel1Stage5Room0,
     NULL,
 };
 
 /* gRoomTable[2][0] */
-struct RoomDef *const gUnk_087E2058[] = {
-    &gUnk_0836AC58,
-    &gUnk_0836AEE4,
-    &gUnk_0836B160,
-    &gUnk_0836B44C,
-    &gUnk_0836B7B4,
-    &gUnk_0836B968,
+struct RoomDef *const gLevel2Stage0Rooms[] = {
+    &gLevel2Stage0Room0,
+    &gLevel2Stage0Room1,
+    &gLevel2Stage0Room2,
+    &gLevel2Stage0Room3,
+    &gLevel2Stage0Room4,
+    &gLevel2Stage0Room5,
     NULL,
 };
 
 /* gRoomTable[2][1] */
-struct RoomDef *const gUnk_087E2074[] = {
-    &gUnk_0836BC70,
-    &gUnk_0836C0B0,
-    &gUnk_0836C50C,
-    &gUnk_0836CA98,
-    &gUnk_0836CDA8,
-    &gUnk_0836D19C,
-    &gUnk_0836D334,
-    &gUnk_0836D4FC,
+struct RoomDef *const gLevel2Stage1Rooms[] = {
+    &gLevel2Stage1Room0,
+    &gLevel2Stage1Room1,
+    &gLevel2Stage1Room2,
+    &gLevel2Stage1Room3,
+    &gLevel2Stage1Room4,
+    &gLevel2Stage1Room5,
+    &gLevel2Stage1Room6,
+    &gLevel2Stage1Room7,
     NULL,
 };
 
 /* gRoomTable[2][2] */
-struct RoomDef *const gUnk_087E2098[] = {
-    &gUnk_0836DADC,
-    &gUnk_0836DD44,
-    &gUnk_0836E09C,
-    &gUnk_0836E3F4,
-    &gUnk_0836E660,
+struct RoomDef *const gLevel2Stage2Rooms[] = {
+    &gLevel2Stage2Room0,
+    &gLevel2Stage2Room1,
+    &gLevel2Stage2Room2,
+    &gLevel2Stage2Room3,
+    &gLevel2Stage2Room4,
     NULL,
 };
 
 /* gRoomTable[2][3] */
-struct RoomDef *const gUnk_087E20B0[] = {
-    &gUnk_0836E824,
-    &gUnk_0836EED8,
-    &gUnk_0836F0A4,
-    &gUnk_0836F270,
-    &gUnk_0836F634,
-    &gUnk_0836F7E4,
+struct RoomDef *const gLevel2Stage3Rooms[] = {
+    &gLevel2Stage3Room0,
+    &gLevel2Stage3Room1,
+    &gLevel2Stage3Room2,
+    &gLevel2Stage3Room3,
+    &gLevel2Stage3Room4,
+    &gLevel2Stage3Room5,
     NULL,
 };
 
 /* gRoomTable[2][4] */
-struct RoomDef *const gUnk_087E20CC[] = {
-    &gUnk_0836F9B0,
-    &gUnk_0836FD44,
-    &gUnk_08370000,
-    &gUnk_083702FC,
-    &gUnk_083704E4,
+struct RoomDef *const gLevel2Stage4Rooms[] = {
+    &gLevel2Stage4Room0,
+    &gLevel2Stage4Room1,
+    &gLevel2Stage4Room2,
+    &gLevel2Stage4Room3,
+    &gLevel2Stage4Room4,
     NULL,
 };
 
 /* gRoomTable[2][5] */
-struct RoomDef *const gUnk_087E20E4[] = {
-    &gUnk_08370684,
-    &gUnk_08370AF4,
-    &gUnk_08370E08,
-    &gUnk_0837108C,
-    &gUnk_08371388,
-    &gUnk_08371728,
-    &gUnk_0837181C,
-    &gUnk_08371D90,
-    &gUnk_08372040,
-    &gUnk_08372240,
+struct RoomDef *const gLevel2Stage5Rooms[] = {
+    &gLevel2Stage5Room0,
+    &gLevel2Stage5Room1,
+    &gLevel2Stage5Room2,
+    &gLevel2Stage5Room3,
+    &gLevel2Stage5Room4,
+    &gLevel2Stage5Room5,
+    &gLevel2Stage5Room6,
+    &gLevel2Stage5Room7,
+    &gLevel2Stage5Room8,
+    &gLevel2Stage5Room9,
     NULL,
 };
 
 /* gRoomTable[2][6] */
-struct RoomDef *const gUnk_087E2110[] = {
-    &gUnk_083723B0,
-    &gUnk_08372518,
-    &gUnk_08372680,
+struct RoomDef *const gLevel2Stage6Rooms[] = {
+    &gLevel2Stage6Room0,
+    &gLevel2Stage6Room1,
+    &gLevel2Stage6Room2,
     NULL,
 };
 
 /* gRoomTable[3][0] */
-struct RoomDef *const gUnk_087E2120[] = {
-    &gUnk_08372A78,
-    &gUnk_08372D58,
-    &gUnk_0837301C,
-    &gUnk_083736A8,
-    &gUnk_08373914,
-    &gUnk_08373AC4,
+struct RoomDef *const gLevel3Stage0Rooms[] = {
+    &gLevel3Stage0Room0,
+    &gLevel3Stage0Room1,
+    &gLevel3Stage0Room2,
+    &gLevel3Stage0Room3,
+    &gLevel3Stage0Room4,
+    &gLevel3Stage0Room5,
     NULL,
 };
 
 /* gRoomTable[3][1] */
-struct RoomDef *const gUnk_087E213C[] = {
-    &gUnk_0837410C,
-    &gUnk_083742CC,
-    &gUnk_083747D0,
-    &gUnk_08374B28,
-    &gUnk_08374C74,
-    &gUnk_08374DBC,
+struct RoomDef *const gLevel3Stage1Rooms[] = {
+    &gLevel3Stage1Room0,
+    &gLevel3Stage1Room1,
+    &gLevel3Stage1Room2,
+    &gLevel3Stage1Room3,
+    &gLevel3Stage1Room4,
+    &gLevel3Stage1Room5,
     NULL,
 };
 
 /* gRoomTable[3][2] */
-struct RoomDef *const gUnk_087E2158[] = {
-    &gUnk_0837531C,
-    &gUnk_083761D0,
-    &gUnk_08376B24,
-    &gUnk_08376D94,
-    &gUnk_08376F18,
-    &gUnk_08377144,
-    &gUnk_08377334,
+struct RoomDef *const gLevel3Stage2Rooms[] = {
+    &gLevel3Stage2Room0,
+    &gLevel3Stage2Room1,
+    &gLevel3Stage2Room2,
+    &gLevel3Stage2Room3,
+    &gLevel3Stage2Room4,
+    &gLevel3Stage2Room5,
+    &gLevel3Stage2Room6,
     NULL,
 };
 
 /* gRoomTable[3][3] */
-struct RoomDef *const gUnk_087E2178[] = {
-    &gUnk_08377AF0,
-    &gUnk_08377FBC,
-    &gUnk_08378A80,
-    &gUnk_08378EB0,
-    &gUnk_08379218,
+struct RoomDef *const gLevel3Stage3Rooms[] = {
+    &gLevel3Stage3Room0,
+    &gLevel3Stage3Room1,
+    &gLevel3Stage3Room2,
+    &gLevel3Stage3Room3,
+    &gLevel3Stage3Room4,
     NULL,
 };
 
 /* gRoomTable[3][4] */
-struct RoomDef *const gUnk_087E2190[] = {
-    &gUnk_08379B84,
-    &gUnk_08379E60,
-    &gUnk_0837A0CC,
-    &gUnk_0837A52C,
-    &gUnk_0837AB88,
-    &gUnk_0837AD38,
-    &gUnk_0837AF10,
+struct RoomDef *const gLevel3Stage4Rooms[] = {
+    &gLevel3Stage4Room0,
+    &gLevel3Stage4Room1,
+    &gLevel3Stage4Room2,
+    &gLevel3Stage4Room3,
+    &gLevel3Stage4Room4,
+    &gLevel3Stage4Room5,
+    &gLevel3Stage4Room6,
     NULL,
 };
 
 /* gRoomTable[3][5] */
-struct RoomDef *const gUnk_087E21B0[] = {
-    &gUnk_0837B7CC,
-    &gUnk_0837BB9C,
-    &gUnk_0837BC90,
-    &gUnk_0837BFA8,
-    &gUnk_0837C288,
-    &gUnk_0837C424,
-    &gUnk_0837C520,
-    &gUnk_0837C698,
+struct RoomDef *const gLevel3Stage5Rooms[] = {
+    &gLevel3Stage5Room0,
+    &gLevel3Stage5Room1,
+    &gLevel3Stage5Room2,
+    &gLevel3Stage5Room3,
+    &gLevel3Stage5Room4,
+    &gLevel3Stage5Room5,
+    &gLevel3Stage5Room6,
+    &gLevel3Stage5Room7,
     NULL,
 };
 
 /* gRoomTable[3][6] */
-struct RoomDef *const gUnk_087E21D4[] = {
-    &gUnk_0837D968,
+struct RoomDef *const gLevel3Stage6Rooms[] = {
+    &gLevel3Stage6Room0,
     NULL,
 };
 
 /* gRoomTable[4][0] */
-struct RoomDef *const gUnk_087E21DC[] = {
-    &gUnk_0837DE3C,
-    &gUnk_0837E598,
-    &gUnk_0837EB34,
-    &gUnk_0837ECA8,
-    &gUnk_0837EE60,
+struct RoomDef *const gLevel4Stage0Rooms[] = {
+    &gLevel4Stage0Room0,
+    &gLevel4Stage0Room1,
+    &gLevel4Stage0Room2,
+    &gLevel4Stage0Room3,
+    &gLevel4Stage0Room4,
     NULL,
 };
 
 /* gRoomTable[4][1] */
-struct RoomDef *const gUnk_087E21F4[] = {
-    &gUnk_0837F028,
-    &gUnk_0837F73C,
-    &gUnk_0837FA44,
-    &gUnk_0837FDC8,
-    &gUnk_083800D0,
-    &gUnk_083805BC,
-    &gUnk_08380758,
+struct RoomDef *const gLevel4Stage1Rooms[] = {
+    &gLevel4Stage1Room0,
+    &gLevel4Stage1Room1,
+    &gLevel4Stage1Room2,
+    &gLevel4Stage1Room3,
+    &gLevel4Stage1Room4,
+    &gLevel4Stage1Room5,
+    &gLevel4Stage1Room6,
     NULL,
 };
 
 /* gRoomTable[4][2] */
-struct RoomDef *const gUnk_087E2214[] = {
-    &gUnk_08380CFC,
-    &gUnk_083811A8,
-    &gUnk_08381CCC,
-    &gUnk_083821BC,
-    &gUnk_083825D8,
-    &gUnk_083828C4,
+struct RoomDef *const gLevel4Stage2Rooms[] = {
+    &gLevel4Stage2Room0,
+    &gLevel4Stage2Room1,
+    &gLevel4Stage2Room2,
+    &gLevel4Stage2Room3,
+    &gLevel4Stage2Room4,
+    &gLevel4Stage2Room5,
     NULL,
 };
 
 /* gRoomTable[4][3] */
-struct RoomDef *const gUnk_087E2230[] = {
-    &gUnk_0838328C,
-    &gUnk_08383B28,
-    &gUnk_083840C0,
-    &gUnk_083847B4,
-    &gUnk_08384ADC,
-    &gUnk_08384CB0,
-    &gUnk_08384E3C,
+struct RoomDef *const gLevel4Stage3Rooms[] = {
+    &gLevel4Stage3Room0,
+    &gLevel4Stage3Room1,
+    &gLevel4Stage3Room2,
+    &gLevel4Stage3Room3,
+    &gLevel4Stage3Room4,
+    &gLevel4Stage3Room5,
+    &gLevel4Stage3Room6,
     NULL,
 };
 
 /* gRoomTable[4][4] */
-struct RoomDef *const gUnk_087E2250[] = {
-    &gUnk_08385964,
-    &gUnk_08385FCC,
-    &gUnk_08386348,
-    &gUnk_08386700,
-    &gUnk_08386BC0,
-    &gUnk_08386F80,
-    &gUnk_08387308,
-    &gUnk_08387498,
+struct RoomDef *const gLevel4Stage4Rooms[] = {
+    &gLevel4Stage4Room0,
+    &gLevel4Stage4Room1,
+    &gLevel4Stage4Room2,
+    &gLevel4Stage4Room3,
+    &gLevel4Stage4Room4,
+    &gLevel4Stage4Room5,
+    &gLevel4Stage4Room6,
+    &gLevel4Stage4Room7,
     NULL,
 };
 
 /* gRoomTable[4][5] */
-struct RoomDef *const gUnk_087E2274[] = {
-    &gUnk_083879E8,
-    &gUnk_083881D4,
-    &gUnk_0838875C,
-    &gUnk_08388970,
-    &gUnk_08388BB8,
+struct RoomDef *const gLevel4Stage5Rooms[] = {
+    &gLevel4Stage5Room0,
+    &gLevel4Stage5Room1,
+    &gLevel4Stage5Room2,
+    &gLevel4Stage5Room3,
+    &gLevel4Stage5Room4,
     NULL,
 };
 
 /* gRoomTable[4][6] */
-struct RoomDef *const gUnk_087E228C[] = {
-    &gUnk_0838928C,
-    &gUnk_083893DC,
+struct RoomDef *const gLevel4Stage6Rooms[] = {
+    &gLevel4Stage6Room0,
+    &gLevel4Stage6Room1,
     NULL,
 };
 
 /* gRoomTable[5][0] */
-struct RoomDef *const gUnk_087E2298[] = {
-    &gUnk_08389A60,
-    &gUnk_08389F2C,
-    &gUnk_0838A420,
-    &gUnk_0838A668,
-    &gUnk_0838A85C,
-    &gUnk_0838A9D0,
+struct RoomDef *const gLevel5Stage0Rooms[] = {
+    &gLevel5Stage0Room0,
+    &gLevel5Stage0Room1,
+    &gLevel5Stage0Room2,
+    &gLevel5Stage0Room3,
+    &gLevel5Stage0Room4,
+    &gLevel5Stage0Room5,
     NULL,
 };
 
 /* gRoomTable[5][1] */
-struct RoomDef *const gUnk_087E22B4[] = {
-    &gUnk_0838AF20,
-    &gUnk_0838B394,
-    &gUnk_0838B744,
-    &gUnk_0838BB74,
-    &gUnk_0838BD4C,
-    &gUnk_0838BF0C,
-    &gUnk_0838C068,
+struct RoomDef *const gLevel5Stage1Rooms[] = {
+    &gLevel5Stage1Room0,
+    &gLevel5Stage1Room1,
+    &gLevel5Stage1Room2,
+    &gLevel5Stage1Room3,
+    &gLevel5Stage1Room4,
+    &gLevel5Stage1Room5,
+    &gLevel5Stage1Room6,
     NULL,
 };
 
 /* gRoomTable[5][2] */
-struct RoomDef *const gUnk_087E22D4[] = {
-    &gUnk_0838C574,
-    &gUnk_0838CB58,
-    &gUnk_0838D190,
-    &gUnk_0838D7FC,
-    &gUnk_0838DBEC,
-    &gUnk_0838DD58,
-    &gUnk_0838DEC4,
-    &gUnk_0838E038,
-    &gUnk_0838E2C8,
-    &gUnk_0838E478,
-    &gUnk_0838E688,
-    &gUnk_0838E818,
+struct RoomDef *const gLevel5Stage2Rooms[] = {
+    &gLevel5Stage2Room0,
+    &gLevel5Stage2Room1,
+    &gLevel5Stage2Room2,
+    &gLevel5Stage2Room3,
+    &gLevel5Stage2Room4,
+    &gLevel5Stage2Room5,
+    &gLevel5Stage2Room6,
+    &gLevel5Stage2Room7,
+    &gLevel5Stage2Room8,
+    &gLevel5Stage2Room9,
+    &gLevel5Stage2Room10,
+    &gLevel5Stage2Room11,
     NULL,
 };
 
 /* gRoomTable[5][3] */
-struct RoomDef *const gUnk_087E2308[] = {
-    &gUnk_0838EEE4,
-    &gUnk_0838F788,
-    &gUnk_0838F914,
-    &gUnk_0838FCF4,
-    &gUnk_083900AC,
-    &gUnk_083902B0,
+struct RoomDef *const gLevel5Stage3Rooms[] = {
+    &gLevel5Stage3Room0,
+    &gLevel5Stage3Room1,
+    &gLevel5Stage3Room2,
+    &gLevel5Stage3Room3,
+    &gLevel5Stage3Room4,
+    &gLevel5Stage3Room5,
     NULL,
 };
 
 /* gRoomTable[5][4] */
-struct RoomDef *const gUnk_087E2324[] = {
-    &gUnk_0839059C,
-    &gUnk_08390BA8,
-    &gUnk_08391138,
-    &gUnk_08391C40,
-    &gUnk_08391D9C,
+struct RoomDef *const gLevel5Stage4Rooms[] = {
+    &gLevel5Stage4Room0,
+    &gLevel5Stage4Room1,
+    &gLevel5Stage4Room2,
+    &gLevel5Stage4Room3,
+    &gLevel5Stage4Room4,
     NULL,
 };
 
 /* gRoomTable[5][5] */
-struct RoomDef *const gUnk_087E233C[] = {
-    &gUnk_08392308,
-    &gUnk_08392778,
-    &gUnk_08392AA8,
-    &gUnk_08392F0C,
-    &gUnk_08393430,
-    &gUnk_083935AC,
-    &gUnk_08393760,
-    &gUnk_083938C0,
-    &gUnk_08393A7C,
-    &gUnk_08393C2C,
-    &gUnk_08393DC8,
+struct RoomDef *const gLevel5Stage5Rooms[] = {
+    &gLevel5Stage5Room0,
+    &gLevel5Stage5Room1,
+    &gLevel5Stage5Room2,
+    &gLevel5Stage5Room3,
+    &gLevel5Stage5Room4,
+    &gLevel5Stage5Room5,
+    &gLevel5Stage5Room6,
+    &gLevel5Stage5Room7,
+    &gLevel5Stage5Room8,
+    &gLevel5Stage5Room9,
+    &gLevel5Stage5Room10,
     NULL,
 };
 
 /* gRoomTable[5][6] */
-struct RoomDef *const gUnk_087E236C[] = {
-    &gUnk_08393EF4,
+struct RoomDef *const gLevel5Stage6Rooms[] = {
+    &gLevel5Stage6Room0,
     NULL,
 };
 
 /* gRoomTable[6][0] */
-struct RoomDef *const gUnk_087E2374[] = {
-    &gUnk_08394458,
-    &gUnk_08394C58,
-    &gUnk_083950F8,
-    &gUnk_08395298,
+struct RoomDef *const gLevel6Stage0Rooms[] = {
+    &gLevel6Stage0Room0,
+    &gLevel6Stage0Room1,
+    &gLevel6Stage0Room2,
+    &gLevel6Stage0Room3,
     NULL,
 };
 
 /* gRoomTable[6][1] */
-struct RoomDef *const gUnk_087E2388[] = {
-    &gUnk_08395450,
-    &gUnk_0839570C,
-    &gUnk_083959C8,
-    &gUnk_08395C90,
-    &gUnk_08395F34,
-    &gUnk_083961E4,
-    &gUnk_083964AC,
-    &gUnk_08396754,
-    &gUnk_08396A00,
-    &gUnk_08396CB8,
-    &gUnk_0839706C,
-    &gUnk_08397358,
-    &gUnk_08397508,
-    &gUnk_08397680,
-    &gUnk_08397804,
-    &gUnk_08397970,
-    &gUnk_08397B54,
-    &gUnk_08397CFC,
-    &gUnk_08397ED0,
-    &gUnk_0839804C,
-    &gUnk_08398220,
-    &gUnk_083983D8,
-    &gUnk_083985D0,
-    &gUnk_0839875C,
-    &gUnk_08398858,
+struct RoomDef *const gLevel6Stage1Rooms[] = {
+    &gLevel6Stage1Room0,
+    &gLevel6Stage1Room1,
+    &gLevel6Stage1Room2,
+    &gLevel6Stage1Room3,
+    &gLevel6Stage1Room4,
+    &gLevel6Stage1Room5,
+    &gLevel6Stage1Room6,
+    &gLevel6Stage1Room7,
+    &gLevel6Stage1Room8,
+    &gLevel6Stage1Room9,
+    &gLevel6Stage1Room10,
+    &gLevel6Stage1Room11,
+    &gLevel6Stage1Room12,
+    &gLevel6Stage1Room13,
+    &gLevel6Stage1Room14,
+    &gLevel6Stage1Room15,
+    &gLevel6Stage1Room16,
+    &gLevel6Stage1Room17,
+    &gLevel6Stage1Room18,
+    &gLevel6Stage1Room19,
+    &gLevel6Stage1Room20,
+    &gLevel6Stage1Room21,
+    &gLevel6Stage1Room22,
+    &gLevel6Stage1Room23,
+    &gLevel6Stage1Room24,
     NULL,
 };
 
 /* gRoomTable[6][2] */
-struct RoomDef *const gUnk_087E23F0[] = {
-    &gUnk_08398DDC,
-    &gUnk_08399208,
-    &gUnk_083995EC,
-    &gUnk_08399CB8,
+struct RoomDef *const gLevel6Stage2Rooms[] = {
+    &gLevel6Stage2Room0,
+    &gLevel6Stage2Room1,
+    &gLevel6Stage2Room2,
+    &gLevel6Stage2Room3,
     NULL,
 };
 
 /* gRoomTable[6][3] */
-struct RoomDef *const gUnk_087E2404[] = {
-    &gUnk_0839A214,
-    &gUnk_0839A4C8,
-    &gUnk_0839A774,
-    &gUnk_0839AA40,
-    &gUnk_0839AD18,
-    &gUnk_0839B260,
-    &gUnk_0839BB28,
+struct RoomDef *const gLevel6Stage3Rooms[] = {
+    &gLevel6Stage3Room0,
+    &gLevel6Stage3Room1,
+    &gLevel6Stage3Room2,
+    &gLevel6Stage3Room3,
+    &gLevel6Stage3Room4,
+    &gLevel6Stage3Room5,
+    &gLevel6Stage3Room6,
     NULL,
 };
 
 /* gRoomTable[6][4] */
-struct RoomDef *const gUnk_087E2424[] = {
-    &gUnk_0839BED4,
-    &gUnk_0839C0D0,
-    &gUnk_0839C57C,
-    &gUnk_0839CB34,
-    &gUnk_0839CD48,
+struct RoomDef *const gLevel6Stage4Rooms[] = {
+    &gLevel6Stage4Room0,
+    &gLevel6Stage4Room1,
+    &gLevel6Stage4Room2,
+    &gLevel6Stage4Room3,
+    &gLevel6Stage4Room4,
     NULL,
 };
 
 /* gRoomTable[6][5] */
-struct RoomDef *const gUnk_087E243C[] = {
-    &gUnk_0839D254,
-    &gUnk_0839D5B4,
-    &gUnk_0839D8BC,
-    &gUnk_0839DAFC,
-    &gUnk_0839DED4,
-    &gUnk_0839E190,
-    &gUnk_0839E590,
-    &gUnk_0839E944,
-    &gUnk_0839EBB4,
+struct RoomDef *const gLevel6Stage5Rooms[] = {
+    &gLevel6Stage5Room0,
+    &gLevel6Stage5Room1,
+    &gLevel6Stage5Room2,
+    &gLevel6Stage5Room3,
+    &gLevel6Stage5Room4,
+    &gLevel6Stage5Room5,
+    &gLevel6Stage5Room6,
+    &gLevel6Stage5Room7,
+    &gLevel6Stage5Room8,
     NULL,
 };
 
 /* gRoomTable[6][6] */
-struct RoomDef *const gUnk_087E2464[] = {
-    &gUnk_0839EE14,
+struct RoomDef *const gLevel6Stage6Rooms[] = {
+    &gLevel6Stage6Room0,
     NULL,
 };
 
 /* gRoomTable[7][0] */
-struct RoomDef *const gUnk_087E246C[] = {
-    &gUnk_0839F3D8,
-    &gUnk_0839F684,
-    &gUnk_0839FC40,
+struct RoomDef *const gLevel7Stage0Rooms[] = {
+    &gLevel7Stage0Room0,
+    &gLevel7Stage0Room1,
+    &gLevel7Stage0Room2,
     NULL,
 };
 
 /* gRoomTable[7][2] */
-struct RoomDef *const gUnk_087E247C[] = {
-    &gUnk_083A0058,
-    &gUnk_083A0370,
-    &gUnk_083A06DC,
-    &gUnk_083A0AA0,
-    &gUnk_083A0D2C,
-    &gUnk_083A0F00,
-    &gUnk_083A142C,
-    &gUnk_083A1644,
-    &gUnk_083A17CC,
-    &gUnk_083A1B64,
-    &gUnk_083A1FD8,
+struct RoomDef *const gLevel7Stage2Rooms[] = {
+    &gLevel7Stage2Room0,
+    &gLevel7Stage2Room1,
+    &gLevel7Stage2Room2,
+    &gLevel7Stage2Room3,
+    &gLevel7Stage2Room4,
+    &gLevel7Stage2Room5,
+    &gLevel7Stage2Room6,
+    &gLevel7Stage2Room7,
+    &gLevel7Stage2Room8,
+    &gLevel7Stage2Room9,
+    &gLevel7Stage2Room10,
     NULL,
 };
 
 /* gRoomTable[8][0] */
-struct RoomDef *const gUnk_087E24AC[] = {
-    &gUnk_083A24F0,
-    &gUnk_083A2578,
-    &gUnk_083A2694,
-    &gUnk_083A291C,
-    &gUnk_083A2AC4,
+struct RoomDef *const gLevel8Stage0Rooms[] = {
+    &gLevel8Stage0Room0,
+    &gLevel8Stage0Room1,
+    &gLevel8Stage0Room2,
+    &gLevel8Stage0Room3,
+    &gLevel8Stage0Room4,
     NULL,
 };
 
 /* gRoomTable[8][1] */
-struct RoomDef *const gUnk_087E24C4[] = {
-    &gUnk_083A32BC,
-    &gUnk_083A3344,
-    &gUnk_083A34E4,
-    &gUnk_083A360C,
-    &gUnk_083A38FC,
-    &gUnk_083A3A74,
+struct RoomDef *const gLevel8Stage1Rooms[] = {
+    &gLevel8Stage1Room0,
+    &gLevel8Stage1Room1,
+    &gLevel8Stage1Room2,
+    &gLevel8Stage1Room3,
+    &gLevel8Stage1Room4,
+    &gLevel8Stage1Room5,
     NULL,
 };
 
 /* gRoomTable[8][2] */
-struct RoomDef *const gUnk_087E24E0[] = {
-    &gUnk_083A3FF4,
-    &gUnk_083A407C,
-    &gUnk_083A421C,
-    &gUnk_083A433C,
-    &gUnk_083A45DC,
-    &gUnk_083A46FC,
+struct RoomDef *const gLevel8Stage2Rooms[] = {
+    &gLevel8Stage2Room0,
+    &gLevel8Stage2Room1,
+    &gLevel8Stage2Room2,
+    &gLevel8Stage2Room3,
+    &gLevel8Stage2Room4,
+    &gLevel8Stage2Room5,
     NULL,
 };
 
 /* gRoomTable[8][3] */
-struct RoomDef *const gUnk_087E24FC[] = {
-    &gUnk_083A4D80,
-    &gUnk_083A4E08,
-    &gUnk_083A4FA8,
-    &gUnk_083A50D0,
-    &gUnk_083A5354,
-    &gUnk_083A5480,
+struct RoomDef *const gLevel8Stage3Rooms[] = {
+    &gLevel8Stage3Room0,
+    &gLevel8Stage3Room1,
+    &gLevel8Stage3Room2,
+    &gLevel8Stage3Room3,
+    &gLevel8Stage3Room4,
+    &gLevel8Stage3Room5,
     NULL,
 };
 
 /* gRoomTable[8][4] */
-struct RoomDef *const gUnk_087E2518[] = {
-    &gUnk_083A5BE8,
-    &gUnk_083A5C70,
-    &gUnk_083A5E10,
-    &gUnk_083A5F3C,
-    &gUnk_083A61E4,
-    &gUnk_083A633C,
+struct RoomDef *const gLevel8Stage4Rooms[] = {
+    &gLevel8Stage4Room0,
+    &gLevel8Stage4Room1,
+    &gLevel8Stage4Room2,
+    &gLevel8Stage4Room3,
+    &gLevel8Stage4Room4,
+    &gLevel8Stage4Room5,
     NULL,
 };
 
 /* gRoomTable[8][5] */
-struct RoomDef *const gUnk_087E2534[] = {
-    &gUnk_083A6AE0,
-    &gUnk_083A6B68,
-    &gUnk_083A6D08,
-    &gUnk_083A6E24,
-    &gUnk_083A70A0,
-    &gUnk_083A71E4,
+struct RoomDef *const gLevel8Stage5Rooms[] = {
+    &gLevel8Stage5Room0,
+    &gLevel8Stage5Room1,
+    &gLevel8Stage5Room2,
+    &gLevel8Stage5Room3,
+    &gLevel8Stage5Room4,
+    &gLevel8Stage5Room5,
     NULL,
 };
 
 /* gRoomTable[8][6] */
-struct RoomDef *const gUnk_087E2550[] = {
-    &gUnk_083A77C4,
-    &gUnk_083A784C,
-    &gUnk_083A7ADC,
-    &gUnk_083A7C28,
+struct RoomDef *const gLevel8Stage6Rooms[] = {
+    &gLevel8Stage6Room0,
+    &gLevel8Stage6Room1,
+    &gLevel8Stage6Room2,
+    &gLevel8Stage6Room3,
     NULL,
 };
 
 /* gRoomTable[8][7] */
-struct RoomDef *const gUnk_087E2564[] = {
-    &gUnk_083A8364,
-    &gUnk_083A85D4,
+struct RoomDef *const gLevel8Stage7Rooms[] = {
+    &gLevel8Stage7Room0,
+    &gLevel8Stage7Room1,
     NULL,
 };
