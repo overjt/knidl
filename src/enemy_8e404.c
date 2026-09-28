@@ -522,7 +522,7 @@ s32 sub_0808ec34(void)
         TaskSetEntry(sub_0808f380, gCurTaskIdx);
         return 1;
     case 4:
-        sub_08066c3c(gUnk_08743390);
+        sub_08066c3c(gShotzoDef);
         ActorSetState(0);
         TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
         return 1;
@@ -542,14 +542,14 @@ s32 sub_0808ec90(void)
 s32 sub_0808ecb4(void)
 {
     if (gCurTask->variant == 4)
-        sub_08066c08(gUnk_08743390, 0);
+        sub_08066c08(gShotzoDef, 0);
     sub_0806a0f0(-2);
     return 1;
 }
 
 s32 sub_0808ece0(void)
 {
-    sub_08066c08(gUnk_08743390, 0);
+    sub_08066c08(gShotzoDef, 0);
     ActorSetState(2);
     TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
     return 1;
@@ -557,7 +557,7 @@ s32 sub_0808ece0(void)
 
 s32 sub_0808ed0c(void)
 {
-    sub_08066c08(gUnk_08743390, 0);
+    sub_08066c08(gShotzoDef, 0);
     ActorSetState(2);
     TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
     return 1;

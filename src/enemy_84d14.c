@@ -1017,7 +1017,7 @@ u8 sub_08085e74(void)
         return 1;
     case 1:
         ActorStopAnim();
-        sub_08066c3c(gUnk_08742A40);
+        sub_08066c3c(gWaddleDooDef);
         TaskStopY();
         ActorSetState(0);
         TaskSetEntry(sub_0808589c, gCurTaskIdx);
@@ -1071,7 +1071,7 @@ u8 sub_08085fa0(void)
         sub_0806a0f0(-2);
         return 1;
     case 1:
-        sub_08066c08(gUnk_08742A40, 0);
+        sub_08066c08(gWaddleDooDef, 0);
         sub_0806a0f0(-2);
         return 1;
     }
@@ -1121,7 +1121,7 @@ s32 sub_08086024(void)
 
 void sub_0808606c(void)
 {
-    sub_08066c08(gUnk_08742A40, 0);
+    sub_08066c08(gWaddleDooDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 

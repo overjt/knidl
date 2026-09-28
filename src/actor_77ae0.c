@@ -774,7 +774,7 @@ void Task_WaddleDee(void)
 
 s32 sub_08078984(void)
 {
-    sub_08066c08(gUnk_08740BD4, 0);
+    sub_08066c08(gWaddleDeeDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -843,7 +843,7 @@ s32 sub_08078a48(void)
         r = 1;
         break;
     case 3:
-        sub_08066c3c(gUnk_08740BD4);
+        sub_08066c3c(gWaddleDeeDef);
         ActorSetState(0);
         TaskSetEntry(ParasolWaddleDeeWalkEnterState, gCurTaskIdx);
         r = 1;
@@ -862,7 +862,7 @@ s32 sub_08078b08(void)
     u8 v = gCurTask->variant;
 
     if (v == 3 || v == 5)
-        sub_08066c08(gUnk_08740BD4, 0);
+        sub_08066c08(gWaddleDeeDef, 0);
     sub_0806a0f0(-2);
     return 1;
 }

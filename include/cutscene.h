@@ -110,7 +110,7 @@ extern struct M19Frame gUnk_087404A0[][24];
 extern u8 gUnk_08740620[];
 extern u32 gWaddleDeeVariants[];
 extern struct AnimCmd gUnk_087406A0[];
-extern u32 gUnk_08740BD4[];
+extern u32 gWaddleDeeDef[];
 extern u32 gWaddleDeeFrames[];
 extern u32 gCannonFrames[];
 extern u32 gCannonFuseFrames[];
