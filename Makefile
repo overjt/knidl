@@ -107,7 +107,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers check-data progress datastats shifttest boottest-roms boottest-run report symbols split modmap clean
+.PHONY: all compare check-headers check-data audit progress datastats shifttest boottest-roms boottest-run report symbols split modmap clean
 
 all: $(ROM)
 
@@ -223,6 +223,14 @@ boottest-run:
 check-data:
 	python3 tools/check_data_policy.py
 
+# The final audit (issue #37, docs/audit.md): .incbin only in data/*.s and
+# the header logo, every raw directive in asm/ justified, the sanctioned asm
+# list against tools/calcrom.pl, no raw address in src/ without a symbol,
+# macro or reason, the code exceptions, and the placeholder census in
+# docs/naming.md; needs no baserom, so CI runs it on every push.
+audit:
+	python3 tools/audit.py
+
 # objdiff-schema progress report (report.json) for decomp.dev — derived
 # from the repo's own ground truth (segments.txt / symbols.csv /
 # module-map.csv), no baserom needed.  CI uploads the artifact.
@@ -263,7 +271,7 @@ DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 # apart from the toolchain image.
 BOOTTEST_IMAGE := knidl-boottest
 
-.PHONY: image boottest-image all compare check-headers check-data progress datastats shifttest boottest symbols split modmap clean
+.PHONY: image boottest-image all compare check-headers check-data audit progress datastats shifttest boottest symbols split modmap clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -288,6 +296,9 @@ datastats: image
 
 check-data: image
 	$(DOCKER_RUN) make check-data INSIDE_DOCKER=1
+
+audit: image
+	$(DOCKER_RUN) make audit INSIDE_DOCKER=1
 
 shifttest: image
 	$(DOCKER_RUN) make shifttest INSIDE_DOCKER=1
