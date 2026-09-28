@@ -8,10 +8,10 @@
 /* effect_57494.c (0x08057494-0x08057CDF, issue #89).
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
- * variants 32-34.  Variant 32 (sub_08057494, M12/M13) is a nine-way jump
+ * variants 32-34.  Variant 32 (PlayerEffectBurningFlames, M12/M13) is a nine-way jump
  * table over its sub-state (cases 5-8 share one arm) with the per-sub-state
  * rows gUnk_0873BAB0[][3] (8.8 x velocity, 8.8 y acceleration, frame); its
- * sub-states respawn variant 32 and install sub_08057a10, which kills the
+ * sub-states respawn variant 32 and install PlayerEffectBurningFlamesUpdate, which kills the
  * task once the player leaves mode 13 or the spawner's Task.waterFlags bit 0 is
  * set.  Variant 33 (sub_08057a48, spawned by M14's task type #6) is a short
  * animation from gUnk_08751BF4.  Variant 34 (sub_08057ad4, M12) has two
@@ -23,7 +23,7 @@ u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amoun
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2);          /* M16's effect spawner (spawns task type #7) */
 
-void sub_08057494(void)
+void PlayerEffectBurningFlames(void)
 {
     struct Task *t;
     u16 *row;
@@ -43,7 +43,7 @@ void sub_08057494(void)
 
             u->moveCallback = (u32)TaskMove;
             u->frameTable = gUnk_0874C600;
-            u->updateCallback = (u32)sub_08057a10;
+            u->updateCallback = (u32)PlayerEffectBurningFlamesUpdate;
             u->unk6C = 0;
         }
         do
@@ -160,7 +160,7 @@ void sub_08057494(void)
 
             u->moveCallback = (u32)TaskMove;
             u->tileWord = (u->u8C.parentTask)->tileWord | 0x1808;
-            u->updateCallback = (u32)sub_08057a10;
+            u->updateCallback = (u32)PlayerEffectBurningFlamesUpdate;
             u->unk6C = 0;
         }
         do
@@ -185,7 +185,7 @@ void sub_08057494(void)
 
             u->moveCallback = (u32)TaskMove;
             u->tileWord = (u->u8C.parentTask)->tileWord | 0x1808;
-            u->updateCallback = (u32)sub_08057a10;
+            u->updateCallback = (u32)PlayerEffectBurningFlamesUpdate;
             u->unk6C = 0;
         }
         do
@@ -251,7 +251,7 @@ void sub_08057494(void)
     TaskExitTrampoline();
 }
 
-void sub_08057a10(void)
+void PlayerEffectBurningFlamesUpdate(void)
 {
     if (gCurTask->player->mode != 13 || ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);

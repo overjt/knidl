@@ -172,15 +172,15 @@ void sub_08056770(void);
 void sub_08056da8(void);
 
 /* src/effect_56dd4.c */
-void sub_08056dd4(void);
-void sub_0805707c(void);
-void sub_0805710c(void);
-void sub_080573a4(void);
+void PlayerEffectFireBreathFlames(void);
+void PlayerEffectFireBreathFlamesUpdate(void);
+void PlayerEffectSparkAura(void);
+void PlayerEffectSparkAuraUpdate(void);
 void sub_08057430(void);
 
 /* src/effect_57494.c */
-void sub_08057494(void);
-void sub_08057a10(void);
+void PlayerEffectBurningFlames(void);
+void PlayerEffectBurningFlamesUpdate(void);
 void sub_08057a48(void);
 void sub_08057ad4(void);
 void sub_08057c98(void);
@@ -188,17 +188,17 @@ void sub_08057c98(void);
 /* src/effect_57ce0.c */
 void sub_08057ce0(void);
 void sub_08057e90(void);
-void sub_08057f90(void);
-void sub_08058410(void);
-void sub_08058460(void);
-void sub_080586fc(void);
+void PlayerEffectMikeAttack(void);
+void PlayerEffectMikeAttackUpdate(void);
+void PlayerEffectSleepBubble(void);
+void PlayerEffectSleepBubbleUpdate(void);
 void sub_08058720(void);
 
 /* src/effect_58810.c */
-void sub_08058810(void);
-void sub_08058e80(void);
-void sub_08058f10(void);
-void sub_080594e0(void);
+void PlayerEffectIceBreathCloud(void);
+void PlayerEffectIceBreathCloudUpdate(void);
+void PlayerEffectFreezeAura(void);
+void PlayerEffectFreezeAuraUpdate(void);
 
 /* src/effect_59570.c */
 void sub_08059570(void);
@@ -211,9 +211,9 @@ void sub_0805a320(void);
 /* src/effect_5a358.c */
 void sub_0805a358(void);
 void sub_0805a508(void);
-void sub_0805a52c(void);
-void sub_0805ab04(void);
-void sub_0805ac50(void);
+void PlayerEffectCrashBlast(void);
+void PlayerEffectCrashBlastUpdate(void);
+void PlayerEffectCrashBlastDraw(void);
 void sub_0805acec(void);
 void sub_0805ae00(void);
 void sub_0805ae94(void);

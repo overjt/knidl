@@ -14,18 +14,18 @@
  * variants 35-39, all spawned by M12's actions (39 also by M11 and M13).
  * Variants 35 (sub_08057ce0, two sub-states), 36 (sub_08057e90) and 39
  * (sub_08058720) are animations in world space (gUnk_08751D88,
- * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (sub_08057f90) stops other
+ * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
  * tasks: it fills the 20-slot table gUnk_0200B000 with 0xFFFF, collects the
  * indices of the tasks of kinds 1, 2, 7 and 8 (Task.actorKind) whose
  * gTaskSlotTypes entry is not -1 (while gUnk_03002444 is clear), stops them
  * through the task skip mask (TaskRestoreSkipMask, with gUnk_02006178 = 1), and
  * after the yield releases them (TaskSaveSkipMask, TaskSetSkipMask(15, i)); then it
  * walks the tasks 32-62 of kinds 0, 3, 4, 6 and 9 one at a time the same
- * way.  Its callback sub_08058410 kills it once the player leaves mode 13
+ * way.  Its callback PlayerEffectMikeAttackUpdate kills it once the player leaves mode 13
  * and otherwise, while PlayerState.unk16 is set, registers the collider row
- * gUnk_0873C04C (RegisterCollider).  Variant 38 (sub_08058460) rides on its
+ * gUnk_0873C04C (RegisterCollider).  Variant 38 (PlayerEffectSleepBubble) rides on its
  * spawner through four sub-states and draws through M11's sub_0803dfc8;
- * sub_080586fc kills it once the player leaves mode 13. */
+ * PlayerEffectSleepBubbleUpdate kills it once the player leaves mode 13. */
 
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
@@ -144,7 +144,7 @@ void sub_08057e90(void)
     TaskExitTrampoline();
 }
 
-void sub_08057f90(void)
+void PlayerEffectMikeAttack(void)
 {
     struct Task *t;
     struct Task *u;
@@ -164,7 +164,7 @@ void sub_08057f90(void)
     {
         t->moveCallback = 0;
         t->drawCallback = 0;
-        t->updateCallback = (u32)sub_08058410;
+        t->updateCallback = (u32)PlayerEffectMikeAttackUpdate;
         t->u80.attackAbility = 7;
         while ((s8)gCurTask->player->unk16 == 0)
             TaskYieldTrampoline(1);
@@ -322,7 +322,7 @@ void sub_08057f90(void)
     TaskExitTrampoline();
 }
 
-void sub_08058410(void)
+void PlayerEffectMikeAttackUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -332,7 +332,7 @@ void sub_08058410(void)
         RegisterCollider((u8)gCurTaskIdx, t->unk28, t->unk2C, gUnk_0873C04C);
 }
 
-void sub_08058460(void)
+void PlayerEffectSleepBubble(void)
 {
     struct Task *t;
     struct Task *u;
@@ -340,7 +340,7 @@ void sub_08058460(void)
     u16 *p;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080586fc;
+    t->updateCallback = (u32)PlayerEffectSleepBubbleUpdate;
     switch (t->unk18 & 15)
     {
     case 0:
@@ -422,7 +422,7 @@ void sub_08058460(void)
     TaskExitTrampoline();
 }
 
-void sub_080586fc(void)
+void PlayerEffectSleepBubbleUpdate(void)
 {
     if (gCurTask->player->mode != 13)
         TaskFree(gCurTaskIdx);

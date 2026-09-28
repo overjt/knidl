@@ -13,18 +13,18 @@
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 45-48.  Variant 45 (sub_0805a358, M13) rides on its spawner
  * through three sub-states (gUnk_08751FCC); sub_0805a508 kills it once the
- * player leaves mode 13.  Variant 46 (sub_0805a52c, M13) is the twin of
+ * player leaves mode 13.  Variant 46 (PlayerEffectCrashBlast, M13) is the twin of
  * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
  * kinds 1, 2, 7 and 8 through gUnk_0200B000 and the task skip mask, around a
  * palette effect - it saves the palette buffer (CpuSet of gUnk_03001570 into
  * gUnk_0200AF20) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
- * sub_08065e6c and a VRAM transfer.  Its callbacks are sub_0805ab04, which
+ * sub_08065e6c and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
  * blends the saved palette towards gUnk_0873BC3E (while gUnk_03002444 is
  * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
  * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
  * (with the collider row gUnk_0873C2B4 at the player's camera position
  * gPlayerCameraPos) and lowering it by 46 to 0 in state 2 (then calling M17's
- * sub_08065ed0), and the draw hook sub_0805ac50.  Variant 47 (sub_0805acec,
+ * sub_08065ed0), and the draw hook PlayerEffectCrashBlastDraw.  Variant 47 (sub_0805acec,
  * M13) is an animation in world space; its callback sub_0805ae00 clears
  * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
  * Task.variant is not 4 (and copies the spawner's facing), and in the other
@@ -139,7 +139,7 @@ void sub_0805a508(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0805a52c(void)
+void PlayerEffectCrashBlast(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -208,8 +208,8 @@ void sub_0805a52c(void)
         break;
     case 1:
         t->moveCallback = 0;
-        t->drawCallback = (u32)sub_0805ac50;
-        t->updateCallback = (u32)sub_0805ab04;
+        t->drawCallback = (u32)PlayerEffectCrashBlastDraw;
+        t->updateCallback = (u32)PlayerEffectCrashBlastUpdate;
         t->layer = 15;
         w = gCurTask;
         w->frameTable = gUnk_08752020;
@@ -360,7 +360,7 @@ void sub_0805a52c(void)
     TaskExitTrampoline();
 }
 
-void sub_0805ab04(void)
+void PlayerEffectCrashBlastUpdate(void)
 {
     s32 n;
     struct Task *t;
@@ -409,7 +409,7 @@ void sub_0805ab04(void)
     }
 }
 
-void sub_0805ac50(void)
+void PlayerEffectCrashBlastDraw(void)
 {
     struct Task *t;
     s32 g;

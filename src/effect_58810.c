@@ -9,14 +9,14 @@
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 40 and 41, spawned by M13's ability get and actions.  Variant 40
- * (sub_08058810, 1648 bytes) rides on its spawner through three sub-states,
+ * (PlayerEffectIceBreathCloud, 1648 bytes) rides on its spawner through three sub-states,
  * each a long yield script whose every step stops once Task.unk28 is set;
- * its callback sub_08058e80 sets it when the player leaves mode 13 or its
+ * its callback PlayerEffectIceBreathCloudUpdate sets it when the player leaves mode 13 or its
  * facing no longer matches the spawner's, and kills the task when the
  * ability is no longer 13 or PlayerState.unk40 bit 8 is clear while the
- * spawner's Task.waterFlags bit 0 is set.  Variant 41 (sub_08058f10, 1488 bytes)
+ * spawner's Task.waterFlags bit 0 is set.  Variant 41 (PlayerEffectFreezeAura, 1488 bytes)
  * is four sub-states in world space (gUnk_08751E7C); its callback
- * sub_080594e0 sets Task.unk28 when the player leaves mode 13 (or, while
+ * PlayerEffectFreezeAuraUpdate sets Task.unk28 when the player leaves mode 13 (or, while
  * PlayerState.unk40 bit 8 is clear, when the spawner's Task.variant is not 1)
  * and kills it on the same unk40/unk7B test. */
 
@@ -25,13 +25,13 @@ void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 l
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 
-void sub_08058810(void)
+void PlayerEffectIceBreathCloud(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->updateCallback = (u32)sub_08058e80;
+    t->updateCallback = (u32)PlayerEffectIceBreathCloudUpdate;
     t->frameTable = gUnk_08751E5C;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 8;
     t->unk28 = 0;
@@ -235,7 +235,7 @@ void sub_08058810(void)
     TaskExitTrampoline();
 }
 
-void sub_08058e80(void)
+void PlayerEffectIceBreathCloudUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -247,13 +247,13 @@ void sub_08058e80(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_08058f10(void)
+void PlayerEffectFreezeAura(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
-    gCurTask->updateCallback = (u32)sub_080594e0;
+    gCurTask->updateCallback = (u32)PlayerEffectFreezeAuraUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751E7C;
@@ -412,7 +412,7 @@ void sub_08058f10(void)
     TaskExitTrampoline();
 }
 
-void sub_080594e0(void)
+void PlayerEffectFreezeAuraUpdate(void)
 {
     struct Task *t = gCurTask;
     struct PlayerState *p = t->player;

@@ -795,29 +795,29 @@ void sub_08050814(void);
 void sub_0805091c(void);
 
 /* src/plobj_509ec.c */
-void sub_080509ec(void);
-void sub_08050c48(void);
-void sub_08050d00(void);
-void sub_08050e84(void);
+void PlayerObjectAirPuff(void);
+void PlayerObjectAirPuffUpdate(void);
+void PlayerObjectSpitStar(void);
+void PlayerObjectSpitStarUpdate(void);
 void sub_08050f80(void);
-void sub_08051124(void);
-void sub_080512f8(void);
+void PlayerObjectSpitMultiStar(void);
+void PlayerObjectSpitMultiStarUpdate(void);
 void sub_080513d4(void);
 
 /* src/plobj_514f8.c */
-void sub_080514f8(void);
-void sub_0805176c(void);
-void sub_0805181c(void);
-void sub_08051b0c(void);
-void sub_08051c1c(void);
-void sub_08051d84(void);
-void sub_08051f4c(void);
-void sub_080520dc(void);
+void PlayerObjectWaterShot(void);
+void PlayerObjectWaterShotUpdate(void);
+void PlayerObjectFireBreath(void);
+void PlayerObjectFireBreathUpdate(void);
+void PlayerObjectCutterBlade(void);
+void PlayerObjectCutterBladeUpdate(void);
+void PlayerObjectLaserBeam(void);
+void PlayerObjectLaserBeamUpdate(void);
 
 /* src/plobj_5239c.c */
-void sub_0805239c(void);
-void sub_0805268c(void);
-s32 sub_080527a4(void);
+void PlayerObjectIceBreath(void);
+void PlayerObjectIceBreathUpdate(void);
+s32 PlayerObjectBeamOrb(void);
 s32 sub_08052b08(void);
 void sub_08052b88(void);
 

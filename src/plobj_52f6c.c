@@ -45,7 +45,7 @@ u32 IsWorldPosOnScreen(s16 x, s16 y);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void sub_0801c230(const s8 *p);
 void sub_0802205c(s8 *box);
-s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
+s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
 void sub_08052f6c(void)
 {
@@ -176,7 +176,7 @@ void sub_08052f6c(void)
             u16 *e = gUnk_0873B862[k];
             s32 v;
 
-            u->updateCallback = (u32)sub_080520dc;
+            u->updateCallback = (u32)PlayerObjectLaserBeamUpdate;
             u->frame = e[0];
             if (k == 1 || k == 3)
             {

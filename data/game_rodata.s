@@ -3963,15 +3963,15 @@ gUnk_0873B724:
 	.incbin	"baserom.gba", 0x73B724, 0x58
 	.global	gPlayerObjectVariants
 gPlayerObjectVariants:
-	.word	sub_080509ec+1
-	.word	sub_08050d00+1
-	.word	sub_08051124+1
-	.word	sub_080514f8+1
-	.word	sub_0805181c+1
-	.word	sub_08051c1c+1
-	.word	sub_08051f4c+1
-	.word	sub_0805239c+1
-	.word	sub_080527a4+1
+	.word	PlayerObjectAirPuff+1
+	.word	PlayerObjectSpitStar+1
+	.word	PlayerObjectSpitMultiStar+1
+	.word	PlayerObjectWaterShot+1
+	.word	PlayerObjectFireBreath+1
+	.word	PlayerObjectCutterBlade+1
+	.word	PlayerObjectLaserBeam+1
+	.word	PlayerObjectIceBreath+1
+	.word	PlayerObjectBeamOrb+1
 	.word	sub_08052b88+1
 	.word	sub_08052f6c+1
 	.word	sub_080535b0+1
@@ -4028,24 +4028,24 @@ gPlayerEffectVariants:
 	.word	sub_08056448+1
 	.word	sub_080564ac+1
 	.word	sub_08056770+1
-	.word	sub_08056dd4+1
-	.word	sub_0805710c+1
+	.word	PlayerEffectFireBreathFlames+1
+	.word	PlayerEffectSparkAura+1
 	.word	sub_08057430+1
-	.word	sub_08057494+1
+	.word	PlayerEffectBurningFlames+1
 	.word	sub_08057a48+1
 	.word	sub_08057ad4+1
 	.word	sub_08057ce0+1
 	.word	sub_08057e90+1
-	.word	sub_08057f90+1
-	.word	sub_08058460+1
+	.word	PlayerEffectMikeAttack+1
+	.word	PlayerEffectSleepBubble+1
 	.word	sub_08058720+1
-	.word	sub_08058810+1
-	.word	sub_08058f10+1
+	.word	PlayerEffectIceBreathCloud+1
+	.word	PlayerEffectFreezeAura+1
 	.word	sub_08059570+1
 	.word	sub_08059c28+1
 	.word	sub_08059d7c+1
 	.word	sub_0805a358+1
-	.word	sub_0805a52c+1
+	.word	PlayerEffectCrashBlast+1
 	.word	sub_0805acec+1
 	.word	sub_0805ae94+1
 	.global	gUnk_0873B9EC

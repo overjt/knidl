@@ -8,12 +8,12 @@
 /* plobj_5239c.c (0x0805239C-0x08052F6B, issue #90).
  *
  * Task type #6, variants 7-9, each variant body followed by the callbacks
- * only it installs.  Variant 7 (sub_0805239c, animation tables
+ * only it installs.  Variant 7 (PlayerObjectIceBreath, animation tables
  * gUnk_08751B40/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
  * and installs M11's sub_0803dfc8 and its own collision callback
- * sub_0805268c, which registers the collider row gUnk_0873BE24 and runs the
+ * PlayerObjectIceBreathUpdate, which registers the collider row gUnk_0873BE24 and runs the
  * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
- * Variant 8 (sub_080527a4, gUnk_08751BB0) traces six-step paths from the
+ * Variant 8 (PlayerObjectBeamOrb, gUnk_08751BB0) traces six-step paths from the
  * 8.8 velocity rows gUnk_0873B7C0[k] and the animation rows
  * gUnk_0873B808[k] (sound 129) with the callback sub_08052b08 (collider row
  * gUnk_0873BE38, hit test gUnk_0873CC2C), which variant 10
@@ -36,17 +36,17 @@ u16 RandomSpread(u16 base, u8 scale, u8 amount);
 s16 RandomSpreadFacing(u16 base, u8 scale, u8 amount);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
-s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/sub_08050c48.c); landed M09/M12/M13 files spell it u16 */
+s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
 s32 sub_08052b08(void);   /* returns a value: pop {r1} epilogue; plobj_52f6c.c spells it void */
 
-void sub_0805239c(void)
+void PlayerObjectIceBreath(void)
 {
     {
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMove;
-        t->updateCallback = (u32)sub_0805268c;
+        t->updateCallback = (u32)PlayerObjectIceBreathUpdate;
         t->unk28 = 0;
         t->u80.attackAbility = 13;
     }
@@ -154,7 +154,7 @@ void sub_0805239c(void)
     TaskExitTrampoline();
 }
 
-void sub_0805268c(void)
+void PlayerObjectIceBreathUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -197,7 +197,7 @@ void sub_0805268c(void)
     }
 }
 
-s32 sub_080527a4(void)
+s32 PlayerObjectBeamOrb(void)
 {
     u16 *xs;
     u16 *ys;

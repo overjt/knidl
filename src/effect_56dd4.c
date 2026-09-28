@@ -8,15 +8,15 @@
 /* effect_56dd4.c (0x08056DD4-0x08057493, issue #89).
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
- * variants 29-31.  Variant 29 (sub_08056dd4, M11/M13) has three sub-states
- * with random frames (RandomRange); its callback sub_0805707c sets
+ * variants 29-31.  Variant 29 (PlayerEffectFireBreathFlames, M11/M13) has three sub-states
+ * with random frames (RandomRange); its callback PlayerEffectFireBreathFlamesUpdate sets
  * Task.unk28 once the player leaves mode 13 or its facing no longer matches
  * the spawner's, and kills it when the ability is no longer 1 or when
  * PlayerState.unk40 bit 8 is clear while the spawner's Task.waterFlags bit 0 is
- * set.  Variant 30 (sub_0805710c, M11/M13) rides on its spawner with the
+ * set.  Variant 30 (PlayerEffectSparkAura, M11/M13) rides on its spawner with the
  * draw hook TaskDrawWorldLoadTiles (sub-state 0) or TaskDrawWorldTilesLoaded and re-rolls its
  * position every two frames from the {base, scale, amount} rows
- * gUnk_0873BA8C[][2][3]; its callback sub_080573a4 kills it when the player
+ * gUnk_0873BA8C[][2][3]; its callback PlayerEffectSparkAuraUpdate kills it when the player
  * leaves mode 13 or the spawner's Task.variant is not 1, and otherwise, while
  * Task.unk28 is clear, registers the collider row gUnk_0873C038 (M05's
  * RegisterCollider) and tests the block hit-box set gUnk_0873CC94 (M09's
@@ -32,13 +32,13 @@ s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated wh
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 
-void sub_08056dd4(void)
+void PlayerEffectFireBreathFlames(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
-    gCurTask->updateCallback = (u32)sub_0805707c;
+    gCurTask->updateCallback = (u32)PlayerEffectFireBreathFlamesUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751CA4;
@@ -114,7 +114,7 @@ void sub_08056dd4(void)
     TaskExitTrampoline();
 }
 
-void sub_0805707c(void)
+void PlayerEffectFireBreathFlamesUpdate(void)
 {
     {
         struct Task *t = gCurTask;
@@ -132,14 +132,14 @@ void sub_0805707c(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_0805710c(void)
+void PlayerEffectSparkAura(void)
 {
     struct Task *t;
     s16 *x;
     s16 *y;
 
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
-    gCurTask->updateCallback = (u32)sub_080573a4;
+    gCurTask->updateCallback = (u32)PlayerEffectSparkAuraUpdate;
     gCurTask->layer = 8;
     t = gCurTask;
     t->frameTable = gUnk_08751CBC;
@@ -199,7 +199,7 @@ void sub_0805710c(void)
     }
 }
 
-void sub_080573a4(void)
+void PlayerEffectSparkAuraUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *p;
