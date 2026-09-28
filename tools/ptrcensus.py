@@ -192,9 +192,10 @@ def record_provider(rom, cfg, segs):
     return {"coincidence": out, "pointer": ptr}
 
 
-def elf_symbols(elf):
+def elf_symbols(elf, skip=()):
     """Sorted VMAs of the ELF's symbols that name something: every symbol
-    but the ARM mapping symbols ($a/$t/$d), file and section symbols."""
+    but the ARM mapping symbols ($a/$t/$d), file and section symbols, and
+    the names in `skip`."""
     out = subprocess.run(["arm-none-eabi-readelf", "-sW", elf],
                          stdout=subprocess.PIPE, universal_newlines=True,
                          check=True).stdout
@@ -204,7 +205,7 @@ def elf_symbols(elf):
                      r'(\w+)\s+(\S+)\s*$', line)
         if not m or m.group(2) in ("FILE", "SECTION") or m.group(3) in ("UND", "ABS"):
             continue
-        if re.match(r'^\$[atd](\.|$)', m.group(4)):
+        if re.match(r'^\$[atd](\.|$)', m.group(4)) or m.group(4) in skip:
             continue
         addrs.append(int(m.group(1), 16))
     addrs.sort()
@@ -225,7 +226,7 @@ def rom_refs(rom):
     return out
 
 
-def unreachable_check(ranges, rom, elf, coin):
+def unreachable_check(ranges, rom, elf, coin, segnames=()):
     """Condition (a) of the unreachable class (docs/data.md 8.3), checked
     for every claimed [s, e): no 4-byte value anywhere in the ROM outside
     [s, e), at any byte offset, points into it (bit 0 ignored; symbolic
@@ -236,7 +237,16 @@ def unreachable_check(ranges, rom, elf, coin):
     refers into it, they are never followed.  Returns the failures."""
     refs = [(v, h) for v, h in rom_refs(rom) if not coin.covering(h, h + 4)]
     vals = [v for v, _h in refs]
-    syms = elf_symbols(elf)
+    # The one exclusion (segnames, the data segments' names): split.py
+    # writes `.global <segment>` / `<segment>:` at the start of every data
+    # file, with the segment's exact name from docs/analysis/segments.txt.
+    # That symbol names a file (a linker.ld row), not an object: no C code,
+    # pool or data word refers to it, and the only other use, a grouped
+    # section's matching-mode assertion (tools/ldgroup.py), emits no bytes.
+    # So a region may start at a segment boundary.  Every other symbol, a
+    # data_symbols label or a generated one at the same address included,
+    # still counts.
+    syms = elf_symbols(elf, skip=segnames)
     bad = []
     for s, e, _kind, why in ranges:
         i = bisect.bisect_left(vals, s)
@@ -311,7 +321,8 @@ def main():
                    if c[2].endswith("-nextlabel")])
     unreach_claims = [c for _n, r in results for c in r["coincidence"]
                       if c[2] == "unreachable"]
-    bad = unreachable_check(unreach_claims, rom, args.elf, coin)
+    bad = unreachable_check(unreach_claims, rom, args.elf, coin,
+                            set(n for _s, _e, k, n in segs if k == "data"))
     if bad:
         for b in bad[:20]:
             sys.stderr.write("unreachable claim fails: %s\n" % b)

@@ -15,6 +15,8 @@
 #   --rodata compare the object's .rodata instead of .text: a functional
 #            table defined in C (src/data/*.c, issue #36 phase 2), checked
 #            against its ROM range before tools/carve_data.py lands it.
+#   --section=NAME  compare the object's section NAME: one run of records
+#            that src/data/*.c places with __attribute__((section)).
 #
 # What it does:
 #   1. Compiles file.c through the exact Makefile pipeline (cpp | agbcc |
@@ -55,6 +57,7 @@ for a in "$@"; do
         --newpb) RECIPE="newpb" ;;
         --no-werror) WERROR="" ;;
         --rodata) SECTION=".rodata" ;;
+        --section=*) SECTION="${a#--section=}" ;;
         *) echo "unknown flag: $a" >&2; exit 2 ;;
     esac
 done
@@ -70,7 +73,7 @@ if [[ "${INSIDE_DOCKER:-0}" != "1" ]]; then
         $( [[ "$RECIPE" == "old2" ]] && echo --old2 ) \
         $( [[ "$RECIPE" == "newpb" ]] && echo --newpb ) \
         $( [[ -z "$WERROR" ]] && echo --no-werror ) \
-        $( [[ "$SECTION" == ".rodata" ]] && echo --rodata )
+        $( [[ "$SECTION" != ".text" ]] && echo "--section=$SECTION" )
 fi
 
 START=$((START_RAW)); END=$((END_RAW)); SIZE=$((END - START))
@@ -96,6 +99,10 @@ cpp -P -I include "$CFILE" \
 
 # ── 2. auto stand-ins + linker script for undefined symbols ─────────────────
 arm-none-eabi-nm -u "$D/cand.o" | awk '{print $NF}' | sort -u > "$D/undef.txt"
+# the object's other sections named .<name>_<8 hex digits> (runs of records,
+# --section): linked at that address, so references between runs resolve
+arm-none-eabi-readelf -SW "$D/cand.o" \
+  | sed -n 's/.*\] \(\.[A-Za-z0-9_]*_[0-9a-f]\{8\}\) .*/\1/p' > "$D/sections.txt"
 
 python3 - "$D" "$START" "$SECTION" <<'PYEOF'
 import csv, json, re, sys
@@ -149,6 +156,10 @@ with open(d + '/standins.s', 'w') as f:
 with open(d + '/link.ld', 'w') as f:
     f.write("MEMORY { ROM : ORIGIN = 0x08000000, LENGTH = 8M }\nSECTIONS\n{\n")
     f.write("    .cand 0x%08X : { %s/cand.o(%s) } > ROM\n" % (start, d, section))
+    for sec in open(d + '/sections.txt').read().split():
+        if sec != section:
+            f.write("    %s 0x%s : { %s/cand.o(%s) } > ROM\n"
+                    % (sec, sec[-8:], d, sec))
     for name, addr, mode in labels:
         f.write("    .st_%s 0x%08X : { *(.st_%s) } > ROM\n" % (name, addr, name))
     f.write("    /DISCARD/ : { *(*) }\n}\n")

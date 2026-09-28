@@ -114,7 +114,9 @@ def main():
     for n in old_names:
         m = ldblocks.block_re(n, comment=True).search(old_ld)
         if not m:
-            die('linker.ld section .%s not found' % n)
+            die(ldblocks.not_found(old_ld, n))
+        if ldblocks.check_not_group(m.group(0), n):
+            die(ldblocks.check_not_group(m.group(0), n))
         spans.append((m.start(), m.end()))
     for (a0, a1), (b0, _b1) in zip(spans, spans[1:]):
         if old_ld[a1:b0].strip():

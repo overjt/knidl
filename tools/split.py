@@ -1228,6 +1228,10 @@ class DataPlan(object):
             if addr % 4:
                 raise ConfigError("pointer slot 0x%08X (%s) is not 4-aligned"
                                   % (addr, why))
+            if any(s <= addr < e for s, e in self.c_ranges):
+                # a record carved into C (src/data/): its pointer fields
+                # are C initializers, not words of a data file
+                return
             seg = self.segment_of(addr)
             if seg is None or addr + 4 > seg[2]:
                 raise ConfigError("pointer slot 0x%08X (%s) is not inside a "
