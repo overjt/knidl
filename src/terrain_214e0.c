@@ -55,11 +55,11 @@ void TerrainProbeWaterAtPoint(void)
 
 void TerrainProbeDamage(void)
 {
-    gTerrainProbeResult.unkF = 0;
-    gTerrainProbeResult.unkF = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.unkF;
-    gTerrainProbeResult.unkF = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.unkF;
-    gTerrainProbeResult.unkF = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.unkF;
-    gTerrainProbeResult.unkF = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.unkF;
+    gTerrainProbeResult.damage = 0;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.damage;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) | gTerrainProbeResult.damage;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.damage;
+    gTerrainProbeResult.damage = TerrainQueryDamage(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) | gTerrainProbeResult.damage;
 }
 
 s32 TerrainQueryPixel(u32 x, u32 y)

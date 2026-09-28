@@ -87,7 +87,7 @@ struct Unk03005530
     /*0x0C*/ u8 unkC;
     /*0x0D*/ u8 unkD;
     /*0x0E*/ u8 onSlipperyFloor;
-    /*0x0F*/ u8 unkF;
+    /*0x0F*/ u8 damage;
     /*0x10*/ u8 unk10;
 };
 
@@ -107,7 +107,7 @@ struct Unk03005550
     /*0x08*/ s16 unk8;
     /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 onSlipperyFloor;
-    /*0x0C*/ u8 unkC;
+    /*0x0C*/ u8 damage;
     /*0x0D*/ u8 unkD;
 };
 

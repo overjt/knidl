@@ -298,13 +298,13 @@ void PlayerUpdate(void)
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
             gCurTask->player->unk4E = gUnk_03005544;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
-        if (gTerrainResult.unkC != 0 && !(gCurTask->player->unk42 & 0x200)
+        if (gTerrainResult.damage != 0 && !(gCurTask->player->unk42 & 0x200)
          && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)
         {
             r = AddPlayerHealth(-8, gCurTask->player->playerIndex);
             if (r != 0)
             {
-                gCurTask->hitEffect = gTerrainResult.unkC | 0x80;
+                gCurTask->hitEffect = gTerrainResult.damage | 0x80;
                 gCurTask->hitKind = 2;
             }
             else
@@ -319,7 +319,7 @@ void PlayerUpdate(void)
     {
         gTerrainResult.unk0 = gTerrainResult.ceilingHits = gTerrainResult.unk2 = 0;
         gTerrainResult.unk3 = gTerrainResult.slope = gTerrainResult.unk5 = 0;
-        gTerrainResult.unk8 = gTerrainResult.onSlipperyFloor = gTerrainResult.unkC = 0;
+        gTerrainResult.unk8 = gTerrainResult.onSlipperyFloor = gTerrainResult.damage = 0;
         gTerrainResult.atDoor = 0;
         gTerrainProbeResult.onSlipperyFloor = 0;
     }
