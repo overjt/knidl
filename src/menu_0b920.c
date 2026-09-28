@@ -26,7 +26,7 @@
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-void sub_080b81a0(s32 a);
+void ResetLevelProgress(s32 a);
 
 void MainMenuMain(void)
 {
@@ -173,7 +173,7 @@ void MainMenuMain(void)
             LoadSaveSlot(gCurSaveSlot);
             CheckNewMilestones();
             if (gUnk_02006090 == 7)
-                sub_080b81a0(gCurSaveSlot);
+                ResetLevelProgress(gCurSaveSlot);
         }
         gPrevGameState = 4;
         break;

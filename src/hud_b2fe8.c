@@ -1196,7 +1196,7 @@ void MaximTomatoHeal(void)
         k4 = sub_080b4204(*(s16 *)((u8 *)*c + 68));
         TaskYieldTrampoline(8);
     } while (k4 == 0);
-    sub_08040894(*(s16 *)((u8 *)gCurTask + 68), 1);
+    PlayerStartItemShare(*(s16 *)((u8 *)gCurTask + 68), 1);
     EnablePause();
 }
 
@@ -1241,7 +1241,7 @@ xbody:
     if (*(s16 *)h < n)
         goto xbody;
 xend:
-    sub_08040894(*(s16 *)((u8 *)gCurTask + 68), 2);
+    PlayerStartItemShare(*(s16 *)((u8 *)gCurTask + 68), 2);
     EnablePause();
 }
 

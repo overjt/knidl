@@ -7,7 +7,7 @@
 #include "player.h"
 #include "save.h"
 
-void sub_080b72bc(void)
+void InputRecorderRestoreState(void)
 {
     s32 i;
     s32 j;

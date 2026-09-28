@@ -88,7 +88,7 @@ void LoadSaveSlot(s32 a)
     }
     CalcCompletionPercent(gExtraMode);
 }
-void sub_080b81a0(void)
+void ResetLevelProgress(void)
 {
     s32 i;
     s32 j;

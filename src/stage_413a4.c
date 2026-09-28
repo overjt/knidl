@@ -432,7 +432,7 @@ void MetaKnightActionJumpUpdate(void)
     PlayerStopAtWall();
 }
 
-void sub_08041b8c(void)
+void MetaKnightActionReleaseJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 4;
@@ -1280,7 +1280,7 @@ void sub_08042c50(void)
     }
 }
 
-void sub_08042cfc(void)
+void MetaKnightActionRecoil(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
@@ -1291,7 +1291,7 @@ void sub_08042cfc(void)
     TaskSleepForever();
 }
 
-void sub_08042d40(void)
+void MetaKnightActionRecoilUpdate(void)
 {
     gCurTask->player->requestedAction = 7;
 }

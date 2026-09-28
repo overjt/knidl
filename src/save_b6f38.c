@@ -56,7 +56,7 @@ extern struct LinkSave gInputRecording;
 extern u16 gBossEnduranceBestTime[];
 extern u16 gCompletionPercent;
 extern u16 gMetaKnightmareBestTime[];
-extern void sub_080b72bc(void);
+extern void InputRecorderRestoreState(void);
 extern void ReadInputRecording(void);
 extern void WriteInputRecording(void);
 
@@ -133,11 +133,11 @@ void InputRecorderStart(void)
     case 2:
         ReadInputRecording();
         gInputRecordingPtr = &gInputRecording;
-        sub_080b72bc();
+        InputRecorderRestoreState();
         break;
     case 3:
         gInputRecordingPtr = gUnk_0200EC50;
-        sub_080b72bc();
+        InputRecorderRestoreState();
         break;
     }
 }

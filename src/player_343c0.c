@@ -16,8 +16,8 @@
  * from gPlayerActionHandlers[57] (CallTableEntry(index, count, table); entry 0 of
  * both tables is NULL).  Here: actions 3-6 and 22.
  * PlayerActionRun enters mode 2 (handler 3, PlayerActionRunUpdate), PlayerActionSkid
- * mode 3 (handler 4, PlayerActionSkidUpdate), PlayerActionJump and sub_08034d34 mode 4
- * (handlers 5 and 6, PlayerActionJumpUpdate and sub_08034e60); sub_08034f70
+ * mode 3 (handler 4, PlayerActionSkidUpdate), PlayerActionJump and PlayerActionReleaseJump mode 4
+ * (handlers 5 and 6, PlayerActionJumpUpdate and PlayerActionReleaseJumpUpdate); sub_08034f70
  * (action 22) clears PlayerState.terrainBox and runs PlayerActionFall, the
  * mode-5 coroutine of the next file.  The enter coroutines switch on the
  * ability PlayerState.ability for the animation (TaskSetFrame) and loop
@@ -412,7 +412,7 @@ end:
     PlayerStopAtWall();
 }
 
-void sub_08034d34(void)
+void PlayerActionReleaseJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 4;
@@ -452,7 +452,7 @@ void sub_08034d34(void)
     }
 }
 
-void sub_08034e60(void)
+void PlayerActionReleaseJumpUpdate(void)
 {
     PlayerTurnToHeldDirection();
     while (PlayerCheckBButton() == 0 && PlayerCheckDropAbility() == 0)

@@ -182,7 +182,7 @@ void ResumeHBlankScroll(void);
 void InputRecorderStart(void);
 
 /* src/save_b72bc.c */
-void sub_080b72bc(void);
+void InputRecorderRestoreState(void);
 
 /* src/save_b75a4.c */
 void InputRecorderRecordFrame(void);
@@ -203,8 +203,8 @@ s32 WriteSaveSlot(s32 a);
 u32 WriteSramSignature(void);
 void WriteNewSaveFile(s32 a);
 void SaveProgress(s32 a);
-void sub_080b7c00(s32 a);
-void sub_080b7cb4(s32 a);
+void SaveMetaKnightmareBestTime(s32 a);
+void SaveBossEnduranceBestTime(s32 a);
 void EraseSaveSlot(s32 a);
 void ClearSaveSlot(s32 a);
 u32 CalcSaveSlotChecksum(s32 a);

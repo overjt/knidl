@@ -2786,7 +2786,7 @@ s32 sub_080404e4(void)
 struct M11Ctr { u16 unk00; };
 #define CTR(p) (((struct M11Ctr *)&(p)->unk38)->unk00)
 
-s32 sub_08040514(void)
+s32 PlayerCheckShareItem(void)
 {
     struct Task *u;
     struct PlayerState *q;
@@ -2922,7 +2922,7 @@ void sub_0804087c(s32 a0)
     (gPlayerStates + a0)->unk40 |= 64;
 }
 
-void sub_08040894(s32 a0, u8 a1)
+void PlayerStartItemShare(s32 a0, u8 a1)
 {
     struct PlayerState *p;
 

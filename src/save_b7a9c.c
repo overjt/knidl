@@ -68,7 +68,7 @@ void SaveProgress(s32 a)
     UpdateSaveSlotChecksum(a);
     WriteSaveSlot(a);
 }
-void sub_080b7c00(s32 a)
+void SaveMetaKnightmareBestTime(s32 a)
 {
     u32 m;
     u32 s;
@@ -102,7 +102,7 @@ void sub_080b7c00(s32 a)
     UpdateSaveSlotChecksum(a);
     WriteSaveSlot(a);
 }
-void sub_080b7cb4(s32 a)
+void SaveBossEnduranceBestTime(s32 a)
 {
     u32 m;
     u32 s;

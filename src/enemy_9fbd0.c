@@ -140,7 +140,7 @@ u8 sub_0809fd64(void)
     if (gMetaKnightmareMode == 1)
     {
         sub_0800a698();
-        sub_080b7c00(gCurSaveSlot[0]);
+        SaveMetaKnightmareBestTime(gCurSaveSlot[0]);
     }
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;

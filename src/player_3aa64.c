@@ -17,10 +17,10 @@
  * gUnk_0873D9DA[4][4] chosen by the ability; its per-frame handler 20,
  * PlayerActionSwimUpdate, re-picks the state and re-binds the coroutine when the
  * keys change.  Actions 24-28 (PlayerActionStandInWater, PlayerActionWalkInWater, PlayerActionSwallowInWater,
- * PlayerActionSpitInWater, sub_0803b9a0) are short animation scripts, the last a
+ * PlayerActionSpitInWater, PlayerActionWaterShot) are short animation scripts, the last a
  * four-way directional pick; handlers 21-25 run M11's predicates and
- * request the next action through PlayerState.requestedAction.  sub_0803bd90
- * (action 18) installs handler 17, the leaf sub_0803bdd4. */
+ * request the next action through PlayerState.requestedAction.  PlayerActionRecoil
+ * (action 18) installs handler 17, the leaf PlayerActionRecoilUpdate. */
 
 void TaskSetEntry(void *a, u32 i);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
@@ -673,7 +673,7 @@ void PlayerActionSpitInWaterUpdate(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_0803b9a0(void)
+void PlayerActionWaterShot(void)
 {
     struct Task *t;
 
@@ -806,7 +806,7 @@ void sub_0803b9a0(void)
     TaskSleepForever();
 }
 
-void sub_0803bbf0(void)
+void PlayerActionWaterShotUpdate(void)
 {
     struct Task *t = gCurTask;
     u8 *st = &t->variant;
@@ -816,7 +816,7 @@ void sub_0803bbf0(void)
         if (!(gLatchedHeldKeys[t->player->playerIndex] & 2) && (s16)t->player->unk14 == 0)
         {
             *st = 1;
-            TaskSetEntry(sub_0803b9a0, gCurTaskIdx);
+            TaskSetEntry(PlayerActionWaterShot, gCurTaskIdx);
         }
         else
         {
@@ -836,7 +836,7 @@ void sub_0803bbf0(void)
             if (d != gCurTask->unk28)
             {
                 gCurTask->unk28 = d;
-                TaskSetEntry(sub_0803b9a0, gCurTaskIdx);
+                TaskSetEntry(PlayerActionWaterShot, gCurTaskIdx);
             }
         }
         if ((s16)gCurTask->player->unk14 != 0)
@@ -869,7 +869,7 @@ void sub_0803bbf0(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_0803bd90(void)
+void PlayerActionRecoil(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
@@ -880,7 +880,7 @@ void sub_0803bd90(void)
     TaskSleepForever();
 }
 
-void sub_0803bdd4(void)
+void PlayerActionRecoilUpdate(void)
 {
     gCurTask->player->requestedAction = 7;
 }

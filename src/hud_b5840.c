@@ -71,7 +71,7 @@ extern u32 ActorCollideTerrain(void);
 extern u32 sub_0806951c(void);
 extern u32 sub_08069888(void);
 extern u32 ActorReactToHit(void);
-extern void sub_080b7cb4();
+extern void SaveBossEnduranceBestTime();
 
 /* Module functions */
 void sub_080a2b2c();

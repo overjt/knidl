@@ -3591,9 +3591,9 @@ gPlayerActions:
 	.word	PlayerActionRun+1
 	.word	PlayerActionSkid+1
 	.word	PlayerActionJump+1
-	.word	sub_08034d34+1
+	.word	PlayerActionReleaseJump+1
 	.word	PlayerActionFall+1
-	.word	sub_080355d8+1
+	.word	PlayerActionHighFall+1
 	.word	PlayerActionFloat+1
 	.word	PlayerActionDuck+1
 	.word	PlayerActionSlide+1
@@ -3603,8 +3603,8 @@ gPlayerActions:
 	.word	PlayerActionSwallow+1
 	.word	PlayerActionHurt+1
 	.word	PlayerActionDie+1
-	.word	sub_0803bd90+1
-	.word	sub_0803bde8+1
+	.word	PlayerActionRecoil+1
+	.word	PlayerActionShareItem+1
 	.word	PlayerActionEnterDoor+1
 	.word	PlayerActionExitDoor+1
 	.word	sub_08034f70+1
@@ -3613,7 +3613,7 @@ gPlayerActions:
 	.word	PlayerActionWalkInWater+1
 	.word	PlayerActionSwallowInWater+1
 	.word	PlayerActionSpitInWater+1
-	.word	sub_0803b9a0+1
+	.word	PlayerActionWaterShot+1
 	.word	PlayerActionGetAbility+1
 	.word	PlayerActionBackdrop+1
 	.word	PlayerActionThrow+1
@@ -3655,9 +3655,9 @@ gPlayerActionHandlers:
 	.word	PlayerActionRunUpdate+1
 	.word	PlayerActionSkidUpdate+1
 	.word	PlayerActionJumpUpdate+1
-	.word	sub_08034e60+1
+	.word	PlayerActionReleaseJumpUpdate+1
 	.word	PlayerActionFallUpdate+1
-	.word	sub_08035848+1
+	.word	PlayerActionHighFallUpdate+1
 	.word	PlayerActionFloatUpdate+1
 	.word	PlayerActionDuckUpdate+1
 	.word	PlayerActionSlideUpdate+1
@@ -3666,13 +3666,13 @@ gPlayerActionHandlers:
 	.word	PlayerActionSpitUpdate+1
 	.word	PlayerActionSwallowUpdate+1
 	.word	PlayerActionHurtUpdate+1
-	.word	sub_0803bdd4+1
-	.word	sub_0803c990+1
+	.word	PlayerActionRecoilUpdate+1
+	.word	PlayerActionShareItemUpdate+1
 	.word	PlayerActionExitDoorUpdate+1
 	.word	PlayerActionSwimUpdate+1
 	.word	PlayerActionStandInWaterUpdate+1
 	.word	PlayerActionWalkInWaterUpdate+1
-	.word	sub_0803bbf0+1
+	.word	PlayerActionWaterShotUpdate+1
 	.word	PlayerActionSpitInWaterUpdate+1
 	.word	PlayerActionSwallowInWaterUpdate+1
 	.word	PlayerActionGetAbilityUpdate+1
@@ -3843,7 +3843,7 @@ gMetaKnightActions:
 	.word	MetaKnightActionRun+1
 	.word	MetaKnightActionSkid+1
 	.word	MetaKnightActionJump+1
-	.word	sub_08041b8c+1
+	.word	MetaKnightActionReleaseJump+1
 	.word	MetaKnightActionFall+1
 	.incbin	"baserom.gba", 0x73B44C, 0x4
 	.word	MetaKnightActionFloat+1
@@ -3853,7 +3853,7 @@ gMetaKnightActions:
 	.incbin	"baserom.gba", 0x73B460, 0xC
 	.word	MetaKnightActionHurt+1
 	.word	MetaKnightActionDie+1
-	.word	sub_08042cfc+1
+	.word	MetaKnightActionRecoil+1
 	.incbin	"baserom.gba", 0x73B478, 0x4
 	.word	MetaKnightActionEnterDoor+1
 	.word	MetaKnightActionExitDoor+1
@@ -3882,7 +3882,7 @@ gMetaKnightActionHandlers:
 	.word	MetaKnightActionLadderUpdate+1
 	.incbin	"baserom.gba", 0x73B4D8, 0xC
 	.word	MetaKnightActionHurtUpdate+1
-	.word	sub_08042d40+1
+	.word	MetaKnightActionRecoilUpdate+1
 	.incbin	"baserom.gba", 0x73B4EC, 0x4
 	.word	PlayerActionExitDoorUpdate+1
 	.word	MetaKnightActionSwimUpdate+1

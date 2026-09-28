@@ -991,7 +991,7 @@ s32 sub_080ab8a8(void)
     if (gGameState == 20)
     {
         sub_0800a698();
-        sub_080b7cb4(gCurSaveSlot[0]);
+        SaveBossEnduranceBestTime(gCurSaveSlot[0]);
     }
     if (gUnk_02007D00[1] != 0)
     {

@@ -11,8 +11,8 @@
 /* player_3bde8.c (0x0803BDE8-0x0803CD5F, issue #91).
  *
  * Player action body, part 10: action 19 and three helpers M09 calls.
- * sub_0803bde8 (action 19, mode 23; its per-frame handler 18 is
- * sub_0803c990) hands something over to the partner player in
+ * PlayerActionShareItem (action 19, mode 23; its per-frame handler 18 is
+ * PlayerActionShareItemUpdate) hands something over to the partner player in
  * Task.unk18: the two face each other, play the rows of gUnk_0873DA62 by
  * ability, and PlayerState.unk3A says what passes - 1 refills the
  * partner's health gPlayerHealth[] up to gMaxHealth step by step
@@ -43,7 +43,7 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);        /* u8 in early_5d9c.c; u32 as in pl
    or copies its own unk17/unk18 to the target (3); then it restores both
    tasks' Task.layer/unk43 (saved on the stack), clears PlayerState.unk42
    bit 8 on both players and sets the target's bit in PlayerState.unk3B. */
-void sub_0803bde8(void)
+void PlayerActionShareItem(void)
 {
     struct Task *t;
     struct Task *u;
@@ -410,7 +410,7 @@ void sub_0803bde8(void)
     TaskSleepForever();
 }
 
-void sub_0803c990(void)
+void PlayerActionShareItemUpdate(void)
 {
     struct PlayerState *p = gCurTask->player;
 

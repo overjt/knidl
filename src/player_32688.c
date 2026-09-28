@@ -459,7 +459,7 @@ void sub_0803332c(void)
         }
     }
     if (gCurTask->player->requestedAction == 0)
-        sub_08040514();
+        PlayerCheckShareItem();
 }
 
 void sub_08033414(void)
@@ -494,7 +494,7 @@ void sub_08033414(void)
             SetPlayerInvulnerability(5, 0, gCurTask->player->playerIndex);
             gCurTask->player->unk40 &= 0xFFBF;
             PlayBgm(19);
-            sub_08040894(gCurTask->player->playerIndex, 3);
+            PlayerStartItemShare(gCurTask->player->playerIndex, 3);
         }
         break;
     case 1:
