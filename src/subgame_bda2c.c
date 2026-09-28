@@ -412,7 +412,7 @@ void BombRallyResultsShow(void)
     if (gPrevGameState == 4) {
         gCurTask->state = 1;
     } else {
-        sub_080be550();
+        CreateBombRallyLivesIcons();
         TaskYieldTrampoline(60);
         BombRallyAwardLives();
         p = gPlayerPressedKeys;
@@ -452,7 +452,7 @@ void BombRallyResultsMenu(void)
         while (gCurTask->unk28 == 0) {
             TaskYieldTrampoline(1);
             if (gPlayerPressedKeys[0] & 9) {
-                sub_080be7c0(102);
+                BombRallyPlaySfxIfPlayer0(102);
                 t = gCurTask;
                 if (t->unk2C == 0) {
                     t->unk28 = 1;
@@ -462,7 +462,7 @@ void BombRallyResultsMenu(void)
                     TaskSleepForever();
                 }
             } else if (gPlayerPressedKeys[0] & 0xF0) {
-                sub_080be7c0(101);
+                BombRallyPlaySfxIfPlayer0(101);
                 u = gCurTask;
                 u->unk2C ^= 1;
                 if (gPlayerPressedKeys[0] & 0x60)
@@ -478,17 +478,17 @@ void BombRallyResultsMenu(void)
             TaskYieldTrampoline(1);
             a = gPlayerPressedKeys[0] & 9;
             if (a) {
-                sub_080be7c0(102);
+                BombRallyPlaySfxIfPlayer0(102);
                 SubGameReplay(gCurTask->unk2C);
                 TaskSleepForever();
             } else {
                 b = gPlayerPressedKeys[0] & 2;
                 if (b) {
                     gCurTask->unk28 = a;
-                    sub_080be7c0(215);
+                    BombRallyPlaySfxIfPlayer0(215);
                     TaskYieldTrampoline(16);
                 } else if (gPlayerPressedKeys[0] & 0x90) {
-                    sub_080be7c0(101);
+                    BombRallyPlaySfxIfPlayer0(101);
                     v = gCurTask;
                     v->unk2C++;
                     if (v->unk2C == 3)
@@ -496,7 +496,7 @@ void BombRallyResultsMenu(void)
                     gCurTask->unk30 = b;
                     TaskYieldTrampoline(10);
                 } else if (gPlayerPressedKeys[0] & 0x60) {
-                    sub_080be7c0(101);
+                    BombRallyPlaySfxIfPlayer0(101);
                     w = gCurTask;
                     w->unk2C--;
                     if (w->unk2C < 0)
@@ -544,7 +544,7 @@ void sub_080be4a4(void)
     }
 }
 
-void sub_080be550(void)
+void CreateBombRallyLivesIcons(void)
 {
     struct Task *t;
     s32 i;
@@ -671,7 +671,7 @@ void BombRallyAwardLives(void)
     }
 }
 
-void sub_080be7c0(u32 a)
+void BombRallyPlaySfxIfPlayer0(u32 a)
 {
     if (gLocalPlayer == 0)
         PlaySfx(a);

@@ -12,11 +12,11 @@
  *       position list with TaskYieldTrampoline.
  *   BombRallyResultsPlayer / sub_080c183c    the two dispatch bodies (switch on
  *       Task.unk1C / Task.unk20).
- *   sub_080c18c8 / sub_080c1950    slot placement: Task.posX/unk50 from
- *       gUnk_08757250/gUnk_08757260, and the per-slot horizontal offset
+ *   BombRallyResultsPlayerLives / BombRallyResultsPlayerLivesUpdate    slot placement: Task.posX/unk50 from
+ *       gBombRallyResultsSlotX/gBombRallyResultsSlotY, and the per-slot horizontal offset
  *       switch over gBombRallyFinishOrder[Task.unk20].
- *   BombRallyMenuItem / sub_080c1b78    the results task.
- *   sub_080c1be8 / sub_080c1cec / sub_080c1d84   the three ranking markers.
+ *   BombRallyMenuItem / BombRallyMenuItemUpdate    the results task.
+ *   BombRallyMenuItemContinueUpdate / BombRallyMenuItemLevel / BombRallyMenuItemLevelUpdate   the three ranking markers.
  *   sub_080c1ebc   walks the 4-direction path script at gUnk_08757280 in
  *       6.0 steps, writing gBg3ScrollX/gBg3ScrollY (terminator 128).
  *   sub_080c1f88 / AirGrindInit / AirGrindMain   the score-record reset:
@@ -46,9 +46,9 @@ extern u32 gBombRallyBombFrames[];
 extern u32 gUnk_08755E0C[];
 extern u32 gUnk_08755E44[];
 extern u32 gUnk_08755E7C[];
-extern s32 gUnk_08756540[];
-extern s32 gUnk_08756550[];
-extern s16 gUnk_08756798[];
+extern s32 gBombRallySeatScrollX[];
+extern s32 gBombRallySeatScrollY[];
+extern s16 gBombRallySeatBombX[];
 extern s32 gUnk_087567A8[][3];
 extern s32 *gUnk_08756D3C[][2];
 extern u32 gUnk_08755EB4;
@@ -56,12 +56,12 @@ extern u32 gUnk_08755EFC[];
 extern u32 gUnk_08755F1C[];
 extern u32 gUnk_08755F2C[];
 extern u32 gUnk_08755F3C[];
-extern u32 gUnk_08757238[];
-extern u32 gUnk_08757244[];
-extern s32 gUnk_08757250[];
-extern s32 gUnk_08757260[];
-extern u32 gUnk_08757270[];
-extern u32 gUnk_08757278[];
+extern u32 gBombRallyResultsPlayerStates[];
+extern u32 gBombRallyResultsPlayerStateUpdates[];
+extern s32 gBombRallyResultsSlotX[];
+extern s32 gBombRallyResultsSlotY[];
+extern u32 gBombRallyMenuItemStates[];
+extern u32 gBombRallyMenuItemStateUpdates[];
 extern u8 gUnk_08757280[];
 extern u32 gAirGrindPhases[];
 extern u8 gAirGrind[];
@@ -85,7 +85,7 @@ extern s32 gUnk_08756FA4[][4];
 extern s16 gUnk_08756770[];
 extern u16 gUnk_08756778[];
 extern s8 gUnk_0875673C[];
-extern s16 gUnk_087567A0[];
+extern s16 gBombRallySeatBombY[];
 extern u8 gUnk_0875676C[];
 extern u32 gBombRallyBombStates[];
 extern u32 gBombRallyBombStateUpdates[];
@@ -122,9 +122,9 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *a, u32 i);
 extern void CreateBombRallyBurstStar(u32 a);
 extern void BombRallyBombSmokeUpdate(void);
-extern void sub_080c17ac(void);
-extern void sub_080c1804(void);
-extern void sub_080c1b78(void);
+extern void BombRallyStartSignUpdate(void);
+extern void BombRallyResultsPlayerUpdate(void);
+extern void BombRallyMenuItemUpdate(void);
 extern void PlaySfx(u32 a);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u32 f);
@@ -145,7 +145,7 @@ extern void BombRallySeatPlayers(void);
 extern void BombRallyResultsUpdate(void);
 extern void BombRallyResultsEnterState(void);
 extern void sub_080be4a4(void);
-extern void sub_080be550(void);
+extern void CreateBombRallyLivesIcons(void);
 extern void sub_080be5fc(void);
 extern void CreateBombRallyContinueItems(u32 a);
 extern void CreateBombRallyLevelItems(u32 a);
@@ -157,12 +157,12 @@ extern void BombRallyPlayerEnterState(void);
 extern void BombRallyBombUpdate(void);
 extern void BombRallyBombEnterState(void);
 extern void CreateBombRallyStartSign(void);
-extern void sub_080c05f0(u32 a);
-extern void sub_080c0704(u32 a);
-extern void sub_080c0b18(u32 a);
+extern void BombRallyBombPlaceAtSeat(u32 a);
+extern void BombRallyScrollToSeat(u32 a);
+extern void BombRallyPanToSeat(u32 a);
 extern s32 sub_080c1ebc(s32 a, s32 b);
-extern void sub_080c061c(s32 a, s32 b, s32 c, s32 d);
-extern void sub_080c072c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
+extern void BombRallyBombSetArcPos(s32 a, s32 b, s32 c, s32 d);
+extern void BombRallyScrollAlongPass(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f);
 extern void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e);
 /* NOTE: CreateBombRallyBombSmoke's third parameter is `u16` at its definition
    (src/subgame_bda2c.c) but the ROM's call sites here sign-extend the
@@ -170,7 +170,7 @@ extern void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e);
    original source had the same prototype mismatch. */
 extern void CreateBombRallyBombSmoke(s32 a, s32 b, s32 c, s32 d);
 extern void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d);
-extern void sub_080be7c0(u32 a);
+extern void BombRallyPlaySfxIfPlayer0(u32 a);
 
 void sub_080c0de8(void)
 {
@@ -598,7 +598,7 @@ void BombRallyStartSign(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawScreen;
-    t->updateCallback = (u32)sub_080c17ac;
+    t->updateCallback = (u32)BombRallyStartSignUpdate;
     t->layer = 6;
     u = gCurTask;
     u->frameTable = gUnk_08755EFC;
@@ -613,7 +613,7 @@ void BombRallyStartSign(void)
     TaskExitTrampoline();
 }
 
-void sub_080c17ac(void)
+void BombRallyStartSignUpdate(void)
 {
 }
 
@@ -624,7 +624,7 @@ void BombRallyResultsPlayer(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawScreen;
-    t->updateCallback = (u32)sub_080c1804;
+    t->updateCallback = (u32)BombRallyResultsPlayerUpdate;
     switch (t->unk1C) {
     case 0:
         t->state = t->unk1C;
@@ -636,18 +636,18 @@ void BombRallyResultsPlayer(void)
         t->state = t->unk1C;
         break;
     }
-    CallTableEntry(gCurTask->state, 3, gUnk_08757238);
+    CallTableEntry(gCurTask->state, 3, gBombRallyResultsPlayerStates);
     TaskSleepForever();
 }
 
-void sub_080c1804(void)
+void BombRallyResultsPlayerUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_08757244);
+    CallTableEntry(gCurTask->updateState, 3, gBombRallyResultsPlayerStateUpdates);
 }
 
-void sub_080c1820(void)
+void BombRallyResultsPlayerEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08757238);
+    CallTableEntry(gCurTask->state, 3, gBombRallyResultsPlayerStates);
 }
 
 void sub_080c183c(void)
@@ -666,8 +666,8 @@ void sub_080c183c(void)
         u->posX = 0xF0 << 15;
         u->posY = 0xC0 << 15;
     } else {
-        u->posX = gUnk_08757250[u->unk18] << 16;
-        u->posY = gUnk_08757260[u->unk18] << 16;
+        u->posX = gBombRallyResultsSlotX[u->unk18] << 16;
+        u->posY = gBombRallyResultsSlotY[u->unk18] << 16;
     }
     v = gCurTask;
     v->frame = gBombRallyFinishOrder[v->unk20];
@@ -678,7 +678,7 @@ void sub_080c18c4(void)
 {
 }
 
-void sub_080c18c8(void)
+void BombRallyResultsPlayerLives(void)
 {
     struct Task *t;
     struct Task *u;
@@ -693,8 +693,8 @@ void sub_080c18c8(void)
         u->posX = 0xF0 << 15;
         u->posY = 0xC0 << 15;
     } else {
-        u->posX = gUnk_08757250[u->unk18] << 16;
-        u->posY = gUnk_08757260[u->unk18] << 16;
+        u->posX = gBombRallyResultsSlotX[u->unk18] << 16;
+        u->posY = gBombRallyResultsSlotY[u->unk18] << 16;
     }
     n = gBombRallyFinishOrder[gCurTask->unk20];
     switch (n) {
@@ -712,7 +712,7 @@ void sub_080c18c8(void)
     TaskSleepForever();
 }
 
-void sub_080c1950(void)
+void BombRallyResultsPlayerLivesUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -780,8 +780,8 @@ void sub_080c1ab8(void)
         u->posX = 0xF0 << 15;
         u->posY = 0x90 << 15;
     } else {
-        u->posX = gUnk_08757250[u->unk18] << 16;
-        u->posY = (gUnk_08757260[u->unk18] - 24) << 16;
+        u->posX = gBombRallyResultsSlotX[u->unk18] << 16;
+        u->posY = (gBombRallyResultsSlotY[u->unk18] - 24) << 16;
     }
     v = gCurTask;
     v->frame = gBombRallyFinishOrder[v->unk20] + 2;
@@ -800,22 +800,22 @@ void BombRallyMenuItem(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawScreen;
-    t->updateCallback = (u32)sub_080c1b78;
+    t->updateCallback = (u32)BombRallyMenuItemUpdate;
     n = t->unk74;
     if (n == 0)
         t->state = n;
     else
         t->state = 1;
-    CallTableEntry(gCurTask->state, 2, gUnk_08757270);
+    CallTableEntry(gCurTask->state, 2, gBombRallyMenuItemStates);
     TaskSleepForever();
 }
 
-void sub_080c1b78(void)
+void BombRallyMenuItemUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08757278);
+    CallTableEntry(gCurTask->updateState, 2, gBombRallyMenuItemStateUpdates);
 }
 
-void sub_080c1b94(void)
+void BombRallyMenuItemContinue(void)
 {
     struct Task *t;
 
@@ -836,7 +836,7 @@ void sub_080c1b94(void)
     TaskSleepForever();
 }
 
-void sub_080c1be8(void)
+void BombRallyMenuItemContinueUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -887,7 +887,7 @@ void sub_080c1be8(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_080c1cec(void)
+void BombRallyMenuItemLevel(void)
 {
     struct Task *t;
     struct Task *u;
@@ -921,7 +921,7 @@ void sub_080c1cec(void)
     TaskSleepForever();
 }
 
-void sub_080c1d84(void)
+void BombRallyMenuItemLevelUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -991,8 +991,8 @@ s32 sub_080c1ebc(s32 a, s32 b)
     base = gUnk_08757280;
     p = base + b * 2;
     if (p[0] == 128) {
-        gBg3ScrollX = gUnk_08756540[a];
-        gBg3ScrollY = gUnk_08756550[a];
+        gBg3ScrollX = gBombRallySeatScrollX[a];
+        gBg3ScrollY = gBombRallySeatScrollY[a];
         return b;
     }
     x = (s8)p[0];
@@ -1011,8 +1011,8 @@ s32 sub_080c1ebc(s32 a, s32 b)
         x = ((u32)(x << 16) + 0xFFFA0000) >> 16;
         break;
     }
-    gBg3ScrollX = gUnk_08756540[a] + (x << 16);
-    gBg3ScrollY = gUnk_08756550[a] + (y << 16);
+    gBg3ScrollX = gBombRallySeatScrollX[a] + (x << 16);
+    gBg3ScrollY = gBombRallySeatScrollY[a] + (y << 16);
     return b + 1;
 }
 void sub_080c1f88(void)

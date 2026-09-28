@@ -23,13 +23,13 @@
  *       re-arms the sprite and recomputes the hand-off speed as
  *       Div((gUnk_08756770[next] - gUnk_08756770[cur]) << 4, frames).
  *   BombRallyBombPassUpdate / BombRallyBombExplode / BombRallyBombExplodeUpdate   the three placement bodies
- *       that walk a turn: sub_080c072c for the thrower, sub_080c061c for the
+ *       that walk a turn: BombRallyScrollAlongPass for the thrower, BombRallyBombSetArcPos for the
  *       projectile and sub_080c0a10 for its shadow.
- *   sub_080c05f0 / sub_080c0704   set a slot's sprite frame / animation.
- *   sub_080c061c   position on the 16.16 parabola p0 + v*t + (a*t*t)/2:
- *       p0 from gUnk_08756798 / gUnk_087567A0, v from gUnk_087567A8[c][b],
+ *   BombRallyBombPlaceAtSeat / BombRallyScrollToSeat   set a slot's sprite frame / animation.
+ *   BombRallyBombSetArcPos   position on the 16.16 parabola p0 + v*t + (a*t*t)/2:
+ *       p0 from gBombRallySeatBombX / gBombRallySeatBombY, v from gUnk_087567A8[c][b],
  *       and the two coefficient rows from gUnk_08756D3C[c][0..1].
- *   sub_080c0b18 / BombRallyBombSmoke / BombRallyBombSmokeUpdate / BombRallyStarBurst   the
+ *   BombRallyPanToSeat / BombRallyBombSmoke / BombRallyBombSmokeUpdate / BombRallyStarBurst   the
  *       remaining table-driven animation helpers.
  */
 #include "gba/gba.h"
@@ -293,11 +293,11 @@ void BombRallyBombStart(void)
     v = gCurTask;
     v->unk30 = 0;
     v->unk24 = u->unk34;
-    sub_080c05f0(v->unk24);
-    sub_080c0704(gCurTask->unk18);
+    BombRallyBombPlaceAtSeat(v->unk24);
+    BombRallyScrollToSeat(gCurTask->unk18);
     TaskYieldTrampoline(30);
-    sub_080c0b18(gCurTask->unk24);
-    sub_080c0704(gCurTask->unk24);
+    BombRallyPanToSeat(gCurTask->unk24);
+    BombRallyScrollToSeat(gCurTask->unk24);
     w = gCurTask;
     w->frameTable = 0;
     TaskYieldTrampoline(30);
@@ -366,21 +366,21 @@ void BombRallyBombPass(void)
     v->unk30 = 0;
     v->unk34 = 0;
     v->unk24 = u->unk34;
-    sub_080c0704(u->unk34);
+    BombRallyScrollToSeat(u->unk34);
     while (u->unk28 < -1)
         TaskYieldTrampoline(1);
     w = gCurTask;
     w->frame = (u->unk34 * 3) << 1;
-    sub_080c05f0(u->unk34);
+    BombRallyBombPlaceAtSeat(u->unk34);
     x = gCurTask;
     x->velY = 0xFFFBC000;
     x->accelY = 128 << 7;
     x->unk28 = 1;
     while (u->unk28 < 0) {
-        tb = gUnk_087567A0;
+        tb = gBombRallySeatBombY;
         if (gCurTask->posY > (tb[u->unk34] << 16)) {
             TaskStopY();
-            sub_080c05f0(u->unk34);
+            BombRallyBombPlaceAtSeat(u->unk34);
         }
         TaskYieldTrampoline(1);
     }
@@ -392,8 +392,8 @@ void BombRallyBombPass(void)
         tb = gUnk_08756770;
         u = &gTasks[z->parent];
         if (z->unk24 != u->unk34) {
-            sub_080c05f0(u->unk34);
-            sub_080c0704(u->unk34);
+            BombRallyBombPlaceAtSeat(u->unk34);
+            BombRallyScrollToSeat(u->unk34);
             p = gCurTask;
             m = u->unk34;
             p->unk24 = m;
@@ -465,8 +465,8 @@ void BombRallyBombPassUpdate(void)
     case 2:
         if (u->unk28 > 2) {
             k = u->unk28 - 3;
-            sub_080c072c(u->unk34, k, u->unk2C, u->unk30, u->unk24, 1);
-            sub_080c061c((u->unk34 + 3) & 3, k, u->unk2C, u->unk24 - u->unk30);
+            BombRallyScrollAlongPass(u->unk34, k, u->unk2C, u->unk30, u->unk24, 1);
+            BombRallyBombSetArcPos((u->unk34 + 3) & 3, k, u->unk2C, u->unk24 - u->unk30);
             sub_080c0a10((u->unk34 + 3) & 3, k, u->unk2C, u->unk24 - u->unk30,
                          (s16)(gUnk_08756778[gCurTask->unk24]
                                + ((gCurTask->unk2C * u->unk30) >> 5)));
@@ -483,8 +483,8 @@ void BombRallyBombPassUpdate(void)
             }
         } else {
             k = u->unk28;
-            sub_080c072c(u->unk34, k, u->unk2C, u->unk30, u->unk24, 0);
-            sub_080c061c(u->unk34, k, u->unk2C, u->unk30);
+            BombRallyScrollAlongPass(u->unk34, k, u->unk2C, u->unk30, u->unk24, 0);
+            BombRallyBombSetArcPos(u->unk34, k, u->unk2C, u->unk30);
             sub_080c0a10(u->unk34, k, u->unk2C, u->unk30,
                          (s16)(gUnk_08756778[gCurTask->unk24]
                                + ((gCurTask->unk2C * u->unk30) >> 5)));
@@ -552,7 +552,7 @@ void BombRallyBombExplode(void)
     v->unk28 = u->unk34;
     v->unk2C = 0;
     v->unk30 = 0;
-    sub_080c0704(v->unk28);
+    BombRallyScrollToSeat(v->unk28);
     gCurTask->layer = 6;
     TaskStop();
     w = gCurTask;
@@ -631,15 +631,15 @@ void BombRallyBombExplodeUpdate(void)
     }
 }
 
-void sub_080c05f0(u32 a)
+void BombRallyBombPlaceAtSeat(u32 a)
 {
     struct Task *t = gCurTask;
 
-    t->posX = gUnk_08756798[a] << 16;
-    t->posY = gUnk_087567A0[a] << 16;
+    t->posX = gBombRallySeatBombX[a] << 16;
+    t->posY = gBombRallySeatBombY[a] << 16;
 }
 
-void sub_080c061c(s32 a, s32 b, s32 c, s32 d)
+void BombRallyBombSetArcPos(s32 a, s32 b, s32 c, s32 d)
 {
     struct Task *t;
     struct Task *u;
@@ -649,70 +649,70 @@ void sub_080c061c(s32 a, s32 b, s32 c, s32 d)
     p1 = gUnk_08756D3C[c][0];
     p2 = gUnk_08756D3C[c][1];
     if (a == 0 || a == 3)
-        gCurTask->posX = (gUnk_08756798[a] << 16) - gUnk_087567A8[c][b] * d;
+        gCurTask->posX = (gBombRallySeatBombX[a] << 16) - gUnk_087567A8[c][b] * d;
     else
-        gCurTask->posX = (gUnk_08756798[a] << 16) + gUnk_087567A8[c][b] * d;
-    gCurTask->posY = (gUnk_087567A0[a] << 16) + p1[b * 4 + a] * d
+        gCurTask->posX = (gBombRallySeatBombX[a] << 16) + gUnk_087567A8[c][b] * d;
+    gCurTask->posY = (gBombRallySeatBombY[a] << 16) + p1[b * 4 + a] * d
              + ((p2[b * 4 + a] * d * d) >> 1);
 }
 
-void sub_080c0704(u32 a)
+void BombRallyScrollToSeat(u32 a)
 {
-    gBg3ScrollX = gUnk_08756540[a];
-    gBg3ScrollY = gUnk_08756550[a];
+    gBg3ScrollX = gBombRallySeatScrollX[a];
+    gBg3ScrollY = gBombRallySeatScrollY[a];
 }
 
-void sub_080c072c(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
+void BombRallyScrollAlongPass(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
 {
     if (f == 0) {
         if (a == 0 || a == 3)
-            gBg3ScrollX = gUnk_08756540[a] - gUnk_08756D74[c * 3 + b] * d
+            gBg3ScrollX = gBombRallySeatScrollX[a] - gUnk_08756D74[c * 3 + b] * d
                           + ((gUnk_08756DC8[c * 3 + b] * d * d) >> 1);
         else
-            gBg3ScrollX = gUnk_08756540[a] + gUnk_08756D74[c * 3 + b] * d
+            gBg3ScrollX = gBombRallySeatScrollX[a] + gUnk_08756D74[c * 3 + b] * d
                           - ((gUnk_08756DC8[c * 3 + b] * d * d) >> 1);
         switch (b) {
         case 2:
-            gBg3ScrollY = gUnk_08756550[a] + gUnk_08756F34[c][a] * d
+            gBg3ScrollY = gBombRallySeatScrollY[a] + gUnk_08756F34[c][a] * d
                           + ((gUnk_08756FA4[c][a] * d * d) >> 1);
             break;
         case 1:
-            gBg3ScrollY = gUnk_08756550[a] + gUnk_08756E54[c][a] * d
+            gBg3ScrollY = gBombRallySeatScrollY[a] + gUnk_08756E54[c][a] * d
                           + ((gUnk_08756EC4[c][a] * d * d) >> 1);
             break;
         case 0:
             if (a <= 1)
-                gBg3ScrollY = gUnk_08756550[a] - gUnk_08756E1C[c] * d
+                gBg3ScrollY = gBombRallySeatScrollY[a] - gUnk_08756E1C[c] * d
                               + ((gUnk_08756E38[c] * d * d) >> 1);
             else
-                gBg3ScrollY = gUnk_08756550[a] + gUnk_08756E1C[c] * d
+                gBg3ScrollY = gBombRallySeatScrollY[a] + gUnk_08756E1C[c] * d
                               - ((gUnk_08756E38[c] * d * d) >> 1);
             break;
         }
     } else {
         if (a <= 1)
-            gBg3ScrollX = gUnk_08756540[a] + gUnk_08756D74[c * 3 + b] * d
+            gBg3ScrollX = gBombRallySeatScrollX[a] + gUnk_08756D74[c * 3 + b] * d
                           - ((gUnk_08756DC8[c * 3 + b] * d * d) >> 1);
         else
-            gBg3ScrollX = gUnk_08756540[a] - gUnk_08756D74[c * 3 + b] * d
+            gBg3ScrollX = gBombRallySeatScrollX[a] - gUnk_08756D74[c * 3 + b] * d
                           + ((gUnk_08756DC8[c * 3 + b] * d * d) >> 1);
         switch (b) {
         case 2:
-            gBg3ScrollY = gUnk_08756550[(a + 3) & 3]
+            gBg3ScrollY = gBombRallySeatScrollY[(a + 3) & 3]
                           + gUnk_08756F34[c][(a + 3) & 3] * (e - d)
                           + ((gUnk_08756FA4[c][(a + 3) & 3] * (e - d) * (e - d)) >> 1);
             break;
         case 1:
-            gBg3ScrollY = gUnk_08756550[(a + 3) & 3]
+            gBg3ScrollY = gBombRallySeatScrollY[(a + 3) & 3]
                           + gUnk_08756E54[c][(a + 3) & 3] * (e - d)
                           + ((gUnk_08756EC4[c][(a + 3) & 3] * (e - d) * (e - d)) >> 1);
             break;
         case 0:
             if (a == 0 || a == 3)
-                gBg3ScrollY = gUnk_08756550[a] - gUnk_08756E1C[c] * d
+                gBg3ScrollY = gBombRallySeatScrollY[a] - gUnk_08756E1C[c] * d
                               + ((gUnk_08756E38[c] * d * d) >> 1);
             else
-                gBg3ScrollY = gUnk_08756550[a] + gUnk_08756E1C[c] * d
+                gBg3ScrollY = gBombRallySeatScrollY[a] + gUnk_08756E1C[c] * d
                               - ((gUnk_08756E38[c] * d * d) >> 1);
             break;
         }
@@ -728,9 +728,9 @@ void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e)
     if ((s16)gCurTask->frame != -1) {
         p = gUnk_0875716C[b];
         if (a == 0 || a == 3)
-            x = (gUnk_08756798[a] << 16) - gUnk_087567A8[c][b] * d;
+            x = (gBombRallySeatBombX[a] << 16) - gUnk_087567A8[c][b] * d;
         else
-            x = (gUnk_08756798[a] << 16) + gUnk_087567A8[c][b] * d;
+            x = (gBombRallySeatBombX[a] << 16) + gUnk_087567A8[c][b] * d;
         y = (gUnk_08757014[a] << 16) + p[c * 4 + a] * d;
         QueueSprite(10, DrawAffineSprite(gUnk_08755EB4, (s16)e, (s16)e, 0), 0, 0,
                      (x >> 16) - (gBg3ScrollX >> 16),
@@ -738,7 +738,7 @@ void sub_080c0a10(s32 a, s32 b, s32 c, s32 d, s16 e)
     }
 }
 
-void sub_080c0b18(u32 a)
+void BombRallyPanToSeat(u32 a)
 {
     struct Task *t;
     struct Task *u;
@@ -760,13 +760,13 @@ void sub_080c0b18(u32 a)
         }
         gBg3ScrollX += gCurTask->unk1C;
         gBg3ScrollY += gCurTask->unk20;
-        if ((gCurTask->unk1C < 0 && gBg3ScrollX < gUnk_08756540[a])
-         || (gCurTask->unk1C > 0 && gBg3ScrollX > gUnk_08756540[a]))
-            gBg3ScrollX = gUnk_08756540[a];
+        if ((gCurTask->unk1C < 0 && gBg3ScrollX < gBombRallySeatScrollX[a])
+         || (gCurTask->unk1C > 0 && gBg3ScrollX > gBombRallySeatScrollX[a]))
+            gBg3ScrollX = gBombRallySeatScrollX[a];
         w = gCurTask;
-        if ((w->unk20 < 0 && gBg3ScrollY < gUnk_08756550[a])
-         || (w->unk20 > 0 && gBg3ScrollY > gUnk_08756550[a]))
-            gBg3ScrollY = gUnk_08756550[a];
+        if ((w->unk20 < 0 && gBg3ScrollY < gBombRallySeatScrollY[a])
+         || (w->unk20 > 0 && gBg3ScrollY > gBombRallySeatScrollY[a]))
+            gBg3ScrollY = gBombRallySeatScrollY[a];
         TaskYieldTrampoline(1);
         z = gCurTask;
         z->unk6C++;

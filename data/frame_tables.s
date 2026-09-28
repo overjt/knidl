@@ -10188,8 +10188,8 @@ gUnk_08755A24:
 	.word	gUnk_085F2A38
 	.word	gUnk_085F2AA0
 	.word	gUnk_085F2AF8
-	.global	gUnk_08755A34
-gUnk_08755A34:
+	.global	gQuickDrawDigitFrames
+gQuickDrawDigitFrames:
 	.word	gUnk_085F2B2C
 	.word	gUnk_085F2B3C
 	.word	gUnk_085F2B4C
@@ -10200,19 +10200,19 @@ gUnk_08755A34:
 	.word	gUnk_085F2B9C
 	.word	gUnk_085F2BAC
 	.word	gUnk_085F2BBC
-	.global	gUnk_08755A5C
-gUnk_08755A5C:
+	.global	gQuickDrawWinCountFrames
+gQuickDrawWinCountFrames:
 	.word	gUnk_085F2BCC
 	.word	gUnk_085F2BE4
 	.word	gUnk_085F2BFC
-	.global	gUnk_08755A68
-gUnk_08755A68:
+	.global	gQuickDrawRankFrames
+gQuickDrawRankFrames:
 	.word	gUnk_085F2C24
 	.word	gUnk_085F2C44
 	.word	gUnk_085F2C6C
 	.word	gUnk_085F2C8C
-	.global	gUnk_08755A78
-gUnk_08755A78:
+	.global	gQuickDrawRedrawFrames
+gQuickDrawRedrawFrames:
 	.word	gUnk_085F2CA4
 	.global	gUnk_08755A7C
 gUnk_08755A7C:
@@ -10228,27 +10228,27 @@ gUnk_08755A88:
 	.word	gUnk_085F2E64
 	.word	gUnk_085F2EC4
 	.word	gUnk_085F2FFC
-	.global	gUnk_08755AA4
-gUnk_08755AA4:
+	.global	gQuickDrawPlayerTagFrames
+gQuickDrawPlayerTagFrames:
 	.word	gUnk_085F322C
 	.word	gUnk_085F3254
 	.word	gUnk_085F327C
 	.word	gUnk_085F32A4
 	.word	gUnk_085F32CC
-	.global	gUnk_08755AB8
-gUnk_08755AB8:
+	.global	gQuickDrawFalseStartMarkFrames
+gQuickDrawFalseStartMarkFrames:
 	.word	gUnk_085F32DC
 	.word	gUnk_085F330C
 	.word	gUnk_085F330C
 	.word	gUnk_085F333C
-	.global	gUnk_08755AC8
-gUnk_08755AC8:
+	.global	gQuickDrawSweatDropFrames
+gQuickDrawSweatDropFrames:
 	.word	gUnk_085F3344
 	.word	gUnk_085F3364
 	.word	gUnk_085F3364
 	.word	gUnk_085F3384
-	.global	gUnk_08755AD8
-gUnk_08755AD8:
+	.global	gQuickDrawTimerBoardFrames
+gQuickDrawTimerBoardFrames:
 	.word	gUnk_085F36DC
 	.global	gQuickDrawBurstFrames
 gQuickDrawBurstFrames:
@@ -10305,8 +10305,8 @@ gUnk_08755B68:
 	.word	gUnk_085F4C54
 	.word	gUnk_085F4CDC
 	.word	gUnk_085F4D64
-	.global	gUnk_08755B90
-gUnk_08755B90:
+	.global	gQuickDrawBonusFrames
+gQuickDrawBonusFrames:
 	.word	gUnk_085F3394
 	.word	gUnk_085F33AC
 	.word	gUnk_085F33DC
@@ -10314,8 +10314,8 @@ gUnk_08755B90:
 	.word	gUnk_085F345C
 	.word	gUnk_085F349C
 	.word	gUnk_085F34BC
-	.global	gUnk_08755BAC
-gUnk_08755BAC:
+	.global	gQuickDrawResultsMenuFrames
+gQuickDrawResultsMenuFrames:
 	.word	gUnk_085F34C4
 	.word	gUnk_085F351C
 	.word	gUnk_085F3574
