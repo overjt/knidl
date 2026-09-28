@@ -184,6 +184,43 @@ ability moves are `PlayerAction<Ability>` / `PlayerAction<Ability>Update`
 (`PlayerActionFire`, `PlayerActionHiJumpUpdate`, `PlayerActionStarRod`).
 An enum for the ids would be a code change and waits for #36 phase 2.
 
+### 2.4 Data records by position (run 3 of #155)
+
+Some records have no identity but their slot in a table that a decompiled
+consumer proves (docs/data.md 5): a stage's room list, a room's header,
+the map and the doors only that header points at.  Such a record is named
+after the slot, and the slot is its evidence (tag `slot:`, section 4).
+The indices are the table's own, **0-based**, exactly as the code indexes
+it (`gRoomTable[level][stage][room]`); no world name enters an
+identifier.
+
+| Record | Name | Example |
+|---|---|---|
+| a stage's room list `gRoomTable[L][S]` | `gLevel<L>Stage<S>Rooms` | `gLevel0Stage1Rooms` |
+| a room header (`struct RoomDef`) `gRoomTable[L][S][R]` | `gLevel<L>Stage<S>Room<R>` | `gLevel0Stage1Room2` |
+| a record that one RoomDef field alone points at | `gLevel<L>Stage<S>Room<R><Field>`, the field in PascalCase | `gLevel0Stage1Room2Doors`, `...Room2MetatileMap` |
+| an ActorDef bound by a named family through its kind table's slot | `g<Enemy>Def` | `gWaddleDeeDef` |
+
+Rules: a record gets a position name only when that one slot is its only
+referrer (no second table, no code reference; checked over `data/`,
+`asm/`, `src/` and `include/` before a batch); a record several slots
+share (a stage's common tiles and palettes) keeps its placeholder, and so
+does the target of a field that has no name yet (`RoomDef.unk10`).
+Position names are applied in their own batches, and the progress figures
+count them apart from the semantic names (a slot is an address-free
+identity, not a role).
+
+What the level indices are in the game is proven for 0-6 by the boss each
+level's last stage spawns (room objects of kind 3, `gBossDefs[subtype]`,
+whose identities run 2 fixed): 0 Whispy Woods, 1 Paint Roller, 2 Mr. Shine
+& Mr. Bright, 3 Kracko, 4 Heavy Mole, 5 Meta Knight, 6 King Dedede - the
+game's Levels 1-7 (Vegetable Valley, Ice Cream Island, Butter Building,
+Grape Garden, Yogurt Yard, Orange Ocean, Rainbow Resort;
+https://wikirby.com/wiki/Kirby:_Nightmare_in_Dream_Land).  Level 7's
+stage 0 holds the Nightmare Power Orb and Nightmare Wizard rooms and its
+stage 1 three rooms with Kracko, Whispy Woods and King Dedede; level 8
+spawns no boss.  What levels 7 and 8 are in the game is not proven here.
+
 ## 3. Words with a fixed meaning
 
 | Word | Means | Not |
@@ -227,6 +264,8 @@ check.  Start it with one of these tags:
 - `hw:` a hardware register the code drives: `hw: writes REG_SIOCNT
   0x4003 (multi-play, 115200 bps, IRQ) and REG_RCNT 0`.
 - `string:` a string or ID the code reads or compares (`"AGB  KIRBY"`).
+- `slot:` the record's slot in a consumer-proven table, for a position
+  name (section 2.4): `slot: gRoomTable[0][1][2].doors`.
 - `doc:` a finding already written down in `docs/analysis/rom-map.md`,
   `docs/analysis/module-map.md` or a lesson, by section.
 
