@@ -15,8 +15,8 @@
  * AgbMain state 7 (CutsceneMain), entered instead of states 5/6 while
  * gCutscenePending is set: the scripted sequence of stage gCurLevel.
  * It clears the blend and window shadows, loads the sequence's palette
- * set and pictures (sub_08008d98, and sub_080102c0: the sprite sheet
- * gUnk_08731F78[stage] plus, in link play, the player palette), opens
+ * set and pictures (sub_08008d98, and CutsceneLoadGraphics: the sprite sheet
+ * gCutsceneSheets[stage] plus, in link play, the player palette), opens
  * window 0 (full width for sequence 7), spawns M04's director, task
  * type #91, and pumps frames until the director leaves state 7. */
 
@@ -63,7 +63,7 @@ void CutsceneMain(void)
         }
         for (i = 0; i <= 3; i++)
             InitPlayerState(i);
-        sub_080102c0();
+        CutsceneLoadGraphics();
         TaskCreateFrom(91, 32);
         LinkRequestSync();
         LinkSyncRandom();
@@ -84,9 +84,9 @@ void CutsceneMain(void)
     }
 }
 
-void sub_080102c0(void)
+void CutsceneLoadGraphics(void)
 {
-    struct GfxHeader *h = gUnk_08731F78[gCurLevel];
+    struct GfxHeader *h = gCutsceneSheets[gCurLevel];
 
     if (h != NULL) {
         LZ77UnCompWram(h->tiles, gUnk_02020000);

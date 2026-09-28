@@ -153,7 +153,7 @@ void sub_08077cf4(void)
     PlaySfx(226);
     RequestScreenShake(4);
     sub_08077cd4();
-    sub_08009e14();
+    HudDeactivateAbilityPanel();
     ActorSetStateSlot(gCurTaskIdx, 1);
     TaskSetEntry(BigSwitchEnterState, gCurTaskIdx);
 }
@@ -189,7 +189,7 @@ void sub_08077d54(void)
         }
     }
     ThawStage();
-    sub_08009e20();
+    HudActivateAbilityPanel();
     EnablePause();
     ActorDie();
 }

@@ -1155,8 +1155,8 @@ gUnk_08731F08:
 	.global	gUnk_08731F48
 gUnk_08731F48:
 	.incbin	"baserom.gba", 0x731F48, 0x30
-	.global	gUnk_08731F78
-gUnk_08731F78:
+	.global	gCutsceneSheets
+gCutsceneSheets:
 	.word	gUnk_085BC800
 	.word	gUnk_085BEB70
 	.word	gUnk_085C1974
@@ -1168,60 +1168,60 @@ gUnk_08731F78:
 	.global	gCutsceneDurations
 gCutsceneDurations:
 	.incbin	"baserom.gba", 0x731F98, 0x10
-	.global	gUnk_08731FA8
-gUnk_08731FA8:
-	.word	sub_0801050c+1
-	.word	sub_08011154+1
-	.word	sub_08011ff8+1
-	.word	sub_08013430+1
-	.word	sub_0801448c+1
-	.word	sub_08014e6c+1
-	.word	sub_08015704+1
+	.global	gCutsceneStarts
+gCutsceneStarts:
+	.word	CutsceneDuelStart+1
+	.word	CutsceneBeachStart+1
+	.word	CutsceneBombStart+1
+	.word	CutsceneBalloonsStart+1
+	.word	CutsceneTomatoStart+1
+	.word	CutsceneShipStart+1
+	.word	CutsceneSingingStart+1
 	.word	sub_0801761c+1
-	.global	gUnk_08731FC8
-gUnk_08731FC8:
-	.word	sub_08010528+1
+	.global	gCutsceneActors
+gCutsceneActors:
+	.word	CutsceneDuelKirby+1
 	.word	sub_08010834+1
 	.word	sub_08010bac+1
 	.word	sub_08010cb4+1
-	.word	sub_08010eb8+1
-	.word	sub_080111a8+1
-	.word	sub_080113cc+1
-	.word	sub_08011458+1
-	.word	sub_080115a0+1
-	.word	sub_0801170c+1
+	.word	CutsceneDuelBladeKnight+1
+	.word	CutsceneBeachKirby+1
+	.word	CutsceneBeachChair+1
+	.word	CutsceneBeachCandyDream+1
+	.word	CutsceneBeachDonutDream+1
+	.word	CutsceneBeachMeatDream+1
 	.word	sub_08011880+1
-	.word	sub_080119b4+1
-	.word	sub_08011b60+1
-	.word	sub_08011bfc+1
-	.word	sub_0801201c+1
-	.word	sub_08012628+1
-	.word	sub_080129f8+1
-	.word	sub_08012b94+1
+	.word	CutsceneBeachWaddleDoo+1
+	.word	CutsceneBeachSunglasses+1
+	.word	CutsceneBeachQuestionMarks+1
+	.word	CutsceneBombKirby+1
+	.word	CutsceneBombPoppyBrosSr+1
+	.word	CutsceneBombHeldBomb+1
+	.word	CutsceneBombThrownBomb+1
 	.word	sub_08012df8+1
 	.word	sub_08012e6c+1
 	.word	sub_08013058+1
 	.word	sub_08013348+1
-	.word	sub_0801347c+1
-	.word	sub_08013af8+1
-	.word	sub_08013be4+1
-	.word	sub_08013e38+1
-	.word	sub_0801408c+1
+	.word	CutsceneBalloonsKirby+1
+	.word	CutsceneBalloonsLooseBalloon+1
+	.word	CutsceneBalloonsYellowBalloon+1
+	.word	CutsceneBalloonsGreenBalloon+1
+	.word	CutsceneBalloonsLastBalloon+1
 	.word	sub_08014184+1
 	.word	sub_080142a0+1
 	.word	sub_080143b4+1
-	.word	sub_080144b0+1
-	.word	sub_08014994+1
+	.word	CutsceneTomatoKirby+1
+	.word	CutsceneTomatoMaximTomato+1
 	.word	sub_08014c08+1
-	.word	sub_08014d08+1
-	.word	sub_08014ea0+1
-	.word	sub_08015268+1
-	.word	sub_08015400+1
-	.word	sub_08015524+1
-	.word	sub_08015680+1
-	.word	sub_08015758+1
+	.word	CutsceneTomatoExclamation+1
+	.word	CutsceneShipKirby+1
+	.word	CutsceneShipSpyglass+1
+	.word	CutsceneShipPirateHat+1
+	.word	CutsceneShipShark+1
+	.word	CutsceneShipWaves+1
+	.word	CutsceneSingingKirby+1
 	.word	sub_08015f18+1
-	.word	sub_0801607c+1
+	.word	CutsceneSingingRainbowBar+1
 	.word	sub_080162a0+1
 	.word	sub_08016514+1
 	.word	sub_080167dc+1

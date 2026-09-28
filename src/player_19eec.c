@@ -7,7 +7,7 @@
 
 /* player_19eec.c (0x08019EEC-0x0801A07B, issue #125).
  *
- * Animation script 62, the last entry (70) of gUnk_08731FA8: a timed blend
+ * Animation script 62, the last entry (70) of gCutsceneStarts: a timed blend
  * sequence.  It turns alpha blending on (the BLDCNT shadows gBldCntTarget1 and
  * gBldCntTarget2), holds for 272 frames, cross-fades the BLDALPHA shadows
  * (gBldAlphaEva down, gBldAlphaEvb up) over 64 frames, holds for 798 more,

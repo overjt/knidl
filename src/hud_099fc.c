@@ -166,12 +166,12 @@ void HudRedraw(s32 i)
     HudFlushTilemap();
 }
 
-void sub_08009e14(void)
+void HudDeactivateAbilityPanel(void)
 {
     gHudAbilityPanelActive = 0;
 }
 
-void sub_08009e20(void)
+void HudActivateAbilityPanel(void)
 {
     gHudAbilityPanelActive = 1;
 }
