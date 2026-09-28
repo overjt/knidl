@@ -55,7 +55,7 @@ extern s8 gUnk_02006130[];
 extern s8 gUnk_0200617C;
 extern s8 gHudAbilityPanelState;
 extern struct HudBar gHudHpBars[];
-extern s16 gUnk_02007D30;
+extern s16 gHudHpBarLength;
 extern u16 gUnk_02007D40;
 extern s16 gHudHpBarValues[];
 extern s16 gUnk_02008014[];

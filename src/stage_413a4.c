@@ -71,7 +71,7 @@ void PlayerSetMotionYPreset(s32 a0)
     }
 }
 
-void sub_08041438(void)
+void MetaKnightActionStand(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 0;
@@ -103,7 +103,7 @@ void sub_08041438(void)
     TaskSleepForever();
 }
 
-void sub_080414e8(void)
+void MetaKnightActionWalk(void)
 {
     struct PlayerState *p;
     struct Task *t;
@@ -135,7 +135,7 @@ void sub_080414e8(void)
     }
 }
 
-void sub_080415c8(void)
+void MetaKnightActionWalkUpdate(void)
 {
     while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0 && sub_0803fe68() == 0
            && PlayerCheckEnterDoor() == 0 && PlayerCheckLadder() == 0 && PlayerCheckDuckOrSwallow() == 0
@@ -181,7 +181,7 @@ void sub_080415c8(void)
     PlayerSetMotionXPreset(2, 72);
 }
 
-void sub_080416a0(void)
+void MetaKnightActionRun(void)
 {
     struct PlayerState *p;
     u16 *q;
@@ -219,7 +219,7 @@ void sub_080416a0(void)
     }
 }
 
-void sub_08041778(void)
+void MetaKnightActionRunUpdate(void)
 {
     struct Task *t;
     struct Task *t3;
@@ -304,7 +304,7 @@ end:
     PlayerSetMotionXPreset(3, 72);
 }
 
-void sub_080418dc(void)
+void MetaKnightActionSkid(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 3;
@@ -319,7 +319,7 @@ void sub_080418dc(void)
     TaskSleepForever();
 }
 
-void sub_08041940(void)
+void MetaKnightActionJump(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -365,7 +365,7 @@ void sub_08041940(void)
     TaskSleepForever();
 }
 
-void sub_08041a2c(void)
+void MetaKnightActionJumpUpdate(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -425,7 +425,7 @@ void sub_08041a2c(void)
             break;
         PlayerCheckBump();
         if (((u8 *)gCurTask->player)[62] & 7)
-            TaskSetEntry(sub_08041940, gCurTaskIdx);
+            TaskSetEntry(MetaKnightActionJump, gCurTaskIdx);
         break;
     }
     PlayerSetMotionXPreset(7, 72);
@@ -448,7 +448,7 @@ void sub_08041b8c(void)
     TaskSleepForever();
 }
 
-void sub_08041bf0(void)
+void MetaKnightActionFall(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
@@ -459,7 +459,7 @@ void sub_08041bf0(void)
     TaskSleepForever();
 }
 
-void sub_08041c30(void)
+void MetaKnightActionFallUpdate(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -492,7 +492,7 @@ void sub_08041c30(void)
             break;
         PlayerCheckBump();
         if (((u8 *)gCurTask->player)[62] & 7)
-            TaskSetEntry(sub_08041bf0, gCurTaskIdx);
+            TaskSetEntry(MetaKnightActionFall, gCurTaskIdx);
         break;
     }
     PlayerSetMotionXPreset(7, 72);
@@ -501,7 +501,7 @@ void sub_08041c30(void)
     PlayerStopAtCeilingAndWall();
 }
 
-void sub_08041d14(void)
+void MetaKnightActionFloat(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 14;
@@ -526,7 +526,7 @@ void sub_08041d14(void)
     TaskSleepForever();
 }
 
-void sub_08041dc8(void)
+void MetaKnightActionFloatUpdate(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -554,7 +554,7 @@ void sub_08041dc8(void)
         {
             if (gLatchedPressedKeys[p->playerIndex] & 1)
             {
-                TaskSetEntry(sub_08041d14, gCurTaskIdx);
+                TaskSetEntry(MetaKnightActionFloat, gCurTaskIdx);
                 break;
             }
         }
@@ -570,7 +570,7 @@ end:
     PlayerStopAtWall();
 }
 
-void sub_08041e8c(void)
+void MetaKnightActionDuck(void)
 {
     struct Task *t;
     s16 *q;
@@ -592,7 +592,7 @@ void sub_08041e8c(void)
     TaskSleepForever();
 }
 
-void sub_08041f10(void)
+void MetaKnightActionSlide(void)
 {
     struct Task *t;
 
@@ -639,7 +639,7 @@ void sub_08041f10(void)
     TaskSleepForever();
 }
 
-void sub_08042050(void)
+void MetaKnightActionSlideUpdate(void)
 {
     struct Task *t;
     struct Task *t2;
@@ -711,7 +711,7 @@ void sub_08042050(void)
    quantity pushes block_alloc onto the qsort path, which sorts correctly:
    chain->r0, pool->r1, index->r1, xa->r0; the pointer`s preference becomes
    r0, which it conflicts with and is pruned, so v is free to take r1. */
-void sub_08042128(void)
+void MetaKnightActionLadder(void)
 {
     struct Task *h1;
     struct Task *h2;
@@ -831,7 +831,7 @@ void sub_08042128(void)
    Corroboration: at 0x08042562 the `movs r3,#1` for the `unk7A & 1` mask is
    still live inside set1 (`strb r3,[r0,#1]`), i.e. the constant 1 is CSEd
    across the goto, which only happens if set1 is a jump target. */
-void sub_08042328(void)
+void MetaKnightActionLadderUpdate(void)
 {
     struct Task *t;
     struct Task *ta;
@@ -863,7 +863,7 @@ void sub_08042328(void)
             ta->variant = 2;
         if (gCurTask->variant == 1)
             break;
-        TaskSetEntry(sub_08042128, gCurTaskIdx);
+        TaskSetEntry(MetaKnightActionLadder, gCurTaskIdx);
         break;
     case 2:
         p = t->player;
@@ -885,7 +885,7 @@ void sub_08042328(void)
             tb->variant = 1;
         if (gCurTask->variant == 2)
             break;
-        TaskSetEntry(sub_08042128, gCurTaskIdx);
+        TaskSetEntry(MetaKnightActionLadder, gCurTaskIdx);
         break;
     case 0:
         if ((gLatchedPressedKeys[t->player->playerIndex] & 192) == 0)
@@ -928,7 +928,7 @@ void sub_08042328(void)
         if (td->unk28 > 13)
             td->unk28 = 10;
     callit:
-        TaskSetEntry(sub_08042128, gCurTaskIdx);
+        TaskSetEntry(MetaKnightActionLadder, gCurTaskIdx);
         break;
     }
     qd = gLatchedPressedKeys;
@@ -954,7 +954,7 @@ void sub_08042328(void)
     }
 }
 
-void sub_08042580(void)
+void MetaKnightActionHurt(void)
 {
     struct Task *t;
     struct Task *t5;
@@ -1105,7 +1105,7 @@ void sub_08042580(void)
     }
 }
 
-void sub_08042980(void)
+void MetaKnightActionHurtUpdate(void)
 {
     switch (gCurTask->variant)
     {
@@ -1123,7 +1123,7 @@ void sub_08042980(void)
         if (PlayerHasCrossedWaterSurface(0))
         {
             gCurTask->variant = 6;
-            TaskSetEntry(sub_08042580, gCurTaskIdx);
+            TaskSetEntry(MetaKnightActionHurt, gCurTaskIdx);
         }
         break;
     }
@@ -1159,7 +1159,7 @@ void sub_08042980(void)
    member - every `*(u16 *)((u8 *)p + 18)` spelling adds an `adds r0,rN,#0`
    copy (lesson 3.323).  include/task.h now carries it, so the throw-away
    stand-in this body used is gone. */
-void sub_080429fc(void)
+void MetaKnightActionDie(void)
 {
     struct Task *t;
     u16 *q;
@@ -1296,7 +1296,7 @@ void sub_08042d40(void)
     gCurTask->player->requestedAction = 7;
 }
 
-void sub_08042d54(void)
+void MetaKnightActionEnterDoor(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 19;
@@ -1345,7 +1345,7 @@ void sub_08042d54(void)
     TaskSleepForever();
 }
 
-void sub_08042e98(void)
+void MetaKnightActionExitDoor(void)
 {
     s32 a;
 
@@ -1401,7 +1401,7 @@ void sub_08042e98(void)
     TaskSleepForever();
 }
 
-void sub_08043014(void)
+void MetaKnightActionSwim(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 15;

@@ -14,7 +14,7 @@ void RegisterCollider(u8 a, s16 x, s16 y, void *p);
 void RequestScreenShake(u32 a);
 void CreatePlayerObject(s32 a, s32 b, s32 c);
 
-void sub_08043654(void)
+void MetaKnightActionStandInWater(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 0;
@@ -28,7 +28,7 @@ void sub_08043654(void)
     TaskSleepForever();
 }
 
-void sub_080436ac(void)
+void MetaKnightActionWalkInWater(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 1;
@@ -55,7 +55,7 @@ void sub_080436ac(void)
     }
 }
 
-void sub_0804374c(void)
+void MetaKnightActionSlash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -219,7 +219,7 @@ Lend:
     TaskSleepForever();
 }
 
-void sub_08043a88(void)
+void MetaKnightActionSlashUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -260,11 +260,11 @@ void sub_08043a88(void)
 /* NOTE: fwd.h gives this four s32 args; that is an arity.py artifact -
    the script does not model `ldmia rN!, {r2, r3, r4}` (the 20-byte struct
    copy in this body) as WRITING r2/r3, so it reads them as incoming
-   arguments.  The real prototype is `void sub_08043b80(void)`, confirmed by
+   arguments.  The real prototype is `void MetaKnightActionDashSlash(void)`, confirmed by
    the anchor table at 0x0873B46C whose entries are `void (*)(void)`.
    The unused parameters are kept only so this file compiles against the
    current fwd.h; they cost no code. */
-void sub_08043b80(void)
+void MetaKnightActionDashSlash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -374,7 +374,7 @@ void sub_08043b80(void)
     TaskSleepForever();
 }
 
-void sub_08043e28(void)
+void MetaKnightActionDashSlashUpdate(void)
 {
     if (gCurTask->unk28 != 0) {
         if ((gCurTask->onGround & 1) == 0) {
@@ -430,11 +430,11 @@ void sub_08043e28(void)
 /* NOTE: fwd.h gives this four s32 args; that is an arity.py artifact -
    the script does not model `ldmia rN!, {r2, r3, r4}` (the 20-byte struct
    copy in this body) as WRITING r2/r3, so it reads them as incoming
-   arguments.  The real prototype is `void sub_08043fa8(void)`, confirmed by
+   arguments.  The real prototype is `void MetaKnightActionUpwardSlash(void)`, confirmed by
    the anchor table at 0x0873B46C whose entries are `void (*)(void)`.
    The unused parameters are kept only so this file compiles against the
    current fwd.h; they cost no code. */
-void sub_08043fa8(void)
+void MetaKnightActionUpwardSlash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -513,7 +513,7 @@ void sub_08043fa8(void)
     TaskSleepForever();
 }
 
-void sub_080441cc(void)
+void MetaKnightActionUpwardSlashUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -540,11 +540,11 @@ void sub_080441cc(void)
 /* NOTE: fwd.h gives this four s32 args; that is an arity.py artifact -
    the script does not model `ldmia rN!, {r2, r3, r4}` (the 20-byte struct
    copy in this body) as WRITING r2/r3, so it reads them as incoming
-   arguments.  The real prototype is `void sub_08044288(void)`, confirmed by
+   arguments.  The real prototype is `void MetaKnightActionDownThrust(void)`, confirmed by
    the anchor table at 0x0873B46C whose entries are `void (*)(void)`.
    The unused parameters are kept only so this file compiles against the
    current fwd.h; they cost no code. */
-void sub_08044288(void)
+void MetaKnightActionDownThrust(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
@@ -617,7 +617,7 @@ void sub_08044288(void)
     TaskSleepForever();
 }
 
-void sub_08044470(void)
+void MetaKnightActionDownThrustUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -626,7 +626,7 @@ void sub_08044470(void)
         if (PlayerCheckLanding() != 0) {
             PlayerStopAxes(3);
             gCurTask->variant = 1;
-            TaskSetEntry(sub_08044288, gCurTaskIdx);
+            TaskSetEntry(MetaKnightActionDownThrust, gCurTaskIdx);
             break;
         }
         {

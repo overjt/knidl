@@ -1069,12 +1069,12 @@ void sub_080664e0(struct AnimCmd *p)
     ActorStopAnim();
     if (p != NULL)
         gCurTask->unk24 = ActorStartAnim(p);
-    if (gUnk_0200AFF8 == 0)
+    if (gHudHpBarFilled == 0)
     {
         do
         {
             TaskYieldTrampoline(1);
-        } while (gUnk_0200AFF8 == 0);
+        } while (gHudHpBarFilled == 0);
     }
     sub_08066564();
     sub_080666a4();
@@ -1113,7 +1113,7 @@ void ActorShowHpBar(void)
     s32 v;
 
     g = &gCurTask;
-    gUnk_0200AFF8 = 0;
+    gHudHpBarFilled = 0;
     HudShowHpBar();
     t = *g;
     if (t->actorKind == 1 || (t->actorKind == 2 && t->unk76 == 7))

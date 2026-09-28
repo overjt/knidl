@@ -64,7 +64,7 @@ void HudReset(void)
         gHudHpBarValues[i] = 0;
         HudResetHpBar(i);
     }
-    gHudHpBarMaxHp = gUnk_02007D30 = 0;
+    gHudHpBarMaxHp = gHudHpBarLength = 0;
     gUnk_020055F0[0] = 0;
     gUnk_020055F0[1] = 0;
 }
@@ -113,7 +113,7 @@ void HudInit(s32 i)
             gHudHpBarValues[j] = 0;
             HudResetHpBar(j);
         }
-        gHudHpBarMaxHp = gUnk_02007D30 = 0;
+        gHudHpBarMaxHp = gHudHpBarLength = 0;
         gUnk_020055F0[0] = 0;
         gUnk_020055F0[1] = 0;
     } else {

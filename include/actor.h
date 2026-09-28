@@ -42,7 +42,7 @@ extern s32 gUnk_02007D00[];
 extern u32 gUnk_02007F50;
 extern s8 gUnk_02007FB8[];
 extern u32 gUnk_0200AEF4;
-extern u8 gUnk_0200AFF8;
+extern u8 gHudHpBarFilled;
 extern u8 gUnk_0200B030;
 extern struct Actor gActors[];
 

@@ -309,7 +309,7 @@ void PlayerActionDuckUpdate(void)
                 if (gMetaKnightmareMode == 0)
                     TaskSetEntry(PlayerActionDuck, gCurTaskIdx);
                 else
-                    TaskSetEntry(sub_08041e8c, gCurTaskIdx);
+                    TaskSetEntry(MetaKnightActionDuck, gCurTaskIdx);
             }
         }
         break;

@@ -2339,7 +2339,7 @@ void sub_080ad710(void)
     s32 w;
     s32 w2;
 
-    if (gUnk_0200AFF8 != 0)
+    if (gHudHpBarFilled != 0)
         sub_08066564();
     sub_08068f68();
     ActorReactToHit();

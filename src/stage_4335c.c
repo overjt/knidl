@@ -13,7 +13,7 @@
  * gLatchedHeldKeys[] (left or right = 3, A or up = 1, down = 2, else 0; state 1
  * also looks at the newly pressed keys gLatchedPressedKeys[] and the counter
  * Task.unk28), applies the motion presets of PlayerSetMotionXPreset and PlayerSetMotionYPreset
- * in state 3, re-binds the coroutine sub_08043014 when the state changed
+ * in state 3, re-binds the coroutine MetaKnightActionSwim when the state changed
  * and then, unless M11's predicates PlayerCheckBButton/PlayerCheckEnterDoor take over,
  * requests the next action through PlayerState.requestedAction (9 or 5 on the ground,
  * 24 or 25 in the air).
@@ -46,7 +46,7 @@ void TaskSetEntry(void *a, u32 i);
      three calls, and calls kill every MEM expression in agbcc's gcse, so no
      plain spelling (x/q/w locals as in the twin, all-global) produces it
      (190 bytes); tp without m places the copy before the load (16 bytes). */
-void sub_0804335c(void)
+void MetaKnightActionSwimUpdate(void)
 {
     struct Task *t;
     struct PlayerState *u;
@@ -155,7 +155,7 @@ void sub_0804335c(void)
         break;
     }
     if (gCurTask->unk2C != gCurTask->variant)
-        TaskSetEntry(sub_08043014, gCurTaskIdx);
+        TaskSetEntry(MetaKnightActionSwim, gCurTaskIdx);
     if (!PlayerCheckBButton() && !PlayerCheckEnterDoor())
     {
         m = gCurTask->waterFlags & 1;

@@ -12,7 +12,7 @@
  * 17 and 20-25.  gLatchedHeldKeys[player] is the held-keys mask the bodies
  * test (0x30 left/right, 0x41 A or up, 0x80 down; gLatchedPressedKeys[] is the
  * newly-pressed one).  PlayerActionSwim (action 23) is the twin of M11's
- * sub_08043014: a four-state machine over Task.variant picked from the keys
+ * MetaKnightActionSwim: a four-state machine over Task.variant picked from the keys
  * (left/right = 3, A/up = 1, down = 2, else 0) that plays a row of
  * gUnk_0873D9DA[4][4] chosen by the ability; its per-frame handler 20,
  * PlayerActionSwimUpdate, re-picks the state and re-binds the coroutine when the

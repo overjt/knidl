@@ -20,7 +20,7 @@ extern u32 gUnk_02006040[];
 extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
 extern s8 gUnk_02007FB8[];
-extern u8 gUnk_0200AFF8;
+extern u8 gHudHpBarFilled;
 extern u8 gUnk_0200B030;
 extern struct PlayerState gPlayerStates[];
 extern s32 gUnk_030023B4;
@@ -415,15 +415,15 @@ void sub_080a19ec(void)
     aa = ta->u8C.actor;
     ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->unk60->altAttackBox);
     ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->unk60->altAttackBox);
-    gUnk_0200AFF8 = 0;
+    gHudHpBarFilled = 0;
     HudShowHpBar();
     HudStartHpBar(tb->health * 2, tb->health);
-    while (gUnk_0200AFF8 == 0)
+    while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
-    gUnk_0200AFF8 = 0;
+    gHudHpBarFilled = 0;
     HudShowHpBar();
     HudStartHpBar(ta->health * 2, ta->health);
-    while (gUnk_0200AFF8 == 0)
+    while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
     if (gUnk_030023B0 != 0)
         TaskYieldTrampoline(120);

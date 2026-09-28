@@ -123,7 +123,7 @@ void sub_080a8878(void)
     gCurTask->velY = 0;
     gCurTask->posY = (gViewRect[2] + 48) << 16;
     gUnk_02007D00[0] = 0;
-    while (gUnk_0200AFF8 == 0)
+    while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
     sub_08066564();
     ActorSetAttackBox((u32)gUnk_08749720);

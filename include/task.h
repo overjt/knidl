@@ -283,7 +283,7 @@ struct PlayerState
     /*0x3A*/ u8 unk3A;
     /*0x3B*/ u8 unk3B;
     /*0x3C*/ u8 unk3C;
-    /* M11's sub_08043e28 writes 0/1 here (issue #85). */
+    /* M11's MetaKnightActionDashSlashUpdate writes 0/1 here (issue #85). */
     /*0x3D*/ u8 running;
     /*0x3E*/ u8 bumpKind;
     /*0x3F*/ u8 invulnerability;

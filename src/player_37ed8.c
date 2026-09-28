@@ -12,7 +12,7 @@
  *
  * Player action body, part 6: action 16 and per-frame handler 16.
  * PlayerActionHurt (action 16, mode 17, 4368 bytes) is the twin of M11's
- * sub_08042580: a goto loop around a seven-state switch over Task.variant.
+ * MetaKnightActionHurt: a goto loop around a seven-state switch over Task.variant.
  * State 5, the entry, picks the next state from Task.hitEffect (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
  * (PlayerState.ability) with bit 1 of PlayerState.unk42 clear, releases it

@@ -3838,60 +3838,60 @@ gPlayerMotionYPresets:
 	.global	gMetaKnightActions
 gMetaKnightActions:
 	.incbin	"baserom.gba", 0x73B42C, 0x4
-	.word	sub_08041438+1
-	.word	sub_080414e8+1
-	.word	sub_080416a0+1
-	.word	sub_080418dc+1
-	.word	sub_08041940+1
+	.word	MetaKnightActionStand+1
+	.word	MetaKnightActionWalk+1
+	.word	MetaKnightActionRun+1
+	.word	MetaKnightActionSkid+1
+	.word	MetaKnightActionJump+1
 	.word	sub_08041b8c+1
-	.word	sub_08041bf0+1
+	.word	MetaKnightActionFall+1
 	.incbin	"baserom.gba", 0x73B44C, 0x4
-	.word	sub_08041d14+1
-	.word	sub_08041e8c+1
-	.word	sub_08041f10+1
-	.word	sub_08042128+1
+	.word	MetaKnightActionFloat+1
+	.word	MetaKnightActionDuck+1
+	.word	MetaKnightActionSlide+1
+	.word	MetaKnightActionLadder+1
 	.incbin	"baserom.gba", 0x73B460, 0xC
-	.word	sub_08042580+1
-	.word	sub_080429fc+1
+	.word	MetaKnightActionHurt+1
+	.word	MetaKnightActionDie+1
 	.word	sub_08042cfc+1
 	.incbin	"baserom.gba", 0x73B478, 0x4
-	.word	sub_08042d54+1
-	.word	sub_08042e98+1
+	.word	MetaKnightActionEnterDoor+1
+	.word	MetaKnightActionExitDoor+1
 	.incbin	"baserom.gba", 0x73B484, 0x4
-	.word	sub_08043014+1
-	.word	sub_08043654+1
-	.word	sub_080436ac+1
-	.word	sub_0804374c+1
-	.word	sub_08043b80+1
-	.word	sub_08043fa8+1
-	.word	sub_08044288+1
+	.word	MetaKnightActionSwim+1
+	.word	MetaKnightActionStandInWater+1
+	.word	MetaKnightActionWalkInWater+1
+	.word	MetaKnightActionSlash+1
+	.word	MetaKnightActionDashSlash+1
+	.word	MetaKnightActionUpwardSlash+1
+	.word	MetaKnightActionDownThrust+1
 	.global	gMetaKnightActionHandlers
 gMetaKnightActionHandlers:
 	.incbin	"baserom.gba", 0x73B4A4, 0x4
 	.word	PlayerActionStandUpdate+1
-	.word	sub_080415c8+1
-	.word	sub_08041778+1
+	.word	MetaKnightActionWalkUpdate+1
+	.word	MetaKnightActionRunUpdate+1
 	.word	PlayerActionSkidUpdate+1
-	.word	sub_08041a2c+1
-	.word	sub_08041a2c+1
-	.word	sub_08041c30+1
+	.word	MetaKnightActionJumpUpdate+1
+	.word	MetaKnightActionJumpUpdate+1
+	.word	MetaKnightActionFallUpdate+1
 	.incbin	"baserom.gba", 0x73B4C4, 0x4
-	.word	sub_08041dc8+1
+	.word	MetaKnightActionFloatUpdate+1
 	.word	PlayerActionDuckUpdate+1
-	.word	sub_08042050+1
-	.word	sub_08042328+1
+	.word	MetaKnightActionSlideUpdate+1
+	.word	MetaKnightActionLadderUpdate+1
 	.incbin	"baserom.gba", 0x73B4D8, 0xC
-	.word	sub_08042980+1
+	.word	MetaKnightActionHurtUpdate+1
 	.word	sub_08042d40+1
 	.incbin	"baserom.gba", 0x73B4EC, 0x4
 	.word	PlayerActionExitDoorUpdate+1
-	.word	sub_0804335c+1
+	.word	MetaKnightActionSwimUpdate+1
 	.word	PlayerActionStandInWaterUpdate+1
 	.word	PlayerActionWalkInWaterUpdate+1
-	.word	sub_08043a88+1
-	.word	sub_08043e28+1
-	.word	sub_080441cc+1
-	.word	sub_08044470+1
+	.word	MetaKnightActionSlashUpdate+1
+	.word	MetaKnightActionDashSlashUpdate+1
+	.word	MetaKnightActionUpwardSlashUpdate+1
+	.word	MetaKnightActionDownThrustUpdate+1
 	.global	gUnk_0873B510
 gUnk_0873B510:
 	.word	gUnk_081CC2C8

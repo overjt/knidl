@@ -229,8 +229,8 @@ gUnk_02007D00 = 0x02007D00
 gGameOverPlayerTask = 0x02007D28
 	.global	gSubGamePhase
 gSubGamePhase = 0x02007D2C
-	.global	gUnk_02007D30
-gUnk_02007D30 = 0x02007D30
+	.global	gHudHpBarLength
+gHudHpBarLength = 0x02007D30
 	.global	gMenuChoiceCursor
 gMenuChoiceCursor = 0x02007D34
 	.global	gUnk_02007D38
@@ -343,8 +343,8 @@ gPlayerBubbleTimers = 0x0200AFE8
 gBombRallyOutCount = 0x0200AFF0
 	.global	gUnk_0200AFF4
 gUnk_0200AFF4 = 0x0200AFF4
-	.global	gUnk_0200AFF8
-gUnk_0200AFF8 = 0x0200AFF8
+	.global	gHudHpBarFilled
+gHudHpBarFilled = 0x0200AFF8
 	.global	gUnk_0200B000
 gUnk_0200B000 = 0x0200B000
 	.global	gHudShowsHpBar

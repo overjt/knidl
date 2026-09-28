@@ -91,9 +91,9 @@ void HudStartHpBar(s32 max, s32 cur)
 {
     if (gUnk_030023B0 != 0) {
         gHudHpBarMaxHp = max;
-        gUnk_02007D30 = 32;
+        gHudHpBarLength = 32;
         gHudHpBarValues[0] = 32;
-        gUnk_0200AFF8 = 1;
+        gHudHpBarFilled = 1;
         HudDrawHpBar(32);
         gHudHpBarIndex = 0;
         gHudHpBars[0].unk0 = 0;
@@ -102,10 +102,10 @@ void HudStartHpBar(s32 max, s32 cur)
         gHudHpBars[0].unk6 = 0;
     } else {
         gHudHpBarMaxHp = max;
-        gUnk_02007D30 = 32;
+        gHudHpBarLength = 32;
         gHudHpBarValues[0] = Div(cur << 5, gHudHpBarMaxHp);
-        if (gHudHpBarValues[0] > gUnk_02007D30)
-            gHudHpBarValues[0] = gUnk_02007D30;
+        if (gHudHpBarValues[0] > gHudHpBarLength)
+            gHudHpBarValues[0] = gHudHpBarLength;
         HudResetHpBar(0);
         HudDrawHpBar(0);
         sub_0800aa18(0, gHudHpBarValues[0]);
@@ -124,10 +124,10 @@ void sub_0800a340(s32 max, s32 cur)
     if (gUnk_030023B0 != 0) {
         if (gHudHpBarMaxHp == 0) {
             gHudHpBarMaxHp = max;
-            gUnk_02007D30 = 32;
+            gHudHpBarLength = 32;
         }
-        gHudHpBarValues[idx] = gUnk_02007D30;
-        gUnk_0200AFF8 = 1;
+        gHudHpBarValues[idx] = gHudHpBarLength;
+        gHudHpBarFilled = 1;
         HudDrawHpBar(32);
         gHudHpBarIndex = idx;
         p = &gHudHpBars[idx];
@@ -138,7 +138,7 @@ void sub_0800a340(s32 max, s32 cur)
     } else {
         if (gHudHpBarMaxHp == 0) {
             gHudHpBarMaxHp = max;
-            gUnk_02007D30 = 32;
+            gHudHpBarLength = 32;
         }
         gHudHpBarValues[idx] = Div(cur << 5, gHudHpBarMaxHp);
         HudResetHpBar(idx);
@@ -217,7 +217,7 @@ void HudRemoveHpBar(void)
                     HudDrawClock(gHudClock);
             }
             gHudShowsHpBar = 0;
-            gHudHpBarMaxHp = gUnk_02007D30 = 0;
+            gHudHpBarMaxHp = gHudHpBarLength = 0;
         }
     }
 }
@@ -326,7 +326,7 @@ void HudUpdateHpBars(void)
                 p->unk4 = v;
                 if (p->unk4 == p->unk2) {
                     p->unk0 = 0;
-                    gUnk_0200AFF8 = 1;
+                    gHudHpBarFilled = 1;
                 } else {
                     p->unk6 = 4;
                 }
@@ -410,7 +410,7 @@ s32 sub_0800aa18(s32 from, s32 to)
             gHudHpBars[i].unk0 = 1;
         }
         gHudHpBarIndex = 0;
-        gUnk_0200AFF8 = 0;
+        gHudHpBarFilled = 0;
     }
 }
 
