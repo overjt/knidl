@@ -20,7 +20,7 @@
  *   * the two stand-alone class-2 bodies `Task_ChillyFreezeSparkle` (a two-variant intro
  *     that walks Task.posX/unk50 with RandomSpread and waits on the room byte
  *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `Task_WaddleDooBeam`,
- *     plus the smaller `Task_GlunkShot` and `sub_0808d218`;
+ *     plus the smaller `Task_GlunkShot` and `Task_GipStar`;
  *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
  *     the row bodies `sub_0808d558` / `sub_0808da00` / `sub_0808df58`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
@@ -259,7 +259,7 @@ void sub_0808d200(void)
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_0808d218(void)
+void Task_GipStar(void)
 {
     struct Task *t;
 
@@ -268,8 +268,8 @@ void sub_0808d218(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     t = gCurTask;
-    t->frameTable = gUnk_08752C18;
-    t->updateCallback = (u32)sub_0808d2a8;
+    t->frameTable = gGipStarFrames;
+    t->updateCallback = (u32)GipStarUpdate;
     gCurTask->facing = TaskGetParentFacing();
     TaskSetMotionXFacing(192 << 9, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 168 << 5, 192 << 10);
@@ -286,7 +286,7 @@ void sub_0808d218(void)
     }
 }
 
-void sub_0808d2a8(void)
+void GipStarUpdate(void)
 {
     ActorCheckHits();
     ActorReactToHit();

@@ -8,9 +8,9 @@
  *     `0x08741FB8`, bodies `0x08741FC0`, guards `0x08741FD4`, per-frame hook
  *     `ChillyUpdate`;
  *   * class-3 task #17 (`Task_WaddleDoo`): `0x08741FE8` / `0x08741FF8` /
- *     `0x08742004`, per-frame hook `sub_08085500`;
- *   * the `sub_08085858` script: `0x08742030` / `0x08742040`, per-frame hook
- *     `sub_080858cc`;
+ *     `0x08742004`, per-frame hook `WaddleDooWalkUpdate`;
+ *   * the `ParasolWaddleDooInit` script: `0x08742030` / `0x08742040`, per-frame hook
+ *     `ParasolWaddleDooUpdate`;
  *   * class-3 task #20 (`Task_BrontoBurt` / `sub_080860d8`), whose seven unk73
  *     rows at `0x08742064` all point INTO module M23 - the first cross-module
  *     dispatch found in the behaviour banks.
@@ -451,33 +451,33 @@ void Task_WaddleDoo(void)
     CallTableEntry(u->variant, 4, gWaddleDooVariants);
 }
 
-void sub_08085498(void)
+void WaddleDooWalkInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08085500;
+    t->updateCallback = (u32)WaddleDooWalkUpdate;
     t->unk28 = 15;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_08741FF8);
+    CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
 }
 
-void sub_080854d0(void)
+void WaddleDooWalkEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08085500;
+    t->updateCallback = (u32)WaddleDooWalkUpdate;
     if (t->state == 0)
         t->unk28 = 80;
-    CallTableEntry(gCurTask->state, 3, gUnk_08741FF8);
+    CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
 }
 
-void sub_08085500(void)
+void WaddleDooWalkUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08742004);
+        CallTableEntry(gCurTask->updateState, 3, gWaddleDooWalkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -548,7 +548,7 @@ void sub_08085608(void)
             return;
         }
         ActorSetState(n);
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
     }
 }
 
@@ -643,36 +643,36 @@ void sub_0808582c(void)
 
     t = gCurTask;
     if (t->unk2C == 0 && t->state != 2)
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
 }
 
-void sub_08085858(void)
+void ParasolWaddleDooInit(void)
 {
     struct Task *t;
 
-    gCurTask->updateCallback = (u32)sub_080858cc;
-    sub_08066b34(gUnk_08742A6C);
+    gCurTask->updateCallback = (u32)ParasolWaddleDooUpdate;
+    sub_08066b34(gParasolWaddleDooDef);
     gCurTask->unk28 = 15;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 4, gUnk_08742030);
+    CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
 }
 
-void sub_0808589c(void)
+void ParasolWaddleDooEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_080858cc;
+    t->updateCallback = (u32)ParasolWaddleDooUpdate;
     if (t->state == 0)
         t->unk28 = 80;
-    CallTableEntry(gCurTask->state, 4, gUnk_08742030);
+    CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
 }
 
-void sub_080858cc(void)
+void ParasolWaddleDooUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 4, gUnk_08742040);
+        CallTableEntry(gCurTask->updateState, 4, gParasolWaddleDooStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -743,7 +743,7 @@ void sub_08085998(void)
             return;
         }
         ActorSetState(n);
-        TaskSetEntry(sub_0808589c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
     }
 }
 
@@ -838,7 +838,7 @@ void sub_08085bb8(void)
 
     t = gCurTask;
     if (t->unk2C == 0 && t->state != 2)
-        TaskSetEntry(sub_0808589c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
 }
 
 void sub_08085be4(void)
@@ -1013,14 +1013,14 @@ u8 sub_08085e74(void)
         t->unk2C = 0;
         TaskStopY();
         ActorSetState(0);
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
         return 1;
     case 1:
         ActorStopAnim();
         sub_08066c3c(gWaddleDooDef);
         TaskStopY();
         ActorSetState(0);
-        TaskSetEntry(sub_0808589c, gCurTaskIdx);
+        TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1040,7 +1040,7 @@ u8 sub_08085ef0(void)
         t->accelY = 0x1500;
         t->speedLimitY = 0x30000;
         ActorSetState(0);
-        TaskSetEntry(sub_080854d0, gCurTaskIdx);
+        TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
         return 1;
     case 1:
         if (t->unk8C->extraFrame == -1)
@@ -1049,7 +1049,7 @@ u8 sub_08085ef0(void)
             t->accelY = 0x1500;
             t->speedLimitY = 0x30000;
             ActorSetState(0);
-            TaskSetEntry(sub_0808589c, gCurTaskIdx);
+            TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
         }
         else
         {

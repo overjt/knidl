@@ -1585,7 +1585,7 @@ s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
     return i;
 }
 
-s32 sub_08065100(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
+s32 CreateBlockStar(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
 {
     struct Task *t;
     s32 i;

@@ -330,7 +330,7 @@ void sub_080790e8(void)
 void ParasolWaddleDeeWalkInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolWaddleDeeWalkUpdate;
-    sub_08066b34(gUnk_08740C00);
+    sub_08066b34(gParasolWaddleDeeDef);
     TaskFaceNearestPlayer();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 2, gParasolWaddleDeeWalkStates);
@@ -428,7 +428,7 @@ void sub_080792f4(void)
 void ParasolWaddleDeeStandInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolWaddleDeeStandUpdate;
-    sub_08066b34(gUnk_08740C00);
+    sub_08066b34(gParasolWaddleDeeDef);
     gCurTask->unk74 = 2;
     TaskFaceNearestPlayer();
     ActorSetState(0);
@@ -1084,10 +1084,10 @@ void sub_08079f54(u16 a)
     switch (gCurTask->variant)
     {
     case 0:
-        TaskSetEntry(sub_0807a10c, gCurTaskIdx);
+        TaskSetEntry(SparkyJumpEnterState, gCurTaskIdx);
         break;
     case 2:
-        TaskSetEntry(sub_0807a618, gCurTaskIdx);
+        TaskSetEntry(SparkyStandEnterState, gCurTaskIdx);
         break;
     }
 }
@@ -1106,7 +1106,7 @@ s32 sub_08079fd0(void)
     if (gCurTask->variant != 0)
         return 0;
     ActorSetState(3);
-    TaskSetEntry(sub_0807a10c, gCurTaskIdx);
+    TaskSetEntry(SparkyJumpEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1115,7 +1115,7 @@ s32 sub_0807a008(void)
     if (gCurTask->variant != 0)
         return 0;
     ActorSetState(1);
-    TaskSetEntry(sub_0807a10c, gCurTaskIdx);
+    TaskSetEntry(SparkyJumpEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1136,17 +1136,17 @@ void sub_0807a05c(void)
     gCurTask->velY = 0;
 }
 
-void sub_0807a06c(void)
+void SparkyJumpInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807a09c;
+    gCurTask->updateCallback = (u32)SparkyJumpUpdate;
     sub_08079fa8(2);
-    CallTableEntry(gCurTask->state, 4, gUnk_087407E4);
+    CallTableEntry(gCurTask->state, 4, gSparkyJumpStates);
 }
 
-void sub_0807a09c(void)
+void SparkyJumpUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 4, gUnk_087407F4);
+        CallTableEntry(gCurTask->updateState, 4, gSparkyJumpStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         struct Task *t;
@@ -1159,9 +1159,9 @@ void sub_0807a09c(void)
     }
 }
 
-void sub_0807a10c(void)
+void SparkyJumpEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_087407E4);
+    CallTableEntry(gCurTask->state, 4, gSparkyJumpStates);
 }
 
 void sub_0807a128(void)
@@ -1367,17 +1367,17 @@ void sub_0807a574(void)
 {
 }
 
-void sub_0807a578(void)
+void SparkyStandInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807a5a8;
+    gCurTask->updateCallback = (u32)SparkyStandUpdate;
     sub_08079fa8(1);
-    CallTableEntry(gCurTask->state, 2, gUnk_08740810);
+    CallTableEntry(gCurTask->state, 2, gSparkyStandStates);
 }
 
-void sub_0807a5a8(void)
+void SparkyStandUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_08740818);
+        CallTableEntry(gCurTask->updateState, 2, gSparkyStandStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         struct Task *t;
@@ -1390,9 +1390,9 @@ void sub_0807a5a8(void)
     }
 }
 
-void sub_0807a618(void)
+void SparkyStandEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08740810);
+    CallTableEntry(gCurTask->state, 2, gSparkyStandStates);
 }
 
 void sub_0807a634(void)

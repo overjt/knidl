@@ -549,9 +549,9 @@ gUnk_087407AC:
 	.word	sub_08079e20+1
 	.global	gSparkyVariants
 gSparkyVariants:
-	.word	sub_0807a06c+1
+	.word	SparkyJumpInit+1
 	.word	sub_0807a45c+1
-	.word	sub_0807a578+1
+	.word	SparkyStandInit+1
 	.global	gUnk_087407BC
 gUnk_087407BC:
 	.incbin	"baserom.gba", 0x7407BC, 0x4
@@ -567,14 +567,14 @@ gUnk_087407D0:
 	.global	gUnk_087407DC
 gUnk_087407DC:
 	.incbin	"baserom.gba", 0x7407DC, 0x8
-	.global	gUnk_087407E4
-gUnk_087407E4:
+	.global	gSparkyJumpStates
+gSparkyJumpStates:
 	.word	sub_0807a1c0+1
 	.word	sub_0807a3bc+1
 	.word	sub_0807a128+1
 	.word	sub_0807a424+1
-	.global	gUnk_087407F4
-gUnk_087407F4:
+	.global	gSparkyJumpStateUpdates
+gSparkyJumpStateUpdates:
 	.word	sub_0807a380+1
 	.word	sub_0807a408+1
 	.word	sub_0807a1bc+1
@@ -588,12 +588,12 @@ gUnk_08740808:
 	.global	gUnk_0874080C
 gUnk_0874080C:
 	.incbin	"baserom.gba", 0x74080C, 0x4
-	.global	gUnk_08740810
-gUnk_08740810:
+	.global	gSparkyStandStates
+gSparkyStandStates:
 	.word	sub_0807a634+1
 	.word	sub_0807a830+1
-	.global	gUnk_08740818
-gUnk_08740818:
+	.global	gSparkyStandStateUpdates
+gSparkyStandStateUpdates:
 	.word	sub_0807a7f4+1
 	.word	sub_0807a87c+1
 	.global	gUnk_08740820
@@ -639,11 +639,11 @@ gScarfyStateUpdates:
 	.word	sub_0807adcc+1
 	.word	ScarfyChaseUpdate+1
 	.word	sub_0807af3c+1
-	.global	gUnk_08740990
-gUnk_08740990:
-	.word	sub_0807b300+1
+	.global	gSwordAndBladeKnightVariants
+gSwordAndBladeKnightVariants:
+	.word	SwordAndBladeKnightWalkInit+1
 	.word	sub_0807b800+1
-	.word	sub_0807b8ec+1
+	.word	SwordAndBladeKnightStandInit+1
 	.global	gUnk_0874099C
 gUnk_0874099C:
 	.incbin	"baserom.gba", 0x74099C, 0x24
@@ -653,8 +653,8 @@ gUnk_087409C0:
 	.global	gUnk_087409E4
 gUnk_087409E4:
 	.incbin	"baserom.gba", 0x7409E4, 0x18
-	.global	gUnk_087409FC
-gUnk_087409FC:
+	.global	gSwordAndBladeKnightWalkStates
+gSwordAndBladeKnightWalkStates:
 	.word	sub_0807b3f8+1
 	.word	sub_0807b49c+1
 	.word	sub_0807b584+1
@@ -663,8 +663,8 @@ gUnk_087409FC:
 	.word	sub_0807b66c+1
 	.word	sub_0807b6e8+1
 	.word	sub_0807b7d0+1
-	.global	gUnk_08740A1C
-gUnk_08740A1C:
+	.global	gSwordAndBladeKnightWalkStateUpdates
+gSwordAndBladeKnightWalkStateUpdates:
 	.word	sub_0807b430+1
 	.word	sub_0807b4c8+1
 	.word	sub_0807b5b0+1
@@ -679,28 +679,28 @@ gUnk_08740A3C:
 	.global	gUnk_08740A40
 gUnk_08740A40:
 	.word	sub_0807b8d0+1
-	.global	gUnk_08740A44
-gUnk_08740A44:
+	.global	gSwordAndBladeKnightStandStates
+gSwordAndBladeKnightStandStates:
 	.word	sub_0807b9ec+1
 	.word	sub_0807ba7c+1
 	.word	sub_0807bb60+1
 	.word	sub_0807bad0+1
 	.word	sub_0807bbb4+1
 	.word	sub_0807bc44+1
-	.global	gUnk_08740A5C
-gUnk_08740A5C:
+	.global	gSwordAndBladeKnightStandStateUpdates
+gSwordAndBladeKnightStandStateUpdates:
 	.word	sub_0807ba18+1
 	.word	sub_0807baa8+1
 	.word	sub_0807bb8c+1
 	.word	sub_0807bb38+1
 	.word	sub_0807bc1c+1
 	.word	sub_0807bc78+1
-	.global	gUnk_08740A74
-gUnk_08740A74:
-	.word	sub_0807bcec+1
-	.global	gTogezoVariants
-gTogezoVariants:
-	.word	TogezoInit+1
+	.global	gBlockStarVariants
+gBlockStarVariants:
+	.word	BlockStarInit+1
+	.global	gNeedlousVariants
+gNeedlousVariants:
+	.word	NeedlousInit+1
 	.word	sub_0807c350+1
 	.global	gUnk_08740A80
 gUnk_08740A80:
@@ -717,16 +717,16 @@ gUnk_08740A98:
 	.global	gUnk_08740AAC
 gUnk_08740AAC:
 	.incbin	"baserom.gba", 0x740AAC, 0x1C
-	.global	gTogezoStates
-gTogezoStates:
+	.global	gNeedlousStates
+gNeedlousStates:
 	.word	sub_0807c118+1
 	.word	sub_0807c1d0+1
 	.word	sub_0807c210+1
 	.word	sub_0807c248+1
 	.word	sub_0807c280+1
 	.word	sub_0807c2b8+1
-	.global	gTogezoStateUpdates
-gTogezoStateUpdates:
+	.global	gNeedlousStateUpdates
+gNeedlousStateUpdates:
 	.word	sub_0807c138+1
 	.word	sub_0807c1f4+1
 	.word	sub_0807c22c+1
@@ -772,15 +772,15 @@ gUnk_08740BA8:
 	.word	sub_0807cbb0+1
 	.global	gParasolVariants
 gParasolVariants:
-	.word	sub_0807cc68+1
+	.word	ParasolRiseInit+1
 	.word	ParasolChaseInit+1
 	.word	sub_0807cedc+1
 	.word	sub_0807cfd0+1
-	.global	gUnk_08740BBC
-gUnk_08740BBC:
+	.global	gParasolRiseStates
+gParasolRiseStates:
 	.word	sub_0807cd08+1
-	.global	gUnk_08740BC0
-gUnk_08740BC0:
+	.global	gParasolRiseStateUpdates
+gParasolRiseStateUpdates:
 	.word	sub_0807cd60+1
 	.global	gParasolChaseStates
 gParasolChaseStates:

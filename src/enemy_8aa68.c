@@ -824,41 +824,41 @@ s32 sub_0808bd04(void)
     }
 }
 
-void sub_0808bdb4(void)
+void Task_Gip(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08752BD4;
-    CallTableEntry(gCurTask->variant, 2, gUnk_08742940);
+    gCurTask->frameTable = gGipFrames;
+    CallTableEntry(gCurTask->variant, 2, gGipVariants);
 }
 
-void sub_0808bdf4(void)
+void GipInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808be58;
+    gCurTask->updateCallback = (u32)GipUpdate;
     gCurTask->unk28 = 120;
     if (sub_0808c82c() != 0)
         ActorSetState(3);
     else
         ActorSetState(1);
-    CallTableEntry(gCurTask->state, 12, gUnk_08742948);
+    CallTableEntry(gCurTask->state, 12, gGipStates);
 }
 
-void sub_0808be3c(void)
+void GipEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 12, gUnk_08742948);
+    CallTableEntry(gCurTask->state, 12, gGipStates);
 }
 
-void sub_0808be58(void)
+void GipUpdate(void)
 {
     if (gCurTask->unk18 != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 8, gUnk_08742978);
+            CallTableEntry(gCurTask->updateState, 8, gGipStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 8, gUnk_08742978);
+        CallTableEntry(gCurTask->updateState, 8, gGipStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -894,7 +894,7 @@ void sub_0808bf1c(void)
     if (--gCurTask->unk28 == 0)
     {
         ActorSetState(11);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return;
     }
     if (--gCurTask->unk2C != 0)
@@ -939,7 +939,7 @@ void sub_0808bfc4(void)
 void sub_0808c004(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
 void sub_0808c02c(void)
@@ -1019,19 +1019,19 @@ void sub_0808c0fc(void)
 void sub_0808c1d0(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
         if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
         {
             ActorSetState(8);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
     else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
     {
         ActorSetState(8);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
 
@@ -1109,19 +1109,19 @@ void sub_0808c32c(void)
 void sub_0808c3e8(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
         if (sub_0808ca00(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
         {
             ActorSetState(9);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
     else if (sub_0808cab8(12, ((s8 *)gCurTask->unk8C->terrainBox)[3]) < 0)
     {
         ActorSetState(9);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
 
@@ -1141,7 +1141,7 @@ void sub_0808c478(void)
 void sub_0808c4bc(void)
 {
     if (gCurTask->state != 8)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
 void sub_0808c4e4(void)
@@ -1198,10 +1198,10 @@ void sub_0808c53c(void)
 void sub_0808c5e8(void)
 {
     if (gCurTask->state != 10)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void sub_0808c610(void)
+void GipShoot(void)
 {
     gCurTask->updateState = 7;
     gCurTask->unk18 = 0;
@@ -1211,7 +1211,7 @@ void sub_0808c610(void)
     TaskSetFrame(14);
     TaskYieldTrampoline(16);
     PlaySfx(233);
-    sub_0808c934();
+    CreateGipStar();
     TaskSetFrame(15);
     TaskYieldTrampoline(12);
     TaskSetFrame(14);
@@ -1226,7 +1226,7 @@ void sub_0808c610(void)
 void sub_0808c684(void)
 {
     if (gCurTask->state != 11)
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
 void sub_0808c6ac(void)
@@ -1260,7 +1260,7 @@ s32 sub_0808c71c(void)
     if (gCurTask->variant != 1)
     {
         ActorSetState(0);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1270,7 +1270,7 @@ s32 sub_0808c74c(void)
     if (gCurTask->variant != 1)
     {
         ActorSetState(7);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1292,12 +1292,12 @@ s32 sub_0808c79c(void)
         {
         case 0:
             ActorSetState(6);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
             return 1;
         case 9:
         case 10:
             ActorSetState(3);
-            TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+            TaskSetEntry(GipEnterState, gCurTaskIdx);
             return 1;
         }
         return 0;
@@ -1314,7 +1314,7 @@ s32 sub_0808c7ec(void)
             return 0;
         }
         ActorSetState(10);
-        TaskSetEntry(sub_0808be3c, gCurTaskIdx);
+        TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -1367,7 +1367,7 @@ void sub_0808c8bc(void)
     }
 }
 
-void sub_0808c934(void)
+void CreateGipStar(void)
 {
     struct ActorSpawn sp;
     u8 zero;

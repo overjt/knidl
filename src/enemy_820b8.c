@@ -10,7 +10,7 @@
  *     `0x08741C44` (`sub_08082678` / `sub_080826a0` / `sub_080826bc` /
  *     `sub_080826c8`) and `0x08741C64` (`sub_08082d14` / `sub_08082d4c` /
  *     `sub_08082db0` / `sub_08082dd4`);
- *   * five scripts in the entry/hook shape: `sub_080820b8`+`sub_08082108`
+ *   * five scripts in the entry/hook shape: `PoppyBrosJrRideInit`+`PoppyBrosJrRideUpdate`
  *     (`0x08741610`/`0x08741614`; its hook is the one that spawns the
  *     class-0 sub-actors 30/31/32 through CreateActorByKind and hands them to
  *     sub_080b5540), `sub_080822b0`+`sub_08082300` (`0x08741618`),
@@ -52,27 +52,27 @@ extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
 extern void AngleToVector(s16 t, s16 mag);
 
-void sub_080820b8(void)
+void PoppyBrosJrRideInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08082108;
+    gCurTask->updateCallback = (u32)PoppyBrosJrRideUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741610);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideStates);
 }
 
 void sub_080820ec(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741610);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideStates);
 }
 
-void sub_08082108(void)
+void PoppyBrosJrRideUpdate(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08741614);
+        CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrRideStateUpdates);
     ActorCheckHits();
     t = gCurTask;
     switch (t->hitKind)

@@ -57,7 +57,7 @@ extern void ActorLoadDef(u32 *def);
 extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
 
-void sub_0807d3b0(void)
+void SwordAndBladeKnightSlashUpdate(void)
 {
     s32 v;
 

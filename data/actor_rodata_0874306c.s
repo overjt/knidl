@@ -117,18 +117,18 @@ gUnk_08743214:
 	.global	gUnk_0874321C
 gUnk_0874321C:
 	.incbin	"baserom.gba", 0x74321C, 0x8
-	.global	gUnk_08743224
-gUnk_08743224:
-	.word	sub_0808e914+1
-	.word	sub_0808e914+1
+	.global	gCoconutVariants
+gCoconutVariants:
+	.word	CoconutInit+1
+	.word	CoconutInit+1
 	.word	sub_0808eb24+1
-	.global	gUnk_08743230
-gUnk_08743230:
-	.word	sub_0808e9b0+1
-	.word	sub_0808ea00+1
+	.global	gCoconutStates
+gCoconutStates:
+	.word	CoconutWait+1
+	.word	CoconutFall+1
 	.word	sub_0808eb10+1
-	.global	gUnk_0874323C
-gUnk_0874323C:
+	.global	gCoconutStateUpdates
+gCoconutStateUpdates:
 	.word	sub_0808e9d4+1
 	.global	gUnk_08743240
 gUnk_08743240:
@@ -153,39 +153,39 @@ gUnk_0874325A:
 	.incbin	"baserom.gba", 0x74325A, 0x2A
 	.global	gShotzoVariants
 gShotzoVariants:
-	.word	sub_0808f26c+1
-	.word	sub_0808f2c4+1
-	.word	sub_0808f2c4+1
-	.word	sub_0808f2c4+1
-	.word	sub_0808f320+1
+	.word	ShotzoAimInit+1
+	.word	ShotzoFixedInit+1
+	.word	ShotzoFixedInit+1
+	.word	ShotzoFixedInit+1
+	.word	ParasolShotzoInit+1
 	.word	sub_0808f8e8+1
-	.global	gUnk_0874329C
-gUnk_0874329C:
+	.global	gShotzoAimStates
+gShotzoAimStates:
 	.word	sub_0808f3d4+1
 	.word	sub_0808f4f8+1
 	.word	sub_0808f41c+1
-	.global	gUnk_087432A8
-gUnk_087432A8:
+	.global	gShotzoAimStateUpdates
+gShotzoAimStateUpdates:
 	.word	sub_0808f400+1
 	.word	sub_0808f51c+1
 	.word	sub_0808f4b4+1
-	.global	gUnk_087432B4
-gUnk_087432B4:
+	.global	gShotzoFixedStates
+gShotzoFixedStates:
 	.word	sub_0808f528+1
 	.word	sub_0808f6c0+1
 	.word	sub_0808f5cc+1
-	.global	gUnk_087432C0
-gUnk_087432C0:
+	.global	gShotzoFixedStateUpdates
+gShotzoFixedStateUpdates:
 	.word	sub_0808f578+1
 	.word	sub_0808f71c+1
 	.word	sub_0808f678+1
-	.global	gUnk_087432CC
-gUnk_087432CC:
+	.global	gParasolShotzoStates
+gParasolShotzoStates:
 	.word	sub_0808f728+1
 	.word	sub_0808f7ac+1
 	.word	sub_0808f888+1
-	.global	gUnk_087432D8
-gUnk_087432D8:
+	.global	gParasolShotzoStateUpdates
+gParasolShotzoStateUpdates:
 	.word	sub_0808f75c+1
 	.word	sub_0808f844+1
 	.word	sub_0808f8dc+1
@@ -198,13 +198,13 @@ gUnk_087432E8:
 	.global	gUnk_087432EC
 gUnk_087432EC:
 	.incbin	"baserom.gba", 0x7432EC, 0x8
-	.global	gUnk_087432F4
-gUnk_087432F4:
-	.word	sub_0808fa50+1
+	.global	gConerVariants
+gConerVariants:
+	.word	ConerInit+1
 	.word	sub_0808fbac+1
-	.global	gUnk_087432FC
-gUnk_087432FC:
-	.word	sub_0808fab4+1
+	.global	gConerStates
+gConerStates:
+	.word	ConerWalk+1
 	.word	sub_0808fb50+1
 	.word	sub_0808fb80+1
 	.global	gUnk_08743308

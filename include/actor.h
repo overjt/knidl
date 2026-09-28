@@ -190,7 +190,7 @@ extern struct ActorDef gScarfyDef;
 extern struct ActorDef gUnk_08740CDC;
 extern struct ActorDef gUnk_08740D08;
 extern struct ActorDef gUnk_08740D34;
-extern struct ActorDef gTogezoDef;
+extern struct ActorDef gNeedlousDef;
 extern struct ActorDef gUFODef;
 extern struct ActorDef gParasolDef;
 extern struct ActorDef gUnk_087410E4;

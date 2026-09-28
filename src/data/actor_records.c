@@ -683,7 +683,7 @@ struct ActorDef gWaddleDeeDef ACTOR_REC(08740bd4) = {
     .unk24 = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08740C00 ACTOR_REC(08740bd4) = {
+struct ActorDef gParasolWaddleDeeDef ACTOR_REC(08740bd4) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -819,7 +819,7 @@ struct ActorDef gUnk_08740D34 ACTOR_REC(08740bd4) = {
     .unk24 = NULL,
     .teardown = NULL,
 };
-struct ActorDef gTogezoDef ACTOR_REC(08740bd4) = {
+struct ActorDef gNeedlousDef ACTOR_REC(08740bd4) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -1129,7 +1129,7 @@ struct ActorDef gUnk_087419C8 ACTOR_REC(087417b8) = {
     .unk24 = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_087419F4 ACTOR_REC(087417b8) = {
+struct ActorDef gPoppyBrosJrAppleDef ACTOR_REC(087417b8) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -1146,7 +1146,7 @@ struct ActorDef gUnk_087419F4 ACTOR_REC(087417b8) = {
     .unk24 = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08741A20 ACTOR_REC(087417b8) = {
+struct ActorDef gPoppyBrosJrMaximTomatoDef ACTOR_REC(087417b8) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -1286,7 +1286,7 @@ struct ActorDef gWaddleDooDef ACTOR_REC(087429e8) = {
     .unk24 = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08742A6C ACTOR_REC(087429e8) = {
+struct ActorDef gParasolWaddleDooDef ACTOR_REC(087429e8) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -1596,7 +1596,7 @@ struct ActorDef gUnk_087433BC ACTOR_REC(0874330c) = {
     .unk24 = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_087433E8 ACTOR_REC(0874330c) = {
+struct ActorDef gParasolShotzoDef ACTOR_REC(0874330c) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,

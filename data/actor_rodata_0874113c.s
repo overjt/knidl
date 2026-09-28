@@ -365,7 +365,7 @@ gUnk_08741524:
 	.global	gStarmanVariants
 gStarmanVariants:
 	.word	sub_08080e10+1
-	.word	sub_08081408+1
+	.word	StarmanJumpInit+1
 	.word	StarmanFlyInit+1
 	.word	sub_08081774+1
 	.global	gUnk_08741554
@@ -384,13 +384,13 @@ gUnk_0874156C:
 	.word	sub_0808124c+1
 	.word	sub_080813a4+1
 	.word	sub_080812ec+1
-	.global	gUnk_08741584
-gUnk_08741584:
+	.global	gStarmanJumpStates
+gStarmanJumpStates:
 	.word	sub_0808148c+1
 	.word	sub_08081508+1
 	.word	sub_0808159c+1
-	.global	gUnk_08741590
-gUnk_08741590:
+	.global	gStarmanJumpStateUpdates
+gStarmanJumpStateUpdates:
 	.word	sub_080814b4+1
 	.word	sub_08081560+1
 	.word	sub_080815dc+1
@@ -411,16 +411,16 @@ gUnk_087415AC:
 	.incbin	"baserom.gba", 0x7415AC, 0xC
 	.global	gPoppyBrosJrVariants
 gPoppyBrosJrVariants:
-	.word	sub_080819f4+1
-	.word	sub_080819f4+1
+	.word	PoppyBrosJrInit+1
+	.word	PoppyBrosJrInit+1
 	.word	sub_08081d24+1
-	.global	gUnk_087415C4
-gUnk_087415C4:
+	.global	gPoppyBrosJrStates
+gPoppyBrosJrStates:
 	.word	sub_08081aac+1
 	.word	sub_08081bc4+1
-	.word	sub_08081c78+1
-	.global	gUnk_087415D0
-gUnk_087415D0:
+	.word	PoppyBrosJrJump+1
+	.global	gPoppyBrosJrStateUpdates
+gPoppyBrosJrStateUpdates:
 	.word	sub_08081b5c+1
 	.word	sub_08081c3c+1
 	.word	sub_08081ce0+1
@@ -442,16 +442,16 @@ gUnk_087415F4:
 	.global	gUnk_087415FC
 gUnk_087415FC:
 	.incbin	"baserom.gba", 0x7415FC, 0x8
-	.global	gUnk_08741604
-gUnk_08741604:
-	.word	sub_080820b8+1
+	.global	gPoppyBrosJrRideVariants
+gPoppyBrosJrRideVariants:
+	.word	PoppyBrosJrRideInit+1
 	.word	sub_080822b0+1
 	.word	sub_0808248c+1
-	.global	gUnk_08741610
-gUnk_08741610:
+	.global	gPoppyBrosJrRideStates
+gPoppyBrosJrRideStates:
 	.word	sub_08082270+1
-	.global	gUnk_08741614
-gUnk_08741614:
+	.global	gPoppyBrosJrRideStateUpdates
+gPoppyBrosJrRideStateUpdates:
 	.word	sub_080822a4+1
 	.global	gUnk_08741618
 gUnk_08741618:

@@ -13,8 +13,8 @@
  *     `sub_0808eec4`;
  *   * the class-3 hook row `0x08743518` — `sub_0808f9b8`, `sub_0808f978`,
  *     `sub_0808f9d8` and `sub_0808f9f8`;
- *   * script 5: entry `sub_0808fa10` (`0x087432F4`, 2 rows), rows
- *     `sub_0808fa50` / `sub_0808fbac`, bodies `0x087432FC` (3) and
+ *   * script 5: entry `Task_Coner` (`0x087432F4`, 2 rows), rows
+ *     `ConerInit` / `sub_0808fbac`, bodies `0x087432FC` (3) and
  *     `0x08743308` (1);
  *   * script 6: entry `Task_LaserBallLaser` (`0x08743600`, 1 row), row
  *     `sub_0808fc90`, bodies `0x08743604` (2), guards `0x0874360C` (2);
@@ -93,7 +93,7 @@ void sub_0808f4b4(void)
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
         ActorSetState(0);
-        TaskSetEntry(sub_0808f380, gCurTaskIdx);
+        TaskSetEntry(ShotzoAimEnterState, gCurTaskIdx);
     }
 }
 
@@ -152,7 +152,7 @@ void sub_0808f578(void)
             break;
         }
         ActorSetState(2);
-        TaskSetEntry(sub_0808f39c, gCurTaskIdx);
+        TaskSetEntry(ShotzoFixedEnterState, gCurTaskIdx);
     }
 }
 
@@ -207,7 +207,7 @@ void sub_0808f678(void)
     {
         TaskStop();
         ActorSetState(2);
-        TaskSetEntry(sub_0808f39c, gCurTaskIdx);
+        TaskSetEntry(ShotzoFixedEnterState, gCurTaskIdx);
     }
 }
 
@@ -257,10 +257,10 @@ void sub_0808f75c(void)
     if (gCurTask->unk8C->extraFrame == -1)
     {
         if (sub_08069888() == 0)
-            sub_0808f1b4(1, sub_0808f3b8);
+            sub_0808f1b4(1, ParasolShotzoEnterState);
     }
     else if (ActorCollideTerrain() == 0)
-        sub_0808f1b4(1, sub_0808f3b8);
+        sub_0808f1b4(1, ParasolShotzoEnterState);
 }
 
 void sub_0808f7ac(void)
@@ -305,7 +305,7 @@ void sub_0808f844(void)
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
         ActorSetState(0);
-        TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
+        TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
     }
 }
 
@@ -374,13 +374,13 @@ s32 sub_0808f978(void)
     if (gCurTask->waterFlags == 3)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_0808fa98, gCurTaskIdx);
+        TaskSetEntry(ConerEnterState, gCurTaskIdx);
         return 1;
     }
     else
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0808fa98, gCurTaskIdx);
+        TaskSetEntry(ConerEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -388,14 +388,14 @@ s32 sub_0808f978(void)
 s32 sub_0808f9b8(void)
 {
     ActorSetState(0);
-    TaskSetEntry(sub_0808fa98, gCurTaskIdx);
+    TaskSetEntry(ConerEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 sub_0808f9d8(void)
 {
     ActorSetState(2);
-    TaskSetEntry(sub_0808fa98, gCurTaskIdx);
+    TaskSetEntry(ConerEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -411,7 +411,7 @@ s32 sub_0808fa04(void)
     return 0;
 }
 
-void sub_0808fa10(void)
+void Task_Coner(void)
 {
     struct Task *t;
     struct Task *u;
@@ -421,31 +421,31 @@ void sub_0808fa10(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_08752A70;
-    CallTableEntry(u->variant, 2, gUnk_087432F4);
+    u->frameTable = gConerFrames;
+    CallTableEntry(u->variant, 2, gConerVariants);
 }
 
-void sub_0808fa50(void)
+void ConerInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808fa84;
+    gCurTask->updateCallback = (u32)ConerUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_087432FC);
+    CallTableEntry(gCurTask->state, 3, gConerStates);
 }
 
-void sub_0808fa84(void)
+void ConerUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808fa98(void)
+void ConerEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087432FC);
+    CallTableEntry(gCurTask->state, 3, gConerStates);
 }
 
-void sub_0808fab4(void)
+void ConerWalk(void)
 {
     TaskStop();
     while (1)

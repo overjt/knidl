@@ -51,7 +51,7 @@ struct ActorDef *const gUnk_0873ECEC[] = {
     &gUnk_087433BC,
     &gWheelieDef,
     &gFlamerDef,
-    &gTogezoDef,
+    &gNeedlousDef,
     &gUFODef,
     &gParasolDef,
     &gUnk_08742BCC,

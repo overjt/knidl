@@ -23,7 +23,7 @@ s32 PlayerHasCrossedWaterSurface(s32 a0);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);
 void PlayerSetMotionYPreset(s32 a0);
 void PlayerActionThrow(void);
-s32 sub_08065100(s32 x, s32 y, u32 p2, u8 p3, u8 p4);
+s32 CreateBlockStar(s32 x, s32 y, u32 p2, u8 p3, u8 p4);
 
 void PlayerActionThrowUpdate(void)
 {
@@ -55,7 +55,7 @@ void PlayerActionThrowUpdate(void)
                 {
                     if (sub_08030898(gUnk_0873CC54, p->playerIndex) != 0)
                     {
-                        sub_08065100(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 2);
+                        CreateBlockStar(gUnk_02007FA0[0] + 8, gUnk_02004B6C[0] + 8, gCurTaskIdx, 4, 2);
                         gCurTask->player->unk09 = 2;
                     }
                 }

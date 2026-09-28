@@ -11,8 +11,8 @@
  *     with `sub_0808e480` / `sub_0808e54c` / `sub_0808e610` / `sub_0808e730`
  *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
  *     `sub_0808e800` as their guards;
- *   * script 3: entry `sub_0808e8d4` (Task.variant -> `0x08743224`, 3 rows),
- *     rows `sub_0808e914` / `sub_0808eb24`, bodies `0x08743230` (3) and
+ *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
+ *     rows `CoconutInit` / `sub_0808eb24`, bodies `0x08743230` (3) and
  *     `0x08743240`, guards `0x0874323C` and `0x08743244`;
  *   * the class-3 hook row `0x087434FC` — `sub_0808ec34`, `sub_0808ebe0`,
  *     `sub_0808ecb4` and `sub_0808ec90`, every one returning s32;
@@ -324,7 +324,7 @@ void sub_0808e8a0(void)
 s32 sub_0808e8a4(void)
 {
     ActorSetState(2);
-    TaskSetEntry(sub_0808e994, gCurTaskIdx);
+    TaskSetEntry(CoconutEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -334,7 +334,7 @@ s32 sub_0808e8c4(void)
     return 1;
 }
 
-void sub_0808e8d4(void)
+void Task_Coconut(void)
 {
     struct Task *t;
     struct Task *u;
@@ -344,16 +344,16 @@ void sub_0808e8d4(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
-    u->frameTable = gUnk_087524A4;
-    CallTableEntry(u->variant, 3, gUnk_08743224);
+    u->frameTable = gCoconutFrames;
+    CallTableEntry(u->variant, 3, gCoconutVariants);
 }
 
-void sub_0808e914(void)
+void CoconutInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0808e964;
+    t->updateCallback = (u32)CoconutUpdate;
     switch (t->variant)
     {
     case 0:
@@ -364,23 +364,23 @@ void sub_0808e914(void)
         break;
     }
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_08743230);
+    CallTableEntry(gCurTask->state, 3, gCoconutStates);
 }
 
-void sub_0808e964(void)
+void CoconutUpdate(void)
 {
     if (sub_08069888() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_0874323C);
+        CallTableEntry(gCurTask->updateState, 1, gCoconutStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808e994(void)
+void CoconutEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08743230);
+    CallTableEntry(gCurTask->state, 3, gCoconutStates);
 }
 
-void sub_0808e9b0(void)
+void CoconutWait(void)
 {
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
@@ -396,11 +396,11 @@ void sub_0808e9d4(void)
     if (abs(v) <= 7)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0808e994, gCurTaskIdx);
+        TaskSetEntry(CoconutEnterState, gCurTaskIdx);
     }
 }
 
-void sub_0808ea00(void)
+void CoconutFall(void)
 {
     struct Task *t;
 
@@ -496,15 +496,15 @@ s32 sub_0808ebe0(void)
     {
     default:
         ActorSetState(1);
-        TaskSetEntry(sub_0808f39c, gCurTaskIdx);
+        TaskSetEntry(ShotzoFixedEnterState, gCurTaskIdx);
         return 1;
     case 0:
         ActorSetState(1);
-        TaskSetEntry(sub_0808f380, gCurTaskIdx);
+        TaskSetEntry(ShotzoAimEnterState, gCurTaskIdx);
         return 1;
     case 4:
         ActorSetState(2);
-        TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
+        TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -515,16 +515,16 @@ s32 sub_0808ec34(void)
     {
     default:
         ActorSetState(0);
-        TaskSetEntry(sub_0808f39c, gCurTaskIdx);
+        TaskSetEntry(ShotzoFixedEnterState, gCurTaskIdx);
         return 1;
     case 0:
         ActorSetState(0);
-        TaskSetEntry(sub_0808f380, gCurTaskIdx);
+        TaskSetEntry(ShotzoAimEnterState, gCurTaskIdx);
         return 1;
     case 4:
         sub_08066c3c(gShotzoDef);
         ActorSetState(0);
-        TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
+        TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
         return 1;
     }
 }
@@ -551,7 +551,7 @@ s32 sub_0808ece0(void)
 {
     sub_08066c08(gShotzoDef, 0);
     ActorSetState(2);
-    TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
+    TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -559,7 +559,7 @@ s32 sub_0808ed0c(void)
 {
     sub_08066c08(gShotzoDef, 0);
     ActorSetState(2);
-    TaskSetEntry(sub_0808f3b8, gCurTaskIdx);
+    TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -862,65 +862,65 @@ void Task_Shotzo(void)
     CallTableEntry(u->variant, 6, gShotzoVariants);
 }
 
-void sub_0808f26c(void)
+void ShotzoAimInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808f2a0;
+    gCurTask->updateCallback = (u32)ShotzoAimUpdate;
     ActorSetState(0);
     sub_0808ef88();
-    CallTableEntry(gCurTask->state, 3, gUnk_0874329C);
+    CallTableEntry(gCurTask->state, 3, gShotzoAimStates);
 }
 
-void sub_0808f2a0(void)
+void ShotzoAimUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_087432A8);
+    CallTableEntry(gCurTask->updateState, 3, gShotzoAimStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808f2c4(void)
+void ShotzoFixedInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808f2fc;
+    gCurTask->updateCallback = (u32)ShotzoFixedUpdate;
     ActorSetState(0);
     gCurTask->facing = 255;
-    CallTableEntry(gCurTask->state, 3, gUnk_087432B4);
+    CallTableEntry(gCurTask->state, 3, gShotzoFixedStates);
 }
 
-void sub_0808f2fc(void)
+void ShotzoFixedUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_087432C0);
+    CallTableEntry(gCurTask->updateState, 3, gShotzoFixedStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808f320(void)
+void ParasolShotzoInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808f35c;
+    gCurTask->updateCallback = (u32)ParasolShotzoUpdate;
     ActorSetState(0);
     sub_0808ef88();
-    sub_08066b34(gUnk_087433E8);
-    CallTableEntry(gCurTask->state, 3, gUnk_087432CC);
+    sub_08066b34(gParasolShotzoDef);
+    CallTableEntry(gCurTask->state, 3, gParasolShotzoStates);
 }
 
-void sub_0808f35c(void)
+void ParasolShotzoUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_087432D8);
+    CallTableEntry(gCurTask->updateState, 3, gParasolShotzoStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808f380(void)
+void ShotzoAimEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_0874329C);
+    CallTableEntry(gCurTask->state, 3, gShotzoAimStates);
 }
 
-void sub_0808f39c(void)
+void ShotzoFixedEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087432B4);
+    CallTableEntry(gCurTask->state, 3, gShotzoFixedStates);
 }
 
-void sub_0808f3b8(void)
+void ParasolShotzoEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_087432CC);
+    CallTableEntry(gCurTask->state, 3, gParasolShotzoStates);
 }
 
 void sub_0808f3d4(void)
@@ -938,5 +938,5 @@ void sub_0808f3d4(void)
 void sub_0808f400(void)
 {
     if (sub_08069888() == 0)
-        sub_0808f1b4(2, sub_0808f380);
+        sub_0808f1b4(2, ShotzoAimEnterState);
 }

@@ -519,8 +519,8 @@ gUnk_0874CB3C:
 	.word	gUnk_080D6FB8
 	.word	gUnk_080D6FF0
 	.word	gUnk_080D7040
-	.global	gUnk_0874CB5C
-gUnk_0874CB5C:
+	.global	gBlockStarFrames
+gBlockStarFrames:
 	.word	gUnk_080D7080
 	.word	gUnk_080D7080
 	.word	gUnk_080D7080
@@ -6391,8 +6391,8 @@ gBomberFrames:
 	.word	gUnk_082517E0
 	.word	gUnk_082517E8
 	.word	gUnk_08251808
-	.global	gUnk_087524A4
-gUnk_087524A4:
+	.global	gCoconutFrames
+gCoconutFrames:
 	.word	gUnk_08251D5C
 	.word	gUnk_08251D5C
 	.word	gUnk_08251D5C
@@ -6540,8 +6540,8 @@ gScarfyAngryFrames:
 	.word	gUnk_08254FE4
 	.word	gUnk_08255004
 	.word	gUnk_0825500C
-	.global	gUnk_087526A8
-gUnk_087526A8:
+	.global	gBubblesFrames
+gBubblesFrames:
 	.word	gUnk_08255700
 	.word	gUnk_08255700
 	.word	gUnk_08255700
@@ -6645,8 +6645,8 @@ gGlunkShotFrames:
 	.word	gUnk_0825672C
 	.word	gUnk_08256734
 	.word	gUnk_0825673C
-	.global	gUnk_08752828
-gUnk_08752828:
+	.global	gSlippyFrames
+gSlippyFrames:
 	.word	gUnk_08256CEC
 	.word	gUnk_08256CEC
 	.word	gUnk_08256CEC
@@ -6703,8 +6703,8 @@ gPoppyBrosJrFrames:
 	.word	gUnk_08257C24
 	.word	gUnk_08257C44
 	.word	gUnk_08257C64
-	.global	gUnk_087528F0
-gUnk_087528F0:
+	.global	gPoppyBrosJrOnAppleFrames
+gPoppyBrosJrOnAppleFrames:
 	.word	gUnk_08257CBC
 	.word	gUnk_08257C7C
 	.word	gUnk_08257C7C
@@ -6722,8 +6722,8 @@ gUnk_087528F0:
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D64
 	.word	gUnk_08257D84
-	.global	gUnk_08752934
-gUnk_08752934:
+	.global	gPoppyBrosJrOnMaximTomatoFrames
+gPoppyBrosJrOnMaximTomatoFrames:
 	.word	gUnk_08257D9C
 	.word	gUnk_08257C7C
 	.word	gUnk_08257C7C
@@ -6741,8 +6741,8 @@ gUnk_08752934:
 	.word	gUnk_08257E3C
 	.word	gUnk_08257E5C
 	.word	gUnk_08257E7C
-	.global	gUnk_08752978
-gUnk_08752978:
+	.global	gPoppyBrosJrAppleFrames
+gPoppyBrosJrAppleFrames:
 	.word	gUnk_08257CBC
 	.word	gUnk_08257CBC
 	.word	gUnk_08257CBC
@@ -6755,8 +6755,8 @@ gUnk_08752978:
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D64
 	.word	gUnk_08257D84
-	.global	gUnk_087529A8
-gUnk_087529A8:
+	.global	gPoppyBrosJrMaximTomatoFrames
+gPoppyBrosJrMaximTomatoFrames:
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D4C
 	.word	gUnk_08257D4C
@@ -6769,8 +6769,8 @@ gUnk_087529A8:
 	.word	gUnk_08257E3C
 	.word	gUnk_08257E5C
 	.word	gUnk_08257E7C
-	.global	gUnk_087529D8
-gUnk_087529D8:
+	.global	gSwordKnightFrames
+gSwordKnightFrames:
 	.word	gUnk_082587B4
 	.word	gUnk_082587B4
 	.word	gUnk_082587B4
@@ -6790,8 +6790,8 @@ gUnk_087529D8:
 	.word	gUnk_08258784
 	.word	gUnk_082587B4
 	.word	gUnk_082587DC
-	.global	gUnk_08752A24
-gUnk_08752A24:
+	.global	gBladeKnightFrames
+gBladeKnightFrames:
 	.word	gUnk_08259214
 	.word	gUnk_08259214
 	.word	gUnk_08259214
@@ -6811,8 +6811,8 @@ gUnk_08752A24:
 	.word	gUnk_082591E4
 	.word	gUnk_08259214
 	.word	gUnk_0825923C
-	.global	gUnk_08752A70
-gUnk_08752A70:
+	.global	gConerFrames
+gConerFrames:
 	.word	gUnk_08259504
 	.word	gUnk_08259504
 	.word	gUnk_08259504
@@ -6855,8 +6855,8 @@ gFlamerFrames:
 	.word	gUnk_0825A410
 	.word	gUnk_0825A420
 	.word	gUnk_0825A430
-	.global	gTogezoFrames
-gTogezoFrames:
+	.global	gNeedlousFrames
+gNeedlousFrames:
 	.word	gUnk_0825AB2C
 	.word	gUnk_0825AB2C
 	.word	gUnk_0825AB2C
@@ -6914,8 +6914,8 @@ gParasolFrames:
 	.word	gUnk_0825B5C4
 	.word	gUnk_0825B604
 	.word	gUnk_0825B634
-	.global	gUnk_08752BD4
-gUnk_08752BD4:
+	.global	gGipFrames
+gGipFrames:
 	.word	gUnk_0825BE64
 	.word	gUnk_0825BE64
 	.word	gUnk_0825BE64
@@ -6933,8 +6933,8 @@ gUnk_08752BD4:
 	.word	gUnk_0825BDC4
 	.word	gUnk_0825BDE4
 	.word	gUnk_0825BE14
-	.global	gUnk_08752C18
-gUnk_08752C18:
+	.global	gGipStarFrames
+gGipStarFrames:
 	.word	gUnk_0825BE3C
 	.word	gUnk_0825BE3C
 	.word	gUnk_0825BE3C
