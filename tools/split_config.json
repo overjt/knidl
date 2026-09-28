@@ -12499,6 +12499,7 @@
     "0x081A2790": "gUnk_081A2790",
     "0x081A2896": "gUnk_081A2896",
     "0x081A29BE": "gUnk_081A29BE",
+    "0x081A2AC4": "gUnk_081A2AC4",
     "0x081A2BEC": "gUnk_081A2BEC",
     "0x081A2D14": "gUnk_081A2D14",
     "0x081A2E3C": "gUnk_081A2E3C",
@@ -12523,6 +12524,7 @@
     "0x081A36AC": "gUnk_081A36AC",
     "0x081A36B4": "gUnk_081A36B4",
     "0x081A36D4": "gUnk_081A36D4",
+    "0x081A36F4": "gUnk_081A36F4",
     "0x081A3714": "gUnk_081A3714",
     "0x081A3734": "gUnk_081A3734",
     "0x081A3754": "gUnk_081A3754",
@@ -13438,6 +13440,7 @@
     "0x081C5E34": "gUnk_081C5E34",
     "0x081C61DA": "gUnk_081C61DA",
     "0x081C6420": "gUnk_081C6420",
+    "0x081C66C6": "gUnk_081C66C6",
     "0x081C690C": "gUnk_081C690C",
     "0x081C694C": "gUnk_081C694C",
     "0x081C698C": "gUnk_081C698C",
@@ -13469,6 +13472,7 @@
     "0x081C6FEC": "gUnk_081C6FEC",
     "0x081C7024": "gUnk_081C7024",
     "0x081C705C": "gUnk_081C705C",
+    "0x081C709C": "gUnk_081C709C",
     "0x081C70D4": "gUnk_081C70D4",
     "0x081C70E0": "gUnk_081C70E0",
     "0x081C70EC": "gUnk_081C70EC",
@@ -15378,6 +15382,7 @@
     "0x0820BACA": "gUnk_0820BACA",
     "0x0820BBF2": "gUnk_0820BBF2",
     "0x0820BD1A": "gUnk_0820BD1A",
+    "0x0820BE42": "gUnk_0820BE42",
     "0x0820BF08": "gUnk_0820BF08",
     "0x0820BF28": "gUnk_0820BF28",
     "0x0820BF48": "gUnk_0820BF48",
@@ -15388,6 +15393,7 @@
     "0x0820BFE8": "gUnk_0820BFE8",
     "0x0820C008": "gUnk_0820C008",
     "0x0820C028": "gUnk_0820C028",
+    "0x0820C048": "gUnk_0820C048",
     "0x0820C058": "gUnk_0820C058",
     "0x0820C064": "gUnk_0820C064",
     "0x0820C070": "gUnk_0820C070",
@@ -15629,6 +15635,7 @@
     "0x08211F80": "gUnk_08211F80",
     "0x08211F94": "gUnk_08211F94",
     "0x08211FB6": "gUnk_08211FB6",
+    "0x08211FF8": "gUnk_08211FF8",
     "0x0821201A": "gUnk_0821201A",
     "0x08212140": "gUnk_08212140",
     "0x08212266": "gUnk_08212266",
@@ -15660,6 +15667,9 @@
     "0x08215174": "gUnk_08215174",
     "0x082152BA": "gUnk_082152BA",
     "0x082153E0": "gUnk_082153E0",
+    "0x08215506": "gUnk_08215506",
+    "0x0821558C": "gUnk_0821558C",
+    "0x08215692": "gUnk_08215692",
     "0x08215718": "gUnk_08215718",
     "0x08215738": "gUnk_08215738",
     "0x08215758": "gUnk_08215758",
@@ -15691,6 +15701,9 @@
     "0x08215B38": "gUnk_08215B38",
     "0x08215B68": "gUnk_08215B68",
     "0x08215B88": "gUnk_08215B88",
+    "0x08215BA8": "gUnk_08215BA8",
+    "0x08215BB0": "gUnk_08215BB0",
+    "0x08215BB8": "gUnk_08215BB8",
     "0x08215BC0": "gUnk_08215BC0",
     "0x08215BCC": "gUnk_08215BCC",
     "0x08215BD8": "gUnk_08215BD8",
@@ -15911,6 +15924,8 @@
     "0x0821C8D8": "gUnk_0821C8D8",
     "0x0821CDE2": "gUnk_0821CDE2",
     "0x0821D2AC": "gUnk_0821D2AC",
+    "0x0821D7B6": "gUnk_0821D7B6",
+    "0x0821D99C": "gUnk_0821D99C",
     "0x0821DC02": "gUnk_0821DC02",
     "0x0821DC3A": "gUnk_0821DC3A",
     "0x0821DC82": "gUnk_0821DC82",
@@ -15919,6 +15934,8 @@
     "0x0821DD3A": "gUnk_0821DD3A",
     "0x0821DD82": "gUnk_0821DD82",
     "0x0821DDBA": "gUnk_0821DDBA",
+    "0x0821DE02": "gUnk_0821DE02",
+    "0x0821DE32": "gUnk_0821DE32",
     "0x0821DE6C": "gUnk_0821DE6C",
     "0x0821DE78": "gUnk_0821DE78",
     "0x0821DE84": "gUnk_0821DE84",
@@ -16492,6 +16509,7 @@
     "0x0823ABFC": "gUnk_0823ABFC",
     "0x0823AC1E": "gUnk_0823AC1E",
     "0x0823AD24": "gUnk_0823AD24",
+    "0x0823AD44": "gUnk_0823AD44",
     "0x0823AD64": "gUnk_0823AD64",
     "0x0823AD84": "gUnk_0823AD84",
     "0x0823ADC6": "gUnk_0823ADC6",
@@ -16905,6 +16923,7 @@
     "0x08249B62": "gUnk_08249B62",
     "0x08249B82": "gUnk_08249B82",
     "0x08249BAC": "gUnk_08249BAC",
+    "0x08249BCC": "gUnk_08249BCC",
     "0x0824A9CC": "gUnk_0824A9CC",
     "0x0824A9E4": "gUnk_0824A9E4",
     "0x0824A9F8": "gUnk_0824A9F8",
@@ -20235,6 +20254,7 @@
     "0x082FE0E4": "gUnk_082FE0E4",
     "0x082FE104": "gUnk_082FE104",
     "0x082FE124": "gUnk_082FE124",
+    "0x082FE144": "gUnk_082FE144",
     "0x082FEF04": "gUnk_082FEF04",
     "0x082FEF0C": "gUnk_082FEF0C",
     "0x082FEF14": "gUnk_082FEF14",
@@ -20260,6 +20280,7 @@
     "0x082FEFE4": "gUnk_082FEFE4",
     "0x082FEFF4": "gUnk_082FEFF4",
     "0x082FF008": "gUnk_082FF008",
+    "0x082FF048": "gUnk_082FF048",
     "0x082FFDC8": "gUnk_082FFDC8",
     "0x082FFDE8": "gUnk_082FFDE8",
     "0x082FFDF0": "gUnk_082FFDF0",
@@ -20645,6 +20666,7 @@
     "0x08334480": "gUnk_08334480",
     "0x083344C0": "gUnk_083344C0",
     "0x08334500": "gUnk_08334500",
+    "0x08334520": "gUnk_08334520",
     "0x08334CA0": "gUnk_08334CA0",
     "0x08334CB0": "gUnk_08334CB0",
     "0x08334CC0": "gUnk_08334CC0",
@@ -32653,6 +32675,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32660,7 +32683,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/actor_653ec.c:1785); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/actor_653ec.c:1785); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0873F6BC",
@@ -32844,6 +32867,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32851,13 +32875,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9c0a8.c:248); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9c0a8.c:248); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747DB4",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32865,13 +32890,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:192); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:192); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747E0C",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32879,13 +32905,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:754); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:754); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747E64",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32893,13 +32920,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9cc24.c:285); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9cc24.c:285); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x087487BC",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32907,7 +32935,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDefSlot (src/enemy_a1590.c:457); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 not read on this path, left unknown"
+      "why": "struct ActorDef passed to ActorLoadDefSlot (src/enemy_a1590.c:457); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748918",
@@ -32932,6 +32960,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32939,13 +32968,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3049); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3049); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748B60",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32953,13 +32983,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3141); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3141); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748B8C",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -32967,7 +32998,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3217); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3217); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08749AE8",
@@ -33019,6 +33050,7 @@
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33026,13 +33058,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2407); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2407); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B998",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33040,13 +33073,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2440); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2440); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B9C4",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33054,13 +33088,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2464); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2464); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B9F0",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33068,13 +33103,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2489); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2489); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA1C",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33082,13 +33118,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2514); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2514); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA48",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33096,13 +33133,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2538); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2538); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA74",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33110,13 +33148,14 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2603); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2603); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BAA0",
       "count": 1,
       "stride": 44,
       "pointers": [
+        "0x10",
         "0x14",
         "0x18",
         "0x1C",
@@ -33124,7 +33163,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2708); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2708); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874C1FC",
@@ -39086,9 +39125,8 @@
     },
     {
       "start": "0x0824A9EC",
-      "count": 1,
-      "proof": "format",
-      "why": "format only: sheet header 0x0824A9E4 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+      "count": 2,
+      "why": "sheet header 0x0824A9E4 .palette (+0x8) and .tiles (+0xC): struct GfxSrc gUnk_0824A9E4 (include/actor.h:16/58): RequestCopy(2, .unk08, .., unk00 << 5) and RequestCopy(3, .unk0C, .., unk02 << 5), src/actor_6ff24.c:446-450; tileCount * 32 raw tile bytes follow the palette"
     },
     {
       "start": "0x0825DF68",
@@ -39278,15 +39316,13 @@
     },
     {
       "start": "0x082FEFFC",
-      "count": 1,
-      "proof": "format",
-      "why": "format only: sheet header 0x082FEFF4 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+      "count": 2,
+      "why": "sheet header 0x082FEFF4 .palette (+0x8) and .tiles (+0xC): sub_080ae4c4 src/enemy_ae3bc.c:150-152: RequestCopy(4, q[3], .., q[1] << 5) and RequestCopy(2, q[2], .., q[0] << 5); tileCount * 32 raw tile bytes follow the palette"
     },
     {
       "start": "0x082FFDF8",
-      "count": 1,
-      "proof": "format",
-      "why": "format only: sheet header 0x082FFDF0 (trailer-bearing): .palette = 2 banks * 32 bytes ending at .tiles (no code reads this header)"
+      "count": 2,
+      "why": "sheet header 0x082FFDF0 .palette (+0x8) and .tiles (+0xC): sub_080b0b04 src/enemy_ae3bc.c:2306-2308: RequestCopy(4, q[3], .., q[1] << 5) and RequestCopy(2, q[2], .., 32); tileCount * 32 raw tile bytes follow the palette"
     },
     {
       "start": "0x08334474",
@@ -39304,7 +39340,7 @@
       "start": "0x08334DC8",
       "count": 1,
       "proof": "format",
-      "why": "format only: sheet header 0x08334DC0 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles (no code reads this header)"
+      "why": "format only: sheet header 0x08334DC0 (trailer-bearing): .palette = 1 banks * 32 bytes ending at .tiles; sub_08066f78 (src/actor_653ec.c:1670-1673) reads the header's .tiles and counts but takes its palette from gUnk_0873E264[gLevelIndex], so no code reads this field"
     },
     {
       "start": "0x085EEE28",
@@ -39365,6 +39401,83 @@
       "count": 1,
       "proof": "format",
       "why": "format only: sheet header 0x085F2B18 (trailer-bearing): .tiles = LZ77 stream (5252 bytes) decoding to tileCount 277 * 32 bytes (no code reads this header)"
+    },
+    {
+      "start": "0x08334DCC",
+      "count": 1,
+      "why": "sheet header 0x08334DC0 .tiles (+0xC): sub_08066f78 src/actor_653ec.c:1670-1673: RequestCopy(4, h->tiles, .., h->tileCount << 5) (its palette comes from gUnk_0873E264[gLevelIndex]); tileCount * 32 raw tile bytes follow the palette"
+    },
+    {
+      "start": "0x081A38D4",
+      "count": 1,
+      "stride": 12,
+      "pointers": [
+        "0x0",
+        "0x4",
+        "0x8"
+      ],
+      "proof": "format",
+      "why": "format only: record(s) 16 of the struct TaskGfx block 0x081A3814 (25 records, then the count word 25 and a zero trailer; 24 of them reached by a frame table); struct TaskGfx {oamTemplate, palette, tiles} (include/task.h), the same layout as the block's reached records (TaskLoadFrameTiles src/early_5acc.c:82-107): .oamTemplate passes the strict BuildOam parse, .palette a {u16 byteCount; colours} block and .tiles a {u16 size; data} chunk stream ended by 0xFFFF (census_sprites.taskgfx)"
+    },
+    {
+      "start": "0x081C7248",
+      "count": 1,
+      "stride": 12,
+      "pointers": [
+        "0x0",
+        "0x4",
+        "0x8"
+      ],
+      "proof": "format",
+      "why": "format only: record(s) 31 of the struct TaskGfx block 0x081C70D4 (32 records, then the count word 32 and a zero trailer; 31 of them reached by a frame table); struct TaskGfx {oamTemplate, palette, tiles} (include/task.h), the same layout as the block's reached records (TaskLoadFrameTiles src/early_5acc.c:82-107): .oamTemplate passes the strict BuildOam parse, .palette a {u16 byteCount; colours} block and .tiles a {u16 size; data} chunk stream ended by 0xFFFF (census_sprites.taskgfx)"
+    },
+    {
+      "start": "0x0820C0D0",
+      "count": 1,
+      "stride": 12,
+      "pointers": [
+        "0x0",
+        "0x4",
+        "0x8"
+      ],
+      "proof": "format",
+      "why": "format only: record(s) 10 of the struct TaskGfx block 0x0820C058 (11 records, then the count word 11 and a zero trailer; 10 of them reached by a frame table); struct TaskGfx {oamTemplate, palette, tiles} (include/task.h), the same layout as the block's reached records (TaskLoadFrameTiles src/early_5acc.c:82-107): .oamTemplate passes the strict BuildOam parse, .palette a {u16 byteCount; colours} block and .tiles a {u16 size; data} chunk stream ended by 0xFFFF (census_sprites.taskgfx)"
+    },
+    {
+      "start": "0x08215D34",
+      "count": 3,
+      "stride": 12,
+      "pointers": [
+        "0x0",
+        "0x4",
+        "0x8"
+      ],
+      "proof": "format",
+      "why": "format only: record(s) 31,32,33 of the struct TaskGfx block 0x08215BC0 (34 records, then the count word 34 and a zero trailer; 31 of them reached by a frame table); struct TaskGfx {oamTemplate, palette, tiles} (include/task.h), the same layout as the block's reached records (TaskLoadFrameTiles src/early_5acc.c:82-107): .oamTemplate passes the strict BuildOam parse, .palette a {u16 byteCount; colours} block and .tiles a {u16 size; data} chunk stream ended by 0xFFFF (census_sprites.taskgfx)"
+    },
+    {
+      "start": "0x0821DECC",
+      "count": 2,
+      "stride": 12,
+      "pointers": [
+        "0x0",
+        "0x4",
+        "0x8"
+      ],
+      "proof": "format",
+      "why": "format only: record(s) 8,9 of the struct TaskGfx block 0x0821DE6C (10 records, then the count word 10 and a zero trailer; 8 of them reached by a frame table); struct TaskGfx {oamTemplate, palette, tiles} (include/task.h), the same layout as the block's reached records (TaskLoadFrameTiles src/early_5acc.c:82-107): .oamTemplate passes the strict BuildOam parse, .palette a {u16 byteCount; colours} block and .tiles a {u16 size; data} chunk stream ended by 0xFFFF (census_sprites.taskgfx)"
+    },
+    {
+      "start": "0x0823AD70",
+      "count": 1,
+      "stride": 12,
+      "pointers": [
+        "0x0",
+        "0x4",
+        "0x8"
+      ],
+      "proof": "format",
+      "why": "format only: record(s) 1 of the struct TaskGfx block 0x0823AD64 (2 records, then the count word 2 and a zero trailer; 1 of them reached by a frame table); struct TaskGfx {oamTemplate, palette, tiles} (include/task.h), the same layout as the block's reached records (TaskLoadFrameTiles src/early_5acc.c:82-107): .oamTemplate passes the strict BuildOam parse, .palette a {u16 byteCount; colours} block and .tiles a {u16 size; data} chunk stream ended by 0xFFFF (census_sprites.taskgfx)"
     }
   ],
   "m4a": {
@@ -39413,16 +39526,13 @@
       "name": "irq_handler_table_14"
     },
     {
-      "name": "lib_misc"
+      "name": "sram_id_string"
     },
     {
-      "name": "lib_rodata_fir_tables"
+      "name": "air_grind_rodata"
     },
     {
-      "name": "level_object_tables"
-    },
-    {
-      "name": "level_graphics_palettes",
+      "name": "sprite_sheets",
       "asset": true
     },
     {
@@ -39446,21 +39556,21 @@
       "asset": true
     },
     {
-      "name": "m4a_songs",
+      "name": "sprite_sheets_2",
       "asset": true
     },
     {
       "name": "m4a_engine_rodata"
     },
     {
-      "name": "m4a_song_tracks",
+      "name": "m4a_voicegroups",
       "asset": true
     },
     {
       "name": "m4a_song_table"
     },
     {
-      "name": "m4a_songs_2",
+      "name": "m4a_song_data",
       "asset": true
     },
     {
@@ -39473,16 +39583,145 @@
       "name": "sram_driver_fn_table"
     },
     {
-      "name": "gap_sram_driver_fn_table_asset_metadata_index"
+      "name": "engine_rodata"
     },
     {
-      "name": "asset_metadata_index"
+      "name": "game_rodata"
     },
     {
-      "name": "asset_metadata_index_0873eea0"
+      "name": "actor_rodata"
     },
     {
-      "name": "song_tail_misc_audio",
+      "name": "actor_rodata_0873f4c8"
+    },
+    {
+      "name": "actor_rodata_0873f6e8"
+    },
+    {
+      "name": "actor_rodata_0873f8f4"
+    },
+    {
+      "name": "actor_rodata_08740de4"
+    },
+    {
+      "name": "actor_rodata_0874113c"
+    },
+    {
+      "name": "actor_rodata_08741aa4"
+    },
+    {
+      "name": "actor_rodata_08741f0c"
+    },
+    {
+      "name": "actor_rodata_08742bf8"
+    },
+    {
+      "name": "actor_rodata_0874306c"
+    },
+    {
+      "name": "actor_rodata_08743414"
+    },
+    {
+      "name": "actor_rodata_0874369c"
+    },
+    {
+      "name": "actor_rodata_08743bd0"
+    },
+    {
+      "name": "actor_rodata_0874407c"
+    },
+    {
+      "name": "actor_rodata_0874425c"
+    },
+    {
+      "name": "actor_rodata_087449e8"
+    },
+    {
+      "name": "actor_rodata_087453bc"
+    },
+    {
+      "name": "actor_rodata_08745588"
+    },
+    {
+      "name": "actor_rodata_08745868"
+    },
+    {
+      "name": "actor_rodata_08745a34"
+    },
+    {
+      "name": "actor_rodata_08745bb4"
+    },
+    {
+      "name": "actor_rodata_08747ebc"
+    },
+    {
+      "name": "actor_rodata_087481a0"
+    },
+    {
+      "name": "actor_rodata_087487e8"
+    },
+    {
+      "name": "actor_rodata_08748930"
+    },
+    {
+      "name": "actor_rodata_08748bb8"
+    },
+    {
+      "name": "actor_rodata_08749598"
+    },
+    {
+      "name": "actor_rodata_08749b08"
+    },
+    {
+      "name": "actor_rodata_08749c70"
+    },
+    {
+      "name": "actor_rodata_0874b38c"
+    },
+    {
+      "name": "actor_rodata_0874b4d8"
+    },
+    {
+      "name": "actor_rodata_0874bb7c"
+    },
+    {
+      "name": "actor_rodata_0874c184"
+    },
+    {
+      "name": "actor_rodata_0874c204"
+    },
+    {
+      "name": "actor_rodata_0874c3d0"
+    },
+    {
+      "name": "frame_tables"
+    },
+    {
+      "name": "late_game_rodata"
+    },
+    {
+      "name": "credits_demos"
+    },
+    {
+      "name": "player_frame_records"
+    },
+    {
+      "name": "player_frame_lists"
+    },
+    {
+      "name": "multiboot_program",
+      "asset": true
+    },
+    {
+      "name": "quick_draw_program",
+      "asset": true
+    },
+    {
+      "name": "bomb_rally_program",
+      "asset": true
+    },
+    {
+      "name": "air_grind_program",
       "asset": true
     },
     {

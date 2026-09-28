@@ -1954,29 +1954,23 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.irq_handler_table_14) == 0x080CFDE8, "MATCHING: .irq_handler_table_14 moved")
 
-    /* Miscellaneous library data */
-    .lib_misc : {
-        KEEP(*(.lib_misc)) KEEP(*(.lib_misc.tail))
+    /* The SRAM id string "AGB  KIRBY" (gSramIdString), WriteSramEx(.., 0x0E000000, 10) src/save_b7a9c.c:29 (#36 phase 2 run 3; formerly the head of lib_misc) */
+    .sram_id_string : {
+        KEEP(*(.sram_id_string)) KEEP(*(.sram_id_string.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.lib_misc) == 0x080CFE20, "MATCHING: .lib_misc moved")
+    ASSERT(!MATCHING || ADDR(.sram_id_string) == 0x080CFE20, "MATCHING: .sram_id_string moved")
 
-    /* Library rodata / FIR-style coefficient tables (m4a) */
-    .lib_rodata_fir_tables : {
-        KEEP(*(.lib_rodata_fir_tables)) KEEP(*(.lib_rodata_fir_tables.tail))
+    /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gUnk_080D0398, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer */
+    .air_grind_rodata : {
+        KEEP(*(.air_grind_rodata)) KEEP(*(.air_grind_rodata.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.lib_rodata_fir_tables) == 0x080CFF00, "MATCHING: .lib_rodata_fir_tables moved")
+    ASSERT(!MATCHING || ADDR(.air_grind_rodata) == 0x080CFE2C, "MATCHING: .air_grind_rodata moved")
 
-    /* Level/map & object tables */
-    .level_object_tables : {
-        KEEP(*(.level_object_tables)) KEEP(*(.level_object_tables.tail))
+    /* Sprite sheets (asset, #36 phase 2 run 3): OAM template streams, tiles, palettes and struct TaskGfx records the frame tables reach; its head holds a RequestCopyList palette and the LZ77 streams gUnk_080D07C8/gUnk_080D1B78, its last 12 bytes the stage-count table gUnk_08334EB4 */
+    .sprite_sheets : {
+        KEEP(*(.sprite_sheets)) KEEP(*(.sprite_sheets.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.level_object_tables) == 0x080D0000, "MATCHING: .level_object_tables moved")
-
-    /* Level graphics and palettes (asset); its last 12 bytes are the stage-count table gUnk_08334EB4 */
-    .level_graphics_palettes : {
-        KEEP(*(.level_graphics_palettes)) KEEP(*(.level_graphics_palettes.tail))
-    } > ROM
-    ASSERT(!MATCHING || ADDR(.level_graphics_palettes) == 0x08120000, "MATCHING: .level_graphics_palettes moved")
+    ASSERT(!MATCHING || ADDR(.sprite_sheets) == 0x080D0788, "MATCHING: .sprite_sheets moved")
 
     /* Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c) */
     .room_bg_anims : {
@@ -2008,11 +2002,11 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.compressed_graphics) == 0x083D0148, "MATCHING: .compressed_graphics moved")
 
-    /* m4a songs / sequences (head: song track data before the engine tables) */
-    .m4a_songs : {
-        KEEP(*(.m4a_songs)) KEEP(*(.m4a_songs.tail))
+    /* Sprite sheets, part 2 (asset, #36 phase 2 run 3; formerly m4a_songs, no m4a data): OAM streams, raw and LZ77 tiles, palettes, TaskGfx records; opens with the tail of compressed_graphics' LZ77 stream gUnk_085BF484 */
+    .sprite_sheets_2 : {
+        KEEP(*(.sprite_sheets_2)) KEEP(*(.sprite_sheets_2.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.m4a_songs) == 0x085C0000, "MATCHING: .m4a_songs moved")
+    ASSERT(!MATCHING || ADDR(.sprite_sheets_2) == 0x085C0000, "MATCHING: .sprite_sheets_2 moved")
 
     /* m4a engine rodata tables (issue #51): gMPlayJumpTableTemplate..gXcmdTable */
     .m4a_engine_rodata : {
@@ -2020,11 +2014,11 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.m4a_engine_rodata) == 0x0860A140, "MATCHING: .m4a_engine_rodata moved")
 
-    /* Song track data between the engine tables and the song table */
-    .m4a_song_tracks : {
-        KEEP(*(.m4a_song_tracks)) KEEP(*(.m4a_song_tracks.tail))
+    /* m4a voicegroups (asset, #36 phase 2 run 3; formerly m4a_song_tracks): the five voicegroups and five 4-bit CGB waves tools/m4a_struct.py parses */
+    .m4a_voicegroups : {
+        KEEP(*(.m4a_voicegroups)) KEEP(*(.m4a_voicegroups.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.m4a_song_tracks) == 0x0860A418, "MATCHING: .m4a_song_tracks moved")
+    ASSERT(!MATCHING || ADDR(.m4a_voicegroups) == 0x0860A418, "MATCHING: .m4a_voicegroups moved")
 
     /* gMPlayTable + gSongTable (issue #51) */
     .m4a_song_table : {
@@ -2032,11 +2026,11 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.m4a_song_table) == 0x0860B430, "MATCHING: .m4a_song_table moved")
 
-    /* m4a songs / sequences (tail: song headers, tone data, track data) */
-    .m4a_songs_2 : {
-        KEEP(*(.m4a_songs_2)) KEEP(*(.m4a_songs_2.tail))
+    /* m4a song data (asset, #36 phase 2 run 3; formerly m4a_songs_2): song headers, track streams, ToneData and all 129 WaveData PCM samples (tools/m4a_struct.py) */
+    .m4a_song_data : {
+        KEEP(*(.m4a_song_data)) KEEP(*(.m4a_song_data.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.m4a_songs_2) == 0x0860C678, "MATCHING: .m4a_songs_2 moved")
+    ASSERT(!MATCHING || ADDR(.m4a_song_data) == 0x0860C678, "MATCHING: .m4a_song_data moved")
 
     /* SRAM_V112 identifier string */
     .sram_v112_string : {
@@ -2056,11 +2050,11 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.sram_driver_fn_table) == 0x0872EA04, "MATCHING: .sram_driver_fn_table moved")
 
-    /* Data between SRAM table and asset metadata */
-    .gap_sram_driver_fn_table_asset_metadata_index : {
-        KEEP(*(.gap_sram_driver_fn_table_asset_metadata_index)) KEEP(*(.gap_sram_driver_fn_table_asset_metadata_index.tail))
+    /* Engine-zone rodata (#36 phase 2 run 3; formerly gap_sram_driver_fn_table_asset_metadata_index): 256 zero bytes, sprite half-dimensions gUnk_0872EB14, gBootSignature, the SE table gSfxTable, gCosTable; gTaskTypes follows */
+    .engine_rodata : {
+        KEEP(*(.engine_rodata)) KEEP(*(.engine_rodata.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.gap_sram_driver_fn_table_asset_metadata_index) == 0x0872EA14, "MATCHING: .gap_sram_driver_fn_table_asset_metadata_index moved")
+    ASSERT(!MATCHING || ADDR(.engine_rodata) == 0x0872EA14, "MATCHING: .engine_rodata moved")
 
     /* task_types - functional table in C (src/data/task_types.c, carved by tools/carve_data.py) */
     .task_types : {
@@ -2068,11 +2062,11 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.task_types) == 0x0872FF30, "MATCHING: .task_types moved")
 
-    /* Asset metadata / index zone */
-    .asset_metadata_index : {
-        KEEP(*(.asset_metadata_index)) KEEP(*(.asset_metadata_index.tail))
+    /* Game rodata in link order, M02-M18 (#36 phase 2 run 3; formerly asset_metadata_index): mode, menu, player, collision, room, camera and terrain tables, blocks, player actions, effects, actor core */
+    .game_rodata : {
+        KEEP(*(.game_rodata)) KEEP(*(.game_rodata.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.asset_metadata_index) == 0x08730780, "MATCHING: .asset_metadata_index moved")
+    ASSERT(!MATCHING || ADDR(.game_rodata) == 0x08730780, "MATCHING: .game_rodata moved")
 
     /* actor_defs - functional table in C (src/data/actor_defs.c, carved by tools/carve_data.py) */
     .actor_defs : {
@@ -2080,16 +2074,201 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.actor_defs) == 0x0873ECEC, "MATCHING: .actor_defs moved")
 
-    .asset_metadata_index_0873eea0 : {
-        KEEP(*(.asset_metadata_index_0873eea0)) KEEP(*(.asset_metadata_index_0873eea0.tail))
+    /* Actor and enemy rodata, M17-M32 (#36 phase 2 run 3; formerly asset_metadata_index_0873eea0): behaviour tables, ActorDef/ActorAux records, HitBoxSets (ldgroup.py: 69 rows in one output section) */
+    .actor_rodata : {
+        KEEP(*(.actor_rodata)) KEEP(*(.actor_rodata.tail))
+        build/src/data/actor_records.o(.actor_rec_0873f2b8)
+        KEEP(*(.actor_rodata_0873f4c8)) KEEP(*(.actor_rodata_0873f4c8.tail))
+        build/src/data/actor_records.o(.actor_rec_0873f664)
+        KEEP(*(.actor_rodata_0873f6e8)) KEEP(*(.actor_rodata_0873f6e8.tail))
+        build/src/data/actor_records.o(.actor_rec_0873f8ec)
+        KEEP(*(.actor_rodata_0873f8f4)) KEEP(*(.actor_rodata_0873f8f4.tail))
+        build/src/data/actor_records.o(.actor_rec_08740bd4)
+        KEEP(*(.actor_rodata_08740de4)) KEEP(*(.actor_rodata_08740de4.tail))
+        build/src/data/actor_records.o(.actor_rec_087410e4)
+        KEEP(*(.actor_rodata_0874113c)) KEEP(*(.actor_rodata_0874113c.tail))
+        build/src/data/actor_records.o(.actor_rec_087417b8)
+        KEEP(*(.actor_rodata_08741aa4)) KEEP(*(.actor_rodata_08741aa4.tail))
+        build/src/data/actor_records.o(.actor_rec_08741eb4)
+        KEEP(*(.actor_rodata_08741f0c)) KEEP(*(.actor_rodata_08741f0c.tail))
+        build/src/data/actor_records.o(.actor_rec_087429e8)
+        KEEP(*(.actor_rodata_08742bf8)) KEEP(*(.actor_rodata_08742bf8.tail))
+        build/src/data/actor_records.o(.actor_rec_08742fbc)
+        KEEP(*(.actor_rodata_0874306c)) KEEP(*(.actor_rodata_0874306c.tail))
+        build/src/data/actor_records.o(.actor_rec_0874330c)
+        KEEP(*(.actor_rodata_08743414)) KEEP(*(.actor_rodata_08743414.tail))
+        build/src/data/actor_records.o(.actor_rec_08743644)
+        KEEP(*(.actor_rodata_0874369c)) KEEP(*(.actor_rodata_0874369c.tail))
+        build/src/data/actor_records.o(.actor_rec_08743b4c)
+        KEEP(*(.actor_rodata_08743bd0)) KEEP(*(.actor_rodata_08743bd0.tail))
+        build/src/data/actor_records.o(.actor_rec_0874402c)
+        KEEP(*(.actor_rodata_0874407c)) KEEP(*(.actor_rodata_0874407c.tail))
+        build/src/data/actor_records.o(.actor_rec_087441d8)
+        KEEP(*(.actor_rodata_0874425c)) KEEP(*(.actor_rodata_0874425c.tail))
+        build/src/data/actor_records.o(.actor_rec_08744964)
+        KEEP(*(.actor_rodata_087449e8)) KEEP(*(.actor_rodata_087449e8.tail))
+        build/src/data/actor_records.o(.actor_rec_0874531c)
+        KEEP(*(.actor_rodata_087453bc)) KEEP(*(.actor_rodata_087453bc.tail))
+        build/src/data/actor_records.o(.actor_rec_08745530)
+        KEEP(*(.actor_rodata_08745588)) KEEP(*(.actor_rodata_08745588.tail))
+        build/src/data/actor_records.o(.actor_rec_08745810)
+        KEEP(*(.actor_rodata_08745868)) KEEP(*(.actor_rodata_08745868.tail))
+        build/src/data/actor_records.o(.actor_rec_08745a2c)
+        KEEP(*(.actor_rodata_08745a34)) KEEP(*(.actor_rodata_08745a34.tail))
+        build/src/data/actor_records.o(.actor_rec_08745b30)
+        KEEP(*(.actor_rodata_08745bb4)) KEEP(*(.actor_rodata_08745bb4.tail))
+        build/src/data/actor_records.o(.actor_rec_08747c80)
+        KEEP(*(.actor_rodata_08747ebc)) KEEP(*(.actor_rodata_08747ebc.tail))
+        build/src/data/actor_records.o(.actor_rec_08748198)
+        KEEP(*(.actor_rodata_087481a0)) KEEP(*(.actor_rodata_087481a0.tail))
+        build/src/data/actor_records.o(.actor_rec_08748764)
+        KEEP(*(.actor_rodata_087487e8)) KEEP(*(.actor_rodata_087487e8.tail))
+        build/src/data/actor_records.o(.actor_rec_08748918)
+        KEEP(*(.actor_rodata_08748930)) KEEP(*(.actor_rodata_08748930.tail))
+        build/src/data/actor_records.o(.actor_rec_08748ab0)
+        KEEP(*(.actor_rodata_08748bb8)) KEEP(*(.actor_rodata_08748bb8.tail))
+        build/src/data/actor_records.o(.actor_rec_08749514)
+        KEEP(*(.actor_rodata_08749598)) KEEP(*(.actor_rodata_08749598.tail))
+        build/src/data/actor_records.o(.actor_rec_08749ae8)
+        KEEP(*(.actor_rodata_08749b08)) KEEP(*(.actor_rodata_08749b08.tail))
+        build/src/data/actor_records.o(.actor_rec_08749bec)
+        KEEP(*(.actor_rodata_08749c70)) KEEP(*(.actor_rodata_08749c70.tail))
+        build/src/data/actor_records.o(.actor_rec_0874b2dc)
+        KEEP(*(.actor_rodata_0874b38c)) KEEP(*(.actor_rodata_0874b38c.tail))
+        build/src/data/actor_records.o(.actor_rec_0874b4c8)
+        KEEP(*(.actor_rodata_0874b4d8)) KEEP(*(.actor_rodata_0874b4d8.tail))
+        build/src/data/actor_records.o(.actor_rec_0874b940)
+        KEEP(*(.actor_rodata_0874bb7c)) KEEP(*(.actor_rodata_0874bb7c.tail))
+        build/src/data/actor_records.o(.actor_rec_0874c158)
+        KEEP(*(.actor_rodata_0874c184)) KEEP(*(.actor_rodata_0874c184.tail))
+        build/src/data/actor_records.o(.actor_rec_0874c1fc)
+        KEEP(*(.actor_rodata_0874c204)) KEEP(*(.actor_rodata_0874c204.tail))
+        build/src/data/actor_records.o(.actor_rec_0874c378)
+        KEEP(*(.actor_rodata_0874c3d0)) KEEP(*(.actor_rodata_0874c3d0.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.asset_metadata_index_0873eea0) == 0x0873EEA0, "MATCHING: .asset_metadata_index_0873eea0 moved")
+    ASSERT(!MATCHING || ADDR(.actor_rodata) == 0x0873EEA0, "MATCHING: .actor_rodata moved")
+    ASSERT(!MATCHING || gUnk_0873F2B8 == 0x0873F2B8, "MATCHING: actor_rec_0873f2b8 moved")
+    ASSERT(!MATCHING || actor_rodata_0873f4c8 == 0x0873F4C8, "MATCHING: actor_rodata_0873f4c8 moved")
+    ASSERT(!MATCHING || gUnk_0873F664 == 0x0873F664, "MATCHING: actor_rec_0873f664 moved")
+    ASSERT(!MATCHING || actor_rodata_0873f6e8 == 0x0873F6E8, "MATCHING: actor_rodata_0873f6e8 moved")
+    ASSERT(!MATCHING || gUnk_0873F8EC == 0x0873F8EC, "MATCHING: actor_rec_0873f8ec moved")
+    ASSERT(!MATCHING || actor_rodata_0873f8f4 == 0x0873F8F4, "MATCHING: actor_rodata_0873f8f4 moved")
+    ASSERT(!MATCHING || gUnk_08740BD4 == 0x08740BD4, "MATCHING: actor_rec_08740bd4 moved")
+    ASSERT(!MATCHING || actor_rodata_08740de4 == 0x08740DE4, "MATCHING: actor_rodata_08740de4 moved")
+    ASSERT(!MATCHING || gUnk_087410E4 == 0x087410E4, "MATCHING: actor_rec_087410e4 moved")
+    ASSERT(!MATCHING || actor_rodata_0874113c == 0x0874113C, "MATCHING: actor_rodata_0874113c moved")
+    ASSERT(!MATCHING || gUnk_087417B8 == 0x087417B8, "MATCHING: actor_rec_087417b8 moved")
+    ASSERT(!MATCHING || actor_rodata_08741aa4 == 0x08741AA4, "MATCHING: actor_rodata_08741aa4 moved")
+    ASSERT(!MATCHING || gUnk_08741EB4 == 0x08741EB4, "MATCHING: actor_rec_08741eb4 moved")
+    ASSERT(!MATCHING || actor_rodata_08741f0c == 0x08741F0C, "MATCHING: actor_rodata_08741f0c moved")
+    ASSERT(!MATCHING || gUnk_087429E8 == 0x087429E8, "MATCHING: actor_rec_087429e8 moved")
+    ASSERT(!MATCHING || actor_rodata_08742bf8 == 0x08742BF8, "MATCHING: actor_rodata_08742bf8 moved")
+    ASSERT(!MATCHING || gUnk_08742FBC == 0x08742FBC, "MATCHING: actor_rec_08742fbc moved")
+    ASSERT(!MATCHING || actor_rodata_0874306c == 0x0874306C, "MATCHING: actor_rodata_0874306c moved")
+    ASSERT(!MATCHING || gUnk_0874330C == 0x0874330C, "MATCHING: actor_rec_0874330c moved")
+    ASSERT(!MATCHING || actor_rodata_08743414 == 0x08743414, "MATCHING: actor_rodata_08743414 moved")
+    ASSERT(!MATCHING || gUnk_08743644 == 0x08743644, "MATCHING: actor_rec_08743644 moved")
+    ASSERT(!MATCHING || actor_rodata_0874369c == 0x0874369C, "MATCHING: actor_rodata_0874369c moved")
+    ASSERT(!MATCHING || gBonkersDef == 0x08743B4C, "MATCHING: actor_rec_08743b4c moved")
+    ASSERT(!MATCHING || actor_rodata_08743bd0 == 0x08743BD0, "MATCHING: actor_rodata_08743bd0 moved")
+    ASSERT(!MATCHING || gUnk_0874402C == 0x0874402C, "MATCHING: actor_rec_0874402c moved")
+    ASSERT(!MATCHING || actor_rodata_0874407c == 0x0874407C, "MATCHING: actor_rodata_0874407c moved")
+    ASSERT(!MATCHING || gUnk_087441D8 == 0x087441D8, "MATCHING: actor_rec_087441d8 moved")
+    ASSERT(!MATCHING || actor_rodata_0874425c == 0x0874425C, "MATCHING: actor_rodata_0874425c moved")
+    ASSERT(!MATCHING || gGrandWheelieDef == 0x08744964, "MATCHING: actor_rec_08744964 moved")
+    ASSERT(!MATCHING || actor_rodata_087449e8 == 0x087449E8, "MATCHING: actor_rodata_087449e8 moved")
+    ASSERT(!MATCHING || gUnk_0874531C == 0x0874531C, "MATCHING: actor_rec_0874531c moved")
+    ASSERT(!MATCHING || actor_rodata_087453bc == 0x087453BC, "MATCHING: actor_rodata_087453bc moved")
+    ASSERT(!MATCHING || gUnk_08745530 == 0x08745530, "MATCHING: actor_rec_08745530 moved")
+    ASSERT(!MATCHING || actor_rodata_08745588 == 0x08745588, "MATCHING: actor_rodata_08745588 moved")
+    ASSERT(!MATCHING || gMrFrostyDef == 0x08745810, "MATCHING: actor_rec_08745810 moved")
+    ASSERT(!MATCHING || actor_rodata_08745868 == 0x08745868, "MATCHING: actor_rodata_08745868 moved")
+    ASSERT(!MATCHING || gUnk_08745A2C == 0x08745A2C, "MATCHING: actor_rec_08745a2c moved")
+    ASSERT(!MATCHING || actor_rodata_08745a34 == 0x08745A34, "MATCHING: actor_rodata_08745a34 moved")
+    ASSERT(!MATCHING || gUnk_08745B30 == 0x08745B30, "MATCHING: actor_rec_08745b30 moved")
+    ASSERT(!MATCHING || actor_rodata_08745bb4 == 0x08745BB4, "MATCHING: actor_rodata_08745bb4 moved")
+    ASSERT(!MATCHING || gUnk_08747C80 == 0x08747C80, "MATCHING: actor_rec_08747c80 moved")
+    ASSERT(!MATCHING || actor_rodata_08747ebc == 0x08747EBC, "MATCHING: actor_rodata_08747ebc moved")
+    ASSERT(!MATCHING || gUnk_08748198 == 0x08748198, "MATCHING: actor_rec_08748198 moved")
+    ASSERT(!MATCHING || actor_rodata_087481a0 == 0x087481A0, "MATCHING: actor_rodata_087481a0 moved")
+    ASSERT(!MATCHING || gKingDededeDef == 0x08748764, "MATCHING: actor_rec_08748764 moved")
+    ASSERT(!MATCHING || actor_rodata_087487e8 == 0x087487E8, "MATCHING: actor_rodata_087487e8 moved")
+    ASSERT(!MATCHING || gUnk_08748918 == 0x08748918, "MATCHING: actor_rec_08748918 moved")
+    ASSERT(!MATCHING || actor_rodata_08748930 == 0x08748930, "MATCHING: actor_rodata_08748930 moved")
+    ASSERT(!MATCHING || gUnk_08748AB0 == 0x08748AB0, "MATCHING: actor_rec_08748ab0 moved")
+    ASSERT(!MATCHING || actor_rodata_08748bb8 == 0x08748BB8, "MATCHING: actor_rodata_08748bb8 moved")
+    ASSERT(!MATCHING || gMetaKnightDef == 0x08749514, "MATCHING: actor_rec_08749514 moved")
+    ASSERT(!MATCHING || actor_rodata_08749598 == 0x08749598, "MATCHING: actor_rodata_08749598 moved")
+    ASSERT(!MATCHING || gUnk_08749AE8 == 0x08749AE8, "MATCHING: actor_rec_08749ae8 moved")
+    ASSERT(!MATCHING || actor_rodata_08749b08 == 0x08749B08, "MATCHING: actor_rodata_08749b08 moved")
+    ASSERT(!MATCHING || gUnk_08749BEC == 0x08749BEC, "MATCHING: actor_rec_08749bec moved")
+    ASSERT(!MATCHING || actor_rodata_08749c70 == 0x08749C70, "MATCHING: actor_rodata_08749c70 moved")
+    ASSERT(!MATCHING || gPaintRollerDef == 0x0874B2DC, "MATCHING: actor_rec_0874b2dc moved")
+    ASSERT(!MATCHING || actor_rodata_0874b38c == 0x0874B38C, "MATCHING: actor_rodata_0874b38c moved")
+    ASSERT(!MATCHING || gUnk_0874B4C8 == 0x0874B4C8, "MATCHING: actor_rec_0874b4c8 moved")
+    ASSERT(!MATCHING || actor_rodata_0874b4d8 == 0x0874B4D8, "MATCHING: actor_rodata_0874b4d8 moved")
+    ASSERT(!MATCHING || gUnk_0874B940 == 0x0874B940, "MATCHING: actor_rec_0874b940 moved")
+    ASSERT(!MATCHING || actor_rodata_0874bb7c == 0x0874BB7C, "MATCHING: actor_rodata_0874bb7c moved")
+    ASSERT(!MATCHING || gWhispyWoodsDef == 0x0874C158, "MATCHING: actor_rec_0874c158 moved")
+    ASSERT(!MATCHING || actor_rodata_0874c184 == 0x0874C184, "MATCHING: actor_rodata_0874c184 moved")
+    ASSERT(!MATCHING || gUnk_0874C1FC == 0x0874C1FC, "MATCHING: actor_rec_0874c1fc moved")
+    ASSERT(!MATCHING || actor_rodata_0874c204 == 0x0874C204, "MATCHING: actor_rodata_0874c204 moved")
+    ASSERT(!MATCHING || gUnk_0874C378 == 0x0874C378, "MATCHING: actor_rec_0874c378 moved")
+    ASSERT(!MATCHING || actor_rodata_0874c3d0 == 0x0874C3D0, "MATCHING: actor_rodata_0874c3d0 moved")
 
-    /* Song tail / misc audio data */
-    .song_tail_misc_audio : {
-        KEEP(*(.song_tail_misc_audio)) KEEP(*(.song_tail_misc_audio.tail))
+    /* Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gUnk_0874CFEC among them */
+    .frame_tables : {
+        KEEP(*(.frame_tables)) KEEP(*(.frame_tables.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.song_tail_misc_audio) == 0x08760000, "MATCHING: .song_tail_misc_audio moved")
+    ASSERT(!MATCHING || ADDR(.frame_tables) == 0x0874C44C, "MATCHING: .frame_tables moved")
+
+    /* Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits */
+    .late_game_rodata : {
+        KEEP(*(.late_game_rodata)) KEEP(*(.late_game_rodata.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.late_game_rodata) == 0x0875607C, "MATCHING: .late_game_rodata moved")
+
+    /* The 14 recorded input demos of the staff credits' rows 1 and 2 (gUnk_087583CC, CreditsMain src/credits_cd330.c; InputRecorderStart) */
+    .credits_demos : {
+        KEEP(*(.credits_demos)) KEEP(*(.credits_demos.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.credits_demos) == 0x08758448, "MATCHING: .credits_demos moved")
+
+    /* Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/stage_3cd60.c) (#36 phase 2 run 3) */
+    .player_frame_records : {
+        KEEP(*(.player_frame_records)) KEEP(*(.player_frame_records.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.player_frame_records) == 0x08759DC8, "MATCHING: .player_frame_records moved")
+
+    /* The player sheets' frame lists, format-only (docs/data.md 5.3) (#36 phase 2 run 3) */
+    .player_frame_lists : {
+        KEEP(*(.player_frame_lists)) KEEP(*(.player_frame_lists.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.player_frame_lists) == 0x08769250, "MATCHING: .player_frame_lists moved")
+
+    /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, sub_08007e04 src/mode_07b68.c */
+    .multiboot_program : {
+        KEEP(*(.multiboot_program)) KEEP(*(.multiboot_program.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.multiboot_program) == 0x0876B1FC, "MATCHING: .multiboot_program moved")
+
+    /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    .quick_draw_program : {
+        KEEP(*(.quick_draw_program)) KEEP(*(.quick_draw_program.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.quick_draw_program) == 0x0876F690, "MATCHING: .quick_draw_program moved")
+
+    /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    .bomb_rally_program : {
+        KEEP(*(.bomb_rally_program)) KEEP(*(.bomb_rally_program.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.bomb_rally_program) == 0x087954C0, "MATCHING: .bomb_rally_program moved")
+
+    /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by sub_08007c5c (src/mode_07b68.c) */
+    .air_grind_program : {
+        KEEP(*(.air_grind_program)) KEEP(*(.air_grind_program.tail))
+    } > ROM
+    ASSERT(!MATCHING || ADDR(.air_grind_program) == 0x087C0A4C, "MATCHING: .air_grind_program moved")
 
     /* room_table - functional table in C (src/data/room_table.c, carved by tools/carve_data.py) */
     .room_table : {

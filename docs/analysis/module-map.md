@@ -1,5 +1,14 @@
 # Module map — bulk game code `0x08007300-0x080CFA4C`
 
+> Segment names below are the ones of issue #34's time.  #36 renamed the
+> data segments by content: `asset_metadata_index` is `game_rodata` (and
+> its neighbours `engine_rodata`, `actor_rodata`, `frame_tables`,
+> `late_game_rodata`, `credits_demos`), `level_object_tables` /
+> `level_graphics_palettes` are `air_grind_rodata` and `sprite_sheets`,
+> `song_tail_misc_audio` is `player_frame_records` ... `air_grind_program`,
+> `sample_set_index` is `room_table` and its neighbours; the old -> new
+> table is `docs/data.md` §4.1.
+
 Subsystem identification pass over the ~800 KiB of game code that is still
 labeled assembly (issue #34).  Its job is to turn one undifferentiated
 `game_code_and_rodata` segment into a set of **coherent, self-contained,

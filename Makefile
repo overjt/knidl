@@ -107,7 +107,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers check-data progress datastats shifttest report symbols split modmap clean
+.PHONY: all compare check-headers check-data progress datastats shifttest boottest-roms boottest-run report symbols split modmap clean
 
 all: $(ROM)
 
@@ -189,7 +189,33 @@ datastats: baserom.gba tools/datastats.py tools/split_config.json docs/analysis/
 # zone, the pointer-like words that did not move with their targets.
 shifttest: $(ELF)
 	python3 tools/shiftcheck.py --elf $(ELF) --json $(BUILD_DIR)/shifttest.json --objs $(ALL_OBJS)
-	python3 tools/ptrcensus.py --elf $(ELF) --shift $(BUILD_DIR)/shifttest.json --by-target --unknown $(BUILD_DIR)/ptrcensus_unknown.json
+	python3 tools/ptrcensus.py --elf $(ELF) --shift $(BUILD_DIR)/shifttest.json --by-target --strict --unknown $(BUILD_DIR)/ptrcensus_unknown.json --unreachable $(BUILD_DIR)/ptrcensus_unreachable.json
+
+# The boot test (issue #36, docs/data.md section 8.4), in two halves because
+# it needs two images: boottest-roms (knidl-builder) links one shifted ROM
+# per insertion point into build/boottest/, as shiftcheck.py's image B;
+# boottest-run (knidl-boottest, tools/boottest/Dockerfile) runs the
+# reference and every shifted ROM in lockstep in mGBA with the scripted
+# input and fails at the first frame whose video, audio or RAM differs.
+# BOOTTEST_AT picks the points (section names; default: shiftcheck.py's),
+# BOOTTEST_FRAMES the length (default: the script's plus 600 frames).
+BOOTTEST_DIR   := $(BUILD_DIR)/boottest
+BOOTTEST_INPUT := tools/boottest/input.txt
+
+boottest-roms: $(ROM)
+	python3 tools/boottest.py --elf $(ELF) --out $(BOOTTEST_DIR) $(foreach s,$(BOOTTEST_AT),--at $(s)) --objs $(ALL_OBJS)
+
+# BOOTTEST_RAM_ALLOW: RAM words allowed to differ, each with its evidence.
+# gHBlankDmaCnt/gHBlankDmaSrc (0x03001184, 0x03001EF0): the fade driver
+# sub_080b6154 (src/save_b6154.c) falls off its end without a return value
+# on its last frame, so UpdateHBlankScroll (src/hud_b5840.c) takes the
+# function's own address (still in r0) as the DMA count: the ROM's own
+# undefined behaviour, layout-dependent by nature (docs/data.md 8.4).
+BOOTTEST_RAM_ALLOW := 0x03001184,0x03001EF0
+
+# no prerequisites: the emulator image has no toolchain to rebuild them
+boottest-run:
+	knidl-boottest --input $(BOOTTEST_INPUT) --ram-allow $(BOOTTEST_RAM_ALLOW) $(if $(BOOTTEST_FRAMES),--frames $(BOOTTEST_FRAMES)) $(ROM) $$(cat $(BOOTTEST_DIR)/roms.txt)
 
 # Data policy (AGENTS.md, docs/data.md): assets are never committed, and
 # data/ may hold only labels, symbolic .words and .incbin slices of
@@ -233,10 +259,17 @@ else
 
 DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 
-.PHONY: image all compare check-headers check-data progress datastats shifttest symbols split modmap clean
+# The boot test's emulator image (mGBA + tools/boottest/boottest.c), kept
+# apart from the toolchain image.
+BOOTTEST_IMAGE := knidl-boottest
+
+.PHONY: image boottest-image all compare check-headers check-data progress datastats shifttest boottest symbols split modmap clean
 
 image:
 	docker build -t $(IMAGE) .
+
+boottest-image:
+	docker build -t $(BOOTTEST_IMAGE) tools/boottest
 
 all: image
 	$(DOCKER_RUN) make all INSIDE_DOCKER=1 $(if $(MATCHING),MATCHING=$(MATCHING))
@@ -258,6 +291,12 @@ check-data: image
 
 shifttest: image
 	$(DOCKER_RUN) make shifttest INSIDE_DOCKER=1
+
+# The boot test (docs/data.md section 8.4): link the shifted ROMs in the
+# toolchain image, then run them against knidl.gba in the emulator image.
+boottest: image boottest-image
+	$(DOCKER_RUN) make boottest-roms INSIDE_DOCKER=1 $(if $(BOOTTEST_AT),BOOTTEST_AT="$(BOOTTEST_AT)")
+	docker run --rm -v $(CURDIR):/src -w /src $(BOOTTEST_IMAGE) make boottest-run INSIDE_DOCKER=1 $(if $(BOOTTEST_FRAMES),BOOTTEST_FRAMES=$(BOOTTEST_FRAMES))
 
 # report.json generation only needs Python + the repo's ground-truth CSVs,
 # so it runs directly on the host (no toolchain image required).

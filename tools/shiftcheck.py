@@ -52,17 +52,20 @@ import sys
 import tempfile
 from array import array
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import branchcheck  # noqa: E402  (tools/branchcheck.py)
+
 ROM_BASE = 0x08000000
 
 # (label, section): the default insertion points.
 DEFAULT_POINTS = [
     ("after crt0 (all code and data move)", "agb_init"),
-    ("right after the code", "level_object_tables"),
+    ("right after the code and the SDK tables", "sram_id_string"),
     ("level data (rooms)", "room_bg_anims"),
     ("compressed graphics", "compressed_graphics"),
-    ("inside the song zone", "m4a_songs_2"),
-    ("behaviour tables (seg 18)", "gap_sram_driver_fn_table_asset_metadata_index"),
-    ("song tail (seg 19)", "song_tail_misc_audio"),
+    ("inside the song zone", "m4a_song_data"),
+    ("rodata (seg 18)", "engine_rodata"),
+    ("player frame records (seg 18/19)", "player_frame_records"),
 ]
 
 SECTION_LINE_RE = re.compile(
@@ -271,18 +274,23 @@ def main():
                 sys.exit("error: shifted image is 0x%X bytes, expected 0x%X"
                          % (len(b), len(a) + pad))
             r = compare(a, b, vma - ROM_BASE, pad)
+            # relative branches that cross the point: no word compare can
+            # see a raw one (tools/branchcheck.py, docs/data.md 8.4)
+            r["branches"], r["bad_branches"] = branchcheck.check(
+                a, b, vma, pad, segs)
             results.append((vma, name, label, r))
 
     print("shift test: 0x%X bytes inserted at each point; 4-aligned words "
           "whose value points at or after the point" % pad)
     print()
-    print("%-10s %-44s %10s %11s %7s %7s %7s"
+    print("%-10s %-44s %10s %11s %7s %7s %7s %9s"
           % ("point", "section", "relocated", "unrelocated", "broken",
-             "wrong", "other"))
+             "wrong", "other", "branches"))
     for vma, name, label, r in results:
-        print("0x%08X %-44s %10d %11d %7d %7d %7d"
+        print("0x%08X %-44s %10d %11d %7d %7d %7d %5d/%-3d"
               % (vma, name, len(r["relocated"]), len(r["unrelocated"]),
-                 len(r["broken"]), len(r["moved_wrongly"]), r["other_bytes"]))
+                 len(r["broken"]), len(r["moved_wrongly"]), r["other_bytes"],
+                 r["branches"] - len(r["bad_branches"]), r["branches"]))
         if label:
             print("%-10s   (%s)" % ("", label))
     print()
@@ -290,7 +298,9 @@ def main():
           "(a real pointer or a coincidence, see tools/ptrcensus.py);")
     print("broken: neither; wrong: pointed before the point but moved; "
           "other: differing bytes outside those words (branches, unaligned "
-          "operands).")
+          "operands);")
+    print("branches: relative branches crossing the point that still reach "
+          "their target / all of them (tools/branchcheck.py).")
 
     # per holding segment, for the lowest point
     vma0, name0, _l, r0 = results[0]
@@ -356,6 +366,15 @@ def main():
         with open(args.json, "w") as f:
             json.dump(out, f, indent=0)
             f.write("\n")
+    for vma, _n, _l, r in results:
+        if r["bad_branches"]:
+            print()
+            branchcheck.report(vma, r["branches"], r["bad_branches"])
+    nb = sum(len(r["bad_branches"]) for _v, _n, _l, r in results)
+    if nb:
+        sys.exit("error: %d relative branch(es) do not reach their target in "
+                 "a shifted image: raw bytes the linker never saw "
+                 "(tools/branchcheck.py)" % nb)
     bad = sum(len(r["broken"]) + len(r["moved_wrongly"])
               for _v, _n, _l, r in results)
     if bad:

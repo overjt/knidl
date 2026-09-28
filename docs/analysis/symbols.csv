@@ -5339,7 +5339,10 @@ vma,size,isa,evidence,name
 0x080CFC6C,0x94,thumb,bl-target,__divsi3
 0x080CFD00,0x4,thumb,bl-target,_div0
 0x080CFD04,0xC0,thumb,bl-target,__umodsi3
-0x080CFDC4,0x8,thumb,bl-target,TaskSwitchTrampoline
-0x080CFDCC,0x8,thumb,bl-target,TaskYieldTrampoline
-0x080CFDD4,0x8,thumb,bl-target,TaskExitTrampoline
+0x080CFDC4,0x4,thumb,bl-target,TaskSwitchTrampoline
+0x080CFDC8,0x4,arm,prologue-scan,sub_080cfdc8
+0x080CFDCC,0x4,thumb,bl-target,TaskYieldTrampoline
+0x080CFDD0,0x4,arm,prologue-scan,sub_080cfdd0
+0x080CFDD4,0x4,thumb,bl-target,TaskExitTrampoline
+0x080CFDD8,0x4,arm,prologue-scan,sub_080cfdd8
 0x080CFDDC,0x8,arm,bl-target,sub_080cfddc

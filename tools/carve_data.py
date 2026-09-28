@@ -195,7 +195,9 @@ def main():
     for s in covered:
         m = ldblocks.block_re(s['name']).search(old_ld)
         if not m:
-            die('linker.ld section .%s not found' % s['name'])
+            die(ldblocks.not_found(old_ld, s['name']))
+        if ldblocks.check_not_group(m.group(0), s['name']):
+            die(ldblocks.check_not_group(m.group(0), s['name']))
         spans.append((m.start(), m.end()))
     cblock = ('    /* %s - functional table in C (src/data/%s.c, carved by '
               'tools/carve_data.py) */\n' % (name, name)

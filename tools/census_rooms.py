@@ -1,7 +1,7 @@
 """Pointer-census evidence: rooms, BG animations, GfxHeaders, ActorDefs
 (issue #36 phase 2 run 2, tools/ptrcensus.py provider).
 
-Zones: level_object_tables (seg 11), room_bg_anims, room_data,
+Zones: air_grind_rodata + sprite_sheets (seg 11), room_bg_anims, room_data,
 room_metatiles, room_bg3_maps, compressed_graphics (seg 14), and the
 ActorDef/ActorAux pointer fields in seg 18.  Everything is derived from the
 ROM and the config; every start address listed here cites its consumer.
@@ -275,7 +275,7 @@ DIRECT_ACTOR_DEFS = {
     0x0874BAA0: "ActorLoadDef src/enemy_ae3bc.c:2708",
 }
 
-# Seg 11 (level_object_tables) records whose consumer gives the extent.
+# Seg 11 (air_grind_rodata, formerly level_object_tables) records whose consumer gives the extent.
 SEG11 = [
     (0x080D0198, 0x080D0398, "palette",
      "gUnk_080D0198, 256 u16 BG colours copied by src/subgame_c5284.c:343-344 (for i < 256)"),
@@ -542,7 +542,7 @@ def provide(rom, cfg, segs):
         zl = [a for a in labels if lo <= a < hi]
         for a in zl:
             # the next label anywhere in the ROM: a stream may run past its
-            # segment's end (gUnk_085BF484 ends at 0x085C122C, m4a_songs)
+            # segment's end (gUnk_085BF484 ends at 0x085C122C, sprite_sheets_2)
             k = bisect.bisect_right(labels, a)
             nxt = labels[k] if k < len(labels) else hi
             x = lz77(rom, a)

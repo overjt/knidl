@@ -170,7 +170,9 @@ def main():
     old_ld = open(LINKER).read()
     m = ldblocks.block_re(seg['name']).search(old_ld)
     if not m:
-        die('linker.ld section .%s not found' % seg['name'])
+        die(ldblocks.not_found(old_ld, seg['name']))
+    if ldblocks.check_not_group(m.group(0), seg['name']):
+        die(ldblocks.check_not_group(m.group(0), seg['name']))
     blocks = []
     if pre:
         blocks.append(ldblocks.data_block(seg['name'], pre[0]))

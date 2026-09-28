@@ -4572,6 +4572,21 @@ assembly oracle (4.128) before trusting it; but a ROM table address used
 once, as a call argument, is the easy case.  Also dropping `static` from
 the SDK's two RAM-copied SRAM cores only added two `.globl` lines.
 
+### 3.521 A void-returning callback's "return value" is its own address
+`UpdateHBlankScroll` (`src/hud_b5840.c`) takes the s16 return value of
+the effect it calls through `gHBlankScrollEffects[]` as the HBlank DMA
+count.  One effect, the fade driver `sub_080b6154`
+(`src/save_b6154.c`), has a path that falls off its end without setting
+r0, and a call through a function pointer leaves the callee's address
+in the register the call went through: on that frame the DMA count is
+`0x6155`, the low half of `sub_080b6154 + 1`.  The ROM's own undefined
+behaviour, harmless in the original (one frame of the game select menu,
+nothing visible), and exactly the kind of layout dependence a boot test
+of a moved ROM trips over: shifted by 0x1000 the count is `0x7155`.  The
+decompiled C reproduces it byte for byte, so it stays, documented; the
+boot test lists the two RAM cells it touches as the only allowed RAM
+differences (4.143).
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -10789,6 +10804,137 @@ proven range and reported 727 proven coincidences as heuristic.
   each round took 2-7 minutes.  Round 1 cut the unrelocated words from
   56,075 to 20,110, round 2 to 17,044, round 3 to 16,997 (unknown 3,909
   -> 577 -> 429).
+
+### 4.140 The census's fourth class: unreachable, with a mechanical check
+Some unrelocated words can be neither proven pointers nor proven
+coincidences because nothing reads them: a record no table points at,
+the tail of a demo after the last entry its scene plays, entries past
+the highest index a consumer can form.  `tools/ptrcensus.py` has a class
+for them, counted apart and never symbolized, on three conditions the
+owner's coordinator set: (a) no symbol, pointer word, pool literal or C
+initializer anywhere in the ROM points into the region, (b) no
+consumer-proven extent and no unbounded index reaches it (the provider's
+`why` names the neighbours and why each stops), (c) the tool records it.
+(a) is not left to the provider: the census scans every 4-byte value at
+every byte offset of the ROM and fails the run if one outside the region
+points into it, unless its bytes are a proven coincidence (so the check
+also needs the coincidence union, and pixels that happen to equal an
+address do not block a claim), and it rejects any ELF symbol in the
+region except the segment-name label `split.py` writes at a data file's
+start.  Words inside the region do not count: if nothing outside refers
+into it, they are never followed.  Of run 3's 63 unreachable words, 48
+are fourteen unreached player records; the claim that looked weakest to
+a reviewer (the last entries of two frame lists, which a trailer word
+points at the start of) passes (a) because the trailer points at the
+list, not into the entry, and (b) because no code reads frame lists at
+all.
+
+### 4.141 An unlisted record field is a value to the census - write every pointer field
+The record provider reads every word of a `pointer_tables` record that
+the entry does not list in `pointers` as a value field, a proven
+coincidence.  Seventeen single-record ActorDef entries listed the fields
+`ActorLoadDefSlot` copies and said "unk10 not read on this path, left
+unknown"; the tool, not reading prose, made the five non-NULL `.unk10`
+words coincidences, although `ActorInitSlot`'s `sub_080637e4` copies
+`def->unk10` into `Actor.unk60` for every actor and the config's own
+ActorAux entries rested on that read.  Five real pointers, raw, in the
+"proven" column: a moved ROM would have given five actor definitions a stale hit
+box.  Agent D found them when the records became C and the fields had to
+be written out.  The rule: an entry lists every pointer field of the
+struct, whatever path its `why` cites; a field that is really unknown
+needs a mechanism, not a comment.  After the fix no value-field word of
+an unrelocated record equals a symbol's address (a cheap audit worth
+repeating).
+
+### 4.142 A raw relative branch is invisible to the shift test
+The shift test compares words whose value looks like a ROM address.  A
+PC-relative branch has no such value, and one written as raw bytes keeps
+its offset in a moved image without changing a byte, so it is counted
+nowhere.  Three were: after `bx pc; nop`, each task trampoline
+(`asm/sdk_libc.s`) is one ARM `b` back to its helper in crt0's zone, and
+the splitter had decoded that word as Thumb (a `stmia` and a raw `.short
+0xEAFC`).  Every insertion between `0x08000310` and the trampolines, that
+is anywhere in the game code, sent every task switch 0x1000 bytes too
+far; the boot test's image crashed at frame 88.  Fix: `ARM_ENTRIES` in
+`tools/symdb.py` for the three ARM halves, so `make split` writes `b
+TaskSwitch` etc. (the ROM is unchanged).  Guard: `tools/branchcheck.py`
+decodes every branch that crosses an insertion point (ARM B/BL, the ARM
+after `bx pc`, Thumb BL, B, B<cond> into code) and checks the moved
+target; `make shifttest` runs it at every point.  The lesson for the
+splitter: an ARM island after `bx pc` must be declared, or its branch is
+data.
+
+### 4.143 The boot test: two images in lockstep, compared frame by frame
+`make boottest` (docs/data.md 8.4) runs `knidl.gba` and the shifted
+images in mGBA's core, one thread per ROM, in lockstep, with a scripted
+input and a fresh save in memory, and compares per frame the video
+buffer, the audio samples and EWRAM+IWRAM up to relocation (a RAM word
+may differ only by exactly the padding and only if it points into the
+moved part: a pointer the linker moved, a return address).  What made
+it useful:
+- `--step <frame>` single-steps the first differing frame and prints the
+  last PCs before the images part: the trampoline bug read as "the
+  reference jumps to 0x08000238, the shifted image to 0x08001238";
+- a negative control: leaving task type #0's body pointer or the room
+  table unrelocated diverges at frames 88 and 1739, so the test does
+  see a missed pointer;
+- timing cannot cause a false difference in mGBA 0.10.5: it charges ROM
+  wait states by region and sequentiality only (no 128 KiB page rule),
+  and a 0x1000 shift keeps every alignment the prefetch model uses;
+- nothing is written or committed: no frame, frame hash, savestate or
+  recording; local screenshots for tuning the script stay under
+  `pending/`, and the script describes what it reaches in words.
+It is only as wide as its script (level 1, the menus, the story); the
+census stays the proof for the rest.
+
+### 4.144 Records interleaved with other data: one output section, many input sections
+The 179 ActorDef/ActorAux records lie in 34 runs between seg 18's other
+tables.  One `carve_data.py` carve per run gives each run an output
+section and splits the data segment around it: 68 more output sections.
+Instead: one C file, each run in a named section
+(`__attribute__((section(".actor_rec_<addr>")))` - agbcc honours it and
+keeps definition order within a section), each run still a `c_data` row,
+and `tools/ldgroup.py` listing the zone's 69 rows (data pieces and runs)
+in order inside one output section, with a matching-mode assertion per
+row on its first symbol.  `--ungroup` restores one block per row for the
+tools that edit blocks (which now refuse a grouped row with a message),
+and the round trip is byte-identical.  Two costs: `const` would have
+reached `ActorLoadDef`'s parameter and `Actor.def` under `-Werror`, so
+the records are not const (the section places them in ROM); and every
+run still adds two `segments.txt` rows and a data file, which argues for
+teaching `split.py` to write one file with `.section` pieces per zone
+before the 333 RoomDefs follow.
+
+### 4.145 Bounding an index by replaying or clamping, not by guessing
+Two of run 3's extents came from simulating the consumer on the ROM's
+own data.  The credits demos: `CreditsMain` plays each scene for a fixed
+number of frames (its length table), and the recorder's position only
+grows by the player count, so replaying `InputRecorderPlayFrame` over
+those frames gives exactly the entries read (the rest is unreachable).
+The wave table `gUnk_087561CC[(gSpriteCameraY + line) >> 3]`: the two
+effects that read it run in two rooms only, every writer of the camera
+centre clamps it to the room or camera bounds, the room bound is
+`height * 16 - borderY - 80`, and a screen shake adds at most the
+largest offset of `gScreenShakePatterns[1..7]`; the provider computes
+rooms, shake and bound from the ROM, so entries 0-135 are read and
+136-143 are not.  Both are sweeps of every writer, which the provider's
+comments list so that a reviewer can re-check the chain.
+
+### 4.146 Harness notes from #36 phase 2 run 3
+- Phase A (the coordinator alone): the unreachable class and its
+  mechanical check in `ptrcensus.py`, then four proposal agents in
+  scratch copies (A: the sprite sheets' 263 words; B: the completion
+  pictures, seg 18/19/11, 166 words; C: the boot test; D: segment names
+  and the records as C).  A and B reported after 25 minutes, D after 32,
+  C after 43; B's second round (the wave table) took 9 minutes.
+- Integration order A, B, D's census finding (4.141), D's names, B's
+  round 2, D's records (after an `ask`), C.  Each step ran `make split`,
+  `make clean && make compare`, `make check-data` and `make shifttest`,
+  and a later agent's scratch copy was refreshed from the tree first.
+- The boot test's first run found a bug the census could not (4.142):
+  the empirical check was worth building even with 0 unknown words.
+- CI's `run:` steps that pipe `make` into `tee` had no `pipefail`, so a
+  failing `make shifttest` passed; they have `shell: bash` now.
 
 ## 5. Workflow that worked
 

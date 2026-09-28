@@ -12,8 +12,17 @@ each of them into one of three classes, from evidence only:
                    hold no pointer: instructions, a record's value field, an
                    LZ77 stream, an m4a track's events, a PCM sample body,
                    raw tiles or a palette whose size the consumer gives;
-  unknown          neither.  It may be either, so a zone that such a word
-                   points into is not proven movable.
+  unreachable      neither, but the word lies in bytes that nothing can
+                   read (a weaker class, counted apart): a provider claims
+                   the region with kind "unreachable" and the consumer
+                   evidence that no table's index reaches it, and this tool
+                   checks mechanically that no other ROM word, at any byte
+                   offset, points into the region (bytes that are proven
+                   coincidences excepted) and that no symbol of the ELF
+                   lies inside it (unreachable_check below).  A word
+                   nobody reads cannot break a moved ROM, whatever it is;
+  unknown          none of these.  It may be either, so a zone that such a
+                   word points into is not proven movable.
 
 The evidence comes from providers.  The built-in ones read the linked ELF
 (ARM/Thumb mapping symbols: a word inside an instruction stream is two
@@ -183,6 +192,77 @@ def record_provider(rom, cfg, segs):
     return {"coincidence": out, "pointer": ptr}
 
 
+def elf_symbols(elf, skip=()):
+    """Sorted VMAs of the ELF's symbols that name something: every symbol
+    but the ARM mapping symbols ($a/$t/$d), file and section symbols, and
+    the names in `skip`."""
+    out = subprocess.run(["arm-none-eabi-readelf", "-sW", elf],
+                         stdout=subprocess.PIPE, universal_newlines=True,
+                         check=True).stdout
+    addrs = []
+    for line in out.splitlines():
+        m = re.match(r'\s*\d+:\s+([0-9a-f]+)\s+\d+\s+(\w+)\s+\w+\s+\w+\s+'
+                     r'(\w+)\s+(\S+)\s*$', line)
+        if not m or m.group(2) in ("FILE", "SECTION") or m.group(3) in ("UND", "ABS"):
+            continue
+        if re.match(r'^\$[atd](\.|$)', m.group(4)) or m.group(4) in skip:
+            continue
+        addrs.append(int(m.group(1), 16))
+    addrs.sort()
+    return addrs
+
+
+def rom_refs(rom):
+    """Sorted (value & ~1, holder) of every 4-byte little-endian value, at
+    ANY byte offset of the ROM, that lies in 0x08000000-0x08800000."""
+    out = []
+    n = len(rom) - 3
+    for k in range(4):
+        body = rom[k:k + ((n - k) // 4) * 4]
+        for i, v in enumerate(struct.unpack("<%dI" % (len(body) // 4), body)):
+            if ROM_BASE <= v < 0x08800000:
+                out.append((v & ~1, ROM_BASE + k + 4 * i))
+    out.sort()
+    return out
+
+
+def unreachable_check(ranges, rom, elf, coin, segnames=()):
+    """Condition (a) of the unreachable class (docs/data.md 8.3), checked
+    for every claimed [s, e): no 4-byte value anywhere in the ROM outside
+    [s, e), at any byte offset, points into it (bit 0 ignored; symbolic
+    words, literal pools, C initializers and unknown words all count), and
+    no ELF symbol lies in [s, e).  Two kinds of holder do not count: bytes
+    that `coin` (the proven coincidences) covers, which are proven not to
+    be pointers, and words inside the region itself: if nothing outside
+    refers into it, they are never followed.  Returns the failures."""
+    refs = [(v, h) for v, h in rom_refs(rom) if not coin.covering(h, h + 4)]
+    vals = [v for v, _h in refs]
+    # The one exclusion (segnames, the data segments' names): split.py
+    # writes `.global <segment>` / `<segment>:` at the start of every data
+    # file, with the segment's exact name from docs/analysis/segments.txt.
+    # That symbol names a file (a linker.ld row), not an object: no C code,
+    # pool or data word refers to it, and the only other use, a grouped
+    # section's matching-mode assertion (tools/ldgroup.py), emits no bytes.
+    # So a region may start at a segment boundary.  Every other symbol, a
+    # data_symbols label or a generated one at the same address included,
+    # still counts.
+    syms = elf_symbols(elf, skip=segnames)
+    bad = []
+    for s, e, _kind, why in ranges:
+        i = bisect.bisect_left(vals, s)
+        while i < len(vals) and vals[i] < e:
+            h = refs[i][1]
+            if not (s <= h and h + 4 <= e):
+                bad.append("0x%08X-0x%08X: the word at 0x%08X points into it "
+                           "(0x%08X)" % (s, e, h, vals[i]))
+                break
+            i += 1
+        j = bisect.bisect_left(syms, s)
+        if j < len(syms) and syms[j] < e:
+            bad.append("0x%08X-0x%08X: a symbol lies at 0x%08X" % (s, e, syms[j]))
+    return bad
+
+
 def load_providers(tools_dir):
     mods = []
     for path in sorted(glob.glob(os.path.join(tools_dir, "census_*.py"))):
@@ -204,6 +284,13 @@ def main():
     ap.add_argument("--shift", default="build/shifttest.json",
                     help="shiftcheck.py's --json output")
     ap.add_argument("--unknown", help="write the unknown words here (JSON)")
+    ap.add_argument("--unreachable",
+                    help="write the unreachable words and their evidence "
+                         "here (JSON)")
+    ap.add_argument("--strict", action="store_true",
+                    help="exit with an error if any word is a proven "
+                         "pointer or unknown (make shifttest: the ROM stays "
+                         "proven movable, docs/data.md 8.3)")
     ap.add_argument("--by-target", action="store_true",
                     help="also count the unproven words by the segment they "
                          "point into")
@@ -233,9 +320,24 @@ def main():
     # proven coincidences and next-label-extent ones in separate unions, so
     # a heuristic range never hides the kind of a proven one it overlaps
     coin = Ranges([c for _n, r in results for c in r["coincidence"]
-                   if not c[2].endswith("-nextlabel")])
+                   if not c[2].endswith("-nextlabel") and c[2] != "unreachable"])
     heur = Ranges([c for _n, r in results for c in r["coincidence"]
                    if c[2].endswith("-nextlabel")])
+    unreach_claims = [c for _n, r in results for c in r["coincidence"]
+                      if c[2] == "unreachable"]
+    bad = unreachable_check(unreach_claims, rom, args.elf, coin,
+                            set(n for _s, _e, k, n in segs if k == "data"))
+    if bad:
+        for b in bad[:20]:
+            sys.stderr.write("unreachable claim fails: %s\n" % b)
+        sys.exit("error: %d unreachable claim(s) fail condition (a)" % len(bad))
+    unreach = Ranges(unreach_claims)
+    # the same union without the ranges whose only evidence is a format
+    # parse of structures no code reads (docs/data.md 5.3)
+    coin_cons = Ranges([c for _n, r in results for c in r["coincidence"]
+                        if not c[2].endswith("-nextlabel")
+                        and c[2] != "unreachable"
+                        and not c[3].startswith("format only")])
     proven = {}
     for name, r in results:
         for a, why in r["pointer"]:
@@ -252,6 +354,7 @@ def main():
     rows = {}
     order = []
     unknown = []
+    unreachable = []
     targets = {}
     kinds_total = {}
     for a, v in words:
@@ -260,8 +363,8 @@ def main():
             seg[3] if seg else "?")
         if key not in rows:
             rows[key] = {"total": 0, "pointer": 0, "coincidence": 0,
-                         "unknown": 0, "heuristic": 0,
-                         "start": seg[0] if seg else 0}
+                         "unreachable": 0, "unknown": 0, "heuristic": 0,
+                         "format": 0, "start": seg[0] if seg else 0}
             order.append(key)
         row = rows[key]
         row["total"] += 1
@@ -269,9 +372,17 @@ def main():
             cls = "pointer"
         else:
             c = coin.covering(a, a + 4)
+            u = None if c else unreach.covering(a, a + 4)
             if c:
                 cls = "coincidence"
                 kinds_total[c[0]] = kinds_total.get(c[0], 0) + 1
+                # coincidences whose only evidence is a format parse of
+                # structures no code reads (docs/data.md 5.3)
+                if not coin_cons.covering(a, a + 4):
+                    row["format"] += 1
+            elif u:
+                cls = "unreachable"
+                unreachable.append(("0x%08X" % a, "0x%08X" % v, u[1]))
             else:
                 # a value table whose element type is proven but whose
                 # extent is only the span to the next label (docs/data.md
@@ -281,7 +392,7 @@ def main():
                     row["heuristic"] += 1
                 unknown.append(("0x%08X" % a, "0x%08X" % v))
         row[cls] += 1
-        if cls != "coincidence":
+        if cls not in ("coincidence", "unreachable"):
             t = seg_of(v & ~1)
             tkey = "(code segments)" if t and t[2] in CODE_KINDS else (
                 t[3] if t else "?")
@@ -291,23 +402,35 @@ def main():
     print("pointer census of the %d unrelocated words (insertion at %s):"
           % (len(words), shift.get("lowest", "?")))
     print()
-    print("%-46s %8s %8s %11s %8s %9s"
-          % ("holding segment", "words", "pointer", "coincidence", "unknown",
-             "(heur.)"))
-    tot = {"total": 0, "pointer": 0, "coincidence": 0, "unknown": 0,
-           "heuristic": 0}
+    print("%-46s %8s %8s %11s %8s %8s %8s %9s"
+          % ("holding segment", "words", "pointer", "coincidence", "(format)",
+             "unreach.", "unknown", "(heur.)"))
+    tot = {"total": 0, "pointer": 0, "coincidence": 0, "unreachable": 0,
+           "unknown": 0, "heuristic": 0, "format": 0}
     for key in sorted(order, key=lambda k: rows[k]["start"]):
         r = rows[key]
         for k in tot:
             tot[k] += r[k]
-        print("%-46s %8d %8d %11d %8d %9s"
-              % (key, r["total"], r["pointer"], r["coincidence"], r["unknown"],
+        print("%-46s %8d %8d %11d %8s %8s %8d %9s"
+              % (key, r["total"], r["pointer"], r["coincidence"],
+                 r["format"] or "", r["unreachable"] or "", r["unknown"],
                  r["heuristic"] or ""))
-    print("%-46s %8d %8d %11d %8d %9d"
+    print("%-46s %8d %8d %11d %8d %8d %8d %9d"
           % ("total", tot["total"], tot["pointer"], tot["coincidence"],
-             tot["unknown"], tot["heuristic"]))
+             tot["format"], tot["unreachable"], tot["unknown"],
+             tot["heuristic"]))
+    print("(format): proven coincidences whose evidence is a format parse of "
+          "structures no code reads (docs/data.md 5.3), part of the column "
+          "before;")
+    print("unreach.: words in bytes nothing can read (docs/data.md 8.3, "
+          "counted apart, not proven coincidences);")
     print("(heur.): unknown words inside a value table whose extent is only "
           "the span to the next label")
+    print()
+    print("classes: proven pointer %d, proven coincidence %d (format-only %d), "
+          "unreachable %d, unknown %d"
+          % (tot["pointer"], tot["coincidence"], tot["format"],
+             tot["unreachable"], tot["unknown"]))
     print()
     print("coincidences by evidence: " + ", ".join(
         "%s %d" % (k, n) for k, n in sorted(kinds_total.items(),
@@ -351,6 +474,15 @@ def main():
         with open(args.unknown, "w") as f:
             json.dump(unknown, f, indent=0)
             f.write("\n")
+    if args.unreachable:
+        with open(args.unreachable, "w") as f:
+            json.dump(unreachable, f, indent=0)
+            f.write("\n")
+    if args.strict and (tot["pointer"] or tot["unknown"]):
+        sys.exit("error: %d proven pointer(s) still raw and %d unknown "
+                 "word(s): the ROM is no longer proven movable (symbolize "
+                 "the pointers; prove or explain the unknown words, "
+                 "docs/data.md 8.3)" % (tot["pointer"], tot["unknown"]))
 
 
 if __name__ == "__main__":

@@ -46,3 +46,42 @@ def block(name, vma, body):
 def data_block(name, vma):
     """The block of a split data/asm segment (its .name and .name.tail)."""
     return block(name, vma, 'KEEP(*(.%s)) KEEP(*(.%s.tail))' % (name, name))
+
+
+GROUP_RE = re.compile(r'^[ \t]*\.([A-Za-z0-9_]+)[ \t]*:[ \t]*\{([^}]*)\}', re.M)
+
+
+def group_of(text, name):
+    """The output section that lists segment `name` as one row of a group
+    (tools/ldgroup.py), or None: its data pieces `KEEP(*(.name))` or its
+    C pieces `obj(.name)` inside another section's block."""
+    pat = re.compile(r'(?:KEEP\(\*\(|\()\.%s\)' % re.escape(name))
+    for m in GROUP_RE.finditer(text):
+        if m.group(1) != name and pat.search(m.group(2)):
+            return m.group(1)
+    return None
+
+
+def not_found(text, name):
+    """The error text for a segment whose own block is missing."""
+    g = group_of(text, name)
+    if g:
+        return ('linker.ld section .%s is a row of the grouped output section '
+                '.%s: run `python3 tools/ldgroup.py --ungroup %s --write` first '
+                'and group the rows again afterwards (docs/data.md 5.2)'
+                % (name, g, g))
+    return 'linker.ld section .%s not found' % name
+
+
+def check_not_group(block_text, name):
+    """An error text if the block found for `name` is a group of rows
+    (tools/ldgroup.py names a group after its first row, so block_re finds
+    it under that name), else None.  A plain block lists one line of input
+    sections."""
+    body = block_text[block_text.index('{') + 1:block_text.index('}')]
+    if len([ln for ln in body.splitlines() if ln.strip()]) > 1:
+        return ('linker.ld section .%s is a grouped output section '
+                '(tools/ldgroup.py): run `python3 tools/ldgroup.py --ungroup %s '
+                '--write` first and group the rows again afterwards '
+                '(docs/data.md 5.2)' % (name, name))
+    return None
