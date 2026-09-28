@@ -10955,6 +10955,93 @@ comments list so that a reviewer can re-check the chain.
 - CI's `run:` steps that pipe `make` into `tee` had no `pipefail`, so a
   failing `make shifttest` passed; they have `shell: bash` now.
 
+### 4.147 `tools/rename.py`: linker.ld became a place a name lives
+#36 phase 2 run 3 grouped the ActorDef/ActorAux runs into one output
+section (`tools/ldgroup.py`, 4.145) and wrote one `ASSERT(!MATCHING ||
+<first record of the run> == <address>, ...)` per run into linker.ld.  The
+first #155 run-3 batch that renamed such a record (`gUnk_0873F2B8` ->
+`gAbilityStarDef`) linked with "undefined symbol `gUnk_0873F2B8'
+referenced in expression": the rule of 4.123 that linker.ld is never
+edited predates those asserts.  linker.ld is one of the tool's
+`TEXT_FILES` now: its word-boundary uses are renamed (object paths and
+`.actor_rec_<addr>` section names are not symbols; the file-stem rule
+keeps `build/src/<name>.o` safe), and `--verify-diff` compares it exactly
+after the mapping.  A batch driver has to `git add linker.ld` too.
+
+### 4.148 Position names: the slot is the identity, and the referrer check
+Run 3 named 1,962 data records after their slot in a consumer-proven
+table (docs/naming.md 2.4): the 57 room lists and 333 RoomDefs of
+`gRoomTable[level][stage][room]`, the 1,295 records one RoomDef field
+alone points at (maps, block layers, doors, object lists, BG2/BG3 tiles,
+palettes, maps), the kind tables' ActorDefs (`gEnemyDefs`,
+`gChildActorDefs`, the stage-object and pickup slots), the kind-0
+graphics descriptors and the palettes and tiles 55 named descriptors
+alone point at, and the 12 BG animation sets with their scripts.  What
+made them safe to apply in bulk:
+* a referrer count over `data/`, `asm/`, `src/` and `include/` before each
+  batch (a record with a second table or a code reference keeps its
+  placeholder, unless every referrer uses it as the same thing, as the
+  three Poppy Bros. Jr. subtypes share one descriptor): all 1,295 RoomDef
+  field records had exactly one referrer, the RoomDefs only the room
+  lists, the lists only `gRoomTable`;
+* 0-based indices exactly as the code writes them, no world names; the
+  mapping of level indices 0-6 to the game's Levels 1-7 is documented
+  apart, proven by the boss each level's last stage spawns;
+* their own batches, and the progress figures count them apart from the
+  semantic names (`make progress` cannot tell them apart; the `slot:`
+  evidence tag in `renames.csv` can).
+A per-slot table built from an agent's summary sentence would have been
+wrong: "kind-4 slot N is task type 102 + N" held only to slot 19 (both of
+Heavy Mole's arms share slot 19, so slot 20 is #123); the per-slot pairs
+(`ActorSpawn.subtype` next to `ActorSpawn.taskType` in every spawner)
+were right, and the batch was generated from those.
+
+### 4.149 Renders: RequestCopy mode 4 fills the right half of an OBJ row
+(agent C of #155 run 3.)  The room object loader copies a sheet with
+`RequestCopy` mode 3 or 4, 0x200-byte rows at a 0x400 stride; mode 4
+writes each 16-tile sheet row into the RIGHT half of the 32-tile OBJ VRAM
+row.  So a tile word such as `0x8010` or `0xD3D0` carries a +0x10 column,
+and a sheet rendered 16 tiles wide from column 0 misses it: that is why
+run 2 found no sheet for task type #73 (the Star Rod piece) and the hub
+objects.  The renderer must place the tiles where the copy mode puts them
+before a frame table is assembled over them.  Palettes matter as much: a
+child object's tile word names its palette bank (`0xA110` is bank 10,
+which the Nightmare Power Orb fills from a separate star sheet), and a
+render with the wrong bank is not evidence.
+
+### 4.150 Harness notes from #155 run 3
+- The coordinator did Phase A alone (baseline, the per-file oracle, the
+  worklists) and then applied the position names itself while four
+  proposal agents worked by subject (A kind-0 enemies, B bosses, C actor
+  core / effects / objects / menus, D fields, views and cells).  Short
+  rounds (about 10-25 minutes each once the agents knew the code) resumed
+  with `SendMessage` worked better than long briefs; each round started
+  with "your last CSV is applied, cite the current names".
+- The three-source rule for identities (render, code, WiKirby text by
+  URL) was cheap once WebFetch was allowed for text, and it corrected run
+  2 twice (Togezo -> Needlous; the BALL enemy is Bubbles, Bounder is not
+  in this game) and settled the case run 2 left open (Sword Knight
+  purple, Blade Knight green with a red plume).  A reference found for one
+  question answered another: WiKirby's Bubbles page says Bubbles takes the
+  seat of a blasted Kirby in Bomb Rally, which named that sub-game's
+  knocked-out states.
+- Rules still slipped: agent D's field census parsed the tree with the
+  host's clang (a parse only, but AGENTS.md keeps compilers in Docker, as
+  4.127 already says), and agent B ran one read-only `git log`.  Both were
+  stopped at the next round; say "no host compiler, no git at all, not
+  even read-only" in the brief itself.
+- A view (a union in `struct Task`) is a type change: it went through an
+  `ask`, its own commit, and the proof of 4.128 on the parent commit
+  (the per-file oracle regenerated there, because renames change the
+  symbol names in the `.s`).  `--verify-diff` then runs in two segments:
+  `origin/master` up to the commit before the view (in a temporary
+  worktree), and the view commit up to HEAD.
+- The coordinator dropped a handful of proposed names the agents
+  themselves flagged as least certain (a shot type whose variants are not
+  all shots, a state that only creates the thrower, a body-only name with
+  no requester, a "room type" when a second room-kind byte exists): a
+  wrong name is worse than no name.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
