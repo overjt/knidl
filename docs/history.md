@@ -1022,3 +1022,14 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   module loop also treats module M265 (exactly the `m4a_1` core) as one of
   them.  The badge moves from 99.51% to 100% ("every code byte built from
   repository source"); `make progress` keeps the zones excluded.
+- Asset extraction (#165): `tools/extract_assets.py` (`make assets`,
+  `make assets-check`, docs/assets.md) decodes the census-proven graphics
+  objects from `baserom.gba` into the gitignored `assets/` directory, the
+  data policy's editable view (the tmc/mzm model), reusing the pointer
+  census providers so every boundary, format and consumer citation is the
+  census-proven one: 15,620 artifacts (palettes as JASC, 4bpp tiles and
+  TaskGfx chunk streams, decoded LZ77 blobs, room and picture maps, OAM
+  templates as JSON, 19 rendered pictures) plus a manifest.  `make
+  assets-check` re-extracts into a temporary directory and compares byte for
+  byte; CI runs it after `make compare`.  Rebased after #167-#176 by the
+  coordinator: the extractor ran unchanged on the zone files and C records.

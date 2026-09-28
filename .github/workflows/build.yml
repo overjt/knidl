@@ -131,6 +131,19 @@ jobs:
         if: steps.baserom.outputs.have == 'true'
         run: make compare
 
+      # Asset extraction fidelity (docs/assets.md): the gitignored assets/
+      # tree must regenerate byte-for-byte from baserom.gba.  CI does not
+      # keep the tree; it only proves the extractor still round-trips the
+      # ROM's proven asset objects (the same contract make compare gives
+      # the built ROM).
+      - name: Asset extraction check (make assets-check)
+        if: steps.baserom.outputs.have == 'true'
+        run: |
+          set -eu
+          make assets
+          make assets-check
+          rm -rf assets
+
       - name: Progress report (make progress)
         if: steps.baserom.outputs.have == 'true'
         # bash -eo pipefail: without it a failing make before `| tee` passes

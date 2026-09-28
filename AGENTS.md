@@ -54,6 +54,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   - `make boottest` — the boot test (docs/data.md §8.4): links one shifted ROM per shift-test point and runs it against `knidl.gba` in mGBA (emulator image `tools/boottest/Dockerfile`, mGBA built from a release tag), in lockstep with the scripted inputs `tools/boottest/*.txt` (`input.txt`, `subgames.txt`, `gameover.txt`, `level1.txt`, each from boot), failing at the first frame whose video, audio or RAM differs or when a script's `expect` checkpoint no longer holds (`BOOTTEST_INPUT`, `BOOTTEST_AT`, `BOOTTEST_FRAMES`); CI runs it after `make shifttest`.  `make boottest-coverage` counts the functions the scripts execute (docs/data.md §8.4).  Never commit a screenshot, frame dump, frame-hash list, savestate or capture: they are assets.
   - `make MATCHING=0` — link without `linker.ld`'s per-section address assertions (a modified ROM); the default `MATCHING=1` keeps every section at its original address.
   - `make check-data` — the no-ROM-bytes check (`tools/check_data_policy.py`): `data/*.s` may hold only labels, symbolic `.word`s and `.incbin` slices of `baserom.gba`; needs no baserom.
+  - `make assets` / `make assets-check` — asset extraction (`tools/extract_assets.py`, docs/assets.md): decode the census-proven graphics objects (palettes, tiles, maps, LZ77, OAM, rendered PNGs) from `baserom.gba` into the **gitignored** `assets/` directory; `assets-check` re-extracts and compares byte for byte (host Python, needs baserom; CI runs it after `make compare`).
   - `make check-headers` — compile-only smoke test of `include/gba/*.h` (`tools/header_smoke.c`) with agbcc + old_agbcc, and of all the game headers `include/*.h` in one translation unit (`tools/header_smoke_game.c`); never linked into the ROM.
   - `make audit` — the final audit (`tools/audit.py`, issue #37, `docs/audit.md`): `.incbin` only in `data/*.s` and the header's Nintendo logo, every raw numeric directive in `asm/` justified, the sanctioned asm list in `docs/audit.md` matching `tools/calcrom.pl`, no raw ROM/RAM/I/O address in `src/` without a symbol, macro or justification, every code exception listed, and the placeholder census (`sub_*`, `gUnk_*`, `unk*` fields) generated into `docs/naming.md`; needs no baserom, CI runs it.
   - `make clean` — remove `build/` and `knidl.gba`.
@@ -121,6 +122,13 @@ module by module, is [`docs/history.md`](docs/history.md).
   5,348 functions executed), each checking its scenes with `expect`
   checkpoints; the credits need the whole game and link play linked
   cores, so the census alone covers them (docs/data.md §8.4).
+- **Assets (#165).**  `make assets` decodes the census-proven graphics
+  (944 palettes, 4,468 tile blobs, 1,041 LZ77 streams, 77 maps, 8,947 OAM
+  template streams, 19 rendered pictures: 15,620 artifacts plus a
+  manifest) from the user's `baserom.gba` into the gitignored `assets/`,
+  the data policy's editable view; `make assets-check` (CI, after `make
+  compare`) re-extracts and compares byte for byte.  Nothing under
+  `assets/` is ever committed (docs/assets.md).
 - **Names: #155, open.**  263 of 266 task bodies and 3,800 of 5,348
   functions named (run 4: 689 by role and 662 by their state-table slot,
   docs/naming.md 2.4); `make progress`: 9,524 of 34,017 symbols documented
