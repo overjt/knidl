@@ -30,7 +30,7 @@ jobs:
       # ----- Checks that never require baserom.gba (always run) -----
 
       - name: Python tooling check (tools/*.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py tools/ldblocks.py tools/shiftcheck.py tools/ptrcensus.py tools/census_rooms.py tools/census_seg18.py tools/census_m4a.py tools/m4a_struct.py tools/census_sprites.py tools/census_sheets.py tools/census_bounds.py tools/ldgroup.py tools/boottest.py tools/branchcheck.py
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py tools/ldblocks.py tools/shiftcheck.py tools/ptrcensus.py tools/census_rooms.py tools/census_seg18.py tools/census_m4a.py tools/m4a_struct.py tools/census_sprites.py tools/census_sheets.py tools/census_bounds.py tools/ldgroup.py tools/boottest.py tools/branchcheck.py tools/extract_assets.py tools/rebuild_assets.py
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
@@ -125,17 +125,22 @@ jobs:
         if: steps.baserom.outputs.have == 'true'
         run: make compare
 
-      # Asset extraction fidelity (docs/assets.md): the gitignored assets/
-      # tree must regenerate byte-for-byte from baserom.gba.  CI does not
-      # keep the tree; it only proves the extractor still round-trips the
-      # ROM's proven asset objects (the same contract make compare gives
-      # the built ROM).
-      - name: Asset extraction check (make assets-check)
+      # Asset extraction fidelity + re-injection (docs/assets.md): the
+      # gitignored assets/ tree must regenerate byte-for-byte from
+      # baserom.gba, an unedited tree must rebuild a ROM byte-identical to
+      # baserom.gba (the pristine round-trip of tools/rebuild_assets.py),
+      # and every re-encoder must reproduce or decode back the whole ROM
+      # corpus (make assets-selftest).  CI does not keep the tree; it only
+      # proves the tools still round-trip the ROM's proven asset objects
+      # (the same contract make compare gives the built ROM).
+      - name: Asset extraction and re-injection checks (make assets-check, assets-mod-check, assets-selftest)
         if: steps.baserom.outputs.have == 'true'
         run: |
           set -eu
           make assets
           make assets-check
+          make assets-mod-check
+          make assets-selftest
           rm -rf assets
 
       - name: Progress report (make progress)
