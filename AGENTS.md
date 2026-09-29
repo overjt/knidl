@@ -55,9 +55,10 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   - `make MATCHING=0` — link without `linker.ld`'s per-section address assertions (a modified ROM); the default `MATCHING=1` keeps every section at its original address.
   - `make check-data` — the no-ROM-bytes check (`tools/check_data_policy.py`): `data/*.s` may hold only labels, symbolic `.word`s and `.incbin` slices of `baserom.gba`; needs no baserom.
   - `make assets` / `make assets-check` — asset extraction (`tools/extract_assets.py`, docs/assets.md): decode the census-proven graphics objects (palettes, tiles, maps, LZ77, OAM, rendered PNGs) from `baserom.gba` into the **gitignored** `assets/` directory; `assets-check` re-extracts and compares byte for byte (host Python, needs baserom; CI runs it after `make compare`).
+  - `make assets-mod` / `make assets-mod-check` / `make assets-selftest` — asset re-injection (`tools/rebuild_assets.py`, the inverse of the extractor, docs/assets.md): rebuild the gitignored `knidl-mod.gba` from `baserom.gba` + the edited `assets/` tree (never re-extracts, so edits are safe; unchanged objects are never touched, edited ones are re-encoded to their ROM formats and spliced in place over their slots, header checksum fixed with `tools/gbafix.py`); `assets-mod-check` proves the pristine round-trip (an unedited tree rebuilds a ROM byte-identical to `baserom.gba`, SHA-1s printed) and `assets-selftest` verifies every encoder against the whole ROM corpus (host Python, needs baserom; CI runs both after `make assets-check`).
   - `make check-headers` — compile-only smoke test of `include/gba/*.h` (`tools/header_smoke.c`) with agbcc + old_agbcc, and of all the game headers `include/*.h` in one translation unit (`tools/header_smoke_game.c`); never linked into the ROM.
   - `make audit` — the final audit (`tools/audit.py`, issue #37, `docs/audit.md`): `.incbin` only in `data/*.s` and the header's Nintendo logo, every raw numeric directive in `asm/` justified, the sanctioned asm list in `docs/audit.md` matching `tools/calcrom.pl`, no raw ROM/RAM/I/O address in `src/` without a symbol, macro or justification, every code exception listed, and the placeholder census (`sub_*`, `gUnk_*`, `unk*` fields) generated into `docs/naming.md`; needs no baserom, CI runs it.
-  - `make clean` — remove `build/` and `knidl.gba`.
+  - `make clean` — remove `build/`, `knidl.gba` and `knidl-mod.gba`.
 - Header fields for `gbafix`: title `AGB KIRBY DX`, code `A7KE`, maker `01`, version `0`. Internal ROM codes are `A7K*` (not `AKT*`).
 
 ## Git / PR workflow (mandatory for agents)
@@ -127,8 +128,15 @@ module by module, is [`docs/history.md`](docs/history.md).
   template streams, 19 rendered pictures: 15,620 artifacts plus a
   manifest) from the user's `baserom.gba` into the gitignored `assets/`,
   the data policy's editable view; `make assets-check` (CI, after `make
-  compare`) re-extracts and compares byte for byte.  Nothing under
-  `assets/` is ever committed (docs/assets.md).
+  compare`) re-extracts and compares byte for byte.  `make assets-mod`
+  (#166, `tools/rebuild_assets.py`) is the inverse: it rebuilds the
+  gitignored `knidl-mod.gba` from `baserom.gba` plus the edited tree,
+  re-encoding only the objects that changed (JASC palettes, tiles, chunk
+  streams, BIOS LZ77, maps, OAM JSON) and splicing each in place over its
+  slot (fit or fail; growth needs `MATCHING=0`); `make assets-mod-check`
+  proves an unedited tree rebuilds `baserom.gba` byte for byte and `make
+  assets-selftest` re-encodes the whole corpus.  Nothing under `assets/`,
+  and no modded ROM, is ever committed (docs/assets.md).
 - **Names: #155, open.**  263 of 266 task bodies and 3,800 of 5,348
   functions named (run 4: 689 by role and 662 by their state-table slot,
   docs/naming.md 2.4); `make progress`: 9,524 of 34,017 symbols documented

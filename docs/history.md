@@ -1033,3 +1033,14 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   assets-check` re-extracts into a temporary directory and compares byte for
   byte; CI runs it after `make compare`.  Rebased after #167-#176 by the
   coordinator: the extractor ran unchanged on the zone files and C records.
+- Asset re-injection (#166): `tools/rebuild_assets.py` (`make assets-mod`,
+  `assets-mod-check`, `assets-selftest`, docs/assets.md), the extractor's
+  inverse, rebuilds the gitignored `knidl-mod.gba` from `baserom.gba` and
+  the edited `assets/` tree: it re-derives every record's pristine original
+  through `extract_assets`, leaves unchanged objects untouched (an unedited
+  tree rebuilds `baserom.gba` byte for byte), re-encodes edited ones
+  (JASC palettes to BGR555, tiles, TaskGfx chunk streams, a BIOS LZ77
+  writer whose streams are decoded back before splicing, maps with their
+  BG3 headers, OAM JSON) and splices each over its slot, fit or fail.
+  `assets-selftest` re-encodes the whole corpus (14,386 objects byte-exact,
+  1,091 LZ77 streams decoded back).  Rebased after #165 by the coordinator.

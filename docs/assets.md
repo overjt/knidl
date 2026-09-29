@@ -12,10 +12,11 @@ them.  The ROM build never reads this directory.
 ```sh
 make assets        # extract into assets/   (~15,600 files, a few seconds)
 make assets-check  # verify assets/ is still byte-identical to the ROM
+make assets-mod    # re-inject your edits: rebuild knidl-mod.gba (below)
 ```
 
-Both run on the host with plain Python 3 (no toolchain image) and require
-`baserom.gba`.
+All of them run on the host with plain Python 3 (no toolchain image) and
+require `baserom.gba`.
 
 ## What is extracted, and why it is trustworthy
 
@@ -68,11 +69,66 @@ regenerates differently, which catches `split_config.json` /
 
 This is a **fidelity** check, not a linter: a file you edited will (correctly)
 fail it.  The intended modding loop is edit → `make assets` is *not* run
-again over your edits → use your edited assets with the future re-injection
-tooling (below); run `make assets-check` only to prove a pristine tree.
+again over your edits → re-inject them with `make assets-mod` (below); run
+`make assets-check` only to prove a pristine tree.
 
-CI runs `assets-check` on every push where a `baserom.gba` is available,
-right after `make compare`.
+CI runs `assets-check`, `assets-mod-check` and `assets-selftest` on every
+push where a `baserom.gba` is available, right after `make compare`.
+
+## Re-injection: rebuild a modded ROM from edited assets
+
+`tools/rebuild_assets.py` — the inverse of the extractor — rebuilds a
+playable modded ROM from `baserom.gba` plus your edited `assets/` tree:
+
+```sh
+make assets-mod        # write knidl-mod.gba (gitignored; never re-extracts,
+                       # so it cannot overwrite your edits)
+make assets-mod-check  # pristine round-trip: an unedited tree must rebuild
+                       # a ROM byte-identical to baserom.gba (SHA-1 printed)
+make assets-selftest   # encode every object straight from the ROM and verify
+                       # (no assets/ tree needed)
+```
+
+All three run on the host with plain Python 3 and require `baserom.gba`;
+`assets-mod`/`assets-mod-check` also need a populated `assets/`
+(`make assets` first).
+
+**How it works.**  The tool re-runs the extractor (imported, not copied)
+into a temporary directory and compares every manifest record's file with
+the ROM-derived original.  Records whose bytes are equal are *unchanged*:
+their ROM ranges are never touched, so an unedited tree rebuilds a
+byte-identical ROM.  Edited records are re-encoded into their ROM format
+and written in place over their slot `[vma, rom_end)`:
+
+| format | re-encoding |
+| --- | --- |
+| `pal-raw` / `pal-counted` | JASC-PAL colours quantized back to BGR555 (8→5 bits; `>> 3` round-trips the extractor's `(v << 3) \| (v >> 2)` expansion exactly); the counted form re-writes the `u16` byte count |
+| `tiles-raw` | the `.4bpp` bytes verbatim |
+| `tiles-chunks` | re-framed with the manifest's chunk layout: chunk count and the `0xFFFF` terminator kept, per-chunk sizes may change — a blob that grew or shrank resizes the *last* chunk, because chunks are copied to VRAM pages `0x400` apart (`TaskLoadFrameTiles`, `src/early_5acc.c`), so earlier chunks keep their pages |
+| `lz77` | re-compressed with a BIOS LZ77 (type 0x10) writer; every stream is decoded back through `extract_assets.lz77_decode` and compared before it is spliced, and its size may differ from Nintendo's original |
+| `raw-map` / `bgmap-raw` | map bytes verbatim / behind the 6-byte `{size, width, height}` header; the dimensions are fixed by the RoomDef, so the file length must not change |
+| `bgmap-lz77` | the same header (the `u16` flag word at +6 is preserved from the ROM) and the re-compressed stream at the recorded `stream_vma` |
+| `oam` | JSON entries packed back to little-endian halfwords; attr0 bit 12 (BuildOam's "last" flag, `src/early_1b08.c`) must be set on exactly the final entry |
+
+`graphics/*.png` are rendered **views**: an edit fails with the list of
+view-only files and the underlying `palettes/`, `tiles/` or `maps/` file to
+edit instead.  `misc/*.bin` (`huffman`, `raw-copy`) are undecoded copies and
+fail the same way — no encoder exists for them in this phase.
+
+**Splice policy.**  `knidl-mod.gba` starts as the bytes of `baserom.gba`
+and each re-encoded object is written in place over its slot.  A
+re-encoded object must *fit* its slot: smaller is fine and zero-padded to
+the slot end (every padded object is reported); growing past it fails with
+a per-object report, because growth needs the `MATCHING=0` rebuild path on
+the proven-movable ROM ([data.md](data.md) §8), which this tool
+deliberately does not attempt.  The output's GBA header checksum is fixed
+with `tools/gbafix.py`.
+
+`make assets-selftest` is the encoders' own regression check: for every
+verbatim format the re-encoded pristine file must reproduce the ROM slot
+byte for byte, and for the LZ77 forms the stream must decode back to
+exactly the file's bytes (currently 15,620 objects: 14,386 byte-exact,
+1,091 LZ77 round-trips, 143 views/undecoded skipped).
 
 ## Not extracted (yet)
 
@@ -89,8 +145,8 @@ right after `make compare`.
 - **Rendered sprite sheets** — per-frame PNGs from the TaskGfx records
   (8,947 OAM streams + 4,468 tile blobs are extracted; the per-frame
   composition with OAM offsets is a natural follow-up).
-- **Re-injection** — rebuilding a modded ROM from edited assets.  The
-  manifest already records every ROM range and framing detail (chunk
-  layouts, BG3 headers, stream VMAs) needed to write the inverse tool;
-  `make MATCHING=0` plus the proven-movable ROM (data.md §8) is the
-  building ground.
+- **ROM growth** — re-injection writes each edited object back into its
+  original slot, so an object that grew past its slot fails; moving
+  objects and growing the ROM needs the `MATCHING=0` rebuild path on the
+  proven-movable layout (data.md §8), the natural next step on top of
+  `tools/rebuild_assets.py`.
