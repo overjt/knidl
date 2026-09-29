@@ -18,6 +18,11 @@ IMAGE     := knidl-builder
 BUILD_DIR := build
 ROM       := knidl.gba
 
+# The modded ROM rebuilt from the edited assets/ tree (tools/
+# rebuild_assets.py, docs/assets.md).  Gitignored like every *.gba and
+# removed by `make clean`.
+MOD_ROM   := knidl-mod.gba
+
 ifeq ($(INSIDE_DOCKER),1)
 
 # Every compile rule is a pipeline (cpp | agbcc | as).  Without pipefail the
@@ -253,7 +258,7 @@ split: baserom.gba tools/split.py tools/split_config.json docs/analysis/segments
 	python3 tools/split.py --rom baserom.gba --config tools/split_config.json
 
 clean:
-	rm -rf $(BUILD_DIR) $(ROM)
+	rm -rf $(BUILD_DIR) $(ROM) $(MOD_ROM)
 
 else
 
@@ -263,7 +268,7 @@ DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 # apart from the toolchain image.
 BOOTTEST_IMAGE := knidl-boottest
 
-.PHONY: image boottest-image all compare check-headers check-data progress datastats shifttest boottest symbols split modmap clean
+.PHONY: image boottest-image all compare check-headers check-data progress datastats shifttest boottest symbols split modmap assets assets-check assets-mod assets-mod-check assets-selftest clean
 
 image:
 	docker build -t $(IMAGE) .
@@ -303,6 +308,44 @@ boottest: image boottest-image
 report:
 	python3 tools/gen_report.py
 
+# Asset extraction (docs/assets.md): decode the ROM's graphics assets into
+# the gitignored assets/ directory — the policy-sanctioned editable view
+# (never committed).  Needs baserom.gba; host Python only, no toolchain
+# image.  assets-check re-extracts into a temp dir and compares byte for
+# byte, failing on any drift or hand edit (the make compare of assets).
+ASSET_PREREQ := baserom.gba tools/extract_assets.py tools/census_rooms.py \
+                tools/census_sprites.py tools/census_sheets.py \
+                tools/split_config.json docs/analysis/segments.txt
+
+assets: $(ASSET_PREREQ)
+	python3 tools/extract_assets.py --rom baserom.gba
+
+assets-check: $(ASSET_PREREQ)
+	python3 tools/extract_assets.py --rom baserom.gba --check
+
+# Asset re-injection (docs/assets.md): the inverse of `make assets` —
+# rebuild the modded ROM knidl-mod.gba from baserom.gba plus the (possibly
+# edited) assets/ tree.  Never re-extracts, so it cannot overwrite edits;
+# unchanged objects are never touched, edited ones are re-encoded to their
+# ROM formats and spliced in place over their slots (growth past a slot
+# fails: that needs the future MATCHING=0 path, docs/data.md section 8).
+# assets-mod-check proves the pristine round-trip (an unedited tree
+# rebuilds a ROM byte-identical to baserom.gba); assets-selftest encodes
+# every object from the ROM and verifies it (no assets/ tree needed).
+MOD_PREREQ := baserom.gba tools/rebuild_assets.py tools/extract_assets.py \
+              tools/census_rooms.py tools/census_sprites.py \
+              tools/census_sheets.py tools/split_config.json \
+              docs/analysis/segments.txt tools/gbafix.py
+
+assets-mod: $(MOD_PREREQ)
+	python3 tools/rebuild_assets.py --rom baserom.gba
+
+assets-mod-check: $(MOD_PREREQ)
+	python3 tools/rebuild_assets.py --rom baserom.gba --check
+
+assets-selftest: $(MOD_PREREQ)
+	python3 tools/rebuild_assets.py --rom baserom.gba --self-test
+
 symbols: image
 	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
 
@@ -313,6 +356,6 @@ modmap: image
 	$(DOCKER_RUN) make modmap INSIDE_DOCKER=1
 
 clean:
-	rm -rf $(BUILD_DIR) $(ROM)
+	rm -rf $(BUILD_DIR) $(ROM) $(MOD_ROM)
 
 endif
