@@ -19,8 +19,10 @@
 #include "ending.h"
 
 /* The behaviour tables of actor_rodata (0x0873EEA0-0x0874C44B, the rodata of
- * M17-M32; issue #167): 409 state/handler tables, 1444 function pointers, in
- * 103 runs of adjacent tables, each run in address order.  Every table is
+ * M17-M32; issue #167): 408 state/handler tables, 1443 function pointers, in
+ * 102 runs of adjacent tables, each run in address order, and Whispy Woods'
+ * seven script streams (one run, 9 function pointers; their opcodes and
+ * operands are numbers, as in the data file).  Every table is
  * defined with the element type its declaration gives (the line above it
  * names the declaring header and the consumer): most are u32 [] because their
  * consumers pass them to CallTableEntry(index, count, table) (src/early_2b04.c,
@@ -42,18 +44,6 @@
  * consumers call it. */
 
 #define ACTOR_TBL(addr) __attribute__((section(".actor_tbl_" #addr)))
-
-/* ---- 0x0873F910-0x0873F92C: 1 table(s), 1 function pointer(s), section .actor_tbl_0873f910 ---- */
-/* include/actor.h; read by sub_0806a0f0 */
-u32 gUnk_0873F910[7] ACTOR_TBL(0873f910) = {
-    (u32)sub_0806b24c,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-};
 
 /* ---- 0x0873FB04-0x0873FB7C: 4 table(s), 26 function pointer(s), section .actor_tbl_0873fb04 ---- */
 /* include/actor.h; CallTableEntry(i, 8, ...) in sub_0806ee30, sub_0806ef38 */
@@ -2816,6 +2806,165 @@ u32 gUnk_0874AD34[4] ACTOR_TBL(0874ad34) = {
     (u32)sub_080af144,
     (u32)sub_080af188,
     (u32)sub_080af1c8,
+};
+
+/* ---- 0x0874AD74-0x0874B1A8: 7 script(s), section .actor_tbl_0874ad74 ---- */
+/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 13 words up to its -2 (restart) */
+u32 gUnk_0874AD74[13] ACTOR_TBL(0874ad74) = {
+    -4, 4, (u32)sub_080af100,
+    -4, 5, (u32)sub_080af100,
+    -4, 6, (u32)sub_080af100,
+    -4, 7, (u32)sub_080af100,
+    -2,
+};
+/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 65 words up to its -2 (restart) */
+u32 gUnk_0874ADA8[65] ACTOR_TBL(0874ad74) = {
+    4, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    -3, (u32)sub_080af178,
+    5, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    -3, (u32)sub_080af178,
+    6, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    -3, (u32)sub_080af178,
+    7, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    -3, (u32)sub_080af178,
+    -2,
+};
+/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 57 words up to its -2 (restart) */
+u32 gUnk_0874AEAC[57] ACTOR_TBL(0874ad74) = {
+    4, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    5, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    6, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    7, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    -2,
+};
+/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 59 words up to its -1 (stop) */
+u32 gUnk_0874AF90[59] ACTOR_TBL(0874ad74) = {
+    4, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    5, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    6, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    7, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    -3, (u32)sub_080af1b8,
+    -1,
+};
+/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 9 words up to its -2 (restart) */
+u32 gUnk_0874B07C[9] ACTOR_TBL(0874ad74) = {
+    4, 1,
+    6, 1,
+    5, 1,
+    7, 1,
+    -2,
+};
+/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 9 words up to its -2 (restart) */
+u32 gUnk_0874B0A0[9] ACTOR_TBL(0874ad74) = {
+    4, 4,
+    5, 4,
+    6, 4,
+    7, 4,
+    -2,
+};
+/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 57 words up to its -2 (restart) */
+u32 gUnk_0874B0C4[57] ACTOR_TBL(0874ad74) = {
+    4, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    5, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    6, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    7, 2,
+    8, 1,
+    9, 1,
+    11, 1,
+    10, 1,
+    9, 1,
+    8, 1,
+    -2,
 };
 
 /* ---- 0x0874B1DC-0x0874B20C: 1 table(s), 12 function pointer(s), section .actor_tbl_0874b1dc ---- */

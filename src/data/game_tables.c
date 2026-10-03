@@ -19,8 +19,8 @@
 #include "ending.h"
 
 /* The behaviour tables of game_rodata (0x08730780-0x0873ECEB, the rodata of
- * M02-M18; issue #167): 37 state/handler tables, 471 function pointers, in
- * 21 runs of adjacent tables, each run in address order.  Every table is
+ * M02-M18; issue #167): 38 state/handler tables, 472 function pointers, in
+ * 22 runs of adjacent tables, each run in address order.  Every table is
  * defined with the element type its declaration gives (the line above it
  * names the declaring header and the consumer): most are u32 [] because their
  * consumers pass them to CallTableEntry(index, count, table) (src/early_2b04.c,
@@ -543,6 +543,13 @@ u32 gPaletteAnimVariants[5] GAME_TBL(0873df24) = {
 /* include/actor.h; CallTableEntry(i, 1, ...) in Task_InhalableStar */
 u32 gUnk_0873E280[1] GAME_TBL(0873e280) = {
     (u32)sub_08067258,
+};
+
+/* ---- 0x0873E284-0x0873E288: 1 table(s), 1 function pointer(s), section .game_tbl_0873e284 ---- */
+/* include/actor.h; CallTableEntry(i, 1, ...) in InhalableStarUpdate: one entry; the 26 words
+ * after it, up to the next label, are other data and stay structure-only */
+u32 gUnk_0873E284[1] GAME_TBL(0873e284) = {
+    (u32)sub_08067378,
 };
 
 /* ---- 0x0873E2F0-0x0873E348: 2 table(s), 22 function pointer(s), section .game_tbl_0873e2f0 ---- */

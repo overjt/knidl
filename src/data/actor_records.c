@@ -44,12 +44,6 @@ extern const u8 gUnk_0873F5C4[];
 extern const u8 gUnk_0873F5DC[];
 extern const u8 gUnk_0873F5EC[];
 extern const u8 gUnk_0873F5F4[];
-extern const u8 gUnk_0873F5FC[];
-extern const u8 gUnk_0873F618[];
-extern const u8 gUnk_0873F634[];
-extern const u8 gUnk_0873F640[];
-extern const u8 gUnk_0873F64C[];
-extern const u8 gUnk_0873F658[];
 extern const u8 gUnk_0873F720[];
 extern const u8 gUnk_0873F73C[];
 extern const u8 gUnk_0873F774[];
@@ -59,29 +53,10 @@ extern const u8 gUnk_0873F800[];
 extern const u8 gUnk_0873F89C[];
 extern const u8 gUnk_0873F8A4[];
 extern const u8 gUnk_0873F8E4[];
-extern const u8 gUnk_0873F944[];
 extern const u8 gUnk_08740E00[];
-extern const u8 gUnk_08740E54[];
-extern const u8 gUnk_08740E70[];
-extern const u8 gUnk_08740E8C[];
-extern const u8 gUnk_08740EA8[];
-extern const u8 gUnk_08740EC4[];
-extern const u8 gUnk_08740EE0[];
-extern const u8 gUnk_08740EFC[];
-extern const u8 gUnk_08740F08[];
-extern const u8 gUnk_08740F14[];
-extern const u8 gUnk_08740F20[];
-extern const u8 gUnk_08740F38[];
-extern const u8 gUnk_08740F44[];
-extern const u8 gUnk_08740F68[];
-extern const u8 gUnk_08740F74[];
-extern const u8 gUnk_08740F80[];
-extern const u8 gUnk_08740F8C[];
-extern const u8 gUnk_08740F98[];
 extern const u8 gUnk_0874113C[];
 extern const u8 gUnk_08741190[];
 extern const u8 gUnk_087411AC[];
-extern const u8 gUnk_087411B4[];
 extern const u8 gUnk_08741AA4[];
 extern const u8 gUnk_08741AC0[];
 extern const u8 gUnk_08741AF8[];
@@ -94,96 +69,27 @@ extern const u8 gUnk_08741B3C[];
 extern const u8 gUnk_08741B4C[];
 extern const u8 gUnk_08741B54[];
 extern const u8 gUnk_08741B5C[];
-extern const u8 gUnk_08741B64[];
-extern const u8 gUnk_08741B80[];
-extern const u8 gUnk_08741B9C[];
-extern const u8 gUnk_08741BB8[];
-extern const u8 gUnk_08741BD4[];
-extern const u8 gUnk_08741BF0[];
-extern const u8 gUnk_08741C0C[];
-extern const u8 gUnk_08741C28[];
-extern const u8 gUnk_08741C44[];
-extern const u8 gUnk_08741C60[];
-extern const u8 gUnk_08741C7C[];
-extern const u8 gUnk_08741C98[];
-extern const u8 gUnk_08741CA4[];
-extern const u8 gUnk_08741CB0[];
-extern const u8 gUnk_08741CBC[];
-extern const u8 gUnk_08741CC8[];
-extern const u8 gUnk_08741CD4[];
-extern const u8 gUnk_08741CEC[];
-extern const u8 gUnk_08741CF8[];
-extern const u8 gUnk_08741D04[];
-extern const u8 gUnk_08741D10[];
-extern const u8 gUnk_08741D1C[];
-extern const u8 gUnk_08741D28[];
-extern const u8 gUnk_08741D34[];
-extern const u8 gUnk_08741D40[];
-extern const u8 gUnk_08741D4C[];
-extern const u8 gUnk_08741D58[];
 extern const u8 gUnk_08741F0C[];
 extern const u8 gUnk_08741F28[];
 extern const u8 gUnk_08741F44[];
-extern const u8 gUnk_08741F4C[];
-extern const u8 gUnk_08741F58[];
 extern const u8 gUnk_08742BF8[];
 extern const u8 gUnk_08742C14[];
 extern const u8 gUnk_08742CD8[];
 extern const u8 gUnk_08742CE0[];
 extern const u8 gUnk_08742CE8[];
-extern const u8 gUnk_08742CF0[];
-extern const u8 gUnk_08742D0C[];
-extern const u8 gUnk_08742D28[];
-extern const u8 gUnk_08742D44[];
-extern const u8 gUnk_08742D60[];
-extern const u8 gUnk_08742D7C[];
-extern const u8 gUnk_08742D98[];
-extern const u8 gUnk_08742DB4[];
-extern const u8 gUnk_08742DD0[];
-extern const u8 gUnk_08742DEC[];
-extern const u8 gUnk_08742E08[];
-extern const u8 gUnk_08742E14[];
-extern const u8 gUnk_08742E20[];
-extern const u8 gUnk_08742E2C[];
-extern const u8 gUnk_08742E38[];
-extern const u8 gUnk_08742E44[];
-extern const u8 gUnk_08742E50[];
-extern const u8 gUnk_08742E68[];
-extern const u8 gUnk_08742E74[];
-extern const u8 gUnk_08742E80[];
-extern const u8 gUnk_08742E8C[];
-extern const u8 gUnk_08742E98[];
 extern const u8 gUnk_0874306C[];
 extern const u8 gUnk_08743088[];
 extern const u8 gUnk_087430A4[];
 extern const u8 gUnk_087430C0[];
 extern const u8 gUnk_087430DC[];
 extern const u8 gUnk_087430E4[];
-extern const u8 gUnk_087430EC[];
-extern const u8 gUnk_08743108[];
-extern const u8 gUnk_08743124[];
-extern const u8 gUnk_08743130[];
 extern const u8 gUnk_08743414[];
 extern const u8 gUnk_08743470[];
 extern const u8 gUnk_0874348C[];
-extern const u8 gUnk_087434C4[];
-extern const u8 gUnk_087434E0[];
-extern const u8 gUnk_087434FC[];
-extern const u8 gUnk_08743518[];
-extern const u8 gUnk_08743534[];
-extern const u8 gUnk_08743540[];
-extern const u8 gUnk_0874354C[];
-extern const u8 gUnk_08743564[];
-extern const u8 gUnk_08743570[];
-extern const u8 gUnk_0874357C[];
 extern const u8 gUnk_0874369C[];
 extern const u8 gUnk_087436B8[];
 extern const u8 gUnk_087436D4[];
 extern const u8 gUnk_087436DC[];
-extern const u8 gUnk_087436E4[];
-extern const u8 gUnk_08743700[];
-extern const u8 gUnk_0874371C[];
-extern const u8 gUnk_08743728[];
 extern const u8 gUnk_08743BD0[];
 extern const u8 gUnk_08743BEC[];
 extern const u8 gUnk_08743C40[];
@@ -200,23 +106,12 @@ extern const u8 gUnk_08743F6C[];
 extern const u8 gUnk_08744014[];
 extern const u8 gUnk_0874401C[];
 extern const u8 gUnk_08744024[];
-extern const u8 gUnk_0874407C[];
-extern const u8 gUnk_08744098[];
-extern const u8 gUnk_087440B4[];
-extern const u8 gUnk_087440D0[];
-extern const u8 gUnk_087440E8[];
-extern const u8 gUnk_08744100[];
 extern const u8 gUnk_0874425C[];
 extern const u8 gUnk_08744278[];
 extern const u8 gUnk_08744294[];
 extern const u8 gUnk_087442B0[];
 extern const u8 gUnk_087442B8[];
 extern const u8 gUnk_087442C0[];
-extern const u8 gUnk_087442C8[];
-extern const u8 gUnk_087442E4[];
-extern const u8 gUnk_08744300[];
-extern const u8 gUnk_08744318[];
-extern const u8 gUnk_08744330[];
 extern const u8 gUnk_087449E8[];
 extern const u8 gUnk_08744A20[];
 extern const u8 gUnk_08744A74[];
@@ -243,37 +138,19 @@ extern const u8 gUnk_08745254[];
 extern const u8 gUnk_087452FC[];
 extern const u8 gUnk_08745304[];
 extern const u8 gUnk_08745314[];
-extern const u8 gUnk_087453BC[];
-extern const u8 gUnk_087453D8[];
-extern const u8 gUnk_087453F4[];
-extern const u8 gUnk_08745410[];
-extern const u8 gUnk_08745428[];
-extern const u8 gUnk_08745440[];
 extern const u8 gUnk_08745588[];
 extern const u8 gUnk_087455A4[];
 extern const u8 gUnk_087455C0[];
-extern const u8 gUnk_087455C8[];
-extern const u8 gUnk_087455E4[];
-extern const u8 gUnk_08745600[];
-extern const u8 gUnk_0874560C[];
 extern const u8 gUnk_08745868[];
 extern const u8 gUnk_087458D8[];
 extern const u8 gUnk_08745964[];
 extern const u8 gUnk_08745A0C[];
 extern const u8 gUnk_08745A1C[];
-extern const u8 gUnk_08745A3C[];
-extern const u8 gUnk_08745A58[];
-extern const u8 gUnk_08745A74[];
-extern const u8 gUnk_08745A8C[];
 extern const u8 gUnk_08745BB4[];
 extern const u8 gUnk_08745BEC[];
 extern const u8 gUnk_08745C5C[];
 extern const u8 gUnk_08745C78[];
 extern const u8 gUnk_08745C88[];
-extern const u8 gUnk_08745C90[];
-extern const u8 gUnk_08745CAC[];
-extern const u8 gUnk_08745CC8[];
-extern const u8 gUnk_08745CE0[];
 extern const u8 gUnk_08747EBC[];
 extern const u8 gUnk_08747ED8[];
 extern const u8 gUnk_08747F10[];
@@ -284,17 +161,6 @@ extern const u8 gUnk_08748178[];
 extern const u8 gUnk_08748180[];
 extern const u8 gUnk_08748188[];
 extern const u8 gUnk_08748190[];
-extern const u8 gUnk_087481A0[];
-extern const u8 gUnk_087481BC[];
-extern const u8 gUnk_087481D8[];
-extern const u8 gUnk_087481F4[];
-extern const u8 gUnk_08748210[];
-extern const u8 gUnk_0874821C[];
-extern const u8 gUnk_08748228[];
-extern const u8 gUnk_08748234[];
-extern const u8 gUnk_08748240[];
-extern const u8 gUnk_0874824C[];
-extern const u8 gUnk_08748258[];
 extern const u8 gUnk_087487E8[];
 extern const u8 gUnk_08748804[];
 extern const u8 gUnk_0874883C[];
@@ -304,11 +170,6 @@ extern const u8 gUnk_087488C8[];
 extern const u8 gUnk_08748900[];
 extern const u8 gUnk_08748908[];
 extern const u8 gUnk_08748910[];
-extern const u8 gUnk_08748930[];
-extern const u8 gUnk_0874894C[];
-extern const u8 gUnk_08748968[];
-extern const u8 gUnk_08748980[];
-extern const u8 gUnk_08748998[];
 extern const u8 gUnk_08748BB8[];
 extern const u8 gUnk_08748BF0[];
 extern const u8 gUnk_08748C60[];
@@ -320,9 +181,6 @@ extern const u8 gUnk_08748CD8[];
 extern const u8 gUnk_08748CE0[];
 extern const u8 gUnk_08748CE8[];
 extern const u8 gUnk_08748CF0[];
-extern const u8 gUnk_08748CF8[];
-extern const u8 gUnk_08748D10[];
-extern const u8 gUnk_08748D1C[];
 extern const u8 gUnk_08749598[];
 extern const u8 gUnk_08749608[];
 extern const u8 gUnk_087496E8[];
@@ -332,52 +190,196 @@ extern const u8 gUnk_08749870[];
 extern const u8 gUnk_0874988C[];
 extern const u8 gUnk_08749AD8[];
 extern const u8 gUnk_08749AE0[];
-extern const u8 gUnk_08749B08[];
-extern const u8 gUnk_08749B24[];
-extern const u8 gUnk_08749B3C[];
-extern const u8 gUnk_08749B54[];
 extern const u8 gUnk_08749C70[];
 extern const u8 gUnk_08749C8C[];
 extern const u8 gUnk_08749CA8[];
 extern const u8 gUnk_08749CC4[];
 extern const u8 gUnk_08749CCC[];
-extern const u8 gUnk_08749CD4[];
-extern const u8 gUnk_08749CE0[];
 extern const u8 gUnk_0874B38C[];
 extern const u8 gUnk_0874B3C4[];
 extern const u8 gUnk_0874B3E0[];
 extern const u8 gUnk_0874B418[];
 extern const u8 gUnk_0874B434[];
 extern const u8 gUnk_0874B4C0[];
-extern const u8 gUnk_0874B4E0[];
-extern const u8 gUnk_0874B4F8[];
-extern const u8 gUnk_0874B510[];
 extern const u8 gUnk_0874BB7C[];
 extern const u8 gUnk_0874BBB4[];
 extern const u8 gUnk_0874BF34[];
 extern const u8 gUnk_0874BF50[];
-extern const u8 gUnk_0874BF58[];
-extern const u8 gUnk_0874BF74[];
-extern const u8 gUnk_0874BF80[];
-extern const u8 gUnk_0874BF8C[];
-extern const u8 gUnk_0874BF98[];
-extern const u8 gUnk_0874BFA4[];
-extern const u8 gUnk_0874BFB0[];
-extern const u8 gUnk_0874BFBC[];
-extern const u8 gUnk_0874BFC8[];
-extern const u8 gUnk_0874BFE0[];
-extern const u8 gUnk_0874BFEC[];
 extern const u8 gUnk_0874C184[];
 extern const u8 gUnk_0874C1BC[];
 extern const u8 gUnk_0874C1F4[];
-extern const u8 gUnk_0874C204[];
 extern const u8 gUnk_0874C3D0[];
 extern const u8 gUnk_0874C3EC[];
 extern const u8 gUnk_0874C408[];
 extern const u8 gUnk_0874C410[];
-extern const u8 gUnk_0874C418[];
-extern const u8 gUnk_0874C434[];
-extern const u8 gUnk_0874C440[];
+
+/* Actor.terrainHandlers and Actor.hitReactions targets: src/data/actor_handlers.c. */
+extern struct ActorHandlers gUnk_0873F5FC;
+extern struct ActorHandlers gUnk_0873F618;
+extern struct ActorHandlers gUnk_08740E54;
+extern struct ActorHandlers gUnk_08740E70;
+extern struct ActorHandlers gUnk_08740E8C;
+extern struct ActorHandlers gUnk_08740EA8;
+extern struct ActorHandlers gUnk_08740EC4;
+extern struct ActorHandlers gUnk_08740EE0;
+extern struct ActorHandlers gUnk_08741B64;
+extern struct ActorHandlers gUnk_08741B80;
+extern struct ActorHandlers gUnk_08741B9C;
+extern struct ActorHandlers gUnk_08741BB8;
+extern struct ActorHandlers gUnk_08741BD4;
+extern struct ActorHandlers gUnk_08741BF0;
+extern struct ActorHandlers gUnk_08741C0C;
+extern struct ActorHandlers gUnk_08741C28;
+extern struct ActorHandlers gUnk_08741C44;
+extern struct ActorHandlers gUnk_08741C60;
+extern struct ActorHandlers gUnk_08741C7C;
+extern struct ActorHandlers gUnk_08742CF0;
+extern struct ActorHandlers gUnk_08742D0C;
+extern struct ActorHandlers gUnk_08742D28;
+extern struct ActorHandlers gUnk_08742D44;
+extern struct ActorHandlers gUnk_08742D60;
+extern struct ActorHandlers gUnk_08742D7C;
+extern struct ActorHandlers gUnk_08742D98;
+extern struct ActorHandlers gUnk_08742DB4;
+extern struct ActorHandlers gUnk_08742DD0;
+extern struct ActorHandlers gUnk_08742DEC;
+extern struct ActorHandlers gUnk_087430EC;
+extern struct ActorHandlers gUnk_08743108;
+extern struct ActorHandlers gUnk_087434C4;
+extern struct ActorHandlers gUnk_087434E0;
+extern struct ActorHandlers gUnk_087434FC;
+extern struct ActorHandlers gUnk_08743518;
+extern struct ActorHandlers gUnk_087436E4;
+extern struct ActorHandlers gUnk_08743700;
+extern struct ActorHandlers gUnk_0874407C;
+extern struct ActorHandlers gUnk_08744098;
+extern struct ActorHandlers gUnk_087440B4;
+extern struct ActorHandlers gUnk_087442C8;
+extern struct ActorHandlers gUnk_087442E4;
+extern struct ActorHandlers gUnk_087453BC;
+extern struct ActorHandlers gUnk_087453D8;
+extern struct ActorHandlers gUnk_087453F4;
+extern struct ActorHandlers gUnk_087455C8;
+extern struct ActorHandlers gUnk_087455E4;
+extern struct ActorHandlers gUnk_08745A3C;
+extern struct ActorHandlers gUnk_08745A58;
+extern struct ActorHandlers gUnk_08745C90;
+extern struct ActorHandlers gUnk_08745CAC;
+extern struct ActorHandlers gUnk_087481A0;
+extern struct ActorHandlers gUnk_087481BC;
+extern struct ActorHandlers gUnk_087481D8;
+extern struct ActorHandlers gUnk_087481F4;
+extern struct ActorHandlers gUnk_08748930;
+extern struct ActorHandlers gUnk_0874894C;
+extern struct ActorHandlers gUnk_08749B08;
+extern struct ActorHandlers gUnk_0874BF58;
+extern struct ActorHandlers gUnk_0874C418;
+extern struct ActorVt gUnk_0873F634;
+extern struct ActorVt gUnk_0873F640;
+extern struct ActorVt gUnk_0873F64C;
+extern struct ActorVt gUnk_0873F658;
+extern struct ActorVt gUnk_0873F944;
+extern struct ActorVt gUnk_08740EFC;
+extern struct ActorVt gUnk_08740F08;
+extern struct ActorVt gUnk_08740F14;
+extern struct ActorVt gUnk_08740F20;
+extern struct ActorVt gUnk_08740F38;
+extern struct ActorVt gUnk_08740F44;
+extern struct ActorVt gUnk_08740F68;
+extern struct ActorVt gUnk_08740F74;
+extern struct ActorVt gUnk_08740F80;
+extern struct ActorVt gUnk_08740F8C;
+extern struct ActorVt gUnk_08740F98;
+extern struct ActorVt gUnk_087411B4;
+extern struct ActorVt gUnk_08741C98;
+extern struct ActorVt gUnk_08741CA4;
+extern struct ActorVt gUnk_08741CB0;
+extern struct ActorVt gUnk_08741CBC;
+extern struct ActorVt gUnk_08741CC8;
+extern struct ActorVt gUnk_08741CD4;
+extern struct ActorVt gUnk_08741CEC;
+extern struct ActorVt gUnk_08741CF8;
+extern struct ActorVt gUnk_08741D04;
+extern struct ActorVt gUnk_08741D10;
+extern struct ActorVt gUnk_08741D1C;
+extern struct ActorVt gUnk_08741D28;
+extern struct ActorVt gUnk_08741D34;
+extern struct ActorVt gUnk_08741D40;
+extern struct ActorVt gUnk_08741D4C;
+extern struct ActorVt gUnk_08741D58;
+extern struct ActorVt gUnk_08741F4C;
+extern struct ActorVt gUnk_08741F58;
+extern struct ActorVt gUnk_08742E08;
+extern struct ActorVt gUnk_08742E14;
+extern struct ActorVt gUnk_08742E20;
+extern struct ActorVt gUnk_08742E2C;
+extern struct ActorVt gUnk_08742E38;
+extern struct ActorVt gUnk_08742E44;
+extern struct ActorVt gUnk_08742E50;
+extern struct ActorVt gUnk_08742E68;
+extern struct ActorVt gUnk_08742E74;
+extern struct ActorVt gUnk_08742E80;
+extern struct ActorVt gUnk_08742E8C;
+extern struct ActorVt gUnk_08742E98;
+extern struct ActorVt gUnk_08743124;
+extern struct ActorVt gUnk_08743130;
+extern struct ActorVt gUnk_08743534;
+extern struct ActorVt gUnk_08743540;
+extern struct ActorVt gUnk_0874354C;
+extern struct ActorVt gUnk_08743564;
+extern struct ActorVt gUnk_08743570;
+extern struct ActorVt gUnk_0874357C;
+extern struct ActorVt gUnk_0874371C;
+extern struct ActorVt gUnk_08743728;
+extern struct ActorVt gUnk_087440D0;
+extern struct ActorVt gUnk_087440E8;
+extern struct ActorVt gUnk_08744100;
+extern struct ActorVt gUnk_08744300;
+extern struct ActorVt gUnk_08744318;
+extern struct ActorVt gUnk_08744330;
+extern struct ActorVt gUnk_08745410;
+extern struct ActorVt gUnk_08745428;
+extern struct ActorVt gUnk_08745440;
+extern struct ActorVt gUnk_08745600;
+extern struct ActorVt gUnk_0874560C;
+extern struct ActorVt gUnk_08745A74;
+extern struct ActorVt gUnk_08745A8C;
+extern struct ActorVt gUnk_08745CC8;
+extern struct ActorVt gUnk_08745CE0;
+extern struct ActorVt gUnk_08748210;
+extern struct ActorVt gUnk_0874821C;
+extern struct ActorVt gUnk_08748228;
+extern struct ActorVt gUnk_08748234;
+extern struct ActorVt gUnk_08748240;
+extern struct ActorVt gUnk_0874824C;
+extern struct ActorVt gUnk_08748258;
+extern struct ActorVt gUnk_08748968;
+extern struct ActorVt gUnk_08748980;
+extern struct ActorVt gUnk_08748998;
+extern struct ActorVt gUnk_08748CF8;
+extern struct ActorVt gUnk_08748D10;
+extern struct ActorVt gUnk_08748D1C;
+extern struct ActorVt gUnk_08749B24;
+extern struct ActorVt gUnk_08749B3C;
+extern struct ActorVt gUnk_08749B54;
+extern struct ActorVt gUnk_08749CD4;
+extern struct ActorVt gUnk_08749CE0;
+extern struct ActorVt gUnk_0874B4E0;
+extern struct ActorVt gUnk_0874B4F8;
+extern struct ActorVt gUnk_0874B510;
+extern struct ActorVt gUnk_0874BF74;
+extern struct ActorVt gUnk_0874BF80;
+extern struct ActorVt gUnk_0874BF8C;
+extern struct ActorVt gUnk_0874BF98;
+extern struct ActorVt gUnk_0874BFA4;
+extern struct ActorVt gUnk_0874BFB0;
+extern struct ActorVt gUnk_0874BFBC;
+extern struct ActorVt gUnk_0874BFC8;
+extern struct ActorVt gUnk_0874BFE0;
+extern struct ActorVt gUnk_0874BFEC;
+extern struct ActorVt gUnk_0874C204;
+extern struct ActorVt gUnk_0874C434;
+extern struct ActorVt gUnk_0874C440;
 
 /* ActorAux records defined further down. */
 extern struct ActorAux gUnk_0873F8EC;
@@ -412,8 +414,8 @@ struct ActorDef gAbilityStarDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4C8,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_0873F5FC,
-    .hitReactions = (u32)gUnk_0873F634,
+    .terrainHandlers = (u32)&gUnk_0873F5FC,
+    .hitReactions = (u32)&gUnk_0873F634,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -429,8 +431,8 @@ struct ActorDef gOneUpDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)gUnk_0873F618,
-    .hitReactions = (u32)gUnk_0873F640,
+    .terrainHandlers = (u32)&gUnk_0873F618,
+    .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -446,8 +448,8 @@ struct ActorDef gMaximTomatoDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)gUnk_0873F618,
-    .hitReactions = (u32)gUnk_0873F640,
+    .terrainHandlers = (u32)&gUnk_0873F618,
+    .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -463,8 +465,8 @@ struct ActorDef gInvincibleCandyDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)gUnk_0873F618,
-    .hitReactions = (u32)gUnk_0873F640,
+    .terrainHandlers = (u32)&gUnk_0873F618,
+    .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -480,8 +482,8 @@ struct ActorDef gEnergyDrinkDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)gUnk_0873F618,
-    .hitReactions = (u32)gUnk_0873F640,
+    .terrainHandlers = (u32)&gUnk_0873F618,
+    .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -498,7 +500,7 @@ struct ActorDef gUnk_0873F394 ACTOR_REC(0873f2b8) = {
     .attackBox = (u32)gUnk_0873F51C,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0873F64C,
+    .hitReactions = (u32)&gUnk_0873F64C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -566,7 +568,7 @@ struct ActorDef gBigSwitchDef ACTOR_REC(0873f2b8) = {
     .attackBox = (u32)gUnk_0873F5A8,
     .terrainBox = (s32)gUnk_0873F5F4,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_0873F658,
+    .hitReactions = (u32)&gUnk_0873F658,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -619,7 +621,7 @@ struct ActorDef gInhalableStarDef ACTOR_REC(0873f664) = {
     .attackBox = (u32)gUnk_0873F7C8,
     .terrainBox = (s32)gUnk_0873F8E4,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0873F944,
+    .hitReactions = (u32)&gUnk_0873F944,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -636,7 +638,7 @@ struct ActorDef gUnk_0873F690 ACTOR_REC(0873f664) = {
     .attackBox = (u32)gUnk_0873F7C8,
     .terrainBox = (s32)gUnk_0873F8E4,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0873F944,
+    .hitReactions = (u32)&gUnk_0873F944,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -678,8 +680,8 @@ struct ActorDef gWaddleDeeDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)gUnk_08740E54,
-    .hitReactions = (u32)gUnk_08740EFC,
+    .terrainHandlers = (u32)&gUnk_08740E54,
+    .hitReactions = (u32)&gUnk_08740EFC,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -695,8 +697,8 @@ struct ActorDef gParasolWaddleDeeDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F73C,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)gUnk_08740E54,
-    .hitReactions = (u32)gUnk_08740F08,
+    .terrainHandlers = (u32)&gUnk_08740E54,
+    .hitReactions = (u32)&gUnk_08740F08,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -712,8 +714,8 @@ struct ActorDef gPengyDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F89C,
-    .terrainHandlers = (u32)gUnk_08740E70,
-    .hitReactions = (u32)gUnk_08740F14,
+    .terrainHandlers = (u32)&gUnk_08740E70,
+    .hitReactions = (u32)&gUnk_08740F14,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -729,8 +731,8 @@ struct ActorDef gBomberDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F89C,
-    .terrainHandlers = (u32)gUnk_08740E8C,
-    .hitReactions = (u32)gUnk_08740F20,
+    .terrainHandlers = (u32)&gUnk_08740E8C,
+    .hitReactions = (u32)&gUnk_08740F20,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -746,8 +748,8 @@ struct ActorDef gSparkyDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F774,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08740EA8,
-    .hitReactions = (u32)gUnk_08740F38,
+    .terrainHandlers = (u32)&gUnk_08740EA8,
+    .hitReactions = (u32)&gUnk_08740F38,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_08079e70,
 };
@@ -764,7 +766,7 @@ struct ActorDef gScarfyDef ACTOR_REC(08740bd4) = {
     .attackBox = (u32)gUnk_08740E00,
     .terrainBox = (s32)gUnk_0873F894,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08740F44,
+    .hitReactions = (u32)&gUnk_08740F44,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -780,8 +782,8 @@ struct ActorDef gSwordKnightDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08740EC4,
-    .hitReactions = (u32)gUnk_08740F68,
+    .terrainHandlers = (u32)&gUnk_08740EC4,
+    .hitReactions = (u32)&gUnk_08740F68,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -797,8 +799,8 @@ struct ActorDef gBladeKnightDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08740EC4,
-    .hitReactions = (u32)gUnk_08740F68,
+    .terrainHandlers = (u32)&gUnk_08740EC4,
+    .hitReactions = (u32)&gUnk_08740F68,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -815,7 +817,7 @@ struct ActorDef gBlockStarDef ACTOR_REC(08740bd4) = {
     .attackBox = (u32)gUnk_0873F7AC,
     .terrainBox = (s32)gUnk_0873F894,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08740F74,
+    .hitReactions = (u32)&gUnk_08740F74,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -831,8 +833,8 @@ struct ActorDef gNeedlousDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08740EE0,
-    .hitReactions = (u32)gUnk_08740F80,
+    .terrainHandlers = (u32)&gUnk_08740EE0,
+    .hitReactions = (u32)&gUnk_08740F80,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -849,7 +851,7 @@ struct ActorDef gUFODef ACTOR_REC(08740bd4) = {
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08740F8C,
+    .hitReactions = (u32)&gUnk_08740F8C,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_0807c484,
 };
@@ -866,7 +868,7 @@ struct ActorDef gParasolDef ACTOR_REC(08740bd4) = {
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08740F98,
+    .hitReactions = (u32)&gUnk_08740F98,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -902,7 +904,7 @@ struct ActorDef gUFOLaserDef ACTOR_REC(087410e4) = {
     .attackBox = (u32)gUnk_08741190,
     .terrainBox = (s32)gUnk_087411AC,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_087411B4,
+    .hitReactions = (u32)&gUnk_087411B4,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -920,8 +922,8 @@ struct ActorDef gRockyDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B14,
-    .terrainHandlers = (u32)gUnk_08741B64,
-    .hitReactions = (u32)gUnk_08741C98,
+    .terrainHandlers = (u32)&gUnk_08741B64,
+    .hitReactions = (u32)&gUnk_08741C98,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -937,8 +939,8 @@ struct ActorDef gSirKibbleDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B1C,
-    .terrainHandlers = (u32)gUnk_08741B80,
-    .hitReactions = (u32)gUnk_08741CA4,
+    .terrainHandlers = (u32)&gUnk_08741B80,
+    .hitReactions = (u32)&gUnk_08741CA4,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -954,8 +956,8 @@ struct ActorDef gCappyDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B24,
-    .terrainHandlers = (u32)gUnk_08741B9C,
-    .hitReactions = (u32)gUnk_08741CB0,
+    .terrainHandlers = (u32)&gUnk_08741B9C,
+    .hitReactions = (u32)&gUnk_08741CB0,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -971,8 +973,8 @@ struct ActorDef gUnk_0874183C ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B24,
-    .terrainHandlers = (u32)gUnk_08741B9C,
-    .hitReactions = (u32)gUnk_08741CBC,
+    .terrainHandlers = (u32)&gUnk_08741B9C,
+    .hitReactions = (u32)&gUnk_08741CBC,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1006,7 +1008,7 @@ struct ActorDef gCoolSpookDef ACTOR_REC(087417b8) = {
     .attackBox = (u32)gUnk_08741AC0,
     .terrainBox = (s32)gUnk_08741B34,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08741CC8,
+    .hitReactions = (u32)&gUnk_08741CC8,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_0807efec,
 };
@@ -1022,8 +1024,8 @@ struct ActorDef gKabuDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08741BB8,
-    .hitReactions = (u32)gUnk_08741CD4,
+    .terrainHandlers = (u32)&gUnk_08741BB8,
+    .hitReactions = (u32)&gUnk_08741CD4,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1039,8 +1041,8 @@ struct ActorDef gTwisterDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08741BD4,
-    .hitReactions = (u32)gUnk_08741CEC,
+    .terrainHandlers = (u32)&gUnk_08741BD4,
+    .hitReactions = (u32)&gUnk_08741CEC,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1056,8 +1058,8 @@ struct ActorDef gStarmanDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B3C,
-    .terrainHandlers = (u32)gUnk_08741BF0,
-    .hitReactions = (u32)gUnk_08741CF8,
+    .terrainHandlers = (u32)&gUnk_08741BF0,
+    .hitReactions = (u32)&gUnk_08741CF8,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1073,8 +1075,8 @@ struct ActorDef gHotHeadDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B4C,
-    .terrainHandlers = (u32)gUnk_08741C0C,
-    .hitReactions = (u32)gUnk_08741D04,
+    .terrainHandlers = (u32)&gUnk_08741C0C,
+    .hitReactions = (u32)&gUnk_08741D04,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1090,8 +1092,8 @@ struct ActorDef gPoppyBrosJrDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08741C28,
-    .hitReactions = (u32)gUnk_08741D10,
+    .terrainHandlers = (u32)&gUnk_08741C28,
+    .hitReactions = (u32)&gUnk_08741D10,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1107,8 +1109,8 @@ struct ActorDef gPoppyBrosJrOnAppleDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08741AF8,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08741C44,
-    .hitReactions = (u32)gUnk_08741D1C,
+    .terrainHandlers = (u32)&gUnk_08741C44,
+    .hitReactions = (u32)&gUnk_08741D1C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1124,8 +1126,8 @@ struct ActorDef gPoppyBrosJrOnMaximTomatoDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08741AF8,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08741C44,
-    .hitReactions = (u32)gUnk_08741D28,
+    .terrainHandlers = (u32)&gUnk_08741C44,
+    .hitReactions = (u32)&gUnk_08741D28,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1141,8 +1143,8 @@ struct ActorDef gPoppyBrosJrAppleDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08741C44,
-    .hitReactions = (u32)gUnk_08741D34,
+    .terrainHandlers = (u32)&gUnk_08741C44,
+    .hitReactions = (u32)&gUnk_08741D34,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1158,8 +1160,8 @@ struct ActorDef gPoppyBrosJrMaximTomatoDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08741C44,
-    .hitReactions = (u32)gUnk_08741D40,
+    .terrainHandlers = (u32)&gUnk_08741C44,
+    .hitReactions = (u32)&gUnk_08741D40,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1175,8 +1177,8 @@ struct ActorDef gWheelieDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B54,
-    .terrainHandlers = (u32)gUnk_08741C60,
-    .hitReactions = (u32)gUnk_08741D4C,
+    .terrainHandlers = (u32)&gUnk_08741C60,
+    .hitReactions = (u32)&gUnk_08741D4C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1192,8 +1194,8 @@ struct ActorDef gFlamerDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B5C,
-    .terrainHandlers = (u32)gUnk_08741C7C,
-    .hitReactions = (u32)gUnk_08741D58,
+    .terrainHandlers = (u32)&gUnk_08741C7C,
+    .hitReactions = (u32)&gUnk_08741D58,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1212,7 +1214,7 @@ struct ActorDef gSirKibbleCutterDef ACTOR_REC(08741eb4) = {
     .attackBox = (u32)gUnk_08741F0C,
     .terrainBox = (s32)gUnk_0873F894,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08741F4C,
+    .hitReactions = (u32)&gUnk_08741F4C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1229,7 +1231,7 @@ struct ActorDef gHotHeadFireDef ACTOR_REC(08741eb4) = {
     .attackBox = (u32)gUnk_08741F28,
     .terrainBox = (s32)gUnk_08741F44,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08741F58,
+    .hitReactions = (u32)&gUnk_08741F58,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1247,8 +1249,8 @@ struct ActorDef gNoddyDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F89C,
-    .terrainHandlers = (u32)gUnk_08742CF0,
-    .hitReactions = (u32)gUnk_08742E08,
+    .terrainHandlers = (u32)&gUnk_08742CF0,
+    .hitReactions = (u32)&gUnk_08742E08,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1264,8 +1266,8 @@ struct ActorDef gChillyDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08742BF8,
     .terrainBox = (s32)gUnk_08742CD8,
-    .terrainHandlers = (u32)gUnk_08742D0C,
-    .hitReactions = (u32)gUnk_08742E14,
+    .terrainHandlers = (u32)&gUnk_08742D0C,
+    .hitReactions = (u32)&gUnk_08742E14,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1281,8 +1283,8 @@ struct ActorDef gWaddleDooDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)gUnk_08742D28,
-    .hitReactions = (u32)gUnk_08742E20,
+    .terrainHandlers = (u32)&gUnk_08742D28,
+    .hitReactions = (u32)&gUnk_08742E20,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1298,8 +1300,8 @@ struct ActorDef gParasolWaddleDooDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F73C,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)gUnk_08742D28,
-    .hitReactions = (u32)gUnk_08742E2C,
+    .terrainHandlers = (u32)&gUnk_08742D28,
+    .hitReactions = (u32)&gUnk_08742E2C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1316,7 +1318,7 @@ struct ActorDef gBrontoBurtDef ACTOR_REC(087429e8) = {
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F89C,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08742E38,
+    .hitReactions = (u32)&gUnk_08742E38,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1332,8 +1334,8 @@ struct ActorDef gTwizzyDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08742D44,
-    .hitReactions = (u32)gUnk_08742E44,
+    .terrainHandlers = (u32)&gUnk_08742D44,
+    .hitReactions = (u32)&gUnk_08742E44,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1349,8 +1351,8 @@ struct ActorDef gSquishyDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)gUnk_08742D60,
-    .hitReactions = (u32)gUnk_08742E50,
+    .terrainHandlers = (u32)&gUnk_08742D60,
+    .hitReactions = (u32)&gUnk_08742E50,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1366,8 +1368,8 @@ struct ActorDef gBubblesDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08742C14,
     .terrainBox = (s32)gUnk_08742CE0,
-    .terrainHandlers = (u32)gUnk_08742D7C,
-    .hitReactions = (u32)gUnk_08742E68,
+    .terrainHandlers = (u32)&gUnk_08742D7C,
+    .hitReactions = (u32)&gUnk_08742E68,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1383,8 +1385,8 @@ struct ActorDef gGlunkDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08742D98,
-    .hitReactions = (u32)gUnk_08742E74,
+    .terrainHandlers = (u32)&gUnk_08742D98,
+    .hitReactions = (u32)&gUnk_08742E74,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1400,8 +1402,8 @@ struct ActorDef gSlippyDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_08742DB4,
-    .hitReactions = (u32)gUnk_08742E80,
+    .terrainHandlers = (u32)&gUnk_08742DB4,
+    .hitReactions = (u32)&gUnk_08742E80,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1417,8 +1419,8 @@ struct ActorDef gBlipperDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F89C,
-    .terrainHandlers = (u32)gUnk_08742DD0,
-    .hitReactions = (u32)gUnk_08742E8C,
+    .terrainHandlers = (u32)&gUnk_08742DD0,
+    .hitReactions = (u32)&gUnk_08742E8C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1434,8 +1436,8 @@ struct ActorDef gGipDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08742CE8,
-    .terrainHandlers = (u32)gUnk_08742DEC,
-    .hitReactions = (u32)gUnk_08742E98,
+    .terrainHandlers = (u32)&gUnk_08742DEC,
+    .hitReactions = (u32)&gUnk_08742E98,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1470,7 +1472,7 @@ struct ActorDef gWaddleDooBeamDef ACTOR_REC(08742fbc) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08743088,
     .terrainBox = (s32)gUnk_087430DC,
-    .terrainHandlers = (u32)gUnk_087430EC,
+    .terrainHandlers = (u32)&gUnk_087430EC,
     .hitReactions = 0,
     .initCallback = NULL,
     .teardown = NULL,
@@ -1487,8 +1489,8 @@ struct ActorDef gGlunkShotDef ACTOR_REC(08742fbc) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_087430A4,
     .terrainBox = (s32)gUnk_087430E4,
-    .terrainHandlers = (u32)gUnk_08743108,
-    .hitReactions = (u32)gUnk_08743124,
+    .terrainHandlers = (u32)&gUnk_08743108,
+    .hitReactions = (u32)&gUnk_08743124,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1505,7 +1507,7 @@ struct ActorDef gGipStarDef ACTOR_REC(08742fbc) = {
     .attackBox = (u32)gUnk_087430C0,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08743130,
+    .hitReactions = (u32)&gUnk_08743130,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1523,8 +1525,8 @@ struct ActorDef gBroomHatterDef ACTOR_REC(0874330c) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_087434C4,
-    .hitReactions = (u32)gUnk_08743534,
+    .terrainHandlers = (u32)&gUnk_087434C4,
+    .hitReactions = (u32)&gUnk_08743534,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1541,7 +1543,7 @@ struct ActorDef gLaserBallDef ACTOR_REC(0874330c) = {
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08743540,
+    .hitReactions = (u32)&gUnk_08743540,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_0808e054,
 };
@@ -1557,8 +1559,8 @@ struct ActorDef gCoconutDef ACTOR_REC(0874330c) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_087434E0,
-    .hitReactions = (u32)gUnk_0874354C,
+    .terrainHandlers = (u32)&gUnk_087434E0,
+    .hitReactions = (u32)&gUnk_0874354C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1574,8 +1576,8 @@ struct ActorDef gShotzoDef ACTOR_REC(0874330c) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08743470,
     .terrainBox = (s32)gUnk_08743414,
-    .terrainHandlers = (u32)gUnk_087434FC,
-    .hitReactions = (u32)gUnk_08743564,
+    .terrainHandlers = (u32)&gUnk_087434FC,
+    .hitReactions = (u32)&gUnk_08743564,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1591,8 +1593,8 @@ struct ActorDef gConerDef ACTOR_REC(0874330c) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F89C,
-    .terrainHandlers = (u32)gUnk_08743518,
-    .hitReactions = (u32)gUnk_08743570,
+    .terrainHandlers = (u32)&gUnk_08743518,
+    .hitReactions = (u32)&gUnk_08743570,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1608,8 +1610,8 @@ struct ActorDef gParasolShotzoDef ACTOR_REC(0874330c) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0874348C,
     .terrainBox = (s32)gUnk_08743414,
-    .terrainHandlers = (u32)gUnk_087434FC,
-    .hitReactions = (u32)gUnk_0874357C,
+    .terrainHandlers = (u32)&gUnk_087434FC,
+    .hitReactions = (u32)&gUnk_0874357C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1627,8 +1629,8 @@ struct ActorDef gLaserBallLaserDef ACTOR_REC(08743644) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0874369C,
     .terrainBox = (s32)gUnk_087436D4,
-    .terrainHandlers = (u32)gUnk_087436E4,
-    .hitReactions = (u32)gUnk_0874371C,
+    .terrainHandlers = (u32)&gUnk_087436E4,
+    .hitReactions = (u32)&gUnk_0874371C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1644,8 +1646,8 @@ struct ActorDef gShotzoCannonballDef ACTOR_REC(08743644) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_087436B8,
     .terrainBox = (s32)gUnk_087436DC,
-    .terrainHandlers = (u32)gUnk_08743700,
-    .hitReactions = (u32)gUnk_08743728,
+    .terrainHandlers = (u32)&gUnk_08743700,
+    .hitReactions = (u32)&gUnk_08743728,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1663,8 +1665,8 @@ struct ActorDef gBonkersDef ACTOR_REC(08743b4c) = {
     .unk10 = &gUnk_0874402C,
     .attackBox = (u32)gUnk_08743BD0,
     .terrainBox = (s32)gUnk_08744014,
-    .terrainHandlers = (u32)gUnk_0874407C,
-    .hitReactions = (u32)gUnk_087440D0,
+    .terrainHandlers = (u32)&gUnk_0874407C,
+    .hitReactions = (u32)&gUnk_087440D0,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1680,8 +1682,8 @@ struct ActorDef gPoppyBrosSrDef ACTOR_REC(08743b4c) = {
     .unk10 = &gUnk_08744054,
     .attackBox = (u32)gUnk_08743DE4,
     .terrainBox = (s32)gUnk_0874401C,
-    .terrainHandlers = (u32)gUnk_08744098,
-    .hitReactions = (u32)gUnk_087440E8,
+    .terrainHandlers = (u32)&gUnk_08744098,
+    .hitReactions = (u32)&gUnk_087440E8,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1697,8 +1699,8 @@ struct ActorDef gBugzzyDef ACTOR_REC(08743b4c) = {
     .unk10 = &gUnk_0874406C,
     .attackBox = (u32)gUnk_08743EFC,
     .terrainBox = (s32)gUnk_08744024,
-    .terrainHandlers = (u32)gUnk_087440B4,
-    .hitReactions = (u32)gUnk_08744100,
+    .terrainHandlers = (u32)&gUnk_087440B4,
+    .hitReactions = (u32)&gUnk_08744100,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1768,8 +1770,8 @@ struct ActorDef gBonkersNutDef ACTOR_REC(087441d8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874425C,
     .terrainBox = (s32)gUnk_087442B0,
-    .terrainHandlers = (u32)gUnk_087442C8,
-    .hitReactions = (u32)gUnk_08744300,
+    .terrainHandlers = (u32)&gUnk_087442C8,
+    .hitReactions = (u32)&gUnk_08744300,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1785,8 +1787,8 @@ struct ActorDef gPoppyBrosSrBombDef ACTOR_REC(087441d8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_08744278,
     .terrainBox = (s32)gUnk_087442B8,
-    .terrainHandlers = (u32)gUnk_087442E4,
-    .hitReactions = (u32)gUnk_08744318,
+    .terrainHandlers = (u32)&gUnk_087442E4,
+    .hitReactions = (u32)&gUnk_08744318,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1803,7 +1805,7 @@ struct ActorDef gBugzzyLadybugDef ACTOR_REC(087441d8) = {
     .attackBox = (u32)gUnk_08744294,
     .terrainBox = (s32)gUnk_087442C0,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08744330,
+    .hitReactions = (u32)&gUnk_08744330,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1821,8 +1823,8 @@ struct ActorDef gGrandWheelieDef ACTOR_REC(08744964) = {
     .unk10 = &gUnk_0874531C,
     .attackBox = (u32)gUnk_087449E8,
     .terrainBox = (s32)gUnk_087452FC,
-    .terrainHandlers = (u32)gUnk_087453BC,
-    .hitReactions = (u32)gUnk_08745410,
+    .terrainHandlers = (u32)&gUnk_087453BC,
+    .hitReactions = (u32)&gUnk_08745410,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1838,8 +1840,8 @@ struct ActorDef gFireLionDef ACTOR_REC(08744964) = {
     .unk10 = &gUnk_08745354,
     .attackBox = (u32)gUnk_08744CDC,
     .terrainBox = (s32)gUnk_08745304,
-    .terrainHandlers = (u32)gUnk_087453D8,
-    .hitReactions = (u32)gUnk_08745428,
+    .terrainHandlers = (u32)&gUnk_087453D8,
+    .hitReactions = (u32)&gUnk_08745428,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1855,8 +1857,8 @@ struct ActorDef gPhanPhanDef ACTOR_REC(08744964) = {
     .unk10 = &gUnk_087453B4,
     .attackBox = (u32)gUnk_0874521C,
     .terrainBox = (s32)gUnk_08745314,
-    .terrainHandlers = (u32)gUnk_087453F4,
-    .hitReactions = (u32)gUnk_08745440,
+    .terrainHandlers = (u32)&gUnk_087453F4,
+    .hitReactions = (u32)&gUnk_08745440,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1976,8 +1978,8 @@ struct ActorDef gGrandWheelieMiniWheelieDef ACTOR_REC(08745530) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_08745588,
     .terrainBox = (s32)gUnk_087455C0,
-    .terrainHandlers = (u32)gUnk_087455C8,
-    .hitReactions = (u32)gUnk_08745600,
+    .terrainHandlers = (u32)&gUnk_087455C8,
+    .hitReactions = (u32)&gUnk_08745600,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1993,8 +1995,8 @@ struct ActorDef gPhanPhanAppleDef ACTOR_REC(08745530) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_087455A4,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)gUnk_087455E4,
-    .hitReactions = (u32)gUnk_0874560C,
+    .terrainHandlers = (u32)&gUnk_087455E4,
+    .hitReactions = (u32)&gUnk_0874560C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2012,8 +2014,8 @@ struct ActorDef gMrFrostyDef ACTOR_REC(08745810) = {
     .unk10 = &gUnk_08745A2C,
     .attackBox = (u32)gUnk_08745868,
     .terrainBox = (s32)gUnk_08745A0C,
-    .terrainHandlers = (u32)gUnk_08745A3C,
-    .hitReactions = (u32)gUnk_08745A74,
+    .terrainHandlers = (u32)&gUnk_08745A3C,
+    .hitReactions = (u32)&gUnk_08745A74,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2029,8 +2031,8 @@ struct ActorDef gMrTickTockDef ACTOR_REC(08745810) = {
     .unk10 = &gUnk_08745A2C,
     .attackBox = (u32)gUnk_08745964,
     .terrainBox = (s32)gUnk_08745A1C,
-    .terrainHandlers = (u32)gUnk_08745A58,
-    .hitReactions = (u32)gUnk_08745A8C,
+    .terrainHandlers = (u32)&gUnk_08745A58,
+    .hitReactions = (u32)&gUnk_08745A8C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2055,8 +2057,8 @@ struct ActorDef gMrFrostyIceCubeDef ACTOR_REC(08745b30) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_08745BB4,
     .terrainBox = (s32)gUnk_08745C78,
-    .terrainHandlers = (u32)gUnk_08745C90,
-    .hitReactions = (u32)gUnk_08745CC8,
+    .terrainHandlers = (u32)&gUnk_08745C90,
+    .hitReactions = (u32)&gUnk_08745CC8,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2089,8 +2091,8 @@ struct ActorDef gMrTickTockNoteDef ACTOR_REC(08745b30) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_08745C5C,
     .terrainBox = (s32)gUnk_08745C88,
-    .terrainHandlers = (u32)gUnk_08745CAC,
-    .hitReactions = (u32)gUnk_08745CE0,
+    .terrainHandlers = (u32)&gUnk_08745CAC,
+    .hitReactions = (u32)&gUnk_08745CE0,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2193,8 +2195,8 @@ struct ActorDef gUnk_08747D5C ACTOR_REC(08747c80) = {
     .unk10 = &gUnk_08748198,
     .attackBox = (u32)gUnk_08747EBC,
     .terrainBox = (s32)gUnk_08748178,
-    .terrainHandlers = (u32)gUnk_087481A0,
-    .hitReactions = (u32)gUnk_08748210,
+    .terrainHandlers = (u32)&gUnk_087481A0,
+    .hitReactions = (u32)&gUnk_08748210,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_0809f808,
 };
@@ -2211,7 +2213,7 @@ struct ActorDef gAxeKnightAxeDef ACTOR_REC(08747c80) = {
     .attackBox = (u32)gUnk_08747F10,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874821C,
+    .hitReactions = (u32)&gUnk_0874821C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2227,8 +2229,8 @@ struct ActorDef gUnk_08747DB4 ACTOR_REC(08747c80) = {
     .unk10 = &gUnk_08748198,
     .attackBox = (u32)gUnk_08747EBC,
     .terrainBox = (s32)gUnk_08748180,
-    .terrainHandlers = (u32)gUnk_087481BC,
-    .hitReactions = (u32)gUnk_08748228,
+    .terrainHandlers = (u32)&gUnk_087481BC,
+    .hitReactions = (u32)&gUnk_08748228,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_0809f808,
 };
@@ -2261,8 +2263,8 @@ struct ActorDef gUnk_08747E0C ACTOR_REC(08747c80) = {
     .unk10 = &gUnk_08748198,
     .attackBox = (u32)gUnk_08747EBC,
     .terrainBox = (s32)gUnk_08748188,
-    .terrainHandlers = (u32)gUnk_087481D8,
-    .hitReactions = (u32)gUnk_08748234,
+    .terrainHandlers = (u32)&gUnk_087481D8,
+    .hitReactions = (u32)&gUnk_08748234,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_0809f808,
 };
@@ -2279,7 +2281,7 @@ struct ActorDef gTridentKnightTridentDef ACTOR_REC(08747c80) = {
     .attackBox = (u32)gUnk_08747F48,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08748240,
+    .hitReactions = (u32)&gUnk_08748240,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2295,8 +2297,8 @@ struct ActorDef gUnk_08747E64 ACTOR_REC(08747c80) = {
     .unk10 = &gUnk_08748198,
     .attackBox = (u32)gUnk_08747EBC,
     .terrainBox = (s32)gUnk_08748190,
-    .terrainHandlers = (u32)gUnk_087481F4,
-    .hitReactions = (u32)gUnk_0874824C,
+    .terrainHandlers = (u32)&gUnk_087481F4,
+    .hitReactions = (u32)&gUnk_0874824C,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_0809f808,
 };
@@ -2313,7 +2315,7 @@ struct ActorDef gJavelinKnightJavelinDef ACTOR_REC(08747c80) = {
     .attackBox = (u32)gUnk_08747F64,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08748258,
+    .hitReactions = (u32)&gUnk_08748258,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2338,8 +2340,8 @@ struct ActorDef gKingDededeDef ACTOR_REC(08748764) = {
     .unk10 = &gUnk_08748918,
     .attackBox = (u32)gUnk_087487E8,
     .terrainBox = (s32)gUnk_08748900,
-    .terrainHandlers = (u32)gUnk_08748930,
-    .hitReactions = (u32)gUnk_08748968,
+    .terrainHandlers = (u32)&gUnk_08748930,
+    .hitReactions = (u32)&gUnk_08748968,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2355,8 +2357,8 @@ struct ActorDef gMrShineAndMrBrightDef ACTOR_REC(08748764) = {
     .unk10 = &gUnk_08748920,
     .attackBox = (u32)gUnk_0874883C,
     .terrainBox = (s32)gUnk_08748908,
-    .terrainHandlers = (u32)gUnk_0874894C,
-    .hitReactions = (u32)gUnk_08748980,
+    .terrainHandlers = (u32)&gUnk_0874894C,
+    .hitReactions = (u32)&gUnk_08748980,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2372,8 +2374,8 @@ struct ActorDef gUnk_087487BC ACTOR_REC(08748764) = {
     .unk10 = &gUnk_08748928,
     .attackBox = (u32)gUnk_087488AC,
     .terrainBox = (s32)gUnk_08748910,
-    .terrainHandlers = (u32)gUnk_0874894C,
-    .hitReactions = (u32)gUnk_08748998,
+    .terrainHandlers = (u32)&gUnk_0874894C,
+    .hitReactions = (u32)&gUnk_08748998,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2409,7 +2411,7 @@ struct ActorDef gKingDededeStarDef ACTOR_REC(08748ab0) = {
     .attackBox = (u32)gUnk_08748BB8,
     .terrainBox = (s32)gUnk_08748CD0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08748CF8,
+    .hitReactions = (u32)&gUnk_08748CF8,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2443,7 +2445,7 @@ struct ActorDef gUnk_08748B08 ACTOR_REC(08748ab0) = {
     .attackBox = (u32)gUnk_08748C60,
     .terrainBox = (s32)gUnk_08748CE0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08748D10,
+    .hitReactions = (u32)&gUnk_08748D10,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2460,7 +2462,7 @@ struct ActorDef gUnk_08748B34 ACTOR_REC(08748ab0) = {
     .attackBox = (u32)gUnk_08748C7C,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08748D10,
+    .hitReactions = (u32)&gUnk_08748D10,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2477,7 +2479,7 @@ struct ActorDef gUnk_08748B60 ACTOR_REC(08748ab0) = {
     .attackBox = (u32)gUnk_08748C98,
     .terrainBox = (s32)gUnk_08748CE8,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08748D1C,
+    .hitReactions = (u32)&gUnk_08748D1C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2494,7 +2496,7 @@ struct ActorDef gUnk_08748B8C ACTOR_REC(08748ab0) = {
     .attackBox = (u32)gUnk_08748CB4,
     .terrainBox = (s32)gUnk_08748CF0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_08748D1C,
+    .hitReactions = (u32)&gUnk_08748D1C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2512,8 +2514,8 @@ struct ActorDef gMetaKnightDef ACTOR_REC(08749514) = {
     .unk10 = &gUnk_08749AE8,
     .attackBox = (u32)gUnk_08749598,
     .terrainBox = (s32)gUnk_08749AD8,
-    .terrainHandlers = (u32)gUnk_08749B08,
-    .hitReactions = (u32)gUnk_08749B24,
+    .terrainHandlers = (u32)&gUnk_08749B08,
+    .hitReactions = (u32)&gUnk_08749B24,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2530,7 +2532,7 @@ struct ActorDef gKrackoDef ACTOR_REC(08749514) = {
     .attackBox = (u32)gUnk_087496E8,
     .terrainBox = (s32)gUnk_08749AE0,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08749B3C,
+    .hitReactions = (u32)&gUnk_08749B3C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2547,7 +2549,7 @@ struct ActorDef gNightmareWizardDef ACTOR_REC(08749514) = {
     .attackBox = (u32)gUnk_08749790,
     .terrainBox = 0,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08749B54,
+    .hitReactions = (u32)&gUnk_08749B54,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2605,7 +2607,7 @@ struct ActorDef gKrackoStarmanDef ACTOR_REC(08749bec) = {
     .attackBox = (u32)gUnk_08749C8C,
     .terrainBox = (s32)gUnk_08741B3C,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08749CD4,
+    .hitReactions = (u32)&gUnk_08749CD4,
     .initCallback = NULL,
     .teardown = (void (*)(void))sub_080acc8c,
 };
@@ -2622,7 +2624,7 @@ struct ActorDef gNightmareWizardStarDef ACTOR_REC(08749bec) = {
     .attackBox = (u32)gUnk_08749CA8,
     .terrainBox = (s32)gUnk_08749CCC,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_08749CE0,
+    .hitReactions = (u32)&gUnk_08749CE0,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2641,7 +2643,7 @@ struct ActorDef gPaintRollerDef ACTOR_REC(0874b2dc) = {
     .attackBox = (u32)gUnk_0874B38C,
     .terrainBox = (s32)gUnk_0874B4C0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874B4E0,
+    .hitReactions = (u32)&gUnk_0874B4E0,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2658,7 +2660,7 @@ struct ActorDef gHeavyMoleDef ACTOR_REC(0874b2dc) = {
     .attackBox = (u32)gUnk_0874B3E0,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874B4F8,
+    .hitReactions = (u32)&gUnk_0874B4F8,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2675,7 +2677,7 @@ struct ActorDef gNightmarePowerOrbDef ACTOR_REC(0874b2dc) = {
     .attackBox = (u32)gUnk_0874B434,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874B510,
+    .hitReactions = (u32)&gUnk_0874B510,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2739,8 +2741,8 @@ struct ActorDef gUnk_0874B96C ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)gUnk_0874BF58,
-    .hitReactions = (u32)gUnk_0874BF74,
+    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .hitReactions = (u32)&gUnk_0874BF74,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2756,8 +2758,8 @@ struct ActorDef gUnk_0874B998 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)gUnk_0874BF58,
-    .hitReactions = (u32)gUnk_0874BF80,
+    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .hitReactions = (u32)&gUnk_0874BF80,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2773,8 +2775,8 @@ struct ActorDef gUnk_0874B9C4 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)gUnk_0874BF58,
-    .hitReactions = (u32)gUnk_0874BF8C,
+    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .hitReactions = (u32)&gUnk_0874BF8C,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2790,8 +2792,8 @@ struct ActorDef gUnk_0874B9F0 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)gUnk_0874BF58,
-    .hitReactions = (u32)gUnk_0874BF98,
+    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .hitReactions = (u32)&gUnk_0874BF98,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2808,7 +2810,7 @@ struct ActorDef gUnk_0874BA1C ACTOR_REC(0874b940) = {
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874BFA4,
+    .hitReactions = (u32)&gUnk_0874BFA4,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2824,8 +2826,8 @@ struct ActorDef gUnk_0874BA48 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)gUnk_0874BF58,
-    .hitReactions = (u32)gUnk_0874BFB0,
+    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .hitReactions = (u32)&gUnk_0874BFB0,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2842,7 +2844,7 @@ struct ActorDef gUnk_0874BA74 ACTOR_REC(0874b940) = {
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874BFBC,
+    .hitReactions = (u32)&gUnk_0874BFBC,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2859,7 +2861,7 @@ struct ActorDef gUnk_0874BAA0 ACTOR_REC(0874b940) = {
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874BFC8,
+    .hitReactions = (u32)&gUnk_0874BFC8,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2875,7 +2877,7 @@ struct ActorDef gPaintRollerLightningDef ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BBB4,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)gUnk_0874BF58,
+    .terrainHandlers = (u32)&gUnk_0874BF58,
     .hitReactions = 0,
     .initCallback = NULL,
     .teardown = NULL,
@@ -2910,7 +2912,7 @@ struct ActorDef gHeavyMoleYellowMissileDef ACTOR_REC(0874b940) = {
     .attackBox = (u32)gUnk_0874BF34,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874BFE0,
+    .hitReactions = (u32)&gUnk_0874BFE0,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2927,7 +2929,7 @@ struct ActorDef gHeavyMoleRedMissileDef ACTOR_REC(0874b940) = {
     .attackBox = (u32)gUnk_0874BF34,
     .terrainBox = 0,
     .terrainHandlers = 0,
-    .hitReactions = (u32)gUnk_0874BFEC,
+    .hitReactions = (u32)&gUnk_0874BFEC,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2946,7 +2948,7 @@ struct ActorDef gWhispyWoodsDef ACTOR_REC(0874c158) = {
     .attackBox = (u32)gUnk_0874C184,
     .terrainBox = (s32)gUnk_0874C1F4,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_0874C204,
+    .hitReactions = (u32)&gUnk_0874C204,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2971,8 +2973,8 @@ struct ActorDef gWhispyWoodsAppleDef ACTOR_REC(0874c378) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874C3D0,
     .terrainBox = (s32)gUnk_0874C408,
-    .terrainHandlers = (u32)gUnk_0874C418,
-    .hitReactions = (u32)gUnk_0874C434,
+    .terrainHandlers = (u32)&gUnk_0874C418,
+    .hitReactions = (u32)&gUnk_0874C434,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -2989,7 +2991,7 @@ struct ActorDef gWhispyWoodsAirPuffDef ACTOR_REC(0874c378) = {
     .attackBox = (u32)gUnk_0874C3EC,
     .terrainBox = (s32)gUnk_0874C410,
     .terrainHandlers = (u32)gUnk_0873F8F4,
-    .hitReactions = (u32)gUnk_0874C440,
+    .hitReactions = (u32)&gUnk_0874C440,
     .initCallback = NULL,
     .teardown = NULL,
 };

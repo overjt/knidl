@@ -505,8 +505,12 @@ spells it `const` (the consumers compile to the same assembly).
 | the six `struct ActorDef *` tables | `0x0873ECEC-0x0873EEA0` | `src/data/actor_defs.c` | `sub_08063704` (`src/actor_63698.c`) binds a task to `table[Task.unk76]`, the table picked by `Task.actorKind`; lengths are the next-label spans (§5.1) |
 | `gRoomTable[9][8]` | `0x087E1D58-0x087E1E78` | `src/data/room_table.c` | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/level_23948.c`, `src/level_242d0.c`) |
 | the 57 stage room lists | `0x087E1F58-0x087E2570` | `src/data/room_lists.c` | the same loaders index them with `gRoomIndex`; each ends with a NULL |
-
 | the 136 `struct ActorDef` and 43 `struct ActorAux` records | 34 runs in `0x0873F2B8-0x0874C3D0` | `src/data/actor_records.c`, one input section per run | `ActorLoadDefSlot` and `sub_080637e4` (`src/actor_63698.c`) read an ActorDef when a task binds it; `Actor.unk60 = def->unk10`, whose `altAttackBox` becomes `gAttackBox` (`src/actor_673ec.c`) |
+| the 30 BG animation scripts and 14 palette fades (#167) | 40 runs in `room_bg_anims` | `src/data/bg_anim_scripts.c`, one input section per run | `UpdateBgAnims` runs a script's `struct Unk02007D70Cmd {op, arg, ptr}` commands up to its op-3 (loop) or op-4 (stop) terminator; op 1's fade (`struct Unk0802D278`, 16 bytes) is what `BgAnimStartPaletteFade` copies (`src/camera_2d01c.c`) |
+| the 12 script lists and `gRoomBgAnimScripts[14]` (#167) | `0x087E1E78-0x087E1F58` (the whole `room_bg_anim_lists`) | `src/data/room_bg_anim_lists.c` | `LoadRoomBgAnims` walks `gRoomBgAnimScripts[RoomDef.bgAnimSet]` up to its NULL |
+| the 343 frame tables (#167) | `0x0874C44C-0x0875607C` (the whole `frame_tables`) | `src/data/frame_tables.c`, one named section | `Task.frameTable[Task.frame]` (`TaskLoadFrameTiles`, `src/early_5acc.c`; the player's `PlayerLoadFrameTilesAndPalette`, `src/stage_3cd60.c`) or a frame `QueueSprite` stores (`src/early_1518.c`); each array's comment gives its extent proof |
+| the 333 `struct RoomDef` headers (#167) | 333 runs in `room_data` | `src/data/room_defs.c`, one input section per run | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/level_2296c.c`, `src/level_23948.c`, `src/level_242d0.c`); the camera, doors and blocks read the rest |
+| 500 behaviour tables of seg 18 (#167) | 147 runs in `game_rodata`, the `actor_rodata` zone and `late_game_rodata` | `src/data/game_tables.c`, `actor_tables.c`, `late_game_tables.c`, one input section per run | most are `CallTableEntry(index, count, table)` tables (`src/early_2b04.c`) whose count is the span; the rest are read by direct index or declared as function-pointer arrays |
 
 The ActorDef/ActorAux records (run 3) lie between other seg 18 tables,
 so one carve per run would give each run its own output section and
@@ -540,17 +544,40 @@ file instead:
 
 The records are not `const`: under `-Werror` the qualifier would reach
 `ActorLoadDef`'s parameter and `Actor.def`, and the section attribute is
-what places them in ROM.  The same design is the proposal for the BG
-animation scripts (30 scripts and 14 fades in `room_bg_anims`, none
-adjacent: about 88 sections one carve each, 0 grouped) and the 333
-RoomDef headers (each after its own maps in `room_data`: 666 sections one
-carve each, 0 grouped; with 666 rows, which argues for teaching
-`split.py` to write one data file with `.section` pieces per zone first).
+what places them in ROM.
 
-What the records point at stays where it is: the RoomDefs (`room_data`)
-are structure-only data, declared in `include/room.h`, and the maps and
-graphics behind them are assets; the behaviour tables, hit boxes and
-scripts between the ActorDef runs are structure-only data too.
+#167 used the same design for every family, on top of the zone files:
+
+| family | zone (one output section, one data file) | rows | C file |
+|---|---|---|---|
+| BG animation scripts and fades | `room_bg_anims` | 80 (40 runs, 40 pieces) | `src/data/bg_anim_scripts.c` |
+| RoomDef headers | `room_data` | 666 (333 runs, 333 pieces) | `src/data/room_defs.c` |
+| behaviour tables | `game_rodata` | 42 (21 runs, 21 pieces) | `src/data/game_tables.c` |
+| ActorDef records, behaviour tables | `actor_rodata` | 264 (34 + 103 runs, 127 pieces) | `src/data/actor_records.c`, `src/data/actor_tables.c` |
+| behaviour tables | `late_game_rodata` | 45 (23 runs, 22 pieces) | `src/data/late_game_tables.c` |
+| frame tables, script lists | `frame_tables`, `room_bg_anim_lists` | 1 each (a whole segment) | `src/data/frame_tables.c`, `src/data/room_bg_anim_lists.c` |
+
+`carve_data.py --runs <file> [--record-in-asset] --write` lands a family
+(one `start end row c_file section` line per run), `ldgroup.py` groups
+the zone, and `fnmatch.sh ... --rodata --section=.<row>` verifies each
+run.  Two of the zones are assets (`room_bg_anims`, `room_data`): only
+the functional records between the asset bytes became C, with
+`--record-in-asset`, and the reviewer checks that line (§1).  Every word
+kept its state: a symbol of the data file is the same symbol in C, a
+number stays a number, so `make shifttest` reads the same relocations
+(16,961 unrelocated after crt0 before and after).  `const` only where
+the declaration already had it (`gRoomBgAnimScripts` and its lists,
+`gSubGameInitHooks`): the scripts (`Unk02007D70.unk4`), the RoomDefs
+(`gCurRoomDef`), the frame tables (`Task.frameTable`) and the
+`CallTableEntry` tables (its `u32 *` parameter) would drop the qualifier
+under `-Werror`, and the section attribute places them in ROM.
+
+What the records point at stays where it is: the RoomDefs' metatile
+maps, block layers, block tables, door geometry and object lists are
+level layouts (assets) in `data/room_data.s`, the BG animations' tile
+frames and palettes are assets in `data/room_bg_anims.s`, and the
+sprite records, OAM streams and tiles behind the frame tables are in the
+sprite sheets; the C names them by their labels.
 
 ### 5.3 Format-only pointers (no consumer)
 

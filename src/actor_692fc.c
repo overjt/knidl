@@ -36,30 +36,6 @@ struct InputState
     /*0x05*/ u8 unk05;
 };
 
-/* Seven-entry handler table hanging off Actor.terrainHandlers; every entry is a
-   u8 (*)(void) that returns 1 when it consumed the frame. */
-struct ActorHandlers
-{
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ u32 unk0C;
-    /*0x10*/ u32 unk10;
-    /*0x14*/ u32 unk14;
-    /*0x18*/ u32 unk18;
-};
-
-/* Block Actor.hitReactions points at: two s8 mode bytes and two u8 (*)(void)
-   hooks.  Compare struct ActorAux, which is the Actor.unk60 block. */
-struct ActorVt
-{
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ u8 filler02[2];
-    /*0x04*/ u32 unk04;
-    /*0x08*/ u32 unk08;
-};
-
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
    3.517). */
 extern u8 gTerrainResult[];
