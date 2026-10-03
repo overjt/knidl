@@ -26,5 +26,5 @@ SoftReset:
 	mov	sp, r3
 	svc	1
 	svc	0
-	.word	gUnk_04000208
+	.word	gRegIme
 	.word	0x03007FFA	@ raw: constant, the BIOS soft-reset flag byte 0x03007FFA (GBATEK: 0 = restart from ROM), which SoftReset clears; then sp = 0x03007F00 via subs r3, #0xFA

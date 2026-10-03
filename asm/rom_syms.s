@@ -1219,14 +1219,14 @@ gSoundMainRAM_Buffer = 0x03007150
 SOUND_INFO_PTR = 0x03007FF0
 	.global	INTR_VECTOR
 INTR_VECTOR = 0x03007FFC
-	.global	gUnk_04000006
-gUnk_04000006 = 0x04000006
-	.global	gUnk_04000060
-gUnk_04000060 = 0x04000060
-	.global	gUnk_040000BC
-gUnk_040000BC = 0x040000BC
-	.global	gUnk_04000208
-gUnk_04000208 = 0x04000208
+	.global	gRegVcount
+gRegVcount = 0x04000006
+	.global	gRegSound1CntL
+gRegSound1CntL = 0x04000060
+	.global	gRegDma1Sad
+gRegDma1Sad = 0x040000BC
+	.global	gRegIme
+gRegIme = 0x04000208
 	.global	gObjVram
 gObjVram = 0x06010000
 

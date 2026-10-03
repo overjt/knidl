@@ -84,7 +84,7 @@ extern u16 gMultiBootClientData[];
 
 /* REG_IME as a symbol.  raw: src/early_4734.c's GIME needs the symbol, the
  * io_reg.h REG_IME changes its allocation (lesson 3.523) */
-extern vu16 gUnk_04000208; /* REG_IME */
+extern vu16 gRegIme; /* REG_IME */
 
 
 /* Functions (defined in the files named above each group). */

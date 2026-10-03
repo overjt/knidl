@@ -145,7 +145,7 @@ the authoritative check.
   labels for intra-file targets without database entries, or database names
   for external targets. A `@ 0x........` comment preserves the target address.
 * Non-function pointer words are symbolic when the value is a
-  `data_symbols` cell (`.word gUnk_04000208`, `.word gSoundMainRAM_Buffer+1`
+  `data_symbols` cell (`.word gRegIme`, `.word gSoundMainRAM_Buffer+1`
   for the Thumb entry of RAM-copied code); a word that is a constant, not
   an address, is a `raw_words` entry and carries a same-line `@ raw:
   <reason>` (docs/data.md 3.5).
