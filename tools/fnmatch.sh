@@ -2,15 +2,19 @@
 # fnmatch.sh — byte-match a candidate C file against a ROM range WITHOUT
 # touching the real build (issue #28 workflow, generalized).
 #
-# Usage:  ./tools/fnmatch.sh <start> <end> <file.c> [--old] [--no-werror]
+# Usage:  ./tools/fnmatch.sh <start> <end> <file.c> [--old|--old2|--nopb] [--no-werror]
 #   start    ROM VMA where the compiled .text must land (e.g. 0x08000310).
 #   end      first VMA NOT in the range (exclusive, e.g. 0x080008E8).
 #   file.c   candidate source (usually src/<module>.c).
-#   --old    compile with old_agbcc -O1 (SDK zone recipe) instead of the
-#            default agbcc -O2 -mthumb-interwork (game-code zone).
+#   (default) the Makefile's recipe for src/, the game-code zone: agbcc -O2
+#            -mthumb-interwork -fprologue-bugfix (that flag suppresses
+#            agbcc's spurious leaf `push {lr}`, issue #32, lesson 3.75).
+#   --old    compile with old_agbcc -O1 (SDK zone recipe).
 #   --old2   compile with old_agbcc -O2 (m4a driver zone, issue #53).
-#   --newpb  compile with agbcc -O2 -fprologue-bugfix (game-code zone: that
-#            flag suppresses agbcc's spurious leaf `push {lr}`, issue #32).
+#   --nopb   agbcc -O2 WITHOUT -fprologue-bugfix (the default before #170;
+#            no Makefile rule uses it).
+#   --newpb  the default recipe; accepted so older notes and scripts keep
+#            working.
 #   --no-werror  drop -Werror while iterating (warnings won't abort).
 #   --rodata compare the object's .rodata instead of .text: a functional
 #            table defined in C (src/data/*.c, issue #36 phase 2), checked
@@ -44,17 +48,18 @@ set -euo pipefail
 IMAGE="knidl-builder"
 
 if [[ $# -lt 3 ]]; then
-    sed -n '2,28p' "$0" >&2
+    sed -n '2,23p' "$0" >&2
     exit 2
 fi
 
 START_RAW="$1"; END_RAW="$2"; CFILE="$3"; shift 3
-RECIPE="new"; WERROR="-Werror"; SECTION=".text"
+RECIPE="newpb"; WERROR="-Werror"; SECTION=".text"
 for a in "$@"; do
     case "$a" in
         --old) RECIPE="old" ;;
         --old2) RECIPE="old2" ;;
         --newpb) RECIPE="newpb" ;;
+        --nopb) RECIPE="nopb" ;;
         --no-werror) WERROR="" ;;
         --rodata) SECTION=".rodata" ;;
         --section=*) SECTION="${a#--section=}" ;;
@@ -71,7 +76,7 @@ if [[ "${INSIDE_DOCKER:-0}" != "1" ]]; then
         "$IMAGE" bash tools/fnmatch.sh "$START_RAW" "$END_RAW" "$CFILE" \
         $( [[ "$RECIPE" == "old" ]] && echo --old ) \
         $( [[ "$RECIPE" == "old2" ]] && echo --old2 ) \
-        $( [[ "$RECIPE" == "newpb" ]] && echo --newpb ) \
+        $( [[ "$RECIPE" == "nopb" ]] && echo --nopb ) \
         $( [[ -z "$WERROR" ]] && echo --no-werror ) \
         $( [[ "$SECTION" != ".text" ]] && echo "--section=$SECTION" )
 fi
@@ -87,10 +92,10 @@ if [[ "$RECIPE" == "old" ]]; then
     CCLINE=(old_agbcc -O1 -mthumb-interwork)
 elif [[ "$RECIPE" == "old2" ]]; then
     CCLINE=(old_agbcc -O2 -mthumb-interwork)
-elif [[ "$RECIPE" == "newpb" ]]; then
-    CCLINE=(agbcc -O2 -mthumb-interwork -fprologue-bugfix -Wimplicit -Wparentheses $WERROR -fhex-asm)
-else
+elif [[ "$RECIPE" == "nopb" ]]; then
     CCLINE=(agbcc -O2 -mthumb-interwork -Wimplicit -Wparentheses $WERROR -fhex-asm)
+else
+    CCLINE=(agbcc -O2 -mthumb-interwork -fprologue-bugfix -Wimplicit -Wparentheses $WERROR -fhex-asm)
 fi
 cpp -P -I include "$CFILE" \
   | "${CCLINE[@]}" -o - - \

@@ -37,7 +37,7 @@ the steps below reference those lessons by number. Tool references:
 | Function address + size | `docs/analysis/symbols.csv` (e.g. `0x080CFA9C,0x24,thumb,rom-pointer,ReadSram_Core`) |
 | Its current asm | was the `asm/<segment>/<segment>_NN.s` chunk files (gone: all game code is C); today the target is `baserom.gba` itself (`./asmdiff.sh`, §1) and the range is its `docs/analysis/segments.txt` row |
 | Symbol names it calls/references | `docs/analysis/callgraph.csv`, `asm/rom_syms.s` absolute symbols |
-| Compiler recipe for its zone | `Makefile` per-file overrides + `docs/research/compiler-validation.md`: game code = `agbcc -O2 -mthumb-interwork -fprologue-bugfix` (lesson 3.75; `fnmatch.sh --newpb`); SDK zone (`0x080CF9xx`) = `old_agbcc -O1 -mthumb-interwork`; m4a driver zone (`0x080CE4B8+`) = `old_agbcc -O2 -mthumb-interwork` (lesson 3.15); ARM units = `agbcc_arm` |
+| Compiler recipe for its zone | `Makefile` per-file overrides + `docs/research/compiler-validation.md`: game code = `agbcc -O2 -mthumb-interwork -fprologue-bugfix` (lesson 3.75; `fnmatch.sh`'s default since #170); SDK zone (`0x080CF9xx`) = `old_agbcc -O1 -mthumb-interwork`; m4a driver zone (`0x080CE4B8+`) = `old_agbcc -O2 -mthumb-interwork` (lesson 3.15); ARM units = `agbcc_arm` |
 
 ## 1. Pick the function and set up scratch space
 
@@ -84,15 +84,17 @@ labels pinned at their VMAs, `gUnk_*`/data_symbols as absolutes), links it
 alone at the target address and byte-compares against `baserom.gba`:
 
 ```sh
-./tools/fnmatch.sh 0x08000310 0x080008E8 src/agb_init.c --newpb  # game zone
+./tools/fnmatch.sh 0x08000310 0x080008E8 src/agb_init.c          # game zone
 ./tools/fnmatch.sh 0x080CFA9C 0x080CFC30 src/agb_sram.c --old    # SDK zone
 ./tools/fnmatch.sh 0x080CE4B8 0x080CEFB4 src/m4a_c1.c --old2     # m4a driver zone (lesson 3.15)
 ```
 
-`--newpb` is the Makefile's recipe for all of `src/` (`CFLAGS` carries
-`-fprologue-bugfix`, lesson 3.75); fnmatch's bare default omits that flag,
-so a file with a leaf that branches mismatches under it (`src/early_6464.c`:
-119 differing bytes without `--newpb`, MATCH with it).
+The default is the Makefile's recipe for all of `src/` (`CFLAGS` carries
+`-fprologue-bugfix`, lesson 3.75).  Until #170 the bare default omitted that
+flag and the game zone needed `--newpb`, which older notes still pass (it is
+accepted and means the default); without the flag a file with a leaf that
+branches mismatches (`src/early_6464.c`: 119 differing bytes, `--nopb` keeps
+that recipe for experiments).
 
 - `MATCH (N bytes ...)` = the file will be byte-identical once landed.
 - On mismatch it prints the differing byte count and a **pool-resolving
