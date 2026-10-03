@@ -50,7 +50,8 @@ What a data change commits is *structure*:
 Every `data`-kind row of `docs/analysis/segments.txt` (except the
 hand-written cartridge header `asm/rom_header.s`) is configured in
 `tools/split_config.json` and emitted by `tools/split.py` as
-`data/<segment>.s`. `asm/` holds code only. A generated data file contains
+`data/<segment>.s` (or, for the pieces of a zone cut around C runs, as
+one `.section` each of `data/<zone>.s`, #167; docs/splitting.md). `asm/` holds code only. A generated data file contains
 nothing but:
 
 ```
@@ -148,7 +149,8 @@ Add an entry to `pointer_tables`:
 - A table that has moved to C (§5.2) keeps its entry: its own words are
   not emitted (they are C initializers now), but its `targets` records
   still get their pointer fields symbolized.  The room lists above are C
-  since #36 phase 2, and their entry still marks the 333 RoomDefs.
+  since #36 phase 2, and their entry still marks the 333 RoomDefs; since
+  #167 the RoomDefs are C too, and the entry documents their layout.
 - `targets` may add `"tagged": {"0x0": ["0xC", "0x10"]}`: the field at
   `0x0` carries a flag in bit 0 (it is emitted as `label+1` when set),
   and a record whose flag is set has the listed extra pointer fields (the
@@ -187,7 +189,11 @@ Review the list (which segments the targets fall in), merge it into
 ```
 
 Since #36 phase 2 run 2 the entries are the two value words of the BG
-animation scripts' op 5 (a collision tile, not a pointer).  The SRAM
+animation scripts' op 5 (a collision tile, not a pointer; the scripts
+are C since #167, where the two words stay numbers), and since #167 the
+word at `0x087404CC`: four `struct M19Frame` bytes `{8, 1, 0, 8}` of
+`gUnk_087404A0` that equal `MasterIsr`'s address, which the
+function-entry rule had written as `.word MasterIsr`.  The SRAM
 driver table's two pointers to the SDK's RAM-copied cores used to be
 here (lesson 4.116); `src/agb_sram.c` now gives the cores external
 linkage, so they are symbols.
@@ -253,15 +259,15 @@ pointer, and 25 such words there equal a function entry by chance
 Assets stay bytes-from-baserom forever; each asset file says so in its
 header comment.
 
-| segment | range | kind of content | state after #36 phase 2, run 3 |
+| segment | range | kind of content | state after #167 |
 |---|---|---|---|
 | `gap_interworking_veneer_irq_handler_table_14` | `0x080CFDE4-0x080CFDE8` | the veneer's literal | 1 code pointer |
 | `irq_handler_table_14` | `0x080CFDE8-0x080CFE20` | IRQ handler table | 14 code pointers; its start is `gIntrTableTemplate`, which AgbInit copies |
 | `sram_id_string` | `0x080CFE20-0x080CFE2C` | the SRAM id string "AGB  KIRBY" (`gSramIdString`, `src/save_b7a9c.c`) | 2 labels |
 | `air_grind_rodata` | `0x080CFE2C-0x080D0788` | Air Grind's (M37) rodata (not sound-driver or FIR tables, #98) | 27 labels, bytes extracted |
 | `sprite_sheets` | `0x080D0788-0x08334EC0` | sprite sheets (**asset**): OAM template streams, tiles, palettes and `struct TaskGfx` records; its last 12 bytes are the stage-count table `gUnk_08334EB4` (`u8[9]`, `src/level_2296c.c`) | 14,675 labels, 5,957 data pointers |
-| `room_bg_anims` | `0x08334EC0-0x0835CFD4` | the rooms' BG animations: 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (**asset**) | 253 labels, 224 pointers (the 30 scripts and 14 fades as pointer tables) |
-| `room_data` | `0x0835CFD4-0x083A862C` | 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list (**asset**) | 1,914 labels, 3,574 RoomDef pointer fields |
+| `room_bg_anims` | `0x08334EC0-0x0835CFD4` | the rooms' BG animations: 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (**asset**) | 209 labels in 40 pieces of `data/room_bg_anims.s`; the 30 scripts and 14 fades are C (`src/data/bg_anim_scripts.c`, 40 runs, 224 pointers) |
+| `room_data` | `0x0835CFD4-0x083A862C` | 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list (**asset**) | 1,581 labels in 333 pieces of `data/room_data.s`; the 333 RoomDefs are C (`src/data/room_defs.c`, 3,574 pointer fields) |
 | `room_metatiles` | `0x083A862C-0x083B5538` | 23 LZ77 metatile tables (`RoomDef.metatileTiles`, **asset**) | 23 labels |
 | `room_bg3_maps` | `0x083B5538-0x083D0148` | 32 BG3 maps (`struct BgMap`, 25 LZ77 and 7 raw; **asset**) | 32 labels |
 | `compressed_graphics` (seg 14) | `0x083D0148-0x085C0000` | compressed graphics and the file-select completion pictures (**asset**) | 1,198 labels, 27 pointers (9 GfxHeaders) |
@@ -272,17 +278,17 @@ header comment.
 | `sram_v112_string`, its gap, `sram_driver_fn_table` | `0x0872E9F8-0x0872EA14` | SDK save-type marker and SRAM table | 4 code pointers |
 | `engine_rodata` | `0x0872EA14-0x0872FF30` | the engine zone's rodata: sprite half-dimensions, `gBootSignature`, `gSfxTable`, `gCosTable` | 5 labels, 274 pointers |
 | `task_types` (**C**, `src/data/task_types.c`) | `0x0872FF30-0x08730780` | `gTaskTypes[266]` | 266 function pointers in C |
-| `game_rodata` | `0x08730780-0x0873ECEC` | the rodata of M02-M18, in link order | 635 labels, 472 code + 2,504 data pointers |
+| `game_rodata` | `0x08730780-0x0873ECEC` | the rodata of M02-M18, in link order | 597 labels, 2,504 data pointers in 21 pieces; 38 handler tables are C (`src/data/game_tables.c`, 22 runs) |
 | `actor_defs` (**C**, `src/data/actor_defs.c`) | `0x0873ECEC-0x0873EEA0` | the six `struct ActorDef *` tables by actor kind | 107 pointers in C |
-| `actor_rodata` | `0x0873EEA0-0x0874C44C` | actor and enemy rodata, M17-M32: behaviour tables, ActorDef/ActorAux records, HitBoxSets | 2,029 labels, 1,723 code + 1,518 data pointers |
-| `frame_tables` | `0x0874C44C-0x0875607C` | every sprite frame table (`struct TaskGfx *[]` or OAM stream pointers) the code installs | 343 labels, 9,981 pointers |
-| `late_game_rodata` | `0x0875607C-0x08758448` | the rodata of M33-M38: pickups, HUD, save, sub-games, ending, credits | 197 labels, 265 code + 118 data pointers |
+| `actor_rodata` | `0x0873EEA0-0x0874C44C` | actor and enemy rodata, M17-M32: behaviour tables, ActorDef/ActorAux records, HitBoxSets | 1,237 labels, 945 data pointers in 140 pieces; C: the 179 ActorDef/ActorAux records (`actor_records.c`, 34 runs), 415 handler tables and scripts (`actor_tables.c`, 103 runs), 198 terrain-handler tables and hit-reaction records (`actor_handlers.c`, 28 runs) |
+| `frame_tables` (**C**, `src/data/frame_tables.c`) | `0x0874C44C-0x0875607C` | every sprite frame table (`struct TaskGfx *[]` or OAM stream pointers) the code installs | 343 arrays, 9,981 pointers in C |
+| `late_game_rodata` | `0x0875607C-0x08758448` | the rodata of M33-M38: pickups, HUD, save, sub-games, ending, credits | 143 labels, 118 data pointers in 22 pieces; 54 handler tables are C (`src/data/late_game_tables.c`, 23 runs) |
 | `credits_demos` | `0x08758448-0x08759DC8` | the 14 recorded input demos the staff credits play (`gUnk_087583CC` rows 1-2) | 14 labels |
 | `player_frame_records` | `0x08759DC8-0x08769250` | the 20-byte tagged player frame records | 3,116 labels, 14,663 pointers |
 | `player_frame_lists` | `0x08769250-0x0876B1FC` | the player sheets' frame lists (format-only, §5.3) | 146 labels, 2,025 pointers |
 | `multiboot_program`, `quick_draw_program`, `bomb_rally_program`, `air_grind_program` | `0x0876B1FC-0x087E1D58` | four separately linked GBA programs: the single-pak link client and the three sub-games sent to the other players (`src/menu_0d450.c`, `src/mode_07b68.c`; **asset**) | 1 label each |
 | `room_table` (**C**, `src/data/room_table.c`) | `0x087E1D58-0x087E1E78` | `gRoomTable[9][8]` | 57 pointers in C |
-| `room_bg_anim_lists` | `0x087E1E78-0x087E1F58` | 12 NULL-ended lists of the 30 BG animation scripts and their index `gRoomBgAnimScripts` | 13 labels, 42 pointers |
+| `room_bg_anim_lists` (**C**, `src/data/room_bg_anim_lists.c`) | `0x087E1E78-0x087E1F58` | 12 NULL-ended lists of the 30 BG animation scripts and their index `gRoomBgAnimScripts` | 13 objects, 42 pointers in C |
 | `room_lists` (**C**, `src/data/room_lists.c`) | `0x087E1F58-0x087E2570` | the 57 stage room lists | 333 pointers in C |
 | `sprite_frame_lists` | `0x087E2570-0x087E3088` | 23 per-sheet lists of frame pointers (below) | 23 labels, 710 pointers (format-only, §5.3) |
 | `zero_padding` | `0x087E3088-0x08800000` | padding | one slice |
@@ -330,7 +336,8 @@ after crt0 did not change):
 `actor_rodata_<addr>`) around the 34 runs of ActorDef/ActorAux records
 that are C since run 3 (§5.2); the pieces are rows of one output section,
 and since #167 one data file, `data/actor_rodata.s`, with one section per
-piece (docs/splitting.md, "One data file per zone").
+piece (docs/splitting.md, "One data file per zone"); #167's handler
+tables cut it further, to 140 pieces around 165 C runs.
 
 The evidence for run 3's names:
 
@@ -510,7 +517,8 @@ spells it `const` (the consumers compile to the same assembly).
 | the 12 script lists and `gRoomBgAnimScripts[14]` (#167) | `0x087E1E78-0x087E1F58` (the whole `room_bg_anim_lists`) | `src/data/room_bg_anim_lists.c` | `LoadRoomBgAnims` walks `gRoomBgAnimScripts[RoomDef.bgAnimSet]` up to its NULL |
 | the 343 frame tables (#167) | `0x0874C44C-0x0875607C` (the whole `frame_tables`) | `src/data/frame_tables.c`, one named section | `Task.frameTable[Task.frame]` (`TaskLoadFrameTiles`, `src/early_5acc.c`; the player's `PlayerLoadFrameTilesAndPalette`, `src/stage_3cd60.c`) or a frame `QueueSprite` stores (`src/early_1518.c`); each array's comment gives its extent proof |
 | the 333 `struct RoomDef` headers (#167) | 333 runs in `room_data` | `src/data/room_defs.c`, one input section per run | the room loaders read `gRoomTable[level][stage][room]` into `gCurRoomDef` (`src/level_2296c.c`, `src/level_23948.c`, `src/level_242d0.c`); the camera, doors and blocks read the rest |
-| 500 behaviour tables of seg 18 (#167) | 147 runs in `game_rodata`, the `actor_rodata` zone and `late_game_rodata` | `src/data/game_tables.c`, `actor_tables.c`, `late_game_tables.c`, one input section per run | most are `CallTableEntry(index, count, table)` tables (`src/early_2b04.c`) whose count is the span; the rest are read by direct index or declared as function-pointer arrays |
+| 507 handler tables and scripts of seg 18 (#167) | 148 runs in `game_rodata`, the `actor_rodata` zone and `late_game_rodata` | `src/data/game_tables.c`, `actor_tables.c`, `late_game_tables.c`, one input section per run | most are `CallTableEntry(index, count, table)` tables (`src/early_2b04.c`) whose count is the span; the rest are read by direct index or declared as function-pointer arrays; seven are the Whispy Woods script streams `sub_080af020` runs |
+| 62 terrain-handler tables and 136 hit-reaction records (#167) | 28 runs in the `actor_rodata` zone | `src/data/actor_handlers.c`, one input section per run | `struct ActorHandlers` (seven `u8 (*)(void)`) and `struct ActorVt` (`{s8, s8, pad, hook, hook}`), which `ActorCollideTerrain`, `ActorReactToDamage` and `ActorReactToDefeat` (`src/actor_692fc.c`) walk through `Actor.terrainHandlers` / `Actor.hitReactions` |
 
 The ActorDef/ActorAux records (run 3) lie between other seg 18 tables,
 so one carve per run would give each run its own output section and
@@ -552,8 +560,8 @@ what places them in ROM.
 |---|---|---|---|
 | BG animation scripts and fades | `room_bg_anims` | 80 (40 runs, 40 pieces) | `src/data/bg_anim_scripts.c` |
 | RoomDef headers | `room_data` | 666 (333 runs, 333 pieces) | `src/data/room_defs.c` |
-| behaviour tables | `game_rodata` | 42 (21 runs, 21 pieces) | `src/data/game_tables.c` |
-| ActorDef records, behaviour tables | `actor_rodata` | 264 (34 + 103 runs, 127 pieces) | `src/data/actor_records.c`, `src/data/actor_tables.c` |
+| behaviour tables | `game_rodata` | 43 (22 runs, 21 pieces) | `src/data/game_tables.c` |
+| ActorDef records, behaviour tables, terrain and hit-reaction handlers | `actor_rodata` | 305 (34 + 103 + 28 runs, 140 pieces) | `src/data/actor_records.c`, `actor_tables.c`, `actor_handlers.c` |
 | behaviour tables | `late_game_rodata` | 45 (23 runs, 22 pieces) | `src/data/late_game_tables.c` |
 | frame tables, script lists | `frame_tables`, `room_bg_anim_lists` | 1 each (a whole segment) | `src/data/frame_tables.c`, `src/data/room_bg_anim_lists.c` |
 
@@ -608,21 +616,21 @@ two numbers, measured from the committed files against the baserom:
    `0x08000000-0x08800000`): symbolic, and not symbolic split into
    "points at code" (a code or pool segment) and "points at data".
 
-| | before #36 phase 1 | after phase 1 | after phase 2, run 1 | after phase 2, run 2 | after phase 2, run 3 |
-|---|---|---|---|---|---|
-| ROM data symbols defined by absolute address | 2,277 of 2,277 | 0 of 5,065 | 0 of 5,065 | 0 of 25,859 | 0 of 25,881 |
-| real ROM data labels in data files | 19 | 5,078 | 5,013 (65 more are C objects) | 27,962 (plus the m4a parse's generated ones) | 27,805 (179 more are C objects) |
-| pointer-like words, symbolic | 63 | 8,385 | 8,385 | 47,465 | 47,501 |
-| - by the function-entry rule | 63 | 2,522 | 2,522 | 2,515 | 2,515 |
-| - in consumer-proven pointer tables | 0 | 4,272 | 3,616 | 36,373 | 35,803 |
-| - in next-label tables (§5.1) | 0 | 1,591 | 1,484 | 2,249 | 2,249 |
-| - in the m4a song structure (§3.4) | 0 | 0 | 0 | 2,551 | 2,551 |
-| - format-only, no consumer (§5.3) | 0 | 0 | 0 | 3,014 | 3,038 |
-| - in C tables (`src/data/`, §5.2) | 0 | 0 | 763 | 763 | 1,345 |
-| not symbolic, points at code | 13,882 | 11,154 | 11,154 | 11,152 | 11,152 |
-| not symbolic, points at data | 50,718 | 45,124 | 45,124 | 6,046 | 6,010 |
-| symbolic words pointing at RAM | 8 | 28 | 28 | 49 | 49 |
-| unaligned symbolic words (m4a track operands) | 0 | 0 | 0 | 1,343 | 1,343 |
+| | before #36 phase 1 | after phase 1 | after phase 2, run 1 | after phase 2, run 2 | after phase 2, run 3 | after #167 |
+|---|---|---|---|---|---|---|
+| ROM data symbols defined by absolute address | 2,277 of 2,277 | 0 of 5,065 | 0 of 5,065 | 0 of 25,859 | 0 of 25,881 | 0 of 25,881 |
+| real ROM data labels in data files | 19 | 5,078 | 5,013 (65 more are C objects) | 27,962 (plus the m4a parse's generated ones) | 27,805 (179 more are C objects) | 26,367 (1,682 more are C objects) |
+| pointer-like words, symbolic | 63 | 8,385 | 8,385 | 47,465 | 47,501 | 47,506 |
+| - by the function-entry rule | 63 | 2,522 | 2,522 | 2,515 | 2,515 | 67 |
+| - in consumer-proven pointer tables | 0 | 4,272 | 3,616 | 36,373 | 35,803 | 22,048 |
+| - in next-label tables (§5.1) | 0 | 1,591 | 1,484 | 2,249 | 2,249 | 2,180 |
+| - in the m4a song structure (§3.4) | 0 | 0 | 0 | 2,551 | 2,551 | 2,551 |
+| - format-only, no consumer (§5.3) | 0 | 0 | 0 | 3,014 | 3,038 | 3,038 |
+| - in C tables (`src/data/`, §5.2) | 0 | 0 | 763 | 763 | 1,345 | 17,622 |
+| not symbolic, points at code | 13,882 | 11,154 | 11,154 | 11,152 | 11,152 | 11,147 |
+| not symbolic, points at data | 50,718 | 45,124 | 45,124 | 6,046 | 6,010 | 6,010 |
+| symbolic words pointing at RAM | 8 | 28 | 28 | 49 | 49 | 49 |
+| unaligned symbolic words (m4a track operands) | 0 | 0 | 0 | 1,343 | 1,343 | 1,343 |
 
 The "not symbolic" lines count words by value only; which of them are
 coincidences is the census's job (section 8.3): after run 2 the shift
@@ -633,16 +641,25 @@ Run 3's symbolic words: 31 new ones in the sprite sheets (four raw
 `.tiles` pointers the code reads, 27 format-only record fields), five
 `ActorDef.unk10` pointers the census had counted as value fields, and
 577 that moved from `actor_rodata` into C with the ActorDef records.
+#167 moved 16,271 symbolic words into C (the BG animation scripts and
+lists 266, the frame tables 9,981, the RoomDefs 3,574, seg 18's handler
+tables and records 2,450) and made one a number again (the `MasterIsr`
+word inside `gUnk_087404A0`, §3.3).  The C line counts words by value,
+so its 17,622 include six RoomDef byte groups that read as `0x08000100`
+(numbers in C, as they were in the data file); hence 47,506 symbolic
+against run 3's 47,501, while the sum of the four lines stays 64,663.
 
-The last line of `make datastats` counts the C tables (38 segments, 244
-symbols, 0x29F4 bytes, 1,345 pointer words) apart from the data files.
+The last line of `make datastats` counts the C tables (589 segments,
+1,682 symbols, 0x17588 bytes, 17,622 pointer words since #167; 38, 244,
+0x29F4 and 1,345 after run 3) apart from the data files.
 
 Most of the remaining "not symbolic" words are coincidences inside assets
 (the sprite sheets, LZ77 streams, PCM, the program images) and in seg
 18's byte tables (`0x08080808` runs); the census accounts for every one
 that points into the moved part of the ROM.  The data files'
 `.incbin` count (`make datastats`' second line) goes **up** as labels
-go in (26,916 slices today; 19 before phase 1), while their bytes go down
+go in (26,916 slices after run 3, 24,724 after #167 moved records into
+C; 19 before phase 1), while their bytes go down
 by four per symbolic word (lesson 4.120).
 
 `make check-data` (`tools/check_data_policy.py`, run in CI on every
@@ -659,7 +676,7 @@ tables begin is a judgement the check cannot make: reviewers make it,
 using §1. Code segments' literal pools and raw instruction halfwords are
 code and outside its scope.
 
-## 7. Phase 2
+## 7. Phase 2 and #167
 
 Run 1 (#36 phase 2, PR "Part of #36") landed:
 
@@ -687,17 +704,36 @@ class), the boot test and the three raw ARM branches it found (8.4),
 content-true names for every data segment (§4.1), and the ActorDef and
 ActorAux records as C (§5.2).
 
-What is left is readability, not movability:
+#167 moved the remaining functional records to C, on top of one data
+file per zone (docs/splitting.md): the BG animation scripts, palette
+fades and script lists, the 343 frame tables, the 333 RoomDef headers,
+507 handler tables and scripts and 198 terrain-handler tables and
+hit-reaction records of seg 18 (§5.2), with field names where a consumer
+proves the role (`Unk02007D70Cmd {op, arg, ptr}`, the fade's
+`{src, dst, colorIndex, colorCount, rate}`,
+`RoomDef.blockMetatiles`/`driftObjectIndex`) and the 333 block tables
+named by their slot.  Every census and shift-test number is unchanged.
 
-- **More records as C**, with run 3's grouped design (§5.2): the BG
-  animation scripts (30 scripts and 14 fades in `room_bg_anims`), the
-  333 RoomDef headers (each after its own maps; worth teaching
-  `split.py` to write one data file with `.section` pieces per zone
-  before that), the frame tables and seg 18's behaviour tables.  The
-  object lists (enemy placements) are level layouts and stay structure.
+What is left:
+
+- **Seg 18's value tables.**  The handler tables are all C; what stays
+  structure-only between the runs is value data (hit boxes, per-move
+  arrays, the credits particles' animation rows `gUnk_08740320` and
+  `gUnk_087404A0`, `struct M19Frame [][24]`), the 26 words after
+  `gUnk_0873E284`'s one entry, and the 12 bytes after two hit-reaction
+  records (`gUnk_08745CC8`, `gUnk_0874B510`) that nothing addresses.
+  They can follow with the same tools once someone wants them as C; none
+  is a pointer table whose element type the C declares.
+- **Extents a consumer does not settle**: `gUnk_087402FC` is read with
+  `CallTableEntry(i, 5, ...)` but its span is 9 words; entries 5-8 have
+  no reference, so no label is invented (the C keeps the span, with the
+  note).
 - **A wider boot test**: the script plays level 1 only (8.4); the
   sub-games, bosses, the credits and link play are reached by the census
   alone.
+- Assets stay `.incbin` (§1): the RoomDefs' maps, block layers, block
+  tables, door geometry and object lists, the BG animations' tile frames
+  and palettes, and everything the frame tables point at.
 
 ## 8. Shifting the ROM
 

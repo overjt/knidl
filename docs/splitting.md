@@ -183,14 +183,14 @@ since), and #167 removed both fallbacks and the `.tail` patterns.
 A data segment's config entry may name its `"zone"`, the data file it is
 written to.  `tools/carve_data.py` cuts a data segment around the C runs
 it carves (`<zone>`, then `<zone>_<start>` after each run) and gives the
-pieces after the first one `"zone": "<zone>"`, so a zone cut into 35
-pieces (`actor_rodata`, around the 34 ActorDef runs of
-`src/data/actor_records.c`) stays one file, `data/<zone>.s`, with one
-`.section .<piece>` per piece:
+pieces after the first one `"zone": "<zone>"`, so a zone cut into 140
+pieces (`actor_rodata`, around the 165 C runs of
+`src/data/actor_records.c`, `actor_tables.c` and `actor_handlers.c`)
+stays one file, `data/<zone>.s`, with one `.section .<piece>` per piece:
 
 ```
-@ Zone actor_rodata: 0x0873EEA0-0x0874C44C, 35 data pieces (0xBCF4 bytes) and
-@ 34 C run(s) between them.  ...
+@ Zone actor_rodata: 0x0873EEA0-0x0874C418, 140 data pieces (0x94FC bytes) and
+@ 164 C run(s) between them.  ...
 @ Piece actor_rodata: 0x0873EEA0-0x0873F2B8 (data, 0x418 bytes)
 	.section .actor_rodata, "a"
 	.global	actor_rodata
@@ -198,7 +198,7 @@ actor_rodata:
 	...
 @ 0x0873F2B8-0x0873F4C8: C, row actor_rec_0873f2b8 (src/data/actor_records.c section .actor_rec_0873f2b8)
 
-@ Piece actor_rodata_0873f4c8: 0x0873F4C8-0x0873F664 (data, 0x19C bytes)
+@ Piece actor_rodata_0873f4c8: 0x0873F4C8-0x0873F5FC (data, 0x134 bytes)
 	.section .actor_rodata_0873f4c8, "a"
 	...
 ```
@@ -207,8 +207,11 @@ Every piece keeps its `segments.txt` row and its section name, so
 `tools/ldgroup.py` lists the pieces and the C runs in order inside one
 output section (docs/data.md 5.2), the C runs show as comments where
 they sit, and `make split` removes a generated data file that no zone
-writes any more (the 34 `actor_rodata_<addr>.s` files folded into
-`data/actor_rodata.s`, or a segment a carve consumed entirely).
+writes any more (the 34 `actor_rodata_<addr>.s` files run 3 left were
+folded into `data/actor_rodata.s`, and a segment a carve consumes
+entirely, `frame_tables` or `room_bg_anim_lists`, loses its file).  The
+zones since #167: `room_bg_anims` (40 pieces), `room_data` (333),
+`game_rodata` (21), `actor_rodata` (140) and `late_game_rodata` (22).
 `make datastats`, `make check-data` and `make audit` read a data file
 section by section.
 

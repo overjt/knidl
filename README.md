@@ -59,26 +59,26 @@ The project started as a full ROM split and was decompiled module by module
 into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
 [docs/history.md](docs/history.md)).
 
-<!-- Figures from `make progress` at the end of #37; refresh after any asm or naming change. -->
+<!-- Figures from `make progress` at the end of #167; refresh after any asm, naming or data change. -->
 
 ```
-857524 total bytes of code
-    853356 bytes of code in src (99.5139%)
-    4168 bytes of code in asm (0.4861%)
+851196 total bytes of code
+    847028 bytes of code in src (99.5103%)
+    4168 bytes of code in asm (0.4897%)
         0 bytes of code remaining to be decompiled
         0 bytes in 0 functions in asm/nonmatching
         4168 bytes excluded from decompilation tracking
 
-34092 total symbols
-    7757 symbols documented (22.7531%)
-    26335 symbols undocumented (77.2469%)
+34017 total symbols
+    8015 symbols documented (23.5617%)
+    26002 symbols undocumented (76.4383%)
 
-7531104 total bytes of data
-    4428 bytes of data in src (0.0588%)
-    7526444 bytes of data in data (99.9381%)
+7537432 total bytes of data
+    95640 bytes of data in src (1.2689%)
+    7441560 bytes of data in data (98.7281%)
     232 bytes of data from asm (0.0031%)
 
-7336404 bytes of data in 26917 baserom incbins (97.4147%)
+7316608 bytes of data in 24725 baserom incbins (97.0703%)
 ```
 
 - **Code: complete.** All of the game's code is byte-exact C: everything from
@@ -96,18 +96,20 @@ into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
   (`PoppyBrosSrHeadUpdate` and `BootLogoUpdateObjects`); the rest are
   `BLOCK_CROSS_JUMP` tails, the SDK's own inline asm and documented
   zero-code stand-ins.
-- **Data** (#36, closed). The ROM's data is structure, not bytes: labeled,
-  symbolic `data/*.s` files whose contents are `.incbin` slices of your own
-  `baserom.gba`, and typed C tables in `src/data/` where a decompiled
-  consumer proves the layout. Assets are never committed
+- **Data** (#36, closed; #167). The ROM's data is structure, not bytes:
+  labeled, symbolic `data/*.s` files whose contents are `.incbin` slices of
+  your own `baserom.gba`, and typed C tables in `src/data/` where a
+  decompiled consumer proves the layout: since #167 every functional
+  record family (the BG animation scripts, the frame tables, the RoomDef
+  headers, the actor records and seg 18's handler tables). Assets are never committed
   ([docs/data.md](docs/data.md)). The shift test proves the ROM movable and
   the boot test runs it moved (see "For modders").
 - **Names** (#155, open). 2,449 of the 5,348 functions and 248 of the 266
   task bodies have real names, each with its evidence in
   `docs/analysis/renames.csv` (convention: [docs/naming.md](docs/naming.md)).
-  Of the 7,757 documented symbols, 5,781 have semantic names and 1,976 are
+  Of the 8,015 documented symbols, 5,706 have semantic names and 2,309 are
   position names (a data record named after its slot in a consumer-proven
-  table). Most of the undocumented symbols are ROM data labels, 17,421 of
+  table). Most of the undocumented symbols are ROM data labels, 17,074 of
   them asset labels that stay unnamed by policy; the long tail (about 2,900
   `sub_*` functions, enemy and boss state bodies and one-caller helpers
   mostly) is #155's backlog. `make audit` keeps the census of what is left,

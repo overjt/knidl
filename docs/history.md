@@ -875,3 +875,39 @@ current state is `AGENTS.md`'s `## Status`; the lessons are
   then #37's final audit.
   The three functions #154 left pinned or levered are listed in its
   bullet above.
+
+## After #37
+
+The bullets below follow the same form for the issues closed after #37
+moved the record here; `AGENTS.md`'s `## Status` stays the current state.
+
+- Data readability (issue #167): **every functional record family is
+  typed C**, on top of a new data layout, and no census or shift-test
+  number moved.  `tools/split.py` writes one data file per zone: a data
+  segment's config entry may name its `"zone"`, and the pieces a zone is
+  cut into around C runs share `data/<zone>.s`, one `.section` each (the
+  35 `actor_rodata*` files of run 3 became one); `carve_data.py` gained
+  `--runs`, `--c-file`, `--section` and `--record-in-asset`, and the
+  `.tail` sections and odd-start raw path went (#170's item 4).  As C
+  (`src/data/`, each run a named section, each zone one output section
+  via `tools/ldgroup.py`): the 30 BG animation scripts and 14 palette
+  fades (40 runs) and the script lists, the 343 frame tables (one
+  section), the 333 RoomDef headers (333 runs; their maps, block layers,
+  block tables, doors and object lists stay `.incbin` assets), and seg
+  18's 507 handler tables and scripts plus 62 terrain-handler tables and
+  136 hit-reaction records (`struct ActorHandlers`/`ActorVt`, moved from
+  `src/actor_692fc.c` to `include/actor.h`) in 176 runs.  589 `c_data`
+  rows, 17,622 pointer words in C; `make datastats`: symbolic words in
+  data files 46,156 -> 29,884; `make shifttest` 16,961 unrelocated after
+  crt0, 0 proven pointers, 0 unknown, before and after; `make boottest`
+  7/7.  Found on the way: the `.word MasterIsr` inside the credits
+  particles' frame rows (`gUnk_087404A0`) was four frame bytes (a
+  `not_pointers` entry now), `tools/calcrom.pl` counted the C records as
+  code and split.py's segment labels as documented symbols, and
+  `tools/audit.py`'s census skipped labels defined in C.  Fields named
+  from their consumers (`Unk02007D70Cmd {op, arg, ptr}`, the fades'
+  `{src, dst, colorIndex, colorCount, rate}`,
+  `RoomDef.blockMetatiles`/`driftObjectIndex`) and the 333 block tables
+  by their slot.  New lessons 4.156-4.159.  Done by four proposal agents
+  in scratch copies of the tree, one of them in two rounds, plus the
+  coordinator, who wrote the zone emitter and applied every change.
