@@ -314,7 +314,7 @@ sub_080cfdc8:
 	.global	TaskYieldTrampoline
 TaskYieldTrampoline:
 	.thumb
-	.short	0x4778
+	bx	pc
 	nop
 	.global	sub_080cfdd0
 sub_080cfdd0:
@@ -324,7 +324,7 @@ sub_080cfdd0:
 	.global	TaskExitTrampoline
 TaskExitTrampoline:
 	.thumb
-	.short	0x4778
+	bx	pc
 	nop
 	.global	sub_080cfdd8
 sub_080cfdd8:

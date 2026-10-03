@@ -5351,6 +5351,12 @@
     "sub_080cd2f8"
   ],
   "extra_labels": {
+    "0x080CD8A0": "__umul3232H32",
+    "0x080CD93C": "SoundMainRAM_Reverb",
+    "0x080CD990": "SoundMainRAM_NoReverb",
+    "0x080CD99E": "SoundMainRAM_NoReverb_Ok",
+    "0x080CD9AA": "SoundMainRAM_NoReverb_Loop",
+    "0x080CD9C8": "SoundMainRAM_ChanLoop",
     "0x080CFC40": "_call_via_r4",
     "0x080CFC44": "_call_via_r5",
     "0x080CFC48": "_call_via_r6",
@@ -5982,6 +5988,8 @@
     "0x03007150": "gSoundMainRAM_Buffer",
     "0x03007FF0": "SOUND_INFO_PTR",
     "0x04000006": "gUnk_04000006",
+    "0x04000060": "gUnk_04000060",
+    "0x040000BC": "gUnk_040000BC",
     "0x0400010C": "gUnk_0400010C",
     "0x0400010E": "gUnk_0400010E",
     "0x04000120": "gUnk_04000120",
@@ -31875,13 +31883,34 @@
     "0x0833F4B8": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to SetCollisionTile as the metatile's new collision tile",
     "0x0833FD24": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to SetCollisionTile as the metatile's new collision tile"
   },
-  "raw_ranges": [
+  "isa_ranges": [
+    {
+      "start": "0x080CD8A0",
+      "end": "0x080CD8AC",
+      "isa": "arm",
+      "why": "umul3232H32's ARM half __umul3232H32 (umull; add; bx lr), entered by the Thumb head's `adr r2; bx r2` (pokeemerald src/m4a_1.s)"
+    },
     {
       "start": "0x080CD93C",
-      "end": "0x080CDCCE",
-      "why": "SoundMainRAM's ARM mixer: the Thumb head ends with `adr r1; bx r1; nop` at 0x080CD936-0x080CD93B and the rest of the function (m4aSoundInit copies it to IWRAM) is ARM code; decoded as Thumb it produced a false `b.n CreditsInitText` at 0x080CDBFE and a false label at 0x080CDD6E that split gMPlayJumpTableTemplate's pool word (#36 phase 2 run 2)"
+      "end": "0x080CD990",
+      "isa": "arm",
+      "why": "SoundMainRAM_Reverb, the mixer's ARM reverb loop: entered by `adr r1; bx r1` at 0x080CD936, it returns to the Thumb channel setup at 0x080CD9BE through `adr r0, .L_080cd9be+1; bx r0`"
+    },
+    {
+      "start": "0x080CDAC8",
+      "end": "0x080CDCB0",
+      "isa": "arm",
+      "why": "SoundMainRAM's ARM sample mixer (one channel per pass, fixed-frequency and resampling loops): entered by `adr r0; bx r0` at 0x080CDAC2, it returns to the Thumb channel loop at 0x080CDCB0 through `add r0, pc, #1; bx r0`; m4aSoundInit copies SoundMainRAM to IWRAM (gSoundMainRAM_Buffer), so every branch stays inside the function"
     }
   ],
+  "raw_words": {
+    "0x080CD91C": "constant, ID_NUMBER 'Smsh' (include/gba/m4a_internal.h), the idle value of SoundInfo.ident that SoundMain checks before it locks the driver",
+    "0x080CD928": "constant, offsetof(struct SoundInfo, pcmBuffer) (0x350)",
+    "0x080CD92C": "constant, PCM_DMA_BUF_SIZE (1584), the offset of the right channel's half of pcmBuffer",
+    "0x080CDCD0": "constant, ID_NUMBER 'Smsh', stored back into SoundInfo.ident to release the driver",
+    "0x080CDF48": "constant, DMA1/DMA2 control for the sound FIFOs: enable, special (FIFO) timing, 32-bit, repeat, 4 words",
+    "0x080CE1B0": "constant, ID_NUMBER 'Smsh', the SoundInfo/MusicPlayerInfo ident lock value"
+  },
   "pointer_tables": [
     {
       "start": "0x0872FF30",
