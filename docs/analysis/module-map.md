@@ -8,9 +8,16 @@
 > `song_tail_misc_audio` is `player_frame_records` ... `air_grind_program`,
 > `sample_set_index` is `room_table` and its neighbours; the old -> new
 > table is `docs/data.md` §4.1.
+>
+> **Status (#37): every module M02-M38 is C** (#35 closed; `make progress`
+> reports 0 bytes of code remaining).  The census text below describes the
+> asm of #34's time; each §6 block says how its module landed.  The code
+> segments are one `c_code` row per C file now, so `game_code_and_rodata`
+> and `game_code_early` no longer exist, and `module-map.csv` lists those
+> rows (`already landed (c_code)`) next to the clustered ones.
 
-Subsystem identification pass over the ~800 KiB of game code that is still
-labeled assembly (issue #34).  Its job is to turn one undifferentiated
+Subsystem identification pass over the ~800 KiB of game code that was still
+labeled assembly at the time (issue #34).  Its job is to turn one undifferentiated
 `game_code_and_rodata` segment into a set of **coherent, self-contained,
 contiguous slices** that can each become a child issue of #35, with enough
 evidence attached that whoever picks a slice up knows what they are looking at
@@ -33,7 +40,7 @@ properties of the compiler, not of that zone).
 |---|---|---|---|
 | Issue #34 range | `0x08007300-0x080CFA4C` | `0xC874C` (801.8 KiB) | 5,045 |
 | Already landed (not clustered) | `main` + 4 m4a segments | `0x2468` (9.1 KiB) | 95 |
-| **Still in asm, clustered here** | `0x080075B8-0x080CD89C` | **`0xC62E4` (792.7 KiB)** | **4,950** |
+| **In asm at #34, clustered here** | `0x080075B8-0x080CD89C` | **`0xC62E4` (792.7 KiB)** | **4,950** |
 
 Coverage is 100% **by construction, and asserted**: the modules are the cells
 of a partition of the range, every function entry in `symbols.csv` belongs to
@@ -122,7 +129,8 @@ range.
 * Extent `0x0872FF30-0x0873077F` (`0x850` bytes) — note this **straddles the
   `segments.txt` boundary at `0x08730000`**, starting in
   `gap_sram_driver_fn_table_asset_metadata_index` and ending inside
-  `asset_metadata_index`.  A future segments.txt refinement should carve it out.
+  `asset_metadata_index`.  #36 phase 2 carved it out: the `task_types`
+  segment, C in `src/data/task_types.c` (`gTaskTypes[266]`).
 * Class histogram (the priority group of `src/early_4fec.c`'s 5 groups):
   class 0 x3, class 1 x24, class 2 x38, class 3 x132, class 4 x69.
 * The three class-0 types (#0, #1, #2) all live in M02 — the top-level
@@ -175,6 +183,10 @@ are one subsystem.
   sets)", is referenced **21 times from M07** (level/room build). Its leaves
   point into `0x0836xxxx` (`sound_samples_2`). So it is indexed by *level*
   code: per-room sample/bank selection, not a sound-engine-private table.
+  *Correction (#93, #36 phase 2):* it is the room table
+  `gRoomTable[level][stage][room]` (`src/data/room_table.c`), and its leaves
+  are `struct RoomDef` headers in what is now `room_data`; seg 13 holds no
+  PCM at all.
 * The "FIR/envelope coefficient tables" at `0x080CFF00` (`lib_rodata_fir_tables`,
   rom-map §2 seg 10) have exactly one consumer, **M37** (`0x080C1FFC`), with 22
   pool refs into `lib_misc` and 7 into the tables. rom-map predicted a consumer
@@ -194,23 +206,23 @@ dispatches, pool density) — a planning aid, not a promise.
 | M01 | `0x08007300-0x080075B7` | 0.7 KiB | 1 | 0 | - | **done** - main |
 | M02 | `0x080075B8-0x0800B91F` | 16.9 KiB | 109 | 1 | *** | game-state bodies, boot/title sequence, screen loaders, pause screen + HUD - **landed (#96)** |
 | M03 | `0x0800B920-0x08010357` | 18.6 KiB | 79 | 0 | **** | main menu + its 22 sprite tasks, BG scroll animator, stage sequence state - **landed (#99)** |
-| M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts |
+| M04 | `0x08010358-0x08017667` | 28.8 KiB | 65 | 0 | *** | scripted-sequence bank: director + 50 of the 63 scripts - **landed (#82)** |
 | M05 | `0x08017668-0x0801A8C7` | 12.6 KiB | 23 | 0 | *** | player-character animation bank + collision registry - **landed (#81, #125)** |
 | M06 | `0x0801A8C8-0x08021B17` | 28.6 KiB | 55 | 0 | ***** | box-vs-terrain collision engine + actor-vs-collider hit tests - **landed (#84, final campaign)** |
 | M07 | `0x08021B18-0x0802969F` | 30.9 KiB | 154 | 1 | ****** | level / room builder + tilemap upload - **landed (#93, final campaign)** |
 | M08 | `0x080296A0-0x08030803` | 28.3 KiB | 151 | 2 | *** | camera, BG map streaming, map-event tasks + stage objects #221-#236 - **landed (#86)** |
 | M09 | `0x08030804-0x0803627F` | 22.6 KiB | 60 | 0 | ***** | breakable blocks + the player task (#5) and first action bodies - **landed (#92)** |
-| M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | stage script runner |
+| M10 | `0x08036280-0x0803CD5F` | 26.7 KiB | 41 | 0 | **** | player action bodies, part 2 (actions 10-21 and 23-28, handlers 9-25) - **landed (#91)** |
 | M11 | `0x0803CD60-0x080449C7` | 31.1 KiB | 121 | 4 | ***** | player mode/state machine + stage support services - **landed (#85)** |
 | M12 | `0x080449C8-0x08047FE7` | 13.5 KiB | 22 | 0 | *** | player action bodies, part 3 (actions 34-43, handlers 30-40) - **landed (#87)** |
 | M13 | `0x08047FE8-0x0804CC7B` | 19.1 KiB | 27 | 0 | *** | player action bodies, part 4 (actions 29, 44-48, 50-54, handlers 26, 41-45, 47-51) - **landed (#88)** |
 | M14 | `0x0804CC7C-0x08053AF3` | 27.6 KiB | 84 | 2 | *** | player action bodies, part 5 (actions 30-31, 49, 55-58, handlers 27-28, 46, 52-55), the action 49/58 sub-action tables and task type #6 - **landed (#90)** |
 | M15 | `0x08053AF4-0x0805AFAB` | 29.2 KiB | 84 | 1 | *** | player effect objects: task type #7 (body + 49 variants and their callbacks) - **landed (#89)** |
-| M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 89 | 1 | *** | effect spawner + two-level state machine (task types #81-#90) |
-| M17 | `0x08062584-0x080692FB` | 27.4 KiB | 244 | 2 | *** | struct Task field API (actor core) |
+| M16 | `0x0805AFAC-0x08062583` | 29.5 KiB | 89 | 1 | *** | effect spawner + two-level state machine (task types #81-#90) - **landed (#83)** |
+| M17 | `0x08062584-0x080692FB` | 27.4 KiB | 244 | 2 | *** | struct Task field API (actor core) - **landed (#65)** |
 | M18 | `0x080692FC-0x08070EBF` | 30.9 KiB | 256 | 4 | * | player-state task bodies (actor core part 2) - **landed (#64)** |
 | M19 | `0x08070EC0-0x08078B67` | 31.2 KiB | 220 | 8 | ** | cutscene / ending-sequence bank (11 class-3 tasks) - **landed (#79)** |
-| M20 | `0x08078B68-0x0807F043` | 25.2 KiB | 390 | 20 | ** | enemy/object behaviour bank 1 - **landed (#77)** |
+| M20 | `0x08078B68-0x0807F043` | 25.2 KiB | 390 | 20 | ** | enemy behaviour bank 1 (21 task types) - **landed (#77)** |
 | M21 | `0x0807F044-0x08082E67` | 15.5 KiB | 188 | 10 | * | enemy/object behaviour bank 2 - **landed (#71)** |
 | M22 | `0x08082E68-0x080860F7` | 12.6 KiB | 119 | 8 | * | enemy/object behaviour bank 3 (five three-table scripts) - **landed (#69)** |
 | M23 | `0x080860F8-0x0808CCE7` | 27.0 KiB | 297 | 14 | *** | enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - **landed (#80)** |
@@ -219,10 +231,10 @@ dispatches, pool density) — a planning aid, not a promise.
 | M26 | `0x08093F64-0x080988F7` | 18.4 KiB | 140 | 4 | ** | enemy/object behaviour bank 7 (four three-table scripts + two companions) - **landed (#75)** |
 | M27 | `0x080988F8-0x0809BA43` | 12.3 KiB | 140 | 3 | * | mid-boss behaviour bank (two scripts + three companions) - **landed (#68)** |
 | M28 | `0x0809BA44-0x080A158F` | 22.8 KiB | 198 | 5 | * | enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - **landed (#74)** |
-| M29 | `0x080A1590-0x080A5643` | 16.2 KiB | 221 | 5 | ** | enemy/object behaviour bank 10 |
+| M29 | `0x080A1590-0x080A5643` | 16.2 KiB | 221 | 5 | ** | enemy/object behaviour bank 10 - **landed (#76)** |
 | M30 | `0x080A5644-0x080AA337` | 19.2 KiB | 130 | 2 | * | enemy/object behaviour bank 11 - **landed (#72)** |
-| M31 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 121 | 2 | ** | enemy/object behaviour bank 12 |
-| M32 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 129 | 5 | * | enemy/object behaviour bank 13 |
+| M31 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 121 | 2 | ** | enemy/object behaviour bank 12 - **landed (#78)** |
+| M32 | `0x080AE3BC-0x080B2FE7` | 19.0 KiB | 129 | 5 | * | enemy/object behaviour bank 13 - **landed (#73)** |
 | M33 | `0x080B2FE8-0x080B6153` | 12.4 KiB | 108 | 5 | *** | HUD / overlay effects? - **landed (#97)** |
 | M34 | `0x080B6154-0x080B9D0B` | 14.9 KiB | 105 | 2 | *** | save file / SRAM records + options - **landed (#94)** |
 | M35 | `0x080B9D0C-0x080BDA2B` | 15.3 KiB | 193 | 4 | *** | sub-game framework + reaction-duel sub-game - **landed (#95)** |
@@ -236,6 +248,10 @@ dispatches, pool density) — a planning aid, not a promise.
 
 
 ## 5. Suggested decompilation order
+
+*History: all 37 modules have landed (#35 closed).  The "landed" marks in
+the two tables below were added as the issues closed and are not complete;
+the order and the waves are #34's plan, kept for the record.*
 
 Ordering rule: **leaf-heavy and cheap first** (`ext_deps` ascending, difficulty
 ascending, `module-map.csv` has both columns), with one deliberate exception —
@@ -270,7 +286,7 @@ ordering inside it:
 | 10 | M18 actor core part 2 + class-1 task bodies | 0x7BC4 | 256 | 1 | 10 | 18 | 31 |
 | 11 | M26 enemy/object behaviour bank 7 - landed | 0x4994 | 140 | 2 | 3 | 0 | 7 |
 | 12 | M29 enemy/object behaviour bank 10 | 0x40B4 | 221 | 2 | 4 | 0 | 9 |
-| 13 | M20 enemy/object behaviour bank 1 | 0x64DC | 390 | 2 | 5 | 0 | 21 |
+| 13 | M20 enemy behaviour bank 1 (21 task types) - landed | 0x64DC | 390 | 2 | 5 | 0 | 21 |
 | 14 | M31 enemy/object behaviour bank 12 | 0x4084 | 121 | 2 | 7 | 0 | 18 |
 | 15 | M19 cutscene / ending-sequence bank (11 class-3 tasks) - landed | 0x7CA8 | 220 | 2 | 7 | 4 | 11 |
 | 16 | M34 save file / SRAM records + options - landed | 0x3BB8 | 106 | 3 | 2 | 12 | 0 |
@@ -317,7 +333,7 @@ sub-issue of #35, so the numbering ascends with the recommended order):
 | 11 | #74 | M28 enemy/object behaviour bank 9 (four-lane spawner, a six-variant enemy family, the player death sequence) - landed | `0x0809BA44-0x080A158F` | 22.8 KiB | 2 |
 | 12 | #75 | M26 enemy/object behaviour bank 7 (four three-table scripts + two companions) - landed | `0x08093F64-0x080988F7` | 18.4 KiB | 2 |
 | 13 | #76 | M29 enemy/object behaviour bank 10 - landed | `0x080A1590-0x080A5643` | 16.2 KiB | 2 |
-| 14 | #77 | M20 enemy/object behaviour bank 1 (21 task types, mostly moving scenery) - landed | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
+| 14 | #77 | M20 enemy behaviour bank 1 (21 task types) - landed | `0x08078B68-0x0807F043` | 25.2 KiB | 2 |
 | 15 | #78 | M31 enemy/object behaviour bank 12 | `0x080AA338-0x080AE3BB` | 16.1 KiB | 2 |
 | 16 | #79 | M19 cutscene / ending-sequence bank (11 class-3 tasks) - landed | `0x08070EC0-0x08078B67` | 31.2 KiB | 2 |
 | 17 | #80 | M23 enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - landed | `0x080860F8-0x0808CCE7` | 27.0 KiB | 2 |
@@ -516,7 +532,7 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** DISPCNT shadow x26, keys newly pressed x20, current game state (main dispatch) x11, BG3VOFS shadow (16.16) x10, decimal digit buffer, [5] = sign/flag x9, auto-repeat first delay (14) x7.
 * **Suggested batches** `0x0800B920` (13 fns), `0x0800CA10` (37 fns), `0x0800EA0C` (33 fns).
 
-### M04 `0x08010358-0x08017667` - scripted-sequence bank: director + 50 of the 63 scripts
+### M04 `0x08010358-0x08017667` - scripted-sequence bank: director + 50 of the 63 scripts - **landed (#82)**
 
 **Decompiled in issue #82** (all 65 functions, no asm left in the range): `src/player_10358.c`, `src/player_109c8.c`, `src/player_10b38.c`.
 
@@ -557,7 +573,7 @@ below is the pre-decompilation one, kept for the record.
 * **Census: two phantoms**, both now in `tools/symdb.py`. `0x080153A2` and `0x0801625A` were invented by the pool word `0xFFFFF000` at `0x080143A0` and `0x08015258` decoding as a `bl` pair (lesson 4.40, fourth and fifth instances); neither has a prologue and each continues the function above it, so `sub_08015268` really runs `0x198` bytes and `sub_0801607c` `0x224`. The module has 65 functions, not 67.
 * **Seam cost** 0 in / 1 out. **Called from** M05 x5.
 
-### M05 `0x08017668-0x0801A8C7` - player-character animation bank + collision registry
+### M05 `0x08017668-0x0801A8C7` - player-character animation bank + collision registry - **landed (#81, #125)**
 
 **Decompiled in issue #81** (20 of 23 functions, 11100 of 12896 bytes):
 `src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,
@@ -970,7 +986,7 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** DISPCNT shadow x4, current game state (main dispatch) x1, frames left to wait x1.
 * **Suggested batches** `0x08036280` (6 fns), `0x080371F0` (10 fns), `0x08038FE8` (8 fns), `0x0803AFCC` (17 fns).
 
-### M11 `0x0803CD60-0x080449C7` - player mode/state machine + stage support services
+### M11 `0x0803CD60-0x080449C7` - player mode/state machine + stage support services - **landed (#85)**
 
 **Decompiled in issue #85** (119 of 121 functions, 28940 of 31848 bytes):
 `src/stage_3cd60.c`, `src/stage_413a4.c`, `src/stage_43654.c`; the straggler
@@ -1321,7 +1337,7 @@ below is the pre-decompilation one, kept for the record.
 * **Known RAM cells touched** DISPCNT shadow x3.
 * **Suggested batches** `0x08053AF4` (12 fns), `0x08054330` (25 fns), `0x0805614C` (18 fns), `0x08057CE0` (17 fns), `0x08059C28` (14 fns).
 
-### M16 `0x0805AFAC-0x08062583` - effect spawner + two-level state machine (task types #81-#90)
+### M16 `0x0805AFAC-0x08062583` - effect spawner + two-level state machine (task types #81-#90) - **landed (#83)**
 
 **Decompiled in issue #83** (all 89 functions, no asm left in the range): `src/effect_5afac.c`.
 
@@ -1539,7 +1555,7 @@ functions; the sweep of #79 corrected that to 220, see below).
 * **Known RAM cells touched** DISPCNT shadow x3, per-player keys held x1, per-player keys pressed x1.
 * **Batches as landed** `0x08070EC0` (42 fns), `0x08072D8C` (48), `0x08074C0C` (12), `0x080763E8` (63), `0x08077AE0` (55).
 
-### M20 `0x08078B68-0x0807F043` - enemy/object behaviour bank 1 - **landed (#77)**
+### M20 `0x08078B68-0x0807F043` - enemy behaviour bank 1 - **landed (#77)**
 
 The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as three `c_code` rows instead of one clusterable module; the
@@ -1566,8 +1582,8 @@ functions; the reachability sweep of #77 corrected that to 414, see below).
   #155 run 2: they are enemies - Waddle Dee's rows, Rocky, Pengy, Sir Kibble,
   Cappy, Gordo, Cool Spook, Kabu, Bomber, Sparky, Scarfy, the sword knights,
   Needlous (run 2 said Togezo; corrected in run 3), UFO and the parasol, identified from local sprite renders and
-  their ActorDef.ability; the table title above comes from
-  `tools/modmap.py` and keeps the old reading until a non-rename PR*): the bodies
+  their ActorDef.ability; `tools/modmap.py`'s title and evidence say so
+  since #37*): the bodies
   drive the 16.16 velocity pair `Task.unk54`/`Task.unk58` and the gravity cell
   `Task.unk60` from ROM constants and then wait on the collision flag
   `Task.unk7A`, instead of aiming at a player.
@@ -2793,10 +2809,12 @@ Other loose ends this pass surfaced:
 
 1. The task-type table straddles a `segments.txt` boundary (§3.1) and should be
    carved into its own segment with symbolic entry names — a natural companion
-   to #36 (typed extraction of data zones).
+   to #36 (typed extraction of data zones).  *Done in #36 phase 2:*
+   `src/data/task_types.c`.
 2. `rom-map.md` §6 / `src/early_58e4.c` describe `TaskType.unk04` as a flag
    word; it is an entry point. Worth fixing in both places when the task
-   subsystem is next touched.
+   subsystem is next touched.  *Done:* `struct TaskType` in `include/task.h`
+   and `src/early_58e4.c` call it `entry`.
 3. 3,288 of 5,045 functions have **no BL caller at all** — they are only
    reachable through tables. Any future "dead code?" analysis must not treat
    `rom-pointer`-only evidence as suspicious.

@@ -13,27 +13,40 @@ the whole Thumb game-code region was split into per-function chunks (issue
 configured too, and emitted by a separate structure-only emitter into
 `data/<segment>.s`: labels, symbolic pointer words and `.incbin` slices of
 `baserom.gba`, never ROM values (the data policy; rules, config keys and
-metrics in [`docs/data.md`](data.md)). The code segments configured today
-(the chunked game-code rows below are history: that code is C now):
+metrics in [`docs/data.md`](data.md)). The code segments configured today,
+all of them asm by design (`docs/audit.md` §2):
 
 | segment              | range                        | contents                          |
 | -------------------- | ---------------------------- | --------------------------------- |
-| `game_code_early`    | `0x080008E8-0x08007300`      | early subsystems — 2 chunks in `asm/game_code_early/` (`agb_init` before it was decompiled to `src/agb_init.c` in #28; its old 0x080006FF boundary split the `bx r0` return and the literal pool of `AgbInit` in half — the real compiler unit ends at 0x080008E8) |
-| `game_code_and_rodata` | `0x080075B8-0x080CFA4C`    | bulk of the game logic (~5,000 functions) — 14 chunks of ~64 KiB in `asm/game_code_and_rodata/` (end moved from 0x080CFA40 in #29: the old boundary cut the m4a XCMD handler `ply_xswee` in half) |
 | `task_switch_helpers`| `0x08000234-0x080002E5`      | cooperative task switch (ARM, 4 helpers + 1-byte tail) |
 | `task_literals`      | `0x080002E5-0x08000310`      | their literal pools (10 words, all named cells) |
+| `m4a_1`              | `0x080CD89C-0x080CE4B8`      | the m4a sound engine's hand-written asm core (`docs/analysis/rom-map.md` §8.2) |
 | `sdk_swi_wrappers`   | `0x080CFA4C-0x080CFA7F`      | 11 Thumb SWI thunks (svc wrappers)|
 | `sdk_reset_helper`   | `0x080CFA7F-0x080CFA9C`      | odd-start segment: `SoftReset` (0x080CFA80) + pool|
 | `sdk_libc`           | `0x080CFC30-0x080CFDDC`      | `_call_via_r0..lr`, division/modulo, task trampolines |
 | `interworking_veneer`| `0x080CFDDC-0x080CFDE4`      | ARM `ldr ip,[pc]; bx ip` -> `0x08005654\|1` |
 
+History: two chunked game-code segments were configured until the code
+became C (#25-#35): `game_code_early` (`0x080008E8-0x08007300`, 2 chunks
+in `asm/game_code_early/`; its old `0x080006FF` start split the `bx r0`
+return and the literal pool of `AgbInit` in half, corrected in #28) and
+`game_code_and_rodata` (`0x080075B8-0x080CFA4C`, ~5,000 functions in 14
+chunks of ~64 KiB in `asm/game_code_and_rodata/`; its end moved from
+`0x080CFA40` in #29, where the old boundary cut the m4a XCMD handler
+`ply_xswee` in half).  Every C file now has its own `c_code` row in
+`docs/analysis/segments.txt`, landed by `tools/carve.py`.
+
 The six data segments this table used to list (the veneer's literal word,
 the IRQ handler table, `lib_misc`, `lib_rodata_fir_tables`, the m4a engine
 rodata and the m4a song table) were value lists in `asm/` until #36, which
 moved them to `data/` with every value replaced by an `.incbin` slice or a
-symbol.
+symbol (`lib_misc` and `lib_rodata_fir_tables` are `sram_id_string` and
+`air_grind_rodata` since #36 phase 2, `docs/data.md` §4.1).
 
 ## Chunked segments (issue #25)
+
+No segment uses chunking today (the two chunked game-code segments became
+C); the mechanism stays in `tools/split.py`.
 
 Segments configured with a `"chunk_bytes"` value are cut at EVEN function
 boundaries roughly that many bytes apart and emitted as one file per chunk,
@@ -155,8 +168,8 @@ handling (both occur in the demo set):
   `.segment.tail`, and every segment rule in `linker.ld` carries a
   `KEEP(*(.segment.tail))` pattern that appends it after the main content.
 * **Odd segment start** (`sdk_reset_helper` begins at `0x080CFA7F`, the
-  second half of the previous segment's `bx lr`; `game_code_early` at
-  an odd segment start is the same shape): real instructions cannot be placed at odd
+  second half of the previous segment's `bx lr`; the pre-#28
+  `game_code_early` at `0x080006FF` was the same shape): real instructions cannot be placed at odd
   section offsets (gas would pad), so such segments are emitted from raw
   `.short`/`.byte`/`.word` data with labels but no instruction text. Pure
   data directives do not pad, so the bytes stay exact.
@@ -165,7 +178,8 @@ handling (both occur in the demo set):
 
 Each run assembles and links **all configured segments as a group** before
 writing anything (a split segment may reference labels that another split
-segment defines, e.g. the IRQ table pointing into `game_code_early`):
+segment defines, e.g. `sdk_libc`'s trampolines branching to the task
+switcher in `task_switch_helpers`):
 
 1. `arm-none-eabi-as -mcpu=arm7tdmi` assembles every candidate file
    (per segment, real instructions first, raw fallback if it will not

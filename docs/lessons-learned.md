@@ -9977,7 +9977,7 @@ no clobbers or pins) it matched.
 ### 3.352 Iterate the clobber sweep: each round is cheap and they compose
 `asm("" ::: "rN")` inserted at *every* statement boundary and scored with
 `fnmatch.sh` is ~25 compiles a minute per register, so a whole function can be
-swept in a couple of minutes.  `tools/clobber_sweep.py <file.c> <start> <end>
+swept in a couple of minutes.  `tools/archive/clobber_sweep.py <file.c> <start> <end>
 [rounds]` does exactly that and re-runs itself on its own winner.  What the M34 stragglers showed is that the sweep
 should be **re-run on its own winner**: single clobbers interact, and the score
 falls in steps that one round never finds.  `sub_080b75a4` went
@@ -9993,7 +9993,8 @@ different program (the `asm` becomes the `if` body and the real statement
 becomes unconditional); and score `differing + 1000 * |size delta|` so that
 variants which reach the ROM's exact byte count sort above smaller-diff ones
 that are still missing instructions.
-
+*Correction note (#37):* archived to `tools/archive/` (the path above is
+the new one; `tools/archive/README.md`).
 
 ### 3.354 Assign a pool address INSIDE the loop and loop.c hoists it; assign it outside and gcse copies it
 The move that closed `sub_080b6290`, and the cleanest statement so far of when

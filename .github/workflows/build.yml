@@ -29,8 +29,14 @@ jobs:
 
       # ----- Checks that never require baserom.gba (always run) -----
 
+      # Every top-level tool (a glob, not a list: the list had drifted and
+      # missed addsyms.py, carve.py, clobber_sweep.py, fnmatch_diff.py and
+      # gen_report.py) and the asm-differ configuration.
       - name: Python tooling check (tools/*.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/gbafix.py tools/symdb.py tools/symdb_check.py tools/split.py tools/modmap.py tools/datastats.py tools/check_data_policy.py tools/rename.py tools/rename_field.py tools/carve_data.py tools/resegment.py tools/ldblocks.py tools/shiftcheck.py tools/ptrcensus.py tools/census_rooms.py tools/census_seg18.py tools/census_m4a.py tools/m4a_struct.py tools/census_sprites.py tools/census_sheets.py tools/census_bounds.py tools/ldgroup.py tools/boottest.py tools/branchcheck.py
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/*.py tools/asm-differ/*.py
+
+      - name: Shell tooling check (bash -n)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder bash -c 'set -e; for f in asmdiff.sh tools/*.sh tools/asm-differ/*.sh; do bash -n "$f"; done'
 
       - name: Perl tooling check (tools/calcrom.pl)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder perl -c tools/calcrom.pl
@@ -43,7 +49,7 @@ jobs:
           mkdir -p build/scratch
           cp -r tools/permuter-example build/scratch/fn
           docker run --rm -v "$PWD":/src -w /src knidl-builder bash -c '
-            set -e
+            set -eo pipefail
             cd build/scratch/fn
             chmod +x compile.sh
             arm-none-eabi-as -mcpu=arm7tdmi -o target.o target.s
@@ -115,7 +121,7 @@ jobs:
       - name: Verify baserom.gba SHA-1 (fail closed)
         if: steps.baserom.outputs.have == 'true'
         run: |
-          set -eu
+          set -euo pipefail
           echo "$EXPECTED_BASEROM_SHA1  baserom.gba" | sha1sum --check --strict - || {
             echo "::error::baserom.gba SHA-1 mismatch: expected $EXPECTED_BASEROM_SHA1. Refusing to build with a wrong/corrupt ROM."
             exit 1
@@ -153,6 +159,13 @@ jobs:
         run: |
           make split
           git diff --exit-code -- asm data
+          # git diff does not see a generated file that was never committed
+          untracked=$(git status --porcelain --untracked-files=all -- asm data)
+          if [ -n "$untracked" ]; then
+            echo "$untracked"
+            echo "::error::make split wrote files under asm/ or data/ that are not committed"
+            exit 1
+          fi
 
       # Data policy (AGENTS.md, docs/data.md, issue #36): assets are never
       # committed; generated data files hold structure only (labels,
@@ -160,6 +173,14 @@ jobs:
       # always runs.
       - name: Data policy check (no assets committed)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 tools/check_data_policy.py
+
+      # The final audit (issue #37, docs/audit.md): .incbin only where the
+      # data policy allows it, every raw directive in asm/ and raw address in
+      # src/ justified, the sanctioned asm list against tools/calcrom.pl, the
+      # code exceptions and the docs/naming.md placeholder census.  Reads the
+      # committed tree only, so it needs no baserom and always runs.
+      - name: Audit (make audit)
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 tools/audit.py
 
       - name: Data structure metrics (make datastats)
         if: steps.baserom.outputs.have == 'true'
@@ -263,7 +284,10 @@ jobs:
           echo " "
           echo " Ran instead (always green without a baserom):"
           echo "   - knidl-builder Docker image build (full toolchain)"
-          echo "   - tools/gbafix.py and tools/calcrom.pl syntax checks"
-          echo "   - compilation of crt0 and every file in src/"
-          echo "   - header smoke check of include/gba/ (make check-headers)"
+          echo "   - syntax checks of tools/*.py, the shell tools and tools/calcrom.pl"
+          echo "   - decomp-permuter smoke test (tools/permuter-example)"
+          echo "   - compilation of crt0 and every file in src/ and src/data/"
+          echo "   - header smoke check of include/gba/ and include/*.h (make check-headers)"
+          echo "   - data policy check (tools/check_data_policy.py)"
+          echo "   - the final audit (tools/audit.py, make audit)"
           echo "=================================================================="

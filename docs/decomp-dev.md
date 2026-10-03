@@ -24,7 +24,8 @@ docs/analysis/module-map.csv─┘            │
 - **`tools/gen_report.py`** derives the report from the repo's own ground
   truth — no baserom or toolchain needed:
   - a function is **matched** iff its VMA lies inside a `c_code` segment
-    (exactly the ranges `linker.ld` pins to `build/src/<name>.o`; the
+    (exactly the ranges `linker.ld` places from `build/src/<name>.o` and
+    asserts at their ROM address in matching builds; the
     byte-exactness of every one of those ranges is enforced by
     `make compare` in CI, so "in c_code" ⇒ "verified matching C"),
   - units follow the functional clustering of `module-map.csv`
@@ -76,5 +77,8 @@ CI whenever the analysis CSVs change).
 | `matched_functions` | symbols.csv functions inside `c_code` ranges |
 | `[asm]` units | named-asm-forever zones; counted in totals at 0% |
 
-Data (`8.3 MB` of assets) is intentionally not tracked as "code progress";
-the ROM's data segments are incbins by design until asset tooling exists.
+Data is intentionally not tracked as "code progress": the ROM's data
+segments are structure-only `data/*.s` files (labels, symbolic pointers and
+`.incbin` slices of the user's `baserom.gba`, `docs/data.md`), assets stay
+bytes from the baserom by policy, and the functional tables that are C
+(`src/data/`) are counted by `make datastats`, not here.

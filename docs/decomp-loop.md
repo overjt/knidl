@@ -1,10 +1,22 @@
 # The standard decompilation loop — one function from asm to matching C
 
 This is the repeatable workflow for turning one ROM function from labeled asm
-(issue #25 split) into matching C that links back into its pinned section.
+(issue #25 split) into matching C that links back into its section (placed by
+ld in link order and asserted at its ROM address in matching builds,
+`docs/data.md` §8.2).
 It is written for AI agents executing decompilation issues: every step is a
 command that runs inside the `knidl-builder` Docker image, and §8 defines the
 subagent handoff contract.
+
+> [!NOTE]
+> **Status (#37):** every game function is C (#35 closed; `make progress`
+> reports 0 bytes of code remaining).  The asm left in the ROM is asm by
+> design (`docs/audit.md` §2, `tools/calcrom.pl`'s `%decomp_excluded_asm`),
+> and the split chunk files this loop starts from (`asm/<segment>/...`) are
+> gone.  The loop stays the reference for re-matching work on C that
+> already matches (a plainer rewrite, a new name or type, #154's natural-C
+> campaign): read the target from `baserom.gba` (`./asmdiff.sh`, §1) and
+> verify with `tools/fnmatch.sh` (§3) and the full build (§5).
 
 Read [`docs/lessons-learned.md`](lessons-learned.md) before your first module;
 the steps below reference those lessons by number. Tool references:
@@ -23,9 +35,9 @@ the steps below reference those lessons by number. Tool references:
 | Input | Where |
 |-------|-------|
 | Function address + size | `docs/analysis/symbols.csv` (e.g. `0x080CFA9C,0x24,thumb,rom-pointer,ReadSram_Core`) |
-| Its current asm | `asm/<segment>/<segment>_NN.s` chunk files (find the chunk via `docs/analysis/segments.txt` boundaries); functions are labeled, literal pools included |
+| Its current asm | was the `asm/<segment>/<segment>_NN.s` chunk files (gone: all game code is C); today the target is `baserom.gba` itself (`./asmdiff.sh`, §1) and the range is its `docs/analysis/segments.txt` row |
 | Symbol names it calls/references | `docs/analysis/callgraph.csv`, `asm/rom_syms.s` absolute symbols |
-| Compiler recipe for its zone | `Makefile` per-file overrides + `docs/research/compiler-validation.md`: game code = `agbcc -O2 -mthumb-interwork`; SDK zone (`0x080CF9xx`) = `old_agbcc -O1 -mthumb-interwork`; m4a driver zone (`0x080CE4B8+`) = `old_agbcc -O2 -mthumb-interwork` (lesson 3.15); ARM units = `agbcc_arm` |
+| Compiler recipe for its zone | `Makefile` per-file overrides + `docs/research/compiler-validation.md`: game code = `agbcc -O2 -mthumb-interwork -fprologue-bugfix` (lesson 3.75; `fnmatch.sh --newpb`); SDK zone (`0x080CF9xx`) = `old_agbcc -O1 -mthumb-interwork`; m4a driver zone (`0x080CE4B8+`) = `old_agbcc -O2 -mthumb-interwork` (lesson 3.15); ARM units = `agbcc_arm` |
 
 ## 1. Pick the function and set up scratch space
 
@@ -72,10 +84,15 @@ labels pinned at their VMAs, `gUnk_*`/data_symbols as absolutes), links it
 alone at the target address and byte-compares against `baserom.gba`:
 
 ```sh
-./tools/fnmatch.sh 0x08000310 0x080008E8 src/agb_init.c          # game zone
+./tools/fnmatch.sh 0x08000310 0x080008E8 src/agb_init.c --newpb  # game zone
 ./tools/fnmatch.sh 0x080CFA9C 0x080CFC30 src/agb_sram.c --old    # SDK zone
 ./tools/fnmatch.sh 0x080CE4B8 0x080CEFB4 src/m4a_c1.c --old2     # m4a driver zone (lesson 3.15)
 ```
+
+`--newpb` is the Makefile's recipe for all of `src/` (`CFLAGS` carries
+`-fprologue-bugfix`, lesson 3.75); fnmatch's bare default omits that flag,
+so a file with a leaf that branches mismatches under it (`src/early_6464.c`:
+119 differing bytes without `--newpb`, MATCH with it).
 
 - `MATCH (N bytes ...)` = the file will be byte-identical once landed.
 - On mismatch it prints the differing byte count and a **pool-resolving
@@ -92,18 +109,15 @@ alone at the target address and byte-compares against `baserom.gba`:
   (lesson 3.6) — cutting it off makes a match impossible.
 
 Iterate on the C until MATCH. Source-shape fixes live in
-`docs/lessons-learned.md` §3 — for game-zone code read §3.6-§3.11 first
-(chained assignments, volatile indexed-store pre-reads, zero variables);
-try the other opt level BEFORE rewriting source (lesson 3.1).
-
-Source-shape fixes live in `docs/lessons-learned.md` §3 (opt level per zone,
-CSE defeat, mask widths, stack-copy idioms). Try the other opt level BEFORE
-rewriting source (lesson 3.1).
+`docs/lessons-learned.md` §3 (opt level per zone, CSE defeat, mask widths,
+stack-copy idioms) — for game-zone code read lessons 3.6-3.11 first (chained
+assignments, volatile indexed-store pre-reads, zero variables); try the
+other opt level BEFORE rewriting source (lesson 3.1).
 
 ## 4. Escalate to decomp-permuter (close-but-not-equal)
 
 When the diff is small and stable but nonzero, let
-[`tools/decomp-permuter`](tools/decomp-permuter) (vendored from
+[`tools/decomp-permuter`](../tools/decomp-permuter) (vendored from
 simonlindholm/decomp-permuter@`2795247304ec4798459b9bc865314e64e5182bf9`,
 MIT LICENSE kept intact) search semantically-equivalent source shapes for you.
 It needs no baserom — only the compiler pipeline and target asm.
@@ -143,7 +157,7 @@ set -euo pipefail                     # pipefail is MANDATORY: without it a cras
                                       # compiler + succeeding assembler scores 0
 INPUT="$1"; OUTPUT="$3"
 cpp -P -I include "$INPUT" \
-  | agbcc -O2 -mthumb-interwork -fhex-asm \
+  | agbcc -O2 -mthumb-interwork -fprologue-bugfix -fhex-asm \
   | { cat; printf '.text\n\t.align\t2, 0\n'; } \
   | arm-none-eabi-as -mcpu=arm7tdmi -o "$OUTPUT"
 ```
@@ -197,25 +211,23 @@ Useful flags: `--stop-on-zero` (halt on match), `--better-only`,
 `--print-diffs` (show what changed per improvement), `--debug` (dumps compiled
 base object). Full CLI: `tools/decomp-permuter/USAGE.md`.
 
-### 4b. Register residues: tools/clobber_sweep.py
+### 4b. Register residues: read them as source differences
 
 When the candidate is the right size and the right instructions but the wrong
 registers, the permuter is the wrong tool — it mutates source shape, not
-allocation.  Use the empty-clobber lever instead
-(`docs/lessons-learned.md` §3.341, §3.350–§3.352):
-
-```sh
-python3 tools/clobber_sweep.py pending/<mod>/cand.c 0x080B75A4 0x080B76A8 6
-```
-
-It inserts `asm("" ::: "rN")` at every statement boundary, keeps the best
-scoring insertion (score = differing bytes + 1000x |size delta|, so exact size
-always wins), and repeats on its own winner — clobbers compose, and one round
-rarely finds the pair that closes a function.  The candidate must live inside
-the repo and carry a `/* --- functions --- */` marker with a single function
-after it.  Stop when a round gains less than a couple of bytes: that is the
-signal the residue is structural (a missing statement, a wrong type, a wrong
-return type — lesson 4.70) rather than an allocation rotation.
+allocation.  The modules' campaigns reached for zero-byte `asm("" ::: "rN")`
+clobbers and `register ... asm("rN")` pins here (lessons 3.341, 3.350–3.352),
+but #154 found that nearly all of them described the old candidate, not the
+function: 130 of 133 pinned functions matched again from plain C once the
+residue was read as a source difference — a wrong declaration (`u16` for
+`s16`, `vu8` for `u8`), a literal written at every use, a table element read
+twice, a variable's role or a loop's shape (lessons 3.495–3.514).  Start
+there: strip the levers, redraft from a sibling that matches, and fix the
+types.  Any lever that remains is a code exception and must be listed in
+`docs/audit.md` §3.  The clobber sweep of #94 stays available as a last
+resort, archived as `tools/archive/clobber_sweep.py` (`tools/archive/README.md`):
+the two approved levers of `sub_080caab8` (`BootLogoUpdateObjects`) came from
+that kind of search.
 
 ## 5. Land it with tools/carve.py
 
@@ -286,7 +298,8 @@ To keep parallel agents from colliding, every delegation MUST use this contract.
 1. **Assignment**: exactly ONE function — name, `[start, end)` ROM range
    (half-open, from `symbols.csv`/`segments.txt`) and its containing segment.
 2. **Current asm**: path(s) to the chunk file(s) holding the function plus the
-   function's label inside them.
+   function's label inside them (since all game code is C: the range and the
+   current `src/` file, the target being `baserom.gba`).
 3. **Symbol context**: known names the function calls/references (from
    `callgraph.csv` / `rom_syms.s`) and whether each is C-defined yet.
 4. **Compiler recipe**: the zone verdict (`agbcc -O2` vs `old_agbcc -O1` /
