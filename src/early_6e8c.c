@@ -66,5 +66,5 @@ void LinkMain1(u16 *a, u16 *b, u16 *c);
 
 void StartTransfer(void)
 {
-    gUnk_04000128 |= 0x80;
+    REG_SIOCNT |= 0x80;
 }

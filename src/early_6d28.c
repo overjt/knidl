@@ -61,10 +61,6 @@ struct SioMultiCnt
 
 /* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
-/* raw: REG_SIOMULTI0/REG_SIOCNT/REG_SIOMLT_SEND as symbols (lesson 3.523) */
-extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
-extern vu16 gUnk_04000128;      /* REG_SIOCNT */
-extern vu16 gUnk_0400012A;      /* REG_SIOMLT_SEND */
 extern u16 gLocalPlayer;
 extern u16 gPlayerCount;
 extern u32 gSerialIntrCount;
@@ -82,23 +78,23 @@ void SerialCB(void)
     u8 playerCount = 0;
     u16 minRecv = 0xFFFF;
 
-    gLink.unk02 = ((struct SioMultiCnt *)&gUnk_04000128)->id;
+    gLink.unk02 = ((struct SioMultiCnt *)&REG_SIOCNT)->id;
 
     switch (gLink.unk01)
     {
     case 4:
-        gLink.unk12 = ((struct SioMultiCnt *)&gUnk_04000128)->error;
+        gLink.unk12 = ((struct SioMultiCnt *)&REG_SIOCNT)->error;
         DoRecv();
         DoSend();
         SendRecvDone();
         break;
     case 2:
         if (gLink.unk10 == 1)
-            gUnk_0400012A = 0x8FFF;
+            REG_SIOMLT_SEND = 0x8FFF;
         else
-            gUnk_0400012A = 0xCFF0;
+            REG_SIOMLT_SEND = 0xCFF0;
 
-        *(struct Pair *)gLink.recv = *(struct Pair *)&gUnk_04000120;
+        *(struct Pair *)gLink.recv = *(struct Pair *)&REG_SIOMULTI0;
         gLink.unk10 = 0;
 
         if (gLink.recv[0] == 0x8FFF)
