@@ -153,6 +153,7 @@ listed.
 | [4.79](#479-a-function-can-match-alone-and-not-inside-its-carve-file-gcse-hashes-pool-label-addresses) | [3.515](#3515-a-rename-is-codegen-neutral-under-agbccs-thumb-backend-measured-on-155s-1145-renames) | Amended (final campaign note): gcse hashes a name's characters, not its address; the conclusion stands. |
 | [4.105](#4105-the-stack-slots-of-pres-copies-follow-gcses-hash-table-order-which-the-functions-size-sets) | [3.493](#3493-sub_080c5b84-pres-slot-order-is-arithmetic---solve-the-bucket-inequalities-for-declaration-order-s-and-the-files-label-count-together) | Corrected: the insn count S is one of three variables of the bucket arithmetic. |
 | [4.121](#4121-a-zones-census-name-is-a-guess-follow-the-consumers-pointers) | [4.130](#4130-toolsresegmentpy-and-why-seg-13-had-to-be-re-partitioned-not-renamed), [4.137](#4137-seg-19s-head-is-the-players-frame-records-and-one-format-needs-a-flag-bit) | Amended: the segments were re-partitioned and renamed in phase 2, and seg 19's census name was wrong too. |
+| [4.134](#4134-a-false-thumb-branch-inside-arm-code-would-have-corrupted-a-shifted-rom) | [4.151](#4151-arm-islands-are-a-range-not-a-function-isa_ranges) | Superseded (#37): the mixer is decoded as ARM (`isa_ranges`); `raw_ranges` is gone. |
 
 ## 1. Build system
 
@@ -4755,6 +4756,29 @@ compile to the same assembly.  `tools/header_smoke_game.c` now checks
 the offsets around both views with negative-size arrays, so a layout
 change fails `make check-headers` as well as `make compare`
 (docs/header-conventions.md, "Per-family views of `struct Task`").
+
+### 3.523 io_reg.h and region-macro spellings under the assembly oracle
+#37 replaced the raw I/O, RAM, palette, VRAM, OAM and SRAM addresses of
+`src/` with `include/gba/io_reg.h` and `include/gba/defines.h` macros,
+keeping a change only where the file's agbcc assembly stayed identical
+(4.128).  A register address used as a value (`gHBlankDmaDest =
+REG_ADDR_BG2HOFS`, `(vu32 *)REG_ADDR_DMA0`) and a region address written
+`REGION + offset` (262 sites in 57 files) compile exactly like the number.
+Swapping an extern I/O symbol for its `REG_*` macro changed only the pool
+word's spelling (`.word gUnk_0400012A` -> `.word 0x400012a`) in
+`early_7004.c`, `early_6d28.c`, `early_6e8c.c` and `early_6e9c.c`: the
+same instructions, labels and pool order, and the same `.text` once the
+absolute symbols are defined (the 3.520 case; the owner's coordinator
+accepted it under those three checks).  In `early_4734.c`, `REG_IME`
+lets cse derive `0x04000208` from the live `0x0400010C` (`adds r1, #252`),
+which removes one pseudo and shifts the allocation, so `GIME` stays the
+symbol with a `raw:` comment (3.482's opposite case, 3.62).  The `u`
+suffix of the region macros never mattered for a real address, but it did
+for a number that only looked like one: `gBg0ScrollX > 0x2000000`
+(`mode_082d0.c`, a 16.16 scroll value) became an unsigned `bls` with
+`EWRAM_START`; it stays a number with a `raw:` comment.  So the oracle
+also checks that a literal really is an address.  `make audit` (docs/audit.md)
+lists what is left: four CpuSet control words and nine commented numbers.
 
 ### 3.524 `sub_080b38f0`: a nested `do { } while (0)` is a x3 reference weight, and it settled #154's last r3/r4 swap
 #37's one-hour attempt (agent D) matched `sub_080b38f0`
@@ -10928,6 +10952,8 @@ false label that cut gMPlayJumpTableTemplate's pool word into a `.short`
 and an instruction.  Config `raw_ranges` now keeps the ARM body raw and
 undecoded.  The check that finds such branches: every non-`bl` branch in
 `asm/*.s` whose target is not a label of the same file (one hit).
+*Correction note (#37):* the mixer is decoded as ARM now (`isa_ranges`,
+lesson 4.151); `raw_ranges` is gone.
 
 ### 4.135 Instruction pairs that look like pointers
 After the raw constants of lesson 3.520 were symbols, the code segments
@@ -11219,6 +11245,59 @@ render with the wrong bank is not evidence.
   all shots, a state that only creates the thrower, a body-only name with
   no requester, a "room type" when a second room-kind byte exists): a
   wrong name is worse than no name.
+
+### 4.151 ARM islands are a range, not a function (`isa_ranges`)
+`m4a_1`'s mixer `SoundMainRAM` and `__umul3232H32` switch to ARM inside a
+Thumb function (`adr rN, <label>; bx rN` in, `adr r0, <label>+1; bx r0`
+out).  `raw_ranges` kept those bytes as raw halfwords because a Thumb
+decode produced false branches and labels (4.134); #37's config key
+`isa_ranges` (`{"start", "end", "isa", "why"}`) decodes them in place
+instead: function rows and sizes stay as they are, the emitter splits a
+function into runs, writes `.arm`/`.thumb` before each run's labels and
+decodes each run in its own ISA, with labels from `extra_labels`
+(pokeemerald's names).  One objdump sweep over mixed code merges an ARM
+word with the next Thumb halfword into a Thumb-2 pattern, so the emitter
+re-sweeps from any address where the shared sweep is out of step (`-z`
+keeps zero words).  Every pc-relative `add rd, pc, #imm` is written `adr
+rd, <label>` (`<label>+1` for an ARM `adr` to Thumb code), and a pool
+word one past a data symbol is written `name+1`
+(`gSoundMainRAM_Buffer+1`).  The census needs no special case: the `$a`
+mapping symbols cover the islands.  `raw_ranges` is gone.
+
+### 4.152 An odd segment boundary is an analysis artifact
+`0x080002E5` and `0x080CFA7F` each cut an instruction in two (the ARM
+`b .` of the task-done check and SoundDriverVSyncOff's `bx lr`), which is
+why split.py had its `.tail` sections and the raw-data odd-start path.
+Moved to `0x080002E8` and `0x080CFA80`, both instructions decode and
+SoftReset is a curated Thumb function with its two call edges
+(symbols.csv 5,347 -> 5,348 rows).  Decoding `b .` exposed an emitter bug:
+a branch to its own address re-queued its label after the label had been
+placed ("unplaceable labels").  `resegment.py` handles only data
+segments, so the two `linker.ld` asserts were edited by hand.
+
+### 4.153 Cross-section literal loads: `ldr rN, [pc, #:pc_g0:(label - 8)]`
+crt0's ARM code loads its pool from the next section (`.crt0_literals`).
+gas rejects `ldr rN, label` across sections ("OFFSET_IMM not fixed up"),
+which is why those eight loads were raw `.word 0xE59F....`.  The form
+`ldr rN, [pc, #:pc_g0:(label - 8)]` emits an `R_ARM_LDR_PC_G0`
+relocation that ld resolves, so the loads are symbolic and stay right if
+either section moves.  The task switch helpers still load
+`task_literals` with numeric offsets across a section boundary; no
+insertion point lies between them today.
+
+### 4.154 Harness notes from #37
+* The final audit is a tool, not a document: `tools/audit.py` checks the
+  docs' lists against the tree (the sanctioned asm against `calcrom.pl`,
+  each code exception's `file:line` and function) and regenerates the
+  placeholder census, so a stale list fails CI instead of drifting.
+* Three proposal agents and a fourth for the optional function, each in
+  its own clone under `pending/final37/wip/`, delivered patches against
+  the base commit; the coordinator applied them with `git apply --3way`
+  and resolved the docs conflicts by hand.  An API weekly limit killed all
+  three mid-run; `SendMessage` to their ids resumed each with its context.
+* The clean-clone proof found a Dockerfile pin that never applied (`ARG
+  AGBC_COMMIT` used as `AGBCC_COMMIT`): the image built the fork's default
+  branch head, which only happened to be the pinned commit.
 
 ## 5. Workflow that worked
 

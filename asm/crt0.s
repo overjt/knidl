@@ -5,6 +5,11 @@
 @ .crt0_literals (0x08000210-0x08000233).
 @
 @ Assembled with: arm-none-eabi-as -mcpu=arm7tdmi
+@
+@ Stays asm: the ROM entry (Start) and the master interrupt handler
+@   (MasterIsr, copied to IWRAM 0x03001030) are ARM mode switches, stack set-up
+@   and the IRQ dispatch prologue, which no C compiler emits; every pret GBA
+@   project keeps crt0.s in asm (docs/audit.md section 2).
 
 	.syntax unified
 	.cpu	arm7tdmi

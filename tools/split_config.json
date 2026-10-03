@@ -39518,25 +39518,32 @@
   },
   "segments": [
     {
-      "name": "m4a_1"
+      "name": "m4a_1",
+      "stays_asm": "the m4a sound engine's hand-scheduled asm core with its ARM mixer SoundMainRAM, copied to IWRAM; pret's projects keep m4a_1.s in asm too (docs/analysis/rom-map.md section 8)."
     },
     {
-      "name": "task_switch_helpers"
+      "name": "task_switch_helpers",
+      "stays_asm": "the ARM coroutine switch (TaskSwitch, TaskYield, TaskExit and the task-done check) saves and swaps sp, which no C source can express (docs/analysis/rom-map.md section 6)."
     },
     {
-      "name": "task_literals"
+      "name": "task_literals",
+      "stays_asm": "no code: the task switch helpers' literal pool (named IWRAM cells), counted as data."
     },
     {
-      "name": "sdk_swi_wrappers"
+      "name": "sdk_swi_wrappers",
+      "stays_asm": "the BIOS call thunks are bare `svc N; bx lr` pairs, which agbcc cannot emit (#29)."
     },
     {
-      "name": "sdk_reset_helper"
+      "name": "sdk_reset_helper",
+      "stays_asm": "SoftReset has the same SWI-thunk shape (svc 1; svc 0), which agbcc cannot emit (#29)."
     },
     {
-      "name": "sdk_libc"
+      "name": "sdk_libc",
+      "stays_asm": "libgcc's lib1funcs.asm routines and _call_via_rN are hand-written asm in gcc's own tree, and the Thumb-to-ARM task trampolines are SDK glue (#30)."
     },
     {
-      "name": "interworking_veneer"
+      "name": "interworking_veneer",
+      "stays_asm": "the linker-style `ldr ip, [pc]; bx ip` ARM veneer."
     },
     {
       "name": "gap_interworking_veneer_irq_handler_table_14"

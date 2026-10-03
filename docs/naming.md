@@ -368,7 +368,7 @@ copies and module-local records).
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 173 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
-| I/O register | `gUnk_04*` | 7 | I/O registers written as symbols, kept for codegen (lesson 3.523); the C spells the rest REG_* |
+| I/O register | `gUnk_04*` | 4 | I/O registers written as symbols, kept for codegen (lesson 3.523); the C spells the rest REG_* |
 | ROM label | `gUnk_08*` | 5765 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17421 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 1832 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
@@ -377,7 +377,7 @@ copies and module-local records).
 | struct field | `unk*` | 385 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 430 RAM cells, 2787 ROM labels by role and 1832 by position.
+Named for comparison: 431 RAM cells, 2787 ROM labels by role and 1832 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -424,8 +424,8 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M37 | Air Grind and game state 11 | 82 | 8 |
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
-| sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 31 | 4 |
-| all | | 5347 | 2899 |
+| sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
+| all | | 5348 | 2899 |
 
 `unk*` fields by header struct: `LinkSave` 33, `PlayerState` 27, `M37Player` 19, `AttackBox` 18, `Task` 17, `BodyBox` 16, `M37CoursePlayer` 13, `Unk020061F0` 12, `M37Results` 11, `Actor` 10, `M37Timer` 10, `SaveSlot` 10, `Unk02007D70` 10, `M37Game` 9, `Unk03005530` 9, `LinkRec` 8, `Unk03005550` 8, `M37Course` 7, `RoomDef` 7, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `Collider` 4, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `Unk03005670` 4, `M12Fade` 3, `MapCell` 3, `Unk02005E00` 3, `Unk02007D70Cmd` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `MapTile` 1, `Unk0873EEA0` 1.
 

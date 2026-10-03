@@ -1,3 +1,12 @@
+@ Kirby: Nightmare in Dream Land (GBA, 2002) - the cartridge header
+@ (0x08000000-0x080000BF).
+@
+@ Stays asm: the header is the entry branch, the Nintendo logo (an .incbin
+@   slice of the user's own baserom.gba, never committed), the title, the
+@   codes and the checksum that tools/gbafix.py writes; its fields are data
+@   by nature, written as asm as in pret's rom_header.s (docs/audit.md
+@   section 2).
+
 	.section .rom_header, "a"
 	.global rom_header
 rom_header:

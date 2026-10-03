@@ -65,9 +65,9 @@ A row names `file:line` or `file:first-last`.
 | `src/enemy_9113c.c:714` | `PoppyBrosSrHeadUpdate` | lever | #154 leftover (`sub_08091e18` before #155): keeps the decremented timer live through the frame test; without it cse folds every use of the decremented value inside its `== 0` block (lesson 3.156, 9 bytes) |
 | `src/boot_caab8.c:137-142` | `BootLogoUpdateObjects` | lever | #152's two approved zero-byte levers (`sub_080caab8` before #155): an opaque `0xFFFF` and a live mask at one store (lessons 3.457, 3.494); its natural best is on #100 |
 | `src/enemy_9fbd0.c:189-216` | `sub_0809fe10` | cross-jump | `BLOCK_CROSS_JUMP` (`include/global.h`, a pret idiom) at four tails that the ROM really duplicates instead of cross-jumping (#154) |
-| `src/early_4734.c:58` | (file scope) | alias | the `MultiBoot` SWI thunk declared int-returning under a local name, as the ROM keeps the untruncated result (lesson 3.481) |
-| `src/early_4d6c.c:53` | (file scope) | alias | the same alias in the second MultiBoot unit |
-| `src/early_4d6c.c:207-221` | `MultiBootWaitCycles` | inline-asm | the SDK's own inline asm: pokeemerald's `src/multiboot.c` `MultiBootWaitCycles` is the same asm |
+| `src/early_4734.c:56` | (file scope) | alias | the `MultiBoot` SWI thunk declared int-returning under a local name, as the ROM keeps the untruncated result (lesson 3.481) |
+| `src/early_4d6c.c:45` | (file scope) | alias | the same alias in the second MultiBoot unit |
+| `src/early_4d6c.c:199-213` | `MultiBootWaitCycles` | inline-asm | the SDK's own inline asm: pokeemerald's `src/multiboot.c` `MultiBootWaitCycles` is the same asm |
 | `src/m4a_c1.c:293` | `MusicPlayerJumpTableCopy` | inline-asm | a dead SDK export that is one `swi 0x2A` in inline asm, as in katam's SDK |
 | `src/camera_2d01c.c:255` | `UpdateBgAnims` | zero-code | its loop notes weight the body's references one loop level deeper, which puts the slot pointer in r4 and the command pointer in r5 as in the ROM (comment at the function) |
 | `src/enemy_a1590.c:847` | `sub_080a22d4` | zero-code | #154's commented stand-in: the loop note ranks `acc` (r2) above `r` (r3) in global allocation |
