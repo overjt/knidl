@@ -42,7 +42,6 @@ struct Pair { u32 a, b; };
 /* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
-extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
 extern u32 gChecksumAvailable;
 extern u32 gLinkRecvVCount;
 extern u16 gRecvNonzeroCheck;
@@ -60,7 +59,7 @@ void DoRecv(void)
     u32 index;
     vu16 *p;
 
-    *(struct Pair *)gUnk_03004D38 = *(struct Pair *)&gUnk_04000120;
+    *(struct Pair *)gUnk_03004D38 = *(struct Pair *)&REG_SIOMULTI0;
     p = gUnk_03004D38;
 
     if (gLink.unk18 == 0)

@@ -175,17 +175,17 @@ u32 ReadInputRecording(void)
 {
     if (gSramAvailable == 0)
         return 0;
-    ReadSram((u8 *)0x0E000800, gInputRecording, 240 << 7);
+    ReadSram((u8 *)(SRAM_START + 0x800), gInputRecording, 240 << 7);
 }
 u32 WriteInputRecording(void)
 {
     if (gSramAvailable == 0)
         return 0;
-    return WriteSramEx(gInputRecording, (u8 *)0x0E000800, 240 << 7);
+    return WriteSramEx(gInputRecording, (u8 *)(SRAM_START + 0x800), 240 << 7);
 }
 u32 WriteInputRecordingEntry(u8 *src, s32 i)
 {
-    return WriteSramEx(src, (u8 *)(i * 2 + 0x0E00092C), 2);
+    return WriteSramEx(src, (u8 *)(i * 2 + (SRAM_START + 0x92C)), 2);
 }
 void CopySaveSlotToLinkSlot(void)
 {

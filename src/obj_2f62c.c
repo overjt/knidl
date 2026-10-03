@@ -169,10 +169,10 @@ void sub_0802f8c8(void)
 
     if (gCurTask->unk34 != -1)
     {
-        RequestCopy(4, (u32)gUnk_085A2DF8[gCurTask->unk34 * 9], 0x06013980, 96);
+        RequestCopy(4, (u32)gUnk_085A2DF8[gCurTask->unk34 * 9], OBJ_VRAM0 + 0x3980, 96);
         src = (u8 *)gUnk_085A2DF8;
-        RequestCopy(4, (u32)(src + (gCurTask->unk34 * 9 + 3) * 32), 0x06013D80, 96);
-        RequestCopy(4, (u32)(src + (gCurTask->unk34 * 9 + 6) * 32), 0x06014180, 96);
+        RequestCopy(4, (u32)(src + (gCurTask->unk34 * 9 + 3) * 32), OBJ_VRAM0 + 0x3D80, 96);
+        RequestCopy(4, (u32)(src + (gCurTask->unk34 * 9 + 6) * 32), OBJ_VRAM0 + 0x4180, 96);
         gCurTask->unk34 = -1;
     }
 }

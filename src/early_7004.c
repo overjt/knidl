@@ -78,7 +78,7 @@ void RunFrame(void);
 void DoSend(void)
 {
     if (gLink[24] == 4) {
-        gUnk_0400012A = *(u16 *)&gLink[22];
+        REG_SIOMLT_SEND = *(u16 *)&gLink[22];
         if (gSendBufferEmpty == 0) {
             gLink[0x10D]--;
             gLink[0x10C]++;
@@ -93,9 +93,9 @@ void DoSend(void)
                 gSendBufferEmpty = 1;
         }
         if (gSendBufferEmpty != 0) {
-            gUnk_0400012A = 0;
+            REG_SIOMLT_SEND = 0;
         } else {
-            gUnk_0400012A = *(u16 *)((gLink[0x10C] << 1)
+            REG_SIOMLT_SEND = *(u16 *)((gLink[0x10C] << 1)
                           + (((gLink[24] << 4) - gLink[24]) << 2)
                           + (u32)&gLink[28]);
         }
@@ -106,8 +106,8 @@ void DoSend(void)
 void StopTimer(void)
 {
     if (gLink[0] != 0) {
-        gUnk_0400010E &= 0xFF7F;
-        gUnk_0400010C = 0xFF7C;
+        REG_TM3CNT_H &= 0xFF7F;
+        REG_TM3CNT_L = 0xFF7C;
     }
 }
 
@@ -121,7 +121,7 @@ void SendRecvDone(void)
         gLink[24] = 0;
         gLink[25] = 0;
     } else if (gLink[0] != 0) {
-        gUnk_0400010E |= 0x80;
+        REG_TM3CNT_H |= 0x80;
     }
 }
 
@@ -179,11 +179,11 @@ u32 ConnectLink(void)
 {
     gUnk_03004D78 = 0;
     DisableSerial();
-    gIntrMasterEnable = (gUnk_04000208 &= 0xFFFE, gUnk_04000208);
+    gIntrMasterEnable = (REG_IME &= 0xFFFE, REG_IME);
     gIntrTable[0] = SerialCB;
     gIntrTable[1] = Timer3Intr;
-    gUnk_04000208 |= 1;
-    gIntrMasterEnable = gUnk_04000208;
+    REG_IME |= 1;
+    gIntrMasterEnable = REG_IME;
     EnableSerial();
     gLink[1] = 2;
     gLinkDriverMode = 1;

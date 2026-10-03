@@ -92,25 +92,25 @@ void MenuEnterModeList(void)
 
 void MenuDrawModeList(void)
 {
-    RequestCopy(6, 0, 0x06003800, 0x800);
+    RequestCopy(6, 0, BG_VRAM + 0x3800, 0x800);
     switch (gModeListExtraRows) {
     case 0:
-        RequestCopy(1, (u32)&gUnk_0855A5F8[0], 0x060039C0, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[128], 0x06003A80, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[256], 0x06003B40, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[0], BG_VRAM + 0x39C0, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[128], BG_VRAM + 0x3A80, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[256], BG_VRAM + 0x3B40, 128);
         break;
     case 1:
-        RequestCopy(1, (u32)&gUnk_0855A5F8[0], 0x060039C0, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[128], 0x06003A40, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[256], 0x06003AC0, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[384], 0x06003B40, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[0], BG_VRAM + 0x39C0, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[128], BG_VRAM + 0x3A40, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[256], BG_VRAM + 0x3AC0, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[384], BG_VRAM + 0x3B40, 128);
         break;
     case 2:
-        RequestCopy(1, (u32)&gUnk_0855A5F8[0], 0x06003980, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[128], 0x06003A00, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[256], 0x06003A80, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[384], 0x06003B00, 128);
-        RequestCopy(1, (u32)&gUnk_0855A5F8[512], 0x06003B80, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[0], BG_VRAM + 0x3980, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[128], BG_VRAM + 0x3A00, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[256], BG_VRAM + 0x3A80, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[384], BG_VRAM + 0x3B00, 128);
+        RequestCopy(1, (u32)&gUnk_0855A5F8[512], BG_VRAM + 0x3B80, 128);
         break;
     }
 }

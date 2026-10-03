@@ -25,9 +25,9 @@ void sub_08019000(void)
     gCurTask->updateCallback = (u32)sub_08019590;
     gCurTask->unk70 = 0;
     gCurTask->tileWord = 0x9210;
-    LZ77UnCompWram((const void *)gNightmarePowerOrbGfx[3], (void *)0x02026000);
-    RequestCopy(4, 0x02026000, 0x06014000, 128 << 6);
-    RequestCopy(2, gNightmarePowerOrbGfx[2], 0x03001590, 32);
+    LZ77UnCompWram((const void *)gNightmarePowerOrbGfx[3], (void *)(EWRAM_START + 0x26000));
+    RequestCopy(4, EWRAM_START + 0x26000, OBJ_VRAM0 + 0x4000, 128 << 6);
+    RequestCopy(2, gNightmarePowerOrbGfx[2], IWRAM_START + 0x1590, 32);
     gCurTask->posX = 240 << 15;
     gCurTask->posY = 144 << 15;
     TaskStop();
@@ -257,7 +257,7 @@ void sub_08019590(void)
     if ((s16)t->unk70 > 23)
         t->unk70 = 0;
     BlendColors((s32)gUnk_082FE0E4, (s32)gUnk_082FE104,
-                 gUnk_0874AD44[(s16)gCurTask->unk70], 16, (void *)0x03001590);
+                 gUnk_0874AD44[(s16)gCurTask->unk70], 16, (void *)(IWRAM_START + 0x1590));
     gCurTask->unk70++;
 }
 

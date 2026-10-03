@@ -425,11 +425,11 @@ void AirGrindBuildSky(void)
 
 void AirGrindSkyVBlankCallback(void)
 {
-    vu32 *dma = (vu32 *)0x040000B0;
+    vu32 *dma = (vu32 *)REG_ADDR_DMA0;
 
     REG_DMA0CNT_H = 0;
-    *(vu16 *)0x05000000 = gAirGrindPtr->backdropColor;
+    *(vu16 *)BG_PLTT = gAirGrindPtr->backdropColor;
     dma[0] = (u32)gAirGrindPtr->skyLineColors;
-    dma[1] = 0x05000000;
+    dma[1] = BG_PLTT;
     dma[2] = 0xA2400001;
 }

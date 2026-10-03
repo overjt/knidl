@@ -127,7 +127,7 @@ void LoadHubRoom(void)
     CameraInitPos();
     CameraWriteScrollParallax();
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     if (gHubUnlockFlags != 0)
         DrawBg123View(gCameraPos[0], gCameraPos[1]);
     else
@@ -185,7 +185,7 @@ void LoadBigSwitchViewRoom(void)
     CameraInitPos();
     CameraWriteScrollParallax();
     zero = w;
-    CpuFastSet(&zero, (void *)0x06002000, 0x01000400);
+    CpuFastSet(&zero, (void *)(BG_VRAM + 0x2000), 0x01000400);
     DrawBg123View(gCameraPos[0], gCameraPos[1]);
 }
 
@@ -375,6 +375,6 @@ void LoadGoalGameRoom(void)
     CameraInitPos();
     CameraWriteScrollParallax();
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     DrawBg23View(gCameraPos[0], gCameraPos[1]);
 }

@@ -89,6 +89,10 @@ KNOWN_SYMBOLS = {
     0x080CFA70: "LZ77UnCompWram",  # svc 0x11
     0x080CFA74: "MultiBoot",  # r1=1; svc 0x25
     0x080CFA7C: "SoundDriverVSyncOff",  # svc 0x28
+    0x080CFA80: "SoftReset",  # IME=0, BIOS reset flag 0x03007FFA=0, sp=0x03007F00;
+    # svc 1 (RegisterRamReset) + svc 0 (SoftReset); katam libagbsyscall.s.
+    # Two BL callers; the prologue sweep finds no `bx`/`pop {pc}` (it
+    # ends in svc 0), so it is curated (#37; an extra label before)
     # m4a/mp2k XCMD (extended command 0xCD) handlers, issue #29.  Evidence:
     # the 12-entry Thumb-pointer table at 0x0860A3E8 matches gXcmdTable of
     # katam (src/m4a_tables.c) / pokeemerald one-for-one — ply_xxx fills

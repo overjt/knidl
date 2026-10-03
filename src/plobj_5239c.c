@@ -378,10 +378,10 @@ void sub_08052b88(void)
         {
             u32 off = ((gCurTask->u8C.parentTask)->tileWord & 0xFFF) << 5;
 
-            RequestCopy(1, gUnk_08204B98, (void *)(off + 0x06010080), 320);
-            RequestCopy(1, gUnk_08204B98 + 320, (void *)(off + 0x06010480), 320);
-            RequestCopy(1, gUnk_08204B98 + 640, (void *)(off + 0x06010880), 320);
-            RequestCopy(1, gUnk_08204B98 + 960, (void *)(off + 0x06010C80), 320);
+            RequestCopy(1, gUnk_08204B98, (void *)(off + (OBJ_VRAM0 + 0x80)), 320);
+            RequestCopy(1, gUnk_08204B98 + 320, (void *)(off + (OBJ_VRAM0 + 0x480)), 320);
+            RequestCopy(1, gUnk_08204B98 + 640, (void *)(off + (OBJ_VRAM0 + 0x880)), 320);
+            RequestCopy(1, gUnk_08204B98 + 960, (void *)(off + (OBJ_VRAM0 + 0xC80)), 320);
         }
         RequestCopy(2, gUnk_08204B78,
                      gObjPalette + ((((gCurTask->u8C.parentTask)->tileWord >> 12) + 1) << 5), 32);

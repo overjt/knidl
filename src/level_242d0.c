@@ -123,7 +123,7 @@ void LoadCutsceneRoom(void)
     CameraWriteScrollParallax();
     SetViewRectToPlayers();
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     HudReset();
     if (gBg3MapShape != 0)
     {
@@ -276,7 +276,7 @@ void LoadEndingRoom(s32 a0)
     CameraInitPos();
     CameraWriteScrollParallax();
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     switch (gRoomBgLayout)
     {
     default:
@@ -445,7 +445,7 @@ void LoadCreditsRoom(void)
     CameraWriteScrollParallax();
     SpawnRoomObjectsInView();
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     switch (gRoomBgLayout)
     {
     default:

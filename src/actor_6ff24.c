@@ -446,7 +446,7 @@ void sub_08070648(void)
     RequestCopy(2, gUnk_0824A9E4.unk08,
                  &gObjPalette[u->tileWord >> 12], gUnk_0824A9E4.unk00 << 5);
     RequestCopy(3, gUnk_0824A9E4.unk0C,
-                 (u16 *)(0x06010000 + ((gCurTask->tileWord & 0xFFF) << 5)),
+                 (u16 *)(OBJ_VRAM0 + ((gCurTask->tileWord & 0xFFF) << 5)),
                  gUnk_0824A9E4.unk02 << 5);
     v = gCurTask;
     v->parent = gUnk_020055C0;

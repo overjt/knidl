@@ -71,7 +71,7 @@ s32 sub_080b6474(void)
         }
         vt = base[0] << 16;
         *pe = vt;
-        *pc = 0x04000014;
+        *pc = REG_ADDR_BG1HOFS;
         return 1;
     }
 }
@@ -157,7 +157,7 @@ s32 sub_080b6570(void)
         }
         gBg1ScrollX = gHBlankScrollTable[0] << 16;
         gBg1ScrollY = gHBlankScrollTable[1] << 16;
-        gHBlankDmaDest = 0x04000014;
+        gHBlankDmaDest = REG_ADDR_BG1HOFS;
         return 2;
     }
 }
@@ -253,7 +253,7 @@ s32 sub_080b67dc(void)
         }
         gBg1ScrollX = gHBlankScrollTable[0] << 16;
         gBg1ScrollY = gHBlankScrollTable[1] << 16;
-        gHBlankDmaDest = 0x04000014;
+        gHBlankDmaDest = REG_ADDR_BG1HOFS;
         return 2;
     }
 }

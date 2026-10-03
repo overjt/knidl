@@ -176,7 +176,7 @@ void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n)
             if (gBlockLayer[s->unk4] != 0)
             {
                 s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF];
-                s->unkC = (u16 *)0x06002000 + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
+                s->unkC = (u16 *)(BG_VRAM + 0x2000) + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
                 s->unk16 = s->unk8->metatile;
                 s->unk18 = s->unk8->collisionTile;
                 BlockAnimWriteMetatile(s);
@@ -235,7 +235,7 @@ void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n)
             if (gBlockLayer[s->unk4] != 0)
             {
                 s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF] - 1;
-                s->unkC = (u16 *)0x06002000 + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
+                s->unkC = (u16 *)(BG_VRAM + 0x2000) + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
                 s->unk16 = s->unk8->metatile;
                 s->unk18 = s->unk8->collisionTile;
 
@@ -434,7 +434,7 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
                     v = gUnk_0200B060[gUnk_0873A6D4[n][0]] + gUnk_0200B060[gUnk_0873A6D4[n][1]] * 2;
                     if (v == 0)
                         v = gUnk_0200B060[gUnk_0873A6D4[n][2]] * 4;
-                    p = (u16 *)0x06002000 + ((x & 31) + ((y & 63) << 5));
+                    p = (u16 *)(BG_VRAM + 0x2000) + ((x & 31) + ((y & 63) << 5));
                     *p = gUnk_080D71A0[v * 4 + n];
                 }
                 for (l = 0; l <= 2; l++)
@@ -449,7 +449,7 @@ void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
                             v = gUnk_0200B060[gUnk_0873A6EC[n][l][0]] + gUnk_0200B060[gUnk_0873A6EC[n][l][1]] * 2;
                             if (v == 0)
                                 v = gUnk_0200B060[gUnk_0873A6EC[n][l][2]] * 4;
-                            p = (u16 *)0x06002000 + ((x & 31) + ((y & 63) << 5));
+                            p = (u16 *)(BG_VRAM + 0x2000) + ((x & 31) + ((y & 63) << 5));
                             *p = gUnk_080D71A0[v * 4 + (x & 1) + (y & 1) * 2];
                         }
                     }
@@ -508,7 +508,7 @@ s16 BreakBg1BlockAtCursor(void)
     b->unk8 = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk10 + 1;
     b->unk0 = gBlockCursorX;
     b->unk2 = gBlockCursorY;
-    b->unkC = (u16 *)0x06001800 + (((gBlockCursorX * 2) & 31) + (((gBlockCursorY * 2) & 31) << 5));
+    b->unkC = (u16 *)(BG_VRAM + 0x1800) + (((gBlockCursorX * 2) & 31) + (((gBlockCursorY * 2) & 31) << 5));
     b->unk6 = 0;
     b->unk14 = 0;
     b->unk10 = gUnk_0873A458;

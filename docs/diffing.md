@@ -60,58 +60,67 @@ A clean build should produce **no output** for any range (same as `make compare`
 
 ### Prerequisites
 
-```sh
-# Python 3.8+; no extra packages required for basic use.
-# Optional — enables tab-completion of symbol names:
-pip3 install argcomplete
-```
+The `knidl-builder` image has asm-differ's Python dependencies (the
+`Dockerfile` installs `colorama`, `watchdog`, `levenshtein` and `cxxfilt`)
+and the objdump it needs, so run it there.  `diff.py` and
+`diff_settings.py` are both in `tools/asm-differ/`; run `diff.py` from the
+**repo root**.
 
-`diff.py` and `diff_settings.py` are both in `tools/asm-differ/`.  Run
-`diff.py` from the **repo root** so that it picks up `diff_settings.py` from
-the current directory via `sys.path`:
+asm-differ compares a function's object with the same object from a
+matching build, which it looks for under `expected/` (`.gitignore`d:
+`expected/build/` matches the `build/` rule).  Seed it once from a
+matching build:
 
 ```sh
-python3 tools/asm-differ/diff.py [flags] <symbol_or_address>
+make compare                     # knidl.gba: OK
+cp -R build expected/
 ```
 
 ### Common invocations
 
 ```sh
-# Diff a symbol by name (resolved via build/knidl.map):
-python3 tools/asm-differ/diff.py func_08001234
+# Diff a C function by name (its object is found through build/knidl.map):
+docker run --rm -it -v "$PWD":/src -w /src knidl-builder \
+    python3 tools/asm-differ/diff.py -o AgbMain
 
-# Same, but rebuild before diffing and watch for changes:
-python3 tools/asm-differ/diff.py -mwo func_08001234
+# Same, rebuilding before the diff and watching for changes:
+docker run --rm -it -v "$PWD":/src -w /src -e INSIDE_DOCKER=1 knidl-builder \
+    python3 tools/asm-differ/diff.py -mwo AgbMain
 
-# Diff by raw address, show 40 instructions:
-python3 tools/asm-differ/diff.py -mwo 0x08001234
-
-# Limit output to 30 lines:
-python3 tools/asm-differ/diff.py -mwo -l 30 func_08001234
+# Binary mode: baserom.gba against knidl.gba by FILE OFFSET
+# (VMA - 0x08000000), e.g. AgbMain's first 0x20 bytes:
+docker run --rm -it -v "$PWD":/src -w /src knidl-builder \
+    python3 tools/asm-differ/diff.py 0x7300 0x7320
 ```
 
 | Flag | Meaning |
 |------|---------|
-| `-m` | Run `make` before diffing (rebuilds `knidl.gba` via Docker). |
+| `-o` | Diff the function's object against `expected/` (by symbol name). |
+| `-m` | Run `make` before diffing (inside the container, with `INSIDE_DOCKER=1`). |
 | `-w` | Watch mode — re-diffs automatically when source files change. |
-| `-o` | Show byte offsets alongside instructions. |
-| `-l N` | Limit output to N instructions. |
+| `--arm` | Disassemble as ARM instead of Thumb (`diff_settings.py`'s own flag). |
+| `--no-pager`, `--format plain` | Print once, without colour (for logs). |
+
+Binary mode cannot look a symbol up: asm-differ's GNU map parser wants
+the overlay `load address` lines a flat GBA link does not write, so a
+symbol name without `-o` fails with "Failed to find "load address" in map
+file".  The asm units (crt0, the task switcher, `m4a_1`) are not in a
+`.text` section, so `-o` cannot find them either; use `./asmdiff.sh`
+(§1) or binary mode for those.
 
 ### Thumb vs ARM mode
 
-The default is **Thumb** (set in `diff_settings.py` → `config["thumb"] = True`).
-
-For an **ARM-mode** function, pass the objdump flag override:
+The default is **Thumb**: `diff_settings.py` passes `-marmv4t
+-Mforce-thumb` to objdump (asm-differ's `armel` arch).  For an
+**ARM-mode** range, pass `--arm`:
 
 ```sh
-python3 tools/asm-differ/diff.py --objdump-flags='-Mno-force-thumb' func_arm_08001234
+python3 tools/asm-differ/diff.py --arm 0xC0 0x110
 ```
-
-Or temporarily edit `diff_settings.py` and set `config["thumb"] = False`.
 
 ### How it maps onto Docker
 
-`diff_settings.py` checks for `arm-none-eabi-objdump` on the host `PATH`:
+Outside the container, `diff_settings.py` checks for `arm-none-eabi-objdump` on the host `PATH`:
 
 - **Found** (e.g. inside the container, or devkitARM installed natively):
   `objdump_executable = "arm-none-eabi-objdump"`.
@@ -128,11 +137,11 @@ The `-m` rebuild flag calls `make` on the host, which itself calls
 ### Typical function decomp loop
 
 ```
-1.  ./asmdiff.sh 0x08XXXXXX <size>      # confirm target range is unmatched
-2.  Extract target asm with objdump (via asmdiff.sh output or separate call)
-3.  Write/iterate C in src/
+1.  ./asmdiff.sh 0x08XXXXXX <size>      # the target range (empty diff = matching)
+2.  cp -R build expected/                # from a matching build, once
+3.  Write/iterate C in src/ (or verify alone: ./tools/fnmatch.sh, docs/decomp-loop.md §3)
 4.  make                                 # rebuild (Docker)
-5.  python3 tools/asm-differ/diff.py -mwo <symbol>   # live diff
+5.  python3 tools/asm-differ/diff.py -o <function>   # function diff (in the container)
 6.  make compare                         # final byte-level check
 ```
 

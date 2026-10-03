@@ -27,7 +27,7 @@ each of them into one of three classes, from evidence only:
 The evidence comes from providers.  The built-in ones read the linked ELF
 (ARM/Thumb mapping symbols: a word inside an instruction stream is two
 instructions, not a literal) and the config (the value fields of a
-pointer_tables record, raw_ranges).  The format providers live in
+pointer_tables record).  The format providers live in
 tools/census_*.py; each has
 
     provide(rom, cfg, segs) -> {"coincidence": [(start, end, kind, why)],
@@ -119,7 +119,8 @@ def code_provider(rom, cfg, segs, elf):
 
     A 4-aligned word that the mapping symbols place inside an ARM or Thumb
     instruction stream is instructions (a Thumb word is two of them), not a
-    literal; config raw_ranges (code of the other ISA kept raw) count too.
+    literal; code of the other ISA inside a function (config isa_ranges) is
+    emitted as instructions of that ISA, so its mapping symbols cover it.
     Literal-pool words ($d) get no verdict here."""
     marks = elf_mapping(elf)
     addrs = [a for a, _k in marks]
@@ -142,9 +143,6 @@ def code_provider(rom, cfg, segs, elf):
             state = marks[j][1]
             cur = nxt
             j += 1
-    for r in cfg.get("raw_ranges", []):
-        out.append((int(r["start"], 16), int(r["end"], 16), "instructions",
-                    "raw_ranges: " + r["why"]))
     return {"coincidence": out, "pointer": []}
 
 

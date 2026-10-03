@@ -454,10 +454,10 @@ void sub_08059d7c(void)
             u->tileWord = (u->u8C.parentTask)->tileWord | 0xF008;
             off = ((u->u8C.parentTask)->tileWord & 0x7FF) << 5;
             src = gUnk_081FD870;
-            RequestCopy(1, src, (void *)(off + 0x06010100), 128);
-            RequestCopy(1, src + 128, (void *)(off + 0x06010500), 128);
-            RequestCopy(1, src + 256, (void *)(off + 0x06010900), 128);
-            RequestCopy(1, src + 384, (void *)(off + 0x06010D00), 128);
+            RequestCopy(1, src, (void *)(off + (OBJ_VRAM0 + 0x100)), 128);
+            RequestCopy(1, src + 128, (void *)(off + (OBJ_VRAM0 + 0x500)), 128);
+            RequestCopy(1, src + 256, (void *)(off + (OBJ_VRAM0 + 0x900)), 128);
+            RequestCopy(1, src + 384, (void *)(off + (OBJ_VRAM0 + 0xD00)), 128);
         }
         gCurTask->posX = (gCurTask->pixelX + RandomSpreadFacing(0, 1, 8)) << 16;
         gCurTask->posY = (gCurTask->pixelY + RandomSpread(0, 1, 8)) << 16;

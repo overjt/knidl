@@ -5,6 +5,11 @@
 @ .crt0_literals (0x08000210-0x08000233).
 @
 @ Assembled with: arm-none-eabi-as -mcpu=arm7tdmi
+@
+@ Stays asm: the ROM entry (Start) and the master interrupt handler
+@   (MasterIsr, copied to IWRAM 0x03001030) are ARM mode switches, stack set-up
+@   and the IRQ dispatch prologue, which no C compiler emits; every pret GBA
+@   project keeps crt0.s in asm (docs/audit.md section 2).
 
 	.syntax unified
 	.cpu	arm7tdmi
@@ -16,11 +21,12 @@
 @                AgbInit (Thumb) then AgbMain (Thumb); loops if it returns.
 @   MasterIsr  - master IRQ dispatcher; dispatches via 14-entry table at IWRAM.
 @
-@ NOTE: Several ldr instructions in this section use PC-relative offsets that
-@ reach into the separate .crt0_literals section (VMA 0x08000210).  Those
-@ loads cannot be expressed as assembler pseudo-ops across section boundaries,
-@ so they are encoded as raw .word values.  The comment beside each one shows
-@ the effective target address.
+@ NOTE: Several ldr instructions in this section load from the separate
+@ .crt0_literals section (VMA 0x08000210).  gas cannot resolve `ldr rN, label`
+@ across sections, so they use the group relocation R_ARM_LDR_PC_G0:
+@ `ldr rN, [pc, #:pc_g0:(label - 8)]` (the -8 is the ARM pc bias), which ld
+@ fills in from the two sections' final addresses.  The comment beside each
+@ one shows the effective target address.
 @ ─────────────────────────────────────────────────────────────────────────────
 
 	.section .crt0_master_isr, "ax"
@@ -47,9 +53,8 @@ Start:
 	ldr	sp, _sys_stack_top
 
 	@ 0x080000D8: ldr r1, [pc, #308]  ->  0x8000214 (BIOS IRQ vector = 0x03007FFC)
-	@ Cross-section PC-relative load; encoded as raw word.
-	@ pc = 0x080000E0, offset = 308 = 0x134, target = 0x08000214
-	.word	0xE59F1134		@ ldr r1, [pc, #308]  @ 0x8000214
+	@ Cross-section PC-relative load (see the NOTE above).
+	ldr	r1, [pc, #:pc_g0:(lit_intr_vector - 8)]	@ 0x08000214
 
 	@ 0x080000DC: add r0, pc, #36  ->  r0 = 0x08000108 (address of MasterIsr)
 	@ pc = 0x080000E4, + 0x24 = 0x08000108
@@ -59,7 +64,7 @@ Start:
 	str	r0, [r1]
 
 	@ 0x080000E4: ldr r1, [pc, #300]  ->  0x8000218 (AgbInit Thumb ptr = 0x08000311)
-	.word	0xE59F112C		@ ldr r1, [pc, #300]  @ 0x8000218
+	ldr	r1, [pc, #:pc_g0:(lit_agb_init - 8)]	@ 0x08000218
 
 	@ 0x080000E8: mov lr, pc
 	mov	lr, pc
@@ -67,7 +72,7 @@ Start:
 	bx	r1
 
 	@ 0x080000F0: ldr r1, [pc, #292]  ->  0x800021C (AgbMain Thumb ptr = 0x08007301)
-	.word	0xE59F1124		@ ldr r1, [pc, #292]  @ 0x800021C
+	ldr	r1, [pc, #:pc_g0:(lit_agb_main - 8)]	@ 0x0800021C
 
 	@ 0x080000F4: mov lr, pc
 	mov	lr, pc
@@ -81,10 +86,10 @@ Start:
 @ These are referenced by the ldr instructions above via PC-relative offsets
 @ within the same section.
 _sys_stack_top:
-	.word	0x03007EC0	@ 0x08000100 — System-mode stack top
+	.word	0x03007EC0	@ raw: constant, System-mode stack top (0x08000100)
 
 _irq_stack_top:
-	.word	0x03007F60	@ 0x08000104 — IRQ-mode stack top
+	.word	0x03007F60	@ raw: constant, IRQ-mode stack top (0x08000104)
 
 @ ────────────────────────────────────
 @ MasterIsr — master IRQ handler (VMA 0x08000108)
@@ -189,24 +194,24 @@ _isr_dispatch:
 	@ 0x0800019C: mov r0, sp
 	mov	r0, sp
 	@ 0x080001A0: ldr r1, [pc, #120]  ->  0x8000220 (_isr_stack_guard = 0x03007B80)
-	.word	0xE59F1078		@ ldr r1, [pc, #120]  @ 0x8000220
+	ldr	r1, [pc, #:pc_g0:(lit_isr_stack_limit - 8)]	@ 0x08000220
 	@ 0x080001A4: cmp r0, r1
 	cmp	r0, r1
 	@ 0x080001A8: bcs _isr_no_overflow
 	bcs	_isr_no_overflow
 	@ 0x080001AC: ldr r1, [pc, #112]  ->  0x8000224 (_isr_sp_save = 0x03000FA0)
-	.word	0xE59F1070		@ ldr r1, [pc, #112]  @ 0x8000224
+	ldr	r1, [pc, #:pc_g0:(lit_isr_sp_save - 8)]	@ 0x08000224
 	@ 0x080001B0: str r0, [r1]
 	str	r0, [r1]
 	@ 0x080001B4: ldr r1, [pc, #108]  ->  0x8000228 (_isr_stack_top = 0x03007C80)
-	.word	0xE59F106C		@ ldr r1, [pc, #108]  @ 0x8000228
+	ldr	r1, [pc, #:pc_g0:(lit_isr_stack_top - 8)]	@ 0x08000228
 	@ 0x080001B8: mov sp, r1
 	mov	sp, r1
 _isr_no_overflow:
 
 	@ Tail-call the per-IRQ handler from the 14-entry table.
 	@ 0x080001BC: ldr r1, [pc, #104]  ->  0x800022C (_irq_handler_table = 0x030004B0)
-	.word	0xE59F1068		@ ldr r1, [pc, #104]  @ 0x800022C
+	ldr	r1, [pc, #:pc_g0:(lit_intr_table - 8)]	@ 0x0800022C
 	@ 0x080001C0: add r1, r1, ip
 	add	r1, r1, ip
 	@ 0x080001C4: ldr r0, [r1]
@@ -222,13 +227,13 @@ _isr_no_overflow:
 
 	@ Restore SYS sp if we used the overflow stack.
 	@ 0x080001D8: ldr r0, [pc, #72]  ->  0x8000228 (_isr_stack_top = 0x03007C80)
-	.word	0xE59F0048		@ ldr r0, [pc, #72]   @ 0x8000228
+	ldr	r0, [pc, #:pc_g0:(lit_isr_stack_top - 8)]	@ 0x08000228
 	@ 0x080001DC: cmp r0, sp
 	cmp	r0, sp
 	@ 0x080001E0: bne _isr_restore_done
 	bne	_isr_restore_done
 	@ 0x080001E4: ldr r1, [pc, #68]  ->  0x8000230 (_isr_sp_save_2 = 0x03000FA0)
-	.word	0xE59F1044		@ ldr r1, [pc, #68]   @ 0x8000230
+	ldr	r1, [pc, #:pc_g0:(lit_isr_sp_save_2 - 8)]	@ 0x08000230
 	@ 0x080001E8: ldr sp, [r1]
 	ldr	sp, [r1]
 _isr_restore_done:
@@ -266,28 +271,36 @@ _isr_restore_done:
 	.section .crt0_literals, "a"
 
 @ 0x08000210 — magic / sentinel word
-	.word	0x89ABCDEF
+	.word	0x89ABCDEF	@ raw: constant, no load reads it (AgbInit's CpuSet copies it to IWRAM with MasterIsr)
 
 @ 0x08000214 — BIOS IRQ vector address (target of ldr r1 at 0x080000D8)
-	.word	0x03007FFC
+lit_intr_vector:
+	.word	INTR_VECTOR
 
 @ 0x08000218 — AgbInit Thumb interwork ptr (target of ldr r1 at 0x080000E4)
+lit_agb_init:
 	.word	AgbInit	@ 0x08000311: R_ARM_ABS32 sets the Thumb bit (lesson 4.117)
 
 @ 0x0800021C — AgbMain Thumb interwork ptr (target of ldr r1 at 0x080000F0)
+lit_agb_main:
 	.word	AgbMain	@ 0x08007301
 
 @ 0x08000220 — ISR stack guard threshold (target of ldr r1 at 0x080001A0)
-	.word	0x03007B80
+lit_isr_stack_limit:
+	.word	0x03007B80	@ raw: constant, System-mode stack floor: below it MasterIsr moves to the overflow stack
 
 @ 0x08000224 — ISR sp spill cell address (target of ldr r1 at 0x080001AC)
-	.word	0x03000FA0
+lit_isr_sp_save:
+	.word	gUnk_03000FA0
 
 @ 0x08000228 — ISR overflow stack top (target of ldr r1/r0 at 0x080001B4 / 0x080001D8)
-	.word	0x03007C80
+lit_isr_stack_top:
+	.word	0x03007C80	@ raw: constant, MasterIsr's overflow stack top
 
 @ 0x0800022C — 14-entry IRQ handler table base in IWRAM (target of ldr r1 at 0x080001BC)
-	.word	0x030004B0
+lit_intr_table:
+	.word	gIntrTable
 
 @ 0x08000230 — ISR sp spill cell address copy (target of ldr r1 at 0x080001E4)
-	.word	0x03000FA0
+lit_isr_sp_save_2:
+	.word	gUnk_03000FA0

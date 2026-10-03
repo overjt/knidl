@@ -258,7 +258,7 @@ void GameOverLoadGraphics(void)
     RequestCopy(2, (u32)gUnk_085E2C20, (u32)gUnk_030014F0, 192);
     if (gPlayerCount == 1) {
         LZ77UnCompWram(gUnk_085E2CE0, gUnk_02020000);
-        RequestCopy(3, (u32)gUnk_02020000, 0x06012C00, 0x2A00);
+        RequestCopy(3, (u32)gUnk_02020000, OBJ_VRAM0 + 0x2C00, 0x2A00);
         LZ77UnCompWram(gUnk_085E4064, gUnk_02020000);
         RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, 0x3A00);
     } else {

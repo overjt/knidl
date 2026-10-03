@@ -220,9 +220,9 @@ void CreditsStreamText(void)
     }
     if ((gUnk_0201C1B4 & 0x1000) && gUnk_0201C19C != 0) {
         if (gUnk_0201C1A8 & 1)
-            RequestCopy(1, (u32)gHudTilemap, 0x06001000, 0x800);
+            RequestCopy(1, (u32)gHudTilemap, BG_VRAM + 0x1000, 0x800);
         else
-            RequestCopy(1, (u32)gHudTilemap, 0x06001800, 0x800);
+            RequestCopy(1, (u32)gHudTilemap, BG_VRAM + 0x1800, 0x800);
         gUnk_0201C19C = 0;
         gUnk_0201C1B4 = 0;
     }

@@ -27,10 +27,14 @@ RUN pip3 install --break-system-packages \
         toml
 
 # agbcc: zhade's new_newlib_pret fork (the compiler needed to match the
-# sibling KATAM decompilation), pinned for reproducibility.
-ARG AGBC_COMMIT=59b966ed1b8f371856dcf99f1546c2fe89c678ca
+# sibling KATAM decompilation), pinned for reproducibility.  The commit check
+# makes a wrong or empty pin fail the build: the ARG was once spelled
+# AGBC_COMMIT, so `checkout ${AGBCC_COMMIT}` checked out nothing and the image
+# silently built the fork's default branch head.
+ARG AGBCC_COMMIT=59b966ed1b8f371856dcf99f1546c2fe89c678ca
 RUN git clone https://github.com/jiangzhengwenjz/agbcc /tmp/agbcc \
     && git -C /tmp/agbcc checkout ${AGBCC_COMMIT} \
+    && test "$(git -C /tmp/agbcc rev-parse HEAD)" = "${AGBCC_COMMIT}" \
     && cd /tmp/agbcc && ./build.sh \
     && mkdir -p /opt/agbcc/bin \
     && mv agbcc old_agbcc agbcc_arm libc.a libgcc.a /opt/agbcc/bin/ \

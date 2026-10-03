@@ -130,7 +130,7 @@ void sub_08027a6c(void)
     if (gHubUnlockFlags != 0)
     {
         a = 0;
-        CpuFastSet(&a, (u32 *)0x06001800, 0x01000200);
+        CpuFastSet(&a, (u32 *)(BG_VRAM + 0x1800), 0x01000200);
         b = 0;
         CpuFastSet(&b, (u32 *)gBg1MetatileMap, ((gRoomMetatileCount / 2) & 0x1FFFFF) | 0x01000000);
         for (idx = 0; idx < 2; idx++)

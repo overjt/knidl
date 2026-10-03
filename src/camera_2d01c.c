@@ -258,7 +258,7 @@ void UpdateBgAnims(void)
 
 void BgAnimCopyTiles(struct Unk0802D25C *a)
 {
-    RequestCopy(1, (u32)a->unk4, 0x06004000 + a->unk0 * 32, a->unk2);
+    RequestCopy(1, (u32)a->unk4, (BG_VRAM + 0x4000) + a->unk0 * 32, a->unk2);
 }
 
 void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q)

@@ -49,7 +49,7 @@ void InitSaveSlots(void)
             if (((mask >> i) & 1) != 0)
             {
                 for (j = 0; j < 2; j++)
-                    WriteSramEx((u8 *)gUnk_0200E900, (u8 *)(off + j * 256 + 0x0E000200), 256);
+                    WriteSramEx((u8 *)gUnk_0200E900, (u8 *)(off + j * 256 + (SRAM_START + 0x200)), 256);
             }
             off += 512;
         }
@@ -91,7 +91,7 @@ s32 ReadSaveSlot(s32 a, s32 b)
     {
         for (i = 0; i <= 1; i++)
         {
-            ReadSram((u8 *)((((b * 2) + i) << 8) + 0x0E000200), (u8 *)&gSaveSlots[a], 256);
+            ReadSram((u8 *)((((b * 2) + i) << 8) + (SRAM_START + 0x200)), (u8 *)&gSaveSlots[a], 256);
             if (CalcSaveSlotChecksum(a) == gSaveSlots[a].checksum)
                 break;
         }

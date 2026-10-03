@@ -459,7 +459,7 @@ s32 BreakBlockAt(u32 x, u32 y)
                 b->unk8 = gCurRoomDef->unk10 + gBlockLayer[gBlockCursorIndex];
                 b->unk0 = gBlockCursorX;
                 b->unk2 = gBlockCursorY;
-                b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+                b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
                 gBlockLayer[gBlockCursorIndex] |= 0x8000;
                 b->unk1A = 0;
                 b->unk10 = gUnk_0873A47C[0];
@@ -570,9 +570,9 @@ s32 BreakBlockAtCursor(void)
     b->unk2 = gBlockCursorY;
     b->unk1C = gBlockCursorPlayer;
     if (gUnk_0200B078 == 1)
-        b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 63) << 5));
+        b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 63) << 5));
     else
-        b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+        b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
     gBlockLayer[gBlockCursorIndex] |= 0x8000;
     switch (gUnk_02006174)
     {
@@ -737,7 +737,7 @@ s32 sub_08031738(u32 x, u32 y, s32 n)
     b->unk0 = gBlockCursorX;
     b->unk2 = gBlockCursorY;
     b->unk1C = gBlockCursorPlayer;
-    b->unkC = (u16 *)0x06002000 + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+    b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
     b->unk16 = t->metatile;
     b->unk18 = t->collisionTile;
     gBlockLayer[gBlockCursorIndex] |= 0x8000;

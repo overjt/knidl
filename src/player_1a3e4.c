@@ -52,7 +52,7 @@ void sub_0801a3e4(void)
     if (t->frame == -1)
         return;
     base = ((t->tileWord - 16) & 0xFFF) << 5;
-    dst = 0x06010000 + base;
+    dst = OBJ_VRAM0 + base;
     dx = t->pixelX - (gBg3ScrollX >> 16);
     dy = t->pixelY - (gBg3ScrollY >> 16);
     if (tbl == gUnk_08755440)
@@ -61,7 +61,7 @@ void sub_0801a3e4(void)
                      128 << 2);
         RequestCopy(4, (u32)gUnk_02020000
                         + ((gUnk_08732190[gCurTask->frame] + 16) << 5),
-                     0x06010400 + base, 224 << 1);
+                     (OBJ_VRAM0 + 0x400) + base, 224 << 1);
         xb = dx;
         x = xb - 64;
         yb = dy;
@@ -96,13 +96,13 @@ void sub_0801a3e4(void)
     else if (tbl == gUnk_0875546C)
     {
         RequestCopy(4, (u32)gUnk_02020000 + ((gUnk_087321A6[t->frame] + 14) << 5),
-                     0x060105C0 + base, 64);
+                     (OBJ_VRAM0 + 0x5C0) + base, 64);
         RequestCopy(4, (u32)gUnk_02020000
                         + ((gUnk_087321A6[gCurTask->frame] + 16) << 5),
-                     0x06010800 + base, 128 << 2);
+                     (OBJ_VRAM0 + 0x800) + base, 128 << 2);
         RequestCopy(4, (u32)gUnk_02020000
                         + ((gUnk_087321A6[gCurTask->frame] + 32) << 5),
-                     0x06010C00 + base, 64);
+                     (OBJ_VRAM0 + 0xC00) + base, 64);
         xb = dx;
         yb = dy;
         /* this arm's attribute bits are a u16 variable: the ROM builds its
@@ -120,13 +120,13 @@ void sub_0801a3e4(void)
     else if (tbl == gUnk_08755484)
     {
         RequestCopy(4, (u32)gUnk_02020000 + ((gUnk_087321B2[t->frame] + 2) << 5),
-                     0x06010C40 + base, 224 << 1);
+                     (OBJ_VRAM0 + 0xC40) + base, 224 << 1);
         RequestCopy(4, (u32)gUnk_02020000
                         + ((gUnk_087321B2[gCurTask->frame] + 16) << 5),
-                     0x06011000 + base, 128 << 2);
+                     (OBJ_VRAM0 + 0x1000) + base, 128 << 2);
         RequestCopy(4, (u32)gUnk_02020000
                         + ((gUnk_087321B2[gCurTask->frame] + 32) << 5),
-                     0x06011400 + base, 128 << 2);
+                     (OBJ_VRAM0 + 0x1400) + base, 128 << 2);
         xb = dx;
         yb = dy;
         if (IsOnScreen(xb, yb) != 0)

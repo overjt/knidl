@@ -97,8 +97,9 @@ void ExtraModeTitleTransferIconUpdate(void)
 {
     if (gExtraModeTitlePhase == 1) {
         gBg0ScrollX += 0x20000;
+        /* raw: not an address, 512 px in 16.16 fixed point (the scroll wraps) */
         if (gBg0ScrollX > 0x2000000)
-            gBg0ScrollX -= 0x2000000;
+            gBg0ScrollX -= 0x2000000; /* raw: 512 px in 16.16, not an address */
     }
     if (gExtraModeTitlePhase == 2) {
         BlendColors(gUnk_085B6F98, gUnk_085B6F98 + 16, gUnk_0873079C[gCurTask->unk2C], 16, gObjPalette);

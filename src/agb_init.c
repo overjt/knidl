@@ -144,24 +144,28 @@ void AgbInit(void)
 
     zeroA = 0;
     zeroWords[0] = zeroA;
-    CpuFastSet(&zeroWords[0], (u32 *)0x02000000, 0x01010000);
+    CpuFastSet(&zeroWords[0], (u32 *)EWRAM_START, 0x01010000);
     zeroWords[1] = zeroA;
-    CpuFastSet(&zeroWords[1], (u32 *)0x03000010, 0x01001EDC);
+    CpuFastSet(&zeroWords[1], (u32 *)(IWRAM_START + 0x10), 0x01001EDC);
     zeroWords[2] = zeroA;
-    CpuFastSet(&zeroWords[2], (u32 *)0x06000000, 0x01006000);
+    CpuFastSet(&zeroWords[2], (u32 *)BG_VRAM, 0x01006000);
     zeroWords[3] = zeroA;
-    CpuFastSet(&zeroWords[3], (u32 *)0x07000000, 0x01000100);
+    CpuFastSet(&zeroWords[3], (u32 *)OAM, 0x01000100);
     zeroWords[4] = zeroA;
-    CpuFastSet(&zeroWords[4], (u32 *)0x05000000, 0x01000100);
+    CpuFastSet(&zeroWords[4], (u32 *)BG_PLTT, 0x01000100);
 
     gUnk_03001004 |= 0x4014;
     REG_WAITCNT = gUnk_03001004;
 
     gUnk_03000FA0 = zeroA;
 
-    CpuSet(gIntrTableTemplate, (void *)0x030004B0, 28);
-    CpuSet((const void *)0x08000108, (void *)0x03001030, 160);
-    INTR_VECTOR = (void (*)(void))0x03001030;
+    CpuSet(gIntrTableTemplate, (void *)(IWRAM_START + 0x4B0), 28);
+    /* 0x08000108 is crt0's MasterIsr, the ROM image of the ISR copied to
+     * IWRAM with its pool; crt0 follows the pinned header, so it does not
+     * move (MATCHING=0 too), and a symbol would pool `.word MasterIsr`.
+     * raw: kept a number (lesson 3.523) */
+    CpuSet((const void *)0x08000108, (void *)(IWRAM_START + 0x1030), 160);
+    INTR_VECTOR = (void (*)(void))(IWRAM_START + 0x1030);
 
     gVBlankCount = gFrameCount = zeroA;
     gWaitingForVBlank = gFrameInProgress = zeroA;
@@ -171,7 +175,7 @@ void AgbInit(void)
     gPlayTime[1] = zeroA;
     gPlayTime[0] = zeroA;
 
-    gCopyQueueWrite = gCopyQueueRead = 0x03000B80;
+    gCopyQueueWrite = gCopyQueueRead = IWRAM_START + 0xB80;
 
     gUnk_03000020[3] = zeroA;
     gHeldKeys = zeroA;
@@ -276,16 +280,16 @@ void AgbInit(void)
         gSfxPlayerSlots[i] = i;
     }
 
-    gPaletteSource = 0x03001270;
+    gPaletteSource = IWRAM_START + 0x1270;
     zeroC = 0;
     *fillA = zeroC;
-    CpuSet(fillA, (void *)0x03001270, 0x01000200);
+    CpuSet(fillA, (void *)(IWRAM_START + 0x1270), 0x01000200);
     *fillB = zeroC;
-    CpuSet(fillB, (void *)0x03001A90, 0x01000200);
+    CpuSet(fillB, (void *)(IWRAM_START + 0x1A90), 0x01000200);
 
     ResetOamShadow();
 
-    CpuSet((const void *)((u32)BuildOam & ~1), (void *)0x03001F40, 0x100);
+    CpuSet((const void *)((u32)BuildOam & ~1), (void *)(IWRAM_START + 0x1F40), 0x100);
 
     ResetFadeAndBlend();
 

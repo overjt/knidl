@@ -62,7 +62,7 @@ u32 TaskLoadFrameTilesAndPalette(u32 alt)
     if (alt == 0)
         dst = (attr & 0x7FF) * 32 + (u32)gObjVram;
     else
-        dst = (attr & 0x7FF) * 32 + 0x0600FE00;
+        dst = (attr & 0x7FF) * 32 + (BG_VRAM + 0xFE00);
     tbl = gCurTask->frameTable;
     g = (struct TaskGfx *)tbl[gCurTask->frame];
     p = g->tiles;
@@ -92,7 +92,7 @@ u32 TaskLoadFrameTiles(u32 alt)
     if (alt == 0)
         dst = (attr & 0x7FF) * 32 + (u32)gObjVram;
     else
-        dst = (attr & 0x7FF) * 32 + 0x0600FE00;
+        dst = (attr & 0x7FF) * 32 + (BG_VRAM + 0xFE00);
     tbl = gCurTask->frameTable;
     g = (struct TaskGfx *)tbl[gCurTask->frame];
     p = g->tiles;

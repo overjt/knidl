@@ -354,7 +354,7 @@ void DrawBg1Tile(s32 x, s32 y)
     src = &gMetatileTiles[(gBg1MetatileMap[(x >> 1) + (y >> 1) * gRoomWidth] << 2)
                          + (x & 1) + ((y & 1) << 1)];
     i = (x & 31) + ((y & 31) << 5);
-    ((u16 *)0x06001800)[i] = *src;
+    ((u16 *)(BG_VRAM + 0x1800))[i] = *src;
 }
 
 void DrawBg2Tile(s32 x, s32 y)
@@ -364,7 +364,7 @@ void DrawBg2Tile(s32 x, s32 y)
     src = &gMetatileTiles[((&gRoomMap[x >> 1])[(y >> 1) * gRoomWidth].metatile << 2)
                          + (x & 1) + ((y & 1) << 1)];
     i = (x & 31) + ((y & 31) << 5) + ((x & 32) << 5);
-    ((u16 *)0x06002000)[i] = *src;
+    ((u16 *)(BG_VRAM + 0x2000))[i] = *src;
 }
 
 void DrawBg3Tile(s32 x, s32 y)
@@ -374,7 +374,7 @@ void DrawBg3Tile(s32 x, s32 y)
 
     src = &gCurRoomDef->bg3Map->unk6[x] + gCurRoomDef->bg3Map->width * y;
     i = (x & 31) + ((y & 31) << 5) + ((x & 32) << 5);
-    ((u16 *)0x06003000)[i] = *src;
+    ((u16 *)(BG_VRAM + 0x3000))[i] = *src;
 }
 
 void DrawBg2ViewLooping(s32 px)
@@ -391,7 +391,7 @@ void DrawBg2ViewLooping(s32 px)
         x1 = gRoomWidth * 2 - 1;
     for (i = 0; i < gRoomHeight * 2; i++)
         for (x = x0; x <= x1; x++)
-            ((u16 *)0x06002000)[(x & 31) + ((i & 63) << 5)]
+            ((u16 *)(BG_VRAM + 0x2000))[(x & 31) + ((i & 63) << 5)]
                 = *(gMetatileTiles + ((&gRoomMap[x >> 1])[(i >> 1) * gRoomWidth].metatile << 2) + (x & 1) + ((i & 1) << 1));
     for (i = x0; i <= x1; i++)
     {
@@ -408,7 +408,7 @@ void DrawBg2EdgeTile(s32 x, s32 y)
     s32 a, b, c;
     s32 idx;
 
-    dst = (u16 *)0x06002000 + ((x & 31) + ((y & 63) << 5));
+    dst = (u16 *)(BG_VRAM + 0x2000) + ((x & 31) + ((y & 63) << 5));
     q = (x & 1) + ((y & 1) << 1);
     x >>= 1;
     y >>= 1;

@@ -157,46 +157,46 @@ void ExtraModeTitleLinkErrorScreen(void)
    are written as literals: the ROM rebuilds each one as size + constant. */
 void ExtraModeTitleLoadMultiBootImage(void)
 {
-    u32 *tbl = (u32 *)0x020200C8;
+    u32 *tbl = (u32 *)(EWRAM_START + 0x200C8);
     u8 *dst = (u8 *)gUnk_02020000;
     u32 size;
 
     size = gUnk_0876F690 - gUnk_0876B1FC;
     CpuSet(gUnk_0876B1FC, dst, ((size + 16) / 2) & 0x1FFFFF);
-    dst = (u8 *)(size + 0x02020010);
+    dst = (u8 *)(size + (EWRAM_START + 0x20010));
     switch (gUnk_02006090) {
     case 0:
         CpuSet(gUnk_085B4ACC, dst, 0x40);
         *tbl++ = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02020090);
+        dst = (u8 *)(size + (EWRAM_START + 0x20090));
         CpuSet(gUnk_085B4B4C, dst, 0xCBE);
         *tbl++ = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02021A0C);
+        dst = (u8 *)(size + (EWRAM_START + 0x21A0C));
         CpuSet(gUnk_085B64C8, dst, 0x2E0);
         *tbl = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02021FCC);
+        dst = (u8 *)(size + (EWRAM_START + 0x21FCC));
         break;
     case 1:
         CpuSet(gUnk_085B113C, dst, 0x30);
         *tbl++ = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02020070);
+        dst = (u8 *)(size + (EWRAM_START + 0x20070));
         CpuSet(gUnk_085B119C, dst, 0xAD8);
         *tbl++ = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02021620);
+        dst = (u8 *)(size + (EWRAM_START + 0x21620));
         CpuSet(gUnk_085B274C, dst, 0x2E0);
         *tbl = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02021BE0);
+        dst = (u8 *)(size + (EWRAM_START + 0x21BE0));
         break;
     case 2:
         CpuSet(gUnk_085B2D0C, dst, 0x40);
         *tbl++ = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02020090);
+        dst = (u8 *)(size + (EWRAM_START + 0x20090));
         CpuSet(gUnk_085B2D8C, dst, 0xBC0);
         *tbl++ = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02021810);
+        dst = (u8 *)(size + (EWRAM_START + 0x21810));
         CpuSet(gUnk_085B450C, dst, 0x2E0);
         *tbl = (u32)dst - 0x20000;
-        dst = (u8 *)(size + 0x02021DD0);
+        dst = (u8 *)(size + (EWRAM_START + 0x21DD0));
         break;
     }
     MultiBootSetParams((u8 *)gUnk_02020000, dst);
@@ -218,7 +218,7 @@ void ExtraModeTitleMain(void)
     gDispCnt |= 0x1800;
     if (gUnk_02006090 == 6 || gUnk_02006090 == 7) {
         LoadGfxSet(4);
-        RequestCopy(6, 0, 0x06001000, 0x800);
+        RequestCopy(6, 0, BG_VRAM + 0x1000, 0x800);
         /* Two complete copies: jump2 cross-jumps the identical tails, which
            is what leaves the ROM's `ldr r0, =F18; b join` arm.  A pointer
            local (if/else or ?:) is folded into "p = b; if (c) p = a". */

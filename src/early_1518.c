@@ -125,7 +125,7 @@ void RequestCopyList(struct TransferNode *node)
                 if ((src | dst | size) & 3)
                     cmd = (size >> 1) << 4;
                 else if (size & 31)
-                    cmd = ((size >> 2) | 0x04000000) << 4;
+                    cmd = ((size >> 2) | 0x04000000) << 4; /* raw: not an address: CpuSet's 32-bit flag in a copy command */
                 else
                     cmd = ((size >> 2) << 4) | 1;
                 *q++ = cmd;
@@ -160,7 +160,7 @@ void RequestCopyList(struct TransferNode *node)
                     if ((src | dst | cmd) & 3)
                         cmd = (cmd >> 1) << 4;
                     else if (cmd & 31)
-                        cmd = ((cmd >> 2) | 0x04000000) << 4;
+                        cmd = ((cmd >> 2) | 0x04000000) << 4; /* raw: not an address: CpuSet's 32-bit flag in a copy command */
                     else
                         cmd = ((cmd >> 2) << 4) | 1;
                     *q++ = cmd;
@@ -187,7 +187,7 @@ void RequestCopyList(struct TransferNode *node)
                 if ((dst | size) & 3)
                     cmd = (((size >> 1) | 0x01000000) << 4) | 2;
                 else if (size & 31)
-                    cmd = (((size >> 2) | 0x05000000) << 4) | 2;
+                    cmd = (((size >> 2) | 0x05000000) << 4) | 2; /* raw: not an address: CpuSet's fill + 32-bit flags in a copy command */
                 else
                     cmd = (((size >> 2) | 0x01000000) << 4) | 3;
                 *q++ = cmd;
@@ -225,7 +225,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size)
             if ((src | dst | size) & 3)
                 mode = (size >> 1) << 4;
             else if (size & 31)
-                mode = ((size >> 2) | 0x04000000) << 4;
+                mode = ((size >> 2) | 0x04000000) << 4; /* raw: not an address: CpuSet's 32-bit flag in a copy command */
             else
                 mode = ((size >> 2) << 4) | 1;
             *q++ = mode;
@@ -262,7 +262,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size)
                 if ((src | dst | chunk) & 3)
                     mode = (chunk >> 1) << 4;
                 else if (chunk & 31)
-                    mode = ((chunk >> 2) | 0x04000000) << 4;
+                    mode = ((chunk >> 2) | 0x04000000) << 4; /* raw: not an address: CpuSet's 32-bit flag in a copy command */
                 else
                     mode = ((chunk >> 2) << 4) | 1;
                 *q++ = mode;
@@ -289,7 +289,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size)
             if ((dst | size) & 3)
                 mode = (((size >> 1) | 0x01000000) << 4) | 2;
             else if (size & 31)
-                mode = (((size >> 2) | 0x05000000) << 4) | 2;
+                mode = (((size >> 2) | 0x05000000) << 4) | 2; /* raw: not an address: CpuSet's fill + 32-bit flags in a copy command */
             else
                 mode = (((size >> 2) | 0x01000000) << 4) | 3;
             *q++ = mode;
@@ -332,17 +332,17 @@ void ResetSpriteQueue(void)
     u32 zeroWord;
     u32 zero;
 
-    gOamBufferCursor = 0x03000050;
+    gOamBufferCursor = IWRAM_START + 0x50;
     gSpriteQueueTop = -1;
     zero = 0;
     zeroWord = zero;
-    CpuFastSet(&zeroWord, (u32 *)0x03000B30, 0x01000010);
+    CpuFastSet(&zeroWord, (u32 *)(IWRAM_START + 0xB30), 0x01000010);
     gOamAffineCount = gAffineSpriteBufferPos = zero;
 }
 
 void RunBuildOamInIwram(void)
 {
-    ((void (*)(void))0x03001F41)();
+    ((void (*)(void))(IWRAM_START + 0x1F41))();
 }
 
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, u16 f)

@@ -707,7 +707,7 @@ void sub_080c8ea8(void)
     } while ((s16)gCurTask->unk6C <= 14);
     gCurTask->unk6C = 0;
     do {
-        RequestCopy(1, (u32)gUnk_02020000 + ((s16)gCurTask->unk6C << 12), 0x06000000, 0x1000);
+        RequestCopy(1, (u32)gUnk_02020000 + ((s16)gCurTask->unk6C << 12), BG_VRAM, 0x1000);
         gCurTask->unk6E = 0;
         do {
             gBldAlphaEva = (gCurTask->unk6E + 1) >> 1;

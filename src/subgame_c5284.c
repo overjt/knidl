@@ -337,17 +337,17 @@ void AirGrindBuildCourse(s32 a, s32 b)
         break;
     }
     for (i = 0; i < 0x1000; i++)
-        ((u16 *)0x0600E000)[i] = 3;
+        ((u16 *)(BG_VRAM + 0xE000))[i] = 3;
     for (i = 0; i < 64; i++)
-        ((vu8 *)0x06000000)[i] = 0;
+        ((vu8 *)BG_VRAM)[i] = 0;
     for (i = 0; i < 256; i++)
         gBgPalette[i] = gUnk_080D0198[i];
     AirGrindLayOutCourse(a);
     for (i = 0; i < 64; i++)
-        ((vu8 *)0x0600C000)[i] = 8;
+        ((vu8 *)(BG_VRAM + 0xC000))[i] = 8;
     for (i = 0; i < 0x400; i++)
-        ((u16 *)0x0600F800)[i] = 0;
-    *(u16 *)0x0600FC20 = 0x300;
+        ((u16 *)(BG_VRAM + 0xF800))[i] = 0;
+    *(u16 *)(BG_VRAM + 0xFC20) = 0x300;
     gAirGrindCourse.scrollPos = 360;
     AirGrindDrawCourse();
 }
@@ -404,7 +404,7 @@ void AirGrindDrawCourse(void)
                 x = 90;
             if (rem == 0)
             {
-                vp = (u16 *)0x0600E000 + (lane * 1024 + c32);
+                vp = (u16 *)(BG_VRAM + 0xE000) + (lane * 1024 + c32);
                 for (m = 0; m < 32; m++)
                 {
                     *vp = 1;
@@ -425,7 +425,7 @@ void AirGrindDrawCourse(void)
                     vp += 32;
                     *vp = tile + 4;
                 }
-                addr = 0x06000000 + tile * 64;
+                addr = BG_VRAM + tile * 64;
                 zero = 0;
                 CpuSet(&zero, (void *)addr, 0x010000A0);
             }
@@ -447,11 +447,11 @@ void AirGrindDrawCourse(void)
             }
             h = gUnk_080D059A[(y + 512) / 4 - 32] * 6 / 256;
             pos = lane * 1024 + c32;
-            vp = (u16 *)0x0600E180 + (pos + (x + 80) / 8 * 32);
-            addr = *vp * 64 + 0x06000000;
+            vp = (u16 *)(BG_VRAM + 0xE180) + (pos + (x + 80) / 8 * 32);
+            addr = *vp * 64 + BG_VRAM;
             addr += rem + ((x + 80) % 8 - h / 2) * 8;
-            if (addr < 0x06000040)
-                addr = 0x06000040;
+            if (addr < (BG_VRAM + 0x40))
+                addr = BG_VRAM + 0x40;
             if (flag == 0 && (col / 2) & 1)
             {
                 addr -= 16;

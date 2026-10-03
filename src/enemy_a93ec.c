@@ -547,7 +547,7 @@ void sub_080a9ef4(void)
         return;
     x = t->tileWord;
     pal = x >> 12;
-    dst = ((x & 0x7FF) << 5) + 0x0600FE00;
+    dst = ((x & 0x7FF) << 5) + (BG_VRAM + 0xFE00);
     g = (struct TaskGfx *)gt[t->frame];
     src = g->tiles;
     while (src[0] != 0xFFFF) {
@@ -577,7 +577,7 @@ void sub_080a9ef4(void)
     gUnk_03001F2C = (s8)gUnk_087493A4[gCurTask->frame];
     if (gUnk_03001F2C == -1)
         return;
-    dst = 0x06014800;
+    dst = OBJ_VRAM0 + 0x4800;
     g = (struct TaskGfx *)gUnk_087546D0[gUnk_03001F2C];
     src = g->tiles;
     while (src[0] != 0xFFFF) {
@@ -624,7 +624,7 @@ void sub_080aa188(void)
     if (t->frame == -1)
         return;
     x = t->tileWord;
-    dst = ((0x7FF & x) << 5) + 0x0600FE00;
+    dst = ((0x7FF & x) << 5) + (BG_VRAM + 0xFE00);
     g = (struct TaskGfx *)gt[t->frame];
     src = g->tiles;
     while (src[0] != 0xFFFF) {

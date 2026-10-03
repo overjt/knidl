@@ -40,7 +40,7 @@ s32 sub_080b6d04(void)
     {
         gBg2ScrollX = gHBlankScrollTable[0] << 16;
         gBg3ScrollX = gHBlankScrollTable[2] << 16;
-        gHBlankDmaDest = 0x04000018;
+        gHBlankDmaDest = REG_ADDR_BG2HOFS;
         return 3;
     }
     if (gHBlankScrollState == 2)
@@ -79,7 +79,7 @@ s32 sub_080b6d04(void)
         *pf = vt1;
         vt2 = base[2] << 16;
         *pb = vt2;
-        *pc = 0x04000018;
+        *pc = REG_ADDR_BG2HOFS;
         return 3;
     }
 }

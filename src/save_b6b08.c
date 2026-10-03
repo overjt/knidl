@@ -8,7 +8,7 @@
  *
  * HBlank wavy-scroll table driver, the sine variant of src/save_b6d04.c: a
  * table of three halfwords per line for REG_BG2HOFS/BG2VOFS/BG3HOFS
- * (gHBlankDmaDest = 0x04000018).  Every eighth line picks a new offset from
+ * (gHBlankDmaDest = REG_ADDR_BG2HOFS).  Every eighth line picks a new offset from
  * the s8 wave table gUnk_087561CC scaled by the frame counter gHBlankScrollTimer
  * (which wraps at 0x200), and each of the 160 lines gets the offset, the
  * fixed BG2VOFS value from its shadow gBg2ScrollY and the offset again.
@@ -38,7 +38,7 @@ s32 sub_080b6b08(void)
     {
         gBg2ScrollX = gHBlankScrollTable[0] << 16;
         gBg3ScrollX = gHBlankScrollTable[2] << 16;
-        gHBlankDmaDest = 0x04000018;
+        gHBlankDmaDest = REG_ADDR_BG2HOFS;
         return 3;
     }
     if (gHBlankScrollState == 2)
@@ -66,7 +66,7 @@ s32 sub_080b6b08(void)
         }
         gBg2ScrollX = gHBlankScrollTable[0] << 16;
         gBg3ScrollX = gHBlankScrollTable[2] << 16;
-        gHBlankDmaDest = 0x04000018;
+        gHBlankDmaDest = REG_ADDR_BG2HOFS;
         return 3;
     }
 }

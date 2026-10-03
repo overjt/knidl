@@ -105,7 +105,7 @@ void sub_08027240(void)
 {
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1F00;
-    RequestCopy(8, (u32)gCurRoomDef->bg3Tiles, 0x06008000, 0);
+    RequestCopy(8, (u32)gCurRoomDef->bg3Tiles, BG_VRAM + 0x8000, 0);
     CpuSet(gUnk_02008060, gUnk_03001370, 128);
     if (gBg3MapShape == 1)
         SetBg3ScreenSize(0x8000);

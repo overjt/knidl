@@ -57,10 +57,15 @@ Emission rules:
   * branch targets are rewritten to labels (function names, local `.L_`
     labels inside the file, or database names for external targets);
   * odd segment boundaries are handled explicitly: gas silently aligns
-    Thumb instructions to 2, so a segment with an odd start (e.g.
-    sdk_reset_helper at 0x080CFA7F) or an odd trailing byte emits those
-    bytes as raw `.byte`/`.short` (`.short`/`.word` themselves are emitted
-    unaligned without padding, which was verified empirically).
+    Thumb instructions to 2, so a segment with an odd start or an odd
+    trailing byte emits those bytes as raw `.byte`/`.short` (`.short`/
+    `.word` themselves are emitted unaligned without padding, which was
+    verified empirically); no configured segment has one since #37 moved
+    the two odd boundaries (0x080002E5, 0x080CFA7F) to instructions;
+  * config "isa_ranges" switches the ISA inside a function (the ARM
+    islands of m4a_1's Thumb functions), and every `add rd, pc, #imm` is
+    written `adr rd, <label>`; config "raw_words" keeps a literal word a
+    number with a same-line `@ raw: <reason>` (docs/data.md 3.5).
 
 Every generated file is verified before being written: the tool assembles
 it, links it at the segment's ROM VMA with a throwaway linker script plus
@@ -161,7 +166,25 @@ def compute_chunks(start, end, func_vmas, chunk_bytes):
     return cuts
 
 
-def collect_ref_targets(rom, start, end, funcs):
+def isa_runs(rs, re_, isa, isa_ranges):
+    """[(start, end, isa)] covering [rs, re_): `isa` (the function's),
+    except inside the config isa_ranges [(start, end, isa)]."""
+    runs = []
+    cur = rs
+    for s, e, risa in sorted(isa_ranges):
+        if e <= cur or s >= re_:
+            continue
+        s, e = max(s, cur), min(e, re_)
+        if s > cur:
+            runs.append((cur, s, isa))
+        runs.append((s, e, risa))
+        cur = e
+    if cur < re_:
+        runs.append((cur, re_, isa))
+    return runs
+
+
+def collect_ref_targets(rom, start, end, funcs, isa_ranges=()):
     """Set of branch/adr target addresses referenced from anywhere in the
     segment's function stream.
 
@@ -178,18 +201,20 @@ def collect_ref_targets(rom, start, end, funcs):
     bounds = [vma for vma, _n, _i in funcs]
     for i, (vma, _name, isa) in enumerate(funcs):
         stop = bounds[i + 1] if i + 1 < len(bounds) else end
-        off = vma_off(vma)
-        stop_off = vma_off(stop)
-        while off < stop_off:
-            if isa == "thumb":
-                size, info = thumb_decode(rom, off)
-            else:
-                size, info = arm_decode(rom, off)
-            if info:
-                if "branch" in info or "pcadd" in info:
-                    key = "branch" if "branch" in info else "pcadd"
-                    targets.add(info[key])
-            off += size
+        for rs, re_, risa in isa_runs(vma, stop, isa, isa_ranges):
+            off = vma_off(rs)
+            stop_off = vma_off(re_)
+            while off < stop_off:
+                if risa == "thumb":
+                    size, info = thumb_decode(rom, off)
+                else:
+                    size, info = arm_decode(rom, off)
+                if info:
+                    if "branch" in info:
+                        targets.add(info["branch"])
+                    elif "pcadd" in info:
+                        targets.add(info["pcadd"] & ~1)
+                off += size
     return targets
 
 
@@ -280,7 +305,7 @@ def thumb_decode(rom, off):
         return 2, {"pool": base + (hw & 0xFF) * 4}
     if 0xA000 <= hw <= 0xA7FF:  # add rd, pc, #imm8*4 (adr)
         base = (ROM_BASE + off + 4) & ~3
-        return 2, {"pcadd": base + (hw & 0xFF) * 4}
+        return 2, {"pcadd": base + (hw & 0xFF) * 4, "rd": (hw >> 8) & 7}
     return 2, None
 
 
@@ -297,6 +322,18 @@ def arm_decode(rom, off):
         base = (ROM_BASE + off + 8) & ~3
         target = base + imm if (w & 0x00800000) else base - imm
         return 4, {"pool": target}
+    op = w & 0xFFFF0000
+    if op in (0xE28F0000, 0xE24F0000):
+        # add/sub rd, pc, #imm (adr): an always-executed data-processing
+        # immediate with Rn = pc and S clear (opcode 0100 add, 0010 sub);
+        # the target keeps bit 0, which marks a Thumb destination for the
+        # `bx` that follows (SoundMainRAM's ARM islands return that way)
+        rot = ((w >> 8) & 0xF) * 2
+        imm = w & 0xFF
+        imm = ((imm >> rot) | (imm << (32 - rot))) & 0xFFFFFFFF if rot else imm
+        pc = ROM_BASE + off + 8
+        target = pc + imm if op == 0xE28F0000 else pc - imm
+        return 4, {"pcadd": target, "rd": (w >> 12) & 0xF}
     return 4, None
 
 
@@ -336,7 +373,7 @@ def disassemble(rom, start, end, thumb, tmpdir, tag):
     # forcing whole chunks into the raw fallback.  Same choice as
     # asmdiff.sh.
     cmd = [
-        OBJDUMP, "-D", "-b", "binary", "-marmv4t",
+        OBJDUMP, "-D", "-z", "-b", "binary", "-marmv4t",
         "--adjust-vma=0x%08X" % start,
     ]
     if thumb:
@@ -420,15 +457,20 @@ class SegmentEmitter(object):
         self._noted_raw = False
         self._extra_placed = set()
         self._required_placed = set()
+        self._placed_labels = set()
         # Addresses whose objdump text gas rejects (undefined-decode-space
         # halfwords printed as later-arch mnemonics); emit_instruction
         # forces them to raw .short bytes.  Persists across emit() calls so
         # the assembly repair loop can grow it incrementally.
         self.forced_raw_addrs = set()
-        # [(start, end)] of config "raw_ranges": bytes of a function that
-        # are not instructions of its ISA (SoundMainRAM's ARM mixer inside a
-        # Thumb function); never decoded for labels or pools, always raw
-        self.raw_ranges = []
+        # [(start, end, isa)] of config "isa_ranges": code inside a function
+        # whose ISA is not the function's (the ARM islands of m4a_1's Thumb
+        # functions umul3232H32 and SoundMainRAM); decoded, labelled and
+        # emitted in that ISA, with `.arm`/`.thumb` at each boundary
+        self.isa_ranges = []
+        # addr -> reason of config "raw_words": literal words that stay
+        # numbers (constants, not addresses), emitted with `@ raw: <reason>`
+        self.raw_words = {}
         # Address of every instruction line appended to self.lines, in
         # order (parallel to the file's instruction lines; used by
         # addrs_from_asm_errors).
@@ -480,6 +522,7 @@ class SegmentEmitter(object):
     def emit_labels_at(self, addr):
         for label in self.pending.pop(addr, []):
             self.lines.append("%s:" % label)
+            self._placed_labels.add(label)
 
     def label_pending_at(self, addr):
         """True when a label boundary is needed at halfword `addr`."""
@@ -498,8 +541,9 @@ class SegmentEmitter(object):
                     label = LOCAL_PREFIX + "%08x" % addr
                     # Only queue the label if the walk has not emitted the
                     # address yet (a backward branch re-resolves its target
-                    # after the label line was already written).
-                    if addr >= self.cursor:
+                    # after the label line was already written; a branch to
+                    # itself, `b .`, resolves after its own label).
+                    if addr >= self.cursor and label not in self._placed_labels:
                         labels = self.pending.setdefault(addr, [])
                         if label not in labels:
                             labels.append(label)
@@ -539,28 +583,33 @@ class SegmentEmitter(object):
                 if i + 1 < len(self.funcs)
                 else self.end
             )
-            off = vma_off(vma)
-            stop_off = vma_off(stop)
-            while off < stop_off:
-                if isa == "thumb":
-                    size, info = thumb_decode(self.rom, off)
-                else:
-                    size, info = arm_decode(self.rom, off)
-                if info and self.in_raw_range(ROM_BASE + off):
-                    info = None
-                if info:
-                    if "pool" in info:
-                        target = info["pool"]
-                        if self.start <= target <= self.end - 4:
-                            self.pool_addrs.add(target)
-                    elif "branch" in info:
-                        self.branch_targets.append(info["branch"])
-                off += size
+            for rs, re_, risa in self.isa_runs(vma, stop, isa):
+                off = vma_off(rs)
+                stop_off = vma_off(re_)
+                while off < stop_off:
+                    if risa == "thumb":
+                        size, info = thumb_decode(self.rom, off)
+                    else:
+                        size, info = arm_decode(self.rom, off)
+                    if info:
+                        if "pool" in info:
+                            target = info["pool"]
+                            if self.start <= target <= self.end - 4:
+                                self.pool_addrs.add(target)
+                        elif "branch" in info:
+                            self.branch_targets.append(info["branch"])
+                        elif "pcadd" in info:
+                            # an adr's target needs a label too (bit 0 is
+                            # the Thumb mark of an ARM `adr rd, label+1`)
+                            self.branch_targets.append(info["pcadd"] & ~1)
+                    off += size
 
         for target in self.branch_targets:
             if self.chunked:
                 break
-            if self.start < target < self.end and target not in self.func_map:
+            if (self.start < target < self.end
+                    and target not in self.func_map
+                    and target not in self.extra_labels):
                 label = LOCAL_PREFIX + "%08x" % target
                 labels = self.pending.setdefault(target, [])
                 if label not in labels:
@@ -571,6 +620,10 @@ class SegmentEmitter(object):
     def word_line(self, addr):
         """Emit line(s) for the 4 bytes at `addr` (a pool or data word)."""
         v = u32(self.rom, vma_off(addr))
+        if addr in self.raw_words:
+            # config raw_words: a constant, not an address
+            self.stats["data_words"] += 1
+            return "\t.word\t0x%08X\t@ raw: %s" % (v, self.raw_words[addr])
         if v in self.data_symbols:
             self.stats["named_words"] += 1
             return "\t.word\t%s" % self.data_symbols[v]
@@ -582,6 +635,11 @@ class SegmentEmitter(object):
             if target in self.db:
                 self.stats["symbolic_words"] += 1
                 return "\t.word\t%s+1" % self.db[target]
+            if target in self.data_symbols:
+                # Thumb code copied to RAM: SoundMain's `bx` to the mixer's
+                # IWRAM copy gSoundMainRAM_Buffer+1
+                self.stats["named_words"] += 1
+                return "\t.word\t%s+1" % self.data_symbols[target]
         elif v in self.db:
             self.stats["symbolic_words"] += 1
             return "\t.word\t%s" % self.db[v]
@@ -632,6 +690,7 @@ class SegmentEmitter(object):
                 addr += 1
 
     def emit_func_region(self, rs, re, name, isa, tmpdir):
+        runs = self.isa_runs(rs, re, isa)
         pretty = (
             self.level == 0
             and (rs - self.start) % (4 if isa == "arm" else 2) == 0
@@ -641,7 +700,6 @@ class SegmentEmitter(object):
                 self.lines.append("\t.thumb_func")
             self.lines.append("\t.global\t%s" % name)
             self.lines.append("%s:" % name)
-            self.lines.append("\t.thumb" if isa == "thumb" else "\t.arm")
         else:
             # Raw mode (or an odd section offset, which gas would pad):
             # label only, no mode directives, so the section can stay at
@@ -654,21 +712,39 @@ class SegmentEmitter(object):
                     "    note: %s at 0x%08X (and any other function at an "
                     "odd section offset) emitted as raw data" % (name, rs)
                 )
+        for s, e, risa in runs:
+            if pretty:
+                # The mode directive comes before the run's labels: gas
+                # gives a label the ISA it is defined in, and `.arm` aligns
+                # to 4 (isa_ranges start word-aligned, so it adds nothing).
+                self.lines.append("\t.thumb" if risa == "thumb" else "\t.arm")
+            self.emit_run(s, e, risa, pretty, tmpdir)
 
+    def sweep(self, isa, rs, tmpdir):
+        """objdump decode of [rs, main_end) in `isa`, cached by start."""
+        key = (isa, rs)
+        if key not in self.dis_cache:
+            self.dis_cache[key] = disassemble(
+                self.rom, rs, self.main_end, isa == "thumb", tmpdir,
+                "%s_%s_%08x" % (self.name, isa, rs),
+            )
+        return self.dis_cache[key]
+
+    def emit_run(self, rs, re, isa, pretty, tmpdir):
+        """Emit [rs, re), code of one ISA inside a function region."""
         dis = {}
         if pretty:
-            # One objdump sweep per ISA covers the rest of the segment.
-            # Thumb-16 decoding is address-stable (every instruction is one
-            # halfword; even a false `bl' prefix in data only corrupts its
-            # own 4-byte window), and a big buffer avoids objdump's `...'
-            # elision of trailing zero instructions that small per-function
-            # buffers trigger.
-            if isa not in self.dis_cache:
-                self.dis_cache[isa] = disassemble(
-                    self.rom, rs, self.main_end, isa == "thumb", tmpdir,
-                    "%s_%s" % (self.name, isa),
-                )
-            dis = self.dis_cache[isa]
+            # One objdump sweep per ISA covers the rest of the segment: a
+            # big buffer is decoded once, and Thumb-16 decoding is
+            # address-stable (every instruction is one halfword; even a
+            # false `bl' prefix in data only corrupts its own 4-byte
+            # window).  Where the sweep is out of step with this run (it
+            # merged the run's first halfword into a 32-bit Thumb-2 pattern
+            # of the bytes before it, e.g. the ARM word ahead of a
+            # trampoline's `bx pc`), a fresh sweep starts at the address.
+            first = self.dis_cache.setdefault(("first", isa), rs)
+            dis = self.sweep(isa, first, tmpdir)
+        resynced = set()
 
         addr = rs
         while addr < re:
@@ -708,6 +784,14 @@ class SegmentEmitter(object):
 
             text = ""
             entry = dis.get(addr) if pretty else None
+            if pretty and addr not in resynced and (
+                entry is None
+                or entry[2] != self.rom[off:off + entry[0]].hex()
+            ):
+                resynced.add(addr)
+                dis = dict(dis)
+                dis.update(self.sweep(isa, addr, tmpdir))
+                entry = dis.get(addr)
             if entry is not None:
                 entry_size, text, hexbytes = entry
                 want_hex = self.rom[off:off + entry_size].hex()
@@ -736,8 +820,15 @@ class SegmentEmitter(object):
                 self.raw_bytes_lines(addr, size)
                 addr += size
 
-    def in_raw_range(self, addr):
-        return any(s <= addr < e for s, e in self.raw_ranges)
+    def isa_at(self, addr, default):
+        """ISA of the code byte at `addr` in a function of ISA `default`."""
+        for s, e, isa in self.isa_ranges:
+            if s <= addr < e:
+                return isa
+        return default
+
+    def isa_runs(self, rs, re_, isa):
+        return isa_runs(rs, re_, isa, self.isa_ranges)
 
     def emit_instruction(self, addr, decode_size, entry_size, text, info):
         """Emit one objdump-derived instruction line.
@@ -745,7 +836,7 @@ class SegmentEmitter(object):
         Returns True if the instruction was emitted (caller advances by
         entry_size), False if the caller should use raw bytes instead.
         """
-        if addr in self.forced_raw_addrs or self.in_raw_range(addr):
+        if addr in self.forced_raw_addrs:
             # gas rejected this line in an earlier repair round; emit the
             # halfwords verbatim instead.
             return False
@@ -772,19 +863,21 @@ class SegmentEmitter(object):
             return True
 
         if info and "pcadd" in info:
-            # `adr`-style operands print as absolute addresses, which gas
-            # would re-relativize against the wrong origin; rewrite them.
-            m = re.match(r"^(adr(?:\.w)?\s+r\d+,\s*)(.*)$", text)
-            if m:
-                label = self.resolve_target(info["pcadd"])
-                if label is None:
-                    return False
-                self._append_insn(
-                    "\t%s%s\t@ 0x%08X" % (m.group(1), label, info["pcadd"])
-                )
-                self.stats["instructions"] += 1
-                return True
-            return False
+            # `add rd, pc, #imm` (Thumb, ARM) is `adr rd, <label>`: objdump
+            # prints the pc-relative form or an absolute address, neither of
+            # which names the target; an odd ARM target is a Thumb label + 1
+            if decode_size != entry_size:
+                return False
+            target = info["pcadd"]
+            label = self.resolve_target(target & ~1)
+            if label is None:
+                return False
+            self._append_insn(
+                "\tadr\tr%d, %s%s\t@ 0x%08X"
+                % (info["rd"], label, "+1" if target & 1 else "", target)
+            )
+            self.stats["instructions"] += 1
+            return True
 
         # Any other operand that still contains a bare 8-hex-digit address
         # (objdump sometimes annotates pc-relative forms symbolically) would
@@ -890,6 +983,7 @@ class SegmentEmitter(object):
         self._noted_raw = False
         self._extra_placed = set()
         self._required_placed = set()
+        self._placed_labels = set()
         self.stats = {
             "instructions": 0,
             "raw_instructions": 0,
@@ -905,11 +999,17 @@ class SegmentEmitter(object):
         # multiple of that alignment would therefore gain padding bytes, so
         # the trailing odd bytes are parked in a separate alignment-1
         # section ".name.tail" that the linker script appends right after
-        # the main section (e.g. the `bx lr' of SoundDriverVSyncOff split
-        # across the sdk_swi_wrappers/sdk_reset_helper boundary).
+        # the main section (until #37, the `bx lr' of SoundDriverVSyncOff
+        # split across the sdk_swi_wrappers/sdk_reset_helper boundary).
         align = 1
         for _vma, _name, isa in self.funcs:
             align = max(align, 4 if isa == "arm" else 2)
+        for _s, _e, isa in self.isa_ranges:
+            align = max(align, 4 if isa == "arm" else 2)
+        if self.pool_addrs and align > 1:
+            # a literal pool must stay word-aligned wherever ld puts the
+            # section (MATCHING=0, the shift test)
+            align = 4
         tail_len = (self.end - self.start) % align if align > 1 else 0
         main_end = self.end - tail_len
         self.main_end = main_end
@@ -929,6 +1029,11 @@ class SegmentEmitter(object):
                 % (self.name, self.start, self.end, self.kind,
                    self.end - self.start)
             )
+        # Why the segment stays asm (config "stays_asm"; tools/audit.py
+        # requires this line in every asm/ file, docs/audit.md section 2).
+        why = STAYS_ASM.get(self.name)
+        if why:
+            h.extend(wrap_comment("Stays asm: " + why))
         if self.funcs:
             h.append("@ Functions (docs/analysis/symbols.csv):")
             for vma, name, _isa in self.funcs:
@@ -1613,6 +1718,22 @@ def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
     return failing
 
 
+# segment name -> why it stays asm (config "stays_asm"), filled by main()
+STAYS_ASM = {}
+
+
+def wrap_comment(text, width=76):
+    """`text` as `@ ` comment lines of at most `width` characters."""
+    out, line = [], "@"
+    for word in text.split():
+        if len(line) + 1 + len(word) > width and line != "@":
+            out.append(line)
+            line = "@  "
+        line += " " + word
+    out.append(line)
+    return out
+
+
 # --------------------------------------------------------------------------
 # rom_syms.s
 # --------------------------------------------------------------------------
@@ -1621,6 +1742,8 @@ def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
 def emit_rom_syms(db, exclude, path, data_symbols, abs_symbols=None):
     lines = [
         "@ Auto-generated by tools/split.py - DO NOT EDIT. Regenerate with: make split",
+        "@ Stays asm: no bytes, only absolute symbols for the linker (docs/audit.md",
+        "@ section 2).",
         "@ Absolute symbols for every function in docs/analysis/symbols.csv that is",
         "@ not defined as a real label by split asm files or compiled C sources,",
         "@ so generated files can reference not-yet-split code symbolically",
@@ -1713,20 +1836,40 @@ def main():
     except (AttributeError, ValueError):
         sys.exit("error: abs_symbols must map names to \"0x...\" hex values")
     not_pointers = parse_addr_map(cfg.get("not_pointers", {}), "not_pointers")
-    # "raw_ranges": [{"start", "end", "why"}] code bytes that are not
-    # instructions of their function's ISA (ARM code inside a Thumb
-    # function): emitted raw and never decoded, because a halfword that
-    # decodes as a branch would be relocated and a shifted ROM would
-    # rewrite it (#36 phase 2 run 2)
-    raw_ranges = []
-    for i, r in enumerate(cfg.get("raw_ranges", [])):
+    # "isa_ranges": [{"start", "end", "isa", "why"}] code inside a
+    # function whose ISA is not the function's own (the ARM islands that
+    # follow `adr rN, <label>; bx rN` in m4a_1's Thumb functions): decoded
+    # and emitted in that ISA, so their branches and `adr`s are labels and
+    # the Thumb decode cannot invent branches out of ARM words (lesson
+    # 4.134).  Each range must be word-aligned for "arm" (`.arm` aligns).
+    isa_ranges = []
+    for i, r in enumerate(cfg.get("isa_ranges", [])):
         try:
             a, b = int(r["start"], 16), int(r["end"], 16)
         except (KeyError, TypeError, ValueError):
-            sys.exit("error: raw_ranges[%d] needs hex \"start\" and \"end\"" % i)
+            sys.exit("error: isa_ranges[%d] needs hex \"start\" and \"end\"" % i)
+        isa = r.get("isa")
+        if isa not in ("arm", "thumb"):
+            sys.exit("error: isa_ranges[%d] needs \"isa\": \"arm\" or \"thumb\"" % i)
         if not r.get("why"):
-            sys.exit("error: raw_ranges[%d] needs a \"why\"" % i)
-        raw_ranges.append((a, b, r["why"]))
+            sys.exit("error: isa_ranges[%d] needs a \"why\"" % i)
+        if b <= a or a % (4 if isa == "arm" else 2) or b % (4 if isa == "arm" else 2):
+            sys.exit("error: isa_ranges[%d] must be a non-empty %s-aligned range"
+                     % (i, "word" if isa == "arm" else "halfword"))
+        isa_ranges.append((a, b, isa))
+    # "raw_words": {"0x<addr>": "<reason>"} literal-pool words of split code
+    # that are constants, not addresses: emitted as numbers with a
+    # same-line `@ raw: <reason>` (the justification make audit reads)
+    raw_words = {}
+    for addr, why in cfg.get("raw_words", {}).items():
+        try:
+            a = int(addr, 16)
+        except (TypeError, ValueError):
+            sys.exit("error: raw_words keys must be \"0x...\" addresses")
+        if a % 4 or not why:
+            sys.exit("error: raw_words[%s] needs a word address and a reason"
+                     % addr)
+        raw_words[a] = why
     pointer_tables = cfg.get("pointer_tables", [])
     if not isinstance(pointer_tables, list):
         sys.exit("error: pointer_tables must be a list of tables")
@@ -1737,6 +1880,8 @@ def main():
         data_entries = []  # structure-only segments (issue #36)
         for seg_cfg in cfg["segments"]:
             name = seg_cfg["name"]
+            if seg_cfg.get("stays_asm"):
+                STAYS_ASM[name] = seg_cfg["stays_asm"]
             if name not in segdefs:
                 sys.exit("error: segment %r not in %s" % (name, args.segments))
             start, end, kind = segdefs[name]
@@ -1954,7 +2099,8 @@ def main():
                 seg_names.setdefault(addr, lab)
             required_all = set()
             if num > 1:
-                targets = collect_ref_targets(rom, start, end, funcs_all)
+                targets = collect_ref_targets(rom, start, end, funcs_all,
+                                              isa_ranges)
                 for target in sorted(targets):
                     if start <= target < end and target not in seg_names:
                         loc = "loc_%08x" % target
@@ -2051,9 +2197,12 @@ def main():
                     ),
                 )
                 em.forced_raw_addrs = raw_addrs[uid]
-                em.raw_ranges = [
-                    (a, b) for a, b, _w in raw_ranges
+                em.isa_ranges = [
+                    (a, b, i) for a, b, i in isa_ranges
                     if a < u["end"] and b > u["start"]]
+                em.raw_words = dict(
+                    (a, w) for a, w in raw_words.items()
+                    if u["start"] <= a < u["end"])
                 em.data_labels = data_labels
                 text = None
                 obj = os.path.join(

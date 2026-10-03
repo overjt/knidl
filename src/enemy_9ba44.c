@@ -232,7 +232,7 @@ void sub_0809bfac(void)
     struct GfxHeader *g;
     u16 *p;
 
-    RequestCopy(4, (u32)gUnk_02020000, 0x06010000, 240 << 6);
+    RequestCopy(4, (u32)gUnk_02020000, OBJ_VRAM0, 240 << 6);
     g = (struct GfxHeader *)gAxeKnightGfx;
     RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gUnk_03001570), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gJavelinKnightGfx;

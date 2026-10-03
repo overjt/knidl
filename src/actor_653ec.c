@@ -100,7 +100,7 @@ void sub_08065470(void)
     if (gCurTask->frame == -1)
         return;
     prio = gCurTask->tileWord;
-    dst = ((prio & 0x7FF) << 5) + 0x0600FE00;
+    dst = ((prio & 0x7FF) << 5) + (BG_VRAM + 0xFE00);
     g = (struct TaskGfx *)gCurTask->frameTable[gCurTask->frame];
     p = g->tiles;
     if (*p != 0xFFFF)
@@ -1668,7 +1668,7 @@ void LoadStarRodPieceGfx(void)
     struct GfxHeader *h;
 
     h = (struct GfxHeader *)gUnk_08334DC0;
-    RequestCopy(4, (u32)h->tiles, 0x06017800, h->tileCount << 5);
+    RequestCopy(4, (u32)h->tiles, OBJ_VRAM0 + 0x7800, h->tileCount << 5);
     RequestCopy(2, gStarRodPiecePalettes[gLevelIndex], (u32)gUnk_03001610,
                  h->paletteBankCount << 5);
 }

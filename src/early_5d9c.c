@@ -210,7 +210,7 @@ void TaskSetEntry(void *a, u32 i)
 {
     gTasks[i].sleepFrames = 0;
     gTaskResumeAddrs[i] = a;
-    gTaskStackPtrs[i] = 0x0203BFE0 + (i << 8);
+    gTaskStackPtrs[i] = (EWRAM_START + 0x3BFE0) + (i << 8);
 }
 
 void TaskSetFrameByFacing(s16 a)

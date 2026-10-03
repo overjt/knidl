@@ -165,12 +165,12 @@ void sub_080710fc(void)
 
         t->frame = 13;
         off = (t->tileWord & 0x7FF) << 5;
-        dst = 0x06010000 + off;
+        dst = OBJ_VRAM0 + off;
         RequestCopy(1, gUnk_0873FB7C[t->unk6E], dst, 128);
     }
-    RequestCopy(1, gUnk_0873FB7C[gCurTask->unk6E] + 128, 0x06010400 + off, 128);
-    RequestCopy(1, gUnk_0873FB7C[gCurTask->unk6E] + 256, 0x06010800 + off, 128);
-    RequestCopy(1, gUnk_0873FB7C[gCurTask->unk6E] + 384, 0x06010C00 + off, 128);
+    RequestCopy(1, gUnk_0873FB7C[gCurTask->unk6E] + 128, (OBJ_VRAM0 + 0x400) + off, 128);
+    RequestCopy(1, gUnk_0873FB7C[gCurTask->unk6E] + 256, (OBJ_VRAM0 + 0x800) + off, 128);
+    RequestCopy(1, gUnk_0873FB7C[gCurTask->unk6E] + 384, (OBJ_VRAM0 + 0xC00) + off, 128);
 }
 
 void sub_080711d0(void)
@@ -228,10 +228,10 @@ u16 sub_08071360(s32 idx)
     u16 v = gTasks[idx].tileWord & 0x7FF;
     u32 off = v << 5;
 
-    RequestCopy(1, (u32)gUnk_0825D2C8, 0x06010180 + off, 128);
-    RequestCopy(1, (u32)gUnk_0825D2C8 + 128, 0x06010580 + off, 128);
-    RequestCopy(1, (u32)gUnk_0825D2C8 + 256, 0x06010980 + off, 128);
-    RequestCopy(1, (u32)gUnk_0825D2C8 + 384, 0x06010D80 + off, 128);
+    RequestCopy(1, (u32)gUnk_0825D2C8, (OBJ_VRAM0 + 0x180) + off, 128);
+    RequestCopy(1, (u32)gUnk_0825D2C8 + 128, (OBJ_VRAM0 + 0x580) + off, 128);
+    RequestCopy(1, (u32)gUnk_0825D2C8 + 256, (OBJ_VRAM0 + 0x980) + off, 128);
+    RequestCopy(1, (u32)gUnk_0825D2C8 + 384, (OBJ_VRAM0 + 0xD80) + off, 128);
     gUnk_020061E0++;
     return v + 0xF00C;
 }

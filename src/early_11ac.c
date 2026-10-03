@@ -29,8 +29,8 @@ extern void IntrDummy(void); /* no-op IRQ handler (bx lr) */
  * OAM/palette RAM. */
 void CopyOamAndPalette(void)
 {
-    CpuFastSet((u32 *)0x03000050, (u32 *)0x07000000, 0x100);
-    CpuFastSet((u32 *)gPaletteSource, (u32 *)0x05000000, 0x100);
+    CpuFastSet((u32 *)(IWRAM_START + 0x50), (u32 *)OAM, 0x100);
+    CpuFastSet((u32 *)gPaletteSource, (u32 *)BG_PLTT, 0x100);
 }
 
 /* Poll REG_KEYINPUT into the held/new/repeat key state cells. */

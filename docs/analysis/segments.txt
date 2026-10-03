@@ -10,8 +10,8 @@
 0x08000000 0x080000C0 data rom_header
 0x080000C0 0x08000210 arm_code crt0_master_isr
 0x08000210 0x08000234 pool crt0_literals
-0x08000234 0x080002E5 arm_code task_switch_helpers [split] # cooperative task switch; IWRAM cells named via split_config data_symbols
-0x080002E5 0x08000310 pool task_literals [split] # task helper literal pools (all 10 words = named cells)
+0x08000234 0x080002E8 arm_code task_switch_helpers [split] # cooperative task switch; IWRAM cells named via split_config data_symbols; ends after sub_080002a8's `b .` (0x080002E4, boundary moved from the odd 0x080002E5 in #37)
+0x080002E8 0x08000310 pool task_literals [split] # task helper literal pools (all 10 words = named cells)
 0x08000310 0x080008E8 c_code agb_init # src/agb_init.c: AgbInit + its literal pool (0x0700 pool-skip branch + words to 0x08E7)
 0x080008E8 0x08000DE4 c_code early_08e8 # src/early_08e8.c (carved by tools/carve.py)
 0x08000DE4 0x080010CC c_code early_0de4 # src/early_0de4.c (carved by tools/carve.py)
@@ -318,8 +318,8 @@
 0x080CE4B8 0x080CEFB4 c_code m4a_c1 # src/m4a_c1.c (carved by tools/carve.py): m4a C driver part 1, MidiKeyToFreq + init/song-number/MPlay API (issue #53, old_agbcc -O2)
 0x080CEFB4 0x080CF588 c_code m4a_cgb # src/m4a_cgb.c (carved by tools/carve.py)
 0x080CF588 0x080CFA4C c_code m4a_ctrl # src/m4a_ctrl.c (carved by tools/carve.py)
-0x080CFA4C 0x080CFA7F thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h; stays named asm by design (bare `svc N; bx lr` is not producible from C by agbcc — issue #29)
-0x080CFA7F 0x080CFA9C thumb_code sdk_reset_helper [split] # SoftReset (0x080CFA80, svc 1 + svc 0) via split_config extra_labels; odd start => data-emitted, stays named asm by design (issue #29)
+0x080CFA4C 0x080CFA80 thumb_code sdk_swi_wrappers [split] # svc thunks named per include/gba/syscall.h; stays named asm by design (bare `svc N; bx lr` is not producible from C by agbcc — issue #29)
+0x080CFA80 0x080CFA9C thumb_code sdk_reset_helper [split] # SoftReset (svc 1 + svc 0) and its pool; stays named asm by design (issue #29); boundary moved from the odd 0x080CFA7F, which split SoundDriverVSyncOff's `bx lr`, in #37
 0x080CFA9C 0x080CFC30 c_code sram_driver
 0x080CFC30 0x080CFDDC thumb_code sdk_libc [split] # _call_via_r0..lr + __divsi3/__umodsi3/_div0 (gcc lib1funcs.asm, hand-written asm upstream) + Task{Switch,Yield,Dispatch}Trampoline; stays named asm forever by design (#30, rom-map section 2 seg 9)
 0x080CFDDC 0x080CFDE4 arm_code interworking_veneer [split] # ldr ip,[pc]; bx ip -> 0x08005654|1

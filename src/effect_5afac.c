@@ -195,7 +195,7 @@ void GoalGameMain(void)
     {
         RunLinkFrame();
         LatchPlayerKeys();
-    } while (*(s8 *)0x03002438 == 0);
+    } while (*(s8 *)(IWRAM_START + 0x2438) == 0);
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
@@ -1694,7 +1694,7 @@ void sub_0805da2c(void)
         if (g->palette != NULL)
             RequestCopy(2, g->palette + 1, gObjPalette + ((a >> 12) << 5), *g->palette);
         p = pal[1];
-        dst = (u8 *)(((a & 0x7FF) << 5) + 0x0600FE00);
+        dst = (u8 *)(((a & 0x7FF) << 5) + (BG_VRAM + 0xFE00));
         while (*p != 0xFFFF)
         {
             u16 *q = p + 1;
@@ -1708,7 +1708,7 @@ void sub_0805da2c(void)
         if (*g->palette != 0)
             RequestCopy(2, g->palette + 1, gObjPalette + ((a >> 12) << 5), *g->palette);
         p = g->tiles;
-        dst = (u8 *)(((a & 0x7FF) << 5) + 0x0600FE00);
+        dst = (u8 *)(((a & 0x7FF) << 5) + (BG_VRAM + 0xFE00));
         while (*p != 0xFFFF)
         {
             u16 *q = p + 1;

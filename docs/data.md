@@ -224,13 +224,25 @@ relocate an unaligned `R_ARM_ABS32`).  The numbers: 330 song headers,
 701 tracks, 5 voicegroups, 129 `WaveData` (not 100, as §4.1 said
 before), 3,894 pointer words (1,343 unaligned) and 2,156 labels.
 
-### 3.5 Code bytes that stay raw (`raw_ranges`)
+### 3.5 Code of the other ISA (`isa_ranges`) and constant words (`raw_words`)
 
-`"raw_ranges": [{"start", "end", "why"}]` keeps a range of a split code
-segment raw and undecoded.  The one entry is SoundMainRAM's ARM mixer
-(`0x080CD93C-0x080CDCCE`): decoded as Thumb, one of its ARM instructions
-read as a branch into another object, which a shifted ROM would have
-rewritten (lesson 4.134).
+`"isa_ranges": [{"start", "end", "isa", "why"}]` marks code inside a split
+function whose ISA is not the function's: the ARM islands of m4a_1's
+Thumb functions (`__umul3232H32` in `umul3232H32`, and SoundMainRAM's
+reverb loop and sample mixer, entered by `adr rN, <label>; bx rN` and left
+by `adr r0, <thumb label>+1; bx r0`).  split.py decodes, labels and emits
+them in that ISA, with `.arm`/`.thumb` at each boundary, so their
+branches and `adr`s are labels inside the file.  Until #37 the mixer was a
+`raw_ranges` entry kept as raw halfwords, because its Thumb decode read
+one ARM instruction as a branch into another object, which a shifted ROM
+would have rewritten (lesson 4.134); the census now sees the islands
+through the ELF's `$a` mapping symbols like any other ARM code.
+
+`"raw_words": {"0x<addr>": "<reason>"}` names literal-pool words of split
+code that are constants, not addresses (m4a's `ID_NUMBER`, the
+`SoundInfo.pcmBuffer` offset, `PCM_DMA_BUF_SIZE`, the sound DMA control
+word): they stay numbers, emitted with a same-line `@ raw: <reason>`, the
+justification `make audit` reads (docs/audit.md).
 
 ## 4. Segments
 

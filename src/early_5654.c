@@ -131,7 +131,7 @@ s32 TaskCreate(u32 type)
      * materialises (the ROM's `ldr r7, =0x0203BFE0` in the dead `type`
      * register); `(u32)gUnk_0203BFE0` makes it a local pseudo instead
      * (lesson 3.486). */
-    gTaskStackPtrs[gTaskCursor] = 0x0203BFE0 + (gTaskCursor << 8);
+    gTaskStackPtrs[gTaskCursor] = (EWRAM_START + 0x3BFE0) + (gTaskCursor << 8);
     gTaskResumeAddrs[gTaskCursor] = gTaskTypes[type].entry;
     t->sleepFrames = 0;
     t->skipMask = 0;

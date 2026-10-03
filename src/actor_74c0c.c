@@ -202,11 +202,11 @@ void Task_NightmarePowerOrbEscape(void)
         t->layer = 11;
     }
     gCurTask->frameTable = gUnk_0875549C;
-    RequestCopy(2, (u32)gUnk_085E6FA4, 0x030015B0, 64);
-    LZ77UnCompWram(gUnk_085E6FE4, (void *)0x02020000);
-    RequestCopy(4, 0x02020000, 0x06013000, 0x800);
-    LZ77UnCompWram(gUnk_085E72D4, (void *)0x02020000);
-    RequestCopy(4, 0x02020000, 0x06014000, 0x1000);
+    RequestCopy(2, (u32)gUnk_085E6FA4, IWRAM_START + 0x15B0, 64);
+    LZ77UnCompWram(gUnk_085E6FE4, (void *)(EWRAM_START + 0x20000));
+    RequestCopy(4, EWRAM_START + 0x20000, OBJ_VRAM0 + 0x3000, 0x800);
+    LZ77UnCompWram(gUnk_085E72D4, (void *)(EWRAM_START + 0x20000));
+    RequestCopy(4, EWRAM_START + 0x20000, OBJ_VRAM0 + 0x4000, 0x1000);
     {
         struct Task *t = gCurTask;
 

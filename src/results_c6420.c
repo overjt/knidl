@@ -106,20 +106,20 @@ void DrawLargeClockScreen(void)
 {
     LoadGfxSet(53);
     IntToDigits(gHudClock[3]);
-    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[1] << 5), 0x0600AEA0, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 16) << 5), 0x0600B0A0, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[0] << 5), 0x0600AEC0, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 16) << 5), 0x0600B0C0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[1] << 5), BG_VRAM + 0xAEA0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 16) << 5), BG_VRAM + 0xB0A0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[0] << 5), BG_VRAM + 0xAEC0, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 16) << 5), BG_VRAM + 0xB0C0, 32);
     IntToDigits(gHudClock[2]);
-    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[1] << 5), 0x0600AF00, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 16) << 5), 0x0600B100, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[0] << 5), 0x0600AF20, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 16) << 5), 0x0600B120, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[1] << 5), BG_VRAM + 0xAF00, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 16) << 5), BG_VRAM + 0xB100, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + (gDigits[0] << 5), BG_VRAM + 0xAF20, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 16) << 5), BG_VRAM + 0xB120, 32);
     IntToDigits(gHudClock[1]);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 32) << 5), 0x0600AF60, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 48) << 5), 0x0600B160, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 32) << 5), 0x0600AF80, 32);
-    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 48) << 5), 0x0600B180, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 32) << 5), BG_VRAM + 0xAF60, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[1] + 48) << 5), BG_VRAM + 0xB160, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 32) << 5), BG_VRAM + 0xAF80, 32);
+    RequestCopy(1, (u32)gUnk_02020000 + ((gDigits[0] + 48) << 5), BG_VRAM + 0xB180, 32);
 }
 
 /* A full-screen picture (screen 57 or 59, by gExtraMode) shown until a
@@ -313,5 +313,5 @@ void DrawClockToBgMap(u16 *time, s32 x, s32 y)
 /* Copy n tiles from src to the BG map at 0x06001000, row y, column x. */
 void CopyToBgMap(u16 *src, s32 x, s32 y, s32 n)
 {
-    RequestCopy(1, (u32)src, (x + (y << 5)) * 2 + 0x06001000, n * 2);
+    RequestCopy(1, (u32)src, (x + (y << 5)) * 2 + (BG_VRAM + 0x1000), n * 2);
 }
