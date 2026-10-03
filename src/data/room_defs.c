@@ -366,7 +366,7 @@ extern struct BgMap gLevel7Stage0Room2Bg3Map;
 /* gRoomTable[7][1][0], 0x0835D08C, section .room_def_0835d08c */
 extern u8 gLevel7Stage1Room0MetatileMap[];
 extern u8 gLevel7Stage1Room0BlockLayer[];
-extern u8 gUnk_0835D07C[];
+extern u8 gLevel7Stage1Room0BlockMetatiles[];
 extern u8 gLevel7Stage1Room0Objects[];
 struct RoomDef gLevel7Stage1Room0 ROOM_DEF(0835d08c) = {
     .filler00 = { 7, 1, 0, 0 },
@@ -375,7 +375,7 @@ struct RoomDef gLevel7Stage1Room0 ROOM_DEF(0835d08c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage1Room0MetatileMap,
     .blockLayer = gLevel7Stage1Room0BlockLayer,
-    .unk10 = gUnk_0835D07C,
+    .blockMetatiles = gLevel7Stage1Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0835D548,
@@ -388,7 +388,7 @@ struct RoomDef gLevel7Stage1Room0 ROOM_DEF(0835d08c) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -408,7 +408,7 @@ struct RoomDef gLevel7Stage1Room0 ROOM_DEF(0835d08c) = {
 /* gRoomTable[7][1][1], 0x0835D300, section .room_def_0835d300 */
 extern u8 gLevel7Stage1Room1MetatileMap[];
 extern u8 gLevel7Stage1Room1BlockLayer[];
-extern u8 gUnk_0835D2F0[];
+extern u8 gLevel7Stage1Room1BlockMetatiles[];
 extern u8 gLevel7Stage1Room1Objects[];
 struct RoomDef gLevel7Stage1Room1 ROOM_DEF(0835d300) = {
     .filler00 = { 7, 1, 1, 0 },
@@ -417,7 +417,7 @@ struct RoomDef gLevel7Stage1Room1 ROOM_DEF(0835d300) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage1Room1MetatileMap,
     .blockLayer = gLevel7Stage1Room1BlockLayer,
-    .unk10 = gUnk_0835D2F0,
+    .blockMetatiles = gLevel7Stage1Room1BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_0835D918,
@@ -430,7 +430,7 @@ struct RoomDef gLevel7Stage1Room1 ROOM_DEF(0835d300) = {
     .bg3Map = &gUnk_083D0A64,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -450,7 +450,7 @@ struct RoomDef gLevel7Stage1Room1 ROOM_DEF(0835d300) = {
 /* gRoomTable[7][1][2], 0x0835D4F0, section .room_def_0835d4f0 */
 extern u8 gLevel7Stage1Room2MetatileMap[];
 extern u8 gLevel7Stage1Room2BlockLayer[];
-extern u8 gUnk_0835D4E0[];
+extern u8 gLevel7Stage1Room2BlockMetatiles[];
 extern u8 gLevel7Stage1Room2Objects[];
 struct RoomDef gLevel7Stage1Room2 ROOM_DEF(0835d4f0) = {
     .filler00 = { 7, 1, 2, 0 },
@@ -459,7 +459,7 @@ struct RoomDef gLevel7Stage1Room2 ROOM_DEF(0835d4f0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage1Room2MetatileMap,
     .blockLayer = gLevel7Stage1Room2BlockLayer,
-    .unk10 = gUnk_0835D4E0,
+    .blockMetatiles = gLevel7Stage1Room2BlockMetatiles,
     .width = 18,
     .height = 21,
     .bg2Palette = gUnk_0852BD00,
@@ -472,7 +472,7 @@ struct RoomDef gLevel7Stage1Room2 ROOM_DEF(0835d4f0) = {
     .bg3Map = &gUnk_083C89E8,
     .bg3BorderX = 8,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -492,7 +492,7 @@ struct RoomDef gLevel7Stage1Room2 ROOM_DEF(0835d4f0) = {
 /* gRoomTable[0][0][0], 0x0835DDC0, section .room_def_0835ddc0 */
 extern u8 gLevel0Stage0Room0MetatileMap[];
 extern u8 gLevel0Stage0Room0BlockLayer[];
-extern u8 gUnk_0835DD54[];
+extern u8 gLevel0Stage0Room0BlockMetatiles[];
 extern struct Door gLevel0Stage0Room0Doors[];
 extern u8 gLevel0Stage0Room0Objects[];
 struct RoomDef gLevel0Stage0Room0 ROOM_DEF(0835ddc0) = {
@@ -502,7 +502,7 @@ struct RoomDef gLevel0Stage0Room0 ROOM_DEF(0835ddc0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage0Room0MetatileMap,
     .blockLayer = gLevel0Stage0Room0BlockLayer,
-    .unk10 = gUnk_0835DD54,
+    .blockMetatiles = gLevel0Stage0Room0BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0849A940,
@@ -515,7 +515,7 @@ struct RoomDef gLevel0Stage0Room0 ROOM_DEF(0835ddc0) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 11,
     .objectsSortedByY = 0,
@@ -535,7 +535,7 @@ struct RoomDef gLevel0Stage0Room0 ROOM_DEF(0835ddc0) = {
 /* gRoomTable[0][0][1], 0x0835E2A0, section .room_def_0835e2a0 */
 extern u8 gLevel0Stage0Room1MetatileMap[];
 extern u8 gLevel0Stage0Room1BlockLayer[];
-extern u8 gUnk_0835E228[];
+extern u8 gLevel0Stage0Room1BlockMetatiles[];
 extern struct Door gLevel0Stage0Room1Doors[];
 extern u8 gLevel0Stage0Room1Objects[];
 struct RoomDef gLevel0Stage0Room1 ROOM_DEF(0835e2a0) = {
@@ -545,7 +545,7 @@ struct RoomDef gLevel0Stage0Room1 ROOM_DEF(0835e2a0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage0Room1MetatileMap,
     .blockLayer = gLevel0Stage0Room1BlockLayer,
-    .unk10 = gUnk_0835E228,
+    .blockMetatiles = gLevel0Stage0Room1BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0853DAB4,
@@ -558,7 +558,7 @@ struct RoomDef gLevel0Stage0Room1 ROOM_DEF(0835e2a0) = {
     .bg3Map = &gUnk_0849B4E8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 11,
     .objectsSortedByY = 0,
@@ -578,7 +578,7 @@ struct RoomDef gLevel0Stage0Room1 ROOM_DEF(0835e2a0) = {
 /* gRoomTable[0][0][2], 0x0835E70C, section .room_def_0835e70c */
 extern u8 gLevel0Stage0Room2MetatileMap[];
 extern u8 gLevel0Stage0Room2BlockLayer[];
-extern u8 gUnk_0835E68C[];
+extern u8 gLevel0Stage0Room2BlockMetatiles[];
 extern struct Door gLevel0Stage0Room2Doors[];
 extern u8 gLevel0Stage0Room2Objects[];
 struct RoomDef gLevel0Stage0Room2 ROOM_DEF(0835e70c) = {
@@ -588,7 +588,7 @@ struct RoomDef gLevel0Stage0Room2 ROOM_DEF(0835e70c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage0Room2MetatileMap,
     .blockLayer = gLevel0Stage0Room2BlockLayer,
-    .unk10 = gUnk_0835E68C,
+    .blockMetatiles = gLevel0Stage0Room2BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -601,7 +601,7 @@ struct RoomDef gLevel0Stage0Room2 ROOM_DEF(0835e70c) = {
     .bg3Map = &gUnk_0849B4E8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -621,7 +621,7 @@ struct RoomDef gLevel0Stage0Room2 ROOM_DEF(0835e70c) = {
 /* gRoomTable[0][0][3], 0x0835E924, section .room_def_0835e924 */
 extern u8 gLevel0Stage0Room3MetatileMap[];
 extern u8 gLevel0Stage0Room3BlockLayer[];
-extern u8 gUnk_0835E900[];
+extern u8 gLevel0Stage0Room3BlockMetatiles[];
 extern struct Door gLevel0Stage0Room3Doors[];
 extern u8 gLevel0Stage0Room3Objects[];
 struct RoomDef gLevel0Stage0Room3 ROOM_DEF(0835e924) = {
@@ -631,7 +631,7 @@ struct RoomDef gLevel0Stage0Room3 ROOM_DEF(0835e924) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage0Room3MetatileMap,
     .blockLayer = gLevel0Stage0Room3BlockLayer,
-    .unk10 = gUnk_0835E900,
+    .blockMetatiles = gLevel0Stage0Room3BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -644,7 +644,7 @@ struct RoomDef gLevel0Stage0Room3 ROOM_DEF(0835e924) = {
     .bg3Map = &gUnk_083CEF10,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -664,7 +664,7 @@ struct RoomDef gLevel0Stage0Room3 ROOM_DEF(0835e924) = {
 /* gRoomTable[0][1][0], 0x0835EF1C, section .room_def_0835ef1c */
 extern u8 gLevel0Stage1Room0MetatileMap[];
 extern u8 gLevel0Stage1Room0BlockLayer[];
-extern u8 gUnk_0835EE40[];
+extern u8 gLevel0Stage1Room0BlockMetatiles[];
 extern struct Door gLevel0Stage1Room0Doors[];
 extern u8 gLevel0Stage1Room0Objects[];
 struct RoomDef gLevel0Stage1Room0 ROOM_DEF(0835ef1c) = {
@@ -674,7 +674,7 @@ struct RoomDef gLevel0Stage1Room0 ROOM_DEF(0835ef1c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage1Room0MetatileMap,
     .blockLayer = gLevel0Stage1Room0BlockLayer,
-    .unk10 = gUnk_0835EE40,
+    .blockMetatiles = gLevel0Stage1Room0BlockMetatiles,
     .width = 95,
     .height = 11,
     .bg2Palette = gUnk_0849A940,
@@ -687,7 +687,7 @@ struct RoomDef gLevel0Stage1Room0 ROOM_DEF(0835ef1c) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 10,
     .objectsSortedByY = 0,
@@ -707,7 +707,7 @@ struct RoomDef gLevel0Stage1Room0 ROOM_DEF(0835ef1c) = {
 /* gRoomTable[0][1][1], 0x0835F1A4, section .room_def_0835f1a4 */
 extern u8 gLevel0Stage1Room1MetatileMap[];
 extern u8 gLevel0Stage1Room1BlockLayer[];
-extern u8 gUnk_0835F180[];
+extern u8 gLevel0Stage1Room1BlockMetatiles[];
 extern struct Door gLevel0Stage1Room1Doors[];
 extern u8 gLevel0Stage1Room1Objects[];
 struct RoomDef gLevel0Stage1Room1 ROOM_DEF(0835f1a4) = {
@@ -717,7 +717,7 @@ struct RoomDef gLevel0Stage1Room1 ROOM_DEF(0835f1a4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage1Room1MetatileMap,
     .blockLayer = gLevel0Stage1Room1BlockLayer,
-    .unk10 = gUnk_0835F180,
+    .blockMetatiles = gLevel0Stage1Room1BlockMetatiles,
     .width = 16,
     .height = 33,
     .bg2Palette = gUnk_0849A940,
@@ -730,7 +730,7 @@ struct RoomDef gLevel0Stage1Room1 ROOM_DEF(0835f1a4) = {
     .bg3Map = &gUnk_0849B4E8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 1,
@@ -750,7 +750,7 @@ struct RoomDef gLevel0Stage1Room1 ROOM_DEF(0835f1a4) = {
 /* gRoomTable[0][1][2], 0x0835F544, section .room_def_0835f544 */
 extern u8 gLevel0Stage1Room2MetatileMap[];
 extern u8 gLevel0Stage1Room2BlockLayer[];
-extern u8 gUnk_0835F4DC[];
+extern u8 gLevel0Stage1Room2BlockMetatiles[];
 extern struct Door gLevel0Stage1Room2Doors[];
 extern u8 gLevel0Stage1Room2Objects[];
 struct RoomDef gLevel0Stage1Room2 ROOM_DEF(0835f544) = {
@@ -760,7 +760,7 @@ struct RoomDef gLevel0Stage1Room2 ROOM_DEF(0835f544) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage1Room2MetatileMap,
     .blockLayer = gLevel0Stage1Room2BlockLayer,
-    .unk10 = gUnk_0835F4DC,
+    .blockMetatiles = gLevel0Stage1Room2BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -773,7 +773,7 @@ struct RoomDef gLevel0Stage1Room2 ROOM_DEF(0835f544) = {
     .bg3Map = &gUnk_0849B4E8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 7,
     .objectsSortedByY = 0,
@@ -793,7 +793,7 @@ struct RoomDef gLevel0Stage1Room2 ROOM_DEF(0835f544) = {
 /* gRoomTable[0][1][3], 0x0835FC24, section .room_def_0835fc24 */
 extern u8 gLevel0Stage1Room3MetatileMap[];
 extern u8 gLevel0Stage1Room3BlockLayer[];
-extern u8 gUnk_0835FB90[];
+extern u8 gLevel0Stage1Room3BlockMetatiles[];
 extern struct Door gLevel0Stage1Room3Doors[];
 extern u8 gLevel0Stage1Room3Objects[];
 struct RoomDef gLevel0Stage1Room3 ROOM_DEF(0835fc24) = {
@@ -803,7 +803,7 @@ struct RoomDef gLevel0Stage1Room3 ROOM_DEF(0835fc24) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage1Room3MetatileMap,
     .blockLayer = gLevel0Stage1Room3BlockLayer,
-    .unk10 = gUnk_0835FB90,
+    .blockMetatiles = gLevel0Stage1Room3BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0849A52C,
@@ -816,7 +816,7 @@ struct RoomDef gLevel0Stage1Room3 ROOM_DEF(0835fc24) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -836,7 +836,7 @@ struct RoomDef gLevel0Stage1Room3 ROOM_DEF(0835fc24) = {
 /* gRoomTable[0][1][4], 0x0835FFE4, section .room_def_0835ffe4 */
 extern u8 gLevel0Stage1Room4MetatileMap[];
 extern u8 gLevel0Stage1Room4BlockLayer[];
-extern u8 gUnk_0835FF90[];
+extern u8 gLevel0Stage1Room4BlockMetatiles[];
 extern struct Door gLevel0Stage1Room4Doors[];
 extern u8 gLevel0Stage1Room4Objects[];
 struct RoomDef gLevel0Stage1Room4 ROOM_DEF(0835ffe4) = {
@@ -846,7 +846,7 @@ struct RoomDef gLevel0Stage1Room4 ROOM_DEF(0835ffe4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage1Room4MetatileMap,
     .blockLayer = gLevel0Stage1Room4BlockLayer,
-    .unk10 = gUnk_0835FF90,
+    .blockMetatiles = gLevel0Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 24,
     .bg2Palette = gUnk_0849A52C,
@@ -859,7 +859,7 @@ struct RoomDef gLevel0Stage1Room4 ROOM_DEF(0835ffe4) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 5,
     .objectsSortedByY = 1,
@@ -879,7 +879,7 @@ struct RoomDef gLevel0Stage1Room4 ROOM_DEF(0835ffe4) = {
 /* gRoomTable[0][1][5], 0x083601DC, section .room_def_083601dc */
 extern u8 gLevel0Stage1Room5MetatileMap[];
 extern u8 gLevel0Stage1Room5BlockLayer[];
-extern u8 gUnk_083601B8[];
+extern u8 gLevel0Stage1Room5BlockMetatiles[];
 extern struct Door gLevel0Stage1Room5Doors[];
 extern u8 gLevel0Stage1Room5Objects[];
 struct RoomDef gLevel0Stage1Room5 ROOM_DEF(083601dc) = {
@@ -889,7 +889,7 @@ struct RoomDef gLevel0Stage1Room5 ROOM_DEF(083601dc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage1Room5MetatileMap,
     .blockLayer = gLevel0Stage1Room5BlockLayer,
-    .unk10 = gUnk_083601B8,
+    .blockMetatiles = gLevel0Stage1Room5BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_084BB068,
@@ -902,7 +902,7 @@ struct RoomDef gLevel0Stage1Room5 ROOM_DEF(083601dc) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -922,7 +922,7 @@ struct RoomDef gLevel0Stage1Room5 ROOM_DEF(083601dc) = {
 /* gRoomTable[0][2][0], 0x08360690, section .room_def_08360690 */
 extern u8 gLevel0Stage2Room0MetatileMap[];
 extern u8 gLevel0Stage2Room0BlockLayer[];
-extern u8 gUnk_08360610[];
+extern u8 gLevel0Stage2Room0BlockMetatiles[];
 extern struct Door gLevel0Stage2Room0Doors[];
 extern u8 gLevel0Stage2Room0Objects[];
 struct RoomDef gLevel0Stage2Room0 ROOM_DEF(08360690) = {
@@ -932,7 +932,7 @@ struct RoomDef gLevel0Stage2Room0 ROOM_DEF(08360690) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage2Room0MetatileMap,
     .blockLayer = gLevel0Stage2Room0BlockLayer,
-    .unk10 = gUnk_08360610,
+    .blockMetatiles = gLevel0Stage2Room0BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0849A940,
@@ -945,7 +945,7 @@ struct RoomDef gLevel0Stage2Room0 ROOM_DEF(08360690) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -965,7 +965,7 @@ struct RoomDef gLevel0Stage2Room0 ROOM_DEF(08360690) = {
 /* gRoomTable[0][2][1], 0x08360B38, section .room_def_08360b38 */
 extern u8 gLevel0Stage2Room1MetatileMap[];
 extern u8 gLevel0Stage2Room1BlockLayer[];
-extern u8 gUnk_08360ABC[];
+extern u8 gLevel0Stage2Room1BlockMetatiles[];
 extern struct Door gLevel0Stage2Room1Doors[];
 extern u8 gLevel0Stage2Room1Objects[];
 struct RoomDef gLevel0Stage2Room1 ROOM_DEF(08360b38) = {
@@ -975,7 +975,7 @@ struct RoomDef gLevel0Stage2Room1 ROOM_DEF(08360b38) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage2Room1MetatileMap,
     .blockLayer = gLevel0Stage2Room1BlockLayer,
-    .unk10 = gUnk_08360ABC,
+    .blockMetatiles = gLevel0Stage2Room1BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0853DAB4,
@@ -988,7 +988,7 @@ struct RoomDef gLevel0Stage2Room1 ROOM_DEF(08360b38) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -1008,7 +1008,7 @@ struct RoomDef gLevel0Stage2Room1 ROOM_DEF(08360b38) = {
 /* gRoomTable[0][2][2], 0x08360F38, section .room_def_08360f38 */
 extern u8 gLevel0Stage2Room2MetatileMap[];
 extern u8 gLevel0Stage2Room2BlockLayer[];
-extern u8 gUnk_08360EE0[];
+extern u8 gLevel0Stage2Room2BlockMetatiles[];
 extern struct Door gLevel0Stage2Room2Doors[];
 extern u8 gLevel0Stage2Room2Objects[];
 struct RoomDef gLevel0Stage2Room2 ROOM_DEF(08360f38) = {
@@ -1018,7 +1018,7 @@ struct RoomDef gLevel0Stage2Room2 ROOM_DEF(08360f38) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage2Room2MetatileMap,
     .blockLayer = gLevel0Stage2Room2BlockLayer,
-    .unk10 = gUnk_08360EE0,
+    .blockMetatiles = gLevel0Stage2Room2BlockMetatiles,
     .width = 18,
     .height = 25,
     .bg2Palette = gUnk_084D50EC,
@@ -1031,7 +1031,7 @@ struct RoomDef gLevel0Stage2Room2 ROOM_DEF(08360f38) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 7,
     .objectsSortedByY = 1,
@@ -1051,7 +1051,7 @@ struct RoomDef gLevel0Stage2Room2 ROOM_DEF(08360f38) = {
 /* gRoomTable[0][2][3], 0x083613A0, section .room_def_083613a0 */
 extern u8 gLevel0Stage2Room3MetatileMap[];
 extern u8 gLevel0Stage2Room3BlockLayer[];
-extern u8 gUnk_08361310[];
+extern u8 gLevel0Stage2Room3BlockMetatiles[];
 extern struct Door gLevel0Stage2Room3Doors[];
 extern u8 gLevel0Stage2Room3Objects[];
 struct RoomDef gLevel0Stage2Room3 ROOM_DEF(083613a0) = {
@@ -1061,7 +1061,7 @@ struct RoomDef gLevel0Stage2Room3 ROOM_DEF(083613a0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage2Room3MetatileMap,
     .blockLayer = gLevel0Stage2Room3BlockLayer,
-    .unk10 = gUnk_08361310,
+    .blockMetatiles = gLevel0Stage2Room3BlockMetatiles,
     .width = 66,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -1074,7 +1074,7 @@ struct RoomDef gLevel0Stage2Room3 ROOM_DEF(083613a0) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -1094,7 +1094,7 @@ struct RoomDef gLevel0Stage2Room3 ROOM_DEF(083613a0) = {
 /* gRoomTable[0][3][0], 0x0836179C, section .room_def_0836179c */
 extern u8 gLevel0Stage3Room0MetatileMap[];
 extern u8 gLevel0Stage3Room0BlockLayer[];
-extern u8 gUnk_08361748[];
+extern u8 gLevel0Stage3Room0BlockMetatiles[];
 extern struct Door gLevel0Stage3Room0Doors[];
 extern u8 gLevel0Stage3Room0Objects[];
 struct RoomDef gLevel0Stage3Room0 ROOM_DEF(0836179c) = {
@@ -1104,7 +1104,7 @@ struct RoomDef gLevel0Stage3Room0 ROOM_DEF(0836179c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage3Room0MetatileMap,
     .blockLayer = gLevel0Stage3Room0BlockLayer,
-    .unk10 = gUnk_08361748,
+    .blockMetatiles = gLevel0Stage3Room0BlockMetatiles,
     .width = 17,
     .height = 22,
     .bg2Palette = gUnk_0853D12C,
@@ -1117,7 +1117,7 @@ struct RoomDef gLevel0Stage3Room0 ROOM_DEF(0836179c) = {
     .bg3Map = &gUnk_083D0A64,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 1,
@@ -1137,7 +1137,7 @@ struct RoomDef gLevel0Stage3Room0 ROOM_DEF(0836179c) = {
 /* gRoomTable[0][3][1], 0x08361CB8, section .room_def_08361cb8 */
 extern u8 gLevel0Stage3Room1MetatileMap[];
 extern u8 gLevel0Stage3Room1BlockLayer[];
-extern u8 gUnk_08361C14[];
+extern u8 gLevel0Stage3Room1BlockMetatiles[];
 extern struct Door gLevel0Stage3Room1Doors[];
 extern u8 gLevel0Stage3Room1Objects[];
 struct RoomDef gLevel0Stage3Room1 ROOM_DEF(08361cb8) = {
@@ -1147,7 +1147,7 @@ struct RoomDef gLevel0Stage3Room1 ROOM_DEF(08361cb8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage3Room1MetatileMap,
     .blockLayer = gLevel0Stage3Room1BlockLayer,
-    .unk10 = gUnk_08361C14,
+    .blockMetatiles = gLevel0Stage3Room1BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0853D12C,
@@ -1160,7 +1160,7 @@ struct RoomDef gLevel0Stage3Room1 ROOM_DEF(08361cb8) = {
     .bg3Map = &gUnk_083D0A64,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 18,
     .objectsSortedByY = 0,
@@ -1180,7 +1180,7 @@ struct RoomDef gLevel0Stage3Room1 ROOM_DEF(08361cb8) = {
 /* gRoomTable[0][3][2], 0x08362104, section .room_def_08362104 */
 extern u8 gLevel0Stage3Room2MetatileMap[];
 extern u8 gLevel0Stage3Room2BlockLayer[];
-extern u8 gUnk_083620A0[];
+extern u8 gLevel0Stage3Room2BlockMetatiles[];
 extern struct Door gLevel0Stage3Room2Doors[];
 extern u8 gLevel0Stage3Room2Objects[];
 struct RoomDef gLevel0Stage3Room2 ROOM_DEF(08362104) = {
@@ -1190,7 +1190,7 @@ struct RoomDef gLevel0Stage3Room2 ROOM_DEF(08362104) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage3Room2MetatileMap,
     .blockLayer = gLevel0Stage3Room2BlockLayer,
-    .unk10 = gUnk_083620A0,
+    .blockMetatiles = gLevel0Stage3Room2BlockMetatiles,
     .width = 16,
     .height = 35,
     .bg2Palette = gUnk_0853E728,
@@ -1203,7 +1203,7 @@ struct RoomDef gLevel0Stage3Room2 ROOM_DEF(08362104) = {
     .bg3Map = &gUnk_083D0A64,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 1,
@@ -1223,7 +1223,7 @@ struct RoomDef gLevel0Stage3Room2 ROOM_DEF(08362104) = {
 /* gRoomTable[0][3][3], 0x08362788, section .room_def_08362788 */
 extern u8 gLevel0Stage3Room3MetatileMap[];
 extern u8 gLevel0Stage3Room3BlockLayer[];
-extern u8 gUnk_083626DC[];
+extern u8 gLevel0Stage3Room3BlockMetatiles[];
 extern struct Door gLevel0Stage3Room3Doors[];
 extern u8 gLevel0Stage3Room3Objects[];
 struct RoomDef gLevel0Stage3Room3 ROOM_DEF(08362788) = {
@@ -1233,7 +1233,7 @@ struct RoomDef gLevel0Stage3Room3 ROOM_DEF(08362788) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage3Room3MetatileMap,
     .blockLayer = gLevel0Stage3Room3BlockLayer,
-    .unk10 = gUnk_083626DC,
+    .blockMetatiles = gLevel0Stage3Room3BlockMetatiles,
     .width = 82,
     .height = 13,
     .bg2Palette = gUnk_0853D12C,
@@ -1246,7 +1246,7 @@ struct RoomDef gLevel0Stage3Room3 ROOM_DEF(08362788) = {
     .bg3Map = &gUnk_083D0A64,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 19,
     .objectsSortedByY = 0,
@@ -1266,7 +1266,7 @@ struct RoomDef gLevel0Stage3Room3 ROOM_DEF(08362788) = {
 /* gRoomTable[0][4][0], 0x08362AD0, section .room_def_08362ad0 */
 extern u8 gLevel0Stage4Room0MetatileMap[];
 extern u8 gLevel0Stage4Room0BlockLayer[];
-extern u8 gUnk_08362AC0[];
+extern u8 gLevel0Stage4Room0BlockMetatiles[];
 extern u8 gLevel0Stage4Room0Objects[];
 struct RoomDef gLevel0Stage4Room0 ROOM_DEF(08362ad0) = {
     .filler00 = { 0, 4, 0, 0 },
@@ -1275,7 +1275,7 @@ struct RoomDef gLevel0Stage4Room0 ROOM_DEF(08362ad0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel0Stage4Room0MetatileMap,
     .blockLayer = gLevel0Stage4Room0BlockLayer,
-    .unk10 = gUnk_08362AC0,
+    .blockMetatiles = gLevel0Stage4Room0BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_0835D918,
@@ -1288,7 +1288,7 @@ struct RoomDef gLevel0Stage4Room0 ROOM_DEF(08362ad0) = {
     .bg3Map = &gUnk_083D0A64,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -1308,7 +1308,7 @@ struct RoomDef gLevel0Stage4Room0 ROOM_DEF(08362ad0) = {
 /* gRoomTable[1][0][0], 0x083630A0, section .room_def_083630a0 */
 extern u8 gLevel1Stage0Room0MetatileMap[];
 extern u8 gLevel1Stage0Room0BlockLayer[];
-extern u8 gUnk_08363008[];
+extern u8 gLevel1Stage0Room0BlockMetatiles[];
 extern struct Door gLevel1Stage0Room0Doors[];
 extern u8 gLevel1Stage0Room0Objects[];
 struct RoomDef gLevel1Stage0Room0 ROOM_DEF(083630a0) = {
@@ -1318,7 +1318,7 @@ struct RoomDef gLevel1Stage0Room0 ROOM_DEF(083630a0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage0Room0MetatileMap,
     .blockLayer = gLevel1Stage0Room0BlockLayer,
-    .unk10 = gUnk_08363008,
+    .blockMetatiles = gLevel1Stage0Room0BlockMetatiles,
     .width = 80,
     .height = 13,
     .bg2Palette = gUnk_0853E318,
@@ -1331,7 +1331,7 @@ struct RoomDef gLevel1Stage0Room0 ROOM_DEF(083630a0) = {
     .bg3Map = &gUnk_083CCA9C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -1351,7 +1351,7 @@ struct RoomDef gLevel1Stage0Room0 ROOM_DEF(083630a0) = {
 /* gRoomTable[1][0][1], 0x083634E0, section .room_def_083634e0 */
 extern u8 gLevel1Stage0Room1MetatileMap[];
 extern u8 gLevel1Stage0Room1BlockLayer[];
-extern u8 gUnk_0836346C[];
+extern u8 gLevel1Stage0Room1BlockMetatiles[];
 extern struct Door gLevel1Stage0Room1Doors[];
 extern u8 gLevel1Stage0Room1Objects[];
 struct RoomDef gLevel1Stage0Room1 ROOM_DEF(083634e0) = {
@@ -1361,7 +1361,7 @@ struct RoomDef gLevel1Stage0Room1 ROOM_DEF(083634e0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage0Room1MetatileMap,
     .blockLayer = gLevel1Stage0Room1BlockLayer,
-    .unk10 = gUnk_0836346C,
+    .blockMetatiles = gLevel1Stage0Room1BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gLevel1Stage0Room1Bg2Palette,
@@ -1374,7 +1374,7 @@ struct RoomDef gLevel1Stage0Room1 ROOM_DEF(083634e0) = {
     .bg3Map = &gUnk_083CCA9C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -1394,7 +1394,7 @@ struct RoomDef gLevel1Stage0Room1 ROOM_DEF(083634e0) = {
 /* gRoomTable[1][0][2], 0x08363A0C, section .room_def_08363a0c */
 extern u8 gLevel1Stage0Room2MetatileMap[];
 extern u8 gLevel1Stage0Room2BlockLayer[];
-extern u8 gUnk_08363980[];
+extern u8 gLevel1Stage0Room2BlockMetatiles[];
 extern struct Door gLevel1Stage0Room2Doors[];
 extern u8 gLevel1Stage0Room2Objects[];
 struct RoomDef gLevel1Stage0Room2 ROOM_DEF(08363a0c) = {
@@ -1404,7 +1404,7 @@ struct RoomDef gLevel1Stage0Room2 ROOM_DEF(08363a0c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage0Room2MetatileMap,
     .blockLayer = gLevel1Stage0Room2BlockLayer,
-    .unk10 = gUnk_08363980,
+    .blockMetatiles = gLevel1Stage0Room2BlockMetatiles,
     .width = 63,
     .height = 11,
     .bg2Palette = gUnk_0853D12C,
@@ -1417,7 +1417,7 @@ struct RoomDef gLevel1Stage0Room2 ROOM_DEF(08363a0c) = {
     .bg3Map = &gUnk_083CCA9C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -1437,7 +1437,7 @@ struct RoomDef gLevel1Stage0Room2 ROOM_DEF(08363a0c) = {
 /* gRoomTable[1][0][3], 0x08363E04, section .room_def_08363e04 */
 extern u8 gLevel1Stage0Room3MetatileMap[];
 extern u8 gLevel1Stage0Room3BlockLayer[];
-extern u8 gUnk_08363D94[];
+extern u8 gLevel1Stage0Room3BlockMetatiles[];
 extern struct Door gLevel1Stage0Room3Doors[];
 extern u8 gLevel1Stage0Room3Objects[];
 struct RoomDef gLevel1Stage0Room3 ROOM_DEF(08363e04) = {
@@ -1447,7 +1447,7 @@ struct RoomDef gLevel1Stage0Room3 ROOM_DEF(08363e04) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage0Room3MetatileMap,
     .blockLayer = gLevel1Stage0Room3BlockLayer,
-    .unk10 = gUnk_08363D94,
+    .blockMetatiles = gLevel1Stage0Room3BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_0849A52C,
@@ -1460,7 +1460,7 @@ struct RoomDef gLevel1Stage0Room3 ROOM_DEF(08363e04) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 4,
     .objectsSortedByY = 1,
@@ -1480,7 +1480,7 @@ struct RoomDef gLevel1Stage0Room3 ROOM_DEF(08363e04) = {
 /* gRoomTable[1][1][0], 0x08364014, section .room_def_08364014 */
 extern u8 gLevel1Stage1Room0MetatileMap[];
 extern u8 gLevel1Stage1Room0BlockLayer[];
-extern u8 gUnk_08363FE0[];
+extern u8 gLevel1Stage1Room0BlockMetatiles[];
 extern struct Door gLevel1Stage1Room0Doors[];
 extern u8 gLevel1Stage1Room0Objects[];
 struct RoomDef gLevel1Stage1Room0 ROOM_DEF(08364014) = {
@@ -1490,7 +1490,7 @@ struct RoomDef gLevel1Stage1Room0 ROOM_DEF(08364014) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage1Room0MetatileMap,
     .blockLayer = gLevel1Stage1Room0BlockLayer,
-    .unk10 = gUnk_08363FE0,
+    .blockMetatiles = gLevel1Stage1Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853E728,
@@ -1503,7 +1503,7 @@ struct RoomDef gLevel1Stage1Room0 ROOM_DEF(08364014) = {
     .bg3Map = &gUnk_083CC17C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -1523,7 +1523,7 @@ struct RoomDef gLevel1Stage1Room0 ROOM_DEF(08364014) = {
 /* gRoomTable[1][1][1], 0x083643BC, section .room_def_083643bc */
 extern u8 gLevel1Stage1Room1MetatileMap[];
 extern u8 gLevel1Stage1Room1BlockLayer[];
-extern u8 gUnk_083642E4[];
+extern u8 gLevel1Stage1Room1BlockMetatiles[];
 extern struct Door gLevel1Stage1Room1Doors[];
 extern u8 gLevel1Stage1Room1Objects[];
 struct RoomDef gLevel1Stage1Room1 ROOM_DEF(083643bc) = {
@@ -1533,7 +1533,7 @@ struct RoomDef gLevel1Stage1Room1 ROOM_DEF(083643bc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage1Room1MetatileMap,
     .blockLayer = gLevel1Stage1Room1BlockLayer,
-    .unk10 = gUnk_083642E4,
+    .blockMetatiles = gLevel1Stage1Room1BlockMetatiles,
     .width = 33,
     .height = 11,
     .bg2Palette = gUnk_0849A6B4,
@@ -1546,7 +1546,7 @@ struct RoomDef gLevel1Stage1Room1 ROOM_DEF(083643bc) = {
     .bg3Map = &gUnk_083CC17C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -1566,7 +1566,7 @@ struct RoomDef gLevel1Stage1Room1 ROOM_DEF(083643bc) = {
 /* gRoomTable[1][1][2], 0x0836463C, section .room_def_0836463c */
 extern u8 gLevel1Stage1Room2MetatileMap[];
 extern u8 gLevel1Stage1Room2BlockLayer[];
-extern u8 gUnk_08364620[];
+extern u8 gLevel1Stage1Room2BlockMetatiles[];
 extern struct Door gLevel1Stage1Room2Doors[];
 extern u8 gLevel1Stage1Room2Objects[];
 struct RoomDef gLevel1Stage1Room2 ROOM_DEF(0836463c) = {
@@ -1576,7 +1576,7 @@ struct RoomDef gLevel1Stage1Room2 ROOM_DEF(0836463c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage1Room2MetatileMap,
     .blockLayer = gLevel1Stage1Room2BlockLayer,
-    .unk10 = gUnk_08364620,
+    .blockMetatiles = gLevel1Stage1Room2BlockMetatiles,
     .width = 16,
     .height = 32,
     .bg2Palette = gUnk_0849A6B4,
@@ -1589,7 +1589,7 @@ struct RoomDef gLevel1Stage1Room2 ROOM_DEF(0836463c) = {
     .bg3Map = &gUnk_083CC17C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -1609,7 +1609,7 @@ struct RoomDef gLevel1Stage1Room2 ROOM_DEF(0836463c) = {
 /* gRoomTable[1][1][3], 0x08364A38, section .room_def_08364a38 */
 extern u8 gLevel1Stage1Room3MetatileMap[];
 extern u8 gLevel1Stage1Room3BlockLayer[];
-extern u8 gUnk_083649D0[];
+extern u8 gLevel1Stage1Room3BlockMetatiles[];
 extern struct Door gLevel1Stage1Room3Doors[];
 extern u8 gLevel1Stage1Room3Objects[];
 struct RoomDef gLevel1Stage1Room3 ROOM_DEF(08364a38) = {
@@ -1619,7 +1619,7 @@ struct RoomDef gLevel1Stage1Room3 ROOM_DEF(08364a38) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage1Room3MetatileMap,
     .blockLayer = gLevel1Stage1Room3BlockLayer,
-    .unk10 = gUnk_083649D0,
+    .blockMetatiles = gLevel1Stage1Room3BlockMetatiles,
     .width = 52,
     .height = 11,
     .bg2Palette = gUnk_0850A9A8,
@@ -1632,7 +1632,7 @@ struct RoomDef gLevel1Stage1Room3 ROOM_DEF(08364a38) = {
     .bg3Map = &gUnk_083CB85C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -1652,7 +1652,7 @@ struct RoomDef gLevel1Stage1Room3 ROOM_DEF(08364a38) = {
 /* gRoomTable[1][1][4], 0x08365558, section .room_def_08365558 */
 extern u8 gLevel1Stage1Room4MetatileMap[];
 extern u8 gLevel1Stage1Room4BlockLayer[];
-extern u8 gUnk_08365454[];
+extern u8 gLevel1Stage1Room4BlockMetatiles[];
 extern struct Door gLevel1Stage1Room4Doors[];
 extern u8 gLevel1Stage1Room4Objects[];
 struct RoomDef gLevel1Stage1Room4 ROOM_DEF(08365558) = {
@@ -1662,7 +1662,7 @@ struct RoomDef gLevel1Stage1Room4 ROOM_DEF(08365558) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage1Room4MetatileMap,
     .blockLayer = gLevel1Stage1Room4BlockLayer,
-    .unk10 = gUnk_08365454,
+    .blockMetatiles = gLevel1Stage1Room4BlockMetatiles,
     .width = 100,
     .height = 23,
     .bg2Palette = gUnk_0850A9A8,
@@ -1675,7 +1675,7 @@ struct RoomDef gLevel1Stage1Room4 ROOM_DEF(08365558) = {
     .bg3Map = &gUnk_083CB85C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 24,
     .objectsSortedByY = 0,
@@ -1695,7 +1695,7 @@ struct RoomDef gLevel1Stage1Room4 ROOM_DEF(08365558) = {
 /* gRoomTable[1][2][0], 0x083657C0, section .room_def_083657c0 */
 extern u8 gLevel1Stage2Room0MetatileMap[];
 extern u8 gLevel1Stage2Room0BlockLayer[];
-extern u8 gUnk_0836578C[];
+extern u8 gLevel1Stage2Room0BlockMetatiles[];
 extern struct Door gLevel1Stage2Room0Doors[];
 extern u8 gLevel1Stage2Room0Objects[];
 struct RoomDef gLevel1Stage2Room0 ROOM_DEF(083657c0) = {
@@ -1705,7 +1705,7 @@ struct RoomDef gLevel1Stage2Room0 ROOM_DEF(083657c0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage2Room0MetatileMap,
     .blockLayer = gLevel1Stage2Room0BlockLayer,
-    .unk10 = gUnk_0836578C,
+    .blockMetatiles = gLevel1Stage2Room0BlockMetatiles,
     .width = 32,
     .height = 13,
     .bg2Palette = gUnk_0849A52C,
@@ -1718,7 +1718,7 @@ struct RoomDef gLevel1Stage2Room0 ROOM_DEF(083657c0) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -1738,7 +1738,7 @@ struct RoomDef gLevel1Stage2Room0 ROOM_DEF(083657c0) = {
 /* gRoomTable[1][2][1], 0x08366340, section .room_def_08366340 */
 extern u8 gLevel1Stage2Room1MetatileMap[];
 extern u8 gLevel1Stage2Room1BlockLayer[];
-extern u8 gUnk_08366124[];
+extern u8 gLevel1Stage2Room1BlockMetatiles[];
 extern struct Door gLevel1Stage2Room1Doors[];
 extern u8 gLevel1Stage2Room1Objects[];
 struct RoomDef gLevel1Stage2Room1 ROOM_DEF(08366340) = {
@@ -1748,7 +1748,7 @@ struct RoomDef gLevel1Stage2Room1 ROOM_DEF(08366340) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage2Room1MetatileMap,
     .blockLayer = gLevel1Stage2Room1BlockLayer,
-    .unk10 = gUnk_08366124,
+    .blockMetatiles = gLevel1Stage2Room1BlockMetatiles,
     .width = 49,
     .height = 26,
     .bg2Palette = gUnk_0849A52C,
@@ -1761,7 +1761,7 @@ struct RoomDef gLevel1Stage2Room1 ROOM_DEF(08366340) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 4,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -1781,7 +1781,7 @@ struct RoomDef gLevel1Stage2Room1 ROOM_DEF(08366340) = {
 /* gRoomTable[1][2][2], 0x0836663C, section .room_def_0836663c */
 extern u8 gLevel1Stage2Room2MetatileMap[];
 extern u8 gLevel1Stage2Room2BlockLayer[];
-extern u8 gUnk_083665E8[];
+extern u8 gLevel1Stage2Room2BlockMetatiles[];
 extern struct Door gLevel1Stage2Room2Doors[];
 extern u8 gLevel1Stage2Room2Objects[];
 struct RoomDef gLevel1Stage2Room2 ROOM_DEF(0836663c) = {
@@ -1791,7 +1791,7 @@ struct RoomDef gLevel1Stage2Room2 ROOM_DEF(0836663c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage2Room2MetatileMap,
     .blockLayer = gLevel1Stage2Room2BlockLayer,
-    .unk10 = gUnk_083665E8,
+    .blockMetatiles = gLevel1Stage2Room2BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0853E318,
@@ -1804,7 +1804,7 @@ struct RoomDef gLevel1Stage2Room2 ROOM_DEF(0836663c) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -1824,7 +1824,7 @@ struct RoomDef gLevel1Stage2Room2 ROOM_DEF(0836663c) = {
 /* gRoomTable[1][2][3], 0x08366974, section .room_def_08366974 */
 extern u8 gLevel1Stage2Room3MetatileMap[];
 extern u8 gLevel1Stage2Room3BlockLayer[];
-extern u8 gUnk_08366930[];
+extern u8 gLevel1Stage2Room3BlockMetatiles[];
 extern struct Door gLevel1Stage2Room3Doors[];
 extern u8 gLevel1Stage2Room3Objects[];
 struct RoomDef gLevel1Stage2Room3 ROOM_DEF(08366974) = {
@@ -1834,7 +1834,7 @@ struct RoomDef gLevel1Stage2Room3 ROOM_DEF(08366974) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage2Room3MetatileMap,
     .blockLayer = gLevel1Stage2Room3BlockLayer,
-    .unk10 = gUnk_08366930,
+    .blockMetatiles = gLevel1Stage2Room3BlockMetatiles,
     .width = 32,
     .height = 13,
     .bg2Palette = gUnk_0853E318,
@@ -1847,7 +1847,7 @@ struct RoomDef gLevel1Stage2Room3 ROOM_DEF(08366974) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -1867,7 +1867,7 @@ struct RoomDef gLevel1Stage2Room3 ROOM_DEF(08366974) = {
 /* gRoomTable[1][2][4], 0x08366B98, section .room_def_08366b98 */
 extern u8 gLevel1Stage2Room4MetatileMap[];
 extern u8 gLevel1Stage2Room4BlockLayer[];
-extern u8 gUnk_08366B64[];
+extern u8 gLevel1Stage2Room4BlockMetatiles[];
 extern struct Door gLevel1Stage2Room4Doors[];
 extern u8 gLevel1Stage2Room4Objects[];
 struct RoomDef gLevel1Stage2Room4 ROOM_DEF(08366b98) = {
@@ -1877,7 +1877,7 @@ struct RoomDef gLevel1Stage2Room4 ROOM_DEF(08366b98) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage2Room4MetatileMap,
     .blockLayer = gLevel1Stage2Room4BlockLayer,
-    .unk10 = gUnk_08366B64,
+    .blockMetatiles = gLevel1Stage2Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849A52C,
@@ -1890,7 +1890,7 @@ struct RoomDef gLevel1Stage2Room4 ROOM_DEF(08366b98) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -1910,7 +1910,7 @@ struct RoomDef gLevel1Stage2Room4 ROOM_DEF(08366b98) = {
 /* gRoomTable[1][2][5], 0x08366D1C, section .room_def_08366d1c */
 extern u8 gLevel1Stage2Room5MetatileMap[];
 extern u8 gLevel1Stage2Room5BlockLayer[];
-extern u8 gUnk_08366CF8[];
+extern u8 gLevel1Stage2Room5BlockMetatiles[];
 extern struct Door gLevel1Stage2Room5Doors[];
 extern u8 gLevel1Stage2Room5Objects[];
 struct RoomDef gLevel1Stage2Room5 ROOM_DEF(08366d1c) = {
@@ -1920,7 +1920,7 @@ struct RoomDef gLevel1Stage2Room5 ROOM_DEF(08366d1c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage2Room5MetatileMap,
     .blockLayer = gLevel1Stage2Room5BlockLayer,
-    .unk10 = gUnk_08366CF8,
+    .blockMetatiles = gLevel1Stage2Room5BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_0853E318,
@@ -1933,7 +1933,7 @@ struct RoomDef gLevel1Stage2Room5 ROOM_DEF(08366d1c) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -1953,7 +1953,7 @@ struct RoomDef gLevel1Stage2Room5 ROOM_DEF(08366d1c) = {
 /* gRoomTable[1][3][0], 0x08367274, section .room_def_08367274 */
 extern u8 gLevel1Stage3Room0MetatileMap[];
 extern u8 gLevel1Stage3Room0BlockLayer[];
-extern u8 gUnk_083671A0[];
+extern u8 gLevel1Stage3Room0BlockMetatiles[];
 extern struct Door gLevel1Stage3Room0Doors[];
 extern u8 gLevel1Stage3Room0Objects[];
 struct RoomDef gLevel1Stage3Room0 ROOM_DEF(08367274) = {
@@ -1963,7 +1963,7 @@ struct RoomDef gLevel1Stage3Room0 ROOM_DEF(08367274) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage3Room0MetatileMap,
     .blockLayer = gLevel1Stage3Room0BlockLayer,
-    .unk10 = gUnk_083671A0,
+    .blockMetatiles = gLevel1Stage3Room0BlockMetatiles,
     .width = 80,
     .height = 13,
     .bg2Palette = gUnk_0835D548,
@@ -1976,7 +1976,7 @@ struct RoomDef gLevel1Stage3Room0 ROOM_DEF(08367274) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -1996,7 +1996,7 @@ struct RoomDef gLevel1Stage3Room0 ROOM_DEF(08367274) = {
 /* gRoomTable[1][3][1], 0x0836753C, section .room_def_0836753c */
 extern u8 gLevel1Stage3Room1MetatileMap[];
 extern u8 gLevel1Stage3Room1BlockLayer[];
-extern u8 gUnk_083674E8[];
+extern u8 gLevel1Stage3Room1BlockMetatiles[];
 extern struct Door gLevel1Stage3Room1Doors[];
 extern u8 gLevel1Stage3Room1Objects[];
 struct RoomDef gLevel1Stage3Room1 ROOM_DEF(0836753c) = {
@@ -2006,7 +2006,7 @@ struct RoomDef gLevel1Stage3Room1 ROOM_DEF(0836753c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage3Room1MetatileMap,
     .blockLayer = gLevel1Stage3Room1BlockLayer,
-    .unk10 = gUnk_083674E8,
+    .blockMetatiles = gLevel1Stage3Room1BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_0835D548,
@@ -2019,7 +2019,7 @@ struct RoomDef gLevel1Stage3Room1 ROOM_DEF(0836753c) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 1,
@@ -2039,7 +2039,7 @@ struct RoomDef gLevel1Stage3Room1 ROOM_DEF(0836753c) = {
 /* gRoomTable[1][3][2], 0x083677F4, section .room_def_083677f4 */
 extern u8 gLevel1Stage3Room2MetatileMap[];
 extern u8 gLevel1Stage3Room2BlockLayer[];
-extern u8 gUnk_083677A0[];
+extern u8 gLevel1Stage3Room2BlockMetatiles[];
 extern struct Door gLevel1Stage3Room2Doors[];
 extern u8 gLevel1Stage3Room2Objects[];
 struct RoomDef gLevel1Stage3Room2 ROOM_DEF(083677f4) = {
@@ -2049,7 +2049,7 @@ struct RoomDef gLevel1Stage3Room2 ROOM_DEF(083677f4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage3Room2MetatileMap,
     .blockLayer = gLevel1Stage3Room2BlockLayer,
-    .unk10 = gUnk_083677A0,
+    .blockMetatiles = gLevel1Stage3Room2BlockMetatiles,
     .width = 33,
     .height = 11,
     .bg2Palette = gUnk_0853E318,
@@ -2062,7 +2062,7 @@ struct RoomDef gLevel1Stage3Room2 ROOM_DEF(083677f4) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -2082,7 +2082,7 @@ struct RoomDef gLevel1Stage3Room2 ROOM_DEF(083677f4) = {
 /* gRoomTable[1][3][3], 0x08367A50, section .room_def_08367a50 */
 extern u8 gLevel1Stage3Room3MetatileMap[];
 extern u8 gLevel1Stage3Room3BlockLayer[];
-extern u8 gUnk_083679F4[];
+extern u8 gLevel1Stage3Room3BlockMetatiles[];
 extern struct Door gLevel1Stage3Room3Doors[];
 extern u8 gLevel1Stage3Room3Objects[];
 struct RoomDef gLevel1Stage3Room3 ROOM_DEF(08367a50) = {
@@ -2092,7 +2092,7 @@ struct RoomDef gLevel1Stage3Room3 ROOM_DEF(08367a50) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage3Room3MetatileMap,
     .blockLayer = gLevel1Stage3Room3BlockLayer,
-    .unk10 = gUnk_083679F4,
+    .blockMetatiles = gLevel1Stage3Room3BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_0835D548,
@@ -2105,7 +2105,7 @@ struct RoomDef gLevel1Stage3Room3 ROOM_DEF(08367a50) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 1,
@@ -2125,7 +2125,7 @@ struct RoomDef gLevel1Stage3Room3 ROOM_DEF(08367a50) = {
 /* gRoomTable[1][3][4], 0x08367E8C, section .room_def_08367e8c */
 extern u8 gLevel1Stage3Room4MetatileMap[];
 extern u8 gLevel1Stage3Room4BlockLayer[];
-extern u8 gUnk_08367D7C[];
+extern u8 gLevel1Stage3Room4BlockMetatiles[];
 extern struct Door gLevel1Stage3Room4Doors[];
 extern u8 gLevel1Stage3Room4Objects[];
 struct RoomDef gLevel1Stage3Room4 ROOM_DEF(08367e8c) = {
@@ -2135,7 +2135,7 @@ struct RoomDef gLevel1Stage3Room4 ROOM_DEF(08367e8c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage3Room4MetatileMap,
     .blockLayer = gLevel1Stage3Room4BlockLayer,
-    .unk10 = gUnk_08367D7C,
+    .blockMetatiles = gLevel1Stage3Room4BlockMetatiles,
     .width = 50,
     .height = 11,
     .bg2Palette = gUnk_0853E318,
@@ -2148,7 +2148,7 @@ struct RoomDef gLevel1Stage3Room4 ROOM_DEF(08367e8c) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 16,
     .objectsSortedByY = 0,
@@ -2168,7 +2168,7 @@ struct RoomDef gLevel1Stage3Room4 ROOM_DEF(08367e8c) = {
 /* gRoomTable[1][3][5], 0x083684D4, section .room_def_083684d4 */
 extern u8 gLevel1Stage3Room5MetatileMap[];
 extern u8 gLevel1Stage3Room5BlockLayer[];
-extern u8 gUnk_08368454[];
+extern u8 gLevel1Stage3Room5BlockMetatiles[];
 extern struct Door gLevel1Stage3Room5Doors[];
 extern u8 gLevel1Stage3Room5Objects[];
 struct RoomDef gLevel1Stage3Room5 ROOM_DEF(083684d4) = {
@@ -2178,7 +2178,7 @@ struct RoomDef gLevel1Stage3Room5 ROOM_DEF(083684d4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage3Room5MetatileMap,
     .blockLayer = gLevel1Stage3Room5BlockLayer,
-    .unk10 = gUnk_08368454,
+    .blockMetatiles = gLevel1Stage3Room5BlockMetatiles,
     .width = 80,
     .height = 14,
     .bg2Palette = gUnk_0850A9A8,
@@ -2191,7 +2191,7 @@ struct RoomDef gLevel1Stage3Room5 ROOM_DEF(083684d4) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -2211,7 +2211,7 @@ struct RoomDef gLevel1Stage3Room5 ROOM_DEF(083684d4) = {
 /* gRoomTable[1][3][6], 0x08368710, section .room_def_08368710 */
 extern u8 gLevel1Stage3Room6MetatileMap[];
 extern u8 gLevel1Stage3Room6BlockLayer[];
-extern u8 gUnk_083686D4[];
+extern u8 gLevel1Stage3Room6BlockMetatiles[];
 extern struct Door gLevel1Stage3Room6Doors[];
 extern u8 gLevel1Stage3Room6Objects[];
 struct RoomDef gLevel1Stage3Room6 ROOM_DEF(08368710) = {
@@ -2221,7 +2221,7 @@ struct RoomDef gLevel1Stage3Room6 ROOM_DEF(08368710) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage3Room6MetatileMap,
     .blockLayer = gLevel1Stage3Room6BlockLayer,
-    .unk10 = gUnk_083686D4,
+    .blockMetatiles = gLevel1Stage3Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853E728,
@@ -2234,7 +2234,7 @@ struct RoomDef gLevel1Stage3Room6 ROOM_DEF(08368710) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -2254,7 +2254,7 @@ struct RoomDef gLevel1Stage3Room6 ROOM_DEF(08368710) = {
 /* gRoomTable[1][4][0], 0x08368D30, section .room_def_08368d30 */
 extern u8 gLevel1Stage4Room0MetatileMap[];
 extern u8 gLevel1Stage4Room0BlockLayer[];
-extern u8 gUnk_08368CC4[];
+extern u8 gLevel1Stage4Room0BlockMetatiles[];
 extern struct Door gLevel1Stage4Room0Doors[];
 extern u8 gLevel1Stage4Room0Objects[];
 struct RoomDef gLevel1Stage4Room0 ROOM_DEF(08368d30) = {
@@ -2264,7 +2264,7 @@ struct RoomDef gLevel1Stage4Room0 ROOM_DEF(08368d30) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage4Room0MetatileMap,
     .blockLayer = gLevel1Stage4Room0BlockLayer,
-    .unk10 = gUnk_08368CC4,
+    .blockMetatiles = gLevel1Stage4Room0BlockMetatiles,
     .width = 80,
     .height = 11,
     .bg2Palette = gUnk_0853D12C,
@@ -2277,7 +2277,7 @@ struct RoomDef gLevel1Stage4Room0 ROOM_DEF(08368d30) = {
     .bg3Map = &gUnk_083CC17C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 11,
     .objectsSortedByY = 0,
@@ -2297,7 +2297,7 @@ struct RoomDef gLevel1Stage4Room0 ROOM_DEF(08368d30) = {
 /* gRoomTable[1][4][1], 0x083692D8, section .room_def_083692d8 */
 extern u8 gLevel1Stage4Room1MetatileMap[];
 extern u8 gLevel1Stage4Room1BlockLayer[];
-extern u8 gUnk_08369200[];
+extern u8 gLevel1Stage4Room1BlockMetatiles[];
 extern struct Door gLevel1Stage4Room1Doors[];
 extern u8 gLevel1Stage4Room1Objects[];
 struct RoomDef gLevel1Stage4Room1 ROOM_DEF(083692d8) = {
@@ -2307,7 +2307,7 @@ struct RoomDef gLevel1Stage4Room1 ROOM_DEF(083692d8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage4Room1MetatileMap,
     .blockLayer = gLevel1Stage4Room1BlockLayer,
-    .unk10 = gUnk_08369200,
+    .blockMetatiles = gLevel1Stage4Room1BlockMetatiles,
     .width = 80,
     .height = 11,
     .bg2Palette = gUnk_0853E318,
@@ -2320,7 +2320,7 @@ struct RoomDef gLevel1Stage4Room1 ROOM_DEF(083692d8) = {
     .bg3Map = &gUnk_083CC17C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -2340,7 +2340,7 @@ struct RoomDef gLevel1Stage4Room1 ROOM_DEF(083692d8) = {
 /* gRoomTable[1][4][2], 0x08369BE0, section .room_def_08369be0 */
 extern u8 gLevel1Stage4Room2MetatileMap[];
 extern u8 gLevel1Stage4Room2BlockLayer[];
-extern u8 gUnk_08369A80[];
+extern u8 gLevel1Stage4Room2BlockMetatiles[];
 extern struct Door gLevel1Stage4Room2Doors[];
 extern u8 gLevel1Stage4Room2Objects[];
 struct RoomDef gLevel1Stage4Room2 ROOM_DEF(08369be0) = {
@@ -2350,7 +2350,7 @@ struct RoomDef gLevel1Stage4Room2 ROOM_DEF(08369be0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage4Room2MetatileMap,
     .blockLayer = gLevel1Stage4Room2BlockLayer,
-    .unk10 = gUnk_08369A80,
+    .blockMetatiles = gLevel1Stage4Room2BlockMetatiles,
     .width = 90,
     .height = 21,
     .bg2Palette = gUnk_0853DAB4,
@@ -2363,7 +2363,7 @@ struct RoomDef gLevel1Stage4Room2 ROOM_DEF(08369be0) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 24,
     .objectsSortedByY = 0,
@@ -2383,7 +2383,7 @@ struct RoomDef gLevel1Stage4Room2 ROOM_DEF(08369be0) = {
 /* gRoomTable[1][4][3], 0x0836A0A8, section .room_def_0836a0a8 */
 extern u8 gLevel1Stage4Room3MetatileMap[];
 extern u8 gLevel1Stage4Room3BlockLayer[];
-extern u8 gUnk_08369EF4[];
+extern u8 gLevel1Stage4Room3BlockMetatiles[];
 extern struct Door gLevel1Stage4Room3Doors[];
 extern u8 gLevel1Stage4Room3Objects[];
 struct RoomDef gLevel1Stage4Room3 ROOM_DEF(0836a0a8) = {
@@ -2393,7 +2393,7 @@ struct RoomDef gLevel1Stage4Room3 ROOM_DEF(0836a0a8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage4Room3MetatileMap,
     .blockLayer = gLevel1Stage4Room3BlockLayer,
-    .unk10 = gUnk_08369EF4,
+    .blockMetatiles = gLevel1Stage4Room3BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_0835D548,
@@ -2406,7 +2406,7 @@ struct RoomDef gLevel1Stage4Room3 ROOM_DEF(0836a0a8) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 1,
@@ -2426,7 +2426,7 @@ struct RoomDef gLevel1Stage4Room3 ROOM_DEF(0836a0a8) = {
 /* gRoomTable[1][4][4], 0x0836A318, section .room_def_0836a318 */
 extern u8 gLevel1Stage4Room4MetatileMap[];
 extern u8 gLevel1Stage4Room4BlockLayer[];
-extern u8 gUnk_0836A2C4[];
+extern u8 gLevel1Stage4Room4BlockMetatiles[];
 extern struct Door gLevel1Stage4Room4Doors[];
 extern u8 gLevel1Stage4Room4Objects[];
 struct RoomDef gLevel1Stage4Room4 ROOM_DEF(0836a318) = {
@@ -2436,7 +2436,7 @@ struct RoomDef gLevel1Stage4Room4 ROOM_DEF(0836a318) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage4Room4MetatileMap,
     .blockLayer = gLevel1Stage4Room4BlockLayer,
-    .unk10 = gUnk_0836A2C4,
+    .blockMetatiles = gLevel1Stage4Room4BlockMetatiles,
     .width = 32,
     .height = 14,
     .bg2Palette = gUnk_0835D548,
@@ -2449,7 +2449,7 @@ struct RoomDef gLevel1Stage4Room4 ROOM_DEF(0836a318) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -2469,7 +2469,7 @@ struct RoomDef gLevel1Stage4Room4 ROOM_DEF(0836a318) = {
 /* gRoomTable[1][4][5], 0x0836A534, section .room_def_0836a534 */
 extern u8 gLevel1Stage4Room5MetatileMap[];
 extern u8 gLevel1Stage4Room5BlockLayer[];
-extern u8 gUnk_0836A500[];
+extern u8 gLevel1Stage4Room5BlockMetatiles[];
 extern struct Door gLevel1Stage4Room5Doors[];
 extern u8 gLevel1Stage4Room5Objects[];
 struct RoomDef gLevel1Stage4Room5 ROOM_DEF(0836a534) = {
@@ -2479,7 +2479,7 @@ struct RoomDef gLevel1Stage4Room5 ROOM_DEF(0836a534) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage4Room5MetatileMap,
     .blockLayer = gLevel1Stage4Room5BlockLayer,
-    .unk10 = gUnk_0836A500,
+    .blockMetatiles = gLevel1Stage4Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853E318,
@@ -2492,7 +2492,7 @@ struct RoomDef gLevel1Stage4Room5 ROOM_DEF(0836a534) = {
     .bg3Map = &gUnk_083CC17C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -2512,7 +2512,7 @@ struct RoomDef gLevel1Stage4Room5 ROOM_DEF(0836a534) = {
 /* gRoomTable[1][4][6], 0x0836A6DC, section .room_def_0836a6dc */
 extern u8 gLevel1Stage4Room6MetatileMap[];
 extern u8 gLevel1Stage4Room6BlockLayer[];
-extern u8 gUnk_0836A6B0[];
+extern u8 gLevel1Stage4Room6BlockMetatiles[];
 extern struct Door gLevel1Stage4Room6Doors[];
 extern u8 gLevel1Stage4Room6Objects[];
 struct RoomDef gLevel1Stage4Room6 ROOM_DEF(0836a6dc) = {
@@ -2522,7 +2522,7 @@ struct RoomDef gLevel1Stage4Room6 ROOM_DEF(0836a6dc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage4Room6MetatileMap,
     .blockLayer = gLevel1Stage4Room6BlockLayer,
-    .unk10 = gUnk_0836A6B0,
+    .blockMetatiles = gLevel1Stage4Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0835D548,
@@ -2535,7 +2535,7 @@ struct RoomDef gLevel1Stage4Room6 ROOM_DEF(0836a6dc) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -2555,7 +2555,7 @@ struct RoomDef gLevel1Stage4Room6 ROOM_DEF(0836a6dc) = {
 /* gRoomTable[1][5][0], 0x0836A89C, section .room_def_0836a89c */
 extern u8 gLevel1Stage5Room0MetatileMap[];
 extern u8 gLevel1Stage5Room0BlockLayer[];
-extern u8 gUnk_0836A88C[];
+extern u8 gLevel1Stage5Room0BlockMetatiles[];
 extern u8 gLevel1Stage5Room0Objects[];
 struct RoomDef gLevel1Stage5Room0 ROOM_DEF(0836a89c) = {
     .filler00 = { 1, 5, 0, 0 },
@@ -2564,7 +2564,7 @@ struct RoomDef gLevel1Stage5Room0 ROOM_DEF(0836a89c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel1Stage5Room0MetatileMap,
     .blockLayer = gLevel1Stage5Room0BlockLayer,
-    .unk10 = gUnk_0836A88C,
+    .blockMetatiles = gLevel1Stage5Room0BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gLevel1Stage5Room0Bg2Palette,
@@ -2577,7 +2577,7 @@ struct RoomDef gLevel1Stage5Room0 ROOM_DEF(0836a89c) = {
     .bg3Map = &gLevel1Stage5Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -2597,7 +2597,7 @@ struct RoomDef gLevel1Stage5Room0 ROOM_DEF(0836a89c) = {
 /* gRoomTable[2][0][0], 0x0836AC58, section .room_def_0836ac58 */
 extern u8 gLevel2Stage0Room0MetatileMap[];
 extern u8 gLevel2Stage0Room0BlockLayer[];
-extern u8 gUnk_0836ABF8[];
+extern u8 gLevel2Stage0Room0BlockMetatiles[];
 extern struct Door gLevel2Stage0Room0Doors[];
 extern u8 gLevel2Stage0Room0Objects[];
 struct RoomDef gLevel2Stage0Room0 ROOM_DEF(0836ac58) = {
@@ -2607,7 +2607,7 @@ struct RoomDef gLevel2Stage0Room0 ROOM_DEF(0836ac58) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage0Room0MetatileMap,
     .blockLayer = gLevel2Stage0Room0BlockLayer,
-    .unk10 = gUnk_0836ABF8,
+    .blockMetatiles = gLevel2Stage0Room0BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0853DBB8,
@@ -2620,7 +2620,7 @@ struct RoomDef gLevel2Stage0Room0 ROOM_DEF(0836ac58) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -2640,7 +2640,7 @@ struct RoomDef gLevel2Stage0Room0 ROOM_DEF(0836ac58) = {
 /* gRoomTable[2][0][1], 0x0836AEE4, section .room_def_0836aee4 */
 extern u8 gLevel2Stage0Room1MetatileMap[];
 extern u8 gLevel2Stage0Room1BlockLayer[];
-extern u8 gUnk_0836AE38[];
+extern u8 gLevel2Stage0Room1BlockMetatiles[];
 extern struct Door gLevel2Stage0Room1Doors[];
 extern u8 gLevel2Stage0Room1Objects[];
 struct RoomDef gLevel2Stage0Room1 ROOM_DEF(0836aee4) = {
@@ -2650,7 +2650,7 @@ struct RoomDef gLevel2Stage0Room1 ROOM_DEF(0836aee4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage0Room1MetatileMap,
     .blockLayer = gLevel2Stage0Room1BlockLayer,
-    .unk10 = gUnk_0836AE38,
+    .blockMetatiles = gLevel2Stage0Room1BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D53C,
@@ -2663,7 +2663,7 @@ struct RoomDef gLevel2Stage0Room1 ROOM_DEF(0836aee4) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -2683,7 +2683,7 @@ struct RoomDef gLevel2Stage0Room1 ROOM_DEF(0836aee4) = {
 /* gRoomTable[2][0][2], 0x0836B160, section .room_def_0836b160 */
 extern u8 gLevel2Stage0Room2MetatileMap[];
 extern u8 gLevel2Stage0Room2BlockLayer[];
-extern u8 gUnk_0836B0F8[];
+extern u8 gLevel2Stage0Room2BlockMetatiles[];
 extern struct Door gLevel2Stage0Room2Doors[];
 extern u8 gLevel2Stage0Room2Objects[];
 struct RoomDef gLevel2Stage0Room2 ROOM_DEF(0836b160) = {
@@ -2693,7 +2693,7 @@ struct RoomDef gLevel2Stage0Room2 ROOM_DEF(0836b160) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage0Room2MetatileMap,
     .blockLayer = gLevel2Stage0Room2BlockLayer,
-    .unk10 = gUnk_0836B0F8,
+    .blockMetatiles = gLevel2Stage0Room2BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0853DBB8,
@@ -2706,7 +2706,7 @@ struct RoomDef gLevel2Stage0Room2 ROOM_DEF(0836b160) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -2726,7 +2726,7 @@ struct RoomDef gLevel2Stage0Room2 ROOM_DEF(0836b160) = {
 /* gRoomTable[2][0][3], 0x0836B44C, section .room_def_0836b44c */
 extern u8 gLevel2Stage0Room3MetatileMap[];
 extern u8 gLevel2Stage0Room3BlockLayer[];
-extern u8 gUnk_0836B408[];
+extern u8 gLevel2Stage0Room3BlockMetatiles[];
 extern struct Door gLevel2Stage0Room3Doors[];
 extern u8 gLevel2Stage0Room3Objects[];
 struct RoomDef gLevel2Stage0Room3 ROOM_DEF(0836b44c) = {
@@ -2736,7 +2736,7 @@ struct RoomDef gLevel2Stage0Room3 ROOM_DEF(0836b44c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage0Room3MetatileMap,
     .blockLayer = gLevel2Stage0Room3BlockLayer,
-    .unk10 = gUnk_0836B408,
+    .blockMetatiles = gLevel2Stage0Room3BlockMetatiles,
     .width = 16,
     .height = 24,
     .bg2Palette = gUnk_0853D53C,
@@ -2749,7 +2749,7 @@ struct RoomDef gLevel2Stage0Room3 ROOM_DEF(0836b44c) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 2,
     .objectsSortedByY = 1,
@@ -2769,7 +2769,7 @@ struct RoomDef gLevel2Stage0Room3 ROOM_DEF(0836b44c) = {
 /* gRoomTable[2][0][4], 0x0836B7B4, section .room_def_0836b7b4 */
 extern u8 gLevel2Stage0Room4MetatileMap[];
 extern u8 gLevel2Stage0Room4BlockLayer[];
-extern u8 gUnk_0836B6A8[];
+extern u8 gLevel2Stage0Room4BlockMetatiles[];
 extern struct Door gLevel2Stage0Room4Doors[];
 struct RoomDef gLevel2Stage0Room4 ROOM_DEF(0836b7b4) = {
     .filler00 = { 2, 0, 4, 0 },
@@ -2778,7 +2778,7 @@ struct RoomDef gLevel2Stage0Room4 ROOM_DEF(0836b7b4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage0Room4MetatileMap,
     .blockLayer = gLevel2Stage0Room4BlockLayer,
-    .unk10 = gUnk_0836B6A8,
+    .blockMetatiles = gLevel2Stage0Room4BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_0853D53C,
@@ -2791,7 +2791,7 @@ struct RoomDef gLevel2Stage0Room4 ROOM_DEF(0836b7b4) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -2811,7 +2811,7 @@ struct RoomDef gLevel2Stage0Room4 ROOM_DEF(0836b7b4) = {
 /* gRoomTable[2][0][5], 0x0836B968, section .room_def_0836b968 */
 extern u8 gLevel2Stage0Room5MetatileMap[];
 extern u8 gLevel2Stage0Room5BlockLayer[];
-extern u8 gUnk_0836B934[];
+extern u8 gLevel2Stage0Room5BlockMetatiles[];
 extern struct Door gLevel2Stage0Room5Doors[];
 extern u8 gLevel2Stage0Room5Objects[];
 struct RoomDef gLevel2Stage0Room5 ROOM_DEF(0836b968) = {
@@ -2821,7 +2821,7 @@ struct RoomDef gLevel2Stage0Room5 ROOM_DEF(0836b968) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage0Room5MetatileMap,
     .blockLayer = gLevel2Stage0Room5BlockLayer,
-    .unk10 = gUnk_0836B934,
+    .blockMetatiles = gLevel2Stage0Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D53C,
@@ -2834,7 +2834,7 @@ struct RoomDef gLevel2Stage0Room5 ROOM_DEF(0836b968) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -2854,7 +2854,7 @@ struct RoomDef gLevel2Stage0Room5 ROOM_DEF(0836b968) = {
 /* gRoomTable[2][1][0], 0x0836BC70, section .room_def_0836bc70 */
 extern u8 gLevel2Stage1Room0MetatileMap[];
 extern u8 gLevel2Stage1Room0BlockLayer[];
-extern u8 gUnk_0836BC0C[];
+extern u8 gLevel2Stage1Room0BlockMetatiles[];
 extern struct Door gLevel2Stage1Room0Doors[];
 extern u8 gLevel2Stage1Room0Objects[];
 struct RoomDef gLevel2Stage1Room0 ROOM_DEF(0836bc70) = {
@@ -2864,7 +2864,7 @@ struct RoomDef gLevel2Stage1Room0 ROOM_DEF(0836bc70) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room0MetatileMap,
     .blockLayer = gLevel2Stage1Room0BlockLayer,
-    .unk10 = gUnk_0836BC0C,
+    .blockMetatiles = gLevel2Stage1Room0BlockMetatiles,
     .width = 16,
     .height = 24,
     .bg2Palette = gUnk_085111F8,
@@ -2877,7 +2877,7 @@ struct RoomDef gLevel2Stage1Room0 ROOM_DEF(0836bc70) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 10,
     .objectsSortedByY = 1,
@@ -2897,7 +2897,7 @@ struct RoomDef gLevel2Stage1Room0 ROOM_DEF(0836bc70) = {
 /* gRoomTable[2][1][1], 0x0836C0B0, section .room_def_0836c0b0 */
 extern u8 gLevel2Stage1Room1MetatileMap[];
 extern u8 gLevel2Stage1Room1BlockLayer[];
-extern u8 gUnk_0836C03C[];
+extern u8 gLevel2Stage1Room1BlockMetatiles[];
 extern struct Door gLevel2Stage1Room1Doors[];
 extern u8 gLevel2Stage1Room1Objects[];
 struct RoomDef gLevel2Stage1Room1 ROOM_DEF(0836c0b0) = {
@@ -2907,7 +2907,7 @@ struct RoomDef gLevel2Stage1Room1 ROOM_DEF(0836c0b0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room1MetatileMap,
     .blockLayer = gLevel2Stage1Room1BlockLayer,
-    .unk10 = gUnk_0836C03C,
+    .blockMetatiles = gLevel2Stage1Room1BlockMetatiles,
     .width = 17,
     .height = 48,
     .bg2Palette = gUnk_0853DBB8,
@@ -2920,7 +2920,7 @@ struct RoomDef gLevel2Stage1Room1 ROOM_DEF(0836c0b0) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 12,
     .objectsSortedByY = 1,
@@ -2940,7 +2940,7 @@ struct RoomDef gLevel2Stage1Room1 ROOM_DEF(0836c0b0) = {
 /* gRoomTable[2][1][2], 0x0836C50C, section .room_def_0836c50c */
 extern u8 gLevel2Stage1Room2MetatileMap[];
 extern u8 gLevel2Stage1Room2BlockLayer[];
-extern u8 gUnk_0836C4A8[];
+extern u8 gLevel2Stage1Room2BlockMetatiles[];
 extern struct Door gLevel2Stage1Room2Doors[];
 extern u8 gLevel2Stage1Room2Objects[];
 struct RoomDef gLevel2Stage1Room2 ROOM_DEF(0836c50c) = {
@@ -2950,7 +2950,7 @@ struct RoomDef gLevel2Stage1Room2 ROOM_DEF(0836c50c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room2MetatileMap,
     .blockLayer = gLevel2Stage1Room2BlockLayer,
-    .unk10 = gUnk_0836C4A8,
+    .blockMetatiles = gLevel2Stage1Room2BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_085111F8,
@@ -2963,7 +2963,7 @@ struct RoomDef gLevel2Stage1Room2 ROOM_DEF(0836c50c) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 10,
     .objectsSortedByY = 1,
@@ -2983,7 +2983,7 @@ struct RoomDef gLevel2Stage1Room2 ROOM_DEF(0836c50c) = {
 /* gRoomTable[2][1][3], 0x0836CA98, section .room_def_0836ca98 */
 extern u8 gLevel2Stage1Room3MetatileMap[];
 extern u8 gLevel2Stage1Room3BlockLayer[];
-extern u8 gUnk_0836C9EC[];
+extern u8 gLevel2Stage1Room3BlockMetatiles[];
 extern struct Door gLevel2Stage1Room3Doors[];
 extern u8 gLevel2Stage1Room3Objects[];
 struct RoomDef gLevel2Stage1Room3 ROOM_DEF(0836ca98) = {
@@ -2993,7 +2993,7 @@ struct RoomDef gLevel2Stage1Room3 ROOM_DEF(0836ca98) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room3MetatileMap,
     .blockLayer = gLevel2Stage1Room3BlockLayer,
-    .unk10 = gUnk_0836C9EC,
+    .blockMetatiles = gLevel2Stage1Room3BlockMetatiles,
     .width = 32,
     .height = 23,
     .bg2Palette = gUnk_085111F8,
@@ -3006,7 +3006,7 @@ struct RoomDef gLevel2Stage1Room3 ROOM_DEF(0836ca98) = {
     .bg3Map = &gUnk_0849ABCC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -3026,7 +3026,7 @@ struct RoomDef gLevel2Stage1Room3 ROOM_DEF(0836ca98) = {
 /* gRoomTable[2][1][4], 0x0836CDA8, section .room_def_0836cda8 */
 extern u8 gLevel2Stage1Room4MetatileMap[];
 extern u8 gLevel2Stage1Room4BlockLayer[];
-extern u8 gUnk_0836CCA4[];
+extern u8 gLevel2Stage1Room4BlockMetatiles[];
 extern struct Door gLevel2Stage1Room4Doors[];
 extern u8 gLevel2Stage1Room4Objects[];
 struct RoomDef gLevel2Stage1Room4 ROOM_DEF(0836cda8) = {
@@ -3036,7 +3036,7 @@ struct RoomDef gLevel2Stage1Room4 ROOM_DEF(0836cda8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room4MetatileMap,
     .blockLayer = gLevel2Stage1Room4BlockLayer,
-    .unk10 = gUnk_0836CCA4,
+    .blockMetatiles = gLevel2Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_085111F8,
@@ -3049,7 +3049,7 @@ struct RoomDef gLevel2Stage1Room4 ROOM_DEF(0836cda8) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -3069,7 +3069,7 @@ struct RoomDef gLevel2Stage1Room4 ROOM_DEF(0836cda8) = {
 /* gRoomTable[2][1][5], 0x0836D19C, section .room_def_0836d19c */
 extern u8 gLevel2Stage1Room5MetatileMap[];
 extern u8 gLevel2Stage1Room5BlockLayer[];
-extern u8 gUnk_0836D110[];
+extern u8 gLevel2Stage1Room5BlockMetatiles[];
 extern struct Door gLevel2Stage1Room5Doors[];
 extern u8 gLevel2Stage1Room5Objects[];
 struct RoomDef gLevel2Stage1Room5 ROOM_DEF(0836d19c) = {
@@ -3079,7 +3079,7 @@ struct RoomDef gLevel2Stage1Room5 ROOM_DEF(0836d19c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room5MetatileMap,
     .blockLayer = gLevel2Stage1Room5BlockLayer,
-    .unk10 = gUnk_0836D110,
+    .blockMetatiles = gLevel2Stage1Room5BlockMetatiles,
     .width = 51,
     .height = 11,
     .bg2Palette = gUnk_085111F8,
@@ -3092,7 +3092,7 @@ struct RoomDef gLevel2Stage1Room5 ROOM_DEF(0836d19c) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -3112,7 +3112,7 @@ struct RoomDef gLevel2Stage1Room5 ROOM_DEF(0836d19c) = {
 /* gRoomTable[2][1][6], 0x0836D334, section .room_def_0836d334 */
 extern u8 gLevel2Stage1Room6MetatileMap[];
 extern u8 gLevel2Stage1Room6BlockLayer[];
-extern u8 gUnk_0836D300[];
+extern u8 gLevel2Stage1Room6BlockMetatiles[];
 extern struct Door gLevel2Stage1Room6Doors[];
 extern u8 gLevel2Stage1Room6Objects[];
 struct RoomDef gLevel2Stage1Room6 ROOM_DEF(0836d334) = {
@@ -3122,7 +3122,7 @@ struct RoomDef gLevel2Stage1Room6 ROOM_DEF(0836d334) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room6MetatileMap,
     .blockLayer = gLevel2Stage1Room6BlockLayer,
-    .unk10 = gUnk_0836D300,
+    .blockMetatiles = gLevel2Stage1Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_085111F8,
@@ -3135,7 +3135,7 @@ struct RoomDef gLevel2Stage1Room6 ROOM_DEF(0836d334) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -3155,7 +3155,7 @@ struct RoomDef gLevel2Stage1Room6 ROOM_DEF(0836d334) = {
 /* gRoomTable[2][1][7], 0x0836D4FC, section .room_def_0836d4fc */
 extern u8 gLevel2Stage1Room7MetatileMap[];
 extern u8 gLevel2Stage1Room7BlockLayer[];
-extern u8 gUnk_0836D4D8[];
+extern u8 gLevel2Stage1Room7BlockMetatiles[];
 extern struct Door gLevel2Stage1Room7Doors[];
 extern u8 gLevel2Stage1Room7Objects[];
 struct RoomDef gLevel2Stage1Room7 ROOM_DEF(0836d4fc) = {
@@ -3165,7 +3165,7 @@ struct RoomDef gLevel2Stage1Room7 ROOM_DEF(0836d4fc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage1Room7MetatileMap,
     .blockLayer = gLevel2Stage1Room7BlockLayer,
-    .unk10 = gUnk_0836D4D8,
+    .blockMetatiles = gLevel2Stage1Room7BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_085111F8,
@@ -3178,7 +3178,7 @@ struct RoomDef gLevel2Stage1Room7 ROOM_DEF(0836d4fc) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -3198,7 +3198,7 @@ struct RoomDef gLevel2Stage1Room7 ROOM_DEF(0836d4fc) = {
 /* gRoomTable[2][2][0], 0x0836DADC, section .room_def_0836dadc */
 extern u8 gLevel2Stage2Room0MetatileMap[];
 extern u8 gLevel2Stage2Room0BlockLayer[];
-extern u8 gUnk_0836DA60[];
+extern u8 gLevel2Stage2Room0BlockMetatiles[];
 extern struct Door gLevel2Stage2Room0Doors[];
 extern u8 gLevel2Stage2Room0Objects[];
 struct RoomDef gLevel2Stage2Room0 ROOM_DEF(0836dadc) = {
@@ -3208,7 +3208,7 @@ struct RoomDef gLevel2Stage2Room0 ROOM_DEF(0836dadc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage2Room0MetatileMap,
     .blockLayer = gLevel2Stage2Room0BlockLayer,
-    .unk10 = gUnk_0836DA60,
+    .blockMetatiles = gLevel2Stage2Room0BlockMetatiles,
     .width = 32,
     .height = 23,
     .bg2Palette = gUnk_08511134,
@@ -3221,7 +3221,7 @@ struct RoomDef gLevel2Stage2Room0 ROOM_DEF(0836dadc) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -3241,7 +3241,7 @@ struct RoomDef gLevel2Stage2Room0 ROOM_DEF(0836dadc) = {
 /* gRoomTable[2][2][1], 0x0836DD44, section .room_def_0836dd44 */
 extern u8 gLevel2Stage2Room1MetatileMap[];
 extern u8 gLevel2Stage2Room1BlockLayer[];
-extern u8 gUnk_0836DD18[];
+extern u8 gLevel2Stage2Room1BlockMetatiles[];
 extern struct Door gLevel2Stage2Room1Doors[];
 extern u8 gLevel2Stage2Room1Objects[];
 struct RoomDef gLevel2Stage2Room1 ROOM_DEF(0836dd44) = {
@@ -3251,7 +3251,7 @@ struct RoomDef gLevel2Stage2Room1 ROOM_DEF(0836dd44) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage2Room1MetatileMap,
     .blockLayer = gLevel2Stage2Room1BlockLayer,
-    .unk10 = gUnk_0836DD18,
+    .blockMetatiles = gLevel2Stage2Room1BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0850AA6C,
@@ -3264,7 +3264,7 @@ struct RoomDef gLevel2Stage2Room1 ROOM_DEF(0836dd44) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -3284,7 +3284,7 @@ struct RoomDef gLevel2Stage2Room1 ROOM_DEF(0836dd44) = {
 /* gRoomTable[2][2][2], 0x0836E09C, section .room_def_0836e09c */
 extern u8 gLevel2Stage2Room2MetatileMap[];
 extern u8 gLevel2Stage2Room2BlockLayer[];
-extern u8 gUnk_0836E010[];
+extern u8 gLevel2Stage2Room2BlockMetatiles[];
 extern struct Door gLevel2Stage2Room2Doors[];
 extern u8 gLevel2Stage2Room2Objects[];
 struct RoomDef gLevel2Stage2Room2 ROOM_DEF(0836e09c) = {
@@ -3294,7 +3294,7 @@ struct RoomDef gLevel2Stage2Room2 ROOM_DEF(0836e09c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage2Room2MetatileMap,
     .blockLayer = gLevel2Stage2Room2BlockLayer,
-    .unk10 = gUnk_0836E010,
+    .blockMetatiles = gLevel2Stage2Room2BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_08511134,
@@ -3307,7 +3307,7 @@ struct RoomDef gLevel2Stage2Room2 ROOM_DEF(0836e09c) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 7,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -3327,7 +3327,7 @@ struct RoomDef gLevel2Stage2Room2 ROOM_DEF(0836e09c) = {
 /* gRoomTable[2][2][3], 0x0836E3F4, section .room_def_0836e3f4 */
 extern u8 gLevel2Stage2Room3MetatileMap[];
 extern u8 gLevel2Stage2Room3BlockLayer[];
-extern u8 gUnk_0836E368[];
+extern u8 gLevel2Stage2Room3BlockMetatiles[];
 extern struct Door gLevel2Stage2Room3Doors[];
 extern u8 gLevel2Stage2Room3Objects[];
 struct RoomDef gLevel2Stage2Room3 ROOM_DEF(0836e3f4) = {
@@ -3337,7 +3337,7 @@ struct RoomDef gLevel2Stage2Room3 ROOM_DEF(0836e3f4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage2Room3MetatileMap,
     .blockLayer = gLevel2Stage2Room3BlockLayer,
-    .unk10 = gUnk_0836E368,
+    .blockMetatiles = gLevel2Stage2Room3BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_08511134,
@@ -3350,7 +3350,7 @@ struct RoomDef gLevel2Stage2Room3 ROOM_DEF(0836e3f4) = {
     .bg3Map = &gUnk_0852C1D4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 6,
     .objectCount = 5,
     .objectsSortedByY = 1,
@@ -3370,7 +3370,7 @@ struct RoomDef gLevel2Stage2Room3 ROOM_DEF(0836e3f4) = {
 /* gRoomTable[2][2][4], 0x0836E660, section .room_def_0836e660 */
 extern u8 gLevel2Stage2Room4MetatileMap[];
 extern u8 gLevel2Stage2Room4BlockLayer[];
-extern u8 gUnk_0836E5D4[];
+extern u8 gLevel2Stage2Room4BlockMetatiles[];
 extern struct Door gLevel2Stage2Room4Doors[];
 extern u8 gLevel2Stage2Room4Objects[];
 struct RoomDef gLevel2Stage2Room4 ROOM_DEF(0836e660) = {
@@ -3380,7 +3380,7 @@ struct RoomDef gLevel2Stage2Room4 ROOM_DEF(0836e660) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage2Room4MetatileMap,
     .blockLayer = gLevel2Stage2Room4BlockLayer,
-    .unk10 = gUnk_0836E5D4,
+    .blockMetatiles = gLevel2Stage2Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08511134,
@@ -3393,7 +3393,7 @@ struct RoomDef gLevel2Stage2Room4 ROOM_DEF(0836e660) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -3413,7 +3413,7 @@ struct RoomDef gLevel2Stage2Room4 ROOM_DEF(0836e660) = {
 /* gRoomTable[2][3][0], 0x0836E824, section .room_def_0836e824 */
 extern u8 gLevel2Stage3Room0MetatileMap[];
 extern u8 gLevel2Stage3Room0BlockLayer[];
-extern u8 gUnk_0836E808[];
+extern u8 gLevel2Stage3Room0BlockMetatiles[];
 extern struct Door gLevel2Stage3Room0Doors[];
 extern u8 gLevel2Stage3Room0Objects[];
 struct RoomDef gLevel2Stage3Room0 ROOM_DEF(0836e824) = {
@@ -3423,7 +3423,7 @@ struct RoomDef gLevel2Stage3Room0 ROOM_DEF(0836e824) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage3Room0MetatileMap,
     .blockLayer = gLevel2Stage3Room0BlockLayer,
-    .unk10 = gUnk_0836E808,
+    .blockMetatiles = gLevel2Stage3Room0BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_0853DBB8,
@@ -3436,7 +3436,7 @@ struct RoomDef gLevel2Stage3Room0 ROOM_DEF(0836e824) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -3456,7 +3456,7 @@ struct RoomDef gLevel2Stage3Room0 ROOM_DEF(0836e824) = {
 /* gRoomTable[2][3][1], 0x0836EED8, section .room_def_0836eed8 */
 extern u8 gLevel2Stage3Room1MetatileMap[];
 extern u8 gLevel2Stage3Room1BlockLayer[];
-extern u8 gUnk_0836EEC4[];
+extern u8 gLevel2Stage3Room1BlockMetatiles[];
 extern struct Door gLevel2Stage3Room1Doors[];
 struct RoomDef gLevel2Stage3Room1 ROOM_DEF(0836eed8) = {
     .filler00 = { 2, 3, 1, 0 },
@@ -3465,7 +3465,7 @@ struct RoomDef gLevel2Stage3Room1 ROOM_DEF(0836eed8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage3Room1MetatileMap,
     .blockLayer = gLevel2Stage3Room1BlockLayer,
-    .unk10 = gUnk_0836EEC4,
+    .blockMetatiles = gLevel2Stage3Room1BlockMetatiles,
     .width = 16,
     .height = 108,
     .bg2Palette = gUnk_0853DBB8,
@@ -3478,7 +3478,7 @@ struct RoomDef gLevel2Stage3Room1 ROOM_DEF(0836eed8) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -3498,7 +3498,7 @@ struct RoomDef gLevel2Stage3Room1 ROOM_DEF(0836eed8) = {
 /* gRoomTable[2][3][2], 0x0836F0A4, section .room_def_0836f0a4 */
 extern u8 gLevel2Stage3Room2MetatileMap[];
 extern u8 gLevel2Stage3Room2BlockLayer[];
-extern u8 gUnk_0836F078[];
+extern u8 gLevel2Stage3Room2BlockMetatiles[];
 extern struct Door gLevel2Stage3Room2Doors[];
 struct RoomDef gLevel2Stage3Room2 ROOM_DEF(0836f0a4) = {
     .filler00 = { 2, 3, 2, 0 },
@@ -3507,7 +3507,7 @@ struct RoomDef gLevel2Stage3Room2 ROOM_DEF(0836f0a4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage3Room2MetatileMap,
     .blockLayer = gLevel2Stage3Room2BlockLayer,
-    .unk10 = gUnk_0836F078,
+    .blockMetatiles = gLevel2Stage3Room2BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_0853DBB8,
@@ -3520,7 +3520,7 @@ struct RoomDef gLevel2Stage3Room2 ROOM_DEF(0836f0a4) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -3540,7 +3540,7 @@ struct RoomDef gLevel2Stage3Room2 ROOM_DEF(0836f0a4) = {
 /* gRoomTable[2][3][3], 0x0836F270, section .room_def_0836f270 */
 extern u8 gLevel2Stage3Room3MetatileMap[];
 extern u8 gLevel2Stage3Room3BlockLayer[];
-extern u8 gUnk_0836F22C[];
+extern u8 gLevel2Stage3Room3BlockMetatiles[];
 extern struct Door gLevel2Stage3Room3Doors[];
 extern u8 gLevel2Stage3Room3Objects[];
 struct RoomDef gLevel2Stage3Room3 ROOM_DEF(0836f270) = {
@@ -3550,7 +3550,7 @@ struct RoomDef gLevel2Stage3Room3 ROOM_DEF(0836f270) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage3Room3MetatileMap,
     .blockLayer = gLevel2Stage3Room3BlockLayer,
-    .unk10 = gUnk_0836F22C,
+    .blockMetatiles = gLevel2Stage3Room3BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08511134,
@@ -3563,7 +3563,7 @@ struct RoomDef gLevel2Stage3Room3 ROOM_DEF(0836f270) = {
     .bg3Map = &gUnk_0852C930,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -3583,7 +3583,7 @@ struct RoomDef gLevel2Stage3Room3 ROOM_DEF(0836f270) = {
 /* gRoomTable[2][3][4], 0x0836F634, section .room_def_0836f634 */
 extern u8 gLevel2Stage3Room4MetatileMap[];
 extern u8 gLevel2Stage3Room4BlockLayer[];
-extern u8 gUnk_0836F5C0[];
+extern u8 gLevel2Stage3Room4BlockMetatiles[];
 extern struct Door gLevel2Stage3Room4Doors[];
 extern u8 gLevel2Stage3Room4Objects[];
 struct RoomDef gLevel2Stage3Room4 ROOM_DEF(0836f634) = {
@@ -3593,7 +3593,7 @@ struct RoomDef gLevel2Stage3Room4 ROOM_DEF(0836f634) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage3Room4MetatileMap,
     .blockLayer = gLevel2Stage3Room4BlockLayer,
-    .unk10 = gUnk_0836F5C0,
+    .blockMetatiles = gLevel2Stage3Room4BlockMetatiles,
     .width = 16,
     .height = 47,
     .bg2Palette = gUnk_0853DBB8,
@@ -3606,7 +3606,7 @@ struct RoomDef gLevel2Stage3Room4 ROOM_DEF(0836f634) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 11,
+    .driftObjectIndex = 11,
     .doorCount = 1,
     .objectCount = 11,
     .objectsSortedByY = 1,
@@ -3626,7 +3626,7 @@ struct RoomDef gLevel2Stage3Room4 ROOM_DEF(0836f634) = {
 /* gRoomTable[2][3][5], 0x0836F7E4, section .room_def_0836f7e4 */
 extern u8 gLevel2Stage3Room5MetatileMap[];
 extern u8 gLevel2Stage3Room5BlockLayer[];
-extern u8 gUnk_0836F7C0[];
+extern u8 gLevel2Stage3Room5BlockMetatiles[];
 extern struct Door gLevel2Stage3Room5Doors[];
 extern u8 gLevel2Stage3Room5Objects[];
 struct RoomDef gLevel2Stage3Room5 ROOM_DEF(0836f7e4) = {
@@ -3636,7 +3636,7 @@ struct RoomDef gLevel2Stage3Room5 ROOM_DEF(0836f7e4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage3Room5MetatileMap,
     .blockLayer = gLevel2Stage3Room5BlockLayer,
-    .unk10 = gUnk_0836F7C0,
+    .blockMetatiles = gLevel2Stage3Room5BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_08511134,
@@ -3649,7 +3649,7 @@ struct RoomDef gLevel2Stage3Room5 ROOM_DEF(0836f7e4) = {
     .bg3Map = &gUnk_0852C930,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -3669,7 +3669,7 @@ struct RoomDef gLevel2Stage3Room5 ROOM_DEF(0836f7e4) = {
 /* gRoomTable[2][4][0], 0x0836F9B0, section .room_def_0836f9b0 */
 extern u8 gLevel2Stage4Room0MetatileMap[];
 extern u8 gLevel2Stage4Room0BlockLayer[];
-extern u8 gUnk_0836F97C[];
+extern u8 gLevel2Stage4Room0BlockMetatiles[];
 extern struct Door gLevel2Stage4Room0Doors[];
 extern u8 gLevel2Stage4Room0Objects[];
 struct RoomDef gLevel2Stage4Room0 ROOM_DEF(0836f9b0) = {
@@ -3679,7 +3679,7 @@ struct RoomDef gLevel2Stage4Room0 ROOM_DEF(0836f9b0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage4Room0MetatileMap,
     .blockLayer = gLevel2Stage4Room0BlockLayer,
-    .unk10 = gUnk_0836F97C,
+    .blockMetatiles = gLevel2Stage4Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08511070,
@@ -3692,7 +3692,7 @@ struct RoomDef gLevel2Stage4Room0 ROOM_DEF(0836f9b0) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -3712,7 +3712,7 @@ struct RoomDef gLevel2Stage4Room0 ROOM_DEF(0836f9b0) = {
 /* gRoomTable[2][4][1], 0x0836FD44, section .room_def_0836fd44 */
 extern u8 gLevel2Stage4Room1MetatileMap[];
 extern u8 gLevel2Stage4Room1BlockLayer[];
-extern u8 gUnk_0836FCF8[];
+extern u8 gLevel2Stage4Room1BlockMetatiles[];
 extern struct Door gLevel2Stage4Room1Doors[];
 extern u8 gLevel2Stage4Room1Objects[];
 struct RoomDef gLevel2Stage4Room1 ROOM_DEF(0836fd44) = {
@@ -3722,7 +3722,7 @@ struct RoomDef gLevel2Stage4Room1 ROOM_DEF(0836fd44) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage4Room1MetatileMap,
     .blockLayer = gLevel2Stage4Room1BlockLayer,
-    .unk10 = gUnk_0836FCF8,
+    .blockMetatiles = gLevel2Stage4Room1BlockMetatiles,
     .width = 17,
     .height = 43,
     .bg2Palette = gUnk_0853DBB8,
@@ -3735,7 +3735,7 @@ struct RoomDef gLevel2Stage4Room1 ROOM_DEF(0836fd44) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 7,
     .objectsSortedByY = 1,
@@ -3755,7 +3755,7 @@ struct RoomDef gLevel2Stage4Room1 ROOM_DEF(0836fd44) = {
 /* gRoomTable[2][4][2], 0x08370000, section .room_def_08370000 */
 extern u8 gLevel2Stage4Room2MetatileMap[];
 extern u8 gLevel2Stage4Room2BlockLayer[];
-extern u8 gUnk_0836FFA4[];
+extern u8 gLevel2Stage4Room2BlockMetatiles[];
 extern struct Door gLevel2Stage4Room2Doors[];
 extern u8 gLevel2Stage4Room2Objects[];
 struct RoomDef gLevel2Stage4Room2 ROOM_DEF(08370000) = {
@@ -3765,7 +3765,7 @@ struct RoomDef gLevel2Stage4Room2 ROOM_DEF(08370000) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage4Room2MetatileMap,
     .blockLayer = gLevel2Stage4Room2BlockLayer,
-    .unk10 = gUnk_0836FFA4,
+    .blockMetatiles = gLevel2Stage4Room2BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_08511070,
@@ -3778,7 +3778,7 @@ struct RoomDef gLevel2Stage4Room2 ROOM_DEF(08370000) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -3798,7 +3798,7 @@ struct RoomDef gLevel2Stage4Room2 ROOM_DEF(08370000) = {
 /* gRoomTable[2][4][3], 0x083702FC, section .room_def_083702fc */
 extern u8 gLevel2Stage4Room3MetatileMap[];
 extern u8 gLevel2Stage4Room3BlockLayer[];
-extern u8 gUnk_08370218[];
+extern u8 gLevel2Stage4Room3BlockMetatiles[];
 extern struct Door gLevel2Stage4Room3Doors[];
 extern u8 gLevel2Stage4Room3Objects[];
 struct RoomDef gLevel2Stage4Room3 ROOM_DEF(083702fc) = {
@@ -3808,7 +3808,7 @@ struct RoomDef gLevel2Stage4Room3 ROOM_DEF(083702fc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage4Room3MetatileMap,
     .blockLayer = gLevel2Stage4Room3BlockLayer,
-    .unk10 = gUnk_08370218,
+    .blockMetatiles = gLevel2Stage4Room3BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08511070,
@@ -3821,7 +3821,7 @@ struct RoomDef gLevel2Stage4Room3 ROOM_DEF(083702fc) = {
     .bg3Map = &gUnk_0852C930,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -3841,7 +3841,7 @@ struct RoomDef gLevel2Stage4Room3 ROOM_DEF(083702fc) = {
 /* gRoomTable[2][4][4], 0x083704E4, section .room_def_083704e4 */
 extern u8 gLevel2Stage4Room4MetatileMap[];
 extern u8 gLevel2Stage4Room4BlockLayer[];
-extern u8 gUnk_083704B0[];
+extern u8 gLevel2Stage4Room4BlockMetatiles[];
 extern struct Door gLevel2Stage4Room4Doors[];
 extern u8 gLevel2Stage4Room4Objects[];
 struct RoomDef gLevel2Stage4Room4 ROOM_DEF(083704e4) = {
@@ -3851,7 +3851,7 @@ struct RoomDef gLevel2Stage4Room4 ROOM_DEF(083704e4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage4Room4MetatileMap,
     .blockLayer = gLevel2Stage4Room4BlockLayer,
-    .unk10 = gUnk_083704B0,
+    .blockMetatiles = gLevel2Stage4Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08511070,
@@ -3864,7 +3864,7 @@ struct RoomDef gLevel2Stage4Room4 ROOM_DEF(083704e4) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -3884,7 +3884,7 @@ struct RoomDef gLevel2Stage4Room4 ROOM_DEF(083704e4) = {
 /* gRoomTable[2][5][0], 0x08370684, section .room_def_08370684 */
 extern u8 gLevel2Stage5Room0MetatileMap[];
 extern u8 gLevel2Stage5Room0BlockLayer[];
-extern u8 gUnk_08370650[];
+extern u8 gLevel2Stage5Room0BlockMetatiles[];
 extern struct Door gLevel2Stage5Room0Doors[];
 extern u8 gLevel2Stage5Room0Objects[];
 struct RoomDef gLevel2Stage5Room0 ROOM_DEF(08370684) = {
@@ -3894,7 +3894,7 @@ struct RoomDef gLevel2Stage5Room0 ROOM_DEF(08370684) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room0MetatileMap,
     .blockLayer = gLevel2Stage5Room0BlockLayer,
-    .unk10 = gUnk_08370650,
+    .blockMetatiles = gLevel2Stage5Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08510FAC,
@@ -3907,7 +3907,7 @@ struct RoomDef gLevel2Stage5Room0 ROOM_DEF(08370684) = {
     .bg3Map = &gUnk_0852C930,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -3927,7 +3927,7 @@ struct RoomDef gLevel2Stage5Room0 ROOM_DEF(08370684) = {
 /* gRoomTable[2][5][1], 0x08370AF4, section .room_def_08370af4 */
 extern u8 gLevel2Stage5Room1MetatileMap[];
 extern u8 gLevel2Stage5Room1BlockLayer[];
-extern u8 gUnk_08370A9C[];
+extern u8 gLevel2Stage5Room1BlockMetatiles[];
 extern struct Door gLevel2Stage5Room1Doors[];
 extern u8 gLevel2Stage5Room1Objects[];
 struct RoomDef gLevel2Stage5Room1 ROOM_DEF(08370af4) = {
@@ -3937,7 +3937,7 @@ struct RoomDef gLevel2Stage5Room1 ROOM_DEF(08370af4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room1MetatileMap,
     .blockLayer = gLevel2Stage5Room1BlockLayer,
-    .unk10 = gUnk_08370A9C,
+    .blockMetatiles = gLevel2Stage5Room1BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_08510FAC,
@@ -3950,7 +3950,7 @@ struct RoomDef gLevel2Stage5Room1 ROOM_DEF(08370af4) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 7,
     .objectsSortedByY = 0,
@@ -3970,7 +3970,7 @@ struct RoomDef gLevel2Stage5Room1 ROOM_DEF(08370af4) = {
 /* gRoomTable[2][5][2], 0x08370E08, section .room_def_08370e08 */
 extern u8 gLevel2Stage5Room2MetatileMap[];
 extern u8 gLevel2Stage5Room2BlockLayer[];
-extern u8 gUnk_08370DBC[];
+extern u8 gLevel2Stage5Room2BlockMetatiles[];
 extern struct Door gLevel2Stage5Room2Doors[];
 extern u8 gLevel2Stage5Room2Objects[];
 struct RoomDef gLevel2Stage5Room2 ROOM_DEF(08370e08) = {
@@ -3980,7 +3980,7 @@ struct RoomDef gLevel2Stage5Room2 ROOM_DEF(08370e08) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room2MetatileMap,
     .blockLayer = gLevel2Stage5Room2BlockLayer,
-    .unk10 = gUnk_08370DBC,
+    .blockMetatiles = gLevel2Stage5Room2BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_08510FAC,
@@ -3993,7 +3993,7 @@ struct RoomDef gLevel2Stage5Room2 ROOM_DEF(08370e08) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 7,
     .objectsSortedByY = 1,
@@ -4013,7 +4013,7 @@ struct RoomDef gLevel2Stage5Room2 ROOM_DEF(08370e08) = {
 /* gRoomTable[2][5][3], 0x0837108C, section .room_def_0837108c */
 extern u8 gLevel2Stage5Room3MetatileMap[];
 extern u8 gLevel2Stage5Room3BlockLayer[];
-extern u8 gUnk_08371058[];
+extern u8 gLevel2Stage5Room3BlockMetatiles[];
 extern struct Door gLevel2Stage5Room3Doors[];
 extern u8 gLevel2Stage5Room3Objects[];
 struct RoomDef gLevel2Stage5Room3 ROOM_DEF(0837108c) = {
@@ -4023,7 +4023,7 @@ struct RoomDef gLevel2Stage5Room3 ROOM_DEF(0837108c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room3MetatileMap,
     .blockLayer = gLevel2Stage5Room3BlockLayer,
-    .unk10 = gUnk_08371058,
+    .blockMetatiles = gLevel2Stage5Room3BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0850AA6C,
@@ -4036,7 +4036,7 @@ struct RoomDef gLevel2Stage5Room3 ROOM_DEF(0837108c) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -4056,7 +4056,7 @@ struct RoomDef gLevel2Stage5Room3 ROOM_DEF(0837108c) = {
 /* gRoomTable[2][5][4], 0x08371388, section .room_def_08371388 */
 extern u8 gLevel2Stage5Room4MetatileMap[];
 extern u8 gLevel2Stage5Room4BlockLayer[];
-extern u8 gUnk_08371318[];
+extern u8 gLevel2Stage5Room4BlockMetatiles[];
 extern struct Door gLevel2Stage5Room4Doors[];
 extern u8 gLevel2Stage5Room4Objects[];
 struct RoomDef gLevel2Stage5Room4 ROOM_DEF(08371388) = {
@@ -4066,7 +4066,7 @@ struct RoomDef gLevel2Stage5Room4 ROOM_DEF(08371388) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room4MetatileMap,
     .blockLayer = gLevel2Stage5Room4BlockLayer,
-    .unk10 = gUnk_08371318,
+    .blockMetatiles = gLevel2Stage5Room4BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0853DBB8,
@@ -4079,7 +4079,7 @@ struct RoomDef gLevel2Stage5Room4 ROOM_DEF(08371388) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 8,
     .objectsSortedByY = 1,
@@ -4099,7 +4099,7 @@ struct RoomDef gLevel2Stage5Room4 ROOM_DEF(08371388) = {
 /* gRoomTable[2][5][5], 0x08371728, section .room_def_08371728 */
 extern u8 gLevel2Stage5Room5MetatileMap[];
 extern u8 gLevel2Stage5Room5BlockLayer[];
-extern u8 gUnk_083716BC[];
+extern u8 gLevel2Stage5Room5BlockMetatiles[];
 extern struct Door gLevel2Stage5Room5Doors[];
 extern u8 gLevel2Stage5Room5Objects[];
 struct RoomDef gLevel2Stage5Room5 ROOM_DEF(08371728) = {
@@ -4109,7 +4109,7 @@ struct RoomDef gLevel2Stage5Room5 ROOM_DEF(08371728) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room5MetatileMap,
     .blockLayer = gLevel2Stage5Room5BlockLayer,
-    .unk10 = gUnk_083716BC,
+    .blockMetatiles = gLevel2Stage5Room5BlockMetatiles,
     .width = 47,
     .height = 11,
     .bg2Palette = gLevel2Stage5Room5Bg2Palette,
@@ -4122,7 +4122,7 @@ struct RoomDef gLevel2Stage5Room5 ROOM_DEF(08371728) = {
     .bg3Map = &gUnk_0849ABCC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 11,
     .objectsSortedByY = 0,
@@ -4142,7 +4142,7 @@ struct RoomDef gLevel2Stage5Room5 ROOM_DEF(08371728) = {
 /* gRoomTable[2][5][6], 0x0837181C, section .room_def_0837181c */
 extern u8 gLevel2Stage5Room6MetatileMap[];
 extern u8 gLevel2Stage5Room6BlockLayer[];
-extern u8 gUnk_08371814[];
+extern u8 gLevel2Stage5Room6BlockMetatiles[];
 struct RoomDef gLevel2Stage5Room6 ROOM_DEF(0837181c) = {
     .filler00 = { 2, 5, 6, 0 },
     .bgm = 15,
@@ -4150,7 +4150,7 @@ struct RoomDef gLevel2Stage5Room6 ROOM_DEF(0837181c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room6MetatileMap,
     .blockLayer = gLevel2Stage5Room6BlockLayer,
-    .unk10 = gUnk_08371814,
+    .blockMetatiles = gLevel2Stage5Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08510FAC,
@@ -4163,7 +4163,7 @@ struct RoomDef gLevel2Stage5Room6 ROOM_DEF(0837181c) = {
     .bg3Map = &gUnk_0849ABCC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -4183,7 +4183,7 @@ struct RoomDef gLevel2Stage5Room6 ROOM_DEF(0837181c) = {
 /* gRoomTable[2][5][7], 0x08371D90, section .room_def_08371d90 */
 extern u8 gLevel2Stage5Room7MetatileMap[];
 extern u8 gLevel2Stage5Room7BlockLayer[];
-extern u8 gUnk_08371CD4[];
+extern u8 gLevel2Stage5Room7BlockMetatiles[];
 extern struct Door gLevel2Stage5Room7Doors[];
 extern u8 gLevel2Stage5Room7Objects[];
 struct RoomDef gLevel2Stage5Room7 ROOM_DEF(08371d90) = {
@@ -4193,7 +4193,7 @@ struct RoomDef gLevel2Stage5Room7 ROOM_DEF(08371d90) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room7MetatileMap,
     .blockLayer = gLevel2Stage5Room7BlockLayer,
-    .unk10 = gUnk_08371CD4,
+    .blockMetatiles = gLevel2Stage5Room7BlockMetatiles,
     .width = 16,
     .height = 78,
     .bg2Palette = gUnk_0853DBB8,
@@ -4206,7 +4206,7 @@ struct RoomDef gLevel2Stage5Room7 ROOM_DEF(08371d90) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 21,
     .objectsSortedByY = 1,
@@ -4226,7 +4226,7 @@ struct RoomDef gLevel2Stage5Room7 ROOM_DEF(08371d90) = {
 /* gRoomTable[2][5][8], 0x08372040, section .room_def_08372040 */
 extern u8 gLevel2Stage5Room8MetatileMap[];
 extern u8 gLevel2Stage5Room8BlockLayer[];
-extern u8 gUnk_08371FC4[];
+extern u8 gLevel2Stage5Room8BlockMetatiles[];
 extern struct Door gLevel2Stage5Room8Doors[];
 extern u8 gLevel2Stage5Room8Objects[];
 struct RoomDef gLevel2Stage5Room8 ROOM_DEF(08372040) = {
@@ -4236,7 +4236,7 @@ struct RoomDef gLevel2Stage5Room8 ROOM_DEF(08372040) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room8MetatileMap,
     .blockLayer = gLevel2Stage5Room8BlockLayer,
-    .unk10 = gUnk_08371FC4,
+    .blockMetatiles = gLevel2Stage5Room8BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08510FAC,
@@ -4249,7 +4249,7 @@ struct RoomDef gLevel2Stage5Room8 ROOM_DEF(08372040) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -4269,7 +4269,7 @@ struct RoomDef gLevel2Stage5Room8 ROOM_DEF(08372040) = {
 /* gRoomTable[2][5][9], 0x08372240, section .room_def_08372240 */
 extern u8 gLevel2Stage5Room9MetatileMap[];
 extern u8 gLevel2Stage5Room9BlockLayer[];
-extern u8 gUnk_08372224[];
+extern u8 gLevel2Stage5Room9BlockMetatiles[];
 extern struct Door gLevel2Stage5Room9Doors[];
 extern u8 gLevel2Stage5Room9Objects[];
 struct RoomDef gLevel2Stage5Room9 ROOM_DEF(08372240) = {
@@ -4279,7 +4279,7 @@ struct RoomDef gLevel2Stage5Room9 ROOM_DEF(08372240) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage5Room9MetatileMap,
     .blockLayer = gLevel2Stage5Room9BlockLayer,
-    .unk10 = gUnk_08372224,
+    .blockMetatiles = gLevel2Stage5Room9BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08510FAC,
@@ -4292,7 +4292,7 @@ struct RoomDef gLevel2Stage5Room9 ROOM_DEF(08372240) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -4312,7 +4312,7 @@ struct RoomDef gLevel2Stage5Room9 ROOM_DEF(08372240) = {
 /* gRoomTable[2][6][0], 0x083723B0, section .room_def_083723b0 */
 extern u8 gLevel2Stage6Room0MetatileMap[];
 extern u8 gLevel2Stage6Room0BlockLayer[];
-extern u8 gUnk_083723A0[];
+extern u8 gLevel2Stage6Room0BlockMetatiles[];
 extern u8 gLevel2Stage6Room0Objects[];
 struct RoomDef gLevel2Stage6Room0 ROOM_DEF(083723b0) = {
     .filler00 = { 2, 6, 0, 0 },
@@ -4321,7 +4321,7 @@ struct RoomDef gLevel2Stage6Room0 ROOM_DEF(083723b0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage6Room0MetatileMap,
     .blockLayer = gLevel2Stage6Room0BlockLayer,
-    .unk10 = gUnk_083723A0,
+    .blockMetatiles = gLevel2Stage6Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849AA04,
@@ -4334,7 +4334,7 @@ struct RoomDef gLevel2Stage6Room0 ROOM_DEF(083723b0) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -4354,7 +4354,7 @@ struct RoomDef gLevel2Stage6Room0 ROOM_DEF(083723b0) = {
 /* gRoomTable[2][6][1], 0x08372518, section .room_def_08372518 */
 extern u8 gLevel2Stage6Room1MetatileMap[];
 extern u8 gLevel2Stage6Room1BlockLayer[];
-extern u8 gUnk_08372510[];
+extern u8 gLevel2Stage6Room1BlockMetatiles[];
 struct RoomDef gLevel2Stage6Room1 ROOM_DEF(08372518) = {
     .filler00 = { 2, 6, 1, 0 },
     .bgm = 30,
@@ -4362,7 +4362,7 @@ struct RoomDef gLevel2Stage6Room1 ROOM_DEF(08372518) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage6Room1MetatileMap,
     .blockLayer = gLevel2Stage6Room1BlockLayer,
-    .unk10 = gUnk_08372510,
+    .blockMetatiles = gLevel2Stage6Room1BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849AA04,
@@ -4375,7 +4375,7 @@ struct RoomDef gLevel2Stage6Room1 ROOM_DEF(08372518) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -4395,7 +4395,7 @@ struct RoomDef gLevel2Stage6Room1 ROOM_DEF(08372518) = {
 /* gRoomTable[2][6][2], 0x08372680, section .room_def_08372680 */
 extern u8 gLevel2Stage6Room2MetatileMap[];
 extern u8 gLevel2Stage6Room2BlockLayer[];
-extern u8 gUnk_08372678[];
+extern u8 gLevel2Stage6Room2BlockMetatiles[];
 struct RoomDef gLevel2Stage6Room2 ROOM_DEF(08372680) = {
     .filler00 = { 2, 6, 2, 0 },
     .bgm = 30,
@@ -4403,7 +4403,7 @@ struct RoomDef gLevel2Stage6Room2 ROOM_DEF(08372680) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel2Stage6Room2MetatileMap,
     .blockLayer = gLevel2Stage6Room2BlockLayer,
-    .unk10 = gUnk_08372678,
+    .blockMetatiles = gLevel2Stage6Room2BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849AA04,
@@ -4416,7 +4416,7 @@ struct RoomDef gLevel2Stage6Room2 ROOM_DEF(08372680) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -4436,7 +4436,7 @@ struct RoomDef gLevel2Stage6Room2 ROOM_DEF(08372680) = {
 /* gRoomTable[3][0][0], 0x08372A78, section .room_def_08372a78 */
 extern u8 gLevel3Stage0Room0MetatileMap[];
 extern u8 gLevel3Stage0Room0BlockLayer[];
-extern u8 gUnk_08372A0C[];
+extern u8 gLevel3Stage0Room0BlockMetatiles[];
 extern struct Door gLevel3Stage0Room0Doors[];
 extern u8 gLevel3Stage0Room0Objects[];
 struct RoomDef gLevel3Stage0Room0 ROOM_DEF(08372a78) = {
@@ -4446,7 +4446,7 @@ struct RoomDef gLevel3Stage0Room0 ROOM_DEF(08372a78) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage0Room0MetatileMap,
     .blockLayer = gLevel3Stage0Room0BlockLayer,
-    .unk10 = gUnk_08372A0C,
+    .blockMetatiles = gLevel3Stage0Room0BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0835D548,
@@ -4459,7 +4459,7 @@ struct RoomDef gLevel3Stage0Room0 ROOM_DEF(08372a78) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 11,
     .objectsSortedByY = 0,
@@ -4479,7 +4479,7 @@ struct RoomDef gLevel3Stage0Room0 ROOM_DEF(08372a78) = {
 /* gRoomTable[3][0][1], 0x08372D58, section .room_def_08372d58 */
 extern u8 gLevel3Stage0Room1MetatileMap[];
 extern u8 gLevel3Stage0Room1BlockLayer[];
-extern u8 gUnk_08372CFC[];
+extern u8 gLevel3Stage0Room1BlockMetatiles[];
 extern struct Door gLevel3Stage0Room1Doors[];
 extern u8 gLevel3Stage0Room1Objects[];
 struct RoomDef gLevel3Stage0Room1 ROOM_DEF(08372d58) = {
@@ -4489,7 +4489,7 @@ struct RoomDef gLevel3Stage0Room1 ROOM_DEF(08372d58) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage0Room1MetatileMap,
     .blockLayer = gLevel3Stage0Room1BlockLayer,
-    .unk10 = gUnk_08372CFC,
+    .blockMetatiles = gLevel3Stage0Room1BlockMetatiles,
     .width = 16,
     .height = 25,
     .bg2Palette = gUnk_0835D548,
@@ -4502,7 +4502,7 @@ struct RoomDef gLevel3Stage0Room1 ROOM_DEF(08372d58) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 1,
@@ -4522,7 +4522,7 @@ struct RoomDef gLevel3Stage0Room1 ROOM_DEF(08372d58) = {
 /* gRoomTable[3][0][2], 0x0837301C, section .room_def_0837301c */
 extern u8 gLevel3Stage0Room2MetatileMap[];
 extern u8 gLevel3Stage0Room2BlockLayer[];
-extern u8 gUnk_08372FC0[];
+extern u8 gLevel3Stage0Room2BlockMetatiles[];
 extern struct Door gLevel3Stage0Room2Doors[];
 extern u8 gLevel3Stage0Room2Objects[];
 struct RoomDef gLevel3Stage0Room2 ROOM_DEF(0837301c) = {
@@ -4532,7 +4532,7 @@ struct RoomDef gLevel3Stage0Room2 ROOM_DEF(0837301c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage0Room2MetatileMap,
     .blockLayer = gLevel3Stage0Room2BlockLayer,
-    .unk10 = gUnk_08372FC0,
+    .blockMetatiles = gLevel3Stage0Room2BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0835D548,
@@ -4545,7 +4545,7 @@ struct RoomDef gLevel3Stage0Room2 ROOM_DEF(0837301c) = {
     .bg3Map = &gUnk_083CEF10,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -4565,7 +4565,7 @@ struct RoomDef gLevel3Stage0Room2 ROOM_DEF(0837301c) = {
 /* gRoomTable[3][0][3], 0x083736A8, section .room_def_083736a8 */
 extern u8 gLevel3Stage0Room3MetatileMap[];
 extern u8 gLevel3Stage0Room3BlockLayer[];
-extern u8 gUnk_08373440[];
+extern u8 gLevel3Stage0Room3BlockMetatiles[];
 extern struct Door gLevel3Stage0Room3Doors[];
 extern u8 gLevel3Stage0Room3Objects[];
 struct RoomDef gLevel3Stage0Room3 ROOM_DEF(083736a8) = {
@@ -4575,7 +4575,7 @@ struct RoomDef gLevel3Stage0Room3 ROOM_DEF(083736a8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage0Room3MetatileMap,
     .blockLayer = gLevel3Stage0Room3BlockLayer,
-    .unk10 = gUnk_08373440,
+    .blockMetatiles = gLevel3Stage0Room3BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_084B2F9C,
@@ -4588,7 +4588,7 @@ struct RoomDef gLevel3Stage0Room3 ROOM_DEF(083736a8) = {
     .bg3Map = &gUnk_083CEF10,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -4608,7 +4608,7 @@ struct RoomDef gLevel3Stage0Room3 ROOM_DEF(083736a8) = {
 /* gRoomTable[3][0][4], 0x08373914, section .room_def_08373914 */
 extern u8 gLevel3Stage0Room4MetatileMap[];
 extern u8 gLevel3Stage0Room4BlockLayer[];
-extern u8 gUnk_083738D0[];
+extern u8 gLevel3Stage0Room4BlockMetatiles[];
 extern struct Door gLevel3Stage0Room4Doors[];
 extern u8 gLevel3Stage0Room4Objects[];
 struct RoomDef gLevel3Stage0Room4 ROOM_DEF(08373914) = {
@@ -4618,7 +4618,7 @@ struct RoomDef gLevel3Stage0Room4 ROOM_DEF(08373914) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage0Room4MetatileMap,
     .blockLayer = gLevel3Stage0Room4BlockLayer,
-    .unk10 = gUnk_083738D0,
+    .blockMetatiles = gLevel3Stage0Room4BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0835D548,
@@ -4631,7 +4631,7 @@ struct RoomDef gLevel3Stage0Room4 ROOM_DEF(08373914) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -4651,7 +4651,7 @@ struct RoomDef gLevel3Stage0Room4 ROOM_DEF(08373914) = {
 /* gRoomTable[3][0][5], 0x08373AC4, section .room_def_08373ac4 */
 extern u8 gLevel3Stage0Room5MetatileMap[];
 extern u8 gLevel3Stage0Room5BlockLayer[];
-extern u8 gUnk_08373AA8[];
+extern u8 gLevel3Stage0Room5BlockMetatiles[];
 extern struct Door gLevel3Stage0Room5Doors[];
 extern u8 gLevel3Stage0Room5Objects[];
 struct RoomDef gLevel3Stage0Room5 ROOM_DEF(08373ac4) = {
@@ -4661,7 +4661,7 @@ struct RoomDef gLevel3Stage0Room5 ROOM_DEF(08373ac4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage0Room5MetatileMap,
     .blockLayer = gLevel3Stage0Room5BlockLayer,
-    .unk10 = gUnk_08373AA8,
+    .blockMetatiles = gLevel3Stage0Room5BlockMetatiles,
     .width = 17,
     .height = 12,
     .bg2Palette = gUnk_0835D548,
@@ -4674,7 +4674,7 @@ struct RoomDef gLevel3Stage0Room5 ROOM_DEF(08373ac4) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -4694,7 +4694,7 @@ struct RoomDef gLevel3Stage0Room5 ROOM_DEF(08373ac4) = {
 /* gRoomTable[3][1][0], 0x0837410C, section .room_def_0837410c */
 extern u8 gLevel3Stage1Room0MetatileMap[];
 extern u8 gLevel3Stage1Room0BlockLayer[];
-extern u8 gUnk_083740A0[];
+extern u8 gLevel3Stage1Room0BlockMetatiles[];
 extern struct Door gLevel3Stage1Room0Doors[];
 extern u8 gLevel3Stage1Room0Objects[];
 struct RoomDef gLevel3Stage1Room0 ROOM_DEF(0837410c) = {
@@ -4704,7 +4704,7 @@ struct RoomDef gLevel3Stage1Room0 ROOM_DEF(0837410c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage1Room0MetatileMap,
     .blockLayer = gLevel3Stage1Room0BlockLayer,
-    .unk10 = gUnk_083740A0,
+    .blockMetatiles = gLevel3Stage1Room0BlockMetatiles,
     .width = 48,
     .height = 23,
     .bg2Palette = gUnk_084B57E8,
@@ -4717,7 +4717,7 @@ struct RoomDef gLevel3Stage1Room0 ROOM_DEF(0837410c) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -4737,7 +4737,7 @@ struct RoomDef gLevel3Stage1Room0 ROOM_DEF(0837410c) = {
 /* gRoomTable[3][1][1], 0x083742CC, section .room_def_083742cc */
 extern u8 gLevel3Stage1Room1MetatileMap[];
 extern u8 gLevel3Stage1Room1BlockLayer[];
-extern u8 gUnk_083742A0[];
+extern u8 gLevel3Stage1Room1BlockMetatiles[];
 extern struct Door gLevel3Stage1Room1Doors[];
 extern u8 gLevel3Stage1Room1Objects[];
 struct RoomDef gLevel3Stage1Room1 ROOM_DEF(083742cc) = {
@@ -4747,7 +4747,7 @@ struct RoomDef gLevel3Stage1Room1 ROOM_DEF(083742cc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage1Room1MetatileMap,
     .blockLayer = gLevel3Stage1Room1BlockLayer,
-    .unk10 = gUnk_083742A0,
+    .blockMetatiles = gLevel3Stage1Room1BlockMetatiles,
     .width = 17,
     .height = 12,
     .bg2Palette = gUnk_08497C74,
@@ -4760,7 +4760,7 @@ struct RoomDef gLevel3Stage1Room1 ROOM_DEF(083742cc) = {
     .bg3Map = &gUnk_083CA620,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -4780,7 +4780,7 @@ struct RoomDef gLevel3Stage1Room1 ROOM_DEF(083742cc) = {
 /* gRoomTable[3][1][2], 0x083747D0, section .room_def_083747d0 */
 extern u8 gLevel3Stage1Room2MetatileMap[];
 extern u8 gLevel3Stage1Room2BlockLayer[];
-extern u8 gUnk_08374734[];
+extern u8 gLevel3Stage1Room2BlockMetatiles[];
 extern struct Door gLevel3Stage1Room2Doors[];
 extern u8 gLevel3Stage1Room2Objects[];
 struct RoomDef gLevel3Stage1Room2 ROOM_DEF(083747d0) = {
@@ -4790,7 +4790,7 @@ struct RoomDef gLevel3Stage1Room2 ROOM_DEF(083747d0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage1Room2MetatileMap,
     .blockLayer = gLevel3Stage1Room2BlockLayer,
-    .unk10 = gUnk_08374734,
+    .blockMetatiles = gLevel3Stage1Room2BlockMetatiles,
     .width = 32,
     .height = 24,
     .bg2Palette = gUnk_08497C74,
@@ -4803,7 +4803,7 @@ struct RoomDef gLevel3Stage1Room2 ROOM_DEF(083747d0) = {
     .bg3Map = &gUnk_083CA620,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -4823,7 +4823,7 @@ struct RoomDef gLevel3Stage1Room2 ROOM_DEF(083747d0) = {
 /* gRoomTable[3][1][3], 0x08374B28, section .room_def_08374b28 */
 extern u8 gLevel3Stage1Room3MetatileMap[];
 extern u8 gLevel3Stage1Room3BlockLayer[];
-extern u8 gUnk_08374AA8[];
+extern u8 gLevel3Stage1Room3BlockMetatiles[];
 extern struct Door gLevel3Stage1Room3Doors[];
 extern u8 gLevel3Stage1Room3Objects[];
 struct RoomDef gLevel3Stage1Room3 ROOM_DEF(08374b28) = {
@@ -4833,7 +4833,7 @@ struct RoomDef gLevel3Stage1Room3 ROOM_DEF(08374b28) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage1Room3MetatileMap,
     .blockLayer = gLevel3Stage1Room3BlockLayer,
-    .unk10 = gUnk_08374AA8,
+    .blockMetatiles = gLevel3Stage1Room3BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_08497C74,
@@ -4846,7 +4846,7 @@ struct RoomDef gLevel3Stage1Room3 ROOM_DEF(08374b28) = {
     .bg3Map = &gUnk_083CA620,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -4866,7 +4866,7 @@ struct RoomDef gLevel3Stage1Room3 ROOM_DEF(08374b28) = {
 /* gRoomTable[3][1][4], 0x08374C74, section .room_def_08374c74 */
 extern u8 gLevel3Stage1Room4MetatileMap[];
 extern u8 gLevel3Stage1Room4BlockLayer[];
-extern u8 gUnk_08374C38[];
+extern u8 gLevel3Stage1Room4BlockMetatiles[];
 extern struct Door gLevel3Stage1Room4Doors[];
 extern u8 gLevel3Stage1Room4Objects[];
 struct RoomDef gLevel3Stage1Room4 ROOM_DEF(08374c74) = {
@@ -4876,7 +4876,7 @@ struct RoomDef gLevel3Stage1Room4 ROOM_DEF(08374c74) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage1Room4MetatileMap,
     .blockLayer = gLevel3Stage1Room4BlockLayer,
-    .unk10 = gUnk_08374C38,
+    .blockMetatiles = gLevel3Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08497C74,
@@ -4889,7 +4889,7 @@ struct RoomDef gLevel3Stage1Room4 ROOM_DEF(08374c74) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -4909,7 +4909,7 @@ struct RoomDef gLevel3Stage1Room4 ROOM_DEF(08374c74) = {
 /* gRoomTable[3][1][5], 0x08374DBC, section .room_def_08374dbc */
 extern u8 gLevel3Stage1Room5MetatileMap[];
 extern u8 gLevel3Stage1Room5BlockLayer[];
-extern u8 gUnk_08374D80[];
+extern u8 gLevel3Stage1Room5BlockMetatiles[];
 extern struct Door gLevel3Stage1Room5Doors[];
 extern u8 gLevel3Stage1Room5Objects[];
 struct RoomDef gLevel3Stage1Room5 ROOM_DEF(08374dbc) = {
@@ -4919,7 +4919,7 @@ struct RoomDef gLevel3Stage1Room5 ROOM_DEF(08374dbc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage1Room5MetatileMap,
     .blockLayer = gLevel3Stage1Room5BlockLayer,
-    .unk10 = gUnk_08374D80,
+    .blockMetatiles = gLevel3Stage1Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08497C74,
@@ -4932,7 +4932,7 @@ struct RoomDef gLevel3Stage1Room5 ROOM_DEF(08374dbc) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -4952,7 +4952,7 @@ struct RoomDef gLevel3Stage1Room5 ROOM_DEF(08374dbc) = {
 /* gRoomTable[3][2][0], 0x0837531C, section .room_def_0837531c */
 extern u8 gLevel3Stage2Room0MetatileMap[];
 extern u8 gLevel3Stage2Room0BlockLayer[];
-extern u8 gUnk_0837512C[];
+extern u8 gLevel3Stage2Room0BlockMetatiles[];
 extern struct Door gLevel3Stage2Room0Doors[];
 extern u8 gLevel3Stage2Room0Objects[];
 struct RoomDef gLevel3Stage2Room0 ROOM_DEF(0837531c) = {
@@ -4962,7 +4962,7 @@ struct RoomDef gLevel3Stage2Room0 ROOM_DEF(0837531c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage2Room0MetatileMap,
     .blockLayer = gLevel3Stage2Room0BlockLayer,
-    .unk10 = gUnk_0837512C,
+    .blockMetatiles = gLevel3Stage2Room0BlockMetatiles,
     .width = 33,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -4975,7 +4975,7 @@ struct RoomDef gLevel3Stage2Room0 ROOM_DEF(0837531c) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -4995,7 +4995,7 @@ struct RoomDef gLevel3Stage2Room0 ROOM_DEF(0837531c) = {
 /* gRoomTable[3][2][1], 0x083761D0, section .room_def_083761d0 */
 extern u8 gLevel3Stage2Room1MetatileMap[];
 extern u8 gLevel3Stage2Room1BlockLayer[];
-extern u8 gUnk_083760FC[];
+extern u8 gLevel3Stage2Room1BlockMetatiles[];
 extern struct Door gLevel3Stage2Room1Doors[];
 extern u8 gLevel3Stage2Room1Objects[];
 struct RoomDef gLevel3Stage2Room1 ROOM_DEF(083761d0) = {
@@ -5005,7 +5005,7 @@ struct RoomDef gLevel3Stage2Room1 ROOM_DEF(083761d0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage2Room1MetatileMap,
     .blockLayer = gLevel3Stage2Room1BlockLayer,
-    .unk10 = gUnk_083760FC,
+    .blockMetatiles = gLevel3Stage2Room1BlockMetatiles,
     .width = 120,
     .height = 28,
     .bg2Palette = gUnk_0852D7AC,
@@ -5018,7 +5018,7 @@ struct RoomDef gLevel3Stage2Room1 ROOM_DEF(083761d0) = {
     .bg3Map = &gUnk_083BA534,
     .bg3BorderX = 0,
     .bg3BorderY = 0,
-    .unk38 = 20,
+    .driftObjectIndex = 20,
     .doorCount = 3,
     .objectCount = 20,
     .objectsSortedByY = 0,
@@ -5038,7 +5038,7 @@ struct RoomDef gLevel3Stage2Room1 ROOM_DEF(083761d0) = {
 /* gRoomTable[3][2][2], 0x08376B24, section .room_def_08376b24 */
 extern u8 gLevel3Stage2Room2MetatileMap[];
 extern u8 gLevel3Stage2Room2BlockLayer[];
-extern u8 gUnk_08376A68[];
+extern u8 gLevel3Stage2Room2BlockMetatiles[];
 extern struct Door gLevel3Stage2Room2Doors[];
 extern u8 gLevel3Stage2Room2Objects[];
 struct RoomDef gLevel3Stage2Room2 ROOM_DEF(08376b24) = {
@@ -5048,7 +5048,7 @@ struct RoomDef gLevel3Stage2Room2 ROOM_DEF(08376b24) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage2Room2MetatileMap,
     .blockLayer = gLevel3Stage2Room2BlockLayer,
-    .unk10 = gUnk_08376A68,
+    .blockMetatiles = gLevel3Stage2Room2BlockMetatiles,
     .width = 128,
     .height = 13,
     .bg2Palette = gUnk_0852D624,
@@ -5061,7 +5061,7 @@ struct RoomDef gLevel3Stage2Room2 ROOM_DEF(08376b24) = {
     .bg3Map = &gUnk_083BA534,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 19,
+    .driftObjectIndex = 19,
     .doorCount = 1,
     .objectCount = 19,
     .objectsSortedByY = 0,
@@ -5081,7 +5081,7 @@ struct RoomDef gLevel3Stage2Room2 ROOM_DEF(08376b24) = {
 /* gRoomTable[3][2][3], 0x08376D94, section .room_def_08376d94 */
 extern u8 gLevel3Stage2Room3MetatileMap[];
 extern u8 gLevel3Stage2Room3BlockLayer[];
-extern u8 gUnk_08376D4C[];
+extern u8 gLevel3Stage2Room3BlockMetatiles[];
 extern struct Door gLevel3Stage2Room3Doors[];
 extern u8 gLevel3Stage2Room3Objects[];
 struct RoomDef gLevel3Stage2Room3 ROOM_DEF(08376d94) = {
@@ -5091,7 +5091,7 @@ struct RoomDef gLevel3Stage2Room3 ROOM_DEF(08376d94) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage2Room3MetatileMap,
     .blockLayer = gLevel3Stage2Room3BlockLayer,
-    .unk10 = gUnk_08376D4C,
+    .blockMetatiles = gLevel3Stage2Room3BlockMetatiles,
     .width = 16,
     .height = 24,
     .bg2Palette = gUnk_0835D548,
@@ -5104,7 +5104,7 @@ struct RoomDef gLevel3Stage2Room3 ROOM_DEF(08376d94) = {
     .bg3Map = &gUnk_083BA534,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 5,
     .objectsSortedByY = 1,
@@ -5124,7 +5124,7 @@ struct RoomDef gLevel3Stage2Room3 ROOM_DEF(08376d94) = {
 /* gRoomTable[3][2][4], 0x08376F18, section .room_def_08376f18 */
 extern u8 gLevel3Stage2Room4MetatileMap[];
 extern u8 gLevel3Stage2Room4BlockLayer[];
-extern u8 gUnk_08376EF0[];
+extern u8 gLevel3Stage2Room4BlockMetatiles[];
 extern struct Door gLevel3Stage2Room4Doors[];
 extern u8 gLevel3Stage2Room4Objects[];
 struct RoomDef gLevel3Stage2Room4 ROOM_DEF(08376f18) = {
@@ -5134,7 +5134,7 @@ struct RoomDef gLevel3Stage2Room4 ROOM_DEF(08376f18) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage2Room4MetatileMap,
     .blockLayer = gLevel3Stage2Room4BlockLayer,
-    .unk10 = gUnk_08376EF0,
+    .blockMetatiles = gLevel3Stage2Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0835D548,
@@ -5147,7 +5147,7 @@ struct RoomDef gLevel3Stage2Room4 ROOM_DEF(08376f18) = {
     .bg3Map = &gUnk_083BA534,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -5167,7 +5167,7 @@ struct RoomDef gLevel3Stage2Room4 ROOM_DEF(08376f18) = {
 /* gRoomTable[3][2][5], 0x08377144, section .room_def_08377144 */
 extern u8 gLevel3Stage2Room5MetatileMap[];
 extern u8 gLevel3Stage2Room5BlockLayer[];
-extern u8 gUnk_08377128[];
+extern u8 gLevel3Stage2Room5BlockMetatiles[];
 extern struct Door gLevel3Stage2Room5Doors[];
 extern u8 gLevel3Stage2Room5Objects[];
 struct RoomDef gLevel3Stage2Room5 ROOM_DEF(08377144) = {
@@ -5177,7 +5177,7 @@ struct RoomDef gLevel3Stage2Room5 ROOM_DEF(08377144) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage2Room5MetatileMap,
     .blockLayer = gLevel3Stage2Room5BlockLayer,
-    .unk10 = gUnk_08377128,
+    .blockMetatiles = gLevel3Stage2Room5BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_0852D7AC,
@@ -5190,7 +5190,7 @@ struct RoomDef gLevel3Stage2Room5 ROOM_DEF(08377144) = {
     .bg3Map = &gUnk_083BA534,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -5210,7 +5210,7 @@ struct RoomDef gLevel3Stage2Room5 ROOM_DEF(08377144) = {
 /* gRoomTable[3][2][6], 0x08377334, section .room_def_08377334 */
 extern u8 gLevel3Stage2Room6MetatileMap[];
 extern u8 gLevel3Stage2Room6BlockLayer[];
-extern u8 gUnk_083772F8[];
+extern u8 gLevel3Stage2Room6BlockMetatiles[];
 extern struct Door gLevel3Stage2Room6Doors[];
 extern u8 gLevel3Stage2Room6Objects[];
 struct RoomDef gLevel3Stage2Room6 ROOM_DEF(08377334) = {
@@ -5220,7 +5220,7 @@ struct RoomDef gLevel3Stage2Room6 ROOM_DEF(08377334) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage2Room6MetatileMap,
     .blockLayer = gLevel3Stage2Room6BlockLayer,
-    .unk10 = gUnk_083772F8,
+    .blockMetatiles = gLevel3Stage2Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D624,
@@ -5233,7 +5233,7 @@ struct RoomDef gLevel3Stage2Room6 ROOM_DEF(08377334) = {
     .bg3Map = &gUnk_083BA534,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -5253,7 +5253,7 @@ struct RoomDef gLevel3Stage2Room6 ROOM_DEF(08377334) = {
 /* gRoomTable[3][3][0], 0x08377AF0, section .room_def_08377af0 */
 extern u8 gLevel3Stage3Room0MetatileMap[];
 extern u8 gLevel3Stage3Room0BlockLayer[];
-extern u8 gUnk_08377A54[];
+extern u8 gLevel3Stage3Room0BlockMetatiles[];
 extern struct Door gLevel3Stage3Room0Doors[];
 extern u8 gLevel3Stage3Room0Objects[];
 struct RoomDef gLevel3Stage3Room0 ROOM_DEF(08377af0) = {
@@ -5263,7 +5263,7 @@ struct RoomDef gLevel3Stage3Room0 ROOM_DEF(08377af0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage3Room0MetatileMap,
     .blockLayer = gLevel3Stage3Room0BlockLayer,
-    .unk10 = gUnk_08377A54,
+    .blockMetatiles = gLevel3Stage3Room0BlockMetatiles,
     .width = 64,
     .height = 18,
     .bg2Palette = gUnk_084BB270,
@@ -5276,7 +5276,7 @@ struct RoomDef gLevel3Stage3Room0 ROOM_DEF(08377af0) = {
     .bg3Map = &gUnk_084CE788,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -5296,7 +5296,7 @@ struct RoomDef gLevel3Stage3Room0 ROOM_DEF(08377af0) = {
 /* gRoomTable[3][3][1], 0x08377FBC, section .room_def_08377fbc */
 extern u8 gLevel3Stage3Room1MetatileMap[];
 extern u8 gLevel3Stage3Room1BlockLayer[];
-extern u8 gUnk_08377F40[];
+extern u8 gLevel3Stage3Room1BlockMetatiles[];
 extern struct Door gLevel3Stage3Room1Doors[];
 extern u8 gLevel3Stage3Room1Objects[];
 struct RoomDef gLevel3Stage3Room1 ROOM_DEF(08377fbc) = {
@@ -5306,7 +5306,7 @@ struct RoomDef gLevel3Stage3Room1 ROOM_DEF(08377fbc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage3Room1MetatileMap,
     .blockLayer = gLevel3Stage3Room1BlockLayer,
-    .unk10 = gUnk_08377F40,
+    .blockMetatiles = gLevel3Stage3Room1BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_084BB270,
@@ -5319,7 +5319,7 @@ struct RoomDef gLevel3Stage3Room1 ROOM_DEF(08377fbc) = {
     .bg3Map = &gUnk_084CE788,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -5339,7 +5339,7 @@ struct RoomDef gLevel3Stage3Room1 ROOM_DEF(08377fbc) = {
 /* gRoomTable[3][3][2], 0x08378A80, section .room_def_08378a80 */
 extern u8 gLevel3Stage3Room2MetatileMap[];
 extern u8 gLevel3Stage3Room2BlockLayer[];
-extern u8 gUnk_08378798[];
+extern u8 gLevel3Stage3Room2BlockMetatiles[];
 extern struct Door gLevel3Stage3Room2Doors[];
 extern u8 gLevel3Stage3Room2Objects[];
 struct RoomDef gLevel3Stage3Room2 ROOM_DEF(08378a80) = {
@@ -5349,7 +5349,7 @@ struct RoomDef gLevel3Stage3Room2 ROOM_DEF(08378a80) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage3Room2MetatileMap,
     .blockLayer = gLevel3Stage3Room2BlockLayer,
-    .unk10 = gUnk_08378798,
+    .blockMetatiles = gLevel3Stage3Room2BlockMetatiles,
     .width = 16,
     .height = 59,
     .bg2Palette = gUnk_0853E318,
@@ -5362,7 +5362,7 @@ struct RoomDef gLevel3Stage3Room2 ROOM_DEF(08378a80) = {
     .bg3Map = &gUnk_08517F00,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 15,
     .objectsSortedByY = 1,
@@ -5382,7 +5382,7 @@ struct RoomDef gLevel3Stage3Room2 ROOM_DEF(08378a80) = {
 /* gRoomTable[3][3][3], 0x08378EB0, section .room_def_08378eb0 */
 extern u8 gLevel3Stage3Room3MetatileMap[];
 extern u8 gLevel3Stage3Room3BlockLayer[];
-extern u8 gUnk_08378DFC[];
+extern u8 gLevel3Stage3Room3BlockMetatiles[];
 extern struct Door gLevel3Stage3Room3Doors[];
 extern u8 gLevel3Stage3Room3Objects[];
 struct RoomDef gLevel3Stage3Room3 ROOM_DEF(08378eb0) = {
@@ -5392,7 +5392,7 @@ struct RoomDef gLevel3Stage3Room3 ROOM_DEF(08378eb0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage3Room3MetatileMap,
     .blockLayer = gLevel3Stage3Room3BlockLayer,
-    .unk10 = gUnk_08378DFC,
+    .blockMetatiles = gLevel3Stage3Room3BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0849A5F0,
@@ -5405,7 +5405,7 @@ struct RoomDef gLevel3Stage3Room3 ROOM_DEF(08378eb0) = {
     .bg3Map = &gUnk_083B5E54,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -5425,7 +5425,7 @@ struct RoomDef gLevel3Stage3Room3 ROOM_DEF(08378eb0) = {
 /* gRoomTable[3][3][4], 0x08379218, section .room_def_08379218 */
 extern u8 gLevel3Stage3Room4MetatileMap[];
 extern u8 gLevel3Stage3Room4BlockLayer[];
-extern u8 gUnk_083791DC[];
+extern u8 gLevel3Stage3Room4BlockMetatiles[];
 extern struct Door gLevel3Stage3Room4Doors[];
 extern u8 gLevel3Stage3Room4Objects[];
 struct RoomDef gLevel3Stage3Room4 ROOM_DEF(08379218) = {
@@ -5435,7 +5435,7 @@ struct RoomDef gLevel3Stage3Room4 ROOM_DEF(08379218) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage3Room4MetatileMap,
     .blockLayer = gLevel3Stage3Room4BlockLayer,
-    .unk10 = gUnk_083791DC,
+    .blockMetatiles = gLevel3Stage3Room4BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0849A5F0,
@@ -5448,7 +5448,7 @@ struct RoomDef gLevel3Stage3Room4 ROOM_DEF(08379218) = {
     .bg3Map = &gUnk_083B5E54,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -5468,7 +5468,7 @@ struct RoomDef gLevel3Stage3Room4 ROOM_DEF(08379218) = {
 /* gRoomTable[3][4][0], 0x08379B84, section .room_def_08379b84 */
 extern u8 gLevel3Stage4Room0MetatileMap[];
 extern u8 gLevel3Stage4Room0BlockLayer[];
-extern u8 gUnk_08379A94[];
+extern u8 gLevel3Stage4Room0BlockMetatiles[];
 extern struct Door gLevel3Stage4Room0Doors[];
 extern u8 gLevel3Stage4Room0Objects[];
 struct RoomDef gLevel3Stage4Room0 ROOM_DEF(08379b84) = {
@@ -5478,7 +5478,7 @@ struct RoomDef gLevel3Stage4Room0 ROOM_DEF(08379b84) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage4Room0MetatileMap,
     .blockLayer = gLevel3Stage4Room0BlockLayer,
-    .unk10 = gUnk_08379A94,
+    .blockMetatiles = gLevel3Stage4Room0BlockMetatiles,
     .width = 97,
     .height = 23,
     .bg2Palette = gUnk_0852D314,
@@ -5491,7 +5491,7 @@ struct RoomDef gLevel3Stage4Room0 ROOM_DEF(08379b84) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 16,
     .objectsSortedByY = 0,
@@ -5511,7 +5511,7 @@ struct RoomDef gLevel3Stage4Room0 ROOM_DEF(08379b84) = {
 /* gRoomTable[3][4][1], 0x08379E60, section .room_def_08379e60 */
 extern u8 gLevel3Stage4Room1MetatileMap[];
 extern u8 gLevel3Stage4Room1BlockLayer[];
-extern u8 gUnk_08379E08[];
+extern u8 gLevel3Stage4Room1BlockMetatiles[];
 extern struct Door gLevel3Stage4Room1Doors[];
 extern u8 gLevel3Stage4Room1Objects[];
 struct RoomDef gLevel3Stage4Room1 ROOM_DEF(08379e60) = {
@@ -5521,7 +5521,7 @@ struct RoomDef gLevel3Stage4Room1 ROOM_DEF(08379e60) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage4Room1MetatileMap,
     .blockLayer = gLevel3Stage4Room1BlockLayer,
-    .unk10 = gUnk_08379E08,
+    .blockMetatiles = gLevel3Stage4Room1BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0852D314,
@@ -5534,7 +5534,7 @@ struct RoomDef gLevel3Stage4Room1 ROOM_DEF(08379e60) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -5554,7 +5554,7 @@ struct RoomDef gLevel3Stage4Room1 ROOM_DEF(08379e60) = {
 /* gRoomTable[3][4][2], 0x0837A0CC, section .room_def_0837a0cc */
 extern u8 gLevel3Stage4Room2MetatileMap[];
 extern u8 gLevel3Stage4Room2BlockLayer[];
-extern u8 gUnk_0837A084[];
+extern u8 gLevel3Stage4Room2BlockMetatiles[];
 extern struct Door gLevel3Stage4Room2Doors[];
 extern u8 gLevel3Stage4Room2Objects[];
 struct RoomDef gLevel3Stage4Room2 ROOM_DEF(0837a0cc) = {
@@ -5564,7 +5564,7 @@ struct RoomDef gLevel3Stage4Room2 ROOM_DEF(0837a0cc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage4Room2MetatileMap,
     .blockLayer = gLevel3Stage4Room2BlockLayer,
-    .unk10 = gUnk_0837A084,
+    .blockMetatiles = gLevel3Stage4Room2BlockMetatiles,
     .width = 30,
     .height = 11,
     .bg2Palette = gUnk_0852D314,
@@ -5577,7 +5577,7 @@ struct RoomDef gLevel3Stage4Room2 ROOM_DEF(0837a0cc) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -5597,7 +5597,7 @@ struct RoomDef gLevel3Stage4Room2 ROOM_DEF(0837a0cc) = {
 /* gRoomTable[3][4][3], 0x0837A52C, section .room_def_0837a52c */
 extern u8 gLevel3Stage4Room3MetatileMap[];
 extern u8 gLevel3Stage4Room3BlockLayer[];
-extern u8 gUnk_0837A468[];
+extern u8 gLevel3Stage4Room3BlockMetatiles[];
 extern struct Door gLevel3Stage4Room3Doors[];
 extern u8 gLevel3Stage4Room3Objects[];
 struct RoomDef gLevel3Stage4Room3 ROOM_DEF(0837a52c) = {
@@ -5607,7 +5607,7 @@ struct RoomDef gLevel3Stage4Room3 ROOM_DEF(0837a52c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage4Room3MetatileMap,
     .blockLayer = gLevel3Stage4Room3BlockLayer,
-    .unk10 = gUnk_0837A468,
+    .blockMetatiles = gLevel3Stage4Room3BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0852D314,
@@ -5620,7 +5620,7 @@ struct RoomDef gLevel3Stage4Room3 ROOM_DEF(0837a52c) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -5640,7 +5640,7 @@ struct RoomDef gLevel3Stage4Room3 ROOM_DEF(0837a52c) = {
 /* gRoomTable[3][4][4], 0x0837AB88, section .room_def_0837ab88 */
 extern u8 gLevel3Stage4Room4MetatileMap[];
 extern u8 gLevel3Stage4Room4BlockLayer[];
-extern u8 gUnk_0837AB0C[];
+extern u8 gLevel3Stage4Room4BlockMetatiles[];
 extern struct Door gLevel3Stage4Room4Doors[];
 extern u8 gLevel3Stage4Room4Objects[];
 struct RoomDef gLevel3Stage4Room4 ROOM_DEF(0837ab88) = {
@@ -5650,7 +5650,7 @@ struct RoomDef gLevel3Stage4Room4 ROOM_DEF(0837ab88) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage4Room4MetatileMap,
     .blockLayer = gLevel3Stage4Room4BlockLayer,
-    .unk10 = gUnk_0837AB0C,
+    .blockMetatiles = gLevel3Stage4Room4BlockMetatiles,
     .width = 57,
     .height = 27,
     .bg2Palette = gUnk_0852D314,
@@ -5663,7 +5663,7 @@ struct RoomDef gLevel3Stage4Room4 ROOM_DEF(0837ab88) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -5683,7 +5683,7 @@ struct RoomDef gLevel3Stage4Room4 ROOM_DEF(0837ab88) = {
 /* gRoomTable[3][4][5], 0x0837AD38, section .room_def_0837ad38 */
 extern u8 gLevel3Stage4Room5MetatileMap[];
 extern u8 gLevel3Stage4Room5BlockLayer[];
-extern u8 gUnk_0837AD1C[];
+extern u8 gLevel3Stage4Room5BlockMetatiles[];
 extern struct Door gLevel3Stage4Room5Doors[];
 extern u8 gLevel3Stage4Room5Objects[];
 struct RoomDef gLevel3Stage4Room5 ROOM_DEF(0837ad38) = {
@@ -5693,7 +5693,7 @@ struct RoomDef gLevel3Stage4Room5 ROOM_DEF(0837ad38) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage4Room5MetatileMap,
     .blockLayer = gLevel3Stage4Room5BlockLayer,
-    .unk10 = gUnk_0837AD1C,
+    .blockMetatiles = gLevel3Stage4Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D314,
@@ -5706,7 +5706,7 @@ struct RoomDef gLevel3Stage4Room5 ROOM_DEF(0837ad38) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -5726,7 +5726,7 @@ struct RoomDef gLevel3Stage4Room5 ROOM_DEF(0837ad38) = {
 /* gRoomTable[3][4][6], 0x0837AF10, section .room_def_0837af10 */
 extern u8 gLevel3Stage4Room6MetatileMap[];
 extern u8 gLevel3Stage4Room6BlockLayer[];
-extern u8 gUnk_0837AEEC[];
+extern u8 gLevel3Stage4Room6BlockMetatiles[];
 extern struct Door gLevel3Stage4Room6Doors[];
 extern u8 gLevel3Stage4Room6Objects[];
 struct RoomDef gLevel3Stage4Room6 ROOM_DEF(0837af10) = {
@@ -5736,7 +5736,7 @@ struct RoomDef gLevel3Stage4Room6 ROOM_DEF(0837af10) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage4Room6MetatileMap,
     .blockLayer = gLevel3Stage4Room6BlockLayer,
-    .unk10 = gUnk_0837AEEC,
+    .blockMetatiles = gLevel3Stage4Room6BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_0852D314,
@@ -5749,7 +5749,7 @@ struct RoomDef gLevel3Stage4Room6 ROOM_DEF(0837af10) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -5769,7 +5769,7 @@ struct RoomDef gLevel3Stage4Room6 ROOM_DEF(0837af10) = {
 /* gRoomTable[3][5][0], 0x0837B7CC, section .room_def_0837b7cc */
 extern u8 gLevel3Stage5Room0MetatileMap[];
 extern u8 gLevel3Stage5Room0BlockLayer[];
-extern u8 gUnk_0837B4D8[];
+extern u8 gLevel3Stage5Room0BlockMetatiles[];
 extern struct Door gLevel3Stage5Room0Doors[];
 extern u8 gLevel3Stage5Room0Objects[];
 struct RoomDef gLevel3Stage5Room0 ROOM_DEF(0837b7cc) = {
@@ -5779,7 +5779,7 @@ struct RoomDef gLevel3Stage5Room0 ROOM_DEF(0837b7cc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room0MetatileMap,
     .blockLayer = gLevel3Stage5Room0BlockLayer,
-    .unk10 = gUnk_0837B4D8,
+    .blockMetatiles = gLevel3Stage5Room0BlockMetatiles,
     .width = 32,
     .height = 23,
     .bg2Palette = gUnk_084BAEE0,
@@ -5792,7 +5792,7 @@ struct RoomDef gLevel3Stage5Room0 ROOM_DEF(0837b7cc) = {
     .bg3Map = &gUnk_083C93D8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 11,
     .objectsSortedByY = 0,
@@ -5812,7 +5812,7 @@ struct RoomDef gLevel3Stage5Room0 ROOM_DEF(0837b7cc) = {
 /* gRoomTable[3][5][1], 0x0837BB9C, section .room_def_0837bb9c */
 extern u8 gLevel3Stage5Room1MetatileMap[];
 extern u8 gLevel3Stage5Room1BlockLayer[];
-extern u8 gUnk_0837BB04[];
+extern u8 gLevel3Stage5Room1BlockMetatiles[];
 extern struct Door gLevel3Stage5Room1Doors[];
 extern u8 gLevel3Stage5Room1Objects[];
 struct RoomDef gLevel3Stage5Room1 ROOM_DEF(0837bb9c) = {
@@ -5822,7 +5822,7 @@ struct RoomDef gLevel3Stage5Room1 ROOM_DEF(0837bb9c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room1MetatileMap,
     .blockLayer = gLevel3Stage5Room1BlockLayer,
-    .unk10 = gUnk_0837BB04,
+    .blockMetatiles = gLevel3Stage5Room1BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0849A778,
@@ -5835,7 +5835,7 @@ struct RoomDef gLevel3Stage5Room1 ROOM_DEF(0837bb9c) = {
     .bg3Map = &gUnk_083C9CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -5855,7 +5855,7 @@ struct RoomDef gLevel3Stage5Room1 ROOM_DEF(0837bb9c) = {
 /* gRoomTable[3][5][2], 0x0837BC90, section .room_def_0837bc90 */
 extern u8 gLevel3Stage5Room2MetatileMap[];
 extern u8 gLevel3Stage5Room2BlockLayer[];
-extern u8 gUnk_0837BC88[];
+extern u8 gLevel3Stage5Room2BlockMetatiles[];
 struct RoomDef gLevel3Stage5Room2 ROOM_DEF(0837bc90) = {
     .filler00 = { 3, 5, 2, 0 },
     .bgm = 15,
@@ -5863,7 +5863,7 @@ struct RoomDef gLevel3Stage5Room2 ROOM_DEF(0837bc90) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room2MetatileMap,
     .blockLayer = gLevel3Stage5Room2BlockLayer,
-    .unk10 = gUnk_0837BC88,
+    .blockMetatiles = gLevel3Stage5Room2BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08497C74,
@@ -5876,7 +5876,7 @@ struct RoomDef gLevel3Stage5Room2 ROOM_DEF(0837bc90) = {
     .bg3Map = &gUnk_083C9CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -5896,7 +5896,7 @@ struct RoomDef gLevel3Stage5Room2 ROOM_DEF(0837bc90) = {
 /* gRoomTable[3][5][3], 0x0837BFA8, section .room_def_0837bfa8 */
 extern u8 gLevel3Stage5Room3MetatileMap[];
 extern u8 gLevel3Stage5Room3BlockLayer[];
-extern u8 gUnk_0837BE58[];
+extern u8 gLevel3Stage5Room3BlockMetatiles[];
 extern struct Door gLevel3Stage5Room3Doors[];
 extern u8 gLevel3Stage5Room3Objects[];
 struct RoomDef gLevel3Stage5Room3 ROOM_DEF(0837bfa8) = {
@@ -5906,7 +5906,7 @@ struct RoomDef gLevel3Stage5Room3 ROOM_DEF(0837bfa8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room3MetatileMap,
     .blockLayer = gLevel3Stage5Room3BlockLayer,
-    .unk10 = gUnk_0837BE58,
+    .blockMetatiles = gLevel3Stage5Room3BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08497C74,
@@ -5919,7 +5919,7 @@ struct RoomDef gLevel3Stage5Room3 ROOM_DEF(0837bfa8) = {
     .bg3Map = &gUnk_083C93D8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -5939,7 +5939,7 @@ struct RoomDef gLevel3Stage5Room3 ROOM_DEF(0837bfa8) = {
 /* gRoomTable[3][5][4], 0x0837C288, section .room_def_0837c288 */
 extern u8 gLevel3Stage5Room4MetatileMap[];
 extern u8 gLevel3Stage5Room4BlockLayer[];
-extern u8 gUnk_0837C234[];
+extern u8 gLevel3Stage5Room4BlockMetatiles[];
 extern struct Door gLevel3Stage5Room4Doors[];
 extern u8 gLevel3Stage5Room4Objects[];
 struct RoomDef gLevel3Stage5Room4 ROOM_DEF(0837c288) = {
@@ -5949,7 +5949,7 @@ struct RoomDef gLevel3Stage5Room4 ROOM_DEF(0837c288) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room4MetatileMap,
     .blockLayer = gLevel3Stage5Room4BlockLayer,
-    .unk10 = gUnk_0837C234,
+    .blockMetatiles = gLevel3Stage5Room4BlockMetatiles,
     .width = 16,
     .height = 23,
     .bg2Palette = gUnk_084BAEE0,
@@ -5962,7 +5962,7 @@ struct RoomDef gLevel3Stage5Room4 ROOM_DEF(0837c288) = {
     .bg3Map = &gUnk_083C93D8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 1,
@@ -5982,7 +5982,7 @@ struct RoomDef gLevel3Stage5Room4 ROOM_DEF(0837c288) = {
 /* gRoomTable[3][5][5], 0x0837C424, section .room_def_0837c424 */
 extern u8 gLevel3Stage5Room5MetatileMap[];
 extern u8 gLevel3Stage5Room5BlockLayer[];
-extern u8 gUnk_0837C400[];
+extern u8 gLevel3Stage5Room5BlockMetatiles[];
 extern struct Door gLevel3Stage5Room5Doors[];
 extern u8 gLevel3Stage5Room5Objects[];
 struct RoomDef gLevel3Stage5Room5 ROOM_DEF(0837c424) = {
@@ -5992,7 +5992,7 @@ struct RoomDef gLevel3Stage5Room5 ROOM_DEF(0837c424) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room5MetatileMap,
     .blockLayer = gLevel3Stage5Room5BlockLayer,
-    .unk10 = gUnk_0837C400,
+    .blockMetatiles = gLevel3Stage5Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849A778,
@@ -6005,7 +6005,7 @@ struct RoomDef gLevel3Stage5Room5 ROOM_DEF(0837c424) = {
     .bg3Map = &gUnk_083C9CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -6025,7 +6025,7 @@ struct RoomDef gLevel3Stage5Room5 ROOM_DEF(0837c424) = {
 /* gRoomTable[3][5][6], 0x0837C520, section .room_def_0837c520 */
 extern u8 gLevel3Stage5Room6MetatileMap[];
 extern u8 gLevel3Stage5Room6BlockLayer[];
-extern u8 gUnk_0837C518[];
+extern u8 gLevel3Stage5Room6BlockMetatiles[];
 struct RoomDef gLevel3Stage5Room6 ROOM_DEF(0837c520) = {
     .filler00 = { 3, 5, 6, 0 },
     .bgm = 15,
@@ -6033,7 +6033,7 @@ struct RoomDef gLevel3Stage5Room6 ROOM_DEF(0837c520) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room6MetatileMap,
     .blockLayer = gLevel3Stage5Room6BlockLayer,
-    .unk10 = gUnk_0837C518,
+    .blockMetatiles = gLevel3Stage5Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08497C74,
@@ -6046,7 +6046,7 @@ struct RoomDef gLevel3Stage5Room6 ROOM_DEF(0837c520) = {
     .bg3Map = &gUnk_083C9CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -6066,7 +6066,7 @@ struct RoomDef gLevel3Stage5Room6 ROOM_DEF(0837c520) = {
 /* gRoomTable[3][5][7], 0x0837C698, section .room_def_0837c698 */
 extern u8 gLevel3Stage5Room7MetatileMap[];
 extern u8 gLevel3Stage5Room7BlockLayer[];
-extern u8 gUnk_0837C664[];
+extern u8 gLevel3Stage5Room7BlockMetatiles[];
 extern struct Door gLevel3Stage5Room7Doors[];
 extern u8 gLevel3Stage5Room7Objects[];
 struct RoomDef gLevel3Stage5Room7 ROOM_DEF(0837c698) = {
@@ -6076,7 +6076,7 @@ struct RoomDef gLevel3Stage5Room7 ROOM_DEF(0837c698) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage5Room7MetatileMap,
     .blockLayer = gLevel3Stage5Room7BlockLayer,
-    .unk10 = gUnk_0837C664,
+    .blockMetatiles = gLevel3Stage5Room7BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_084BAEE0,
@@ -6089,7 +6089,7 @@ struct RoomDef gLevel3Stage5Room7 ROOM_DEF(0837c698) = {
     .bg3Map = &gUnk_083C93D8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -6109,7 +6109,7 @@ struct RoomDef gLevel3Stage5Room7 ROOM_DEF(0837c698) = {
 /* gRoomTable[3][6][0], 0x0837D968, section .room_def_0837d968 */
 extern u8 gLevel3Stage6Room0MetatileMap[];
 extern u8 gLevel3Stage6Room0BlockLayer[];
-extern u8 gUnk_0837D188[];
+extern u8 gLevel3Stage6Room0BlockMetatiles[];
 extern u8 gLevel3Stage6Room0Objects[];
 struct RoomDef gLevel3Stage6Room0 ROOM_DEF(0837d968) = {
     .filler00 = { 3, 6, 0, 0 },
@@ -6118,7 +6118,7 @@ struct RoomDef gLevel3Stage6Room0 ROOM_DEF(0837d968) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel3Stage6Room0MetatileMap,
     .blockLayer = gLevel3Stage6Room0BlockLayer,
-    .unk10 = gUnk_0837D188,
+    .blockMetatiles = gLevel3Stage6Room0BlockMetatiles,
     .width = 16,
     .height = 144,
     .bg2Palette = gUnk_0835D548,
@@ -6131,7 +6131,7 @@ struct RoomDef gLevel3Stage6Room0 ROOM_DEF(0837d968) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 12,
     .objectsSortedByY = 1,
@@ -6151,7 +6151,7 @@ struct RoomDef gLevel3Stage6Room0 ROOM_DEF(0837d968) = {
 /* gRoomTable[4][0][0], 0x0837DE3C, section .room_def_0837de3c */
 extern u8 gLevel4Stage0Room0MetatileMap[];
 extern u8 gLevel4Stage0Room0BlockLayer[];
-extern u8 gUnk_0837DDAC[];
+extern u8 gLevel4Stage0Room0BlockMetatiles[];
 extern struct Door gLevel4Stage0Room0Doors[];
 extern u8 gLevel4Stage0Room0Objects[];
 struct RoomDef gLevel4Stage0Room0 ROOM_DEF(0837de3c) = {
@@ -6161,7 +6161,7 @@ struct RoomDef gLevel4Stage0Room0 ROOM_DEF(0837de3c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage0Room0MetatileMap,
     .blockLayer = gLevel4Stage0Room0BlockLayer,
-    .unk10 = gUnk_0837DDAC,
+    .blockMetatiles = gLevel4Stage0Room0BlockMetatiles,
     .width = 80,
     .height = 14,
     .bg2Palette = gUnk_0835D548,
@@ -6174,7 +6174,7 @@ struct RoomDef gLevel4Stage0Room0 ROOM_DEF(0837de3c) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -6194,7 +6194,7 @@ struct RoomDef gLevel4Stage0Room0 ROOM_DEF(0837de3c) = {
 /* gRoomTable[4][0][1], 0x0837E598, section .room_def_0837e598 */
 extern u8 gLevel4Stage0Room1MetatileMap[];
 extern u8 gLevel4Stage0Room1BlockLayer[];
-extern u8 gUnk_0837E3A0[];
+extern u8 gLevel4Stage0Room1BlockMetatiles[];
 extern struct Door gLevel4Stage0Room1Doors[];
 extern u8 gLevel4Stage0Room1Objects[];
 struct RoomDef gLevel4Stage0Room1 ROOM_DEF(0837e598) = {
@@ -6204,7 +6204,7 @@ struct RoomDef gLevel4Stage0Room1 ROOM_DEF(0837e598) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage0Room1MetatileMap,
     .blockLayer = gLevel4Stage0Room1BlockLayer,
-    .unk10 = gUnk_0837E3A0,
+    .blockMetatiles = gLevel4Stage0Room1BlockMetatiles,
     .width = 16,
     .height = 82,
     .bg2Palette = gUnk_0835D548,
@@ -6217,7 +6217,7 @@ struct RoomDef gLevel4Stage0Room1 ROOM_DEF(0837e598) = {
     .bg3Map = &gUnk_083B82B0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 15,
     .objectsSortedByY = 1,
@@ -6237,7 +6237,7 @@ struct RoomDef gLevel4Stage0Room1 ROOM_DEF(0837e598) = {
 /* gRoomTable[4][0][2], 0x0837EB34, section .room_def_0837eb34 */
 extern u8 gLevel4Stage0Room2MetatileMap[];
 extern u8 gLevel4Stage0Room2BlockLayer[];
-extern u8 gUnk_0837EAD0[];
+extern u8 gLevel4Stage0Room2BlockMetatiles[];
 extern struct Door gLevel4Stage0Room2Doors[];
 extern u8 gLevel4Stage0Room2Objects[];
 struct RoomDef gLevel4Stage0Room2 ROOM_DEF(0837eb34) = {
@@ -6247,7 +6247,7 @@ struct RoomDef gLevel4Stage0Room2 ROOM_DEF(0837eb34) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage0Room2MetatileMap,
     .blockLayer = gLevel4Stage0Room2BlockLayer,
-    .unk10 = gUnk_0837EAD0,
+    .blockMetatiles = gLevel4Stage0Room2BlockMetatiles,
     .width = 81,
     .height = 14,
     .bg2Palette = gUnk_0853DAB4,
@@ -6260,7 +6260,7 @@ struct RoomDef gLevel4Stage0Room2 ROOM_DEF(0837eb34) = {
     .bg3Map = &gUnk_0850AC74,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 10,
     .objectsSortedByY = 0,
@@ -6280,7 +6280,7 @@ struct RoomDef gLevel4Stage0Room2 ROOM_DEF(0837eb34) = {
 /* gRoomTable[4][0][3], 0x0837ECA8, section .room_def_0837eca8 */
 extern u8 gLevel4Stage0Room3MetatileMap[];
 extern u8 gLevel4Stage0Room3BlockLayer[];
-extern u8 gUnk_0837EC6C[];
+extern u8 gLevel4Stage0Room3BlockMetatiles[];
 extern struct Door gLevel4Stage0Room3Doors[];
 extern u8 gLevel4Stage0Room3Objects[];
 struct RoomDef gLevel4Stage0Room3 ROOM_DEF(0837eca8) = {
@@ -6290,7 +6290,7 @@ struct RoomDef gLevel4Stage0Room3 ROOM_DEF(0837eca8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage0Room3MetatileMap,
     .blockLayer = gLevel4Stage0Room3BlockLayer,
-    .unk10 = gUnk_0837EC6C,
+    .blockMetatiles = gLevel4Stage0Room3BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0835D548,
@@ -6303,7 +6303,7 @@ struct RoomDef gLevel4Stage0Room3 ROOM_DEF(0837eca8) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -6323,7 +6323,7 @@ struct RoomDef gLevel4Stage0Room3 ROOM_DEF(0837eca8) = {
 /* gRoomTable[4][0][4], 0x0837EE60, section .room_def_0837ee60 */
 extern u8 gLevel4Stage0Room4MetatileMap[];
 extern u8 gLevel4Stage0Room4BlockLayer[];
-extern u8 gUnk_0837EE3C[];
+extern u8 gLevel4Stage0Room4BlockMetatiles[];
 extern struct Door gLevel4Stage0Room4Doors[];
 extern u8 gLevel4Stage0Room4Objects[];
 struct RoomDef gLevel4Stage0Room4 ROOM_DEF(0837ee60) = {
@@ -6333,7 +6333,7 @@ struct RoomDef gLevel4Stage0Room4 ROOM_DEF(0837ee60) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage0Room4MetatileMap,
     .blockLayer = gLevel4Stage0Room4BlockLayer,
-    .unk10 = gUnk_0837EE3C,
+    .blockMetatiles = gLevel4Stage0Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_084B2F9C,
@@ -6346,7 +6346,7 @@ struct RoomDef gLevel4Stage0Room4 ROOM_DEF(0837ee60) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -6366,7 +6366,7 @@ struct RoomDef gLevel4Stage0Room4 ROOM_DEF(0837ee60) = {
 /* gRoomTable[4][1][0], 0x0837F028, section .room_def_0837f028 */
 extern u8 gLevel4Stage1Room0MetatileMap[];
 extern u8 gLevel4Stage1Room0BlockLayer[];
-extern u8 gUnk_0837F014[];
+extern u8 gLevel4Stage1Room0BlockMetatiles[];
 extern struct Door gLevel4Stage1Room0Doors[];
 struct RoomDef gLevel4Stage1Room0 ROOM_DEF(0837f028) = {
     .filler00 = { 4, 1, 0, 0 },
@@ -6375,7 +6375,7 @@ struct RoomDef gLevel4Stage1Room0 ROOM_DEF(0837f028) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage1Room0MetatileMap,
     .blockLayer = gLevel4Stage1Room0BlockLayer,
-    .unk10 = gUnk_0837F014,
+    .blockMetatiles = gLevel4Stage1Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -6388,7 +6388,7 @@ struct RoomDef gLevel4Stage1Room0 ROOM_DEF(0837f028) = {
     .bg3Map = &gUnk_0850AC74,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -6408,7 +6408,7 @@ struct RoomDef gLevel4Stage1Room0 ROOM_DEF(0837f028) = {
 /* gRoomTable[4][1][1], 0x0837F73C, section .room_def_0837f73c */
 extern u8 gLevel4Stage1Room1MetatileMap[];
 extern u8 gLevel4Stage1Room1BlockLayer[];
-extern u8 gUnk_0837F69C[];
+extern u8 gLevel4Stage1Room1BlockMetatiles[];
 extern struct Door gLevel4Stage1Room1Doors[];
 extern u8 gLevel4Stage1Room1Objects[];
 struct RoomDef gLevel4Stage1Room1 ROOM_DEF(0837f73c) = {
@@ -6418,7 +6418,7 @@ struct RoomDef gLevel4Stage1Room1 ROOM_DEF(0837f73c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage1Room1MetatileMap,
     .blockLayer = gLevel4Stage1Room1BlockLayer,
-    .unk10 = gUnk_0837F69C,
+    .blockMetatiles = gLevel4Stage1Room1BlockMetatiles,
     .width = 80,
     .height = 13,
     .bg2Palette = gUnk_0849A52C,
@@ -6431,7 +6431,7 @@ struct RoomDef gLevel4Stage1Room1 ROOM_DEF(0837f73c) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 4,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -6451,7 +6451,7 @@ struct RoomDef gLevel4Stage1Room1 ROOM_DEF(0837f73c) = {
 /* gRoomTable[4][1][2], 0x0837FA44, section .room_def_0837fa44 */
 extern u8 gLevel4Stage1Room2MetatileMap[];
 extern u8 gLevel4Stage1Room2BlockLayer[];
-extern u8 gUnk_0837F9E0[];
+extern u8 gLevel4Stage1Room2BlockMetatiles[];
 extern struct Door gLevel4Stage1Room2Doors[];
 extern u8 gLevel4Stage1Room2Objects[];
 struct RoomDef gLevel4Stage1Room2 ROOM_DEF(0837fa44) = {
@@ -6461,7 +6461,7 @@ struct RoomDef gLevel4Stage1Room2 ROOM_DEF(0837fa44) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage1Room2MetatileMap,
     .blockLayer = gLevel4Stage1Room2BlockLayer,
-    .unk10 = gUnk_0837F9E0,
+    .blockMetatiles = gLevel4Stage1Room2BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BAFA4,
@@ -6474,7 +6474,7 @@ struct RoomDef gLevel4Stage1Room2 ROOM_DEF(0837fa44) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 7,
     .objectsSortedByY = 1,
@@ -6494,7 +6494,7 @@ struct RoomDef gLevel4Stage1Room2 ROOM_DEF(0837fa44) = {
 /* gRoomTable[4][1][3], 0x0837FDC8, section .room_def_0837fdc8 */
 extern u8 gLevel4Stage1Room3MetatileMap[];
 extern u8 gLevel4Stage1Room3BlockLayer[];
-extern u8 gUnk_0837FD74[];
+extern u8 gLevel4Stage1Room3BlockMetatiles[];
 extern struct Door gLevel4Stage1Room3Doors[];
 extern u8 gLevel4Stage1Room3Objects[];
 struct RoomDef gLevel4Stage1Room3 ROOM_DEF(0837fdc8) = {
@@ -6504,7 +6504,7 @@ struct RoomDef gLevel4Stage1Room3 ROOM_DEF(0837fdc8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage1Room3MetatileMap,
     .blockLayer = gLevel4Stage1Room3BlockLayer,
-    .unk10 = gUnk_0837FD74,
+    .blockMetatiles = gLevel4Stage1Room3BlockMetatiles,
     .width = 33,
     .height = 13,
     .bg2Palette = gUnk_084BAFA4,
@@ -6517,7 +6517,7 @@ struct RoomDef gLevel4Stage1Room3 ROOM_DEF(0837fdc8) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -6537,7 +6537,7 @@ struct RoomDef gLevel4Stage1Room3 ROOM_DEF(0837fdc8) = {
 /* gRoomTable[4][1][4], 0x083800D0, section .room_def_083800d0 */
 extern u8 gLevel4Stage1Room4MetatileMap[];
 extern u8 gLevel4Stage1Room4BlockLayer[];
-extern u8 gUnk_08380088[];
+extern u8 gLevel4Stage1Room4BlockMetatiles[];
 extern struct Door gLevel4Stage1Room4Doors[];
 extern u8 gLevel4Stage1Room4Objects[];
 struct RoomDef gLevel4Stage1Room4 ROOM_DEF(083800d0) = {
@@ -6547,7 +6547,7 @@ struct RoomDef gLevel4Stage1Room4 ROOM_DEF(083800d0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage1Room4MetatileMap,
     .blockLayer = gLevel4Stage1Room4BlockLayer,
-    .unk10 = gUnk_08380088,
+    .blockMetatiles = gLevel4Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BAFA4,
@@ -6560,7 +6560,7 @@ struct RoomDef gLevel4Stage1Room4 ROOM_DEF(083800d0) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 5,
     .objectsSortedByY = 1,
@@ -6580,7 +6580,7 @@ struct RoomDef gLevel4Stage1Room4 ROOM_DEF(083800d0) = {
 /* gRoomTable[4][1][5], 0x083805BC, section .room_def_083805bc */
 extern u8 gLevel4Stage1Room5MetatileMap[];
 extern u8 gLevel4Stage1Room5BlockLayer[];
-extern u8 gUnk_08380548[];
+extern u8 gLevel4Stage1Room5BlockMetatiles[];
 extern struct Door gLevel4Stage1Room5Doors[];
 extern u8 gLevel4Stage1Room5Objects[];
 struct RoomDef gLevel4Stage1Room5 ROOM_DEF(083805bc) = {
@@ -6590,7 +6590,7 @@ struct RoomDef gLevel4Stage1Room5 ROOM_DEF(083805bc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage1Room5MetatileMap,
     .blockLayer = gLevel4Stage1Room5BlockLayer,
-    .unk10 = gUnk_08380548,
+    .blockMetatiles = gLevel4Stage1Room5BlockMetatiles,
     .width = 32,
     .height = 25,
     .bg2Palette = gUnk_0853DAB4,
@@ -6603,7 +6603,7 @@ struct RoomDef gLevel4Stage1Room5 ROOM_DEF(083805bc) = {
     .bg3Map = &gUnk_0850AC74,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -6623,7 +6623,7 @@ struct RoomDef gLevel4Stage1Room5 ROOM_DEF(083805bc) = {
 /* gRoomTable[4][1][6], 0x08380758, section .room_def_08380758 */
 extern u8 gLevel4Stage1Room6MetatileMap[];
 extern u8 gLevel4Stage1Room6BlockLayer[];
-extern u8 gUnk_08380724[];
+extern u8 gLevel4Stage1Room6BlockMetatiles[];
 extern struct Door gLevel4Stage1Room6Doors[];
 extern u8 gLevel4Stage1Room6Objects[];
 struct RoomDef gLevel4Stage1Room6 ROOM_DEF(08380758) = {
@@ -6633,7 +6633,7 @@ struct RoomDef gLevel4Stage1Room6 ROOM_DEF(08380758) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage1Room6MetatileMap,
     .blockLayer = gLevel4Stage1Room6BlockLayer,
-    .unk10 = gUnk_08380724,
+    .blockMetatiles = gLevel4Stage1Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853E318,
@@ -6646,7 +6646,7 @@ struct RoomDef gLevel4Stage1Room6 ROOM_DEF(08380758) = {
     .bg3Map = &gUnk_0850AC74,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -6666,7 +6666,7 @@ struct RoomDef gLevel4Stage1Room6 ROOM_DEF(08380758) = {
 /* gRoomTable[4][2][0], 0x08380CFC, section .room_def_08380cfc */
 extern u8 gLevel4Stage2Room0MetatileMap[];
 extern u8 gLevel4Stage2Room0BlockLayer[];
-extern u8 gUnk_08380C30[];
+extern u8 gLevel4Stage2Room0BlockMetatiles[];
 extern struct Door gLevel4Stage2Room0Doors[];
 extern u8 gLevel4Stage2Room0Objects[];
 struct RoomDef gLevel4Stage2Room0 ROOM_DEF(08380cfc) = {
@@ -6676,7 +6676,7 @@ struct RoomDef gLevel4Stage2Room0 ROOM_DEF(08380cfc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage2Room0MetatileMap,
     .blockLayer = gLevel4Stage2Room0BlockLayer,
-    .unk10 = gUnk_08380C30,
+    .blockMetatiles = gLevel4Stage2Room0BlockMetatiles,
     .width = 16,
     .height = 64,
     .bg2Palette = gUnk_084D50EC,
@@ -6689,7 +6689,7 @@ struct RoomDef gLevel4Stage2Room0 ROOM_DEF(08380cfc) = {
     .bg3Map = &gUnk_08517F00,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 23,
     .objectsSortedByY = 1,
@@ -6709,7 +6709,7 @@ struct RoomDef gLevel4Stage2Room0 ROOM_DEF(08380cfc) = {
 /* gRoomTable[4][2][1], 0x083811A8, section .room_def_083811a8 */
 extern u8 gLevel4Stage2Room1MetatileMap[];
 extern u8 gLevel4Stage2Room1BlockLayer[];
-extern u8 gUnk_0838114C[];
+extern u8 gLevel4Stage2Room1BlockMetatiles[];
 extern struct Door gLevel4Stage2Room1Doors[];
 extern u8 gLevel4Stage2Room1Objects[];
 struct RoomDef gLevel4Stage2Room1 ROOM_DEF(083811a8) = {
@@ -6719,7 +6719,7 @@ struct RoomDef gLevel4Stage2Room1 ROOM_DEF(083811a8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage2Room1MetatileMap,
     .blockLayer = gLevel4Stage2Room1BlockLayer,
-    .unk10 = gUnk_0838114C,
+    .blockMetatiles = gLevel4Stage2Room1BlockMetatiles,
     .width = 16,
     .height = 43,
     .bg2Palette = gUnk_08510DA4,
@@ -6732,7 +6732,7 @@ struct RoomDef gLevel4Stage2Room1 ROOM_DEF(083811a8) = {
     .bg3Map = &gUnk_08517F00,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 1,
@@ -6752,7 +6752,7 @@ struct RoomDef gLevel4Stage2Room1 ROOM_DEF(083811a8) = {
 /* gRoomTable[4][2][2], 0x08381CCC, section .room_def_08381ccc */
 extern u8 gLevel4Stage2Room2MetatileMap[];
 extern u8 gLevel4Stage2Room2BlockLayer[];
-extern u8 gUnk_08381C20[];
+extern u8 gLevel4Stage2Room2BlockMetatiles[];
 extern struct Door gLevel4Stage2Room2Doors[];
 extern u8 gLevel4Stage2Room2Objects[];
 struct RoomDef gLevel4Stage2Room2 ROOM_DEF(08381ccc) = {
@@ -6762,7 +6762,7 @@ struct RoomDef gLevel4Stage2Room2 ROOM_DEF(08381ccc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage2Room2MetatileMap,
     .blockLayer = gLevel4Stage2Room2BlockLayer,
-    .unk10 = gUnk_08381C20,
+    .blockMetatiles = gLevel4Stage2Room2BlockMetatiles,
     .width = 162,
     .height = 13,
     .bg2Palette = gLevel4Stage2Room2Bg2Palette,
@@ -6775,7 +6775,7 @@ struct RoomDef gLevel4Stage2Room2 ROOM_DEF(08381ccc) = {
     .bg3Map = &gUnk_085175E4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 19,
     .objectsSortedByY = 0,
@@ -6795,7 +6795,7 @@ struct RoomDef gLevel4Stage2Room2 ROOM_DEF(08381ccc) = {
 /* gRoomTable[4][2][3], 0x083821BC, section .room_def_083821bc */
 extern u8 gLevel4Stage2Room3MetatileMap[];
 extern u8 gLevel4Stage2Room3BlockLayer[];
-extern u8 gUnk_0838212C[];
+extern u8 gLevel4Stage2Room3BlockMetatiles[];
 extern struct Door gLevel4Stage2Room3Doors[];
 extern u8 gLevel4Stage2Room3Objects[];
 struct RoomDef gLevel4Stage2Room3 ROOM_DEF(083821bc) = {
@@ -6805,7 +6805,7 @@ struct RoomDef gLevel4Stage2Room3 ROOM_DEF(083821bc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage2Room3MetatileMap,
     .blockLayer = gLevel4Stage2Room3BlockLayer,
-    .unk10 = gUnk_0838212C,
+    .blockMetatiles = gLevel4Stage2Room3BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_08510DA4,
@@ -6818,7 +6818,7 @@ struct RoomDef gLevel4Stage2Room3 ROOM_DEF(083821bc) = {
     .bg3Map = &gUnk_085175E4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 7,
     .objectsSortedByY = 0,
@@ -6838,7 +6838,7 @@ struct RoomDef gLevel4Stage2Room3 ROOM_DEF(083821bc) = {
 /* gRoomTable[4][2][4], 0x083825D8, section .room_def_083825d8 */
 extern u8 gLevel4Stage2Room4MetatileMap[];
 extern u8 gLevel4Stage2Room4BlockLayer[];
-extern u8 gUnk_0838259C[];
+extern u8 gLevel4Stage2Room4BlockMetatiles[];
 extern struct Door gLevel4Stage2Room4Doors[];
 extern u8 gLevel4Stage2Room4Objects[];
 struct RoomDef gLevel4Stage2Room4 ROOM_DEF(083825d8) = {
@@ -6848,7 +6848,7 @@ struct RoomDef gLevel4Stage2Room4 ROOM_DEF(083825d8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage2Room4MetatileMap,
     .blockLayer = gLevel4Stage2Room4BlockLayer,
-    .unk10 = gUnk_0838259C,
+    .blockMetatiles = gLevel4Stage2Room4BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_084D50EC,
@@ -6861,7 +6861,7 @@ struct RoomDef gLevel4Stage2Room4 ROOM_DEF(083825d8) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 1,
@@ -6881,7 +6881,7 @@ struct RoomDef gLevel4Stage2Room4 ROOM_DEF(083825d8) = {
 /* gRoomTable[4][2][5], 0x083828C4, section .room_def_083828c4 */
 extern u8 gLevel4Stage2Room5MetatileMap[];
 extern u8 gLevel4Stage2Room5BlockLayer[];
-extern u8 gUnk_083827C0[];
+extern u8 gLevel4Stage2Room5BlockMetatiles[];
 extern struct Door gLevel4Stage2Room5Doors[];
 extern u8 gLevel4Stage2Room5Objects[];
 struct RoomDef gLevel4Stage2Room5 ROOM_DEF(083828c4) = {
@@ -6891,7 +6891,7 @@ struct RoomDef gLevel4Stage2Room5 ROOM_DEF(083828c4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage2Room5MetatileMap,
     .blockLayer = gLevel4Stage2Room5BlockLayer,
-    .unk10 = gUnk_083827C0,
+    .blockMetatiles = gLevel4Stage2Room5BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_084B2F9C,
@@ -6904,7 +6904,7 @@ struct RoomDef gLevel4Stage2Room5 ROOM_DEF(083828c4) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -6924,7 +6924,7 @@ struct RoomDef gLevel4Stage2Room5 ROOM_DEF(083828c4) = {
 /* gRoomTable[4][3][0], 0x0838328C, section .room_def_0838328c */
 extern u8 gLevel4Stage3Room0MetatileMap[];
 extern u8 gLevel4Stage3Room0BlockLayer[];
-extern u8 gUnk_083831F8[];
+extern u8 gLevel4Stage3Room0BlockMetatiles[];
 extern struct Door gLevel4Stage3Room0Doors[];
 extern u8 gLevel4Stage3Room0Objects[];
 struct RoomDef gLevel4Stage3Room0 ROOM_DEF(0838328c) = {
@@ -6934,7 +6934,7 @@ struct RoomDef gLevel4Stage3Room0 ROOM_DEF(0838328c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage3Room0MetatileMap,
     .blockLayer = gLevel4Stage3Room0BlockLayer,
-    .unk10 = gUnk_083831F8,
+    .blockMetatiles = gLevel4Stage3Room0BlockMetatiles,
     .width = 131,
     .height = 11,
     .bg2Palette = gUnk_0849A6B4,
@@ -6947,7 +6947,7 @@ struct RoomDef gLevel4Stage3Room0 ROOM_DEF(0838328c) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 7,
     .objectsSortedByY = 0,
@@ -6967,7 +6967,7 @@ struct RoomDef gLevel4Stage3Room0 ROOM_DEF(0838328c) = {
 /* gRoomTable[4][3][1], 0x08383B28, section .room_def_08383b28 */
 extern u8 gLevel4Stage3Room1MetatileMap[];
 extern u8 gLevel4Stage3Room1BlockLayer[];
-extern u8 gUnk_08383A80[];
+extern u8 gLevel4Stage3Room1BlockMetatiles[];
 extern struct Door gLevel4Stage3Room1Doors[];
 extern u8 gLevel4Stage3Room1Objects[];
 struct RoomDef gLevel4Stage3Room1 ROOM_DEF(08383b28) = {
@@ -6977,7 +6977,7 @@ struct RoomDef gLevel4Stage3Room1 ROOM_DEF(08383b28) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage3Room1MetatileMap,
     .blockLayer = gLevel4Stage3Room1BlockLayer,
-    .unk10 = gUnk_08383A80,
+    .blockMetatiles = gLevel4Stage3Room1BlockMetatiles,
     .width = 123,
     .height = 14,
     .bg2Palette = gUnk_084BB16C,
@@ -6990,7 +6990,7 @@ struct RoomDef gLevel4Stage3Room1 ROOM_DEF(08383b28) = {
     .bg3Map = &gUnk_084FEF08,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -7010,7 +7010,7 @@ struct RoomDef gLevel4Stage3Room1 ROOM_DEF(08383b28) = {
 /* gRoomTable[4][3][2], 0x083840C0, section .room_def_083840c0 */
 extern u8 gLevel4Stage3Room2MetatileMap[];
 extern u8 gLevel4Stage3Room2BlockLayer[];
-extern u8 gUnk_0838407C[];
+extern u8 gLevel4Stage3Room2BlockMetatiles[];
 extern struct Door gLevel4Stage3Room2Doors[];
 extern u8 gLevel4Stage3Room2Objects[];
 struct RoomDef gLevel4Stage3Room2 ROOM_DEF(083840c0) = {
@@ -7020,7 +7020,7 @@ struct RoomDef gLevel4Stage3Room2 ROOM_DEF(083840c0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage3Room2MetatileMap,
     .blockLayer = gLevel4Stage3Room2BlockLayer,
-    .unk10 = gUnk_0838407C,
+    .blockMetatiles = gLevel4Stage3Room2BlockMetatiles,
     .width = 34,
     .height = 22,
     .bg2Palette = gUnk_0849A6B4,
@@ -7033,7 +7033,7 @@ struct RoomDef gLevel4Stage3Room2 ROOM_DEF(083840c0) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 5,
+    .driftObjectIndex = 5,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -7053,7 +7053,7 @@ struct RoomDef gLevel4Stage3Room2 ROOM_DEF(083840c0) = {
 /* gRoomTable[4][3][3], 0x083847B4, section .room_def_083847b4 */
 extern u8 gLevel4Stage3Room3MetatileMap[];
 extern u8 gLevel4Stage3Room3BlockLayer[];
-extern u8 gUnk_083846F8[];
+extern u8 gLevel4Stage3Room3BlockMetatiles[];
 extern struct Door gLevel4Stage3Room3Doors[];
 extern u8 gLevel4Stage3Room3Objects[];
 struct RoomDef gLevel4Stage3Room3 ROOM_DEF(083847b4) = {
@@ -7063,7 +7063,7 @@ struct RoomDef gLevel4Stage3Room3 ROOM_DEF(083847b4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage3Room3MetatileMap,
     .blockLayer = gLevel4Stage3Room3BlockLayer,
-    .unk10 = gUnk_083846F8,
+    .blockMetatiles = gLevel4Stage3Room3BlockMetatiles,
     .width = 16,
     .height = 81,
     .bg2Palette = gUnk_084BB16C,
@@ -7076,7 +7076,7 @@ struct RoomDef gLevel4Stage3Room3 ROOM_DEF(083847b4) = {
     .bg3Map = &gUnk_084FEF08,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 21,
     .objectsSortedByY = 1,
@@ -7096,7 +7096,7 @@ struct RoomDef gLevel4Stage3Room3 ROOM_DEF(083847b4) = {
 /* gRoomTable[4][3][4], 0x08384ADC, section .room_def_08384adc */
 extern u8 gLevel4Stage3Room4MetatileMap[];
 extern u8 gLevel4Stage3Room4BlockLayer[];
-extern u8 gUnk_08384A94[];
+extern u8 gLevel4Stage3Room4BlockMetatiles[];
 extern struct Door gLevel4Stage3Room4Doors[];
 extern u8 gLevel4Stage3Room4Objects[];
 struct RoomDef gLevel4Stage3Room4 ROOM_DEF(08384adc) = {
@@ -7106,7 +7106,7 @@ struct RoomDef gLevel4Stage3Room4 ROOM_DEF(08384adc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage3Room4MetatileMap,
     .blockLayer = gLevel4Stage3Room4BlockLayer,
-    .unk10 = gUnk_08384A94,
+    .blockMetatiles = gLevel4Stage3Room4BlockMetatiles,
     .width = 16,
     .height = 24,
     .bg2Palette = gUnk_0849A6B4,
@@ -7119,7 +7119,7 @@ struct RoomDef gLevel4Stage3Room4 ROOM_DEF(08384adc) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 5,
     .objectsSortedByY = 1,
@@ -7139,7 +7139,7 @@ struct RoomDef gLevel4Stage3Room4 ROOM_DEF(08384adc) = {
 /* gRoomTable[4][3][5], 0x08384CB0, section .room_def_08384cb0 */
 extern u8 gLevel4Stage3Room5MetatileMap[];
 extern u8 gLevel4Stage3Room5BlockLayer[];
-extern u8 gUnk_08384C94[];
+extern u8 gLevel4Stage3Room5BlockMetatiles[];
 extern struct Door gLevel4Stage3Room5Doors[];
 extern u8 gLevel4Stage3Room5Objects[];
 struct RoomDef gLevel4Stage3Room5 ROOM_DEF(08384cb0) = {
@@ -7149,7 +7149,7 @@ struct RoomDef gLevel4Stage3Room5 ROOM_DEF(08384cb0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage3Room5MetatileMap,
     .blockLayer = gLevel4Stage3Room5BlockLayer,
-    .unk10 = gUnk_08384C94,
+    .blockMetatiles = gLevel4Stage3Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_084BB16C,
@@ -7162,7 +7162,7 @@ struct RoomDef gLevel4Stage3Room5 ROOM_DEF(08384cb0) = {
     .bg3Map = &gUnk_084FEF08,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -7182,7 +7182,7 @@ struct RoomDef gLevel4Stage3Room5 ROOM_DEF(08384cb0) = {
 /* gRoomTable[4][3][6], 0x08384E3C, section .room_def_08384e3c */
 extern u8 gLevel4Stage3Room6MetatileMap[];
 extern u8 gLevel4Stage3Room6BlockLayer[];
-extern u8 gUnk_08384E18[];
+extern u8 gLevel4Stage3Room6BlockMetatiles[];
 extern struct Door gLevel4Stage3Room6Doors[];
 extern u8 gLevel4Stage3Room6Objects[];
 struct RoomDef gLevel4Stage3Room6 ROOM_DEF(08384e3c) = {
@@ -7192,7 +7192,7 @@ struct RoomDef gLevel4Stage3Room6 ROOM_DEF(08384e3c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage3Room6MetatileMap,
     .blockLayer = gLevel4Stage3Room6BlockLayer,
-    .unk10 = gUnk_08384E18,
+    .blockMetatiles = gLevel4Stage3Room6BlockMetatiles,
     .width = 18,
     .height = 11,
     .bg2Palette = gUnk_0849A6B4,
@@ -7205,7 +7205,7 @@ struct RoomDef gLevel4Stage3Room6 ROOM_DEF(08384e3c) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -7225,7 +7225,7 @@ struct RoomDef gLevel4Stage3Room6 ROOM_DEF(08384e3c) = {
 /* gRoomTable[4][4][0], 0x08385964, section .room_def_08385964 */
 extern u8 gLevel4Stage4Room0MetatileMap[];
 extern u8 gLevel4Stage4Room0BlockLayer[];
-extern u8 gUnk_083858B4[];
+extern u8 gLevel4Stage4Room0BlockMetatiles[];
 extern struct Door gLevel4Stage4Room0Doors[];
 extern u8 gLevel4Stage4Room0Objects[];
 struct RoomDef gLevel4Stage4Room0 ROOM_DEF(08385964) = {
@@ -7235,7 +7235,7 @@ struct RoomDef gLevel4Stage4Room0 ROOM_DEF(08385964) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room0MetatileMap,
     .blockLayer = gLevel4Stage4Room0BlockLayer,
-    .unk10 = gUnk_083858B4,
+    .blockMetatiles = gLevel4Stage4Room0BlockMetatiles,
     .width = 80,
     .height = 25,
     .bg2Palette = gUnk_0852D088,
@@ -7248,7 +7248,7 @@ struct RoomDef gLevel4Stage4Room0 ROOM_DEF(08385964) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 18,
     .objectsSortedByY = 0,
@@ -7268,7 +7268,7 @@ struct RoomDef gLevel4Stage4Room0 ROOM_DEF(08385964) = {
 /* gRoomTable[4][4][1], 0x08385FCC, section .room_def_08385fcc */
 extern u8 gLevel4Stage4Room1MetatileMap[];
 extern u8 gLevel4Stage4Room1BlockLayer[];
-extern u8 gUnk_08385FB0[];
+extern u8 gLevel4Stage4Room1BlockMetatiles[];
 extern struct Door gLevel4Stage4Room1Doors[];
 extern u8 gLevel4Stage4Room1Objects[];
 struct RoomDef gLevel4Stage4Room1 ROOM_DEF(08385fcc) = {
@@ -7278,7 +7278,7 @@ struct RoomDef gLevel4Stage4Room1 ROOM_DEF(08385fcc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room1MetatileMap,
     .blockLayer = gLevel4Stage4Room1BlockLayer,
-    .unk10 = gUnk_08385FB0,
+    .blockMetatiles = gLevel4Stage4Room1BlockMetatiles,
     .width = 80,
     .height = 11,
     .bg2Palette = gUnk_0852D088,
@@ -7291,7 +7291,7 @@ struct RoomDef gLevel4Stage4Room1 ROOM_DEF(08385fcc) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -7311,7 +7311,7 @@ struct RoomDef gLevel4Stage4Room1 ROOM_DEF(08385fcc) = {
 /* gRoomTable[4][4][2], 0x08386348, section .room_def_08386348 */
 extern u8 gLevel4Stage4Room2MetatileMap[];
 extern u8 gLevel4Stage4Room2BlockLayer[];
-extern u8 gUnk_08386304[];
+extern u8 gLevel4Stage4Room2BlockMetatiles[];
 extern struct Door gLevel4Stage4Room2Doors[];
 struct RoomDef gLevel4Stage4Room2 ROOM_DEF(08386348) = {
     .filler00 = { 4, 4, 2, 0 },
@@ -7320,7 +7320,7 @@ struct RoomDef gLevel4Stage4Room2 ROOM_DEF(08386348) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room2MetatileMap,
     .blockLayer = gLevel4Stage4Room2BlockLayer,
-    .unk10 = gUnk_08386304,
+    .blockMetatiles = gLevel4Stage4Room2BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_084B57E8,
@@ -7333,7 +7333,7 @@ struct RoomDef gLevel4Stage4Room2 ROOM_DEF(08386348) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 4,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -7353,7 +7353,7 @@ struct RoomDef gLevel4Stage4Room2 ROOM_DEF(08386348) = {
 /* gRoomTable[4][4][3], 0x08386700, section .room_def_08386700 */
 extern u8 gLevel4Stage4Room3MetatileMap[];
 extern u8 gLevel4Stage4Room3BlockLayer[];
-extern u8 gUnk_083866B4[];
+extern u8 gLevel4Stage4Room3BlockMetatiles[];
 extern struct Door gLevel4Stage4Room3Doors[];
 extern u8 gLevel4Stage4Room3Objects[];
 struct RoomDef gLevel4Stage4Room3 ROOM_DEF(08386700) = {
@@ -7363,7 +7363,7 @@ struct RoomDef gLevel4Stage4Room3 ROOM_DEF(08386700) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room3MetatileMap,
     .blockLayer = gLevel4Stage4Room3BlockLayer,
-    .unk10 = gUnk_083866B4,
+    .blockMetatiles = gLevel4Stage4Room3BlockMetatiles,
     .width = 48,
     .height = 12,
     .bg2Palette = gUnk_0852D250,
@@ -7376,7 +7376,7 @@ struct RoomDef gLevel4Stage4Room3 ROOM_DEF(08386700) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -7396,7 +7396,7 @@ struct RoomDef gLevel4Stage4Room3 ROOM_DEF(08386700) = {
 /* gRoomTable[4][4][4], 0x08386BC0, section .room_def_08386bc0 */
 extern u8 gLevel4Stage4Room4MetatileMap[];
 extern u8 gLevel4Stage4Room4BlockLayer[];
-extern u8 gUnk_08386B44[];
+extern u8 gLevel4Stage4Room4BlockMetatiles[];
 extern struct Door gLevel4Stage4Room4Doors[];
 extern u8 gLevel4Stage4Room4Objects[];
 struct RoomDef gLevel4Stage4Room4 ROOM_DEF(08386bc0) = {
@@ -7406,7 +7406,7 @@ struct RoomDef gLevel4Stage4Room4 ROOM_DEF(08386bc0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room4MetatileMap,
     .blockLayer = gLevel4Stage4Room4BlockLayer,
-    .unk10 = gUnk_08386B44,
+    .blockMetatiles = gLevel4Stage4Room4BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0852D088,
@@ -7419,7 +7419,7 @@ struct RoomDef gLevel4Stage4Room4 ROOM_DEF(08386bc0) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -7439,7 +7439,7 @@ struct RoomDef gLevel4Stage4Room4 ROOM_DEF(08386bc0) = {
 /* gRoomTable[4][4][5], 0x08386F80, section .room_def_08386f80 */
 extern u8 gLevel4Stage4Room5MetatileMap[];
 extern u8 gLevel4Stage4Room5BlockLayer[];
-extern u8 gUnk_08386F2C[];
+extern u8 gLevel4Stage4Room5BlockMetatiles[];
 extern struct Door gLevel4Stage4Room5Doors[];
 extern u8 gLevel4Stage4Room5Objects[];
 struct RoomDef gLevel4Stage4Room5 ROOM_DEF(08386f80) = {
@@ -7449,7 +7449,7 @@ struct RoomDef gLevel4Stage4Room5 ROOM_DEF(08386f80) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room5MetatileMap,
     .blockLayer = gLevel4Stage4Room5BlockLayer,
-    .unk10 = gUnk_08386F2C,
+    .blockMetatiles = gLevel4Stage4Room5BlockMetatiles,
     .width = 48,
     .height = 12,
     .bg2Palette = gUnk_0852D250,
@@ -7462,7 +7462,7 @@ struct RoomDef gLevel4Stage4Room5 ROOM_DEF(08386f80) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -7482,7 +7482,7 @@ struct RoomDef gLevel4Stage4Room5 ROOM_DEF(08386f80) = {
 /* gRoomTable[4][4][6], 0x08387308, section .room_def_08387308 */
 extern u8 gLevel4Stage4Room6MetatileMap[];
 extern u8 gLevel4Stage4Room6BlockLayer[];
-extern u8 gUnk_083871AC[];
+extern u8 gLevel4Stage4Room6BlockMetatiles[];
 extern struct Door gLevel4Stage4Room6Doors[];
 extern u8 gLevel4Stage4Room6Objects[];
 struct RoomDef gLevel4Stage4Room6 ROOM_DEF(08387308) = {
@@ -7492,7 +7492,7 @@ struct RoomDef gLevel4Stage4Room6 ROOM_DEF(08387308) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room6MetatileMap,
     .blockLayer = gLevel4Stage4Room6BlockLayer,
-    .unk10 = gUnk_083871AC,
+    .blockMetatiles = gLevel4Stage4Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853E728,
@@ -7505,7 +7505,7 @@ struct RoomDef gLevel4Stage4Room6 ROOM_DEF(08387308) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -7525,7 +7525,7 @@ struct RoomDef gLevel4Stage4Room6 ROOM_DEF(08387308) = {
 /* gRoomTable[4][4][7], 0x08387498, section .room_def_08387498 */
 extern u8 gLevel4Stage4Room7MetatileMap[];
 extern u8 gLevel4Stage4Room7BlockLayer[];
-extern u8 gUnk_08387470[];
+extern u8 gLevel4Stage4Room7BlockMetatiles[];
 extern struct Door gLevel4Stage4Room7Doors[];
 extern u8 gLevel4Stage4Room7Objects[];
 struct RoomDef gLevel4Stage4Room7 ROOM_DEF(08387498) = {
@@ -7535,7 +7535,7 @@ struct RoomDef gLevel4Stage4Room7 ROOM_DEF(08387498) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage4Room7MetatileMap,
     .blockLayer = gLevel4Stage4Room7BlockLayer,
-    .unk10 = gUnk_08387470,
+    .blockMetatiles = gLevel4Stage4Room7BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D12C,
@@ -7548,7 +7548,7 @@ struct RoomDef gLevel4Stage4Room7 ROOM_DEF(08387498) = {
     .bg3Map = &gUnk_08490A70,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -7568,7 +7568,7 @@ struct RoomDef gLevel4Stage4Room7 ROOM_DEF(08387498) = {
 /* gRoomTable[4][5][0], 0x083879E8, section .room_def_083879e8 */
 extern u8 gLevel4Stage5Room0MetatileMap[];
 extern u8 gLevel4Stage5Room0BlockLayer[];
-extern u8 gUnk_08387954[];
+extern u8 gLevel4Stage5Room0BlockMetatiles[];
 extern struct Door gLevel4Stage5Room0Doors[];
 extern u8 gLevel4Stage5Room0Objects[];
 struct RoomDef gLevel4Stage5Room0 ROOM_DEF(083879e8) = {
@@ -7578,7 +7578,7 @@ struct RoomDef gLevel4Stage5Room0 ROOM_DEF(083879e8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage5Room0MetatileMap,
     .blockLayer = gLevel4Stage5Room0BlockLayer,
-    .unk10 = gUnk_08387954,
+    .blockMetatiles = gLevel4Stage5Room0BlockMetatiles,
     .width = 81,
     .height = 13,
     .bg2Palette = gUnk_0853E318,
@@ -7591,7 +7591,7 @@ struct RoomDef gLevel4Stage5Room0 ROOM_DEF(083879e8) = {
     .bg3Map = &gUnk_083CCA9C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 16,
     .objectsSortedByY = 0,
@@ -7611,7 +7611,7 @@ struct RoomDef gLevel4Stage5Room0 ROOM_DEF(083879e8) = {
 /* gRoomTable[4][5][1], 0x083881D4, section .room_def_083881d4 */
 extern u8 gLevel4Stage5Room1MetatileMap[];
 extern u8 gLevel4Stage5Room1BlockLayer[];
-extern u8 gUnk_083880A8[];
+extern u8 gLevel4Stage5Room1BlockMetatiles[];
 extern struct Door gLevel4Stage5Room1Doors[];
 extern u8 gLevel4Stage5Room1Objects[];
 struct RoomDef gLevel4Stage5Room1 ROOM_DEF(083881d4) = {
@@ -7621,7 +7621,7 @@ struct RoomDef gLevel4Stage5Room1 ROOM_DEF(083881d4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage5Room1MetatileMap,
     .blockLayer = gLevel4Stage5Room1BlockLayer,
-    .unk10 = gUnk_083880A8,
+    .blockMetatiles = gLevel4Stage5Room1BlockMetatiles,
     .width = 81,
     .height = 14,
     .bg2Palette = gUnk_0852D18C,
@@ -7634,7 +7634,7 @@ struct RoomDef gLevel4Stage5Room1 ROOM_DEF(083881d4) = {
     .bg3Map = &gUnk_083CCA9C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -7654,7 +7654,7 @@ struct RoomDef gLevel4Stage5Room1 ROOM_DEF(083881d4) = {
 /* gRoomTable[4][5][2], 0x0838875C, section .room_def_0838875c */
 extern u8 gLevel4Stage5Room2MetatileMap[];
 extern u8 gLevel4Stage5Room2BlockLayer[];
-extern u8 gUnk_083886C0[];
+extern u8 gLevel4Stage5Room2BlockMetatiles[];
 extern struct Door gLevel4Stage5Room2Doors[];
 extern u8 gLevel4Stage5Room2Objects[];
 struct RoomDef gLevel4Stage5Room2 ROOM_DEF(0838875c) = {
@@ -7664,7 +7664,7 @@ struct RoomDef gLevel4Stage5Room2 ROOM_DEF(0838875c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage5Room2MetatileMap,
     .blockLayer = gLevel4Stage5Room2BlockLayer,
-    .unk10 = gUnk_083886C0,
+    .blockMetatiles = gLevel4Stage5Room2BlockMetatiles,
     .width = 79,
     .height = 13,
     .bg2Palette = gUnk_0853E318,
@@ -7677,7 +7677,7 @@ struct RoomDef gLevel4Stage5Room2 ROOM_DEF(0838875c) = {
     .bg3Map = &gUnk_083CCA9C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -7697,7 +7697,7 @@ struct RoomDef gLevel4Stage5Room2 ROOM_DEF(0838875c) = {
 /* gRoomTable[4][5][3], 0x08388970, section .room_def_08388970 */
 extern u8 gLevel4Stage5Room3MetatileMap[];
 extern u8 gLevel4Stage5Room3BlockLayer[];
-extern u8 gUnk_08388924[];
+extern u8 gLevel4Stage5Room3BlockMetatiles[];
 extern struct Door gLevel4Stage5Room3Doors[];
 struct RoomDef gLevel4Stage5Room3 ROOM_DEF(08388970) = {
     .filler00 = { 4, 5, 3, 0 },
@@ -7706,7 +7706,7 @@ struct RoomDef gLevel4Stage5Room3 ROOM_DEF(08388970) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage5Room3MetatileMap,
     .blockLayer = gLevel4Stage5Room3BlockLayer,
-    .unk10 = gUnk_08388924,
+    .blockMetatiles = gLevel4Stage5Room3BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_0853E318,
@@ -7719,7 +7719,7 @@ struct RoomDef gLevel4Stage5Room3 ROOM_DEF(08388970) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -7739,7 +7739,7 @@ struct RoomDef gLevel4Stage5Room3 ROOM_DEF(08388970) = {
 /* gRoomTable[4][5][4], 0x08388BB8, section .room_def_08388bb8 */
 extern u8 gLevel4Stage5Room4MetatileMap[];
 extern u8 gLevel4Stage5Room4BlockLayer[];
-extern u8 gUnk_08388B8C[];
+extern u8 gLevel4Stage5Room4BlockMetatiles[];
 extern struct Door gLevel4Stage5Room4Doors[];
 extern u8 gLevel4Stage5Room4Objects[];
 struct RoomDef gLevel4Stage5Room4 ROOM_DEF(08388bb8) = {
@@ -7749,7 +7749,7 @@ struct RoomDef gLevel4Stage5Room4 ROOM_DEF(08388bb8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage5Room4MetatileMap,
     .blockLayer = gLevel4Stage5Room4BlockLayer,
-    .unk10 = gUnk_08388B8C,
+    .blockMetatiles = gLevel4Stage5Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D18C,
@@ -7762,7 +7762,7 @@ struct RoomDef gLevel4Stage5Room4 ROOM_DEF(08388bb8) = {
     .bg3Map = &gUnk_085113C0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -7782,7 +7782,7 @@ struct RoomDef gLevel4Stage5Room4 ROOM_DEF(08388bb8) = {
 /* gRoomTable[4][6][0], 0x0838928C, section .room_def_0838928c */
 extern u8 gLevel4Stage6Room0MetatileMap[];
 extern u8 gLevel4Stage6Room0BlockLayer[];
-extern u8 gUnk_08389278[];
+extern u8 gLevel4Stage6Room0BlockMetatiles[];
 extern u8 gLevel4Stage6Room0Objects[];
 struct RoomDef gLevel4Stage6Room0 ROOM_DEF(0838928c) = {
     .filler00 = { 4, 6, 0, 0 },
@@ -7791,7 +7791,7 @@ struct RoomDef gLevel4Stage6Room0 ROOM_DEF(0838928c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage6Room0MetatileMap,
     .blockLayer = gLevel4Stage6Room0BlockLayer,
-    .unk10 = gUnk_08389278,
+    .blockMetatiles = gLevel4Stage6Room0BlockMetatiles,
     .width = 64,
     .height = 32,
     .bg2Palette = gLevel4Stage6Room0Bg2Palette,
@@ -7804,7 +7804,7 @@ struct RoomDef gLevel4Stage6Room0 ROOM_DEF(0838928c) = {
     .bg3Map = &gUnk_085250F0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -7824,7 +7824,7 @@ struct RoomDef gLevel4Stage6Room0 ROOM_DEF(0838928c) = {
 /* gRoomTable[4][6][1], 0x083893DC, section .room_def_083893dc */
 extern u8 gLevel4Stage6Room1MetatileMap[];
 extern u8 gLevel4Stage6Room1BlockLayer[];
-extern u8 gUnk_083893CC[];
+extern u8 gLevel4Stage6Room1BlockMetatiles[];
 extern u8 gLevel4Stage6Room1Objects[];
 struct RoomDef gLevel4Stage6Room1 ROOM_DEF(083893dc) = {
     .filler00 = { 4, 6, 1, 0 },
@@ -7833,7 +7833,7 @@ struct RoomDef gLevel4Stage6Room1 ROOM_DEF(083893dc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel4Stage6Room1MetatileMap,
     .blockLayer = gLevel4Stage6Room1BlockLayer,
-    .unk10 = gUnk_083893CC,
+    .blockMetatiles = gLevel4Stage6Room1BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849A52C,
@@ -7846,7 +7846,7 @@ struct RoomDef gLevel4Stage6Room1 ROOM_DEF(083893dc) = {
     .bg3Map = &gUnk_085250F0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -7866,7 +7866,7 @@ struct RoomDef gLevel4Stage6Room1 ROOM_DEF(083893dc) = {
 /* gRoomTable[5][0][0], 0x08389A60, section .room_def_08389a60 */
 extern u8 gLevel5Stage0Room0MetatileMap[];
 extern u8 gLevel5Stage0Room0BlockLayer[];
-extern u8 gUnk_083899BC[];
+extern u8 gLevel5Stage0Room0BlockMetatiles[];
 extern struct Door gLevel5Stage0Room0Doors[];
 extern u8 gLevel5Stage0Room0Objects[];
 struct RoomDef gLevel5Stage0Room0 ROOM_DEF(08389a60) = {
@@ -7876,7 +7876,7 @@ struct RoomDef gLevel5Stage0Room0 ROOM_DEF(08389a60) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage0Room0MetatileMap,
     .blockLayer = gLevel5Stage0Room0BlockLayer,
-    .unk10 = gUnk_083899BC,
+    .blockMetatiles = gLevel5Stage0Room0BlockMetatiles,
     .width = 48,
     .height = 23,
     .bg2Palette = gUnk_08505A1C,
@@ -7889,7 +7889,7 @@ struct RoomDef gLevel5Stage0Room0 ROOM_DEF(08389a60) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -7909,7 +7909,7 @@ struct RoomDef gLevel5Stage0Room0 ROOM_DEF(08389a60) = {
 /* gRoomTable[5][0][1], 0x08389F2C, section .room_def_08389f2c */
 extern u8 gLevel5Stage0Room1MetatileMap[];
 extern u8 gLevel5Stage0Room1BlockLayer[];
-extern u8 gUnk_08389E94[];
+extern u8 gLevel5Stage0Room1BlockMetatiles[];
 extern struct Door gLevel5Stage0Room1Doors[];
 extern u8 gLevel5Stage0Room1Objects[];
 struct RoomDef gLevel5Stage0Room1 ROOM_DEF(08389f2c) = {
@@ -7919,7 +7919,7 @@ struct RoomDef gLevel5Stage0Room1 ROOM_DEF(08389f2c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage0Room1MetatileMap,
     .blockLayer = gLevel5Stage0Room1BlockLayer,
-    .unk10 = gUnk_08389E94,
+    .blockMetatiles = gLevel5Stage0Room1BlockMetatiles,
     .width = 71,
     .height = 14,
     .bg2Palette = gUnk_0849AA04,
@@ -7932,7 +7932,7 @@ struct RoomDef gLevel5Stage0Room1 ROOM_DEF(08389f2c) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -7952,7 +7952,7 @@ struct RoomDef gLevel5Stage0Room1 ROOM_DEF(08389f2c) = {
 /* gRoomTable[5][0][2], 0x0838A420, section .room_def_0838a420 */
 extern u8 gLevel5Stage0Room2MetatileMap[];
 extern u8 gLevel5Stage0Room2BlockLayer[];
-extern u8 gUnk_0838A384[];
+extern u8 gLevel5Stage0Room2BlockMetatiles[];
 extern struct Door gLevel5Stage0Room2Doors[];
 extern u8 gLevel5Stage0Room2Objects[];
 struct RoomDef gLevel5Stage0Room2 ROOM_DEF(0838a420) = {
@@ -7962,7 +7962,7 @@ struct RoomDef gLevel5Stage0Room2 ROOM_DEF(0838a420) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage0Room2MetatileMap,
     .blockLayer = gLevel5Stage0Room2BlockLayer,
-    .unk10 = gUnk_0838A384,
+    .blockMetatiles = gLevel5Stage0Room2BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_08505A1C,
@@ -7975,7 +7975,7 @@ struct RoomDef gLevel5Stage0Room2 ROOM_DEF(0838a420) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -7995,7 +7995,7 @@ struct RoomDef gLevel5Stage0Room2 ROOM_DEF(0838a420) = {
 /* gRoomTable[5][0][3], 0x0838A668, section .room_def_0838a668 */
 extern u8 gLevel5Stage0Room3MetatileMap[];
 extern u8 gLevel5Stage0Room3BlockLayer[];
-extern u8 gUnk_0838A624[];
+extern u8 gLevel5Stage0Room3BlockMetatiles[];
 extern struct Door gLevel5Stage0Room3Doors[];
 extern u8 gLevel5Stage0Room3Objects[];
 struct RoomDef gLevel5Stage0Room3 ROOM_DEF(0838a668) = {
@@ -8005,7 +8005,7 @@ struct RoomDef gLevel5Stage0Room3 ROOM_DEF(0838a668) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage0Room3MetatileMap,
     .blockLayer = gLevel5Stage0Room3BlockLayer,
-    .unk10 = gUnk_0838A624,
+    .blockMetatiles = gLevel5Stage0Room3BlockMetatiles,
     .width = 17,
     .height = 11,
     .bg2Palette = gUnk_0849A5F0,
@@ -8018,7 +8018,7 @@ struct RoomDef gLevel5Stage0Room3 ROOM_DEF(0838a668) = {
     .bg3Map = &gUnk_083B5E54,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -8038,7 +8038,7 @@ struct RoomDef gLevel5Stage0Room3 ROOM_DEF(0838a668) = {
 /* gRoomTable[5][0][4], 0x0838A85C, section .room_def_0838a85c */
 extern u8 gLevel5Stage0Room4MetatileMap[];
 extern u8 gLevel5Stage0Room4BlockLayer[];
-extern u8 gUnk_0838A840[];
+extern u8 gLevel5Stage0Room4BlockMetatiles[];
 extern struct Door gLevel5Stage0Room4Doors[];
 extern u8 gLevel5Stage0Room4Objects[];
 struct RoomDef gLevel5Stage0Room4 ROOM_DEF(0838a85c) = {
@@ -8048,7 +8048,7 @@ struct RoomDef gLevel5Stage0Room4 ROOM_DEF(0838a85c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage0Room4MetatileMap,
     .blockLayer = gLevel5Stage0Room4BlockLayer,
-    .unk10 = gUnk_0838A840,
+    .blockMetatiles = gLevel5Stage0Room4BlockMetatiles,
     .width = 17,
     .height = 11,
     .bg2Palette = gUnk_084BAFA4,
@@ -8061,7 +8061,7 @@ struct RoomDef gLevel5Stage0Room4 ROOM_DEF(0838a85c) = {
     .bg3Map = &gUnk_083B5E54,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -8081,7 +8081,7 @@ struct RoomDef gLevel5Stage0Room4 ROOM_DEF(0838a85c) = {
 /* gRoomTable[5][0][5], 0x0838A9D0, section .room_def_0838a9d0 */
 extern u8 gLevel5Stage0Room5MetatileMap[];
 extern u8 gLevel5Stage0Room5BlockLayer[];
-extern u8 gUnk_0838A9AC[];
+extern u8 gLevel5Stage0Room5BlockMetatiles[];
 extern struct Door gLevel5Stage0Room5Doors[];
 extern u8 gLevel5Stage0Room5Objects[];
 struct RoomDef gLevel5Stage0Room5 ROOM_DEF(0838a9d0) = {
@@ -8091,7 +8091,7 @@ struct RoomDef gLevel5Stage0Room5 ROOM_DEF(0838a9d0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage0Room5MetatileMap,
     .blockLayer = gLevel5Stage0Room5BlockLayer,
-    .unk10 = gUnk_0838A9AC,
+    .blockMetatiles = gLevel5Stage0Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08505A1C,
@@ -8104,7 +8104,7 @@ struct RoomDef gLevel5Stage0Room5 ROOM_DEF(0838a9d0) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -8124,7 +8124,7 @@ struct RoomDef gLevel5Stage0Room5 ROOM_DEF(0838a9d0) = {
 /* gRoomTable[5][1][0], 0x0838AF20, section .room_def_0838af20 */
 extern u8 gLevel5Stage1Room0MetatileMap[];
 extern u8 gLevel5Stage1Room0BlockLayer[];
-extern u8 gUnk_0838AE68[];
+extern u8 gLevel5Stage1Room0BlockMetatiles[];
 extern struct Door gLevel5Stage1Room0Doors[];
 extern u8 gLevel5Stage1Room0Objects[];
 struct RoomDef gLevel5Stage1Room0 ROOM_DEF(0838af20) = {
@@ -8134,7 +8134,7 @@ struct RoomDef gLevel5Stage1Room0 ROOM_DEF(0838af20) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage1Room0MetatileMap,
     .blockLayer = gLevel5Stage1Room0BlockLayer,
-    .unk10 = gUnk_0838AE68,
+    .blockMetatiles = gLevel5Stage1Room0BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gLevel5Stage1Room0Bg2Palette,
@@ -8147,7 +8147,7 @@ struct RoomDef gLevel5Stage1Room0 ROOM_DEF(0838af20) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -8167,7 +8167,7 @@ struct RoomDef gLevel5Stage1Room0 ROOM_DEF(0838af20) = {
 /* gRoomTable[5][1][1], 0x0838B394, section .room_def_0838b394 */
 extern u8 gLevel5Stage1Room1MetatileMap[];
 extern u8 gLevel5Stage1Room1BlockLayer[];
-extern u8 gUnk_0838B314[];
+extern u8 gLevel5Stage1Room1BlockMetatiles[];
 extern struct Door gLevel5Stage1Room1Doors[];
 extern u8 gLevel5Stage1Room1Objects[];
 struct RoomDef gLevel5Stage1Room1 ROOM_DEF(0838b394) = {
@@ -8177,7 +8177,7 @@ struct RoomDef gLevel5Stage1Room1 ROOM_DEF(0838b394) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage1Room1MetatileMap,
     .blockLayer = gLevel5Stage1Room1BlockLayer,
-    .unk10 = gUnk_0838B314,
+    .blockMetatiles = gLevel5Stage1Room1BlockMetatiles,
     .width = 32,
     .height = 23,
     .bg2Palette = gUnk_0852D3D8,
@@ -8190,7 +8190,7 @@ struct RoomDef gLevel5Stage1Room1 ROOM_DEF(0838b394) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -8210,7 +8210,7 @@ struct RoomDef gLevel5Stage1Room1 ROOM_DEF(0838b394) = {
 /* gRoomTable[5][1][2], 0x0838B744, section .room_def_0838b744 */
 extern u8 gLevel5Stage1Room2MetatileMap[];
 extern u8 gLevel5Stage1Room2BlockLayer[];
-extern u8 gUnk_0838B6C4[];
+extern u8 gLevel5Stage1Room2BlockMetatiles[];
 extern struct Door gLevel5Stage1Room2Doors[];
 extern u8 gLevel5Stage1Room2Objects[];
 struct RoomDef gLevel5Stage1Room2 ROOM_DEF(0838b744) = {
@@ -8220,7 +8220,7 @@ struct RoomDef gLevel5Stage1Room2 ROOM_DEF(0838b744) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage1Room2MetatileMap,
     .blockLayer = gLevel5Stage1Room2BlockLayer,
-    .unk10 = gUnk_0838B6C4,
+    .blockMetatiles = gLevel5Stage1Room2BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0849AA04,
@@ -8233,7 +8233,7 @@ struct RoomDef gLevel5Stage1Room2 ROOM_DEF(0838b744) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 12,
     .objectsSortedByY = 1,
@@ -8253,7 +8253,7 @@ struct RoomDef gLevel5Stage1Room2 ROOM_DEF(0838b744) = {
 /* gRoomTable[5][1][3], 0x0838BB74, section .room_def_0838bb74 */
 extern u8 gLevel5Stage1Room3MetatileMap[];
 extern u8 gLevel5Stage1Room3BlockLayer[];
-extern u8 gUnk_0838BAE8[];
+extern u8 gLevel5Stage1Room3BlockMetatiles[];
 extern struct Door gLevel5Stage1Room3Doors[];
 extern u8 gLevel5Stage1Room3Objects[];
 struct RoomDef gLevel5Stage1Room3 ROOM_DEF(0838bb74) = {
@@ -8263,7 +8263,7 @@ struct RoomDef gLevel5Stage1Room3 ROOM_DEF(0838bb74) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage1Room3MetatileMap,
     .blockLayer = gLevel5Stage1Room3BlockLayer,
-    .unk10 = gUnk_0838BAE8,
+    .blockMetatiles = gLevel5Stage1Room3BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_08505A1C,
@@ -8276,7 +8276,7 @@ struct RoomDef gLevel5Stage1Room3 ROOM_DEF(0838bb74) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -8296,7 +8296,7 @@ struct RoomDef gLevel5Stage1Room3 ROOM_DEF(0838bb74) = {
 /* gRoomTable[5][1][4], 0x0838BD4C, section .room_def_0838bd4c */
 extern u8 gLevel5Stage1Room4MetatileMap[];
 extern u8 gLevel5Stage1Room4BlockLayer[];
-extern u8 gUnk_0838BCF4[];
+extern u8 gLevel5Stage1Room4BlockMetatiles[];
 extern struct Door gLevel5Stage1Room4Doors[];
 extern u8 gLevel5Stage1Room4Objects[];
 struct RoomDef gLevel5Stage1Room4 ROOM_DEF(0838bd4c) = {
@@ -8306,7 +8306,7 @@ struct RoomDef gLevel5Stage1Room4 ROOM_DEF(0838bd4c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage1Room4MetatileMap,
     .blockLayer = gLevel5Stage1Room4BlockLayer,
-    .unk10 = gUnk_0838BCF4,
+    .blockMetatiles = gLevel5Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_084B2F9C,
@@ -8319,7 +8319,7 @@ struct RoomDef gLevel5Stage1Room4 ROOM_DEF(0838bd4c) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -8339,7 +8339,7 @@ struct RoomDef gLevel5Stage1Room4 ROOM_DEF(0838bd4c) = {
 /* gRoomTable[5][1][5], 0x0838BF0C, section .room_def_0838bf0c */
 extern u8 gLevel5Stage1Room5MetatileMap[];
 extern u8 gLevel5Stage1Room5BlockLayer[];
-extern u8 gUnk_0838BEE4[];
+extern u8 gLevel5Stage1Room5BlockMetatiles[];
 extern struct Door gLevel5Stage1Room5Doors[];
 extern u8 gLevel5Stage1Room5Objects[];
 struct RoomDef gLevel5Stage1Room5 ROOM_DEF(0838bf0c) = {
@@ -8349,7 +8349,7 @@ struct RoomDef gLevel5Stage1Room5 ROOM_DEF(0838bf0c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage1Room5MetatileMap,
     .blockLayer = gLevel5Stage1Room5BlockLayer,
-    .unk10 = gUnk_0838BEE4,
+    .blockMetatiles = gLevel5Stage1Room5BlockMetatiles,
     .width = 17,
     .height = 11,
     .bg2Palette = gUnk_084B2F9C,
@@ -8362,7 +8362,7 @@ struct RoomDef gLevel5Stage1Room5 ROOM_DEF(0838bf0c) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -8382,7 +8382,7 @@ struct RoomDef gLevel5Stage1Room5 ROOM_DEF(0838bf0c) = {
 /* gRoomTable[5][1][6], 0x0838C068, section .room_def_0838c068 */
 extern u8 gLevel5Stage1Room6MetatileMap[];
 extern u8 gLevel5Stage1Room6BlockLayer[];
-extern u8 gUnk_0838C044[];
+extern u8 gLevel5Stage1Room6BlockMetatiles[];
 extern struct Door gLevel5Stage1Room6Doors[];
 extern u8 gLevel5Stage1Room6Objects[];
 struct RoomDef gLevel5Stage1Room6 ROOM_DEF(0838c068) = {
@@ -8392,7 +8392,7 @@ struct RoomDef gLevel5Stage1Room6 ROOM_DEF(0838c068) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage1Room6MetatileMap,
     .blockLayer = gLevel5Stage1Room6BlockLayer,
-    .unk10 = gUnk_0838C044,
+    .blockMetatiles = gLevel5Stage1Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D3D8,
@@ -8405,7 +8405,7 @@ struct RoomDef gLevel5Stage1Room6 ROOM_DEF(0838c068) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -8425,7 +8425,7 @@ struct RoomDef gLevel5Stage1Room6 ROOM_DEF(0838c068) = {
 /* gRoomTable[5][2][0], 0x0838C574, section .room_def_0838c574 */
 extern u8 gLevel5Stage2Room0MetatileMap[];
 extern u8 gLevel5Stage2Room0BlockLayer[];
-extern u8 gUnk_0838C50C[];
+extern u8 gLevel5Stage2Room0BlockMetatiles[];
 extern struct Door gLevel5Stage2Room0Doors[];
 extern u8 gLevel5Stage2Room0Objects[];
 struct RoomDef gLevel5Stage2Room0 ROOM_DEF(0838c574) = {
@@ -8435,7 +8435,7 @@ struct RoomDef gLevel5Stage2Room0 ROOM_DEF(0838c574) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room0MetatileMap,
     .blockLayer = gLevel5Stage2Room0BlockLayer,
-    .unk10 = gUnk_0838C50C,
+    .blockMetatiles = gLevel5Stage2Room0BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0852D6E8,
@@ -8448,7 +8448,7 @@ struct RoomDef gLevel5Stage2Room0 ROOM_DEF(0838c574) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -8468,7 +8468,7 @@ struct RoomDef gLevel5Stage2Room0 ROOM_DEF(0838c574) = {
 /* gRoomTable[5][2][1], 0x0838CB58, section .room_def_0838cb58 */
 extern u8 gLevel5Stage2Room1MetatileMap[];
 extern u8 gLevel5Stage2Room1BlockLayer[];
-extern u8 gUnk_0838CA18[];
+extern u8 gLevel5Stage2Room1BlockMetatiles[];
 extern struct Door gLevel5Stage2Room1Doors[];
 extern u8 gLevel5Stage2Room1Objects[];
 struct RoomDef gLevel5Stage2Room1 ROOM_DEF(0838cb58) = {
@@ -8478,7 +8478,7 @@ struct RoomDef gLevel5Stage2Room1 ROOM_DEF(0838cb58) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room1MetatileMap,
     .blockLayer = gLevel5Stage2Room1BlockLayer,
-    .unk10 = gUnk_0838CA18,
+    .blockMetatiles = gLevel5Stage2Room1BlockMetatiles,
     .width = 31,
     .height = 23,
     .bg2Palette = gUnk_0852D560,
@@ -8491,7 +8491,7 @@ struct RoomDef gLevel5Stage2Room1 ROOM_DEF(0838cb58) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -8511,7 +8511,7 @@ struct RoomDef gLevel5Stage2Room1 ROOM_DEF(0838cb58) = {
 /* gRoomTable[5][2][2], 0x0838D190, section .room_def_0838d190 */
 extern u8 gLevel5Stage2Room2MetatileMap[];
 extern u8 gLevel5Stage2Room2BlockLayer[];
-extern u8 gUnk_0838D0CC[];
+extern u8 gLevel5Stage2Room2BlockMetatiles[];
 extern struct Door gLevel5Stage2Room2Doors[];
 extern u8 gLevel5Stage2Room2Objects[];
 struct RoomDef gLevel5Stage2Room2 ROOM_DEF(0838d190) = {
@@ -8521,7 +8521,7 @@ struct RoomDef gLevel5Stage2Room2 ROOM_DEF(0838d190) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room2MetatileMap,
     .blockLayer = gLevel5Stage2Room2BlockLayer,
-    .unk10 = gUnk_0838D0CC,
+    .blockMetatiles = gLevel5Stage2Room2BlockMetatiles,
     .width = 37,
     .height = 26,
     .bg2Palette = gUnk_0852D6E8,
@@ -8534,7 +8534,7 @@ struct RoomDef gLevel5Stage2Room2 ROOM_DEF(0838d190) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 7,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -8554,7 +8554,7 @@ struct RoomDef gLevel5Stage2Room2 ROOM_DEF(0838d190) = {
 /* gRoomTable[5][2][3], 0x0838D7FC, section .room_def_0838d7fc */
 extern u8 gLevel5Stage2Room3MetatileMap[];
 extern u8 gLevel5Stage2Room3BlockLayer[];
-extern u8 gUnk_0838D78C[];
+extern u8 gLevel5Stage2Room3BlockMetatiles[];
 extern struct Door gLevel5Stage2Room3Doors[];
 extern u8 gLevel5Stage2Room3Objects[];
 struct RoomDef gLevel5Stage2Room3 ROOM_DEF(0838d7fc) = {
@@ -8564,7 +8564,7 @@ struct RoomDef gLevel5Stage2Room3 ROOM_DEF(0838d7fc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room3MetatileMap,
     .blockLayer = gLevel5Stage2Room3BlockLayer,
-    .unk10 = gUnk_0838D78C,
+    .blockMetatiles = gLevel5Stage2Room3BlockMetatiles,
     .width = 46,
     .height = 36,
     .bg2Palette = gUnk_0852D6E8,
@@ -8577,7 +8577,7 @@ struct RoomDef gLevel5Stage2Room3 ROOM_DEF(0838d7fc) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 10,
     .objectsSortedByY = 0,
@@ -8597,7 +8597,7 @@ struct RoomDef gLevel5Stage2Room3 ROOM_DEF(0838d7fc) = {
 /* gRoomTable[5][2][4], 0x0838DBEC, section .room_def_0838dbec */
 extern u8 gLevel5Stage2Room4MetatileMap[];
 extern u8 gLevel5Stage2Room4BlockLayer[];
-extern u8 gUnk_0838DB74[];
+extern u8 gLevel5Stage2Room4BlockMetatiles[];
 extern struct Door gLevel5Stage2Room4Doors[];
 extern u8 gLevel5Stage2Room4Objects[];
 struct RoomDef gLevel5Stage2Room4 ROOM_DEF(0838dbec) = {
@@ -8607,7 +8607,7 @@ struct RoomDef gLevel5Stage2Room4 ROOM_DEF(0838dbec) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room4MetatileMap,
     .blockLayer = gLevel5Stage2Room4BlockLayer,
-    .unk10 = gUnk_0838DB74,
+    .blockMetatiles = gLevel5Stage2Room4BlockMetatiles,
     .width = 48,
     .height = 13,
     .bg2Palette = gUnk_08505A1C,
@@ -8620,7 +8620,7 @@ struct RoomDef gLevel5Stage2Room4 ROOM_DEF(0838dbec) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 11,
     .objectsSortedByY = 0,
@@ -8640,7 +8640,7 @@ struct RoomDef gLevel5Stage2Room4 ROOM_DEF(0838dbec) = {
 /* gRoomTable[5][2][5], 0x0838DD58, section .room_def_0838dd58 */
 extern u8 gLevel5Stage2Room5MetatileMap[];
 extern u8 gLevel5Stage2Room5BlockLayer[];
-extern u8 gUnk_0838DD44[];
+extern u8 gLevel5Stage2Room5BlockMetatiles[];
 extern struct Door gLevel5Stage2Room5Doors[];
 struct RoomDef gLevel5Stage2Room5 ROOM_DEF(0838dd58) = {
     .filler00 = { 5, 2, 5, 0 },
@@ -8649,7 +8649,7 @@ struct RoomDef gLevel5Stage2Room5 ROOM_DEF(0838dd58) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room5MetatileMap,
     .blockLayer = gLevel5Stage2Room5BlockLayer,
-    .unk10 = gUnk_0838DD44,
+    .blockMetatiles = gLevel5Stage2Room5BlockMetatiles,
     .width = 16,
     .height = 21,
     .bg2Palette = gUnk_0852D560,
@@ -8662,7 +8662,7 @@ struct RoomDef gLevel5Stage2Room5 ROOM_DEF(0838dd58) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -8682,7 +8682,7 @@ struct RoomDef gLevel5Stage2Room5 ROOM_DEF(0838dd58) = {
 /* gRoomTable[5][2][6], 0x0838DEC4, section .room_def_0838dec4 */
 extern u8 gLevel5Stage2Room6MetatileMap[];
 extern u8 gLevel5Stage2Room6BlockLayer[];
-extern u8 gUnk_0838DE9C[];
+extern u8 gLevel5Stage2Room6BlockMetatiles[];
 extern struct Door gLevel5Stage2Room6Doors[];
 extern u8 gLevel5Stage2Room6Objects[];
 struct RoomDef gLevel5Stage2Room6 ROOM_DEF(0838dec4) = {
@@ -8692,7 +8692,7 @@ struct RoomDef gLevel5Stage2Room6 ROOM_DEF(0838dec4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room6MetatileMap,
     .blockLayer = gLevel5Stage2Room6BlockLayer,
-    .unk10 = gUnk_0838DE9C,
+    .blockMetatiles = gLevel5Stage2Room6BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D560,
@@ -8705,7 +8705,7 @@ struct RoomDef gLevel5Stage2Room6 ROOM_DEF(0838dec4) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -8725,7 +8725,7 @@ struct RoomDef gLevel5Stage2Room6 ROOM_DEF(0838dec4) = {
 /* gRoomTable[5][2][7], 0x0838E038, section .room_def_0838e038 */
 extern u8 gLevel5Stage2Room7MetatileMap[];
 extern u8 gLevel5Stage2Room7BlockLayer[];
-extern u8 gUnk_0838E008[];
+extern u8 gLevel5Stage2Room7BlockMetatiles[];
 extern struct Door gLevel5Stage2Room7Doors[];
 extern u8 gLevel5Stage2Room7Objects[];
 struct RoomDef gLevel5Stage2Room7 ROOM_DEF(0838e038) = {
@@ -8735,7 +8735,7 @@ struct RoomDef gLevel5Stage2Room7 ROOM_DEF(0838e038) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room7MetatileMap,
     .blockLayer = gLevel5Stage2Room7BlockLayer,
-    .unk10 = gUnk_0838E008,
+    .blockMetatiles = gLevel5Stage2Room7BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D560,
@@ -8748,7 +8748,7 @@ struct RoomDef gLevel5Stage2Room7 ROOM_DEF(0838e038) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -8768,7 +8768,7 @@ struct RoomDef gLevel5Stage2Room7 ROOM_DEF(0838e038) = {
 /* gRoomTable[5][2][8], 0x0838E2C8, section .room_def_0838e2c8 */
 extern u8 gLevel5Stage2Room8MetatileMap[];
 extern u8 gLevel5Stage2Room8BlockLayer[];
-extern u8 gUnk_0838E23C[];
+extern u8 gLevel5Stage2Room8BlockMetatiles[];
 extern struct Door gLevel5Stage2Room8Doors[];
 extern u8 gLevel5Stage2Room8Objects[];
 struct RoomDef gLevel5Stage2Room8 ROOM_DEF(0838e2c8) = {
@@ -8778,7 +8778,7 @@ struct RoomDef gLevel5Stage2Room8 ROOM_DEF(0838e2c8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room8MetatileMap,
     .blockLayer = gLevel5Stage2Room8BlockLayer,
-    .unk10 = gUnk_0838E23C,
+    .blockMetatiles = gLevel5Stage2Room8BlockMetatiles,
     .width = 17,
     .height = 11,
     .bg2Palette = gUnk_0852D560,
@@ -8791,7 +8791,7 @@ struct RoomDef gLevel5Stage2Room8 ROOM_DEF(0838e2c8) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -8811,7 +8811,7 @@ struct RoomDef gLevel5Stage2Room8 ROOM_DEF(0838e2c8) = {
 /* gRoomTable[5][2][9], 0x0838E478, section .room_def_0838e478 */
 extern u8 gLevel5Stage2Room9MetatileMap[];
 extern u8 gLevel5Stage2Room9BlockLayer[];
-extern u8 gUnk_0838E43C[];
+extern u8 gLevel5Stage2Room9BlockMetatiles[];
 extern struct Door gLevel5Stage2Room9Doors[];
 extern u8 gLevel5Stage2Room9Objects[];
 struct RoomDef gLevel5Stage2Room9 ROOM_DEF(0838e478) = {
@@ -8821,7 +8821,7 @@ struct RoomDef gLevel5Stage2Room9 ROOM_DEF(0838e478) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room9MetatileMap,
     .blockLayer = gLevel5Stage2Room9BlockLayer,
-    .unk10 = gUnk_0838E43C,
+    .blockMetatiles = gLevel5Stage2Room9BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_0852D560,
@@ -8834,7 +8834,7 @@ struct RoomDef gLevel5Stage2Room9 ROOM_DEF(0838e478) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -8854,7 +8854,7 @@ struct RoomDef gLevel5Stage2Room9 ROOM_DEF(0838e478) = {
 /* gRoomTable[5][2][10], 0x0838E688, section .room_def_0838e688 */
 extern u8 gLevel5Stage2Room10MetatileMap[];
 extern u8 gLevel5Stage2Room10BlockLayer[];
-extern u8 gUnk_0838E664[];
+extern u8 gLevel5Stage2Room10BlockMetatiles[];
 extern struct Door gLevel5Stage2Room10Doors[];
 extern u8 gLevel5Stage2Room10Objects[];
 struct RoomDef gLevel5Stage2Room10 ROOM_DEF(0838e688) = {
@@ -8864,7 +8864,7 @@ struct RoomDef gLevel5Stage2Room10 ROOM_DEF(0838e688) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room10MetatileMap,
     .blockLayer = gLevel5Stage2Room10BlockLayer,
-    .unk10 = gUnk_0838E664,
+    .blockMetatiles = gLevel5Stage2Room10BlockMetatiles,
     .width = 17,
     .height = 13,
     .bg2Palette = gUnk_0852D560,
@@ -8877,7 +8877,7 @@ struct RoomDef gLevel5Stage2Room10 ROOM_DEF(0838e688) = {
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -8897,7 +8897,7 @@ struct RoomDef gLevel5Stage2Room10 ROOM_DEF(0838e688) = {
 /* gRoomTable[5][2][11], 0x0838E818, section .room_def_0838e818 */
 extern u8 gLevel5Stage2Room11MetatileMap[];
 extern u8 gLevel5Stage2Room11BlockLayer[];
-extern u8 gUnk_0838E7F0[];
+extern u8 gLevel5Stage2Room11BlockMetatiles[];
 extern struct Door gLevel5Stage2Room11Doors[];
 extern u8 gLevel5Stage2Room11Objects[];
 struct RoomDef gLevel5Stage2Room11 ROOM_DEF(0838e818) = {
@@ -8907,7 +8907,7 @@ struct RoomDef gLevel5Stage2Room11 ROOM_DEF(0838e818) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage2Room11MetatileMap,
     .blockLayer = gLevel5Stage2Room11BlockLayer,
-    .unk10 = gUnk_0838E7F0,
+    .blockMetatiles = gLevel5Stage2Room11BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D3D8,
@@ -8920,7 +8920,7 @@ struct RoomDef gLevel5Stage2Room11 ROOM_DEF(0838e818) = {
     .bg3Map = &gUnk_083B7994,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -8940,7 +8940,7 @@ struct RoomDef gLevel5Stage2Room11 ROOM_DEF(0838e818) = {
 /* gRoomTable[5][3][0], 0x0838EEE4, section .room_def_0838eee4 */
 extern u8 gLevel5Stage3Room0MetatileMap[];
 extern u8 gLevel5Stage3Room0BlockLayer[];
-extern u8 gUnk_0838EE28[];
+extern u8 gLevel5Stage3Room0BlockMetatiles[];
 extern struct Door gLevel5Stage3Room0Doors[];
 extern u8 gLevel5Stage3Room0Objects[];
 struct RoomDef gLevel5Stage3Room0 ROOM_DEF(0838eee4) = {
@@ -8950,7 +8950,7 @@ struct RoomDef gLevel5Stage3Room0 ROOM_DEF(0838eee4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage3Room0MetatileMap,
     .blockLayer = gLevel5Stage3Room0BlockLayer,
-    .unk10 = gUnk_0838EE28,
+    .blockMetatiles = gLevel5Stage3Room0BlockMetatiles,
     .width = 48,
     .height = 26,
     .bg2Palette = gUnk_08505A1C,
@@ -8963,7 +8963,7 @@ struct RoomDef gLevel5Stage3Room0 ROOM_DEF(0838eee4) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -8983,7 +8983,7 @@ struct RoomDef gLevel5Stage3Room0 ROOM_DEF(0838eee4) = {
 /* gRoomTable[5][3][1], 0x0838F788, section .room_def_0838f788 */
 extern u8 gLevel5Stage3Room1MetatileMap[];
 extern u8 gLevel5Stage3Room1BlockLayer[];
-extern u8 gUnk_0838F60C[];
+extern u8 gLevel5Stage3Room1BlockMetatiles[];
 extern struct Door gLevel5Stage3Room1Doors[];
 extern u8 gLevel5Stage3Room1Objects[];
 struct RoomDef gLevel5Stage3Room1 ROOM_DEF(0838f788) = {
@@ -8993,7 +8993,7 @@ struct RoomDef gLevel5Stage3Room1 ROOM_DEF(0838f788) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage3Room1MetatileMap,
     .blockLayer = gLevel5Stage3Room1BlockLayer,
-    .unk10 = gUnk_0838F60C,
+    .blockMetatiles = gLevel5Stage3Room1BlockMetatiles,
     .width = 35,
     .height = 33,
     .bg2Palette = gUnk_0849A6B4,
@@ -9006,7 +9006,7 @@ struct RoomDef gLevel5Stage3Room1 ROOM_DEF(0838f788) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 3,
     .objectCount = 18,
     .objectsSortedByY = 0,
@@ -9026,7 +9026,7 @@ struct RoomDef gLevel5Stage3Room1 ROOM_DEF(0838f788) = {
 /* gRoomTable[5][3][2], 0x0838F914, section .room_def_0838f914 */
 extern u8 gLevel5Stage3Room2MetatileMap[];
 extern u8 gLevel5Stage3Room2BlockLayer[];
-extern u8 gUnk_0838F8E8[];
+extern u8 gLevel5Stage3Room2BlockMetatiles[];
 extern struct Door gLevel5Stage3Room2Doors[];
 extern u8 gLevel5Stage3Room2Objects[];
 struct RoomDef gLevel5Stage3Room2 ROOM_DEF(0838f914) = {
@@ -9036,7 +9036,7 @@ struct RoomDef gLevel5Stage3Room2 ROOM_DEF(0838f914) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage3Room2MetatileMap,
     .blockLayer = gLevel5Stage3Room2BlockLayer,
-    .unk10 = gUnk_0838F8E8,
+    .blockMetatiles = gLevel5Stage3Room2BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_08505A1C,
@@ -9049,7 +9049,7 @@ struct RoomDef gLevel5Stage3Room2 ROOM_DEF(0838f914) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -9069,7 +9069,7 @@ struct RoomDef gLevel5Stage3Room2 ROOM_DEF(0838f914) = {
 /* gRoomTable[5][3][3], 0x0838FCF4, section .room_def_0838fcf4 */
 extern u8 gLevel5Stage3Room3MetatileMap[];
 extern u8 gLevel5Stage3Room3BlockLayer[];
-extern u8 gUnk_0838FC84[];
+extern u8 gLevel5Stage3Room3BlockMetatiles[];
 extern struct Door gLevel5Stage3Room3Doors[];
 extern u8 gLevel5Stage3Room3Objects[];
 struct RoomDef gLevel5Stage3Room3 ROOM_DEF(0838fcf4) = {
@@ -9079,7 +9079,7 @@ struct RoomDef gLevel5Stage3Room3 ROOM_DEF(0838fcf4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage3Room3MetatileMap,
     .blockLayer = gLevel5Stage3Room3BlockLayer,
-    .unk10 = gUnk_0838FC84,
+    .blockMetatiles = gLevel5Stage3Room3BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_08505A1C,
@@ -9092,7 +9092,7 @@ struct RoomDef gLevel5Stage3Room3 ROOM_DEF(0838fcf4) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 10,
     .objectsSortedByY = 1,
@@ -9112,7 +9112,7 @@ struct RoomDef gLevel5Stage3Room3 ROOM_DEF(0838fcf4) = {
 /* gRoomTable[5][3][4], 0x083900AC, section .room_def_083900ac */
 extern u8 gLevel5Stage3Room4MetatileMap[];
 extern u8 gLevel5Stage3Room4BlockLayer[];
-extern u8 gUnk_08390018[];
+extern u8 gLevel5Stage3Room4BlockMetatiles[];
 extern struct Door gLevel5Stage3Room4Doors[];
 extern u8 gLevel5Stage3Room4Objects[];
 struct RoomDef gLevel5Stage3Room4 ROOM_DEF(083900ac) = {
@@ -9122,7 +9122,7 @@ struct RoomDef gLevel5Stage3Room4 ROOM_DEF(083900ac) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage3Room4MetatileMap,
     .blockLayer = gLevel5Stage3Room4BlockLayer,
-    .unk10 = gUnk_08390018,
+    .blockMetatiles = gLevel5Stage3Room4BlockMetatiles,
     .width = 48,
     .height = 13,
     .bg2Palette = gUnk_08505A1C,
@@ -9135,7 +9135,7 @@ struct RoomDef gLevel5Stage3Room4 ROOM_DEF(083900ac) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 16,
     .objectsSortedByY = 0,
@@ -9155,7 +9155,7 @@ struct RoomDef gLevel5Stage3Room4 ROOM_DEF(083900ac) = {
 /* gRoomTable[5][3][5], 0x083902B0, section .room_def_083902b0 */
 extern u8 gLevel5Stage3Room5MetatileMap[];
 extern u8 gLevel5Stage3Room5BlockLayer[];
-extern u8 gUnk_08390294[];
+extern u8 gLevel5Stage3Room5BlockMetatiles[];
 extern struct Door gLevel5Stage3Room5Doors[];
 extern u8 gLevel5Stage3Room5Objects[];
 struct RoomDef gLevel5Stage3Room5 ROOM_DEF(083902b0) = {
@@ -9165,7 +9165,7 @@ struct RoomDef gLevel5Stage3Room5 ROOM_DEF(083902b0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage3Room5MetatileMap,
     .blockLayer = gLevel5Stage3Room5BlockLayer,
-    .unk10 = gUnk_08390294,
+    .blockMetatiles = gLevel5Stage3Room5BlockMetatiles,
     .width = 17,
     .height = 11,
     .bg2Palette = gUnk_0849A6B4,
@@ -9178,7 +9178,7 @@ struct RoomDef gLevel5Stage3Room5 ROOM_DEF(083902b0) = {
     .bg3Map = &gUnk_083B5538,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9198,7 +9198,7 @@ struct RoomDef gLevel5Stage3Room5 ROOM_DEF(083902b0) = {
 /* gRoomTable[5][4][0], 0x0839059C, section .room_def_0839059c */
 extern u8 gLevel5Stage4Room0MetatileMap[];
 extern u8 gLevel5Stage4Room0BlockLayer[];
-extern u8 gUnk_08390558[];
+extern u8 gLevel5Stage4Room0BlockMetatiles[];
 extern struct Door gLevel5Stage4Room0Doors[];
 extern u8 gLevel5Stage4Room0Objects[];
 struct RoomDef gLevel5Stage4Room0 ROOM_DEF(0839059c) = {
@@ -9208,7 +9208,7 @@ struct RoomDef gLevel5Stage4Room0 ROOM_DEF(0839059c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage4Room0MetatileMap,
     .blockLayer = gLevel5Stage4Room0BlockLayer,
-    .unk10 = gUnk_08390558,
+    .blockMetatiles = gLevel5Stage4Room0BlockMetatiles,
     .width = 33,
     .height = 13,
     .bg2Palette = gUnk_084B2F9C,
@@ -9221,7 +9221,7 @@ struct RoomDef gLevel5Stage4Room0 ROOM_DEF(0839059c) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -9241,7 +9241,7 @@ struct RoomDef gLevel5Stage4Room0 ROOM_DEF(0839059c) = {
 /* gRoomTable[5][4][1], 0x08390BA8, section .room_def_08390ba8 */
 extern u8 gLevel5Stage4Room1MetatileMap[];
 extern u8 gLevel5Stage4Room1BlockLayer[];
-extern u8 gUnk_08390B4C[];
+extern u8 gLevel5Stage4Room1BlockMetatiles[];
 extern struct Door gLevel5Stage4Room1Doors[];
 extern u8 gLevel5Stage4Room1Objects[];
 struct RoomDef gLevel5Stage4Room1 ROOM_DEF(08390ba8) = {
@@ -9251,7 +9251,7 @@ struct RoomDef gLevel5Stage4Room1 ROOM_DEF(08390ba8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage4Room1MetatileMap,
     .blockLayer = gLevel5Stage4Room1BlockLayer,
-    .unk10 = gUnk_08390B4C,
+    .blockMetatiles = gLevel5Stage4Room1BlockMetatiles,
     .width = 32,
     .height = 45,
     .bg2Palette = gUnk_0852BB78,
@@ -9264,7 +9264,7 @@ struct RoomDef gLevel5Stage4Room1 ROOM_DEF(08390ba8) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 9,
     .objectsSortedByY = 1,
@@ -9284,7 +9284,7 @@ struct RoomDef gLevel5Stage4Room1 ROOM_DEF(08390ba8) = {
 /* gRoomTable[5][4][2], 0x08391138, section .room_def_08391138 */
 extern u8 gLevel5Stage4Room2MetatileMap[];
 extern u8 gLevel5Stage4Room2BlockLayer[];
-extern u8 gUnk_08390F54[];
+extern u8 gLevel5Stage4Room2BlockMetatiles[];
 extern struct Door gLevel5Stage4Room2Doors[];
 extern u8 gLevel5Stage4Room2Objects[];
 struct RoomDef gLevel5Stage4Room2 ROOM_DEF(08391138) = {
@@ -9294,7 +9294,7 @@ struct RoomDef gLevel5Stage4Room2 ROOM_DEF(08391138) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage4Room2MetatileMap,
     .blockLayer = gLevel5Stage4Room2BlockLayer,
-    .unk10 = gUnk_08390F54,
+    .blockMetatiles = gLevel5Stage4Room2BlockMetatiles,
     .width = 16,
     .height = 25,
     .bg2Palette = gUnk_084B2F9C,
@@ -9307,7 +9307,7 @@ struct RoomDef gLevel5Stage4Room2 ROOM_DEF(08391138) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -9327,7 +9327,7 @@ struct RoomDef gLevel5Stage4Room2 ROOM_DEF(08391138) = {
 /* gRoomTable[5][4][3], 0x08391C40, section .room_def_08391c40 */
 extern u8 gLevel5Stage4Room3MetatileMap[];
 extern u8 gLevel5Stage4Room3BlockLayer[];
-extern u8 gUnk_083918D0[];
+extern u8 gLevel5Stage4Room3BlockMetatiles[];
 extern struct Door gLevel5Stage4Room3Doors[];
 extern u8 gLevel5Stage4Room3Objects[];
 struct RoomDef gLevel5Stage4Room3 ROOM_DEF(08391c40) = {
@@ -9337,7 +9337,7 @@ struct RoomDef gLevel5Stage4Room3 ROOM_DEF(08391c40) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage4Room3MetatileMap,
     .blockLayer = gLevel5Stage4Room3BlockLayer,
-    .unk10 = gUnk_083918D0,
+    .blockMetatiles = gLevel5Stage4Room3BlockMetatiles,
     .width = 64,
     .height = 23,
     .bg2Palette = gUnk_084BB068,
@@ -9350,7 +9350,7 @@ struct RoomDef gLevel5Stage4Room3 ROOM_DEF(08391c40) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -9370,7 +9370,7 @@ struct RoomDef gLevel5Stage4Room3 ROOM_DEF(08391c40) = {
 /* gRoomTable[5][4][4], 0x08391D9C, section .room_def_08391d9c */
 extern u8 gLevel5Stage4Room4MetatileMap[];
 extern u8 gLevel5Stage4Room4BlockLayer[];
-extern u8 gUnk_08391D74[];
+extern u8 gLevel5Stage4Room4BlockMetatiles[];
 extern struct Door gLevel5Stage4Room4Doors[];
 extern u8 gLevel5Stage4Room4Objects[];
 struct RoomDef gLevel5Stage4Room4 ROOM_DEF(08391d9c) = {
@@ -9380,7 +9380,7 @@ struct RoomDef gLevel5Stage4Room4 ROOM_DEF(08391d9c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage4Room4MetatileMap,
     .blockLayer = gLevel5Stage4Room4BlockLayer,
-    .unk10 = gUnk_08391D74,
+    .blockMetatiles = gLevel5Stage4Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D49C,
@@ -9393,7 +9393,7 @@ struct RoomDef gLevel5Stage4Room4 ROOM_DEF(08391d9c) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9413,7 +9413,7 @@ struct RoomDef gLevel5Stage4Room4 ROOM_DEF(08391d9c) = {
 /* gRoomTable[5][5][0], 0x08392308, section .room_def_08392308 */
 extern u8 gLevel5Stage5Room0MetatileMap[];
 extern u8 gLevel5Stage5Room0BlockLayer[];
-extern u8 gUnk_08392298[];
+extern u8 gLevel5Stage5Room0BlockMetatiles[];
 extern struct Door gLevel5Stage5Room0Doors[];
 extern u8 gLevel5Stage5Room0Objects[];
 struct RoomDef gLevel5Stage5Room0 ROOM_DEF(08392308) = {
@@ -9423,7 +9423,7 @@ struct RoomDef gLevel5Stage5Room0 ROOM_DEF(08392308) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room0MetatileMap,
     .blockLayer = gLevel5Stage5Room0BlockLayer,
-    .unk10 = gUnk_08392298,
+    .blockMetatiles = gLevel5Stage5Room0BlockMetatiles,
     .width = 48,
     .height = 26,
     .bg2Palette = gUnk_084B2F9C,
@@ -9436,7 +9436,7 @@ struct RoomDef gLevel5Stage5Room0 ROOM_DEF(08392308) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -9456,7 +9456,7 @@ struct RoomDef gLevel5Stage5Room0 ROOM_DEF(08392308) = {
 /* gRoomTable[5][5][1], 0x08392778, section .room_def_08392778 */
 extern u8 gLevel5Stage5Room1MetatileMap[];
 extern u8 gLevel5Stage5Room1BlockLayer[];
-extern u8 gUnk_083926D0[];
+extern u8 gLevel5Stage5Room1BlockMetatiles[];
 extern struct Door gLevel5Stage5Room1Doors[];
 extern u8 gLevel5Stage5Room1Objects[];
 struct RoomDef gLevel5Stage5Room1 ROOM_DEF(08392778) = {
@@ -9466,7 +9466,7 @@ struct RoomDef gLevel5Stage5Room1 ROOM_DEF(08392778) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room1MetatileMap,
     .blockLayer = gLevel5Stage5Room1BlockLayer,
-    .unk10 = gUnk_083926D0,
+    .blockMetatiles = gLevel5Stage5Room1BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0852D49C,
@@ -9479,7 +9479,7 @@ struct RoomDef gLevel5Stage5Room1 ROOM_DEF(08392778) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -9499,7 +9499,7 @@ struct RoomDef gLevel5Stage5Room1 ROOM_DEF(08392778) = {
 /* gRoomTable[5][5][2], 0x08392AA8, section .room_def_08392aa8 */
 extern u8 gLevel5Stage5Room2MetatileMap[];
 extern u8 gLevel5Stage5Room2BlockLayer[];
-extern u8 gUnk_083929D0[];
+extern u8 gLevel5Stage5Room2BlockMetatiles[];
 extern struct Door gLevel5Stage5Room2Doors[];
 struct RoomDef gLevel5Stage5Room2 ROOM_DEF(08392aa8) = {
     .filler00 = { 5, 5, 2, 0 },
@@ -9508,7 +9508,7 @@ struct RoomDef gLevel5Stage5Room2 ROOM_DEF(08392aa8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room2MetatileMap,
     .blockLayer = gLevel5Stage5Room2BlockLayer,
-    .unk10 = gUnk_083929D0,
+    .blockMetatiles = gLevel5Stage5Room2BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849A5F0,
@@ -9521,7 +9521,7 @@ struct RoomDef gLevel5Stage5Room2 ROOM_DEF(08392aa8) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -9541,7 +9541,7 @@ struct RoomDef gLevel5Stage5Room2 ROOM_DEF(08392aa8) = {
 /* gRoomTable[5][5][3], 0x08392F0C, section .room_def_08392f0c */
 extern u8 gLevel5Stage5Room3MetatileMap[];
 extern u8 gLevel5Stage5Room3BlockLayer[];
-extern u8 gUnk_08392EA8[];
+extern u8 gLevel5Stage5Room3BlockMetatiles[];
 extern struct Door gLevel5Stage5Room3Doors[];
 extern u8 gLevel5Stage5Room3Objects[];
 struct RoomDef gLevel5Stage5Room3 ROOM_DEF(08392f0c) = {
@@ -9551,7 +9551,7 @@ struct RoomDef gLevel5Stage5Room3 ROOM_DEF(08392f0c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room3MetatileMap,
     .blockLayer = gLevel5Stage5Room3BlockLayer,
-    .unk10 = gUnk_08392EA8,
+    .blockMetatiles = gLevel5Stage5Room3BlockMetatiles,
     .width = 62,
     .height = 13,
     .bg2Palette = gUnk_0849A5F0,
@@ -9564,7 +9564,7 @@ struct RoomDef gLevel5Stage5Room3 ROOM_DEF(08392f0c) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 10,
     .objectsSortedByY = 0,
@@ -9584,7 +9584,7 @@ struct RoomDef gLevel5Stage5Room3 ROOM_DEF(08392f0c) = {
 /* gRoomTable[5][5][4], 0x08393430, section .room_def_08393430 */
 extern u8 gLevel5Stage5Room4MetatileMap[];
 extern u8 gLevel5Stage5Room4BlockLayer[];
-extern u8 gUnk_083933A4[];
+extern u8 gLevel5Stage5Room4BlockMetatiles[];
 extern struct Door gLevel5Stage5Room4Doors[];
 extern u8 gLevel5Stage5Room4Objects[];
 struct RoomDef gLevel5Stage5Room4 ROOM_DEF(08393430) = {
@@ -9594,7 +9594,7 @@ struct RoomDef gLevel5Stage5Room4 ROOM_DEF(08393430) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room4MetatileMap,
     .blockLayer = gLevel5Stage5Room4BlockLayer,
-    .unk10 = gUnk_083933A4,
+    .blockMetatiles = gLevel5Stage5Room4BlockMetatiles,
     .width = 80,
     .height = 13,
     .bg2Palette = gUnk_084B2F9C,
@@ -9607,7 +9607,7 @@ struct RoomDef gLevel5Stage5Room4 ROOM_DEF(08393430) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -9627,7 +9627,7 @@ struct RoomDef gLevel5Stage5Room4 ROOM_DEF(08393430) = {
 /* gRoomTable[5][5][5], 0x083935AC, section .room_def_083935ac */
 extern u8 gLevel5Stage5Room5MetatileMap[];
 extern u8 gLevel5Stage5Room5BlockLayer[];
-extern u8 gUnk_0839358C[];
+extern u8 gLevel5Stage5Room5BlockMetatiles[];
 extern struct Door gLevel5Stage5Room5Doors[];
 struct RoomDef gLevel5Stage5Room5 ROOM_DEF(083935ac) = {
     .filler00 = { 5, 5, 5, 0 },
@@ -9636,7 +9636,7 @@ struct RoomDef gLevel5Stage5Room5 ROOM_DEF(083935ac) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room5MetatileMap,
     .blockLayer = gLevel5Stage5Room5BlockLayer,
-    .unk10 = gUnk_0839358C,
+    .blockMetatiles = gLevel5Stage5Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_084B2F9C,
@@ -9649,7 +9649,7 @@ struct RoomDef gLevel5Stage5Room5 ROOM_DEF(083935ac) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -9669,7 +9669,7 @@ struct RoomDef gLevel5Stage5Room5 ROOM_DEF(083935ac) = {
 /* gRoomTable[5][5][6], 0x08393760, section .room_def_08393760 */
 extern u8 gLevel5Stage5Room6MetatileMap[];
 extern u8 gLevel5Stage5Room6BlockLayer[];
-extern u8 gUnk_08393744[];
+extern u8 gLevel5Stage5Room6BlockMetatiles[];
 extern struct Door gLevel5Stage5Room6Doors[];
 extern u8 gLevel5Stage5Room6Objects[];
 struct RoomDef gLevel5Stage5Room6 ROOM_DEF(08393760) = {
@@ -9679,7 +9679,7 @@ struct RoomDef gLevel5Stage5Room6 ROOM_DEF(08393760) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room6MetatileMap,
     .blockLayer = gLevel5Stage5Room6BlockLayer,
-    .unk10 = gUnk_08393744,
+    .blockMetatiles = gLevel5Stage5Room6BlockMetatiles,
     .width = 17,
     .height = 13,
     .bg2Palette = gUnk_084B2F9C,
@@ -9692,7 +9692,7 @@ struct RoomDef gLevel5Stage5Room6 ROOM_DEF(08393760) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9712,7 +9712,7 @@ struct RoomDef gLevel5Stage5Room6 ROOM_DEF(08393760) = {
 /* gRoomTable[5][5][7], 0x083938C0, section .room_def_083938c0 */
 extern u8 gLevel5Stage5Room7MetatileMap[];
 extern u8 gLevel5Stage5Room7BlockLayer[];
-extern u8 gUnk_083938A4[];
+extern u8 gLevel5Stage5Room7BlockMetatiles[];
 extern struct Door gLevel5Stage5Room7Doors[];
 extern u8 gLevel5Stage5Room7Objects[];
 struct RoomDef gLevel5Stage5Room7 ROOM_DEF(083938c0) = {
@@ -9722,7 +9722,7 @@ struct RoomDef gLevel5Stage5Room7 ROOM_DEF(083938c0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room7MetatileMap,
     .blockLayer = gLevel5Stage5Room7BlockLayer,
-    .unk10 = gUnk_083938A4,
+    .blockMetatiles = gLevel5Stage5Room7BlockMetatiles,
     .width = 16,
     .height = 13,
     .bg2Palette = gUnk_0849A5F0,
@@ -9735,7 +9735,7 @@ struct RoomDef gLevel5Stage5Room7 ROOM_DEF(083938c0) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9755,7 +9755,7 @@ struct RoomDef gLevel5Stage5Room7 ROOM_DEF(083938c0) = {
 /* gRoomTable[5][5][8], 0x08393A7C, section .room_def_08393a7c */
 extern u8 gLevel5Stage5Room8MetatileMap[];
 extern u8 gLevel5Stage5Room8BlockLayer[];
-extern u8 gUnk_08393A40[];
+extern u8 gLevel5Stage5Room8BlockMetatiles[];
 extern struct Door gLevel5Stage5Room8Doors[];
 extern u8 gLevel5Stage5Room8Objects[];
 struct RoomDef gLevel5Stage5Room8 ROOM_DEF(08393a7c) = {
@@ -9765,7 +9765,7 @@ struct RoomDef gLevel5Stage5Room8 ROOM_DEF(08393a7c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room8MetatileMap,
     .blockLayer = gLevel5Stage5Room8BlockLayer,
-    .unk10 = gUnk_08393A40,
+    .blockMetatiles = gLevel5Stage5Room8BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849A5F0,
@@ -9778,7 +9778,7 @@ struct RoomDef gLevel5Stage5Room8 ROOM_DEF(08393a7c) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9798,7 +9798,7 @@ struct RoomDef gLevel5Stage5Room8 ROOM_DEF(08393a7c) = {
 /* gRoomTable[5][5][9], 0x08393C2C, section .room_def_08393c2c */
 extern u8 gLevel5Stage5Room9MetatileMap[];
 extern u8 gLevel5Stage5Room9BlockLayer[];
-extern u8 gUnk_08393BF0[];
+extern u8 gLevel5Stage5Room9BlockMetatiles[];
 extern struct Door gLevel5Stage5Room9Doors[];
 extern u8 gLevel5Stage5Room9Objects[];
 struct RoomDef gLevel5Stage5Room9 ROOM_DEF(08393c2c) = {
@@ -9808,7 +9808,7 @@ struct RoomDef gLevel5Stage5Room9 ROOM_DEF(08393c2c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room9MetatileMap,
     .blockLayer = gLevel5Stage5Room9BlockLayer,
-    .unk10 = gUnk_08393BF0,
+    .blockMetatiles = gLevel5Stage5Room9BlockMetatiles,
     .width = 18,
     .height = 11,
     .bg2Palette = gUnk_0849A5F0,
@@ -9821,7 +9821,7 @@ struct RoomDef gLevel5Stage5Room9 ROOM_DEF(08393c2c) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9841,7 +9841,7 @@ struct RoomDef gLevel5Stage5Room9 ROOM_DEF(08393c2c) = {
 /* gRoomTable[5][5][10], 0x08393DC8, section .room_def_08393dc8 */
 extern u8 gLevel5Stage5Room10MetatileMap[];
 extern u8 gLevel5Stage5Room10BlockLayer[];
-extern u8 gUnk_08393DA4[];
+extern u8 gLevel5Stage5Room10BlockMetatiles[];
 extern struct Door gLevel5Stage5Room10Doors[];
 extern u8 gLevel5Stage5Room10Objects[];
 struct RoomDef gLevel5Stage5Room10 ROOM_DEF(08393dc8) = {
@@ -9851,7 +9851,7 @@ struct RoomDef gLevel5Stage5Room10 ROOM_DEF(08393dc8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage5Room10MetatileMap,
     .blockLayer = gLevel5Stage5Room10BlockLayer,
-    .unk10 = gUnk_08393DA4,
+    .blockMetatiles = gLevel5Stage5Room10BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_084B2F9C,
@@ -9864,7 +9864,7 @@ struct RoomDef gLevel5Stage5Room10 ROOM_DEF(08393dc8) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9884,7 +9884,7 @@ struct RoomDef gLevel5Stage5Room10 ROOM_DEF(08393dc8) = {
 /* gRoomTable[5][6][0], 0x08393EF4, section .room_def_08393ef4 */
 extern u8 gLevel5Stage6Room0MetatileMap[];
 extern u8 gLevel5Stage6Room0BlockLayer[];
-extern u8 gUnk_08393EE4[];
+extern u8 gLevel5Stage6Room0BlockMetatiles[];
 extern u8 gLevel5Stage6Room0Objects[];
 struct RoomDef gLevel5Stage6Room0 ROOM_DEF(08393ef4) = {
     .filler00 = { 5, 6, 0, 0 },
@@ -9893,7 +9893,7 @@ struct RoomDef gLevel5Stage6Room0 ROOM_DEF(08393ef4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel5Stage6Room0MetatileMap,
     .blockLayer = gLevel5Stage6Room0BlockLayer,
-    .unk10 = gUnk_08393EE4,
+    .blockMetatiles = gLevel5Stage6Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gLevel5Stage6Room0Bg2Palette,
@@ -9906,7 +9906,7 @@ struct RoomDef gLevel5Stage6Room0 ROOM_DEF(08393ef4) = {
     .bg3Map = &gLevel5Stage6Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -9926,7 +9926,7 @@ struct RoomDef gLevel5Stage6Room0 ROOM_DEF(08393ef4) = {
 /* gRoomTable[6][0][0], 0x08394458, section .room_def_08394458 */
 extern u8 gLevel6Stage0Room0MetatileMap[];
 extern u8 gLevel6Stage0Room0BlockLayer[];
-extern u8 gUnk_083943D0[];
+extern u8 gLevel6Stage0Room0BlockMetatiles[];
 extern struct Door gLevel6Stage0Room0Doors[];
 extern u8 gLevel6Stage0Room0Objects[];
 struct RoomDef gLevel6Stage0Room0 ROOM_DEF(08394458) = {
@@ -9936,7 +9936,7 @@ struct RoomDef gLevel6Stage0Room0 ROOM_DEF(08394458) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage0Room0MetatileMap,
     .blockLayer = gLevel6Stage0Room0BlockLayer,
-    .unk10 = gUnk_083943D0,
+    .blockMetatiles = gLevel6Stage0Room0BlockMetatiles,
     .width = 67,
     .height = 13,
     .bg2Palette = gUnk_084B2F9C,
@@ -9949,7 +9949,7 @@ struct RoomDef gLevel6Stage0Room0 ROOM_DEF(08394458) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 14,
     .objectsSortedByY = 0,
@@ -9969,7 +9969,7 @@ struct RoomDef gLevel6Stage0Room0 ROOM_DEF(08394458) = {
 /* gRoomTable[6][0][1], 0x08394C58, section .room_def_08394c58 */
 extern u8 gLevel6Stage0Room1MetatileMap[];
 extern u8 gLevel6Stage0Room1BlockLayer[];
-extern u8 gUnk_08394914[];
+extern u8 gLevel6Stage0Room1BlockMetatiles[];
 extern struct Door gLevel6Stage0Room1Doors[];
 extern u8 gLevel6Stage0Room1Objects[];
 struct RoomDef gLevel6Stage0Room1 ROOM_DEF(08394c58) = {
@@ -9979,7 +9979,7 @@ struct RoomDef gLevel6Stage0Room1 ROOM_DEF(08394c58) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage0Room1MetatileMap,
     .blockLayer = gLevel6Stage0Room1BlockLayer,
-    .unk10 = gUnk_08394914,
+    .blockMetatiles = gLevel6Stage0Room1BlockMetatiles,
     .width = 47,
     .height = 12,
     .bg2Palette = gUnk_084B2F9C,
@@ -9992,7 +9992,7 @@ struct RoomDef gLevel6Stage0Room1 ROOM_DEF(08394c58) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 10,
     .objectsSortedByY = 0,
@@ -10012,7 +10012,7 @@ struct RoomDef gLevel6Stage0Room1 ROOM_DEF(08394c58) = {
 /* gRoomTable[6][0][2], 0x083950F8, section .room_def_083950f8 */
 extern u8 gLevel6Stage0Room2MetatileMap[];
 extern u8 gLevel6Stage0Room2BlockLayer[];
-extern u8 gUnk_0839504C[];
+extern u8 gLevel6Stage0Room2BlockMetatiles[];
 extern struct Door gLevel6Stage0Room2Doors[];
 extern u8 gLevel6Stage0Room2Objects[];
 struct RoomDef gLevel6Stage0Room2 ROOM_DEF(083950f8) = {
@@ -10022,7 +10022,7 @@ struct RoomDef gLevel6Stage0Room2 ROOM_DEF(083950f8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage0Room2MetatileMap,
     .blockLayer = gLevel6Stage0Room2BlockLayer,
-    .unk10 = gUnk_0839504C,
+    .blockMetatiles = gLevel6Stage0Room2BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0852BB78,
@@ -10035,7 +10035,7 @@ struct RoomDef gLevel6Stage0Room2 ROOM_DEF(083950f8) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 16,
     .objectsSortedByY = 0,
@@ -10055,7 +10055,7 @@ struct RoomDef gLevel6Stage0Room2 ROOM_DEF(083950f8) = {
 /* gRoomTable[6][0][3], 0x08395298, section .room_def_08395298 */
 extern u8 gLevel6Stage0Room3MetatileMap[];
 extern u8 gLevel6Stage0Room3BlockLayer[];
-extern u8 gUnk_0839527C[];
+extern u8 gLevel6Stage0Room3BlockMetatiles[];
 extern struct Door gLevel6Stage0Room3Doors[];
 extern u8 gLevel6Stage0Room3Objects[];
 struct RoomDef gLevel6Stage0Room3 ROOM_DEF(08395298) = {
@@ -10065,7 +10065,7 @@ struct RoomDef gLevel6Stage0Room3 ROOM_DEF(08395298) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage0Room3MetatileMap,
     .blockLayer = gLevel6Stage0Room3BlockLayer,
-    .unk10 = gUnk_0839527C,
+    .blockMetatiles = gLevel6Stage0Room3BlockMetatiles,
     .width = 17,
     .height = 11,
     .bg2Palette = gUnk_084B2F9C,
@@ -10078,7 +10078,7 @@ struct RoomDef gLevel6Stage0Room3 ROOM_DEF(08395298) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10098,7 +10098,7 @@ struct RoomDef gLevel6Stage0Room3 ROOM_DEF(08395298) = {
 /* gRoomTable[6][1][0], 0x08395450, section .room_def_08395450 */
 extern u8 gLevel6Stage1Room0MetatileMap[];
 extern u8 gLevel6Stage1Room0BlockLayer[];
-extern u8 gUnk_08395418[];
+extern u8 gLevel6Stage1Room0BlockMetatiles[];
 extern struct Door gLevel6Stage1Room0Doors[];
 struct RoomDef gLevel6Stage1Room0 ROOM_DEF(08395450) = {
     .filler00 = { 6, 1, 0, 0 },
@@ -10107,7 +10107,7 @@ struct RoomDef gLevel6Stage1Room0 ROOM_DEF(08395450) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room0MetatileMap,
     .blockLayer = gLevel6Stage1Room0BlockLayer,
-    .unk10 = gUnk_08395418,
+    .blockMetatiles = gLevel6Stage1Room0BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_084BB4FC,
@@ -10120,7 +10120,7 @@ struct RoomDef gLevel6Stage1Room0 ROOM_DEF(08395450) = {
     .bg3Map = &gUnk_083BB70C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 4,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10140,7 +10140,7 @@ struct RoomDef gLevel6Stage1Room0 ROOM_DEF(08395450) = {
 /* gRoomTable[6][1][1], 0x0839570C, section .room_def_0839570c */
 extern u8 gLevel6Stage1Room1MetatileMap[];
 extern u8 gLevel6Stage1Room1BlockLayer[];
-extern u8 gUnk_083956EC[];
+extern u8 gLevel6Stage1Room1BlockMetatiles[];
 extern struct Door gLevel6Stage1Room1Doors[];
 struct RoomDef gLevel6Stage1Room1 ROOM_DEF(0839570c) = {
     .filler00 = { 6, 1, 1, 0 },
@@ -10149,7 +10149,7 @@ struct RoomDef gLevel6Stage1Room1 ROOM_DEF(0839570c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room1MetatileMap,
     .blockLayer = gLevel6Stage1Room1BlockLayer,
-    .unk10 = gUnk_083956EC,
+    .blockMetatiles = gLevel6Stage1Room1BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10162,7 +10162,7 @@ struct RoomDef gLevel6Stage1Room1 ROOM_DEF(0839570c) = {
     .bg3Map = &gUnk_083BB70C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10182,7 +10182,7 @@ struct RoomDef gLevel6Stage1Room1 ROOM_DEF(0839570c) = {
 /* gRoomTable[6][1][2], 0x083959C8, section .room_def_083959c8 */
 extern u8 gLevel6Stage1Room2MetatileMap[];
 extern u8 gLevel6Stage1Room2BlockLayer[];
-extern u8 gUnk_083959A8[];
+extern u8 gLevel6Stage1Room2BlockMetatiles[];
 extern struct Door gLevel6Stage1Room2Doors[];
 struct RoomDef gLevel6Stage1Room2 ROOM_DEF(083959c8) = {
     .filler00 = { 6, 1, 2, 0 },
@@ -10191,7 +10191,7 @@ struct RoomDef gLevel6Stage1Room2 ROOM_DEF(083959c8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room2MetatileMap,
     .blockLayer = gLevel6Stage1Room2BlockLayer,
-    .unk10 = gUnk_083959A8,
+    .blockMetatiles = gLevel6Stage1Room2BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10204,7 +10204,7 @@ struct RoomDef gLevel6Stage1Room2 ROOM_DEF(083959c8) = {
     .bg3Map = &gLevel6Stage1Room2Bg3Map,
     .bg3BorderX = 0,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10224,7 +10224,7 @@ struct RoomDef gLevel6Stage1Room2 ROOM_DEF(083959c8) = {
 /* gRoomTable[6][1][3], 0x08395C90, section .room_def_08395c90 */
 extern u8 gLevel6Stage1Room3MetatileMap[];
 extern u8 gLevel6Stage1Room3BlockLayer[];
-extern u8 gUnk_08395C70[];
+extern u8 gLevel6Stage1Room3BlockMetatiles[];
 extern struct Door gLevel6Stage1Room3Doors[];
 struct RoomDef gLevel6Stage1Room3 ROOM_DEF(08395c90) = {
     .filler00 = { 6, 1, 3, 0 },
@@ -10233,7 +10233,7 @@ struct RoomDef gLevel6Stage1Room3 ROOM_DEF(08395c90) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room3MetatileMap,
     .blockLayer = gLevel6Stage1Room3BlockLayer,
-    .unk10 = gUnk_08395C70,
+    .blockMetatiles = gLevel6Stage1Room3BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10246,7 +10246,7 @@ struct RoomDef gLevel6Stage1Room3 ROOM_DEF(08395c90) = {
     .bg3Map = &gUnk_083B82B0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10266,7 +10266,7 @@ struct RoomDef gLevel6Stage1Room3 ROOM_DEF(08395c90) = {
 /* gRoomTable[6][1][4], 0x08395F34, section .room_def_08395f34 */
 extern u8 gLevel6Stage1Room4MetatileMap[];
 extern u8 gLevel6Stage1Room4BlockLayer[];
-extern u8 gUnk_08395F14[];
+extern u8 gLevel6Stage1Room4BlockMetatiles[];
 extern struct Door gLevel6Stage1Room4Doors[];
 struct RoomDef gLevel6Stage1Room4 ROOM_DEF(08395f34) = {
     .filler00 = { 6, 1, 4, 0 },
@@ -10275,7 +10275,7 @@ struct RoomDef gLevel6Stage1Room4 ROOM_DEF(08395f34) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room4MetatileMap,
     .blockLayer = gLevel6Stage1Room4BlockLayer,
-    .unk10 = gUnk_08395F14,
+    .blockMetatiles = gLevel6Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10288,7 +10288,7 @@ struct RoomDef gLevel6Stage1Room4 ROOM_DEF(08395f34) = {
     .bg3Map = &gUnk_083B6770,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10308,7 +10308,7 @@ struct RoomDef gLevel6Stage1Room4 ROOM_DEF(08395f34) = {
 /* gRoomTable[6][1][5], 0x083961E4, section .room_def_083961e4 */
 extern u8 gLevel6Stage1Room5MetatileMap[];
 extern u8 gLevel6Stage1Room5BlockLayer[];
-extern u8 gUnk_083961C4[];
+extern u8 gLevel6Stage1Room5BlockMetatiles[];
 extern struct Door gLevel6Stage1Room5Doors[];
 struct RoomDef gLevel6Stage1Room5 ROOM_DEF(083961e4) = {
     .filler00 = { 6, 1, 5, 0 },
@@ -10317,7 +10317,7 @@ struct RoomDef gLevel6Stage1Room5 ROOM_DEF(083961e4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room5MetatileMap,
     .blockLayer = gLevel6Stage1Room5BlockLayer,
-    .unk10 = gUnk_083961C4,
+    .blockMetatiles = gLevel6Stage1Room5BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10330,7 +10330,7 @@ struct RoomDef gLevel6Stage1Room5 ROOM_DEF(083961e4) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10350,7 +10350,7 @@ struct RoomDef gLevel6Stage1Room5 ROOM_DEF(083961e4) = {
 /* gRoomTable[6][1][6], 0x083964AC, section .room_def_083964ac */
 extern u8 gLevel6Stage1Room6MetatileMap[];
 extern u8 gLevel6Stage1Room6BlockLayer[];
-extern u8 gUnk_0839648C[];
+extern u8 gLevel6Stage1Room6BlockMetatiles[];
 extern struct Door gLevel6Stage1Room6Doors[];
 struct RoomDef gLevel6Stage1Room6 ROOM_DEF(083964ac) = {
     .filler00 = { 6, 1, 6, 0 },
@@ -10359,7 +10359,7 @@ struct RoomDef gLevel6Stage1Room6 ROOM_DEF(083964ac) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room6MetatileMap,
     .blockLayer = gLevel6Stage1Room6BlockLayer,
-    .unk10 = gUnk_0839648C,
+    .blockMetatiles = gLevel6Stage1Room6BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10372,7 +10372,7 @@ struct RoomDef gLevel6Stage1Room6 ROOM_DEF(083964ac) = {
     .bg3Map = &gUnk_083B954C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10392,7 +10392,7 @@ struct RoomDef gLevel6Stage1Room6 ROOM_DEF(083964ac) = {
 /* gRoomTable[6][1][7], 0x08396754, section .room_def_08396754 */
 extern u8 gLevel6Stage1Room7MetatileMap[];
 extern u8 gLevel6Stage1Room7BlockLayer[];
-extern u8 gUnk_08396734[];
+extern u8 gLevel6Stage1Room7BlockMetatiles[];
 extern struct Door gLevel6Stage1Room7Doors[];
 struct RoomDef gLevel6Stage1Room7 ROOM_DEF(08396754) = {
     .filler00 = { 6, 1, 7, 0 },
@@ -10401,7 +10401,7 @@ struct RoomDef gLevel6Stage1Room7 ROOM_DEF(08396754) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room7MetatileMap,
     .blockLayer = gLevel6Stage1Room7BlockLayer,
-    .unk10 = gUnk_08396734,
+    .blockMetatiles = gLevel6Stage1Room7BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10414,7 +10414,7 @@ struct RoomDef gLevel6Stage1Room7 ROOM_DEF(08396754) = {
     .bg3Map = &gUnk_083BB70C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10434,7 +10434,7 @@ struct RoomDef gLevel6Stage1Room7 ROOM_DEF(08396754) = {
 /* gRoomTable[6][1][8], 0x08396A00, section .room_def_08396a00 */
 extern u8 gLevel6Stage1Room8MetatileMap[];
 extern u8 gLevel6Stage1Room8BlockLayer[];
-extern u8 gUnk_083969E0[];
+extern u8 gLevel6Stage1Room8BlockMetatiles[];
 extern struct Door gLevel6Stage1Room8Doors[];
 struct RoomDef gLevel6Stage1Room8 ROOM_DEF(08396a00) = {
     .filler00 = { 6, 1, 8, 0 },
@@ -10443,7 +10443,7 @@ struct RoomDef gLevel6Stage1Room8 ROOM_DEF(08396a00) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room8MetatileMap,
     .blockLayer = gLevel6Stage1Room8BlockLayer,
-    .unk10 = gUnk_083969E0,
+    .blockMetatiles = gLevel6Stage1Room8BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10456,7 +10456,7 @@ struct RoomDef gLevel6Stage1Room8 ROOM_DEF(08396a00) = {
     .bg3Map = &gUnk_083B82B0,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10476,7 +10476,7 @@ struct RoomDef gLevel6Stage1Room8 ROOM_DEF(08396a00) = {
 /* gRoomTable[6][1][9], 0x08396CB8, section .room_def_08396cb8 */
 extern u8 gLevel6Stage1Room9MetatileMap[];
 extern u8 gLevel6Stage1Room9BlockLayer[];
-extern u8 gUnk_08396C98[];
+extern u8 gLevel6Stage1Room9BlockMetatiles[];
 extern struct Door gLevel6Stage1Room9Doors[];
 struct RoomDef gLevel6Stage1Room9 ROOM_DEF(08396cb8) = {
     .filler00 = { 6, 1, 9, 0 },
@@ -10485,7 +10485,7 @@ struct RoomDef gLevel6Stage1Room9 ROOM_DEF(08396cb8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room9MetatileMap,
     .blockLayer = gLevel6Stage1Room9BlockLayer,
-    .unk10 = gUnk_08396C98,
+    .blockMetatiles = gLevel6Stage1Room9BlockMetatiles,
     .width = 16,
     .height = 22,
     .bg2Palette = gUnk_084BB438,
@@ -10498,7 +10498,7 @@ struct RoomDef gLevel6Stage1Room9 ROOM_DEF(08396cb8) = {
     .bg3Map = &gUnk_083B954C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -10518,7 +10518,7 @@ struct RoomDef gLevel6Stage1Room9 ROOM_DEF(08396cb8) = {
 /* gRoomTable[6][1][10], 0x0839706C, section .room_def_0839706c */
 extern u8 gLevel6Stage1Room10MetatileMap[];
 extern u8 gLevel6Stage1Room10BlockLayer[];
-extern u8 gUnk_08397050[];
+extern u8 gLevel6Stage1Room10BlockMetatiles[];
 extern struct Door gLevel6Stage1Room10Doors[];
 extern u8 gLevel6Stage1Room10Objects[];
 struct RoomDef gLevel6Stage1Room10 ROOM_DEF(0839706c) = {
@@ -10528,7 +10528,7 @@ struct RoomDef gLevel6Stage1Room10 ROOM_DEF(0839706c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room10MetatileMap,
     .blockLayer = gLevel6Stage1Room10BlockLayer,
-    .unk10 = gUnk_08397050,
+    .blockMetatiles = gLevel6Stage1Room10BlockMetatiles,
     .width = 16,
     .height = 60,
     .bg2Palette = gUnk_084BB4FC,
@@ -10541,7 +10541,7 @@ struct RoomDef gLevel6Stage1Room10 ROOM_DEF(0839706c) = {
     .bg3Map = &gUnk_083CEF10,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10561,7 +10561,7 @@ struct RoomDef gLevel6Stage1Room10 ROOM_DEF(0839706c) = {
 /* gRoomTable[6][1][11], 0x08397358, section .room_def_08397358 */
 extern u8 gLevel6Stage1Room11MetatileMap[];
 extern u8 gLevel6Stage1Room11BlockLayer[];
-extern u8 gUnk_08397320[];
+extern u8 gLevel6Stage1Room11BlockMetatiles[];
 extern struct Door gLevel6Stage1Room11Doors[];
 extern u8 gLevel6Stage1Room11Objects[];
 struct RoomDef gLevel6Stage1Room11 ROOM_DEF(08397358) = {
@@ -10571,7 +10571,7 @@ struct RoomDef gLevel6Stage1Room11 ROOM_DEF(08397358) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room11MetatileMap,
     .blockLayer = gLevel6Stage1Room11BlockLayer,
-    .unk10 = gUnk_08397320,
+    .blockMetatiles = gLevel6Stage1Room11BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -10584,7 +10584,7 @@ struct RoomDef gLevel6Stage1Room11 ROOM_DEF(08397358) = {
     .bg3Map = &gUnk_083CEF10,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 3,
     .objectsSortedByY = 0,
@@ -10604,7 +10604,7 @@ struct RoomDef gLevel6Stage1Room11 ROOM_DEF(08397358) = {
 /* gRoomTable[6][1][12], 0x08397508, section .room_def_08397508 */
 extern u8 gLevel6Stage1Room12MetatileMap[];
 extern u8 gLevel6Stage1Room12BlockLayer[];
-extern u8 gUnk_083974CC[];
+extern u8 gLevel6Stage1Room12BlockMetatiles[];
 extern struct Door gLevel6Stage1Room12Doors[];
 extern u8 gLevel6Stage1Room12Objects[];
 struct RoomDef gLevel6Stage1Room12 ROOM_DEF(08397508) = {
@@ -10614,7 +10614,7 @@ struct RoomDef gLevel6Stage1Room12 ROOM_DEF(08397508) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room12MetatileMap,
     .blockLayer = gLevel6Stage1Room12BlockLayer,
-    .unk10 = gUnk_083974CC,
+    .blockMetatiles = gLevel6Stage1Room12BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D53C,
@@ -10627,7 +10627,7 @@ struct RoomDef gLevel6Stage1Room12 ROOM_DEF(08397508) = {
     .bg3Map = &gUnk_083CEF10,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -10647,7 +10647,7 @@ struct RoomDef gLevel6Stage1Room12 ROOM_DEF(08397508) = {
 /* gRoomTable[6][1][13], 0x08397680, section .room_def_08397680 */
 extern u8 gLevel6Stage1Room13MetatileMap[];
 extern u8 gLevel6Stage1Room13BlockLayer[];
-extern u8 gUnk_0839764C[];
+extern u8 gLevel6Stage1Room13BlockMetatiles[];
 extern struct Door gLevel6Stage1Room13Doors[];
 extern u8 gLevel6Stage1Room13Objects[];
 struct RoomDef gLevel6Stage1Room13 ROOM_DEF(08397680) = {
@@ -10657,7 +10657,7 @@ struct RoomDef gLevel6Stage1Room13 ROOM_DEF(08397680) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room13MetatileMap,
     .blockLayer = gLevel6Stage1Room13BlockLayer,
-    .unk10 = gUnk_0839764C,
+    .blockMetatiles = gLevel6Stage1Room13BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D53C,
@@ -10670,7 +10670,7 @@ struct RoomDef gLevel6Stage1Room13 ROOM_DEF(08397680) = {
     .bg3Map = &gUnk_083BB70C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10690,7 +10690,7 @@ struct RoomDef gLevel6Stage1Room13 ROOM_DEF(08397680) = {
 /* gRoomTable[6][1][14], 0x08397804, section .room_def_08397804 */
 extern u8 gLevel6Stage1Room14MetatileMap[];
 extern u8 gLevel6Stage1Room14BlockLayer[];
-extern u8 gUnk_083977D0[];
+extern u8 gLevel6Stage1Room14BlockMetatiles[];
 extern struct Door gLevel6Stage1Room14Doors[];
 extern u8 gLevel6Stage1Room14Objects[];
 struct RoomDef gLevel6Stage1Room14 ROOM_DEF(08397804) = {
@@ -10700,7 +10700,7 @@ struct RoomDef gLevel6Stage1Room14 ROOM_DEF(08397804) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room14MetatileMap,
     .blockLayer = gLevel6Stage1Room14BlockLayer,
-    .unk10 = gUnk_083977D0,
+    .blockMetatiles = gLevel6Stage1Room14BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D560,
@@ -10713,7 +10713,7 @@ struct RoomDef gLevel6Stage1Room14 ROOM_DEF(08397804) = {
     .bg3Map = &gUnk_083BB70C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10733,7 +10733,7 @@ struct RoomDef gLevel6Stage1Room14 ROOM_DEF(08397804) = {
 /* gRoomTable[6][1][15], 0x08397970, section .room_def_08397970 */
 extern u8 gLevel6Stage1Room15MetatileMap[];
 extern u8 gLevel6Stage1Room15BlockLayer[];
-extern u8 gUnk_0839793C[];
+extern u8 gLevel6Stage1Room15BlockMetatiles[];
 extern struct Door gLevel6Stage1Room15Doors[];
 extern u8 gLevel6Stage1Room15Objects[];
 struct RoomDef gLevel6Stage1Room15 ROOM_DEF(08397970) = {
@@ -10743,7 +10743,7 @@ struct RoomDef gLevel6Stage1Room15 ROOM_DEF(08397970) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room15MetatileMap,
     .blockLayer = gLevel6Stage1Room15BlockLayer,
-    .unk10 = gUnk_0839793C,
+    .blockMetatiles = gLevel6Stage1Room15BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_084B2F9C,
@@ -10756,7 +10756,7 @@ struct RoomDef gLevel6Stage1Room15 ROOM_DEF(08397970) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10776,7 +10776,7 @@ struct RoomDef gLevel6Stage1Room15 ROOM_DEF(08397970) = {
 /* gRoomTable[6][1][16], 0x08397B54, section .room_def_08397b54 */
 extern u8 gLevel6Stage1Room16MetatileMap[];
 extern u8 gLevel6Stage1Room16BlockLayer[];
-extern u8 gUnk_08397B20[];
+extern u8 gLevel6Stage1Room16BlockMetatiles[];
 extern struct Door gLevel6Stage1Room16Doors[];
 extern u8 gLevel6Stage1Room16Objects[];
 struct RoomDef gLevel6Stage1Room16 ROOM_DEF(08397b54) = {
@@ -10786,7 +10786,7 @@ struct RoomDef gLevel6Stage1Room16 ROOM_DEF(08397b54) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room16MetatileMap,
     .blockLayer = gLevel6Stage1Room16BlockLayer,
-    .unk10 = gUnk_08397B20,
+    .blockMetatiles = gLevel6Stage1Room16BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -10799,7 +10799,7 @@ struct RoomDef gLevel6Stage1Room16 ROOM_DEF(08397b54) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10819,7 +10819,7 @@ struct RoomDef gLevel6Stage1Room16 ROOM_DEF(08397b54) = {
 /* gRoomTable[6][1][17], 0x08397CFC, section .room_def_08397cfc */
 extern u8 gLevel6Stage1Room17MetatileMap[];
 extern u8 gLevel6Stage1Room17BlockLayer[];
-extern u8 gUnk_08397CC8[];
+extern u8 gLevel6Stage1Room17BlockMetatiles[];
 extern struct Door gLevel6Stage1Room17Doors[];
 extern u8 gLevel6Stage1Room17Objects[];
 struct RoomDef gLevel6Stage1Room17 ROOM_DEF(08397cfc) = {
@@ -10829,7 +10829,7 @@ struct RoomDef gLevel6Stage1Room17 ROOM_DEF(08397cfc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room17MetatileMap,
     .blockLayer = gLevel6Stage1Room17BlockLayer,
-    .unk10 = gUnk_08397CC8,
+    .blockMetatiles = gLevel6Stage1Room17BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849A52C,
@@ -10842,7 +10842,7 @@ struct RoomDef gLevel6Stage1Room17 ROOM_DEF(08397cfc) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10862,7 +10862,7 @@ struct RoomDef gLevel6Stage1Room17 ROOM_DEF(08397cfc) = {
 /* gRoomTable[6][1][18], 0x08397ED0, section .room_def_08397ed0 */
 extern u8 gLevel6Stage1Room18MetatileMap[];
 extern u8 gLevel6Stage1Room18BlockLayer[];
-extern u8 gUnk_08397E9C[];
+extern u8 gLevel6Stage1Room18BlockMetatiles[];
 extern struct Door gLevel6Stage1Room18Doors[];
 extern u8 gLevel6Stage1Room18Objects[];
 struct RoomDef gLevel6Stage1Room18 ROOM_DEF(08397ed0) = {
@@ -10872,7 +10872,7 @@ struct RoomDef gLevel6Stage1Room18 ROOM_DEF(08397ed0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room18MetatileMap,
     .blockLayer = gLevel6Stage1Room18BlockLayer,
-    .unk10 = gUnk_08397E9C,
+    .blockMetatiles = gLevel6Stage1Room18BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D12C,
@@ -10885,7 +10885,7 @@ struct RoomDef gLevel6Stage1Room18 ROOM_DEF(08397ed0) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10905,7 +10905,7 @@ struct RoomDef gLevel6Stage1Room18 ROOM_DEF(08397ed0) = {
 /* gRoomTable[6][1][19], 0x0839804C, section .room_def_0839804c */
 extern u8 gLevel6Stage1Room19MetatileMap[];
 extern u8 gLevel6Stage1Room19BlockLayer[];
-extern u8 gUnk_08398018[];
+extern u8 gLevel6Stage1Room19BlockMetatiles[];
 extern struct Door gLevel6Stage1Room19Doors[];
 extern u8 gLevel6Stage1Room19Objects[];
 struct RoomDef gLevel6Stage1Room19 ROOM_DEF(0839804c) = {
@@ -10915,7 +10915,7 @@ struct RoomDef gLevel6Stage1Room19 ROOM_DEF(0839804c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room19MetatileMap,
     .blockLayer = gLevel6Stage1Room19BlockLayer,
-    .unk10 = gUnk_08398018,
+    .blockMetatiles = gLevel6Stage1Room19BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D53C,
@@ -10928,7 +10928,7 @@ struct RoomDef gLevel6Stage1Room19 ROOM_DEF(0839804c) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10948,7 +10948,7 @@ struct RoomDef gLevel6Stage1Room19 ROOM_DEF(0839804c) = {
 /* gRoomTable[6][1][20], 0x08398220, section .room_def_08398220 */
 extern u8 gLevel6Stage1Room20MetatileMap[];
 extern u8 gLevel6Stage1Room20BlockLayer[];
-extern u8 gUnk_083981EC[];
+extern u8 gLevel6Stage1Room20BlockMetatiles[];
 extern struct Door gLevel6Stage1Room20Doors[];
 extern u8 gLevel6Stage1Room20Objects[];
 struct RoomDef gLevel6Stage1Room20 ROOM_DEF(08398220) = {
@@ -10958,7 +10958,7 @@ struct RoomDef gLevel6Stage1Room20 ROOM_DEF(08398220) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room20MetatileMap,
     .blockLayer = gLevel6Stage1Room20BlockLayer,
-    .unk10 = gUnk_083981EC,
+    .blockMetatiles = gLevel6Stage1Room20BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -10971,7 +10971,7 @@ struct RoomDef gLevel6Stage1Room20 ROOM_DEF(08398220) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -10991,7 +10991,7 @@ struct RoomDef gLevel6Stage1Room20 ROOM_DEF(08398220) = {
 /* gRoomTable[6][1][21], 0x083983D8, section .room_def_083983d8 */
 extern u8 gLevel6Stage1Room21MetatileMap[];
 extern u8 gLevel6Stage1Room21BlockLayer[];
-extern u8 gUnk_083983A4[];
+extern u8 gLevel6Stage1Room21BlockMetatiles[];
 extern struct Door gLevel6Stage1Room21Doors[];
 extern u8 gLevel6Stage1Room21Objects[];
 struct RoomDef gLevel6Stage1Room21 ROOM_DEF(083983d8) = {
@@ -11001,7 +11001,7 @@ struct RoomDef gLevel6Stage1Room21 ROOM_DEF(083983d8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room21MetatileMap,
     .blockLayer = gLevel6Stage1Room21BlockLayer,
-    .unk10 = gUnk_083983A4,
+    .blockMetatiles = gLevel6Stage1Room21BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0849A52C,
@@ -11014,7 +11014,7 @@ struct RoomDef gLevel6Stage1Room21 ROOM_DEF(083983d8) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -11034,7 +11034,7 @@ struct RoomDef gLevel6Stage1Room21 ROOM_DEF(083983d8) = {
 /* gRoomTable[6][1][22], 0x083985D0, section .room_def_083985d0 */
 extern u8 gLevel6Stage1Room22MetatileMap[];
 extern u8 gLevel6Stage1Room22BlockLayer[];
-extern u8 gUnk_0839859C[];
+extern u8 gLevel6Stage1Room22BlockMetatiles[];
 extern struct Door gLevel6Stage1Room22Doors[];
 extern u8 gLevel6Stage1Room22Objects[];
 struct RoomDef gLevel6Stage1Room22 ROOM_DEF(083985d0) = {
@@ -11044,7 +11044,7 @@ struct RoomDef gLevel6Stage1Room22 ROOM_DEF(083985d0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room22MetatileMap,
     .blockLayer = gLevel6Stage1Room22BlockLayer,
-    .unk10 = gUnk_0839859C,
+    .blockMetatiles = gLevel6Stage1Room22BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D12C,
@@ -11057,7 +11057,7 @@ struct RoomDef gLevel6Stage1Room22 ROOM_DEF(083985d0) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -11077,7 +11077,7 @@ struct RoomDef gLevel6Stage1Room22 ROOM_DEF(083985d0) = {
 /* gRoomTable[6][1][23], 0x0839875C, section .room_def_0839875c */
 extern u8 gLevel6Stage1Room23MetatileMap[];
 extern u8 gLevel6Stage1Room23BlockLayer[];
-extern u8 gUnk_08398728[];
+extern u8 gLevel6Stage1Room23BlockMetatiles[];
 extern struct Door gLevel6Stage1Room23Doors[];
 extern u8 gLevel6Stage1Room23Objects[];
 struct RoomDef gLevel6Stage1Room23 ROOM_DEF(0839875c) = {
@@ -11087,7 +11087,7 @@ struct RoomDef gLevel6Stage1Room23 ROOM_DEF(0839875c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room23MetatileMap,
     .blockLayer = gLevel6Stage1Room23BlockLayer,
-    .unk10 = gUnk_08398728,
+    .blockMetatiles = gLevel6Stage1Room23BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D53C,
@@ -11100,7 +11100,7 @@ struct RoomDef gLevel6Stage1Room23 ROOM_DEF(0839875c) = {
     .bg3Map = &gUnk_084A7CFC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -11120,7 +11120,7 @@ struct RoomDef gLevel6Stage1Room23 ROOM_DEF(0839875c) = {
 /* gRoomTable[6][1][24], 0x08398858, section .room_def_08398858 */
 extern u8 gLevel6Stage1Room24MetatileMap[];
 extern u8 gLevel6Stage1Room24BlockLayer[];
-extern u8 gUnk_08398844[];
+extern u8 gLevel6Stage1Room24BlockMetatiles[];
 extern struct Door gLevel6Stage1Room24Doors[];
 struct RoomDef gLevel6Stage1Room24 ROOM_DEF(08398858) = {
     .filler00 = { 6, 1, 24, 0 },
@@ -11129,7 +11129,7 @@ struct RoomDef gLevel6Stage1Room24 ROOM_DEF(08398858) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage1Room24MetatileMap,
     .blockLayer = gLevel6Stage1Room24BlockLayer,
-    .unk10 = gUnk_08398844,
+    .blockMetatiles = gLevel6Stage1Room24BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D53C,
@@ -11142,7 +11142,7 @@ struct RoomDef gLevel6Stage1Room24 ROOM_DEF(08398858) = {
     .bg3Map = &gUnk_083CEF10,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -11162,7 +11162,7 @@ struct RoomDef gLevel6Stage1Room24 ROOM_DEF(08398858) = {
 /* gRoomTable[6][2][0], 0x08398DDC, section .room_def_08398ddc */
 extern u8 gLevel6Stage2Room0MetatileMap[];
 extern u8 gLevel6Stage2Room0BlockLayer[];
-extern u8 gUnk_08398D68[];
+extern u8 gLevel6Stage2Room0BlockMetatiles[];
 extern struct Door gLevel6Stage2Room0Doors[];
 extern u8 gLevel6Stage2Room0Objects[];
 struct RoomDef gLevel6Stage2Room0 ROOM_DEF(08398ddc) = {
@@ -11172,7 +11172,7 @@ struct RoomDef gLevel6Stage2Room0 ROOM_DEF(08398ddc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage2Room0MetatileMap,
     .blockLayer = gLevel6Stage2Room0BlockLayer,
-    .unk10 = gUnk_08398D68,
+    .blockMetatiles = gLevel6Stage2Room0BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -11185,7 +11185,7 @@ struct RoomDef gLevel6Stage2Room0 ROOM_DEF(08398ddc) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -11205,7 +11205,7 @@ struct RoomDef gLevel6Stage2Room0 ROOM_DEF(08398ddc) = {
 /* gRoomTable[6][2][1], 0x08399208, section .room_def_08399208 */
 extern u8 gLevel6Stage2Room1MetatileMap[];
 extern u8 gLevel6Stage2Room1BlockLayer[];
-extern u8 gUnk_08399194[];
+extern u8 gLevel6Stage2Room1BlockMetatiles[];
 extern struct Door gLevel6Stage2Room1Doors[];
 extern u8 gLevel6Stage2Room1Objects[];
 struct RoomDef gLevel6Stage2Room1 ROOM_DEF(08399208) = {
@@ -11215,7 +11215,7 @@ struct RoomDef gLevel6Stage2Room1 ROOM_DEF(08399208) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage2Room1MetatileMap,
     .blockLayer = gLevel6Stage2Room1BlockLayer,
-    .unk10 = gUnk_08399194,
+    .blockMetatiles = gLevel6Stage2Room1BlockMetatiles,
     .width = 16,
     .height = 48,
     .bg2Palette = gUnk_084B2F9C,
@@ -11228,7 +11228,7 @@ struct RoomDef gLevel6Stage2Room1 ROOM_DEF(08399208) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 12,
     .objectsSortedByY = 1,
@@ -11248,7 +11248,7 @@ struct RoomDef gLevel6Stage2Room1 ROOM_DEF(08399208) = {
 /* gRoomTable[6][2][2], 0x083995EC, section .room_def_083995ec */
 extern u8 gLevel6Stage2Room2MetatileMap[];
 extern u8 gLevel6Stage2Room2BlockLayer[];
-extern u8 gUnk_08399578[];
+extern u8 gLevel6Stage2Room2BlockMetatiles[];
 extern struct Door gLevel6Stage2Room2Doors[];
 extern u8 gLevel6Stage2Room2Objects[];
 struct RoomDef gLevel6Stage2Room2 ROOM_DEF(083995ec) = {
@@ -11258,7 +11258,7 @@ struct RoomDef gLevel6Stage2Room2 ROOM_DEF(083995ec) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage2Room2MetatileMap,
     .blockLayer = gLevel6Stage2Room2BlockLayer,
-    .unk10 = gUnk_08399578,
+    .blockMetatiles = gLevel6Stage2Room2BlockMetatiles,
     .width = 66,
     .height = 12,
     .bg2Palette = gUnk_084B2F9C,
@@ -11271,7 +11271,7 @@ struct RoomDef gLevel6Stage2Room2 ROOM_DEF(083995ec) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -11291,7 +11291,7 @@ struct RoomDef gLevel6Stage2Room2 ROOM_DEF(083995ec) = {
 /* gRoomTable[6][2][3], 0x08399CB8, section .room_def_08399cb8 */
 extern u8 gLevel6Stage2Room3MetatileMap[];
 extern u8 gLevel6Stage2Room3BlockLayer[];
-extern u8 gUnk_08399AC4[];
+extern u8 gLevel6Stage2Room3BlockMetatiles[];
 extern struct Door gLevel6Stage2Room3Doors[];
 extern u8 gLevel6Stage2Room3Objects[];
 struct RoomDef gLevel6Stage2Room3 ROOM_DEF(08399cb8) = {
@@ -11301,7 +11301,7 @@ struct RoomDef gLevel6Stage2Room3 ROOM_DEF(08399cb8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage2Room3MetatileMap,
     .blockLayer = gLevel6Stage2Room3BlockLayer,
-    .unk10 = gUnk_08399AC4,
+    .blockMetatiles = gLevel6Stage2Room3BlockMetatiles,
     .width = 59,
     .height = 13,
     .bg2Palette = gUnk_084BB068,
@@ -11314,7 +11314,7 @@ struct RoomDef gLevel6Stage2Room3 ROOM_DEF(08399cb8) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 17,
     .objectsSortedByY = 0,
@@ -11334,7 +11334,7 @@ struct RoomDef gLevel6Stage2Room3 ROOM_DEF(08399cb8) = {
 /* gRoomTable[6][3][0], 0x0839A214, section .room_def_0839a214 */
 extern u8 gLevel6Stage3Room0MetatileMap[];
 extern u8 gLevel6Stage3Room0BlockLayer[];
-extern u8 gUnk_0839A180[];
+extern u8 gLevel6Stage3Room0BlockMetatiles[];
 extern struct Door gLevel6Stage3Room0Doors[];
 extern u8 gLevel6Stage3Room0Objects[];
 struct RoomDef gLevel6Stage3Room0 ROOM_DEF(0839a214) = {
@@ -11344,7 +11344,7 @@ struct RoomDef gLevel6Stage3Room0 ROOM_DEF(0839a214) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage3Room0MetatileMap,
     .blockLayer = gLevel6Stage3Room0BlockLayer,
-    .unk10 = gUnk_0839A180,
+    .blockMetatiles = gLevel6Stage3Room0BlockMetatiles,
     .width = 64,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -11357,7 +11357,7 @@ struct RoomDef gLevel6Stage3Room0 ROOM_DEF(0839a214) = {
     .bg3Map = &gUnk_0848AEA4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 16,
     .objectsSortedByY = 0,
@@ -11377,7 +11377,7 @@ struct RoomDef gLevel6Stage3Room0 ROOM_DEF(0839a214) = {
 /* gRoomTable[6][3][1], 0x0839A4C8, section .room_def_0839a4c8 */
 extern u8 gLevel6Stage3Room1MetatileMap[];
 extern u8 gLevel6Stage3Room1BlockLayer[];
-extern u8 gUnk_0839A48C[];
+extern u8 gLevel6Stage3Room1BlockMetatiles[];
 extern struct Door gLevel6Stage3Room1Doors[];
 extern u8 gLevel6Stage3Room1Objects[];
 struct RoomDef gLevel6Stage3Room1 ROOM_DEF(0839a4c8) = {
@@ -11387,7 +11387,7 @@ struct RoomDef gLevel6Stage3Room1 ROOM_DEF(0839a4c8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage3Room1MetatileMap,
     .blockLayer = gLevel6Stage3Room1BlockLayer,
-    .unk10 = gUnk_0839A48C,
+    .blockMetatiles = gLevel6Stage3Room1BlockMetatiles,
     .width = 17,
     .height = 12,
     .bg2Palette = gUnk_0852BD00,
@@ -11400,7 +11400,7 @@ struct RoomDef gLevel6Stage3Room1 ROOM_DEF(0839a4c8) = {
     .bg3Map = &gUnk_0848AEA4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -11420,7 +11420,7 @@ struct RoomDef gLevel6Stage3Room1 ROOM_DEF(0839a4c8) = {
 /* gRoomTable[6][3][2], 0x0839A774, section .room_def_0839a774 */
 extern u8 gLevel6Stage3Room2MetatileMap[];
 extern u8 gLevel6Stage3Room2BlockLayer[];
-extern u8 gUnk_0839A738[];
+extern u8 gLevel6Stage3Room2BlockMetatiles[];
 extern struct Door gLevel6Stage3Room2Doors[];
 extern u8 gLevel6Stage3Room2Objects[];
 struct RoomDef gLevel6Stage3Room2 ROOM_DEF(0839a774) = {
@@ -11430,7 +11430,7 @@ struct RoomDef gLevel6Stage3Room2 ROOM_DEF(0839a774) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage3Room2MetatileMap,
     .blockLayer = gLevel6Stage3Room2BlockLayer,
-    .unk10 = gUnk_0839A738,
+    .blockMetatiles = gLevel6Stage3Room2BlockMetatiles,
     .width = 17,
     .height = 12,
     .bg2Palette = gUnk_0852BD00,
@@ -11443,7 +11443,7 @@ struct RoomDef gLevel6Stage3Room2 ROOM_DEF(0839a774) = {
     .bg3Map = &gUnk_0848AEA4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -11463,7 +11463,7 @@ struct RoomDef gLevel6Stage3Room2 ROOM_DEF(0839a774) = {
 /* gRoomTable[6][3][3], 0x0839AA40, section .room_def_0839aa40 */
 extern u8 gLevel6Stage3Room3MetatileMap[];
 extern u8 gLevel6Stage3Room3BlockLayer[];
-extern u8 gUnk_0839A9EC[];
+extern u8 gLevel6Stage3Room3BlockMetatiles[];
 extern struct Door gLevel6Stage3Room3Doors[];
 extern u8 gLevel6Stage3Room3Objects[];
 struct RoomDef gLevel6Stage3Room3 ROOM_DEF(0839aa40) = {
@@ -11473,7 +11473,7 @@ struct RoomDef gLevel6Stage3Room3 ROOM_DEF(0839aa40) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage3Room3MetatileMap,
     .blockLayer = gLevel6Stage3Room3BlockLayer,
-    .unk10 = gUnk_0839A9EC,
+    .blockMetatiles = gLevel6Stage3Room3BlockMetatiles,
     .width = 17,
     .height = 12,
     .bg2Palette = gUnk_0852BD00,
@@ -11486,7 +11486,7 @@ struct RoomDef gLevel6Stage3Room3 ROOM_DEF(0839aa40) = {
     .bg3Map = &gUnk_0848AEA4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -11506,7 +11506,7 @@ struct RoomDef gLevel6Stage3Room3 ROOM_DEF(0839aa40) = {
 /* gRoomTable[6][3][4], 0x0839AD18, section .room_def_0839ad18 */
 extern u8 gLevel6Stage3Room4MetatileMap[];
 extern u8 gLevel6Stage3Room4BlockLayer[];
-extern u8 gUnk_0839ACC4[];
+extern u8 gLevel6Stage3Room4BlockMetatiles[];
 extern struct Door gLevel6Stage3Room4Doors[];
 extern u8 gLevel6Stage3Room4Objects[];
 struct RoomDef gLevel6Stage3Room4 ROOM_DEF(0839ad18) = {
@@ -11516,7 +11516,7 @@ struct RoomDef gLevel6Stage3Room4 ROOM_DEF(0839ad18) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage3Room4MetatileMap,
     .blockLayer = gLevel6Stage3Room4BlockLayer,
-    .unk10 = gUnk_0839ACC4,
+    .blockMetatiles = gLevel6Stage3Room4BlockMetatiles,
     .width = 17,
     .height = 12,
     .bg2Palette = gUnk_0852BD00,
@@ -11529,7 +11529,7 @@ struct RoomDef gLevel6Stage3Room4 ROOM_DEF(0839ad18) = {
     .bg3Map = &gUnk_0848AEA4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 4,
     .objectsSortedByY = 0,
@@ -11549,7 +11549,7 @@ struct RoomDef gLevel6Stage3Room4 ROOM_DEF(0839ad18) = {
 /* gRoomTable[6][3][5], 0x0839B260, section .room_def_0839b260 */
 extern u8 gLevel6Stage3Room5MetatileMap[];
 extern u8 gLevel6Stage3Room5BlockLayer[];
-extern u8 gUnk_0839B1A4[];
+extern u8 gLevel6Stage3Room5BlockMetatiles[];
 extern struct Door gLevel6Stage3Room5Doors[];
 extern u8 gLevel6Stage3Room5Objects[];
 struct RoomDef gLevel6Stage3Room5 ROOM_DEF(0839b260) = {
@@ -11559,7 +11559,7 @@ struct RoomDef gLevel6Stage3Room5 ROOM_DEF(0839b260) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage3Room5MetatileMap,
     .blockLayer = gLevel6Stage3Room5BlockLayer,
-    .unk10 = gUnk_0839B1A4,
+    .blockMetatiles = gLevel6Stage3Room5BlockMetatiles,
     .width = 48,
     .height = 14,
     .bg2Palette = gUnk_0852BD00,
@@ -11572,7 +11572,7 @@ struct RoomDef gLevel6Stage3Room5 ROOM_DEF(0839b260) = {
     .bg3Map = &gUnk_0848AEA4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -11592,7 +11592,7 @@ struct RoomDef gLevel6Stage3Room5 ROOM_DEF(0839b260) = {
 /* gRoomTable[6][3][6], 0x0839BB28, section .room_def_0839bb28 */
 extern u8 gLevel6Stage3Room6MetatileMap[];
 extern u8 gLevel6Stage3Room6BlockLayer[];
-extern u8 gUnk_0839B948[];
+extern u8 gLevel6Stage3Room6BlockMetatiles[];
 extern struct Door gLevel6Stage3Room6Doors[];
 extern u8 gLevel6Stage3Room6Objects[];
 struct RoomDef gLevel6Stage3Room6 ROOM_DEF(0839bb28) = {
@@ -11602,7 +11602,7 @@ struct RoomDef gLevel6Stage3Room6 ROOM_DEF(0839bb28) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage3Room6MetatileMap,
     .blockLayer = gLevel6Stage3Room6BlockLayer,
-    .unk10 = gUnk_0839B948,
+    .blockMetatiles = gLevel6Stage3Room6BlockMetatiles,
     .width = 25,
     .height = 35,
     .bg2Palette = gUnk_0852BD00,
@@ -11615,7 +11615,7 @@ struct RoomDef gLevel6Stage3Room6 ROOM_DEF(0839bb28) = {
     .bg3Map = &gUnk_0848AEA4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 11,
     .objectsSortedByY = 1,
@@ -11635,7 +11635,7 @@ struct RoomDef gLevel6Stage3Room6 ROOM_DEF(0839bb28) = {
 /* gRoomTable[6][4][0], 0x0839BED4, section .room_def_0839bed4 */
 extern u8 gLevel6Stage4Room0MetatileMap[];
 extern u8 gLevel6Stage4Room0BlockLayer[];
-extern u8 gUnk_0839BE88[];
+extern u8 gLevel6Stage4Room0BlockMetatiles[];
 extern struct Door gLevel6Stage4Room0Doors[];
 extern u8 gLevel6Stage4Room0Objects[];
 struct RoomDef gLevel6Stage4Room0 ROOM_DEF(0839bed4) = {
@@ -11645,7 +11645,7 @@ struct RoomDef gLevel6Stage4Room0 ROOM_DEF(0839bed4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage4Room0MetatileMap,
     .blockLayer = gLevel6Stage4Room0BlockLayer,
-    .unk10 = gUnk_0839BE88,
+    .blockMetatiles = gLevel6Stage4Room0BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -11658,7 +11658,7 @@ struct RoomDef gLevel6Stage4Room0 ROOM_DEF(0839bed4) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 7,
     .objectsSortedByY = 0,
@@ -11678,7 +11678,7 @@ struct RoomDef gLevel6Stage4Room0 ROOM_DEF(0839bed4) = {
 /* gRoomTable[6][4][1], 0x0839C0D0, section .room_def_0839c0d0 */
 extern u8 gLevel6Stage4Room1MetatileMap[];
 extern u8 gLevel6Stage4Room1BlockLayer[];
-extern u8 gUnk_0839C094[];
+extern u8 gLevel6Stage4Room1BlockMetatiles[];
 extern struct Door gLevel6Stage4Room1Doors[];
 extern u8 gLevel6Stage4Room1Objects[];
 struct RoomDef gLevel6Stage4Room1 ROOM_DEF(0839c0d0) = {
@@ -11688,7 +11688,7 @@ struct RoomDef gLevel6Stage4Room1 ROOM_DEF(0839c0d0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage4Room1MetatileMap,
     .blockLayer = gLevel6Stage4Room1BlockLayer,
-    .unk10 = gUnk_0839C094,
+    .blockMetatiles = gLevel6Stage4Room1BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -11701,7 +11701,7 @@ struct RoomDef gLevel6Stage4Room1 ROOM_DEF(0839c0d0) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -11721,7 +11721,7 @@ struct RoomDef gLevel6Stage4Room1 ROOM_DEF(0839c0d0) = {
 /* gRoomTable[6][4][2], 0x0839C57C, section .room_def_0839c57c */
 extern u8 gLevel6Stage4Room2MetatileMap[];
 extern u8 gLevel6Stage4Room2BlockLayer[];
-extern u8 gUnk_0839C500[];
+extern u8 gLevel6Stage4Room2BlockMetatiles[];
 extern struct Door gLevel6Stage4Room2Doors[];
 extern u8 gLevel6Stage4Room2Objects[];
 struct RoomDef gLevel6Stage4Room2 ROOM_DEF(0839c57c) = {
@@ -11731,7 +11731,7 @@ struct RoomDef gLevel6Stage4Room2 ROOM_DEF(0839c57c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage4Room2MetatileMap,
     .blockLayer = gLevel6Stage4Room2BlockLayer,
-    .unk10 = gUnk_0839C500,
+    .blockMetatiles = gLevel6Stage4Room2BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0852BD00,
@@ -11744,7 +11744,7 @@ struct RoomDef gLevel6Stage4Room2 ROOM_DEF(0839c57c) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 13,
     .objectsSortedByY = 0,
@@ -11764,7 +11764,7 @@ struct RoomDef gLevel6Stage4Room2 ROOM_DEF(0839c57c) = {
 /* gRoomTable[6][4][3], 0x0839CB34, section .room_def_0839cb34 */
 extern u8 gLevel6Stage4Room3MetatileMap[];
 extern u8 gLevel6Stage4Room3BlockLayer[];
-extern u8 gUnk_0839CA44[];
+extern u8 gLevel6Stage4Room3BlockMetatiles[];
 extern struct Door gLevel6Stage4Room3Doors[];
 extern u8 gLevel6Stage4Room3Objects[];
 struct RoomDef gLevel6Stage4Room3 ROOM_DEF(0839cb34) = {
@@ -11774,7 +11774,7 @@ struct RoomDef gLevel6Stage4Room3 ROOM_DEF(0839cb34) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage4Room3MetatileMap,
     .blockLayer = gLevel6Stage4Room3BlockLayer,
-    .unk10 = gUnk_0839CA44,
+    .blockMetatiles = gLevel6Stage4Room3BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -11787,7 +11787,7 @@ struct RoomDef gLevel6Stage4Room3 ROOM_DEF(0839cb34) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -11807,7 +11807,7 @@ struct RoomDef gLevel6Stage4Room3 ROOM_DEF(0839cb34) = {
 /* gRoomTable[6][4][4], 0x0839CD48, section .room_def_0839cd48 */
 extern u8 gLevel6Stage4Room4MetatileMap[];
 extern u8 gLevel6Stage4Room4BlockLayer[];
-extern u8 gUnk_0839CD00[];
+extern u8 gLevel6Stage4Room4BlockMetatiles[];
 extern struct Door gLevel6Stage4Room4Doors[];
 extern u8 gLevel6Stage4Room4Objects[];
 struct RoomDef gLevel6Stage4Room4 ROOM_DEF(0839cd48) = {
@@ -11817,7 +11817,7 @@ struct RoomDef gLevel6Stage4Room4 ROOM_DEF(0839cd48) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage4Room4MetatileMap,
     .blockLayer = gLevel6Stage4Room4BlockLayer,
-    .unk10 = gUnk_0839CD00,
+    .blockMetatiles = gLevel6Stage4Room4BlockMetatiles,
     .width = 17,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -11830,7 +11830,7 @@ struct RoomDef gLevel6Stage4Room4 ROOM_DEF(0839cd48) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 5,
     .objectsSortedByY = 0,
@@ -11850,7 +11850,7 @@ struct RoomDef gLevel6Stage4Room4 ROOM_DEF(0839cd48) = {
 /* gRoomTable[6][5][0], 0x0839D254, section .room_def_0839d254 */
 extern u8 gLevel6Stage5Room0MetatileMap[];
 extern u8 gLevel6Stage5Room0BlockLayer[];
-extern u8 gUnk_0839D1C8[];
+extern u8 gLevel6Stage5Room0BlockMetatiles[];
 extern struct Door gLevel6Stage5Room0Doors[];
 extern u8 gLevel6Stage5Room0Objects[];
 struct RoomDef gLevel6Stage5Room0 ROOM_DEF(0839d254) = {
@@ -11860,7 +11860,7 @@ struct RoomDef gLevel6Stage5Room0 ROOM_DEF(0839d254) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room0MetatileMap,
     .blockLayer = gLevel6Stage5Room0BlockLayer,
-    .unk10 = gUnk_0839D1C8,
+    .blockMetatiles = gLevel6Stage5Room0BlockMetatiles,
     .width = 80,
     .height = 13,
     .bg2Palette = gUnk_0853E7EC,
@@ -11873,7 +11873,7 @@ struct RoomDef gLevel6Stage5Room0 ROOM_DEF(0839d254) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 15,
     .objectsSortedByY = 0,
@@ -11893,7 +11893,7 @@ struct RoomDef gLevel6Stage5Room0 ROOM_DEF(0839d254) = {
 /* gRoomTable[6][5][1], 0x0839D5B4, section .room_def_0839d5b4 */
 extern u8 gLevel6Stage5Room1MetatileMap[];
 extern u8 gLevel6Stage5Room1BlockLayer[];
-extern u8 gUnk_0839D570[];
+extern u8 gLevel6Stage5Room1BlockMetatiles[];
 extern struct Door gLevel6Stage5Room1Doors[];
 extern u8 gLevel6Stage5Room1Objects[];
 struct RoomDef gLevel6Stage5Room1 ROOM_DEF(0839d5b4) = {
@@ -11903,7 +11903,7 @@ struct RoomDef gLevel6Stage5Room1 ROOM_DEF(0839d5b4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room1MetatileMap,
     .blockLayer = gLevel6Stage5Room1BlockLayer,
-    .unk10 = gUnk_0839D570,
+    .blockMetatiles = gLevel6Stage5Room1BlockMetatiles,
     .width = 50,
     .height = 11,
     .bg2Palette = gUnk_0853E7EC,
@@ -11916,7 +11916,7 @@ struct RoomDef gLevel6Stage5Room1 ROOM_DEF(0839d5b4) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -11936,7 +11936,7 @@ struct RoomDef gLevel6Stage5Room1 ROOM_DEF(0839d5b4) = {
 /* gRoomTable[6][5][2], 0x0839D8BC, section .room_def_0839d8bc */
 extern u8 gLevel6Stage5Room2MetatileMap[];
 extern u8 gLevel6Stage5Room2BlockLayer[];
-extern u8 gUnk_0839D868[];
+extern u8 gLevel6Stage5Room2BlockMetatiles[];
 extern struct Door gLevel6Stage5Room2Doors[];
 extern u8 gLevel6Stage5Room2Objects[];
 struct RoomDef gLevel6Stage5Room2 ROOM_DEF(0839d8bc) = {
@@ -11946,7 +11946,7 @@ struct RoomDef gLevel6Stage5Room2 ROOM_DEF(0839d8bc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room2MetatileMap,
     .blockLayer = gLevel6Stage5Room2BlockLayer,
-    .unk10 = gUnk_0839D868,
+    .blockMetatiles = gLevel6Stage5Room2BlockMetatiles,
     .width = 46,
     .height = 11,
     .bg2Palette = gUnk_0853E7EC,
@@ -11959,7 +11959,7 @@ struct RoomDef gLevel6Stage5Room2 ROOM_DEF(0839d8bc) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 8,
     .objectsSortedByY = 0,
@@ -11979,7 +11979,7 @@ struct RoomDef gLevel6Stage5Room2 ROOM_DEF(0839d8bc) = {
 /* gRoomTable[6][5][3], 0x0839DAFC, section .room_def_0839dafc */
 extern u8 gLevel6Stage5Room3MetatileMap[];
 extern u8 gLevel6Stage5Room3BlockLayer[];
-extern u8 gUnk_0839DAAC[];
+extern u8 gLevel6Stage5Room3BlockMetatiles[];
 extern struct Door gLevel6Stage5Room3Doors[];
 extern u8 gLevel6Stage5Room3Objects[];
 struct RoomDef gLevel6Stage5Room3 ROOM_DEF(0839dafc) = {
@@ -11989,7 +11989,7 @@ struct RoomDef gLevel6Stage5Room3 ROOM_DEF(0839dafc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room3MetatileMap,
     .blockLayer = gLevel6Stage5Room3BlockLayer,
-    .unk10 = gUnk_0839DAAC,
+    .blockMetatiles = gLevel6Stage5Room3BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0853E7EC,
@@ -12002,7 +12002,7 @@ struct RoomDef gLevel6Stage5Room3 ROOM_DEF(0839dafc) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 6,
     .objectsSortedByY = 0,
@@ -12022,7 +12022,7 @@ struct RoomDef gLevel6Stage5Room3 ROOM_DEF(0839dafc) = {
 /* gRoomTable[6][5][4], 0x0839DED4, section .room_def_0839ded4 */
 extern u8 gLevel6Stage5Room4MetatileMap[];
 extern u8 gLevel6Stage5Room4BlockLayer[];
-extern u8 gUnk_0839DE58[];
+extern u8 gLevel6Stage5Room4BlockMetatiles[];
 extern struct Door gLevel6Stage5Room4Doors[];
 extern u8 gLevel6Stage5Room4Objects[];
 struct RoomDef gLevel6Stage5Room4 ROOM_DEF(0839ded4) = {
@@ -12032,7 +12032,7 @@ struct RoomDef gLevel6Stage5Room4 ROOM_DEF(0839ded4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room4MetatileMap,
     .blockLayer = gLevel6Stage5Room4BlockLayer,
-    .unk10 = gUnk_0839DE58,
+    .blockMetatiles = gLevel6Stage5Room4BlockMetatiles,
     .width = 64,
     .height = 13,
     .bg2Palette = gUnk_0853E7EC,
@@ -12045,7 +12045,7 @@ struct RoomDef gLevel6Stage5Room4 ROOM_DEF(0839ded4) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 12,
     .objectsSortedByY = 0,
@@ -12065,7 +12065,7 @@ struct RoomDef gLevel6Stage5Room4 ROOM_DEF(0839ded4) = {
 /* gRoomTable[6][5][5], 0x0839E190, section .room_def_0839e190 */
 extern u8 gLevel6Stage5Room5MetatileMap[];
 extern u8 gLevel6Stage5Room5BlockLayer[];
-extern u8 gUnk_0839E0F4[];
+extern u8 gLevel6Stage5Room5BlockMetatiles[];
 extern struct Door gLevel6Stage5Room5Doors[];
 extern u8 gLevel6Stage5Room5Objects[];
 struct RoomDef gLevel6Stage5Room5 ROOM_DEF(0839e190) = {
@@ -12075,7 +12075,7 @@ struct RoomDef gLevel6Stage5Room5 ROOM_DEF(0839e190) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room5MetatileMap,
     .blockLayer = gLevel6Stage5Room5BlockLayer,
-    .unk10 = gUnk_0839E0F4,
+    .blockMetatiles = gLevel6Stage5Room5BlockMetatiles,
     .width = 33,
     .height = 12,
     .bg2Palette = gUnk_0853E7EC,
@@ -12088,7 +12088,7 @@ struct RoomDef gLevel6Stage5Room5 ROOM_DEF(0839e190) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 9,
     .objectsSortedByY = 0,
@@ -12108,7 +12108,7 @@ struct RoomDef gLevel6Stage5Room5 ROOM_DEF(0839e190) = {
 /* gRoomTable[6][5][6], 0x0839E590, section .room_def_0839e590 */
 extern u8 gLevel6Stage5Room6MetatileMap[];
 extern u8 gLevel6Stage5Room6BlockLayer[];
-extern u8 gUnk_0839E52C[];
+extern u8 gLevel6Stage5Room6BlockMetatiles[];
 extern struct Door gLevel6Stage5Room6Doors[];
 extern u8 gLevel6Stage5Room6Objects[];
 struct RoomDef gLevel6Stage5Room6 ROOM_DEF(0839e590) = {
@@ -12118,7 +12118,7 @@ struct RoomDef gLevel6Stage5Room6 ROOM_DEF(0839e590) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room6MetatileMap,
     .blockLayer = gLevel6Stage5Room6BlockLayer,
-    .unk10 = gUnk_0839E52C,
+    .blockMetatiles = gLevel6Stage5Room6BlockMetatiles,
     .width = 48,
     .height = 13,
     .bg2Palette = gUnk_0853E7EC,
@@ -12131,7 +12131,7 @@ struct RoomDef gLevel6Stage5Room6 ROOM_DEF(0839e590) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 10,
     .objectsSortedByY = 0,
@@ -12151,7 +12151,7 @@ struct RoomDef gLevel6Stage5Room6 ROOM_DEF(0839e590) = {
 /* gRoomTable[6][5][7], 0x0839E944, section .room_def_0839e944 */
 extern u8 gLevel6Stage5Room7MetatileMap[];
 extern u8 gLevel6Stage5Room7BlockLayer[];
-extern u8 gUnk_0839E8BC[];
+extern u8 gLevel6Stage5Room7BlockMetatiles[];
 extern struct Door gLevel6Stage5Room7Doors[];
 extern u8 gLevel6Stage5Room7Objects[];
 struct RoomDef gLevel6Stage5Room7 ROOM_DEF(0839e944) = {
@@ -12161,7 +12161,7 @@ struct RoomDef gLevel6Stage5Room7 ROOM_DEF(0839e944) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room7MetatileMap,
     .blockLayer = gLevel6Stage5Room7BlockLayer,
-    .unk10 = gUnk_0839E8BC,
+    .blockMetatiles = gLevel6Stage5Room7BlockMetatiles,
     .width = 16,
     .height = 38,
     .bg2Palette = gUnk_0853E7EC,
@@ -12174,7 +12174,7 @@ struct RoomDef gLevel6Stage5Room7 ROOM_DEF(0839e944) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 8,
     .objectsSortedByY = 1,
@@ -12194,7 +12194,7 @@ struct RoomDef gLevel6Stage5Room7 ROOM_DEF(0839e944) = {
 /* gRoomTable[6][5][8], 0x0839EBB4, section .room_def_0839ebb4 */
 extern u8 gLevel6Stage5Room8MetatileMap[];
 extern u8 gLevel6Stage5Room8BlockLayer[];
-extern u8 gUnk_0839EB88[];
+extern u8 gLevel6Stage5Room8BlockMetatiles[];
 extern struct Door gLevel6Stage5Room8Doors[];
 extern u8 gLevel6Stage5Room8Objects[];
 struct RoomDef gLevel6Stage5Room8 ROOM_DEF(0839ebb4) = {
@@ -12204,7 +12204,7 @@ struct RoomDef gLevel6Stage5Room8 ROOM_DEF(0839ebb4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage5Room8MetatileMap,
     .blockLayer = gLevel6Stage5Room8BlockLayer,
-    .unk10 = gUnk_0839EB88,
+    .blockMetatiles = gLevel6Stage5Room8BlockMetatiles,
     .width = 16,
     .height = 25,
     .bg2Palette = gUnk_0853E7EC,
@@ -12217,7 +12217,7 @@ struct RoomDef gLevel6Stage5Room8 ROOM_DEF(0839ebb4) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 3,
     .objectsSortedByY = 1,
@@ -12237,7 +12237,7 @@ struct RoomDef gLevel6Stage5Room8 ROOM_DEF(0839ebb4) = {
 /* gRoomTable[6][6][0], 0x0839EE14, section .room_def_0839ee14 */
 extern u8 gLevel6Stage6Room0MetatileMap[];
 extern u8 gLevel6Stage6Room0BlockLayer[];
-extern u8 gUnk_0839EE04[];
+extern u8 gLevel6Stage6Room0BlockMetatiles[];
 extern u8 gLevel6Stage6Room0Objects[];
 struct RoomDef gLevel6Stage6Room0 ROOM_DEF(0839ee14) = {
     .filler00 = { 6, 6, 0, 0 },
@@ -12246,7 +12246,7 @@ struct RoomDef gLevel6Stage6Room0 ROOM_DEF(0839ee14) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel6Stage6Room0MetatileMap,
     .blockLayer = gLevel6Stage6Room0BlockLayer,
-    .unk10 = gUnk_0839EE04,
+    .blockMetatiles = gLevel6Stage6Room0BlockMetatiles,
     .width = 18,
     .height = 21,
     .bg2Palette = gUnk_0852BD00,
@@ -12259,7 +12259,7 @@ struct RoomDef gLevel6Stage6Room0 ROOM_DEF(0839ee14) = {
     .bg3Map = &gUnk_083C89E8,
     .bg3BorderX = 8,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -12279,7 +12279,7 @@ struct RoomDef gLevel6Stage6Room0 ROOM_DEF(0839ee14) = {
 /* gRoomTable[7][0][0], 0x0839F3D8, section .room_def_0839f3d8 */
 extern u8 gLevel7Stage0Room0MetatileMap[];
 extern u8 gLevel7Stage0Room0BlockLayer[];
-extern u8 gUnk_0839F39C[];
+extern u8 gLevel7Stage0Room0BlockMetatiles[];
 extern u8 gLevel7Stage0Room0Objects[];
 struct RoomDef gLevel7Stage0Room0 ROOM_DEF(0839f3d8) = {
     .filler00 = { 7, 0, 0, 0 },
@@ -12288,7 +12288,7 @@ struct RoomDef gLevel7Stage0Room0 ROOM_DEF(0839f3d8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage0Room0MetatileMap,
     .blockLayer = gLevel7Stage0Room0BlockLayer,
-    .unk10 = gUnk_0839F39C,
+    .blockMetatiles = gLevel7Stage0Room0BlockMetatiles,
     .width = 16,
     .height = 68,
     .bg2Palette = gUnk_084BB808,
@@ -12301,7 +12301,7 @@ struct RoomDef gLevel7Stage0Room0 ROOM_DEF(0839f3d8) = {
     .bg3Map = &gLevel7Stage0Room0Bg3Map,
     .bg3BorderX = 0,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -12321,7 +12321,7 @@ struct RoomDef gLevel7Stage0Room0 ROOM_DEF(0839f3d8) = {
 /* gRoomTable[7][0][1], 0x0839F684, section .room_def_0839f684 */
 extern u8 gLevel7Stage0Room1MetatileMap[];
 extern u8 gLevel7Stage0Room1BlockLayer[];
-extern u8 gUnk_0839F668[];
+extern u8 gLevel7Stage0Room1BlockMetatiles[];
 extern struct Door gLevel7Stage0Room1Doors[];
 extern u8 gLevel7Stage0Room1Objects[];
 struct RoomDef gLevel7Stage0Room1 ROOM_DEF(0839f684) = {
@@ -12331,7 +12331,7 @@ struct RoomDef gLevel7Stage0Room1 ROOM_DEF(0839f684) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage0Room1MetatileMap,
     .blockLayer = gLevel7Stage0Room1BlockLayer,
-    .unk10 = gUnk_0839F668,
+    .blockMetatiles = gLevel7Stage0Room1BlockMetatiles,
     .width = 32,
     .height = 24,
     .bg2Palette = gUnk_084BB5C0,
@@ -12344,7 +12344,7 @@ struct RoomDef gLevel7Stage0Room1 ROOM_DEF(0839f684) = {
     .bg3Map = &gLevel7Stage0Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -12364,7 +12364,7 @@ struct RoomDef gLevel7Stage0Room1 ROOM_DEF(0839f684) = {
 /* gRoomTable[7][0][2], 0x0839FC40, section .room_def_0839fc40 */
 extern u8 gLevel7Stage0Room2MetatileMap[];
 extern u8 gLevel7Stage0Room2BlockLayer[];
-extern u8 gUnk_0839FC0C[];
+extern u8 gLevel7Stage0Room2BlockMetatiles[];
 struct RoomDef gLevel7Stage0Room2 ROOM_DEF(0839fc40) = {
     .filler00 = { 7, 0, 2, 0 },
     .bgm = -1,
@@ -12372,7 +12372,7 @@ struct RoomDef gLevel7Stage0Room2 ROOM_DEF(0839fc40) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage0Room2MetatileMap,
     .blockLayer = gLevel7Stage0Room2BlockLayer,
-    .unk10 = gUnk_0839FC0C,
+    .blockMetatiles = gLevel7Stage0Room2BlockMetatiles,
     .width = 16,
     .height = 68,
     .bg2Palette = gUnk_084BB808,
@@ -12385,7 +12385,7 @@ struct RoomDef gLevel7Stage0Room2 ROOM_DEF(0839fc40) = {
     .bg3Map = &gLevel7Stage0Room2Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12405,7 +12405,7 @@ struct RoomDef gLevel7Stage0Room2 ROOM_DEF(0839fc40) = {
 /* gRoomTable[7][2][0], 0x083A0058, section .room_def_083a0058 */
 extern u8 gLevel7Stage2Room0MetatileMap[];
 extern u8 gLevel7Stage2Room0BlockLayer[];
-extern u8 gUnk_0839FFB8[];
+extern u8 gLevel7Stage2Room0BlockMetatiles[];
 extern struct Door gLevel7Stage2Room0Doors[];
 extern u8 gLevel7Stage2Room0Objects[];
 struct RoomDef gLevel7Stage2Room0 ROOM_DEF(083a0058) = {
@@ -12415,7 +12415,7 @@ struct RoomDef gLevel7Stage2Room0 ROOM_DEF(083a0058) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room0MetatileMap,
     .blockLayer = gLevel7Stage2Room0BlockLayer,
-    .unk10 = gUnk_0839FFB8,
+    .blockMetatiles = gLevel7Stage2Room0BlockMetatiles,
     .width = 80,
     .height = 12,
     .bg2Palette = gUnk_0853C698,
@@ -12428,7 +12428,7 @@ struct RoomDef gLevel7Stage2Room0 ROOM_DEF(083a0058) = {
     .bg3Map = &gUnk_083D0148,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 6,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -12448,7 +12448,7 @@ struct RoomDef gLevel7Stage2Room0 ROOM_DEF(083a0058) = {
 /* gRoomTable[7][2][1], 0x083A0370, section .room_def_083a0370 */
 extern u8 gLevel7Stage2Room1MetatileMap[];
 extern u8 gLevel7Stage2Room1BlockLayer[];
-extern u8 gUnk_083A0328[];
+extern u8 gLevel7Stage2Room1BlockMetatiles[];
 extern struct Door gLevel7Stage2Room1Doors[];
 extern u8 gLevel7Stage2Room1Objects[];
 struct RoomDef gLevel7Stage2Room1 ROOM_DEF(083a0370) = {
@@ -12458,7 +12458,7 @@ struct RoomDef gLevel7Stage2Room1 ROOM_DEF(083a0370) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room1MetatileMap,
     .blockLayer = gLevel7Stage2Room1BlockLayer,
-    .unk10 = gUnk_083A0328,
+    .blockMetatiles = gLevel7Stage2Room1BlockMetatiles,
     .width = 64,
     .height = 12,
     .bg2Palette = gUnk_0853C698,
@@ -12471,7 +12471,7 @@ struct RoomDef gLevel7Stage2Room1 ROOM_DEF(083a0370) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -12491,7 +12491,7 @@ struct RoomDef gLevel7Stage2Room1 ROOM_DEF(083a0370) = {
 /* gRoomTable[7][2][2], 0x083A06DC, section .room_def_083a06dc */
 extern u8 gLevel7Stage2Room2MetatileMap[];
 extern u8 gLevel7Stage2Room2BlockLayer[];
-extern u8 gUnk_083A06AC[];
+extern u8 gLevel7Stage2Room2BlockMetatiles[];
 extern struct Door gLevel7Stage2Room2Doors[];
 extern u8 gLevel7Stage2Room2Objects[];
 struct RoomDef gLevel7Stage2Room2 ROOM_DEF(083a06dc) = {
@@ -12501,7 +12501,7 @@ struct RoomDef gLevel7Stage2Room2 ROOM_DEF(083a06dc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room2MetatileMap,
     .blockLayer = gLevel7Stage2Room2BlockLayer,
-    .unk10 = gUnk_083A06AC,
+    .blockMetatiles = gLevel7Stage2Room2BlockMetatiles,
     .width = 64,
     .height = 12,
     .bg2Palette = gUnk_0853C698,
@@ -12514,7 +12514,7 @@ struct RoomDef gLevel7Stage2Room2 ROOM_DEF(083a06dc) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -12534,7 +12534,7 @@ struct RoomDef gLevel7Stage2Room2 ROOM_DEF(083a06dc) = {
 /* gRoomTable[7][2][3], 0x083A0AA0, section .room_def_083a0aa0 */
 extern u8 gLevel7Stage2Room3MetatileMap[];
 extern u8 gLevel7Stage2Room3BlockLayer[];
-extern u8 gUnk_083A0928[];
+extern u8 gLevel7Stage2Room3BlockMetatiles[];
 extern struct Door gLevel7Stage2Room3Doors[];
 extern u8 gLevel7Stage2Room3Objects[];
 struct RoomDef gLevel7Stage2Room3 ROOM_DEF(083a0aa0) = {
@@ -12544,7 +12544,7 @@ struct RoomDef gLevel7Stage2Room3 ROOM_DEF(083a0aa0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room3MetatileMap,
     .blockLayer = gLevel7Stage2Room3BlockLayer,
-    .unk10 = gUnk_083A0928,
+    .blockMetatiles = gLevel7Stage2Room3BlockMetatiles,
     .width = 32,
     .height = 12,
     .bg2Palette = gUnk_0853C698,
@@ -12557,7 +12557,7 @@ struct RoomDef gLevel7Stage2Room3 ROOM_DEF(083a0aa0) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -12577,7 +12577,7 @@ struct RoomDef gLevel7Stage2Room3 ROOM_DEF(083a0aa0) = {
 /* gRoomTable[7][2][4], 0x083A0D2C, section .room_def_083a0d2c */
 extern u8 gLevel7Stage2Room4MetatileMap[];
 extern u8 gLevel7Stage2Room4BlockLayer[];
-extern u8 gUnk_083A0D04[];
+extern u8 gLevel7Stage2Room4BlockMetatiles[];
 extern struct Door gLevel7Stage2Room4Doors[];
 extern u8 gLevel7Stage2Room4Objects[];
 struct RoomDef gLevel7Stage2Room4 ROOM_DEF(083a0d2c) = {
@@ -12587,7 +12587,7 @@ struct RoomDef gLevel7Stage2Room4 ROOM_DEF(083a0d2c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room4MetatileMap,
     .blockLayer = gLevel7Stage2Room4BlockLayer,
-    .unk10 = gUnk_083A0D04,
+    .blockMetatiles = gLevel7Stage2Room4BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0853C698,
@@ -12600,7 +12600,7 @@ struct RoomDef gLevel7Stage2Room4 ROOM_DEF(083a0d2c) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0,
+    .driftObjectIndex = 0,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12620,7 +12620,7 @@ struct RoomDef gLevel7Stage2Room4 ROOM_DEF(083a0d2c) = {
 /* gRoomTable[7][2][5], 0x083A0F00, section .room_def_083a0f00 */
 extern u8 gLevel7Stage2Room5MetatileMap[];
 extern u8 gLevel7Stage2Room5BlockLayer[];
-extern u8 gUnk_083A0EC8[];
+extern u8 gLevel7Stage2Room5BlockMetatiles[];
 extern struct Door gLevel7Stage2Room5Doors[];
 struct RoomDef gLevel7Stage2Room5 ROOM_DEF(083a0f00) = {
     .filler00 = { 7, 2, 5, 0 },
@@ -12629,7 +12629,7 @@ struct RoomDef gLevel7Stage2Room5 ROOM_DEF(083a0f00) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room5MetatileMap,
     .blockLayer = gLevel7Stage2Room5BlockLayer,
-    .unk10 = gUnk_083A0EC8,
+    .blockMetatiles = gLevel7Stage2Room5BlockMetatiles,
     .width = 32,
     .height = 11,
     .bg2Palette = gUnk_0853C698,
@@ -12642,7 +12642,7 @@ struct RoomDef gLevel7Stage2Room5 ROOM_DEF(083a0f00) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12662,7 +12662,7 @@ struct RoomDef gLevel7Stage2Room5 ROOM_DEF(083a0f00) = {
 /* gRoomTable[7][2][6], 0x083A142C, section .room_def_083a142c */
 extern u8 gLevel7Stage2Room6MetatileMap[];
 extern u8 gLevel7Stage2Room6BlockLayer[];
-extern u8 gUnk_083A11E4[];
+extern u8 gLevel7Stage2Room6BlockMetatiles[];
 extern struct Door gLevel7Stage2Room6Doors[];
 extern u8 gLevel7Stage2Room6Objects[];
 struct RoomDef gLevel7Stage2Room6 ROOM_DEF(083a142c) = {
@@ -12672,7 +12672,7 @@ struct RoomDef gLevel7Stage2Room6 ROOM_DEF(083a142c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room6MetatileMap,
     .blockLayer = gLevel7Stage2Room6BlockLayer,
-    .unk10 = gUnk_083A11E4,
+    .blockMetatiles = gLevel7Stage2Room6BlockMetatiles,
     .width = 22,
     .height = 29,
     .bg2Palette = gUnk_0853C698,
@@ -12685,7 +12685,7 @@ struct RoomDef gLevel7Stage2Room6 ROOM_DEF(083a142c) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 8,
     .objectsSortedByY = 1,
@@ -12705,7 +12705,7 @@ struct RoomDef gLevel7Stage2Room6 ROOM_DEF(083a142c) = {
 /* gRoomTable[7][2][7], 0x083A1644, section .room_def_083a1644 */
 extern u8 gLevel7Stage2Room7MetatileMap[];
 extern u8 gLevel7Stage2Room7BlockLayer[];
-extern u8 gUnk_083A1630[];
+extern u8 gLevel7Stage2Room7BlockMetatiles[];
 extern struct Door gLevel7Stage2Room7Doors[];
 struct RoomDef gLevel7Stage2Room7 ROOM_DEF(083a1644) = {
     .filler00 = { 7, 2, 7, 0 },
@@ -12714,7 +12714,7 @@ struct RoomDef gLevel7Stage2Room7 ROOM_DEF(083a1644) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room7MetatileMap,
     .blockLayer = gLevel7Stage2Room7BlockLayer,
-    .unk10 = gUnk_083A1630,
+    .blockMetatiles = gLevel7Stage2Room7BlockMetatiles,
     .width = 41,
     .height = 13,
     .bg2Palette = gUnk_0853C698,
@@ -12727,7 +12727,7 @@ struct RoomDef gLevel7Stage2Room7 ROOM_DEF(083a1644) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12747,7 +12747,7 @@ struct RoomDef gLevel7Stage2Room7 ROOM_DEF(083a1644) = {
 /* gRoomTable[7][2][8], 0x083A17CC, section .room_def_083a17cc */
 extern u8 gLevel7Stage2Room8MetatileMap[];
 extern u8 gLevel7Stage2Room8BlockLayer[];
-extern u8 gUnk_083A17A8[];
+extern u8 gLevel7Stage2Room8BlockMetatiles[];
 extern struct Door gLevel7Stage2Room8Doors[];
 extern u8 gLevel7Stage2Room8Objects[];
 struct RoomDef gLevel7Stage2Room8 ROOM_DEF(083a17cc) = {
@@ -12757,7 +12757,7 @@ struct RoomDef gLevel7Stage2Room8 ROOM_DEF(083a17cc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room8MetatileMap,
     .blockLayer = gLevel7Stage2Room8BlockLayer,
-    .unk10 = gUnk_083A17A8,
+    .blockMetatiles = gLevel7Stage2Room8BlockMetatiles,
     .width = 31,
     .height = 11,
     .bg2Palette = gUnk_0853C698,
@@ -12770,7 +12770,7 @@ struct RoomDef gLevel7Stage2Room8 ROOM_DEF(083a17cc) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -12790,7 +12790,7 @@ struct RoomDef gLevel7Stage2Room8 ROOM_DEF(083a17cc) = {
 /* gRoomTable[7][2][9], 0x083A1B64, section .room_def_083a1b64 */
 extern u8 gLevel7Stage2Room9MetatileMap[];
 extern u8 gLevel7Stage2Room9BlockLayer[];
-extern u8 gUnk_083A1B5C[];
+extern u8 gLevel7Stage2Room9BlockMetatiles[];
 struct RoomDef gLevel7Stage2Room9 ROOM_DEF(083a1b64) = {
     .filler00 = { 7, 2, 9, 0 },
     .bgm = -1,
@@ -12798,7 +12798,7 @@ struct RoomDef gLevel7Stage2Room9 ROOM_DEF(083a1b64) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room9MetatileMap,
     .blockLayer = gLevel7Stage2Room9BlockLayer,
-    .unk10 = gUnk_083A1B5C,
+    .blockMetatiles = gLevel7Stage2Room9BlockMetatiles,
     .width = 50,
     .height = 16,
     .bg2Palette = gUnk_0853C698,
@@ -12811,7 +12811,7 @@ struct RoomDef gLevel7Stage2Room9 ROOM_DEF(083a1b64) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12831,7 +12831,7 @@ struct RoomDef gLevel7Stage2Room9 ROOM_DEF(083a1b64) = {
 /* gRoomTable[7][2][10], 0x083A1FD8, section .room_def_083a1fd8 */
 extern u8 gLevel7Stage2Room10MetatileMap[];
 extern u8 gLevel7Stage2Room10BlockLayer[];
-extern u8 gUnk_083A1FD0[];
+extern u8 gLevel7Stage2Room10BlockMetatiles[];
 struct RoomDef gLevel7Stage2Room10 ROOM_DEF(083a1fd8) = {
     .filler00 = { 7, 2, 10, 0 },
     .bgm = -1,
@@ -12839,7 +12839,7 @@ struct RoomDef gLevel7Stage2Room10 ROOM_DEF(083a1fd8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel7Stage2Room10MetatileMap,
     .blockLayer = gLevel7Stage2Room10BlockLayer,
-    .unk10 = gUnk_083A1FD0,
+    .blockMetatiles = gLevel7Stage2Room10BlockMetatiles,
     .width = 100,
     .height = 13,
     .bg2Palette = gUnk_0853C698,
@@ -12852,7 +12852,7 @@ struct RoomDef gLevel7Stage2Room10 ROOM_DEF(083a1fd8) = {
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12872,7 +12872,7 @@ struct RoomDef gLevel7Stage2Room10 ROOM_DEF(083a1fd8) = {
 /* gRoomTable[8][0][0], 0x083A24F0, section .room_def_083a24f0 */
 extern u8 gLevel8Stage0Room0MetatileMap[];
 extern u8 gLevel8Stage0Room0BlockLayer[];
-extern u8 gUnk_083A2464[];
+extern u8 gLevel8Stage0Room0BlockMetatiles[];
 extern struct Door gLevel8Stage0Room0Doors[];
 struct RoomDef gLevel8Stage0Room0 ROOM_DEF(083a24f0) = {
     .filler00 = { 8, 0, 0, 0 },
@@ -12881,7 +12881,7 @@ struct RoomDef gLevel8Stage0Room0 ROOM_DEF(083a24f0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage0Room0MetatileMap,
     .blockLayer = gLevel8Stage0Room0BlockLayer,
-    .unk10 = gUnk_083A2464,
+    .blockMetatiles = gLevel8Stage0Room0BlockMetatiles,
     .width = 32,
     .height = 22,
     .bg2Palette = gUnk_0853D600,
@@ -12894,7 +12894,7 @@ struct RoomDef gLevel8Stage0Room0 ROOM_DEF(083a24f0) = {
     .bg3Map = &gUnk_083BC030,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 11,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12914,7 +12914,7 @@ struct RoomDef gLevel8Stage0Room0 ROOM_DEF(083a24f0) = {
 /* gRoomTable[8][0][1], 0x083A2578, section .room_def_083a2578 */
 extern u8 gLevel8Stage0Room1MetatileMap[];
 extern u8 gLevel8Stage0Room1BlockLayer[];
-extern u8 gUnk_083A2560[];
+extern u8 gLevel8Stage0Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage0Room1 ROOM_DEF(083a2578) = {
     .filler00 = { 8, 0, 1, 0 },
     .bgm = 4,
@@ -12922,7 +12922,7 @@ struct RoomDef gLevel8Stage0Room1 ROOM_DEF(083a2578) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage0Room1MetatileMap,
     .blockLayer = gLevel8Stage0Room1BlockLayer,
-    .unk10 = gUnk_083A2560,
+    .blockMetatiles = gLevel8Stage0Room1BlockMetatiles,
     .width = 2,
     .height = 2,
     .bg2Palette = gUnk_0853D600,
@@ -12935,7 +12935,7 @@ struct RoomDef gLevel8Stage0Room1 ROOM_DEF(083a2578) = {
     .bg3Map = &gUnk_083BC030,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -12955,7 +12955,7 @@ struct RoomDef gLevel8Stage0Room1 ROOM_DEF(083a2578) = {
 /* gRoomTable[8][0][2], 0x083A2694, section .room_def_083a2694 */
 extern u8 gLevel8Stage0Room2MetatileMap[];
 extern u8 gLevel8Stage0Room2BlockLayer[];
-extern u8 gUnk_083A2678[];
+extern u8 gLevel8Stage0Room2BlockMetatiles[];
 extern struct Door gLevel8Stage0Room2Doors[];
 extern u8 gLevel8Stage0Room2Objects[];
 struct RoomDef gLevel8Stage0Room2 ROOM_DEF(083a2694) = {
@@ -12965,7 +12965,7 @@ struct RoomDef gLevel8Stage0Room2 ROOM_DEF(083a2694) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage0Room2MetatileMap,
     .blockLayer = gLevel8Stage0Room2BlockLayer,
-    .unk10 = gUnk_083A2678,
+    .blockMetatiles = gLevel8Stage0Room2BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_084BB5C0,
@@ -12978,7 +12978,7 @@ struct RoomDef gLevel8Stage0Room2 ROOM_DEF(083a2694) = {
     .bg3Map = &gLevel8Stage0Room2Bg3Map,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -12998,7 +12998,7 @@ struct RoomDef gLevel8Stage0Room2 ROOM_DEF(083a2694) = {
 /* gRoomTable[8][0][3], 0x083A291C, section .room_def_083a291c */
 extern u8 gLevel8Stage0Room3MetatileMap[];
 extern u8 gLevel8Stage0Room3BlockLayer[];
-extern u8 gUnk_083A28D8[];
+extern u8 gLevel8Stage0Room3BlockMetatiles[];
 extern struct Door gLevel8Stage0Room3Doors[];
 extern u8 gLevel8Stage0Room3Objects[];
 struct RoomDef gLevel8Stage0Room3 ROOM_DEF(083a291c) = {
@@ -13008,7 +13008,7 @@ struct RoomDef gLevel8Stage0Room3 ROOM_DEF(083a291c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage0Room3MetatileMap,
     .blockLayer = gLevel8Stage0Room3BlockLayer,
-    .unk10 = gUnk_083A28D8,
+    .blockMetatiles = gLevel8Stage0Room3BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0849A940,
@@ -13021,7 +13021,7 @@ struct RoomDef gLevel8Stage0Room3 ROOM_DEF(083a291c) = {
     .bg3Map = &gUnk_08505C24,
     .bg3BorderX = 16,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -13041,7 +13041,7 @@ struct RoomDef gLevel8Stage0Room3 ROOM_DEF(083a291c) = {
 /* gRoomTable[8][0][4], 0x083A2AC4, section .room_def_083a2ac4 */
 extern u8 gLevel8Stage0Room4MetatileMap[];
 extern u8 gLevel8Stage0Room4BlockLayer[];
-extern u8 gUnk_083A2ABC[];
+extern u8 gLevel8Stage0Room4BlockMetatiles[];
 struct RoomDef gLevel8Stage0Room4 ROOM_DEF(083a2ac4) = {
     .filler00 = { 8, 0, 4, 0 },
     .bgm = 0,
@@ -13049,7 +13049,7 @@ struct RoomDef gLevel8Stage0Room4 ROOM_DEF(083a2ac4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage0Room4MetatileMap,
     .blockLayer = gLevel8Stage0Room4BlockLayer,
-    .unk10 = gUnk_083A2ABC,
+    .blockMetatiles = gLevel8Stage0Room4BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853D12C,
@@ -13062,7 +13062,7 @@ struct RoomDef gLevel8Stage0Room4 ROOM_DEF(083a2ac4) = {
     .bg3Map = &gUnk_083CAF40,
     .bg3BorderX = 0,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13082,7 +13082,7 @@ struct RoomDef gLevel8Stage0Room4 ROOM_DEF(083a2ac4) = {
 /* gRoomTable[8][1][0], 0x083A32BC, section .room_def_083a32bc */
 extern u8 gLevel8Stage1Room0MetatileMap[];
 extern u8 gLevel8Stage1Room0BlockLayer[];
-extern u8 gUnk_083A3200[];
+extern u8 gLevel8Stage1Room0BlockMetatiles[];
 extern struct Door gLevel8Stage1Room0Doors[];
 struct RoomDef gLevel8Stage1Room0 ROOM_DEF(083a32bc) = {
     .filler00 = { 8, 1, 0, 0 },
@@ -13091,7 +13091,7 @@ struct RoomDef gLevel8Stage1Room0 ROOM_DEF(083a32bc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage1Room0MetatileMap,
     .blockLayer = gLevel8Stage1Room0BlockLayer,
-    .unk10 = gUnk_083A3200,
+    .blockMetatiles = gLevel8Stage1Room0BlockMetatiles,
     .width = 48,
     .height = 23,
     .bg2Palette = gUnk_0853D6C4,
@@ -13104,7 +13104,7 @@ struct RoomDef gLevel8Stage1Room0 ROOM_DEF(083a32bc) = {
     .bg3Map = &gUnk_083BD638,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 15,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13124,7 +13124,7 @@ struct RoomDef gLevel8Stage1Room0 ROOM_DEF(083a32bc) = {
 /* gRoomTable[8][1][1], 0x083A3344, section .room_def_083a3344 */
 extern u8 gLevel8Stage1Room1MetatileMap[];
 extern u8 gLevel8Stage1Room1BlockLayer[];
-extern u8 gUnk_083A332C[];
+extern u8 gLevel8Stage1Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage1Room1 ROOM_DEF(083a3344) = {
     .filler00 = { 8, 1, 1, 0 },
     .bgm = 5,
@@ -13132,7 +13132,7 @@ struct RoomDef gLevel8Stage1Room1 ROOM_DEF(083a3344) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage1Room1MetatileMap,
     .blockLayer = gLevel8Stage1Room1BlockLayer,
-    .unk10 = gUnk_083A332C,
+    .blockMetatiles = gLevel8Stage1Room1BlockMetatiles,
     .width = 2,
     .height = 2,
     .bg2Palette = gUnk_0853D6C4,
@@ -13145,7 +13145,7 @@ struct RoomDef gLevel8Stage1Room1 ROOM_DEF(083a3344) = {
     .bg3Map = &gUnk_083BD638,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13165,7 +13165,7 @@ struct RoomDef gLevel8Stage1Room1 ROOM_DEF(083a3344) = {
 /* gRoomTable[8][1][2], 0x083A34E4, section .room_def_083a34e4 */
 extern u8 gLevel8Stage1Room2MetatileMap[];
 extern u8 gLevel8Stage1Room2BlockLayer[];
-extern u8 gUnk_083A34AC[];
+extern u8 gLevel8Stage1Room2BlockMetatiles[];
 extern struct Door gLevel8Stage1Room2Doors[];
 extern u8 gLevel8Stage1Room2Objects[];
 struct RoomDef gLevel8Stage1Room2 ROOM_DEF(083a34e4) = {
@@ -13175,7 +13175,7 @@ struct RoomDef gLevel8Stage1Room2 ROOM_DEF(083a34e4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage1Room2MetatileMap,
     .blockLayer = gLevel8Stage1Room2BlockLayer,
-    .unk10 = gUnk_083A34AC,
+    .blockMetatiles = gLevel8Stage1Room2BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_084E56DC,
@@ -13188,7 +13188,7 @@ struct RoomDef gLevel8Stage1Room2 ROOM_DEF(083a34e4) = {
     .bg3Map = &gUnk_084E5928,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -13208,7 +13208,7 @@ struct RoomDef gLevel8Stage1Room2 ROOM_DEF(083a34e4) = {
 /* gRoomTable[8][1][3], 0x083A360C, section .room_def_083a360c */
 extern u8 gLevel8Stage1Room3MetatileMap[];
 extern u8 gLevel8Stage1Room3BlockLayer[];
-extern u8 gUnk_083A35E8[];
+extern u8 gLevel8Stage1Room3BlockMetatiles[];
 extern struct Door gLevel8Stage1Room3Doors[];
 extern u8 gLevel8Stage1Room3Objects[];
 struct RoomDef gLevel8Stage1Room3 ROOM_DEF(083a360c) = {
@@ -13218,7 +13218,7 @@ struct RoomDef gLevel8Stage1Room3 ROOM_DEF(083a360c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage1Room3MetatileMap,
     .blockLayer = gLevel8Stage1Room3BlockLayer,
-    .unk10 = gUnk_083A35E8,
+    .blockMetatiles = gLevel8Stage1Room3BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_084BB5C0,
@@ -13231,7 +13231,7 @@ struct RoomDef gLevel8Stage1Room3 ROOM_DEF(083a360c) = {
     .bg3Map = &gLevel8Stage1Room3Bg3Map,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -13251,7 +13251,7 @@ struct RoomDef gLevel8Stage1Room3 ROOM_DEF(083a360c) = {
 /* gRoomTable[8][1][4], 0x083A38FC, section .room_def_083a38fc */
 extern u8 gLevel8Stage1Room4MetatileMap[];
 extern u8 gLevel8Stage1Room4BlockLayer[];
-extern u8 gUnk_083A38AC[];
+extern u8 gLevel8Stage1Room4BlockMetatiles[];
 extern struct Door gLevel8Stage1Room4Doors[];
 extern u8 gLevel8Stage1Room4Objects[];
 struct RoomDef gLevel8Stage1Room4 ROOM_DEF(083a38fc) = {
@@ -13261,7 +13261,7 @@ struct RoomDef gLevel8Stage1Room4 ROOM_DEF(083a38fc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage1Room4MetatileMap,
     .blockLayer = gLevel8Stage1Room4BlockLayer,
-    .unk10 = gUnk_083A38AC,
+    .blockMetatiles = gLevel8Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0853E318,
@@ -13274,7 +13274,7 @@ struct RoomDef gLevel8Stage1Room4 ROOM_DEF(083a38fc) = {
     .bg3Map = &gUnk_08505C24,
     .bg3BorderX = 16,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 2,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -13294,7 +13294,7 @@ struct RoomDef gLevel8Stage1Room4 ROOM_DEF(083a38fc) = {
 /* gRoomTable[8][1][5], 0x083A3A74, section .room_def_083a3a74 */
 extern u8 gLevel8Stage1Room5MetatileMap[];
 extern u8 gLevel8Stage1Room5BlockLayer[];
-extern u8 gUnk_083A3A6C[];
+extern u8 gLevel8Stage1Room5BlockMetatiles[];
 struct RoomDef gLevel8Stage1Room5 ROOM_DEF(083a3a74) = {
     .filler00 = { 8, 1, 5, 0 },
     .bgm = 0,
@@ -13302,7 +13302,7 @@ struct RoomDef gLevel8Stage1Room5 ROOM_DEF(083a3a74) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage1Room5MetatileMap,
     .blockLayer = gLevel8Stage1Room5BlockLayer,
-    .unk10 = gUnk_083A3A6C,
+    .blockMetatiles = gLevel8Stage1Room5BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_0853E318,
@@ -13315,7 +13315,7 @@ struct RoomDef gLevel8Stage1Room5 ROOM_DEF(083a3a74) = {
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13335,7 +13335,7 @@ struct RoomDef gLevel8Stage1Room5 ROOM_DEF(083a3a74) = {
 /* gRoomTable[8][2][0], 0x083A3FF4, section .room_def_083a3ff4 */
 extern u8 gLevel8Stage2Room0MetatileMap[];
 extern u8 gLevel8Stage2Room0BlockLayer[];
-extern u8 gUnk_083A3F2C[];
+extern u8 gLevel8Stage2Room0BlockMetatiles[];
 extern struct Door gLevel8Stage2Room0Doors[];
 struct RoomDef gLevel8Stage2Room0 ROOM_DEF(083a3ff4) = {
     .filler00 = { 8, 2, 0, 0 },
@@ -13344,7 +13344,7 @@ struct RoomDef gLevel8Stage2Room0 ROOM_DEF(083a3ff4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage2Room0MetatileMap,
     .blockLayer = gLevel8Stage2Room0BlockLayer,
-    .unk10 = gUnk_083A3F2C,
+    .blockMetatiles = gLevel8Stage2Room0BlockMetatiles,
     .width = 16,
     .height = 47,
     .bg2Palette = gUnk_08539C88,
@@ -13357,7 +13357,7 @@ struct RoomDef gLevel8Stage2Room0 ROOM_DEF(083a3ff4) = {
     .bg3Map = &gUnk_083BF8C0,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 16,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13377,7 +13377,7 @@ struct RoomDef gLevel8Stage2Room0 ROOM_DEF(083a3ff4) = {
 /* gRoomTable[8][2][1], 0x083A407C, section .room_def_083a407c */
 extern u8 gLevel8Stage2Room1MetatileMap[];
 extern u8 gLevel8Stage2Room1BlockLayer[];
-extern u8 gUnk_083A4064[];
+extern u8 gLevel8Stage2Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage2Room1 ROOM_DEF(083a407c) = {
     .filler00 = { 8, 2, 1, 0 },
     .bgm = 6,
@@ -13385,7 +13385,7 @@ struct RoomDef gLevel8Stage2Room1 ROOM_DEF(083a407c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage2Room1MetatileMap,
     .blockLayer = gLevel8Stage2Room1BlockLayer,
-    .unk10 = gUnk_083A4064,
+    .blockMetatiles = gLevel8Stage2Room1BlockMetatiles,
     .width = 2,
     .height = 2,
     .bg2Palette = gUnk_08539C88,
@@ -13398,7 +13398,7 @@ struct RoomDef gLevel8Stage2Room1 ROOM_DEF(083a407c) = {
     .bg3Map = &gUnk_083BF8C0,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13418,7 +13418,7 @@ struct RoomDef gLevel8Stage2Room1 ROOM_DEF(083a407c) = {
 /* gRoomTable[8][2][2], 0x083A421C, section .room_def_083a421c */
 extern u8 gLevel8Stage2Room2MetatileMap[];
 extern u8 gLevel8Stage2Room2BlockLayer[];
-extern u8 gUnk_083A41E4[];
+extern u8 gLevel8Stage2Room2BlockMetatiles[];
 extern struct Door gLevel8Stage2Room2Doors[];
 extern u8 gLevel8Stage2Room2Objects[];
 struct RoomDef gLevel8Stage2Room2 ROOM_DEF(083a421c) = {
@@ -13428,7 +13428,7 @@ struct RoomDef gLevel8Stage2Room2 ROOM_DEF(083a421c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage2Room2MetatileMap,
     .blockLayer = gLevel8Stage2Room2BlockLayer,
-    .unk10 = gUnk_083A41E4,
+    .blockMetatiles = gLevel8Stage2Room2BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_084E56DC,
@@ -13441,7 +13441,7 @@ struct RoomDef gLevel8Stage2Room2 ROOM_DEF(083a421c) = {
     .bg3Map = &gUnk_084E5928,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -13461,7 +13461,7 @@ struct RoomDef gLevel8Stage2Room2 ROOM_DEF(083a421c) = {
 /* gRoomTable[8][2][3], 0x083A433C, section .room_def_083a433c */
 extern u8 gLevel8Stage2Room3MetatileMap[];
 extern u8 gLevel8Stage2Room3BlockLayer[];
-extern u8 gUnk_083A4320[];
+extern u8 gLevel8Stage2Room3BlockMetatiles[];
 extern struct Door gLevel8Stage2Room3Doors[];
 extern u8 gLevel8Stage2Room3Objects[];
 struct RoomDef gLevel8Stage2Room3 ROOM_DEF(083a433c) = {
@@ -13471,7 +13471,7 @@ struct RoomDef gLevel8Stage2Room3 ROOM_DEF(083a433c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage2Room3MetatileMap,
     .blockLayer = gLevel8Stage2Room3BlockLayer,
-    .unk10 = gUnk_083A4320,
+    .blockMetatiles = gLevel8Stage2Room3BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_084BB5C0,
@@ -13484,7 +13484,7 @@ struct RoomDef gLevel8Stage2Room3 ROOM_DEF(083a433c) = {
     .bg3Map = &gLevel8Stage2Room3Bg3Map,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -13504,7 +13504,7 @@ struct RoomDef gLevel8Stage2Room3 ROOM_DEF(083a433c) = {
 /* gRoomTable[8][2][4], 0x083A45DC, section .room_def_083a45dc */
 extern u8 gLevel8Stage2Room4MetatileMap[];
 extern u8 gLevel8Stage2Room4BlockLayer[];
-extern u8 gUnk_083A4598[];
+extern u8 gLevel8Stage2Room4BlockMetatiles[];
 extern struct Door gLevel8Stage2Room4Doors[];
 extern u8 gLevel8Stage2Room4Objects[];
 struct RoomDef gLevel8Stage2Room4 ROOM_DEF(083a45dc) = {
@@ -13514,7 +13514,7 @@ struct RoomDef gLevel8Stage2Room4 ROOM_DEF(083a45dc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage2Room4MetatileMap,
     .blockLayer = gLevel8Stage2Room4BlockLayer,
-    .unk10 = gUnk_083A4598,
+    .blockMetatiles = gLevel8Stage2Room4BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0853DBB8,
@@ -13527,7 +13527,7 @@ struct RoomDef gLevel8Stage2Room4 ROOM_DEF(083a45dc) = {
     .bg3Map = &gUnk_08505C24,
     .bg3BorderX = 16,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -13547,7 +13547,7 @@ struct RoomDef gLevel8Stage2Room4 ROOM_DEF(083a45dc) = {
 /* gRoomTable[8][2][5], 0x083A46FC, section .room_def_083a46fc */
 extern u8 gLevel8Stage2Room5MetatileMap[];
 extern u8 gLevel8Stage2Room5BlockLayer[];
-extern u8 gUnk_083A46F4[];
+extern u8 gLevel8Stage2Room5BlockMetatiles[];
 struct RoomDef gLevel8Stage2Room5 ROOM_DEF(083a46fc) = {
     .filler00 = { 8, 2, 5, 0 },
     .bgm = 0,
@@ -13555,7 +13555,7 @@ struct RoomDef gLevel8Stage2Room5 ROOM_DEF(083a46fc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage2Room5MetatileMap,
     .blockLayer = gLevel8Stage2Room5BlockLayer,
-    .unk10 = gUnk_083A46F4,
+    .blockMetatiles = gLevel8Stage2Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853DBB8,
@@ -13568,7 +13568,7 @@ struct RoomDef gLevel8Stage2Room5 ROOM_DEF(083a46fc) = {
     .bg3Map = &gUnk_083B9C18,
     .bg3BorderX = 0,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13588,7 +13588,7 @@ struct RoomDef gLevel8Stage2Room5 ROOM_DEF(083a46fc) = {
 /* gRoomTable[8][3][0], 0x083A4D80, section .room_def_083a4d80 */
 extern u8 gLevel8Stage3Room0MetatileMap[];
 extern u8 gLevel8Stage3Room0BlockLayer[];
-extern u8 gUnk_083A4CB8[];
+extern u8 gLevel8Stage3Room0BlockMetatiles[];
 extern struct Door gLevel8Stage3Room0Doors[];
 struct RoomDef gLevel8Stage3Room0 ROOM_DEF(083a4d80) = {
     .filler00 = { 8, 3, 0, 0 },
@@ -13597,7 +13597,7 @@ struct RoomDef gLevel8Stage3Room0 ROOM_DEF(083a4d80) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage3Room0MetatileMap,
     .blockLayer = gLevel8Stage3Room0BlockLayer,
-    .unk10 = gUnk_083A4CB8,
+    .blockMetatiles = gLevel8Stage3Room0BlockMetatiles,
     .width = 48,
     .height = 23,
     .bg2Palette = gUnk_08539D8C,
@@ -13610,7 +13610,7 @@ struct RoomDef gLevel8Stage3Room0 ROOM_DEF(083a4d80) = {
     .bg3Map = &gUnk_083C0E48,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 16,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13630,7 +13630,7 @@ struct RoomDef gLevel8Stage3Room0 ROOM_DEF(083a4d80) = {
 /* gRoomTable[8][3][1], 0x083A4E08, section .room_def_083a4e08 */
 extern u8 gLevel8Stage3Room1MetatileMap[];
 extern u8 gLevel8Stage3Room1BlockLayer[];
-extern u8 gUnk_083A4DF0[];
+extern u8 gLevel8Stage3Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage3Room1 ROOM_DEF(083a4e08) = {
     .filler00 = { 8, 3, 1, 0 },
     .bgm = 7,
@@ -13638,7 +13638,7 @@ struct RoomDef gLevel8Stage3Room1 ROOM_DEF(083a4e08) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage3Room1MetatileMap,
     .blockLayer = gLevel8Stage3Room1BlockLayer,
-    .unk10 = gUnk_083A4DF0,
+    .blockMetatiles = gLevel8Stage3Room1BlockMetatiles,
     .width = 2,
     .height = 2,
     .bg2Palette = gUnk_08539D8C,
@@ -13651,7 +13651,7 @@ struct RoomDef gLevel8Stage3Room1 ROOM_DEF(083a4e08) = {
     .bg3Map = &gUnk_083C0E48,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13671,7 +13671,7 @@ struct RoomDef gLevel8Stage3Room1 ROOM_DEF(083a4e08) = {
 /* gRoomTable[8][3][2], 0x083A4FA8, section .room_def_083a4fa8 */
 extern u8 gLevel8Stage3Room2MetatileMap[];
 extern u8 gLevel8Stage3Room2BlockLayer[];
-extern u8 gUnk_083A4F70[];
+extern u8 gLevel8Stage3Room2BlockMetatiles[];
 extern struct Door gLevel8Stage3Room2Doors[];
 extern u8 gLevel8Stage3Room2Objects[];
 struct RoomDef gLevel8Stage3Room2 ROOM_DEF(083a4fa8) = {
@@ -13681,7 +13681,7 @@ struct RoomDef gLevel8Stage3Room2 ROOM_DEF(083a4fa8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage3Room2MetatileMap,
     .blockLayer = gLevel8Stage3Room2BlockLayer,
-    .unk10 = gUnk_083A4F70,
+    .blockMetatiles = gLevel8Stage3Room2BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_084E56DC,
@@ -13694,7 +13694,7 @@ struct RoomDef gLevel8Stage3Room2 ROOM_DEF(083a4fa8) = {
     .bg3Map = &gUnk_084E5928,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -13714,7 +13714,7 @@ struct RoomDef gLevel8Stage3Room2 ROOM_DEF(083a4fa8) = {
 /* gRoomTable[8][3][3], 0x083A50D0, section .room_def_083a50d0 */
 extern u8 gLevel8Stage3Room3MetatileMap[];
 extern u8 gLevel8Stage3Room3BlockLayer[];
-extern u8 gUnk_083A50AC[];
+extern u8 gLevel8Stage3Room3BlockMetatiles[];
 extern struct Door gLevel8Stage3Room3Doors[];
 extern u8 gLevel8Stage3Room3Objects[];
 struct RoomDef gLevel8Stage3Room3 ROOM_DEF(083a50d0) = {
@@ -13724,7 +13724,7 @@ struct RoomDef gLevel8Stage3Room3 ROOM_DEF(083a50d0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage3Room3MetatileMap,
     .blockLayer = gLevel8Stage3Room3BlockLayer,
-    .unk10 = gUnk_083A50AC,
+    .blockMetatiles = gLevel8Stage3Room3BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_084BB5C0,
@@ -13737,7 +13737,7 @@ struct RoomDef gLevel8Stage3Room3 ROOM_DEF(083a50d0) = {
     .bg3Map = &gLevel8Stage3Room3Bg3Map,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -13757,7 +13757,7 @@ struct RoomDef gLevel8Stage3Room3 ROOM_DEF(083a50d0) = {
 /* gRoomTable[8][3][4], 0x083A5354, section .room_def_083a5354 */
 extern u8 gLevel8Stage3Room4MetatileMap[];
 extern u8 gLevel8Stage3Room4BlockLayer[];
-extern u8 gUnk_083A5310[];
+extern u8 gLevel8Stage3Room4BlockMetatiles[];
 extern struct Door gLevel8Stage3Room4Doors[];
 extern u8 gLevel8Stage3Room4Objects[];
 struct RoomDef gLevel8Stage3Room4 ROOM_DEF(083a5354) = {
@@ -13767,7 +13767,7 @@ struct RoomDef gLevel8Stage3Room4 ROOM_DEF(083a5354) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage3Room4MetatileMap,
     .blockLayer = gLevel8Stage3Room4BlockLayer,
-    .unk10 = gUnk_083A5310,
+    .blockMetatiles = gLevel8Stage3Room4BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0835D548,
@@ -13780,7 +13780,7 @@ struct RoomDef gLevel8Stage3Room4 ROOM_DEF(083a5354) = {
     .bg3Map = &gUnk_08505C24,
     .bg3BorderX = 16,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -13800,7 +13800,7 @@ struct RoomDef gLevel8Stage3Room4 ROOM_DEF(083a5354) = {
 /* gRoomTable[8][3][5], 0x083A5480, section .room_def_083a5480 */
 extern u8 gLevel8Stage3Room5MetatileMap[];
 extern u8 gLevel8Stage3Room5BlockLayer[];
-extern u8 gUnk_083A5478[];
+extern u8 gLevel8Stage3Room5BlockMetatiles[];
 struct RoomDef gLevel8Stage3Room5 ROOM_DEF(083a5480) = {
     .filler00 = { 8, 3, 5, 0 },
     .bgm = 0,
@@ -13808,7 +13808,7 @@ struct RoomDef gLevel8Stage3Room5 ROOM_DEF(083a5480) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage3Room5MetatileMap,
     .blockLayer = gLevel8Stage3Room5BlockLayer,
-    .unk10 = gUnk_083A5478,
+    .blockMetatiles = gLevel8Stage3Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0835D548,
@@ -13821,7 +13821,7 @@ struct RoomDef gLevel8Stage3Room5 ROOM_DEF(083a5480) = {
     .bg3Map = &gUnk_083BA534,
     .bg3BorderX = 0,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13841,7 +13841,7 @@ struct RoomDef gLevel8Stage3Room5 ROOM_DEF(083a5480) = {
 /* gRoomTable[8][4][0], 0x083A5BE8, section .room_def_083a5be8 */
 extern u8 gLevel8Stage4Room0MetatileMap[];
 extern u8 gLevel8Stage4Room0BlockLayer[];
-extern u8 gUnk_083A5B14[];
+extern u8 gLevel8Stage4Room0BlockMetatiles[];
 extern struct Door gLevel8Stage4Room0Doors[];
 struct RoomDef gLevel8Stage4Room0 ROOM_DEF(083a5be8) = {
     .filler00 = { 8, 4, 0, 0 },
@@ -13850,7 +13850,7 @@ struct RoomDef gLevel8Stage4Room0 ROOM_DEF(083a5be8) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage4Room0MetatileMap,
     .blockLayer = gLevel8Stage4Room0BlockLayer,
-    .unk10 = gUnk_083A5B14,
+    .blockMetatiles = gLevel8Stage4Room0BlockMetatiles,
     .width = 48,
     .height = 23,
     .bg2Palette = gUnk_0853D7C8,
@@ -13863,7 +13863,7 @@ struct RoomDef gLevel8Stage4Room0 ROOM_DEF(083a5be8) = {
     .bg3Map = &gUnk_083C2DD0,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 17,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13883,7 +13883,7 @@ struct RoomDef gLevel8Stage4Room0 ROOM_DEF(083a5be8) = {
 /* gRoomTable[8][4][1], 0x083A5C70, section .room_def_083a5c70 */
 extern u8 gLevel8Stage4Room1MetatileMap[];
 extern u8 gLevel8Stage4Room1BlockLayer[];
-extern u8 gUnk_083A5C58[];
+extern u8 gLevel8Stage4Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage4Room1 ROOM_DEF(083a5c70) = {
     .filler00 = { 8, 4, 1, 0 },
     .bgm = 8,
@@ -13891,7 +13891,7 @@ struct RoomDef gLevel8Stage4Room1 ROOM_DEF(083a5c70) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage4Room1MetatileMap,
     .blockLayer = gLevel8Stage4Room1BlockLayer,
-    .unk10 = gUnk_083A5C58,
+    .blockMetatiles = gLevel8Stage4Room1BlockMetatiles,
     .width = 2,
     .height = 2,
     .bg2Palette = gUnk_0853D7C8,
@@ -13904,7 +13904,7 @@ struct RoomDef gLevel8Stage4Room1 ROOM_DEF(083a5c70) = {
     .bg3Map = &gUnk_083C2DD0,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -13924,7 +13924,7 @@ struct RoomDef gLevel8Stage4Room1 ROOM_DEF(083a5c70) = {
 /* gRoomTable[8][4][2], 0x083A5E10, section .room_def_083a5e10 */
 extern u8 gLevel8Stage4Room2MetatileMap[];
 extern u8 gLevel8Stage4Room2BlockLayer[];
-extern u8 gUnk_083A5DD8[];
+extern u8 gLevel8Stage4Room2BlockMetatiles[];
 extern struct Door gLevel8Stage4Room2Doors[];
 extern u8 gLevel8Stage4Room2Objects[];
 struct RoomDef gLevel8Stage4Room2 ROOM_DEF(083a5e10) = {
@@ -13934,7 +13934,7 @@ struct RoomDef gLevel8Stage4Room2 ROOM_DEF(083a5e10) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage4Room2MetatileMap,
     .blockLayer = gLevel8Stage4Room2BlockLayer,
-    .unk10 = gUnk_083A5DD8,
+    .blockMetatiles = gLevel8Stage4Room2BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_084E56DC,
@@ -13947,7 +13947,7 @@ struct RoomDef gLevel8Stage4Room2 ROOM_DEF(083a5e10) = {
     .bg3Map = &gUnk_084E5928,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -13967,7 +13967,7 @@ struct RoomDef gLevel8Stage4Room2 ROOM_DEF(083a5e10) = {
 /* gRoomTable[8][4][3], 0x083A5F3C, section .room_def_083a5f3c */
 extern u8 gLevel8Stage4Room3MetatileMap[];
 extern u8 gLevel8Stage4Room3BlockLayer[];
-extern u8 gUnk_083A5F18[];
+extern u8 gLevel8Stage4Room3BlockMetatiles[];
 extern struct Door gLevel8Stage4Room3Doors[];
 extern u8 gLevel8Stage4Room3Objects[];
 struct RoomDef gLevel8Stage4Room3 ROOM_DEF(083a5f3c) = {
@@ -13977,7 +13977,7 @@ struct RoomDef gLevel8Stage4Room3 ROOM_DEF(083a5f3c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage4Room3MetatileMap,
     .blockLayer = gLevel8Stage4Room3BlockLayer,
-    .unk10 = gUnk_083A5F18,
+    .blockMetatiles = gLevel8Stage4Room3BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_084BB5C0,
@@ -13990,7 +13990,7 @@ struct RoomDef gLevel8Stage4Room3 ROOM_DEF(083a5f3c) = {
     .bg3Map = &gLevel8Stage4Room3Bg3Map,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 2,
     .objectsSortedByY = 0,
@@ -14010,7 +14010,7 @@ struct RoomDef gLevel8Stage4Room3 ROOM_DEF(083a5f3c) = {
 /* gRoomTable[8][4][4], 0x083A61E4, section .room_def_083a61e4 */
 extern u8 gLevel8Stage4Room4MetatileMap[];
 extern u8 gLevel8Stage4Room4BlockLayer[];
-extern u8 gUnk_083A61A0[];
+extern u8 gLevel8Stage4Room4BlockMetatiles[];
 extern struct Door gLevel8Stage4Room4Doors[];
 extern u8 gLevel8Stage4Room4Objects[];
 struct RoomDef gLevel8Stage4Room4 ROOM_DEF(083a61e4) = {
@@ -14020,7 +14020,7 @@ struct RoomDef gLevel8Stage4Room4 ROOM_DEF(083a61e4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage4Room4MetatileMap,
     .blockLayer = gLevel8Stage4Room4BlockLayer,
-    .unk10 = gUnk_083A61A0,
+    .blockMetatiles = gLevel8Stage4Room4BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0853DAB4,
@@ -14033,7 +14033,7 @@ struct RoomDef gLevel8Stage4Room4 ROOM_DEF(083a61e4) = {
     .bg3Map = &gUnk_08505C24,
     .bg3BorderX = 16,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -14053,7 +14053,7 @@ struct RoomDef gLevel8Stage4Room4 ROOM_DEF(083a61e4) = {
 /* gRoomTable[8][4][5], 0x083A633C, section .room_def_083a633c */
 extern u8 gLevel8Stage4Room5MetatileMap[];
 extern u8 gLevel8Stage4Room5BlockLayer[];
-extern u8 gUnk_083A6334[];
+extern u8 gLevel8Stage4Room5BlockMetatiles[];
 struct RoomDef gLevel8Stage4Room5 ROOM_DEF(083a633c) = {
     .filler00 = { 8, 4, 5, 0 },
     .bgm = 0,
@@ -14061,7 +14061,7 @@ struct RoomDef gLevel8Stage4Room5 ROOM_DEF(083a633c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage4Room5MetatileMap,
     .blockLayer = gLevel8Stage4Room5BlockLayer,
-    .unk10 = gUnk_083A6334,
+    .blockMetatiles = gLevel8Stage4Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0853DAB4,
@@ -14074,7 +14074,7 @@ struct RoomDef gLevel8Stage4Room5 ROOM_DEF(083a633c) = {
     .bg3Map = &gUnk_083BADEC,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14094,7 +14094,7 @@ struct RoomDef gLevel8Stage4Room5 ROOM_DEF(083a633c) = {
 /* gRoomTable[8][5][0], 0x083A6AE0, section .room_def_083a6ae0 */
 extern u8 gLevel8Stage5Room0MetatileMap[];
 extern u8 gLevel8Stage5Room0BlockLayer[];
-extern u8 gUnk_083A6A0C[];
+extern u8 gLevel8Stage5Room0BlockMetatiles[];
 extern struct Door gLevel8Stage5Room0Doors[];
 struct RoomDef gLevel8Stage5Room0 ROOM_DEF(083a6ae0) = {
     .filler00 = { 8, 5, 0, 0 },
@@ -14103,7 +14103,7 @@ struct RoomDef gLevel8Stage5Room0 ROOM_DEF(083a6ae0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage5Room0MetatileMap,
     .blockLayer = gLevel8Stage5Room0BlockLayer,
-    .unk10 = gUnk_083A6A0C,
+    .blockMetatiles = gLevel8Stage5Room0BlockMetatiles,
     .width = 48,
     .height = 23,
     .bg2Palette = gUnk_0853D8CC,
@@ -14116,7 +14116,7 @@ struct RoomDef gLevel8Stage5Room0 ROOM_DEF(083a6ae0) = {
     .bg3Map = &gUnk_083C5058,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 17,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14136,7 +14136,7 @@ struct RoomDef gLevel8Stage5Room0 ROOM_DEF(083a6ae0) = {
 /* gRoomTable[8][5][1], 0x083A6B68, section .room_def_083a6b68 */
 extern u8 gLevel8Stage5Room1MetatileMap[];
 extern u8 gLevel8Stage5Room1BlockLayer[];
-extern u8 gUnk_083A6B50[];
+extern u8 gLevel8Stage5Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage5Room1 ROOM_DEF(083a6b68) = {
     .filler00 = { 8, 5, 1, 0 },
     .bgm = 9,
@@ -14144,7 +14144,7 @@ struct RoomDef gLevel8Stage5Room1 ROOM_DEF(083a6b68) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage5Room1MetatileMap,
     .blockLayer = gLevel8Stage5Room1BlockLayer,
-    .unk10 = gUnk_083A6B50,
+    .blockMetatiles = gLevel8Stage5Room1BlockMetatiles,
     .width = 2,
     .height = 2,
     .bg2Palette = gUnk_0853D8CC,
@@ -14157,7 +14157,7 @@ struct RoomDef gLevel8Stage5Room1 ROOM_DEF(083a6b68) = {
     .bg3Map = &gUnk_083C5058,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14177,7 +14177,7 @@ struct RoomDef gLevel8Stage5Room1 ROOM_DEF(083a6b68) = {
 /* gRoomTable[8][5][2], 0x083A6D08, section .room_def_083a6d08 */
 extern u8 gLevel8Stage5Room2MetatileMap[];
 extern u8 gLevel8Stage5Room2BlockLayer[];
-extern u8 gUnk_083A6CD0[];
+extern u8 gLevel8Stage5Room2BlockMetatiles[];
 extern struct Door gLevel8Stage5Room2Doors[];
 extern u8 gLevel8Stage5Room2Objects[];
 struct RoomDef gLevel8Stage5Room2 ROOM_DEF(083a6d08) = {
@@ -14187,7 +14187,7 @@ struct RoomDef gLevel8Stage5Room2 ROOM_DEF(083a6d08) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage5Room2MetatileMap,
     .blockLayer = gLevel8Stage5Room2BlockLayer,
-    .unk10 = gUnk_083A6CD0,
+    .blockMetatiles = gLevel8Stage5Room2BlockMetatiles,
     .width = 18,
     .height = 12,
     .bg2Palette = gUnk_084E56DC,
@@ -14200,7 +14200,7 @@ struct RoomDef gLevel8Stage5Room2 ROOM_DEF(083a6d08) = {
     .bg3Map = &gUnk_084E5928,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -14220,7 +14220,7 @@ struct RoomDef gLevel8Stage5Room2 ROOM_DEF(083a6d08) = {
 /* gRoomTable[8][5][3], 0x083A6E24, section .room_def_083a6e24 */
 extern u8 gLevel8Stage5Room3MetatileMap[];
 extern u8 gLevel8Stage5Room3BlockLayer[];
-extern u8 gUnk_083A6E08[];
+extern u8 gLevel8Stage5Room3BlockMetatiles[];
 extern struct Door gLevel8Stage5Room3Doors[];
 extern u8 gLevel8Stage5Room3Objects[];
 struct RoomDef gLevel8Stage5Room3 ROOM_DEF(083a6e24) = {
@@ -14230,7 +14230,7 @@ struct RoomDef gLevel8Stage5Room3 ROOM_DEF(083a6e24) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage5Room3MetatileMap,
     .blockLayer = gLevel8Stage5Room3BlockLayer,
-    .unk10 = gUnk_083A6E08,
+    .blockMetatiles = gLevel8Stage5Room3BlockMetatiles,
     .width = 16,
     .height = 12,
     .bg2Palette = gUnk_084BB5C0,
@@ -14243,7 +14243,7 @@ struct RoomDef gLevel8Stage5Room3 ROOM_DEF(083a6e24) = {
     .bg3Map = &gLevel8Stage5Room3Bg3Map,
     .bg3BorderX = 16,
     .bg3BorderY = 16,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 1,
     .objectsSortedByY = 0,
@@ -14263,7 +14263,7 @@ struct RoomDef gLevel8Stage5Room3 ROOM_DEF(083a6e24) = {
 /* gRoomTable[8][5][4], 0x083A70A0, section .room_def_083a70a0 */
 extern u8 gLevel8Stage5Room4MetatileMap[];
 extern u8 gLevel8Stage5Room4BlockLayer[];
-extern u8 gUnk_083A705C[];
+extern u8 gLevel8Stage5Room4BlockMetatiles[];
 extern struct Door gLevel8Stage5Room4Doors[];
 extern u8 gLevel8Stage5Room4Objects[];
 struct RoomDef gLevel8Stage5Room4 ROOM_DEF(083a70a0) = {
@@ -14273,7 +14273,7 @@ struct RoomDef gLevel8Stage5Room4 ROOM_DEF(083a70a0) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage5Room4MetatileMap,
     .blockLayer = gLevel8Stage5Room4BlockLayer,
-    .unk10 = gUnk_083A705C,
+    .blockMetatiles = gLevel8Stage5Room4BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0852D6E8,
@@ -14286,7 +14286,7 @@ struct RoomDef gLevel8Stage5Room4 ROOM_DEF(083a70a0) = {
     .bg3Map = &gUnk_08505C24,
     .bg3BorderX = 16,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -14306,7 +14306,7 @@ struct RoomDef gLevel8Stage5Room4 ROOM_DEF(083a70a0) = {
 /* gRoomTable[8][5][5], 0x083A71E4, section .room_def_083a71e4 */
 extern u8 gLevel8Stage5Room5MetatileMap[];
 extern u8 gLevel8Stage5Room5BlockLayer[];
-extern u8 gUnk_083A71DC[];
+extern u8 gLevel8Stage5Room5BlockMetatiles[];
 struct RoomDef gLevel8Stage5Room5 ROOM_DEF(083a71e4) = {
     .filler00 = { 8, 5, 5, 0 },
     .bgm = 0,
@@ -14314,7 +14314,7 @@ struct RoomDef gLevel8Stage5Room5 ROOM_DEF(083a71e4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage5Room5MetatileMap,
     .blockLayer = gLevel8Stage5Room5BlockLayer,
-    .unk10 = gUnk_083A71DC,
+    .blockMetatiles = gLevel8Stage5Room5BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852D6E8,
@@ -14327,7 +14327,7 @@ struct RoomDef gLevel8Stage5Room5 ROOM_DEF(083a71e4) = {
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14347,7 +14347,7 @@ struct RoomDef gLevel8Stage5Room5 ROOM_DEF(083a71e4) = {
 /* gRoomTable[8][6][0], 0x083A77C4, section .room_def_083a77c4 */
 extern u8 gLevel8Stage6Room0MetatileMap[];
 extern u8 gLevel8Stage6Room0BlockLayer[];
-extern u8 gUnk_083A7738[];
+extern u8 gLevel8Stage6Room0BlockMetatiles[];
 extern struct Door gLevel8Stage6Room0Doors[];
 struct RoomDef gLevel8Stage6Room0 ROOM_DEF(083a77c4) = {
     .filler00 = { 8, 6, 0, 0 },
@@ -14356,7 +14356,7 @@ struct RoomDef gLevel8Stage6Room0 ROOM_DEF(083a77c4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage6Room0MetatileMap,
     .blockLayer = gLevel8Stage6Room0BlockLayer,
-    .unk10 = gUnk_083A7738,
+    .blockMetatiles = gLevel8Stage6Room0BlockMetatiles,
     .width = 32,
     .height = 23,
     .bg2Palette = gUnk_0853D9D0,
@@ -14369,7 +14369,7 @@ struct RoomDef gLevel8Stage6Room0 ROOM_DEF(083a77c4) = {
     .bg3Map = &gUnk_083C72E0,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 11,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14389,7 +14389,7 @@ struct RoomDef gLevel8Stage6Room0 ROOM_DEF(083a77c4) = {
 /* gRoomTable[8][6][1], 0x083A784C, section .room_def_083a784c */
 extern u8 gLevel8Stage6Room1MetatileMap[];
 extern u8 gLevel8Stage6Room1BlockLayer[];
-extern u8 gUnk_083A7834[];
+extern u8 gLevel8Stage6Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage6Room1 ROOM_DEF(083a784c) = {
     .filler00 = { 8, 6, 1, 0 },
     .bgm = 10,
@@ -14397,7 +14397,7 @@ struct RoomDef gLevel8Stage6Room1 ROOM_DEF(083a784c) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage6Room1MetatileMap,
     .blockLayer = gLevel8Stage6Room1BlockLayer,
-    .unk10 = gUnk_083A7834,
+    .blockMetatiles = gLevel8Stage6Room1BlockMetatiles,
     .width = 2,
     .height = 2,
     .bg2Palette = gUnk_0853D9D0,
@@ -14410,7 +14410,7 @@ struct RoomDef gLevel8Stage6Room1 ROOM_DEF(083a784c) = {
     .bg3Map = &gUnk_083C72E0,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14430,7 +14430,7 @@ struct RoomDef gLevel8Stage6Room1 ROOM_DEF(083a784c) = {
 /* gRoomTable[8][6][2], 0x083A7ADC, section .room_def_083a7adc */
 extern u8 gLevel8Stage6Room2MetatileMap[];
 extern u8 gLevel8Stage6Room2BlockLayer[];
-extern u8 gUnk_083A7A98[];
+extern u8 gLevel8Stage6Room2BlockMetatiles[];
 extern struct Door gLevel8Stage6Room2Doors[];
 extern u8 gLevel8Stage6Room2Objects[];
 struct RoomDef gLevel8Stage6Room2 ROOM_DEF(083a7adc) = {
@@ -14440,7 +14440,7 @@ struct RoomDef gLevel8Stage6Room2 ROOM_DEF(083a7adc) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage6Room2MetatileMap,
     .blockLayer = gLevel8Stage6Room2BlockLayer,
-    .unk10 = gUnk_083A7A98,
+    .blockMetatiles = gLevel8Stage6Room2BlockMetatiles,
     .width = 16,
     .height = 36,
     .bg2Palette = gUnk_0852BD00,
@@ -14453,7 +14453,7 @@ struct RoomDef gLevel8Stage6Room2 ROOM_DEF(083a7adc) = {
     .bg3Map = &gUnk_08505C24,
     .bg3BorderX = 16,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 1,
     .objectCount = 6,
     .objectsSortedByY = 1,
@@ -14473,7 +14473,7 @@ struct RoomDef gLevel8Stage6Room2 ROOM_DEF(083a7adc) = {
 /* gRoomTable[8][6][3], 0x083A7C28, section .room_def_083a7c28 */
 extern u8 gLevel8Stage6Room3MetatileMap[];
 extern u8 gLevel8Stage6Room3BlockLayer[];
-extern u8 gUnk_083A7C20[];
+extern u8 gLevel8Stage6Room3BlockMetatiles[];
 struct RoomDef gLevel8Stage6Room3 ROOM_DEF(083a7c28) = {
     .filler00 = { 8, 6, 3, 0 },
     .bgm = 0,
@@ -14481,7 +14481,7 @@ struct RoomDef gLevel8Stage6Room3 ROOM_DEF(083a7c28) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage6Room3MetatileMap,
     .blockLayer = gLevel8Stage6Room3BlockLayer,
-    .unk10 = gUnk_083A7C20,
+    .blockMetatiles = gLevel8Stage6Room3BlockMetatiles,
     .width = 16,
     .height = 11,
     .bg2Palette = gUnk_0852BB78,
@@ -14494,7 +14494,7 @@ struct RoomDef gLevel8Stage6Room3 ROOM_DEF(083a7c28) = {
     .bg3Map = &gUnk_083CF82C,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14514,7 +14514,7 @@ struct RoomDef gLevel8Stage6Room3 ROOM_DEF(083a7c28) = {
 /* gRoomTable[8][7][0], 0x083A8364, section .room_def_083a8364 */
 extern u8 gLevel8Stage7Room0MetatileMap[];
 extern u8 gLevel8Stage7Room0BlockLayer[];
-extern u8 gUnk_083A835C[];
+extern u8 gLevel8Stage7Room0BlockMetatiles[];
 struct RoomDef gLevel8Stage7Room0 ROOM_DEF(083a8364) = {
     .filler00 = { 8, 7, 0, 0 },
     .bgm = 0,
@@ -14522,7 +14522,7 @@ struct RoomDef gLevel8Stage7Room0 ROOM_DEF(083a8364) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage7Room0MetatileMap,
     .blockLayer = gLevel8Stage7Room0BlockLayer,
-    .unk10 = gUnk_083A835C,
+    .blockMetatiles = gLevel8Stage7Room0BlockMetatiles,
     .width = 16,
     .height = 74,
     .bg2Palette = gLevel8Stage7Room0Bg2Palette,
@@ -14535,7 +14535,7 @@ struct RoomDef gLevel8Stage7Room0 ROOM_DEF(083a8364) = {
     .bg3Map = &gLevel8Stage7Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,
@@ -14555,7 +14555,7 @@ struct RoomDef gLevel8Stage7Room0 ROOM_DEF(083a8364) = {
 /* gRoomTable[8][7][1], 0x083A85D4, section .room_def_083a85d4 */
 extern u8 gLevel8Stage7Room1MetatileMap[];
 extern u8 gLevel8Stage7Room1BlockLayer[];
-extern u8 gUnk_083A85CC[];
+extern u8 gLevel8Stage7Room1BlockMetatiles[];
 struct RoomDef gLevel8Stage7Room1 ROOM_DEF(083a85d4) = {
     .filler00 = { 8, 7, 1, 0 },
     .bgm = 0,
@@ -14563,7 +14563,7 @@ struct RoomDef gLevel8Stage7Room1 ROOM_DEF(083a85d4) = {
     .filler06 = { 0, 0 },
     .metatileMap = gLevel8Stage7Room1MetatileMap,
     .blockLayer = gLevel8Stage7Room1BlockLayer,
-    .unk10 = gUnk_083A85CC,
+    .blockMetatiles = gLevel8Stage7Room1BlockMetatiles,
     .width = 48,
     .height = 11,
     .bg2Palette = gUnk_0852BD00,
@@ -14576,7 +14576,7 @@ struct RoomDef gLevel8Stage7Room1 ROOM_DEF(083a85d4) = {
     .bg3Map = &gLevel8Stage7Room1Bg3Map,
     .bg3BorderX = 0,
     .bg3BorderY = 0,
-    .unk38 = 0xFFFF,
+    .driftObjectIndex = 0xFFFF,
     .doorCount = 0,
     .objectCount = 0,
     .objectsSortedByY = 0,

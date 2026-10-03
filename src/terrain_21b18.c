@@ -337,7 +337,7 @@ s32 sub_08022540(u32 x, u32 y)
         idx = y * w + x;
         if (gBlockLayer[idx] != 0)
         {
-            v = ((u8 *)gCurRoomDef->unk10)[gBlockLayer[idx] * 4 + 7] - 56;
+            v = ((u8 *)gCurRoomDef->blockMetatiles)[gBlockLayer[idx] * 4 + 7] - 56;
             if ((u32)v <= 5)
                 return v;
         }

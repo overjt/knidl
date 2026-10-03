@@ -21,8 +21,8 @@ gLevel7Stage1Room0MetatileMap:
 	.global	gLevel7Stage1Room0BlockLayer
 gLevel7Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x35D048, 0x34
-	.global	gUnk_0835D07C
-gUnk_0835D07C:
+	.global	gLevel7Stage1Room0BlockMetatiles
+gLevel7Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x35D07C, 0x8
 	.global	gLevel7Stage1Room0Objects
 gLevel7Stage1Room0Objects:
@@ -41,8 +41,8 @@ gLevel7Stage1Room1MetatileMap:
 	.global	gLevel7Stage1Room1BlockLayer
 gLevel7Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x35D290, 0x60
-	.global	gUnk_0835D2F0
-gUnk_0835D2F0:
+	.global	gLevel7Stage1Room1BlockMetatiles
+gLevel7Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x35D2F0, 0x8
 	.global	gLevel7Stage1Room1Objects
 gLevel7Stage1Room1Objects:
@@ -61,8 +61,8 @@ gLevel7Stage1Room2MetatileMap:
 	.global	gLevel7Stage1Room2BlockLayer
 gLevel7Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x35D480, 0x60
-	.global	gUnk_0835D4E0
-gUnk_0835D4E0:
+	.global	gLevel7Stage1Room2BlockMetatiles
+gLevel7Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x35D4E0, 0x8
 	.global	gLevel7Stage1Room2Objects
 gLevel7Stage1Room2Objects:
@@ -96,8 +96,8 @@ gLevel0Stage0Room0MetatileMap:
 	.global	gLevel0Stage0Room0BlockLayer
 gLevel0Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x35DCA4, 0xB0
-	.global	gUnk_0835DD54
-gUnk_0835DD54:
+	.global	gLevel0Stage0Room0BlockMetatiles
+gLevel0Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x35DD54, 0x8
 	.global	gLevel0Stage0Room0Doors
 gLevel0Stage0Room0Doors:
@@ -119,8 +119,8 @@ gLevel0Stage0Room1MetatileMap:
 	.global	gLevel0Stage0Room1BlockLayer
 gLevel0Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x35E15C, 0xCC
-	.global	gUnk_0835E228
-gUnk_0835E228:
+	.global	gLevel0Stage0Room1BlockMetatiles
+gLevel0Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x35E228, 0x8
 	.global	gLevel0Stage0Room1Doors
 gLevel0Stage0Room1Doors:
@@ -142,8 +142,8 @@ gLevel0Stage0Room2MetatileMap:
 	.global	gLevel0Stage0Room2BlockLayer
 gLevel0Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x35E5DC, 0xB0
-	.global	gUnk_0835E68C
-gUnk_0835E68C:
+	.global	gLevel0Stage0Room2BlockMetatiles
+gLevel0Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x35E68C, 0x8
 	.global	gLevel0Stage0Room2Doors
 gLevel0Stage0Room2Doors:
@@ -165,8 +165,8 @@ gLevel0Stage0Room3MetatileMap:
 	.global	gLevel0Stage0Room3BlockLayer
 gLevel0Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x35E8CC, 0x34
-	.global	gUnk_0835E900
-gUnk_0835E900:
+	.global	gLevel0Stage0Room3BlockMetatiles
+gLevel0Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x35E900, 0x8
 	.global	gLevel0Stage0Room3Doors
 gLevel0Stage0Room3Doors:
@@ -188,8 +188,8 @@ gLevel0Stage1Room0MetatileMap:
 	.global	gLevel0Stage1Room0BlockLayer
 gLevel0Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x35ECF8, 0x148
-	.global	gUnk_0835EE40
-gUnk_0835EE40:
+	.global	gLevel0Stage1Room0BlockMetatiles
+gLevel0Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x35EE40, 0x80
 	.global	gLevel0Stage1Room0Doors
 gLevel0Stage1Room0Doors:
@@ -211,8 +211,8 @@ gLevel0Stage1Room1MetatileMap:
 	.global	gLevel0Stage1Room1BlockLayer
 gLevel0Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x35F0FC, 0x84
-	.global	gUnk_0835F180
-gUnk_0835F180:
+	.global	gLevel0Stage1Room1BlockMetatiles
+gLevel0Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x35F180, 0x8
 	.global	gLevel0Stage1Room1Doors
 gLevel0Stage1Room1Doors:
@@ -234,8 +234,8 @@ gLevel0Stage1Room2MetatileMap:
 	.global	gLevel0Stage1Room2BlockLayer
 gLevel0Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x35F458, 0x84
-	.global	gUnk_0835F4DC
-gUnk_0835F4DC:
+	.global	gLevel0Stage1Room2BlockMetatiles
+gLevel0Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x35F4DC, 0x8
 	.global	gLevel0Stage1Room2Doors
 gLevel0Stage1Room2Doors:
@@ -257,8 +257,8 @@ gLevel0Stage1Room3MetatileMap:
 	.global	gLevel0Stage1Room3BlockLayer
 gLevel0Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x35FADC, 0xB4
-	.global	gUnk_0835FB90
-gUnk_0835FB90:
+	.global	gLevel0Stage1Room3BlockMetatiles
+gLevel0Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x35FB90, 0x10
 	.global	gLevel0Stage1Room3Doors
 gLevel0Stage1Room3Doors:
@@ -280,8 +280,8 @@ gLevel0Stage1Room4MetatileMap:
 	.global	gLevel0Stage1Room4BlockLayer
 gLevel0Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x35FF2C, 0x64
-	.global	gUnk_0835FF90
-gUnk_0835FF90:
+	.global	gLevel0Stage1Room4BlockMetatiles
+gLevel0Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x35FF90, 0x8
 	.global	gLevel0Stage1Room4Doors
 gLevel0Stage1Room4Doors:
@@ -303,8 +303,8 @@ gLevel0Stage1Room5MetatileMap:
 	.global	gLevel0Stage1Room5BlockLayer
 gLevel0Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x360180, 0x38
-	.global	gUnk_083601B8
-gUnk_083601B8:
+	.global	gLevel0Stage1Room5BlockMetatiles
+gLevel0Stage1Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3601B8, 0x8
 	.global	gLevel0Stage1Room5Doors
 gLevel0Stage1Room5Doors:
@@ -326,8 +326,8 @@ gLevel0Stage2Room0MetatileMap:
 	.global	gLevel0Stage2Room0BlockLayer
 gLevel0Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36053C, 0xD4
-	.global	gUnk_08360610
-gUnk_08360610:
+	.global	gLevel0Stage2Room0BlockMetatiles
+gLevel0Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x360610, 0x14
 	.global	gLevel0Stage2Room0Doors
 gLevel0Stage2Room0Doors:
@@ -349,8 +349,8 @@ gLevel0Stage2Room1MetatileMap:
 	.global	gLevel0Stage2Room1BlockLayer
 gLevel0Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3609F0, 0xCC
-	.global	gUnk_08360ABC
-gUnk_08360ABC:
+	.global	gLevel0Stage2Room1BlockMetatiles
+gLevel0Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x360ABC, 0x8
 	.global	gLevel0Stage2Room1Doors
 gLevel0Stage2Room1Doors:
@@ -372,8 +372,8 @@ gLevel0Stage2Room2MetatileMap:
 	.global	gLevel0Stage2Room2BlockLayer
 gLevel0Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x360E6C, 0x74
-	.global	gUnk_08360EE0
-gUnk_08360EE0:
+	.global	gLevel0Stage2Room2BlockMetatiles
+gLevel0Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x360EE0, 0x8
 	.global	gLevel0Stage2Room2Doors
 gLevel0Stage2Room2Doors:
@@ -395,8 +395,8 @@ gLevel0Stage2Room3MetatileMap:
 	.global	gLevel0Stage2Room3BlockLayer
 gLevel0Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36125C, 0xB4
-	.global	gUnk_08361310
-gUnk_08361310:
+	.global	gLevel0Stage2Room3BlockMetatiles
+gLevel0Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x361310, 0x8
 	.global	gLevel0Stage2Room3Doors
 gLevel0Stage2Room3Doors:
@@ -418,8 +418,8 @@ gLevel0Stage3Room0MetatileMap:
 	.global	gLevel0Stage3Room0BlockLayer
 gLevel0Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3616E4, 0x64
-	.global	gUnk_08361748
-gUnk_08361748:
+	.global	gLevel0Stage3Room0BlockMetatiles
+gLevel0Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x361748, 0x10
 	.global	gLevel0Stage3Room0Doors
 gLevel0Stage3Room0Doors:
@@ -441,8 +441,8 @@ gLevel0Stage3Room1MetatileMap:
 	.global	gLevel0Stage3Room1BlockLayer
 gLevel0Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x361B64, 0xB0
-	.global	gUnk_08361C14
-gUnk_08361C14:
+	.global	gLevel0Stage3Room1BlockMetatiles
+gLevel0Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x361C14, 0x8
 	.global	gLevel0Stage3Room1Doors
 gLevel0Stage3Room1Doors:
@@ -464,8 +464,8 @@ gLevel0Stage3Room2MetatileMap:
 	.global	gLevel0Stage3Room2BlockLayer
 gLevel0Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x362010, 0x90
-	.global	gUnk_083620A0
-gUnk_083620A0:
+	.global	gLevel0Stage3Room2BlockMetatiles
+gLevel0Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3620A0, 0x10
 	.global	gLevel0Stage3Room2Doors
 gLevel0Stage3Room2Doors:
@@ -487,8 +487,8 @@ gLevel0Stage3Room3MetatileMap:
 	.global	gLevel0Stage3Room3BlockLayer
 gLevel0Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3625D8, 0x104
-	.global	gUnk_083626DC
-gUnk_083626DC:
+	.global	gLevel0Stage3Room3BlockMetatiles
+gLevel0Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3626DC, 0x8
 	.global	gLevel0Stage3Room3Doors
 gLevel0Stage3Room3Doors:
@@ -510,8 +510,8 @@ gLevel0Stage4Room0MetatileMap:
 	.global	gLevel0Stage4Room0BlockLayer
 gLevel0Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x362A60, 0x60
-	.global	gUnk_08362AC0
-gUnk_08362AC0:
+	.global	gLevel0Stage4Room0BlockMetatiles
+gLevel0Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x362AC0, 0x8
 	.global	gLevel0Stage4Room0Objects
 gLevel0Stage4Room0Objects:
@@ -530,8 +530,8 @@ gLevel1Stage0Room0MetatileMap:
 	.global	gLevel1Stage0Room0BlockLayer
 gLevel1Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x362F08, 0x100
-	.global	gUnk_08363008
-gUnk_08363008:
+	.global	gLevel1Stage0Room0BlockMetatiles
+gLevel1Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x363008, 0x8
 	.global	gLevel1Stage0Room0Doors
 gLevel1Stage0Room0Doors:
@@ -553,8 +553,8 @@ gLevel1Stage0Room1MetatileMap:
 	.global	gLevel1Stage0Room1BlockLayer
 gLevel1Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3633BC, 0xB0
-	.global	gUnk_0836346C
-gUnk_0836346C:
+	.global	gLevel1Stage0Room1BlockMetatiles
+gLevel1Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x36346C, 0x8
 	.global	gLevel1Stage0Room1Doors
 gLevel1Stage0Room1Doors:
@@ -576,8 +576,8 @@ gLevel1Stage0Room2MetatileMap:
 	.global	gLevel1Stage0Room2BlockLayer
 gLevel1Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3638D4, 0xAC
-	.global	gUnk_08363980
-gUnk_08363980:
+	.global	gLevel1Stage0Room2BlockMetatiles
+gLevel1Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x363980, 0x8
 	.global	gLevel1Stage0Room2Doors
 gLevel1Stage0Room2Doors:
@@ -599,8 +599,8 @@ gLevel1Stage0Room3MetatileMap:
 	.global	gLevel1Stage0Room3BlockLayer
 gLevel1Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x363D18, 0x7C
-	.global	gUnk_08363D94
-gUnk_08363D94:
+	.global	gLevel1Stage0Room3BlockMetatiles
+gLevel1Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x363D94, 0x38
 	.global	gLevel1Stage0Room3Doors
 gLevel1Stage0Room3Doors:
@@ -622,8 +622,8 @@ gLevel1Stage1Room0MetatileMap:
 	.global	gLevel1Stage1Room0BlockLayer
 gLevel1Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x363FAC, 0x34
-	.global	gUnk_08363FE0
-gUnk_08363FE0:
+	.global	gLevel1Stage1Room0BlockMetatiles
+gLevel1Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x363FE0, 0x8
 	.global	gLevel1Stage1Room0Doors
 gLevel1Stage1Room0Doors:
@@ -645,8 +645,8 @@ gLevel1Stage1Room1MetatileMap:
 	.global	gLevel1Stage1Room1BlockLayer
 gLevel1Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x364230, 0xB4
-	.global	gUnk_083642E4
-gUnk_083642E4:
+	.global	gLevel1Stage1Room1BlockMetatiles
+gLevel1Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3642E4, 0xB4
 	.global	gLevel1Stage1Room1Doors
 gLevel1Stage1Room1Doors:
@@ -668,8 +668,8 @@ gLevel1Stage1Room2MetatileMap:
 	.global	gLevel1Stage1Room2BlockLayer
 gLevel1Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3645A0, 0x80
-	.global	gUnk_08364620
-gUnk_08364620:
+	.global	gLevel1Stage1Room2BlockMetatiles
+gLevel1Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x364620, 0x8
 	.global	gLevel1Stage1Room2Doors
 gLevel1Stage1Room2Doors:
@@ -691,8 +691,8 @@ gLevel1Stage1Room3MetatileMap:
 	.global	gLevel1Stage1Room3BlockLayer
 gLevel1Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x364934, 0x9C
-	.global	gUnk_083649D0
-gUnk_083649D0:
+	.global	gLevel1Stage1Room3BlockMetatiles
+gLevel1Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3649D0, 0x20
 	.global	gLevel1Stage1Room3Doors
 gLevel1Stage1Room3Doors:
@@ -714,8 +714,8 @@ gLevel1Stage1Room4MetatileMap:
 	.global	gLevel1Stage1Room4BlockLayer
 gLevel1Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x365214, 0x240
-	.global	gUnk_08365454
-gUnk_08365454:
+	.global	gLevel1Stage1Room4BlockMetatiles
+gLevel1Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x365454, 0x38
 	.global	gLevel1Stage1Room4Doors
 gLevel1Stage1Room4Doors:
@@ -737,8 +737,8 @@ gLevel1Stage2Room0MetatileMap:
 	.global	gLevel1Stage2Room0BlockLayer
 gLevel1Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x365720, 0x6C
-	.global	gUnk_0836578C
-gUnk_0836578C:
+	.global	gLevel1Stage2Room0BlockMetatiles
+gLevel1Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x36578C, 0x8
 	.global	gLevel1Stage2Room0Doors
 gLevel1Stage2Room0Doors:
@@ -760,8 +760,8 @@ gLevel1Stage2Room1MetatileMap:
 	.global	gLevel1Stage2Room1BlockLayer
 gLevel1Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x365F2C, 0x1F8
-	.global	gUnk_08366124
-gUnk_08366124:
+	.global	gLevel1Stage2Room1BlockMetatiles
+gLevel1Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x366124, 0x18C
 	.global	gLevel1Stage2Room1Doors
 gLevel1Stage2Room1Doors:
@@ -783,8 +783,8 @@ gLevel1Stage2Room2MetatileMap:
 	.global	gLevel1Stage2Room2BlockLayer
 gLevel1Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36658C, 0x5C
-	.global	gUnk_083665E8
-gUnk_083665E8:
+	.global	gLevel1Stage2Room2BlockMetatiles
+gLevel1Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3665E8, 0x8
 	.global	gLevel1Stage2Room2Doors
 gLevel1Stage2Room2Doors:
@@ -806,8 +806,8 @@ gLevel1Stage2Room3MetatileMap:
 	.global	gLevel1Stage2Room3BlockLayer
 gLevel1Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3668C4, 0x6C
-	.global	gUnk_08366930
-gUnk_08366930:
+	.global	gLevel1Stage2Room3BlockMetatiles
+gLevel1Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x366930, 0x8
 	.global	gLevel1Stage2Room3Doors
 gLevel1Stage2Room3Doors:
@@ -829,8 +829,8 @@ gLevel1Stage2Room4MetatileMap:
 	.global	gLevel1Stage2Room4BlockLayer
 gLevel1Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x366B30, 0x34
-	.global	gUnk_08366B64
-gUnk_08366B64:
+	.global	gLevel1Stage2Room4BlockMetatiles
+gLevel1Stage2Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x366B64, 0x8
 	.global	gLevel1Stage2Room4Doors
 gLevel1Stage2Room4Doors:
@@ -852,8 +852,8 @@ gLevel1Stage2Room5MetatileMap:
 	.global	gLevel1Stage2Room5BlockLayer
 gLevel1Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x366CBC, 0x3C
-	.global	gUnk_08366CF8
-gUnk_08366CF8:
+	.global	gLevel1Stage2Room5BlockMetatiles
+gLevel1Stage2Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x366CF8, 0x10
 	.global	gLevel1Stage2Room5Doors
 gLevel1Stage2Room5Doors:
@@ -875,8 +875,8 @@ gLevel1Stage3Room0MetatileMap:
 	.global	gLevel1Stage3Room0BlockLayer
 gLevel1Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x367088, 0x118
-	.global	gUnk_083671A0
-gUnk_083671A0:
+	.global	gLevel1Stage3Room0BlockMetatiles
+gLevel1Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3671A0, 0x34
 	.global	gLevel1Stage3Room0Doors
 gLevel1Stage3Room0Doors:
@@ -898,8 +898,8 @@ gLevel1Stage3Room1MetatileMap:
 	.global	gLevel1Stage3Room1BlockLayer
 gLevel1Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36748C, 0x5C
-	.global	gUnk_083674E8
-gUnk_083674E8:
+	.global	gLevel1Stage3Room1BlockMetatiles
+gLevel1Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3674E8, 0x8
 	.global	gLevel1Stage3Room1Doors
 gLevel1Stage3Room1Doors:
@@ -921,8 +921,8 @@ gLevel1Stage3Room2MetatileMap:
 	.global	gLevel1Stage3Room2BlockLayer
 gLevel1Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x367740, 0x60
-	.global	gUnk_083677A0
-gUnk_083677A0:
+	.global	gLevel1Stage3Room2BlockMetatiles
+gLevel1Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3677A0, 0x8
 	.global	gLevel1Stage3Room2Doors
 gLevel1Stage3Room2Doors:
@@ -944,8 +944,8 @@ gLevel1Stage3Room3MetatileMap:
 	.global	gLevel1Stage3Room3BlockLayer
 gLevel1Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x367994, 0x60
-	.global	gUnk_083679F4
-gUnk_083679F4:
+	.global	gLevel1Stage3Room3BlockMetatiles
+gLevel1Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3679F4, 0x8
 	.global	gLevel1Stage3Room3Doors
 gLevel1Stage3Room3Doors:
@@ -967,8 +967,8 @@ gLevel1Stage3Room4MetatileMap:
 	.global	gLevel1Stage3Room4BlockLayer
 gLevel1Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x367CB4, 0xC8
-	.global	gUnk_08367D7C
-gUnk_08367D7C:
+	.global	gLevel1Stage3Room4BlockMetatiles
+gLevel1Stage3Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x367D7C, 0x84
 	.global	gLevel1Stage3Room4Doors
 gLevel1Stage3Room4Doors:
@@ -990,8 +990,8 @@ gLevel1Stage3Room5MetatileMap:
 	.global	gLevel1Stage3Room5BlockLayer
 gLevel1Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x368344, 0x110
-	.global	gUnk_08368454
-gUnk_08368454:
+	.global	gLevel1Stage3Room5BlockMetatiles
+gLevel1Stage3Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x368454, 0x8
 	.global	gLevel1Stage3Room5Doors
 gLevel1Stage3Room5Doors:
@@ -1013,8 +1013,8 @@ gLevel1Stage3Room6MetatileMap:
 	.global	gLevel1Stage3Room6BlockLayer
 gLevel1Stage3Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3686A0, 0x34
-	.global	gUnk_083686D4
-gUnk_083686D4:
+	.global	gLevel1Stage3Room6BlockMetatiles
+gLevel1Stage3Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x3686D4, 0x8
 	.global	gLevel1Stage3Room6Doors
 gLevel1Stage3Room6Doors:
@@ -1036,8 +1036,8 @@ gLevel1Stage4Room0MetatileMap:
 	.global	gLevel1Stage4Room0BlockLayer
 gLevel1Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x368BEC, 0xD8
-	.global	gUnk_08368CC4
-gUnk_08368CC4:
+	.global	gLevel1Stage4Room0BlockMetatiles
+gLevel1Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x368CC4, 0x8
 	.global	gLevel1Stage4Room0Doors
 gLevel1Stage4Room0Doors:
@@ -1059,8 +1059,8 @@ gLevel1Stage4Room1MetatileMap:
 	.global	gLevel1Stage4Room1BlockLayer
 gLevel1Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x369100, 0x100
-	.global	gUnk_08369200
-gUnk_08369200:
+	.global	gLevel1Stage4Room1BlockMetatiles
+gLevel1Stage4Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x369200, 0x50
 	.global	gLevel1Stage4Room1Doors
 gLevel1Stage4Room1Doors:
@@ -1082,8 +1082,8 @@ gLevel1Stage4Room2MetatileMap:
 	.global	gLevel1Stage4Room2BlockLayer
 gLevel1Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x369878, 0x208
-	.global	gUnk_08369A80
-gUnk_08369A80:
+	.global	gLevel1Stage4Room2BlockMetatiles
+gLevel1Stage4Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x369A80, 0x88
 	.global	gLevel1Stage4Room2Doors
 gLevel1Stage4Room2Doors:
@@ -1105,8 +1105,8 @@ gLevel1Stage4Room3MetatileMap:
 	.global	gLevel1Stage4Room3BlockLayer
 gLevel1Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x369DAC, 0x148
-	.global	gUnk_08369EF4
-gUnk_08369EF4:
+	.global	gLevel1Stage4Room3BlockMetatiles
+gLevel1Stage4Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x369EF4, 0x168
 	.global	gLevel1Stage4Room3Doors
 gLevel1Stage4Room3Doors:
@@ -1128,8 +1128,8 @@ gLevel1Stage4Room4MetatileMap:
 	.global	gLevel1Stage4Room4BlockLayer
 gLevel1Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36A250, 0x74
-	.global	gUnk_0836A2C4
-gUnk_0836A2C4:
+	.global	gLevel1Stage4Room4BlockMetatiles
+gLevel1Stage4Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x36A2C4, 0x8
 	.global	gLevel1Stage4Room4Doors
 gLevel1Stage4Room4Doors:
@@ -1151,8 +1151,8 @@ gLevel1Stage4Room5MetatileMap:
 	.global	gLevel1Stage4Room5BlockLayer
 gLevel1Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36A4CC, 0x34
-	.global	gUnk_0836A500
-gUnk_0836A500:
+	.global	gLevel1Stage4Room5BlockMetatiles
+gLevel1Stage4Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x36A500, 0x8
 	.global	gLevel1Stage4Room5Doors
 gLevel1Stage4Room5Doors:
@@ -1174,8 +1174,8 @@ gLevel1Stage4Room6MetatileMap:
 	.global	gLevel1Stage4Room6BlockLayer
 gLevel1Stage4Room6BlockLayer:
 	.incbin	"baserom.gba", 0x36A67C, 0x34
-	.global	gUnk_0836A6B0
-gUnk_0836A6B0:
+	.global	gLevel1Stage4Room6BlockMetatiles
+gLevel1Stage4Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x36A6B0, 0x8
 	.global	gLevel1Stage4Room6Doors
 gLevel1Stage4Room6Doors:
@@ -1197,8 +1197,8 @@ gLevel1Stage5Room0MetatileMap:
 	.global	gLevel1Stage5Room0BlockLayer
 gLevel1Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36A854, 0x38
-	.global	gUnk_0836A88C
-gUnk_0836A88C:
+	.global	gLevel1Stage5Room0BlockMetatiles
+gLevel1Stage5Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x36A88C, 0x8
 	.global	gLevel1Stage5Room0Objects
 gLevel1Stage5Room0Objects:
@@ -1217,8 +1217,8 @@ gLevel2Stage0Room0MetatileMap:
 	.global	gLevel2Stage0Room0BlockLayer
 gLevel2Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36AB74, 0x84
-	.global	gUnk_0836ABF8
-gUnk_0836ABF8:
+	.global	gLevel2Stage0Room0BlockMetatiles
+gLevel2Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x36ABF8, 0x8
 	.global	gLevel2Stage0Room0Doors
 gLevel2Stage0Room0Doors:
@@ -1240,8 +1240,8 @@ gLevel2Stage0Room1MetatileMap:
 	.global	gLevel2Stage0Room1BlockLayer
 gLevel2Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36ADCC, 0x6C
-	.global	gUnk_0836AE38
-gUnk_0836AE38:
+	.global	gLevel2Stage0Room1BlockMetatiles
+gLevel2Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x36AE38, 0x78
 	.global	gLevel2Stage0Room1Doors
 gLevel2Stage0Room1Doors:
@@ -1263,8 +1263,8 @@ gLevel2Stage0Room2MetatileMap:
 	.global	gLevel2Stage0Room2BlockLayer
 gLevel2Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36B09C, 0x5C
-	.global	gUnk_0836B0F8
-gUnk_0836B0F8:
+	.global	gLevel2Stage0Room2BlockMetatiles
+gLevel2Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x36B0F8, 0x8
 	.global	gLevel2Stage0Room2Doors
 gLevel2Stage0Room2Doors:
@@ -1286,8 +1286,8 @@ gLevel2Stage0Room3MetatileMap:
 	.global	gLevel2Stage0Room3BlockLayer
 gLevel2Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36B3A4, 0x64
-	.global	gUnk_0836B408
-gUnk_0836B408:
+	.global	gLevel2Stage0Room3BlockMetatiles
+gLevel2Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x36B408, 0x10
 	.global	gLevel2Stage0Room3Doors
 gLevel2Stage0Room3Doors:
@@ -1309,8 +1309,8 @@ gLevel2Stage0Room4MetatileMap:
 	.global	gLevel2Stage0Room4BlockLayer
 gLevel2Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36B5FC, 0xAC
-	.global	gUnk_0836B6A8
-gUnk_0836B6A8:
+	.global	gLevel2Stage0Room4BlockMetatiles
+gLevel2Stage0Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x36B6A8, 0xF4
 	.global	gLevel2Stage0Room4Doors
 gLevel2Stage0Room4Doors:
@@ -1329,8 +1329,8 @@ gLevel2Stage0Room5MetatileMap:
 	.global	gLevel2Stage0Room5BlockLayer
 gLevel2Stage0Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36B900, 0x34
-	.global	gUnk_0836B934
-gUnk_0836B934:
+	.global	gLevel2Stage0Room5BlockMetatiles
+gLevel2Stage0Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x36B934, 0x10
 	.global	gLevel2Stage0Room5Doors
 gLevel2Stage0Room5Doors:
@@ -1352,8 +1352,8 @@ gLevel2Stage1Room0MetatileMap:
 	.global	gLevel2Stage1Room0BlockLayer
 gLevel2Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36BBA8, 0x64
-	.global	gUnk_0836BC0C
-gUnk_0836BC0C:
+	.global	gLevel2Stage1Room0BlockMetatiles
+gLevel2Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x36BC0C, 0x8
 	.global	gLevel2Stage1Room0Doors
 gLevel2Stage1Room0Doors:
@@ -1375,8 +1375,8 @@ gLevel2Stage1Room1MetatileMap:
 	.global	gLevel2Stage1Room1BlockLayer
 gLevel2Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36BF74, 0xC8
-	.global	gUnk_0836C03C
-gUnk_0836C03C:
+	.global	gLevel2Stage1Room1BlockMetatiles
+gLevel2Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x36C03C, 0x8
 	.global	gLevel2Stage1Room1Doors
 gLevel2Stage1Room1Doors:
@@ -1398,8 +1398,8 @@ gLevel2Stage1Room2MetatileMap:
 	.global	gLevel2Stage1Room2BlockLayer
 gLevel2Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36C418, 0x90
-	.global	gUnk_0836C4A8
-gUnk_0836C4A8:
+	.global	gLevel2Stage1Room2BlockMetatiles
+gLevel2Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x36C4A8, 0x8
 	.global	gLevel2Stage1Room2Doors
 gLevel2Stage1Room2Doors:
@@ -1421,8 +1421,8 @@ gLevel2Stage1Room3MetatileMap:
 	.global	gLevel2Stage1Room3BlockLayer
 gLevel2Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36C918, 0xD4
-	.global	gUnk_0836C9EC
-gUnk_0836C9EC:
+	.global	gLevel2Stage1Room3BlockMetatiles
+gLevel2Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x36C9EC, 0x40
 	.global	gLevel2Stage1Room3Doors
 gLevel2Stage1Room3Doors:
@@ -1444,8 +1444,8 @@ gLevel2Stage1Room4MetatileMap:
 	.global	gLevel2Stage1Room4BlockLayer
 gLevel2Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36CC04, 0xA0
-	.global	gUnk_0836CCA4
-gUnk_0836CCA4:
+	.global	gLevel2Stage1Room4BlockMetatiles
+gLevel2Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x36CCA4, 0xD8
 	.global	gLevel2Stage1Room4Doors
 gLevel2Stage1Room4Doors:
@@ -1467,8 +1467,8 @@ gLevel2Stage1Room5MetatileMap:
 	.global	gLevel2Stage1Room5BlockLayer
 gLevel2Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36D080, 0x90
-	.global	gUnk_0836D110
-gUnk_0836D110:
+	.global	gLevel2Stage1Room5BlockMetatiles
+gLevel2Stage1Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x36D110, 0x8
 	.global	gLevel2Stage1Room5Doors
 gLevel2Stage1Room5Doors:
@@ -1490,8 +1490,8 @@ gLevel2Stage1Room6MetatileMap:
 	.global	gLevel2Stage1Room6BlockLayer
 gLevel2Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x36D2CC, 0x34
-	.global	gUnk_0836D300
-gUnk_0836D300:
+	.global	gLevel2Stage1Room6BlockMetatiles
+gLevel2Stage1Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x36D300, 0x10
 	.global	gLevel2Stage1Room6Doors
 gLevel2Stage1Room6Doors:
@@ -1513,8 +1513,8 @@ gLevel2Stage1Room7MetatileMap:
 	.global	gLevel2Stage1Room7BlockLayer
 gLevel2Stage1Room7BlockLayer:
 	.incbin	"baserom.gba", 0x36D4A4, 0x34
-	.global	gUnk_0836D4D8
-gUnk_0836D4D8:
+	.global	gLevel2Stage1Room7BlockMetatiles
+gLevel2Stage1Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x36D4D8, 0x8
 	.global	gLevel2Stage1Room7Doors
 gLevel2Stage1Room7Doors:
@@ -1536,8 +1536,8 @@ gLevel2Stage2Room0MetatileMap:
 	.global	gLevel2Stage2Room0BlockLayer
 gLevel2Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36D9A8, 0xB8
-	.global	gUnk_0836DA60
-gUnk_0836DA60:
+	.global	gLevel2Stage2Room0BlockMetatiles
+gLevel2Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x36DA60, 0x8
 	.global	gLevel2Stage2Room0Doors
 gLevel2Stage2Room0Doors:
@@ -1559,8 +1559,8 @@ gLevel2Stage2Room1MetatileMap:
 	.global	gLevel2Stage2Room1BlockLayer
 gLevel2Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36DCE4, 0x34
-	.global	gUnk_0836DD18
-gUnk_0836DD18:
+	.global	gLevel2Stage2Room1BlockMetatiles
+gLevel2Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x36DD18, 0x8
 	.global	gLevel2Stage2Room1Doors
 gLevel2Stage2Room1Doors:
@@ -1582,8 +1582,8 @@ gLevel2Stage2Room2MetatileMap:
 	.global	gLevel2Stage2Room2BlockLayer
 gLevel2Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36DFB0, 0x60
-	.global	gUnk_0836E010
-gUnk_0836E010:
+	.global	gLevel2Stage2Room2BlockMetatiles
+gLevel2Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x36E010, 0x8
 	.global	gLevel2Stage2Room2Doors
 gLevel2Stage2Room2Doors:
@@ -1605,8 +1605,8 @@ gLevel2Stage2Room3MetatileMap:
 	.global	gLevel2Stage2Room3BlockLayer
 gLevel2Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36E300, 0x68
-	.global	gUnk_0836E368
-gUnk_0836E368:
+	.global	gLevel2Stage2Room3BlockMetatiles
+gLevel2Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x36E368, 0x1C
 	.global	gLevel2Stage2Room3Doors
 gLevel2Stage2Room3Doors:
@@ -1628,8 +1628,8 @@ gLevel2Stage2Room4MetatileMap:
 	.global	gLevel2Stage2Room4BlockLayer
 gLevel2Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36E580, 0x54
-	.global	gUnk_0836E5D4
-gUnk_0836E5D4:
+	.global	gLevel2Stage2Room4BlockMetatiles
+gLevel2Stage2Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x36E5D4, 0x4C
 	.global	gLevel2Stage2Room4Doors
 gLevel2Stage2Room4Doors:
@@ -1651,8 +1651,8 @@ gLevel2Stage3Room0MetatileMap:
 	.global	gLevel2Stage3Room0BlockLayer
 gLevel2Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36E7D0, 0x38
-	.global	gUnk_0836E808
-gUnk_0836E808:
+	.global	gLevel2Stage3Room0BlockMetatiles
+gLevel2Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x36E808, 0x8
 	.global	gLevel2Stage3Room0Doors
 gLevel2Stage3Room0Doors:
@@ -1674,8 +1674,8 @@ gLevel2Stage3Room1MetatileMap:
 	.global	gLevel2Stage3Room1BlockLayer
 gLevel2Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36ED24, 0x1A0
-	.global	gUnk_0836EEC4
-gUnk_0836EEC4:
+	.global	gLevel2Stage3Room1BlockMetatiles
+gLevel2Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x36EEC4, 0x8
 	.global	gLevel2Stage3Room1Doors
 gLevel2Stage3Room1Doors:
@@ -1694,8 +1694,8 @@ gLevel2Stage3Room2MetatileMap:
 	.global	gLevel2Stage3Room2BlockLayer
 gLevel2Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36F040, 0x38
-	.global	gUnk_0836F078
-gUnk_0836F078:
+	.global	gLevel2Stage3Room2BlockMetatiles
+gLevel2Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x36F078, 0x8
 	.global	gLevel2Stage3Room2Doors
 gLevel2Stage3Room2Doors:
@@ -1714,8 +1714,8 @@ gLevel2Stage3Room3MetatileMap:
 	.global	gLevel2Stage3Room3BlockLayer
 gLevel2Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x36F1F8, 0x34
-	.global	gUnk_0836F22C
-gUnk_0836F22C:
+	.global	gLevel2Stage3Room3BlockMetatiles
+gLevel2Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x36F22C, 0x8
 	.global	gLevel2Stage3Room3Doors
 gLevel2Stage3Room3Doors:
@@ -1737,8 +1737,8 @@ gLevel2Stage3Room4MetatileMap:
 	.global	gLevel2Stage3Room4BlockLayer
 gLevel2Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x36F504, 0xBC
-	.global	gUnk_0836F5C0
-gUnk_0836F5C0:
+	.global	gLevel2Stage3Room4BlockMetatiles
+gLevel2Stage3Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x36F5C0, 0x8
 	.global	gLevel2Stage3Room4Doors
 gLevel2Stage3Room4Doors:
@@ -1760,8 +1760,8 @@ gLevel2Stage3Room5MetatileMap:
 	.global	gLevel2Stage3Room5BlockLayer
 gLevel2Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x36F780, 0x40
-	.global	gUnk_0836F7C0
-gUnk_0836F7C0:
+	.global	gLevel2Stage3Room5BlockMetatiles
+gLevel2Stage3Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x36F7C0, 0x10
 	.global	gLevel2Stage3Room5Doors
 gLevel2Stage3Room5Doors:
@@ -1783,8 +1783,8 @@ gLevel2Stage4Room0MetatileMap:
 	.global	gLevel2Stage4Room0BlockLayer
 gLevel2Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x36F948, 0x34
-	.global	gUnk_0836F97C
-gUnk_0836F97C:
+	.global	gLevel2Stage4Room0BlockMetatiles
+gLevel2Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x36F97C, 0x8
 	.global	gLevel2Stage4Room0Doors
 gLevel2Stage4Room0Doors:
@@ -1806,8 +1806,8 @@ gLevel2Stage4Room1MetatileMap:
 	.global	gLevel2Stage4Room1BlockLayer
 gLevel2Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x36FC40, 0xB8
-	.global	gUnk_0836FCF8
-gUnk_0836FCF8:
+	.global	gLevel2Stage4Room1BlockMetatiles
+gLevel2Stage4Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x36FCF8, 0x8
 	.global	gLevel2Stage4Room1Doors
 gLevel2Stage4Room1Doors:
@@ -1829,8 +1829,8 @@ gLevel2Stage4Room2MetatileMap:
 	.global	gLevel2Stage4Room2BlockLayer
 gLevel2Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x36FF48, 0x5C
-	.global	gUnk_0836FFA4
-gUnk_0836FFA4:
+	.global	gLevel2Stage4Room2BlockMetatiles
+gLevel2Stage4Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x36FFA4, 0x8
 	.global	gLevel2Stage4Room2Doors
 gLevel2Stage4Room2Doors:
@@ -1852,8 +1852,8 @@ gLevel2Stage4Room3MetatileMap:
 	.global	gLevel2Stage4Room3BlockLayer
 gLevel2Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37018C, 0x8C
-	.global	gUnk_08370218
-gUnk_08370218:
+	.global	gLevel2Stage4Room3BlockMetatiles
+gLevel2Stage4Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x370218, 0xC0
 	.global	gLevel2Stage4Room3Doors
 gLevel2Stage4Room3Doors:
@@ -1875,8 +1875,8 @@ gLevel2Stage4Room4MetatileMap:
 	.global	gLevel2Stage4Room4BlockLayer
 gLevel2Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x370478, 0x38
-	.global	gUnk_083704B0
-gUnk_083704B0:
+	.global	gLevel2Stage4Room4BlockMetatiles
+gLevel2Stage4Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3704B0, 0x10
 	.global	gLevel2Stage4Room4Doors
 gLevel2Stage4Room4Doors:
@@ -1898,8 +1898,8 @@ gLevel2Stage5Room0MetatileMap:
 	.global	gLevel2Stage5Room0BlockLayer
 gLevel2Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37061C, 0x34
-	.global	gUnk_08370650
-gUnk_08370650:
+	.global	gLevel2Stage5Room0BlockMetatiles
+gLevel2Stage5Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x370650, 0x8
 	.global	gLevel2Stage5Room0Doors
 gLevel2Stage5Room0Doors:
@@ -1921,8 +1921,8 @@ gLevel2Stage5Room1MetatileMap:
 	.global	gLevel2Stage5Room1BlockLayer
 gLevel2Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x370A10, 0x8C
-	.global	gUnk_08370A9C
-gUnk_08370A9C:
+	.global	gLevel2Stage5Room1BlockMetatiles
+gLevel2Stage5Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x370A9C, 0x14
 	.global	gLevel2Stage5Room1Doors
 gLevel2Stage5Room1Doors:
@@ -1944,8 +1944,8 @@ gLevel2Stage5Room2MetatileMap:
 	.global	gLevel2Stage5Room2BlockLayer
 gLevel2Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x370D60, 0x5C
-	.global	gUnk_08370DBC
-gUnk_08370DBC:
+	.global	gLevel2Stage5Room2BlockMetatiles
+gLevel2Stage5Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x370DBC, 0x8
 	.global	gLevel2Stage5Room2Doors
 gLevel2Stage5Room2Doors:
@@ -1967,8 +1967,8 @@ gLevel2Stage5Room3MetatileMap:
 	.global	gLevel2Stage5Room3BlockLayer
 gLevel2Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x371024, 0x34
-	.global	gUnk_08371058
-gUnk_08371058:
+	.global	gLevel2Stage5Room3BlockMetatiles
+gLevel2Stage5Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x371058, 0x8
 	.global	gLevel2Stage5Room3Doors
 gLevel2Stage5Room3Doors:
@@ -1990,8 +1990,8 @@ gLevel2Stage5Room4MetatileMap:
 	.global	gLevel2Stage5Room4BlockLayer
 gLevel2Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x371280, 0x98
-	.global	gUnk_08371318
-gUnk_08371318:
+	.global	gLevel2Stage5Room4BlockMetatiles
+gLevel2Stage5Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x371318, 0x18
 	.global	gLevel2Stage5Room4Doors
 gLevel2Stage5Room4Doors:
@@ -2013,8 +2013,8 @@ gLevel2Stage5Room5MetatileMap:
 	.global	gLevel2Stage5Room5BlockLayer
 gLevel2Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x371638, 0x84
-	.global	gUnk_083716BC
-gUnk_083716BC:
+	.global	gLevel2Stage5Room5BlockMetatiles
+gLevel2Stage5Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3716BC, 0x8
 	.global	gLevel2Stage5Room5Doors
 gLevel2Stage5Room5Doors:
@@ -2036,8 +2036,8 @@ gLevel2Stage5Room6MetatileMap:
 	.global	gLevel2Stage5Room6BlockLayer
 gLevel2Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3717E0, 0x34
-	.global	gUnk_08371814
-gUnk_08371814:
+	.global	gLevel2Stage5Room6BlockMetatiles
+gLevel2Stage5Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x371814, 0x8
 
 @ 0x0837181C-0x08371874: C, row room_def_0837181c (src/data/room_defs.c section .room_def_0837181c)
@@ -2053,8 +2053,8 @@ gLevel2Stage5Room7MetatileMap:
 	.global	gLevel2Stage5Room7BlockLayer
 gLevel2Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x371BA4, 0x130
-	.global	gUnk_08371CD4
-gUnk_08371CD4:
+	.global	gLevel2Stage5Room7BlockMetatiles
+gLevel2Stage5Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x371CD4, 0x8
 	.global	gLevel2Stage5Room7Doors
 gLevel2Stage5Room7Doors:
@@ -2076,8 +2076,8 @@ gLevel2Stage5Room8MetatileMap:
 	.global	gLevel2Stage5Room8BlockLayer
 gLevel2Stage5Room8BlockLayer:
 	.incbin	"baserom.gba", 0x371F64, 0x60
-	.global	gUnk_08371FC4
-gUnk_08371FC4:
+	.global	gLevel2Stage5Room8BlockMetatiles
+gLevel2Stage5Room8BlockMetatiles:
 	.incbin	"baserom.gba", 0x371FC4, 0x5C
 	.global	gLevel2Stage5Room8Doors
 gLevel2Stage5Room8Doors:
@@ -2099,8 +2099,8 @@ gLevel2Stage5Room9MetatileMap:
 	.global	gLevel2Stage5Room9BlockLayer
 gLevel2Stage5Room9BlockLayer:
 	.incbin	"baserom.gba", 0x3721F0, 0x34
-	.global	gUnk_08372224
-gUnk_08372224:
+	.global	gLevel2Stage5Room9BlockMetatiles
+gLevel2Stage5Room9BlockMetatiles:
 	.incbin	"baserom.gba", 0x372224, 0x8
 	.global	gLevel2Stage5Room9Doors
 gLevel2Stage5Room9Doors:
@@ -2122,8 +2122,8 @@ gLevel2Stage6Room0MetatileMap:
 	.global	gLevel2Stage6Room0BlockLayer
 gLevel2Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37236C, 0x34
-	.global	gUnk_083723A0
-gUnk_083723A0:
+	.global	gLevel2Stage6Room0BlockMetatiles
+gLevel2Stage6Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3723A0, 0x8
 	.global	gLevel2Stage6Room0Objects
 gLevel2Stage6Room0Objects:
@@ -2142,8 +2142,8 @@ gLevel2Stage6Room1MetatileMap:
 	.global	gLevel2Stage6Room1BlockLayer
 gLevel2Stage6Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3724DC, 0x34
-	.global	gUnk_08372510
-gUnk_08372510:
+	.global	gLevel2Stage6Room1BlockMetatiles
+gLevel2Stage6Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x372510, 0x8
 
 @ 0x08372518-0x08372570: C, row room_def_08372518 (src/data/room_defs.c section .room_def_08372518)
@@ -2159,8 +2159,8 @@ gLevel2Stage6Room2MetatileMap:
 	.global	gLevel2Stage6Room2BlockLayer
 gLevel2Stage6Room2BlockLayer:
 	.incbin	"baserom.gba", 0x372644, 0x34
-	.global	gUnk_08372678
-gUnk_08372678:
+	.global	gLevel2Stage6Room2BlockMetatiles
+gLevel2Stage6Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x372678, 0x8
 
 @ 0x08372680-0x083726D8: C, row room_def_08372680 (src/data/room_defs.c section .room_def_08372680)
@@ -2176,8 +2176,8 @@ gLevel3Stage0Room0MetatileMap:
 	.global	gLevel3Stage0Room0BlockLayer
 gLevel3Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x372940, 0xCC
-	.global	gUnk_08372A0C
-gUnk_08372A0C:
+	.global	gLevel3Stage0Room0BlockMetatiles
+gLevel3Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x372A0C, 0x8
 	.global	gLevel3Stage0Room0Doors
 gLevel3Stage0Room0Doors:
@@ -2199,8 +2199,8 @@ gLevel3Stage0Room1MetatileMap:
 	.global	gLevel3Stage0Room1BlockLayer
 gLevel3Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x372C94, 0x68
-	.global	gUnk_08372CFC
-gUnk_08372CFC:
+	.global	gLevel3Stage0Room1BlockMetatiles
+gLevel3Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x372CFC, 0x8
 	.global	gLevel3Stage0Room1Doors
 gLevel3Stage0Room1Doors:
@@ -2222,8 +2222,8 @@ gLevel3Stage0Room2MetatileMap:
 	.global	gLevel3Stage0Room2BlockLayer
 gLevel3Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x372F3C, 0x84
-	.global	gUnk_08372FC0
-gUnk_08372FC0:
+	.global	gLevel3Stage0Room2BlockMetatiles
+gLevel3Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x372FC0, 0x8
 	.global	gLevel3Stage0Room2Doors
 gLevel3Stage0Room2Doors:
@@ -2245,8 +2245,8 @@ gLevel3Stage0Room3MetatileMap:
 	.global	gLevel3Stage0Room3BlockLayer
 gLevel3Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37326C, 0x1D4
-	.global	gUnk_08373440
-gUnk_08373440:
+	.global	gLevel3Stage0Room3BlockMetatiles
+gLevel3Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x373440, 0x1E0
 	.global	gLevel3Stage0Room3Doors
 gLevel3Stage0Room3Doors:
@@ -2268,8 +2268,8 @@ gLevel3Stage0Room4MetatileMap:
 	.global	gLevel3Stage0Room4BlockLayer
 gLevel3Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x373874, 0x5C
-	.global	gUnk_083738D0
-gUnk_083738D0:
+	.global	gLevel3Stage0Room4BlockMetatiles
+gLevel3Stage0Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3738D0, 0x8
 	.global	gLevel3Stage0Room4Doors
 gLevel3Stage0Room4Doors:
@@ -2291,8 +2291,8 @@ gLevel3Stage0Room5MetatileMap:
 	.global	gLevel3Stage0Room5BlockLayer
 gLevel3Stage0Room5BlockLayer:
 	.incbin	"baserom.gba", 0x373A70, 0x38
-	.global	gUnk_08373AA8
-gUnk_08373AA8:
+	.global	gLevel3Stage0Room5BlockMetatiles
+gLevel3Stage0Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x373AA8, 0x8
 	.global	gLevel3Stage0Room5Doors
 gLevel3Stage0Room5Doors:
@@ -2314,8 +2314,8 @@ gLevel3Stage1Room0MetatileMap:
 	.global	gLevel3Stage1Room0BlockLayer
 gLevel3Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x373F88, 0x118
-	.global	gUnk_083740A0
-gUnk_083740A0:
+	.global	gLevel3Stage1Room0BlockMetatiles
+gLevel3Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3740A0, 0x20
 	.global	gLevel3Stage1Room0Doors
 gLevel3Stage1Room0Doors:
@@ -2337,8 +2337,8 @@ gLevel3Stage1Room1MetatileMap:
 	.global	gLevel3Stage1Room1BlockLayer
 gLevel3Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x374268, 0x38
-	.global	gUnk_083742A0
-gUnk_083742A0:
+	.global	gLevel3Stage1Room1BlockMetatiles
+gLevel3Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3742A0, 0x8
 	.global	gLevel3Stage1Room1Doors
 gLevel3Stage1Room1Doors:
@@ -2360,8 +2360,8 @@ gLevel3Stage1Room2MetatileMap:
 	.global	gLevel3Stage1Room2BlockLayer
 gLevel3Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x374654, 0xE0
-	.global	gUnk_08374734
-gUnk_08374734:
+	.global	gLevel3Stage1Room2BlockMetatiles
+gLevel3Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x374734, 0x44
 	.global	gLevel3Stage1Room2Doors
 gLevel3Stage1Room2Doors:
@@ -2383,8 +2383,8 @@ gLevel3Stage1Room3MetatileMap:
 	.global	gLevel3Stage1Room3BlockLayer
 gLevel3Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3749F8, 0xB0
-	.global	gUnk_08374AA8
-gUnk_08374AA8:
+	.global	gLevel3Stage1Room3BlockMetatiles
+gLevel3Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x374AA8, 0x8
 	.global	gLevel3Stage1Room3Doors
 gLevel3Stage1Room3Doors:
@@ -2406,8 +2406,8 @@ gLevel3Stage1Room4MetatileMap:
 	.global	gLevel3Stage1Room4BlockLayer
 gLevel3Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x374C04, 0x34
-	.global	gUnk_08374C38
-gUnk_08374C38:
+	.global	gLevel3Stage1Room4BlockMetatiles
+gLevel3Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x374C38, 0x8
 	.global	gLevel3Stage1Room4Doors
 gLevel3Stage1Room4Doors:
@@ -2429,8 +2429,8 @@ gLevel3Stage1Room5MetatileMap:
 	.global	gLevel3Stage1Room5BlockLayer
 gLevel3Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x374D48, 0x38
-	.global	gUnk_08374D80
-gUnk_08374D80:
+	.global	gLevel3Stage1Room5BlockMetatiles
+gLevel3Stage1Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x374D80, 0x10
 	.global	gLevel3Stage1Room5Doors
 gLevel3Stage1Room5Doors:
@@ -2452,8 +2452,8 @@ gLevel3Stage2Room0MetatileMap:
 	.global	gLevel3Stage2Room0BlockLayer
 gLevel3Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x375064, 0xC8
-	.global	gUnk_0837512C
-gUnk_0837512C:
+	.global	gLevel3Stage2Room0BlockMetatiles
+gLevel3Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x37512C, 0x1A8
 	.global	gLevel3Stage2Room0Doors
 gLevel3Stage2Room0Doors:
@@ -2475,8 +2475,8 @@ gLevel3Stage2Room1MetatileMap:
 	.global	gLevel3Stage2Room1BlockLayer
 gLevel3Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x375DD8, 0x324
-	.global	gUnk_083760FC
-gUnk_083760FC:
+	.global	gLevel3Stage2Room1BlockMetatiles
+gLevel3Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3760FC, 0x8
 	.global	gLevel3Stage2Room1Doors
 gLevel3Stage2Room1Doors:
@@ -2498,8 +2498,8 @@ gLevel3Stage2Room2MetatileMap:
 	.global	gLevel3Stage2Room2BlockLayer
 gLevel3Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3768D4, 0x194
-	.global	gUnk_08376A68
-gUnk_08376A68:
+	.global	gLevel3Stage2Room2BlockMetatiles
+gLevel3Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x376A68, 0x10
 	.global	gLevel3Stage2Room2Doors
 gLevel3Stage2Room2Doors:
@@ -2521,8 +2521,8 @@ gLevel3Stage2Room3MetatileMap:
 	.global	gLevel3Stage2Room3BlockLayer
 gLevel3Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x376CE8, 0x64
-	.global	gUnk_08376D4C
-gUnk_08376D4C:
+	.global	gLevel3Stage2Room3BlockMetatiles
+gLevel3Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x376D4C, 0x8
 	.global	gLevel3Stage2Room3Doors
 gLevel3Stage2Room3Doors:
@@ -2544,8 +2544,8 @@ gLevel3Stage2Room4MetatileMap:
 	.global	gLevel3Stage2Room4BlockLayer
 gLevel3Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x376EBC, 0x34
-	.global	gUnk_08376EF0
-gUnk_08376EF0:
+	.global	gLevel3Stage2Room4BlockMetatiles
+gLevel3Stage2Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x376EF0, 0x8
 	.global	gLevel3Stage2Room4Doors
 gLevel3Stage2Room4Doors:
@@ -2567,8 +2567,8 @@ gLevel3Stage2Room5MetatileMap:
 	.global	gLevel3Stage2Room5BlockLayer
 gLevel3Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3770F0, 0x38
-	.global	gUnk_08377128
-gUnk_08377128:
+	.global	gLevel3Stage2Room5BlockMetatiles
+gLevel3Stage2Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x377128, 0x8
 	.global	gLevel3Stage2Room5Doors
 gLevel3Stage2Room5Doors:
@@ -2590,8 +2590,8 @@ gLevel3Stage2Room6MetatileMap:
 	.global	gLevel3Stage2Room6BlockLayer
 gLevel3Stage2Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3772C4, 0x34
-	.global	gUnk_083772F8
-gUnk_083772F8:
+	.global	gLevel3Stage2Room6BlockMetatiles
+gLevel3Stage2Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x3772F8, 0x8
 	.global	gLevel3Stage2Room6Doors
 gLevel3Stage2Room6Doors:
@@ -2613,8 +2613,8 @@ gLevel3Stage3Room0MetatileMap:
 	.global	gLevel3Stage3Room0BlockLayer
 gLevel3Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37793C, 0x118
-	.global	gUnk_08377A54
-gUnk_08377A54:
+	.global	gLevel3Stage3Room0BlockMetatiles
+gLevel3Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x377A54, 0x8
 	.global	gLevel3Stage3Room0Doors
 gLevel3Stage3Room0Doors:
@@ -2636,8 +2636,8 @@ gLevel3Stage3Room1MetatileMap:
 	.global	gLevel3Stage3Room1BlockLayer
 gLevel3Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x377E90, 0xB0
-	.global	gUnk_08377F40
-gUnk_08377F40:
+	.global	gLevel3Stage3Room1BlockMetatiles
+gLevel3Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x377F40, 0x8
 	.global	gLevel3Stage3Room1Doors
 gLevel3Stage3Room1Doors:
@@ -2659,8 +2659,8 @@ gLevel3Stage3Room2MetatileMap:
 	.global	gLevel3Stage3Room2BlockLayer
 gLevel3Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x378584, 0x214
-	.global	gUnk_08378798
-gUnk_08378798:
+	.global	gLevel3Stage3Room2BlockMetatiles
+gLevel3Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x378798, 0x258
 	.global	gLevel3Stage3Room2Doors
 gLevel3Stage3Room2Doors:
@@ -2682,8 +2682,8 @@ gLevel3Stage3Room3MetatileMap:
 	.global	gLevel3Stage3Room3BlockLayer
 gLevel3Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x378D44, 0xB8
-	.global	gUnk_08378DFC
-gUnk_08378DFC:
+	.global	gLevel3Stage3Room3BlockMetatiles
+gLevel3Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x378DFC, 0x68
 	.global	gLevel3Stage3Room3Doors
 gLevel3Stage3Room3Doors:
@@ -2705,8 +2705,8 @@ gLevel3Stage3Room4MetatileMap:
 	.global	gLevel3Stage3Room4BlockLayer
 gLevel3Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x379180, 0x5C
-	.global	gUnk_083791DC
-gUnk_083791DC:
+	.global	gLevel3Stage3Room4BlockMetatiles
+gLevel3Stage3Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3791DC, 0x8
 	.global	gLevel3Stage3Room4Doors
 gLevel3Stage3Room4Doors:
@@ -2728,8 +2728,8 @@ gLevel3Stage4Room0MetatileMap:
 	.global	gLevel3Stage4Room0BlockLayer
 gLevel3Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x379854, 0x240
-	.global	gUnk_08379A94
-gUnk_08379A94:
+	.global	gLevel3Stage4Room0BlockMetatiles
+gLevel3Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x379A94, 0x58
 	.global	gLevel3Stage4Room0Doors
 gLevel3Stage4Room0Doors:
@@ -2751,8 +2751,8 @@ gLevel3Stage4Room1MetatileMap:
 	.global	gLevel3Stage4Room1BlockLayer
 gLevel3Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x379DA8, 0x60
-	.global	gUnk_08379E08
-gUnk_08379E08:
+	.global	gLevel3Stage4Room1BlockMetatiles
+gLevel3Stage4Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x379E08, 0x10
 	.global	gLevel3Stage4Room1Doors
 gLevel3Stage4Room1Doors:
@@ -2774,8 +2774,8 @@ gLevel3Stage4Room2MetatileMap:
 	.global	gLevel3Stage4Room2BlockLayer
 gLevel3Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37A02C, 0x58
-	.global	gUnk_0837A084
-gUnk_0837A084:
+	.global	gLevel3Stage4Room2BlockMetatiles
+gLevel3Stage4Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x37A084, 0x8
 	.global	gLevel3Stage4Room2Doors
 gLevel3Stage4Room2Doors:
@@ -2797,8 +2797,8 @@ gLevel3Stage4Room3MetatileMap:
 	.global	gLevel3Stage4Room3BlockLayer
 gLevel3Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37A398, 0xD0
-	.global	gUnk_0837A468
-gUnk_0837A468:
+	.global	gLevel3Stage4Room3BlockMetatiles
+gLevel3Stage4Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x37A468, 0x50
 	.global	gLevel3Stage4Room3Doors
 gLevel3Stage4Room3Doors:
@@ -2820,8 +2820,8 @@ gLevel3Stage4Room4MetatileMap:
 	.global	gLevel3Stage4Room4BlockLayer
 gLevel3Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x37A998, 0x174
-	.global	gUnk_0837AB0C
-gUnk_0837AB0C:
+	.global	gLevel3Stage4Room4BlockMetatiles
+gLevel3Stage4Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x37AB0C, 0x8
 	.global	gLevel3Stage4Room4Doors
 gLevel3Stage4Room4Doors:
@@ -2843,8 +2843,8 @@ gLevel3Stage4Room5MetatileMap:
 	.global	gLevel3Stage4Room5BlockLayer
 gLevel3Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x37ACE8, 0x34
-	.global	gUnk_0837AD1C
-gUnk_0837AD1C:
+	.global	gLevel3Stage4Room5BlockMetatiles
+gLevel3Stage4Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x37AD1C, 0x8
 	.global	gLevel3Stage4Room5Doors
 gLevel3Stage4Room5Doors:
@@ -2866,8 +2866,8 @@ gLevel3Stage4Room6MetatileMap:
 	.global	gLevel3Stage4Room6BlockLayer
 gLevel3Stage4Room6BlockLayer:
 	.incbin	"baserom.gba", 0x37AEAC, 0x40
-	.global	gUnk_0837AEEC
-gUnk_0837AEEC:
+	.global	gLevel3Stage4Room6BlockMetatiles
+gLevel3Stage4Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x37AEEC, 0x10
 	.global	gLevel3Stage4Room6Doors
 gLevel3Stage4Room6Doors:
@@ -2889,8 +2889,8 @@ gLevel3Stage5Room0MetatileMap:
 	.global	gLevel3Stage5Room0BlockLayer
 gLevel3Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37B2E0, 0x1F8
-	.global	gUnk_0837B4D8
-gUnk_0837B4D8:
+	.global	gLevel3Stage5Room0BlockMetatiles
+gLevel3Stage5Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x37B4D8, 0x284
 	.global	gLevel3Stage5Room0Doors
 gLevel3Stage5Room0Doors:
@@ -2912,8 +2912,8 @@ gLevel3Stage5Room1MetatileMap:
 	.global	gLevel3Stage5Room1BlockLayer
 gLevel3Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x37BA38, 0xCC
-	.global	gUnk_0837BB04
-gUnk_0837BB04:
+	.global	gLevel3Stage5Room1BlockMetatiles
+gLevel3Stage5Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x37BB04, 0x8
 	.global	gLevel3Stage5Room1Doors
 gLevel3Stage5Room1Doors:
@@ -2935,8 +2935,8 @@ gLevel3Stage5Room2MetatileMap:
 	.global	gLevel3Stage5Room2BlockLayer
 gLevel3Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37BC54, 0x34
-	.global	gUnk_0837BC88
-gUnk_0837BC88:
+	.global	gLevel3Stage5Room2BlockMetatiles
+gLevel3Stage5Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x37BC88, 0x8
 
 @ 0x0837BC90-0x0837BCE8: C, row room_def_0837bc90 (src/data/room_defs.c section .room_def_0837bc90)
@@ -2952,8 +2952,8 @@ gLevel3Stage5Room3MetatileMap:
 	.global	gLevel3Stage5Room3BlockLayer
 gLevel3Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37BD9C, 0xBC
-	.global	gUnk_0837BE58
-gUnk_0837BE58:
+	.global	gLevel3Stage5Room3BlockMetatiles
+gLevel3Stage5Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x37BE58, 0x114
 	.global	gLevel3Stage5Room3Doors
 gLevel3Stage5Room3Doors:
@@ -2975,8 +2975,8 @@ gLevel3Stage5Room4MetatileMap:
 	.global	gLevel3Stage5Room4BlockLayer
 gLevel3Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x37C1D4, 0x60
-	.global	gUnk_0837C234
-gUnk_0837C234:
+	.global	gLevel3Stage5Room4BlockMetatiles
+gLevel3Stage5Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x37C234, 0x8
 	.global	gLevel3Stage5Room4Doors
 gLevel3Stage5Room4Doors:
@@ -2998,8 +2998,8 @@ gLevel3Stage5Room5MetatileMap:
 	.global	gLevel3Stage5Room5BlockLayer
 gLevel3Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x37C3C8, 0x38
-	.global	gUnk_0837C400
-gUnk_0837C400:
+	.global	gLevel3Stage5Room5BlockMetatiles
+gLevel3Stage5Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x37C400, 0x10
 	.global	gLevel3Stage5Room5Doors
 gLevel3Stage5Room5Doors:
@@ -3021,8 +3021,8 @@ gLevel3Stage5Room6MetatileMap:
 	.global	gLevel3Stage5Room6BlockLayer
 gLevel3Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x37C4E4, 0x34
-	.global	gUnk_0837C518
-gUnk_0837C518:
+	.global	gLevel3Stage5Room6BlockMetatiles
+gLevel3Stage5Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x37C518, 0x8
 
 @ 0x0837C520-0x0837C578: C, row room_def_0837c520 (src/data/room_defs.c section .room_def_0837c520)
@@ -3038,8 +3038,8 @@ gLevel3Stage5Room7MetatileMap:
 	.global	gLevel3Stage5Room7BlockLayer
 gLevel3Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x37C630, 0x34
-	.global	gUnk_0837C664
-gUnk_0837C664:
+	.global	gLevel3Stage5Room7BlockMetatiles
+gLevel3Stage5Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x37C664, 0x10
 	.global	gLevel3Stage5Room7Doors
 gLevel3Stage5Room7Doors:
@@ -3061,8 +3061,8 @@ gLevel3Stage6Room0MetatileMap:
 	.global	gLevel3Stage6Room0BlockLayer
 gLevel3Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37CB98, 0x5F0
-	.global	gUnk_0837D188
-gUnk_0837D188:
+	.global	gLevel3Stage6Room0BlockMetatiles
+gLevel3Stage6Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x37D188, 0x780
 	.global	gLevel3Stage6Room0Objects
 gLevel3Stage6Room0Objects:
@@ -3081,8 +3081,8 @@ gLevel4Stage0Room0MetatileMap:
 	.global	gLevel4Stage0Room0BlockLayer
 gLevel4Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37DC9C, 0x110
-	.global	gUnk_0837DDAC
-gUnk_0837DDAC:
+	.global	gLevel4Stage0Room0BlockMetatiles
+gLevel4Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x37DDAC, 0x8
 	.global	gLevel4Stage0Room0Doors
 gLevel4Stage0Room0Doors:
@@ -3104,8 +3104,8 @@ gLevel4Stage0Room1MetatileMap:
 	.global	gLevel4Stage0Room1BlockLayer
 gLevel4Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x37E1AC, 0x1F4
-	.global	gUnk_0837E3A0
-gUnk_0837E3A0:
+	.global	gLevel4Stage0Room1BlockMetatiles
+gLevel4Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x37E3A0, 0x168
 	.global	gLevel4Stage0Room1Doors
 gLevel4Stage0Room1Doors:
@@ -3127,8 +3127,8 @@ gLevel4Stage0Room2MetatileMap:
 	.global	gLevel4Stage0Room2BlockLayer
 gLevel4Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37E9BC, 0x114
-	.global	gUnk_0837EAD0
-gUnk_0837EAD0:
+	.global	gLevel4Stage0Room2BlockMetatiles
+gLevel4Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x37EAD0, 0x8
 	.global	gLevel4Stage0Room2Doors
 gLevel4Stage0Room2Doors:
@@ -3150,8 +3150,8 @@ gLevel4Stage0Room3MetatileMap:
 	.global	gLevel4Stage0Room3BlockLayer
 gLevel4Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37EC38, 0x34
-	.global	gUnk_0837EC6C
-gUnk_0837EC6C:
+	.global	gLevel4Stage0Room3BlockMetatiles
+gLevel4Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x37EC6C, 0x8
 	.global	gLevel4Stage0Room3Doors
 gLevel4Stage0Room3Doors:
@@ -3173,8 +3173,8 @@ gLevel4Stage0Room4MetatileMap:
 	.global	gLevel4Stage0Room4BlockLayer
 gLevel4Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x37EE08, 0x34
-	.global	gUnk_0837EE3C
-gUnk_0837EE3C:
+	.global	gLevel4Stage0Room4BlockMetatiles
+gLevel4Stage0Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x37EE3C, 0x8
 	.global	gLevel4Stage0Room4Doors
 gLevel4Stage0Room4Doors:
@@ -3196,8 +3196,8 @@ gLevel4Stage1Room0MetatileMap:
 	.global	gLevel4Stage1Room0BlockLayer
 gLevel4Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x37EFE0, 0x34
-	.global	gUnk_0837F014
-gUnk_0837F014:
+	.global	gLevel4Stage1Room0BlockMetatiles
+gLevel4Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x37F014, 0x8
 	.global	gLevel4Stage1Room0Doors
 gLevel4Stage1Room0Doors:
@@ -3216,8 +3216,8 @@ gLevel4Stage1Room1MetatileMap:
 	.global	gLevel4Stage1Room1BlockLayer
 gLevel4Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x37F59C, 0x100
-	.global	gUnk_0837F69C
-gUnk_0837F69C:
+	.global	gLevel4Stage1Room1BlockMetatiles
+gLevel4Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x37F69C, 0x8
 	.global	gLevel4Stage1Room1Doors
 gLevel4Stage1Room1Doors:
@@ -3239,8 +3239,8 @@ gLevel4Stage1Room2MetatileMap:
 	.global	gLevel4Stage1Room2BlockLayer
 gLevel4Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x37F984, 0x5C
-	.global	gUnk_0837F9E0
-gUnk_0837F9E0:
+	.global	gLevel4Stage1Room2BlockMetatiles
+gLevel4Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x37F9E0, 0x8
 	.global	gLevel4Stage1Room2Doors
 gLevel4Stage1Room2Doors:
@@ -3262,8 +3262,8 @@ gLevel4Stage1Room3MetatileMap:
 	.global	gLevel4Stage1Room3BlockLayer
 gLevel4Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x37FD04, 0x70
-	.global	gUnk_0837FD74
-gUnk_0837FD74:
+	.global	gLevel4Stage1Room3BlockMetatiles
+gLevel4Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x37FD74, 0x8
 	.global	gLevel4Stage1Room3Doors
 gLevel4Stage1Room3Doors:
@@ -3285,8 +3285,8 @@ gLevel4Stage1Room4MetatileMap:
 	.global	gLevel4Stage1Room4BlockLayer
 gLevel4Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38002C, 0x5C
-	.global	gUnk_08380088
-gUnk_08380088:
+	.global	gLevel4Stage1Room4BlockMetatiles
+gLevel4Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x380088, 0x8
 	.global	gLevel4Stage1Room4Doors
 gLevel4Stage1Room4Doors:
@@ -3308,8 +3308,8 @@ gLevel4Stage1Room5MetatileMap:
 	.global	gLevel4Stage1Room5BlockLayer
 gLevel4Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x380484, 0xC4
-	.global	gUnk_08380548
-gUnk_08380548:
+	.global	gLevel4Stage1Room5BlockMetatiles
+gLevel4Stage1Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x380548, 0x8
 	.global	gLevel4Stage1Room5Doors
 gLevel4Stage1Room5Doors:
@@ -3331,8 +3331,8 @@ gLevel4Stage1Room6MetatileMap:
 	.global	gLevel4Stage1Room6BlockLayer
 gLevel4Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3806F0, 0x34
-	.global	gUnk_08380724
-gUnk_08380724:
+	.global	gLevel4Stage1Room6BlockMetatiles
+gLevel4Stage1Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x380724, 0x10
 	.global	gLevel4Stage1Room6Doors
 gLevel4Stage1Room6Doors:
@@ -3354,8 +3354,8 @@ gLevel4Stage2Room0MetatileMap:
 	.global	gLevel4Stage2Room0BlockLayer
 gLevel4Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x380B34, 0xFC
-	.global	gUnk_08380C30
-gUnk_08380C30:
+	.global	gLevel4Stage2Room0BlockMetatiles
+gLevel4Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x380C30, 0x8
 	.global	gLevel4Stage2Room0Doors
 gLevel4Stage2Room0Doors:
@@ -3377,8 +3377,8 @@ gLevel4Stage2Room1MetatileMap:
 	.global	gLevel4Stage2Room1BlockLayer
 gLevel4Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3810A0, 0xAC
-	.global	gUnk_0838114C
-gUnk_0838114C:
+	.global	gLevel4Stage2Room1BlockMetatiles
+gLevel4Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x38114C, 0x8
 	.global	gLevel4Stage2Room1Doors
 gLevel4Stage2Room1Doors:
@@ -3400,8 +3400,8 @@ gLevel4Stage2Room2MetatileMap:
 	.global	gLevel4Stage2Room2BlockLayer
 gLevel4Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x381A28, 0x1F8
-	.global	gUnk_08381C20
-gUnk_08381C20:
+	.global	gLevel4Stage2Room2BlockMetatiles
+gLevel4Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x381C20, 0x8
 	.global	gLevel4Stage2Room2Doors
 gLevel4Stage2Room2Doors:
@@ -3423,8 +3423,8 @@ gLevel4Stage2Room3MetatileMap:
 	.global	gLevel4Stage2Room3BlockLayer
 gLevel4Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x382040, 0xEC
-	.global	gUnk_0838212C
-gUnk_0838212C:
+	.global	gLevel4Stage2Room3BlockMetatiles
+gLevel4Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x38212C, 0x34
 	.global	gLevel4Stage2Room3Doors
 gLevel4Stage2Room3Doors:
@@ -3446,8 +3446,8 @@ gLevel4Stage2Room4MetatileMap:
 	.global	gLevel4Stage2Room4BlockLayer
 gLevel4Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38250C, 0x90
-	.global	gUnk_0838259C
-gUnk_0838259C:
+	.global	gLevel4Stage2Room4BlockMetatiles
+gLevel4Stage2Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x38259C, 0x8
 	.global	gLevel4Stage2Room4Doors
 gLevel4Stage2Room4Doors:
@@ -3469,8 +3469,8 @@ gLevel4Stage2Room5MetatileMap:
 	.global	gLevel4Stage2Room5BlockLayer
 gLevel4Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38271C, 0xA4
-	.global	gUnk_083827C0
-gUnk_083827C0:
+	.global	gLevel4Stage2Room5BlockMetatiles
+gLevel4Stage2Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3827C0, 0xD0
 	.global	gLevel4Stage2Room5Doors
 gLevel4Stage2Room5Doors:
@@ -3492,8 +3492,8 @@ gLevel4Stage3Room0MetatileMap:
 	.global	gLevel4Stage3Room0BlockLayer
 gLevel4Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x383078, 0x180
-	.global	gUnk_083831F8
-gUnk_083831F8:
+	.global	gLevel4Stage3Room0BlockMetatiles
+gLevel4Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3831F8, 0x44
 	.global	gLevel4Stage3Room0Doors
 gLevel4Stage3Room0Doors:
@@ -3515,8 +3515,8 @@ gLevel4Stage3Room1MetatileMap:
 	.global	gLevel4Stage3Room1BlockLayer
 gLevel4Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3838E0, 0x1A0
-	.global	gUnk_08383A80
-gUnk_08383A80:
+	.global	gLevel4Stage3Room1BlockMetatiles
+gLevel4Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x383A80, 0x8
 	.global	gLevel4Stage3Room1Doors
 gLevel4Stage3Room1Doors:
@@ -3538,8 +3538,8 @@ gLevel4Stage3Room2MetatileMap:
 	.global	gLevel4Stage3Room2BlockLayer
 gLevel4Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x383FC4, 0xB8
-	.global	gUnk_0838407C
-gUnk_0838407C:
+	.global	gLevel4Stage3Room2BlockMetatiles
+gLevel4Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x38407C, 0x8
 	.global	gLevel4Stage3Room2Doors
 gLevel4Stage3Room2Doors:
@@ -3561,8 +3561,8 @@ gLevel4Stage3Room3MetatileMap:
 	.global	gLevel4Stage3Room3BlockLayer
 gLevel4Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3845BC, 0x13C
-	.global	gUnk_083846F8
-gUnk_083846F8:
+	.global	gLevel4Stage3Room3BlockMetatiles
+gLevel4Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3846F8, 0x8
 	.global	gLevel4Stage3Room3Doors
 gLevel4Stage3Room3Doors:
@@ -3584,8 +3584,8 @@ gLevel4Stage3Room4MetatileMap:
 	.global	gLevel4Stage3Room4BlockLayer
 gLevel4Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x384A30, 0x64
-	.global	gUnk_08384A94
-gUnk_08384A94:
+	.global	gLevel4Stage3Room4BlockMetatiles
+gLevel4Stage3Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x384A94, 0x8
 	.global	gLevel4Stage3Room4Doors
 gLevel4Stage3Room4Doors:
@@ -3607,8 +3607,8 @@ gLevel4Stage3Room5MetatileMap:
 	.global	gLevel4Stage3Room5BlockLayer
 gLevel4Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x384C60, 0x34
-	.global	gUnk_08384C94
-gUnk_08384C94:
+	.global	gLevel4Stage3Room5BlockMetatiles
+gLevel4Stage3Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x384C94, 0x8
 	.global	gLevel4Stage3Room5Doors
 gLevel4Stage3Room5Doors:
@@ -3630,8 +3630,8 @@ gLevel4Stage3Room6MetatileMap:
 	.global	gLevel4Stage3Room6BlockLayer
 gLevel4Stage3Room6BlockLayer:
 	.incbin	"baserom.gba", 0x384DE0, 0x38
-	.global	gUnk_08384E18
-gUnk_08384E18:
+	.global	gLevel4Stage3Room6BlockMetatiles
+gLevel4Stage3Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x384E18, 0x10
 	.global	gLevel4Stage3Room6Doors
 gLevel4Stage3Room6Doors:
@@ -3653,8 +3653,8 @@ gLevel4Stage4Room0MetatileMap:
 	.global	gLevel4Stage4Room0BlockLayer
 gLevel4Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3856D0, 0x1E4
-	.global	gUnk_083858B4
-gUnk_083858B4:
+	.global	gLevel4Stage4Room0BlockMetatiles
+gLevel4Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3858B4, 0x8
 	.global	gLevel4Stage4Room0Doors
 gLevel4Stage4Room0Doors:
@@ -3676,8 +3676,8 @@ gLevel4Stage4Room1MetatileMap:
 	.global	gLevel4Stage4Room1BlockLayer
 gLevel4Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x385ED8, 0xD8
-	.global	gUnk_08385FB0
-gUnk_08385FB0:
+	.global	gLevel4Stage4Room1BlockMetatiles
+gLevel4Stage4Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x385FB0, 0x8
 	.global	gLevel4Stage4Room1Doors
 gLevel4Stage4Room1Doors:
@@ -3699,8 +3699,8 @@ gLevel4Stage4Room2MetatileMap:
 	.global	gLevel4Stage4Room2BlockLayer
 gLevel4Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x386278, 0x8C
-	.global	gUnk_08386304
-gUnk_08386304:
+	.global	gLevel4Stage4Room2BlockMetatiles
+gLevel4Stage4Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x386304, 0x14
 	.global	gLevel4Stage4Room2Doors
 gLevel4Stage4Room2Doors:
@@ -3719,8 +3719,8 @@ gLevel4Stage4Room3MetatileMap:
 	.global	gLevel4Stage4Room3BlockLayer
 gLevel4Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x386624, 0x90
-	.global	gUnk_083866B4
-gUnk_083866B4:
+	.global	gLevel4Stage4Room3BlockMetatiles
+gLevel4Stage4Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3866B4, 0x8
 	.global	gLevel4Stage4Room3Doors
 gLevel4Stage4Room3Doors:
@@ -3742,8 +3742,8 @@ gLevel4Stage4Room4MetatileMap:
 	.global	gLevel4Stage4Room4BlockLayer
 gLevel4Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x386A94, 0xB0
-	.global	gUnk_08386B44
-gUnk_08386B44:
+	.global	gLevel4Stage4Room4BlockMetatiles
+gLevel4Stage4Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x386B44, 0x8
 	.global	gLevel4Stage4Room4Doors
 gLevel4Stage4Room4Doors:
@@ -3765,8 +3765,8 @@ gLevel4Stage4Room5MetatileMap:
 	.global	gLevel4Stage4Room5BlockLayer
 gLevel4Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x386E9C, 0x90
-	.global	gUnk_08386F2C
-gUnk_08386F2C:
+	.global	gLevel4Stage4Room5BlockMetatiles
+gLevel4Stage4Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x386F2C, 0x8
 	.global	gLevel4Stage4Room5Doors
 gLevel4Stage4Room5Doors:
@@ -3788,8 +3788,8 @@ gLevel4Stage4Room6MetatileMap:
 	.global	gLevel4Stage4Room6BlockLayer
 gLevel4Stage4Room6BlockLayer:
 	.incbin	"baserom.gba", 0x38712C, 0x80
-	.global	gUnk_083871AC
-gUnk_083871AC:
+	.global	gLevel4Stage4Room6BlockMetatiles
+gLevel4Stage4Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x3871AC, 0x124
 	.global	gLevel4Stage4Room6Doors
 gLevel4Stage4Room6Doors:
@@ -3811,8 +3811,8 @@ gLevel4Stage4Room7MetatileMap:
 	.global	gLevel4Stage4Room7BlockLayer
 gLevel4Stage4Room7BlockLayer:
 	.incbin	"baserom.gba", 0x38743C, 0x34
-	.global	gUnk_08387470
-gUnk_08387470:
+	.global	gLevel4Stage4Room7BlockMetatiles
+gLevel4Stage4Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x387470, 0x8
 	.global	gLevel4Stage4Room7Doors
 gLevel4Stage4Room7Doors:
@@ -3834,8 +3834,8 @@ gLevel4Stage5Room0MetatileMap:
 	.global	gLevel4Stage5Room0BlockLayer
 gLevel4Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x387854, 0x100
-	.global	gUnk_08387954
-gUnk_08387954:
+	.global	gLevel4Stage5Room0BlockMetatiles
+gLevel4Stage5Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x387954, 0x8
 	.global	gLevel4Stage5Room0Doors
 gLevel4Stage5Room0Doors:
@@ -3857,8 +3857,8 @@ gLevel4Stage5Room1MetatileMap:
 	.global	gLevel4Stage5Room1BlockLayer
 gLevel4Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x387F18, 0x190
-	.global	gUnk_083880A8
-gUnk_083880A8:
+	.global	gLevel4Stage5Room1BlockMetatiles
+gLevel4Stage5Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3880A8, 0xF0
 	.global	gLevel4Stage5Room1Doors
 gLevel4Stage5Room1Doors:
@@ -3880,8 +3880,8 @@ gLevel4Stage5Room2MetatileMap:
 	.global	gLevel4Stage5Room2BlockLayer
 gLevel4Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3885C4, 0xFC
-	.global	gUnk_083886C0
-gUnk_083886C0:
+	.global	gLevel4Stage5Room2BlockMetatiles
+gLevel4Stage5Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3886C0, 0x8
 	.global	gLevel4Stage5Room2Doors
 gLevel4Stage5Room2Doors:
@@ -3903,8 +3903,8 @@ gLevel4Stage5Room3MetatileMap:
 	.global	gLevel4Stage5Room3BlockLayer
 gLevel4Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3888D8, 0x4C
-	.global	gUnk_08388924
-gUnk_08388924:
+	.global	gLevel4Stage5Room3BlockMetatiles
+gLevel4Stage5Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x388924, 0x28
 	.global	gLevel4Stage5Room3Doors
 gLevel4Stage5Room3Doors:
@@ -3923,8 +3923,8 @@ gLevel4Stage5Room4MetatileMap:
 	.global	gLevel4Stage5Room4BlockLayer
 gLevel4Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x388B58, 0x34
-	.global	gUnk_08388B8C
-gUnk_08388B8C:
+	.global	gLevel4Stage5Room4BlockMetatiles
+gLevel4Stage5Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x388B8C, 0x8
 	.global	gLevel4Stage5Room4Doors
 gLevel4Stage5Room4Doors:
@@ -3946,8 +3946,8 @@ gLevel4Stage6Room0MetatileMap:
 	.global	gLevel4Stage6Room0BlockLayer
 gLevel4Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38908C, 0x1EC
-	.global	gUnk_08389278
-gUnk_08389278:
+	.global	gLevel4Stage6Room0BlockMetatiles
+gLevel4Stage6Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x389278, 0xC
 	.global	gLevel4Stage6Room0Objects
 gLevel4Stage6Room0Objects:
@@ -3966,8 +3966,8 @@ gLevel4Stage6Room1MetatileMap:
 	.global	gLevel4Stage6Room1BlockLayer
 gLevel4Stage6Room1BlockLayer:
 	.incbin	"baserom.gba", 0x389398, 0x34
-	.global	gUnk_083893CC
-gUnk_083893CC:
+	.global	gLevel4Stage6Room1BlockMetatiles
+gLevel4Stage6Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3893CC, 0x8
 	.global	gLevel4Stage6Room1Objects
 gLevel4Stage6Room1Objects:
@@ -3986,8 +3986,8 @@ gLevel5Stage0Room0MetatileMap:
 	.global	gLevel5Stage0Room0BlockLayer
 gLevel5Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3898A8, 0x114
-	.global	gUnk_083899BC
-gUnk_083899BC:
+	.global	gLevel5Stage0Room0BlockMetatiles
+gLevel5Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3899BC, 0x14
 	.global	gLevel5Stage0Room0Doors
 gLevel5Stage0Room0Doors:
@@ -4009,8 +4009,8 @@ gLevel5Stage0Room1MetatileMap:
 	.global	gLevel5Stage0Room1BlockLayer
 gLevel5Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x389DA0, 0xF4
-	.global	gUnk_08389E94
-gUnk_08389E94:
+	.global	gLevel5Stage0Room1BlockMetatiles
+gLevel5Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x389E94, 0x8
 	.global	gLevel5Stage0Room1Doors
 gLevel5Stage0Room1Doors:
@@ -4032,8 +4032,8 @@ gLevel5Stage0Room2MetatileMap:
 	.global	gLevel5Stage0Room2BlockLayer
 gLevel5Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38A2B8, 0xCC
-	.global	gUnk_0838A384
-gUnk_0838A384:
+	.global	gLevel5Stage0Room2BlockMetatiles
+gLevel5Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x38A384, 0x8
 	.global	gLevel5Stage0Room2Doors
 gLevel5Stage0Room2Doors:
@@ -4055,8 +4055,8 @@ gLevel5Stage0Room3MetatileMap:
 	.global	gLevel5Stage0Room3BlockLayer
 gLevel5Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38A5E4, 0x40
-	.global	gUnk_0838A624
-gUnk_0838A624:
+	.global	gLevel5Stage0Room3BlockMetatiles
+gLevel5Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x38A624, 0x1C
 	.global	gLevel5Stage0Room3Doors
 gLevel5Stage0Room3Doors:
@@ -4078,8 +4078,8 @@ gLevel5Stage0Room4MetatileMap:
 	.global	gLevel5Stage0Room4BlockLayer
 gLevel5Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38A80C, 0x34
-	.global	gUnk_0838A840
-gUnk_0838A840:
+	.global	gLevel5Stage0Room4BlockMetatiles
+gLevel5Stage0Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x38A840, 0x8
 	.global	gLevel5Stage0Room4Doors
 gLevel5Stage0Room4Doors:
@@ -4101,8 +4101,8 @@ gLevel5Stage0Room5MetatileMap:
 	.global	gLevel5Stage0Room5BlockLayer
 gLevel5Stage0Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38A978, 0x34
-	.global	gUnk_0838A9AC
-gUnk_0838A9AC:
+	.global	gLevel5Stage0Room5BlockMetatiles
+gLevel5Stage0Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x38A9AC, 0x8
 	.global	gLevel5Stage0Room5Doors
 gLevel5Stage0Room5Doors:
@@ -4124,8 +4124,8 @@ gLevel5Stage1Room0MetatileMap:
 	.global	gLevel5Stage1Room0BlockLayer
 gLevel5Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38AD80, 0xE8
-	.global	gUnk_0838AE68
-gUnk_0838AE68:
+	.global	gLevel5Stage1Room0BlockMetatiles
+gLevel5Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x38AE68, 0x40
 	.global	gLevel5Stage1Room0Doors
 gLevel5Stage1Room0Doors:
@@ -4147,8 +4147,8 @@ gLevel5Stage1Room1MetatileMap:
 	.global	gLevel5Stage1Room1BlockLayer
 gLevel5Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x38B25C, 0xB8
-	.global	gUnk_0838B314
-gUnk_0838B314:
+	.global	gLevel5Stage1Room1BlockMetatiles
+gLevel5Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x38B314, 0x8
 	.global	gLevel5Stage1Room1Doors
 gLevel5Stage1Room1Doors:
@@ -4170,8 +4170,8 @@ gLevel5Stage1Room2MetatileMap:
 	.global	gLevel5Stage1Room2BlockLayer
 gLevel5Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38B634, 0x90
-	.global	gUnk_0838B6C4
-gUnk_0838B6C4:
+	.global	gLevel5Stage1Room2BlockMetatiles
+gLevel5Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x38B6C4, 0x8
 	.global	gLevel5Stage1Room2Doors
 gLevel5Stage1Room2Doors:
@@ -4193,8 +4193,8 @@ gLevel5Stage1Room3MetatileMap:
 	.global	gLevel5Stage1Room3BlockLayer
 gLevel5Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38BA18, 0xD0
-	.global	gUnk_0838BAE8
-gUnk_0838BAE8:
+	.global	gLevel5Stage1Room3BlockMetatiles
+gLevel5Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x38BAE8, 0x10
 	.global	gLevel5Stage1Room3Doors
 gLevel5Stage1Room3Doors:
@@ -4216,8 +4216,8 @@ gLevel5Stage1Room4MetatileMap:
 	.global	gLevel5Stage1Room4BlockLayer
 gLevel5Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38BCB0, 0x44
-	.global	gUnk_0838BCF4
-gUnk_0838BCF4:
+	.global	gLevel5Stage1Room4BlockMetatiles
+gLevel5Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x38BCF4, 0x28
 	.global	gLevel5Stage1Room4Doors
 gLevel5Stage1Room4Doors:
@@ -4239,8 +4239,8 @@ gLevel5Stage1Room5MetatileMap:
 	.global	gLevel5Stage1Room5BlockLayer
 gLevel5Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38BEB0, 0x34
-	.global	gUnk_0838BEE4
-gUnk_0838BEE4:
+	.global	gLevel5Stage1Room5BlockMetatiles
+gLevel5Stage1Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x38BEE4, 0x8
 	.global	gLevel5Stage1Room5Doors
 gLevel5Stage1Room5Doors:
@@ -4262,8 +4262,8 @@ gLevel5Stage1Room6MetatileMap:
 	.global	gLevel5Stage1Room6BlockLayer
 gLevel5Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x38C010, 0x34
-	.global	gUnk_0838C044
-gUnk_0838C044:
+	.global	gLevel5Stage1Room6BlockMetatiles
+gLevel5Stage1Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x38C044, 0x8
 	.global	gLevel5Stage1Room6Doors
 gLevel5Stage1Room6Doors:
@@ -4285,8 +4285,8 @@ gLevel5Stage2Room0MetatileMap:
 	.global	gLevel5Stage2Room0BlockLayer
 gLevel5Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38C438, 0xD4
-	.global	gUnk_0838C50C
-gUnk_0838C50C:
+	.global	gLevel5Stage2Room0BlockMetatiles
+gLevel5Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x38C50C, 0x14
 	.global	gLevel5Stage2Room0Doors
 gLevel5Stage2Room0Doors:
@@ -4308,8 +4308,8 @@ gLevel5Stage2Room1MetatileMap:
 	.global	gLevel5Stage2Room1BlockLayer
 gLevel5Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x38C8F8, 0x120
-	.global	gUnk_0838CA18
-gUnk_0838CA18:
+	.global	gLevel5Stage2Room1BlockMetatiles
+gLevel5Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x38CA18, 0xE4
 	.global	gLevel5Stage2Room1Doors
 gLevel5Stage2Room1Doors:
@@ -4331,8 +4331,8 @@ gLevel5Stage2Room2MetatileMap:
 	.global	gLevel5Stage2Room2BlockLayer
 gLevel5Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38CFE0, 0xEC
-	.global	gUnk_0838D0CC
-gUnk_0838D0CC:
+	.global	gLevel5Stage2Room2BlockMetatiles
+gLevel5Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x38D0CC, 0x8
 	.global	gLevel5Stage2Room2Doors
 gLevel5Stage2Room2Doors:
@@ -4354,8 +4354,8 @@ gLevel5Stage2Room3MetatileMap:
 	.global	gLevel5Stage2Room3BlockLayer
 gLevel5Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38D5F4, 0x198
-	.global	gUnk_0838D78C
-gUnk_0838D78C:
+	.global	gLevel5Stage2Room3BlockMetatiles
+gLevel5Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x38D78C, 0x14
 	.global	gLevel5Stage2Room3Doors
 gLevel5Stage2Room3Doors:
@@ -4377,8 +4377,8 @@ gLevel5Stage2Room4MetatileMap:
 	.global	gLevel5Stage2Room4BlockLayer
 gLevel5Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38DAD8, 0x9C
-	.global	gUnk_0838DB74
-gUnk_0838DB74:
+	.global	gLevel5Stage2Room4BlockMetatiles
+gLevel5Stage2Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x38DB74, 0x8
 	.global	gLevel5Stage2Room4Doors
 gLevel5Stage2Room4Doors:
@@ -4400,8 +4400,8 @@ gLevel5Stage2Room5MetatileMap:
 	.global	gLevel5Stage2Room5BlockLayer
 gLevel5Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x38DCEC, 0x58
-	.global	gUnk_0838DD44
-gUnk_0838DD44:
+	.global	gLevel5Stage2Room5BlockMetatiles
+gLevel5Stage2Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x38DD44, 0x8
 	.global	gLevel5Stage2Room5Doors
 gLevel5Stage2Room5Doors:
@@ -4420,8 +4420,8 @@ gLevel5Stage2Room6MetatileMap:
 	.global	gLevel5Stage2Room6BlockLayer
 gLevel5Stage2Room6BlockLayer:
 	.incbin	"baserom.gba", 0x38DE68, 0x34
-	.global	gUnk_0838DE9C
-gUnk_0838DE9C:
+	.global	gLevel5Stage2Room6BlockMetatiles
+gLevel5Stage2Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x38DE9C, 0x8
 	.global	gLevel5Stage2Room6Doors
 gLevel5Stage2Room6Doors:
@@ -4443,8 +4443,8 @@ gLevel5Stage2Room7MetatileMap:
 	.global	gLevel5Stage2Room7BlockLayer
 gLevel5Stage2Room7BlockLayer:
 	.incbin	"baserom.gba", 0x38DFD4, 0x34
-	.global	gUnk_0838E008
-gUnk_0838E008:
+	.global	gLevel5Stage2Room7BlockMetatiles
+gLevel5Stage2Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x38E008, 0x8
 	.global	gLevel5Stage2Room7Doors
 gLevel5Stage2Room7Doors:
@@ -4466,8 +4466,8 @@ gLevel5Stage2Room8MetatileMap:
 	.global	gLevel5Stage2Room8BlockLayer
 gLevel5Stage2Room8BlockLayer:
 	.incbin	"baserom.gba", 0x38E1F4, 0x48
-	.global	gUnk_0838E23C
-gUnk_0838E23C:
+	.global	gLevel5Stage2Room8BlockMetatiles
+gLevel5Stage2Room8BlockMetatiles:
 	.incbin	"baserom.gba", 0x38E23C, 0x50
 	.global	gLevel5Stage2Room8Doors
 gLevel5Stage2Room8Doors:
@@ -4489,8 +4489,8 @@ gLevel5Stage2Room9MetatileMap:
 	.global	gLevel5Stage2Room9BlockLayer
 gLevel5Stage2Room9BlockLayer:
 	.incbin	"baserom.gba", 0x38E404, 0x38
-	.global	gUnk_0838E43C
-gUnk_0838E43C:
+	.global	gLevel5Stage2Room9BlockMetatiles
+gLevel5Stage2Room9BlockMetatiles:
 	.incbin	"baserom.gba", 0x38E43C, 0x8
 	.global	gLevel5Stage2Room9Doors
 gLevel5Stage2Room9Doors:
@@ -4512,8 +4512,8 @@ gLevel5Stage2Room10MetatileMap:
 	.global	gLevel5Stage2Room10BlockLayer
 gLevel5Stage2Room10BlockLayer:
 	.incbin	"baserom.gba", 0x38E628, 0x3C
-	.global	gUnk_0838E664
-gUnk_0838E664:
+	.global	gLevel5Stage2Room10BlockMetatiles
+gLevel5Stage2Room10BlockMetatiles:
 	.incbin	"baserom.gba", 0x38E664, 0x8
 	.global	gLevel5Stage2Room10Doors
 gLevel5Stage2Room10Doors:
@@ -4535,8 +4535,8 @@ gLevel5Stage2Room11MetatileMap:
 	.global	gLevel5Stage2Room11BlockLayer
 gLevel5Stage2Room11BlockLayer:
 	.incbin	"baserom.gba", 0x38E7BC, 0x34
-	.global	gUnk_0838E7F0
-gUnk_0838E7F0:
+	.global	gLevel5Stage2Room11BlockMetatiles
+gLevel5Stage2Room11BlockMetatiles:
 	.incbin	"baserom.gba", 0x38E7F0, 0x8
 	.global	gLevel5Stage2Room11Doors
 gLevel5Stage2Room11Doors:
@@ -4558,8 +4558,8 @@ gLevel5Stage3Room0MetatileMap:
 	.global	gLevel5Stage3Room0BlockLayer
 gLevel5Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x38ECE8, 0x140
-	.global	gUnk_0838EE28
-gUnk_0838EE28:
+	.global	gLevel5Stage3Room0BlockMetatiles
+gLevel5Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x38EE28, 0x28
 	.global	gLevel5Stage3Room0Doors
 gLevel5Stage3Room0Doors:
@@ -4581,8 +4581,8 @@ gLevel5Stage3Room1MetatileMap:
 	.global	gLevel5Stage3Room1BlockLayer
 gLevel5Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x38F494, 0x178
-	.global	gUnk_0838F60C
-gUnk_0838F60C:
+	.global	gLevel5Stage3Room1BlockMetatiles
+gLevel5Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x38F60C, 0xC8
 	.global	gLevel5Stage3Room1Doors
 gLevel5Stage3Room1Doors:
@@ -4604,8 +4604,8 @@ gLevel5Stage3Room2MetatileMap:
 	.global	gLevel5Stage3Room2BlockLayer
 gLevel5Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x38F8B4, 0x34
-	.global	gUnk_0838F8E8
-gUnk_0838F8E8:
+	.global	gLevel5Stage3Room2BlockMetatiles
+gLevel5Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x38F8E8, 0x8
 	.global	gLevel5Stage3Room2Doors
 gLevel5Stage3Room2Doors:
@@ -4627,8 +4627,8 @@ gLevel5Stage3Room3MetatileMap:
 	.global	gLevel5Stage3Room3BlockLayer
 gLevel5Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x38FBF4, 0x90
-	.global	gUnk_0838FC84
-gUnk_0838FC84:
+	.global	gLevel5Stage3Room3BlockMetatiles
+gLevel5Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x38FC84, 0x8
 	.global	gLevel5Stage3Room3Doors
 gLevel5Stage3Room3Doors:
@@ -4650,8 +4650,8 @@ gLevel5Stage3Room4MetatileMap:
 	.global	gLevel5Stage3Room4BlockLayer
 gLevel5Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x38FF7C, 0x9C
-	.global	gUnk_08390018
-gUnk_08390018:
+	.global	gLevel5Stage3Room4BlockMetatiles
+gLevel5Stage3Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x390018, 0x8
 	.global	gLevel5Stage3Room4Doors
 gLevel5Stage3Room4Doors:
@@ -4673,8 +4673,8 @@ gLevel5Stage3Room5MetatileMap:
 	.global	gLevel5Stage3Room5BlockLayer
 gLevel5Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x390260, 0x34
-	.global	gUnk_08390294
-gUnk_08390294:
+	.global	gLevel5Stage3Room5BlockMetatiles
+gLevel5Stage3Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x390294, 0x8
 	.global	gLevel5Stage3Room5Doors
 gLevel5Stage3Room5Doors:
@@ -4696,8 +4696,8 @@ gLevel5Stage4Room0MetatileMap:
 	.global	gLevel5Stage4Room0BlockLayer
 gLevel5Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3904E8, 0x70
-	.global	gUnk_08390558
-gUnk_08390558:
+	.global	gLevel5Stage4Room0BlockMetatiles
+gLevel5Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x390558, 0x8
 	.global	gLevel5Stage4Room0Doors
 gLevel5Stage4Room0Doors:
@@ -4719,8 +4719,8 @@ gLevel5Stage4Room1MetatileMap:
 	.global	gLevel5Stage4Room1BlockLayer
 gLevel5Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3909F0, 0x15C
-	.global	gUnk_08390B4C
-gUnk_08390B4C:
+	.global	gLevel5Stage4Room1BlockMetatiles
+gLevel5Stage4Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x390B4C, 0x8
 	.global	gLevel5Stage4Room1Doors
 gLevel5Stage4Room1Doors:
@@ -4742,8 +4742,8 @@ gLevel5Stage4Room2MetatileMap:
 	.global	gLevel5Stage4Room2BlockLayer
 gLevel5Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x390E1C, 0x138
-	.global	gUnk_08390F54
-gUnk_08390F54:
+	.global	gLevel5Stage4Room2BlockMetatiles
+gLevel5Stage4Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x390F54, 0x19C
 	.global	gLevel5Stage4Room2Doors
 gLevel5Stage4Room2Doors:
@@ -4765,8 +4765,8 @@ gLevel5Stage4Room3MetatileMap:
 	.global	gLevel5Stage4Room3BlockLayer
 gLevel5Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39166C, 0x264
-	.global	gUnk_083918D0
-gUnk_083918D0:
+	.global	gLevel5Stage4Room3BlockMetatiles
+gLevel5Stage4Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3918D0, 0x2D0
 	.global	gLevel5Stage4Room3Doors
 gLevel5Stage4Room3Doors:
@@ -4788,8 +4788,8 @@ gLevel5Stage4Room4MetatileMap:
 	.global	gLevel5Stage4Room4BlockLayer
 gLevel5Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x391D40, 0x34
-	.global	gUnk_08391D74
-gUnk_08391D74:
+	.global	gLevel5Stage4Room4BlockMetatiles
+gLevel5Stage4Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x391D74, 0x8
 	.global	gLevel5Stage4Room4Doors
 gLevel5Stage4Room4Doors:
@@ -4811,8 +4811,8 @@ gLevel5Stage5Room0MetatileMap:
 	.global	gLevel5Stage5Room0BlockLayer
 gLevel5Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x392164, 0x134
-	.global	gUnk_08392298
-gUnk_08392298:
+	.global	gLevel5Stage5Room0BlockMetatiles
+gLevel5Stage5Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x392298, 0x10
 	.global	gLevel5Stage5Room0Doors
 gLevel5Stage5Room0Doors:
@@ -4834,8 +4834,8 @@ gLevel5Stage5Room1MetatileMap:
 	.global	gLevel5Stage5Room1BlockLayer
 gLevel5Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x392604, 0xCC
-	.global	gUnk_083926D0
-gUnk_083926D0:
+	.global	gLevel5Stage5Room1BlockMetatiles
+gLevel5Stage5Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3926D0, 0x8
 	.global	gLevel5Stage5Room1Doors
 gLevel5Stage5Room1Doors:
@@ -4857,8 +4857,8 @@ gLevel5Stage5Room2MetatileMap:
 	.global	gLevel5Stage5Room2BlockLayer
 gLevel5Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x392940, 0x90
-	.global	gUnk_083929D0
-gUnk_083929D0:
+	.global	gLevel5Stage5Room2BlockMetatiles
+gLevel5Stage5Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3929D0, 0xC0
 	.global	gLevel5Stage5Room2Doors
 gLevel5Stage5Room2Doors:
@@ -4877,8 +4877,8 @@ gLevel5Stage5Room3MetatileMap:
 	.global	gLevel5Stage5Room3BlockLayer
 gLevel5Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x392DE0, 0xC8
-	.global	gUnk_08392EA8
-gUnk_08392EA8:
+	.global	gLevel5Stage5Room3BlockMetatiles
+gLevel5Stage5Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x392EA8, 0x8
 	.global	gLevel5Stage5Room3Doors
 gLevel5Stage5Room3Doors:
@@ -4900,8 +4900,8 @@ gLevel5Stage5Room4MetatileMap:
 	.global	gLevel5Stage5Room4BlockLayer
 gLevel5Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3932A0, 0x104
-	.global	gUnk_083933A4
-gUnk_083933A4:
+	.global	gLevel5Stage5Room4BlockMetatiles
+gLevel5Stage5Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3933A4, 0x10
 	.global	gLevel5Stage5Room4Doors
 gLevel5Stage5Room4Doors:
@@ -4923,8 +4923,8 @@ gLevel5Stage5Room5MetatileMap:
 	.global	gLevel5Stage5Room5BlockLayer
 gLevel5Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x393558, 0x34
-	.global	gUnk_0839358C
-gUnk_0839358C:
+	.global	gLevel5Stage5Room5BlockMetatiles
+gLevel5Stage5Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x39358C, 0x8
 	.global	gLevel5Stage5Room5Doors
 gLevel5Stage5Room5Doors:
@@ -4943,8 +4943,8 @@ gLevel5Stage5Room6MetatileMap:
 	.global	gLevel5Stage5Room6BlockLayer
 gLevel5Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x393708, 0x3C
-	.global	gUnk_08393744
-gUnk_08393744:
+	.global	gLevel5Stage5Room6BlockMetatiles
+gLevel5Stage5Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x393744, 0x8
 	.global	gLevel5Stage5Room6Doors
 gLevel5Stage5Room6Doors:
@@ -4966,8 +4966,8 @@ gLevel5Stage5Room7MetatileMap:
 	.global	gLevel5Stage5Room7BlockLayer
 gLevel5Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x39386C, 0x38
-	.global	gUnk_083938A4
-gUnk_083938A4:
+	.global	gLevel5Stage5Room7BlockMetatiles
+gLevel5Stage5Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x3938A4, 0x8
 	.global	gLevel5Stage5Room7Doors
 gLevel5Stage5Room7Doors:
@@ -4989,8 +4989,8 @@ gLevel5Stage5Room8MetatileMap:
 	.global	gLevel5Stage5Room8BlockLayer
 gLevel5Stage5Room8BlockLayer:
 	.incbin	"baserom.gba", 0x393A08, 0x38
-	.global	gUnk_08393A40
-gUnk_08393A40:
+	.global	gLevel5Stage5Room8BlockMetatiles
+gLevel5Stage5Room8BlockMetatiles:
 	.incbin	"baserom.gba", 0x393A40, 0x10
 	.global	gLevel5Stage5Room8Doors
 gLevel5Stage5Room8Doors:
@@ -5012,8 +5012,8 @@ gLevel5Stage5Room9MetatileMap:
 	.global	gLevel5Stage5Room9BlockLayer
 gLevel5Stage5Room9BlockLayer:
 	.incbin	"baserom.gba", 0x393BB8, 0x38
-	.global	gUnk_08393BF0
-gUnk_08393BF0:
+	.global	gLevel5Stage5Room9BlockMetatiles
+gLevel5Stage5Room9BlockMetatiles:
 	.incbin	"baserom.gba", 0x393BF0, 0x10
 	.global	gLevel5Stage5Room9Doors
 gLevel5Stage5Room9Doors:
@@ -5035,8 +5035,8 @@ gLevel5Stage5Room10MetatileMap:
 	.global	gLevel5Stage5Room10BlockLayer
 gLevel5Stage5Room10BlockLayer:
 	.incbin	"baserom.gba", 0x393D64, 0x40
-	.global	gUnk_08393DA4
-gUnk_08393DA4:
+	.global	gLevel5Stage5Room10BlockMetatiles
+gLevel5Stage5Room10BlockMetatiles:
 	.incbin	"baserom.gba", 0x393DA4, 0x10
 	.global	gLevel5Stage5Room10Doors
 gLevel5Stage5Room10Doors:
@@ -5058,8 +5058,8 @@ gLevel5Stage6Room0MetatileMap:
 	.global	gLevel5Stage6Room0BlockLayer
 gLevel5Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x393EB0, 0x34
-	.global	gUnk_08393EE4
-gUnk_08393EE4:
+	.global	gLevel5Stage6Room0BlockMetatiles
+gLevel5Stage6Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x393EE4, 0x8
 	.global	gLevel5Stage6Room0Objects
 gLevel5Stage6Room0Objects:
@@ -5078,8 +5078,8 @@ gLevel6Stage0Room0MetatileMap:
 	.global	gLevel6Stage0Room0BlockLayer
 gLevel6Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3942F8, 0xD8
-	.global	gUnk_083943D0
-gUnk_083943D0:
+	.global	gLevel6Stage0Room0BlockMetatiles
+gLevel6Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3943D0, 0xC
 	.global	gLevel6Stage0Room0Doors
 gLevel6Stage0Room0Doors:
@@ -5101,8 +5101,8 @@ gLevel6Stage0Room1MetatileMap:
 	.global	gLevel6Stage0Room1BlockLayer
 gLevel6Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x394718, 0x1FC
-	.global	gUnk_08394914
-gUnk_08394914:
+	.global	gLevel6Stage0Room1BlockMetatiles
+gLevel6Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x394914, 0x2DC
 	.global	gLevel6Stage0Room1Doors
 gLevel6Stage0Room1Doors:
@@ -5124,8 +5124,8 @@ gLevel6Stage0Room2MetatileMap:
 	.global	gLevel6Stage0Room2BlockLayer
 gLevel6Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x394F74, 0xD8
-	.global	gUnk_0839504C
-gUnk_0839504C:
+	.global	gLevel6Stage0Room2BlockMetatiles
+gLevel6Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x39504C, 0x20
 	.global	gLevel6Stage0Room2Doors
 gLevel6Stage0Room2Doors:
@@ -5147,8 +5147,8 @@ gLevel6Stage0Room3MetatileMap:
 	.global	gLevel6Stage0Room3BlockLayer
 gLevel6Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x395248, 0x34
-	.global	gUnk_0839527C
-gUnk_0839527C:
+	.global	gLevel6Stage0Room3BlockMetatiles
+gLevel6Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x39527C, 0x8
 	.global	gLevel6Stage0Room3Doors
 gLevel6Stage0Room3Doors:
@@ -5170,8 +5170,8 @@ gLevel6Stage1Room0MetatileMap:
 	.global	gLevel6Stage1Room0BlockLayer
 gLevel6Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3953E4, 0x34
-	.global	gUnk_08395418
-gUnk_08395418:
+	.global	gLevel6Stage1Room0BlockMetatiles
+gLevel6Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x395418, 0x8
 	.global	gLevel6Stage1Room0Doors
 gLevel6Stage1Room0Doors:
@@ -5190,8 +5190,8 @@ gLevel6Stage1Room1MetatileMap:
 	.global	gLevel6Stage1Room1BlockLayer
 gLevel6Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x395690, 0x5C
-	.global	gUnk_083956EC
-gUnk_083956EC:
+	.global	gLevel6Stage1Room1BlockMetatiles
+gLevel6Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3956EC, 0x8
 	.global	gLevel6Stage1Room1Doors
 gLevel6Stage1Room1Doors:
@@ -5210,8 +5210,8 @@ gLevel6Stage1Room2MetatileMap:
 	.global	gLevel6Stage1Room2BlockLayer
 gLevel6Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39594C, 0x5C
-	.global	gUnk_083959A8
-gUnk_083959A8:
+	.global	gLevel6Stage1Room2BlockMetatiles
+gLevel6Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3959A8, 0x8
 	.global	gLevel6Stage1Room2Doors
 gLevel6Stage1Room2Doors:
@@ -5230,8 +5230,8 @@ gLevel6Stage1Room3MetatileMap:
 	.global	gLevel6Stage1Room3BlockLayer
 gLevel6Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x395C14, 0x5C
-	.global	gUnk_08395C70
-gUnk_08395C70:
+	.global	gLevel6Stage1Room3BlockMetatiles
+gLevel6Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x395C70, 0x8
 	.global	gLevel6Stage1Room3Doors
 gLevel6Stage1Room3Doors:
@@ -5250,8 +5250,8 @@ gLevel6Stage1Room4MetatileMap:
 	.global	gLevel6Stage1Room4BlockLayer
 gLevel6Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x395EB8, 0x5C
-	.global	gUnk_08395F14
-gUnk_08395F14:
+	.global	gLevel6Stage1Room4BlockMetatiles
+gLevel6Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x395F14, 0x8
 	.global	gLevel6Stage1Room4Doors
 gLevel6Stage1Room4Doors:
@@ -5270,8 +5270,8 @@ gLevel6Stage1Room5MetatileMap:
 	.global	gLevel6Stage1Room5BlockLayer
 gLevel6Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x396168, 0x5C
-	.global	gUnk_083961C4
-gUnk_083961C4:
+	.global	gLevel6Stage1Room5BlockMetatiles
+gLevel6Stage1Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3961C4, 0x8
 	.global	gLevel6Stage1Room5Doors
 gLevel6Stage1Room5Doors:
@@ -5290,8 +5290,8 @@ gLevel6Stage1Room6MetatileMap:
 	.global	gLevel6Stage1Room6BlockLayer
 gLevel6Stage1Room6BlockLayer:
 	.incbin	"baserom.gba", 0x396430, 0x5C
-	.global	gUnk_0839648C
-gUnk_0839648C:
+	.global	gLevel6Stage1Room6BlockMetatiles
+gLevel6Stage1Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x39648C, 0x8
 	.global	gLevel6Stage1Room6Doors
 gLevel6Stage1Room6Doors:
@@ -5310,8 +5310,8 @@ gLevel6Stage1Room7MetatileMap:
 	.global	gLevel6Stage1Room7BlockLayer
 gLevel6Stage1Room7BlockLayer:
 	.incbin	"baserom.gba", 0x3966D8, 0x5C
-	.global	gUnk_08396734
-gUnk_08396734:
+	.global	gLevel6Stage1Room7BlockMetatiles
+gLevel6Stage1Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x396734, 0x8
 	.global	gLevel6Stage1Room7Doors
 gLevel6Stage1Room7Doors:
@@ -5330,8 +5330,8 @@ gLevel6Stage1Room8MetatileMap:
 	.global	gLevel6Stage1Room8BlockLayer
 gLevel6Stage1Room8BlockLayer:
 	.incbin	"baserom.gba", 0x396984, 0x5C
-	.global	gUnk_083969E0
-gUnk_083969E0:
+	.global	gLevel6Stage1Room8BlockMetatiles
+gLevel6Stage1Room8BlockMetatiles:
 	.incbin	"baserom.gba", 0x3969E0, 0x8
 	.global	gLevel6Stage1Room8Doors
 gLevel6Stage1Room8Doors:
@@ -5350,8 +5350,8 @@ gLevel6Stage1Room9MetatileMap:
 	.global	gLevel6Stage1Room9BlockLayer
 gLevel6Stage1Room9BlockLayer:
 	.incbin	"baserom.gba", 0x396C3C, 0x5C
-	.global	gUnk_08396C98
-gUnk_08396C98:
+	.global	gLevel6Stage1Room9BlockMetatiles
+gLevel6Stage1Room9BlockMetatiles:
 	.incbin	"baserom.gba", 0x396C98, 0x8
 	.global	gLevel6Stage1Room9Doors
 gLevel6Stage1Room9Doors:
@@ -5370,8 +5370,8 @@ gLevel6Stage1Room10MetatileMap:
 	.global	gLevel6Stage1Room10BlockLayer
 gLevel6Stage1Room10BlockLayer:
 	.incbin	"baserom.gba", 0x396F64, 0xEC
-	.global	gUnk_08397050
-gUnk_08397050:
+	.global	gLevel6Stage1Room10BlockMetatiles
+gLevel6Stage1Room10BlockMetatiles:
 	.incbin	"baserom.gba", 0x397050, 0x8
 	.global	gLevel6Stage1Room10Doors
 gLevel6Stage1Room10Doors:
@@ -5393,8 +5393,8 @@ gLevel6Stage1Room11MetatileMap:
 	.global	gLevel6Stage1Room11BlockLayer
 gLevel6Stage1Room11BlockLayer:
 	.incbin	"baserom.gba", 0x3972C4, 0x5C
-	.global	gUnk_08397320
-gUnk_08397320:
+	.global	gLevel6Stage1Room11BlockMetatiles
+gLevel6Stage1Room11BlockMetatiles:
 	.incbin	"baserom.gba", 0x397320, 0x8
 	.global	gLevel6Stage1Room11Doors
 gLevel6Stage1Room11Doors:
@@ -5416,8 +5416,8 @@ gLevel6Stage1Room12MetatileMap:
 	.global	gLevel6Stage1Room12BlockLayer
 gLevel6Stage1Room12BlockLayer:
 	.incbin	"baserom.gba", 0x397498, 0x34
-	.global	gUnk_083974CC
-gUnk_083974CC:
+	.global	gLevel6Stage1Room12BlockMetatiles
+gLevel6Stage1Room12BlockMetatiles:
 	.incbin	"baserom.gba", 0x3974CC, 0x8
 	.global	gLevel6Stage1Room12Doors
 gLevel6Stage1Room12Doors:
@@ -5439,8 +5439,8 @@ gLevel6Stage1Room13MetatileMap:
 	.global	gLevel6Stage1Room13BlockLayer
 gLevel6Stage1Room13BlockLayer:
 	.incbin	"baserom.gba", 0x397618, 0x34
-	.global	gUnk_0839764C
-gUnk_0839764C:
+	.global	gLevel6Stage1Room13BlockMetatiles
+gLevel6Stage1Room13BlockMetatiles:
 	.incbin	"baserom.gba", 0x39764C, 0x10
 	.global	gLevel6Stage1Room13Doors
 gLevel6Stage1Room13Doors:
@@ -5462,8 +5462,8 @@ gLevel6Stage1Room14MetatileMap:
 	.global	gLevel6Stage1Room14BlockLayer
 gLevel6Stage1Room14BlockLayer:
 	.incbin	"baserom.gba", 0x39779C, 0x34
-	.global	gUnk_083977D0
-gUnk_083977D0:
+	.global	gLevel6Stage1Room14BlockMetatiles
+gLevel6Stage1Room14BlockMetatiles:
 	.incbin	"baserom.gba", 0x3977D0, 0x10
 	.global	gLevel6Stage1Room14Doors
 gLevel6Stage1Room14Doors:
@@ -5485,8 +5485,8 @@ gLevel6Stage1Room15MetatileMap:
 	.global	gLevel6Stage1Room15BlockLayer
 gLevel6Stage1Room15BlockLayer:
 	.incbin	"baserom.gba", 0x397908, 0x34
-	.global	gUnk_0839793C
-gUnk_0839793C:
+	.global	gLevel6Stage1Room15BlockMetatiles
+gLevel6Stage1Room15BlockMetatiles:
 	.incbin	"baserom.gba", 0x39793C, 0x10
 	.global	gLevel6Stage1Room15Doors
 gLevel6Stage1Room15Doors:
@@ -5508,8 +5508,8 @@ gLevel6Stage1Room16MetatileMap:
 	.global	gLevel6Stage1Room16BlockLayer
 gLevel6Stage1Room16BlockLayer:
 	.incbin	"baserom.gba", 0x397AEC, 0x34
-	.global	gUnk_08397B20
-gUnk_08397B20:
+	.global	gLevel6Stage1Room16BlockMetatiles
+gLevel6Stage1Room16BlockMetatiles:
 	.incbin	"baserom.gba", 0x397B20, 0x10
 	.global	gLevel6Stage1Room16Doors
 gLevel6Stage1Room16Doors:
@@ -5531,8 +5531,8 @@ gLevel6Stage1Room17MetatileMap:
 	.global	gLevel6Stage1Room17BlockLayer
 gLevel6Stage1Room17BlockLayer:
 	.incbin	"baserom.gba", 0x397C94, 0x34
-	.global	gUnk_08397CC8
-gUnk_08397CC8:
+	.global	gLevel6Stage1Room17BlockMetatiles
+gLevel6Stage1Room17BlockMetatiles:
 	.incbin	"baserom.gba", 0x397CC8, 0x10
 	.global	gLevel6Stage1Room17Doors
 gLevel6Stage1Room17Doors:
@@ -5554,8 +5554,8 @@ gLevel6Stage1Room18MetatileMap:
 	.global	gLevel6Stage1Room18BlockLayer
 gLevel6Stage1Room18BlockLayer:
 	.incbin	"baserom.gba", 0x397E68, 0x34
-	.global	gUnk_08397E9C
-gUnk_08397E9C:
+	.global	gLevel6Stage1Room18BlockMetatiles
+gLevel6Stage1Room18BlockMetatiles:
 	.incbin	"baserom.gba", 0x397E9C, 0x10
 	.global	gLevel6Stage1Room18Doors
 gLevel6Stage1Room18Doors:
@@ -5577,8 +5577,8 @@ gLevel6Stage1Room19MetatileMap:
 	.global	gLevel6Stage1Room19BlockLayer
 gLevel6Stage1Room19BlockLayer:
 	.incbin	"baserom.gba", 0x397FE4, 0x34
-	.global	gUnk_08398018
-gUnk_08398018:
+	.global	gLevel6Stage1Room19BlockMetatiles
+gLevel6Stage1Room19BlockMetatiles:
 	.incbin	"baserom.gba", 0x398018, 0x10
 	.global	gLevel6Stage1Room19Doors
 gLevel6Stage1Room19Doors:
@@ -5600,8 +5600,8 @@ gLevel6Stage1Room20MetatileMap:
 	.global	gLevel6Stage1Room20BlockLayer
 gLevel6Stage1Room20BlockLayer:
 	.incbin	"baserom.gba", 0x3981B8, 0x34
-	.global	gUnk_083981EC
-gUnk_083981EC:
+	.global	gLevel6Stage1Room20BlockMetatiles
+gLevel6Stage1Room20BlockMetatiles:
 	.incbin	"baserom.gba", 0x3981EC, 0x10
 	.global	gLevel6Stage1Room20Doors
 gLevel6Stage1Room20Doors:
@@ -5623,8 +5623,8 @@ gLevel6Stage1Room21MetatileMap:
 	.global	gLevel6Stage1Room21BlockLayer
 gLevel6Stage1Room21BlockLayer:
 	.incbin	"baserom.gba", 0x398370, 0x34
-	.global	gUnk_083983A4
-gUnk_083983A4:
+	.global	gLevel6Stage1Room21BlockMetatiles
+gLevel6Stage1Room21BlockMetatiles:
 	.incbin	"baserom.gba", 0x3983A4, 0x10
 	.global	gLevel6Stage1Room21Doors
 gLevel6Stage1Room21Doors:
@@ -5646,8 +5646,8 @@ gLevel6Stage1Room22MetatileMap:
 	.global	gLevel6Stage1Room22BlockLayer
 gLevel6Stage1Room22BlockLayer:
 	.incbin	"baserom.gba", 0x398568, 0x34
-	.global	gUnk_0839859C
-gUnk_0839859C:
+	.global	gLevel6Stage1Room22BlockMetatiles
+gLevel6Stage1Room22BlockMetatiles:
 	.incbin	"baserom.gba", 0x39859C, 0x10
 	.global	gLevel6Stage1Room22Doors
 gLevel6Stage1Room22Doors:
@@ -5669,8 +5669,8 @@ gLevel6Stage1Room23MetatileMap:
 	.global	gLevel6Stage1Room23BlockLayer
 gLevel6Stage1Room23BlockLayer:
 	.incbin	"baserom.gba", 0x3986F4, 0x34
-	.global	gUnk_08398728
-gUnk_08398728:
+	.global	gLevel6Stage1Room23BlockMetatiles
+gLevel6Stage1Room23BlockMetatiles:
 	.incbin	"baserom.gba", 0x398728, 0x10
 	.global	gLevel6Stage1Room23Doors
 gLevel6Stage1Room23Doors:
@@ -5692,8 +5692,8 @@ gLevel6Stage1Room24MetatileMap:
 	.global	gLevel6Stage1Room24BlockLayer
 gLevel6Stage1Room24BlockLayer:
 	.incbin	"baserom.gba", 0x398810, 0x34
-	.global	gUnk_08398844
-gUnk_08398844:
+	.global	gLevel6Stage1Room24BlockMetatiles
+gLevel6Stage1Room24BlockMetatiles:
 	.incbin	"baserom.gba", 0x398844, 0x8
 	.global	gLevel6Stage1Room24Doors
 gLevel6Stage1Room24Doors:
@@ -5712,8 +5712,8 @@ gLevel6Stage2Room0MetatileMap:
 	.global	gLevel6Stage2Room0BlockLayer
 gLevel6Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x398CB8, 0xB0
-	.global	gUnk_08398D68
-gUnk_08398D68:
+	.global	gLevel6Stage2Room0BlockMetatiles
+gLevel6Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x398D68, 0x8
 	.global	gLevel6Stage2Room0Doors
 gLevel6Stage2Room0Doors:
@@ -5735,8 +5735,8 @@ gLevel6Stage2Room1MetatileMap:
 	.global	gLevel6Stage2Room1BlockLayer
 gLevel6Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3990D4, 0xC0
-	.global	gUnk_08399194
-gUnk_08399194:
+	.global	gLevel6Stage2Room1BlockMetatiles
+gLevel6Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x399194, 0x8
 	.global	gLevel6Stage2Room1Doors
 gLevel6Stage2Room1Doors:
@@ -5758,8 +5758,8 @@ gLevel6Stage2Room2MetatileMap:
 	.global	gLevel6Stage2Room2BlockLayer
 gLevel6Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3994B4, 0xC4
-	.global	gUnk_08399578
-gUnk_08399578:
+	.global	gLevel6Stage2Room2BlockMetatiles
+gLevel6Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x399578, 0x8
 	.global	gLevel6Stage2Room2Doors
 gLevel6Stage2Room2Doors:
@@ -5781,8 +5781,8 @@ gLevel6Stage2Room3MetatileMap:
 	.global	gLevel6Stage2Room3BlockLayer
 gLevel6Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x399954, 0x170
-	.global	gUnk_08399AC4
-gUnk_08399AC4:
+	.global	gLevel6Stage2Room3BlockMetatiles
+gLevel6Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x399AC4, 0x160
 	.global	gLevel6Stage2Room3Doors
 gLevel6Stage2Room3Doors:
@@ -5804,8 +5804,8 @@ gLevel6Stage3Room0MetatileMap:
 	.global	gLevel6Stage3Room0BlockLayer
 gLevel6Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39A0D0, 0xB0
-	.global	gUnk_0839A180
-gUnk_0839A180:
+	.global	gLevel6Stage3Room0BlockMetatiles
+gLevel6Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x39A180, 0x8
 	.global	gLevel6Stage3Room0Doors
 gLevel6Stage3Room0Doors:
@@ -5827,8 +5827,8 @@ gLevel6Stage3Room1MetatileMap:
 	.global	gLevel6Stage3Room1BlockLayer
 gLevel6Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39A450, 0x3C
-	.global	gUnk_0839A48C
-gUnk_0839A48C:
+	.global	gLevel6Stage3Room1BlockMetatiles
+gLevel6Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x39A48C, 0x10
 	.global	gLevel6Stage3Room1Doors
 gLevel6Stage3Room1Doors:
@@ -5850,8 +5850,8 @@ gLevel6Stage3Room2MetatileMap:
 	.global	gLevel6Stage3Room2BlockLayer
 gLevel6Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39A6FC, 0x3C
-	.global	gUnk_0839A738
-gUnk_0839A738:
+	.global	gLevel6Stage3Room2BlockMetatiles
+gLevel6Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x39A738, 0x10
 	.global	gLevel6Stage3Room2Doors
 gLevel6Stage3Room2Doors:
@@ -5873,8 +5873,8 @@ gLevel6Stage3Room3MetatileMap:
 	.global	gLevel6Stage3Room3BlockLayer
 gLevel6Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39A9A8, 0x44
-	.global	gUnk_0839A9EC
-gUnk_0839A9EC:
+	.global	gLevel6Stage3Room3BlockMetatiles
+gLevel6Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x39A9EC, 0x28
 	.global	gLevel6Stage3Room3Doors
 gLevel6Stage3Room3Doors:
@@ -5896,8 +5896,8 @@ gLevel6Stage3Room4MetatileMap:
 	.global	gLevel6Stage3Room4BlockLayer
 gLevel6Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x39AC80, 0x44
-	.global	gUnk_0839ACC4
-gUnk_0839ACC4:
+	.global	gLevel6Stage3Room4BlockMetatiles
+gLevel6Stage3Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x39ACC4, 0x28
 	.global	gLevel6Stage3Room4Doors
 gLevel6Stage3Room4Doors:
@@ -5919,8 +5919,8 @@ gLevel6Stage3Room5MetatileMap:
 	.global	gLevel6Stage3Room5BlockLayer
 gLevel6Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x39B0CC, 0xD8
-	.global	gUnk_0839B1A4
-gUnk_0839B1A4:
+	.global	gLevel6Stage3Room5BlockMetatiles
+gLevel6Stage3Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x39B1A4, 0x70
 	.global	gLevel6Stage3Room5Doors
 gLevel6Stage3Room5Doors:
@@ -5942,8 +5942,8 @@ gLevel6Stage3Room6MetatileMap:
 	.global	gLevel6Stage3Room6BlockLayer
 gLevel6Stage3Room6BlockLayer:
 	.incbin	"baserom.gba", 0x39B7C0, 0x188
-	.global	gUnk_0839B948
-gUnk_0839B948:
+	.global	gLevel6Stage3Room6BlockMetatiles
+gLevel6Stage3Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x39B948, 0x17C
 	.global	gLevel6Stage3Room6Doors
 gLevel6Stage3Room6Doors:
@@ -5965,8 +5965,8 @@ gLevel6Stage4Room0MetatileMap:
 	.global	gLevel6Stage4Room0BlockLayer
 gLevel6Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39BE04, 0x84
-	.global	gUnk_0839BE88
-gUnk_0839BE88:
+	.global	gLevel6Stage4Room0BlockMetatiles
+gLevel6Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x39BE88, 0x8
 	.global	gLevel6Stage4Room0Doors
 gLevel6Stage4Room0Doors:
@@ -5988,8 +5988,8 @@ gLevel6Stage4Room1MetatileMap:
 	.global	gLevel6Stage4Room1BlockLayer
 gLevel6Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39C05C, 0x38
-	.global	gUnk_0839C094
-gUnk_0839C094:
+	.global	gLevel6Stage4Room1BlockMetatiles
+gLevel6Stage4Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x39C094, 0x10
 	.global	gLevel6Stage4Room1Doors
 gLevel6Stage4Room1Doors:
@@ -6011,8 +6011,8 @@ gLevel6Stage4Room2MetatileMap:
 	.global	gLevel6Stage4Room2BlockLayer
 gLevel6Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39C434, 0xCC
-	.global	gUnk_0839C500
-gUnk_0839C500:
+	.global	gLevel6Stage4Room2BlockMetatiles
+gLevel6Stage4Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x39C500, 0x8
 	.global	gLevel6Stage4Room2Doors
 gLevel6Stage4Room2Doors:
@@ -6034,8 +6034,8 @@ gLevel6Stage4Room3MetatileMap:
 	.global	gLevel6Stage4Room3BlockLayer
 gLevel6Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39C99C, 0xA8
-	.global	gUnk_0839CA44
-gUnk_0839CA44:
+	.global	gLevel6Stage4Room3BlockMetatiles
+gLevel6Stage4Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x39CA44, 0x90
 	.global	gLevel6Stage4Room3Doors
 gLevel6Stage4Room3Doors:
@@ -6057,8 +6057,8 @@ gLevel6Stage4Room4MetatileMap:
 	.global	gLevel6Stage4Room4BlockLayer
 gLevel6Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x39CCCC, 0x34
-	.global	gUnk_0839CD00
-gUnk_0839CD00:
+	.global	gLevel6Stage4Room4BlockMetatiles
+gLevel6Stage4Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x39CD00, 0x8
 	.global	gLevel6Stage4Room4Doors
 gLevel6Stage4Room4Doors:
@@ -6080,8 +6080,8 @@ gLevel6Stage5Room0MetatileMap:
 	.global	gLevel6Stage5Room0BlockLayer
 gLevel6Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39D0C8, 0x100
-	.global	gUnk_0839D1C8
-gUnk_0839D1C8:
+	.global	gLevel6Stage5Room0BlockMetatiles
+gLevel6Stage5Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x39D1C8, 0x8
 	.global	gLevel6Stage5Room0Doors
 gLevel6Stage5Room0Doors:
@@ -6103,8 +6103,8 @@ gLevel6Stage5Room1MetatileMap:
 	.global	gLevel6Stage5Room1BlockLayer
 gLevel6Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39D4E8, 0x88
-	.global	gUnk_0839D570
-gUnk_0839D570:
+	.global	gLevel6Stage5Room1BlockMetatiles
+gLevel6Stage5Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x39D570, 0x8
 	.global	gLevel6Stage5Room1Doors
 gLevel6Stage5Room1Doors:
@@ -6126,8 +6126,8 @@ gLevel6Stage5Room2MetatileMap:
 	.global	gLevel6Stage5Room2BlockLayer
 gLevel6Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39D7E8, 0x80
-	.global	gUnk_0839D868
-gUnk_0839D868:
+	.global	gLevel6Stage5Room2BlockMetatiles
+gLevel6Stage5Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x39D868, 0x8
 	.global	gLevel6Stage5Room2Doors
 gLevel6Stage5Room2Doors:
@@ -6149,8 +6149,8 @@ gLevel6Stage5Room3MetatileMap:
 	.global	gLevel6Stage5Room3BlockLayer
 gLevel6Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x39DA50, 0x5C
-	.global	gUnk_0839DAAC
-gUnk_0839DAAC:
+	.global	gLevel6Stage5Room3BlockMetatiles
+gLevel6Stage5Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x39DAAC, 0x8
 	.global	gLevel6Stage5Room3Doors
 gLevel6Stage5Room3Doors:
@@ -6172,8 +6172,8 @@ gLevel6Stage5Room4MetatileMap:
 	.global	gLevel6Stage5Room4BlockLayer
 gLevel6Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x39DD88, 0xD0
-	.global	gUnk_0839DE58
-gUnk_0839DE58:
+	.global	gLevel6Stage5Room4BlockMetatiles
+gLevel6Stage5Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x39DE58, 0x10
 	.global	gLevel6Stage5Room4Doors
 gLevel6Stage5Room4Doors:
@@ -6195,8 +6195,8 @@ gLevel6Stage5Room5MetatileMap:
 	.global	gLevel6Stage5Room5BlockLayer
 gLevel6Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x39E078, 0x7C
-	.global	gUnk_0839E0F4
-gUnk_0839E0F4:
+	.global	gLevel6Stage5Room5BlockMetatiles
+gLevel6Stage5Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x39E0F4, 0x3C
 	.global	gLevel6Stage5Room5Doors
 gLevel6Stage5Room5Doors:
@@ -6218,8 +6218,8 @@ gLevel6Stage5Room6MetatileMap:
 	.global	gLevel6Stage5Room6BlockLayer
 gLevel6Stage5Room6BlockLayer:
 	.incbin	"baserom.gba", 0x39E490, 0x9C
-	.global	gUnk_0839E52C
-gUnk_0839E52C:
+	.global	gLevel6Stage5Room6BlockMetatiles
+gLevel6Stage5Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x39E52C, 0x8
 	.global	gLevel6Stage5Room6Doors
 gLevel6Stage5Room6Doors:
@@ -6241,8 +6241,8 @@ gLevel6Stage5Room7MetatileMap:
 	.global	gLevel6Stage5Room7BlockLayer
 gLevel6Stage5Room7BlockLayer:
 	.incbin	"baserom.gba", 0x39E810, 0xAC
-	.global	gUnk_0839E8BC
-gUnk_0839E8BC:
+	.global	gLevel6Stage5Room7BlockMetatiles
+gLevel6Stage5Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x39E8BC, 0x30
 	.global	gLevel6Stage5Room7Doors
 gLevel6Stage5Room7Doors:
@@ -6264,8 +6264,8 @@ gLevel6Stage5Room8MetatileMap:
 	.global	gLevel6Stage5Room8BlockLayer
 gLevel6Stage5Room8BlockLayer:
 	.incbin	"baserom.gba", 0x39EB20, 0x68
-	.global	gUnk_0839EB88
-gUnk_0839EB88:
+	.global	gLevel6Stage5Room8BlockMetatiles
+gLevel6Stage5Room8BlockMetatiles:
 	.incbin	"baserom.gba", 0x39EB88, 0x8
 	.global	gLevel6Stage5Room8Doors
 gLevel6Stage5Room8Doors:
@@ -6287,8 +6287,8 @@ gLevel6Stage6Room0MetatileMap:
 	.global	gLevel6Stage6Room0BlockLayer
 gLevel6Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39EDA4, 0x60
-	.global	gUnk_0839EE04
-gUnk_0839EE04:
+	.global	gLevel6Stage6Room0BlockMetatiles
+gLevel6Stage6Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x39EE04, 0x8
 	.global	gLevel6Stage6Room0Objects
 gLevel6Stage6Room0Objects:
@@ -6307,8 +6307,8 @@ gLevel7Stage0Room0MetatileMap:
 	.global	gLevel7Stage0Room0BlockLayer
 gLevel7Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39F27C, 0x120
-	.global	gUnk_0839F39C
-gUnk_0839F39C:
+	.global	gLevel7Stage0Room0BlockMetatiles
+gLevel7Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x39F39C, 0x34
 	.global	gLevel7Stage0Room0Objects
 gLevel7Stage0Room0Objects:
@@ -6327,8 +6327,8 @@ gLevel7Stage0Room1MetatileMap:
 	.global	gLevel7Stage0Room1BlockLayer
 gLevel7Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x39F5A8, 0xC0
-	.global	gUnk_0839F668
-gUnk_0839F668:
+	.global	gLevel7Stage0Room1BlockMetatiles
+gLevel7Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x39F668, 0x8
 	.global	gLevel7Stage0Room1Doors
 gLevel7Stage0Room1Doors:
@@ -6350,8 +6350,8 @@ gLevel7Stage0Room2MetatileMap:
 	.global	gLevel7Stage0Room2BlockLayer
 gLevel7Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x39FAEC, 0x120
-	.global	gUnk_0839FC0C
-gUnk_0839FC0C:
+	.global	gLevel7Stage0Room2BlockMetatiles
+gLevel7Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x39FC0C, 0x34
 
 @ 0x0839FC40-0x0839FC98: C, row room_def_0839fc40 (src/data/room_defs.c section .room_def_0839fc40)
@@ -6367,8 +6367,8 @@ gLevel7Stage2Room0MetatileMap:
 	.global	gLevel7Stage2Room0BlockLayer
 gLevel7Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x39FEAC, 0x10C
-	.global	gUnk_0839FFB8
-gUnk_0839FFB8:
+	.global	gLevel7Stage2Room0BlockMetatiles
+gLevel7Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x39FFB8, 0x48
 	.global	gLevel7Stage2Room0Doors
 gLevel7Stage2Room0Doors:
@@ -6390,8 +6390,8 @@ gLevel7Stage2Room1MetatileMap:
 	.global	gLevel7Stage2Room1BlockLayer
 gLevel7Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A0254, 0xD4
-	.global	gUnk_083A0328
-gUnk_083A0328:
+	.global	gLevel7Stage2Room1BlockMetatiles
+gLevel7Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A0328, 0x28
 	.global	gLevel7Stage2Room1Doors
 gLevel7Stage2Room1Doors:
@@ -6413,8 +6413,8 @@ gLevel7Stage2Room2MetatileMap:
 	.global	gLevel7Stage2Room2BlockLayer
 gLevel7Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A05EC, 0xC0
-	.global	gUnk_083A06AC
-gUnk_083A06AC:
+	.global	gLevel7Stage2Room2BlockMetatiles
+gLevel7Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A06AC, 0x8
 	.global	gLevel7Stage2Room2Doors
 gLevel7Stage2Room2Doors:
@@ -6436,8 +6436,8 @@ gLevel7Stage2Room3MetatileMap:
 	.global	gLevel7Stage2Room3BlockLayer
 gLevel7Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A081C, 0x10C
-	.global	gUnk_083A0928
-gUnk_083A0928:
+	.global	gLevel7Stage2Room3BlockMetatiles
+gLevel7Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A0928, 0x148
 	.global	gLevel7Stage2Room3Doors
 gLevel7Stage2Room3Doors:
@@ -6459,8 +6459,8 @@ gLevel7Stage2Room4MetatileMap:
 	.global	gLevel7Stage2Room4BlockLayer
 gLevel7Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A0C80, 0x84
-	.global	gUnk_083A0D04
-gUnk_083A0D04:
+	.global	gLevel7Stage2Room4BlockMetatiles
+gLevel7Stage2Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A0D04, 0x8
 	.global	gLevel7Stage2Room4Doors
 gLevel7Stage2Room4Doors:
@@ -6482,8 +6482,8 @@ gLevel7Stage2Room5MetatileMap:
 	.global	gLevel7Stage2Room5BlockLayer
 gLevel7Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A0E60, 0x68
-	.global	gUnk_083A0EC8
-gUnk_083A0EC8:
+	.global	gLevel7Stage2Room5BlockMetatiles
+gLevel7Stage2Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A0EC8, 0x20
 	.global	gLevel7Stage2Room5Doors
 gLevel7Stage2Room5Doors:
@@ -6502,8 +6502,8 @@ gLevel7Stage2Room6MetatileMap:
 	.global	gLevel7Stage2Room6BlockLayer
 gLevel7Stage2Room6BlockLayer:
 	.incbin	"baserom.gba", 0x3A10C8, 0x11C
-	.global	gUnk_083A11E4
-gUnk_083A11E4:
+	.global	gLevel7Stage2Room6BlockMetatiles
+gLevel7Stage2Room6BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A11E4, 0x1F0
 	.global	gLevel7Stage2Room6Doors
 gLevel7Stage2Room6Doors:
@@ -6525,8 +6525,8 @@ gLevel7Stage2Room7MetatileMap:
 	.global	gLevel7Stage2Room7BlockLayer
 gLevel7Stage2Room7BlockLayer:
 	.incbin	"baserom.gba", 0x3A15A8, 0x88
-	.global	gUnk_083A1630
-gUnk_083A1630:
+	.global	gLevel7Stage2Room7BlockMetatiles
+gLevel7Stage2Room7BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A1630, 0x8
 	.global	gLevel7Stage2Room7Doors
 gLevel7Stage2Room7Doors:
@@ -6545,8 +6545,8 @@ gLevel7Stage2Room8MetatileMap:
 	.global	gLevel7Stage2Room8BlockLayer
 gLevel7Stage2Room8BlockLayer:
 	.incbin	"baserom.gba", 0x3A1750, 0x58
-	.global	gUnk_083A17A8
-gUnk_083A17A8:
+	.global	gLevel7Stage2Room8BlockMetatiles
+gLevel7Stage2Room8BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A17A8, 0x8
 	.global	gLevel7Stage2Room8Doors
 gLevel7Stage2Room8Doors:
@@ -6568,8 +6568,8 @@ gLevel7Stage2Room9MetatileMap:
 	.global	gLevel7Stage2Room9BlockLayer
 gLevel7Stage2Room9BlockLayer:
 	.incbin	"baserom.gba", 0x3A1A98, 0xC4
-	.global	gUnk_083A1B5C
-gUnk_083A1B5C:
+	.global	gLevel7Stage2Room9BlockMetatiles
+gLevel7Stage2Room9BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A1B5C, 0x8
 
 @ 0x083A1B64-0x083A1BBC: C, row room_def_083a1b64 (src/data/room_defs.c section .room_def_083a1b64)
@@ -6585,8 +6585,8 @@ gLevel7Stage2Room10MetatileMap:
 	.global	gLevel7Stage2Room10BlockLayer
 gLevel7Stage2Room10BlockLayer:
 	.incbin	"baserom.gba", 0x3A1E94, 0x13C
-	.global	gUnk_083A1FD0
-gUnk_083A1FD0:
+	.global	gLevel7Stage2Room10BlockMetatiles
+gLevel7Stage2Room10BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A1FD0, 0x8
 
 @ 0x083A1FD8-0x083A2030: C, row room_def_083a1fd8 (src/data/room_defs.c section .room_def_083a1fd8)
@@ -6602,8 +6602,8 @@ gLevel8Stage0Room0MetatileMap:
 	.global	gLevel8Stage0Room0BlockLayer
 gLevel8Stage0Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A23B4, 0xB0
-	.global	gUnk_083A2464
-gUnk_083A2464:
+	.global	gLevel8Stage0Room0BlockMetatiles
+gLevel8Stage0Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A2464, 0x8
 	.global	gLevel8Stage0Room0Doors
 gLevel8Stage0Room0Doors:
@@ -6622,8 +6622,8 @@ gLevel8Stage0Room1MetatileMap:
 	.global	gLevel8Stage0Room1BlockLayer
 gLevel8Stage0Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A2558, 0x8
-	.global	gUnk_083A2560
-gUnk_083A2560:
+	.global	gLevel8Stage0Room1BlockMetatiles
+gLevel8Stage0Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A2560, 0x18
 
 @ 0x083A2578-0x083A25D0: C, row room_def_083a2578 (src/data/room_defs.c section .room_def_083a2578)
@@ -6639,8 +6639,8 @@ gLevel8Stage0Room2MetatileMap:
 	.global	gLevel8Stage0Room2BlockLayer
 gLevel8Stage0Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A2640, 0x38
-	.global	gUnk_083A2678
-gUnk_083A2678:
+	.global	gLevel8Stage0Room2BlockMetatiles
+gLevel8Stage0Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A2678, 0x8
 	.global	gLevel8Stage0Room2Doors
 gLevel8Stage0Room2Doors:
@@ -6662,8 +6662,8 @@ gLevel8Stage0Room3MetatileMap:
 	.global	gLevel8Stage0Room3BlockLayer
 gLevel8Stage0Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A2848, 0x90
-	.global	gUnk_083A28D8
-gUnk_083A28D8:
+	.global	gLevel8Stage0Room3BlockMetatiles
+gLevel8Stage0Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A28D8, 0x8
 	.global	gLevel8Stage0Room3Doors
 gLevel8Stage0Room3Doors:
@@ -6685,8 +6685,8 @@ gLevel8Stage0Room4MetatileMap:
 	.global	gLevel8Stage0Room4BlockLayer
 gLevel8Stage0Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A2A88, 0x34
-	.global	gUnk_083A2ABC
-gUnk_083A2ABC:
+	.global	gLevel8Stage0Room4BlockMetatiles
+gLevel8Stage0Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A2ABC, 0x8
 
 @ 0x083A2AC4-0x083A2B1C: C, row room_def_083a2ac4 (src/data/room_defs.c section .room_def_083a2ac4)
@@ -6702,8 +6702,8 @@ gLevel8Stage1Room0MetatileMap:
 	.global	gLevel8Stage1Room0BlockLayer
 gLevel8Stage1Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A30F4, 0x10C
-	.global	gUnk_083A3200
-gUnk_083A3200:
+	.global	gLevel8Stage1Room0BlockMetatiles
+gLevel8Stage1Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A3200, 0x8
 	.global	gLevel8Stage1Room0Doors
 gLevel8Stage1Room0Doors:
@@ -6722,8 +6722,8 @@ gLevel8Stage1Room1MetatileMap:
 	.global	gLevel8Stage1Room1BlockLayer
 gLevel8Stage1Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A3324, 0x8
-	.global	gUnk_083A332C
-gUnk_083A332C:
+	.global	gLevel8Stage1Room1BlockMetatiles
+gLevel8Stage1Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A332C, 0x18
 
 @ 0x083A3344-0x083A339C: C, row room_def_083a3344 (src/data/room_defs.c section .room_def_083a3344)
@@ -6739,8 +6739,8 @@ gLevel8Stage1Room2MetatileMap:
 	.global	gLevel8Stage1Room2BlockLayer
 gLevel8Stage1Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A346C, 0x40
-	.global	gUnk_083A34AC
-gUnk_083A34AC:
+	.global	gLevel8Stage1Room2BlockMetatiles
+gLevel8Stage1Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A34AC, 0x14
 	.global	gLevel8Stage1Room2Doors
 gLevel8Stage1Room2Doors:
@@ -6762,8 +6762,8 @@ gLevel8Stage1Room3MetatileMap:
 	.global	gLevel8Stage1Room3BlockLayer
 gLevel8Stage1Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A35B0, 0x38
-	.global	gUnk_083A35E8
-gUnk_083A35E8:
+	.global	gLevel8Stage1Room3BlockMetatiles
+gLevel8Stage1Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A35E8, 0x8
 	.global	gLevel8Stage1Room3Doors
 gLevel8Stage1Room3Doors:
@@ -6785,8 +6785,8 @@ gLevel8Stage1Room4MetatileMap:
 	.global	gLevel8Stage1Room4BlockLayer
 gLevel8Stage1Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A381C, 0x90
-	.global	gUnk_083A38AC
-gUnk_083A38AC:
+	.global	gLevel8Stage1Room4BlockMetatiles
+gLevel8Stage1Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A38AC, 0x8
 	.global	gLevel8Stage1Room4Doors
 gLevel8Stage1Room4Doors:
@@ -6808,8 +6808,8 @@ gLevel8Stage1Room5MetatileMap:
 	.global	gLevel8Stage1Room5BlockLayer
 gLevel8Stage1Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A3A34, 0x38
-	.global	gUnk_083A3A6C
-gUnk_083A3A6C:
+	.global	gLevel8Stage1Room5BlockMetatiles
+gLevel8Stage1Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A3A6C, 0x8
 
 @ 0x083A3A74-0x083A3ACC: C, row room_def_083a3a74 (src/data/room_defs.c section .room_def_083a3a74)
@@ -6825,8 +6825,8 @@ gLevel8Stage2Room0MetatileMap:
 	.global	gLevel8Stage2Room0BlockLayer
 gLevel8Stage2Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A3E70, 0xBC
-	.global	gUnk_083A3F2C
-gUnk_083A3F2C:
+	.global	gLevel8Stage2Room0BlockMetatiles
+gLevel8Stage2Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A3F2C, 0x8
 	.global	gLevel8Stage2Room0Doors
 gLevel8Stage2Room0Doors:
@@ -6845,8 +6845,8 @@ gLevel8Stage2Room1MetatileMap:
 	.global	gLevel8Stage2Room1BlockLayer
 gLevel8Stage2Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A405C, 0x8
-	.global	gUnk_083A4064
-gUnk_083A4064:
+	.global	gLevel8Stage2Room1BlockMetatiles
+gLevel8Stage2Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A4064, 0x18
 
 @ 0x083A407C-0x083A40D4: C, row room_def_083a407c (src/data/room_defs.c section .room_def_083a407c)
@@ -6862,8 +6862,8 @@ gLevel8Stage2Room2MetatileMap:
 	.global	gLevel8Stage2Room2BlockLayer
 gLevel8Stage2Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A41A4, 0x40
-	.global	gUnk_083A41E4
-gUnk_083A41E4:
+	.global	gLevel8Stage2Room2BlockMetatiles
+gLevel8Stage2Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A41E4, 0x14
 	.global	gLevel8Stage2Room2Doors
 gLevel8Stage2Room2Doors:
@@ -6885,8 +6885,8 @@ gLevel8Stage2Room3MetatileMap:
 	.global	gLevel8Stage2Room3BlockLayer
 gLevel8Stage2Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A42E8, 0x38
-	.global	gUnk_083A4320
-gUnk_083A4320:
+	.global	gLevel8Stage2Room3BlockMetatiles
+gLevel8Stage2Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A4320, 0x8
 	.global	gLevel8Stage2Room3Doors
 gLevel8Stage2Room3Doors:
@@ -6908,8 +6908,8 @@ gLevel8Stage2Room4MetatileMap:
 	.global	gLevel8Stage2Room4BlockLayer
 gLevel8Stage2Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A4508, 0x90
-	.global	gUnk_083A4598
-gUnk_083A4598:
+	.global	gLevel8Stage2Room4BlockMetatiles
+gLevel8Stage2Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A4598, 0x8
 	.global	gLevel8Stage2Room4Doors
 gLevel8Stage2Room4Doors:
@@ -6931,8 +6931,8 @@ gLevel8Stage2Room5MetatileMap:
 	.global	gLevel8Stage2Room5BlockLayer
 gLevel8Stage2Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A46C0, 0x34
-	.global	gUnk_083A46F4
-gUnk_083A46F4:
+	.global	gLevel8Stage2Room5BlockMetatiles
+gLevel8Stage2Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A46F4, 0x8
 
 @ 0x083A46FC-0x083A4754: C, row room_def_083a46fc (src/data/room_defs.c section .room_def_083a46fc)
@@ -6948,8 +6948,8 @@ gLevel8Stage3Room0MetatileMap:
 	.global	gLevel8Stage3Room0BlockLayer
 gLevel8Stage3Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A4BAC, 0x10C
-	.global	gUnk_083A4CB8
-gUnk_083A4CB8:
+	.global	gLevel8Stage3Room0BlockMetatiles
+gLevel8Stage3Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A4CB8, 0x8
 	.global	gLevel8Stage3Room0Doors
 gLevel8Stage3Room0Doors:
@@ -6968,8 +6968,8 @@ gLevel8Stage3Room1MetatileMap:
 	.global	gLevel8Stage3Room1BlockLayer
 gLevel8Stage3Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A4DE8, 0x8
-	.global	gUnk_083A4DF0
-gUnk_083A4DF0:
+	.global	gLevel8Stage3Room1BlockMetatiles
+gLevel8Stage3Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A4DF0, 0x18
 
 @ 0x083A4E08-0x083A4E60: C, row room_def_083a4e08 (src/data/room_defs.c section .room_def_083a4e08)
@@ -6985,8 +6985,8 @@ gLevel8Stage3Room2MetatileMap:
 	.global	gLevel8Stage3Room2BlockLayer
 gLevel8Stage3Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A4F30, 0x40
-	.global	gUnk_083A4F70
-gUnk_083A4F70:
+	.global	gLevel8Stage3Room2BlockMetatiles
+gLevel8Stage3Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A4F70, 0x14
 	.global	gLevel8Stage3Room2Doors
 gLevel8Stage3Room2Doors:
@@ -7008,8 +7008,8 @@ gLevel8Stage3Room3MetatileMap:
 	.global	gLevel8Stage3Room3BlockLayer
 gLevel8Stage3Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A5074, 0x38
-	.global	gUnk_083A50AC
-gUnk_083A50AC:
+	.global	gLevel8Stage3Room3BlockMetatiles
+gLevel8Stage3Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A50AC, 0x8
 	.global	gLevel8Stage3Room3Doors
 gLevel8Stage3Room3Doors:
@@ -7031,8 +7031,8 @@ gLevel8Stage3Room4MetatileMap:
 	.global	gLevel8Stage3Room4BlockLayer
 gLevel8Stage3Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A5280, 0x90
-	.global	gUnk_083A5310
-gUnk_083A5310:
+	.global	gLevel8Stage3Room4BlockMetatiles
+gLevel8Stage3Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A5310, 0x8
 	.global	gLevel8Stage3Room4Doors
 gLevel8Stage3Room4Doors:
@@ -7054,8 +7054,8 @@ gLevel8Stage3Room5MetatileMap:
 	.global	gLevel8Stage3Room5BlockLayer
 gLevel8Stage3Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A5444, 0x34
-	.global	gUnk_083A5478
-gUnk_083A5478:
+	.global	gLevel8Stage3Room5BlockMetatiles
+gLevel8Stage3Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A5478, 0x8
 
 @ 0x083A5480-0x083A54D8: C, row room_def_083a5480 (src/data/room_defs.c section .room_def_083a5480)
@@ -7071,8 +7071,8 @@ gLevel8Stage4Room0MetatileMap:
 	.global	gLevel8Stage4Room0BlockLayer
 gLevel8Stage4Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A5A08, 0x10C
-	.global	gUnk_083A5B14
-gUnk_083A5B14:
+	.global	gLevel8Stage4Room0BlockMetatiles
+gLevel8Stage4Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A5B14, 0x8
 	.global	gLevel8Stage4Room0Doors
 gLevel8Stage4Room0Doors:
@@ -7091,8 +7091,8 @@ gLevel8Stage4Room1MetatileMap:
 	.global	gLevel8Stage4Room1BlockLayer
 gLevel8Stage4Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A5C50, 0x8
-	.global	gUnk_083A5C58
-gUnk_083A5C58:
+	.global	gLevel8Stage4Room1BlockMetatiles
+gLevel8Stage4Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A5C58, 0x18
 
 @ 0x083A5C70-0x083A5CC8: C, row room_def_083a5c70 (src/data/room_defs.c section .room_def_083a5c70)
@@ -7108,8 +7108,8 @@ gLevel8Stage4Room2MetatileMap:
 	.global	gLevel8Stage4Room2BlockLayer
 gLevel8Stage4Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A5D98, 0x40
-	.global	gUnk_083A5DD8
-gUnk_083A5DD8:
+	.global	gLevel8Stage4Room2BlockMetatiles
+gLevel8Stage4Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A5DD8, 0x14
 	.global	gLevel8Stage4Room2Doors
 gLevel8Stage4Room2Doors:
@@ -7131,8 +7131,8 @@ gLevel8Stage4Room3MetatileMap:
 	.global	gLevel8Stage4Room3BlockLayer
 gLevel8Stage4Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A5EE0, 0x38
-	.global	gUnk_083A5F18
-gUnk_083A5F18:
+	.global	gLevel8Stage4Room3BlockMetatiles
+gLevel8Stage4Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A5F18, 0x8
 	.global	gLevel8Stage4Room3Doors
 gLevel8Stage4Room3Doors:
@@ -7154,8 +7154,8 @@ gLevel8Stage4Room4MetatileMap:
 	.global	gLevel8Stage4Room4BlockLayer
 gLevel8Stage4Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A6110, 0x90
-	.global	gUnk_083A61A0
-gUnk_083A61A0:
+	.global	gLevel8Stage4Room4BlockMetatiles
+gLevel8Stage4Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A61A0, 0x8
 	.global	gLevel8Stage4Room4Doors
 gLevel8Stage4Room4Doors:
@@ -7177,8 +7177,8 @@ gLevel8Stage4Room5MetatileMap:
 	.global	gLevel8Stage4Room5BlockLayer
 gLevel8Stage4Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A6300, 0x34
-	.global	gUnk_083A6334
-gUnk_083A6334:
+	.global	gLevel8Stage4Room5BlockMetatiles
+gLevel8Stage4Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A6334, 0x8
 
 @ 0x083A633C-0x083A6394: C, row room_def_083a633c (src/data/room_defs.c section .room_def_083a633c)
@@ -7194,8 +7194,8 @@ gLevel8Stage5Room0MetatileMap:
 	.global	gLevel8Stage5Room0BlockLayer
 gLevel8Stage5Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A6900, 0x10C
-	.global	gUnk_083A6A0C
-gUnk_083A6A0C:
+	.global	gLevel8Stage5Room0BlockMetatiles
+gLevel8Stage5Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A6A0C, 0x8
 	.global	gLevel8Stage5Room0Doors
 gLevel8Stage5Room0Doors:
@@ -7214,8 +7214,8 @@ gLevel8Stage5Room1MetatileMap:
 	.global	gLevel8Stage5Room1BlockLayer
 gLevel8Stage5Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A6B48, 0x8
-	.global	gUnk_083A6B50
-gUnk_083A6B50:
+	.global	gLevel8Stage5Room1BlockMetatiles
+gLevel8Stage5Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A6B50, 0x18
 
 @ 0x083A6B68-0x083A6BC0: C, row room_def_083a6b68 (src/data/room_defs.c section .room_def_083a6b68)
@@ -7231,8 +7231,8 @@ gLevel8Stage5Room2MetatileMap:
 	.global	gLevel8Stage5Room2BlockLayer
 gLevel8Stage5Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A6C90, 0x40
-	.global	gUnk_083A6CD0
-gUnk_083A6CD0:
+	.global	gLevel8Stage5Room2BlockMetatiles
+gLevel8Stage5Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A6CD0, 0x14
 	.global	gLevel8Stage5Room2Doors
 gLevel8Stage5Room2Doors:
@@ -7254,8 +7254,8 @@ gLevel8Stage5Room3MetatileMap:
 	.global	gLevel8Stage5Room3BlockLayer
 gLevel8Stage5Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A6DD0, 0x38
-	.global	gUnk_083A6E08
-gUnk_083A6E08:
+	.global	gLevel8Stage5Room3BlockMetatiles
+gLevel8Stage5Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A6E08, 0x8
 	.global	gLevel8Stage5Room3Doors
 gLevel8Stage5Room3Doors:
@@ -7277,8 +7277,8 @@ gLevel8Stage5Room4MetatileMap:
 	.global	gLevel8Stage5Room4BlockLayer
 gLevel8Stage5Room4BlockLayer:
 	.incbin	"baserom.gba", 0x3A6FCC, 0x90
-	.global	gUnk_083A705C
-gUnk_083A705C:
+	.global	gLevel8Stage5Room4BlockMetatiles
+gLevel8Stage5Room4BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A705C, 0x8
 	.global	gLevel8Stage5Room4Doors
 gLevel8Stage5Room4Doors:
@@ -7300,8 +7300,8 @@ gLevel8Stage5Room5MetatileMap:
 	.global	gLevel8Stage5Room5BlockLayer
 gLevel8Stage5Room5BlockLayer:
 	.incbin	"baserom.gba", 0x3A71A8, 0x34
-	.global	gUnk_083A71DC
-gUnk_083A71DC:
+	.global	gLevel8Stage5Room5BlockMetatiles
+gLevel8Stage5Room5BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A71DC, 0x8
 
 @ 0x083A71E4-0x083A723C: C, row room_def_083a71e4 (src/data/room_defs.c section .room_def_083a71e4)
@@ -7317,8 +7317,8 @@ gLevel8Stage6Room0MetatileMap:
 	.global	gLevel8Stage6Room0BlockLayer
 gLevel8Stage6Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A7680, 0xB8
-	.global	gUnk_083A7738
-gUnk_083A7738:
+	.global	gLevel8Stage6Room0BlockMetatiles
+gLevel8Stage6Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A7738, 0x8
 	.global	gLevel8Stage6Room0Doors
 gLevel8Stage6Room0Doors:
@@ -7337,8 +7337,8 @@ gLevel8Stage6Room1MetatileMap:
 	.global	gLevel8Stage6Room1BlockLayer
 gLevel8Stage6Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A782C, 0x8
-	.global	gUnk_083A7834
-gUnk_083A7834:
+	.global	gLevel8Stage6Room1BlockMetatiles
+gLevel8Stage6Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A7834, 0x18
 
 @ 0x083A784C-0x083A78A4: C, row room_def_083a784c (src/data/room_defs.c section .room_def_083a784c)
@@ -7354,8 +7354,8 @@ gLevel8Stage6Room2MetatileMap:
 	.global	gLevel8Stage6Room2BlockLayer
 gLevel8Stage6Room2BlockLayer:
 	.incbin	"baserom.gba", 0x3A7A08, 0x90
-	.global	gUnk_083A7A98
-gUnk_083A7A98:
+	.global	gLevel8Stage6Room2BlockMetatiles
+gLevel8Stage6Room2BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A7A98, 0x8
 	.global	gLevel8Stage6Room2Doors
 gLevel8Stage6Room2Doors:
@@ -7377,8 +7377,8 @@ gLevel8Stage6Room3MetatileMap:
 	.global	gLevel8Stage6Room3BlockLayer
 gLevel8Stage6Room3BlockLayer:
 	.incbin	"baserom.gba", 0x3A7BEC, 0x34
-	.global	gUnk_083A7C20
-gUnk_083A7C20:
+	.global	gLevel8Stage6Room3BlockMetatiles
+gLevel8Stage6Room3BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A7C20, 0x8
 
 @ 0x083A7C28-0x083A7C80: C, row room_def_083a7c28 (src/data/room_defs.c section .room_def_083a7c28)
@@ -7394,8 +7394,8 @@ gLevel8Stage7Room0MetatileMap:
 	.global	gLevel8Stage7Room0BlockLayer
 gLevel8Stage7Room0BlockLayer:
 	.incbin	"baserom.gba", 0x3A823C, 0x120
-	.global	gUnk_083A835C
-gUnk_083A835C:
+	.global	gLevel8Stage7Room0BlockMetatiles
+gLevel8Stage7Room0BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A835C, 0x8
 
 @ 0x083A8364-0x083A83BC: C, row room_def_083a8364 (src/data/room_defs.c section .room_def_083a8364)
@@ -7411,6 +7411,6 @@ gLevel8Stage7Room1MetatileMap:
 	.global	gLevel8Stage7Room1BlockLayer
 gLevel8Stage7Room1BlockLayer:
 	.incbin	"baserom.gba", 0x3A8548, 0x84
-	.global	gUnk_083A85CC
-gUnk_083A85CC:
+	.global	gLevel8Stage7Room1BlockMetatiles
+gLevel8Stage7Room1BlockMetatiles:
 	.incbin	"baserom.gba", 0x3A85CC, 0x8
