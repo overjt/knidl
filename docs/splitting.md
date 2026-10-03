@@ -63,13 +63,11 @@ boundaries roughly that many bytes apart and emitted as one file per chunk,
   defined by its owning chunk. Within a chunk, targets keep the legacy
   file-local `.L_XXXXXXXX` labels. Flat segments behave exactly as before
   issue #25.
-* Cuts land on even addresses because gas aligns Thumb instructions to 2
-  within a section and ld aligns each input section to its own
-  `sh_addralign`: an input section whose first byte would sit at an odd
-  ROM address gets padded by ld and shifts everything after it. An
-  odd-start segment therefore yields a tiny leading data-only chunk (for
-  `game_code_early`, formerly the single byte at `0x080006FF` — a boundary
-  corrected in #28).
+* Cuts land on word-aligned function boundaries because gas aligns
+  instructions (2 for Thumb, 4 for ARM) within a section and pads its size
+  to its alignment, and ld aligns each input section to its own
+  `sh_addralign`: a chunk that started or ended off its alignment would
+  gain padding and shift everything after it (segment boundaries, below).
 * Two objdump→gas round-trip hazards are repaired automatically (see
   lessons-learned §4): halfwords in undefined-decode spaces print as
   later-architecture mnemonics that arm7tdmi gas rejects, and unified-
@@ -150,7 +148,8 @@ the authoritative check.
 ### Data segments (issue #36)
 
 A `data`-kind segment never goes through the rules above. Its file is
-`data/<segment>.s`, and it holds only `.global` labels (every ROM
+`data/<segment>.s` (or, for the pieces of a zone cut around C runs, the
+zone's file, below), and it holds only `.global` labels (every ROM
 `data_symbols`/`extra_labels` address in it), `.word <symbol>` lines for
 proven pointers (function entries outside asset segments, and the words of
 consumer-proven `pointer_tables`) and `.incbin "baserom.gba", <offset>,
@@ -158,26 +157,60 @@ consumer-proven `pointer_tables`) and `.incbin "baserom.gba", <offset>,
 code files, cannot fall back to raw bytes, and is checked by `make
 check-data`. See [`docs/data.md`](data.md).
 
-### Odd boundaries
+### Segment boundaries
 
-gas silently pads a section's **size** up to its alignment (2 for a section
-containing Thumb instructions, 4 for ARM or a literal pool) and aligns every
-Thumb instruction to 2. The splitter therefore handles two boundary
-oddities:
+gas aligns every instruction (2 for Thumb, 4 for ARM) and pads a
+section's **size** up to its alignment (4 once it holds an ARM
+instruction or a literal pool), and ld aligns each section's start.  A
+code segment must therefore start and end on its alignment: `make split`
+stops with an error naming the segment otherwise, and the fix is to move
+the boundary to an instruction in `docs/analysis/segments.txt`.
 
-* **Odd trailing bytes**: they are parked in a separate alignment-1
-  section `.segment.tail`, and every segment rule in `linker.ld` carries a
-  `KEEP(*(.segment.tail))` pattern that appends it after the main content.
-* **Odd segment start**: real instructions cannot be placed at odd section
-  offsets (gas would pad), so such a segment is emitted from raw
-  `.short`/`.byte`/`.word` data with labels but no instruction text.
-
-Both are fallbacks for a boundary in the wrong place: the ROM had two
+The ROM had two boundaries inside an instruction
 (`task_switch_helpers`/`task_literals` at `0x080002E5`, which cut the ARM
-`b .` at `0x080002E4` in two, and `sdk_swi_wrappers`/`sdk_reset_helper` at
-`0x080CFA7F`, which cut SoundDriverVSyncOff's `bx lr`), and #37 moved both
-to the instruction boundaries `0x080002E8` and `0x080CFA80`, so no split
-segment uses either path today and SoftReset is decoded as Thumb.
+`b .` at `0x080002E4` in two, and `sdk_swi_wrappers`/`sdk_reset_helper`
+at `0x080CFA7F`, which cut SoundDriverVSyncOff's `bx lr`).  Until #37
+the splitter handled them with two fallbacks: odd trailing bytes parked
+in a separate alignment-1 section `.segment.tail` that every `linker.ld`
+block collected with a `KEEP(*(.segment.tail))` pattern, and an odd
+segment start emitted as raw `.short`/`.byte` data with labels but no
+instruction text.  #37 moved both boundaries to the instruction
+boundaries `0x080002E8` and `0x080CFA80` (SoftReset is decoded as Thumb
+since), and #167 removed both fallbacks and the `.tail` patterns.
+
+### One data file per zone (#167)
+
+A data segment's config entry may name its `"zone"`, the data file it is
+written to.  `tools/carve_data.py` cuts a data segment around the C runs
+it carves (`<zone>`, then `<zone>_<start>` after each run) and gives the
+pieces after the first one `"zone": "<zone>"`, so a zone cut into 35
+pieces (`actor_rodata`, around the 34 ActorDef runs of
+`src/data/actor_records.c`) stays one file, `data/<zone>.s`, with one
+`.section .<piece>` per piece:
+
+```
+@ Zone actor_rodata: 0x0873EEA0-0x0874C44C, 35 data pieces (0xBCF4 bytes) and
+@ 34 C run(s) between them.  ...
+@ Piece actor_rodata: 0x0873EEA0-0x0873F2B8 (data, 0x418 bytes)
+	.section .actor_rodata, "a"
+	.global	actor_rodata
+actor_rodata:
+	...
+@ 0x0873F2B8-0x0873F4C8: C, row actor_rec_0873f2b8 (src/data/actor_records.c section .actor_rec_0873f2b8)
+
+@ Piece actor_rodata_0873f4c8: 0x0873F4C8-0x0873F664 (data, 0x19C bytes)
+	.section .actor_rodata_0873f4c8, "a"
+	...
+```
+
+Every piece keeps its `segments.txt` row and its section name, so
+`tools/ldgroup.py` lists the pieces and the C runs in order inside one
+output section (docs/data.md 5.2), the C runs show as comments where
+they sit, and `make split` removes a generated data file that no zone
+writes any more (the 34 `actor_rodata_<addr>.s` files folded into
+`data/actor_rodata.s`, or a segment a carve consumed entirely).
+`make datastats`, `make check-data` and `make audit` read a data file
+section by section.
 
 ### Code of the other ISA inside a function
 
@@ -216,14 +249,12 @@ switcher in `task_switch_helpers`):
    individually (e.g. a branch to an address with no database entry) fall
    back to raw halfwords one instruction at a time.
 
-`make compare` remains the authoritative end-to-end check. Note that a
-segment whose *start* is odd is always emitted as labeled raw data — gas
-would silently pad real instructions to even offsets — and that odd
-*trailing* bytes live in the `.tail` section described above (no
-configured segment needs either since #37). A stress run
-over `task_switch_helpers` (ARM), the former `agb_init` split (1 KB of
-Thumb with branches and pools; since decompiled, #28) and the pre-#28
-`game_code_early` (odd start, 162 functions) verified all three paths.
+`make compare` remains the authoritative end-to-end check. A segment
+must start and end on its alignment (above). A stress run over
+`task_switch_helpers` (ARM), the former `agb_init` split (1 KB of Thumb
+with branches and pools; since decompiled, #28) and the pre-#28
+`game_code_early` (162 functions) verified the paths, before #167 removed
+the odd-boundary fallbacks.
 
 Notes on round-tripping objdump text (validated empirically, see
 `docs/lessons-learned.md` §4):
@@ -256,8 +287,7 @@ Notes on round-tripping objdump text (validated empirically, see
 
 No `linker.ld` edit is needed: every segment rule already names its section
 (and, since #36 phase 2 run 2, asserts its address in matching builds
-instead of pinning it; docs/data.md section 8) and collects an optional
-`.tail`.
+instead of pinning it; docs/data.md section 8).
 
 To later decompile a split function to C, give it a real definition
 (removing the name from `external_defined` if it was listed there), rerun

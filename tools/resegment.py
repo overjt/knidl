@@ -83,6 +83,17 @@ def main():
     if len(idx) != len(old_names) or idx != list(range(idx[0], idx[0] + len(idx))):
         die('config segment entries of %s are not consecutive' % old_names)
     flags = dict((e['name'], e) for e in cfg['segments'])
+    # a piece of a zone cut around C runs (#167) shares data/<zone>.s with
+    # the zone's other pieces: re-partitioning one would split the file
+    zone_of = dict((e['name'], e.get('zone', e['name'])) for e in cfg['segments'])
+    for n in old_names:
+        z = zone_of[n]
+        if z != n or any(o != n and zone_of[o] == n for o in zone_of):
+            die('segment %s is a piece of zone %s (data/%s.s, cut around C runs '
+                'by tools/carve_data.py): resegment.py re-partitions whole '
+                'data segments; inside a zone, move a boundary by carving with '
+                'tools/carve_data.py instead (docs/splitting.md, "One data file '
+                'per zone")' % (n, z, z))
 
     def asset_of(addr):
         for r in covered:

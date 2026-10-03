@@ -39618,106 +39618,140 @@
       "name": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0873f4c8"
+      "name": "actor_rodata_0873f4c8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0873f6e8"
+      "name": "actor_rodata_0873f6e8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0873f8f4"
+      "name": "actor_rodata_0873f8f4",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08740de4"
+      "name": "actor_rodata_08740de4",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874113c"
+      "name": "actor_rodata_0874113c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08741aa4"
+      "name": "actor_rodata_08741aa4",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08741f0c"
+      "name": "actor_rodata_08741f0c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08742bf8"
+      "name": "actor_rodata_08742bf8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874306c"
+      "name": "actor_rodata_0874306c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08743414"
+      "name": "actor_rodata_08743414",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874369c"
+      "name": "actor_rodata_0874369c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08743bd0"
+      "name": "actor_rodata_08743bd0",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874407c"
+      "name": "actor_rodata_0874407c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874425c"
+      "name": "actor_rodata_0874425c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087449e8"
+      "name": "actor_rodata_087449e8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087453bc"
+      "name": "actor_rodata_087453bc",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745588"
+      "name": "actor_rodata_08745588",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745868"
+      "name": "actor_rodata_08745868",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745a34"
+      "name": "actor_rodata_08745a34",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745bb4"
+      "name": "actor_rodata_08745bb4",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08747ebc"
+      "name": "actor_rodata_08747ebc",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087481a0"
+      "name": "actor_rodata_087481a0",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087487e8"
+      "name": "actor_rodata_087487e8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08748930"
+      "name": "actor_rodata_08748930",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08748bb8"
+      "name": "actor_rodata_08748bb8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08749598"
+      "name": "actor_rodata_08749598",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08749b08"
+      "name": "actor_rodata_08749b08",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08749c70"
+      "name": "actor_rodata_08749c70",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874b38c"
+      "name": "actor_rodata_0874b38c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874b4d8"
+      "name": "actor_rodata_0874b4d8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874bb7c"
+      "name": "actor_rodata_0874bb7c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874c184"
+      "name": "actor_rodata_0874c184",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874c204"
+      "name": "actor_rodata_0874c204",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874c3d0"
+      "name": "actor_rodata_0874c3d0",
+      "zone": "actor_rodata"
     },
     {
       "name": "frame_tables"

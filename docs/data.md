@@ -328,7 +328,9 @@ after crt0 did not change):
 
 `actor_rodata` is then cut into 35 data pieces (`actor_rodata`,
 `actor_rodata_<addr>`) around the 34 runs of ActorDef/ActorAux records
-that are C since run 3 (§5.2); the pieces are rows of one output section.
+that are C since run 3 (§5.2); the pieces are rows of one output section,
+and since #167 one data file, `data/actor_rodata.s`, with one section per
+piece (docs/splitting.md, "One data file per zone").
 
 The evidence for run 3's names:
 
@@ -521,10 +523,18 @@ file instead:
   of the zone, data pieces and runs, in order inside ONE output section
   `.actor_rodata`, with a matching-mode assertion per row on its first
   symbol (the data piece's segment label, the run's first record);
+- the data pieces of the zone stay one file (#167): `carve_data.py` gives
+  each piece after a run the config key `"zone": "actor_rodata"`, and
+  `split.py` writes all of them into `data/actor_rodata.s`, one
+  `.section .<piece>` each, with a comment where each C run sits
+  (docs/splitting.md, "One data file per zone").  `carve_data.py --c-file
+  src/data/<file>.c --section .<run>` writes the run's block reading its
+  named section directly, and `--runs FILE` carves a family in one call;
 - `tools/ldgroup.py --ungroup actor_rodata --write` writes the rows back
   as one block each (the form `carve_data.py`, `resegment.py` and
   `carve.py` edit, which refuse a grouped row with a message saying so);
-  grouping again gives the identical `linker.ld`;
+  grouping again gives the identical `linker.ld`.  `resegment.py` refuses
+  a piece of a zone (a boundary inside a zone moves by carving);
 - `tools/fnmatch.sh <start> <end> src/data/actor_records.c --rodata
   --section=.actor_rec_<addr>` verifies one run.
 

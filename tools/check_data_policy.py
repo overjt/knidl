@@ -8,8 +8,10 @@ symbolic pointers, .incbin offsets).  This check fails on what can be
 detected mechanically:
 
   1. every `data` segment of docs/analysis/segments.txt (except the
-     hand-written cartridge header) is emitted as data/<segment>.s, and no
-     asm/ file opens a data segment's section;
+     hand-written cartridge header) is the section of exactly one data/*.s
+     file (data/<segment>.s, or the file of its zone, which holds the
+     pieces of a zone cut around C runs, #167), and no asm/ file opens a
+     data segment's section;
   2. every data/*.s line is one of: a comment, a blank line, `.section`,
      `.global`, a label, `.incbin "baserom.gba", <offset>, <length>`,
      `.word <symbol>` / `.word <symbol>+<n>` (a symbol, never a number) or
@@ -138,10 +140,23 @@ def main():
     segs = parse_segments("docs/analysis/segments.txt")
     data_names = set(n for k, n in segs if k == "data") - set(NOT_DATA_FILES)
 
-    # 1. data segments live in data/, nowhere else.
+    # 1. data segments live in data/, nowhere else: each is the section
+    # of exactly one data file (its zone's).
+    opened = {}
+    for fname in sorted(os.listdir("data")):
+        if not fname.endswith(".s"):
+            continue
+        with open(os.path.join("data", fname)) as f:
+            for line in f:
+                m = SECTION_RE.match(line)
+                if m:
+                    opened.setdefault(m.group(1), []).append(fname)
     for name in sorted(data_names):
-        if not os.path.exists(os.path.join("data", name + ".s")):
-            errors.append("data segment %s has no data/%s.s" % (name, name))
+        files = opened.get(name, [])
+        if len(files) != 1:
+            errors.append("data segment %s is opened by %d data/*.s files"
+                          " (%s), not one" % (name, len(files),
+                                              ", ".join(files) or "none"))
     for root in ("asm",):
         for dirpath, _dirs, files in os.walk(root):
             for fname in sorted(files):

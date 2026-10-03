@@ -13,16 +13,19 @@ Usage:
             resegment.py write them).
     --c-object OBJ
             the object that defines the run's c_data rows in named sections:
-            a c_data row <row> is then read from OBJ(.<row>) instead of
-            build/src/data/<row>.o(.rodata) (src/data/actor_records.c places
-            each run of records with __attribute__((section(".<row>")))).
+            a c_data row <row> whose block reads build/src/data/<row>.o(.rodata)
+            is then read from OBJ(.<row>) (src/data/actor_records.c places
+            each run of records with __attribute__((section(".<row>"))));
+            a row carved with carve_data.py --c-file/--section already reads
+            its object's section and keeps it.
 
 Why: tools/carve_data.py gives every carve its own output section, and a
 carve inside a data segment also splits the segment, so N carves in one
 segment add 2N output sections.  One output section per data zone keeps the
-section count where it was: the rows stay (segments.txt, split.py's data
-files and the c_data ranges are unchanged), only linker.ld lists them in
-order inside one block.  Each row keeps its matching-mode address as an
+section count where it was: the rows stay (segments.txt, the c_data ranges
+and split.py's one data file per zone, data/<zone>.s with one section per
+piece, are unchanged), only linker.ld lists them in order inside one
+block.  Each row keeps its matching-mode address as an
 assertion on its first symbol (split.py labels every data file's start with
 the segment name; a c_data row starts with its first data_symbols label).
 
@@ -67,7 +70,7 @@ def ungroup(group, write):
     blocks = []
     for ln in m.group(2).strip().splitlines():
         ln = ln.strip()
-        d = re.fullmatch(r'KEEP\(\*\(\.(\w+)\)\) KEEP\(\*\(\.\1\.tail\)\)', ln)
+        d = re.fullmatch(r'KEEP\(\*\(\.(\w+)\)\)', ln)
         c = re.fullmatch(r'(\S+)\(\.(\w+)\)', ln)
         if d:
             name = d.group(1)
@@ -136,10 +139,11 @@ def main():
             die('linker.ld block .%s not found (already grouped?)' % n)
         spans.append((m.start(), m.end()))
         b = re.search(r'\{([^}]*)\}', m.group(0)).group(1).strip()
-        if k == 'c_data' and cobj:
-            want = 'build/src/data/%s.o(.rodata)' % n
-            if b not in (want, '%s(.%s)' % (cobj, n)):
-                die('c_data block .%s reads %r, not %r' % (n, b, want))
+        if k == 'c_data' and cobj and b == 'build/src/data/%s.o(.rodata)' % n:
+            # a row carved without --c-file/--section: read the named
+            # section of the one C file instead (a row that already reads
+            # an object's section, carve_data.py --c-file --section, keeps
+            # it, so a zone may hold the runs of several C files)
             b = '%s(.%s)' % (cobj, n)
         bodies.append(b)
     for (a0, a1), (b0, _b1) in zip(spans, spans[1:]):

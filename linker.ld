@@ -30,40 +30,36 @@ SECTIONS
      * asm/rom_header.s. The Nintendo logo is copyrighted and is extracted
      * from baserom.gba via .incbin instead of being committed. */
     .rom_header 0x08000000 : {
-        KEEP(*(.rom_header)) KEEP(*(.rom_header.tail))
+        KEEP(*(.rom_header))
     } > ROM
 
     /* ===== Segments split from the former main_blob =====
      * One section per docs/analysis/segments.txt row, in address order;
-     * the assertion after each block is its segments.txt start.
-     *
-     * The `KEEP(*(.name.tail))` patterns collect optional alignment-1 tail
-     * sections emitted by tools/split.py: gas pads a section's size up to
-     * its instruction alignment (2/4), so odd trailing bytes of a split
-     * segment live in a separate section appended right after the main
-     * content (see docs/splitting.md). */
+     * the assertion after each block is its segments.txt start.  A group
+     * (tools/ldgroup.py) lists several rows, the data pieces of one
+     * data/<zone>.s and the C runs between them, in one block. */
 
     /* crt0 + master ISR (ARM code) — assembled from asm/crt0.s */
     .crt0_master_isr : {
-        KEEP(*(.crt0_master_isr)) KEEP(*(.crt0_master_isr.tail))
+        KEEP(*(.crt0_master_isr))
     } > ROM
     ASSERT(!MATCHING || ADDR(.crt0_master_isr) == 0x080000C0, "MATCHING: .crt0_master_isr moved")
 
     /* crt0/ISR literal pool — assembled from asm/crt0.s */
     .crt0_literals : {
-        KEEP(*(.crt0_literals)) KEEP(*(.crt0_literals.tail))
+        KEEP(*(.crt0_literals))
     } > ROM
     ASSERT(!MATCHING || ADDR(.crt0_literals) == 0x08000210, "MATCHING: .crt0_literals moved")
 
     /* Task/context-switch helpers (ARM code) */
     .task_switch_helpers : {
-        KEEP(*(.task_switch_helpers)) KEEP(*(.task_switch_helpers.tail))
+        KEEP(*(.task_switch_helpers))
     } > ROM
     ASSERT(!MATCHING || ADDR(.task_switch_helpers) == 0x08000234, "MATCHING: .task_switch_helpers moved")
 
     /* Task helper literal pool */
     .task_literals : {
-        KEEP(*(.task_literals)) KEEP(*(.task_literals.tail))
+        KEEP(*(.task_literals))
     } > ROM
     ASSERT(!MATCHING || ADDR(.task_literals) == 0x080002E8, "MATCHING: .task_literals moved")
 
@@ -1887,7 +1883,7 @@ SECTIONS
      * SDK asm, stays asm forever — issue #52). SoundMainRAM's ROM image
      * embeds an ARM-mode mixer loop (see rom-map section 8.2). */
     .m4a_1 : {
-        KEEP(*(.m4a_1)) KEEP(*(.m4a_1.tail))
+        KEEP(*(.m4a_1))
     } > ROM
     ASSERT(!MATCHING || ADDR(.m4a_1) == 0x080CD89C, "MATCHING: .m4a_1 moved")
 
@@ -1913,13 +1909,13 @@ SECTIONS
 
     /* SDK syscall wrappers (Thumb) */
     .sdk_swi_wrappers : {
-        KEEP(*(.sdk_swi_wrappers)) KEEP(*(.sdk_swi_wrappers.tail))
+        KEEP(*(.sdk_swi_wrappers))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sdk_swi_wrappers) == 0x080CFA4C, "MATCHING: .sdk_swi_wrappers moved")
 
-    /* SDK swi reset helper tail + literals */
+    /* SDK SoftReset (Thumb) and its literal pool */
     .sdk_reset_helper : {
-        KEEP(*(.sdk_reset_helper)) KEEP(*(.sdk_reset_helper.tail))
+        KEEP(*(.sdk_reset_helper))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sdk_reset_helper) == 0x080CFA80, "MATCHING: .sdk_reset_helper moved")
 
@@ -1932,127 +1928,127 @@ SECTIONS
 
     /* C library: call_via_rN, copy loops, division routines (verbatim) */
     .sdk_libc : {
-        KEEP(*(.sdk_libc)) KEEP(*(.sdk_libc.tail))
+        KEEP(*(.sdk_libc))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sdk_libc) == 0x080CFC30, "MATCHING: .sdk_libc moved")
 
     /* Interworking veneer (ARM) */
     .interworking_veneer : {
-        KEEP(*(.interworking_veneer)) KEEP(*(.interworking_veneer.tail))
+        KEEP(*(.interworking_veneer))
     } > ROM
     ASSERT(!MATCHING || ADDR(.interworking_veneer) == 0x080CFDDC, "MATCHING: .interworking_veneer moved")
 
     /* Alignment padding between veneer and IRQ table */
     .gap_interworking_veneer_irq_handler_table_14 : {
-        KEEP(*(.gap_interworking_veneer_irq_handler_table_14)) KEEP(*(.gap_interworking_veneer_irq_handler_table_14.tail))
+        KEEP(*(.gap_interworking_veneer_irq_handler_table_14))
     } > ROM
     ASSERT(!MATCHING || ADDR(.gap_interworking_veneer_irq_handler_table_14) == 0x080CFDE4, "MATCHING: .gap_interworking_veneer_irq_handler_table_14 moved")
 
     /* 14-entry IRQ handler table */
     .irq_handler_table_14 : {
-        KEEP(*(.irq_handler_table_14)) KEEP(*(.irq_handler_table_14.tail))
+        KEEP(*(.irq_handler_table_14))
     } > ROM
     ASSERT(!MATCHING || ADDR(.irq_handler_table_14) == 0x080CFDE8, "MATCHING: .irq_handler_table_14 moved")
 
     /* The SRAM id string "AGB  KIRBY" (gSramIdString), WriteSramEx(.., 0x0E000000, 10) src/save_b7a9c.c:29 (#36 phase 2 run 3; formerly the head of lib_misc) */
     .sram_id_string : {
-        KEEP(*(.sram_id_string)) KEEP(*(.sram_id_string.tail))
+        KEEP(*(.sram_id_string))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sram_id_string) == 0x080CFE20, "MATCHING: .sram_id_string moved")
 
     /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gAirGrindSineTable, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer */
     .air_grind_rodata : {
-        KEEP(*(.air_grind_rodata)) KEEP(*(.air_grind_rodata.tail))
+        KEEP(*(.air_grind_rodata))
     } > ROM
     ASSERT(!MATCHING || ADDR(.air_grind_rodata) == 0x080CFE2C, "MATCHING: .air_grind_rodata moved")
 
     /* Sprite sheets (asset, #36 phase 2 run 3): OAM template streams, tiles, palettes and struct TaskGfx records the frame tables reach; its head holds a RequestCopyList palette and the LZ77 streams gUnk_080D07C8/gUnk_080D1B78, its last 12 bytes the stage-count table gUnk_08334EB4 */
     .sprite_sheets : {
-        KEEP(*(.sprite_sheets)) KEEP(*(.sprite_sheets.tail))
+        KEEP(*(.sprite_sheets))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sprite_sheets) == 0x080D0788, "MATCHING: .sprite_sheets moved")
 
     /* Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c) */
     .room_bg_anims : {
-        KEEP(*(.room_bg_anims)) KEEP(*(.room_bg_anims.tail))
+        KEEP(*(.room_bg_anims))
     } > ROM
     ASSERT(!MATCHING || ADDR(.room_bg_anims) == 0x08334EC0, "MATCHING: .room_bg_anims moved")
 
     /* Room records (#36 phase 2): 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list */
     .room_data : {
-        KEEP(*(.room_data)) KEEP(*(.room_data.tail))
+        KEEP(*(.room_data))
     } > ROM
     ASSERT(!MATCHING || ADDR(.room_data) == 0x0835CFD4, "MATCHING: .room_data moved")
 
     /* Room metatile tables (#36 phase 2): 23 LZ77 RoomDef.metatileTiles streams */
     .room_metatiles : {
-        KEEP(*(.room_metatiles)) KEEP(*(.room_metatiles.tail))
+        KEEP(*(.room_metatiles))
     } > ROM
     ASSERT(!MATCHING || ADDR(.room_metatiles) == 0x083A862C, "MATCHING: .room_metatiles moved")
 
     /* Room BG3 maps (#36 phase 2): 32 struct BgMap, 25 LZ77 and 7 raw */
     .room_bg3_maps : {
-        KEEP(*(.room_bg3_maps)) KEEP(*(.room_bg3_maps.tail))
+        KEEP(*(.room_bg3_maps))
     } > ROM
     ASSERT(!MATCHING || ADDR(.room_bg3_maps) == 0x083B5538, "MATCHING: .room_bg3_maps moved")
 
     /* Compressed graphics (LZ77/RLE-class) */
     .compressed_graphics : {
-        KEEP(*(.compressed_graphics)) KEEP(*(.compressed_graphics.tail))
+        KEEP(*(.compressed_graphics))
     } > ROM
     ASSERT(!MATCHING || ADDR(.compressed_graphics) == 0x083D0148, "MATCHING: .compressed_graphics moved")
 
     /* Sprite sheets, part 2 (asset, #36 phase 2 run 3; formerly m4a_songs, no m4a data): OAM streams, raw and LZ77 tiles, palettes, TaskGfx records; opens with the tail of compressed_graphics' LZ77 stream gUnk_085BF484 */
     .sprite_sheets_2 : {
-        KEEP(*(.sprite_sheets_2)) KEEP(*(.sprite_sheets_2.tail))
+        KEEP(*(.sprite_sheets_2))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sprite_sheets_2) == 0x085C0000, "MATCHING: .sprite_sheets_2 moved")
 
     /* m4a engine rodata tables (issue #51): gMPlayJumpTableTemplate..gXcmdTable */
     .m4a_engine_rodata : {
-        KEEP(*(.m4a_engine_rodata)) KEEP(*(.m4a_engine_rodata.tail))
+        KEEP(*(.m4a_engine_rodata))
     } > ROM
     ASSERT(!MATCHING || ADDR(.m4a_engine_rodata) == 0x0860A140, "MATCHING: .m4a_engine_rodata moved")
 
     /* m4a voicegroups (asset, #36 phase 2 run 3; formerly m4a_song_tracks): the five voicegroups and five 4-bit CGB waves tools/m4a_struct.py parses */
     .m4a_voicegroups : {
-        KEEP(*(.m4a_voicegroups)) KEEP(*(.m4a_voicegroups.tail))
+        KEEP(*(.m4a_voicegroups))
     } > ROM
     ASSERT(!MATCHING || ADDR(.m4a_voicegroups) == 0x0860A418, "MATCHING: .m4a_voicegroups moved")
 
     /* gMPlayTable + gSongTable (issue #51) */
     .m4a_song_table : {
-        KEEP(*(.m4a_song_table)) KEEP(*(.m4a_song_table.tail))
+        KEEP(*(.m4a_song_table))
     } > ROM
     ASSERT(!MATCHING || ADDR(.m4a_song_table) == 0x0860B430, "MATCHING: .m4a_song_table moved")
 
     /* m4a song data (asset, #36 phase 2 run 3; formerly m4a_songs_2): song headers, track streams, ToneData and all 129 WaveData PCM samples (tools/m4a_struct.py) */
     .m4a_song_data : {
-        KEEP(*(.m4a_song_data)) KEEP(*(.m4a_song_data.tail))
+        KEEP(*(.m4a_song_data))
     } > ROM
     ASSERT(!MATCHING || ADDR(.m4a_song_data) == 0x0860C678, "MATCHING: .m4a_song_data moved")
 
     /* SRAM_V112 identifier string */
     .sram_v112_string : {
-        KEEP(*(.sram_v112_string)) KEEP(*(.sram_v112_string.tail))
+        KEEP(*(.sram_v112_string))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sram_v112_string) == 0x0872E9F8, "MATCHING: .sram_v112_string moved")
 
     /* Null padding after SRAM string */
     .gap_sram_v112_string_sram_driver_fn_table : {
-        KEEP(*(.gap_sram_v112_string_sram_driver_fn_table)) KEEP(*(.gap_sram_v112_string_sram_driver_fn_table.tail))
+        KEEP(*(.gap_sram_v112_string_sram_driver_fn_table))
     } > ROM
     ASSERT(!MATCHING || ADDR(.gap_sram_v112_string_sram_driver_fn_table) == 0x0872EA02, "MATCHING: .gap_sram_v112_string_sram_driver_fn_table moved")
 
     /* SRAM driver function table (4 Thumb pointers) */
     .sram_driver_fn_table : {
-        KEEP(*(.sram_driver_fn_table)) KEEP(*(.sram_driver_fn_table.tail))
+        KEEP(*(.sram_driver_fn_table))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sram_driver_fn_table) == 0x0872EA04, "MATCHING: .sram_driver_fn_table moved")
 
     /* Engine-zone rodata (#36 phase 2 run 3; formerly gap_sram_driver_fn_table_asset_metadata_index): 256 zero bytes, sprite half-dimensions gUnk_0872EB14, gBootSignature, the SE table gSfxTable, gCosTable; gTaskTypes follows */
     .engine_rodata : {
-        KEEP(*(.engine_rodata)) KEEP(*(.engine_rodata.tail))
+        KEEP(*(.engine_rodata))
     } > ROM
     ASSERT(!MATCHING || ADDR(.engine_rodata) == 0x0872EA14, "MATCHING: .engine_rodata moved")
 
@@ -2064,7 +2060,7 @@ SECTIONS
 
     /* Game rodata in link order, M02-M18 (#36 phase 2 run 3; formerly asset_metadata_index): mode, menu, player, collision, room, camera and terrain tables, blocks, player actions, effects, actor core */
     .game_rodata : {
-        KEEP(*(.game_rodata)) KEEP(*(.game_rodata.tail))
+        KEEP(*(.game_rodata))
     } > ROM
     ASSERT(!MATCHING || ADDR(.game_rodata) == 0x08730780, "MATCHING: .game_rodata moved")
 
@@ -2076,75 +2072,75 @@ SECTIONS
 
     /* Actor and enemy rodata, M17-M32 (#36 phase 2 run 3; formerly asset_metadata_index_0873eea0): behaviour tables, ActorDef/ActorAux records, HitBoxSets (ldgroup.py: 69 rows in one output section) */
     .actor_rodata : {
-        KEEP(*(.actor_rodata)) KEEP(*(.actor_rodata.tail))
+        KEEP(*(.actor_rodata))
         build/src/data/actor_records.o(.actor_rec_0873f2b8)
-        KEEP(*(.actor_rodata_0873f4c8)) KEEP(*(.actor_rodata_0873f4c8.tail))
+        KEEP(*(.actor_rodata_0873f4c8))
         build/src/data/actor_records.o(.actor_rec_0873f664)
-        KEEP(*(.actor_rodata_0873f6e8)) KEEP(*(.actor_rodata_0873f6e8.tail))
+        KEEP(*(.actor_rodata_0873f6e8))
         build/src/data/actor_records.o(.actor_rec_0873f8ec)
-        KEEP(*(.actor_rodata_0873f8f4)) KEEP(*(.actor_rodata_0873f8f4.tail))
+        KEEP(*(.actor_rodata_0873f8f4))
         build/src/data/actor_records.o(.actor_rec_08740bd4)
-        KEEP(*(.actor_rodata_08740de4)) KEEP(*(.actor_rodata_08740de4.tail))
+        KEEP(*(.actor_rodata_08740de4))
         build/src/data/actor_records.o(.actor_rec_087410e4)
-        KEEP(*(.actor_rodata_0874113c)) KEEP(*(.actor_rodata_0874113c.tail))
+        KEEP(*(.actor_rodata_0874113c))
         build/src/data/actor_records.o(.actor_rec_087417b8)
-        KEEP(*(.actor_rodata_08741aa4)) KEEP(*(.actor_rodata_08741aa4.tail))
+        KEEP(*(.actor_rodata_08741aa4))
         build/src/data/actor_records.o(.actor_rec_08741eb4)
-        KEEP(*(.actor_rodata_08741f0c)) KEEP(*(.actor_rodata_08741f0c.tail))
+        KEEP(*(.actor_rodata_08741f0c))
         build/src/data/actor_records.o(.actor_rec_087429e8)
-        KEEP(*(.actor_rodata_08742bf8)) KEEP(*(.actor_rodata_08742bf8.tail))
+        KEEP(*(.actor_rodata_08742bf8))
         build/src/data/actor_records.o(.actor_rec_08742fbc)
-        KEEP(*(.actor_rodata_0874306c)) KEEP(*(.actor_rodata_0874306c.tail))
+        KEEP(*(.actor_rodata_0874306c))
         build/src/data/actor_records.o(.actor_rec_0874330c)
-        KEEP(*(.actor_rodata_08743414)) KEEP(*(.actor_rodata_08743414.tail))
+        KEEP(*(.actor_rodata_08743414))
         build/src/data/actor_records.o(.actor_rec_08743644)
-        KEEP(*(.actor_rodata_0874369c)) KEEP(*(.actor_rodata_0874369c.tail))
+        KEEP(*(.actor_rodata_0874369c))
         build/src/data/actor_records.o(.actor_rec_08743b4c)
-        KEEP(*(.actor_rodata_08743bd0)) KEEP(*(.actor_rodata_08743bd0.tail))
+        KEEP(*(.actor_rodata_08743bd0))
         build/src/data/actor_records.o(.actor_rec_0874402c)
-        KEEP(*(.actor_rodata_0874407c)) KEEP(*(.actor_rodata_0874407c.tail))
+        KEEP(*(.actor_rodata_0874407c))
         build/src/data/actor_records.o(.actor_rec_087441d8)
-        KEEP(*(.actor_rodata_0874425c)) KEEP(*(.actor_rodata_0874425c.tail))
+        KEEP(*(.actor_rodata_0874425c))
         build/src/data/actor_records.o(.actor_rec_08744964)
-        KEEP(*(.actor_rodata_087449e8)) KEEP(*(.actor_rodata_087449e8.tail))
+        KEEP(*(.actor_rodata_087449e8))
         build/src/data/actor_records.o(.actor_rec_0874531c)
-        KEEP(*(.actor_rodata_087453bc)) KEEP(*(.actor_rodata_087453bc.tail))
+        KEEP(*(.actor_rodata_087453bc))
         build/src/data/actor_records.o(.actor_rec_08745530)
-        KEEP(*(.actor_rodata_08745588)) KEEP(*(.actor_rodata_08745588.tail))
+        KEEP(*(.actor_rodata_08745588))
         build/src/data/actor_records.o(.actor_rec_08745810)
-        KEEP(*(.actor_rodata_08745868)) KEEP(*(.actor_rodata_08745868.tail))
+        KEEP(*(.actor_rodata_08745868))
         build/src/data/actor_records.o(.actor_rec_08745a2c)
-        KEEP(*(.actor_rodata_08745a34)) KEEP(*(.actor_rodata_08745a34.tail))
+        KEEP(*(.actor_rodata_08745a34))
         build/src/data/actor_records.o(.actor_rec_08745b30)
-        KEEP(*(.actor_rodata_08745bb4)) KEEP(*(.actor_rodata_08745bb4.tail))
+        KEEP(*(.actor_rodata_08745bb4))
         build/src/data/actor_records.o(.actor_rec_08747c80)
-        KEEP(*(.actor_rodata_08747ebc)) KEEP(*(.actor_rodata_08747ebc.tail))
+        KEEP(*(.actor_rodata_08747ebc))
         build/src/data/actor_records.o(.actor_rec_08748198)
-        KEEP(*(.actor_rodata_087481a0)) KEEP(*(.actor_rodata_087481a0.tail))
+        KEEP(*(.actor_rodata_087481a0))
         build/src/data/actor_records.o(.actor_rec_08748764)
-        KEEP(*(.actor_rodata_087487e8)) KEEP(*(.actor_rodata_087487e8.tail))
+        KEEP(*(.actor_rodata_087487e8))
         build/src/data/actor_records.o(.actor_rec_08748918)
-        KEEP(*(.actor_rodata_08748930)) KEEP(*(.actor_rodata_08748930.tail))
+        KEEP(*(.actor_rodata_08748930))
         build/src/data/actor_records.o(.actor_rec_08748ab0)
-        KEEP(*(.actor_rodata_08748bb8)) KEEP(*(.actor_rodata_08748bb8.tail))
+        KEEP(*(.actor_rodata_08748bb8))
         build/src/data/actor_records.o(.actor_rec_08749514)
-        KEEP(*(.actor_rodata_08749598)) KEEP(*(.actor_rodata_08749598.tail))
+        KEEP(*(.actor_rodata_08749598))
         build/src/data/actor_records.o(.actor_rec_08749ae8)
-        KEEP(*(.actor_rodata_08749b08)) KEEP(*(.actor_rodata_08749b08.tail))
+        KEEP(*(.actor_rodata_08749b08))
         build/src/data/actor_records.o(.actor_rec_08749bec)
-        KEEP(*(.actor_rodata_08749c70)) KEEP(*(.actor_rodata_08749c70.tail))
+        KEEP(*(.actor_rodata_08749c70))
         build/src/data/actor_records.o(.actor_rec_0874b2dc)
-        KEEP(*(.actor_rodata_0874b38c)) KEEP(*(.actor_rodata_0874b38c.tail))
+        KEEP(*(.actor_rodata_0874b38c))
         build/src/data/actor_records.o(.actor_rec_0874b4c8)
-        KEEP(*(.actor_rodata_0874b4d8)) KEEP(*(.actor_rodata_0874b4d8.tail))
+        KEEP(*(.actor_rodata_0874b4d8))
         build/src/data/actor_records.o(.actor_rec_0874b940)
-        KEEP(*(.actor_rodata_0874bb7c)) KEEP(*(.actor_rodata_0874bb7c.tail))
+        KEEP(*(.actor_rodata_0874bb7c))
         build/src/data/actor_records.o(.actor_rec_0874c158)
-        KEEP(*(.actor_rodata_0874c184)) KEEP(*(.actor_rodata_0874c184.tail))
+        KEEP(*(.actor_rodata_0874c184))
         build/src/data/actor_records.o(.actor_rec_0874c1fc)
-        KEEP(*(.actor_rodata_0874c204)) KEEP(*(.actor_rodata_0874c204.tail))
+        KEEP(*(.actor_rodata_0874c204))
         build/src/data/actor_records.o(.actor_rec_0874c378)
-        KEEP(*(.actor_rodata_0874c3d0)) KEEP(*(.actor_rodata_0874c3d0.tail))
+        KEEP(*(.actor_rodata_0874c3d0))
     } > ROM
     ASSERT(!MATCHING || ADDR(.actor_rodata) == 0x0873EEA0, "MATCHING: .actor_rodata moved")
     ASSERT(!MATCHING || gAbilityStarDef == 0x0873F2B8, "MATCHING: actor_rec_0873f2b8 moved")
@@ -2218,55 +2214,55 @@ SECTIONS
 
     /* Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gUnk_0874CFEC among them */
     .frame_tables : {
-        KEEP(*(.frame_tables)) KEEP(*(.frame_tables.tail))
+        KEEP(*(.frame_tables))
     } > ROM
     ASSERT(!MATCHING || ADDR(.frame_tables) == 0x0874C44C, "MATCHING: .frame_tables moved")
 
     /* Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits */
     .late_game_rodata : {
-        KEEP(*(.late_game_rodata)) KEEP(*(.late_game_rodata.tail))
+        KEEP(*(.late_game_rodata))
     } > ROM
     ASSERT(!MATCHING || ADDR(.late_game_rodata) == 0x0875607C, "MATCHING: .late_game_rodata moved")
 
     /* The 14 recorded input demos of the staff credits' rows 1 and 2 (gUnk_087583CC, CreditsMain src/credits_cd330.c; InputRecorderStart) */
     .credits_demos : {
-        KEEP(*(.credits_demos)) KEEP(*(.credits_demos.tail))
+        KEEP(*(.credits_demos))
     } > ROM
     ASSERT(!MATCHING || ADDR(.credits_demos) == 0x08758448, "MATCHING: .credits_demos moved")
 
     /* Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/stage_3cd60.c) (#36 phase 2 run 3) */
     .player_frame_records : {
-        KEEP(*(.player_frame_records)) KEEP(*(.player_frame_records.tail))
+        KEEP(*(.player_frame_records))
     } > ROM
     ASSERT(!MATCHING || ADDR(.player_frame_records) == 0x08759DC8, "MATCHING: .player_frame_records moved")
 
     /* The player sheets' frame lists, format-only (docs/data.md 5.3) (#36 phase 2 run 3) */
     .player_frame_lists : {
-        KEEP(*(.player_frame_lists)) KEEP(*(.player_frame_lists.tail))
+        KEEP(*(.player_frame_lists))
     } > ROM
     ASSERT(!MATCHING || ADDR(.player_frame_lists) == 0x08769250, "MATCHING: .player_frame_lists moved")
 
     /* Separately linked GBA program (asset): the single-pak link client, MultiBootInitWithParams(gUnk_0876B1FC, gUnk_0876F690) src/menu_0d450.c, ExtraModeTitleLoadMultiBootImage src/mode_07b68.c */
     .multiboot_program : {
-        KEEP(*(.multiboot_program)) KEEP(*(.multiboot_program.tail))
+        KEEP(*(.multiboot_program))
     } > ROM
     ASSERT(!MATCHING || ADDR(.multiboot_program) == 0x0876B1FC, "MATCHING: .multiboot_program moved")
 
     /* Separately linked GBA program (asset): sub-game 0 (Quick Draw), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .quick_draw_program : {
-        KEEP(*(.quick_draw_program)) KEEP(*(.quick_draw_program.tail))
+        KEEP(*(.quick_draw_program))
     } > ROM
     ASSERT(!MATCHING || ADDR(.quick_draw_program) == 0x0876F690, "MATCHING: .quick_draw_program moved")
 
     /* Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .bomb_rally_program : {
-        KEEP(*(.bomb_rally_program)) KEEP(*(.bomb_rally_program.tail))
+        KEEP(*(.bomb_rally_program))
     } > ROM
     ASSERT(!MATCHING || ADDR(.bomb_rally_program) == 0x087954C0, "MATCHING: .bomb_rally_program moved")
 
     /* Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by ExtraModeTitleSendModeData (src/mode_07b68.c) */
     .air_grind_program : {
-        KEEP(*(.air_grind_program)) KEEP(*(.air_grind_program.tail))
+        KEEP(*(.air_grind_program))
     } > ROM
     ASSERT(!MATCHING || ADDR(.air_grind_program) == 0x087C0A4C, "MATCHING: .air_grind_program moved")
 
@@ -2278,7 +2274,7 @@ SECTIONS
 
     /* Room BG-animation script lists (#36 phase 2): 12 NULL-ended lists of the 30 scripts and their index gRoomBgAnimScripts */
     .room_bg_anim_lists : {
-        KEEP(*(.room_bg_anim_lists)) KEEP(*(.room_bg_anim_lists.tail))
+        KEEP(*(.room_bg_anim_lists))
     } > ROM
     ASSERT(!MATCHING || ADDR(.room_bg_anim_lists) == 0x087E1E78, "MATCHING: .room_bg_anim_lists moved")
 
@@ -2290,13 +2286,13 @@ SECTIONS
 
     /* Sprite frame lists (#36 phase 2): 23 per-sheet lists of frame pointers, one per extended GfxHeader trailer; no code reference found */
     .sprite_frame_lists : {
-        KEEP(*(.sprite_frame_lists)) KEEP(*(.sprite_frame_lists.tail))
+        KEEP(*(.sprite_frame_lists))
     } > ROM
     ASSERT(!MATCHING || ADDR(.sprite_frame_lists) == 0x087E2570, "MATCHING: .sprite_frame_lists moved")
 
     /* Zero padding to ROM end */
     .zero_padding : {
-        KEEP(*(.zero_padding)) KEEP(*(.zero_padding.tail))
+        KEEP(*(.zero_padding))
     } > ROM
     ASSERT(!MATCHING || ADDR(.zero_padding) == 0x087E3088, "MATCHING: .zero_padding moved")
     ASSERT(!MATCHING || ADDR(.zero_padding) + SIZEOF(.zero_padding) == 0x08800000, "MATCHING: the ROM does not end at 0x08800000")

@@ -694,6 +694,11 @@ def placeholder_census():
     for path in files_under("data", (".s",)):
         seg = os.path.splitext(os.path.basename(path))[0]
         for line in read(path).split("\n"):
+            # a zone's file holds one section per piece (#167)
+            m = re.match(r"\s*\.section\s+\.(\w+)", line)
+            if m:
+                seg = m.group(1)
+                continue
             m = LABEL_RE.match(line)
             if not m:
                 continue
