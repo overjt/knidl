@@ -39949,9 +39949,6 @@
       "zone": "actor_rodata"
     },
     {
-      "name": "frame_tables"
-    },
-    {
       "name": "late_game_rodata"
     },
     {

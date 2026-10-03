@@ -369,15 +369,15 @@ copies and module-local records).
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 173 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 4 | I/O registers kept as symbols: the m4a_1 and SoftReset asm pools (VCOUNT, SOUND1CNT_L, DMA1SAD, IME) and early_4734.c's IME, where REG_IME changes the allocation (lesson 3.523); the rest of the C spells REG_* |
-| ROM label | `gUnk_08*` | 5765 | tracked by #155: functional data whose consumer does not settle a name |
+| ROM label | `gUnk_08*` | 5851 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17407 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
-| ROM label | (named) | 1790 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
+| ROM label | (named) | 1976 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | struct field | `unk*` | 11 | per-family Task fields: the meaning changes with the task type, a view per family needs the owner (#155) |
 | struct field | `unk*` | 348 | tracked by #155: the field's role is not proven |
 | struct field | `unk*` | 385 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 431 RAM cells, 2786 ROM labels by role and 1790 by position.
+Named for comparison: 431 RAM cells, 2815 ROM labels by role and 1976 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 

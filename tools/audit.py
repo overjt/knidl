@@ -717,6 +717,21 @@ def placeholder_census():
                     add("ROM label", "rom-data")
             else:
                 rom_named += 1
+    # ROM labels the C tables of src/data/ define (c_data rows): they left
+    # data/*.s but are still labels, named or not
+    c_rows = [(s, e) for s, e, k, _n in segs if k == "c_data"]
+    for addr, name in cfg["data_symbols"].items():
+        a = int(addr, 16)
+        if not any(s <= a < e for s, e in c_rows):
+            continue
+        if name in positions:
+            rom_pos += 1
+            add("ROM label", "rom-position")
+        elif name.startswith("gUnk_"):
+            rom_unk_data += 1
+            add("ROM label", "rom-data")
+        else:
+            rom_named += 1
     extra["rom"] = (rom_named, rom_unk_asset, rom_unk_data, rom_pos)
     # struct fields
     header_structs = {}

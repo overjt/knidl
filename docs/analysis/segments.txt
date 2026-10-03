@@ -493,7 +493,7 @@
 0x0874C204 0x0874C378 data actor_rodata_0874c204
 0x0874C378 0x0874C3D0 c_data actor_rec_0874c378 # src/data/actor_records.c section .actor_rec_0874c378 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874C3D0 0x0874C44C data actor_rodata_0874c3d0
-0x0874C44C 0x0875607C data frame_tables # Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gUnk_0874CFEC among them
+0x0874C44C 0x0875607C c_data frame_tables # src/data/frame_tables.c section .frame_tables (carved by tools/carve_data.py)
 0x0875607C 0x08758448 data late_game_rodata # Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits
 0x08758448 0x08759DC8 data credits_demos # The 14 recorded input demos of the staff credits' rows 1 and 2 (gUnk_087583CC, CreditsMain src/credits_cd330.c; InputRecorderStart)
 0x08759DC8 0x08769250 data player_frame_records # Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/stage_3cd60.c) (#36 phase 2 run 3)

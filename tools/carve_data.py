@@ -266,6 +266,14 @@ def carve(st, start, end, name, c_file=None, section=None,
     # the comment line above the first block describes that segment: with
     # no pre part it now belongs above the post part
     cm = re.search(r'([ \t]*/\*[^\n]*\*/[ \t]*\n)$', old_ld[:spans[0][0]])
+    if cm and not pre and not post and len(covered) == 1:
+        # a whole segment becomes C: one comment, the segment's and the C's
+        spans[0] = (cm.start(1), spans[0][1])
+        what = re.sub(r'\s*\*/\s*$', '', cm.group(1).rstrip('\n'))
+        repls[0] = repls[0].replace(
+            cblock.split('\n', 1)[0],
+            '%s; functional table in C (%s, carved by tools/carve_data.py) */'
+            % (what, c_file))
     if cm and not pre and post and len(covered) == 1:
         spans[0] = (cm.start(1), spans[0][1])
         repls[0] = repls[0].replace(section_block(post_name, post[0]),

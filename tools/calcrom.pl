@@ -158,6 +158,12 @@ sub record_section
         # A labeled table split to asm (see header comment).
         $is_code = 0;
     }
+    elsif ($object =~ m{(?:^|/)src/data/[^/]+\.o$})
+    {
+        # A functional table in C (src/data/*.c, docs/data.md 5.2) that
+        # __attribute__((section)) places in a named section: ROM data.
+        $is_code = 0;
+    }
     elsif ($origin eq 'asm' or $origin eq 'src')
     {
         # Custom-named section from a code object (see header comment).
