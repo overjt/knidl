@@ -6,7 +6,7 @@
 @ (tools/ldgroup.py, docs/data.md 5.2).
 @ Structure only (docs/data.md): labels, symbolic pointer words and
 @ .incbin slices of the user's baserom.gba; no ROM bytes are committed.
-@ 1237 label(s), 1 code pointer(s), 945 data pointer(s), 1247 .incbin slice(s) (0x8634 bytes).
+@ 1237 label(s), 0 code pointer(s), 945 data pointer(s), 1246 .incbin slice(s) (0x8638 bytes).
 @ 637 of the pointers are in next-label tables (docs/data.md 5.1).
 
 @ Piece actor_rodata: 0x0873EEA0-0x0873F2B8 (data, 0x418 bytes)
@@ -567,7 +567,7 @@ gUnk_0874029C:
 @ 0x087402BC-0x08740320: C, row actor_tbl_087402bc (src/data/actor_tables.c section .actor_tbl_087402bc)
 
 @ Piece actor_rodata_08740320: 0x08740320-0x08740630 (data, 0x310 bytes)
-@ 3 label(s), 1 code pointer(s), 0 data pointer(s), 4 .incbin slice(s) (0x30C bytes).
+@ 3 label(s), 0 code pointer(s), 0 data pointer(s), 3 .incbin slice(s) (0x310 bytes).
 	.section .actor_rodata_08740320, "a"
 	.global	actor_rodata_08740320
 actor_rodata_08740320:
@@ -576,9 +576,7 @@ gUnk_08740320:
 	.incbin	"baserom.gba", 0x740320, 0x180
 	.global	gUnk_087404A0
 gUnk_087404A0:
-	.incbin	"baserom.gba", 0x7404A0, 0x2C
-	.word	MasterIsr
-	.incbin	"baserom.gba", 0x7404D0, 0x150
+	.incbin	"baserom.gba", 0x7404A0, 0x180
 	.global	gUnk_08740620
 gUnk_08740620:
 	.incbin	"baserom.gba", 0x740620, 0x10
