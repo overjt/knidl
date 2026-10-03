@@ -3,8 +3,8 @@
 [![CI](https://github.com/overjt/knidl/actions/workflows/build.yml/badge.svg)](https://github.com/overjt/knidl/actions/workflows/build.yml)
 [![decomp.dev](https://decomp.dev/overjt/knidl?mode=shield)](https://decomp.dev/overjt/knidl)
 
-A work-in-progress **matching decompilation** of *Kirby: Nightmare in Dream Land*
-(Game Boy Advance, 2002), developed by HAL Laboratory and published by Nintendo.
+A **matching decompilation** of *Kirby: Nightmare in Dream Land* (Game Boy
+Advance, 2002), developed by HAL Laboratory and published by Nintendo.
 
 The goal is C/C++ source that compiles into a **byte-for-byte identical** copy of
 the original ROM — not a port, rewrite, or recreation. All compilation happens
@@ -28,37 +28,38 @@ The repository builds the following USA retail ROM:
 You must supply your own legally dumped cartridge image as `baserom.gba`
 (see [INSTALL.md](INSTALL.md)); the same hash is expected.
 
-## Building
+## Building, verifying and testing
 
-Docker is the only requirement:
+Docker and GNU make are the only requirements; every target below runs
+inside the `knidl-builder` image (the boot test in its own `knidl-boottest`
+image). Full instructions, including `baserom.gba` placement and hash
+verification: [INSTALL.md](INSTALL.md).
 
 ```sh
-make image    # build the knidl-builder toolchain image (Debian 12 + pinned agbcc)
-make          # build knidl.gba from source + baserom.gba
-make compare  # verify the built ROM SHA-1 (byte-for-byte match)
-make progress # print code/data decompilation percentages
-make symbols  # regenerate + validate the ROM-wide function symbol database
-make split    # extract configured ROM ranges into labeled, byte-identical asm
+make image      # build the knidl-builder toolchain image (Debian 12 + pinned agbcc)
+make            # build knidl.gba from source + baserom.gba
+make compare    # build and verify the SHA-1 (byte-for-byte match)
 ```
 
-Full instructions, including `baserom.gba` placement and hash verification:
-[INSTALL.md](INSTALL.md).
+| Command | What it checks | Needs `baserom.gba` |
+| --- | --- | --- |
+| `make compare` | the built ROM's SHA-1 against `knidl.sha1` | yes |
+| `make shifttest` | the shift test and pointer census: relinks with padding at section boundaries and proves every pointer-like word that did not move is not a pointer ([docs/data.md](docs/data.md) section 8) | yes |
+| `make boottest` | the boot test: runs shifted ROMs against `knidl.gba` in mGBA, frame for frame (the first run builds the `knidl-boottest` image, also `make boottest-image`) | yes |
+| `make audit` | the final audit: `.incbin` only where allowed, no unjustified raw bytes or addresses, the sanctioned asm and code-exception lists, the placeholder census ([docs/audit.md](docs/audit.md)) | no |
+| `make check-data` | the data policy: `data/*.s` holds only labels, symbolic pointers and `.incbin` slices | no |
+| `make check-headers` | compile-only smoke test of `include/gba/*.h` and the game headers | no |
+| `make datastats` | data-structure metrics (symbolic vs raw pointer-like words) | yes |
+| `make progress` | code/data/symbol percentages from the linker map | yes |
+| `make symbols`, `make split`, `make modmap` | regenerate the committed symbol database, `asm/`/`data/` and the module map; a clean tree must show no diff afterwards (`git status --porcelain` empty) | yes |
 
 ## Progress
 
-The project started as a full ROM split (30 address-pinned segments in
-`linker.ld`) and was decompiled module by module into `src/`, following the
-pret conventions (see `AGENTS.md`). **All of the game's code is now matching
-C**: everything from `AgbInit` (`0x08000310`) to the sound engine's asm core
-is byte-exact C, and so is the sound engine's C driver. The only code left in
-assembly is kept there by design: crt0 and the ARM task switcher, the m4a
-engine's hand-scheduled core (`asm/m4a_1.s`, as in pret projects), the BIOS
-call thunks and the libgcc routines. Each one is justified in
-`docs/analysis/rom-map.md` section 2 and excluded in `tools/calcrom.pl`.
+The project started as a full ROM split and was decompiled module by module
+into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
+[docs/history.md](docs/history.md)).
 
-```sh
-make progress
-```
+<!-- Figures from `make progress` at master 768a4f8; refresh after any asm or naming change. -->
 
 ```
 857532 total bytes of code
@@ -80,39 +81,65 @@ make progress
 7336404 bytes of data in 26917 baserom incbins (97.4147%)
 ```
 
-(Output from the current tree; run `make progress` for live values.)
+- **Code: complete.** All of the game's code is byte-exact C: everything from
+  `AgbInit` (`0x08000310`) to the sound engine's asm core, the sound engine's
+  C driver and the SRAM driver. The 4,176 bytes of asm are kept by design and
+  excluded from tracking: the ROM header, crt0 and the master interrupt
+  handler, the ARM task switcher, the m4a engine's hand-scheduled core
+  (`asm/m4a_1.s`, as in pret projects), the BIOS call thunks and `SoftReset`,
+  libgcc's division routines with `_call_via_rN` and the task trampolines,
+  and the interworking veneer. Each is justified in
+  [docs/audit.md](docs/audit.md) section 2.
+- **Code exceptions.** The C is plain C apart from the sites
+  [docs/audit.md](docs/audit.md) section 3 lists, among them the three
+  functions the natural-C campaign (#154) left with register pins or empty
+  `asm` levers: `sub_080b38f0`, `PoppyBrosSrHeadUpdate` and
+  `BootLogoUpdateObjects`.
+- **Data** (#36, closed). The ROM's data is structure, not bytes: labeled,
+  symbolic `data/*.s` files whose contents are `.incbin` slices of your own
+  `baserom.gba`, and typed C tables in `src/data/` where a decompiled
+  consumer proves the layout. Assets are never committed
+  ([docs/data.md](docs/data.md)). The shift test proves the ROM movable and
+  the boot test runs it moved (see "For modders").
+- **Names** (#155, open). 2,448 of the 5,347 functions and 248 of the 266
+  task bodies have real names, each with its evidence in
+  `docs/analysis/renames.csv` (convention: [docs/naming.md](docs/naming.md)).
+  Of the 7,743 documented symbols, 5,767 have semantic names and 1,976 are
+  position names (a data record named after its slot in a consumer-proven
+  table). Most of the undocumented symbols are ROM data labels, 17,421 of
+  them asset labels that stay unnamed by policy; the long tail (about 2,900
+  `sub_*` functions, enemy and boss state bodies and one-caller helpers
+  mostly) is #155's backlog. `make audit` keeps the census of what is left,
+  and why, in [docs/naming.md](docs/naming.md) section 5.1.
 
-What is left:
+## For modders
 
-- **Data.** The ROM's data is still `.incbin`'d from `baserom.gba` at build
-  time and is never committed. Issue #36 turns the structured tables into
-  labeled, typed symbols without committing their contents.
-- **Names.** Issue #155 gives functions and globals real names with
-  `tools/rename.py`, each with its evidence in `docs/analysis/renames.csv`
-  (convention: `docs/naming.md`).  Run 1 named 1,141 symbols, among them
-  178 of the engine zone's 182 functions and most of the widely called
-  helpers.  Run 2 named 242 struct fields (`tools/rename_field.py`; 153 of
-  the 222 fields in `include/task.h`), identified the enemies, mid-bosses,
-  bosses and the 25 copy abilities from local sprite renders, and named
-  their families (806 more symbols).  Run 3 named 248 of the 266 task
-  bodies and their families, the last unidentified enemies (each species
-  on three agreeing sources: a local render, the code, and a public text
-  reference), two per-family views of `struct Task`, and 1,977 data
-  records by their slot in a consumer-proven table (the room table's
-  lists, RoomDefs and their maps and doors, the kind tables' ActorDefs
-  and graphics); of the 7,743 documented symbols above, 1,976 are such
-  position names.  The rest still have address-based names
-  (`sub_08XXXXXX`, `gUnk_XXXXXXXX`), shown as "symbols undocumented"
-  above (23,263 of the 26,341 are ROM data labels, most of them from #36), and
-  the fields whose role changes with the task family stay `unkXX`.
+`make MATCHING=0` links without `linker.ld`'s per-section address asserts, so
+a modified ROM builds: every section after the cartridge header is placed by
+the linker right after the previous one. Moving code or data is safe as far as
+it has been measured: the shift test ([docs/data.md](docs/data.md) section 8)
+proves every insertion point after crt0 safe (no pointer-like word that fails
+to move is a pointer or unexplained), and the boot test runs shifted images
+frame for frame against the original through boot, menus, a new game and the
+first stage. The data policy sets the limits: assets (graphics, audio, text,
+level maps) are `.incbin` slices of your own `baserom.gba` and are never
+committed, so editing them needs a build-time extraction step that does not
+exist yet; functional tables are C only where a decompiled consumer proves
+their layout, and stay structure-only (labels and symbolic pointers)
+everywhere else.
 
 ## CI
 
 Continuous integration (`.github/workflows/build.yml`) is designed to be
 **green without a baserom**: it builds the full Docker toolchain image, syntax
-checks the Python/Perl tooling, and compiles `crt0` plus every file in `src/`.
-The byte-for-byte `make compare` step additionally runs when a `baserom.gba`
-is available on the runner, by any of these mechanisms:
+checks the Python/Perl tooling, compiles `crt0` plus every file in `src/`, and
+runs the checks that need no ROM (`make check-headers`, `make check-data`,
+`make audit`). The ROM-dependent steps additionally run when a `baserom.gba`
+is available on the runner: `make compare`, `make progress`, the regeneration
+checks of `make symbols`, `make split` and `make modmap` (the committed
+outputs must regenerate with no diff, `git diff --exit-code`),
+`make datastats`, `make shifttest` and `make boottest`. The baserom can come
+from any of these mechanisms:
 
 - **Self-hosted runner** with `baserom.gba` placed in the runner user's home
   directory (`$HOME/baserom.gba`; files inside the workspace itself are
@@ -124,8 +151,8 @@ is available on the runner, by any of these mechanisms:
 
 If the baserom's SHA-1 does not match `37a476567d133c146fee6b5e2eb0b07a215da6b0`,
 or the built ROM differs from it, CI **fails closed** — a mismatch can never
-pass. When no baserom is available, the compare step is skipped explicitly and
-visibly (a notice annotation and a step summary banner).
+pass. When no baserom is available, the ROM-dependent steps are skipped
+explicitly and visibly (a notice annotation and a step summary banner).
 
 A second workflow (`.github/workflows/report.yml`) generates the objdiff-schema
 progress report and publishes it as the `A7KE_report` artifact for

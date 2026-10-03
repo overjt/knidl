@@ -215,7 +215,7 @@ rarely finds the pair that closes a function.  The candidate must live inside
 the repo and carry a `/* --- functions --- */` marker with a single function
 after it.  Stop when a round gains less than a couple of bytes: that is the
 signal the residue is structural (a missing statement, a wrong type, a wrong
-return type — §4.70) rather than an allocation rotation.
+return type — lesson 4.70) rather than an allocation rotation.
 
 ## 5. Land it with tools/carve.py
 

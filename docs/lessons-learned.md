@@ -7,6 +7,152 @@ them. All examples reference the tools that exist in this repo today
 
 The lessons keep the `sub_`/`gUnk_` names of their time; `docs/analysis/renames.csv` maps each one to its real name (issue #155, `docs/naming.md`).
 
+## Start here
+
+This file is the project's memory: about 690 numbered lessons in five
+sections, each tied to the function, module or tool that taught it.
+The 40 lines below are the ones to read before your first function; each
+names a lesson (and its closest companions) and says what it tells you.
+Then check [Superseded and amended lessons](#superseded-and-amended-lessons)
+before you rely on an older lesson: several were overturned by later runs,
+and the correction lives in a note on the old lesson or in a later one.
+The procedure itself is [`docs/decomp-loop.md`](decomp-loop.md).
+
+**Build and Docker**
+
+- [1.6](#16-the-main-makefile-needed-pipefail-too-and-its-absence-swallowed-every-compile-error) Every compile rule is a pipeline: without `pipefail` an agbcc error is swallowed and `make` exits 0 with a wrong ROM; agbcc reports errors as `stdin:N:`, so grep the full serial log for them.
+- [1.2](#12-changing-flags-does-not-rebuild-the-object), [1.7](#17-build_dir-inside-the-inside_docker-branch-made-host-side-make-clean-a-silent-no-op) A flag change does not rebuild an object, and `make clean` runs on the host: check that `ls build` fails after it, and treat only `make compare` (not bare `make`) as proof.
+- [4.13](#413-segmentstxt-ends-are-exclusive--annotation-edits-must-not-shift-them), [4.22](#422-an-un-carved-deliverable-in-src-breaks-the-whole-build) `segments.txt` ends are exclusive, so after a boundary edit do a clean full build; every `.c` under `src/` is compiled, so drafts live in the gitignored `pending/` until carved.
+- [4.23](#423-a-slept-mac-can-wedge-the-container-runtime-beyond-orbctl-restart) A slept Mac can wedge the Docker runtime: restart it and re-verify with `make compare` before diagnosing stalled agents one by one.
+
+**The per-function loop and its oracles**
+
+- [4.44](#444-grep-the-landed-src-for-a-twin-before-hand-deriving-anything) Grep the landed `src/` for a twin on a distinctive expression before deriving anything; same-size siblings are usually one template.
+- [4.102](#4102-m2c-drafts-are-the-transcriber-for-a-logic-heavy-module) `m2c -t gba` drafts are never byte-exact, but they give the data flow and argument order, and small functions often match from them.
+- [4.26](#426-fnmatchs-pool-resolving-diff-is-capped--fix-from-the-top-and-re-run), [4.28](#428-attribute-a-diff-only-after-the-sizes-agree) `tools/fnmatch.sh`'s diff is capped and meaningless while the sizes differ: fix the size first, then work top-down.
+- [4.51](#451-agbcc--dg-prints-the-allocators-own-state-stop-guessing-permutations) (with [3.34](#334-read-the-register-allocator-instead-of-guessing-agbcc--da)) `agbcc -dg`/`-dl` print the allocation order, each pseudo's references and live length and the conflict graph: a register permutation becomes arithmetic.
+- [4.128](#4128-a-whole-tree-assembly-oracle-compile-all-306-files-to-s-in-24-seconds) For a change that only touches declarations, the agbcc assembly of every file is a complete oracle: identical `.s`, identical bytes.
+- [3.257](#3257-decomp-permuters-scorer-is-unusable-on-this-target-verify-the-base-score-before-trusting-a-run) (with [4.35](#435-making-decomp-permuter-score-0-on-a-byte-exact-function)) decomp-permuter's score has no gradient on this target; check the base score before trusting a run.
+
+**agbcc source shapes**
+
+- [3.75](#375--fprologue-bugfix-is-the-game-code-zones-real-recipe) The game code is one recipe, `agbcc -O2 -mthumb-interwork -fprologue-bugfix`; re-test with that flag before deciding a range needs another compiler (the m4a driver really is `old_agbcc`).
+- [3.9](#39-ram-cells-must-be-extern-symbols-not-cast-constants) RAM cells are `extern` symbols named through `split_config.json` `data_symbols`, never cast constants: the ROM pools one word per cell.
+- [3.305](#3305-an-arrays-declared-element-type-is-load-bearing-symbol-first-vs-index-first) A table's declared element type is visible: `arr[i]` loads the symbol before the index arithmetic, a cast or pointer spelling after it.
+- [3.123](#3123-write-converging-arms-out-in-full-and-let-cross-jumping-merge-them) (with [3.506](#3506-an-address-or-value-the-rom-loads-in-two-arms-is-two-full-arms-that-cross-jump)) Write converging arms out in full and let cross-jumping merge them; a value the ROM loads in two arms is two full arms.
+- [3.141](#3141-a-switchs-dispatch-shape-is-decided-by-the-source-order-of-its-arms) A `switch`'s dispatch polarity and layout follow the source order of its arms: permute the arms before anything else.
+- [3.509](#3509-volatility-is-a-declaration-question-in-both-directions) Volatility is a declaration question in both directions: a missing `vu8` and a spurious one both cost bytes.
+- [3.508](#3508-narrowing-decides-operand-types-a-same-signedness-multiply--2-against--1-and-a-u32-local-before-a-u16-store) Narrowing to a 16-bit context decides operand types: both operands' signedness, `* 2` against `<< 1`, a `u32` local before a `u16` store.
+- [3.482](#3482-the-link-librarys-io-registers-are-the-io_regh-macros-gcse-keeps-a-symbols-address-alive-never-a-constants) gcse keeps a symbol's address alive in a register, never a constant's: where the original spelled an I/O address as an `io_reg.h` macro, a symbol costs bytes (decide per function, [3.62](#362-an-mmio-register-can-be-derived-from-another-live-io-address)).
+- [3.443](#3443-agbcc-rounds-every-struct-up-to-a-multiple-of-4-bytes-check-a-sub-structs-size-before-nesting-it) (with [3.522](#3522-agbcc-pads-every-union-to-4-bytes-a-byte-wide-view-must-be-packed)) agbcc pads every struct and union to a multiple of 4 bytes: probe `sizeof`/`offsetof` before publishing a nested struct, and make a byte-wide union `packed`.
+- [3.428](#3428-a-call-the-rom-makes-with-another-signature-than-the-definition-declare-it-per-file-never-cast-the-function) (with [3.517](#3517-one-type-per-symbol-per-translation-unit-a-file-whose-view-differs-cannot-include-the-header)) A call made with another signature than the definition gets a per-file declaration with a note, never a function-pointer cast; a file whose view of a symbol differs keeps its own declarations instead of the header.
+
+**Register-allocation residues: plain source first**
+
+- [3.468](#3468-re-attack-an-old-straggler-from-the-plainest-source-before-any-lever) Re-attack a straggler from the plainest 2002-style source before any lever: a residue is often an artifact of the levers that brought it close.
+- [3.495](#3495-the-natural-c-campaign-the-pins-described-the-candidates-and-a-strip-test-finds-the-dead-ones) The natural-C campaign: strip the pins first (36 functions matched as they stood), then redraft from the plain neighbours rather than unpinning.
+- [3.472](#3472-a-parked-register-residue-can-be-a-wrong-declaration-check-every-cell-against-src-before-any-archaeology) A parked "register residue" can be a wrong declaration: check every cell's width and volatility against `src/` before any archaeology.
+- [3.496](#3496-ties-are-broken-by-declaration-order-and-statement-order-not-by-a-pin) (with [3.41](#341-global-alloc-priority-ties-are-broken-by-declaration-order)) Exact priority ties are broken by pseudo number, which is declaration order, and by statement order; no pin is needed.
+- [3.436](#3436-a-variable-reused-in-two-blocks-is-one-pseudo-split-it-where-the-roms-register-changes) A user variable is one pseudo for the whole function: where the ROM keeps "the same" value in two registers, the source had two variables.
+- [3.258](#3258-not-every-ldr-rn-sym-is-the-same-insn-pseudo-vs-address-reload-decides-the-reload-phase-and-30-printf-lines-in-reload1c-settle-it) (with [4.77](#477-a-one-print-rrtrace-build-is-ten-minutes-and-it-turns-a-rotation-into-a-count)) A store's `ldr rN, =sym` is either a pseudo or an address reload, and that decides reload's rotation; a one-print instrumented agbcc turns a rotation into a count.
+- [3.493](#3493-sub_080c5b84-pres-slot-order-is-arithmetic---solve-the-bucket-inequalities-for-declaration-order-s-and-the-files-label-count-together) (with [3.491](#3491-the-doubled-n-times-live-length-is-when-jumpc-swaps-an-else-arm-a-dead-store-before-break-delays-it-to-jump2), [4.79](#479-a-function-can-match-alone-and-not-inside-its-carve-file-gcse-hashes-pool-label-addresses)) PRE's stack-slot order is gcse hash-bucket arithmetic over declaration order, insn count and the file's pool-label count, which is why a function can match alone and not in its carve file.
+
+**Splitting and the census**
+
+- [4.11](#411-hand-labels-must-flow-through-the-split-config-never-edit-generated-asm) Every hand name goes through `tools/split_config.json` or `tools/symdb.py`: CI regenerates `asm/` and `data/` and fails on any diff.
+- [4.30](#430-the-census-has-two-systematic-blind-spots-in-the-game-code-zone--sweep-for-them-before-writing-c) (with [4.40](#440-a-bl-edge-whose-site-is-a-literal-pool-word-is-a-phantom), [4.90](#490-a-census-row-of-exactly-0x1000-is-symdbs-size-cap-look-for-long-jump-phantoms)) The function census has systematic phantoms (the pool word `0xFFFFF000` decodes as a `bl`, pool-skip branches, symdb's 0x1000 size cap): sweep for them before writing C.
+- [4.121](#4121-a-zones-census-name-is-a-guess-follow-the-consumers-pointers) A zone's census name is a guess: read a data zone through its consumers' pointers.
+
+**Data policy, the shift test and the boot test**
+
+- [4.119](#4119-a-consumers-struct-is-the-pointer-proof-a-value-scan-is-not) (with [4.118](#4118-graphics-samples-and-songs-hold-function-pointers-by-chance)) A word is a pointer when a consumer's struct says so; a value scan finds "function pointers" in graphics and songs by chance.
+- [4.133](#4133-sizes-and-order-alone-reproduce-the-rom) Sizes and order alone reproduce the ROM: `linker.ld` places the sections one after another and only asserts their addresses (`MATCHING`).
+- [4.138](#4138-a-census-needs-three-classes-and-heuristics-stay-out-of-proven) (with [4.140](#4140-the-censuss-fourth-class-unreachable-with-a-mechanical-check)) The pointer census keeps heuristics out of "proven", and unreachable regions are a fourth class with a mechanical check.
+- [4.142](#4142-a-raw-relative-branch-is-invisible-to-the-shift-test) (with [4.143](#4143-the-boot-test-two-images-in-lockstep-compared-frame-by-frame)) A raw relative branch is invisible to the shift test; the boot test, which runs shifted images frame for frame, found three, and `tools/branchcheck.py` now checks them.
+
+**Names**
+
+- [4.123](#4123-toolsrenamepy-where-a-name-lives-and-the-pure-rename-proof) `tools/rename.py` updates every place a name lives, and `--verify-diff` proves a branch is a pure rename.
+- [3.515](#3515-a-rename-is-codegen-neutral-under-agbccs-thumb-backend-measured-on-155s-1145-renames) (with [3.516](#3516-a-struct-field-rename-never-reaches-codegen)) Renames are codegen-neutral under agbcc's Thumb backend (every symbol address goes through the constant pool), and field names never reach codegen.
+- [4.148](#4148-position-names-the-slot-is-the-identity-and-the-referrer-check) A record whose only identity is its slot in a consumer-proven table is named after the slot (`docs/naming.md` 2.4).
+
+**Harness and fan-out**
+
+- [4.98](#498-seed-every-cross-file-helper-callback-and-spawner-then-fan-out-by-family) (with [4.76](#476-on-a-logic-heavy-bank-seed-the-cross-batch-leaves-before-the-fan-out)) Before fanning out by family, the coordinator matches every cross-file helper, callback and spawner and one representative per family.
+- [4.75](#475-hand-a-function-to-another-agent-through-variantssh-never-fns) (with [4.91](#491-racing-two-agents-on-one-function-through-variantssh-needs-per-agent-variant-names)) Hand a function over through `variants.sh` into the new owner's own `wip/` directory, never through `fns/`; racing agents need per-agent variant names.
+- [4.81](#481-a-finished-agents-last-re-verify-pass-overwrites-the-coordinators-copies-in-good) (with [4.80](#480-one-canonical-declaration-per-shared-cell-changed-mid-run-by-evidence)) Freeze a file before harmonising it, since a finished agent's last re-verify pass overwrites the coordinator's copies; keep one canonical declaration per shared cell.
+
+## Superseded and amended lessons
+
+A lesson is never deleted: when a later run overturns or narrows one, the
+old text stays (it records what was tried) and gets a note, and the new
+lesson says what it corrects.  This table lists every such pair, so check
+it before applying a lesson from the left column.  "#154" is the
+natural-C campaign (lessons 3.495-3.514), which found that most pinned
+recipes described the old candidates rather than the functions; "#63" is
+the engine zone's last functions (3.479-3.488); the final campaign is
+3.489-3.494.  Plain "extends" links, which only add a case, are not
+listed.
+
+| Lesson | Superseded or amended by | What changed |
+| --- | --- | --- |
+| [3.11](#311-loop-shapes-reversed-counters-and-hoisted-qi-zeros) | [3.289](#3289-an-explicit-zero-variable-can-mis-schedule-the-constant-refines-311) | Refined: an explicit zero variable can mis-schedule the constant. |
+| [3.18](#318-superseded-by-375--the-leaf-push-lr-is-a-bug-not-an-identity) | [3.75](#375--fprologue-bugfix-is-the-game-code-zones-real-recipe) | Superseded: the leaf `push {lr}` was agbcc's missing `-fprologue-bugfix`, not old_agbcc sub-units; the game code is one recipe. |
+| [3.24](#324-ldr-rsk--adds-rdrs0-is-one-himode-move-not-two-insns) | [3.47](#347-himode-locals-differ-by-recipe--scope-324-before-applying-it) | Scoped: HImode locals differ by recipe. |
+| [3.34](#334-read-the-register-allocator-instead-of-guessing-agbcc--da) | [3.41](#341-global-alloc-priority-ties-are-broken-by-declaration-order), [3.496](#3496-ties-are-broken-by-declaration-order-and-statement-order-not-by-a-pin) | Amended: declaration order also breaks exact priority ties at function scope. |
+| [3.35](#335-a-two-register-swap-in-a-two-address-op-is-a-regmove-decision) | [3.479](#3479-sub_08001cc8-a-goto-loop-arithmetic-in-place-a-real-3-d-table---not-a-regmove-tie) | Corrected (#63): `sub_08001cc8` matched from plain source; the regmove rule stands but proves no assignment unreachable. |
+| [3.55](#355-read-loops-lifesavings-arithmetic-before-hunting-shapes) | [3.488](#3488-sub_08002378-merge_blocks-splices-a-gotos-target-back-in-and-when-it-does-decides-cse1s-view) | Corrected (#63): `sub_08002378`'s preheader load is a movable; merge_blocks' timing decided cse1's view. |
+| [3.62](#362-an-mmio-register-can-be-derived-from-another-live-io-address) | [3.481](#3481-multibootmain-is-an-older-sdk-revision-and-its-siomulti-is-the-io_regh-constant), [3.482](#3482-the-link-librarys-io-registers-are-the-io_regh-macros-gcse-keeps-a-symbols-address-alive-never-a-constants), [3.486](#3486-taskcreate-an-integer-literal-is-reloaded-a-symbol-is-a-local-quantity) | Amended (#63): the opposite also happens; there a symbol is what goes wrong, so decide per function. |
+| [3.73](#373-a-commutative-simode-op-with-a-16-bit-load-operand-order-proves-uses) | [3.485](#3485-three-more-32-verdicts-that-were-plain-source-taskfree-the-on-screen-test-the-group-b-upload-pair) | Corrected (#63): a pointer sum with a single use; the rule holds for an integer add only. |
+| [3.162](#3162-abs-in-a-condition-distributes-into-two-compares), [3.180](#3180-this-modules-x-is-n--0---n--n-not-globalhs-abs), [3.206](#3206-the-roms-absolute-value-is-n--0---n--n-not-globalhs-abs), [3.235](#3235-abs-on-a-variable-folds-to-abs_expr-on-a-call-it-does-not) | [3.360](#3360-abs-in-globalh-tests--0-first-use-it-for-every-x) | Updated: `global.h`'s `abs()` is now the `< 0` form; write `abs(x)`. |
+| [3.229](#3229-register-x-asmrn-is-the-practical-tie-break-for-a-global-alloc-priority-tie) | [3.496](#3496-ties-are-broken-by-declaration-order-and-statement-order-not-by-a-pin) | Corrected (#154): ties are broken by declaration and statement order, not by a pin. |
+| [3.231](#3231-one-local-per-straight-line-block-that-re-reads-gunk_03002490-per-arm-too) | [3.512](#3512-small-shapes-that-replaced-a-pin) | #154: per-block locals can be the defect; one reassigned local matched. |
+| [3.234](#3234-a-pool-constant-used-as-a-call-argument-is-materialised-inside-the-call) | [3.504](#3504-constants-and-zeros-in-callee-saved-registers-across-calls-are-cses-and-a-halfword-stores-own) | #154: the constant is a literal at every call. |
+| [3.244](#3244-pin-a-pointer-to-global-to-a-call-clobbered-register-to-force-a-reload-on-both-sides-of-a-call) | [3.506](#3506-an-address-or-value-the-rom-loads-in-two-arms-is-two-full-arms-that-cross-jump) | #154: two full if/else arms that jump2 cross-jumps, no pin. |
+| [3.245](#3245-asm--rx-makes-a-value-opaque-to-csegcse---two-distinct-uses) | [3.504](#3504-constants-and-zeros-in-callee-saved-registers-across-calls-are-cses-and-a-halfword-stores-own), [3.475](#3475-one-draw-call-without-the-himode-reload-copy-its-constant-was-a-u16-variable) | #154: the "copied constant" is the HImode reload copy of a literal. |
+| [3.246](#3246-asm--ra-rb-after-an-add-stops-the-destination-reusing-either-operand) | [3.505](#3505-a-table-element-read-twice-inline-and-tables-declared-as-what-they-are) | #154: the table element is read twice inline, no keep-alive. |
+| [3.248](#3248-block_cross_jump-placement-is-load-bearing-in-both-directions) | [3.503](#3503-block_cross_jump-two-full-arms-a-redundant-barrier-and-real-duplicated-tails), [3.506](#3506-an-address-or-value-the-rom-loads-in-two-arms-is-two-full-arms-that-cross-jump) | #154: `BLOCK_CROSS_JUMP`'s remaining uses and the full-arm rule. |
+| [3.249](#3249-agbcc--das-loop-dump-names-the-giv-threshold-it-is-the-loops-insn-count), [3.251](#3251-a-rom-base--k--index-where-you-emit-index--base-with-k-in-the-ldrshs-index-register), [3.253](#3253-asm--ri-keeps-check_dbra_loop-from-reversing-the-loop), [3.254](#3254-a-store-to-a-global-whose-address-register-the-rom-picks-is-a-pinned-t--local) | [3.513](#3513-the-hardest-pinned-functions-operand-order-one-u16-value-a-twin-transcription-and-one-stand-in) | #154: `sub_080a00ec` needs no offset locals, keep-alive or pinned pointer. |
+| [3.256](#3256-reloads-scratch-register-is-a-round-robin-over-a-per-insn-list-and-agbccgccreload1c-gives-you-both-halves-of-it) | [3.258](#3258-not-every-ldr-rn-sym-is-the-same-insn-pseudo-vs-address-reload-decides-the-reload-phase-and-30-printf-lines-in-reload1c-settle-it) | Superseded: the phase exclusivity was self-inflicted by allocator-chosen address pseudos. |
+| [3.258](#3258-not-every-ldr-rn-sym-is-the-same-insn-pseudo-vs-address-reload-decides-the-reload-phase-and-30-printf-lines-in-reload1c-settle-it) | [3.513](#3513-the-hardest-pinned-functions-operand-order-one-u16-value-a-twin-transcription-and-one-stand-in) | #154: the address-reload mechanism is real, but the function is plain C with one pointer local. |
+| [3.260](#3260-empty-asm-barriers-inflate-branch-shortening-estimates-and-flip-beq---bneb-relaxation-ties) | [3.507](#3507-the-m32-quartet-two-task-pointers-and-arms-that-re-read-the-cell) | #154: written like its landed twin, no barriers or staging. |
+| [3.261](#3261-the-volatile-staged-pinned-copy-how-to-place-a-hi-reg-reload-temp-in-a-chosen-register) | [3.504](#3504-constants-and-zeros-in-callee-saved-registers-across-calls-are-cses-and-a-halfword-stores-own), [3.507](#3507-the-m32-quartet-two-task-pointers-and-arms-that-re-read-the-cell), [3.508](#3508-narrowing-decides-operand-types-a-same-signedness-multiply--2-against--1-and-a-u32-local-before-a-u16-store), [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | #154: no staged copies. |
+| [3.262](#3262-pointer-arithmetic-canonicalizes-base-first-the-u32-cast-form-keeps-source-operand-order) | [3.507](#3507-the-m32-quartet-two-task-pointers-and-arms-that-re-read-the-cell), [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | #154: no `(u32)` casts; subscripts. |
+| [3.263](#3263-a-pinned-base-register-blocks-every-addressing-fold-natural-homes-come-from-forced-copies-not-pins) | [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | #154: M33's "second-order temps" needed no forced copies. |
+| [3.264](#3264-match-one-family-member-then-transcribe-the-recipe-the-afdf0aff40b0144b0338-quartet) | [3.507](#3507-the-m32-quartet-two-task-pointers-and-arms-that-re-read-the-cell) | #154: the rule holds, the recipe does not. |
+| [3.266](#3266-r7-is-frame_pointer_regnum-pinned-r7-vars-are-never-saved-and-global_alloc-never-hands-r7-out) | [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | #154: matched with the real cell types and no locals. |
+| [3.267](#3267-the-reload-spillset-is-the-missing-half-of-the-rotation-pinned-registers-can-never-enter-it), [3.268](#3268-the-rotation-is-two-pass-and-starts-at-last_spill_reg1-the-try-trace-settles-any-scratch-register-residue) | [3.505](#3505-a-table-element-read-twice-inline-and-tables-declared-as-what-they-are) | #154: the "deleted reload" is the table element read twice. |
+| [3.269](#3269-solved-the-mov-rx-sp-strb-rv-rx-4-byte-slot-form-is-a-frame-offset-0-struct-accessed-through-per-site-barrierd-byte-pointers) | [3.474](#3474-the-mov-rx-sp-strb-rv-rx-4-byte-slot-is-the-compilers-own-qimode-copy-not-a-user-variable) | Corrected: the byte slot is reload's spill of the compiler's own QImode copy; no frame struct. |
+| [3.269b](#3269b-reloads-spill-set-entry-order-counts-pseudo-refs-only---explicit-register-variables-are-invisible) | [3.474](#3474-the-mov-rx-sp-strb-rv-rx-4-byte-slot-is-the-compilers-own-qimode-copy-not-a-user-variable), [3.504](#3504-constants-and-zeros-in-callee-saved-registers-across-calls-are-cses-and-a-halfword-stores-own), [3.505](#3505-a-table-element-read-twice-inline-and-tables-declared-as-what-they-are), [3.510](#3510-which-load-loopc-hoists-a-base-read-before-an-inline-index-a-load-written-twice-for-nests) | Corrected: user code does produce the form; #154: the functions it lists are plain C. |
+| [3.270](#3270-solved-rotation-advance-sub-case-a-redundant-reg-offset-read-forces-the-reload-reload_cse-later-deletes-reproducing-the-phantom-reservation) | [3.279](#3279-asm-insns-block-cross-jump-entirely-a-deliberate-duplicate-arm-that-merges-post-reload-is-a-zero-byte-rotation-advance), [3.505](#3505-a-table-element-read-twice-inline-and-tables-declared-as-what-they-are), [3.510](#3510-which-load-loopc-hoists-a-base-read-before-an-inline-index-a-load-written-twice-for-nests) | 3.279 closed its gap; #154: the source reads the element twice, with typed tables. |
+| [3.271](#3271-probe-confirmed-r7-cannot-be-forced-into-the-prologue-saved-set-from-c-at-all) | [3.274](#3274-solved-for-b4ea8-by-3279-3281---r7-is-reachable-via-global_alloc-pressure-refining-3271-natural-loop-carried-pseudos-push-r7-correctly-the-residual-blocker-was-web-splitting-not-enrollment), [3.275](#3275-solved-a78a0-and-the-whole-r7-enrollment-family-pinned-x-var-windows-are-zero-byte-hard-liveness-and-they-steer-both-the-spill-pick-and-the-rotation), [3.508](#3508-narrowing-decides-operand-types-a-same-signedness-multiply--2-against--1-and-a-u32-local-before-a-u16-store), [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | Superseded: r7 is reachable; #154: `sub_080a78a0`'s r7 is a narrowed multiply over an `s16` table. |
+| [3.272](#3272-the-combined-structuralpin-annealing-permuter-reduces-but-cannot-zero-the-r7coalescing-residues) | [3.474](#3474-the-mov-rx-sp-strb-rv-rx-4-byte-slot-is-the-compilers-own-qimode-copy-not-a-user-variable), [3.508](#3508-narrowing-decides-operand-types-a-same-signedness-multiply--2-against--1-and-a-u32-local-before-a-u16-store) to [3.513](#3513-the-hardest-pinned-functions-operand-order-one-u16-value-a-twin-transcription-and-one-stand-in) | Corrected: the M30/M33 floors were the pins'. |
+| [3.273](#3273-solved-ada20-m31s-last-straggler-the-extendhisi2-zero-temp-lands-in-r4-when-the-store-cell-pointer-is-a-dropped-pseudo-address-reload-not-a-pin) | [3.504](#3504-constants-and-zeros-in-callee-saved-registers-across-calls-are-cses-and-a-halfword-stores-own) | #154: plain C, cells read at every use. |
+| [3.274](#3274-solved-for-b4ea8-by-3279-3281---r7-is-reachable-via-global_alloc-pressure-refining-3271-natural-loop-carried-pseudos-push-r7-correctly-the-residual-blocker-was-web-splitting-not-enrollment) | [3.275](#3275-solved-a78a0-and-the-whole-r7-enrollment-family-pinned-x-var-windows-are-zero-byte-hard-liveness-and-they-steer-both-the-spill-pick-and-the-rotation), [3.281](#3281-caller-save-is-on--fcaller-saves-at--o2-a-natural-call-clobbered-pseudo-live-across-a-call-gets-the-roms-str-rn-sp--ldr-rn-sp-pair-for-free), [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | Its in-lesson "unreachable" verdict is marked wrong; 3.275 and 3.281 made its family verdict and trap 2 obsolete; #154: plain C. |
+| [3.275](#3275-solved-a78a0-and-the-whole-r7-enrollment-family-pinned-x-var-windows-are-zero-byte-hard-liveness-and-they-steer-both-the-spill-pick-and-the-rotation) | [3.508](#3508-narrowing-decides-operand-types-a-same-signedness-multiply--2-against--1-and-a-u32-local-before-a-u16-store), [3.510](#3510-which-load-loopc-hoists-a-base-read-before-an-inline-index-a-load-written-twice-for-nests) | #154: the x-var windows described the pinned candidates. |
+| [3.277](#3277-ldrh-rx-rx-dest--base-is-a-qty-tie-copy--self-load) | [3.513](#3513-the-hardest-pinned-functions-operand-order-one-u16-value-a-twin-transcription-and-one-stand-in) | #154: no qty-tie copy; a second task local. |
+| [3.278](#3278-pinned-staging-copies-emit-the-roms-bytes-but-not-its-rotation-advances-de-stage-to-real-reloads) | [3.510](#3510-which-load-loopc-hoists-a-base-read-before-an-inline-index-a-load-written-twice-for-nests), [3.513](#3513-the-hardest-pinned-functions-operand-order-one-u16-value-a-twin-transcription-and-one-stand-in) | #154: plain C. |
+| [3.279](#3279-asm-insns-block-cross-jump-entirely-a-deliberate-duplicate-arm-that-merges-post-reload-is-a-zero-byte-rotation-advance), [3.280](#3280-file-scope-register-s32-gr9-asmr9-globals-exclude-r9-r11-at-zero-prologue-cost), [3.281](#3281-caller-save-is-on--fcaller-saves-at--o2-a-natural-call-clobbered-pseudo-live-across-a-call-gets-the-roms-str-rn-sp--ldr-rn-sp-pair-for-free) | [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | #154: `sub_080b4ea8` needs no barriers, duplicate tail or register globals. |
+| [3.312](#3312-a-switchs-arm-source-order-is-observable-in-the-dispatch-polarity) | [3.321](#3321-if-c-goto-l-with-the-label-behind-the-test-is-a-real-shape) | Qualified: a plain `if`'s branch direction is read differently from a `switch`'s polarity. |
+| [3.336](#3336-the-four-loop-hblank-family-for-i--0-i--6-i--j---j--i--1--), [3.344](#3344-a-user-variable-for-a-hoisted-constant-fixes-the-order-but-loses-the-copy), [3.347](#3347-an-mvtrace-instrumented-agbcc-prints-the-movable-list-stop-guessing-hoist-order), [3.348](#3348-agbcc--das-loop-dump-already-prints-the-movables-list---no-instrumented-build-needed) | [3.465](#3465-the-four-loop-familys-preheader-order-is-agbccs-second-loop-pass-write-the-store-the-plain-way-and-the-cells-address-is-hoisted-last) | Corrected (#94's second run): agbcc's second loop pass reaches the ROM's order from source with no locals. |
+| [3.341](#3341-an-empty-asm--rn-is-a-zero-byte-lever-on-register-allocation) | [3.498](#3498-a-pointer-local-dropped-by-global-allocation-loads-the-address-after-the-value), [3.499](#3499-one-variable-for-the-inner-loop-counters-and-a-later-div-result), [3.509](#3509-volatility-is-a-declaration-question-in-both-directions) | #154: none of the three functions it cites needs a clobber. |
+| [3.346](#3346-turn-the-preheaders-hoisted-invariants-into-named-locals-then-pin-them) | [3.465](#3465-the-four-loop-familys-preheader-order-is-agbccs-second-loop-pass-write-the-store-the-plain-way-and-the-cells-address-is-hoisted-last), [3.466](#3466-reloads-spill-register-order-was-never-the-lever-the-pins-were) | Corrected: the last bytes were the pins themselves. |
+| [3.351](#3351-asm--r7-is-inert-in-thumb-r7-is-the-frame-pointer-register) | [3.467](#3467-a-cell-address-kept-in-one-register-from-a-test-to-a-loop-is-a-pointer-local-a-spilled-u32-local-makes-the-roms-mov-r0-sp-ldrh) | Note: `sub_080b6b08` was not an r7 problem; a pointer local. |
+| [3.353](#3353-two-plain-int-locals-fix-the-four-loop-familys-hoist-order) | [3.465](#3465-the-four-loop-familys-preheader-order-is-agbccs-second-loop-pass-write-the-store-the-plain-way-and-the-cells-address-is-hoisted-last) | Superseded: no locals are needed at all. |
+| [3.370](#3370-a-4-byte-shortfall-with-one-arm-branching-into-the-other-is-cross-jumping) | [3.506](#3506-an-address-or-value-the-rom-loads-in-two-arms-is-two-full-arms-that-cross-jump) | #154: the shared store written in both arms, merged by jump2; no clobber. |
+| [3.452](#3452-in-a-big-function-variables-are-roles-the-rom-shares-or-splits-measure-each-one) | [3.493](#3493-sub_080c5b84-pres-slot-order-is-arithmetic---solve-the-bucket-inequalities-for-declaration-order-s-and-the-files-label-count-together) | Note (final campaign): block scoping was one way to reach the pseudo numbering; the landed source declares at function scope. |
+| [3.457](#3457-an-all-ones-halfword-store-keeps-its-orrs-only-when-combine-cannot-see-the-constant) | [3.494](#3494-sub_080caab8-dead-initializers-settle-the-slot-swap-the-all-ones-orrs-still-needs-two-levers) | Note (final campaign): the slot swap was the insn count; the `orrs` still needs two levers. |
+| [3.464](#3464-a-gcse-reaching-register-set-in-n-arms-has-its-live-length-doubled-n-times-the-parked-sub_0801b24c) | [3.487](#3487-serialcb-sub_08006d28-66---15-bytes-parked-on-a-doubled-live-length), [3.491](#3491-the-doubled-n-times-live-length-is-when-jumpc-swaps-an-else-arm-a-dead-store-before-break-delays-it-to-jump2), [3.492](#3492-sub_0801b24c-no-p-local-one-mask-variable---and-the-triple-doubling-was-never-the-residue) | Corrected: the triple doubling was not `sub_0801b24c`'s residue. |
+| [3.478](#3478-sub_0801b24c-again-the-plain-rewrite-keeps-3464s-44-bytes-and-the-p-block-is-a-cse1cse2-path-effect) | [3.492](#3492-sub_0801b24c-no-p-local-one-mask-variable---and-the-triple-doubling-was-never-the-residue) | Corrected: the `p` block's path effect was the `p` local itself. |
+| [3.487](#3487-serialcb-sub_08006d28-66---15-bytes-parked-on-a-doubled-live-length) | [3.490](#3490-serialcbs-handshake-reads-the-struct-not-a-pointer-local), [3.491](#3491-the-doubled-n-times-live-length-is-when-jumpc-swaps-an-else-arm-a-dead-store-before-break-delays-it-to-jump2) | Corrected: matched; the extra doubling was jump.c's else-arm swap timing. |
+| [4.51](#451-agbcc--dg-prints-the-allocators-own-state-stop-guessing-permutations) | [3.41](#341-global-alloc-priority-ties-are-broken-by-declaration-order), [3.496](#3496-ties-are-broken-by-declaration-order-and-statement-order-not-by-a-pin) | Annotated in #37: "declaration order of locals is inert" holds only while no two pseudos tie. |
+| [4.55](#455-agbcc--dg-turns-a-register-permutation-into-arithmetic-and-names-the-lever) | [4.59](#459-correction-to-455-read-preferences-not-density--density-is-last-resort) | Corrected: read `preferences`, not density; density is the last resort. |
+| [4.57](#457-a-function-pointer-cast-is-the-safe-way-to-work-around-a-wrong-prototype) | [3.428](#3428-a-call-the-rom-makes-with-another-signature-than-the-definition-declare-it-per-file-never-cast-the-function) | Annotated in #37: the landed practice is a per-file declaration, not the function-pointer cast. |
+| [4.63](#463-regmove-can-add-a-defuse-and-reorder-the-whole-allocation) | [3.476](#3476-a-cached-mask-local-lets-regmove-and-in-place-read-the-table-halfword-inline-at-every-test) | Corrected: the live reference was never needed; `sub_08040b40`'s cached mask locals were the lever (also 4.62's conclusion). |
+| [4.79](#479-a-function-can-match-alone-and-not-inside-its-carve-file-gcse-hashes-pool-label-addresses) | [3.515](#3515-a-rename-is-codegen-neutral-under-agbccs-thumb-backend-measured-on-155s-1145-renames) | Amended (final campaign note): gcse hashes a name's characters, not its address; the conclusion stands. |
+| [4.105](#4105-the-stack-slots-of-pres-copies-follow-gcses-hash-table-order-which-the-functions-size-sets) | [3.493](#3493-sub_080c5b84-pres-slot-order-is-arithmetic---solve-the-bucket-inequalities-for-declaration-order-s-and-the-files-label-count-together) | Corrected: the insn count S is one of three variables of the bucket arithmetic. |
+| [4.121](#4121-a-zones-census-name-is-a-guess-follow-the-consumers-pointers) | [4.130](#4130-toolsresegmentpy-and-why-seg-13-had-to-be-re-partitioned-not-renamed), [4.137](#4137-seg-19s-head-is-the-players-frame-records-and-one-format-needs-a-flag-bit) | Amended: the segments were re-partitioned and renamed in phase 2, and seg 19's census name was wrong too. |
+
 ## 1. Build system
 
 ### 1.1 Per-file compiler overrides must come AFTER `BUILD_DIR` is defined
@@ -7404,7 +7550,7 @@ remaining levers" below but the zero-byte hard-liveness and rotation levers
 of 3.275-3.281; carve granularity did the rest (a carve needs every function
 in ITS OWN range at zero, so a single hole splits a module into two c_code
 segments instead of blocking it). The two blocking classes are r7 spill
-enrollment (§3.271) and r4/pointer coalescing + retard-rotation (§3.268b/
+enrollment (§3.271) and r4/pointer coalescing + retard-rotation (§3.268/
 3.269b) - both internal allocator fixed-points. The only remaining lever is
 a permuter that scores against the target ROM at the allocation level;
 pending/permute4.py is the scaffold for it.
@@ -8663,6 +8809,8 @@ callees. Unlike a `#define` rename or an `__asm__` alias it keeps the real
 symbol, so it cannot break the link — which makes it the one acceptable
 local workaround while a shared prototype is being corrected. Report the
 correction anyway; the cast should not ship.
+*Correction note (#37):* the landed practice is a per-file declaration
+with a note, never the cast (lesson 3.428; 3.517 for whole-symbol views).
 
 ### 4.58 "A `bl loc_XXXX` is a goto" needs a bounds check first
 4.39 says a long jump inside one function is spelled `bl`, and a draft
@@ -8732,6 +8880,9 @@ not rewrite a register-based MEM address), a **literal instead of a symbol**
 (below), and finally **block-scoping a loop temporary** so that two duplicated
 loops get two per-arm pseudos rather than one shared one, which is what
 reordered the allocation.
+*Correction note (#37):* "declaration order of locals is inert" holds only
+while no two pseudos tie on priority; an exact tie is broken by pseudo
+number, which is declaration order (lessons 3.41, 3.496).
 
 ### 4.52 Symbolic vs numeric pool rendering tells you if the SOURCE named a symbol
 The listing prints a pool word symbolically when the symbol database has a name
