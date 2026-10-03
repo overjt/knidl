@@ -11286,7 +11286,8 @@ which is why those eight loads were raw `.word 0xE59F....`.  The form
 relocation that ld resolves, so the loads are symbolic and stay right if
 either section moves.  The task switch helpers still load
 `task_literals` with numeric offsets across a section boundary; no
-insertion point lies between them today.
+insertion point lies between them today.  (#170 fixed them in
+`tools/split.py`, 4.155.)
 
 ### 4.154 Harness notes from #37
 * The final audit is a tool, not a document: `tools/audit.py` checks the
@@ -11301,6 +11302,28 @@ insertion point lies between them today.
 * The clean-clone proof found a Dockerfile pin that never applied (`ARG
   AGBC_COMMIT` used as `AGBCC_COMMIT`): the image built the fork's default
   branch head, which only happened to be the pinned commit.
+### 4.155 split.py writes every cross-segment ARM pool load with `pc_g0`; the boot test proved the numeric form crashes
+#170 taught `tools/split.py` 4.153's form: an ARM `ldr rN, [pc, #imm]`
+whose literal lies in another configured segment is emitted as `ldr rN,
+[pc, #:pc_g0:(<segment> + <off> - 8)]` (`emit_instruction`'s pool branch,
+`seg_bounds`), and a target in no single segment falls back to raw bytes.
+It found two sites: the ten loads of the task switch helpers from
+`task_literals`, and the interworking veneer `sub_080cfddc`, whose one
+`ldr ip, [pc]` reads the word of the next data segment.  The shift test
+cannot see this class (the numeric instruction does not change, so no word
+differs); the boot test does.  With 0x100 bytes inserted before
+`task_literals`, the old numeric loads crash at frame 88 (mGBA: `Bad memory
+Store32: 0x00000000`, the first task switch through a wrong pool word); the
+`pc_g0` loads run all 14,066 frames with the same video and audio.  Two
+limits: an ARM load reaches +-4095 bytes, so padding the default 0x1000
+there fails at link time with "relocation truncated to fit" (loud, where
+the numeric form was silently wrong); and the shifted run differs in one
+IWRAM word, `0x03001164`, because `AgbInit` copies 320 bytes from
+`0x08000108` for the master ISR (rom-map section 4), which overruns the ISR
+and its literals by 20 bytes into `TaskSwitch`, so IWRAM holds a dead copy
+of its first pool load, and that instruction's offset is what moved.  It
+is never executed; a boot test with an insertion point there needs it in
+`BOOTTEST_RAM_ALLOW`.
 
 ### 4.156 One data file per zone: the rows stay, only the files merge
 Run 3's grouped records cut `actor_rodata` into 35 rows, and split.py
