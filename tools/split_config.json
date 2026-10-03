@@ -39765,6 +39765,1666 @@
       "asset": true
     },
     {
+      "name": "room_data_0835d0e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835d358",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835d548",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835de18",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835e2f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835e764",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835e97c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835ef74",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835f1fc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835f59c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835fc7c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836003c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08360234",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083606e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08360b90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08360f90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083613f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083617f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08361d10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836215c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083627e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08362b28",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083630f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08363538",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08363a64",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08363e5c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836406c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08364414",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08364694",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08364a90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083655b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08365818",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366398",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366694",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083669cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366bf0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366d74",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083672cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08367594",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836784c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08367aa8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08367ee4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836852c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08368768",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08368d88",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08369330",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08369c38",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a100",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a370",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a58c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a734",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a8f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836acb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836af3c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b1b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b4a4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b80c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b9c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836bcc8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836c108",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836c564",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836caf0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836ce00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836d1f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836d38c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836d554",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836db34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836dd9c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e0f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e44c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e6b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e87c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836ef30",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f0fc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f2c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f68c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f83c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836fa08",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836fd9c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370058",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370354",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837053c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083706dc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370b4c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370e60",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083710e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083713e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08371780",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08371874",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08371de8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372098",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372298",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372408",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372570",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083726d8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372ad0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372db0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08373074",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08373700",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837396c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08373b1c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374164",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374324",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374828",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374b80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374ccc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374e14",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08375374",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376228",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376b7c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376dec",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376f70",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837719c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837738c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08377b48",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08378014",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08378ad8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08378f08",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08379270",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08379bdc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08379eb8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837a124",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837a584",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837abe0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837ad90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837af68",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837b824",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837bbf4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837bce8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c000",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c2e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c47c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c578",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c6f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837d9c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837de94",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837e5f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837eb8c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837ed00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837eeb8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837f080",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837f794",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837fa9c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837fe20",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08380128",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08380614",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083807b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08380d54",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08381200",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08381d24",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08382214",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08382630",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838291c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083832e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08383b80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384118",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838480c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384b34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384d08",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384e94",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083859bc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386024",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083863a0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386758",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386c18",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386fd8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08387360",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083874f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08387a40",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838822c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083887b4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083889c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08388c10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083892e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08389434",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08389ab8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08389f84",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838a478",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838a6c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838a8b4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838aa28",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838af78",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838b3ec",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838b79c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838bbcc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838bda4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838bf64",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838c0c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838c5cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838cbb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838d1e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838d854",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838dc44",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838ddb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838df1c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e090",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e320",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e4d0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e6e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e870",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838ef3c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838f7e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838f96c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838fd4c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08390104",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08390308",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083905f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08390c00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08391190",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08391c98",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08391df4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08392360",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083927d0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08392b00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08392f64",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393488",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393604",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083937b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393918",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393ad4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393c84",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393e20",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393f4c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083944b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08394cb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395150",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083952f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083954a8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395764",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395a20",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395ce8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395f8c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839623c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08396504",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083967ac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08396a58",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08396d10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083970c4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083973b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397560",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083976d8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839785c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083979c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397bac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397d54",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397f28",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083980a4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398278",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398430",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398628",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083987b4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083988b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398e34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08399260",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08399644",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08399d10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839a26c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839a520",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839a7cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839aa98",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839ad70",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839b2b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839bb80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839bf2c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839c128",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839c5d4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839cb8c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839cda0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839d2ac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839d60c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839d914",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839db54",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839df2c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839e1e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839e5e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839e99c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839ec0c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839ee6c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839f430",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839f6dc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839fc98",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a00b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a03c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0734",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0af8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0d84",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0f58",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a1484",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a169c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a1824",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a1bbc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2030",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2548",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a25d0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a26ec",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2974",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2b1c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3314",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a339c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a353c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3664",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3954",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3acc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a404c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a40d4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4274",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4394",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4634",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4754",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4dd8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4e60",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5000",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5128",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a53ac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a54d8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5c40",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5cc8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5e68",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5f94",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a623c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6394",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6b38",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6bc0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6d60",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6e7c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a70f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a723c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a781c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a78a4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a7b34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a7c80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a83bc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
       "name": "room_metatiles",
       "asset": true
     },
