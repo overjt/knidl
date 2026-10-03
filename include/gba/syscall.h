@@ -47,16 +47,14 @@
  *               (clears IME + high byte of INTR_CHECK, sets sp=0x03007F00,
  *               RegisterRamReset(r0) then reset); 2 BL callers (0x08000FF8,
  *               0x08008C40).  Named per katam precedent (its
- *               asm/libagbsyscall.s SoftReset is this same compound).  The
- *               label is a split_config.json extra_labels data label — the
- *               segment starts at the odd address 0x080CFA7F and is
- *               data-emitted, so the label carries no Thumb function mark;
- *               deliberately NOT a symbols.csv entry and NOT prototyped
- *               here, because a `bl SoftReset` relocation against an
- *               unmarked label makes ld insert an interworking veneer that
- *               shifts every later section.  The two callers keep raw
- *               `.short` BL pairs.
- *
+ *               asm/libagbsyscall.s SoftReset is this same compound).  A
+ *               Thumb function of asm/sdk_reset_helper.s and a symbols.csv
+ *               entry since #37, which moved the segment's start from the
+ *               odd 0x080CFA7F (the second byte of SoundDriverVSyncOff's
+ *               `bx lr`) to 0x080CFA80; before, it was a data label of a
+ *               raw-emitted segment.  Its callers declare it locally
+ *               (`void SoftReset(u32 resetFlags)`).
+
  *   The former "unidentified SDK helper" at 0x080CFA40 was no helper at
  *   all: it was the tail of the m4a XCMD handler ply_xswee (entry
  *   0x080CFA38), cut in half by the old segment boundary; the boundary

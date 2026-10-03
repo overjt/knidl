@@ -65,7 +65,7 @@ SECTIONS
     .task_literals : {
         KEEP(*(.task_literals)) KEEP(*(.task_literals.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.task_literals) == 0x080002E5, "MATCHING: .task_literals moved")
+    ASSERT(!MATCHING || ADDR(.task_literals) == 0x080002E8, "MATCHING: .task_literals moved")
 
     /* AgbInit (Thumb) — decompiled to C (src/agb_init.c, issue #28).
      * The section spans 0x08000310-0x080008E7: the function body, the
@@ -1921,7 +1921,7 @@ SECTIONS
     .sdk_reset_helper : {
         KEEP(*(.sdk_reset_helper)) KEEP(*(.sdk_reset_helper.tail))
     } > ROM
-    ASSERT(!MATCHING || ADDR(.sdk_reset_helper) == 0x080CFA7F, "MATCHING: .sdk_reset_helper moved")
+    ASSERT(!MATCHING || ADDR(.sdk_reset_helper) == 0x080CFA80, "MATCHING: .sdk_reset_helper moved")
 
     /* SDK SRAM driver (libagbsrd, "SRAM_V112") — decompiled to C
      * (src/agb_sram.c, compiled with old_agbcc). */

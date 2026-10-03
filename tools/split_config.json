@@ -21,12 +21,6 @@
     "SRAM save identifier string; the m4a engine rodata tables of issue",
     "#51 \u2014 pret names, gCgb3Vol identified against pokeemerald's",
     "m4a_tables.c by its NR32 channel-3 output-level byte pattern).",
-    "SoftReset (0x080CFA80, issue #29) is",
-    "deliberately an extra label and NOT a symbols.csv entry: the segment is",
-    "data-emitted (odd start 0x080CFA7F), so the label carries no Thumb",
-    "function mark, and resolving its two BL callers against it would make",
-    "ld insert an interworking veneer that shifts every later section; the",
-    "callers keep their raw .short BL pairs instead.",
     "",
     "data_symbols names non-ROM word values so they can be emitted as",
     ".word <name> from split literal pools; definitions land in rom_syms.s.",
@@ -5368,7 +5362,6 @@
     "0x080CFC60": "_call_via_ip",
     "0x080CFC64": "_call_via_sp",
     "0x080CFC68": "_call_via_lr",
-    "0x080CFA80": "SoftReset",
     "0x080CFE20": "gSramIdString",
     "0x0860A140": "gMPlayJumpTableTemplate",
     "0x0860A1D0": "gScaleTable",
@@ -5987,6 +5980,7 @@
     "0x03006F70": "gMPlayTrack_SE3",
     "0x03007150": "gSoundMainRAM_Buffer",
     "0x03007FF0": "SOUND_INFO_PTR",
+    "0x03007FFC": "INTR_VECTOR",
     "0x04000006": "gUnk_04000006",
     "0x04000060": "gUnk_04000060",
     "0x040000BC": "gUnk_040000BC",
@@ -31909,7 +31903,8 @@
     "0x080CD92C": "constant, PCM_DMA_BUF_SIZE (1584), the offset of the right channel's half of pcmBuffer",
     "0x080CDCD0": "constant, ID_NUMBER 'Smsh', stored back into SoundInfo.ident to release the driver",
     "0x080CDF48": "constant, DMA1/DMA2 control for the sound FIFOs: enable, special (FIFO) timing, 32-bit, repeat, 4 words",
-    "0x080CE1B0": "constant, ID_NUMBER 'Smsh', the SoundInfo/MusicPlayerInfo ident lock value"
+    "0x080CE1B0": "constant, ID_NUMBER 'Smsh', the SoundInfo/MusicPlayerInfo ident lock value",
+    "0x080CFA98": "constant, the BIOS soft-reset flag byte 0x03007FFA (GBATEK: 0 = restart from ROM), which SoftReset clears; then sp = 0x03007F00 via subs r3, #0xFA"
   },
   "pointer_tables": [
     {

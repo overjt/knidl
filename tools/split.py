@@ -57,10 +57,15 @@ Emission rules:
   * branch targets are rewritten to labels (function names, local `.L_`
     labels inside the file, or database names for external targets);
   * odd segment boundaries are handled explicitly: gas silently aligns
-    Thumb instructions to 2, so a segment with an odd start (e.g.
-    sdk_reset_helper at 0x080CFA7F) or an odd trailing byte emits those
-    bytes as raw `.byte`/`.short` (`.short`/`.word` themselves are emitted
-    unaligned without padding, which was verified empirically).
+    Thumb instructions to 2, so a segment with an odd start or an odd
+    trailing byte emits those bytes as raw `.byte`/`.short` (`.short`/
+    `.word` themselves are emitted unaligned without padding, which was
+    verified empirically); no configured segment has one since #37 moved
+    the two odd boundaries (0x080002E5, 0x080CFA7F) to instructions;
+  * config "isa_ranges" switches the ISA inside a function (the ARM
+    islands of m4a_1's Thumb functions), and every `add rd, pc, #imm` is
+    written `adr rd, <label>`; config "raw_words" keeps a literal word a
+    number with a same-line `@ raw: <reason>` (docs/data.md 3.5).
 
 Every generated file is verified before being written: the tool assembles
 it, links it at the segment's ROM VMA with a throwaway linker script plus
@@ -452,6 +457,7 @@ class SegmentEmitter(object):
         self._noted_raw = False
         self._extra_placed = set()
         self._required_placed = set()
+        self._placed_labels = set()
         # Addresses whose objdump text gas rejects (undefined-decode-space
         # halfwords printed as later-arch mnemonics); emit_instruction
         # forces them to raw .short bytes.  Persists across emit() calls so
@@ -516,6 +522,7 @@ class SegmentEmitter(object):
     def emit_labels_at(self, addr):
         for label in self.pending.pop(addr, []):
             self.lines.append("%s:" % label)
+            self._placed_labels.add(label)
 
     def label_pending_at(self, addr):
         """True when a label boundary is needed at halfword `addr`."""
@@ -534,8 +541,9 @@ class SegmentEmitter(object):
                     label = LOCAL_PREFIX + "%08x" % addr
                     # Only queue the label if the walk has not emitted the
                     # address yet (a backward branch re-resolves its target
-                    # after the label line was already written).
-                    if addr >= self.cursor:
+                    # after the label line was already written; a branch to
+                    # itself, `b .`, resolves after its own label).
+                    if addr >= self.cursor and label not in self._placed_labels:
                         labels = self.pending.setdefault(addr, [])
                         if label not in labels:
                             labels.append(label)
@@ -975,6 +983,7 @@ class SegmentEmitter(object):
         self._noted_raw = False
         self._extra_placed = set()
         self._required_placed = set()
+        self._placed_labels = set()
         self.stats = {
             "instructions": 0,
             "raw_instructions": 0,
@@ -990,13 +999,17 @@ class SegmentEmitter(object):
         # multiple of that alignment would therefore gain padding bytes, so
         # the trailing odd bytes are parked in a separate alignment-1
         # section ".name.tail" that the linker script appends right after
-        # the main section (e.g. the `bx lr' of SoundDriverVSyncOff split
-        # across the sdk_swi_wrappers/sdk_reset_helper boundary).
+        # the main section (until #37, the `bx lr' of SoundDriverVSyncOff
+        # split across the sdk_swi_wrappers/sdk_reset_helper boundary).
         align = 1
         for _vma, _name, isa in self.funcs:
             align = max(align, 4 if isa == "arm" else 2)
         for _s, _e, isa in self.isa_ranges:
             align = max(align, 4 if isa == "arm" else 2)
+        if self.pool_addrs and align > 1:
+            # a literal pool must stay word-aligned wherever ld puts the
+            # section (MATCHING=0, the shift test)
+            align = 4
         tail_len = (self.end - self.start) % align if align > 1 else 0
         main_end = self.end - tail_len
         self.main_end = main_end
