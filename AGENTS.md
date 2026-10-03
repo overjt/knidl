@@ -86,13 +86,14 @@ module by module, is [`docs/history.md`](docs/history.md).
   thunks and SoftReset, lib1funcs/`_call_via_rN`/task trampolines,
   interworking veneer) is `docs/audit.md` section 2, checked against
   `tools/calcrom.pl`'s exclusions.
-- **Code exceptions** (`docs/audit.md` section 3): the three functions #154
-  left pinned or levered - `sub_080b38f0` (`src/hud_b2fe8.c`, 10 pins and 6
-  barriers; best plain source 7 bytes off), `PoppyBrosSrHeadUpdate`
-  (formerly `sub_08091e18`, one lever, lesson 3.156) and
-  `BootLogoUpdateObjects` (formerly `sub_080caab8`, #152's two approved
-  levers, lesson 3.494) - plus `BLOCK_CROSS_JUMP` tails the ROM really
-  duplicates, the SDK's own inline asm and commented zero-code stand-ins.
+- **Code exceptions** (`docs/audit.md` section 3): no `register` pin is
+  left; two functions keep zero-byte `asm("")` levers -
+  `PoppyBrosSrHeadUpdate` (formerly `sub_08091e18`, one lever, lesson
+  3.156) and `BootLogoUpdateObjects` (formerly `sub_080caab8`, #152's two
+  approved levers, lesson 3.494) - plus `BLOCK_CROSS_JUMP` tails the ROM
+  really duplicates, the SDK's own inline asm and commented zero-code
+  stand-ins.  #37 made the third #154 leftover, `sub_080b38f0`, plain
+  (two zero-code stand-ins instead of 10 pins and 6 levers, lesson 3.524).
 - **Data: #36, closed by #162.**  `data/*.s` is structure only (labels,
   symbolic pointers, `.incbin "baserom.gba"` slices; `make check-data`);
   consumer-proven tables are typed C in `src/data/`.  `linker.ld` pins only
@@ -117,7 +118,7 @@ module by module, is [`docs/history.md`](docs/history.md).
   behaviour tables as C (docs/data.md §5.2, §7), a longer boot-test script;
   (3) #155's long tail (about 2,900 `sub_*`, 18 task bodies, about 170
   `gUnk_` RAM cells, per-family `Task` fields, asset labels); (4) natural
-  forms for the three #154 exceptions.
+  forms for the two levered functions.
 - **Docs:** `docs/decomp-loop.md`, `docs/lessons-learned.md` (its "Start
   here" list first), `docs/splitting.md`, `docs/data.md`, `docs/naming.md`,
   `docs/header-conventions.md`, `docs/audit.md`, `docs/history.md`,

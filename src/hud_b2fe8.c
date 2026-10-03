@@ -656,82 +656,38 @@ void sub_080b37ec(void)
 
 void sub_080b38f0(void)
 {
-    register struct Task **c asm("r4");
-    struct Task *t;
-    struct Task *q;
-    struct Task *t2;
-    struct Task *t3;
-    register u16 *a70 asm("r3");
-    register s16 *a48 asm("r2");
-    s32 w24c;
-    s32 wv;
-    s16 *a4A;
-    u8 *aw;
-    register u8 *ab asm("r1");
-    register u8 *ac asm("r0");
-    register s32 k6 asm("r2");
-    s32 w;
-    s32 w2;
-    register s32 w3 asm("r0");
-    register s32 w4 asm("r0");
-    s32 w24b;
-    register s32 w5 asm("r2");
-    register s32 w6 asm("r2");
+    s32 x;
+    u16 v;
 
-    c = &gCurTask;
-    t = *c;
-    a70 = (u16 *)((u8 *)t + 112);
-    q = t;
-    w24c = *(u16 *)&q->unk24;
-    a48 = (s16 *)((u8 *)q + 72);
-    t->unk24 = w24c + (*a48 << 16);
-    t->unk20 = *(u16 *)&t->unk20 + (*a48 << 16);
-    t->unk34 = *(u16 *)&t->unk34 + (*a48 << 16);
-    t->unk30 = *(u16 *)&t->unk30 + (*a48 << 16);
-    t->unk2C = *(u16 *)&t->unk2C + (*a48 << 16);
-    t->unk28 = *(u16 *)&t->unk28 + (*a48 << 16);
-    w = *a48;
-    t->unk18 = w;
-    *a70 = w;
-    aw = (u8 *)t + 70;
-    *(u16 *)aw = w;
-    aw += 58;
-    *aw = w;
-    w2 = (s8)(u8)w;
-    aw -= 8;
-    *(s16 *)aw = w2;
-    t2 = *c;
-    wv = *(u16 *)((u8 *)t2 + 74);
-    *(u8 *)((u8 *)t2 + 67) = wv;
-    t3 = *c;
-    w24b = t3->unk24;
-    k6 = 0xFFFF0000;
-    w24b &= k6;
-    a4A = (s16 *)((u8 *)t3 + 74);
-    t3->unk24 = w24b + *a4A;
-    asm("" ::: "memory");
-    t3->unk20 = (t3->unk20 & k6) + *a4A;
-    asm("" ::: "memory");
-    t3->unk34 = (t3->unk34 & k6) + *a4A;
-    asm("" ::: "memory");
-    t3->unk30 = (t3->unk30 & k6) + *a4A;
-    asm("" ::: "memory");
-    t3->unk2C = (t3->unk2C & k6) + *a4A;
-    asm("" ::: "memory");
-    t3->unk28 = (t3->unk28 & k6) + *a4A;
-    asm("" ::: "memory");
-    w3 = *a4A;
-    t3->unk1C = w3;
-    ab = (u8 *)t3 + 67;
-    *ab = w3;
-    w4 = (s8)(u8)w3;
-    w5 = w4;
-    *(s16 *)(ab + 1) = w4;
-    ac = (u8 *)t3 + 127;
-    *ac = w5;
-    w6 = (s8)(u8)w5;
-    ac += 5;
-    *(s16 *)ac = w6;
+    /* Zero-code stand-in: an unused read of unk70.  It is what computes the
+       unk70 address first (`adds r3, #112` before the first ldrh). */
+    v = gCurTask->unk70;
+    gCurTask->unk24 = (gCurTask->unk24 & 0xFFFF) + (gCurTask->pixelX << 16);
+    gCurTask->unk20 = (gCurTask->unk20 & 0xFFFF) + (gCurTask->pixelX << 16);
+    gCurTask->unk34 = (gCurTask->unk34 & 0xFFFF) + (gCurTask->pixelX << 16);
+    gCurTask->unk30 = (gCurTask->unk30 & 0xFFFF) + (gCurTask->pixelX << 16);
+    gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF) + (gCurTask->pixelX << 16);
+    gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF) + (gCurTask->pixelX << 16);
+    x = gCurTask->pixelX;
+    gCurTask->unk18 = x;
+    /* Zero-code lever: two loop levels weight the unk70 address's use x3
+       (flow counts refs by loop depth), 1 + 3 = 4 refs, which ranks it
+       above the &gCurTask pool value in local-alloc (r3, not r4). */
+    do {
+        do {
+            gCurTask->unk70 = x;
+        } while (0);
+    } while (0);
+    gCurTask->health = gCurTask->u80.nearestPlayer = gCurTask->unk46 = x;
+    gCurTask->facing = gCurTask->pixelY;
+    gCurTask->unk24 = (gCurTask->unk24 & 0xFFFF0000) + gCurTask->pixelY;
+    gCurTask->unk20 = (gCurTask->unk20 & 0xFFFF0000) + gCurTask->pixelY;
+    gCurTask->unk34 = (gCurTask->unk34 & 0xFFFF0000) + gCurTask->pixelY;
+    gCurTask->unk30 = (gCurTask->unk30 & 0xFFFF0000) + gCurTask->pixelY;
+    gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF0000) + gCurTask->pixelY;
+    gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF0000) + gCurTask->pixelY;
+    gCurTask->unk84 = gCurTask->hitterPlayer = gCurTask->parent
+        = gCurTask->facing = gCurTask->unk1C = gCurTask->pixelY;
 }
 
 void sub_080b3a00(void)

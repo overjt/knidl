@@ -145,6 +145,7 @@ listed.
 | [3.464](#3464-a-gcse-reaching-register-set-in-n-arms-has-its-live-length-doubled-n-times-the-parked-sub_0801b24c) | [3.487](#3487-serialcb-sub_08006d28-66---15-bytes-parked-on-a-doubled-live-length), [3.491](#3491-the-doubled-n-times-live-length-is-when-jumpc-swaps-an-else-arm-a-dead-store-before-break-delays-it-to-jump2), [3.492](#3492-sub_0801b24c-no-p-local-one-mask-variable---and-the-triple-doubling-was-never-the-residue) | Corrected: the triple doubling was not `sub_0801b24c`'s residue. |
 | [3.478](#3478-sub_0801b24c-again-the-plain-rewrite-keeps-3464s-44-bytes-and-the-p-block-is-a-cse1cse2-path-effect) | [3.492](#3492-sub_0801b24c-no-p-local-one-mask-variable---and-the-triple-doubling-was-never-the-residue) | Corrected: the `p` block's path effect was the `p` local itself. |
 | [3.487](#3487-serialcb-sub_08006d28-66---15-bytes-parked-on-a-doubled-live-length) | [3.490](#3490-serialcbs-handshake-reads-the-struct-not-a-pointer-local), [3.491](#3491-the-doubled-n-times-live-length-is-when-jumpc-swaps-an-else-arm-a-dead-store-before-break-delays-it-to-jump2) | Corrected: matched; the extra doubling was jump.c's else-arm swap timing. |
+| [3.511](#3511-m33s-pinned-functions-bit-fields-io-macros-listed-empty-cases-and-nothing-for-r7) | [3.524](#3524-sub_080b38f0-a-nested-do---while-0-is-a-x3-reference-weight-and-it-settled-154s-last-r3r4-swap) | Amended (#37): `sub_080b38f0` is plain now; two nested `do { } while (0)` settle the r3/r4 swap. |
 | [4.51](#451-agbcc--dg-prints-the-allocators-own-state-stop-guessing-permutations) | [3.41](#341-global-alloc-priority-ties-are-broken-by-declaration-order), [3.496](#3496-ties-are-broken-by-declaration-order-and-statement-order-not-by-a-pin) | Annotated in #37: "declaration order of locals is inert" holds only while no two pseudos tie. |
 | [4.55](#455-agbcc--dg-turns-a-register-permutation-into-arithmetic-and-names-the-lever) | [4.59](#459-correction-to-455-read-preferences-not-density--density-is-last-resort) | Corrected: read `preferences`, not density; density is the last resort. |
 | [4.57](#457-a-function-pointer-cast-is-the-safe-way-to-work-around-a-wrong-prototype) | [3.428](#3428-a-call-the-rom-makes-with-another-signature-than-the-definition-declare-it-per-file-never-cast-the-function) | Annotated in #37: the landed practice is a per-file declaration, not the function-pointer cast. |
@@ -4498,6 +4499,9 @@ natc-b's M33 results:
 3.262's `sub_080B5A94` count, 3.266's `sub_080b5d84` note, 3.272's M33
 floors, 3.274 and 3.279-3.281 (the `sub_080b4ea8` levers; caller-save
 exists, but the source never had to arrange it); see their notes.
+*Correction note (#37):* `sub_080b38f0` is plain now: two nested
+`do { } while (0)` around the `unk70` store and an unused read of `unk70`
+(both zero code) replace the pins and levers (lesson 3.524).
 
 ### 3.512 Small shapes that replaced a pin
 * A sign flip of an `s8` field with the address in r1 and the value in r0:
@@ -4751,6 +4755,28 @@ compile to the same assembly.  `tools/header_smoke_game.c` now checks
 the offsets around both views with negative-size arrays, so a layout
 change fails `make check-headers` as well as `make compare`
 (docs/header-conventions.md, "Per-family views of `struct Task`").
+
+### 3.524 `sub_080b38f0`: a nested `do { } while (0)` is a x3 reference weight, and it settled #154's last r3/r4 swap
+#37's one-hour attempt (agent D) matched `sub_080b38f0`
+(`src/hud_b2fe8.c`) with no pin and no `asm`, from #154's 7-byte plain body
+(`gCurTask->` at every access, which is right: the ROM reloads `gCurTask`
+exactly after the two byte stores to `u80` and `facing`, which a `t` local
+would not do).  The residue was 3.511's r3/r4 swap, and `-dl` gives its
+arithmetic: the `unk70` address is pseudo 27, 2 refs over a local life of
+68 (2/68 = 0.029), the `&gCurTask` pool value pseudo 25, 4 refs over 100
+(0.08), so local-alloc gives the pool value r3 first.  Flow weights each
+reference by its loop depth, so a `do { } while (0)` is a priority lever
+(3.383, 3.424), and its depth is the knob: one level around the `unk70`
+store gives 1 + 2 = 3 refs (0.044, still 7 bytes); one loop from the read
+to the store gives the address 4 refs but also covers the pool value's
+set and first use (6 refs, 0.12), still 7 bytes; **two nested levels
+around the store alone** give 1 + 3 = 4 refs (0.118 > 0.08), and the
+function matches.  The early `adds r3, #112` comes from an unused read of
+`unk70` at the top (a zero-code stand-in, 3.511's "dead read").  A pointer
+local `u16 *p = &gCurTask->unk70` does not help: gcc merges `p` into the
+address pseudo (still 2 refs), and the `*p` store forces an extra
+`gCurTask` reload (153 bytes).  Both shapes are listed in `docs/audit.md`
+section 3; the original probably had a loop or a macro there.
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 

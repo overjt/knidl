@@ -91,10 +91,11 @@ into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
   and the interworking veneer. Each is justified in
   [docs/audit.md](docs/audit.md) section 2.
 - **Code exceptions.** The C is plain C apart from the sites
-  [docs/audit.md](docs/audit.md) section 3 lists, among them the three
-  functions the natural-C campaign (#154) left with register pins or empty
-  `asm` levers: `sub_080b38f0`, `PoppyBrosSrHeadUpdate` and
-  `BootLogoUpdateObjects`.
+  [docs/audit.md](docs/audit.md) section 3 lists: no register pin is left,
+  and two functions keep zero-byte `asm("")` levers
+  (`PoppyBrosSrHeadUpdate` and `BootLogoUpdateObjects`); the rest are
+  `BLOCK_CROSS_JUMP` tails, the SDK's own inline asm and documented
+  zero-code stand-ins.
 - **Data** (#36, closed). The ROM's data is structure, not bytes: labeled,
   symbolic `data/*.s` files whose contents are `.incbin` slices of your own
   `baserom.gba`, and typed C tables in `src/data/` where a decompiled
