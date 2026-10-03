@@ -38,9 +38,9 @@ struct Unk03005680
    index into the BG palette buffer, unk16 the count, unk18 the rate). */
 struct Unk02007D70Cmd
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ void *unk4;
+    /*0x00*/ u16 op;
+    /*0x02*/ u16 arg;
+    /*0x04*/ void *ptr;
 };
 
 struct Unk02007D70
@@ -89,11 +89,11 @@ struct Unk0802D25C
 
 struct Unk0802D278
 {
-    /*0x00*/ u16 *unk0;
-    /*0x04*/ u16 *unk4;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-    /*0x0C*/ u32 unkC;
+    /*0x00*/ u16 *src;
+    /*0x04*/ u16 *dst;
+    /*0x08*/ u16 colorIndex;
+    /*0x0A*/ u16 colorCount;
+    /*0x0C*/ u32 rate;
 };
 
 struct MapTile
@@ -221,31 +221,31 @@ void UpdateBgAnims(void)
             if (--p->unk2 > 0)
                 continue;
             cmd = &p->unk4[p->unk0];
-            switch (cmd->unk0)
+            switch (cmd->op)
             {
             case 0:
-                BgAnimCopyTiles(cmd->unk4);
-                p->unk2 = cmd->unk2 + 1;
+                BgAnimCopyTiles(cmd->ptr);
+                p->unk2 = cmd->arg + 1;
                 p->unk0++;
                 goto loop;
             case 1:
-                BgAnimStartPaletteFade(p, cmd->unk4);
-                p->unk2 = cmd->unk2 + 1;
+                BgAnimStartPaletteFade(p, cmd->ptr);
+                p->unk2 = cmd->arg + 1;
                 p->unk0++;
                 goto loop;
             case 2:
-                p->unk2 = cmd->unk2 + 1;
+                p->unk2 = cmd->arg + 1;
                 p->unk0++;
                 goto loop;
             case 3:
                 p->unk0 = 0;
                 goto loop;
             case 5:
-                SetCollisionTile(cmd->unk2 >> 8, cmd->unk2 & 0xFF, (u16)(u32)cmd->unk4);
+                SetCollisionTile(cmd->arg >> 8, cmd->arg & 0xFF, (u16)(u32)cmd->ptr);
                 p->unk0++;
                 goto loop;
             case 6:
-                PlaySfx(cmd->unk2);
+                PlaySfx(cmd->arg);
                 p->unk0++;
                 goto loop;
             default:
@@ -263,11 +263,11 @@ void BgAnimCopyTiles(struct Unk0802D25C *a)
 
 void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q)
 {
-    p->unkC = q->unk0;
-    p->unk10 = q->unk4;
-    p->unk14 = q->unk8;
-    p->unk16 = q->unkA;
-    p->unk18 = q->unkC;
+    p->unkC = q->src;
+    p->unk10 = q->dst;
+    p->unk14 = q->colorIndex;
+    p->unk16 = q->colorCount;
+    p->unk18 = q->rate;
     p->unk8 = 0;
 }
 

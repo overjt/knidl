@@ -7,7 +7,7 @@
  * address order.  LoadRoomBgAnims (src/camera_2d01c.c) loads the
  * NULL-ended script list gRoomBgAnimScripts[RoomDef.bgAnimSet] into the
  * slots gBgAnims[]; UpdateBgAnims runs each script one 8-byte command
- * {unk0 op, unk2 arg, unk4 ptr} at a time:
+ * {op, arg, ptr} at a time:
  *   op 0  BgAnimCopyTiles(ptr), ptr a tile frame (struct Unk0802D25C:
  *         tile, byte size, tiles), then wait arg + 1 frames;
  *   op 1  BgAnimStartPaletteFade(slot, ptr), ptr a fade, then wait
@@ -20,9 +20,9 @@
  *   op 6  PlaySfx(arg);
  *   other BgAnimStop (op 4: the end of a one-shot script).
  * Nothing after a script's op 3 or op 4 is read.  A fade is the 16 bytes
- * BgAnimStartPaletteFade copies: BgAnimStepPaletteFade blends unkA colours
- * from unk0 to unk4 into gUnk_030012B0[unk8], unkC/256 more of the way
- * each frame.
+ * BgAnimStartPaletteFade copies: BgAnimStepPaletteFade blends colorCount
+ * colours from src to dst into gUnk_030012B0[colorIndex], rate/256 more of
+ * the way each frame.
  *
  * The tile frames and the palettes are assets: they stay baserom slices
  * in data/room_bg_anims.s (one section per data piece between the runs),
@@ -452,29 +452,29 @@ struct Unk02007D70Cmd gRoomBgAnimSet6Script0[] BG_ANIM(0833fcc8) = {
 
 /* ---- 0x0833FE30-0x0833FE40: gUnk_0833FE30, section .bg_anim_0833fe30 ---- */
 struct Unk0802D278 gUnk_0833FE30 BG_ANIM(0833fe30) = {
-    .unk0 = gUnk_0833FD30,
-    .unk4 = gUnk_0833FDB0,
-    .unk8 = 0,
-    .unkA = 64,
-    .unkC = 874,
+    .src = gUnk_0833FD30,
+    .dst = gUnk_0833FDB0,
+    .colorIndex = 0,
+    .colorCount = 64,
+    .rate = 874,
 };
 
 /* ---- 0x0833FF40-0x0833FF50: gUnk_0833FF40, section .bg_anim_0833ff40 ---- */
 struct Unk0802D278 gUnk_0833FF40 BG_ANIM(0833ff40) = {
-    .unk0 = gUnk_0833FE40,
-    .unk4 = gUnk_0833FEC0,
-    .unk8 = 0,
-    .unkA = 64,
-    .unkC = 874,
+    .src = gUnk_0833FE40,
+    .dst = gUnk_0833FEC0,
+    .colorIndex = 0,
+    .colorCount = 64,
+    .rate = 874,
 };
 
 /* ---- 0x08340050-0x08340088: gUnk_08340050, gRoomBgAnimSet5Script0, section .bg_anim_08340050 ---- */
 struct Unk0802D278 gUnk_08340050 BG_ANIM(08340050) = {
-    .unk0 = gUnk_0833FF50,
-    .unk4 = gUnk_0833FFD0,
-    .unk8 = 0,
-    .unkA = 64,
-    .unkC = 874,
+    .src = gUnk_0833FF50,
+    .dst = gUnk_0833FFD0,
+    .colorIndex = 0,
+    .colorCount = 64,
+    .rate = 874,
 };
 struct Unk02007D70Cmd gRoomBgAnimSet5Script0[] BG_ANIM(08340050) = {
     { 2, 65, NULL }, /* wait */
@@ -486,29 +486,29 @@ struct Unk02007D70Cmd gRoomBgAnimSet5Script0[] BG_ANIM(08340050) = {
 
 /* ---- 0x08340108-0x08340118: gUnk_08340108, section .bg_anim_08340108 ---- */
 struct Unk0802D278 gUnk_08340108 BG_ANIM(08340108) = {
-    .unk0 = gUnk_08340088,
-    .unk4 = gUnk_083400C8,
-    .unk8 = 64,
-    .unkA = 32,
-    .unkC = 874,
+    .src = gUnk_08340088,
+    .dst = gUnk_083400C8,
+    .colorIndex = 64,
+    .colorCount = 32,
+    .rate = 874,
 };
 
 /* ---- 0x08340198-0x083401A8: gUnk_08340198, section .bg_anim_08340198 ---- */
 struct Unk0802D278 gUnk_08340198 BG_ANIM(08340198) = {
-    .unk0 = gUnk_08340118,
-    .unk4 = gUnk_08340158,
-    .unk8 = 64,
-    .unkA = 32,
-    .unkC = 874,
+    .src = gUnk_08340118,
+    .dst = gUnk_08340158,
+    .colorIndex = 64,
+    .colorCount = 32,
+    .rate = 874,
 };
 
 /* ---- 0x08340228-0x08340260: gUnk_08340228, gRoomBgAnimSet5Script1, section .bg_anim_08340228 ---- */
 struct Unk0802D278 gUnk_08340228 BG_ANIM(08340228) = {
-    .unk0 = gUnk_083401A8,
-    .unk4 = gUnk_083401E8,
-    .unk8 = 64,
-    .unkA = 32,
-    .unkC = 874,
+    .src = gUnk_083401A8,
+    .dst = gUnk_083401E8,
+    .colorIndex = 64,
+    .colorCount = 32,
+    .rate = 874,
 };
 struct Unk02007D70Cmd gRoomBgAnimSet5Script1[] BG_ANIM(08340228) = {
     { 2, 65, NULL }, /* wait */
@@ -520,38 +520,38 @@ struct Unk02007D70Cmd gRoomBgAnimSet5Script1[] BG_ANIM(08340228) = {
 
 /* ---- 0x08340360-0x08340370: gUnk_08340360, section .bg_anim_08340360 ---- */
 struct Unk0802D278 gUnk_08340360 BG_ANIM(08340360) = {
-    .unk0 = gUnk_08340260,
-    .unk4 = gUnk_083402E0,
-    .unk8 = 0,
-    .unkA = 64,
-    .unkC = 656,
+    .src = gUnk_08340260,
+    .dst = gUnk_083402E0,
+    .colorIndex = 0,
+    .colorCount = 64,
+    .rate = 656,
 };
 
 /* ---- 0x08340470-0x08340480: gUnk_08340470, section .bg_anim_08340470 ---- */
 struct Unk0802D278 gUnk_08340470 BG_ANIM(08340470) = {
-    .unk0 = gUnk_08340370,
-    .unk4 = gUnk_083403F0,
-    .unk8 = 0,
-    .unkA = 64,
-    .unkC = 656,
+    .src = gUnk_08340370,
+    .dst = gUnk_083403F0,
+    .colorIndex = 0,
+    .colorCount = 64,
+    .rate = 656,
 };
 
 /* ---- 0x08340580-0x08340590: gUnk_08340580, section .bg_anim_08340580 ---- */
 struct Unk0802D278 gUnk_08340580 BG_ANIM(08340580) = {
-    .unk0 = gUnk_08340480,
-    .unk4 = gUnk_08340500,
-    .unk8 = 0,
-    .unkA = 64,
-    .unkC = 656,
+    .src = gUnk_08340480,
+    .dst = gUnk_08340500,
+    .colorIndex = 0,
+    .colorCount = 64,
+    .rate = 656,
 };
 
 /* ---- 0x08340690-0x083406D0: gUnk_08340690, gRoomBgAnimSet6Script1, section .bg_anim_08340690 ---- */
 struct Unk0802D278 gUnk_08340690 BG_ANIM(08340690) = {
-    .unk0 = gUnk_08340590,
-    .unk4 = gUnk_08340610,
-    .unk8 = 0,
-    .unkA = 64,
-    .unkC = 656,
+    .src = gUnk_08340590,
+    .dst = gUnk_08340610,
+    .colorIndex = 0,
+    .colorCount = 64,
+    .rate = 656,
 };
 struct Unk02007D70Cmd gRoomBgAnimSet6Script1[] BG_ANIM(08340690) = {
     { 2, 64, NULL }, /* wait */
@@ -564,38 +564,38 @@ struct Unk02007D70Cmd gRoomBgAnimSet6Script1[] BG_ANIM(08340690) = {
 
 /* ---- 0x08340750-0x08340760: gUnk_08340750, section .bg_anim_08340750 ---- */
 struct Unk0802D278 gUnk_08340750 BG_ANIM(08340750) = {
-    .unk0 = gUnk_083406D0,
-    .unk4 = gUnk_08340710,
-    .unk8 = 64,
-    .unkA = 32,
-    .unkC = 656,
+    .src = gUnk_083406D0,
+    .dst = gUnk_08340710,
+    .colorIndex = 64,
+    .colorCount = 32,
+    .rate = 656,
 };
 
 /* ---- 0x083407E0-0x083407F0: gUnk_083407E0, section .bg_anim_083407e0 ---- */
 struct Unk0802D278 gUnk_083407E0 BG_ANIM(083407e0) = {
-    .unk0 = gUnk_08340760,
-    .unk4 = gUnk_083407A0,
-    .unk8 = 64,
-    .unkA = 32,
-    .unkC = 656,
+    .src = gUnk_08340760,
+    .dst = gUnk_083407A0,
+    .colorIndex = 64,
+    .colorCount = 32,
+    .rate = 656,
 };
 
 /* ---- 0x08340870-0x08340880: gUnk_08340870, section .bg_anim_08340870 ---- */
 struct Unk0802D278 gUnk_08340870 BG_ANIM(08340870) = {
-    .unk0 = gUnk_083407F0,
-    .unk4 = gUnk_08340830,
-    .unk8 = 64,
-    .unkA = 32,
-    .unkC = 656,
+    .src = gUnk_083407F0,
+    .dst = gUnk_08340830,
+    .colorIndex = 64,
+    .colorCount = 32,
+    .rate = 656,
 };
 
 /* ---- 0x08340900-0x08340940: gUnk_08340900, gRoomBgAnimSet6Script2, section .bg_anim_08340900 ---- */
 struct Unk0802D278 gUnk_08340900 BG_ANIM(08340900) = {
-    .unk0 = gUnk_08340880,
-    .unk4 = gUnk_083408C0,
-    .unk8 = 64,
-    .unkA = 32,
-    .unkC = 656,
+    .src = gUnk_08340880,
+    .dst = gUnk_083408C0,
+    .colorIndex = 64,
+    .colorCount = 32,
+    .rate = 656,
 };
 struct Unk02007D70Cmd gRoomBgAnimSet6Script2[] BG_ANIM(08340900) = {
     { 2, 64, NULL }, /* wait */

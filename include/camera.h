@@ -25,22 +25,22 @@ struct Unk02007D70
 
 struct Unk02007D70Cmd
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ void *unk4;
+    /*0x00*/ u16 op;
+    /*0x02*/ u16 arg;
+    /*0x04*/ void *ptr;
 };
 
 /* A BG animation palette fade (op 1's pointer; src/data/bg_anim_scripts.c):
    BgAnimStartPaletteFade copies it into a gBgAnims[] slot and
-   BgAnimStepPaletteFade blends unkA colours from unk0 to unk4 into the
-   palette buffer at colour unk8, at unkC/256 per frame. */
+   BgAnimStepPaletteFade blends colorCount colours from src to dst into the
+   palette buffer at colour colorIndex, at rate/256 per frame. */
 struct Unk0802D278
 {
-    /*0x00*/ u16 *unk0;
-    /*0x04*/ u16 *unk4;
-    /*0x08*/ u16 unk8;
-    /*0x0A*/ u16 unkA;
-    /*0x0C*/ u32 unkC;
+    /*0x00*/ u16 *src;
+    /*0x04*/ u16 *dst;
+    /*0x08*/ u16 colorIndex;
+    /*0x0A*/ u16 colorCount;
+    /*0x0C*/ u32 rate;
 };
 
 struct Unk03004B00
