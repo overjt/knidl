@@ -564,7 +564,7 @@ REASONS = {
     "fn-engine": "tracked by #155: engine-zone helpers whose role is not settled",
     "fn-lib": "runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8)",
     "ram": "tracked by #155: role not proven; many are proven shared scratch or hold two encodings",
-    "io": "I/O registers written as symbols, kept for codegen (lesson 3.523); the C spells the rest REG_*",
+    "io": "I/O registers kept as symbols: the m4a_1 and SoftReset asm pools (VCOUNT, SOUND1CNT_L, DMA1SAD, IME) and early_4734.c's IME, where REG_IME changes the allocation (lesson 3.523); the rest of the C spells REG_*",
     "rom-asset": "asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
     "rom-position": "documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4)",

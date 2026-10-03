@@ -59,31 +59,31 @@ The project started as a full ROM split and was decompiled module by module
 into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
 [docs/history.md](docs/history.md)).
 
-<!-- Figures from `make progress` at master 768a4f8; refresh after any asm or naming change. -->
+<!-- Figures from `make progress` at the end of #37; refresh after any asm or naming change. -->
 
 ```
-857532 total bytes of code
-    853356 bytes of code in src (99.5130%)
-    4176 bytes of code in asm (0.4870%)
+857524 total bytes of code
+    853356 bytes of code in src (99.5139%)
+    4168 bytes of code in asm (0.4861%)
         0 bytes of code remaining to be decompiled
         0 bytes in 0 functions in asm/nonmatching
-        4176 bytes excluded from decompilation tracking
+        4168 bytes excluded from decompilation tracking
 
-34084 total symbols
-    7743 symbols documented (22.7174%)
-    26341 symbols undocumented (77.2826%)
+34092 total symbols
+    7757 symbols documented (22.7531%)
+    26335 symbols undocumented (77.2469%)
 
-7531108 total bytes of data
+7531104 total bytes of data
     4428 bytes of data in src (0.0588%)
     7526444 bytes of data in data (99.9381%)
-    236 bytes of data from asm (0.0031%)
+    232 bytes of data from asm (0.0031%)
 
 7336404 bytes of data in 26917 baserom incbins (97.4147%)
 ```
 
 - **Code: complete.** All of the game's code is byte-exact C: everything from
   `AgbInit` (`0x08000310`) to the sound engine's asm core, the sound engine's
-  C driver and the SRAM driver. The 4,176 bytes of asm are kept by design and
+  C driver and the SRAM driver. The 4,168 bytes of asm are kept by design and
   excluded from tracking: the ROM header, crt0 and the master interrupt
   handler, the ARM task switcher, the m4a engine's hand-scheduled core
   (`asm/m4a_1.s`, as in pret projects), the BIOS call thunks and `SoftReset`,
@@ -102,10 +102,10 @@ into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
   consumer proves the layout. Assets are never committed
   ([docs/data.md](docs/data.md)). The shift test proves the ROM movable and
   the boot test runs it moved (see "For modders").
-- **Names** (#155, open). 2,448 of the 5,347 functions and 248 of the 266
+- **Names** (#155, open). 2,449 of the 5,348 functions and 248 of the 266
   task bodies have real names, each with its evidence in
   `docs/analysis/renames.csv` (convention: [docs/naming.md](docs/naming.md)).
-  Of the 7,743 documented symbols, 5,767 have semantic names and 1,976 are
+  Of the 7,757 documented symbols, 5,781 have semantic names and 1,976 are
   position names (a data record named after its slot in a consumer-proven
   table). Most of the undocumented symbols are ROM data labels, 17,421 of
   them asset labels that stay unnamed by policy; the long tail (about 2,900
