@@ -39810,6 +39810,86 @@
       "name": "game_rodata"
     },
     {
+      "name": "game_rodata_0873079c",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_087320c4",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_08732630",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_087328bc",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_087328f0",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873a924",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b510",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b6cc",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b7b0",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b9ec",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873dc3c",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873dea8",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873df14",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873df38",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e284",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e348",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e5f8",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e698",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e7a4",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873eac0",
+      "zone": "game_rodata"
+    },
+    {
       "name": "actor_rodata"
     },
     {
@@ -39825,7 +39905,83 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_0873f92c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0873fb7c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0873fcf8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087400e4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740124",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740320",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740648",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740668",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740680",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087406ec",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740720",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087407bc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874080c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740824",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874099c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740a80",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08740b08",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08740de4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741094",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087410c0",
       "zone": "actor_rodata"
     },
     {
@@ -39833,11 +39989,159 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_08741214",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741298",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087412ec",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741318",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087413d8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087414b0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087414f8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087415ac",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087415e4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741628",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741684",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08741aa4",
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_08741e70",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741e94",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08741f0c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741fa8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742010",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742050",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742088",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087420ac",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087420c0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087420f4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874210c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742144",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742598",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087425b8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087425dc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087425f0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742600",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742614",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874269c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087426ec",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742734",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874276c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087427b0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742814",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087428e8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742930",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742998",
       "zone": "actor_rodata"
     },
     {
@@ -39849,11 +40153,43 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_087431cc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743214",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743248",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087432ec",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08743414",
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_08743614",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_0874369c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087438a4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087439c0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743b48",
       "zone": "actor_rodata"
     },
     {
@@ -39865,7 +40201,31 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_0874417c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087441bc",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_0874425c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874449c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08744510",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08744598",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087448e4",
       "zone": "actor_rodata"
     },
     {
@@ -39881,6 +40241,10 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_087456cc",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08745868",
       "zone": "actor_rodata"
     },
@@ -39889,7 +40253,19 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_08745b0c",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08745bb4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08747b10",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08747c28",
       "zone": "actor_rodata"
     },
     {
@@ -39901,6 +40277,18 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_08748268",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087484a4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087484e4",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_087487e8",
       "zone": "actor_rodata"
     },
@@ -39909,7 +40297,35 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_087489c0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748a00",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748a38",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748a80",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08748bb8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748f8c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087491a0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749458",
       "zone": "actor_rodata"
     },
     {
@@ -39921,7 +40337,23 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_08749bac",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_08749c70",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749d1c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874ad44",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b20c",
       "zone": "actor_rodata"
     },
     {
@@ -39930,6 +40362,14 @@
     },
     {
       "name": "actor_rodata_0874b4d8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b560",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b614",
       "zone": "actor_rodata"
     },
     {
@@ -39945,11 +40385,103 @@
       "zone": "actor_rodata"
     },
     {
+      "name": "actor_rodata_0874c240",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874c260",
+      "zone": "actor_rodata"
+    },
+    {
       "name": "actor_rodata_0874c3d0",
       "zone": "actor_rodata"
     },
     {
       "name": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087560c0",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087560ec",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756178",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087561c4",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087562a8",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087562e4",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087562f0",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_0875636c",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087563d8",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756498",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756514",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756570",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_0875670c",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756798",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08757250",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08757280",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087572e0",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_0875735c",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08757424",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087582f4",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08758334",
+      "zone": "late_game_rodata"
     },
     {
       "name": "credits_demos"

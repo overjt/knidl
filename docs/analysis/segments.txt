@@ -422,7 +422,48 @@
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
 0x0872EA14 0x0872FF30 data engine_rodata # Engine-zone rodata (#36 phase 2 run 3; formerly gap_sram_driver_fn_table_asset_metadata_index): 256 zero bytes, sprite half-dimensions gUnk_0872EB14, gBootSignature, the SE table gSfxTable, gCosTable; gTaskTypes follows
 0x0872FF30 0x08730780 c_data task_types # src/data/task_types.c (carved by tools/carve_data.py)
-0x08730780 0x0873ECEC data game_rodata # Game rodata in link order, M02-M18 (#36 phase 2 run 3; formerly asset_metadata_index): mode, menu, player, collision, room, camera and terrain tables, blocks, player actions, effects, actor core
+0x08730780 0x0873078C data game_rodata # Game rodata in link order, M02-M18 (#36 phase 2 run 3; formerly asset_metadata_index): mode, menu, player, collision, room, camera and terrain tables, blocks, player actions, effects, actor core
+0x0873078C 0x0873079C c_data game_tbl_0873078c # src/data/game_tables.c section .game_tbl_0873078c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873079C 0x08731FA8 data game_rodata_0873079c
+0x08731FA8 0x087320C4 c_data game_tbl_08731fa8 # src/data/game_tables.c section .game_tbl_08731fa8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087320C4 0x08732614 data game_rodata_087320c4
+0x08732614 0x08732630 c_data game_tbl_08732614 # src/data/game_tables.c section .game_tbl_08732614 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08732630 0x087328A0 data game_rodata_08732630
+0x087328A0 0x087328BC c_data game_tbl_087328a0 # src/data/game_tables.c section .game_tbl_087328a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087328BC 0x087328D8 data game_rodata_087328bc
+0x087328D8 0x087328F0 c_data game_tbl_087328d8 # src/data/game_tables.c section .game_tbl_087328d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087328F0 0x0873A748 data game_rodata_087328f0
+0x0873A748 0x0873A924 c_data game_tbl_0873a748 # src/data/game_tables.c section .game_tbl_0873a748 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873A924 0x0873B42C data game_rodata_0873a924
+0x0873B42C 0x0873B510 c_data game_tbl_0873b42c # src/data/game_tables.c section .game_tbl_0873b42c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B510 0x0873B664 data game_rodata_0873b510
+0x0873B664 0x0873B6CC c_data game_tbl_0873b664 # src/data/game_tables.c section .game_tbl_0873b664 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B6CC 0x0873B77C data game_rodata_0873b6cc
+0x0873B77C 0x0873B7B0 c_data game_tbl_0873b77c # src/data/game_tables.c section .game_tbl_0873b77c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B7B0 0x0873B928 data game_rodata_0873b7b0
+0x0873B928 0x0873B9EC c_data game_tbl_0873b928 # src/data/game_tables.c section .game_tbl_0873b928 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B9EC 0x0873DBE4 data game_rodata_0873b9ec
+0x0873DBE4 0x0873DC3C c_data game_tbl_0873dbe4 # src/data/game_tables.c section .game_tbl_0873dbe4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DC3C 0x0873DEA0 data game_rodata_0873dc3c
+0x0873DEA0 0x0873DEA8 c_data game_tbl_0873dea0 # src/data/game_tables.c section .game_tbl_0873dea0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DEA8 0x0873DEDC data game_rodata_0873dea8
+0x0873DEDC 0x0873DF14 c_data game_tbl_0873dedc # src/data/game_tables.c section .game_tbl_0873dedc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DF14 0x0873DF24 data game_rodata_0873df14
+0x0873DF24 0x0873DF38 c_data game_tbl_0873df24 # src/data/game_tables.c section .game_tbl_0873df24 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DF38 0x0873E280 data game_rodata_0873df38
+0x0873E280 0x0873E284 c_data game_tbl_0873e280 # src/data/game_tables.c section .game_tbl_0873e280 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E284 0x0873E2F0 data game_rodata_0873e284
+0x0873E2F0 0x0873E348 c_data game_tbl_0873e2f0 # src/data/game_tables.c section .game_tbl_0873e2f0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E348 0x0873E5BC data game_rodata_0873e348
+0x0873E5BC 0x0873E5F8 c_data game_tbl_0873e5bc # src/data/game_tables.c section .game_tbl_0873e5bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E5F8 0x0873E670 data game_rodata_0873e5f8
+0x0873E670 0x0873E698 c_data game_tbl_0873e670 # src/data/game_tables.c section .game_tbl_0873e670 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E698 0x0873E734 data game_rodata_0873e698
+0x0873E734 0x0873E7A4 c_data game_tbl_0873e734 # src/data/game_tables.c section .game_tbl_0873e734 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E7A4 0x0873EAA0 data game_rodata_0873e7a4
+0x0873EAA0 0x0873EAC0 c_data game_tbl_0873eaa0 # src/data/game_tables.c section .game_tbl_0873eaa0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873EAC0 0x0873ECE0 data game_rodata_0873eac0
+0x0873ECE0 0x0873ECEC c_data game_tbl_0873ece0 # src/data/game_tables.c section .game_tbl_0873ece0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0873ECEC 0x0873EEA0 c_data actor_defs # src/data/actor_defs.c (carved by tools/carve_data.py)
 0x0873EEA0 0x0873F2B8 data actor_rodata # Actor and enemy rodata, M17-M32 (#36 phase 2 run 3; formerly asset_metadata_index_0873eea0): behaviour tables, ActorDef/ActorAux records, HitBoxSets
 0x0873F2B8 0x0873F4C8 c_data actor_rec_0873f2b8 # src/data/actor_records.c section .actor_rec_0873f2b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
@@ -430,71 +471,310 @@
 0x0873F664 0x0873F6E8 c_data actor_rec_0873f664 # src/data/actor_records.c section .actor_rec_0873f664 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0873F6E8 0x0873F8EC data actor_rodata_0873f6e8
 0x0873F8EC 0x0873F8F4 c_data actor_rec_0873f8ec # src/data/actor_records.c section .actor_rec_0873f8ec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0873F8F4 0x08740BD4 data actor_rodata_0873f8f4
+0x0873F8F4 0x0873F910 data actor_rodata_0873f8f4
+0x0873F910 0x0873F92C c_data actor_tbl_0873f910 # src/data/actor_tables.c section .actor_tbl_0873f910 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873F92C 0x0873FB04 data actor_rodata_0873f92c
+0x0873FB04 0x0873FB7C c_data actor_tbl_0873fb04 # src/data/actor_tables.c section .actor_tbl_0873fb04 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873FB7C 0x0873FBAC data actor_rodata_0873fb7c
+0x0873FBAC 0x0873FCF8 c_data actor_tbl_0873fbac # src/data/actor_tables.c section .actor_tbl_0873fbac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873FCF8 0x087400B0 data actor_rodata_0873fcf8
+0x087400B0 0x087400E4 c_data actor_tbl_087400b0 # src/data/actor_tables.c section .actor_tbl_087400b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087400E4 0x08740100 data actor_rodata_087400e4
+0x08740100 0x08740124 c_data actor_tbl_08740100 # src/data/actor_tables.c section .actor_tbl_08740100 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740124 0x087402BC data actor_rodata_08740124
+0x087402BC 0x08740320 c_data actor_tbl_087402bc # src/data/actor_tables.c section .actor_tbl_087402bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740320 0x08740630 data actor_rodata_08740320
+0x08740630 0x08740648 c_data actor_tbl_08740630 # src/data/actor_tables.c section .actor_tbl_08740630 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740648 0x08740658 data actor_rodata_08740648
+0x08740658 0x08740668 c_data actor_tbl_08740658 # src/data/actor_tables.c section .actor_tbl_08740658 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740668 0x08740670 data actor_rodata_08740668
+0x08740670 0x08740680 c_data actor_tbl_08740670 # src/data/actor_tables.c section .actor_tbl_08740670 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740680 0x087406C4 data actor_rodata_08740680
+0x087406C4 0x087406EC c_data actor_tbl_087406c4 # src/data/actor_tables.c section .actor_tbl_087406c4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087406EC 0x08740700 data actor_rodata_087406ec
+0x08740700 0x08740720 c_data actor_tbl_08740700 # src/data/actor_tables.c section .actor_tbl_08740700 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740720 0x08740758 data actor_rodata_08740720
+0x08740758 0x087407BC c_data actor_tbl_08740758 # src/data/actor_tables.c section .actor_tbl_08740758 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087407BC 0x087407E4 data actor_rodata_087407bc
+0x087407E4 0x0874080C c_data actor_tbl_087407e4 # src/data/actor_tables.c section .actor_tbl_087407e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874080C 0x08740810 data actor_rodata_0874080c
+0x08740810 0x08740824 c_data actor_tbl_08740810 # src/data/actor_tables.c section .actor_tbl_08740810 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740824 0x08740960 data actor_rodata_08740824
+0x08740960 0x0874099C c_data actor_tbl_08740960 # src/data/actor_tables.c section .actor_tbl_08740960 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874099C 0x087409FC data actor_rodata_0874099c
+0x087409FC 0x08740A80 c_data actor_tbl_087409fc # src/data/actor_tables.c section .actor_tbl_087409fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740A80 0x08740AC8 data actor_rodata_08740a80
+0x08740AC8 0x08740B08 c_data actor_tbl_08740ac8 # src/data/actor_tables.c section .actor_tbl_08740ac8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740B08 0x08740B84 data actor_rodata_08740b08
+0x08740B84 0x08740BD4 c_data actor_tbl_08740b84 # src/data/actor_tables.c section .actor_tbl_08740b84 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08740BD4 0x08740DE4 c_data actor_rec_08740bd4 # src/data/actor_records.c section .actor_rec_08740bd4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08740DE4 0x087410E4 data actor_rodata_08740de4
+0x08740DE4 0x08741088 data actor_rodata_08740de4
+0x08741088 0x08741094 c_data actor_tbl_08741088 # src/data/actor_tables.c section .actor_tbl_08741088 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741094 0x087410AC data actor_rodata_08741094
+0x087410AC 0x087410C0 c_data actor_tbl_087410ac # src/data/actor_tables.c section .actor_tbl_087410ac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087410C0 0x087410E4 data actor_rodata_087410c0
 0x087410E4 0x0874113C c_data actor_rec_087410e4 # src/data/actor_records.c section .actor_rec_087410e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874113C 0x087417B8 data actor_rodata_0874113c
+0x0874113C 0x087411C0 data actor_rodata_0874113c
+0x087411C0 0x08741214 c_data actor_tbl_087411c0 # src/data/actor_tables.c section .actor_tbl_087411c0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741214 0x08741220 data actor_rodata_08741214
+0x08741220 0x08741298 c_data actor_tbl_08741220 # src/data/actor_tables.c section .actor_tbl_08741220 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741298 0x087412BC data actor_rodata_08741298
+0x087412BC 0x087412EC c_data actor_tbl_087412bc # src/data/actor_tables.c section .actor_tbl_087412bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087412EC 0x08741300 data actor_rodata_087412ec
+0x08741300 0x08741318 c_data actor_tbl_08741300 # src/data/actor_tables.c section .actor_tbl_08741300 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741318 0x08741380 data actor_rodata_08741318
+0x08741380 0x087413D8 c_data actor_tbl_08741380 # src/data/actor_tables.c section .actor_tbl_08741380 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087413D8 0x08741488 data actor_rodata_087413d8
+0x08741488 0x087414B0 c_data actor_tbl_08741488 # src/data/actor_tables.c section .actor_tbl_08741488 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087414B0 0x087414B4 data actor_rodata_087414b0
+0x087414B4 0x087414F8 c_data actor_tbl_087414b4 # src/data/actor_tables.c section .actor_tbl_087414b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087414F8 0x08741544 data actor_rodata_087414f8
+0x08741544 0x087415AC c_data actor_tbl_08741544 # src/data/actor_tables.c section .actor_tbl_08741544 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087415AC 0x087415B8 data actor_rodata_087415ac
+0x087415B8 0x087415E4 c_data actor_tbl_087415b8 # src/data/actor_tables.c section .actor_tbl_087415b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087415E4 0x08741604 data actor_rodata_087415e4
+0x08741604 0x08741628 c_data actor_tbl_08741604 # src/data/actor_tables.c section .actor_tbl_08741604 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741628 0x08741640 data actor_rodata_08741628
+0x08741640 0x08741684 c_data actor_tbl_08741640 # src/data/actor_tables.c section .actor_tbl_08741640 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741684 0x0874176C data actor_rodata_08741684
+0x0874176C 0x087417B8 c_data actor_tbl_0874176c # src/data/actor_tables.c section .actor_tbl_0874176c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087417B8 0x08741AA4 c_data actor_rec_087417b8 # src/data/actor_records.c section .actor_rec_087417b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08741AA4 0x08741EB4 data actor_rodata_08741aa4
+0x08741AA4 0x08741E64 data actor_rodata_08741aa4
+0x08741E64 0x08741E70 c_data actor_tbl_08741e64 # src/data/actor_tables.c section .actor_tbl_08741e64 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741E70 0x08741E7C data actor_rodata_08741e70
+0x08741E7C 0x08741E94 c_data actor_tbl_08741e7c # src/data/actor_tables.c section .actor_tbl_08741e7c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741E94 0x08741EB4 data actor_rodata_08741e94
 0x08741EB4 0x08741F0C c_data actor_rec_08741eb4 # src/data/actor_records.c section .actor_rec_08741eb4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08741F0C 0x087429E8 data actor_rodata_08741f0c
+0x08741F0C 0x08741F70 data actor_rodata_08741f0c
+0x08741F70 0x08741FA8 c_data actor_tbl_08741f70 # src/data/actor_tables.c section .actor_tbl_08741f70 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741FA8 0x08741FB8 data actor_rodata_08741fa8
+0x08741FB8 0x08742010 c_data actor_tbl_08741fb8 # src/data/actor_tables.c section .actor_tbl_08741fb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742010 0x08742030 data actor_rodata_08742010
+0x08742030 0x08742050 c_data actor_tbl_08742030 # src/data/actor_tables.c section .actor_tbl_08742030 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742050 0x08742064 data actor_rodata_08742050
+0x08742064 0x08742088 c_data actor_tbl_08742064 # src/data/actor_tables.c section .actor_tbl_08742064 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742088 0x087420A0 data actor_rodata_08742088
+0x087420A0 0x087420AC c_data actor_tbl_087420a0 # src/data/actor_tables.c section .actor_tbl_087420a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087420AC 0x087420BC data actor_rodata_087420ac
+0x087420BC 0x087420C0 c_data actor_tbl_087420bc # src/data/actor_tables.c section .actor_tbl_087420bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087420C0 0x087420F0 data actor_rodata_087420c0
+0x087420F0 0x087420F4 c_data actor_tbl_087420f0 # src/data/actor_tables.c section .actor_tbl_087420f0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087420F4 0x08742100 data actor_rodata_087420f4
+0x08742100 0x0874210C c_data actor_tbl_08742100 # src/data/actor_tables.c section .actor_tbl_08742100 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874210C 0x0874212C data actor_rodata_0874210c
+0x0874212C 0x08742144 c_data actor_tbl_0874212c # src/data/actor_tables.c section .actor_tbl_0874212c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742144 0x08742570 data actor_rodata_08742144
+0x08742570 0x08742598 c_data actor_tbl_08742570 # src/data/actor_tables.c section .actor_tbl_08742570 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742598 0x087425B0 data actor_rodata_08742598
+0x087425B0 0x087425B8 c_data actor_tbl_087425b0 # src/data/actor_tables.c section .actor_tbl_087425b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087425B8 0x087425D0 data actor_rodata_087425b8
+0x087425D0 0x087425DC c_data actor_tbl_087425d0 # src/data/actor_tables.c section .actor_tbl_087425d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087425DC 0x087425EC data actor_rodata_087425dc
+0x087425EC 0x087425F0 c_data actor_tbl_087425ec # src/data/actor_tables.c section .actor_tbl_087425ec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087425F0 0x087425F8 data actor_rodata_087425f0
+0x087425F8 0x08742600 c_data actor_tbl_087425f8 # src/data/actor_tables.c section .actor_tbl_087425f8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742600 0x0874260C data actor_rodata_08742600
+0x0874260C 0x08742614 c_data actor_tbl_0874260c # src/data/actor_tables.c section .actor_tbl_0874260c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742614 0x0874263C data actor_rodata_08742614
+0x0874263C 0x0874269C c_data actor_tbl_0874263c # src/data/actor_tables.c section .actor_tbl_0874263c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874269C 0x087426AC data actor_rodata_0874269c
+0x087426AC 0x087426EC c_data actor_tbl_087426ac # src/data/actor_tables.c section .actor_tbl_087426ac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087426EC 0x08742704 data actor_rodata_087426ec
+0x08742704 0x08742734 c_data actor_tbl_08742704 # src/data/actor_tables.c section .actor_tbl_08742704 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742734 0x0874273C data actor_rodata_08742734
+0x0874273C 0x0874276C c_data actor_tbl_0874273c # src/data/actor_tables.c section .actor_tbl_0874273c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874276C 0x08742798 data actor_rodata_0874276c
+0x08742798 0x087427B0 c_data actor_tbl_08742798 # src/data/actor_tables.c section .actor_tbl_08742798 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087427B0 0x087427B4 data actor_rodata_087427b0
+0x087427B4 0x08742814 c_data actor_tbl_087427b4 # src/data/actor_tables.c section .actor_tbl_087427b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742814 0x087428C0 data actor_rodata_08742814
+0x087428C0 0x087428E8 c_data actor_tbl_087428c0 # src/data/actor_tables.c section .actor_tbl_087428c0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087428E8 0x08742908 data actor_rodata_087428e8
+0x08742908 0x08742930 c_data actor_tbl_08742908 # src/data/actor_tables.c section .actor_tbl_08742908 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742930 0x08742940 data actor_rodata_08742930
+0x08742940 0x08742998 c_data actor_tbl_08742940 # src/data/actor_tables.c section .actor_tbl_08742940 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742998 0x087429E8 data actor_rodata_08742998
 0x087429E8 0x08742BF8 c_data actor_rec_087429e8 # src/data/actor_records.c section .actor_rec_087429e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08742BF8 0x08742FBC data actor_rodata_08742bf8
 0x08742FBC 0x0874306C c_data actor_rec_08742fbc # src/data/actor_records.c section .actor_rec_08742fbc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874306C 0x0874330C data actor_rodata_0874306c
+0x0874306C 0x08743188 data actor_rodata_0874306c
+0x08743188 0x087431CC c_data actor_tbl_08743188 # src/data/actor_tables.c section .actor_tbl_08743188 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087431CC 0x087431E4 data actor_rodata_087431cc
+0x087431E4 0x08743214 c_data actor_tbl_087431e4 # src/data/actor_tables.c section .actor_tbl_087431e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743214 0x08743224 data actor_rodata_08743214
+0x08743224 0x08743248 c_data actor_tbl_08743224 # src/data/actor_tables.c section .actor_tbl_08743224 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743248 0x08743284 data actor_rodata_08743248
+0x08743284 0x087432EC c_data actor_tbl_08743284 # src/data/actor_tables.c section .actor_tbl_08743284 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087432EC 0x087432F4 data actor_rodata_087432ec
+0x087432F4 0x0874330C c_data actor_tbl_087432f4 # src/data/actor_tables.c section .actor_tbl_087432f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874330C 0x08743414 c_data actor_rec_0874330c # src/data/actor_records.c section .actor_rec_0874330c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08743414 0x08743644 data actor_rodata_08743414
+0x08743414 0x08743600 data actor_rodata_08743414
+0x08743600 0x08743614 c_data actor_tbl_08743600 # src/data/actor_tables.c section .actor_tbl_08743600 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743614 0x0874362C data actor_rodata_08743614
+0x0874362C 0x08743644 c_data actor_tbl_0874362c # src/data/actor_tables.c section .actor_tbl_0874362c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08743644 0x0874369C c_data actor_rec_08743644 # src/data/actor_records.c section .actor_rec_08743644 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874369C 0x08743B4C data actor_rodata_0874369c
+0x0874369C 0x08743848 data actor_rodata_0874369c
+0x08743848 0x087438A4 c_data actor_tbl_08743848 # src/data/actor_tables.c section .actor_tbl_08743848 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087438A4 0x08743984 data actor_rodata_087438a4
+0x08743984 0x087439C0 c_data actor_tbl_08743984 # src/data/actor_tables.c section .actor_tbl_08743984 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087439C0 0x08743ADC data actor_rodata_087439c0
+0x08743ADC 0x08743B48 c_data actor_tbl_08743adc # src/data/actor_tables.c section .actor_tbl_08743adc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743B48 0x08743B4C data actor_rodata_08743b48
 0x08743B4C 0x08743BD0 c_data actor_rec_08743b4c # src/data/actor_records.c section .actor_rec_08743b4c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08743BD0 0x0874402C data actor_rodata_08743bd0
 0x0874402C 0x0874407C c_data actor_rec_0874402c # src/data/actor_records.c section .actor_rec_0874402c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874407C 0x087441D8 data actor_rodata_0874407c
+0x0874407C 0x08744170 data actor_rodata_0874407c
+0x08744170 0x0874417C c_data actor_tbl_08744170 # src/data/actor_tables.c section .actor_tbl_08744170 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874417C 0x087441A4 data actor_rodata_0874417c
+0x087441A4 0x087441BC c_data actor_tbl_087441a4 # src/data/actor_tables.c section .actor_tbl_087441a4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087441BC 0x087441CC data actor_rodata_087441bc
+0x087441CC 0x087441D8 c_data actor_tbl_087441cc # src/data/actor_tables.c section .actor_tbl_087441cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087441D8 0x0874425C c_data actor_rec_087441d8 # src/data/actor_records.c section .actor_rec_087441d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874425C 0x08744964 data actor_rodata_0874425c
+0x0874425C 0x08744440 data actor_rodata_0874425c
+0x08744440 0x0874449C c_data actor_tbl_08744440 # src/data/actor_tables.c section .actor_tbl_08744440 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874449C 0x087444E4 data actor_rodata_0874449c
+0x087444E4 0x08744510 c_data actor_tbl_087444e4 # src/data/actor_tables.c section .actor_tbl_087444e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08744510 0x08744564 data actor_rodata_08744510
+0x08744564 0x08744598 c_data actor_tbl_08744564 # src/data/actor_tables.c section .actor_tbl_08744564 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08744598 0x0874489C data actor_rodata_08744598
+0x0874489C 0x087448E4 c_data actor_tbl_0874489c # src/data/actor_tables.c section .actor_tbl_0874489c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087448E4 0x08744964 data actor_rodata_087448e4
 0x08744964 0x087449E8 c_data actor_rec_08744964 # src/data/actor_records.c section .actor_rec_08744964 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087449E8 0x0874531C data actor_rodata_087449e8
 0x0874531C 0x087453BC c_data actor_rec_0874531c # src/data/actor_records.c section .actor_rec_0874531c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087453BC 0x08745530 data actor_rodata_087453bc
 0x08745530 0x08745588 c_data actor_rec_08745530 # src/data/actor_records.c section .actor_rec_08745530 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08745588 0x08745810 data actor_rodata_08745588
+0x08745588 0x08745630 data actor_rodata_08745588
+0x08745630 0x087456CC c_data actor_tbl_08745630 # src/data/actor_tables.c section .actor_tbl_08745630 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087456CC 0x0874574C data actor_rodata_087456cc
+0x0874574C 0x08745810 c_data actor_tbl_0874574c # src/data/actor_tables.c section .actor_tbl_0874574c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08745810 0x08745868 c_data actor_rec_08745810 # src/data/actor_records.c section .actor_rec_08745810 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08745868 0x08745A2C data actor_rodata_08745868
 0x08745A2C 0x08745A34 c_data actor_rec_08745a2c # src/data/actor_records.c section .actor_rec_08745a2c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08745A34 0x08745B30 data actor_rodata_08745a34
+0x08745A34 0x08745AE4 data actor_rodata_08745a34
+0x08745AE4 0x08745B0C c_data actor_tbl_08745ae4 # src/data/actor_tables.c section .actor_tbl_08745ae4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08745B0C 0x08745B1C data actor_rodata_08745b0c
+0x08745B1C 0x08745B30 c_data actor_tbl_08745b1c # src/data/actor_tables.c section .actor_tbl_08745b1c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08745B30 0x08745BB4 c_data actor_rec_08745b30 # src/data/actor_records.c section .actor_rec_08745b30 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08745BB4 0x08747C80 data actor_rodata_08745bb4
+0x08745BB4 0x08747AA4 data actor_rodata_08745bb4
+0x08747AA4 0x08747B10 c_data actor_tbl_08747aa4 # src/data/actor_tables.c section .actor_tbl_08747aa4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08747B10 0x08747BCC data actor_rodata_08747b10
+0x08747BCC 0x08747C28 c_data actor_tbl_08747bcc # src/data/actor_tables.c section .actor_tbl_08747bcc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08747C28 0x08747C6C data actor_rodata_08747c28
+0x08747C6C 0x08747C80 c_data actor_tbl_08747c6c # src/data/actor_tables.c section .actor_tbl_08747c6c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08747C80 0x08747EBC c_data actor_rec_08747c80 # src/data/actor_records.c section .actor_rec_08747c80 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08747EBC 0x08748198 data actor_rodata_08747ebc
 0x08748198 0x087481A0 c_data actor_rec_08748198 # src/data/actor_records.c section .actor_rec_08748198 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x087481A0 0x08748764 data actor_rodata_087481a0
+0x087481A0 0x08748264 data actor_rodata_087481a0
+0x08748264 0x08748268 c_data actor_tbl_08748264 # src/data/actor_tables.c section .actor_tbl_08748264 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748268 0x0874844C data actor_rodata_08748268
+0x0874844C 0x087484A4 c_data actor_tbl_0874844c # src/data/actor_tables.c section .actor_tbl_0874844c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087484A4 0x087484C4 data actor_rodata_087484a4
+0x087484C4 0x087484E4 c_data actor_tbl_087484c4 # src/data/actor_tables.c section .actor_tbl_087484c4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087484E4 0x08748624 data actor_rodata_087484e4
+0x08748624 0x08748764 c_data actor_tbl_08748624 # src/data/actor_tables.c section .actor_tbl_08748624 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08748764 0x087487E8 c_data actor_rec_08748764 # src/data/actor_records.c section .actor_rec_08748764 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087487E8 0x08748918 data actor_rodata_087487e8
 0x08748918 0x08748930 c_data actor_rec_08748918 # src/data/actor_records.c section .actor_rec_08748918 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08748930 0x08748AB0 data actor_rodata_08748930
+0x08748930 0x087489B4 data actor_rodata_08748930
+0x087489B4 0x087489C0 c_data actor_tbl_087489b4 # src/data/actor_tables.c section .actor_tbl_087489b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087489C0 0x087489D4 data actor_rodata_087489c0
+0x087489D4 0x08748A00 c_data actor_tbl_087489d4 # src/data/actor_tables.c section .actor_tbl_087489d4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748A00 0x08748A28 data actor_rodata_08748a00
+0x08748A28 0x08748A38 c_data actor_tbl_08748a28 # src/data/actor_tables.c section .actor_tbl_08748a28 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748A38 0x08748A54 data actor_rodata_08748a38
+0x08748A54 0x08748A80 c_data actor_tbl_08748a54 # src/data/actor_tables.c section .actor_tbl_08748a54 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748A80 0x08748AB0 data actor_rodata_08748a80
 0x08748AB0 0x08748BB8 c_data actor_rec_08748ab0 # src/data/actor_records.c section .actor_rec_08748ab0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08748BB8 0x08749514 data actor_rodata_08748bb8
+0x08748BB8 0x08748EB8 data actor_rodata_08748bb8
+0x08748EB8 0x08748F8C c_data actor_tbl_08748eb8 # src/data/actor_tables.c section .actor_tbl_08748eb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748F8C 0x08749150 data actor_rodata_08748f8c
+0x08749150 0x087491A0 c_data actor_tbl_08749150 # src/data/actor_tables.c section .actor_tbl_08749150 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087491A0 0x087493F4 data actor_rodata_087491a0
+0x087493F4 0x08749458 c_data actor_tbl_087493f4 # src/data/actor_tables.c section .actor_tbl_087493f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749458 0x08749514 data actor_rodata_08749458
 0x08749514 0x08749598 c_data actor_rec_08749514 # src/data/actor_records.c section .actor_rec_08749514 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08749598 0x08749AE8 data actor_rodata_08749598
 0x08749AE8 0x08749B08 c_data actor_rec_08749ae8 # src/data/actor_records.c section .actor_rec_08749ae8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08749B08 0x08749BEC data actor_rodata_08749b08
+0x08749B08 0x08749B8C data actor_rodata_08749b08
+0x08749B8C 0x08749BAC c_data actor_tbl_08749b8c # src/data/actor_tables.c section .actor_tbl_08749b8c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749BAC 0x08749BE4 data actor_rodata_08749bac
+0x08749BE4 0x08749BEC c_data actor_tbl_08749be4 # src/data/actor_tables.c section .actor_tbl_08749be4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08749BEC 0x08749C70 c_data actor_rec_08749bec # src/data/actor_records.c section .actor_rec_08749bec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08749C70 0x0874B2DC data actor_rodata_08749c70
+0x08749C70 0x08749D10 data actor_rodata_08749c70
+0x08749D10 0x08749D1C c_data actor_tbl_08749d10 # src/data/actor_tables.c section .actor_tbl_08749d10 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749D1C 0x0874AD34 data actor_rodata_08749d1c
+0x0874AD34 0x0874AD44 c_data actor_tbl_0874ad34 # src/data/actor_tables.c section .actor_tbl_0874ad34 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874AD44 0x0874B1DC data actor_rodata_0874ad44
+0x0874B1DC 0x0874B20C c_data actor_tbl_0874b1dc # src/data/actor_tables.c section .actor_tbl_0874b1dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B20C 0x0874B2DC data actor_rodata_0874b20c
 0x0874B2DC 0x0874B38C c_data actor_rec_0874b2dc # src/data/actor_records.c section .actor_rec_0874b2dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874B38C 0x0874B4C8 data actor_rodata_0874b38c
 0x0874B4C8 0x0874B4D8 c_data actor_rec_0874b4c8 # src/data/actor_records.c section .actor_rec_0874b4c8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874B4D8 0x0874B940 data actor_rodata_0874b4d8
+0x0874B4D8 0x0874B540 data actor_rodata_0874b4d8
+0x0874B540 0x0874B560 c_data actor_tbl_0874b540 # src/data/actor_tables.c section .actor_tbl_0874b540 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B560 0x0874B5E4 data actor_rodata_0874b560
+0x0874B5E4 0x0874B614 c_data actor_tbl_0874b5e4 # src/data/actor_tables.c section .actor_tbl_0874b5e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B614 0x0874B940 data actor_rodata_0874b614
 0x0874B940 0x0874BB7C c_data actor_rec_0874b940 # src/data/actor_records.c section .actor_rec_0874b940 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874BB7C 0x0874C158 data actor_rodata_0874bb7c
+0x0874BB7C 0x0874C12C data actor_rodata_0874bb7c
+0x0874C12C 0x0874C158 c_data actor_tbl_0874c12c # src/data/actor_tables.c section .actor_tbl_0874c12c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874C158 0x0874C184 c_data actor_rec_0874c158 # src/data/actor_records.c section .actor_rec_0874c158 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874C184 0x0874C1FC data actor_rodata_0874c184
 0x0874C1FC 0x0874C204 c_data actor_rec_0874c1fc # src/data/actor_records.c section .actor_rec_0874c1fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874C204 0x0874C378 data actor_rodata_0874c204
+0x0874C204 0x0874C21C data actor_rodata_0874c204
+0x0874C21C 0x0874C240 c_data actor_tbl_0874c21c # src/data/actor_tables.c section .actor_tbl_0874c21c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874C240 0x0874C254 data actor_rodata_0874c240
+0x0874C254 0x0874C260 c_data actor_tbl_0874c254 # src/data/actor_tables.c section .actor_tbl_0874c254 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874C260 0x0874C378 data actor_rodata_0874c260
 0x0874C378 0x0874C3D0 c_data actor_rec_0874c378 # src/data/actor_records.c section .actor_rec_0874c378 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874C3D0 0x0874C44C data actor_rodata_0874c3d0
 0x0874C44C 0x0875607C c_data frame_tables # src/data/frame_tables.c section .frame_tables (carved by tools/carve_data.py)
-0x0875607C 0x08758448 data late_game_rodata # Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits
+0x0875607C 0x08756084 c_data late_tbl_0875607c # src/data/late_game_tables.c section .late_tbl_0875607c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756084 0x087560A0 data late_game_rodata # Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits
+0x087560A0 0x087560C0 c_data late_tbl_087560a0 # src/data/late_game_tables.c section .late_tbl_087560a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087560C0 0x087560D0 data late_game_rodata_087560c0
+0x087560D0 0x087560EC c_data late_tbl_087560d0 # src/data/late_game_tables.c section .late_tbl_087560d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087560EC 0x08756150 data late_game_rodata_087560ec
+0x08756150 0x08756178 c_data late_tbl_08756150 # src/data/late_game_tables.c section .late_tbl_08756150 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756178 0x08756198 data late_game_rodata_08756178
+0x08756198 0x087561C4 c_data late_tbl_08756198 # src/data/late_game_tables.c section .late_tbl_08756198 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087561C4 0x08756270 data late_game_rodata_087561c4
+0x08756270 0x087562A8 c_data late_tbl_08756270 # src/data/late_game_tables.c section .late_tbl_08756270 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562A8 0x087562CC data late_game_rodata_087562a8
+0x087562CC 0x087562D8 c_data late_tbl_087562cc # src/data/late_game_tables.c section .late_tbl_087562cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562D8 0x087562E4 c_data late_tbl_087562d8 # src/data/late_game_tables.c section .late_tbl_087562d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562E4 0x087562E8 data late_game_rodata_087562e4
+0x087562E8 0x087562F0 c_data late_tbl_087562e8 # src/data/late_game_tables.c section .late_tbl_087562e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562F0 0x087562FC data late_game_rodata_087562f0
+0x087562FC 0x0875636C c_data late_tbl_087562fc # src/data/late_game_tables.c section .late_tbl_087562fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0875636C 0x08756378 data late_game_rodata_0875636c
+0x08756378 0x087563D8 c_data late_tbl_08756378 # src/data/late_game_tables.c section .late_tbl_08756378 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087563D8 0x08756468 data late_game_rodata_087563d8
+0x08756468 0x08756498 c_data late_tbl_08756468 # src/data/late_game_tables.c section .late_tbl_08756468 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756498 0x087564E4 data late_game_rodata_08756498
+0x087564E4 0x08756514 c_data late_tbl_087564e4 # src/data/late_game_tables.c section .late_tbl_087564e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756514 0x08756568 data late_game_rodata_08756514
+0x08756568 0x08756570 c_data late_tbl_08756568 # src/data/late_game_tables.c section .late_tbl_08756568 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756570 0x08756668 data late_game_rodata_08756570
+0x08756668 0x0875670C c_data late_tbl_08756668 # src/data/late_game_tables.c section .late_tbl_08756668 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0875670C 0x08756780 data late_game_rodata_0875670c
+0x08756780 0x08756798 c_data late_tbl_08756780 # src/data/late_game_tables.c section .late_tbl_08756780 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756798 0x087571F8 data late_game_rodata_08756798
+0x087571F8 0x08757250 c_data late_tbl_087571f8 # src/data/late_game_tables.c section .late_tbl_087571f8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08757250 0x08757270 data late_game_rodata_08757250
+0x08757270 0x08757280 c_data late_tbl_08757270 # src/data/late_game_tables.c section .late_tbl_08757270 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08757280 0x087572CC data late_game_rodata_08757280
+0x087572CC 0x087572E0 c_data late_tbl_087572cc # src/data/late_game_tables.c section .late_tbl_087572cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087572E0 0x08757330 data late_game_rodata_087572e0
+0x08757330 0x0875735C c_data late_tbl_08757330 # src/data/late_game_tables.c section .late_tbl_08757330 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0875735C 0x087573F4 data late_game_rodata_0875735c
+0x087573F4 0x08757424 c_data late_tbl_087573f4 # src/data/late_game_tables.c section .late_tbl_087573f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08757424 0x08758294 data late_game_rodata_08757424
+0x08758294 0x087582F4 c_data late_tbl_08758294 # src/data/late_game_tables.c section .late_tbl_08758294 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087582F4 0x08758324 data late_game_rodata_087582f4
+0x08758324 0x08758334 c_data late_tbl_08758324 # src/data/late_game_tables.c section .late_tbl_08758324 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08758334 0x08758448 data late_game_rodata_08758334
 0x08758448 0x08759DC8 data credits_demos # The 14 recorded input demos of the staff credits' rows 1 and 2 (gUnk_087583CC, CreditsMain src/credits_cd330.c; InputRecorderStart)
 0x08759DC8 0x08769250 data player_frame_records # Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/stage_3cd60.c) (#36 phase 2 run 3)
 0x08769250 0x0876B1FC data player_frame_lists # The player sheets' frame lists, format-only (docs/data.md 5.3) (#36 phase 2 run 3)

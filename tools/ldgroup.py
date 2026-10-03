@@ -122,7 +122,10 @@ def main():
     run = rows[i0:i1 + 1]
     if len(run) < 2:
         die('a group needs two rows or more')
-    if group != first and group in names:
+    if group in names and group not in [r[3] for r in run]:
+        # the group may take the name of any row of the run: a zone whose
+        # first row became C (a carve at the zone's start) keeps its name
+        # on the data piece after it, inside the group (#167)
         die('group name %r is another row' % group)
     for s, e, k, n in run:
         if k not in ('data', 'c_data'):
