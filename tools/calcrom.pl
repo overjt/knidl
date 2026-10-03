@@ -287,6 +287,14 @@ foreach my $line (split /\n/, $nm_sizes_output)
     #   awk '{print $3}' | grep '^[^_].\{4\}' | uniq
     # "uniq" only removes adjacent duplicates after filtering, so keep track
     # of the previous accepted name rather than globally deduplicating symbols.
+    # A segments.txt row's name labels the start of its data or asm file
+    # (tools/split.py writes `.global <segment>`; a zone's data file has one
+    # per piece, #167): it names a linker row, not an object, so it is
+    # neither a documented nor an undocumented symbol.
+    # (A c_code row may share its name with the function it holds, which
+    # stays counted.)
+    next if ($segment_kind{$name} // '') =~ /^(?:data|pool|arm_code|thumb_code)$/;
+
     if ($name !~ /^_/ and length($name) >= 5)
     {
         if (!defined($previous_filtered_symbol) or $name ne $previous_filtered_symbol)
