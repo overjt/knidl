@@ -143,9 +143,9 @@ void FileSelectCursorUpdate(void)
     cur = gMenuCursor;
     if (cur != gCurTask->unk28) {
         u8 *p;
-        RequestCopy(3, (u32)&gUnk_08550B9C[cur * 192], 0x06013580, 96);
+        RequestCopy(3, (u32)&gUnk_08550B9C[cur * 192], OBJ_VRAM0 + 0x3580, 96);
         p = gUnk_08550B9C;
-        RequestCopy(3, (u32)&p[gMenuCursor * 192 + 96], 0x06013980, 96);
+        RequestCopy(3, (u32)&p[gMenuCursor * 192 + 96], OBJ_VRAM0 + 0x3980, 96);
         gCurTask->unk28 = gMenuCursor;
     }
 }
@@ -315,5 +315,5 @@ void MenuUpdateFileMenuPalette(void)
 s32 MenuLoadPicture(s32 id, s32 part)
 {
     LZ77UnCompWram(gUnk_08731E34[id], gUnk_02020000);
-    RequestCopy(1, (u32)gUnk_02020000 + (part << 11), 0x06004200, 0x800);
+    RequestCopy(1, (u32)gUnk_02020000 + (part << 11), BG_VRAM + 0x4200, 0x800);
 }

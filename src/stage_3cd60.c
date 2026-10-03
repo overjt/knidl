@@ -498,7 +498,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
                          (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
         p++;
         s = *p;
-        dst = ((prio & 0x7FF) << 5) + 0x06010000;
+        dst = ((prio & 0x7FF) << 5) + OBJ_VRAM0;
         if (*s != 0xFFFF) {
             do {
                 q = s + 1;
@@ -514,7 +514,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
         q = p[1];
         if (q != NULL) {
             s = q;
-            dst = ((prio & 0x7FF) << 5) + 0x06010800;
+            dst = ((prio & 0x7FF) << 5) + (OBJ_VRAM0 + 0x800);
             if (*s != 0xFFFF) {
                 do {
                     q = s + 1;
@@ -529,7 +529,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             RequestCopy(2, (u32)(g->palette + 1),
                          (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
         s = g->tiles;
-        dst = ((prio & 0x7FF) << 5) + 0x06010000;
+        dst = ((prio & 0x7FF) << 5) + OBJ_VRAM0;
         if (*s != 0xFFFF) {
             do {
                 q = s + 1;

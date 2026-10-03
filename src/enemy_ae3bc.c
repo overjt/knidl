@@ -148,8 +148,8 @@ void sub_080ae4c4(void)
     s16 w;
 
     q = (u16 *)gUnk_082FEFF4;
-    RequestCopy(4, ((u32 *)q)[3], 0x06012000, q[1] << 5);
-    RequestCopy(2, ((u32 *)q)[2], 0x030015B0, q[0] << 5);
+    RequestCopy(4, ((u32 *)q)[3], OBJ_VRAM0 + 0x2000, q[1] << 5);
+    RequestCopy(2, ((u32 *)q)[2], IWRAM_START + 0x15B0, q[0] << 5);
     sub_08063a00((u32)gUnk_0874B450);
     c = &gCurTask;
     t = *c;
@@ -2304,7 +2304,7 @@ void sub_080b0b04(void)
     struct Task *t;
 
     q = (u16 *)gUnk_082FFDF0;
-    RequestCopy(4, ((u32 *)q)[3], 0x06010000, q[1] << 5);
+    RequestCopy(4, ((u32 *)q)[3], OBJ_VRAM0, q[1] << 5);
     RequestCopy(2, ((u32 *)q)[2], (u32)gUnk_03001570, 32);
     t = gCurTask;
     t->tileWord = 0x8010;

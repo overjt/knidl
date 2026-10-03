@@ -312,7 +312,7 @@ void sub_0800b230(s32 a, s32 b)
             HudClearTiles(12, row + 1, 16);
         } else {
             b--;
-            RequestCopy(1, (u32)gUnk_085A6714 + (b << 10), 0x06000C00, 0x400);
+            RequestCopy(1, (u32)gUnk_085A6714 + (b << 10), BG_VRAM + 0xC00, 0x400);
             HudDrawTiles(gUnk_085A6FFC, 12, row, 16);
             HudDrawTiles(gUnk_085A6FFC + 16, 12, row + 1, 16);
             if (b == 0) {

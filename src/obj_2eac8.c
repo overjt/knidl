@@ -75,10 +75,10 @@ void sub_0802eba4(void)
 
     if (gCurTask->unk28 != -1)
     {
-        RequestCopy(4, (u32)&gUnk_085A0638[gCurTask->unk28 * 384], 0x06012180, 128);
+        RequestCopy(4, (u32)&gUnk_085A0638[gCurTask->unk28 * 384], OBJ_VRAM0 + 0x2180, 128);
         src = gUnk_085A0638;
-        RequestCopy(4, (u32)(src + (gCurTask->unk28 * 384 + 128)), 0x06012580, 128);
-        RequestCopy(4, (u32)(src + (gCurTask->unk28 * 384 + 256)), 0x06012980, 128);
+        RequestCopy(4, (u32)(src + (gCurTask->unk28 * 384 + 128)), OBJ_VRAM0 + 0x2580, 128);
+        RequestCopy(4, (u32)(src + (gCurTask->unk28 * 384 + 256)), OBJ_VRAM0 + 0x2980, 128);
         gCurTask->unk28 = -1;
     }
 }
@@ -146,10 +146,10 @@ void BossDoorSignUpdate(void)
 
     if (gCurTask->unk2C != -1)
     {
-        RequestCopy(4, (u32)gUnk_085A0C38[gCurTask->unk2C * 9], 0x06012100, 96);
+        RequestCopy(4, (u32)gUnk_085A0C38[gCurTask->unk2C * 9], OBJ_VRAM0 + 0x2100, 96);
         src = (u8 *)gUnk_085A0C38;
-        RequestCopy(4, (u32)(src + (gCurTask->unk2C * 9 + 3) * 32), 0x06012500, 96);
-        RequestCopy(4, (u32)(src + (gCurTask->unk2C * 9 + 6) * 32), 0x06012900, 96);
+        RequestCopy(4, (u32)(src + (gCurTask->unk2C * 9 + 3) * 32), OBJ_VRAM0 + 0x2500, 96);
+        RequestCopy(4, (u32)(src + (gCurTask->unk2C * 9 + 6) * 32), OBJ_VRAM0 + 0x2900, 96);
         gCurTask->unk2C = -1;
     }
 }
@@ -223,22 +223,22 @@ void sub_0802ee88(void)
         switch (t->unk18)
         {
         case 0:
-            RequestCopy(4, (u32)&gUnk_085A12F8[idx * 768], 0x06011100, 256);
+            RequestCopy(4, (u32)&gUnk_085A12F8[idx * 768], OBJ_VRAM0 + 0x1100, 256);
             src = gUnk_085A12F8;
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), 0x06011500, 256);
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), 0x06011900, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
             break;
         case 1:
-            RequestCopy(4, (u32)&gUnk_085A1BF8[idx * 768], 0x06011100, 256);
+            RequestCopy(4, (u32)&gUnk_085A1BF8[idx * 768], OBJ_VRAM0 + 0x1100, 256);
             src = gUnk_085A1BF8;
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), 0x06011500, 256);
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), 0x06011900, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
             break;
         case 2:
-            RequestCopy(4, (u32)&gUnk_085A24F8[idx * 768], 0x06011100, 256);
+            RequestCopy(4, (u32)&gUnk_085A24F8[idx * 768], OBJ_VRAM0 + 0x1100, 256);
             src = gUnk_085A24F8;
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), 0x06011500, 256);
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), 0x06011900, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
             break;
         }
         gCurTask->unk28 = -1;

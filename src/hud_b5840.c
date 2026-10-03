@@ -112,11 +112,11 @@ s32 LoadRoomMidBossGfx(u8 *e, s32 i, s32 k)
         if (*(u16 *)(d5 + 6) != 0)
         {
             LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + OBJ_VRAM0, *(u16 *)(d5 + 2) << 5);
         }
         else
         {
-            RequestCopy(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + OBJ_VRAM0, *(u16 *)(d5 + 2) << 5);
         }
     }
     if (*(u16 *)d5 != 0)
@@ -158,11 +158,11 @@ s32 LoadRoomBossGfx(u8 *e, s32 i, s32 k)
         if (*(u16 *)(d5 + 6) != 0)
         {
             LZ77UnCompVram((void *)*(u32 *)(d5 + 12), (void *)gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (*(s16 *)(p6 + 2) << 6) + OBJ_VRAM0, *(u16 *)(d5 + 2) << 5);
         }
         else
         {
-            RequestCopy(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + 0x06010000, *(u16 *)(d5 + 2) << 5);
+            RequestCopy(4, *(u32 *)(d5 + 12), (*(s16 *)(p6 + 2) << 6) + OBJ_VRAM0, *(u16 *)(d5 + 2) << 5);
         }
     }
     if (*(u16 *)d5 != 0)
@@ -191,11 +191,11 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
         if (d->tilesCompressed != 0)
         {
             LZ77UnCompVram((void *)d->tiles, gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, 0x06010000, d->tileCount << 5);
+            RequestCopy(4, (u32)gUnk_02020000, OBJ_VRAM0, d->tileCount << 5);
         }
         else
         {
-            RequestCopy(4, d->tiles, 0x06010000, d->tileCount << 5);
+            RequestCopy(4, d->tiles, OBJ_VRAM0, d->tileCount << 5);
         }
     }
     if (d->paletteBankCount != 0)
@@ -238,11 +238,11 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
         if (d->tilesCompressed != 0)
         {
             LZ77UnCompVram((void *)d->tiles, gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, (gRoomObjectGfxSlots[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (gRoomObjectGfxSlots[n].unk2 << 6) + OBJ_VRAM0, d->tileCount << 5);
         }
         else
         {
-            RequestCopy(4, d->tiles, (gRoomObjectGfxSlots[n].unk2 << 6) + 0x06010000, d->tileCount << 5);
+            RequestCopy(4, d->tiles, (gRoomObjectGfxSlots[n].unk2 << 6) + OBJ_VRAM0, d->tileCount << 5);
         }
     }
     if (d->paletteBankCount != 0)

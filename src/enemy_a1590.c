@@ -2762,7 +2762,7 @@ void sub_080a488c(void)
         t = gCurTask;
         x = t->tileWord;
         x &= 0x7FF;
-        dst = (x << 5) + 0x0600FE00;
+        dst = (x << 5) + (BG_VRAM + 0xFE00);
         act = t->u8C.actor;
         gt = t->frameTable;
         if (t->frame != -1)

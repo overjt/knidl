@@ -17,7 +17,7 @@ s32 WriteSaveSlot(s32 a)
     n = 0;
     for (i = 0; i < 2; i++)
     {
-        if (WriteSramEx((u8 *)&gSaveSlots[a], (u8 *)((a << 9) + 0x0E000200 + i * 256), 256) != 0)
+        if (WriteSramEx((u8 *)&gSaveSlots[a], (u8 *)((a << 9) + (SRAM_START + 0x200) + i * 256), 256) != 0)
             n++;
     }
     return n;

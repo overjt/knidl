@@ -297,13 +297,13 @@ void sub_08029194(void)
 
 void LoadBg2Gfx(void)
 {
-    RequestCopy(8, (u32)gCurRoomDef->bg2Tiles, 0x06004000, 0);
+    RequestCopy(8, (u32)gCurRoomDef->bg2Tiles, BG_VRAM + 0x4000, 0);
     RequestCopy(2, (u32)(gCurRoomDef->bg2Palette + 1), (u32)gUnk_030012B0, gCurRoomDef->bg2Palette[0]);
 }
 
 void LoadBg3Gfx(void)
 {
-    RequestCopy(8, (u32)gCurRoomDef->bg3Tiles, 0x06008000, 0);
+    RequestCopy(8, (u32)gCurRoomDef->bg3Tiles, BG_VRAM + 0x8000, 0);
     RequestCopy(2, (u32)(gCurRoomDef->bg3Palette + 1), (u32)(gObjPalette - gCurRoomDef->bg3Palette[0]), gCurRoomDef->bg3Palette[0]);
 }
 
@@ -313,9 +313,9 @@ void ClearBg2Bg3Maps(void)
     u32 b;
 
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     b = 0;
-    CpuFastSet(&b, (u32 *)0x06003000, 0x01000400);
+    CpuFastSet(&b, (u32 *)(BG_VRAM + 0x3000), 0x01000400);
 }
 
 void SelectBg3MapShape(void)
@@ -335,7 +335,7 @@ void SelectBg3MapShape(void)
 
 void LoadBg3Map(void)
 {
-    RequestCopy(8, (u32)gCurRoomDef->bg3Map + 8, 0x06003000, 0);
+    RequestCopy(8, (u32)gCurRoomDef->bg3Map + 8, BG_VRAM + 0x3000, 0);
 }
 
 void SpawnRoomObjectsInView(void)

@@ -148,7 +148,7 @@ void sub_0801a310(void)
     if (t->frame == -1)
         return;
     prio = t->tileWord;
-    dst = ((prio & 0x7FF) << 5) + 0x0600FE00;
+    dst = ((prio & 0x7FF) << 5) + (BG_VRAM + 0xFE00);
     g = (struct TaskGfx *)t->frameTable[t->frame];
     p = g->tiles;
     if (*p != 0xFFFF)

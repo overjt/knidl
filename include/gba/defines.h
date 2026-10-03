@@ -29,6 +29,14 @@
 #define VRAM        0x06000000u
 #define OAM         0x07000000u
 
+/* Their halves (pret names): BG and OBJ palettes, BG and OBJ tile VRAM
+ * (text modes), and the cartridge SRAM window. */
+#define BG_PLTT     PLTT
+#define OBJ_PLTT    (PLTT + 0x200)
+#define BG_VRAM     VRAM
+#define OBJ_VRAM0   (VRAM + 0x10000)
+#define SRAM_START  0x0E000000u
+
 /* GBA interrupt vector / check / sound-info pointers (conventional) */
 #define INTR_CHECK   (*(volatile unsigned short *)0x03007FF8u)
 #define INTR_VECTOR  (*(void (*volatile *)(void))0x03007FFCu)

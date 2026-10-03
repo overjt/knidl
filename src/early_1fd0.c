@@ -155,7 +155,7 @@ void BeginFadeOutToBlack(void)
 
 u32 CheckWarmBoot(void)
 {
-    vu8 *p = (vu8 *)0x03000000;
+    vu8 *p = (vu8 *)IWRAM_START;
     u32 ok = 1;
     u32 i;
     u32 c;

@@ -70,7 +70,7 @@ void HudClearTilemap(void)
 void HudFlushTilemap(void)
 {
     if (gHudTilemapDirty != 0) {
-        RequestCopy(1, (u32)gHudTilemap, 0x06001000, 0x800);
+        RequestCopy(1, (u32)gHudTilemap, BG_VRAM + 0x1000, 0x800);
         gHudTilemapDirty = 0;
     }
 }

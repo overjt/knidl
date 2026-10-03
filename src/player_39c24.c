@@ -250,7 +250,7 @@ void PlayerActionExitDoor(void)
             break;
         }
         LZ77UnCompWram(gUnk_080D07C8, gUnk_02020000);
-        RequestCopy(3, (u32)gUnk_080DCC68, 0x06014000, 0x400);
+        RequestCopy(3, (u32)gUnk_080DCC68, OBJ_VRAM0 + 0x4000, 0x400);
         sub_08027850(gCurTaskIdx);
         {
             struct Task *t = gCurTask;
@@ -425,7 +425,7 @@ void PlayerActionExitDoor(void)
         TaskSetSkipMask(0, gCurTaskIdx);
         gCurTask->spriteFlags = 0x4000;
         sub_08026704(i);
-        RequestCopy(3, (u32)gUnk_02020000, 0x06014000, 0x400);
+        RequestCopy(3, (u32)gUnk_02020000, OBJ_VRAM0 + 0x4000, 0x400);
         sub_08027908();
         PlayerSetMotionXPreset(10, 14);
         if (!(gCurTask->waterFlags & 1))

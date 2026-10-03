@@ -444,7 +444,7 @@ void MapEventStageUnlockPan(void)
         TaskYieldTrampoline(1);
     }
     PauseBlockAnims();
-    RequestCopy(6, 0, 0x06001800, 0x800);
+    RequestCopy(6, 0, BG_VRAM + 0x1800, 0x800);
     if (gCurTask->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
         gWarpStarStationDoorRevealed++;
     TaskYieldTrampoline(20);
@@ -629,7 +629,7 @@ void MapEventBigSwitchUnlockPan(void)
         TaskYieldTrampoline(1);
     }
     PauseBlockAnims();
-    RequestCopy(6, 0, 0x06001800, 0x800);
+    RequestCopy(6, 0, BG_VRAM + 0x1800, 0x800);
     if (gCurTask->unk24 != 0 && gWarpStarStationDoorRevealed == 0)
         gWarpStarStationDoorRevealed++;
     TaskYieldTrampoline(20);

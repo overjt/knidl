@@ -168,7 +168,7 @@ void InitTasks(void)
     }
 
     fill = 0xFFFF;
-    CpuSet((const void *)&fill, (void *)0x0203BF00, 0x01002000);
+    CpuSet((const void *)&fill, (void *)(EWRAM_START + 0x3BF00), 0x01002000);
     fill2 = 0;
     CpuSet(&fill2, gTasks, 0x01001200);
 

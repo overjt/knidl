@@ -374,7 +374,7 @@ void LoadRoom(void)
     CameraWriteScrollParallax();
     SpawnRoomObjectsInView();
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     switch (gRoomBgLayout)
     {
     default:
@@ -463,7 +463,7 @@ void sub_080233e0(void)
         gBg3Pos[0] = gUnk_02004B80;
     CameraWriteScrollParallax();
     a = 0;
-    CpuFastSet(&a, (u32 *)0x06002000, 0x01000400);
+    CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);
     if (gRoomBgLayout == 1)
     {
         DrawBg2View(gCameraPos[0], gCameraPos[1]);

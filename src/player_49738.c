@@ -127,15 +127,15 @@ void sub_08049a58(void)
 
     if (t->player->ability == 2) {
         u8 *src = gUnk_081BE45C;
-        RequestCopy(1, src, (void *)(off + 0x06010100), 128);
-        RequestCopy(1, src + 128, (void *)(off + 0x06010500), 128);
-        RequestCopy(1, src + 256, (void *)(off + 0x06010900), 128);
-        RequestCopy(1, src + 384, (void *)(off + 0x06010D00), 128);
+        RequestCopy(1, src, (void *)(off + (OBJ_VRAM0 + 0x100)), 128);
+        RequestCopy(1, src + 128, (void *)(off + (OBJ_VRAM0 + 0x500)), 128);
+        RequestCopy(1, src + 256, (void *)(off + (OBJ_VRAM0 + 0x900)), 128);
+        RequestCopy(1, src + 384, (void *)(off + (OBJ_VRAM0 + 0xD00)), 128);
         if (gInHub != 0) {
-            RequestCopy(1, src, (void *)(off + 0x06010180), 128);
-            RequestCopy(1, src + 128, (void *)(off + 0x06010580), 128);
-            RequestCopy(1, src + 256, (void *)(off + 0x06010980), 128);
-            RequestCopy(1, src + 384, (void *)(off + 0x06010D80), 128);
+            RequestCopy(1, src, (void *)(off + (OBJ_VRAM0 + 0x180)), 128);
+            RequestCopy(1, src + 128, (void *)(off + (OBJ_VRAM0 + 0x580)), 128);
+            RequestCopy(1, src + 256, (void *)(off + (OBJ_VRAM0 + 0x980)), 128);
+            RequestCopy(1, src + 384, (void *)(off + (OBJ_VRAM0 + 0xD80)), 128);
         }
     }
 }
