@@ -8,8 +8,11 @@
  * ActorLoadDefSlot (src/actor_63698.c) read an ActorDef when a task binds
  * it (Actor.def); ActorDef.unk10 becomes Actor.unk60, the ActorAux whose
  * altAttackBox becomes gAttackBox (src/actor_673ec.c).  The six pointer
- * tables are src/data/actor_defs.c; the rest of actor_rodata (behaviour
- * tables, hit boxes, scripts) stays structure-only data between the runs.
+ * tables are src/data/actor_defs.c; since #167 the behaviour tables and
+ * scripts between the runs are src/data/actor_tables.c and the terrain
+ * handlers and hit reactions the records point at src/data/
+ * actor_handlers.c, while the hit boxes and other value data stay
+ * structure-only data in data/actor_rodata.s.
  *
  * Each run is a named section .actor_rec_<address>: linker.ld lists them
  * between the data pieces of actor_rodata inside ONE output section
