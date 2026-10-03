@@ -30,6 +30,19 @@ struct Unk02007D70Cmd
     /*0x04*/ void *unk4;
 };
 
+/* A BG animation palette fade (op 1's pointer; src/data/bg_anim_scripts.c):
+   BgAnimStartPaletteFade copies it into a gBgAnims[] slot and
+   BgAnimStepPaletteFade blends unkA colours from unk0 to unk4 into the
+   palette buffer at colour unk8, at unkC/256 per frame. */
+struct Unk0802D278
+{
+    /*0x00*/ u16 *unk0;
+    /*0x04*/ u16 *unk4;
+    /*0x08*/ u16 unk8;
+    /*0x0A*/ u16 unkA;
+    /*0x0C*/ u32 unkC;
+};
+
 struct Unk03004B00
 {
     /*0x00*/ u32 unk0;
@@ -88,13 +101,43 @@ extern u32 gUnk_0875599C[];
 extern u32 gWarpStarStationNumberFrames[];
 extern u32 gWarpStarStationLevelSignFrames[];
 extern u32 gMuseumAbilitySignFrames[];
-extern struct Unk02007D70Cmd **gRoomBgAnimScripts[];
+extern struct Unk02007D70Cmd *const *const gRoomBgAnimScripts[];
+/* The BG animation scripts (src/data/bg_anim_scripts.c), in address order. */
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script1[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script2[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script3[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script4[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script5[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script6[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script7[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script8[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet1Script9[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet2Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet3Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet4Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet5Script2[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet6Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet5Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet5Script1[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet6Script1[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet6Script2[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet7Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet8Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet10Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet10Script1[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet10Script2[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet12Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet9Script0[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet9Script1[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet9Script2[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet11Script1[];
+extern struct Unk02007D70Cmd gRoomBgAnimSet11Script0[];
 
 
 /* Functions (defined in the files named above each group). */
 
 struct Unk0802D25C;
-struct Unk0802D278;
 
 /* src/camera_296a0.c */
 void StreamBg2MapLooping(void);

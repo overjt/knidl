@@ -328,7 +328,86 @@
 0x080CFE20 0x080CFE2C data sram_id_string # The SRAM id string "AGB  KIRBY" (gSramIdString), WriteSramEx(.., 0x0E000000, 10) src/save_b7a9c.c:29 (#36 phase 2 run 3; formerly the head of lib_misc)
 0x080CFE2C 0x080D0788 data air_grind_rodata # Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gUnk_080D0398, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer
 0x080D0788 0x08334EC0 data sprite_sheets # Sprite sheets (asset, #36 phase 2 run 3): OAM template streams, tiles, palettes and struct TaskGfx records the frame tables reach; its head holds a RequestCopyList palette and the LZ77 streams gUnk_080D07C8/gUnk_080D1B78, its last 12 bytes the stage-count table gUnk_08334EB4
-0x08334EC0 0x0835CFD4 data room_bg_anims # Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c)
+0x08334EC0 0x083356E0 data room_bg_anims # Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c)
+0x083356E0 0x08335728 c_data bg_anim_083356e0 # src/data/bg_anim_scripts.c section .bg_anim_083356e0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08335728 0x08335B48 data room_bg_anims_08335728
+0x08335B48 0x08335B90 c_data bg_anim_08335b48 # src/data/bg_anim_scripts.c section .bg_anim_08335b48 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08335B90 0x08335DB0 data room_bg_anims_08335b90
+0x08335DB0 0x08335DF8 c_data bg_anim_08335db0 # src/data/bg_anim_scripts.c section .bg_anim_08335db0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08335DF8 0x08336618 data room_bg_anims_08335df8
+0x08336618 0x08336660 c_data bg_anim_08336618 # src/data/bg_anim_scripts.c section .bg_anim_08336618 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08336660 0x08336E80 data room_bg_anims_08336660
+0x08336E80 0x08336EC8 c_data bg_anim_08336e80 # src/data/bg_anim_scripts.c section .bg_anim_08336e80 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08336EC8 0x083376E8 data room_bg_anims_08336ec8
+0x083376E8 0x08337730 c_data bg_anim_083376e8 # src/data/bg_anim_scripts.c section .bg_anim_083376e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08337730 0x08337B50 data room_bg_anims_08337730
+0x08337B50 0x08337B98 c_data bg_anim_08337b50 # src/data/bg_anim_scripts.c section .bg_anim_08337b50 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08337B98 0x083396B8 data room_bg_anims_08337b98
+0x083396B8 0x08339700 c_data bg_anim_083396b8 # src/data/bg_anim_scripts.c section .bg_anim_083396b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08339700 0x08339B20 data room_bg_anims_08339700
+0x08339B20 0x08339B68 c_data bg_anim_08339b20 # src/data/bg_anim_scripts.c section .bg_anim_08339b20 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08339B68 0x08339D88 data room_bg_anims_08339b68
+0x08339D88 0x08339DD0 c_data bg_anim_08339d88 # src/data/bg_anim_scripts.c section .bg_anim_08339d88 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08339DD0 0x0833A0E8 data room_bg_anims_08339dd0
+0x0833A0E8 0x0833A120 c_data bg_anim_0833a0e8 # src/data/bg_anim_scripts.c section .bg_anim_0833a0e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833A120 0x0833ABB8 data room_bg_anims_0833a120
+0x0833ABB8 0x0833ABF0 c_data bg_anim_0833abb8 # src/data/bg_anim_scripts.c section .bg_anim_0833abb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833ABF0 0x0833EC10 data room_bg_anims_0833abf0
+0x0833EC10 0x0833EC58 c_data bg_anim_0833ec10 # src/data/bg_anim_scripts.c section .bg_anim_0833ec10 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833EC58 0x0833F45C data room_bg_anims_0833ec58
+0x0833F45C 0x0833F4C4 c_data bg_anim_0833f45c # src/data/bg_anim_scripts.c section .bg_anim_0833f45c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833F4C4 0x0833FCC8 data room_bg_anims_0833f4c4
+0x0833FCC8 0x0833FD30 c_data bg_anim_0833fcc8 # src/data/bg_anim_scripts.c section .bg_anim_0833fcc8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833FD30 0x0833FE30 data room_bg_anims_0833fd30
+0x0833FE30 0x0833FE40 c_data bg_anim_0833fe30 # src/data/bg_anim_scripts.c section .bg_anim_0833fe30 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833FE40 0x0833FF40 data room_bg_anims_0833fe40
+0x0833FF40 0x0833FF50 c_data bg_anim_0833ff40 # src/data/bg_anim_scripts.c section .bg_anim_0833ff40 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833FF50 0x08340050 data room_bg_anims_0833ff50
+0x08340050 0x08340088 c_data bg_anim_08340050 # src/data/bg_anim_scripts.c section .bg_anim_08340050 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340088 0x08340108 data room_bg_anims_08340088
+0x08340108 0x08340118 c_data bg_anim_08340108 # src/data/bg_anim_scripts.c section .bg_anim_08340108 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340118 0x08340198 data room_bg_anims_08340118
+0x08340198 0x083401A8 c_data bg_anim_08340198 # src/data/bg_anim_scripts.c section .bg_anim_08340198 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083401A8 0x08340228 data room_bg_anims_083401a8
+0x08340228 0x08340260 c_data bg_anim_08340228 # src/data/bg_anim_scripts.c section .bg_anim_08340228 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340260 0x08340360 data room_bg_anims_08340260
+0x08340360 0x08340370 c_data bg_anim_08340360 # src/data/bg_anim_scripts.c section .bg_anim_08340360 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340370 0x08340470 data room_bg_anims_08340370
+0x08340470 0x08340480 c_data bg_anim_08340470 # src/data/bg_anim_scripts.c section .bg_anim_08340470 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340480 0x08340580 data room_bg_anims_08340480
+0x08340580 0x08340590 c_data bg_anim_08340580 # src/data/bg_anim_scripts.c section .bg_anim_08340580 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340590 0x08340690 data room_bg_anims_08340590
+0x08340690 0x083406D0 c_data bg_anim_08340690 # src/data/bg_anim_scripts.c section .bg_anim_08340690 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083406D0 0x08340750 data room_bg_anims_083406d0
+0x08340750 0x08340760 c_data bg_anim_08340750 # src/data/bg_anim_scripts.c section .bg_anim_08340750 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340760 0x083407E0 data room_bg_anims_08340760
+0x083407E0 0x083407F0 c_data bg_anim_083407e0 # src/data/bg_anim_scripts.c section .bg_anim_083407e0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083407F0 0x08340870 data room_bg_anims_083407f0
+0x08340870 0x08340880 c_data bg_anim_08340870 # src/data/bg_anim_scripts.c section .bg_anim_08340870 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340880 0x08340900 data room_bg_anims_08340880
+0x08340900 0x08340940 c_data bg_anim_08340900 # src/data/bg_anim_scripts.c section .bg_anim_08340900 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340940 0x083447D0 data room_bg_anims_08340940
+0x083447D0 0x083447F8 c_data bg_anim_083447d0 # src/data/bg_anim_scripts.c section .bg_anim_083447d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083447F8 0x08344C08 data room_bg_anims_083447f8
+0x08344C08 0x08344C30 c_data bg_anim_08344c08 # src/data/bg_anim_scripts.c section .bg_anim_08344c08 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08344C30 0x08348248 data room_bg_anims_08344c30
+0x08348248 0x08348280 c_data bg_anim_08348248 # src/data/bg_anim_scripts.c section .bg_anim_08348248 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08348280 0x0834B898 data room_bg_anims_08348280
+0x0834B898 0x0834B8D0 c_data bg_anim_0834b898 # src/data/bg_anim_scripts.c section .bg_anim_0834b898 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0834B8D0 0x0834EEE8 data room_bg_anims_0834b8d0
+0x0834EEE8 0x0834EF20 c_data bg_anim_0834eee8 # src/data/bg_anim_scripts.c section .bg_anim_0834eee8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0834EF20 0x08350AF8 data room_bg_anims_0834ef20
+0x08350AF8 0x08350B30 c_data bg_anim_08350af8 # src/data/bg_anim_scripts.c section .bg_anim_08350af8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08350B30 0x08353248 data room_bg_anims_08350b30
+0x08353248 0x08353280 c_data bg_anim_08353248 # src/data/bg_anim_scripts.c section .bg_anim_08353248 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08353280 0x08355998 data room_bg_anims_08353280
+0x08355998 0x083559D0 c_data bg_anim_08355998 # src/data/bg_anim_scripts.c section .bg_anim_08355998 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083559D0 0x083580E8 data room_bg_anims_083559d0
+0x083580E8 0x08358120 c_data bg_anim_083580e8 # src/data/bg_anim_scripts.c section .bg_anim_083580e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08358120 0x0835B5BC data room_bg_anims_08358120
+0x0835B5BC 0x0835B604 c_data bg_anim_0835b5bc # src/data/bg_anim_scripts.c section .bg_anim_0835b5bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835B604 0x0835CF9C data room_bg_anims_0835b604
+0x0835CF9C 0x0835CFD4 c_data bg_anim_0835cf9c # src/data/bg_anim_scripts.c section .bg_anim_0835cf9c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0835CFD4 0x083A862C data room_data # Room records (#36 phase 2): 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list
 0x083A862C 0x083B5538 data room_metatiles # Room metatile tables (#36 phase 2): 23 LZ77 RoomDef.metatileTiles streams
 0x083B5538 0x083D0148 data room_bg3_maps # Room BG3 maps (#36 phase 2): 32 struct BgMap, 25 LZ77 and 7 raw
@@ -424,7 +503,7 @@
 0x087954C0 0x087C0A4C data bomb_rally_program # Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by sub_08007c5c (src/mode_07b68.c)
 0x087C0A4C 0x087E1D58 data air_grind_program # Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by sub_08007c5c (src/mode_07b68.c)
 0x087E1D58 0x087E1E78 c_data room_table # src/data/room_table.c (carved by tools/carve_data.py)
-0x087E1E78 0x087E1F58 data room_bg_anim_lists # Room BG-animation script lists (#36 phase 2): 12 NULL-ended lists of the 30 scripts and their index gRoomBgAnimScripts
+0x087E1E78 0x087E1F58 c_data room_bg_anim_lists # src/data/room_bg_anim_lists.c (carved by tools/carve_data.py)
 0x087E1F58 0x087E2570 c_data room_lists # src/data/room_lists.c (carved by tools/carve_data.py)
 0x087E2570 0x087E3088 data sprite_frame_lists # Sprite frame lists (#36 phase 2): 23 per-sheet lists of frame pointers, one per extended GfxHeader trailer; no code reference found
 0x087E3088 0x08800000 data zero_padding

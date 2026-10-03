@@ -39566,6 +39566,201 @@
       "asset": true
     },
     {
+      "name": "room_bg_anims_08335728",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08335b90",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08335df8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08336660",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08336ec8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08337730",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08337b98",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08339700",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08339b68",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08339dd0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833a120",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833abf0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833ec58",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833f4c4",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833fd30",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833fe40",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833ff50",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340088",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340118",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083401a8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340260",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340370",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340480",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340590",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083406d0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340760",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083407f0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340880",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340940",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083447f8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08344c30",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08348280",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0834b8d0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0834ef20",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08350b30",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08353280",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083559d0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08358120",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0835b604",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
       "name": "room_data",
       "asset": true
     },
@@ -39783,9 +39978,6 @@
     {
       "name": "air_grind_program",
       "asset": true
-    },
-    {
-      "name": "room_bg_anim_lists"
     },
     {
       "name": "sprite_frame_lists"
