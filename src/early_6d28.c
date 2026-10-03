@@ -61,6 +61,7 @@ struct SioMultiCnt
 
 /* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
+/* raw: REG_SIOMULTI0/REG_SIOCNT/REG_SIOMLT_SEND as symbols (lesson 3.523) */
 extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
 extern vu16 gUnk_04000128;      /* REG_SIOCNT */
 extern vu16 gUnk_0400012A;      /* REG_SIOMLT_SEND */

@@ -82,7 +82,8 @@ extern u8 gSendBufferEmpty;
 /* Per-client probe response cache (3 halfwords). */
 extern u16 gMultiBootClientData[];
 
-/* ROM */
+/* I/O registers as symbols.  raw: they stay symbols where the io_reg.h
+ * REG_* spelling changes a file's agbcc assembly (lesson 3.523) */
 extern vu16 gUnk_04000006; /* REG_VCOUNT */
 extern vu16 gUnk_0400010C; /* REG_TM3CNT_L */
 extern vu16 gUnk_0400010E; /* REG_TM3CNT_H */

@@ -72,7 +72,7 @@ s32 sub_080b6290(void)
         }
         vt = base[0] << 16;
         *pe = vt;
-        *pc = 0x04000014;
+        *pc = REG_ADDR_BG1HOFS;
         return 1;
     }
 }

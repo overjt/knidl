@@ -38,18 +38,16 @@
  * every mention.  See the batch report for the full analysis.
  */
 
-/* REG_SIOMULTI0..3 as an array.  UNRESOLVED (see the report): MultiBootHandShake
- * only reproduces the ROM through the cast literal (gcc rematerialises the
- * pool word at every mention), while MultiBootMain only reproduces the ROM's
- * instruction *count* through a symbol reference.  Both spell 0x04000120. */
+/* REG_SIOMULTI0..3 as an array: the io_reg.h constant (gcc rematerialises
+ * the pool word at every mention, lesson 3.482). */
 #define SIOMULTI  ((vu16 *)REG_ADDR_SIOMULTI0)
-#define SIOMULTI2 gUnk_04000120
 
 /* REG_IME must be reached through a SYMBOL here, not the io_reg.h cast
  * literal: with the literal, cse.c derives 0x04000208 from the still-live
  * 0x0400010C (REG_TM3CNT_L) as `adds r1,#252`, which removes one address
  * pseudo and shifts the whole register allocation by one.  The ROM pools
- * 0x04000208 on its own at every mention. */
+ * 0x04000208 on its own at every mention.
+ * raw: stays a symbol, REG_IME changes this file's allocation (lesson 3.523) */
 #define GIME gUnk_04000208
 
 /* The MultiBoot SWI thunk returns an error code; syscall.h declares it u8,

@@ -42,7 +42,7 @@ struct Pair { u32 a, b; };
 /* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
 extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
-extern vu16 gUnk_04000120;      /* REG_SIOMULTI0 */
+extern vu16 gUnk_04000120;      /* REG_SIOMULTI0; raw: a symbol (lesson 3.523) */
 extern u32 gChecksumAvailable;
 extern u32 gLinkRecvVCount;
 extern u16 gRecvNonzeroCheck;

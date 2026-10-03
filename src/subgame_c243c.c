@@ -425,7 +425,7 @@ void AirGrindBuildSky(void)
 
 void AirGrindSkyVBlankCallback(void)
 {
-    vu32 *dma = (vu32 *)0x040000B0;
+    vu32 *dma = (vu32 *)REG_ADDR_DMA0;
 
     REG_DMA0CNT_H = 0;
     *(vu16 *)0x05000000 = gAirGrindPtr->backdropColor;
