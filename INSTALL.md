@@ -129,8 +129,11 @@ a modified ROM (README.md, "For modders").
 
 ## Troubleshooting
 
-- **`make` fails with `baserom.gba: No such file or directory`** — step 2 was
+- **`make` stops with `error: baserom.gba not found`** — step 2 was
   skipped; place your dump at the repo root, named exactly `baserom.gba`.
+  Every target that reads it (`all`, `compare`, `progress`, `datastats`,
+  `shifttest`, `boottest`, `symbols`, `split`, `modmap`) checks for it
+  first; `check-headers`, `check-data` and `audit` need none.
 - **`make compare` reports a SHA-1 mismatch for `baserom.gba`/`knidl.gba`** —
   your dump has the wrong hash (wrong region, bad dump). Re-dump your own
   USA cartridge; never patch the expected hash to "make it pass".

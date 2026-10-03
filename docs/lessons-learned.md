@@ -230,8 +230,10 @@ reported a byte-identical ROM because that file was never recompiled.
 Any variable a host-side target expands must be defined ABOVE the split.  And
 treat `make clean` as something to verify, not assume: `make clean && ls build`
 should say `No such file or directory`.  Note also that bare `make` on the host
-only builds the Docker image - the real build is `make compare`, so "I ran
-`make` and it passed" proves nothing.
+only built the Docker image until #170 (the host branch's first rule, `image`,
+was the default goal); it now builds `knidl.gba`, but still without the check -
+the real build is `make compare`, so "I ran `make` and it passed" proves
+nothing.
 
 ## 2. Tooling pitfalls
 
