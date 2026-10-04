@@ -2305,10 +2305,10 @@ u32 gJavelinKnightVariants[2] ACTOR_TBL(08747aa4) = {
 /* include/enemy.h; CallTableEntry(i, 6, ...) in JavelinKnightEnterState */
 u32 gJavelinKnightStates[6] ACTOR_TBL(08747aa4) = {
     (u32)sub_0809d25c,
-    (u32)sub_0809d280,
+    (u32)JavelinKnightHop,
     (u32)sub_0809d30c,
     (u32)JavelinKnightJumpThrow,
-    (u32)sub_0809d56c,
+    (u32)JavelinKnightJump,
     (u32)sub_0809d638,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in JavelinKnightUpdate */

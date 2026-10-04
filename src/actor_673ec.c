@@ -69,21 +69,21 @@ void HeldPlayerUpdate(void)
         SetCameraFocus(gCurTask->pixelX, gCurTask->pixelY);
 }
 
-void sub_08067470(void)
+void HeldPlayerSwallow(void)
 {
     gCurTask->updateState = 0;
     sub_08068690();
-    while (sub_080687a0() == 0)
+    while (HeldPlayerIsNearCaptor() == 0)
     {
-        sub_08068760();
+        HeldPlayerPullTowardCaptor();
         TaskYieldTrampoline(1);
     }
     TaskStop();
-    sub_080687e0();
+    HeldPlayerEnterMouth();
     TaskSleepForever();
 }
 
-void sub_080674a8(void)
+void HeldPlayerSwallowUpdate(void)
 {
     struct Task *t;
 
@@ -97,18 +97,18 @@ void sub_080674a8(void)
     sub_080687fc();
 }
 
-void sub_080674d8(void)
+void HeldPlayerSpitFlight(void)
 {
     gCurTask->updateState = 1;
     sub_08068828();
     TaskSleepForever();
 }
 
-void sub_080674f4(void)
+void HeldPlayerSpitFlightUpdate(void)
 {
 }
 
-void sub_080674f8(void)
+void HeldPlayerSpitBounceOff(void)
 {
     struct Task *t;
 
@@ -120,7 +120,7 @@ void sub_080674f8(void)
     TaskSleepForever();
 }
 
-void sub_08067520(void)
+void HeldPlayerSpitBounceOffUpdate(void)
 {
     struct Task *t;
 
@@ -137,7 +137,7 @@ void sub_08067520(void)
     }
 }
 
-void sub_08067550(void)
+void HeldPlayerBackdropHeld(void)
 {
     struct Task *u;
     struct PlayerState *p;
@@ -167,13 +167,13 @@ void sub_08067550(void)
     }
     TaskSleepForever();
 }
-void sub_080675d8(void)
+void HeldPlayerBackdropHeldUpdate(void)
 {
-    sub_080675e4();
+    HeldPlayerFollowCaptorPose();
 }
 
 /* Follow the carried task's frame offsets out of gUnk_0873E1F8. */
-void sub_080675e4(void)
+void HeldPlayerFollowCaptorPose(void)
 {
     struct Task *t;
     struct Task *u;
@@ -209,7 +209,7 @@ void sub_080675e4(void)
 }
 
 /* Task body: the carried task's "thrown" arc. */
-void sub_080676c0(void)
+void HeldPlayerBackdropBounceOff(void)
 {
     struct Task *t;
     struct Task *u;
@@ -221,9 +221,9 @@ void sub_080676c0(void)
     u->moveCallback = (u32)PlayerMove;
     u->updateState = 4;
     TaskStop();
-    sub_08068a2c(-8, 512);
+    HeldPlayerDamage(-8, 512);
     if (gMetaKnightmareMode == 0)
-        sub_080675e4();
+        HeldPlayerFollowCaptorPose();
     t = gCurTask;
     t->unk28 = gTasks[t->parent].unk28;
     t->unk34 = 0;
@@ -297,7 +297,7 @@ void sub_080676c0(void)
     x->unk34 = x->unk34 + 1;
     TaskSleepForever();
 }
-void sub_08067908(void)
+void HeldPlayerBackdropBounceOffUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     TerrainCollideBox(gPlayerDefaultTerrainBox);
@@ -407,7 +407,7 @@ void sub_08067b24(void)
     t = gCurTask;
     t->posX = t->pixelX << 16;
     t->posY = t->pixelY << 16;
-    sub_08068a2c(-8, 512);
+    HeldPlayerDamage(-8, 512);
     t = gCurTask;
     t->unk34 = 0;
     if (t->health == 0)
@@ -506,7 +506,7 @@ void sub_08067d30(void)
     }
 }
 
-void sub_08067d78(void)
+void HeldPlayerThrowHeld(void)
 {
     struct Task *t;
 
@@ -517,7 +517,7 @@ void sub_08067d78(void)
 }
 
 /* Track the carrier's frame through the 5-word gUnk_0873E3C8 table. */
-void sub_08067db0(void)
+void HeldPlayerThrowHeldUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -550,7 +550,7 @@ void sub_08067db0(void)
 }
 
 /* Task body: the carried task struggling in the player's hands. */
-void sub_08067ea4(void)
+void HeldPlayerThrowFlightForward(void)
 {
     struct Task *t;
     struct Task *u;
@@ -614,7 +614,7 @@ void sub_08067ea4(void)
     TaskSleepForever();
 }
 
-void sub_08068028(void)
+void HeldPlayerThrowFlightForwardUpdate(void)
 {
     struct Task *t;
 
@@ -627,17 +627,17 @@ void sub_08068028(void)
         t = gCurTask;
         t->facing = -t->facing;
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
     else if (gCurTask->onGround & 1)
     {
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
 }
 
 /* Task body: the carried task struggling, mirrored variant. */
-void sub_080680ac(void)
+void HeldPlayerThrowFlightBackward(void)
 {
     struct Task *t;
     struct Task *u;
@@ -694,7 +694,7 @@ void sub_080680ac(void)
     TaskSleepForever();
 }
 
-void sub_08068224(void)
+void HeldPlayerThrowFlightBackwardUpdate(void)
 {
     struct Task *t;
 
@@ -707,15 +707,15 @@ void sub_08068224(void)
         t = gCurTask;
         t->facing = -t->facing;
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
     else if (gCurTask->onGround & 1)
     {
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
 }
-void sub_080682a8(void)
+void HeldPlayerThrowBounceOff(void)
 {
     struct Task *t;
     struct Task *u;
@@ -726,7 +726,7 @@ void sub_080682a8(void)
     t->moveCallback = (u32)PlayerMove;
     t->updateState = 10;
     TaskStop();
-    sub_08068a2c(-8, 512);
+    HeldPlayerDamage(-8, 512);
     u = gCurTask;
     u->unk34 = 0;
     if (u->health == 0)
@@ -791,7 +791,7 @@ void sub_080682a8(void)
     w->unk34 = w->unk34 + 1;
     TaskSleepForever();
 }
-void sub_08068460(void)
+void HeldPlayerThrowBounceOffUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     TerrainCollideBox(gPlayerDefaultTerrainBox);
@@ -943,7 +943,7 @@ void sub_08068690(void)
         TaskSetFrame(0x123B);
     }
 }
-void sub_08068760(void)
+void HeldPlayerPullTowardCaptor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -964,7 +964,7 @@ void sub_08068760(void)
     else
         u->velY = -v;
 }
-u32 sub_080687a0(void)
+u32 HeldPlayerIsNearCaptor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -980,7 +980,7 @@ u32 sub_080687a0(void)
     else
         return 0;
 }
-void sub_080687e0(void)
+void HeldPlayerEnterMouth(void)
 {
     gUnk_02007D00[0] = 1;
     gCurTask->frame = 0xFFFF;
@@ -1032,7 +1032,7 @@ void sub_08068840(void)
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 0x2000, 0x30000);
     gCurTask->onGround = 0;
-    if (sub_08068a2c(-8, 256) != 0)
+    if (HeldPlayerDamage(-8, 256) != 0)
         SetPlayerInvulnerability(1, 96, gCurTaskIdx);
     v = gCurTask;
     if (v->health != 0)
@@ -1094,7 +1094,7 @@ void ReleaseHeldPlayer(s32 i, u8 d)
     PlayerResumeControl(i, 6, 0, 0);
     p->unk14 = 4;
 }
-s32 sub_08068a2c(s32 a, s32 b)
+s32 HeldPlayerDamage(s32 a, s32 b)
 {
     struct Task *t;
     s32 r;

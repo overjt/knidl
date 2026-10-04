@@ -360,10 +360,10 @@ void sub_0809d25c(void)
     gCurTask->updateState = 0;
     gCurTask->unk28 = 3;
     ActorSetState(1);
-    sub_0809d280();
+    JavelinKnightHop();
 }
 
-void sub_0809d280(void)
+void JavelinKnightHop(void)
 {
     gCurTask->updateState = 0;
     TaskYieldTrampoline(2);
@@ -519,7 +519,7 @@ void sub_0809d568(void)
 {
 }
 
-void sub_0809d56c(void)
+void JavelinKnightJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -609,7 +609,7 @@ void sub_0809d6dc(void)
     } while ((s16)++gCurTask->unk6C <= 3);
 }
 
-void sub_0809d71c(void)
+void JavelinKnightChooseNextState(void)
 {
     struct Task *t;
 

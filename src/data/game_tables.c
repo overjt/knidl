@@ -555,31 +555,31 @@ u32 gUnk_0873E284[1] GAME_TBL(0873e284) = {
 /* ---- 0x0873E2F0-0x0873E348: 2 table(s), 22 function pointer(s), section .game_tbl_0873e2f0 ---- */
 /* include/actor.h; CallTableEntry(i, 11, ...) in HeldPlayerInit, HeldPlayerEnterState */
 u32 gHeldPlayerStates[11] GAME_TBL(0873e2f0) = {
-    (u32)sub_08067470,
-    (u32)sub_080674d8,
-    (u32)sub_080674f8,
-    (u32)sub_08067550,
-    (u32)sub_080676c0,
+    (u32)HeldPlayerSwallow,
+    (u32)HeldPlayerSpitFlight,
+    (u32)HeldPlayerSpitBounceOff,
+    (u32)HeldPlayerBackdropHeld,
+    (u32)HeldPlayerBackdropBounceOff,
     (u32)sub_08067950,
     (u32)sub_08067b24,
-    (u32)sub_08067d78,
-    (u32)sub_08067ea4,
-    (u32)sub_080680ac,
-    (u32)sub_080682a8,
+    (u32)HeldPlayerThrowHeld,
+    (u32)HeldPlayerThrowFlightForward,
+    (u32)HeldPlayerThrowFlightBackward,
+    (u32)HeldPlayerThrowBounceOff,
 };
 /* include/actor.h; CallTableEntry(i, 11, ...) in HeldPlayerUpdate */
 u32 gHeldPlayerStateUpdates[11] GAME_TBL(0873e2f0) = {
-    (u32)sub_080674a8,
-    (u32)sub_080674f4,
-    (u32)sub_08067520,
-    (u32)sub_080675d8,
-    (u32)sub_08067908,
+    (u32)HeldPlayerSwallowUpdate,
+    (u32)HeldPlayerSpitFlightUpdate,
+    (u32)HeldPlayerSpitBounceOffUpdate,
+    (u32)HeldPlayerBackdropHeldUpdate,
+    (u32)HeldPlayerBackdropBounceOffUpdate,
     (u32)sub_08067a48,
     (u32)sub_08067d30,
-    (u32)sub_08067db0,
-    (u32)sub_08068028,
-    (u32)sub_08068224,
-    (u32)sub_08068460,
+    (u32)HeldPlayerThrowHeldUpdate,
+    (u32)HeldPlayerThrowFlightForwardUpdate,
+    (u32)HeldPlayerThrowFlightBackwardUpdate,
+    (u32)HeldPlayerThrowBounceOffUpdate,
 };
 
 /* ---- 0x0873E5BC-0x0873E5F8: 2 table(s), 15 function pointer(s), section .game_tbl_0873e5bc ---- */

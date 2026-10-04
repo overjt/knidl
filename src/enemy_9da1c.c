@@ -105,7 +105,7 @@ u8 sub_0809db48(void)
             }
             else
             {
-                sub_0809d71c();
+                JavelinKnightChooseNextState();
                 return 0;
             }
         }
