@@ -401,7 +401,7 @@ void Task_MrTickTock(void)
     u->frameTable = gMrTickTockFrames;
     gUnk_02007D00[0]++;
     u->mrTickTockFlashEnabled = 1;
-    u->mrTickTockDustTrailSlot = zero;
+    u->actorDustTrailSlot = zero;
     sub_080666cc(gUnk_08745744);
     sub_08066ae0();
     CallTableEntry(gCurTask->variant, 1, gMrTickTockVariants);
@@ -760,7 +760,7 @@ void MrTickTockDash(void)
     t->updateState = 6;
     u = gCurTask;
     u->mrTickTockStatePhase = zero;
-    gCurTask->mrTickTockDustTrailSlot = CreateDustTrail(1, 10, -12, 16);
+    gCurTask->actorDustTrailSlot = CreateDustTrail(1, 10, -12, 16);
     TaskStop();
     switch (gCurTask->actorSpawnArg)
     {
@@ -1497,7 +1497,7 @@ void MrTickTockState20(void)
     u = gCurTask;
     u->mrTickTockTimer = 32;
     CreateStarFlash(1, 0, 0);
-    gCurTask->mrTickTockDustTrailSlot = CreateDustTrail(0, 4, 8, 24);
+    gCurTask->actorDustTrailSlot = CreateDustTrail(0, 4, 8, 24);
     TaskStop();
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
     v = gCurTask;

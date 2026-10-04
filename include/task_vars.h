@@ -444,7 +444,6 @@
 #define mrFrostyHopsLeft unk30 /* s32: jumps MrFrostyHop makes, from gUnk_0874561F (stored when state 1 is picked) */
 #define mrFrostyTimer unk30 /* s32: frames left of the running state's timed part (or of the wait, set by the state before) */
 #define mrFrostyIceCubeTurnsLeft unk34 /* s32: times the ice-cube state 8 may still be picked before state 2 or 1 must come (2) */
-#define mrFrostyDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143) of the dash or the defeat slide */
 #define mrFrostyLoopCount unk6C /* s16: the running state's loop counter (wind-up cycles), counted from 0 */
 
 /* MrFrostyIceCube - Mr. Frosty's ice cube (task type #115,
@@ -499,7 +498,6 @@
 #define mrTickTockHopsLeft unk30 /* s32: jumps left in state 2 (MrTickTockHop), from gUnk_087456D0 */
 #define mrTickTockTimer unk30 /* s32: frames left (or, in state 16, frames since its start) of the running state's timed part */
 #define mrTickTockCheckPhase unk34 /* s32: step of sub_08099db0's count; every fourth call enters state 9 */
-#define mrTickTockDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143) of the dash; TaskFreeDustTrail frees it */
 #define mrTickTockLoopCount unk6C /* s16: iterations of the running state's frame loop, counted from 0 */
 #define mrTickTockNoteOffsetX unk6C /* s16: the X offset of the note CreateMrTickTockNote spawns, gUnk_087456CC[unk70] */
 #define mrTickTockRingSlot unk6C /* s16: the ring actor (task type #118) state 8 created; stored, never read */

@@ -342,7 +342,7 @@ void Task_MrFrosty(void)
     sub_080666cc(gUnk_08745624);
     u = gCurTask;
     u->mrFrostyFlashEnabled = 1;
-    u->mrFrostyDustTrailSlot = zero;
+    u->actorDustTrailSlot = zero;
     sub_08066ae0();
     CallTableEntry(gCurTask->variant, 1, gMrFrostyVariants);
 }
@@ -548,7 +548,7 @@ void MrFrostyDash(void)
 
     t = gCurTask;
     t->updateState = 3;
-    gCurTask->mrFrostyDustTrailSlot = CreateDustTrail(1, 10, -8, 24);
+    gCurTask->actorDustTrailSlot = CreateDustTrail(1, 10, -8, 24);
     PlaySfx(502);
     v = gCurTask;
     switch (v->actorSpawnArg)
@@ -625,7 +625,7 @@ void MrFrostyState5(void)
     v = gCurTask;
     v->velY = -65536;
     RequestScreenShake(2);
-    gCurTask->mrFrostyDustTrailSlot = CreateDustTrail(0, 4, 8, 24);
+    gCurTask->actorDustTrailSlot = CreateDustTrail(0, 4, 8, 24);
     CreateStarFlash(0, 0, 24);
     TaskSetFrame(24);
     TaskSleepForever();
@@ -996,7 +996,7 @@ void MrFrostyState14(void)
     u = gCurTask;
     u->mrFrostyTimer = 32;
     CreateStarFlash(1, 0, 0);
-    gCurTask->mrFrostyDustTrailSlot = CreateDustTrail(0, 4, 8, 24);
+    gCurTask->actorDustTrailSlot = CreateDustTrail(0, 4, 8, 24);
     TaskStop();
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
     v = gCurTask;
