@@ -201,8 +201,8 @@ shifttest: $(ELF)
 # frame whose video, audio or RAM differs, or when a script's `expect` no
 # longer holds on the reference.  BOOTTEST_AT picks the points (section
 # names; default: shiftcheck.py's), BOOTTEST_INPUT the scripts (default:
-# the CI set below), BOOTTEST_FRAMES the length (default: each script's
-# plus 600 frames).
+# all four, as CI runs them), BOOTTEST_FRAMES the length (default: each
+# script's plus 600 frames).
 BOOTTEST_DIR   := $(BUILD_DIR)/boottest
 BOOTTEST_SYMS  := $(BOOTTEST_DIR)/syms.txt
 BOOTTEST_INPUT := tools/boottest/input.txt tools/boottest/subgames.txt tools/boottest/gameover.txt tools/boottest/level1.txt
