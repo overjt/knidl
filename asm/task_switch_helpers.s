@@ -21,7 +21,7 @@ TaskSwitch:
 	.arm
 	stmfd	sp!, {lr}
 	push	{r4, r5, r6, r7, r8, r9, sl, fp}
-	ldr	r3, [pc, #164]	@ 0x080002E8
+	ldr	r3, [pc, #:pc_g0:(task_literals - 8)]	@ 0x080002E8
 	str	sp, [r3]
 	mov	sp, r2
 	pop	{r4, r5, r6, r7, r8, r9, sl, fp}
@@ -32,13 +32,13 @@ TaskSwitch:
 TaskYield:
 	.arm
 	push	{r4, r5, r6, r7, r8, r9, sl, fp}
-	ldr	r3, [pc, #136]	@ 0x080002EC
+	ldr	r3, [pc, #:pc_g0:(task_literals + 0x4 - 8)]	@ 0x080002EC
 	str	sp, [r3]
-	ldr	r3, [pc, #132]	@ 0x080002F0
+	ldr	r3, [pc, #:pc_g0:(task_literals + 0x8 - 8)]	@ 0x080002F0
 	str	lr, [r3]
-	ldr	r3, [pc, #128]	@ 0x080002F4
+	ldr	r3, [pc, #:pc_g0:(task_literals + 0xC - 8)]	@ 0x080002F4
 	str	r0, [r3]
-	ldr	r3, [pc, #124]	@ 0x080002F8
+	ldr	r3, [pc, #:pc_g0:(task_literals + 0x10 - 8)]	@ 0x080002F8
 	ldr	sp, [r3]
 	pop	{r4, r5, r6, r7, r8, r9, sl, fp}
 	ldmfd	sp!, {r1}
@@ -46,10 +46,10 @@ TaskYield:
 	.global	TaskExit
 TaskExit:
 	.arm
-	ldr	r0, [pc, #108]	@ 0x080002FC
+	ldr	r0, [pc, #:pc_g0:(task_literals + 0x14 - 8)]	@ 0x080002FC
 	ldr	r0, [r0]
 	bl	sub_080cfddc	@ 0x080CFDDC
-	ldr	r3, [pc, #100]	@ 0x08000300
+	ldr	r3, [pc, #:pc_g0:(task_literals + 0x18 - 8)]	@ 0x08000300
 	ldr	sp, [r3]
 	pop	{r4, r5, r6, r7, r8, r9, sl, fp}
 	ldmfd	sp!, {r1}
@@ -59,14 +59,14 @@ sub_080002a8:
 	.arm
 	mov	r2, #0
 	sub	r2, r2, #1
-	ldr	r3, [pc, #76]	@ 0x08000304
+	ldr	r3, [pc, #:pc_g0:(task_literals + 0x1C - 8)]	@ 0x08000304
 	ldr	r3, [r3]
 	cmp	r2, r3
 	bne	.L_080002e0	@ 0x080002E0
-	ldr	r3, [pc, #64]	@ 0x08000308
+	ldr	r3, [pc, #:pc_g0:(task_literals + 0x20 - 8)]	@ 0x08000308
 	ldr	r3, [r3]
 	lsls	r3, r3, #2
-	ldr	r2, [pc, #56]	@ 0x0800030C
+	ldr	r2, [pc, #:pc_g0:(task_literals + 0x24 - 8)]	@ 0x0800030C
 	add	r2, r2, r3
 	ldr	r2, [r2]
 	cmp	r2, #0

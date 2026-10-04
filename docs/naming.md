@@ -33,6 +33,7 @@ everywhere it lives and logs it in `docs/analysis/renames.csv`.
 | Functions | `PascalCase` | `MultiBootInit`, `TaskCreate` |
 | Task-type bodies (entries of the task-type table `0x0872FF30`) | `Task_<Thing>` | `Task_TitleScreen` |
 | Globals (RAM cells, ROM tables) | `g` + `PascalCase` | `gMultiBootParam`, `gTaskTypes` |
+| I/O registers kept as symbols (asm pools, lesson 3.523) | `gReg` + the GBATEK name in `PascalCase` | `gRegIme`, `gRegSound1CntL` (`REG_<NAME>` is `include/gba/io_reg.h`'s macro, which C code uses everywhere else) |
 | File-local statics | `s` + `PascalCase` | `sLinkTimer` |
 | Struct and union tags, typedefs | `PascalCase` | `struct Task`, `struct RoomDef` |
 | Struct fields | `camelCase` | `posX`, `sleepFrames`, `frameTable` (section 2.2) |
@@ -368,7 +369,7 @@ copies and module-local records).
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 173 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
-| I/O register | `gUnk_04*` | 4 | I/O registers kept as symbols: the m4a_1 and SoftReset asm pools (VCOUNT, SOUND1CNT_L, DMA1SAD, IME) and early_4734.c's IME, where REG_IME changes the allocation (lesson 3.523); the rest of the C spells REG_* |
+| I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
 | ROM label | `gUnk_08*` | 5851 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 2309 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |

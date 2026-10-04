@@ -271,7 +271,24 @@ DOCKER_RUN := docker run --rm -v $(CURDIR):/src -w /src $(IMAGE)
 # apart from the toolchain image.
 BOOTTEST_IMAGE := knidl-boottest
 
-.PHONY: image boottest-image all compare check-headers check-data audit progress datastats shifttest boottest symbols split modmap clean
+# `make` alone builds the ROM, as AGENTS.md and README say; without this the
+# first rule below, `image`, was the default goal and `make` only built the
+# toolchain image (#170).
+.DEFAULT_GOAL := all
+
+.PHONY: image boottest-image need-baserom all compare check-headers check-data audit progress datastats shifttest boottest symbols split modmap clean
+
+# The targets that read baserom.gba check for it first, before building any
+# image, and point at INSTALL.md instead of failing in the assembler with
+# `asm/rom_header.s:8: Error: file not found: baserom.gba` (#170).  CI calls
+# them only when it has a baserom, and runs its baserom-free steps inside the
+# image with INSIDE_DOCKER=1, so it never reaches this check.
+need-baserom:
+	@test -f baserom.gba || { \
+	  echo "error: baserom.gba not found in $(CURDIR)." >&2; \
+	  echo "       This target reads your own dump of the USA ROM (A7KE); see INSTALL.md section 2." >&2; \
+	  echo "       Targets that need no baserom: make check-headers, check-data, audit." >&2; \
+	  exit 1; }
 
 image:
 	docker build -t $(IMAGE) .
@@ -279,19 +296,19 @@ image:
 boottest-image:
 	docker build -t $(BOOTTEST_IMAGE) tools/boottest
 
-all: image
+all: need-baserom image
 	$(DOCKER_RUN) make all INSIDE_DOCKER=1 $(if $(MATCHING),MATCHING=$(MATCHING))
 
-compare: image
+compare: need-baserom image
 	$(DOCKER_RUN) make compare INSIDE_DOCKER=1
 
 check-headers: image
 	$(DOCKER_RUN) make check-headers INSIDE_DOCKER=1
 
-progress: image
+progress: need-baserom image
 	$(DOCKER_RUN) make progress INSIDE_DOCKER=1
 
-datastats: image
+datastats: need-baserom image
 	$(DOCKER_RUN) make datastats INSIDE_DOCKER=1
 
 check-data: image
@@ -300,12 +317,12 @@ check-data: image
 audit: image
 	$(DOCKER_RUN) make audit INSIDE_DOCKER=1
 
-shifttest: image
+shifttest: need-baserom image
 	$(DOCKER_RUN) make shifttest INSIDE_DOCKER=1
 
 # The boot test (docs/data.md section 8.4): link the shifted ROMs in the
 # toolchain image, then run them against knidl.gba in the emulator image.
-boottest: image boottest-image
+boottest: need-baserom image boottest-image
 	$(DOCKER_RUN) make boottest-roms INSIDE_DOCKER=1 $(if $(BOOTTEST_AT),BOOTTEST_AT="$(BOOTTEST_AT)")
 	docker run --rm -v $(CURDIR):/src -w /src $(BOOTTEST_IMAGE) make boottest-run INSIDE_DOCKER=1 $(if $(BOOTTEST_FRAMES),BOOTTEST_FRAMES=$(BOOTTEST_FRAMES))
 
@@ -314,13 +331,13 @@ boottest: image boottest-image
 report:
 	python3 tools/gen_report.py
 
-symbols: image
+symbols: need-baserom image
 	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
 
-split: image
+split: need-baserom image
 	$(DOCKER_RUN) make split INSIDE_DOCKER=1
 
-modmap: image
+modmap: need-baserom image
 	$(DOCKER_RUN) make modmap INSIDE_DOCKER=1
 
 clean:

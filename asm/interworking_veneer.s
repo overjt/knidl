@@ -14,5 +14,5 @@ interworking_veneer:
 	.global	sub_080cfddc
 sub_080cfddc:
 	.arm
-	ldr	ip, [pc]	@ 0x080CFDE4
+	ldr	r12, [pc, #:pc_g0:(gap_interworking_veneer_irq_handler_table_14 - 8)]	@ 0x080CFDE4
 	bx	ip
