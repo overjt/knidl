@@ -7,7 +7,7 @@
  * (0x080694E0-0x080696A0) snapshot the current task's directional state into a
  * 6-byte stack record (ActorGetTerrainBox) and hand it to one of the input decoders
  * at 0x0801BCAC..0x0801C3A4; the three big dispatchers (ActorCollideTerrain,
- * sub_080696a0, sub_08069888) then walk the actor's seven-entry handler table
+ * sub_080696a0, ActorCollideTerrainFloor) then walk the actor's seven-entry handler table
  * at Actor.terrainHandlers, calling the first handler that claims the frame.  The tail
  * of the module is the class-1 "carried" task body: state machine entry
  * points (ActorReactToHitKind/sub_08069bbc), the ActorPlayHitSfx sound dispatcher and
@@ -220,7 +220,7 @@ u32 sub_080695bc(void)
     return 0;
 }
 
-u32 sub_08069604(void)
+u32 ActorCollideTerrainPointPushOut(void)
 {
     struct InputState v;
     u32 r;
@@ -235,7 +235,7 @@ u32 sub_08069604(void)
     return r;
 }
 
-u32 sub_08069660(void)
+u32 ActorCollideTerrainPointStop(void)
 {
     struct InputState v;
     u32 r;
@@ -348,7 +348,7 @@ s3:
     return r;
 }
 
-u32 sub_08069888(void)
+u32 ActorCollideTerrainFloor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -407,7 +407,7 @@ s2:
     return r;
 }
 
-u32 sub_080699a8(void)
+u32 ActorStepBackFromSlope(void)
 {
     struct Task *t;
     struct Task *u;

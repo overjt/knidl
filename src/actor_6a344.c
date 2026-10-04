@@ -653,7 +653,7 @@ void ActorDefeatAbilityStar(void)
     PlayRayBurstAnim();
 }
 
-u32 sub_0806acf8(void)
+u32 ActorHasExtraFrame(void)
 {
     if (gCurTask->u8C.actor->extraFrame == -1)
         return 0;

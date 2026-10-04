@@ -22,7 +22,7 @@
 #include "enemy.h"
 
 extern void PlaySfx(u32 a);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern void ActorReactToHit(void);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
@@ -60,7 +60,7 @@ void sub_080653ec(void)
     {
         if (TaskIsOnScreen() == 0)
             return;
-        sub_08065470();
+        ActorDrawStreamedFrame();
     }
     else if (sub_08066a80() != 0)
     {
@@ -82,11 +82,11 @@ void sub_08065438(void)
         return;
     if (TaskIsOnScreen() == 0)
         return;
-    sub_08065470();
+    ActorDrawStreamedFrame();
 }
 
 /* Push the running task's tile stream into OBJ VRAM, then draw it. */
-void sub_08065470(void)
+void ActorDrawStreamedFrame(void)
 {
     struct Task *t;
     struct TaskGfx *g;
@@ -370,7 +370,7 @@ void PaletteAnimVariant0(void)
 
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
-void PaletteAnimVariant1(void)
+void PaletteAnimCycle(void)
 {
     struct Task *w;
     struct Task *t;
@@ -405,7 +405,7 @@ void PaletteAnimVariant1(void)
 }
 
 /* Task body: flash one palette entry on and off. */
-void PaletteAnimVariant2(void)
+void PaletteAnimFlashColor(void)
 {
     struct Task *w;
     struct Task *t;
@@ -943,7 +943,7 @@ void sub_080662d8(void)
     u32 v;
 
     a = gCurTask->u8C.actor;
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
     if (gUnk_02004C90 != 0)
     {
@@ -1057,7 +1057,7 @@ void ActorLoadHeaderPalette(struct GfxHeader *h)
 }
 
 /* Task body: hand the actor over to the "carried" routine at 0x08066754. */
-void sub_080664e0(struct AnimCmd *p)
+void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p)
 {
     struct Task *t;
 
@@ -1065,7 +1065,7 @@ void sub_080664e0(struct AnimCmd *p)
     TaskSetSkipMask(8, gCurTaskIdx);
     t = gCurTask;
     t->unk20 = t->updateCallback;
-    t->updateCallback = (u32)sub_08066754;
+    t->updateCallback = (u32)ActorIntroPoseUpdate;
     ActorStopAnim();
     if (p != NULL)
         gCurTask->unk24 = ActorStartAnim(p);
@@ -1077,7 +1077,7 @@ void sub_080664e0(struct AnimCmd *p)
         } while (gHudHpBarFilled == 0);
     }
     ActorResetAttackBox();
-    sub_080666a4();
+    ActorEndIntroPose();
 }
 
 void sub_08066544(void)
@@ -1158,7 +1158,7 @@ u16 sub_08066630(u16 a)
     return r | m;
 }
 
-void sub_08066658(struct AnimCmd *p)
+void ActorStartIntroPose(struct AnimCmd *p)
 {
     struct Task *t;
     struct Actor *a;
@@ -1166,7 +1166,7 @@ void sub_08066658(struct AnimCmd *p)
     t = gCurTask;
     a = t->u8C.actor;
     t->unk20 = t->updateCallback;
-    t->updateCallback = (u32)sub_08066754;
+    t->updateCallback = (u32)ActorIntroPoseUpdate;
     ActorStopAnim();
     if (p != NULL)
         gCurTask->actorAnimDelay24 = ActorStartAnim(p);
@@ -1174,7 +1174,7 @@ void sub_08066658(struct AnimCmd *p)
     ActorSetAttackBox(a->unk60->altAttackBox);
 }
 
-void sub_080666a4(void)
+void ActorEndIntroPose(void)
 {
     struct Task *t;
 
@@ -1187,7 +1187,7 @@ void sub_080666a4(void)
 
 void sub_080666cc(struct AnimCmd *p)
 {
-    sub_08066658(p);
+    ActorStartIntroPose(p);
     if (gUnk_0200D080 == 0)
     {
         do
@@ -1195,15 +1195,15 @@ void sub_080666cc(struct AnimCmd *p)
             TaskYieldTrampoline(1);
         } while (gUnk_0200D080 == 0);
     }
-    sub_080666a4();
+    ActorEndIntroPose();
 }
 
 void sub_080666f8(struct AnimCmd *p)
 {
-    sub_08066658(p);
+    ActorStartIntroPose(p);
     while (sub_08066718() == 0)
         TaskYieldTrampoline(1);
-    sub_080666a4();
+    ActorEndIntroPose();
 }
 
 u32 sub_08066718(void)
@@ -1220,7 +1220,7 @@ u32 sub_08066718(void)
     return 0;
 }
 
-void sub_08066754(void)
+void ActorIntroPoseUpdate(void)
 {
     struct Task *t;
 
@@ -1229,7 +1229,7 @@ void sub_08066754(void)
         gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
     else
         gCurTask->actorAnimDelay24 = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay24);
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -1454,7 +1454,7 @@ void sub_08066b34(u32 def)
     }
 }
 
-void sub_08066b70(void)
+void TaskBounceParasolDriftOffWall(void)
 {
     struct Task *t;
     struct Actor *a;

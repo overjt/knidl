@@ -872,7 +872,7 @@ s32 WaddleDeeHitWall(void)
     struct Task *t = gCurTask;
 
     if (t->variant == 3 && t->state == 1)
-        sub_08066b70();
+        TaskBounceParasolDriftOffWall();
     else
         TaskTurnAroundAndReverseX();
     return 0;

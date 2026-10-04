@@ -1312,7 +1312,7 @@ s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio)
 
 /* Cycle the running task's frame between 4 and 7 every other tick. */
 /* Cycle the running task's frame between 4 and 7 every other tick. */
-void sub_08064bcc(void)
+void TaskStepSpinFrameFacing(void)
 {
     struct Task *t;
 

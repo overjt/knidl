@@ -26,10 +26,10 @@ extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern u32 ActorCheckHitsWithBox(void *p);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 sub_0806acf8(void);
+extern u8 ActorHasExtraFrame(void);
 
 void Task_FireLion(void)
 {
@@ -854,7 +854,7 @@ void sub_0809699c(void)
     FireLionUpdatePalette();
     CallTableEntry(gCurTask->updateState, 13, gFireLionStateUpdates);
     sub_08097024();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -862,14 +862,14 @@ void FireLionUpdate(void)
 {
     FireLionUpdatePalette();
     FireLionCheckCatch();
-    if (sub_0806acf8() == 0) {
+    if (ActorHasExtraFrame() == 0) {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 13, gFireLionStateUpdates);
     } else {
         CallTableEntry(gCurTask->updateState, 13, gFireLionStateUpdates);
     }
     sub_08097024();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -970,7 +970,7 @@ void FireLionDefeat(void)
     TaskYieldTrampoline(30);
     TaskStop();
     TaskYieldTrampoline(170);
-    sub_0806ad18();
+    ActorShakeVertically();
     ActorDie();
 }
 

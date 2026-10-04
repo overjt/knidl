@@ -16,7 +16,7 @@ extern u16 TaskGetAngleToNearestPlayer(s32 prec);
 extern u32 RandomRange(u32 range);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
@@ -1231,7 +1231,7 @@ void GlunkEnterState(void)
 
 void GlunkUpdate(void)
 {
-    if ((u8)sub_08069888() == 0)
+    if ((u8)ActorCollideTerrainFloor() == 0)
         CallTableEntry(gCurTask->updateState, 2, gGlunkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
@@ -1352,7 +1352,7 @@ void GlunkIdle(void)
 
 void GlunkIdleUpdate(void)
 {
-    sub_08069888();
+    ActorCollideTerrainFloor();
     ActorCheckHits();
     ActorReactToHit();
 }

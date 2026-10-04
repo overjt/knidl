@@ -30,7 +30,7 @@ struct Unk0873EAC0
 
 /* Seven-entry handler table hanging off Actor.terrainHandlers (and
    ActorDef.terrainHandlers); every entry is a u8 (*)(void) that returns 1 when
-   it consumed the frame.  ActorCollideTerrain, sub_080696a0 and sub_08069888
+   it consumed the frame.  ActorCollideTerrain, sub_080696a0 and ActorCollideTerrainFloor
    (src/actor_692fc.c) walk it. */
 struct ActorHandlers
 {
@@ -397,7 +397,7 @@ s32 sub_08064a78(struct ActorSpawn *p);
 s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio);
 s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
 s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio);
-void sub_08064bcc(void);
+void TaskStepSpinFrameFacing(void);
 s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
 s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 s32 CreateChildTaskHere(u32 type, u8 keepPrio);
@@ -417,7 +417,7 @@ void sub_08065350(void);
 /* src/actor_653ec.c */
 void sub_080653ec(void);
 void sub_08065438(void);
-void sub_08065470(void);
+void ActorDrawStreamedFrame(void);
 void ActorDrawSpriteAndExtra(void);
 void ActorDrawWorldInViewOrDestroyWithExtra(void);
 void sub_0806567c(void);
@@ -430,8 +430,8 @@ void StartBgPaletteBlend(u32 a, u32 b);
 void AcquirePaletteAnim(u32 p0, s32 idx);
 void Task_PaletteAnim(void);
 void PaletteAnimVariant0(void);
-void PaletteAnimVariant1(void);
-void PaletteAnimVariant2(void);
+void PaletteAnimCycle(void);
+void PaletteAnimFlashColor(void);
 void PaletteAnimVariant3(void);
 void PaletteAnimBgBlend(void);
 void sub_08065ce0(u32 i);
@@ -455,7 +455,7 @@ void ActorFlashPalette(void *src, u32 size);
 void ActorClearPaletteOverride(void);
 void sub_08066480(struct GfxHeader *h, u32 src, u32 size);
 void ActorLoadHeaderPalette(struct GfxHeader *h);
-void sub_080664e0(struct AnimCmd *p);
+void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p);
 void sub_08066544(void);
 void ActorResetAttackBox(void);
 void sub_08066580(void);
@@ -463,12 +463,12 @@ void ActorShowHpBar(void);
 u16 sub_080665fc(void);
 u16 sub_0806660c(u16 a);
 u16 sub_08066630(u16 a);
-void sub_08066658(struct AnimCmd *p);
-void sub_080666a4(void);
+void ActorStartIntroPose(struct AnimCmd *p);
+void ActorEndIntroPose(void);
 void sub_080666cc(struct AnimCmd *p);
 void sub_080666f8(struct AnimCmd *p);
 u32 sub_08066718(void);
-void sub_08066754(void);
+void ActorIntroPoseUpdate(void);
 void sub_08066798(void);
 void sub_080667c0(u8 a, u16 b);
 void sub_0806684c(void);
@@ -480,7 +480,7 @@ u8 sub_08066a6c(void);
 u8 sub_08066a80(void);
 void sub_08066a94(u8 mode);
 void sub_08066ae0(void);
-void sub_08066b70(void);
+void TaskBounceParasolDriftOffWall(void);
 void TaskStartParasolDrift(void);
 void TaskStepParasolDrift(void);
 void ActorDrawWorldInViewOrDestroyWithParasol(void);
@@ -613,7 +613,7 @@ void sub_0806acc4(void);
 void ActorDefeatAbilityStar(void);
 
 /* src/actor_6ad18.c */
-void sub_0806ad18(void);
+void ActorShakeVertically(void);
 void sub_0806adb0(void);
 void sub_0806ae94(void);
 void ActorDefeatMidBoss(void);

@@ -91,7 +91,7 @@ extern void TaskFaceLikeParent(void);
 extern s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio);
 extern s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio);
 extern s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio);
-extern void sub_08064bcc(void);
+extern void TaskStepSpinFrameFacing(void);
 extern s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg);
 extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
@@ -119,7 +119,7 @@ extern void sub_08066144(void);
 extern void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4);
 extern void sub_0806621c(void);
 extern s32 sub_08066394(void);
-extern void sub_080664e0(struct AnimCmd *p);
+extern void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p);
 extern void sub_08066544(void);
 extern void ActorResetAttackBox(void);
 extern void sub_08066580(void);
@@ -142,13 +142,13 @@ extern void SetHeldPlayerState(s32 i, u8 c);
 extern void sub_08068950(s16 x, s16 y, s16 d);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 sub_0806951c(void);
 extern u32 sub_0806956c(void);
 extern u32 sub_080695bc(void);
 extern u32 sub_080696a0(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 extern u32 sub_08069b84(void);
 extern u32 sub_08069bbc(void);
@@ -670,7 +670,7 @@ s32 MrShineAndMrBrightReactToDamage(void)
 /* sub_080a2020 (0x080A2020-0x080A2030) */
 void sub_080a2020(void)
 {
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -2828,7 +2828,7 @@ void sub_080a4a1c(void)
 /* sub_080a4a60 (0x080A4A60-0x080A4AA8) */
 void sub_080a4a60(void)
 {
-    sub_08064bcc();
+    TaskStepSpinFrameFacing();
     CallTableEntry(gCurTask->updateState, 1, gUnk_087489BC);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
@@ -3114,7 +3114,7 @@ void MrShineFallingStarState0(void)
 void MrShineFallingStarState0Update(void)
 {
     if (gCurTask->mrShineAndMrBrightAttackSpinning != 0)
-        sub_08064bcc();
+        TaskStepSpinFrameFacing();
 }
 
 /* MrShineFallingStarState1 (0x080A5020-0x080A503C) */

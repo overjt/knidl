@@ -55,7 +55,7 @@ extern void ActorSetTerrainBox(u32 *p);
 extern void sub_08063a00(u32 *p);
 extern s32 TaskGetDxTo(s32 i);
 extern u32 ActorCheckHits(void);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
 
@@ -462,7 +462,7 @@ void MrTickTockUpdate(void)
         CallTableEntry(u->updateState, 24, gMrTickTockStateUpdates);
     }
     sub_0809a03c();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -1539,7 +1539,7 @@ void MrTickTockState21(void)
     TaskYieldTrampoline(170);
     v = gCurTask;
     v->mrTickTockCollideTerrain = zero;
-    sub_0806ad18();
+    ActorShakeVertically();
     w = gCurTask;
     w->mrTickTockDefeatDone = 1;
     TaskSleepForever();

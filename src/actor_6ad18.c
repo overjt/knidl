@@ -3,7 +3,7 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x0806AD18 0x0806B2E4 src/actor_6ad18.c --newpb
  *
- * The screen-transition half of the module. sub_0806ad18 nudges the carried
+ * The screen-transition half of the module. ActorShakeVertically nudges the carried
  * actor one frame either way; sub_0806adb0 and BossDefeatScreenFlash are the two
  * DISPCNT-shadow fades (gDispCnt masked to 0xE0FF and re-ORed with the
  * BG-enable pattern, alternating a ROM window descriptor with a copy of
@@ -43,7 +43,7 @@ extern void ActorCheckHits(void);
 extern void ActorReactToHit(void);
 extern u8 ActorCollideTerrain(void);
 
-void sub_0806ad18(void)
+void ActorShakeVertically(void)
 {
     struct Task *t;
 

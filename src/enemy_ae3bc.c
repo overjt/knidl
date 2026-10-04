@@ -47,10 +47,10 @@ extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 sub_0806951c(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
@@ -129,7 +129,7 @@ void NightmarePowerOrbUpdate(void)
     u = *c;
     if ((s16)u->health != 0)
     {
-        sub_08068f68();
+        ActorCheckHitsWithExtraBox();
         ActorReactToHit();
         sub_080af1d4();
         if (gUnk_02007D00[3] > 0)
@@ -4072,7 +4072,7 @@ void Task_WhispyWoods(void)
     u2->posY = 128 << 17;
     k4 = (struct AnimCmd *)gUnk_0874C110;
     sub_080666f8(k4);
-    sub_080664e0(k4);
+    ActorIntroPoseUntilHpBarFull(k4);
     u3 = *c;
     CallTableEntry(u3->variant, 1, gWhispyWoodsVariants);
 }

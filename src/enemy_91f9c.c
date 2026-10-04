@@ -9,7 +9,7 @@
  * gUnk_08743AC8.  BugzzyUpdate is the busiest body in the module: besides the
  * usual Task.updateState dispatch it calls ClampTaskToRoom (the camera/room hook) on
  * entry, and when the row gUnk_08743A58[Task.unk34] is non-null it runs the
- * "hit the wall" transition - sub_0806914c, then Task.unk1C = Task.hitterSlot,
+ * "hit the wall" transition - ActorCheckPlayerHitsWithBox, then Task.unk1C = Task.hitterSlot,
  * a re-seat of the actor at gUnk_030023B4 - Task.facing * 16, and a hand-off to
  * HoldPlayer / TaskSetEntry.
  *
@@ -53,7 +53,7 @@ extern vu8 gTerrainResult;
 
 /* Externals */
 extern void ClampTaskToRoom(struct Task *t);
-extern u32 sub_0806914c(s32 a);
+extern u32 ActorCheckPlayerHitsWithBox(s32 a);
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ActorCheckHits(void);
 /* Declared here, not through a header: the calls in this file pass other
@@ -70,11 +70,11 @@ extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
 extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
-extern u8 sub_0806acf8(void);
+extern u8 ActorHasExtraFrame(void);
 
 /* Defined below */
 void BugzzyInit(void)
@@ -113,7 +113,7 @@ void BugzzyUpdate(void)
         t->bugzzyIgnoreTerrainTimer--;
         CallTableEntry(t->updateState, 13, gBugzzyStateUpdates);
     }
-    else if (sub_0806acf8() == 0)
+    else if (ActorHasExtraFrame() == 0)
     {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 13, gBugzzyStateUpdates);
@@ -136,11 +136,11 @@ void BugzzyUpdate(void)
     ActorSetAttackBox(gUnk_08743A10[gCurTask->bugzzyBoxSet]);
     sub_080639f0(gUnk_08743A28[gCurTask->bugzzyBoxSet]);
     sub_08063a00(gUnk_08743A40[gCurTask->bugzzyBoxSet]);
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
     if (gUnk_08743A58[gCurTask->bugzzyBoxSet] != 0)
     {
-        sub_0806914c(gUnk_08743A58[gCurTask->bugzzyBoxSet]);
+        ActorCheckPlayerHitsWithBox(gUnk_08743A58[gCurTask->bugzzyBoxSet]);
         v = gCurTask;
         if (v->hitKind == 8)
         {
@@ -956,7 +956,7 @@ void BugzzyDefeat(void)
     TaskStopX();
     TaskYieldTrampoline(170);
     CreateStarFlash(1, 0, 0);
-    sub_0806ad18();
+    ActorShakeVertically();
     gUnk_02007D00[4] = 1;
     TaskSleepForever();
 }

@@ -1112,7 +1112,7 @@ s32 WaddleDooHitWall(void)
         return 0;
     case 1:
         if (t->state == 3)
-            sub_08066b70();
+            TaskBounceParasolDriftOffWall();
         else
             TaskTurnAroundAndReverseX();
         return 0;

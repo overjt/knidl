@@ -56,11 +56,11 @@ extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
 extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
-extern u8 sub_0806acf8(void);
+extern u8 ActorHasExtraFrame(void);
 extern s32 Div(s32 numerator, s32 denominator);
 
 void PoppyBrosSrInit(void)
@@ -94,7 +94,7 @@ void PoppyBrosSrUpdate(void)
         t->poppyBrosSrIgnoreTerrainTimer--;
         CallTableEntry(t->updateState, 7, gPoppyBrosSrStateUpdates);
     }
-    else if (sub_0806acf8() == 0)
+    else if (ActorHasExtraFrame() == 0)
     {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 7, gPoppyBrosSrStateUpdates);
@@ -117,7 +117,7 @@ void PoppyBrosSrUpdate(void)
     ActorSetAttackBox(gUnk_087438EC[gCurTask->frame]);
     sub_080639f0(gUnk_0874391C[gCurTask->frame]);
     sub_08063a00(gUnk_0874394C[gCurTask->frame]);
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -398,7 +398,7 @@ void PoppyBrosSrDefeat(void)
     TaskStop();
     TaskYieldTrampoline(170);
     TaskStopY();
-    sub_0806ad18();
+    ActorShakeVertically();
     gCurTask->poppyBrosSrDefeatPhase = 2;
     TaskSleepForever();
 }

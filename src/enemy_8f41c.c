@@ -46,9 +46,9 @@ extern void ActorSetAttackBox(void *p);
 extern void AngleToVector(s32 a, s32 b);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
-extern u8 sub_08069604(void);
-extern u8 sub_08069660(void);
-extern u8 sub_08069888(void);
+extern u8 ActorCollideTerrainPointPushOut(void);
+extern u8 ActorCollideTerrainPointStop(void);
+extern u8 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 void ShotzoAimShoot(void)
@@ -90,7 +90,7 @@ void ShotzoAimShoot(void)
 
 void ShotzoAimShootUpdate(void)
 {
-    if ((s16)gCurTask->shotzoRecoilDone != 0 && sub_08069888() == 0 && gCurTask->shotzoShotDone != 0)
+    if ((s16)gCurTask->shotzoRecoilDone != 0 && ActorCollideTerrainFloor() == 0 && gCurTask->shotzoShotDone != 0)
     {
         ActorSetState(0);
         TaskSetEntry(ShotzoAimEnterState, gCurTaskIdx);
@@ -110,7 +110,7 @@ void ShotzoAimFall(void)
 
 void ShotzoAimFallUpdate(void)
 {
-    sub_08069888();
+    ActorCollideTerrainFloor();
 }
 
 void ShotzoFixedState0(void)
@@ -136,7 +136,7 @@ void ShotzoFixedState0Update(void)
 {
     struct Task *t;
 
-    if (sub_08069888() == 0)
+    if (ActorCollideTerrainFloor() == 0)
     {
         t = gCurTask;
         switch (t->variant)
@@ -203,7 +203,7 @@ void ShotzoFixedShoot(void)
 
 void ShotzoFixedShootUpdate(void)
 {
-    if ((s16)gCurTask->shotzoRecoilDone != 0 && sub_08069888() == 0 && gCurTask->shotzoShotDone != 0)
+    if ((s16)gCurTask->shotzoRecoilDone != 0 && ActorCollideTerrainFloor() == 0 && gCurTask->shotzoShotDone != 0)
     {
         TaskStop();
         ActorSetState(2);
@@ -236,7 +236,7 @@ void ShotzoFixedFall(void)
 
 void ShotzoFixedFallUpdate(void)
 {
-    sub_08069888();
+    ActorCollideTerrainFloor();
 }
 
 void ParasolShotzoAim(void)
@@ -256,7 +256,7 @@ void ParasolShotzoAimUpdate(void)
 {
     if (gCurTask->u8C.actor->extraFrame == -1)
     {
-        if (sub_08069888() == 0)
+        if (ActorCollideTerrainFloor() == 0)
             ShotzoCheckShoot(1, ParasolShotzoEnterState);
     }
     else if (ActorCollideTerrain() == 0)
@@ -302,7 +302,7 @@ void ParasolShotzoShoot(void)
 
 void ParasolShotzoShootUpdate(void)
 {
-    if ((s16)gCurTask->shotzoRecoilDone != 0 && sub_08069888() == 0 && gCurTask->shotzoShotDone != 0)
+    if ((s16)gCurTask->shotzoRecoilDone != 0 && ActorCollideTerrainFloor() == 0 && gCurTask->shotzoShotDone != 0)
     {
         ActorSetState(0);
         TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
@@ -543,7 +543,7 @@ void LaserBallLaserInit(void)
 
 void LaserBallLaserUpdate(void)
 {
-    if (sub_08069604() == 0)
+    if (ActorCollideTerrainPointPushOut() == 0)
         CallTableEntry(gCurTask->updateState, 2, gLaserBallLaserStateUpdates);
     else
     {
@@ -615,7 +615,7 @@ void ShotzoCannonballInit(void)
 
 void ShotzoCannonballUpdate(void)
 {
-    if (sub_08069660() == 0)
+    if (ActorCollideTerrainPointStop() == 0)
         CallTableEntry(gCurTask->updateState, 1, gShotzoCannonballStateUpdates);
     else
         TaskSetEntry(ActorDie, gCurTaskIdx);

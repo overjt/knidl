@@ -21,11 +21,11 @@ extern void ActorSetAttackBox(void *p);
 extern void sub_08063a00(void *p);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
-extern u32 sub_0806914c(void *p);
+extern u32 ActorCheckHitsWithExtraBox(void);
+extern u32 ActorCheckPlayerHitsWithBox(void *p);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 sub_0806acf8(void);
+extern u8 ActorHasExtraFrame(void);
 
 void FireLionFlameCheckParent(void)
 {
@@ -82,7 +82,7 @@ void sub_080975c8(void)
     CallTableEntry(gCurTask->updateState, 9, gPhanPhanStateUpdates);
     if (gCurTask->phanPhanCatchActive != 0)
         PhanPhanCheckCatch();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -95,7 +95,7 @@ void PhanPhanUpdate(void)
         ActorFlashPalette(gUnk_082BFBA4, 16);
     else
         ActorClearPaletteOverride();
-    if (sub_0806acf8() == 0) {
+    if (ActorHasExtraFrame() == 0) {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 9, gPhanPhanStateUpdates);
     } else {
@@ -103,7 +103,7 @@ void PhanPhanUpdate(void)
     }
     if (gCurTask->phanPhanCatchActive != 0)
         PhanPhanCheckCatch();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -651,7 +651,7 @@ void PhanPhanDefeat(void)
     CreateChildTaskHere(141, 0);
     CreateDustTrail(0, 1, -4, 12);
     TaskYieldTrampoline(170);
-    sub_0806ad18();
+    ActorShakeVertically();
     ActorDie();
 }
 
@@ -726,7 +726,7 @@ void PhanPhanCheckCatch(void)
     struct PlayerState *p;
     s32 i;
 
-    if (sub_0806914c(gUnk_087452E0) != 0) {
+    if (ActorCheckPlayerHitsWithBox(gUnk_087452E0) != 0) {
         p = gPlayerStates;
         t = gCurTask;
         i = t->hitterSlot;

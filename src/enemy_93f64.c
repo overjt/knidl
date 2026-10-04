@@ -27,10 +27,10 @@ extern void sub_080639f0(void *p);
 extern void sub_08063a00(void *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
-extern u8 sub_0806acf8(void);
+extern u8 ActorHasExtraFrame(void);
 
 void Task_BugzzyLadybug(void)
 {
@@ -200,7 +200,7 @@ void sub_080942b4(void)
 {
     CallTableEntry(gCurTask->updateState, 11, gGrandWheelieStateUpdates);
     sub_08094358();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -215,14 +215,14 @@ void GrandWheelieUpdate(void)
     } else {
         ActorClearPaletteOverride();
     }
-    if (sub_0806acf8() == 0) {
+    if (ActorHasExtraFrame() == 0) {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 11, gGrandWheelieStateUpdates);
     } else {
         CallTableEntry(gCurTask->updateState, 11, gGrandWheelieStateUpdates);
     }
     sub_08094358();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -977,7 +977,7 @@ void GrandWheelieDefeat(void)
     t->grandWheelieDefeatDone = z2;
     CreateChildTaskHere(141, 0);
     TaskYieldTrampoline(170);
-    sub_0806ad18();
+    ActorShakeVertically();
     gCurTask->grandWheelieDefeatDone = 1;
     TaskSleepForever();
 }

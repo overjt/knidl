@@ -42,7 +42,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void ActorSetState(s32 a);
 extern void ActorSetAttackBox(u32 *p);
-extern u8 sub_080699a8(void);
+extern u8 ActorStepBackFromSlope(void);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorReactToHit(void);
@@ -496,7 +496,7 @@ s32 sub_08084c84(void)
         return 0;
     if (t->velX != 0)
     {
-        r = sub_080699a8();
+        r = ActorStepBackFromSlope();
         if (r != 0)
         {
             TaskTurnAroundAndReverseX();

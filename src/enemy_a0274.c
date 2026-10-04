@@ -537,7 +537,7 @@ void KingDededeState0(void)
     TaskStop();
     ActorCollideTerrain();
     sub_080666f8(gUnk_08748384);
-    sub_080664e0(gUnk_08748384);
+    ActorIntroPoseUntilHpBarFull(gUnk_08748384);
     sub_08063a00((u32)gUnk_08748820);
     gCurTask->unk2C = z;
     sub_080a0658();

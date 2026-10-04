@@ -56,8 +56,8 @@ extern s32 AreAllPlayersOnGround();
 extern s32 ActorReactToHit(void);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
-extern u8 sub_08069604(void);
-extern u8 sub_080699a8(void);
+extern u8 ActorCollideTerrainPointPushOut(void);
+extern u8 ActorStepBackFromSlope(void);
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void TaskSetEntry(void *fn, u32 i);
 extern void ActorSetState(u32 v);
@@ -356,7 +356,7 @@ s32 SwordAndBladeKnightHitWall(void)
 
 void sub_0807b088(void)
 {
-    if (gCurTask->velX != 0 && (u8)sub_080699a8() != 0)
+    if (gCurTask->velX != 0 && (u8)ActorStepBackFromSlope() != 0)
     {
         TaskStop();
         gCurTask->swordAndBladeKnightStopped = 1;
@@ -1953,7 +1953,7 @@ void UFOLaserInit(void)
 
 void UFOLaserUpdate(void)
 {
-    if ((u8)sub_08069604() != 0)
+    if ((u8)ActorCollideTerrainPointPushOut() != 0)
     {
         ActorSetState(1);
         TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);

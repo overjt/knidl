@@ -1326,7 +1326,7 @@ u32 ActorCheckHits(void)
         return 0;
     return ActorTestColliders(1);
 }
-u32 sub_08068f68(void)
+u32 ActorCheckHitsWithExtraBox(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1405,7 +1405,7 @@ u32 sub_08068f68(void)
     ActorStoreHit(1);
     return 1;
 }
-u32 sub_0806914c(s32 a)
+u32 ActorCheckPlayerHitsWithBox(s32 a)
 {
     struct Task *t;
     struct Task *u;

@@ -16,7 +16,7 @@
  * re-uploads (ActorFlashPalette) or drops (ActorClearPaletteOverride) the 16-byte graphics
  * record gUnk_08274840 while Task.unk18 is set, dispatches Task.updateState through
  * the 19-word body table gMrFrostyStateUpdates that follows it, and finishes with the
- * animation-row selector sub_08098de4 plus sub_08068f68 / ActorReactToHit.
+ * animation-row selector sub_08098de4 plus ActorCheckHitsWithExtraBox / ActorReactToHit.
  * MrFrostyEnterState is the re-arm hook every guard installs through
  * TaskSetEntry(fn, gCurTaskIdx).
  *
@@ -53,7 +53,7 @@ extern void ActorSetTerrainBox(u32 *p);
 extern void sub_08063a00(u32 *p);
 extern s32 TaskGetDxTo(s32 i);
 extern void RequestScreenShake(s32 a);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern u8 ActorCollideTerrain(void);
 extern s32 ActorReactToHit(void);
 extern void PlaySfx(s32 id);
@@ -403,7 +403,7 @@ void MrFrostyUpdate(void)
         CallTableEntry(u->updateState, 19, gMrFrostyStateUpdates);
     }
     sub_08098de4();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -1038,7 +1038,7 @@ void MrFrostyState15(void)
     TaskYieldTrampoline(170);
     v = gCurTask;
     v->mrFrostyCollideTerrain = zero;
-    sub_0806ad18();
+    ActorShakeVertically();
     w = gCurTask;
     w->mrFrostyDefeatDone = 1;
     TaskSleepForever();

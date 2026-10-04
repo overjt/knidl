@@ -54,7 +54,7 @@ extern void sub_08066c08(u32 *p, s32 b);
 extern void sub_08066c3c(u32 *p);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
-extern u8 sub_08069888(void);
+extern u8 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 void LaserBallInit(void)
@@ -369,7 +369,7 @@ void CoconutInit(void)
 
 void CoconutUpdate(void)
 {
-    if (sub_08069888() == 0)
+    if (ActorCollideTerrainFloor() == 0)
         CallTableEntry(gCurTask->updateState, 1, gCoconutStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
@@ -463,7 +463,7 @@ void CoconutIdleInit(void)
 
 void CoconutIdleUpdate(void)
 {
-    if (sub_08069888() == 0)
+    if (ActorCollideTerrainFloor() == 0)
         CallTableEntry(gCurTask->updateState, 1, gCoconutIdleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
@@ -535,7 +535,7 @@ s32 ShotzoHitWall(void)
 
     t = gCurTask;
     if (t->variant == 4 && t->state == 2)
-        sub_08066b70();
+        TaskBounceParasolDriftOffWall();
     return 0;
 }
 
@@ -937,6 +937,6 @@ void ShotzoAim(void)
 
 void ShotzoAimState0Update(void)
 {
-    if (sub_08069888() == 0)
+    if (ActorCollideTerrainFloor() == 0)
         ShotzoCheckShoot(2, ShotzoAimEnterState);
 }

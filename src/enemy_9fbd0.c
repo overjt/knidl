@@ -27,7 +27,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern s16 ActorComputeHealth(void);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorReactToHit(void);
 
 void sub_0809fbd0(void)
@@ -72,7 +72,7 @@ void Task_KingDedede(void)
 
 void sub_0809fca4(void)
 {
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 

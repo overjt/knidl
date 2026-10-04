@@ -67,9 +67,9 @@ extern void ActorSetAttackBox(void *p);
 extern void AngleToVector(s32 a, s32 b);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
-extern u8 sub_08069604(void);
-extern u8 sub_08069660(void);
-extern u8 sub_080699a8(void);
+extern u8 ActorCollideTerrainPointPushOut(void);
+extern u8 ActorCollideTerrainPointStop(void);
+extern u8 ActorStepBackFromSlope(void);
 extern u32 ActorReactToHit(void);
 
 void Task_ChillyFreezeSparkle(void)
@@ -200,7 +200,7 @@ void Task_WaddleDooBeam(void)
 
 void WaddleDooBeamUpdate(void)
 {
-    if (sub_08069660() != 0) {
+    if (ActorCollideTerrainPointStop() != 0) {
         TaskStop();
         TaskSetEntry(ActorDie, gCurTaskIdx);
     } else {
@@ -242,7 +242,7 @@ void Task_GlunkShot(void)
 
 void GlunkShotUpdate(void)
 {
-    if (sub_08069604() != 0)
+    if (ActorCollideTerrainPointPushOut() != 0)
     {
         TaskStop();
         TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -337,7 +337,7 @@ s32 BroomHatterEnterWater(void)
 
 s32 sub_0808d364(void)
 {
-    if (gCurTask->velX != 0 && sub_080699a8() != 0)
+    if (gCurTask->velX != 0 && ActorStepBackFromSlope() != 0)
         TaskStop();
     return 0;
 }

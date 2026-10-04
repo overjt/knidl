@@ -89,10 +89,10 @@ extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
-extern u32 sub_08068f68(void);
+extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
 extern u32 sub_0806951c(void);
-extern u32 sub_08069888(void);
+extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
@@ -135,7 +135,7 @@ void NightmareWizardUpdate(void)
         gUnk_03001F2C = gUnk_08749380[gCurTask->frame];
         ActorSetAttackBox(gUnk_08749358[gUnk_03001F2C]);
         sub_08063a00(gUnk_0874936C[gUnk_03001F2C]);
-        sub_08068f68();
+        ActorCheckHitsWithExtraBox();
     }
     else
     {
@@ -1975,7 +1975,7 @@ void Task_PaintRoller(void)
     ActorSetState(0);
     gCurTask->paintRollerEnteredState = 0;
     gCurTask->updateCallback = (u32)sub_080acf3c;
-    sub_080664e0((struct AnimCmd *)gUnk_08749CEC);
+    ActorIntroPoseUntilHpBarFull((struct AnimCmd *)gUnk_08749CEC);
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -2071,7 +2071,7 @@ void PaintRollerUpdate(void)
 {
     struct Task *t;
 
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
     t = gCurTask;
     if (t->paintRollerEnteredState != t->state)
@@ -2341,7 +2341,7 @@ void HeavyMoleUpdate(void)
 
     if (gHudHpBarFilled != 0)
         ActorResetAttackBox();
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
     TaskBreakBlocksNoPlayer((u32)gUnk_0874B538);
     w = gCurTask->heavyMoleMoveTimer - 1;

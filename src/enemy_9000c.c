@@ -10,7 +10,7 @@
  * gBonkersFrames, counts the boss into gUnk_02007D00[0], spawns its helper
  * task with CreateChildTaskHere(177, 1) and hands Task.variant to CallTableEntry, which
  * jumps into the table.  BonkersUpdate is the per-frame body: it runs down
- * Task.unk18, asks sub_0806acf8 / ActorCollideTerrain whether the player interrupted,
+ * Task.unk18, asks ActorHasExtraFrame / ActorCollideTerrain whether the player interrupted,
  * dispatches Task.updateState through the same table, reloads the graphics through
  * ActorFlashPalette / ActorClearPaletteOverride and drives the three animation calls from the
  * per-frame row gUnk_087437D0[Task.frame].
@@ -22,7 +22,7 @@
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
  * TaskSetEntry whenever Task.state leaves the state.  State 4 aims with
  * Div(|TaskGetNearestPlayerDx()|, 3), state 5 spawns the actors 8 and 145, and state 10
- * is the defeat sequence (sub_0806684c, CreateStarFlash, sub_0806ad18).
+ * is the defeat sequence (sub_0806684c, CreateStarFlash, ActorShakeVertically).
  *
  * The tail holds the pieces the states share - BonkersCreateSlamStar (fire a shot at
  * the boss's own position through CreateInhalableStar), BonkersChooseNextState (advance the
@@ -44,12 +44,12 @@
    types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void ActorSetState(u16 v);
-extern u8 sub_0806acf8(void);
+extern u8 ActorHasExtraFrame(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
 extern void sub_08063a00(u32 v);
-extern void sub_08068f68(void);
+extern void ActorCheckHitsWithExtraBox(void);
 extern s32 ActorReactToHit(void);
 extern void PlaySfx(s32 id);
 extern void RequestScreenShake(s32 a);
@@ -112,7 +112,7 @@ void BonkersUpdate(void)
         t->bonkersIgnoreTerrainTimer--;
         CallTableEntry(t->updateState, 11, gBonkersStateUpdates);
     }
-    else if (sub_0806acf8() == 0)
+    else if (ActorHasExtraFrame() == 0)
     {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 11, gBonkersStateUpdates);
@@ -135,7 +135,7 @@ void BonkersUpdate(void)
     ActorSetAttackBox(gUnk_087437F4[gUnk_087437D0[gCurTask->frame]]);
     sub_080639f0(gUnk_08743810[gUnk_087437D0[gCurTask->frame]]);
     sub_08063a00(gUnk_0874382C[gUnk_087437D0[gCurTask->frame]]);
-    sub_08068f68();
+    ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
 
@@ -627,7 +627,7 @@ void BonkersDefeat(void)
     TaskStopX();
     TaskYieldTrampoline(170);
     CreateStarFlash(1, 0, 0);
-    sub_0806ad18();
+    ActorShakeVertically();
     gCurTask->bonkersDefeatPhase = 2;
     TaskSleepForever();
 }

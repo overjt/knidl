@@ -673,7 +673,7 @@
    type #127, Task_MrShineAndMrBrightAttack;
    gMrShineAndMrBrightAttackVariants) */
 #define mrShineAndMrBrightAttackFrameTimer unk18 /* s32: frames until the beam's frame flips between 2 and 3 (every 2) */
-#define mrShineAndMrBrightAttackSpinning unk18 /* s32: nonzero while the falling star spins (sub_08064bcc each frame) */
+#define mrShineAndMrBrightAttackSpinning unk18 /* s32: nonzero while the falling star spins (TaskStepSpinFrameFacing each frame) */
 #define mrShineAndMrBrightAttackBeamFrame unk1C /* s32: 0/1: the beam shows frame 2 or 3; toggled every 2 frames */
 #define mrShineAndMrBrightAttackStartVelY unk28 /* s32: the falling star's fall speed (3 or 4 px/frame by spawnArg bit 0), set on its start */
 #define mrShineAndMrBrightAttackStartVelX unk2C /* s32: the falling star's X speed (gUnk_08748A40, toward the nearest player's side) */

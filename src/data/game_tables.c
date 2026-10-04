@@ -533,8 +533,8 @@ u32 gPlayerDances[14] GAME_TBL(0873dedc) = {
 /* include/actor.h; CallTableEntry(i, 5, ...) in Task_PaletteAnim */
 u32 gPaletteAnimVariants[5] GAME_TBL(0873df24) = {
     (u32)PaletteAnimVariant0,
-    (u32)PaletteAnimVariant1,
-    (u32)PaletteAnimVariant2,
+    (u32)PaletteAnimCycle,
+    (u32)PaletteAnimFlashColor,
     (u32)PaletteAnimVariant3,
     (u32)PaletteAnimBgBlend,
 };
