@@ -205,7 +205,7 @@ shifttest: $(ELF)
 # plus 600 frames).
 BOOTTEST_DIR   := $(BUILD_DIR)/boottest
 BOOTTEST_SYMS  := $(BOOTTEST_DIR)/syms.txt
-BOOTTEST_INPUT := tools/boottest/input.txt tools/boottest/subgames.txt tools/boottest/gameover.txt
+BOOTTEST_INPUT := tools/boottest/input.txt tools/boottest/subgames.txt tools/boottest/gameover.txt tools/boottest/level1.txt
 
 $(BOOTTEST_SYMS): $(ELF)
 	@mkdir -p $(BOOTTEST_DIR)
