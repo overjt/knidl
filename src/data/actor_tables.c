@@ -1362,8 +1362,8 @@ u32 gTwizzyVariants[10] ACTOR_TBL(08742570) = {
     (u32)TwizzyDiagonalInit,
     (u32)TwizzyChaseInit,
     (u32)TwizzyTakeOffInit,
-    (u32)TwizzyVariant6,
-    (u32)TwizzyVariant7,
+    (u32)TwizzyHopInit,
+    (u32)TwizzyHopToChaseInit,
     (u32)TwizzyHoverInit,
     (u32)TwizzyIdle,
 };
@@ -1431,35 +1431,35 @@ u32 gTwizzyTakeOffStateUpdates[3] ACTOR_TBL(0874263c) = {
     (u32)TwizzyTakeOffState1Update,
     (u32)TwizzyTakeOffState2Update,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyVariant6, sub_08087e60 */
-u32 gUnk_08742654[3] ACTOR_TBL(0874263c) = {
-    (u32)sub_08087eb4,
-    (u32)sub_08087f18,
-    (u32)sub_08087f8c,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyHopInit, TwizzyHopEnterState */
+u32 gTwizzyHopStates[3] ACTOR_TBL(0874263c) = {
+    (u32)TwizzyHopWait,
+    (u32)TwizzyHopJump,
+    (u32)TwizzyHopFall,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_08087e84 */
-u32 gUnk_08742660[3] ACTOR_TBL(0874263c) = {
-    (u32)sub_08087ef0,
-    (u32)sub_08087f88,
-    (u32)sub_08087fc8,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyHopUpdate */
+u32 gTwizzyHopStateUpdates[3] ACTOR_TBL(0874263c) = {
+    (u32)TwizzyHopWaitUpdate,
+    (u32)TwizzyHopJumpUpdate,
+    (u32)TwizzyHopFallUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 6, ...) in TwizzyVariant7, sub_08088000 */
-u32 gUnk_0874266C[6] ACTOR_TBL(0874263c) = {
+/* include/enemy.h; CallTableEntry(i, 6, ...) in TwizzyHopToChaseInit, TwizzyHopToChaseEnterState */
+u32 gTwizzyHopToChaseStates[6] ACTOR_TBL(0874263c) = {
     (u32)sub_08088054,
-    (u32)sub_080881a0,
-    (u32)sub_080881e4,
-    (u32)sub_08088230,
-    (u32)sub_0808827c,
-    (u32)sub_08088320,
+    (u32)TwizzyHopToChaseJump,
+    (u32)TwizzyHopToChaseWaitShort,
+    (u32)TwizzyHopToChaseWaitLong,
+    (u32)TwizzyHopToChaseTakeOff,
+    (u32)TwizzyHopToChaseFall,
 };
-/* include/enemy.h; CallTableEntry(i, 6, ...) in sub_08088024 */
-u32 gUnk_08742684[6] ACTOR_TBL(0874263c) = {
+/* include/enemy.h; CallTableEntry(i, 6, ...) in TwizzyHopToChaseUpdate */
+u32 gTwizzyHopToChaseStateUpdates[6] ACTOR_TBL(0874263c) = {
     (u32)sub_080880fc,
-    (u32)sub_080881e0,
-    (u32)sub_08088208,
-    (u32)sub_08088254,
-    (u32)sub_080882f0,
-    (u32)sub_0808835c,
+    (u32)TwizzyHopToChaseJumpUpdate,
+    (u32)TwizzyHopToChaseWaitShortUpdate,
+    (u32)TwizzyHopToChaseWaitLongUpdate,
+    (u32)TwizzyHopToChaseTakeOffUpdate,
+    (u32)TwizzyHopToChaseFallUpdate,
 };
 
 /* ---- 0x087426AC-0x087426EC: 5 table(s), 16 function pointer(s), section .actor_tbl_087426ac ---- */
@@ -1475,10 +1475,10 @@ u32 gTwizzyHoverStateUpdates[1] ACTOR_TBL(087426ac) = {
 u32 gSquishyVariants[4] ACTOR_TBL(087426ac) = {
     (u32)SquishyWalkInit,
     (u32)SquishyVariant1,
-    (u32)SquishyVariant2,
+    (u32)SquishyJumpToWalkInit,
     (u32)SquishyIdle,
 };
-/* include/enemy.h; CallTableEntry(i, 5, ...) in SquishyWalkInit, SquishyWalkEnterState, SquishyVariant2 */
+/* include/enemy.h; CallTableEntry(i, 5, ...) in SquishyWalkInit, SquishyWalkEnterState, SquishyJumpToWalkInit */
 u32 gSquishyWalkStates[5] ACTOR_TBL(087426ac) = {
     (u32)SquishyWalk,
     (u32)SquishyWalkState1,
@@ -1508,17 +1508,17 @@ u32 gUnk_08742710[3] ACTOR_TBL(08742704) = {
     (u32)sub_08088ca0,
     (u32)sub_08088ce4,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in SquishyVariant2, sub_08088d58 */
-u32 gUnk_0874271C[3] ACTOR_TBL(08742704) = {
-    (u32)sub_08088dac,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in SquishyJumpToWalkInit, SquishyJumpToWalkEnterState */
+u32 gSquishyJumpToWalkStates[3] ACTOR_TBL(08742704) = {
+    (u32)SquishyJumpToWalkJump,
     (u32)sub_08088efc,
-    (u32)sub_08088ea4,
+    (u32)SquishyJumpToWalkLand,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_08088d7c */
-u32 gUnk_08742728[3] ACTOR_TBL(08742704) = {
-    (u32)sub_08088e78,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in SquishyJumpToWalkUpdate */
+u32 gSquishyJumpToWalkStateUpdates[3] ACTOR_TBL(08742704) = {
+    (u32)SquishyJumpToWalkJumpUpdate,
     (u32)sub_08088f24,
-    (u32)sub_08088ed4,
+    (u32)SquishyJumpToWalkLandUpdate,
 };
 
 /* ---- 0x0874273C-0x0874276C: 3 table(s), 12 function pointer(s), section .actor_tbl_0874273c ---- */

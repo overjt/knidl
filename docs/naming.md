@@ -560,26 +560,26 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 621 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 595 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 2 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 73 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
 | ROM label | `gUnk_08*` | 718 | shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4) |
-| ROM label | `gUnk_08*` | 819 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
+| ROM label | `gUnk_08*` | 815 | reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer |
 | ROM label | `gUnk_08*` | 93 | one slot of a named record holds it and nothing else names it; its position name waits for the slot's word (docs/naming.md section 2.4) |
-| ROM label | `gUnk_08*` | 722 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
-| ROM label | `gUnk_08*` | 263 | read by several named functions; the row in docs/analysis/unnamed.csv gives its reason |
+| ROM label | `gUnk_08*` | 723 | read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5) |
+| ROM label | `gUnk_08*` | 260 | read by several named functions; the row in docs/analysis/unnamed.csv gives its reason |
 | ROM label | `gUnk_08*` | 1 | no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour |
 | ROM label | `gUnk_08*` | 17073 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
-| ROM label | (named) | 5194 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
+| ROM label | (named) | 5200 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
 | struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
 | struct field | `unk*` | 126 | tracked by #155: the field's role is not proven |
 | struct field | `unk*` | 221 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 507 RAM cells by role and 24 by position, 3111 ROM labels by role and 5249 by position.
+Named for comparison: 507 RAM cells by role and 24 by position, 3111 ROM labels by role and 5255 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -609,7 +609,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M20 | enemies, bank 1 | 414 | 27 |
 | M21 | enemies, bank 2 | 200 | 12 |
 | M22 | enemies, bank 3 | 125 | 4 |
-| M23 | enemies, bank 4, and two bosses | 297 | 63 |
+| M23 | enemies, bank 4, and two bosses | 297 | 37 |
 | M24 | enemies, bank 5 | 158 | 25 |
 | M25 | bosses | 121 | 8 |
 | M26 | enemies, bank 7 | 148 | 35 |
@@ -627,7 +627,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M38 | ending, staff credits, game over | 110 | 14 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 631 |
+| all | | 5348 | 605 |
 
 Register aliases (include/task_vars.h): 1051 in 198 families: AbilityReleaseFlash 1, AbilityStar 6, Actor 38, AirGrind 6, AirGrindDoorSign 1, ArenaDoorSign 1, Blipper 9, BombRally 10, BombRallyDoorSign 1, BombRallyObject 8, Bomber 2, Bonkers 10, BonkersHammerHitBox 1, BonkersNut 1, BossDoorSign 3, BrontoBurt 9, BroomHatter 4, Bubbles 2, Bugzzy 9, BugzzyAfterimage 3, BugzzyLadybug 5, Burst 1, Cannon 4, CannonFuse 8, CannonFuseSpark 2, CannonSmoke 3, Cappy 2, Chilly 3, ChillyFreeze 4, CutsceneActor 11, CutsceneDirector 1, DashFireTrail 2, DashFlame 2, DoorObject 1, DoorOpening 3, DustBurst 2, DustTrail 3, EndingEpilogue 12, EndingStarRodReturn 8, EraseConfirmDialog 3, EraseFileWipe 4, ExplosionScreenFlash 1, FileMenuHighlight 4, FileMenuSlot 4, FileSelectCursor 4, FileSelectSlot 2, FileSelectSlotLabel 1, FireLion 11, Flamer 12, FlamerFlame 1, GameOverChoice 2, GameOverObject 2, GameOverPalette 4, GameOverPlayer 5, GameOverSprite 1, Gip 5, Glunk 2, GlunkShot 1, GoalGameBigTrailStar 1, GoalGameHelperKirby 1, GoalGameLaunchStars 1, GoalGameSign 1, GoalGameSmallTrailStar 1, GrandWheelie 17, GrandWheelieMiniWheelie 2, HalveScore 2, HeavyMole 5, HeavyMoleArm 7, HeavyMoleEye 1, HeavyMoleRedMissile 1, HeavyMoleSmoke 3, HeavyMoleYellowMissile 1, HitFrost 2, HotHead 7, HotHeadFire 3, IceBlock 3, ImpactStar 1, InhalableStar 1, IntroStoryPicture 1, Kabu 13, KingDedede 20, KingDededeStar 2, Kracko 19, KrackoCloud 4, KrackoJrOrbs 3, KrackoLightningMiddle 1, KrackoLightningTop 1, KrackoStarman 1, LandingImpact 2, LaserBall 12, LevelDoorSign 1, LinkPlayCable 4, LinkPlayColorCycle 4, LinkPlayConsole 4, LinkPlayPalettePulse 6, LinkPlayPlayerList 9, MaceKnightMace 2, MapEvent 20, MenuBackground 4, MenuBgPaletteCycle 7, MenuScreenTitle 3, MetaKnight 10, MetaKnightCape 1, MetaKnightMask 1, MetaKnightMaskHalf 2, MetaKnightSword 4, MetaKnightSwordHitBox 1, MetaKnights 11, MetaKnightsKnight 16, ModeListCursor 4, ModePlayerCountPanel 3, MrFrosty 10, MrFrostyIceCube 4, MrShineAndMrBright 19, MrShineAndMrBrightAttack 6, MrTickTock 14, MrTickTockNote 1, MrTickTockRing 2, MuseumAbilitySign 1, Needlous 5, NightmarePowerOrb 6, NightmarePowerOrbEscape 1, NightmarePowerOrbEscapeStar 5, NightmarePowerOrbIntroScroll 1, NightmarePowerOrbStar 1, NightmarePowerOrbStarAfterimage 1, NightmarePowerOrbStarTrail 1, NightmarePowerOrbStarTrailDown 1, NightmarePowerOrbStarTrailUp 1, NightmareWizard 11, NightmareWizardCloakHands 2, NightmareWizardHitBox 1, NightmareWizardPalmTornado 1, NightmareWizardPointTornado 1, NightmareWizardStar 3, Noddy 4, NormalExtraPanel 3, PaintRoller 3, PaintRollerPainting 3, PaletteAnim 13, Parasol 5, Pengy 5, PengyIceBreath 1, PengyIceBreathSparkle 1, PhanPhan 6, PhanPhanApple 1, Player 121, PlayerCountPanel 3, PlayerEffect 3, PlayerObject 2, PoppyBrosJr 14, PoppyBrosSr 11, PoppyBrosSrBomb 1, PoppyBrosSrHand 8, PoppyBrosSrHead 3, QuickDraw 16, QuickDrawDoorSign 1, QuickDrawObject 22, RingStar 1, Rocky 3, RoomParticles 3, Scarfy 8, Shotzo 15, ShotzoCannonball 2, SirKibble 3, Slippy 4, SoundTestCursors 3, SoundTestPulse 5, Sparky 4, Squishy 4, StageDoorSign 4, StageEffect 1, StarFlashOnParent 3, StarRodPiece 2, Starman 11, SubGame 1, SwordAndBladeKnight 8, SwordAndBladeKnightSlash 1, TitlePalette 1, TitleSprites 4, TridentKnightTrident 1, Twister 7, Twizzy 11, UFO 8, WaddleDee 4, WaddleDoo 5, WaddleDooBeam 2, WarpStar 12, WarpStarStationDoorSign 1, WarpStarStationDoorSparkle 1, WarpStarStationLevelSign 1, WarpStarStationNumber 1, WarpStarTrailStar 3, Wheelie 10, WhispyWoods 5, WhispyWoodsAirPuff 3, WhispyWoodsApple 4, WhispyWoodsLeaves 4.
 

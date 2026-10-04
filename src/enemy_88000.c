@@ -27,16 +27,16 @@ extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
 extern void AngleToVector(s16 t, s16 mag);
 
-void sub_08088000(void)
+void TwizzyHopToChaseEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_08088024;
-    CallTableEntry(gCurTask->state, 6, gUnk_0874266C);
+    gCurTask->updateCallback = (u32)TwizzyHopToChaseUpdate;
+    CallTableEntry(gCurTask->state, 6, gTwizzyHopToChaseStates);
 }
 
-void sub_08088024(void)
+void TwizzyHopToChaseUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 6, gUnk_08742684);
+        CallTableEntry(gCurTask->updateState, 6, gTwizzyHopToChaseStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
@@ -82,7 +82,7 @@ void sub_080880fc(void)
     s32 v;
 
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_08088000, gCurTaskIdx);
+        TaskSetEntry(TwizzyHopToChaseEnterState, gCurTaskIdx);
     v = gUnk_0874269C[gCurTask->actorSpawnArg];
     if (v > abs(TaskGetNearestPlayerDx()))
     {
@@ -90,12 +90,12 @@ void sub_080880fc(void)
         if (v > abs(TaskGetNearestPlayerDy()))
         {
             ActorSetState(4);
-            TaskSetEntry(sub_08088000, gCurTaskIdx);
+            TaskSetEntry(TwizzyHopToChaseEnterState, gCurTaskIdx);
         }
     }
 }
 
-void sub_080881a0(void)
+void TwizzyHopToChaseJump(void)
 {
     gCurTask->updateState = 1;
     gCurTask->onGround = 0;
@@ -105,11 +105,11 @@ void sub_080881a0(void)
     TaskSleepForever();
 }
 
-void sub_080881e0(void)
+void TwizzyHopToChaseJumpUpdate(void)
 {
 }
 
-void sub_080881e4(void)
+void TwizzyHopToChaseWaitShort(void)
 {
     gCurTask->updateState = 2;
     TaskYieldTrampoline(32);
@@ -117,13 +117,13 @@ void sub_080881e4(void)
     TaskSleepForever();
 }
 
-void sub_08088208(void)
+void TwizzyHopToChaseWaitShortUpdate(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_08088000, gCurTaskIdx);
+        TaskSetEntry(TwizzyHopToChaseEnterState, gCurTaskIdx);
 }
 
-void sub_08088230(void)
+void TwizzyHopToChaseWaitLong(void)
 {
     gCurTask->updateState = 3;
     TaskYieldTrampoline(64);
@@ -131,13 +131,13 @@ void sub_08088230(void)
     TaskSleepForever();
 }
 
-void sub_08088254(void)
+void TwizzyHopToChaseWaitLongUpdate(void)
 {
     if (gCurTask->state != 3)
-        TaskSetEntry(sub_08088000, gCurTaskIdx);
+        TaskSetEntry(TwizzyHopToChaseEnterState, gCurTaskIdx);
 }
 
-void sub_0808827c(void)
+void TwizzyHopToChaseTakeOff(void)
 {
     gCurTask->updateState = 4;
     gCurTask->onGround = 0;
@@ -156,7 +156,7 @@ void sub_0808827c(void)
     TaskSleepForever();
 }
 
-void sub_080882f0(void)
+void TwizzyHopToChaseTakeOffUpdate(void)
 {
     if (gCurTask->variant != 7)
     {
@@ -165,7 +165,7 @@ void sub_080882f0(void)
     }
 }
 
-void sub_08088320(void)
+void TwizzyHopToChaseFall(void)
 {
     gCurTask->updateState = 5;
     gCurTask->accelY = 0x1500;
@@ -179,7 +179,7 @@ void sub_08088320(void)
     }
 }
 
-void sub_0808835c(void)
+void TwizzyHopToChaseFallUpdate(void)
 {
 }
 
@@ -270,11 +270,11 @@ s32 TwizzyLand(void)
         {
         case 6:
             ActorSetState(0);
-            TaskSetEntry(sub_08087e60, gCurTaskIdx);
+            TaskSetEntry(TwizzyHopEnterState, gCurTaskIdx);
             return 1;
         case 7:
             ActorSetState(0);
-            TaskSetEntry(sub_08088000, gCurTaskIdx);
+            TaskSetEntry(TwizzyHopToChaseEnterState, gCurTaskIdx);
             return 1;
         }
         return 0;
@@ -294,7 +294,7 @@ s32 TwizzyStartFall(void)
             if (s == 0 || s == 2 || s == 3)
             {
                 ActorSetState(5);
-                TaskSetEntry(sub_08088000, gCurTaskIdx);
+                TaskSetEntry(TwizzyHopToChaseEnterState, gCurTaskIdx);
                 return 1;
             }
             return 0;
@@ -623,9 +623,9 @@ void sub_08088ce4(void)
 {
 }
 
-void SquishyVariant2(void)
+void SquishyJumpToWalkInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08088d7c;
+    gCurTask->updateCallback = (u32)SquishyJumpToWalkUpdate;
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
     {
@@ -636,24 +636,24 @@ void SquishyVariant2(void)
         CallTableEntry(gCurTask->state, 5, gSquishyWalkStates);
     }
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_0874271C);
+    CallTableEntry(gCurTask->state, 3, gSquishyJumpToWalkStates);
 }
 
-void sub_08088d58(void)
+void SquishyJumpToWalkEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_08088d7c;
-    CallTableEntry(gCurTask->state, 3, gUnk_0874271C);
+    gCurTask->updateCallback = (u32)SquishyJumpToWalkUpdate;
+    CallTableEntry(gCurTask->state, 3, gSquishyJumpToWalkStates);
 }
 
-void sub_08088d7c(void)
+void SquishyJumpToWalkUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08742728);
+        CallTableEntry(gCurTask->updateState, 3, gSquishyJumpToWalkStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08088dac(void)
+void SquishyJumpToWalkJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -685,13 +685,13 @@ void sub_08088dac(void)
     TaskSleepForever();
 }
 
-void sub_08088e78(void)
+void SquishyJumpToWalkJumpUpdate(void)
 {
     if (--gCurTask->squishyHopTimer == 0)
-        TaskSetEntry(sub_08088d58, gCurTaskIdx);
+        TaskSetEntry(SquishyJumpToWalkEnterState, gCurTaskIdx);
 }
 
-void sub_08088ea4(void)
+void SquishyJumpToWalkLand(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -701,7 +701,7 @@ void sub_08088ea4(void)
     TaskSleepForever();
 }
 
-void sub_08088ed4(void)
+void SquishyJumpToWalkLandUpdate(void)
 {
     if (gCurTask->variant != 2)
         TaskSetEntry(Task_Squishy, gCurTaskIdx);
@@ -719,7 +719,7 @@ void sub_08088efc(void)
 void sub_08088f24(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_08088d58, gCurTaskIdx);
+        TaskSetEntry(SquishyJumpToWalkEnterState, gCurTaskIdx);
 }
 
 void SquishyIdle(void)
@@ -763,7 +763,7 @@ s32 SquishyLand(void)
             return 1;
         case 2:
             ActorSetState(2);
-            TaskSetEntry(sub_08088d58, gCurTaskIdx);
+            TaskSetEntry(SquishyJumpToWalkEnterState, gCurTaskIdx);
             return 1;
         }
         return 0;
@@ -837,7 +837,7 @@ s32 SquishyHitCeiling(void)
         if (gCurTask->variant != 2)
             return 0;
         ActorSetState(1);
-        TaskSetEntry(sub_08088d58, gCurTaskIdx);
+        TaskSetEntry(SquishyJumpToWalkEnterState, gCurTaskIdx);
         return 1;
     }
 }

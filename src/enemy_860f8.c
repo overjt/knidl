@@ -1346,29 +1346,29 @@ void TwizzyTakeOffState2Update(void)
     }
 }
 
-void TwizzyVariant6(void)
+void TwizzyHopInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08087e84;
+    gCurTask->updateCallback = (u32)TwizzyHopUpdate;
     gCurTask->onGround = 1;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 3, gUnk_08742654);
+    CallTableEntry(gCurTask->state, 3, gTwizzyHopStates);
 }
 
-void sub_08087e60(void)
+void TwizzyHopEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_08087e84;
-    CallTableEntry(gCurTask->state, 3, gUnk_08742654);
+    gCurTask->updateCallback = (u32)TwizzyHopUpdate;
+    CallTableEntry(gCurTask->state, 3, gTwizzyHopStates);
 }
 
-void sub_08087e84(void)
+void TwizzyHopUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08742660);
+        CallTableEntry(gCurTask->updateState, 3, gTwizzyHopStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08087eb4(void)
+void TwizzyHopWait(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1381,13 +1381,13 @@ void sub_08087eb4(void)
     TaskSleepForever();
 }
 
-void sub_08087ef0(void)
+void TwizzyHopWaitUpdate(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_08087e60, gCurTaskIdx);
+        TaskSetEntry(TwizzyHopEnterState, gCurTaskIdx);
 }
 
-void sub_08087f18(void)
+void TwizzyHopJump(void)
 {
     gCurTask->updateState = 1;
     gCurTask->onGround = 0;
@@ -1405,11 +1405,11 @@ void sub_08087f18(void)
     TaskSleepForever();
 }
 
-void sub_08087f88(void)
+void TwizzyHopJumpUpdate(void)
 {
 }
 
-void sub_08087f8c(void)
+void TwizzyHopFall(void)
 {
     gCurTask->updateState = 2;
     gCurTask->accelY = 0x800;
@@ -1423,14 +1423,14 @@ void sub_08087f8c(void)
     }
 }
 
-void sub_08087fc8(void)
+void TwizzyHopFallUpdate(void)
 {
 }
 
-void TwizzyVariant7(void)
+void TwizzyHopToChaseInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08088024;
+    gCurTask->updateCallback = (u32)TwizzyHopToChaseUpdate;
     gCurTask->onGround = 1;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 6, gUnk_0874266C);
+    CallTableEntry(gCurTask->state, 6, gTwizzyHopToChaseStates);
 }
