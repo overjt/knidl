@@ -142,7 +142,7 @@ u8 HitTestColliderClass20(void)
             gColliderPlayer = 4;
         else
             gColliderPlayer = gColliderPlayerState->playerIndex;
-        if (gColliderBodyBox->bodyFlags & 0x8000)
+        if (gColliderBodyBox->bodyFlags & BODY_BOX_FLAG_NO_MIRROR)
         {
             s32 x;
             gColliderX = x = gColliderBodyBox->offsetX + e->x;
@@ -189,9 +189,9 @@ u8 HitTestColliderClass20(void)
                 t->hitKind = HIT_KIND_NO_DAMAGE;
             if (k == 4)
                 continue;
-            if (k == 5 && (gAttackBox->attackFlags & 0x80))
+            if (k == 5 && (gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIGH_FALL_BOUNCE))
                 continue;
-            if (gAttackBox->attackFlags & 1)
+            if (gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION)
                 continue;
             if (gColliderPlayer == 4)
                 continue;
@@ -204,7 +204,7 @@ u8 HitTestColliderClass20(void)
         {
             if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass == 32)
                 continue;
-            if ((a->attackFlags & 0x40) && (b->bodyFlags & 0x4000))
+            if ((a->attackFlags & ATTACK_BOX_FLAG_SHIELDABLE) && (b->bodyFlags & BODY_BOX_FLAG_SHIELD))
             {
                 if (gColliderPlayer == 4)
                     continue;
@@ -220,7 +220,7 @@ u8 HitTestColliderClass20(void)
                 HitRecordHitter();
                 return 1;
             }
-            if (!(gAttackBox->attackFlags & 1) && !(k == 5 && (gAttackBox->attackFlags & 0x80))
+            if (!(gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION) && !(k == 5 && (gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIGH_FALL_BOUNCE))
                 && gColliderPlayer != 4)
             {
                 u->u76.unk76 &= 0x4000;
@@ -251,7 +251,7 @@ u8 HitTestColliderClass20(void)
             HitRecordHitter();
             return 1;
         }
-        if (!(a->attackFlags & 1) && !(k == 5 && (a->attackFlags & 0x80)) && gColliderPlayer != 4)
+        if (!(a->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION) && !(k == 5 && (a->attackFlags & ATTACK_BOX_FLAG_NO_HIGH_FALL_BOUNCE)) && gColliderPlayer != 4)
         {
             u->u76.unk76 &= 0x4000;
             u->u76.unk76 |= b->bodyFlags & 0x3FFF;

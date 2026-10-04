@@ -167,7 +167,7 @@ u8 HitTestPlayerColliders(void)
         gColliderPlayer = gColliderPlayerState->playerIndex;
         gColliderBodyBox = e->bodyBox;
         /* the list entry's position is unsigned (ldrh) */
-        if (gColliderBodyBox->bodyFlags & 0x8000)
+        if (gColliderBodyBox->bodyFlags & BODY_BOX_FLAG_NO_MIRROR)
         {
             s32 x;
             gColliderX = x = gColliderBodyBox->offsetX + e->x;
@@ -233,7 +233,7 @@ u8 HitTestPlayerColliders(void)
             else if (s == 0)
             {
                 if (!(gAttackBox->playerHarmlessMask & 0x4005)
-                    && !((gAttackBox->attackFlags & 0x40) && (t->u76.unk76 & 0x4000)))
+                    && !((gAttackBox->attackFlags & ATTACK_BOX_FLAG_SHIELDABLE) && (t->u76.unk76 & 0x4000)))
                 {
                     t->hitEffect = gAttackBox->hitEffect;
                     /* the actor's x is read signed here (ldrsh) */
@@ -372,7 +372,7 @@ u8 HitTestColliderClass10(void)
             continue;
         }
         /* the list entry's position is unsigned (ldrh) */
-        if (gColliderBodyBox->bodyFlags & 0x8000)
+        if (gColliderBodyBox->bodyFlags & BODY_BOX_FLAG_NO_MIRROR)
         {
             s32 x;
             gColliderX = x = gColliderBodyBox->offsetX + e->x;
@@ -417,7 +417,7 @@ u8 HitTestColliderClass10(void)
         k = (u32)(gColliderBodyBox->classKind << 28) >> 28;
         mask = gColliderClass10KindBits[k] | 0x4000;
         /* the body box's halfword at 0x0E (ldrh) */
-        if (!(gColliderBodyBox->guardFlags & 0x8000) && !(mask & gAttackBox->class10HarmlessMask))
+        if (!(gColliderBodyBox->guardFlags & BODY_BOX_GUARD_NO_DAMAGE) && !(mask & gAttackBox->class10HarmlessMask))
         {
             t->hitEffect = gAttackBox->hitEffect;
             t->health -= gAttackBox->damage;
@@ -426,7 +426,7 @@ u8 HitTestColliderClass10(void)
             else
                 t->hitKind = HIT_KIND_DAMAGE;
             u = &gTasks[gColliderPlayer];
-            if (!(gAttackBox->attackFlags & 1))
+            if (!(gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION))
             {
                 u->u76.unk76 &= 0x4000;
                 u->u76.unk76 |= gColliderBodyBox->bodyFlags & 0x3FFF;

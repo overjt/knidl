@@ -191,6 +191,21 @@ FAMILIES = {
         "prefix": "ATTACK_BOX_IMMUNITY_",
         "bits": ["immunityFlags"],
     },
+    "attack_box_flags": {
+        "header": "hits",
+        "prefix": "ATTACK_BOX_FLAG_",
+        "bits": ["attackFlags"],
+    },
+    "body_box_flags": {
+        "header": "hits",
+        "prefix": "BODY_BOX_FLAG_",
+        "bits": ["bodyFlags"],
+    },
+    "body_box_guard": {
+        "header": "hits",
+        "prefix": "BODY_BOX_GUARD_",
+        "bits": ["guardFlags"],
+    },
     "camera": {
         "header": "camera",
         "prefix": "CAMERA_MODE_",
@@ -501,6 +516,38 @@ def add_include(text, topic):
     return text[:pos] + inc + "\n" + text[pos:]
 
 
+BIT_EXPR_RE = re.compile(r"^(~)?(?:([A-Z][A-Z0-9_]*)|\(([A-Z][A-Z0-9_]*(?: \| [A-Z][A-Z0-9_]*)+)\))$")
+BIT_WIDTHS = (8, 16, 32)
+
+
+def bit_expr_value(expr, consts):
+    """(value of the OR, complemented?, topic) of a bit expression `~A`,
+    `~(A | B)` or `(A | B)` whose constants are single bits of one header;
+    None otherwise."""
+    m = BIT_EXPR_RE.match(expr)
+    if not m or (not m.group(1) and m.group(2)):
+        return None
+    names = [m.group(2)] if m.group(2) else m.group(3).split(" | ")
+    value, topics = 0, set()
+    for n in names:
+        c = consts.get(n)
+        if c is None or c[0] <= 0 or c[0] & (c[0] - 1) or value & c[0]:
+            return None
+        value |= c[0]
+        topics.add(c[1])
+    if len(topics) != 1 or names != sorted(names, key=lambda n: consts[n][0]):
+        return None
+    return value, bool(m.group(1)), topics.pop()
+
+
+def bit_expr_matches(literal, value, comp):
+    """True if an integer literal equals the bit expression: the OR itself,
+    or (complemented) the OR's complement in a field of 8, 16 or 32 bits."""
+    if not comp:
+        return literal == value
+    return any(literal == (~value) & ((1 << w) - 1) for w in BIT_WIDTHS if value < (1 << w))
+
+
 def apply_sites(rows, do_write, consts=None):
     consts = dict(consts or all_constants())
     by_file = {}
@@ -523,17 +570,33 @@ def apply_sites(rows, do_write, consts=None):
             if not tok or tok[0] != "num" or tok[1] != r["literal"]:
                 problems.append("%s:%d:%d: no literal %s there" % (path, ln, col, r["literal"]))
                 continue
-            c = consts.get(r["constant"])
-            if c is None:
-                problems.append("%s:%d: unknown constant %s" % (path, ln, r["constant"]))
-                continue
-            v, suffix = int_value(r["literal"])
-            if v != c[0] or suffix:
-                problems.append("%s:%d: %s is %d, %s is %d" % (path, ln, r["literal"], v,
-                                                               r["constant"], c[0]))
-                continue
+            if re.match(r"^[A-Z][A-Z0-9_]*$", r["constant"]):
+                c = consts.get(r["constant"])
+                if c is None:
+                    problems.append("%s:%d: unknown constant %s" % (path, ln, r["constant"]))
+                    continue
+                v, suffix = int_value(r["literal"])
+                if v != c[0] or suffix:
+                    problems.append("%s:%d: %s is %d, %s is %d" % (path, ln, r["literal"], v,
+                                                                   r["constant"], c[0]))
+                    continue
+                topic = c[1]
+            else:
+                # a bit expression (docs/naming.md 7.0, the second form):
+                # `~A`, `~(A | B)` or `(A | B)` of one header's constants
+                v, suffix = int_value(r["literal"])
+                ev = bit_expr_value(r["constant"], consts)
+                if ev is None or suffix:
+                    problems.append("%s:%d: %r is not a bit expression of known constants"
+                                    % (path, ln, r["constant"]))
+                    continue
+                value, comp, topic = ev
+                if not bit_expr_matches(v, value, comp):
+                    problems.append("%s:%d: %s does not equal %s" % (path, ln, r["literal"],
+                                                                     r["constant"]))
+                    continue
             spans.append((off, off + len(r["literal"]), r["constant"]))
-            topics.add(c[1])
+            topics.add(topic)
         if len(set(s[0] for s in spans)) != len(spans):
             problems.append("%s: a literal is listed twice" % path)
         for a, b, name in sorted(spans, reverse=True):
@@ -764,6 +827,64 @@ def function_spans(toks):
     return out
 
 
+def bit_expr_sites(fam):
+    """[(file, line, col, literal, expression)] of the literals at a bits
+    family's positions that are a complement or a union of its proven bits
+    (`&= 0x7FFF` -> `&= ~A`, `& 0x6000` -> `& (A | B)`; docs/naming.md 7.0,
+    the second form), and [(file, line, col, literal)] of those that are
+    not.  The spec's `width` is the field's width in bits."""
+    spec = FAMILIES[fam]
+    width = spec.get("width", 16)
+    mask = (1 << width) - 1
+    consts = all_constants()
+    bits = sorted((v, n) for n, (v, topic) in consts.items()
+                  if topic == spec["header"] and n.startswith(spec.get("prefix", ""))
+                  and v > 0 and not v & (v - 1))
+    allbits = 0
+    for v, _ in bits:
+        allbits |= v
+
+    def expr(v, comp):
+        names = [n for b, n in bits if v & b]
+        if len(names) == 1:
+            return ("~" if comp else "") + names[0]
+        return ("~" if comp else "") + "(" + " | ".join(names) + ")"
+    members = set(spec.get("bits", []))
+    variables = set(spec.get("bit_vars", []))
+    rows, other = [], []
+    for path in src_files():
+        text = read(os.path.join(ROOT, path))
+        starts = line_starts(text)
+        toks = lex(text)
+        n = len(toks)
+        for i in range(n):
+            k, tk = toks[i][0], toks[i][1]
+            prev = toks[i - 1][1] if i > 0 else ""
+            if not (k == "id" and ((tk in members and prev in (".", "->"))
+                                   or (tk in variables and prev not in (".", "->")))):
+                continue
+            j = _operand_end(toks, i) + 1
+            if j >= n or toks[j][1] not in ("&", "|", "^", "&=", "|=", "^="):
+                continue
+            lit = _value_after(toks, j)
+            if not lit:
+                continue
+            pos, v = lit
+            if v <= 0 or not v & (v - 1):
+                continue  # a single bit: the first form
+            off = toks[pos][2]
+            ln = max(x for x in range(len(starts)) if starts[x] <= off)
+            where = (path, ln + 1, off - starts[ln] + 1, toks[pos][1])
+            comp = (~v) & mask
+            if toks[j][1] in ("&", "&=") and comp and not comp & ~allbits and v <= mask:
+                rows.append(where + (expr(comp, True),))
+            elif not v & ~allbits:
+                rows.append(where + (expr(v, False),))
+            else:
+                other.append(where)
+    return rows, other
+
+
 def scan(fam):
     """[(file, line, col, literal, constant)] of the family's literals whose
     value has a constant in the family's header, and the count of those
@@ -959,6 +1080,7 @@ def main():
     ap.add_argument("--preambles", help="JSON {topic: preamble text} for new headers")
     ap.add_argument("--sites")
     ap.add_argument("--scan")
+    ap.add_argument("--bitexprs", help="a bits family: its complement / union sites (second form)")
     ap.add_argument("--out")
     ap.add_argument("--verify-cpp")
     ap.add_argument("--census", action="store_true")
@@ -979,6 +1101,17 @@ def main():
                     consts[r["constant"]] = (int_value(r["value"])[0], r["header"])
             if args.sites:
                 apply_sites(read_csv(args.sites), args.write, consts)
+        elif args.bitexprs:
+            rows, other = bit_expr_sites(args.bitexprs)
+            out = open(args.out, "w", newline="") if args.out else sys.stdout
+            w = csv.writer(out, lineterminator="\n")
+            w.writerow(["file", "line", "col", "literal", "constant"])
+            for r in rows:
+                w.writerow(r)
+            print("bitexprs %s: %d complement / union sites, %d other multi-bit literals"
+                  % (args.bitexprs, len(rows), len(other)), file=sys.stderr)
+            for o in other:
+                print("  not of proven bits: %s:%d:%d %s" % o, file=sys.stderr)
         elif args.scan:
             rows, missing = scan(args.scan)
             out = open(args.out, "w", newline="") if args.out else sys.stdout
