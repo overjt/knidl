@@ -101,6 +101,11 @@ MAX_VALUE = 0x7FFFFFFF
 #            (`x.member = N`, `x->member == N`, `!=`)
 #   indexed: arrays whose element is compared with a literal
 #            (`gTaskSlotTypes[i] == N`)
+#   prefix:  only the header's constants with this prefix (a header may hold
+#            two enumerations: GAME_STATE_ and STAGE_REQUEST_)
+#   skip_files / skip_sites: where the same member or variable holds another
+#            enumeration's values (file; or file, function, line hint,
+#            literal, reason)
 FAMILIES = {
     "tasks": {
         "header": "tasks",
@@ -123,6 +128,44 @@ FAMILIES = {
         },
         "members": ["ability", "attackAbility", "pendingAbility"],
         "indexed": ["gPlayerAbilities", "gSavedPlayerAbilities"],
+    },
+    "game_states": {
+        "header": "game_states",
+        "prefix": "GAME_STATE_",
+        "vars": ["gGameState", "gPrevGameState"],
+    },
+    "stage_requests": {
+        "header": "game_states",
+        "prefix": "STAGE_REQUEST_",
+        "vars": ["gStageRequest"],
+    },
+    "hits": {
+        "header": "hits",
+        "prefix": "HIT_KIND_",
+        "calls": {"ActorReactToHitKind": 0, "CreateBlockStar": 3},
+        "members": ["hitKind"],
+        "vars": ["gHitKind"],
+        "skip_files": ["src/plobj_509ec.c", "src/plobj_514f8.c", "src/plobj_52f6c.c"],
+    },
+    "actors": {
+        "header": "actors",
+        "prefix": "ACTOR_KIND_",
+        "calls": {"CreateActor": 0, "CreateActorByKind": 0},
+        "members": ["actorKind"],
+    },
+    "camera": {
+        "header": "camera",
+        "prefix": "CAMERA_MODE_",
+        "vars": ["gCameraMode"],
+        "skip_files": ["src/level_23948.c"],
+        "skip_sites": [
+            ["src/stage_273a0.c", "CameraStartHoldAnchorAt", "gCameraMode = 4", "4", "hub branch (gInHub != 0): the hub's hold-anchor mode"],
+            ["src/camera_2d01c.c", "CameraStartHoldAnchor", "gCameraMode = 4", "4", "hub branch (gInHub != 0): the hub's hold-anchor mode"],
+            ["src/camera_28b8c.c", "SetRoomEntryPoint", "gCameraMode == 2 || gCameraMode == 4", "2", "hub branch: the hub's hold-anchor modes 2/4"],
+            ["src/camera_28b8c.c", "SetRoomEntryPoint", "gCameraMode == 2 || gCameraMode == 4", "4", "hub branch: the hub's hold-anchor modes 2/4"],
+            ["src/stage_261c0.c", "SetCameraFocusOrAnchor", "gCameraMode != 2 && gCameraMode != 4", "2", "hub branch: the hub's hold-anchor modes 2/4"],
+            ["src/stage_261c0.c", "SetCameraFocusOrAnchor", "gCameraMode != 2 && gCameraMode != 4", "4", "hub branch: the hub's hold-anchor modes 2/4"],
+        ],
     },
 }
 
@@ -638,6 +681,34 @@ def family_positions(fam, toks):
                     yield pos
 
 
+def function_spans(toks):
+    """[(name, first token index, last token index)] of the function
+    bodies of a file's token list."""
+    out, depth, cur = [], 0, None
+    for i, t in enumerate(toks):
+        if t[1] == "{":
+            if depth == 0 and i > 0 and toks[i - 1][1] == ")":
+                j = i - 1
+                d = 0
+                while j >= 0:
+                    if toks[j][1] == ")":
+                        d += 1
+                    elif toks[j][1] == "(":
+                        d -= 1
+                        if d == 0:
+                            break
+                    j -= 1
+                if j > 0 and toks[j - 1][0] == "id":
+                    cur = (toks[j - 1][1], i)
+            depth += 1
+        elif t[1] == "}":
+            depth -= 1
+            if depth == 0 and cur:
+                out.append((cur[0], cur[1], i))
+                cur = None
+    return out
+
+
 def scan(fam):
     """[(file, line, col, literal, constant)] of the family's literals whose
     value has a constant in the family's header, and the count of those
@@ -646,16 +717,29 @@ def scan(fam):
     consts = all_constants()
     by_value = {}
     for name, (v, topic) in consts.items():
-        if topic == spec["header"]:
+        if topic == spec["header"] and name.startswith(spec.get("prefix", "")):
             by_value.setdefault(v, []).append(name)
+    skip_sites = {}
+    for f, func, hint, lit, _why in spec.get("skip_sites", []):
+        skip_sites.setdefault(f, []).append((func, hint, lit))
     rows, missing = [], []
     for path in src_files():
+        if path in spec.get("skip_files", []):
+            continue
         text = read(os.path.join(ROOT, path))
         starts = line_starts(text)
         toks = lex(text)
+        spans = function_spans(toks) if path in skip_sites else []
         for i, v in family_positions(fam, toks):
             if v in spec.get("skip_values", []):
                 continue
+            if path in skip_sites:
+                func = next((n for n, a, b in spans if a <= i <= b), None)
+                ls = text.rfind("\n", 0, toks[i][2]) + 1
+                le = text.find("\n", toks[i][2])
+                line = text[ls:le if le >= 0 else len(text)]
+                if any(func == f and h in line and toks[i][1] == l for f, h, l in skip_sites[path]):
+                    continue
             off = toks[i][2]
             lo, hi = 0, len(starts) - 1
             while lo < hi:
