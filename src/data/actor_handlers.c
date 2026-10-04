@@ -257,12 +257,12 @@ void HeavyMoleReactToDamage(void);
 s32 HeavyMoleReactToDefeat(void);
 void NightmarePowerOrbReactToDamage(void);
 void NightmarePowerOrbReactToDefeat(void);
-s32 sub_080b1588(void);
-s32 sub_080b1594(void);
-s32 sub_080b15b4(void);
+s32 PaintRollerPaintingLand(void);
+s32 PaintRollerPaintingStartFall(void);
+s32 PaintRollerPaintingHitWall(void);
 void WhispyWoodsReactToDefeat(void);
 void WhispyWoodsReactToDamage(void);
-s32 sub_080b2f38(void);
+s32 WhispyWoodsAppleLand(void);
 s32 PickupStartFall(void);
 s32 PickupLand(void);
 s32 PickupEnterWater(void);
@@ -1891,12 +1891,12 @@ struct ActorVt gNightmarePowerOrbHitReactions ACTOR_TBL(0874b4e0) = {
 
 /* ---- 0x0874BF58-0x0874BFF8: 12 record(s), section .actor_tbl_0874bf58 ---- */
 /* 6 ActorDefs (gUnk_0874B96C, gUnk_0874B998, ...) */
-struct ActorHandlers gUnk_0874BF58 ACTOR_TBL(0874bf58) = {
-    .landCallback = (u32)sub_080b1588,
-    .leaveGroundCallback = (u32)sub_080b1594,
+struct ActorHandlers gPaintRollerPaintingTerrainHandlers ACTOR_TBL(0874bf58) = {
+    .landCallback = (u32)PaintRollerPaintingLand,
+    .leaveGroundCallback = (u32)PaintRollerPaintingStartFall,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_080b15b4,
+    .hitWallCallback = (u32)PaintRollerPaintingHitWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };
@@ -2010,7 +2010,7 @@ struct ActorVt gWhispyWoodsReactToDefeatHitReactions ACTOR_TBL(0874c204) = {
 /* ---- 0x0874C418-0x0874C44C: 3 record(s), section .actor_tbl_0874c418 ---- */
 /* gWhispyWoodsAppleDef */
 struct ActorHandlers gWhispyWoodsAppleTerrainHandlers ACTOR_TBL(0874c418) = {
-    .landCallback = (u32)sub_080b2f38,
+    .landCallback = (u32)WhispyWoodsAppleLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,

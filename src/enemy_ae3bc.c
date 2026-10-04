@@ -54,7 +54,7 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
@@ -480,7 +480,7 @@ void NightmarePowerOrbDash(void)
         TaskYieldTrampoline(8);
         gCurTask->velX = 0;
         TaskYieldTrampoline(32);
-        sub_080aec00();
+        NightmarePowerOrbReturnDown();
         break;
     case 1:
         gCurTask->velX = 128 << 10;
@@ -526,7 +526,7 @@ void NightmarePowerOrbDash(void)
         gCurTask->velX = 0xFFFF0000;
         gCurTask->velY = 128 << 11;
         TaskYieldTrampoline(8);
-        sub_080aec00();
+        NightmarePowerOrbReturnDown();
         break;
     case 2:
         gCurTask->velX = 128 << 10;
@@ -572,13 +572,13 @@ void NightmarePowerOrbDash(void)
         gCurTask->velX = 0xFFFF0000;
         gCurTask->velY = 0xFFFC0000;
         TaskYieldTrampoline(8);
-        sub_080aed5c();
+        NightmarePowerOrbReturnUp();
         break;
     }
     TaskStop();
 }
 
-void sub_080aec00(void)
+void NightmarePowerOrbReturnDown(void)
 {
     NightmarePowerOrbStartAnim((u32)gUnk_0874B0A0);
     gCurTask->updateState = 3;
@@ -643,7 +643,7 @@ void sub_080aec00(void)
     TaskYieldTrampoline(32);
 }
 
-void sub_080aed5c(void)
+void NightmarePowerOrbReturnUp(void)
 {
     struct Task **c;
     s32 z;
@@ -1040,7 +1040,7 @@ void NightmarePowerOrbDefeat(void)
     CreateNextRoomWarpStar(u->pixelX, u->pixelY);
     NightmarePowerOrbFlyAway();
     (*c)->updateCallback = (u32)sub_080aef50;
-    sub_080b09ac();
+    NightmarePowerOrbShrinkAway();
 }
 
 void sub_080af308(void)
@@ -1138,7 +1138,7 @@ void NightmarePowerOrbStarVariant0(void)
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
-    sub_080af7d4();
+    NightmarePowerOrbStarSetVelYTowardPlayer();
 top:
     t = *c;
     w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
@@ -1209,7 +1209,7 @@ void NightmarePowerOrbStarVariant1(void)
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
-    sub_080af7d4();
+    NightmarePowerOrbStarSetVelYTowardPlayer();
 top:
     t = *c;
     w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
@@ -1280,7 +1280,7 @@ void NightmarePowerOrbStarVariant2(void)
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
-    sub_080af7d4();
+    NightmarePowerOrbStarSetVelYTowardPlayer();
 top:
     t = *c;
     w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
@@ -1351,7 +1351,7 @@ void NightmarePowerOrbStarVariant3(void)
     PlaySfx(139 << 2);
     u6 = *c;
     u6->velX = 0xFFFA0000;
-    sub_080af7d4();
+    NightmarePowerOrbStarSetVelYTowardPlayer();
 top:
     t = *c;
     w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
@@ -1371,7 +1371,7 @@ top:
     goto top;
 }
 
-void sub_080af7d4(void)
+void NightmarePowerOrbStarSetVelYTowardPlayer(void)
 {
     struct Task *t;
     struct Task *e;
@@ -2252,14 +2252,14 @@ void Task_NightmarePowerOrbStreak(void)
     TaskExitTrampoline();
 }
 
-void sub_080b09ac(void)
+void NightmarePowerOrbShrinkAway(void)
 {
     TaskStop();
     while (gViewRect[2] > 8)
         TaskYieldTrampoline(1);
     gCurTask->updateCallback = 0;
-    gCurTask->drawCallback = (u32)sub_080b0b50;
-    sub_080b0b04();
+    gCurTask->drawCallback = (u32)NightmarePowerOrbShrinkAwayDraw;
+    NightmarePowerOrbLoadShrinkAwayGfx();
     gCurTask->facing = 1;
     TaskSetFrame(0);
     gCurTask->nightmarePowerOrbScale = 128 << 13;
@@ -2298,7 +2298,7 @@ void sub_080b09ac(void)
     TaskSleepForever();
 }
 
-void sub_080b0b04(void)
+void NightmarePowerOrbLoadShrinkAwayGfx(void)
 {
     u16 *q;
     struct Task *t;
@@ -2311,7 +2311,7 @@ void sub_080b0b04(void)
     t->frameTable = gUnk_08754560;
 }
 
-void sub_080b0b50(void)
+void NightmarePowerOrbShrinkAwayDraw(void)
 {
     struct Task *t;
     u32 *tbl;
@@ -2756,13 +2756,13 @@ void PaintRollerPaintingBaseballUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_080b1588(void)
+s32 PaintRollerPaintingLand(void)
 {
     TaskStopY();
     return 0;
 }
 
-s32 sub_080b1594(void)
+s32 PaintRollerPaintingStartFall(void)
 {
     struct Task *t;
 
@@ -2773,7 +2773,7 @@ s32 sub_080b1594(void)
     return 0;
 }
 
-s32 sub_080b15b4(void)
+s32 PaintRollerPaintingHitWall(void)
 {
     TaskTurnAroundAndReverseX();
     return 0;
@@ -3022,7 +3022,7 @@ void HeavyMoleArmEnterState(void)
     CallTableEntry(gCurTask->state, 6, gHeavyMoleArmStates);
 }
 
-void HeavyMoleArmState0(void)
+void HeavyMoleArmSpinLoop(void)
 {
     gCurTask->updateState = HEAVY_MOLE_ARM_STATE_0;
     if (gCurTask->heavyMoleArmSpinLevel >> 16 > 2)
@@ -3061,7 +3061,7 @@ void HeavyMoleArmState0(void)
     }
 }
 
-void HeavyMoleArmState0Update(void)
+void HeavyMoleArmSpinLoopUpdate(void)
 {
     struct Task *t;
     s32 v;
@@ -3106,7 +3106,7 @@ void HeavyMoleArmState0Update(void)
     }
 }
 
-void HeavyMoleArmState1(void)
+void HeavyMoleArmSpinWindUp(void)
 {
     struct Task **c;
     struct Task *t;
@@ -3208,7 +3208,7 @@ void HeavyMoleArmState1(void)
     }
 }
 
-void HeavyMoleArmState1Update(void)
+void HeavyMoleArmSpinWindUpUpdate(void)
 {
     struct Task **c;
     struct Task *t;
@@ -3241,7 +3241,7 @@ void HeavyMoleArmState1Update(void)
         u->heavyMoleArmSpinLevel = v + 120;
 }
 
-void HeavyMoleArmState2(void)
+void HeavyMoleArmSwingSlow(void)
 {
     struct Task **c;
     struct Task **c2;
@@ -3276,11 +3276,11 @@ void HeavyMoleArmState2(void)
         u3 = *c;
         u3->heavyMoleArmSwingStep = -u3->heavyMoleArmSwingStep;
     }
-    sub_080b2058(0);
+    HeavyMoleArmSweepAngle(0);
     c2 = &gCurTask;
     u4 = *c2;
     u4->heavyMoleArmSwingStep = -u4->heavyMoleArmSwingStep;
-    sub_080b2058(1);
+    HeavyMoleArmSweepAngle(1);
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(2);
@@ -3288,7 +3288,7 @@ void HeavyMoleArmState2(void)
     TaskSleepForever();
 }
 
-void HeavyMoleArmState2Update(void)
+void HeavyMoleArmSwingSlowUpdate(void)
 {
     struct Task *t;
 
@@ -3318,7 +3318,7 @@ void HeavyMoleArmState2Update(void)
         gCurTask->frame = gUnk_030023D4 + (gFrameCount & 3);
 }
 
-void HeavyMoleArmState3(void)
+void HeavyMoleArmSwingFast(void)
 {
     struct Task **c;
     struct Task **c2;
@@ -3353,11 +3353,11 @@ void HeavyMoleArmState3(void)
         u3 = *c;
         u3->heavyMoleArmSwingStep = -u3->heavyMoleArmSwingStep;
     }
-    sub_080b2058(0);
+    HeavyMoleArmSweepAngle(0);
     c2 = &gCurTask;
     u4 = *c2;
     u4->heavyMoleArmSwingStep = -u4->heavyMoleArmSwingStep;
-    sub_080b2058(1);
+    HeavyMoleArmSweepAngle(1);
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(1);
@@ -3365,7 +3365,7 @@ void HeavyMoleArmState3(void)
     TaskSleepForever();
 }
 
-void HeavyMoleArmState3Update(void)
+void HeavyMoleArmSwingFastUpdate(void)
 {
     struct Task *t;
 
@@ -3395,7 +3395,7 @@ void HeavyMoleArmState3Update(void)
         gCurTask->frame = gUnk_030023D4 + (gFrameCount & 3);
 }
 
-void sub_080b2058(u8 a)
+void HeavyMoleArmSweepAngle(u8 a)
 {
     struct Task **c;
     struct Task *u;
@@ -3447,7 +3447,7 @@ xbody2:
     }
 }
 
-void HeavyMoleArmState5(void)
+void HeavyMoleArmThrust(void)
 {
     struct Task **c;
     u32 *t40;
@@ -3487,7 +3487,7 @@ loop:
     TaskSleepForever();
 }
 
-void HeavyMoleArmState5Update(void)
+void HeavyMoleArmThrustUpdate(void)
 {
     struct Task **c;
     struct Task *t;
@@ -3927,7 +3927,7 @@ void CreateWhispyWoodsApple(void)
     sp.taskType = TASK_WHISPY_WOODS_APPLE;
     sp.variant = WHISPY_WOODS_APPLE_VARIANT_INIT;
     sp.spawnArg = 0;
-    sp.x = (u8)sub_080b2804();
+    sp.x = (u8)WhispyWoodsPickAppleX();
     z = 0;
     sp.y = 224;
     sp.tileWord = ActorGetTileWordPalOffset(1);
@@ -3936,7 +3936,7 @@ void CreateWhispyWoodsApple(void)
     CreateActorFromDesc(&sp, 1);
 }
 
-s32 sub_080b2804(void)
+s32 WhispyWoodsPickAppleX(void)
 {
     u32 v;
 
@@ -3969,12 +3969,12 @@ s32 sub_080b2804(void)
     }
 }
 
-void sub_080b2884(void)
+void WhispyWoodsDefeatHook(void)
 {
     TaskSetFrameFlip(10);
 }
 
-void sub_080b2890(void)
+void WhispyWoodsDraw(void)
 {
     struct Task **c;
     struct Task *t0;
@@ -4061,7 +4061,7 @@ void Task_WhispyWoods(void)
     c = &gCurTask;
     t = *c;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_080b2890;
+    t->drawCallback = (u32)WhispyWoodsDraw;
     t->layer = 11;
     u = *c;
     u->frameTable = gWhispyWoodsFrames;
@@ -4399,7 +4399,7 @@ void sub_080b2f34(void)
 {
 }
 
-s32 sub_080b2f38(void)
+s32 WhispyWoodsAppleLand(void)
 {
     struct Task *t;
     s32 z;

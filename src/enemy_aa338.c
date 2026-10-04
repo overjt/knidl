@@ -97,7 +97,7 @@ extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
@@ -166,7 +166,7 @@ void NightmareWizardUpdate(void)
     ActorReactToHit();
 }
 
-void NightmareWizardState0(void)
+void NightmareWizardIntro(void)
 {
     gCurTask->updateState = NIGHTMARE_WIZARD_STATE_0;
     ActorStopAnim();
@@ -197,14 +197,14 @@ void NightmareWizardState0(void)
     TaskSleepForever();
 }
 
-void NightmareWizardState0Update(void)
+void NightmareWizardIntroUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
     if (gCurTask->state != NIGHTMARE_WIZARD_STATE_0)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void NightmareWizardState1(void)
+void NightmareWizardWait(void)
 {
     s32 v;
     struct Task *t;
@@ -255,7 +255,7 @@ setv:
     TaskSleepForever();
 }
 
-void NightmareWizardState1Update(void)
+void NightmareWizardWaitUpdate(void)
 {
     s32 w;
 
@@ -270,7 +270,7 @@ void NightmareWizardState1Update(void)
     }
 }
 
-void NightmareWizardState2(void)
+void NightmareWizardTeleportEnd(void)
 {
     gCurTask->updateState = NIGHTMARE_WIZARD_STATE_2;
     NightmareWizardMoveToNextSpot();
@@ -280,13 +280,13 @@ void NightmareWizardState2(void)
     TaskSleepForever();
 }
 
-void NightmareWizardState2Update(void)
+void NightmareWizardTeleportEndUpdate(void)
 {
     if (gCurTask->state != NIGHTMARE_WIZARD_STATE_2)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void NightmareWizardState3(void)
+void NightmareWizardTeleportStart(void)
 {
     s32 n;
 
@@ -305,7 +305,7 @@ void NightmareWizardState3(void)
     TaskSleepForever();
 }
 
-void NightmareWizardState3Update(void)
+void NightmareWizardTeleportStartUpdate(void)
 {
     if (gCurTask->state != NIGHTMARE_WIZARD_STATE_3)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
@@ -791,7 +791,7 @@ void NightmareWizardSwoopUpdate(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void NightmareWizardState10(void)
+void NightmareWizardTeleportLoop(void)
 {
     gCurTask->updateState = NIGHTMARE_WIZARD_STATE_10;
     gCurTask->nightmareWizardLoopCount = 0;
@@ -807,7 +807,7 @@ void NightmareWizardState10(void)
     TaskSleepForever();
 }
 
-void NightmareWizardState10Update(void)
+void NightmareWizardTeleportLoopUpdate(void)
 {
     if (gCurTask->state != NIGHTMARE_WIZARD_STATE_10)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
@@ -816,7 +816,7 @@ void NightmareWizardState10Update(void)
 void NightmareWizardHurt(void)
 {
     gCurTask->updateState = NIGHTMARE_WIZARD_STATE_HURT;
-    sub_080ab5c0();
+    NightmareWizardKnockBack();
     gUnk_02007D00[0] = 0;
     ActorSetState(NIGHTMARE_WIZARD_STATE_3);
     TaskSleepForever();
@@ -872,7 +872,7 @@ void NightmareWizardSteerTowardNearestPlayer(void)
     }
 }
 
-void sub_080ab5c0(void)
+void NightmareWizardKnockBack(void)
 {
     TaskStop();
     if (gUnk_02007D00[1] == 0)
@@ -1011,7 +1011,7 @@ void NightmareWizardDefeat(void)
     gCurTask->updateCallback = (u32)NightmareWizardDefeatUpdate;
     gCurTask->frameTable = gNightmareWizardFrames;
     gCurTask->layer = 11;
-    sub_080ab5c0();
+    NightmareWizardKnockBack();
     ActorStopAnim();
     NightmareWizardVanish(0);
     NightmareWizardMoveToSpot(6);
@@ -1584,7 +1584,7 @@ void NightmareWizardHitBoxUpdate(void)
         TaskFree(gCurTaskIdx);
 }
 
-s32 sub_080ac678(void)
+s32 NightmareWizardDefeatHook(void)
 {
     TaskSetFrame(0);
 }
@@ -1603,7 +1603,7 @@ void Task_MetaKnightSword(void)
     {
     case 0:
         t->layer = 12;
-        gCurTask->updateCallback = (u32)sub_080ac72c;
+        gCurTask->updateCallback = (u32)MetaKnightSwordPickUpUpdate;
         ActorSetState(0);
         break;
     case 1:
@@ -1617,16 +1617,16 @@ void Task_MetaKnightSword(void)
         ActorSetState(2);
         break;
     }
-    CallTableEntry(gCurTask->state, 3, gUnk_08749B8C);
+    CallTableEntry(gCurTask->state, 3, gMetaKnightSwordStates);
 }
 
-void sub_080ac72c(void)
+void MetaKnightSwordPickUpUpdate(void)
 {
     s32 d;
     s32 k;
 
     ActorCollideTerrainCeilingAndFloor();
-    CallTableEntry(gCurTask->updateState, 3, gUnk_08749B98);
+    CallTableEntry(gCurTask->updateState, 3, gMetaKnightSwordStateUpdates);
     if (gCurTask->metaKnightSwordLanded > 0)
         ActorCheckHits();
     if (gCurTask->hitKind == 7)
@@ -1663,15 +1663,15 @@ void sub_080ac72c(void)
 void sub_080ac82c(void)
 {
     ActorCollideTerrainCeilingAndFloor();
-    CallTableEntry(gCurTask->updateState, 3, gUnk_08749B98);
+    CallTableEntry(gCurTask->updateState, 3, gMetaKnightSwordStateUpdates);
 }
 
 void sub_080ac84c(void)
 {
-    CallTableEntry(gCurTask->updateState, 3, gUnk_08749B98);
+    CallTableEntry(gCurTask->updateState, 3, gMetaKnightSwordStateUpdates);
 }
 
-void sub_080ac868(void)
+void MetaKnightSwordFall(void)
 {
     struct ActorSpawn sp;
     s32 w;
@@ -1715,7 +1715,7 @@ void sub_080ac868(void)
     TaskSleepForever();
 }
 
-void sub_080ac94c(void)
+void MetaKnightSwordFallUpdate(void)
 {
 }
 
@@ -1768,7 +1768,7 @@ void sub_080aca3c(void)
     TaskExitTrampoline();
 }
 
-void sub_080aca60(void)
+void MetaKnightSwordCheckParent(void)
 {
     if ((s16)gTaskSlotTypes[gCurTask->parent] == -1)
         ActorDestroy();
@@ -1860,7 +1860,7 @@ void KrackoStarmanCheckParent(void)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_080acc8c(void)
+void KrackoStarmanTeardown(void)
 {
     gUnk_02007D00[2]--;
 }
@@ -2449,7 +2449,7 @@ void HeavyMoleStartNextMove(void)
             gUnk_030023B4 = 1;
         else
             gUnk_030023B4 = 0;
-        gUnk_030023D4 = sub_080adaf8(gUnk_030023B4);
+        gUnk_030023D4 = HeavyMoleGetNearEdgesY(gUnk_030023B4);
         switch (gUnk_030023D4)
         {
         case 1:
@@ -2506,7 +2506,7 @@ void HeavyMolePickPattern(void)
     gUnk_02007D00[1] = gUnk_0874ACE4[(gUnk_030023B4 & gUnk_0874ACE0[v]) + v * 2];
 }
 
-s32 sub_080adaf8(s32 arg)
+s32 HeavyMoleGetNearEdgesY(s32 arg)
 {
     s32 *pd;
     u16 *a;

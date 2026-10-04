@@ -609,7 +609,7 @@
 #define kingDededeJumpForward unk24 /* s32: 1 when the state-6 jump also moves toward the player, 0 straight up */
 #define kingDededeSlamKind unk24 /* s32: KingDededeSlam's kind: 0 one slam, 1 four slams, 2 KingDededeJumpSlam (player high) */
 #define kingDededeDefeatedAnimating unk28 /* s32: 1 once the Defeated state 1 started its animation; the update ticks it only then */
-#define kingDededeDefeatedCheckingPlayers unk2C /* s32: 1 while the Defeated update runs the per-player checks (sub_080a1790 / 180c) */
+#define kingDededeDefeatedCheckingPlayers unk2C /* s32: 1 while the Defeated update runs the per-player checks (KingDededeDefeatedCheckPlayers / 180c) */
 #define kingDededeSlamSetupCount unk30 /* s32: KingDededeSlam setups mod 4 (player low); at 0 the slam is the four-slam kind */
 #define kingDededeInhaleTimer unk34 /* s32: frames the inhale goes on catching nothing (90) before it stops */
 #define kingDededeWalkStopDist unk34 /* s32: distance to the target at which the walk hands over (46 Jump, 52 hammer, 8 spot, 0) */
@@ -842,7 +842,7 @@
 #define metaKnightsKnightQueue unk6E /* s16: the group's queue (place) 0-3 it was spawned from; indexes gUnk_02007D00[0..3] */
 
 /* MetaKnightSword - Meta Knight's sword (task type #120,
-   Task_MetaKnightSword; gUnk_08749B8C) */
+   Task_MetaKnightSword; gMetaKnightSwordStates) */
 #define metaKnightSwordHopFrameTimer unk28 /* s32: frames until the next frame of the hop's 16-23 spin (every 2) */
 #define metaKnightSwordLanded unk28 /* s32: 1 once the thrown sword has landed; only then the update checks hits (the pick-up) */
 #define metaKnightSwordFallFrameTimer unk2C /* s32: frames until the next frame of the fall's 4-11 spin (every 2) */

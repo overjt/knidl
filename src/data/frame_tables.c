@@ -11881,7 +11881,7 @@ u32 gMrShineFallingStarFrames[] FRAME_TABLE = {
     (u32)gUnk_082F7E8C,
 };
 
-/* gWhispyWoodsFrames.  Consumers: sub_080b2890 (src/enemy_ae3bc.c:4011),
+/* gWhispyWoodsFrames.  Consumers: WhispyWoodsDraw (src/enemy_ae3bc.c:4011),
  * Task_WhispyWoods (src/enemy_ae3bc.c:4067), WhispyWoodsDefeatedInit
  * (src/enemy_ae3bc.c:4328).  18 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
@@ -11934,7 +11934,7 @@ u32 gWhispyWoodsAppleFrames[] FRAME_TABLE = {
     (u32)gUnk_082FBB44,
 };
 
-/* gUnk_08754358.  Consumer: sub_080b2890 (src/enemy_ae3bc.c:4028).  18
+/* gUnk_08754358.  Consumer: WhispyWoodsDraw (src/enemy_ae3bc.c:4028).  18
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754358-0x087543A0).  Declared
  * include/enemy.h:1263. */
@@ -11959,7 +11959,7 @@ u32 gUnk_08754358[] FRAME_TABLE = {
     (u32)gUnk_082FBDBC,
 };
 
-/* gUnk_087543A0.  Consumer: sub_080b2890 (src/enemy_ae3bc.c:4044).  18
+/* gUnk_087543A0.  Consumer: WhispyWoodsDraw (src/enemy_ae3bc.c:4044).  18
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087543A0-0x087543E8).  Declared
  * include/enemy.h:1264. */
@@ -12125,7 +12125,7 @@ u32 gUnk_08754504[] FRAME_TABLE = {
 };
 
 /* gUnk_08754560.  Consumers: WarpStarFlight23 (src/actor_72d8c.c:1062),
- * sub_080b0b04 (src/enemy_ae3bc.c:2311).  2 words, OAM template streams;
+ * NightmarePowerOrbLoadShrinkAwayGfx (src/enemy_ae3bc.c:2311).  2 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754560-0x08754568).  Declared include/enemy.h:1271. */
 u32 gUnk_08754560[] FRAME_TABLE = {

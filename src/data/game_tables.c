@@ -629,15 +629,15 @@ u32 gActorExplodeDefeatsByEffect[4] GAME_TBL(0873e670) = {
 /* ---- 0x0873E734-0x0873E7A4: 5 table(s), 25 function pointer(s), section .game_tbl_0873e734 ---- */
 /* include/actor.h; read by BossRunDefeatHook */
 u32 gUnk_0873E734[9] GAME_TBL(0873e734) = {
-    (u32)sub_080a1618,
+    (u32)KingDededeDefeatHook,
     0,
     (u32)sub_080a7d20,
     0,
-    (u32)sub_080a46e0,
-    (u32)sub_080b2884,
+    (u32)MrShineAndMrBrightDefeatHook,
+    (u32)WhispyWoodsDefeatHook,
     (u32)sub_080a9ea4,
     0,
-    (u32)sub_080ac678,
+    (u32)NightmareWizardDefeatHook,
 };
 /* include/actor.h; CallTableEntry(i, 9, ...) in ActorDefeatBoss */
 u32 gUnk_0873E758[9] GAME_TBL(0873e734) = {

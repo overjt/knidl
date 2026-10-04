@@ -33,7 +33,7 @@ void UFOTeardown(void);
 void CoolSpookTeardown(void);
 void LaserBallTeardown(void);
 void MetaKnightsKnightTeardown(void);
-void sub_080acc8c(void);
+void KrackoStarmanTeardown(void);
 
 /* Record targets no header declares: labels of the data files. */
 extern const u8 gAbilityStarAttackBox[];
@@ -275,7 +275,7 @@ extern struct ActorHandlers gJavelinKnightTerrainHandlers;
 extern struct ActorHandlers gKingDededeTerrainHandlers;
 extern struct ActorHandlers gUnk_0874894C;
 extern struct ActorHandlers gMetaKnightTerrainHandlers;
-extern struct ActorHandlers gUnk_0874BF58;
+extern struct ActorHandlers gPaintRollerPaintingTerrainHandlers;
 extern struct ActorHandlers gWhispyWoodsAppleTerrainHandlers;
 extern struct ActorVt gAbilityStarHitReactions;
 extern struct ActorVt gUnk_0873F640;
@@ -2612,7 +2612,7 @@ struct ActorDef gKrackoStarmanDef ACTOR_REC(08749bec) = {
     .terrainHandlers = (u32)gUnk_0873F8F4,
     .hitReactions = (u32)&gKrackoStarmanHitReactions,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_080acc8c,
+    .teardown = (void (*)(void))KrackoStarmanTeardown,
 };
 struct ActorDef gNightmareWizardStarDef ACTOR_REC(08749bec) = {
     .health1Player = 2,
@@ -2744,7 +2744,7 @@ struct ActorDef gUnk_0874B96C ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .terrainHandlers = (u32)&gPaintRollerPaintingTerrainHandlers,
     .hitReactions = (u32)&gUnk_0874BF74,
     .initCallback = NULL,
     .teardown = NULL,
@@ -2761,7 +2761,7 @@ struct ActorDef gUnk_0874B998 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .terrainHandlers = (u32)&gPaintRollerPaintingTerrainHandlers,
     .hitReactions = (u32)&gUnk_0874BF80,
     .initCallback = NULL,
     .teardown = NULL,
@@ -2778,7 +2778,7 @@ struct ActorDef gUnk_0874B9C4 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .terrainHandlers = (u32)&gPaintRollerPaintingTerrainHandlers,
     .hitReactions = (u32)&gUnk_0874BF8C,
     .initCallback = NULL,
     .teardown = NULL,
@@ -2795,7 +2795,7 @@ struct ActorDef gUnk_0874B9F0 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .terrainHandlers = (u32)&gPaintRollerPaintingTerrainHandlers,
     .hitReactions = (u32)&gUnk_0874BF98,
     .initCallback = NULL,
     .teardown = NULL,
@@ -2829,7 +2829,7 @@ struct ActorDef gUnk_0874BA48 ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0874BB7C,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .terrainHandlers = (u32)&gPaintRollerPaintingTerrainHandlers,
     .hitReactions = (u32)&gUnk_0874BFB0,
     .initCallback = NULL,
     .teardown = NULL,
@@ -2880,7 +2880,7 @@ struct ActorDef gPaintRollerLightningDef ACTOR_REC(0874b940) = {
     .unk10 = NULL,
     .attackBox = (u32)gPaintRollerLightningAttackBox,
     .terrainBox = (s32)gUnk_0874BF50,
-    .terrainHandlers = (u32)&gUnk_0874BF58,
+    .terrainHandlers = (u32)&gPaintRollerPaintingTerrainHandlers,
     .hitReactions = 0,
     .initCallback = NULL,
     .teardown = NULL,

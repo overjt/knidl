@@ -74,7 +74,7 @@ extern u32 ActorReactToHit(void);
 extern void SaveBossEnduranceBestTime();
 
 /* Module functions */
-void sub_080a2b2c();
+void MrBrightFlashPalette();
 void ReleaseRoomObject();
 s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
