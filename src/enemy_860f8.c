@@ -1350,7 +1350,7 @@ void TwizzyHopInit(void)
 {
     gCurTask->updateCallback = (u32)TwizzyHopUpdate;
     gCurTask->onGround = 1;
-    ActorSetState(0);
+    ActorSetState(TWIZZY_HOP_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gTwizzyHopStates);
 }
 
@@ -1370,26 +1370,26 @@ void TwizzyHopUpdate(void)
 
 void TwizzyHopWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = TWIZZY_HOP_STATE_WAIT;
     TaskStop();
     TaskSetFrame(6);
     TaskYieldTrampoline(24);
     TaskFaceNearestPlayer();
     TaskSetFrame(6);
     TaskYieldTrampoline(24);
-    ActorSetState(1);
+    ActorSetState(TWIZZY_HOP_STATE_JUMP);
     TaskSleepForever();
 }
 
 void TwizzyHopWaitUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != TWIZZY_HOP_STATE_WAIT)
         TaskSetEntry(TwizzyHopEnterState, gCurTaskIdx);
 }
 
 void TwizzyHopJump(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = TWIZZY_HOP_STATE_JUMP;
     gCurTask->onGround = 0;
     PlaySfx(187);
     TaskSetMotionY(0xFFFE0000, 0x800, 0x30000);
@@ -1411,7 +1411,7 @@ void TwizzyHopJumpUpdate(void)
 
 void TwizzyHopFall(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = TWIZZY_HOP_STATE_FALL;
     gCurTask->accelY = 0x800;
     gCurTask->speedLimitY = 0x30000;
     while (1)
@@ -1431,6 +1431,6 @@ void TwizzyHopToChaseInit(void)
 {
     gCurTask->updateCallback = (u32)TwizzyHopToChaseUpdate;
     gCurTask->onGround = 1;
-    ActorSetState(0);
+    ActorSetState(TWIZZY_HOP_TO_CHASE_STATE_0);
     CallTableEntry(gCurTask->state, 6, gTwizzyHopToChaseStates);
 }

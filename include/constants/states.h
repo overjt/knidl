@@ -1046,4 +1046,22 @@
 #define STARMAN_AMBUSH_STATE_4         4
 #define STARMAN_AMBUSH_STATE_FLY_AWAY  5
 
+/* SquishyJumpToWalk states - gSquishyJumpToWalkStates[N], CallTableEntry(Task.state) in SquishyJumpToWalkInit */
+#define SQUISHY_JUMP_TO_WALK_STATE_JUMP  0
+#define SQUISHY_JUMP_TO_WALK_STATE_1     1
+#define SQUISHY_JUMP_TO_WALK_STATE_LAND  2
+
+/* TwizzyHop states - gTwizzyHopStates[N], CallTableEntry(Task.state) in TwizzyHopInit */
+#define TWIZZY_HOP_STATE_WAIT  0
+#define TWIZZY_HOP_STATE_JUMP  1
+#define TWIZZY_HOP_STATE_FALL  2
+
+/* TwizzyHopToChase states - gTwizzyHopToChaseStates[N], CallTableEntry(Task.state) in TwizzyHopToChaseInit */
+#define TWIZZY_HOP_TO_CHASE_STATE_0           0
+#define TWIZZY_HOP_TO_CHASE_STATE_JUMP        1
+#define TWIZZY_HOP_TO_CHASE_STATE_WAIT_SHORT  2
+#define TWIZZY_HOP_TO_CHASE_STATE_WAIT_LONG   3
+#define TWIZZY_HOP_TO_CHASE_STATE_TAKE_OFF    4
+#define TWIZZY_HOP_TO_CHASE_STATE_FALL        5
+
 #endif // GUARD_CONSTANTS_STATES_H
