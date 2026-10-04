@@ -116,7 +116,7 @@ void ActorInitFromDefSlot(u32 i)
     t = &gTasks[i];
     a = t->u8C.actor;
     a->prevState = 0xFFFF;
-    a->unk04 = 0;
+    a->attachEffect = 0;
     a->hitState = 0;
     a->hitterClass = 0;
     a->hitterKind = 0;
@@ -1228,7 +1228,7 @@ void ActorAwardScore(u32 arg, s32 mul)
     }
     v *= mul;
     if (gCurTask->actorKind == ACTOR_KIND_ENEMY && gCurTask->u76.subtype == 40
-        && (u8)(a->unk04 - 2) <= 1)
+        && (u8)(a->attachEffect - 2) <= 1)
         v = 200;
     AddPlayerScore(v, arg);
 }

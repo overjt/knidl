@@ -50,7 +50,7 @@ void TerrainProbeEnd(const s8 *p)
     gTerrainResult.unk3 = gTerrainProbeResult.unk3;
     gTerrainResult.slope = gTerrainProbeResult.slope;
     gTerrainResult.unk5 = gTerrainProbeResult.unk5;
-    gTerrainResult.unk8 = gTerrainProbeResult.unk8;
+    gTerrainResult.waterSurfaceY = gTerrainProbeResult.waterSurfaceY;
     gTerrainResult.onSlipperyFloor = gTerrainProbeResult.onSlipperyFloor;
     gTerrainResult.damage = gTerrainProbeResult.damage;
     gTerrainResult.unkD = gTerrainProbeResult.unk10;

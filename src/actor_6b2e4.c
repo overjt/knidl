@@ -375,7 +375,7 @@ void sub_0806b95c(void)
     m &= w;
     c->savedPaletteBits = m;
     v->actorPaletteRestoreDelay = 2;
-    a->unk04 = v->hitEffect;
+    a->attachEffect = v->hitEffect;
 }
 
 void ActorAttachedBindCarrier(void)
@@ -662,7 +662,7 @@ void ActorAttachedReleaseCarrierSlot(u32 i)
     s = &gTasks[i];
     a = s->u8C.actor;
     p = s->player;
-    if (a->unk04 == 1)
+    if (a->attachEffect == 1)
     {
         if (*(s8 *)&p->heldCount != 0)
         {

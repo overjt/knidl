@@ -1336,13 +1336,13 @@ void sub_08066988(u32 i)
 
     t = &gTasks[i];
     a = t->u8C.actor;
-    if (a->unk04 != 0)
+    if (a->attachEffect != 0)
     {
         p = t->player;
         ActorAttachedReleaseCarrierSlot(i);
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (a->unk04 != 1)
+        if (a->attachEffect != 1)
         {
             if ((u8)(p->unk16 + 2) <= 1)
             {

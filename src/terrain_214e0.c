@@ -33,7 +33,7 @@ void TerrainProbeWaterAtPoint(void)
     s32 h;
 
     TerrainQueryPixelAndBelow(gTerrainProbeX, gTerrainProbeY);
-    gTerrainProbeResult.unk8 = 0xFFFF;
+    gTerrainProbeResult.waterSurfaceY = 0xFFFF;
     gTerrainProbeResult.waterFlags = 0;
     y = gTerrainProbeY;
     h = gRoomHeight << 4;

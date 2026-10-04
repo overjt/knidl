@@ -82,7 +82,7 @@ struct TerrainProbeResult
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 onGround;
     /*0x07*/ u8 waterFlags;
-    /*0x08*/ u16 unk8;
+    /*0x08*/ u16 waterSurfaceY;
     /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 unkB;
     /*0x0C*/ u8 unkC;
@@ -105,7 +105,7 @@ struct TerrainResult
     /*0x05*/ u8 unk5;
     /*0x06*/ u8 unk6;
     /*0x07*/ u8 unk7;
-    /*0x08*/ s16 unk8;
+    /*0x08*/ s16 waterSurfaceY;
     /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 damage;

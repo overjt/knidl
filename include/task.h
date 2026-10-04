@@ -204,7 +204,7 @@ struct Actor
     /*0x01*/ u8 hitStunTimer;
     /*0x02*/ s8 healthBonus;
     /*0x03*/ s8 extraLayerOffset;
-    /*0x04*/ u8 unk04;
+    /*0x04*/ u8 attachEffect;
     /*0x05*/ u8 hitState;
     /*0x06*/ u8 hitterClass;
     /*0x07*/ u8 hitterKind;

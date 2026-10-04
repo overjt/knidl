@@ -319,7 +319,7 @@ void PlayerUpdate(void)
     {
         gTerrainResult.unk0 = gTerrainResult.ceilingHits = gTerrainResult.unk2 = 0;
         gTerrainResult.unk3 = gTerrainResult.slope = gTerrainResult.unk5 = 0;
-        gTerrainResult.unk8 = gTerrainResult.onSlipperyFloor = gTerrainResult.damage = 0;
+        gTerrainResult.waterSurfaceY = gTerrainResult.onSlipperyFloor = gTerrainResult.damage = 0;
         gTerrainResult.atDoor = 0;
         gTerrainProbeResult.onSlipperyFloor = 0;
     }
@@ -357,16 +357,16 @@ post:
     if (gCurTask->velY >= 0)
     {
         if (gCurTask->waterFlags & 0x80)
-            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPLASH, gTerrainResult.unk8);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPLASH, gTerrainResult.waterSurfaceY);
     }
     else if (gCurTask->player->mouthState == 2)
     {
         if (gCurTask->waterFlags & 0x80)
-            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.unk8);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.waterSurfaceY);
     }
     else if ((gCurTask->player->prevWaterFlags & 1) && !(gCurTask->waterFlags & 1))
     {
-        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.unk8);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.waterSurfaceY);
     }
     if ((gCurTask->waterFlags & 65) == 1)
     {
