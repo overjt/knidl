@@ -302,7 +302,7 @@ void WarpStarFlight14(void)
     }
     TaskYieldTrampoline(44);
     gCurTask->facing = 255;
-    sub_080277f0(gCurTask->pixelX, gCurTask->pixelY);
+    CameraStartFollowFocusAt(gCurTask->pixelX, gCurTask->pixelY);
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);
@@ -731,7 +731,7 @@ void WarpStarFlight19Update(void)
     t = gCurTask;
     if (t->onGround & 1)
     {
-        sub_080277f0(t->pixelX, t->pixelY);
+        CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
@@ -971,7 +971,7 @@ void WarpStarFlight22Update(void)
     t = gCurTask;
     if (t->onGround & 1)
     {
-        sub_080277f0(t->pixelX, t->pixelY);
+        CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
@@ -1325,7 +1325,7 @@ void WarpStarFlight4Update(void)
     t = gCurTask;
     if (t->onGround & 1)
     {
-        sub_080277f0(t->pixelX, t->pixelY);
+        CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);

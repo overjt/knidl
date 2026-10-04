@@ -65,7 +65,7 @@ extern void TaskSetEntry(void *fn, u32 i);
 extern void ActorSetState(u32 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
-extern void sub_08066b34(u32 *p);
+extern void ActorStartCarryingParasol(u32 *p);
 
 void sub_08078b68(void)
 {
@@ -330,7 +330,7 @@ void WaddleDeeJumpFallUpdate(void)
 void ParasolWaddleDeeWalkInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolWaddleDeeWalkUpdate;
-    sub_08066b34(gParasolWaddleDeeDef);
+    ActorStartCarryingParasol(gParasolWaddleDeeDef);
     TaskFaceNearestPlayer();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 2, gParasolWaddleDeeWalkStates);
@@ -428,7 +428,7 @@ void WaddleDeeIdleState0Update(void)
 void ParasolWaddleDeeStandInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolWaddleDeeStandUpdate;
-    sub_08066b34(gParasolWaddleDeeDef);
+    ActorStartCarryingParasol(gParasolWaddleDeeDef);
     gCurTask->unk74 = 2;
     TaskFaceNearestPlayer();
     ActorSetState(0);

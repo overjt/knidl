@@ -541,14 +541,14 @@ u32 gPaletteAnimVariants[5] GAME_TBL(0873df24) = {
 
 /* ---- 0x0873E280-0x0873E284: 1 table(s), 1 function pointer(s), section .game_tbl_0873e280 ---- */
 /* include/actor.h; CallTableEntry(i, 1, ...) in Task_InhalableStar */
-u32 gUnk_0873E280[1] GAME_TBL(0873e280) = {
+u32 gInhalableStarStates[1] GAME_TBL(0873e280) = {
     (u32)sub_08067258,
 };
 
 /* ---- 0x0873E284-0x0873E288: 1 table(s), 1 function pointer(s), section .game_tbl_0873e284 ---- */
 /* include/actor.h; CallTableEntry(i, 1, ...) in InhalableStarUpdate: one entry; the 26 words
  * after it, up to the next label, are other data and stay structure-only */
-u32 gUnk_0873E284[1] GAME_TBL(0873e284) = {
+u32 gInhalableStarStateUpdates[1] GAME_TBL(0873e284) = {
     (u32)sub_08067378,
 };
 

@@ -331,7 +331,7 @@ void Task_MrFrosty(void)
     struct Task *u;
     u16 zero;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)sub_08065438;

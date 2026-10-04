@@ -114,14 +114,14 @@ void LoadHubRoom(void)
     default:
     case 0:
     case 3:
-        sub_0802c550();
+        HubCameraFollowFocus();
         break;
     case 2:
     case 4:
         CameraSnapPlayersToAnchor();
         break;
     case 1:
-        sub_0802c680();
+        HubCameraFollowFocusPlayer();
         break;
     }
     CameraInitPos();
@@ -222,17 +222,17 @@ void RoomTaskHubUpdateCamera(void)
         {
         default:
         case 0:
-            sub_0802c550();
+            HubCameraFollowFocus();
             break;
         case 2:
         case 4:
             CameraSnapPlayersToAnchor();
             break;
         case 3:
-            sub_0802c7f4();
+            HubCameraGlideToPlayers();
             break;
         case 1:
-            sub_0802c680();
+            HubCameraFollowFocusPlayer();
             break;
         }
     }

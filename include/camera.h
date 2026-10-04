@@ -154,15 +154,15 @@ void SpawnRoomObjectsScrolledIn(void);
 /* src/camera_29c74.c */
 void UpdatePlayerGroupCenter(void);
 void SetCameraBoundsToGroup(void);
-void sub_08029ef4(void);
+void SetCameraBoundsToGroupInScrollLock(void);
 void UpdatePlayerCameras(void);
-void sub_0802a260(void);
-void sub_0802a340(void);
+void UpdatePlayerCamerasInScrollLock(void);
+void SetPlayerGroupCenterFromTasks(void);
 void SetPlayerBoundsFromCamera(void);
-void sub_0802a484(void);
+void SetPlayerBoundsFromCameraInScrollLock(void);
 void SetViewRectToPlayers(void);
-void sub_0802a568(void);
-void sub_0802a63c(void);
+void SetViewRectToPlayersInScrollLock(void);
+void LockPlayersPastScrollLine(void);
 void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
 
 /* src/bgmap_2a9cc.c */
@@ -204,9 +204,9 @@ void CameraSlideFromScrollLock(void);
 
 /* src/camera_2c42c.c */
 void CameraHoldAnchor(void);
-void sub_0802c550(void);
-void sub_0802c680(void);
-void sub_0802c7f4(void);
+void HubCameraFollowFocus(void);
+void HubCameraFollowFocusPlayer(void);
+void HubCameraGlideToPlayers(void);
 void CameraSnapBoundsToAnchor(void);
 void CameraSnapPlayersToAnchor(void);
 void CameraSnapToFocus(void);

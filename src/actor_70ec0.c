@@ -353,7 +353,7 @@ void WarpStarState1(void)
 void WarpStarState1Update(void)
 {
     WarpStarAnimateTiles();
-    if (gCurTask->warpStarRiderCount == gActivePlayerCount && sub_08027750())
+    if (gCurTask->warpStarRiderCount == gActivePlayerCount && AreInactivePlayerCamerasParked())
     {
         struct Task *t = gCurTask;
         u32 v = t->actorSpawnArg;
@@ -723,7 +723,7 @@ void sub_08071ebc(void)
     t = gCurTask;
     if (t->onGround & 1)
     {
-        sub_080277f0(t->pixelX, t->pixelY);
+        CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
         StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
         PlaySfx(219);
@@ -1469,7 +1469,7 @@ void WarpStarFlight12(void)
     gCurTask->velX = -0x80000;
     TaskYieldTrampoline(6);
     gCurTask->facing = 255;
-    sub_080277f0(gCurTask->pixelX, gCurTask->pixelY);
+    CameraStartFollowFocusAt(gCurTask->pixelX, gCurTask->pixelY);
     RequestScreenShake(4);
     StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
     PlaySfx(219);

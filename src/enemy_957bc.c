@@ -65,7 +65,7 @@ void sub_08095834(void)
     struct Task *h;
     s32 v;
 
-    sub_08066088(1);
+    ActorInitBossGfx(1);
     gCurTask->speedLimitY = 0x30000;
     TaskFaceNearestPlayer();
     gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);

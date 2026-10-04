@@ -37,7 +37,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
 s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio);
 
-s32 sub_08063698(u32 type, s32 start)
+s32 TaskCreatePausedInScreenAttack(u32 type, s32 start)
 {
     s32 i;
     struct Task *t;
@@ -1259,7 +1259,7 @@ s32 sub_08064a78(struct ActorSpawn *p)
         if (GetShapeAtPixelIgnoringOneWay(p->x, p->y) != 0)
             return -1;
     }
-    i = sub_08063698(p->taskType, 32);
+    i = TaskCreatePausedInScreenAttack(p->taskType, 32);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1354,7 +1354,7 @@ s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg)
     u16 y = yArg;
     u16 prio = prioArg;
 
-    i = sub_08063698(type, 32);
+    i = TaskCreatePausedInScreenAttack(type, 32);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1444,7 +1444,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
     u16 prio = prioArg;
     u8 alt = altArg;
 
-    i = sub_08063698(type, 32);
+    i = TaskCreatePausedInScreenAttack(type, 32);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1512,7 +1512,7 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
     struct Task *t;
     s32 i;
 
-    i = sub_08063698(type, 32);
+    i = TaskCreatePausedInScreenAttack(type, 32);
     if (i != -1)
     {
         t = &gTasks[i];

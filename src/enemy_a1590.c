@@ -43,7 +43,7 @@ extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void RequestScreenShake(u32 a);
 extern void TaskBreakBlocksNoPlayer();
 extern void TaskBreakTopBlockRow();
-extern s32 sub_08063698(u32 type, s32 start);
+extern s32 TaskCreatePausedInScreenAttack(u32 type, s32 start);
 extern void ActorLoadDef(struct ActorDef *d);
 extern void ActorLoadDefSlot(u32 i, struct ActorDef *d);
 extern void ActorSetState();
@@ -114,10 +114,10 @@ extern void sub_08065dd0(u32 slot, u32 i);
 extern void sub_08065dfc(u32 slot);
 extern u8 TaskHasSameSerial(u32 i);
 extern s16 ActorComputeHealth(void);
-extern u16 sub_08066088(u32 mode);
+extern u16 ActorInitBossGfx(u32 mode);
 extern void sub_08066144(void);
-extern void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4);
-extern void sub_0806621c(void);
+extern void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4);
+extern void BossEndHitStun(void);
 extern s32 sub_08066394(void);
 extern void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p);
 extern void sub_08066544(void);
@@ -131,7 +131,7 @@ extern void ActorLoadPalette(void *src, u32 size, u8 force);
 extern u8 sub_08066a6c(void);
 extern void sub_08066f50(s32 x, s32 y);
 extern void CreateStarRodPiece(u8 p3, s16 x, s16 y);
-extern void sub_0806704c(void);
+extern void CreateRoomStarRodPiece(void);
 extern void FreezeStage(u16 a);
 extern void ThawStage(void);
 extern void DisablePause(void);
@@ -653,16 +653,16 @@ void sub_080a1f90(void)
     if (gCurTask->variant == 2)
         sub_080a2b2c(gUnk_02004C90, gUnk_02006190[4]);
     if (gUnk_02006190[3] <= 0)
-        sub_0806621c();
+        BossEndHitStun();
 }
 
 /* MrShineAndMrBrightReactToDamage (0x080A1FC8-0x080A2020) */
 s32 MrShineAndMrBrightReactToDamage(void)
 {
     if (gCurTask->variant == 2)
-        sub_0806619c(13, (u32)sub_080a1f90, (u32)gUnk_082FB230, 16, 2);
+        BossStartHitStun(13, (u32)sub_080a1f90, (u32)gUnk_082FB230, 16, 2);
     else
-        sub_0806619c(13, (u32)sub_080a1f90, (u32)gUnk_082FB210, 16, 0);
+        BossStartHitStun(13, (u32)sub_080a1f90, (u32)gUnk_082FB210, 16, 0);
     CreateStarFlash(1, 0, 0);
     return 0;
 }
@@ -1580,7 +1580,7 @@ void sub_080a30d0(void)
 /* MrShineAndMrBrightInit (0x080A3114-0x080A314C) */
 void MrShineAndMrBrightInit(void)
 {
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     CreateMrShineAndMrBright();
     gCurTask->updateCallback = (u32)MrShineAndMrBrightUpdate;
     ActorSetState(0);
@@ -3498,7 +3498,7 @@ void Task_MetaKnight(void)
 {
     struct Task *t;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     sub_08066144();
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;

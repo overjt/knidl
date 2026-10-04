@@ -257,7 +257,7 @@ s32 SpawnRoomObject(s32 i)
     case 4:
         if (*(s8 *)(e4 + 1) == 5)
         {
-            sub_0806704c();
+            CreateRoomStarRodPiece();
             break;
         }
         pw = (u8 *)gUsedRoomObjects;

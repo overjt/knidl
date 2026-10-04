@@ -1962,7 +1962,7 @@ void Task_PaintRoller(void)
     gCurTask->drawCallback = (u32)sub_08065438;
     gCurTask->frameTable = gPaintRollerFrames;
     gCurTask->layer = 11;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     sub_08063a00((u32)gUnk_0874B3A8);
     gCurTask->unk34 = 0;
     gUnk_02007D00[0] = 1;
@@ -2211,14 +2211,14 @@ void CreatePaintRollerPainting(void)
 
 void sub_080ad458(void)
 {
-    sub_0806619c(13, (u32)sub_080ad47c, (u32)gUnk_082DFFA8, 32, 1);
+    BossStartHitStun(13, (u32)sub_080ad47c, (u32)gUnk_082DFFA8, 32, 1);
 }
 
 void sub_080ad47c(void)
 {
     if (gUnk_02006190[3] == 0)
     {
-        sub_0806621c();
+        BossEndHitStun();
         if (gUnk_02007D00[5] >= 0)
         {
             ActorSetState((u16)gUnk_02007D00[5]);
@@ -2236,7 +2236,7 @@ void Task_HeavyMole(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->frameTable = gHeavyMoleFrames;
     gCurTask->layer = 10;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     gCurTask->tileWord |= 128 << 4;
     sub_08066144();
     gCurTask->facing = 1;
@@ -2529,7 +2529,7 @@ s32 sub_080adaf8(s32 arg)
 void HeavyMoleReactToDamage(void)
 {
     CreateChildTaskHere(142, 0);
-    sub_0806619c(23, (u32)sub_080adb90, (u32)gUnk_082F65D4, 32, 0);
+    BossStartHitStun(23, (u32)sub_080adb90, (u32)gUnk_082F65D4, 32, 0);
     TaskSetSkipMask(4, gCurTaskIdx);
 }
 
@@ -2562,7 +2562,7 @@ void sub_080adb90(void)
         }
     }
     if (gUnk_02006190[3] == 0)
-        sub_0806621c();
+        BossEndHitStun();
 }
 
 s32 HeavyMoleReactToDefeat(void)

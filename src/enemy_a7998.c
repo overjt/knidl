@@ -219,7 +219,7 @@ void Task_Kracko(void)
 {
     struct Task *t;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     sub_08066144();
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;

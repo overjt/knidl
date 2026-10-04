@@ -229,7 +229,7 @@ void KrackoLookAtNearestPlayer(void)
 
 s32 KrackoReactToDamage(void)
 {
-    sub_0806619c(13, (u32)sub_080a9794, (u32)gUnk_082FD438, 48, 0);
+    BossStartHitStun(13, (u32)sub_080a9794, (u32)gUnk_082FD438, 48, 0);
     gUnk_02007D00[1] = gUnk_02007D00[0];
     gUnk_02007D00[0] = 2;
     return 0;
@@ -240,7 +240,7 @@ void sub_080a9794(void)
     if (gFrameCount & 1)
         gCurTask->frame = (gCurTask->frame + 1) & 7;
     if (gUnk_02006190[3] == 0) {
-        sub_0806621c();
+        BossEndHitStun();
         gUnk_02007D00[0] = gUnk_02007D00[1];
     }
 }
@@ -653,7 +653,7 @@ void Task_NightmareWizard(void)
             while (o->onGround == 0);
         }
     }
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     sub_08066144();
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)sub_080a9ed8;

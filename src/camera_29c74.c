@@ -12,13 +12,13 @@
  * gPlayerCameraPos[i], bounds gPlayerBounds[i] and a mode gPlayerCameraMode[i]
  * (0 follows its task, 2 glides to the group centre, 3 is parked there);
  * gPlayerCount is the player count and gActivePlayerMask the mask of the
- * players present.  UpdatePlayerGroupCenter, sub_08029ef4 and sub_0802a340 compute
+ * players present.  UpdatePlayerGroupCenter, SetCameraBoundsToGroupInScrollLock and SetPlayerGroupCenterFromTasks compute
  * the group centre gPlayerGroupCenter (the midpoint of the players' extremes,
  * clamped to the camera bounds gCameraBounds), SetCameraBoundsToGroup re-centres
  * those bounds on it inside the room bounds gRoomBounds,
- * UpdatePlayerCameras/sub_0802a260 update the per-player positions,
- * SetPlayerBoundsFromCamera/sub_0802a484 their bounds and SetViewRectToPlayers/sub_0802a568
- * the visible rectangle gViewRect around them.  sub_0802a63c moves
+ * UpdatePlayerCameras/UpdatePlayerCamerasInScrollLock update the per-player positions,
+ * SetPlayerBoundsFromCamera/SetPlayerBoundsFromCameraInScrollLock their bounds and SetViewRectToPlayers/SetViewRectToPlayersInScrollLock
+ * the visible rectangle gViewRect around them.  LockPlayersPastScrollLine moves
  * the bounds once every player has crossed the scroll line held in the
  * camera control block gScrollLock.  SpawnRoomObjectsInRect spawns the entries
  * of the room's object list gRoomObjectList (sorted along one axis) that
@@ -159,7 +159,7 @@ void SetCameraBoundsToGroup(void)
         gCameraBounds[3] = gRoomBounds[3];
 }
 
-void sub_08029ef4(void)
+void SetCameraBoundsToGroupInScrollLock(void)
 {
     s32 x0, x1, y0, y1, x, y, cx, cy, i;
     s16 t;
@@ -302,7 +302,7 @@ void UpdatePlayerCameras(void)
     }
 }
 
-void sub_0802a260(void)
+void UpdatePlayerCamerasInScrollLock(void)
 {
     s32 i;
 
@@ -335,7 +335,7 @@ void sub_0802a260(void)
     }
 }
 
-void sub_0802a340(void)
+void SetPlayerGroupCenterFromTasks(void)
 {
     s32 x0, x1, y0, y1, v, i;
 
@@ -387,7 +387,7 @@ void SetPlayerBoundsFromCamera(void)
     }
 }
 
-void sub_0802a484(void)
+void SetPlayerBoundsFromCameraInScrollLock(void)
 {
     s32 i;
 
@@ -430,7 +430,7 @@ void SetViewRectToPlayers(void)
     gViewRect[3] = y1 + 80;
 }
 
-void sub_0802a568(void)
+void SetViewRectToPlayersInScrollLock(void)
 {
     s32 x0, x1, y0, y1, v, i;
 
@@ -473,7 +473,7 @@ void sub_0802a568(void)
     gViewRect[3] = y1 + 80;
 }
 
-void sub_0802a63c(void)
+void LockPlayersPastScrollLine(void)
 {
     s32 i;
 

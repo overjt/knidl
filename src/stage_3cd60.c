@@ -64,7 +64,7 @@ s32 sub_0803d870(void);
 void sub_0803db74(void);
 void sub_0803e28c(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
-s32 sub_0803e7d8(void);
+s32 PlayerUpdateInvincibility(void);
 void sub_0803e8ec(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerStopAtWall(void);
@@ -1048,7 +1048,7 @@ void PlayerUpdateInvulnerability(void)
             }
         }
     }
-    sub_0803e7d8();
+    PlayerUpdateInvincibility();
 }
 
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1)
@@ -1331,7 +1331,7 @@ void sub_0803e68c(s32 a0)
     p->requestedAction = v;
 }
 
-s32 sub_0803e7d8(void)
+s32 PlayerUpdateInvincibility(void)
 {
     struct PlayerState *p = gCurTask->player;
     s32 i;
@@ -1362,7 +1362,7 @@ s32 sub_0803e7d8(void)
     sub_080270d0();
 }
 
-void sub_0803e868(void)
+void PlayerEndInvincibility(void)
 {
     s32 i;
     s32 ok;

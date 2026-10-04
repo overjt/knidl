@@ -58,7 +58,7 @@ void Task_KingDedede(void)
     s32 v;
 
     t = gCurTask;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     v = ActorComputeHealth();
     v = (v * 85) >> 8;
     t = gCurTask;

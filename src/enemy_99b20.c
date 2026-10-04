@@ -390,7 +390,7 @@ void Task_MrTickTock(void)
     struct Task *u;
     s32 zero;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;

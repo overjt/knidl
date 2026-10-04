@@ -81,7 +81,7 @@ void PlayerActionDie(void)
     }
     else
     {
-        sub_0803e868();
+        PlayerEndInvincibility();
     }
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
@@ -359,7 +359,7 @@ void PlayerActionEnterDoor(void)
     }
     EnterDoor();
     if (gInHub != 0)
-        sub_080264b0();
+        CreateEntryDoorOpening();
     if (gInHub == 0)
         PlaySfx(181);
     t = gCurTask;

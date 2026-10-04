@@ -64,7 +64,7 @@ void Task_Bonkers(void)
     struct Task *t;
     struct Task *u;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)sub_08065438;
@@ -772,7 +772,7 @@ void Task_PoppyBrosSr(void)
     struct Task *t;
     struct Task *u;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)sub_08065350;

@@ -12,9 +12,9 @@
  * level change (the stage door kind in gUnk_02008054), sub_08027548 and
  * sub_08027588/sub_080275cc keep the two-player race record
  * gUnk_02006098 (flags|0x80, lo, hi, previous, direction),
- * sub_080276ac/sub_080276cc/sub_08027750/sub_08027a30 the per-player
- * camera modes gPlayerCameraMode, and CameraStartHoldAnchorAt, sub_080277f0,
- * sub_08027850 and sub_08027908 set the camera mode and target
+ * sub_080276ac/sub_080276cc/AreInactivePlayerCamerasParked/ArePlayerCamerasDoneGliding the per-player
+ * camera modes gPlayerCameraMode, and CameraStartHoldAnchorAt, CameraStartFollowFocusAt,
+ * CameraStartFollowingPlayer and sub_08027908 set the camera mode and target
  * (gCameraAnchorX/gCameraAnchorY) for one or all players. */
 
 /* Declared here, not through a header: the calls in this file pass other
@@ -209,7 +209,7 @@ s32 sub_080276cc(s32 i)
     }
 }
 
-s32 sub_08027750(void)
+s32 AreInactivePlayerCamerasParked(void)
 {
     s32 i;
 
@@ -233,7 +233,7 @@ void CameraStartHoldAnchorAt(s32 x, s32 y)
         gCameraMode = 5;
 }
 
-void sub_080277f0(s32 x, s32 y)
+void CameraStartFollowFocusAt(s32 x, s32 y)
 {
     gCameraFocusX = x;
     gCameraFocusY = y;
@@ -250,7 +250,7 @@ void sub_080277f0(s32 x, s32 y)
     }
 }
 
-void sub_08027850(s32 a)
+void CameraStartFollowingPlayer(s32 a)
 {
     s32 i;
     s32 x;
@@ -333,7 +333,7 @@ void sub_08027908(void)
     }
 }
 
-s32 sub_08027a30(void)
+s32 ArePlayerCamerasDoneGliding(void)
 {
     s32 i;
 

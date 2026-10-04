@@ -42,9 +42,9 @@ extern void PlaySfx(s32 a);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void ActorSetState(s32 a);
 extern void ActorSetAttackBox(u32 *p);
-extern void sub_08066b34(u32 *p);
-extern void sub_08066c3c(u32 *p);
-extern void sub_08066c08(u32 *p, s32 b);
+extern void ActorStartCarryingParasol(u32 *p);
+extern void ActorDropParasolOnLanding(u32 *p);
+extern void ActorDropParasol(u32 *p, s32 b);
 extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
@@ -651,7 +651,7 @@ void ParasolWaddleDooInit(void)
     struct Task *t;
 
     gCurTask->updateCallback = (u32)ParasolWaddleDooUpdate;
-    sub_08066b34(gParasolWaddleDooDef);
+    ActorStartCarryingParasol(gParasolWaddleDooDef);
     gCurTask->waddleDooPickTimer = 15;
     TaskFaceNearestPlayer();
     ActorSetState(0);
@@ -1017,7 +1017,7 @@ u8 WaddleDooLand(void)
         return 1;
     case 1:
         ActorStopAnim();
-        sub_08066c3c(gWaddleDooDef);
+        ActorDropParasolOnLanding(gWaddleDooDef);
         TaskStopY();
         ActorSetState(0);
         TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
@@ -1071,7 +1071,7 @@ u8 WaddleDooEnterWater(void)
         ActorStartDrown(-2);
         return 1;
     case 1:
-        sub_08066c08(gWaddleDooDef, 0);
+        ActorDropParasol(gWaddleDooDef, 0);
         ActorStartDrown(-2);
         return 1;
     }
@@ -1121,7 +1121,7 @@ s32 WaddleDooHitWall(void)
 
 void ParasolWaddleDooReactToDefeat(void)
 {
-    sub_08066c08(gWaddleDooDef, 0);
+    ActorDropParasol(gWaddleDooDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 

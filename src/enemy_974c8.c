@@ -43,7 +43,7 @@ void Task_PhanPhan(void)
     t->layer = 11;
     gCurTask->frameTable = gPhanPhanFrames;
     gUnk_02007D00[8]++;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     sub_08097580();
     ActorCollideTerrain();
     sub_080666cc(gUnk_08744888);

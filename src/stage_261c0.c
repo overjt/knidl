@@ -17,7 +17,7 @@
  * tabled position, WrapLoopingRoom wraps every camera, object and task
  * coordinate back by 0x200 pixels in a looping room, ClampCameraFocusToRoom clamps
  * the player to the room bounds and sub_0802695c starts the next stage.
- * sub_080264b0, sub_0802651c, sub_0802653c, sub_08026584 and sub_08026704
+ * CreateEntryDoorOpening, CloseDoorOpening, CreateEntryDoorStageClearFlag, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
  * (gEntryDoorIndex, its slots in gDoorObjectTasks); CreateStageUnlockPan/CreateBigSwitchUnlockPan
  * spawn a map-event task and put the camera on the player or a partner.
@@ -151,7 +151,7 @@ void WrapLoopingRoom(void)
     }
 }
 
-s32 sub_080264b0(void)
+s32 CreateEntryDoorOpening(void)
 {
     s32 r = -1;
     struct Door *d;
@@ -164,13 +164,13 @@ s32 sub_080264b0(void)
     return r;
 }
 
-void sub_0802651c(s32 i)
+void CloseDoorOpening(s32 i)
 {
     if (i != -1)
         gTasks[i].unk1C = 1;
 }
 
-s32 sub_0802653c(void)
+s32 CreateEntryDoorStageClearFlag(void)
 {
     s32 r = -1;
     struct Door *d;

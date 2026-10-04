@@ -1320,7 +1320,7 @@ void MetaKnightActionEnterDoor(void)
     }
     EnterDoor();
     if (gInHub != 0)
-        ((void (*)(void))sub_080264b0)();
+        ((void (*)(void))CreateEntryDoorOpening)();
     if (gInHub == 0)
         PlaySfx(181);
     if ((gCurTask->waterFlags & 1) == 0)
@@ -1359,13 +1359,13 @@ void MetaKnightActionExitDoor(void)
     if (gEntryDoorEvent == 1)
     {
         ((void (*)(void))sub_08027a60)();
-        a = ((s32 (*)(void))sub_0802653c)();
+        a = ((s32 (*)(void))CreateEntryDoorStageClearFlag)();
         TaskYieldTrampoline(1);
         sub_08026704(a);
     }
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
-    a = ((s32 (*)(void))sub_080264b0)();
+    a = ((s32 (*)(void))CreateEntryDoorOpening)();
     gCurTask->frame = -1;
     TaskYieldTrampoline(4);
     gCurTask->spriteFlags = 0x2000;
@@ -1374,7 +1374,7 @@ void MetaKnightActionExitDoor(void)
     TaskYieldTrampoline(3);
     gCurTask->frame--;
     TaskYieldTrampoline(3);
-    sub_0802651c(a);
+    CloseDoorOpening(a);
     gCurTask->frame--;
     TaskYieldTrampoline(4);
     gCurTask->frame--;

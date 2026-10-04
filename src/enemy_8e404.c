@@ -49,9 +49,9 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void AngleToVector(s32 a, s32 b);
-extern void sub_08066b34(u32 *p);
-extern void sub_08066c08(u32 *p, s32 b);
-extern void sub_08066c3c(u32 *p);
+extern void ActorStartCarryingParasol(u32 *p);
+extern void ActorDropParasol(u32 *p, s32 b);
+extern void ActorDropParasolOnLanding(u32 *p);
 extern void ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u8 ActorCollideTerrainFloor(void);
@@ -522,7 +522,7 @@ s32 ShotzoLand(void)
         TaskSetEntry(ShotzoAimEnterState, gCurTaskIdx);
         return 1;
     case 4:
-        sub_08066c3c(gShotzoDef);
+        ActorDropParasolOnLanding(gShotzoDef);
         ActorSetState(0);
         TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
         return 1;
@@ -542,14 +542,14 @@ s32 ShotzoHitWall(void)
 s32 ShotzoEnterWater(void)
 {
     if (gCurTask->variant == 4)
-        sub_08066c08(gShotzoDef, 0);
+        ActorDropParasol(gShotzoDef, 0);
     ActorStartDrown(-2);
     return 1;
 }
 
 s32 ParasolShotzoReactToDefeat(void)
 {
-    sub_08066c08(gShotzoDef, 0);
+    ActorDropParasol(gShotzoDef, 0);
     ActorSetState(2);
     TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
     return 1;
@@ -557,7 +557,7 @@ s32 ParasolShotzoReactToDefeat(void)
 
 s32 sub_0808ed0c(void)
 {
-    sub_08066c08(gShotzoDef, 0);
+    ActorDropParasol(gShotzoDef, 0);
     ActorSetState(2);
     TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
     return 1;
@@ -897,7 +897,7 @@ void ParasolShotzoInit(void)
     gCurTask->updateCallback = (u32)ParasolShotzoUpdate;
     ActorSetState(0);
     ShotzoInitBarrel();
-    sub_08066b34(gParasolShotzoDef);
+    ActorStartCarryingParasol(gParasolShotzoDef);
     CallTableEntry(gCurTask->state, 3, gParasolShotzoStates);
 }
 

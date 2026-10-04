@@ -11,7 +11,7 @@
  * CameraHoldAnchor, CameraSnapBoundsToAnchor and CameraSnapPlayersToAnchor snap the camera, and the
  * per-player cameras and bounds, to the spawn point
  * gCameraAnchorX/gCameraAnchorY clamped to the room bounds gRoomBounds
- * (when gActivePlayerCount is set).  sub_0802c550, sub_0802c680, sub_0802c7f4
+ * (when gActivePlayerCount is set).  HubCameraFollowFocus, HubCameraFollowFocusPlayer, HubCameraGlideToPlayers
  * and CameraSnapToFocus follow the player (gCameraFocusX/gCameraFocusY, the
  * task gCameraFocusPlayer or the multiplayer group of camera_29c74.c) inside
  * the bounds gCameraBounds and write the 16.16 target
@@ -58,7 +58,7 @@ void CameraHoldAnchor(void)
     }
 }
 
-void sub_0802c550(void)
+void HubCameraFollowFocus(void)
 {
     s32 x, y;
 
@@ -116,7 +116,7 @@ void sub_0802c550(void)
     }
 }
 
-void sub_0802c680(void)
+void HubCameraFollowFocusPlayer(void)
 {
     s32 x, y;
 
@@ -174,7 +174,7 @@ void sub_0802c680(void)
     }
 }
 
-void sub_0802c7f4(void)
+void HubCameraGlideToPlayers(void)
 {
     s32 x, y;
 
@@ -242,7 +242,7 @@ void sub_0802c7f4(void)
     {
         s32 i;
 
-        sub_0802a340();
+        SetPlayerGroupCenterFromTasks();
         for (i = 0; i < gPlayerCount; i++)
         {
             if ((gActivePlayerMask >> i) & 1)
@@ -571,7 +571,7 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
         }
         else
         {
-            sub_0802a63c();
+            LockPlayersPastScrollLine();
             if (gScrollLock.lockedAxes & 1)
                 gPlayerCameraPos[gPlayerCount].x = gScrollLock.unkA;
             if (gScrollLock.lockedAxes & 2)

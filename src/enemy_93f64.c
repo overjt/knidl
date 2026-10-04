@@ -157,7 +157,7 @@ void Task_GrandWheelie(void)
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
     gCurTask->frameTable = gGrandWheelieFrames;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     gUnk_02007D00[8]++;
     gCurTask->grandWheelieSummonPhase = -1;
     TaskFaceNearestPlayer();

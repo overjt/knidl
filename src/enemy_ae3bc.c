@@ -82,7 +82,7 @@ void Task_NightmarePowerOrb(void)
     b42 = &t->layer;
     z = 0;
     *b42 = 11;
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     sub_080b05e8();
     u = *c;
     u->updateCallback = (u32)NightmarePowerOrbUpdate;
@@ -2069,7 +2069,7 @@ void sub_080b05e8(void)
     u->u8C.actor->animScript = (struct AnimCmd *)z;
     p[6] = z;
     p[7] = 3;
-    sub_08063698(80, 32);
+    TaskCreatePausedInScreenAttack(80, 32);
     (*c)->updateCallback = (u32)sub_080b07d8;
     TaskYieldTrampoline(65);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B240);
@@ -3768,7 +3768,7 @@ void WhispyWoodsReactToDamage(void)
     RequestScreenShake(4);
     t = gCurTask;
     t->whispyWoodsHurtTimer = 32;
-    sub_0806619c(-1, (u32)sub_080b25e8, 0, 0, 0);
+    BossStartHitStun(-1, (u32)sub_080b25e8, 0, 0, 0);
 }
 
 void sub_080b25a4(void)
@@ -3803,7 +3803,7 @@ void sub_080b25e8(void)
         TaskSetFrame(4);
         break;
     case 0:
-        sub_0806621c();
+        BossEndHitStun();
         break;
     }
     t2 = gCurTask;
@@ -4057,7 +4057,7 @@ void Task_WhispyWoods(void)
     struct Task *u2;
     struct Task *u3;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     c = &gCurTask;
     t = *c;
     t->moveCallback = (u32)ActorMove;

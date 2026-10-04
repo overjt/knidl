@@ -18,7 +18,7 @@
  * kinds 1, 2, 7 and 8 through gScreenAttackTasks and the task skip mask, around a
  * palette effect - it saves the palette buffer (CpuSet of gObjPaletteBank8 into
  * gUnk_0200AF20) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
- * sub_08065e6c and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
+ * LockAllActorPalettes and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
  * blends the saved palette towards gUnk_0873BC3E (while gInHub is
  * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
  * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
@@ -227,7 +227,7 @@ void PlayerEffectCrashBlast(void)
         v = gCurTask;
         v->unk28 = 0;
         v->unk2C = 0;
-        sub_08065e6c();
+        LockAllActorPalettes();
         CpuSet(gObjPaletteBank8, gUnk_0200AF20, 96);
         gCurTask->frame = 0;
         gCurTask->playerEffectLoopCount = 0;

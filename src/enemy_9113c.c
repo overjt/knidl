@@ -107,7 +107,7 @@ void PoppyBrosSrUpdate(void)
     if (u->poppyBrosSrFlashing != 0)
     {
         if (u->hitTimer != 1)
-            sub_08066480(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
+            ActorFlashHeaderPalette(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
         else
         {
             u->poppyBrosSrFlashing = 0;
@@ -405,7 +405,7 @@ void PoppyBrosSrDefeat(void)
 
 void PoppyBrosSrDefeatUpdate(void)
 {
-    sub_08066480(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
+    ActorFlashHeaderPalette(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
     if (gCurTask->poppyBrosSrDefeatPhase == 2)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
@@ -734,7 +734,7 @@ void Task_Bugzzy(void)
     struct Task *t;
     struct Task *u;
 
-    sub_08066088(0);
+    ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)sub_080653ec;

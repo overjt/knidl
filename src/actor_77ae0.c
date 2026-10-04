@@ -33,8 +33,8 @@ extern void TaskSetEntry(void *a, u32 i);
 extern void RequestScreenShake(u32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetStateSlot(u32 i, u8 v);
-extern void sub_08066c08(u32 *p, s32 b);
-extern void sub_08066c3c(u32 *p);
+extern void ActorDropParasol(u32 *p, s32 b);
+extern void ActorDropParasolOnLanding(u32 *p);
 
 void CannonFuseWait(void)
 {
@@ -774,7 +774,7 @@ void Task_WaddleDee(void)
 
 s32 ParasolWaddleDeeReactToDefeat(void)
 {
-    sub_08066c08(gWaddleDeeDef, 0);
+    ActorDropParasol(gWaddleDeeDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -843,7 +843,7 @@ s32 WaddleDeeLand(void)
         r = 1;
         break;
     case 3:
-        sub_08066c3c(gWaddleDeeDef);
+        ActorDropParasolOnLanding(gWaddleDeeDef);
         ActorSetState(0);
         TaskSetEntry(ParasolWaddleDeeWalkEnterState, gCurTaskIdx);
         r = 1;
@@ -862,7 +862,7 @@ s32 WaddleDeeEnterWater(void)
     u8 v = gCurTask->variant;
 
     if (v == 3 || v == 5)
-        sub_08066c08(gWaddleDeeDef, 0);
+        ActorDropParasol(gWaddleDeeDef, 0);
     ActorStartDrown(-2);
     return 1;
 }

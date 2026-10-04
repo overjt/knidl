@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x080653EC 0x080673EC src/actor_653ec.c --newpb
  *
  * Actor drawing and per-frame upkeep: OAM priority/palette packing
- * (sub_08066088), graphics upload out of the Task.frameTable descriptor table
+ * (ActorInitBossGfx), graphics upload out of the Task.frameTable descriptor table
  * (ActorFlashPalette/sub_08066A94), the per-task update sweep (sub_080668C8), and
  * the class-2/class-4 task bodies that drive them.
  */
@@ -28,7 +28,7 @@ extern void ActorReactToHit(void);
    types than the definition takes (lessons 3.428, 3.517). */
 extern void HudStartTaskHpBar(s16 a, s16 b);
 extern void HudStartHpBar(s16 a, s16 b);
-void sub_08066c08(u32 def, u8 b);
+void ActorDropParasol(u32 def, u8 b);
 extern void ActorSetAttackBox(u32 v);
 extern void TaskSetEntry(void *fn, u32 i);
 extern void ActorLoadDef(u32 def);
@@ -45,7 +45,7 @@ extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void BlendColors(u32 a, u32 b, u32 c, u32 d, u32 e);
 
 s16 ActorComputeHealthSlot(u32 i);
-void sub_08066c08(u32 def, u8 b);
+void ActorDropParasol(u32 def, u8 b);
 
 void sub_080653ec(void)
 {
@@ -676,7 +676,7 @@ void ActorPlaySfx(u32 def, u32 which)
 }
 
 /* Set bit 0 of every live enemy actor's two flag bytes. */
-void sub_08065e6c(void)
+void LockAllActorPalettes(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -825,7 +825,7 @@ u32 *sub_0806601c(void)
     return r;
 }
 
-u16 sub_08066088(u32 mode)
+u16 ActorInitBossGfx(u32 mode)
 {
     struct Task *t;
     struct Actor *a;
@@ -882,13 +882,13 @@ void sub_08066144(void)
     gUnk_0200AEF4 = gUnk_02004C90 = 0;
 }
 
-void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
+void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
 {
     struct Task *t;
 
     TaskSetSkipMask(7, gCurTaskIdx);
     t = gCurTask;
-    t->lateUpdateCallback = (u32)sub_080662d8;
+    t->lateUpdateCallback = (u32)BossHitStunLateUpdate;
     gUnk_02006190[0] = t->pixelX;
     gUnk_02006190[1] = t->pixelY;
     gUnk_02006190[2] = t->frame;
@@ -899,7 +899,7 @@ void sub_0806619c(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
     gUnk_02006190[5] = p4;
 }
 
-void sub_0806621c(void)
+void BossEndHitStun(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -921,7 +921,7 @@ void sub_0806621c(void)
 }
 
 /* Walk one step of the queued knock-back path. */
-void sub_0806627c(void)
+void BossHitStunShake(void)
 {
     struct Task *t;
     s32 i;
@@ -937,7 +937,7 @@ void sub_0806627c(void)
     gUnk_02006190[3]--;
 }
 
-void sub_080662d8(void)
+void BossHitStunLateUpdate(void)
 {
     struct Actor *a;
     u32 v;
@@ -954,11 +954,11 @@ void sub_080662d8(void)
             ActorFlashPalette((void *)gUnk_02004C90, gUnk_02006190[4]);
             break;
         case 0:
-            sub_08066480(a->gfx.header, gUnk_02004C90, gUnk_02006190[4]);
+            ActorFlashHeaderPalette(a->gfx.header, gUnk_02004C90, gUnk_02006190[4]);
             break;
         }
     }
-    sub_0806627c();
+    BossHitStunShake();
     if (gUnk_0200AEF4 != 0)
         ((void (*)(void))gUnk_0200AEF4)();
 }
@@ -1038,7 +1038,7 @@ void ActorClearPaletteOverride(void)
     gCurTask->u8C.actor->paletteOverridden &= 254;
 }
 
-void sub_08066480(struct GfxHeader *h, u32 src, u32 size)
+void ActorFlashHeaderPalette(struct GfxHeader *h, u32 src, u32 size)
 {
     struct Actor *a;
 
@@ -1439,7 +1439,7 @@ void sub_08066ae0(void)
     ActorResetHealth();
 }
 
-void sub_08066b34(u32 def)
+void ActorStartCarryingParasol(u32 def)
 {
     struct Task *t;
     struct Actor *a;
@@ -1501,15 +1501,15 @@ void TaskStepParasolDrift(void)
     u->velX = gParasolDriftSwayVelX[u->actorParasolSwayStep];
 }
 
-void sub_08066c08(u32 def, u8 b)
+void ActorDropParasol(u32 def, u8 b)
 {
     gCurTask->u8C.actor->extraFrame = 0xFFFF;
     ActorLoadDef(def);
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    sub_08066e88(b);
+    CreateDroppedParasol(b);
 }
 
-void sub_08066c3c(u32 def)
+void ActorDropParasolOnLanding(u32 def)
 {
     struct Task *t;
     struct Actor *a;
@@ -1517,7 +1517,7 @@ void sub_08066c3c(u32 def)
     t = gCurTask;
     a = t->u8C.actor;
     if (a->extraFrame != -1 && t->unk74 != 2)
-        sub_08066c08(def, 1);
+        ActorDropParasol(def, 1);
 }
 
 /* Draw the running task plus its trailing "sparkle" sprite. */
@@ -1566,7 +1566,7 @@ void ActorDrawWorldInViewOrDestroyWithParasol(void)
                 }
             }
         }
-        sub_08066dcc();
+        ActorGetParasolOffset();
         t = gCurTask;
         x = t->pixelX - gSpriteCameraX + gUnk_030023B4;
         y = t->pixelY - gSpriteCameraY + gUnk_030023D4;
@@ -1585,7 +1585,7 @@ void ActorDrawWorldInViewOrDestroyWithParasol(void)
 /* Offset of the trailing sprite for the running task's animation. */
 /* Offset of the trailing sprite for the running task's animation. */
 /* Offset of the trailing sprite for the running task's animation. */
-void sub_08066dcc(void)
+void ActorGetParasolOffset(void)
 {
     struct Task *t;
     s32 i;
@@ -1618,7 +1618,7 @@ void sub_08066dcc(void)
     }
 }
 
-void sub_08066e88(u8 a)
+void CreateDroppedParasol(u8 a)
 {
     struct Task *t;
     struct Task *s;
@@ -1633,7 +1633,7 @@ void sub_08066e88(u8 a)
         kind = 1;
     else
         kind = 0;
-    sub_08066dcc();
+    ActorGetParasolOffset();
     t = gCurTask;
     x = t->pixelX + gUnk_030023B4;
     y = t->pixelY + gUnk_030023D4;
@@ -1695,7 +1695,7 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
     }
 }
 
-void sub_0806704c(void)
+void CreateRoomStarRodPiece(void)
 {
     LoadStarRodPieceGfx();
     CreateStarRodPiece(0, 128, 104);
@@ -1806,12 +1806,12 @@ void Task_InhalableStar(void)
     t->updateCallback = (u32)InhalableStarUpdate;
     sub_08067170();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0873E280);
+    CallTableEntry(gCurTask->state, 1, gInhalableStarStates);
 }
 
 void InhalableStarUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0873E284);
+    CallTableEntry(gCurTask->updateState, 1, gInhalableStarStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
