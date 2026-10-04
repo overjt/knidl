@@ -38,12 +38,12 @@ void sub_08018e14(void)
 
     for (i = 0; i < 10; i++)
         gUnk_02006040[i] = 0;
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     while (1)
     {
         for (i = 0; i < 3; i++)
         {
-            if ((s16)gCurTask->unk6C < 50 && gUnk_02006040[i] == 0)
+            if ((s16)gCurTask->cutsceneActorLoopCount < 50 && gUnk_02006040[i] == 0)
             {
                 gUnk_02006040[i + 6] = 0;
                 r = RandomRange(16);
@@ -76,8 +76,8 @@ void sub_08018e14(void)
                 QueueSprite(gCurTask->layer, (u32)gUnk_080D2148, 0, 0, gUnk_03001F2C, gUnk_03002448);
             }
         }
-        gCurTask->unk6C++;
-        if ((s16)gCurTask->unk6C > 60)
+        gCurTask->cutsceneActorLoopCount++;
+        if ((s16)gCurTask->cutsceneActorLoopCount > 60)
             break;
         TaskYieldTrampoline(1);
     }

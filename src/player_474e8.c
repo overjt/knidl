@@ -43,7 +43,7 @@ void PlayerActionParasol(void)
     gCurTask->updateState = 38;
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         if (t->waterFlags & 1)
             t->unk2C = 1;
         else
@@ -117,7 +117,7 @@ void PlayerActionParasol(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -126,7 +126,7 @@ void PlayerActionParasolUpdate(void)
     struct Task *t = gCurTask;
     struct Task *u;
 
-    if (t->unk28 != 0) {
+    if (t->playerActionDone28 != 0) {
         PlayerRequestLocomotion();
     } else if (t->velY > 0) {
         if (PlayerHasCrossedWaterSurface(0) != 0)
@@ -149,7 +149,7 @@ void PlayerActionSleep(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 39;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->player->unk42 |= 2;
     PlayerSetMotionXPreset(0, 72);
     TaskSetFrame(0x8E5);
@@ -251,7 +251,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -263,7 +263,7 @@ void PlayerActionSleepUpdate(void)
             t->player->unk42 &= 0xFFFD;
             SetPlayerAbility(0, -1, t->player->playerIndex);
         }
-    } else if (gCurTask->unk28 != 0) {
+    } else if (gCurTask->playerActionDone28 != 0) {
         PlayerRequestLocomotion();
     }
 }

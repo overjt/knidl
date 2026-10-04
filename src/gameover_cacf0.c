@@ -101,7 +101,7 @@ void GameOverScreen(void)
     }
     for (i = 0; i < 8; i++) {
         struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
-        t->unk18 = i;
+        t->gameOverSpriteIndex = i;
         RunLinkFrames(8);
     }
     GameOverResetWait();
@@ -149,7 +149,7 @@ void GameOverMetaKnightmareScreen(void)
     }
     for (i = 0; i < 8; i++) {
         struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
-        t->unk18 = i;
+        t->gameOverSpriteIndex = i;
         GameOverShowClock(8);
     }
     GameOverResetWait();

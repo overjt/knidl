@@ -590,7 +590,7 @@ void PlayerActionSwallowInWater(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 12;
     gCurTask->updateState = 25;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(225);
     TaskYieldTrampoline(2);
@@ -609,7 +609,7 @@ void PlayerActionSwallowInWater(void)
     TaskYieldTrampoline(8);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -617,7 +617,7 @@ void PlayerActionSwallowInWaterUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0)
+    if (t->playerActionDone28 != 0)
     {
         gLatchedHeldKeys[t->player->playerIndex] = gLatchedPressedKeys[t->player->playerIndex] = 0;
         if (t->onGround & 1)
@@ -632,7 +632,7 @@ void PlayerActionSpitInWater(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 11;
     gCurTask->updateState = 24;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(224);
     TaskYieldTrampoline(2);
@@ -644,7 +644,7 @@ void PlayerActionSpitInWater(void)
         CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -652,7 +652,7 @@ void PlayerActionSpitInWaterUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0)
+    if (t->playerActionDone28 != 0)
     {
         if (!(t->onGround & 1) || (gLatchedHeldKeys[t->player->playerIndex] & 65))
             t->player->requestedAction = 23;

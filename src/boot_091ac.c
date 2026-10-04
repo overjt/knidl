@@ -129,18 +129,18 @@ void Task_TitlePalette(void)
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    for (t->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++) {
-        RequestCopy(2, (u32)gUnk_08541D98[(s16)gCurTask->unk6C], (u32)gBgPaletteBank14, 32);
+    for (t->titlePaletteLoopCount = 0; (s16)gCurTask->titlePaletteLoopCount <= 10; gCurTask->titlePaletteLoopCount++) {
+        RequestCopy(2, (u32)gUnk_08541D98[(s16)gCurTask->titlePaletteLoopCount], (u32)gBgPaletteBank14, 32);
         TaskYieldTrampoline(1);
     }
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 11; gCurTask->unk6C++) {
-        BlendColors(gUnk_08541D98[13], gUnk_08541D98[11], (u16)(((s16)gCurTask->unk6C + 1) * 21), 16, gBgPaletteBank14);
-        BlendColors(gUnk_08541F58, gUnk_08541F58 + 8, (u16)(((s16)gCurTask->unk6C + 1) * 21), 8, gBgPaletteBank14 + 17);
+    for (gCurTask->titlePaletteLoopCount = 0; (s16)gCurTask->titlePaletteLoopCount <= 11; gCurTask->titlePaletteLoopCount++) {
+        BlendColors(gUnk_08541D98[13], gUnk_08541D98[11], (u16)(((s16)gCurTask->titlePaletteLoopCount + 1) * 21), 16, gBgPaletteBank14);
+        BlendColors(gUnk_08541F58, gUnk_08541F58 + 8, (u16)(((s16)gCurTask->titlePaletteLoopCount + 1) * 21), 8, gBgPaletteBank14 + 17);
         TaskYieldTrampoline(1);
     }
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++) {
-        BlendColors(gUnk_08541D98[11], gUnk_08541D98[12], (u16)(((s16)gCurTask->unk6C + 1) * 32), 16, gBgPaletteBank14);
-        BlendColors(gUnk_08541F58 + 8, gUnk_08541F58, (u16)(((s16)gCurTask->unk6C + 1) * 32), 8, gBgPaletteBank14 + 17);
+    for (gCurTask->titlePaletteLoopCount = 0; (s16)gCurTask->titlePaletteLoopCount <= 7; gCurTask->titlePaletteLoopCount++) {
+        BlendColors(gUnk_08541D98[11], gUnk_08541D98[12], (u16)(((s16)gCurTask->titlePaletteLoopCount + 1) * 32), 16, gBgPaletteBank14);
+        BlendColors(gUnk_08541F58 + 8, gUnk_08541F58, (u16)(((s16)gCurTask->titlePaletteLoopCount + 1) * 32), 8, gBgPaletteBank14 + 17);
         TaskYieldTrampoline(1);
     }
     /* Loop 4: the ROM hoists the store's &gUnk_03001F2C (after the task
@@ -155,10 +155,10 @@ void Task_TitlePalette(void)
        hoisted register instead. */
     q = (u16 *)&gUnk_03001F2C;
     for (;;) {
-        gCurTask->unk6C = 0;
+        gCurTask->titlePaletteLoopCount = 0;
         p = &gUnk_03001F2C;
-        for (; (s16)gCurTask->unk6C <= 15; gCurTask->unk6C++) {
-            *p = ((s16)gCurTask->unk6C > 7 ? 16 - (s16)gCurTask->unk6C : (s16)gCurTask->unk6C) << 5;
+        for (; (s16)gCurTask->titlePaletteLoopCount <= 15; gCurTask->titlePaletteLoopCount++) {
+            *p = ((s16)gCurTask->titlePaletteLoopCount > 7 ? 16 - (s16)gCurTask->titlePaletteLoopCount : (s16)gCurTask->titlePaletteLoopCount) << 5;
             q = (u16 *)&gUnk_03001F2C;
             BlendColors(gUnk_08541D98[12], gUnk_08541D98[13], *q, 16, gBgPaletteBank14);
             TaskYieldTrampoline(1);
@@ -168,7 +168,7 @@ void Task_TitlePalette(void)
 
 void Task_TitleSprites(void)
 {
-    if (gCurTask->unk18 == -1)
+    if (gCurTask->titleSpritesIndex == -1)
         sub_080095e4();
     else
         sub_08009640();
@@ -179,12 +179,12 @@ void sub_080095e4(void)
     struct Task *t;
     s32 idx;
 
-    TaskYieldTrampoline(gCurTask->unk1C);
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < 10; gCurTask->unk6C++) {
+    TaskYieldTrampoline(gCurTask->titleSpritesStartDelay);
+    for (gCurTask->titleSpritesLoopCount = 0; (s16)gCurTask->titleSpritesLoopCount < 10; gCurTask->titleSpritesLoopCount++) {
         idx = TaskCreateFrom(2, 0);
         t = gCurTask;
-        t->unk28 = idx;
-        gTasks[idx].unk18 = (s16)t->unk6C;
+        t->titleSpritesChildSlot = idx;
+        gTasks[idx].titleSpritesIndex = (s16)t->titleSpritesLoopCount;
         TaskYieldTrampoline(3);
     }
     TaskExitTrampoline();
@@ -200,11 +200,11 @@ void sub_08009640(void)
     t->frameTable = gUnk_087555B4;
     t->layer = 8;
     u = gCurTask;
-    if (u->unk18 <= 4) {
-        u->posX = u->unk18 * 0x140000 + 0x180000;
+    if (u->titleSpritesIndex <= 4) {
+        u->posX = u->titleSpritesIndex * 0x140000 + 0x180000;
         u->posY = 0x800000;
     } else {
-        u->posX = (u->unk18 - 5) * 0x140000 + 0x880000;
+        u->posX = (u->titleSpritesIndex - 5) * 0x140000 + 0x880000;
         u->posY = 0x800000;
     }
     gCurTask->frame = 8;
@@ -214,7 +214,7 @@ void sub_08009640(void)
     gCurTask->frame--;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    v->frame = gUnk_08731CC8[v->unk18];
+    v->frame = gUnk_08731CC8[v->titleSpritesIndex];
     TaskSleepForever();
 }
 
@@ -252,12 +252,12 @@ s32 TitleScreen(void)
         BeginFastFadeInFromWhite();
         RunFramesUntilFadeDone();
         idx = TaskCreateFrom(2, 0);
-        gTasks[idx].unk18 = -1;
-        gTasks[idx].unk1C = 0;
+        gTasks[idx].titleSpritesIndex = -1;
+        gTasks[idx].titleSpritesStartDelay = 0;
     } else {
         idx = TaskCreateFrom(2, 0);
-        gTasks[idx].unk18 = -1;
-        gTasks[idx].unk1C = 90;
+        gTasks[idx].titleSpritesIndex = -1;
+        gTasks[idx].titleSpritesStartDelay = 90;
     }
     TaskCreateFrom(1, 0);
     PlayBgm(26);
@@ -305,7 +305,7 @@ void IntroStory(void)
     for (i = 0; i < 9; i++) {
         LoadGfxSet(gUnk_08731CDC[i]);
         t = TaskCreateFrom(237, 0);
-        gTasks[t].unk18 = i;
+        gTasks[t].introStoryPictureIndex = i;
         for (j = 0; j <= 16; j++) {
             gBldAlphaEva = j;
             gBldAlphaEvb = 16 - j;

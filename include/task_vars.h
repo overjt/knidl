@@ -16,6 +16,12 @@
  * (docs/header-conventions.md, "Per-family registers").
  */
 
+/* AbilityStar - Ability Star (task type #68, Task_AbilityStar;
+   gAbilityStarStates) */
+#define abilityStarLifeTimer unk28 /* s32: frames the ability star lasts (260); at 0 it dies */
+#define abilityStarFrameTimer unk2C /* s32: frames until the star's next spin frame (every 2; frames 4-19) */
+#define abilityStarPickupDelay unk30 /* s32: frames (48) before the star's hits are checked, so it cannot be taken at once */
+
 /* Actor - every actor: a task made by CreateActor, sub_08064a78 or
    sub_08064d9c (src/actor_63698.c), which also bind Task.u8C.actor; the room
    objects of kinds 0-6 come through CreateActor */
@@ -118,6 +124,23 @@
 #define bugzzyLadybugFrameTimer unk34 /* s32: frames until the sprite toggles frame bit 0 again (every 2) */
 #define bugzzyLadybugLoopCount unk6C /* s16: iterations of BugzzyLadybugState0's two loops (launch frames, bobs), counted from 0 */
 
+/* Cannon - Cannon (task type #75, Task_Cannon; gCannonVariants,
+   gCannonStates) */
+#define cannonRiderCount unk1C /* s32: players loaded into the cannon; it fires the full launch only when all active ones are in */
+#define cannonRiderMask unk20 /* s32: bit i set when player i is loaded; CannonLaunchPlayers launches exactly those */
+#define cannonLoopCount unk6C /* s16: the launch states' loop counter (frame cycles of states 2 and 3) */
+
+/* CannonFuse - Cannon fuse (task type #76, Task_CannonFuse;
+   gCannonFuseVariants, gCannonFuseStates) */
+#define cannonFuseExit unk18 /* s32: which exit of the piece the flame leaves by (gUnk_087401CC[entry dir + kind * 4]) */
+#define cannonFuseFrameStep unk1C /* s32: step in the current piece's frame list (counts up while burning, down in state 2) */
+#define cannonFusePieceKind unk20 /* s32: kind 0-5 of the fuse block the flame is on (gUnk_087401E4[it] = its script); -1 at the end */
+#define cannonFuseBurnDir unk24 /* s32: 1 once lit (state 1 burns toward the cannon), -1 in state 2 (frames stepped back) */
+#define cannonFuseStartY unk2C /* s32: pixel Y the fuse was spawned at; CannonFuseWait returns there */
+#define cannonFuseStartX unk30 /* s32: pixel X the fuse was spawned at; CannonFuseWait returns there */
+#define cannonFuseStepTimer unk34 /* s32: frames to the next burn step (every 2 frames) */
+#define cannonFuseSparkSlot unk46 /* s16: slot of the Task_CannonFuseSpark (type 157) that rides the burning end */
+
 /* Cappy - Cappy (task type #16, Task_Cappy; gCappyVariants,
    gCappyCappedStates, gCappyCaplessStates, gCappyStandStates) */
 #define cappyHopCount unk28 /* s32: hops left before it faces the player again (40) */
@@ -134,6 +157,64 @@
 #define chillyFreezeSfxTimer unk34 /* s32: frames to the next sound 185 (replayed every 5 frames) */
 #define chillyFreezeSparkleSlot unk46 /* s16: slot of the Task_ChillyFreezeSparkle (task type 215) just created */
 #define chillyFreezeLoopCount unk6C /* s16: Task_ChillyFreeze's loop counter: 4-frame flash cycles before ActorDestroy (60) */
+
+/* CutsceneActor - Cutscene actor (task type #92, Task_CutsceneActor;
+   gCutsceneActors, one script per actor) */
+#define cutsceneActorScript unk18 /* s32: index of the actor's script in gCutsceneActors (CreateCutsceneActor's first argument) */
+#define cutsceneActorPattern unk1C /* s32: which of script 3's four effect patterns it plays (0-3, set by script 2 at creation) */
+#define cutsceneActorBgmVolume unk20 /* s32: script 50's BGM volume (255 down to 0 by cutsceneActorBgmFadeStep per frame) */
+#define cutsceneActorSfxTimer unk20 /* s32: script 51's sound cycle: 0-2, sound 0x111 at 0; -1 = silent */
+#define cutsceneActorBgmFadeStep unk24 /* s32: script 50's BGM fade step per frame (-1 = hold full volume) */
+#define cutsceneActorChildGate unk28 /* s32: 1 during script 51's two stroke phases; its child script 53 waits for it to play */
+#define cutsceneActorNextFrame unk28 /* s32: script 1's next frame number: shown for one frame, then blanked, 9 times */
+#define cutsceneActorFlashPhase unk34 /* s32: script 50's palette flash step (0-10, gUnk_08757368 weights) once its frame passes 49 */
+#define cutsceneActorChildSlot unk46 /* s16: slot of the task the script just created to set up (a cutscene actor or an effect) */
+#define cutsceneActorLoopCount unk6C /* s16: the running script's loop counter (frame cycles, strokes, blend steps) */
+#define cutsceneActorPalettePhase unk70 /* s16: script 55's palette step (0-23, gUnk_0874AD44 weights) its update blends by */
+
+/* CutsceneDirector - Cutscene director (task type #91, Task_CutsceneDirector;
+   gCutsceneStarts) */
+#define cutsceneDirectorTimer unk6C /* s16: frames since the cutscene's first 60, up to gCutsceneDurations[level] - 60 */
+
+/* EraseConfirmDialog - EraseConfirmDialog (task type #243,
+   Task_EraseConfirmDialog) */
+#define eraseConfirmDialogBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define eraseConfirmDialogBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define eraseConfirmDialogBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
+
+/* EraseFileWipe - EraseFileWipe (task type #244, Task_EraseFileWipe) */
+#define eraseFileWipeOffsetX unk28 /* s32: 16.16 X offset of the two halves (drawn at x - 127 and 367 - x); opens and closes */
+#define eraseFileWipeShakeY unk2C /* s32: 16.16 Y offset of both halves; +-6 px steps shake them */
+#define eraseFileWipeLoopCount unk6C /* s16: the running loop's counter (10 open steps, 2 shakes, 10 close steps) */
+#define eraseFileWipeShakeFrameCount unk6E /* s16: frames of one shake direction (0-1) */
+
+/* FileMenuHighlight - FileMenuHighlight (task type #242,
+   Task_FileMenuHighlight) */
+#define fileMenuHighlightSavedCursor unk28 /* s32: gFileMenuCursor as last drawn; -1 = none yet / hidden */
+#define fileMenuHighlightBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define fileMenuHighlightBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define fileMenuHighlightBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
+
+/* FileMenuSlot - FileMenuSlot (task type #241, Task_FileMenuSlot) */
+#define fileMenuSlotOffsetX unk18 /* s32: 16.16 X offset of the slot panel from its spot (slides in, aside, out) */
+#define fileMenuSlotOffsetY unk1C /* s32: 16.16 Y offset of the slot panel (0 or 29 px) */
+#define fileMenuSlotLeaving unk28 /* s32: 1 once the menu left for another screen; the slot label is no longer drawn */
+#define fileMenuSlotLoopCount unk6C /* s16: the slide loops' counter (8 frames each) */
+
+/* FileSelectCursor - FileSelectCursor (task type #240, Task_FileSelectCursor)
+   */
+#define fileSelectCursorSavedCursor unk28 /* s32: gMenuCursor as last drawn; -1 = none yet */
+#define fileSelectCursorBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define fileSelectCursorBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define fileSelectCursorBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
+
+/* FileSelectSlot - FileSelectSlot (task type #239, Task_FileSelectSlot) */
+#define fileSelectSlotIndex unk1C /* s32: which save slot (0-2) it shows, from CreateFileSelectSprites */
+#define fileSelectSlotSavedCursor unk28 /* s32: gMenuCursor as last seen; -1 at start */
+
+/* FileSelectSlotLabel - FileSelectSlotLabel (task type #238,
+   Task_FileSelectSlotLabel) */
+#define fileSelectSlotLabelIndex unk1C /* s32: which save slot (0-2) it labels, from CreateFileSelectSprites */
 
 /* FireLion - Fire Lion (task type #55, Task_FireLion; gFireLionStates /
    gFireLionStateUpdates) */
@@ -166,6 +247,35 @@
 
 /* FlamerFlame - Flamer's flame (task type #176, Task_FlamerFlame) */
 #define flamerFlameArcIndex unk18 /* s32: index 0-3 into gUnk_08741E94 / A4 (velY -1/-0.5/+1/+0.5 px, accelY): set by Flamer */
+
+/* GameOverChoice - Game-over cursor (task type #264 variant 1,
+   GameOverChoice; gGameOverChoiceStates) */
+#define gameOverChoiceShowPending unk20 /* s32: 1 when the choice animation reached the point where the player task shows the result */
+#define gameOverChoiceGiveUp unk24 /* s32: 1 when the cursor is on the second choice (give up), 0 on continue; up/down flips it */
+
+/* GameOverObject - Game-over object (task type #264, Task_GameOverObject;
+   gGameOverObjectVariants) */
+#define gameOverObjectMotionIndex unk24 /* s32: variant 2: offset 0/4/8 of its current motion set in gUnk_087582F4 */
+#define gameOverObjectLoopCount unk6C /* s16: the variant scripts' loop counter */
+
+/* GameOverPalette - Game-over palette cycle (task type #262,
+   Task_GameOverPalette) */
+#define gameOverPaletteFadeTimer unk28 /* s32: frames of the 32-frame blend fade-in (gBldAlphaEva = it / 2) */
+#define gameOverPaletteFrom unk2C /* s32: index 0/1 of the gUnk_08584BB0 palette the blend starts from (swapped each cycle) */
+#define gameOverPaletteTo unk30 /* s32: index 1/0 of the gUnk_08584BB0 palette the blend goes to (swapped each cycle) */
+#define gameOverPaletteBlend unk34 /* s32: blend ratio 0-256 between the two palettes, +4 per frame */
+
+/* GameOverPlayer - Game-over player (task type #264 variant 0,
+   GameOverPlayer; gGameOverPlayerStates) */
+#define gameOverPlayerLooped unk18 /* s32: 1 after the idle loop's first pass; sound 180 plays from the second pass on */
+#define gameOverPlayerSfxPlayer unk1C /* s32: the sound player PlaySfx(103) returned, stopped after the give-up loop */
+#define gameOverPlayerEndTimer unk20 /* s32: frames before the screen ends after the give-up animation (120) */
+#define gameOverPlayerReentered unk24 /* s32: 1 once GameOverPlayerEnterState re-entered the states; the wait handler ends the screen */
+#define gameOverPlayerLoopCount unk6C /* s16: GameOverPlayerGiveUp's loop counter (13 frame cycles) */
+
+/* GameOverSprite - Game-over still sprite (task type #260,
+   Task_GameOverSprite) */
+#define gameOverSpriteIndex unk18 /* s32: which of the eight sprites it is: its frame and its position gUnk_08758274/84[it] */
 
 /* Gip - Gip (task type #47, Task_Gip; gGipVariants, gGipStates) */
 #define gipCollideTerrain unk18 /* s32: 1 when GipUpdate runs ActorCollideTerrain before the state update (0 on the wall) */
@@ -205,6 +315,10 @@
    Task_GrandWheelieMiniWheelie; spawned by GrandWheelieSummon) */
 #define grandWheelieMiniWheelieGroundClass unk1C /* s8: the ground class sub_08094d10 gave last (-1 after a landing); indexes the roll speeds */
 #define grandWheelieMiniWheelieRolling unk2C /* s32: 0 while thrown in the air, 1 once it has landed and rolls */
+
+/* HalveScore - Score halving (task type #263, Task_HalveScore) */
+#define halveScoreShown unk28 /* s32: score drawn on the BG map, counted down by 10 per frame to the halved score */
+#define halveScoreRemainder unk2C /* s32: the halved score's last digit (mod 10), subtracted to round it to a multiple of 10 */
 
 /* HeavyMole - Heavy Mole (task type #62, Task_HeavyMole; a timed move script,
    no state table) */
@@ -256,6 +370,10 @@
 #define hotHeadFireAngle unk28 /* s32: row 0: the flame's heading (0 or 256 by facing, plus its fan offset gUnk_08741E70) */
 #define hotHeadFireAimAngle unk2C /* s32: row 1: the heading toward the nearest player, snapped to one of four diagonal sectors */
 #define hotHeadFireFanIndex unk2C /* s32: row 0: which flame of the fan (0-4): the parent Hot Head's (s16)unk6E */
+
+/* IntroStoryPicture - IntroStoryPicture (task type #237,
+   Task_IntroStoryPicture) */
+#define introStoryPictureIndex unk18 /* s32: which picture (0-8) of the intro story, from IntroStory's loop */
 
 /* Kabu - Kabu (task type #21, Task_Kabu; gKabuVariants and its four rows'
    state tables) */
@@ -356,11 +474,73 @@
 #define laserBallShotCount unk6C /* s16: lasers fired in LaserBallShoot (1-3, RandomRange(3) + 1 re-drawn each loop) */
 #define laserBallWindUpCount unk6E /* s16: wind-up cycles (frames 6, 7, 4) done before the first laser (loop of 8) */
 
+/* LinkPlayCable - Link Play's cable (task type #253, Task_LinkPlayCable) */
+#define linkPlayCableIndex unk18 /* s32: which of the four cables (0-3), from its creator's loop; position, layer and column */
+#define linkPlayCableStepRow unk1C /* s32: the shown count it moves from (+1 when stepping down): row of the step tables */
+#define linkPlayCableBobTimer unk28 /* s32: frames until the first cable's bob turns (16) */
+#define linkPlayCableBobDir unk2C /* s32: the first cable's bob direction (+-1), velY = unk2C << 16 */
+
+/* LinkPlayColorCycle - LinkPlayColorCycle (task type #250,
+   Task_LinkPlayColorCycle) */
+#define linkPlayColorCyclePrevScreen unk28 /* s32: gPrevMenuScreen at creation; 3 picks the second palette table */
+#define linkPlayColorCycleBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-6) */
+#define linkPlayColorCycleBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define linkPlayColorCycleBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +16 per frame) */
+
+/* LinkPlayConsole - Link Play's console icon (task type #252,
+   Task_LinkPlayConsole) */
+#define linkPlayConsoleIndex unk18 /* s32: which of the four consoles (0-3), from its creator's loop; layer and step column */
+#define linkPlayConsoleStepRow unk28 /* s32: the shown count it moves from (+1 when stepping down): row of the step tables */
+#define linkPlayConsoleMarkerTimer unk2C /* s32: frames left of the marker that drops onto a newly linked console (24) */
+#define linkPlayConsoleMarkerScale unk30 /* s32: the marker's affine scale in its last 3 frames ((4 - timer) * 64 + 256) */
+
+/* LinkPlayPalettePulse - LinkPlayPalettePulse (task type #249,
+   Task_LinkPlayPalettePulse) */
+#define linkPlayPalettePulseFadeStep unk18 /* s32: fade-in step 0-20; gBldAlphaEva = unk18 >> 2 */
+#define linkPlayPalettePulseActiveIndex unk28 /* s32: which of the four BG palettes pulses (0-3); steps each time the blend cycle wraps */
+#define linkPlayPalettePulseBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-15) */
+#define linkPlayPalettePulseBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define linkPlayPalettePulseBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +64 per frame) */
+#define linkPlayPalettePulseLoopCount unk6C /* s16: the loop counter over the four BG palettes */
+
+/* LinkPlayPlayerList - LinkPlayPlayerList (task type #251,
+   Task_LinkPlayPlayerList) */
+#define linkPlayPlayerListStepDir unk18 /* s32: +1 / -1 while the shown count steps up / down toward the linked count, 0 at rest */
+#define linkPlayPlayerListShownCount unk1C /* s32: the player count the screen shows; steps by one toward the linked count */
+#define linkPlayPlayerListStepTimer unk20 /* s32: frames until the shown count may step again (6) */
+#define linkPlayPlayerListLinkedCount unk24 /* s32: the linked player count sub_0800ffd8 returns, read each frame */
+#define linkPlayPlayerListChildSlot unk28 /* s32: task slot of the console (#252) or cable (#253) it just made */
+#define linkPlayPlayerListBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-3) */
+#define linkPlayPlayerListBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define linkPlayPlayerListBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +16 per frame) */
+#define linkPlayPlayerListLoopCount unk6C /* s16: the creation loop's counter; each console / cable gets it as its index (0-3) */
+
 /* MaceKnightMace - the Mace Knight's mace (task type #130,
    Task_MaceKnightMace; gMaceKnightMaceVariants; created by
    CreateMaceKnightMace) */
 #define maceKnightMaceDismissed unk2C /* s32: 1 once its knight was hit (hitKind 1, 3 or 4); the mace then lets go and is destroyed */
 #define maceKnightMaceLoopCount unk6C /* s16: the mace's loop counter (swing passes), counted from 0 */
+
+/* MenuBackground - MenuBackground (task type #258, Task_MenuBackground) */
+#define menuBackgroundScreen unk18 /* s32: the menu screen whose background palette (gUnk_08731CF8) is shown */
+#define menuBackgroundPrevScreen unk1C /* s32: the screen whose palette fades out */
+#define menuBackgroundFadePhase unk20 /* s32: 0 none, 1 fading the old palette out, 2 fading the new one in */
+#define menuBackgroundFadeRatio unk24 /* s32: the fade's BlendColors ratio (0-256, +32 per frame) */
+
+/* MenuBgPaletteCycle - MenuBgPaletteCycle (task type #259,
+   Task_MenuBgPaletteCycle) */
+#define menuBgPaletteCycleScreen unk18 /* s32: the menu screen whose palette set (gUnk_08731D28) is cycled */
+#define menuBgPaletteCyclePrevScreen unk1C /* s32: the screen whose palette set it cross-fades from */
+#define menuBgPaletteCycleFading unk20 /* s32: 1 while the cross-fade between the two screens' palettes runs */
+#define menuBgPaletteCycleFadeRatio unk24 /* s32: the cross-fade's ratio (0-256, +16 per frame) */
+#define menuBgPaletteCycleBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-5) */
+#define menuBgPaletteCycleBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define menuBgPaletteCycleBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
+
+/* MenuScreenTitle - MenuScreenTitle (task type #256, Task_MenuScreenTitle) */
+#define menuScreenTitleScreen unk28 /* s32: gMenuScreen as last seen; picks the title graphics gUnk_08731D70 */
+#define menuScreenTitlePhase unk2C /* s32: the title's change step: 0 slide out, 1 slide in, 2 swap after a delay, 3 at rest */
+#define menuScreenTitlePhaseTimer unk30 /* s32: frames left in the slide or delay step (8, 7 or 1) */
 
 /* MetaKnight - Meta Knight (task type #61, Task_MetaKnight;
    gMetaKnightStates) */
@@ -432,6 +612,18 @@
 /* MetaKnightSwordHitBox - Meta Knight's sword hit box (task type #184,
    Task_MetaKnightSwordHitBox) */
 #define metaKnightSwordHitBoxFrameIndex unk28 /* s32: the parent's frame - 88 (his slash frames): index of the box and offset tables */
+
+/* ModeListCursor - ModeListCursor (task type #247, Task_ModeListCursor) */
+#define modeListCursorSavedCursor unk28 /* s32: gMenuCursor as last drawn; a change restarts the highlight, -1 when hidden */
+#define modeListCursorBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define modeListCursorBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define modeListCursorBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
+
+/* ModePlayerCountPanel - ModePlayerCountPanel (task type #248,
+   Task_ModePlayerCountPanel) */
+#define modePlayerCountPanelBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define modePlayerCountPanelBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define modePlayerCountPanelBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
 
 /* MrFrosty - Mr. Frosty (task type #52, Task_MrFrosty; gMrFrostyVariants,
    gMrFrostyStates / gMrFrostyStateUpdates) */
@@ -612,6 +804,12 @@
 #define noddySleepPeriodCount unk34 /* s32: 224-frame sleep periods left (starts at 1); NoddySleep wakes when it and the timer are 0 */
 #define noddyBubbleSlot unk46 /* s16: slot of the last Task_NoddyBubble (type 194) the sleeping loop puffed */
 
+/* NormalExtraPanel - NormalExtraPanel (task type #245, Task_NormalExtraPanel)
+   */
+#define normalExtraPanelBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define normalExtraPanelBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define normalExtraPanelBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
+
 /* PaintRoller - Paint Roller (task type #60, Task_PaintRoller;
    gPaintRollerStates) */
 #define paintRollerEnteredState unk28 /* s32: the state PaintRollerEnterState last entered; the update re-enters on a change */
@@ -665,6 +863,23 @@
    / gPlayerActionHandlers, Meta Knightmare's gMetaKnightActions /
    gMetaKnightActionHandlers, and the Warp Star, cannon and goal-game rides)
    */
+#define playerActionDone28 unk28 /* s32: 1 once the action's body has finished; its update then hands over (as playerActionDone) */
+#define playerCrashBlendRatio unk28 /* s32: Crash: BlendColors ratio of the palette flash (0-256; +85 in the body, +10 in the update) */
+#define playerDuckDropTimer unk28 /* s32: Duck: frames (8) of ducking on a floor gTerrainResult.unk5 marks before it drops through */
+#define playerHighFallPhase unk28 /* s32: High fall: 0 in the opening frames, 1 after; the update then registers the body collider */
+#define playerHurtPhase unk28 /* s32: Hurt: the step of the knock-back sequence (0 at the start, counted per stage) */
+#define playerLadderStep unk28 /* s32: Ladder: the climb step, a row of gUnk_0873D8B4 / D908 (up 0-9 or 0-15, down 10-13, 16-20) */
+#define playerParasolSwayAccelX unk28 /* s32: Parasol falling: the X acceleration of the sway (+-0x400 / 0x800 by facing) */
+#define playerWalkStepDelay unk28 /* s32: Walk: frames added to every step of the walk cycle (0, or 2 when slowing without input) */
+#define playerCrashSavedPosY unk2C /* s32: Crash: posY at the blast; the update keeps the player from falling below it */
+#define playerInhaleHoldTimer unk2C /* s32: Inhale: frames (30) the inhale lasts at least before releasing B ends it */
+#define playerLadderSavedFacing unk2C /* s32: Ladder: the facing when it took the ladder, restored when it leaves */
+#define playerParasolSwayVelX unk2C /* s32: Parasol falling: the sway's X speed, added to posX every frame by PlayerUpdate */
+#define playerPoseSlope unk2C /* s32: Stand / Duck: the slope (PlayerState.slope) the pose was drawn for; a change re-enters it */
+#define playerFallBumped unk30 /* s32: Fall: 1 when it began from a bump (bumpKind bit 0); the body then skips its start frames */
+#define playerInhaleCaught unk30 /* s32: Inhale: 1 once something is attached and the catch offset script has started */
+#define playerLadderDir unk30 /* s32: Ladder: the direction it last climbed (the variant: 1 up, 2 down) */
+#define playerLadderFrameOffset unk34 /* s32: Ladder (abilities 1/2/5/19): the frame offset 0-51 cycled by 13 every 2 frames */
 #define playerBallRollFrame unk46 /* s16: Ball: the roll frame index 0-15 into gUnk_0873DB0A (-1 while another animation plays) */
 #define playerBaseFrame unk46 /* s16: the running action's base frame, from its per-ability frame table; frames step from it */
 #define playerGoalGameMarkerSlot unk46 /* s16: the goal game's player marker child (task type #87, Task_GoalGamePlayerMarker) */
@@ -677,6 +892,12 @@
 #define playerBankBlendRatio unk6E /* s16: Spark: ratio 0-256 (+128 a step) blending the sprite's palette bank to its charged colours */
 #define playerActionDone unk70 /* s16: Ball / Star Rod: 1 once the action's body has finished; its update then hands over */
 #define playerNextBankBlendRatio unk70 /* s16: Spark: ratio 0-256 (+64 a step) blending the next palette bank to its charged colours */
+
+/* PlayerCountPanel - PlayerCountPanel (task type #246, Task_PlayerCountPanel)
+   */
+#define playerCountPanelBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define playerCountPanelBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define playerCountPanelBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
 
 /* PoppyBrosJr - Poppy Bros. Jr. (task type #38, Task_PoppyBrosJr;
    gPoppyBrosJrVariants, gPoppyBrosJrStates) and its riders (#39
@@ -739,6 +960,12 @@
 #define rockyPlayerSlot unk2C /* s32: slot of the nearest player it watches (TaskFindNearestPlayer) */
 #define rockyLoopCount unk6C /* s16: the running state's loop counter (two step cycles of the walk / the stand) */
 
+/* RoomParticles - Room particles (task type #79, Task_RoomParticles;
+   gRoomParticlesVariants) */
+#define roomParticlesIndex unk28 /* s32: index of the particle the current loop is on (gRoomParticles[it]) */
+#define roomParticlesCount unk30 /* s32: particles RoomParticlesDrawBelowLine draws (8, 3, 4 by variant) */
+#define roomParticlesLineY unk34 /* s32: world Y of the line the particles show below (0, 208, 64 by variant) */
+
 /* Scarfy - Scarfy (task type #29, Task_Scarfy; gScarfyVariants,
    gScarfyStates) */
 #define scarfyChaseTimer unk28 /* s32: frames left of the chase (gUnk_0874094C[spawn arg]); at 0 it explodes */
@@ -786,6 +1013,19 @@
 #define slippyMovePickCount unk34 /* s32: calls of SlippyPickMove; its parity picks one of the two weight tables */
 #define slippyLoopCount unk6C /* s16: SlippyState1's loop counter: frame cycles done (gUnk_08742820[spawn arg]: 3 or 2) */
 
+/* SoundTestCursors - SoundTestCursors (task type #254, Task_SoundTestCursors)
+   */
+#define soundTestCursorsBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-1) */
+#define soundTestCursorsBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define soundTestCursorsBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
+
+/* SoundTestPulse - SoundTestPulse (task type #255, Task_SoundTestPulse) */
+#define soundTestPulseActive unk18 /* s32: 1 once A was pressed on the second row: its pulse plays instead of the still palette */
+#define soundTestPulseHoldTimer unk28 /* s32: frames the ratio holds after a full cycle (4) before it rises again */
+#define soundTestPulseBlendFrom unk2C /* s32: index of the palette the blend starts from (cycles 0-5) */
+#define soundTestPulseBlendTo unk30 /* s32: index of the palette the blend goes to (one step ahead of BlendFrom) */
+#define soundTestPulseBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +128 per frame) */
+
 /* Sparky - Sparky (task type #26, Task_Sparky; gSparkyVariants,
    gSparkyJumpStates, gSparkyStandStates, gSparkyIdleStates) */
 #define sparkyJumpIndex unk28 /* s32: jump picked (0-2; 0 straight up) for SparkySetJumpMotion's speed tables */
@@ -815,6 +1055,10 @@
 #define starmanLeapFrame unk30 /* s32: frame of the leap (16-18, the next every 6 frames), shown while it moves fast */
 #define starmanWaveCount unk30 /* s32: waves left (6); at 0 it rises away (accelY -0x1900) */
 
+/* StarRodPiece - Star Rod piece (task type #73, Task_StarRodPiece) */
+#define starRodPieceWalkingMask unk18 /* s32: players (bit per index) already sent walking to the dance spot */
+#define starRodPieceWalkingCount unk1C /* s32: players sent to the dance spot; at gActivePlayerCount the dance starts */
+
 /* SwordAndBladeKnight - Sword Knight and Blade Knight (task types #36 / #37,
    Task_SwordKnight / Task_BladeKnight; gSwordAndBladeKnightVariants and its
    rows' state tables) */
@@ -830,6 +1074,15 @@
 /* SwordAndBladeKnightSlash - Sword and Blade Knight's slash (task type #173,
    Task_SwordAndBladeKnightSlash) */
 #define swordAndBladeKnightSlashStruck unk18 /* s32: 1 after a hit of kind 6 struck it (sfx 243); later frames test the second box */
+
+/* TitlePalette - TitlePalette (task type #1, Task_TitlePalette) */
+#define titlePaletteLoopCount unk6C /* s16: the running loop's counter (palette steps and blend ratios) */
+
+/* TitleSprites - TitleSprites (task type #2, Task_TitleSprites) */
+#define titleSpritesIndex unk18 /* s32: which of the ten title sprites (0-9); -1 for the instance that spawns them */
+#define titleSpritesStartDelay unk1C /* s32: frames the spawning instance waits before the first sprite (0 or 90) */
+#define titleSpritesChildSlot unk28 /* s32: task slot of the sprite it just made */
+#define titleSpritesLoopCount unk6C /* s16: the spawn loop's counter; each new sprite gets it as its index */
 
 /* TridentKnightTrident - the Trident Knight's trident (task type #131,
    Task_TridentKnightTrident; gTridentKnightTridentVariants; created by
@@ -889,6 +1142,27 @@
 /* WaddleDooBeam - Waddle Doo's beam (task type #106, Task_WaddleDooBeam) */
 #define waddleDooBeamAngleIndex unk34 /* s32: index into the beam angle table gUnk_08742FAC: the parent's beam step (halved for arg 0-1) */
 #define waddleDooBeamLoopCount unk6C /* s16: Task_WaddleDooBeam's loop counter: frame 0/1 cycles shown before ActorDestroy (3) */
+
+/* WarpStar - Warp Star (task type #74, Task_WarpStar; gWarpStarStates,
+   gWarpStarFlights) */
+#define warpStarScale unk18 /* s32: flight sprite scale (16.16 index into gUnk_0873FF98); -1 / <= -2 select other draw modes */
+#define warpStarExitRequested unk24 /* s32: 1 once the flight has called sub_08025f00 (the request for the destination room) */
+#define warpStarRiderCount unk28 /* s32: players boarded before the flight; it starts when this equals gActivePlayerCount */
+#define warpStarScaleSpeed unk28 /* s32: per-frame change of warpStarScale during a flight (negative = shrinking) */
+#define warpStarBobTimer unk2C /* s32: frames to the idle bob's next velY step (16) */
+#define warpStarBobPhase unk30 /* s32: step 0-5 of the idle bob through the velY table gUnk_0873FB94 */
+#define warpStarTrailSpeed unk34 /* s32: speed of the trail stars WarpStarEmitTrailStars launches, set by WarpStarSetTrail */
+#define warpStarSparkleSlot unk46 /* s16: slot of the idle Task_WarpStarSparkle (type 164); 0xFFFF once freed */
+#define warpStarLoopCount unk6C /* s16: the running flight's loop counter */
+#define warpStarTilePhase unk6E /* s16: step 0-5 of the star's tile animation (gUnk_0873FB7C, copied to its tiles each frame) */
+#define warpStarTrailTimer unk70 /* s16: frames to the next trail star (reloaded from Task.hitTimer, the trail's interval) */
+#define warpStarTrailDir unk74 /* u8: flight trail direction 0-15 (x 32 = the trail stars' angle), set by WarpStarSetTrail */
+
+/* WarpStarTrailStar - Warp Star trail star (task type #165,
+   Task_WarpStarTrailStar) */
+#define warpStarTrailStarAngle unk28 /* s32: flight angle (512 per turn) CreateWarpStarTrailStar gives the star */
+#define warpStarTrailStarSpeed unk2C /* s32: speed CreateWarpStarTrailStar gives the star (AngleToVector's magnitude) */
+#define warpStarTrailStarLoopCount unk6C /* s16: state 2's loop counter: frame 0-9 of the four-ring sparkle (indexes the ring offsets) */
 
 /* Wheelie - Wheelie (task type #42, Task_Wheelie; gWheelieVariants,
    gWheelieStates, gWheelieIdleStates) */

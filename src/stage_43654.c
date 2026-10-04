@@ -273,7 +273,7 @@ void MetaKnightActionDashSlash(void)
     {
         struct Task *t = gCurTask;
         t->unk30 = 0;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         {
             struct M11R20 *d = (struct M11R20 *)gPlayerBodyBoxes;
             d[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873CA90;
@@ -370,13 +370,13 @@ void MetaKnightActionDashSlash(void)
             TaskYieldTrampoline(4);
         }
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
 void MetaKnightActionDashSlashUpdate(void)
 {
-    if (gCurTask->unk28 != 0) {
+    if (gCurTask->playerActionDone28 != 0) {
         if ((gCurTask->onGround & 1) == 0) {
             if ((gCurTask->waterFlags & 1) == 0)
                 gCurTask->player->requestedAction = 7;
@@ -442,7 +442,7 @@ void MetaKnightActionUpwardSlash(void)
     gCurTask->u80.attackAbility = 4;
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         {
             struct M11R20 *d = (struct M11R20 *)gPlayerBodyBoxes;
             d[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873CA90;
@@ -509,7 +509,7 @@ void MetaKnightActionUpwardSlash(void)
     TaskYieldTrampoline(2);
     gCurTask->frame--;
     TaskYieldTrampoline(1);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -518,7 +518,7 @@ void MetaKnightActionUpwardSlashUpdate(void)
     struct Task *t = gCurTask;
     struct Task *u;
 
-    if (t->unk28 != 0) {
+    if (t->playerActionDone28 != 0) {
         PlayerRequestLocomotion();
     } else if (t->unk2C != -1) {
         LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873CAA4 + t->unk2C * 8);

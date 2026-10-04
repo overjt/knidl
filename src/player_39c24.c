@@ -57,7 +57,7 @@ void PlayerActionExitDoor(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         if (t->unk2C == 1 || t->unk2C == 3)
         {
             t->facing = -1;
@@ -526,13 +526,13 @@ void PlayerActionExitDoor(void)
         LoadAbilityTiles();
         break;
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
 void PlayerActionExitDoorUpdate(void)
 {
-    if (gCurTask->unk28 != 0)
+    if (gCurTask->playerActionDone28 != 0)
     {
         PlayerRequestLocomotion();
         gPauseDisabled = 0;

@@ -31,17 +31,17 @@ void sub_080ccd4c(void)
     gCurTask->facing = gTasks[gGameOverPlayerTask].facing;
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(64);
-    gCurTask->unk24 = 0;
+    gCurTask->gameOverObjectMotionIndex = 0;
     for (;;) {
         gCurTask->posX = (gCurTask->facing << 19) + (120 << 16);
         gCurTask->posY = 129 << 16;
-        TaskSetMotionXFacing(gUnk_087582F4[gCurTask->unk24], gUnk_087582F4[gCurTask->unk24 + 1]);
-        gCurTask->velY = gUnk_087582F4[gCurTask->unk24 + 2];
-        gCurTask->accelY = gUnk_087582F4[gCurTask->unk24 + 3];
-        gCurTask->unk24 += 4;
-        if (gCurTask->unk24 > 11)
-            gCurTask->unk24 = 0;
-        gCurTask->unk6C = 0;
+        TaskSetMotionXFacing(gUnk_087582F4[gCurTask->gameOverObjectMotionIndex], gUnk_087582F4[gCurTask->gameOverObjectMotionIndex + 1]);
+        gCurTask->velY = gUnk_087582F4[gCurTask->gameOverObjectMotionIndex + 2];
+        gCurTask->accelY = gUnk_087582F4[gCurTask->gameOverObjectMotionIndex + 3];
+        gCurTask->gameOverObjectMotionIndex += 4;
+        if (gCurTask->gameOverObjectMotionIndex > 11)
+            gCurTask->gameOverObjectMotionIndex = 0;
+        gCurTask->gameOverObjectLoopCount = 0;
         do {
             TaskSetFrame(0);
             TaskYieldTrampoline(6);
@@ -51,8 +51,8 @@ void sub_080ccd4c(void)
             TaskYieldTrampoline(6);
             gCurTask->frame--;
             TaskYieldTrampoline(4);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 1);
+            gCurTask->gameOverObjectLoopCount++;
+        } while ((s16)gCurTask->gameOverObjectLoopCount <= 1);
         TaskSetFrame(3);
         TaskYieldTrampoline(6);
         gCurTask->frame++;
@@ -124,7 +124,7 @@ void sub_080ccf2c(void)
     gCurTask->accelX = -0x2B00;
     TaskYieldTrampoline(2);
     TaskSetMotion(-0x30000, 0, 0x5A5A5A5A, 0x5A5A5A5A, 0x4000, 0x5A5A5A5A);
-    gCurTask->unk6C = 0;
+    gCurTask->gameOverObjectLoopCount = 0;
     do {
         gCurTask->frame = 3;
         TaskYieldTrampoline(2);
@@ -142,8 +142,8 @@ void sub_080ccf2c(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
+        gCurTask->gameOverObjectLoopCount++;
+    } while ((s16)gCurTask->gameOverObjectLoopCount <= 5);
     TaskSleepForever();
 }
 

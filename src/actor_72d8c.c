@@ -40,7 +40,7 @@ void sub_08072d8c(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
@@ -94,7 +94,7 @@ void sub_08072d8c(void)
     TaskYieldTrampoline(8);
     gCurTask->velX = -0x10000;
     TaskYieldTrampoline(4);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -111,9 +111,9 @@ void sub_08072d8c(void)
             t->velY = -0x10000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -130,9 +130,9 @@ void sub_08072d8c(void)
             t->velY = 0x10000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -149,9 +149,9 @@ void sub_08072d8c(void)
             t->velY = -0x8000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -168,8 +168,8 @@ void sub_08072d8c(void)
             t->velY = -0x8000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
     {
         struct Task *t = gCurTask;
 
@@ -177,7 +177,7 @@ void sub_08072d8c(void)
         t->velY = 0x20000;
     }
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -189,8 +189,8 @@ void sub_08072d8c(void)
         TaskYieldTrampoline(2);
         gCurTask->velX = 0x20000;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 1);
     {
         struct Task *t = gCurTask;
 
@@ -198,7 +198,7 @@ void sub_08072d8c(void)
         t->velY = 0x8000;
     }
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -215,8 +215,8 @@ void sub_08072d8c(void)
             t->velY = -0x30000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 3);
     WarpStarSetTrail(0, 0, 6, 0x500);
     {
         struct Task *t = gCurTask;
@@ -273,7 +273,7 @@ void sub_08072d8c(void)
     gCurTask->velY = -0x40000;
     TaskYieldTrampoline(4);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
@@ -330,7 +330,7 @@ void sub_08073298(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
@@ -361,7 +361,7 @@ void sub_08073298(void)
     gCurTask->velX = -0x1FF00;
     TaskYieldTrampoline(1);
     WarpStarSetTrail(0, 8, 6, 0x600);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -380,8 +380,8 @@ void sub_08073298(void)
             t->accelY = 0x2000;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 11);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 11);
     TaskSetMotion(-0x40000, 0x4000, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(10);
     gCurTask->accelY = 0x3000;
@@ -456,7 +456,7 @@ void sub_08073298(void)
     TaskStop();
     TaskYieldTrampoline(10);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
@@ -474,7 +474,7 @@ void sub_08073584(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
@@ -638,7 +638,7 @@ void sub_08073584(void)
     TaskYieldTrampoline(13);
     TaskStop();
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
@@ -656,9 +656,9 @@ void sub_08073804(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
-        t->unk18 = 0x3F0000;
-        t->unk28 = -0x5000;
+        t->warpStarExitRequested = 0;
+        t->warpStarScale = 0x3F0000;
+        t->warpStarScaleSpeed = -0x5000;
     }
     TaskStop();
     WarpStarSetTrail(0, 4, 4, 0x300);
@@ -696,7 +696,7 @@ void sub_08073804(void)
     gCurTask->velX = 0x1000;
     TaskYieldTrampoline(40);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
@@ -755,7 +755,7 @@ void sub_08073a54(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     {
         s32 r;
@@ -876,7 +876,7 @@ void sub_08073a54(void)
     TaskYieldTrampoline(40);
     TaskStop();
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
@@ -894,7 +894,7 @@ void sub_08073ce0(void)
         t->posX = (t->pixelX - gViewRect[0]) << 16;
         t->posY = (t->pixelY - gViewRect[2]) << 16;
         t->moveCallback = (u32)TaskMoveRelativeToView;
-        t->unk24 = 0;
+        t->warpStarExitRequested = 0;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -926,7 +926,7 @@ void sub_08073ce0(void)
     WarpStarSetTrail(2, 0, -1, 0);
     TaskYieldTrampoline(7);
     sub_08025f00();
-    gCurTask->unk24 = 1;
+    gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
 
@@ -1026,8 +1026,8 @@ void sub_08073f18(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk18 = 0x100000;
-        t->unk28 = -0xD00;
+        t->warpStarScale = 0x100000;
+        t->warpStarScaleSpeed = -0xD00;
         t->posX = 0x8A0000;
         t->posY = -0x100000;
         t->velX = -0x10000;
@@ -1058,7 +1058,7 @@ void sub_08073f18(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk28 = 0;
+        t->warpStarScaleSpeed = 0;
         t->frameTable = gUnk_08754560;
         t->tileWord = 0xF010;
         t->facing = 1;
@@ -1066,8 +1066,8 @@ void sub_08073f18(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk18 = -2;
-        t->unk28 = 0;
+        t->warpStarScale = -2;
+        t->warpStarScaleSpeed = 0;
     }
     TaskSetFrame(1);
     TaskYieldTrampoline(50);
@@ -1098,7 +1098,7 @@ void sub_080740bc(void)
     WarpStarStopTrail();
     TaskStop();
     TaskYieldTrampoline(16);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1138,13 +1138,13 @@ void sub_080740bc(void)
             t->velY = 0x8000;
         }
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 5);
     gCurTask->velY = 0x2000;
     TaskYieldTrampoline(24);
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(16);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1164,9 +1164,9 @@ void sub_080740bc(void)
         TaskYieldTrampoline(8);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 1);
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1186,15 +1186,15 @@ void sub_080740bc(void)
         TaskYieldTrampoline(8);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 2);
     gCurTask->velY = 0x10000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = -0x8000;
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->warpStarLoopCount = 0;
     do
     {
         {
@@ -1226,8 +1226,8 @@ void sub_080740bc(void)
             t->velY = -0x20000;
         }
         TaskYieldTrampoline(16);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->warpStarLoopCount++;
+    } while ((s16)gCurTask->warpStarLoopCount <= 1);
     PlayBgm(34);
     CreateNightmarePowerOrbEscapeStars(11);
     gCurTask->velX = -0x2000;
@@ -1283,10 +1283,10 @@ void sub_080743cc(void)
 void sub_080743f0(void)
 {
     TaskGetScreenPos();
-    if (gCurTask->unk24 == 0 && gUnk_030023D4 <= 0)
+    if (gCurTask->warpStarExitRequested == 0 && gUnk_030023D4 <= 0)
     {
         sub_08025f00();
-        gCurTask->unk24 = 1;
+        gCurTask->warpStarExitRequested = 1;
     }
 }
 
@@ -1666,7 +1666,7 @@ void CreateWarpStarTrailStar(int a, int b, int c)
     gTasks[id].state = z;
     if (z != 2)
     {
-        gTasks[id].unk28 = x;
-        gTasks[id].unk2C = (s16)y;
+        gTasks[id].warpStarTrailStarAngle = x;
+        gTasks[id].warpStarTrailStarSpeed = (s16)y;
     }
 }

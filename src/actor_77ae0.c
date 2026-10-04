@@ -45,8 +45,8 @@ void CannonFuseWait(void)
     {
         struct Task *t = gCurTask;
 
-        t->posX = t->unk30 << 16;
-        t->posY = t->unk2C << 16;
+        t->posX = t->cannonFuseStartX << 16;
+        t->posY = t->cannonFuseStartY << 16;
         t->frame = 42;
     }
     TaskSleepForever();
@@ -57,7 +57,7 @@ void CannonFuseWaitUpdate(void)
     if (ActorCheckHits())
     {
         gCannonFuseState = 0;
-        gCurTask->unk24 = 1;
+        gCurTask->cannonFuseBurnDir = 1;
         ActorSetState(1);
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
     }
@@ -79,7 +79,7 @@ void CannonFuseBurn(void)
 
 void CannonFuseBurnUpdate(void)
 {
-    if (gCurTask->unk20 != -1)
+    if (gCurTask->cannonFusePieceKind != -1)
     {
         CannonFuseBurnStep();
     }
@@ -94,7 +94,7 @@ void CannonFuseState2(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
-    gCurTask->unk24 = -1;
+    gCurTask->cannonFuseBurnDir = -1;
     CannonFuseInitBurn();
     {
         struct Task *t = gCurTask;
@@ -107,7 +107,7 @@ void CannonFuseState2(void)
 
 void CannonFuseState2Update(void)
 {
-    if (gCurTask->unk20 != -1)
+    if (gCurTask->cannonFusePieceKind != -1)
         sub_08077980();
     if (gCurTask->state != 2)
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
@@ -301,24 +301,24 @@ void StakeState0Update(void)
 
 void RoomParticlesDrawFixed(void)
 {
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleDrawFixed(&gRoomParticles[gCurTask->unk28]);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 7);
+        RoomParticleDrawFixed(&gRoomParticles[gCurTask->roomParticlesIndex]);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 7);
 }
 
 void RoomParticlesDrawBelowLine(void)
 {
-    if (gSpriteCameraY > gCurTask->unk34)
+    if (gSpriteCameraY > gCurTask->roomParticlesLineY)
     {
-        for (gCurTask->unk28 = 0;
-             gCurTask->unk28 < gCurTask->unk30;
-             gCurTask->unk28++)
+        for (gCurTask->roomParticlesIndex = 0;
+             gCurTask->roomParticlesIndex < gCurTask->roomParticlesCount;
+             gCurTask->roomParticlesIndex++)
         {
             struct M19Particle *base = gRoomParticles;
-            struct M19Particle *p = &base[gCurTask->unk28];
+            struct M19Particle *p = &base[gCurTask->roomParticlesIndex];
 
             if (p->unk03 > 8)
                 RoomParticleDrawScrolled(p);
@@ -326,14 +326,14 @@ void RoomParticlesDrawBelowLine(void)
     }
     else
     {
-        for (gCurTask->unk28 = 0;
-             gCurTask->unk28 < gCurTask->unk30;
-             gCurTask->unk28++)
+        for (gCurTask->roomParticlesIndex = 0;
+             gCurTask->roomParticlesIndex < gCurTask->roomParticlesCount;
+             gCurTask->roomParticlesIndex++)
         {
             struct M19Particle *base = gRoomParticles;
-            struct M19Particle *p = &base[gCurTask->unk28];
+            struct M19Particle *p = &base[gCurTask->roomParticlesIndex];
 
-            if (p->unk03 > gCurTask->unk34 - gSpriteCameraY)
+            if (p->unk03 > gCurTask->roomParticlesLineY - gSpriteCameraY)
                 RoomParticleDrawScrolled(p);
         }
     }
@@ -341,18 +341,18 @@ void RoomParticlesDrawBelowLine(void)
 
 void RoomParticlesDrawRepeated(void)
 {
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleDrawRepeated(&gRoomParticles[gCurTask->unk28]);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 2);
-    gCurTask->unk28 = 3;
+        RoomParticleDrawRepeated(&gRoomParticles[gCurTask->roomParticlesIndex]);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 2);
+    gCurTask->roomParticlesIndex = 3;
     do
     {
-        RoomParticleDrawRepeated(&gRoomParticles[gCurTask->unk28]);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 5);
+        RoomParticleDrawRepeated(&gRoomParticles[gCurTask->roomParticlesIndex]);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 5);
 }
 
 void RoomParticleStepX(struct M19Particle *p)
@@ -617,23 +617,23 @@ void Task_RoomParticles(void)
 void RoomParticlesVariant0(void)
 {
     gCurTask->updateCallback = (u32)sub_080786b4;
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 0, 0);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 7);
+        RoomParticleInit(&gRoomParticles[gCurTask->roomParticlesIndex], 0, 0);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 7);
     TaskSleepForever();
 }
 
 void sub_080786b4(void)
 {
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleStepX(&gRoomParticles[gCurTask->unk28]);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 7);
+        RoomParticleStepX(&gRoomParticles[gCurTask->roomParticlesIndex]);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 7);
 }
 
 void RoomParticlesVariant1(void)
@@ -642,26 +642,26 @@ void RoomParticlesVariant1(void)
         struct Task *t = gCurTask;
 
         t->updateCallback = (u32)sub_08078734;
-        t->unk30 = 8;
-        t->unk34 = 0;
+        t->roomParticlesCount = 8;
+        t->roomParticlesLineY = 0;
     }
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 0, 0);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 7);
+        RoomParticleInit(&gRoomParticles[gCurTask->roomParticlesIndex], 0, 0);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 7);
     TaskSleepForever();
 }
 
 void sub_08078734(void)
 {
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 0);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 7);
+        RoomParticleStepY(&gRoomParticles[gCurTask->roomParticlesIndex], 0);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 7);
 }
 
 void RoomParticlesVariant2(void)
@@ -670,26 +670,26 @@ void RoomParticlesVariant2(void)
         struct Task *t = gCurTask;
 
         t->updateCallback = (u32)sub_080787b8;
-        t->unk30 = 3;
-        t->unk34 = 208;
+        t->roomParticlesCount = 3;
+        t->roomParticlesLineY = 208;
     }
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 2, 0);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 2);
+        RoomParticleInit(&gRoomParticles[gCurTask->roomParticlesIndex], 2, 0);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 2);
     TaskSleepForever();
 }
 
 void sub_080787b8(void)
 {
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 2);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 2);
+        RoomParticleStepY(&gRoomParticles[gCurTask->roomParticlesIndex], 2);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 2);
 }
 
 void RoomParticlesVariant3(void)
@@ -698,60 +698,60 @@ void RoomParticlesVariant3(void)
         struct Task *t = gCurTask;
 
         t->updateCallback = (u32)sub_0807883c;
-        t->unk30 = 4;
-        t->unk34 = 64;
+        t->roomParticlesCount = 4;
+        t->roomParticlesLineY = 64;
     }
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 1, 0);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 3);
+        RoomParticleInit(&gRoomParticles[gCurTask->roomParticlesIndex], 1, 0);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 3);
     TaskSleepForever();
 }
 
 void sub_0807883c(void)
 {
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 1);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 3);
+        RoomParticleStepY(&gRoomParticles[gCurTask->roomParticlesIndex], 1);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 3);
 }
 
 void RoomParticlesVariant4(void)
 {
     gCurTask->updateCallback = (u32)sub_080788e0;
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 3, 0);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 2);
-    gCurTask->unk28 = 3;
+        RoomParticleInit(&gRoomParticles[gCurTask->roomParticlesIndex], 3, 0);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 2);
+    gCurTask->roomParticlesIndex = 3;
     do
     {
-        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 3, 1);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 5);
+        RoomParticleInit(&gRoomParticles[gCurTask->roomParticlesIndex], 3, 1);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 5);
     TaskSleepForever();
 }
 
 void sub_080788e0(void)
 {
-    gCurTask->unk28 = 0;
+    gCurTask->roomParticlesIndex = 0;
     do
     {
-        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 3);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 2);
-    gCurTask->unk28 = 3;
+        RoomParticleStepY(&gRoomParticles[gCurTask->roomParticlesIndex], 3);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 2);
+    gCurTask->roomParticlesIndex = 3;
     do
     {
-        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 4);
-        gCurTask->unk28++;
-    } while (gCurTask->unk28 <= 5);
+        RoomParticleStepY(&gRoomParticles[gCurTask->roomParticlesIndex], 4);
+        gCurTask->roomParticlesIndex++;
+    } while (gCurTask->roomParticlesIndex <= 5);
 }
 
 void Task_WaddleDee(void)

@@ -34,14 +34,14 @@ void sub_08019eec(void)
     gBldAlphaEvb = 0;
     TaskYieldTrampoline(112);
     TaskYieldTrampoline(160);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        gBldAlphaEvb = (s16)gCurTask->unk6C >> 2;
+        gBldAlphaEvb = (s16)gCurTask->cutsceneActorLoopCount >> 2;
         gBldAlphaEva = 16 - gBldAlphaEvb;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 63);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 63);
     gBldAlphaEva = 0;
     gBldAlphaEvb = 16;
     TaskYieldTrampoline(64);
@@ -49,27 +49,27 @@ void sub_08019eec(void)
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(134);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gCurTask->unk6C * 16), 128, gBgPaletteBank8);
+        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gCurTask->cutsceneActorLoopCount * 16), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 15);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 15);
     TaskYieldTrampoline(86);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        BlendColors(gUnk_085E2A20, gUnk_085E2920, (u16)((s16)gCurTask->unk6C * 16), 128, gBgPaletteBank8);
+        BlendColors(gUnk_085E2A20, gUnk_085E2920, (u16)((s16)gCurTask->cutsceneActorLoopCount * 16), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 15);
-    gCurTask->unk6C = 0;
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 15);
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gCurTask->unk6C * 16), 128, gBgPaletteBank8);
+        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gCurTask->cutsceneActorLoopCount * 16), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 15);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 15);
     TaskSleepForever();
 }

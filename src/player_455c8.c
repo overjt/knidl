@@ -247,7 +247,7 @@ void PlayerActionLaser(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 34;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->u80.attackAbility = 0;
     TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
@@ -266,13 +266,13 @@ void PlayerActionLaser(void)
     } while ((s16)++gCurTask->playerLoopCount <= 15);
     TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
 void PlayerActionLaserUpdate(void)
 {
-    if (gCurTask->unk28 != 0)
+    if (gCurTask->playerActionDone28 != 0)
         PlayerRequestLocomotion();
     sub_0803e55c();
 }

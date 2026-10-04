@@ -50,7 +50,7 @@ void PlayerActionBackdropHold(void)
         h->variant = 6;
         u = gCurTask;
         u->player->unk14 = 120;
-        u->unk28 = 0;
+        u->playerActionDone28 = 0;
         u->u80.attackAbility = 22;
     }
 loop:
@@ -297,7 +297,7 @@ loop:
         gCurTask->variant = 7;
         goto loop;
     case 4:
-        gCurTask->unk28 = 0;
+        gCurTask->playerActionDone28 = 0;
         PlayerSetMotionXPreset(11, 67);
         gCurTask->player->unk16 = 37;
         TaskSetFrame(0xECE);
@@ -341,7 +341,7 @@ loop:
         RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->player->playerIndex);
         PlayerStopAxes(3);
-        gCurTask->unk28++;
+        gCurTask->playerActionDone28++;
         gCurTask->player->unk16 = 48;
         TaskSetFrame(0xED9);
         TaskYieldTrampoline(20);
@@ -460,7 +460,7 @@ void PlayerActionBackdropHoldUpdate(void)
     case 4:
         {
             struct Task *t = gCurTask;
-            if (t->unk28 == 0 && !(t->onGround & 1) && (s8)t->player->unk16 != -1) {
+            if (t->playerActionDone28 == 0 && !(t->onGround & 1) && (s8)t->player->unk16 != -1) {
                 s32 k, x, v;
                 k = PlayerGetHeldDirection();
                 gUnk_03001F2C = k;

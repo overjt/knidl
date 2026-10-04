@@ -31,9 +31,9 @@ void Task_NormalExtraPanel(void)
     gCurTask->layer = 6;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 7;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->normalExtraPanelBlendFrom = 0;
+    gCurTask->normalExtraPanelBlendTo = 1;
+    gCurTask->normalExtraPanelBlendRatio = 0;
     gCurTask->posX = 0xA00000;
     gCurTask->posY = 0x300000;
     while (gMenuScreen == 2 || gMenuScreen == 3)
@@ -47,24 +47,24 @@ void NormalExtraPanelUpdate(void)
     struct Task *u, *v, *w;
     s32 k;
 
-    if (t->unk34 == 256) {
-        if (++t->unk2C > 1)
-            t->unk2C = 0;
+    if (t->normalExtraPanelBlendRatio == 256) {
+        if (++t->normalExtraPanelBlendFrom > 1)
+            t->normalExtraPanelBlendFrom = 0;
         u = gCurTask;
-        if (++u->unk30 > 1)
-            u->unk30 = 0;
-        gCurTask->unk34 = 0;
+        if (++u->normalExtraPanelBlendTo > 1)
+            u->normalExtraPanelBlendTo = 0;
+        gCurTask->normalExtraPanelBlendRatio = 0;
     }
     v = gCurTask;
-    if ((v->unk34 += 32) > 256)
-        v->unk34 = 256;
+    if ((v->normalExtraPanelBlendRatio += 32) > 256)
+        v->normalExtraPanelBlendRatio = 256;
     if (gMenuScreen == 2) {
         k = gMenuChoiceCursor * 3;
         w = gCurTask;
-        BlendColors(gUnk_08559C24[k + w->unk2C], gUnk_08559C24[k + w->unk30], (u16)w->unk34, 16, gObjPaletteBank8);
+        BlendColors(gUnk_08559C24[k + w->normalExtraPanelBlendFrom], gUnk_08559C24[k + w->normalExtraPanelBlendTo], (u16)w->normalExtraPanelBlendRatio, 16, gObjPaletteBank8);
         MenuLoadPicture(1, gMenuChoiceCursor);
     } else {
-        BlendColors((u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16)gCurTask->unk34, 16, gObjPaletteBank8);
+        BlendColors((u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16)gCurTask->normalExtraPanelBlendRatio, 16, gObjPaletteBank8);
     }
 }
 
@@ -76,9 +76,9 @@ void Task_PlayerCountPanel(void)
     gCurTask->layer = 5;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 6;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->playerCountPanelBlendFrom = 0;
+    gCurTask->playerCountPanelBlendTo = 1;
+    gCurTask->playerCountPanelBlendRatio = 0;
     if (gSaveSlots[gCurSaveSlot].milestoneFlags & 4) {
         gCurTask->posX = 0xB00000;
         gCurTask->posY = (gMenuChoiceCursor << 20) + 0x280000;
@@ -97,20 +97,20 @@ void PlayerCountPanelUpdate(void)
     struct Task *u, *v, *w;
     s32 k;
 
-    if (t->unk34 == 256) {
-        if (++t->unk2C > 1)
-            t->unk2C = 0;
+    if (t->playerCountPanelBlendRatio == 256) {
+        if (++t->playerCountPanelBlendFrom > 1)
+            t->playerCountPanelBlendFrom = 0;
         u = gCurTask;
-        if (++u->unk30 > 1)
-            u->unk30 = 0;
-        gCurTask->unk34 = 0;
+        if (++u->playerCountPanelBlendTo > 1)
+            u->playerCountPanelBlendTo = 0;
+        gCurTask->playerCountPanelBlendRatio = 0;
     }
     v = gCurTask;
-    if ((v->unk34 += 32) > 256)
-        v->unk34 = 256;
+    if ((v->playerCountPanelBlendRatio += 32) > 256)
+        v->playerCountPanelBlendRatio = 256;
     k = gPlayerCountCursor * 3;
     w = gCurTask;
-    BlendColors(gUnk_08559C24[k + w->unk2C], gUnk_08559C24[k + w->unk30], (u16)w->unk34, 16, gObjPaletteBank7);
+    BlendColors(gUnk_08559C24[k + w->playerCountPanelBlendFrom], gUnk_08559C24[k + w->playerCountPanelBlendTo], (u16)w->playerCountPanelBlendRatio, 16, gObjPaletteBank7);
     MenuLoadPicture(2, gPlayerCountCursor);
 }
 
@@ -124,10 +124,10 @@ void Task_ModeListCursor(void)
     ModeListHighlightRow();
     if (gMenuScreen == 4)
         MenuLoadPicture(3, gMenuCursor);
-    gCurTask->unk28 = gMenuCursor;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->modeListCursorSavedCursor = gMenuCursor;
+    gCurTask->modeListCursorBlendFrom = 0;
+    gCurTask->modeListCursorBlendTo = 1;
+    gCurTask->modeListCursorBlendRatio = 0;
     gCurTask->posX = 0x680000;
     while (1) {
         gCurTask->posY = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
@@ -144,29 +144,29 @@ void ModeListCursorUpdate(void)
     struct Task *u, *v, *w;
     u32 *tbl;
 
-    if (t->unk34 == 256) {
-        if (++t->unk2C > 1)
-            t->unk2C = 0;
+    if (t->modeListCursorBlendRatio == 256) {
+        if (++t->modeListCursorBlendFrom > 1)
+            t->modeListCursorBlendFrom = 0;
         u = gCurTask;
-        if (++u->unk30 > 1)
-            u->unk30 = 0;
-        gCurTask->unk34 = 0;
+        if (++u->modeListCursorBlendTo > 1)
+            u->modeListCursorBlendTo = 0;
+        gCurTask->modeListCursorBlendRatio = 0;
     }
     v = gCurTask;
-    if ((v->unk34 += 32) > 256)
-        v->unk34 = 256;
+    if ((v->modeListCursorBlendRatio += 32) > 256)
+        v->modeListCursorBlendRatio = 256;
     if (gMenuScreen == 4) {
         w = gCurTask;
-        BlendColors(gUnk_0855D2F8[w->unk2C], gUnk_0855D2F8[w->unk30], (u16)w->unk34, 10, gObjPaletteBank6Color6);
-        if (gMenuCursor != gCurTask->unk28) {
+        BlendColors(gUnk_0855D2F8[w->modeListCursorBlendFrom], gUnk_0855D2F8[w->modeListCursorBlendTo], (u16)w->modeListCursorBlendRatio, 10, gObjPaletteBank6Color6);
+        if (gMenuCursor != gCurTask->modeListCursorSavedCursor) {
             ModeListHighlightRow();
             if (gMenuScreen == 4)
                 MenuLoadPicture(3, gMenuCursor);
-            gCurTask->unk28 = gMenuCursor;
+            gCurTask->modeListCursorSavedCursor = gMenuCursor;
         }
     } else {
-        BlendColors(gUnk_0855D320, gUnk_0855D320, (u16)gCurTask->unk34, 10, gObjPaletteBank6Color6);
-        gCurTask->unk28 = -1;
+        BlendColors(gUnk_0855D320, gUnk_0855D320, (u16)gCurTask->modeListCursorBlendRatio, 10, gObjPaletteBank6Color6);
+        gCurTask->modeListCursorSavedCursor = -1;
     }
     if (TaskIsOnScreenNoCamera()) {
         tbl = gUnk_08755650;
@@ -197,9 +197,9 @@ void Task_ModePlayerCountPanel(void)
     gCurTask->layer = 5;
     gCurTask->frameTable = gUnk_08755650;
     gCurTask->frame = 6;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->modePlayerCountPanelBlendFrom = 0;
+    gCurTask->modePlayerCountPanelBlendTo = 1;
+    gCurTask->modePlayerCountPanelBlendRatio = 0;
     gCurTask->posX = 0xA80000;
     gCurTask->posY = (gUnk_08731E4C[gModeListExtraRows] + gUnk_08731E52[gModeListExtraRows] * gMenuCursor) << 16;
     while (gMenuScreen == 5)
@@ -213,24 +213,24 @@ void ModePlayerCountPanelUpdate(void)
     struct Task *u, *v, *w;
     s32 k;
 
-    if (t->unk34 == 256) {
-        if (++t->unk2C > 1)
-            t->unk2C = 0;
+    if (t->modePlayerCountPanelBlendRatio == 256) {
+        if (++t->modePlayerCountPanelBlendFrom > 1)
+            t->modePlayerCountPanelBlendFrom = 0;
         u = gCurTask;
-        if (++u->unk30 > 1)
-            u->unk30 = 0;
-        gCurTask->unk34 = 0;
+        if (++u->modePlayerCountPanelBlendTo > 1)
+            u->modePlayerCountPanelBlendTo = 0;
+        gCurTask->modePlayerCountPanelBlendRatio = 0;
     }
     v = gCurTask;
-    if ((v->unk34 += 32) > 256)
-        v->unk34 = 256;
+    if ((v->modePlayerCountPanelBlendRatio += 32) > 256)
+        v->modePlayerCountPanelBlendRatio = 256;
     if (gMenuScreen == 5) {
         k = gMenuChoiceCursor * 2;
         w = gCurTask;
-        BlendColors(gUnk_0855D334[k + w->unk2C], gUnk_0855D334[k + w->unk30], (u16)w->unk34, 16, gObjPaletteBank7);
+        BlendColors(gUnk_0855D334[k + w->modePlayerCountPanelBlendFrom], gUnk_0855D334[k + w->modePlayerCountPanelBlendTo], (u16)w->modePlayerCountPanelBlendRatio, 16, gObjPaletteBank7);
         MenuLoadPicture(4, gMenuCursor * 2 + gMenuChoiceCursor);
     } else {
-        BlendColors((u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16)gCurTask->unk34, 16, gObjPaletteBank7);
+        BlendColors((u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16)gCurTask->modePlayerCountPanelBlendRatio, 16, gObjPaletteBank7);
     }
 }
 
@@ -240,9 +240,9 @@ void Task_EraseConfirmDialog(void)
     gCurTask->drawCallback = 0;
     gCurTask->updateCallback = (u32)EraseConfirmDialogUpdate;
     gCurTask->frameTable = gUnk_08755650;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->eraseConfirmDialogBlendFrom = 0;
+    gCurTask->eraseConfirmDialogBlendTo = 1;
+    gCurTask->eraseConfirmDialogBlendRatio = 0;
     gCurTask->posX = 0x800000;
     gCurTask->posY = 0x680000;
     while (gMenuScreen == 6 && gEraseConfirmCount != 2)

@@ -51,7 +51,7 @@ void PlayerActionGetAbility(void)
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->unk2C = 0;
         t->player->mode = 13;
     }
@@ -689,7 +689,7 @@ void PlayerActionGetAbility(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk28++;
+        t->playerActionDone28++;
         t->player->unk40 &= 0xFEFF;
     }
     gPauseDisabled = 0;
@@ -700,7 +700,7 @@ void PlayerActionGetAbilityUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0) {
+    if (t->playerActionDone28 != 0) {
         struct PlayerState *p = t->player;
         switch (p->ability) {
         case 11:

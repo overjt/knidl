@@ -31,7 +31,7 @@ void PlayerActionLight(void)
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->unk2C = 0;
         t->player->unk42 |= 0x700;
         t->player->terrainBox = 0;
@@ -100,7 +100,7 @@ void PlayerActionLight(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk28++;
+        t->playerActionDone28++;
         gPauseDisabled = 0;
         t->player->unk42 &= 0xF8FF;
     }
@@ -111,7 +111,7 @@ void PlayerActionLightUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0) {
+    if (t->playerActionDone28 != 0) {
         if (t->onGround & 1) {
             /* Both arms store 1: jump2 cross-jumps them after reload and
                deletes the branch, but the `ldr [t, #84]` that fed the test

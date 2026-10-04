@@ -49,7 +49,7 @@ void PlayerActionBackdrop(void)
     gCurTask->updateState = 27;
     if (gCurTask->player->prevMode != 10)
     {
-        gCurTask->unk28 = 0;
+        gCurTask->playerActionDone28 = 0;
         gCurTask->variant = 0;
         gCurTask->player->unk16 = 0;
         {
@@ -138,7 +138,7 @@ void PlayerActionBackdrop(void)
             TaskSetFrame(0xE83);
             TaskYieldTrampoline(1);
         }
-        gCurTask->unk28++;
+        gCurTask->playerActionDone28++;
     }
     TaskSleepForever();
 }
@@ -183,7 +183,7 @@ void PlayerActionBackdropUpdate(void)
         }
         break;
     case 2:
-        if (t->unk28 != 0)
+        if (t->playerActionDone28 != 0)
         {
             p = t->player;
             if ((s8)p->heldCount != 0)

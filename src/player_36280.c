@@ -226,10 +226,10 @@ void PlayerActionDuck(void)
     {
         t->player->bodyBox = (u32)gUnk_0873BD28;
         t->player->terrainBox = (u32)gUnk_0873CB24;
-        t->unk2C = t->player->slope;
+        t->playerPoseSlope = t->player->slope;
         PlayerSetMotionXPreset(0, 72);
     }
-    gCurTask->unk28 = 8;
+    gCurTask->playerDuckDropTimer = 8;
     gCurTask->player->unk33 = PlayerGetFacingSlope(gCurTask->player->playerIndex);
     p = gCurTask->player;
     p->unk35 = 0;
@@ -291,7 +291,7 @@ void PlayerActionDuckUpdate(void)
         }
         if (gTerrainResult.unk5 != 0)
         {
-            if (t->unk28 == 0)
+            if (t->playerDuckDropTimer == 0)
             {
                 t->onGround = 0;
                 gCurTask->player->requestedAction = 7;
@@ -299,12 +299,12 @@ void PlayerActionDuckUpdate(void)
                 gCurTask->posY += 0x10000;
                 break;
             }
-            t->unk28--;
+            t->playerDuckDropTimer--;
         }
         {
             struct Task *w = gCurTask;
 
-            if (w->player->slope != w->unk2C || dir != w->facing)
+            if (w->player->slope != w->playerPoseSlope || dir != w->facing)
             {
                 if (gMetaKnightmareMode == 0)
                     TaskSetEntry(PlayerActionDuck, gCurTaskIdx);
@@ -314,7 +314,7 @@ void PlayerActionDuckUpdate(void)
         }
         break;
     }
-    gCurTask->unk2C = gCurTask->player->slope;
+    gCurTask->playerPoseSlope = gCurTask->player->slope;
     if (gTerrainResult.unk0 != 0)
         PlayerStopAxes(1);
 }
@@ -329,7 +329,7 @@ void PlayerActionSlide(void)
     t = gCurTask;
     if (t->player->prevMode != 7)
     {
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->variant = 0;
         gCurTask->player->unk14 = 10;
         PlayerStartSfx(118, gCurTask->player->playerIndex);
@@ -380,7 +380,7 @@ void PlayerActionSlide(void)
         break;
     }
     gCurTask->player->hitBoxSet = 0;
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -400,7 +400,7 @@ void PlayerActionSlideUpdate(void)
         if (PlayerCheckDropAbility() != 0)
             break;
         t = gCurTask;
-        if (t->unk28 != 0)
+        if (t->playerActionDone28 != 0)
         {
             t->player->requestedAction = 1;
         }

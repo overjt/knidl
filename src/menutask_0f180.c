@@ -46,44 +46,44 @@ void Task_LinkPlayPlayerList(void)
     t->frameTable = gUnk_08755688;
     t->posX = 0xC40000;
     t->posY = 0x340000;
-    t->unk6C = 0;
+    t->linkPlayPlayerListLoopCount = 0;
     do {
-        gCurTask->unk28 = TaskCreateFrom(252, 32);
+        gCurTask->linkPlayPlayerListChildSlot = TaskCreateFrom(252, 32);
         u = gCurTask;
-        x = &gTasks[u->unk28];
+        x = &gTasks[u->linkPlayPlayerListChildSlot];
         x->parent = gCurTaskIdx;
-        x->unk18 = (s16)u->unk6C;
-        gCurTask->unk28 = TaskCreateFrom(253, 32);
+        x->unk18 = (s16)u->linkPlayPlayerListLoopCount;
+        gCurTask->linkPlayPlayerListChildSlot = TaskCreateFrom(253, 32);
         u = gCurTask;
-        x = &gTasks[u->unk28];
+        x = &gTasks[u->linkPlayPlayerListChildSlot];
         x->parent = gCurTaskIdx;
-        x->unk18 = (s16)u->unk6C;
-    } while ((s16)++u->unk6C <= 3);
+        x->unk18 = (s16)u->linkPlayPlayerListLoopCount;
+    } while ((s16)++u->linkPlayPlayerListLoopCount <= 3);
     s = gCurTask;
-    s->unk2C = 0;
-    s->unk30 = 1;
-    s->unk34 = 0;
-    s->unk18 = 0;
-    s->unk1C = 0;
-    s->unk20 = 0;
+    s->linkPlayPlayerListBlendFrom = 0;
+    s->linkPlayPlayerListBlendTo = 1;
+    s->linkPlayPlayerListBlendRatio = 0;
+    s->linkPlayPlayerListStepDir = 0;
+    s->linkPlayPlayerListShownCount = 0;
+    s->linkPlayPlayerListStepTimer = 0;
     while (gMenuScreen == 8 || gMenuScreen == 9) {
         s32 n = sub_0800ffd8();
         struct Task *v;
 
         u = gCurTask;
-        u->unk24 = n;
-        if (u->unk20 == 0 || --u->unk20 == 0) {
+        u->linkPlayPlayerListLinkedCount = n;
+        if (u->linkPlayPlayerListStepTimer == 0 || --u->linkPlayPlayerListStepTimer == 0) {
             v = gCurTask;
-            if (v->unk1C < v->unk24) {
-                v->unk18 = 1;
-                v->unk1C = v->unk1C + 1;
-                v->unk20 = 6;
-            } else if (v->unk1C > v->unk24) {
-                v->unk18 = -1;
-                v->unk1C = v->unk1C - 1;
-                v->unk20 = 6;
+            if (v->linkPlayPlayerListShownCount < v->linkPlayPlayerListLinkedCount) {
+                v->linkPlayPlayerListStepDir = 1;
+                v->linkPlayPlayerListShownCount = v->linkPlayPlayerListShownCount + 1;
+                v->linkPlayPlayerListStepTimer = 6;
+            } else if (v->linkPlayPlayerListShownCount > v->linkPlayPlayerListLinkedCount) {
+                v->linkPlayPlayerListStepDir = -1;
+                v->linkPlayPlayerListShownCount = v->linkPlayPlayerListShownCount - 1;
+                v->linkPlayPlayerListStepTimer = 6;
             } else {
-                v->unk18 = 0;
+                v->linkPlayPlayerListStepDir = 0;
             }
         }
         TaskYieldTrampoline(1);
@@ -102,25 +102,25 @@ void LinkPlayPlayerListUpdate(void)
     s32 n;
 
     t = gCurTask;
-    if (t->unk34 == 256) {
-        if (++t->unk2C > 3)
-            t->unk2C = 0;
+    if (t->linkPlayPlayerListBlendRatio == 256) {
+        if (++t->linkPlayPlayerListBlendFrom > 3)
+            t->linkPlayPlayerListBlendFrom = 0;
         u = gCurTask;
-        if (++u->unk30 > 3)
-            u->unk30 = 0;
-        gCurTask->unk34 = 0;
+        if (++u->linkPlayPlayerListBlendTo > 3)
+            u->linkPlayPlayerListBlendTo = 0;
+        gCurTask->linkPlayPlayerListBlendRatio = 0;
     }
     v = gCurTask;
-    n = v->unk34 + 16;
-    v->unk34 = n;
+    n = v->linkPlayPlayerListBlendRatio + 16;
+    v->linkPlayPlayerListBlendRatio = n;
     if (n > 256)
-        v->unk34 = 256;
+        v->linkPlayPlayerListBlendRatio = 256;
     w = gCurTask;
-    BlendColors(gUnk_08562FE4[w->unk2C], gUnk_08562FE4[w->unk30], (u16)w->unk34, 8, gObjPaletteBank13Color1);
+    BlendColors(gUnk_08562FE4[w->linkPlayPlayerListBlendFrom], gUnk_08562FE4[w->linkPlayPlayerListBlendTo], (u16)w->linkPlayPlayerListBlendRatio, 8, gObjPaletteBank13Color1);
     y = gCurTask;
-    BlendColors(gUnk_08563024[y->unk2C], gUnk_08563024[y->unk30], (u16)y->unk34, 13, &gObjPaletteBank13Color1[16]);
+    BlendColors(gUnk_08563024[y->linkPlayPlayerListBlendFrom], gUnk_08563024[y->linkPlayPlayerListBlendTo], (u16)y->linkPlayPlayerListBlendRatio, 13, &gObjPaletteBank13Color1[16]);
     x = gCurTask;
-    if (x->unk20 == 0 && x->unk24 != 0 && gMultiBootStruct[0] == 0 && gUnk_02007FC8 == 0)
+    if (x->linkPlayPlayerListStepTimer == 0 && x->linkPlayPlayerListLinkedCount != 0 && gMultiBootStruct[0] == 0 && gUnk_02007FC8 == 0)
         x->frame = 17;
     else
         gCurTask->frame = 0xFFFF;
@@ -131,11 +131,11 @@ void Task_LinkPlayConsole(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->updateCallback = (u32)LinkPlayConsoleUpdate;
-    gCurTask->layer = gCurTask->unk18 * 2 + 9;
+    gCurTask->layer = gCurTask->linkPlayConsoleIndex * 2 + 9;
     gCurTask->frameTable = gUnk_08755688;
     gCurTask->posX = 0x780000;
     gCurTask->posY = 0x480000;
-    gCurTask->unk2C = 0;
+    gCurTask->linkPlayConsoleMarkerTimer = 0;
     while (gMenuScreen == 8 || gMenuScreen == 9)
         TaskYieldTrampoline(1);
     TaskExitTrampoline();
@@ -155,41 +155,41 @@ void LinkPlayConsoleUpdate(void)
     s32 k;
     s32 g;
 
-    if (p->unk18 != 0) {
-        if (p->unk18 == 1) {
-            t->unk28 = p->unk1C;
-            if (p->unk1C == t->unk18 && gMultiBootStruct[0] == 0)
-                t->unk2C = 24;
+    if (p->linkPlayPlayerListStepDir != 0) {
+        if (p->linkPlayPlayerListStepDir == 1) {
+            t->linkPlayConsoleStepRow = p->linkPlayPlayerListShownCount;
+            if (p->linkPlayPlayerListShownCount == t->linkPlayConsoleIndex && gMultiBootStruct[0] == 0)
+                t->linkPlayConsoleMarkerTimer = 24;
         } else {
-            t->unk28 = p->unk1C + 1;
+            t->linkPlayConsoleStepRow = p->linkPlayPlayerListShownCount + 1;
         }
         u = gCurTask;
-        u->velX = gUnk_08731E58[u->unk28][u->unk18] * p->unk18;
-        u->velY = gUnk_08731E98[u->unk28] * p->unk18;
+        u->velX = gUnk_08731E58[u->linkPlayConsoleStepRow][u->linkPlayConsoleIndex] * p->linkPlayPlayerListStepDir;
+        u->velY = gUnk_08731E98[u->linkPlayConsoleStepRow] * p->linkPlayPlayerListStepDir;
     } else {
         t->velX = 0;
         t->velY = 0;
     }
     if (gUnk_02007FC8 == 0) {
         v = gCurTask;
-        v->frame = gUnk_08731EA8[p->unk1C];
+        v->frame = gUnk_08731EA8[p->linkPlayPlayerListShownCount];
         if (TaskIsOnScreenNoCamera()) {
             w = gCurTask;
             tbl = w->frameTable;
-            QueueSprite(w->layer - 1, tbl[gUnk_08731EB0[p->unk1C]], 0, 0, w->pixelX, w->pixelY);
-            if (gMultiBootStruct[0] == (gCurTask->unk18 & 0xFF) && sub_0800ffd8() != 0) {
+            QueueSprite(w->layer - 1, tbl[gUnk_08731EB0[p->linkPlayPlayerListShownCount]], 0, 0, w->pixelX, w->pixelY);
+            if (gMultiBootStruct[0] == (gCurTask->linkPlayConsoleIndex & 0xFF) && sub_0800ffd8() != 0) {
                 x = gCurTask;
-                if (p->unk1C >= x->unk18)
+                if (p->linkPlayPlayerListShownCount >= x->linkPlayConsoleIndex)
                     QueueSprite(x->layer - 1, tbl[gMultiBootStruct[0] + 13], 0, 0, x->pixelX, x->pixelY + 16);
             }
             y = gCurTask;
-            if (y->unk2C != 0 && --y->unk2C <= 17) {
-                if (y->unk2C <= 3) {
-                    k = (4 - y->unk2C) * 64 + 256;
-                    y->unk30 = k;
+            if (y->linkPlayConsoleMarkerTimer != 0 && --y->linkPlayConsoleMarkerTimer <= 17) {
+                if (y->linkPlayConsoleMarkerTimer <= 3) {
+                    k = (4 - y->linkPlayConsoleMarkerTimer) * 64 + 256;
+                    y->linkPlayConsoleMarkerScale = k;
                     g = DrawAffineSprite(tbl[18], k, k, 0);
                     z = gCurTask;
-                    QueueSprite(z->layer - 1, g, 0, 0, z->pixelX, z->pixelY + 28 + z->unk2C);
+                    QueueSprite(z->layer - 1, g, 0, 0, z->pixelX, z->pixelY + 28 + z->linkPlayConsoleMarkerTimer);
                 } else {
                     QueueSprite(y->layer - 1, tbl[18], 0, 0, y->pixelX, y->pixelY + 32);
                 }
@@ -207,20 +207,20 @@ void Task_LinkPlayCable(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->updateCallback = (u32)LinkPlayCableUpdate;
-    gCurTask->layer = gCurTask->unk18 * 2 + 9;
+    gCurTask->layer = gCurTask->linkPlayCableIndex * 2 + 9;
     t = gCurTask;
     t->frameTable = gUnk_08755688;
-    t->posX = gUnk_08731EB8[t->unk18] << 16;
-    t->posY = gUnk_08731EC0[t->unk18] << 16;
-    t->unk28 = 1;
-    t->unk2C = 1;
+    t->posX = gUnk_08731EB8[t->linkPlayCableIndex] << 16;
+    t->posY = gUnk_08731EC0[t->linkPlayCableIndex] << 16;
+    t->linkPlayCableBobTimer = 1;
+    t->linkPlayCableBobDir = 1;
     while (gMenuScreen == 8 || gMenuScreen == 9) {
         struct Task *u = gCurTask;
 
-        if (u->unk18 == 0 && --u->unk28 == 0) {
-            u->unk28 = 16;
-            u->unk2C = -u->unk2C;
-            u->velY = u->unk2C << 16;
+        if (u->linkPlayCableIndex == 0 && --u->linkPlayCableBobTimer == 0) {
+            u->linkPlayCableBobTimer = 16;
+            u->linkPlayCableBobDir = -u->linkPlayCableBobDir;
+            u->velY = u->linkPlayCableBobDir << 16;
         }
         TaskYieldTrampoline(1);
     }
@@ -235,28 +235,28 @@ void LinkPlayCableUpdate(void)
     s16 a;
     s16 b;
 
-    if (t->unk18 == 0) {
-        if (p->unk1C == 0 && p->unk18 == 0)
+    if (t->linkPlayCableIndex == 0) {
+        if (p->linkPlayPlayerListShownCount == 0 && p->linkPlayPlayerListStepDir == 0)
             t->frame = 6;
         else
             gCurTask->frame = 0xFFFF;
-    } else if (p->unk18 != 0) {
-        if (p->unk18 == -1)
-            t->unk1C = p->unk1C + 1;
+    } else if (p->linkPlayPlayerListStepDir != 0) {
+        if (p->linkPlayPlayerListStepDir == -1)
+            t->linkPlayCableStepRow = p->linkPlayPlayerListShownCount + 1;
         else
-            t->unk1C = p->unk1C;
+            t->linkPlayCableStepRow = p->linkPlayPlayerListShownCount;
         u = gCurTask;
-        u->velX = gUnk_08731EC8[u->unk1C][u->unk18] * p->unk18;
-        u->velY = gUnk_08731F08[u->unk1C][u->unk18] * p->unk18;
-        a = gUnk_08731F48[p->unk1C][u->unk18];
-        if (a == -1 || (b = gUnk_08731F48[p->unk1C - p->unk18][u->unk18]) == -1)
+        u->velX = gUnk_08731EC8[u->linkPlayCableStepRow][u->linkPlayCableIndex] * p->linkPlayPlayerListStepDir;
+        u->velY = gUnk_08731F08[u->linkPlayCableStepRow][u->linkPlayCableIndex] * p->linkPlayPlayerListStepDir;
+        a = gUnk_08731F48[p->linkPlayPlayerListShownCount][u->linkPlayCableIndex];
+        if (a == -1 || (b = gUnk_08731F48[p->linkPlayPlayerListShownCount - p->linkPlayPlayerListStepDir][u->linkPlayCableIndex]) == -1)
             u->frame = 0xFFFF;
-        else if (p->unk20 > 3)
+        else if (p->linkPlayPlayerListStepTimer > 3)
             u->frame = b;
         else
             u->frame = a;
     } else {
-        t->frame = gUnk_08731F48[p->unk1C][t->unk18];
+        t->frame = gUnk_08731F48[p->linkPlayPlayerListShownCount][t->linkPlayCableIndex];
         t->velX = 0;
         t->velY = 0;
     }
@@ -274,8 +274,8 @@ void Task_MenuScreenTitle(void)
     gCurTask->frameTable = gUnk_08755620;
     gCurTask->layer = 7;
     t = gCurTask;
-    t->unk28 = gMenuScreen;
-    LoadGfxSet(gUnk_08731D70[t->unk28]);
+    t->menuScreenTitleScreen = gMenuScreen;
+    LoadGfxSet(gUnk_08731D70[t->menuScreenTitleScreen]);
     if (gMenuScreen == 7) {
         t = gCurTask;
         t->posX = 0x600000;
@@ -287,7 +287,7 @@ void Task_MenuScreenTitle(void)
         t->posY = 0xE0000;
         t->frame = 10;
     }
-    gCurTask->unk2C = 3;
+    gCurTask->menuScreenTitlePhase = 3;
     TaskSleepForever();
 }
 
@@ -297,12 +297,12 @@ void MenuScreenTitleUpdate(void)
     struct Task *t = gCurTask;
     struct Task *u;
     struct Task *v;
-    s32 old = t->unk28;
+    s32 old = t->menuScreenTitleScreen;
 
     if (tbl[old] != tbl[gMenuScreen]) {
         if (gMenuScreen == 7 || old == 7) {
-            t->unk2C = 0;
-            t->unk30 = 8;
+            t->menuScreenTitlePhase = 0;
+            t->menuScreenTitlePhaseTimer = 8;
             if (old == 7) {
                 t->posX = 0x600000;
                 t->posY = 0x200000;
@@ -315,23 +315,23 @@ void MenuScreenTitleUpdate(void)
                 t->velX = 0x200000;
             }
         } else {
-            t->unk30 = (old == 11) ? 1 : 7;
+            t->menuScreenTitlePhaseTimer = (old == 11) ? 1 : 7;
             u = gCurTask;
             u->posX = 0x640000;
             u->posY = 0xE0000;
             u->velX = 0;
             if (gUnk_08731D70[gMenuScreen])
-                u->unk2C = 2;
+                u->menuScreenTitlePhase = 2;
             else
-                u->unk2C = 3;
+                u->menuScreenTitlePhase = 3;
         }
-        gCurTask->unk28 = gMenuScreen;
+        gCurTask->menuScreenTitleScreen = gMenuScreen;
     }
     v = gCurTask;
-    switch (v->unk2C) {
+    switch (v->menuScreenTitlePhase) {
     case 0:
-        if (--v->unk30 == 0) {
-            LoadGfxSet(gUnk_08731D70[v->unk28]);
+        if (--v->menuScreenTitlePhaseTimer == 0) {
+            LoadGfxSet(gUnk_08731D70[v->menuScreenTitleScreen]);
             if (gMenuScreen == 7) {
                 u = gCurTask;
                 u->posX = 0xFFE00000;
@@ -346,25 +346,25 @@ void MenuScreenTitleUpdate(void)
                 u->velX = 0xFFF00000;
             }
             u = gCurTask;
-            u->unk30 = 8;
-            u->unk2C = 1;
+            u->menuScreenTitlePhaseTimer = 8;
+            u->menuScreenTitlePhase = 1;
         }
         break;
     case 2:
-        if (--v->unk30 == 0) {
+        if (--v->menuScreenTitlePhaseTimer == 0) {
             if (gMenuScreen == 8 && gPrevMenuScreen == 5)
                 LoadGfxSet(44);
             else
-                LoadGfxSet(gUnk_08731D70[gCurTask->unk28]);
+                LoadGfxSet(gUnk_08731D70[gCurTask->menuScreenTitleScreen]);
             if (gMenuScreen == 7)
                 gCurTask->frame = 11;
             else
                 gCurTask->frame = 10;
-            gCurTask->unk2C = 3;
+            gCurTask->menuScreenTitlePhase = 3;
         }
         break;
     case 1:
-        if (--v->unk30 == 0) {
+        if (--v->menuScreenTitlePhaseTimer == 0) {
             if (gMenuScreen == 7) {
                 v->posX = 0x600000;
                 v->posY = 0x200000;
@@ -372,7 +372,7 @@ void MenuScreenTitleUpdate(void)
                 v->posX = 0x640000;
                 v->posY = 0xE0000;
             }
-            gCurTask->unk2C = 3;
+            gCurTask->menuScreenTitlePhase = 3;
             gCurTask->velX = 0;
         }
         break;
@@ -386,50 +386,50 @@ void Task_MenuBgPaletteCycle(void)
     u16 *p;
     s32 s;
 
-    t->unk2C = 0;
-    t->unk30 = 1;
-    t->unk34 = 0;
+    t->menuBgPaletteCycleBlendFrom = 0;
+    t->menuBgPaletteCycleBlendTo = 1;
+    t->menuBgPaletteCycleBlendRatio = 0;
     s = gMenuScreen;
-    t->unk18 = s;
-    t->unk1C = s;
-    t->unk20 = 0;
-    t->unk24 = 0;
+    t->menuBgPaletteCycleScreen = s;
+    t->menuBgPaletteCyclePrevScreen = s;
+    t->menuBgPaletteCycleFading = 0;
+    t->menuBgPaletteCycleFadeRatio = 0;
     for (;;) {
         p = gUnk_08731D28[gMenuScreen];
-        if (p != NULL && gUnk_08731D28[gCurTask->unk18] != p) {
-            gCurTask->unk1C = gCurTask->unk18;
-            gCurTask->unk18 = gMenuScreen;
-            gCurTask->unk24 = 0;
-            gCurTask->unk20 = 1;
+        if (p != NULL && gUnk_08731D28[gCurTask->menuBgPaletteCycleScreen] != p) {
+            gCurTask->menuBgPaletteCyclePrevScreen = gCurTask->menuBgPaletteCycleScreen;
+            gCurTask->menuBgPaletteCycleScreen = gMenuScreen;
+            gCurTask->menuBgPaletteCycleFadeRatio = 0;
+            gCurTask->menuBgPaletteCycleFading = 1;
         }
         u = gCurTask;
-        if (u->unk34 == 256) {
-            if (++u->unk2C > 5)
-                u->unk2C = 0;
+        if (u->menuBgPaletteCycleBlendRatio == 256) {
+            if (++u->menuBgPaletteCycleBlendFrom > 5)
+                u->menuBgPaletteCycleBlendFrom = 0;
             v = gCurTask;
-            if (++v->unk30 > 5)
-                v->unk30 = 0;
-            gCurTask->unk34 = 0;
+            if (++v->menuBgPaletteCycleBlendTo > 5)
+                v->menuBgPaletteCycleBlendTo = 0;
+            gCurTask->menuBgPaletteCycleBlendRatio = 0;
         }
         w = gCurTask;
-        if ((w->unk34 += 32) > 256)
-            w->unk34 = 256;
+        if ((w->menuBgPaletteCycleBlendRatio += 32) > 256)
+            w->menuBgPaletteCycleBlendRatio = 256;
         x = gCurTask;
-        switch (x->unk20) {
+        switch (x->menuBgPaletteCycleFading) {
         case 0:
-            BlendColors(gUnk_08731D28[x->unk18] + x->unk2C * 16, gUnk_08731D28[x->unk18] + x->unk30 * 16, (u16)x->unk34, 16, gBgPaletteBank14 - 176);
+            BlendColors(gUnk_08731D28[x->menuBgPaletteCycleScreen] + x->menuBgPaletteCycleBlendFrom * 16, gUnk_08731D28[x->menuBgPaletteCycleScreen] + x->menuBgPaletteCycleBlendTo * 16, (u16)x->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14 - 176);
             break;
         case 1:
-            BlendColors(gUnk_08731D28[x->unk1C] + x->unk2C * 16, gUnk_08731D28[x->unk1C] + x->unk30 * 16, (u16)x->unk34, 16, gBgPaletteBank14);
+            BlendColors(gUnk_08731D28[x->menuBgPaletteCyclePrevScreen] + x->menuBgPaletteCycleBlendFrom * 16, gUnk_08731D28[x->menuBgPaletteCyclePrevScreen] + x->menuBgPaletteCycleBlendTo * 16, (u16)x->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14);
             y = gCurTask;
-            BlendColors(gUnk_08731D28[y->unk18] + y->unk2C * 16, gUnk_08731D28[y->unk18] + y->unk30 * 16, (u16)y->unk34, 16, gBgPaletteBank14 + 16);
+            BlendColors(gUnk_08731D28[y->menuBgPaletteCycleScreen] + y->menuBgPaletteCycleBlendFrom * 16, gUnk_08731D28[y->menuBgPaletteCycleScreen] + y->menuBgPaletteCycleBlendTo * 16, (u16)y->menuBgPaletteCycleBlendRatio, 16, gBgPaletteBank14 + 16);
             z = gCurTask;
-            z->unk24 += 16;
-            BlendColors(gBgPaletteBank14, gBgPaletteBank14 + 16, (u16)z->unk24, 16, gBgPaletteBank14 - 176);
+            z->menuBgPaletteCycleFadeRatio += 16;
+            BlendColors(gBgPaletteBank14, gBgPaletteBank14 + 16, (u16)z->menuBgPaletteCycleFadeRatio, 16, gBgPaletteBank14 - 176);
             a = gCurTask;
-            if (a->unk24 == 256) {
-                a->unk20 = 0;
-                a->unk24 = 0;
+            if (a->menuBgPaletteCycleFadeRatio == 256) {
+                a->menuBgPaletteCycleFading = 0;
+                a->menuBgPaletteCycleFadeRatio = 0;
             }
             break;
         }
@@ -445,39 +445,39 @@ void Task_MenuBackground(void)
     s32 s;
 
     s = gMenuScreen;
-    t->unk18 = s;
-    t->unk1C = s;
-    t->unk20 = 0;
-    t->unk24 = 0;
+    t->menuBackgroundScreen = s;
+    t->menuBackgroundPrevScreen = s;
+    t->menuBackgroundFadePhase = 0;
+    t->menuBackgroundFadeRatio = 0;
     LoadGfxSet(gUnk_08731D58[s]);
-    RequestCopy(2, (u32)gUnk_08731CF8[gCurTask->unk18], (u32)gBgPaletteBank2, 32);
+    RequestCopy(2, (u32)gUnk_08731CF8[gCurTask->menuBackgroundScreen], (u32)gBgPaletteBank2, 32);
     for (;;) {
         p = gUnk_08731CF8[gMenuScreen];
-        if (p != NULL && gUnk_08731CF8[gCurTask->unk18] != p) {
-            gCurTask->unk1C = gCurTask->unk18;
-            gCurTask->unk18 = gMenuScreen;
-            gCurTask->unk24 = 0;
-            gCurTask->unk20 = 1;
+        if (p != NULL && gUnk_08731CF8[gCurTask->menuBackgroundScreen] != p) {
+            gCurTask->menuBackgroundPrevScreen = gCurTask->menuBackgroundScreen;
+            gCurTask->menuBackgroundScreen = gMenuScreen;
+            gCurTask->menuBackgroundFadeRatio = 0;
+            gCurTask->menuBackgroundFadePhase = 1;
         }
         u = gCurTask;
-        if (u->unk20 != 0) {
-            u->unk24 += 32;
-            switch (u->unk20) {
+        if (u->menuBackgroundFadePhase != 0) {
+            u->menuBackgroundFadeRatio += 32;
+            switch (u->menuBackgroundFadePhase) {
             case 1:
-                BlendColors(gUnk_08731CF8[u->unk1C], gUnk_085563C8, (u16)u->unk24, 16, gBgPaletteBank2);
+                BlendColors(gUnk_08731CF8[u->menuBackgroundPrevScreen], gUnk_085563C8, (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
                 w = gCurTask;
-                if (w->unk24 == 256) {
-                    w->unk24 = 0;
-                    w->unk20 = 2;
-                    LoadGfxSet(gUnk_08731D58[w->unk18]);
+                if (w->menuBackgroundFadeRatio == 256) {
+                    w->menuBackgroundFadeRatio = 0;
+                    w->menuBackgroundFadePhase = 2;
+                    LoadGfxSet(gUnk_08731D58[w->menuBackgroundScreen]);
                 }
                 break;
             case 2:
-                BlendColors(gUnk_085563C8, gUnk_08731CF8[u->unk18], (u16)u->unk24, 16, gBgPaletteBank2);
+                BlendColors(gUnk_085563C8, gUnk_08731CF8[u->menuBackgroundScreen], (u16)u->menuBackgroundFadeRatio, 16, gBgPaletteBank2);
                 w = gCurTask;
-                if (w->unk24 == 256) {
-                    w->unk24 = 0;
-                    w->unk20 = 0;
+                if (w->menuBackgroundFadeRatio == 256) {
+                    w->menuBackgroundFadeRatio = 0;
+                    w->menuBackgroundFadePhase = 0;
                 }
                 break;
             }

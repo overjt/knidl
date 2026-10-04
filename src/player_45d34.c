@@ -50,7 +50,7 @@ void PlayerActionMike(void)
     }
     gCurTask->player->unk16 = 0;
     CreatePlayerEffect(gCurTask->player->playerIndex, 37, 0);
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
     switch (gCurTask->variant) {
@@ -200,7 +200,7 @@ void PlayerActionMike(void)
         else
             p->unk22 = 2;
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     gPauseDisabled = 0;
     gCurTask->player->unk42 &= 0xF8FF;
     TaskSleepForever();
@@ -210,7 +210,7 @@ void PlayerActionMikeUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0) {
+    if (t->playerActionDone28 != 0) {
         if (t->onGround & 1)
             t->player->requestedAction = 1;
         else

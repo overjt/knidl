@@ -23,7 +23,7 @@ void sub_08019000(void)
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_087553DC;
     gCurTask->updateCallback = (u32)sub_08019590;
-    gCurTask->unk70 = 0;
+    gCurTask->cutsceneActorPalettePhase = 0;
     gCurTask->tileWord = 0x9210;
     LZ77UnCompWram((const void *)gNightmarePowerOrbGfx[3], (void *)(EWRAM_START + 0x26000));
     RequestCopy(4, EWRAM_START + 0x26000, OBJ_VRAM0 + 0x4000, 128 << 6);
@@ -41,7 +41,7 @@ void sub_08019000(void)
     TaskYieldTrampoline(88);
     CreateCutsceneActor(56, 32);
     TaskYieldTrampoline(66);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 7;
@@ -52,8 +52,8 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->frame |= -1;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 3);
     gCurTask->frame = 6;
     TaskYieldTrampoline(2);
     gCurTask->frame = 5;
@@ -71,7 +71,7 @@ void sub_08019000(void)
     TaskStop();
     gCurTask->frame = 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->velY = 128 << 9;
@@ -126,8 +126,8 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 4);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 4);
     TaskSetMotion(0xFFF80000, 160 << 7, 0x5A5A5A5A, 0, 192 << 2, 0x5A5A5A5A);
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
@@ -137,7 +137,7 @@ void sub_08019000(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 3;
@@ -148,8 +148,8 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
     gCurTask->accelY = 0xFFFFFD00;
     gCurTask->frame = 3;
     TaskYieldTrampoline(2);
@@ -186,7 +186,7 @@ void sub_08019000(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 3;
@@ -197,8 +197,8 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
     PlaySfx(144 << 2);
     gCurTask->accelX = 128 << 9;
     gCurTask->frame = 3;
@@ -218,7 +218,7 @@ void sub_08019000(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 2;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 3;
@@ -229,10 +229,10 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 2);
     TaskStop();
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 3;
@@ -243,8 +243,8 @@ void sub_08019000(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 15);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 15);
     TaskStop();
     gCurTask->frame = 0xFFFF;
     TaskSleepForever();
@@ -254,11 +254,11 @@ void sub_08019590(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 > 23)
-        t->unk70 = 0;
+    if ((s16)t->cutsceneActorPalettePhase > 23)
+        t->cutsceneActorPalettePhase = 0;
     BlendColors((s32)gUnk_082FE0E4, (s32)gUnk_082FE104,
-                 gUnk_0874AD44[(s16)gCurTask->unk70], 16, (void *)(IWRAM_START + 0x1590));
-    gCurTask->unk70++;
+                 gUnk_0874AD44[(s16)gCurTask->cutsceneActorPalettePhase], 16, (void *)(IWRAM_START + 0x1590));
+    gCurTask->cutsceneActorPalettePhase++;
 }
 
 void sub_080195ec(void)
@@ -279,7 +279,7 @@ void sub_080195ec(void)
     TaskSetMotion(0xFFFF0000, 160 << 3, 0x5A5A5A5A, 0xFFFB8000, 158 << 7, 0x5A5A5A5A);
     gCurTask->frame = 0;
     TaskYieldTrampoline(1);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 0;
@@ -314,8 +314,8 @@ void sub_080195ec(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 3;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
     gCurTask->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame = 2;
@@ -490,7 +490,7 @@ void sub_08019b30(void)
     RequestCopy(2, (u32)gUnk_085E0070, (u32)gObjPaletteBank13, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 0;
@@ -505,8 +505,8 @@ void sub_08019b30(void)
         TaskYieldTrampoline(5);
         gCurTask->frame = 5;
         TaskYieldTrampoline(5);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 40);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 40);
     gCurTask->frame = 5;
     TaskYieldTrampoline(5);
     gCurTask->frame = 6;
@@ -575,7 +575,7 @@ void sub_08019d30(void)
     RequestCopy(2, (u32)gUnk_085E0070, (u32)gObjPaletteBank13, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 0;
@@ -590,8 +590,8 @@ void sub_08019d30(void)
         TaskYieldTrampoline(5);
         gCurTask->frame = 5;
         TaskYieldTrampoline(5);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 39);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 39);
     gCurTask->frame = 0;
     TaskYieldTrampoline(5);
     gCurTask->frame = 1;

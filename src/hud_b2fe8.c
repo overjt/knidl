@@ -1295,9 +1295,9 @@ void sub_080b447c(void)
     TaskSetMotionXFacing(*(s32 *)((*(u8 *)((u8 *)*c + 116) << 2) + (u32)e), 0x5A5A5A5A);
     TaskSetMotionY(0, 168 << 5, 192 << 10);
     t2 = *c;
-    t2->unk28 = 130 << 1;
-    t2->unk2C = 2;
-    t2->unk30 = 48;
+    t2->abilityStarLifeTimer = 130 << 1;
+    t2->abilityStarFrameTimer = 2;
+    t2->abilityStarPickupDelay = 48;
     z = 0;
     t2->frame = 4;
     *(u8 *)((u8 *)t2 + 122) = z;
@@ -1314,7 +1314,7 @@ void sub_080b44f0(void)
 
     c = &gCurTask;
     t = *c;
-    w0 = t->unk2C;
+    w0 = t->abilityStarFrameTimer;
     c2 = c;
     if (w0 <= 0)
     {
@@ -1322,10 +1322,10 @@ void sub_080b44f0(void)
         *(u16 *)((u8 *)t + 60) = w;
         if ((s16)w > 19)
             t->frame = 4;
-        (*c2)->unk2C = 2;
+        (*c2)->abilityStarFrameTimer = 2;
     }
     t3 = *c2;
-    t3->unk2C = t3->unk2C - 1;
+    t3->abilityStarFrameTimer = t3->abilityStarFrameTimer - 1;
 }
 
 s32 AbilityStarCheckPlayerFar(void)
@@ -1398,10 +1398,10 @@ void AbilityStarCheckExpire(void)
     if (AbilityStarCheckPlayerFar() != 0)
         return;
     t = gCurTask;
-    wl = t->unk28;
+    wl = t->abilityStarLifeTimer;
     w = wl;
     wl = wl - 1;
-    t->unk28 = wl;
+    t->abilityStarLifeTimer = wl;
     if (w <= 0)
     {
         TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -1457,11 +1457,11 @@ void AbilityStarUpdate(void)
     if ((u8)sub_080696a0() == 0)
         CallTableEntry(gCurTask->updateState, 2, gAbilityStarStateUpdates);
     t = gCurTask;
-    w = t->unk30;
+    w = t->abilityStarPickupDelay;
     if (w <= 0)
         ActorCheckHits();
     else
-        t->unk30 = w - 1;
+        t->abilityStarPickupDelay = w - 1;
     sub_08069b84();
 }
 
@@ -1576,8 +1576,8 @@ void sub_080b48e0(void)
 
     TaskStop();
     t = gCurTask;
-    t->unk1C = 0;
-    t->unk18 = 0;
+    t->starRodPieceWalkingCount = 0;
+    t->starRodPieceWalkingMask = 0;
 }
 
 void StarRodPieceStartDance(void)
@@ -1647,7 +1647,7 @@ void sub_080b4968(void)
         {
             b = one << i;
             c = &gCurTask;
-            if (!((*c)->unk18 & b))
+            if (!((*c)->starRodPieceWalkingMask & b))
             {
                 t3 = (struct Task *)((u8 *)gTasks + o);
                 w1 = i * 116;
@@ -1665,8 +1665,8 @@ void sub_080b4968(void)
                     {
                         PlayerWalkToDanceSpot(i);
                         t = *c;
-                        t->unk18 |= b;
-                        t->unk1C++;
+                        t->starRodPieceWalkingMask |= b;
+                        t->starRodPieceWalkingCount++;
                     }
                 }
                 else if (*(u32 *)(p1 + 104) == 0 && *(s16 *)((u8 *)t3 + 74) > 116)
@@ -1682,7 +1682,7 @@ void sub_080b4968(void)
 
 void sub_080b4a34(void)
 {
-    if (gCurTask->unk1C == gActivePlayerCount)
+    if (gCurTask->starRodPieceWalkingCount == gActivePlayerCount)
         StarRodPieceStartDance();
     else
         sub_080b4968();
@@ -1734,7 +1734,7 @@ void StarRodPieceHoverState0(void)
     TaskStop();
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
     v6 = 0xFFFFC000;
     v5 = 128 << 7;
     for (;;)
@@ -1761,9 +1761,9 @@ void StarRodPieceHoverState0Update(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk34);
+    r = ActorTickAnim((*c)->actorAnimDelay34);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
 }
 
 void StarRodPieceHoverState1(void)
@@ -1826,7 +1826,7 @@ void StarRodPieceSlideOutState0(void)
     TaskStop();
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
     t->velX = 0xFFFC0000;
     TaskYieldTrampoline(8);
     (*c)->velX = 0xFFFE0000;
@@ -1847,9 +1847,9 @@ void StarRodPieceSlideOutState0Update(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk34);
+    r = ActorTickAnim((*c)->actorAnimDelay34);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
     if (t->state != 0)
         TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
 }
@@ -1891,9 +1891,9 @@ void StarRodPieceSlideOutState1Update(void)
     s32 r;
 
     c = &gCurTask;
-    r = ActorTickAnim((*c)->unk34);
+    r = ActorTickAnim((*c)->actorAnimDelay34);
     t = *c;
-    t->unk34 = r;
+    t->actorAnimDelay34 = r;
 }
 
 void StarRodPieceSlideOutState2(void)

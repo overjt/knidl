@@ -602,7 +602,7 @@ void MetaKnightActionSlide(void)
     t = gCurTask;
     if (t->player->prevMode != 7)
     {
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->variant = 0;
     }
     switch (gCurTask->variant)
@@ -635,7 +635,7 @@ void MetaKnightActionSlide(void)
         gCurTask->u80.attackAbility = 0;
         break;
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -680,7 +680,7 @@ void MetaKnightActionSlideUpdate(void)
                 RegisterCollider((u8)gCurTaskIdx, t2->pixelX, t2->pixelY, gUnk_0873CA68);
             break;
         case 2:
-            if (t->unk28 != 0)
+            if (t->playerActionDone28 != 0)
             {
                 t->player->hitBoxSet = (void *)v;
                 t->player->requestedAction = 1;
@@ -1354,7 +1354,7 @@ void MetaKnightActionExitDoor(void)
     gCurTask->updateState = 19;
     TaskInitWaterFlags();
     sub_08021c74((s32)gPlayerDefaultTerrainBox, gCurTaskIdx);
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->frame = -1;
     if (gEntryDoorEvent == 1)
     {
@@ -1397,7 +1397,7 @@ void MetaKnightActionExitDoor(void)
     }
     gCurTask->spriteFlags = 0x4000;
     ((void (*)(void))sub_08026584)();
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 

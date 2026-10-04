@@ -53,7 +53,7 @@ void Task_WarpStarTrailStar(void)
         struct Task *t = gCurTask;
 
         t->tileWord = 0;
-        if (gTasks[t->parent].unk18 < 0)
+        if (gTasks[t->parent].warpStarScale < 0)
             t->tileWord |= 0xC00;
         else
             t->tileWord &= 0xF3FF;
@@ -61,7 +61,7 @@ void Task_WarpStarTrailStar(void)
     switch (gCurTask->state)
     {
     case 1:
-        AngleToVector(gCurTask->unk28, gCurTask->unk2C);
+        AngleToVector(gCurTask->warpStarTrailStarAngle, gCurTask->warpStarTrailStarSpeed);
         {
             struct Task *t = gCurTask;
 
@@ -73,7 +73,7 @@ void Task_WarpStarTrailStar(void)
         TaskSleepForever();
         break;
     case 0:
-        AngleToVector(gCurTask->unk28, gCurTask->unk2C);
+        AngleToVector(gCurTask->warpStarTrailStarAngle, gCurTask->warpStarTrailStarSpeed);
         {
             struct Task *t = gCurTask;
 
@@ -89,7 +89,7 @@ void Task_WarpStarTrailStar(void)
             struct Task *t = gCurTask;
 
             t->drawCallback = 0;
-            t->unk6C = 0;
+            t->warpStarTrailStarLoopCount = 0;
         }
         do
         {
@@ -97,33 +97,33 @@ void Task_WarpStarTrailStar(void)
                 struct Task *t = gCurTask;
 
                 QueueSprite(1, (u32)gUnk_080D21C8, t->spriteFlags, t->tileWord,
-                             t->pixelX + gUnk_0873FCF8[(s16)t->unk6C * 2],
-                             t->pixelY + gUnk_0873FCF8[(s16)t->unk6C * 2 + 1]);
+                             t->pixelX + gUnk_0873FCF8[(s16)t->warpStarTrailStarLoopCount * 2],
+                             t->pixelY + gUnk_0873FCF8[(s16)t->warpStarTrailStarLoopCount * 2 + 1]);
             }
             {
                 struct Task *t = gCurTask;
 
                 QueueSprite(1, (u32)gUnk_080D21C8, t->spriteFlags, t->tileWord,
-                             t->pixelX + gUnk_0873FD20[(s16)t->unk6C * 2],
-                             t->pixelY + gUnk_0873FD20[(s16)t->unk6C * 2 + 1]);
+                             t->pixelX + gUnk_0873FD20[(s16)t->warpStarTrailStarLoopCount * 2],
+                             t->pixelY + gUnk_0873FD20[(s16)t->warpStarTrailStarLoopCount * 2 + 1]);
             }
             {
                 struct Task *t = gCurTask;
 
                 QueueSprite(1, (u32)gUnk_080D21C8, t->spriteFlags, t->tileWord,
-                             t->pixelX + gUnk_0873FD48[(s16)t->unk6C * 2],
-                             t->pixelY + gUnk_0873FD48[(s16)t->unk6C * 2 + 1]);
+                             t->pixelX + gUnk_0873FD48[(s16)t->warpStarTrailStarLoopCount * 2],
+                             t->pixelY + gUnk_0873FD48[(s16)t->warpStarTrailStarLoopCount * 2 + 1]);
             }
             {
                 struct Task *t = gCurTask;
 
                 QueueSprite(1, (u32)gUnk_080D21C8, t->spriteFlags, t->tileWord,
-                             t->pixelX + gUnk_0873FD70[(s16)t->unk6C * 2],
-                             t->pixelY + gUnk_0873FD70[(s16)t->unk6C * 2 + 1]);
+                             t->pixelX + gUnk_0873FD70[(s16)t->warpStarTrailStarLoopCount * 2],
+                             t->pixelY + gUnk_0873FD70[(s16)t->warpStarTrailStarLoopCount * 2 + 1]);
             }
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 9);
+            gCurTask->warpStarTrailStarLoopCount++;
+        } while ((s16)gCurTask->warpStarTrailStarLoopCount <= 9);
         TaskExitTrampoline();
         break;
     default:

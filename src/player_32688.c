@@ -275,8 +275,8 @@ void PlayerUpdate(void)
         goto post;
     if (gCurTask->player->ability == 10 && gCurTask->player->mode == 5)
     {
-        gCurTask->unk2C += gCurTask->unk28;
-        gCurTask->posX += gCurTask->unk2C;
+        gCurTask->playerParasolSwayVelX += gCurTask->playerParasolSwayAccelX;
+        gCurTask->posX += gCurTask->playerParasolSwayVelX;
         gCurTask->pixelX = gCurTask->posX >> 16;
     }
     if (gCurTask->player->hitBoxSet != 0)

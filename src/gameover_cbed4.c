@@ -34,8 +34,8 @@ void GameOverChoice(void)
     gCurTask->updateCallback = (u32)GameOverChoiceUpdate;
     gCurTask->layer = 6;
     gCurTask->frameTable = gUnk_087549B0;
-    gCurTask->unk24 = 0;
-    gCurTask->unk20 = 0;
+    gCurTask->gameOverChoiceGiveUp = 0;
+    gCurTask->gameOverChoiceShowPending = 0;
     gCurTask->state = 0;
     CallTableEntry(gCurTask->state, 6, gGameOverChoiceStates);
     TaskSleepForever();
@@ -65,7 +65,7 @@ void GameOverPlayerShowChoice(void)
 {
     struct Task *t = &gTasks[gGameOverPlayerTask];
 
-    if (gCurTask->unk24 != 0)
+    if (gCurTask->gameOverChoiceGiveUp != 0)
         t->state = 2;
     else
         t->state = 1;
@@ -76,7 +76,7 @@ void GameOverPlayerShowChoice(void)
 void sub_080cbfac(void)
 {
     GameOverPlayerShowChoice();
-    gCurTask->unk20 = 0;
+    gCurTask->gameOverChoiceShowPending = 0;
     CreateGameOverObject(3);
 }
 
@@ -90,7 +90,7 @@ void GameOverChoiceEnterState(void)
 void GameOverChoiceWait(void)
 {
     gCurTask->updateState = 0;
-    if (gCurTask->unk24 != 0) {
+    if (gCurTask->gameOverChoiceGiveUp != 0) {
         gCurTask->posX = 128 << 16;
         gCurTask->posY = 110 << 16;
     } else {
@@ -105,11 +105,11 @@ void GameOverChoiceWait(void)
 void GameOverChoiceWaitUpdate(void)
 {
     if (GameOverIsUpDownPressed()) {
-        gCurTask->unk24 ^= 1;
+        gCurTask->gameOverChoiceGiveUp ^= 1;
         gCurTask->state = 1;
     } else if (gPlayerPressedKeys[0] & 9) {
         PlaySfx(102);
-        if (gCurTask->unk24 != 0) {
+        if (gCurTask->gameOverChoiceGiveUp != 0) {
             gCurTask->state = 4;
         } else {
             TaskCreateFrom(263, 32);
@@ -124,7 +124,7 @@ void GameOverChoiceWaitUpdate(void)
 void GameOverChoiceMove(void)
 {
     gCurTask->updateState = 1;
-    if (gCurTask->unk24 != 0) {
+    if (gCurTask->gameOverChoiceGiveUp != 0) {
         TaskSetMotion(-0xA000, 0x1000, 0x5A5A5A5A, 0, 0x5000, 0x5A5A5A5A);
         TaskYieldTrampoline(9);
         gCurTask->accelY = -0x5000;
@@ -207,7 +207,7 @@ void sub_080cc2e0(void)
     gCurTask->frame = 4;
     TaskSetMotion(0x20000, 0, 0x5A5A5A5A, 0x20000, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
-    gCurTask->unk20 = 1;
+    gCurTask->gameOverChoiceShowPending = 1;
     gCurTask->frame++;
     TaskSetMotion(0, -0x1000, 0x5A5A5A5A, -0x30000, 0, 0x5A5A5A5A);
     TaskYieldTrampoline(10);
@@ -281,7 +281,7 @@ void sub_080cc5d4(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
-    if (gCurTask->unk20 != 0)
+    if (gCurTask->gameOverChoiceShowPending != 0)
         sub_080cbfac();
 }
 
@@ -340,7 +340,7 @@ void sub_080cc768(void)
     gCurTask->frame = 2;
     TaskSetMotion(0x18000, -0x4800, 0x5A5A5A5A, 0x8400, -0x1800, 0x5A5A5A5A);
     TaskYieldTrampoline(7);
-    gCurTask->unk20 = 1;
+    gCurTask->gameOverChoiceShowPending = 1;
     TaskYieldTrampoline(3);
     gCurTask->frame = 0;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
@@ -482,8 +482,8 @@ void sub_080ccd10(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
-    if (gCurTask->unk20 != 0) {
+    if (gCurTask->gameOverChoiceShowPending != 0) {
         GameOverPlayerShowChoice();
-        gCurTask->unk20 = 0;
+        gCurTask->gameOverChoiceShowPending = 0;
     }
 }

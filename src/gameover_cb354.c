@@ -35,9 +35,9 @@ void Task_GameOverSprite(void)
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 9;
     gCurTask->frameTable = gUnk_087556E0;
-    gCurTask->frame = gCurTask->unk18;
-    gCurTask->posX = gUnk_08758274[gCurTask->unk18] << 16;
-    gCurTask->posY = gUnk_08758284[gCurTask->unk18] << 16;
+    gCurTask->frame = gCurTask->gameOverSpriteIndex;
+    gCurTask->posX = gUnk_08758274[gCurTask->gameOverSpriteIndex] << 16;
+    gCurTask->posY = gUnk_08758284[gCurTask->gameOverSpriteIndex] << 16;
     TaskSleepForever();
 }
 
@@ -65,34 +65,34 @@ void Task_GameOverCursor(void)
    four colours between two palettes of gUnk_08584BB0. */
 void Task_GameOverPalette(void)
 {
-    gCurTask->unk28 = 0;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->gameOverPaletteFadeTimer = 0;
+    gCurTask->gameOverPaletteFrom = 0;
+    gCurTask->gameOverPaletteTo = 1;
+    gCurTask->gameOverPaletteBlend = 0;
     gBldCntTarget1 = 66;
     gBldCntTarget2 = 12;
     gBldAlphaEva = 0;
     gBldAlphaEvb = 16;
     for (;;) {
-        if (gCurTask->unk28 < 32) {
-            gCurTask->unk28++;
-            if (gCurTask->unk28 == 32) {
+        if (gCurTask->gameOverPaletteFadeTimer < 32) {
+            gCurTask->gameOverPaletteFadeTimer++;
+            if (gCurTask->gameOverPaletteFadeTimer == 32) {
                 gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
             } else {
-                gBldAlphaEva = gCurTask->unk28 >> 1;
+                gBldAlphaEva = gCurTask->gameOverPaletteFadeTimer >> 1;
                 gBldAlphaEvb = 16 - gBldAlphaEva;
             }
         }
-        if (gCurTask->unk34 == 256) {
-            gCurTask->unk2C ^= 1;
-            gCurTask->unk30 ^= 1;
-            gCurTask->unk34 = 0;
+        if (gCurTask->gameOverPaletteBlend == 256) {
+            gCurTask->gameOverPaletteFrom ^= 1;
+            gCurTask->gameOverPaletteTo ^= 1;
+            gCurTask->gameOverPaletteBlend = 0;
         }
-        gCurTask->unk34 += 4;
-        if (gCurTask->unk34 > 256)
-            gCurTask->unk34 = 256;
-        BlendColors(gUnk_08584BB0[gCurTask->unk2C], gUnk_08584BB0[gCurTask->unk30],
-            (u16)gCurTask->unk34, 4, gBgPaletteBank9);
+        gCurTask->gameOverPaletteBlend += 4;
+        if (gCurTask->gameOverPaletteBlend > 256)
+            gCurTask->gameOverPaletteBlend = 256;
+        BlendColors(gUnk_08584BB0[gCurTask->gameOverPaletteFrom], gUnk_08584BB0[gCurTask->gameOverPaletteTo],
+            (u16)gCurTask->gameOverPaletteBlend, 4, gBgPaletteBank9);
         TaskYieldTrampoline(1);
     }
 }
@@ -103,13 +103,13 @@ void Task_HalveScore(void)
 {
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
-    gCurTask->unk28 = gPlayerScores[gLocalPlayer];
+    gCurTask->halveScoreShown = gPlayerScores[gLocalPlayer];
     gPlayerScores[gLocalPlayer] >>= 1;
-    gCurTask->unk2C = Mod(gPlayerScores[gLocalPlayer], 10);
-    gPlayerScores[gLocalPlayer] -= gCurTask->unk2C;
-    while (gCurTask->unk28 != gPlayerScores[gLocalPlayer]) {
-        gCurTask->unk28 -= 10;
-        DrawScoreToBgMap(gCurTask->unk28, 22, 18);
+    gCurTask->halveScoreRemainder = Mod(gPlayerScores[gLocalPlayer], 10);
+    gPlayerScores[gLocalPlayer] -= gCurTask->halveScoreRemainder;
+    while (gCurTask->halveScoreShown != gPlayerScores[gLocalPlayer]) {
+        gCurTask->halveScoreShown -= 10;
+        DrawScoreToBgMap(gCurTask->halveScoreShown, 22, 18);
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();

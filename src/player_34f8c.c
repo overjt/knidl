@@ -41,15 +41,15 @@ void PlayerActionFall(void)
     gCurTask->player->mode = 5;
     gCurTask->updateState = 7;
     PlayerSetMotionYPreset(2);
-    gCurTask->unk30 = 0;
+    gCurTask->playerFallBumped = 0;
     if (gCurTask->player->prevMode != 5)
         gCurTask->player->unk14 = 300;
     if (gCurTask->player->bumpKind & 1)
-        gCurTask->unk30 = 1;
+        gCurTask->playerFallBumped = 1;
     if (gCurTask->player->ability == 10)
     {
-        gCurTask->unk2C = 0;
-        gCurTask->unk28 = 0;
+        gCurTask->playerParasolSwayVelX = 0;
+        gCurTask->playerParasolSwayAccelX = 0;
     }
     PlayerPlayBump();
     gCurTask->player->unk14 = 30;
@@ -66,7 +66,7 @@ void PlayerActionFall(void)
             TaskYieldTrampoline(2);
             gCurTask->player->unk14 = 0;
         }
-        else if (gCurTask->unk30 != 0)
+        else if (gCurTask->playerFallBumped != 0)
         {
             gCurTask->player->unk14 = 30;
         }
@@ -97,7 +97,7 @@ void PlayerActionFall(void)
             }
         }
     }
-    gCurTask->unk30 = 0;
+    gCurTask->playerFallBumped = 0;
     if (gCurTask->player->mouthState == 1)
     {
         while (1)
@@ -133,9 +133,9 @@ void PlayerActionFall(void)
         while (1)
         {
             if (gCurTask->facing == 1)
-                gCurTask->unk28 = -0x400;
+                gCurTask->playerParasolSwayAccelX = -0x400;
             else
-                gCurTask->unk28 = 0x400;
+                gCurTask->playerParasolSwayAccelX = 0x400;
             sub_0803ccd8(0);
             TaskSetFrame(0x839);
             TaskYieldTrampoline(8);
@@ -152,9 +152,9 @@ void PlayerActionFall(void)
             gCurTask->frame--;
             TaskYieldTrampoline(8);
             if (gCurTask->facing == 1)
-                gCurTask->unk28 = -0x800;
+                gCurTask->playerParasolSwayAccelX = -0x800;
             else
-                gCurTask->unk28 = 0x800;
+                gCurTask->playerParasolSwayAccelX = 0x800;
             sub_0803ccd8(5);
             TaskSetFrame(0x840);
             TaskYieldTrampoline(4);
@@ -171,9 +171,9 @@ void PlayerActionFall(void)
             gCurTask->frame++;
             TaskYieldTrampoline(4);
             if (gCurTask->facing == 1)
-                gCurTask->unk28 = 0x400;
+                gCurTask->playerParasolSwayAccelX = 0x400;
             else
-                gCurTask->unk28 = -0x400;
+                gCurTask->playerParasolSwayAccelX = -0x400;
             sub_0803ccd8(10);
             TaskSetFrame(0x83A);
             TaskYieldTrampoline(8);
@@ -190,9 +190,9 @@ void PlayerActionFall(void)
             gCurTask->frame++;
             TaskYieldTrampoline(8);
             if (gCurTask->facing == 1)
-                gCurTask->unk28 = 0x800;
+                gCurTask->playerParasolSwayAccelX = 0x800;
             else
-                gCurTask->unk28 = -0x800;
+                gCurTask->playerParasolSwayAccelX = -0x800;
             sub_0803ccd8(15);
             TaskSetFrame(0x83F);
             TaskYieldTrampoline(4);
@@ -243,7 +243,7 @@ void PlayerActionFallUpdate(void)
         {
             if ((s16)gCurTask->player->unk14 != 0)
                 gCurTask->player->unk14--;
-            if (gCurTask->unk28 != 0
+            if (gCurTask->playerParasolSwayAccelX != 0
                 && (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128))
             {
                 PlayerStopAxes(1);
@@ -271,7 +271,7 @@ void PlayerActionHighFall(void)
         gCurTask->player->unk40 &= 0xFFFD;
     }
     gCurTask->player->hitBoxSet = 0;
-    gCurTask->unk28 = 0;
+    gCurTask->playerHighFallPhase = 0;
     anim = gUnk_0873D420[gCurTask->player->ability];
     switch (gCurTask->variant)
     {
@@ -287,7 +287,7 @@ void PlayerActionHighFall(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk28++;
+            gCurTask->playerHighFallPhase++;
             TaskSetFrame(anim[1]);
             TaskSleepForever();
         case 1:
@@ -303,7 +303,7 @@ void PlayerActionHighFall(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk28++;
+            gCurTask->playerHighFallPhase++;
             gCurTask->playerBaseFrame = anim[1];
             while (1)
             {
@@ -337,7 +337,7 @@ void PlayerActionHighFall(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk28++;
+        gCurTask->playerHighFallPhase++;
         break;
     }
     TaskSleepForever();
@@ -383,7 +383,7 @@ void PlayerActionHighFallUpdate(void)
                         if (gCurTask->player->bumpKind & 7)
                             TaskSetEntry(PlayerActionFall, gCurTaskIdx);
                     }
-                    if (gCurTask->unk28 != 0)
+                    if (gCurTask->playerHighFallPhase != 0)
                         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BEB0);
                 }
             }
@@ -398,7 +398,7 @@ void PlayerActionHighFallUpdate(void)
                 break;
             }
         case 2:
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerHighFallPhase != 0)
             {
                 gCurTask->player->requestedAction = 7;
                 gCurTask->player->unk42 &= 0xFEFF;

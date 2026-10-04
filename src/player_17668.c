@@ -17,7 +17,7 @@ void sub_08017668(void)
     gCurTask->layer = 7;
     gCurTask->frameTable = gUnk_08755068;
     gCurTask->updateCallback = (u32)sub_08018464;
-    gCurTask->unk24 = -1;
+    gCurTask->cutsceneActorBgmFadeStep = -1;
     gCurTask->tileWord = 128 << 4;
     gCurTask->posX = 128 << 16;
     gCurTask->posY = 218 << 15;
@@ -57,7 +57,7 @@ void sub_08017668(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 90;
     TaskYieldTrampoline(4);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 81;
@@ -80,8 +80,8 @@ void sub_08017668(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 90;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 2);
     TaskStop();
     gCurTask->frame = 81;
     TaskYieldTrampoline(8);
@@ -166,7 +166,7 @@ void sub_08017668(void)
     gCurTask->spriteFlags &= 0x7FFF;
     gCurTask->frame = 78;
     TaskYieldTrampoline(4);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 81;
@@ -189,9 +189,9 @@ void sub_08017668(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 90;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->velX = 0xFFFF5000;
@@ -222,8 +222,8 @@ void sub_08017668(void)
         TaskYieldTrampoline(4);
         gCurTask->frame = 90;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
     gCurTask->velX = 0xFFFF5000;
     gCurTask->frame = 81;
     TaskYieldTrampoline(8);
@@ -316,15 +316,15 @@ void sub_08017668(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 67;
     TaskYieldTrampoline(4);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 95;
         TaskYieldTrampoline(2);
         gCurTask->frame = 94;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 2);
     TaskStop();
     gCurTask->frame = 93;
     TaskYieldTrampoline(2);
@@ -332,17 +332,17 @@ void sub_08017668(void)
     TaskYieldTrampoline(8);
     gCurTask->frame = 78;
     TaskYieldTrampoline(44);
-    gCurTask->unk24 = 4;
-    gCurTask->unk20 = 255;
+    gCurTask->cutsceneActorBgmFadeStep = 4;
+    gCurTask->cutsceneActorBgmVolume = 255;
     PlaySfx(100);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         TaskSetMotion(0xFFFF2000, 0xFFFFE700, 0x5A5A5A5A, 0xFFFB8B00, 246 << 7, 0x5A5A5A5A);
         gCurTask->frame = 68;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 6);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 6);
     gCurTask->frame = 69;
     TaskYieldTrampoline(6);
     gCurTask->frame = 68;
@@ -353,14 +353,14 @@ void sub_08017668(void)
     gCurTask->frame = 71;
     TaskYieldTrampoline(8);
     PlaySfx(100);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         TaskSetMotion(0xFFFF0000, 0xFFFFF900, 0x5A5A5A5A, 0xFFFAB000, 138 << 8, 0x5A5A5A5A);
         gCurTask->frame = 91;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 3);
     gCurTask->frame = 96;
     TaskYieldTrampoline(2);
     gCurTask->frame = 97;
@@ -400,7 +400,7 @@ void sub_08017668(void)
     gCurTask->frame = 75;
     TaskYieldTrampoline(10);
     PlaySfx(238);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         TaskStop();
@@ -408,8 +408,8 @@ void sub_08017668(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 77;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 4);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 4);
     CreateCutsceneActor(57, 32);
     TaskSetMotion(0xFFFEB000, 0, 0x5A5A5A5A, 0xFFFCB000, 222 << 7, 0x5A5A5A5A);
     gCurTask->frame = 10;
@@ -441,7 +441,7 @@ void sub_08017668(void)
     TaskYieldTrampoline(64);
     PlayBgm(56);
     sub_08003184();
-    gCurTask->unk24 = -1;
+    gCurTask->cutsceneActorBgmFadeStep = -1;
     TaskStop();
     gCurTask->frame = 5;
     TaskYieldTrampoline(72);
@@ -451,7 +451,7 @@ void sub_08017668(void)
     TaskStop();
     gCurTask->frame = 6;
     TaskYieldTrampoline(100);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->spriteFlags &= 0x7FFF;
@@ -487,10 +487,10 @@ void sub_08017668(void)
         gCurTask->spriteFlags &= 0x7FFF;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk24 = 2;
-    gCurTask->unk6C = 0;
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 3);
+    gCurTask->cutsceneActorBgmFadeStep = 2;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->spriteFlags &= 0x7FFF;
@@ -526,8 +526,8 @@ void sub_08017668(void)
         gCurTask->spriteFlags &= 0x7FFF;
         gCurTask->frame = 8;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 3);
     gCurTask->velX = 160 << 11;
     gCurTask->velY = 0xFFFD8000;
     gCurTask->frame = 41;
@@ -548,7 +548,7 @@ void sub_08017668(void)
     TaskYieldTrampoline(80);
     gCurTask->posX = 150 << 15;
     gCurTask->posY = 176 << 15;
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->velX = 128 << 11;
@@ -585,8 +585,8 @@ void sub_08017668(void)
         TaskYieldTrampoline(2);
         gCurTask->frame = 119;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
     TaskStop();
     gCurTask->frame = 0xFFFF;
     TaskSleepForever();
@@ -595,7 +595,7 @@ void sub_08017668(void)
 void sub_08018464(void)
 {
     struct Task *t = gCurTask;
-    s32 d = t->unk24;
+    s32 d = t->cutsceneActorBgmFadeStep;
     s32 v;
 
     if (d < 0)
@@ -604,15 +604,15 @@ void sub_08018464(void)
     }
     else
     {
-        v = t->unk20 - d;
-        t->unk20 = v;
+        v = t->cutsceneActorBgmVolume - d;
+        t->cutsceneActorBgmVolume = v;
         if (v >= 0)
             goto done;
         v = 0;
     }
-    t->unk20 = v;
+    t->cutsceneActorBgmVolume = v;
 done:
-    SetBgmVolume((u16)gCurTask->unk20);
+    SetBgmVolume((u16)gCurTask->cutsceneActorBgmVolume);
 }
 
 void sub_08018498(void)
@@ -623,11 +623,11 @@ void sub_08018498(void)
     gCurTask->frameTable = gUnk_08755378;
     gCurTask->updateCallback = (u32)sub_08018b84;
     gUnk_02007D00[0] = -1;
-    gCurTask->unk20 = -1;
+    gCurTask->cutsceneActorSfxTimer = -1;
     gCurTask->tileWord = 0x8010;
     gCurTask->posX = 184 << 14;
     gCurTask->posY = 0xFFDA0000;
-    gCurTask->unk28 = 0;
+    gCurTask->cutsceneActorChildGate = 0;
     CreateCutsceneActor(53, 32);
     gCurTask->spriteFlags &= 0x7FFF;
     TaskStop();
@@ -657,9 +657,9 @@ void sub_08018498(void)
     TaskSetMotion(184 << 9, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 16;
     TaskYieldTrampoline(9);
-    gCurTask->unk28 = 1;
-    gCurTask->unk20 = 0;
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorChildGate = 1;
+    gCurTask->cutsceneActorSfxTimer = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->velX = 0xFFFF5000;
@@ -668,22 +668,22 @@ void sub_08018498(void)
         gCurTask->velX = 128 << 7;
         gCurTask->frame = 16;
         TaskYieldTrampoline(20);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk28 = 0;
-    gCurTask->unk20 = -1;
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
+    gCurTask->cutsceneActorChildGate = 0;
+    gCurTask->cutsceneActorSfxTimer = -1;
     TaskStop();
     gCurTask->frame = 1;
     TaskYieldTrampoline(40);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 0;
         TaskYieldTrampoline(8);
         gCurTask->frame = 2;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 3);
     gCurTask->frame = 1;
     TaskYieldTrampoline(84);
     gCurTask->velX = 0xFFFEB400;
@@ -699,13 +699,13 @@ void sub_08018498(void)
     gCurTask->accelY = 0x00011900;
     gCurTask->frame = 15;
     TaskYieldTrampoline(8);
-    gCurTask->unk28 = 1;
-    gCurTask->unk20 = 0;
+    gCurTask->cutsceneActorChildGate = 1;
+    gCurTask->cutsceneActorSfxTimer = 0;
     TaskSetMotion(0x00025500, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->frame = 16;
     TaskYieldTrampoline(7);
     TaskStop();
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->velX = 0xFFFF5000;
@@ -714,9 +714,9 @@ void sub_08018498(void)
         gCurTask->velX = 128 << 7;
         gCurTask->frame = 3;
         TaskYieldTrampoline(20);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 4);
-    gCurTask->unk6C = 0;
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 4);
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->velX = 128 << 6;
@@ -725,16 +725,16 @@ void sub_08018498(void)
         gCurTask->velX = 152 << 9;
         gCurTask->frame = 3;
         TaskYieldTrampoline(20);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 1);
     gCurTask->velX = 128 << 6;
     gCurTask->frame = 16;
     TaskYieldTrampoline(10);
     gCurTask->velX = 152 << 9;
     gCurTask->frame = 3;
     TaskYieldTrampoline(9);
-    gCurTask->unk28 = 0;
-    gCurTask->unk20 = -1;
+    gCurTask->cutsceneActorChildGate = 0;
+    gCurTask->cutsceneActorSfxTimer = -1;
     TaskStop();
     gCurTask->frame = 3;
     TaskYieldTrampoline(20);
@@ -767,15 +767,15 @@ void sub_08018498(void)
     TaskYieldTrampoline(10);
     gCurTask->frame = 4;
     TaskYieldTrampoline(16);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 6;
         TaskYieldTrampoline(4);
         gCurTask->frame = 7;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 31);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 31);
     gCurTask->frame = 6;
     TaskYieldTrampoline(4);
     gCurTask->velX = 0xFFFB0000;
@@ -784,7 +784,7 @@ void sub_08018498(void)
     TaskStop();
     gCurTask->frame = 8;
     TaskYieldTrampoline(100);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->spriteFlags &= 0x7FFF;
@@ -820,8 +820,8 @@ void sub_08018498(void)
         gCurTask->spriteFlags &= 0x7FFF;
         gCurTask->frame = 10;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 5);
     gCurTask->spriteFlags &= 0x7FFF;
     TaskStop();
     gCurTask->frame = 19;
@@ -844,15 +844,15 @@ void sub_08018498(void)
     TaskYieldTrampoline(16);
     CreateCutsceneActor(52, 32);
     gUnk_02007D00[0] = PlaySfx(0x21B);
-    gCurTask->unk6C = 0;
+    gCurTask->cutsceneActorLoopCount = 0;
     do
     {
         gCurTask->frame = 21;
         TaskYieldTrampoline(10);
         gCurTask->frame = 22;
         TaskYieldTrampoline(10);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->cutsceneActorLoopCount++;
+    } while ((s16)gCurTask->cutsceneActorLoopCount <= 2);
     if (gUnk_02007D00[0] != -1)
     {
         StopSfxOnPlayer(gUnk_02007D00[0], 0x21B);

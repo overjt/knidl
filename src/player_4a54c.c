@@ -39,7 +39,7 @@ void PlayerActionBeam(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 44;
-    gCurTask->unk28 = 0;
+    gCurTask->playerActionDone28 = 0;
     gCurTask->u80.attackAbility = 0;
     TaskSetFrame(0xBBD);
     TaskYieldTrampoline(6);
@@ -71,13 +71,13 @@ void PlayerActionBeam(void)
     } while ((s16)++gCurTask->playerLoopCount <= 1);
     TaskSetFrame(0xBBF);
     TaskYieldTrampoline(4);
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
 void PlayerActionBeamUpdate(void)
 {
-    if (gCurTask->unk28 != 0)
+    if (gCurTask->playerActionDone28 != 0)
         PlayerRequestLocomotion();
     sub_0803e55c();
 }

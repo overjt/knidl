@@ -33,7 +33,7 @@ void PlayerActionHammer(void)
     gCurTask->updateState = 37;
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerActionDone28 = 0;
         t->unk2C = -1;
         if (t->waterFlags & 1)
             t->unk30 = 1;
@@ -196,7 +196,7 @@ void PlayerActionHammer(void)
         }
         break;
     }
-    gCurTask->unk28++;
+    gCurTask->playerActionDone28++;
     TaskSleepForever();
 }
 
@@ -206,7 +206,7 @@ void PlayerActionHammerUpdate(void)
 
     switch (t->variant) {
     case 0:
-        if (t->unk28 != 0)
+        if (t->playerActionDone28 != 0)
             PlayerRequestLocomotion();
         else if (t->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
             gCurTask->player->requestedAction = 23;
@@ -229,7 +229,7 @@ void PlayerActionHammerUpdate(void)
         }
         {
             struct Task *u = gCurTask;
-            if ((u->onGround & 1) || u->unk28 != 0) {
+            if ((u->onGround & 1) || u->playerActionDone28 != 0) {
                 u->player->hitBoxSet = 0;
                 PlayerRequestLocomotion();
             } else if (u->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0) {
