@@ -62,7 +62,7 @@ extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern void ActorDrawWorldInView(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern u8 TaskHasSameSerial(s32 i);
-extern void sub_0806ff7c(void);
+extern void PlayerWarpStarRideDraw(void);
 extern void MetaKnightWarpStarRideInit(void);
 
 /* Defined below */
@@ -663,7 +663,7 @@ void PlayerWarpStarRideInit(void)
     if (gMetaKnightmareMode == 1)
         MetaKnightWarpStarRideInit();
     t = gCurTask;
-    t->drawCallback = (u32)sub_0806ff7c;
+    t->drawCallback = (u32)PlayerWarpStarRideDraw;
     t->updateCallback = (u32)PlayerWarpStarRideUpdate;
     t->lateUpdateCallback = 0;
     t->taskClass = 4;

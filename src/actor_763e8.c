@@ -185,7 +185,7 @@ void sub_080766ac(void)
     }
     TaskYieldTrampoline(25);
     sub_08076558(384);
-    sub_0807029c();
+    PlayerStartTumble();
     TaskGetScreenPos();
     if (gUnk_030023D4 > 63)
         gCurTask->unk18 = 1;
@@ -211,7 +211,7 @@ void sub_08076710(void)
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(25);
     sub_080765f4(448);
-    sub_0807029c();
+    PlayerStartTumble();
     TaskGetScreenPos();
     if (gUnk_030023B4 > 95 || gUnk_030023D4 > 63)
         gCurTask->unk18 = 1;
@@ -271,7 +271,7 @@ void sub_0807685c(s32 a)
     if (t->frame != -1)
     {
         if (gMetaKnightmareMode == 0)
-            sub_08070334();
+            PlayerStepTumble();
         {
             struct Task *u = gCurTask;
 
@@ -427,7 +427,7 @@ void sub_08076a58(void)
         } while (gCurTask->unk24 == 1);
     }
     TaskYieldTrampoline(3);
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 

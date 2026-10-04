@@ -13,7 +13,7 @@
  * graphics table Task.frameTable and the palette, then runs its animation as
  * a TaskYieldTrampoline coroutine) and its callbacks.  The animated ones
  * keep the frame to upload in Task.unk28 and a Task.updateCallback callback
- * (sub_0802eba4, BossDoorSignUpdate, sub_0802ee88) that DMAs that frame's tiles
+ * (ArenaDoorSignUpdate, BossDoorSignUpdate, DoorOpeningUpdate) that DMAs that frame's tiles
  * into OBJ VRAM with RequestCopy and resets unk28 to -1.  The last three
  * spawners are the three variants of type #229 (obj_2f62c.c). */
 
@@ -55,7 +55,7 @@ void Task_ArenaDoorSign(void)
     u->tileWord = 0x8800;
     u->arenaDoorSignTileFrame = -1;
     u->frame = 0;
-    u->updateCallback = (u32)sub_0802eba4;
+    u->updateCallback = (u32)ArenaDoorSignUpdate;
     for (;;)
     {
         gCurTask->arenaDoorSignTileFrame = 0;
@@ -69,7 +69,7 @@ void Task_ArenaDoorSign(void)
     }
 }
 
-void sub_0802eba4(void)
+void ArenaDoorSignUpdate(void)
 {
     u8 *src;
 
@@ -190,7 +190,7 @@ void Task_DoorOpening(void)
     u->taskClass = 4;
     v = gCurTask;
     v->doorOpeningTileFrame = -1;
-    v->updateCallback = (u32)sub_0802ee88;
+    v->updateCallback = (u32)DoorOpeningUpdate;
     PlaySfx(222);
     gCurTask->doorOpeningTileFrame = 0;
     TaskYieldTrampoline(3);
@@ -210,7 +210,7 @@ void Task_DoorOpening(void)
     TaskExitTrampoline();
 }
 
-void sub_0802ee88(void)
+void DoorOpeningUpdate(void)
 {
     struct Task *t;
     s32 idx;
@@ -320,13 +320,13 @@ void Task_QuickDrawDoorSign(void)
     u = gCurTask;
     u->tileWord = 0x8800;
     if (u->quickDrawDoorSignAnimated == 0)
-        sub_0802f1dc();
+        QuickDrawDoorSignShowStill();
     else
-        sub_0802f110();
+        QuickDrawDoorSignAnimate();
     TaskExitTrampoline();
 }
 
-void sub_0802f110(void)
+void QuickDrawDoorSignAnimate(void)
 {
     gCurTask->drawCallback = (u32)DoorObjectDraw;
     for (;;)
@@ -360,12 +360,12 @@ void sub_0802f110(void)
     }
 }
 
-void sub_0802f1dc(void)
+void QuickDrawDoorSignShowStill(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->drawCallback = (u32)sub_0802ff70;
+    t->drawCallback = (u32)SubGameDoorSignDrawUsed;
     t->frame = 0;
     TaskSleepForever();
 }
@@ -404,13 +404,13 @@ void Task_BombRallyDoorSign(void)
     u = gCurTask;
     u->tileWord = 0x8800;
     if (u->bombRallyDoorSignAnimated == 0)
-        sub_0802f2fc();
+        BombRallyDoorSignShowStill();
     else
-        sub_0802f2b0();
+        BombRallyDoorSignAnimate();
     TaskExitTrampoline();
 }
 
-void sub_0802f2b0(void)
+void BombRallyDoorSignAnimate(void)
 {
     gCurTask->drawCallback = (u32)DoorObjectDraw;
     for (;;)
@@ -426,12 +426,12 @@ void sub_0802f2b0(void)
     }
 }
 
-void sub_0802f2fc(void)
+void BombRallyDoorSignShowStill(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->drawCallback = (u32)sub_0802ff70;
+    t->drawCallback = (u32)SubGameDoorSignDrawUsed;
     t->frame = 0;
     TaskSleepForever();
 }
@@ -470,13 +470,13 @@ void Task_AirGrindDoorSign(void)
     u = gCurTask;
     u->tileWord = 0x8800;
     if (u->airGrindDoorSignAnimated == 0)
-        sub_0802f400();
+        AirGrindDoorSignShowStill();
     else
-        sub_0802f3d0();
+        AirGrindDoorSignAnimate();
     TaskExitTrampoline();
 }
 
-void sub_0802f3d0(void)
+void AirGrindDoorSignAnimate(void)
 {
     gCurTask->drawCallback = (u32)DoorObjectDraw;
     for (;;)
@@ -488,12 +488,12 @@ void sub_0802f3d0(void)
     }
 }
 
-void sub_0802f400(void)
+void AirGrindDoorSignShowStill(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->drawCallback = (u32)sub_0802ff70;
+    t->drawCallback = (u32)SubGameDoorSignDrawUsed;
     t->frame = 0;
     TaskSleepForever();
 }

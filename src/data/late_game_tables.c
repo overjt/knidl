@@ -473,7 +473,7 @@ void (*gGameOverObjectVariants[6])(void) LATE_TBL(08758294) = {
     sub_080ccd4c,
     sub_080ccec8,
     sub_080cd24c,
-    sub_080cd2f8,
+    GameOverKnockedOutPlayers,
 };
 /* include/ending.h; CallTableEntry(i, 3, ...) in GameOverPlayer, GameOverPlayerEnterState */
 void (*gGameOverPlayerStates[3])(void) LATE_TBL(08758294) = {

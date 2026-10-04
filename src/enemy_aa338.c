@@ -79,7 +79,7 @@ extern void ActorSetState();
 extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(struct ActorAux *v);
+extern void ActorSetAux(struct ActorAux *v);
 extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
@@ -146,12 +146,12 @@ void NightmareWizardUpdate(void)
             if (gUnk_02007D00[1] == 0)
             {
                 ActorSetAttackBox((u32)gUnk_08749870);
-                sub_080639f0((struct ActorAux *)gUnk_08749AF8);
+                ActorSetAux((struct ActorAux *)gUnk_08749AF8);
             }
             else
             {
                 ActorSetAttackBox((u32)gUnk_0874988C);
-                sub_080639f0((struct ActorAux *)gUnk_08749B00);
+                ActorSetAux((struct ActorAux *)gUnk_08749B00);
             }
             ActorCheckHits();
         }

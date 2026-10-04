@@ -23,7 +23,7 @@ extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
-extern void sub_080639f0(void *p);
+extern void ActorSetAux(void *p);
 extern void ActorSetExtraAttackBox(void *p);
 extern void AngleToVector(s16 t, s16 mag);
 extern u32 ActorCheckHits(void);
@@ -277,31 +277,31 @@ void sub_08094358(void)
         if (v >= 4 && v <= 9) {
             ActorSetAttackBox(gUnk_087449E8);
             ActorSetExtraAttackBox(gUnk_08744A04);
-            sub_080639f0(gUnk_0874531C);
+            ActorSetAux(gUnk_0874531C);
         } else if (v >= 10 && v <= 19) {
             ActorSetAttackBox(gUnk_08744A3C);
             ActorSetExtraAttackBox(gUnk_08744A58);
-            sub_080639f0(gUnk_08745324);
+            ActorSetAux(gUnk_08745324);
         } else if (v >= 20 && v <= 27) {
             ActorSetAttackBox(gUnk_08744A90);
             ActorSetExtraAttackBox(gUnk_08744AAC);
-            sub_080639f0(gUnk_0874532C);
+            ActorSetAux(gUnk_0874532C);
         } else if (v >= 28 && v <= 31) {
             ActorSetAttackBox(gUnk_08744B1C);
             ActorSetExtraAttackBox(gUnk_08744B38);
-            sub_080639f0(gUnk_08745334);
+            ActorSetAux(gUnk_08745334);
         } else if (v >= 32 && v <= 35) {
             ActorSetAttackBox(gUnk_08744B70);
             ActorSetExtraAttackBox(gUnk_08744B8C);
-            sub_080639f0(gUnk_0874533C);
+            ActorSetAux(gUnk_0874533C);
         } else if (v >= 36 && v <= 47) {
             ActorSetAttackBox(gUnk_08744BFC);
             ActorSetExtraAttackBox(gUnk_08744C18);
-            sub_080639f0(gUnk_08745344);
+            ActorSetAux(gUnk_08745344);
         } else {
             ActorSetAttackBox(gUnk_08744C50);
             ActorSetExtraAttackBox(gUnk_08744C6C);
-            sub_080639f0(gUnk_0874534C);
+            ActorSetAux(gUnk_0874534C);
         }
     }
 }

@@ -12522,11 +12522,11 @@ u32 gUnk_087548A0[] FRAME_TABLE = {
     (u32)gUnk_085B9B2C,
 };
 
-/* gUnk_087548A8.  Consumer: sub_080cd2f8 (src/gameover_ccd4c.c:239).  4
+/* gGameOverKnockedOutPlayersFrames.  Consumer: GameOverKnockedOutPlayers (src/gameover_ccd4c.c:239).  4
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087548A8-0x087548B8).  Declared
  * include/ending.h:58. */
-u32 gUnk_087548A8[] FRAME_TABLE = {
+u32 gGameOverKnockedOutPlayersFrames[] FRAME_TABLE = {
     (u32)gUnk_085E6CD4,
     (u32)gUnk_085E6D1C,
     (u32)gUnk_085E6DAC,
@@ -13831,7 +13831,7 @@ u32 gUnk_087558C0[] FRAME_TABLE = {
     (u32)gUnk_085A3280,
 };
 
-/* gUnk_087558C4.  Consumer: sub_0802f6f4 (src/obj_2f62c.c:87).  3 words,
+/* gUnk_087558C4.  Consumer: StageDoorSignShowStill (src/obj_2f62c.c:87).  3 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x087558C4-0x087558D0).  Declared
  * include/camera.h:88. */
@@ -13842,7 +13842,7 @@ u32 gUnk_087558C4[] FRAME_TABLE = {
 };
 
 /* gUnk_087558D0.  Consumers: sub_0802f93c (src/obj_2f62c.c:188),
- * DoorObjectDraw (src/obj_2f62c.c:417), sub_0802ff70 (src/obj_2f62c.c:439).
+ * DoorObjectDraw (src/obj_2f62c.c:417), SubGameDoorSignDrawUsed (src/obj_2f62c.c:439).
  * 3 words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087558D0-0x087558DC).  Declared
  * include/camera.h:89. */
@@ -13853,7 +13853,7 @@ u32 gUnk_087558D0[] FRAME_TABLE = {
 };
 
 /* gUnk_087558DC.  Consumers: Task_BossDoorSign (src/obj_2eac8.c:120),
- * sub_0802f684 (src/obj_2f62c.c:52), sub_0802f6c0 (src/obj_2f62c.c:71).  3
+ * StageDoorSignBlinkSignAndDoor (src/obj_2f62c.c:52), StageDoorSignBlinkDoor (src/obj_2f62c.c:71).  3
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087558DC-0x087558E8).  Declared
  * include/camera.h:90. */

@@ -55,7 +55,7 @@ extern u32 gUnk_085E5BC4[];
 extern u32 gUnk_0874CEE8[];
 extern u32 gUnk_0874CF28[];
 extern u32 gUnk_0874CF94[];
-extern u32 gUnk_087548A8[];
+extern u32 gGameOverKnockedOutPlayersFrames[];
 extern u32 gUnk_087548B8[];
 extern u32 gUnk_08754908[];
 extern u32 gUnk_08754914[];
@@ -230,7 +230,7 @@ void sub_080cd0c8(void);
 void sub_080cd0cc(void);
 void sub_080cd248(void);
 void sub_080cd24c(void);
-void sub_080cd2f8(void);
+void GameOverKnockedOutPlayers(void);
 
 /* src/credits_cd330.c */
 void CreditsMain(void);

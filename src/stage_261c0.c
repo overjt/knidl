@@ -204,12 +204,12 @@ s32 sub_08026584(void)
         case 0:
             break;
         case 1:
-            TaskSetEntry(sub_0802f6c0, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(StageDoorSignBlinkDoor, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 2:
             CreateStageEffect(4, (d->unk2 << 4) + 16, (d->unk4 << 4) + 8);
             n = 1;
-            TaskSetEntry(sub_0802f6f4, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(StageDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         }
         break;
@@ -219,13 +219,13 @@ s32 sub_08026584(void)
         switch (*(u8 *)&gCurRoomDef->doors[gEntryDoorIndex].unk6)
         {
         case 3:
-            TaskSetEntry(sub_0802f2fc, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(BombRallyDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 4:
-            TaskSetEntry(sub_0802f400, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(AirGrindDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         case 5:
-            TaskSetEntry(sub_0802f1dc, gDoorObjectTasks[gEntryDoorIndex][0]);
+            TaskSetEntry(QuickDrawDoorSignShowStill, gDoorObjectTasks[gEntryDoorIndex][0]);
             break;
         default:
             return;

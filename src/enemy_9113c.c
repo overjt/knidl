@@ -53,7 +53,7 @@ extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
-extern void sub_080639f0(u32 v);
+extern void ActorSetAux(u32 v);
 extern void ActorSetExtraAttackBox(u32 v);
 extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
 extern void ActorCheckHitsWithExtraBox(void);
@@ -115,7 +115,7 @@ void PoppyBrosSrUpdate(void)
         }
     }
     ActorSetAttackBox(gUnk_087438EC[gCurTask->frame]);
-    sub_080639f0(gUnk_0874391C[gCurTask->frame]);
+    ActorSetAux(gUnk_0874391C[gCurTask->frame]);
     ActorSetExtraAttackBox(gUnk_0874394C[gCurTask->frame]);
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();

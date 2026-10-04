@@ -10,7 +10,7 @@
  *
  * Task types #229-#235 (class 3) and the spawner of #236, in the same
  * spawner / body / callback layout as obj_2eac8.c.  The draw callbacks
- * (sub_0802f718, sub_0802f93c, sub_0802fd98, DoorObjectDraw, sub_0802ff70;
+ * (sub_0802f718, sub_0802f93c, sub_0802fd98, DoorObjectDraw, SubGameDoorSignDrawUsed;
  * several types share the last two) draw the frame Task.frame of the
  * Task.frameTable table through QueueWorldSprite, and a second sprite from
  * Task.unk34 at Task.velX/unk58 where the type has one.  #231
@@ -34,15 +34,15 @@ void Task_StageDoorSign(void)
     u = gCurTask;
     u->tileWord = 0x8800;
     if (u->doorObjectKind == 0)
-        sub_0802f6f4();
+        StageDoorSignShowStill();
     else if (u->stageDoorSignAnimated == 0)
-        sub_0802f6c0();
+        StageDoorSignBlinkDoor();
     else
-        sub_0802f684();
+        StageDoorSignBlinkSignAndDoor();
     TaskExitTrampoline();
 }
 
-void sub_0802f684(void)
+void StageDoorSignBlinkSignAndDoor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -63,7 +63,7 @@ void sub_0802f684(void)
     }
 }
 
-void sub_0802f6c0(void)
+void StageDoorSignBlinkDoor(void)
 {
     struct Task *t;
 
@@ -79,7 +79,7 @@ void sub_0802f6c0(void)
     }
 }
 
-void sub_0802f6f4(void)
+void StageDoorSignShowStill(void)
 {
     struct Task *t;
 
@@ -147,7 +147,7 @@ void Task_WarpStarStationDoorSign(void)
     u->tileWord = 0x8800;
     u->taskClass = 2;
     v = gCurTask;
-    v->updateCallback = (u32)sub_0802f8c8;
+    v->updateCallback = (u32)WarpStarStationDoorSignUpdate;
     v->frame = 0;
     v->warpStarStationDoorSignTileFrame = 0;
     for (;;)
@@ -163,7 +163,7 @@ void Task_WarpStarStationDoorSign(void)
     }
 }
 
-void sub_0802f8c8(void)
+void WarpStarStationDoorSignUpdate(void)
 {
     u8 *src;
 
@@ -425,7 +425,7 @@ void DoorObjectDraw(void)
     }
 }
 
-void sub_0802ff70(void)
+void SubGameDoorSignDrawUsed(void)
 {
     struct Task *t;
     u32 *tbl;

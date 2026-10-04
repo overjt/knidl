@@ -51,7 +51,7 @@ extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
 extern void ActorSetAttackBoxSlot(u32 i, u32 v);
-extern void sub_080639f0(struct ActorAux *v);
+extern void ActorSetAux(struct ActorAux *v);
 extern void ActorSetExtraAttackBox(u32 v);
 extern void ActorSetExtraAttackBoxSlot(u32 i, u32 v);
 extern s32 TaskFindNearestPlayer(void);

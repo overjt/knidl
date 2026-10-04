@@ -94,7 +94,7 @@ void PlayerWarpStarRideState1(void)
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
     gCurTask->spriteFlags &= 0x7FFF;
-    sub_0807029c();
+    PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
     case 0:
@@ -137,7 +137,7 @@ void PlayerWarpStarRideState1(void)
     while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -175,7 +175,7 @@ void PlayerWarpStarRideState3(void)
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
     gCurTask->spriteFlags &= 0x7FFF;
-    sub_0807029c();
+    PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
     case 0:
@@ -218,7 +218,7 @@ void PlayerWarpStarRideState3(void)
     while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -257,7 +257,7 @@ void PlayerWarpStarRideState4(void)
     gCurTask->layer = 7;
     gCurTask->facing = -1;
     gCurTask->spriteFlags &= 0x7FFF;
-    sub_0807029c();
+    PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
     case 0:
@@ -312,7 +312,7 @@ void PlayerWarpStarRideState4(void)
     while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -493,7 +493,7 @@ void PlayerWarpStarRideState5(void)
     while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -526,7 +526,7 @@ void PlayerWarpStarRideState6(void)
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
     gCurTask->spriteFlags &= 0x7FFF;
-    sub_0807029c();
+    PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
     case 0:
@@ -569,7 +569,7 @@ void PlayerWarpStarRideState6(void)
     while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -610,7 +610,7 @@ void PlayerWarpStarRideState7(void)
     gCurTask->spriteFlags &= 0x7FFF;
     gCurTask->unk24 = 1;
     gCurTask->unk34 = 0;
-    sub_0807029c();
+    PlayerStartTumble();
     t = gCurTask;
     switch (t->player->playerIndex)
     {
@@ -689,6 +689,6 @@ void PlayerWarpStarRideState7(void)
         TaskYieldTrampoline(2);
     } while (++*(s16 *)&gCurTask->playerLoopCount <= 25);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }

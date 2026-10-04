@@ -72,7 +72,7 @@ void HeldPlayerUpdate(void)
 void HeldPlayerSwallow(void)
 {
     gCurTask->updateState = HELD_PLAYER_STATE_SWALLOW;
-    sub_08068690();
+    HeldPlayerStartSwallow();
     while (HeldPlayerIsNearCaptor() == 0)
     {
         HeldPlayerPullTowardCaptor();
@@ -94,13 +94,13 @@ void HeldPlayerSwallowUpdate(void)
         return;
     if (t->frame == -1)
         return;
-    sub_080687fc();
+    HeldPlayerSwallowAdvanceFrame();
 }
 
 void HeldPlayerSpitFlight(void)
 {
     gCurTask->updateState = HELD_PLAYER_STATE_SPIT_FLIGHT;
-    sub_08068828();
+    HeldPlayerStartSpitFlight();
     TaskSleepForever();
 }
 
@@ -116,7 +116,7 @@ void HeldPlayerSpitBounceOff(void)
     t->moveCallback = (u32)PlayerMove;
     t->updateState = HELD_PLAYER_STATE_SPIT_BOUNCE_OFF;
     TaskStop();
-    sub_08068840();
+    HeldPlayerStartSpitBounceOff();
     TaskSleepForever();
 }
 
@@ -133,7 +133,7 @@ void HeldPlayerSpitBounceOffUpdate(void)
     else
     {
         t->playerHeldSpitTimer--;
-        sub_0806896c();
+        HeldPlayerStepTumble();
     }
 }
 
@@ -289,7 +289,7 @@ void HeldPlayerBackdropBounceOff(void)
         gCurTask->playerHeldLoopCount = 0;
         do
         {
-            sub_0806896c();
+            HeldPlayerStepTumble();
             TaskYieldTrampoline(1);
         } while ((s16)(++gCurTask->playerHeldLoopCount) <= 29);
     }
@@ -474,7 +474,7 @@ void HeldPlayerState6(void)
             gCurTask->playerHeldLoopCount = 0;
             do
             {
-                sub_0806896c();
+                HeldPlayerStepTumble();
                 TaskYieldTrampoline(1);
                 t = gCurTask;
                 t->playerHeldLoopCount++;
@@ -775,7 +775,7 @@ void HeldPlayerThrowBounceOff(void)
             gCurTask->playerHeldLoopCount = 0;
             do
             {
-                sub_0806896c();
+                HeldPlayerStepTumble();
                 TaskYieldTrampoline(1);
             } while ((s16)(++gCurTask->playerHeldLoopCount) <= 14);
         }
@@ -908,7 +908,7 @@ void DropHeldPlayer(s32 i)
     gUnk_02007D00[1] = -1;
     t->actorKind = ACTOR_KIND_ENEMY;
 }
-void sub_08068690(void)
+void HeldPlayerStartSwallow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -985,7 +985,7 @@ void HeldPlayerEnterMouth(void)
     gUnk_02007D00[0] = 1;
     gCurTask->frame = 0xFFFF;
 }
-void sub_080687fc(void)
+void HeldPlayerSwallowAdvanceFrame(void)
 {
     struct Task *t;
 
@@ -1001,7 +1001,7 @@ void sub_080687fc(void)
         t->playerHeldFrameTimer--;
     }
 }
-void sub_08068828(void)
+void HeldPlayerStartSpitFlight(void)
 {
     struct Task *t;
 
@@ -1010,7 +1010,7 @@ void sub_08068828(void)
     t->posX = 0;
     t->posY = 0;
 }
-void sub_08068840(void)
+void HeldPlayerStartSpitBounceOff(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1055,7 +1055,7 @@ void sub_08068950(s16 x, s16 y, s16 d)
     gUnk_02007D00[3] = y;
     gUnk_02007D00[4] = d;
 }
-void sub_0806896c(void)
+void HeldPlayerStepTumble(void)
 {
     struct Task *t;
     struct Task *u;

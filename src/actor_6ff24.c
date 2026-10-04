@@ -19,7 +19,7 @@
  * vertical speed) through a table of steps with TaskYieldTrampoline, and
  * finally wait for the helper to reach unk24 == 2.
  *
- * Also here: sub_0806ff7c, the OAM draw routine for the family, and
+ * Also here: PlayerWarpStarRideDraw, the OAM draw routine for the family, and
  * PlayerBoardWarpStar / MetaKnightWarpStarRideInit, the entry points that re-seat the running
  * task from the player record (Task.player) and the id at 0x020055C0.
  *
@@ -75,7 +75,7 @@ void PlayerWarpStarRideState7Update(void)
     {
     case 1:
     case 2:
-        sub_08070334();
+        PlayerStepTumble();
         break;
     case 3:
         sub_080702d8();
@@ -83,7 +83,7 @@ void PlayerWarpStarRideState7Update(void)
     }
 }
 
-void sub_0806ff7c(void)
+void PlayerWarpStarRideDraw(void)
 {
     struct Task *t;
     struct Task *u;
@@ -136,7 +136,7 @@ void sub_0806ff7c(void)
                  gCurTask->tileWord | 0x800, x, y);
 }
 
-void sub_080700e8(void)
+void PlayerSetWarpStarRideFrame(void)
 {
     struct PlayerState *p;
     struct Task *t;
@@ -144,7 +144,7 @@ void sub_080700e8(void)
     s32 k;
     s32 pri;
 
-    tbl = gUnk_0873F950[(p = gCurTask->player)->ability];
+    tbl = gPlayerWarpStarRideFrames[(p = gCurTask->player)->ability];
     k = p->playerIndex;
     if (k == 1 || k == 2)
         if (gPlayerCount == 4)
@@ -200,7 +200,7 @@ void sub_08070174(void)
         }
     }
     TaskSetMotionY(0xFFFC0000, 0x3000, 0x40000);
-    sub_0807029c();
+    PlayerStartTumble();
 }
 
 void sub_08070208(void)
@@ -211,14 +211,14 @@ void sub_08070208(void)
     t->moveCallback = (u32)TaskCopyParentPixelPos;
     t->taskClass = 4;
     gCurTask->lateUpdateCallback = 0;
-    sub_080700e8();
+    PlayerSetWarpStarRideFrame();
 }
 
 void sub_0807022c(void)
 {
     while (gCurTask->unk24 != 3)
         TaskYieldTrampoline(1);
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -234,14 +234,14 @@ void sub_08070264(void)
     t->unk28 = 2;
 }
 
-void sub_0807029c(void)
+void PlayerStartTumble(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->unk2C = -t->facing;
     t->unk28 = 1;
-    t->frame = gUnk_0873FAB4[t->player->ability] + 13;
+    t->frame = gPlayerTumbleFrames[t->player->ability] + 13;
     t->unk30 = 13;
 }
 
@@ -267,7 +267,7 @@ void sub_080702d8(void)
     }
 }
 
-void sub_08070334(void)
+void PlayerStepTumble(void)
 {
     struct Task *t;
     struct Task *u;
@@ -285,13 +285,13 @@ void sub_08070334(void)
         t->unk28 = 1;
         if (v > 15)
         {
-            t->frame = gUnk_0873FAB4[t->player->ability];
+            t->frame = gPlayerTumbleFrames[t->player->ability];
             t->unk30 = 0;
         }
         u = gCurTask;
         if (u->unk30 < 0)
         {
-            u->frame = gUnk_0873FAB4[u->player->ability] + 15;
+            u->frame = gPlayerTumbleFrames[u->player->ability] + 15;
             u->unk30 = 15;
         }
     }
@@ -337,7 +337,7 @@ void sub_0807042c(void)
     switch (gCurTask->unk24)
     {
     case 1:
-        sub_08070334();
+        PlayerStepTumble();
         break;
     case 2:
         sub_080702d8();
@@ -378,7 +378,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
     {
         if (gMetaKnightmareMode == 0)
         {
-            tbl = gUnk_0873F950[p->ability];
+            tbl = gPlayerWarpStarRideFrames[p->ability];
             k = p->playerIndex;
             if (k == 1 || k == 2)
                 if (gPlayerCount == 4)
@@ -404,7 +404,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
     }
     else
     {
-        tbl = gUnk_0873F950[p->ability];
+        tbl = gPlayerWarpStarRideFrames[p->ability];
         k = p->playerIndex;
         if (k == 1 || k == 2)
             if (gPlayerCount == 4)
@@ -416,7 +416,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
     TaskSetEntry((u32)PlayerWarpStarRideInit, a);
 }
 
-void sub_08070614(u32 a)
+void PlayerEndRideLanding(u32 a)
 {
     struct PlayerState *p;
 
@@ -528,7 +528,7 @@ void MetaKnightWarpStarRideState1(void)
     while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -596,7 +596,7 @@ void MetaKnightWarpStarRideState3(void)
     while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -664,7 +664,7 @@ void MetaKnightWarpStarRideState4(void)
     while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -722,7 +722,7 @@ void MetaKnightWarpStarRideState5(void)
     while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 
@@ -777,7 +777,7 @@ void MetaKnightWarpStarRideState6(void)
     while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_08070614(gCurTaskIdx);
+    PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
 }
 

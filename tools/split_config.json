@@ -240,6 +240,7 @@
     "ActorSelectPaletteVariant",
     "ActorSetAttackBox",
     "ActorSetAttackBoxSlot",
+    "ActorSetAux",
     "ActorSetDefaultPalette",
     "ActorSetExtraAttackBox",
     "ActorSetExtraAttackBoxSlot",
@@ -281,6 +282,8 @@
     "AirGrindCourseToLanePos",
     "AirGrindCpuHoldsA",
     "AirGrindCpuRollTarget",
+    "AirGrindDoorSignAnimate",
+    "AirGrindDoorSignShowStill",
     "AirGrindDrawCourse",
     "AirGrindDrawDigit",
     "AirGrindDrawNumber",
@@ -351,6 +354,7 @@
     "AreAllPlayersOnGround",
     "AreInactivePlayerCamerasParked",
     "ArePlayerCamerasDoneGliding",
+    "ArenaDoorSignUpdate",
     "ArenaDropMaximTomato",
     "AxeKnightAxeUpdate",
     "AxeKnightCatchAxe",
@@ -449,6 +453,8 @@
     "BombRallyBombStart",
     "BombRallyBombStartUpdate",
     "BombRallyBombUpdate",
+    "BombRallyDoorSignAnimate",
+    "BombRallyDoorSignShowStill",
     "BombRallyEnterState",
     "BombRallyInit",
     "BombRallyInitSpeed",
@@ -1135,6 +1141,7 @@
     "DoRecv",
     "DoSend",
     "DoorObjectDraw",
+    "DoorOpeningUpdate",
     "DrawAffineSprite",
     "DrawBg123Column",
     "DrawBg123Row",
@@ -1303,6 +1310,7 @@
     "GameOverChoiceWait",
     "GameOverChoiceWaitUpdate",
     "GameOverIsUpDownPressed",
+    "GameOverKnockedOutPlayers",
     "GameOverLoadGraphics",
     "GameOverMain",
     "GameOverMetaKnightmareScreen",
@@ -1498,11 +1506,16 @@
     "HeldPlayerSpitBounceOffUpdate",
     "HeldPlayerSpitFlight",
     "HeldPlayerSpitFlightUpdate",
+    "HeldPlayerStartSpitBounceOff",
+    "HeldPlayerStartSpitFlight",
+    "HeldPlayerStartSwallow",
     "HeldPlayerState5",
     "HeldPlayerState5Update",
     "HeldPlayerState6",
     "HeldPlayerState6Update",
+    "HeldPlayerStepTumble",
     "HeldPlayerSwallow",
+    "HeldPlayerSwallowAdvanceFrame",
     "HeldPlayerSwallowUpdate",
     "HeldPlayerThrowBounceOff",
     "HeldPlayerThrowBounceOffUpdate",
@@ -2919,6 +2932,7 @@
     "PlayerEffectUFOLaserTrail",
     "PlayerEndCannonLaunch",
     "PlayerEndInvincibility",
+    "PlayerEndRideLanding",
     "PlayerEnterCannon",
     "PlayerFaceHeldDirection",
     "PlayerGetFacingSlope",
@@ -3055,6 +3069,7 @@
     "PlayerSetDanceSpot",
     "PlayerSetMotionXPreset",
     "PlayerSetMotionYPreset",
+    "PlayerSetWarpStarRideFrame",
     "PlayerSetWaterMotionY",
     "PlayerStarRodFlightCheckShoot",
     "PlayerStarRodFlightFly",
@@ -3070,6 +3085,8 @@
     "PlayerStartOffsetScript",
     "PlayerStartRequestedAction",
     "PlayerStartSfx",
+    "PlayerStartTumble",
+    "PlayerStepTumble",
     "PlayerStopAtCeilingAndWall",
     "PlayerStopAtWall",
     "PlayerStopAxes",
@@ -3085,6 +3102,7 @@
     "PlayerUpdatePaletteFlash",
     "PlayerWalkToDanceSpot",
     "PlayerWalkToDanceSpotUpdate",
+    "PlayerWarpStarRideDraw",
     "PlayerWarpStarRideEnterState",
     "PlayerWarpStarRideInit",
     "PlayerWarpStarRideState1",
@@ -3185,6 +3203,8 @@
     "QuickDrawCreateRankLabels",
     "QuickDrawDecideRound",
     "QuickDrawDecideRoundVsCpu",
+    "QuickDrawDoorSignAnimate",
+    "QuickDrawDoorSignShowStill",
     "QuickDrawEndRoundFalseStart",
     "QuickDrawEndRoundLoseVsCpu",
     "QuickDrawEndRoundTie",
@@ -3678,6 +3698,9 @@
     "SquishyWalkState4",
     "SquishyWalkState4Update",
     "SquishyWalkUpdate",
+    "StageDoorSignBlinkDoor",
+    "StageDoorSignBlinkSignAndDoor",
+    "StageDoorSignShowStill",
     "StageInit",
     "StageMain",
     "StakeInit",
@@ -3776,6 +3799,7 @@
     "SubGameAnyPressedB",
     "SubGameCheckEnd",
     "SubGameDimAndHalt",
+    "SubGameDoorSignDrawUsed",
     "SubGameInit",
     "SubGameLoadScreen",
     "SubGameMain",
@@ -4521,6 +4545,7 @@
     "WarpStarState0Update",
     "WarpStarState1",
     "WarpStarState1Update",
+    "WarpStarStationDoorSignUpdate",
     "WarpStarStopTrail",
     "WarpStarUpdate",
     "WarpStarVanish",
@@ -4695,22 +4720,9 @@
     "sub_0802d6cc",
     "sub_0802d96c",
     "sub_0802da8c",
-    "sub_0802eba4",
-    "sub_0802ee88",
-    "sub_0802f110",
-    "sub_0802f1dc",
-    "sub_0802f2b0",
-    "sub_0802f2fc",
-    "sub_0802f3d0",
-    "sub_0802f400",
-    "sub_0802f684",
-    "sub_0802f6c0",
-    "sub_0802f6f4",
     "sub_0802f718",
-    "sub_0802f8c8",
     "sub_0802f93c",
     "sub_0802fd98",
-    "sub_0802ff70",
     "sub_08030254",
     "sub_080302cc",
     "sub_08030404",
@@ -4793,7 +4805,6 @@
     "sub_0805ddb0",
     "sub_0805df9c",
     "sub_0805e2d4",
-    "sub_080639f0",
     "sub_08063a2c",
     "sub_080641b0",
     "sub_080652c8",
@@ -4806,12 +4817,7 @@
     "sub_08066580",
     "sub_080667c0",
     "sub_08066988",
-    "sub_08068690",
-    "sub_080687fc",
-    "sub_08068828",
-    "sub_08068840",
     "sub_08068950",
-    "sub_0806896c",
     "sub_080694e0",
     "sub_08069fc8",
     "sub_0806a6a0",
@@ -4830,18 +4836,13 @@
     "sub_0806be4c",
     "sub_0806d08c",
     "sub_0806ee2c",
-    "sub_0806ff7c",
-    "sub_080700e8",
     "sub_08070174",
     "sub_08070208",
     "sub_0807022c",
     "sub_08070264",
-    "sub_0807029c",
     "sub_080702d8",
-    "sub_08070334",
     "sub_080703a8",
     "sub_0807042c",
-    "sub_08070614",
     "sub_08070ec0",
     "sub_08070ffc",
     "sub_08071774",
@@ -5341,8 +5342,7 @@
     "sub_080cd0c8",
     "sub_080cd0cc",
     "sub_080cd248",
-    "sub_080cd24c",
-    "sub_080cd2f8"
+    "sub_080cd24c"
   ],
   "extra_labels": {
     "0x080CD8A0": "__umul3232H32",
@@ -26009,7 +26009,7 @@
     "0x0873F92C": "gUnk_0873F92C",
     "0x0873F938": "gUnk_0873F938",
     "0x0873F944": "gUnk_0873F944",
-    "0x0873F950": "gUnk_0873F950",
+    "0x0873F950": "gPlayerWarpStarRideFrames",
     "0x0873F9B8": "gUnk_0873F9B8",
     "0x0873F9C4": "gUnk_0873F9C4",
     "0x0873F9D0": "gUnk_0873F9D0",
@@ -26031,7 +26031,7 @@
     "0x0873FA90": "gUnk_0873FA90",
     "0x0873FA9C": "gUnk_0873FA9C",
     "0x0873FAA8": "gUnk_0873FAA8",
-    "0x0873FAB4": "gUnk_0873FAB4",
+    "0x0873FAB4": "gPlayerTumbleFrames",
     "0x0873FAE8": "gUnk_0873FAE8",
     "0x0873FB04": "gPlayerWarpStarRideStates",
     "0x0873FB24": "gPlayerWarpStarRideStateUpdates",
@@ -28195,7 +28195,7 @@
     "0x08754880": "gUnk_08754880",
     "0x0875488C": "gUnk_0875488C",
     "0x087548A0": "gUnk_087548A0",
-    "0x087548A8": "gUnk_087548A8",
+    "0x087548A8": "gGameOverKnockedOutPlayersFrames",
     "0x087548B8": "gUnk_087548B8",
     "0x08754908": "gUnk_08754908",
     "0x08754914": "gUnk_08754914",
@@ -34156,7 +34156,7 @@
     {
       "start": "0x0873F950",
       "extent": "next-label",
-      "why": "include/actor.h:179 `s16 *gUnk_0873F950[]`: sub_080700e8 reads tbl[k] of the ability's row (src/actor_6ff24.c:147-152); the array ends at the first row it points at (0x0873F9B8, 26 pointers)"
+      "why": "include/actor.h:179 `s16 *gPlayerWarpStarRideFrames[]`: PlayerSetWarpStarRideFrame reads tbl[k] of the ability's row (src/actor_6ff24.c:147-152); the array ends at the first row it points at (0x0873F9B8, 26 pointers)"
     },
     {
       "start": "0x0873FB7C",
@@ -34266,7 +34266,7 @@
     {
       "start": "0x08743810",
       "extent": "next-label",
-      "why": "sub_080639f0(struct ActorAux *) (src/enemy_9000c.c:136) installs the element as Actor.unk60, dereferenced as b->unk60->hitDuration (src/actor_673ec.c:1429); extent: the span to the next consumer-referenced label",
+      "why": "ActorSetAux(struct ActorAux *) (src/enemy_9000c.c:136) installs the element as Actor.unk60, dereferenced as b->unk60->hitDuration (src/actor_673ec.c:1429); extent: the span to the next consumer-referenced label",
       "targets": {
         "pointers": [
           "0x4"
@@ -34277,7 +34277,7 @@
     {
       "start": "0x0874391C",
       "extent": "next-label",
-      "why": "sub_080639f0(struct ActorAux *) (src/enemy_9113c.c:116) installs the element as Actor.unk60, dereferenced as b->unk60->hitDuration (src/actor_673ec.c:1429); extent: the span to the next consumer-referenced label",
+      "why": "ActorSetAux(struct ActorAux *) (src/enemy_9113c.c:116) installs the element as Actor.unk60, dereferenced as b->unk60->hitDuration (src/actor_673ec.c:1429); extent: the span to the next consumer-referenced label",
       "targets": {
         "pointers": [
           "0x4"
@@ -34288,7 +34288,7 @@
     {
       "start": "0x08743A28",
       "extent": "next-label",
-      "why": "sub_080639f0(struct ActorAux *) (src/enemy_91f9c.c:137) installs the element as Actor.unk60, dereferenced as b->unk60->hitDuration (src/actor_673ec.c:1429); extent: the span to the next consumer-referenced label",
+      "why": "ActorSetAux(struct ActorAux *) (src/enemy_91f9c.c:137) installs the element as Actor.unk60, dereferenced as b->unk60->hitDuration (src/actor_673ec.c:1429); extent: the span to the next consumer-referenced label",
       "targets": {
         "pointers": [
           "0x4"
@@ -34364,7 +34364,7 @@
     {
       "start": "0x08745324",
       "count": 1,
-      "why": "ActorAux passed to sub_080639f0 (src/enemy_93f64.c:284): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
+      "why": "ActorAux passed to ActorSetAux (src/enemy_93f64.c:284): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
       "stride": 8,
       "pointers": [
         "0x4"
@@ -34373,7 +34373,7 @@
     {
       "start": "0x0874532C",
       "count": 1,
-      "why": "ActorAux passed to sub_080639f0 (src/enemy_93f64.c:288): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
+      "why": "ActorAux passed to ActorSetAux (src/enemy_93f64.c:288): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
       "stride": 8,
       "pointers": [
         "0x4"
@@ -34382,7 +34382,7 @@
     {
       "start": "0x08745334",
       "count": 1,
-      "why": "ActorAux passed to sub_080639f0 (src/enemy_93f64.c:292): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
+      "why": "ActorAux passed to ActorSetAux (src/enemy_93f64.c:292): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
       "stride": 8,
       "pointers": [
         "0x4"
@@ -34391,7 +34391,7 @@
     {
       "start": "0x0874533C",
       "count": 1,
-      "why": "ActorAux passed to sub_080639f0 (src/enemy_93f64.c:296): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
+      "why": "ActorAux passed to ActorSetAux (src/enemy_93f64.c:296): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
       "stride": 8,
       "pointers": [
         "0x4"
@@ -34400,7 +34400,7 @@
     {
       "start": "0x08745344",
       "count": 1,
-      "why": "ActorAux passed to sub_080639f0 (src/enemy_93f64.c:300): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
+      "why": "ActorAux passed to ActorSetAux (src/enemy_93f64.c:300): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
       "stride": 8,
       "pointers": [
         "0x4"
@@ -34409,7 +34409,7 @@
     {
       "start": "0x0874534C",
       "count": 1,
-      "why": "ActorAux passed to sub_080639f0 (src/enemy_93f64.c:304): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
+      "why": "ActorAux passed to ActorSetAux (src/enemy_93f64.c:304): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
       "stride": 8,
       "pointers": [
         "0x4"
@@ -34418,7 +34418,7 @@
     {
       "start": "0x08749B00",
       "count": 1,
-      "why": "ActorAux passed to sub_080639f0 (src/enemy_aa338.c:153): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
+      "why": "ActorAux passed to ActorSetAux (src/enemy_aa338.c:153): struct ActorAux {s8 hitDuration; u8 pad[3]; u32 altAttackBox} (include/task.h:137): +4 becomes gAttackBox (`gAttackBox = a->unk60->altAttackBox`, src/actor_673ec.c:1315), a struct AttackBox * the hit tests dereference (src/hitbox_1a8c8.c:195); +0 is a number",
       "stride": 8,
       "pointers": [
         "0x4"
@@ -35974,7 +35974,7 @@
     {
       "start": "0x087548A8",
       "end": "0x087548B8",
-      "why": "frame table gUnk_087548A8 [4 words], consumer src/gameover_ccd4c.c:239 `gCurTask->frameTable = gUnk_087548A8;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gGameOverKnockedOutPlayersFrames [4 words], consumer src/gameover_ccd4c.c:239 `gCurTask->frameTable = gGameOverKnockedOutPlayersFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x087548B8",

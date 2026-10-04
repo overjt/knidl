@@ -20,7 +20,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void ActorSetTerrainBox(void *p);
-extern void sub_080639f0(void *p);
+extern void ActorSetAux(void *p);
 extern void ActorSetExtraAttackBox(void *p);
 extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
@@ -947,21 +947,21 @@ void FireLionDefeat(void)
     TaskSetFrame(21);
     ActorSetAttackBox(gUnk_08744F0C);
     ActorSetExtraAttackBox(gUnk_087446E8[gCurTask->frame]);
-    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     ActorSetTerrainBox(gUnk_08745304);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     TaskSetFrame(38);
     ActorSetAttackBox(gUnk_087450CC);
     ActorSetExtraAttackBox(gUnk_087450E8);
-    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     while (gCurTask->fireLionLanded == 0)
         TaskYieldTrampoline(1);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744550);
     TaskSetFrameByFacing(40);
     ActorSetAttackBox(gUnk_08745104);
     ActorSetExtraAttackBox(gUnk_08745120);
-    sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
     CreateChildTaskHere(TASK_STAR_FLASH, 0);
@@ -1125,7 +1125,7 @@ void sub_08097024(void)
         v = u->frame;
         if (v < 40 || v > 43)
             ActorSetExtraAttackBox(gUnk_087446E8[u->frame]);
-        sub_080639f0(gUnk_087447B8[gCurTask->frame]);
+        ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     }
 }
 

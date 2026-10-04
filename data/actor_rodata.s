@@ -356,8 +356,8 @@ gUnk_0873F8E4:
 	.section .actor_rodata_0873f92c, "a"
 	.global	actor_rodata_0873f92c
 actor_rodata_0873f92c:
-	.global	gUnk_0873F950
-gUnk_0873F950:
+	.global	gPlayerWarpStarRideFrames
+gPlayerWarpStarRideFrames:
 	.word	gUnk_0873F9B8
 	.word	gUnk_0873F9C4
 	.word	gUnk_0873F9D0
@@ -447,8 +447,8 @@ gUnk_0873FA9C:
 	.global	gUnk_0873FAA8
 gUnk_0873FAA8:
 	.incbin	"baserom.gba", 0x73FAA8, 0xC
-	.global	gUnk_0873FAB4
-gUnk_0873FAB4:
+	.global	gPlayerTumbleFrames
+gPlayerTumbleFrames:
 	.incbin	"baserom.gba", 0x73FAB4, 0x34
 	.global	gUnk_0873FAE8
 gUnk_0873FAE8:

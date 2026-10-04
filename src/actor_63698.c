@@ -255,7 +255,7 @@ void ActorSetTerrainBox(u32 box)
     gCurTask->u8C.actor->terrainBox = box;
 }
 
-void sub_080639f0(struct ActorAux *v)
+void ActorSetAux(struct ActorAux *v)
 {
     gCurTask->u8C.actor->unk60 = v;
 }
