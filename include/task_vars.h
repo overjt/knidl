@@ -274,7 +274,7 @@
 #define cutsceneActorFlashPhase unk34 /* s32: script 50's palette flash step (0-10, gKirbyFlashBlendRatios weights) once its frame passes 49 */
 #define cutsceneActorChildSlot unk46 /* s16: slot of the task the script just created to set up (a cutscene actor or an effect) */
 #define cutsceneActorLoopCount unk6C /* s16: the running script's loop counter (frame cycles, strokes, blend steps) */
-#define cutsceneActorPalettePhase unk70 /* s16: script 55's palette step (0-23, gUnk_0874AD44 weights) its update blends by */
+#define cutsceneActorPalettePhase unk70 /* s16: script 55's palette step (0-23, gNightmarePowerOrbBlendWeights weights) its update blends by */
 
 /* CutsceneDirector - Cutscene director (task type #91, Task_CutsceneDirector;
    gCutsceneStarts) */
@@ -516,7 +516,7 @@
 
 /* HeavyMoleArm - Heavy Mole's arms (task types #121 / #122,
    Task_HeavyMoleUpperArm / Task_HeavyMoleLowerArm; gHeavyMoleArmStates) */
-#define heavyMoleArmSpinLevel unk28 /* s32: high half: claw spin speed level 0-3 (gUnk_0874B82A delays); low half: frames to its step */
+#define heavyMoleArmSpinLevel unk28 /* s32: high half: claw spin speed level 0-3 (gHeavyMoleArmSpinDelays delays); low half: frames to its step */
 #define heavyMoleArmPathStep unk2C /* s32: step counted down through the state's path tables (state 4: 24 poses, state 5: 11 moves) */
 #define heavyMoleArmStateTimer unk2C /* s32: frames until state 0 goes to state 1, and state 1 to a random attack (gUnk_0874B831) */
 #define heavyMoleArmSwingStep unk30 /* s32: the swing's angle step in states 2/3: +-1 (state 2) or +-2 (state 3), 0 = not swinging */
@@ -1011,8 +1011,8 @@
 #define nightmareWizardPalmStarDir unk20 /* s32: direction index the next OpenPalm star gets as its spawnArg (0-4, +1..4 mod 5) */
 #define nightmareWizardFrameTimer unk24 /* s32: frames until the next step of the 36-39 robe frames (every 2) in a sweep or OpenPalm */
 #define nightmareWizardSfxTimer unk24 /* s32: frames until state 8 plays sound 0x22E again (every 6) */
-#define nightmareWizardSpotAttack unk24 /* s32: the current spot's attack code (gUnk_08749224[spot], 0-4), row of gUnk_08749230 */
-#define nightmareWizardSpotIndex unk28 /* s32: index into the spot script gUnk_08749224 (0-9, wraps); -1 before the first spot */
+#define nightmareWizardSpotAttack unk24 /* s32: the current spot's attack code (gNightmareWizardSpotScript[spot], 0-4), row of gUnk_08749230 */
+#define nightmareWizardSpotIndex unk28 /* s32: index into the spot script gNightmareWizardSpotScript (0-9, wraps); -1 before the first spot */
 #define nightmareWizardWaitIndex unk2C /* s32: index of state 1's wait in gUnk_08749220 (15/30/45/60), stepped by 1-3 mod 4 */
 #define nightmareWizardOpenCloakCount unk30 /* s32: OpenCloak attacks made; bit 0 picks the order of the five stars */
 #define nightmareWizardVanishCount unk34 /* s32: vanishes made (state 3); every fourth goes to state 10 instead of 2 */

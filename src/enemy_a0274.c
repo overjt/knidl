@@ -287,7 +287,7 @@ void KingDededeStartWait(void)
     if (sub_080a060c() != 0)
     {
         i = RandomRange(3);
-        n = ActorStartAnim(gUnk_08748384);
+        n = ActorStartAnim(gKingDededeWaitAnim);
         t = gCurTask;
         t->actorAnimDelay24 = n;
         if (t->health < (s16)t->kingDededeThirdHealth)
@@ -536,8 +536,8 @@ void KingDededeIntro(void)
     t->updateState = z;
     TaskStop();
     ActorCollideTerrain();
-    ActorIntroPoseUntilScrollLocked(gUnk_08748384);
-    ActorIntroPoseUntilHpBarFull(gUnk_08748384);
+    ActorIntroPoseUntilScrollLocked(gKingDededeWaitAnim);
+    ActorIntroPoseUntilHpBarFull(gKingDededeWaitAnim);
     ActorSetExtraAttackBox((u32)gKingDededeIntroExtraAttackBox);
     gCurTask->unk2C = z;
     KingDededeStartWait();

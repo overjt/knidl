@@ -150,7 +150,7 @@ void PoppyBrosSrIntroUpdate(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState1(void)
+void PoppyBrosSrHop1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -168,7 +168,7 @@ void PoppyBrosSrState1(void)
     TaskSleepForever();
 }
 
-void PoppyBrosSrState1Update(void)
+void PoppyBrosSrHop1Update(void)
 {
     if (gCurTask->state != POPPY_BROS_SR_STATE_1)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
@@ -268,7 +268,7 @@ void PoppyBrosSrJumpThrowUpdate(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState3(void)
+void PoppyBrosSrHop2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -285,13 +285,13 @@ void PoppyBrosSrState3(void)
     TaskSleepForever();
 }
 
-void PoppyBrosSrState3Update(void)
+void PoppyBrosSrHop2Update(void)
 {
     if (gCurTask->state != POPPY_BROS_SR_STATE_3)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState4(void)
+void PoppyBrosSrHop3(void)
 {
     struct Task *t;
     u8 zero;
@@ -320,13 +320,13 @@ void PoppyBrosSrState4(void)
     TaskSleepForever();
 }
 
-void PoppyBrosSrState4Update(void)
+void PoppyBrosSrHop3Update(void)
 {
     if (gCurTask->state != POPPY_BROS_SR_STATE_4)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState5(void)
+void PoppyBrosSrHop4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -365,7 +365,7 @@ void PoppyBrosSrState5(void)
     TaskSleepForever();
 }
 
-void PoppyBrosSrState5Update(void)
+void PoppyBrosSrHop4Update(void)
 {
     if (gCurTask->state != POPPY_BROS_SR_STATE_5)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);

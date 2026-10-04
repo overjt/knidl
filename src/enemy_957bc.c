@@ -43,7 +43,7 @@ void Task_FireLion(void)
     gUnk_02007D00[8]++;
     sub_08095834();
     ActorCollideTerrain();
-    ActorIntroPoseUntilMidBossFight(gUnk_08744510);
+    ActorIntroPoseUntilMidBossFight(gFireLionWaitAnim);
     if (IsMidBossDroppingIn() != 0) {
         gCurTask->updateCallback = (u32)sub_0809699c;
         FireLionDropIn();
@@ -123,7 +123,7 @@ void FireLionDropIn(void)
             TaskYieldTrampoline(1);
         } while (gCurTask->fireLionLanded == 0);
     }
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskSetFrame(16);
     TaskYieldTrampoline(24);
     ActorSetState(FIRE_LION_STATE_1);
@@ -139,8 +139,8 @@ void FireLionShowHpBar(void)
 {
     ActorSetState(FIRE_LION_STATE_1);
     gCurTask->updateState = 1;
-    ActorSetTerrainBox(gUnk_08745304);
-    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744510);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
+    gCurTask->actorAnimDelay = ActorStartAnim(gFireLionWaitAnim);
     sub_08066580();
     TaskYieldTrampoline(gUnk_08744524[gCurTask->actorSpawnArg]);
     gCurTask->fireLionSequencePhase = RandomRange(8);
@@ -156,10 +156,10 @@ void FireLionWait(void)
     s32 x;
 
     gCurTask->updateState = 1;
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskFaceNearestPlayer();
     TaskStop();
-    x = ActorStartAnim(gUnk_08744510);
+    x = ActorStartAnim(gFireLionWaitAnim);
     t = gCurTask;
     t->actorAnimDelay = x;
     gUnk_030023D4 = v = t->actorSpawnArg * 2;
@@ -182,7 +182,7 @@ void FireLionHop(void)
     s32 r;
 
     gCurTask->updateState = 2;
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskFaceNearestPlayer();
     TaskSetFrame(12);
     TaskYieldTrampoline(6);
@@ -200,7 +200,7 @@ void FireLionHop(void)
         TaskFaceNearestPlayer();
         gCurTask->fireLionLoopCount++;
     }
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskSetFrame(17);
     TaskYieldTrampoline(8);
     TaskSetFrame(18);
@@ -210,7 +210,7 @@ void FireLionHop(void)
     TaskSetFrame(7);
     TaskYieldTrampoline(8);
     if (gCurTask->state == FIRE_LION_STATE_3)
-        ActorSetState(gUnk_08744608[RandomRange(8)]);
+        ActorSetState(gFireLionRandomStates[RandomRange(8)]);
     else
         ActorSetState(FIRE_LION_STATE_POUNCE);
     gCurTask->updateState = 12;
@@ -230,7 +230,7 @@ void FireLionLunge(void)
     struct Task *x;
 
     gCurTask->updateState = 3;
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskFaceNearestPlayer();
     FireLionLungeWindUp();
     t = gCurTask;
@@ -252,12 +252,12 @@ void FireLionLunge(void)
         TaskSetMotionY(-0x30000, 0x2000, 0x30000);
         TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
         FireLionWaitForLanding();
-        ActorSetTerrainBox(gUnk_08745304);
+        ActorSetTerrainBox(gFireLionGroundTerrainBox);
         FireLionCheckJumpBack();
         if (gCurTask->state == FIRE_LION_STATE_5)
             ActorSetState(FIRE_LION_STATE_WAIT);
         else
-            ActorSetState(gUnk_08744608[RandomRange(8)]);
+            ActorSetState(gFireLionRandomStates[RandomRange(8)]);
     } else {
         gCurTask->fireLionLoopCount = 0;
         do {
@@ -349,7 +349,7 @@ void FireLionSlash(void)
     struct Task *u;
 
     gCurTask->updateState = 4;
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskFaceNearestPlayer();
     if (abs(TaskGetNearestPlayerDx()) <= 47) {
         FireLionJumpBack();
@@ -381,7 +381,7 @@ void FireLionSlash(void)
     TaskSetMotionXFacing(0xC000, 0x5A5A5A5A);
     TaskSetMotionY(-0x28000, 0x2000, 0x30000);
     FireLionWaitForLanding();
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskStop();
     TaskFaceNearestPlayer();
     TaskSetFrame(4);
@@ -432,7 +432,7 @@ void FireLionState9(void)
     s32 zero;
 
     TaskFaceNearestPlayer();
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     gCurTask->fireLionGlowing = 1;
     if (abs(TaskGetNearestPlayerDx()) <= 31)
         FireLionJumpBack();
@@ -446,7 +446,7 @@ void FireLionState9(void)
     TaskYieldTrampoline(8);
     TaskSetMotionY(-0x40000, 0x2200, 0x30000);
     FireLionWaitForLanding();
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskStop();
     gCurTask->fireLionGlowing = zero;
     TaskSetFrame(44);
@@ -555,7 +555,7 @@ void FireLionBounceOffWall(void)
         } while (gCurTask->velY < 0);
     }
     FireLionWaitForLanding();
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     FireLionCheckJumpBack();
     ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
@@ -580,7 +580,7 @@ void FireLionPounce(void)
     struct Task *x;
 
     gCurTask->updateState = 5;
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     ActorStopAnim();
     TaskFaceNearestPlayer();
     if (abs(TaskGetNearestPlayerDx()) <= 47) {
@@ -946,22 +946,22 @@ void FireLionDefeat(void)
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
     TaskSetFrame(21);
     ActorSetAttackBox(gFireLionDefeatAttackBox);
-    ActorSetExtraAttackBox(gUnk_087446E8[gCurTask->frame]);
-    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
-    ActorSetTerrainBox(gUnk_08745304);
+    ActorSetExtraAttackBox(gFireLionExtraAttackBoxes[gCurTask->frame]);
+    ActorSetAux(gFireLionAuxes[gCurTask->frame]);
+    ActorSetTerrainBox(gFireLionGroundTerrainBox);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     TaskSetFrame(38);
     ActorSetAttackBox(gUnk_087450CC);
     ActorSetExtraAttackBox(gFireLionDefeatExtraAttackBox);
-    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
+    ActorSetAux(gFireLionAuxes[gCurTask->frame]);
     while (gCurTask->fireLionLanded == 0)
         TaskYieldTrampoline(1);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744550);
     TaskSetFrameByFacing(40);
     ActorSetAttackBox(gUnk_08745104);
     ActorSetExtraAttackBox(gUnk_08745120);
-    ActorSetAux(gUnk_087447B8[gCurTask->frame]);
+    ActorSetAux(gFireLionAuxes[gCurTask->frame]);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
     CreateChildTaskHere(TASK_STAR_FLASH, 0);
@@ -1108,7 +1108,7 @@ void FireLionChooseNextState(void)
         t->fireLionSequencePhase = 0;
     v = gUnk_087445E8[gCurTask->fireLionSequencePhase + gCurTask->actorSpawnArg * 8];
     if (gUnk_087445E8[gCurTask->fireLionSequencePhase + gCurTask->actorSpawnArg * 8] == 11)
-        v = gUnk_08744608[RandomRange(8)];
+        v = gFireLionRandomStates[RandomRange(8)];
     ActorSetState(v);
 }
 
@@ -1124,8 +1124,8 @@ void FireLionUpdateAttackBoxes(void)
         u = gCurTask;
         v = u->frame;
         if (v < 40 || v > 43)
-            ActorSetExtraAttackBox(gUnk_087446E8[u->frame]);
-        ActorSetAux(gUnk_087447B8[gCurTask->frame]);
+            ActorSetExtraAttackBox(gFireLionExtraAttackBoxes[u->frame]);
+        ActorSetAux(gFireLionAuxes[gCurTask->frame]);
     }
 }
 

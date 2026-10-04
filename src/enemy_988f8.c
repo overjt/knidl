@@ -680,7 +680,7 @@ void MrFrostyState6Update(void)
         t->onGround = 1;
         u = gCurTask;
         u->mrFrostyTimer = 30;
-        ActorSetTerrainBox(gUnk_08745A0C);
+        ActorSetTerrainBox(gMrFrostyTerrainBox);
         ActorSetState(MR_FROSTY_STATE_WAIT);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
     }

@@ -1313,14 +1313,14 @@ void BonkersNutFlightUpdate(void)
 {
     if (gCurTask->bonkersNutBounced != 0)
     {
-        ActorSetHitReactions(gUnk_0874430C);
+        ActorSetHitReactions(gBonkersNutDieHitReactions);
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }
 }
 
 s32 BonkersNutHitWall(void)
 {
-    ActorSetHitReactions(gUnk_0874430C);
+    ActorSetHitReactions(gBonkersNutDieHitReactions);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -1488,7 +1488,7 @@ void Task_PoppyBrosSrBombSpark(void)
 
 s32 PoppyBrosSrBombHitWall(void)
 {
-    ActorSetHitReactions(gUnk_08744324);
+    ActorSetHitReactions(gPoppyBrosSrBombDieHitReactions);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -1502,7 +1502,7 @@ s32 PoppyBrosSrBombLand(void)
     t = gCurTask;
     if (--t->poppyBrosSrBombBouncesLeft == 0)
     {
-        ActorSetHitReactions(gUnk_08744324);
+        ActorSetHitReactions(gPoppyBrosSrBombDieHitReactions);
         TaskSetEntry(ActorDie, gCurTaskIdx);
         r = 1;
     }

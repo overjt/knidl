@@ -257,7 +257,7 @@ void CutsceneFountainNightmarePowerOrbUpdate(void)
     if ((s16)t->cutsceneActorPalettePhase > 23)
         t->cutsceneActorPalettePhase = 0;
     BlendColors((s32)gUnk_082FE0E4, (s32)gUnk_082FE104,
-                 gUnk_0874AD44[(s16)gCurTask->cutsceneActorPalettePhase], 16, (void *)(IWRAM_START + 0x1590));
+                 gNightmarePowerOrbBlendWeights[(s16)gCurTask->cutsceneActorPalettePhase], 16, (void *)(IWRAM_START + 0x1590));
     gCurTask->cutsceneActorPalettePhase++;
 }
 

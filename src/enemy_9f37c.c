@@ -161,7 +161,7 @@ u8 TridentKnightHitWall(void)
         break;
     case 0:
         if (t->state == 0)
-            sub_0809ec84();
+            TridentKnightPickMoveAtEdge();
         else
             TaskStopX();
         return 0;

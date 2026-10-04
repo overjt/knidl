@@ -27,7 +27,7 @@ void sub_0809cb90(void)
     ActorCheckHits();
     ActorReactToHit();
     if ((u16)(gCurTask->frame - 22) <= 1)
-        ActorCheckHitsWithBox((s32)gUnk_08747EF4);
+        ActorCheckHitsWithBox((s32)gAxeKnightSlashAttackBox);
     if (MetaKnightsKnightIsAtEdge() != 0)
     {
         if (gCurTask->pixelX < ((s8 *)gCurTask->u8C.actor->terrainBox)[4] + 24)

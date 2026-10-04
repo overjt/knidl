@@ -500,7 +500,7 @@ void GrandWheelieCharge(void)
     TaskYieldTrampoline(45);
     gCurTask->grandWheelieRushRange = GrandWheelieIsNearPlayer();
     gCurTask->grandWheelieFlameSlot = CreateDashFlame(-10, 5);
-    TaskSetMotionXFacing(gUnk_087444A4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gGrandWheelieRushSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     gCurTask->grandWheelieGroundClass = -1;
     TaskSleepForever();
 }
@@ -606,7 +606,7 @@ void GrandWheelieUpdateRushSpeed(void)
     case 0:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
             gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744360);
-        TaskSetMotionXFacing(gUnk_087444A4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gGrandWheelieRushSpeeds[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         break;
     case 1:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
@@ -672,7 +672,7 @@ void GrandWheelieSkidTurn(void)
     t->grandWheelieSkidTimer = 60;
     t->grandWheelieSkidDir = t->facing;
     t->grandWheelieDustTimer = 0;
-    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_087443D0);
+    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gGrandWheelieSkidAnim);
     PlaySfx(0x20A);
     TaskSleepForever();
 }
@@ -785,7 +785,7 @@ void GrandWheelieState7(void)
     gCurTask->updateState = GRAND_WHEELIE_STATE_7;
     zero = 0;
     gCurTask->grandWheelieRushCooldown = one = 1;
-    v = GrandWheelieStartAnim(gUnk_087443D0);
+    v = GrandWheelieStartAnim(gGrandWheelieSkidAnim);
     t = gCurTask;
     t->actorAnimDelay = v;
     t->grandWheelieSkidDir = t->facing;
@@ -795,13 +795,13 @@ void GrandWheelieState7(void)
     TaskYieldTrampoline(30);
     gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744384);
     gCurTask->grandWheelieFlameSlot = CreateDashFlame(-10, 5);
-    TaskSetMotionXFacing(gUnk_087444A4[0], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gGrandWheelieRushSpeeds[0], 0x5A5A5A5A);
     gCurTask->grandWheelieRushPhase = one;
     gUnk_02007D00[1] = PlaySfx(0x209);
     TaskYieldTrampoline(30);
     if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
         TaskFree(gCurTask->grandWheelieFlameSlot);
-    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_087443D0);
+    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gGrandWheelieSkidAnim);
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
     u = gCurTask;
     u->grandWheelieSkidDir = u->facing;

@@ -62,7 +62,7 @@ void sub_08097580(void)
 {
     struct Task *t;
 
-    ActorSetExtraAttackBox(gUnk_08745238);
+    ActorSetExtraAttackBox(gPhanPhanExtraAttackBox);
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->phanPhanLanded = 0;
@@ -200,7 +200,7 @@ void PhanPhanHopBackward(void)
     gCurTask->onGround = 0;
     t = gCurTask;
     t->phanPhanLanded = 0;
-    TaskSetMotionXFacing(-gUnk_087448EC[t->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(-gPhanPhanHopSpeeds[t->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(23);
     TaskYieldTrampoline(4);
@@ -216,7 +216,7 @@ void PhanPhanHopBackward(void)
     gCurTask->onGround = 0;
     u = gCurTask;
     u->phanPhanLanded = 0;
-    TaskSetMotionXFacing(-gUnk_087448EC[u->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(-gPhanPhanHopSpeeds[u->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(19);
     TaskYieldTrampoline(4);
@@ -239,7 +239,7 @@ void PhanPhanHopForward(void)
     gCurTask->onGround = 0;
     t = gCurTask;
     t->phanPhanLanded = 0;
-    TaskSetMotionXFacing(gUnk_087448EC[t->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gPhanPhanHopSpeeds[t->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(23);
     TaskYieldTrampoline(4);
@@ -255,7 +255,7 @@ void PhanPhanHopForward(void)
     gCurTask->onGround = 0;
     u = gCurTask;
     u->phanPhanLanded = 0;
-    TaskSetMotionXFacing(gUnk_087448EC[u->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gPhanPhanHopSpeeds[u->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(19);
     TaskYieldTrampoline(4);
@@ -386,8 +386,8 @@ void PhanPhanBounceOffWall(void)
     TaskStop();
     if (gCurTask->actorSpawnArg == 0)
         TaskYieldTrampoline(40);
-    ActorSetAttackBox(gUnk_0874521C);
-    ActorSetExtraAttackBox(gUnk_08745238);
+    ActorSetAttackBox(gPhanPhanAttackBox);
+    ActorSetExtraAttackBox(gPhanPhanExtraAttackBox);
     TaskSetFrame(14);
     TaskYieldTrampoline(4);
     TaskSetFrame(15);
@@ -809,7 +809,7 @@ void Task_GrandWheelieMiniWheelie(void)
     gCurTask->frameTable = gGrandWheelieMiniWheelieFrames;
     TaskFaceNearestPlayer();
     TaskStop();
-    TaskSetMotionXFacing(gUnk_087454D8[0] >> 1, 0x5A5A5A5A);
+    TaskSetMotionXFacing(gGrandWheelieMiniWheelieRollSpeeds[0] >> 1, 0x5A5A5A5A);
     TaskSetMotionY(gUnk_087454EC[gCurTask->actorSpawnArg], 0x3000, 0x30000);
     gCurTask->onGround = zero;
     gCurTask->grandWheelieMiniWheelieRolling = zero;
@@ -841,7 +841,7 @@ void GrandWheelieMiniWheelieUpdate(void)
     t = gCurTask;
     t->actorAnimDelay = x;
     if (t->grandWheelieMiniWheelieRolling != 0 && GrandWheelieMiniWheelieUpdateGroundClass() != 0)
-        TaskSetMotionXFacing(gUnk_087454D8[gCurTask->grandWheelieMiniWheelieGroundClass], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gGrandWheelieMiniWheelieRollSpeeds[gCurTask->grandWheelieMiniWheelieGroundClass], 0x5A5A5A5A);
 }
 
 void GrandWheelieMiniWheelieLand(void)

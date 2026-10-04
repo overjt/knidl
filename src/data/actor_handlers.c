@@ -1331,7 +1331,7 @@ struct ActorVt gBonkersNutHitReactions ACTOR_TBL(087442c8) = {
     .defeatCallback = 0,
 };
 /* src/enemy_91f9c.c */
-struct ActorVt gUnk_0874430C ACTOR_TBL(087442c8) = {
+struct ActorVt gBonkersNutDieHitReactions ACTOR_TBL(087442c8) = {
     .damageKind = 0,
     .defeatKind = 3,
     .filler02 = { 0x00, 0x00 },
@@ -1347,7 +1347,7 @@ struct ActorVt gPoppyBrosSrBombHitReactions ACTOR_TBL(087442c8) = {
     .defeatCallback = 0,
 };
 /* src/enemy_91f9c.c */
-struct ActorVt gUnk_08744324 ACTOR_TBL(087442c8) = {
+struct ActorVt gPoppyBrosSrBombDieHitReactions ACTOR_TBL(087442c8) = {
     .damageKind = 0,
     .defeatKind = 3,
     .filler02 = { 0x00, 0x00 },

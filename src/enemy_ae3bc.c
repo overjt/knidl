@@ -824,7 +824,7 @@ void sub_080aef5c(void)
     }
     if (p[5] > 23)
         p[5] = 0;
-    BlendColors((u16 *)gUnk_082FE0E4, (u16 *)gUnk_082FE104, gUnk_0874AD44[p[5]], 16, (u16 *)(((gCurTask->tileWord >> 12) << 5) + (u32)gObjPalette));
+    BlendColors((u16 *)gUnk_082FE0E4, (u16 *)gUnk_082FE104, gNightmarePowerOrbBlendWeights[p[5]], 16, (u16 *)(((gCurTask->tileWord >> 12) << 5) + (u32)gObjPalette));
     p[5]++;
 }
 
@@ -1064,7 +1064,7 @@ void Task_NightmarePowerOrbStar(void)
     z = 0;
     *b42 = 9;
     u = *c;
-    u->frameTable = gUnk_08754504;
+    u->frameTable = gNightmarePowerOrbStarFrames;
     u->facing = 1;
     v = *c;
     v->unk2C = z;
@@ -1110,7 +1110,7 @@ void NightmarePowerOrbStarVariant0(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1181,7 +1181,7 @@ void NightmarePowerOrbStarVariant1(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1252,7 +1252,7 @@ void NightmarePowerOrbStarVariant2(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1323,7 +1323,7 @@ void NightmarePowerOrbStarVariant3(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1458,7 +1458,7 @@ void NightmarePowerOrbStarVariant5(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1497,7 +1497,7 @@ void NightmarePowerOrbStarVariant6(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1537,7 +1537,7 @@ void NightmarePowerOrbStarVariant7(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1576,7 +1576,7 @@ void NightmarePowerOrbStarVariant8(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1617,7 +1617,7 @@ void NightmarePowerOrbStarVariant9(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1662,7 +1662,7 @@ void NightmarePowerOrbStarVariant10(void)
 
     c = &gCurTask;
     (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
-    ActorSetAttackBox((u32)gUnk_0874B488);
+    ActorSetAttackBox((u32)gNightmarePowerOrbStarAttackBox);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
     u1->actorAnimDelay = r;
@@ -1725,7 +1725,7 @@ void Task_NightmarePowerOrbStarTrail(void)
     t->moveCallback = (u32)TaskMoveRelativeToView;
     t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
-    gCurTask->frameTable = gUnk_08754504;
+    gCurTask->frameTable = gNightmarePowerOrbStarFrames;
     gCurTask->facing = 1;
     gUnk_030023B4 = Div(abs(gTasks[gCurTask->parent].velX) << 4,
                         abs(gTasks[gCurTask->parent].velX) + abs(gTasks[gCurTask->parent].velY));
@@ -1772,7 +1772,7 @@ void Task_NightmarePowerOrbStarTrailUp(void)
     t->moveCallback = (u32)TaskMoveRelativeToView;
     t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
-    gCurTask->frameTable = gUnk_08754504;
+    gCurTask->frameTable = gNightmarePowerOrbStarFrames;
     gCurTask->facing = 1;
     gUnk_030023B4 = Div(abs(gTasks[gCurTask->parent].velX) << 4,
                         abs(gTasks[gCurTask->parent].velX) + abs(gTasks[gCurTask->parent].velY));
@@ -1844,7 +1844,7 @@ void Task_NightmarePowerOrbStarTrailDown(void)
     t->moveCallback = (u32)TaskMoveRelativeToView;
     t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
-    gCurTask->frameTable = gUnk_08754504;
+    gCurTask->frameTable = gNightmarePowerOrbStarFrames;
     gCurTask->facing = 1;
     gUnk_030023B4 = Div(abs(gTasks[gCurTask->parent].velX) << 4,
                         abs(gTasks[gCurTask->parent].velX) + abs(gTasks[gCurTask->parent].velY));
@@ -1915,7 +1915,7 @@ void Task_NightmarePowerOrbStarAfterimage(void)
     t->moveCallback = (u32)TaskMoveRelativeToView;
     t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 13;
-    gCurTask->frameTable = gUnk_08754504;
+    gCurTask->frameTable = gNightmarePowerOrbStarFrames;
     gCurTask->facing = 1;
     gUnk_030023B4 = Div(abs(gTasks[gCurTask->parent].velX) << 4,
                         abs(gTasks[gCurTask->parent].velX) + abs(gTasks[gCurTask->parent].velY));
@@ -2175,7 +2175,7 @@ void NightmarePowerOrbIntroUpdate(void)
     p = gUnk_02007D00;
     if (p[5] > 23)
         p[5] = 0;
-    BlendColors((u16 *)gUnk_082FE0E4, (u16 *)gUnk_082FE104, gUnk_0874AD44[p[5]], 16, (u16 *)((((*c)->tileWord >> 12) << 5) + (u32)gObjPalette));
+    BlendColors((u16 *)gUnk_082FE0E4, (u16 *)gUnk_082FE104, gNightmarePowerOrbBlendWeights[p[5]], 16, (u16 *)((((*c)->tileWord >> 12) << 5) + (u32)gObjPalette));
     p[5]++;
 }
 
@@ -2846,7 +2846,7 @@ void Task_HeavyMoleUpperArm(void)
     z = 0;
     t->moveCallback = z;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_08753E8C;
+    t->frameTable = gHeavyMoleArmFrames;
     b42 = &t->layer;
     *b42 = 11;
     u = *c;
@@ -2876,7 +2876,7 @@ void Task_HeavyMoleLowerArm(void)
     z = 0;
     t->moveCallback = z;
     t->drawCallback = (u32)HeavyMoleLowerArmDraw;
-    t->frameTable = gUnk_08753E8C;
+    t->frameTable = gHeavyMoleArmFrames;
     b42 = &t->layer;
     *b42 = 8;
     u = *c;
@@ -3036,13 +3036,13 @@ void HeavyMoleArmSpinLoop(void)
         while (1)
         {
             gCurTask->frame = 3;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 2;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 1;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 0;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
         }
     }
     else
@@ -3050,13 +3050,13 @@ void HeavyMoleArmSpinLoop(void)
         while (1)
         {
             gCurTask->frame = 0;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 1;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 2;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
             gCurTask->frame = 3;
-            TaskYieldTrampoline(gUnk_0874B82A[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
+            TaskYieldTrampoline(gHeavyMoleArmSpinDelays[((s16 *)&gCurTask->heavyMoleArmSpinLevel)[1]]);
         }
     }
 }
@@ -3135,7 +3135,7 @@ void HeavyMoleArmSpinWindUp(void)
     {
         c = &gCurTask;
         zz = 0;
-        tj = (u8 *)gUnk_0874B82A;
+        tj = (u8 *)gHeavyMoleArmSpinDelays;
         for (;;)
         {
             u1 = *c;
@@ -3193,16 +3193,16 @@ void HeavyMoleArmSpinWindUp(void)
             else
             {
                 q1->frame = 0;
-                TaskYieldTrampoline(*(u8 *)(x2 + (u32)gUnk_0874B82A));
+                TaskYieldTrampoline(*(u8 *)(x2 + (u32)gHeavyMoleArmSpinDelays));
                 q2 = gCurTask;
                 q2->frame = 1;
-                TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q2 + 42) + (u32)gUnk_0874B82A));
+                TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q2 + 42) + (u32)gHeavyMoleArmSpinDelays));
                 q3 = gCurTask;
                 q3->frame = 2;
-                TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q3 + 42) + (u32)gUnk_0874B82A));
+                TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q3 + 42) + (u32)gHeavyMoleArmSpinDelays));
                 q4 = gCurTask;
                 q4->frame = 3;
-                TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q4 + 42) + (u32)gUnk_0874B82A));
+                TaskYieldTrampoline(*(u8 *)(*(s16 *)((u8 *)q4 + 42) + (u32)gHeavyMoleArmSpinDelays));
             }
         }
     }

@@ -215,7 +215,7 @@ void NightmareWizardWait(void)
     r1v = ActorStartAnim((struct AnimCmd *)gUnk_08749270);
     t = gCurTask;
     t->actorAnimDelay18 = r1v;
-    t->nightmareWizardSpotAttack = gUnk_08749224[t->nightmareWizardSpotIndex];
+    t->nightmareWizardSpotAttack = gNightmareWizardSpotScript[t->nightmareWizardSpotIndex];
     if (t->nightmareWizardSpotAttack == 0)
         goto is0;
     if (t->nightmareWizardSpotAttack == 3)
@@ -393,7 +393,7 @@ out:
         gCurTask->nightmareWizardLoopCount++;
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 5);
     TaskStop();
-    if (gUnk_08749224[gCurTask->nightmareWizardSpotIndex] == 2)
+    if (gNightmareWizardSpotScript[gCurTask->nightmareWizardSpotIndex] == 2)
         ActorSetState(NIGHTMARE_WIZARD_STATE_POINT);
     else
         ActorSetState(NIGHTMARE_WIZARD_STATE_OPEN_PALM);
@@ -837,7 +837,7 @@ void NightmareWizardMoveToNextSpot(void)
     gCurTask->nightmareWizardSpotIndex = n;
     if (n == 10)
         gCurTask->nightmareWizardSpotIndex = 0;
-    NightmareWizardMoveToSpot(gUnk_08749224[gCurTask->nightmareWizardSpotIndex]);
+    NightmareWizardMoveToSpot(gNightmareWizardSpotScript[gCurTask->nightmareWizardSpotIndex]);
 }
 
 void NightmareWizardMoveToSpot(s32 a)
@@ -2344,7 +2344,7 @@ void HeavyMoleUpdate(void)
         ActorResetAttackBox();
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
-    TaskBreakBlocksNoPlayer((u32)gUnk_0874B538);
+    TaskBreakBlocksNoPlayer((u32)gHeavyMoleBlockBreakBox);
     w = gCurTask->heavyMoleMoveTimer - 1;
     gCurTask->heavyMoleMoveTimer = w;
     if (w <= 0)
@@ -2541,7 +2541,7 @@ void HeavyMoleHitStunUpdate(void)
     struct Task *u;
     s32 *p;
 
-    TaskBreakBlocksNoPlayer(gUnk_0874B538);
+    TaskBreakBlocksNoPlayer(gHeavyMoleBlockBreakBox);
     c = &gCurTask;
     t = *c;
     t->heavyMoleAnimSpeedTimer--;

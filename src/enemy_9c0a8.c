@@ -251,7 +251,7 @@ void sub_0809c490(void)
     CallTableEntry(u->variant, 4, gAxeKnightVariants);
 }
 
-void AxeKnightVariant0(void)
+void AxeKnightFallInInit(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -264,7 +264,7 @@ void AxeKnightVariant0(void)
     u->accelY = 148 << 6;
     u->speedLimitY = 192 << 10;
     u->onGround = 0;
-    sub_0809c5a4();
+    AxeKnightAnimateWalk();
 }
 
 void AxeKnightEnterState(void)
@@ -299,10 +299,10 @@ void AxeKnightWalk(void)
     sub_0809f90c();
     sub_0809f91c();
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
-    sub_0809c5a4();
+    AxeKnightAnimateWalk();
 }
 
-void sub_0809c5a4(void)
+void AxeKnightAnimateWalk(void)
 {
     while (1)
     {
@@ -444,7 +444,7 @@ void AxeKnightSlashUpdate(void)
     if (gCurTask->state != AXE_KNIGHT_STATE_SLASH)
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     if ((u16)(gCurTask->frame - 22) <= 1)
-        ActorCheckHitsWithBox((s32)gUnk_08747EF4);
+        ActorCheckHitsWithBox((s32)gAxeKnightSlashAttackBox);
 }
 
 void AxeKnightThrow(void)
@@ -576,7 +576,7 @@ void AxeKnightState4Update(void)
 {
 }
 
-void AxeKnightVariant1(void)
+void AxeKnightSlashLoop(void)
 {
     struct Task *t;
 

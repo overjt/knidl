@@ -137,7 +137,7 @@ u8 MrTickTockHitWall(void)
         return 1;
     case MR_TICK_TOCK_STATE_DASH_START:
         ActorSetState(MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL);
-        ActorSetTerrainBox(gUnk_08745A24);
+        ActorSetTerrainBox(gMrTickTockKnockBackTerrainBox);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case MR_TICK_TOCK_STATE_WALK_BACK:
@@ -145,7 +145,7 @@ u8 MrTickTockHitWall(void)
         break;
     case MR_TICK_TOCK_STATE_DASH_LOOP:
         ActorSetState(MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL);
-        ActorSetTerrainBox(gUnk_08745A24);
+        ActorSetTerrainBox(gMrTickTockKnockBackTerrainBox);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case MR_TICK_TOCK_STATE_16:
@@ -153,7 +153,7 @@ u8 MrTickTockHitWall(void)
         gCurTask->mrTickTockStatePhase = 1;
         break;
     case MR_TICK_TOCK_STATE_DEFEAT:
-        ActorSetTerrainBox(gUnk_08745A24);
+        ActorSetTerrainBox(gMrTickTockKnockBackTerrainBox);
     case MR_TICK_TOCK_STATE_JUMP_HIGH:
     case MR_TICK_TOCK_STATE_RING_FROM_DASH:
     case MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL:
@@ -1307,7 +1307,7 @@ void MrTickTockState16Update(void)
         break;
     case 62:
         t->velY = 0x10000;
-        ActorSetTerrainBox(gUnk_08745A1C);
+        ActorSetTerrainBox(gMrTickTockTerrainBox);
         ActorSetState(MR_TICK_TOCK_STATE_WAIT_SHORT);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         break;
@@ -1466,7 +1466,7 @@ void MrTickTockDefeat(void)
     zero = 0;
     t->updateState = 19;
     ActorSetHitReactions(gMrTickTockDefeatedHitReactions);
-    ActorSetTerrainBox(gUnk_08745A24);
+    ActorSetTerrainBox(gMrTickTockKnockBackTerrainBox);
     u = gCurTask;
     u->onGround = zero;
     if (--gUnk_02007D00[0] <= 0)
@@ -1889,7 +1889,7 @@ void MrTickTockRingState0(void)
     gCurTask->mrTickTockRingSfxPlayer = PlaySfx(0x219);
     while (1)
     {
-        ActorSetAttackBox(gUnk_08745BEC);
+        ActorSetAttackBox(gMrTickTockRingAttackBox);
         TaskSetFrame(0);
         TaskYieldTrampoline(2);
         TaskSetFrame(1);

@@ -864,7 +864,7 @@ void MetaKnightSlashShortUpdate(void)
         if (v == 16)
             gCurTask->velX = 0;
         else
-            TaskSetMotionXFacing(gUnk_08748D44[v >> 3], 0x5A5A5A5A);
+            TaskSetMotionXFacing(gMetaKnightSlashSlideSpeeds[v >> 3], 0x5A5A5A5A);
     }
     if (gCurTask->state != META_KNIGHT_STATE_SLASH_SHORT)
         sub_080a7168();
@@ -921,7 +921,7 @@ void MetaKnightDoubleSlashUpdate(void)
         if (v == 16)
             gCurTask->velX = 0;
         else
-            TaskSetMotionXFacing(gUnk_08748D44[v >> 3], 0x5A5A5A5A);
+            TaskSetMotionXFacing(gMetaKnightSlashSlideSpeeds[v >> 3], 0x5A5A5A5A);
     }
     if (gCurTask->state != META_KNIGHT_STATE_DOUBLE_SLASH)
         sub_080a7168();

@@ -11527,12 +11527,12 @@ u32 gHeavyMoleFrames[] FRAME_TABLE = {
     (u32)gUnk_082F5E18,
 };
 
-/* gUnk_08753E8C.  Consumers: Task_HeavyMoleUpperArm
+/* gHeavyMoleArmFrames.  Consumers: Task_HeavyMoleUpperArm
  * (src/enemy_ae3bc.c:2849), Task_HeavyMoleLowerArm
  * (src/enemy_ae3bc.c:2879).  136 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08753E8C-0x087540AC).  Declared include/enemy.h:1249. */
-u32 gUnk_08753E8C[] FRAME_TABLE = {
+u32 gHeavyMoleArmFrames[] FRAME_TABLE = {
     (u32)gUnk_082F5948,
     (u32)gUnk_082F5950,
     (u32)gUnk_082F5958,
@@ -11855,11 +11855,11 @@ u32 gMrBrightFireballFrames[] FRAME_TABLE = {
     (u32)gUnk_082F7FB4,
 };
 
-/* gUnk_08754290.  Consumers: MrBrightBeamInit (src/enemy_a1590.c:3215),
+/* gMrBrightBeamFrames.  Consumers: MrBrightBeamInit (src/enemy_a1590.c:3215),
  * Task_MrBrightBeamEffect (src/enemy_a1590.c:3416).  6 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754290-0x087542A8).  Declared include/enemy.h:1259. */
-u32 gUnk_08754290[] FRAME_TABLE = {
+u32 gMrBrightBeamFrames[] FRAME_TABLE = {
     (u32)gUnk_082F7E94,
     (u32)gUnk_082F7EB4,
     (u32)gUnk_082F7EE4,
@@ -12093,12 +12093,12 @@ u32 gNightmarePowerOrbFrames[] FRAME_TABLE = {
     (u32)gUnk_082FE048,
 };
 
-/* gUnk_08754504.  Consumers: Task_NightmarePowerOrbStar
+/* gNightmarePowerOrbStarFrames.  Consumers: Task_NightmarePowerOrbStar
  * (src/enemy_ae3bc.c:1067), Task_NightmarePowerOrbStarTrail (src/enemy_ae3bc.c:1728),
  * Task_NightmarePowerOrbStarTrailUp (src/enemy_ae3bc.c:1775) and 2 more.  23 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754504-0x08754560).  Declared include/enemy.h:1270. */
-u32 gUnk_08754504[] FRAME_TABLE = {
+u32 gNightmarePowerOrbStarFrames[] FRAME_TABLE = {
     (u32)gUnk_082FEF04,
     (u32)gUnk_082FEF0C,
     (u32)gUnk_082FEF14,

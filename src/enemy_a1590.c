@@ -427,9 +427,9 @@ void MrShineAndMrBrightFillHpBars(void)
         TaskYieldTrampoline(1);
     if (gCreditsDemoSet != 0)
         TaskYieldTrampoline(120);
-    ActorSetAttackBoxSlot(gUnk_02007D00[1], (u32)gUnk_0874883C);
-    ActorSetExtraAttackBoxSlot(gUnk_02007D00[1], (u32)gUnk_08748874);
-    ActorSetAttackBoxSlot(gUnk_02007D00[0], (u32)gUnk_087488AC);
+    ActorSetAttackBoxSlot(gUnk_02007D00[1], (u32)gMrShineAttackBox);
+    ActorSetExtraAttackBoxSlot(gUnk_02007D00[1], (u32)gMrShineExtraAttackBox);
+    ActorSetAttackBoxSlot(gUnk_02007D00[0], (u32)gMrBrightAttackBox);
     ActorSetExtraAttackBoxSlot(gUnk_02007D00[0], (u32)gUnk_087488E4);
 }
 
@@ -708,7 +708,7 @@ void MrShineAndMrBrightStartAscend(void)
     else
     {
         gUnk_02007D00[2] = 0;
-        ActorSetAttackBox((u32)gUnk_08748858);
+        ActorSetAttackBox((u32)gMrShineStartAscendAttackBox);
         sub_080275cc(2);
     }
     gUnk_02007D00[4] = 0;
@@ -1737,7 +1737,7 @@ void MrShineWait(void)
     TaskStop();
     MrShineAndMrBrightCheckAscend();
     gCurTask->mrShineAndMrBrightFaceTimer = 8;
-    ActorSetAttackBox((u32)gUnk_0874883C);
+    ActorSetAttackBox((u32)gMrShineAttackBox);
     TaskSetFrame(10);
     TaskYieldTrampoline((s16)MrShineAndMrBrightGetWaitTime());
     MrShineAndMrBrightPickGroundMove();
@@ -2052,7 +2052,7 @@ void MrShineRecoilUpdate(void)
 {
     if (gCurTask->state != MR_SHINE_STATE_RECOIL)
     {
-        ActorSetExtraAttackBox((u32)gUnk_08748874);
+        ActorSetExtraAttackBox((u32)gMrShineExtraAttackBox);
         TaskSetEntry(MrShineEnterState, gCurTaskIdx);
     }
 }
@@ -2219,7 +2219,7 @@ void MrBrightWait(void)
     gCurTask->updateState = MR_BRIGHT_STATE_WAIT;
     TaskStop();
     MrShineAndMrBrightCheckAscend();
-    ActorSetAttackBox((u32)gUnk_087488AC);
+    ActorSetAttackBox((u32)gMrBrightAttackBox);
     gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_08748574);
     gCurTask->mrShineAndMrBrightBobFrame = 48;
     TaskYieldTrampoline((s16)MrShineAndMrBrightGetWaitTime());
@@ -3212,7 +3212,7 @@ void MrBrightBeamInit(void)
     gCurTask->layer = 12;
     t = gCurTask;
     t->updateCallback = (u32)MrBrightBeamUpdate;
-    t->frameTable = gUnk_08754290;
+    t->frameTable = gMrBrightBeamFrames;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B8C);
     ActorSetState(MR_BRIGHT_BEAM_STATE_0);
@@ -3413,7 +3413,7 @@ void Task_MrBrightBeamEffect(void)
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
-    gCurTask->frameTable = gUnk_08754290;
+    gCurTask->frameTable = gMrBrightBeamFrames;
     CallTableEntry(gCurTask->variant, 3, gMrBrightBeamEffectVariants);
 }
 

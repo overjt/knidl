@@ -246,7 +246,7 @@ void MaceKnightStandUpdate(void)
     }
 }
 
-void MaceKnightVariant1(void)
+void MaceKnightWalkInit(void)
 {
     gCurTask->updateCallback = (u32)MaceKnightUpdate;
     TaskFaceScreenCenter();
@@ -342,9 +342,9 @@ void MaceKnightThrowUpdate(void)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
-void MaceKnightVariant2(void)
+void MaceKnightSwing(void)
 {
-    gCurTask->updateCallback = (u32)sub_0809dfc8;
+    gCurTask->updateCallback = (u32)MaceKnightSwingUpdate;
     TaskFaceScreenCenter();
     TaskSetMotionXFacing(176 << 9, 0x5A5A5A5A);
     CreateMaceKnightMace();
@@ -365,7 +365,7 @@ void MaceKnightVariant2(void)
     }
 }
 
-void sub_0809dfc8(void)
+void MaceKnightSwingUpdate(void)
 {
     struct Task *t;
     struct Task *w;
@@ -490,7 +490,7 @@ s32 CreateMaceKnightMace(void)
     sp.spawnArg = t->unk74;
     sp.x = z;
     sp.y = 0xFFF0;
-    sp.tileWord = gUnk_08745CEC[2];
+    sp.tileWord = gMetaKnightsKnightTileWords[2];
     sp.checkTerrain = 0;
     r = CreateActorFromDesc(&sp, 1);
     p = &gCurTask->metaKnightsKnightWeaponSlot;
@@ -524,14 +524,14 @@ void MaceKnightMaceMove(void)
     t->pixelY = ((struct Task *)(*q * 144 + (s32)gTasks))->pixelY + (t->posY >> 16);
 }
 
-void sub_0809e320(void)
+void MaceKnightMaceFlight(void)
 {
     struct Task *t;
     struct Task *u;
     s32 k;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809e630;
+    t->updateCallback = (u32)MaceKnightMaceFlightUpdate;
     t->layer = 10;
     gCurTask->maceKnightMaceLoopCount = 0;
     do
@@ -630,7 +630,7 @@ void sub_0809e320(void)
     ActorDestroy();
 }
 
-void sub_0809e630(void)
+void MaceKnightMaceFlightUpdate(void)
 {
     struct Task *t;
 
@@ -646,12 +646,12 @@ void sub_0809e630(void)
     }
 }
 
-void MaceKnightMaceVariant2(void)
+void MaceKnightMaceSwing(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809e780;
+    t->updateCallback = (u32)MaceKnightMaceSwingUpdate;
     t->layer = 12;
     TaskSetFrame(0);
     gCurTask->posY = 0xFFF00000;
@@ -689,7 +689,7 @@ void MaceKnightMaceVariant2(void)
     }
 }
 
-void sub_0809e780(void)
+void MaceKnightMaceSwingUpdate(void)
 {
     struct Task *t;
 
@@ -749,7 +749,7 @@ void sub_0809e824(void)
     struct Task *u;
 
     t = gCurTask;
-    t->drawCallback = (u32)sub_0809e864;
+    t->drawCallback = (u32)TridentKnightDraw;
     t->frameTable = gTridentKnightFrames;
     ActorLoadDef((u32)gTridentKnightDef);
     u = gCurTask;
@@ -757,13 +757,13 @@ void sub_0809e824(void)
     CallTableEntry(u->variant, 4, gTridentKnightVariants);
 }
 
-void sub_0809e864(void)
+void TridentKnightDraw(void)
 {
     ActorDrawWorldInViewOrDestroy();
     sub_0809f2f4();
 }
 
-void TridentKnightVariant0(void)
+void TridentKnightFallInInit(void)
 {
     struct Task *t;
     struct Task *u;
@@ -855,7 +855,7 @@ void TridentKnightWalk(void)
     }
 }
 
-void sub_0809ea08(void)
+void TridentKnightWalkUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -876,7 +876,7 @@ void sub_0809ea08(void)
     }
     if (MetaKnightsKnightIsAtEdge() != 0)
     {
-        sub_0809ec84();
+        TridentKnightPickMoveAtEdge();
         return;
     }
     u = gCurTask;
@@ -886,7 +886,7 @@ void sub_0809ea08(void)
         return;
     if (n <= 0)
     {
-        sub_0809ed08();
+        TridentKnightPickAttack();
         return;
     }
     if ((n & 7) != 7)
@@ -941,7 +941,7 @@ void TridentKnightThrow(void)
     u = gCurTask;
     u->metaKnightsKnightTridentTimer = 120;
     TaskStop();
-    sub_0809ebc0();
+    TridentKnightThrowTridentOnGround();
     TaskYieldTrampoline(10);
     ActorSetState(TRIDENT_KNIGHT_STATE_WALK);
     sub_0809f90c();
@@ -979,7 +979,7 @@ void TridentKnightJumpThrow(void)
     v = gCurTask;
     v->velY = 0xFFFD0000;
     v->accelY = 148 << 6;
-    sub_0809ec2c();
+    TridentKnightThrowTridentInAir();
     TaskSleepForever();
 }
 
@@ -987,7 +987,7 @@ void TridentKnightJumpThrowUpdate(void)
 {
 }
 
-void sub_0809ebc0(void)
+void TridentKnightThrowTridentOnGround(void)
 {
     sub_0809f90c();
     TaskSetFrame(11);
@@ -1008,7 +1008,7 @@ void sub_0809ebc0(void)
     TaskSetFrame(16);
 }
 
-void sub_0809ec2c(void)
+void TridentKnightThrowTridentInAir(void)
 {
     sub_0809f90c();
     TaskSetFrame(11);
@@ -1029,12 +1029,12 @@ void sub_0809ec80(void)
 {
 }
 
-void sub_0809ec84(void)
+void TridentKnightPickMoveAtEdge(void)
 {
     if (gCurTask->metaKnightsKnightTridentTimer > 59
         || abs(TaskGetNearestPlayerDx()) > 63)
     {
-        sub_0809ed74();
+        TridentKnightReverseWalk();
     }
     else if (abs(TaskGetNearestPlayerDx()) <= 31)
     {
@@ -1048,7 +1048,7 @@ void sub_0809ec84(void)
     }
 }
 
-void sub_0809ed08(void)
+void TridentKnightPickAttack(void)
 {
     gCurTask->metaKnightsKnightTridentTimer = 60;
     if (RandomRange(2) == 0)
@@ -1066,7 +1066,7 @@ void sub_0809ed08(void)
     }
 }
 
-void sub_0809ed74(void)
+void TridentKnightReverseWalk(void)
 {
     struct Task *t;
     s32 vx;
@@ -1086,7 +1086,7 @@ void sub_0809ed74(void)
     TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
 }
 
-void TridentKnightVariant1(void)
+void TridentKnightStand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1098,7 +1098,7 @@ void TridentKnightVariant1(void)
     s8 *p;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809ef98;
+    t->updateCallback = (u32)TridentKnightStandUpdate;
     p = &t->onGround;
     z = 0;
     *p = 1;
@@ -1175,7 +1175,7 @@ void TridentKnightVariant1(void)
     }
 }
 
-void sub_0809ef98(void)
+void TridentKnightStandUpdate(void)
 {
     struct Task *t;
 
@@ -1194,7 +1194,7 @@ void sub_0809ef98(void)
     ActorReactToHit();
 }
 
-void TridentKnightVariant2(void)
+void TridentKnightWalkInShortInit(void)
 {
     struct Task *t;
     struct Task *v;
@@ -1204,7 +1204,7 @@ void TridentKnightVariant2(void)
     s32 z;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809f0f0;
+    t->updateCallback = (u32)TridentKnightWalkInShortUpdate;
     p = &t->onGround;
     z = 0;
     *p = 1;
@@ -1253,7 +1253,7 @@ void TridentKnightVariant2(void)
     TridentKnightWalk();
 }
 
-void sub_0809f0f0(void)
+void TridentKnightWalkInShortUpdate(void)
 {
     struct Task *t;
 
@@ -1272,7 +1272,7 @@ void sub_0809f0f0(void)
     ActorReactToHit();
 }
 
-void TridentKnightVariant3(void)
+void TridentKnightWalkInLongInit(void)
 {
     struct Task *t;
     struct Task *v;
@@ -1282,7 +1282,7 @@ void TridentKnightVariant3(void)
     s32 z;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809f26c;
+    t->updateCallback = (u32)TridentKnightWalkInLongUpdate;
     p = &t->onGround;
     z = 0;
     *p = 1;
@@ -1337,7 +1337,7 @@ void TridentKnightVariant3(void)
     TridentKnightWalk();
 }
 
-void sub_0809f26c(void)
+void TridentKnightWalkInLongUpdate(void)
 {
     struct Task *t;
 
