@@ -196,7 +196,7 @@ void sub_080ae548(void)
     t = *c;
     z = 0;
     t->unk2C = z;
-    sub_080aefd4((u32)gUnk_0874AD74);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874AD74);
     (*c)->updateState = z;
     u1 = *c;
     v1 = 0xFFFF0000;
@@ -269,7 +269,7 @@ void sub_080ae628(void)
     struct Task *u20;
 
     ActorSetState(1);
-    sub_080aefd4((u32)gUnk_0874ADA8);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874ADA8);
     c = &gCurTask;
     t = *c;
     z = 0;
@@ -365,7 +365,7 @@ void sub_080ae628(void)
 void sub_080ae79c(void)
 {
     ActorSetState(2);
-    sub_080aefd4((u32)gUnk_0874AEAC);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874AEAC);
     gCurTask->updateState = 3;
     TaskYieldTrampoline(40);
     CreateNightmarePowerOrbStar(0);
@@ -388,7 +388,7 @@ void NightmarePowerOrbShoot(void)
     struct Task *u5;
 
     ActorSetState(3);
-    sub_080aefd4((u32)gUnk_0874ADA8);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874ADA8);
     c = &gCurTask;
     (*c)->updateState = 3;
     TaskStop();
@@ -450,7 +450,7 @@ void NightmarePowerOrbShootStar(void)
 void NightmarePowerOrbDash(void)
 {
     ActorSetState(4);
-    sub_080aefd4((u32)gUnk_0874AF90);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874AF90);
     gCurTask->updateState = 3;
     switch ((u8)NightmarePowerOrbPickDashLane())
     {
@@ -580,7 +580,7 @@ void NightmarePowerOrbDash(void)
 
 void sub_080aec00(void)
 {
-    sub_080aefd4((u32)gUnk_0874B0A0);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B0A0);
     gCurTask->updateState = 3;
     gCurTask->velX = 128 << 10;
     gCurTask->velY = 128 << 10;
@@ -673,7 +673,7 @@ void sub_080aed5c(void)
     struct Task *q18;
     struct Task *q19;
 
-    sub_080aefd4((u32)gUnk_0874B0A0);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B0A0);
     c = &gCurTask;
     t = *c;
     z = 0;
@@ -791,7 +791,7 @@ void sub_080aeef8(void)
     struct Task *u;
 
     ActorSetState(5);
-    sub_080aefd4((u32)gUnk_0874B0C4);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B0C4);
     c = &gCurTask;
     (*c)->updateState = 3;
     u = *c;
@@ -828,7 +828,7 @@ void sub_080aef5c(void)
     p[5]++;
 }
 
-void sub_080aefd4(u32 a)
+void NightmarePowerOrbStartAnim(u32 a)
 {
     struct Task *t;
     struct Task *u;
@@ -838,10 +838,10 @@ void sub_080aefd4(u32 a)
     t->u8C.actor->animScriptPos = 0;
     u = gCurTask;
     u->unk28 = 0;
-    sub_080af020();
+    NightmarePowerOrbStepAnim();
 }
 
-void sub_080aeff8(void)
+void NightmarePowerOrbTickAnim(void)
 {
     struct Task *t;
 
@@ -850,11 +850,11 @@ void sub_080aeff8(void)
     {
         t->unk28--;
         if (t->unk28 <= 0)
-            sub_080af020();
+            NightmarePowerOrbStepAnim();
     }
 }
 
-void sub_080af020(void)
+void NightmarePowerOrbStepAnim(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -922,13 +922,13 @@ void sub_080af114(void)
     struct Task *t;
     struct Task *u;
 
-    sub_080aeff8();
+    NightmarePowerOrbTickAnim();
     c = &gCurTask;
     t = *c;
     t->unk2C++;
     if (t->unk2C > 39)
     {
-        sub_080aefd4((u32)gUnk_0874ADA8);
+        NightmarePowerOrbStartAnim((u32)gUnk_0874ADA8);
         u = *c;
         u->updateState = 1;
     }
@@ -954,10 +954,10 @@ void sub_080af188(void)
 {
     struct Task *t;
 
-    sub_080aeff8();
+    NightmarePowerOrbTickAnim();
     if (gUnk_02007D00[1] <= 0)
     {
-        sub_080aefd4((u32)gUnk_0874AD74);
+        NightmarePowerOrbStartAnim((u32)gUnk_0874AD74);
         t = gCurTask;
         t->unk2C = 0;
         t->updateState = 0;
@@ -966,12 +966,12 @@ void sub_080af188(void)
 
 void sub_080af1b8(void)
 {
-    sub_080aefd4((u32)gUnk_0874B07C);
+    NightmarePowerOrbStartAnim((u32)gUnk_0874B07C);
 }
 
 void sub_080af1c8(void)
 {
-    sub_080aeff8();
+    NightmarePowerOrbTickAnim();
 }
 
 void sub_080af1d4(void)

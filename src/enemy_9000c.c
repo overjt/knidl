@@ -27,7 +27,7 @@
  * The tail holds the pieces the states share - BonkersCreateSlamStar (fire a shot at
  * the boss's own position through CreateInhalableStar), BonkersChooseNextState (advance the
  * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
- * the BonkersReactToDamage / BonkersReactToDefeat / sub_08090f4c hit hooks, the companion
+ * the BonkersReactToDamage / BonkersReactToDefeat / BonkersHitWall hit hooks, the companion
  * task Task_BonkersHammerHitBox / BonkersHammerHitBoxUpdate that mirrors the boss's position while
  * gTaskSlotTypes[Task.parent] says the boss is alive - and Task_PoppyBrosSr, the
  * entry of the second boss, whose states live in src/enemy_9113c.c.
@@ -687,14 +687,14 @@ s32 BonkersReactToDamage(void)
 
 s32 BonkersReactToDefeat(void)
 {
-    ActorSetHitReactions(gUnk_087440DC);
+    ActorSetHitReactions(gBonkersDefeatedHitReactions);
     gCurTask->bonkersDefeatPhase = 1;
     ActorSetState(10);
     TaskSetEntry(BonkersEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_08090f4c(void)
+s32 BonkersHitWall(void)
 {
     struct Task *t;
     s32 r;

@@ -236,7 +236,7 @@ void TwizzyHover(void)
     }
 }
 
-void sub_08088478(void)
+void TwizzyHoverState0Update(void)
 {
     if (--gCurTask->twizzyFaceTimer == 0)
     {
@@ -895,7 +895,7 @@ void BubblesJump(void)
     PlaySfx(193);
     while (1)
     {
-        sub_08089808(gCurTask->bubblesRollPhase);
+        BubblesSetRollFrame(gCurTask->bubblesRollPhase);
         switch (gCurTask->bubblesJumpKind)
         {
         case 0:
@@ -927,7 +927,7 @@ void BubblesJumpUpdate(void)
 {
 }
 
-void BubblesState1(void)
+void BubblesBounceOffWall(void)
 {
     gCurTask->updateState = 1;
     gCurTask->moveCallback = 0;
@@ -956,7 +956,7 @@ void BubblesState1(void)
     ActorSetAttackBox((u32)gUnk_08742C14);
     while (1)
     {
-        sub_08089808(gCurTask->bubblesRollPhase);
+        BubblesSetRollFrame(gCurTask->bubblesRollPhase);
         switch (gCurTask->bubblesJumpKind)
         {
         case 0:
@@ -984,11 +984,11 @@ void BubblesState1(void)
     }
 }
 
-void BubblesState1Update(void)
+void BubblesBounceOffWallUpdate(void)
 {
 }
 
-void BubblesState2(void)
+void BubblesBounceOffCeiling(void)
 {
     gCurTask->updateState = 1;
     gCurTask->moveCallback = 0;
@@ -1010,7 +1010,7 @@ void BubblesState2(void)
     ActorSetAttackBox((u32)gUnk_08742C14);
     while (1)
     {
-        sub_08089808(gCurTask->bubblesRollPhase);
+        BubblesSetRollFrame(gCurTask->bubblesRollPhase);
         switch (gCurTask->bubblesJumpKind)
         {
         case 0:
@@ -1083,7 +1083,7 @@ void BubblesFall(void)
     ActorSetAttackBox((u32)gUnk_08742C14);
     while (1)
     {
-        sub_08089808(gCurTask->bubblesRollPhase);
+        BubblesSetRollFrame(gCurTask->bubblesRollPhase);
         switch (gCurTask->bubblesJumpKind)
         {
         case 0:
@@ -1152,7 +1152,7 @@ s32 sub_080896ec(void)
     }
 }
 
-s32 sub_0808972c(void)
+s32 BubblesStartFall(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1164,7 +1164,7 @@ s32 sub_0808972c(void)
     }
 }
 
-s32 sub_0808976c(void)
+s32 BubblesEnterWater(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1173,7 +1173,7 @@ s32 sub_0808976c(void)
     }
 }
 
-s32 sub_0808978c(void)
+s32 BubblesHitWall(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1187,7 +1187,7 @@ s32 sub_0808978c(void)
     }
 }
 
-s32 sub_080897d0(void)
+s32 BubblesHitCeiling(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1198,7 +1198,7 @@ s32 sub_080897d0(void)
     }
 }
 
-void sub_08089808(u8 a)
+void BubblesSetRollFrame(u8 a)
 {
     gCurTask->frame = gUnk_08742778[a * 2];
     if (gUnk_08742778[a * 2 + 1] != 0)

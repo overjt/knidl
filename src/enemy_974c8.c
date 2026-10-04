@@ -968,7 +968,7 @@ void sub_080988c0(void)
 {
 }
 
-s32 sub_080988c4(void)
+s32 MrFrostyStartFall(void)
 {
     if (gCurTask->state == 0) {
         ActorSetState(16);

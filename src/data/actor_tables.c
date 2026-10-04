@@ -1316,7 +1316,7 @@ s32 gBrontoBurtSwoopStates[1] ACTOR_TBL(087420a0) = {
 /* ---- 0x087420BC-0x087420C0: 1 table(s), 1 function pointer(s), section .actor_tbl_087420bc ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in BrontoBurtSwoopUpdate */
 u32 gBrontoBurtSwoopStateUpdates[1] ACTOR_TBL(087420bc) = {
-    (u32)sub_080867b8,
+    (u32)BrontoBurtSwoopState0Update,
 };
 
 /* ---- 0x087420F0-0x087420F4: 1 table(s), 1 function pointer(s), section .actor_tbl_087420f0 ---- */
@@ -1395,7 +1395,7 @@ s32 gTwizzySwoopStates[1] ACTOR_TBL(087425d0) = {
 /* ---- 0x087425EC-0x087425F0: 1 table(s), 1 function pointer(s), section .actor_tbl_087425ec ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in TwizzySwoopUpdate */
 u32 gTwizzySwoopStateUpdates[1] ACTOR_TBL(087425ec) = {
-    (u32)sub_08087724,
+    (u32)TwizzySwoopState0Update,
 };
 
 /* ---- 0x087425F8-0x08742600: 2 table(s), 2 function pointer(s), section .actor_tbl_087425f8 ---- */
@@ -1469,7 +1469,7 @@ u32 gTwizzyHoverStates[1] ACTOR_TBL(087426ac) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in TwizzyHoverUpdate */
 u32 gTwizzyHoverStateUpdates[1] ACTOR_TBL(087426ac) = {
-    (u32)sub_08088478,
+    (u32)TwizzyHoverState0Update,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in Task_Squishy */
 u32 gSquishyVariants[4] ACTOR_TBL(087426ac) = {
@@ -1530,15 +1530,15 @@ u32 gBubblesVariants[2] ACTOR_TBL(0874273c) = {
 /* include/enemy.h; CallTableEntry(i, 5, ...) in BubblesInit, BubblesEnterState */
 u32 gBubblesStates[5] ACTOR_TBL(0874273c) = {
     (u32)BubblesJump,
-    (u32)BubblesState1,
-    (u32)BubblesState2,
+    (u32)BubblesBounceOffWall,
+    (u32)BubblesBounceOffCeiling,
     (u32)BubblesLand,
     (u32)BubblesFall,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in BubblesUpdate */
 u32 gBubblesStateUpdates[5] ACTOR_TBL(0874273c) = {
     (u32)BubblesJumpUpdate,
-    (u32)BubblesState1Update,
+    (u32)BubblesBounceOffWallUpdate,
     (u32)sub_08089530,
     (u32)BubblesLandUpdate,
     (u32)BubblesFallUpdate,
@@ -2809,7 +2809,7 @@ u32 gNightmarePowerOrbStateUpdates[4] ACTOR_TBL(0874ad34) = {
 };
 
 /* ---- 0x0874AD74-0x0874B1A8: 7 script(s), section .actor_tbl_0874ad74 ---- */
-/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 13 words up to its -2 (restart) */
+/* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 13 words up to its -2 (restart) */
 u32 gUnk_0874AD74[13] ACTOR_TBL(0874ad74) = {
     -4, 4, (u32)sub_080af100,
     -4, 5, (u32)sub_080af100,
@@ -2817,7 +2817,7 @@ u32 gUnk_0874AD74[13] ACTOR_TBL(0874ad74) = {
     -4, 7, (u32)sub_080af100,
     -2,
 };
-/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 65 words up to its -2 (restart) */
+/* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 65 words up to its -2 (restart) */
 u32 gUnk_0874ADA8[65] ACTOR_TBL(0874ad74) = {
     4, 2,
     8, 1,
@@ -2853,7 +2853,7 @@ u32 gUnk_0874ADA8[65] ACTOR_TBL(0874ad74) = {
     -3, (u32)sub_080af178,
     -2,
 };
-/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 57 words up to its -2 (restart) */
+/* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 57 words up to its -2 (restart) */
 u32 gUnk_0874AEAC[57] ACTOR_TBL(0874ad74) = {
     4, 2,
     8, 1,
@@ -2885,7 +2885,7 @@ u32 gUnk_0874AEAC[57] ACTOR_TBL(0874ad74) = {
     8, 1,
     -2,
 };
-/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 59 words up to its -1 (stop) */
+/* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 59 words up to its -1 (stop) */
 u32 gUnk_0874AF90[59] ACTOR_TBL(0874ad74) = {
     4, 2,
     8, 1,
@@ -2918,7 +2918,7 @@ u32 gUnk_0874AF90[59] ACTOR_TBL(0874ad74) = {
     -3, (u32)sub_080af1b8,
     -1,
 };
-/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 9 words up to its -2 (restart) */
+/* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 9 words up to its -2 (restart) */
 u32 gUnk_0874B07C[9] ACTOR_TBL(0874ad74) = {
     4, 1,
     6, 1,
@@ -2926,7 +2926,7 @@ u32 gUnk_0874B07C[9] ACTOR_TBL(0874ad74) = {
     7, 1,
     -2,
 };
-/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 9 words up to its -2 (restart) */
+/* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 9 words up to its -2 (restart) */
 u32 gUnk_0874B0A0[9] ACTOR_TBL(0874ad74) = {
     4, 4,
     5, 4,
@@ -2934,7 +2934,7 @@ u32 gUnk_0874B0A0[9] ACTOR_TBL(0874ad74) = {
     7, 4,
     -2,
 };
-/* include/enemy.h; sub_080aefd4 installs it as Actor.animScript, sub_080af020 runs it: 57 words up to its -2 (restart) */
+/* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 57 words up to its -2 (restart) */
 u32 gUnk_0874B0C4[57] ACTOR_TBL(0874ad74) = {
     4, 2,
     8, 1,

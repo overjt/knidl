@@ -578,8 +578,8 @@ void sub_080a1dd4(void)
     }
 }
 
-/* sub_080a1df8 (0x080A1DF8-0x080A1E4C) */
-s32 sub_080a1df8(void)
+/* MrShineAndMrBrightLand (0x080A1DF8-0x080A1E4C) */
+s32 MrShineAndMrBrightLand(void)
 {
     if (gCurTask->state == 8)
     {
@@ -593,8 +593,8 @@ s32 sub_080a1df8(void)
     return 0;
 }
 
-/* sub_080a1e4c (0x080A1E4C-0x080A1EC4) */
-s32 sub_080a1e4c(void)
+/* MrShineAndMrBrightHitWall (0x080A1E4C-0x080A1EC4) */
+s32 MrShineAndMrBrightHitWall(void)
 {
     struct Task *t = gCurTask;
 
@@ -608,7 +608,7 @@ s32 sub_080a1e4c(void)
         return 0;
     case 12:
         t->velX = 0;
-        sub_080a2c90();
+        MrShineAndMrBrightEndFlash();
         ActorSetState(13);
         if (gCurTask->variant == 2)
             TaskSetEntry(MrBrightEnterState, gCurTaskIdx);
@@ -682,7 +682,7 @@ void sub_080a2030(void)
         TaskSetMotionY(128 << 9, 168 << 5, 192 << 11);
     else
         TaskSetMotionY(-0x30000, 168 << 5, 192 << 11);
-    sub_080a2c90();
+    MrShineAndMrBrightEndFlash();
     gCurTask->layer = 10;
 }
 
@@ -716,7 +716,7 @@ void sub_080a2090(void)
     TaskStop();
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
     TaskSetMotionY(-0x60000, 148 << 6, 192 << 10);
-    sub_080a2c90();
+    MrShineAndMrBrightEndFlash();
     gCurTask->layer = 12;
 }
 
@@ -799,16 +799,16 @@ void sub_080a2274(void *a)
     }
 }
 
-/* sub_080a22b0 (0x080A22B0-0x080A22D4) */
-s32 sub_080a22b0(void)
+/* MrShineAndMrBrightGetWaitTime (0x080A22B0-0x080A22D4) */
+s32 MrShineAndMrBrightGetWaitTime(void)
 {
     if (gCurTask->health < gUnk_02007D00[8])
         return 60;
     return 120;
 }
 
-/* sub_080a22d4 (0x080A22D4-0x080A2390) */
-void sub_080a22d4(void)
+/* MrShineAndMrBrightPickGroundMove (0x080A22D4-0x080A2390) */
+void MrShineAndMrBrightPickGroundMove(void)
 {
     struct Task *t;
     s32 ofs;
@@ -1083,8 +1083,8 @@ void sub_080a27b8(void)
     t->mrShineAndMrBrightPaletteIndex = 0;
 }
 
-/* sub_080a2814 (0x080A2814-0x080A28D0) */
-void sub_080a2814(void)
+/* MrShineUpdatePalette (0x080A2814-0x080A28D0) */
+void MrShineUpdatePalette(void)
 {
     struct Task *t = gCurTask;
 
@@ -1308,8 +1308,8 @@ void sub_080a2b2c(void *a, u32 b)
     }
 }
 
-/* sub_080a2bc4 (0x080A2BC4-0x080A2C90) */
-void sub_080a2bc4(void)
+/* MrBrightUpdatePalette (0x080A2BC4-0x080A2C90) */
+void MrBrightUpdatePalette(void)
 {
     struct Task *t = gCurTask;
     struct Actor *act = t->u8C.actor;
@@ -1346,8 +1346,8 @@ void sub_080a2bc4(void)
     }
 }
 
-/* sub_080a2c90 (0x080A2C90-0x080A2CA8) */
-void sub_080a2c90(void)
+/* MrShineAndMrBrightEndFlash (0x080A2C90-0x080A2CA8) */
+void MrShineAndMrBrightEndFlash(void)
 {
     gCurTask->u8C.actor->paletteOverridden = 0;
     gCurTask->mrShineAndMrBrightFlashing = 0;
@@ -1688,7 +1688,7 @@ void MrShineUpdate(void)
         CallTableEntry(gCurTask->updateState, 18, gMrShineStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        sub_080a2814();
+        MrShineUpdatePalette();
         if (gUnk_02007D00[6] != 0)
             sub_080a2020();
     }
@@ -1739,8 +1739,8 @@ void MrShineWait(void)
     gCurTask->mrShineAndMrBrightFaceTimer = 8;
     ActorSetAttackBox((u32)gUnk_0874883C);
     TaskSetFrame(10);
-    TaskYieldTrampoline((s16)sub_080a22b0());
-    sub_080a22d4();
+    TaskYieldTrampoline((s16)MrShineAndMrBrightGetWaitTime());
+    MrShineAndMrBrightPickGroundMove();
     TaskSleepForever();
 }
 
@@ -1804,7 +1804,7 @@ void MrShineState4Update(void)
 
     if ((u8)sub_080a2224(f) == 0 && gCurTask->state != 4)
     {
-        sub_080a2c90();
+        MrShineAndMrBrightEndFlash();
         TaskSetEntry(f, gCurTaskIdx);
     }
 }
@@ -2009,7 +2009,7 @@ void MrShineDashUpdate(void)
     if ((u8)sub_080a2390() != 0)
     {
         gCurTask->velX = 0;
-        sub_080a2c90();
+        MrShineAndMrBrightEndFlash();
         ActorDestroySlot(gCurTask->mrShineAndMrBrightDashTrailSlot);
         gCurTask->mrShineAndMrBrightDashTrailSlot = 0xFFFF;
         ActorSetState(13);
@@ -2127,7 +2127,7 @@ void sub_080a3ba0(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
         sub_080a268c(8);
-    sub_080a2814();
+    MrShineUpdatePalette();
 }
 
 /* MrShineState17 (0x080A3BC0-0x080A3C08) */
@@ -2152,7 +2152,7 @@ void sub_080a3c08(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
         sub_080a268c(3);
-    sub_080a2814();
+    MrShineUpdatePalette();
 }
 
 /* MrBrightInit (0x080A3C28-0x080A3C54) */
@@ -2170,7 +2170,7 @@ void MrBrightUpdate(void)
         CallTableEntry(gCurTask->updateState, 18, gMrBrightStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        sub_080a2bc4();
+        MrBrightUpdatePalette();
         if (gUnk_02007D00[6] != 0)
             sub_080a2020();
     }
@@ -2222,8 +2222,8 @@ void MrBrightWait(void)
     ActorSetAttackBox((u32)gUnk_087488AC);
     gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_08748574);
     gCurTask->mrShineAndMrBrightBobFrame = 48;
-    TaskYieldTrampoline((s16)sub_080a22b0());
-    sub_080a22d4();
+    TaskYieldTrampoline((s16)MrShineAndMrBrightGetWaitTime());
+    MrShineAndMrBrightPickGroundMove();
     TaskSleepForever();
 }
 
@@ -2292,7 +2292,7 @@ void MrBrightState4Update(void)
     f = MrBrightEnterState;
     if ((u8)sub_080a2224(f) == 0 && gCurTask->state != 4)
     {
-        sub_080a2c90();
+        MrShineAndMrBrightEndFlash();
         TaskSetEntry(f, gCurTaskIdx);
     }
 }
@@ -2522,7 +2522,7 @@ void MrBrightDashUpdate(void)
     if ((u8)sub_080a2390() != 0)
     {
         gCurTask->velX = 0;
-        sub_080a2c90();
+        MrShineAndMrBrightEndFlash();
         ActorDestroySlot(gCurTask->mrShineAndMrBrightDashTrailSlot);
         gCurTask->mrShineAndMrBrightDashTrailSlot = 0xFFFF;
         sub_080a30d0();
@@ -2631,7 +2631,7 @@ void sub_080a4658(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
         sub_080a268c(8);
-    sub_080a2bc4();
+    MrBrightUpdatePalette();
 }
 
 /* MrBrightState17 (0x080A4678-0x080A46C0) */
@@ -2656,7 +2656,7 @@ void sub_080a46c0(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
         sub_080a268c(3);
-    sub_080a2bc4();
+    MrBrightUpdatePalette();
 }
 
 /* sub_080a46e0 (0x080A46E0-0x080A4708) */

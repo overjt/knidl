@@ -837,7 +837,7 @@ void GipInit(void)
 {
     gCurTask->updateCallback = (u32)GipUpdate;
     gCurTask->unk28 = 120;
-    if (sub_0808c82c() != 0)
+    if (GipTrySnapToWall() != 0)
         ActorSetState(3);
     else
         ActorSetState(1);
@@ -931,7 +931,7 @@ void GipState3(void)
     {
         TaskSetFrame(8);
         TaskYieldTrampoline(29);
-        sub_0808c8bc();
+        GipPickNextState();
     } while (gCurTask->state == 3);
     TaskSleepForever();
 }
@@ -975,7 +975,7 @@ void GipState4(void)
             TaskYieldTrampoline(6);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 2);
-        sub_0808c8bc();
+        GipPickNextState();
     } while (gCurTask->state == 4);
     TaskSleepForever();
 }
@@ -1022,13 +1022,13 @@ void sub_0808c1d0(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
+        if (GipGetWallDistRight(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
             ActorSetState(8);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
+    else if (GipGetWallDistLeft(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
         ActorSetState(8);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
@@ -1068,7 +1068,7 @@ void GipState5(void)
             TaskYieldTrampoline(4);
             gCurTask->unk6C++;
         } while ((s16)gCurTask->unk6C <= 2);
-        sub_0808c8bc();
+        GipPickNextState();
     } while (gCurTask->state == 5);
     TaskSleepForever();
 }
@@ -1112,13 +1112,13 @@ void sub_0808c3e8(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
-        if (sub_0808ca00(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
+        if (GipGetWallDistRight(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
             ActorSetState(9);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
-    else if (sub_0808cab8(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
+    else if (GipGetWallDistLeft(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
         ActorSetState(9);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
@@ -1185,7 +1185,7 @@ void GipState10(void)
     } while ((s16)gCurTask->unk6C <= 7);
     gCurTask->unk18 = 1;
     gCurTask->facing = -gCurTask->facing;
-    sub_0808c980();
+    GipSetLeapVelocity();
     while (1)
     {
         TaskSetFrame(6);
@@ -1255,7 +1255,7 @@ void GipIdleUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_0808c71c(void)
+s32 GipLand(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1265,7 +1265,7 @@ s32 sub_0808c71c(void)
     }
 }
 
-s32 sub_0808c74c(void)
+s32 GipStartFall(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1275,7 +1275,7 @@ s32 sub_0808c74c(void)
     }
 }
 
-s32 sub_0808c77c(void)
+s32 GipEnterWater(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1284,7 +1284,7 @@ s32 sub_0808c77c(void)
     }
 }
 
-s32 sub_0808c79c(void)
+s32 GipHitWall(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1304,7 +1304,7 @@ s32 sub_0808c79c(void)
     }
 }
 
-s32 sub_0808c7ec(void)
+s32 GipHitCeiling(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1319,11 +1319,11 @@ s32 sub_0808c7ec(void)
     }
 }
 
-s32 sub_0808c82c(void)
+s32 GipTrySnapToWall(void)
 {
     s32 r;
 
-    r = sub_0808ca00(12, 0);
+    r = GipGetWallDistRight(12, 0);
     if (r >= 0)
     {
         gCurTask->pixelX = (u16)gCurTask->pixelX
@@ -1332,7 +1332,7 @@ s32 sub_0808c82c(void)
         gCurTask->facing = 1;
         return 1;
     }
-    r = sub_0808cab8(12, 0);
+    r = GipGetWallDistLeft(12, 0);
     if (r >= 0)
     {
         gCurTask->pixelX = (u16)gCurTask->pixelX
@@ -1344,7 +1344,7 @@ s32 sub_0808c82c(void)
     return 0;
 }
 
-void sub_0808c8bc(void)
+void GipPickNextState(void)
 {
     PickWeightedRandomIndex(gUnk_08742998[(u16)TaskGetAngleToNearestPlayer(1)], 100);
     switch (gUnk_030023D4)
@@ -1383,7 +1383,7 @@ void CreateGipStar(void)
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
 }
 
-void sub_0808c980(void)
+void GipSetLeapVelocity(void)
 {
     s32 a;
     s32 d;
@@ -1406,7 +1406,7 @@ void sub_0808c980(void)
     TaskSetMotionY(d, 0x2000, 0x30000);
 }
 
-s32 sub_0808ca00(s32 a, s32 b)
+s32 GipGetWallDistRight(s32 a, s32 b)
 {
     struct Task *t;
     s16 *pa;
@@ -1438,7 +1438,7 @@ minus1:
     return -1;
 }
 
-s32 sub_0808cab8(s32 a, s32 b)
+s32 GipGetWallDistLeft(s32 a, s32 b)
 {
     struct Task *t;
     s16 *pa;

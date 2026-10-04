@@ -15,14 +15,14 @@
  *     rows at `0x08742064` all point INTO module M23 - the first cross-module
  *     dispatch found in the behaviour banks.
  *
- * `sub_08085390` / `sub_080853c8` / `sub_08085404` / `sub_0808542c` and
- * `sub_08085e74` / `sub_08085ef0` / `sub_08085fa0` / `sub_08086024` /
- * `sub_08085fec` are the class-3 hook rows at `0x08742D0C` / `0x08742D1C` and
+ * `ChillyLand` / `ChillyStartFall` / `ChillyEnterWater` / `ChillyHitWall` and
+ * `WaddleDooLand` / `WaddleDooStartFall` / `WaddleDooEnterWater` / `WaddleDooHitWall` /
+ * `WaddleDooHitCeiling` are the class-3 hook rows at `0x08742D0C` / `0x08742D1C` and
  * `0x08742D28` / `0x08742D38` / `0x08742D40`; the second group switches on
  * Task.variant (0 = plain, 1 = riding a carrier, 2-3 = ignore) instead of only
  * bailing out on 1.
  *
- * `sub_08085fec` is the second leaf the prologue scan missed (lesson 4.30):
+ * `WaddleDooHitCeiling` is the second leaf the prologue scan missed (lesson 4.30):
  * the table word at `0x08742D40` points at it and it clamps Task.velY (the
  * 16.16 vertical velocity) at zero.
  */
@@ -393,7 +393,7 @@ void ChillyIdleUpdate(void)
     ActorReactToHit();
 }
 
-u8 sub_08085390(void)
+u8 ChillyLand(void)
 {
     struct Task *t;
 
@@ -405,7 +405,7 @@ u8 sub_08085390(void)
     return 1;
 }
 
-u8 sub_080853c8(void)
+u8 ChillyStartFall(void)
 {
     struct Task *t;
 
@@ -418,7 +418,7 @@ u8 sub_080853c8(void)
     return 1;
 }
 
-u8 sub_08085404(void)
+u8 ChillyEnterWater(void)
 {
     if (gCurTask->variant == 1)
         return 0;
@@ -426,7 +426,7 @@ u8 sub_08085404(void)
     return 1;
 }
 
-s32 sub_0808542c(void)
+s32 ChillyHitWall(void)
 {
     struct Task *t;
 
@@ -999,7 +999,7 @@ void WaddleDooShootUpdate(void)
     ActorReactToHit();
 }
 
-u8 sub_08085e74(void)
+u8 WaddleDooLand(void)
 {
     struct Task *t;
 
@@ -1025,7 +1025,7 @@ u8 sub_08085e74(void)
     }
 }
 
-u8 sub_08085ef0(void)
+u8 WaddleDooStartFall(void)
 {
     struct Task *t;
 
@@ -1060,7 +1060,7 @@ u8 sub_08085ef0(void)
     }
 }
 
-u8 sub_08085fa0(void)
+u8 WaddleDooEnterWater(void)
 {
     switch (gCurTask->variant)
     {
@@ -1077,7 +1077,7 @@ u8 sub_08085fa0(void)
     }
 }
 
-s32 sub_08085fec(void)
+s32 WaddleDooHitCeiling(void)
 {
     struct Task *t;
 
@@ -1097,7 +1097,7 @@ s32 sub_08085fec(void)
     }
 }
 
-s32 sub_08086024(void)
+s32 WaddleDooHitWall(void)
 {
     struct Task *t;
 
@@ -1119,7 +1119,7 @@ s32 sub_08086024(void)
     }
 }
 
-void sub_0808606c(void)
+void ParasolWaddleDooReactToDefeat(void)
 {
     sub_08066c08(gWaddleDooDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);

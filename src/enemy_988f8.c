@@ -20,14 +20,14 @@
  * MrFrostyEnterState is the re-arm hook every guard installs through
  * TaskSetEntry(fn, gCurTaskIdx).
  *
- * The rest are the states.  sub_080988f8 / sub_08098a04 are the two jump-table
+ * The rest are the states.  MrFrostyLand / MrFrostyHitWall are the two jump-table
  * dispatchers that turn Task.state into the next animation, sub_08098afc frees
  * the helper task recorded in Task.unk46 once gTaskSlotTypes[] says its type is
  * 143 and gTasks[] says this task is its parent, MrFrostyChooseNextState walks the
  * gUnk_08745618 / gUnk_0874561F rows with the decimal-digit buffer
  * gDigits[1] as the index, sub_08098c54 fires the timed
  * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, CreateMrFrostyIceCube
- * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and sub_08098da4 is the "close
+ * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and MrFrostyCheckNearIceCube is the "close
  * enough" probe (|TaskGetDxTo(Task.unk1C)| <= 10).  MrFrostyBounceOffWallUpdate and
  * MrFrostyState16Update are empty state handlers, and MrFrostyState18Update is the timer leaf
  * the guard table word at 0x087456C8 points at.
@@ -61,7 +61,7 @@ extern void PlaySfx(s32 id);
 /* Defined below */
 void sub_0809a080(s32 a);
 
-u8 sub_080988f8(void)
+u8 MrFrostyLand(void)
 {
     switch (gCurTask->state)
     {
@@ -105,7 +105,7 @@ u8 sub_080988f8(void)
     return 0;
 }
 
-u8 sub_08098a04(void)
+u8 MrFrostyHitWall(void)
 {
     switch (gCurTask->state)
     {
@@ -137,7 +137,7 @@ u8 sub_08098a04(void)
 
 u8 MrFrostyReactToDefeat(void)
 {
-    ActorSetHitReactions(gUnk_08745A80);
+    ActorSetHitReactions(gMrFrostyDefeatedHitReactions);
     gCurTask->mrFrostyFlashEnabled = 0;
     ActorSetState(13);
     TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
@@ -285,7 +285,7 @@ void CreateMrFrostyIceCube(void)
     gCurTask->mrFrostyIceCubeSlot = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-u8 sub_08098da4(void)
+u8 MrFrostyCheckNearIceCube(void)
 {
     s32 v;
 
@@ -813,7 +813,7 @@ void MrFrostyState9Update(void)
     t = gCurTask;
     if (--t->mrFrostyTimer < 0)
     {
-        if (sub_08098da4() == 0)
+        if (MrFrostyCheckNearIceCube() == 0)
         {
             ActorSetState(12);
             TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
@@ -866,7 +866,7 @@ void MrFrostyState10Update(void)
     if (--t->mrFrostyTimer < 0)
     {
         TaskTurnAround();
-        if (sub_08098da4() == 0)
+        if (MrFrostyCheckNearIceCube() == 0)
         {
             ActorSetState(12);
             TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
@@ -906,7 +906,7 @@ void MrFrostyState11Update(void)
     t = gCurTask;
     if (--t->mrFrostyTimer < 0)
     {
-        if (sub_08098da4() == 0)
+        if (MrFrostyCheckNearIceCube() == 0)
         {
             ActorSetState(12);
             TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
@@ -965,7 +965,7 @@ void MrFrostyDefeat(void)
     t = gCurTask;
     zero = 0;
     t->updateState = 13;
-    ActorSetHitReactions(gUnk_08745A80);
+    ActorSetHitReactions(gMrFrostyDefeatedHitReactions);
     u = gCurTask;
     u->onGround = zero;
     if (--gUnk_02007D00[0] <= 0)

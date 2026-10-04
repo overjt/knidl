@@ -2347,7 +2347,7 @@ void HeavyMoleUpdate(void)
     w = gCurTask->unk28 - 1;
     gCurTask->unk28 = w;
     if (w <= 0)
-        sub_080ad7f0();
+        HeavyMoleStartNextMove();
     w2 = gCurTask->unk2C - 1;
     gCurTask->unk2C = w2;
     if (w2 == 0)
@@ -2391,7 +2391,7 @@ void sub_080ad788(void)
     gUnk_02007D00[2] = ((s16 *)gUnk_02007D00)[5] + (gUnk_030023D4 << 16);
 }
 
-void sub_080ad7f0(void)
+void HeavyMoleStartNextMove(void)
 {
     struct Task *t;
     struct Task **c8;
@@ -2618,7 +2618,7 @@ void Task_HeavyMoleMissileHatch(void)
     t->frameTable = gHeavyMoleFrames;
     t->layer = 9;
     u = gCurTask;
-    u->lateUpdateCallback = (u32)sub_080add48;
+    u->lateUpdateCallback = (u32)HeavyMoleMissileHatchFollowBody;
     c = &gCurTask;
     p = gUnk_02007D00;
 top:
@@ -2646,7 +2646,7 @@ top:
     goto top;
 }
 
-void sub_080add48(void)
+void HeavyMoleMissileHatchFollowBody(void)
 {
     struct Task *t;
     s16 *a;
@@ -2753,7 +2753,7 @@ void Task_HeavyMoleTurbines(void)
     t->frameTable = gHeavyMoleFrames;
     t->layer = 7;
     u = gCurTask;
-    u->lateUpdateCallback = (u32)sub_080adf50;
+    u->lateUpdateCallback = (u32)HeavyMoleTurbinesFollowBody;
     c = &gCurTask;
     k = 8;
 top:
@@ -2766,7 +2766,7 @@ top:
     goto top;
 }
 
-void sub_080adf50(void)
+void HeavyMoleTurbinesFollowBody(void)
 {
     struct Task *t;
     s16 *a;
@@ -2839,7 +2839,7 @@ void Task_HeavyMoleEye(void)
     t->frameTable = gHeavyMoleFrames;
     t->layer = 9;
     u = gCurTask;
-    u->lateUpdateCallback = (u32)sub_080ae0b4;
+    u->lateUpdateCallback = (u32)HeavyMoleEyeFollowBody;
     u->unk28 = 96;
     c = &gCurTask;
     k = 11;
@@ -2866,7 +2866,7 @@ top:
     goto top;
 }
 
-void sub_080ae0b4(void)
+void HeavyMoleEyeFollowBody(void)
 {
     struct Task *t;
     s16 *a;

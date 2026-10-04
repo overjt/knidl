@@ -334,7 +334,7 @@ void BrontoBurtSwoop(void)
     TaskSleepForever();
 }
 
-void sub_080867b8(void)
+void BrontoBurtSwoopState0Update(void)
 {
     if (gCurTask->variant != 2)
     {
@@ -1028,7 +1028,7 @@ void TwizzySwoop(void)
     TaskSleepForever();
 }
 
-void sub_08087724(void)
+void TwizzySwoopState0Update(void)
 {
     if (gCurTask->variant != 2)
     {

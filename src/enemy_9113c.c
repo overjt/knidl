@@ -14,7 +14,7 @@
  * sub_08091a98 (they walk Task.frame up and down while yielding Task.unk24
  * frames per step), and waits on Task.onGround between passes.
  *
- * PoppyBrosSrReactToDamage / PoppyBrosSrReactToDefeat / sub_08091b60 are the hit hooks (they return
+ * PoppyBrosSrReactToDamage / PoppyBrosSrReactToDefeat / PoppyBrosSrHitWall are the hit hooks (they return
  * 1 when they take over the task), and Task_PoppyBrosSrHand is the class-4 companion
  * the boss spawns: it builds an ActorSpawn on the stack, then flies the task
  * along three 16.16 ramps (Task.unk28 / Task.unk30) with a wait in the middle
@@ -509,14 +509,14 @@ s32 PoppyBrosSrReactToDamage(void)
 s32 PoppyBrosSrReactToDefeat(void)
 {
     TaskSetFrame(10);
-    ActorSetHitReactions(gUnk_087440F4);
+    ActorSetHitReactions(gPoppyBrosSrDefeatedHitReactions);
     gCurTask->poppyBrosSrDefeatPhase = 1;
     ActorSetState(6);
     TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_08091b60(void)
+s32 PoppyBrosSrHitWall(void)
 {
     TaskStopX();
     return 0;

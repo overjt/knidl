@@ -33,7 +33,7 @@
  * BonkersNutState0 is its one state, Task_PoppyBrosSrBomb / PoppyBrosSrBombInit are the second
  * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), PoppyBrosSrBombHeld and
  * PoppyBrosSrBombFlight are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
- * every six frames, and PoppyBrosSrBombHeldUpdate / Task_PoppyBrosSrBombSpark / sub_08093f00 are the
+ * every six frames, and PoppyBrosSrBombHeldUpdate / Task_PoppyBrosSrBombSpark / PoppyBrosSrBombLand are the
  * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
  */
 #include "gba/gba.h"
@@ -1318,7 +1318,7 @@ void BonkersNutState0Update(void)
     }
 }
 
-s32 sub_08093bb0(void)
+s32 BonkersNutHitWall(void)
 {
     ActorSetHitReactions(gUnk_0874430C);
     TaskSetEntry(ActorDie, gCurTaskIdx);
@@ -1486,14 +1486,14 @@ void Task_PoppyBrosSrBombSpark(void)
     TaskExitTrampoline();
 }
 
-s32 sub_08093edc(void)
+s32 PoppyBrosSrBombHitWall(void)
 {
     ActorSetHitReactions(gUnk_08744324);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_08093f00(void)
+s32 PoppyBrosSrBombLand(void)
 {
     struct Task *t;
     s32 r;

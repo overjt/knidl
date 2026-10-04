@@ -238,7 +238,7 @@ extern struct ActorHandlers gWheelieTerrainHandlers;
 extern struct ActorHandlers gFlamerTerrainHandlers;
 extern struct ActorHandlers gNoddyTerrainHandlers;
 extern struct ActorHandlers gChillyTerrainHandlers;
-extern struct ActorHandlers gUnk_08742D28;
+extern struct ActorHandlers gWaddleDooTerrainHandlers;
 extern struct ActorHandlers gTwizzyTerrainHandlers;
 extern struct ActorHandlers gSquishyTerrainHandlers;
 extern struct ActorHandlers gBubblesTerrainHandlers;
@@ -1286,7 +1286,7 @@ struct ActorDef gWaddleDooDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)&gUnk_08742D28,
+    .terrainHandlers = (u32)&gWaddleDooTerrainHandlers,
     .hitReactions = (u32)&gWaddleDooHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
@@ -1303,7 +1303,7 @@ struct ActorDef gParasolWaddleDooDef ACTOR_REC(087429e8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F73C,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)&gUnk_08742D28,
+    .terrainHandlers = (u32)&gWaddleDooTerrainHandlers,
     .hitReactions = (u32)&gParasolWaddleDooHitReactions,
     .initCallback = NULL,
     .teardown = NULL,

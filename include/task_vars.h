@@ -249,7 +249,7 @@
 #define mrShineAndMrBrightDashTrailSlot unk46 /* s16: slot of the dash's trail actor (Mr. Shine's dash flame, Mr. Bright's fire trail); -1 none */
 #define mrShineAndMrBrightLoopCount unk6C /* s16: the running state's loop counter (MrShineWalk's four steps, MrBrightHop's hops) */
 #define mrShineAndMrBrightFrozen unk6E /* s16: 1 when the pair task stopped this twin's state updates (the joint defeat) */
-#define mrShineAndMrBrightFlashing unk70 /* s16: nonzero while the palette hook flashes the twin (states 4, 11, 15); sub_080a2c90 clears */
+#define mrShineAndMrBrightFlashing unk70 /* s16: nonzero while the palette hook flashes the twin (states 4, 11, 15); MrShineAndMrBrightEndFlash clears */
 
 /* MrTickTock - Mr. Tick-Tock (task type #53, Task_MrTickTock;
    gMrTickTockVariants, gMrTickTockStates / gMrTickTockStateUpdates) */

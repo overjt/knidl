@@ -19,7 +19,7 @@
  * This batch holds:
  *   * the two stand-alone class-2 bodies `Task_ChillyFreezeSparkle` (a two-variant intro
  *     that walks Task.posX/unk50 with RandomSpread and waits on the room byte
- *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `Task_WaddleDooBeam`,
+ *     gTaskSlotTypes[Task.parent] through `ChillyFreezeSparkleCheckParent`) and `Task_WaddleDooBeam`,
  *     plus the smaller `Task_GlunkShot` and `Task_GipStar`;
  *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
  *     the row bodies `BroomHatterVariant0` / `BroomHatterVariant1` / `BroomHatterIdleInit`, the
@@ -82,7 +82,7 @@ void Task_ChillyFreezeSparkle(void)
     switch (gCurTask->state)
     {
     case 0:
-        sub_0808cfec();
+        ChillyFreezeSparkleCheckParent();
         gCurTask->posX = (RandomSpread(-20, 1, 32) + gTasks[gCurTask->parent].pixelX) << 16;
         gCurTask->posY = (RandomSpread(20, 1, 8) + gTasks[gCurTask->parent].pixelY) << 16;
         TaskSetMotionXFacing(0xFFFF4000, 128 << 5);
@@ -96,7 +96,7 @@ void Task_ChillyFreezeSparkle(void)
         TaskYieldTrampoline(3);
         TaskSetFrame(5);
         TaskYieldTrampoline(3);
-        sub_0808cfec();
+        ChillyFreezeSparkleCheckParent();
         gCurTask->posX = (RandomSpread(-20, 1, 32) + gTasks[gCurTask->parent].pixelX) << 16;
         gCurTask->posY = (RandomSpread(4, 1, 8) + gTasks[gCurTask->parent].pixelY) << 16;
         TaskSetMotionXFacing(0xFFFF4000, 128 << 5);
@@ -116,7 +116,7 @@ void Task_ChillyFreezeSparkle(void)
         TaskYieldTrampoline(3);
         break;
     case 1:
-        sub_0808cfec();
+        ChillyFreezeSparkleCheckParent();
         gCurTask->posX = (RandomSpread(-12, 1, 32) + gTasks[gCurTask->parent].pixelX) << 16;
         gCurTask->posY = (RandomSpread(16, 1, 8) + gTasks[gCurTask->parent].pixelY) << 16;
         TaskSetMotionXFacing(192 << 8, 0xFFFFF000);
@@ -130,7 +130,7 @@ void Task_ChillyFreezeSparkle(void)
         TaskYieldTrampoline(3);
         TaskSetFrame(5);
         TaskYieldTrampoline(3);
-        sub_0808cfec();
+        ChillyFreezeSparkleCheckParent();
         gCurTask->posY = (RandomSpread(0, 1, 8) + gTasks[gCurTask->parent].pixelY) << 16;
         TaskSetMotionXFacing(192 << 8, 0xFFFFF000);
         gCurTask->velY = 0xFFFEC000;
@@ -152,7 +152,7 @@ void Task_ChillyFreezeSparkle(void)
     TaskExitTrampoline();
 }
 
-void sub_0808cfec(void)
+void ChillyFreezeSparkleCheckParent(void)
 {
     if (gTaskSlotTypes[gCurTask->parent] != 104)
         TaskExitTrampoline();
@@ -172,7 +172,7 @@ void Task_WaddleDooBeam(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gWaddleDooBeamFrames;
-    u->updateCallback = (u32)sub_0808d100;
+    u->updateCallback = (u32)WaddleDooBeamUpdate;
     u->onGround = 0;
     w = gCurTask;
     w->unk28 = 0;
@@ -198,7 +198,7 @@ void Task_WaddleDooBeam(void)
     ActorDestroy();
 }
 
-void sub_0808d100(void)
+void WaddleDooBeamUpdate(void)
 {
     if (sub_08069660() != 0) {
         TaskStop();
@@ -209,7 +209,7 @@ void sub_0808d100(void)
     }
 }
 
-void sub_0808d130(void)
+void WaddleDooBeamHitTerrain(void)
 {
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }

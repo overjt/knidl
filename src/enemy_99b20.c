@@ -1605,7 +1605,7 @@ void MrTickTockState23Update(void)
     u->mrTickTockTimer--;
 }
 
-u8 sub_0809b454(void)
+u8 MrFrostyIceCubeLand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1638,11 +1638,11 @@ u8 sub_0809b454(void)
     return 0;
 }
 
-void sub_0809b4d8(void)
+void MrFrostyIceCubeStartFall(void)
 {
 }
 
-u8 sub_0809b4dc(void)
+u8 MrFrostyIceCubeHitWall(void)
 {
     ActorSetState(2);
     TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);

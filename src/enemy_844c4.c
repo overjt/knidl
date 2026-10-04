@@ -12,7 +12,7 @@
  * still attached, and or-s in 0x10000 while `gTerrainResult[4]` (the room's
  * kind) is outside 1-4.
  *
- * `sub_08084bc0` / `sub_08084c0c` / `sub_08084c5c` / `sub_08084cb8` plus the
+ * `NoddyLand` / `NoddyStartFall` / `NoddyEnterWater` / `NoddyBounceOffWall` plus the
  * shared `sub_08084c84` are the four class-3 hook rows at `0x08742CF0` /
  * `0x08742D00`: each returns 1 when it has handed the task to a new state and
  * 0 otherwise, and all four open with the same `Task.variant == 1` bail-out.
@@ -421,7 +421,7 @@ void NoddyBubbleUpdate(void)
         TaskFree(gCurTaskIdx);
 }
 
-u8 sub_08084bc0(void)
+u8 NoddyLand(void)
 {
     struct Task *t;
     s32 v;
@@ -449,7 +449,7 @@ def:
     return 0;
 }
 
-u8 sub_08084c0c(void)
+u8 NoddyStartFall(void)
 {
     struct Task *t;
     s32 v;
@@ -478,7 +478,7 @@ out:
     return 0;
 }
 
-u8 sub_08084c5c(void)
+u8 NoddyEnterWater(void)
 {
     if (gCurTask->variant == 1)
         return 0;
@@ -505,7 +505,7 @@ s32 sub_08084c84(void)
     }
 }
 
-s32 sub_08084cb8(void)
+s32 NoddyBounceOffWall(void)
 {
     if (gCurTask->variant != 1)
         TaskTurnAroundAndReverseX();
