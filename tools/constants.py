@@ -101,6 +101,13 @@ MAX_VALUE = 0x7FFFFFFF
 #            (`x.member = N`, `x->member == N`, `!=`)
 #   indexed: arrays whose element is compared with a literal
 #            (`gTaskSlotTypes[i] == N`)
+#   bits:    flag-word members whose single bits are the family's values
+#            (#155 run 7, R3): a literal is at a position when it is the whole
+#            right operand of `&`, `|`, `^`, `&=`, `|=` or `^=` whose left
+#            operand is the member (`x->immunityFlags & 4`,
+#            `t->spriteFlags |= 0x8000`); complements and masks of several
+#            bits are not values of the family and stay out of the scan
+#   bit_vars: the same for plain variables
 #   prefix:  only the header's constants with this prefix (a header may hold
 #            two enumerations: GAME_STATE_ and STAGE_REQUEST_)
 #   skip_files / skip_sites: where the same member or variable holds another
@@ -640,6 +647,17 @@ def family_positions(fam, toks):
     members = set(spec.get("members", []))
     variables = set(spec.get("vars", []))
     indexed = set(spec.get("indexed", []))
+    bit_members = set(spec.get("bits", []))
+    bit_vars = set(spec.get("bit_vars", []))
+
+    def is_bit_operand(i):
+        k, t = toks[i][0], toks[i][1]
+        if k != "id":
+            return False
+        prev = toks[i - 1][1] if i > 0 else ""
+        if t in bit_members and prev in (".", "->"):
+            return True
+        return t in bit_vars and prev not in (".", "->")
 
     def is_operand(i):
         k, t = toks[i][0], toks[i][1]
@@ -679,6 +697,12 @@ def family_positions(fam, toks):
                 lit = literal_at(toks, *args[want])
                 if lit:
                     yield lit[0], lit[1]
+        elif is_bit_operand(i):
+            j = _operand_end(toks, i) + 1
+            if j < n and toks[j][1] in ("&", "|", "^", "&=", "|=", "^="):
+                v = _value_after(toks, j)
+                if v and v[1] > 0 and v[1] & (v[1] - 1) == 0:
+                    yield v
         elif is_operand(i):
             j = _operand_end(toks, i) + 1
             if j < n and toks[j][1] in ("=", "==", "!="):

@@ -216,8 +216,9 @@ Run 3 of #155 added these words, each defined by the whole body:
   state has changed is `<State>Update` (`BonkersWalkUpdate`), as run 2's
   `ScarfyChaseUpdate`.
 - Two species that share one script get a pair prefix
-  (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`); a verb
-  that fits two states of one family names neither of them.
+  (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`).  (Run 3
+  added "a verb that fits two states of one family names neither of
+  them"; run 7's R1, below, replaced it.)
 
 Run 4 of #155 named the state bodies with these words, each defined by the
 whole body (the agents' notes in the run-4 PR give every family's verb
@@ -260,6 +261,33 @@ list):
   (`ActorAttached<Move>Held` / `Flight` / `BounceOff`) are reused, with the
   captor's move as the row word, for the player a boss holds
   (`HeldPlayerBackdropHeld`, `HeldPlayerThrowFlightForward`).
+
+Run 7 of #155 (the owner's decisions R1 and R2) replaced two rules that
+had left states and rows unnamed:
+
+- **A verb that fits two states names both (R1).**  Run 3's "a verb that
+  fits two states of one family names neither of them" is withdrawn.
+  Each state takes the verb plus the qualifier that the code proves sets
+  it apart from its twin: a word where one exists - direction (`Up` /
+  `Down`, `Left` / `Right`, `Forward` / `Back`), speed or distance
+  (`Short` / `Long`, `Slow` / `Fast`), phase (`Start` / `Loop` / `End`,
+  `WindUp` / `Release`) or the condition that enters it (`OnGround` /
+  `InAir`, `Near` / `Far`, `Hurt`, `FromFloor`) - and a sequence qualifier
+  (`First` / `Second`, `Slash1` / `Slash2`) only when the transitions
+  prove the order (state A always enters state B) and no word separates
+  them.  The qualifier's evidence (the velocity sign, the timer value, the
+  transition that enters the state) is in the `renames.csv` row, and the
+  update a state selects follows it (`<Enemy><Verb><Qualifier>Update`).
+  Example: Gip's wall states are `GipClimbUp` / `GipClimbDown` (velY < 0 /
+  > 0, both picked by GipPickNextState), their entries
+  `GipClimbUpFromFloor` (GipHitWall during the walk) /
+  `GipClimbDownFromLedge` (GipStartFall: it turns back to the wall it
+  walked off), and the two ends `GipClimbOverTop` / `GipLetGo`.
+- **A row no row word covers whole (R2)** is named after what sets it
+  apart from its sibling rows - its spawn behaviour, its path, the ability
+  the variant carries - when renders or the code prove it
+  (`<Enemy><Distinction>Init`, `g<Enemy><Distinction>States`); otherwise it
+  keeps its `<Enemy>Variant<N>` position name.  No row word is invented.
 
 **A species identity needs three agreeing sources** (run 3): the local
 render (`visual:`), the behaviour and `ActorDef.ability` from the code
@@ -772,6 +800,37 @@ number (the counts are `tools/constants.py --census`'s):
 | `camera.h` (room.h) | `CAMERA_MODE_*` | RoomTaskUpdateCamera's cases | the hub's 2-4 (its own meanings) |
 | `rooms.h` (room.h, save.h) | `ROOM_ENTRY_*`, `DOOR_KIND_*` | Task_Player's entry cases; EnterDoor's and SpawnDoorObjects' door kinds | door-object kinds 0-2 |
 | `sound.h` (sound.h, player.h) | `SE_<ROLE>`, `BGM_<ROLE>` | ids every call site plays for one thing | every id with two roles, the cutscene songs (they are room music too); the sounds and songs themselves are assets |
+
+### 7.0 Flag bits (run 7, the owner's decision R3)
+
+A flag word left as `unk*` because it holds one bit per meaning gets a
+field name where every bit is a flag of the same object (`flags`,
+`immunityFlags`, `statusFlags`) and one `#define` per proven bit, in the
+constants header of its subsystem (`hits.h` for the hit engine's boxes,
+`player.h` for `PlayerState`, `rooms.h` for doors and room headers, a new
+`sprites.h` for the sprite flags): `<STRUCT>_<WORD>_<BIT>`, the word taken
+from the field (`AttackBox.immunityFlags` gives `ATTACK_BOX_IMMUNITY_*`,
+a plain `flags` gives `<STRUCT>_FLAG_*`), valued as the code's masks spell
+the bit (`0x40`).
+
+- **Where.**  `tools/constants.py`'s `bits` positions (FAMILIES): a literal
+  that is the whole right operand of `&`, `|`, `^`, `&=`, `|=` or `^=` on
+  that field (`a->immunityFlags & 4`, `t->spriteFlags |= 0x8000`).  The
+  constant is used only on that field; the same value in another flag word
+  is another family.
+- **Proof.**  The literal form is D6's: `--verify-cpp` (tokens identical,
+  literals by value), the per-file `.s` oracle and `make compare`.
+- **Complements and masks of several bits** (`&= 0x7FFF`, `& 0x6000`)
+  cannot be spelled with the constant under that rule.  The owner's
+  coordinator approved a second form, in commits of its own: the clear
+  becomes `&= ~FLAG` and the mask `(FLAG_A | FLAG_B)`, only with bits that
+  are already proven, with no new cast or type change.  These are token
+  changes, so their proof is the per-file `.s` oracle (all units identical
+  to the parent commit), `make compare` and `tools/rename.py --verify-diff`;
+  a site whose assembly would change keeps its number (isolated per site),
+  and the block's note counts those sites and says why.
+- **Unproven bits** stay numbers, with the reason next to the block (a bit
+  no reader tests, a value the writers disagree on).
 
 ### 7.1 Struct tags and locals (run 6, the owner's decisions D7 and D8)
 
