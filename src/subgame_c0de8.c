@@ -657,7 +657,7 @@ void BombRallyResultsPlayerPose(void)
     struct Task *v;
 
     t = gCurTask;
-    t->updateState = 0;
+    t->updateState = BOMB_RALLY_RESULTS_PLAYER_STATE_POSE;
     gCurTask->layer = 9;
     u = gCurTask;
     u->frameTable = gBombRallyResultsPoseFrames;
@@ -686,7 +686,7 @@ void BombRallyResultsPlayerLives(void)
     s32 n;
 
     t = gCurTask;
-    t->updateState = 2;
+    t->updateState = BOMB_RALLY_RESULTS_PLAYER_STATE_LIVES;
     u = gCurTask;
     u->unk28 = 0;
     if (gPlayerCount == 1) {
@@ -772,7 +772,7 @@ void BombRallyResultsPlayerPlace(void)
     struct Task *v;
 
     t = gCurTask;
-    t->updateState = 1;
+    t->updateState = BOMB_RALLY_RESULTS_PLAYER_STATE_PLACE;
     gCurTask->layer = 7;
     u = gCurTask;
     u->frameTable = gUnk_08755EFC;
@@ -805,7 +805,7 @@ void BombRallyMenuItem(void)
     if (n == 0)
         t->state = n;
     else
-        t->state = 1;
+        t->state = BOMB_RALLY_MENU_ITEM_STATE_LEVEL;
     CallTableEntry(gCurTask->state, 2, gBombRallyMenuItemStates);
     TaskSleepForever();
 }
@@ -819,7 +819,7 @@ void BombRallyMenuItemContinue(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BOMB_RALLY_MENU_ITEM_STATE_CONTINUE;
     t = gCurTask;
     t->frameTable = gBombRallyContinueItemFrames;
     t->frame = t->unk18;
@@ -897,7 +897,7 @@ void BombRallyMenuItemLevel(void)
     struct Task *y;
 
     t = gCurTask;
-    t->updateState = 1;
+    t->updateState = BOMB_RALLY_MENU_ITEM_STATE_LEVEL;
     u = gCurTask;
     u->unk34 = 0;
     u->frameTable = gBombRallyLevelItemFrames;

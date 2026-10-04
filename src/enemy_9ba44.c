@@ -29,7 +29,7 @@ void MrTickTockNoteInit(void)
 
     t->updateCallback = (u32)MrTickTockNoteUpdate;
     t->mrTickTockNoteDir = -gTasks[t->parent].facing;
-    ActorSetState(0);
+    ActorSetState(MR_TICK_TOCK_NOTE_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 2, gMrTickTockNoteStates);
 }
 
@@ -41,10 +41,10 @@ void MrTickTockNoteUpdate(void)
     }
     else
     {
-        ActorSetState(1);
+        ActorSetState(MR_TICK_TOCK_NOTE_STATE_VANISH);
         TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != MR_TICK_TOCK_NOTE_STATE_VANISH)
         ActorCheckHits();
     ActorReactToHit();
 }
@@ -58,7 +58,7 @@ void MrTickTockNoteFlight(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = MR_TICK_TOCK_NOTE_STATE_FLIGHT;
     gCurTask->onGround = 0;
     t = gCurTask;
     t->unk28 = 0;
@@ -80,7 +80,7 @@ void MrTickTockNoteVanish(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = MR_TICK_TOCK_NOTE_STATE_VANISH;
     gCurTask->onGround = 0;
     gCurTask->unk28 = 0;
     TaskStop();

@@ -62,7 +62,7 @@ void LaserBallInit(void)
     gCurTask->onGround = 0;
     gCurTask->updateCallback = (u32)LaserBallUpdate;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(LASER_BALL_STATE_APPROACH);
     CallTableEntry(gCurTask->state, 4, gLaserBallStates);
 }
 
@@ -80,7 +80,7 @@ void LaserBallEnterState(void)
 
 void LaserBallApproach(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = LASER_BALL_STATE_APPROACH;
     gCurTask->laserBallSteerTimer = 16;
     TaskStop();
     while (1)
@@ -136,7 +136,7 @@ void LaserBallApproachUpdate(void)
 
 void LaserBallHover(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = LASER_BALL_STATE_HOVER;
     gCurTask->laserBallHoverTimer = 0;
     TaskStop();
     while (1)
@@ -169,7 +169,7 @@ void LaserBallHoverUpdate(void)
     t->pixelX = t->laserBallTargetX;
     if (t->laserBallHoverTimer > 5 && RandomRange(2) != 0)
     {
-        ActorSetState(1);
+        ActorSetState(LASER_BALL_STATE_SHOOT);
         TaskSetEntry(LaserBallEnterState, gCurTaskIdx);
     }
 }
@@ -180,7 +180,7 @@ void LaserBallShoot(void)
     struct Task *u;
     struct Task *w;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = LASER_BALL_STATE_SHOOT;
     TaskFaceNearestPlayer();
     gCurTask->laserBallShotDone = 0;
     TaskStop();
@@ -229,7 +229,7 @@ void LaserBallShootUpdate(void)
 {
     if (gCurTask->laserBallShotDone != 0)
     {
-        ActorSetState(3);
+        ActorSetState(LASER_BALL_STATE_RETREAT);
         TaskSetEntry(LaserBallEnterState, gCurTaskIdx);
     }
 }
@@ -240,7 +240,7 @@ void LaserBallRetreat(void)
     struct Task *u;
     struct Task *v;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = LASER_BALL_STATE_RETREAT;
     t = gCurTask;
     t->laserBallTurnPending = 1;
     t->accelY = 0xFFFFF000;
@@ -295,7 +295,7 @@ void LaserBallIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(LASER_BALL_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gLaserBallIdleStates);
 }
 
@@ -309,7 +309,7 @@ void LaserBallIdleUpdate(void)
 
 void LaserBallIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = LASER_BALL_IDLE_STATE_IDLE;
     TaskFaceNearestPlayer();
     gCurTask->onGround = 1;
     TaskStop();
@@ -323,7 +323,7 @@ void LaserBallIdleState0Update(void)
 
 s32 CoconutLand(void)
 {
-    ActorSetState(2);
+    ActorSetState(COCONUT_STATE_EXPLODE);
     TaskSetEntry(CoconutEnterState, gCurTaskIdx);
     return 1;
 }
@@ -363,7 +363,7 @@ void CoconutInit(void)
         t->facing = 255;
         break;
     }
-    ActorSetState(0);
+    ActorSetState(COCONUT_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gCoconutStates);
 }
 
@@ -395,7 +395,7 @@ void CoconutWaitUpdate(void)
     v = TaskGetNearestPlayerDx();
     if (abs(v) <= 7)
     {
-        ActorSetState(1);
+        ActorSetState(COCONUT_STATE_FALL);
         TaskSetEntry(CoconutEnterState, gCurTaskIdx);
     }
 }
@@ -457,7 +457,7 @@ void CoconutIdleInit(void)
     gCurTask->updateCallback = (u32)CoconutIdleUpdate;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(COCONUT_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gCoconutIdleStates);
 }
 
@@ -471,7 +471,7 @@ void CoconutIdleUpdate(void)
 
 void CoconutIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = COCONUT_IDLE_STATE_IDLE;
     gCurTask->onGround = 1;
     while (1)
     {
@@ -550,7 +550,7 @@ s32 ShotzoEnterWater(void)
 s32 ParasolShotzoReactToDefeat(void)
 {
     ActorDropParasol(gShotzoDef, 0);
-    ActorSetState(2);
+    ActorSetState(PARASOL_SHOTZO_STATE_2);
     TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
     return 1;
 }
@@ -558,7 +558,7 @@ s32 ParasolShotzoReactToDefeat(void)
 s32 sub_0808ed0c(void)
 {
     ActorDropParasol(gShotzoDef, 0);
-    ActorSetState(2);
+    ActorSetState(PARASOL_SHOTZO_STATE_2);
     TaskSetEntry(ParasolShotzoEnterState, gCurTaskIdx);
     return 1;
 }
@@ -865,7 +865,7 @@ void Task_Shotzo(void)
 void ShotzoAimInit(void)
 {
     gCurTask->updateCallback = (u32)ShotzoAimUpdate;
-    ActorSetState(0);
+    ActorSetState(SHOTZO_AIM_STATE_AIM);
     ShotzoInitBarrel();
     CallTableEntry(gCurTask->state, 3, gShotzoAimStates);
 }
@@ -880,7 +880,7 @@ void ShotzoAimUpdate(void)
 void ShotzoFixedInit(void)
 {
     gCurTask->updateCallback = (u32)ShotzoFixedUpdate;
-    ActorSetState(0);
+    ActorSetState(SHOTZO_FIXED_STATE_0);
     gCurTask->facing = 255;
     CallTableEntry(gCurTask->state, 3, gShotzoFixedStates);
 }
@@ -895,7 +895,7 @@ void ShotzoFixedUpdate(void)
 void ParasolShotzoInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolShotzoUpdate;
-    ActorSetState(0);
+    ActorSetState(PARASOL_SHOTZO_STATE_AIM);
     ShotzoInitBarrel();
     ActorStartCarryingParasol(gParasolShotzoDef);
     CallTableEntry(gCurTask->state, 3, gParasolShotzoStates);
@@ -927,7 +927,7 @@ void ShotzoAim(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = SHOTZO_AIM_STATE_AIM;
     t = gCurTask;
     t->shotzoAimTimer = gUnk_08743248[t->shotzoSpeedLevel];
     TaskStopY();

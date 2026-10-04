@@ -406,7 +406,7 @@ void sub_080bc70c(void)
         struct Task *p = &gTasks[gCurTask->parent];
         p->quickDrawPlayersReady = 1;
     }
-    gCurTask->state = 1;
+    gCurTask->state = QUICK_DRAW_PLAYER_STATE_READY;
 }
 
 void QuickDrawSetPlayerState(s32 a0, u16 a1)
@@ -469,13 +469,13 @@ void QuickDrawPlayer(void)
     switch (t->quickDrawObjectStartMode)
     {
     case 0:
-        t->state = 0;
+        t->state = QUICK_DRAW_PLAYER_STATE_ARRIVE;
         break;
     case 1:
-        t->state = 1;
+        t->state = QUICK_DRAW_PLAYER_STATE_READY;
         break;
     case 2:
-        t->state = 5;
+        t->state = QUICK_DRAW_PLAYER_STATE_RESULTS;
         break;
     }
     CallTableEntry(gCurTask->state, 6, gQuickDrawPlayerStates);
@@ -494,7 +494,7 @@ void QuickDrawPlayerEnterState(void)
 
 void QuickDrawPlayerArrive(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = QUICK_DRAW_PLAYER_STATE_ARRIVE;
     QuickDrawPlayerStartSlideIn();
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
@@ -514,13 +514,13 @@ void QuickDrawPlayerArriveUpdate(void)
 {
     if (gBrightness == 0 && gCurTask->unk24 == 0)
         QuickDrawPlayerSlideIn();
-    if (gCurTask->state != 0)
+    if (gCurTask->state != QUICK_DRAW_PLAYER_STATE_ARRIVE)
         TaskSetEntry(QuickDrawPlayerEnterState, gCurTaskIdx);
 }
 
 void QuickDrawPlayerReady(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = QUICK_DRAW_PLAYER_STATE_READY;
     QuickDrawPlacePlayer();
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
@@ -538,7 +538,7 @@ void QuickDrawPlayerStrike(void)
     s16 x;
     s32 i;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = QUICK_DRAW_PLAYER_STATE_STRIKE;
     QuickDrawPlacePlayerStrike();
     saved = gCurTask->pixelX;
     x = gCurTask->pixelX;
@@ -567,7 +567,7 @@ void QuickDrawPlayerLose(void)
     s32 i;
 
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->updateState = 3;
+    gCurTask->updateState = QUICK_DRAW_PLAYER_STATE_LOSE;
     QuickDrawPlayerSetKnockBack();
     while (1)
     {
@@ -602,7 +602,7 @@ void QuickDrawPlayerFalseStart(void)
     s16 x;
     s32 i;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = QUICK_DRAW_PLAYER_STATE_FALSE_START;
     sub_080bc460();
     saved = gCurTask->pixelX;
     x = gCurTask->pixelX;
@@ -633,7 +633,7 @@ void QuickDrawPlayerFalseStartUpdate(void)
 
 void QuickDrawPlayerResults(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = QUICK_DRAW_PLAYER_STATE_RESULTS;
     QuickDrawPlacePlayerForResults();
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
@@ -1059,9 +1059,9 @@ void QuickDrawOpponent(void)
     t = gCurTask;
     t->quickDrawObjectOpponentIndex = 0;
     if (t->u76.unk76 != 0)
-        t->state = 5;
+        t->state = QUICK_DRAW_OPPONENT_STATE_TAG;
     else
-        t->state = 0;
+        t->state = QUICK_DRAW_OPPONENT_STATE_ARRIVE;
     CallTableEntry(gCurTask->state, 6, gQuickDrawOpponentStates);
     TaskSleepForever();
 }
@@ -1081,14 +1081,14 @@ void QuickDrawOpponentEnterState(void)
 
 void QuickDrawOpponentArrive(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = QUICK_DRAW_OPPONENT_STATE_ARRIVE;
     QuickDrawOpponentStartSlideIn();
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(60);
     CreateQuickDrawOpponentTag();
     TaskYieldTrampoline(gCurTask->quickDrawObjectOpponentArriveDelay);
-    gCurTask->state = 1;
+    gCurTask->state = QUICK_DRAW_OPPONENT_STATE_READY;
     TaskSleepForever();
 }
 
@@ -1096,13 +1096,13 @@ void QuickDrawOpponentArriveUpdate(void)
 {
     if (gBrightness == 0 && gCurTask->unk24 == 0)
         QuickDrawOpponentSlideIn();
-    if (gCurTask->state != 0)
+    if (gCurTask->state != QUICK_DRAW_OPPONENT_STATE_ARRIVE)
         TaskSetEntry(QuickDrawOpponentEnterState, gCurTaskIdx);
 }
 
 void QuickDrawOpponentReady(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = QUICK_DRAW_OPPONENT_STATE_READY;
     QuickDrawPlaceOpponent();
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
@@ -1115,7 +1115,7 @@ void QuickDrawOpponentReadyUpdate(void)
 
 void QuickDrawOpponentStrike(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = QUICK_DRAW_OPPONENT_STATE_STRIKE;
     QuickDrawPlaceOpponentStrike(1);
     TaskSleepForever();
 }
@@ -1127,7 +1127,7 @@ void QuickDrawOpponentStrikeUpdate(void)
 void QuickDrawOpponentLose(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->updateState = 3;
+    gCurTask->updateState = QUICK_DRAW_OPPONENT_STATE_LOSE;
     QuickDrawOpponentSetKnockBack();
     gUnk_0200B048 = ++gCurTask->quickDrawObjectOpponentIndex;
     TaskSleepForever();
@@ -1148,7 +1148,7 @@ void QuickDrawOpponentLoseUpdate(void)
 
 void QuickDrawOpponentTie(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = QUICK_DRAW_OPPONENT_STATE_TIE;
     QuickDrawPlaceOpponentStrike(0);
     TaskSleepForever();
 }

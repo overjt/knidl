@@ -126,7 +126,7 @@ void Task_WarpStar(void)
         t->frameTable = gWarpStarFrames;
         t->updateCallback = (u32)WarpStarUpdate;
     }
-    ActorSetState(0);
+    ActorSetState(WARP_STAR_STATE_0);
     CallTableEntry(gCurTask->state, 3, gWarpStarStates);
 }
 
@@ -219,7 +219,7 @@ void WarpStarBoard(void)
         PlaySfx(219);
     if (gCurLevel == 7)
         gUnk_02007D00[9] = 1;
-    ActorSetState(1);
+    ActorSetState(WARP_STAR_STATE_1);
     TaskSetEntry(WarpStarEnterState, gCurTaskIdx);
 }
 
@@ -243,7 +243,7 @@ void CreateWarpStar(int x, int y, int c)
 
 void WarpStarState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = WARP_STAR_STATE_0;
     {
         struct Task *t = gCurTask;
 
@@ -316,7 +316,7 @@ void WarpStarState0Update(void)
             TaskFree(t->warpStarSparkleSlot);
             gCurTask->warpStarSparkleSlot = 0xFFFF;
         }
-        ActorSetState(2);
+        ActorSetState(WARP_STAR_STATE_VANISH);
         TaskSetEntry(WarpStarEnterState, gCurTaskIdx);
     }
     else
@@ -339,7 +339,7 @@ void WarpStarState0Update(void)
 
 void WarpStarState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = WARP_STAR_STATE_1;
     TaskStop();
     while (1)
     {

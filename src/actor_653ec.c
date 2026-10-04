@@ -1805,7 +1805,7 @@ void Task_InhalableStar(void)
     t->frameTable = gInhalableStarFrames;
     t->updateCallback = (u32)InhalableStarUpdate;
     InhalableStarInitVariant();
-    ActorSetState(0);
+    ActorSetState(INHALABLE_STAR_STATE_0);
     CallTableEntry(gCurTask->state, 1, gInhalableStarStates);
 }
 
@@ -1826,7 +1826,7 @@ void InhalableStarState0(void)
     struct Task *u;
     struct Task *v;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = INHALABLE_STAR_STATE_0;
     gCurTask->onGround = 0;
     gCurTask->unk24 = 2;
     TaskSetMotionXFacing(0x20000, 0x5A5A5A5A);

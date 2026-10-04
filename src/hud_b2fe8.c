@@ -275,7 +275,7 @@ void WhispyWoodsAppleState1Update(void)
     t = gCurTask;
     if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
-        ActorSetState(2);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_2);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
@@ -310,7 +310,7 @@ void WhispyWoodsAppleState2Update(void)
     t = gCurTask;
     if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
-        ActorSetState(3);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_3);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
@@ -976,14 +976,14 @@ void sub_080b3ffc(void)
 
 s32 PickupStartFall(void)
 {
-    ActorSetState(1);
+    ActorSetState(PICKUP_STATE_FALL);
     TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 PickupLand(void)
 {
-    ActorSetState(0);
+    ActorSetState(PICKUP_STATE_0);
     TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
@@ -1011,9 +1011,9 @@ void PickupInit(void)
     TaskInitWaterFlags();
     tb = *c;
     if ((s8)*(u8 *)((u8 *)tb + 123) == 3)
-        ActorSetState(2);
+        ActorSetState(PICKUP_STATE_FALL_IN_WATER);
     else
-        ActorSetState(1);
+        ActorSetState(PICKUP_STATE_FALL);
     sub_080b3f54();
     CallTableEntry(gCurTask->state, 3, gPickupStates);
 }
@@ -1042,7 +1042,7 @@ void PickupEnterState(void)
 
 void PickupState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PICKUP_STATE_0;
     TaskStopY();
     TaskSleepForever();
 }
@@ -1226,7 +1226,7 @@ s32 AbilityStarBounceOffFloor(void)
 
 s32 AbilityStarEnterWater(void)
 {
-    ActorSetState(1);
+    ActorSetState(ABILITY_STAR_STATE_SINK);
     TaskSetEntry(AbilityStarEnterState, gCurTaskIdx);
     return 1;
 }
@@ -1441,10 +1441,10 @@ void Task_AbilityStar(void)
     w2 &= w;
     if (w2 != 0)
         goto elsecall;
-    ActorSetState(1);
+    ActorSetState(ABILITY_STAR_STATE_SINK);
     goto after;
 elsecall:
-    ActorSetState(0);
+    ActorSetState(ABILITY_STAR_STATE_0);
 after:
     CallTableEntry(gCurTask->state, 2, gAbilityStarStates);
 }
@@ -1472,7 +1472,7 @@ void AbilityStarEnterState(void)
 
 void AbilityStarState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = ABILITY_STAR_STATE_0;
     TaskSleepForever();
 }
 
@@ -1710,7 +1710,7 @@ void StarRodPieceHoverUpdate(void)
         CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
-        ActorSetState(1);
+        ActorSetState(STAR_ROD_PIECE_HOVER_STATE_1);
         TaskSetEntry(StarRodPieceHoverEnterState, gCurTaskIdx);
     }
 }
@@ -1804,7 +1804,7 @@ void StarRodPieceSlideOutUpdate(void)
         CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
-        ActorSetState(2);
+        ActorSetState(STAR_ROD_PIECE_SLIDE_OUT_STATE_2);
         TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
     }
 }
@@ -1836,7 +1836,7 @@ void StarRodPieceSlideOutState0(void)
     (*c)->velX = 0xFFFF8000;
     TaskYieldTrampoline(8);
     TaskStop();
-    ActorSetState(1);
+    ActorSetState(STAR_ROD_PIECE_SLIDE_OUT_STATE_1);
     TaskSleepForever();
 }
 

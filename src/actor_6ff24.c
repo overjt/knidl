@@ -455,7 +455,7 @@ void MetaKnightWarpStarRideInit(void)
     else
         v->facing = gUnk_0873FAE8[gTasks[i].unk74];
     w = gCurTask;
-    w->state = 2;
+    w->state = META_KNIGHT_WARP_STAR_RIDE_STATE_2;
     CallTableEntry(gCurTask->state, 7, gMetaKnightWarpStarRideStates);
 }
 
@@ -475,7 +475,7 @@ void MetaKnightWarpStarRideEnterState(void)
 
 void MetaKnightWarpStarRideState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_2;
     sub_08070ffc();
     TaskSleepForever();
 }
@@ -488,7 +488,7 @@ void MetaKnightWarpStarRideState1(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_1;
     t = gCurTask;
     t->playerWarpStarRideLandCount = 1;
     t->unk34 = 0;
@@ -556,7 +556,7 @@ void MetaKnightWarpStarRideState3(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_3;
     t = gCurTask;
     t->playerWarpStarRideLandCount = 1;
     t->unk34 = 0;
@@ -624,7 +624,7 @@ void MetaKnightWarpStarRideState4(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_4;
     t = gCurTask;
     t->playerWarpStarRideLandCount = 0;
     t->unk34 = 0;
@@ -693,7 +693,7 @@ void MetaKnightWarpStarRideState5(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_5;
     t = gCurTask;
     t->playerWarpStarRideLandCount = 0;
     t->unk34 = 0;
@@ -749,7 +749,7 @@ void MetaKnightWarpStarRideState6(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->updateState = 6;
+    gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_6;
     t = gCurTask;
     t->playerWarpStarRideLandCount = 1;
     t->unk34 = 0;

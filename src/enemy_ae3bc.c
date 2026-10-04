@@ -2804,28 +2804,28 @@ void PaintRollerPaintingPickSubject(void)
     switch (gUnk_030023B4)
     {
     case 0:
-        ActorSetState(0);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_CAR);
         break;
     case 1:
-        ActorSetState(1);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_KIRBY);
         break;
     case 2:
-        ActorSetState(2);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_WADDLE_DEE);
         break;
     case 3:
-        ActorSetState(3);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_MIKE);
         break;
     case 4:
-        ActorSetState(4);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_BASEBALL);
         break;
     case 5:
-        ActorSetState(5);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_BOMB);
         break;
     case 6:
-        ActorSetState(6);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_CLOUD);
         break;
     case 7:
-        ActorSetState(7);
+        ActorSetState(PAINT_ROLLER_PAINTING_STATE_PARASOL);
         break;
     }
     gUnk_02007D00[3] = ((s16 *)gUnk_02007D00)[7] + (gUnk_030023B4 << 16);
@@ -3024,7 +3024,7 @@ void HeavyMoleArmEnterState(void)
 
 void HeavyMoleArmState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HEAVY_MOLE_ARM_STATE_0;
     if (gCurTask->heavyMoleArmSpinLevel >> 16 > 2)
         gCurTask->heavyMoleArmSpinLevel = (gCurTask->heavyMoleArmSpinLevel & 0xFFFF) + (128 << 10);
     gUnk_030023D4 = 0;
@@ -3101,7 +3101,7 @@ void HeavyMoleArmState0Update(void)
     if (gCurTask->heavyMoleArmStateTimer == 0)
     {
         gCurTask->heavyMoleArmStateTimer = gUnk_0874B82E[gUnk_02007D00[3]];
-        ActorSetState(1);
+        ActorSetState(HEAVY_MOLE_ARM_STATE_1);
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     }
 }
@@ -3128,7 +3128,7 @@ void HeavyMoleArmState1(void)
     s32 x2;
 
     t = gCurTask;
-    t->updateState = 1;
+    t->updateState = HEAVY_MOLE_ARM_STATE_1;
     u = gCurTask;
     k = u->facing;
     if (k == -1)
@@ -3284,7 +3284,7 @@ void HeavyMoleArmState2(void)
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(2);
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3293,7 +3293,7 @@ void HeavyMoleArmState2Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 2)
+    if (t->state != HEAVY_MOLE_ARM_STATE_2)
     {
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
@@ -3361,7 +3361,7 @@ void HeavyMoleArmState3(void)
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(1);
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3370,7 +3370,7 @@ void HeavyMoleArmState3Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 3)
+    if (t->state != HEAVY_MOLE_ARM_STATE_3)
     {
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
@@ -3462,7 +3462,7 @@ void HeavyMoleArmState5(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 5;
+    t->updateState = HEAVY_MOLE_ARM_STATE_5;
     t2 = gCurTask;
     t2->heavyMoleArmPathStep = 11;
     t2->heavyMoleArmAngleIndex = z;
@@ -3483,7 +3483,7 @@ loop:
     u2 = gCurTask;
     u2->posX = 0;
     u2->posY = 0;
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3495,7 +3495,7 @@ void HeavyMoleArmState5Update(void)
     vu16 *pm;
 
     c = &gCurTask;
-    if (gCurTask->state != 5)
+    if (gCurTask->state != HEAVY_MOLE_ARM_STATE_5)
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     pm = (vu16 *)&gFrameCount;
     if (*pm & 1)
@@ -3514,7 +3514,7 @@ void HeavyMoleArmState4(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = HEAVY_MOLE_ARM_STATE_4;
     t = gCurTask;
     t->heavyMoleArmPathStep = 24;
     t->heavyMoleArmTimeLimit = gUnk_0874B8C4[gUnk_02007D00[3]];
@@ -3527,7 +3527,7 @@ void HeavyMoleArmState4(void)
             gCurTask->heavyMoleArmBaseFrame = gUnk_0874B8F8[gCurTask->heavyMoleArmPathStep];
         TaskYieldTrampoline(gUnk_0874B928[gCurTask->heavyMoleArmPathStep]);
     } while (gCurTask->heavyMoleArmPathStep > 0);
-    ActorSetState(0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     TaskSleepForever();
 }
 
@@ -3542,7 +3542,7 @@ void HeavyMoleArmState4Update(void)
     t = *c;
     t->heavyMoleArmTimeLimit--;
     if (t->heavyMoleArmTimeLimit < 0)
-        ActorSetState(0);
+        ActorSetState(HEAVY_MOLE_ARM_STATE_0);
     t3 = *c;
     if (t3->state != 4)
     {
@@ -3845,20 +3845,20 @@ void WhispyWoodsPickAttack(void)
         {
             ta = gCurTask;
             ta->whispyWoodsAttackPhase = 1;
-            ActorSetState(2);
+            ActorSetState(WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS);
         }
         else
         {
             tb = gCurTask;
             tb->whispyWoodsAttackPhase = 2;
-            ActorSetState(3);
+            ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 1:
         tc = *c2;
         tc->whispyWoodsAttackPhase = 2;
-        ActorSetState(3);
+        ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 2:
@@ -3866,20 +3866,20 @@ void WhispyWoodsPickAttack(void)
         {
             td = gCurTask;
             td->whispyWoodsAttackPhase = 3;
-            ActorSetState(3);
+            ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         }
         else
         {
             te = gCurTask;
             te->whispyWoodsAttackPhase = 0;
-            ActorSetState(1);
+            ActorSetState(WHISPY_WOODS_STATE_BLOW_TWO_PUFFS);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 3:
         tf = *c2;
         tf->whispyWoodsAttackPhase = 0;
-        ActorSetState(1);
+        ActorSetState(WHISPY_WOODS_STATE_BLOW_TWO_PUFFS);
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
     case 4:
@@ -3887,13 +3887,13 @@ void WhispyWoodsPickAttack(void)
         {
             tg = gCurTask;
             tg->whispyWoodsAttackPhase = 1;
-            ActorSetState(2);
+            ActorSetState(WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS);
         }
         else
         {
             th = gCurTask;
             th->whispyWoodsAttackPhase = 2;
-            ActorSetState(3);
+            ActorSetState(WHISPY_WOODS_STATE_DROP_APPLES);
         }
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
         break;
@@ -4147,7 +4147,7 @@ void WhispyWoodsBlowTwoPuffs(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 1;
+    t->updateState = WHISPY_WOODS_STATE_BLOW_TWO_PUFFS;
     t2 = gCurTask;
     t2->whispyWoodsLoopCount = z;
     c = &gCurTask;
@@ -4179,13 +4179,13 @@ void WhispyWoodsBlowTwoPuffs(void)
     u = gCurTask;
     u->frame--;
     TaskYieldTrampoline(2);
-    ActorSetState(0);
+    ActorSetState(WHISPY_WOODS_STATE_WAIT);
     TaskSleepForever();
 }
 
 void WhispyWoodsBlowTwoPuffsUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != WHISPY_WOODS_STATE_BLOW_TWO_PUFFS)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
@@ -4204,7 +4204,7 @@ void WhispyWoodsBlowFourPuffs(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 2;
+    t->updateState = WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS;
     t2 = gCurTask;
     t2->whispyWoodsLoopCount = z;
     c = &gCurTask;
@@ -4236,13 +4236,13 @@ void WhispyWoodsBlowFourPuffs(void)
     u = gCurTask;
     u->frame--;
     TaskYieldTrampoline(2);
-    ActorSetState(0);
+    ActorSetState(WHISPY_WOODS_STATE_WAIT);
     TaskSleepForever();
 }
 
 void WhispyWoodsBlowFourPuffsUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
@@ -4260,7 +4260,7 @@ void WhispyWoodsDropApples(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 3;
+    t->updateState = WHISPY_WOODS_STATE_DROP_APPLES;
     t2 = gCurTask;
     t2->whispyWoodsAppleTimer = 150;
     t2->whispyWoodsLoopCount = z;
@@ -4286,7 +4286,7 @@ void WhispyWoodsDropApples(void)
         q5 = *c;
         q5->whispyWoodsLoopCount++;
     } while ((s16)q5->whispyWoodsLoopCount <= 2);
-    ActorSetState(0);
+    ActorSetState(WHISPY_WOODS_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -4308,7 +4308,7 @@ void WhispyWoodsDropApplesUpdate(void)
         CreateWhispyWoodsApple();
         break;
     }
-    if (gCurTask->state != 3)
+    if (gCurTask->state != WHISPY_WOODS_STATE_DROP_APPLES)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
@@ -4410,7 +4410,7 @@ s32 sub_080b2f38(void)
     {
         t->whispyWoodsAppleFirstFall = z;
         t->whispyWoodsAppleFloorY = t->pixelY;
-        ActorSetState(1);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_1);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
         return 1;
     }

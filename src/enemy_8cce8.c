@@ -936,7 +936,7 @@ void BroomHatterIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(BROOM_HATTER_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gBroomHatterIdleStates);
 }
 
@@ -950,7 +950,7 @@ void BroomHatterIdleUpdate(void)
 
 void BroomHatterIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BROOM_HATTER_IDLE_STATE_IDLE;
     TaskFaceNearestPlayer();
     gCurTask->onGround = 1;
     TaskStop();
@@ -1094,7 +1094,7 @@ void LaserBallCheckShoot(void)
     p.y1 = t->pixelY;
     if (GetDistSq(&p) <= 16)
     {
-        ActorSetState(1);
+        ActorSetState(LASER_BALL_STATE_SHOOT);
         TaskSetEntry(LaserBallEnterState, gCurTaskIdx);
     }
 }

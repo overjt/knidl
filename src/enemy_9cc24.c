@@ -233,7 +233,7 @@ u8 AxeKnightLand(void)
     else
     {
         TaskStopY();
-        ActorSetState(0);
+        ActorSetState(AXE_KNIGHT_STATE_WALK);
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
         r = 1;
     }
@@ -359,7 +359,7 @@ void JavelinKnightState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->metaKnightsKnightJavelinHopsLeft = 3;
-    ActorSetState(1);
+    ActorSetState(JAVELIN_KNIGHT_STATE_HOP);
     JavelinKnightHop();
 }
 
@@ -450,7 +450,7 @@ void JavelinKnightState2(void)
     TaskYieldTrampoline(4);
     TaskSetFrame(11);
     TaskYieldTrampoline(3);
-    ActorSetState(0);
+    ActorSetState(JAVELIN_KNIGHT_STATE_0);
     TaskSleepForever();
 }
 
@@ -459,7 +459,7 @@ void sub_0809d42c(void)
     struct Task *t;
     u16 v;
 
-    if (gCurTask->state != 2)
+    if (gCurTask->state != JAVELIN_KNIGHT_STATE_2)
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
     t = gCurTask;
     v = t->frame;
@@ -587,13 +587,13 @@ void JavelinKnightState5(void)
     TaskYieldTrampoline(3);
     TaskSetFrame(11);
     TaskYieldTrampoline(4);
-    ActorSetState(0);
+    ActorSetState(JAVELIN_KNIGHT_STATE_0);
     TaskSleepForever();
 }
 
 void sub_0809d6b4(void)
 {
-    if (gCurTask->state != 5)
+    if (gCurTask->state != JAVELIN_KNIGHT_STATE_5)
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
 }
 
@@ -617,18 +617,18 @@ void JavelinKnightChooseNextState(void)
     if (t->metaKnightsKnightJavelinJumpedLast != 1 && (gFrameCount & 1) != 0)
     {
         t->metaKnightsKnightJavelinJumpedLast = 1;
-        ActorSetState(4);
+        ActorSetState(JAVELIN_KNIGHT_STATE_JUMP);
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
         return;
     }
     gCurTask->metaKnightsKnightJavelinJumpedLast = 0;
     if (abs(TaskGetNearestPlayerDx()) > 39)
     {
-        ActorSetState(3);
+        ActorSetState(JAVELIN_KNIGHT_STATE_JUMP_THROW);
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
         return;
     }
-    ActorSetState(2);
+    ActorSetState(JAVELIN_KNIGHT_STATE_2);
     TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
 }
 

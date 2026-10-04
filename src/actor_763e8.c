@@ -453,7 +453,7 @@ void sub_08076c00(void)
                     struct Task *v = gCurTask;
 
                     v->frame = 0x1255;
-                    v->state = 5;
+                    v->state = PLAYER_CANNON_STATE_5;
                 }
                 TaskSetEntry(PlayerCannonEnterState, gCurTaskIdx);
                 break;
@@ -467,7 +467,7 @@ void sub_08076c00(void)
 
 void PlayerCannonState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PLAYER_CANNON_STATE_0;
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     sub_08076454();
     TaskSleepForever();
@@ -484,7 +484,7 @@ void PlayerCannonState0Update(void)
 
 void PlayerCannonState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = PLAYER_CANNON_STATE_1;
     sub_080766ac();
     if (gMetaKnightmareMode == 1)
         sub_080769d0();
@@ -498,7 +498,7 @@ void PlayerCannonState1Update(void)
 
 void PlayerCannonState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = PLAYER_CANNON_STATE_2;
     sub_08076710();
     if (gMetaKnightmareMode == 1)
         sub_080769d0();
@@ -512,7 +512,7 @@ void PlayerCannonState2Update(void)
 
 void PlayerCannonState3(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = PLAYER_CANNON_STATE_3;
     sub_08076798();
     if (gMetaKnightmareMode == 0)
         sub_08076958();
@@ -534,7 +534,7 @@ void PlayerCannonState3Update(void)
 
 void PlayerCannonState4(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = PLAYER_CANNON_STATE_4;
     sub_080768c8();
     if (gMetaKnightmareMode == 0)
     {
@@ -570,7 +570,7 @@ void PlayerCannonState4Update(void)
 
 void PlayerCannonState5(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = PLAYER_CANNON_STATE_5;
     sub_08076a58();
 }
 
@@ -695,10 +695,10 @@ u16 CannonPickLaunchState(void)
     switch (v)
     {
     case 1:
-        ActorSetState(2);
+        ActorSetState(CANNON_STATE_2);
         break;
     case 2:
-        ActorSetState(3);
+        ActorSetState(CANNON_STATE_3);
         break;
     }
     return v;
@@ -757,7 +757,7 @@ void CannonFire(void)
     else
     {
         CannonLaunchPlayers(3);
-        ActorSetState(1);
+        ActorSetState(CANNON_STATE_1);
     }
     TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
@@ -765,7 +765,7 @@ void CannonFire(void)
 void CannonInit(void)
 {
     gCurTask->updateCallback = (u32)CannonUpdate;
-    ActorSetState(0);
+    ActorSetState(CANNON_STATE_WAIT);
     CallTableEntry(gCurTask->state, 4, gCannonStates);
 }
 
@@ -781,7 +781,7 @@ void CannonEnterState(void)
 
 void CannonWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = CANNON_STATE_WAIT;
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -820,7 +820,7 @@ void CannonWaitUpdate(void)
 
 void CannonState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = CANNON_STATE_1;
     TaskStop();
     sub_0807717c();
     gCurTask->frame = 12;
@@ -844,19 +844,19 @@ void CannonState1(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCannonFuseState = 0;
-    ActorSetState(0);
+    ActorSetState(CANNON_STATE_WAIT);
     TaskSleepForever();
 }
 
 void CannonState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != CANNON_STATE_1)
         TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
 
 void CannonState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = CANNON_STATE_2;
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -934,7 +934,7 @@ void CannonState2Update(void)
 
 void CannonState3(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = CANNON_STATE_3;
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -1180,7 +1180,7 @@ void CannonFuseStepCell(struct CannonFusePiece *p)
             sub_080269d8(u->pixelX, u->pixelY, 1);
             gCannonFuseState = id;
             gCurTask->frame = 42;
-            ActorSetState(0);
+            ActorSetState(CANNON_FUSE_STATE_WAIT);
         }
     }
     {
@@ -1242,7 +1242,7 @@ void CannonFuseInit(void)
     t->updateCallback = (u32)CannonFuseUpdate;
     t->cannonFuseStartX = t->pixelX;
     t->cannonFuseStartY = t->pixelY;
-    ActorSetState(0);
+    ActorSetState(CANNON_FUSE_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gCannonFuseStates);
 }
 

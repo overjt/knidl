@@ -128,11 +128,11 @@ u8 TridentKnightLand(void)
     case 0:
         TaskStopY();
         gCurTask->updateState = 0;
-        if (gCurTask->state == 0)
+        if (gCurTask->state == TRIDENT_KNIGHT_STATE_WALK)
             goto zero;
         sub_0809f90c();
         gCurTask->metaKnightsKnightTridentWalkBack = 1;
-        ActorSetState(0);
+        ActorSetState(TRIDENT_KNIGHT_STATE_WALK);
         TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         return 1;
     }

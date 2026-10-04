@@ -294,7 +294,7 @@ void AxeKnightUpdate(void)
 
 void AxeKnightWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = AXE_KNIGHT_STATE_WALK;
     gCurTask->metaKnightsKnightAxeWalkTimer = 90;
     sub_0809f90c();
     sub_0809f91c();
@@ -348,7 +348,7 @@ void AxeKnightWalkUpdate(void)
      && abs(TaskGetNearestPlayerDy()) <= 16)
     {
         gCurTask->metaKnightsKnightAxeWaitTimer = 90;
-        ActorSetState(1);
+        ActorSetState(AXE_KNIGHT_STATE_SLASH);
         goto install;
     }
     u = gCurTask;
@@ -368,19 +368,19 @@ void AxeKnightWalkUpdate(void)
     TaskGetNearestPlayerDx();
     if (TaskGetNearestPlayerDx() > 59)
     {
-        ActorSetState(2);
+        ActorSetState(AXE_KNIGHT_STATE_THROW);
         TaskSetEntry(AxeKnightThrow, gCurTaskIdx);
         return;
     }
     if (RandomRange(3) != 0)
-        ActorSetState(2);
+        ActorSetState(AXE_KNIGHT_STATE_THROW);
     else
-        ActorSetState(4);
+        ActorSetState(AXE_KNIGHT_STATE_4);
 install:
     TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     return;
 stumble:
-    ActorSetState(3);
+    ActorSetState(AXE_KNIGHT_STATE_JUMP_THROW);
     TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
 }
 
@@ -394,7 +394,7 @@ void AxeKnightSlash(void)
     s16 d;
     s16 e;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = AXE_KNIGHT_STATE_SLASH;
     TaskStop();
     sub_0809f90c();
     t = gCurTask;
@@ -435,13 +435,13 @@ void AxeKnightSlash(void)
     gCurTask->frame = a;
     TaskYieldTrampoline(10);
     sub_0809f930();
-    ActorSetState(0);
+    ActorSetState(AXE_KNIGHT_STATE_WALK);
     TaskSleepForever();
 }
 
 void AxeKnightSlashUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != AXE_KNIGHT_STATE_SLASH)
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     if ((u16)(gCurTask->frame - 22) <= 1)
         ActorCheckHitsWithBox((s32)gUnk_08747EF4);
@@ -449,7 +449,7 @@ void AxeKnightSlashUpdate(void)
 
 void AxeKnightThrow(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = AXE_KNIGHT_STATE_THROW;
     TaskStop();
     gCurTask->metaKnightsKnightAxeCaught = 0;
     sub_0809f90c();
@@ -466,13 +466,13 @@ void AxeKnightThrow(void)
     CreateAxeKnightAxe();
     gCurTask->frame = 14;
     TaskYieldTrampoline(60);
-    ActorSetState(0);
+    ActorSetState(AXE_KNIGHT_STATE_WALK);
     TaskSleepForever();
 }
 
 void AxeKnightThrowUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != AXE_KNIGHT_STATE_THROW)
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     if (gCurTask->metaKnightsKnightAxeCaught != 0)
         TaskSetEntry(AxeKnightCatchAxe, gCurTaskIdx);
@@ -491,7 +491,7 @@ void AxeKnightCatchAxe(void)
     TaskYieldTrampoline(1);
     gCurTask->frame = 17;
     TaskYieldTrampoline(30);
-    ActorSetState(0);
+    ActorSetState(AXE_KNIGHT_STATE_WALK);
     TaskSleepForever();
 }
 
@@ -504,7 +504,7 @@ void AxeKnightJumpThrow(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 3;
+    t->updateState = AXE_KNIGHT_STATE_JUMP_THROW;
     TaskStop();
     sub_0809f90c();
     TaskSetMotionY(0xFFFD0000, 148 << 6, 192 << 10);
@@ -540,7 +540,7 @@ void AxeKnightState4(void)
     s16 v;
     s16 w;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = AXE_KNIGHT_STATE_4;
     TaskStop();
     sub_0809f960();
     t = gCurTask;

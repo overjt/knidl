@@ -76,7 +76,7 @@ void MetaKnightInit(void)
     t->metaKnightFollowFlags = 0;
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = (s16)ActorComputeHealth();
-    ActorSetState(0);
+    ActorSetState(META_KNIGHT_STATE_INTRO);
     CallTableEntry(gCurTask->state, 24, gMetaKnightStates);
 }
 
@@ -108,7 +108,7 @@ void MetaKnightUpdate(void)
                 t = gCurTask;
                 t->health = gUnk_02007D00[1];
                 t->metaKnightAttackBoxIndex = 2;
-                ActorSetState(22);
+                ActorSetState(META_KNIGHT_STATE_22);
                 sub_080a7168();
             }
             break;
@@ -124,20 +124,20 @@ void MetaKnightUpdate(void)
                 if ((s32)rr < gUnk_08748D6C[gUnk_03001F2C])
                 {
                     gCurTask->metaKnightAttackBoxIndex = 2;
-                    ActorSetState(22);
+                    ActorSetState(META_KNIGHT_STATE_22);
                     sub_080a7168();
                 }
                 else if ((s32)rr < gUnk_08748D70[gUnk_03001F2C])
                 {
                     gCurTask->metaKnightAttackBoxIndex = 2;
-                    ActorSetState(16);
+                    ActorSetState(META_KNIGHT_STATE_16);
                     sub_080a7168();
                 }
                 break;
             case 2:
             case 3:
                 gCurTask->metaKnightAttackBoxIndex = 2;
-                ActorSetState(23);
+                ActorSetState(META_KNIGHT_STATE_23);
                 sub_080a7168();
                 break;
             }
@@ -153,7 +153,7 @@ void MetaKnightIntro(void)
     struct Task *t;
     s32 i;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = META_KNIGHT_STATE_INTRO;
     gCurTask->posX = (gViewRect[0] + 216) << 16;
     gCurTask->posY = (gViewRect[2] + 44) << 16;
     if (gMetaKnightmareMode == 0)
@@ -233,13 +233,13 @@ void MetaKnightIntro(void)
     CreateChildTaskHere(TASK_META_KNIGHT_SWORD_HIT_BOX, 0);
     gUnk_02007D00[5] = 192 << 9;
     gUnk_02007D00[6] = 0;
-    ActorSetState(9);
+    ActorSetState(META_KNIGHT_STATE_9);
     TaskSleepForever();
 }
 
 void MetaKnightIntroUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != META_KNIGHT_STATE_INTRO)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
@@ -248,7 +248,7 @@ void MetaKnightFollow(void)
     struct Task *t;
     s32 v;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = META_KNIGHT_STATE_FOLLOW;
     t = gCurTask;
     t->metaKnightGuardFlags &= ~128;
     t->metaKnightAttackBoxIndex = 0;
@@ -396,7 +396,7 @@ void MetaKnightFollowUpdate(void)
 
 void MetaKnightState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = META_KNIGHT_STATE_2;
     if (!(gCurTask->metaKnightFollowFlags & 2))
     {
         if (gCurTask->facing == 1)
@@ -409,49 +409,49 @@ void MetaKnightState2(void)
     gCurTask->metaKnightFollowPhase = 0;
     gCurTask->metaKnightFollowFlags &= 2;
     TaskSetFrame(61);
-    ActorSetState(1);
+    ActorSetState(META_KNIGHT_STATE_FOLLOW);
     TaskSleepForever();
 }
 
 void MetaKnightState2Update(void)
 {
     ClampTaskToRoom(gCurTask);
-    if (gCurTask->state != 2)
+    if (gCurTask->state != META_KNIGHT_STATE_2)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void MetaKnightState3(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = META_KNIGHT_STATE_3;
     gCurTask->metaKnightFollowOffsetX = -gCurTask->metaKnightFollowOffsetX;
     MetaKnightSetFollowTimer();
     gCurTask->metaKnightWalkAnimFlags = 0;
     gCurTask->metaKnightFollowPhase = 0;
     gCurTask->metaKnightFollowFlags = 2;
     TaskSetFrame(61);
-    ActorSetState(1);
+    ActorSetState(META_KNIGHT_STATE_FOLLOW);
     TaskSleepForever();
 }
 
 void MetaKnightState3Update(void)
 {
     ClampTaskToRoom(gCurTask);
-    if (gCurTask->state != 3)
+    if (gCurTask->state != META_KNIGHT_STATE_3)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void MetaKnightState4(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = META_KNIGHT_STATE_4;
     gCurTask->metaKnightFollowTimer = 48;
-    ActorSetState(1);
+    ActorSetState(META_KNIGHT_STATE_FOLLOW);
     TaskSleepForever();
 }
 
 void MetaKnightState4Update(void)
 {
     ClampTaskToRoom(gCurTask);
-    if (gCurTask->state != 4)
+    if (gCurTask->state != META_KNIGHT_STATE_4)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
@@ -459,7 +459,7 @@ void MetaKnightState5(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = META_KNIGHT_STATE_5;
     gCurTask->metaKnightFollowFlags = 4;
     TaskFaceNearestPlayer();
     t = gCurTask;
@@ -471,20 +471,20 @@ void MetaKnightState5(void)
     gCurTask->metaKnightWalkAnimFlags = 0;
     gCurTask->metaKnightFollowPhase = 0;
     TaskSetFrame(61);
-    ActorSetState(1);
+    ActorSetState(META_KNIGHT_STATE_FOLLOW);
     TaskSleepForever();
 }
 
 void MetaKnightState5Update(void)
 {
     ClampTaskToRoom(gCurTask);
-    if (gCurTask->state != 5)
+    if (gCurTask->state != META_KNIGHT_STATE_5)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
 void MetaKnightApproach(void)
 {
-    gCurTask->updateState = 6;
+    gCurTask->updateState = META_KNIGHT_STATE_APPROACH;
     if (gCurTask->metaKnightFollowOffsetX < 0)
         gUnk_02007D00[6] = 1;
     else
@@ -515,7 +515,7 @@ void MetaKnightApproachUpdate(void)
             ActorSetState(gUnk_08748E48[RandomRange(16)]);
         else
             ActorSetState(gUnk_08748E68[RandomRange(16)]);
-        if (gCurTask->state == 3)
+        if (gCurTask->state == META_KNIGHT_STATE_3)
             gUnk_02007D00[6]++;
         gCurTask->metaKnightFollowOffsetX = gUnk_08748D60[gUnk_02007D00[6]];
         gCurTask->metaKnightFollowFlags = 2;
@@ -525,7 +525,7 @@ void MetaKnightApproachUpdate(void)
 
 void MetaKnightRun(void)
 {
-    gCurTask->updateState = 7;
+    gCurTask->updateState = META_KNIGHT_STATE_RUN;
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(224 << 9, 0x5A5A5A5A);
     for (;;)
@@ -558,7 +558,7 @@ void MetaKnightRunUpdate(void)
 
 void MetaKnightState9(void)
 {
-    gCurTask->updateState = 9;
+    gCurTask->updateState = META_KNIGHT_STATE_9;
     gCurTask->metaKnightAttackBoxIndex = 0;
     gUnk_02007D00[7] = 0;
     gCurTask->onGround = 0;
@@ -580,20 +580,20 @@ void MetaKnightState9(void)
             TaskYieldTrampoline(1);
     }
     TaskStop();
-    ActorSetState(10);
+    ActorSetState(META_KNIGHT_STATE_LAND);
     TaskSleepForever();
 }
 
 void MetaKnightState9Update(void)
 {
     MetaKnightPickAirAttack();
-    if (gCurTask->state != 9)
+    if (gCurTask->state != META_KNIGHT_STATE_9)
         sub_080a7168();
 }
 
 void MetaKnightState8(void)
 {
-    gCurTask->updateState = 8;
+    gCurTask->updateState = META_KNIGHT_STATE_8;
     gUnk_02007D00[7] = 0;
     gCurTask->onGround = 0;
     TaskSetMotionY(-0x33000, 168 << 5, 192 << 10);
@@ -614,65 +614,65 @@ void MetaKnightState8(void)
             TaskYieldTrampoline(1);
     }
     TaskStop();
-    ActorSetState(10);
+    ActorSetState(META_KNIGHT_STATE_LAND);
     TaskSleepForever();
 }
 
 void MetaKnightState8Update(void)
 {
     MetaKnightPickAirAttack();
-    if (gCurTask->state != 8)
+    if (gCurTask->state != META_KNIGHT_STATE_8)
         sub_080a7168();
 }
 
 void MetaKnightLand(void)
 {
-    gCurTask->updateState = 10;
+    gCurTask->updateState = META_KNIGHT_STATE_LAND;
     TaskStop();
     gCurTask->metaKnightAttackBoxIndex = 0;
     TaskSetFrame(81);
     TaskYieldTrampoline(12);
     TaskSetFrame(60);
     TaskYieldTrampoline(56);
-    ActorSetState(2);
+    ActorSetState(META_KNIGHT_STATE_2);
     TaskSleepForever();
 }
 
 void MetaKnightLandUpdate(void)
 {
-    if (gCurTask->state != 10)
+    if (gCurTask->state != META_KNIGHT_STATE_LAND)
         sub_080a7168();
 }
 
 void MetaKnightState11(void)
 {
-    gCurTask->updateState = 11;
+    gCurTask->updateState = META_KNIGHT_STATE_11;
     TaskFaceNearestPlayer();
     gUnk_02007D00[5] = 192 << 9;
     gUnk_02007D00[6] = 0;
-    ActorSetState(8);
+    ActorSetState(META_KNIGHT_STATE_8);
     TaskSleepForever();
 }
 
 void MetaKnightState11Update(void)
 {
-    if (gCurTask->state != 11)
+    if (gCurTask->state != META_KNIGHT_STATE_11)
         sub_080a7168();
 }
 
 void MetaKnightState12(void)
 {
-    gCurTask->updateState = 12;
+    gCurTask->updateState = META_KNIGHT_STATE_12;
     TaskFaceNearestPlayer();
     gUnk_02007D00[5] = 0;
     gUnk_02007D00[6] = 0;
-    ActorSetState(8);
+    ActorSetState(META_KNIGHT_STATE_8);
     TaskSleepForever();
 }
 
 void MetaKnightState12Update(void)
 {
-    if (gCurTask->state != 12)
+    if (gCurTask->state != META_KNIGHT_STATE_12)
         sub_080a7168();
 }
 
@@ -681,7 +681,7 @@ void MetaKnightSwordSpin(void)
     struct Task *t;
     s32 i;
 
-    gCurTask->updateState = 13;
+    gCurTask->updateState = META_KNIGHT_STATE_SWORD_SPIN;
     t = gCurTask;
     t->accelY = 144 << 7;
     t->speedLimitY = 128 << 11;
@@ -718,30 +718,30 @@ void MetaKnightSwordSpinUpdate(void)
     if (gCurTask->onGround != 0)
     {
         TaskStop();
-        ActorSetState(10);
+        ActorSetState(META_KNIGHT_STATE_LAND);
         sub_080a7168();
     }
 }
 
 void MetaKnightState16(void)
 {
-    gCurTask->updateState = 16;
+    gCurTask->updateState = META_KNIGHT_STATE_16;
     TaskFaceNearestPlayer();
     gUnk_02007D00[5] = 192 << 9;
     gUnk_02007D00[6] = 15;
-    ActorSetState(8);
+    ActorSetState(META_KNIGHT_STATE_8);
     TaskSleepForever();
 }
 
 void MetaKnightState16Update(void)
 {
-    if (gCurTask->state != 16)
+    if (gCurTask->state != META_KNIGHT_STATE_16)
         sub_080a7168();
 }
 
 void MetaKnightDownThrust(void)
 {
-    gCurTask->updateState = 15;
+    gCurTask->updateState = META_KNIGHT_STATE_DOWN_THRUST;
     TaskStop();
     TaskSetFrame(111);
     TaskYieldTrampoline(2);
@@ -758,7 +758,7 @@ void MetaKnightDownThrust(void)
     TaskYieldTrampoline(12);
     TaskSetFrame(60);
     TaskYieldTrampoline(56);
-    ActorSetState(2);
+    ActorSetState(META_KNIGHT_STATE_2);
     TaskSleepForever();
 }
 
@@ -766,29 +766,29 @@ void MetaKnightDownThrustUpdate(void)
 {
     if ((u8)MetaKnightClampToRoom() == 1)
         TaskTurnAroundAndReverseX();
-    if (gCurTask->state != 15)
+    if (gCurTask->state != META_KNIGHT_STATE_DOWN_THRUST)
         sub_080a7168();
 }
 
 void MetaKnightState14(void)
 {
-    gCurTask->updateState = 14;
+    gCurTask->updateState = META_KNIGHT_STATE_14;
     TaskFaceNearestPlayer();
     gUnk_02007D00[5] = 192 << 9;
     gUnk_02007D00[6] = 17;
-    ActorSetState(8);
+    ActorSetState(META_KNIGHT_STATE_8);
     TaskSleepForever();
 }
 
 void MetaKnightState14Update(void)
 {
-    if (gCurTask->state != 14)
+    if (gCurTask->state != META_KNIGHT_STATE_14)
         sub_080a7168();
 }
 
 void MetaKnightState17(void)
 {
-    gCurTask->updateState = 17;
+    gCurTask->updateState = META_KNIGHT_STATE_17;
     MetaKnightUpwardSlash();
     TaskSetMotionY(0, 168 << 5, 192 << 10);
     TaskSetFrame(80);
@@ -803,24 +803,24 @@ void MetaKnightState17Update(void)
     {
         StopSfxOnPlayer(gUnk_02007D00[4], 137 << 2);
         TaskStop();
-        ActorSetState(10);
+        ActorSetState(META_KNIGHT_STATE_LAND);
         sub_080a7168();
     }
 }
 
 void MetaKnightState18(void)
 {
-    gCurTask->updateState = 18;
+    gCurTask->updateState = META_KNIGHT_STATE_18;
     TaskStop();
     MetaKnightUpwardSlash();
-    ActorSetState(2);
+    ActorSetState(META_KNIGHT_STATE_2);
     TaskSleepForever();
 }
 
 void MetaKnightState18Update(void)
 {
     ClampTaskToRoom(gCurTask);
-    if (gCurTask->state != 18)
+    if (gCurTask->state != META_KNIGHT_STATE_18)
         sub_080a7168();
 }
 
@@ -828,7 +828,7 @@ void MetaKnightState19(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 19;
+    gCurTask->updateState = META_KNIGHT_STATE_19;
     TaskStop();
     gUnk_02007D00[7] = -1;
     TaskSetFrame(88);
@@ -848,7 +848,7 @@ void MetaKnightState19(void)
     TaskYieldTrampoline(24);
     TaskSetFrame(60);
     TaskYieldTrampoline(28);
-    ActorSetState(5);
+    ActorSetState(META_KNIGHT_STATE_5);
     TaskSleepForever();
 }
 
@@ -866,7 +866,7 @@ void MetaKnightState19Update(void)
         else
             TaskSetMotionXFacing(gUnk_08748D44[v >> 3], 0x5A5A5A5A);
     }
-    if (gCurTask->state != 19)
+    if (gCurTask->state != META_KNIGHT_STATE_19)
         sub_080a7168();
 }
 
@@ -874,7 +874,7 @@ void MetaKnightDoubleSlash(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 20;
+    gCurTask->updateState = META_KNIGHT_STATE_DOUBLE_SLASH;
     TaskStop();
     gUnk_02007D00[7] = -1;
     TaskSetFrame(88);
@@ -905,7 +905,7 @@ void MetaKnightDoubleSlash(void)
     } while ((s16)gCurTask->metaKnightLoopCount <= 7);
     TaskSetFrame(88);
     TaskYieldTrampoline(10);
-    ActorSetState(21);
+    ActorSetState(META_KNIGHT_STATE_21);
     TaskSleepForever();
 }
 
@@ -923,7 +923,7 @@ void MetaKnightDoubleSlashUpdate(void)
         else
             TaskSetMotionXFacing(gUnk_08748D44[v >> 3], 0x5A5A5A5A);
     }
-    if (gCurTask->state != 20)
+    if (gCurTask->state != META_KNIGHT_STATE_DOUBLE_SLASH)
         sub_080a7168();
 }
 
@@ -931,7 +931,7 @@ void MetaKnightState21(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 21;
+    gCurTask->updateState = META_KNIGHT_STATE_21;
     TaskStop();
     gUnk_02007D00[7] = -1;
     TaskSetFrame(105);
@@ -952,7 +952,7 @@ void MetaKnightState21(void)
     gCurTask->metaKnightAttackBoxIndex = 0;
     TaskSetFrame(60);
     TaskYieldTrampoline(48);
-    ActorSetState(5);
+    ActorSetState(META_KNIGHT_STATE_5);
     TaskSleepForever();
 }
 
@@ -967,7 +967,7 @@ void MetaKnightState21Update(void)
             ;
         TaskSetMotionXFacing(gUnk_08748D50[(s16)gCurTask->metaKnightLoopCount], 0x5A5A5A5A);
     }
-    if (gCurTask->state != 21)
+    if (gCurTask->state != META_KNIGHT_STATE_21)
         sub_080a7168();
 }
 
@@ -975,7 +975,7 @@ void MetaKnightState22(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 22;
+    gCurTask->updateState = META_KNIGHT_STATE_22;
     gUnk_02007D00[6] = gCurTask->onGround;
     gUnk_02007D00[7] = 20;
     TaskFaceNearestPlayer();
@@ -1026,7 +1026,7 @@ void MetaKnightState22Update(void)
             if (pD[6] == 0)
             {
                 TaskStop();
-                ActorSetState(10);
+                ActorSetState(META_KNIGHT_STATE_LAND);
                 TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
             }
             else
@@ -1060,7 +1060,7 @@ void MetaKnightState23(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 23;
+    gCurTask->updateState = META_KNIGHT_STATE_23;
     TaskStop();
     gUnk_02007D00[6] = gCurTask->onGround;
     t = gCurTask;
@@ -1358,7 +1358,7 @@ void MetaKnightDefeatedInit(void)
     t->frameTable = gMetaKnightFrames;
     t->layer = 4;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(META_KNIGHT_DEFEATED_STATE_0);
     CallTableEntry(gCurTask->state, 2, gMetaKnightDefeatedStates);
 }
 
@@ -1377,7 +1377,7 @@ void sub_080a7438(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = META_KNIGHT_DEFEATED_STATE_0;
     TaskStop();
     gCurTask->onGround = 0;
     gCurTask->accelY = 168 << 5;
@@ -1416,13 +1416,13 @@ void sub_080a7438(void)
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    ActorSetState(1);
+    ActorSetState(META_KNIGHT_DEFEATED_STATE_1);
     TaskSleepForever();
 }
 
 void sub_080a75a0(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != META_KNIGHT_DEFEATED_STATE_0)
         TaskSetEntry(MetaKnightDefeatedEnterState, gCurTaskIdx);
 }
 
@@ -1430,7 +1430,7 @@ void sub_080a75c8(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = META_KNIGHT_DEFEATED_STATE_1;
     gCurTask->unk6C = 0;
     do
     {

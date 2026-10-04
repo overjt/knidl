@@ -51,7 +51,7 @@ void QuickDrawSetupResults(void)
         QuickDrawSetupResultsVsCpu();
     t = gCurTask;
     t->quickDrawMenuDelay = 40;
-    t->state = 0;
+    t->state = QUICK_DRAW_RESULTS_STATE_PLAY_SONG;
 }
 
 void QuickDrawInitContinueMenu(void)
@@ -84,7 +84,7 @@ void QuickDrawContinueMenuInput(void)
         t = gCurTask;
         t->quickDrawMenuActive = 0;
         if (t->quickDrawMenuCursor == 0)
-            t->state = 5;
+            t->state = QUICK_DRAW_RESULTS_STATE_LEVEL_MENU;
         else
             SubGameQuit();
     }
@@ -139,7 +139,7 @@ void QuickDrawLevelMenuInput(void)
     else if (gPlayerPressedKeys[0] & 2)
     {
         QuickDrawPlaySfxIfPlayer0(215);
-        gCurTask->state = 4;
+        gCurTask->state = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
         gCurTask->quickDrawMenuActive = 0;
     }
     else if (gPlayerPressedKeys[0] & 0x30)
@@ -538,7 +538,7 @@ void QuickDrawResultsEnterState(void)
 
 void QuickDrawResultsPlaySong(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_PLAY_SONG;
     TaskYieldTrampoline(30);
     PlayBgm(gCurTask->quickDrawResultsSong | 0x800);
     TaskYieldTrampoline(180);
@@ -548,41 +548,41 @@ void QuickDrawResultsPlaySong(void)
 
 void QuickDrawResultsPlaySongUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_PLAY_SONG)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsBonusSign(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_BONUS_SIGN;
     TaskYieldTrampoline(16);
     if (gPrevGameState == GAME_STATE_HUB)
     {
         if (gUnk_0200B048 != 0)
         {
             CreateQuickDrawBonusSign(0, 96, 64);
-            gCurTask->state = 2;
+            gCurTask->state = QUICK_DRAW_RESULTS_STATE_AWARD_BONUSES;
         }
         else
         {
             CreateQuickDrawBonusSign(1, 120, 64);
-            gCurTask->state = 6;
+            gCurTask->state = QUICK_DRAW_RESULTS_STATE_WAIT_QUIT;
         }
     }
     else
-        gCurTask->state = 4;
+        gCurTask->state = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
     TaskSleepForever();
 }
 
 void QuickDrawResultsBonusSignUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_BONUS_SIGN)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsAwardBonuses(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_AWARD_BONUSES;
     QuickDrawInitBonusSteps();
     TaskYieldTrampoline(16);
     while (gCurTask->quickDrawBonusStepsLeft != 0)
@@ -590,35 +590,35 @@ void QuickDrawResultsAwardBonuses(void)
         QuickDrawCreateNextBonus();
         TaskYieldTrampoline(20);
     }
-    gCurTask->state = 6;
+    gCurTask->state = QUICK_DRAW_RESULTS_STATE_WAIT_QUIT;
     TaskSleepForever();
 }
 
 void QuickDrawResultsAwardBonusesUpdate(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_AWARD_BONUSES)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsRanking(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_RANKING;
     TaskYieldTrampoline(16);
     QuickDrawCreateRankLabels();
     TaskYieldTrampoline(20);
-    gCurTask->state = 4;
+    gCurTask->state = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
     TaskSleepForever();
 }
 
 void QuickDrawResultsRankingUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_RANKING)
         TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
 }
 
 void QuickDrawResultsContinueMenu(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU;
     gCurTask->quickDrawMenuActive = 0;
     TaskYieldTrampoline(gCurTask->quickDrawMenuDelay);
     if (gLocalPlayer == 0)
@@ -633,14 +633,14 @@ void QuickDrawResultsContinueMenuUpdate(void)
     if (gCurTask->quickDrawMenuActive != 0)
     {
         QuickDrawContinueMenuInput();
-        if (gCurTask->state != 4)
+        if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_CONTINUE_MENU)
             TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 
 void QuickDrawResultsLevelMenu(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_LEVEL_MENU;
     gCurTask->quickDrawMenuActive = 0;
     TaskYieldTrampoline(8);
     QuickDrawInitLevelMenu();
@@ -653,14 +653,14 @@ void QuickDrawResultsLevelMenuUpdate(void)
     if (gCurTask->quickDrawMenuActive != 0)
     {
         QuickDrawLevelMenuInput();
-        if (gCurTask->state != 5)
+        if (gCurTask->state != QUICK_DRAW_RESULTS_STATE_LEVEL_MENU)
             TaskSetEntry(QuickDrawResultsEnterState, gCurTaskIdx);
     }
 }
 
 void QuickDrawResultsWaitQuit(void)
 {
-    gCurTask->updateState = 6;
+    gCurTask->updateState = QUICK_DRAW_RESULTS_STATE_WAIT_QUIT;
     TaskSleepForever();
 }
 

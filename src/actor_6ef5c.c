@@ -49,7 +49,7 @@ void PlayerWarpStarRideState2(void)
     s32 d, n, i;
     u8 k;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_2;
     sub_08070208();
     PlayerLoadSparkTiles();
     k = gCurTask->player->ability;
@@ -84,7 +84,7 @@ void PlayerWarpStarRideState1(void)
 {
     struct PlayerState *p;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_1;
     gCurTask->playerWarpStarRideLandCount = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
@@ -165,7 +165,7 @@ void PlayerWarpStarRideState3(void)
 {
     struct PlayerState *p;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_3;
     gCurTask->playerWarpStarRideLandCount = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
@@ -246,7 +246,7 @@ void PlayerWarpStarRideState4(void)
 {
     struct PlayerState *p;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_4;
     gCurTask->playerWarpStarRideLandCount = 0;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
@@ -344,7 +344,7 @@ void PlayerWarpStarRideState5(void)
     struct PlayerState *p;
     s32 k;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_5;
     gCurTask->playerWarpStarRideLandCount = 0;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
@@ -516,7 +516,7 @@ void PlayerWarpStarRideState6(void)
 {
     struct PlayerState *p;
 
-    gCurTask->updateState = 6;
+    gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_6;
     gCurTask->playerWarpStarRideLandCount = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
@@ -600,7 +600,7 @@ void PlayerWarpStarRideState7(void)
     struct Task *u;
     struct Task *v;
 
-    gCurTask->updateState = 7;
+    gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_7;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;

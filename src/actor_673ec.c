@@ -71,7 +71,7 @@ void HeldPlayerUpdate(void)
 
 void HeldPlayerSwallow(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HELD_PLAYER_STATE_SWALLOW;
     sub_08068690();
     while (HeldPlayerIsNearCaptor() == 0)
     {
@@ -99,7 +99,7 @@ void HeldPlayerSwallowUpdate(void)
 
 void HeldPlayerSpitFlight(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = HELD_PLAYER_STATE_SPIT_FLIGHT;
     sub_08068828();
     TaskSleepForever();
 }
@@ -114,7 +114,7 @@ void HeldPlayerSpitBounceOff(void)
 
     t = gCurTask;
     t->moveCallback = (u32)PlayerMove;
-    t->updateState = 2;
+    t->updateState = HELD_PLAYER_STATE_SPIT_BOUNCE_OFF;
     TaskStop();
     sub_08068840();
     TaskSleepForever();
@@ -142,7 +142,7 @@ void HeldPlayerBackdropHeld(void)
     struct Task *u;
     struct PlayerState *p;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = HELD_PLAYER_STATE_BACKDROP_HELD;
     gCurTask->facing = gTasks[gCurTask->parent].facing;
     if (gMetaKnightmareMode == 0)
     {
@@ -219,7 +219,7 @@ void HeldPlayerBackdropBounceOff(void)
 
     u = gCurTask;
     u->moveCallback = (u32)PlayerMove;
-    u->updateState = 4;
+    u->updateState = HELD_PLAYER_STATE_BACKDROP_BOUNCE_OFF;
     TaskStop();
     HeldPlayerDamage(-8, 512);
     if (gMetaKnightmareMode == 0)
@@ -319,7 +319,7 @@ void HeldPlayerState5(void)
     struct Task *w;
     struct Task *x;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = HELD_PLAYER_STATE_5;
     u = gCurTask;
     u->facing = gTasks[u->parent].facing;
     v = gCurTask;
@@ -402,7 +402,7 @@ void HeldPlayerState6(void)
 
     t = gCurTask;
     t->moveCallback = (u32)PlayerMove;
-    t->updateState = 6;
+    t->updateState = HELD_PLAYER_STATE_6;
     TaskStop();
     t = gCurTask;
     t->posX = t->pixelX << 16;
@@ -510,7 +510,7 @@ void HeldPlayerThrowHeld(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 7;
+    gCurTask->updateState = HELD_PLAYER_STATE_THROW_HELD;
     t = gCurTask;
     t->facing = gTasks[t->parent].facing;
     TaskSleepForever();
@@ -560,7 +560,7 @@ void HeldPlayerThrowFlightForward(void)
     struct PlayerState *p;
     s32 f;
 
-    gCurTask->updateState = 8;
+    gCurTask->updateState = HELD_PLAYER_STATE_THROW_FLIGHT_FORWARD;
     gCurTask->moveCallback = (u32)PlayerMove;
     gCurTask->layer = 7;
     gCurTask->facing = gTasks[gCurTask->parent].facing;
@@ -644,7 +644,7 @@ void HeldPlayerThrowFlightBackward(void)
     struct PlayerState *p;
     s32 f;
 
-    gCurTask->updateState = 9;
+    gCurTask->updateState = HELD_PLAYER_STATE_THROW_FLIGHT_BACKWARD;
     gCurTask->moveCallback = (u32)PlayerMove;
     gCurTask->layer = 7;
     gCurTask->facing = -gTasks[gCurTask->parent].facing;
@@ -724,7 +724,7 @@ void HeldPlayerThrowBounceOff(void)
 
     t = gCurTask;
     t->moveCallback = (u32)PlayerMove;
-    t->updateState = 10;
+    t->updateState = HELD_PLAYER_STATE_THROW_BOUNCE_OFF;
     TaskStop();
     HeldPlayerDamage(-8, 512);
     u = gCurTask;

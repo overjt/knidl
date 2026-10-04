@@ -117,7 +117,7 @@ void NightmareWizardInit(void)
     gCurTask->nightmareWizardMaxHealth = (s16)ActorComputeHealth();
     gUnk_02007D00[0] = 0;
     gUnk_02007D00[1] = 0;
-    ActorSetState(0);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_0);
     CallTableEntry(gCurTask->state, 12, gNightmareWizardStates);
 }
 
@@ -168,7 +168,7 @@ void NightmareWizardUpdate(void)
 
 void NightmareWizardState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_0;
     ActorStopAnim();
     NightmareWizardMoveToNextSpot();
     TaskStop();
@@ -193,14 +193,14 @@ void NightmareWizardState0(void)
         gCurTask->nightmareWizardLoopCount++;
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 1);
     TaskStop();
-    ActorSetState(1);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_1);
     TaskSleepForever();
 }
 
 void NightmareWizardState0Update(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 0)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_0)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -211,7 +211,7 @@ void NightmareWizardState1(void)
     s32 r1v;
     s32 r2v;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_1;
     r1v = ActorStartAnim((struct AnimCmd *)gUnk_08749270);
     t = gCurTask;
     t->actorAnimDelay18 = r1v;
@@ -272,17 +272,17 @@ void NightmareWizardState1Update(void)
 
 void NightmareWizardState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_2;
     NightmareWizardMoveToNextSpot();
     TaskStop();
     NightmareWizardAppear(1);
-    ActorSetState(1);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_1);
     TaskSleepForever();
 }
 
 void NightmareWizardState2Update(void)
 {
-    if (gCurTask->state != 2)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_2)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -290,7 +290,7 @@ void NightmareWizardState3(void)
 {
     s32 n;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_3;
     TaskStop();
     NightmareWizardVanish(1);
     n = gCurTask->nightmareWizardVanishCount + 1;
@@ -298,16 +298,16 @@ void NightmareWizardState3(void)
     if ((n & 3) != 0)
     {
         TaskYieldTrampoline(RandomRange(31) + 30);
-        ActorSetState(2);
+        ActorSetState(NIGHTMARE_WIZARD_STATE_2);
     }
     else
-        ActorSetState(10);
+        ActorSetState(NIGHTMARE_WIZARD_STATE_10);
     TaskSleepForever();
 }
 
 void NightmareWizardState3Update(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_3)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -318,7 +318,7 @@ void NightmareWizardState4(void)
     s32 *pb;
     s32 w;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_4;
     TaskGetNearestPlayerScreenPos();
     if (gUnk_030023B4 > 128)
         gCurTask->facing = 255;
@@ -394,15 +394,15 @@ out:
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 5);
     TaskStop();
     if (gUnk_08749224[gCurTask->nightmareWizardSpotIndex] == 2)
-        ActorSetState(7);
+        ActorSetState(NIGHTMARE_WIZARD_STATE_POINT);
     else
-        ActorSetState(6);
+        ActorSetState(NIGHTMARE_WIZARD_STATE_OPEN_PALM);
     TaskSleepForever();
 }
 
 void NightmareWizardState4Update(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_4)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -411,7 +411,7 @@ void NightmareWizardPoint(void)
     struct ActorSpawn sp;
     s32 d;
 
-    gCurTask->updateState = 7;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_POINT;
     gUnk_02007D00[7] = 0;
     ActorStopAnim();
     TaskSetFrame(52);
@@ -470,14 +470,14 @@ void NightmareWizardPoint(void)
         sub_080ab810();
         gCurTask->nightmareWizardLoopCount++;
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 2);
-    ActorSetState(3);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_3);
     TaskSleepForever();
 }
 
 void NightmareWizardPointUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 7)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_POINT)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -485,7 +485,7 @@ void NightmareWizardOpenPalm(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->updateState = 6;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_OPEN_PALM;
     ActorStopAnim();
     TaskSetMotionY(0, 168 << 5, 192 << 10);
     TaskSetFrame(36);
@@ -542,14 +542,14 @@ void NightmareWizardOpenPalm(void)
         sub_080ab810();
         gCurTask->nightmareWizardLoopCount++;
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 2);
-    ActorSetState(3);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_3);
     TaskSleepForever();
 }
 
 void NightmareWizardOpenPalmUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 6)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_OPEN_PALM)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -557,7 +557,7 @@ void NightmareWizardOpenCloak(void)
 {
     struct ActorSpawn sp;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_OPEN_CLOAK;
     gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_08749270);
     gCurTask->velY = 0;
     gCurTask->accelY = -0x2000;
@@ -610,14 +610,14 @@ void NightmareWizardOpenCloak(void)
         CreateActorFromDescHere(&sp, 1);
     }
     gCurTask->nightmareWizardOpenCloakCount++;
-    ActorSetState(3);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_3);
     TaskSleepForever();
 }
 
 void NightmareWizardOpenCloakUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 5)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_OPEN_CLOAK)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -625,7 +625,7 @@ void NightmareWizardTwist(void)
 {
     s32 d;
 
-    gCurTask->updateState = 8;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_TWIST;
     gCurTask->nightmareWizardSfxTimer = 1;
     gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_087492E8);
     d = (s16)gCurTask->health;
@@ -697,7 +697,7 @@ void NightmareWizardTwist(void)
         gUnk_02007D00[1] = 0;
     }
     TaskStop();
-    ActorSetState(3);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_3);
     TaskSleepForever();
 }
 
@@ -713,13 +713,13 @@ void NightmareWizardTwistUpdate(void)
         gCurTask->nightmareWizardSfxTimer = 6;
     }
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 8)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_TWIST)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
 void NightmareWizardSwoop(void)
 {
-    gCurTask->updateState = 9;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_SWOOP;
     TaskYieldTrampoline(24);
     PlaySfx(0x231);
     TaskFaceNearestPlayer();
@@ -780,20 +780,20 @@ void NightmareWizardSwoop(void)
         gCurTask->nightmareWizardLoopCount++;
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 3);
     TaskStop();
-    ActorSetState(3);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_3);
     TaskSleepForever();
 }
 
 void NightmareWizardSwoopUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 9)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_SWOOP)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
 void NightmareWizardState10(void)
 {
-    gCurTask->updateState = 10;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_10;
     gCurTask->nightmareWizardLoopCount = 0;
     do
     {
@@ -803,29 +803,29 @@ void NightmareWizardState10(void)
         TaskYieldTrampoline(2);
         gCurTask->nightmareWizardLoopCount++;
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 2);
-    ActorSetState(2);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_2);
     TaskSleepForever();
 }
 
 void NightmareWizardState10Update(void)
 {
-    if (gCurTask->state != 10)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_10)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
 void NightmareWizardHurt(void)
 {
-    gCurTask->updateState = 11;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STATE_HURT;
     sub_080ab5c0();
     gUnk_02007D00[0] = 0;
-    ActorSetState(3);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_3);
     TaskSleepForever();
 }
 
 void NightmareWizardHurtUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
-    if (gCurTask->state != 11)
+    if (gCurTask->state != NIGHTMARE_WIZARD_STATE_HURT)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
@@ -977,7 +977,7 @@ s32 NightmareWizardReactToDamage(void)
     gUnk_02007D00[0] |= 1;
     gCurTask->facing = TaskGetFacingToward(gCurTask->hitterPlayer);
     CreateStarFlash(1, 0, 0);
-    ActorSetState(11);
+    ActorSetState(NIGHTMARE_WIZARD_STATE_HURT);
     TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
     return 1;
 }
@@ -1783,7 +1783,7 @@ void Task_KrackoStarman(void)
     TaskFaceNearestPlayer();
     gUnk_02007D00[2]++;
     gCurTask->updateCallback = (u32)KrackoStarmanUpdate;
-    ActorSetState(0);
+    ActorSetState(KRACKO_STARMAN_STATE_0);
     CallTableEntry(gCurTask->state, 1, gKrackoStarmanStates);
 }
 
@@ -1799,7 +1799,7 @@ void KrackoStarmanState0(void)
 {
     s32 w;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KRACKO_STARMAN_STATE_0;
     gCurTask->onGround = 0;
     TaskSetMotionY(0, 148 << 10, 192 << 10);
     TaskSetMotionXFacing(192 << 8, 0x5A5A5A5A);
@@ -1873,7 +1873,7 @@ void Task_NightmareWizardStar(void)
     gCurTask->frameTable = gUnk_08754738;
     gCurTask->updateCallback = (u32)NightmareWizardStarUpdate;
     gCurTask->nightmareWizardStarDone = 0;
-    ActorSetState(0);
+    ActorSetState(NIGHTMARE_WIZARD_STAR_STATE_0);
     CallTableEntry(gCurTask->state, 1, gNightmareWizardStarStates);
 }
 
@@ -1900,7 +1900,7 @@ void NightmareWizardStarState0(void)
     struct Task **c2;
     struct Task **c3;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = NIGHTMARE_WIZARD_STAR_STATE_0;
     TaskFaceLikeParent();
     gCurTask->actorAnimDelay30 = ActorStartAnim((struct AnimCmd *)gUnk_08749BD0);
     gCurTask->onGround = 0;
@@ -1973,11 +1973,11 @@ void Task_PaintRoller(void)
     gUnk_02007D00[5] = -1;
     gUnk_02007D00[9] = ActorComputeHealth();
     PaintRollerMoveToSpot();
-    ActorSetState(0);
+    ActorSetState(PAINT_ROLLER_STATE_0);
     gCurTask->paintRollerEnteredState = 0;
     gCurTask->updateCallback = (u32)sub_080acf3c;
     ActorIntroPoseUntilHpBarFull((struct AnimCmd *)gUnk_08749CEC);
-    ActorSetState(1);
+    ActorSetState(PAINT_ROLLER_STATE_RUN_TO_NEXT_SPOT);
     TaskSleepForever();
 }
 
@@ -2012,7 +2012,7 @@ void PaintRollerRunToNextSpot(void)
         gUnk_02007D00[5] = 2;
         sub_080ad08c();
     }
-    ActorSetState(2);
+    ActorSetState(PAINT_ROLLER_STATE_SUMMON);
     TaskSleepForever();
 }
 
@@ -2043,7 +2043,7 @@ void PaintRollerSummon(void)
             gCurTask->paintRollerStepsLeft = w;
         } while (w > 0);
     }
-    ActorSetState(1);
+    ActorSetState(PAINT_ROLLER_STATE_RUN_TO_NEXT_SPOT);
     TaskSleepForever();
 }
 

@@ -299,7 +299,7 @@ void MaceKnightUpdate(void)
 
 void MaceKnightWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = MACE_KNIGHT_STATE_WALK;
     TaskSetMotionXFacing(128 << 7, 0x5A5A5A5A);
     TaskSetFrame(6);
     TaskYieldTrampoline(3);
@@ -317,28 +317,28 @@ void MaceKnightWalk(void)
     TaskYieldTrampoline(6);
     TaskSetFrame(27);
     TaskYieldTrampoline(5);
-    ActorSetState(1);
+    ActorSetState(MACE_KNIGHT_STATE_THROW);
     TaskSleepForever();
 }
 
 void MaceKnightWalkUpdate(void)
 {
-    if (gCurTask->state != 0)
+    if (gCurTask->state != MACE_KNIGHT_STATE_WALK)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
 void MaceKnightThrow(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = MACE_KNIGHT_STATE_THROW;
     TaskStop();
     sub_0809e04c();
-    ActorSetState(0);
+    ActorSetState(MACE_KNIGHT_STATE_WALK);
     TaskSleepForever();
 }
 
 void MaceKnightThrowUpdate(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != MACE_KNIGHT_STATE_THROW)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
@@ -869,7 +869,7 @@ void sub_0809ea08(void)
         if (t->metaKnightsKnightTridentWalkBack != 1)
         {
             t->metaKnightsKnightTridentWalkBack = 1;
-            ActorSetState(0);
+            ActorSetState(TRIDENT_KNIGHT_STATE_WALK);
             TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         }
         return;
@@ -897,7 +897,7 @@ void sub_0809ea08(void)
     {
         v = gCurTask;
         v->metaKnightsKnightTridentWalkBack = 1;
-        ActorSetState(0);
+        ActorSetState(TRIDENT_KNIGHT_STATE_WALK);
         TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
 }
@@ -943,7 +943,7 @@ void TridentKnightThrow(void)
     TaskStop();
     sub_0809ebc0();
     TaskYieldTrampoline(10);
-    ActorSetState(0);
+    ActorSetState(TRIDENT_KNIGHT_STATE_WALK);
     sub_0809f90c();
     v = gCurTask;
     v->metaKnightsKnightTridentWalkBack = 1;
@@ -955,7 +955,7 @@ void TridentKnightThrowUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 2)
+    if (t->state != TRIDENT_KNIGHT_STATE_THROW)
     {
         t->updateState = 0;
         TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
@@ -1038,12 +1038,12 @@ void sub_0809ec84(void)
     }
     else if (abs(TaskGetNearestPlayerDx()) <= 31)
     {
-        ActorSetState(1);
+        ActorSetState(TRIDENT_KNIGHT_STATE_JUMP);
         TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
     else
     {
-        ActorSetState(2);
+        ActorSetState(TRIDENT_KNIGHT_STATE_THROW);
         TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
     }
 }
@@ -1055,12 +1055,12 @@ void sub_0809ed08(void)
     {
         if (abs(TaskGetNearestPlayerDx()) > 63)
         {
-            ActorSetState(3);
+            ActorSetState(TRIDENT_KNIGHT_STATE_JUMP_THROW);
             TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         }
         else
         {
-            ActorSetState(2);
+            ActorSetState(TRIDENT_KNIGHT_STATE_THROW);
             TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
         }
     }
@@ -1081,7 +1081,7 @@ void sub_0809ed74(void)
         gCurTask->metaKnightsKnightTridentWalkBack = 0;
     else
         gCurTask->metaKnightsKnightTridentWalkBack = 1;
-    ActorSetState(0);
+    ActorSetState(TRIDENT_KNIGHT_STATE_WALK);
     gCurTask->updateState = 0;
     TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
 }

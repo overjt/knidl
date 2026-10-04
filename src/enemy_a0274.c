@@ -249,7 +249,7 @@ void sub_080a05c8(void)
     gUnk_02007D00[8] = -1;
     t->kingDededeChildSlot = -1;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(KING_DEDEDE_STATE_INTRO);
 }
 
 u8 sub_080a060c(void)
@@ -329,7 +329,7 @@ void KingDededeChooseNextState(void)
     if (n == 6)
     {
         t->kingDededePickCount = 0;
-        ActorSetState(4);
+        ActorSetState(KING_DEDEDE_STATE_FLOAT);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
     else
@@ -559,7 +559,7 @@ void KingDededeIntroUpdate(void)
     if (n == 0)
     {
         u->kingDededeNextState = 3;
-        ActorSetState(2);
+        ActorSetState(KING_DEDEDE_STATE_WALK);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
     }
 }
@@ -596,7 +596,7 @@ void KingDededeWaitUpdate(void)
 
 void KingDededeWalk(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = KING_DEDEDE_STATE_WALK;
     TaskStop();
     KingDededeStartWalk();
     sub_080a094c();
@@ -667,7 +667,7 @@ void KingDededeJump(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 3;
+    t->updateState = KING_DEDEDE_STATE_JUMP;
     TaskStop();
     gCurTask->onGround = z;
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
@@ -694,7 +694,7 @@ void KingDededeJump(void)
     TaskSetMotionXFacing(128 << 6, k);
     TaskYieldTrampoline(10);
     TaskStop();
-    ActorSetState(1);
+    ActorSetState(KING_DEDEDE_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -704,7 +704,7 @@ void KingDededeJumpUpdate(void)
     s16 *p;
 
     t = gCurTask;
-    if (t->state != 3)
+    if (t->state != KING_DEDEDE_STATE_JUMP)
     {
         p = &t->kingDededeChildSlot;
         if (*p != -1)
@@ -727,7 +727,7 @@ void KingDededeFloat(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 4;
+    t->updateState = KING_DEDEDE_STATE_FLOAT;
     TaskStop();
     u = gCurTask;
     u->kingDededeFloatTimer = -2;
@@ -778,7 +778,7 @@ void KingDededeFloatUpdate(void)
         return;
     if (n == 0)
     {
-        ActorSetState(5);
+        ActorSetState(KING_DEDEDE_STATE_EXHALE);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         return;
     }
@@ -812,7 +812,7 @@ void KingDededeExhale(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 5;
+    t->updateState = KING_DEDEDE_STATE_EXHALE;
     TaskStop();
     gCurTask->onGround = z;
     TaskSetFrame(22);
@@ -832,13 +832,13 @@ void KingDededeExhale(void)
     TaskStop();
     TaskSetFrame(41);
     TaskYieldTrampoline(10);
-    ActorSetState(1);
+    ActorSetState(KING_DEDEDE_STATE_WAIT);
     TaskSleepForever();
 }
 
 void KingDededeExhaleUpdate(void)
 {
-    if (gCurTask->state != 5)
+    if (gCurTask->state != KING_DEDEDE_STATE_EXHALE)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
@@ -851,7 +851,7 @@ void KingDededeHighJump(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 6;
+    t->updateState = KING_DEDEDE_STATE_HIGH_JUMP;
     TaskStop();
     TaskSetFrame(41);
     TaskYieldTrampoline(24);
@@ -878,26 +878,26 @@ void KingDededeHighJump(void)
     KingDededeCreateImpactStars(1);
     TaskSetFrame(41);
     TaskYieldTrampoline(34);
-    ActorSetState(1);
+    ActorSetState(KING_DEDEDE_STATE_WAIT);
     TaskSleepForever();
 }
 
 void KingDededeHighJumpUpdate(void)
 {
-    if (gCurTask->state != 6)
+    if (gCurTask->state != KING_DEDEDE_STATE_HIGH_JUMP)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
 void KingDededeSlam(void)
 {
-    gCurTask->updateState = 7;
+    gCurTask->updateState = KING_DEDEDE_STATE_SLAM;
     TaskStop();
     KingDededePickSlamKind();
     if (gCurTask->kingDededeSlamKind != 2)
         KingDededeGroundSlam();
     else
         KingDededeJumpSlam();
-    ActorSetState(1);
+    ActorSetState(KING_DEDEDE_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -906,7 +906,7 @@ void KingDededeSlamUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != 7)
+    if (t->state != KING_DEDEDE_STATE_SLAM)
     {
         TaskFree(t->kingDededeChildSlot);
         gCurTask->kingDededeChildSlot = 0xFFFF;
@@ -927,7 +927,7 @@ void KingDededeInhale(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = 8;
+    t->updateState = KING_DEDEDE_STATE_INHALE;
     TaskStop();
     gCurTask->kingDededeInhaling = z;
     TaskSetFrame(24);
@@ -971,7 +971,7 @@ void KingDededeInhale(void)
     } while ((s16)++gCurTask->kingDededeLoopCount <= 3);
     TaskStepForward(0);
     TaskYieldTrampoline(14);
-    ActorSetState(9);
+    ActorSetState(KING_DEDEDE_STATE_SPIT);
     TaskSleepForever();
 }
 
@@ -1022,7 +1022,7 @@ void KingDededeInhaleUpdate(void)
                     StopSfxOnPlayer(gUnk_02007D00[9], 0x21B);
                     gUnk_02007D00[9] = n;
                 }
-                ActorSetState(1);
+                ActorSetState(KING_DEDEDE_STATE_WAIT);
                 TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
             }
             else
@@ -1031,7 +1031,7 @@ void KingDededeInhaleUpdate(void)
             }
         }
     }
-    if (gCurTask->state != 8)
+    if (gCurTask->state != KING_DEDEDE_STATE_INHALE)
     {
         ActorClearPaletteOverride();
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
@@ -1040,11 +1040,11 @@ void KingDededeInhaleUpdate(void)
 
 void KingDededeSpit(void)
 {
-    gCurTask->updateState = 9;
+    gCurTask->updateState = KING_DEDEDE_STATE_SPIT;
     TaskStop();
     CreateKingDededeStar();
     TaskYieldTrampoline(51);
-    ActorSetState(1);
+    ActorSetState(KING_DEDEDE_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -1063,7 +1063,7 @@ void KingDededeSpitUpdate(void)
             gUnk_02006190[5]--;
         }
     }
-    if (gCurTask->state != 9)
+    if (gCurTask->state != KING_DEDEDE_STATE_SPIT)
     {
         if (gUnk_02006190[5] > 0)
         {
@@ -1082,7 +1082,7 @@ void KingDededeFall(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    t->updateState = 10;
+    t->updateState = KING_DEDEDE_STATE_FALL;
     TaskStop();
     TaskSetFrame(43);
     TaskSetMotionY(0, 148 << 6, 192 << 10);
@@ -1092,14 +1092,14 @@ void KingDededeFall(void)
     TaskSetFrame(41);
     TaskYieldTrampoline(10);
     f = a->prevState;
-    ActorSetState(1);
+    ActorSetState(KING_DEDEDE_STATE_WAIT);
     a->prevState = (s8)f;
     TaskSleepForever();
 }
 
 void KingDededeFallUpdate(void)
 {
-    if (gCurTask->state != 10)
+    if (gCurTask->state != KING_DEDEDE_STATE_FALL)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
@@ -1112,7 +1112,7 @@ void KingDededeDefeatedInit(void)
     t->updateCallback = (u32)KingDededeDefeatedUpdate;
     t->frameTable = gKingDededeFrames;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(KING_DEDEDE_DEFEATED_STATE_FALL);
     CallTableEntry(gCurTask->state, 2, gKingDededeDefeatedStates);
 }
 

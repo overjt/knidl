@@ -38,7 +38,7 @@ extern void ActorDropParasolOnLanding(u32 *p);
 
 void CannonFuseWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = CANNON_FUSE_STATE_WAIT;
     gCurTask->facing = 1;
     TaskStop();
     gCannonFuseState = -1;
@@ -58,14 +58,14 @@ void CannonFuseWaitUpdate(void)
     {
         gCannonFuseState = 0;
         gCurTask->cannonFuseBurnDir = 1;
-        ActorSetState(1);
+        ActorSetState(CANNON_FUSE_STATE_BURN);
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
     }
 }
 
 void CannonFuseBurn(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = CANNON_FUSE_STATE_BURN;
     TaskStop();
     CannonFuseInitBurn();
     CreateCannonFuseSpark();
@@ -85,14 +85,14 @@ void CannonFuseBurnUpdate(void)
     }
     else if (gCannonFuseState == 0)
     {
-        ActorSetState(2);
+        ActorSetState(CANNON_FUSE_STATE_2);
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
     }
 }
 
 void CannonFuseState2(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = CANNON_FUSE_STATE_2;
     TaskStop();
     gCurTask->cannonFuseBurnDir = -1;
     CannonFuseInitBurn();
@@ -109,7 +109,7 @@ void CannonFuseState2Update(void)
 {
     if (gCurTask->cannonFusePieceKind != -1)
         sub_08077980();
-    if (gCurTask->state != 2)
+    if (gCurTask->state != CANNON_FUSE_STATE_2)
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
 }
 
@@ -197,7 +197,7 @@ void BigSwitchRefillHealth(void)
 void BigSwitchInit(void)
 {
     gCurTask->updateCallback = (u32)BigSwitchUpdate;
-    ActorSetState(0);
+    ActorSetState(BIG_SWITCH_STATE_WAIT);
     CallTableEntry(gCurTask->state, 3, gBigSwitchStates);
 }
 
@@ -214,7 +214,7 @@ void BigSwitchEnterState(void)
 
 void BigSwitchWait(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BIG_SWITCH_STATE_WAIT;
     gCurTask->facing = 1;
     TaskStop();
     gCurTask->frame = 0;
@@ -229,7 +229,7 @@ void BigSwitchWaitUpdate(void)
 
 void BigSwitchState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = BIG_SWITCH_STATE_1;
     TaskYieldTrampoline(8);
     FadeOutSfx(16);
     PressBigSwitch(gCurTaskIdx);
@@ -242,7 +242,7 @@ void BigSwitchState1Update(void)
 
 void BigSwitchRefill(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = BIG_SWITCH_STATE_REFILL;
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
     BigSwitchRefillHealth();
@@ -273,7 +273,7 @@ void Task_Stake(void)
 void StakeInit(void)
 {
     gCurTask->updateCallback = (u32)StakeUpdate;
-    ActorSetState(0);
+    ActorSetState(STAKE_STATE_0);
     CallTableEntry(gCurTask->state, 1, gStakeStates);
 }
 
@@ -284,7 +284,7 @@ void StakeUpdate(void)
 
 void StakeState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = STAKE_STATE_0;
     gCurTask->frame = 0;
     while (GetCollisionTileAtPixel(gCurTask->pixelX, gCurTask->pixelY) == 51)
         TaskYieldTrampoline(1);

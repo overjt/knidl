@@ -164,28 +164,28 @@ u8 KingDededeReactToDamage(void)
     KingDededeStartHitStun();
     switch (gCurTask->state)
     {
-    case 3:
+    case KING_DEDEDE_STATE_JUMP:
         u = gCurTask;
         if ((u->onGround & 1) == 0)
         {
             gUnk_02006190[2] = 43;
-            ActorSetState(10);
+            ActorSetState(KING_DEDEDE_STATE_FALL);
             goto install;
         }
         else
         {
             u->unk2C = 1;
             gUnk_02006190[2] = 4;
-            ActorSetState(1);
+            ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
         goto install;
-    case 4:
+    case KING_DEDEDE_STATE_FLOAT:
         v = gCurTask;
         if ((v->onGround & 1) == 0)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
-            ActorSetState(10);
+            ActorSetState(KING_DEDEDE_STATE_FALL);
             BLOCK_CROSS_JUMP
             goto install;
         }
@@ -193,17 +193,17 @@ u8 KingDededeReactToDamage(void)
         {
             v->unk2C = 1;
             gUnk_02006190[2] = 4;
-            ActorSetState(1);
+            ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
         BLOCK_CROSS_JUMP
         goto install;
-    case 7:
+    case KING_DEDEDE_STATE_SLAM:
         w = gCurTask;
         if (w->unk24 == 2)
         {
             if (gUnk_0300244C != 0)
                 gUnk_02006190[2] = 43;
-            ActorSetState(10);
+            ActorSetState(KING_DEDEDE_STATE_FALL);
             BLOCK_CROSS_JUMP
             goto install;
         }
@@ -211,38 +211,38 @@ u8 KingDededeReactToDamage(void)
         {
             w->unk2C = 1;
             gUnk_02006190[2] = 4;
-            ActorSetState(1);
+            ActorSetState(KING_DEDEDE_STATE_WAIT);
         }
         BLOCK_CROSS_JUMP
         goto install;
-    case 2:
+    case KING_DEDEDE_STATE_WALK:
         x = gCurTask;
         x->unk2C = 1;
         gUnk_02006190[2] = 4;
-        ActorSetState(1);
+        ActorSetState(KING_DEDEDE_STATE_WAIT);
         a->prevState = gCurTask->unk1C;
     install:
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
-    case 8:
-    case 9:
+    case KING_DEDEDE_STATE_INHALE:
+    case KING_DEDEDE_STATE_SPIT:
         TaskSetSkipMask(0, gCurTaskIdx);
         y = gCurTask;
         y->lateUpdateCallback = 0;
         y->frame = gUnk_02006190[2];
         gUnk_02006190[5] = 14;
         break;
-    case 0:
-        gCurTask->state = 1;
-    case 1:
+    case KING_DEDEDE_STATE_INTRO:
+        gCurTask->state = KING_DEDEDE_STATE_WAIT;
+    case KING_DEDEDE_STATE_WAIT:
         z = gCurTask;
         z->unk2C = 1;
         gUnk_02006190[2] = 4;
-        ActorSetState(1);
+        ActorSetState(KING_DEDEDE_STATE_WAIT);
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
         break;
-    case 5:
-    case 6:
+    case KING_DEDEDE_STATE_EXHALE:
+    case KING_DEDEDE_STATE_HIGH_JUMP:
         break;
     }
     if (s0 == gCurTask->state)

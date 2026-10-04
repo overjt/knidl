@@ -99,7 +99,7 @@ void ActorAttachedPullIn(void)
         TaskYieldTrampoline(1);
     }
     sub_0806bc9c();
-    ActorSetState(5);
+    ActorSetState(ACTOR_ATTACHED_STATE_THROW_HELD);
     TaskSleepForever();
 }
 
@@ -112,7 +112,7 @@ void ActorAttachedPullInLateUpdate(void)
     t = gCurTask;
     if (t->actorMouthFull == 1)
         ActorAttachedDie();
-    else if (t->state != 4)
+    else if (t->state != ACTOR_ATTACHED_STATE_PULL_IN)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     ActorAttachedCheckScreenAttack();
 }
@@ -236,7 +236,7 @@ void ActorAttachedThrowFlightUpdate(void)
         PlaySfx(237);
         RequestScreenShake(2);
         gCurTask->lateUpdateCallback = 0;
-        ActorSetState(7);
+        ActorSetState(ACTOR_ATTACHED_STATE_THROW_BOUNCE_OFF);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
     }
     else

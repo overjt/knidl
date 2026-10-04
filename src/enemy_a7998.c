@@ -244,7 +244,7 @@ void KrackoJrInit(void)
     t->krackoJrStepTimer = 0;
     gUnk_02007D00[0] = 1;
     gCurTask->krackoOrbsSlot = CreateChildTaskHere(TASK_KRACKO_JR_ORBS, 1);
-    ActorSetState(0);
+    ActorSetState(KRACKO_JR_STATE_0);
     CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }
 
@@ -257,14 +257,14 @@ void KrackoJrUpdate(void)
 {
     KrackoLookAtNearestPlayer();
     CallTableEntry(gCurTask->updateState, 2, gKrackoJrStateUpdates);
-    if (gCurTask->updateState == 0)
+    if (gCurTask->updateState == KRACKO_JR_STATE_0)
         ActorCheckHits();
     ActorReactToHit();
 }
 
 void KrackoJrState0(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = KRACKO_JR_STATE_0;
     for (;;)
     {
         do
@@ -371,7 +371,7 @@ void KrackoJrState0Update(void)
     if (gViewRect[2] <= 0x16F)
     {
         TaskStop();
-        ActorSetState(1);
+        ActorSetState(KRACKO_JR_STATE_TRANSFORM);
         TaskSetEntry(KrackoJrEnterState, gCurTaskIdx);
         return;
     }
@@ -678,7 +678,7 @@ void KrackoJrTransform(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = KRACKO_JR_STATE_TRANSFORM;
     t = gCurTask;
     t->velY = 0;
     t->accelY = -0x2000;

@@ -6,6 +6,7 @@
 #include "constants/actors.h"
 #include "constants/hits.h"
 #include "constants/player.h"
+#include "constants/states.h"
 #include "constants/tasks.h"
 #include "constants/variants.h"
 

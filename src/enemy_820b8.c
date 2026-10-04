@@ -56,7 +56,7 @@ void PoppyBrosJrRideInit(void)
 {
     gCurTask->updateCallback = (u32)PoppyBrosJrRideUpdate;
     TaskFaceNearestPlayer();
-    ActorSetState(0);
+    ActorSetState(POPPY_BROS_JR_RIDE_STATE_RIDE);
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideStates);
 }
 
@@ -112,7 +112,7 @@ void PoppyBrosJrRideUpdate(void)
 
 void PoppyBrosJrRide(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = POPPY_BROS_JR_RIDE_STATE_RIDE;
     TaskSetMotionXFacing(gUnk_087415E4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     PoppyBrosJrRiderHop();
 }
@@ -130,7 +130,7 @@ void PoppyBrosJrDroppedObjectInit(void)
     t->poppyBrosJrDropFrameTimer = 0;
     t->unk20 = 0;
     t->poppyBrosJrBounceCount = 0;
-    ActorSetState(0);
+    ActorSetState(POPPY_BROS_JR_DROPPED_OBJECT_STATE_0);
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
 
@@ -159,7 +159,7 @@ void PoppyBrosJrDroppedObjectState0(void)
     s32 *p;
     struct Task **g;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = POPPY_BROS_JR_DROPPED_OBJECT_STATE_0;
     TaskFaceNearestPlayer();
     t = gCurTask;
     if (t->facing == 1)
@@ -225,7 +225,7 @@ void PoppyBrosJrRideIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(POPPY_BROS_JR_RIDE_IDLE_STATE_RIDE_IDLE);
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
 }
 
@@ -375,7 +375,7 @@ void WheelieInit(void)
     gCurTask->updateCallback = (u32)WheelieUpdate;
     TaskFaceNearestPlayer();
     gCurTask->wheelieCheckTimer = 30;
-    ActorSetState(0);
+    ActorSetState(WHEELIE_STATE_0);
     CallTableEntry(gCurTask->state, 6, gWheelieStates);
 }
 
@@ -396,7 +396,7 @@ void WheelieState0(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = WHEELIE_STATE_0;
     TaskSetMotionXFacing(gUnk_08741628[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     *(s16 *)&gCurTask->wheelieLoopCount = 0;
     do
@@ -408,20 +408,20 @@ void WheelieState0(void)
         gCurTask->frame++;
         TaskYieldTrampoline(3);
     } while (++*(s16 *)&gCurTask->wheelieLoopCount <= 3);
-    ActorSetState(1);
+    ActorSetState(WHEELIE_STATE_1);
     TaskSleepForever();
 }
 
 void WheelieState0Update(void)
 {
     WheelieCheckSkid();
-    if (gCurTask->state != 0)
+    if (gCurTask->state != WHEELIE_STATE_0)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
 void WheelieState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = WHEELIE_STATE_1;
     TaskSetMotionXFacing(gUnk_08741630[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     gCurTask->wheelieFrameScale = 1;
     sub_08082cc4();
@@ -430,7 +430,7 @@ void WheelieState1(void)
 void WheelieState1Update(void)
 {
     WheelieCheckSkid();
-    if (gCurTask->state != 1)
+    if (gCurTask->state != WHEELIE_STATE_1)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
@@ -438,7 +438,7 @@ void WheelieSkid(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = WHEELIE_STATE_SKID;
     t = gCurTask;
     t->wheelieStateTimer = 42;
     t->wheelieSkidStopped = 0;
@@ -479,7 +479,7 @@ void WheelieSkidUpdate(void)
     v = gCurTask;
     if (--v->wheelieStateTimer == 0)
     {
-        ActorSetState(3);
+        ActorSetState(WHEELIE_STATE_WAIT);
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
     }
 }
@@ -490,7 +490,7 @@ void WheelieWait(void)
     struct Task *u;
     s32 n;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = WHEELIE_STATE_WAIT;
     TaskStopX();
     t = gCurTask;
     if (t->facing == 1)
@@ -511,7 +511,7 @@ void WheelieWaitUpdate(void)
     if (--t->wheelieStateTimer == 0)
     {
         t->wheelieCheckTimer = 30;
-        ActorSetState(1);
+        ActorSetState(WHEELIE_STATE_1);
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
     }
 }
@@ -522,7 +522,7 @@ void WheelieBounceOffWall(void)
     struct Task *u;
     struct Task *v;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = WHEELIE_STATE_BOUNCE_OFF_WALL;
     TaskStop();
     RequestScreenShake(1);
     PlaySfx(197);
@@ -557,19 +557,19 @@ void WheelieBounceOffWall(void)
         v->facing = -1;
     else
         v->facing = 1;
-    ActorSetState(1);
+    ActorSetState(WHEELIE_STATE_1);
     TaskSleepForever();
 }
 
 void WheelieBounceOffWallUpdate(void)
 {
-    if (gCurTask->state != 4)
+    if (gCurTask->state != WHEELIE_STATE_BOUNCE_OFF_WALL)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
 void WheelieFall(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = WHEELIE_STATE_FALL;
     gCurTask->wheelieRestoreTimer = 0;
     TaskSetMotionY(0, 0x2500, 0x30000);
     gCurTask->wheelieFrameScale = 1;
@@ -592,9 +592,9 @@ void WheelieFallUpdate(void)
     {
         TaskStopY();
         if (TaskGetFacingTowardNearestPlayer() != gCurTask->facing)
-            ActorSetState(2);
+            ActorSetState(WHEELIE_STATE_SKID);
         else
-            ActorSetState(1);
+            ActorSetState(WHEELIE_STATE_1);
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
     }
 }
@@ -607,7 +607,7 @@ void WheelieIdleInit(void)
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
-    ActorSetState(0);
+    ActorSetState(WHEELIE_IDLE_STATE_IDLE);
     CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);
 }
 
@@ -625,7 +625,7 @@ void WheelieIdleUpdate(void)
 
 void WheelieIdle(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = WHEELIE_IDLE_STATE_IDLE;
     gCurTask->wheelieFrameScale = 1;
     sub_08082cc4();
 }
@@ -648,7 +648,7 @@ void WheelieCheckSkid(void)
     if (TaskGetFacingTowardNearestPlayer() == gCurTask->facing)
         return;
     if (abs(TaskGetNearestPlayerDy()) <= 31)
-        ActorSetState(2);
+        ActorSetState(WHEELIE_STATE_SKID);
 }
 
 void sub_08082cc4(void)
@@ -676,10 +676,10 @@ s32 WheelieStartFall(void)
 
     switch (gCurTask->state)
     {
-    case 0:
-    case 1:
-    case 2:
-        ActorSetState(5);
+    case WHEELIE_STATE_0:
+    case WHEELIE_STATE_1:
+    case WHEELIE_STATE_SKID:
+        ActorSetState(WHEELIE_STATE_FALL);
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
         r = 1;
         break;
@@ -694,20 +694,20 @@ s32 WheelieHitWall(void)
 
     switch (gCurTask->state)
     {
-    case 0:
-    case 1:
-        ActorSetState(4);
+    case WHEELIE_STATE_0:
+    case WHEELIE_STATE_1:
+        ActorSetState(WHEELIE_STATE_BOUNCE_OFF_WALL);
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
         r = 1;
         break;
-    case 5:
+    case WHEELIE_STATE_FALL:
         TaskTurnAroundAndReverseX();
         t = gCurTask;
         t->wheelieRestoreTimer = 2;
         t->unk34 = t->posX;
         t->wheelieSavedPosY = t->posY;
         break;
-    case 2:
+    case WHEELIE_STATE_SKID:
         TaskStopX();
         gCurTask->unk34 = 1;
         break;

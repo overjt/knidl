@@ -66,7 +66,7 @@ void PlayerLifeRequestPickStartState(void)
     t->drawCallback = 0;
     if (gLifeRequests.gameOver[gCurTaskIdx] != 0)
     {
-        t->state = 6;
+        t->state = PLAYER_LIFE_REQUEST_STATE_GAME_OVER;
     }
     else
     {
@@ -82,9 +82,9 @@ void PlayerLifeRequestPickStartState(void)
         {
             PlayerLifeRequestLoadGfx(1);
             if (gPlayerLives[gCurTask->playerLifeGiver] > 0)
-                gCurTask->state = 2;
+                gCurTask->state = PLAYER_LIFE_REQUEST_STATE_WAIT;
             else
-                gCurTask->state = 4;
+                gCurTask->state = PLAYER_LIFE_REQUEST_STATE_FAIL;
         }
         else
         {
@@ -208,13 +208,13 @@ void PlayerLifeRequestSelectChoice(void)
         if (t->playerLifeRequestCursor == 0)
         {
             if (PlayerLifeRequestCountGivers() != 0)
-                gCurTask->state = 1;
+                gCurTask->state = PLAYER_LIFE_REQUEST_STATE_PICK_GIVER;
             else
-                gCurTask->state = 5;
+                gCurTask->state = PLAYER_LIFE_REQUEST_STATE_NO_GIVER;
         }
         else
         {
-            t->state = 6;
+            t->state = PLAYER_LIFE_REQUEST_STATE_GAME_OVER;
         }
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
     }
@@ -282,11 +282,11 @@ void PlayerLifeRequestSelectGiver(void)
                 j++;
             }
             gLifeRequests.requests[gCurTask->playerLifeGiver] = (gCurTaskIdx << 4) | 1;
-            gCurTask->state = 2;
+            gCurTask->state = PLAYER_LIFE_REQUEST_STATE_WAIT;
         }
         else
         {
-            t->state = 0;
+            t->state = PLAYER_LIFE_REQUEST_STATE_CHOOSE;
         }
     }
 }
@@ -312,8 +312,8 @@ void PlayerLifeRequestFailCheckPress(void)
     k = gPlayerPressedKeys;
     t = gCurTask;
     if ((k[t->player->playerIndex] & 1) != 0)
-        t->state = 0;
-    if (gCurTask->state != 4)
+        t->state = PLAYER_LIFE_REQUEST_STATE_CHOOSE;
+    if (gCurTask->state != PLAYER_LIFE_REQUEST_STATE_FAIL)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
 void PlayerLifeRequestNoGiverCheckPress(void)
@@ -324,8 +324,8 @@ void PlayerLifeRequestNoGiverCheckPress(void)
     k = gPlayerPressedKeys;
     t = gCurTask;
     if ((k[t->player->playerIndex] & 1) != 0)
-        t->state = 0;
-    if (gCurTask->state != 5)
+        t->state = PLAYER_LIFE_REQUEST_STATE_CHOOSE;
+    if (gCurTask->state != PLAYER_LIFE_REQUEST_STATE_NO_GIVER)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
 s32 PlayerLifeRequestCountGivers(void)
@@ -399,15 +399,15 @@ void PlayerLifeRequestCheckGiven(void)
     if ((v & 2) != 0)
     {
         if ((v >> 4) == gCurTaskIdx)
-            t->state = 3;
+            t->state = PLAYER_LIFE_REQUEST_STATE_RECEIVE;
     }
 }
 void PlayerLifeRequestCheckTimeout(void)
 {
     if (gLifeRequests.timeout <= 0)
-        gCurTask->state = 4;
+        gCurTask->state = PLAYER_LIFE_REQUEST_STATE_FAIL;
     gLifeRequests.timeout--;
-    if (gCurTask->state != 2)
+    if (gCurTask->state != PLAYER_LIFE_REQUEST_STATE_WAIT)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
 void PlayerLifeRequestCheckGiverLives(void)
@@ -418,7 +418,7 @@ void PlayerLifeRequestCheckGiverLives(void)
     p = gPlayerLives;
     t = gCurTask;
     if (p[t->playerLifeGiver] <= 0)
-        t->state = 4;
+        t->state = PLAYER_LIFE_REQUEST_STATE_FAIL;
 }
 void PlayerLifeRequestInit(void)
 {
@@ -436,7 +436,7 @@ void PlayerLifeRequestEnterState(void)
 }
 void PlayerLifeRequestChoose(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = PLAYER_LIFE_REQUEST_STATE_CHOOSE;
     PlayerLifeRequestOpenMenu();
     TaskSleepForever();
 }
@@ -447,7 +447,7 @@ void PlayerLifeRequestChooseUpdate(void)
 }
 void PlayerLifeRequestPickGiver(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = PLAYER_LIFE_REQUEST_STATE_PICK_GIVER;
     PlayerLifeRequestOpenGiverList();
     TaskSleepForever();
 }
@@ -466,14 +466,14 @@ void PlayerLifeRequestPickGiverUpdate(void)
     }
     else
     {
-        gCurTask->state = 5;
+        gCurTask->state = PLAYER_LIFE_REQUEST_STATE_NO_GIVER;
     }
-    if (gCurTask->state != 1)
+    if (gCurTask->state != PLAYER_LIFE_REQUEST_STATE_PICK_GIVER)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
 void PlayerLifeRequestWait(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = PLAYER_LIFE_REQUEST_STATE_WAIT;
     PlayerLifeRequestStartAsking();
     while (1)
     {
@@ -488,7 +488,7 @@ void PlayerLifeRequestWaitUpdate(void)
 }
 void PlayerLifeRequestReceive(void)
 {
-    gCurTask->updateState = 3;
+    gCurTask->updateState = PLAYER_LIFE_REQUEST_STATE_RECEIVE;
     PlayerLifeRequestTakeLife();
     TaskYieldTrampoline(180);
     PlayerLifeRequestFinish();
@@ -500,10 +500,10 @@ void PlayerLifeRequestReceiveUpdate(void)
 }
 void PlayerLifeRequestFail(void)
 {
-    gCurTask->updateState = 4;
+    gCurTask->updateState = PLAYER_LIFE_REQUEST_STATE_FAIL;
     PlayerLifeRequestStartFail();
     TaskYieldTrampoline(180);
-    gCurTask->state = 0;
+    gCurTask->state = PLAYER_LIFE_REQUEST_STATE_CHOOSE;
     TaskSleepForever();
 }
 void PlayerLifeRequestFailUpdate(void)
@@ -512,10 +512,10 @@ void PlayerLifeRequestFailUpdate(void)
 }
 void PlayerLifeRequestNoGiver(void)
 {
-    gCurTask->updateState = 5;
+    gCurTask->updateState = PLAYER_LIFE_REQUEST_STATE_NO_GIVER;
     PlayerLifeRequestStartNoGiver();
     TaskYieldTrampoline(300);
-    gCurTask->state = 0;
+    gCurTask->state = PLAYER_LIFE_REQUEST_STATE_CHOOSE;
     TaskSleepForever();
 }
 void PlayerLifeRequestNoGiverUpdate(void)
@@ -524,7 +524,7 @@ void PlayerLifeRequestNoGiverUpdate(void)
 }
 void PlayerLifeRequestGameOver(void)
 {
-    gCurTask->updateState = 6;
+    gCurTask->updateState = PLAYER_LIFE_REQUEST_STATE_GAME_OVER;
     PlayerLifeRequestShowGameOver();
     TaskSleepForever();
 }

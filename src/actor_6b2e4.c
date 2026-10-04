@@ -46,7 +46,7 @@ void ActorDrownEnterState(void)
 
 void ActorDrownSink(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = ACTOR_DROWN_STATE_SINK;
     TaskStop();
     TaskSetFrame(*(s16 *)&gCurTask->actorDrownFrame);
     gCurTask->velY = 0x4000;
@@ -59,17 +59,17 @@ void ActorDrownSinkUpdate(void)
 
 void ActorDrownState1(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = ACTOR_DROWN_STATE_1;
     TaskStop();
     TaskSetFrame(*(s16 *)&gCurTask->actorDrownFrame);
     TaskYieldTrampoline(30);
-    ActorSetState(2);
+    ActorSetState(ACTOR_DROWN_STATE_2);
     TaskSleepForever();
 }
 
 void ActorDrownState1Update(void)
 {
-    if (gCurTask->state != 1)
+    if (gCurTask->state != ACTOR_DROWN_STATE_1)
         TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
 }
 
@@ -77,7 +77,7 @@ void ActorDrownState2(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = ACTOR_DROWN_STATE_2;
     t = gCurTask;
     t->frameTable = gUnk_0874C9D8;
     t->tileWord = 0;
@@ -178,7 +178,7 @@ void ActorAttachedThrowHeldFollowCarrier(void)
                 return;
             }
         }
-        ActorSetState(6);
+        ActorSetState(ACTOR_ATTACHED_STATE_THROW_FLIGHT);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
@@ -247,7 +247,7 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
             w = gCurTask;
             w->facing = s->facing;
         }
-        ActorSetState(2);
+        ActorSetState(ACTOR_ATTACHED_STATE_BACKDROP_FLIGHT);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
@@ -465,17 +465,17 @@ s32 ActorAttachToHitter(void)
     {
     case HIT_EFFECT_INHALE:
         sub_0806b95c();
-        ActorSetState(0);
+        ActorSetState(ACTOR_ATTACHED_STATE_SWALLOW);
         break;
     case HIT_EFFECT_THROW:
         sub_0806b95c();
         ActorInitCarryOffset();
-        ActorSetState(4);
+        ActorSetState(ACTOR_ATTACHED_STATE_PULL_IN);
         break;
     case HIT_EFFECT_BACKDROP:
         sub_0806b95c();
         ActorInitCarryOffset();
-        ActorSetState(1);
+        ActorSetState(ACTOR_ATTACHED_STATE_BACKDROP_HELD);
         break;
     }
     TaskSetEntry(ActorAttachedEnterState, gCurTaskIdx);
@@ -864,7 +864,7 @@ void ActorAttachedBackdropFlightUpdate(void)
             gCurTask->actorBounceSurface = 2;
         PlaySfx(179);
         RequestScreenShake(2);
-        ActorSetState(3);
+        ActorSetState(ACTOR_ATTACHED_STATE_BACKDROP_BOUNCE_OFF);
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
