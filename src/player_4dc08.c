@@ -304,7 +304,7 @@ void PlayerActionThrow(void)
         }
         else
         {
-            PlaySfxIfLocalPlayer(201, gCurTask->player->playerIndex);
+            PlaySfxIfLocalPlayer(SE_THROW_GRAB, gCurTask->player->playerIndex);
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
             gCurTask->player->unk42 |= 0x200;
             TaskSetFrame(0xF73);

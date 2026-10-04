@@ -59,7 +59,7 @@ void PlayerActionHiJump(void)
         PlayerSetMotionYPreset(38);
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->hitBoxSet = gUnk_0873CF5C;
-        PlayerStartSfx(174, gCurTask->player->playerIndex);
+        PlayerStartSfx(SE_HI_JUMP_ATTACK, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, 42, 0);
         CreatePlayerEffect(gCurTask->player->playerIndex, 42, 1);
         CreatePlayerEffect(gCurTask->player->playerIndex, 42, 2);

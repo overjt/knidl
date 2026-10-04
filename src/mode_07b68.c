@@ -135,11 +135,11 @@ void ExtraModeTitleLinkErrorScreen(void)
     gFadeBlankAtWhite = 0;
     while (1) {
         if (gPressedKeys & 9) {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             break;
         }
         if (gPressedKeys & 2) {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             break;
         }
         RunFrameNoTasks();
@@ -271,7 +271,7 @@ void ExtraModeTitleMain(void)
         ExtraModeTitleLinkErrorScreen();
         return;
     cancel:
-        PlaySfx(215);
+        PlaySfx(SE_CANCEL);
         BeginFastFadeOutToWhite();
         RunFramesUntilFadeDone();
         gGameState = GAME_STATE_MAIN_MENU;
@@ -293,17 +293,17 @@ select:
         if (gPrevGameState == GAME_STATE_MAIN_MENU) {
             if (gUnk_02006090 <= 2) {
                 if ((gPlayerPressedKeys[0] & 0x20) && gSubGameLevel != 0) {
-                    PlaySfx(101);
+                    PlaySfx(SE_CURSOR_MOVE);
                     gSubGameLevel--;
                 } else if ((gPlayerPressedKeys[0] & 0x10) && gSubGameLevel != 2) {
-                    PlaySfx(101);
+                    PlaySfx(SE_CURSOR_MOVE);
                     gSubGameLevel++;
                 }
             }
             if (gPlayerCount == 1 && (gPlayerPressedKeys[0] & 2))
                 goto cancel;
             if (gPlayerPressedKeys[0] & 9) {
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
                 break;
             }
         } else {

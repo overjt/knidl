@@ -56,7 +56,7 @@ void ReturnToRestartPoint(void)
         gRoomEntryY = (d->unk4 << 4) + 5;
         gRoomEntrySet = 1;
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 1;
+        gRoomEntryMode = ROOM_ENTRY_DOOR;
         gGameState = GAME_STATE_HUB;
     }
     else
@@ -72,7 +72,7 @@ void ReturnToRestartPoint(void)
         gRoomEntryY = gUnk_02008050;
         gRoomEntrySet = 1;
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 0;
+        gRoomEntryMode = ROOM_ENTRY_NORMAL;
     }
 }
 

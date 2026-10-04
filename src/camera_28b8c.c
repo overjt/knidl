@@ -167,7 +167,7 @@ void SetRoomEntryPoint(void)
     if (gUnk_0200B038 == 0)
     {
         gUnk_02008054 = gRoomIndex;
-        if (gRoomEntryMode == 2)
+        if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         {
             gUnk_0200AFF4 = gCurRoomDef->entryX;
             gUnk_02008050 = gCurRoomDef->entryY;

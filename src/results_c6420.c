@@ -89,7 +89,7 @@ void FinalResultsScreen(void)
     do
         RunLinkFrame();
     while (!(gPlayerPressedKeys[0] & 8));
-    PlaySfx(102);
+    PlaySfx(SE_CONFIRM);
     LinkStopKeyExchange();
     FadeOutBgm(8);
     BeginFadeOutToWhite();
@@ -148,7 +148,7 @@ void ShowMilestonePicture(void)
         RunLinkFrame();
         for (i = 0; i < gPlayerCount; i++) {
             if (gPlayerPressedKeys[i] & 9) {
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
                 break;
             }
         }
@@ -181,7 +181,7 @@ void ShowMilestonePictureForMode(s32 slot)
     do
         RunFrameNoTasks();
     while (!(gPressedKeys & 9));
-    PlaySfx(102);
+    PlaySfx(SE_CONFIRM);
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
     gBg3ScrollX = x;

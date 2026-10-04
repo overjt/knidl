@@ -99,7 +99,7 @@ void PlayerActionStone(void)
     }
     switch (gCurTask->variant) {
     case 0:
-        PlaySfxIfLocalPlayer(152, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_STONE_ATTACK, gCurTask->player->playerIndex);
         if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) == 0)
             PlayerStopAxes(1);
         if (gCurTask->onGround & 1) {
@@ -193,7 +193,7 @@ void PlayerActionStoneUpdate(void)
         if (t->onGround & 1) {
             if (t->velY != 0) {
                 CreatePlayerEffect(t->player->playerIndex, 27, 0);
-                PlaySfxIfLocalPlayer(143, gCurTask->player->playerIndex);
+                PlaySfxIfLocalPlayer(SE_STONE_LAND, gCurTask->player->playerIndex);
                 RequestScreenShake(2);
                 PlayerStopAxes(2);
             }

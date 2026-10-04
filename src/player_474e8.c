@@ -51,7 +51,7 @@ void PlayerActionParasol(void)
     }
     gCurTask->u80.attackAbility = ABILITY_PARASOL;
     PlayerSetMotionXPreset(0, 72);
-    PlaySfxIfLocalPlayer(151, gCurTask->player->playerIndex);
+    PlaySfxIfLocalPlayer(SE_PARASOL_ATTACK, gCurTask->player->playerIndex);
     if (gCurTask->unk2C == 0) {
         TaskSetFrame(0x8D2);
         TaskYieldTrampoline(4);
@@ -291,7 +291,7 @@ void PlayerActionNeedle(void)
         gCurTask->unk28 = gCurTask->onGround;
         gCurTask->playerNeedleStep = 0;
         TaskYieldTrampoline(8);
-        PlaySfxIfLocalPlayer(138, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_NEEDLE_ATTACK, gCurTask->player->playerIndex);
         gCurTask->playerNeedleStep = 1;
         TaskYieldTrampoline(4);
         gCurTask->unk2C++;

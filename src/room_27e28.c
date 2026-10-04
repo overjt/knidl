@@ -110,7 +110,7 @@ void InitRoomBgLayout(void)
         gRoomBounds[1] = gRoomBorder[0] + 120;
         StartRoomHBlankScroll(9);
         gUnk_02000020 = 3;
-        if (gRoomEntryMode != 2)
+        if (gRoomEntryMode != ROOM_ENTRY_WARP_STAR)
             sub_08025e0c();
         break;
     case 6:

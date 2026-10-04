@@ -67,7 +67,7 @@ void PlayerActionBurning(void)
         gCurTask->variant = 1;
         /* fallthrough */
     case 1:
-        PlayerStartSfx(137, gCurTask->player->playerIndex);
+        PlayerStartSfx(SE_BURNING_ATTACK, gCurTask->player->playerIndex);
         gCurTask->onGround = 0;
         gCurTask->player->terrainBox = (u32)gUnk_0873CB2C;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
@@ -258,7 +258,7 @@ void PlayerActionLaser(void)
     TaskSetFrame(0x65A);
     TaskYieldTrampoline(2);
     CreatePlayerObject(gCurTask->player->playerIndex, 6, 0);
-    PlaySfxIfLocalPlayer(172, gCurTask->player->playerIndex);
+    PlaySfxIfLocalPlayer(SE_LASER_ATTACK, gCurTask->player->playerIndex);
     gCurTask->playerLoopCount = 0;
     do {
         gCurTask->frame++;

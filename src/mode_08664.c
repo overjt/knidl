@@ -86,7 +86,7 @@ void PauseScreen(void)
                         PlaySfx(0x11F);
                         pressed++;
                     } else if (gPlayerPressedKeys[i] & 2) {
-                        PlaySfx(215);
+                        PlaySfx(SE_CANCEL);
                         pressed++;
                     }
                     if (flag != 0 && (gPlayerPressedKeys[i] & 0xC0)) {
@@ -110,7 +110,7 @@ void PauseScreen(void)
                 PlaySfx(0x11F);
                 pressed++;
             } else if (gPlayerPressedKeys[gPausingPlayer] & 2) {
-                PlaySfx(215);
+                PlaySfx(SE_CANCEL);
                 pressed++;
             }
         }

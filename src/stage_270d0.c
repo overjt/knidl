@@ -139,5 +139,5 @@ void ReturnToHubStageDoor(void)
     gRoomEntryY = (d->unk4 << 4) + 5;
     gRoomEntrySet = 1;
     gEntryDoorEvent = 0;
-    gRoomEntryMode = 1;
+    gRoomEntryMode = ROOM_ENTRY_DOOR;
 }

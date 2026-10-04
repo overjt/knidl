@@ -338,7 +338,7 @@ void LoadCreditsRoom(void)
         gCurLevel = gLevelIndex;
         gUnk_03001F20 = gStageIndex;
     }
-    if (gRoomEntryMode == 2)
+    if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
     else
         gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
@@ -611,7 +611,7 @@ s32 EnterDoor(void)
                 gStageIndex = d->unk8;
                 gRoomIndex = 0;
                 gStageRequest = STAGE_REQUEST_STAGE_START;
-                gRoomEntryMode = 0;
+                gRoomEntryMode = ROOM_ENTRY_NORMAL;
                 gEntryDoorEvent = 0;
                 break;
             case 1:
@@ -629,7 +629,7 @@ s32 EnterDoor(void)
                 gRoomEntryY = e->unk4 * 16 + 5;
                 gRoomEntrySet = 1;
                 gStageRequest = STAGE_REQUEST_HUB;
-                gRoomEntryMode = 1;
+                gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 0;
                 gCutscenePending = 0;
                 break;
@@ -642,7 +642,7 @@ s32 EnterDoor(void)
                     gUnk_02008054 = 0x100;
                     gUnk_0200B038 = 1;
                     gStageRequest = STAGE_REQUEST_STAGE_START;
-                    gRoomEntryMode = 0;
+                    gRoomEntryMode = ROOM_ENTRY_NORMAL;
                 }
                 else
                 {
@@ -660,7 +660,7 @@ s32 EnterDoor(void)
                     gRoomEntryY = e->unk4 * 16 + 5;
                     gRoomEntrySet = 1;
                     gStageRequest = STAGE_REQUEST_HUB;
-                    gRoomEntryMode = 1;
+                    gRoomEntryMode = ROOM_ENTRY_DOOR;
                     gCutscenePending = 0;
                 }
                 gEntryDoorEvent = 0;
@@ -672,7 +672,7 @@ s32 EnterDoor(void)
                 gRoomEntryY = d->unk4 * 16 + 5;
                 gRoomEntrySet = 1;
                 gStageRequest = STAGE_REQUEST_BOMB_RALLY;
-                gRoomEntryMode = 1;
+                gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 2;
                 break;
             case 4:
@@ -682,7 +682,7 @@ s32 EnterDoor(void)
                 gRoomEntryY = d->unk4 * 16 + 5;
                 gRoomEntrySet = 1;
                 gStageRequest = STAGE_REQUEST_AIR_GRIND;
-                gRoomEntryMode = 1;
+                gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 2;
                 break;
             case 5:
@@ -692,7 +692,7 @@ s32 EnterDoor(void)
                 gRoomEntryY = d->unk4 * 16 + 5;
                 gRoomEntrySet = 1;
                 gStageRequest = STAGE_REQUEST_QUICK_DRAW;
-                gRoomEntryMode = 1;
+                gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 2;
                 break;
             case 6:
@@ -706,7 +706,7 @@ s32 EnterDoor(void)
                 gRoomEntrySet = 1;
                 gUnk_02008054 = 0x200;
                 gUnk_0200B038 = 1;
-                gRoomEntryMode = 0;
+                gRoomEntryMode = ROOM_ENTRY_NORMAL;
                 gEntryDoorEvent = 0;
                 break;
             default:
@@ -730,7 +730,7 @@ s32 EnterDoor(void)
         gRoomEntrySet = 1;
         gStageRequest = STAGE_REQUEST_HUB;
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 1;
+        gRoomEntryMode = ROOM_ENTRY_DOOR;
     }
     else
     {
@@ -787,7 +787,7 @@ s32 EnterDoor(void)
                 gContinueLevel = gCurLevel;
                 gUnk_02007FF8 = gUnk_03001F20;
             }
-            gRoomEntryMode = 1;
+            gRoomEntryMode = ROOM_ENTRY_DOOR;
         }
         else
         {
@@ -803,7 +803,7 @@ s32 EnterDoor(void)
             gRoomEntrySet = 1;
             gStageRequest = STAGE_REQUEST_CHANGE_ROOM;
             gEntryDoorEvent = 0;
-            gRoomEntryMode = 0;
+            gRoomEntryMode = ROOM_ENTRY_NORMAL;
         }
         if (gUnk_02007D60 & 0x8000)
             gUnk_02007D60 = 0;
@@ -838,7 +838,7 @@ void ExitClearedStage(void)
         gRoomEntrySet = 1;
         gStageRequest = STAGE_REQUEST_HUB;
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 1;
+        gRoomEntryMode = ROOM_ENTRY_DOOR;
         gCutscenePending = 1;
         sub_0802695c();
         gUnk_02007FF0 = 0;
@@ -848,7 +848,7 @@ void ExitClearedStage(void)
         gLevelIndex = gCurLevel + 1;
         gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
         gRoomIndex = 0;
-        gRoomEntryMode = 0;
+        gRoomEntryMode = ROOM_ENTRY_NORMAL;
         gRoomEntrySet = 0;
         gStageRequest = STAGE_REQUEST_HUB;
     }
@@ -873,7 +873,7 @@ void ExitKingDededeStage(void)
             gStageRequest = STAGE_REQUEST_HUB;
         }
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 0;
+        gRoomEntryMode = ROOM_ENTRY_NORMAL;
         gUnk_0200B038 = 0;
     }
     else
@@ -890,7 +890,7 @@ void ExitToNextRoom(void)
     gRoomEntrySet = 0;
     gStageRequest = STAGE_REQUEST_CHANGE_ROOM;
     gEntryDoorEvent = 0;
-    gRoomEntryMode = 0;
+    gRoomEntryMode = ROOM_ENTRY_NORMAL;
     gStageExitFlags |= 2;
 }
 
@@ -901,7 +901,7 @@ void ExitToNextRoomOnWarpStar(void)
     gStageRequest = STAGE_REQUEST_CHANGE_ROOM;
     gEntryDoorEvent = 0;
     gUnk_02004C98 = 0;
-    gRoomEntryMode = 2;
+    gRoomEntryMode = ROOM_ENTRY_WARP_STAR;
     gUnk_0200B038 = 0;
     gUnk_02007FF0 = 0;
 }
@@ -958,7 +958,7 @@ void PressBigSwitch(s32 id)
         gHubUnlockFlags |= 16;
         gWarpStarStationLevels |= 1 << lvl;
     }
-    gRoomEntryMode = 4;
+    gRoomEntryMode = ROOM_ENTRY_BIG_SWITCH;
     gEntryDoorEvent = 3;
     gRoomEntryX = d->unk2 * 16 + 22;
     gRoomEntryY = d->unk4 * 16 + 5;
@@ -1058,7 +1058,7 @@ s32 ExitOnWarpStar(void)
         gStageRequest = STAGE_REQUEST_WARP_STAR_STATION;
         gCutscenePending = 0;
     }
-    gRoomEntryMode = 2;
+    gRoomEntryMode = ROOM_ENTRY_WARP_STAR;
     gUnk_0200B038 = 0;
     return 1;
 }
@@ -1106,7 +1106,7 @@ s32 ExitByCannon(void)
     gRoomEntryY = d->unk8;
     gRoomEntrySet = 1;
     gStageRequest = STAGE_REQUEST_CHANGE_ROOM;
-    gRoomEntryMode = 3;
+    gRoomEntryMode = ROOM_ENTRY_CANNON;
     gUnk_0200B038 = 0;
     if (gUnk_02007D60 & 0x8000)
         gUnk_02007D60 = 0;

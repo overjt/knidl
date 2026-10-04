@@ -63,7 +63,7 @@ void MenuSoundTest(void)
             gKeyRepeatDelay = 10;
             gKeyRepeatInterval = 6;
             StopAllSfx();
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             LoadGfxSet(50);
             RunFrames(3);
             LoadGfxSet(47);
@@ -139,7 +139,7 @@ void MenuLinkPlay(void)
     RunFrames(4);
     while (1) {
         if (gPressedKeys & 2) {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             LinkSetupStop();
             gDispCnt &= 0xE0FF;
             gDispCnt |= 0x1A00;

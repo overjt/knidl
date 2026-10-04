@@ -36,7 +36,7 @@ void SpawnDoorObjects(void)
     gRoomDriftVelX = 0;
     gRoomDriftVelY = 0;
     gUnk_020055D4 = 0x4000;
-    if (gRoomEntryMode == 1 || gRoomEntryMode == 4)
+    if (gRoomEntryMode == ROOM_ENTRY_DOOR || gRoomEntryMode == ROOM_ENTRY_BIG_SWITCH)
     {
         r = GetCollisionTileAtPixel(gRoomEntryX, gRoomEntryY);
         if (r == 55 || r == 183)
@@ -101,7 +101,7 @@ void SpawnDoorObjects(void)
                 case 2:
                     if (i == gEntryDoorIndex)
                     {
-                        if (gRoomEntryMode == 4)
+                        if (gRoomEntryMode == ROOM_ENTRY_BIG_SWITCH)
                         {
                             gDoorObjectTasks[i][0] = CreateClearedStageDoorSign(x, y, d->unk8, i);
                             gDoorObjectTasks[i][1] = CreateStageClearFlag(x, y, 15, 0x4000);

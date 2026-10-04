@@ -131,7 +131,7 @@ void MenuModeListSelect(void)
         }
         if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             if (gMenuCursor == 4) {
                 gMenuScreen = 9;
                 gExtraMode = 0;
@@ -159,7 +159,7 @@ void MenuModeListSelect(void)
         }
         if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             gPrevMenuScreen = gMenuScreen;
             gMenuScreen = 1;
             gDispCnt &= 0xE0FF;
@@ -179,11 +179,11 @@ void MenuModeListSelect(void)
             return;
         }
         if (gRepeatedKeys & 64) {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             if (--gMenuCursor < 0)
                 gMenuCursor = gModeListExtraRows + 2;
         } else if (gRepeatedKeys & 128) {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             if (++gMenuCursor >= gModeListExtraRows + 3)
                 gMenuCursor = 0;
         }
@@ -245,7 +245,7 @@ void MenuModePlayerCountSelect(void)
         }
         if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             if (gMenuChoiceCursor == 0) {
                 gMenuScreen = 9;
                 gMetaKnightmareMode = 0;
@@ -257,17 +257,17 @@ void MenuModePlayerCountSelect(void)
         }
         if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2)) {
             gMenuBufferedKeys = 0;
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             gMenuScreen = 4;
             RunFrames(8);
             return;
         }
         if (gMenuTransitionTimer == 0) {
             if ((gHeldKeys & 128) && gMenuChoiceCursor == 0) {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 gMenuChoiceCursor = 1;
             } else if ((gHeldKeys & 64) && gMenuChoiceCursor == 1) {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 gMenuChoiceCursor = 0;
             }
         }

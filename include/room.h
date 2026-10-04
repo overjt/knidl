@@ -4,6 +4,7 @@
 #include "gba/types.h"
 #include "constants/camera.h"
 #include "constants/game_states.h"
+#include "constants/rooms.h"
 
 /* room.h: the RAM cells and ROM tables of the level / room builder, the doors
    and the stage helpers (M07).  One declaration per symbol, with the type its

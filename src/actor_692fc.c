@@ -593,20 +593,20 @@ void ActorPlayHitSfx(void)
         switch (u->u80.attackAbility)
         {
         case ABILITY_CUTTER:
-            PlaySfx(145);
+            PlaySfx(SE_CUTTER_HIT);
             break;
         case ABILITY_SWORD:
-            PlaySfx(146);
+            PlaySfx(SE_SWORD_HIT);
             break;
         case ABILITY_HAMMER:
-            PlaySfx(132);
+            PlaySfx(SE_HAMMER_HIT);
             break;
         case ABILITY_NEEDLE:
-            PlaySfx(139);
+            PlaySfx(SE_NEEDLE_HIT);
             break;
         case ABILITY_ICE:
         case ABILITY_FREEZE:
-            PlaySfx(142);
+            PlaySfx(SE_ICE_HIT);
             break;
         case ABILITY_NORMAL:
         case ABILITY_FIRE:

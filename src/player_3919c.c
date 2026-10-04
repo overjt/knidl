@@ -361,7 +361,7 @@ void PlayerActionEnterDoor(void)
     if (gInHub != 0)
         CreateEntryDoorOpening();
     if (gInHub == 0)
-        PlaySfx(181);
+        PlaySfx(SE_ENTER_DOOR);
     t = gCurTask;
     if (!(t->waterFlags & 1))
     {

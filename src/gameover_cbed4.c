@@ -3,6 +3,7 @@
 #include "task.h"
 #include "main.h"
 #include "ending.h"
+#include "constants/sound.h"
 
 /* gameover_cbed4.c (0x080CBED4-0x080CCD4B, issue #100).
  *
@@ -108,7 +109,7 @@ void GameOverChoiceWaitUpdate(void)
         gCurTask->gameOverChoiceGiveUp ^= 1;
         gCurTask->state = 1;
     } else if (gPlayerPressedKeys[0] & 9) {
-        PlaySfx(102);
+        PlaySfx(SE_CONFIRM);
         if (gCurTask->gameOverChoiceGiveUp != 0) {
             gCurTask->state = 4;
         } else {

@@ -2,6 +2,7 @@
 #define GUARD_PLAYER_H
 
 #include "gba/types.h"
+#include "constants/sound.h"
 
 /* player.h: the RAM cells and ROM tables of the player: animation bank and
    collision registry (M05), breakable blocks and the player task (M09), the

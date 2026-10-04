@@ -646,7 +646,7 @@ void Task_NightmareWizard(void)
 
     PlayBgm(34);
     o = &gTasks[TaskFindNearestPlayer()];
-    if (gRoomEntryMode == 2) {
+    if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR) {
         if (o->onGround == 0) {
             do
                 TaskYieldTrampoline(1);

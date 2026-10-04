@@ -154,7 +154,7 @@ void Task_Player(void)
     }
     switch (gRoomEntryMode)
     {
-    case 2:
+    case ROOM_ENTRY_WARP_STAR:
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
@@ -162,7 +162,7 @@ void Task_Player(void)
             CreateFlyingWarpStar(gCurTask->posX, gCurTask->posY, sub_080260b0());
         PlayerWarpStarRideInit();
         TaskSleepForever();
-    case 3:
+    case ROOM_ENTRY_CANNON:
         gCurTask->player->bodyBox = 0;
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
@@ -170,11 +170,11 @@ void Task_Player(void)
         gCurTask->state = 4;
         PlayerCannonInit();
         TaskSleepForever();
-    case 1:
+    case ROOM_ENTRY_DOOR:
         gPauseDisabled = 1;
         gCurTask->player->action = PLAYER_ACTION_EXIT_DOOR;
         break;
-    case 0:
+    case ROOM_ENTRY_NORMAL:
     default:
         TaskInitWaterFlags();
         sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);

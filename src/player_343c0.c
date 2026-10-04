@@ -320,7 +320,7 @@ void PlayerActionJump(void)
         else
             gCurTask->player->unk14 = 23;
         PlayerSetMotionYPreset(0);
-        PlaySfxIfLocalPlayer(100, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_JUMP, gCurTask->player->playerIndex);
         gCurTask->variant = 0;
     }
     PlayerPlayBump();
@@ -421,7 +421,7 @@ void PlayerActionReleaseJump(void)
     {
         gCurTask->variant = 0;
         PlayerSetMotionYPreset(0);
-        PlaySfxIfLocalPlayer(100, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_JUMP, gCurTask->player->playerIndex);
     }
     gCurTask->playerBaseFrame = gUnk_0873D384[gCurTask->player->ability];
     switch (gCurTask->player->ability)

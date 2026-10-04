@@ -78,7 +78,7 @@ void ResetLevelStateAtHub(void)
     if (gFurthestLevel == 0 && gFurthestStage == 0)
     {
         gRoomEntrySet = 0;
-        gRoomEntryMode = 2;
+        gRoomEntryMode = ROOM_ENTRY_WARP_STAR;
     }
     else
     {
@@ -91,7 +91,7 @@ void ResetLevelStateAtHub(void)
             }
             gRoomEntryX = d->unk2 * 16 + 22;
             gRoomEntryY = d->unk4 * 16 + 5;
-            gRoomEntryMode = 1;
+            gRoomEntryMode = ROOM_ENTRY_DOOR;
             gEntryDoorEvent = 0;
         }
         else if ((s8)gUnk_03001F20 == 32)
@@ -103,7 +103,7 @@ void ResetLevelStateAtHub(void)
             }
             gRoomEntryX = d->unk2 * 16 + 16;
             gRoomEntryY = d->unk4 * 16 + 53;
-            gRoomEntryMode = 0;
+            gRoomEntryMode = ROOM_ENTRY_NORMAL;
         }
         else
         {
@@ -114,7 +114,7 @@ void ResetLevelStateAtHub(void)
             }
             gRoomEntryX = d->unk2 * 16 + 22;
             gRoomEntryY = d->unk4 * 16 + 5;
-            gRoomEntryMode = 1;
+            gRoomEntryMode = ROOM_ENTRY_DOOR;
             gEntryDoorEvent = 0;
         }
         gRoomEntrySet = 1;
@@ -165,7 +165,7 @@ void ResetLevelStateForContinue(void)
         gRoomEntrySet = 0;
         gStageRequest = STAGE_REQUEST_STAGE_START;
         gEntryDoorEvent = 0;
-        gRoomEntryMode = 0;
+        gRoomEntryMode = ROOM_ENTRY_NORMAL;
     }
     else
     {
@@ -177,7 +177,7 @@ void ResetLevelStateForContinue(void)
         {
             gRoomEntryX = 70;
             gRoomEntryY = 0x105;
-            gRoomEntryMode = 0;
+            gRoomEntryMode = ROOM_ENTRY_NORMAL;
             gEntryDoorEvent = 0;
         }
         else
@@ -193,7 +193,7 @@ void ResetLevelStateForContinue(void)
                 }
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
-                gRoomEntryMode = 1;
+                gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 0;
             }
             else if (gUnk_02007FF8 == 32)
@@ -205,7 +205,7 @@ void ResetLevelStateForContinue(void)
                 }
                 gRoomEntryX = d->unk2 * 16 + 16;
                 gRoomEntryY = d->unk4 * 16 + 53;
-                gRoomEntryMode = 0;
+                gRoomEntryMode = ROOM_ENTRY_NORMAL;
                 gEntryDoorEvent = 0;
             }
             else
@@ -217,7 +217,7 @@ void ResetLevelStateForContinue(void)
                 }
                 gRoomEntryX = d->unk2 * 16 + 22;
                 gRoomEntryY = d->unk4 * 16 + 5;
-                gRoomEntryMode = 1;
+                gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 0;
             }
         }
@@ -233,7 +233,7 @@ void sub_08022f50(void)
     gLevelIndex = 0;
     gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
     gRoomIndex = 0;
-    gRoomEntryMode = 0;
+    gRoomEntryMode = ROOM_ENTRY_NORMAL;
     gRoomEntrySet = 0;
     gCutscenePending = 0;
     HudShowClock();
@@ -265,7 +265,7 @@ void LoadRoom(void)
         gCurLevel = gLevelIndex;
         gUnk_03001F20 = gStageIndex;
     }
-    if (gRoomEntryMode == 2)
+    if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
     else
         gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;

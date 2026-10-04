@@ -130,7 +130,7 @@ void PlayerActionStarRodJump(void)
     gCurTask->variant = 0;
     gCurTask->player->unk14 = 23;
     PlayerSetMotionYPreset(0);
-    PlaySfxIfLocalPlayer(100, (u16)gCurTask->player->playerIndex);
+    PlaySfxIfLocalPlayer(SE_JUMP, (u16)gCurTask->player->playerIndex);
     {
         struct Task *t = gCurTask;
         t->unk2C = t->facing;

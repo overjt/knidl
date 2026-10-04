@@ -2,6 +2,7 @@
 #define GUARD_SAVE_H
 
 #include "gba/types.h"
+#include "constants/rooms.h"
 
 /* save.h: the RAM cells and ROM tables of the save file, the SRAM records,
    the wavy-scroll effect, the input recorder and the link-play results screen

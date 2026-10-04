@@ -35,7 +35,7 @@ void LoadHubRoom(void)
     gInHub = 1;
     gCurLevel = gStageIndex;
     gUnk_03001F20 = 16;
-    if (gHubUnlockFlags != 0 || gRoomEntryMode == 2)
+    if (gHubUnlockFlags != 0 || gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         gCameraMode = 4;
     else
         gCameraMode = 0;

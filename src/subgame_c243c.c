@@ -225,7 +225,7 @@ void AirGrindResultsStep(void)
                     t->spriteFlags = 0x2000;
                     t->layer = 1;
                     AirGrindResultsSetCursorBlend(-1);
-                    PlaySfx(102);
+                    PlaySfx(SE_CONFIRM);
                 }
                 gAirGrindResults.state++;
             } else {
@@ -256,7 +256,7 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindContinueCursor = 1;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 128) {
@@ -264,7 +264,7 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindContinueCursor = 0;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 9) {
@@ -280,7 +280,7 @@ void AirGrindResultsStep(void)
                 gAirGrindResults.state = 99;
             }
             if (gAirGrindPtr->localPlayer == 0)
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
         }
         break;
     case 6:
@@ -289,7 +289,7 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindLevelCursor = 2;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 128) {
@@ -297,19 +297,19 @@ void AirGrindResultsStep(void)
                 gCurTask->airGrindLevelCursor = 0;
             if (gAirGrindPtr->localPlayer == 0) {
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
             }
         }
         if (gPlayerPressedKeys[0] & 9) {
             SubGameReplay(gCurTask->airGrindLevelCursor);
             gAirGrindResults.state = 99;
             if (gAirGrindPtr->localPlayer == 0)
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
         } else if (gPlayerPressedKeys[0] & 2) {
             if (gAirGrindPtr->localPlayer == 0) {
                 gCurTask->frame = 1;
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
-                PlaySfx(215);
+                PlaySfx(SE_CANCEL);
             }
             gAirGrindResults.state--;
         }

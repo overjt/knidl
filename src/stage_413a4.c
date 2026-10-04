@@ -344,7 +344,7 @@ void MetaKnightActionJump(void)
             gCurTask->player->unk14 = 20;
         }
         PlayerSetMotionYPreset(4);
-        PlaySfx(264);
+        PlaySfx(SE_META_KNIGHT_JUMP);
         gCurTask->variant = 1;
         ((s8 *)gCurTask->player)[16] = 10;
     }
@@ -440,7 +440,7 @@ void MetaKnightActionReleaseJump(void)
     if (gCurTask->player->prevMode != 4)
     {
         PlayerSetMotionYPreset(4);
-        PlaySfx(264);
+        PlaySfx(SE_META_KNIGHT_JUMP);
         ((s8 *)gCurTask->player)[16] = 10;
     }
     gCurTask->variant = 1;
@@ -1322,7 +1322,7 @@ void MetaKnightActionEnterDoor(void)
     if (gInHub != 0)
         ((void (*)(void))CreateEntryDoorOpening)();
     if (gInHub == 0)
-        PlaySfx(181);
+        PlaySfx(SE_ENTER_DOOR);
     if ((gCurTask->waterFlags & 1) == 0)
     {
         TaskSetFrame(0x1208);

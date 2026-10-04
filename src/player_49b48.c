@@ -62,7 +62,7 @@ void PlayerActionIce(void)
         {
             struct PlayerState *p = gCurTask->player;
             if ((p->unk42 & 128) == 0)
-                PlayerStartSfx(140, p->playerIndex);
+                PlayerStartSfx(SE_ICE_ATTACK, p->playerIndex);
         }
         CreatePlayerObject(gCurTask->player->playerIndex, 7, 0);
         CreatePlayerObject(gCurTask->player->playerIndex, 7, 1);
@@ -144,7 +144,7 @@ void PlayerActionFreeze(void)
         CreatePlayerEffect(gCurTask->player->playerIndex, 41, 1);
         CreatePlayerEffect(gCurTask->player->playerIndex, 41, 2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 41, 3);
-        PlayerStartSfx(141, gCurTask->player->playerIndex);
+        PlayerStartSfx(SE_FREEZE_ATTACK, gCurTask->player->playerIndex);
         while (1) {
             TaskSetFrame(0xA86);
             TaskYieldTrampoline(1);

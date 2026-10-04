@@ -104,7 +104,7 @@ void PlayerActionGetAbility(void)
                         while (1) {
                             if ((s8)++gCurTask->player->pendingAbility > 24)
                                 gCurTask->player->pendingAbility = ABILITY_FIRE;
-                            PlaySfx(101);
+                            PlaySfx(SE_CURSOR_MOVE);
                             {
                                 struct PlayerState *r = gCurTask->player;
                                 HudShowAbilityAnimated((s8)r->pendingAbility, r->playerIndex);

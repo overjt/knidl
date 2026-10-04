@@ -206,7 +206,7 @@ void GameOverMoveCursor(void)
 u8 GameOverIsUpDownPressed(void)
 {
     if (gPlayerPressedKeys[0] & 0xC0) {
-        PlaySfx(101);
+        PlaySfx(SE_CURSOR_MOVE);
         return 1;
     }
     return 0;
@@ -218,7 +218,7 @@ u8 GameOverCheckConfirm(void)
 
     for (i = 0; i < gPlayerCount; i++) {
         if (gPlayerPressedKeys[i] & 9) {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             gGameOverDone = 1;
             return 1;
         }

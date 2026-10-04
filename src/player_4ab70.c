@@ -50,7 +50,7 @@ void PlayerActionTornado(void)
     gCurTask->u80.attackAbility = ABILITY_TORNADO;
     switch (gCurTask->variant) {
     case 0:
-        PlaySfxIfLocalPlayer(150, gCurTask->player->playerIndex);
+        PlaySfxIfLocalPlayer(SE_TORNADO_ATTACK, gCurTask->player->playerIndex);
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         PlayerSetMotionXPreset(11, 63);
         gCurTask->spriteFlags &= 0x7FFF;
@@ -196,7 +196,7 @@ void PlayerActionCrash(void)
     gCurTask->variant = 0;
     RequestScreenShake(5);
     SetRoomUpdateFlags(2);
-    PlaySfx(248);
+    PlaySfx(SE_CRASH_ATTACK);
     gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDE7);

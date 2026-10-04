@@ -334,7 +334,7 @@ void CutsceneFountainKirby(void)
     TaskYieldTrampoline(44);
     gCurTask->cutsceneActorBgmFadeStep = 4;
     gCurTask->cutsceneActorBgmVolume = 255;
-    PlaySfx(100);
+    PlaySfx(SE_JUMP);
     gCurTask->cutsceneActorLoopCount = 0;
     do
     {
@@ -352,7 +352,7 @@ void CutsceneFountainKirby(void)
     TaskStop();
     gCurTask->frame = 71;
     TaskYieldTrampoline(8);
-    PlaySfx(100);
+    PlaySfx(SE_JUMP);
     gCurTask->cutsceneActorLoopCount = 0;
     do
     {
@@ -384,7 +384,7 @@ void CutsceneFountainKirby(void)
     TaskStop();
     gCurTask->frame = 79;
     TaskYieldTrampoline(4);
-    PlaySfx(100);
+    PlaySfx(SE_JUMP);
     gCurTask->velY = 0xFFF90000;
     gCurTask->accelY = 142 << 8;
     gCurTask->frame = 91;

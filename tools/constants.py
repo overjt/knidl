@@ -114,7 +114,7 @@ FAMILIES = {
             "TaskCreateHighSlot": 0, "TaskCreatePausedInScreenAttack": 0,
             "CreateChildTask": 0, "CreateChildTaskAt": 0,
             "CreateChildTaskAtOffsetFacing": 0, "CreateChildTaskHere": 0,
-            "CreateActor": 2, "sub_08064d9c": 1, "sub_08064e5c": 1, "sub_08064e90": 1,
+            "CreateActor": 2, "CreateItemOrObject": 1, "CreateItemHere": 1, "CreateItemAt": 1,
         },
         "members": ["taskType"],
         "indexed": ["gTaskSlotTypes"],
@@ -152,6 +152,17 @@ FAMILIES = {
         "prefix": "ACTOR_KIND_",
         "calls": {"CreateActor": 0, "CreateActorByKind": 0},
         "members": ["actorKind"],
+    },
+    "rooms": {
+        "header": "rooms",
+        "prefix": "ROOM_ENTRY_",
+        "members": ["roomEntryMode"],
+        "vars": ["gRoomEntryMode"],
+    },
+    "sound": {
+        "header": "sound",
+        "prefix": "SE_",
+        "calls": {"PlaySfx": 0, "PlaySfxIfLocalPlayer": 0, "PlayerStartSfx": 0},
     },
     "camera": {
         "header": "camera",

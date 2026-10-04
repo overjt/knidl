@@ -8,6 +8,7 @@
 #include "room.h"
 #include "save.h"
 #include "ending.h"
+#include "constants/sound.h"
 
 /* menu_0c09c.c (0x0800C09C-0x0800CA0F, issue #99).
  *
@@ -33,7 +34,7 @@ void MenuFileSelect(void)
     {
         if (*keys & 9)
         {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             gCurSaveSlot = gMenuCursor;
             if (gSaveSlots[gCurSaveSlot].unk04 == 0x99999999)
                 InitNewSaveFile(gCurSaveSlot);
@@ -71,7 +72,7 @@ void MenuFileSelect(void)
         }
         if (*keys & 2)
         {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             *state = 10;
             gPrevGameState = GAME_STATE_MAIN_MENU;
             gGameState = GAME_STATE_TITLE;
@@ -79,13 +80,13 @@ void MenuFileSelect(void)
         }
         if (gRepeatedKeys & 0x40)
         {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             if (--gMenuCursor < 0)
                 gMenuCursor = 2;
         }
         else if (gRepeatedKeys & 0x80)
         {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             if (++gMenuCursor > 2)
                 gMenuCursor = 0;
         }
@@ -162,7 +163,7 @@ void MenuFileMenuSelect(void)
         }
         if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9))
         {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             switch (gFileMenuCursor)
             {
             case 0:
@@ -197,7 +198,7 @@ void MenuFileMenuSelect(void)
         }
         if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2))
         {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             gMenuScreen = 0;
             MenuDrawSaveSlots();
             CreateFileSelectSprites(1);
@@ -213,13 +214,13 @@ void MenuFileMenuSelect(void)
         {
             if (gRepeatedKeys & 0x40)
             {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 if (--gFileMenuCursor < 0)
                     gFileMenuCursor = 3;
             }
             else if (gRepeatedKeys & 0x80)
             {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 if (++gFileMenuCursor > 3)
                     gFileMenuCursor = 0;
             }
@@ -237,24 +238,24 @@ void MenuNormalExtraSelect(void)
     {
         if (*keys & 2)
         {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             *state = 1;
             RunFrames(10);
             return;
         }
         if ((gHeldKeys & 0x80) && gMenuChoiceCursor == 0)
         {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             gMenuChoiceCursor = 1;
         }
         else if ((gHeldKeys & 0x40) && gMenuChoiceCursor == 1)
         {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             gMenuChoiceCursor = 0;
         }
         RunFrame();
     }
-    PlaySfx(102);
+    PlaySfx(SE_CONFIRM);
     gExtraMode = gMenuChoiceCursor;
     *state = 3;
     gPlayerCountCursor = 0;
@@ -294,7 +295,7 @@ void MenuPlayerCountSelect(void)
         }
         if ((gPressedKeys & 9) || (gMenuBufferedKeys & 9))
         {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             if (gPlayerCountCursor == 0)
             {
                 gMenuScreen = 9;
@@ -328,7 +329,7 @@ void MenuPlayerCountSelect(void)
         }
         if ((gPressedKeys & 2) || (gMenuBufferedKeys & 2))
         {
-            PlaySfx(215);
+            PlaySfx(SE_CANCEL);
             if (gSaveSlots[gCurSaveSlot].milestoneFlags & 4)
                 gMenuScreen = 2;
             else
@@ -340,12 +341,12 @@ void MenuPlayerCountSelect(void)
         {
             if ((gHeldKeys & 0x80) && gPlayerCountCursor == 0)
             {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 gPlayerCountCursor = 1;
             }
             else if ((gHeldKeys & 0x40) && gPlayerCountCursor == 1)
             {
-                PlaySfx(101);
+                PlaySfx(SE_CURSOR_MOVE);
                 gPlayerCountCursor = 0;
             }
         }
@@ -367,7 +368,7 @@ void MenuEraseSelect(void)
     {
         if ((gPressedKeys & 9) && gMenuChoiceCursor == 0)
         {
-            PlaySfx(102);
+            PlaySfx(SE_CONFIRM);
             if (++gEraseConfirmCount == 1)
             {
                 LoadGfxSet(30);
@@ -396,21 +397,21 @@ void MenuEraseSelect(void)
         else if (*keys & 11)
         {
             if (*keys & 9)
-                PlaySfx(102);
+                PlaySfx(SE_CONFIRM);
             else
-                PlaySfx(215);
+                PlaySfx(SE_CANCEL);
             gMenuScreen = 1;
             RunFrames(10);
             return;
         }
         if ((gHeldKeys & 0x20) && gMenuChoiceCursor == 1)
         {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             gMenuChoiceCursor = 0;
         }
         else if ((gHeldKeys & 0x10) && gMenuChoiceCursor == 0)
         {
-            PlaySfx(101);
+            PlaySfx(SE_CURSOR_MOVE);
             gMenuChoiceCursor = 1;
         }
         RunFrame();

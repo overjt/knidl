@@ -730,7 +730,7 @@ void PlayerActionFire(void)
         {
             struct PlayerState *p = gCurTask->player;
             if ((p->unk42 & 128) == 0)
-                PlayerStartSfx(128, p->playerIndex);
+                PlayerStartSfx(SE_FIRE_ATTACK, p->playerIndex);
         }
         CreatePlayerObject(gCurTask->player->playerIndex, 4, 0);
         CreatePlayerObject(gCurTask->player->playerIndex, 4, 1);
@@ -816,7 +816,7 @@ void PlayerActionSpark(void)
         }
         CreatePlayerEffect(gCurTask->player->playerIndex, 30, 1);
         CreatePlayerEffect(gCurTask->player->playerIndex, 30, 2);
-        PlayerStartSfx(136, gCurTask->player->playerIndex);
+        PlayerStartSfx(SE_SPARK_ATTACK, gCurTask->player->playerIndex);
         while (1) {
             TaskSetFrame(0x36B);
             TaskYieldTrampoline(2);
