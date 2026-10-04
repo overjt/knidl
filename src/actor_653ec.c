@@ -295,21 +295,21 @@ void StartBgPaletteBlend(u32 a, u32 b)
 /* Reference-counted spawn of the slot-`idx` helper task. */
 void AcquirePaletteAnim(u32 p0, s32 idx)
 {
-    struct Task *t;
-    s32 i;
+    struct Task *paletteAnim;
+    s32 paletteAnimSlot;
 
     if (idx > 2)
         return;
     if (gPaletteAnimRefCounts[idx] == 0)
     {
-        i = CreateChildTaskHere(TASK_PALETTE_ANIM, 1);
-        if (i != -1)
+        paletteAnimSlot = CreateChildTaskHere(TASK_PALETTE_ANIM, 1);
+        if (paletteAnimSlot != -1)
         {
-            t = &gTasks[i];
-            t->paletteAnimPaletteBank = gCurTask->tileWord >> 12;
-            t->variant = p0;
-            t->paletteAnimRefIndex = idx;
-            gPaletteAnimTasks[idx] = i;
+            paletteAnim = &gTasks[paletteAnimSlot];
+            paletteAnim->paletteAnimPaletteBank = gCurTask->tileWord >> 12;
+            paletteAnim->variant = p0;
+            paletteAnim->paletteAnimRefIndex = idx;
+            gPaletteAnimTasks[idx] = paletteAnimSlot;
         }
     }
     gPaletteAnimRefCounts[idx]++;

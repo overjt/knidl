@@ -252,7 +252,7 @@ void CameraStartFollowFocusAt(s32 x, s32 y)
 
 void CameraStartFollowingPlayer(s32 a)
 {
-    s32 i;
+    s32 player;
     s32 x;
     s32 y;
 
@@ -265,7 +265,7 @@ void CameraStartFollowingPlayer(s32 a)
     {
         gCameraFocusPlayer = a;
         gCameraMode = CAMERA_MODE_FOLLOW_PLAYER;
-        for (i = 0; i < gPlayerCount; i++)
+        for (player = 0; player < gPlayerCount; player++)
         {
             x = gCameraAnchorX;
             y = gCameraAnchorY;
@@ -277,8 +277,8 @@ void CameraStartFollowingPlayer(s32 a)
                 y = gCameraBounds[2];
             if (gCameraBounds[3] < y)
                 y = gCameraBounds[3];
-            gPlayerCameraPos[i].x = x;
-            gPlayerCameraPos[i].y = y;
+            gPlayerCameraPos[player].x = x;
+            gPlayerCameraPos[player].y = y;
         }
     }
 }

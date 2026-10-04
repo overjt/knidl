@@ -238,7 +238,7 @@ void TitleMain(void)
    "if (foo) bar; else break;" swap moves it in front of the loop body. */
 s32 TitleScreen(void)
 {
-    s32 idx, i, ret;
+    s32 titleSpritesSlot, i, ret;
 
     if (gPrevGameState != GAME_STATE_BOOT_LOGO) {
         ResetTasksAndOam();
@@ -251,13 +251,13 @@ s32 TitleScreen(void)
     if (gPrevGameState != GAME_STATE_BOOT_LOGO) {
         BeginFastFadeInFromWhite();
         RunFramesUntilFadeDone();
-        idx = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
-        gTasks[idx].titleSpritesIndex = -1;
-        gTasks[idx].titleSpritesStartDelay = 0;
+        titleSpritesSlot = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
+        gTasks[titleSpritesSlot].titleSpritesIndex = -1;
+        gTasks[titleSpritesSlot].titleSpritesStartDelay = 0;
     } else {
-        idx = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
-        gTasks[idx].titleSpritesIndex = -1;
-        gTasks[idx].titleSpritesStartDelay = 90;
+        titleSpritesSlot = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
+        gTasks[titleSpritesSlot].titleSpritesIndex = -1;
+        gTasks[titleSpritesSlot].titleSpritesStartDelay = 90;
     }
     TaskCreateFrom(TASK_TITLE_PALETTE, 0);
     PlayBgm(BGM_TITLE);

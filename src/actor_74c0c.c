@@ -309,18 +309,18 @@ void Task_NightmarePowerOrbEscape(void)
 
 void CreateNightmarePowerOrbEscapeStars(s32 a)
 {
-    struct Task *t;
-    s32 id;
+    struct Task *escapeStar;
+    s32 escapeStarSlot;
 
     if (a == 12)
     {
         a = 3;
     loop:
-        id = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
-        if (id != -1)
+        escapeStarSlot = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
+        if (escapeStarSlot != -1)
         {
-            t = &gTasks[id];
-            t->variant = a;
+            escapeStar = &gTasks[escapeStarSlot];
+            escapeStar->variant = a;
         }
         a++;
         if (a <= 10)
@@ -328,11 +328,11 @@ void CreateNightmarePowerOrbEscapeStars(s32 a)
     }
     else
     {
-        id = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
-        if (id != -1)
+        escapeStarSlot = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
+        if (escapeStarSlot != -1)
         {
-            t = &gTasks[id];
-            t->variant = a;
+            escapeStar = &gTasks[escapeStarSlot];
+            escapeStar->variant = a;
         }
     }
 }

@@ -117,8 +117,8 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
     s8 kind = a0;
     u8 param = a1;
     s32 base;
-    s32 idx;
-    struct Task *t;
+    s32 playerEffectSlot;
+    struct Task *playerEffect;
 
     if (kind == 0)
         base = 16;
@@ -130,8 +130,8 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
         base = 28;
     else
         return -1;
-    idx = TaskCreateInRange(TASK_PLAYER_EFFECT, base, base + 3);
-    if (idx == -1)
+    playerEffectSlot = TaskCreateInRange(TASK_PLAYER_EFFECT, base, base + 3);
+    if (playerEffectSlot == -1)
     {
         if (kind == 0)
             base = 4;
@@ -143,42 +143,42 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
             base = 13;
         else
             return -1;
-        idx = TaskCreateInRange(TASK_PLAYER_EFFECT, base, base + 2);
+        playerEffectSlot = TaskCreateInRange(TASK_PLAYER_EFFECT, base, base + 2);
     }
-    if (idx != -1)
+    if (playerEffectSlot != -1)
     {
-        t = &gTasks[idx];
-        t->playerEffectSpawnWord = (param << 24) | (a2 & 0x00FFFFFF);
-        t->posX = gCurTask->posX;
-        t->pixelX = gCurTask->pixelX;
-        t->posY = gCurTask->posY;
-        t->pixelY = gCurTask->pixelY;
-        t->facing = gCurTask->facing;
-        t->player = gCurTask->player;
+        playerEffect = &gTasks[playerEffectSlot];
+        playerEffect->playerEffectSpawnWord = (param << 24) | (a2 & 0x00FFFFFF);
+        playerEffect->posX = gCurTask->posX;
+        playerEffect->pixelX = gCurTask->pixelX;
+        playerEffect->posY = gCurTask->posY;
+        playerEffect->pixelY = gCurTask->pixelY;
+        playerEffect->facing = gCurTask->facing;
+        playerEffect->player = gCurTask->player;
     }
-    return idx;
+    return playerEffectSlot;
 }
 
 s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2)
 {
     u8 param = a1;
-    s32 idx;
-    struct Task *t;
+    s32 playerEffectSlot;
+    struct Task *playerEffect;
 
-    idx = TaskCreateInRange(TASK_PLAYER_EFFECT, 32, 62);
-    if (idx != -1)
+    playerEffectSlot = TaskCreateInRange(TASK_PLAYER_EFFECT, 32, 62);
+    if (playerEffectSlot != -1)
     {
-        t = &gTasks[idx];
-        t->playerEffectSpawnWord = (param << 24) | (a2 & 0x00FFFFFF);
-        t->posX = gCurTask->posX;
-        t->pixelX = gCurTask->pixelX;
-        t->posY = gCurTask->posY;
-        t->pixelY = gCurTask->pixelY;
-        t->facing = gCurTask->facing;
-        t->player = gCurTask->player;
-        t->actorKind = 10;
+        playerEffect = &gTasks[playerEffectSlot];
+        playerEffect->playerEffectSpawnWord = (param << 24) | (a2 & 0x00FFFFFF);
+        playerEffect->posX = gCurTask->posX;
+        playerEffect->pixelX = gCurTask->pixelX;
+        playerEffect->posY = gCurTask->posY;
+        playerEffect->pixelY = gCurTask->pixelY;
+        playerEffect->facing = gCurTask->facing;
+        playerEffect->player = gCurTask->player;
+        playerEffect->actorKind = 10;
     }
-    return idx;
+    return playerEffectSlot;
 }
 
 void GoalGameMain(void)

@@ -367,15 +367,15 @@ void Task_ImpactStar(void)
 void CreateStarRing(void)
 {
     s32 i;
-    s32 j;
+    s32 ringStarSlot;
     struct Task *p;
 
     for (i = 0; i < 8; i++)
     {
-        j = CreateChildTaskHere(TASK_RING_STAR, 0);
-        if (j != -1)
+        ringStarSlot = CreateChildTaskHere(TASK_RING_STAR, 0);
+        if (ringStarSlot != -1)
         {
-            p = &gTasks[j];
+            p = &gTasks[ringStarSlot];
             p->variant = i;
         }
     }
@@ -456,15 +456,15 @@ void Task_ExplosionScreenFlash(void)
 
 void CreateCannonSmoke(u32 a, u32 b)
 {
-    s32 i;
-    struct Task *p;
+    s32 cannonSmokeSlot;
+    struct Task *cannonSmoke;
 
-    i = CreateChildTaskHere(TASK_CANNON_SMOKE, 0);
-    if (i != -1)
+    cannonSmokeSlot = CreateChildTaskHere(TASK_CANNON_SMOKE, 0);
+    if (cannonSmokeSlot != -1)
     {
-        p = &gTasks[i];
-        p->variant = a;
-        p->cannonSmokeSpot = b;
+        cannonSmoke = &gTasks[cannonSmokeSlot];
+        cannonSmoke->variant = a;
+        cannonSmoke->cannonSmokeSpot = b;
     }
 }
 

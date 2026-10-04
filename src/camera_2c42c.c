@@ -24,7 +24,7 @@
 
 void CameraHoldAnchor(void)
 {
-    s32 x, y, i;
+    s32 x, y, player;
 
     if (gActivePlayerCount)
     {
@@ -40,14 +40,14 @@ void CameraHoldAnchor(void)
             y = gRoomBounds[3];
         gCameraBounds[0] = gCameraBounds[1] = x;
         gCameraBounds[2] = gCameraBounds[3] = y;
-        for (i = 0; i < gPlayerCount; i++)
+        for (player = 0; player < gPlayerCount; player++)
         {
-            gPlayerBounds[i].x0 = x - 117;
-            gPlayerBounds[i].x1 = x + 117;
-            gPlayerBounds[i].y0 = y - 76;
-            gPlayerBounds[i].y1 = y + 104;
-            gPlayerCameraPos[i].x = x;
-            gPlayerCameraPos[i].y = y;
+            gPlayerBounds[player].x0 = x - 117;
+            gPlayerBounds[player].x1 = x + 117;
+            gPlayerBounds[player].y0 = y - 76;
+            gPlayerBounds[player].y1 = y + 104;
+            gPlayerCameraPos[player].x = x;
+            gPlayerCameraPos[player].y = y;
         }
         gCameraCenterX = x << 16;
         gCameraCenterY = y << 16;
@@ -374,7 +374,7 @@ void CameraSnapBoundsToAnchor(void)
 
 void CameraSnapPlayersToAnchor(void)
 {
-    s32 x, y, i;
+    s32 x, y, player;
 
     if (gActivePlayerCount)
     {
@@ -388,10 +388,10 @@ void CameraSnapPlayersToAnchor(void)
             y = gRoomBounds[2];
         if (y > gRoomBounds[3])
             y = gRoomBounds[3];
-        for (i = 0; i < gPlayerCount; i++)
+        for (player = 0; player < gPlayerCount; player++)
         {
-            gPlayerCameraPos[i].x = x;
-            gPlayerCameraPos[i].y = y;
+            gPlayerCameraPos[player].x = x;
+            gPlayerCameraPos[player].y = y;
         }
         gCameraCenterX = x << 16;
         gCameraCenterY = y << 16;

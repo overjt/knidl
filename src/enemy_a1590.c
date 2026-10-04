@@ -1390,29 +1390,29 @@ void CreateMrBrightBeam(void)
 /* CreateMrBrightBeamEffects (0x080A2D38-0x080A2DE0) */
 void CreateMrBrightBeamEffects(void)
 {
-    s32 r;
-    struct Task *t;
+    s32 beamEffectSlot;
+    struct Task *beamEffect;
 
-    r = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 96, (u16)ActorGetGfxTileWordPalOffset(2));
-    gUnk_02006040[3] = r;
-    if (r != -1)
+    beamEffectSlot = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 96, (u16)ActorGetGfxTileWordPalOffset(2));
+    gUnk_02006040[3] = beamEffectSlot;
+    if (beamEffectSlot != -1)
     {
-        t = &gTasks[r];
-        t->variant = 0;
+        beamEffect = &gTasks[beamEffectSlot];
+        beamEffect->variant = 0;
     }
-    r = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 16, (u16)ActorGetGfxTileWordPalOffset(2));
-    gUnk_02006040[1] = r;
-    if (r != -1)
+    beamEffectSlot = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 16, (u16)ActorGetGfxTileWordPalOffset(2));
+    gUnk_02006040[1] = beamEffectSlot;
+    if (beamEffectSlot != -1)
     {
-        t = &gTasks[r];
-        t->variant = 1;
+        beamEffect = &gTasks[beamEffectSlot];
+        beamEffect->variant = 1;
     }
-    r = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 8, (u16)ActorGetGfxTileWordPalOffset(2));
-    gUnk_02006040[2] = r;
-    if (r != -1)
+    beamEffectSlot = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 8, (u16)ActorGetGfxTileWordPalOffset(2));
+    gUnk_02006040[2] = beamEffectSlot;
+    if (beamEffectSlot != -1)
     {
-        t = &gTasks[r];
-        t->variant = 2;
+        beamEffect = &gTasks[beamEffectSlot];
+        beamEffect->variant = 2;
     }
 }
 

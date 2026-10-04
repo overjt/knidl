@@ -10,7 +10,7 @@
 void StoreProgressInSaveSlot(s32 a)
 {
     s32 i;
-    s32 j;
+    s32 stage;
 
     gSaveSlots[a].curLevel[gExtraMode] = gCurLevel;
     gSaveSlots[a].curStage[gExtraMode] = gCurStage;
@@ -19,10 +19,10 @@ void StoreProgressInSaveSlot(s32 a)
     gSaveSlots[a].bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
+        for (stage = 0; stage <= 6; stage++)
         {
-            gSaveSlots[a].stageClearStatus[i][j] &= 15 << ((gExtraMode ^ 1) * 4);
-            gSaveSlots[a].stageClearStatus[i][j] |= gStageClearStatus[i][j] << (gExtraMode * 4);
+            gSaveSlots[a].stageClearStatus[i][stage] &= 15 << ((gExtraMode ^ 1) * 4);
+            gSaveSlots[a].stageClearStatus[i][stage] |= gStageClearStatus[i][stage] << (gExtraMode * 4);
         }
     }
     for (i = 0; i <= 3; i++)
@@ -37,7 +37,7 @@ void StoreProgressInSaveSlot(s32 a)
 void StoreProgressInBothHalves(s32 a)
 {
     s32 i;
-    s32 j;
+    s32 stage;
 
     for (i = 0; i <= 1; i++)
     {
@@ -52,8 +52,8 @@ void StoreProgressInBothHalves(s32 a)
     gSaveSlots[a].milestoneFlags = gMilestoneFlags;
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
-            gSaveSlots[a].stageClearStatus[i][j] = (gStageClearStatus[i][j] << 4) | gStageClearStatus[i][j];
+        for (stage = 0; stage <= 6; stage++)
+            gSaveSlots[a].stageClearStatus[i][stage] = (gStageClearStatus[i][stage] << 4) | gStageClearStatus[i][stage];
     }
     for (i = 0; i <= 3; i++)
     {
@@ -64,7 +64,7 @@ void StoreProgressInBothHalves(s32 a)
 void LoadSaveSlot(s32 a)
 {
     s32 i;
-    s32 j;
+    s32 stage;
 
     if (a == -1)
         return;
@@ -78,8 +78,8 @@ void LoadSaveSlot(s32 a)
     gBigSwitchFlags[0] = gSaveSlots[a].bigSwitchFlags[gExtraMode];
     for (i = 0; i <= 7; i++)
     {
-        for (j = 0; j <= 6; j++)
-            gStageClearStatus[i][j] = (gSaveSlots[a].stageClearStatus[i][j] >> (gExtraMode * 4)) & 15;
+        for (stage = 0; stage <= 6; stage++)
+            gStageClearStatus[i][stage] = (gSaveSlots[a].stageClearStatus[i][stage] >> (gExtraMode * 4)) & 15;
     }
     for (i = 0; i <= 3; i++)
     {
@@ -90,25 +90,25 @@ void LoadSaveSlot(s32 a)
 }
 void ResetLevelProgress(void)
 {
-    s32 i;
-    s32 j;
+    s32 level;
+    s32 stage;
 
     gCurLevel = 0;
     gCurStage = 0;
     gFurthestLevel = 0;
     gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;
-    for (i = 0; i <= 7; i++)
+    for (level = 0; level <= 7; level++)
     {
-        for (j = 0; j <= 6; j++)
-            gStageClearStatus[i][j] = 0;
+        for (stage = 0; stage <= 6; stage++)
+            gStageClearStatus[level][stage] = 0;
     }
     CalcCompletionPercent(0);
 }
 void ResetProgress(void)
 {
-    s32 i;
-    s32 j;
+    s32 level;
+    s32 stage;
     u16 *p;
     u16 *q;
 
@@ -120,10 +120,10 @@ void ResetProgress(void)
     gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;
     gCompletionPercent = 0;
-    for (i = 0; i <= 7; i++)
+    for (level = 0; level <= 7; level++)
     {
-        for (j = 0; j <= 6; j++)
-            gStageClearStatus[i][j] = 0;
+        for (stage = 0; stage <= 6; stage++)
+            gStageClearStatus[level][stage] = 0;
     }
     p = gBossEnduranceBestTime;
     q = gMetaKnightmareBestTime;

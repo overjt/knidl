@@ -497,7 +497,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
 s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg)
 {
     s32 prio;
-    s32 idx;
+    s32 playerObjectSlot;
 
     if (player == 0)
         prio = 4;
@@ -509,18 +509,18 @@ s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg)
         prio = 13;
     else
         return -1;
-    idx = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 2);
-    if (idx != -1)
+    playerObjectSlot = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 2);
+    if (playerObjectSlot != -1)
     {
-        struct Task *t = &gTasks[idx];
-        t->playerObjectSpawnWord = (variant << 24) | (arg & 0xFFFFFF);
-        t->posX = gCurTask->posX;
-        t->pixelX = gCurTask->pixelX;
-        t->posY = gCurTask->posY;
-        t->pixelY = gCurTask->pixelY;
-        t->facing = gCurTask->facing;
-        t->waterFlags = gCurTask->waterFlags;
-        t->player = gCurTask->player;
+        struct Task *playerObject = &gTasks[playerObjectSlot];
+        playerObject->playerObjectSpawnWord = (variant << 24) | (arg & 0xFFFFFF);
+        playerObject->posX = gCurTask->posX;
+        playerObject->pixelX = gCurTask->pixelX;
+        playerObject->posY = gCurTask->posY;
+        playerObject->pixelY = gCurTask->pixelY;
+        playerObject->facing = gCurTask->facing;
+        playerObject->waterFlags = gCurTask->waterFlags;
+        playerObject->player = gCurTask->player;
     }
-    return idx;
+    return playerObjectSlot;
 }

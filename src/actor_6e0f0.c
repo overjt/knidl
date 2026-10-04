@@ -305,17 +305,17 @@ void AbilityReleaseFlashCheckParent(void)
 
 s32 CreateDashFlame(s16 x, s16 y)
 {
-    struct Task *t;
-    s32 i;
+    struct Task *dashFlame;
+    s32 dashFlameSlot;
 
-    i = CreateChildTaskAt(TASK_DASH_FLAME, 0, 0, 0);
-    if (i != -1)
+    dashFlameSlot = CreateChildTaskAt(TASK_DASH_FLAME, 0, 0, 0);
+    if (dashFlameSlot != -1)
     {
-        t = &gTasks[i];
-        t->dashFlameOffsetX = x;
-        t->dashFlameOffsetY = y;
+        dashFlame = &gTasks[dashFlameSlot];
+        dashFlame->dashFlameOffsetX = x;
+        dashFlame->dashFlameOffsetY = y;
     }
-    return i;
+    return dashFlameSlot;
 }
 
 void Task_DashFlame(void)
@@ -356,17 +356,17 @@ void DashFlameCheckParent(void)
 
 s32 CreateDashFireTrail(s16 x, s16 y)
 {
-    struct Task *t;
-    s32 i;
+    struct Task *dashFireTrail;
+    s32 dashFireTrailSlot;
 
-    i = CreateChildTaskAt(TASK_DASH_FIRE_TRAIL, 0, 0, 0);
-    if (i != -1)
+    dashFireTrailSlot = CreateChildTaskAt(TASK_DASH_FIRE_TRAIL, 0, 0, 0);
+    if (dashFireTrailSlot != -1)
     {
-        t = &gTasks[i];
-        t->dashFireTrailOffsetX = x;
-        t->dashFireTrailOffsetY = y;
+        dashFireTrail = &gTasks[dashFireTrailSlot];
+        dashFireTrail->dashFireTrailOffsetX = x;
+        dashFireTrail->dashFireTrailOffsetY = y;
     }
-    return i;
+    return dashFireTrailSlot;
 }
 
 void Task_DashFireTrail(void)
@@ -424,18 +424,18 @@ void DashFireTrailCheckParent(void)
 
 s32 CreateLandingImpact(u8 a, s16 x, s16 y)
 {
-    struct Task *t;
-    s32 i;
+    struct Task *landingImpact;
+    s32 landingImpactSlot;
 
-    i = CreateChildTaskHere(TASK_LANDING_IMPACT, 0);
-    if (i != -1)
+    landingImpactSlot = CreateChildTaskHere(TASK_LANDING_IMPACT, 0);
+    if (landingImpactSlot != -1)
     {
-        t = &gTasks[i];
-        t->variant = a;
-        t->landingImpactOffsetX = x;
-        t->landingImpactOffsetY = y;
+        landingImpact = &gTasks[landingImpactSlot];
+        landingImpact->variant = a;
+        landingImpact->landingImpactOffsetX = x;
+        landingImpact->landingImpactOffsetY = y;
     }
-    return i;
+    return landingImpactSlot;
 }
 
 void Task_LandingImpact(void)

@@ -172,12 +172,12 @@ void CreateQuickDrawBonusSign(u16 a0, u16 a1, u16 a2)
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
+        struct Task *quickDrawObject = &gTasks[i];
 
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS_SIGN;
-        t->frame = a0;
-        t->pixelX = a1;
-        t->pixelY = a2;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS_SIGN;
+        quickDrawObject->frame = a0;
+        quickDrawObject->pixelX = a1;
+        quickDrawObject->pixelY = a2;
     }
 }
 
@@ -204,13 +204,13 @@ void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3)
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
+        struct Task *quickDrawObject = &gTasks[i];
 
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS;
-        t->unk18 = a0;
-        t->pixelX = a1;
-        t->pixelY = a2;
-        t->unk1C = a3;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS;
+        quickDrawObject->unk18 = a0;
+        quickDrawObject->pixelX = a1;
+        quickDrawObject->pixelY = a2;
+        quickDrawObject->unk1C = a3;
     }
 }
 
@@ -220,14 +220,14 @@ void CreateQuickDrawRankLabel(u8 a0, s16 a1, s16 a2, s8 a3)
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
+        struct Task *quickDrawObject = &gTasks[i];
 
-        t->pixelX = a1;
-        t->pixelY = a2;
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_RANK_LABEL;
-        t->unk18 = a0;
-        t->unk1C = a3;
-        t->frame = a0;
+        quickDrawObject->pixelX = a1;
+        quickDrawObject->pixelY = a2;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_RANK_LABEL;
+        quickDrawObject->unk18 = a0;
+        quickDrawObject->unk1C = a3;
+        quickDrawObject->frame = a0;
     }
 }
 
@@ -449,19 +449,19 @@ void CreateQuickDrawDefeatedLabel(void)
 
     if (id != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[id];
 
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        t->unk18 = gUnk_0200B048;
-        t->unk1C = 4;
-        t->unk20 = -1;
-        t->unk24 = 6;
-        t->pixelX = 80;
-        t->pixelY = 16;
-        t->unk28 = -12;
-        t->unk2C = 80;
-        t->unk30 = (s32)gUnk_08755A88;
-        t->unk34 = 0;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->unk18 = gUnk_0200B048;
+        quickDrawObject->unk1C = 4;
+        quickDrawObject->unk20 = -1;
+        quickDrawObject->unk24 = 6;
+        quickDrawObject->pixelX = 80;
+        quickDrawObject->pixelY = 16;
+        quickDrawObject->unk28 = -12;
+        quickDrawObject->unk2C = 80;
+        quickDrawObject->unk30 = (s32)gUnk_08755A88;
+        quickDrawObject->unk34 = 0;
     }
 }
 
@@ -471,19 +471,19 @@ void CreateQuickDrawBestTimeLabel(void)
 
     if (id != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[id];
         s32 v;
         s32 n;
 
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        t->unk1C = 5;
-        t->unk20 = -1;
-        t->pixelX = 172;
-        t->pixelY = 96;
-        t->unk28 = -8;
-        t->unk2C = 0;
-        t->unk30 = (s32)gQuickDrawDigitFrames;
-        t->unk34 = 0;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->unk1C = 5;
+        quickDrawObject->unk20 = -1;
+        quickDrawObject->pixelX = 172;
+        quickDrawObject->pixelY = 96;
+        quickDrawObject->unk28 = -8;
+        quickDrawObject->unk2C = 0;
+        quickDrawObject->unk30 = (s32)gQuickDrawDigitFrames;
+        quickDrawObject->unk34 = 0;
         v = gQuickDrawBestTime;
         n = 0;
         while (v > 9)
@@ -491,24 +491,24 @@ void CreateQuickDrawBestTimeLabel(void)
             v -= 10;
             n++;
         }
-        t->unk24 = n;
-        t->unk18 = v;
+        quickDrawObject->unk24 = n;
+        quickDrawObject->unk18 = v;
     }
 }
 
 void CreateQuickDrawResultsPlayer(void)
 {
-    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 0);
+    s32 quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 0);
 
-    if (id != -1)
+    if (quickDrawObjectSlot != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[quickDrawObjectSlot];
 
-        t->parent = gCurTaskIdx;
-        t->quickDrawObjectPlayerIndex = id;
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_PLAYER;
-        t->quickDrawObjectStartMode = 2;
-        t->unk28 = 0;
+        quickDrawObject->parent = gCurTaskIdx;
+        quickDrawObject->quickDrawObjectPlayerIndex = quickDrawObjectSlot;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_PLAYER;
+        quickDrawObject->quickDrawObjectStartMode = 2;
+        quickDrawObject->unk28 = 0;
     }
 }
 

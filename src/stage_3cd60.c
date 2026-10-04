@@ -2882,17 +2882,17 @@ void PlayerRequestStandOrFall(void)
 
 void LatchPlayerKeys(void)
 {
-    s32 i;
+    s32 player;
 
-    for (i = 0; i < gPlayerCount; i++)
+    for (player = 0; player < gPlayerCount; player++)
     {
-        gLatchedHeldKeys[i] = gPlayerHeldKeys[i];
-        gLatchedPressedKeys[i] = gPlayerPressedKeys[i];
+        gLatchedHeldKeys[player] = gPlayerHeldKeys[player];
+        gLatchedPressedKeys[player] = gPlayerPressedKeys[player];
 
-        if (gPlayerStates[i].unk42 & 64)
+        if (gPlayerStates[player].unk42 & 64)
         {
-            gLatchedPressedKeys[i] = 0;
-            gLatchedHeldKeys[i] = 0;
+            gLatchedPressedKeys[player] = 0;
+            gLatchedHeldKeys[player] = 0;
         }
     }
 }

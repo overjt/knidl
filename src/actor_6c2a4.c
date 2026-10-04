@@ -446,7 +446,7 @@ void Task_ActorSplash(void)
 s16 CreateStarFlash(u8 kind, s32 dx, s32 dy)
 {
     struct Task *t;
-    s32 i;
+    s32 starFlashSlot;
     u16 r;
 
     switch (kind)
@@ -455,11 +455,11 @@ s16 CreateStarFlash(u8 kind, s32 dx, s32 dy)
         r = CreateChildTaskAtOffsetFacing(TASK_STAR_FLASH, (s16)dx, (s16)dy, 0);
         break;
     case 1:
-        i = CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
-        r = i;
-        if ((s16)i != -1)
+        starFlashSlot = CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
+        r = starFlashSlot;
+        if ((s16)starFlashSlot != -1)
         {
-            t = &gTasks[(s16)i];
+            t = &gTasks[(s16)starFlashSlot];
             t->starFlashOnParentOffsetX = gCurTask->facing * dx;
             t->starFlashOnParentOffsetY = dy;
         }
@@ -534,14 +534,14 @@ void StarFlashFollowParent(void)
 s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
 {
     struct Task *p;
-    s32 i;
+    s32 dustTrailSlot;
     u16 r;
 
-    i = CreateChildTaskAtOffsetFacing(TASK_DUST_TRAIL, (s16)c, (s16)d, 0);
-    r = i;
-    if ((s16)i != -1)
+    dustTrailSlot = CreateChildTaskAtOffsetFacing(TASK_DUST_TRAIL, (s16)c, (s16)d, 0);
+    r = dustTrailSlot;
+    if ((s16)dustTrailSlot != -1)
     {
-        p = &gTasks[(s16)i];
+        p = &gTasks[(s16)dustTrailSlot];
         p->dustTrailPuffCount = vx;
         if (flag == 0)
         {

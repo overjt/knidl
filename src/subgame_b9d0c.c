@@ -493,15 +493,15 @@ void QuickDrawFreeze(void)
 
 void CreateQuickDrawTimer(void)
 {
-    s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
+    s32 quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
-    if (idx != -1)
+    if (quickDrawObjectSlot != -1)
     {
-        struct Task *t = &gTasks[idx];
+        struct Task *t = &gTasks[quickDrawObjectSlot];
 
         t->parent = gCurTaskIdx;
         t->variant = QUICK_DRAW_OBJECT_VARIANT_TIMER;
-        gCurTask->quickDrawTimerSlot = idx;
+        gCurTask->quickDrawTimerSlot = quickDrawObjectSlot;
     }
 }
 
@@ -511,17 +511,17 @@ void CreateQuickDrawPlayers(s32 a0)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 0);
+        s32 quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 0);
 
-        if (idx != -1)
+        if (quickDrawObjectSlot != -1)
         {
-            struct Task *t = &gTasks[idx];
+            struct Task *quickDrawObject = &gTasks[quickDrawObjectSlot];
 
-            t->parent = gCurTaskIdx;
-            t->quickDrawObjectPlayerIndex = idx;
-            t->variant = QUICK_DRAW_OBJECT_VARIANT_PLAYER;
-            t->quickDrawObjectStartMode = a0;
-            t->unk28 = 0;
+            quickDrawObject->parent = gCurTaskIdx;
+            quickDrawObject->quickDrawObjectPlayerIndex = quickDrawObjectSlot;
+            quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_PLAYER;
+            quickDrawObject->quickDrawObjectStartMode = a0;
+            quickDrawObject->unk28 = 0;
         }
     }
 }
@@ -543,16 +543,16 @@ void CreateQuickDrawSignal(void)
 
     if (idx != -1)
     {
-        struct Task *t = &gTasks[idx];
+        struct Task *quickDrawObject = &gTasks[idx];
 
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        t->unk18 = 0;
-        t->unk1C = 3;
-        t->unk20 = 16;
-        t->unk24 = -1;
-        t->pixelX = 120;
-        t->pixelY = 88;
-        t->unk34 = 0;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->unk18 = 0;
+        quickDrawObject->unk1C = 3;
+        quickDrawObject->unk20 = 16;
+        quickDrawObject->unk24 = -1;
+        quickDrawObject->pixelX = 120;
+        quickDrawObject->pixelY = 88;
+        quickDrawObject->unk34 = 0;
     }
 }
 

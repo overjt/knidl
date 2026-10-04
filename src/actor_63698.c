@@ -1587,18 +1587,18 @@ s32 CreateChildActorOfSameType(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
 
 s32 CreateBlockStar(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
 {
-    struct Task *t;
-    s32 i;
+    struct Task *blockStar;
+    s32 blockStarSlot;
 
-    i = CreateActor(ACTOR_KIND_ENEMY, 40, TASK_BLOCK_STAR, 0, 0, x, y, 0);
-    if (i != -1)
+    blockStarSlot = CreateActor(ACTOR_KIND_ENEMY, 40, TASK_BLOCK_STAR, 0, 0, x, y, 0);
+    if (blockStarSlot != -1)
     {
-        t = &gTasks[i];
-        t->hitKind = p3;
-        t->hitEffect = p4;
-        t->hitterSlot = p2;
+        blockStar = &gTasks[blockStarSlot];
+        blockStar->hitKind = p3;
+        blockStar->hitEffect = p4;
+        blockStar->hitterSlot = p2;
     }
-    return i;
+    return blockStarSlot;
 }
 
 /* Is the running task inside the 64px-padded camera window? */

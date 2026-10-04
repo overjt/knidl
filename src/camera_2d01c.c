@@ -301,16 +301,16 @@ void BgAnimStop(struct BgAnim *p)
 
 s32 CreateMapEvent(s32 a)
 {
-    s32 id;
+    s32 mapEventSlot;
     struct Task *t;
 
-    id = TaskCreateHighSlot(TASK_MAP_EVENT);
-    if (id != -1)
+    mapEventSlot = TaskCreateHighSlot(TASK_MAP_EVENT);
+    if (mapEventSlot != -1)
     {
-        t = &gTasks[id];
+        t = &gTasks[mapEventSlot];
         t->state = a;
     }
-    return id;
+    return mapEventSlot;
 }
 
 void Task_MapEvent(void)

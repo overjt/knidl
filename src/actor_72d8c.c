@@ -1660,13 +1660,13 @@ void CreateWarpStarTrailStar(int a, int b, int c)
     u16 x = a;
     u16 y = b;
     u8 z = c;
-    s32 id;
+    s32 trailStarSlot;
 
-    id = CreateChildTaskAt(TASK_WARP_STAR_TRAIL_STAR, gCurTask->pixelX, gCurTask->pixelY, 0);
-    gTasks[id].state = z;
+    trailStarSlot = CreateChildTaskAt(TASK_WARP_STAR_TRAIL_STAR, gCurTask->pixelX, gCurTask->pixelY, 0);
+    gTasks[trailStarSlot].state = z;
     if (z != 2)
     {
-        gTasks[id].warpStarTrailStarAngle = x;
-        gTasks[id].warpStarTrailStarSpeed = (s16)y;
+        gTasks[trailStarSlot].warpStarTrailStarAngle = x;
+        gTasks[trailStarSlot].warpStarTrailStarSpeed = (s16)y;
     }
 }

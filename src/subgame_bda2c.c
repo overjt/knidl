@@ -230,11 +230,11 @@ void CreateBombRallyBomb(u32 a)
     s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
-        struct Task *t = &gTasks[i];
+        struct Task *bombRallyObject = &gTasks[i];
 
-        t->parent = gCurTaskIdx;
-        t->variant = BOMB_RALLY_OBJECT_VARIANT_BOMB;
-        t->bombRallyObjectStartSeat = a;
+        bombRallyObject->parent = gCurTaskIdx;
+        bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_BOMB;
+        bombRallyObject->bombRallyObjectStartSeat = a;
     }
 }
 
@@ -243,16 +243,16 @@ void CreateBombRallyBombSmoke(s32 a, s32 b, u16 c, s32 d)
     s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
-        struct Task *t = &gTasks[i];
+        struct Task *bombRallyObject = &gTasks[i];
 
-        t->parent = gCurTaskIdx;
-        t->variant = BOMB_RALLY_OBJECT_VARIANT_BOMB_SMOKE;
-        t->unk18 = (s16)c;
-        t->unk1C = d;
-        t->posX = a + (gCurTask->facing << 19);
-        t->posY = b - 0x40000;
-        t->pixelX = a >> 16;
-        t->pixelY = b >> 16;
+        bombRallyObject->parent = gCurTaskIdx;
+        bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_BOMB_SMOKE;
+        bombRallyObject->unk18 = (s16)c;
+        bombRallyObject->unk1C = d;
+        bombRallyObject->posX = a + (gCurTask->facing << 19);
+        bombRallyObject->posY = b - 0x40000;
+        bombRallyObject->pixelX = a >> 16;
+        bombRallyObject->pixelY = b >> 16;
     }
 }
 
@@ -261,16 +261,16 @@ void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d)
     s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
-        struct Task *t = &gTasks[i];
+        struct Task *bombRallyObject = &gTasks[i];
 
-        t->parent = gCurTaskIdx;
-        t->variant = BOMB_RALLY_OBJECT_VARIANT_STAR_BURST;
-        t->unk74 = c;
-        t->facing = d;
-        t->posX = a;
-        t->posY = b;
-        t->pixelX = a >> 16;
-        t->pixelY = b >> 16;
+        bombRallyObject->parent = gCurTaskIdx;
+        bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_STAR_BURST;
+        bombRallyObject->unk74 = c;
+        bombRallyObject->facing = d;
+        bombRallyObject->posX = a;
+        bombRallyObject->posY = b;
+        bombRallyObject->pixelX = a >> 16;
+        bombRallyObject->pixelY = b >> 16;
     }
 }
 
@@ -279,17 +279,17 @@ void CreateBombRallyBurstStar(u32 a)
     s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
-        struct Task *t = &gTasks[i];
+        struct Task *bombRallyObject = &gTasks[i];
 
-        t->parent = gCurTaskIdx;
-        t->variant = BOMB_RALLY_OBJECT_VARIANT_STAR_BURST;
-        t->unk74 = a;
-        t->facing = gCurTask->facing;
-        t->posX = gCurTask->posX;
-        t->posY = gCurTask->posY;
-        t->pixelX = gCurTask->pixelX;
+        bombRallyObject->parent = gCurTaskIdx;
+        bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_STAR_BURST;
+        bombRallyObject->unk74 = a;
+        bombRallyObject->facing = gCurTask->facing;
+        bombRallyObject->posX = gCurTask->posX;
+        bombRallyObject->posY = gCurTask->posY;
+        bombRallyObject->pixelX = gCurTask->pixelX;
         /* The ROM reads unk48 twice here; unk4A is never sourced. */
-        t->pixelY = gCurTask->pixelX;
+        bombRallyObject->pixelY = gCurTask->pixelX;
     }
 }
 
@@ -311,7 +311,7 @@ void BombRallySeatPlayers(void)
     s32 mask;
     s32 i;
     s32 j;
-    s32 k;
+    s32 bombRallyObjectSlot;
     s32 r;
     s32 slot;
 
@@ -338,14 +338,14 @@ void BombRallySeatPlayers(void)
         for (j = 0; j < 4; j++)
             if (i == gBombRallySeats[j])
                 break;
-        k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-        if (k != -1) {
-            struct Task *t = &gTasks[k];
+        bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+        if (bombRallyObjectSlot != -1) {
+            struct Task *bombRallyObject = &gTasks[bombRallyObjectSlot];
 
-            t->parent = gCurTaskIdx;
-            t->variant = BOMB_RALLY_OBJECT_VARIANT_PLAYER;
-            t->bombRallyObjectPlayerIndex = i;
-            t->bombRallyObjectSeat = j;
+            bombRallyObject->parent = gCurTaskIdx;
+            bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_PLAYER;
+            bombRallyObject->bombRallyObjectPlayerIndex = i;
+            bombRallyObject->bombRallyObjectSeat = j;
         }
     }
 }
@@ -515,30 +515,30 @@ void BombRallyResultsMenuUpdate(void)
 
 void CreateBombRallyResultsPoses(void)
 {
-    struct Task *t;
+    struct Task *bombRallyObject;
     s32 i;
-    s32 k;
+    s32 bombRallyObjectSlot;
 
     if (gPlayerCount == 1) {
-        k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-        if (k != -1) {
-            t = &gTasks[k];
-            t->parent = gCurTaskIdx;
-            t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
-            t->unk18 = 0;
-            t->unk1C = 0;
-            t->unk20 = 0;
+        bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+        if (bombRallyObjectSlot != -1) {
+            bombRallyObject = &gTasks[bombRallyObjectSlot];
+            bombRallyObject->parent = gCurTaskIdx;
+            bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
+            bombRallyObject->unk18 = 0;
+            bombRallyObject->unk1C = 0;
+            bombRallyObject->unk20 = 0;
         }
     } else {
         for (i = 0; i <= 3; i++) {
-            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-            if (k != -1) {
-                t = &gTasks[k];
-                t->parent = gCurTaskIdx;
-                t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
-                t->unk18 = i;
-                t->unk1C = 0;
-                t->unk20 = gBombRallySeats[i];
+            bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+            if (bombRallyObjectSlot != -1) {
+                bombRallyObject = &gTasks[bombRallyObjectSlot];
+                bombRallyObject->parent = gCurTaskIdx;
+                bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
+                bombRallyObject->unk18 = i;
+                bombRallyObject->unk1C = 0;
+                bombRallyObject->unk20 = gBombRallySeats[i];
             }
         }
     }
@@ -546,30 +546,30 @@ void CreateBombRallyResultsPoses(void)
 
 void CreateBombRallyLivesIcons(void)
 {
-    struct Task *t;
+    struct Task *bombRallyObject;
     s32 i;
-    s32 k;
+    s32 bombRallyObjectSlot;
 
     if (gPlayerCount == 1) {
-        k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-        if (k != -1) {
-            t = &gTasks[k];
-            t->parent = gCurTaskIdx;
-            t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
-            t->unk18 = 0;
-            t->unk1C = 2;
-            t->unk20 = 0;
+        bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+        if (bombRallyObjectSlot != -1) {
+            bombRallyObject = &gTasks[bombRallyObjectSlot];
+            bombRallyObject->parent = gCurTaskIdx;
+            bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
+            bombRallyObject->unk18 = 0;
+            bombRallyObject->unk1C = 2;
+            bombRallyObject->unk20 = 0;
         }
     } else {
         for (i = 0; i <= 3; i++) {
-            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-            if (k != -1) {
-                t = &gTasks[k];
-                t->parent = gCurTaskIdx;
-                t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
-                t->unk18 = i;
-                t->unk1C = 2;
-                t->unk20 = gBombRallySeats[i];
+            bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+            if (bombRallyObjectSlot != -1) {
+                bombRallyObject = &gTasks[bombRallyObjectSlot];
+                bombRallyObject->parent = gCurTaskIdx;
+                bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
+                bombRallyObject->unk18 = i;
+                bombRallyObject->unk1C = 2;
+                bombRallyObject->unk20 = gBombRallySeats[i];
             }
         }
     }
@@ -577,31 +577,31 @@ void CreateBombRallyLivesIcons(void)
 
 void CreateBombRallyPlaceLabels(void)
 {
-    struct Task *t;
+    struct Task *bombRallyObject;
     s32 i;
-    s32 k;
+    s32 bombRallyObjectSlot;
 
     if (gPrevGameState != GAME_STATE_HUB) {
         if (gPlayerCount == 1) {
-            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-            if (k != -1) {
-                t = &gTasks[k];
-                t->parent = gCurTaskIdx;
-                t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
-                t->unk18 = 0;
-                t->unk1C = 1;
-                t->unk20 = 0;
+            bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+            if (bombRallyObjectSlot != -1) {
+                bombRallyObject = &gTasks[bombRallyObjectSlot];
+                bombRallyObject->parent = gCurTaskIdx;
+                bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
+                bombRallyObject->unk18 = 0;
+                bombRallyObject->unk1C = 1;
+                bombRallyObject->unk20 = 0;
             }
         } else {
             for (i = 0; i <= 3; i++) {
-                k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-                if (k != -1) {
-                    t = &gTasks[k];
-                    t->parent = gCurTaskIdx;
-                    t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
-                    t->unk18 = i;
-                    t->unk1C = 1;
-                    t->unk20 = gBombRallySeats[i];
+                bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+                if (bombRallyObjectSlot != -1) {
+                    bombRallyObject = &gTasks[bombRallyObjectSlot];
+                    bombRallyObject->parent = gCurTaskIdx;
+                    bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
+                    bombRallyObject->unk18 = i;
+                    bombRallyObject->unk1C = 1;
+                    bombRallyObject->unk20 = gBombRallySeats[i];
                 }
             }
         }
@@ -610,20 +610,20 @@ void CreateBombRallyPlaceLabels(void)
 
 void CreateBombRallyContinueItems(u32 a)
 {
-    struct Task *t;
+    struct Task *bombRallyObject;
     s32 i;
-    s32 k;
+    s32 bombRallyObjectSlot;
 
     if (gLocalPlayer == 0) {
         for (i = 0; i <= 1; i++) {
-            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-            if (k != -1) {
-                t = &gTasks[k];
-                t->parent = gCurTaskIdx;
-                t->variant = BOMB_RALLY_OBJECT_VARIANT_MENU_ITEM;
-                t->unk74 = 0;
-                t->unk18 = i;
-                t->unk1C = a;
+            bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+            if (bombRallyObjectSlot != -1) {
+                bombRallyObject = &gTasks[bombRallyObjectSlot];
+                bombRallyObject->parent = gCurTaskIdx;
+                bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_MENU_ITEM;
+                bombRallyObject->unk74 = 0;
+                bombRallyObject->unk18 = i;
+                bombRallyObject->unk1C = a;
             }
         }
     }
@@ -631,20 +631,20 @@ void CreateBombRallyContinueItems(u32 a)
 
 void CreateBombRallyLevelItems(u32 a)
 {
-    struct Task *t;
+    struct Task *bombRallyObject;
     s32 i;
-    s32 k;
+    s32 bombRallyObjectSlot;
 
     if (gLocalPlayer == 0) {
         for (i = 0; i <= 2; i++) {
-            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
-            if (k != -1) {
-                t = &gTasks[k];
-                t->parent = gCurTaskIdx;
-                t->variant = BOMB_RALLY_OBJECT_VARIANT_MENU_ITEM;
-                t->unk74 = 1;
-                t->unk18 = i;
-                t->unk1C = a;
+            bombRallyObjectSlot = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
+            if (bombRallyObjectSlot != -1) {
+                bombRallyObject = &gTasks[bombRallyObjectSlot];
+                bombRallyObject->parent = gCurTaskIdx;
+                bombRallyObject->variant = BOMB_RALLY_OBJECT_VARIANT_MENU_ITEM;
+                bombRallyObject->unk74 = 1;
+                bombRallyObject->unk18 = i;
+                bombRallyObject->unk1C = a;
             }
         }
     }

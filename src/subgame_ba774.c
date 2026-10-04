@@ -125,15 +125,15 @@ void CreateQuickDrawRedrawSign(void)
 
     if (i != -1)
     {
-        struct Task *t = &gTasks[i];
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
-        t->unk18 = 0;
-        t->unk1C = 1;
-        t->unk20 = 120;
-        t->unk24 = -1;
-        t->pixelX = 88;
-        t->pixelY = 24;
-        t->unk34 = 0;
+        struct Task *quickDrawObject = &gTasks[i];
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->unk18 = 0;
+        quickDrawObject->unk1C = 1;
+        quickDrawObject->unk20 = 120;
+        quickDrawObject->unk24 = -1;
+        quickDrawObject->pixelX = 88;
+        quickDrawObject->pixelY = 24;
+        quickDrawObject->unk34 = 0;
     }
 }
 
@@ -477,19 +477,19 @@ void QuickDrawFalseStartVsCpu(s32 a0)
 
 void CreateQuickDrawOpponent(void)
 {
-    s32 i;
-    struct Task *t;
+    s32 quickDrawObjectSlot;
+    struct Task *quickDrawObject;
 
     QuickDrawLoadOpponentGraphics(0);
-    i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
-    if (i != -1)
+    quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
+    if (quickDrawObjectSlot != -1)
     {
-        t = &gTasks[i];
-        t->parent = gCurTaskIdx;
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_OPPONENT;
-        t->quickDrawObjectLevel = gSubGameLevel;
-        t->u76.unk76 = 0;
-        gCurTask->quickDrawOpponentSlot = i;
+        quickDrawObject = &gTasks[quickDrawObjectSlot];
+        quickDrawObject->parent = gCurTaskIdx;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_OPPONENT;
+        quickDrawObject->quickDrawObjectLevel = gSubGameLevel;
+        quickDrawObject->u76.unk76 = 0;
+        gCurTask->quickDrawOpponentSlot = quickDrawObjectSlot;
     }
 }
 

@@ -95,16 +95,16 @@ void EndingStarRodReturnLoadGraphics(void)
 void CreateEndingStarRodReturnObjects(void)
 {
     s32 i;
-    s32 id;
+    s32 starRodReturnSlot;
     s32 v;
     struct Task *t;
 
     for (i = 0; v = gEndingStarRodReturnObjectVariants[i], (s16)gEndingStarRodReturnObjectVariants[i] <= 11; i++) {
-        id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
-        if (id == -1)
+        starRodReturnSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
+        if (starRodReturnSlot == -1)
             for (;;)
                 ;
-        t = &gTasks[id];
+        t = &gTasks[starRodReturnSlot];
         t->variant = v;
     }
 }

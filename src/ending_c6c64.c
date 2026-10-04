@@ -73,16 +73,16 @@ void EndingEpilogueLoadGraphics(void)
 void CreateEndingEpilogueObjects(void)
 {
     s32 i;
-    s32 id;
+    s32 endingEpilogueSlot;
     s32 v;
     struct Task *t;
 
     for (i = 0; v = gEndingEpilogueObjectVariants[i], (s16)gEndingEpilogueObjectVariants[i] <= 10; i++) {
-        id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
-        if (id == -1)
+        endingEpilogueSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
+        if (endingEpilogueSlot == -1)
             for (;;)
                 ;
-        t = &gTasks[id];
+        t = &gTasks[endingEpilogueSlot];
         t->variant = v;
     }
 }

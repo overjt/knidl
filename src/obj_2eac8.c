@@ -22,23 +22,23 @@ void PlaySfx(u32 a);
 
 s32 CreateArenaDoorSign(s32 x, s32 y, s32 a)
 {
-    s32 id;
-    struct Task *t;
+    s32 arenaDoorSignSlot;
+    struct Task *arenaDoorSign;
 
-    id = TaskCreateInRange(TASK_ARENA_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    arenaDoorSignSlot = TaskCreateInRange(TASK_ARENA_DOOR_SIGN, 32, 63);
+    if (arenaDoorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 28;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->doorObjectKind = 1;
-        t->u76.doorIndex = a;
+        arenaDoorSign = &gTasks[arenaDoorSignSlot];
+        arenaDoorSign->pixelX = x;
+        arenaDoorSign->posX = arenaDoorSign->pixelX << 16;
+        arenaDoorSign->pixelY = y - 28;
+        arenaDoorSign->posY = arenaDoorSign->pixelY << 16;
+        arenaDoorSign->velX = x;
+        arenaDoorSign->velY = y;
+        arenaDoorSign->doorObjectKind = 1;
+        arenaDoorSign->u76.doorIndex = a;
     }
-    return id;
+    return arenaDoorSignSlot;
 }
 
 void Task_ArenaDoorSign(void)
@@ -85,23 +85,23 @@ void sub_0802eba4(void)
 
 s32 CreateBossDoorSign(s32 x, s32 y, s32 a)
 {
-    s32 id;
-    struct Task *t;
+    s32 bossDoorSignSlot;
+    struct Task *bossDoorSign;
 
-    id = TaskCreateInRange(TASK_BOSS_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    bossDoorSignSlot = TaskCreateInRange(TASK_BOSS_DOOR_SIGN, 32, 63);
+    if (bossDoorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 28;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->doorObjectKind = 2;
-        t->u76.doorIndex = a;
+        bossDoorSign = &gTasks[bossDoorSignSlot];
+        bossDoorSign->pixelX = x;
+        bossDoorSign->posX = bossDoorSign->pixelX << 16;
+        bossDoorSign->pixelY = y - 28;
+        bossDoorSign->posY = bossDoorSign->pixelY << 16;
+        bossDoorSign->velX = x;
+        bossDoorSign->velY = y;
+        bossDoorSign->doorObjectKind = 2;
+        bossDoorSign->u76.doorIndex = a;
     }
-    return id;
+    return bossDoorSignSlot;
 }
 
 void Task_BossDoorSign(void)
@@ -156,20 +156,20 @@ void BossDoorSignUpdate(void)
 
 s32 CreateDoorOpening(s32 x, s32 y, s32 a)
 {
-    s32 id;
-    struct Task *t;
+    s32 doorOpeningSlot;
+    struct Task *doorOpening;
 
-    id = TaskCreateInRange(TASK_DOOR_OPENING, 32, 63);
-    if (id != -1)
+    doorOpeningSlot = TaskCreateInRange(TASK_DOOR_OPENING, 32, 63);
+    if (doorOpeningSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->pixelY = y;
-        t->posX = t->pixelX << 16;
-        t->posY = t->pixelY << 16;
-        t->doorOpeningKind = a;
+        doorOpening = &gTasks[doorOpeningSlot];
+        doorOpening->pixelX = x;
+        doorOpening->pixelY = y;
+        doorOpening->posX = doorOpening->pixelX << 16;
+        doorOpening->posY = doorOpening->pixelY << 16;
+        doorOpening->doorOpeningKind = a;
     }
-    return id;
+    return doorOpeningSlot;
 }
 
 void Task_DoorOpening(void)
@@ -247,21 +247,21 @@ void sub_0802ee88(void)
 
 s32 CreateStageClearFlag(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 stageClearFlagSlot;
+    struct Task *stageClearFlag;
 
-    id = TaskCreateInRange(TASK_STAGE_CLEAR_FLAG, 32, 63);
-    if (id != -1)
+    stageClearFlagSlot = TaskCreateInRange(TASK_STAGE_CLEAR_FLAG, 32, 63);
+    if (stageClearFlagSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x + 26;
-        t->pixelY = y;
-        t->posX = t->pixelX << 16;
-        t->posY = t->pixelY << 16;
-        t->layer = a;
-        t->spriteFlags = b;
+        stageClearFlag = &gTasks[stageClearFlagSlot];
+        stageClearFlag->pixelX = x + 26;
+        stageClearFlag->pixelY = y;
+        stageClearFlag->posX = stageClearFlag->pixelX << 16;
+        stageClearFlag->posY = stageClearFlag->pixelY << 16;
+        stageClearFlag->layer = a;
+        stageClearFlag->spriteFlags = b;
     }
-    return id;
+    return stageClearFlagSlot;
 }
 
 void Task_StageClearFlag(void)
@@ -288,24 +288,24 @@ void Task_StageClearFlag(void)
 
 s32 CreateQuickDrawDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 doorSignSlot;
+    struct Task *doorSign;
 
-    id = TaskCreateInRange(TASK_QUICK_DRAW_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    doorSignSlot = TaskCreateInRange(TASK_QUICK_DRAW_DOOR_SIGN, 32, 63);
+    if (doorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 25;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->quickDrawDoorSignAnimated = a;
-        t->doorObjectKind = 1;
-        t->u76.doorIndex = b;
+        doorSign = &gTasks[doorSignSlot];
+        doorSign->pixelX = x;
+        doorSign->posX = doorSign->pixelX << 16;
+        doorSign->pixelY = y - 25;
+        doorSign->posY = doorSign->pixelY << 16;
+        doorSign->velX = x;
+        doorSign->velY = y;
+        doorSign->quickDrawDoorSignAnimated = a;
+        doorSign->doorObjectKind = 1;
+        doorSign->u76.doorIndex = b;
     }
-    return id;
+    return doorSignSlot;
 }
 
 void Task_QuickDrawDoorSign(void)
@@ -372,24 +372,24 @@ void sub_0802f1dc(void)
 
 s32 CreateBombRallyDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 doorSignSlot;
+    struct Task *doorSign;
 
-    id = TaskCreateInRange(TASK_BOMB_RALLY_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    doorSignSlot = TaskCreateInRange(TASK_BOMB_RALLY_DOOR_SIGN, 32, 63);
+    if (doorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 25;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->bombRallyDoorSignAnimated = a;
-        t->doorObjectKind = 1;
-        t->u76.doorIndex = b;
+        doorSign = &gTasks[doorSignSlot];
+        doorSign->pixelX = x;
+        doorSign->posX = doorSign->pixelX << 16;
+        doorSign->pixelY = y - 25;
+        doorSign->posY = doorSign->pixelY << 16;
+        doorSign->velX = x;
+        doorSign->velY = y;
+        doorSign->bombRallyDoorSignAnimated = a;
+        doorSign->doorObjectKind = 1;
+        doorSign->u76.doorIndex = b;
     }
-    return id;
+    return doorSignSlot;
 }
 
 void Task_BombRallyDoorSign(void)
@@ -438,24 +438,24 @@ void sub_0802f2fc(void)
 
 s32 CreateAirGrindDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 doorSignSlot;
+    struct Task *doorSign;
 
-    id = TaskCreateInRange(TASK_AIR_GRIND_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    doorSignSlot = TaskCreateInRange(TASK_AIR_GRIND_DOOR_SIGN, 32, 63);
+    if (doorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 25;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->airGrindDoorSignAnimated = a;
-        t->doorObjectKind = 1;
-        t->u76.doorIndex = b;
+        doorSign = &gTasks[doorSignSlot];
+        doorSign->pixelX = x;
+        doorSign->posX = doorSign->pixelX << 16;
+        doorSign->pixelY = y - 25;
+        doorSign->posY = doorSign->pixelY << 16;
+        doorSign->velX = x;
+        doorSign->velY = y;
+        doorSign->airGrindDoorSignAnimated = a;
+        doorSign->doorObjectKind = 1;
+        doorSign->u76.doorIndex = b;
     }
-    return id;
+    return doorSignSlot;
 }
 
 void Task_AirGrindDoorSign(void)
@@ -500,23 +500,23 @@ void sub_0802f400(void)
 
 s32 CreateMuseumDoorSign(s32 x, s32 y, s32 a)
 {
-    s32 id;
-    struct Task *t;
+    s32 museumDoorSignSlot;
+    struct Task *museumDoorSign;
 
-    id = TaskCreateInRange(TASK_MUSEUM_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    museumDoorSignSlot = TaskCreateInRange(TASK_MUSEUM_DOOR_SIGN, 32, 63);
+    if (museumDoorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 28;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->doorObjectKind = 1;
-        t->u76.doorIndex = a;
+        museumDoorSign = &gTasks[museumDoorSignSlot];
+        museumDoorSign->pixelX = x;
+        museumDoorSign->posX = museumDoorSign->pixelX << 16;
+        museumDoorSign->pixelY = y - 28;
+        museumDoorSign->posY = museumDoorSign->pixelY << 16;
+        museumDoorSign->velX = x;
+        museumDoorSign->velY = y;
+        museumDoorSign->doorObjectKind = 1;
+        museumDoorSign->u76.doorIndex = a;
     }
-    return id;
+    return museumDoorSignSlot;
 }
 
 void Task_MuseumDoorSign(void)
@@ -538,69 +538,69 @@ void Task_MuseumDoorSign(void)
 
 s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 stageDoorSignSlot;
+    struct Task *stageDoorSign;
 
-    id = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    stageDoorSignSlot = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
+    if (stageDoorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 24;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->stageDoorSignIndex = a;
-        t->stageDoorSignAnimated = 1;
-        t->doorObjectKind = 2;
-        t->u76.doorIndex = b;
+        stageDoorSign = &gTasks[stageDoorSignSlot];
+        stageDoorSign->pixelX = x;
+        stageDoorSign->posX = stageDoorSign->pixelX << 16;
+        stageDoorSign->pixelY = y - 24;
+        stageDoorSign->posY = stageDoorSign->pixelY << 16;
+        stageDoorSign->velX = x;
+        stageDoorSign->velY = y;
+        stageDoorSign->stageDoorSignIndex = a;
+        stageDoorSign->stageDoorSignAnimated = 1;
+        stageDoorSign->doorObjectKind = 2;
+        stageDoorSign->u76.doorIndex = b;
     }
-    return id;
+    return stageDoorSignSlot;
 }
 
 s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 stageDoorSignSlot;
+    struct Task *stageDoorSign;
 
-    id = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    stageDoorSignSlot = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
+    if (stageDoorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 24;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->stageDoorSignIndex = a;
-        t->stageDoorSignAnimated = 0;
-        t->doorObjectKind = 2;
-        t->u76.doorIndex = b;
+        stageDoorSign = &gTasks[stageDoorSignSlot];
+        stageDoorSign->pixelX = x;
+        stageDoorSign->posX = stageDoorSign->pixelX << 16;
+        stageDoorSign->pixelY = y - 24;
+        stageDoorSign->posY = stageDoorSign->pixelY << 16;
+        stageDoorSign->velX = x;
+        stageDoorSign->velY = y;
+        stageDoorSign->stageDoorSignIndex = a;
+        stageDoorSign->stageDoorSignAnimated = 0;
+        stageDoorSign->doorObjectKind = 2;
+        stageDoorSign->u76.doorIndex = b;
     }
-    return id;
+    return stageDoorSignSlot;
 }
 
 s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
 {
-    s32 id;
-    struct Task *t;
+    s32 stageDoorSignSlot;
+    struct Task *stageDoorSign;
 
-    id = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
-    if (id != -1)
+    stageDoorSignSlot = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
+    if (stageDoorSignSlot != -1)
     {
-        t = &gTasks[id];
-        t->pixelX = x;
-        t->posX = t->pixelX << 16;
-        t->pixelY = y - 24;
-        t->posY = t->pixelY << 16;
-        t->velX = x;
-        t->velY = y;
-        t->stageDoorSignIndex = a;
-        t->stageDoorSignAnimated = 0;
-        t->doorObjectKind = 0;
-        t->u76.doorIndex = b;
+        stageDoorSign = &gTasks[stageDoorSignSlot];
+        stageDoorSign->pixelX = x;
+        stageDoorSign->posX = stageDoorSign->pixelX << 16;
+        stageDoorSign->pixelY = y - 24;
+        stageDoorSign->posY = stageDoorSign->pixelY << 16;
+        stageDoorSign->velX = x;
+        stageDoorSign->velY = y;
+        stageDoorSign->stageDoorSignIndex = a;
+        stageDoorSign->stageDoorSignAnimated = 0;
+        stageDoorSign->doorObjectKind = 0;
+        stageDoorSign->u76.doorIndex = b;
     }
-    return id;
+    return stageDoorSignSlot;
 }

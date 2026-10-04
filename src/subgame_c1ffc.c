@@ -43,45 +43,45 @@ void AirGrindStepScript(void);                                  /* step the gAir
 void CreateAirGrindRacers(void)
 {
     s32 i;
-    s32 id;
-    struct Task *t;
+    s32 airGrindObjectSlot;
+    struct Task *airGrindObject;
 
     for (i = 0; i < 4; i++) {
-        id = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 0);
-        if (id != -1) {
-            t = &gTasks[id];
-            t->unk18 = id;
-            t->unk1C = i;
-            t->variant = AIR_GRIND_OBJECT_VARIANT_RACER;
+        airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 0);
+        if (airGrindObjectSlot != -1) {
+            airGrindObject = &gTasks[airGrindObjectSlot];
+            airGrindObject->unk18 = airGrindObjectSlot;
+            airGrindObject->unk1C = i;
+            airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_RACER;
         }
     }
 }
 
 void CreateAirGrindScenery(s32 unused)
 {
-    s32 id;
+    s32 airGrindObjectSlot;
     struct Task *t;
 
-    id = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
-    if (id != -1) {
-        t = &gTasks[id];
+    airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
+    if (airGrindObjectSlot != -1) {
+        t = &gTasks[airGrindObjectSlot];
         t->variant = AIR_GRIND_OBJECT_VARIANT_SCENERY;
-        gAirGrindPtr->sceneryTaskSlot = id;
+        gAirGrindPtr->sceneryTaskSlot = airGrindObjectSlot;
     }
 }
 
 void CreateAirGrindEffect(s32 a, s32 b, s32 c)
 {
-    s32 id;
-    struct Task *t;
+    s32 airGrindObjectSlot;
+    struct Task *airGrindObject;
 
-    id = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
-    if (id != -1) {
-        t = &gTasks[id];
-        t->unk18 = b;
-        t->unk1C = a;
-        t->variant = AIR_GRIND_OBJECT_VARIANT_EFFECT;
-        t->unk20 = c;
+    airGrindObjectSlot = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
+    if (airGrindObjectSlot != -1) {
+        airGrindObject = &gTasks[airGrindObjectSlot];
+        airGrindObject->unk18 = b;
+        airGrindObject->unk1C = a;
+        airGrindObject->variant = AIR_GRIND_OBJECT_VARIANT_EFFECT;
+        airGrindObject->unk20 = c;
     }
 }
 

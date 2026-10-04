@@ -188,15 +188,15 @@ void Task_LandingDust(void)
 
 s32 CreateDustBurst(s16 a, s16 b)
 {
-    struct Task *p;
-    s32 i;
+    struct Task *dustBurst;
+    s32 dustBurstSlot;
 
-    i = CreateChildTaskAt(TASK_DUST_BURST, 0, 0, 0);
-    if (i != -1)
+    dustBurstSlot = CreateChildTaskAt(TASK_DUST_BURST, 0, 0, 0);
+    if (dustBurstSlot != -1)
     {
-        p = &gTasks[i];
-        p->dustBurstOffsetX = a;
-        p->dustBurstOffsetY = b;
+        dustBurst = &gTasks[dustBurstSlot];
+        dustBurst->dustBurstOffsetX = a;
+        dustBurst->dustBurstOffsetY = b;
     }
-    return i;
+    return dustBurstSlot;
 }

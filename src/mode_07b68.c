@@ -32,7 +32,7 @@ void LinkMain1(u8 *cmd, u16 *send, u16 *recv);
 
 s32 SendLinkBlockAndVerify(u32 *src, u32 *dst, u32 size)
 {
-    s32 i;
+    s32 player;
     s32 n;
     s32 m;
 
@@ -56,10 +56,10 @@ s32 SendLinkBlockAndVerify(u32 *src, u32 *dst, u32 size)
     m = 0;
     n = 0;
     do {
-        for (i = 0; i < 4; i++) {
-            if (gRecvCmds[0][i] == 0x5503) {
+        for (player = 0; player < 4; player++) {
+            if (gRecvCmds[0][player] == 0x5503) {
                 n++;
-                if (gRecvCmds[1][i] != 0)
+                if (gRecvCmds[1][player] != 0)
                     m++;
             }
         }

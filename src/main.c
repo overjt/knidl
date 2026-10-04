@@ -23,7 +23,7 @@
 
 void AgbMain(void)
 {
-    s32 i;
+    s32 player;
 
     gGameState = GAME_STATE_RESET;
     InitSaveSlots();
@@ -115,9 +115,9 @@ void AgbMain(void)
             SubGameMain();
             break;
         case GAME_STATE_BOSS_ENDURANCE:
-            for (i = 0; i < 4; i++) {
-                gPlayerLives[i] = 1;
-                gPlayerHealth[i] = 0;
+            for (player = 0; player < 4; player++) {
+                gPlayerLives[player] = 1;
+                gPlayerHealth[player] = 0;
             }
             ResetPlayTime();
             BossEnduranceSetStart();

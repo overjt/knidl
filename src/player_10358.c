@@ -25,14 +25,14 @@ void TaskSetFrame(s32 a);
 
 s32 CreateCutsceneActor(s32 a, s32 b)
 {
-    s32 i;
+    s32 cutsceneActorSlot;
     struct Task *t;
     struct Task *dst;
 
-    i = TaskCreateInRange(TASK_CUTSCENE_ACTOR, b, 62);
-    if (i != -1)
+    cutsceneActorSlot = TaskCreateInRange(TASK_CUTSCENE_ACTOR, b, 62);
+    if (cutsceneActorSlot != -1)
     {
-        dst = &gTasks[i];
+        dst = &gTasks[cutsceneActorSlot];
         t = gCurTask;
         dst->pixelX = t->pixelX;
         dst->pixelY = t->pixelY;
@@ -44,7 +44,7 @@ s32 CreateCutsceneActor(s32 a, s32 b)
         if (gCutsceneSheets[*(s8 *)&gCurLevel] != 0)
             dst->tileWord = 0x8810;
     }
-    return i;
+    return cutsceneActorSlot;
 }
 
 void CutsceneCheckSkip(void);   /* hdr.c lacks this in-module prototype */

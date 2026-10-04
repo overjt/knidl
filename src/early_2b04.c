@@ -78,7 +78,7 @@ void FillSendCmd(void)
 
 void UpdatePlayerKeys(void)
 {
-    s32 i;
+    s32 player;
     s32 t;
     u32 tries;
     u32 old;
@@ -120,20 +120,20 @@ void UpdatePlayerKeys(void)
         }
     }
 
-    for (i = 0; i < 4; i++) {
-        t = gRecvCmds[0][i] & 0xFF00;
+    for (player = 0; player < 4; player++) {
+        t = gRecvCmds[0][player] & 0xFF00;
         if (t != 0x6600) {
             if (t > 0x6600) {
                 if (t == 0x8800) {
-                    gPlayerHeldKeys[i] = gRecvCmds[1][i];
-                    gPlayerPressedKeys[i] = gRecvCmds[2][i];
+                    gPlayerHeldKeys[player] = gRecvCmds[1][player];
+                    gPlayerPressedKeys[player] = gRecvCmds[2][player];
                 }
             }
         } else {
             ReceiveLinkSaveSlots();
         }
-        if ((gRecvCmds[0][i] & 0xFF00) != 0x8800)
-            gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
+        if ((gRecvCmds[0][player] & 0xFF00) != 0x8800)
+            gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = 0;
     }
 }
 

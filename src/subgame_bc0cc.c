@@ -276,42 +276,42 @@ void sub_080bc460(void)
 
 void CreateQuickDrawFalseStartMark(void)
 {
-    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
+    s32 quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
-    if (id != -1)
+    if (quickDrawObjectSlot != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[quickDrawObjectSlot];
         struct Task *p;
 
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
         p = gCurTask;
-        t->unk18 = p->unk20;
-        t->unk1C = 6;
-        t->unk20 = -1;
-        t->unk24 = -1;
-        t->pixelX = p->pixelX + gUnk_08756448[p->unk20] * p->facing;
-        t->pixelY = p->pixelY - gUnk_08756450[p->unk20];
-        t->unk34 = 0;
+        quickDrawObject->unk18 = p->unk20;
+        quickDrawObject->unk1C = 6;
+        quickDrawObject->unk20 = -1;
+        quickDrawObject->unk24 = -1;
+        quickDrawObject->pixelX = p->pixelX + gUnk_08756448[p->unk20] * p->facing;
+        quickDrawObject->pixelY = p->pixelY - gUnk_08756450[p->unk20];
+        quickDrawObject->unk34 = 0;
     }
-    gCurTask->quickDrawObjectFalseStartMarkSlot = id;
+    gCurTask->quickDrawObjectFalseStartMarkSlot = quickDrawObjectSlot;
 }
 
 void CreateQuickDrawSweatDrop(void)
 {
-    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
+    s32 quickDrawObjectSlot = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
-    if (id != -1)
+    if (quickDrawObjectSlot != -1)
     {
-        struct Task *t = &gTasks[id];
+        struct Task *quickDrawObject = &gTasks[quickDrawObjectSlot];
         struct Task *p;
 
-        t->variant = QUICK_DRAW_OBJECT_VARIANT_SWEAT_DROP;
+        quickDrawObject->variant = QUICK_DRAW_OBJECT_VARIANT_SWEAT_DROP;
         p = gCurTask;
-        t->unk18 = p->unk20;
-        t->pixelX = p->pixelX + gUnk_08756458[p->unk20];
-        t->pixelY = p->pixelY - gUnk_08756460[p->unk20];
+        quickDrawObject->unk18 = p->unk20;
+        quickDrawObject->pixelX = p->pixelX + gUnk_08756458[p->unk20];
+        quickDrawObject->pixelY = p->pixelY - gUnk_08756460[p->unk20];
     }
-    gCurTask->quickDrawObjectSweatDropSlot = id;
+    gCurTask->quickDrawObjectSweatDropSlot = quickDrawObjectSlot;
 }
 
 void CreateQuickDrawPlayerTag(void)
@@ -323,7 +323,7 @@ void CreateQuickDrawPlayerTag(void)
         struct Task *t = gCurTask;
         s16 x = t->pixelX - 24;
         s16 y = t->pixelY - 32;
-        struct Task *n;
+        struct Task *quickDrawObject;
         struct Task *u;
 
         /* The ROM keeps a dead `ldrsh` of t->unk48 here (same artifact as
@@ -338,23 +338,23 @@ void CreateQuickDrawPlayerTag(void)
             x = x;
             break;
         }
-        n = &gTasks[idx];
-        n->variant = 1;
+        quickDrawObject = &gTasks[idx];
+        quickDrawObject->variant = 1;
         u = gCurTask;
-        n->unk18 = u->quickDrawObjectPlayerIndex;
-        n->unk1C = 0;
-        n->unk20 = 60;
-        n->unk24 = -1;
-        n->pixelX = x;
-        n->pixelY = y;
+        quickDrawObject->unk18 = u->quickDrawObjectPlayerIndex;
+        quickDrawObject->unk1C = 0;
+        quickDrawObject->unk20 = 60;
+        quickDrawObject->unk24 = -1;
+        quickDrawObject->pixelX = x;
+        quickDrawObject->pixelY = y;
         if (gLocalPlayer == u->quickDrawObjectPlayerIndex)
         {
-            n->unk18 = 4;
-            n->pixelY = u->pixelY - 32;
-            n->pixelX += 12;
+            quickDrawObject->unk18 = 4;
+            quickDrawObject->pixelY = u->pixelY - 32;
+            quickDrawObject->pixelX += 12;
         }
-        n->unk34 = 0;
-        n->layer = gCurTask->layer - 8;
+        quickDrawObject->unk34 = 0;
+        quickDrawObject->layer = gCurTask->layer - 8;
     }
     gCurTask->quickDrawObjectArriveDelay = 60;
 }
@@ -368,7 +368,7 @@ void CreateQuickDrawWinCountLabel(void)
         struct Task *t = gCurTask;
         s16 x = t->pixelX - 24;
         s16 y = t->pixelY - 32;
-        struct Task *n;
+        struct Task *quickDrawObject;
 
         /* Dead `ldrsh` of t->unk48 in the ROM: a switch whose arms are all
            no-ops (same artifact as QuickDrawPlaceRankLabel). */
@@ -387,14 +387,14 @@ void CreateQuickDrawWinCountLabel(void)
             x = x;
             break;
         }
-        n = &gTasks[idx];
-        n->variant = 1;
-        n->unk18 = gQuickDrawWins[gCurTask->quickDrawObjectPlayerIndex];
-        n->unk1C = 2;
-        n->unk20 = 60;
-        n->unk24 = -1;
-        n->pixelX = x + 4;
-        n->pixelY = y;
+        quickDrawObject = &gTasks[idx];
+        quickDrawObject->variant = 1;
+        quickDrawObject->unk18 = gQuickDrawWins[gCurTask->quickDrawObjectPlayerIndex];
+        quickDrawObject->unk1C = 2;
+        quickDrawObject->unk20 = 60;
+        quickDrawObject->unk24 = -1;
+        quickDrawObject->pixelX = x + 4;
+        quickDrawObject->pixelY = y;
     }
     gCurTask->quickDrawObjectArriveDelay = 60;
 }
@@ -973,7 +973,7 @@ void CreateQuickDrawOpponentTag(void)
         struct Task *t = gCurTask;
         s16 x = t->pixelX - 24;
         s16 y = t->pixelY - 32;
-        struct Task *n;
+        struct Task *quickDrawObject;
 
         /* Dead `ldrsh` of t->unk48 in the ROM: a switch whose arms are all
            no-ops (same artifact as QuickDrawPlaceRankLabel/CreateQuickDrawPlayerTag/CreateQuickDrawWinCountLabel).
@@ -992,11 +992,11 @@ void CreateQuickDrawOpponentTag(void)
             x = x;
             break;
         }
-        n = &gTasks[idx];
-        n->variant = 5;
-        n->u76.unk76 = 1;
-        n->pixelX = x;
-        n->pixelY = y;
+        quickDrawObject = &gTasks[idx];
+        quickDrawObject->variant = 5;
+        quickDrawObject->u76.unk76 = 1;
+        quickDrawObject->pixelX = x;
+        quickDrawObject->pixelY = y;
     }
     gCurTask->quickDrawObjectOpponentArriveDelay = 60;
 }

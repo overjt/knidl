@@ -134,7 +134,7 @@ void ResetTasksAndPlayers(void)
 
 void StageInit(void)
 {
-    s32 i;
+    s32 player;
     s8 *b;
     s8 *p;
     s8 zero;
@@ -184,8 +184,8 @@ void StageInit(void)
     gRoomExitKind = 0;
     gDanceId = -1;
     gUnk_020055C4 = 0;
-    for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
+    for (player = 0; player < 4; player++)
+        gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = gLatchedHeldKeys[player] = gLatchedPressedKeys[player] = 0;
     gStageRequest = STAGE_REQUEST_NONE;
     if (gUnk_0300244C != 0) {
         b2 = gUnk_02007CF4;
@@ -200,7 +200,7 @@ void StageInit(void)
 
 void HubInit(void)
 {
-    s32 i;
+    s32 player;
     s8 *b;
     s8 *p;
     s8 zero;
@@ -224,15 +224,15 @@ void HubInit(void)
     gUnk_020061E0 = 0;
     gBossSubtype = -1;
     sub_08066144();
-    for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
+    for (player = 0; player < 4; player++)
+        gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = gLatchedHeldKeys[player] = gLatchedPressedKeys[player] = 0;
     gLinkCommand = 0;
     gStageRequest = STAGE_REQUEST_NONE;
 }
 
 void BigSwitchViewInit(void)
 {
-    s32 i;
+    s32 player;
     s8 *b;
     s8 *p;
     s8 zero;
@@ -255,8 +255,8 @@ void BigSwitchViewInit(void)
     gUnk_020061E0 = 0;
     gBossSubtype = -1;
     sub_08066144();
-    for (i = 0; i < 4; i++)
-        gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
+    for (player = 0; player < 4; player++)
+        gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = gLatchedHeldKeys[player] = gLatchedPressedKeys[player] = 0;
     gLinkCommand = 0;
     gStageRequest = STAGE_REQUEST_NONE;
 }

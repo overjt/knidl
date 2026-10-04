@@ -39,7 +39,7 @@ void CheckPauseButton(void)
 void HubMain(void)
 {
     s32 done = 0;
-    s32 i;
+    s32 player;
 
     gPausingPlayer = 0;
     LoadBgLayout(3);
@@ -114,10 +114,10 @@ void HubMain(void)
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    for (i = 0; i < gPlayerCount; i++) {
-        if (gPlayerStates[i].sfxPlayer != -1) {
-            StopSfxOnPlayer(gPlayerStates[i].sfxPlayer, gPlayerStates[i].sfxId);
-            gPlayerStates[i].sfxPlayer = -1;
+    for (player = 0; player < gPlayerCount; player++) {
+        if (gPlayerStates[player].sfxPlayer != -1) {
+            StopSfxOnPlayer(gPlayerStates[player].sfxPlayer, gPlayerStates[player].sfxId);
+            gPlayerStates[player].sfxPlayer = -1;
         }
     }
     StopRoom();

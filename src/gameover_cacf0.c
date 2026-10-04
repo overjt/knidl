@@ -279,24 +279,24 @@ void GameOverResetWait(void)
 void CreateGameOverObjects(void)
 {
     s32 i;
-    s32 id;
+    s32 gameOverObjectSlot;
     struct Task *t;
 
     if (gPlayerCount == 1) {
         TaskCreateFrom(TASK_GAME_OVER_CURSOR, 32);
         for (i = 0; i <= 2; i++) {
-            id = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
-            if (id != -1) {
-                t = &gTasks[id];
+            gameOverObjectSlot = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
+            if (gameOverObjectSlot != -1) {
+                t = &gTasks[gameOverObjectSlot];
                 t->variant = i;
                 if (i == 0)
-                    gGameOverPlayerTask = id;
+                    gGameOverPlayerTask = gameOverObjectSlot;
             }
         }
     } else {
-        id = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
-        if (id != -1) {
-            struct Task *t2 = &gTasks[id];
+        gameOverObjectSlot = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
+        if (gameOverObjectSlot != -1) {
+            struct Task *t2 = &gTasks[gameOverObjectSlot];
             t2->variant = 5;
         }
     }
