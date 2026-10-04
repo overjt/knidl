@@ -2499,7 +2499,7 @@ u32 gMrBrightStates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightChase,
     (u32)sub_080a3ff8,
     (u32)MrBrightDescend,
-    (u32)sub_080a408c,
+    (u32)MrBrightHop,
     (u32)MrBrightJump,
     (u32)sub_080a4260,
     (u32)MrBrightDash,
@@ -2520,7 +2520,7 @@ u32 gMrBrightStateUpdates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightChaseUpdate,
     (u32)sub_080a4018,
     (u32)MrBrightDescendUpdate,
-    (u32)sub_080a412c,
+    (u32)MrBrightHopUpdate,
     (u32)MrBrightJumpUpdate,
     (u32)sub_080a42f8,
     (u32)MrBrightDashUpdate,
@@ -2558,59 +2558,59 @@ u32 gKingDededeAirPuffStates[1] ACTOR_TBL(087489d4) = {
 u32 gKingDededeAirPuffStateUpdates[1] ACTOR_TBL(087489d4) = {
     (u32)sub_080a4c80,
 };
-/* include/enemy.h; CallTableEntry(i, 4, ...) in sub_080a4c84 */
-u32 gUnk_087489E0[4] ACTOR_TBL(087489d4) = {
-    (u32)sub_080a4cc4,
-    (u32)sub_080a5040,
-    (u32)sub_080a4e9c,
-    (u32)sub_080a5188,
+/* include/enemy.h; CallTableEntry(i, 4, ...) in Task_MrShineAndMrBrightAttack */
+u32 gMrShineAndMrBrightAttackVariants[4] ACTOR_TBL(087489d4) = {
+    (u32)MrShineCrescentInit,
+    (u32)MrBrightFireballInit,
+    (u32)MrShineFallingStarInit,
+    (u32)MrBrightBeamInit,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a4cc4, sub_080a4d6c */
-u32 gUnk_087489F0[2] ACTOR_TBL(087489d4) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineCrescentInit, MrShineCrescentEnterState */
+u32 gMrShineCrescentStates[2] ACTOR_TBL(087489d4) = {
     (u32)sub_080a4d88,
     (u32)sub_080a4df4,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a4d00 */
-u32 gUnk_087489F8[2] ACTOR_TBL(087489d4) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineCrescentUpdate */
+u32 gMrShineCrescentStateUpdates[2] ACTOR_TBL(087489d4) = {
     (u32)sub_080a4dd8,
     (u32)sub_080a4e10,
 };
 
 /* ---- 0x08748A28-0x08748A38: 2 table(s), 4 function pointer(s), section .actor_tbl_08748a28 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a4e9c, sub_080a4f24 */
-u32 gUnk_08748A28[2] ACTOR_TBL(08748a28) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineFallingStarInit, sub_080a4f24 */
+u32 gMrShineFallingStarStates[2] ACTOR_TBL(08748a28) = {
     (u32)sub_080a4f40,
     (u32)sub_080a5020,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a4ee0 */
-u32 gUnk_08748A30[2] ACTOR_TBL(08748a28) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrShineFallingStarUpdate */
+u32 gMrShineFallingStarStateUpdates[2] ACTOR_TBL(08748a28) = {
     (u32)sub_080a5008,
     (u32)sub_080a503c,
 };
 
 /* ---- 0x08748A54-0x08748A80: 5 table(s), 11 function pointer(s), section .actor_tbl_08748a54 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a5040, sub_080a50f0 */
-u32 gUnk_08748A54[2] ACTOR_TBL(08748a54) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightFireballInit, MrBrightFireballEnterState */
+u32 gMrBrightFireballStates[2] ACTOR_TBL(08748a54) = {
     (u32)sub_080a510c,
     (u32)sub_080a5168,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a5084 */
-u32 gUnk_08748A5C[2] ACTOR_TBL(08748a54) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightFireballUpdate */
+u32 gMrBrightFireballStateUpdates[2] ACTOR_TBL(08748a54) = {
     (u32)sub_080a5164,
     (u32)sub_080a5184,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a5188, sub_080a5220 */
-u32 gUnk_08748A64[2] ACTOR_TBL(08748a54) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightBeamInit, sub_080a5220 */
+u32 gMrBrightBeamStates[2] ACTOR_TBL(08748a54) = {
     (u32)sub_080a528c,
     (u32)sub_080a5304,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a51dc */
-u32 gUnk_08748A6C[2] ACTOR_TBL(08748a54) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrBrightBeamUpdate */
+u32 gMrBrightBeamStateUpdates[2] ACTOR_TBL(08748a54) = {
     (u32)sub_080a52c8,
     (u32)sub_080a5320,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_080a54e4 */
-u32 gUnk_08748A74[3] ACTOR_TBL(08748a54) = {
+/* include/enemy.h; CallTableEntry(i, 3, ...) in Task_MrBrightBeamEffect */
+u32 gMrBrightBeamEffectVariants[3] ACTOR_TBL(08748a54) = {
     (u32)sub_080a5524,
     (u32)sub_080a556c,
     (u32)sub_080a55ac,

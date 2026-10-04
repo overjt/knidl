@@ -401,8 +401,8 @@ void Task_MrShineAndMrBright(void)
     CallTableEntry(gCurTask->variant, 4, gMrShineAndMrBrightVariants);
 }
 
-/* sub_080a19ec (0x080A19EC-0x080A1AD0) */
-void sub_080a19ec(void)
+/* MrShineAndMrBrightFillHpBars (0x080A19EC-0x080A1AD0) */
+void MrShineAndMrBrightFillHpBars(void)
 {
     struct Task *tb;
     struct Task *ta;
@@ -459,8 +459,8 @@ void CreateMrShineAndMrBright(void)
     gUnk_02007D00[8] = ActorComputeHealth() >> 1;
 }
 
-/* sub_080a1b94 (0x080A1B94-0x080A1BD8) */
-void sub_080a1b94(void)
+/* MrShineAndMrBrightPickFirstAscender (0x080A1B94-0x080A1BD8) */
+void MrShineAndMrBrightPickFirstAscender(void)
 {
     s32 a;
     s32 b;
@@ -507,8 +507,8 @@ void MrShineAndMrBrightMoveToMidpoint(void)
     t->posY = t->pixelY << 16;
 }
 
-/* sub_080a1c90 (0x080A1C90-0x080A1D2C) */
-void sub_080a1c90(void)
+/* MrShineAndMrBrightStartDefeat (0x080A1C90-0x080A1D2C) */
+void MrShineAndMrBrightStartDefeat(void)
 {
     struct Task *tb;
     struct Task *ta;
@@ -1387,8 +1387,8 @@ void CreateMrBrightBeam(void)
     gUnk_02006040[6] = PlaySfx(0x216);
 }
 
-/* sub_080a2d38 (0x080A2D38-0x080A2DE0) */
-void sub_080a2d38(void)
+/* CreateMrBrightBeamEffects (0x080A2D38-0x080A2DE0) */
+void CreateMrBrightBeamEffects(void)
 {
     s32 r;
     struct Task *t;
@@ -1541,8 +1541,8 @@ void sub_080a301c(void)
     }
 }
 
-/* sub_080a306c (0x080A306C-0x080A30D0) */
-void sub_080a306c(void)
+/* MrBrightRemoveBeam (0x080A306C-0x080A30D0) */
+void MrBrightRemoveBeam(void)
 {
     if (gUnk_02006040[0] + 1 > 1)
         ActorDestroySlot(gUnk_02006040[0]);
@@ -1603,7 +1603,7 @@ void MrShineAndMrBrightEnterState(void)
 void sub_080a3184(void)
 {
     gCurTask->updateState = 0;
-    sub_080a19ec();
+    MrShineAndMrBrightFillHpBars();
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -1614,7 +1614,7 @@ void sub_080a31a4(void)
     if (gCurTask->state != 0)
     {
         TaskSetEntry(MrShineAndMrBrightEnterState, gCurTaskIdx);
-        sub_080a1b94();
+        MrShineAndMrBrightPickFirstAscender();
     }
 }
 
@@ -1637,7 +1637,7 @@ void sub_080a31f4(void)
     struct Task *t;
 
     if (gUnk_02007D00[5] == 2)
-        sub_080a1c90();
+        MrShineAndMrBrightStartDefeat();
     else
     {
         t = &gTasks[gUnk_02007D00[2] != 0 ? gUnk_02007D00[1] : gUnk_02007D00[0]];
@@ -2304,7 +2304,7 @@ void sub_080a3f24(void)
     sub_080a3000();
     TaskYieldTrampoline(6);
     CreateMrBrightBeam();
-    sub_080a2d38();
+    CreateMrBrightBeamEffects();
     StartBgPaletteBlend(10, 80);
     TaskSleepForever();
 }
@@ -2324,14 +2324,14 @@ void sub_080a3f54(void)
         {
             sub_080a2400(f);
             EndBgPaletteBlend(16);
-            sub_080a306c();
+            MrBrightRemoveBeam();
         }
         gCurTask->unk34--;
     }
     else
     {
         ResetBgPaletteBlend();
-        sub_080a306c();
+        MrBrightRemoveBeam();
     }
 }
 
@@ -2383,8 +2383,8 @@ void MrBrightDescendUpdate(void)
     sub_080a2164();
 }
 
-/* sub_080a408c (0x080A408C-0x080A412C) */
-void sub_080a408c(void)
+/* MrBrightHop (0x080A408C-0x080A412C) */
+void MrBrightHop(void)
 {
     gCurTask->updateState = 9;
     sub_080a2af4();
@@ -2408,8 +2408,8 @@ void sub_080a408c(void)
     TaskSleepForever();
 }
 
-/* sub_080a412c (0x080A412C-0x080A4180) */
-void sub_080a412c(void)
+/* MrBrightHopUpdate (0x080A412C-0x080A4180) */
+void MrBrightHopUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -2942,8 +2942,8 @@ void sub_080a4c80(void)
 {
 }
 
-/* sub_080a4c84 (0x080A4C84-0x080A4CC4) */
-void sub_080a4c84(void)
+/* Task_MrShineAndMrBrightAttack (0x080A4C84-0x080A4CC4) */
+void Task_MrShineAndMrBrightAttack(void)
 {
     struct Task *t = gCurTask;
     struct Actor *a = t->u8C.actor;
@@ -2952,31 +2952,31 @@ void sub_080a4c84(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     a->sfxOverride = -2;
-    CallTableEntry(gCurTask->variant, 4, gUnk_087489E0);
+    CallTableEntry(gCurTask->variant, 4, gMrShineAndMrBrightAttackVariants);
 }
 
-/* sub_080a4cc4 (0x080A4CC4-0x080A4D00) */
-void sub_080a4cc4(void)
+/* MrShineCrescentInit (0x080A4CC4-0x080A4D00) */
+void MrShineCrescentInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080a4d00;
+    t->updateCallback = (u32)MrShineCrescentUpdate;
     t->frameTable = gUnk_08754260;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_087489F0);
+    CallTableEntry(gCurTask->state, 2, gMrShineCrescentStates);
 }
 
-/* sub_080a4d00 (0x080A4D00-0x080A4D6C) */
-void sub_080a4d00(void)
+/* MrShineCrescentUpdate (0x080A4D00-0x080A4D6C) */
+void MrShineCrescentUpdate(void)
 {
     if ((u8)sub_080695bc() != 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_080a4d6c, gCurTaskIdx);
+        TaskSetEntry(MrShineCrescentEnterState, gCurTaskIdx);
     }
     else
-        CallTableEntry(gCurTask->updateState, 2, gUnk_087489F8);
+        CallTableEntry(gCurTask->updateState, 2, gMrShineCrescentStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -2984,10 +2984,10 @@ void sub_080a4d00(void)
     }
 }
 
-/* sub_080a4d6c (0x080A4D6C-0x080A4D88) */
-void sub_080a4d6c(void)
+/* MrShineCrescentEnterState (0x080A4D6C-0x080A4D88) */
+void MrShineCrescentEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_087489F0);
+    CallTableEntry(gCurTask->state, 2, gMrShineCrescentStates);
 }
 
 /* sub_080a4d88 (0x080A4D88-0x080A4DD8) */
@@ -3022,8 +3022,8 @@ void sub_080a4e10(void)
 {
 }
 
-/* sub_080a4e14 (0x080A4E14-0x080A4E9C) */
-void sub_080a4e14(void)
+/* MrShineFallingStarSetStart (0x080A4E14-0x080A4E9C) */
+void MrShineFallingStarSetStart(void)
 {
     s32 r;
     s32 m;
@@ -3038,23 +3038,23 @@ void sub_080a4e14(void)
     gCurTask->unk2C = gUnk_08748A40[r];
 }
 
-/* sub_080a4e9c (0x080A4E9C-0x080A4EE0) */
-void sub_080a4e9c(void)
+/* MrShineFallingStarInit (0x080A4E9C-0x080A4EE0) */
+void MrShineFallingStarInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080a4ee0;
+    t->updateCallback = (u32)MrShineFallingStarUpdate;
     t->frameTable = gUnk_087542A8;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B34);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08748A28);
+    CallTableEntry(gCurTask->state, 2, gMrShineFallingStarStates);
 }
 
-/* sub_080a4ee0 (0x080A4EE0-0x080A4F24) */
-void sub_080a4ee0(void)
+/* MrShineFallingStarUpdate (0x080A4EE0-0x080A4F24) */
+void MrShineFallingStarUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08748A30);
+    CallTableEntry(gCurTask->updateState, 2, gMrShineFallingStarStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -3065,7 +3065,7 @@ void sub_080a4ee0(void)
 /* sub_080a4f24 (0x080A4F24-0x080A4F40) */
 void sub_080a4f24(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08748A28);
+    CallTableEntry(gCurTask->state, 2, gMrShineFallingStarStates);
 }
 
 /* sub_080a4f40 (0x080A4F40-0x080A5008) */
@@ -3077,7 +3077,7 @@ void sub_080a4f40(void)
     TaskStop();
     gCurTask->onGround = 0;
     gCurTask->unk18 = 0;
-    sub_080a4e14();
+    MrShineFallingStarSetStart();
     gCurTask->unk6C = 0;
     do
     {
@@ -3130,29 +3130,29 @@ void sub_080a503c(void)
 {
 }
 
-/* sub_080a5040 (0x080A5040-0x080A5084) */
-void sub_080a5040(void)
+/* MrBrightFireballInit (0x080A5040-0x080A5084) */
+void MrBrightFireballInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080a5084;
+    t->updateCallback = (u32)MrBrightFireballUpdate;
     t->frameTable = gUnk_08754280;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B60);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08748A54);
+    CallTableEntry(gCurTask->state, 2, gMrBrightFireballStates);
 }
 
-/* sub_080a5084 (0x080A5084-0x080A50F0) */
-void sub_080a5084(void)
+/* MrBrightFireballUpdate (0x080A5084-0x080A50F0) */
+void MrBrightFireballUpdate(void)
 {
     if ((u8)sub_080695bc() != 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_080a50f0, gCurTaskIdx);
+        TaskSetEntry(MrBrightFireballEnterState, gCurTaskIdx);
     }
     else
-        CallTableEntry(gCurTask->updateState, 2, gUnk_08748A5C);
+        CallTableEntry(gCurTask->updateState, 2, gMrBrightFireballStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -3160,10 +3160,10 @@ void sub_080a5084(void)
     }
 }
 
-/* sub_080a50f0 (0x080A50F0-0x080A510C) */
-void sub_080a50f0(void)
+/* MrBrightFireballEnterState (0x080A50F0-0x080A510C) */
+void MrBrightFireballEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08748A54);
+    CallTableEntry(gCurTask->state, 2, gMrBrightFireballStates);
 }
 
 /* sub_080a510c (0x080A510C-0x080A5164) */
@@ -3203,26 +3203,26 @@ void sub_080a5184(void)
 {
 }
 
-/* sub_080a5188 (0x080A5188-0x080A51DC) */
-void sub_080a5188(void)
+/* MrBrightBeamInit (0x080A5188-0x080A51DC) */
+void MrBrightBeamInit(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->layer = 12;
     t = gCurTask;
-    t->updateCallback = (u32)sub_080a51dc;
+    t->updateCallback = (u32)MrBrightBeamUpdate;
     t->frameTable = gUnk_08754290;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B8C);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08748A64);
+    CallTableEntry(gCurTask->state, 2, gMrBrightBeamStates);
 }
 
-/* sub_080a51dc (0x080A51DC-0x080A5220) */
-void sub_080a51dc(void)
+/* MrBrightBeamUpdate (0x080A51DC-0x080A5220) */
+void MrBrightBeamUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08748A6C);
+    CallTableEntry(gCurTask->updateState, 2, gMrBrightBeamStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -3233,11 +3233,11 @@ void sub_080a51dc(void)
 /* sub_080a5220 (0x080A5220-0x080A523C) */
 void sub_080a5220(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08748A64);
+    CallTableEntry(gCurTask->state, 2, gMrBrightBeamStates);
 }
 
-/* sub_080a523c (0x080A523C-0x080A528C) */
-void sub_080a523c(void)
+/* MrBrightBeamDropStars (0x080A523C-0x080A528C) */
+void MrBrightBeamDropStars(void)
 {
     struct Task *t;
     s16 x;
@@ -3262,9 +3262,9 @@ void sub_080a528c(void)
     gCurTask->unk18 = 0;
     gCurTask->unk1C = 0;
     TaskYieldTrampoline(2);
-    sub_080a523c();
+    MrBrightBeamDropStars();
     TaskYieldTrampoline(84);
-    sub_080a523c();
+    MrBrightBeamDropStars();
     TaskSleepForever();
 }
 
@@ -3404,8 +3404,8 @@ void KingDededeInhaleHitBoxUpdate(void)
     }
 }
 
-/* sub_080a54e4 (0x080A54E4-0x080A5524) */
-void sub_080a54e4(void)
+/* Task_MrBrightBeamEffect (0x080A54E4-0x080A5524) */
+void Task_MrBrightBeamEffect(void)
 {
     struct Task *t;
 
@@ -3414,7 +3414,7 @@ void sub_080a54e4(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     gCurTask->frameTable = gUnk_08754290;
-    CallTableEntry(gCurTask->variant, 3, gUnk_08748A74);
+    CallTableEntry(gCurTask->variant, 3, gMrBrightBeamEffectVariants);
 }
 
 /* sub_080a5524 (0x080A5524-0x080A556C) */

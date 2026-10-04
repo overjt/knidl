@@ -11829,7 +11829,7 @@ u32 gMrShineFrames[] FRAME_TABLE = {
     (u32)gUnk_082F7DD4,
 };
 
-/* gUnk_08754260.  Consumer: sub_080a4cc4 (src/enemy_a1590.c:2964).  8
+/* gUnk_08754260.  Consumer: MrShineCrescentInit (src/enemy_a1590.c:2964).  8
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754260-0x08754280).  Declared
  * include/enemy.h:1257. */
@@ -11844,7 +11844,7 @@ u32 gUnk_08754260[] FRAME_TABLE = {
     (u32)gUnk_082F7E34,
 };
 
-/* gUnk_08754280.  Consumer: sub_080a5040 (src/enemy_a1590.c:3139).  4
+/* gUnk_08754280.  Consumer: MrBrightFireballInit (src/enemy_a1590.c:3139).  4
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754280-0x08754290).  Declared
  * include/enemy.h:1258. */
@@ -11855,8 +11855,8 @@ u32 gUnk_08754280[] FRAME_TABLE = {
     (u32)gUnk_082F7FB4,
 };
 
-/* gUnk_08754290.  Consumers: sub_080a5188 (src/enemy_a1590.c:3215),
- * sub_080a54e4 (src/enemy_a1590.c:3416).  6 words, OAM template streams;
+/* gUnk_08754290.  Consumers: MrBrightBeamInit (src/enemy_a1590.c:3215),
+ * Task_MrBrightBeamEffect (src/enemy_a1590.c:3416).  6 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754290-0x087542A8).  Declared include/enemy.h:1259. */
 u32 gUnk_08754290[] FRAME_TABLE = {
@@ -11868,7 +11868,7 @@ u32 gUnk_08754290[] FRAME_TABLE = {
     (u32)gUnk_082F7F4C,
 };
 
-/* gUnk_087542A8.  Consumer: sub_080a4e9c (src/enemy_a1590.c:3047).  6
+/* gUnk_087542A8.  Consumer: MrShineFallingStarInit (src/enemy_a1590.c:3047).  6
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087542A8-0x087542C0).  Declared
  * include/enemy.h:1260. */
@@ -12142,7 +12142,7 @@ u32 gUnk_08754568[] FRAME_TABLE = {
 };
 
 /* gNightmareWizardFrames.  Consumers: Task_NightmareWizard
- * (src/enemy_a93ec.c:661), sub_080ab93c (src/enemy_aa338.c:1011).  89
+ * (src/enemy_a93ec.c:661), NightmareWizardDefeat (src/enemy_aa338.c:1011).  89
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0875456C-0x087546D0).  Declared
  * include/enemy.h:1273. */

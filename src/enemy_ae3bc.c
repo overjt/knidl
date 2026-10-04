@@ -397,28 +397,28 @@ void sub_080ae7ec(void)
     v1 = 0xFFFA0000;
     u1->velY = v1;
     TaskYieldTrampoline(10);
-    sub_080ae870();
+    NightmarePowerOrbShootStar();
     u2 = *c;
     v2 = 192 << 11;
     u2->velY = v2;
     TaskYieldTrampoline(16);
-    sub_080ae870();
+    NightmarePowerOrbShootStar();
     u3 = *c;
     u3->velY = v1;
     TaskYieldTrampoline(12);
-    sub_080ae870();
+    NightmarePowerOrbShootStar();
     u4 = *c;
     u4->velY = v2;
     TaskYieldTrampoline(16);
-    sub_080ae870();
+    NightmarePowerOrbShootStar();
     u5 = *c;
     u5->velY = v1;
     TaskYieldTrampoline(10);
-    sub_080ae870();
+    NightmarePowerOrbShootStar();
     TaskStop();
 }
 
-void sub_080ae870(void)
+void NightmarePowerOrbShootStar(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -2397,7 +2397,7 @@ void Task_PaintRollerPainting(void)
         TaskYieldTrampoline(2);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 2);
-    sub_080b15c0();
+    PaintRollerPaintingPickSubject();
     CallTableEntry(gCurTask->state, 8, gPaintRollerPaintingStates);
 }
 
@@ -2515,7 +2515,7 @@ void PaintRollerPaintingBaseball(void)
     gCurTask->tileWord += 0x1000;
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
-    gCurTask->updateCallback = (u32)sub_080b1578;
+    gCurTask->updateCallback = (u32)PaintRollerPaintingBaseballUpdate;
     AngleToVector(TaskGetAngleToNearestPlayer(3), 128 << 2);
     gCurTask->velX = gUnk_030023B4;
     gCurTask->velY = gUnk_030023D4;
@@ -2538,7 +2538,7 @@ void PaintRollerPaintingBomb(void)
     ActorLoadDef((struct ActorDef *)gUnk_0874BA48);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
-    gCurTask->updateCallback = (u32)sub_080b123c;
+    gCurTask->updateCallback = (u32)PaintRollerPaintingBombUpdate;
     gCurTask->unk28 = ActorStartAnim((struct AnimCmd *)gUnk_0874B560);
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
@@ -2580,7 +2580,7 @@ void PaintRollerPaintingBomb(void)
     ActorDestroy();
 }
 
-void sub_080b123c(void)
+void PaintRollerPaintingBombUpdate(void)
 {
     struct Task **c;
     struct Task *u;
@@ -2603,7 +2603,7 @@ void PaintRollerPaintingCloud(void)
     ActorLoadDef((struct ActorDef *)gUnk_0874BA74);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
-    gCurTask->updateCallback = (u32)sub_080b1398;
+    gCurTask->updateCallback = (u32)PaintRollerPaintingCloudUpdate;
     gCurTask->velY = 0xFFFE0000;
     TaskYieldTrampoline(4);
     gCurTask->velY = 0xFFFF0000;
@@ -2645,7 +2645,7 @@ void PaintRollerPaintingCloud(void)
     }
 }
 
-void sub_080b1398(void)
+void PaintRollerPaintingCloudUpdate(void)
 {
     struct Task **c;
     struct Task *u;
@@ -2708,7 +2708,7 @@ void PaintRollerPaintingParasol(void)
     ActorLoadDef((struct ActorDef *)gUnk_0874BAA0);
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
-    (*c)->updateCallback = (u32)sub_080b14fc;
+    (*c)->updateCallback = (u32)PaintRollerPaintingParasolUpdate;
     r = ActorStartAnim((struct AnimCmd *)gUnk_0874B590);
     u = *c;
     u->unk28 = r;
@@ -2716,7 +2716,7 @@ void PaintRollerPaintingParasol(void)
     TaskSleepForever();
 }
 
-void sub_080b14fc(void)
+void PaintRollerPaintingParasolUpdate(void)
 {
     struct Task **c;
     struct Task *u;
@@ -2750,7 +2750,7 @@ void sub_080b1564(void)
     ActorReactToHit();
 }
 
-void sub_080b1578(void)
+void PaintRollerPaintingBaseballUpdate(void)
 {
     ActorCheckHits();
     ActorReactToHit();
@@ -2779,7 +2779,7 @@ s32 sub_080b15b4(void)
     return 0;
 }
 
-void sub_080b15c0(void)
+void PaintRollerPaintingPickSubject(void)
 {
     s32 ofs;
 

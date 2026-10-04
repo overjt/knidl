@@ -1003,7 +1003,7 @@ s32 NightmareWizardReactToDefeat(void)
     return 1;
 }
 
-void sub_080ab93c(void)
+void NightmareWizardDefeat(void)
 {
     gUnk_02007FB8[0] = 0;
     gCurTask->drawCallback = (u32)sub_080a9ed8;
@@ -1102,17 +1102,17 @@ void sub_080ab93c(void)
         goto far;
     {
         RequestScreenShake(7);
-        sub_080abcd0(gViewRect[0] + 80, gViewRect[2] + 136, 30);
-        sub_080abcd0(gViewRect[0] + 224, gViewRect[2] + 136, 15);
-        sub_080abcd0(gViewRect[0] + 208, gViewRect[2] + 136, 0);
-        sub_080abcd0(gViewRect[0] + 48, gViewRect[2] + 136, 30);
-        sub_080abcd0(gViewRect[0] + 192, gViewRect[2] + 136, 10);
-        sub_080abcd0(gViewRect[0] + 112, gViewRect[2] + 136, 10);
-        sub_080abcd0(gViewRect[0] + 32, gViewRect[2] + 136, 10);
-        sub_080abcd0(gViewRect[0] + 216, gViewRect[2] + 136, 45);
-        sub_080abcd0(gViewRect[0] + 80, gViewRect[2] + 136, 0);
-        sub_080abcd0(gViewRect[0] + 200, gViewRect[2] + 136, 30);
-        sub_080abcd0(gViewRect[0] + 224, gViewRect[2] + 136, 0);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 80, gViewRect[2] + 136, 30);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 224, gViewRect[2] + 136, 15);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 208, gViewRect[2] + 136, 0);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 48, gViewRect[2] + 136, 30);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 192, gViewRect[2] + 136, 10);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 112, gViewRect[2] + 136, 10);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 32, gViewRect[2] + 136, 10);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 216, gViewRect[2] + 136, 45);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 80, gViewRect[2] + 136, 0);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 200, gViewRect[2] + 136, 30);
+        NightmareWizardScatterStarsAt(gViewRect[0] + 224, gViewRect[2] + 136, 0);
         RequestScreenShake(0);
     }
     goto fin;
@@ -1128,7 +1128,7 @@ void sub_080abcb4(void)
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
 }
 
-void sub_080abcd0(s32 x, s32 y, s32 d)
+void NightmareWizardScatterStarsAt(s32 x, s32 y, s32 d)
 {
     PlaySfx(189);
     CreateChildTaskAt(148, (s16)x, (s16)y, 0);
@@ -1514,17 +1514,17 @@ void NightmareWizardCloakTornadoUpdate(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_080ac510(void)
+void Task_NightmareWizardHitBox(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_080ac530;
+    t->updateCallback = (u32)NightmareWizardHitBoxUpdate;
     TaskSleepForever();
 }
 
-void sub_080ac530(void)
+void NightmareWizardHitBoxUpdate(void)
 {
     vs16 *arr;
     struct Task *t;
