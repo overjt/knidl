@@ -337,7 +337,8 @@ def run(defs_path, sites_path, do_write):
     first = not os.path.exists(VARS_H)
     text = render_vars(blocks)
     write(VARS_H, text)
-    if parse_vars() != blocks:
+    norm = lambda bs: sorted((f, h, sorted(d)) for f, h, d in bs)
+    if norm(parse_vars()) != norm(blocks):
         raise AliasError("%s does not parse back to what was written" % rel(VARS_H))
     if first:
         t = read(TASK_H)
