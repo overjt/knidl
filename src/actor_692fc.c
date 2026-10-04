@@ -274,7 +274,7 @@ u32 ActorCollideTerrainInCameraBounds(void)
     f = t->waterFlags;
     ActorGetTerrainBox(&v);
     TerrainCollideBoxInCameraBounds(&v);
-    sub_080b460c();
+    TaskBounceOffCameraBounds();
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
         CreateChildTaskAt(TASK_ACTOR_SPLASH, u->pixelX, ((s16 *)gTerrainResult)[i], 0);

@@ -14,10 +14,10 @@ struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
 struct PlayerBodyBox { u32 w[5]; };
 
 /* Not from collision.h or player.h: this file's view of gTerrainResult and
-   gUnk_020055C4 differs (lesson 3.517). */
+   gPlayerOrderShuffleCount differs (lesson 3.517). */
 extern u16 gEndingLocalPlayer;
 extern struct PlayerHitBoxSet gPlayerHitBoxSets[];
-extern u8 gUnk_020055C4[];
+extern u8 gPlayerOrderShuffleCount[];
 extern struct PlayerBodyBox gPlayerBodyBoxes[];
 extern struct M11Buf gPlayerHitBoxLists[];
 extern u16 gUnk_02007F60[];
@@ -42,7 +42,7 @@ extern u32 gPlayerDefaultTerrainBox[];
 extern u8 gAbilityBButtonActions[];
 extern s16 gUnk_0873D210[];
 extern s16 gUnk_0873D2E0[];
-extern u16 gUnk_0873D79E[];
+extern u16 gPlayerWaterDoorAnims[];
 extern u16 gUnk_0873DB44[][2];
 extern u32 gUnk_08751990[];
 extern u32 gUnk_087519CC[];
@@ -59,13 +59,13 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);
 s32 IsTaskBelowPlayerBounds(struct Task *t);
 void sub_08033414(void);
 s32 sub_0803d010(void);
-void sub_0803d7c4(void);
-s32 sub_0803d870(void);
+void PlayerLoadPlayerPalette(void);
+s32 PlayerGetPlayerPaletteOffset(void);
 void sub_0803db74(void);
 void sub_0803e28c(s32 a0);
 s32 PlaySfxIfLocalPlayer(s32 a0, u16 a1);
 s32 PlayerUpdateInvincibility(void);
-void sub_0803e8ec(void);
+void PlayerUpdateInvincibleFlash(void);
 void PlayerStopAtCeilingAndWall(void);
 s32 PlayerStopAtWall(void);
 s32 PlayerCheckLanding(void);
@@ -121,7 +121,7 @@ void PlayerPlayBump(void)
     }
 }
 
-void sub_0803ce98(void)
+void PlayerUpdateBlink(void)
 {
     struct PlayerState *ps;
     struct PlayerState *ps2;
@@ -542,7 +542,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
     return g->oamTemplate & ~1;
 }
 
-void sub_0803d710(void)
+void PlayerLoadFramePalette(void)
 {
     struct Task *t;
     struct TaskGfx *g;
@@ -569,18 +569,18 @@ void sub_0803d710(void)
     }
     if (gMetaKnightmareMode == 0) {
         if (gPlayerCount > 1)
-            sub_0803d7c4();
+            PlayerLoadPlayerPalette();
         sub_0803db74();
     }
 }
 
-void sub_0803d7c4(void)
+void PlayerLoadPlayerPalette(void)
 {
     s32 idx;
 
     if (gCurTask->player->playerIndex == 0)
         return;
-    idx = sub_0803d870();
+    idx = PlayerGetPlayerPaletteOffset();
     if (idx == -1)
         return;
     RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes
@@ -588,11 +588,11 @@ void sub_0803d7c4(void)
                  (u32)gObjPalette + ((gCurTask->tileWord >> 12) << 5), 32);
 }
 
-void sub_0803d824(void)
+void PlayerLoadEndingPlayerPalette(void)
 {
     s32 idx;
 
-    idx = sub_0803d870();
+    idx = PlayerGetPlayerPaletteOffset();
     if (idx == -1)
         return;
     RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes + (gEndingLocalPlayer << 5),
@@ -601,7 +601,7 @@ void sub_0803d824(void)
 
 /* Pick the HUD/status graphics slot for the running task's state, or -1 for
    "nothing to upload". */
-s32 sub_0803d870(void)
+s32 PlayerGetPlayerPaletteOffset(void)
 {
     struct Task *t;
     struct Task *u;
@@ -815,7 +815,7 @@ void sub_0803ddc0(void)
             return;
         if (gCurTask->frame == -1)
             return;
-        sub_0803d710();
+        PlayerLoadFramePalette();
         return;
     }
     if (gCurTask->frameTable == 0)
@@ -843,11 +843,11 @@ void sub_0803ddc0(void)
         if (gCreditsDemoSet == 0)
         {
             if (gPlayerCount > 1)
-                sub_0803d7c4();
+                PlayerLoadPlayerPalette();
         }
         else
         {
-            sub_0803d824();
+            PlayerLoadEndingPlayerPalette();
         }
         sub_0803db74();
     }
@@ -894,7 +894,7 @@ void PlayerStopAxes(s32 axes)
     }
 }
 
-void sub_0803e080(void)
+void PlayerUpdatePaletteFlash(void)
 {
     struct Task *t = gCurTask;
     struct PlayerState *p = t->player;
@@ -954,7 +954,7 @@ void sub_0803e080(void)
         gCurTask->player->unk42 |= 16;
         break;
     }
-    sub_0803e8ec();
+    PlayerUpdateInvincibleFlash();
 }
 
 /* CENSUS: this is ONE function, 0x0803E1B8-0x0803E28C (212 bytes).  The
@@ -1389,7 +1389,7 @@ void PlayerEndInvincibility(void)
     }
 }
 
-void sub_0803e8ec(void)
+void PlayerUpdateInvincibleFlash(void)
 {
     struct PlayerState *p = gCurTask->player;
     s32 needBig;
@@ -1451,7 +1451,7 @@ void sub_0803e8ec(void)
         switch ((s16)r->invincibleFlashStep)
         {
         case 0:
-            sub_0803d710();
+            PlayerLoadFramePalette();
             if (needSmall)
             {
                 RequestCopy(2, (u32)gUnk_080DCC48,
@@ -1468,7 +1468,7 @@ void sub_0803e8ec(void)
             gCurTask->player->invincibleFlashStep++;
             break;
         case 1:
-            sub_0803d710();
+            PlayerLoadFramePalette();
             if (needSmall)
             {
                 RequestCopy(2, (u32)gUnk_080DCC28,
@@ -2250,13 +2250,13 @@ void FreePlayerEffectsAndObjects(s8 a0)
     }
 }
 
-void sub_0803f6e0(void)
+void ShufflePlayerOrder(void)
 {
     s32 sel[4];
     s32 i, k, v;
     s32 *p;
 
-    gUnk_020055C4[0]++;
+    gPlayerOrderShuffleCount[0]++;
     if (gActivePlayerCount == 1)
     {
         gCurTask->unk2C = 0;
@@ -2290,7 +2290,7 @@ void sub_0803f6e0(void)
     }
 }
 
-u16 sub_0803f7e0(u16 a0)
+u16 PlayerGetWaterDoorAnim(u16 a0)
 {
     s32 k;
 
@@ -2312,7 +2312,7 @@ u16 sub_0803f7e0(u16 a0)
         k = 4;
         break;
     }
-    return gUnk_0873D79E[k * 7 + a0];
+    return gPlayerWaterDoorAnims[k * 7 + a0];
 }
 
 void sub_0803f834(u16 a0, void *src)
@@ -2897,7 +2897,7 @@ void LatchPlayerKeys(void)
     }
 }
 
-void sub_08040808(s32 a0)
+void CreateLocalPlayerArrow(s32 a0)
 {
     s32 t;
 

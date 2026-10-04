@@ -1249,7 +1249,7 @@ s32 AbilityStarBounceOffWall(void)
     return r;
 }
 
-s32 sub_080b442c(void)
+s32 AbilityStarHitCeiling(void)
 {
     struct Task *t;
     s32 r;
@@ -1271,7 +1271,7 @@ s32 sub_080b442c(void)
     return r;
 }
 
-void sub_080b447c(void)
+void AbilityStarInit(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1303,7 +1303,7 @@ void sub_080b447c(void)
     *(u8 *)((u8 *)t2 + 122) = z;
 }
 
-void sub_080b44f0(void)
+void AbilityStarAdvanceFrame(void)
 {
     struct Task **c;
     struct Task **c2;
@@ -1366,7 +1366,7 @@ s32 sub_080b45c0(void)
     return r;
 }
 
-void sub_080b460c(void)
+void TaskBounceOffCameraBounds(void)
 {
     u8 *q0;
     s32 w;
@@ -1412,7 +1412,7 @@ void AbilityStarCheckExpire(void)
         ActorDestroy();
         return;
     }
-    sub_080b44f0();
+    AbilityStarAdvanceFrame();
 }
 
 void Task_AbilityStar(void)
@@ -1431,7 +1431,7 @@ void Task_AbilityStar(void)
     tb = *c;
     tb->frameTable = (u32 *)gAbilityStarFrames;
     tb->updateCallback = (u32)AbilityStarUpdate;
-    sub_080b447c();
+    AbilityStarInit();
     w = *(u8 *)((u8 *)*c + 123);
     w2 = 1;
     w2 &= w;

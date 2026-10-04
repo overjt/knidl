@@ -252,7 +252,7 @@ void sub_080396a4(void)
             }
         }
         if (!(gCurTask->player->unk42 & 32))
-            sub_0803e080();
+            PlayerUpdatePaletteFlash();
         break;
     }
     case 2:
@@ -401,7 +401,7 @@ void PlayerActionEnterDoor(void)
     }
     else
     {
-        gCurTask->playerBaseFrame = sub_0803f7e0(0);
+        gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(0);
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskYieldTrampoline(3);
         gCurTask->frame++;

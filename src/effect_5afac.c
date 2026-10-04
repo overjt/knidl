@@ -36,7 +36,7 @@ extern u16 gGoalGameLayerScores[];
 extern u32 gUnk_0873DCA8[];
 extern u32 gUnk_0873DCC0[];
 extern u32 gUnk_0873DCC8[];
-extern u32 gUnk_0873DCCC[];
+extern u32 gGoalGameSpringDepths[];
 extern u32 gUnk_0873DD16[];
 extern u32 gUnk_0873DD30[];
 extern u32 gUnk_0873DD4C[];
@@ -80,20 +80,20 @@ s32 PlayerGoalGameCheckPress(void);
 void PlayerGoalGameSetLaunchPower(void);
 void PlayerGoalGameWaitForLaunch(void);
 void sub_0805b83c(void);
-void sub_0805b8b8(void);
+void PlayerGoalGameAddToLayerSign(void);
 void sub_0805b8f8(void);
 void PlayerGoalGameFall(void);
 void PlayerGoalGameLand(void);
-void sub_0805bb90(void);
+void PlayerGoalGameWalkToSpotUpdate(void);
 void PlayerGoalGameWait(void);
 void PlayerGoalGameWaitLateUpdate(void);
-void sub_0805bca4(void);
+void PlayerGoalGameRemoveFromLayerSign(void);
 void PlayerGoalGameDance(void);
 void PlayerGoalGameFinish(void);
-void sub_0805be48(void);
+void PlayerGoalGameDrawPressPrompt(void);
 void GoalGameLaunchStarsUpdate(void);
 void GoalGameLaunchStarsDraw(void);
-void sub_0805c584(void);
+void PlayerGoalGameRideSpring(void);
 void GoalGameCameraFollowPlayer(void);
 void GoalGameCameraUpdate(void);
 s32 GoalGamePlayerMarkerFollowParent(void);
@@ -104,8 +104,8 @@ void TaskStartFrameScript(s32 a0);
 void TaskStartFrameScriptId(s32 a0);
 void TaskUpdateFrameScript(void);
 void TaskAdvanceFrameScript(void);
-void sub_0805d994(s32 a0, s32 a1);
-void sub_0805da2c(void);
+void GoalGameHelperKirbyInitSprite(s32 a0, s32 a1);
+void GoalGameHelperKirbyDraw(void);
 void sub_0805dd4c(void);
 void StartAllPlayersDance(void);
 void PlayerDance(void);
@@ -331,8 +331,8 @@ void PlayerGoalGameWaitForPressUpdate(void)
     TaskUpdateFrameScript();
     if (PlayerGoalGameCheckPress() == 0)
     {
-        sub_0805c584();
-        sub_0805be48();
+        PlayerGoalGameRideSpring();
+        PlayerGoalGameDrawPressPrompt();
         gCurTask->playerGoalGameSpringTimer++;
         if (gCurTask->playerGoalGameSpringTimer > 35)
         {
@@ -395,7 +395,7 @@ void PlayerGoalGameState2(void)
 void PlayerGoalGameState2Update(void)
 {
     TaskUpdateFrameScript();
-    sub_0805c584();
+    PlayerGoalGameRideSpring();
 }
 
 void PlayerGoalGameWaitForLaunch(void)
@@ -407,7 +407,7 @@ void PlayerGoalGameWaitForLaunch(void)
 void PlayerGoalGameWaitForLaunchUpdate(void)
 {
     TaskUpdateFrameScript();
-    sub_0805c584();
+    PlayerGoalGameRideSpring();
     gCurTask->playerGoalGameSpringTimer++;
     if (gCurTask->playerGoalGameSpringTimer > 35)
     {
@@ -422,7 +422,7 @@ void PlayerGoalGameLaunch(void)
     CreateBurstEffect(1, 0);
     gCurTask->playerGoalGameLayer = gUnk_0873DC80[gCurTask->playerGoalGameLaunchPower];
     sub_0805b83c();
-    sub_0805b8b8();
+    PlayerGoalGameAddToLayerSign();
     TaskStartFrameScriptId(3);
     TaskCreateFrom(TASK_GOAL_GAME_LAUNCH_STARS, 32);
     gCurTask->unk24 = 0;
@@ -480,7 +480,7 @@ void sub_0805b83c(void)
         gUnk_02007D00[9] = 1;
 }
 
-void sub_0805b8b8(void)
+void PlayerGoalGameAddToLayerSign(void)
 {
     struct Task *t;
 
@@ -574,12 +574,12 @@ void PlayerGoalGameLand(void)
             gCurTask->facing = 1;
         else
             gCurTask->facing = -1;
-        gCurTask->updateCallback = (u32)sub_0805bb90;
+        gCurTask->updateCallback = (u32)PlayerGoalGameWalkToSpotUpdate;
         PlayerActionWalk();
     }
     TaskStop();
     TaskStartFrameScriptId(6);
-    sub_0805bca4();
+    PlayerGoalGameRemoveFromLayerSign();
     gCurTask->state = PLAYER_GOAL_GAME_STATE_DANCE;
     PlayerGoalGameDance();
 }
@@ -589,7 +589,7 @@ void PlayerGoalGameLandUpdate(void)
     TaskUpdateFrameScript();
 }
 
-void sub_0805bb90(void)
+void PlayerGoalGameWalkToSpotUpdate(void)
 {
     if (gCurTask->facing == 1)
     {
@@ -622,7 +622,7 @@ void PlayerGoalGameWait(void)
     gCurTask->facing = 1;
     TaskStop();
     TaskStartFrameScriptId(6);
-    sub_0805bca4();
+    PlayerGoalGameRemoveFromLayerSign();
     TaskSleepForever();
 }
 
@@ -643,7 +643,7 @@ void PlayerGoalGameWaitLateUpdate(void)
     }
 }
 
-void sub_0805bca4(void)
+void PlayerGoalGameRemoveFromLayerSign(void)
 {
     struct Task *t;
 
@@ -708,7 +708,7 @@ void PlayerGoalGameFinishUpdate(void)
     TaskUpdateFrameScript();
 }
 
-void sub_0805be48(void)
+void PlayerGoalGameDrawPressPrompt(void)
 {
     if (((gActivePlayerMask >> gLocalPlayer) & 1) != 0
      && gLocalPlayer == gCurTask->player->playerIndex
@@ -939,10 +939,10 @@ void Task_GoalGameSmallTrailStar(void)
     TaskExitTrampoline();
 }
 
-void sub_0805c584(void)
+void PlayerGoalGameRideSpring(void)
 {
     struct Task *t = gCurTask;
-    s16 *tbl = (s16 *)gUnk_0873DCCC;
+    s16 *tbl = (s16 *)gGoalGameSpringDepths;
 
     t->pixelY = 1024 + tbl[t->playerGoalGameSpringTimer];
     t->posY = t->pixelY << 16;
@@ -1274,7 +1274,7 @@ void Task_GoalGameHelperKirby(void)
         gCurTask->variant = 1;
     else
         gCurTask->variant = 0;
-    sub_0805d994(gCurTask->unk28, gCurTask->variant);
+    GoalGameHelperKirbyInitSprite(gCurTask->unk28, gCurTask->variant);
     gCurTask->layer = 8;
     switch (gCurTask->variant)
     {
@@ -1643,7 +1643,7 @@ top:
     t3->unk1C = m;
 }
 
-void sub_0805d994(s32 a0, s32 a1)
+void GoalGameHelperKirbyInitSprite(s32 a0, s32 a1)
 {
     if (a1 == 0)
     {
@@ -1660,12 +1660,12 @@ void sub_0805d994(s32 a0, s32 a1)
             gCurTask->tileWord = ((a0 << 3) + 896) | -12272;
     }
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0805da2c;
+    gCurTask->drawCallback = (u32)GoalGameHelperKirbyDraw;
     gCurTask->layer = 7;
     gCurTask->frameTable = gPlayerFrames;
 }
 
-void sub_0805da2c(void)
+void GoalGameHelperKirbyDraw(void)
 {
     struct Task *t;
     struct Task *s;

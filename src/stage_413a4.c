@@ -1268,7 +1268,7 @@ void sub_08042c50(void)
             }
         }
         if ((gCurTask->player->unk42 & 32) == 0)
-            sub_0803e080();
+            PlayerUpdatePaletteFlash();
         break;
     case 2:
         if (--gCurTask->player->unk14 == 0)

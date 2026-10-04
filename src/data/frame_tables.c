@@ -2581,7 +2581,7 @@ u32 gUnk_0874C718[] FRAME_TABLE = {
     (u32)gUnk_080D3758,
 };
 
-/* gUnk_0874C780.  Consumer: sub_08055a40 (src/effect_55460.c:255).  1 word,
+/* gUnk_0874C780.  Consumer: PlayerEffectLocalPlayerArrow (src/effect_55460.c:255).  1 word,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x0874C780-0x0874C784).  Declared
  * include/effect.h:79. */
@@ -3417,7 +3417,7 @@ u32 gUnk_0874CF94[] FRAME_TABLE = {
 };
 
 /* gPlayerFrames.  Consumers: Task_Player (src/player_32688.c:80),
- * PlayerWarpStarRideInit (src/actor_6e0f0.c:670), sub_0805d994
+ * PlayerWarpStarRideInit (src/actor_6e0f0.c:670), GoalGameHelperKirbyInitSprite
  * (src/effect_5afac.c:1665) and 2 more.  4713 words, the player's struct
  * TaskGfx records (tagged 20-byte variant); extent: the span to the next
  * label, every word such a target (pointer_tables 0x0874CFEC-0x08751990).
@@ -8138,7 +8138,7 @@ u32 gPlayerFrames[] FRAME_TABLE = {
     (u32)&gUnk_0823ABE8,
 };
 
-/* gUnk_08751990.  Consumer: sub_0803ce98 (src/stage_3cd60.c:154).  15
+/* gUnk_08751990.  Consumer: PlayerUpdateBlink (src/stage_3cd60.c:154).  15
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08751990-0x087519CC).  Declared
  * include/player.h:332. */
@@ -12446,7 +12446,7 @@ u32 gUnk_0875483C[] FRAME_TABLE = {
 
 /* gUnk_08754850.  Consumer: Task_GoalGameSpring (src/effect_5afac.c:1122)
  * installs it with one player and shows frames 0-1
- * (src/effect_5afac.c:1135-1137), and the charge step sub_0805c584 frame 2
+ * (src/effect_5afac.c:1135-1137), and the charge step PlayerGoalGameRideSpring frame 2
  * (src/effect_5afac.c:952).  3 words, OAM template streams; extent: that
  * index bound, the span to gUnk_0875485C = gUnk_0873DD4C[0].  The
  * pointer_tables entry 0x08754850-0x0875488C predates the four player

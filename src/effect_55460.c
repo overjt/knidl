@@ -16,8 +16,8 @@
  * (sub_0805574c) has no draw hook and draws itself through its Task.updateCallback
  * callback sub_080557d4 (QueueSprite); 20 (sub_0805587c) is a
  * three-sub-state puff whose sub-states 0 and 1 (one differing store, then a
- * shared body) spawn its sub-state 2; 21 (sub_08055a40) rides on its
- * spawner, and sub_08055abc kills it (or, while gUnk_0300244C is set, hides
+ * shared body) spawn its sub-state 2; 21 (PlayerEffectLocalPlayerArrow) rides on its
+ * spawner, and PlayerEffectLocalPlayerArrowUpdate kills it (or, while gUnk_0300244C is set, hides
  * it) when the player is in mode 13, 16, 18 or 20. */
 
 /* Declared here, not through a header: the calls in this file pass other
@@ -243,13 +243,13 @@ void sub_0805587c(void)
     TaskExitTrampoline();
 }
 
-void sub_08055a40(void)
+void PlayerEffectLocalPlayerArrow(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
-    gCurTask->updateCallback = (u32)sub_08055abc;
+    gCurTask->updateCallback = (u32)PlayerEffectLocalPlayerArrowUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C780;
@@ -267,7 +267,7 @@ void sub_08055a40(void)
     TaskExitTrampoline();
 }
 
-void sub_08055abc(void)
+void PlayerEffectLocalPlayerArrowUpdate(void)
 {
     if (gUnk_0300244C == 0)
     {

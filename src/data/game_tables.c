@@ -443,7 +443,7 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
     sub_08055520,
     sub_0805574c,
     sub_0805587c,
-    sub_08055a40,
+    PlayerEffectLocalPlayerArrow,
     PlayerEffectHurtFlames,
     PlayerEffectHurtSparks,
     sub_0805614c,

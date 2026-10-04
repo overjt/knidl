@@ -4277,8 +4277,8 @@ gUnk_0873D5CA:
 	.global	gPlayerDoorAnims
 gPlayerDoorAnims:
 	.incbin	"baserom.gba", 0x73D632, 0x16C
-	.global	gUnk_0873D79E
-gUnk_0873D79E:
+	.global	gPlayerWaterDoorAnims
+gPlayerWaterDoorAnims:
 	.incbin	"baserom.gba", 0x73D79E, 0x46
 	.global	gUnk_0873D7E4
 gUnk_0873D7E4:
@@ -4361,8 +4361,8 @@ gUnk_0873DCC0:
 	.global	gUnk_0873DCC8
 gUnk_0873DCC8:
 	.incbin	"baserom.gba", 0x73DCC8, 0x4
-	.global	gUnk_0873DCCC
-gUnk_0873DCCC:
+	.global	gGoalGameSpringDepths
+gGoalGameSpringDepths:
 	.incbin	"baserom.gba", 0x73DCCC, 0x4A
 	.global	gUnk_0873DD16
 gUnk_0873DD16:

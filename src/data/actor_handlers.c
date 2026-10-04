@@ -269,7 +269,7 @@ s32 PickupEnterWater(void);
 s32 AbilityStarBounceOffFloor(void);
 s32 AbilityStarEnterWater(void);
 s32 AbilityStarBounceOffWall(void);
-s32 sub_080b442c(void);
+s32 AbilityStarHitCeiling(void);
 
 /* ---- 0x0873F5FC-0x0873F664: 6 record(s), section .actor_tbl_0873f5fc ---- */
 /* gAbilityStarDef */
@@ -280,7 +280,7 @@ struct ActorHandlers gAbilityStarTerrainHandlers ACTOR_TBL(0873f5fc) = {
     .leaveWaterCallback = 0,
     .hitWallCallback = (u32)AbilityStarBounceOffWall,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_080b442c,
+    .hitCeilingCallback = (u32)AbilityStarHitCeiling,
 };
 /* 4 ActorDefs (gOneUpDef, gMaximTomatoDef, ...) */
 struct ActorHandlers gPickupTerrainHandlers ACTOR_TBL(0873f5fc) = {

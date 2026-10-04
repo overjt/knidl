@@ -14,7 +14,7 @@
  * Player action body, part 8: action 21 (PlayerActionExitDoor, 3612 bytes), the
  * walk through a door the player entered with action 20.  It plays the
  * ability's door animations (gPlayerDoorAnims[ability][1..6], or
- * sub_0803f7e0 for the form with Task.waterFlags bit 0 set), moves the player
+ * PlayerGetWaterDoorAnim for the form with Task.waterFlags bit 0 set), moves the player
  * by the door side kept in Task.unk2C, drives the door's M08 stage
  * objects through M07's helpers (CreateEntryDoorOpening ... sub_08026704) and the
  * cameras through CameraStartFollowingPlayer/CameraStartPlayersAtAnchor/ArePlayerCamerasDoneGliding/CameraResumeFollowFocus;
@@ -42,9 +42,9 @@ void PlayerActionExitDoor(void)
     gCurTask->frame = 0xFFFF;
     TaskInitWaterFlags();
     sub_08021c74((s8 *)gPlayerDefaultTerrainBox, gCurTaskIdx);
-    if (gUnk_020055C4 == 0)
+    if (gPlayerOrderShuffleCount == 0)
     {
-        sub_0803f6e0();
+        ShufflePlayerOrder();
         if (gPlayerCount > 1 && gEntryDoorEvent == 1)
         {
             for (i = 0; i < gPlayerCount; i++)
@@ -113,7 +113,7 @@ void PlayerActionExitDoor(void)
         }
         else
         {
-            gCurTask->playerBaseFrame = sub_0803f7e0(1);
+            gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(1);
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
@@ -157,7 +157,7 @@ void PlayerActionExitDoor(void)
             if (!(t->waterFlags & 1))
                 t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][2];
             else
-                gCurTask->playerBaseFrame = sub_0803f7e0(2);
+                gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(2);
         }
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskYieldTrampoline(2);
@@ -174,7 +174,7 @@ void PlayerActionExitDoor(void)
         if (gCurTask->unk2C == 0)
         {
             sub_08026584();
-            sub_08040808(gCurTask->player->playerIndex);
+            CreateLocalPlayerArrow(gCurTask->player->playerIndex);
         }
         break;
     case 1:
@@ -213,7 +213,7 @@ void PlayerActionExitDoor(void)
                 if (!(t->waterFlags & 1))
                     t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][2];
                 else
-                    gCurTask->playerBaseFrame = sub_0803f7e0(2);
+                    gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(2);
             }
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
@@ -290,7 +290,7 @@ void PlayerActionExitDoor(void)
             else
             {
                 PlayerSetMotionXPreset(10, 11);
-                gCurTask->frame = gCurTask->playerBaseFrame = sub_0803f7e0(3);
+                gCurTask->frame = gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(3);
                 TaskYieldTrampoline(4);
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
@@ -308,7 +308,7 @@ void PlayerActionExitDoor(void)
         else
         {
             PlayerSetMotionYPreset(21);
-            gCurTask->playerBaseFrame = sub_0803f7e0(4);
+            gCurTask->playerBaseFrame = PlayerGetWaterDoorAnim(4);
         }
         gCurTask->frame = gCurTask->playerBaseFrame;
         TaskYieldTrampoline(2);
@@ -371,7 +371,7 @@ void PlayerActionExitDoor(void)
             }
             else
             {
-                gCurTask->frame = sub_0803f7e0(5);
+                gCurTask->frame = PlayerGetWaterDoorAnim(5);
                 TaskYieldTrampoline(24);
             }
         }
@@ -501,7 +501,7 @@ void PlayerActionExitDoor(void)
         else
         {
             PlayerSetMotionYPreset(21);
-            gCurTask->frame = sub_0803f7e0(6);
+            gCurTask->frame = PlayerGetWaterDoorAnim(6);
             TaskYieldTrampoline(14);
             PlayerSetMotionXPreset(10, 15);
             while (!(gCurTask->onGround & 1))
@@ -519,7 +519,7 @@ void PlayerActionExitDoor(void)
         {
             gPlayerStates[i].unk42 &= 0xFFBF;
             if (gPlayerHealth[i] != 0)
-                sub_08040808(i);
+                CreateLocalPlayerArrow(i);
             if (i != gCurTaskIdx)
                 TaskSetSkipMask(0, i);
         }

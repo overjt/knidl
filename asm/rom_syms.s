@@ -103,8 +103,8 @@ gBg3MapShape = 0x020055B0
 gBlockAnimClipRect = 0x020055B8
 	.global	gWarpStarRideSlot
 gWarpStarRideSlot = 0x020055C0
-	.global	gUnk_020055C4
-gUnk_020055C4 = 0x020055C4
+	.global	gPlayerOrderShuffleCount
+gPlayerOrderShuffleCount = 0x020055C4
 	.global	gRoomBgmStarted
 gRoomBgmStarted = 0x020055C8
 	.global	gExtraModeTitleSeen

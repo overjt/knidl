@@ -196,7 +196,7 @@ void Task_Player(void)
         if (gCurTask->player->ability == ABILITY_UFO)
             gCurTask->player->action = PLAYER_ACTION_UFO;
         gCurTask->player->mode = 21;
-        sub_08040808(gCurTask->player->playerIndex);
+        CreateLocalPlayerArrow(gCurTask->player->playerIndex);
         break;
     }
     if (gMetaKnightmareMode == 0)
@@ -350,7 +350,7 @@ post:
     gCurTask->player->hitsThisFrame = 0;
     sub_0803fb54();
     if (!(gCurTask->player->unk42 & 32))
-        sub_0803e080();
+        PlayerUpdatePaletteFlash();
     if ((gMetaKnightmareMode == 1 || gUnk_0300244C != 0)
      && (gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
         goto check;
@@ -545,7 +545,7 @@ void sub_08033414(void)
             gCurTask->u76.unk76 &= 0xFFFD;
         }
         if (!(gCurTask->player->unk40 & 128))
-            sub_0803ce98();
+            PlayerUpdateBlink();
     }
     if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
         TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);

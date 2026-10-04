@@ -119,7 +119,7 @@ void HubResetPlayers(void)
         gLifeRequests.gameOver[i] = 0;
         InitPlayerState(i);
     }
-    gUnk_020055C4 = 0;
+    gPlayerOrderShuffleCount = 0;
 }
 
 void ResetTasksAndPlayers(void)
@@ -183,7 +183,7 @@ void StageInit(void)
     gScreenAttackActive = 0;
     gRoomExitKind = 0;
     gDanceId = -1;
-    gUnk_020055C4 = 0;
+    gPlayerOrderShuffleCount = 0;
     for (player = 0; player < 4; player++)
         gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = gLatchedHeldKeys[player] = gLatchedPressedKeys[player] = 0;
     gStageRequest = STAGE_REQUEST_NONE;

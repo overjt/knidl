@@ -126,7 +126,7 @@ void sub_0806ff7c(void)
         gfx = PlayerLoadFrameTilesAndPalette(0);
     }
     if (gPlayerCount > 1)
-        sub_0803d7c4();
+        PlayerLoadPlayerPalette();
     sub_0803db74();
     x = dx;
     y = dy;
@@ -424,7 +424,7 @@ void sub_08070614(u32 a)
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
-    sub_08040808(a);
+    CreateLocalPlayerArrow(a);
 }
 
 void MetaKnightWarpStarRideInit(void)

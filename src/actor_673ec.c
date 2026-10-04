@@ -64,7 +64,7 @@ void HeldPlayerUpdate(void)
     CallTableEntry(gCurTask->updateState, 11, gHeldPlayerStateUpdates);
     PlayerUpdateInvulnerability();
     if ((gCurTask->player->unk42 & 32) == 0)
-        sub_0803e080();
+        PlayerUpdatePaletteFlash();
     if (gLocalPlayer == gCurTask->player->playerIndex)
         SetCameraFocus(gCurTask->pixelX, gCurTask->pixelY);
 }

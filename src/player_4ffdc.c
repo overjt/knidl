@@ -105,8 +105,8 @@ void PlayerStarRodFlightIntro(void)
     TaskYieldTrampoline(16);
     gCurTask->velY = 0x2000;
     TaskYieldTrampoline(16);
-    if (gUnk_020055C4 == 0)
-        sub_0803f6e0();
+    if (gPlayerOrderShuffleCount == 0)
+        ShufflePlayerOrder();
     {
         struct Task *t = gCurTask;
         u16 *e = gUnk_0873B6CC[t->unk2C];
