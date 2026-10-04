@@ -11700,6 +11700,86 @@ out of reach of a one-core-per-image harness.
   the coordinator's bar for 3.526's redundant store was "meaningful code,
   not a placeholder", with a comment at the site so nobody cleans it up.
 
+### 4.166 Register aliases: cpp identity proves the tokens, a gcc type check proves the struct
+#155 run 5 named `struct Task`'s per-family registers with object-like
+alias macros (`include/task_vars.h`, `tools/task_alias.py`; pret's `#define
+tState data[0]`).  An alias expands back to `unkXX`, so the proof that it
+changes nothing is that every translation unit's `cpp -P` output
+(whitespace collapsed) equals the parent commit's: 321 units in about 7 s
+in the knidl-builder image.  That proof is blind to one mistake: an alias
+written on ANOTHER struct's `unkXX` (an `Actor *`, a local copy) also
+expands back to the same tokens.  `--verify-types` closes it: a copy of the
+tree in which each aliased member of `struct Task` becomes an anonymous
+union of the member and its aliases, with the macros removed, compiled by
+gcc 12 `-fsyntax-only`; an alias on any other struct is then a new "has no
+member" error (the baseline has 12,813 errors from agbcc-only constructs,
+so the check compares error sets, as `rename_field.py` does).  A negative
+test (an alias on `gActors[0]`) fails it as expected.  `rename.py
+--verify-diff` was taught the `alias` rows of `renames.csv` (and alias
+chains, `Task.<old alias>` -> `Task.<new>`, for merges), so one command
+still proves the whole branch from `origin/master`.
+
+### 4.167 A struct-member census from gcc's "has no member" errors
+Which accesses are `struct Task`'s `unk28`, among dozens of structs with an
+`unk28`?  `pending/names5/tools/taskcensus.py` renames the member in the
+copied header, compiles every unit with gcc 12 and reads the errors: each
+is an access on a `struct Task`, with its file, line and column.  gcc
+reports one error per expression, so the census renames the found
+accesses in its work copy and recompiles until nothing is left (two or
+three passes, 13 s for 10,484 accesses).  An access spelled through an
+alias macro errors at the macro's definition line in `task_vars.h`; the
+"note: in expansion of macro" line that follows gives the real site.  The
+census also records each access's pointer expression, which a self-pointer
+analysis (locals that only ever hold `gCurTask`) turns into "the family's
+own task" or "another task".
+
+### 4.168 A regex for a function definition also matches `if (Fn()) {`
+`^[^;{}]*\bFn\s*\([^;{]*\)\s*\{` matches a call site such as `if
+(BombRallyPlayerJudgePress()) {`, so a helper that took the first match
+read 15 functions' self pointers from the wrong body (one of them treated
+a parent pointer `u = &gTasks[t->parent]` as the task itself).  Require
+a definition to start at column 0 with a type and to sit at brace depth
+0, as `tools/task_alias.py`'s own `function_span` did, which is why no
+alias landed on a wrong pointer: an audit of every applied non-`gCurTask`
+site against the fixed analysis found none outside the agents' explicit,
+proven child and parent sites.
+
+### 4.169 Shared-role aliases, and when a family alias is the wrong shape
+The owner's coordinator ruled that a register whose role a SHARED helper's
+contract fixes gets one role alias without a family prefix: the delay
+`ActorStartAnim` / `ActorTickAnim` return (`actorAnimDelay`), the spawn
+argument every actor spawner stores (`actorSpawnArg`), the dust-trail child
+`TaskFreeDustTrail` frees (`actorDustTrailSlot`), the door kind
+`CreateEntryDoorOpening` reads (`doorObjectKind`), and the registers the
+actor core's own states fix for any actor (drown, defeat, freeze, carry,
+throw, swallow).  A macro maps one member, so the same role kept in another
+register carries the offset (`actorAnimDelay34`).  Three family aliases
+turned out to be shared roles after they were applied and were merged with
+`tools/task_alias.py --rename` (a chain row in `renames.csv`).  A
+convention that is only a code style (unk6C as the running loop's counter
+in nearly every coroutine) stays per family, with one word
+(`<family>LoopCount`) so siblings read alike.
+
+### 4.170 Harness notes from #155 run 5 (names and register aliases)
+* Four proposal agents by subject in two waves, each resumed with
+  `SendMessage` for 3-6 rounds of 5-25 minutes; a finished wave-1 agent
+  took a wave-2 subject (keeping its context of the conventions) instead of
+  a fresh agent.  Each agent wrote symbol rows and alias rows
+  (`family,alias,field,type,role,functions,evidence`, `functions` = `*`,
+  `@Family` or a list); `pending/names5/tools/expand_aliases.py` turned
+  them into the tool's site rows from the current census, so names changed
+  by a rename batch never broke an alias batch.
+* Re-run the census, the family classifier and `xref.json` after every
+  rename batch, before expanding aliases; a stale census made the agents'
+  dry runs report applied sites as missing.
+* `docs/audit.md` section 3 names each code exception's enclosing
+  function: a rename of that function fails `make audit` until the doc
+  follows it (the apply script now rewrites it from the batch).
+* A usage limit stopped the run for about two hours; every batch was
+  committed, the heartbeat was stopped, the agents resumed with their
+  context.  One agent died mid-round and was resumed with a message saying
+  where its files stood.
+
 ## 5. Workflow that worked
 
 The canonical per-function loop (pick → m2c first pass → asmdiff iterate →
