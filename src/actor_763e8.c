@@ -684,7 +684,7 @@ void Task_Cannon(void)
     }
 }
 
-u16 sub_080770a0(void)
+u16 CannonPickLaunchState(void)
 {
     s32 i = gLevelIndex * 2 + gCurTask->unk74;
     u16 v;
@@ -753,7 +753,7 @@ void sub_080771c4(void)
 void CannonFire(void)
 {
     if (gCurTask->unk1C == gActivePlayerCount)
-        CannonLaunchPlayers((s16)sub_080770a0());
+        CannonLaunchPlayers((s16)CannonPickLaunchState());
     else
     {
         CannonLaunchPlayers(3);
@@ -1031,7 +1031,7 @@ void Task_CannonFuse(void)
     }
 }
 
-void sub_0807775c(void)
+void CannonFuseInitBurn(void)
 {
     struct Task *t = gCurTask;
 
@@ -1042,7 +1042,7 @@ void sub_0807775c(void)
     t->unk18 = 0;
 }
 
-s32 sub_0807777c(struct M19Script *p)
+s32 CannonFuseGetPieceFrame(struct M19Script *p)
 {
     struct Task *t = gCurTask;
     u8 *q;
@@ -1081,7 +1081,7 @@ s32 sub_0807777c(struct M19Script *p)
     return (s16)v;
 }
 
-void sub_080777bc(s32 x, s32 y, s32 d)
+void CannonFuseEnterPiece(s32 x, s32 y, s32 d)
 {
     struct M19Script *p = gUnk_087401E4[gCurTask->unk20];
     struct Task *t = gCurTask;
@@ -1120,7 +1120,7 @@ void CannonFuseBurnStep(void)
 
     if (t->unk34 <= 0)
     {
-        gCurTask->frame = sub_0807777c(p);
+        gCurTask->frame = CannonFuseGetPieceFrame(p);
         if (gCurTask->frame != -1)
         {
             struct Task *u = gCurTask;
@@ -1164,7 +1164,7 @@ void CannonFuseStepCell(struct M19Script *p)
     gCurTask->unk20 = id;
     if (id != -1)
     {
-        sub_080777bc(x, y, d);
+        CannonFuseEnterPiece(x, y, d);
     }
     else
     {
@@ -1208,7 +1208,7 @@ void sub_08077980(void)
         {
             struct Task *u;
 
-            gCurTask->frame = sub_0807777c(p);
+            gCurTask->frame = CannonFuseGetPieceFrame(p);
             u = gCurTask;
             u->unk1C--;
         }

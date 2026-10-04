@@ -10113,7 +10113,7 @@ u32 gUnk_08752D8C[] FRAME_TABLE = {
     (u32)gUnk_0825D8A0,
 };
 
-/* gUnk_08752DB8.  Consumers: sub_080781fc (src/actor_77ae0.c:409),
+/* gUnk_08752DB8.  Consumers: RoomParticleDrawFixed (src/actor_77ae0.c:409),
  * Task_RoomParticles (src/actor_77ae0.c:569).  18 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08752DB8-0x08752E00).  Declared include/cutscene.h:120. */
@@ -10139,7 +10139,7 @@ u32 gUnk_08752DB8[] FRAME_TABLE = {
 };
 
 /* gUnk_08752E00.  Consumers: sub_08078258 (src/actor_77ae0.c:418),
- * sub_080782b4 (src/actor_77ae0.c:427), sub_0807831c
+ * RoomParticleDrawScrolled (src/actor_77ae0.c:427), RoomParticleDrawRepeated
  * (src/actor_77ae0.c:442) and 1 more.  18 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08752E00-0x08752E48).  Declared include/cutscene.h:121. */

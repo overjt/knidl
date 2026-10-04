@@ -1874,7 +1874,7 @@ vma,size,isa,evidence,name
 0x0807186C,0x2C,thumb,bl-target,WarpStarSetTrail
 0x08071898,0x28,thumb,bl-target,WarpStarStopTrail
 0x080718C0,0xE0,thumb,bl-target,WarpStarEmitTrailStars
-0x080719A0,0x210,thumb,rom-pointer,sub_080719a0
+0x080719A0,0x210,thumb,rom-pointer,WarpStarDrawFlight
 0x08071BB0,0x88,thumb,bl-target,WarpStarSetRiderState
 0x08071C38,0x88,thumb,bl-target,WarpStarSetMetaKnightRiderState
 0x08071CC0,0x6C,thumb,bl-target,CreateFlyingWarpStar
@@ -1989,7 +1989,7 @@ vma,size,isa,evidence,name
 0x08076F50,0x94,thumb,bl-target,sub_08076f50
 0x08076FE4,0x78,thumb,bl-target,CannonLaunchPlayers
 0x0807705C,0x44,thumb,rom-pointer,Task_Cannon
-0x080770A0,0x50,thumb,bl-target,sub_080770a0
+0x080770A0,0x50,thumb,bl-target,CannonPickLaunchState
 0x080770F0,0x8C,thumb,bl-target,CannonLoadPlayer
 0x0807717C,0x34,thumb,bl-target,sub_0807717c
 0x080771B0,0x14,thumb,bl-target,sub_080771b0
@@ -2007,9 +2007,9 @@ vma,size,isa,evidence,name
 0x08077568,0x1B0,thumb,rom-pointer,CannonState3
 0x08077718,0x4,thumb,rom-pointer,CannonState3Update
 0x0807771C,0x40,thumb,rom-pointer,Task_CannonFuse
-0x0807775C,0x20,thumb,bl-target,sub_0807775c
-0x0807777C,0x40,thumb,bl-target,sub_0807777c
-0x080777BC,0x74,thumb,bl-target,sub_080777bc
+0x0807775C,0x20,thumb,bl-target,CannonFuseInitBurn
+0x0807777C,0x40,thumb,bl-target,CannonFuseGetPieceFrame
+0x080777BC,0x74,thumb,bl-target,CannonFuseEnterPiece
 0x08077830,0x68,thumb,bl-target,CannonFuseBurnStep
 0x08077898,0xE8,thumb,bl-target,CannonFuseStepCell
 0x08077980,0x5C,thumb,bl-target,sub_08077980
@@ -2049,11 +2049,11 @@ vma,size,isa,evidence,name
 0x080780C4,0x58,thumb,rom-pointer,RoomParticlesDrawRepeated
 0x0807811C,0x60,thumb,bl-target,RoomParticleStepX
 0x0807817C,0x80,thumb,bl-target,RoomParticleInit
-0x080781FC,0x5C,thumb,bl-target,sub_080781fc
+0x080781FC,0x5C,thumb,bl-target,RoomParticleDrawFixed
 0x08078258,0x5C,thumb,curated,sub_08078258
-0x080782B4,0x68,thumb,bl-target,sub_080782b4
-0x0807831C,0xC4,thumb,bl-target,sub_0807831c
-0x080783E0,0x2C,thumb,bl-target,sub_080783e0
+0x080782B4,0x68,thumb,bl-target,RoomParticleDrawScrolled
+0x0807831C,0xC4,thumb,bl-target,RoomParticleDrawRepeated
+0x080783E0,0x2C,thumb,bl-target,RoomParticleIsOnScreen
 0x0807840C,0x18C,thumb,bl-target,RoomParticleStepY
 0x08078598,0xD8,thumb,rom-pointer,Task_RoomParticles
 0x08078670,0x44,thumb,rom-pointer,RoomParticlesVariant0

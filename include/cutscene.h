@@ -24,7 +24,7 @@ struct M19Frame
 
 /* The eight 4-byte records at 0x03000FE0 that M19's credits tasks animate:
    a frame table index (unk00), the frame within it (unk01), the timer
-   (unk02) and the countdown sub_080782b4 draws on (unk03). */
+   (unk02) and the countdown RoomParticleDrawScrolled draws on (unk03). */
 struct M19Particle
 {
     /*0x00*/ u8 unk00;
@@ -36,7 +36,7 @@ struct M19Particle
 /* The 0x087401E4 script records M19's ending-sequence tasks walk: a pointer
    table indexed by Task.unk20, each entry a header plus two `s16` step lists
    (the "forward" list at +6 and the "reverse" one at +18) that
-   sub_0807777c picks between on Task.unk18/unk24. */
+   CannonFuseGetPieceFrame picks between on Task.unk18/unk24. */
 struct M19Script
 {
     /*0x00*/ u8 unk00[4];
@@ -228,7 +228,7 @@ void WarpStarFlightEnterState(void);
 void WarpStarSetTrail(int a, int b, int c, int d);
 void WarpStarStopTrail(void);
 void WarpStarEmitTrailStars(void);
-void sub_080719a0(void);
+void WarpStarDrawFlight(void);
 void WarpStarSetRiderState(u16 a);
 void WarpStarSetMetaKnightRiderState(u16 a);
 void CreateFlyingWarpStar(int x, int y, int c);
@@ -349,7 +349,7 @@ void sub_08076f04(s32 id);
 void sub_08076f50(s32 id);
 void CannonLaunchPlayers(int a);
 void Task_Cannon(void);
-u16 sub_080770a0(void);
+u16 CannonPickLaunchState(void);
 void CannonLoadPlayer(s32 id);
 void sub_0807717c(void);
 void sub_080771b0(void);
@@ -367,9 +367,9 @@ void CannonState2Update(void);
 void CannonState3(void);
 void CannonState3Update(void);
 void Task_CannonFuse(void);
-void sub_0807775c(void);
-s32 sub_0807777c(struct M19Script *p);
-void sub_080777bc(s32 x, s32 y, s32 d);
+void CannonFuseInitBurn(void);
+s32 CannonFuseGetPieceFrame(struct M19Script *p);
+void CannonFuseEnterPiece(s32 x, s32 y, s32 d);
 void CannonFuseBurnStep(void);
 void CannonFuseStepCell(struct M19Script *p);
 void sub_08077980(void);
@@ -411,11 +411,11 @@ void RoomParticlesDrawBelowLine(void);
 void RoomParticlesDrawRepeated(void);
 void RoomParticleStepX(struct M19Particle *p);
 void RoomParticleInit(struct M19Particle *p, u8 a, u8 b);
-void sub_080781fc(struct M19Particle *p);
+void RoomParticleDrawFixed(struct M19Particle *p);
 void sub_08078258(struct M19Particle *p);
-void sub_080782b4(struct M19Particle *p);
-void sub_0807831c(struct M19Particle *p);
-u8 sub_080783e0(s16 x, s16 y);
+void RoomParticleDrawScrolled(struct M19Particle *p);
+void RoomParticleDrawRepeated(struct M19Particle *p);
+u8 RoomParticleIsOnScreen(s16 x, s16 y);
 void RoomParticleStepY(struct M19Particle *p, u8 a);
 void Task_RoomParticles(void);
 void RoomParticlesVariant0(void);

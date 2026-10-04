@@ -419,7 +419,7 @@ void WarpStarStartFlight(void)
     {
         struct Task *u = gCurTask;
 
-        u->drawCallback = (u32)sub_080719a0;
+        u->drawCallback = (u32)WarpStarDrawFlight;
         u->layer = 10;
     }
     t = gCurTask;
@@ -518,7 +518,7 @@ void WarpStarEmitTrailStars(void)
     }
 }
 
-void sub_080719a0(void)
+void WarpStarDrawFlight(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
