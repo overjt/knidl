@@ -11,7 +11,7 @@
  * Player action bodies, part 26: actions 56-58 and per-frame handlers
  * 53-55.  PlayerActionStarRod (action 56, mode 13) installs the collider row
  * gUnk_0873C2C8, plays sound 155 and animations 0x1026/0x102A and spawns
- * task type #6's variant 11 through sub_08053a44; its handler PlayerActionStarRodUpdate
+ * task type #6's variant 11 through CreatePlayerObjectLowSlot; its handler PlayerActionStarRodUpdate
  * re-binds it and requests action 2 once the animation ends.
  * PlayerActionStarRodJump (action 57, mode 13) plays animation 0xFE5 with the collider
  * row gUnk_0873C304; its handler PlayerActionStarRodJumpUpdate is a `switch (Task.variant)`
@@ -28,7 +28,7 @@ void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < coun
 void TaskSetEntry(void *a, u32 i);
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-s32 sub_08053a44(s8 player, u8 variant, s32 arg);
+s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg);
 
 void PlayerActionStarRod(void)
 {
@@ -55,7 +55,7 @@ void PlayerActionStarRod(void)
     TaskYieldTrampoline(1);
     TaskSetFrame(0x102A);
     TaskYieldTrampoline(1);
-    sub_08053a44(gCurTask->player->playerIndex, 11, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 11, 0);
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
     {
         struct Task *t = gCurTask;

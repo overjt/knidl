@@ -16,13 +16,13 @@
  * player's palettes gUnk_081BE6BC[player] into the OBJ palette buffer
  * (BlendColors, raising PlayerState.unk42 bit 4 while it does).
  * PlayerActionCutter (action 34, mode 13) is a linear yield script (animation
- * 0x3E9, effect 28 on the ground, M14's sub_08053a44, sound 144); its
+ * 0x3E9, effect 28 on the ground, M14's CreatePlayerObjectLowSlot, sound 144); its
  * handler PlayerActionCutterUpdate re-enters it on a newly-pressed B and requests
  * action 2 when left or right is held on the ground. */
 
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 void TaskSetEntry(void *a, u32 i);
-void sub_08053a44(s32 a0, s32 a1, s32 a2);   /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
+void CreatePlayerObjectLowSlot(s32 a0, s32 a1, s32 a2);   /* M14, src/plobj_52f6c.c (defined s32 (s8, u8, s32); the result is unused here) */
 
 void PlayerActionSparkUpdate(void)
 {
@@ -117,7 +117,7 @@ void PlayerActionCutter(void)
     TaskYieldTrampoline(2);
     if (gCurTask->onGround & 1)
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
-    sub_08053a44(gCurTask->player->playerIndex, 5, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 5, 0);
     gCurTask->unk28++;
     PlaySfxIfLocalPlayer(144, gCurTask->player->playerIndex);
     gCurTask->frame++;

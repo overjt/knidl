@@ -130,7 +130,7 @@ void Task_BigSwitch(void)
     }
 }
 
-s32 sub_08077ca4(void)
+s32 BigSwitchHitterCanPress(void)
 {
     struct PlayerState *p = &gPlayerStates[gCurTask->hitterSlot];
 
@@ -223,7 +223,7 @@ void BigSwitchWait(void)
 
 void BigSwitchWaitUpdate(void)
 {
-    if (gBigSwitchPressActive == 0 && ActorCheckHits() && (u8)sub_08077ca4())
+    if (gBigSwitchPressActive == 0 && ActorCheckHits() && (u8)BigSwitchHitterCanPress())
         BigSwitchStartPress();
 }
 

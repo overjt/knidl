@@ -26,7 +26,7 @@
  *       (LoadBgLayout), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
  *       task and run frames (RunLinkFrame) until it clears gEndingSceneActive,
  *       then tear the level down (sub_08027178).
- *   sub_080c6354 / sub_080c63ec   spawn M38's task type #100 / #101,
+ *   CreateEndingEpilogue / CreateEndingStarRodReturn   spawn M38's task type #100 / #101,
  *       retrying every frame until a slot is free, with Task.variant = 0. */
 
 s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task */
@@ -58,7 +58,7 @@ void EndingEpilogueScene(void)
     LoadBgLayout(15);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
-    sub_080c6354();
+    CreateEndingEpilogue();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
     while (gEndingSceneActive != 0)
@@ -68,7 +68,7 @@ void EndingEpilogueScene(void)
     sub_08027178();
 }
 
-void sub_080c6354(void)
+void CreateEndingEpilogue(void)
 {
     s32 id;
     struct Task *t;
@@ -86,7 +86,7 @@ void EndingStarRodReturnScene(void)
     LoadBgLayout(16);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1C00;
-    sub_080c63ec();
+    CreateEndingStarRodReturn();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();
     while (gEndingSceneActive != 0)
@@ -96,7 +96,7 @@ void EndingStarRodReturnScene(void)
     sub_08027178();
 }
 
-void sub_080c63ec(void)
+void CreateEndingStarRodReturn(void)
 {
     s32 id;
     struct Task *t;

@@ -166,7 +166,7 @@ u32 gWarpStarCameraPaths[25] ACTOR_TBL(0873fbac) = {
     (u32)sub_08074628,
     (u32)sub_080745dc,
     (u32)sub_08074628,
-    (u32)sub_08074588,
+    (u32)WarpStarCameraFollowPlayer,
     (u32)sub_08074638,
     (u32)sub_080746c0,
     (u32)sub_080745d0,

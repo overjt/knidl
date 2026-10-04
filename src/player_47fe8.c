@@ -21,7 +21,7 @@
  * (SetPlayerAbilityNoHud, HudShowAbilityAnimated), loads its sprite tiles (M13's
  * LoadAbilityTiles) and plays the ability's own pose - a 25-way switch on
  * PlayerState.ability - 1 whose arms install hit boxes, spawn effects
- * and load extra tiles (sub_08049a58) - before it restores the palette
+ * and load extra tiles (PlayerLoadSparkTiles) - before it restores the palette
  * and the mode (the fade back, BeginFade(4, 2, ...)) and unfreezes
  * the stage.  Its handler PlayerActionGetAbilityUpdate hands
  * over to the ability's own follow-up once Task.unk28 is set (action 42
@@ -239,7 +239,7 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            sub_08049a58();
+            PlayerLoadSparkTiles();
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
             break;
         case 1:
@@ -265,7 +265,7 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(2);
             TaskSetFrame(0x28F);
             TaskYieldTrampoline(1);
-            sub_08049a58();
+            PlayerLoadSparkTiles();
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
             break;
         case 2:
@@ -341,7 +341,7 @@ void PlayerActionGetAbility(void)
             CreatePlayerEffect(gCurTask->player->playerIndex, 32, 8);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            sub_08049a58();
+            PlayerLoadSparkTiles();
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
             break;
         case 5:

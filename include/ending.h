@@ -101,9 +101,9 @@ extern u16 gCreditsDemoLengths[][7]; /* credits: per variant, the scenes' length
 /* src/mode_c6260.c */
 void EndingMain(void);
 void EndingEpilogueScene(void);
-void sub_080c6354(void);
+void CreateEndingEpilogue(void);
 void EndingStarRodReturnScene(void);
-void sub_080c63ec(void);
+void CreateEndingStarRodReturn(void);
 
 /* src/results_c6420.c */
 void FinalResultsScreen(void);

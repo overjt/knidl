@@ -1357,7 +1357,7 @@ void WarpStarCameraUpdate(void)
     SetCameraFocusOrAnchor(t->pixelX, t->pixelY);
 }
 
-void sub_08074588(void)
+void WarpStarCameraFollowPlayer(void)
 {
     while (1)
     {

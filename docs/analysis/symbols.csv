@@ -1076,7 +1076,7 @@ vma,size,isa,evidence,name
 0x08047FE8,0x1000,thumb,rom-pointer,PlayerActionGetAbility
 0x08049484,0x2B4,thumb,rom-pointer,PlayerActionGetAbilityUpdate
 0x08049738,0x320,thumb,bl-target,LoadAbilityTiles
-0x08049A58,0xF0,thumb,bl-target,sub_08049a58
+0x08049A58,0xF0,thumb,bl-target,PlayerLoadSparkTiles
 0x08049B48,0x1D4,thumb,rom-pointer,PlayerActionIce
 0x08049D1C,0x78,thumb,rom-pointer,PlayerActionIceUpdate
 0x08049D94,0x148,thumb,rom-pointer,PlayerActionFreeze
@@ -1178,7 +1178,7 @@ vma,size,isa,evidence,name
 0x080537DC,0xF0,thumb,rom-pointer,PlayerObjectStarRodFlightShot
 0x080538CC,0x74,thumb,rom-pointer,PlayerObjectStarRodFlightShotUpdate
 0x08053940,0x104,thumb,bl-target,CreatePlayerObject
-0x08053A44,0xB0,thumb,bl-target,sub_08053a44
+0x08053A44,0xB0,thumb,bl-target,CreatePlayerObjectLowSlot
 0x08053AF4,0x4C,thumb,rom-pointer,Task_PlayerEffect
 0x08053B40,0xA0,thumb,rom-pointer,sub_08053b40
 0x08053BE0,0x3C,thumb,rom-pointer,sub_08053be0
@@ -1923,7 +1923,7 @@ vma,size,isa,evidence,name
 0x0807447C,0x90,thumb,rom-pointer,sub_0807447c
 0x0807450C,0x5C,thumb,rom-pointer,Task_WarpStarCamera
 0x08074568,0x20,thumb,rom-pointer,WarpStarCameraUpdate
-0x08074588,0x48,thumb,rom-pointer,sub_08074588
+0x08074588,0x48,thumb,rom-pointer,WarpStarCameraFollowPlayer
 0x080745D0,0xC,thumb,rom-pointer,sub_080745d0
 0x080745DC,0x4C,thumb,rom-pointer,sub_080745dc
 0x08074628,0x10,thumb,rom-pointer,sub_08074628
@@ -2025,7 +2025,7 @@ vma,size,isa,evidence,name
 0x08077BF0,0x3C,thumb,rom-pointer,CannonFuseState2
 0x08077C2C,0x38,thumb,rom-pointer,CannonFuseState2Update
 0x08077C64,0x40,thumb,rom-pointer,Task_BigSwitch
-0x08077CA4,0x30,thumb,bl-target,sub_08077ca4
+0x08077CA4,0x30,thumb,bl-target,BigSwitchHitterCanPress
 0x08077CD4,0x20,thumb,bl-target,sub_08077cd4
 0x08077CF4,0x44,thumb,bl-target,BigSwitchStartPress
 0x08077D38,0x1C,thumb,bl-target,BigSwitchStartRefill
@@ -5107,9 +5107,9 @@ vma,size,isa,evidence,name
 0x080C6258,0x8,thumb,bl-target,sub_080c6258
 0x080C6260,0x90,thumb,bl-target,EndingMain
 0x080C62F0,0x64,thumb,bl-target,EndingEpilogueScene
-0x080C6354,0x34,thumb,bl-target,sub_080c6354
+0x080C6354,0x34,thumb,bl-target,CreateEndingEpilogue
 0x080C6388,0x64,thumb,bl-target,EndingStarRodReturnScene
-0x080C63EC,0x34,thumb,bl-target,sub_080c63ec
+0x080C63EC,0x34,thumb,bl-target,CreateEndingStarRodReturn
 0x080C6420,0x1E0,thumb,bl-target,FinalResultsScreen
 0x080C6600,0x150,thumb,bl-target,DrawLargeClockScreen
 0x080C6750,0xBC,thumb,bl-target,ShowMilestonePicture

@@ -25,7 +25,7 @@
  * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
  * callbacks PlayerObjectStarRodShotUpdate and PlayerObjectStarRodFlightShotUpdate register the collider and hand
  * over to sub_08050814 on contact (variant 11 bounces back once on
- * collision result 6).  CreatePlayerObject and sub_08053a44 are the spawners
+ * collision result 6).  CreatePlayerObject and CreatePlayerObjectLowSlot are the spawners
  * the player's actions call (M09-M14): they start a task of type 6 in
  * the slot band of player 0-3 (4-6, 7-9, 10-12, 13-15; CreatePlayerObject
  * then retries a wider band and, last, a type-7 task in slots 32-62) and
@@ -494,7 +494,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
     return idx;
 }
 
-s32 sub_08053a44(s8 player, u8 variant, s32 arg)
+s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg)
 {
     s32 prio;
     s32 idx;

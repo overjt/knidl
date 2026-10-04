@@ -7,7 +7,7 @@
 /* plobj_507bc.c (0x080507BC-0x080509EB, issue #90).
  *
  * Task type #6 (the objects the player's actions spawn through
- * CreatePlayerObject/sub_08053a44): the body and two shared callbacks.  The body
+ * CreatePlayerObject/CreatePlayerObjectLowSlot): the body and two shared callbacks.  The body
  * Task_PlayerObject links the task to its spawner (Task.u8C.parentTask =
  * &gTasks[Task.parent], the first time only) and dispatches the
  * variant, the top byte of Task.unk18, through the 13 variant bodies

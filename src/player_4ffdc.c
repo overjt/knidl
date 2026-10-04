@@ -13,7 +13,7 @@
  * (gPlayerStarRodFlightVariantUpdates), interleaved in the ROM as 18, 22, 19, 23, 20, 24, 21,
  * 25, and their two helpers.  PlayerStarRodFlightIntro is a long yield script driven by
  * the 8.8 velocity pairs gUnk_0873B6CC; PlayerStarRodFlightShoot spawns task type #6's
- * variant 12 through sub_08053a44; PlayerStarRodFlightHurt switches the player to mode
+ * variant 12 through CreatePlayerObjectLowSlot; PlayerStarRodFlightHurt switches the player to mode
  * 17 with camera presets PlayerSetMotionXPreset(10, 24-27).  PlayerStarRodFlightCheckShoot re-binds
  * sub-action 2 when a direction is pressed or held for ten frames, and
  * PlayerStarRodFlightSteer steers the player with the held direction (velocity pairs
@@ -22,7 +22,7 @@
 
 void TaskSetEntry(void *a, u32 i);
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
-s32 sub_08053a44(s8 player, u8 variant, s32 arg);
+s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg);
 
 void PlayerStarRodFlightIntro(void)
 {
@@ -240,7 +240,7 @@ void PlayerStarRodFlightShoot(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
-    sub_08053a44(gCurTask->player->playerIndex, 12, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 12, 0);
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 9; gCurTask->playerLoopCount++)
     {
         gCurTask->frame++;

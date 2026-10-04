@@ -686,7 +686,7 @@ void PlayerActionGetAbilityUpdate(void);
 
 /* src/player_49738.c */
 void LoadAbilityTiles(void);
-void sub_08049a58(void);
+void PlayerLoadSparkTiles(void);
 
 /* src/player_49b48.c */
 void PlayerActionIce(void);

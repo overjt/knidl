@@ -51,7 +51,7 @@ void PlayerWarpStarRideState2(void)
 
     gCurTask->updateState = 2;
     sub_08070208();
-    sub_08049a58();
+    PlayerLoadSparkTiles();
     k = gCurTask->player->ability;
     if (k == 1 || k == 2 || (s8)k == 5 || (s8)k == 19 || (s8)k == 25)
     {

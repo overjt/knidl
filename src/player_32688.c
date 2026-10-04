@@ -102,7 +102,7 @@ void Task_Player(void)
         case 1:
         case 2:
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
-            sub_08049a58();
+            PlayerLoadSparkTiles();
             break;
         case 10:
             {
@@ -565,7 +565,7 @@ void sub_08033414(void)
             case 32:
             case 33:
                 CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
-                sub_08049a58();
+                PlayerLoadSparkTiles();
                 break;
             }
             gCurTask->player->unk36 = 0;

@@ -460,7 +460,7 @@ void PlayerActionExitDoor(void)
                 gCurTask->playerBaseFrame = 0x841;
                 goto anim;
             case 2:
-                sub_08049a58();
+                PlayerLoadSparkTiles();
             default:
             anim:
                 gCurTask->frame = gCurTask->playerBaseFrame;
