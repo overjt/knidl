@@ -429,7 +429,7 @@ u8 HitTestColliderClass10(void)
             if (!(gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION))
             {
                 u->u76.unk76 &= 0x4000;
-                u->u76.unk76 |= gColliderBodyBox->bodyFlags & 0x3FFF;
+                u->u76.unk76 |= gColliderBodyBox->bodyFlags & ~(BODY_BOX_FLAG_SHIELD | BODY_BOX_FLAG_NO_MIRROR);
             }
         }
         if (!(gAttackBox->class10ImmuneMask & 0x8000))

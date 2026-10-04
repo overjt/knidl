@@ -196,7 +196,7 @@ u8 HitTestColliderClass20(void)
             if (gColliderPlayer == 4)
                 continue;
             u->u76.unk76 &= 0x4000;
-            u->u76.unk76 |= gColliderBodyBox->bodyFlags & 0x3FFF;
+            u->u76.unk76 |= gColliderBodyBox->bodyFlags & ~(BODY_BOX_FLAG_SHIELD | BODY_BOX_FLAG_NO_MIRROR);
             continue;
         }
         m = gUnk_08732254[k];
@@ -224,7 +224,7 @@ u8 HitTestColliderClass20(void)
                 && gColliderPlayer != 4)
             {
                 u->u76.unk76 &= 0x4000;
-                u->u76.unk76 |= gColliderBodyBox->bodyFlags & 0x3FFF;
+                u->u76.unk76 |= gColliderBodyBox->bodyFlags & ~(BODY_BOX_FLAG_SHIELD | BODY_BOX_FLAG_NO_MIRROR);
             }
             switch (k)
             {
@@ -254,7 +254,7 @@ u8 HitTestColliderClass20(void)
         if (!(a->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION) && !(k == 5 && (a->attackFlags & ATTACK_BOX_FLAG_NO_HIGH_FALL_BOUNCE)) && gColliderPlayer != 4)
         {
             u->u76.unk76 &= 0x4000;
-            u->u76.unk76 |= b->bodyFlags & 0x3FFF;
+            u->u76.unk76 |= b->bodyFlags & ~(BODY_BOX_FLAG_SHIELD | BODY_BOX_FLAG_NO_MIRROR);
         }
         if (gColliderSlot != (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass != 32)
         {
