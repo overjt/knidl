@@ -69,10 +69,10 @@ void PoppyBrosSrInit(void)
 
     t = gCurTask;
     t->updateCallback = (u32)PoppyBrosSrUpdate;
-    t->unk2C = 0;
-    t->unk30 = 0;
-    t->unk34 = 0;
-    gCurTask->unk46 = CreateChildTaskHere(179, 1);
+    t->poppyBrosSrDefeatPhase = 0;
+    t->poppyBrosSrHeadAnimIndex = 0;
+    t->poppyBrosSrFlashing = 0;
+    gCurTask->poppyBrosSrHeadSlot = CreateChildTaskHere(179, 1);
     sub_080666cc(gUnk_0874397C);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 7, gPoppyBrosSrStates);
@@ -89,9 +89,9 @@ void PoppyBrosSrUpdate(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->unk18 != 0)
+    if (t->poppyBrosSrIgnoreTerrainTimer != 0)
     {
-        t->unk18--;
+        t->poppyBrosSrIgnoreTerrainTimer--;
         CallTableEntry(t->updateState, 7, gPoppyBrosSrStateUpdates);
     }
     else if (sub_0806acf8() == 0)
@@ -104,13 +104,13 @@ void PoppyBrosSrUpdate(void)
         CallTableEntry(gCurTask->updateState, 7, gPoppyBrosSrStateUpdates);
     }
     u = gCurTask;
-    if (u->unk34 != 0)
+    if (u->poppyBrosSrFlashing != 0)
     {
         if (u->hitTimer != 1)
             sub_08066480(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
         else
         {
-            u->unk34 = 0;
+            u->poppyBrosSrFlashing = 0;
             ActorLoadHeaderPalette(&gPoppyBrosSrGfx);
         }
     }
@@ -160,9 +160,9 @@ void PoppyBrosSrState1(void)
     zero = 0;
     t->updateState = 1;
     u = gCurTask;
-    u->unk20 = zero;
-    gCurTask->unk1C =
-        gUnk_087438DC[RandomRange(4) + gCurTask->unk74 * 4];
+    u->poppyBrosSrHopPhase = zero;
+    gCurTask->poppyBrosSrHopsLeft =
+        gUnk_087438DC[RandomRange(4) + gCurTask->actorSpawnArg * 4];
     sub_08091954();
     ActorSetState(2);
     TaskSleepForever();
@@ -190,13 +190,13 @@ void PoppyBrosSrState2(void)
     gCurTask->onGround = zero;
     TaskSetMotionY(0xFFFD0000, 4096, 196608);
     if (abs(TaskGetNearestPlayerDy()) <= 63)
-        gCurTask->unk1C = 1;
+        gCurTask->poppyBrosSrPlayerNearY = 1;
     else
-        gCurTask->unk1C = 0;
-    gCurTask->unk20 = -1;
+        gCurTask->poppyBrosSrPlayerNearY = 0;
+    gCurTask->poppyBrosSrAimTimer = -1;
     p = &gTasks[(s16)CreateChildTaskHere(180, 1)];
-    p->unk18 = gCurTask->unk1C;
-    gCurTask->unk30 = 2;
+    p->poppyBrosSrHandBombVariant = gCurTask->poppyBrosSrPlayerNearY;
+    gCurTask->poppyBrosSrHeadAnimIndex = 2;
     TaskSetFrame(5);
     TaskYieldTrampoline(4);
     gCurTask->frame += 2;
@@ -210,26 +210,26 @@ void PoppyBrosSrState2(void)
     gCurTask->frame -= 2;
     TaskYieldTrampoline(4);
     v = gCurTask;
-    if (v->unk1C == 0)
+    if (v->poppyBrosSrPlayerNearY == 0)
     {
-        v->unk20 = 4;
+        v->poppyBrosSrAimTimer = 4;
     }
     else
     {
         p2 = v;
-        p2->unk24 = abs(TaskGetNearestPlayerDx());
+        p2->poppyBrosSrPlayerDistX = abs(TaskGetNearestPlayerDx());
         w = gCurTask;
-        n = w->unk24;
+        n = w->poppyBrosSrPlayerDistX;
         if (n <= 47)
-            w->unk20 = 64;
+            w->poppyBrosSrAimTimer = 64;
         else if (n <= 79)
-            w->unk20 = 1;
+            w->poppyBrosSrAimTimer = 1;
         else
-            w->unk20 = 36;
+            w->poppyBrosSrAimTimer = 36;
     }
     while (1)
     {
-        if (gCurTask->unk20-- == 0)
+        if (gCurTask->poppyBrosSrAimTimer-- == 0)
             break;
         TaskYieldTrampoline(1);
     }
@@ -256,14 +256,14 @@ void PoppyBrosSrState2Update(void)
 {
     struct Task *t;
 
-    if (gCurTask->unk20 != 0)
+    if (gCurTask->poppyBrosSrAimTimer != 0)
     {
         TaskFaceNearestPlayer();
         TaskUpdateFlip();
     }
     t = gCurTask;
-    if (t->velY > 0 && t->unk30 == 2)
-        t->unk30 = 3;
+    if (t->velY > 0 && t->poppyBrosSrHeadAnimIndex == 2)
+        t->poppyBrosSrHeadAnimIndex = 3;
     if (gCurTask->state != 2)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
@@ -278,8 +278,8 @@ void PoppyBrosSrState3(void)
     zero = 0;
     t->updateState = 3;
     u = gCurTask;
-    u->unk20 = zero;
-    u->unk1C = 2;
+    u->poppyBrosSrHopPhase = zero;
+    u->poppyBrosSrHopsLeft = 2;
     sub_08091954();
     ActorSetState(4);
     TaskSleepForever();
@@ -303,7 +303,7 @@ void PoppyBrosSrState4(void)
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(81920, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFEC000, 4096, 196608);
-    gCurTask->unk24 = 6;
+    gCurTask->poppyBrosSrFrameDelay = 6;
     sub_08091a30();
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
@@ -338,7 +338,7 @@ void PoppyBrosSrState5(void)
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(163840, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFE4000, 4096, 196608);
-    gCurTask->unk24 = 7;
+    gCurTask->poppyBrosSrFrameDelay = 7;
     sub_08091a30();
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
@@ -354,7 +354,7 @@ void PoppyBrosSrState5(void)
         TaskStopX();
         u = gCurTask;
         u->velY = 0xFFFE0000;
-        u->unk24 = 10;
+        u->poppyBrosSrFrameDelay = 10;
     }
     sub_08091a98();
     while (gCurTask->onGround == 0)
@@ -399,14 +399,14 @@ void PoppyBrosSrDefeat(void)
     TaskYieldTrampoline(170);
     TaskStopY();
     sub_0806ad18();
-    gCurTask->unk2C = 2;
+    gCurTask->poppyBrosSrDefeatPhase = 2;
     TaskSleepForever();
 }
 
 void PoppyBrosSrDefeatUpdate(void)
 {
     sub_08066480(&gPoppyBrosSrGfx, (u32)&gUnk_08275670, 16);
-    if (gCurTask->unk2C == 2)
+    if (gCurTask->poppyBrosSrDefeatPhase == 2)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
@@ -415,24 +415,24 @@ void sub_08091954(void)
     struct Task *u;
     struct Task *v;
 
-    while (gCurTask->unk1C-- > 0)
+    while (gCurTask->poppyBrosSrHopsLeft-- > 0)
     {
         TaskFaceNearestPlayer();
         if (abs(TaskGetNearestPlayerDx()) <= 39)
-            gCurTask->unk20 = 1;
+            gCurTask->poppyBrosSrHopPhase = 1;
         gCurTask->onGround = 0;
-        TaskSetMotionXFacing(gUnk_087438E4[gCurTask->unk20], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gUnk_087438E4[gCurTask->poppyBrosSrHopPhase], 0x5A5A5A5A);
         TaskSetMotionY(0xFFFEE000, 4096, 196608);
         u = gCurTask;
-        u->unk24 = 3;
-        if (u->unk20 == 0)
+        u->poppyBrosSrFrameDelay = 3;
+        if (u->poppyBrosSrHopPhase == 0)
             sub_08091a30();
         else
             sub_08091a98();
         while (gCurTask->onGround == 0)
             TaskYieldTrampoline(1);
         v = gCurTask;
-        v->unk20 ^= 1;
+        v->poppyBrosSrHopPhase ^= 1;
         PlaySfx(528);
     }
     TaskStop();
@@ -448,24 +448,24 @@ void sub_08091a30(void)
     struct Task *y;
 
     t = gCurTask;
-    t->unk30 = 0;
+    t->poppyBrosSrHeadAnimIndex = 0;
     TaskSetFrame(4);
-    TaskYieldTrampoline(gCurTask->unk24);
+    TaskYieldTrampoline(gCurTask->poppyBrosSrFrameDelay);
     u = gCurTask;
     u->frame += 2;
-    TaskYieldTrampoline(u->unk24);
+    TaskYieldTrampoline(u->poppyBrosSrFrameDelay);
     v = gCurTask;
     v->frame += 2;
-    TaskYieldTrampoline(v->unk24);
+    TaskYieldTrampoline(v->poppyBrosSrFrameDelay);
     w = gCurTask;
     w->frame += 1;
-    TaskYieldTrampoline(w->unk24);
+    TaskYieldTrampoline(w->poppyBrosSrFrameDelay);
     x = gCurTask;
     x->frame -= 2;
-    TaskYieldTrampoline(x->unk24);
+    TaskYieldTrampoline(x->poppyBrosSrFrameDelay);
     y = gCurTask;
     y->frame -= 2;
-    TaskYieldTrampoline(y->unk24);
+    TaskYieldTrampoline(y->poppyBrosSrFrameDelay);
 }
 
 void sub_08091a98(void)
@@ -478,29 +478,29 @@ void sub_08091a98(void)
     struct Task *y;
 
     t = gCurTask;
-    t->unk30 = 1;
+    t->poppyBrosSrHeadAnimIndex = 1;
     TaskSetFrame(5);
-    TaskYieldTrampoline(gCurTask->unk24);
+    TaskYieldTrampoline(gCurTask->poppyBrosSrFrameDelay);
     u = gCurTask;
     u->frame += 2;
-    TaskYieldTrampoline(u->unk24);
+    TaskYieldTrampoline(u->poppyBrosSrFrameDelay);
     v = gCurTask;
     v->frame += 2;
-    TaskYieldTrampoline(v->unk24);
+    TaskYieldTrampoline(v->poppyBrosSrFrameDelay);
     w = gCurTask;
     w->frame -= 1;
-    TaskYieldTrampoline(w->unk24);
+    TaskYieldTrampoline(w->poppyBrosSrFrameDelay);
     x = gCurTask;
     x->frame -= 2;
-    TaskYieldTrampoline(x->unk24);
+    TaskYieldTrampoline(x->poppyBrosSrFrameDelay);
     y = gCurTask;
     y->frame -= 2;
-    TaskYieldTrampoline(y->unk24);
+    TaskYieldTrampoline(y->poppyBrosSrFrameDelay);
 }
 
 s32 PoppyBrosSrReactToDamage(void)
 {
-    gCurTask->unk34 = 1;
+    gCurTask->poppyBrosSrFlashing = 1;
     CreateStarFlash(1, 0, -8);
     RequestScreenShake(2);
     return 0;
@@ -510,7 +510,7 @@ s32 PoppyBrosSrReactToDefeat(void)
 {
     TaskSetFrame(10);
     ActorSetHitReactions(gUnk_087440F4);
-    gCurTask->unk2C = 1;
+    gCurTask->poppyBrosSrDefeatPhase = 1;
     ActorSetState(6);
     TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
     return 1;
@@ -549,33 +549,33 @@ void Task_PoppyBrosSrHand(void)
     u->updateCallback = (u32)PoppyBrosSrHandUpdate;
     TaskFaceLikeParent();
     v = gCurTask;
-    v->unk2C = 0x100000;
-    v->unk30 = zero;
-    v->unk34 = 0x40000;
-    v->unk1C = zero;
+    v->poppyBrosSrHandOffsetX = 0x100000;
+    v->poppyBrosSrHandOffsetVelY = zero;
+    v->poppyBrosSrHandOffsetY = 0x40000;
+    v->poppyBrosSrHandReleased = zero;
     spawn.subtype = 9;
     spawn.taskType = 111;
-    spawn.variant = v->unk18;
+    spawn.variant = v->poppyBrosSrHandBombVariant;
     spawn.spawnArg = v->unk74;
     spawn.x = zero;
     spawn.y = zero;
     spawn.checkTerrain = 1;
     spawn.tileWord = sub_08066630(1);
-    gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 1);
-    gCurTask->unk28 = 0x30000;
-    gCurTask->unk30 = 0xFFFA0000;
+    gCurTask->poppyBrosSrHandBombSlot = CreateActorFromDescAtOffsetFacing(&spawn, 1);
+    gCurTask->poppyBrosSrHandOffsetVelX = 0x30000;
+    gCurTask->poppyBrosSrHandOffsetVelY = 0xFFFA0000;
     TaskSetFrame(5);
-    gCurTask->unk6C = zero;
+    gCurTask->poppyBrosSrHandLoopCount = zero;
     do
     {
         x = gCurTask;
-        x->unk28 += 0xFFFF7000;
-        x->unk30 += 0x8000;
+        x->poppyBrosSrHandOffsetVelX += 0xFFFF7000;
+        x->poppyBrosSrHandOffsetVelY += 0x8000;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 15);
+    } while ((s16)++gCurTask->poppyBrosSrHandLoopCount <= 15);
     y = gCurTask;
-    y->unk28 = 0;
-    y->unk30 = 0;
+    y->poppyBrosSrHandOffsetVelX = 0;
+    y->poppyBrosSrHandOffsetVelY = 0;
     p = gCurTask;
     while ((q = &gTasks[p->parent])->unk20 != 0)
     {
@@ -583,31 +583,31 @@ void Task_PoppyBrosSrHand(void)
         p = gCurTask;
     }
     z = gCurTask;
-    z->unk28 = 0x88000;
-    z->unk30 = 0xFFFC0000;
-    z->unk6C = 0;
+    z->poppyBrosSrHandOffsetVelX = 0x88000;
+    z->poppyBrosSrHandOffsetVelY = 0xFFFC0000;
+    z->poppyBrosSrHandLoopCount = 0;
     do
     {
         a = gCurTask;
-        a->unk28 += 0xFFFF0000;
-        a->unk30 += 0x1A000;
+        a->poppyBrosSrHandOffsetVelX += 0xFFFF0000;
+        a->poppyBrosSrHandOffsetVelY += 0x1A000;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->poppyBrosSrHandLoopCount <= 3);
     b = gCurTask;
-    b->unk1C++;
+    b->poppyBrosSrHandReleased++;
     PlaySfx(0x20F);
     TaskSetFrame(1);
-    gCurTask->unk6C = 0;
+    gCurTask->poppyBrosSrHandLoopCount = 0;
     do
     {
         c = gCurTask;
-        c->unk28 += 0xFFFF0000;
-        c->unk30 += 0x1A000;
+        c->poppyBrosSrHandOffsetVelX += 0xFFFF0000;
+        c->poppyBrosSrHandOffsetVelY += 0x1A000;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->poppyBrosSrHandLoopCount <= 3);
     d = gCurTask;
-    d->unk28 = 0xFFFF0000;
-    d->unk30 = 0xFFFF0000;
+    d->poppyBrosSrHandOffsetVelX = 0xFFFF0000;
+    d->poppyBrosSrHandOffsetVelY = 0xFFFF0000;
     TaskSetFrame(3);
     TaskYieldTrampoline(6);
     TaskExitTrampoline();
@@ -624,14 +624,14 @@ void PoppyBrosSrHandUpdate(void)
     {
         t = gCurTask;
         u = &gTasks[t->parent];
-        if (u->u76.subtype == 1 && u->unk2C == 0)
+        if (u->u76.subtype == 1 && u->poppyBrosSrDefeatPhase == 0)
         {
             t->facing = u->facing;
             TaskUpdateFlip();
             v = gCurTask;
-            v->unk2C += v->unk28;
-            v->unk34 += v->unk30;
-            v->pixelX = u->pixelX + (v->unk2C * u->facing >> 16);
+            v->poppyBrosSrHandOffsetX += v->poppyBrosSrHandOffsetVelX;
+            v->poppyBrosSrHandOffsetY += v->poppyBrosSrHandOffsetVelY;
+            v->pixelX = u->pixelX + (v->poppyBrosSrHandOffsetX * u->facing >> 16);
             m = ((s16 *)v)[27];
             v->pixelY = u->pixelY + m;
         }
@@ -658,7 +658,7 @@ void Task_PoppyBrosSrHead(void)
     u = gCurTask;
     u->frameTable = gPoppyBrosSrHeadFrames;
     u->updateCallback = (u32)PoppyBrosSrHeadUpdate;
-    u->unk30 = -1;
+    u->poppyBrosSrHeadShownIndex = -1;
     TaskSleepForever();
 }
 
@@ -677,27 +677,27 @@ void PoppyBrosSrHeadUpdate(void)
     {
         t = gCurTask;
         u = &gTasks[t->parent];
-        if (u->u76.subtype == 1 && u->unk2C == 0)
+        if (u->u76.subtype == 1 && u->poppyBrosSrDefeatPhase == 0)
         {
             t->pixelX = u->pixelX;
             t->pixelY = u->pixelY;
             t->facing = u->facing;
             TaskUpdateFlip();
             v = gCurTask;
-            if (v->unk30 != u->unk30)
+            if (v->poppyBrosSrHeadShownIndex != u->poppyBrosSrHeadAnimIndex)
             {
-                v->unk30 = u->unk30;
-                v->unk2C = 0;
-                p = gPoppyBrosSrHeadAnims[v->unk30];
-                v->unk28 = p->delay;
+                v->poppyBrosSrHeadShownIndex = u->poppyBrosSrHeadAnimIndex;
+                v->poppyBrosSrHeadScriptPos = 0;
+                p = gPoppyBrosSrHeadAnims[v->poppyBrosSrHeadShownIndex];
+                v->poppyBrosSrHeadStepTimer = p->delay;
                 v->frame = p->frame;
             }
             w = gCurTask;
-            if (w->unk28 != 0 && --w->unk28 == 0)
+            if (w->poppyBrosSrHeadStepTimer != 0 && --w->poppyBrosSrHeadStepTimer == 0)
             {
-                w->unk2C++;
-                base = (u32)gPoppyBrosSrHeadAnims[w->unk30];
-                q = (struct AnimCmd *)(w->unk2C * 4 + base);
+                w->poppyBrosSrHeadScriptPos++;
+                base = (u32)gPoppyBrosSrHeadAnims[w->poppyBrosSrHeadShownIndex];
+                q = (struct AnimCmd *)(w->poppyBrosSrHeadScriptPos * 4 + base);
                 frame = q->frame;
                 if (frame == -1)
                 {
@@ -709,11 +709,11 @@ void PoppyBrosSrHeadUpdate(void)
                      * live into the frame test, as the ROM's registers show
                      * (`subs r4, r0, #1` and the ldrsh scratches; lessons
                      * 3.156, 3.526).  Do not remove it. */
-                    w->unk28 = 0;
+                    w->poppyBrosSrHeadStepTimer = 0;
                 }
                 else
                 {
-                    w->unk28 = q->delay;
+                    w->poppyBrosSrHeadStepTimer = q->delay;
                     w->frame = frame;
                 }
             }
@@ -742,16 +742,16 @@ void Task_Bugzzy(void)
     u = gCurTask;
     u->frameTable = gBugzzyFrames;
     gUnk_02007D00[7]++;
-    u->unk28 = -1;
-    u->unk2C = 0;
-    u->unk30 = 0;
-    u->unk34 = 1;
-    u->unk1C = -1;
-    u->unk24 = u->u8C.actor->palette;
+    u->bugzzyBackdropMove = -1;
+    u->bugzzyWalkCount = 0;
+    u->bugzzyFlashing = 0;
+    u->bugzzyBoxSet = 1;
+    u->bugzzyHeldPlayerSlot = -1;
+    u->bugzzySavedPalette = u->u8C.actor->palette;
     if (sub_08067060() == 1)
-        gCurTask->unk20 = 24;
+        gCurTask->bugzzyIgnoreTerrainTimer = 24;
     else
-        gCurTask->unk20 = 0;
+        gCurTask->bugzzyIgnoreTerrainTimer = 0;
     sub_08066ae0();
     CallTableEntry(gCurTask->variant, 1, gBugzzyVariants);
 }

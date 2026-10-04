@@ -62,7 +62,7 @@ void Task_KingDedede(void)
     v = ActorComputeHealth();
     v = (v * 85) >> 8;
     t = gCurTask;
-    t->unk70 = v;
+    t->kingDededeThirdHealth = v;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_08065438;
     t->layer = 11;
@@ -299,9 +299,9 @@ void sub_080a0098(void)
         *p = z;
         p--;
     } while ((s32)p >= (s32)q);
-    (*tp)->unk20 = 1;
-    (*tp)->unk34 = 90;
+    (*tp)->kingDededeInhaling = 1;
+    (*tp)->kingDededeInhaleTimer = 90;
     r[0] = -1;
-    (*tp)->unk46 = CreateChildTaskAtOffsetFacing(183, 38, 10, 0);
+    (*tp)->kingDededeChildSlot = CreateChildTaskAtOffsetFacing(183, 38, 10, 0);
     r[9] = PlaySfx(0x21B);
 }

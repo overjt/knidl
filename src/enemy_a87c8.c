@@ -70,16 +70,16 @@ void KrackoInit(void)
 
     t = gCurTask;
     t->updateCallback = (u32)KrackoUpdate;
-    t->unk28 = 0;
-    t->unk2C = 0;
-    t->unk34 = 0;
-    t->unk18 = 0;
+    t->krackoPickCount = 0;
+    t->krackoPickPhase = 0;
+    t->krackoDefeatStage = 0;
+    t->krackoLastPick = 0;
     gUnk_02007D00[2] = 0;
     TaskGetScreenPosSlot(gCurTaskIdx);
     if (gUnk_030023B4 <= 127)
-        gCurTask->unk30 = 0;
+        gCurTask->krackoSide = 0;
     else
-        gCurTask->unk30 = 1;
+        gCurTask->krackoSide = 1;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 7, gKrackoStates);
 }
@@ -109,7 +109,7 @@ void KrackoState0(void)
     sub_08066544();
     gUnk_02007D00[0] = 0;
     TaskYieldTrampoline(76);
-    gCurTask->unk6C = 0;
+    gCurTask->krackoLoopCount = 0;
     do
     {
         gCurTask->velY = 128 << 8;
@@ -118,8 +118,8 @@ void KrackoState0(void)
         TaskYieldTrampoline(1);
         gCurTask->velY = 128 << 8;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 10);
+        gCurTask->krackoLoopCount++;
+    } while ((s16)gCurTask->krackoLoopCount <= 10);
     gCurTask->velY = 0;
     gCurTask->posY = (gViewRect[2] + 48) << 16;
     gUnk_02007D00[0] = 0;
@@ -145,37 +145,37 @@ void KrackoState1(void)
     gCurTask->updateState = 1;
     for (;;)
     {
-        switch (gCurTask->unk2C)
+        switch (gCurTask->krackoPickPhase)
         {
         case 0:
-            if (gCurTask->unk18 == 0)
+            if (gCurTask->krackoLastPick == 0)
             {
-                gCurTask->unk18 = 4;
+                gCurTask->krackoLastPick = 4;
                 ActorSetState(4);
             }
             else
             {
-                gCurTask->unk18 = 5;
+                gCurTask->krackoLastPick = 5;
                 ActorSetState(5);
-                gCurTask->unk2C = 3;
+                gCurTask->krackoPickPhase = 3;
             }
             break;
         case 1:
-            if (gCurTask->unk28 & 128)
+            if (gCurTask->krackoPickCount & 128)
             {
-                gCurTask->unk28 = 0;
+                gCurTask->krackoPickCount = 0;
                 goto pick;
             }
-            if ((RandomRange(2) != 0 || gCurTask->unk28 > 4)
+            if ((RandomRange(2) != 0 || gCurTask->krackoPickCount > 4)
                 && gUnk_02007D00[2] <= 1)
             {
-                gCurTask->unk28 = 128;
-                gCurTask->unk2C = 3;
+                gCurTask->krackoPickCount = 128;
+                gCurTask->krackoPickPhase = 3;
                 ActorSetState(6);
                 break;
             }
 pick:
-            gCurTask->unk28++;
+            gCurTask->krackoPickCount++;
             idx = TaskFindNearestPlayer();
             gUnk_03001F2C = idx;
             gUnk_03002448 = gPlayerStates[idx].mode;
@@ -187,7 +187,7 @@ pick:
                     ActorSetState(5);
                     goto st3;
                 }
-                if (gCurTask->unk30 == 0)
+                if (gCurTask->krackoSide == 0)
                 {
                     if (gUnk_030023B4 <= 71)
                     {
@@ -202,25 +202,25 @@ pick:
                     gUnk_03002344 = 1;
             }
             else if (gUnk_030023B4 <= 71)
-                gUnk_03002344 = gUnk_087490B0[gCurTask->unk30];
+                gUnk_03002344 = gUnk_087490B0[gCurTask->krackoSide];
             else if (gUnk_030023B4 > 168)
-                gUnk_03002344 = gUnk_087490B2[gCurTask->unk30];
+                gUnk_03002344 = gUnk_087490B2[gCurTask->krackoSide];
             else
                 gUnk_03002344 = 2;
 sel:
             gUnk_03002160 = gUnk_087490B4[gUnk_03002344][RandomRange(8)];
-            if (gUnk_03002160 == 4 && gCurTask->unk18 == 4)
+            if (gUnk_03002160 == 4 && gCurTask->krackoLastPick == 4)
                 gUnk_03002160 = gUnk_087490DC[RandomRange(2)];
             ActorSetState((u16)gUnk_03002160);
-            gCurTask->unk18 = gUnk_03002160;
+            gCurTask->krackoLastPick = gUnk_03002160;
 st3:
-            gCurTask->unk2C = 3;
+            gCurTask->krackoPickPhase = 3;
             break;
         case 2:
             ActorSetState(2);
-            gCurTask->posX = (gUnk_087490E4[gCurTask->unk30] + gViewRect[0]) << 16;
+            gCurTask->posX = (gUnk_087490E4[gCurTask->krackoSide] + gViewRect[0]) << 16;
             gCurTask->posY = (gViewRect[2] + 48) << 16;
-            gCurTask->unk2C = 3;
+            gCurTask->krackoPickPhase = 3;
             break;
         }
         TaskYieldTrampoline(1);
@@ -237,14 +237,14 @@ void KrackoWait(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
-    gCurTask->unk6C = 0;
+    gCurTask->krackoLoopCount = 0;
     do
     {
-        gCurTask->velY = gUnk_087490E8[(s16)gCurTask->unk6C];
+        gCurTask->velY = gUnk_087490E8[(s16)gCurTask->krackoLoopCount];
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
-    gCurTask->unk2C = 1;
+        gCurTask->krackoLoopCount++;
+    } while ((s16)gCurTask->krackoLoopCount <= 5);
+    gCurTask->krackoPickPhase = 1;
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -262,24 +262,24 @@ void KrackoState3(void)
     TaskGetScreenPosSlot(gCurTaskIdx);
     if (gUnk_030023B4 <= 127)
     {
-        gCurTask->unk30 = 0;
+        gCurTask->krackoSide = 0;
         gCurTask->velX = 160 << 9;
     }
     else
     {
-        gCurTask->unk30 = 1;
+        gCurTask->krackoSide = 1;
         gCurTask->velX = -0x14000;
     }
     gCurTask->unk24 = 0;
     for (;;)
     {
-        gCurTask->unk6C = 0;
+        gCurTask->krackoLoopCount = 0;
         do
         {
-            gCurTask->velY = gUnk_087490E8[(s16)gCurTask->unk6C];
+            gCurTask->velY = gUnk_087490E8[(s16)gCurTask->krackoLoopCount];
             TaskYieldTrampoline(6);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 5);
+            gCurTask->krackoLoopCount++;
+        } while ((s16)gCurTask->krackoLoopCount <= 5);
     }
 }
 
@@ -289,7 +289,7 @@ void KrackoState3Update(void)
 
     TaskGetScreenPosSlot(gCurTaskIdx);
     t = gCurTask;
-    if (t->unk30 == 0)
+    if (t->krackoSide == 0)
     {
         if (gUnk_030023B4 > 167)
         {
@@ -308,8 +308,8 @@ void KrackoState3Update(void)
 
         u->velX = 0;
         u->velY = 0;
-        u->unk2C = 2;
-        u->unk30 ^= 1;
+        u->krackoPickPhase = 2;
+        u->krackoSide ^= 1;
         ActorSetState(1);
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
     }
@@ -321,7 +321,7 @@ void KrackoLightningSweep(void)
     gUnk_02007D00[0] = 1;
     TaskStop();
     StartBgPaletteBlend(8, 128);
-    if (gCurTask->unk30 == 0)
+    if (gCurTask->krackoSide == 0)
         gCurTask->facing = 1;
     else
         gCurTask->facing = 255;
@@ -338,20 +338,20 @@ void KrackoLightningSweep(void)
     gCurTask->velY = 0;
     TaskYieldTrampoline(15);
     TaskYieldTrampoline(1);
-    gCurTask->unk24 = 1;
+    gCurTask->krackoThunderSfxTimer = 1;
     TaskSetMotionXFacing(160 << 9, 0x5A5A5A5A);
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 8; gCurTask->unk6C++)
+    for (gCurTask->krackoLoopCount = 0; (s16)gCurTask->krackoLoopCount <= 8; gCurTask->krackoLoopCount++)
     {
-        for (gCurTask->unk6E = 0; (s16)gCurTask->unk6E <= 3; gCurTask->unk6E++)
+        for (gCurTask->krackoBoltCount = 0; (s16)gCurTask->krackoBoltCount <= 3; gCurTask->krackoBoltCount++)
         {
             CreateChildTaskAtOffsetFacing(197, 0, 32, 1);
-            gCurTask->velY = gUnk_08749100[(s16)gCurTask->unk6E];
-            for (gCurTask->unk70 = 0; (s16)gCurTask->unk70 <= 3; gCurTask->unk70++)
+            gCurTask->velY = gUnk_08749100[(s16)gCurTask->krackoBoltCount];
+            for (gCurTask->krackoBoltFrameCount = 0; (s16)gCurTask->krackoBoltFrameCount <= 3; gCurTask->krackoBoltFrameCount++)
             {
-                if (--gCurTask->unk24 == 0)
+                if (--gCurTask->krackoThunderSfxTimer == 0)
                 {
                     PlaySfx(138 << 2);
-                    gCurTask->unk24 = 10;
+                    gCurTask->krackoThunderSfxTimer = 10;
                 }
                 TaskYieldTrampoline(1);
             }
@@ -376,9 +376,9 @@ void KrackoLightningSweep(void)
     gCurTask->velX = 0;
     gCurTask->velY = 0;
     gUnk_02007D00[0] = 0;
-    gCurTask->unk30 ^= 1;
-    if (gCurTask->unk2C != 0)
-        gCurTask->unk2C = 2;
+    gCurTask->krackoSide ^= 1;
+    if (gCurTask->krackoPickPhase != 0)
+        gCurTask->krackoPickPhase = 2;
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -407,7 +407,7 @@ void KrackoSummon(void)
     CreateActorFromDescAtOffsetFacing(&sp, 0);
     PlaySfx(506);
     gUnk_02007D00[0] = 0;
-    gCurTask->unk2C = 2;
+    gCurTask->krackoPickPhase = 2;
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -422,7 +422,7 @@ void KrackoSwoop(void)
 {
     gCurTask->updateState = 5;
     gUnk_02007D00[0] = 1;
-    if (gCurTask->unk30 == 0)
+    if (gCurTask->krackoSide == 0)
         gCurTask->facing = 1;
     else
         gCurTask->facing = 255;
@@ -518,9 +518,9 @@ void KrackoSwoop(void)
     gCurTask->velY = 0;
     TaskYieldTrampoline(6);
     gUnk_02007D00[0] = 0;
-    if (gCurTask->unk2C != 0)
-        gCurTask->unk2C = 2;
-    gCurTask->unk30 ^= 1;
+    if (gCurTask->krackoPickPhase != 0)
+        gCurTask->krackoPickPhase = 2;
+    gCurTask->krackoSide ^= 1;
     ActorSetState(1);
     TaskSleepForever();
 }

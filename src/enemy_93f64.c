@@ -46,10 +46,10 @@ void Task_BugzzyLadybug(void)
     gCurTask->frameTable = gUnk_087536FC;
     TaskFaceLikeParent();
     u = gCurTask;
-    u->unk28 = gUnk_087441BC[u->variant] * (s8)u->facing + 384;
-    u->unk2C = zero;
-    u->unk30 = 384;
-    u->unk34 = 2;
+    u->bugzzyLadybugAngle = gUnk_087441BC[u->variant] * (s8)u->facing + 384;
+    u->bugzzyLadybugHitsActive = zero;
+    u->bugzzyLadybugSpeed = 384;
+    u->bugzzyLadybugFrameTimer = 2;
     u->variant = zero;
     CallTableEntry(gCurTask->variant, 1, gBugzzyLadybugVariants);
 }
@@ -64,7 +64,7 @@ void BugzzyLadybugInit(void)
 void BugzzyLadybugUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 1, gBugzzyLadybugStateUpdates);
-    if (gCurTask->unk2C == 1)
+    if (gCurTask->bugzzyLadybugHitsActive == 1)
         ActorCheckHits();
     ActorReactToHit();
 }
@@ -82,31 +82,31 @@ void BugzzyLadybugState0(void)
     PlaySfx(506);
     BugzzyLadybugSetVelocity();
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->bugzzyLadybugLoopCount = 0;
     do {
         BugzzyLadybugSetVelocity();
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->unk30 -= 48;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 7);
+        t->bugzzyLadybugSpeed -= 48;
+        t->bugzzyLadybugLoopCount++;
+    } while ((s16)t->bugzzyLadybugLoopCount <= 7);
     t->velX = 0;
     t->velY = 0;
-    t->unk2C = 1;
+    t->bugzzyLadybugHitsActive = 1;
     TaskFaceNearestPlayer();
     TaskUpdateFlip();
-    gCurTask->unk6C = 0;
+    gCurTask->bugzzyLadybugLoopCount = 0;
     do {
         gCurTask->velY = -0x4000;
         TaskYieldTrampoline(4);
         gCurTask->velY = 0x4000;
         TaskYieldTrampoline(4);
         u = gCurTask;
-        u->unk6C++;
-    } while ((s16)u->unk6C <= 1);
+        u->bugzzyLadybugLoopCount++;
+    } while ((s16)u->bugzzyLadybugLoopCount <= 1);
     v = gCurTask;
     v->velY = 0;
-    TaskSetMotionXFacing(gUnk_087441C4[v->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_087441C4[v->actorSpawnArg], 0x5A5A5A5A);
     while (1) {
         if (TaskGetYDirBitToNearestPlayer() == 1) {
             w = gCurTask;
@@ -128,9 +128,9 @@ void BugzzyLadybugState0Update(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk34--;
-    if (t->unk34 == 0) {
-        t->unk34 = 2;
+    t->bugzzyLadybugFrameTimer--;
+    if (t->bugzzyLadybugFrameTimer == 0) {
+        t->bugzzyLadybugFrameTimer = 2;
         t->frame ^= 1;
     }
 }
@@ -140,8 +140,8 @@ void BugzzyLadybugSetVelocity(void)
     struct Task *t;
 
     t = gCurTask;
-    AngleToVector(t->unk28, t->unk30);
-    if (gCurTask->unk74 != 0)
+    AngleToVector(t->bugzzyLadybugAngle, t->bugzzyLadybugSpeed);
+    if (gCurTask->actorSpawnArg != 0)
         gUnk_030023B4 += gUnk_030023B4 >> 1;
     t = gCurTask;
     t->velX = gUnk_030023B4;
@@ -159,7 +159,7 @@ void Task_GrandWheelie(void)
     gCurTask->frameTable = gGrandWheelieFrames;
     sub_08066088(0);
     gUnk_02007D00[8]++;
-    gCurTask->unk34 = -1;
+    gCurTask->grandWheelieSummonPhase = -1;
     TaskFaceNearestPlayer();
     ActorCollideTerrain();
     sub_080666cc(gUnk_0874433C);
@@ -209,8 +209,8 @@ void GrandWheelieUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk20 > 0) {
-        t->unk20--;
+    if (t->grandWheelieFlashTimer > 0) {
+        t->grandWheelieFlashTimer--;
         ActorFlashPalette(gUnk_0826F170, 16);
     } else {
         ActorClearPaletteOverride();
@@ -234,7 +234,7 @@ void sub_08094358(void)
 
     t = gCurTask;
     if (t->state == 10) {
-        if (t->unk2C == 0 && t->velY < 0) {
+        if (t->grandWheelieDefeatPhase == 0 && t->velY < 0) {
             v = t->frame;
             if (v >= 4 && v <= 9) {
                 ActorSetAttackBox(gUnk_08744A20);
@@ -314,7 +314,7 @@ void GrandWheelieState0(void)
     gCurTask->updateState = 0;
     v = GrandWheelieStartAnim(gUnk_0874433C);
     t = gCurTask;
-    t->unk28 = v;
+    t->actorAnimDelay = v;
     t->accelY = 9472;
     t->speedLimitY = 0x30000;
     TaskYieldTrampoline(24);
@@ -324,7 +324,7 @@ void GrandWheelieState0(void)
 
 void GrandWheelieState0Update(void)
 {
-    gCurTask->unk28 = GrandWheelieTickAnim(gCurTask->unk28);
+    gCurTask->actorAnimDelay = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
 }
 
 void GrandWheelieState1(void)
@@ -343,7 +343,7 @@ void GrandWheelieState1Update(void)
     if (t->state != 1) {
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     } else {
-        gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
+        gCurTask->actorAnimDelay = GrandWheelieTickAnim(t->actorAnimDelay);
     }
 }
 
@@ -357,16 +357,16 @@ void GrandWheelieState2(void)
         TaskSleepForever();
     }
     t = gCurTask;
-    t->unk2C = t->pixelX;
+    t->grandWheelieSavedPixelX = t->pixelX;
     switch (sub_080947cc()) {
     case 0:
-        gCurTask->unk30 = gUnk_030023D4;
-        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
+        gCurTask->grandWheelieStandTimer = gUnk_030023D4;
+        gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_0874433C);
         TaskSleepForever();
         break;
     case 1:
-        gCurTask->unk30 = gUnk_030023D4;
-        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_087443A8);
+        gCurTask->grandWheelieStandTimer = gUnk_030023D4;
+        gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_087443A8);
         while (1) {
             TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
             TaskYieldTrampoline(2);
@@ -386,15 +386,15 @@ void GrandWheelieState2Update(void)
     t = gCurTask;
     if (t->state != 2)
         goto rearm;
-    x = GrandWheelieTickAnim(t->unk28);
+    x = GrandWheelieTickAnim(t->actorAnimDelay);
     u = gCurTask;
-    u->unk28 = x;
-    u->unk30--;
-    if (u->unk30 != 0)
+    u->actorAnimDelay = x;
+    u->grandWheelieStandTimer--;
+    if (u->grandWheelieStandTimer != 0)
         return;
     TaskStopX();
     v = gCurTask;
-    v->posX = v->unk2C << 16;
+    v->posX = v->grandWheelieSavedPixelX << 16;
     if (RandomRange(4) == 0)
         goto quiet;
     ActorSetState(4);
@@ -409,7 +409,7 @@ quiet:
 s32 sub_080947cc(void)
 {
     TaskFaceNearestPlayer();
-    gUnk_030023D4 = gUnk_0874449C[gCurTask->unk74 * 2 + (gFrameCount & 1)];
+    gUnk_030023D4 = gUnk_0874449C[gCurTask->actorSpawnArg * 2 + (gFrameCount & 1)];
     return gFrameCount & 1;
 }
 
@@ -419,14 +419,14 @@ s32 GrandWheelieCheckSummon(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk34 = (t->unk34 + 1) & 3;
-    if (t->unk34 == 3) {
-        if (t->unk18 > 3)
-            t->unk18 = 0;
+    t->grandWheelieSummonPhase = (t->grandWheelieSummonPhase + 1) & 3;
+    if (t->grandWheelieSummonPhase == 3) {
+        if (t->grandWheelieRushCooldown > 3)
+            t->grandWheelieRushCooldown = 0;
         u = gCurTask;
-        if (u->unk18 == 0)
+        if (u->grandWheelieRushCooldown == 0)
             return 1;
-        u->unk18++;
+        u->grandWheelieRushCooldown++;
     }
     return 0;
 }
@@ -440,9 +440,9 @@ void GrandWheelieHop(void)
         TaskSleepForever();
     }
     TaskFaceNearestPlayer();
-    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
+    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744360);
     sub_08094908();
-    gCurTask->unk2C = gUnk_030023D4;
+    gCurTask->grandWheelieHopsLeft = gUnk_030023D4;
     sub_08094894();
 }
 
@@ -451,8 +451,8 @@ void sub_08094894(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C != 0) {
-        t->unk2C--;
+    if (t->grandWheelieHopsLeft != 0) {
+        t->grandWheelieHopsLeft--;
         t->onGround = 0;
         TaskSetMotionY(-0x50000, 0x4A00, 0x70000);
         TaskSleepForever();
@@ -466,9 +466,9 @@ void GrandWheelieHopUpdate(void)
     struct Task *t;
     s32 x;
 
-    x = GrandWheelieTickAnim(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
-    t->unk28 = x;
+    t->actorAnimDelay = x;
     if (t->state != 3)
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
@@ -496,12 +496,12 @@ void GrandWheelieCharge(void)
     t->unk30 = t->facing;
     gUnk_02007D00[1] = PlaySfx(0x209);
     if (gCurTask->u8C.actor->animScript != gUnk_08744384)
-        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
+        gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744384);
     TaskYieldTrampoline(45);
-    gCurTask->unk2C = GrandWheelieIsNearPlayer();
-    gCurTask->unk46 = CreateDashFlame(-10, 5);
-    TaskSetMotionXFacing(gUnk_087444A4[gCurTask->unk74], 0x5A5A5A5A);
-    gCurTask->unk1C = -1;
+    gCurTask->grandWheelieRushRange = GrandWheelieIsNearPlayer();
+    gCurTask->grandWheelieFlameSlot = CreateDashFlame(-10, 5);
+    TaskSetMotionXFacing(gUnk_087444A4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    gCurTask->grandWheelieGroundClass = -1;
     TaskSleepForever();
 }
 
@@ -517,9 +517,9 @@ void GrandWheelieChargeUpdate(void)
     s16 *p;
     u16 a;
 
-    x = GrandWheelieTickAnim(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
-    t->unk28 = x;
+    t->actorAnimDelay = x;
     if (t->state != 4)
         goto rearm;
     if (t->velX == 0)
@@ -527,28 +527,28 @@ void GrandWheelieChargeUpdate(void)
     sub_08094bbc();
     if (gCurTask->facing != TaskGetFacingTowardNearestPlayer())
         goto other;
-    if (gCurTask->unk2C != 0)
+    if (gCurTask->grandWheelieRushRange != 0)
         return;
     y = GrandWheelieIsNearPlayer();
-    gCurTask->unk2C = y;
+    gCurTask->grandWheelieRushRange = y;
     if (y == 0)
         return;
     if (RandomRange(3) != 0)
         return;
     v = gCurTask;
-    if (v->unk18 != 0)
+    if (v->grandWheelieRushCooldown != 0)
         return;
-    v->unk18 = 1;
+    v->grandWheelieRushCooldown = 1;
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-    if (gTaskSlotTypes[gCurTask->unk46] == 167)
-        TaskFree(gCurTask->unk46);
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+        TaskFree(gCurTask->grandWheelieFlameSlot);
     ActorSetState(7);
 rearm:
     TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     return;
 other:
     w = gCurTask;
-    if (w->unk2C < 0) {
+    if (w->grandWheelieRushRange < 0) {
         a = w->pixelX;
         p = &w->pixelY;
         switch (GetCollisionTileAtPixel(a, ((s8 *)w->u8C.actor->terrainBox)[3] + *p)) {
@@ -562,23 +562,23 @@ other:
             break;
         }
         StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-        if (gTaskSlotTypes[gCurTask->unk46] == 167)
-            TaskFree(gCurTask->unk46);
+        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+            TaskFree(gCurTask->grandWheelieFlameSlot);
         ActorSetState(5);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     }
     z = GrandWheelieIsNearPlayer();
-    gCurTask->unk2C = z;
+    gCurTask->grandWheelieRushRange = z;
     if (z == 1)
         return;
-    gCurTask->unk2C = -1;
+    gCurTask->grandWheelieRushRange = -1;
     q = RandomRange(3);
     if (q != 0)
         return;
-    gCurTask->unk18 = q;
+    gCurTask->grandWheelieRushCooldown = q;
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-    if (gTaskSlotTypes[gCurTask->unk46] == 167)
-        TaskFree(gCurTask->unk46);
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+        TaskFree(gCurTask->grandWheelieFlameSlot);
     ActorSetState(6);
     TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
@@ -599,34 +599,34 @@ void sub_08094bbc(void)
     t = gCurTask;
     r = sub_08094d10();
     v = r;
-    if (t->unk1C == (s8)r)
+    if (t->grandWheelieGroundClass == (s8)r)
         return;
-    gCurTask->unk1C = (s8)v;
+    gCurTask->grandWheelieGroundClass = (s8)v;
     switch ((s8)v) {
     case 0:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
-            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
-        TaskSetMotionXFacing(gUnk_087444A4[gCurTask->unk74], 0x5A5A5A5A);
+            gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744360);
+        TaskSetMotionXFacing(gUnk_087444A4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         break;
     case 1:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
-            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
-        TaskSetMotionXFacing(gUnk_087444AC[gCurTask->unk74], 0x5A5A5A5A);
+            gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744360);
+        TaskSetMotionXFacing(gUnk_087444AC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         break;
     case 2:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
-            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
-        TaskSetMotionXFacing(gUnk_087444B4[gCurTask->unk74], 0x5A5A5A5A);
+            gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744360);
+        TaskSetMotionXFacing(gUnk_087444B4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         break;
     case 3:
         if (gCurTask->u8C.actor->animScript != gUnk_0874433C)
-            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
-        TaskSetMotionXFacing(gUnk_087444BC[gCurTask->unk74], 0x5A5A5A5A);
+            gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_0874433C);
+        TaskSetMotionXFacing(gUnk_087444BC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         break;
     case 4:
         if (gCurTask->u8C.actor->animScript != gUnk_08744384)
-            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
-        TaskSetMotionXFacing(gUnk_087444C4[gCurTask->unk74], 0x5A5A5A5A);
+            gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744384);
+        TaskSetMotionXFacing(gUnk_087444C4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         break;
     }
 }
@@ -669,10 +669,10 @@ void GrandWheelieState5(void)
 
     gCurTask->updateState = 5;
     t = gCurTask;
-    t->unk30 = 60;
-    t->unk2C = t->facing;
-    t->unk1C = 0;
-    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_087443D0);
+    t->grandWheelieSkidTimer = 60;
+    t->grandWheelieSkidDir = t->facing;
+    t->grandWheelieDustTimer = 0;
+    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_087443D0);
     PlaySfx(0x20A);
     TaskSleepForever();
 }
@@ -683,12 +683,12 @@ void GrandWheelieState5Update(void)
     struct Task *u;
     s32 x;
 
-    x = GrandWheelieTickAnim(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
-    t->unk28 = x;
+    t->actorAnimDelay = x;
     if (t->u8C.actor->animScript == 0) {
         TaskTurnAround();
-        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
+        gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_0874433C);
     }
     if (GrandWheelieBrake() != 0) {
         gCurTask->velX = 0;
@@ -697,8 +697,8 @@ void GrandWheelieState5Update(void)
         return;
     }
     u = gCurTask;
-    u->unk30--;
-    if (u->unk30 >= 0)
+    u->grandWheelieSkidTimer--;
+    if (u->grandWheelieSkidTimer >= 0)
         return;
     if ((gFrameCount & 1) != 0) {
         ActorSetState(4);
@@ -717,7 +717,7 @@ s32 GrandWheelieBrake(void)
     s32 a;
     s32 b;
 
-    if (gCurTask->unk2C == 1) {
+    if (gCurTask->grandWheelieSkidDir == 1) {
         a = sub_08094d10();
         t = gCurTask;
         t->velX -= gUnk_087444CC[a];
@@ -731,13 +731,13 @@ s32 GrandWheelieBrake(void)
             return 1;
     }
     v = gCurTask;
-    v->unk1C++;
-    if (v->unk1C == 8) {
-        if (v->unk2C == v->facing)
+    v->grandWheelieDustTimer++;
+    if (v->grandWheelieDustTimer == 8) {
+        if (v->grandWheelieSkidDir == v->facing)
             CreateDustTrail(1, 1, -4, 12);
         else
             CreateDustTrail(1, 1, -4, 12);
-        gCurTask->unk1C = 0;
+        gCurTask->grandWheelieDustTimer = 0;
     }
     return 0;
 }
@@ -752,9 +752,9 @@ void GrandWheelieState6(void)
     zero = 0;
     v = GrandWheelieStartAnim(gUnk_087443BC);
     t = gCurTask;
-    t->unk28 = v;
-    t->unk2C = t->facing;
-    t->unk1C = zero;
+    t->actorAnimDelay = v;
+    t->grandWheelieSkidDir = t->facing;
+    t->grandWheelieDustTimer = zero;
     PlaySfx(0x20A);
     TaskSleepForever();
 }
@@ -764,9 +764,9 @@ void GrandWheelieState6Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk20 > 0)
+    if (t->grandWheelieFlashTimer > 0)
         return;
-    gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
+    gCurTask->actorAnimDelay = GrandWheelieTickAnim(t->actorAnimDelay);
     if (GrandWheelieBrake() != 0) {
         gCurTask->velX = 0;
         ActorSetState(2);
@@ -784,32 +784,32 @@ void GrandWheelieState7(void)
 
     gCurTask->updateState = 7;
     zero = 0;
-    gCurTask->unk18 = one = 1;
+    gCurTask->grandWheelieRushCooldown = one = 1;
     v = GrandWheelieStartAnim(gUnk_087443D0);
     t = gCurTask;
-    t->unk28 = v;
-    t->unk2C = t->facing;
-    t->unk30 = zero;
-    t->unk1C = zero;
+    t->actorAnimDelay = v;
+    t->grandWheelieSkidDir = t->facing;
+    t->grandWheelieRushPhase = zero;
+    t->grandWheelieDustTimer = zero;
     PlaySfx(0x20A);
     TaskYieldTrampoline(30);
-    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
-    gCurTask->unk46 = CreateDashFlame(-10, 5);
+    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744384);
+    gCurTask->grandWheelieFlameSlot = CreateDashFlame(-10, 5);
     TaskSetMotionXFacing(gUnk_087444A4[0], 0x5A5A5A5A);
-    gCurTask->unk30 = one;
+    gCurTask->grandWheelieRushPhase = one;
     gUnk_02007D00[1] = PlaySfx(0x209);
     TaskYieldTrampoline(30);
-    if (gTaskSlotTypes[gCurTask->unk46] == 167)
-        TaskFree(gCurTask->unk46);
-    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_087443D0);
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+        TaskFree(gCurTask->grandWheelieFlameSlot);
+    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_087443D0);
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
     u = gCurTask;
-    u->unk2C = u->facing;
-    u->unk30 = zero;
-    u->unk1C = zero;
+    u->grandWheelieSkidDir = u->facing;
+    u->grandWheelieRushPhase = zero;
+    u->grandWheelieDustTimer = zero;
     PlaySfx(0x20A);
     TaskYieldTrampoline(30);
-    gCurTask->unk30 = 2;
+    gCurTask->grandWheelieRushPhase = 2;
     TaskSleepForever();
 }
 
@@ -819,19 +819,19 @@ void GrandWheelieState7Update(void)
     s32 v;
 
     t = gCurTask;
-    v = t->unk30;
+    v = t->grandWheelieRushPhase;
     switch (v) {
     case 0:
-        gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
+        gCurTask->actorAnimDelay = GrandWheelieTickAnim(t->actorAnimDelay);
         if (gCurTask->u8C.actor->animScript == 0) {
             TaskTurnAround();
-            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
+            gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_0874433C);
         }
         if (GrandWheelieBrake() != 0)
             gCurTask->velX = v;
         break;
     case 1:
-        gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
+        gCurTask->actorAnimDelay = GrandWheelieTickAnim(t->actorAnimDelay);
         sub_08094bbc();
         break;
     case 2:
@@ -854,16 +854,16 @@ void GrandWheelieSummon(void)
     GrandWheelieStartAnim(gUnk_087443E4);
     TaskSetMotionY(-0x30000, 0x3500, 0x30000);
     gCurTask->onGround = zero;
-    gCurTask->unk2C = zero;
+    gCurTask->grandWheelieLanded = zero;
     do {
         TaskYieldTrampoline(1);
-    } while (gCurTask->unk2C == 0);
+    } while (gCurTask->grandWheelieLanded == 0);
     TaskSetMotionY(-0x18000, 0x3500, 0x30000);
     gCurTask->onGround = 0;
-    gCurTask->unk2C = 0;
+    gCurTask->grandWheelieLanded = 0;
     do {
         TaskYieldTrampoline(1);
-    } while (gCurTask->unk2C == 0);
+    } while (gCurTask->grandWheelieLanded == 0);
     TaskYieldTrampoline(16);
     PlaySfx(506);
     t = gCurTask;
@@ -871,12 +871,12 @@ void GrandWheelieSummon(void)
     sp.subtype = 12;
     sp.taskType = 114;
     sp.variant = t->variant;
-    sp.spawnArg = t->unk74;
+    sp.spawnArg = t->actorSpawnArg;
     sp.x = 0;
     sp.y = 0;
     sp.tileWord = a->savedTileWord;
     sp.checkTerrain = 1;
-    gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
+    gCurTask->grandWheelieMiniWheelieSlot = CreateActorFromDescAtOffsetFacing(&sp, 1);
     TaskYieldTrampoline(20);
     ActorSetState(2);
     TaskSleepForever();
@@ -887,9 +887,9 @@ void GrandWheelieSummonUpdate(void)
     struct Task *t;
     s32 x;
 
-    x = GrandWheelieTickAnim(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
-    t->unk28 = x;
+    t->actorAnimDelay = x;
     if (t->state != 8)
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
@@ -910,18 +910,18 @@ void GrandWheelieBounceOffWall(void)
     TaskSetMotionY(-0x30000, 0x2500, 0x30000);
     gCurTask->onGround = 0;
     GrandWheelieStartAnim(gUnk_08744408);
-    gCurTask->unk2C = 0;
+    gCurTask->grandWheelieLanded = 0;
     do {
         TaskYieldTrampoline(1);
-    } while (gCurTask->unk2C == 0);
+    } while (gCurTask->grandWheelieLanded == 0);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x2500, 0x30000);
     gCurTask->onGround = 0;
     GrandWheelieStartAnim(gUnk_0874441C);
-    gCurTask->unk2C = 0;
+    gCurTask->grandWheelieLanded = 0;
     do {
         TaskYieldTrampoline(1);
-    } while (gCurTask->unk2C == 0);
+    } while (gCurTask->grandWheelieLanded == 0);
     TaskYieldTrampoline(30);
     ActorSetState(2);
     TaskSleepForever();
@@ -932,9 +932,9 @@ void GrandWheelieBounceOffWallUpdate(void)
     struct Task *t;
     s32 x;
 
-    x = GrandWheelieTickAnim(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
-    t->unk28 = x;
+    t->actorAnimDelay = x;
     if (t->state != 9)
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
@@ -947,20 +947,20 @@ void GrandWheelieDefeat(void)
 
     gCurTask->updateState = 10;
     z1 = 0;
-    if (gTaskSlotTypes[gCurTask->unk46] == 167)
-        TaskFree(gCurTask->unk46);
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+        TaskFree(gCurTask->grandWheelieFlameSlot);
     ActorSetHitReactions(gGrandWheelieDefeatedHitReactions);
-    gCurTask->unk2C = z1;
+    gCurTask->grandWheelieDefeatPhase = z1;
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
         sub_0806684c();
     sub_080667c0(1, 32);
     CreateChildTaskHere(142, 0);
-    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744408);
+    gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744408);
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
     gCurTask->onGround = z1;
-    while (gCurTask->unk2C == 0)
+    while (gCurTask->grandWheelieDefeatPhase == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     RequestScreenShake(4);
@@ -969,16 +969,16 @@ void GrandWheelieDefeat(void)
     GrandWheelieStartAnim(gUnk_0874441C);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     RequestScreenShake(2);
-    gCurTask->unk1C = z2 = 0;
+    gCurTask->grandWheelieDustTimer = z2 = 0;
     TaskYieldTrampoline(32);
     TaskStop();
     t = gCurTask;
-    t->unk2C = 2;
-    t->unk30 = z2;
+    t->grandWheelieDefeatPhase = 2;
+    t->grandWheelieDefeatDone = z2;
     CreateChildTaskHere(141, 0);
     TaskYieldTrampoline(170);
     sub_0806ad18();
-    gCurTask->unk30 = 1;
+    gCurTask->grandWheelieDefeatDone = 1;
     TaskSleepForever();
 }
 
@@ -987,18 +987,18 @@ void GrandWheelieDefeatUpdate(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->unk28 = GrandWheelieTickAnim(gCurTask->unk28);
+    gCurTask->actorAnimDelay = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
     ActorFlashPalette(gUnk_0826F170, 16);
     t = gCurTask;
-    if (t->unk2C == 1) {
-        t->unk1C++;
-        if (t->unk1C == 16) {
+    if (t->grandWheelieDefeatPhase == 1) {
+        t->grandWheelieDustTimer++;
+        if (t->grandWheelieDustTimer == 16) {
             CreateDustTrail(0, 1, 8, 10);
-            gCurTask->unk1C = 0;
+            gCurTask->grandWheelieDustTimer = 0;
         }
     }
     u = gCurTask;
-    if (u->unk2C == 2 && u->unk30 != 0)
+    if (u->grandWheelieDefeatPhase == 2 && u->grandWheelieDefeatDone != 0)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
@@ -1017,7 +1017,7 @@ s32 GrandWheelieLand(void)
         RequestScreenShake(2);
         PlaySfx(0x1F7);
         if (gCurTask->u8C.actor->animScript != gUnk_08744384)
-            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
+            gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744384);
         TaskSetEntry(sub_08094894, gCurTaskIdx);
         return 1;
     case 8:
@@ -1026,7 +1026,7 @@ s32 GrandWheelieLand(void)
         TaskStop();
         if (gCurTask->state != 10)
             PlaySfx(504);
-        gCurTask->unk2C = 1;
+        gCurTask->grandWheelieLanded = 1;
         break;
     }
     return 0;
@@ -1040,8 +1040,8 @@ s32 GrandWheelieHitWall(void)
     switch (t->state) {
     case 4:
         StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-        if (gTaskSlotTypes[gCurTask->unk46] == 167)
-            TaskFree(gCurTask->unk46);
+        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+            TaskFree(gCurTask->grandWheelieFlameSlot);
         ActorSetState(9);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
         return 1;
@@ -1051,14 +1051,14 @@ s32 GrandWheelieHitWall(void)
         TaskStopX();
         break;
     case 7:
-        if (gCurTask->unk30 == 0) {
+        if (gCurTask->grandWheelieRushPhase == 0) {
             TaskStopX();
             break;
         }
         TaskStop();
         StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-        if (gTaskSlotTypes[gCurTask->unk46] == 167)
-            TaskFree(gCurTask->unk46);
+        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+            TaskFree(gCurTask->grandWheelieFlameSlot);
         ActorSetState(9);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
         return 1;
@@ -1073,7 +1073,7 @@ void GrandWheelieReactToDamage(void)
 {
     CreateChildTaskHere(142, 0);
     RequestScreenShake(2);
-    gCurTask->unk20 = 32;
+    gCurTask->grandWheelieFlashTimer = 32;
 }
 
 void GrandWheelieReactToDefeat(void)

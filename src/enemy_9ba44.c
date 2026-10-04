@@ -28,7 +28,7 @@ void MrTickTockNoteInit(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)MrTickTockNoteUpdate;
-    t->unk2C = -gTasks[t->parent].facing;
+    t->mrTickTockNoteDir = -gTasks[t->parent].facing;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 2, gMrTickTockNoteStates);
 }
@@ -62,7 +62,7 @@ void MrTickTockNoteFlight(void)
     gCurTask->onGround = 0;
     t = gCurTask;
     t->unk28 = 0;
-    t->velX = gUnk_08745B0C[t->unk74] * t->unk2C;
+    t->velX = gUnk_08745B0C[t->actorSpawnArg] * t->mrTickTockNoteDir;
     t->velY = 0xFFFD0000;
     t->accelY = 0xC0 << 6;
     t->speedLimitY = 0xC0 << 10;

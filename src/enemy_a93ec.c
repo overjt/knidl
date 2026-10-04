@@ -80,21 +80,21 @@ void sub_080a9434(struct Task *pt)
 
     TaskStop();
     t = gCurTask;
-    t->unk2C = 0;
+    t->krackoJrStepTimer = 0;
     t->unk30 = 32;
     gUnk_02007D00[0] = 131;
-    t->unk18 = pt->pixelX;
-    t->unk20 = pt->pixelY;
+    t->krackoJrTargetX = pt->pixelX;
+    t->krackoJrTargetY = pt->pixelY;
     gUnk_02007D00[4] = ((u16)TaskGetAngleTo(gUnk_02007D00[5], 3) + 256) & 496;
     if (pt->onGround != 0)
     {
         gUnk_02007D00[3] = 1;
-        gCurTask->unk20 |= 15;
+        gCurTask->krackoJrTargetY |= 15;
         gUnk_02007D00[4] = (gUnk_02007D00[4] + gUnk_087490A8[RandomRange(4)]) & 496;
     }
     else
         gUnk_02007D00[3] = 0;
-    gCurTask->unk28 = 4;
+    gCurTask->krackoJrPhase = 4;
 }
 
 void sub_080a94d4(void)
@@ -107,16 +107,16 @@ void sub_080a94d4(void)
         gUnk_03002448 = 0;
     else
         gUnk_03002448 = 1;
-    gCurTask->unk18 = gUnk_03002448;
+    gCurTask->krackoJrMoveAxis = gUnk_03002448;
     if (RandomRange(4) != 0)
-        gCurTask->unk18 ^= 1;
-    if (gCurTask->unk18 == 0)
+        gCurTask->krackoJrMoveAxis ^= 1;
+    if (gCurTask->krackoJrMoveAxis == 0)
     {
         if (gUnk_03001F2C == 0)
             gUnk_02007D00[4] = 128 << 1;
         else
             gUnk_02007D00[4] = 0;
-        gCurTask->unk20 = gUnk_03001F2C;
+        gCurTask->krackoJrMoveDir = gUnk_03001F2C;
     }
     else
     {
@@ -124,7 +124,7 @@ void sub_080a94d4(void)
             gUnk_02007D00[4] = 192 << 1;
         else
             gUnk_02007D00[4] = 128;
-        gCurTask->unk20 = gUnk_03002448;
+        gCurTask->krackoJrMoveDir = gUnk_03002448;
     }
     AngleToVector((s16)gUnk_02007D00[4], 320);
     gCurTask->velX = gUnk_030023B4;
@@ -135,20 +135,20 @@ s32 sub_080a95dc(void)
 {
     struct Task *t;
 
-    if (gCurTask->unk18 == 0)
+    if (gCurTask->krackoJrMoveAxis == 0)
     {
         if (TaskGetDxTo(gUnk_02007D00[5]) < 0)
             gUnk_03001F2C = 0;
         else
             gUnk_03001F2C = 1;
         t = gCurTask;
-        if (t->unk20 != gUnk_03001F2C)
+        if (t->krackoJrMoveDir != gUnk_03001F2C)
         {
-            t->unk18 = 1;
+            t->krackoJrMoveAxis = 1;
             if (TaskGetDyTo(gUnk_02007D00[5]) < 0)
-                gCurTask->unk20 = 0;
+                gCurTask->krackoJrMoveDir = 0;
             else
-                gCurTask->unk20 = 1;
+                gCurTask->krackoJrMoveDir = 1;
             return 1;
         }
     }
@@ -159,13 +159,13 @@ s32 sub_080a95dc(void)
         else
             gUnk_03001F2C = 1;
         t = gCurTask;
-        if (t->unk20 != gUnk_03001F2C)
+        if (t->krackoJrMoveDir != gUnk_03001F2C)
         {
-            t->unk18 = 0;
+            t->krackoJrMoveAxis = 0;
             if (TaskGetDxTo(gUnk_02007D00[5]) < 0)
-                gCurTask->unk20 = 0;
+                gCurTask->krackoJrMoveDir = 0;
             else
-                gCurTask->unk20 = 1;
+                gCurTask->krackoJrMoveDir = 1;
             return 1;
         }
     }
@@ -176,13 +176,13 @@ void sub_080a96a4(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk34 & 0x8000) {
+    if (t->krackoJrAirborneTimer & 0x8000) {
         if (gUnk_02007D00[6] == 0) {
             gUnk_02007D00[0] = 2;
-            t->unk24 = 4;
-            t->unk28 = 3;
+            t->krackoJrAccelTimer = 4;
+            t->krackoJrPhase = 3;
         } else {
-            t->unk34 = 0;
+            t->krackoJrAirborneTimer = 0;
         }
     }
 }
@@ -250,7 +250,7 @@ s32 KrackoReactToDefeat(void)
     ResetFadeAndBlend();
     TaskStop();
     ActorSetHitReactions((u32)gUnk_08749B48);
-    gCurTask->unk34 = 1;
+    gCurTask->krackoDefeatStage = 1;
     ResetBgPaletteBlend();
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
@@ -258,7 +258,7 @@ s32 KrackoReactToDefeat(void)
 
 void KrackoDropStarRodPiece(void)
 {
-    gCurTask->unk34 = 2;
+    gCurTask->krackoDefeatStage = 2;
     CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
@@ -495,7 +495,7 @@ void KrackoLightningUpdate(void)
     if ((s16)arr[i] != -1) {
         struct Task *o = &gTasks[i];
 
-        if (o->u76.subtype == 6 && o->unk34 != 1)
+        if (o->u76.subtype == 6 && o->krackoDefeatStage != 1)
             ActorCheckHitsWithBox((s32)gUnk_08749774);
         else
             TaskFree(gCurTaskIdx);
@@ -506,7 +506,7 @@ void KrackoLightningUpdate(void)
 
 s32 KrackoDefeatSweepFilter(s32 a)
 {
-    if (a == gCurTask->unk46)
+    if (a == gCurTask->krackoOrbsSlot)
         return 0;
     return 1;
 }

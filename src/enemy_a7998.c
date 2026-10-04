@@ -238,12 +238,12 @@ void KrackoJrInit(void)
     gCurTask->updateCallback = (u32)KrackoJrUpdate;
     ActorSetAttackBox((u32)gUnk_08749704);
     t = gCurTask;
-    t->unk28 = 0;
-    t->unk34 = 0;
+    t->krackoJrPhase = 0;
+    t->krackoJrAirborneTimer = 0;
     t->unk30 = 0;
-    t->unk2C = 0;
+    t->krackoJrStepTimer = 0;
     gUnk_02007D00[0] = 1;
-    gCurTask->unk46 = CreateChildTaskHere(195, 1);
+    gCurTask->krackoOrbsSlot = CreateChildTaskHere(195, 1);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }
@@ -270,7 +270,7 @@ void KrackoJrState0(void)
         do
         {
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 != 10);
+        } while (gCurTask->krackoJrPhase != 10);
         TaskStop();
         gCurTask->velX = 0;
         gCurTask->velY = -0x10000;
@@ -303,7 +303,7 @@ void KrackoJrState0(void)
         gCurTask->velY = 128 << 7;
         TaskYieldTrampoline(4);
         TaskBreakTopBlockRow((u32)gUnk_08749B84);
-        gCurTask->unk6C = 0;
+        gCurTask->krackoLoopCount = 0;
         do
         {
             gCurTask->velX = 0;
@@ -318,9 +318,9 @@ void KrackoJrState0(void)
             gCurTask->velX = -0xC000;
             gCurTask->velY = 0;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 5);
-        gCurTask->unk6C = 0;
+            gCurTask->krackoLoopCount++;
+        } while ((s16)gCurTask->krackoLoopCount <= 5);
+        gCurTask->krackoLoopCount = 0;
         do
         {
             gCurTask->velX = 0;
@@ -335,8 +335,8 @@ void KrackoJrState0(void)
             gCurTask->velX = -0x10000;
             gCurTask->velY = 0;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 1);
+            gCurTask->krackoLoopCount++;
+        } while ((s16)gCurTask->krackoLoopCount <= 1);
         gCurTask->velX = 0;
         gCurTask->velY = 192 << 8;
         TaskYieldTrampoline(1);
@@ -351,7 +351,7 @@ void KrackoJrState0(void)
         gUnk_02007D00[0] = 130;
         TaskYieldTrampoline(8);
         gUnk_02007D00[0] = 129;
-        gCurTask->unk28 = 9;
+        gCurTask->krackoJrPhase = 9;
     }
 }
 
@@ -378,35 +378,35 @@ void KrackoJrState0Update(void)
     gUnk_02007D00[5] = TaskFindNearestPlayer();
     pt = &gTasks[gUnk_02007D00[5]];
     gUnk_02007D00[6] = pt->onGround;
-    if ((u32)(gCurTask->unk28 - 8) > 2)
+    if ((u32)(gCurTask->krackoJrPhase - 8) > 2)
         KrackoJrClampToView();
-    if (!(gCurTask->unk34 & (128 << 8)))
+    if (!(gCurTask->krackoJrAirborneTimer & (128 << 8)))
     {
         if (gUnk_02007D00[6] != 0)
-            gCurTask->unk34 = 0;
+            gCurTask->krackoJrAirborneTimer = 0;
         else
         {
-            gCurTask->unk34++;
-            if (gCurTask->unk34 > 119)
-                gCurTask->unk34 = 128 << 8;
+            gCurTask->krackoJrAirborneTimer++;
+            if (gCurTask->krackoJrAirborneTimer > 119)
+                gCurTask->krackoJrAirborneTimer = 128 << 8;
         }
     }
-    if (gCurTask->unk28 == 0)
+    if (gCurTask->krackoJrPhase == 0)
         goto next;
-    if (gCurTask->unk28 < 0)
+    if (gCurTask->krackoJrPhase < 0)
         goto sw;
-    if (gCurTask->unk28 > 2)
+    if (gCurTask->krackoJrPhase > 2)
         goto sw;
-    gCurTask->unk2C++;
-    if (gCurTask->unk2C > 63)
+    gCurTask->krackoJrStepTimer++;
+    if (gCurTask->krackoJrStepTimer > 63)
     {
-        gCurTask->unk2C = 0;
+        gCurTask->krackoJrStepTimer = 0;
         r = RandomRange(4);
         if (r == 0)
         {
             gCurTask->velX = r;
             gCurTask->velY = r;
-            gCurTask->unk28 = r;
+            gCurTask->krackoJrPhase = r;
         }
     }
 next:
@@ -458,16 +458,16 @@ strong:
         goto sw;
     }
 sw:
-    switch (gCurTask->unk28)
+    switch (gCurTask->krackoJrPhase)
     {
     case 0:
-        gCurTask->unk2C++;
-        if (gCurTask->unk2C > 32)
+        gCurTask->krackoJrStepTimer++;
+        if (gCurTask->krackoJrStepTimer > 32)
         {
-            gCurTask->unk2C = 0;
+            gCurTask->krackoJrStepTimer = 0;
             gUnk_02007D00[0] = 129;
-            gCurTask->unk1C = 4;
-            gCurTask->unk28 = 1;
+            gCurTask->krackoJrSteerTimer = 4;
+            gCurTask->krackoJrPhase = 1;
             sub_080a94d4();
         }
         sub_080a96a4();
@@ -475,8 +475,8 @@ sw:
     case 1:
         if (sub_080a95dc() == 1)
         {
-            gCurTask->unk28 = 2;
-            gCurTask->unk1C = 4;
+            gCurTask->krackoJrPhase = 2;
+            gCurTask->krackoJrSteerTimer = 4;
             sub_080a96dc();
             AngleToVector((s16)gUnk_02007D00[4], 320);
             gCurTask->velX = gUnk_030023B4;
@@ -486,10 +486,10 @@ sw:
         break;
     case 2:
         sub_080a95dc();
-        gCurTask->unk1C--;
-        if (gCurTask->unk1C == 0)
+        gCurTask->krackoJrSteerTimer--;
+        if (gCurTask->krackoJrSteerTimer == 0)
         {
-            gCurTask->unk1C = 4;
+            gCurTask->krackoJrSteerTimer = 4;
             sub_080a96dc();
             AngleToVector((s16)gUnk_02007D00[4], 320);
             gCurTask->velX = gUnk_030023B4;
@@ -504,17 +504,17 @@ sw:
                 goto retreat2;
             gCurTask->velX = 0;
             gCurTask->velY = 0;
-            gCurTask->unk34 = 0;
+            gCurTask->krackoJrAirborneTimer = 0;
             gCurTask->unk30 = 0;
-            gCurTask->unk2C = 0;
-            gCurTask->unk28 = 0;
+            gCurTask->krackoJrStepTimer = 0;
+            gCurTask->krackoJrPhase = 0;
         }
         else
         {
-            gCurTask->unk24--;
-            if (gCurTask->unk24 == 0)
+            gCurTask->krackoJrAccelTimer--;
+            if (gCurTask->krackoJrAccelTimer == 0)
             {
-                gCurTask->unk24 = 4;
+                gCurTask->krackoJrAccelTimer = 4;
                 TaskAccelerateTowardNearestPlayer(192 << 6, 192 << 9);
             }
         }
@@ -523,7 +523,7 @@ sw:
         gCurTask->unk30--;
         if (gCurTask->unk30 == 0)
         {
-            gCurTask->unk28 = 5;
+            gCurTask->krackoJrPhase = 5;
             gUnk_02007D00[1] = 128 << 3;
             gUnk_02007D00[2] = -1;
         }
@@ -555,7 +555,7 @@ sw:
                 }
                 gUnk_02007D00[2] = gUnk_087490A4[gUnk_02007D00[2]];
                 gUnk_02007D00[4] = (gUnk_02007D00[4] + 256) & 511;
-                gCurTask->unk28 = 6;
+                gCurTask->krackoJrPhase = 6;
             }
         }
         else
@@ -587,8 +587,8 @@ sw:
         else
         {
             gUnk_02007D00[2] = -1;
-            gCurTask->unk1C = 4;
-            gCurTask->unk28 = gUnk_02007D00[3] + 7;
+            gCurTask->krackoJrSteerTimer = 4;
+            gCurTask->krackoJrPhase = gUnk_02007D00[3] + 7;
         }
         break;
     case 7:
@@ -602,7 +602,7 @@ sw:
             if (gUnk_02007D00[2] == 0)
             {
                 sub_080a96a4();
-                v = gCurTask->unk34 & (128 << 8);
+                v = gCurTask->krackoJrAirborneTimer & (128 << 8);
                 if (v == 0)
                 {
                     if ((u32)RandomRange(16) <= 2)
@@ -613,8 +613,8 @@ retreat2:
                     else
                     {
                         gCurTask->unk30 = v;
-                        gCurTask->unk2C = v;
-                        gCurTask->unk28 = v;
+                        gCurTask->krackoJrStepTimer = v;
+                        gCurTask->krackoJrPhase = v;
                     }
                 }
             }
@@ -630,10 +630,10 @@ retreat2:
             }
             else
             {
-                gCurTask->unk1C--;
-                if (gCurTask->unk1C == 0)
+                gCurTask->krackoJrSteerTimer--;
+                if (gCurTask->krackoJrSteerTimer == 0)
                 {
-                    gCurTask->unk1C = 4;
+                    gCurTask->krackoJrSteerTimer = 4;
                     sub_080a96dc();
                     AngleToVector((s16)gUnk_02007D00[4], (s16)gUnk_02007D00[1]);
                     gCurTask->velX = gUnk_030023B4;
@@ -643,30 +643,30 @@ retreat2:
         }
         break;
     case 8:
-        d = gCurTask->pixelX - gCurTask->unk18;
-        if (d >= 0 ? d <= 2 : gCurTask->unk18 - gCurTask->pixelX <= 2)
+        d = gCurTask->pixelX - gCurTask->krackoJrTargetX;
+        if (d >= 0 ? d <= 2 : gCurTask->krackoJrTargetX - gCurTask->pixelX <= 2)
         {
-            d = gCurTask->pixelY - gCurTask->unk20;
-            if (d >= 0 ? d <= 2 : gCurTask->unk20 - gCurTask->pixelY <= 2)
+            d = gCurTask->pixelY - gCurTask->krackoJrTargetY;
+            if (d >= 0 ? d <= 2 : gCurTask->krackoJrTargetY - gCurTask->pixelY <= 2)
             {
                 gCurTask->velX = 0;
                 gCurTask->velY = 0;
-                gCurTask->unk28 = 10;
+                gCurTask->krackoJrPhase = 10;
                 break;
             }
         }
-        va = ArcTan2((s16)(gCurTask->unk18 - gCurTask->pixelX), (s16)(gCurTask->unk20 - gCurTask->pixelY));
+        va = ArcTan2((s16)(gCurTask->krackoJrTargetX - gCurTask->pixelX), (s16)(gCurTask->krackoJrTargetY - gCurTask->pixelY));
         gUnk_02007D00[4] = (va <<= 16, va = (u32)va >> 23, va += 32, va &= 511, va >>= 6);
         TaskAccelerateInDir(192 << 6, 192 << 9, va);
         break;
     case 9:
         sub_080a96a4();
-        n = gCurTask->unk34 & (128 << 8);
+        n = gCurTask->krackoJrAirborneTimer & (128 << 8);
         if (n == 0)
         {
             gCurTask->unk30 = n;
-            gCurTask->unk2C = n;
-            gCurTask->unk28 = n;
+            gCurTask->krackoJrStepTimer = n;
+            gCurTask->krackoJrPhase = n;
         }
         break;
     case 10:
@@ -682,6 +682,6 @@ void KrackoJrTransform(void)
     t = gCurTask;
     t->velY = 0;
     t->accelY = -0x2000;
-    t->unk28 = 0;
+    t->krackoJrPhase = 0;
     TaskSleepForever();
 }

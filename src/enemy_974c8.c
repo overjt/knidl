@@ -65,10 +65,10 @@ void sub_08097580(void)
     sub_08063a00(gUnk_08745238);
     TaskFaceNearestPlayer();
     t = gCurTask;
-    t->unk28 = 0;
-    t->unk2C = 0;
-    t->unk1C = 0;
-    t->unk18 = -1;
+    t->phanPhanLanded = 0;
+    t->phanPhanCatchActive = 0;
+    t->phanPhanMoveCount = 0;
+    t->phanPhanHeldPlayerSlot = -1;
     sub_08066ae0();
 }
 
@@ -80,7 +80,7 @@ void PhanPhanEnterState(void)
 void sub_080975c8(void)
 {
     CallTableEntry(gCurTask->updateState, 9, gPhanPhanStateUpdates);
-    if (gCurTask->unk2C != 0)
+    if (gCurTask->phanPhanCatchActive != 0)
         PhanPhanCheckCatch();
     sub_08068f68();
     ActorReactToHit();
@@ -101,7 +101,7 @@ void PhanPhanUpdate(void)
     } else {
         CallTableEntry(gCurTask->updateState, 9, gPhanPhanStateUpdates);
     }
-    if (gCurTask->unk2C != 0)
+    if (gCurTask->phanPhanCatchActive != 0)
         PhanPhanCheckCatch();
     sub_08068f68();
     ActorReactToHit();
@@ -114,16 +114,16 @@ void sub_08097694(void)
     ActorSetState(0);
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
-    gCurTask->unk28 = 0;
+    gCurTask->phanPhanLanded = 0;
     TaskSetFrame(18);
     gCurTask->accelY = 0x2500;
     TaskYieldTrampoline(24);
     t = gCurTask;
     t->updateCallback = (u32)PhanPhanUpdate;
-    if (t->unk28 == 0) {
+    if (t->phanPhanLanded == 0) {
         do {
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->phanPhanLanded == 0);
     }
     PlaySfx(0x1F7);
     RequestScreenShake(2);
@@ -147,12 +147,12 @@ void sub_0809773c(void)
     s16 v;
 
     gCurTask->updateState = 1;
-    gCurTask->unk2C = 1;
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gUnk_087448E4[gCurTask->unk74]) {
+    gCurTask->phanPhanCatchActive = 1;
+    gCurTask->phanPhanLoopCount = 0;
+    while ((s16)gCurTask->phanPhanLoopCount < gUnk_087448E4[gCurTask->actorSpawnArg]) {
         TaskFaceNearestPlayer();
         TaskStop();
-        v = gUnk_087448E6[gCurTask->unk74];
+        v = gUnk_087448E6[gCurTask->actorSpawnArg];
         if (abs(TaskGetNearestPlayerDx()) <= v) {
             gUnk_030023D4 = r = RandomRange(8);
             if (r > 3)
@@ -169,7 +169,7 @@ anim:
                 }
             }
         }
-        gCurTask->unk6C++;
+        gCurTask->phanPhanLoopCount++;
     }
     PhanPhanChooseNextState();
     TaskSleepForever();
@@ -199,14 +199,14 @@ void PhanPhanHopBackward(void)
     TaskYieldTrampoline(5);
     gCurTask->onGround = 0;
     t = gCurTask;
-    t->unk28 = 0;
-    TaskSetMotionXFacing(-gUnk_087448EC[t->unk74], 0x5A5A5A5A);
+    t->phanPhanLanded = 0;
+    TaskSetMotionXFacing(-gUnk_087448EC[t->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(23);
     TaskYieldTrampoline(4);
     TaskSetFrame(25);
     TaskYieldTrampoline(4);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(24);
@@ -215,14 +215,14 @@ void PhanPhanHopBackward(void)
     TaskYieldTrampoline(5);
     gCurTask->onGround = 0;
     u = gCurTask;
-    u->unk28 = 0;
-    TaskSetMotionXFacing(-gUnk_087448EC[u->unk74], 0x5A5A5A5A);
+    u->phanPhanLanded = 0;
+    TaskSetMotionXFacing(-gUnk_087448EC[u->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(19);
     TaskYieldTrampoline(4);
     TaskSetFrame(17);
     TaskYieldTrampoline(4);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
 }
 
@@ -238,14 +238,14 @@ void PhanPhanHopForward(void)
     TaskYieldTrampoline(5);
     gCurTask->onGround = 0;
     t = gCurTask;
-    t->unk28 = 0;
-    TaskSetMotionXFacing(gUnk_087448EC[t->unk74], 0x5A5A5A5A);
+    t->phanPhanLanded = 0;
+    TaskSetMotionXFacing(gUnk_087448EC[t->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(23);
     TaskYieldTrampoline(4);
     TaskSetFrame(25);
     TaskYieldTrampoline(4);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(24);
@@ -254,14 +254,14 @@ void PhanPhanHopForward(void)
     TaskYieldTrampoline(5);
     gCurTask->onGround = 0;
     u = gCurTask;
-    u->unk28 = 0;
-    TaskSetMotionXFacing(gUnk_087448EC[u->unk74], 0x5A5A5A5A);
+    u->phanPhanLanded = 0;
+    TaskSetMotionXFacing(gUnk_087448EC[u->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x8000, 0x30000);
     TaskSetFrame(19);
     TaskYieldTrampoline(4);
     TaskSetFrame(17);
     TaskYieldTrampoline(4);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
 }
 
@@ -278,15 +278,15 @@ void PhanPhanHop(void)
     s32 n;
 
     gCurTask->updateState = 2;
-    gCurTask->unk2C = 1;
+    gCurTask->phanPhanCatchActive = 1;
     TaskStop();
     TaskFaceNearestPlayer();
-    n = gUnk_087448F4[gCurTask->unk74 * 2 + RandomRange(2)];
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < n) {
+    n = gUnk_087448F4[gCurTask->actorSpawnArg * 2 + RandomRange(2)];
+    gCurTask->phanPhanLoopCount = 0;
+    while ((s16)gCurTask->phanPhanLoopCount < n) {
         gCurTask->onGround = 0;
         u = gCurTask;
-        u->unk28 = 0;
+        u->phanPhanLanded = 0;
         TaskSetMotionY(-0x50000, 0x5000, 0x30000);
         TaskSetFrame(17);
         TaskYieldTrampoline(16);
@@ -294,11 +294,11 @@ void PhanPhanHop(void)
         TaskYieldTrampoline(14);
         TaskSetFrame(19);
         TaskYieldTrampoline(2);
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->phanPhanLanded == 0)
             TaskYieldTrampoline(1);
         PlaySfx(0x1F7);
         RequestScreenShake(2);
-        gCurTask->unk6C++;
+        gCurTask->phanPhanLoopCount++;
     }
     ActorSetState(1);
     TaskSleepForever();
@@ -316,7 +316,7 @@ void PhanPhanCharge(void)
     s32 v;
 
     gCurTask->updateState = 3;
-    gCurTask->unk2C = 1;
+    gCurTask->phanPhanCatchActive = 1;
     TaskSetMotionXFacing(-0x30000, 0x3000);
     ActorStopAnim();
     TaskSetFrame(11);
@@ -332,12 +332,12 @@ void PhanPhanCharge(void)
     TaskStop();
     v = ActorStartAnim(gUnk_08744900);
     t = gCurTask;
-    t->unk24 = v;
-    if (t->unk74 == 0)
+    t->actorAnimDelay24 = v;
+    if (t->actorSpawnArg == 0)
         TaskYieldTrampoline(16);
     PlaySfx(500);
     CreateDustTrail(1, 3, 8, 10);
-    TaskSetMotionXFacing(gUnk_087448F8[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_087448F8[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     TaskYieldTrampoline(48);
     TaskStop();
     ActorStopAnim();
@@ -353,7 +353,7 @@ void PhanPhanChargeUpdate(void)
     if (t->state != 3) {
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     } else {
-        gCurTask->unk24 = ActorTickAnim(t->unk24);
+        gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
     }
 }
 
@@ -369,13 +369,13 @@ void PhanPhanBounceOffWall(void)
     ActorSetAttackBox(gUnk_08745270);
     sub_08063a00(gUnk_0874528C);
     t = gCurTask;
-    t->unk2C = zero;
+    t->phanPhanCatchActive = zero;
     t->onGround = zero;
-    gCurTask->unk28 = zero;
+    gCurTask->phanPhanLanded = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x2500, 0x30000);
     TaskSetFrame(28);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
@@ -384,7 +384,7 @@ void PhanPhanBounceOffWall(void)
     TaskSetFrame(29);
     TaskYieldTrampoline(2);
     TaskStop();
-    if (gCurTask->unk74 == 0)
+    if (gCurTask->actorSpawnArg == 0)
         TaskYieldTrampoline(40);
     ActorSetAttackBox(gUnk_0874521C);
     sub_08063a00(gUnk_08745238);
@@ -412,15 +412,15 @@ void PhanPhanJump(void)
     TaskFaceNearestPlayer();
     gCurTask->onGround = zero;
     t = gCurTask;
-    t->unk28 = zero;
-    t->unk2C = 1;
-    TaskSetMotionXFacing(gUnk_08744924[t->unk74], 0x5A5A5A5A);
+    t->phanPhanLanded = zero;
+    t->phanPhanCatchActive = 1;
+    TaskSetMotionXFacing(gUnk_08744924[t->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(-0x48000, 0x2500, 0x30000);
     TaskSetFrame(17);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     TaskSetFrame(18);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     PlaySfx(0x1F7);
     RequestScreenShake(2);
@@ -451,36 +451,36 @@ void PhanPhanThrowPlayer(void)
     gCurTask->updateState = 6;
     zero = 0;
     TaskStop();
-    gCurTask->unk2C = zero;
+    gCurTask->phanPhanCatchActive = zero;
     ActorStopAnim();
     TaskSetFrame(40);
     t = gCurTask;
     if (t->onGround == 0) {
-        t->unk28 = zero;
+        t->phanPhanLanded = zero;
         TaskSetMotionY(0, 0x2500, 0x30000);
-        gCurTask->unk6C = zero;
+        gCurTask->phanPhanLoopCount = zero;
         do {
             TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
             TaskYieldTrampoline(2);
             TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
             TaskYieldTrampoline(2);
             u = gCurTask;
-            u->unk6C++;
-        } while ((s16)u->unk6C <= 3);
+            u->phanPhanLoopCount++;
+        } while ((s16)u->phanPhanLoopCount <= 3);
         TaskStopX();
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->phanPhanLanded == 0)
             TaskYieldTrampoline(1);
         TaskYieldTrampoline(20);
     } else {
-        t->unk6C = zero;
+        t->phanPhanLoopCount = zero;
         do {
             TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
             TaskYieldTrampoline(2);
             TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
             TaskYieldTrampoline(2);
             v = gCurTask;
-            v->unk6C++;
-        } while ((s16)v->unk6C <= 3);
+            v->phanPhanLoopCount++;
+        } while ((s16)v->phanPhanLoopCount <= 3);
         TaskStopX();
         TaskYieldTrampoline(4);
     }
@@ -496,10 +496,10 @@ chk2:
         goto other;
 yes:
     sub_0809809c();
-    SetHeldPlayerState(gCurTask->unk18, 8);
-    if (gLocalPlayer == gCurTask->unk18)
+    SetHeldPlayerState(gCurTask->phanPhanHeldPlayerSlot, 8);
+    if (gLocalPlayer == gCurTask->phanPhanHeldPlayerSlot)
         PlaySfx(0x23A);
-    gCurTask->unk18 = -1;
+    gCurTask->phanPhanHeldPlayerSlot = -1;
     TaskSetFrame(32);
     TaskYieldTrampoline(4);
     TaskSetFrame(39);
@@ -507,10 +507,10 @@ yes:
     goto tail;
 other:
     sub_08098140();
-    SetHeldPlayerState(gCurTask->unk18, 9);
-    if (gLocalPlayer == gCurTask->unk18)
+    SetHeldPlayerState(gCurTask->phanPhanHeldPlayerSlot, 9);
+    if (gLocalPlayer == gCurTask->phanPhanHeldPlayerSlot)
         PlaySfx(0x23A);
-    gCurTask->unk18 = -1;
+    gCurTask->phanPhanHeldPlayerSlot = -1;
     TaskSetFrame(43);
     TaskYieldTrampoline(4);
     TaskSetFrame(44);
@@ -532,9 +532,9 @@ void sub_0809809c(void)
 {
     struct Task *t;
 
-    gCurTask->unk6C = 0;
+    gCurTask->phanPhanLoopCount = 0;
     do {
-        if (gLocalPlayer == gCurTask->unk18)
+        if (gLocalPlayer == gCurTask->phanPhanHeldPlayerSlot)
             PlaySfx(0x239);
         TaskSetFrame(30);
         TaskYieldTrampoline(4);
@@ -553,8 +553,8 @@ void sub_0809809c(void)
         TaskSetFrame(37);
         TaskYieldTrampoline(4);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 2);
+        t->phanPhanLoopCount++;
+    } while ((s16)t->phanPhanLoopCount <= 2);
 }
 
 void sub_08098140(void)
@@ -579,14 +579,14 @@ void PhanPhanThrowApple(void)
 
     gCurTask->updateState = 7;
     zero = 0;
-    gCurTask->unk2C = zero;
+    gCurTask->phanPhanCatchActive = zero;
     TaskStop();
     TaskFaceNearestPlayer();
     TaskSetFrame(4);
     TaskYieldTrampoline(15);
     gCurTask->onGround = zero;
-    gCurTask->unk28 = zero;
-    gCurTask->unk24 = ActorStartAnim(gUnk_08744900);
+    gCurTask->phanPhanLanded = zero;
+    gCurTask->actorAnimDelay24 = ActorStartAnim(gUnk_08744900);
     TaskSetMotionY(-0x38000, 0x2000, 0x30000);
     TaskYieldTrampoline(gUnk_0874492C[RandomRange(8)]);
     ActorStopAnim();
@@ -599,7 +599,7 @@ void PhanPhanThrowApple(void)
     TaskSetFrame(8);
     TaskYieldTrampoline(3);
     TaskSetFrame(18);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     TaskSetFrame(19);
     TaskYieldTrampoline(8);
@@ -615,7 +615,7 @@ void PhanPhanThrowAppleUpdate(void)
     if (t->state != 7) {
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     } else {
-        gCurTask->unk24 = ActorTickAnim(t->unk24);
+        gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
     }
 }
 
@@ -626,7 +626,7 @@ void PhanPhanDefeat(void)
     gCurTask->updateState = 8;
     zero = 0;
     TaskStop();
-    gCurTask->unk2C = zero;
+    gCurTask->phanPhanCatchActive = zero;
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
         sub_0806684c();
@@ -634,7 +634,7 @@ void PhanPhanDefeat(void)
     CreateChildTaskHere(142, 0);
     ActorSetHitReactions(gPhanPhanDefeatedHitReactions);
     gCurTask->onGround = zero;
-    gCurTask->unk28 = zero;
+    gCurTask->phanPhanLanded = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x2500, 0x30000);
     TaskSetFrame(28);
@@ -643,7 +643,7 @@ void PhanPhanDefeat(void)
         TaskYieldTrampoline(1);
     ActorSetAttackBox(gUnk_087452A8);
     sub_08063a00(gUnk_087452C4);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(29);
@@ -666,9 +666,9 @@ void PhanPhanChooseNextState(void)
     s32 r;
 
     t = gCurTask;
-    t->unk1C++;
-    if (t->unk1C > 2) {
-        t->unk1C = 0;
+    t->phanPhanMoveCount++;
+    if (t->phanPhanMoveCount > 2) {
+        t->phanPhanMoveCount = 0;
         ActorSetState(7);
         return;
     }
@@ -683,7 +683,7 @@ void PhanPhanChooseNextState(void)
         k = 1;
         break;
     }
-    if (gCurTask->unk74 != 0)
+    if (gCurTask->actorSpawnArg != 0)
         k += 3;
     gUnk_030023D4 = r = RandomRange(8);
     if (r < gUnk_08744934[k]) {
@@ -709,14 +709,14 @@ void CreatePhanPhanApple(void)
     p = &sp;
     t = gCurTask;
     p->variant = t->variant;
-    p->spawnArg = t->unk74;
+    p->spawnArg = t->actorSpawnArg;
     p->tileWord = t->u8C.actor->savedTileWord;
     p->x = 12;
     p->y = 8;
     p->checkTerrain = 1;
     d = t->facing;
     TaskFaceNearestPlayer();
-    gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
+    gCurTask->phanPhanAppleSlot = CreateActorFromDescAtOffsetFacing(&sp, 1);
     gCurTask->facing = d;
 }
 
@@ -731,10 +731,10 @@ void PhanPhanCheckCatch(void)
         t = gCurTask;
         i = t->hitterSlot;
         if (p[i].ability != 17 || p[i].mode != 13) {
-            t->unk18 = i;
+            t->phanPhanHeldPlayerSlot = i;
             TaskFaceToward(i);
             PlaySfx(568);
-            HoldPlayer(gCurTask->unk18, gCurTaskIdx, 7);
+            HoldPlayer(gCurTask->phanPhanHeldPlayerSlot, gCurTaskIdx, 7);
             ActorSetState(6);
             TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
         }
@@ -744,7 +744,7 @@ void PhanPhanCheckCatch(void)
 s32 PhanPhanLand(void)
 {
     TaskStopY();
-    gCurTask->unk28 = 1;
+    gCurTask->phanPhanLanded = 1;
     return 0;
 }
 
@@ -785,9 +785,9 @@ s32 PhanPhanReactToDefeat(void)
 
     ActorFaceHitter();
     t = gCurTask;
-    if (t->unk18 >= 0) {
-        ReleaseHeldPlayer(t->unk18, -t->facing);
-        gCurTask->unk18 = -1;
+    if (t->phanPhanHeldPlayerSlot >= 0) {
+        ReleaseHeldPlayer(t->phanPhanHeldPlayerSlot, -t->facing);
+        gCurTask->phanPhanHeldPlayerSlot = -1;
     }
     ActorSetState(8);
     TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
@@ -810,19 +810,19 @@ void Task_GrandWheelieMiniWheelie(void)
     TaskFaceNearestPlayer();
     TaskStop();
     TaskSetMotionXFacing(gUnk_087454D8[0] >> 1, 0x5A5A5A5A);
-    TaskSetMotionY(gUnk_087454EC[gCurTask->unk74], 0x3000, 0x30000);
+    TaskSetMotionY(gUnk_087454EC[gCurTask->actorSpawnArg], 0x3000, 0x30000);
     gCurTask->onGround = zero;
-    gCurTask->unk2C = zero;
+    gCurTask->grandWheelieMiniWheelieRolling = zero;
     while (1) {
         u = gCurTask;
-        switch (u->unk2C) {
+        switch (u->grandWheelieMiniWheelieRolling) {
         case 0:
             if (u->u8C.actor->animScript != gUnk_087454B8)
-                gCurTask->unk28 = ActorStartAnim(gUnk_087454B8);
+                gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087454B8);
             break;
         case 1:
             if (u->u8C.actor->animScript != gUnk_087454C4)
-                gCurTask->unk28 = ActorStartAnim(gUnk_087454C4);
+                gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087454C4);
             break;
         }
         TaskYieldTrampoline(1);
@@ -837,11 +837,11 @@ void GrandWheelieMiniWheelieUpdate(void)
     ActorCollideTerrain();
     ActorCheckHits();
     ActorReactToHit();
-    x = ActorTickAnim(gCurTask->unk28);
+    x = ActorTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
-    t->unk28 = x;
-    if (t->unk2C != 0 && sub_08098748() != 0)
-        TaskSetMotionXFacing(gUnk_087454D8[gCurTask->unk1C], 0x5A5A5A5A);
+    t->actorAnimDelay = x;
+    if (t->grandWheelieMiniWheelieRolling != 0 && sub_08098748() != 0)
+        TaskSetMotionXFacing(gUnk_087454D8[gCurTask->grandWheelieMiniWheelieGroundClass], 0x5A5A5A5A);
 }
 
 void GrandWheelieMiniWheelieLand(void)
@@ -850,8 +850,8 @@ void GrandWheelieMiniWheelieLand(void)
 
     TaskStopY();
     t = gCurTask;
-    t->unk1C = -1;
-    t->unk2C = 1;
+    t->grandWheelieMiniWheelieGroundClass = -1;
+    t->grandWheelieMiniWheelieRolling = 1;
 }
 
 void sub_08098708(void)
@@ -885,8 +885,8 @@ s32 sub_08098748(void)
 
     v = sub_08094d10();
     t = gCurTask;
-    if (t->unk1C != (s8)v) {
-        t->unk1C = (s8)v;
+    if (t->grandWheelieMiniWheelieGroundClass != (s8)v) {
+        t->grandWheelieMiniWheelieGroundClass = (s8)v;
         return 1;
     }
     return 0;
@@ -914,27 +914,27 @@ void Task_PhanPhanApple(void)
     TaskFaceNearestPlayer();
     v = ActorStartAnim(gUnk_0874550C);
     w = gCurTask;
-    w->unk28 = v;
+    w->actorAnimDelay = v;
     w->onGround = zero;
     y = gCurTask;
-    y->unk34 = zero;
-    TaskSetMotionXFacing(gUnk_087454F4[y->unk74], 0x5A5A5A5A);
+    y->phanPhanAppleLanded = zero;
+    TaskSetMotionXFacing(gUnk_087454F4[y->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(0x2AF00, 0x3000, 0x30000);
-    while (gCurTask->unk34 == 0)
+    while (gCurTask->phanPhanAppleLanded == 0)
         TaskYieldTrampoline(1);
     gCurTask->onGround = 0;
     z = gCurTask;
-    z->unk34 = 0;
-    TaskSetMotionXFacing(gUnk_087454FC[z->unk74], 0x5A5A5A5A);
-    TaskSetMotionY(gUnk_08745504[gCurTask->unk74], 0x3000, 0x30000);
-    while (gCurTask->unk34 == 0)
+    z->phanPhanAppleLanded = 0;
+    TaskSetMotionXFacing(gUnk_087454FC[z->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionY(gUnk_08745504[gCurTask->actorSpawnArg], 0x3000, 0x30000);
+    while (gCurTask->phanPhanAppleLanded == 0)
         TaskYieldTrampoline(1);
     while (1) {
         gCurTask->onGround = 0;
         q = gCurTask;
-        q->unk34 = 0;
+        q->phanPhanAppleLanded = 0;
         q->velY = -0x30000;
-        while (gCurTask->unk34 == 0)
+        while (gCurTask->phanPhanAppleLanded == 0)
             TaskYieldTrampoline(1);
     }
 }
@@ -944,9 +944,9 @@ void PhanPhanAppleUpdate(void)
     struct Task *t;
     s32 x;
 
-    x = ActorTickAnim(gCurTask->unk28);
+    x = ActorTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
-    t->unk28 = x;
+    t->actorAnimDelay = x;
     ActorCollideTerrain();
     ActorCheckHits();
     ActorReactToHit();
@@ -954,7 +954,7 @@ void PhanPhanAppleUpdate(void)
 
 s32 PhanPhanAppleLand(void)
 {
-    gCurTask->unk34 = 1;
+    gCurTask->phanPhanAppleLanded = 1;
     return 0;
 }
 

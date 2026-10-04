@@ -176,16 +176,16 @@ void Task_WaddleDooBeam(void)
     u->onGround = 0;
     w = gCurTask;
     w->unk28 = 0;
-    v = gTasks[w->parent].unk34;
-    w->unk34 = v;
-    if (w->unk74 <= 1)
-        w->unk34 = v >> 1;
+    v = gTasks[w->parent].waddleDooBeamStep;
+    w->waddleDooBeamAngleIndex = v;
+    if (w->actorSpawnArg <= 1)
+        w->waddleDooBeamAngleIndex = v >> 1;
     gCurTask->facing = TaskGetParentFacing();
-    AngleToVector(gUnk_08742FAC[gCurTask->unk34], 128 << 4);
+    AngleToVector(gUnk_08742FAC[gCurTask->waddleDooBeamAngleIndex], 128 << 4);
     TaskSetMotionXFacing(gUnk_030023B4, 0x5A5A5A5A);
     gCurTask->velY = gUnk_030023D4;
     TaskSetFrame(0);
-    gCurTask->unk6C = 0;
+    gCurTask->waddleDooBeamLoopCount = 0;
     do
     {
         TaskSetFrame(0);
@@ -193,8 +193,8 @@ void Task_WaddleDooBeam(void)
         TaskSetFrame(1);
         TaskYieldTrampoline(1);
         z = gCurTask;
-        z->unk6C++;
-    } while ((s16)z->unk6C <= 2);
+        z->waddleDooBeamLoopCount++;
+    } while ((s16)z->waddleDooBeamLoopCount <= 2);
     ActorDestroy();
 }
 
@@ -313,8 +313,8 @@ s32 BroomHatterLand(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk30 = 1;
-    t->unk34 = 1;
+    t->broomHatterLanded = 1;
+    t->broomHatterMove = 1;
     switch (t->variant)
     {
     case 0:
@@ -370,20 +370,20 @@ void BroomHatterPickNextState(void)
         IntToDigits((s16)RandomRange(8));
         t = gCurTask;
         i = gDigits[0];
-    } while (t->unk34 == gUnk_0874313C[i]);
+    } while (t->broomHatterMove == gUnk_0874313C[i]);
     v = gUnk_0874313C[i];
     switch (v)
     {
     case 0:
-        t->unk34 = v;
+        t->broomHatterMove = v;
         ActorSetState(1);
         break;
     case 1:
-        t->unk34 = v;
+        t->broomHatterMove = v;
         ActorSetState(0);
         break;
     case 2:
-        t->unk34 = v;
+        t->broomHatterMove = v;
         t->facing = -1 * t->facing;
         ActorSetState(0);
         break;
@@ -433,7 +433,7 @@ void Task_BroomHatter(void)
     t->u8C.actor->unk16 = 0;
     t->u8C.actor->extraOffsetY = 0;
     t->u8C.actor->extraTileWord = (t->tileWord & 0xFFF) | (240 << 8);
-    t->unk34 = 1;
+    t->broomHatterMove = 1;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_08065640;
     t->layer = 11;
@@ -493,11 +493,11 @@ void sub_0808d640(void)
 
     gCurTask->updateState = 0;
     TaskFaceNearestPlayer();
-    if (gCurTask->unk34 == 2)
+    if (gCurTask->broomHatterMove == 2)
         TaskTurnAround();
     t = gCurTask;
-    t->unk28 = 0;
-    t->unk6C = 0;
+    t->broomHatterSweepDone = 0;
+    t->broomHatterLoopCount = 0;
     do
     {
         sub_0808d460();
@@ -535,17 +535,17 @@ void sub_0808d640(void)
         TaskSetFrame(6);
         TaskYieldTrampoline(2);
         u = gCurTask;
-        u->unk6C++;
-    } while ((s16)u->unk6C <= 1);
+        u->broomHatterLoopCount++;
+    } while ((s16)u->broomHatterLoopCount <= 1);
     TaskStop();
     v = gCurTask;
-    v->unk28 = 2;
+    v->broomHatterSweepDone = 2;
     TaskSleepForever();
 }
 
 void sub_0808d764(void)
 {
-    if (gCurTask->unk28 == 2)
+    if (gCurTask->broomHatterSweepDone == 2)
     {
         BroomHatterPickNextState();
         TaskSetEntry(sub_0808d624, gCurTaskIdx);
@@ -557,14 +557,14 @@ void sub_0808d790(void)
     struct Task *t;
 
     gCurTask->updateState = 1;
-    gCurTask->unk28 = 0;
+    gCurTask->broomHatterSweepDone = 0;
     TaskFaceNearestPlayer();
     sub_0808d460();
     TaskSetMotionXFacing(gUnk_08743158[0], 0x5A5A5A5A);
     sub_0808d4d0();
     gCurTask->frame = 6;
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->broomHatterLoopCount = 0;
     do
     {
         TaskUpdateFlip();
@@ -618,16 +618,16 @@ void sub_0808d790(void)
         TaskSetFrameByFacing(6);
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 2);
+        t->broomHatterLoopCount++;
+    } while ((s16)t->broomHatterLoopCount <= 2);
     TaskStop();
-    gCurTask->unk28 = 1;
+    gCurTask->broomHatterSweepDone = 1;
     TaskSleepForever();
 }
 
 void sub_0808d938(void)
 {
-    if (gCurTask->unk28 == 1)
+    if (gCurTask->broomHatterSweepDone == 1)
     {
         BroomHatterPickNextState();
         TaskSetEntry(sub_0808d624, gCurTaskIdx);
@@ -724,71 +724,71 @@ void sub_0808dae8(void)
 
     gCurTask->updateState = 0;
     TaskFaceNearestPlayer();
-    if (gCurTask->unk34 == 2)
+    if (gCurTask->broomHatterMove == 2)
         TaskTurnAround();
     t = gCurTask;
-    t->unk28 = 0;
-    t->unk6C = 0;
+    t->broomHatterSweepDone = 0;
+    t->broomHatterLoopCount = 0;
     do
     {
         sub_0808d460();
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[0], 0x5A5A5A5A);
         sub_0808d4d0();
         gCurTask->frame = 6;
         TaskYieldTrampoline(7);
         TaskUpdateFlip();
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[0], 0x5A5A5A5A);
         sub_0808d4d0();
         gCurTask->frame = 6;
         TaskYieldTrampoline(3);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[1], 0x5A5A5A5A);
         sub_0808d4d0();
         TaskSetFrame(6);
         TaskYieldTrampoline(4);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[1], 0x5A5A5A5A);
         sub_0808d4d0();
         TaskSetFrame(5);
         TaskYieldTrampoline(6);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[2], 0x5A5A5A5A);
         sub_0808d494();
         TaskSetFrame(4);
         TaskYieldTrampoline(6);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[2], 0x5A5A5A5A);
         sub_0808d4a8();
         TaskSetFrame(7);
         TaskYieldTrampoline(2);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[3], 0x5A5A5A5A);
         sub_0808d4a8();
         TaskSetFrame(7);
         TaskYieldTrampoline(4);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[3], 0x5A5A5A5A);
         sub_0808d4bc();
         TaskSetFrame(6);
         TaskYieldTrampoline(4);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743144[4], 0x5A5A5A5A);
         sub_0808d4bc();
         TaskSetFrame(6);
         TaskYieldTrampoline(2);
         u = gCurTask;
-        u->unk6C++;
-    } while ((s16)u->unk6C <= 1);
+        u->broomHatterLoopCount++;
+    } while ((s16)u->broomHatterLoopCount <= 1);
     TaskStop();
-    gCurTask->unk28 = 2;
+    gCurTask->broomHatterSweepDone = 2;
     TaskSleepForever();
 }
 
 void sub_0808dc68(void)
 {
-    if (gCurTask->unk28 == 2)
+    if (gCurTask->broomHatterSweepDone == 2)
     {
         BroomHatterPickNextState();
         TaskSetEntry(sub_0808dacc, gCurTaskIdx);
@@ -800,90 +800,90 @@ void sub_0808dc94(void)
     struct Task *t;
 
     gCurTask->updateState = 1;
-    gCurTask->unk28 = 0;
+    gCurTask->broomHatterSweepDone = 0;
     TaskFaceNearestPlayer();
     sub_0808d460();
-    if (gCurTask->unk30 != 0)
+    if (gCurTask->broomHatterLanded != 0)
         TaskSetMotionXFacing(gUnk_08743158[0], 0x5A5A5A5A);
     sub_0808d4d0();
     gCurTask->frame = 6;
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->broomHatterLoopCount = 0;
     do
     {
         TaskUpdateFlip();
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[0], 0x5A5A5A5A);
         sub_0808d494();
         gCurTask->frame = 6;
         TaskYieldTrampoline(2);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[0], 0x5A5A5A5A);
         sub_0808d494();
         gCurTask->frame = 5;
         TaskYieldTrampoline(6);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[1], 0x5A5A5A5A);
         sub_0808d4a8();
         TaskSetFrame(4);
         TaskYieldTrampoline(7);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[1], 0x5A5A5A5A);
         sub_0808d4bc();
         TaskSetFrame(4);
         TaskYieldTrampoline(1);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[2], 0x5A5A5A5A);
         sub_0808d4bc();
         TaskSetFrame(7);
         TaskYieldTrampoline(7);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[2], 0x5A5A5A5A);
         sub_0808d4d0();
         TaskSetFrame(6);
         TaskYieldTrampoline(1);
         sub_0808d460();
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[3], 0x5A5A5A5A);
         sub_0808d494();
         gCurTask->frame = 6;
         TaskYieldTrampoline(2);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[3], 0x5A5A5A5A);
         sub_0808d494();
         gCurTask->frame = 5;
         TaskYieldTrampoline(6);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[4], 0x5A5A5A5A);
         sub_0808d4a8();
         TaskSetFrameByFacing(4);
         TaskYieldTrampoline(7);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[4], 0x5A5A5A5A);
         sub_0808d4bc();
         TaskSetFrameByFacing(4);
         TaskYieldTrampoline(1);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[5], 0x5A5A5A5A);
         sub_0808d4bc();
         TaskSetFrameByFacing(7);
         TaskYieldTrampoline(7);
-        if (gCurTask->unk30 != 0)
+        if (gCurTask->broomHatterLanded != 0)
             TaskSetMotionXFacing(gUnk_08743158[5], 0x5A5A5A5A);
         sub_0808d4d0();
         TaskSetFrameByFacing(6);
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 2);
+        t->broomHatterLoopCount++;
+    } while ((s16)t->broomHatterLoopCount <= 2);
     TaskStop();
-    gCurTask->unk28 = 1;
+    gCurTask->broomHatterSweepDone = 1;
     TaskSleepForever();
 }
 
 void sub_0808de90(void)
 {
-    if (gCurTask->unk28 == 1)
+    if (gCurTask->broomHatterSweepDone == 1)
     {
         BroomHatterPickNextState();
         TaskSetEntry(sub_0808dacc, gCurTaskIdx);
@@ -994,10 +994,10 @@ void LaserBallSetTargetX(void)
     switch (TaskGetXDirBitToNearestPlayer())
     {
     case 4:
-        gCurTask->unk2C = (&gTasks[TaskFindNearestPlayer()])->pixelX - 64;
+        gCurTask->laserBallTargetX = (&gTasks[TaskFindNearestPlayer()])->pixelX - 64;
         break;
     case 8:
-        gCurTask->unk2C = (&gTasks[TaskFindNearestPlayer()])->pixelX + 64;
+        gCurTask->laserBallTargetX = (&gTasks[TaskFindNearestPlayer()])->pixelX + 64;
         break;
     }
 }
@@ -1011,16 +1011,16 @@ void sub_0808e0d0(void)
     switch (TaskGetXDirBitToNearestPlayer())
     {
     case 4:
-        gCurTask->unk2C = (&gTasks[TaskFindNearestPlayer()])->pixelX - 64;
+        gCurTask->laserBallTargetX = (&gTasks[TaskFindNearestPlayer()])->pixelX - 64;
         break;
     case 8:
-        gCurTask->unk2C = (&gTasks[TaskFindNearestPlayer()])->pixelX + 64;
+        gCurTask->laserBallTargetX = (&gTasks[TaskFindNearestPlayer()])->pixelX + 64;
         break;
     }
     t = gCurTask;
-    dx = (s16)(t->unk2C - (u16)t->pixelX);
+    dx = (s16)(t->laserBallTargetX - (u16)t->pixelX);
     dy = (s16)((u16)(&gTasks[TaskFindNearestPlayer()])->pixelY - (u16)gCurTask->pixelY);
-    gCurTask->unk18 = (((u16)ArcTan2(dx, dy) >> 8) + 16) >> 5;
+    gCurTask->laserBallTargetDir = (((u16)ArcTan2(dx, dy) >> 8) + 16) >> 5;
 }
 
 void LaserBallSetMoveDir(void)
@@ -1031,34 +1031,34 @@ void LaserBallSetMoveDir(void)
     s32 i;
 
     t = gCurTask;
-    dx = (s16)(t->unk2C - (u16)t->pixelX);
+    dx = (s16)(t->laserBallTargetX - (u16)t->pixelX);
     dy = (s16)((u16)(&gTasks[TaskFindNearestPlayer()])->pixelY - (u16)gCurTask->pixelY);
     i = (((u16)ArcTan2(dx, dy) >> 8) + 16) >> 5;
     switch (i)
     {
     case 0:
-        gCurTask->unk34 = 0;
+        gCurTask->laserBallMoveDir = 0;
         break;
     case 1:
-        gCurTask->unk34 = 1;
+        gCurTask->laserBallMoveDir = 1;
         break;
     case 2:
-        gCurTask->unk34 = 2;
+        gCurTask->laserBallMoveDir = 2;
         break;
     case 3:
-        gCurTask->unk34 = 3;
+        gCurTask->laserBallMoveDir = 3;
         break;
     case 4:
-        gCurTask->unk34 = 4;
+        gCurTask->laserBallMoveDir = 4;
         break;
     case 5:
-        gCurTask->unk34 = 5;
+        gCurTask->laserBallMoveDir = 5;
         break;
     case 6:
-        gCurTask->unk34 = 6;
+        gCurTask->laserBallMoveDir = 6;
         break;
     case 7:
-        gCurTask->unk34 = 7;
+        gCurTask->laserBallMoveDir = 7;
         break;
     }
 }
@@ -1074,7 +1074,7 @@ void CreateLaserBallLaser(void)
         sp.subtype = 1;
         sp.taskType = 103;
         sp.variant = 0;
-        sp.spawnArg = gCurTask->unk34;
+        sp.spawnArg = gCurTask->laserBallLaserDir;
         sp.x = 16;
         sp.y = 0;
         sp.checkTerrain = 1;
@@ -1087,7 +1087,7 @@ void LaserBallCheckShoot(void)
     struct PointPair p;
     struct Task *t;
 
-    p.x0 = gCurTask->unk2C;
+    p.x0 = gCurTask->laserBallTargetX;
     p.y0 = (&gTasks[TaskFindNearestPlayer()])->pixelY;
     t = gCurTask;
     p.x1 = t->pixelX;
@@ -1105,13 +1105,13 @@ void LaserBallReaim(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->unk30 == 0)
+    if (t->laserBallSteerTimer == 0)
     {
-        t->unk30 = 16;
-        t->unk28 = t->unk18;
+        t->laserBallSteerTimer = 16;
+        t->laserBallPrevTargetDir = t->laserBallTargetDir;
         sub_0808e0d0();
         u = gCurTask;
-        if (u->unk28 != u->unk18)
+        if (u->laserBallPrevTargetDir != u->laserBallTargetDir)
             LaserBallSetMoveDir();
     }
 }
@@ -1121,8 +1121,8 @@ void LaserBallAccelerateInMoveDir(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk30 == 16 || t->unk30 == 8)
-        TaskAccelerateInDir(gUnk_087431CC[t->unk74], gUnk_087431D8[t->unk74], (u16)t->unk34);
+    if (t->laserBallSteerTimer == 16 || t->laserBallSteerTimer == 8)
+        TaskAccelerateInDir(gUnk_087431CC[t->actorSpawnArg], gUnk_087431D8[t->actorSpawnArg], (u16)t->laserBallMoveDir);
 }
 
 void Task_LaserBall(void)

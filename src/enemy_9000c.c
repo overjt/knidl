@@ -72,11 +72,11 @@ void Task_Bonkers(void)
     u = gCurTask;
     u->frameTable = gBonkersFrames;
     gUnk_02007D00[0]++;
-    gCurTask->unk46 = CreateChildTaskHere(177, 1);
+    gCurTask->bonkersHammerHitBoxSlot = CreateChildTaskHere(177, 1);
     if (sub_08067060() == 1)
-        gCurTask->unk18 = 24;
+        gCurTask->bonkersIgnoreTerrainTimer = 24;
     else
-        gCurTask->unk18 = 0;
+        gCurTask->bonkersIgnoreTerrainTimer = 0;
     sub_08066ae0();
     CallTableEntry(gCurTask->variant, 1, gBonkersVariants);
 }
@@ -87,10 +87,10 @@ void BonkersInit(void)
 
     t = gCurTask;
     t->updateCallback = (u32)BonkersUpdate;
-    t->unk28 = 4;
-    t->unk2C = 2;
-    t->unk30 = 0;
-    t->unk34 = 0;
+    t->bonkersSequencePhase = 4;
+    t->bonkersSlamsLeft = 2;
+    t->bonkersFlashing = 0;
+    t->bonkersDefeatPhase = 0;
     sub_080666cc(gUnk_08743758);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 11, gBonkersStates);
@@ -107,9 +107,9 @@ void BonkersUpdate(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->unk18 != 0)
+    if (t->bonkersIgnoreTerrainTimer != 0)
     {
-        t->unk18--;
+        t->bonkersIgnoreTerrainTimer--;
         CallTableEntry(t->updateState, 11, gBonkersStateUpdates);
     }
     else if (sub_0806acf8() == 0)
@@ -122,13 +122,13 @@ void BonkersUpdate(void)
         CallTableEntry(gCurTask->updateState, 11, gBonkersStateUpdates);
     }
     u = gCurTask;
-    if (u->unk30 != 0)
+    if (u->bonkersFlashing != 0)
     {
         if (u->hitTimer != 0)
             ActorFlashPalette(&gUnk_0826A668, 16);
         else
         {
-            u->unk30 = 0;
+            u->bonkersFlashing = 0;
             ActorClearPaletteOverride();
         }
     }
@@ -186,11 +186,11 @@ void BonkersWalk(void)
     t->updateState = 1;
     TaskStop();
     TaskFaceNearestPlayer();
-    TaskSetMotionXFacing(gUnk_08743734[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_08743734[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     TaskSetFrame(7);
-    gCurTask->unk1C = (RandomRange(3) + 2) * 4;
-    gCurTask->unk6C = zero;
-    while ((s16)gCurTask->unk6C < gCurTask->unk1C)
+    gCurTask->bonkersMoveLength = (RandomRange(3) + 2) * 4;
+    gCurTask->bonkersLoopCount = zero;
+    while ((s16)gCurTask->bonkersLoopCount < gCurTask->bonkersMoveLength)
     {
         TaskFaceNearestPlayer();
         TaskUpdateFlip();
@@ -198,7 +198,7 @@ void BonkersWalk(void)
         if (--u->frame <= 3)
             u->frame = 11;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
+        gCurTask->bonkersLoopCount++;
     }
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(-32768, 0x5A5A5A5A);
@@ -245,7 +245,7 @@ void BonkersJump(void)
     TaskSetFrame(12);
     TaskYieldTrampoline(8);
     gCurTask->onGround = zero;
-    TaskSetMotionXFacing(gUnk_0874373C[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_0874373C[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(0xFFFA0000, 20480, 196608);
     gCurTask->frame++;
     while (gCurTask->onGround == 0)
@@ -276,9 +276,9 @@ void BonkersHop(void)
     t->updateState = 3;
     TaskStop();
     TaskFaceNearestPlayer();
-    gCurTask->unk1C = gUnk_0874374E[RandomRange(2)];
-    gCurTask->unk6C = zero;
-    while ((s16)gCurTask->unk6C < gCurTask->unk1C)
+    gCurTask->bonkersMoveLength = gUnk_0874374E[RandomRange(2)];
+    gCurTask->bonkersLoopCount = zero;
+    while ((s16)gCurTask->bonkersLoopCount < gCurTask->bonkersMoveLength)
     {
         TaskSetFrame(12);
         TaskYieldTrampoline(8);
@@ -292,7 +292,7 @@ void BonkersHop(void)
         RequestScreenShake(2);
         CreateLandingDust(16, 6);
         TaskFaceNearestPlayer();
-        gCurTask->unk6C++;
+        gCurTask->bonkersLoopCount++;
     }
     gCurTask->frame--;
     TaskYieldTrampoline(30);
@@ -325,7 +325,7 @@ void BonkersDash(void)
     w = gCurTask;
     if (w->unk20 > 256)
     {
-        w->unk1C = 256;
+        w->bonkersMoveLength = 256;
     }
     else
     {
@@ -337,33 +337,33 @@ void BonkersDash(void)
         }
         else
         {
-            if (w->unk74 == 0)
-                gCurTask->unk1C = Div(n, 3) * 2;
+            if (w->actorSpawnArg == 0)
+                gCurTask->bonkersMoveLength = Div(n, 3) * 2;
             else
-                w->unk1C = n >> 1;
-            if (gCurTask->unk1C <= 0)
-                gCurTask->unk1C = 1;
+                w->bonkersMoveLength = n >> 1;
+            if (gCurTask->bonkersMoveLength <= 0)
+                gCurTask->bonkersMoveLength = 1;
         }
     }
     PlaySfx(502);
-    gCurTask->unk20 = ActorStartAnim(gUnk_087437C8[gCurTask->unk74]);
-    TaskSetMotionXFacing(gUnk_08743750[gCurTask->unk74], 0x5A5A5A5A);
+    gCurTask->unk20 = ActorStartAnim(gUnk_087437C8[gCurTask->actorSpawnArg]);
+    TaskSetMotionXFacing(gUnk_08743750[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     y = gCurTask;
     zero = 0;
-    y->unk24 = zero;
-    y->unk6C = zero;
-    while ((s16)gCurTask->unk6C < gCurTask->unk1C)
+    y->bonkersDashStepCount = zero;
+    y->bonkersLoopCount = zero;
+    while ((s16)gCurTask->bonkersLoopCount < gCurTask->bonkersMoveLength)
     {
         TaskYieldTrampoline(1);
         if (--gCurTask->unk20 == 0)
         {
-            if ((++gCurTask->unk24 & 1) != 0)
+            if ((++gCurTask->bonkersDashStepCount & 1) != 0)
                 CreateDustTrail(1, 1, -16, 8);
             gCurTask->unk20 = ActorStepAnim();
         }
-        gCurTask->unk6C++;
+        gCurTask->bonkersLoopCount++;
     }
-    if (gCurTask->unk2C == 0)
+    if (gCurTask->bonkersSlamsLeft == 0)
         ActorSetState(8);
     else if (TaskGetNearestPlayerDy() < -40)
         ActorSetState(7);
@@ -401,14 +401,14 @@ void BonkersThrow(void)
         RequestScreenShake(2);
         CreateLandingDust(16, 6);
     }
-    gCurTask->unk6C = 0;
+    gCurTask->bonkersLoopCount = 0;
     do
     {
         TaskSetFrame(27);
         TaskYieldTrampoline(10);
         gCurTask->frame++;
         TaskYieldTrampoline(6);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->bonkersLoopCount <= 3);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     spawn.subtype = 8;
@@ -419,7 +419,7 @@ void BonkersThrow(void)
     spawn.y = 0;
     spawn.tileWord = gCurTask->u8C.actor->savedTileWord;
     spawn.checkTerrain = 1;
-    gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 1);
+    gCurTask->bonkersNutSlot = CreateActorFromDescAtOffsetFacing(&spawn, 1);
     PlaySfx(0x1FB);
     z = gCurTask;
     CreateChildTask(145, (s16)(z->pixelX - z->facing * 16), (s16)(z->pixelY + 8), 0);
@@ -470,7 +470,7 @@ void BonkersSlam(void)
     else
     {
         u = gCurTask;
-        u->unk2C--;
+        u->bonkersSlamsLeft--;
         BonkersChooseNextState();
     }
     TaskSleepForever();
@@ -542,14 +542,14 @@ void BonkersTripleSlam(void)
     TaskFaceNearestPlayer();
     TaskSetFrame(20);
     TaskYieldTrampoline(16);
-    gCurTask->unk6C = 0;
+    gCurTask->bonkersLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         RequestScreenShake(2);
         PlaySfx(520);
-        if ((s16)gCurTask->unk6C == 0)
+        if ((s16)gCurTask->bonkersLoopCount == 0)
             BonkersCreateSlamStar();
         gCurTask->frame++;
         TaskYieldTrampoline(8);
@@ -557,9 +557,9 @@ void BonkersTripleSlam(void)
         TaskYieldTrampoline(2);
         gCurTask->frame--;
         TaskYieldTrampoline(8);
-    } while ((s16)++gCurTask->unk6C <= 2);
+    } while ((s16)++gCurTask->bonkersLoopCount <= 2);
     TaskYieldTrampoline(11);
-    gCurTask->unk2C = 2;
+    gCurTask->bonkersSlamsLeft = 2;
     BonkersChooseNextState();
     TaskSleepForever();
 }
@@ -628,14 +628,14 @@ void BonkersDefeat(void)
     TaskYieldTrampoline(170);
     CreateStarFlash(1, 0, 0);
     sub_0806ad18();
-    gCurTask->unk34 = 2;
+    gCurTask->bonkersDefeatPhase = 2;
     TaskSleepForever();
 }
 
 void BonkersDefeatUpdate(void)
 {
     ActorFlashPalette(&gUnk_0826A668, 16);
-    if (gCurTask->unk34 == 2)
+    if (gCurTask->bonkersDefeatPhase == 2)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
@@ -655,17 +655,17 @@ void BonkersChooseNextState(void)
 {
     struct Task *t;
 
-    ActorSetState(gUnk_08743744[gCurTask->unk28]);
+    ActorSetState(gUnk_08743744[gCurTask->bonkersSequencePhase]);
     if (gCurTask->state == 2)
         gCurTask->state += RandomRange(2);
     t = gCurTask;
-    if (--t->unk28 < 0)
-        t->unk28 = 4;
+    if (--t->bonkersSequencePhase < 0)
+        t->bonkersSequencePhase = 4;
 }
 
 void sub_08090e9c(void)
 {
-    gCurTask->unk6C = 0;
+    gCurTask->bonkersLoopCount = 0;
     do
     {
         gCurTask->onGround = 0;
@@ -673,13 +673,13 @@ void sub_08090e9c(void)
         TaskYieldTrampoline(2);
         gCurTask->velY = 65536;
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 9);
+    } while ((s16)++gCurTask->bonkersLoopCount <= 9);
     TaskStopY();
 }
 
 s32 BonkersReactToDamage(void)
 {
-    gCurTask->unk30 = 1;
+    gCurTask->bonkersFlashing = 1;
     CreateStarFlash(1, 0, 0);
     RequestScreenShake(2);
     return 0;
@@ -688,7 +688,7 @@ s32 BonkersReactToDamage(void)
 s32 BonkersReactToDefeat(void)
 {
     ActorSetHitReactions(gUnk_087440DC);
-    gCurTask->unk34 = 1;
+    gCurTask->bonkersDefeatPhase = 1;
     ActorSetState(10);
     TaskSetEntry(BonkersEnterState, gCurTaskIdx);
     return 1;
@@ -744,16 +744,16 @@ void BonkersHammerHitBoxUpdate(void)
     if ((s16)gTaskSlotTypes[gCurTask->parent] != -1)
     {
         u = &gTasks[gCurTask->parent];
-        if (u->u76.subtype == 0 && u->unk34 == 0)
+        if (u->u76.subtype == 0 && u->bonkersDefeatPhase == 0)
         {
             d = u->frame - 16;
             if (d <= 6)
             {
                 i = (s16)u->frame - 16;
-                gCurTask->unk28 = i;
+                gCurTask->bonkersHammerHitBoxIndex = i;
                 gCurTask->pixelX = u->pixelX + gBonkersHammerHitBoxOffsetsX[i] * (u16)u->facing;
-                gCurTask->pixelY = u->pixelY + gBonkersHammerHitBoxOffsetsY[gCurTask->unk28];
-                ActorCheckHitsWithBox(gBonkersHammerHitBoxes[gCurTask->unk28]);
+                gCurTask->pixelY = u->pixelY + gBonkersHammerHitBoxOffsetsY[gCurTask->bonkersHammerHitBoxIndex];
+                ActorCheckHitsWithBox(gBonkersHammerHitBoxes[gCurTask->bonkersHammerHitBoxIndex]);
             }
         }
         else
@@ -781,9 +781,9 @@ void Task_PoppyBrosSr(void)
     u->frameTable = gPoppyBrosSrFrames;
     gUnk_02007D00[0]++;
     if (sub_08067060() == 1)
-        gCurTask->unk18 = 24;
+        gCurTask->poppyBrosSrIgnoreTerrainTimer = 24;
     else
-        gCurTask->unk18 = 0;
+        gCurTask->poppyBrosSrIgnoreTerrainTimer = 0;
     TaskFaceNearestPlayer();
     sub_08066ae0();
     CallTableEntry(gCurTask->variant, 1, gPoppyBrosSrVariants);

@@ -457,7 +457,7 @@ void WaddleDooWalkInit(void)
 
     t = gCurTask;
     t->updateCallback = (u32)WaddleDooWalkUpdate;
-    t->unk28 = 15;
+    t->waddleDooPickTimer = 15;
     TaskFaceNearestPlayer();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
@@ -470,7 +470,7 @@ void WaddleDooWalkEnterState(void)
     t = gCurTask;
     t->updateCallback = (u32)WaddleDooWalkUpdate;
     if (t->state == 0)
-        t->unk28 = 80;
+        t->waddleDooPickTimer = 80;
     CallTableEntry(gCurTask->state, 3, gWaddleDooWalkStates);
 }
 
@@ -493,32 +493,32 @@ void WaddleDooWalk(void)
     struct Task *u7;
 
     gCurTask->updateState = 0;
-    TaskSetMotionXFacing(gUnk_08742010[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_08742010[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     while (1)
     {
         TaskSetFrame(4);
-        TaskYieldTrampoline(gUnk_08742020[gCurTask->unk74]);
+        TaskYieldTrampoline(gUnk_08742020[gCurTask->actorSpawnArg]);
         u1 = gCurTask;
         u1->frame++;
-        TaskYieldTrampoline(gUnk_08742024[u1->unk74]);
+        TaskYieldTrampoline(gUnk_08742024[u1->actorSpawnArg]);
         u2 = gCurTask;
         u2->frame++;
-        TaskYieldTrampoline(gUnk_08742024[u2->unk74]);
+        TaskYieldTrampoline(gUnk_08742024[u2->actorSpawnArg]);
         u3 = gCurTask;
         u3->frame++;
-        TaskYieldTrampoline(gUnk_08742024[u3->unk74]);
+        TaskYieldTrampoline(gUnk_08742024[u3->actorSpawnArg]);
         u4 = gCurTask;
         u4->frame++;
-        TaskYieldTrampoline(gUnk_08742020[u4->unk74]);
+        TaskYieldTrampoline(gUnk_08742020[u4->actorSpawnArg]);
         u5 = gCurTask;
         u5->frame--;
-        TaskYieldTrampoline(gUnk_08742024[u5->unk74]);
+        TaskYieldTrampoline(gUnk_08742024[u5->actorSpawnArg]);
         u6 = gCurTask;
         u6->frame--;
-        TaskYieldTrampoline(gUnk_08742024[u6->unk74]);
+        TaskYieldTrampoline(gUnk_08742024[u6->actorSpawnArg]);
         u7 = gCurTask;
         u7->frame--;
-        TaskYieldTrampoline(gUnk_08742024[u7->unk74]);
+        TaskYieldTrampoline(gUnk_08742024[u7->actorSpawnArg]);
     }
 }
 
@@ -529,7 +529,7 @@ void WaddleDooWalkState0Update(void)
     s32 n;
 
     t = gCurTask;
-    if (t->unk2C == 0 && --t->unk28 == 0)
+    if (t->waddleDooAirborne == 0 && --t->waddleDooPickTimer == 0)
     {
         v = RandomRange(4);
         switch (v)
@@ -539,7 +539,7 @@ void WaddleDooWalkState0Update(void)
             n = 2;
             break;
         case 0:
-            gCurTask->unk28 = 30;
+            gCurTask->waddleDooPickTimer = 30;
             return;
         case 1:
             n = 1;
@@ -597,41 +597,41 @@ void WaddleDooWalkShoot(void)
     t->updateState = 2;
     TaskStop();
     u = gCurTask;
-    u->unk6C = zero;
-    while ((s16)gCurTask->unk6C < gUnk_08742028[gCurTask->unk74])
+    u->waddleDooLoopCount = zero;
+    while ((s16)gCurTask->waddleDooLoopCount < gUnk_08742028[gCurTask->actorSpawnArg])
     {
         TaskSetFrame(6);
         TaskYieldTrampoline(2);
         TaskSetFrame(11);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
+        gCurTask->waddleDooLoopCount++;
     }
     v = gCurTask;
     zero2 = 0;
-    v->unk34 = zero2;
+    v->waddleDooBeamStep = zero2;
     PlaySfx(110);
     TaskSetFrame(12);
-    gCurTask->unk6C = zero2;
-    while ((s16)gCurTask->unk6C < gUnk_0874202C[gCurTask->unk74])
+    gCurTask->waddleDooLoopCount = zero2;
+    while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
         sp.taskType = 106;
         sp.variant = 0;
         w = gCurTask;
-        sp.spawnArg = w->unk74;
+        sp.spawnArg = w->actorSpawnArg;
         sp.x = 8;
         sp.y = 3;
         sp.checkTerrain = 1;
         if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
-            gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
+            gCurTask->waddleDooBeamSlot = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
-        x->unk34++;
+        x->waddleDooBeamStep++;
         if ((s16)x->frame == 12)
             TaskSetFrame(13);
         else
             TaskSetFrame(12);
-        gCurTask->unk6C++;
+        gCurTask->waddleDooLoopCount++;
     }
     ActorSetState(0);
     TaskSleepForever();
@@ -642,7 +642,7 @@ void WaddleDooWalkShootUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C == 0 && t->state != 2)
+    if (t->waddleDooAirborne == 0 && t->state != 2)
         TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
 }
 
@@ -652,7 +652,7 @@ void ParasolWaddleDooInit(void)
 
     gCurTask->updateCallback = (u32)ParasolWaddleDooUpdate;
     sub_08066b34(gParasolWaddleDooDef);
-    gCurTask->unk28 = 15;
+    gCurTask->waddleDooPickTimer = 15;
     TaskFaceNearestPlayer();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
@@ -665,7 +665,7 @@ void ParasolWaddleDooEnterState(void)
     t = gCurTask;
     t->updateCallback = (u32)ParasolWaddleDooUpdate;
     if (t->state == 0)
-        t->unk28 = 80;
+        t->waddleDooPickTimer = 80;
     CallTableEntry(gCurTask->state, 4, gParasolWaddleDooStates);
 }
 
@@ -724,7 +724,7 @@ void ParasolWaddleDooWalkUpdate(void)
     s32 n;
 
     t = gCurTask;
-    if (t->unk2C == 0 && t->u8C.actor->extraFrame == -1 && --t->unk28 == 0)
+    if (t->waddleDooAirborne == 0 && t->u8C.actor->extraFrame == -1 && --t->waddleDooPickTimer == 0)
     {
         v = RandomRange(4);
         switch (v)
@@ -734,7 +734,7 @@ void ParasolWaddleDooWalkUpdate(void)
             n = 2;
             break;
         case 0:
-            gCurTask->unk28 = 30;
+            gCurTask->waddleDooPickTimer = 30;
             return;
         case 1:
             n = 1;
@@ -792,22 +792,22 @@ void ParasolWaddleDooShoot(void)
     t->updateState = 2;
     TaskStop();
     u = gCurTask;
-    u->unk6C = zero;
-    while ((s16)gCurTask->unk6C < gUnk_08742028[1])
+    u->waddleDooLoopCount = zero;
+    while ((s16)gCurTask->waddleDooLoopCount < gUnk_08742028[1])
     {
         TaskSetFrame(6);
         TaskYieldTrampoline(2);
         TaskSetFrame(11);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
+        gCurTask->waddleDooLoopCount++;
     }
     v = gCurTask;
     zero2 = 0;
-    v->unk34 = zero2;
+    v->waddleDooBeamStep = zero2;
     PlaySfx(110);
     TaskSetFrame(12);
-    gCurTask->unk6C = zero2;
-    while ((s16)gCurTask->unk6C < gUnk_0874202C[gCurTask->unk74])
+    gCurTask->waddleDooLoopCount = zero2;
+    while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
         sp.taskType = 106;
@@ -818,15 +818,15 @@ void ParasolWaddleDooShoot(void)
         sp.checkTerrain = 1;
         w = gCurTask;
         if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
-            gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
+            gCurTask->waddleDooBeamSlot = CreateActorFromDescAtOffsetFacing(&sp, 0);
         TaskYieldTrampoline(2);
         x = gCurTask;
-        x->unk34++;
+        x->waddleDooBeamStep++;
         if ((s16)x->frame == 12)
             TaskSetFrame(13);
         else
             TaskSetFrame(12);
-        gCurTask->unk6C++;
+        gCurTask->waddleDooLoopCount++;
     }
     ActorSetState(0);
     TaskSleepForever();
@@ -837,7 +837,7 @@ void ParasolWaddleDooShootUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C == 0 && t->state != 2)
+    if (t->waddleDooAirborne == 0 && t->state != 2)
         TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
 }
 
@@ -925,7 +925,7 @@ void WaddleDooShoot(void)
     while (1)
     {
         TaskStop();
-        gCurTask->unk6C = 0;
+        gCurTask->waddleDooLoopCount = 0;
         do
         {
             TaskSetFrame(4);
@@ -951,23 +951,23 @@ void WaddleDooShoot(void)
             u7 = gCurTask;
             u7->frame--;
             TaskYieldTrampoline(7);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
+            gCurTask->waddleDooLoopCount++;
+        } while ((s16)gCurTask->waddleDooLoopCount <= 2);
         TaskSetFrame(6);
         TaskYieldTrampoline(32);
-        gCurTask->unk6C = 0;
+        gCurTask->waddleDooLoopCount = 0;
         do
         {
             TaskSetFrame(6);
             TaskYieldTrampoline(2);
             TaskSetFrame(11);
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 15);
-        gCurTask->unk34 = 0;
+            gCurTask->waddleDooLoopCount++;
+        } while ((s16)gCurTask->waddleDooLoopCount <= 15);
+        gCurTask->waddleDooBeamStep = 0;
         PlaySfx(110);
         TaskSetFrame(12);
-        gCurTask->unk6C = 0;
+        gCurTask->waddleDooLoopCount = 0;
         do
         {
             sp.subtype = 4;
@@ -979,16 +979,16 @@ void WaddleDooShoot(void)
             sp.checkTerrain = 1;
             w = gCurTask;
             if (GetShapeAtPixelIgnoringOneWay(w->pixelX + (w->facing << 3), w->pixelY + 3) == 0)
-                gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
+                gCurTask->waddleDooBeamSlot = CreateActorFromDescAtOffsetFacing(&sp, 0);
             TaskYieldTrampoline(2);
             x = gCurTask;
-            x->unk34++;
+            x->waddleDooBeamStep++;
             if ((s16)x->frame == 12)
                 TaskSetFrame(13);
             else
                 TaskSetFrame(12);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 15);
+            gCurTask->waddleDooLoopCount++;
+        } while ((s16)gCurTask->waddleDooLoopCount <= 15);
     }
 }
 
@@ -1010,7 +1010,7 @@ u8 sub_08085e74(void)
     case 3:
         return 0;
     case 0:
-        t->unk2C = 0;
+        t->waddleDooAirborne = 0;
         TaskStopY();
         ActorSetState(0);
         TaskSetEntry(WaddleDooWalkEnterState, gCurTaskIdx);
@@ -1036,7 +1036,7 @@ u8 sub_08085ef0(void)
     case 3:
         return 0;
     case 0:
-        t->unk2C = 1;
+        t->waddleDooAirborne = 1;
         t->accelY = 0x1500;
         t->speedLimitY = 0x30000;
         ActorSetState(0);
@@ -1045,7 +1045,7 @@ u8 sub_08085ef0(void)
     case 1:
         if (t->u8C.actor->extraFrame == -1)
         {
-            t->unk2C = 1;
+            t->waddleDooAirborne = 1;
             t->accelY = 0x1500;
             t->speedLimitY = 0x30000;
             ActorSetState(0);
