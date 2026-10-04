@@ -76,7 +76,7 @@ extern u8 gBlockCursorShake; /*   hit-box id bit 11 */
 extern s16 gBrokenBlockY[]; /*   y (pixels) */
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4;
-extern struct Unk02005E00 gUnk_02005E00;
+extern struct Unk02005E00 gLifeRequests;
 extern u16 gBlockCursorIndex; /*   map index */
 extern struct M11R20 gPlayerBodyBoxes[];
 extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */

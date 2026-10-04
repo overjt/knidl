@@ -60,7 +60,7 @@ void Task_Player(void)
         if (gCreditsDemoSet == 0)
         {
             if (gGameState != 20)
-                sub_080b9610();
+                PlayerLifeRequestInit();
             else
                 sub_080b9118();
             TaskSleepForever();
@@ -405,10 +405,10 @@ check:
             if (x >= 0 && LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CF9C + x * 8)) != 0)
                 TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
         }
-        if (gUnk_02005E00.unk04[gCurTaskIdx] & 1)
+        if (gLifeRequests.unk04[gCurTaskIdx] & 1)
         {
             if ((gPlayerHeldKeys[gCurTask->player->playerIndex] & 0x300) == 0x300)
-                gUnk_02005E00.unk04[gCurTaskIdx] = (gUnk_02005E00.unk04[gCurTaskIdx] & 0xF0) | 2;
+                gLifeRequests.unk04[gCurTaskIdx] = (gLifeRequests.unk04[gCurTaskIdx] & 0xF0) | 2;
         }
     }
     else if (gCurTask->player->unk10 != 0)

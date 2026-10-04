@@ -216,7 +216,7 @@ void sub_080396a4(void)
         t->updateCallback = 0;
         t->taskClass = 4;
         if (gGameState != 20)
-            TaskSetEntry(sub_080b9610, gCurTaskIdx);
+            TaskSetEntry(PlayerLifeRequestInit, gCurTaskIdx);
         else
             sub_080b9118();
         break;

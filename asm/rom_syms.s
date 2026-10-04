@@ -127,8 +127,8 @@ gSubGameTaskIdx = 0x020055EC
 gUnk_020055F0 = 0x020055F0
 	.global	gHudTilemap
 gHudTilemap = 0x02005600
-	.global	gUnk_02005E00
-gUnk_02005E00 = 0x02005E00
+	.global	gLifeRequests
+gLifeRequests = 0x02005E00
 	.global	gUnk_02005E10
 gUnk_02005E10 = 0x02005E10
 	.global	gUnk_02005F10

@@ -4320,7 +4320,7 @@ SECTIONS
     ASSERT(!MATCHING || late_game_rodata_08756178 == 0x08756178, "MATCHING: late_game_rodata_08756178 moved")
     ASSERT(!MATCHING || gHBlankScrollEffects == 0x08756198, "MATCHING: late_tbl_08756198 moved")
     ASSERT(!MATCHING || late_game_rodata_087561c4 == 0x087561C4, "MATCHING: late_game_rodata_087561c4 moved")
-    ASSERT(!MATCHING || gUnk_08756270 == 0x08756270, "MATCHING: late_tbl_08756270 moved")
+    ASSERT(!MATCHING || gPlayerLifeRequestStates == 0x08756270, "MATCHING: late_tbl_08756270 moved")
     ASSERT(!MATCHING || late_game_rodata_087562a8 == 0x087562A8, "MATCHING: late_game_rodata_087562a8 moved")
     ASSERT(!MATCHING || gSubGameInitHooks == 0x087562CC, "MATCHING: late_tbl_087562cc moved")
     ASSERT(!MATCHING || gSubGameBodies == 0x087562D8, "MATCHING: late_tbl_087562d8 moved")

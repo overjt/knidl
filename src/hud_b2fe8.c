@@ -1570,7 +1570,7 @@ void StarRodPieceCollect(void)
     DisablePause();
 }
 
-void sub_080b48e0(void)
+void StarRodPieceInitDanceWalk(void)
 {
     struct Task *t;
 
@@ -1623,7 +1623,7 @@ void StarRodPieceStartDance(void)
     }
 }
 
-void sub_080b4968(void)
+void StarRodPieceGatherPlayers(void)
 {
     s32 i;
     s32 o;
@@ -1680,12 +1680,12 @@ void sub_080b4968(void)
     } while (i < gPlayerCount);
 }
 
-void sub_080b4a34(void)
+void StarRodPieceGatherUpdate(void)
 {
     if (gCurTask->starRodPieceWalkingCount == gActivePlayerCount)
         StarRodPieceStartDance();
     else
-        sub_080b4968();
+        StarRodPieceGatherPlayers();
 }
 
 void StarRodPieceHoverInit(void)
@@ -1772,14 +1772,14 @@ void StarRodPieceHoverState1(void)
 
     c = &gCurTask;
     (*c)->updateState = 1;
-    sub_080b48e0();
+    StarRodPieceInitDanceWalk();
     (*c)->frame = 0xFFFF;
     TaskSleepForever();
 }
 
 void StarRodPieceHoverState1Update(void)
 {
-    sub_080b4a34();
+    StarRodPieceGatherUpdate();
 }
 
 void StarRodPieceSlideOutInit(void)
@@ -1902,14 +1902,14 @@ void StarRodPieceSlideOutState2(void)
 
     c = &gCurTask;
     (*c)->updateState = 2;
-    sub_080b48e0();
+    StarRodPieceInitDanceWalk();
     (*c)->frame = 0xFFFF;
     TaskSleepForever();
 }
 
 void StarRodPieceSlideOutState2Update(void)
 {
-    sub_080b4a34();
+    StarRodPieceGatherUpdate();
 }
 
 void StarRodPieceVariant2(void)

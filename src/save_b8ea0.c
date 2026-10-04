@@ -23,7 +23,7 @@ void sub_080b8ea0(void)
     u8 *e;
     s32 z;
 
-    s = &gUnk_02005E00;
+    s = &gLifeRequests;
     t = gCurTask;
     f = (u8 *)s + 4;
     e = &f[t->unk1C];
@@ -41,7 +41,7 @@ void sub_080b8ebc(void)
     s32 z;
 
     i = 0;
-    s = &gUnk_02005E00;
+    s = &gLifeRequests;
     f = (u8 *)s + 4;
     z = 0;
     do
@@ -64,7 +64,7 @@ void sub_080b8ef4(void)
     t = gCurTask;
     t->moveCallback = 0;
     t->drawCallback = 0;
-    if (gUnk_02005E00.unk08[gCurTaskIdx] != 0)
+    if (gLifeRequests.unk08[gCurTaskIdx] != 0)
     {
         t->state = 6;
     }
@@ -72,7 +72,7 @@ void sub_080b8ef4(void)
     {
         for (i = 0, n = 0; i < 4; i++)
         {
-            if (gUnk_02005E00.unk04[i] != 0 && gUnk_02005E00.unk04[i] >> 4 == gCurTaskIdx)
+            if (gLifeRequests.unk04[i] != 0 && gLifeRequests.unk04[i] >> 4 == gCurTaskIdx)
             {
                 gCurTask->unk1C = i;
                 n++;
@@ -128,7 +128,7 @@ void sub_080b9064(void)
 {
     struct Unk02005E00 *s;
 
-    s = &gUnk_02005E00;
+    s = &gLifeRequests;
     if (s->unk00 == 0)
         s->unk00 = 1200;
     sub_080b8f8c(1);
@@ -165,7 +165,7 @@ void sub_080b9118(void)
 
     sub_080b8f8c(2);
     sub_080b9cc0();
-    s = &gUnk_02005E00;
+    s = &gLifeRequests;
     ip = &gCurTaskIdx;
     g = (u8 *)s + 8;
     g[*ip] = 1;
@@ -216,7 +216,7 @@ void sub_080b9198(void)
         {
             t->state = 6;
         }
-        TaskSetEntry(sub_080b9658, gCurTaskIdx);
+        TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
     }
 }
 void sub_080b91fc(void)
@@ -281,7 +281,7 @@ void sub_080b927c(void)
                 }
                 j++;
             }
-            gUnk_02005E00.unk04[gCurTask->unk1C] = (gCurTaskIdx << 4) | 1;
+            gLifeRequests.unk04[gCurTask->unk1C] = (gCurTaskIdx << 4) | 1;
             gCurTask->state = 2;
         }
         else
@@ -314,7 +314,7 @@ void sub_080b938c(void)
     if ((k[t->player->playerIndex] & 1) != 0)
         t->state = 0;
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_080b9658, gCurTaskIdx);
+        TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
 void sub_080b93d8(void)
 {
@@ -326,7 +326,7 @@ void sub_080b93d8(void)
     if ((k[t->player->playerIndex] & 1) != 0)
         t->state = 0;
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_080b9658, gCurTaskIdx);
+        TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
 s32 sub_080b9424(void)
 {
@@ -337,7 +337,7 @@ s32 sub_080b9424(void)
     gCurTask->unk24 = 0;
     for (i = 0, n = 0; i < gPlayerCount; i++)
     {
-        if ((1 & (gActivePlayerMask >> i)) != 0 && gPlayerLives[i] > 0 && gUnk_02005E00.unk04[i] == 0)
+        if ((1 & (gActivePlayerMask >> i)) != 0 && gPlayerLives[i] > 0 && gLifeRequests.unk04[i] == 0)
         {
             n++;
             gCurTask->unk24 |= 1 << i;
@@ -366,7 +366,7 @@ void sub_080b94b4(s32 a, s32 b)
     {
         for (i = 0, j = 0; i < gPlayerCount; i++)
         {
-            if ((1 & (gActivePlayerMask >> i)) != 0 && gUnk_02005E00.unk04[i] == 0)
+            if ((1 & (gActivePlayerMask >> i)) != 0 && gLifeRequests.unk04[i] == 0)
             {
                 e = &gPlayerLives[i];
                 u = *e;
@@ -392,7 +392,7 @@ void sub_080b9578(void)
     u8 v;
     u8 *p;
 
-    p = (u8 *)&gUnk_02005E00;
+    p = (u8 *)&gLifeRequests;
     t = gCurTask;
     p += 4;
     v = p[t->unk1C];
@@ -404,11 +404,11 @@ void sub_080b9578(void)
 }
 void sub_080b95ac(void)
 {
-    if (gUnk_02005E00.unk00 <= 0)
+    if (gLifeRequests.unk00 <= 0)
         gCurTask->state = 4;
-    gUnk_02005E00.unk00--;
+    gLifeRequests.unk00--;
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_080b9658, gCurTaskIdx);
+        TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
 void sub_080b95ec(void)
 {
@@ -420,19 +420,19 @@ void sub_080b95ec(void)
     if (p[t->unk1C] <= 0)
         t->state = 4;
 }
-void sub_080b9610(void)
+void PlayerLifeRequestInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080b963c;
+    gCurTask->updateCallback = (u32)PlayerLifeRequestUpdate;
     sub_080b8ef4();
-    CallTableEntry(gCurTask->state, 7, gUnk_08756270);
+    CallTableEntry(gCurTask->state, 7, gPlayerLifeRequestStates);
 }
-void sub_080b963c(void)
+void PlayerLifeRequestUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 7, gUnk_0875628C);
+    CallTableEntry(gCurTask->updateState, 7, gPlayerLifeRequestStateUpdates);
 }
-void sub_080b9658(void)
+void PlayerLifeRequestEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 7, gUnk_08756270);
+    CallTableEntry(gCurTask->state, 7, gPlayerLifeRequestStates);
 }
 void sub_080b9674(void)
 {
@@ -469,9 +469,9 @@ void sub_080b96bc(void)
         gCurTask->state = 5;
     }
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080b9658, gCurTaskIdx);
+        TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
-void sub_080b9710(void)
+void PlayerLifeRequestWait(void)
 {
     gCurTask->updateState = 2;
     sub_080b9064();
@@ -481,12 +481,12 @@ void sub_080b9710(void)
         sub_080b95ec();
     }
 }
-void sub_080b9730(void)
+void PlayerLifeRequestWaitUpdate(void)
 {
     sub_080b9578();
     sub_080b95ac();
 }
-void sub_080b9740(void)
+void PlayerLifeRequestReceive(void)
 {
     gCurTask->updateState = 3;
     sub_080b9090();
@@ -494,7 +494,7 @@ void sub_080b9740(void)
     sub_080b90c8();
     TaskSleepForever();
 }
-void sub_080b9764(void)
+void PlayerLifeRequestReceiveUpdate(void)
 {
     sub_080b9344();
 }
@@ -580,7 +580,7 @@ void sub_080b98c0(void)
         HudClearTilemap();
         for (i = 0, j = 0; i < gPlayerCount; i++)
         {
-            f = gUnk_02005E00.unk04;
+            f = gLifeRequests.unk04;
             if (((gActivePlayerMask >> i) & 1) != 0)
             {
                 pe = gPlayerLives;

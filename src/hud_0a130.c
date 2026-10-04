@@ -235,14 +235,14 @@ void sub_0800a6a4(void)
     if (mode != 0) {
         if (mode == 1) {
             if (gUnk_020055F0[0] == 0) {
-                if (gUnk_02005E00.unk04[gLocalPlayer] != 0) {
+                if (gLifeRequests.unk04[gLocalPlayer] != 0) {
                     gUnk_020055F0[0] = mode;
                     gUnk_020055F0[1] = 0;
                 }
                 if (gUnk_020055F0[0] == 0)
                     goto done;
             }
-            if (gUnk_02005E00.unk04[gLocalPlayer] == 0) {
+            if (gLifeRequests.unk04[gLocalPlayer] == 0) {
                 gUnk_020055F0[0] = 0;
                 row = gInHub ? 2 : 0;
                 HudClearTiles(12, row, 16);
@@ -251,7 +251,7 @@ void sub_0800a6a4(void)
                 if (gUnk_020055F0[1] == 0) {
                     if (gUnk_020055F0[0] == 2) {
                         gUnk_020055F0[0] = 1;
-                        sub_0800b230(gUnk_02005E00.unk04[gLocalPlayer] >> 4, 1);
+                        sub_0800b230(gLifeRequests.unk04[gLocalPlayer] >> 4, 1);
                     } else {
                         gUnk_020055F0[0] = 2;
                         sub_0800b230(gLocalPlayer, 2);

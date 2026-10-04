@@ -136,8 +136,8 @@ extern u8 gUnk_087561C4[];
 extern s8 gUnk_087561CC[];
 extern u32 gUnk_0875625C[];
 extern u16 gUnk_08756268[];
-extern u32 gUnk_08756270[];
-extern u32 gUnk_0875628C[];
+extern u32 gPlayerLifeRequestStates[];
+extern u32 gPlayerLifeRequestStateUpdates[];
 
 
 /* Functions (defined in the files named above each group). */
@@ -259,17 +259,17 @@ void sub_080b94b4(s32 a, s32 b);
 void sub_080b9578(void);
 void sub_080b95ac(void);
 void sub_080b95ec(void);
-void sub_080b9610(void);
-void sub_080b963c(void);
-void sub_080b9658(void);
+void PlayerLifeRequestInit(void);
+void PlayerLifeRequestUpdate(void);
+void PlayerLifeRequestEnterState(void);
 void sub_080b9674(void);
 void sub_080b9690(void);
 void sub_080b96a0(void);
 void sub_080b96bc(void);
-void sub_080b9710(void);
-void sub_080b9730(void);
-void sub_080b9740(void);
-void sub_080b9764(void);
+void PlayerLifeRequestWait(void);
+void PlayerLifeRequestWaitUpdate(void);
+void PlayerLifeRequestReceive(void);
+void PlayerLifeRequestReceiveUpdate(void);
 void sub_080b9770(void);
 void sub_080b9798(void);
 void sub_080b97a4(void);
