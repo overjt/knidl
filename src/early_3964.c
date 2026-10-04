@@ -6,30 +6,30 @@
 /* Link (SIO multi-play + multiboot) driver work area at 0x0200EBC0. */
 struct SioWork
 {
-    /*0x00*/ vu8 unk00;
-    /*0x01*/ vu8 unk01;
-    /*0x02*/ vu8 unk02;
-    /*0x03*/ vu8 unk03;
+    /*0x00*/ vu8 localId;
+    /*0x01*/ vu8 playerCount;
+    /*0x02*/ vu8 state;
+    /*0x03*/ vu8 errorFlags;
     /*0x04*/ vu8 unk04;
     /*0x05*/ vu8 unk05;
-    /*0x06*/ vu16 unk06;
-    /*0x08*/ vu16 unk08;
+    /*0x06*/ vu16 sendSeq;
+    /*0x08*/ vu16 recvSeq;
     /*0x0A*/ vu16 unk0A;
-    /*0x0C*/ vu16 unk0C;
-    /*0x0E*/ vu16 unk0E;
-    /*0x10*/ u32 unk10;
+    /*0x0C*/ vu16 sendCode;
+    /*0x0E*/ vu16 absentMask;
+    /*0x10*/ u32 bootSrc;
     /*0x14*/ u32 unk14;
-    /*0x18*/ u32 unk18;
+    /*0x18*/ u32 bootSize;
     /*0x1C*/ vu16 unk1C;
-    /*0x1E*/ vu16 unk1E[3];
-    /*0x24*/ vu8 unk24;
-    /*0x25*/ vu8 unk25;
+    /*0x1E*/ vu16 prevRecv[3];
+    /*0x24*/ vu8 recvStableFrames;
+    /*0x25*/ vu8 detectMask;
     /*0x26*/ vu8 unk26;
     /*0x27*/ vu8 unk27;
-    /*0x28*/ vu16 unk28;
+    /*0x28*/ vu16 sioCnt;
     /*0x2A*/ vu8 unk2A;
     /*0x2B*/ vu8 unk2B;
-    /*0x2C*/ vu8 unk2C;
+    /*0x2C*/ vu8 bootError;
     /*0x2D*/ vu8 unk2D;
     /*0x2E*/ vu16 unk2E;
 };
@@ -92,7 +92,7 @@ void LinkSetupStop(void)
     REG_SIOCNT = REG_SIOCNT & 0xBFFF;
     REG_SIOMLT_SEND = 0xD952;
     gIntrTable[1] = gIntrTable[0] = (u32)LinkSetupIntr;
-    gMultiBootStruct.unk01 = gMultiBootStruct.unk02 = 0;
+    gMultiBootStruct.playerCount = gMultiBootStruct.state = 0;
     REG_IE = gIntrEnable = gIntrEnable & 0xFF3F;
     gIntrMasterEnable = REG_IME = REG_IME | 1;
 }
@@ -103,9 +103,9 @@ void MultiBootSetParams(u8 *start, u8 *end)
     u32 len;
 
     len = ((u32)end - (u32)start + 16) & ~15;
-    gMultiBootStruct.unk10 = (u32)start + 0xC0;
+    gMultiBootStruct.bootSrc = (u32)start + 0xC0;
     gMultiBootStruct.unk14 = (u32)end;
-    gMultiBootStruct.unk18 = len - 0xC0;
+    gMultiBootStruct.bootSize = len - 0xC0;
     gMultiBootParam.masterp = start;
     gMultiBootParam.server_type = 0;
 }
@@ -119,9 +119,9 @@ void MultiBootInitWithParams(u8 *start, u8 *end)
     len = ((u32)end - (u32)start + 16) & ~15;
     zero = 0;
     CpuSet((void *)&zero, &gMultiBootParam, 0x01000026);
-    gMultiBootStruct.unk10 = (u32)start + 0xC0;
+    gMultiBootStruct.bootSrc = (u32)start + 0xC0;
     gMultiBootStruct.unk14 = (u32)end;
-    gMultiBootStruct.unk18 = len - 0xC0;
+    gMultiBootStruct.bootSize = len - 0xC0;
     gMultiBootParam.masterp = start;
     gMultiBootParam.server_type = 0;
     MultiBootInit(&gMultiBootParam);
@@ -132,7 +132,7 @@ void LinkSetupRequestStart(void)
 {
     if (gMultiBootStruct.unk2B != 0)
         return;
-    if (gMultiBootStruct.unk02 != 2)
+    if (gMultiBootStruct.state != 2)
         return;
     gMultiBootStruct.unk2B = 1;
 }
@@ -148,44 +148,44 @@ void LinkSetupDetect(void)
     cnt = REG_SIOCNT;
     if ((REG_SIOCNT & 4) == 0)
         MultiBootMain(&gMultiBootParam);
-    gMultiBootStruct.unk25 = 0;
+    gMultiBootStruct.detectMask = 0;
     if ((cnt & 8) == 0)
     {
         t = cnt & 0x80;
         if (t != 0)
             return;
-        gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = gMultiBootStruct.unk03 = t;
+        gMultiBootStruct.recvStableFrames = gMultiBootStruct.detectMask = gMultiBootStruct.errorFlags = t;
         return;
     }
-    if (gMultiBootStruct.unk24 <= 29)
+    if (gMultiBootStruct.recvStableFrames <= 29)
         return;
     mask = 0;
     for (i = 0; i <= 2; i++)
     {
         u16 v;
 
-        v = gMultiBootStruct.unk1E[i] & 0xFFF0;
+        v = gMultiBootStruct.prevRecv[i] & 0xFFF0;
         if (v == 0x7200)
             mask |= 1;
         if (v == 0xD950)
             mask |= 2;
     }
-    gMultiBootStruct.unk25 = mask;
+    gMultiBootStruct.detectMask = mask;
     mask &= 3;
     if (mask == 3)
     {
-        gMultiBootStruct.unk03 |= 2;
+        gMultiBootStruct.errorFlags |= 2;
         return;
     }
     gMultiBootStruct.unk2A = 0;
-    gMultiBootStruct.unk02 = 0;
+    gMultiBootStruct.state = 0;
     gMultiBootStruct.unk0A = 0;
-    if (gMultiBootStruct.unk25 == 1)
+    if (gMultiBootStruct.detectMask == 1)
     {
         gLinkSetupMode = 2;
         return;
     }
-    if (gMultiBootStruct.unk25 == 2)
+    if (gMultiBootStruct.detectMask == 2)
         gLinkSetupMode = 1;
 }
 
@@ -197,24 +197,24 @@ void LinkSetupMultiCart(void)
     u16 t2;
 
     cnt = REG_SIOCNT;
-    if ((gMultiBootStruct.unk28 & 0x40) != 0 || (gMultiBootStruct.unk28 & 8) == 0)
+    if ((gMultiBootStruct.sioCnt & 0x40) != 0 || (gMultiBootStruct.sioCnt & 8) == 0)
     {
-        gMultiBootStruct.unk01 = 0;
-        gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = 0;
+        gMultiBootStruct.playerCount = 0;
+        gMultiBootStruct.unk2A = gMultiBootStruct.state = gMultiBootStruct.recvStableFrames = gMultiBootStruct.detectMask = 0;
         gLinkSetupMode = 0;
     }
     else
     {
-        t = gMultiBootStruct.unk28 & 4;
+        t = gMultiBootStruct.sioCnt & 4;
         if (t == 0 && (cnt & 0xFC) != 8)
         {
-            gMultiBootStruct.unk01 = t;
-            gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = t;
+            gMultiBootStruct.playerCount = t;
+            gMultiBootStruct.unk2A = gMultiBootStruct.state = gMultiBootStruct.recvStableFrames = gMultiBootStruct.detectMask = t;
             gLinkSetupMode = t;
         }
         else
         {
-            if (gMultiBootDataRecv[0] == 0xE4E4 && (gMultiBootStruct.unk28 & 4) != 0)
+            if (gMultiBootDataRecv[0] == 0xE4E4 && (gMultiBootStruct.sioCnt & 4) != 0)
                 return;
             t = gMultiBootStruct.unk2B;
             if (t != 0)
@@ -225,45 +225,45 @@ void LinkSetupMultiCart(void)
             }
             if (gMultiBootStruct.unk2A != 0)
             {
-                if (gMultiBootStruct.unk02 != 2 || gMultiBootStruct.unk01 == 1)
+                if (gMultiBootStruct.state != 2 || gMultiBootStruct.playerCount == 1)
                 {
-                    gMultiBootStruct.unk01 = t;
-                    gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = t;
+                    gMultiBootStruct.playerCount = t;
+                    gMultiBootStruct.unk2A = gMultiBootStruct.state = gMultiBootStruct.recvStableFrames = gMultiBootStruct.detectMask = t;
                     gLinkSetupMode = t;
                     return;
                 }
             }
-            else if (gMultiBootStruct.unk02 == 2)
+            else if (gMultiBootStruct.state == 2)
             {
                 gMultiBootStruct.unk2A = 1;
             }
             if (gMultiBootDataRecv[0] == 0xE4E4)
                 return;
-            t2 = gMultiBootStruct.unk28 & 4;
+            t2 = gMultiBootStruct.sioCnt & 4;
             if (t2 == 0)
             {
                 if ((cnt & 0xFC) != 8)
-                    gMultiBootStruct.unk02 = 0;
-                gMultiBootStruct.unk06 = gMultiBootStruct.unk06 + 1;
-                gMultiBootStruct.unk06 = gMultiBootStruct.unk06 & 0x1FFF;
-                if (gMultiBootStruct.unk06 <= 255)
-                    gMultiBootStruct.unk06 = 0x100;
-                REG_SIOMLT_SEND = gMultiBootStruct.unk06 | gMultiBootStruct.unk0C;
-                if ((gMultiBootStruct.unk28 & 0x4000) == 0)
+                    gMultiBootStruct.state = 0;
+                gMultiBootStruct.sendSeq = gMultiBootStruct.sendSeq + 1;
+                gMultiBootStruct.sendSeq = gMultiBootStruct.sendSeq & 0x1FFF;
+                if (gMultiBootStruct.sendSeq <= 255)
+                    gMultiBootStruct.sendSeq = 0x100;
+                REG_SIOMLT_SEND = gMultiBootStruct.sendSeq | gMultiBootStruct.sendCode;
+                if ((gMultiBootStruct.sioCnt & 0x4000) == 0)
                 {
-                    gMultiBootStruct.unk02 = 0;
+                    gMultiBootStruct.state = 0;
                     return;
                 }
                 gMultiBootStruct.unk0A = gMultiBootStruct.unk0A + 1;
                 REG_SIOCNT |= 0x80;
                 return;
             }
-            if (gMultiBootStruct.unk06 == gMultiBootStruct.unk08)
+            if (gMultiBootStruct.sendSeq == gMultiBootStruct.recvSeq)
             {
-                gMultiBootStruct.unk02 = 0;
-                gMultiBootStruct.unk03 &= 0xFE;
+                gMultiBootStruct.state = 0;
+                gMultiBootStruct.errorFlags &= 0xFE;
             }
-            gMultiBootStruct.unk06 = gMultiBootStruct.unk08;
+            gMultiBootStruct.sendSeq = gMultiBootStruct.recvSeq;
         }
     }
 }
@@ -277,7 +277,7 @@ void LinkSetupMultiBoot(void)
     u8 cb;
 
     cnt = REG_SIOCNT;
-    t = gMultiBootStruct.unk28 & 4;
+    t = gMultiBootStruct.sioCnt & 4;
     if (t != 0)
     {
         gLinkSetupMode = 0;
@@ -285,10 +285,10 @@ void LinkSetupMultiBoot(void)
     }
     if (gMultiBootStruct.unk2A == 1)
     {
-        if (gMultiBootStruct.unk01 == 1 || (gMultiBootParam.client_bit & 14) == 0)
+        if (gMultiBootStruct.playerCount == 1 || (gMultiBootParam.client_bit & 14) == 0)
         {
-            gMultiBootStruct.unk01 = t;
-            gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = t;
+            gMultiBootStruct.playerCount = t;
+            gMultiBootStruct.unk2A = gMultiBootStruct.state = gMultiBootStruct.recvStableFrames = gMultiBootStruct.detectMask = t;
             gLinkSetupMode = t;
             return;
         }
@@ -301,19 +301,19 @@ void LinkSetupMultiBoot(void)
     }
     if (gMultiBootStruct.unk2A == 0)
         gMultiBootStruct.unk2A = 1;
-    gMultiBootStruct.unk02 = 1;
-    gMultiBootStruct.unk01 = 1;
+    gMultiBootStruct.state = 1;
+    gMultiBootStruct.playerCount = 1;
     cb = gMultiBootParam.client_bit;
-    gMultiBootStruct.unk01 = gMultiBootStruct.unk01 + ((cb >> 1) & 1);
-    gMultiBootStruct.unk01 = gMultiBootStruct.unk01 + ((cb >> 2) & 1);
-    gMultiBootStruct.unk01 = gMultiBootStruct.unk01 + ((cb >> 3) & 1);
+    gMultiBootStruct.playerCount = gMultiBootStruct.playerCount + ((cb >> 1) & 1);
+    gMultiBootStruct.playerCount = gMultiBootStruct.playerCount + ((cb >> 2) & 1);
+    gMultiBootStruct.playerCount = gMultiBootStruct.playerCount + ((cb >> 3) & 1);
     switch (gMultiBootParam.probe_count)
     {
     case 0:
         if (gMultiBootStruct.unk0A <= 15)
             gMultiBootStruct.unk0A = gMultiBootStruct.unk0A + 1;
         if (gMultiBootStruct.unk0A == 16)
-            gMultiBootStruct.unk02 = 2;
+            gMultiBootStruct.state = 2;
         gMultiBootStruct.unk04 = 2;
         break;
     case 0xD1:
@@ -326,12 +326,12 @@ void LinkSetupMultiBoot(void)
         gMultiBootStruct.unk04 = 4;
     goto next;
 noconn:
-    gMultiBootStruct.unk02 = t;
+    gMultiBootStruct.state = t;
     gMultiBootStruct.unk0A = t;
 next:
     if (gMultiBootStruct.unk0A == 17)
     {
-        MultiBootStartMaster(&gMultiBootParam, gMultiBootStruct.unk10, gMultiBootStruct.unk18, 4, 1);
+        MultiBootStartMaster(&gMultiBootParam, gMultiBootStruct.bootSrc, gMultiBootStruct.bootSize, 4, 1);
         gMultiBootStruct.unk0A = 18;
     }
     if (gMultiBootStruct.unk2B == 1 && gMultiBootStruct.unk0A == 16 && gMultiBootParam.probe_count == 0
@@ -350,14 +350,14 @@ next:
         if (r != 0)
         {
             REG_SIOCNT |= 0x4000;
-            gMultiBootStruct.unk2C = 4;
-            gMultiBootStruct.unk03 |= 4;
-            gMultiBootStruct.unk01 = 0;
-            gMultiBootStruct.unk2A = gMultiBootStruct.unk02 = gMultiBootStruct.unk24 = gMultiBootStruct.unk25 = 0;
+            gMultiBootStruct.bootError = 4;
+            gMultiBootStruct.errorFlags |= 4;
+            gMultiBootStruct.playerCount = 0;
+            gMultiBootStruct.unk2A = gMultiBootStruct.state = gMultiBootStruct.recvStableFrames = gMultiBootStruct.detectMask = 0;
             gLinkSetupMode = 0;
             return;
         }
     }
     if (MultiBootCheckComplete(&gMultiBootParam) != 0)
-        gMultiBootStruct.unk02 = 3;
+        gMultiBootStruct.state = 3;
 }

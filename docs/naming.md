@@ -576,7 +576,7 @@ copies and module-local records).
 | ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
 | struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
 | struct field | `unk*` | 118 | tracked by #155: the field's role is not proven |
-| struct field | `unk*` | 220 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
+| struct field | `unk*` | 163 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
 Named for comparison: 508 RAM cells by role and 24 by position, 3182 ROM labels by role and 5255 by position.

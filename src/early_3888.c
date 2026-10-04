@@ -21,30 +21,30 @@
 /* Link (SIO multi-play + multiboot) driver work area at 0x0200EBC0. */
 struct SioWork
 {
-    /*0x00*/ vu8 unk00;
-    /*0x01*/ vu8 unk01;
-    /*0x02*/ vu8 unk02;
-    /*0x03*/ vu8 unk03;
+    /*0x00*/ vu8 localId;
+    /*0x01*/ vu8 playerCount;
+    /*0x02*/ vu8 state;
+    /*0x03*/ vu8 errorFlags;
     /*0x04*/ vu8 unk04;
     /*0x05*/ vu8 unk05;
-    /*0x06*/ vu16 unk06;
-    /*0x08*/ vu16 unk08;
+    /*0x06*/ vu16 sendSeq;
+    /*0x08*/ vu16 recvSeq;
     /*0x0A*/ vu16 unk0A;
-    /*0x0C*/ vu16 unk0C;
-    /*0x0E*/ vu16 unk0E;
-    /*0x10*/ u32 unk10;
+    /*0x0C*/ vu16 sendCode;
+    /*0x0E*/ vu16 absentMask;
+    /*0x10*/ u32 bootSrc;
     /*0x14*/ u32 unk14;
-    /*0x18*/ u32 unk18;
+    /*0x18*/ u32 bootSize;
     /*0x1C*/ vu16 unk1C;
-    /*0x1E*/ vu16 unk1E[3];
-    /*0x24*/ vu8 unk24;
-    /*0x25*/ vu8 unk25;
+    /*0x1E*/ vu16 prevRecv[3];
+    /*0x24*/ vu8 recvStableFrames;
+    /*0x25*/ vu8 detectMask;
     /*0x26*/ vu8 unk26;
     /*0x27*/ vu8 unk27;
-    /*0x28*/ vu16 unk28;
+    /*0x28*/ vu16 sioCnt;
     /*0x2A*/ vu8 unk2A;
     /*0x2B*/ vu8 unk2B;
-    /*0x2C*/ vu8 unk2C;
+    /*0x2C*/ vu8 bootError;
     /*0x2D*/ vu8 unk2D;
     /*0x2E*/ vu16 unk2E;
 };
@@ -75,7 +75,7 @@ void LinkSetupInit(void)
     gIntrMasterEnable = REG_IME = REG_IME & 0xFFFE;
     zero = 0;
     CpuSet((void *)&zero, &gMultiBootStruct, 0x01000018);
-    gMultiBootStruct.unk06 = gMultiBootStruct.unk08 = 0x100;
+    gMultiBootStruct.sendSeq = gMultiBootStruct.recvSeq = 0x100;
     gLinkBlockState = 0;
     gLinkSetupMode = 0;
     gUnk_0300244C = gUnk_030023A8.unk00[0] = gUnk_030023A8.unk00[1]

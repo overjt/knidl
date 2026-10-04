@@ -29,16 +29,16 @@
  * allocation shows. */
 
 struct Link {
-    /*0x000*/ u8 unk00, unk01, unk02, count;
+    /*0x000*/ u8 isMaster, state, localId, count;
     /*0x004*/ u16 recv[4];
-    /*0x00C*/ u8 unk0C, unk0D, unk0E, unk0F;
-    /*0x010*/ u8 unk10, unk11, unk12, unk13, unk14, unk15;
+    /*0x00C*/ u8 receivedNothing, serialIntrCounter, unk0E, unk0F;
+    /*0x010*/ u8 handshakeAsMaster, unk11, hardwareError, badChecksum, queueFull, lag;
     /*0x016*/ u16 chk;
-    /*0x018*/ u8 unk18, unk19, unk1A, unk1B;
+    /*0x018*/ u8 sendCmdIndex, recvCmdIndex, unk1A, unk1B;
     /*0x01C*/ u16 ring[4][30];
-    /*0x10C*/ u8 unk10C, unk10D, unk10E, unk10F;
+    /*0x10C*/ u8 sendQueuePos, sendQueueCount, unk10E, unk10F;
     /*0x110*/ u16 buf[4][4][30];
-    /*0x4D0*/ u8 unk4D0, unk4D1;
+    /*0x4D0*/ u8 recvQueuePos, recvQueueCount;
 };
 
 struct Pair { u32 a, b; };
@@ -78,35 +78,35 @@ void SerialCB(void)
     u8 playerCount = 0;
     u16 minRecv = 0xFFFF;
 
-    gLink.unk02 = ((struct SioMultiCnt *)&REG_SIOCNT)->id;
+    gLink.localId = ((struct SioMultiCnt *)&REG_SIOCNT)->id;
 
-    switch (gLink.unk01)
+    switch (gLink.state)
     {
     case 4:
-        gLink.unk12 = ((struct SioMultiCnt *)&REG_SIOCNT)->error;
+        gLink.hardwareError = ((struct SioMultiCnt *)&REG_SIOCNT)->error;
         DoRecv();
         DoSend();
         SendRecvDone();
         break;
     case 2:
-        if (gLink.unk10 == 1)
+        if (gLink.handshakeAsMaster == 1)
             REG_SIOMLT_SEND = 0x8FFF;
         else
             REG_SIOMLT_SEND = 0xCFF0;
 
         *(struct Pair *)gLink.recv = *(struct Pair *)&REG_SIOMULTI0;
-        gLink.unk10 = 0;
+        gLink.handshakeAsMaster = 0;
 
         if (gLink.recv[0] == 0x8FFF)
         {
-            gLocalPlayer = gLink.unk02;
-            gLinkIsMaster = gLink.unk00;
+            gLocalPlayer = gLink.localId;
+            gLinkIsMaster = gLink.isMaster;
             gLinkPlayerCount = gLink.count;
             gPlayerCount = gLinkPlayerCount;
-            if (gLink.unk00)
-                gLink.unk01 = 3;
+            if (gLink.isMaster)
+                gLink.state = 3;
             else
-                gLink.unk01 = 4;
+                gLink.state = 4;
             break;
         }
 
@@ -133,7 +133,7 @@ void SerialCB(void)
             }
         }
 
-        if (gLink.unk10 == 0)
+        if (gLink.handshakeAsMaster == 0)
             gLink.count = playerCount;
 
         if (gLink.count > 1)
@@ -141,13 +141,13 @@ void SerialCB(void)
         else
             gLink.unk11 = 0;
 
-        gLink.unk10 = 0;
+        gLink.handshakeAsMaster = 0;
         break;
     }
 
-    gLink.unk0D++;
+    gLink.serialIntrCounter++;
     gSerialIntrCount++;
 
-    if ((s8)gLink.unk0D == 4)
-        gLastRecvQueueCount = gLink.unk4D1;
+    if ((s8)gLink.serialIntrCounter == 4)
+        gLastRecvQueueCount = gLink.recvQueueCount;
 }
