@@ -628,17 +628,17 @@ void ActorPlayHitSfx(void)
         case ABILITY_THROW:
         case ABILITY_UFO:
         case ABILITY_STAR_ROD:
-            sub_08069d78();
+            ActorPlayDefaultHitSfx();
             break;
         }
     }
     else
     {
-        sub_08069d78();
+        ActorPlayDefaultHitSfx();
     }
 }
 
-void sub_08069d78(void)
+void ActorPlayDefaultHitSfx(void)
 {
     switch (gCurTask->actorKind)
     {

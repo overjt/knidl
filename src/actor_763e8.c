@@ -252,7 +252,7 @@ void sub_08076828(void)
     TaskGetScreenPos();
     if (gCurTask->unk24 == 0 && gUnk_030023D4 <= 0)
     {
-        sub_0802610c();
+        ExitByCannon();
         {
             struct Task *t = gCurTask;
 

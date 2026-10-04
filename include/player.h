@@ -82,11 +82,11 @@ extern struct M11R20 gPlayerBodyBoxes[];
 extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile; /*   the metatile's collision byte */
 extern u8 gUnk_020061E0;
-extern struct M11Buf gUnk_02006A80[];
+extern struct M11Buf gPlayerHitBoxLists[];
 extern u16 gBlockCursorX; /* the block CanBreakBlock accepted: x */
 extern struct M04Spark gUnk_02007E90[][3];
 extern u16 gUnk_02007F60[];
-extern struct Unk020061F0 gUnk_02007FD0;
+extern struct Unk020061F0 gBlockAnimScratchRecord;
 extern u16 gBlockCursorY; /*   y */
 extern u16 gPlayerBubbleTimers[];
 extern u16 gUnk_0200B060[];

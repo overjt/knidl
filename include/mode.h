@@ -179,11 +179,11 @@ void IntroStory(void);
 s32 IntroStoryWait(s32 n);
 
 /* src/mode_0b44c.c */
-void sub_0800b44c(void);
+void ResetGameSession(void);
 void ResetScoresAndMaxHealth(void);
 void ResetPlayerRecords(void);
-void sub_0800b5dc(void);
-void sub_0800b628(void);
+void HubResetPlayers(void);
+void ResetTasksAndPlayers(void);
 void StageInit(void);
 void HubInit(void);
 void BigSwitchViewInit(void);

@@ -12,13 +12,13 @@
 
 /* level_2296c.c (0x0802296C-0x08023617, issue #93).
  *
- * Level resets and room loaders, part 1.  sub_0802296c (M02's
- * ResetScoresAndMaxHealth) and its twin sub_08022c3c clear the level state, rebuild
+ * Level resets and room loaders, part 1.  ResetLevelStateAtHub (M02's
+ * ResetScoresAndMaxHealth) and its twin ResetLevelStateForContinue clear the level state, rebuild
  * the per-stage door masks gUsedSubGameDoors[] and the cleared-stage mask
  * gWarpStarStationLevels from the save flags (gHubDoorUnlocks[level][6] names each
  * stage's flag) and place the player at the matching door of the hub
  * room gRoomTable[8][stage][0]; sub_08022f50 (AgbMain) resets level,
- * stage and room; sub_08022f98/sub_08022f9c are M02's screen-setup hooks;
+ * stage and room; sub_08022f98/ClearRoomBgmStarted are M02's screen-setup hooks;
  * LoadRoom and sub_080233e0 are the loaders of M02's first screen
  * setup StageInit (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
@@ -32,7 +32,7 @@ struct Unk020055D8Entry
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_0802296c(void)
+void ResetLevelStateAtHub(void)
 {
     s32 i;
     s32 j;
@@ -122,7 +122,7 @@ void sub_0802296c(void)
     gCutscenePending = 1;
 }
 
-void sub_08022c3c(void)
+void ResetLevelStateForContinue(void)
 {
     s32 i;
     s32 j;
@@ -243,7 +243,7 @@ void sub_08022f98(void)
 {
 }
 
-void sub_08022f9c(void)
+void ClearRoomBgmStarted(void)
 {
     gRoomBgmStarted = 0;
 }

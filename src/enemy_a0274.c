@@ -488,7 +488,7 @@ void KingDededeUpdate(void)
         sub_0809fca4();
 }
 
-void sub_080a0a84(void)
+void KingDededeHitStunLateUpdate(void)
 {
     s32 n;
     s32 m;
@@ -511,7 +511,7 @@ void sub_080a0a84(void)
             gUnk_02006190[5] = gUnk_08748430[1];
             if (m <= 0)
             {
-                sub_0809fd20();
+                KingDededeEndHitStun();
                 return;
             }
         }

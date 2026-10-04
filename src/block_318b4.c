@@ -12,7 +12,7 @@
  * neighbours, wait, free) and then clears the "stepped" bit 15 of unk6.
  * UpdateBlockAnims draws the replacement metatiles into the BG map
  * (BlockAnimDrawColumn/BlockAnimWriteAndDrawColumn for a whole column of n blocks, through the
- * scratch record gUnk_02007FD0) and chains to the neighbours
+ * scratch record gBlockAnimScratchRecord) and chains to the neighbours
  * (BlockAnimBreakNeighbors); UpdateBlockAnimsWithEdges also rebuilds the 3x3 edge tiles around
  * the block (BlockAnimDrawWithEdges) for rooms whose BG map has edge tiles; and
  * UpdateBg1BlockAnims animates the blocks of the second layer gBg1MetatileMap in
@@ -165,7 +165,7 @@ void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n)
     BlockAnimDrawTiles(b);
     if (n != 1)
     {
-        s = &gUnk_02007FD0;
+        s = &gBlockAnimScratchRecord;
         for (i = 1; i < n; i++)
         {
             s->cellX = b->cellX;
@@ -198,7 +198,7 @@ void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n)
     BlockAnimWriteMetatile(b);
     if (n == 1)
         return;
-    s = &gUnk_02007FD0;
+    s = &gBlockAnimScratchRecord;
     for (i = 1; i < n; i++)
     {
         if (b->cellY + i >= gRoomHeight)
@@ -224,7 +224,7 @@ void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n)
     BlockAnimDrawTiles(b);
     if (n != 1)
     {
-        s = &gUnk_02007FD0;
+        s = &gBlockAnimScratchRecord;
         for (i = 1; i < n; i++)
         {
             s->cellX = b->cellX;

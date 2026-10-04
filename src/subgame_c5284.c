@@ -28,7 +28,7 @@
  *       position is on an even segment of the lane (the course record's
  *       unk14), the next boundary after it, and the set/clear bit counts of
  *       gAirGrindSegmentBits over a span (the racers' scores).
- *   sub_080c55d8 / sub_080c5628   linear interpolation in gAirGrindCourseToLane /
+ *   AirGrindCourseToLanePos / AirGrindLaneToCoursePos   linear interpolation in gAirGrindCourseToLane /
  *       gAirGrindLaneToCourse at 32-pixel steps.
  *   AirGrindDrawCourse   the course renderer (called every frame by player 0's
  *       racer step AirGrindRacerUpdateDepth, src/subgame_c3648.c, and once by
@@ -178,7 +178,7 @@ void AirGrindCountSegmentBits(s32 start, s32 end, s32 *set, s32 *clear)
     }
 }
 
-s32 sub_080c55d8(s32 lane, s32 x)
+s32 AirGrindCourseToLanePos(s32 lane, s32 x)
 {
     s32 lo;
     s32 hi;
@@ -191,7 +191,7 @@ s32 sub_080c55d8(s32 lane, s32 x)
     return (hi - lo) * x + lo * 32;
 }
 
-s32 sub_080c5628(s32 lane, s32 x)
+s32 AirGrindLaneToCoursePos(s32 lane, s32 x)
 {
     s32 lo;
     s32 hi;
@@ -290,7 +290,7 @@ void AirGrindLayOutCourse(s32 a)
     for (i = 0; i < 4; i++)
     {
         for (j = 0; j < gUnk_0201B1F4; j++)
-            gAirGrindLaneSegmentEnds[i][j] = sub_080c55d8(i, gAirGrindSegmentEnds[j]);
+            gAirGrindLaneSegmentEnds[i][j] = AirGrindCourseToLanePos(i, gAirGrindSegmentEnds[j]);
         gAirGrindLaneSegmentEnds[i][j] = 0x7D000;
     }
 }
@@ -387,8 +387,8 @@ void AirGrindDrawCourse(void)
     for (lane = 0; lane < 4; lane++)
     {
         p = &gAirGrindCourse.players[lane];
-        lo = sub_080c55d8(lane, gAirGrindCourse.scrollPos) / 32;
-        hi = sub_080c55d8(lane, gAirGrindCourse.unk108) / 32;
+        lo = AirGrindCourseToLanePos(lane, gAirGrindCourse.scrollPos) / 32;
+        hi = AirGrindCourseToLanePos(lane, gAirGrindCourse.unk108) / 32;
         for (k = 0; k < lo - hi; k++)
         {
             j = k + 120;
@@ -429,7 +429,7 @@ void AirGrindDrawCourse(void)
                 zero = 0;
                 CpuSet(&zero, (void *)addr, 0x010000A0);
             }
-            w = sub_080c5628(lane, col);
+            w = AirGrindLaneToCoursePos(lane, col);
             if (flag != 0)
             {
                 if (lane != 0)
@@ -483,7 +483,7 @@ void AirGrindDrawCourse(void)
             }
         }
         *gUnk_08757300[lane] = (lo - 120) << 16;
-        v = sub_080c55d8(lane, p->coursePos);
+        v = AirGrindCourseToLanePos(lane, p->coursePos);
         AirGrindCalcLanePoint(lane, v / 32, &p->screenY, &depth[lane], &p->unk1C);
         p->prevOnEvenSegment = p->onEvenSegment;
         AirGrindFindLaneSegment(lane, &p->segmentIndex, v, &p->onEvenSegment);

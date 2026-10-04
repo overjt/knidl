@@ -38,8 +38,8 @@
  * ExitKingDededeStage, ExitToNextRoom, ExitToNextRoomOnWarpStar, ExitToEnding, PressBigSwitch and
  * ReturnFromBigSwitchView are the other exits, each setting the level/stage/room and a
  * stage request; sub_08025e0c lowers the room's bottom bound, sub_08025e88
- * reads an object-list entry's parameter, and sub_08025f00, sub_080260b0
- * and sub_0802610c pick the position the player arrives at. */
+ * reads an object-list entry's parameter, and ExitOnWarpStar, sub_080260b0
+ * and ExitByCannon pick the position the player arrives at. */
 
 struct Unk020055D8Entry
 {
@@ -1015,7 +1015,7 @@ s32 sub_08025e88(s32 i)
     return ((s8 *)e->filler0)[2];
 }
 
-s32 sub_08025f00(void)
+s32 ExitOnWarpStar(void)
 {
     s32 i;
 
@@ -1090,7 +1090,7 @@ s32 sub_080260b0(void)
     return r;
 }
 
-s32 sub_0802610c(void)
+s32 ExitByCannon(void)
 {
     struct Door *d = gCurRoomDef->doors;
     s32 i;

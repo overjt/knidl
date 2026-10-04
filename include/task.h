@@ -87,7 +87,7 @@ struct Task
     /*0x74*/ u8 unk74;
     /*0x75*/ s8 hitTimer;
     /* A per-family view (docs/header-conventions.md): an actor's subtype
-       (written by CreateActor, sub_08064a78 and sub_08064d9c;
+       (written by CreateActor, CreateChildActor and sub_08064d9c;
        ActorBindDefSlot binds Actor.def = gEnemyDefs[subtype] ...); the door
        index into gDoorStates for the door signs (src/obj_2eac8.c,
        obj_2f62c.c); the player's hit and status bits and Quick Draw's flag
@@ -123,7 +123,7 @@ struct Task
        store the nearest player's struct Task * here instead, which no actor
        reads back; ActorAttachToHitter rebinds it to the hitter's record. */
     /*0x88*/ struct PlayerState *player;
-    /* The task's actor record &gActors[slot] (CreateActor, sub_08064a78,
+    /* The task's actor record &gActors[slot] (CreateActor, CreateChildActor,
        sub_08064d9c, SetPaletteAnimSource); task types #6/#7 keep their parent
        task &gTasks[Task.parent] here instead (Task_PlayerObject,
        Task_PlayerEffect, sub_08056770). */
@@ -345,7 +345,7 @@ struct PlayerState
     /*0x70*/ u32 *prevTerrainBox;
 };
 
-/* Spawn descriptor sub_08064A78 turns into a task of actor kind 4
+/* Spawn descriptor CreateChildActor turns into a task of actor kind 4
    (Task.actorKind). */
 struct ActorSpawn
 {

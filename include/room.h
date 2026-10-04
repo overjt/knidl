@@ -695,11 +695,11 @@ extern struct RoomDef *const gLevel8Stage7Rooms[];
 /* Functions (defined in the files named above each group). */
 
 /* src/level_2296c.c */
-void sub_0802296c(void);
-void sub_08022c3c(void);
+void ResetLevelStateAtHub(void);
+void ResetLevelStateForContinue(void);
 void sub_08022f50(void);
 void sub_08022f98(void);
-void sub_08022f9c(void);
+void ClearRoomBgmStarted(void);
 void LoadRoom(void);
 void sub_080233e0(void);
 void CreateRoomTask(s32 a);
@@ -753,9 +753,9 @@ void ReturnFromBigSwitchView(void);
 void sub_08025e00(void);
 void sub_08025e0c(void);
 s32 sub_08025e88(s32 i);
-s32 sub_08025f00(void);
+s32 ExitOnWarpStar(void);
 s32 sub_080260b0(void);
-s32 sub_0802610c(void);
+s32 ExitByCannon(void);
 
 /* src/stage_261c0.c */
 s32 CreateBlockBreakEffect(s32 x, s32 y);

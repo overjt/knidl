@@ -189,11 +189,11 @@ gMidBossTaskTypes:
 	.global	gBossTaskTypes
 gBossTaskTypes:
 	.incbin	"baserom.gba", 0x73F264, 0x24
-	.global	gUnk_0873F288
-gUnk_0873F288:
+	.global	gObjectTaskTypes
+gObjectTaskTypes:
 	.incbin	"baserom.gba", 0x73F288, 0x18
-	.global	gUnk_0873F2A0
-gUnk_0873F2A0:
+	.global	gItemTaskTypes
+gItemTaskTypes:
 	.incbin	"baserom.gba", 0x73F2A0, 0x18
 
 @ 0x0873F2B8-0x0873F4C8: C, row actor_rec_0873f2b8 (src/data/actor_records.c section .actor_rec_0873f2b8)

@@ -26,7 +26,7 @@
 #define abilityStarFrameTimer unk2C /* s32: frames until the star's next spin frame (every 2; frames 4-19) */
 #define abilityStarPickupDelay unk30 /* s32: frames (48) before the star's hits are checked, so it cannot be taken at once */
 
-/* Actor - every actor: a task made by CreateActor, sub_08064a78 or
+/* Actor - every actor: a task made by CreateActor, CreateChildActor or
    sub_08064d9c (src/actor_63698.c), which also bind Task.u8C.actor; the room
    objects of kinds 0-6 come through CreateActor */
 #define actorAnimDelay18 unk18 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) in unk18 */
@@ -979,7 +979,7 @@
 
 /* NightmarePowerOrbIntroScroll - Nightmare Power Orb's intro scroll (task
    type #80, Task_NightmarePowerOrbIntroScroll) */
-#define nightmarePowerOrbIntroScrollSpeed unk28 /* s32: pixels per frame sub_080b08a0 adds to gCameraAnchorY (-4 easing to 0) */
+#define nightmarePowerOrbIntroScrollSpeed unk28 /* s32: pixels per frame NightmarePowerOrbIntroScrollUpdate adds to gCameraAnchorY (-4 easing to 0) */
 
 /* NightmarePowerOrbStar - Nightmare Power Orb's star (task type #135,
    Task_NightmarePowerOrbStar; gNightmarePowerOrbStarVariants) */
@@ -1503,7 +1503,7 @@
 /* WarpStar - Warp Star (task type #74, Task_WarpStar; gWarpStarStates,
    gWarpStarFlights) */
 #define warpStarScale unk18 /* s32: flight sprite scale (16.16 index into gUnk_0873FF98); -1 / <= -2 select other draw modes */
-#define warpStarExitRequested unk24 /* s32: 1 once the flight has called sub_08025f00 (the request for the destination room) */
+#define warpStarExitRequested unk24 /* s32: 1 once the flight has called ExitOnWarpStar (the request for the destination room) */
 #define warpStarRiderCount unk28 /* s32: players boarded before the flight; it starts when this equals gActivePlayerCount */
 #define warpStarScaleSpeed unk28 /* s32: per-frame change of warpStarScale during a flight (negative = shrinking) */
 #define warpStarBobTimer unk2C /* s32: frames to the idle bob's next velY step (16) */

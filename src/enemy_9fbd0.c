@@ -76,7 +76,7 @@ void sub_0809fca4(void)
     ActorReactToHit();
 }
 
-void sub_0809fcb4(void)
+void KingDededeStartHitStun(void)
 {
     struct Task *t;
     s32 one;
@@ -84,7 +84,7 @@ void sub_0809fcb4(void)
     RequestScreenShake(4);
     TaskSetSkipMask(7, gCurTaskIdx);
     t = gCurTask;
-    t->lateUpdateCallback = (u32)sub_080a0a84;
+    t->lateUpdateCallback = (u32)KingDededeHitStunLateUpdate;
     gUnk_02006190[0] = t->pixelX;
     gUnk_02006190[1] = t->pixelY;
     gUnk_02006190[2] = t->frame;
@@ -97,7 +97,7 @@ void sub_0809fcb4(void)
     CreateStarFlash(1, 0, 0);
 }
 
-void sub_0809fd20(void)
+void KingDededeEndHitStun(void)
 {
     struct Task *t;
     s32 z;
@@ -113,12 +113,12 @@ void sub_0809fd20(void)
     ActorClearPaletteOverride();
 }
 
-u8 sub_0809fd64(void)
+u8 KingDededeReactToDefeat(void)
 {
     struct Task *t;
     s16 *p;
 
-    ActorSetHitReactions(gUnk_08748974);
+    ActorSetHitReactions(gKingDededeDefeatedHitReactions);
     TaskSetFrame(9);
     t = gCurTask;
     p = &t->unk46;
@@ -146,7 +146,7 @@ u8 sub_0809fd64(void)
     return 1;
 }
 
-u8 sub_0809fe10(void)
+u8 KingDededeReactToDamage(void)
 {
     struct Task *t;
     struct Task *u;
@@ -161,7 +161,7 @@ u8 sub_0809fe10(void)
     t = gCurTask;
     a = t->u8C.actor;
     s0 = t->state;
-    sub_0809fcb4();
+    KingDededeStartHitStun();
     switch (gCurTask->state)
     {
     case 3:

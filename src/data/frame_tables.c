@@ -12238,7 +12238,7 @@ u32 gNightmareWizardFrames[] FRAME_TABLE = {
     (u32)&gUnk_083239A0,
 };
 
-/* gUnk_087546D0.  Consumer: sub_080a9ef4 (src/enemy_a93ec.c:581).  10
+/* gUnk_087546D0.  Consumer: NightmareWizardDrawStreamedFrame (src/enemy_a93ec.c:581).  10
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087546D0-0x087546F8).  Declared
  * include/enemy.h:1274. */

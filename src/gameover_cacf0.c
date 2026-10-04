@@ -56,7 +56,7 @@ void GameOverMain(void)
     if (gGameState == GAME_STATE_HUB) {
         gCutscenePending = 1;
         ResetPlayerRecords();
-        sub_08022c3c();
+        ResetLevelStateForContinue();
         if (gStageRequest != STAGE_REQUEST_HUB)
             gGameState = GAME_STATE_STAGE_START;
     } else {

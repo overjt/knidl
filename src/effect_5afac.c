@@ -11,12 +11,12 @@
 #include "enemy.h"
 
 /* Not from room.h or effect.h: this file's view of gUnk_02000020 and
-   gUnk_02008010 differs (lesson 3.517). */
+   gDanceId differs (lesson 3.517). */
 extern u32 gUnk_02000020[];
-extern u32 gUnk_020060CC[];
+extern u32 gStageClearDanceBgmPlayed[];
 extern u8 gUnk_02006A14[];
 extern u8 gRoomExitKind;
-extern u32 gUnk_02008010[];
+extern u32 gDanceId[];
 extern u16 gObjPaletteBank8[];
 extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
@@ -228,7 +228,7 @@ void GoalGameInit(void)
     }
     gPauseDisabled = 1;
     gRoomExitKind = 0;
-    *(s8 *)gUnk_02008010 = -1;
+    *(s8 *)gDanceId = -1;
     *(s8 *)gStageRequest = STAGE_REQUEST_NONE;
     q = gPaletteAnimRefCounts;
     z = 0;
@@ -1979,20 +1979,20 @@ void PlayerDanceInGoalGame(void)
 {
     struct Task *t;
 
-    if (*(s8 *)gUnk_02008010 < 0)
-        *(s8 *)gUnk_02008010 = RandomRange(7);
+    if (*(s8 *)gDanceId < 0)
+        *(s8 *)gDanceId = RandomRange(7);
     t = gCurTask;
     if (t->unk30 != 0)
     {
         if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(14);
-        CallTableEntry(*(s8 *)gUnk_02008010, 14, gPlayerDances);
+        CallTableEntry(*(s8 *)gDanceId, 14, gPlayerDances);
     }
     else
     {
         if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(13);
-        CallTableEntry(*(s8 *)gUnk_02008010 + 7, 14, gPlayerDances);
+        CallTableEntry(*(s8 *)gDanceId + 7, 14, gPlayerDances);
     }
 }
 
@@ -2000,21 +2000,21 @@ void PlayerDanceAfterStageClear(void)
 {
     TaskSetFrameFlip(146);
     TaskYieldTrampoline(30);
-    if (*(s8 *)gUnk_02008010 < 0)
+    if (*(s8 *)gDanceId < 0)
     {
-        *(s8 *)gUnk_02008010 = RandomRange(7) + 7;
+        *(s8 *)gDanceId = RandomRange(7) + 7;
         gCurTask->unk34 = 1;
     }
     else
     {
         gCurTask->unk34 = 0;
     }
-    if (*(u8 *)gUnk_020060CC == 0)
+    if (*(u8 *)gStageClearDanceBgmPlayed == 0)
     {
         PlayBgm(13);
-        *(u8 *)gUnk_020060CC = 1;
+        *(u8 *)gStageClearDanceBgmPlayed = 1;
     }
-    CallTableEntry(*(s8 *)gUnk_02008010, 14, gPlayerDances);
+    CallTableEntry(*(s8 *)gDanceId, 14, gPlayerDances);
     TaskYieldTrampoline(60);
     if (gCurTask->unk34 != 0)
         ExitClearedStage();

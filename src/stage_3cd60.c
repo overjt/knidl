@@ -19,7 +19,7 @@ extern u16 gEndingLocalPlayer;
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4[];
 extern struct M11R20 gPlayerBodyBoxes[];
-extern struct M11Buf gUnk_02006A80[];
+extern struct M11Buf gPlayerHitBoxLists[];
 extern u16 gUnk_02007F60[];
 extern u16 gPlayerBubbleTimers[];
 extern u16 gObjPaletteBank1[];
@@ -1205,7 +1205,7 @@ s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6)
 /* NEEDS a byte-level view of the module's 8-byte rows in hdr.c (see report):
        struct M11R8  { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
        struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
-       extern struct M11Buf gUnk_02006A80[];
+       extern struct M11Buf gPlayerHitBoxLists[];
    gPlayerHitBoxSets keeps its `struct M11R8[]` spelling - only M11R8's members
    change, and an 8-byte struct still copies with ldmia/stmia whatever its
    members are.  Only an ARRAY-typed extern with a SCALAR member at +4 puts the
@@ -1221,12 +1221,12 @@ s32 LoadPlayerHitBoxSet(s32 a0, s32 a1)
         return 0;
     gPlayerHitBoxSets[a0].offsetX = src[0];
     gPlayerHitBoxSets[a0].offsetY = src[1];
-    gPlayerHitBoxSets[a0].boxes = gUnk_02006A80[a0].unk00;
-    gUnk_02006A80[a0].unk00[0] = src[2];
-    gUnk_02006A80[a0].unk00[1] = src[3];
-    gUnk_02006A80[a0].unk00[2] = src[4];
-    gUnk_02006A80[a0].unk00[3] = src[5];
-    q = gUnk_02006A80[a0].unk04;
+    gPlayerHitBoxSets[a0].boxes = gPlayerHitBoxLists[a0].unk00;
+    gPlayerHitBoxLists[a0].unk00[0] = src[2];
+    gPlayerHitBoxLists[a0].unk00[1] = src[3];
+    gPlayerHitBoxLists[a0].unk00[2] = src[4];
+    gPlayerHitBoxLists[a0].unk00[3] = src[5];
+    q = gPlayerHitBoxLists[a0].unk04;
     q[0] = 127;
     q[1] = q[2] = q[3] = 0;
     return 1;

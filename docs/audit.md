@@ -63,7 +63,7 @@ A row names `file:line` or `file:first-last`.
 |---|---|---|---|
 | `src/hud_b2fe8.c:679-680` | `WhispyWoodsLeavesFillTrail` | zero-code | #37: two nested `do { } while (0)` around the `unk70` store weight its address's use x3 (1 + 3 = 4 refs), which ranks the address above the `&gCurTask` pool value in local allocation, as the ROM's r3/r4 show (lesson 3.524); replaced #154's ten pins and six levers |
 | `src/boot_caab8.c:137-142` | `BootLogoUpdateObjects` | lever | #152's two approved zero-byte levers (`sub_080caab8` before #155): an opaque `0xFFFF` and a live mask at one store (lessons 3.457, 3.494).  Sanctioned and final since #169, which measured why the plain store folds: gcse's reaching register for the old id has two sets, so combine uses its first scan's union (0xFFFF); with one set the plain source gives the ROM's `orrs`, and the only route left is unnatural (lesson 3.527).  The plain store is 40 bytes off (#100) |
-| `src/enemy_9fbd0.c:189-216` | `sub_0809fe10` | cross-jump | `BLOCK_CROSS_JUMP` (`include/global.h`, a pret idiom) at four tails that the ROM really duplicates instead of cross-jumping (#154) |
+| `src/enemy_9fbd0.c:189-216` | `KingDededeReactToDamage` | cross-jump | `BLOCK_CROSS_JUMP` (`include/global.h`, a pret idiom) at four tails that the ROM really duplicates instead of cross-jumping (#154) |
 | `src/early_4734.c:56` | (file scope) | alias | the `MultiBoot` SWI thunk declared int-returning under a local name, as the ROM keeps the untruncated result (lesson 3.481) |
 | `src/early_4d6c.c:45` | (file scope) | alias | the same alias in the second MultiBoot unit |
 | `src/early_4d6c.c:199-213` | `MultiBootWaitCycles` | inline-asm | the SDK's own inline asm: pokeemerald's `src/multiboot.c` `MultiBootWaitCycles` is the same asm |

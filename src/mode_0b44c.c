@@ -12,24 +12,24 @@
 /* mode_0b44c.c (0x0800B44C-0x0800B91F, issue #96).
  *
  * The game-state setup helpers AgbMain and the state bodies call:
- * sub_0800b44c (reset the game-state cells), ResetScoresAndMaxHealth (scores, the
+ * ResetGameSession (reset the game-state cells), ResetScoresAndMaxHealth (scores, the
  * maximum health 24 or 48, the HUD mode), ResetPlayerRecords (three lives and
- * cleared records per player), sub_0800b5dc/sub_0800b628, and the three
+ * cleared records per player), HubResetPlayers/ResetTasksAndPlayers, and the three
  * screen setups StageInit/HubInit/BigSwitchViewInit. */
 
 /* Not from room.h or effect.h: this file's view of gSavedPlayerAbilityUses
-   and gUnk_020060CC differs (lesson 3.517). */
+   and gStageClearDanceBgmPlayed differs (lesson 3.517). */
 extern u8 gUnk_02000020;
 extern u16 gPlayerAbilities[];
 extern u8 gBigSwitchPressActive;
 extern s16 gMaxHealth;
 extern s16 gPlayerHealth[];
-extern u8 gUnk_020060CC;
+extern u8 gStageClearDanceBgmPlayed;
 extern u8 gRoomExitKind;
 extern s16 gPlayerLives[];
 extern vs16 gSavedPlayerAbilityUses[];
 extern u16 gSavedPlayerAbilities[];
-extern s8 gUnk_02008010;
+extern s8 gDanceId;
 extern u16 gPlayerAbilityUses[];
 extern u8 gMetaKnightmareMode;
 extern u8 gActivePlayerMask;
@@ -39,15 +39,15 @@ extern s8 gStageRequest;
 extern u16 gLatchedHeldKeys[];
 extern u8 gExtraMode;
 
-void sub_0802296c(void);
+void ResetLevelStateAtHub(void);
 void sub_08022f98(void);
-void sub_08022f9c(void);
+void ClearRoomBgmStarted(void);
 void LoadRoom(void);
 void sub_080233e0(void);
 void LoadHubRoom(void);
 void LoadBigSwitchViewRoom(void);
 
-void sub_0800b44c(void)
+void ResetGameSession(void)
 {
     gUnk_03000B24 = 1;
     ResetTasksAndOam();
@@ -81,7 +81,7 @@ void ResetScoresAndMaxHealth(void)
         gMaxHealth = 24;
         HudShowClock();
     }
-    sub_0802296c();
+    ResetLevelStateAtHub();
 }
 
 void ResetPlayerRecords(void)
@@ -109,7 +109,7 @@ void ResetPlayerRecords(void)
     gPauseDisabled = 0;
 }
 
-void sub_0800b5dc(void)
+void HubResetPlayers(void)
 {
     s32 i;
 
@@ -122,12 +122,12 @@ void sub_0800b5dc(void)
     gUnk_020055C4 = 0;
 }
 
-void sub_0800b628(void)
+void ResetTasksAndPlayers(void)
 {
     s32 i;
 
     ResetTasksAndOam();
-    sub_08022f9c();
+    ClearRoomBgmStarted();
     for (i = 0; i <= 3; i++)
         InitPlayerState(i);
 }
@@ -164,7 +164,7 @@ void StageInit(void)
     q1 = &gUnk_020061E0;
     q2 = &gBoardedWarpStarSlot;
     q3 = &gCannonFuseState;
-    q4 = &gUnk_020060CC;
+    q4 = &gStageClearDanceBgmPlayed;
     b = gPaletteAnimRefCounts;
     zero = 0;
     p = b + 2;
@@ -182,7 +182,7 @@ void StageInit(void)
     gPauseDisabled = 0;
     gScreenAttackActive = 0;
     gRoomExitKind = 0;
-    gUnk_02008010 = -1;
+    gDanceId = -1;
     gUnk_020055C4 = 0;
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;

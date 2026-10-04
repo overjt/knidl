@@ -1233,7 +1233,7 @@ void ActorIntroPoseUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08066798(void)
+void ArenaDropMaximTomato(void)
 {
     if (gGameState == GAME_STATE_ARENA)
         sub_08064e90(2, TASK_MAXIM_TOMATO, 0, 128, 0);
@@ -1263,7 +1263,7 @@ void sub_080667c0(u8 a, u16 b)
 void sub_0806684c(void)
 {
     EndMidBossFight();
-    sub_08066798();
+    ArenaDropMaximTomato();
 }
 
 void ActorLoadPalette(void *src, u32 size, u8 force)

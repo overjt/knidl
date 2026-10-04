@@ -7,7 +7,7 @@
  * (ActorBindDefSlot/ActorLoadDefSlot), resetting the actor record (ActorInitFromDefSlot),
  * 16.16 position/velocity accessors, ArcTan2 aiming, rectangle and distance
  * queries, animation-script walking, and the spawn helpers
- * (sub_08064A78/CreateChildTask/CreateActor) every later module calls.
+ * (CreateChildActor/CreateChildTask/CreateActor) every later module calls.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -86,10 +86,10 @@ void ActorBindDefSlot(u32 i)
         a->def = gChildActorDefs[t->u76.subtype];
         break;
     case ACTOR_KIND_OBJECT:
-        a->def = gUnk_0873EE70[t->u76.subtype];
+        a->def = gObjectDefs[t->u76.subtype];
         break;
     default:
-        a->def = gUnk_0873EE88[t->u76.subtype];
+        a->def = gItemDefs[t->u76.subtype];
         break;
     }
 }
@@ -1249,7 +1249,7 @@ void TaskFaceLikeParent(void)
 }
 
 /* Spawn a class-4 task from a descriptor; returns its slot or -1. */
-s32 sub_08064a78(struct ActorSpawn *p)
+s32 CreateChildActor(struct ActorSpawn *p)
 {
     struct Task *t;
     s32 i;
@@ -1288,7 +1288,7 @@ s32 CreateActorFromDescHere(struct ActorSpawn *p, u8 keepPrio)
     p->y = t->pixelY;
     if (keepPrio == 0)
         p->tileWord = t->tileWord;
-    return sub_08064a78(p);
+    return CreateChildActor(p);
 }
 
 s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
@@ -1300,14 +1300,14 @@ s32 CreateActorFromDescAtOffsetFacing(struct ActorSpawn *p, u8 keepPrio)
     p->y += t->pixelY;
     if (keepPrio == 0)
         p->tileWord = t->tileWord;
-    return sub_08064a78(p);
+    return CreateChildActor(p);
 }
 
 s32 CreateActorFromDesc(struct ActorSpawn *p, u8 keepPrio)
 {
     if (keepPrio == 0)
         p->tileWord = gCurTask->tileWord;
-    return sub_08064a78(p);
+    return CreateChildActor(p);
 }
 
 /* Cycle the running task's frame between 4 and 7 every other tick. */
@@ -1550,10 +1550,10 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
         type = gBossTaskTypes[sub];
         break;
     case ACTOR_KIND_OBJECT:
-        type = gUnk_0873F288[sub];
+        type = gObjectTaskTypes[sub];
         break;
     case ACTOR_KIND_ITEM:
-        type = gUnk_0873F2A0[sub];
+        type = gItemTaskTypes[sub];
         break;
     default:
         while (1)

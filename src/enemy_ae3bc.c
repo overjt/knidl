@@ -83,7 +83,7 @@ void Task_NightmarePowerOrb(void)
     z = 0;
     *b42 = 11;
     ActorInitBossGfx(0);
-    sub_080b05e8();
+    NightmarePowerOrbIntro();
     u = *c;
     u->updateCallback = (u32)NightmarePowerOrbUpdate;
     sub_080ae4c4();
@@ -94,24 +94,24 @@ void Task_NightmarePowerOrb(void)
     v->nightmarePowerOrbLoopCount = z;
     do
     {
-        sub_080ae548();
-        sub_080ae548();
-        sub_080ae628();
-        sub_080ae628();
-        sub_080ae79c();
-        sub_080ae628();
-        sub_080ae628();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbShootFourStars();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbFigureEight();
         NightmarePowerOrbShoot();
-        sub_080ae548();
-        sub_080ae548();
-        sub_080ae79c();
-        sub_080ae628();
-        sub_080ae628();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbHover();
+        NightmarePowerOrbShootFourStars();
+        NightmarePowerOrbFigureEight();
+        NightmarePowerOrbFigureEight();
         NightmarePowerOrbDash();
         u2 = gCurTask;
         u2->nightmarePowerOrbLoopCount++;
     } while ((s16)u2->nightmarePowerOrbLoopCount <= 1);
-    sub_080aeef8();
+    NightmarePowerOrbFlyAway();
     sub_080aef30();
 }
 
@@ -131,7 +131,7 @@ void NightmarePowerOrbUpdate(void)
     {
         ActorCheckHitsWithExtraBox();
         ActorReactToHit();
-        sub_080af1d4();
+        NightmarePowerOrbShowHurtFrames();
         if (gUnk_02007D00[3] > 0)
             gUnk_02007D00[3]--;
     }
@@ -173,7 +173,7 @@ void sub_080ae4c4(void)
     t2->nightmarePowerOrbMaxHealth = w;
 }
 
-void sub_080ae548(void)
+void NightmarePowerOrbHover(void)
 {
     struct Task **c;
     s32 z;
@@ -237,7 +237,7 @@ void sub_080ae548(void)
     TaskStop();
 }
 
-void sub_080ae628(void)
+void NightmarePowerOrbFigureEight(void)
 {
     struct Task **c;
     s32 z;
@@ -362,7 +362,7 @@ void sub_080ae628(void)
     TaskStop();
 }
 
-void sub_080ae79c(void)
+void NightmarePowerOrbShootFourStars(void)
 {
     ActorSetState(2);
     NightmarePowerOrbStartAnim((u32)gUnk_0874AEAC);
@@ -785,7 +785,7 @@ s32 NightmarePowerOrbPickDashLane(void)
     return 0;
 }
 
-void sub_080aeef8(void)
+void NightmarePowerOrbFlyAway(void)
 {
     struct Task **c;
     struct Task *u;
@@ -911,7 +911,7 @@ top:
     }
 }
 
-s32 sub_080af100(void)
+s32 NightmarePowerOrbGetAnimDelay(void)
 {
     return ((s16)(u16)gCurTask->health >> 3) + 1;
 }
@@ -974,7 +974,7 @@ void sub_080af1c8(void)
     NightmarePowerOrbTickAnim();
 }
 
-void sub_080af1d4(void)
+void NightmarePowerOrbShowHurtFrames(void)
 {
     s32 *p;
     s32 v;
@@ -1038,7 +1038,7 @@ void NightmarePowerOrbDefeat(void)
     BossDefeatExplode();
     u = *c;
     CreateNextRoomWarpStar(u->pixelX, u->pixelY);
-    sub_080aeef8();
+    NightmarePowerOrbFlyAway();
     (*c)->updateCallback = (u32)sub_080aef50;
     sub_080b09ac();
 }
@@ -2019,7 +2019,7 @@ void sub_080b0570(void)
     t->pixelY = (y >> 16) + (u16)tt2->pixelY;
 }
 
-void sub_080b05e8(void)
+void NightmarePowerOrbIntro(void)
 {
     struct Task **c;
     s32 *p;
@@ -2070,7 +2070,7 @@ void sub_080b05e8(void)
     p[6] = z;
     p[7] = 3;
     TaskCreatePausedInScreenAttack(TASK_NIGHTMARE_POWER_ORB_INTRO_SCROLL, 32);
-    (*c)->updateCallback = (u32)sub_080b07d8;
+    (*c)->updateCallback = (u32)NightmarePowerOrbIntroUpdate;
     TaskYieldTrampoline(65);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B240);
     u2 = *c;
@@ -2161,7 +2161,7 @@ void sub_080b05e8(void)
     TaskYieldTrampoline(18);
 }
 
-void sub_080b07d8(void)
+void NightmarePowerOrbIntroUpdate(void)
 {
     struct Task **c;
     struct Task *u;
@@ -2190,7 +2190,7 @@ void Task_NightmarePowerOrbIntroScroll(void)
 
     c = &gCurTask;
     u = *c;
-    u->updateCallback = (u32)sub_080b08a0;
+    u->updateCallback = (u32)NightmarePowerOrbIntroScrollUpdate;
     u->nightmarePowerOrbIntroScrollSpeed = -4;
     TaskYieldTrampoline(143);
     u2 = *c;
@@ -2208,7 +2208,7 @@ void Task_NightmarePowerOrbIntroScroll(void)
     TaskExitTrampoline();
 }
 
-void sub_080b08a0(void)
+void NightmarePowerOrbIntroScrollUpdate(void)
 {
     s32 *p;
 

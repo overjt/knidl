@@ -2738,8 +2738,8 @@ u32 gNightmareWizardStates[12] ACTOR_TBL(087493f4) = {
     (u32)NightmareWizardOpenCloak,
     (u32)NightmareWizardOpenPalm,
     (u32)NightmareWizardPoint,
-    (u32)NightmareWizardState8,
-    (u32)NightmareWizardState9,
+    (u32)NightmareWizardTwist,
+    (u32)NightmareWizardSwoop,
     (u32)NightmareWizardState10,
     (u32)NightmareWizardHurt,
 };
@@ -2753,8 +2753,8 @@ u32 gNightmareWizardStateUpdates[12] ACTOR_TBL(087493f4) = {
     (u32)NightmareWizardOpenCloakUpdate,
     (u32)NightmareWizardOpenPalmUpdate,
     (u32)NightmareWizardPointUpdate,
-    (u32)NightmareWizardState8Update,
-    (u32)NightmareWizardState9Update,
+    (u32)NightmareWizardTwistUpdate,
+    (u32)NightmareWizardSwoopUpdate,
     (u32)NightmareWizardState10Update,
     (u32)NightmareWizardHurtUpdate,
 };
@@ -2811,10 +2811,10 @@ u32 gNightmarePowerOrbStateUpdates[4] ACTOR_TBL(0874ad34) = {
 /* ---- 0x0874AD74-0x0874B1A8: 7 script(s), section .actor_tbl_0874ad74 ---- */
 /* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 13 words up to its -2 (restart) */
 u32 gUnk_0874AD74[13] ACTOR_TBL(0874ad74) = {
-    -4, 4, (u32)sub_080af100,
-    -4, 5, (u32)sub_080af100,
-    -4, 6, (u32)sub_080af100,
-    -4, 7, (u32)sub_080af100,
+    -4, 4, (u32)NightmarePowerOrbGetAnimDelay,
+    -4, 5, (u32)NightmarePowerOrbGetAnimDelay,
+    -4, 6, (u32)NightmarePowerOrbGetAnimDelay,
+    -4, 7, (u32)NightmarePowerOrbGetAnimDelay,
     -2,
 };
 /* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 65 words up to its -2 (restart) */

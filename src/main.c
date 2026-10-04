@@ -30,7 +30,7 @@ void AgbMain(void)
     while (1) {
         switch (gGameState) {
         case GAME_STATE_RESET:
-            sub_0800b44c();
+            ResetGameSession();
             gGameState = GAME_STATE_BOOT_LOGO;
             break;
         case GAME_STATE_BOOT_LOGO:
@@ -59,9 +59,9 @@ void AgbMain(void)
                 gPrevGameState = GAME_STATE_HUB;
                 gGameState = GAME_STATE_CUTSCENE;
             } else {
-                sub_0800b5dc();
+                HubResetPlayers();
                 while (gGameState == GAME_STATE_HUB) {
-                    sub_0800b5dc();
+                    HubResetPlayers();
                     HubMain();
                 }
             }
@@ -71,7 +71,7 @@ void AgbMain(void)
                 gPrevGameState = GAME_STATE_STAGE_START;
                 gGameState = GAME_STATE_CUTSCENE;
             } else {
-                sub_0800b628();
+                ResetTasksAndPlayers();
                 gGameState = GAME_STATE_STAGE;
             }
             break;
@@ -88,7 +88,7 @@ void AgbMain(void)
             if (gMetaKnightmareMode == 0)
                 GoalGameMain();
             else
-                sub_0800b628();
+                ResetTasksAndPlayers();
             gGameState = GAME_STATE_HUB;
             break;
         case GAME_STATE_EXTRA_MODE_TITLE:

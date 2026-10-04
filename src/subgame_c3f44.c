@@ -106,7 +106,7 @@ void AirGrindEffect(void)
         gCurTask->unk6E = 50;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->frame = 3;
-        gCurTask->updateCallback = (u32)sub_080c43e8;
+        gCurTask->updateCallback = (u32)AirGrindPenaltyScatterEffectUpdate;
         break;
     case 6:
     case 7:
@@ -172,7 +172,7 @@ void sub_080c4364(void)
     }
 }
 
-void sub_080c43e8(void)
+void AirGrindPenaltyScatterEffectUpdate(void)
 {
     if (--gCurTask->unk6E < 0) {
         TaskFree(gCurTaskIdx);

@@ -621,7 +621,7 @@ void NightmareWizardOpenCloakUpdate(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void NightmareWizardState8(void)
+void NightmareWizardTwist(void)
 {
     s32 d;
 
@@ -636,7 +636,7 @@ void NightmareWizardState8(void)
         gCurTask->nightmareWizardLoopCount = 0;
         do
         {
-            sub_080ab570();
+            NightmareWizardSteerTowardNearestPlayer();
             TaskYieldTrampoline(8);
             gCurTask->nightmareWizardLoopCount++;
         } while ((s16)gCurTask->nightmareWizardLoopCount <= 9);
@@ -644,7 +644,7 @@ void NightmareWizardState8(void)
         gCurTask->nightmareWizardLoopCount = 0;
         do
         {
-            sub_080ab570();
+            NightmareWizardSteerTowardNearestPlayer();
             TaskYieldTrampoline(8);
             gCurTask->nightmareWizardLoopCount++;
         } while ((s16)gCurTask->nightmareWizardLoopCount <= 3);
@@ -652,7 +652,7 @@ void NightmareWizardState8(void)
         gCurTask->nightmareWizardLoopCount = 0;
         do
         {
-            sub_080ab570();
+            NightmareWizardSteerTowardNearestPlayer();
             TaskYieldTrampoline(8);
             gCurTask->nightmareWizardLoopCount++;
         } while ((s16)gCurTask->nightmareWizardLoopCount <= 9);
@@ -701,7 +701,7 @@ void NightmareWizardState8(void)
     TaskSleepForever();
 }
 
-void NightmareWizardState8Update(void)
+void NightmareWizardTwistUpdate(void)
 {
     s32 w;
 
@@ -717,7 +717,7 @@ void NightmareWizardState8Update(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void NightmareWizardState9(void)
+void NightmareWizardSwoop(void)
 {
     gCurTask->updateState = 9;
     TaskYieldTrampoline(24);
@@ -784,7 +784,7 @@ void NightmareWizardState9(void)
     TaskSleepForever();
 }
 
-void NightmareWizardState9Update(void)
+void NightmareWizardSwoopUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
     if (gCurTask->state != 9)
@@ -852,7 +852,7 @@ void NightmareWizardMoveToSpot(s32 a)
     gCurTask->posY = gCurTask->pixelY << 16;
 }
 
-void sub_080ab570(void)
+void NightmareWizardSteerTowardNearestPlayer(void)
 {
     s32 v;
 
@@ -916,7 +916,7 @@ void NightmareWizardAppear(s32 a)
     TaskYieldTrampoline(2);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
-    gCurTask->drawCallback = (u32)sub_080a9ed8;
+    gCurTask->drawCallback = (u32)NightmareWizardDrawStreamedFrameNearView;
     TaskSetFrame(50);
     TaskYieldTrampoline(5);
     gCurTask->frame++;
@@ -1007,8 +1007,8 @@ s32 NightmareWizardReactToDefeat(void)
 void NightmareWizardDefeat(void)
 {
     gPaletteAnimRefCounts[0] = 0;
-    gCurTask->drawCallback = (u32)sub_080a9ed8;
-    gCurTask->updateCallback = (u32)sub_080abcb4;
+    gCurTask->drawCallback = (u32)NightmareWizardDrawStreamedFrameNearView;
+    gCurTask->updateCallback = (u32)NightmareWizardDefeatUpdate;
     gCurTask->frameTable = gNightmareWizardFrames;
     gCurTask->layer = 11;
     sub_080ab5c0();
@@ -1124,7 +1124,7 @@ fin:
     TaskExitTrampoline();
 }
 
-void sub_080abcb4(void)
+void NightmareWizardDefeatUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
 }
@@ -1193,13 +1193,13 @@ void Task_NightmareWizardPalm(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 7;
     gCurTask->frameTable = gUnk_08754738;
-    gCurTask->updateCallback = (u32)sub_080abe7c;
+    gCurTask->updateCallback = (u32)NightmareWizardPalmFollowBody;
     TaskFaceLikeParent();
     TaskSetFrame(9);
     TaskSleepForever();
 }
 
-void sub_080abe7c(void)
+void NightmareWizardPalmFollowBody(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -1229,7 +1229,7 @@ void Task_NightmareWizardPalmTornado(void)
     s32 w;
 
     gCurTask->moveCallback = 0;
-    gCurTask->drawCallback = (u32)sub_080aa16c;
+    gCurTask->drawCallback = (u32)NightmareWizardTornadoDrawStreamedFrameNearView;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_08754708;
     gCurTask->updateCallback = (u32)NightmareWizardPalmTornadoUpdate;
@@ -1283,7 +1283,7 @@ void Task_NightmareWizardPointingHand(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 7;
     gCurTask->frameTable = gUnk_08754738;
-    gCurTask->updateCallback = (u32)sub_080ac08c;
+    gCurTask->updateCallback = (u32)NightmareWizardPointingHandFollowBody;
     TaskFaceLikeParent();
     TaskSetFrame(10);
     TaskYieldTrampoline(85);
@@ -1294,7 +1294,7 @@ void Task_NightmareWizardPointingHand(void)
     TaskSleepForever();
 }
 
-void sub_080ac08c(void)
+void NightmareWizardPointingHandFollowBody(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -1330,7 +1330,7 @@ void Task_NightmareWizardPointTornado(void)
     s32 w2;
 
     gCurTask->moveCallback = 0;
-    gCurTask->drawCallback = (u32)sub_080aa16c;
+    gCurTask->drawCallback = (u32)NightmareWizardTornadoDrawStreamedFrameNearView;
     gCurTask->layer = 9;
     gCurTask->frameTable = gUnk_08754718;
     gCurTask->updateCallback = (u32)NightmareWizardPointTornadoUpdate;
@@ -1399,7 +1399,7 @@ void Task_NightmareWizardCloakHands(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 7;
     gCurTask->frameTable = gUnk_08754738;
-    gCurTask->updateCallback = (u32)sub_080ac30c;
+    gCurTask->updateCallback = (u32)NightmareWizardCloakPartFollowBody;
     TaskFaceLikeParent();
     TaskSetFrame(4);
     gCurTask->nightmareWizardCloakHandsBobY = 0;
@@ -1422,7 +1422,7 @@ void Task_NightmareWizardCloakHands(void)
     }
 }
 
-void sub_080ac30c(void)
+void NightmareWizardCloakPartFollowBody(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -1453,7 +1453,7 @@ void Task_NightmareWizardPendant(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_08754738;
-    gCurTask->updateCallback = (u32)sub_080ac30c;
+    gCurTask->updateCallback = (u32)NightmareWizardCloakPartFollowBody;
     gCurTask->unk28 = 0;
     TaskFaceLikeParent();
     for (;;)
@@ -1472,7 +1472,7 @@ void Task_NightmareWizardPendant(void)
 void Task_NightmareWizardCloakTornado(void)
 {
     gCurTask->moveCallback = 0;
-    gCurTask->drawCallback = (u32)sub_080aa16c;
+    gCurTask->drawCallback = (u32)NightmareWizardTornadoDrawStreamedFrameNearView;
     gCurTask->layer = 9;
     gCurTask->frameTable = gUnk_087546F8;
     gCurTask->updateCallback = (u32)NightmareWizardCloakTornadoUpdate;

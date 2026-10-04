@@ -149,7 +149,7 @@ void (*gRoomTaskVariants[7])(void) GAME_TBL(08732614) = {
 /* ---- 0x087328A0-0x087328BC: 1 table(s), 7 function pointer(s), section .game_tbl_087328a0 ---- */
 /* include/camera.h; CallTableEntry(i, 7, ...) in Task_MapEvent */
 void (*gMapEventVariants[7])(void) GAME_TBL(087328a0) = {
-    sub_0802d38c,
+    MapEventMidBossFight,
     sub_0802d6cc,
     sub_0802d4bc,
     sub_0802d5f8,

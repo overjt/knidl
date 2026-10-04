@@ -9,7 +9,7 @@
  *
  * The seven bodies of task type #4 (Task_MapEvent dispatches Task.state
  * into the anchor table gMapEventVariants), the level's scripted map events:
- * sub_0802d38c waits for camera mode 3 and M07's AreInactivePlayerCamerasParked, raises
+ * MapEventMidBossFight waits for camera mode 3 and M07's AreInactivePlayerCamerasParked, raises
  * gMidBossFightState until it drops, then by Task.unk18 spawns a type-#4
  * child (sub_0802d478/sub_0802d5b4) or updates two metatiles through
  * CreateBlockBreakEffect and M09's BreakBlockAt; sub_0802d4bc and sub_0802d5f8
@@ -55,7 +55,7 @@ s32 sub_0802d478(s32 x, s32 y);
 s32 sub_0802d5b4(s32 x, s32 y);
 void sub_0802da8c(void);
 
-void sub_0802d38c(void)
+void MapEventMidBossFight(void)
 {
     struct Task *t;
 

@@ -694,7 +694,7 @@ void sub_08071d60(void)
     TaskYieldTrampoline(8);
     gCurTask->velY = -0x28000;
     TaskYieldTrampoline(40);
-    sub_08025f00();
+    ExitOnWarpStar();
     gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
@@ -792,7 +792,7 @@ void WarpStarFlight5(void)
     }
     TaskYieldTrampoline(12);
     TaskStop();
-    sub_08025f00();
+    ExitOnWarpStar();
     gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
@@ -907,7 +907,7 @@ void WarpStarFlight6(void)
     WarpStarSetTrail(1, 6, 10, 0x300);
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
-    sub_08025f00();
+    ExitOnWarpStar();
     gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
@@ -1089,7 +1089,7 @@ void WarpStarFlight8(void)
     TaskYieldTrampoline(40);
     gCurTask->velY = 0x1000;
     TaskYieldTrampoline(40);
-    sub_08025f00();
+    ExitOnWarpStar();
     gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
@@ -1220,7 +1220,7 @@ void WarpStarFlight10(void)
     gCurTask->velX = 0x30000;
     TaskYieldTrampoline(4);
     TaskStop();
-    sub_08025f00();
+    ExitOnWarpStar();
     gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }
@@ -1342,7 +1342,7 @@ void WarpStarFlight11(void)
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(4);
-    sub_08025f00();
+    ExitOnWarpStar();
     gCurTask->warpStarExitRequested = 1;
     TaskSleepForever();
 }

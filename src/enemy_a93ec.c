@@ -522,13 +522,13 @@ void sub_080a9ea4(void)
         ActorDestroySlot(i);
 }
 
-void sub_080a9ed8(void)
+void NightmareWizardDrawStreamedFrameNearView(void)
 {
     if ((u8)ActorIsInNearView() != 0 && TaskIsOnScreen() != 0)
-        sub_080a9ef4();
+        NightmareWizardDrawStreamedFrame();
 }
 
-void sub_080a9ef4(void)
+void NightmareWizardDrawStreamedFrame(void)
 {
     struct Task *t;
     struct TaskGfx *g;
@@ -601,13 +601,13 @@ void sub_080a9ef4(void)
                  (s16)(gCurTask->pixelY - gViewRect[2]));
 }
 
-void sub_080aa16c(void)
+void NightmareWizardTornadoDrawStreamedFrameNearView(void)
 {
     if ((u8)ActorIsInNearView() != 0 && TaskIsOnScreen() != 0)
-        sub_080aa188();
+        NightmareWizardTornadoDrawStreamedFrame();
 }
 
-void sub_080aa188(void)
+void NightmareWizardTornadoDrawStreamedFrame(void)
 {
     struct Task *t;
     struct TaskGfx *g;
@@ -656,7 +656,7 @@ void Task_NightmareWizard(void)
     ActorInitBossGfx(0);
     sub_08066144();
     gCurTask->moveCallback = (u32)ActorMove;
-    gCurTask->drawCallback = (u32)sub_080a9ed8;
+    gCurTask->drawCallback = (u32)NightmareWizardDrawStreamedFrameNearView;
     gCurTask->layer = 11;
     gCurTask->frameTable = gNightmareWizardFrames;
     gCurTask->u8C.actor->sfxOverride = 0x23E;

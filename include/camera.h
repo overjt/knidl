@@ -229,7 +229,7 @@ s32 CreateMapEvent(s32 a);
 void Task_MapEvent(void);
 
 /* src/camtask_2d38c.c */
-void sub_0802d38c(void);
+void MapEventMidBossFight(void);
 s32 sub_0802d478(s32 x, s32 y);
 void sub_0802d4bc(void);
 s32 sub_0802d5b4(s32 x, s32 y);
