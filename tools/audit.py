@@ -577,6 +577,7 @@ REASONS = {
     "field-header": "tracked by #155: the field's role is not proven",
     "field-local": "local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`)",
     "loc": "none left: the code is C",
+    "field-player-scratch": "struct PlayerState's per-action scratch: each player action keeps its own value there, named per action by the aliases in include/task_vars.h (#155 run 7; the member keeps its unk name)",
     "field-task-family-local": "the per-family registers in the task engine's local copies of struct Task (src/early_58e4.c, early_5c4c.c): named per family by the aliases of include/task_vars.h, which the engine never uses",
     # ROM labels by their referrers (#155 run 7, mechanical)
     "rom-shared": "shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4)",
@@ -910,6 +911,8 @@ def placeholder_census():
                 continue
             if s == "Task" and fld in TASK_FAMILY_FIELDS:
                 add("struct field", "field-task-family")
+            elif s == "PlayerState" and fld in ("unk14", "unk16"):
+                add("struct field", "field-player-scratch")
             else:
                 add("struct field", reason("field", "%s.%s" % (s, fld), "field-header"))
             header_structs[s] = header_structs.get(s, 0) + 1
@@ -977,7 +980,7 @@ def census_markdown(rows, by_zone, extra):
     fixed = ["fn-game", "fn-engine", "fn-lib", "ram", "io", "rom-data", "rom-shared",
              "rom-via-unnamed", "rom-via-slot", "rom-local", "rom-several", "rom-unreferenced",
              "rom-asset", "rom-position", "rom-position-format", "field-task-family",
-             "field-task-family-local", "field-header", "field-local", "loc"]
+             "field-player-scratch", "field-task-family-local", "field-header", "field-local", "loc"]
     pattern = {"function": "`sub_*`", "RAM cell": "`gUnk_02*`, `gUnk_03*`",
                "I/O register": "`gUnk_04*`", "ROM label": "`gUnk_08*`",
                "struct field": "`unk*`", "label": "`loc_*`"}
