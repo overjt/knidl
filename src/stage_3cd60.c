@@ -230,8 +230,8 @@ void InitPlayerState(s32 a0)
     p->running = 0;
     p->bumpKind = 0;
     p->invulnerability = 0;
-    p->unk40 = 0;
-    p->unk42 = 0;
+    p->actionFlags = 0;
+    p->statusFlags = 0;
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
@@ -300,8 +300,8 @@ void InitPlayerStateKeepInvincibility(s32 a0)
     p->running = 0;
     p->bumpKind = 0;
     p->invulnerability = 0;
-    p->unk40 = 0;
-    p->unk42 = 0;
+    p->actionFlags = 0;
+    p->statusFlags = 0;
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
@@ -362,8 +362,8 @@ void InitPlayerStateKeepMouth(s32 a0)
     p->running = 0;
     p->bumpKind = 0;
     p->invulnerability = 0;
-    p->unk40 = 0;
-    p->unk42 = 0;
+    p->actionFlags = 0;
+    p->statusFlags = 0;
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
@@ -459,7 +459,7 @@ void PlayerMove(void)
     t->velY = gUnk_03001F2C;
     t->speedLimitY = gUnk_03002344;
     t->velY += gUnk_03002448;
-    if ((t->player->unk42 & 0x100) == 0) {
+    if ((t->player->statusFlags & 0x100) == 0) {
         t->posX += t->player->driftVelX;
         if ((t->onGround & 1) == 0) {
             t->posY += t->player->driftVelY;
@@ -493,7 +493,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
     g = (struct TaskGfx *)tbl[t->frame + a0];
     if ((g->oamTemplate & 1) != 0) {
         p = &g->palette;
-        if ((t->player->unk42 & 16) == 0 && g->palette != NULL)
+        if ((t->player->statusFlags & 16) == 0 && g->palette != NULL)
             RequestCopy(2, (u32)(g->palette + 1),
                          (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
         p++;
@@ -508,7 +508,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             } while (*s != 0xFFFF);
         }
         p++;
-        if ((gCurTask->player->unk42 & 16) == 0 && *p != NULL)
+        if ((gCurTask->player->statusFlags & 16) == 0 && *p != NULL)
             RequestCopy(2, (u32)(*p + 1),
                          (u32)gObjPaletteBank1 + ((prio >> 12) << 5), **p);
         q = p[1];
@@ -525,7 +525,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             }
         }
     } else {
-        if ((t->player->unk42 & 16) == 0 && *g->palette != 0)
+        if ((t->player->statusFlags & 16) == 0 && *g->palette != 0)
             RequestCopy(2, (u32)(g->palette + 1),
                          (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
         s = g->tiles;
@@ -626,7 +626,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
     if (ps->ability == ABILITY_NEEDLE || ps->ability == ABILITY_ICE) {
         if ((t->waterFlags & 1) == 0)
             return -1;
-        if ((ps->unk40 & 0x100) != 0)
+        if ((ps->actionFlags & 0x100) != 0)
             return -1;
         if (ps->mouthState == 2)
             return -1;
@@ -636,7 +636,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
             return 0;
         return -1;
     }
-    if ((ps->unk42 & 16) == 0) {
+    if ((ps->statusFlags & 16) == 0) {
         switch (ps->ability) {
         case ABILITY_HAMMER:
             return 320;
@@ -653,7 +653,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
                 goto second;
             if ((u->waterFlags & 1) == 0)
                 return -1;
-            if ((ps->unk40 & 0x100) != 0)
+            if ((ps->actionFlags & 0x100) != 0)
                 return -1;
             if (ps->mouthState == 2)
                 return -1;
@@ -688,7 +688,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
                 return 256;
             break;
         case ABILITY_FREEZE:
-            if ((gCurTask->player->unk42 & 16) != 0)
+            if ((gCurTask->player->statusFlags & 16) != 0)
                 return -1;
             return 704;
         case ABILITY_STONE:
@@ -699,7 +699,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
             return -1;
         case ABILITY_UFO:
             y = gCurTask;
-            if ((y->player->unk42 & 16) != 0)
+            if ((y->player->statusFlags & 16) != 0)
                 return -1;
             w = y->frame;
             if (w >= 3976 && w <= 4068)
@@ -708,12 +708,12 @@ s32 PlayerGetPlayerPaletteOffset(void)
         }
     } else {
         if (q->ability == ABILITY_UFO) {
-            if ((q->unk42 & 16) != 0)
+            if ((q->statusFlags & 16) != 0)
                 goto ret_m1;
             return 576;
         }
     }
-    if ((gCurTask->player->unk42 & 16) != 0)
+    if ((gCurTask->player->statusFlags & 16) != 0)
         goto ret_m1;
     return 0;
 ret_m1:
@@ -735,21 +735,21 @@ void sub_0803db74(void)
         case 0:
         case 1:
             u = gCurTask;
-            if ((u->player->unk42 & 16) == 0)
+            if ((u->player->statusFlags & 16) == 0)
                 RequestCopy(2, (u32)gUnk_08226254,
                              (u32)gObjPalette + (((u->tileWord >> 12) + 1) << 5),
                              32);
             break;
         case 2:
             u = gCurTask;
-            if ((u->player->unk42 & 16) == 0)
+            if ((u->player->statusFlags & 16) == 0)
                 BlendColors(gUnk_08226254, gUnk_08226254 - 16, 128, 16,
                              (u16 *)((u32)gObjPalette
                                      + (((u->tileWord >> 12) + 1) << 5)));
             break;
         case 3:
             u3 = gCurTask;
-            if ((u3->player->unk42 & 16) == 0)
+            if ((u3->player->statusFlags & 16) == 0)
                 BlendColors(gUnk_08226254, gUnk_08226254 - 16, 256, 16,
                              (u16 *)((u32)gObjPalette
                                      + (((u3->tileWord >> 12) + 1) << 5)));
@@ -761,20 +761,20 @@ void sub_0803db74(void)
         return;
     }
     if ((u16)(t->frame - 655) <= 218 || (u16)(t->frame - 4369) <= 23) {
-        if ((ps->unk42 & 16) == 0)
+        if ((ps->statusFlags & 16) == 0)
             RequestCopy(2, (u32)gUnk_081BC050,
                          (u32)gObjPalette + (((t->tileWord >> 12) + 1) << 5), 32);
         return;
     }
     if ((u16)(t->frame - 874) <= 8) {
-        if ((ps->unk42 & 16) == 0)
+        if ((ps->statusFlags & 16) == 0)
             RequestCopy(2, (u32)&gUnk_081BE6BC[ps->playerIndex * 128],
                          (u32)gObjPalette + ((t->tileWord >> 12) << 5), 32);
     }
     u = gCurTask;
     if ((u16)(u->frame - 3821) <= 128 || (u16)(u->frame - 4525) <= 5) {
         ps2 = u->player;
-        if ((ps2->unk42 & 16) == 0) {
+        if ((ps2->statusFlags & 16) == 0) {
             if (gCreditsDemoSet == 0)
                 RequestCopy(2, (u32)&gUnk_080DCA28[ps2->playerIndex * 32],
                              (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
@@ -856,7 +856,7 @@ void sub_0803ddc0(void)
     sub_08040a44((s16)x, (s16)y);
     QueueSprite(gCurTask->layer, pal, gCurTask->spriteFlags,
                  2048 | gCurTask->tileWord, (s16)x, (s16)y);
-    if ((gCurTask->player->unk40 & 128) == 0)
+    if ((gCurTask->player->actionFlags & 128) == 0)
         return;
     QueueSprite(gCurTask->layer, pal, gCurTask->spriteFlags,
                  2048 | gCurTask->tileWord, (s16)x - 48, (s16)y);
@@ -902,7 +902,7 @@ void PlayerUpdatePaletteFlash(void)
     switch ((s8)p->paletteFlashMode)
     {
     case 1:
-        p->unk42 &= ~0x10;
+        p->statusFlags &= ~0x10;
         {
             struct PlayerState *q = t->player;
 
@@ -921,10 +921,10 @@ void PlayerUpdatePaletteFlash(void)
             RequestCopy(2, (u32)&gUnk_080DC728[q->playerIndex * 8],
                 (u32)&gObjPalette[(t->tileWord >> 12) << 5], 32);
         }
-        gCurTask->player->unk42 |= 16;
+        gCurTask->player->statusFlags |= 16;
         break;
     case 2:
-        p->unk42 &= ~0x10;
+        p->statusFlags &= ~0x10;
         {
             struct PlayerState *q = t->player;
             u32 src;
@@ -951,7 +951,7 @@ void PlayerUpdatePaletteFlash(void)
             RequestCopy(2, src,
                 (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
         }
-        gCurTask->player->unk42 |= 16;
+        gCurTask->player->statusFlags |= 16;
         break;
     }
     PlayerUpdateInvincibleFlash();
@@ -1019,9 +1019,9 @@ void sub_0803e28c(s32 a0)
         struct Task *t = gCurTask;
         struct PlayerState *p;
 
-        if (t->player->unk42 & 0x200)
+        if (t->player->statusFlags & 0x200)
             mask |= 0x200;
-        t->player->unk42 &= ~mask;
+        t->player->statusFlags &= ~mask;
         p = t->player;
         /* task.h has no fields at PlayerState+0x1E / +0x20 yet */
         ((u16 *)p)[16] = 0;
@@ -1033,7 +1033,7 @@ void PlayerUpdateInvulnerability(void)
 {
     struct PlayerState *p = gCurTask->player;
 
-    if ((p->unk42 & 32) == 0)
+    if ((p->statusFlags & 32) == 0)
     {
         /* PlayerState+0x12 is invulnerabilityTimer, read here through an s16 view */
         if (((s16 *)p)[9] != -32768)
@@ -1042,8 +1042,8 @@ void PlayerUpdateInvulnerability(void)
                 ((s16 *)p)[9]--;
             else if (p->invulnerability != 0)
             {
-                if (p->invulnerability == 1 && (p->unk42 & 0x200))
-                    p->unk42 &= ~0x200;
+                if (p->invulnerability == 1 && (p->statusFlags & 0x200))
+                    p->statusFlags &= ~0x200;
                 gCurTask->player->invulnerability = 0;
             }
         }
@@ -1237,7 +1237,7 @@ void PlayerStartOffsetScript(s32 a0)
     gCurTask->player->offsetScript = a0;
     gCurTask->player->offsetScriptStep = 0;
     gCurTask->player->offsetScriptDelay = 1;
-    gCurTask->player->unk40 |= 1;
+    gCurTask->player->actionFlags |= 1;
 }
 
 void sub_0803e68c(s32 a0)
@@ -1271,7 +1271,7 @@ void sub_0803e68c(s32 a0)
         t->accelY = 9728;
         t->speedLimitY = 163840;
     }
-    p->unk42 = 64;
+    p->statusFlags = 64;
     v = 0;
     if (p->mouthState == 1)
     {
@@ -1336,7 +1336,7 @@ s32 PlayerUpdateInvincibility(void)
     struct PlayerState *p = gCurTask->player;
     s32 i;
 
-    if (p->unk42 & 32)
+    if (p->statusFlags & 32)
         return;
     if ((s16)p->invincibleTimer == 0)
     {
@@ -1401,10 +1401,10 @@ void PlayerUpdateInvincibleFlash(void)
     {
         if (p->ability == ABILITY_SPARK)
             return;
-        if (p->ability == ABILITY_CRASH && (p->unk42 & 16))
+        if (p->ability == ABILITY_CRASH && (p->statusFlags & 16))
             return;
     }
-    gCurTask->player->unk42 &= ~0x10;
+    gCurTask->player->statusFlags &= ~0x10;
     {
         struct PlayerState *q = gCurTask->player;
 
@@ -1433,7 +1433,7 @@ void PlayerUpdateInvincibleFlash(void)
                 return;
             RequestCopy(2, (u32)&gUnk_080DC728[q->playerIndex * 8],
                 (u32)&gObjPalette[(t->tileWord >> 12) << 5], 24);
-            gCurTask->player->unk42 |= 16;
+            gCurTask->player->statusFlags |= 16;
             return;
         }
         if (needSmall != 0 && (gFrameCount & 15) == 0)
@@ -1445,7 +1445,7 @@ void PlayerUpdateInvincibleFlash(void)
         if ((s16)r->invincibleFlashTimer != 0)
         {
             r->invincibleFlashTimer--;
-            gCurTask->player->unk42 |= 16;
+            gCurTask->player->statusFlags |= 16;
             return;
         }
         switch ((s16)r->invincibleFlashStep)
@@ -1456,13 +1456,13 @@ void PlayerUpdateInvincibleFlash(void)
             {
                 RequestCopy(2, (u32)gUnk_080DCC48,
                     (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
-                gCurTask->player->unk42 |= 16;
+                gCurTask->player->statusFlags |= 16;
             }
             if (needBig)
             {
                 RequestCopy(2, (u32)gUnk_080DCC48,
                     (u32)&gObjPalette[((gCurTask->tileWord >> 12) + 1) << 5], 32);
-                gCurTask->player->unk42 |= 16;
+                gCurTask->player->statusFlags |= 16;
             }
             gCurTask->player->invincibleFlashTimer = 1;
             gCurTask->player->invincibleFlashStep++;
@@ -1473,7 +1473,7 @@ void PlayerUpdateInvincibleFlash(void)
             {
                 RequestCopy(2, (u32)gUnk_080DCC28,
                     (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
-                gCurTask->player->unk42 |= 16;
+                gCurTask->player->statusFlags |= 16;
             }
             gCurTask->player->invincibleFlashTimer = 2;
             gCurTask->player->invincibleFlashStep++;
@@ -2416,7 +2416,7 @@ s32 PlayerCheckLanding(void)
 s32 PlayerCheckDie(void)
 {
     if (gCurTask->health != 0
-     && ((gCurTask->player->unk42 & 1024)
+     && ((gCurTask->player->statusFlags & 1024)
       || (IsTaskBelowPlayerBounds(gCurTask) == 0
        && (gUnk_02005574[0] == 0 || (gCurTask->onGround & 1) == 0
            || (gCurTask->player->boundsClamp & 4) == 0)
@@ -2435,15 +2435,15 @@ void sub_0803fb54(void)
 
     if (gCurTask->waterFlags & 1)
     {
-        if (gCurTask->player->unk40 & 16)
+        if (gCurTask->player->actionFlags & 16)
         {
-            gCurTask->player->unk40 &= ~16;
+            gCurTask->player->actionFlags &= ~16;
             gCurTask->player->running = 0;
             gCurTask->player->runTapTimer = 0;
         }
         return;
     }
-    v = gCurTask->player->unk40 & 16;
+    v = gCurTask->player->actionFlags & 16;
     if (v == 0)
     {
         if (gCurTask->player->running != 0)
@@ -2456,7 +2456,7 @@ void sub_0803fb54(void)
         else if (gCurTask->player->invincible != 0)
         {
             gCurTask->player->running = 1;
-            gCurTask->player->unk40 |= 16;
+            gCurTask->player->actionFlags |= 16;
             gCurTask->player->runTapTimer = 10;
         }
         else if ((s8)gCurTask->player->runTapTimer != 0
@@ -2468,7 +2468,7 @@ void sub_0803fb54(void)
                  && gCurTask->facing == -1))
             {
                 gCurTask->player->running = 1;
-                gCurTask->player->unk40 |= 16;
+                gCurTask->player->actionFlags |= 16;
                 gCurTask->player->runTapTimer = 10;
             }
         }
@@ -2477,7 +2477,7 @@ void sub_0803fb54(void)
     }
     else if (gCurTask->player->mode == 2)
     {
-        gCurTask->player->unk40 &= ~16;
+        gCurTask->player->actionFlags &= ~16;
         gCurTask->player->runTapTimer = 0;
     }
     else if ((s8)gCurTask->player->runTapTimer != 0)
@@ -2485,7 +2485,7 @@ void sub_0803fb54(void)
     else
     {
         gCurTask->player->running = 0;
-        gCurTask->player->unk40 &= ~16;
+        gCurTask->player->actionFlags &= ~16;
         gCurTask->player->runTapTimer = 0;
     }
 }
@@ -2682,7 +2682,7 @@ s32 PlayerCheckBButton(void)
             gCurTask->player->requestedAction = PLAYER_ACTION_SPIT_IN_WATER;
         goto out;
     }
-    if (gCurTask->player->ability == ABILITY_HI_JUMP && (gCurTask->player->unk42 & 4) == 0
+    if (gCurTask->player->ability == ABILITY_HI_JUMP && (gCurTask->player->statusFlags & 4) == 0
      && (gCurTask->waterFlags & 1) == 0)
     {
         if (gCurTask->player->hiJumpsLeft == 0)
@@ -2691,7 +2691,7 @@ s32 PlayerCheckBButton(void)
         if (gCurTask->player->mode == 5)
             gCurTask->player->mode = 4;
     }
-    if ((gCurTask->player->unk42 & 4) == 0 || v == 13)
+    if ((gCurTask->player->statusFlags & 4) == 0 || v == 13)
         gCurTask->player->requestedAction = v;
 out:
     return gCurTask->player->requestedAction;
@@ -2708,12 +2708,12 @@ s32 PlayerCheckEnterDoor(void)
 {
     if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && gRoomExitKind == 0
      && gCurTask->player->atDoor != 0
-     && (gCurTask->player->unk42 & 1) == 0
+     && (gCurTask->player->statusFlags & 1) == 0
      && FindDoorAt(gCurTask->pixelX, gCurTask->pixelY) != 0)
     {
         gRoomExitKind = 1;
         gPauseDisabled = 1;
-        gCurTask->player->unk42 |= 2;
+        gCurTask->player->statusFlags |= 2;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = PLAYER_ACTION_ENTER_DOOR;
     }
@@ -2724,7 +2724,7 @@ s32 PlayerCheckDropAbility(void)
 {
     if (gMetaKnightmareMode == 1)
         return 0;
-    if ((gCurTask->player->unk42 & 2) == 0
+    if ((gCurTask->player->statusFlags & 2) == 0
      && gCurTask->player->unk37 == 0
      && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 4)
      && gCurTask->player->ability != ABILITY_NORMAL)
@@ -2889,7 +2889,7 @@ void LatchPlayerKeys(void)
         gLatchedHeldKeys[player] = gPlayerHeldKeys[player];
         gLatchedPressedKeys[player] = gPlayerPressedKeys[player];
 
-        if (gPlayerStates[player].unk42 & 64)
+        if (gPlayerStates[player].statusFlags & 64)
         {
             gLatchedPressedKeys[player] = 0;
             gLatchedHeldKeys[player] = 0;
@@ -2913,13 +2913,13 @@ void sub_08040858(s32 a0)
 {
     struct PlayerState *p = gPlayerStates + a0;
 
-    p->unk40 |= 32;
-    p->unk42 |= 2;
+    p->actionFlags |= 32;
+    p->statusFlags |= 2;
 }
 
 void PlayerGiveInvincibleCandy(s32 a0)
 {
-    (gPlayerStates + a0)->unk40 |= 64;
+    (gPlayerStates + a0)->actionFlags |= 64;
 }
 
 void PlayerStartItemShare(s32 a0, u8 a1)

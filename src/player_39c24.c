@@ -179,7 +179,7 @@ void PlayerActionExitDoor(void)
         break;
     case 1:
         for (i = 0; i < gPlayerCount; i++)
-            gPlayerStates[i].unk42 |= 64;
+            gPlayerStates[i].statusFlags |= 64;
         if (gCurTask->playerEntryOrder != 0)
         {
             switch (gCurTask->playerEntryOrder)
@@ -245,7 +245,7 @@ void PlayerActionExitDoor(void)
                 }
             }
             PlayerStopAxes(1);
-            gCurTask->player->unk42 &= 0xFFEF;
+            gCurTask->player->statusFlags &= 0xFFEF;
             TaskSetSkipMask(15, gCurTaskIdx);
             break;
         }
@@ -375,7 +375,7 @@ void PlayerActionExitDoor(void)
                 TaskYieldTrampoline(24);
             }
         }
-        gCurTask->player->unk42 &= 0xFFEF;
+        gCurTask->player->statusFlags &= 0xFFEF;
         TaskSetSkipMask(14, gCurTaskIdx);
         CreateStageUnlockPan();
         {
@@ -517,7 +517,7 @@ void PlayerActionExitDoor(void)
         CameraResumeFollowFocus();
         for (i = 0; i < gPlayerCount; i++)
         {
-            gPlayerStates[i].unk42 &= 0xFFBF;
+            gPlayerStates[i].statusFlags &= 0xFFBF;
             if (gPlayerHealth[i] != 0)
                 CreateLocalPlayerArrow(i);
             if (i != gCurTaskIdx)

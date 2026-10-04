@@ -25,7 +25,7 @@
  * the functions after a body are the callbacks only it installs.  Variant 0
  * (PlayerEffectInhaleAir, spawned by M10) rides on its spawner and cycles frames
  * 0-11, hidden every other frame; PlayerEffectInhaleAirUpdate copies the spawner's
- * Task.skipMask with bit 2 cleared and kills it once PlayerState.unk40 bit 2
+ * Task.skipMask with bit 2 cleared and kills it once PlayerState.actionFlags bit 2
  * clears, and its draw hook PlayerEffectInhaleAirDraw draws through M11's PlayerDrawWorldLoadTilesAndPalette in
  * player mode 10 and kills it otherwise.  Variants 1 and 2 (M10) are short
  * puffs launched from 12 pixels behind the point they face, the sub-state
@@ -90,7 +90,7 @@ void PlayerEffectInhaleAir(void)
 void PlayerEffectInhaleAirUpdate(void)
 {
     gCurTask->skipMask = (gCurTask->u8C.parentTask)->skipMask & 0xFB;
-    if (!(gCurTask->player->unk40 & 4))
+    if (!(gCurTask->player->actionFlags & 4))
         TaskFree(gCurTaskIdx);
 }
 

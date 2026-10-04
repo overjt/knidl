@@ -1081,7 +1081,7 @@ void MetaKnightState23Update(void)
     u16 v;
 
     ClampTaskToRoom(gCurTask);
-    if (gPlayerStates[gUnk_02007D00[0]].unk40 & 4) {
+    if (gPlayerStates[gUnk_02007D00[0]].actionFlags & 4) {
         if (gCurTask->onGround != 0) {
             if (gUnk_02007D00[6] == 0) {
                 TaskStopY();

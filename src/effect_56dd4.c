@@ -12,7 +12,7 @@
  * with random frames (RandomRange); its callback PlayerEffectFireBreathFlamesUpdate sets
  * Task.unk28 once the player leaves mode 13 or its facing no longer matches
  * the spawner's, and kills it when the ability is no longer 1 or when
- * PlayerState.unk40 bit 8 is clear while the spawner's Task.waterFlags bit 0 is
+ * PlayerState.actionFlags bit 8 is clear while the spawner's Task.waterFlags bit 0 is
  * set.  Variant 30 (PlayerEffectSparkAura, M11/M13) rides on its spawner with the
  * draw hook TaskDrawWorldLoadTiles (sub-state 0) or TaskDrawWorldTilesLoaded and re-rolls its
  * position every two frames from the {base, scale, amount} rows
@@ -125,7 +125,7 @@ void PlayerEffectFireBreathFlamesUpdate(void)
     {
         struct Task *t = gCurTask;
 
-        if (!(t->player->unk40 & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
+        if (!(t->player->actionFlags & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
             TaskFree(gCurTaskIdx);
     }
     if (gCurTask->player->ability != ABILITY_FIRE)

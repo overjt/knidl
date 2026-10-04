@@ -74,7 +74,7 @@ void PlayerActionHiJump(void)
     case 2:
         {
             struct Task *t = gCurTask;
-            t->player->unk42 &= 0xFFEF;
+            t->player->statusFlags &= 0xFFEF;
             SetPlayerInvulnerability(255, 0, t->player->playerIndex);
         }
         TaskYieldTrampoline(13);
@@ -83,7 +83,7 @@ void PlayerActionHiJump(void)
         gCurTask->variant = 3;
         /* fallthrough */
     case 3:
-        gCurTask->player->unk42 &= 0xFFEF;
+        gCurTask->player->statusFlags &= 0xFFEF;
         PlayerSetMotionYPreset(2);
         gCurTask->player->prevMode = gCurTask->player->mode;
         gCurTask->player->mode = 5;
@@ -103,7 +103,7 @@ void PlayerActionHiJump(void)
         {
             struct Task *t = gCurTask;
             struct PlayerState *p;
-            t->player->unk42 &= 0xFFEF;
+            t->player->statusFlags &= 0xFFEF;
             p = t->player;
             if (p->mode != 5) {
                 p->prevMode = p->mode;
@@ -133,10 +133,10 @@ void PlayerActionHiJumpUpdate(void)
 
     switch (t->variant) {
     case 1:
-        t->player->unk42 &= 0xFFEF;
+        t->player->statusFlags &= 0xFFEF;
         if ((gFrameCount & 7) <= 3) {
             RequestCopy(2, gUnk_081F59F0, gObjPalette + (t->tileWord >> 12) * 32, 64);
-            gCurTask->player->unk42 |= 16;
+            gCurTask->player->statusFlags |= 16;
         }
         /* fallthrough */
     case 2:
@@ -222,6 +222,6 @@ void PlayerActionHiJumpUpdate(void)
     {
         struct PlayerState *p = gCurTask->player;
         if (p->requestedAction != PLAYER_ACTION_NONE)
-            p->unk42 &= 0xFFEF;
+            p->statusFlags &= 0xFFEF;
     }
 }

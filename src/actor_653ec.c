@@ -1907,7 +1907,7 @@ void HeldPlayerInit(void)
     u->spriteFlags &= 0x7FFF;
     u->layer = 7;
     p = gCurTask->player;
-    p->unk42 &= 0xFFEF;
+    p->statusFlags &= 0xFFEF;
     r = gCurTask->player;
     if (r->mouthState == 2)
         r->mouthState = 0;

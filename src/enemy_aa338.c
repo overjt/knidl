@@ -1646,7 +1646,7 @@ void MetaKnightSwordPickUpUpdate(void)
                         break;
                     }
                 }
-                else if (!(gPlayerStates[k].unk42 & 2) && gPlayerStates[k].mode != 13
+                else if (!(gPlayerStates[k].statusFlags & 2) && gPlayerStates[k].mode != 13
                          && gPlayerStates[k].mode != 10)
                 {
                     sub_08040858(k);

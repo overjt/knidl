@@ -41,7 +41,7 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);        /* u8 in early_5d9c.c; u32 as in pl
    health gPlayerHealth[] through HealPlayerStep while it is below the maximum
    gMaxHealth (1: until full, 2: at most 1 or 2 steps by gExtraMode)
    or copies its own unk17/unk18 to the target (3); then it restores both
-   tasks' Task.layer/unk43 (saved on the stack), clears PlayerState.unk42
+   tasks' Task.layer/unk43 (saved on the stack), clears PlayerState.statusFlags
    bit 8 on both players and sets the target's bit in PlayerState.sharedMask. */
 void PlayerActionShareItem(void)
 {
@@ -65,8 +65,8 @@ void PlayerActionShareItem(void)
         gCurTask->layer = 5;
         TaskSetSkipMask(14, gCurTaskIdx);
         t = gCurTask;
-        t->player->unk42 |= 0x100;
-        t->player->unk42 &= 0xFFEF;
+        t->player->statusFlags |= 0x100;
+        t->player->statusFlags &= 0xFFEF;
         if (!(t->waterFlags & 1))
         {
             t->playerBaseFrame = gUnk_0873DA62[t->player->ability][1];
@@ -131,8 +131,8 @@ void PlayerActionShareItem(void)
     a42 = gCurTask->layer;
     PlayerStopAxes(3);
     t = gCurTask;
-    t->player->unk42 |= 0x100;
-    t->player->unk42 &= 0xFFEF;
+    t->player->statusFlags |= 0x100;
+    t->player->statusFlags &= 0xFFEF;
     if (u->pixelX - t->pixelX > 0)
         t->facing = 1;
     else
@@ -399,10 +399,10 @@ void PlayerActionShareItem(void)
     }
     gCurTask->facing = a43;
     gCurTask->layer = a42;
-    gCurTask->player->unk42 &= 0xFEFF;
+    gCurTask->player->statusFlags &= 0xFEFF;
     u->facing = b43;
     u->layer = b42;
-    gPlayerStates[gCurTask->playerShareReceiver].unk42 &= 0xFEFF;
+    gPlayerStates[gCurTask->playerShareReceiver].statusFlags &= 0xFEFF;
     u->taskClass--;
     FreezeOtherTasks(0);
     TaskSetSkipMask(0, gCurTaskIdx);
@@ -545,7 +545,7 @@ void sub_0803cbd8(void)
     else
     {
         gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
-        gCurTask->player->unk40 &= 0xFFFE;
+        gCurTask->player->actionFlags &= 0xFFFE;
         TaskSetSkipMask(0, gCurTaskIdx);
     }
 }

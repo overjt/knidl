@@ -357,7 +357,7 @@ void InitDoors(void)
     d = gCurRoomDef->doors;
     for (i = 0; i < gCurRoomDef->doorCount; i++)
     {
-        gDoorStates[i].unk1 = 1;
+        gDoorStates[i].isOpen = 1;
         /* The whole byte at +4 (unk4_0/unk4_4) cleared with one strb
            through the struct: two bit-field stores leave the -16 mask and a
            zero in the loop and change what loop.c hoists (0x22B8 then goes
@@ -367,21 +367,21 @@ void InitDoors(void)
         b = GetCollisionTile(d->unk2 + 1, d->unk4);
         if ((a == 16 && b == 55) || (a == 144 && b == 183))
         {
-            gDoorStates[i].unk0 = 1;
-            gDoorStates[i].unk4_0 = 8;
-            gDoorStates[i].unk4_4 = 3;
+            gDoorStates[i].overlayKind = 1;
+            gDoorStates[i].overlayFrame = 8;
+            gDoorStates[i].overlayTimer = 3;
         }
         else if (d->unk0 == 0x22B8)
         {
-            gDoorStates[i].unk0 = 2;
-            gDoorStates[i].unk4_0 = 2;
-            gDoorStates[i].unk4_4 = 3;
+            gDoorStates[i].overlayKind = 2;
+            gDoorStates[i].overlayFrame = 2;
+            gDoorStates[i].overlayTimer = 3;
         }
         else
         {
-            gDoorStates[i].unk0 = 0;
-            gDoorStates[i].unk4_0 = 0;
-            gDoorStates[i].unk4_4 = 3;
+            gDoorStates[i].overlayKind = 0;
+            gDoorStates[i].overlayFrame = 0;
+            gDoorStates[i].overlayTimer = 3;
         }
         d++;
     }

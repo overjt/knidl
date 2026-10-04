@@ -530,7 +530,7 @@ void PlayerActionInhale(void)
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_INHALE_AIR, 0);
-        gCurTask->player->unk40 |= 4;
+        gCurTask->player->actionFlags |= 4;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->variant = 1;
@@ -555,7 +555,7 @@ void PlayerActionInhale(void)
     hit:
         gCurTask->variant = 2;
     case 2:
-        gCurTask->player->unk40 &= 0xFFFB;
+        gCurTask->player->actionFlags &= 0xFFFB;
         PlayerStopSfx();
         {
             struct PlayerState *q = gCurTask->player;

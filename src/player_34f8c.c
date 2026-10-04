@@ -268,7 +268,7 @@ void PlayerActionHighFall(void)
     if (gCurTask->player->prevMode != 8)
     {
         gCurTask->variant = 0;
-        gCurTask->player->unk40 &= 0xFFFD;
+        gCurTask->player->actionFlags &= 0xFFFD;
     }
     gCurTask->player->hitBoxSet = 0;
     gCurTask->playerHighFallPhase = 0;
@@ -314,7 +314,7 @@ void PlayerActionHighFall(void)
             }
         }
     case 2:
-        gCurTask->player->unk42 |= 0x100;
+        gCurTask->player->statusFlags |= 0x100;
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         gCurTask->player->bumpKind = 0;
         TaskSetFrame(anim[2]);
@@ -350,7 +350,7 @@ void PlayerActionHighFallUpdate(void)
         PlayerCheckDropAbility();
     if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
-        gCurTask->player->unk42 &= 0xFEFF;
+        gCurTask->player->statusFlags &= 0xFEFF;
     }
     else
     {
@@ -369,8 +369,8 @@ void PlayerActionHighFallUpdate(void)
             else
             {
                 if (gCurTask->player->blocksBroken != 0)
-                    gCurTask->player->unk40 |= 2;
-                if (gCurTask->player->unk40 & 2)
+                    gCurTask->player->actionFlags |= 2;
+                if (gCurTask->player->actionFlags & 2)
                 {
                     gCurTask->variant = 1;
                     TaskSetEntry(PlayerActionHighFall, gCurTaskIdx);
@@ -394,14 +394,14 @@ void PlayerActionHighFallUpdate(void)
                 PlayerCheckBump();
                 PlayerLand(0);
                 PlayerRequestLocomotion();
-                gCurTask->player->unk42 &= 0xFEFF;
+                gCurTask->player->statusFlags &= 0xFEFF;
                 break;
             }
         case 2:
             if (gCurTask->playerHighFallPhase != 0)
             {
                 gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
-                gCurTask->player->unk42 &= 0xFEFF;
+                gCurTask->player->statusFlags &= 0xFEFF;
             }
             break;
         }

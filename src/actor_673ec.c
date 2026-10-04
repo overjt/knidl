@@ -63,7 +63,7 @@ void HeldPlayerUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 11, gHeldPlayerStateUpdates);
     PlayerUpdateInvulnerability();
-    if ((gCurTask->player->unk42 & 32) == 0)
+    if ((gCurTask->player->statusFlags & 32) == 0)
         PlayerUpdatePaletteFlash();
     if (gLocalPlayer == gCurTask->player->playerIndex)
         SetCameraFocus(gCurTask->pixelX, gCurTask->pixelY);
@@ -1128,17 +1128,17 @@ void PlayerSuspendControl(s32 i, u8 flag)
     t->u76.unk76 = 0;
     t->variant = 0;
     t->hitKind = HIT_KIND_NONE;
-    if (p->unk40 & 1)
+    if (p->actionFlags & 1)
     {
         gCurTask->player->pixelOffsetY = 0;
         p->pixelOffsetX = 0;
         p->blockBreakCooldown = 0;
         p->offsetScriptDelay = 0;
         p->offsetScriptStep = 0;
-        p->unk40 &= 0xFFFE;
+        p->actionFlags &= 0xFFFE;
         t->skipMask = 0;
     }
-    p->unk42 &= 0xFFEF;
+    p->statusFlags &= 0xFFEF;
     t->accelY = 0;
     t->accelX = 0;
     t->velY = 0;

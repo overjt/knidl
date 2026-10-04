@@ -86,7 +86,7 @@ struct RoomDef
     /*0x4C*/ u8 filler4C[4];
     /*0x50*/ u16 entryX;
     /*0x52*/ u16 entryY;
-    /*0x54*/ u8 unk54;
+    /*0x54*/ u8 setupKind;
     /*0x55*/ u8 bg3FullShake;
     /*0x56*/ u8 unk56;
     /*0x57*/ u8 unk57;
@@ -94,11 +94,11 @@ struct RoomDef
 
 struct DoorState
 {
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
+    /*0x00*/ u8 overlayKind;
+    /*0x01*/ u8 isOpen;
     /*0x02*/ u8 filler02[2];
-    /*0x04*/ u8 unk4_0:4;
-    /*0x04*/ u8 unk4_4:4;
+    /*0x04*/ u8 overlayFrame:4;
+    /*0x04*/ u8 overlayTimer:4;
     /*0x05*/ u8 filler05[3];
 };
 

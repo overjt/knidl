@@ -37,7 +37,7 @@ void sub_0809fbd0(void)
     for (i = 0; i <= 3; i++)
     {
         if (((gActivePlayerMask >> i) & 1) != 0)
-            gPlayerStates[i].unk42 |= 64;
+            gPlayerStates[i].statusFlags |= 64;
     }
 }
 
@@ -48,7 +48,7 @@ void sub_0809fc08(void)
     for (i = 0; i <= 3; i++)
     {
         if (((gActivePlayerMask >> i) & 1) != 0)
-            gPlayerStates[i].unk42 &= 0xFFBF;
+            gPlayerStates[i].statusFlags &= 0xFFBF;
     }
 }
 

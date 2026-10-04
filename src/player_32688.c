@@ -34,7 +34,7 @@
  * per-frame handler and the damage and star-block reactions;
  * sub_0803332c (Task.lateUpdateCallback) runs the 10-frame timer PlayerState.blockBreakCooldown;
  * sub_08033414 (called by M11's sub_0803ddc0) turns the frame's hit
- * event Task.hitKind and the status bits PlayerState.unk40 into an action
+ * event Task.hitKind and the status bits PlayerState.actionFlags into an action
  * request, re-binds the task to PlayerStartRequestedAction when one is pending and
  * adds the 8.8 offsets PlayerState.pixelOffsetX/unk26 to the 16.16 position. */
 
@@ -271,7 +271,7 @@ void PlayerUpdate(void)
     s32 r;
     struct PlayerState *p;
 
-    if ((gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
+    if ((gCurTask->player->actionFlags & 1) && (gCurTask->skipMask & 1))
         goto post;
     if (gCurTask->player->ability == ABILITY_PARASOL && gCurTask->player->mode == 5)
     {
@@ -298,7 +298,7 @@ void PlayerUpdate(void)
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
             gCurTask->player->clampedTopY = gTerrainClampedTopY;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
-        if (gTerrainResult.damage != 0 && !(gCurTask->player->unk42 & 0x200)
+        if (gTerrainResult.damage != 0 && !(gCurTask->player->statusFlags & 0x200)
          && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)
         {
             r = AddPlayerHealth(-8, gCurTask->player->playerIndex);
@@ -349,10 +349,10 @@ void PlayerUpdate(void)
 post:
     gCurTask->player->hitsThisFrame = 0;
     sub_0803fb54();
-    if (!(gCurTask->player->unk42 & 32))
+    if (!(gCurTask->player->statusFlags & 32))
         PlayerUpdatePaletteFlash();
     if ((gMetaKnightmareMode == 1 || gUnk_0300244C != 0)
-     && (gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
+     && (gCurTask->player->actionFlags & 1) && (gCurTask->skipMask & 1))
         goto check;
     if (gCurTask->velY >= 0)
     {
@@ -443,11 +443,11 @@ void sub_0803332c(void)
             }
         }
         p = gCurTask->player;
-        if (p->unk40 & 1)
+        if (p->actionFlags & 1)
         {
             sub_0803cbd8();
             p = gCurTask->player;
-            if (!(p->unk40 & 1) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
+            if (!(p->actionFlags & 1) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
             {
                 TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
                 gCurTask->player->requestedAction = PLAYER_ACTION_RECOIL;
@@ -472,7 +472,7 @@ void sub_08033414(void)
     switch (gCurTask->hitKind)
     {
     default:
-        if (gMetaKnightmareMode == 0 && (gCurTask->player->unk40 & 32))
+        if (gMetaKnightmareMode == 0 && (gCurTask->player->actionFlags & 32))
         {
             if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != ABILITY_NORMAL)
             {
@@ -489,10 +489,10 @@ void sub_08033414(void)
             gCurTask->player->unk37 = 1;
             gCurTask->player->requestedAction = PLAYER_ACTION_GET_ABILITY;
         }
-        else if (gCurTask->player->unk40 & 64)
+        else if (gCurTask->player->actionFlags & 64)
         {
             SetPlayerInvulnerability(5, 0, gCurTask->player->playerIndex);
-            gCurTask->player->unk40 &= 0xFFBF;
+            gCurTask->player->actionFlags &= 0xFFBF;
             PlayBgm(BGM_INVINCIBLE);
             PlayerStartItemShare(gCurTask->player->playerIndex, 3);
         }
@@ -520,7 +520,7 @@ void sub_08033414(void)
     gCurTask->hitKind = HIT_KIND_NONE;
     if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
-        if (gCurTask->player->unk40 & 1)
+        if (gCurTask->player->actionFlags & 1)
         {
             gCurTask->player->offsetScriptStep = 0;
             gCurTask->player->offsetScriptDelay = 1;
@@ -531,7 +531,7 @@ void sub_08033414(void)
         if (gCurTask->player->sfxPlayer != -1)
             PlayerStopSfx();
         gCurTask->u76.unk76 = 0;
-        gCurTask->player->unk40 = 0;
+        gCurTask->player->actionFlags = 0;
         gCurTask->player->unk50 = 0;
         gCurTask->u80.attackAbility = ABILITY_NORMAL;
     }
@@ -539,19 +539,19 @@ void sub_08033414(void)
     {
         if (gCurTask->u76.unk76 & 2)
         {
-            gCurTask->player->unk40 |= 2;
+            gCurTask->player->actionFlags |= 2;
             gCurTask->variant = 1;
             gCurTask->player->requestedAction = PLAYER_ACTION_HIGH_FALL;
             gCurTask->u76.unk76 &= 0xFFFD;
         }
-        if (!(gCurTask->player->unk40 & 128))
+        if (!(gCurTask->player->actionFlags & 128))
             PlayerUpdateBlink();
     }
     if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
         TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
     if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->player->unk40 & 4)
+        if (gCurTask->player->actionFlags & 4)
         {
             if (gCurTask->player->ability == ABILITY_NORMAL)
                 sub_0803c9b4(0);

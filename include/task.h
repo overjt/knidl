@@ -311,8 +311,8 @@ struct PlayerState
     /*0x3D*/ u8 running;
     /*0x3E*/ u8 bumpKind;
     /*0x3F*/ u8 invulnerability;
-    /*0x40*/ u16 unk40;
-    /*0x42*/ u16 unk42;
+    /*0x40*/ u16 actionFlags;
+    /*0x42*/ u16 statusFlags;
     /*0x44*/ u8 blocksBroken;
     /*0x45*/ u8 hitsThisFrame;
     /*0x46*/ u8 savedWallSide;

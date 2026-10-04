@@ -53,10 +53,10 @@ void PlayerActionDie(void)
     if (t->hitEffect == 0x200)
         sub_08027548();
     u = gCurTask;
-    u->player->unk40 |= 8;
-    u->player->unk42 |= 0x100;
+    u->player->actionFlags |= 8;
+    u->player->statusFlags |= 0x100;
     u->variant = 0;
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= 0xFFEF;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     PlayerStopAxes(3);
     gCurTask->player->mouthState = 0;
@@ -251,7 +251,7 @@ void sub_080396a4(void)
                 gCurTask->drawCallback = 0;
             }
         }
-        if (!(gCurTask->player->unk42 & 32))
+        if (!(gCurTask->player->statusFlags & 32))
             PlayerUpdatePaletteFlash();
         break;
     }
@@ -282,7 +282,7 @@ void PlayerActionEnterDoor(void)
     gCurTask->lateUpdateCallback = 0;
     gCurTask->player->running = 0;
     PlayerStopAxes(3);
-    gCurTask->player->unk42 |= 0x100;
+    gCurTask->player->statusFlags |= 0x100;
     RequestScreenShake(0);
     if (gInHub == 0)
     {

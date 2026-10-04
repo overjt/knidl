@@ -729,7 +729,7 @@ void PlayerActionFire(void)
     case 1:
         {
             struct PlayerState *p = gCurTask->player;
-            if ((p->unk42 & 128) == 0)
+            if ((p->statusFlags & 128) == 0)
                 PlayerStartSfx(SE_FIRE_ATTACK, p->playerIndex);
         }
         CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_FIRE_BREATH, 0);
@@ -827,7 +827,7 @@ void PlayerActionSpark(void)
             } while ((s16)++gCurTask->playerLoopCount <= 6);
         }
     case 2:
-        gCurTask->player->unk42 &= 0xFFEF;
+        gCurTask->player->statusFlags &= 0xFFEF;
         PlayerStopSfx();
         TaskSetFrame(0x36A);
         TaskYieldTrampoline(2);

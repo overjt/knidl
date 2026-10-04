@@ -18,16 +18,16 @@
  * and loops animations 0xE7C/0xE85 four times, and state 2 either swings
  * (animation 0xE7D, M11's PlayerSetMotionYPreset steering, effect 28 when it lands)
  * or, once PlayerState.attachedCount is set, plays sound 177, sets
- * PlayerState.unk42 bit 9 and stops; every pass counts Task.unk28.  Its
+ * PlayerState.statusFlags bit 9 and stops; every pass counts Task.unk28.  Its
  * handler PlayerActionBackdropUpdate re-binds state 2 when PlayerState.attachedCount is set, runs
  * the hit test TaskBreakFirstBlock(gUnk_0873CC64) in state 1 (which spawns
  * CreateBlockStar's object and marks PlayerState.catchKind) and, in state 2,
  * requests action 53, 8 or 1 once the swing is over.  PlayerActionThrow
  * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
  * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
- * play), plays sound 103 and holds animation 0xF71 with PlayerState.unk40
+ * play), plays sound 103 and holds animation 0xF71 with PlayerState.actionFlags
  * bit 2 set until PlayerState.attachedCount is non-zero and equal to unk08, then
- * recovers or releases (sound 201, PlayerState.unk42 bit 9). */
+ * recovers or releases (sound 201, PlayerState.statusFlags bit 9). */
 
 /* Not from room.h: this file's view of gBrokenBlockX differs (lesson 3.517). */
 extern s16 gBrokenBlockX[];
@@ -133,7 +133,7 @@ void PlayerActionBackdrop(void)
         {
             PlaySfxIfLocalPlayer(177, gCurTask->player->playerIndex);
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-            gCurTask->player->unk42 |= 0x200;
+            gCurTask->player->statusFlags |= 0x200;
             PlayerStopAxes(1);
             TaskSetFrame(0xE83);
             TaskYieldTrampoline(1);
@@ -270,7 +270,7 @@ void PlayerActionThrow(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->player->playerIndex);
-        gCurTask->player->unk40 |= 4;
+        gCurTask->player->actionFlags |= 4;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->variant = 1;
@@ -295,7 +295,7 @@ void PlayerActionThrow(void)
     hit:
         gCurTask->variant = 2;
     case 2:
-        gCurTask->player->unk40 &= 0xFFFB;
+        gCurTask->player->actionFlags &= 0xFFFB;
         PlayerStopSfx();
         if ((s8)gCurTask->player->heldCount == 0)
         {
@@ -306,7 +306,7 @@ void PlayerActionThrow(void)
         {
             PlaySfxIfLocalPlayer(SE_THROW_GRAB, gCurTask->player->playerIndex);
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-            gCurTask->player->unk42 |= 0x200;
+            gCurTask->player->statusFlags |= 0x200;
             TaskSetFrame(0xF73);
             TaskYieldTrampoline(1);
         }

@@ -66,7 +66,7 @@ void PlayerActionStand(void)
             t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
-        t2->player->unk40 &= 0xFFEF;
+        t2->player->actionFlags &= 0xFFEF;
         t2->player->runTapTimer = 0;
         PlayerPlayBump();
     }

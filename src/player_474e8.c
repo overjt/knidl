@@ -17,7 +17,7 @@
  * has finished (Task.unk28 != 0) and requests action 23 when
  * PlayerHasCrossedWaterSurface(0) fires while Task.velY > 0.  PlayerActionSleep (action 42)
  * is a long scripted sequence (animations 0x8E5-0x8F7, sounds 180 and 274, effect
- * 38 steps 0-3) that holds PlayerState.unk42 bit 1 and releases it with
+ * 38 steps 0-3) that holds PlayerState.statusFlags bit 1 and releases it with
  * the HUD call SetPlayerAbility(0, -1, player); its handler PlayerActionSleepUpdate does
  * the same release when the ability PlayerState.ability is 11.
  * PlayerActionNeedle (action 43) is a re-entrant three-state machine: state 0
@@ -150,7 +150,7 @@ void PlayerActionSleep(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_SLEEP;
     gCurTask->playerActionDone28 = 0;
-    gCurTask->player->unk42 |= 2;
+    gCurTask->player->statusFlags |= 2;
     PlayerSetMotionXPreset(0, 72);
     TaskSetFrame(0x8E5);
     TaskYieldTrampoline(16);
@@ -226,7 +226,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(4);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->player->unk42 &= 0xFFFD;
+    gCurTask->player->statusFlags &= 0xFFFD;
     SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     gCurTask->frame--;
     TaskYieldTrampoline(32);
@@ -260,7 +260,7 @@ void PlayerActionSleepUpdate(void)
     if (sub_0803e55c() != 0) {
         struct Task *t = gCurTask;
         if (t->player->ability == ABILITY_SLEEP) {
-            t->player->unk42 &= 0xFFFD;
+            t->player->statusFlags &= 0xFFFD;
             SetPlayerAbility(ABILITY_NORMAL, -1, t->player->playerIndex);
         }
     } else if (gCurTask->playerActionDone28 != 0) {

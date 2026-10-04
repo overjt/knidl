@@ -219,7 +219,7 @@ void sub_080a1624(void)
     for (i = 0; i < gPlayerCount; i++)
     {
         if ((gActivePlayerMask >> i) & 1)
-            gPlayerStates[i].unk42 = 64;
+            gPlayerStates[i].statusFlags = 64;
     }
 }
 
@@ -243,7 +243,7 @@ void KingDededeDefeatedHoldBackPlayer(s32 a)
             t->facing = 1;
     }
     gPlayerStates[a].requestedAction = PLAYER_ACTION_RECOIL;
-    gPlayerStates[a].unk42 = 64;
+    gPlayerStates[a].statusFlags = 64;
     gUnk_02007D00[a] = -1;
 }
 

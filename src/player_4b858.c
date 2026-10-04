@@ -20,7 +20,7 @@
  * moves (animations 0xE97-0xEE4 with the frame index PlayerState.unk16,
  * velocity presets 2 and 56-68, sounds 178/179, a landing with effect
  * 27 and RequestScreenShake(2)), each back to state 7, which clears
- * PlayerState.unk42 bit 9, calls SetPlayerInvulnerability(255, 0, player) and ends
+ * PlayerState.statusFlags bit 9, calls SetPlayerInvulnerability(255, 0, player) and ends
  * the action (TaskSleepForever, falling into state 0, lesson 3.403).  The
  * long `bl`s at 0x0804C49E and 0x0804C488 are cross-jumped `goto loop`
  * tails.  Its handler PlayerActionBackdropHoldUpdate lets PlayerRequestLocomotion end state 7,
@@ -130,7 +130,7 @@ loop:
         {
             struct Task *d = gCurTask;
 
-            d->player->unk42 &= 0xFDFF;
+            d->player->statusFlags &= 0xFDFF;
             SetPlayerInvulnerability(255, 0, d->player->playerIndex);
         }
         TaskSleepForever();

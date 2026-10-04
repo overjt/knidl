@@ -151,9 +151,9 @@ void sub_08074ee0(u32 flag)
             struct PlayerState *p = &gPlayerStates[i];
 
             if (flag)
-                p->unk42 |= 0x10;
+                p->statusFlags |= 0x10;
             else
-                p->unk42 &= 0xFFEF;
+                p->statusFlags &= 0xFFEF;
         }
     }
 }
@@ -1336,7 +1336,7 @@ void PlayerCannonInit(void)
     {
         struct Task *t = gCurTask;
 
-        t->player->unk42 &= 0xFFEF;
+        t->player->statusFlags &= 0xFFEF;
         CallTableEntry(t->state, 6, gPlayerCannonStates);
     }
 }

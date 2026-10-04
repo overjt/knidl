@@ -19,7 +19,7 @@
  * B is pressed, switching to state 5 once PlayerState.heldCount is 0, and
  * then jumps to state unk28.  States 0-2 are the three releases
  * (animations 0xF7C/0xF76/0xF84, sound 236, then 0xF80), which end in
- * state 5: clear PlayerState.unk42 bit 9, SetPlayerInvulnerability(255, 0, player)
+ * state 5: clear PlayerState.statusFlags bit 9, SetPlayerInvulnerability(255, 0, player)
  * and end the action (TaskSleepForever, which falls into state 0,
  * lesson 3.403).  Its handler PlayerActionThrowHoldUpdate re-binds state 5 from states
  * 0-2 once PlayerState.unk16 >= 0 and unk08 == 0, re-reads the direction
@@ -99,7 +99,7 @@ void PlayerActionThrowHold(void)
             gCurTask->variant = gCurTask->playerThrowDir;
             break;
         case 5:
-            gCurTask->player->unk42 &= 0xFDFF;
+            gCurTask->player->statusFlags &= 0xFDFF;
             do {
                 SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
             } while (0);

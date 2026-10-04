@@ -1735,7 +1735,7 @@ void sub_0805dba0(void)
     TaskStop();
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;
-    u->player->unk42 &= 0xFFEF;
+    u->player->statusFlags &= 0xFFEF;
     CallTableEntry(u->state, 2, gUnk_0873DEA0);
 }
 

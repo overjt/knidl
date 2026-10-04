@@ -15,7 +15,7 @@
  * MetaKnightActionHurt: a goto loop around a seven-state switch over Task.variant.
  * State 5, the entry, picks the next state from Task.hitEffect (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
- * (PlayerState.ability) with bit 1 of PlayerState.unk42 clear, releases it
+ * (PlayerState.ability) with bit 1 of PlayerState.statusFlags clear, releases it
  * through M17's CreateAbilityStar(PlayerState.ownStarSwallowCount) and M02's HUD
  * (SetPlayerAbility); states 0-4 play the ability's animations and state 6
  * leaves.  PlayerActionHurtUpdate, handler 16, steers every state into state 6 and
@@ -39,7 +39,7 @@ void PlayerActionHurt(void)
     p = t->player;
     if (p->prevMode != 17)
     {
-        p->unk42 &= 0xFEEF;
+        p->statusFlags &= 0xFEEF;
         t->variant = 5;
         if (gCurTask->player->mouthState == 2)
             gCurTask->player->mouthState = 0;
@@ -58,7 +58,7 @@ loop:
         {
             if (gCurTask->player->ability == ABILITY_SLEEP)
             {
-                gCurTask->player->unk42 &= 0xFFFD;
+                gCurTask->player->statusFlags &= 0xFFFD;
                 SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             }
             u = gCurTask;
@@ -66,11 +66,11 @@ loop:
                 u->variant = 4;
             else
                 u->variant = u->hitEffect & 15;
-            if (!(gCurTask->player->unk42 & 2) && gCurTask->player->unk37 == 0)
+            if (!(gCurTask->player->statusFlags & 2) && gCurTask->player->unk37 == 0)
             {
                 if (gCurTask->player->ability != ABILITY_NORMAL)
                 {
-                    gCurTask->player->unk42 &= 0xFFFB;
+                    gCurTask->player->statusFlags &= 0xFFFB;
                     CreateAbilityStar(gCurTask->player->ownStarSwallowCount);
                     SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
                 }
@@ -644,7 +644,7 @@ loop:
         if (gCurTask->waterFlags & 1)
             PlayerSetWaterMotionY();
         SetPlayerInvulnerability(1, 96, gCurTask->player->playerIndex);
-        gCurTask->player->unk42 |= 0x200;
+        gCurTask->player->statusFlags |= 0x200;
         break;
     }
     TaskSleepForever();

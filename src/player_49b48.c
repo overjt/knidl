@@ -61,7 +61,7 @@ void PlayerActionIce(void)
     case 1:
         {
             struct PlayerState *p = gCurTask->player;
-            if ((p->unk42 & 128) == 0)
+            if ((p->statusFlags & 128) == 0)
                 PlayerStartSfx(SE_ICE_ATTACK, p->playerIndex);
         }
         CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 0);

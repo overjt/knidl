@@ -169,7 +169,7 @@ void sub_0805574c(void)
         TaskYieldTrampoline(4);
         gCurTask->playerEffectLoopCount++;
     } while ((s16)gCurTask->playerEffectLoopCount <= 6);
-    gCurTask->player->unk40 |= 0x80;
+    gCurTask->player->actionFlags |= 0x80;
     TaskExitTrampoline();
 }
 

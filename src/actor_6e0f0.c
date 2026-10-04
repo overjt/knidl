@@ -671,7 +671,7 @@ void PlayerWarpStarRideInit(void)
     TaskStop();
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;
-    u->player->unk42 &= 0xFFEF;
+    u->player->statusFlags &= 0xFFEF;
     u->parent = gWarpStarRideSlot;
     if (gTasks[u->parent].unk74 == 0)
         gCurTask->facing = gWarpStarFlightFacings[WarpStarPickFlightSlot(u->parent)];

@@ -38,7 +38,7 @@ void sub_08026b60(void)
         p = &gDoorStates[i];
         x = d->unk2 << 4;
         y = d->unk4 << 4;
-        p->unk1 = 0;
+        p->isOpen = 0;
         if (gPlayerCount > 1 && gActivePlayerCount > 1)
         {
             gUnk_03002344 = 128;
@@ -46,19 +46,19 @@ void sub_08026b60(void)
             gUnk_03002448 = y - gRoomEntryY;
             lim = 0x4000;
             if (lim < gUnk_03001F2C * gUnk_03001F2C + gUnk_03002448 * gUnk_03002448)
-                p->unk1 = 0;
+                p->isOpen = 0;
             else
-                p->unk1 = 1;
+                p->isOpen = 1;
         }
         else
         {
-            p->unk1 = 1;
+            p->isOpen = 1;
         }
-        if (--p->unk4_4 == 0)
+        if (--p->overlayTimer == 0)
         {
-            if (++p->unk4_0 > 3)
-                p->unk4_0 = 0;
-            p->unk4_4 = 3;
+            if (++p->overlayFrame > 3)
+                p->overlayFrame = 0;
+            p->overlayTimer = 3;
         }
     }
 }
@@ -81,7 +81,7 @@ void UpdateDoors(void)
         p = &gDoorStates[i];
         x = d->unk2 << 4;
         y = d->unk4 << 4;
-        p->unk1 = 0;
+        p->isOpen = 0;
         k = GetCollisionTileAtPixel(x, y);
         if (gCollisionTileDoor[k] == 0)
             continue;
@@ -106,30 +106,30 @@ void UpdateDoors(void)
                 }
             }
             if (gUnk_03002160 == gPlayerCount)
-                p->unk1 = 1;
+                p->isOpen = 1;
             else
-                p->unk1 = 0;
+                p->isOpen = 0;
         }
         else
         {
-            p->unk1 = 1;
+            p->isOpen = 1;
         }
-        if (p->unk0 != 2)
+        if (p->overlayKind != 2)
         {
-            if (--p->unk4_4 == 0)
+            if (--p->overlayTimer == 0)
             {
-                if (++p->unk4_0 > 3)
-                    p->unk4_0 = 0;
-                p->unk4_4 = 3;
+                if (++p->overlayFrame > 3)
+                    p->overlayFrame = 0;
+                p->overlayTimer = 3;
             }
         }
         else
         {
-            if (--p->unk4_4 == 0)
+            if (--p->overlayTimer == 0)
             {
-                if (++p->unk4_0 > 5)
-                    p->unk4_0 = 0;
-                p->unk4_4 = gUnk_0873264C[p->unk4_0][1];
+                if (++p->overlayFrame > 5)
+                    p->overlayFrame = 0;
+                p->overlayTimer = gUnk_0873264C[p->overlayFrame][1];
             }
         }
     }
@@ -161,32 +161,32 @@ void DrawDoors(void)
         if (k != 16 && k != 144)
             continue;
         gUnk_03001F10 = -1;
-        switch (p->unk0)
+        switch (p->overlayKind)
         {
         case 1:
             gUnk_03001F2C = 16;
-            if ((gRoomExitKind != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
+            if ((gRoomExitKind != 2 || gActivePlayerCount <= 1) && p->isOpen != 0)
                 gUnk_03001F10 = 8;
             else
                 gUnk_03001F10 = 12;
-            gUnk_03001F10 += p->unk4_0;
+            gUnk_03001F10 += p->overlayFrame;
             break;
         default:
         case 0:
             gUnk_03001F2C = 8;
-            if ((gRoomExitKind != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
+            if ((gRoomExitKind != 2 || gActivePlayerCount <= 1) && p->isOpen != 0)
                 gUnk_03001F10 = 0;
             else
                 gUnk_03001F10 = 4;
-            gUnk_03001F10 += p->unk4_0;
+            gUnk_03001F10 += p->overlayFrame;
             break;
         case 2:
             gUnk_03001F2C = 8;
-            if (p->unk1 != 0)
+            if (p->isOpen != 0)
                 gUnk_03001F10 = 0;
             else
                 gUnk_03001F10 = 6;
-            gUnk_03001F10 += gUnk_0873264C[p->unk4_0][0];
+            gUnk_03001F10 += gUnk_0873264C[p->overlayFrame][0];
             break;
         }
         QueueSprite(15, gUnk_0874CDF8[gUnk_03001F10], 0, 0, x + gUnk_03001F2C - gSpriteCameraX,

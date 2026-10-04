@@ -58,9 +58,9 @@ void PlayerActionGetAbility(void)
     gCurTask->player->unk16 = 0xFF;
     {
         struct Task *t = gCurTask;
-        t->player->unk40 |= 0x100;
-        t->player->unk42 |= 0x720;
-        t->player->unk42 &= 0xFFEF;
+        t->player->actionFlags |= 0x100;
+        t->player->statusFlags |= 0x720;
+        t->player->statusFlags &= 0xFFEF;
     }
     FreezeOtherTasks(15);
     if (gCreditsDemoSet == 0)
@@ -171,7 +171,7 @@ void PlayerActionGetAbility(void)
     LoadAbilityTiles();
     {
         struct Task *t = gCurTask;
-        t->player->unk42 |= 128;
+        t->player->statusFlags |= 128;
         switch ((s8)(t->player->ability - 1)) {
         case 24:
             gCurTask->player->unk37 = 3;
@@ -299,7 +299,7 @@ void PlayerActionGetAbility(void)
             CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ABILITY_GET_SPARKLE, 0);
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->player->unk40 & 32)
+            if (gCurTask->player->actionFlags & 32)
                 gUnk_02007D00[2]++;
             break;
         case 4:
@@ -680,7 +680,7 @@ void PlayerActionGetAbility(void)
     {
         struct Task *t = gCurTask;
         struct PlayerState *p;
-        t->player->unk42 &= 0xF85F;
+        t->player->statusFlags &= 0xF85F;
         p = t->player;
         if (p->invulnerability == 1)
             p->invulnerabilityTimer += 6;
@@ -690,7 +690,7 @@ void PlayerActionGetAbility(void)
     {
         struct Task *t = gCurTask;
         t->playerActionDone28++;
-        t->player->unk40 &= 0xFEFF;
+        t->player->actionFlags &= 0xFEFF;
     }
     gPauseDisabled = 0;
     TaskSleepForever();
@@ -724,7 +724,7 @@ void PlayerActionGetAbilityUpdate(void)
             case 0x370:
                 {
                     struct Task *u = gCurTask;
-                    u->player->unk42 &= 0xFFEF;
+                    u->player->statusFlags &= 0xFFEF;
                     u->playerNextBankBlendRatio = 0;
                     u->playerBankBlendRatio = 0;
                 }
@@ -760,7 +760,7 @@ void PlayerActionGetAbilityUpdate(void)
                                  u->playerNextBankBlendRatio, 16,
                                  (u16 *)(gObjPalette + (((u->tileWord >> 12) + 1) << 5)));
                 }
-                gCurTask->player->unk42 |= 16;
+                gCurTask->player->statusFlags |= 16;
                 break;
             }
             break;

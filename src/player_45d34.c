@@ -18,7 +18,7 @@
  * each with its own song (StopSfx) and sound; meanwhile it freezes
  * the stage (gPauseDisabled = 1), switches the DISPCNT shadow
  * gDispCnt to BG0, BG2, BG3 and OBJ unless BG2 is already on, raises
- * PlayerState.unk42 bits 8-10 and repeats the last loop until the effect
+ * PlayerState.statusFlags bits 8-10 and repeats the last loop until the effect
  * counter PlayerState.unk16 runs out.  With the last charge spent it
  * drops the ability (HudShowAbility) unless the ability is 7.  Its handler
  * PlayerActionMikeUpdate requests action 1 or 7 (on the ground or in the air) once
@@ -34,7 +34,7 @@ void PlayerActionMike(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_MIKE;
     gCurTask->variant = gCurTask->player->abilityUses - 1;
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= 0xFFEF;
     if (--gCurTask->player->abilityUses == 0) {
         SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     } else {
@@ -52,7 +52,7 @@ void PlayerActionMike(void)
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 0);
     gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-    gCurTask->player->unk42 |= 0x700;
+    gCurTask->player->statusFlags |= 0x700;
     switch (gCurTask->variant) {
     case 2:
         PlayerSetMotionXPreset(11, 42);
@@ -202,7 +202,7 @@ void PlayerActionMike(void)
     }
     gCurTask->playerActionDone28++;
     gPauseDisabled = 0;
-    gCurTask->player->unk42 &= 0xF8FF;
+    gCurTask->player->statusFlags &= 0xF8FF;
     TaskSleepForever();
 }
 

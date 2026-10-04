@@ -90,7 +90,7 @@ void MetaKnightActionStand(void)
             t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
-        t2->player->unk40 &= 0xFFEF;
+        t2->player->actionFlags &= 0xFFEF;
         t2->player->runTapTimer = 0;
         PlayerPlayBump();
     }
@@ -969,7 +969,7 @@ void MetaKnightActionHurt(void)
     p = t->player;
     if (p->prevMode != 17)
     {
-        p->unk42 &= 0xFFEF;
+        p->statusFlags &= 0xFFEF;
         t->variant = 5;
     }
     while (1)
@@ -1180,10 +1180,10 @@ void MetaKnightActionDie(void)
     gActivePlayerMask &= ~(1 << gCurTask->player->playerIndex);
     if (gCurTask->hitEffect == 512)
         sub_08027548();
-    gCurTask->player->unk40 |= 8;
-    gCurTask->player->unk42 |= 0x100;
+    gCurTask->player->actionFlags |= 8;
+    gCurTask->player->statusFlags |= 0x100;
     gCurTask->variant = 0;
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= 0xFFEF;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     ((u8 *)gCurTask->player)[23] = 0;
     ((u16 *)gCurTask->player)[12] = 0;
@@ -1267,7 +1267,7 @@ void sub_08042c50(void)
                 gCurTask->variant = 2;
             }
         }
-        if ((gCurTask->player->unk42 & 32) == 0)
+        if ((gCurTask->player->statusFlags & 32) == 0)
             PlayerUpdatePaletteFlash();
         break;
     case 2:
@@ -1305,7 +1305,7 @@ void MetaKnightActionEnterDoor(void)
     gCurTask->player->running = 0;
     gPauseDisabled = 1;
     PlayerStopAxes(3);
-    gCurTask->player->unk42 |= 0x100;
+    gCurTask->player->statusFlags |= 0x100;
     RequestScreenShake(0);
     if (gInHub == 0)
     {

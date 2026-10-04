@@ -33,7 +33,7 @@ void PlayerActionLight(void)
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
         t->unk2C = 0;
-        t->player->unk42 |= 0x700;
+        t->player->statusFlags |= 0x700;
         t->player->terrainBox = 0;
     }
     FreezeOtherTasks(15);
@@ -102,7 +102,7 @@ void PlayerActionLight(void)
         struct Task *t = gCurTask;
         t->playerActionDone28++;
         gPauseDisabled = 0;
-        t->player->unk42 &= 0xF8FF;
+        t->player->statusFlags &= 0xF8FF;
     }
     TaskSleepForever();
 }

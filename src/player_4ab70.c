@@ -189,7 +189,7 @@ void PlayerActionCrash(void)
         gDispCnt |= 0x1D00;
     }
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-    gCurTask->player->unk42 |= 0x700;
+    gCurTask->player->statusFlags |= 0x700;
     gCurTask->playerCrashSavedPosY = gCurTask->posY;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CRASH_BLAST, 0);
     gCurTask->player->terrainBox = 0;
@@ -219,7 +219,7 @@ void PlayerActionCrash(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->playerCrashBlendRatio = 0;
-    gCurTask->player->unk42 |= 16;
+    gCurTask->player->statusFlags |= 16;
     gCurTask->playerLoopCount = 0;
     do {
         BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
@@ -229,7 +229,7 @@ void PlayerActionCrash(void)
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 2);
     TaskYieldTrampoline(3);
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= 0xFFEF;
     TaskYieldTrampoline(1);
     PlayerStopAxes(2);
     gCurTask->frame++;
@@ -238,7 +238,7 @@ void PlayerActionCrash(void)
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->playerCrashBlendRatio = 0;
-    gCurTask->player->unk42 |= 16;
+    gCurTask->player->statusFlags |= 16;
     gCurTask->playerLoopCount = 0;
     do {
         BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
@@ -247,7 +247,7 @@ void PlayerActionCrash(void)
         gCurTask->playerCrashBlendRatio += 85;
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 2);
-    gCurTask->player->unk42 &= 0xFFEF;
+    gCurTask->player->statusFlags &= 0xFFEF;
     TaskYieldTrampoline(9);
     PlayerStopAxes(2);
     gCurTask->frame++;
@@ -258,7 +258,7 @@ void PlayerActionCrash(void)
     PlayerSetMotionYPreset(53);
     TaskSetFrame(0xDE7);
     TaskYieldTrampoline(3);
-    gCurTask->player->unk42 |= 16;
+    gCurTask->player->statusFlags |= 16;
     gCurTask->variant = 1;
     gCurTask->playerCrashBlendRatio = 0;
     gCurTask->player->unk16 = 1;
@@ -318,11 +318,11 @@ void PlayerActionCrash(void)
     gCurTask->frame++;
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 31; gCurTask->playerLoopCount++) {
         if (gPauseDisabled == 0)
-            gCurTask->player->unk42 &= 0xFBFF;
+            gCurTask->player->statusFlags &= 0xFBFF;
         TaskYieldTrampoline(1);
     }
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
-    gCurTask->player->unk42 &= 0xFCFF;
+    gCurTask->player->statusFlags &= 0xFCFF;
     gCurTask->variant = 3;
     TaskSleepForever();
 }
@@ -354,7 +354,7 @@ void PlayerActionCrashUpdate(void)
             if (u->playerCrashBlendRatio == 0) {
                 u->variant = 0;
                 RequestScreenShake(0);
-                gCurTask->player->unk42 &= 0xFFEF;
+                gCurTask->player->statusFlags &= 0xFFEF;
             } else {
                 u->playerCrashBlendRatio -= 16;
                 if (u->playerCrashBlendRatio <= 0)

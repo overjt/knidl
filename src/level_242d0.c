@@ -556,7 +556,7 @@ s32 FindDoorAt(s32 x, s32 y)
             break;
         }
     }
-    if (gDoorStates[i].unk1 == 0)
+    if (gDoorStates[i].isOpen == 0)
         return 0;
     if (gInHub != 0)
     {
@@ -1043,7 +1043,7 @@ s32 ExitOnWarpStar(void)
         gRoomIndex = 0;
         for (i = 0; i < 32; i++)
         {
-            if (gRoomTable[gLevelIndex][gStageIndex][i]->unk54 == 3)
+            if (gRoomTable[gLevelIndex][gStageIndex][i]->setupKind == 3)
             {
                 gRoomIndex = i;
                 break;
