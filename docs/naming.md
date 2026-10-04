@@ -675,3 +675,78 @@ after every batch.  gcc 2.95 hashes some RTL by symbol name (lessons 4.79,
 principle; if a batch breaks the match, bisect it, revert the one rename
 that did it, and write the finding down as a lesson.  Never "fix" a broken
 match with a code change.
+
+### 6.3 Named constants: `tools/constants.py`
+
+```sh
+tools/constants.py --defs defs.csv [--preambles p.json]   # dry run
+tools/constants.py --defs defs.csv --write   # headers + constants.csv rows
+tools/constants.py --scan tasks --out sites.csv   # a mechanical family's sites
+tools/constants.py --sites sites.csv --write      # respell the literals
+tools/constants.py --verify-cpp HEAD   # same tokens after cpp, literals by value
+make clean && make compare
+tools/rename.py --verify-diff master   # covers the constants too
+tools/constants.py --census            # constants, sites, literals left
+tools/constants.py --check             # headers == constants.csv
+```
+
+`defs.csv` (`header,block,constant,value,evidence[,note]`) gives one row
+per constant; the tool writes `include/constants/<header>.h` (one block per
+title, the defines in value order) and appends one row per constant to
+`docs/analysis/constants.csv` (`constant,value,header,evidence,issue`; the
+constants' evidence log, a sibling of `renames.csv`).  `sites.csv`
+(`file,line,col,literal,constant`) says which literal to respell; the tool
+refuses a site whose literal is not there or whose value is not the
+constant's.  A mechanical family (`FAMILIES` in the tool: the call
+arguments, struct members, variables and arrays whose values belong to one
+enumeration) gives its sites with `--scan`, which also counts the literals
+left at those positions for the audit.  Section 7 has the rules.
+
+## 7. Named constants (run 6 of #155)
+
+The owner's decision D6: a number whose meaning the names prove is spelled
+as a pret-style object-like macro (katam's `include/constants/`), in a
+header `include/constants/<topic>.h` that the subsystem header defining the
+enumeration's fields includes (`task.h` includes `constants/tasks.h` and
+`constants/abilities.h`).  They are `#define`s, not `enum`s: a define
+changes no token after preprocessing except the spelling of an integer
+literal, which `tools/constants.py --verify-cpp` checks by value, while an
+enum would change the types the compiler sees.
+
+- **Names.**  `<FAMILY>_<NAME>` in UPPER_SNAKE: the family prefix says
+  which enumeration (`TASK_`, `ABILITY_`, `<FAMILY>_STATE_`), the name is
+  the role the consumer proves, derived mechanically where a table gives
+  it: a task type is named after its body (`gTaskTypes[214]` =
+  `Task_FireLionFlame` gives `TASK_FIRE_LION_FLAME`; #88's body has no name
+  yet, so `TASK_88`), an ability after its HUD banner (`ABILITY_HI_JUMP`),
+  a state after its slot's verb (`g<Family>States[N]` = `<Family><Verb>`
+  gives `<FAMILY>_STATE_<VERB>`), or after its index where the slot is a
+  position name, a `sub_*`, a function of another prefix or a verb two
+  slots share (`<FAMILY>_STATE_<N>`).
+- **Values.**  The define spells the value as most of its sites did
+  (decimal or hex); the value must be a plain non-negative literal no larger
+  than 0x7FFFFFFF, so its type cannot change with the spelling.
+- **One enumeration per site.**  A literal is respelled only where the
+  parameter, field or variable it is passed to, stored into, compared with
+  or switched on belongs to that enumeration: a task type at a spawner's
+  `type` argument, `ActorSpawn.taskType` or a `gTaskSlotTypes[]`
+  comparison; an ability at `.ability`, `.attackAbility`,
+  `.pendingAbility`, `gPlayerAbilities[]` or `SetPlayerAbility`'s first
+  argument; a state at `ActorSetState`'s argument or a store into the
+  running task's `state` inside a function proven to run that table's
+  machine (a slot of the table or its update table, or the EnterState that
+  dispatches it; a body that mentions another machine's consumer is left
+  alone).  `updateState` stores take the state constants only in tables
+  whose every entry N stores `updateState = N` (lesson 4.160).  A constant
+  is never used as a count, an index of something else or a size.
+- **Proof.**  Each family is its own commit: `tools/constants.py
+  --verify-cpp HEAD~` (every translation unit's `cpp -P` token stream
+  equals the parent's, integer literals compared by value), the per-file
+  assembly oracle (every unit's agbcc `.s` identical) and `make compare`;
+  `tools/rename.py --verify-diff` accepts the logged constants too.
+- **Evidence.**  Each constant has one `docs/analysis/constants.csv` row
+  whose evidence is the consumer that proves the value: the table slot
+  (`slot: gTaskTypes[214] = Task_FireLionFlame`), the render of the HUD
+  picture, the dispatch or the branch that does the named thing.  A value
+  that no consumer proves stays a number, and the reason is written next
+  to the family's block.
