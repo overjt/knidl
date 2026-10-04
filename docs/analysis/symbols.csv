@@ -467,8 +467,8 @@ vma,size,isa,evidence,name
 0x0801A7B4,0x74,thumb,bl-target,ClearColliderLists
 0x0801A828,0xA0,thumb,bl-target,RegisterCollider
 0x0801A8C8,0x64C,thumb,bl-target,HitTestPlayerColliders
-0x0801AF14,0x338,thumb,bl-target,sub_0801af14
-0x0801B24C,0x590,thumb,bl-target,sub_0801b24c
+0x0801AF14,0x338,thumb,bl-target,HitTestColliderClass10
+0x0801B24C,0x590,thumb,bl-target,HitTestColliderClass20
 0x0801B7DC,0x108,thumb,bl-target,PlaceAttackBox
 0x0801B8E4,0x100,thumb,bl-target,CalcHitDamageAndDirection
 0x0801B9E4,0xC0,thumb,bl-target,sub_0801b9e4

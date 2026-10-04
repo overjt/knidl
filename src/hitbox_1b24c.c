@@ -6,9 +6,9 @@
 /* hitbox_1b24c.c (0x0801B24C-0x0801B7DB, issue #84).
  *
  * The third actor-vs-collider hit test (the first two, HitTestPlayerColliders and
- * sub_0801af14, are src/hitbox_1a8c8.c; the shared tails CalcHitDamageAndDirection and
- * sub_0801b9e4 are src/hitbox_1b7dc.c).  sub_0801b24c walks the third
- * collider list gUnk_030052A0 (gUnk_030054F4 entries) that M05's
+ * HitTestColliderClass10, are src/hitbox_1a8c8.c; the shared tails CalcHitDamageAndDirection and
+ * sub_0801b9e4 are src/hitbox_1b7dc.c).  HitTestColliderClass20 walks the third
+ * collider list gColliderClass20 (gColliderClass20Count entries) that M05's
  * RegisterCollider fills, places each entry's body box (mirrored by its task's
  * facing, unk43) against the camera rectangle, tests it against the actor's
  * attack box and, on an overlap, sorts the hit by the body box's kind k
@@ -77,7 +77,7 @@ struct HitEntry
     /*0x08*/ struct BodyBox *unk08;
 };
 
-/* Not from collision.h: this file's view of gUnk_030052A0 differs (lesson
+/* Not from collision.h: this file's view of gColliderClass20 differs (lesson
    3.517). */
 extern u8 gHitDirection;
 extern u16 gAttackY;           /* actor y */
@@ -103,8 +103,8 @@ extern s16 gColliderLeft;
 extern s16 gColliderRight;
 extern s16 gColliderTop;
 extern s16 gColliderBottom;
-extern struct HitEntry gUnk_030052A0[];
-extern u8 gUnk_030054F4;
+extern struct HitEntry gColliderClass20[];
+extern u8 gColliderClass20Count;
 extern u16 gUnk_08732230[];
 extern u16 gUnk_08732242[];
 extern u32 gUnk_08732254[];
@@ -120,7 +120,7 @@ void sub_0801b9e4(void);
    index a copy (`adds r1, r7, #0`).  All four table masks go through the
    one `u32 m`, which does not tie to the table address (`ldr r2, [r0];
    ands r3, r2`). */
-u8 sub_0801b24c(void)
+u8 HitTestColliderClass20(void)
 {
     s32 i;
     struct HitEntry *e;
@@ -131,8 +131,8 @@ u8 sub_0801b24c(void)
     s32 k;
     u32 m;
 
-    e = gUnk_030052A0;
-    for (i = 0; i < gUnk_030054F4; i++)
+    e = gColliderClass20;
+    for (i = 0; i < gColliderClass20Count; i++)
     {
         gColliderSlot = e->unk00;
         t = &gTasks[gColliderSlot];

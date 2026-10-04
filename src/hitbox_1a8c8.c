@@ -16,8 +16,8 @@
  * HitTestPlayerColliders tests the players' list gPlayerColliders (by the attack's class
  * gAttackBox->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
  * block, 2/3 a touch that marks the player in gUnk_03001F24);
- * sub_0801af14 tests the second list gUnk_030053A0.  The third list's test,
- * sub_0801b24c, is src/hitbox_1b24c.c.
+ * HitTestColliderClass10 tests the second list gColliderClass10.  The third list's test,
+ * HitTestColliderClass20, is src/hitbox_1b24c.c.
  * 
  * Matching notes: the class 2/3 case is the last case in the source, because
  * merge_blocks moves its head up behind the dispatch; hit paths end at an
@@ -76,8 +76,8 @@ struct BodyBox
 /* One entry of a collider list (src/player_1a76c.c's struct Collider,
    filled by M05's RegisterCollider): the owner's task index, its position and
    its body box.  The three lists are gPlayerColliders[gPlayerColliderCount] (up to 4,
-   the players), gUnk_030053A0[gUnk_030054A8] and
-   gUnk_030052A0[gUnk_030054F4] (up to 20 each), picked by the high nibble
+   the players), gColliderClass10[gColliderClass10Count] and
+   gColliderClass20[gColliderClass20Count] (up to 20 each), picked by the high nibble
    of the body box's byte 8. */
 struct HitEntry
 {
@@ -122,8 +122,8 @@ extern s16 gColliderLeft;           /* body box left */
 extern s16 gColliderRight;           /* body box right */
 extern s16 gColliderTop;           /* body box top */
 extern s16 gColliderBottom;           /* body box bottom */
-extern struct HitEntry gUnk_030053A0[];
-extern u8 gUnk_030054A8;
+extern struct HitEntry gColliderClass10[];
+extern u8 gColliderClass10Count;
 extern u16 gUnk_08732218[];
 extern u16 gUnk_08732224[];
 
@@ -349,7 +349,7 @@ u8 HitTestPlayerColliders(void)
 }
 
 /* Hit test of the actor's attack box against the second hit list. */
-u8 sub_0801af14(void)
+u8 HitTestColliderClass10(void)
 {
     struct HitEntry *e;
     struct Task *t;
@@ -358,8 +358,8 @@ u8 sub_0801af14(void)
     u32 k;
     u16 mask;
 
-    e = gUnk_030053A0;
-    for (i = 0; i < gUnk_030054A8; i++)
+    e = gColliderClass10;
+    for (i = 0; i < gColliderClass10Count; i++)
     {
         gColliderSlot = e->unk00;
         t = &gTasks[gColliderSlot];

@@ -1027,14 +1027,14 @@ gExtraModeTitlePhase = 0x03005280
 gPlayerColliderCount = 0x03005290
 	.global	gAttackBoxBottom
 gAttackBoxBottom = 0x03005294
-	.global	gUnk_030052A0
-gUnk_030052A0 = 0x030052A0
+	.global	gColliderClass20
+gColliderClass20 = 0x030052A0
 	.global	gColliderTop
 gColliderTop = 0x03005390
 	.global	gColliderPlayer
 gColliderPlayer = 0x03005394
-	.global	gUnk_030053A0
-gUnk_030053A0 = 0x030053A0
+	.global	gColliderClass10
+gColliderClass10 = 0x030053A0
 	.global	gAttackBoxRight
 gAttackBoxRight = 0x03005490
 	.global	gColliderBottom
@@ -1047,8 +1047,8 @@ gColliderX = 0x0300549C
 gColliderY = 0x030054A0
 	.global	gAttackBoxLeft
 gAttackBoxLeft = 0x030054A4
-	.global	gUnk_030054A8
-gUnk_030054A8 = 0x030054A8
+	.global	gColliderClass10Count
+gColliderClass10Count = 0x030054A8
 	.global	gPlayerColliders
 gPlayerColliders = 0x030054B0
 	.global	gAttackBoxTop
@@ -1061,8 +1061,8 @@ gColliderBodyBox = 0x030054E8
 gColliderLeft = 0x030054EC
 	.global	gColliderPlayerState
 gColliderPlayerState = 0x030054F0
-	.global	gUnk_030054F4
-gUnk_030054F4 = 0x030054F4
+	.global	gColliderClass20Count
+gColliderClass20Count = 0x030054F4
 	.global	gUnk_03005504
 gUnk_03005504 = 0x03005504
 	.global	gTerrainPixelIndex

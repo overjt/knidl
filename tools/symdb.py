@@ -674,6 +674,8 @@ KNOWN_SYMBOLS = {
     0x0801A7B4: "ClearColliderLists",
     0x0801A828: "RegisterCollider",
     0x0801A8C8: "HitTestPlayerColliders",
+    0x0801AF14: "HitTestColliderClass10",
+    0x0801B24C: "HitTestColliderClass20",
     0x0801B7DC: "PlaceAttackBox",
     0x0801B8E4: "CalcHitDamageAndDirection",
     0x0801BAA4: "PlayerProbeTerrain",

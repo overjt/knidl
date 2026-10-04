@@ -20,11 +20,11 @@ void sub_0801a76c(s32 i)
 void ClearColliderLists(void)
 {
     struct Collider *p = gPlayerColliders;
-    struct Collider *q = gUnk_030053A0;
-    struct Collider *r = gUnk_030052A0;
+    struct Collider *q = gColliderClass10;
+    struct Collider *r = gColliderClass20;
     u8 *ca = &gPlayerColliderCount;
-    u8 *cb = &gUnk_030054A8;
-    u8 *cc = &gUnk_030054F4;
+    u8 *cb = &gColliderClass10Count;
+    u8 *cc = &gColliderClass20Count;
     s32 i;
 
     for (i = 0; i < 4; i++)
@@ -70,14 +70,14 @@ u32 RegisterCollider(u8 idx, u16 x, u16 y, u8 *p)
         r = &gPlayerColliders[gPlayerColliderCount++];
         break;
     case 0x10:
-        if (gUnk_030054A8 == 20)
+        if (gColliderClass10Count == 20)
             return 1;
-        r = &gUnk_030053A0[gUnk_030054A8++];
+        r = &gColliderClass10[gColliderClass10Count++];
         break;
     case 0x20:
-        if (gUnk_030054F4 == 20)
+        if (gColliderClass20Count == 20)
             return 1;
-        r = &gUnk_030052A0[gUnk_030054F4++];
+        r = &gColliderClass20[gColliderClass20Count++];
         break;
     }
     r->unk00 = idx;

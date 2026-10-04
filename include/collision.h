@@ -135,24 +135,24 @@ extern u8 gHitEffect;
 extern u8 gAttackLastHitterClass;
 extern u8 gPlayerColliderCount; /* number of hit-list entries */
 extern s16 gAttackBoxBottom; /* attack box bottom */
-extern struct Collider gUnk_030052A0[];
+extern struct Collider gColliderClass20[];
 extern s16 gColliderTop; /* body box top */
 extern u8 gColliderPlayer; /* the current entry's player index */
-extern struct Collider gUnk_030053A0[];
+extern struct Collider gColliderClass10[];
 extern s16 gAttackBoxRight; /* attack box right */
 extern s16 gColliderBottom; /* body box bottom */
 extern u8 gColliderSlot; /* the current entry's task index */
 extern s16 gColliderX; /* the current entry's x */
 extern s16 gColliderY; /* the current entry's y */
 extern s16 gAttackBoxLeft; /* attack box left */
-extern u8 gUnk_030054A8;
+extern u8 gColliderClass10Count;
 extern struct Collider gPlayerColliders[];
 extern s16 gAttackBoxTop; /* attack box top */
 extern s16 gColliderRight; /* body box right */
 extern struct BodyBox *gColliderBodyBox; /* the current entry's body box */
 extern s16 gColliderLeft; /* body box left */
 extern struct PlayerState *gColliderPlayerState; /* the current entry's player */
-extern u8 gUnk_030054F4;
+extern u8 gColliderClass20Count;
 extern u16 gUnk_03005504;
 extern u16 gTerrainPixelIndex; /* pixel offset inside the queried cell */
 extern s16 gTerrainPrevBoxLeft; /* box left (room-relative) */
@@ -221,10 +221,10 @@ struct Task;
 
 /* src/hitbox_1a8c8.c */
 u8 HitTestPlayerColliders(void);
-u8 sub_0801af14(void);
+u8 HitTestColliderClass10(void);
 
 /* src/hitbox_1b24c.c */
-u8 sub_0801b24c(void);
+u8 HitTestColliderClass20(void);
 
 /* src/hitbox_1b7dc.c */
 void PlaceAttackBox(void);

@@ -44,8 +44,8 @@ extern u8 gHitterColliderKind;
    types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaceAttackBox(void);
-extern u8 sub_0801b24c(void);
-extern u8 sub_0801af14(void);
+extern u8 HitTestColliderClass20(void);
+extern u8 HitTestColliderClass10(void);
 extern u8 HitTestPlayerColliders(void);
 extern void PlaySfx(u32 a);
 extern u8 gTerrainResult;
@@ -1217,12 +1217,12 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
 u32 ActorTestColliders(u8 a)
 {
     PlaceAttackBox();
-    if (sub_0801b24c() != 0)
+    if (HitTestColliderClass20() != 0)
     {
         ActorStoreHit(a);
         return 1;
     }
-    if (sub_0801af14() != 0)
+    if (HitTestColliderClass10() != 0)
     {
         ActorStoreHit(a);
         return 1;
