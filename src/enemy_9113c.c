@@ -140,7 +140,7 @@ void PoppyBrosSrIntro(void)
         TaskStop();
     }
     sub_08066580();
-    ActorSetState(POPPY_BROS_SR_STATE_1);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP1);
     TaskSleepForever();
 }
 
@@ -158,19 +158,19 @@ void PoppyBrosSrHop1(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_1;
+    t->updateState = POPPY_BROS_SR_STATE_HOP1;
     u = gCurTask;
     u->poppyBrosSrHopPhase = zero;
     gCurTask->poppyBrosSrHopsLeft =
         gUnk_087438DC[RandomRange(4) + gCurTask->actorSpawnArg * 4];
     PoppyBrosSrHopBackAndForth();
-    ActorSetState(POPPY_BROS_SR_STATE_2);
+    ActorSetState(POPPY_BROS_SR_STATE_JUMP_THROW);
     TaskSleepForever();
 }
 
 void PoppyBrosSrHop1Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_1)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP1)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
@@ -186,7 +186,7 @@ void PoppyBrosSrJumpThrow(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_2;
+    t->updateState = POPPY_BROS_SR_STATE_JUMP_THROW;
     gCurTask->onGround = zero;
     TaskSetMotionY(0xFFFD0000, 4096, 196608);
     if (abs(TaskGetNearestPlayerDy()) <= 63)
@@ -248,7 +248,7 @@ void PoppyBrosSrJumpThrow(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(528);
-    ActorSetState(POPPY_BROS_SR_STATE_3);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP2);
     TaskSleepForever();
 }
 
@@ -264,7 +264,7 @@ void PoppyBrosSrJumpThrowUpdate(void)
     t = gCurTask;
     if (t->velY > 0 && t->poppyBrosSrHeadAnimIndex == 2)
         t->poppyBrosSrHeadAnimIndex = 3;
-    if (gCurTask->state != POPPY_BROS_SR_STATE_2)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_JUMP_THROW)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
@@ -276,18 +276,18 @@ void PoppyBrosSrHop2(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_3;
+    t->updateState = POPPY_BROS_SR_STATE_HOP2;
     u = gCurTask;
     u->poppyBrosSrHopPhase = zero;
     u->poppyBrosSrHopsLeft = 2;
     PoppyBrosSrHopBackAndForth();
-    ActorSetState(POPPY_BROS_SR_STATE_4);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP3);
     TaskSleepForever();
 }
 
 void PoppyBrosSrHop2Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_3)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP2)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
@@ -298,7 +298,7 @@ void PoppyBrosSrHop3(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_4;
+    t->updateState = POPPY_BROS_SR_STATE_HOP3;
     TaskFaceNearestPlayer();
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(81920, 0x5A5A5A5A);
@@ -316,13 +316,13 @@ void PoppyBrosSrHop3(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(528);
-    ActorSetState(POPPY_BROS_SR_STATE_5);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP4);
     TaskSleepForever();
 }
 
 void PoppyBrosSrHop3Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_4)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP3)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
@@ -334,7 +334,7 @@ void PoppyBrosSrHop4(void)
 
     t = gCurTask;
     zero = 0;
-    t->updateState = POPPY_BROS_SR_STATE_5;
+    t->updateState = POPPY_BROS_SR_STATE_HOP4;
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(163840, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFE4000, 4096, 196608);
@@ -361,13 +361,13 @@ void PoppyBrosSrHop4(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(528);
-    ActorSetState(POPPY_BROS_SR_STATE_1);
+    ActorSetState(POPPY_BROS_SR_STATE_HOP1);
     TaskSleepForever();
 }
 
 void PoppyBrosSrHop4Update(void)
 {
-    if (gCurTask->state != POPPY_BROS_SR_STATE_5)
+    if (gCurTask->state != POPPY_BROS_SR_STATE_HOP4)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 

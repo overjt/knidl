@@ -330,9 +330,9 @@ void BugzzyWalk(void)
         if (r < gUnk_08743A7C[gUnk_02007D00[5]])
             ActorSetState(BUGZZY_STATE_CHARGE);
         else if (r < gUnk_08743A82[gUnk_02007D00[5]])
-            ActorSetState(BUGZZY_STATE_4);
+            ActorSetState(BUGZZY_STATE_FLY_UP);
         else if (r < gUnk_08743A88[gUnk_02007D00[5]])
-            ActorSetState(BUGZZY_STATE_6);
+            ActorSetState(BUGZZY_STATE_JUMP);
         else
             ActorSetState(BUGZZY_STATE_HOP);
     }
@@ -520,7 +520,7 @@ void BugzzyFlyUp(void)
     struct Task *w;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_4;
+    t->updateState = BUGZZY_STATE_FLY_UP;
     TaskSetFrame(60);
     TaskYieldTrampoline(6);
     v = gCurTask;
@@ -558,13 +558,13 @@ void BugzzyFlyUp(void)
     else if (abs(TaskGetNearestPlayerDy()) <= 15)
         ActorSetState(BUGZZY_STATE_CHARGE);
     else
-        ActorSetState(BUGZZY_STATE_5);
+        ActorSetState(BUGZZY_STATE_FLY_FORWARD);
     TaskSleepForever();
 }
 
 void BugzzyFlyUpUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_4)
+    if (gCurTask->state != BUGZZY_STATE_FLY_UP)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
@@ -573,7 +573,7 @@ void BugzzyFlyForward(void)
     struct Task *t;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_5;
+    t->updateState = BUGZZY_STATE_FLY_FORWARD;
     TaskSetMotionXFacing(gUnk_08743AA4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     if (TaskGetYDirBitToNearestPlayer() == 1)
         gCurTask->velY = 49152;
@@ -590,7 +590,7 @@ void BugzzyFlyForward(void)
 
 void BugzzyFlyForwardUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_5)
+    if (gCurTask->state != BUGZZY_STATE_FLY_FORWARD)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
@@ -601,7 +601,7 @@ void BugzzyJump(void)
     struct Task *v;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_6;
+    t->updateState = BUGZZY_STATE_JUMP;
     TaskFaceNearestPlayer();
     TaskSetFrame(60);
     TaskYieldTrampoline(4);
@@ -628,7 +628,7 @@ void BugzzyJump(void)
 
 void BugzzyJumpUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_6)
+    if (gCurTask->state != BUGZZY_STATE_JUMP)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void BugzzyHop(void)
@@ -682,7 +682,7 @@ void BugzzyHop(void)
     TaskYieldTrampoline(3);
     p = &gTasks[TaskFindNearestPlayer()];
     if (p->onGround == 0)
-        ActorSetState(BUGZZY_STATE_4);
+        ActorSetState(BUGZZY_STATE_FLY_UP);
     else
         ActorSetState(BUGZZY_STATE_CHARGE);
     TaskSleepForever();
@@ -760,7 +760,7 @@ void BugzzyBounceOffWall(void)
     TaskYieldTrampoline(30);
     gCurTask->velX = 0;
     BugzzyShakeVertically();
-    ActorSetState(BUGZZY_STATE_11);
+    ActorSetState(BUGZZY_STATE_LAND);
     TaskSleepForever();
 }
 
@@ -776,7 +776,7 @@ void BugzzyLand(void)
     struct Task *u;
 
     t = gCurTask;
-    t->updateState = BUGZZY_STATE_11;
+    t->updateState = BUGZZY_STATE_LAND;
     TaskSetMotionXFacing(0xFFFFC000, 0x5A5A5A5A);
     TaskSetFrame(48);
     TaskYieldTrampoline(4);
@@ -795,7 +795,7 @@ void BugzzyLand(void)
 
 void BugzzyLandUpdate(void)
 {
-    if (gCurTask->state != BUGZZY_STATE_11)
+    if (gCurTask->state != BUGZZY_STATE_LAND)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 void BugzzyBackdrop(void)
@@ -881,7 +881,7 @@ void BugzzyBackdrop(void)
             TaskYieldTrampoline(1);
         TaskStop();
         BugzzySlamHeldPlayer();
-        ActorSetState(BUGZZY_STATE_11);
+        ActorSetState(BUGZZY_STATE_LAND);
         break;
     case 3:
         s->bugzzyLoopCount = 0;
@@ -1148,7 +1148,7 @@ s32 BugzzyHitWall(void)
             r = 1;
         }
         break;
-    case BUGZZY_STATE_6:
+    case BUGZZY_STATE_JUMP:
     case BUGZZY_STATE_FALL:
         TaskTurnAroundAndReverseX();
         break;
@@ -1275,7 +1275,7 @@ void BonkersNutInit(void)
     t = gCurTask;
     t->updateCallback = (u32)BonkersNutUpdate;
     TaskFaceLikeParent();
-    ActorSetState(BONKERS_NUT_STATE_0);
+    ActorSetState(BONKERS_NUT_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 1, gBonkersNutStates);
 }
 
@@ -1291,7 +1291,7 @@ void BonkersNutFlight(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = BONKERS_NUT_STATE_0;
+    gCurTask->updateState = BONKERS_NUT_STATE_FLIGHT;
     gCurTask->bonkersNutBounced = 0;
     TaskSetFrame(4);
     gCurTask->onGround = 0;

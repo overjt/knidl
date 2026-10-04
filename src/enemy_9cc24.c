@@ -450,7 +450,7 @@ void JavelinKnightThrust(void)
     TaskYieldTrampoline(4);
     TaskSetFrame(11);
     TaskYieldTrampoline(3);
-    ActorSetState(JAVELIN_KNIGHT_STATE_0);
+    ActorSetState(JAVELIN_KNIGHT_STATE_START_HOP);
     TaskSleepForever();
 }
 
@@ -459,7 +459,7 @@ void JavelinKnightThrustUpdate(void)
     struct Task *t;
     u16 v;
 
-    if (gCurTask->state != JAVELIN_KNIGHT_STATE_2)
+    if (gCurTask->state != JAVELIN_KNIGHT_STATE_THRUST)
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
     t = gCurTask;
     v = t->frame;
@@ -587,7 +587,7 @@ void JavelinKnightState5(void)
     TaskYieldTrampoline(3);
     TaskSetFrame(11);
     TaskYieldTrampoline(4);
-    ActorSetState(JAVELIN_KNIGHT_STATE_0);
+    ActorSetState(JAVELIN_KNIGHT_STATE_START_HOP);
     TaskSleepForever();
 }
 
@@ -628,7 +628,7 @@ void JavelinKnightChooseNextState(void)
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
         return;
     }
-    ActorSetState(JAVELIN_KNIGHT_STATE_2);
+    ActorSetState(JAVELIN_KNIGHT_STATE_THRUST);
     TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
 }
 

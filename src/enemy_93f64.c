@@ -57,7 +57,7 @@ void Task_BugzzyLadybug(void)
 void BugzzyLadybugInit(void)
 {
     gCurTask->updateCallback = (u32)BugzzyLadybugUpdate;
-    ActorSetState(BUGZZY_LADYBUG_STATE_0);
+    ActorSetState(BUGZZY_LADYBUG_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 1, gBugzzyLadybugStates);
 }
 
@@ -77,7 +77,7 @@ void BugzzyLadybugFlight(void)
     struct Task *w;
     struct Task *x;
 
-    gCurTask->updateState = BUGZZY_LADYBUG_STATE_0;
+    gCurTask->updateState = BUGZZY_LADYBUG_STATE_FLIGHT;
     TaskSetFrame(4);
     PlaySfx(506);
     BugzzyLadybugSetVelocity();
@@ -182,7 +182,7 @@ void GrandWheelieInit(void)
         u = gCurTask;
         u->updateCallback = (u32)GrandWheelieUpdate;
         u->onGround = 1;
-        ActorSetState(GRAND_WHEELIE_STATE_1);
+        ActorSetState(GRAND_WHEELIE_STATE_SHOW_HP_BAR);
         CallTableEntry(gCurTask->state, 11, gGrandWheelieStates);
     }
 }
@@ -329,9 +329,9 @@ void GrandWheelieFallUpdate(void)
 
 void GrandWheelieShowHpBar(void)
 {
-    gCurTask->updateState = GRAND_WHEELIE_STATE_1;
+    gCurTask->updateState = GRAND_WHEELIE_STATE_SHOW_HP_BAR;
     sub_08066580();
-    ActorSetState(GRAND_WHEELIE_STATE_2);
+    ActorSetState(GRAND_WHEELIE_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -340,7 +340,7 @@ void GrandWheelieShowHpBarUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != GRAND_WHEELIE_STATE_1) {
+    if (t->state != GRAND_WHEELIE_STATE_SHOW_HP_BAR) {
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     } else {
         gCurTask->actorAnimDelay = GrandWheelieTickAnim(t->actorAnimDelay);
@@ -351,7 +351,7 @@ void GrandWheelieWait(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = GRAND_WHEELIE_STATE_2;
+    gCurTask->updateState = GRAND_WHEELIE_STATE_WAIT;
     if (GrandWheelieCheckSummon() != 0) {
         ActorSetState(GRAND_WHEELIE_STATE_SUMMON);
         TaskSleepForever();
@@ -384,7 +384,7 @@ void GrandWheelieWaitUpdate(void)
     s32 x;
 
     t = gCurTask;
-    if (t->state != GRAND_WHEELIE_STATE_2)
+    if (t->state != GRAND_WHEELIE_STATE_WAIT)
         goto rearm;
     x = GrandWheelieTickAnim(t->actorAnimDelay);
     u = gCurTask;
@@ -564,7 +564,7 @@ other:
         StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
         if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
             TaskFree(gCurTask->grandWheelieFlameSlot);
-        ActorSetState(GRAND_WHEELIE_STATE_5);
+        ActorSetState(GRAND_WHEELIE_STATE_SKID_TURN);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     }
     z = GrandWheelieIsNearPlayer();
@@ -579,7 +579,7 @@ other:
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
     if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
         TaskFree(gCurTask->grandWheelieFlameSlot);
-    ActorSetState(GRAND_WHEELIE_STATE_6);
+    ActorSetState(GRAND_WHEELIE_STATE_SKID_STOP);
     TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
 
@@ -667,7 +667,7 @@ void GrandWheelieSkidTurn(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = GRAND_WHEELIE_STATE_5;
+    gCurTask->updateState = GRAND_WHEELIE_STATE_SKID_TURN;
     t = gCurTask;
     t->grandWheelieSkidTimer = 60;
     t->grandWheelieSkidDir = t->facing;
@@ -692,7 +692,7 @@ void GrandWheelieSkidTurnUpdate(void)
     }
     if (GrandWheelieBrake() != 0) {
         gCurTask->velX = 0;
-        ActorSetState(GRAND_WHEELIE_STATE_2);
+        ActorSetState(GRAND_WHEELIE_STATE_WAIT);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
         return;
     }
@@ -705,7 +705,7 @@ void GrandWheelieSkidTurnUpdate(void)
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
         return;
     }
-    ActorSetState(GRAND_WHEELIE_STATE_2);
+    ActorSetState(GRAND_WHEELIE_STATE_WAIT);
     TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
 
@@ -748,7 +748,7 @@ void GrandWheelieSkidStop(void)
     s32 zero;
     s32 v;
 
-    gCurTask->updateState = GRAND_WHEELIE_STATE_6;
+    gCurTask->updateState = GRAND_WHEELIE_STATE_SKID_STOP;
     zero = 0;
     v = GrandWheelieStartAnim(gUnk_087443BC);
     t = gCurTask;
@@ -769,7 +769,7 @@ void GrandWheelieSkidStopUpdate(void)
     gCurTask->actorAnimDelay = GrandWheelieTickAnim(t->actorAnimDelay);
     if (GrandWheelieBrake() != 0) {
         gCurTask->velX = 0;
-        ActorSetState(GRAND_WHEELIE_STATE_2);
+        ActorSetState(GRAND_WHEELIE_STATE_WAIT);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     }
 }
@@ -878,7 +878,7 @@ void GrandWheelieSummon(void)
     sp.checkTerrain = 1;
     gCurTask->grandWheelieMiniWheelieSlot = CreateActorFromDescAtOffsetFacing(&sp, 1);
     TaskYieldTrampoline(20);
-    ActorSetState(GRAND_WHEELIE_STATE_2);
+    ActorSetState(GRAND_WHEELIE_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -923,7 +923,7 @@ void GrandWheelieBounceOffWall(void)
         TaskYieldTrampoline(1);
     } while (gCurTask->grandWheelieLanded == 0);
     TaskYieldTrampoline(30);
-    ActorSetState(GRAND_WHEELIE_STATE_2);
+    ActorSetState(GRAND_WHEELIE_STATE_WAIT);
     TaskSleepForever();
 }
 
@@ -1009,7 +1009,7 @@ s32 GrandWheelieLand(void)
         TaskStopY();
         RequestScreenShake(2);
         PlaySfx(504);
-        ActorSetState(GRAND_WHEELIE_STATE_1);
+        ActorSetState(GRAND_WHEELIE_STATE_SHOW_HP_BAR);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
         return 1;
     case GRAND_WHEELIE_STATE_HOP:
@@ -1045,8 +1045,8 @@ s32 GrandWheelieHitWall(void)
         ActorSetState(GRAND_WHEELIE_STATE_BOUNCE_OFF_WALL);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
         return 1;
-    case GRAND_WHEELIE_STATE_5:
-    case GRAND_WHEELIE_STATE_6:
+    case GRAND_WHEELIE_STATE_SKID_TURN:
+    case GRAND_WHEELIE_STATE_SKID_STOP:
     case GRAND_WHEELIE_STATE_DEFEAT:
         TaskStopX();
         break;

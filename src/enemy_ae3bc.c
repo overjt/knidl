@@ -3024,7 +3024,7 @@ void HeavyMoleArmEnterState(void)
 
 void HeavyMoleArmSpinLoop(void)
 {
-    gCurTask->updateState = HEAVY_MOLE_ARM_STATE_0;
+    gCurTask->updateState = HEAVY_MOLE_ARM_STATE_SPIN_LOOP;
     if (gCurTask->heavyMoleArmSpinLevel >> 16 > 2)
         gCurTask->heavyMoleArmSpinLevel = (gCurTask->heavyMoleArmSpinLevel & 0xFFFF) + (128 << 10);
     gUnk_030023D4 = 0;
@@ -3101,7 +3101,7 @@ void HeavyMoleArmSpinLoopUpdate(void)
     if (gCurTask->heavyMoleArmStateTimer == 0)
     {
         gCurTask->heavyMoleArmStateTimer = gUnk_0874B82E[gUnk_02007D00[3]];
-        ActorSetState(HEAVY_MOLE_ARM_STATE_1);
+        ActorSetState(HEAVY_MOLE_ARM_STATE_SPIN_WIND_UP);
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     }
 }
@@ -3128,7 +3128,7 @@ void HeavyMoleArmSpinWindUp(void)
     s32 x2;
 
     t = gCurTask;
-    t->updateState = HEAVY_MOLE_ARM_STATE_1;
+    t->updateState = HEAVY_MOLE_ARM_STATE_SPIN_WIND_UP;
     u = gCurTask;
     k = u->facing;
     if (k == -1)
@@ -3284,7 +3284,7 @@ void HeavyMoleArmSwingSlow(void)
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(2);
-    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_SPIN_LOOP);
     TaskSleepForever();
 }
 
@@ -3293,7 +3293,7 @@ void HeavyMoleArmSwingSlowUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != HEAVY_MOLE_ARM_STATE_2)
+    if (t->state != HEAVY_MOLE_ARM_STATE_SWING_SLOW)
     {
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
@@ -3361,7 +3361,7 @@ void HeavyMoleArmSwingFast(void)
     u5 = *c2;
     u5->heavyMoleArmSwingStep = 0;
     TaskYieldTrampoline(1);
-    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_SPIN_LOOP);
     TaskSleepForever();
 }
 
@@ -3370,7 +3370,7 @@ void HeavyMoleArmSwingFastUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->state != HEAVY_MOLE_ARM_STATE_3)
+    if (t->state != HEAVY_MOLE_ARM_STATE_SWING_FAST)
     {
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
         return;
@@ -3462,7 +3462,7 @@ void HeavyMoleArmThrust(void)
 
     t = gCurTask;
     z = 0;
-    t->updateState = HEAVY_MOLE_ARM_STATE_5;
+    t->updateState = HEAVY_MOLE_ARM_STATE_THRUST;
     t2 = gCurTask;
     t2->heavyMoleArmPathStep = 11;
     t2->heavyMoleArmAngleIndex = z;
@@ -3483,7 +3483,7 @@ loop:
     u2 = gCurTask;
     u2->posX = 0;
     u2->posY = 0;
-    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_SPIN_LOOP);
     TaskSleepForever();
 }
 
@@ -3495,7 +3495,7 @@ void HeavyMoleArmThrustUpdate(void)
     vu16 *pm;
 
     c = &gCurTask;
-    if (gCurTask->state != HEAVY_MOLE_ARM_STATE_5)
+    if (gCurTask->state != HEAVY_MOLE_ARM_STATE_THRUST)
         TaskSetEntry(HeavyMoleArmEnterState, gCurTaskIdx);
     pm = (vu16 *)&gFrameCount;
     if (*pm & 1)
@@ -3527,7 +3527,7 @@ void HeavyMoleArmState4(void)
             gCurTask->heavyMoleArmBaseFrame = gUnk_0874B8F8[gCurTask->heavyMoleArmPathStep];
         TaskYieldTrampoline(gUnk_0874B928[gCurTask->heavyMoleArmPathStep]);
     } while (gCurTask->heavyMoleArmPathStep > 0);
-    ActorSetState(HEAVY_MOLE_ARM_STATE_0);
+    ActorSetState(HEAVY_MOLE_ARM_STATE_SPIN_LOOP);
     TaskSleepForever();
 }
 
@@ -3542,7 +3542,7 @@ void HeavyMoleArmState4Update(void)
     t = *c;
     t->heavyMoleArmTimeLimit--;
     if (t->heavyMoleArmTimeLimit < 0)
-        ActorSetState(HEAVY_MOLE_ARM_STATE_0);
+        ActorSetState(HEAVY_MOLE_ARM_STATE_SPIN_LOOP);
     t3 = *c;
     if (t3->state != 4)
     {
@@ -4410,7 +4410,7 @@ s32 WhispyWoodsAppleLand(void)
     {
         t->whispyWoodsAppleFirstFall = z;
         t->whispyWoodsAppleFloorY = t->pixelY;
-        ActorSetState(WHISPY_WOODS_APPLE_STATE_1);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_BOUNCE1);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
         return 1;
     }

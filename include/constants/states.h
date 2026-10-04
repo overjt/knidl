@@ -52,7 +52,7 @@
 
 /* BigSwitch states - gBigSwitchStates[N], CallTableEntry(Task.state) in BigSwitchInit */
 #define BIG_SWITCH_STATE_WAIT    0
-#define BIG_SWITCH_STATE_1       1
+#define BIG_SWITCH_STATE_PRESS   1
 #define BIG_SWITCH_STATE_REFILL  2
 
 /* BlipperChase states - gBlipperChaseStates[N], CallTableEntry(Task.state) in BlipperChaseInit */
@@ -127,7 +127,7 @@
 #define BOMBER_STATE_EXPLODE  3
 
 /* BonkersNut states - gBonkersNutStates[N], CallTableEntry(Task.state) in BonkersNutInit */
-#define BONKERS_NUT_STATE_0  0
+#define BONKERS_NUT_STATE_FLIGHT  0
 
 /* Bonkers states - gBonkersStates[N], CallTableEntry(Task.state) in BonkersInit */
 #define BONKERS_STATE_INTRO            0
@@ -170,33 +170,33 @@
 #define BUBBLES_STATE_FALL                4
 
 /* BugzzyLadybug states - gBugzzyLadybugStates[N], CallTableEntry(Task.state) in BugzzyLadybugInit */
-#define BUGZZY_LADYBUG_STATE_0  0
+#define BUGZZY_LADYBUG_STATE_FLIGHT  0
 
 /* Bugzzy states - gBugzzyStates[N], CallTableEntry(Task.state) in BugzzyInit */
 #define BUGZZY_STATE_INTRO            0
 #define BUGZZY_STATE_WALK             1
 #define BUGZZY_STATE_SUMMON           2
 #define BUGZZY_STATE_CHARGE           3
-#define BUGZZY_STATE_4                4
-#define BUGZZY_STATE_5                5
-#define BUGZZY_STATE_6                6
+#define BUGZZY_STATE_FLY_UP           4
+#define BUGZZY_STATE_FLY_FORWARD      5
+#define BUGZZY_STATE_JUMP             6
 #define BUGZZY_STATE_HOP              7
 #define BUGZZY_STATE_FALL             8
 #define BUGZZY_STATE_BOUNCE_OFF_WALL  9
 #define BUGZZY_STATE_BACKDROP         10
-#define BUGZZY_STATE_11               11
+#define BUGZZY_STATE_LAND             11
 #define BUGZZY_STATE_DEFEAT           12
 
 /* CannonFuse states - gCannonFuseStates[N], CallTableEntry(Task.state) in CannonFuseInit */
-#define CANNON_FUSE_STATE_WAIT  0
-#define CANNON_FUSE_STATE_BURN  1
-#define CANNON_FUSE_STATE_2     2
+#define CANNON_FUSE_STATE_WAIT     0
+#define CANNON_FUSE_STATE_BURN     1
+#define CANNON_FUSE_STATE_RESTORE  2
 
 /* Cannon states - gCannonStates[N], CallTableEntry(Task.state) in CannonInit */
-#define CANNON_STATE_WAIT  0
-#define CANNON_STATE_1     1
-#define CANNON_STATE_2     2
-#define CANNON_STATE_3     3
+#define CANNON_STATE_WAIT             0
+#define CANNON_STATE_LAUNCH_SHORT     1
+#define CANNON_STATE_LAUNCH_UP        2
+#define CANNON_STATE_LAUNCH_UP_RIGHT  3
 
 /* CappyCapless states - gCappyCaplessStates[N], CallTableEntry(Task.state) in CappyCaplessInit */
 #define CAPPY_CAPLESS_STATE_HOP   0
@@ -238,17 +238,17 @@
 #define COOL_SPOOK_FLY_STATE_FLY  0
 
 /* FireLion states - gFireLionStates[N], CallTableEntry(Task.state) in FireLionEnterState */
-#define FIRE_LION_STATE_DROP_IN  0
-#define FIRE_LION_STATE_1        1
-#define FIRE_LION_STATE_WAIT     2
-#define FIRE_LION_STATE_3        3
-#define FIRE_LION_STATE_4        4
-#define FIRE_LION_STATE_5        5
-#define FIRE_LION_STATE_6        6
-#define FIRE_LION_STATE_SLASH    7
-#define FIRE_LION_STATE_POUNCE   8
-#define FIRE_LION_STATE_9        9
-#define FIRE_LION_STATE_DEFEAT   10
+#define FIRE_LION_STATE_DROP_IN      0
+#define FIRE_LION_STATE_SHOW_HP_BAR  1
+#define FIRE_LION_STATE_WAIT         2
+#define FIRE_LION_STATE_3            3
+#define FIRE_LION_STATE_4            4
+#define FIRE_LION_STATE_5            5
+#define FIRE_LION_STATE_6            6
+#define FIRE_LION_STATE_SLASH        7
+#define FIRE_LION_STATE_POUNCE       8
+#define FIRE_LION_STATE_9            9
+#define FIRE_LION_STATE_DEFEAT       10
 
 /* FlamerIdle states - gFlamerIdleStates[N], CallTableEntry(Task.state) in FlamerIdleInit */
 #define FLAMER_IDLE_STATE_IDLE  0
@@ -294,24 +294,24 @@
 
 /* GrandWheelie states - gGrandWheelieStates[N], CallTableEntry(Task.state) in GrandWheelieInit */
 #define GRAND_WHEELIE_STATE_FALL             0
-#define GRAND_WHEELIE_STATE_1                1
-#define GRAND_WHEELIE_STATE_2                2
+#define GRAND_WHEELIE_STATE_SHOW_HP_BAR      1
+#define GRAND_WHEELIE_STATE_WAIT             2
 #define GRAND_WHEELIE_STATE_HOP              3
 #define GRAND_WHEELIE_STATE_CHARGE           4
-#define GRAND_WHEELIE_STATE_5                5
-#define GRAND_WHEELIE_STATE_6                6
+#define GRAND_WHEELIE_STATE_SKID_TURN        5
+#define GRAND_WHEELIE_STATE_SKID_STOP        6
 #define GRAND_WHEELIE_STATE_7                7
 #define GRAND_WHEELIE_STATE_SUMMON           8
 #define GRAND_WHEELIE_STATE_BOUNCE_OFF_WALL  9
 #define GRAND_WHEELIE_STATE_DEFEAT           10
 
 /* HeavyMoleArm states - gHeavyMoleArmStates[N], CallTableEntry(Task.state) in HeavyMoleArmEnterState */
-#define HEAVY_MOLE_ARM_STATE_0  0
-#define HEAVY_MOLE_ARM_STATE_1  1
-#define HEAVY_MOLE_ARM_STATE_2  2
-#define HEAVY_MOLE_ARM_STATE_3  3
-#define HEAVY_MOLE_ARM_STATE_4  4
-#define HEAVY_MOLE_ARM_STATE_5  5
+#define HEAVY_MOLE_ARM_STATE_SPIN_LOOP     0
+#define HEAVY_MOLE_ARM_STATE_SPIN_WIND_UP  1
+#define HEAVY_MOLE_ARM_STATE_SWING_SLOW    2
+#define HEAVY_MOLE_ARM_STATE_SWING_FAST    3
+#define HEAVY_MOLE_ARM_STATE_4             4
+#define HEAVY_MOLE_ARM_STATE_THRUST        5
 
 /* HeldPlayer states - gHeldPlayerStates[N], CallTableEntry(Task.state) in HeldPlayerInit */
 #define HELD_PLAYER_STATE_SWALLOW                0
@@ -343,9 +343,9 @@
 #define INHALABLE_STAR_STATE_0  0
 
 /* JavelinKnight states - gJavelinKnightStates[N], CallTableEntry(Task.state) in JavelinKnightEnterState */
-#define JAVELIN_KNIGHT_STATE_0           0
+#define JAVELIN_KNIGHT_STATE_START_HOP   0
 #define JAVELIN_KNIGHT_STATE_HOP         1
-#define JAVELIN_KNIGHT_STATE_2           2
+#define JAVELIN_KNIGHT_STATE_THRUST      2
 #define JAVELIN_KNIGHT_STATE_JUMP_THROW  3
 #define JAVELIN_KNIGHT_STATE_JUMP        4
 #define JAVELIN_KNIGHT_STATE_5           5
@@ -368,14 +368,14 @@
 #define KABU_TELEPORT_STATE_2         2
 
 /* KingDededeAirPuff states - gKingDededeAirPuffStates[N], CallTableEntry(Task.state) in KingDededeAirPuffInit */
-#define KING_DEDEDE_AIR_PUFF_STATE_0  0
+#define KING_DEDEDE_AIR_PUFF_STATE_FLIGHT  0
 
 /* KingDededeDefeated states - gKingDededeDefeatedStates[N], CallTableEntry(Task.state) in KingDededeDefeatedInit */
 #define KING_DEDEDE_DEFEATED_STATE_FALL       0
 #define KING_DEDEDE_DEFEATED_STATE_HOLD_BACK  1
 
 /* KingDededeStar states - gKingDededeStarStates[N], CallTableEntry(Task.state) in KingDededeStarInit */
-#define KING_DEDEDE_STAR_STATE_0  0
+#define KING_DEDEDE_STAR_STATE_FLIGHT  0
 
 /* KingDedede states - gKingDededeStates[N], CallTableEntry(Task.state) in KingDededeInit */
 #define KING_DEDEDE_STATE_INTRO      0
@@ -467,28 +467,28 @@
 #define MR_BRIGHT_BEAM_STATE_1  1
 
 /* MrBrightFireball states - gMrBrightFireballStates[N], CallTableEntry(Task.state) in MrBrightFireballInit */
-#define MR_BRIGHT_FIREBALL_STATE_0  0
-#define MR_BRIGHT_FIREBALL_STATE_1  1
+#define MR_BRIGHT_FIREBALL_STATE_FLIGHT  0
+#define MR_BRIGHT_FIREBALL_STATE_DIE     1
 
 /* MrBright states - gMrBrightStates[N], CallTableEntry(Task.state) in MrBrightInit */
-#define MR_BRIGHT_STATE_FALL             0
-#define MR_BRIGHT_STATE_WAIT             1
-#define MR_BRIGHT_STATE_ASCEND           2
-#define MR_BRIGHT_STATE_WAIT_TO_ATTACK   3
-#define MR_BRIGHT_STATE_4                4
-#define MR_BRIGHT_STATE_5                5
-#define MR_BRIGHT_STATE_CHASE            6
-#define MR_BRIGHT_STATE_WAIT_TO_DESCEND  7
-#define MR_BRIGHT_STATE_DESCEND          8
-#define MR_BRIGHT_STATE_HOP              9
-#define MR_BRIGHT_STATE_JUMP             10
-#define MR_BRIGHT_STATE_JUMP_BACK        11
-#define MR_BRIGHT_STATE_DASH             12
-#define MR_BRIGHT_STATE_RECOIL           13
-#define MR_BRIGHT_STATE_THROW            14
-#define MR_BRIGHT_STATE_15               15
-#define MR_BRIGHT_STATE_16               16
-#define MR_BRIGHT_STATE_17               17
+#define MR_BRIGHT_STATE_FALL              0
+#define MR_BRIGHT_STATE_WAIT              1
+#define MR_BRIGHT_STATE_ASCEND            2
+#define MR_BRIGHT_STATE_WAIT_TO_ATTACK    3
+#define MR_BRIGHT_STATE_WIND_UP           4
+#define MR_BRIGHT_STATE_FIRE_BEAM         5
+#define MR_BRIGHT_STATE_CHASE             6
+#define MR_BRIGHT_STATE_WAIT_TO_DESCEND   7
+#define MR_BRIGHT_STATE_DESCEND           8
+#define MR_BRIGHT_STATE_HOP               9
+#define MR_BRIGHT_STATE_JUMP              10
+#define MR_BRIGHT_STATE_JUMP_BACK         11
+#define MR_BRIGHT_STATE_DASH              12
+#define MR_BRIGHT_STATE_RECOIL            13
+#define MR_BRIGHT_STATE_THROW             14
+#define MR_BRIGHT_STATE_WAIT_TO_CONVERGE  15
+#define MR_BRIGHT_STATE_CONVERGE_START    16
+#define MR_BRIGHT_STATE_CONVERGE_END      17
 
 /* MrFrostyIceCube states - gMrFrostyIceCubeStates[N], CallTableEntry(Task.state) in MrFrostyIceCubeInit */
 #define MR_FROSTY_ICE_CUBE_STATE_0       0
@@ -517,38 +517,38 @@
 #define MR_FROSTY_STATE_DROP_IN                  18
 
 /* MrShineAndMrBright states - gMrShineAndMrBrightStates[N], CallTableEntry(Task.state) in MrShineAndMrBrightInit */
-#define MR_SHINE_AND_MR_BRIGHT_STATE_0  0
-#define MR_SHINE_AND_MR_BRIGHT_STATE_1  1
-#define MR_SHINE_AND_MR_BRIGHT_STATE_2  2
-#define MR_SHINE_AND_MR_BRIGHT_STATE_3  3
+#define MR_SHINE_AND_MR_BRIGHT_STATE_INTRO                    0
+#define MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_KNOCK_OUT       1
+#define MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_CONVERGE_START  2
+#define MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_CONVERGE_END    3
 
 /* MrShineCrescent states - gMrShineCrescentStates[N], CallTableEntry(Task.state) in MrShineCrescentInit */
-#define MR_SHINE_CRESCENT_STATE_0  0
-#define MR_SHINE_CRESCENT_STATE_1  1
+#define MR_SHINE_CRESCENT_STATE_FLIGHT  0
+#define MR_SHINE_CRESCENT_STATE_DIE     1
 
 /* MrShineFallingStar states - gMrShineFallingStarStates[N], CallTableEntry(Task.state) in MrShineFallingStarInit */
-#define MR_SHINE_FALLING_STAR_STATE_0  0
-#define MR_SHINE_FALLING_STAR_STATE_1  1
+#define MR_SHINE_FALLING_STAR_STATE_FLIGHT  0
+#define MR_SHINE_FALLING_STAR_STATE_DIE     1
 
 /* MrShine states - gMrShineStates[N], CallTableEntry(Task.state) in MrShineInit */
-#define MR_SHINE_STATE_FALL             0
-#define MR_SHINE_STATE_WAIT             1
-#define MR_SHINE_STATE_ASCEND           2
-#define MR_SHINE_STATE_WAIT_TO_ATTACK   3
-#define MR_SHINE_STATE_4                4
-#define MR_SHINE_STATE_DROP_STARS       5
-#define MR_SHINE_STATE_CHASE            6
-#define MR_SHINE_STATE_WAIT_TO_DESCEND  7
-#define MR_SHINE_STATE_DESCEND          8
-#define MR_SHINE_STATE_WALK             9
-#define MR_SHINE_STATE_JUMP             10
-#define MR_SHINE_STATE_JUMP_BACK        11
-#define MR_SHINE_STATE_DASH             12
-#define MR_SHINE_STATE_RECOIL           13
-#define MR_SHINE_STATE_THROW            14
-#define MR_SHINE_STATE_15               15
-#define MR_SHINE_STATE_16               16
-#define MR_SHINE_STATE_17               17
+#define MR_SHINE_STATE_FALL              0
+#define MR_SHINE_STATE_WAIT              1
+#define MR_SHINE_STATE_ASCEND            2
+#define MR_SHINE_STATE_WAIT_TO_ATTACK    3
+#define MR_SHINE_STATE_WIND_UP           4
+#define MR_SHINE_STATE_DROP_STARS        5
+#define MR_SHINE_STATE_CHASE             6
+#define MR_SHINE_STATE_WAIT_TO_DESCEND   7
+#define MR_SHINE_STATE_DESCEND           8
+#define MR_SHINE_STATE_WALK              9
+#define MR_SHINE_STATE_JUMP              10
+#define MR_SHINE_STATE_JUMP_BACK         11
+#define MR_SHINE_STATE_DASH              12
+#define MR_SHINE_STATE_RECOIL            13
+#define MR_SHINE_STATE_THROW             14
+#define MR_SHINE_STATE_WAIT_TO_CONVERGE  15
+#define MR_SHINE_STATE_CONVERGE_START    16
+#define MR_SHINE_STATE_CONVERGE_END      17
 
 /* MrTickTockNote states - gMrTickTockNoteStates[N], CallTableEntry(Task.state) in MrTickTockNoteInit */
 #define MR_TICK_TOCK_NOTE_STATE_FLIGHT  0
@@ -598,18 +598,18 @@
 #define NIGHTMARE_WIZARD_STAR_STATE_0  0
 
 /* NightmareWizard states - gNightmareWizardStates[N], CallTableEntry(Task.state) in NightmareWizardInit */
-#define NIGHTMARE_WIZARD_STATE_0           0
-#define NIGHTMARE_WIZARD_STATE_1           1
-#define NIGHTMARE_WIZARD_STATE_2           2
-#define NIGHTMARE_WIZARD_STATE_3           3
-#define NIGHTMARE_WIZARD_STATE_4           4
-#define NIGHTMARE_WIZARD_STATE_OPEN_CLOAK  5
-#define NIGHTMARE_WIZARD_STATE_OPEN_PALM   6
-#define NIGHTMARE_WIZARD_STATE_POINT       7
-#define NIGHTMARE_WIZARD_STATE_TWIST       8
-#define NIGHTMARE_WIZARD_STATE_SWOOP       9
-#define NIGHTMARE_WIZARD_STATE_10          10
-#define NIGHTMARE_WIZARD_STATE_HURT        11
+#define NIGHTMARE_WIZARD_STATE_INTRO           0
+#define NIGHTMARE_WIZARD_STATE_WAIT            1
+#define NIGHTMARE_WIZARD_STATE_TELEPORT_END    2
+#define NIGHTMARE_WIZARD_STATE_TELEPORT_START  3
+#define NIGHTMARE_WIZARD_STATE_4               4
+#define NIGHTMARE_WIZARD_STATE_OPEN_CLOAK      5
+#define NIGHTMARE_WIZARD_STATE_OPEN_PALM       6
+#define NIGHTMARE_WIZARD_STATE_POINT           7
+#define NIGHTMARE_WIZARD_STATE_TWIST           8
+#define NIGHTMARE_WIZARD_STATE_SWOOP           9
+#define NIGHTMARE_WIZARD_STATE_TELEPORT_LOOP   10
+#define NIGHTMARE_WIZARD_STATE_HURT            11
 
 /* Noddy states - gNoddyStates[N], CallTableEntry(Task.state) in NoddyInit */
 #define NODDY_STATE_WALK         0
@@ -691,12 +691,12 @@
 #define PICKUP_STATE_FALL_IN_WATER  2
 
 /* PlayerCannon states - gPlayerCannonStates[N], CallTableEntry(Task.state) in PlayerCannonInit */
-#define PLAYER_CANNON_STATE_0  0
-#define PLAYER_CANNON_STATE_1  1
-#define PLAYER_CANNON_STATE_2  2
-#define PLAYER_CANNON_STATE_3  3
-#define PLAYER_CANNON_STATE_4  4
-#define PLAYER_CANNON_STATE_5  5
+#define PLAYER_CANNON_STATE_WAIT             0
+#define PLAYER_CANNON_STATE_LAUNCH_UP        1
+#define PLAYER_CANNON_STATE_LAUNCH_UP_RIGHT  2
+#define PLAYER_CANNON_STATE_LAUNCH_SHORT     3
+#define PLAYER_CANNON_STATE_ARRIVE           4
+#define PLAYER_CANNON_STATE_5                5
 
 /* PlayerGoalGame states - gPlayerGoalGameStates[N], CallTableEntry(Task.state) in PlayerGoalGameInit */
 #define PLAYER_GOAL_GAME_STATE_0                0
@@ -752,13 +752,13 @@
 #define POPPY_BROS_SR_BOMB_STATE_FLIGHT  1
 
 /* PoppyBrosSr states - gPoppyBrosSrStates[N], CallTableEntry(Task.state) in PoppyBrosSrInit */
-#define POPPY_BROS_SR_STATE_INTRO   0
-#define POPPY_BROS_SR_STATE_1       1
-#define POPPY_BROS_SR_STATE_2       2
-#define POPPY_BROS_SR_STATE_3       3
-#define POPPY_BROS_SR_STATE_4       4
-#define POPPY_BROS_SR_STATE_5       5
-#define POPPY_BROS_SR_STATE_DEFEAT  6
+#define POPPY_BROS_SR_STATE_INTRO       0
+#define POPPY_BROS_SR_STATE_HOP1        1
+#define POPPY_BROS_SR_STATE_JUMP_THROW  2
+#define POPPY_BROS_SR_STATE_HOP2        3
+#define POPPY_BROS_SR_STATE_HOP3        4
+#define POPPY_BROS_SR_STATE_HOP4        5
+#define POPPY_BROS_SR_STATE_DEFEAT      6
 
 /* QuickDrawOpponent states - gQuickDrawOpponentStates[N], CallTableEntry(Task.state) in QuickDrawOpponent */
 #define QUICK_DRAW_OPPONENT_STATE_ARRIVE  0
@@ -909,22 +909,22 @@
 #define SWORD_AND_BLADE_KNIGHT_IDLE_STATE_0  0
 
 /* SwordAndBladeKnightStand states - gSwordAndBladeKnightStandStates[N], CallTableEntry(Task.state) in SwordAndBladeKnightStandInit */
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_0           0
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_1           1
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_2           2
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP    3
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN  4
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_5           5
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_WAIT_FOR_PLAYER     0
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP_WIND_UP    1
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN_WIND_UP  2
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP            3
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN          4
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_WAIT_AFTER_SLASH    5
 
 /* SwordAndBladeKnightWalk states - gSwordAndBladeKnightWalkStates[N], CallTableEntry(Task.state) in SwordAndBladeKnightWalkInit */
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_0           0
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_1           1
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_2           2
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP    3
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN  4
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_WALK_BACK   5
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_6           6
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_FALL        7
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_0                   0
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP_WIND_UP    1
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN_WIND_UP  2
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP            3
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN          4
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_WALK_BACK           5
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_6                   6
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_FALL                7
 
 /* TridentKnight states - gTridentKnightStates[N], CallTableEntry(Task.state) in TridentKnightEnterState */
 #define TRIDENT_KNIGHT_STATE_WALK        0
@@ -995,16 +995,16 @@
 #define WADDLE_DOO_WALK_STATE_SHOOT  2
 
 /* WarpStar states - gWarpStarStates[N], CallTableEntry(Task.state) in Task_WarpStar */
-#define WARP_STAR_STATE_0       0
-#define WARP_STAR_STATE_1       1
-#define WARP_STAR_STATE_VANISH  2
+#define WARP_STAR_STATE_HOVER_EMPTY    0
+#define WARP_STAR_STATE_HOVER_BOARDED  1
+#define WARP_STAR_STATE_VANISH         2
 
 /* WheelieIdle states - gWheelieIdleStates[N], CallTableEntry(Task.state) in WheelieIdleInit */
 #define WHEELIE_IDLE_STATE_IDLE  0
 
 /* Wheelie states - gWheelieStates[N], CallTableEntry(Task.state) in WheelieInit */
-#define WHEELIE_STATE_0                0
-#define WHEELIE_STATE_1                1
+#define WHEELIE_STATE_ROLL_START       0
+#define WHEELIE_STATE_ROLL_LOOP        1
 #define WHEELIE_STATE_SKID             2
 #define WHEELIE_STATE_WAIT             3
 #define WHEELIE_STATE_BOUNCE_OFF_WALL  4
@@ -1014,10 +1014,10 @@
 #define WHISPY_WOODS_AIR_PUFF_STATE_0  0
 
 /* WhispyWoodsApple states - gWhispyWoodsAppleStates[N], CallTableEntry(Task.state) in WhispyWoodsAppleEnterState */
-#define WHISPY_WOODS_APPLE_STATE_FALL  0
-#define WHISPY_WOODS_APPLE_STATE_1     1
-#define WHISPY_WOODS_APPLE_STATE_2     2
-#define WHISPY_WOODS_APPLE_STATE_3     3
+#define WHISPY_WOODS_APPLE_STATE_FALL     0
+#define WHISPY_WOODS_APPLE_STATE_BOUNCE1  1
+#define WHISPY_WOODS_APPLE_STATE_BOUNCE2  2
+#define WHISPY_WOODS_APPLE_STATE_BOUNCE3  3
 
 /* WhispyWoodsDefeated states - gWhispyWoodsDefeatedStates[N], CallTableEntry(Task.state) in WhispyWoodsDefeatedEnterState */
 #define WHISPY_WOODS_DEFEATED_STATE_0  0

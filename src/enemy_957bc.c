@@ -126,7 +126,7 @@ void FireLionDropIn(void)
     ActorSetTerrainBox(gFireLionGroundTerrainBox);
     TaskSetFrame(16);
     TaskYieldTrampoline(24);
-    ActorSetState(FIRE_LION_STATE_1);
+    ActorSetState(FIRE_LION_STATE_SHOW_HP_BAR);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
@@ -137,7 +137,7 @@ void FireLionDropInUpdate(void)
 
 void FireLionShowHpBar(void)
 {
-    ActorSetState(FIRE_LION_STATE_1);
+    ActorSetState(FIRE_LION_STATE_SHOW_HP_BAR);
     gCurTask->updateState = 1;
     ActorSetTerrainBox(gFireLionGroundTerrainBox);
     gCurTask->actorAnimDelay = ActorStartAnim(gFireLionWaitAnim);

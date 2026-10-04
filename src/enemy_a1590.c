@@ -517,7 +517,7 @@ void MrShineAndMrBrightStartDefeat(void)
     gUnk_02007D00[7] = 0;
     gUnk_02007D00[6] = 0;
     MrShineAndMrBrightMoveToMidpoint();
-    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_2);
+    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_CONVERGE_START);
     TaskSetEntry(MrShineAndMrBrightEnterState, gCurTaskIdx);
     if (gUnk_02006040[6] != -1)
     {
@@ -540,7 +540,7 @@ void MrShineAndMrBrightStartConvergeEnd(void)
     struct Task *ta;
 
     gUnk_02007D00[7] = 0;
-    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_3);
+    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_CONVERGE_END);
     TaskSetEntry(MrShineAndMrBrightEnterState, gCurTaskIdx);
     MrShineAndMrBrightSetStates(17, 17);
     tb = &gTasks[gUnk_02007D00[1]];
@@ -1583,7 +1583,7 @@ void MrShineAndMrBrightInit(void)
     ActorInitBossGfx(0);
     CreateMrShineAndMrBright();
     gCurTask->updateCallback = (u32)MrShineAndMrBrightUpdate;
-    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_0);
+    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_INTRO);
     CallTableEntry(gCurTask->state, 4, gMrShineAndMrBrightStates);
 }
 
@@ -1602,16 +1602,16 @@ void MrShineAndMrBrightEnterState(void)
 /* MrShineAndMrBrightIntro (0x080A3184-0x080A31A4) */
 void MrShineAndMrBrightIntro(void)
 {
-    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_0;
+    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_INTRO;
     MrShineAndMrBrightFillHpBars();
-    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_1);
+    ActorSetState(MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_KNOCK_OUT);
     TaskSleepForever();
 }
 
 /* MrShineAndMrBrightIntroUpdate (0x080A31A4-0x080A31D0) */
 void MrShineAndMrBrightIntroUpdate(void)
 {
-    if (gCurTask->state != MR_SHINE_AND_MR_BRIGHT_STATE_0)
+    if (gCurTask->state != MR_SHINE_AND_MR_BRIGHT_STATE_INTRO)
     {
         TaskSetEntry(MrShineAndMrBrightEnterState, gCurTaskIdx);
         MrShineAndMrBrightPickFirstAscender();
@@ -1621,7 +1621,7 @@ void MrShineAndMrBrightIntroUpdate(void)
 /* MrShineAndMrBrightWaitForKnockOut (0x080A31D0-0x080A31F0) */
 void MrShineAndMrBrightWaitForKnockOut(void)
 {
-    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_1;
+    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_KNOCK_OUT;
     gCurTask->lateUpdateCallback = (u32)MrShineAndMrBrightWaitForKnockOutLateUpdate;
     TaskSleepForever();
 }
@@ -1648,7 +1648,7 @@ void MrShineAndMrBrightWaitForKnockOutLateUpdate(void)
 /* MrShineAndMrBrightWaitForConvergeStart (0x080A3238-0x080A3250) */
 void MrShineAndMrBrightWaitForConvergeStart(void)
 {
-    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_2;
+    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_CONVERGE_START;
     TaskSleepForever();
 }
 
@@ -1662,7 +1662,7 @@ void MrShineAndMrBrightWaitForConvergeStartUpdate(void)
 /* MrShineAndMrBrightWaitForConvergeEnd (0x080A3268-0x080A3280) */
 void MrShineAndMrBrightWaitForConvergeEnd(void)
 {
-    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_3;
+    gCurTask->updateState = MR_SHINE_AND_MR_BRIGHT_STATE_WAIT_FOR_CONVERGE_END;
     TaskSleepForever();
 }
 
@@ -1790,7 +1790,7 @@ void MrShineWaitToAttackUpdate(void)
 /* MrShineWindUp (0x080A34C8-0x080A34F0) */
 void MrShineWindUp(void)
 {
-    gCurTask->updateState = MR_SHINE_STATE_4;
+    gCurTask->updateState = MR_SHINE_STATE_WIND_UP;
     MrShineStartWindUp();
     TaskYieldTrampoline(60);
     ActorSetState(MR_SHINE_STATE_DROP_STARS);
@@ -1802,7 +1802,7 @@ void MrShineWindUpUpdate(void)
 {
     void *f = MrShineEnterState;
 
-    if ((u8)MrShineAndMrBrightCheckKnockOuts(f) == 0 && gCurTask->state != MR_SHINE_STATE_4)
+    if ((u8)MrShineAndMrBrightCheckKnockOuts(f) == 0 && gCurTask->state != MR_SHINE_STATE_WIND_UP)
     {
         MrShineAndMrBrightEndFlash();
         TaskSetEntry(f, gCurTaskIdx);
@@ -2101,7 +2101,7 @@ void MrShineThrowUpdate(void)
 /* MrShineWaitToConverge (0x080A3B4C-0x080A3B78) */
 void MrShineWaitToConverge(void)
 {
-    gCurTask->updateState = MR_SHINE_STATE_15;
+    gCurTask->updateState = MR_SHINE_STATE_WAIT_TO_CONVERGE;
     TaskStop();
     gCurTask->mrShineAndMrBrightFlashing = 1;
     TaskSetFrame(19);
@@ -2273,13 +2273,13 @@ void MrBrightWaitToAttackUpdate(void)
 /* MrBrightWindUp (0x080A3EA0-0x080A3EDC) */
 void MrBrightWindUp(void)
 {
-    gCurTask->updateState = MR_BRIGHT_STATE_4;
+    gCurTask->updateState = MR_BRIGHT_STATE_WIND_UP;
     MrBrightStartWindUp();
     while ((u8)MrBrightStopAtTarget() == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskYieldTrampoline(60);
-    ActorSetState(MR_BRIGHT_STATE_5);
+    ActorSetState(MR_BRIGHT_STATE_FIRE_BEAM);
     TaskSleepForever();
 }
 
@@ -2290,7 +2290,7 @@ void MrBrightWindUpUpdate(void)
 
     gCurTask->actorAnimDelay1C = ActorTickAnim(gCurTask->actorAnimDelay1C);
     f = MrBrightEnterState;
-    if ((u8)MrShineAndMrBrightCheckKnockOuts(f) == 0 && gCurTask->state != MR_BRIGHT_STATE_4)
+    if ((u8)MrShineAndMrBrightCheckKnockOuts(f) == 0 && gCurTask->state != MR_BRIGHT_STATE_WIND_UP)
     {
         MrShineAndMrBrightEndFlash();
         TaskSetEntry(f, gCurTaskIdx);
@@ -2300,7 +2300,7 @@ void MrBrightWindUpUpdate(void)
 /* MrBrightFireBeam (0x080A3F24-0x080A3F54) */
 void MrBrightFireBeam(void)
 {
-    gCurTask->updateState = MR_BRIGHT_STATE_5;
+    gCurTask->updateState = MR_BRIGHT_STATE_FIRE_BEAM;
     MrBrightStartFireBeam();
     TaskYieldTrampoline(6);
     CreateMrBrightBeam();
@@ -2605,7 +2605,7 @@ void MrBrightThrowUpdate(void)
 /* MrBrightWaitToConverge (0x080A4604-0x080A4630) */
 void MrBrightWaitToConverge(void)
 {
-    gCurTask->updateState = MR_BRIGHT_STATE_15;
+    gCurTask->updateState = MR_BRIGHT_STATE_WAIT_TO_CONVERGE;
     TaskStop();
     gCurTask->mrShineAndMrBrightFlashing = 1;
     TaskSetFrame(20);
@@ -2821,7 +2821,7 @@ void KingDededeStarInit(void)
     gCurTask->updateCallback = (u32)KingDededeStarUpdate;
     TaskFaceLikeParent();
     ActorSetAttackBox((u32)gKingDededeStarInitAttackBox);
-    ActorSetState(KING_DEDEDE_STAR_STATE_0);
+    ActorSetState(KING_DEDEDE_STAR_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 1, gKingDededeStarStates);
 }
 
@@ -2848,7 +2848,7 @@ void KingDededeStarFlight(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = KING_DEDEDE_STAR_STATE_0;
+    gCurTask->updateState = KING_DEDEDE_STAR_STATE_FLIGHT;
     gCurTask->onGround = 0;
     t = gCurTask;
     t->actorSpinFrameTimer = 2;
@@ -2898,7 +2898,7 @@ void KingDededeAirPuffInit(void)
 {
     gCurTask->updateCallback = (u32)KingDededeAirPuffUpdate;
     TaskFaceLikeParent();
-    ActorSetState(KING_DEDEDE_AIR_PUFF_STATE_0);
+    ActorSetState(KING_DEDEDE_AIR_PUFF_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 1, gKingDededeAirPuffStates);
 }
 
@@ -2925,7 +2925,7 @@ void KingDededeAirPuffFlight(void)
     s32 i;
     u32 *p;
 
-    gCurTask->updateState = KING_DEDEDE_AIR_PUFF_STATE_0;
+    gCurTask->updateState = KING_DEDEDE_AIR_PUFF_STATE_FLIGHT;
     gCurTask->onGround = 0;
     TaskSetFrame(0);
     p = gUnk_087489C0;
@@ -2963,7 +2963,7 @@ void MrShineCrescentInit(void)
     t->updateCallback = (u32)MrShineCrescentUpdate;
     t->frameTable = gMrShineCrescentFrames;
     TaskFaceLikeParent();
-    ActorSetState(MR_SHINE_CRESCENT_STATE_0);
+    ActorSetState(MR_SHINE_CRESCENT_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 2, gMrShineCrescentStates);
 }
 
@@ -2972,7 +2972,7 @@ void MrShineCrescentUpdate(void)
 {
     if ((u8)ActorCollideTerrainWalls() != 0)
     {
-        ActorSetState(MR_SHINE_CRESCENT_STATE_1);
+        ActorSetState(MR_SHINE_CRESCENT_STATE_DIE);
         TaskSetEntry(MrShineCrescentEnterState, gCurTaskIdx);
     }
     else
@@ -2993,7 +2993,7 @@ void MrShineCrescentEnterState(void)
 /* MrShineCrescentFlight (0x080A4D88-0x080A4DD8) */
 void MrShineCrescentFlight(void)
 {
-    gCurTask->updateState = MR_SHINE_CRESCENT_STATE_0;
+    gCurTask->updateState = MR_SHINE_CRESCENT_STATE_FLIGHT;
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(128 << 11, 0x5A5A5A5A);
     if (gCurTask->facing == 1)
@@ -3047,7 +3047,7 @@ void MrShineFallingStarInit(void)
     t->frameTable = gMrShineFallingStarFrames;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B34);
-    ActorSetState(MR_SHINE_FALLING_STAR_STATE_0);
+    ActorSetState(MR_SHINE_FALLING_STAR_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 2, gMrShineFallingStarStates);
 }
 
@@ -3073,7 +3073,7 @@ void MrShineFallingStarFlight(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = MR_SHINE_FALLING_STAR_STATE_0;
+    gCurTask->updateState = MR_SHINE_FALLING_STAR_STATE_FLIGHT;
     TaskStop();
     gCurTask->onGround = 0;
     gCurTask->mrShineAndMrBrightAttackSpinning = 0;
@@ -3139,7 +3139,7 @@ void MrBrightFireballInit(void)
     t->frameTable = gMrBrightFireballFrames;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B60);
-    ActorSetState(MR_BRIGHT_FIREBALL_STATE_0);
+    ActorSetState(MR_BRIGHT_FIREBALL_STATE_FLIGHT);
     CallTableEntry(gCurTask->state, 2, gMrBrightFireballStates);
 }
 
@@ -3148,7 +3148,7 @@ void MrBrightFireballUpdate(void)
 {
     if ((u8)ActorCollideTerrainWalls() != 0)
     {
-        ActorSetState(MR_BRIGHT_FIREBALL_STATE_1);
+        ActorSetState(MR_BRIGHT_FIREBALL_STATE_DIE);
         TaskSetEntry(MrBrightFireballEnterState, gCurTaskIdx);
     }
     else
@@ -3169,7 +3169,7 @@ void MrBrightFireballEnterState(void)
 /* MrBrightFireballFlight (0x080A510C-0x080A5164) */
 void MrBrightFireballFlight(void)
 {
-    gCurTask->updateState = MR_BRIGHT_FIREBALL_STATE_0;
+    gCurTask->updateState = MR_BRIGHT_FIREBALL_STATE_FLIGHT;
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(128 << 11, 0x5A5A5A5A);
     for (;;)

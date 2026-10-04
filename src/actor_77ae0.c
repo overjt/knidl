@@ -85,14 +85,14 @@ void CannonFuseBurnUpdate(void)
     }
     else if (gCannonFuseState == 0)
     {
-        ActorSetState(CANNON_FUSE_STATE_2);
+        ActorSetState(CANNON_FUSE_STATE_RESTORE);
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
     }
 }
 
 void CannonFuseRestore(void)
 {
-    gCurTask->updateState = CANNON_FUSE_STATE_2;
+    gCurTask->updateState = CANNON_FUSE_STATE_RESTORE;
     TaskStop();
     gCurTask->cannonFuseBurnDir = -1;
     CannonFuseInitBurn();
@@ -109,7 +109,7 @@ void CannonFuseRestoreUpdate(void)
 {
     if (gCurTask->cannonFusePieceKind != -1)
         CannonFuseRestoreStep();
-    if (gCurTask->state != CANNON_FUSE_STATE_2)
+    if (gCurTask->state != CANNON_FUSE_STATE_RESTORE)
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
 }
 
@@ -229,7 +229,7 @@ void BigSwitchWaitUpdate(void)
 
 void BigSwitchPress(void)
 {
-    gCurTask->updateState = BIG_SWITCH_STATE_1;
+    gCurTask->updateState = BIG_SWITCH_STATE_PRESS;
     TaskYieldTrampoline(8);
     FadeOutSfx(16);
     PressBigSwitch(gCurTaskIdx);

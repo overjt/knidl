@@ -275,7 +275,7 @@ void WhispyWoodsAppleBounce1Update(void)
     t = gCurTask;
     if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
-        ActorSetState(WHISPY_WOODS_APPLE_STATE_2);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_BOUNCE2);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
@@ -310,7 +310,7 @@ void WhispyWoodsAppleBounce2Update(void)
     t = gCurTask;
     if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
-        ActorSetState(WHISPY_WOODS_APPLE_STATE_3);
+        ActorSetState(WHISPY_WOODS_APPLE_STATE_BOUNCE3);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }

@@ -564,7 +564,7 @@ void SwordAndBladeKnightWalkState0Update(void)
 
 void SwordAndBladeKnightWalkSlashUpWindUp(void)
 {
-    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_1;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP_WIND_UP;
     TaskStop();
     TaskSetFrame(15);
     TaskYieldTrampoline(16);
@@ -574,7 +574,7 @@ void SwordAndBladeKnightWalkSlashUpWindUp(void)
 
 void SwordAndBladeKnightWalkSlashUpWindUpUpdate(void)
 {
-    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_1)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP_WIND_UP)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
@@ -607,7 +607,7 @@ void SwordAndBladeKnightWalkSlashUpUpdate(void)
 
 void SwordAndBladeKnightWalkSlashDownWindUp(void)
 {
-    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_2;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN_WIND_UP;
     TaskStop();
     TaskSetFrame(16);
     TaskYieldTrampoline(16);
@@ -617,7 +617,7 @@ void SwordAndBladeKnightWalkSlashDownWindUp(void)
 
 void SwordAndBladeKnightWalkSlashDownWindUpUpdate(void)
 {
-    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_2)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN_WIND_UP)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
@@ -800,7 +800,7 @@ void SwordAndBladeKnightStandEnterState(void)
 
 void SwordAndBladeKnightStandWaitForPlayer(void)
 {
-    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_0;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_WAIT_FOR_PLAYER;
     TaskStop();
     gCurTask->facing = 255;
     gCurTask->swordAndBladeKnightStopped = 0;
@@ -826,7 +826,7 @@ void SwordAndBladeKnightStandWaitForPlayerUpdate(void)
 
 void SwordAndBladeKnightStandSlashUpWindUp(void)
 {
-    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_1;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP_WIND_UP;
     TaskStop();
     TaskSetFrame(15);
     TaskYieldTrampoline(16);
@@ -836,7 +836,7 @@ void SwordAndBladeKnightStandSlashUpWindUp(void)
 
 void SwordAndBladeKnightStandSlashUpWindUpUpdate(void)
 {
-    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_1)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP_WIND_UP)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
@@ -867,7 +867,7 @@ void SwordAndBladeKnightStandSlashUpUpdate(void)
 
 void SwordAndBladeKnightStandSlashDownWindUp(void)
 {
-    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_2;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN_WIND_UP;
     TaskStop();
     TaskSetFrame(16);
     TaskYieldTrampoline(16);
@@ -877,7 +877,7 @@ void SwordAndBladeKnightStandSlashDownWindUp(void)
 
 void SwordAndBladeKnightStandSlashDownWindUpUpdate(void)
 {
-    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_2)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN_WIND_UP)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
@@ -908,19 +908,19 @@ void SwordAndBladeKnightStandSlashDownUpdate(void)
 
 void SwordAndBladeKnightStandWaitAfterSlash(void)
 {
-    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_5;
+    gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_WAIT_AFTER_SLASH;
     TaskStop();
     gCurTask->swordAndBladeKnightStopped = 0;
     sub_0807b144();
     TaskYieldTrampoline(gCurTask->swordAndBladeKnightBackOffTime);
-    ActorSetState(SWORD_AND_BLADE_KNIGHT_STAND_STATE_0);
+    ActorSetState(SWORD_AND_BLADE_KNIGHT_STAND_STATE_WAIT_FOR_PLAYER);
     TaskSleepForever();
 }
 
 void SwordAndBladeKnightStandWaitAfterSlashUpdate(void)
 {
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
-    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_5)
+    if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_WAIT_AFTER_SLASH)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 

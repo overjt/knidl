@@ -467,7 +467,7 @@ void sub_08076c00(void)
 
 void PlayerCannonWait(void)
 {
-    gCurTask->updateState = PLAYER_CANNON_STATE_0;
+    gCurTask->updateState = PLAYER_CANNON_STATE_WAIT;
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     sub_08076454();
     TaskSleepForever();
@@ -484,7 +484,7 @@ void PlayerCannonWaitUpdate(void)
 
 void PlayerCannonLaunchUp(void)
 {
-    gCurTask->updateState = PLAYER_CANNON_STATE_1;
+    gCurTask->updateState = PLAYER_CANNON_STATE_LAUNCH_UP;
     sub_080766ac();
     if (gMetaKnightmareMode == 1)
         PlayerCannonAnimateMetaKnightLaunch();
@@ -498,7 +498,7 @@ void PlayerCannonLaunchUpUpdate(void)
 
 void PlayerCannonLaunchUpRight(void)
 {
-    gCurTask->updateState = PLAYER_CANNON_STATE_2;
+    gCurTask->updateState = PLAYER_CANNON_STATE_LAUNCH_UP_RIGHT;
     sub_08076710();
     if (gMetaKnightmareMode == 1)
         PlayerCannonAnimateMetaKnightLaunch();
@@ -512,7 +512,7 @@ void PlayerCannonLaunchUpRightUpdate(void)
 
 void PlayerCannonLaunchShort(void)
 {
-    gCurTask->updateState = PLAYER_CANNON_STATE_3;
+    gCurTask->updateState = PLAYER_CANNON_STATE_LAUNCH_SHORT;
     sub_08076798();
     if (gMetaKnightmareMode == 0)
         sub_08076958();
@@ -534,7 +534,7 @@ void PlayerCannonLaunchShortUpdate(void)
 
 void PlayerCannonArrive(void)
 {
-    gCurTask->updateState = PLAYER_CANNON_STATE_4;
+    gCurTask->updateState = PLAYER_CANNON_STATE_ARRIVE;
     sub_080768c8();
     if (gMetaKnightmareMode == 0)
     {
@@ -695,10 +695,10 @@ u16 CannonPickLaunchState(void)
     switch (v)
     {
     case 1:
-        ActorSetState(CANNON_STATE_2);
+        ActorSetState(CANNON_STATE_LAUNCH_UP);
         break;
     case 2:
-        ActorSetState(CANNON_STATE_3);
+        ActorSetState(CANNON_STATE_LAUNCH_UP_RIGHT);
         break;
     }
     return v;
@@ -757,7 +757,7 @@ void CannonFire(void)
     else
     {
         CannonLaunchPlayers(3);
-        ActorSetState(CANNON_STATE_1);
+        ActorSetState(CANNON_STATE_LAUNCH_SHORT);
     }
     TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
@@ -820,7 +820,7 @@ void CannonWaitUpdate(void)
 
 void CannonLaunchShort(void)
 {
-    gCurTask->updateState = CANNON_STATE_1;
+    gCurTask->updateState = CANNON_STATE_LAUNCH_SHORT;
     TaskStop();
     sub_0807717c();
     gCurTask->frame = 12;
@@ -850,13 +850,13 @@ void CannonLaunchShort(void)
 
 void CannonLaunchShortUpdate(void)
 {
-    if (gCurTask->state != CANNON_STATE_1)
+    if (gCurTask->state != CANNON_STATE_LAUNCH_SHORT)
         TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
 
 void CannonLaunchUp(void)
 {
-    gCurTask->updateState = CANNON_STATE_2;
+    gCurTask->updateState = CANNON_STATE_LAUNCH_UP;
     TaskStop();
     {
         struct Task *t = gCurTask;
@@ -934,7 +934,7 @@ void CannonLaunchUpUpdate(void)
 
 void CannonLaunchUpRight(void)
 {
-    gCurTask->updateState = CANNON_STATE_3;
+    gCurTask->updateState = CANNON_STATE_LAUNCH_UP_RIGHT;
     TaskStop();
     {
         struct Task *t = gCurTask;
