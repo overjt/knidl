@@ -553,7 +553,7 @@ s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->stageDoorSignIndex = a;
         t->stageDoorSignAnimated = 1;
-        t->stageDoorSignDoorAnimated = 2;
+        t->doorObjectKind = 2;
         t->u76.doorIndex = b;
     }
     return id;
@@ -576,7 +576,7 @@ s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->stageDoorSignIndex = a;
         t->stageDoorSignAnimated = 0;
-        t->stageDoorSignDoorAnimated = 2;
+        t->doorObjectKind = 2;
         t->u76.doorIndex = b;
     }
     return id;
@@ -599,7 +599,7 @@ s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->stageDoorSignIndex = a;
         t->stageDoorSignAnimated = 0;
-        t->stageDoorSignDoorAnimated = 0;
+        t->doorObjectKind = 0;
         t->u76.doorIndex = b;
     }
     return id;

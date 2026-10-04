@@ -1341,7 +1341,6 @@
    CreateCompletedStageDoorSign) */
 #define stageDoorSignIndex unk18 /* s32: which sign it shows: frames 2n and 2n+1 of gUnk_08755948 (the creator's argument) */
 #define stageDoorSignAnimated unk1C /* s32: 1 only from CreateStageDoorSign: the sign's two frames alternate */
-#define stageDoorSignDoorAnimated unk20 /* s32: 0 only from CreateCompletedStageDoorSign: the door sprite then stays still */
 #define stageDoorSignDoorFrame unk28 /* s32: frame of that door sprite while gDoorStates[door].unk1 is set (else frame 2) */
 #define stageDoorSignDoorFrames unk34 /* s32: frame table of the door sprite the shared draw sub_0802f718 shows at the door */
 

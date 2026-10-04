@@ -33,7 +33,7 @@ void Task_StageDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    if (u->stageDoorSignDoorAnimated == 0)
+    if (u->doorObjectKind == 0)
         sub_0802f6f4();
     else if (u->stageDoorSignAnimated == 0)
         sub_0802f6c0();
