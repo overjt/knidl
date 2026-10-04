@@ -53,12 +53,12 @@ s32 sub_080b6b08(void)
             *pg = 0;
         i = gSpriteCameraY;
         w = gBg2ScrollY >> 16;
-        v = ((gUnk_087561CC[i >> 3] * *pg) >> 1) + gUnk_02016C30;
+        v = ((gUnk_087561CC[i >> 3] * *pg) >> 1) + gHBlankScrollBaseX;
         p = gHBlankScrollTable;
         for (n = 0; n < 160; n++)
         {
             if ((i & 7) == 0)
-                v = ((gUnk_087561CC[i >> 3] * *pg) >> 1) + gUnk_02016C30;
+                v = ((gUnk_087561CC[i >> 3] * *pg) >> 1) + gHBlankScrollBaseX;
             *p++ = v;
             *p++ = w;
             *p++ = v;

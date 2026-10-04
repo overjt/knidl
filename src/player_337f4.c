@@ -63,7 +63,7 @@ void PlayerActionStand(void)
         t->unk28 = (u16)t->player->unk4E;
         t->unk2C = t->player->slope;
         if (t->player->wallSide != 0)
-            t->player->unk46 = t->player->wallSide;
+            t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
         t2->player->unk40 &= 0xFFEF;
@@ -129,7 +129,7 @@ void PlayerActionStandUpdate(void)
             goto end;
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
         {
-            if (gCurTask->player->unk46 != 0)
+            if (gCurTask->player->savedWallSide != 0)
             {
                 if (dir == gCurTask->facing)
                 {
@@ -146,7 +146,7 @@ void PlayerActionStandUpdate(void)
                     if (turn == 0)
                     {
                         struct PlayerState *q = gCurTask->player;
-                        u8 v = q->unk46;
+                        u8 v = q->savedWallSide;
 
                         if (v == 1 && (gLatchedHeldKeys[q->playerIndex] & 32))
                             turn = 1;
@@ -191,7 +191,7 @@ void PlayerActionStandUpdate(void)
                 gCurTask->unk46 = gUnk_0873D206[PlayerGetFacingSlope(gCurTask->player->playerIndex)];
             }
             TaskSetFrame(gCurTask->unk46);
-            gCurTask->player->unk46 = 0;
+            gCurTask->player->savedWallSide = 0;
             break;
         }
         {
@@ -226,7 +226,7 @@ void PlayerActionWalk(void)
     {
         p->running = 0;
         gCurTask->player->unk0F = 0;
-        gCurTask->player->unk46 = 0;
+        gCurTask->player->savedWallSide = 0;
         gCurTask->unk28 = 0;
         PlayerPlayBump();
         if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)

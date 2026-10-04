@@ -22,7 +22,7 @@
  *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `Task_WaddleDooBeam`,
  *     plus the smaller `Task_GlunkShot` and `Task_GipStar`;
  *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
- *     the row bodies `sub_0808d558` / `sub_0808da00` / `BroomHatterIdleInit`, the
+ *     the row bodies `BroomHatterVariant0` / `BroomHatterVariant1` / `BroomHatterIdleInit`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
  *   * its movement library: `sub_0808d364` / `sub_0808d388` snap Task.unk2C to
@@ -32,8 +32,8 @@
  *     `sub_0808d4d0` set the animation id in Actor.extraFrame;
  *   * script 2's entry `Task_LaserBall` (Task.variant -> `0x087431E4`) and its
  *     aiming half: `sub_0808e070` / `sub_0808e0d0` / `sub_0808e174` turn the
- *     vector to the target into a heading with ArcTan2, `sub_0808e254` spawns
- *     actor 103, `sub_0808e2b4` is the GetDistSq proximity test and
+ *     vector to the target into a heading with ArcTan2, `CreateLaserBallLaser` spawns
+ *     actor 103, `LaserBallCheckShoot` is the GetDistSq proximity test and
  *     `sub_0808e33c` / `sub_0808e36c` are the per-frame step.  The script's
  *     rows continue in src/enemy_8e404.c.
  *
@@ -331,7 +331,7 @@ s32 sub_0808d304(void)
 
 s32 sub_0808d354(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -442,7 +442,7 @@ void Task_BroomHatter(void)
     CallTableEntry(u->variant, 3, gBroomHatterVariants);
 }
 
-void sub_0808d558(void)
+void BroomHatterVariant0(void)
 {
     gCurTask->updateCallback = (u32)sub_0808d58c;
     TaskFaceNearestPlayer();
@@ -674,7 +674,7 @@ void sub_0808d9fc(void)
 {
 }
 
-void sub_0808da00(void)
+void BroomHatterVariant1(void)
 {
     gCurTask->updateCallback = (u32)sub_0808da34;
     TaskFaceNearestPlayer();
@@ -979,13 +979,13 @@ void BroomHatterIdle(void)
     }
 }
 
-void sub_0808e050(void)
+void BroomHatterIdleState0Update(void)
 {
 }
 
 void sub_0808e054(void)
 {
-    if (--gUnk_02007FB8[1] < 0)
+    if (--gPaletteAnimRefCounts[1] < 0)
         sub_0806ee2c();
 }
 
@@ -1063,7 +1063,7 @@ void sub_0808e174(void)
     }
 }
 
-void sub_0808e254(void)
+void CreateLaserBallLaser(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -1082,7 +1082,7 @@ void sub_0808e254(void)
     }
 }
 
-void sub_0808e2b4(void)
+void LaserBallCheckShoot(void)
 {
     struct PointPair p;
     struct Task *t;

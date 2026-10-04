@@ -300,7 +300,7 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
 
     if (idx > 2)
         return;
-    if (gUnk_02007FB8[idx] == 0)
+    if (gPaletteAnimRefCounts[idx] == 0)
     {
         i = CreateChildTaskHere(174, 1);
         if (i != -1)
@@ -312,7 +312,7 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
             gPaletteAnimTasks[idx] = i;
         }
     }
-    gUnk_02007FB8[idx]++;
+    gPaletteAnimRefCounts[idx]++;
 }
 
 void Task_PaletteAnim(void)
@@ -323,7 +323,7 @@ void Task_PaletteAnim(void)
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
-void sub_080658d8(void)
+void PaletteAnimVariant0(void)
 {
     struct Task *w;
     struct Task *u;
@@ -335,7 +335,7 @@ void sub_080658d8(void)
     gCurTask->unk2C = 2;
     gCurTask->unk30 = 3;
     gCurTask->unk34 = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         u = gCurTask;
         u->unk28--;
@@ -370,7 +370,7 @@ void sub_080658d8(void)
 
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
-void sub_080659b4(void)
+void PaletteAnimVariant1(void)
 {
     struct Task *w;
     struct Task *t;
@@ -383,7 +383,7 @@ void sub_080659b4(void)
     a = t->u8C.actor;
     t->unk18 = 10;
     t->unk1C = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0 && a->paletteVariant <= 3)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0 && a->paletteVariant <= 3)
     {
         u = gCurTask;
         if (u->unk18 <= 0)
@@ -405,7 +405,7 @@ void sub_080659b4(void)
 }
 
 /* Task body: flash one palette entry on and off. */
-void sub_08065a68(void)
+void PaletteAnimVariant2(void)
 {
     struct Task *w;
     struct Task *t;
@@ -418,7 +418,7 @@ void sub_08065a68(void)
     t->unk1C = 0;
     off = (t->tileWord >> 12) << 5;
     off += 26;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         u = gCurTask;
         if (u->unk18 <= 0)
@@ -441,7 +441,7 @@ void sub_08065a68(void)
 }
 
 /* Task body: cross-fade the actor's palette pair out of gUnk_0873DF7C. */
-void sub_08065b14(void)
+void PaletteAnimVariant3(void)
 {
     struct Task *w;
     struct Task *t;
@@ -457,7 +457,7 @@ void sub_08065b14(void)
     t->unk2C = 1;
     t->unk30 = 2;
     t->unk34 = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         u = gCurTask;
         u->unk28--;
@@ -500,7 +500,7 @@ void PaletteAnimBgBlend(void)
     struct Task *u;
 
     gCurTask->unk20 = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         t = gCurTask;
         switch (t->unk1C)
@@ -553,10 +553,10 @@ void sub_08065ce0(u32 i)
     switch (t->actorKind)
     {
     case 0:
-        tbl = gUnk_0873EF74[t->unk76];
+        tbl = gUnk_0873EF74[t->u76.subtype];
         break;
     case 1:
-        tbl = gUnk_0873F118[t->unk76];
+        tbl = gUnk_0873F118[t->u76.subtype];
         break;
     default:
         tbl = NULL;
@@ -804,10 +804,10 @@ u32 *sub_0806601c(void)
     a = t->u8C.actor;
     if (t->actorKind == 1)
     {
-        r = gUnk_0873F0C4[t->unk76];
+        r = gUnk_0873F0C4[t->u76.subtype];
         if (a->paletteVariant != 0)
         {
-            tbl = gUnk_0873F118[t->unk76];
+            tbl = gUnk_0873F118[t->u76.subtype];
             if (tbl != NULL)
             {
                 k = a->paletteVariant - 1;
@@ -820,7 +820,7 @@ u32 *sub_0806601c(void)
     }
     else
     {
-        r = gUnk_0873F138[t->unk76];
+        r = gUnk_0873F138[t->u76.subtype];
     }
     return r;
 }
@@ -841,9 +841,9 @@ u16 sub_08066088(u32 mode)
     p = sub_0806601c();
     t = gCurTask;
     if (t->actorKind == 1)
-        a->gfx.header = (struct GfxHeader *)gMidBossGfx[t->unk76];
+        a->gfx.header = (struct GfxHeader *)gMidBossGfx[t->u76.subtype];
     else
-        a->gfx.header = (struct GfxHeader *)gBossGfx[t->unk76];
+        a->gfx.header = (struct GfxHeader *)gBossGfx[t->u76.subtype];
     a->gfx.tileBits = gCurTask->tileWord & 0xFFF;
     a->gfx.paletteBank = gCurTask->tileWord >> 12;
     if (p != NULL)
@@ -1116,7 +1116,7 @@ void ActorShowHpBar(void)
     gHudHpBarFilled = 0;
     HudShowHpBar();
     t = *g;
-    if (t->actorKind == 1 || (t->actorKind == 2 && t->unk76 == 7))
+    if (t->actorKind == 1 || (t->actorKind == 2 && t->u76.subtype == 7))
     {
         v = t->health;
         HudStartTaskHpBar(v, v);
@@ -1208,7 +1208,7 @@ void sub_080666f8(struct AnimCmd *p)
 
 u32 sub_08066718(void)
 {
-    switch (gCurTask->unk76)
+    switch (gCurTask->u76.subtype)
     {
     case 5:
         return sub_08026a0c();
@@ -1225,7 +1225,7 @@ void sub_08066754(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->actorKind == 2 && t->unk76 == 5)
+    if (t->actorKind == 2 && t->u76.subtype == 5)
         gCurTask->unk24 = ActorTickAnim(t->unk24);
     else
         gCurTask->unk24 = ActorTickAnimFacingNearestPlayer(gCurTask->unk24);
@@ -1309,7 +1309,7 @@ void sub_080668c8(void)
         }
         p = &cls;
         cls = t->actorKind;
-        if (*p == 6 && t->unk76 == 0)
+        if (*p == 6 && t->u76.subtype == 0)
             continue;
         if (*p == 10)
             continue;
@@ -1474,7 +1474,7 @@ void sub_08066b70(void)
     }
 }
 
-void sub_08066ba8(void)
+void TaskStartParasolDrift(void)
 {
     struct Task *t;
 
@@ -1488,7 +1488,7 @@ void sub_08066ba8(void)
         t->unk1C = 6;
 }
 
-void sub_08066bdc(void)
+void TaskStepParasolDrift(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1498,7 +1498,7 @@ void sub_08066bdc(void)
     if (t->unk1C > 11)
         t->unk1C = 0;
     u = gCurTask;
-    u->velX = gUnk_0873E1B8[u->unk1C];
+    u->velX = gParasolDriftSwayVelX[u->unk1C];
 }
 
 void sub_08066c08(u32 def, u8 b)
@@ -1594,7 +1594,7 @@ void sub_08066dcc(void)
     t = gCurTask;
     i = t->frame;
     j = i * 2;
-    switch (t->unk76)
+    switch (t->u76.subtype)
     {
     case 0:
         gUnk_030023B4 = gUnk_0873E1E8[i * 2] * t->facing;
@@ -1659,7 +1659,7 @@ void sub_08066e88(u8 a)
 
 void sub_08066f50(s32 x, s32 y)
 {
-    sub_080713f8(x - gViewRect[0], y - gViewRect[2], 23);
+    CreateWarpStar(x - gViewRect[0], y - gViewRect[2], 23);
     PlayBgm(1);
 }
 
@@ -1690,7 +1690,7 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
         else
         {
             t->variant = 2;
-            t->unk74 = gCurTask->unk76;
+            t->unk74 = gCurTask->u76.subtype;
         }
     }
 }
@@ -1891,7 +1891,7 @@ void sub_08067378(void)
 {
 }
 
-void sub_0806737c(void)
+void HeldPlayerInit(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1899,7 +1899,7 @@ void sub_0806737c(void)
     struct PlayerState *r;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08067408;
+    t->updateCallback = (u32)HeldPlayerUpdate;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     TaskStop();
     gCurTask->facing = 1;
@@ -1911,5 +1911,5 @@ void sub_0806737c(void)
     r = gCurTask->player;
     if (r->mouthState == 2)
         r->mouthState = 0;
-    CallTableEntry(gCurTask->state, 11, gUnk_0873E2F0);
+    CallTableEntry(gCurTask->state, 11, gHeldPlayerStates);
 }

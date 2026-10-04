@@ -69,7 +69,7 @@ void BugzzyLadybugUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08094040(void)
+void BugzzyLadybugState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -123,7 +123,7 @@ void sub_08094040(void)
     }
 }
 
-void sub_08094144(void)
+void BugzzyLadybugState0Update(void)
 {
     struct Task *t;
 
@@ -306,13 +306,13 @@ void sub_08094358(void)
     }
 }
 
-void sub_080945fc(void)
+void GrandWheelieState0(void)
 {
     struct Task *t;
     s32 v;
 
     gCurTask->updateState = 0;
-    v = sub_080956c8(gUnk_0874433C);
+    v = GrandWheelieStartAnim(gUnk_0874433C);
     t = gCurTask;
     t->unk28 = v;
     t->accelY = 9472;
@@ -322,12 +322,12 @@ void sub_080945fc(void)
     TaskSleepForever();
 }
 
-void sub_08094640(void)
+void GrandWheelieState0Update(void)
 {
-    gCurTask->unk28 = sub_08095794(gCurTask->unk28);
+    gCurTask->unk28 = GrandWheelieTickAnim(gCurTask->unk28);
 }
 
-void sub_0809465c(void)
+void GrandWheelieState1(void)
 {
     gCurTask->updateState = 1;
     sub_08066580();
@@ -335,7 +335,7 @@ void sub_0809465c(void)
     TaskSleepForever();
 }
 
-void sub_0809467c(void)
+void GrandWheelieState1Update(void)
 {
     struct Task *t;
 
@@ -343,11 +343,11 @@ void sub_0809467c(void)
     if (t->state != 1) {
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     } else {
-        gCurTask->unk28 = sub_08095794(t->unk28);
+        gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
     }
 }
 
-void sub_080946b0(void)
+void GrandWheelieState2(void)
 {
     struct Task *t;
 
@@ -361,12 +361,12 @@ void sub_080946b0(void)
     switch (sub_080947cc()) {
     case 0:
         gCurTask->unk30 = gUnk_030023D4;
-        gCurTask->unk28 = sub_080956c8(gUnk_0874433C);
+        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
         TaskSleepForever();
         break;
     case 1:
         gCurTask->unk30 = gUnk_030023D4;
-        gCurTask->unk28 = sub_080956c8(gUnk_087443A8);
+        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_087443A8);
         while (1) {
             TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
             TaskYieldTrampoline(2);
@@ -376,7 +376,7 @@ void sub_080946b0(void)
     }
 }
 
-void sub_08094758(void)
+void GrandWheelieState2Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -386,7 +386,7 @@ void sub_08094758(void)
     t = gCurTask;
     if (t->state != 2)
         goto rearm;
-    x = sub_08095794(t->unk28);
+    x = GrandWheelieTickAnim(t->unk28);
     u = gCurTask;
     u->unk28 = x;
     u->unk30--;
@@ -431,7 +431,7 @@ s32 sub_08094810(void)
     return 0;
 }
 
-void sub_08094844(void)
+void GrandWheelieHop(void)
 {
     gCurTask->updateState = 3;
     TaskStop();
@@ -440,7 +440,7 @@ void sub_08094844(void)
         TaskSleepForever();
     }
     TaskFaceNearestPlayer();
-    gCurTask->unk28 = sub_080956c8(gUnk_08744360);
+    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
     sub_08094908();
     gCurTask->unk2C = gUnk_030023D4;
     sub_08094894();
@@ -461,12 +461,12 @@ void sub_08094894(void)
     TaskSleepForever();
 }
 
-void sub_080948d4(void)
+void GrandWheelieHopUpdate(void)
 {
     struct Task *t;
     s32 x;
 
-    x = sub_08095794(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->unk28);
     t = gCurTask;
     t->unk28 = x;
     if (t->state != 3)
@@ -496,7 +496,7 @@ void GrandWheelieCharge(void)
     t->unk30 = t->facing;
     gUnk_02007D00[1] = PlaySfx(0x209);
     if (gCurTask->u8C.actor->animScript != gUnk_08744384)
-        gCurTask->unk28 = sub_080956c8(gUnk_08744384);
+        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
     TaskYieldTrampoline(45);
     gCurTask->unk2C = sub_08094b94();
     gCurTask->unk46 = CreateDashFlame(-10, 5);
@@ -505,7 +505,7 @@ void GrandWheelieCharge(void)
     TaskSleepForever();
 }
 
-void sub_080949e0(void)
+void GrandWheelieChargeUpdate(void)
 {
     struct Task *t;
     struct Task *v;
@@ -517,7 +517,7 @@ void sub_080949e0(void)
     s16 *p;
     u16 a;
 
-    x = sub_08095794(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->unk28);
     t = gCurTask;
     t->unk28 = x;
     if (t->state != 4)
@@ -605,27 +605,27 @@ void sub_08094bbc(void)
     switch ((s8)v) {
     case 0:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
-            gCurTask->unk28 = sub_080956c8(gUnk_08744360);
+            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
         TaskSetMotionXFacing(gUnk_087444A4[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 1:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
-            gCurTask->unk28 = sub_080956c8(gUnk_08744360);
+            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
         TaskSetMotionXFacing(gUnk_087444AC[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 2:
         if (gCurTask->u8C.actor->animScript != gUnk_08744360)
-            gCurTask->unk28 = sub_080956c8(gUnk_08744360);
+            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744360);
         TaskSetMotionXFacing(gUnk_087444B4[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 3:
         if (gCurTask->u8C.actor->animScript != gUnk_0874433C)
-            gCurTask->unk28 = sub_080956c8(gUnk_0874433C);
+            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
         TaskSetMotionXFacing(gUnk_087444BC[gCurTask->unk74], 0x5A5A5A5A);
         break;
     case 4:
         if (gCurTask->u8C.actor->animScript != gUnk_08744384)
-            gCurTask->unk28 = sub_080956c8(gUnk_08744384);
+            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
         TaskSetMotionXFacing(gUnk_087444C4[gCurTask->unk74], 0x5A5A5A5A);
         break;
     }
@@ -663,7 +663,7 @@ s32 sub_08094d10(void)
     return -1;
 }
 
-void sub_08094da4(void)
+void GrandWheelieState5(void)
 {
     struct Task *t;
 
@@ -672,25 +672,25 @@ void sub_08094da4(void)
     t->unk30 = 60;
     t->unk2C = t->facing;
     t->unk1C = 0;
-    gCurTask->unk28 = sub_080956c8(gUnk_087443D0);
+    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_087443D0);
     PlaySfx(0x20A);
     TaskSleepForever();
 }
 
-void sub_08094dec(void)
+void GrandWheelieState5Update(void)
 {
     struct Task *t;
     struct Task *u;
     s32 x;
 
-    x = sub_08095794(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->unk28);
     t = gCurTask;
     t->unk28 = x;
     if (t->u8C.actor->animScript == 0) {
         TaskTurnAround();
-        gCurTask->unk28 = sub_080956c8(gUnk_0874433C);
+        gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
     }
-    if (sub_08094e88() != 0) {
+    if (GrandWheelieBrake() != 0) {
         gCurTask->velX = 0;
         ActorSetState(2);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
@@ -709,7 +709,7 @@ void sub_08094dec(void)
     TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
 
-s32 sub_08094e88(void)
+s32 GrandWheelieBrake(void)
 {
     struct Task *t;
     struct Task *u;
@@ -742,7 +742,7 @@ s32 sub_08094e88(void)
     return 0;
 }
 
-void sub_08094f28(void)
+void GrandWheelieState6(void)
 {
     struct Task *t;
     s32 zero;
@@ -750,7 +750,7 @@ void sub_08094f28(void)
 
     gCurTask->updateState = 6;
     zero = 0;
-    v = sub_080956c8(gUnk_087443BC);
+    v = GrandWheelieStartAnim(gUnk_087443BC);
     t = gCurTask;
     t->unk28 = v;
     t->unk2C = t->facing;
@@ -759,22 +759,22 @@ void sub_08094f28(void)
     TaskSleepForever();
 }
 
-void sub_08094f68(void)
+void GrandWheelieState6Update(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->unk20 > 0)
         return;
-    gCurTask->unk28 = sub_08095794(t->unk28);
-    if (sub_08094e88() != 0) {
+    gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
+    if (GrandWheelieBrake() != 0) {
         gCurTask->velX = 0;
         ActorSetState(2);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
     }
 }
 
-void sub_08094fb0(void)
+void GrandWheelieState7(void)
 {
     struct Task *t;
     struct Task *u;
@@ -785,7 +785,7 @@ void sub_08094fb0(void)
     gCurTask->updateState = 7;
     zero = 0;
     gCurTask->unk18 = one = 1;
-    v = sub_080956c8(gUnk_087443D0);
+    v = GrandWheelieStartAnim(gUnk_087443D0);
     t = gCurTask;
     t->unk28 = v;
     t->unk2C = t->facing;
@@ -793,7 +793,7 @@ void sub_08094fb0(void)
     t->unk1C = zero;
     PlaySfx(0x20A);
     TaskYieldTrampoline(30);
-    gCurTask->unk28 = sub_080956c8(gUnk_08744384);
+    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
     gCurTask->unk46 = CreateDashFlame(-10, 5);
     TaskSetMotionXFacing(gUnk_087444A4[0], 0x5A5A5A5A);
     gCurTask->unk30 = one;
@@ -801,7 +801,7 @@ void sub_08094fb0(void)
     TaskYieldTrampoline(30);
     if (gTaskSlotTypes[gCurTask->unk46] == 167)
         TaskFree(gCurTask->unk46);
-    gCurTask->unk28 = sub_080956c8(gUnk_087443D0);
+    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_087443D0);
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
     u = gCurTask;
     u->unk2C = u->facing;
@@ -813,7 +813,7 @@ void sub_08094fb0(void)
     TaskSleepForever();
 }
 
-void sub_080950b4(void)
+void GrandWheelieState7Update(void)
 {
     struct Task *t;
     s32 v;
@@ -822,16 +822,16 @@ void sub_080950b4(void)
     v = t->unk30;
     switch (v) {
     case 0:
-        gCurTask->unk28 = sub_08095794(t->unk28);
+        gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
         if (gCurTask->u8C.actor->animScript == 0) {
             TaskTurnAround();
-            gCurTask->unk28 = sub_080956c8(gUnk_0874433C);
+            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_0874433C);
         }
-        if (sub_08094e88() != 0)
+        if (GrandWheelieBrake() != 0)
             gCurTask->velX = v;
         break;
     case 1:
-        gCurTask->unk28 = sub_08095794(t->unk28);
+        gCurTask->unk28 = GrandWheelieTickAnim(t->unk28);
         sub_08094bbc();
         break;
     case 2:
@@ -851,7 +851,7 @@ void GrandWheelieSummon(void)
     gCurTask->updateState = 8;
     zero = 0;
     TaskStop();
-    sub_080956c8(gUnk_087443E4);
+    GrandWheelieStartAnim(gUnk_087443E4);
     TaskSetMotionY(-0x30000, 0x3500, 0x30000);
     gCurTask->onGround = zero;
     gCurTask->unk2C = zero;
@@ -887,14 +887,14 @@ void GrandWheelieSummonUpdate(void)
     struct Task *t;
     s32 x;
 
-    x = sub_08095794(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->unk28);
     t = gCurTask;
     t->unk28 = x;
     if (t->state != 8)
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
 
-void sub_08095254(void)
+void GrandWheelieBounceOffWall(void)
 {
     struct Task *t;
 
@@ -909,7 +909,7 @@ void sub_08095254(void)
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x2500, 0x30000);
     gCurTask->onGround = 0;
-    sub_080956c8(gUnk_08744408);
+    GrandWheelieStartAnim(gUnk_08744408);
     gCurTask->unk2C = 0;
     do {
         TaskYieldTrampoline(1);
@@ -917,7 +917,7 @@ void sub_08095254(void)
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 0x2500, 0x30000);
     gCurTask->onGround = 0;
-    sub_080956c8(gUnk_0874441C);
+    GrandWheelieStartAnim(gUnk_0874441C);
     gCurTask->unk2C = 0;
     do {
         TaskYieldTrampoline(1);
@@ -927,12 +927,12 @@ void sub_08095254(void)
     TaskSleepForever();
 }
 
-void sub_0809532c(void)
+void GrandWheelieBounceOffWallUpdate(void)
 {
     struct Task *t;
     s32 x;
 
-    x = sub_08095794(gCurTask->unk28);
+    x = GrandWheelieTickAnim(gCurTask->unk28);
     t = gCurTask;
     t->unk28 = x;
     if (t->state != 9)
@@ -956,7 +956,7 @@ void GrandWheelieDefeat(void)
         sub_0806684c();
     sub_080667c0(1, 32);
     CreateChildTaskHere(142, 0);
-    gCurTask->unk28 = sub_080956c8(gUnk_08744408);
+    gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744408);
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
     gCurTask->onGround = z1;
@@ -966,7 +966,7 @@ void GrandWheelieDefeat(void)
     RequestScreenShake(4);
     PlaySfx(0x1F7);
     CreateChildTaskHere(141, 0);
-    sub_080956c8(gUnk_0874441C);
+    GrandWheelieStartAnim(gUnk_0874441C);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     RequestScreenShake(2);
     gCurTask->unk1C = z2 = 0;
@@ -982,12 +982,12 @@ void GrandWheelieDefeat(void)
     TaskSleepForever();
 }
 
-void sub_08095484(void)
+void GrandWheelieDefeatUpdate(void)
 {
     struct Task *t;
     struct Task *u;
 
-    gCurTask->unk28 = sub_08095794(gCurTask->unk28);
+    gCurTask->unk28 = GrandWheelieTickAnim(gCurTask->unk28);
     ActorFlashPalette(gUnk_0826F170, 16);
     t = gCurTask;
     if (t->unk2C == 1) {
@@ -1017,7 +1017,7 @@ s32 sub_080954f0(void)
         RequestScreenShake(2);
         PlaySfx(0x1F7);
         if (gCurTask->u8C.actor->animScript != gUnk_08744384)
-            gCurTask->unk28 = sub_080956c8(gUnk_08744384);
+            gCurTask->unk28 = GrandWheelieStartAnim(gUnk_08744384);
         TaskSetEntry(sub_08094894, gCurTaskIdx);
         return 1;
     case 8:
@@ -1069,14 +1069,14 @@ s32 sub_080955a8(void)
     return 0;
 }
 
-void sub_08095674(void)
+void GrandWheelieReactToDamage(void)
 {
     CreateChildTaskHere(142, 0);
     RequestScreenShake(2);
     gCurTask->unk20 = 32;
 }
 
-void sub_08095694(void)
+void GrandWheelieReactToDefeat(void)
 {
     ActorFaceHitter();
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
@@ -1084,17 +1084,17 @@ void sub_08095694(void)
     TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
 }
 
-s32 sub_080956c8(struct AnimCmd *p)
+s32 GrandWheelieStartAnim(struct AnimCmd *p)
 {
     struct Actor *a;
 
     a = gCurTask->u8C.actor;
     a->animScript = p;
     a->animScriptPos = 0;
-    return sub_080956e4();
+    return GrandWheelieStepAnim();
 }
 
-s32 sub_080956e4(void)
+s32 GrandWheelieStepAnim(void)
 {
     struct Actor *a;
     struct AnimCmd *c;
@@ -1128,23 +1128,23 @@ tail:
     return r;
 }
 
-s32 sub_08095768(s32 a)
+s32 GrandWheelieTickAnimFacingNearestPlayer(s32 a)
 {
     if (gCurTask->u8C.actor->animScript != 0) {
         if (a <= 0) {
             TaskFaceNearestPlayer();
-            a = sub_080956e4();
+            a = GrandWheelieStepAnim();
         }
         a--;
     }
     return a;
 }
 
-s32 sub_08095794(s32 a)
+s32 GrandWheelieTickAnim(s32 a)
 {
     if (gCurTask->u8C.actor->animScript != 0) {
         if (a <= 0)
-            a = sub_080956e4();
+            a = GrandWheelieStepAnim();
         a--;
     }
     return a;

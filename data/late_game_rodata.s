@@ -556,11 +556,11 @@ gUnk_08757432:
 	.global	gUnk_0875743E
 gUnk_0875743E:
 	.incbin	"baserom.gba", 0x75743E, 0x2
-	.global	gUnk_08757440
-gUnk_08757440:
+	.global	gBootLogoObjectSeeds
+gBootLogoObjectSeeds:
 	.incbin	"baserom.gba", 0x757440, 0x398
-	.global	gUnk_087577D8
-gUnk_087577D8:
+	.global	gBootLogoScripts
+gBootLogoScripts:
 	.word	gUnk_08757838
 	.word	gUnk_087578D2
 	.word	gUnk_087578EE
@@ -689,16 +689,16 @@ gUnk_08758334:
 	.global	gUnk_08758374
 gUnk_08758374:
 	.incbin	"baserom.gba", 0x758374, 0x40
-	.global	gUnk_087583B4
-gUnk_087583B4:
+	.global	gCreditsTextPages
+gCreditsTextPages:
 	.word	gUnk_0859D3AC
 	.word	gUnk_0859D514
 	.word	gUnk_0859D6D0
 	.word	gUnk_0859D88C
 	.word	gUnk_0859DA3C
 	.word	gUnk_0859DBF0
-	.global	gUnk_087583CC
-gUnk_087583CC:
+	.global	gCreditsDemoRecordings
+gCreditsDemoRecordings:
 	.word	gUnk_0859DDCC
 	.word	gUnk_0859DFBC
 	.word	gUnk_0859E18C
@@ -720,8 +720,8 @@ gUnk_087583CC:
 	.word	gUnk_08759848
 	.word	gUnk_087590E8
 	.word	gUnk_08759BB8
-	.global	gUnk_0875841E
-	.set	gUnk_0875841E, . - 2
+	.global	gCreditsDemoLengths
+	.set	gCreditsDemoLengths, . - 2
 	.word	gUnk_087592D8
 	.word	gUnk_087594A8
 	.incbin	"baserom.gba", 0x758428, 0x20

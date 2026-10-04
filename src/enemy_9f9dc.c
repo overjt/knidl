@@ -5,7 +5,7 @@
 #include "main.h"
 #include "enemy.h"
 
-void sub_0809f9dc(void)
+void MetaKnightsKnightFlashPalette(void)
 {
     struct Task *t;
     struct Task *w;
@@ -49,7 +49,7 @@ void sub_0809f9dc(void)
     }
 }
 
-void sub_0809fb10(void)
+void MetaKnightsKnightRestorePalette(void)
 {
     struct Task *t;
     u8 *s;

@@ -93,7 +93,7 @@ u32 ActorCollideTerrain(void)
 b1:
     if ((gCurTask->waterFlags & 1) == 0 && (gCurTask->waterFlags & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk0C;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->leaveWaterCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -107,7 +107,7 @@ s1:
 b2:
     if ((gCurTask->waterFlags & 1) != 0 && (gCurTask->waterFlags & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk08;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->enterWaterCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -118,13 +118,13 @@ s2:
     {
         if ((gCurTask->onGround & 1) != 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk04;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->leaveGroundCallback;
     }
     else
     {
         if ((gCurTask->onGround & 1) == 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk00;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->landCallback;
     }
     if (fn != 0)
         r = ((u8 (*)(void))fn)();
@@ -133,7 +133,7 @@ s3:
         return 1;
     if ((gTerrainResult[0] & 3) != 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk10;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->hitWallCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -149,7 +149,7 @@ s3:
         return 1;
     if ((gCurTask->onGround & 1) == 0 && (gTerrainResult[1] & 1) != 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk18;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->hitCeilingCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -285,7 +285,7 @@ u32 sub_080696a0(void)
 b1:
     if ((gCurTask->waterFlags & 1) == 0 && (gCurTask->waterFlags & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk0C;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->leaveWaterCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -299,7 +299,7 @@ s1:
 b2:
     if ((gCurTask->waterFlags & 1) != 0 && (gCurTask->waterFlags & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk08;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->enterWaterCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -310,13 +310,13 @@ s2:
     {
         if ((gCurTask->onGround & 1) != 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk04;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->leaveGroundCallback;
     }
     else
     {
         if ((gCurTask->onGround & 1) == 0)
             goto s3;
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk00;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->landCallback;
     }
     if (fn != 0)
         r = ((u8 (*)(void))fn)();
@@ -325,7 +325,7 @@ s3:
         return 1;
     if ((gTerrainResult[0] & 3) != 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk10;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->hitWallCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -341,7 +341,7 @@ s3:
         return 1;
     if ((gCurTask->onGround & 1) == 0 && (gTerrainResult[1] & 1) != 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk18;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->hitCeilingCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -380,7 +380,7 @@ u32 sub_08069888(void)
 b1:
     if ((gCurTask->waterFlags & 1) != 0 && (gCurTask->waterFlags & 0x40) == 0)
     {
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk08;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->enterWaterCallback;
         if (fn != 0)
             r = ((u8 (*)(void))fn)();
     }
@@ -391,13 +391,13 @@ s1:
     {
         if ((gCurTask->onGround & 1) != 0)
             goto s2;
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk04;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->leaveGroundCallback;
     }
     else
     {
         if ((gCurTask->onGround & 1) == 0)
             goto s2;
-        fn = ((struct ActorHandlers *)a->terrainHandlers)->unk00;
+        fn = ((struct ActorHandlers *)a->terrainHandlers)->landCallback;
     }
     if (fn != 0)
         r = ((u8 (*)(void))fn)();
@@ -710,14 +710,14 @@ u32 ActorReactToDamage(void)
         HudAnimateTaskHpBar();
     if (p != NULL)
     {
-        if (p->unk00 != -1)
+        if (p->damageKind != -1)
         {
             ActorStartHitStun();
             r = 0;
         }
-        else if (p->unk04 != 0)
+        else if (p->damageCallback != 0)
         {
-            r = ((u8 (*)(void))p->unk04)();
+            r = ((u8 (*)(void))p->damageCallback)();
         }
         else
         {
@@ -812,7 +812,7 @@ s16 TaskGetHitAngle(void)
     return r;
 }
 
-void sub_0806a0cc(void)
+void ActorPlayRandomDefeatSfx(void)
 {
     u32 v;
 
@@ -831,7 +831,7 @@ void sub_0806a0cc(void)
     ActorPlaySfx(v, 0);
 }
 
-void sub_0806a0f0(s32 a)
+void ActorStartDrown(s32 a)
 {
     struct Task *t;
     struct Actor *b;
@@ -843,12 +843,12 @@ void sub_0806a0f0(s32 a)
     else
         t->unk18 = a;
     b->hitState = 2;
-    ActorSetTerrainHandlers((u32)gUnk_0873F910);
+    ActorSetTerrainHandlers((u32)gActorDrownTerrainHandlers);
     if (gCurTask->onGround & 1)
         ActorSetState(1);
     else
         ActorSetState(0);
-    TaskSetEntry(sub_0806b26c, gCurTaskIdx);
+    TaskSetEntry(ActorDrownInit, gCurTaskIdx);
 }
 
 /* No return value: the ROM's epilogue is `pop {r0}; bx r0`.  Its caller
@@ -858,10 +858,10 @@ void PickupCollect(void)
 {
     struct Task *t;
 
-    if (gCurTask->unk76 != 0)
+    if (gCurTask->u76.subtype != 0)
         MarkRoomObjectUsed(gCurTaskIdx);
     t = gCurTask;
-    switch (t->unk76)
+    switch (t->u76.subtype)
     {
     case 1:
         if (gLocalPlayer == t->hitterSlot)
@@ -913,7 +913,7 @@ u32 ActorReactToDefeat(void)
         ActorAwardScore(t->hitterPlayer, 2);
     if (p != NULL)
     {
-        if (p->unk01 != -1)
+        if (p->defeatKind != -1)
         {
             TaskSetEntry(ActorDie, gCurTaskIdx);
             r = 1;
@@ -927,8 +927,8 @@ u32 ActorReactToDefeat(void)
                 else
                     PlaySfx(514);
             }
-            if (p->unk08 != 0)
-                r = ((u8 (*)(void))p->unk08)();
+            if (p->defeatCallback != 0)
+                r = ((u8 (*)(void))p->defeatCallback)();
             else
                 sub_0806ee2c();
         }

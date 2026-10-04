@@ -11,19 +11,19 @@
  *     `sub_08080bcc` are its unk73 handlers (`0x08741BF4`);
  *   * task #31's dispatcher `Task_Starman` (`0x08741544`, four rows) and
  *     task #38's `Task_PoppyBrosJr` (`0x087415B8`, three rows);
- *   * six scripts in the entry/hook shape: `sub_08080e10`+`sub_08080e5c`
+ *   * six scripts in the entry/hook shape: `StarmanVariant0`+`sub_08080e5c`
  *     (`0x08741554`/`0x0874156C`, six states), `StarmanJumpInit`+`StarmanJumpUpdate`
  *     (`0x08741584`), `StarmanFlyInit`+`StarmanFlyUpdate` (`0x0874159C`),
  *     `StarmanIdleInit`+`StarmanIdleUpdate` (`0x087415A4`), `PoppyBrosJrInit`+
- *     `PoppyBrosJrUpdate` (`0x087415C4`) and `sub_08081d24`+`sub_08081d84`
+ *     `PoppyBrosJrUpdate` (`0x087415C4`) and `PoppyBrosJrStandInit`+`PoppyBrosJrStandUpdate`
  *     (`0x087415DC`);
- *   * the shared helpers `sub_08080374` (drain Task.unk18 by N and fire cue
+ *   * the shared helpers `TwisterTickSound` (drain Task.unk18 by N and fire cue
  *     192 when it runs out), `sub_08081814` (the eight-step walk animation)
  *     and `sub_08081e64` (flip Task.facing from the gTerrainResult[4] input,
  *     returning 1 when the input already matches the facing).
  *
- * `sub_0808164c`, `sub_080817b8` and `sub_08081d68` are dead exports of the
- * same kind as batch 1's; `sub_08081960`, `sub_08081e40`, `sub_08081f08` and
+ * `StarmanFlyEnterState`, `StarmanIdleEnterState` and `PoppyBrosJrStandEnterState` are dead exports of the
+ * same kind as batch 1's; `sub_08081960`, `PoppyBrosJrStandHopUpdate`, `sub_08081f08` and
  * `sub_08081f18` are pointer-referenced leaves the census originally missed
  * (both classes curated in tools/symdb.py).
  */
@@ -101,7 +101,7 @@ s32 sub_08080c2c(void)
 
 s32 sub_08080c38(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -188,7 +188,7 @@ void Task_Starman(void)
     CallTableEntry(u->variant, 4, gStarmanVariants);
 }
 
-void sub_08080e10(void)
+void StarmanVariant0(void)
 {
     struct Task *t = gCurTask;
 
@@ -530,7 +530,7 @@ void StarmanJumpWalk(void)
     sub_08081814();
 }
 
-void sub_080814b4(void)
+void StarmanJumpWalkUpdate(void)
 {
     struct Task *t = gCurTask;
     s32 n;
@@ -563,7 +563,7 @@ void StarmanJump(void)
     TaskSleepForever();
 }
 
-void sub_08081560(void)
+void StarmanJumpState1Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -592,7 +592,7 @@ void StarmanJumpFall(void)
     }
 }
 
-void sub_080815dc(void)
+void StarmanJumpFallUpdate(void)
 {
     if ((s8)gCurTask->onGround != 0)
     {
@@ -613,7 +613,7 @@ void StarmanFlyInit(void)
     CallTableEntry(gCurTask->state, 1, gStarmanFlyStates);
 }
 
-void sub_0808164c(void)
+void StarmanFlyEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gStarmanFlyStates);
 }
@@ -625,7 +625,7 @@ void StarmanFlyUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808168c(void)
+void StarmanFly(void)
 {
     struct Task *t;
 
@@ -646,7 +646,7 @@ void sub_0808168c(void)
     }
 }
 
-void sub_080816e8(void)
+void StarmanFlyState0Update(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -712,7 +712,7 @@ void StarmanIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
 }
 
-void sub_080817b8(void)
+void StarmanIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
 }
@@ -730,7 +730,7 @@ void StarmanIdle(void)
     sub_08081814();
 }
 
-void sub_08081810(void)
+void StarmanIdleState0Update(void)
 {
 }
 
@@ -843,7 +843,7 @@ s32 sub_08081984(void)
 
 s32 sub_080819a4(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -898,7 +898,7 @@ void PoppyBrosJrUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08081aac(void)
+void PoppyBrosJrHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -934,7 +934,7 @@ void sub_08081aac(void)
     }
 }
 
-void sub_08081b5c(void)
+void PoppyBrosJrHopUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -977,7 +977,7 @@ void PoppyBrosJrWalk(void)
     }
 }
 
-void sub_08081c3c(void)
+void PoppyBrosJrWalkUpdate(void)
 {
     if (gCurTask->onGround != 0 && (u8)sub_08081e64() == 0)
     {
@@ -1002,7 +1002,7 @@ void PoppyBrosJrJump(void)
     TaskSleepForever();
 }
 
-void sub_08081ce0(void)
+void PoppyBrosJrJumpUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -1018,32 +1018,32 @@ void sub_08081ce0(void)
     }
 }
 
-void sub_08081d24(void)
+void PoppyBrosJrStandInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08081d84;
+    t->updateCallback = (u32)PoppyBrosJrStandUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087415DC);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrStandStates);
 }
 
-void sub_08081d68(void)
+void PoppyBrosJrStandEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087415DC);
+    CallTableEntry(gCurTask->state, 1, gPoppyBrosJrStandStates);
 }
 
-void sub_08081d84(void)
+void PoppyBrosJrStandUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_087415E0);
+        CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrStandStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08081db4(void)
+void PoppyBrosJrStandHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1077,7 +1077,7 @@ void sub_08081db4(void)
     }
 }
 
-void sub_08081e40(void)
+void PoppyBrosJrStandHopUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -1173,7 +1173,7 @@ s32 sub_08081f38(void)
 
 s32 sub_08081f50(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 

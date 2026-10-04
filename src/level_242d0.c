@@ -30,7 +30,7 @@
  * registers, lesson 4.79).  FindDoorAt(x, y) finds an enterable door at a
  * pixel - the door metatiles 16/144, 54/182 and 55/183, the door records
  * RoomDef.doors and their locks gUsedSubGameDoors[]/gWarpStarStationLevels - and records
- * it in gUnk_02000030 (type << 8 | index); EnterDoor enters it, a 9-way
+ * it in gFoundDoor (type << 8 | index); EnterDoor enters it, a 9-way
  * switch on the door kind (RoomDef door byte +6) that sets the next
  * level/stage/room, the arrival position gRoomEntryX/gRoomEntryY and
  * the stage request gStageRequest for M02's state bodies.  ExitClearedStage
@@ -80,7 +80,7 @@ void LoadCutsceneRoom(void)
     }
     gCurRoomDef = gRoomTable[8][gCurLevel][gUnk_08732630[gCurLevel]];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -220,7 +220,7 @@ void LoadEndingRoom(s32 a0)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -345,7 +345,7 @@ void LoadCreditsRoom(void)
     CreateRoomTask(6);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -381,7 +381,7 @@ void LoadCreditsRoom(void)
     CalcBg3Parallax();
     CalcRoomBounds();
     InitRoomBgLayout();
-    sub_080b4e40();
+    InitRoomObjects();
     SetRoomEntryPoint();
     LoadRoomBgAnims();
     InitDoors();
@@ -421,7 +421,7 @@ void LoadCreditsRoom(void)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
-    sub_080b5024();
+    SpawnRoomObjectsOnLoad();
     if (gPlayerCount == 1)
         CameraResetBounds();
     else
@@ -507,7 +507,7 @@ s32 FindDoorAt(s32 x, s32 y)
     s32 i;
     struct Door *d;
 
-    gUnk_02000030 = 0xFF;
+    gFoundDoor = 0xFF;
     if (gCurRoomDef->doorCount == 0)
         return 0;
     switch (GetCollisionTileAtPixel(x, y))
@@ -580,7 +580,7 @@ s32 FindDoorAt(s32 x, s32 y)
             break;
         }
     }
-    gUnk_02000030 = (type << 8) | i;
+    gFoundDoor = (type << 8) | i;
     return 1;
 }
 
@@ -593,7 +593,7 @@ s32 EnterDoor(void)
     s32 idx;
     s32 t;
 
-    idx = gUnk_02000030 & 0xFF;
+    idx = gFoundDoor & 0xFF;
     if (idx == 0xFF)
         return 0;
     d = &gCurRoomDef->doors[idx];
@@ -808,7 +808,7 @@ s32 EnterDoor(void)
         if (gUnk_02007D60 & 0x8000)
             gUnk_02007D60 = 0;
     }
-    return gUnk_02000030 >> 8;
+    return gFoundDoor >> 8;
 }
 
 void ExitClearedStage(void)
@@ -945,7 +945,7 @@ void PressBigSwitch(s32 id)
         if (d->unk0 == 0x270F && (u8)d->unk6 == 0 && d->unk8 == (s8)gUnk_03001F20)
             break;
     }
-    gUnk_02007E8C = id;
+    gPressedBigSwitchSlot = id;
     gHubUnlockFlags = 1;
     v = ((s8 *)gRoomObjectList.entries[gUnk_02005590[id - 32]].filler0)[2];
     gHubUnlockSource = v | 0x100;
@@ -964,7 +964,7 @@ void PressBigSwitch(s32 id)
     gRoomEntryY = d->unk4 * 16 + 5;
     gRoomEntrySet = 1;
     if (gRoomBgLayout == 2)
-        gUnk_02004B80 = gBg3Pos[0];
+        gBigSwitchReturnBg3X = gBg3Pos[0];
     gStageRequest = 4;
     gStageExitFlags |= 5;
 }

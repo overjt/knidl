@@ -42,7 +42,7 @@ void sub_0802296c(void)
     gUnk_02004C98 = 0;
     gHubUnlockFlags = 0;
     gHubUnlockSource = 0;
-    gUnk_02004B64 = 0;
+    gBigSwitchPressActive = 0;
     gUnk_0200B038 = 0;
     gUnk_02007FF0 = 0;
     gUnk_02007D60 = 0;
@@ -70,7 +70,7 @@ void sub_0802296c(void)
     gLevelIndex = 8;
     gStageIndex = gCurLevel;
     gRoomIndex = 0;
-    gUnk_0200AF04 = 0;
+    gSkipNextHubBgm = 0;
     gContinueLevel = gStageIndex;
     gUnk_02007FF8 = gUnk_03001F20;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
@@ -132,7 +132,7 @@ void sub_08022c3c(void)
     gUnk_02004C98 = 0;
     gHubUnlockFlags = 0;
     gHubUnlockSource = 0;
-    gUnk_02004B64 = 0;
+    gBigSwitchPressActive = 0;
     gUnk_0200B038 = 0;
     gUnk_02007FF0 = 0;
     gUnk_02007D60 = 0;
@@ -172,7 +172,7 @@ void sub_08022c3c(void)
         gLevelIndex = 8;
         gStageIndex = gContinueLevel;
         gRoomIndex = 0;
-        gUnk_0200AF04 = 0;
+        gSkipNextHubBgm = 0;
         if (gFurthestLevel == 0 && gFurthestStage == 0)
         {
             gRoomEntryX = 70;
@@ -245,7 +245,7 @@ void sub_08022f98(void)
 
 void sub_08022f9c(void)
 {
-    gUnk_020055C8 = 0;
+    gRoomBgmStarted = 0;
 }
 
 void LoadRoom(void)
@@ -273,7 +273,7 @@ void LoadRoom(void)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -309,7 +309,7 @@ void LoadRoom(void)
     CalcBg3Parallax();
     CalcRoomBounds();
     InitRoomBgLayout();
-    sub_080b4e40();
+    InitRoomObjects();
     SetRoomEntryPoint();
     PlayRoomBgm();
     LoadRoomBgAnims();
@@ -350,7 +350,7 @@ void LoadRoom(void)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
-    sub_080b5024();
+    SpawnRoomObjectsOnLoad();
     if (gPlayerCount == 1)
         CameraResetBounds();
     else
@@ -402,9 +402,9 @@ void sub_080233e0(void)
 {
     u32 a;
 
-    TaskSetSkipMask(0, gUnk_02007E8C);
-    TaskSetOthersSkipMask(15, gUnk_02007E8C);
-    sub_08077d38(gUnk_02007E8C);
+    TaskSetSkipMask(0, gPressedBigSwitchSlot);
+    TaskSetOthersSkipMask(15, gPressedBigSwitchSlot);
+    BigSwitchStartRefill(gPressedBigSwitchSlot);
     gInHub = 0;
     gCurLevel = gLevelIndex;
     gUnk_03001F20 = gStageIndex;
@@ -413,7 +413,7 @@ void sub_080233e0(void)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -460,7 +460,7 @@ void sub_080233e0(void)
     }
     CameraInitPos();
     if (gRoomBgLayout == 2)
-        gBg3Pos[0] = gUnk_02004B80;
+        gBg3Pos[0] = gBigSwitchReturnBg3X;
     CameraWriteScrollParallax();
     a = 0;
     CpuFastSet(&a, (u32 *)(BG_VRAM + 0x2000), 0x01000400);

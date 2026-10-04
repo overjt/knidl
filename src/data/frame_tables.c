@@ -2396,7 +2396,7 @@ u32 gUnk_0874C520[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C568.  Consumers: Task_WhispyWoodsAirPuff (src/hud_b2fe8.c:376),
- * sub_080b3758 (src/hud_b2fe8.c:623), PlayerObjectAirPuff
+ * WhispyWoodsAirPuffState0Update (src/hud_b2fe8.c:623), PlayerObjectAirPuff
  * (src/plobj_509ec.c:48).  38 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables
  * 0x0874C568-0x0874C600).  Declared include/enemy.h:1143. */
@@ -2812,8 +2812,8 @@ u32 gUnk_0874C980[] FRAME_TABLE = {
     (u32)gUnk_080D4B50,
 };
 
-/* gUnk_0874C9D8.  Consumers: sub_0806a9d8 (src/actor_6a344.c:459),
- * sub_0806ac6c (src/actor_6a344.c:634), sub_0806acc8
+/* gUnk_0874C9D8.  Consumers: ActorDefeatFrozenState2 (src/actor_6a344.c:459),
+ * sub_0806ac6c (src/actor_6a344.c:634), ActorDefeatAbilityStar
  * (src/actor_6a344.c:650) and 5 more.  17 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C9D8-0x0874CA1C).  Declared include/actor.h:277. */
@@ -2868,7 +2868,7 @@ u32 gUnk_0874CA1C[] FRAME_TABLE = {
     (u32)gUnk_080D5E68,
 };
 
-/* gUnk_0874CA78.  Consumers: sub_0806aec0 (src/actor_6ad18.c:136),
+/* gUnk_0874CA78.  Consumers: ActorDefeatMidBoss (src/actor_6ad18.c:136),
  * PlayStarScatterAnim (src/actor_6d22c.c:256).  24 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CA78-0x0874CAD8).  Declared include/actor.h:279. */
@@ -2968,7 +2968,7 @@ u32 gBlockStarFrames[] FRAME_TABLE = {
     (u32)gUnk_080D70E8,
 };
 
-/* gUnk_0874CB7C.  Consumers: sub_0806a5a0 (src/actor_6a344.c:234),
+/* gUnk_0874CB7C.  Consumers: ActorDefeatFrozenBlink (src/actor_6a344.c:234),
  * Task_IceBlock (src/actor_6e0f0.c:553), Task_MrFrostyIceCube
  * (src/enemy_99b20.c:1678).  5 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
@@ -2982,7 +2982,7 @@ u32 gUnk_0874CB7C[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CB90.  Consumers: Task_DustTrail (src/actor_6cd40.c:37),
- * Task_DustPuff (src/actor_6cd40.c:84), sub_0806cf70
+ * Task_DustPuff (src/actor_6cd40.c:84), Task_BackwardDustPuff
  * (src/actor_6cd40.c:110) and 2 more.  14 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CB90-0x0874CBC8).  Declared include/actor.h:283. */
@@ -3086,7 +3086,7 @@ u32 gUnk_0874CC60[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CC84.  Consumers: Task_TrailFlash (src/actor_6d22c.c:645),
- * sub_0806c770 (src/actor_6c2a4.c:353).  8 words, OAM template streams;
+ * ActorAttachedThrowFlightLateUpdate (src/actor_6c2a4.c:353).  8 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CC84-0x0874CCA4).  Declared include/actor.h:289. */
 u32 gUnk_0874CC84[] FRAME_TABLE = {
@@ -3417,7 +3417,7 @@ u32 gUnk_0874CF94[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CFEC.  Consumers: Task_Player (src/player_32688.c:80),
- * sub_0806ee30 (src/actor_6e0f0.c:670), sub_0805d994
+ * PlayerWarpStarRideInit (src/actor_6e0f0.c:670), sub_0805d994
  * (src/effect_5afac.c:1665) and 2 more.  4713 words, the player's struct
  * TaskGfx records (tagged 20-byte variant); extent: the span to the next
  * label, every word such a target (pointer_tables 0x0874CFEC-0x08751990).
@@ -9098,7 +9098,7 @@ u32 gSirKibbleCutterFrames[] FRAME_TABLE = {
 };
 
 /* gCappyFrames.  Consumers: CappyCappedInit (src/enemy_7d3b0.c:950),
- * sub_0807e8b8 (src/enemy_7d3b0.c:1104).  8 words, OAM template streams;
+ * CappyStandInit (src/enemy_7d3b0.c:1104).  8 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0875235C-0x0875237C).  Declared include/enemy.h:1164. */
 u32 gCappyFrames[] FRAME_TABLE = {
@@ -10074,7 +10074,7 @@ u32 gStakeFrames[] FRAME_TABLE = {
 
 /* gWarpStarFrames.  Consumers: Task_WarpStarSparkle
  * (src/actor_6e0f0.c:208), Task_WarpStar (src/actor_70ec0.c:126),
- * sub_080710fc (src/actor_70ec0.c:155) and 1 more.  15 words, OAM template
+ * WarpStarAnimateTiles (src/actor_70ec0.c:155) and 1 more.  15 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x08752D50-0x08752D8C).  Declared include/actor.h:294. */
 u32 gWarpStarFrames[] FRAME_TABLE = {
@@ -10095,7 +10095,7 @@ u32 gWarpStarFrames[] FRAME_TABLE = {
     (u32)gUnk_0825D2A8,
 };
 
-/* gUnk_08752D8C.  Consumer: sub_08071694 (src/actor_70ec0.c:378).  11
+/* gUnk_08752D8C.  Consumer: WarpStarVanish (src/actor_70ec0.c:378).  11
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08752D8C-0x08752DB8).  Declared
  * include/cutscene.h:119. */
@@ -10114,7 +10114,7 @@ u32 gUnk_08752D8C[] FRAME_TABLE = {
 };
 
 /* gUnk_08752DB8.  Consumers: sub_080781fc (src/actor_77ae0.c:409),
- * sub_08078598 (src/actor_77ae0.c:569).  18 words, OAM template streams;
+ * Task_RoomParticles (src/actor_77ae0.c:569).  18 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08752DB8-0x08752E00).  Declared include/cutscene.h:120. */
 u32 gUnk_08752DB8[] FRAME_TABLE = {
@@ -11745,7 +11745,7 @@ u32 gMrBrightFrames[] FRAME_TABLE = {
     (u32)gUnk_082F81DC,
 };
 
-/* gUnk_08754180.  Consumers: sub_080a472c (src/enemy_a1590.c:2685),
+/* gUnk_08754180.  Consumers: MrShineAndMrBrightVariant3 (src/enemy_a1590.c:2685),
  * sub_080a4814 (src/enemy_a1590.c:2739).  12 words, struct TaskGfx records;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754180-0x087541B0).  Declared include/enemy.h:1253. */
@@ -11829,7 +11829,7 @@ u32 gMrShineFrames[] FRAME_TABLE = {
     (u32)gUnk_082F7DD4,
 };
 
-/* gUnk_08754260.  Consumer: sub_080a4cc4 (src/enemy_a1590.c:2964).  8
+/* gUnk_08754260.  Consumer: MrShineCrescentInit (src/enemy_a1590.c:2964).  8
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754260-0x08754280).  Declared
  * include/enemy.h:1257. */
@@ -11844,7 +11844,7 @@ u32 gUnk_08754260[] FRAME_TABLE = {
     (u32)gUnk_082F7E34,
 };
 
-/* gUnk_08754280.  Consumer: sub_080a5040 (src/enemy_a1590.c:3139).  4
+/* gUnk_08754280.  Consumer: MrBrightFireballInit (src/enemy_a1590.c:3139).  4
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754280-0x08754290).  Declared
  * include/enemy.h:1258. */
@@ -11855,8 +11855,8 @@ u32 gUnk_08754280[] FRAME_TABLE = {
     (u32)gUnk_082F7FB4,
 };
 
-/* gUnk_08754290.  Consumers: sub_080a5188 (src/enemy_a1590.c:3215),
- * sub_080a54e4 (src/enemy_a1590.c:3416).  6 words, OAM template streams;
+/* gUnk_08754290.  Consumers: MrBrightBeamInit (src/enemy_a1590.c:3215),
+ * Task_MrBrightBeamEffect (src/enemy_a1590.c:3416).  6 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754290-0x087542A8).  Declared include/enemy.h:1259. */
 u32 gUnk_08754290[] FRAME_TABLE = {
@@ -11868,7 +11868,7 @@ u32 gUnk_08754290[] FRAME_TABLE = {
     (u32)gUnk_082F7F4C,
 };
 
-/* gUnk_087542A8.  Consumer: sub_080a4e9c (src/enemy_a1590.c:3047).  6
+/* gUnk_087542A8.  Consumer: MrShineFallingStarInit (src/enemy_a1590.c:3047).  6
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087542A8-0x087542C0).  Declared
  * include/enemy.h:1260. */
@@ -12094,8 +12094,8 @@ u32 gNightmarePowerOrbFrames[] FRAME_TABLE = {
 };
 
 /* gUnk_08754504.  Consumers: Task_NightmarePowerOrbStar
- * (src/enemy_ae3bc.c:1067), sub_080afdf0 (src/enemy_ae3bc.c:1728),
- * sub_080aff40 (src/enemy_ae3bc.c:1775) and 2 more.  23 words, OAM template
+ * (src/enemy_ae3bc.c:1067), Task_NightmarePowerOrbStarTrail (src/enemy_ae3bc.c:1728),
+ * Task_NightmarePowerOrbStarTrailUp (src/enemy_ae3bc.c:1775) and 2 more.  23 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754504-0x08754560).  Declared include/enemy.h:1270. */
 u32 gUnk_08754504[] FRAME_TABLE = {
@@ -12133,7 +12133,7 @@ u32 gUnk_08754560[] FRAME_TABLE = {
     (u32)gUnk_082FFDE8,
 };
 
-/* gUnk_08754568.  Consumer: sub_080ab8a8 (src/enemy_aa338.c:998).  1 word,
+/* gUnk_08754568.  Consumer: NightmareWizardReactToDefeat (src/enemy_aa338.c:998).  1 word,
  * struct TaskGfx records; extent: the span to the next label, every word
  * such a target (pointer_tables 0x08754568-0x0875456C).  Declared
  * include/enemy.h:1272. */
@@ -12142,7 +12142,7 @@ u32 gUnk_08754568[] FRAME_TABLE = {
 };
 
 /* gNightmareWizardFrames.  Consumers: Task_NightmareWizard
- * (src/enemy_a93ec.c:661), sub_080ab93c (src/enemy_aa338.c:1011).  89
+ * (src/enemy_a93ec.c:661), NightmareWizardDefeat (src/enemy_aa338.c:1011).  89
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0875456C-0x087546D0).  Declared
  * include/enemy.h:1273. */
@@ -12255,7 +12255,7 @@ u32 gUnk_087546D0[] FRAME_TABLE = {
     (u32)&gUnk_08331694,
 };
 
-/* gUnk_087546F8.  Consumer: sub_080ac410 (src/enemy_aa338.c:1476).  4
+/* gUnk_087546F8.  Consumer: Task_NightmareWizardCloakTornado (src/enemy_aa338.c:1476).  4
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087546F8-0x08754708).  Declared
  * include/enemy.h:1275. */
@@ -12266,7 +12266,7 @@ u32 gUnk_087546F8[] FRAME_TABLE = {
     (u32)&gUnk_083032DC,
 };
 
-/* gUnk_08754708.  Consumer: sub_080abf10 (src/enemy_aa338.c:1233).  4
+/* gUnk_08754708.  Consumer: Task_NightmareWizardPalmTornado (src/enemy_aa338.c:1233).  4
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754708-0x08754718).  Declared
  * include/enemy.h:1276. */
@@ -12277,7 +12277,7 @@ u32 gUnk_08754708[] FRAME_TABLE = {
     (u32)&gUnk_083111E0,
 };
 
-/* gUnk_08754718.  Consumer: sub_080ac124 (src/enemy_aa338.c:1334).  8
+/* gUnk_08754718.  Consumer: Task_NightmareWizardPointTornado (src/enemy_aa338.c:1334).  8
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754718-0x08754738).  Declared
  * include/enemy.h:1277. */
@@ -13453,7 +13453,7 @@ u32 gUnk_08755484[] FRAME_TABLE = {
 };
 
 /* gUnk_0875549C.  Consumers: Task_NightmarePowerOrbEscape
- * (src/actor_74c0c.c:204), sub_080752f4 (src/actor_74c0c.c:352).  7 words,
+ * (src/actor_74c0c.c:204), Task_NightmarePowerOrbEscapeStar (src/actor_74c0c.c:352).  7 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x0875549C-0x087554B8).  Declared
  * include/cutscene.h:129. */
@@ -13467,11 +13467,11 @@ u32 gUnk_0875549C[] FRAME_TABLE = {
     (u32)gUnk_085E75F0,
 };
 
-/* gUnk_087554B8.  Consumer: BootLogoUpdateObjects (src/boot_caab8.c:129).
+/* gBootLogoSprites.  Consumer: BootLogoUpdateObjects (src/boot_caab8.c:129).
  * 63 words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087554B8-0x087555B4).  Declared
  * include/ending.h:65. */
-u32 gUnk_087554B8[] FRAME_TABLE = {
+u32 gBootLogoSprites[] FRAME_TABLE = {
     (u32)gUnk_08541AA0,
     (u32)gUnk_08541AA8,
     (u32)gUnk_08541AB0,

@@ -44,7 +44,7 @@ void CreateKingDededeAirPuff(void)
     gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-void sub_080a02d4(u8 a)
+void KingDededeCreateImpactStars(u8 a)
 {
     struct Task *t;
     u16 x;
@@ -312,7 +312,7 @@ void sub_080a0658(void)
     }
 }
 
-void sub_080a06f0(void)
+void KingDededeChooseNextState(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -373,7 +373,7 @@ void sub_080a0768(void)
         TaskYieldTrampoline(1);
     TaskStop();
     PlaySfx(0x1F7);
-    sub_080a02d4(0);
+    KingDededeCreateImpactStars(0);
     RequestScreenShake(4);
     TaskYieldTrampoline(20);
 }
@@ -406,7 +406,7 @@ void sub_080a0844(void)
     z = 0;
     TaskYieldTrampoline(b);
     RequestScreenShake(d);
-    sub_080a02d4(0);
+    KingDededeCreateImpactStars(0);
     u = gCurTask;
     u->frame--;
     TaskYieldTrampoline(c);
@@ -526,7 +526,7 @@ void KingDededeEnterState(void)
     CallTableEntry(gCurTask->state, 11, gKingDededeStates);
 }
 
-void sub_080a0b30(void)
+void KingDededeState0(void)
 {
     struct Task *t;
     s32 z;
@@ -544,7 +544,7 @@ void sub_080a0b30(void)
     TaskSleepForever();
 }
 
-void sub_080a0b74(void)
+void KingDededeState0Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -564,7 +564,7 @@ void sub_080a0b74(void)
     }
 }
 
-void sub_080a0bb4(void)
+void KingDededeWait(void)
 {
     struct Task *t;
     s32 one;
@@ -578,7 +578,7 @@ void sub_080a0bb4(void)
     TaskSleepForever();
 }
 
-void sub_080a0bdc(void)
+void KingDededeWaitUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -589,12 +589,12 @@ void sub_080a0bdc(void)
     u = gCurTask;
     u->unk24 = n;
     if (u->unk20 == 0)
-        sub_080a06f0();
+        KingDededeChooseNextState();
     else
         u->unk20--;
 }
 
-void sub_080a0c08(void)
+void KingDededeWalk(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -602,7 +602,7 @@ void sub_080a0c08(void)
     sub_080a094c();
 }
 
-void sub_080a0c28(void)
+void KingDededeWalkUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -842,7 +842,7 @@ void KingDededeExhaleUpdate(void)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
-void sub_080a1058(void)
+void KingDededeState6(void)
 {
     struct Task *t;
     struct Task *u;
@@ -875,20 +875,20 @@ void sub_080a1058(void)
     TaskStop();
     PlaySfx(252 << 1);
     RequestScreenShake(2);
-    sub_080a02d4(1);
+    KingDededeCreateImpactStars(1);
     TaskSetFrame(41);
     TaskYieldTrampoline(34);
     ActorSetState(1);
     TaskSleepForever();
 }
 
-void sub_080a1140(void)
+void KingDededeState6Update(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
-void sub_080a1168(void)
+void KingDededeSlam(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
@@ -901,7 +901,7 @@ void sub_080a1168(void)
     TaskSleepForever();
 }
 
-void sub_080a11a0(void)
+void KingDededeSlamUpdate(void)
 {
     struct Task *t;
 
@@ -975,7 +975,7 @@ void KingDededeInhale(void)
     TaskSleepForever();
 }
 
-void sub_080a12e0(void)
+void KingDededeInhaleUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1048,7 +1048,7 @@ void KingDededeSpit(void)
     TaskSleepForever();
 }
 
-void sub_080a1400(void)
+void KingDededeSpitUpdate(void)
 {
     if (gUnk_02006190[7] == 1)
     {

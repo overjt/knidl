@@ -18,11 +18,11 @@ void sub_0809cb90(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();

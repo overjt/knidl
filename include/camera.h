@@ -56,7 +56,7 @@ extern u8 gUnk_02005E10[];
 extern struct Unk02007D70 gBgAnims[];
 extern u8 gWarpStarStationDoorRevealed;
 extern struct Unk020061F0 gBg1BreakingBlocks[];
-extern s32 gUnk_02016C30;
+extern s32 gHBlankScrollBaseX;
 
 /* IWRAM */
 /* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */

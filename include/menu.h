@@ -165,8 +165,8 @@ void sub_0800ec08(void);
 void Task_SoundTestCursors(void);
 void sub_0800ecb8(void);
 void Task_SoundTestPulse(void);
-void sub_0800ef30(void);
-void sub_0800f084(void);
+void Task_LinkPlayPalettePulse(void);
+void Task_LinkPlayColorCycle(void);
 
 /* src/menutask_0f180.c */
 void Task_LinkPlayPlayerList(void);

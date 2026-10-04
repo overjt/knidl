@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x080673EC 0x080692FC src/actor_673ec.c --newpb
  *
  * Task bodies for the carried/helper actor states (unk15 = 3..10) plus the
- * player-record plumbing: spawn/teardown (sub_080685EC/sub_0806865C), the
+ * player-record plumbing: spawn/teardown (HoldPlayer/DropHeldPlayer), the
  * per-character animation-offset switch (sub_080684A4), and the
  * gPlayerStates[] save/restore used when a player is picked up or dropped.
  */
@@ -28,7 +28,7 @@ extern u8 gAttackLastHitterSlot;
 extern u8 gAttackLastHitter;
 extern s16 gAttackFacing;
 extern s8 gAttackHitDuration;
-extern u8 gUnk_03002460;
+extern u8 gAttackLastHitterClass;
 extern s32 gAttackBox;
 extern u8 gHitKind;
 extern u8 gHitEffect;
@@ -37,15 +37,15 @@ extern u8 gHitDirection;
 extern u8 gHitTimer;
 extern u8 gHitterSlot;
 extern u8 gUnk_03001F24;
-extern u8 gUnk_030023A4;
-extern u8 gUnk_030023D0;
+extern u8 gHitterColliderClass;
+extern u8 gHitterColliderKind;
 
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 extern void CallTableEntry(u32 a, u32 b, u32 *c);
 extern void PlaceAttackBox(void);
-extern u8 sub_0801b24c(void);
-extern u8 sub_0801af14(void);
+extern u8 HitTestColliderClass20(void);
+extern u8 HitTestColliderClass10(void);
 extern u8 HitTestPlayerColliders(void);
 extern void PlaySfx(u32 a);
 extern u8 gTerrainResult;
@@ -54,14 +54,14 @@ extern void TerrainCollideBox(u32 *p);
 extern void RequestScreenShake(u32 a);
 extern void TaskSetEntry(void *fn, s32 i);
 
-void sub_080673ec(void)
+void HeldPlayerEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 11, gUnk_0873E2F0);
+    CallTableEntry(gCurTask->state, 11, gHeldPlayerStates);
 }
 
-void sub_08067408(void)
+void HeldPlayerUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 11, gUnk_0873E31C);
+    CallTableEntry(gCurTask->updateState, 11, gHeldPlayerStateUpdates);
     PlayerUpdateInvulnerability();
     if ((gCurTask->player->unk42 & 32) == 0)
         sub_0803e080();
@@ -69,21 +69,21 @@ void sub_08067408(void)
         SetCameraFocus(gCurTask->pixelX, gCurTask->pixelY);
 }
 
-void sub_08067470(void)
+void HeldPlayerSwallow(void)
 {
     gCurTask->updateState = 0;
     sub_08068690();
-    while (sub_080687a0() == 0)
+    while (HeldPlayerIsNearCaptor() == 0)
     {
-        sub_08068760();
+        HeldPlayerPullTowardCaptor();
         TaskYieldTrampoline(1);
     }
     TaskStop();
-    sub_080687e0();
+    HeldPlayerEnterMouth();
     TaskSleepForever();
 }
 
-void sub_080674a8(void)
+void HeldPlayerSwallowUpdate(void)
 {
     struct Task *t;
 
@@ -97,18 +97,18 @@ void sub_080674a8(void)
     sub_080687fc();
 }
 
-void sub_080674d8(void)
+void HeldPlayerSpitFlight(void)
 {
     gCurTask->updateState = 1;
     sub_08068828();
     TaskSleepForever();
 }
 
-void sub_080674f4(void)
+void HeldPlayerSpitFlightUpdate(void)
 {
 }
 
-void sub_080674f8(void)
+void HeldPlayerSpitBounceOff(void)
 {
     struct Task *t;
 
@@ -120,7 +120,7 @@ void sub_080674f8(void)
     TaskSleepForever();
 }
 
-void sub_08067520(void)
+void HeldPlayerSpitBounceOffUpdate(void)
 {
     struct Task *t;
 
@@ -128,7 +128,7 @@ void sub_08067520(void)
     if (t->unk34 <= 0)
     {
         TaskStop();
-        sub_0806865c(gCurTaskIdx);
+        DropHeldPlayer(gCurTaskIdx);
     }
     else
     {
@@ -137,7 +137,7 @@ void sub_08067520(void)
     }
 }
 
-void sub_08067550(void)
+void HeldPlayerBackdropHeld(void)
 {
     struct Task *u;
     struct PlayerState *p;
@@ -167,13 +167,13 @@ void sub_08067550(void)
     }
     TaskSleepForever();
 }
-void sub_080675d8(void)
+void HeldPlayerBackdropHeldUpdate(void)
 {
-    sub_080675e4();
+    HeldPlayerFollowCaptorPose();
 }
 
 /* Follow the carried task's frame offsets out of gUnk_0873E1F8. */
-void sub_080675e4(void)
+void HeldPlayerFollowCaptorPose(void)
 {
     struct Task *t;
     struct Task *u;
@@ -209,7 +209,7 @@ void sub_080675e4(void)
 }
 
 /* Task body: the carried task's "thrown" arc. */
-void sub_080676c0(void)
+void HeldPlayerBackdropBounceOff(void)
 {
     struct Task *t;
     struct Task *u;
@@ -221,9 +221,9 @@ void sub_080676c0(void)
     u->moveCallback = (u32)PlayerMove;
     u->updateState = 4;
     TaskStop();
-    sub_08068a2c(-8, 512);
+    HeldPlayerDamage(-8, 512);
     if (gMetaKnightmareMode == 0)
-        sub_080675e4();
+        HeldPlayerFollowCaptorPose();
     t = gCurTask;
     t->unk28 = gTasks[t->parent].unk28;
     t->unk34 = 0;
@@ -297,7 +297,7 @@ void sub_080676c0(void)
     x->unk34 = x->unk34 + 1;
     TaskSleepForever();
 }
-void sub_08067908(void)
+void HeldPlayerBackdropBounceOffUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     TerrainCollideBox(gPlayerDefaultTerrainBox);
@@ -306,12 +306,12 @@ void sub_08067908(void)
     if (gCurTask->unk34 != 0)
     {
         TaskStop();
-        sub_0806865c(gCurTaskIdx);
+        DropHeldPlayer(gCurTaskIdx);
     }
 }
 
 /* Task body: the carried task wobbling in the player's hands. */
-void sub_08067950(void)
+void HeldPlayerState5(void)
 {
     struct Task *t;
     struct Task *u;
@@ -349,7 +349,7 @@ void sub_08067950(void)
             x->unk34 = 0;
     }
 }
-void sub_08067a48(void)
+void HeldPlayerState5Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -395,7 +395,7 @@ void sub_08067a48(void)
         TaskSleepForever();
     }
 }
-void sub_08067b24(void)
+void HeldPlayerState6(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -407,7 +407,7 @@ void sub_08067b24(void)
     t = gCurTask;
     t->posX = t->pixelX << 16;
     t->posY = t->pixelY << 16;
-    sub_08068a2c(-8, 512);
+    HeldPlayerDamage(-8, 512);
     t = gCurTask;
     t->unk34 = 0;
     if (t->health == 0)
@@ -493,7 +493,7 @@ void sub_08067b24(void)
     TaskSleepForever();
 }
 
-void sub_08067d30(void)
+void HeldPlayerState6Update(void)
 {
     ClampTaskToRoom(gCurTask);
     TerrainCollideBox(gPlayerDefaultTerrainBox);
@@ -502,11 +502,11 @@ void sub_08067d30(void)
     if (gCurTask->unk34 != 0)
     {
         TaskStop();
-        sub_0806865c(gCurTaskIdx);
+        DropHeldPlayer(gCurTaskIdx);
     }
 }
 
-void sub_08067d78(void)
+void HeldPlayerThrowHeld(void)
 {
     struct Task *t;
 
@@ -517,7 +517,7 @@ void sub_08067d78(void)
 }
 
 /* Track the carrier's frame through the 5-word gUnk_0873E3C8 table. */
-void sub_08067db0(void)
+void HeldPlayerThrowHeldUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -550,7 +550,7 @@ void sub_08067db0(void)
 }
 
 /* Task body: the carried task struggling in the player's hands. */
-void sub_08067ea4(void)
+void HeldPlayerThrowFlightForward(void)
 {
     struct Task *t;
     struct Task *u;
@@ -614,7 +614,7 @@ void sub_08067ea4(void)
     TaskSleepForever();
 }
 
-void sub_08068028(void)
+void HeldPlayerThrowFlightForwardUpdate(void)
 {
     struct Task *t;
 
@@ -627,17 +627,17 @@ void sub_08068028(void)
         t = gCurTask;
         t->facing = -t->facing;
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
     else if (gCurTask->onGround & 1)
     {
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
 }
 
 /* Task body: the carried task struggling, mirrored variant. */
-void sub_080680ac(void)
+void HeldPlayerThrowFlightBackward(void)
 {
     struct Task *t;
     struct Task *u;
@@ -694,7 +694,7 @@ void sub_080680ac(void)
     TaskSleepForever();
 }
 
-void sub_08068224(void)
+void HeldPlayerThrowFlightBackwardUpdate(void)
 {
     struct Task *t;
 
@@ -707,15 +707,15 @@ void sub_08068224(void)
         t = gCurTask;
         t->facing = -t->facing;
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
     else if (gCurTask->onGround & 1)
     {
         TaskStop();
-        TaskSetEntry(sub_080682a8, gCurTaskIdx);
+        TaskSetEntry(HeldPlayerThrowBounceOff, gCurTaskIdx);
     }
 }
-void sub_080682a8(void)
+void HeldPlayerThrowBounceOff(void)
 {
     struct Task *t;
     struct Task *u;
@@ -726,7 +726,7 @@ void sub_080682a8(void)
     t->moveCallback = (u32)PlayerMove;
     t->updateState = 10;
     TaskStop();
-    sub_08068a2c(-8, 512);
+    HeldPlayerDamage(-8, 512);
     u = gCurTask;
     u->unk34 = 0;
     if (u->health == 0)
@@ -791,14 +791,14 @@ void sub_080682a8(void)
     w->unk34 = w->unk34 + 1;
     TaskSleepForever();
 }
-void sub_08068460(void)
+void HeldPlayerThrowBounceOffUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
         gCurTask->velX = 0;
     if (gCurTask->unk34 != 0)
-        sub_0806865c(gCurTaskIdx);
+        DropHeldPlayer(gCurTaskIdx);
 }
 s32 sub_080684a4(void)
 {
@@ -880,7 +880,7 @@ s32 sub_080684a4(void)
     }
     gCurTask->frame += d;
 }
-void sub_080685ec(s32 i, s32 j, u8 c)
+void HoldPlayer(s32 i, s32 j, u8 c)
 {
     struct Task *t;
     struct Task *u;
@@ -892,14 +892,14 @@ void sub_080685ec(s32 i, s32 j, u8 c)
     t->state = c;
     t->actorKind = gCurTask->actorKind;
     if (u->actorKind == 2)
-        sub_08068a8c(i, 1);
+        PlayerSuspendControl(i, 1);
     else
-        sub_08068a8c(i, 0);
+        PlayerSuspendControl(i, 0);
     gUnk_02007D00[0] = 0;
     gUnk_02007D00[1] = i;
-    TaskSetEntry(sub_0806737c, i);
+    TaskSetEntry(HeldPlayerInit, i);
 }
-void sub_0806865c(s32 i)
+void DropHeldPlayer(s32 i)
 {
     struct Task *t;
 
@@ -943,7 +943,7 @@ void sub_08068690(void)
         TaskSetFrame(0x123B);
     }
 }
-void sub_08068760(void)
+void HeldPlayerPullTowardCaptor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -964,7 +964,7 @@ void sub_08068760(void)
     else
         u->velY = -v;
 }
-u32 sub_080687a0(void)
+u32 HeldPlayerIsNearCaptor(void)
 {
     struct Task *t;
     struct Task *u;
@@ -980,7 +980,7 @@ u32 sub_080687a0(void)
     else
         return 0;
 }
-void sub_080687e0(void)
+void HeldPlayerEnterMouth(void)
 {
     gUnk_02007D00[0] = 1;
     gCurTask->frame = 0xFFFF;
@@ -1032,7 +1032,7 @@ void sub_08068840(void)
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 0x2000, 0x30000);
     gCurTask->onGround = 0;
-    if (sub_08068a2c(-8, 256) != 0)
+    if (HeldPlayerDamage(-8, 256) != 0)
         SetPlayerInvulnerability(1, 96, gCurTaskIdx);
     v = gCurTask;
     if (v->health != 0)
@@ -1040,14 +1040,14 @@ void sub_08068840(void)
     else
         v->unk34 = 32;
 }
-void sub_08068920(s32 i, u8 c)
+void SetHeldPlayerState(s32 i, u8 c)
 {
     struct Task *t;
 
     t = &gTasks[i];
     t->unk18 = gCurTaskIdx;
     t->state = c;
-    TaskSetEntry(sub_080673ec, i);
+    TaskSetEntry(HeldPlayerEnterState, i);
 }
 void sub_08068950(s16 x, s16 y, s16 d)
 {
@@ -1094,7 +1094,7 @@ void ReleaseHeldPlayer(s32 i, u8 d)
     PlayerResumeControl(i, 6, 0, 0);
     p->unk14 = 4;
 }
-s32 sub_08068a2c(s32 a, s32 b)
+s32 HeldPlayerDamage(s32 a, s32 b)
 {
     struct Task *t;
     s32 r;
@@ -1110,7 +1110,7 @@ s32 sub_08068a2c(s32 a, s32 b)
         t->hitEffect = b;
     return r;
 }
-void sub_08068a8c(s32 i, u8 flag)
+void PlayerSuspendControl(s32 i, u8 flag)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -1125,14 +1125,14 @@ void sub_08068a8c(s32 i, u8 flag)
     t->updateCallback = 0;
     t->updateState = 0;
     t->sleepFrames = 0;
-    t->unk76 = 0;
+    t->u76.unk76 = 0;
     t->variant = 0;
     t->hitKind = 0;
     if (p->unk40 & 1)
     {
         gCurTask->player->pixelOffsetY = 0;
         p->pixelOffsetX = 0;
-        p->unk2B = 0;
+        p->blockBreakCooldown = 0;
         p->offsetScriptDelay = 0;
         p->offsetScriptStep = 0;
         p->unk40 &= 0xFFFE;
@@ -1217,12 +1217,12 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
 u32 ActorTestColliders(u8 a)
 {
     PlaceAttackBox();
-    if (sub_0801b24c() != 0)
+    if (HitTestColliderClass20() != 0)
     {
         ActorStoreHit(a);
         return 1;
     }
-    if (sub_0801af14() != 0)
+    if (HitTestColliderClass10() != 0)
     {
         ActorStoreHit(a);
         return 1;
@@ -1264,7 +1264,7 @@ u32 ActorCheckHitsWithBox(s32 a)
         gAttackHealth = u->health;
         gAttackLastHitterSlot = u->hitterSlot;
         gAttackLastHitter = u->hitterPlayer;
-        gUnk_030023F0 = u->hitTimer;
+        gAttackHitTimer = u->hitTimer;
         gAttackFacing = u->facing;
         gAttackHitDuration = 30;
         gAttackBox = a;
@@ -1305,8 +1305,8 @@ u32 ActorCheckHits(void)
     gAttackHealth = v->health;
     gAttackLastHitterSlot = v->hitterSlot;
     gAttackLastHitter = v->hitterPlayer;
-    gUnk_03002460 = a->unk06;
-    gUnk_030023F0 = v->hitTimer;
+    gAttackLastHitterClass = a->unk06;
+    gAttackHitTimer = v->hitTimer;
     gAttackFacing = v->facing;
     if (a->unk60 != NULL)
     {
@@ -1359,8 +1359,8 @@ u32 sub_08068f68(void)
         gAttackHealth = v->health;
         gAttackLastHitterSlot = v->hitterSlot;
         gAttackLastHitter = v->hitterPlayer;
-        gUnk_03002460 = a->unk06;
-        gUnk_030023F0 = v->hitTimer;
+        gAttackLastHitterClass = a->unk06;
+        gAttackHitTimer = v->hitTimer;
         gAttackFacing = v->facing;
         if (a->unk60 != NULL)
         {
@@ -1424,7 +1424,7 @@ u32 sub_0806914c(s32 a)
     gAttackHealth = u->health;
     gAttackLastHitterSlot = u->hitterSlot;
     gAttackLastHitter = u->hitterPlayer;
-    gUnk_030023F0 = u->hitTimer;
+    gAttackHitTimer = u->hitTimer;
     gAttackFacing = u->facing;
     if (b->unk60 != NULL)
         gAttackHitDuration = b->unk60->hitDuration;
@@ -1459,9 +1459,9 @@ void ActorStoreHit(u8 a)
             if (b->hitState != 2)
                 b->hitState = 1;
         }
-        b->unk06 = gUnk_030023A4;
-        b->unk07 = gUnk_030023D0;
+        b->unk06 = gHitterColliderClass;
+        b->unk07 = gHitterColliderKind;
         u = &gTasks[gCurTask->hitterSlot];
-        b->unk0E = u->parent;
+        b->hitterParent = u->parent;
     }
 }

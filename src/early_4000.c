@@ -50,7 +50,7 @@ extern u32 *gLinkBlockSrc;
 extern vs32 gLinkBlockState;
 extern u8 gLinkBroadcastAcks;
 extern u32 *gLinkBlockDst;
-extern u32 gUnk_0200EBB8;
+extern u32 gLinkBlockAckCount;
 extern vs32 gLinkBlockWords;
 extern vs32 gLinkBlockIndex;
 extern vu32 gLinkBlockParentChecksum;
@@ -266,7 +266,7 @@ void LinkBlockAnnounce(u32 *src, u32 *dst, u32 size)
 {
     if (gLinkIsMaster == 0)
         return;
-    gUnk_0200EBB8 = 0;
+    gLinkBlockAckCount = 0;
     gLinkBlockSrc = src;
     gLinkBlockDst = dst;
     gLinkBlockWords = (size + 15) >> 2;
@@ -298,12 +298,12 @@ u32 LinkBlockHandshakeStep(void)
             if (gRecvCmds[i] == 0x5501)
             {
                 gLinkBlockAcks[i] = 1;
-                gUnk_0200EBB8++;
+                gLinkBlockAckCount++;
             }
         }
-        if (gUnk_0200EBB8 == gMultiBootStruct.unk01)
+        if (gLinkBlockAckCount == gMultiBootStruct.unk01)
         {
-            gUnk_0200EBB8 = 0;
+            gLinkBlockAckCount = 0;
             gLinkBlockAcks[0] = gLinkBlockAcks[1] = gLinkBlockAcks[2] = gLinkBlockAcks[3] = 0;
             gSendCmd[0] = 0x5502;
         }

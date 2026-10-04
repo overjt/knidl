@@ -7,11 +7,11 @@
  * that the 26-entry anchor table at 0x0873FB08 dispatches, continuing the
  * batch-7 range.  Each state is a body + a per-frame helper pair:
  *
- *   sub_0807079c / sub_080708ec   state 1
- *   sub_08070930 / sub_08070a84   state 3
- *   sub_08070ac8 / sub_08070c0c   state 4
- *   sub_08070c54 / sub_08070d48   state 5
- *   sub_08070d90 / sub_08070e7c   state 6
+ *   MetaKnightWarpStarRideState1 / MetaKnightWarpStarRideState1Update   state 1
+ *   MetaKnightWarpStarRideState3 / MetaKnightWarpStarRideState3Update   state 3
+ *   MetaKnightWarpStarRideState4 / MetaKnightWarpStarRideState4Update   state 4
+ *   MetaKnightWarpStarRideState5 / MetaKnightWarpStarRideState5Update   state 5
+ *   MetaKnightWarpStarRideState6 / MetaKnightWarpStarRideState6Update   state 6
  *
  * The bodies are all the same shape: set Task.updateState (the state), unk24 (the
  * sub-step the helper advances on a unk7A bit), unk0C (the draw hook) and
@@ -20,7 +20,7 @@
  * finally wait for the helper to reach unk24 == 2.
  *
  * Also here: sub_0806ff7c, the OAM draw routine for the family, and
- * sub_08070498 / sub_08070648, the entry points that re-seat the running
+ * PlayerBoardWarpStar / MetaKnightWarpStarRideInit, the entry points that re-seat the running
  * task from the player record (Task.player) and the id at 0x020055C0.
  *
  * NOTE for the coordinator - symbols.csv corrections this range needs:
@@ -64,7 +64,7 @@ extern s32 IsOnScreen(s16 x, s16 y);
 extern void TerrainCollideBox(u8 *a);
 extern void RequestScreenShake(s32 a);
 
-void sub_0806ff24(void)
+void PlayerWarpStarRideState7Update(void)
 {
     struct Task *t;
 
@@ -354,7 +354,7 @@ void TaskCopyParentPixelPos(void)
     t->pixelY = gTasks[t->parent].pixelY;
 }
 
-void sub_08070498(u32 a, s32 b)
+void PlayerBoardWarpStar(u32 a, s32 b)
 {
     struct PlayerState *p;
     struct Task *e;
@@ -366,14 +366,14 @@ void sub_08070498(u32 a, s32 b)
     p = &gPlayerStates[a];
     e = &gTasks[a];
     s = &gTasks[b];
-    sub_08068a8c(a, 1);
+    PlayerSuspendControl(a, 1);
     e->pixelX = s->pixelX;
     e->pixelY = s->pixelY;
     e->posX = e->pixelX << 16;
     e->posY = e->pixelY << 16;
     e->taskClass = 4;
     e->parent = b;
-    gUnk_020055C0 = b;
+    gWarpStarRideSlot = b;
     if (gUnk_0300244C != 0)
     {
         if (gMetaKnightmareMode == 0)
@@ -413,7 +413,7 @@ void sub_08070498(u32 a, s32 b)
         p->unk37 = 0;
         e->spriteFlags &= 0x7FFF;
     }
-    TaskSetEntry((u32)sub_0806ee30, a);
+    TaskSetEntry((u32)PlayerWarpStarRideInit, a);
 }
 
 void sub_08070614(u32 a)
@@ -427,7 +427,7 @@ void sub_08070614(u32 a)
     sub_08040808(a);
 }
 
-void sub_08070648(void)
+void MetaKnightWarpStarRideInit(void)
 {
     struct Task *t;
     struct Task *u;
@@ -437,7 +437,7 @@ void sub_08070648(void)
 
     t = gCurTask;
     t->drawCallback = (u32)sub_08070ec0;
-    t->updateCallback = (u32)sub_0807073c;
+    t->updateCallback = (u32)MetaKnightWarpStarRideUpdate;
     t->lateUpdateCallback = 0;
     t->taskClass = 4;
     TaskStop();
@@ -449,42 +449,42 @@ void sub_08070648(void)
                  (u16 *)(OBJ_VRAM0 + ((gCurTask->tileWord & 0xFFF) << 5)),
                  gUnk_0824A9E4.unk02 << 5);
     v = gCurTask;
-    v->parent = gUnk_020055C0;
+    v->parent = gWarpStarRideSlot;
     if (gTasks[i = v->parent].unk74 == 0)
         gCurTask->facing = gUnk_0873FAE8[sub_08025e88(i)];
     else
         v->facing = gUnk_0873FAE8[gTasks[i].unk74];
     w = gCurTask;
     w->state = 2;
-    CallTableEntry(gCurTask->state, 7, gUnk_0873FB44);
+    CallTableEntry(gCurTask->state, 7, gMetaKnightWarpStarRideStates);
 }
 
-void sub_0807073c(void)
+void MetaKnightWarpStarRideUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 7, gUnk_0873FB60);
+    CallTableEntry(gCurTask->updateState, 7, gMetaKnightWarpStarRideStateUpdates);
 }
 
-void sub_08070758(void)
+void MetaKnightWarpStarRideEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
-    CallTableEntry(t->state, 7, gUnk_0873FB44);
+    CallTableEntry(t->state, 7, gMetaKnightWarpStarRideStates);
 }
 
-void sub_0807077c(void)
+void MetaKnightWarpStarRideState2(void)
 {
     gCurTask->updateState = 2;
     sub_08070ffc();
     TaskSleepForever();
 }
 
-void sub_08070798(void)
+void MetaKnightWarpStarRideState2Update(void)
 {
 }
 
-void sub_0807079c(void)
+void MetaKnightWarpStarRideState1(void)
 {
     struct Task *t;
 
@@ -532,7 +532,7 @@ void sub_0807079c(void)
     TaskSleepForever();
 }
 
-void sub_080708ec(void)
+void MetaKnightWarpStarRideState1Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -552,7 +552,7 @@ void sub_080708ec(void)
     }
 }
 
-void sub_08070930(void)
+void MetaKnightWarpStarRideState3(void)
 {
     struct Task *t;
 
@@ -600,7 +600,7 @@ void sub_08070930(void)
     TaskSleepForever();
 }
 
-void sub_08070a84(void)
+void MetaKnightWarpStarRideState3Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -620,7 +620,7 @@ void sub_08070a84(void)
     }
 }
 
-void sub_08070ac8(void)
+void MetaKnightWarpStarRideState4(void)
 {
     struct Task *t;
 
@@ -668,7 +668,7 @@ void sub_08070ac8(void)
     TaskSleepForever();
 }
 
-void sub_08070c0c(void)
+void MetaKnightWarpStarRideState4Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -689,7 +689,7 @@ void sub_08070c0c(void)
     sub_0807042c();
 }
 
-void sub_08070c54(void)
+void MetaKnightWarpStarRideState5(void)
 {
     struct Task *t;
 
@@ -726,7 +726,7 @@ void sub_08070c54(void)
     TaskSleepForever();
 }
 
-void sub_08070d48(void)
+void MetaKnightWarpStarRideState5Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -744,7 +744,7 @@ void sub_08070d48(void)
     }
 }
 
-void sub_08070d90(void)
+void MetaKnightWarpStarRideState6(void)
 {
     struct Task *t;
     struct Task *u;
@@ -781,7 +781,7 @@ void sub_08070d90(void)
     TaskSleepForever();
 }
 
-void sub_08070e7c(void)
+void MetaKnightWarpStarRideState6Update(void)
 {
     struct Task *t;
     struct Task *u;

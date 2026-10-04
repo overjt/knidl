@@ -153,10 +153,10 @@ void Task_WhispyWoodsApple(void)
     u = *c;
     u->frameTable = gWhispyWoodsAppleFrames;
     u->unk28 = 1;
-    CallTableEntry(u->variant, 1, gUnk_0874C21C);
+    CallTableEntry(u->variant, 1, gWhispyWoodsAppleVariants);
 }
 
-void sub_080b3090(void)
+void WhispyWoodsAppleInit(void)
 {
     struct Task **c;
     struct Task *t;
@@ -164,14 +164,14 @@ void sub_080b3090(void)
 
     c = &gCurTask;
     t = *c;
-    t->updateCallback = (u32)sub_080b30c8;
+    t->updateCallback = (u32)WhispyWoodsAppleUpdate;
     t->facing = t->unk74;
     ActorSetState(0);
     u = *c;
-    CallTableEntry(u->state, 4, gUnk_0874C220);
+    CallTableEntry(u->state, 4, gWhispyWoodsAppleStates);
 }
 
-void sub_080b30c8(void)
+void WhispyWoodsAppleUpdate(void)
 {
     struct Task **c;
     struct Task *t;
@@ -184,21 +184,21 @@ void sub_080b30c8(void)
         if ((u8)ActorCollideTerrain() == 0)
         {
             u = *c;
-            CallTableEntry(u->updateState, 4, gUnk_0874C230);
+            CallTableEntry(u->updateState, 4, gWhispyWoodsAppleStateUpdates);
         }
     }
     else
-        CallTableEntry(t->updateState, 4, gUnk_0874C230);
+        CallTableEntry(t->updateState, 4, gWhispyWoodsAppleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080b3110(void)
+void WhispyWoodsAppleEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_0874C220);
+    CallTableEntry(gCurTask->state, 4, gWhispyWoodsAppleStates);
 }
 
-void sub_080b312c(void)
+void WhispyWoodsAppleFall(void)
 {
     struct Task **c;
     s32 z;
@@ -241,11 +241,11 @@ void sub_080b312c(void)
     }
 }
 
-void sub_080b319c(void)
+void WhispyWoodsAppleFallUpdate(void)
 {
 }
 
-void sub_080b31a0(void)
+void WhispyWoodsAppleState1(void)
 {
     struct Task **c;
     s32 z;
@@ -268,7 +268,7 @@ void sub_080b31a0(void)
         sub_080b3010(4);
 }
 
-void sub_080b31e0(void)
+void WhispyWoodsAppleState1Update(void)
 {
     struct Task *t;
 
@@ -276,11 +276,11 @@ void sub_080b31e0(void)
     if (t->pixelY > t->unk2C)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_080b3110, gCurTaskIdx);
+        TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080b3214(void)
+void WhispyWoodsAppleState2(void)
 {
     struct Task **c;
     s32 z;
@@ -303,7 +303,7 @@ void sub_080b3214(void)
         sub_080b3010(8);
 }
 
-void sub_080b3258(void)
+void WhispyWoodsAppleState2Update(void)
 {
     struct Task *t;
 
@@ -311,11 +311,11 @@ void sub_080b3258(void)
     if (t->pixelY > t->unk2C)
     {
         ActorSetState(3);
-        TaskSetEntry(sub_080b3110, gCurTaskIdx);
+        TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080b328c(void)
+void WhispyWoodsAppleState3(void)
 {
     struct Task **c;
     s32 z;
@@ -338,7 +338,7 @@ void sub_080b328c(void)
         sub_080b3010(8);
 }
 
-void sub_080b32d0(void)
+void WhispyWoodsAppleState3Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -377,34 +377,34 @@ void Task_WhispyWoodsAirPuff(void)
     u->tileWord = z;
     u->facing = 255;
     u2 = *c;
-    CallTableEntry(u2->variant, 1, gUnk_0874C254);
+    CallTableEntry(u2->variant, 1, gWhispyWoodsAirPuffVariants);
 }
 
-void sub_080b3368(void)
+void WhispyWoodsAirPuffInit(void)
 {
     struct Task **c;
     struct Task *u;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080b3398;
+    (*c)->updateCallback = (u32)WhispyWoodsAirPuffUpdate;
     ActorSetState(0);
     u = *c;
-    CallTableEntry(u->state, 1, gUnk_0874C258);
+    CallTableEntry(u->state, 1, gWhispyWoodsAirPuffStates);
 }
 
-void sub_080b3398(void)
+void WhispyWoodsAirPuffUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0874C25C);
+    CallTableEntry(gCurTask->updateState, 1, gWhispyWoodsAirPuffStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_080b33bc(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874C258);
+    CallTableEntry(gCurTask->state, 1, gWhispyWoodsAirPuffStates);
 }
 
-void sub_080b33d8(void)
+void WhispyWoodsAirPuffState0(void)
 {
     struct Task **c;
     struct Task *t;
@@ -593,7 +593,7 @@ top:
     goto top;
 }
 
-void sub_080b3758(void)
+void WhispyWoodsAirPuffState0Update(void)
 {
     struct Task *t;
     struct Task *t6;
@@ -933,7 +933,7 @@ void sub_080b3f54(void)
     if (a->animScript == NULL)
         gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
-    if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
+    if (gMetaKnightmareMode == 1 && gCurTask->u76.subtype == 1)
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     a->extraLayerOffset = 1;
     a->extraTileWord = 0xF000;
@@ -967,28 +967,28 @@ void sub_080b3ffc(void)
 {
     if (gCurTask->frame != 5)
     {
-        if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
+        if (gMetaKnightmareMode == 1 && gCurTask->u76.subtype == 1)
             gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     }
     else
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
 }
 
-s32 sub_080b404c(void)
+s32 PickupStartFall(void)
 {
     ActorSetState(1);
     TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080b406c(void)
+s32 PickupLand(void)
 {
     ActorSetState(0);
     TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080b408c(void)
+s32 PickupEnterWater(void)
 {
     struct Task *t;
 
@@ -1040,18 +1040,18 @@ void PickupEnterState(void)
     CallTableEntry(gCurTask->state, 3, gPickupStates);
 }
 
-void sub_080b4174(void)
+void PickupState0(void)
 {
     gCurTask->updateState = 0;
     TaskStopY();
     TaskSleepForever();
 }
 
-void sub_080b4190(void)
+void PickupState0Update(void)
 {
 }
 
-void sub_080b4194(void)
+void PickupFall(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1071,11 +1071,11 @@ void sub_080b4194(void)
     TaskSleepForever();
 }
 
-void sub_080b41c8(void)
+void PickupFallUpdate(void)
 {
 }
 
-void sub_080b41cc(void)
+void PickupFallInWater(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1095,11 +1095,11 @@ void sub_080b41cc(void)
     TaskSleepForever();
 }
 
-void sub_080b4200(void)
+void PickupFallInWaterUpdate(void)
 {
 }
 
-s32 sub_080b4204(u32 a)
+s32 HealPlayerStep(u32 a)
 {
     s32 r;
 
@@ -1149,7 +1149,7 @@ void MaximTomatoHeal(void)
     {
         if (gLocalPlayer == *(s16 *)((u8 *)*c + 68))
             PlaySfx(221);
-        k4 = sub_080b4204(*(s16 *)((u8 *)*c + 68));
+        k4 = HealPlayerStep(*(s16 *)((u8 *)*c + 68));
         TaskYieldTrampoline(8);
     } while (k4 == 0);
     PlayerStartItemShare(*(s16 *)((u8 *)gCurTask + 68), 1);
@@ -1186,7 +1186,7 @@ void EnergyDrinkHeal(void)
 xbody:
     if (gLocalPlayer == *(s16 *)((u8 *)*c + 68))
         PlaySfx(221);
-    k4 = sub_080b4204(*(s16 *)((u8 *)*c + 68));
+    k4 = HealPlayerStep(*(s16 *)((u8 *)*c + 68));
     TaskYieldTrampoline(8);
     if (k4 != 0)
         goto xend;
@@ -1201,7 +1201,7 @@ xend:
     EnablePause();
 }
 
-s32 sub_080b4390(void)
+s32 AbilityStarBounceOffFloor(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1224,14 +1224,14 @@ s32 sub_080b4390(void)
     return r;
 }
 
-s32 sub_080b43d4(void)
+s32 AbilityStarEnterWater(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_080b4754, gCurTaskIdx);
+    TaskSetEntry(AbilityStarEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080b43f4(void)
+s32 AbilityStarBounceOffWall(void)
 {
     s32 r;
 
@@ -1328,7 +1328,7 @@ void sub_080b44f0(void)
     t3->unk2C = t3->unk2C - 1;
 }
 
-s32 sub_080b4524(void)
+s32 AbilityStarCheckPlayerFar(void)
 {
     struct PointPair box;
     struct Task *t = gCurTask;
@@ -1387,7 +1387,7 @@ skip:
         gCurTask->velY = 0;
 }
 
-void sub_080b4648(void)
+void AbilityStarCheckExpire(void)
 {
     struct Task *t;
     s32 w;
@@ -1395,7 +1395,7 @@ void sub_080b4648(void)
 
     if (sub_080b45c0() != 0)
         return;
-    if (sub_080b4524() != 0)
+    if (AbilityStarCheckPlayerFar() != 0)
         return;
     t = gCurTask;
     wl = t->unk28;
@@ -1430,7 +1430,7 @@ void Task_AbilityStar(void)
     *(u8 *)((u8 *)ta + 66) = 5;
     tb = *c;
     tb->frameTable = (u32 *)gAbilityStarFrames;
-    tb->updateCallback = (u32)sub_080b4714;
+    tb->updateCallback = (u32)AbilityStarUpdate;
     sub_080b447c();
     w = *(u8 *)((u8 *)*c + 123);
     w2 = 1;
@@ -1446,16 +1446,16 @@ void Task_AbilityStar(void)
 elsecall:
     ActorSetState(0);
 after:
-    CallTableEntry(gCurTask->state, 2, gUnk_087560D0);
+    CallTableEntry(gCurTask->state, 2, gAbilityStarStates);
 }
 
-void sub_080b4714(void)
+void AbilityStarUpdate(void)
 {
     struct Task *t;
     s32 w;
 
     if ((u8)sub_080696a0() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_087560D8);
+        CallTableEntry(gCurTask->updateState, 2, gAbilityStarStateUpdates);
     t = gCurTask;
     w = t->unk30;
     if (w <= 0)
@@ -1465,23 +1465,23 @@ void sub_080b4714(void)
     sub_08069b84();
 }
 
-void sub_080b4754(void)
+void AbilityStarEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_087560D0);
+    CallTableEntry(gCurTask->state, 2, gAbilityStarStates);
 }
 
-void sub_080b4770(void)
+void AbilityStarState0(void)
 {
     gCurTask->updateState = 0;
     TaskSleepForever();
 }
 
-void sub_080b4788(void)
+void AbilityStarState0Update(void)
 {
-    sub_080b4648();
+    AbilityStarCheckExpire();
 }
 
-void sub_080b4794(void)
+void AbilityStarSink(void)
 {
     struct Task **c;
 
@@ -1493,9 +1493,9 @@ void sub_080b4794(void)
     ActorDie();
 }
 
-void sub_080b47c0(void)
+void AbilityStarSinkUpdate(void)
 {
-    sub_080b4648();
+    AbilityStarCheckExpire();
 }
 
 void Task_StarRodPiece(void)
@@ -1514,7 +1514,7 @@ void Task_StarRodPiece(void)
     CallTableEntry(*(u8 *)((u8 *)tb + 115), 3, gStarRodPieceVariants);
 }
 
-void sub_080b480c(void)
+void DefeatAllAbilityStars(void)
 {
     s32 i;
     s32 o;
@@ -1544,7 +1544,7 @@ void sub_080b480c(void)
     } while (i <= 62);
 }
 
-void sub_080b4878(void)
+void StarRodPieceCollect(void)
 {
     s32 i;
     u8 *b5;
@@ -1566,7 +1566,7 @@ void sub_080b4878(void)
             i++;
         } while (i < gPlayerCount);
     }
-    sub_080b480c();
+    DefeatAllAbilityStars();
     DisablePause();
 }
 
@@ -1580,7 +1580,7 @@ void sub_080b48e0(void)
     t->unk18 = 0;
 }
 
-void sub_080b48f8(void)
+void StarRodPieceStartDance(void)
 {
     s32 i;
     s32 k;
@@ -1618,7 +1618,7 @@ void sub_080b48f8(void)
         if (*pb == 1)
             sub_0805ddb0(0);
         else
-            sub_0805deac();
+            StartAllPlayersDance();
         ActorDestroy();
     }
 }
@@ -1663,7 +1663,7 @@ void sub_080b4968(void)
                     }
                     else
                     {
-                        sub_0805e110(i);
+                        PlayerWalkToDanceSpot(i);
                         t = *c;
                         t->unk18 |= b;
                         t->unk1C++;
@@ -1683,44 +1683,44 @@ void sub_080b4968(void)
 void sub_080b4a34(void)
 {
     if (gCurTask->unk1C == gActivePlayerCount)
-        sub_080b48f8();
+        StarRodPieceStartDance();
     else
         sub_080b4968();
 }
 
-void sub_080b4a5c(void)
+void StarRodPieceHoverInit(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080b4a8c;
+    (*c)->updateCallback = (u32)StarRodPieceHoverUpdate;
     ActorSetState(0);
-    CallTableEntry((*c)->state, 2, gUnk_08756150);
+    CallTableEntry((*c)->state, 2, gStarRodPieceHoverStates);
 }
 
-void sub_080b4a8c(void)
+void StarRodPieceHoverUpdate(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    CallTableEntry((*c)->updateState, 2, gUnk_08756158);
+    CallTableEntry((*c)->updateState, 2, gStarRodPieceHoverStateUpdates);
     if ((*c)->state == 0 && ActorCheckHits() != 0)
     {
-        sub_080b4878();
+        StarRodPieceCollect();
         CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(1);
-        TaskSetEntry(sub_080b4afc, gCurTaskIdx);
+        TaskSetEntry(StarRodPieceHoverEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080b4afc(void)
+void StarRodPieceHoverEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08756150);
+    CallTableEntry(gCurTask->state, 2, gStarRodPieceHoverStates);
 }
 
-void sub_080b4b18(void)
+void StarRodPieceHoverState0(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1754,7 +1754,7 @@ void sub_080b4b18(void)
     }
 }
 
-void sub_080b4b94(void)
+void StarRodPieceHoverState0Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1766,7 +1766,7 @@ void sub_080b4b94(void)
     t->unk34 = r;
 }
 
-void sub_080b4bb0(void)
+void StarRodPieceHoverState1(void)
 {
     struct Task **c;
 
@@ -1777,44 +1777,44 @@ void sub_080b4bb0(void)
     TaskSleepForever();
 }
 
-void sub_080b4bd8(void)
+void StarRodPieceHoverState1Update(void)
 {
     sub_080b4a34();
 }
 
-void sub_080b4be4(void)
+void StarRodPieceSlideOutInit(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080b4c14;
+    (*c)->updateCallback = (u32)StarRodPieceSlideOutUpdate;
     ActorSetState(0);
-    CallTableEntry((*c)->state, 3, gUnk_08756160);
+    CallTableEntry((*c)->state, 3, gStarRodPieceSlideOutStates);
 }
 
-void sub_080b4c14(void)
+void StarRodPieceSlideOutUpdate(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    CallTableEntry((*c)->updateState, 3, gUnk_0875616C);
+    CallTableEntry((*c)->updateState, 3, gStarRodPieceSlideOutStateUpdates);
     if ((*c)->state == 1 && ActorCheckHits() != 0)
     {
-        sub_080b4878();
+        StarRodPieceCollect();
         CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(2);
-        TaskSetEntry(sub_080b4c84, gCurTaskIdx);
+        TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080b4c84(void)
+void StarRodPieceSlideOutEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08756160);
+    CallTableEntry(gCurTask->state, 3, gStarRodPieceSlideOutStates);
 }
 
-void sub_080b4ca0(void)
+void StarRodPieceSlideOutState0(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1840,7 +1840,7 @@ void sub_080b4ca0(void)
     TaskSleepForever();
 }
 
-void sub_080b4d1c(void)
+void StarRodPieceSlideOutState0Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1851,10 +1851,10 @@ void sub_080b4d1c(void)
     t = *c;
     t->unk34 = r;
     if (t->state != 0)
-        TaskSetEntry(sub_080b4c84, gCurTaskIdx);
+        TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
 }
 
-void sub_080b4d50(void)
+void StarRodPieceSlideOutState1(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1884,7 +1884,7 @@ void sub_080b4d50(void)
     }
 }
 
-void sub_080b4db4(void)
+void StarRodPieceSlideOutState1Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1896,7 +1896,7 @@ void sub_080b4db4(void)
     t->unk34 = r;
 }
 
-void sub_080b4dd0(void)
+void StarRodPieceSlideOutState2(void)
 {
     struct Task **c;
 
@@ -1907,12 +1907,12 @@ void sub_080b4dd0(void)
     TaskSleepForever();
 }
 
-void sub_080b4df8(void)
+void StarRodPieceSlideOutState2Update(void)
 {
     sub_080b4a34();
 }
 
-void sub_080b4e04(void)
+void StarRodPieceVariant2(void)
 {
     struct Task *t;
 
@@ -1930,7 +1930,7 @@ void sub_080b4e04(void)
     TaskSleepForever();
 }
 
-void sub_080b4e40(void)
+void InitRoomObjects(void)
 {
     u8 *p1;
     u8 *q;

@@ -927,3 +927,43 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   `gRegVcount`, `gRegSound1CntL`, `gRegDma1Sad` and `gRegIme`
   (`REG_<NAME>` is io_reg.h's macro).  Item 4, split.py's unused `.tail`
   and odd-start paths, went with #167.
+- Names, run 4 (issue #155): the enemy and boss state bodies, by verb and
+  by slot.  #167's C tables gave every state body its family and slot, so
+  six proposal agents (bosses; mid-bosses, the knights and King Dedede;
+  kind-0 enemies; the actor core and stage objects; then RAM cells and
+  fields) named the bodies a defined verb fits, with one verb list per
+  family (new words in docs/naming.md 2.3: Hop as one definition, Land,
+  BounceOffWall, Ascend/Descend, Swoop, Hover, Drift, Vanish..., the
+  `<Family>ReactToDamage`/`ReactToDefeat` hooks of `struct ActorVt`, the
+  terrain handlers of `struct ActorHandlers`, the held player's states
+  after the carried actor's words).  **State-table slot names** (approved
+  by the owner's coordinator as a family of about 800): a function whose
+  only referrer is one slot of one named state table is named after it,
+  `<Family>State<N>` / `State<N>Update` / `Variant<N>` (662 functions,
+  their own commits, counted apart); an update is named by its index only
+  where its state stores `updateState = N`, because Fire Lion, Gip,
+  Javelin Knight, Bubbles and Mr. Tick-Tock index their update tables
+  otherwise (lesson 4.160).  The collider lists RegisterCollider fills for
+  the box classes 0x10 and 0x20 are named by their class value
+  (`gColliderClass10`, `HitTestColliderClass20`...), because no role word
+  fits every registrant; their reading is in `include/collision.h`.
+  **Task bodies:** 263 of 266 (248 before): #79, #99, #127, #145, #193,
+  #202/#204/#206, #208, #210-#213, #249/#250 got role names with code
+  evidence or three-source identities; #88, #209 and #220 stay open.
+  **Fields:** 40 (`ActorHandlers`' six terrain callbacks, `ActorVt`'s
+  reaction kinds and hooks, `Collider`, `AttackBox`, `BodyBox`, five
+  `PlayerState` fields), and one more view, `Task.u76` = packed `union {
+  subtype; doorIndex; unk76; }` (all 319 files' agbcc assembly identical
+  to the parent commit's; lesson 3.525: the oracle cannot see which
+  member an access names, so the census was reviewed access by access).
+  A census of the other per-family fields (`unk18`-`unk34`, `unk46`,
+  `unk74`) found 46-125 task types each using them as their own
+  registers: no plain name and no view worth having.  1,545
+  `renames.csv` rows (1,351 functions - 689 by role, 662 by slot -, 105
+  ROM tables, 49 RAM cells, 40 fields); functions named 2,449 -> 3,800 of
+  5,348; `gUnk_` RAM cells 173 -> 124; `unk*` fields 349 -> 313 (header)
+  and 362 -> 322 (local copies).  `make progress`: 8,015 -> 9,520 of
+  34,017 symbols documented (23.56% -> 27.99%), of which 2,971 are
+  position names (2,309 data records, 662 state-table slots).  No rename
+  changed a byte; `make shifttest` unchanged (16,961 unrelocated, 0
+  proven pointers, 0 unknown).  New lessons 3.525, 4.160 and 4.161.

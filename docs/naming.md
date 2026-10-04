@@ -178,7 +178,9 @@ Run 3 of #155 added these words, each defined by the whole body:
   hits - no velocity or `TaskSetMotion*` call, no attack or spawn, no
   state change of its own (`WaddleDeeIdleInit`, `gPengyIdleStates`); a
   row that also hops, spawns or steers is not Idle.  Nothing re-arms these
-  rows, so they have no EnterState.
+  rows; the one-line re-arm copy a one-state row still has
+  (`CallTableEntry(Task.state, 1, g<Row>States)`, `WheelieIdleEnterState`)
+  is a dead export that nothing references, named by its shape (run 4).
 - **Teleport**: the body hides the sprite, moves it and shows it again
   (`KabuTeleport`).
 - **Float** / **Exhale** (King Dedede): a puffed-up flight that drifts
@@ -199,6 +201,48 @@ Run 3 of #155 added these words, each defined by the whole body:
 - Two species that share one script get a pair prefix
   (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`); a verb
   that fits two states of one family names neither of them.
+
+Run 4 of #155 named the state bodies with these words, each defined by the
+whole body (the agents' notes in the run-4 PR give every family's verb
+list):
+
+- **The state pair.**  `g<Enemy>States[N]` is state N's entry and
+  `g<Enemy>StateUpdates[N]` the update it selects; when the entry has the
+  verb V, the update is `<Enemy>VUpdate`.  The update table is indexed by
+  `Task.updateState`, which each entry stores itself: an update is named
+  after state N only when `g<Enemy>States[N]`'s body stores
+  `updateState = N`.  Most families do; Fire Lion, Gip, Javelin Knight
+  (state k stores k-1), Bubbles' slot 2 and Mr. Tick-Tock's 18 do not, and
+  their updates are named from the entry that selects them or not at all.
+- **Hop**: a loop of small jumps, each waiting for `Task.onGround`, with or
+  without an X step (`CappyCappedHop`, `BonkersHop`, `JavelinKnightHop`);
+  a **Jump** is one jump whose landing hands over to another state.
+  **Land**: the state a landing enters, a recovery with no motion
+  (`MetaKnightLand`, `BubblesLand`).  **BounceOffWall**: the state a
+  mid-boss's wall hook enters during a rush: a shake, a hop backward, a
+  landing and a recovery (`BugzzyBounceOffWall`).  **Ascend** / **Descend**
+  (Mr. Shine & Mr. Bright), **Swoop** (one U-shaped dive and back up,
+  `KrackoSwoop`), **Hover** (in place in the air on a velY wave), **Drift**
+  (the parasol's swaying descent), **Spin** (Kabu's turning frames),
+  **Discharge** (Sparky's widened attack box), **Explode** (sets an
+  exploding death mode, then ActorDie), **Hide** (no sprite, no hit
+  checks), **Sleep**, **Skid**, **Vanish** (plays a disappearing animation
+  and destroys the actor).  **Stand** is a row word for a row that stays in
+  place (`CappyStandHop`).
+- **Hooks of the hit-reaction record** (`struct ActorVt`, called by
+  `ActorReactToDamage` / `ActorReactToDefeat`): `<Family>ReactToDamage` /
+  `<Family>ReactToDefeat`.  **Terrain handlers** (`struct ActorHandlers`,
+  called by `ActorCollideTerrain`): the record is `g<Family>TerrainHandlers`
+  and its functions `<Family>Land`, `<Family>StartFall`,
+  `<Family>EnterWater`, `<Family>BounceOffWall`, after the slot that calls
+  them.  A boss's defeat filter (`Actor.defeatSweepCallback`) is
+  `<Boss>DefeatSweepFilter`, its slot in the per-boss Star Rod table
+  `<Boss>DropStarRodPiece`.  A late hook (`Task.lateUpdateCallback`) is
+  `<State>LateUpdate`.
+- **Carried and held.**  The words of the actor a player carries
+  (`ActorAttached<Move>Held` / `Flight` / `BounceOff`) are reused, with the
+  captor's move as the row word, for the player a boss holds
+  (`HeldPlayerBackdropHeld`, `HeldPlayerThrowFlightForward`).
 
 **A species identity needs three agreeing sources** (run 3): the local
 render (`visual:`), the behaviour and `ActorDef.ability` from the code
@@ -247,6 +291,7 @@ identifier.
 | an ActorDef bound by a named family through its kind table's slot | `g<Enemy>Def` | `gWaddleDeeDef` |
 | a graphics descriptor in a kind's descriptor table (`gEnemyGfx`, `gMidBossGfx`, `gBossGfx`, `gMetaKnightsGfx`) | `g<Enemy>Gfx` | `gCappyGfx` |
 | the palette and sprite-sheet tiles that descriptor alone points at | `g<Enemy>GfxPalette` / `g<Enemy>GfxTiles` | `gCappyGfxTiles` |
+| a state-table slot (run 4): the function in `g<Family>[<Row>]States[N]`, `...StateUpdates[N]` or `...Variants[N]` | `<Family>[<Row>]State<N>` / `<Family>[<Row>]State<N>Update` / `<Family>[<Row>]Variant<N>` | `BugzzyState3`, `BugzzyState3Update` |
 
 Rules: a record gets a position name only when that one slot is its only
 referrer (or when every slot that shares it belongs to one named family,
@@ -257,6 +302,36 @@ does the target of a field that has no name yet (`RoomDef.unk10`).
 Position names are applied in their own batches, and the progress figures
 count them apart from the semantic names (a slot is an address-free
 identity, not a role).
+
+**State-table slots** (run 4 of #155) extend the rule to functions.  A
+family's state tables are consumer-proven (`CallTableEntry(Task.state, n,
+g<Family>States)` in its EnterState, `Task.updateState` in its Update, the
+variant table in its `Task_<Family>` body; `src/data/actor_tables.c`
+names the consumer above each table).  A `sub_*` whose ONLY referrer, in
+the whole tree, is one slot of one such named table, and whose body
+proves no verb, is named after that slot: `g<Family>[<Row>]States[N]` ->
+`<Family>[<Row>]State<N>`, `...StateUpdates[N]` ->
+`<Family>[<Row>]State<N>Update` (state N's per-frame update, the pair of
+2.3's `<Enemy><Verb>` / `<Enemy><Verb>Update`), `...Variants[N]` ->
+`<Family>[<Row>]Variant<N>`.  `N` is the table's 0-based index in decimal,
+as the code indexes it.  The evidence is `slot: g<Table>[N], <file>`.  A
+function that two tables, two families or two slots share, or that code
+also calls directly, keeps its placeholder; a body that proves a verb takes
+the verb, never the slot (the verb batches come first), and a verb proven
+later renames the slot name again (a `renames.csv` chain row).  An update
+slot gets `State<N>Update` only where state N's body stores
+`updateState = N` (2.3, the state pair); the update tables of the
+families that index them otherwise keep their placeholders.
+
+**Class-value names** (run 4).  When the code sorts records by a value and
+no role word is true for every record in a group, the group is named by
+that value as the code writes it, which claims no role: the collider lists
+RegisterCollider fills for the box classes 0x10 and 0x20 are
+`gColliderClass10` / `gColliderClass10Count` / `HitTestColliderClass10` and
+`gColliderClass20` / `...Count` / `HitTestColliderClass20` (class 0x00 is
+the players' bodies, `gPlayerColliders`).  What each group holds is written
+next to its declaration (`include/collision.h`), so a later run can give it
+a role name if one word ever fits every member.
 
 What the level indices are in the game is proven for 0-6 by the boss each
 level's last stage spawns (room objects of kind 3, `gBossDefs[subtype]`,
@@ -365,20 +440,20 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 2886 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 1535 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
-| RAM cell | `gUnk_02*`, `gUnk_03*` | 173 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 124 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
-| ROM label | `gUnk_08*` | 5851 | tracked by #155: functional data whose consumer does not settle a name |
+| ROM label | `gUnk_08*` | 5747 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 2309 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | struct field | `unk*` | 11 | per-family Task fields: the meaning changes with the task type, a view per family needs the owner (#155) |
-| struct field | `unk*` | 349 | tracked by #155: the field's role is not proven |
-| struct field | `unk*` | 362 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
+| struct field | `unk*` | 313 | tracked by #155: the field's role is not proven |
+| struct field | `unk*` | 322 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 431 RAM cells, 2815 ROM labels by role and 2309 by position.
+Named for comparison: 480 RAM cells, 2919 ROM labels by role and 2309 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -388,10 +463,10 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | engine | the engine zone: AgbInit, tasks, sprites, fades, sound front end, link | 184 | 5 |
 | M01 | AgbMain | 1 | 0 |
 | M02 | game-state bodies, title, screen loaders, pause, HUD | 109 | 17 |
-| M03 | main menu and its sprite tasks | 79 | 6 |
+| M03 | main menu and its sprite tasks | 79 | 4 |
 | M04 | scripted-sequence director and scripts | 65 | 25 |
 | M05 | player animation bank and collision registry | 23 | 21 |
-| M06 | collision engine and hit tests | 55 | 13 |
+| M06 | collision engine and hit tests | 55 | 11 |
 | M07 | level / room builder | 157 | 71 |
 | M08 | camera, BG streaming, map events, stage objects | 151 | 44 |
 | M09 | breakable blocks and the player task | 63 | 11 |
@@ -401,34 +476,34 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M13 | player action bodies, part 4 | 24 | 1 |
 | M14 | player action bodies, part 5, and task type #6 | 82 | 10 |
 | M15 | the player's effect objects (task type #7) | 84 | 58 |
-| M16 | effect spawner (task types #81-#90) | 89 | 62 |
-| M17 | actor core | 245 | 125 |
-| M18 | actor core, part 2 | 256 | 158 |
-| M19 | cutscenes and ending sequences | 220 | 189 |
-| M20 | enemies, bank 1 | 414 | 264 |
-| M21 | enemies, bank 2 | 200 | 127 |
-| M22 | enemies, bank 3 | 125 | 84 |
-| M23 | enemies, bank 4, and two bosses | 297 | 230 |
-| M24 | enemies, bank 5 | 158 | 104 |
-| M25 | bosses | 121 | 74 |
-| M26 | enemies, bank 7 | 148 | 129 |
-| M27 | mid-bosses | 145 | 124 |
-| M28 | enemies, bank 9, and the player's death sequence | 204 | 168 |
-| M29 | enemies, bank 10 | 226 | 197 |
-| M30 | enemies, bank 11 | 131 | 103 |
-| M31 | enemies, bank 12 | 123 | 96 |
-| M32 | enemies, bank 13 | 135 | 111 |
-| M33 | HUD effects | 110 | 78 |
+| M16 | effect spawner (task types #81-#90) | 89 | 35 |
+| M17 | actor core | 245 | 82 |
+| M18 | actor core, part 2 | 256 | 71 |
+| M19 | cutscenes and ending sequences | 220 | 114 |
+| M20 | enemies, bank 1 | 414 | 72 |
+| M21 | enemies, bank 2 | 200 | 54 |
+| M22 | enemies, bank 3 | 125 | 32 |
+| M23 | enemies, bank 4, and two bosses | 297 | 146 |
+| M24 | enemies, bank 5 | 158 | 54 |
+| M25 | bosses | 121 | 16 |
+| M26 | enemies, bank 7 | 148 | 69 |
+| M27 | mid-bosses | 145 | 27 |
+| M28 | enemies, bank 9, and the player's death sequence | 204 | 89 |
+| M29 | enemies, bank 10 | 226 | 82 |
+| M30 | enemies, bank 11 | 131 | 31 |
+| M31 | enemies, bank 12 | 123 | 42 |
+| M32 | enemies, bank 13 | 135 | 54 |
+| M33 | HUD effects | 110 | 20 |
 | M34 | wavy scroll, save file, input recorder | 105 | 61 |
 | M35 | sub-game framework and Quick Draw | 196 | 9 |
-| M36 | Bomb Rally | 117 | 16 |
+| M36 | Bomb Rally | 117 | 2 |
 | M37 | Air Grind and game state 11 | 82 | 8 |
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 2899 |
+| all | | 5348 | 1548 |
 
-`unk*` fields by header struct: `LinkSave` 33, `PlayerState` 27, `M37Player` 19, `AttackBox` 18, `Task` 17, `BodyBox` 16, `M37CoursePlayer` 13, `Unk020061F0` 12, `M37Results` 11, `Actor` 10, `M37Timer` 10, `SaveSlot` 10, `Unk02007D70` 10, `M37Game` 9, `Unk03005530` 9, `LinkRec` 8, `Unk03005550` 8, `ActorHandlers` 7, `M37Course` 7, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `RoomDef` 5, `ActorVt` 4, `Collider` 4, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `Unk03005670` 4, `M12Fade` 3, `MapCell` 3, `Unk02005E00` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `MapTile` 1, `Unk0873EEA0` 1.
+`unk*` fields by header struct: `LinkSave` 33, `PlayerState` 22, `M37Player` 19, `Task` 17, `M37CoursePlayer` 13, `Unk020061F0` 12, `M37Results` 11, `AttackBox` 10, `M37Timer` 10, `SaveSlot` 10, `Unk02007D70` 10, `Actor` 9, `M37Game` 9, `Unk03005530` 9, `BodyBox` 8, `LinkRec` 8, `Unk03005550` 8, `M37Course` 7, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `RoomDef` 5, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `Unk03005670` 4, `M12Fade` 3, `MapCell` 3, `Unk02005E00` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `MapTile` 1, `Unk0873EEA0` 1.
 
 <!-- audit:placeholders:end -->
 

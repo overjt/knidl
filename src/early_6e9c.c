@@ -6,7 +6,7 @@
  *
  * The receive step of the SIO multi-play link driver (pokeruby's DoRecv, see
  * src/early_6ac8.c), called from the serial interrupt SerialCB in the
- * connected state: it snapshots the four SIOMULTI words into gUnk_03004D38.
+ * connected state: it snapshots the four SIOMULTI words into gLinkRecvSnapshot.
  * On the checksum round (send index unk18 == 0) it compares every player's
  * word with the running checksum chk (a mismatch sets unk13), clears chk and
  * records REG_VCOUNT in gLinkRecvVCount; otherwise it adds the words to chk,
@@ -17,7 +17,7 @@
  * gLinkPauseFrames = 6 and clears gLinkDriverMode.
  *
  * Matching note (issue #63): this revision walks the staging buffer with a
- * pointer, `p = gUnk_03004D38;` after the copy and `*p++` in each loop; the
+ * pointer, `p = gLinkRecvSnapshot;` after the copy and `*p++` in each loop; the
  * ROM steps the register that holds the buffer's address (lesson 3.483). */
 
 /* The link work area gLink (0x4D2 bytes; layout as in
@@ -41,7 +41,7 @@ struct Pair { u32 a, b; };
 
 /* Not from link.h: this file's view of gLink differs (lesson 3.517). */
 extern struct Link gLink;
-extern vu16 gUnk_03004D38[];    /* receive staging, 4 halfwords */
+extern vu16 gLinkRecvSnapshot[];    /* receive staging, 4 halfwords */
 extern u32 gChecksumAvailable;
 extern u32 gLinkRecvVCount;
 extern u16 gRecvNonzeroCheck;
@@ -50,7 +50,7 @@ extern u16 gRecvNonzeroCheck;
  * four SIOMULTI words, then either check the round's checksum or queue the
  * words into the receive ring.  This older revision walks the staging
  * buffer with a pointer (`*p++`): the ROM's loops step the register that
- * holds &gUnk_03004D38 itself, where `gUnk_03004D38[i]` makes a strength-
+ * holds &gLinkRecvSnapshot itself, where `gLinkRecvSnapshot[i]` makes a strength-
  * reduced copy of it.  REG_VCOUNT is the io_reg.h macro (a symbol would be
  * hoisted into a callee-saved register by gcse, lesson 3.482). */
 void DoRecv(void)
@@ -59,8 +59,8 @@ void DoRecv(void)
     u32 index;
     vu16 *p;
 
-    *(struct Pair *)gUnk_03004D38 = *(struct Pair *)&REG_SIOMULTI0;
-    p = gUnk_03004D38;
+    *(struct Pair *)gLinkRecvSnapshot = *(struct Pair *)&REG_SIOMULTI0;
+    p = gLinkRecvSnapshot;
 
     if (gLink.unk18 == 0)
     {

@@ -8,9 +8,9 @@
  * This batch holds:
  *   * script 2's rows `LaserBallInit` / `LaserBallIdleInit` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
- *     with `sub_0808e480` / `sub_0808e54c` / `LaserBallShoot` / `sub_0808e730`
- *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
- *     `sub_0808e800` as their guards;
+ *     with `LaserBallState0` / `LaserBallHover` / `LaserBallShoot` / `LaserBallState3`
+ *     as the bodies and `LaserBallState0Update` / `LaserBallHoverUpdate` / `LaserBallShootUpdate` /
+ *     `LaserBallState3Update` as their guards;
  *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
  *     rows `CoconutInit` / `CoconutIdleInit`, bodies `0x08743230` (3) and
  *     `0x08743240`, guards `0x0874323C` and `0x08743244`;
@@ -18,11 +18,11 @@
  *     `sub_0808ecb4` and `sub_0808ec90`, every one returning s32;
  *   * the module's shared aiming library: `sub_0808ed38` classifies the
  *     direction to the target into 16 sectors ((u16)ArcTan2 >> 12) and stores
- *     it in Task.unk30 with the parity in Task.unk20, `sub_0808ee60` turns
+ *     it in Task.unk30 with the parity in Task.unk20, `ShotzoStepBarrel` turns
  *     Task.unk34 one notch towards it, `sub_0808ee9c` reports arrival in
- *     Task.unk1C, `sub_0808eec4` converts the heading into an aim angle for
- *     AngleToVector, `sub_0808efdc` / `sub_0808f058` fire actor 109 through
- *     CreateActorFromDescAtOffsetFacing + CreateChildTaskAtOffsetFacing, and `sub_0808f0d0` / `sub_0808f1b4` are the
+ *     Task.unk1C, `ShotzoSetRecoilVelocity` converts the heading into an aim angle for
+ *     AngleToVector, `CreateShotzoCannonball` / `CreateShotzoFixedCannonball` fire actor 109 through
+ *     CreateActorFromDescAtOffsetFacing + CreateChildTaskAtOffsetFacing, and `ShotzoAimBarrel` / `ShotzoCheckShoot` are the
  *     per-frame drivers;
  *   * script 4's entry `Task_Shotzo` (Task.variant -> `0x08743284`, 6 rows) and
  *     its three <body, guard> table pairs `0x0874329C`/`0x087432A8`,
@@ -78,7 +78,7 @@ void LaserBallEnterState(void)
     CallTableEntry(gCurTask->state, 4, gLaserBallStates);
 }
 
-void sub_0808e480(void)
+void LaserBallState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk30 = 16;
@@ -118,7 +118,7 @@ void sub_0808e480(void)
     }
 }
 
-void sub_0808e510(void)
+void LaserBallState0Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -127,14 +127,14 @@ void sub_0808e510(void)
     if (t->unk20 != TaskGetXDirBitToNearestPlayer())
         gCurTask->unk1C = 1;
     sub_0808e070();
-    sub_0808e2b4();
+    LaserBallCheckShoot();
     u = gCurTask;
     u->unk30--;
     sub_0808e33c();
     sub_0808e36c();
 }
 
-void sub_0808e54c(void)
+void LaserBallHover(void)
 {
     gCurTask->updateState = 2;
     gCurTask->unk30 = 0;
@@ -160,7 +160,7 @@ void sub_0808e54c(void)
     }
 }
 
-void sub_0808e5cc(void)
+void LaserBallHoverUpdate(void)
 {
     struct Task *t;
 
@@ -215,7 +215,7 @@ void LaserBallShoot(void)
         TaskYieldTrampoline(2);
         TaskSetFrame(4);
         TaskYieldTrampoline(2);
-        sub_0808e254();
+        CreateLaserBallLaser();
         TaskSetFrame(4);
         TaskYieldTrampoline(8);
         w = gCurTask;
@@ -225,7 +225,7 @@ void LaserBallShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808e704(void)
+void LaserBallShootUpdate(void)
 {
     if (gCurTask->unk30 != 0)
     {
@@ -234,7 +234,7 @@ void sub_0808e704(void)
     }
 }
 
-void sub_0808e730(void)
+void LaserBallState3(void)
 {
     struct Task *t;
     struct Task *u;
@@ -285,7 +285,7 @@ void sub_0808e730(void)
     }
 }
 
-void sub_0808e800(void)
+void LaserBallState3Update(void)
 {
 }
 
@@ -317,7 +317,7 @@ void LaserBallIdle(void)
     TaskSleepForever();
 }
 
-void sub_0808e8a0(void)
+void LaserBallIdleState0Update(void)
 {
 }
 
@@ -330,7 +330,7 @@ s32 sub_0808e8a4(void)
 
 s32 sub_0808e8c4(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -388,7 +388,7 @@ void CoconutWait(void)
     TaskSleepForever();
 }
 
-void sub_0808e9d4(void)
+void CoconutWaitUpdate(void)
 {
     s32 v;
 
@@ -446,7 +446,7 @@ void CoconutFall(void)
     }
 }
 
-void sub_0808eb10(void)
+void CoconutExplode(void)
 {
     ActorSetHitReactions(gUnk_08743558);
     ActorDie();
@@ -486,7 +486,7 @@ void CoconutIdle(void)
     }
 }
 
-void sub_0808ebdc(void)
+void CoconutIdleState0Update(void)
 {
 }
 
@@ -543,7 +543,7 @@ s32 sub_0808ecb4(void)
 {
     if (gCurTask->variant == 4)
         sub_08066c08(gShotzoDef, 0);
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -615,7 +615,7 @@ void sub_0808ed38(void)
     }
 }
 
-void sub_0808ee60(void)
+void ShotzoStepBarrel(void)
 {
     struct Task *t;
 
@@ -664,7 +664,7 @@ void sub_0808ee9c(void)
         t->unk1C = 1;
 }
 
-void sub_0808eec4(s32 a)
+void ShotzoSetRecoilVelocity(s32 a)
 {
     struct Task *t;
     u16 b;
@@ -740,7 +740,7 @@ void sub_0808ef88(void)
     }
 }
 
-void sub_0808efdc(void)
+void CreateShotzoCannonball(void)
 {
     struct ActorSpawn sp;
 
@@ -755,7 +755,7 @@ void sub_0808efdc(void)
     gCurTask->unk46 = CreateChildTaskAtOffsetFacing(172, gUnk_0874324C[gCurTask->unk30], gUnk_08743251[gCurTask->unk30], 0);
 }
 
-void sub_0808f058(void)
+void CreateShotzoFixedCannonball(void)
 {
     struct ActorSpawn sp;
 
@@ -770,10 +770,10 @@ void sub_0808f058(void)
     gCurTask->unk46 = CreateChildTaskAtOffsetFacing(172, gUnk_08743256[gCurTask->unk34], gUnk_08743251[gCurTask->unk34], 0);
 }
 
-void sub_0808f0d0(void)
+void ShotzoAimBarrel(void)
 {
     sub_0808ed38();
-    sub_0808ee60();
+    ShotzoStepBarrel();
     switch (gCurTask->unk34)
     {
     case 0:
@@ -816,7 +816,7 @@ void sub_0808f0d0(void)
     TaskYieldTrampoline(gUnk_08743248[gCurTask->unk74]);
 }
 
-void sub_0808f1b4(u16 a, void *b)
+void ShotzoCheckShoot(u16 a, void *b)
 {
     struct Task *t;
     struct Task *u;
@@ -923,7 +923,7 @@ void ParasolShotzoEnterState(void)
     CallTableEntry(gCurTask->state, 3, gParasolShotzoStates);
 }
 
-void sub_0808f3d4(void)
+void ShotzoAim(void)
 {
     struct Task *t;
 
@@ -932,11 +932,11 @@ void sub_0808f3d4(void)
     t->unk28 = gUnk_08743248[t->unk74];
     TaskStopY();
     while (1)
-        sub_0808f0d0();
+        ShotzoAimBarrel();
 }
 
-void sub_0808f400(void)
+void ShotzoAimState0Update(void)
 {
     if (sub_08069888() == 0)
-        sub_0808f1b4(2, ShotzoAimEnterState);
+        ShotzoCheckShoot(2, ShotzoAimEnterState);
 }

@@ -75,7 +75,18 @@ struct Task
     /*0x73*/ u8 variant;
     /*0x74*/ u8 unk74;
     /*0x75*/ s8 hitTimer;
-    /*0x76*/ u16 unk76;
+    /* A per-family view (docs/header-conventions.md): an actor's subtype
+       (written by CreateActor, sub_08064a78 and sub_08064d9c;
+       ActorBindDefSlot binds Actor.def = gEnemyDefs[subtype] ...); the door
+       index into gDoorStates for the door signs (src/obj_2eac8.c,
+       obj_2f62c.c); the player's hit and status bits and Quick Draw's flag
+       stay unk76.  packed, aligned(2): agbcc pads every union to 4 bytes
+       (lesson 3.522). */
+    /*0x76*/ union {
+        u16 subtype;
+        u16 doorIndex;
+        u16 unk76;
+    } __attribute__((packed, aligned(2))) u76;
     /*0x78*/ s16 health;
     /*0x7A*/ s8 onGround;
     /*0x7B*/ s8 waterFlags;
@@ -83,7 +94,7 @@ struct Task
     /*0x7D*/ u8 hitDirection;
     /*0x7E*/ s8 hitterSlot;
     /*0x7F*/ s8 hitterPlayer;
-    /* An actor's nearest player (sub_08063a9c, TaskFindNearestPlayer); for
+    /* An actor's nearest player (TaskFindNearestPlayerSlot, TaskFindNearestPlayer); for
        the player and its objects and effects (#5-#7) the ability of the
        running attack, which ActorPlayHitSfx reads off the hitter. */
     /* packed: agbcc pads every union to 4 bytes (lesson 3.522). */
@@ -97,7 +108,7 @@ struct Task
     /*0x86*/ u16 unk86;
     /* The record of the player the task belongs to: Task_Player binds
        &gPlayerStates[slot] and the player's objects and effects copy it.
-       For actors, ActorInitSlot's sub_08063a9c and TaskFindNearestPlayer
+       For actors, ActorInitSlot's TaskFindNearestPlayerSlot and TaskFindNearestPlayer
        store the nearest player's struct Task * here instead, which no actor
        reads back; ActorAttachToHitter rebinds it to the hitter's record. */
     /*0x88*/ struct PlayerState *player;
@@ -190,7 +201,7 @@ struct Actor
     /*0x0B*/ u8 paletteLocked;
     /*0x0C*/ u8 paletteVariant;
     /*0x0D*/ u8 unk0D;
-    /*0x0E*/ s16 unk0E;
+    /*0x0E*/ s16 hitterParent;
     /*0x10*/ s16 attachedTask;
     /*0x12*/ s16 attachedTaskLifetime;
     /*0x14*/ u16 savedFrame;
@@ -268,11 +279,11 @@ struct PlayerState
     /*0x28*/ u8 offsetScriptStep;
     /*0x29*/ u8 offsetScriptDelay;
     /*0x2A*/ u8 offsetScript;
-    /*0x2B*/ u8 unk2B;
+    /*0x2B*/ u8 blockBreakCooldown;
     /*0x2C*/ s16 sfxPlayer;
     /*0x2E*/ s16 sfxId;
-    /*0x30*/ u8 unk30;
-    /*0x31*/ u8 unk31;
+    /*0x30*/ u8 ownStarSwallowCount;
+    /*0x31*/ u8 ownStarInMouth;
     /*0x32*/ s8 unk32;
     /*0x33*/ s8 unk33;
     /*0x34*/ s8 unk34;
@@ -291,8 +302,8 @@ struct PlayerState
     /*0x42*/ u16 unk42;
     /*0x44*/ u8 blocksBroken;
     /*0x45*/ u8 hitsThisFrame;
-    /*0x46*/ u8 unk46;
-    /*0x47*/ u8 unk47;
+    /*0x46*/ u8 savedWallSide;
+    /*0x47*/ u8 hiJumpsLeft;
     /*0x48*/ u8 boundsClamp;
     /*0x49*/ u8 onSlipperyFloor;
     /* gTerrainResult's byte 0 after the probes: 1 right wall, 2 left wall,
@@ -313,7 +324,7 @@ struct PlayerState
     /*0x5E*/ u16 prevPixelX;
     /*0x60*/ u16 prevPixelY;
     /*0x62*/ u8 filler62[2];
-    /* M16's sub_0805e15c zeroes bodyBox/terrainBox/hitBoxSet per player
+    /* M16's PlayerDance zeroes bodyBox/terrainBox/hitBoxSet per player
        when a run starts (issue #83). */
     /*0x64*/ u32 bodyBox;
     /*0x68*/ u32 terrainBox;
@@ -344,7 +355,7 @@ struct ActorSpawn
  * TaskIsNearestPlayerInRect.  Four separate `s16` fields are what the CALLEE reads (that is
  * how src/actor_63698.c matches), but a caller that fills the box in the
  * caller's own stack frame does NOT necessarily see this type: M22 (issue #69)
- * has three of them (sub_08083020, sub_08083488, sub_08083fbc) where the ROM
+ * has three of them (FlamerState1Update, FlamerState4Update, SirKibbleCutterState0Update) where the ROM
  * builds the argument with 32-bit read-modify-write over PAIRS of halfwords
  * (`ldr; ands 0xFFFF0000; orrs; str`), which four `s16` fields can only ever
  * compile to `strh`.  Those callers declare the helper as taking a

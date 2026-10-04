@@ -6,17 +6,17 @@
 /* hitbox_1b24c.c (0x0801B24C-0x0801B7DB, issue #84).
  *
  * The third actor-vs-collider hit test (the first two, HitTestPlayerColliders and
- * sub_0801af14, are src/hitbox_1a8c8.c; the shared tails CalcHitDamageAndDirection and
- * sub_0801b9e4 are src/hitbox_1b7dc.c).  sub_0801b24c walks the third
- * collider list gUnk_030052A0 (gUnk_030054F4 entries) that M05's
+ * HitTestColliderClass10, are src/hitbox_1a8c8.c; the shared tails CalcHitDamageAndDirection and
+ * sub_0801b9e4 are src/hitbox_1b7dc.c).  HitTestColliderClass20 walks the third
+ * collider list gColliderClass20 (gColliderClass20Count entries) that M05's
  * RegisterCollider fills, places each entry's body box (mirrored by its task's
  * facing, unk43) against the camera rectangle, tests it against the actor's
  * attack box and, on an overlap, sorts the hit by the body box's kind k
  * (low nibble of unk08) through the per-kind mask tables gUnk_08732254,
- * gUnk_08732278 and gUnk_0873229C against the attack's flags: it may mark
+ * gColliderClass20KindBits and gUnk_0873229C against the attack's flags: it may mark
  * the collider's task (unk7C = 6/7) or its player (unk76), writes the hit
  * result gHitKind (3/4 with a knock-back direction from ArcTan2 into
- * gHitDirection, 6 or 7, or gUnk_08732230[k] with the damage of
+ * gHitDirection, 6 or 7, or gColliderClass20KindHitKinds[k] with the damage of
  * CalcHitDamageAndDirection) and returns 1; it returns 0 when nothing is hit.
  *
  * Matching notes (#84's final campaign, lesson 3.492): parked by #84 at 44
@@ -27,16 +27,16 @@
 
 struct AttackBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
-    /*0x09*/ u8 unk09;
+    /*0x08*/ u8 damage;
+    /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 unk0A;
     /*0x0C*/ u16 unk0C;
     /*0x0E*/ u16 unk0E;
@@ -49,35 +49,35 @@ struct AttackBox
 
 struct BodyBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 unk08;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
     /*0x0B*/ u8 unk0B;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x0C*/ u8 damage;
+    /*0x0D*/ u8 hitEffect;
     /*0x0E*/ u16 unk0E;
     /*0x10*/ u16 unk10;
 };
 
 struct HitEntry
 {
-    /*0x00*/ u8 unk00;
+    /*0x00*/ u8 slot;
     /*0x01*/ u8 filler01;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
+    /*0x02*/ u16 x;
+    /*0x04*/ u16 y;
     /*0x06*/ u16 filler06;
-    /*0x08*/ struct BodyBox *unk08;
+    /*0x08*/ struct BodyBox *bodyBox;
 };
 
-/* Not from collision.h: this file's view of gUnk_030052A0 differs (lesson
+/* Not from collision.h: this file's view of gColliderClass20 differs (lesson
    3.517). */
 extern u8 gHitDirection;
 extern u16 gAttackY;           /* actor y */
@@ -88,7 +88,7 @@ extern u8 gHitKind;            /* hit result */
 extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
 extern u8 gHitEffect;
-extern u8 gUnk_03002460;
+extern u8 gAttackLastHitterClass;
 extern s16 gAttackBoxBottom;           /* attack box bottom */
 extern s16 gAttackBoxTop;           /* attack box top */
 extern s16 gAttackBoxRight;           /* attack box right */
@@ -103,12 +103,12 @@ extern s16 gColliderLeft;
 extern s16 gColliderRight;
 extern s16 gColliderTop;
 extern s16 gColliderBottom;
-extern struct HitEntry gUnk_030052A0[];
-extern u8 gUnk_030054F4;
-extern u16 gUnk_08732230[];
+extern struct HitEntry gColliderClass20[];
+extern u8 gColliderClass20Count;
+extern u16 gColliderClass20KindHitKinds[];
 extern u16 gUnk_08732242[];
 extern u32 gUnk_08732254[];
-extern u32 gUnk_08732278[];
+extern u32 gColliderClass20KindBits[];
 extern u32 gUnk_0873229C[];
 
 void CalcHitDamageAndDirection(void);
@@ -120,7 +120,7 @@ void sub_0801b9e4(void);
    index a copy (`adds r1, r7, #0`).  All four table masks go through the
    one `u32 m`, which does not tie to the table address (`ldr r2, [r0];
    ands r3, r2`). */
-u8 sub_0801b24c(void)
+u8 HitTestColliderClass20(void)
 {
     s32 i;
     struct HitEntry *e;
@@ -131,13 +131,13 @@ u8 sub_0801b24c(void)
     s32 k;
     u32 m;
 
-    e = gUnk_030052A0;
-    for (i = 0; i < gUnk_030054F4; i++)
+    e = gColliderClass20;
+    for (i = 0; i < gColliderClass20Count; i++)
     {
-        gColliderSlot = e->unk00;
+        gColliderSlot = e->slot;
         t = &gTasks[gColliderSlot];
         gColliderPlayerState = t->player;
-        gColliderBodyBox = e->unk08;
+        gColliderBodyBox = e->bodyBox;
         if (gColliderPlayerState == NULL)
             gColliderPlayer = 4;
         else
@@ -145,28 +145,28 @@ u8 sub_0801b24c(void)
         if (gColliderBodyBox->unk10 & 0x8000)
         {
             s32 x;
-            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
-            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
-            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
+            gColliderX = x = gColliderBodyBox->offsetX + e->x;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->left;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->right;
         }
         else if (t->facing == 1)
         {
             s32 x;
-            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
-            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
-            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
+            gColliderX = x = gColliderBodyBox->offsetX + e->x;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->left;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->right;
         }
         else
         {
             s32 x;
-            gColliderX = x = -gColliderBodyBox->unk00 + e->unk02;
-            gColliderLeft = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk04;
-            gColliderRight = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk02;
+            gColliderX = x = -gColliderBodyBox->offsetX + e->x;
+            gColliderLeft = (x - (u16)gViewRect[0]) - gColliderBodyBox->right;
+            gColliderRight = (x - (u16)gViewRect[0]) - gColliderBodyBox->left;
         }
-        gColliderY = gColliderBodyBox->unk01 + e->unk04;
+        gColliderY = gColliderBodyBox->offsetY + e->y;
         e++;
-        gColliderTop = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk03;
-        gColliderBottom = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk05;
+        gColliderTop = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->top;
+        gColliderBottom = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->bottom;
         if (gColliderRight < gAttackBoxLeft)
             continue;
         if (gAttackBoxRight < gColliderLeft)
@@ -182,9 +182,9 @@ u8 sub_0801b24c(void)
         a = gAttackBox;
         if ((s32)a->unk14 < 0)
         {
-            if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gUnk_03002460 == 32)
+            if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass == 32)
                 continue;
-            m = gUnk_08732278[k] | 0x4000;
+            m = gColliderClass20KindBits[k] | 0x4000;
             if (!(a->unk18 & m) && !(b->unk10 & 8))
                 t->hitKind = 6;
             if (k == 4)
@@ -195,25 +195,25 @@ u8 sub_0801b24c(void)
                 continue;
             if (gColliderPlayer == 4)
                 continue;
-            u->unk76 &= 0x4000;
-            u->unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
+            u->u76.unk76 &= 0x4000;
+            u->u76.unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
             continue;
         }
         m = gUnk_08732254[k];
         if (!(a->unk14 & m))
         {
-            if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gUnk_03002460 == 32)
+            if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass == 32)
                 continue;
             if ((a->unk1A & 0x40) && (b->unk10 & 0x4000))
             {
                 if (gColliderPlayer == 4)
                     continue;
-                u->unk76 |= 0x4000;
+                u->u76.unk76 |= 0x4000;
                 continue;
             }
             if (gAttackBox->unk1A & 0x3E)
             {
-                if (!((gAttackBox->unk1A >> gColliderBodyBox->unk0D) & 1))
+                if (!((gAttackBox->unk1A >> gColliderBodyBox->hitEffect) & 1))
                     continue;
                 gHitKind = 7;
                 gHitHealthLeft = gAttackHealth;
@@ -223,8 +223,8 @@ u8 sub_0801b24c(void)
             if (!(gAttackBox->unk1A & 1) && !(k == 5 && (gAttackBox->unk1A & 0x80))
                 && gColliderPlayer != 4)
             {
-                u->unk76 &= 0x4000;
-                u->unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
+                u->u76.unk76 &= 0x4000;
+                u->u76.unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
             }
             switch (k)
             {
@@ -244,7 +244,7 @@ u8 sub_0801b24c(void)
             default:
                 if (!(gColliderBodyBox->unk10 & 0x10))
                     t->hitKind = 7;
-                gHitKind = gUnk_08732230[k];
+                gHitKind = gColliderClass20KindHitKinds[k];
                 CalcHitDamageAndDirection();
                 break;
             }
@@ -253,12 +253,12 @@ u8 sub_0801b24c(void)
         }
         if (!(a->unk1A & 1) && !(k == 5 && (a->unk1A & 0x80)) && gColliderPlayer != 4)
         {
-            u->unk76 &= 0x4000;
-            u->unk76 |= b->unk10 & 0x3FFF;
+            u->u76.unk76 &= 0x4000;
+            u->u76.unk76 |= b->unk10 & 0x3FFF;
         }
-        if (gColliderSlot != (s8)gAttackLastHitterSlot && (s8)gUnk_03002460 != 32)
+        if (gColliderSlot != (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass != 32)
         {
-            m = gUnk_08732278[k] | 0x4000;
+            m = gColliderClass20KindBits[k] | 0x4000;
             if (!(gAttackBox->unk18 & m) && !(gColliderBodyBox->unk10 & 8))
                 t->hitKind = 6;
         }

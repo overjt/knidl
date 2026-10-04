@@ -91,13 +91,13 @@ void KrackoEnterState(void)
 
 void KrackoUpdate(void)
 {
-    sub_080a9738();
+    KrackoLookAtNearestPlayer();
     CallTableEntry(gCurTask->updateState, 7, gKrackoStateUpdates);
     sub_08068f68();
     ActorReactToHit();
 }
 
-void sub_080a8878(void)
+void KrackoState0(void)
 {
     struct Task *t;
 
@@ -132,13 +132,13 @@ void sub_080a8878(void)
     TaskSleepForever();
 }
 
-void sub_080a8948(void)
+void KrackoState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8970(void)
+void KrackoState1(void)
 {
     s32 idx;
 
@@ -227,13 +227,13 @@ st3:
     }
 }
 
-void sub_080a8b44(void)
+void KrackoState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8b6c(void)
+void KrackoWait(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -249,13 +249,13 @@ void sub_080a8b6c(void)
     TaskSleepForever();
 }
 
-void sub_080a8bcc(void)
+void KrackoWaitUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8bf4(void)
+void KrackoState3(void)
 {
     gCurTask->updateState = 3;
     TaskStop();
@@ -283,7 +283,7 @@ void sub_080a8bf4(void)
     }
 }
 
-void sub_080a8c84(void)
+void KrackoState3Update(void)
 {
     struct Task *t;
 
@@ -315,7 +315,7 @@ void sub_080a8c84(void)
     }
 }
 
-void sub_080a8d1c(void)
+void KrackoLightningSweep(void)
 {
     gCurTask->updateState = 4;
     gUnk_02007D00[0] = 1;
@@ -383,7 +383,7 @@ void sub_080a8d1c(void)
     TaskSleepForever();
 }
 
-void sub_080a8f18(void)
+void KrackoLightningSweepUpdate(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
@@ -418,7 +418,7 @@ void KrackoSummonUpdate(void)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8fdc(void)
+void KrackoSwoop(void)
 {
     gCurTask->updateState = 5;
     gUnk_02007D00[0] = 1;
@@ -525,7 +525,7 @@ void sub_080a8fdc(void)
     TaskSleepForever();
 }
 
-void sub_080a9304(void)
+void KrackoSwoopUpdate(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);

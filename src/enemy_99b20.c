@@ -20,15 +20,15 @@
  * MrTickTockUpdate and dispatches Task.state through the 24-word guard table
  * gMrTickTockStates, MrTickTockUpdate dispatches Task.updateState through the 24-word body
  * table gMrTickTockStateUpdates that follows it, and MrTickTockEnterState is its re-arm hook.
- * States 0-23 follow as <body, guard> pairs; sub_0809b438 is the timer leaf
+ * States 0-23 follow as <body, guard> pairs; MrTickTockState23Update is the timer leaf
  * the table word at 0x0874580C points at.
  *
  * Task_MrFrostyIceCube, Task_MrTickTockRing and Task_MrTickTockNote are the three companion tasks
  * (graphics gUnk_0874CB7C, gMrTickTockRingFrames, gMrTickTockNoteFrames).  They use
- * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; sub_0809b6ac and
- * sub_0809b964 read the parent's state out of gTasks[Task.parent], and
- * the third one's own states live in the next module - gUnk_08745B1C points at
- * sub_0809ba44.  sub_0809b8ac is a dead copy of the gUnk_08745B04 re-arm.
+ * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; MrFrostyIceCubeState0Update and
+ * MrTickTockRingState0Update read the parent's state out of gTasks[Task.parent], and
+ * the third one's own states live in the next module - gMrTickTockNoteVariants points at
+ * MrTickTockNoteInit.  MrTickTockRingEnterState is a dead copy of the gMrTickTockRingStates re-arm.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -167,7 +167,7 @@ u8 sub_08099c4c(void)
     return 0;
 }
 
-u8 sub_08099d40(void)
+u8 MrTickTockReactToDamage(void)
 {
     gCurTask->unk2C = 32;
     CreateChildTaskHere(142, 0);
@@ -175,7 +175,7 @@ u8 sub_08099d40(void)
     return 0;
 }
 
-u8 sub_08099d64(void)
+u8 MrTickTockReactToDefeat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -472,7 +472,7 @@ void MrTickTockEnterState(void)
     CallTableEntry(gCurTask->state, 24, gMrTickTockStates);
 }
 
-void sub_0809a214(void)
+void MrTickTockWait(void)
 {
     struct Task *t;
     struct Task *u;
@@ -500,7 +500,7 @@ void sub_0809a214(void)
     TaskSleepForever();
 }
 
-void sub_0809a270(void)
+void MrTickTockWaitUpdate(void)
 {
     struct Task *t;
 
@@ -512,7 +512,7 @@ void sub_0809a270(void)
     }
 }
 
-void sub_0809a2a0(void)
+void MrTickTockState1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -527,7 +527,7 @@ void sub_0809a2a0(void)
     TaskSleepForever();
 }
 
-void sub_0809a2c0(void)
+void MrTickTockState1Update(void)
 {
     struct Task *t;
 
@@ -543,7 +543,7 @@ void sub_0809a2c0(void)
     }
 }
 
-void sub_0809a2e8(void)
+void MrTickTockHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -565,7 +565,7 @@ void sub_0809a2e8(void)
     TaskSleepForever();
 }
 
-void sub_0809a32c(void)
+void MrTickTockHopUpdate(void)
 {
     struct Task *t;
 
@@ -580,7 +580,7 @@ void sub_0809a32c(void)
     }
 }
 
-void sub_0809a36c(void)
+void MrTickTockState3(void)
 {
     struct Task *t;
     struct Task *u;
@@ -623,7 +623,7 @@ void sub_0809a36c(void)
     }
 }
 
-void sub_0809a434(void)
+void MrTickTockState3Update(void)
 {
     struct Task *t;
 
@@ -635,7 +635,7 @@ void sub_0809a434(void)
     }
 }
 
-void sub_0809a464(void)
+void MrTickTockState4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -673,7 +673,7 @@ void sub_0809a464(void)
     TaskSleepForever();
 }
 
-void sub_0809a4f0(void)
+void MrTickTockState4Update(void)
 {
     struct Task *t;
 
@@ -688,7 +688,7 @@ void sub_0809a4f0(void)
     }
 }
 
-void sub_0809a528(void)
+void MrTickTockState5(void)
 {
     struct Task *t;
     struct Task *u;
@@ -737,7 +737,7 @@ void sub_0809a528(void)
     TaskSleepForever();
 }
 
-void sub_0809a624(void)
+void MrTickTockState5Update(void)
 {
     struct Task *t;
 
@@ -817,7 +817,7 @@ void MrTickTockDashUpdate(void)
     }
 }
 
-void sub_0809a798(void)
+void MrTickTockState7(void)
 {
     struct Task *t;
     struct Task *u;
@@ -838,11 +838,11 @@ void sub_0809a798(void)
     TaskSleepForever();
 }
 
-void sub_0809a7d8(void)
+void MrTickTockState7Update(void)
 {
 }
 
-void sub_0809a7dc(void)
+void MrTickTockState8(void)
 {
     struct Task *t;
     struct Task *u;
@@ -865,7 +865,7 @@ void sub_0809a7dc(void)
     }
 }
 
-void sub_0809a82c(void)
+void MrTickTockState8Update(void)
 {
     struct Task *t;
 
@@ -880,7 +880,7 @@ void sub_0809a82c(void)
     }
 }
 
-void sub_0809a868(void)
+void MrTickTockState9(void)
 {
     struct Task *t;
     struct Task *u;
@@ -903,11 +903,11 @@ void sub_0809a868(void)
     TaskSleepForever();
 }
 
-void sub_0809a8b4(void)
+void MrTickTockState9Update(void)
 {
 }
 
-void sub_0809a8b8(void)
+void MrTickTockState10(void)
 {
     struct Task *t;
     struct Task *u;
@@ -932,11 +932,11 @@ void sub_0809a8b8(void)
     TaskSleepForever();
 }
 
-void sub_0809a918(void)
+void MrTickTockState10Update(void)
 {
 }
 
-void sub_0809a91c(void)
+void MrTickTockState11(void)
 {
     struct Task *t;
     struct Task *u;
@@ -960,7 +960,7 @@ void sub_0809a91c(void)
     }
 }
 
-void sub_0809a974(void)
+void MrTickTockState11Update(void)
 {
     struct Task *t;
 
@@ -994,7 +994,7 @@ void sub_0809a974(void)
     }
 }
 
-void sub_0809aa24(void)
+void MrTickTockState12(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1035,7 +1035,7 @@ void sub_0809aa24(void)
     }
 }
 
-void sub_0809aaf0(void)
+void MrTickTockState12Update(void)
 {
     struct Task *t;
     s32 v;
@@ -1070,7 +1070,7 @@ void sub_0809aaf0(void)
     }
 }
 
-void sub_0809ab70(void)
+void MrTickTockState13(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1120,7 +1120,7 @@ void sub_0809ab70(void)
     }
 }
 
-void sub_0809ac54(void)
+void MrTickTockState13Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1151,7 +1151,7 @@ void sub_0809ac54(void)
     v->unk70 = v->velX;
 }
 
-void sub_0809acbc(void)
+void MrTickTockState14(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1192,7 +1192,7 @@ void sub_0809acbc(void)
     TaskSleepForever();
 }
 
-void sub_0809ad6c(void)
+void MrTickTockState14Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1222,7 +1222,7 @@ void sub_0809ad6c(void)
     }
 }
 
-void sub_0809adf4(void)
+void MrTickTockBounceOffWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1244,11 +1244,11 @@ void sub_0809adf4(void)
     TaskSleepForever();
 }
 
-void sub_0809ae3c(void)
+void MrTickTockBounceOffWallUpdate(void)
 {
 }
 
-void sub_0809ae40(void)
+void MrTickTockState16(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1295,7 +1295,7 @@ void sub_0809ae40(void)
     }
 }
 
-void sub_0809aefc(void)
+void MrTickTockState16Update(void)
 {
     struct Task *t;
 
@@ -1314,7 +1314,7 @@ void sub_0809aefc(void)
     }
 }
 
-void sub_0809af4c(void)
+void MrTickTockState17(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1376,7 +1376,7 @@ void sub_0809af4c(void)
     }
 }
 
-void sub_0809b09c(void)
+void MrTickTockState17Update(void)
 {
     struct Task *t;
 
@@ -1396,7 +1396,7 @@ void sub_0809b09c(void)
     }
 }
 
-void sub_0809b104(void)
+void MrTickTockState18(void)
 {
     struct Task *t;
 
@@ -1486,7 +1486,7 @@ void MrTickTockDefeatUpdate(void)
     ActorFlashPalette(&gUnk_082797C8, 16);
 }
 
-void sub_0809b2ac(void)
+void MrTickTockState20(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1507,7 +1507,7 @@ void sub_0809b2ac(void)
     TaskSleepForever();
 }
 
-void sub_0809b310(void)
+void MrTickTockState20Update(void)
 {
     struct Task *t;
 
@@ -1520,7 +1520,7 @@ void sub_0809b310(void)
     }
 }
 
-void sub_0809b34c(void)
+void MrTickTockState21(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1545,7 +1545,7 @@ void sub_0809b34c(void)
     TaskSleepForever();
 }
 
-void sub_0809b394(void)
+void MrTickTockState21Update(void)
 {
     struct Task *t;
 
@@ -1559,7 +1559,7 @@ void sub_0809b394(void)
     }
 }
 
-void sub_0809b3d4(void)
+void MrTickTockState22(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1574,11 +1574,11 @@ void sub_0809b3d4(void)
     TaskSleepForever();
 }
 
-void sub_0809b404(void)
+void MrTickTockState22Update(void)
 {
 }
 
-void sub_0809b408(void)
+void MrTickTockState23(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1593,7 +1593,7 @@ void sub_0809b408(void)
     TaskSleepForever();
 }
 
-void sub_0809b438(void)
+void MrTickTockState23Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1615,7 +1615,7 @@ u8 sub_0809b454(void)
     if (t->state == 0)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_0809b5ec, gCurTaskIdx);
+        TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
         return 1;
     }
     t->onGround = 0;
@@ -1645,7 +1645,7 @@ void sub_0809b4d8(void)
 u8 sub_0809b4dc(void)
 {
     ActorSetState(2);
-    TaskSetEntry(sub_0809b5ec, gCurTaskIdx);
+    TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1677,37 +1677,37 @@ void Task_MrFrostyIceCube(void)
     u->unk70 = u->tileWord;
     u->frameTable = gUnk_0874CB7C;
     u->tileWord = zero;
-    CallTableEntry(u->variant, 1, gUnk_08745AE4);
+    CallTableEntry(u->variant, 1, gMrFrostyIceCubeVariants);
 }
 
-void sub_0809b57c(void)
+void MrFrostyIceCubeInit(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809b5b4;
+    t->updateCallback = (u32)MrFrostyIceCubeUpdate;
     t->facing = t->unk74;
     ActorSetState(0);
     u = gCurTask;
-    CallTableEntry(u->state, 3, gUnk_08745AE8);
+    CallTableEntry(u->state, 3, gMrFrostyIceCubeStates);
 }
 
-void sub_0809b5b4(void)
+void MrFrostyIceCubeUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08745AF4);
+        CallTableEntry(gCurTask->updateState, 3, gMrFrostyIceCubeStateUpdates);
     if (gCurTask->state != 2)
         ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0809b5ec(void)
+void MrFrostyIceCubeEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08745AE8);
+    CallTableEntry(gCurTask->state, 3, gMrFrostyIceCubeStates);
 }
 
-void sub_0809b608(void)
+void MrFrostyIceCubeState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1742,7 +1742,7 @@ void sub_0809b608(void)
     TaskSleepForever();
 }
 
-void sub_0809b6ac(void)
+void MrFrostyIceCubeState0Update(void)
 {
     struct Task *t;
 
@@ -1753,12 +1753,12 @@ void sub_0809b6ac(void)
         if (t->unk2C == 12)
         {
             ActorSetState(1);
-            TaskSetEntry(sub_0809b5ec, gCurTaskIdx);
+            TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
         }
     }
 }
 
-void sub_0809b6f8(void)
+void MrFrostyIceCubeFlight(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1798,11 +1798,11 @@ void sub_0809b6f8(void)
     TaskSleepForever();
 }
 
-void sub_0809b790(void)
+void MrFrostyIceCubeFlightUpdate(void)
 {
 }
 
-void sub_0809b794(void)
+void MrFrostyIceCubeState2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1828,7 +1828,7 @@ void sub_0809b794(void)
     ActorDestroy();
 }
 
-void sub_0809b7ec(void)
+void MrFrostyIceCubeState2Update(void)
 {
 }
 
@@ -1843,25 +1843,25 @@ void Task_MrTickTockRing(void)
     t->layer = 9;
     u = gCurTask;
     u->frameTable = gMrTickTockRingFrames;
-    CallTableEntry(u->variant, 1, gUnk_08745B00);
+    CallTableEntry(u->variant, 1, gMrTickTockRingVariants);
 }
 
-void sub_0809b830(void)
+void MrTickTockRingInit(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809b868;
+    t->updateCallback = (u32)MrTickTockRingUpdate;
     t->facing = t->unk74;
     ActorSetState(0);
     u = gCurTask;
-    CallTableEntry(u->state, 1, gUnk_08745B04);
+    CallTableEntry(u->state, 1, gMrTickTockRingStates);
 }
 
-void sub_0809b868(void)
+void MrTickTockRingUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08745B08);
+    CallTableEntry(gCurTask->updateState, 1, gMrTickTockRingStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1869,12 +1869,12 @@ void sub_0809b868(void)
     }
 }
 
-void sub_0809b8ac(void)
+void MrTickTockRingEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08745B04);
+    CallTableEntry(gCurTask->state, 1, gMrTickTockRingStates);
 }
 
-void sub_0809b8c8(void)
+void MrTickTockRingState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1908,7 +1908,7 @@ void sub_0809b8c8(void)
     }
 }
 
-void sub_0809b964(void)
+void MrTickTockRingState0Update(void)
 {
     struct Task *t;
 
@@ -1925,14 +1925,14 @@ void sub_0809b964(void)
 u8 sub_0809b9c0(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0809baec, gCurTaskIdx);
+    TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     return 1;
 }
 
 u8 sub_0809b9e0(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0809baec, gCurTaskIdx);
+    TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1948,5 +1948,5 @@ void Task_MrTickTockNote(void)
     u = gCurTask;
     u->frameTable = gMrTickTockNoteFrames;
     u->facing = 1;
-    CallTableEntry(gCurTask->variant, 1, gUnk_08745B1C);
+    CallTableEntry(gCurTask->variant, 1, gMrTickTockNoteVariants);
 }

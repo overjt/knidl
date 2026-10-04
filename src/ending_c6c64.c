@@ -60,8 +60,8 @@ void EndingEpilogueLoadGraphics(void)
     LZ77UnCompWram(h->tiles, gUnk_02020000);
     RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);
     RequestCopy(2, (u32)h->palette, (u32)gUnk_03001570, h->paletteBankCount << 5);
-    if (gUnk_02004C94 > 1)
-        RequestCopy(2, (u32)gPlayerPalettes[gUnk_02000028], (u32)&gUnk_03001570[16], 22);
+    if (gEndingPlayerCount > 1)
+        RequestCopy(2, (u32)gPlayerPalettes[gEndingLocalPlayer], (u32)&gUnk_03001570[16], 22);
     h = &gUnk_0859990C;
     LZ77UnCompWram(h->tiles, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);

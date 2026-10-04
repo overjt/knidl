@@ -18,9 +18,9 @@
  *   <spawner>      CreateDashFlame / CreateDashFireTrail / CreateLandingImpact allocate a task
  *                  of type 167/168/169 and seed its unk24/unk20 position.
  *
- * The tail (Task_IceBlock-sub_0806ef38) is the "cursor"/menu-ish task group:
- * sub_0806ed28 walks a 6-entry s16[6][2] table at 0x0873E5F8, and
- * sub_0806ee30 is a class-1 entry point that re-arms the running task from
+ * The tail (Task_IceBlock-PlayerWarpStarRideEnterState) is the "cursor"/menu-ish task group:
+ * IceBlockBlink walks a 6-entry s16[6][2] table at 0x0873E5F8, and
+ * PlayerWarpStarRideInit is a class-1 entry point that re-arms the running task from
  * the player record (Task.player) and the id at 0x020055C0.
  */
 #include "gba/gba.h"
@@ -34,14 +34,14 @@
 
 /* RAM cells */
 /* Not from actor.h: this file's view of gUnk_0873E5F8 differs (lesson 3.517). */
-extern u16 gUnk_020055C0;
+extern u16 gWarpStarRideSlot;
 
 /* ROM tables */
 extern s16 gUnk_0873E5F8[][2];
 extern u32 gLandingImpactVariants[];
 extern u8 gUnk_0873FAE8[];
-extern u32 gUnk_0873FB04[];
-extern u32 gUnk_0873FB24[];
+extern u32 gPlayerWarpStarRideStates[];
+extern u32 gPlayerWarpStarRideStateUpdates[];
 extern u32 gUnk_0874CB3C[];
 extern u32 gUnk_0874CB7C[];
 extern u32 gUnk_0874CBD0[];
@@ -63,7 +63,7 @@ extern void ActorDrawWorldInView(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern u8 TaskHasSameSerial(s32 i);
 extern void sub_0806ff7c(void);
-extern void sub_08070648(void);
+extern void MetaKnightWarpStarRideInit(void);
 
 /* Defined below */
 void HitFlamesCheckParent(void);
@@ -73,10 +73,10 @@ void AbilityReleaseFlashCheckParent(void);
 void DashFlameCheckParent(void);
 void DashFireTrailCheckParent(void);
 s32 CreateLandingImpact(u8 a, s16 x, s16 y);
-void sub_0806ec88(void);
-void sub_0806ed28(void);
+void IceBlockUpdate(void);
+void IceBlockBlink(void);
 void PlaySmokeRingAnim(void);
-void sub_0806ef1c(void);
+void PlayerWarpStarRideUpdate(void);
 
 void HitFrostCheckParent(void)
 {
@@ -457,7 +457,7 @@ void Task_LandingImpact(void)
     TaskSleepForever();
 }
 
-void sub_0806ea70(void)
+void LandingImpactVariant0(void)
 {
     gCurTask->frame = 16;
     TaskYieldTrampoline(1);
@@ -480,7 +480,7 @@ void sub_0806ea70(void)
     TaskExitTrampoline();
 }
 
-void sub_0806eb04(void)
+void LandingImpactVariant1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -510,7 +510,7 @@ void sub_0806eb04(void)
     TaskExitTrampoline();
 }
 
-void sub_0806eba4(void)
+void LandingImpactVariant2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -551,14 +551,14 @@ void Task_IceBlock(void)
     t->layer = 7;
     u = gCurTask;
     u->frameTable = gUnk_0874CB7C;
-    u->updateCallback = (u32)sub_0806ec88;
+    u->updateCallback = (u32)IceBlockUpdate;
     u->tileWord = 0;
     u->posX = 0;
     u->posY = 0;
     TaskSleepForever();
 }
 
-void sub_0806ec88(void)
+void IceBlockUpdate(void)
 {
     s32 i;
     s32 j;
@@ -573,7 +573,7 @@ void sub_0806ec88(void)
         else
         {
             gCurTask->onGround = 0;
-            sub_0806ed28();
+            IceBlockBlink();
         }
     }
     else
@@ -582,7 +582,7 @@ void sub_0806ec88(void)
     }
 }
 
-void sub_0806ed28(void)
+void IceBlockBlink(void)
 {
     struct Task *t;
     struct Task *u;
@@ -648,7 +648,7 @@ void sub_0806ee2c(void)
 {
 }
 
-void sub_0806ee30(void)
+void PlayerWarpStarRideInit(void)
 {
     struct Task *t;
     struct Task *u;
@@ -661,10 +661,10 @@ void sub_0806ee30(void)
     q = gCurTask->player;
     q->mode = 20;
     if (gMetaKnightmareMode == 1)
-        sub_08070648();
+        MetaKnightWarpStarRideInit();
     t = gCurTask;
     t->drawCallback = (u32)sub_0806ff7c;
-    t->updateCallback = (u32)sub_0806ef1c;
+    t->updateCallback = (u32)PlayerWarpStarRideUpdate;
     t->lateUpdateCallback = 0;
     t->taskClass = 4;
     gCurTask->frameTable = gUnk_0874CFEC;
@@ -672,26 +672,26 @@ void sub_0806ee30(void)
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;
     u->player->unk42 &= 0xFFEF;
-    u->parent = gUnk_020055C0;
+    u->parent = gWarpStarRideSlot;
     if (gTasks[u->parent].unk74 == 0)
         gCurTask->facing = gUnk_0873FAE8[sub_08025e88(u->parent)];
     else
         u->facing = gUnk_0873FAE8[gTasks[u->parent].unk74];
     v = gCurTask;
     v->state = 2;
-    CallTableEntry(gCurTask->state, 8, gUnk_0873FB04);
+    CallTableEntry(gCurTask->state, 8, gPlayerWarpStarRideStates);
 }
 
-void sub_0806ef1c(void)
+void PlayerWarpStarRideUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 8, gUnk_0873FB24);
+    CallTableEntry(gCurTask->updateState, 8, gPlayerWarpStarRideStateUpdates);
 }
 
-void sub_0806ef38(void)
+void PlayerWarpStarRideEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
-    CallTableEntry(t->state, 8, gUnk_0873FB04);
+    CallTableEntry(t->state, 8, gPlayerWarpStarRideStates);
 }

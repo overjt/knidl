@@ -15,8 +15,8 @@
  * ActorFlashPalette / ActorClearPaletteOverride and drives the three animation calls from the
  * per-frame row gUnk_087437D0[Task.frame].
  *
- * States 0-10 then follow as <body, guard> pairs (sub_080901e0 /
- * sub_08090270, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
+ * States 0-10 then follow as <body, guard> pairs (BonkersState0 /
+ * BonkersState0Update, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
  * TaskYieldTrampoline waits that steps Task.frame, clears and then waits on
  * Task.onGround (set when the boss lands) and pushes 16.16 velocities through
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
@@ -24,10 +24,10 @@
  * Div(|TaskGetNearestPlayerDx()|, 3), state 5 spawns the actors 8 and 145, and state 10
  * is the defeat sequence (sub_0806684c, CreateStarFlash, sub_0806ad18).
  *
- * The tail holds the pieces the states share - sub_08090e18 (fire a shot at
- * the boss's own position through CreateInhalableStar), sub_08090e54 (advance the
+ * The tail holds the pieces the states share - BonkersCreateSlamStar (fire a shot at
+ * the boss's own position through CreateInhalableStar), BonkersChooseNextState (advance the
  * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
- * the sub_08090ef0 / sub_08090f14 / sub_08090f4c hit hooks, the companion
+ * the BonkersReactToDamage / BonkersReactToDefeat / sub_08090f4c hit hooks, the companion
  * task Task_BonkersHammerHitBox / BonkersHammerHitBoxUpdate that mirrors the boss's position while
  * gTaskSlotTypes[Task.parent] says the boss is alive - and Task_PoppyBrosSr, the
  * entry of the second boss, whose states live in src/enemy_9113c.c.
@@ -139,7 +139,7 @@ void BonkersUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080901e0(void)
+void BonkersState0(void)
 {
     struct Task *t;
     u8 zero;
@@ -165,11 +165,11 @@ void sub_080901e0(void)
     {
         sub_08066580();
     }
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
-void sub_08090270(void)
+void BonkersState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -222,7 +222,7 @@ void BonkersWalk(void)
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(20);
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
@@ -256,7 +256,7 @@ void BonkersJump(void)
     CreateLandingDust(16, 6);
     gCurTask->frame--;
     TaskYieldTrampoline(30);
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
@@ -296,7 +296,7 @@ void BonkersHop(void)
     }
     gCurTask->frame--;
     TaskYieldTrampoline(30);
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
@@ -431,7 +431,7 @@ void BonkersThrow(void)
     TaskYieldTrampoline(4);
     gCurTask->frame--;
     TaskYieldTrampoline(4);
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
@@ -456,7 +456,7 @@ void BonkersSlam(void)
     TaskYieldTrampoline(2);
     PlaySfx(520);
     RequestScreenShake(2);
-    sub_08090e18();
+    BonkersCreateSlamStar();
     gCurTask->frame++;
     TaskYieldTrampoline(32);
     gCurTask->frame--;
@@ -471,7 +471,7 @@ void BonkersSlam(void)
     {
         u = gCurTask;
         u->unk2C--;
-        sub_08090e54();
+        BonkersChooseNextState();
     }
     TaskSleepForever();
 }
@@ -508,7 +508,7 @@ void BonkersJumpSlam(void)
     RequestScreenShake(2);
     PlaySfx(520);
     PlaySfx(0x1F7);
-    sub_08090e18();
+    BonkersCreateSlamStar();
     gCurTask->frame++;
     TaskYieldTrampoline(8);
     gCurTask->onGround = 0;
@@ -522,7 +522,7 @@ void BonkersJumpSlam(void)
         TaskYieldTrampoline(1);
     gCurTask->frame--;
     TaskYieldTrampoline(15);
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
@@ -550,7 +550,7 @@ void BonkersTripleSlam(void)
         RequestScreenShake(2);
         PlaySfx(520);
         if ((s16)gCurTask->unk6C == 0)
-            sub_08090e18();
+            BonkersCreateSlamStar();
         gCurTask->frame++;
         TaskYieldTrampoline(8);
         gCurTask->frame--;
@@ -560,7 +560,7 @@ void BonkersTripleSlam(void)
     } while ((s16)++gCurTask->unk6C <= 2);
     TaskYieldTrampoline(11);
     gCurTask->unk2C = 2;
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
@@ -570,7 +570,7 @@ void BonkersTripleSlamUpdate(void)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
 }
 
-void sub_08090c18(void)
+void BonkersBounceOffWall(void)
 {
     struct Task *t;
 
@@ -587,11 +587,11 @@ void sub_08090c18(void)
     TaskStop();
     RequestScreenShake(2);
     sub_08090e9c();
-    sub_08090e54();
+    BonkersChooseNextState();
     TaskSleepForever();
 }
 
-void sub_08090ca8(void)
+void BonkersBounceOffWallUpdate(void)
 {
     if (gCurTask->state != 9)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);
@@ -639,7 +639,7 @@ void BonkersDefeatUpdate(void)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_08090e18(void)
+void BonkersCreateSlamStar(void)
 {
     struct Task *t;
     s16 x;
@@ -651,7 +651,7 @@ void sub_08090e18(void)
     CreateInhalableStar(x, y, 0, 2);
 }
 
-void sub_08090e54(void)
+void BonkersChooseNextState(void)
 {
     struct Task *t;
 
@@ -677,7 +677,7 @@ void sub_08090e9c(void)
     TaskStopY();
 }
 
-s32 sub_08090ef0(void)
+s32 BonkersReactToDamage(void)
 {
     gCurTask->unk30 = 1;
     CreateStarFlash(1, 0, 0);
@@ -685,7 +685,7 @@ s32 sub_08090ef0(void)
     return 0;
 }
 
-s32 sub_08090f14(void)
+s32 BonkersReactToDefeat(void)
 {
     ActorSetHitReactions(gUnk_087440DC);
     gCurTask->unk34 = 1;
@@ -744,7 +744,7 @@ void BonkersHammerHitBoxUpdate(void)
     if ((s16)gTaskSlotTypes[gCurTask->parent] != -1)
     {
         u = &gTasks[gCurTask->parent];
-        if (u->unk76 == 0 && u->unk34 == 0)
+        if (u->u76.subtype == 0 && u->unk34 == 0)
         {
             d = u->frame - 16;
             if (d <= 6)

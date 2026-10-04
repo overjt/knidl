@@ -14,7 +14,7 @@ struct M38LogoObj
 {
     /*0x00*/ s16 *scriptPos;    /* script cursor */
     /*0x04*/ s16 scriptId;     /* script id, -1 = off */
-    /*0x06*/ s16 spriteId;     /* sprite id (gUnk_087554B8), -1 = none */
+    /*0x06*/ s16 spriteId;     /* sprite id (gBootLogoSprites), -1 = none */
     /*0x08*/ s16 layer;     /* layer */
     /*0x0A*/ s16 sleepFrames;     /* frames to wait */
     /*0x0C*/ s32 posX;     /* x << 8 */
@@ -40,7 +40,7 @@ extern u32 gUnk_02004000[];
 extern u16 gPausingPlayer;
 extern u8 gExtraModeTitleSeen;
 extern u8 gUnk_02006090;
-extern s8 gUnk_02006160;
+extern s8 gBoardedWarpStarSlot;
 extern u8 gUnk_02007FCC;
 extern u32 gUnk_02028000[];
 extern struct M38LogoObj gUnk_02030000[];

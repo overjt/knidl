@@ -42,7 +42,7 @@ extern vs32 gLinkBlockState;
 extern vs32 gLinkBlockWords;
 extern u8 gLinkBroadcastAcks;
 extern u32 *gLinkBlockDst;
-extern u32 gUnk_0200EBB8;
+extern u32 gLinkBlockAckCount;
 extern vs32 gLinkBlockIndex;
 extern vu8 gMultiBootStruct[];
 extern struct MultiBootParam gMultiBootParam;
@@ -63,7 +63,7 @@ extern u32 gLinkErrorMask;
 extern u32 gLinkRecvVCount;
 extern u32 gSendCmdFilled;
 extern u8  gUnk_03004D34;
-extern vu16 gUnk_03004D38[]; /* receive staging, 4 halfwords */
+extern vu16 gLinkRecvSnapshot[]; /* receive staging, 4 halfwords */
 extern u8 gLastRecvQueueCount;
 extern u16 gLinkSavedIme; /* saved REG_IME */
 extern u16 gRecvCmds[4][4]; /* [0]=state [1]=keys held [2]=keys pressed */

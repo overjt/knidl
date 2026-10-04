@@ -21,7 +21,7 @@ extern u32 ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809cc24(void)
+void AxeKnightVariant2(void)
 {
     struct Task *t;
 
@@ -76,17 +76,17 @@ void sub_0809cd4c(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0809cd8c(void)
+void AxeKnightVariant3(void)
 {
     struct Task *t;
 
@@ -143,11 +143,11 @@ void sub_0809cec4(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -181,7 +181,7 @@ void Task_AxeKnightAxe(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gAxeKnightAxeFrames;
-    u->updateCallback = (u32)sub_0809cfe0;
+    u->updateCallback = (u32)AxeKnightAxeUpdate;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(224 << 10, 0xFFFFDB00);
     gCurTask->speedLimitX = 128 << 11;
@@ -198,7 +198,7 @@ void Task_AxeKnightAxe(void)
     }
 }
 
-void sub_0809cfe0(void)
+void AxeKnightAxeUpdate(void)
 {
     struct PointPair box;
     struct Task *t;
@@ -282,7 +282,7 @@ void sub_0809d13c(void)
     t = gCurTask;
     t->drawCallback = (u32)sub_0809d17c;
     t->frameTable = gJavelinKnightFrames;
-    ActorLoadDef((u32)gUnk_08747E64);
+    ActorLoadDef((u32)gJavelinKnightDef);
     u = gCurTask;
     u->unk24 = 0;
     CallTableEntry(u->variant, 2, gJavelinKnightVariants);
@@ -294,7 +294,7 @@ void sub_0809d17c(void)
     sub_0809d994();
 }
 
-void sub_0809d18c(void)
+void JavelinKnightVariant0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -345,25 +345,25 @@ void JavelinKnightUpdate(void)
     if (u->unk24 > 0)
     {
         u->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0809d25c(void)
+void JavelinKnightState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk28 = 3;
     ActorSetState(1);
-    sub_0809d280();
+    JavelinKnightHop();
 }
 
-void sub_0809d280(void)
+void JavelinKnightHop(void)
 {
     gCurTask->updateState = 0;
     TaskYieldTrampoline(2);
@@ -395,11 +395,11 @@ void sub_0809d2a4(void)
     }
 }
 
-void sub_0809d308(void)
+void JavelinKnightState0Update(void)
 {
 }
 
-void sub_0809d30c(void)
+void JavelinKnightState2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -469,7 +469,7 @@ void sub_0809d42c(void)
         ActorCheckHitsWithBox(gUnk_08747B24[t->frame - 28]);
 }
 
-void sub_0809d4a0(void)
+void JavelinKnightJumpThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -519,7 +519,7 @@ void sub_0809d568(void)
 {
 }
 
-void sub_0809d56c(void)
+void JavelinKnightJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -568,7 +568,7 @@ void sub_0809d608(void)
         ActorCheckHitsWithBox(gUnk_08747B38[t->frame - 17]);
 }
 
-void sub_0809d638(void)
+void JavelinKnightState5(void)
 {
     gCurTask->updateState = 4;
     TaskSetFrame(4);
@@ -609,7 +609,7 @@ void sub_0809d6dc(void)
     } while ((s16)++gCurTask->unk6C <= 3);
 }
 
-void sub_0809d71c(void)
+void JavelinKnightChooseNextState(void)
 {
     struct Task *t;
 
@@ -632,7 +632,7 @@ void sub_0809d71c(void)
     TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
 }
 
-void sub_0809d7a4(void)
+void JavelinKnightVariant1(void)
 {
     struct Task *u;
 
@@ -700,11 +700,11 @@ void sub_0809d83c(void)
     if (w->unk24 > 0)
     {
         w->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();

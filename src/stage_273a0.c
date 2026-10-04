@@ -258,12 +258,12 @@ void sub_08027850(s32 a)
 
     if (gPlayerCount == 1)
     {
-        gUnk_02007D38 = gLocalPlayer;
+        gCameraFocusPlayer = gLocalPlayer;
         gCameraMode = 0;
     }
     else
     {
-        gUnk_02007D38 = a;
+        gCameraFocusPlayer = a;
         gCameraMode = 1;
         for (i = 0; i < gPlayerCount; i++)
         {
@@ -324,7 +324,7 @@ void sub_08027908(void)
                 y = gCameraBounds[3];
             gPlayerCameraPos[i].x = x;
             gPlayerCameraPos[i].y = y;
-            if (i == gUnk_02007D38)
+            if (i == gCameraFocusPlayer)
                 gPlayerCameraMode[i] = 0;
             else
                 gPlayerCameraMode[i] = 2;

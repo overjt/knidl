@@ -33,10 +33,10 @@ s32 TaskCreateFrom(u32 type, s32 idx);                         /* spawn a task *
 
 void EndingMain(void)
 {
-    gUnk_02000028 = gLocalPlayer;
-    gUnk_02007D3C = gLinkIsMaster;
-    gUnk_0200616C = gLinkPlayerCount;
-    gUnk_02004C94 = gPlayerCount;
+    gEndingLocalPlayer = gLocalPlayer;
+    gEndingLinkIsMaster = gLinkIsMaster;
+    gEndingLinkPlayerCount = gLinkPlayerCount;
+    gEndingPlayerCount = gPlayerCount;
     if (gPrevGameState == 20) {
         LinkRequestSync();
         LinkSyncClock();

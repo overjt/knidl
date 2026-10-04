@@ -56,7 +56,7 @@ s32 sub_080b6d04(void)
         i = gSpriteCameraY;
         w = gBg2ScrollY >> 16;
         pt = gUnk_087561CC;
-        v = ((d * pt[i >> 3]) >> 1) + *(pc2 = &gUnk_02016C30);
+        v = ((d * pt[i >> 3]) >> 1) + *(pc2 = &gHBlankScrollBaseX);
         pf = &gBg2ScrollX;
         base = gHBlankScrollTable;
         pb = &gBg3ScrollX;

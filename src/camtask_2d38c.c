@@ -404,9 +404,9 @@ void MapEventStageUnlockPan(void)
     StartBg1BlockAnims();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
-    if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
+    if (CanBreakBg1Block(gHubUnlockBlocks[0], gHubUnlockBlocks[1]))
         BreakBg1BlockAtCursor();
-    if (gUnk_0200AFE0[2] != -1 && CanBreakBg1Block(gUnk_0200AFE0[2], gUnk_0200AFE0[3]))
+    if (gHubUnlockBlocks[2] != -1 && CanBreakBg1Block(gHubUnlockBlocks[2], gHubUnlockBlocks[3]))
         BreakBg1BlockAtCursor();
     while (1)
     {
@@ -589,9 +589,9 @@ void MapEventBigSwitchUnlockPan(void)
     StartBg1BlockAnims();
     TaskYieldTrampoline(1);
     gCurTask->unk20 = gCurTask->unk1C * 2;
-    if (CanBreakBg1Block(gUnk_0200AFE0[0], gUnk_0200AFE0[1]))
+    if (CanBreakBg1Block(gHubUnlockBlocks[0], gHubUnlockBlocks[1]))
         BreakBg1BlockAtCursor();
-    if (gUnk_0200AFE0[2] != -1 && CanBreakBg1Block(gUnk_0200AFE0[2], gUnk_0200AFE0[3]))
+    if (gHubUnlockBlocks[2] != -1 && CanBreakBg1Block(gHubUnlockBlocks[2], gHubUnlockBlocks[3]))
         BreakBg1BlockAtCursor();
     while (1)
     {

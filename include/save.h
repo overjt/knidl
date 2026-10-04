@@ -87,7 +87,7 @@ extern struct SaveSlot gSaveSlots[];
 extern u32 gUnk_0200E900[];
 extern struct LinkRec gLinkSaveSlots[];
 extern u8 gLinkSaveSlotPart;
-extern u32 gUnk_0200EC50;
+extern u32 gInputRecorderDemo;
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
 extern u16 gInputRecorderKeys[];

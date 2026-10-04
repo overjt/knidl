@@ -11,17 +11,17 @@
  * entry, and when the row gUnk_08743A58[Task.unk34] is non-null it runs the
  * "hit the wall" transition - sub_0806914c, then Task.unk1C = Task.hitterSlot,
  * a re-seat of the actor at gUnk_030023B4 - Task.facing * 16, and a hand-off to
- * sub_080685ec / TaskSetEntry.
+ * HoldPlayer / TaskSetEntry.
  *
- * States 0-12 follow as <body, guard> pairs.  sub_08092250 is the attack
+ * States 0-12 follow as <body, guard> pairs.  BugzzyWalk is the attack
  * chooser: it walks Task.unk6C over gUnk_08743A70[Task.unk74] rounds, and per
  * round stores |TaskGetNearestPlayerDx()| in gUnk_03001F2C, classifies it into
  * gUnk_02007D00[6] (0/1/2) against the RNG, and plays one of three yield
- * sequences; sub_080926fc is the three-phase charge, sub_08092cdc the
- * multi-hit dive, sub_080930ac the four-way finisher whose case 3 spawns the
+ * sequences; BugzzyCharge is the three-phase charge, BugzzyHop the
+ * multi-hit dive, BugzzyBackdrop the four-way finisher whose case 3 spawns the
  * actor 154 at gUnk_030023B4/gUnk_030023D4, and BugzzyDefeat the defeat
  * sequence.  sub_080934b8 is the shake helper the first states yield to and
- * sub_080934f8 is the collision probe: ten GetCollisionTileAtOffset samples along
+ * BugzzyChooseBackdrop is the collision probe: ten GetCollisionTileAtOffset samples along
  * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
@@ -29,11 +29,11 @@
  * leaf the census had missed, and BugzzyAfterimageUpdate the companion body.
  *
  * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
- * gBonkersNutFrames): sub_08093a64 installs sub_08093a98 as its body,
- * sub_08093ac8 is its one state, Task_PoppyBrosSrBomb / sub_08093c30 are the second
- * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), sub_08093ccc and
- * sub_08093dcc are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
- * every six frames, and sub_08093cf8 / Task_PoppyBrosSrBombSpark / sub_08093f00 are the
+ * gBonkersNutFrames): BonkersNutInit installs BonkersNutUpdate as its body,
+ * BonkersNutState0 is its one state, Task_PoppyBrosSrBomb / PoppyBrosSrBombInit are the second
+ * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), PoppyBrosSrBombHeld and
+ * PoppyBrosSrBombFlight are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
+ * every six frames, and PoppyBrosSrBombHeldUpdate / Task_PoppyBrosSrBombSpark / sub_08093f00 are the
  * companions that copy the boss's 16.16 position (±8 rows) and expire with it.
  */
 #include "gba/gba.h"
@@ -160,14 +160,14 @@ void BugzzyUpdate(void)
             TaskSetFrame(36);
             if (gCurTask->unk1C == gLocalPlayer)
                 PlaySfx(0x23D);
-            sub_080685ec(gCurTask->unk1C, gCurTaskIdx, 3);
+            HoldPlayer(gCurTask->unk1C, gCurTaskIdx, 3);
             ActorSetState(10);
             TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
         }
     }
 }
 
-void sub_08092198(void)
+void BugzzyState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -197,12 +197,12 @@ void sub_08092198(void)
     TaskSleepForever();
 }
 
-void sub_08092228(void)
+void BugzzyState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_08092250(void)
+void BugzzyWalk(void)
 {
     struct Task *t;
     struct Task *u;
@@ -338,7 +338,7 @@ void sub_08092250(void)
     }
     TaskSleepForever();
 }
-void sub_08092590(void)
+void BugzzyWalkUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -395,7 +395,7 @@ void BugzzySummonUpdate(void)
     if (gCurTask->state != 2)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_080926fc(void)
+void BugzzyCharge(void)
 {
     struct Task *t;
     struct Task *u;
@@ -506,13 +506,13 @@ void sub_080926fc(void)
     ActorSetState(8);
     TaskSleepForever();
 }
-void sub_080929ec(void)
+void BugzzyChargeUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092a14(void)
+void BugzzyState4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -562,13 +562,13 @@ void sub_08092a14(void)
     TaskSleepForever();
 }
 
-void sub_08092b30(void)
+void BugzzyState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092b58(void)
+void BugzzyState5(void)
 {
     struct Task *t;
 
@@ -588,13 +588,13 @@ void sub_08092b58(void)
     TaskSleepForever();
 }
 
-void sub_08092bd8(void)
+void BugzzyState5Update(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092c00(void)
+void BugzzyState6(void)
 {
     struct Task *t;
     struct Task *u;
@@ -626,12 +626,12 @@ void sub_08092c00(void)
     TaskSleepForever();
 }
 
-void sub_08092cb4(void)
+void BugzzyState6Update(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_08092cdc(void)
+void BugzzyHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -687,13 +687,13 @@ void sub_08092cdc(void)
         ActorSetState(3);
     TaskSleepForever();
 }
-void sub_08092e40(void)
+void BugzzyHopUpdate(void)
 {
     if (gCurTask->state != 7)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092e68(void)
+void BugzzyFall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -724,13 +724,13 @@ void sub_08092e68(void)
     TaskSleepForever();
 }
 
-void sub_08092f04(void)
+void BugzzyFallUpdate(void)
 {
     if (gCurTask->state != 8)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092f2c(void)
+void BugzzyBounceOffWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -764,13 +764,13 @@ void sub_08092f2c(void)
     TaskSleepForever();
 }
 
-void sub_08092ff4(void)
+void BugzzyBounceOffWallUpdate(void)
 {
     if (gCurTask->state != 9)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_0809301c(void)
+void BugzzyState11(void)
 {
     struct Task *t;
     struct Task *u;
@@ -793,12 +793,12 @@ void sub_0809301c(void)
     TaskSleepForever();
 }
 
-void sub_08093084(void)
+void BugzzyState11Update(void)
 {
     if (gCurTask->state != 11)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_080930ac(void)
+void BugzzyBackdrop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -829,7 +829,7 @@ void sub_080930ac(void)
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_080934f8();
+    BugzzyChooseBackdrop();
     s = gCurTask;
     switch (s->unk28)
     {
@@ -903,14 +903,14 @@ void sub_080930ac(void)
             CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
             TaskYieldTrampoline(8);
         } while ((s16)++gCurTask->unk6C <= 5);
-        sub_08068920(gCurTask->unk1C, 4);
+        SetHeldPlayerState(gCurTask->unk1C, 4);
         sub_080936a0();
         break;
     }
     TaskSleepForever();
 }
 
-void sub_08093354(void)
+void BugzzyBackdropUpdate(void)
 {
     struct Task *t;
 
@@ -982,7 +982,7 @@ void sub_080934b8(void)
         gUnk_02007D00[4] = 2;
     }
 }
-void sub_080934f8(void)
+void BugzzyChooseBackdrop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1066,7 +1066,7 @@ void sub_080934f8(void)
 }
 void sub_0809364c(void)
 {
-    sub_08068920(gCurTask->unk1C, 4);
+    SetHeldPlayerState(gCurTask->unk1C, 4);
     RequestScreenShake(4);
     TaskGetPosSlot(gCurTask->unk1C);
     CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
@@ -1161,7 +1161,7 @@ void sub_08093858(void)
     gCurTask->velY = 0;
 }
 
-s32 sub_08093868(void)
+s32 BugzzyReactToDamage(void)
 {
     gCurTask->unk30 = 1;
     CreateStarFlash(1, 0, 0);
@@ -1169,7 +1169,7 @@ s32 sub_08093868(void)
     return 0;
 }
 
-s32 sub_0809388c(void)
+s32 BugzzyReactToDefeat(void)
 {
     struct Task *t;
     s32 n;
@@ -1231,7 +1231,7 @@ void BugzzyAfterimageUpdate(void)
     s32 i;
 
     if ((s16)gTaskSlotTypes[i = (t = gCurTask)->parent] != -1
-     && (u = &gTasks[i])->unk76 == 5 && u->unk18 != 0)
+     && (u = &gTasks[i])->u76.subtype == 5 && u->unk18 != 0)
     {
         if (--t->unk28 == 0)
         {
@@ -1265,29 +1265,29 @@ void Task_BonkersNut(void)
     t->layer = 9;
     u = gCurTask;
     u->frameTable = gBonkersNutFrames;
-    CallTableEntry(u->variant, 1, gUnk_08744170);
+    CallTableEntry(u->variant, 1, gBonkersNutVariants);
 }
 
-void sub_08093a64(void)
+void BonkersNutInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08093a98;
+    t->updateCallback = (u32)BonkersNutUpdate;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08744174);
+    CallTableEntry(gCurTask->state, 1, gBonkersNutStates);
 }
 
-void sub_08093a98(void)
+void BonkersNutUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08744178);
+        CallTableEntry(gCurTask->updateState, 1, gBonkersNutStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08093ac8(void)
+void BonkersNutState0(void)
 {
     struct Task *t;
 
@@ -1309,7 +1309,7 @@ void sub_08093ac8(void)
     TaskSleepForever();
 }
 
-void sub_08093b80(void)
+void BonkersNutState0Update(void)
 {
     if (gCurTask->unk28 != 0)
     {
@@ -1341,41 +1341,41 @@ void Task_PoppyBrosSrBomb(void)
     v = gCurTask;
     v->u8C.actor->sfxOverride = 0x20E;
     v->onGround = 0;
-    CallTableEntry(gCurTask->variant, 2, gUnk_087441A4);
+    CallTableEntry(gCurTask->variant, 2, gPoppyBrosSrBombVariants);
 }
 
-void sub_08093c30(void)
+void PoppyBrosSrBombInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08093c7c;
+    t->updateCallback = (u32)PoppyBrosSrBombUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_087441AC);
+    CallTableEntry(gCurTask->state, 2, gPoppyBrosSrBombStates);
 }
 
-void sub_08093c60(void)
+void PoppyBrosSrBombEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_087441AC);
+    CallTableEntry(gCurTask->state, 2, gPoppyBrosSrBombStates);
 }
 
-void sub_08093c7c(void)
+void PoppyBrosSrBombUpdate(void)
 {
     switch (gCurTask->updateState)
     {
     case 0:
-        CallTableEntry(0, 2, gUnk_087441B4);
+        CallTableEntry(0, 2, gPoppyBrosSrBombStateUpdates);
         break;
     case 1:
         if (ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 2, gUnk_087441B4);
+            CallTableEntry(gCurTask->updateState, 2, gPoppyBrosSrBombStateUpdates);
         ActorCheckHits();
         ActorReactToHit();
         break;
     }
 }
 
-void sub_08093ccc(void)
+void PoppyBrosSrBombHeld(void)
 {
     gCurTask->updateState = 0;
     TaskSetFrame(4);
@@ -1386,7 +1386,7 @@ void sub_08093ccc(void)
     }
 }
 
-void sub_08093cf8(void)
+void PoppyBrosSrBombHeldUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1415,7 +1415,7 @@ void sub_08093cf8(void)
             v->pixelX = y;
             v->pixelY = v->posY >> 16;
             ActorSetState(1);
-            TaskSetEntry(sub_08093c60, gCurTaskIdx);
+            TaskSetEntry(PoppyBrosSrBombEnterState, gCurTaskIdx);
         }
         else
         {
@@ -1437,7 +1437,7 @@ void sub_08093cf8(void)
     }
 }
 
-void sub_08093dcc(void)
+void PoppyBrosSrBombFlight(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1460,7 +1460,7 @@ void sub_08093dcc(void)
     }
 }
 
-void sub_08093e54(void)
+void PoppyBrosSrBombFlightUpdate(void)
 {
 }
 

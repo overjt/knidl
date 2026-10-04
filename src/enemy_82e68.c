@@ -36,7 +36,7 @@
  *   * the class-2 task #176 one-shot `Task_FlamerFlame` and the class-3 task #10
  *     entry `Task_Noddy`, whose script continues in src/enemy_844c4.c.
  *
- * `sub_080839d0`, `sub_08083ee8`, `sub_080840d4` and `sub_0808429c` are dead
+ * `FlamerIdleEnterState`, `SirKibbleCutterEnterState`, `sub_080840d4` and `sub_0808429c` are dead
  * exports: each is a copy of its host's tail dispatch that nothing in the ROM
  * references (lesson 4.30 / 4.34, curated in tools/symdb.py).
  */
@@ -101,7 +101,7 @@ void FlamerUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08082f04(void)
+void FlamerState0(void)
 {
     struct Task *t;
     u16 v;
@@ -148,13 +148,13 @@ done:
     TaskSleepForever();
 }
 
-void sub_08082fb4(void)
+void FlamerState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_08082fdc(void)
+void FlamerState1(void)
 {
     struct Task *t;
 
@@ -171,7 +171,7 @@ void sub_08082fdc(void)
     }
 }
 
-void sub_08083020(void)
+void FlamerState1Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -294,7 +294,7 @@ void FlamerFall(void)
     TaskSleepForever();
 }
 
-void sub_0808330c(void)
+void FlamerFallUpdate(void)
 {
     u16 m;
 
@@ -312,7 +312,7 @@ void sub_0808330c(void)
     }
 }
 
-void sub_08083370(void)
+void FlamerState3(void)
 {
     struct Task *t;
 
@@ -336,13 +336,13 @@ void sub_08083370(void)
     TaskSleepForever();
 }
 
-void sub_08083400(void)
+void FlamerState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_08083428(void)
+void FlamerState4(void)
 {
     struct Task *t;
 
@@ -365,7 +365,7 @@ void sub_08083428(void)
     }
 }
 
-void sub_08083488(void)
+void FlamerState4Update(void)
 {
     struct Task *u;
     struct Task *v;
@@ -413,7 +413,7 @@ void sub_08083488(void)
     }
 }
 
-void sub_08083614(void)
+void FlamerState5(void)
 {
     s32 n;
 
@@ -469,14 +469,14 @@ void sub_08083614(void)
     TaskSleepForever();
 }
 
-void sub_0808379c(void)
+void FlamerState5Update(void)
 {
     gCurTask->unk20 = ActorTickAnim(gCurTask->unk20);
     if (gCurTask->state != 5)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_080837d0(void)
+void FlamerState6(void)
 {
     struct Task *t;
 
@@ -520,7 +520,7 @@ void sub_080837d0(void)
     TaskSleepForever();
 }
 
-void sub_080838bc(void)
+void FlamerState6Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -567,7 +567,7 @@ void FlamerIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
 }
 
-void sub_080839d0(void)
+void FlamerIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
 }
@@ -595,7 +595,7 @@ void FlamerIdle(void)
     }
 }
 
-void sub_08083a44(void)
+void FlamerIdleState0Update(void)
 {
 }
 
@@ -757,7 +757,7 @@ void sub_08083dfc(void)
 
 u8 sub_08083e5c(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -771,25 +771,25 @@ void Task_SirKibbleCutter(void)
     t->layer = 9;
     gCurTask->frameTable = gSirKibbleCutterFrames;
     PlaySfx(186);
-    CallTableEntry(gCurTask->variant, 1, gUnk_08741E64);
+    CallTableEntry(gCurTask->variant, 1, gSirKibbleCutterVariants);
 }
 
-void sub_08083eb4(void)
+void SirKibbleCutterInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08083f04;
+    gCurTask->updateCallback = (u32)SirKibbleCutterUpdate;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E68);
+    CallTableEntry(gCurTask->state, 1, gSirKibbleCutterStates);
 }
 
-void sub_08083ee8(void)
+void SirKibbleCutterEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E68);
+    CallTableEntry(gCurTask->state, 1, gSirKibbleCutterStates);
 }
 
-void sub_08083f04(void)
+void SirKibbleCutterUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741E6C);
+    CallTableEntry(gCurTask->updateState, 1, gSirKibbleCutterStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -797,7 +797,7 @@ void sub_08083f04(void)
     }
 }
 
-void sub_08083f48(void)
+void SirKibbleCutterState0(void)
 {
     struct Task *t;
 
@@ -821,7 +821,7 @@ void sub_08083f48(void)
     }
 }
 
-void sub_08083fbc(void)
+void SirKibbleCutterState0Update(void)
 {
     struct Task *t;
     struct PointPair p;
@@ -859,7 +859,7 @@ void Task_HotHeadFire(void)
     CallTableEntry(gCurTask->variant, 2, gHotHeadFireVariants);
 }
 
-void sub_080840a4(void)
+void HotHeadFireVariant0(void)
 {
     gCurTask->updateCallback = (u32)sub_080840f0;
     ActorSetState(0);
@@ -938,7 +938,7 @@ void sub_08084248(void)
 {
 }
 
-void sub_0808424c(void)
+void HotHeadFireVariant1(void)
 {
     gCurTask->updateCallback = (u32)sub_080842b8;
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)

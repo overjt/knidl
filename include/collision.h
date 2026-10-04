@@ -16,16 +16,16 @@ struct PlayerState;
    unk03, right unk04, bottom unk05), then the attack's kind and flags. */
 struct AttackBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
-    /*0x09*/ u8 unk09;
+    /*0x08*/ u8 damage;
+    /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 unk0A;
     /*0x0C*/ u16 unk0C;
     /*0x0E*/ u16 unk0E;
@@ -41,32 +41,32 @@ struct AttackBox
    then per-box bytes. */
 struct BodyBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 unk08;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
     /*0x0B*/ u8 unk0B;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x0C*/ u8 damage;
+    /*0x0D*/ u8 hitEffect;
     /*0x0E*/ u16 unk0E;
     /*0x10*/ u16 unk10;
 };
 
 struct Collider
 {
-    /*0x00*/ u8 unk00;
+    /*0x00*/ u8 slot;
     /*0x01*/ u8 filler01;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
+    /*0x02*/ u16 x;
+    /*0x04*/ u16 y;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ u8 *unk08;
+    /*0x08*/ u8 *bodyBox;
 };
 
 /* The probe result block, filled by the terrain probes and mirrored into
@@ -113,11 +113,11 @@ struct Unk03005550
 
 /* IWRAM */
 /* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
-extern s16 gUnk_03001F04;
+extern s16 gHitMidpointX;
 extern u8 gUnk_03001F24;
 extern s8 gAttackHitDuration;
 extern u8 gHitDirection;
-extern s16 gUnk_03002148;
+extern s16 gHitMidpointY;
 extern u16 gAttackY; /* actor y */
 extern u8 gHitTimer;
 extern u16 gAttackX; /* actor x */
@@ -127,32 +127,32 @@ extern u8 gHitKind; /* hit result */
 extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
 extern s16 gAttackFacing;
-extern u8 gUnk_030023A4;
-extern u8 gUnk_030023D0;
+extern u8 gHitterColliderClass;
+extern u8 gHitterColliderKind;
 extern u8 gHitterSlot;
 extern u8 gAttackLastHitter;
 extern u8 gHitEffect;
-extern u8 gUnk_03002460;
+extern u8 gAttackLastHitterClass;
 extern u8 gPlayerColliderCount; /* number of hit-list entries */
 extern s16 gAttackBoxBottom; /* attack box bottom */
-extern struct Collider gUnk_030052A0[];
+extern struct Collider gColliderClass20[];
 extern s16 gColliderTop; /* body box top */
 extern u8 gColliderPlayer; /* the current entry's player index */
-extern struct Collider gUnk_030053A0[];
+extern struct Collider gColliderClass10[];
 extern s16 gAttackBoxRight; /* attack box right */
 extern s16 gColliderBottom; /* body box bottom */
 extern u8 gColliderSlot; /* the current entry's task index */
 extern s16 gColliderX; /* the current entry's x */
 extern s16 gColliderY; /* the current entry's y */
 extern s16 gAttackBoxLeft; /* attack box left */
-extern u8 gUnk_030054A8;
+extern u8 gColliderClass10Count;
 extern struct Collider gPlayerColliders[];
 extern s16 gAttackBoxTop; /* attack box top */
 extern s16 gColliderRight; /* body box right */
 extern struct BodyBox *gColliderBodyBox; /* the current entry's body box */
 extern s16 gColliderLeft; /* body box left */
 extern struct PlayerState *gColliderPlayerState; /* the current entry's player */
-extern u8 gUnk_030054F4;
+extern u8 gColliderClass20Count;
 extern u16 gUnk_03005504;
 extern u16 gTerrainPixelIndex; /* pixel offset inside the queried cell */
 extern s16 gTerrainPrevBoxLeft; /* box left (room-relative) */
@@ -187,11 +187,11 @@ extern s16 gTerrainPrevBoxBottom; /* box bottom (room-relative) */
 
 /* ROM */
 extern u16 gUnk_08732218[];
-extern u16 gUnk_08732224[];
-extern u16 gUnk_08732230[];
+extern u16 gColliderClass10KindBits[];
+extern u16 gColliderClass20KindHitKinds[];
 extern u16 gUnk_08732242[];
 extern u32 gUnk_08732254[];
-extern u32 gUnk_08732278[];
+extern u32 gColliderClass20KindBits[];
 extern u32 gUnk_0873229C[];
 extern s8 *const gCollisionTileShapes[]; /* per-tile-set pixel attribute tables */
 extern u8 gCollisionTileSlope[];
@@ -219,12 +219,28 @@ extern u16 gUnk_08735098[];
 
 struct Task;
 
+/* The collider classes are the high nibble of a box's byte 8, which
+ * RegisterCollider (src/player_1a76c.c) sorts into three lists.  Class 0x00
+ * is the players' bodies (gPlayerColliders).  The other two are named by
+ * their class value, because no role word is true for every registrant
+ * (#155 run 4):
+ * - class 0x10 (gColliderClass10): every PlayerObject task (#6), the water
+ *   shot, the kicked ice block and the Backdrop/Throw held and thrown
+ *   enemies.  HitTestColliderClass10 assumes an owner player, skips the
+ *   last hitter's entries and damages the collider's own task;
+ * - class 0x20 (gColliderClass20): the player's own moves, Meta Knight's
+ *   attacks, the player-centred effects (spark aura, mike, crash) and one
+ *   ownerless actor, the defeat explosion.  HitTestColliderClass20 accepts
+ *   ownerless entries, never damages the collider and reacts by the box's
+ *   kind nibble (inhale, grab, slide, high fall, explosion, strike,
+ *   freeze). */
+
 /* src/hitbox_1a8c8.c */
 u8 HitTestPlayerColliders(void);
-u8 sub_0801af14(void);
+u8 HitTestColliderClass10(void);
 
 /* src/hitbox_1b24c.c */
-u8 sub_0801b24c(void);
+u8 HitTestColliderClass20(void);
 
 /* src/hitbox_1b7dc.c */
 void PlaceAttackBox(void);

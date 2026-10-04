@@ -5,7 +5,7 @@
 #include "enemy.h"
 
 /* The actor definition tables (0x0873ECEC-0x0873EE9F, issue #36 phase 2):
- * one array of struct ActorDef pointers per actor kind.  sub_08063704
+ * one array of struct ActorDef pointers per actor kind.  ActorBindDefSlot
  * (src/actor_63698.c) binds a task to its definition with
  * table[Task.unk76] picked by Task.actorKind; the lengths are the spans
  * between the consumer-referenced labels (docs/data.md 5.1).  The records

@@ -32,7 +32,7 @@
  * PlayerUpdate (Task.updateCallback) runs every frame: the attack hit-boxes
  * (TaskBreakBlocks on PlayerState.hitBoxSet), the collision registry, the
  * per-frame handler and the damage and star-block reactions;
- * sub_0803332c (Task.lateUpdateCallback) runs the 10-frame timer PlayerState.unk2B;
+ * sub_0803332c (Task.lateUpdateCallback) runs the 10-frame timer PlayerState.blockBreakCooldown;
  * sub_08033414 (called by M11's sub_0803ddc0) turns the frame's hit
  * event Task.hitKind and the status bits PlayerState.unk40 into an action
  * request, re-binds the task to PlayerStartRequestedAction when one is pending and
@@ -57,7 +57,7 @@ void Task_Player(void)
     {
         gCurTask->updateCallback = 0;
         gCurTask->taskClass = 4;
-        if (gUnk_030023B0 == 0)
+        if (gCreditsDemoSet == 0)
         {
             if (gGameState != 20)
                 sub_080b9610();
@@ -83,7 +83,7 @@ void Task_Player(void)
     else
         t->layer = 7;
     gCurTask->tileWord = (gCurTask->player->playerIndex << 13) | (gCurTask->player->playerIndex << 7);
-    gCurTask->unk76 = 0;
+    gCurTask->u76.unk76 = 0;
     gCurTask->player->requestedAction = 0;
     if (gMetaKnightmareMode == 0)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
@@ -159,8 +159,8 @@ void Task_Player(void)
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
         if (gCurTask->player->playerIndex == 0 || gUnk_020061E0 == 0)
-            sub_08071cc0(gCurTask->posX, gCurTask->posY, sub_080260b0());
-        sub_0806ee30();
+            CreateFlyingWarpStar(gCurTask->posX, gCurTask->posY, sub_080260b0());
+        PlayerWarpStarRideInit();
         TaskSleepForever();
     case 3:
         gCurTask->player->bodyBox = 0;
@@ -168,7 +168,7 @@ void Task_Player(void)
         gCurTask->player->hitBoxSet = 0;
         gPauseDisabled = 1;
         gCurTask->state = 4;
-        sub_08076318();
+        PlayerCannonInit();
         TaskSleepForever();
     case 1:
         gPauseDisabled = 1;
@@ -283,7 +283,7 @@ void PlayerUpdate(void)
     {
         gCurTask->player->blocksBroken = TaskBreakBlocks(gCurTask->player->hitBoxSet, gCurTask->player->playerIndex);
         if (gCurTask->player->blocksBroken != 0)
-            gCurTask->unk76 |= 1;
+            gCurTask->u76.unk76 |= 1;
     }
     else
     {
@@ -433,13 +433,13 @@ void sub_0803332c(void)
     t = gCurTask;
     if (t->player->requestedAction == 0)
     {
-        if (t->unk76 & 1)
+        if (t->u76.unk76 & 1)
         {
-            t->unk76 &= 0xFFFE;
-            if ((s8)t->player->unk2B == 0)
+            t->u76.unk76 &= 0xFFFE;
+            if ((s8)t->player->blockBreakCooldown == 0)
             {
                 PlayerStartOffsetScript(0);
-                gCurTask->player->unk2B = 10;
+                gCurTask->player->blockBreakCooldown = 10;
             }
         }
         p = gCurTask->player;
@@ -453,9 +453,9 @@ void sub_0803332c(void)
                 gCurTask->player->requestedAction = 18;
             }
         }
-        else if ((s8)p->unk2B != 0)
+        else if ((s8)p->blockBreakCooldown != 0)
         {
-            p->unk2B--;
+            p->blockBreakCooldown--;
         }
     }
     if (gCurTask->player->requestedAction == 0)
@@ -467,7 +467,7 @@ void sub_08033414(void)
     struct Task *t;
     struct PlayerState *p;
 
-    if (gCurTask->player->requestedAction > 31 && gUnk_02007CF0 == 1)
+    if (gCurTask->player->requestedAction > 31 && gRoomExitKind == 1)
         gCurTask->player->requestedAction = 0;
     switch (gCurTask->hitKind)
     {
@@ -524,25 +524,25 @@ void sub_08033414(void)
         {
             gCurTask->player->offsetScriptStep = 0;
             gCurTask->player->offsetScriptDelay = 1;
-            gCurTask->player->unk2B = 0;
+            gCurTask->player->blockBreakCooldown = 0;
             gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
             TaskSetSkipMask(0, gCurTaskIdx);
         }
         if (gCurTask->player->sfxPlayer != -1)
             PlayerStopSfx();
-        gCurTask->unk76 = 0;
+        gCurTask->u76.unk76 = 0;
         gCurTask->player->unk40 = 0;
         gCurTask->player->unk50 = 0;
         gCurTask->u80.attackAbility = 0;
     }
     else if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->unk76 & 2)
+        if (gCurTask->u76.unk76 & 2)
         {
             gCurTask->player->unk40 |= 2;
             gCurTask->variant = 1;
             gCurTask->player->requestedAction = 8;
-            gCurTask->unk76 &= 0xFFFD;
+            gCurTask->u76.unk76 &= 0xFFFD;
         }
         if (!(gCurTask->player->unk40 & 128))
             sub_0803ce98();

@@ -10,21 +10,21 @@
  *     `0x087432B4`/`0x087432C0`, `0x087432CC`/`0x087432D8` and the
  *     single-row `0x087432E4`/`0x087432E8`); the bodies walk the `s16[][4]`
  *     aim table `gUnk_0874325A` one row per Task.unk34 / Task.variant through
- *     `sub_0808eec4`;
+ *     `ShotzoSetRecoilVelocity`;
  *   * the class-3 hook row `0x08743518` — `sub_0808f9b8`, `sub_0808f978`,
  *     `sub_0808f9d8` and `sub_0808f9f8`;
  *   * script 5: entry `Task_Coner` (`0x087432F4`, 2 rows), rows
  *     `ConerInit` / `ConerIdleInit`, bodies `0x087432FC` (3) and
  *     `0x08743308` (1);
  *   * script 6: entry `Task_LaserBallLaser` (`0x08743600`, 1 row), row
- *     `sub_0808fc90`, bodies `0x08743604` (2), guards `0x0874360C` (2);
+ *     `LaserBallLaserInit`, bodies `0x08743604` (2), guards `0x0874360C` (2);
  *   * script 7: entry `Task_ShotzoCannonball` (`0x0874362C`, 4 identical rows), row
- *     `sub_0808fdf8`, body `0x0874363C` (`sub_0808fe88`, the class-2 wanderer
+ *     `ShotzoCannonballInit`, body `0x0874363C` (`ShotzoCannonballState0`, the class-2 wanderer
  *     that picks its heading from gTasks[Task.parent].unk34) and guard
- *     `0x08743640` (`sub_0808ffe0`).
+ *     `0x08743640` (`ShotzoCannonballState0Update`).
  *
- * `sub_0808fa04` and `sub_0808fe6c` are dead exports (twins of
- * `sub_0808f9f8` and of `sub_0808fdf8`'s cue call) that no ROM word points at;
+ * `sub_0808fa04` and `ShotzoCannonballEnterState` are dead exports (twins of
+ * `sub_0808f9f8` and of `ShotzoCannonballInit`'s cue call) that no ROM word points at;
  * both are curated in tools/symdb.py.
  */
 #include "gba/gba.h"
@@ -66,14 +66,14 @@ void ShotzoAimShoot(void)
     t->unk28 = 0;
     t->unk70 = 0;
     PlaySfx(190);
-    sub_0808efdc();
+    CreateShotzoCannonball();
     u = gCurTask;
     u->unk6E = 0;
     u->unk6C = 0;
     do
     {
         v = gCurTask;
-        sub_0808eec4(gUnk_0874325A[v->unk34][v->unk6E]);
+        ShotzoSetRecoilVelocity(gUnk_0874325A[v->unk34][v->unk6E]);
         w = gCurTask;
         w->unk6E++;
         TaskYieldTrampoline(2);
@@ -88,7 +88,7 @@ void ShotzoAimShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808f4b4(void)
+void ShotzoAimShootUpdate(void)
 {
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
@@ -108,12 +108,12 @@ void ShotzoAimFall(void)
     TaskSleepForever();
 }
 
-void sub_0808f51c(void)
+void ShotzoAimFallUpdate(void)
 {
     sub_08069888();
 }
 
-void sub_0808f528(void)
+void ShotzoFixedState0(void)
 {
     gCurTask->updateState = 0;
     TaskStopY();
@@ -132,7 +132,7 @@ void sub_0808f528(void)
     TaskSleepForever();
 }
 
-void sub_0808f578(void)
+void ShotzoFixedState0Update(void)
 {
     struct Task *t;
 
@@ -177,14 +177,14 @@ void ShotzoFixedShoot(void)
         {
             gCurTask->unk70 = 0;
             PlaySfx(190);
-            sub_0808f058();
+            CreateShotzoFixedCannonball();
             u = gCurTask;
             u->unk2C = 0;
             u->unk6E = 0;
             do
             {
                 v = gCurTask;
-                sub_0808eec4(gUnk_0874325A[v->variant][v->unk2C]);
+                ShotzoSetRecoilVelocity(gUnk_0874325A[v->variant][v->unk2C]);
                 w = gCurTask;
                 w->unk2C++;
                 TaskYieldTrampoline(2);
@@ -201,7 +201,7 @@ void ShotzoFixedShoot(void)
     }
 }
 
-void sub_0808f678(void)
+void ShotzoFixedShootUpdate(void)
 {
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
@@ -234,12 +234,12 @@ void ShotzoFixedFall(void)
     TaskSleepForever();
 }
 
-void sub_0808f71c(void)
+void ShotzoFixedFallUpdate(void)
 {
     sub_08069888();
 }
 
-void sub_0808f728(void)
+void ParasolShotzoAim(void)
 {
     struct Task *t;
 
@@ -249,18 +249,18 @@ void sub_0808f728(void)
     t->unk28 = gUnk_08743248[t->unk74];
     TaskStop();
     while (1)
-        sub_0808f0d0();
+        ShotzoAimBarrel();
 }
 
-void sub_0808f75c(void)
+void ParasolShotzoAimUpdate(void)
 {
     if (gCurTask->u8C.actor->extraFrame == -1)
     {
         if (sub_08069888() == 0)
-            sub_0808f1b4(1, ParasolShotzoEnterState);
+            ShotzoCheckShoot(1, ParasolShotzoEnterState);
     }
     else if (ActorCollideTerrain() == 0)
-        sub_0808f1b4(1, ParasolShotzoEnterState);
+        ShotzoCheckShoot(1, ParasolShotzoEnterState);
 }
 
 void ParasolShotzoShoot(void)
@@ -278,14 +278,14 @@ void ParasolShotzoShoot(void)
     t->unk28 = 0;
     t->unk70 = 0;
     PlaySfx(190);
-    sub_0808efdc();
+    CreateShotzoCannonball();
     u = gCurTask;
     u->unk6E = 0;
     u->unk6C = 0;
     do
     {
         v = gCurTask;
-        sub_0808eec4(gUnk_0874325A[v->unk34][v->unk6E]);
+        ShotzoSetRecoilVelocity(gUnk_0874325A[v->unk34][v->unk6E]);
         w = gCurTask;
         w->unk6E++;
         TaskYieldTrampoline(2);
@@ -300,7 +300,7 @@ void ParasolShotzoShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808f844(void)
+void ParasolShotzoShootUpdate(void)
 {
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
@@ -309,7 +309,7 @@ void sub_0808f844(void)
     }
 }
 
-void sub_0808f888(void)
+void ParasolShotzoState2(void)
 {
     struct Task *t;
 
@@ -325,16 +325,16 @@ void sub_0808f888(void)
     }
     else
     {
-        sub_08066ba8();
+        TaskStartParasolDrift();
         while (1)
         {
-            sub_08066bdc();
+            TaskStepParasolDrift();
             TaskYieldTrampoline(8);
         }
     }
 }
 
-void sub_0808f8dc(void)
+void ParasolShotzoState2Update(void)
 {
     ActorCollideTerrain();
 }
@@ -364,7 +364,7 @@ void ShotzoIdle(void)
     TaskSleepForever();
 }
 
-void sub_0808f974(void)
+void ShotzoIdleState0Update(void)
 {
 }
 
@@ -465,7 +465,7 @@ void ConerWalk(void)
     }
 }
 
-void sub_0808fb50(void)
+void ConerState1(void)
 {
     TaskInitWaterFlags();
     gCurTask->accelY = 128 << 5;
@@ -474,7 +474,7 @@ void sub_0808fb50(void)
     TaskSleepForever();
 }
 
-void sub_0808fb80(void)
+void ConerState2(void)
 {
     TaskStopY();
     gCurTask->velY = 128 << 7;
@@ -529,37 +529,37 @@ void Task_LaserBallLaser(void)
     gCurTask->onGround = 0;
     u = gCurTask;
     u->unk28 = 0;
-    CallTableEntry(u->variant, 1, gUnk_08743600);
+    CallTableEntry(u->variant, 1, gLaserBallLaserVariants);
 }
 
-void sub_0808fc90(void)
+void LaserBallLaserInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808fcd4;
+    gCurTask->updateCallback = (u32)LaserBallLaserUpdate;
     PlaySfx(165);
     TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
     ActorSetState(1);
-    CallTableEntry(gCurTask->state, 2, gUnk_08743604);
+    CallTableEntry(gCurTask->state, 2, gLaserBallLaserStates);
 }
 
-void sub_0808fcd4(void)
+void LaserBallLaserUpdate(void)
 {
     if (sub_08069604() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_0874360C);
+        CallTableEntry(gCurTask->updateState, 2, gLaserBallLaserStateUpdates);
     else
     {
         ActorSetState(0);
-        TaskSetEntry(sub_0808fd1c, gCurTaskIdx);
+        TaskSetEntry(LaserBallLaserEnterState, gCurTaskIdx);
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808fd1c(void)
+void LaserBallLaserEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08743604);
+    CallTableEntry(gCurTask->state, 2, gLaserBallLaserStates);
 }
 
-void sub_0808fd38(void)
+void LaserBallLaserState1(void)
 {
     gCurTask->updateState = 1;
     gCurTask->onGround = 0;
@@ -567,11 +567,11 @@ void sub_0808fd38(void)
     TaskSleepForever();
 }
 
-void sub_0808fd5c(void)
+void LaserBallLaserState1Update(void)
 {
 }
 
-void sub_0808fd60(void)
+void LaserBallLaserState0(void)
 {
     struct Task *t;
 
@@ -588,7 +588,7 @@ void sub_0808fd60(void)
     TaskSleepForever();
 }
 
-void sub_0808fdb4(void)
+void LaserBallLaserState0Update(void)
 {
 }
 
@@ -603,32 +603,32 @@ void Task_ShotzoCannonball(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gShotzoCannonballFrames;
-    CallTableEntry(u->variant, 4, gUnk_0874362C);
+    CallTableEntry(u->variant, 4, gShotzoCannonballVariants);
 }
 
-void sub_0808fdf8(void)
+void ShotzoCannonballInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808fe28;
+    gCurTask->updateCallback = (u32)ShotzoCannonballUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874363C);
+    CallTableEntry(gCurTask->state, 1, gShotzoCannonballStates);
 }
 
-void sub_0808fe28(void)
+void ShotzoCannonballUpdate(void)
 {
     if (sub_08069660() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08743640);
+        CallTableEntry(gCurTask->updateState, 1, gShotzoCannonballStateUpdates);
     else
         TaskSetEntry(ActorDie, gCurTaskIdx);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808fe6c(void)
+void ShotzoCannonballEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874363C);
+    CallTableEntry(gCurTask->state, 1, gShotzoCannonballStates);
 }
 
-void sub_0808fe88(void)
+void ShotzoCannonballState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -678,7 +678,7 @@ void sub_0808fe88(void)
     }
 }
 
-void sub_0808ffe0(void)
+void ShotzoCannonballState0Update(void)
 {
     struct Task *t;
 

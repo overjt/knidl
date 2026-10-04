@@ -84,7 +84,7 @@ void TaskFree(s32 id)
     t->unk6E = 0;
     t->unk6C = 0;
     t->player = (struct PlayerState *)(t->u8C.actor = 0);
-    t->unk76 = 0;
+    t->u76.subtype = 0;
     t->unk74 = 0;
     t->variant = 0;
     t->actorKind = 0;

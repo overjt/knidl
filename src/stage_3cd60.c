@@ -15,7 +15,7 @@ struct M11R20 { u32 w[5]; };
 
 /* Not from collision.h or player.h: this file's view of gTerrainResult and
    gUnk_020055C4 differs (lesson 3.517). */
-extern u16 gUnk_02000028;
+extern u16 gEndingLocalPlayer;
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4[];
 extern struct M11R20 gPlayerBodyBoxes[];
@@ -23,7 +23,7 @@ extern struct M11Buf gUnk_02006A80[];
 extern u16 gUnk_02007F60[];
 extern u16 gPlayerBubbleTimers[];
 extern u16 gUnk_03001490[];
-extern u8 gUnk_030023B0;
+extern u8 gCreditsDemoSet;
 extern u8 gTerrainResult[];
 extern u16 gPlayerPalettes[][16];
 extern u32 gUnk_080DC728[];
@@ -213,13 +213,13 @@ void InitPlayerState(s32 a0)
     p->unk1E = 0;
     p->pixelOffsetY = 0;
     p->pixelOffsetX = 0;
-    p->unk2B = 0;
+    p->blockBreakCooldown = 0;
     p->offsetScriptDelay = 0;
     p->offsetScriptStep = 0;
     p->sfxPlayer = 0xFFFF;
     p->sfxId = 0;
-    p->unk30 = 0;
-    p->unk31 = 0;
+    p->ownStarSwallowCount = 0;
+    p->ownStarInMouth = 0;
     p->unk36 = 0;
     p->unk37 = 0;
     p->shareTimer = 0;
@@ -235,8 +235,8 @@ void InitPlayerState(s32 a0)
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
-    p->unk46 = 0;
-    p->unk47 = 1;
+    p->savedWallSide = 0;
+    p->hiJumpsLeft = 1;
     p->unk50 = 0;
     p->atDoor = 0;
     p->wallSide = 0;
@@ -284,13 +284,13 @@ void sub_0803d1c4(s32 a0)
     p->unk1E = 0;
     p->pixelOffsetY = 0;
     p->pixelOffsetX = 0;
-    p->unk2B = 0;
+    p->blockBreakCooldown = 0;
     p->offsetScriptDelay = 0;
     p->offsetScriptStep = 0;
     p->sfxPlayer = 0xFFFF;
     p->sfxId = 0;
-    p->unk30 = 0;
-    p->unk31 = 0;
+    p->ownStarSwallowCount = 0;
+    p->ownStarInMouth = 0;
     p->unk36 = 0;
     p->shareTimer = 0;
     p->sharedMask = 0;
@@ -305,8 +305,8 @@ void sub_0803d1c4(s32 a0)
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
-    p->unk46 = 0;
-    p->unk47 = 1;
+    p->savedWallSide = 0;
+    p->hiJumpsLeft = 1;
     p->unk50 = 0;
     p->atDoor = 0;
     p->wallSide = 0;
@@ -349,7 +349,7 @@ void sub_0803d2d4(s32 a0)
     p->unk1E = 0;
     p->pixelOffsetY = 0;
     p->pixelOffsetX = 0;
-    p->unk2B = 0;
+    p->blockBreakCooldown = 0;
     p->offsetScriptDelay = 0;
     p->offsetScriptStep = 0;
     p->sfxPlayer = 0xFFFF;
@@ -367,8 +367,8 @@ void sub_0803d2d4(s32 a0)
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
-    p->unk46 = 0;
-    p->unk47 = 1;
+    p->savedWallSide = 0;
+    p->hiJumpsLeft = 1;
     p->unk50 = 0;
     p->atDoor = 0;
     p->wallSide = 0;
@@ -595,7 +595,7 @@ void sub_0803d824(void)
     idx = sub_0803d870();
     if (idx == -1)
         return;
-    RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes + (gUnk_02000028 << 5),
+    RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes + (gEndingLocalPlayer << 5),
                  (u32)gObjPalette + ((gCurTask->tileWord >> 12) << 5), 32);
 }
 
@@ -775,11 +775,11 @@ void sub_0803db74(void)
     if ((u16)(u->frame - 3821) <= 128 || (u16)(u->frame - 4525) <= 5) {
         ps2 = u->player;
         if ((ps2->unk42 & 16) == 0) {
-            if (gUnk_030023B0 == 0)
+            if (gCreditsDemoSet == 0)
                 RequestCopy(2, (u32)&gUnk_080DCA28[ps2->playerIndex * 32],
                              (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
             else
-                RequestCopy(2, (u32)&gUnk_080DCA28[gUnk_02000028 * 32],
+                RequestCopy(2, (u32)&gUnk_080DCA28[gEndingLocalPlayer * 32],
                              (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
         }
     }
@@ -840,7 +840,7 @@ void sub_0803ddc0(void)
     pal = PlayerLoadFrameTilesAndPalette(speed);
     if (gMetaKnightmareMode == 0)
     {
-        if (gUnk_030023B0 == 0)
+        if (gCreditsDemoSet == 0)
         {
             if (gPlayerCount > 1)
                 sub_0803d7c4();
@@ -2561,7 +2561,7 @@ s32 PlayerCheckDuckOrSwallow(void)
 {
     if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
     {
-        if (gCurTask->player->mouthState == 1 && gUnk_02007CF0 != 1)
+        if (gCurTask->player->mouthState == 1 && gRoomExitKind != 1)
         {
             if (((s8 *)gCurTask->player)[11] != 0)
                 gCurTask->player->requestedAction = 29;
@@ -2569,14 +2569,14 @@ s32 PlayerCheckDuckOrSwallow(void)
                 gCurTask->player->requestedAction = 15;
             else
                 gCurTask->player->requestedAction = 26;
-            if (gCurTask->player->unk31 != 0)
+            if (gCurTask->player->ownStarInMouth != 0)
             {
-                if (gCurTask->player->unk30 <= 2)
-                    gCurTask->player->unk30++;
-                gCurTask->player->unk31 = 0;
+                if (gCurTask->player->ownStarSwallowCount <= 2)
+                    gCurTask->player->ownStarSwallowCount++;
+                gCurTask->player->ownStarInMouth = 0;
             }
             else
-                gCurTask->player->unk30 = 0;
+                gCurTask->player->ownStarSwallowCount = 0;
         }
         else if ((gCurTask->waterFlags & 1) == 0)
             gCurTask->player->requestedAction = 10;
@@ -2669,7 +2669,7 @@ s32 PlayerCheckBButton(void)
     }
     if (gCurTask->player->ability == 15
      && ((gCurTask->onGround & 1) || (gCurTask->waterFlags & 1)))
-        gCurTask->player->unk47 = 1;
+        gCurTask->player->hiJumpsLeft = 1;
     if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 2) == 0)
         goto out;
     gCurTask->player->running = 0;
@@ -2685,9 +2685,9 @@ s32 PlayerCheckBButton(void)
     if (gCurTask->player->ability == 15 && (gCurTask->player->unk42 & 4) == 0
      && (gCurTask->waterFlags & 1) == 0)
     {
-        if (gCurTask->player->unk47 == 0)
+        if (gCurTask->player->hiJumpsLeft == 0)
             goto out;
-        gCurTask->player->unk47--;
+        gCurTask->player->hiJumpsLeft--;
         if (gCurTask->player->mode == 5)
             gCurTask->player->mode = 4;
     }
@@ -2706,12 +2706,12 @@ s32 PlayerCheckEnterWater(void)
 
 s32 PlayerCheckEnterDoor(void)
 {
-    if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && gUnk_02007CF0 == 0
+    if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && gRoomExitKind == 0
      && gCurTask->player->atDoor != 0
      && (gCurTask->player->unk42 & 1) == 0
      && FindDoorAt(gCurTask->pixelX, gCurTask->pixelY) != 0)
     {
-        gUnk_02007CF0 = 1;
+        gRoomExitKind = 1;
         gPauseDisabled = 1;
         gCurTask->player->unk42 |= 2;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
@@ -2729,7 +2729,7 @@ s32 PlayerCheckDropAbility(void)
      && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 4)
      && gCurTask->player->ability != 0)
     {
-        CreateAbilityStar(gCurTask->player->unk30);
+        CreateAbilityStar(gCurTask->player->ownStarSwallowCount);
         PlaySfxIfLocalPlayer(182, (u16)gCurTask->player->playerIndex);
         SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = gCurTask->player->action;
@@ -2800,7 +2800,7 @@ s32 PlayerCheckShareItem(void)
         gCurTask->player->sharedMask = 0;
         return 0;
     }
-    if (gUnk_02007CF0 != 0)
+    if (gRoomExitKind != 0)
         return 0;
     if (gActivePlayerCount == 1)
         return 0;

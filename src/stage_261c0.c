@@ -271,8 +271,8 @@ s32 CreateStageUnlockPan(void)
         }
         else
         {
-            gCameraAnchorX = gTasks[gUnk_02007D38].pixelX;
-            gCameraAnchorY = gTasks[gUnk_02007D38].pixelY;
+            gCameraAnchorX = gTasks[gCameraFocusPlayer].pixelX;
+            gCameraAnchorY = gTasks[gCameraFocusPlayer].pixelY;
         }
         if (gCameraAnchorX < gRoomBounds[0])
             gCameraAnchorX = gRoomBounds[0];

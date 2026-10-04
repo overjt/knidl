@@ -226,7 +226,7 @@ void Task_Kracko(void)
     gCurTask->layer = 10;
     t = gCurTask;
     t->frameTable = gKrackoFrames;
-    t->u8C.actor->defeatSweepCallback = (u32)sub_080a9e88;
+    t->u8C.actor->defeatSweepCallback = (u32)KrackoDefeatSweepFilter;
     t->tileWord |= 128 << 4;
     CallTableEntry(t->variant, 2, gKrackoVariants);
 }
@@ -255,14 +255,14 @@ void KrackoJrEnterState(void)
 
 void KrackoJrUpdate(void)
 {
-    sub_080a9738();
+    KrackoLookAtNearestPlayer();
     CallTableEntry(gCurTask->updateState, 2, gKrackoJrStateUpdates);
     if (gCurTask->updateState == 0)
         ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080a7e44(void)
+void KrackoJrState0(void)
 {
     gCurTask->updateState = 0;
     for (;;)
@@ -355,7 +355,7 @@ void sub_080a7e44(void)
     }
 }
 
-void sub_080a8038(void)
+void KrackoJrState0Update(void)
 {
     struct PointPair pp;
     struct Task *pt;
@@ -379,7 +379,7 @@ void sub_080a8038(void)
     pt = &gTasks[gUnk_02007D00[5]];
     gUnk_02007D00[6] = pt->onGround;
     if ((u32)(gCurTask->unk28 - 8) > 2)
-        sub_080a932c();
+        KrackoJrClampToView();
     if (!(gCurTask->unk34 & (128 << 8)))
     {
         if (gUnk_02007D00[6] != 0)
@@ -674,7 +674,7 @@ retreat2:
     }
 }
 
-void sub_080a85e4(void)
+void KrackoJrTransform(void)
 {
     struct Task *t;
 

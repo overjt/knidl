@@ -6,14 +6,14 @@
  * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
  * (ActorAttachedBackdropBounceOff / ActorAttachedThrowBounceOff set Task.velX/unk58 from the sign in unk43
  * and hand control to ActorMove), the star-ride state machine
- * (ActorAttachedThrowFlight / sub_0806c5d4 / sub_0806c770 - a nine-step animation
+ * (ActorAttachedThrowFlight / ActorAttachedThrowFlightUpdate / ActorAttachedThrowFlightLateUpdate - a nine-step animation
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
  * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
  * walk Task.frame through a gfx list (gUnk_0874C520 / gUnk_0874CBC8) before
  * TaskExitTrampoline.  CreateStarFlash and CreateDustTrail are the two helper
  * spawners that fix up Task.facing (facing) on the task they created.
  *
- * sub_0806c770 was the hardest function in M18: instruction-identical to the
+ * ActorAttachedThrowFlightLateUpdate was the hardest function in M18: instruction-identical to the
  * ROM but 34 bytes of a three-way register rotation, caused by a preference
  * exclusion in the allocator rather than a wrong shape.  Its `ka`, `kb`,
  * `tbl` and `p` locals are load-bearing - see the commit message and
@@ -56,7 +56,7 @@ void ActorAttachedBackdropBounceOff(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->updateCallback = (u32)sub_0806c30c;
+    t->updateCallback = (u32)ActorAttachedBackdropBounceOffUpdate;
     t->lateUpdateCallback = 0;
     t->unk34 = 0;
     v = t->velX >> 1;
@@ -74,10 +74,10 @@ void ActorAttachedBackdropBounceOff(void)
     TaskSleepForever();
 }
 
-void sub_0806c30c(void)
+void ActorAttachedBackdropBounceOffUpdate(void)
 {
     if (gCurTask->unk34 != 0)
-        sub_0806b8bc();
+        ActorAttachedDie();
 }
 
 void ActorAttachedPullIn(void)
@@ -87,9 +87,9 @@ void ActorAttachedPullIn(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
-    t->lateUpdateCallback = (u32)sub_0806c384;
+    t->lateUpdateCallback = (u32)ActorAttachedPullInLateUpdate;
     ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
-    sub_0806ba9c();
+    TaskSetPosRelativeToParent();
     u = gCurTask;
     u->unk18 = 0;
     u->layer = 6;
@@ -103,18 +103,18 @@ void ActorAttachedPullIn(void)
     TaskSleepForever();
 }
 
-void sub_0806c384(void)
+void ActorAttachedPullInLateUpdate(void)
 {
     struct Task *t;
 
-    sub_0806b878();
+    ActorAttachedRestorePalette();
     sub_0806b938();
     t = gCurTask;
     if (t->unk18 == 1)
-        sub_0806b8bc();
+        ActorAttachedDie();
     else if (t->state != 4)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
-    sub_0806be84();
+    ActorAttachedCheckScreenAttack();
 }
 
 void ActorAttachedThrowHeld(void)
@@ -123,8 +123,8 @@ void ActorAttachedThrowHeld(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
-    t->updateCallback = (u32)sub_0806c418;
-    t->lateUpdateCallback = (u32)sub_0806c490;
+    t->updateCallback = (u32)ActorAttachedThrowHeldUpdate;
+    t->lateUpdateCallback = (u32)ActorAttachedThrowHeldLateUpdate;
     t->posY = 0;
     t->posX = 0;
     t->unk20 = t->pixelX;
@@ -134,12 +134,12 @@ void ActorAttachedThrowHeld(void)
     TaskSleepForever();
 }
 
-void sub_0806c418(void)
+void ActorAttachedThrowHeldUpdate(void)
 {
     struct Task *t;
 
     gCurTask->health = 127;
-    sub_0806b878();
+    ActorAttachedRestorePalette();
     sub_0806b410();
     t = gCurTask;
     if (t->actorKind == 1)
@@ -148,10 +148,10 @@ void sub_0806c418(void)
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F858);
 }
 
-void sub_0806c490(void)
+void ActorAttachedThrowHeldLateUpdate(void)
 {
     sub_0806b848();
-    sub_0806be84();
+    ActorAttachedCheckScreenAttack();
 }
 
 void ActorAttachedThrowFlight(void)
@@ -165,8 +165,8 @@ void ActorAttachedThrowFlight(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->updateCallback = (u32)sub_0806c5d4;
-    t->lateUpdateCallback = (u32)sub_0806c770;
+    t->updateCallback = (u32)ActorAttachedThrowFlightUpdate;
+    t->lateUpdateCallback = (u32)ActorAttachedThrowFlightLateUpdate;
     t->layer = 11;
     if (gUnk_0300244C != 0 && gCurTask->u8C.actor->terrainBox == 0)
         ActorSetTerrainBox((u32)gUnk_0873F894);
@@ -210,7 +210,7 @@ void ActorAttachedThrowFlight(void)
     }
 }
 
-void sub_0806c5d4(void)
+void ActorAttachedThrowFlightUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -263,7 +263,7 @@ void sub_0806c5d4(void)
     }
 }
 
-void sub_0806c770(void)
+void ActorAttachedThrowFlightLateUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -371,7 +371,7 @@ void ActorAttachedThrowBounceOff(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->updateCallback = (u32)sub_0806c9e8;
+    t->updateCallback = (u32)ActorAttachedThrowBounceOffUpdate;
     t->lateUpdateCallback = 0;
     t->unk34 = 0;
     v = t->velX >> 1;
@@ -407,10 +407,10 @@ void ActorAttachedThrowBounceOff(void)
     TaskSleepForever();
 }
 
-void sub_0806c9e8(void)
+void ActorAttachedThrowBounceOffUpdate(void)
 {
     if (gCurTask->unk34 != 0)
-        sub_0806b8bc();
+        ActorAttachedDie();
 }
 
 void Task_ActorSplash(void)

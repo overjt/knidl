@@ -25,28 +25,28 @@ void PlaceAttackBox(void)
     if (gAttackBox->unk1A & 0x8000)
     {
         s32 x;
-        gAttackX = x = gAttackBox->unk00 + gAttackX;
-        gAttackBoxLeft = (x - (u16)gViewRect[0]) + gAttackBox->unk02;
-        gAttackBoxRight = (x - (u16)gViewRect[0]) + gAttackBox->unk04;
+        gAttackX = x = gAttackBox->offsetX + gAttackX;
+        gAttackBoxLeft = (x - (u16)gViewRect[0]) + gAttackBox->left;
+        gAttackBoxRight = (x - (u16)gViewRect[0]) + gAttackBox->right;
     }
     else if (gAttackFacing == 1)
     {
         s32 x;
-        gAttackX = x = gAttackBox->unk00 + gAttackX;
-        gAttackBoxLeft = (x - (u16)gViewRect[0]) + gAttackBox->unk02;
-        gAttackBoxRight = (x - (u16)gViewRect[0]) + gAttackBox->unk04;
+        gAttackX = x = gAttackBox->offsetX + gAttackX;
+        gAttackBoxLeft = (x - (u16)gViewRect[0]) + gAttackBox->left;
+        gAttackBoxRight = (x - (u16)gViewRect[0]) + gAttackBox->right;
     }
     else
     {
         s32 x;
-        gAttackX = x = -gAttackBox->unk00 + gAttackX;
-        gAttackBoxLeft = (x - (u16)gViewRect[0]) - gAttackBox->unk04;
-        gAttackBoxRight = (x - (u16)gViewRect[0]) - gAttackBox->unk02;
+        gAttackX = x = -gAttackBox->offsetX + gAttackX;
+        gAttackBoxLeft = (x - (u16)gViewRect[0]) - gAttackBox->right;
+        gAttackBoxRight = (x - (u16)gViewRect[0]) - gAttackBox->left;
     }
-    y = gAttackY + gAttackBox->unk01;
+    y = gAttackY + gAttackBox->offsetY;
     gAttackY = y;
-    gAttackBoxTop = (y - (u16)gViewRect[2]) + gAttackBox->unk03;
-    gAttackBoxBottom = (y - (u16)gViewRect[2]) + gAttackBox->unk05;
+    gAttackBoxTop = (y - (u16)gViewRect[2]) + gAttackBox->top;
+    gAttackBoxBottom = (y - (u16)gViewRect[2]) + gAttackBox->bottom;
 }
 
 /* Shared tail of the hit tests: the damage left after the body box's
@@ -54,7 +54,7 @@ void PlaceAttackBox(void)
    the angle between the entry and the actor). */
 void CalcHitDamageAndDirection(void)
 {
-    gHitHealthLeft = gAttackHealth - gColliderBodyBox->unk0C;
+    gHitHealthLeft = gAttackHealth - gColliderBodyBox->damage;
     if ((s16)gHitHealthLeft <= 0)
     {
         if (gAttackBox->unk0A & 2)
@@ -69,7 +69,7 @@ void CalcHitDamageAndDirection(void)
         gHitHealthLeft = 0;
     }
     gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
-    gHitEffect = gColliderBodyBox->unk0D;
+    gHitEffect = gColliderBodyBox->hitEffect;
 }
 
 /* Shared tail of the hit tests: copy the hit's details out - the body
@@ -77,8 +77,8 @@ void CalcHitDamageAndDirection(void)
    the midpoint between the entry and the actor. */
 void sub_0801b9e4(void)
 {
-    gUnk_030023A4 = gColliderBodyBox->unk08 & 0xF0;
-    gUnk_030023D0 = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
+    gHitterColliderClass = gColliderBodyBox->unk08 & 0xF0;
+    gHitterColliderKind = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
     gHitterSlot = gColliderSlot;
     gUnk_03001F24 = gColliderPlayer;
     if (gHitKind == 6 || gHitKind == 8)
@@ -86,6 +86,6 @@ void sub_0801b9e4(void)
     else
         gHitTimer = gAttackHitDuration;
     /* gAttackX/gAttackY are read signed here (ldrsh) */
-    gUnk_03001F04 = (gColliderX + (s16)gAttackX) >> 1;
-    gUnk_03002148 = (gColliderY + (s16)gAttackY) >> 1;
+    gHitMidpointX = (gColliderX + (s16)gAttackX) >> 1;
+    gHitMidpointY = (gColliderY + (s16)gAttackY) >> 1;
 }

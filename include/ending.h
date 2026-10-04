@@ -11,22 +11,22 @@
 struct GfxHeader;
 
 /* EWRAM */
-extern u16 gUnk_02004C94;
+extern u16 gEndingPlayerCount;
 extern s16 gGameOverTimer; /* game-over screen: frames left */
 extern s8 gGameOverCursor; /* game-over screen: cursor (continue = 0?) */
-extern u16 gUnk_0200616C;
+extern u16 gEndingLinkPlayerCount;
 extern u8 gGameOverDone; /* game-over screen: done flag */
 extern s16 gGameOverPlayerTask; /* game-over screen: the #264 variant-0 task's index */
-extern u16 gUnk_02007D3C;
+extern u16 gEndingLinkIsMaster;
 extern u8 gEndingSceneActive;
-extern s16 *gUnk_0201BFD0[];
-extern u8 gUnk_0201C19C;
-extern s32 gUnk_0201C1A0; /* credits: BG0 vertical scroll, 16.16 */
+extern s16 *gBootLogoSavedCursors[];
+extern u8 gCreditsTextPageStaged;
+extern s32 gCreditsTextScrollY; /* credits: BG0 vertical scroll, 16.16 */
 extern s32 gUnk_0201C1A4; /* credits: the score saved over the demos */
-extern u8 gUnk_0201C1A8;
-extern s32 gUnk_0201C1AC; /* credits: BG0 horizontal scroll, 16.16 */
+extern u8 gCreditsTextPage;
+extern s32 gCreditsTextScrollX; /* credits: BG0 horizontal scroll, 16.16 */
 extern u8 gUnk_0201C1B0; /* credits: current demo scene */
-extern s32 gUnk_0201C1B4; /* credits: scroll since the last page copy, 1/16 pixel */
+extern s32 gCreditsTextPageScroll; /* credits: scroll since the last page copy, 1/16 pixel */
 
 /* IWRAM */
 extern u16 gUnk_030014F0[];
@@ -62,7 +62,7 @@ extern u32 gUnk_08754914[];
 extern u32 gUnk_08754984[];
 extern u32 gUnk_087549B0[];
 extern u32 gUnk_087549FC[];
-extern u32 gUnk_087554B8[];
+extern u32 gBootLogoSprites[];
 extern u32 gUnk_087556E0[];
 extern u32 gUnk_08755708[];
 extern u32 gUnk_0875581C[];
@@ -77,8 +77,8 @@ extern void (*gEndingStarRodReturnVariants[])(void);
 extern u16 gEndingStarRodReturnObjectVariants[];
 extern u16 gUnk_08757432[];
 extern u16 gUnk_0875743E[];
-extern s16 gUnk_08757440[];
-extern s16 *gUnk_087577D8[];
+extern s16 gBootLogoObjectSeeds[];
+extern s16 *gBootLogoScripts[];
 extern u16 gUnk_08758274[];
 extern u16 gUnk_08758284[];
 extern void (*gGameOverObjectVariants[])(void);
@@ -91,9 +91,9 @@ extern void (*gUnk_08758324[])(void);
 extern void (*gUnk_0875832C[])(void);
 extern u16 gUnk_08758334[];
 extern u16 gUnk_08758374[];
-extern u32 *gUnk_087583B4[]; /* credits: the 14 compressed text pages */
-extern u32 gUnk_087583CC[][8]; /* credits: per variant, the scenes' recorded demos, 0-terminated */
-extern u16 gUnk_0875841E[][7]; /* credits: per variant, the scenes' lengths in frames */
+extern u32 *gCreditsTextPages[]; /* credits: the 14 compressed text pages */
+extern u32 gCreditsDemoRecordings[][8]; /* credits: per variant, the scenes' recorded demos, 0-terminated */
+extern u16 gCreditsDemoLengths[][7]; /* credits: per variant, the scenes' lengths in frames */
 
 
 /* Functions (defined in the files named above each group). */

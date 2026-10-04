@@ -7,10 +7,10 @@
  * actor one frame either way; sub_0806adb0 and BossDefeatScreenFlash are the two
  * DISPCNT-shadow fades (gDispCnt masked to 0xE0FF and re-ORed with the
  * BG-enable pattern, alternating a ROM window descriptor with a copy of
- * gBgPalette on the stack); sub_0806aec0 plays the six-step
+ * gBgPalette on the stack); ActorDefeatMidBoss plays the six-step
  * gUnk_0873E6A0/gUnk_0873E6D0 blend-and-offset table. sub_0806b070
  * dispatches through gUnk_0873E734[Task.unk76], sub_0806b098 is the
- * transition body proper, and sub_0806b12c is the entry point that saves and
+ * transition body proper, and ActorDefeatBoss is the entry point that saves and
  * restores Task.tileWord around it. The tail (0x0806B12C-0x0806B2E4) is the
  * small task-field setters and their gUnk_0873E7xx descriptor tables.
  */
@@ -113,7 +113,7 @@ void sub_0806ae94(void)
     TaskSetSkipMask(0, gCurTaskIdx);
 }
 
-void sub_0806aec0(void)
+void ActorDefeatMidBoss(void)
 {
     struct Task *t;
 
@@ -187,7 +187,7 @@ void sub_0806b070(void)
 {
     void (*f)(void);
 
-    f = (void (*)(void))gUnk_0873E734[gCurTask->unk76];
+    f = (void (*)(void))gUnk_0873E734[gCurTask->u76.subtype];
     if (f != NULL)
         f();
 }
@@ -210,7 +210,7 @@ void sub_0806b098(void)
 
 s32 sub_0806b0f0(void)
 {
-    switch (gCurTask->unk76)
+    switch (gCurTask->u76.subtype)
     {
     case 1:
     case 3:
@@ -228,7 +228,7 @@ s32 sub_0806b0f0(void)
     }
 }
 
-void sub_0806b12c(void)
+void ActorDefeatBoss(void)
 {
     gUnk_02007D00[9] = gCurTask->tileWord;
     HudRemoveHpBar();
@@ -237,7 +237,7 @@ void sub_0806b12c(void)
     sub_0806b098();
     gCurTask->tileWord = gUnk_02007D00[9];
     LoadStarRodPieceGfx();
-    CallTableEntry(gCurTask->unk76, 9, gUnk_0873E758);
+    CallTableEntry(gCurTask->u76.subtype, 9, gUnk_0873E758);
 }
 
 void sub_0806b178(void)
@@ -299,30 +299,30 @@ void sub_0806b230(void)
     PlaySmokeRingAnim();
 }
 
-s32 sub_0806b24c(void)
+s32 ActorDrownLand(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0806b2e4, gCurTaskIdx);
+    TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
     return 1;
 }
 
-void sub_0806b26c(void)
+void ActorDrownInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->updateCallback = (u32)sub_0806b2ac;
+    t->updateCallback = (u32)ActorDrownUpdate;
     t->health = 1;
     t->lateUpdateCallback = 0;
-    CallTableEntry(t->state, 3, gUnk_0873E78C);
+    CallTableEntry(t->state, 3, gActorDrownStates);
 }
 
-void sub_0806b2ac(void)
+void ActorDrownUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_0873E798);
+        CallTableEntry(gCurTask->updateState, 3, gActorDrownStateUpdates);
     if (gCurTask->state != 2)
     {
         ActorCheckHits();

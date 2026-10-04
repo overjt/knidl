@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x08063698 0x080653EC src/actor_63698.c --newpb
  *
  * Actor lifecycle and geometry: binding a task to its ROM descriptor
- * (sub_08063704/ActorLoadDefSlot), resetting the actor record (sub_080637E4),
+ * (ActorBindDefSlot/ActorLoadDefSlot), resetting the actor record (ActorInitFromDefSlot),
  * 16.16 position/velocity accessors, ArcTan2 aiming, rectangle and distance
  * queries, animation-script walking, and the spawn helpers
  * (sub_08064A78/CreateChildTask/CreateActor) every later module calls.
@@ -55,13 +55,13 @@ s32 sub_08063698(u32 type, s32 start)
 
 void ActorInitSlot(u32 i)
 {
-    sub_08063704(i);
-    sub_080637e4(i);
-    sub_08063a9c(i);
+    ActorBindDefSlot(i);
+    ActorInitFromDefSlot(i);
+    TaskFindNearestPlayerSlot(i);
     sub_08069ac4(i);
 }
 
-void sub_08063704(u32 i)
+void ActorBindDefSlot(u32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -72,24 +72,24 @@ void sub_08063704(u32 i)
     switch (t->actorKind)
     {
     case 0:
-        a->def = gEnemyDefs[t->unk76];
+        a->def = gEnemyDefs[t->u76.subtype];
         break;
     case 1:
     case 3:
-        a->def = gMidBossDefs[t->unk76];
+        a->def = gMidBossDefs[t->u76.subtype];
         break;
     case 2:
-        a->def = gBossDefs[t->unk76];
-        gUnk_02007F50 = t->unk76;
+        a->def = gBossDefs[t->u76.subtype];
+        gUnk_02007F50 = t->u76.subtype;
         break;
     case 4:
-        a->def = gChildActorDefs[t->unk76];
+        a->def = gChildActorDefs[t->u76.subtype];
         break;
     case 5:
-        a->def = gUnk_0873EE70[t->unk76];
+        a->def = gUnk_0873EE70[t->u76.subtype];
         break;
     default:
-        a->def = gUnk_0873EE88[t->unk76];
+        a->def = gUnk_0873EE88[t->u76.subtype];
         break;
     }
 }
@@ -107,7 +107,7 @@ void ActorResetHealth(u32 a)
     gCurTask->health = ActorComputeHealth(a);
 }
 
-void sub_080637e4(u32 i)
+void ActorInitFromDefSlot(u32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -126,7 +126,7 @@ void sub_080637e4(u32 i)
     a->animScriptPos = 0;
     a->paletteOverridden = 0;
     a->paletteLocked = 0;
-    a->unk0E = -1;
+    a->hitterParent = -1;
     a->attachedTask = -1;
     a->attachedTaskLifetime = 0xFFFE;
     a->savedPaletteBits = t->tileWord & 0xF000;
@@ -304,7 +304,7 @@ s32 sub_08063a2c(void)
 }
 
 /* Same, but over the active-player mask, relative to task `i`. */
-s32 sub_08063a9c(u32 i)
+s32 TaskFindNearestPlayerSlot(u32 i)
 {
     struct Task *t;
     struct Task *o;
@@ -584,7 +584,7 @@ void ActorDestroySlot(s32 i)
             ReleaseRoomObject(i);
             break;
         case 6:
-            if (gCurTask->unk76 != 0)
+            if (gCurTask->u76.subtype != 0)
                 ReleaseRoomObject(i);
             break;
         }
@@ -1221,13 +1221,13 @@ void ActorAwardScore(u32 arg, s32 mul)
     if (gGameState == 18)
         return;
     v = a->score;
-    if (t->actorKind == 0 && t->unk76 == 37)
+    if (t->actorKind == 0 && t->u76.subtype == 37)
     {
         k = gFrameCount & 3;
         v = gUnk_0873DF14[k];
     }
     v *= mul;
-    if (gCurTask->actorKind == 0 && gCurTask->unk76 == 40
+    if (gCurTask->actorKind == 0 && gCurTask->u76.subtype == 40
         && (u8)(a->unk04 - 2) <= 1)
         v = 200;
     AddPlayerScore(v, arg);
@@ -1264,7 +1264,7 @@ s32 sub_08064a78(struct ActorSpawn *p)
     {
         t = &gTasks[i];
         t->actorKind = 4;
-        t->unk76 = p->subtype;
+        t->u76.subtype = p->subtype;
         t->variant = p->variant;
         t->unk74 = p->spawnArg;
         t->pixelX = p->x;
@@ -1452,7 +1452,7 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
             t->actorKind = 6;
         else
             t->actorKind = 5;
-        t->unk76 = sub;
+        t->u76.subtype = sub;
         t->variant = 0;
         t->unk74 = p2;
         t->pixelX = x;
@@ -1517,7 +1517,7 @@ s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
     {
         t = &gTasks[i];
         t->actorKind = cls;
-        t->unk76 = sub;
+        t->u76.subtype = sub;
         t->variant = p3;
         t->unk74 = p4;
         t->pixelX = x;
@@ -1573,7 +1573,7 @@ s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
 
     t = gCurTask;
     a = t->u8C.actor;
-    i = CreateActor(t->actorKind, t->unk76, gTaskSlotTypes[gCurTaskIdx], p3, p4,
+    i = CreateActor(t->actorKind, t->u76.subtype, gTaskSlotTypes[gCurTaskIdx], p3, p4,
                      x, y, prio);
     if (i != -1)
     {

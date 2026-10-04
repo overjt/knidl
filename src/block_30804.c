@@ -23,7 +23,7 @@
  * against the per-collision-byte tables gUnk_0873A494/gUnk_0873A5D4 and
  * the on-screen test sub_08031310 - and latches it into the cursor cells
  * gBlockCursorX/gBlockCursorY/gBlockCursorIndex (x, y, map index),
- * gBlockCursorPlayer (the player), gUnk_02004B48, gUnk_02006174 (the kind) and
+ * gBlockCursorPlayer (the player), gBlockCursorShake, gBlockCursorAttack (the kind) and
  * gBlockCursorTile (the collision byte); BreakBlockAtCursor then takes a free
  * record, points it at the BG map entry at 0x06002000, plays the sound
  * (PlaySfx), awards points to the player (AddPlayerScore) and starts
@@ -102,8 +102,8 @@ extern u16 gBlockCursorX;               /* the block CanBreakBlock accepted: x *
 extern u16 gBlockCursorY;               /*   y */
 extern u16 gBlockCursorIndex;               /*   map index */
 extern u8 gBlockCursorPlayer;                /*   the player that hit it */
-extern u8 gUnk_02004B48;                /*   hit-box id bit 11 */
-extern u16 gUnk_02006174;               /*   the block kind (hit-box id low byte) */
+extern u8 gBlockCursorShake;                /*   hit-box id bit 11 */
+extern u16 gBlockCursorAttack;               /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile;               /*   the metatile's collision byte */
 extern s8 gUnk_0873A494[];
 extern u16 *gUnk_0873A47C[];            /* animation script per block kind */
@@ -444,8 +444,8 @@ s32 BreakBlockAt(u32 x, u32 y)
         if (gBlockLayer[gBlockCursorIndex] != 0 && !(gBlockLayer[gBlockCursorIndex] & 0x8000))
         {
             gBlockCursorTile = gRoomMap[gBlockCursorIndex].collisionTile;
-            gUnk_02004B48 = 0;
-            gUnk_02006174 = 0;
+            gBlockCursorShake = 0;
+            gBlockCursorAttack = 0;
             if (gUnk_0873A494[gBlockCursorTile] <= 4)
             {
                 while (gBreakingBlocks[i].unk6 != 0x7FFF)
@@ -486,11 +486,11 @@ s32 CanBreakBlock(s32 x, s32 y, s32 id, s32 e)
         {
             gBlockCursorTile = gRoomMap[gBlockCursorIndex].collisionTile;
             if (id & 0x800)
-                gUnk_02004B48 = 1;
+                gBlockCursorShake = 1;
             else
-                gUnk_02004B48 = 0;
-            gUnk_02006174 = id & 0xFF;
-            switch (gUnk_02006174)
+                gBlockCursorShake = 0;
+            gBlockCursorAttack = id & 0xFF;
+            switch (gBlockCursorAttack)
             {
             case 0:
             case 6:
@@ -574,7 +574,7 @@ s32 BreakBlockAtCursor(void)
     else
         b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
     gBlockLayer[gBlockCursorIndex] |= 0x8000;
-    switch (gUnk_02006174)
+    switch (gBlockCursorAttack)
     {
     case 0:
         CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
@@ -694,7 +694,7 @@ s32 BreakBlockAtCursor(void)
     default:
         return -1;
     }
-    if (gUnk_02004B48 != 0)
+    if (gBlockCursorShake != 0)
         RequestScreenShake(1);
     b->unk10 = gUnk_0873A47C[k];
     b->unk14 = 0;

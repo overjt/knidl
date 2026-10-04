@@ -6,8 +6,8 @@
  * The "carried by / riding on another task" movement block: the per-frame
  * position integrators sub_0806b410 and sub_0806b670 that walk the two stride-5
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
- * actor back to the generic task body (sub_0806b8bc), the player-record
- * bookkeeping around gPlayerStates[] (sub_0806b9dc, sub_0806bd10, sub_0806be4c),
+ * actor back to the generic task body (ActorAttachedDie), the player-record
+ * bookkeeping around gPlayerStates[] (ActorAttachedBindCarrier, ActorAttachedEnterMouth, sub_0806be4c),
  * and the class-1 task bodies ActorAttachedSwallow / ActorAttachedBackdropHeld / ActorAttachedBackdropFlight with
  * their per-frame callbacks.
  */
@@ -39,12 +39,12 @@ extern void RegisterCollider(u8 a, s16 x, s16 y, u32 *p);
    3.517). */
 extern u8 gTerrainResult[];
 
-void sub_0806b2e4(void)
+void ActorDrownEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_0873E78C);
+    CallTableEntry(gCurTask->state, 3, gActorDrownStates);
 }
 
-void sub_0806b300(void)
+void ActorDrownSink(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -53,11 +53,11 @@ void sub_0806b300(void)
     TaskSleepForever();
 }
 
-void sub_0806b330(void)
+void ActorDrownSinkUpdate(void)
 {
 }
 
-void sub_0806b334(void)
+void ActorDrownState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -67,13 +67,13 @@ void sub_0806b334(void)
     TaskSleepForever();
 }
 
-void sub_0806b368(void)
+void ActorDrownState1Update(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_0806b2e4, gCurTaskIdx);
+        TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
 }
 
-void sub_0806b390(void)
+void ActorDrownState2(void)
 {
     struct Task *t;
 
@@ -81,23 +81,23 @@ void sub_0806b390(void)
     t = gCurTask;
     t->frameTable = gUnk_0874C9D8;
     t->tileWord = 0;
-    sub_0806a0cc();
+    ActorPlayRandomDefeatSfx();
     PlayRayBurstAnim();
     ActorDestroy();
 }
 
-void sub_0806b3c0(void)
+void ActorDrownState2Update(void)
 {
 }
 
-void sub_0806b3c4(void)
+void ActorDefeatPickup(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
     t->updateCallback = 0;
-    if (t->unk76 != 0)
+    if (t->u76.subtype != 0)
         MarkRoomObjectUsed(gCurTaskIdx);
     TaskYieldTrampoline(1);
     u = gCurTask;
@@ -141,7 +141,7 @@ void sub_0806b410(void)
     {
         u->pixelX = u->unk20;
         u->pixelY = u->unk1C;
-        sub_0806b8bc();
+        ActorAttachedDie();
         return;
     }
     if ((u8)(p->unk16 + 5) <= 2)
@@ -174,7 +174,7 @@ void sub_0806b410(void)
             y = gCurTask;
             if (CanBreakBlock(y->pixelX >> 4, y->pixelY >> 4, 3, -1) == 0)
             {
-                sub_0806b8bc();
+                ActorAttachedDie();
                 return;
             }
         }
@@ -222,7 +222,7 @@ void sub_0806b670(void)
     {
         t->pixelX = t->unk20;
         t->pixelY = t->unk1C;
-        sub_0806b8bc();
+        ActorAttachedDie();
         return;
     }
     if (*(s8 *)&p->unk16 == -2)
@@ -236,7 +236,7 @@ void sub_0806b670(void)
             u = gCurTask;
             if (CanBreakBlock(u->pixelX >> 4, u->pixelY >> 4, 3, -1) == 0)
             {
-                sub_0806b8bc();
+                ActorAttachedDie();
                 return;
             }
             v = gCurTask;
@@ -288,7 +288,7 @@ void sub_0806b848(void)
     t->unk1C = t->pixelY;
 }
 
-void sub_0806b878(void)
+void ActorAttachedRestorePalette(void)
 {
     struct Task *t;
     u32 m;
@@ -312,7 +312,7 @@ void sub_0806b878(void)
     t->tileWord = n | t->u8C.actor->savedPaletteBits;
 }
 
-void sub_0806b8bc(void)
+void ActorAttachedDie(void)
 {
     struct Task *t;
     struct Task *u;
@@ -321,7 +321,7 @@ void sub_0806b8bc(void)
     t = gCurTask;
     if (t->actorKind == 0)
     {
-        v = t->unk76;
+        v = t->u76.subtype;
         if (v == 17 || v == 9 || v == 0 || v == 31 || v == 32)
             gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     }
@@ -344,7 +344,7 @@ void sub_0806b938(void)
     z = 0;
     p->heldCount = z;
     p->attachedCount = z;
-    sub_0806b8bc();
+    ActorAttachedDie();
 }
 
 void sub_0806b95c(void)
@@ -361,7 +361,7 @@ void sub_0806b95c(void)
     t = gCurTask;
     a = t->u8C.actor;
     p = t->player;
-    if (t->actorKind != 0 || t->unk76 != 40)
+    if (t->actorKind != 0 || t->u76.subtype != 40)
         p->unk09 = 1;
     u = gCurTask;
     if (u->drawCallback == (u32)sub_08065640)
@@ -378,7 +378,7 @@ void sub_0806b95c(void)
     a->unk04 = v->hitEffect;
 }
 
-void sub_0806b9dc(void)
+void ActorAttachedBindCarrier(void)
 {
     struct Task *t;
     struct Task *u;
@@ -406,7 +406,7 @@ void sub_0806ba34(void)
     v = t->tileWord;
     z = v >> 12;
     if (a->palette != 0)
-        sub_08065d44(z, t->unk76, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
+        sub_08065d44(z, t->u76.subtype, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
     else if (t->actorKind == 0 || t->actorKind == 3)
     {
         m = 0xFFF;
@@ -416,7 +416,7 @@ void sub_0806ba34(void)
     a->paletteOverridden |= 1;
 }
 
-void sub_0806ba9c(void)
+void TaskSetPosRelativeToParent(void)
 {
     struct Task *t;
     struct Task *s;
@@ -459,7 +459,7 @@ void sub_0806bb34(s32 a)
 
 s32 ActorAttachToHitter(void)
 {
-    sub_0806b9dc();
+    ActorAttachedBindCarrier();
     sub_0806ba34();
     switch (gCurTask->hitEffect)
     {
@@ -482,7 +482,7 @@ s32 ActorAttachToHitter(void)
     return 1;
 }
 
-void sub_0806bbe8(void)
+void ActorAttachedPullTowardCarrier(void)
 {
     struct Task *t;
     struct Task *u;
@@ -519,7 +519,7 @@ void sub_0806bc28(void)
     }
     else
     {
-        sub_0806bbe8();
+        ActorAttachedPullTowardCarrier();
     }
 }
 
@@ -531,7 +531,7 @@ void sub_0806bc54(void)
     t = gCurTask;
     if (t->actorKind == 1)
     {
-        n = t->unk76 * 2;
+        n = t->u76.subtype * 2;
         t->unk34 = gUnk_0873E7A4[n];
         t->unk30 = gUnk_0873E7A4[n + 1];
     }
@@ -565,18 +565,18 @@ void sub_0806bc9c(void)
     }
 }
 
-void sub_0806bcdc(void)
+void ActorAttachedSwallowStep(void)
 {
-    sub_0806bbe8();
+    ActorAttachedPullTowardCarrier();
     if (*(s16 *)&gCurTask->unk70 != 0)
         return;
     if (TaskIsParentWithinX(18) == 0)
         return;
-    sub_0806bd10();
+    ActorAttachedEnterMouth();
     gCurTask->unk70 = 1;
 }
 
-void sub_0806bd10(void)
+void ActorAttachedEnterMouth(void)
 {
     struct Task *t;
     struct Task *u;
@@ -592,7 +592,7 @@ void sub_0806bd10(void)
     p = t->player;
     if ((s8)a->def->isItem == 1)
     {
-        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->unk76 != 0)
+        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->u76.subtype != 0)
         {
             p->unk09 = 3;
             gCurTask->unk30 = *(s8 *)&p->heldCount;
@@ -609,13 +609,13 @@ void sub_0806bd10(void)
         p->heldCount++;
         p->mouthState = 1;
     }
-    p->unk31 = 0;
+    p->ownStarInMouth = 0;
     if (*(s8 *)&a->ability == 0)
         return;
     u = gCurTask;
     if (u->actorKind == 6)
     {
-        f = u->unk76;
+        f = u->u76.subtype;
         if (f == 0)
         {
             p->pendingAbility = u->unk18;
@@ -623,7 +623,7 @@ void sub_0806bd10(void)
             p->pendingAbilityUses = v->unk1C;
             w = gCurTask;
             if (w->unk20 == w->parent)
-                p->unk31 = 1;
+                p->ownStarInMouth = 1;
             if (gUnk_0300244C == 0)
                 return;
             p->unk0A = f;
@@ -685,7 +685,7 @@ void sub_0806be4c(u32 i)
     }
 }
 
-u8 sub_0806be84(void)
+u8 ActorAttachedCheckScreenAttack(void)
 {
     struct Task *t;
     u32 m;
@@ -703,7 +703,7 @@ u8 sub_0806be84(void)
         t->posY = t->pixelY << 16;
         if (t->actorKind != 1 && t->actorKind != 6)
             ActorSetHitReactions(gUnk_0873F938);
-        sub_0806b8bc();
+        ActorAttachedDie();
     }
     return gScreenAttackActive;
 }
@@ -730,9 +730,9 @@ void ActorAttachedSwallow(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
-    t->lateUpdateCallback = (u32)sub_0806bfd8;
+    t->lateUpdateCallback = (u32)ActorAttachedSwallowLateUpdate;
     ActorSetTerrainHandlers(gUnk_0873F8F4);
-    sub_0806ba9c();
+    TaskSetPosRelativeToParent();
     u = gCurTask;
     u->unk46 = 0;
     u->unk70 = 0;
@@ -740,19 +740,19 @@ void ActorAttachedSwallow(void)
     u->layer = 6;
     while (TaskIsParentWithinX(16) == 0)
     {
-        sub_0806bcdc();
+        ActorAttachedSwallowStep();
         TaskYieldTrampoline(1);
     }
     if (*(s16 *)&gCurTask->unk70 == 0)
     {
-        sub_0806bd10();
+        ActorAttachedEnterMouth();
         gCurTask->unk70 = 1;
     }
     gCurTask->unk46 = 1;
     TaskSleepForever();
 }
 
-void sub_0806bfd8(void)
+void ActorAttachedSwallowLateUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -778,10 +778,10 @@ void sub_0806bfd8(void)
     }
     if (*(s16 *)&t->unk70 != 0)
         return;
-    if (sub_0806be84() != 0)
+    if (ActorAttachedCheckScreenAttack() != 0)
         return;
     sub_0806b938();
-    sub_0806b878();
+    ActorAttachedRestorePalette();
 }
 
 void ActorAttachedBackdropHeld(void)
@@ -791,8 +791,8 @@ void ActorAttachedBackdropHeld(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
-    t->updateCallback = (u32)sub_0806c0c0;
-    t->lateUpdateCallback = (u32)sub_0806c148;
+    t->updateCallback = (u32)ActorAttachedBackdropHeldUpdate;
+    t->lateUpdateCallback = (u32)ActorAttachedBackdropHeldLateUpdate;
     t->posY = 0;
     t->posX = 0;
     t->hitKind = 0;
@@ -806,7 +806,7 @@ void ActorAttachedBackdropHeld(void)
     TaskSleepForever();
 }
 
-void sub_0806c0c0(void)
+void ActorAttachedBackdropHeldUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -814,10 +814,10 @@ void sub_0806c0c0(void)
     t = gCurTask;
     t->health = 127;
     if (t->unk18 == 1)
-        sub_0806b8bc();
+        ActorAttachedDie();
     else
         sub_0806b670();
-    sub_0806b878();
+    ActorAttachedRestorePalette();
     u = gCurTask;
     if (u->actorKind == 1)
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F844);
@@ -825,10 +825,10 @@ void sub_0806c0c0(void)
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F830);
 }
 
-void sub_0806c148(void)
+void ActorAttachedBackdropHeldLateUpdate(void)
 {
     sub_0806b848();
-    sub_0806be84();
+    ActorAttachedCheckScreenAttack();
 }
 
 void ActorAttachedBackdropFlight(void)
@@ -837,7 +837,7 @@ void ActorAttachedBackdropFlight(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->updateCallback = (u32)sub_0806c1d0;
+    t->updateCallback = (u32)ActorAttachedBackdropFlightUpdate;
     t->lateUpdateCallback = 0;
     if (gUnk_0300244C != 0 && t->u8C.actor->terrainBox == 0)
         ActorSetTerrainBox(gUnk_0873F894);
@@ -848,7 +848,7 @@ void ActorAttachedBackdropFlight(void)
     TaskSleepForever();
 }
 
-void sub_0806c1d0(void)
+void ActorAttachedBackdropFlightUpdate(void)
 {
     struct Task *t;
 

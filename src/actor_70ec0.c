@@ -133,10 +133,10 @@ void Task_WarpStar(void)
 void WarpStarUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 3, gWarpStarStateUpdates);
-    if (gUnk_02006160 == -1 || gUnk_02006160 == gCurTaskIdx)
+    if (gBoardedWarpStarSlot == -1 || gBoardedWarpStarSlot == gCurTaskIdx)
     {
         if (ActorCheckHits())
-            sub_080711d0();
+            WarpStarBoard();
     }
 }
 
@@ -145,7 +145,7 @@ void WarpStarEnterState(void)
     CallTableEntry(gCurTask->state, 3, gWarpStarStates);
 }
 
-void sub_080710fc(void)
+void WarpStarAnimateTiles(void)
 {
     u32 off;
 
@@ -173,7 +173,7 @@ void sub_080710fc(void)
     RequestCopy(1, gUnk_0873FB7C[gCurTask->unk6E] + 384, (OBJ_VRAM0 + 0xC00) + off, 128);
 }
 
-void sub_080711d0(void)
+void WarpStarBoard(void)
 {
     if (gUnk_0300244C != 0 && gPlayerHealth[gCurTask->hitterSlot] <= 0)
         return;
@@ -195,13 +195,13 @@ void sub_080711d0(void)
             t->posX = (t->pixelX - gViewRect[0]) << 16;
             t->posY = (t->pixelY - gViewRect[2]) << 16;
         }
-        f = sub_08071360(gCurTask->hitterSlot);
+        f = WarpStarCopyTilesToRider(gCurTask->hitterSlot);
         {
             struct Task *t2 = gCurTask;
 
             t2->tileWord = f;
-            gUnk_02006160 = gCurTaskIdx;
-            gUnk_02007CF0 = 2;
+            gBoardedWarpStarSlot = gCurTaskIdx;
+            gRoomExitKind = 2;
             if (t2->unk46 != -1)
             {
                 TaskFree(t2->unk46);
@@ -213,7 +213,7 @@ void sub_080711d0(void)
     gPlayerStates[gCurTask->hitterSlot].mode = 16;
     sub_08040934(gCurTask->hitterSlot);
     gCurTask->unk28++;
-    sub_08070498(gCurTask->hitterSlot, gCurTaskIdx);
+    PlayerBoardWarpStar(gCurTask->hitterSlot, gCurTaskIdx);
     CreateBurstEffect(0, 0);
     if (gLocalPlayer == gCurTask->hitterSlot)
         PlaySfx(219);
@@ -223,7 +223,7 @@ void sub_080711d0(void)
     TaskSetEntry(WarpStarEnterState, gCurTaskIdx);
 }
 
-u16 sub_08071360(s32 idx)
+u16 WarpStarCopyTilesToRider(s32 idx)
 {
     u16 v = gTasks[idx].tileWord & 0x7FF;
     u32 off = v << 5;
@@ -236,12 +236,12 @@ u16 sub_08071360(s32 idx)
     return v + 0xF00C;
 }
 
-void sub_080713f8(int x, int y, int c)
+void CreateWarpStar(int x, int y, int c)
 {
     CreateActorByKind(5, 0, 0, c, x, y, 0);
 }
 
-void sub_08071418(void)
+void WarpStarState0(void)
 {
     gCurTask->updateState = 0;
     {
@@ -305,9 +305,9 @@ void sub_08071418(void)
     }
 }
 
-void sub_0807156c(void)
+void WarpStarState0Update(void)
 {
-    if (gUnk_02007CF0 != 0 && gActivePlayerCount != 1)
+    if (gRoomExitKind != 0 && gActivePlayerCount != 1)
     {
         struct Task *t = gCurTask;
 
@@ -337,7 +337,7 @@ void sub_0807156c(void)
     }
 }
 
-void sub_0807160c(void)
+void WarpStarState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -350,9 +350,9 @@ void sub_0807160c(void)
     }
 }
 
-void sub_08071640(void)
+void WarpStarState1Update(void)
 {
-    sub_080710fc();
+    WarpStarAnimateTiles();
     if (gCurTask->unk28 == gActivePlayerCount && sub_08027750())
     {
         struct Task *t = gCurTask;
@@ -368,7 +368,7 @@ void sub_08071640(void)
     }
 }
 
-void sub_08071694(void)
+void WarpStarVanish(void)
 {
     gCurTask->updateCallback = 0;
     TaskStop();
@@ -439,7 +439,7 @@ void WarpStarStartFlight(void)
 
 void WarpStarFlightUpdate(void)
 {
-    sub_080710fc();
+    WarpStarAnimateTiles();
     CallTableEntry(gCurTask->updateState, 26, gWarpStarFlightUpdates);
 }
 
@@ -588,7 +588,7 @@ void sub_080719a0(void)
     }
 }
 
-void sub_08071bb0(u16 a)
+void WarpStarSetRiderState(u16 a)
 {
     s32 i;
 
@@ -605,12 +605,12 @@ void sub_08071bb0(u16 a)
             t->posX = t->pixelX << 16;
             t->posY = t->pixelY << 16;
             t->state = a;
-            TaskSetEntry(sub_0806ef38, i);
+            TaskSetEntry(PlayerWarpStarRideEnterState, i);
         }
     }
 }
 
-void sub_08071c38(u16 a)
+void WarpStarSetMetaKnightRiderState(u16 a)
 {
     s32 i;
 
@@ -627,12 +627,12 @@ void sub_08071c38(u16 a)
             t->posX = t->pixelX << 16;
             t->posY = t->pixelY << 16;
             t->state = a;
-            TaskSetEntry(sub_08070758, i);
+            TaskSetEntry(MetaKnightWarpStarRideEnterState, i);
         }
     }
 }
 
-void sub_08071cc0(int x, int y, int c)
+void CreateFlyingWarpStar(int x, int y, int c)
 {
     s32 id = CreateActorByKind(5, 0, 0, c, x >> 16, y >> 16, 0);
 
@@ -642,9 +642,9 @@ void sub_08071cc0(int x, int y, int c)
 
         t->state = c;
         TaskSetEntry(WarpStarStartFlight, id);
-        t->tileWord = sub_08071360(gCurTaskIdx);
+        t->tileWord = WarpStarCopyTilesToRider(gCurTaskIdx);
     }
-    gUnk_020055C0 = id;
+    gWarpStarRideSlot = id;
     DisablePause();
 }
 
@@ -730,9 +730,9 @@ void sub_08071ebc(void)
         CreateBurstEffect(0, 0);
         PlaySfx(272);
         if (gMetaKnightmareMode == 0)
-            sub_08071bb0(3);
+            WarpStarSetRiderState(3);
         else
-            sub_08071c38(3);
+            WarpStarSetMetaKnightRiderState(3);
         gUnk_020061E0 = 0;
         ActorDestroy();
     }
@@ -1476,9 +1476,9 @@ void sub_08072b00(void)
     CreateBurstEffect(0, 0);
     PlaySfx(272);
     if (gMetaKnightmareMode == 0)
-        sub_08071bb0(4);
+        WarpStarSetRiderState(4);
     else
-        sub_08071c38(4);
+        WarpStarSetMetaKnightRiderState(4);
     gUnk_020061E0 = 0;
     ActorDestroy();
 }

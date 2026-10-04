@@ -104,7 +104,7 @@ void sub_0802f718(void)
     }
     u = gCurTask;
     tbl = (u32 *)u->unk34;
-    if (gDoorStates[u->unk76].unk1 != 0)
+    if (gDoorStates[u->u76.doorIndex].unk1 != 0)
         QueueWorldSprite(u->layer, tbl[u->unk28], u->spriteFlags, u->tileWord, u->velX, u->velY);
     else
         QueueWorldSprite(u->layer, tbl[2], u->spriteFlags, u->tileWord, u->velX, u->velY);
@@ -127,7 +127,7 @@ s32 CreateWarpStarStationDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->unk18 = a;
         t->unk20 = 1;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }
@@ -186,7 +186,7 @@ void sub_0802f93c(void)
     t = gCurTask;
     if (t->unk18 != 0)
         QueueWorldSprite(t->layer + 1, gUnk_087558D0[1], t->spriteFlags, t->tileWord, t->velX, t->velY);
-    else if (gDoorStates[t->unk76].unk1 != 0)
+    else if (gDoorStates[t->u76.doorIndex].unk1 != 0)
         QueueWorldSprite(t->layer + 1, gUnk_087558D0[0], t->spriteFlags, t->tileWord, t->velX, t->velY);
     else
         QueueWorldSprite(t->layer + 1, gUnk_087558D0[2], t->spriteFlags, t->tileWord, t->velX, t->velY);
@@ -387,7 +387,7 @@ s32 CreateLevelDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->unk18 = a;
         t->unk20 = 1;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }
@@ -413,7 +413,7 @@ void DoorObjectDraw(void)
     struct Task *u;
     u32 *tbl;
 
-    if (gDoorStates[gCurTask->unk76].unk1 != 0)
+    if (gDoorStates[gCurTask->u76.doorIndex].unk1 != 0)
         QueueWorldSprite(gCurTask->layer, gUnk_087558D0[0], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);
     else
         QueueWorldSprite(gCurTask->layer, gUnk_087558D0[2], gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->velX, gCurTask->velY);

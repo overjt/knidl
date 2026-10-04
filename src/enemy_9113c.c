@@ -14,7 +14,7 @@
  * sub_08091a98 (they walk Task.frame up and down while yielding Task.unk24
  * frames per step), and waits on Task.onGround between passes.
  *
- * sub_08091b00 / sub_08091b24 / sub_08091b60 are the hit hooks (they return
+ * PoppyBrosSrReactToDamage / PoppyBrosSrReactToDefeat / sub_08091b60 are the hit hooks (they return
  * 1 when they take over the task), and Task_PoppyBrosSrHand is the class-4 companion
  * the boss spawns: it builds an ActorSpawn on the stack, then flies the task
  * along three 16.16 ramps (Task.unk28 / Task.unk30) with a wait in the middle
@@ -119,7 +119,7 @@ void PoppyBrosSrUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0809128c(void)
+void PoppyBrosSrState0(void)
 {
     struct Task *t;
     u8 zero;
@@ -142,13 +142,13 @@ void sub_0809128c(void)
     TaskSleepForever();
 }
 
-void sub_080912f8(void)
+void PoppyBrosSrState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_08091320(void)
+void PoppyBrosSrState1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -166,13 +166,13 @@ void sub_08091320(void)
     TaskSleepForever();
 }
 
-void sub_08091368(void)
+void PoppyBrosSrState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_08091390(void)
+void PoppyBrosSrState2(void)
 {
     struct Task *t;
     struct Task *v;
@@ -250,7 +250,7 @@ void sub_08091390(void)
     TaskSleepForever();
 }
 
-void sub_08091558(void)
+void PoppyBrosSrState2Update(void)
 {
     struct Task *t;
 
@@ -266,7 +266,7 @@ void sub_08091558(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_080915a4(void)
+void PoppyBrosSrState3(void)
 {
     struct Task *t;
     struct Task *u;
@@ -283,13 +283,13 @@ void sub_080915a4(void)
     TaskSleepForever();
 }
 
-void sub_080915d0(void)
+void PoppyBrosSrState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_080915f8(void)
+void PoppyBrosSrState4(void)
 {
     struct Task *t;
     u8 zero;
@@ -318,13 +318,13 @@ void sub_080915f8(void)
     TaskSleepForever();
 }
 
-void sub_080916c4(void)
+void PoppyBrosSrState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_080916ec(void)
+void PoppyBrosSrState5(void)
 {
     struct Task *t;
     struct Task *u;
@@ -363,7 +363,7 @@ void sub_080916ec(void)
     TaskSleepForever();
 }
 
-void sub_080917fc(void)
+void PoppyBrosSrState5Update(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
@@ -496,7 +496,7 @@ void sub_08091a98(void)
     TaskYieldTrampoline(y->unk24);
 }
 
-s32 sub_08091b00(void)
+s32 PoppyBrosSrReactToDamage(void)
 {
     gCurTask->unk34 = 1;
     CreateStarFlash(1, 0, -8);
@@ -504,7 +504,7 @@ s32 sub_08091b00(void)
     return 0;
 }
 
-s32 sub_08091b24(void)
+s32 PoppyBrosSrReactToDefeat(void)
 {
     TaskSetFrame(10);
     ActorSetHitReactions(gUnk_087440F4);
@@ -622,7 +622,7 @@ void PoppyBrosSrHandUpdate(void)
     {
         t = gCurTask;
         u = &gTasks[t->parent];
-        if (u->unk76 == 1 && u->unk2C == 0)
+        if (u->u76.subtype == 1 && u->unk2C == 0)
         {
             t->facing = u->facing;
             TaskUpdateFlip();
@@ -678,7 +678,7 @@ void PoppyBrosSrHeadUpdate(void)
     {
         t = gCurTask;
         u = &gTasks[t->parent];
-        if (u->unk76 == 1 && u->unk2C == 0)
+        if (u->u76.subtype == 1 && u->unk2C == 0)
         {
             t->pixelX = u->pixelX;
             t->pixelY = u->pixelY;

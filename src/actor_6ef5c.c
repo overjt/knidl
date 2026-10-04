@@ -12,22 +12,22 @@
  *                     walks a fixed run of `Task.velY = <16.16 offset>;
  *                     TaskYieldTrampoline(8);` steps with
  *                     `while (gCurTask->unk24 != K) TaskYieldTrampoline(1);`
- *                     barriers between them.  sub_0806efec, sub_0806f1e0,
- *                     sub_0806f3d8, sub_0806f638 (the 0x474 leader),
- *                     sub_0806fb0c and sub_0806fd04.
- *   <per-frame hook>  sub_0806f174, sub_0806f36c, sub_0806f5c4,
- *                     sub_0806faac and sub_0806fc98: re-aim the camera at
+ *                     barriers between them.  PlayerWarpStarRideState1, PlayerWarpStarRideState3,
+ *                     PlayerWarpStarRideState4, PlayerWarpStarRideState5 (the 0x474 leader),
+ *                     PlayerWarpStarRideState6 and PlayerWarpStarRideState7.
+ *   <per-frame hook>  PlayerWarpStarRideState1Update, PlayerWarpStarRideState3Update, PlayerWarpStarRideState4Update,
+ *                     PlayerWarpStarRideState5Update and PlayerWarpStarRideState6Update: re-aim the camera at
  *                     the owning player, run TerrainCollideBox over a ROM
  *                     descriptor, and advance Task.unk24 on the
  *                     `Task.onGround & 1` edge.
  *
- * sub_0806ef5c is the idle animation loop the sequences fall back to, and
- * sub_0806efe8 is a real no-op callback slot (a ROM-pointer entry, not
+ * PlayerWarpStarRideState2 is the idle animation loop the sequences fall back to, and
+ * PlayerWarpStarRideState2Update is a real no-op callback slot (a ROM-pointer entry, not
  * padding).
  *
  * Two symbol-DB false positives live in this range and are curated away in
- * tools/symdb.py: 0x0806F0E2 (inside sub_0806efec, whose true extent is
- * 0x0806EFEC-0x0806F174) and 0x0806FC3E (inside sub_0806fb0c,
+ * tools/symdb.py: 0x0806F0E2 (inside PlayerWarpStarRideState1, whose true extent is
+ * 0x0806EFEC-0x0806F174) and 0x0806FC3E (inside PlayerWarpStarRideState6,
  * 0x0806FB0C-0x0806FC98).  Both come from the word 0xFFFFF000 in a
  * neighbouring literal pool decoding as a bl pair.
  */
@@ -44,7 +44,7 @@
 extern void TerrainCollideBox(u8 *);
 extern void sub_080706a8(void);
 
-void sub_0806ef5c(void)
+void PlayerWarpStarRideState2(void)
 {
     s32 d, n, i;
     u8 k;
@@ -76,11 +76,11 @@ void sub_0806ef5c(void)
     TaskSleepForever();
 }
 
-void sub_0806efe8(void)
+void PlayerWarpStarRideState2Update(void)
 {
 }
 
-void sub_0806efec(void)
+void PlayerWarpStarRideState1(void)
 {
     struct PlayerState *p;
 
@@ -141,7 +141,7 @@ void sub_0806efec(void)
     TaskSleepForever();
 }
 
-void sub_0806f174(void)
+void PlayerWarpStarRideState1Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -161,7 +161,7 @@ void sub_0806f174(void)
     sub_0807042c();
 }
 
-void sub_0806f1e0(void)
+void PlayerWarpStarRideState3(void)
 {
     struct PlayerState *p;
 
@@ -222,7 +222,7 @@ void sub_0806f1e0(void)
     TaskSleepForever();
 }
 
-void sub_0806f36c(void)
+void PlayerWarpStarRideState3Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -242,7 +242,7 @@ void sub_0806f36c(void)
     sub_0807042c();
 }
 
-void sub_0806f3d8(void)
+void PlayerWarpStarRideState4(void)
 {
     struct PlayerState *p;
 
@@ -316,7 +316,7 @@ void sub_0806f3d8(void)
     TaskSleepForever();
 }
 
-void sub_0806f5c4(void)
+void PlayerWarpStarRideState4Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -339,7 +339,7 @@ void sub_0806f5c4(void)
     sub_0807042c();
 }
 
-void sub_0806f638(void)
+void PlayerWarpStarRideState5(void)
 {
     struct PlayerState *p;
     s32 k;
@@ -497,7 +497,7 @@ void sub_0806f638(void)
     TaskSleepForever();
 }
 
-void sub_0806faac(void)
+void PlayerWarpStarRideState5Update(void)
 {
     struct Task *t;
 
@@ -512,7 +512,7 @@ void sub_0806faac(void)
     }
 }
 
-void sub_0806fb0c(void)
+void PlayerWarpStarRideState6(void)
 {
     struct PlayerState *p;
 
@@ -573,7 +573,7 @@ void sub_0806fb0c(void)
     TaskSleepForever();
 }
 
-void sub_0806fc98(void)
+void PlayerWarpStarRideState6Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -593,7 +593,7 @@ void sub_0806fc98(void)
     sub_0807042c();
 }
 
-void sub_0806fd04(void)
+void PlayerWarpStarRideState7(void)
 {
     struct PlayerState *p;
     struct Task *t;

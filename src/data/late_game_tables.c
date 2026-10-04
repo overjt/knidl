@@ -53,15 +53,15 @@ u32 gPickupVariants[2] LATE_TBL(0875607c) = {
 /* ---- 0x087560A0-0x087560C0: 3 table(s), 8 function pointer(s), section .late_tbl_087560a0 ---- */
 /* include/enemy.h; CallTableEntry(i, 3, ...) in PickupInit, PickupEnterState */
 u32 gPickupStates[3] LATE_TBL(087560a0) = {
-    (u32)sub_080b4174,
-    (u32)sub_080b4194,
-    (u32)sub_080b41cc,
+    (u32)PickupState0,
+    (u32)PickupFall,
+    (u32)PickupFallInWater,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in PickupUpdate */
 u32 gPickupStateUpdates[3] LATE_TBL(087560a0) = {
-    (u32)sub_080b4190,
-    (u32)sub_080b41c8,
-    (u32)sub_080b4200,
+    (u32)PickupState0Update,
+    (u32)PickupFallUpdate,
+    (u32)PickupFallInWaterUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in PickupHeal */
 u32 gUnk_087560B8[2] LATE_TBL(087560a0) = {
@@ -70,45 +70,45 @@ u32 gUnk_087560B8[2] LATE_TBL(087560a0) = {
 };
 
 /* ---- 0x087560D0-0x087560EC: 3 table(s), 7 function pointer(s), section .late_tbl_087560d0 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in Task_AbilityStar, sub_080b4754 */
-u32 gUnk_087560D0[2] LATE_TBL(087560d0) = {
-    (u32)sub_080b4770,
-    (u32)sub_080b4794,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in Task_AbilityStar, AbilityStarEnterState */
+u32 gAbilityStarStates[2] LATE_TBL(087560d0) = {
+    (u32)AbilityStarState0,
+    (u32)AbilityStarSink,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080b4714 */
-u32 gUnk_087560D8[2] LATE_TBL(087560d0) = {
-    (u32)sub_080b4788,
-    (u32)sub_080b47c0,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in AbilityStarUpdate */
+u32 gAbilityStarStateUpdates[2] LATE_TBL(087560d0) = {
+    (u32)AbilityStarState0Update,
+    (u32)AbilityStarSinkUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_StarRodPiece */
 u32 gStarRodPieceVariants[3] LATE_TBL(087560d0) = {
-    (u32)sub_080b4a5c,
-    (u32)sub_080b4be4,
-    (u32)sub_080b4e04,
+    (u32)StarRodPieceHoverInit,
+    (u32)StarRodPieceSlideOutInit,
+    (u32)StarRodPieceVariant2,
 };
 
 /* ---- 0x08756150-0x08756178: 4 table(s), 10 function pointer(s), section .late_tbl_08756150 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080b4a5c, sub_080b4afc */
-u32 gUnk_08756150[2] LATE_TBL(08756150) = {
-    (u32)sub_080b4b18,
-    (u32)sub_080b4bb0,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in StarRodPieceHoverInit, StarRodPieceHoverEnterState */
+u32 gStarRodPieceHoverStates[2] LATE_TBL(08756150) = {
+    (u32)StarRodPieceHoverState0,
+    (u32)StarRodPieceHoverState1,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080b4a8c */
-u32 gUnk_08756158[2] LATE_TBL(08756150) = {
-    (u32)sub_080b4b94,
-    (u32)sub_080b4bd8,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in StarRodPieceHoverUpdate */
+u32 gStarRodPieceHoverStateUpdates[2] LATE_TBL(08756150) = {
+    (u32)StarRodPieceHoverState0Update,
+    (u32)StarRodPieceHoverState1Update,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_080b4be4, sub_080b4c84 */
-u32 gUnk_08756160[3] LATE_TBL(08756150) = {
-    (u32)sub_080b4ca0,
-    (u32)sub_080b4d50,
-    (u32)sub_080b4dd0,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in StarRodPieceSlideOutInit, StarRodPieceSlideOutEnterState */
+u32 gStarRodPieceSlideOutStates[3] LATE_TBL(08756150) = {
+    (u32)StarRodPieceSlideOutState0,
+    (u32)StarRodPieceSlideOutState1,
+    (u32)StarRodPieceSlideOutState2,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_080b4c14 */
-u32 gUnk_0875616C[3] LATE_TBL(08756150) = {
-    (u32)sub_080b4d1c,
-    (u32)sub_080b4db4,
-    (u32)sub_080b4df8,
+/* include/enemy.h; CallTableEntry(i, 3, ...) in StarRodPieceSlideOutUpdate */
+u32 gStarRodPieceSlideOutStateUpdates[3] LATE_TBL(08756150) = {
+    (u32)StarRodPieceSlideOutState0Update,
+    (u32)StarRodPieceSlideOutState1Update,
+    (u32)StarRodPieceSlideOutState2Update,
 };
 
 /* ---- 0x08756198-0x087561C4: 1 table(s), 11 function pointer(s), section .late_tbl_08756198 ---- */
@@ -377,22 +377,22 @@ u32 gBombRallyBombStateUpdates[3] LATE_TBL(08756780) = {
 /* ---- 0x087571F8-0x08757250: 3 table(s), 22 function pointer(s), section .late_tbl_087571f8 ---- */
 /* include/subgame.h; CallTableEntry(i, 16, ...) in BombRallyStarBurst */
 u32 gBombRallyStarBurstStates[16] LATE_TBL(087571f8) = {
-    (u32)sub_080c0de8,
+    (u32)BombRallyStarBurstState0,
     (u32)sub_080c1114,
-    (u32)sub_080c1424,
+    (u32)BombRallyStarBurstState2,
     (u32)sub_080c1114,
-    (u32)sub_080c0e88,
-    (u32)sub_080c0f54,
-    (u32)sub_080c0fe4,
-    (u32)sub_080c1068,
-    (u32)sub_080c11cc,
-    (u32)sub_080c1260,
-    (u32)sub_080c1300,
-    (u32)sub_080c1390,
-    (u32)sub_080c14b8,
-    (u32)sub_080c1558,
-    (u32)sub_080c1608,
-    (u32)sub_080c168c,
+    (u32)BombRallyStarBurstState4,
+    (u32)BombRallyStarBurstState5,
+    (u32)BombRallyStarBurstState6,
+    (u32)BombRallyStarBurstState7,
+    (u32)BombRallyStarBurstState8,
+    (u32)BombRallyStarBurstState9,
+    (u32)BombRallyStarBurstState10,
+    (u32)BombRallyStarBurstState11,
+    (u32)BombRallyStarBurstState12,
+    (u32)BombRallyStarBurstState13,
+    (u32)BombRallyStarBurstState14,
+    (u32)BombRallyStarBurstState15,
 };
 /* include/subgame.h; CallTableEntry(i, 3, ...) in BombRallyResultsPlayer, BombRallyResultsPlayerEnterState */
 u32 gBombRallyResultsPlayerStates[3] LATE_TBL(087571f8) = {

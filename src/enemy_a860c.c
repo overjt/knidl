@@ -63,7 +63,7 @@ void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
 s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
-void sub_080a860c(void)
+void KrackoJrTransformUpdate(void)
 {
     s32 n;
 

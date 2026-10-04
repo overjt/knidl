@@ -309,9 +309,9 @@ void sub_080731d0(void)
     CreateBurstEffect(0, 0);
     PlaySfx(272);
     if (gMetaKnightmareMode == 0)
-        sub_08071bb0(5);
+        WarpStarSetRiderState(5);
     else
-        sub_08071c38(5);
+        WarpStarSetMetaKnightRiderState(5);
     gUnk_020061E0 = 0;
     ActorDestroy();
 }
@@ -738,9 +738,9 @@ void sub_080739bc(void)
         CreateBurstEffect(0, 0);
         PlaySfx(272);
         if (gMetaKnightmareMode == 0)
-            sub_08071bb0(6);
+            WarpStarSetRiderState(6);
         else
-            sub_08071c38(3);
+            WarpStarSetMetaKnightRiderState(3);
         gUnk_020061E0 = 0;
         ActorDestroy();
     }
@@ -978,9 +978,9 @@ void sub_08073e80(void)
         CreateBurstEffect(0, 0);
         PlaySfx(272);
         if (gMetaKnightmareMode == 0)
-            sub_08071bb0(3);
+            WarpStarSetRiderState(3);
         else
-            sub_08071c38(3);
+            WarpStarSetMetaKnightRiderState(3);
         gUnk_020061E0 = 0;
         ActorDestroy();
     }
@@ -1229,7 +1229,7 @@ void sub_080740bc(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     PlayBgm(34);
-    sub_08075290(11);
+    CreateNightmarePowerOrbEscapeStars(11);
     gCurTask->velX = -0x2000;
     TaskYieldTrampoline(8);
     {
@@ -1263,7 +1263,7 @@ void sub_080740bc(void)
     if (gMetaKnightmareMode != 0)
         while (1)
             ;
-    sub_08071bb0(7);
+    WarpStarSetRiderState(7);
     gUnk_020061E0 = 0;
     ActorDestroy();
 }
@@ -1331,9 +1331,9 @@ void sub_0807447c(void)
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         if (gMetaKnightmareMode == 0)
-            sub_08071bb0(1);
+            WarpStarSetRiderState(1);
         else
-            sub_08071c38(1);
+            WarpStarSetMetaKnightRiderState(1);
         gUnk_020061E0 = 0;
         ActorDestroy();
     }
