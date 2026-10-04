@@ -4,7 +4,7 @@
 
 /* The actor records of seg 18 (0x0873F2B8-0x0874C3CF, issue #36 phase 2
  * run 3): 136 struct ActorDef (0x2C bytes) and 43 struct ActorAux (8 bytes)
- * records in 34 runs, each run in address order.  sub_080637e4 and
+ * records in 34 runs, each run in address order.  ActorInitFromDefSlot and
  * ActorLoadDefSlot (src/actor_63698.c) read an ActorDef when a task binds
  * it (Actor.def); ActorDef.unk10 becomes Actor.unk60, the ActorAux whose
  * altAttackBox becomes gAttackBox (src/actor_673ec.c).  The six pointer

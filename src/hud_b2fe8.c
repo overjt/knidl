@@ -1930,7 +1930,7 @@ void sub_080b4e04(void)
     TaskSleepForever();
 }
 
-void sub_080b4e40(void)
+void InitRoomObjects(void)
 {
     u8 *p1;
     u8 *q;

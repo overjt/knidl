@@ -240,13 +240,13 @@ void sub_080b4db4(void);
 void sub_080b4dd0(void);
 void sub_080b4df8(void);
 void sub_080b4e04(void);
-void sub_080b4e40(void);
+void InitRoomObjects(void);
 
 /* src/hud_b4ea8.c */
 void LoadRoomObjectGfx(void);
 
 /* src/hud_b5024.c */
-void sub_080b5024(void);
+void SpawnRoomObjectsOnLoad(void);
 s32 SpawnRoomObject(s32 i);
 void MarkRoomObjectUsed(s32 a);
 void TransferRoomObject(s32 a, s32 b);

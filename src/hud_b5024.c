@@ -121,7 +121,7 @@ s32 sub_080b5a94();
 s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
-void sub_080b5024(void)
+void SpawnRoomObjectsOnLoad(void)
 {
     struct Unk020055D8Entry *e;
     struct Unk0873EEA0 *d;

@@ -381,7 +381,7 @@ void LoadCreditsRoom(void)
     CalcBg3Parallax();
     CalcRoomBounds();
     InitRoomBgLayout();
-    sub_080b4e40();
+    InitRoomObjects();
     SetRoomEntryPoint();
     LoadRoomBgAnims();
     InitDoors();
@@ -421,7 +421,7 @@ void LoadCreditsRoom(void)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }
-    sub_080b5024();
+    SpawnRoomObjectsOnLoad();
     if (gPlayerCount == 1)
         CameraResetBounds();
     else

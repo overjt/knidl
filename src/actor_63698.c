@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x08063698 0x080653EC src/actor_63698.c --newpb
  *
  * Actor lifecycle and geometry: binding a task to its ROM descriptor
- * (sub_08063704/ActorLoadDefSlot), resetting the actor record (sub_080637E4),
+ * (ActorBindDefSlot/ActorLoadDefSlot), resetting the actor record (ActorInitFromDefSlot),
  * 16.16 position/velocity accessors, ArcTan2 aiming, rectangle and distance
  * queries, animation-script walking, and the spawn helpers
  * (sub_08064A78/CreateChildTask/CreateActor) every later module calls.
@@ -55,13 +55,13 @@ s32 sub_08063698(u32 type, s32 start)
 
 void ActorInitSlot(u32 i)
 {
-    sub_08063704(i);
-    sub_080637e4(i);
-    sub_08063a9c(i);
+    ActorBindDefSlot(i);
+    ActorInitFromDefSlot(i);
+    TaskFindNearestPlayerSlot(i);
     sub_08069ac4(i);
 }
 
-void sub_08063704(u32 i)
+void ActorBindDefSlot(u32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -107,7 +107,7 @@ void ActorResetHealth(u32 a)
     gCurTask->health = ActorComputeHealth(a);
 }
 
-void sub_080637e4(u32 i)
+void ActorInitFromDefSlot(u32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -304,7 +304,7 @@ s32 sub_08063a2c(void)
 }
 
 /* Same, but over the active-player mask, relative to task `i`. */
-s32 sub_08063a9c(u32 i)
+s32 TaskFindNearestPlayerSlot(u32 i)
 {
     struct Task *t;
     struct Task *o;

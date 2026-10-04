@@ -3961,7 +3961,7 @@ SECTIONS
     ASSERT(!MATCHING || gActorDrownTerrainHandlers == 0x0873F910, "MATCHING: actor_tbl_0873f910 moved")
     ASSERT(!MATCHING || gUnk_0873F92C == 0x0873F92C, "MATCHING: actor_tbl_0873f92c moved")
     ASSERT(!MATCHING || actor_rodata_0873f92c == 0x0873F950, "MATCHING: actor_rodata_0873f92c moved")
-    ASSERT(!MATCHING || gUnk_0873FB04 == 0x0873FB04, "MATCHING: actor_tbl_0873fb04 moved")
+    ASSERT(!MATCHING || gPlayerWarpStarRideStates == 0x0873FB04, "MATCHING: actor_tbl_0873fb04 moved")
     ASSERT(!MATCHING || actor_rodata_0873fb7c == 0x0873FB7C, "MATCHING: actor_rodata_0873fb7c moved")
     ASSERT(!MATCHING || gWarpStarStates == 0x0873FBAC, "MATCHING: actor_tbl_0873fbac moved")
     ASSERT(!MATCHING || actor_rodata_0873fcf8 == 0x0873FCF8, "MATCHING: actor_rodata_0873fcf8 moved")

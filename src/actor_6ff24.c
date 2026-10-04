@@ -20,7 +20,7 @@
  * finally wait for the helper to reach unk24 == 2.
  *
  * Also here: sub_0806ff7c, the OAM draw routine for the family, and
- * sub_08070498 / sub_08070648, the entry points that re-seat the running
+ * PlayerBoardWarpStar / MetaKnightWarpStarRideInit, the entry points that re-seat the running
  * task from the player record (Task.player) and the id at 0x020055C0.
  *
  * NOTE for the coordinator - symbols.csv corrections this range needs:
@@ -354,7 +354,7 @@ void TaskCopyParentPixelPos(void)
     t->pixelY = gTasks[t->parent].pixelY;
 }
 
-void sub_08070498(u32 a, s32 b)
+void PlayerBoardWarpStar(u32 a, s32 b)
 {
     struct PlayerState *p;
     struct Task *e;
@@ -413,7 +413,7 @@ void sub_08070498(u32 a, s32 b)
         p->unk37 = 0;
         e->spriteFlags &= 0x7FFF;
     }
-    TaskSetEntry((u32)sub_0806ee30, a);
+    TaskSetEntry((u32)PlayerWarpStarRideInit, a);
 }
 
 void sub_08070614(u32 a)
@@ -427,7 +427,7 @@ void sub_08070614(u32 a)
     sub_08040808(a);
 }
 
-void sub_08070648(void)
+void MetaKnightWarpStarRideInit(void)
 {
     struct Task *t;
     struct Task *u;
@@ -437,7 +437,7 @@ void sub_08070648(void)
 
     t = gCurTask;
     t->drawCallback = (u32)sub_08070ec0;
-    t->updateCallback = (u32)sub_0807073c;
+    t->updateCallback = (u32)MetaKnightWarpStarRideUpdate;
     t->lateUpdateCallback = 0;
     t->taskClass = 4;
     TaskStop();
@@ -456,21 +456,21 @@ void sub_08070648(void)
         v->facing = gUnk_0873FAE8[gTasks[i].unk74];
     w = gCurTask;
     w->state = 2;
-    CallTableEntry(gCurTask->state, 7, gUnk_0873FB44);
+    CallTableEntry(gCurTask->state, 7, gMetaKnightWarpStarRideStates);
 }
 
-void sub_0807073c(void)
+void MetaKnightWarpStarRideUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 7, gUnk_0873FB60);
+    CallTableEntry(gCurTask->updateState, 7, gMetaKnightWarpStarRideStateUpdates);
 }
 
-void sub_08070758(void)
+void MetaKnightWarpStarRideEnterState(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMove;
-    CallTableEntry(t->state, 7, gUnk_0873FB44);
+    CallTableEntry(t->state, 7, gMetaKnightWarpStarRideStates);
 }
 
 void sub_0807077c(void)

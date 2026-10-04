@@ -11,7 +11,7 @@
 
 struct ActorDef;
 
-/* The 0x0824A9E4 record sub_08070648 uploads from (two tile-count halfwords
+/* The 0x0824A9E4 record MetaKnightWarpStarRideInit uploads from (two tile-count halfwords
    plus two source pointers). */
 struct GfxSrc
 {
@@ -207,10 +207,10 @@ extern struct ActorVt gUnk_0873F938[];
 extern s16 *gUnk_0873F950[];
 extern u16 gUnk_0873FAB4[];
 extern u8 gUnk_0873FAE8[];
-extern u32 gUnk_0873FB04[];
-extern u32 gUnk_0873FB24[];
-extern u32 gUnk_0873FB44[];
-extern u32 gUnk_0873FB60[];
+extern u32 gPlayerWarpStarRideStates[];
+extern u32 gPlayerWarpStarRideStateUpdates[];
+extern u32 gMetaKnightWarpStarRideStates[];
+extern u32 gMetaKnightWarpStarRideStateUpdates[];
 extern struct ActorDef gPengyDef;
 extern struct ActorDef gBomberDef;
 extern struct ActorDef gSparkyDef;
@@ -334,14 +334,14 @@ void sub_08062f88(void);
 /* src/actor_63698.c */
 s32 sub_08063698(u32 type, s32 start);
 void ActorInitSlot(u32 i);
-void sub_08063704(u32 i);
+void ActorBindDefSlot(u32 i);
 void ActorResetHealthSlot(u32 i);
-void sub_080637e4(u32 i);
+void ActorInitFromDefSlot(u32 i);
 void ActorLoadDefSlot(u32 i, struct ActorDef *d);
 void ActorSetAttackBoxSlot(u32 i, u32 v);
 void sub_08063a14(u32 i, u32 v);
 s32 sub_08063a2c(void);
-s32 sub_08063a9c(u32 i);
+s32 TaskFindNearestPlayerSlot(u32 i);
 s32 TaskFindNearestPlayer(void);
 s32 GetDistSq(struct PointPair *p);
 s32 GetTaskDistSq(u32 i, u32 j);
@@ -585,7 +585,7 @@ void ActorDefeatBurning(void);
 void ActorDefeatBurningUpdate(void);
 void ActorDefeatShocked(void);
 void ActorDefeatShockedUpdate(void);
-void sub_0806a5a0(void);
+void ActorDefeatFrozenBlink(void);
 void ActorFreezeIntoIceBlock(void);
 void sub_0806a6a0(void);
 void sub_0806a6e0(void);
@@ -646,7 +646,7 @@ void sub_0806b40c(void);
 void sub_0806b410(void);
 void sub_0806b670(void);
 void sub_0806b848(void);
-void sub_0806b878(void);
+void ActorAttachedRestorePalette(void);
 void ActorAttachedDie(void);
 void sub_0806b938(void);
 void sub_0806b95c(void);
@@ -667,26 +667,26 @@ u8 ActorAttachedCheckScreenAttack(void);
 void ActorAttachedEnterState(void);
 void ActorAttachedRunState(void);
 void ActorAttachedSwallow(void);
-void sub_0806bfd8(void);
+void ActorAttachedSwallowLateUpdate(void);
 void ActorAttachedBackdropHeld(void);
-void sub_0806c0c0(void);
-void sub_0806c148(void);
+void ActorAttachedBackdropHeldUpdate(void);
+void ActorAttachedBackdropHeldLateUpdate(void);
 void ActorAttachedBackdropFlight(void);
-void sub_0806c1d0(void);
+void ActorAttachedBackdropFlightUpdate(void);
 
 /* src/actor_6c2a4.c */
 void ActorAttachedBackdropBounceOff(void);
-void sub_0806c30c(void);
+void ActorAttachedBackdropBounceOffUpdate(void);
 void ActorAttachedPullIn(void);
-void sub_0806c384(void);
+void ActorAttachedPullInLateUpdate(void);
 void ActorAttachedThrowHeld(void);
-void sub_0806c418(void);
-void sub_0806c490(void);
+void ActorAttachedThrowHeldUpdate(void);
+void ActorAttachedThrowHeldLateUpdate(void);
 void ActorAttachedThrowFlight(void);
-void sub_0806c5d4(void);
-void sub_0806c770(void);
+void ActorAttachedThrowFlightUpdate(void);
+void ActorAttachedThrowFlightLateUpdate(void);
 void ActorAttachedThrowBounceOff(void);
-void sub_0806c9e8(void);
+void ActorAttachedThrowBounceOffUpdate(void);
 void Task_ActorSplash(void);
 s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 void Task_StarFlash(void);
@@ -759,14 +759,14 @@ void sub_0806ea70(void);
 void sub_0806eb04(void);
 void sub_0806eba4(void);
 void Task_IceBlock(void);
-void sub_0806ec88(void);
-void sub_0806ed28(void);
+void IceBlockUpdate(void);
+void IceBlockBlink(void);
 void PlaySmokeRingAnim(void);
 void Task_SmokeRing(void);
 void sub_0806ee2c(void);
-void sub_0806ee30(void);
-void sub_0806ef1c(void);
-void sub_0806ef38(void);
+void PlayerWarpStarRideInit(void);
+void PlayerWarpStarRideUpdate(void);
+void PlayerWarpStarRideEnterState(void);
 
 /* src/actor_6ef5c.c */
 void sub_0806ef5c(void);
@@ -797,11 +797,11 @@ void sub_08070334(void);
 void sub_080703a8(void);
 void sub_0807042c(void);
 void TaskCopyParentPixelPos(void);
-void sub_08070498(u32 a, s32 b);
+void PlayerBoardWarpStar(u32 a, s32 b);
 void sub_08070614(u32 a);
-void sub_08070648(void);
-void sub_0807073c(void);
-void sub_08070758(void);
+void MetaKnightWarpStarRideInit(void);
+void MetaKnightWarpStarRideUpdate(void);
+void MetaKnightWarpStarRideEnterState(void);
 void sub_0807077c(void);
 void sub_08070798(void);
 void sub_0807079c(void);

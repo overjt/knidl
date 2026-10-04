@@ -194,7 +194,7 @@ void ActorDefeatShockedUpdate(void)
     ActorDefeatBlinkAndBurst();
 }
 
-void sub_0806a5a0(void)
+void ActorDefeatFrozenBlink(void)
 {
     struct Task *t;
     struct Task *u;
@@ -349,7 +349,7 @@ void ActorDefeatFrozenUpdate(void)
 
     gCurTask->onGround = 0;
     CallTableEntry(gCurTask->updateState, 3, gActorDefeatFrozenStateUpdates);
-    sub_0806a5a0();
+    ActorDefeatFrozenBlink();
     t = gCurTask;
     if (t->state == 1)
     {

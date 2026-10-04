@@ -83,7 +83,7 @@ struct Task
     /*0x7D*/ u8 hitDirection;
     /*0x7E*/ s8 hitterSlot;
     /*0x7F*/ s8 hitterPlayer;
-    /* An actor's nearest player (sub_08063a9c, TaskFindNearestPlayer); for
+    /* An actor's nearest player (TaskFindNearestPlayerSlot, TaskFindNearestPlayer); for
        the player and its objects and effects (#5-#7) the ability of the
        running attack, which ActorPlayHitSfx reads off the hitter. */
     /* packed: agbcc pads every union to 4 bytes (lesson 3.522). */
@@ -97,7 +97,7 @@ struct Task
     /*0x86*/ u16 unk86;
     /* The record of the player the task belongs to: Task_Player binds
        &gPlayerStates[slot] and the player's objects and effects copy it.
-       For actors, ActorInitSlot's sub_08063a9c and TaskFindNearestPlayer
+       For actors, ActorInitSlot's TaskFindNearestPlayerSlot and TaskFindNearestPlayer
        store the nearest player's struct Task * here instead, which no actor
        reads back; ActorAttachToHitter rebinds it to the hitter's record. */
     /*0x88*/ struct PlayerState *player;

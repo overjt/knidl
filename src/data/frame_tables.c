@@ -2968,7 +2968,7 @@ u32 gBlockStarFrames[] FRAME_TABLE = {
     (u32)gUnk_080D70E8,
 };
 
-/* gUnk_0874CB7C.  Consumers: sub_0806a5a0 (src/actor_6a344.c:234),
+/* gUnk_0874CB7C.  Consumers: ActorDefeatFrozenBlink (src/actor_6a344.c:234),
  * Task_IceBlock (src/actor_6e0f0.c:553), Task_MrFrostyIceCube
  * (src/enemy_99b20.c:1678).  5 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
@@ -3086,7 +3086,7 @@ u32 gUnk_0874CC60[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CC84.  Consumers: Task_TrailFlash (src/actor_6d22c.c:645),
- * sub_0806c770 (src/actor_6c2a4.c:353).  8 words, OAM template streams;
+ * ActorAttachedThrowFlightLateUpdate (src/actor_6c2a4.c:353).  8 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CC84-0x0874CCA4).  Declared include/actor.h:289. */
 u32 gUnk_0874CC84[] FRAME_TABLE = {
@@ -3417,7 +3417,7 @@ u32 gUnk_0874CF94[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CFEC.  Consumers: Task_Player (src/player_32688.c:80),
- * sub_0806ee30 (src/actor_6e0f0.c:670), sub_0805d994
+ * PlayerWarpStarRideInit (src/actor_6e0f0.c:670), sub_0805d994
  * (src/effect_5afac.c:1665) and 2 more.  4713 words, the player's struct
  * TaskGfx records (tagged 20-byte variant); extent: the span to the next
  * label, every word such a target (pointer_tables 0x0874CFEC-0x08751990).
@@ -10074,7 +10074,7 @@ u32 gStakeFrames[] FRAME_TABLE = {
 
 /* gWarpStarFrames.  Consumers: Task_WarpStarSparkle
  * (src/actor_6e0f0.c:208), Task_WarpStar (src/actor_70ec0.c:126),
- * sub_080710fc (src/actor_70ec0.c:155) and 1 more.  15 words, OAM template
+ * WarpStarAnimateTiles (src/actor_70ec0.c:155) and 1 more.  15 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x08752D50-0x08752D8C).  Declared include/actor.h:294. */
 u32 gWarpStarFrames[] FRAME_TABLE = {
@@ -10095,7 +10095,7 @@ u32 gWarpStarFrames[] FRAME_TABLE = {
     (u32)gUnk_0825D2A8,
 };
 
-/* gUnk_08752D8C.  Consumer: sub_08071694 (src/actor_70ec0.c:378).  11
+/* gUnk_08752D8C.  Consumer: WarpStarVanish (src/actor_70ec0.c:378).  11
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08752D8C-0x08752DB8).  Declared
  * include/cutscene.h:119. */

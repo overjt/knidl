@@ -46,8 +46,8 @@
 #define ACTOR_TBL(addr) __attribute__((section(".actor_tbl_" #addr)))
 
 /* ---- 0x0873FB04-0x0873FB7C: 4 table(s), 26 function pointer(s), section .actor_tbl_0873fb04 ---- */
-/* include/actor.h; CallTableEntry(i, 8, ...) in sub_0806ee30, sub_0806ef38 */
-u32 gUnk_0873FB04[8] ACTOR_TBL(0873fb04) = {
+/* include/actor.h; CallTableEntry(i, 8, ...) in PlayerWarpStarRideInit, PlayerWarpStarRideEnterState */
+u32 gPlayerWarpStarRideStates[8] ACTOR_TBL(0873fb04) = {
     0,
     (u32)sub_0806efec,
     (u32)sub_0806ef5c,
@@ -57,8 +57,8 @@ u32 gUnk_0873FB04[8] ACTOR_TBL(0873fb04) = {
     (u32)sub_0806fb0c,
     (u32)sub_0806fd04,
 };
-/* include/actor.h; CallTableEntry(i, 8, ...) in sub_0806ef1c */
-u32 gUnk_0873FB24[8] ACTOR_TBL(0873fb04) = {
+/* include/actor.h; CallTableEntry(i, 8, ...) in PlayerWarpStarRideUpdate */
+u32 gPlayerWarpStarRideStateUpdates[8] ACTOR_TBL(0873fb04) = {
     0,
     (u32)sub_0806f174,
     (u32)sub_0806efe8,
@@ -68,8 +68,8 @@ u32 gUnk_0873FB24[8] ACTOR_TBL(0873fb04) = {
     (u32)sub_0806fc98,
     (u32)sub_0806ff24,
 };
-/* include/actor.h; CallTableEntry(i, 7, ...) in sub_08070648, sub_08070758 */
-u32 gUnk_0873FB44[7] ACTOR_TBL(0873fb04) = {
+/* include/actor.h; CallTableEntry(i, 7, ...) in MetaKnightWarpStarRideInit, MetaKnightWarpStarRideEnterState */
+u32 gMetaKnightWarpStarRideStates[7] ACTOR_TBL(0873fb04) = {
     0,
     (u32)sub_0807079c,
     (u32)sub_0807077c,
@@ -78,8 +78,8 @@ u32 gUnk_0873FB44[7] ACTOR_TBL(0873fb04) = {
     (u32)sub_08070c54,
     (u32)sub_08070d90,
 };
-/* include/actor.h; CallTableEntry(i, 7, ...) in sub_0807073c */
-u32 gUnk_0873FB60[7] ACTOR_TBL(0873fb04) = {
+/* include/actor.h; CallTableEntry(i, 7, ...) in MetaKnightWarpStarRideUpdate */
+u32 gMetaKnightWarpStarRideStateUpdates[7] ACTOR_TBL(0873fb04) = {
     0,
     (u32)sub_080708ec,
     (u32)sub_08070798,
@@ -94,7 +94,7 @@ u32 gUnk_0873FB60[7] ACTOR_TBL(0873fb04) = {
 u32 gWarpStarStates[3] ACTOR_TBL(0873fbac) = {
     (u32)sub_08071418,
     (u32)sub_0807160c,
-    (u32)sub_08071694,
+    (u32)WarpStarVanish,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in WarpStarUpdate */
 u32 gWarpStarStateUpdates[3] ACTOR_TBL(0873fbac) = {

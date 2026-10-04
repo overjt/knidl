@@ -1659,7 +1659,7 @@ void sub_08066e88(u8 a)
 
 void sub_08066f50(s32 x, s32 y)
 {
-    sub_080713f8(x - gViewRect[0], y - gViewRect[2], 23);
+    CreateWarpStar(x - gViewRect[0], y - gViewRect[2], 23);
     PlayBgm(1);
 }
 

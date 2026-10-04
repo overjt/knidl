@@ -76,22 +76,35 @@
     "ActorAttachEffect",
     "ActorAttachToHitter",
     "ActorAttachedBackdropBounceOff",
+    "ActorAttachedBackdropBounceOffUpdate",
     "ActorAttachedBackdropFlight",
+    "ActorAttachedBackdropFlightUpdate",
     "ActorAttachedBackdropHeld",
+    "ActorAttachedBackdropHeldLateUpdate",
+    "ActorAttachedBackdropHeldUpdate",
     "ActorAttachedBindCarrier",
     "ActorAttachedCheckScreenAttack",
     "ActorAttachedDie",
     "ActorAttachedEnterMouth",
     "ActorAttachedEnterState",
     "ActorAttachedPullIn",
+    "ActorAttachedPullInLateUpdate",
     "ActorAttachedPullTowardCarrier",
+    "ActorAttachedRestorePalette",
     "ActorAttachedRunState",
     "ActorAttachedSwallow",
+    "ActorAttachedSwallowLateUpdate",
     "ActorAttachedSwallowStep",
     "ActorAttachedThrowBounceOff",
+    "ActorAttachedThrowBounceOffUpdate",
     "ActorAttachedThrowFlight",
+    "ActorAttachedThrowFlightLateUpdate",
+    "ActorAttachedThrowFlightUpdate",
     "ActorAttachedThrowHeld",
+    "ActorAttachedThrowHeldLateUpdate",
+    "ActorAttachedThrowHeldUpdate",
     "ActorAwardScore",
+    "ActorBindDefSlot",
     "ActorCheckHits",
     "ActorCheckHitsWithBox",
     "ActorClearPaletteOverride",
@@ -107,6 +120,7 @@
     "ActorDefeatExplode",
     "ActorDefeatExplodeByEffect",
     "ActorDefeatFrozen",
+    "ActorDefeatFrozenBlink",
     "ActorDefeatFrozenEnterState",
     "ActorDefeatFrozenShake",
     "ActorDefeatFrozenShakeUpdate",
@@ -134,6 +148,7 @@
     "ActorFlashPalette",
     "ActorFreezeIntoIceBlock",
     "ActorGetTerrainBox",
+    "ActorInitFromDefSlot",
     "ActorInitSlot",
     "ActorIsInView",
     "ActorIsInViewMargin",
@@ -682,6 +697,7 @@
     "CreateEndingStarRodReturnObjects",
     "CreateExtraModeTitleSprites",
     "CreateFileSelectSprites",
+    "CreateFlyingWarpStar",
     "CreateGameOverObject",
     "CreateGameOverObjects",
     "CreateGipStar",
@@ -749,6 +765,7 @@
     "CreateSwordAndBladeKnightSlash",
     "CreateTridentKnightTrident",
     "CreateUFOLaser",
+    "CreateWarpStar",
     "CreateWarpStarStationDoorSign",
     "CreateWarpStarStationDoorSparkle",
     "CreateWarpStarStationLevelSign",
@@ -1099,6 +1116,8 @@
     "HudUpdateAbilityPanel",
     "HudUpdateClock",
     "HudUpdateHpBars",
+    "IceBlockBlink",
+    "IceBlockUpdate",
     "InhalableStarUpdate",
     "InitDoors",
     "InitEndingRoomBgLayout",
@@ -1106,6 +1125,7 @@
     "InitNewSaveFile",
     "InitPlayerState",
     "InitRoomBgLayout",
+    "InitRoomObjects",
     "InitSaveSlots",
     "InitTasks",
     "InitTimer",
@@ -1374,6 +1394,9 @@
     "MetaKnightSwordSpinUpdate",
     "MetaKnightUpdate",
     "MetaKnightUpwardSlash",
+    "MetaKnightWarpStarRideEnterState",
+    "MetaKnightWarpStarRideInit",
+    "MetaKnightWarpStarRideUpdate",
     "MetaKnightsKnightFlashPalette",
     "MetaKnightsKnightReactToDamage",
     "MetaKnightsKnightRestorePalette",
@@ -1835,6 +1858,7 @@
     "PlayerBallStepRoll",
     "PlayerBallTransform",
     "PlayerBallTransformUpdate",
+    "PlayerBoardWarpStar",
     "PlayerCannonEnterState",
     "PlayerCannonInit",
     "PlayerCannonUpdate",
@@ -1944,6 +1968,9 @@
     "PlayerUpdate",
     "PlayerUpdateFlip",
     "PlayerUpdateInvulnerability",
+    "PlayerWarpStarRideEnterState",
+    "PlayerWarpStarRideInit",
+    "PlayerWarpStarRideUpdate",
     "PoppyBrosJrDroppedObjectEnterState",
     "PoppyBrosJrDroppedObjectInit",
     "PoppyBrosJrDroppedObjectUpdate",
@@ -2357,6 +2384,7 @@
     "SpawnRoomObject",
     "SpawnRoomObjectsInRect",
     "SpawnRoomObjectsInView",
+    "SpawnRoomObjectsOnLoad",
     "SpawnRoomObjectsScrolledIn",
     "SquishyIdle",
     "SquishyIdleUpdate",
@@ -2476,6 +2504,7 @@
     "TaskFindNearestPlayer",
     "TaskFindNearestPlayerInScreenXBand",
     "TaskFindNearestPlayerInScreenYBand",
+    "TaskFindNearestPlayerSlot",
     "TaskFree",
     "TaskFreezeOrThawOthers",
     "TaskGetAngleTo",
@@ -2953,16 +2982,22 @@
     "WaddleDooWalkShoot",
     "WaddleDooWalkShootUpdate",
     "WaddleDooWalkUpdate",
+    "WarpStarAnimateTiles",
+    "WarpStarBoard",
     "WarpStarCameraUpdate",
+    "WarpStarCopyTilesToRider",
     "WarpStarEmitTrailStars",
     "WarpStarEnterState",
     "WarpStarFlightEnterState",
     "WarpStarFlightUpdate",
+    "WarpStarSetMetaKnightRiderState",
+    "WarpStarSetRiderState",
     "WarpStarSetTrail",
     "WarpStarSparkleCheckParent",
     "WarpStarStartFlight",
     "WarpStarStopTrail",
     "WarpStarUpdate",
+    "WarpStarVanish",
     "WheelieCheckSkid",
     "WheelieEnterState",
     "WheelieFall",
@@ -3418,13 +3453,10 @@
     "sub_08062584",
     "sub_08062f88",
     "sub_08063698",
-    "sub_08063704",
-    "sub_080637e4",
     "sub_080639f0",
     "sub_08063a00",
     "sub_08063a14",
     "sub_08063a2c",
-    "sub_08063a9c",
     "sub_080641b0",
     "sub_08064a78",
     "sub_08064bcc",
@@ -3549,7 +3581,6 @@
     "sub_08069f70",
     "sub_08069fb0",
     "sub_08069fc8",
-    "sub_0806a5a0",
     "sub_0806a6a0",
     "sub_0806a6e0",
     "sub_0806a9d4",
@@ -3587,7 +3618,6 @@
     "sub_0806b410",
     "sub_0806b670",
     "sub_0806b848",
-    "sub_0806b878",
     "sub_0806b938",
     "sub_0806b95c",
     "sub_0806ba34",
@@ -3596,28 +3626,12 @@
     "sub_0806bc54",
     "sub_0806bc9c",
     "sub_0806be4c",
-    "sub_0806bfd8",
-    "sub_0806c0c0",
-    "sub_0806c148",
-    "sub_0806c1d0",
-    "sub_0806c30c",
-    "sub_0806c384",
-    "sub_0806c418",
-    "sub_0806c490",
-    "sub_0806c5d4",
-    "sub_0806c770",
-    "sub_0806c9e8",
     "sub_0806d08c",
     "sub_0806da74",
     "sub_0806ea70",
     "sub_0806eb04",
     "sub_0806eba4",
-    "sub_0806ec88",
-    "sub_0806ed28",
     "sub_0806ee2c",
-    "sub_0806ee30",
-    "sub_0806ef1c",
-    "sub_0806ef38",
     "sub_0806ef5c",
     "sub_0806efe8",
     "sub_0806efec",
@@ -3643,11 +3657,7 @@
     "sub_08070334",
     "sub_080703a8",
     "sub_0807042c",
-    "sub_08070498",
     "sub_08070614",
-    "sub_08070648",
-    "sub_0807073c",
-    "sub_08070758",
     "sub_0807077c",
     "sub_08070798",
     "sub_0807079c",
@@ -3662,20 +3672,12 @@
     "sub_08070e7c",
     "sub_08070ec0",
     "sub_08070ffc",
-    "sub_080710fc",
-    "sub_080711d0",
-    "sub_08071360",
-    "sub_080713f8",
     "sub_08071418",
     "sub_0807156c",
     "sub_0807160c",
     "sub_08071640",
-    "sub_08071694",
     "sub_08071774",
     "sub_080719a0",
-    "sub_08071bb0",
-    "sub_08071c38",
-    "sub_08071cc0",
     "sub_08071d2c",
     "sub_08071d60",
     "sub_08071e74",
@@ -5190,8 +5192,6 @@
     "sub_080b4dd0",
     "sub_080b4df8",
     "sub_080b4e04",
-    "sub_080b4e40",
-    "sub_080b5024",
     "sub_080b5558",
     "sub_080b5a94",
     "sub_080b5d84",
@@ -26033,10 +26033,10 @@
     "0x0873FAA8": "gUnk_0873FAA8",
     "0x0873FAB4": "gUnk_0873FAB4",
     "0x0873FAE8": "gUnk_0873FAE8",
-    "0x0873FB04": "gUnk_0873FB04",
-    "0x0873FB24": "gUnk_0873FB24",
-    "0x0873FB44": "gUnk_0873FB44",
-    "0x0873FB60": "gUnk_0873FB60",
+    "0x0873FB04": "gPlayerWarpStarRideStates",
+    "0x0873FB24": "gPlayerWarpStarRideStateUpdates",
+    "0x0873FB44": "gMetaKnightWarpStarRideStates",
+    "0x0873FB60": "gMetaKnightWarpStarRideStateUpdates",
     "0x0873FB7C": "gUnk_0873FB7C",
     "0x0873FB94": "gUnk_0873FB94",
     "0x0873FBAC": "gWarpStarStates",
@@ -32042,7 +32042,7 @@
           "0x24",
           "0x28"
         ],
-        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+        "why": "struct ActorDef (0x2C bytes, include/task.h): ActorBindDefSlot (src/actor_63698.c:64) binds table[Task.unk76], ActorInitFromDefSlot (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
       }
     },
     {
@@ -32059,7 +32059,7 @@
           "0x24",
           "0x28"
         ],
-        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+        "why": "struct ActorDef (0x2C bytes, include/task.h): ActorBindDefSlot (src/actor_63698.c:64) binds table[Task.unk76], ActorInitFromDefSlot (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
       }
     },
     {
@@ -32076,7 +32076,7 @@
           "0x24",
           "0x28"
         ],
-        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+        "why": "struct ActorDef (0x2C bytes, include/task.h): ActorBindDefSlot (src/actor_63698.c:64) binds table[Task.unk76], ActorInitFromDefSlot (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
       }
     },
     {
@@ -32093,7 +32093,7 @@
           "0x24",
           "0x28"
         ],
-        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+        "why": "struct ActorDef (0x2C bytes, include/task.h): ActorBindDefSlot (src/actor_63698.c:64) binds table[Task.unk76], ActorInitFromDefSlot (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
       }
     },
     {
@@ -32110,7 +32110,7 @@
           "0x24",
           "0x28"
         ],
-        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+        "why": "struct ActorDef (0x2C bytes, include/task.h): ActorBindDefSlot (src/actor_63698.c:64) binds table[Task.unk76], ActorInitFromDefSlot (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
       }
     },
     {
@@ -32127,7 +32127,7 @@
           "0x24",
           "0x28"
         ],
-        "why": "struct ActorDef (0x2C bytes, include/task.h): sub_08063704 (src/actor_63698.c:64) binds table[Task.unk76], sub_080637e4 (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
+        "why": "struct ActorDef (0x2C bytes, include/task.h): ActorBindDefSlot (src/actor_63698.c:64) binds table[Task.unk76], ActorInitFromDefSlot (l.154-168) copies the fields; unk10 = struct ActorAux * (src/actor_673ec.c:1313), attackBox = struct AttackBox * (gAttackBox, include/collision.h), terrainBox (bytes read at src/actor_692fc.c:479), terrainHandlers = struct ActorHandlers * (src/actor_692fc.c:120), hitReactions = struct ActorVt * (src/actor_692fc.c:730), unk24/teardown functions (l.165-167)"
       }
     },
     {
@@ -32703,7 +32703,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/actor_653ec.c:1785); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/actor_653ec.c:1785); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0873F6BC",
@@ -32895,7 +32895,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9c0a8.c:248); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9c0a8.c:248); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747DB4",
@@ -32910,7 +32910,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:192); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:192); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747E0C",
@@ -32925,7 +32925,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:754); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9da1c.c:754); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08747E64",
@@ -32940,7 +32940,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9cc24.c:285); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_9cc24.c:285); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x087487BC",
@@ -32955,7 +32955,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDefSlot (src/enemy_a1590.c:457); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDefSlot (src/enemy_a1590.c:457); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748918",
@@ -32988,7 +32988,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3049); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3049); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748B60",
@@ -33003,7 +33003,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3141); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3141); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08748B8C",
@@ -33018,7 +33018,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3217); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_a1590.c:3217); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x08749AE8",
@@ -33078,7 +33078,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2407); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2407); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B998",
@@ -33093,7 +33093,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2440); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2440); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B9C4",
@@ -33108,7 +33108,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2464); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2464); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874B9F0",
@@ -33123,7 +33123,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2489); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2489); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA1C",
@@ -33138,7 +33138,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2514); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2514); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA48",
@@ -33153,7 +33153,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2538); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2538); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BA74",
@@ -33168,7 +33168,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2603); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2603); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874BAA0",
@@ -33183,7 +33183,7 @@
         "0x24",
         "0x28"
       ],
-      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2708); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's sub_080637e4 copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
+      "why": "struct ActorDef passed to ActorLoadDef (src/enemy_ae3bc.c:2708); ActorLoadDefSlot (src/actor_63698.c:190-205) copies attackBox/terrainBox/terrainHandlers/hitReactions/teardown; unk10 NULL; .unk10 (+0x10) is a struct ActorAux * (include/task.h:127): ActorInitSlot's ActorInitFromDefSlot copies a->def->unk10 into Actor.unk60 (src/actor_63698.c:168), which the hit code reads as ->hitDuration/->altAttackBox (src/actor_673ec.c:1313-1430)"
     },
     {
       "start": "0x0874C1FC",
@@ -34161,7 +34161,7 @@
     {
       "start": "0x0873FB7C",
       "extent": "next-label",
-      "why": "u32 []: sub_080710fc passes the element (+0, +128, +256, +384) to RequestCopy(1, ...) as the source (src/actor_70ec0.c:169-173); RequestCopy(mode, src, dst, size) copies from src (modes 1-5 CpuSet/DMA from the address, src/early_1518.c:211)"
+      "why": "u32 []: WarpStarAnimateTiles passes the element (+0, +128, +256, +384) to RequestCopy(1, ...) as the source (src/actor_70ec0.c:169-173); RequestCopy(mode, src, dst, size) copies from src (modes 1-5 CpuSet/DMA from the address, src/early_1518.c:211)"
     },
     {
       "start": "0x087401E4",

@@ -159,8 +159,8 @@ void Task_Player(void)
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
         if (gCurTask->player->playerIndex == 0 || gUnk_020061E0 == 0)
-            sub_08071cc0(gCurTask->posX, gCurTask->posY, sub_080260b0());
-        sub_0806ee30();
+            CreateFlyingWarpStar(gCurTask->posX, gCurTask->posY, sub_080260b0());
+        PlayerWarpStarRideInit();
         TaskSleepForever();
     case 3:
         gCurTask->player->bodyBox = 0;

@@ -288,7 +288,7 @@ void sub_0806b848(void)
     t->unk1C = t->pixelY;
 }
 
-void sub_0806b878(void)
+void ActorAttachedRestorePalette(void)
 {
     struct Task *t;
     u32 m;
@@ -730,7 +730,7 @@ void ActorAttachedSwallow(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
-    t->lateUpdateCallback = (u32)sub_0806bfd8;
+    t->lateUpdateCallback = (u32)ActorAttachedSwallowLateUpdate;
     ActorSetTerrainHandlers(gUnk_0873F8F4);
     TaskSetPosRelativeToParent();
     u = gCurTask;
@@ -752,7 +752,7 @@ void ActorAttachedSwallow(void)
     TaskSleepForever();
 }
 
-void sub_0806bfd8(void)
+void ActorAttachedSwallowLateUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -781,7 +781,7 @@ void sub_0806bfd8(void)
     if (ActorAttachedCheckScreenAttack() != 0)
         return;
     sub_0806b938();
-    sub_0806b878();
+    ActorAttachedRestorePalette();
 }
 
 void ActorAttachedBackdropHeld(void)
@@ -791,8 +791,8 @@ void ActorAttachedBackdropHeld(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
-    t->updateCallback = (u32)sub_0806c0c0;
-    t->lateUpdateCallback = (u32)sub_0806c148;
+    t->updateCallback = (u32)ActorAttachedBackdropHeldUpdate;
+    t->lateUpdateCallback = (u32)ActorAttachedBackdropHeldLateUpdate;
     t->posY = 0;
     t->posX = 0;
     t->hitKind = 0;
@@ -806,7 +806,7 @@ void ActorAttachedBackdropHeld(void)
     TaskSleepForever();
 }
 
-void sub_0806c0c0(void)
+void ActorAttachedBackdropHeldUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -817,7 +817,7 @@ void sub_0806c0c0(void)
         ActorAttachedDie();
     else
         sub_0806b670();
-    sub_0806b878();
+    ActorAttachedRestorePalette();
     u = gCurTask;
     if (u->actorKind == 1)
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F844);
@@ -825,7 +825,7 @@ void sub_0806c0c0(void)
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F830);
 }
 
-void sub_0806c148(void)
+void ActorAttachedBackdropHeldLateUpdate(void)
 {
     sub_0806b848();
     ActorAttachedCheckScreenAttack();
@@ -837,7 +837,7 @@ void ActorAttachedBackdropFlight(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->updateCallback = (u32)sub_0806c1d0;
+    t->updateCallback = (u32)ActorAttachedBackdropFlightUpdate;
     t->lateUpdateCallback = 0;
     if (gUnk_0300244C != 0 && t->u8C.actor->terrainBox == 0)
         ActorSetTerrainBox(gUnk_0873F894);
@@ -848,7 +848,7 @@ void ActorAttachedBackdropFlight(void)
     TaskSleepForever();
 }
 
-void sub_0806c1d0(void)
+void ActorAttachedBackdropFlightUpdate(void)
 {
     struct Task *t;
 
