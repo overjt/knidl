@@ -36,8 +36,13 @@ proves the branch is a pure rename: every name renames.csv gained since the
 ref is mapped back, and the code (outside comments), the generated files
 and the config must come out identical to the ref's.
 
+A struct or union tag (kind `tag`, #155 run 6: `Unk02007D70` -> `BgAnim`)
+is renamed the same way: the tag is one token wherever it is used, and a tag
+never reaches the assembly.
+
 Validation, per rename: OLD resolves (a symbols.csv function, a
-data_symbols / extra_labels name or an abs_symbols constant); the kind
+data_symbols / extra_labels name, an abs_symbols constant or a struct/union
+tag); the kind
 matches the address; NEW is a C identifier, not a keyword, not a
 placeholder prefix (sub_, gUnk_, unk_, loc_, _), follows docs/naming.md's
 style for its kind (--allow-style for a public reference such as an SDK
@@ -86,7 +91,9 @@ STYLE = {
     "io": re.compile(r"^(?:[gs][A-Z][A-Za-z0-9]*|REG_[A-Z0-9_]+)$"),
     "rom": re.compile(r"^[gs][A-Z][A-Za-z0-9]*(?:_[A-Z0-9][A-Za-z0-9]*)*$"),
     "const": re.compile(r"^(?:[A-Z][A-Z0-9_]*|g[A-Z][A-Za-z0-9]*)$"),
+    "tag": re.compile(r"^[A-Z][A-Za-z0-9]*$"),
 }
+TAG_RE = re.compile(r"\b(?:struct|union)\s+([A-Za-z_][A-Za-z0-9_]*)")
 ADDR_NAME_RE = re.compile(r"^(sub|gUnk)_([0-9A-Fa-f]{8})$")
 TOKEN_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 
@@ -210,9 +217,12 @@ class State:
         # case-insensitively; words that only occur in comments are noted.
         used = set()
         self.comment_words = set()
+        self.tags = set()  # struct and union tags (#155 run 6, D7)
         for p, text in self.contents.items():
             code = strip_comments(text, p.endswith(".s"))
             used.update(TOKEN_RE.findall(code))
+            if not p.endswith(".s"):
+                self.tags.update(TAG_RE.findall(code))
             self.comment_words.update(TOKEN_RE.findall(text))
         used.update(self.functions)
         used.update(self.data)
@@ -241,9 +251,11 @@ class State:
                 return kind, addr
         if old in self.consts:
             return "const", int(self.consts[old], 16)
+        if old in self.tags:
+            return "tag", 0
         raise RenameError(
             "%s: not a symbols.csv function, a data_symbols/extra_labels "
-            "name or an abs_symbols constant" % old)
+            "name, an abs_symbols constant or a struct/union tag" % old)
 
 
 def validate(state, rows, allow_style):
