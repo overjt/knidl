@@ -9,7 +9,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809cb90(void)
+void AxeKnightSlashLoopUpdate(void)
 {
     struct Task *t;
 

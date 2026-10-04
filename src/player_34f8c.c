@@ -16,8 +16,8 @@
  * coroutine records the previous mode
  * (PlayerState.prevMode = unk04), sets the new one and the task's animation
  * set (Task.updateState), then plays the animation of the current ability
- * (PlayerState.ability, 0..25) out of a per-mode table (gUnk_0873D3B8,
- * gPlayerHighFallFrames, gUnk_0873D7E4) with TaskSetFrame and TaskYieldTrampoline;
+ * (PlayerState.ability, 0..25) out of a per-mode table (gPlayerFallFrames,
+ * gPlayerHighFallFrames, gPlayerFloatFrames) with TaskSetFrame and TaskYieldTrampoline;
  * the per-frame handler runs M11's transition predicates in order and
  * writes the next mode request into PlayerState.requestedAction, or re-binds the
  * task to another coroutine with TaskSetEntry.  PlayerActionFall/PlayerActionFallUpdate
@@ -72,7 +72,7 @@ void PlayerActionFall(void)
         }
         else
         {
-            gCurTask->playerBaseFrame = gUnk_0873D3B8[gCurTask->player->ability][0];
+            gCurTask->playerBaseFrame = gPlayerFallFrames[gCurTask->player->ability][0];
             switch (gCurTask->player->ability)
             {
             case ABILITY_NORMAL:
@@ -108,7 +108,7 @@ void PlayerActionFall(void)
             TaskYieldTrampoline(4);
         }
     }
-    gCurTask->playerBaseFrame = gUnk_0873D3B8[gCurTask->player->ability][1];
+    gCurTask->playerBaseFrame = gPlayerFallFrames[gCurTask->player->ability][1];
     switch (gCurTask->player->ability)
     {
     case ABILITY_NORMAL:
@@ -426,7 +426,7 @@ void PlayerActionFloat(void)
         {
         case 0:
             PlaySfxIfLocalPlayer(228, gCurTask->player->playerIndex);
-            TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][0]);
+            TaskSetFrame(gPlayerFloatFrames[gCurTask->player->ability][0]);
             TaskYieldTrampoline(2);
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
             {
@@ -438,7 +438,7 @@ void PlayerActionFloat(void)
             break;
         case 1:
             PlaySfxIfLocalPlayer(115, gCurTask->player->playerIndex);
-            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gPlayerFloatFrames[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case ABILITY_NORMAL:
@@ -495,7 +495,7 @@ void PlayerActionFloat(void)
             gCurTask->variant = 2;
             break;
         case 2:
-            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gPlayerFloatFrames[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case ABILITY_NORMAL:
@@ -532,7 +532,7 @@ void PlayerActionFloat(void)
                 }
             }
         case 3:
-            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gPlayerFloatFrames[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case ABILITY_NORMAL:
@@ -581,14 +581,14 @@ void PlayerActionFloat(void)
                 CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 0);
                 gCurTask->unk28++;
                 PlayerSetMotionYPreset(2);
-                TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
+                TaskSetFrame(gPlayerFloatFrames[gCurTask->player->ability][2]);
                 TaskYieldTrampoline(6);
                 gCurTask->frame--;
                 TaskYieldTrampoline(2);
             }
             else
             {
-                TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
+                TaskSetFrame(gPlayerFloatFrames[gCurTask->player->ability][2]);
                 gCurTask->frame--;
                 TaskYieldTrampoline(2);
             }
@@ -604,7 +604,7 @@ void PlayerActionFloat(void)
             }
             TaskSleepForever();
         case 5:
-            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gPlayerFloatFrames[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case ABILITY_NORMAL:

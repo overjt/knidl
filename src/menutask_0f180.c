@@ -43,7 +43,7 @@ void Task_LinkPlayPlayerList(void)
     gCurTask->updateCallback = (u32)LinkPlayPlayerListUpdate;
     gCurTask->layer = 7;
     t = gCurTask;
-    t->frameTable = gUnk_08755688;
+    t->frameTable = gLinkPlayFrames;
     t->posX = 0xC40000;
     t->posY = 0x340000;
     t->linkPlayPlayerListLoopCount = 0;
@@ -132,7 +132,7 @@ void Task_LinkPlayConsole(void)
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->updateCallback = (u32)LinkPlayConsoleUpdate;
     gCurTask->layer = gCurTask->linkPlayConsoleIndex * 2 + 9;
-    gCurTask->frameTable = gUnk_08755688;
+    gCurTask->frameTable = gLinkPlayFrames;
     gCurTask->posX = 0x780000;
     gCurTask->posY = 0x480000;
     gCurTask->linkPlayConsoleMarkerTimer = 0;
@@ -209,7 +209,7 @@ void Task_LinkPlayCable(void)
     gCurTask->updateCallback = (u32)LinkPlayCableUpdate;
     gCurTask->layer = gCurTask->linkPlayCableIndex * 2 + 9;
     t = gCurTask;
-    t->frameTable = gUnk_08755688;
+    t->frameTable = gLinkPlayFrames;
     t->posX = gUnk_08731EB8[t->linkPlayCableIndex] << 16;
     t->posY = gUnk_08731EC0[t->linkPlayCableIndex] << 16;
     t->linkPlayCableBobTimer = 1;
@@ -275,7 +275,7 @@ void Task_MenuScreenTitle(void)
     gCurTask->layer = 7;
     t = gCurTask;
     t->menuScreenTitleScreen = gMenuScreen;
-    LoadGfxSet(gUnk_08731D70[t->menuScreenTitleScreen]);
+    LoadGfxSet(gMenuScreenTitleGfx[t->menuScreenTitleScreen]);
     if (gMenuScreen == 7) {
         t = gCurTask;
         t->posX = 0x600000;
@@ -293,7 +293,7 @@ void Task_MenuScreenTitle(void)
 
 void MenuScreenTitleUpdate(void)
 {
-    u32 *tbl = gUnk_08731D70;
+    u32 *tbl = gMenuScreenTitleGfx;
     struct Task *t = gCurTask;
     struct Task *u;
     struct Task *v;
@@ -320,7 +320,7 @@ void MenuScreenTitleUpdate(void)
             u->posX = 0x640000;
             u->posY = 0xE0000;
             u->velX = 0;
-            if (gUnk_08731D70[gMenuScreen])
+            if (gMenuScreenTitleGfx[gMenuScreen])
                 u->menuScreenTitlePhase = 2;
             else
                 u->menuScreenTitlePhase = 3;
@@ -331,7 +331,7 @@ void MenuScreenTitleUpdate(void)
     switch (v->menuScreenTitlePhase) {
     case 0:
         if (--v->menuScreenTitlePhaseTimer == 0) {
-            LoadGfxSet(gUnk_08731D70[v->menuScreenTitleScreen]);
+            LoadGfxSet(gMenuScreenTitleGfx[v->menuScreenTitleScreen]);
             if (gMenuScreen == 7) {
                 u = gCurTask;
                 u->posX = 0xFFE00000;
@@ -355,7 +355,7 @@ void MenuScreenTitleUpdate(void)
             if (gMenuScreen == 8 && gPrevMenuScreen == 5)
                 LoadGfxSet(44);
             else
-                LoadGfxSet(gUnk_08731D70[gCurTask->menuScreenTitleScreen]);
+                LoadGfxSet(gMenuScreenTitleGfx[gCurTask->menuScreenTitleScreen]);
             if (gMenuScreen == 7)
                 gCurTask->frame = 11;
             else

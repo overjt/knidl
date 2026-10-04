@@ -49,7 +49,7 @@ void StageDoorSignBlinkSignAndDoor(void)
     struct Task *v;
 
     t = gCurTask;
-    t->stageDoorSignDoorFrames = (s32)gUnk_087558DC;
+    t->stageDoorSignDoorFrames = (s32)gDoorSignDoorFrames;
     for (;;)
     {
         u = gCurTask;
@@ -68,7 +68,7 @@ void StageDoorSignBlinkDoor(void)
     struct Task *t;
 
     t = gCurTask;
-    t->stageDoorSignDoorFrames = (s32)gUnk_087558DC;
+    t->stageDoorSignDoorFrames = (s32)gDoorSignDoorFrames;
     t->frame = t->stageDoorSignIndex << 1;
     for (;;)
     {

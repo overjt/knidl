@@ -41,7 +41,7 @@ void PlayerEffectFireBreathFlames(void)
     gCurTask->updateCallback = (u32)PlayerEffectFireBreathFlamesUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751CA4;
+    t->frameTable = gFireBreathFlameFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     t->playerEffectStopRequested = 0;
     switch (t->playerEffectSpawnWord & 15)

@@ -17,7 +17,7 @@
  * Task.lateUpdateCallback callback PlayerEffectDeathStarRingLateUpdate integrates every frame, drawing both with
  * QueueSprite when on screen (IsOnScreen; camera-relative unless
  * PlayerState.unk37 == 2).  Variant 13 (PlayerEffectMetaKnightDeathBlast, M11) plays the 23
- * frames of gUnk_0873E640.  Variant 14 (sub_08054de8, M13's ability get)
+ * frames of gExplosionAnimFrames.  Variant 14 (sub_08054de8, M13's ability get)
  * rides on its spawner through four sub-states of frame loops.  Variant 15
  * (sub_08054fe4; M09, M11, M13) runs one of two endless particle loops
  * chosen by the ability PlayerState.ability (1 or 2), re-seeding a random
@@ -143,10 +143,10 @@ void PlayerEffectMetaKnightDeathBlast(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_0874CA1C;
+    t->frameTable = gExplosionFrames;
     for (i = 0; i < 23; i++)
     {
-        gCurTask->frame = gUnk_0873E640[i];
+        gCurTask->frame = gExplosionAnimFrames[i];
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();

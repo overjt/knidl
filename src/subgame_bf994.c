@@ -21,7 +21,7 @@
  *   BombRallyBombPass   the free-running driver: waits out the intro, then loops
  *       for ever re-reading the mode task's slot and, whenever it changes,
  *       re-arms the sprite and recomputes the hand-off speed as
- *       Div((gUnk_08756770[next] - gUnk_08756770[cur]) << 4, frames).
+ *       Div((gBombRallyBombScales[next] - gBombRallyBombScales[cur]) << 4, frames).
  *   BombRallyBombPassUpdate / BombRallyBombExplode / BombRallyBombExplodeUpdate   the three placement bodies
  *       that walk a turn: BombRallyScrollAlongPass for the thrower, BombRallyBombSetArcPos for the
  *       projectile and BombRallyBombDrawShadow for its shadow.
@@ -114,8 +114,8 @@ void BombRallyPlayerBubblesServe(void)
         TaskYieldTrampoline(3);
         PlaySfx(254);
         z = gCurTask;
-        CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->bombRallyObjectSeat] << 16) * z->facing,
-                     z->posY + (gUnk_08756564[z->bombRallyObjectSeat] << 16),
+        CreateBombRallyStarBurst(z->posX + (gBombRallyStarBurstOffsetX[z->bombRallyObjectSeat] << 16) * z->facing,
+                     z->posY + (gBombRallyStarBurstOffsetY[z->bombRallyObjectSeat] << 16),
                      z->bombRallyObjectSeat, z->facing);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
@@ -235,8 +235,8 @@ void BombRallyPlayerBubblesThrow(void)
     TaskYieldTrampoline(2);
     PlaySfx(254);
     z = gCurTask;
-    CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->bombRallyObjectSeat] << 16) * z->facing,
-                 z->posY + (gUnk_08756564[z->bombRallyObjectSeat] << 16),
+    CreateBombRallyStarBurst(z->posX + (gBombRallyStarBurstOffsetX[z->bombRallyObjectSeat] << 16) * z->facing,
+                 z->posY + (gBombRallyStarBurstOffsetY[z->bombRallyObjectSeat] << 16),
                  z->bombRallyObjectSeat, z->facing);
     gCurTask->frame++;
     TaskYieldTrampoline(7);
@@ -327,8 +327,8 @@ void BombRallyBombStartUpdate(void)
                 k = 1;
         }
         QueueSprite(8, DrawAffineSprite(gBombRallyBombFrames[k],
-                                    gUnk_08756770[gCurTask->bombRallyObjectBombSeat],
-                                    gUnk_08756770[gCurTask->bombRallyObjectBombSeat], 0),
+                                    gBombRallyBombScales[gCurTask->bombRallyObjectBombSeat],
+                                    gBombRallyBombScales[gCurTask->bombRallyObjectBombSeat], 0),
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX, gCurTask->pixelY);
     }
@@ -389,7 +389,7 @@ void BombRallyBombPass(void)
     y->unk24 = u->unk34 - 1;
     while (1) {
         z = gCurTask;
-        tb = gUnk_08756770;
+        tb = gBombRallyBombScales;
         u = &gTasks[z->parent];
         if (z->unk24 != u->unk34) {
             BombRallyBombPlaceAtSeat(u->unk34);
@@ -516,7 +516,7 @@ void BombRallyBombPassUpdate(void)
     if ((s16)q->frame != -1) {
         if ((q->unk30 & 3) == 0)
             CreateBombRallyBombSmoke(q->posX, q->posY,
-                         (s16)(gUnk_08756770[q->unk24]
+                         (s16)(gBombRallyBombScales[q->unk24]
                                + ((q->unk2C * u->unk30) >> 4)),
                          q->unk34);
         x = (gCurTask->posX - gBg3ScrollX) >> 16;
@@ -524,9 +524,9 @@ void BombRallyBombPassUpdate(void)
         if (x >= -63 && x <= 303 && y > -64 && y <= 223)
             QueueSprite(8,
                 DrawAffineSprite(gBombRallyBombFrames[(s16)gCurTask->frame],
-                    (s16)(gUnk_08756770[gCurTask->unk24]
+                    (s16)(gBombRallyBombScales[gCurTask->unk24]
                           + ((gCurTask->unk2C * u->unk30) >> 4)),
-                    (s16)(gUnk_08756770[gCurTask->unk24]
+                    (s16)(gBombRallyBombScales[gCurTask->unk24]
                           + ((gCurTask->unk2C * u->unk30) >> 4)),
                     (s16)gCurTask->unk34),
                 gCurTask->spriteFlags, gCurTask->tileWord, x, y);
@@ -556,8 +556,8 @@ void BombRallyBombExplode(void)
     gCurTask->layer = 6;
     TaskStop();
     w = gCurTask;
-    w->posX = gUnk_0875672C[w->unk28] << 16;
-    w->posY = (gUnk_08756734[w->unk28] + gUnk_0875673C[w->unk28]) << 16;
+    w->posX = gBombRallySeatX[w->unk28] << 16;
+    w->posY = (gBombRallySeatY[w->unk28] + gUnk_0875673C[w->unk28]) << 16;
     PlaySfx(255);
     x = gCurTask;
     CreateBombRallyStarBurst(x->posX, x->posY, x->unk28, x->facing);

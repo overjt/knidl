@@ -7,11 +7,11 @@
  *
  * Sub-game 2: the depth scale.
  * 
- *   AirGrindGetDepthScale   gUnk_080D059A[x / 4 - 32], the sprite scale for a course
+ *   AirGrindGetDepthScale   gAirGrindDepthScales[x / 4 - 32], the sprite scale for a course
  *       depth (AirGrindRacerUpdateScreenPos, AirGrindEffect, AirGrindScaleSprite).  It follows the
  *       still-asm AirGrindDrawCourse and precedes PR #133's src/sub_080c6258.c. */
 
 s32 AirGrindGetDepthScale(s32 x)
 {
-    return gUnk_080D059A[x / 4 - 32];
+    return gAirGrindDepthScales[x / 4 - 32];
 }

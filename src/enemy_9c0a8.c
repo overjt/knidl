@@ -580,7 +580,7 @@ void AxeKnightSlashLoop(void)
 {
     struct Task *t;
 
-    gCurTask->updateCallback = (u32)sub_0809cb90;
+    gCurTask->updateCallback = (u32)AxeKnightSlashLoopUpdate;
     TaskFaceScreenCenter();
     while (1)
     {

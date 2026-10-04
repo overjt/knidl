@@ -270,12 +270,12 @@ void PlayExplosionAnim(void)
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CA1C;
+    t->frameTable = gExplosionFrames;
     t->layer = 4;
     gCurTask->tileWord = 0;
     for (i = 0; i < 23; i++)
     {
-        gCurTask->frame = gUnk_0873E640[i];
+        gCurTask->frame = gExplosionAnimFrames[i];
         TaskYieldTrampoline(1);
     }
 }
@@ -642,7 +642,7 @@ void Task_TrailFlash(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CC84;
+    t->frameTable = gTrailFlashFrames;
     t->layer = 10;
     u = gCurTask;
     u->tileWord = 0;

@@ -777,7 +777,7 @@
 #define menuBgPaletteCycleBlendRatio unk34 /* s32: BlendColors' ratio from BlendFrom to BlendTo (0-256, +32 per frame) */
 
 /* MenuScreenTitle - MenuScreenTitle (task type #256, Task_MenuScreenTitle) */
-#define menuScreenTitleScreen unk28 /* s32: gMenuScreen as last seen; picks the title graphics gUnk_08731D70 */
+#define menuScreenTitleScreen unk28 /* s32: gMenuScreen as last seen; picks the title graphics gMenuScreenTitleGfx */
 #define menuScreenTitlePhase unk2C /* s32: the title's change step: 0 slide out, 1 slide in, 2 swap after a delay, 3 at rest */
 #define menuScreenTitlePhaseTimer unk30 /* s32: frames left in the slide or delay step (8, 7 or 1) */
 

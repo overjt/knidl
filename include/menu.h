@@ -71,7 +71,7 @@ extern const u8 gUnk_085653C4[];
 extern u16 *gUnk_08731CF8[];
 extern u16 *gUnk_08731D28[];
 extern u16 gUnk_08731D58[];
-extern u32 gUnk_08731D70[];
+extern u32 gMenuScreenTitleGfx[];
 extern vs32 *const gBgScrollYPtrs[4];
 extern vs32 *const gBgScrollXPtrs[4];
 extern const s16 gUnk_08731DC0[];
@@ -79,8 +79,8 @@ extern u16 gUnk_08731E18[];
 extern u16 gUnk_08731E1E[2][3];
 extern u8 *gUnk_08731E2C[2];
 extern void *const gUnk_08731E34[];
-extern u16 gUnk_08731E4C[];
-extern u16 gUnk_08731E52[];
+extern u16 gModeListCursorBaseY[];
+extern u16 gModeListCursorRowStep[];
 extern s32 gUnk_08731E58[][4];
 extern s32 gUnk_08731E98[];
 extern u16 gUnk_08731EA8[];
@@ -92,7 +92,7 @@ extern s32 gUnk_08731F08[][4];
 extern s16 gUnk_08731F48[][4];
 extern u32 gUnk_08755620[];
 extern u32 gUnk_08755650[];
-extern u32 gUnk_08755688[];
+extern u32 gLinkPlayFrames[];
 extern u32 gUnk_087556D4[];
 
 

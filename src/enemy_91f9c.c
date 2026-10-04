@@ -22,7 +22,7 @@
  * actor 154 at gUnk_030023B4/gUnk_030023D4, and BugzzyDefeat the defeat
  * sequence.  BugzzyFlapStep is the shake helper the first states yield to and
  * BugzzyChooseBackdrop is the collision probe: ten GetCollisionTileAtOffset samples along
- * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
+ * gUnk_08743AB8, mapped through the terrain-class table gCollisionTileCollides into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * BugzzySlamHeldPlayer / BugzzyJumpBack / BugzzyShakeVertically are the shared step sequences,
  * BugzzyHitWall the hit hook, BugzzyHitCeiling the four-instruction "stop moving"
@@ -48,7 +48,7 @@
 /* ROM tables */
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
    3.517). */
-extern s8 gUnk_087339F0[];
+extern s8 gCollisionTileCollides[];
 extern vu8 gTerrainResult;
 
 /* Externals */
@@ -1000,7 +1000,7 @@ void BugzzyChooseBackdrop(void)
         m = GetCollisionTileAtOffset(t->pixelX, t->pixelY, gUnk_08743AB8[i] * t->facing, 0);
         if (m == -1)
             m = 1;
-        if (gUnk_087339F0[m] != 0)
+        if (gCollisionTileCollides[m] != 0)
         {
             if (i > 4)
                 flags |= 1;

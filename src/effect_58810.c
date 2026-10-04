@@ -32,7 +32,7 @@ void PlayerEffectIceBreathCloud(void)
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)TaskDrawWorld;
     t->updateCallback = (u32)PlayerEffectIceBreathCloudUpdate;
-    t->frameTable = gUnk_08751E5C;
+    t->frameTable = gIceBreathCloudFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 8;
     t->playerEffectStopRequested = 0;
     switch (t->playerEffectSpawnWord & 15)

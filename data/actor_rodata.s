@@ -300,11 +300,11 @@ gActorAttachedBackdropBodyBox:
 	.global	gActorAttachedBackdropMidBossBodyBox
 gActorAttachedBackdropMidBossBodyBox:
 	.incbin	"baserom.gba", 0x73F844, 0x14
-	.global	gUnk_0873F858
-gUnk_0873F858:
+	.global	gActorAttachedThrowCollider
+gActorAttachedThrowCollider:
 	.incbin	"baserom.gba", 0x73F858, 0x14
-	.global	gUnk_0873F86C
-gUnk_0873F86C:
+	.global	gActorAttachedThrowMidBossCollider
+gActorAttachedThrowMidBossCollider:
 	.incbin	"baserom.gba", 0x73F86C, 0x14
 	.global	gUnk_0873F880
 gUnk_0873F880:
@@ -4571,11 +4571,11 @@ gUnk_087490B4:
 	.global	gUnk_087490DC
 gUnk_087490DC:
 	.incbin	"baserom.gba", 0x7490DC, 0x8
-	.global	gUnk_087490E4
-gUnk_087490E4:
+	.global	gKrackoSideX
+gKrackoSideX:
 	.incbin	"baserom.gba", 0x7490E4, 0x4
-	.global	gUnk_087490E8
-gUnk_087490E8:
+	.global	gKrackoBobVelY
+gKrackoBobVelY:
 	.incbin	"baserom.gba", 0x7490E8, 0x18
 	.global	gUnk_08749100
 gUnk_08749100:

@@ -12,12 +12,12 @@
  *
  * Player action bodies, part 5: actions 12-15 and per-frame handlers
  * 12-15.  PlayerActionLadder (action 12, mode 9) is a four-state machine over
- * Task.variant that plays the ability's rows of gUnk_0873D880,
+ * Task.variant that plays the ability's rows of gPlayerLadderFrames,
  * gUnk_0873D8B4 and gUnk_0873D908; its handler PlayerActionLadderUpdate re-binds it
  * when the keys change.  PlayerActionInhale (action 13, mode 10) clears the
  * ability (PlayerState.ability = 0) and the player's three spark records
  * gUnk_02007E90[player][] before its animation; its handler PlayerActionInhaleUpdate
- * runs the block-breaking hit box gUnk_0873CC54 through M09's
+ * runs the block-breaking hit box gPlayerInhaleBlockBreakBox through M09's
  * TaskBreakFirstBlock (spawning the debris with M17's CreateBlockStar at the
  * broken block) and M09's collision registry RegisterCollider.  Actions 14
  * and 15 (PlayerActionSpit, PlayerActionSwallow) are short animation scripts, and
@@ -46,11 +46,11 @@ struct HitBoxSet
 
 /* Not from player.h: this file's view of gBrokenBlockY differs (lesson
    3.517). */
-extern s16 gUnk_0873D880[];
+extern s16 gPlayerLadderFrames[];
 extern u16 gUnk_0873D8B4[];
 extern u16 gUnk_0873D908[];
 extern struct M04Spark gUnk_02007E90[][3];
-extern struct HitBoxSet gUnk_0873CC54;
+extern struct HitBoxSet gPlayerInhaleBlockBreakBox;
 extern u16 gBrokenBlockY;
 extern u8 gUnk_0873BEC4[];
 
@@ -147,7 +147,7 @@ void PlayerActionLadder(void)
         h5->playerLadderDir = h5->variant;
     }
     d = gCurTask;
-    d->playerBaseFrame = gUnk_0873D880[d->player->ability];
+    d->playerBaseFrame = gPlayerLadderFrames[d->player->ability];
     k = d->variant;
     switch (k)
     {
@@ -314,7 +314,7 @@ void PlayerActionLadderUpdate(void)
     if (PlayerCheckDropAbility() != 0)
     {
         t = gCurTask;
-        t->frame = gUnk_0873D880[t->player->ability];
+        t->frame = gPlayerLadderFrames[t->player->ability];
         TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
         if (gUnk_0300244C != 0)
             gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
@@ -649,7 +649,7 @@ void PlayerActionInhaleUpdate(void)
             {
                 if (u->playerCatchBlockDelay == 0)
                 {
-                    if (TaskBreakFirstBlock(&gUnk_0873CC54, u->player->playerIndex) != 0)
+                    if (TaskBreakFirstBlock(&gPlayerInhaleBlockBreakBox, u->player->playerIndex) != 0)
                     {
                         gCurTask->player->catchKind = 2;
                         CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, HIT_KIND_INHALE, HIT_EFFECT_INHALE);

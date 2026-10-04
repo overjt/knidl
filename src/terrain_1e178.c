@@ -58,21 +58,21 @@ void TerrainProbeLandingInCameraBounds(void)
                TerrainProbeFloorInCameraBounds). */
             if (gCollisionTileOneWay[gTerrainTile] == 0)
                 goto rflat;
-            u = gUnk_087338F0[gTerrainTile];
+            u = gCollisionTileStepTile[gTerrainTile];
             goto rmove;
         }
         if (GetTileShapeAtPixel(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0)
         {
             gTerrainProbeResult.unk0 = 2;
             if (gCollisionTileOneWay[gTerrainTile] != 0)
-                u = gUnk_087338F0[gTerrainTile];
+                u = gCollisionTileStepTile[gTerrainTile];
             else
                 u = gTerrainTile;
             gTerrainProbeX += GetTilePushRight(u);
             if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
             {
                 if (gCollisionTileOneWay[gTerrainTile] != 0)
-                    u = gUnk_087338F0[gTerrainTile];
+                    u = gCollisionTileStepTile[gTerrainTile];
                 else
                     u = gTerrainTile;
                 gTerrainProbeX += GetTilePushRight(u);
@@ -86,7 +86,7 @@ void TerrainProbeLandingInCameraBounds(void)
         if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
         {
             if (gCollisionTileOneWay[gTerrainTile] != 0)
-                u = gUnk_087338F0[gTerrainTile];
+                u = gCollisionTileStepTile[gTerrainTile];
             else
                 u = gTerrainTile;
             gTerrainProbeX += GetTilePushLeft(u);
@@ -217,7 +217,7 @@ walls:
         }
         if (side == 1)
             goto right;
-        if (gUnk_087339F0[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
+        if (gCollisionTileCollides[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
             goto right;
         if (gCollisionTileOneWay[gTerrainTile] != 0 && !(gTerrainProbeResult.unkB & 0x10))
         {
@@ -289,7 +289,7 @@ right:
         }
         if (side == 2)
             return;
-        if (gUnk_087339F0[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
+        if (gCollisionTileCollides[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
             return;
         if (gCollisionTileOneWay[gTerrainTile] != 0 && !(gTerrainProbeResult.unkB & 0x20))
         {

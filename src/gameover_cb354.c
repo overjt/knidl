@@ -34,7 +34,7 @@ void Task_GameOverSprite(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 9;
-    gCurTask->frameTable = gUnk_087556E0;
+    gCurTask->frameTable = gGameOverScreenFrames;
     gCurTask->frame = gCurTask->gameOverSpriteIndex;
     gCurTask->posX = gUnk_08758274[gCurTask->gameOverSpriteIndex] << 16;
     gCurTask->posY = gUnk_08758284[gCurTask->gameOverSpriteIndex] << 16;
@@ -47,7 +47,7 @@ void Task_GameOverCursor(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_087556E0;
+    gCurTask->frameTable = gGameOverScreenFrames;
     if (gMetaKnightmareMode == 0) {
         gCurTask->posX = 184 << 16;
         gCurTask->posY = 94 << 16;
@@ -131,7 +131,7 @@ void GameOverPlayer(void)
 {
     gCurTask->updateCallback = (u32)GameOverPlayerUpdate;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08754914;
+    gCurTask->frameTable = gGameOverPlayerFrames;
     gCurTask->unk24 = 0;
     gCurTask->unk18 = 0;
     gCurTask->facing = 1;

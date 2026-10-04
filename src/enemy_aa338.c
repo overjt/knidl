@@ -1889,7 +1889,7 @@ void NightmareWizardStarUpdate(void)
     }
 }
 
-void NightmareWizardStarState0(void)
+void NightmareWizardStarFlight(void)
 {
     struct Task *t;
     s32 w;
@@ -1948,7 +1948,7 @@ void NightmareWizardStarState0(void)
     TaskSleepForever();
 }
 
-void NightmareWizardStarState0Update(void)
+void NightmareWizardStarFlightUpdate(void)
 {
     gCurTask->actorAnimDelay30 = ActorTickAnim(gCurTask->actorAnimDelay30);
     if (gUnk_02007D00[0] == 2)

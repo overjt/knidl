@@ -373,7 +373,7 @@ void PlayerWarpStarRideState5(void)
     if (k == 10)
         TaskSetFrame(0x841);
     else
-        TaskSetFrame(gUnk_0873D3B8[k][1]);
+        TaskSetFrame(gPlayerFallFrames[k][1]);
     gCurTask->velY = 0xFFFD0000;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -414,7 +414,7 @@ void PlayerWarpStarRideState5(void)
     {
     case ABILITY_SWORD:
     case ABILITY_HAMMER:
-        TaskSetFrame(gUnk_0873D3B8[gCurTask->player->ability][1]);
+        TaskSetFrame(gPlayerFallFrames[gCurTask->player->ability][1]);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -466,7 +466,7 @@ void PlayerWarpStarRideState5(void)
     if (k == 10)
         TaskSetFrame(0x841);
     else
-        TaskSetFrame(gUnk_0873D3B8[k][1]);
+        TaskSetFrame(gPlayerFallFrames[k][1]);
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);

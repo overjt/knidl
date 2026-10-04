@@ -35,7 +35,7 @@
  *       AirGrindBuildCourse): per lane, every course
  *       column that scrolled into view since the last frame
  *       (gAirGrindCourse.unk108 -> unk000) gets its BG map column at 0x0600E000
- *       and a vertical strip in its tiles, sized by the depth (gUnk_080D059A)
+ *       and a vertical strip in its tiles, sized by the depth (gAirGrindDepthScales)
  *       and shaded by the segment it lies on; the strip's tile address,
  *       height and segment flag go to gAirGrindStripAddrs/gAirGrindStripHeights/
  *       gAirGrindStripOnEvenSegment[lane][256].  Then the lane's racer record is updated
@@ -445,7 +445,7 @@ void AirGrindDrawCourse(void)
                 if (lane == 0)
                     s = 8;
             }
-            h = gUnk_080D059A[(y + 512) / 4 - 32] * 6 / 256;
+            h = gAirGrindDepthScales[(y + 512) / 4 - 32] * 6 / 256;
             pos = lane * 1024 + c32;
             vp = (u16 *)(BG_VRAM + 0xE180) + (pos + (x + 80) / 8 * 32);
             addr = *vp * 64 + BG_VRAM;
@@ -490,9 +490,9 @@ void AirGrindDrawCourse(void)
         p->segmentEnd = AirGrindFindSegmentEnd(p->segmentIndex, p->coursePos);
         v /= 32;
         p->depth = depth[lane] + 512;
-        sn = gUnk_080D059A[p->depth / 4 - 32];
+        sn = gAirGrindDepthScales[p->depth / 4 - 32];
         *gUnk_08757310[lane] = (gAirGrindCourse.unk004 * sn << 8) + 0x300000;
-        sn = gUnk_080D059A[p->depth / 4 - 32];
+        sn = gAirGrindDepthScales[p->depth / 4 - 32];
         *gUnk_08757300[lane] += sn * gAirGrindCourse.unk008 << 8;
         old = p->screenX;
         p->screenX = v - lo + 120;

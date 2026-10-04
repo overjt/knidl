@@ -13,10 +13,10 @@
  * animation table gPlayerObjectWaterShotFrames) is a four-way `switch (Task.unk28)` of
  * endless loops that the ROM lays out in the order 3, 1, 0, 2, with M11's
  * callback PlayerDrawWorldLoadTilesAndPalette and the collision callback PlayerObjectWaterShotUpdate (sound
- * 133).  Variant 4 (PlayerObjectFireBreath, gPlayerObjectFireBreathFrames/gUnk_08751CA4) installs
+ * 133).  Variant 4 (PlayerObjectFireBreath, gPlayerObjectFireBreathFrames/gFireBreathFlameFrames) installs
  * PlayerObjectFireBreathUpdate, which registers the collider row gUnk_0873BDD4 and calls
  * the hit test TaskBreakBlocksAt at the spawner's position with only three
- * arguments.  Variant 5 (PlayerObjectCutterBlade, gUnk_08751A98) and its callback
+ * arguments.  Variant 5 (PlayerObjectCutterBlade, gPlayerObjectCutterBladeFrames) and its callback
  * PlayerObjectCutterBladeUpdate re-bind the body or the shared exit PlayerObjectVanish.  Variant
  * 6 (PlayerObjectLaserBeam, gPlayerObjectLaserBeamFrames, the animation/velocity pairs
  * gUnk_0873B7B0) and its callback PlayerObjectLaserBeamUpdate (a nine-way `switch` on
@@ -233,7 +233,7 @@ void PlayerObjectFireBreath(void)
         break;
     case 1:
         t->drawCallback = (u32)TaskDrawWorld;
-        t->frameTable = gUnk_08751CA4;
+        t->frameTable = gFireBreathFlameFrames;
         t->layer = 5;
         {
             struct Task *u = gCurTask;
@@ -331,10 +331,10 @@ void PlayerObjectCutterBlade(void)
             t->layer = 5;
             {
                 struct Task *u = gCurTask;
-                u->frameTable = gUnk_08751A98;
+                u->frameTable = gPlayerObjectCutterBladeFrames;
                 u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
             }
-            sub_0802205c(gUnk_0873CB54);
+            sub_0802205c(gPlayerObjectCutterBladeTerrainBox);
             gCurTask->u80.attackAbility = ABILITY_CUTTER;
             {
                 struct Task *u = gCurTask;
@@ -408,7 +408,7 @@ void PlayerObjectCutterBladeUpdate(void)
             TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             return;
         }
-        TerrainCollideBoxAlongVelocity(gUnk_0873CB54);
+        TerrainCollideBoxAlongVelocity(gPlayerObjectCutterBladeTerrainBox);
         if ((*(u32 *)&gTerrainResult & 0xFFFFFF) != 0)
         {
             {
@@ -462,7 +462,7 @@ void PlayerObjectCutterBladeUpdate(void)
         if (t->unk2C <= 7)
         {
             if (gFrameCount & 1)
-                t->frameTable = gUnk_08751A98;
+                t->frameTable = gPlayerObjectCutterBladeFrames;
             else
                 t->frameTable = NULL;
         }
@@ -504,7 +504,7 @@ void PlayerObjectLaserBeam(void)
             t->unk2C = 3;
         }
         TaskInitWaterFlags();
-        sub_0802233c(gUnk_0873CB5C);
+        sub_0802233c(gPlayerObjectLaserTerrainBox);
         gCurTask->u80.attackAbility = ABILITY_LASER;
     }
     else
@@ -572,7 +572,7 @@ void PlayerObjectLaserBeamUpdate(void)
             hit = 1;
         }
         else
-            TerrainCollideBoxTileEdge(gUnk_0873CB5C);
+            TerrainCollideBoxTileEdge(gPlayerObjectLaserTerrainBox);
         break;
     case 0:
     case 2:

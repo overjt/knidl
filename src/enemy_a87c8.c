@@ -218,7 +218,7 @@ st3:
             break;
         case 2:
             ActorSetState(KRACKO_STATE_WAIT);
-            gCurTask->posX = (gUnk_087490E4[gCurTask->krackoSide] + gViewRect[0]) << 16;
+            gCurTask->posX = (gKrackoSideX[gCurTask->krackoSide] + gViewRect[0]) << 16;
             gCurTask->posY = (gViewRect[2] + 48) << 16;
             gCurTask->krackoPickPhase = 3;
             break;
@@ -240,7 +240,7 @@ void KrackoWait(void)
     gCurTask->krackoLoopCount = 0;
     do
     {
-        gCurTask->velY = gUnk_087490E8[(s16)gCurTask->krackoLoopCount];
+        gCurTask->velY = gKrackoBobVelY[(s16)gCurTask->krackoLoopCount];
         TaskYieldTrampoline(8);
         gCurTask->krackoLoopCount++;
     } while ((s16)gCurTask->krackoLoopCount <= 5);
@@ -276,7 +276,7 @@ void KrackoCross(void)
         gCurTask->krackoLoopCount = 0;
         do
         {
-            gCurTask->velY = gUnk_087490E8[(s16)gCurTask->krackoLoopCount];
+            gCurTask->velY = gKrackoBobVelY[(s16)gCurTask->krackoLoopCount];
             TaskYieldTrampoline(6);
             gCurTask->krackoLoopCount++;
         } while ((s16)gCurTask->krackoLoopCount <= 5);

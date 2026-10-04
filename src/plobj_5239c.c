@@ -9,7 +9,7 @@
  *
  * Task type #6, variants 7-9, each variant body followed by the callbacks
  * only it installs.  Variant 7 (PlayerObjectIceBreath, animation tables
- * gPlayerObjectIceBreathFrames/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
+ * gPlayerObjectIceBreathFrames/gIceBreathCloudFrames) switches on the sub-state Task.unk18 & 15
  * and installs M11's PlayerDrawWorldLoadTilesAndPalette and its own collision callback
  * PlayerObjectIceBreathUpdate, which registers the collider row gUnk_0873BE24 and runs the
  * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
@@ -108,7 +108,7 @@ void PlayerObjectIceBreath(void)
             break;
         case 1:
             t->drawCallback = (u32)TaskDrawWorld;
-            t->frameTable = gUnk_08751E5C;
+            t->frameTable = gIceBreathCloudFrames;
             t->layer = 7;
             gCurTask->facing = (gCurTask->u8C.parentTask)->facing;
             {

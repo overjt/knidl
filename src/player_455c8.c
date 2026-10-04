@@ -11,7 +11,7 @@
  * Player action bodies, part 13: actions 36-37 and per-frame handlers
  * 33-34.  PlayerActionBurning (action 36, mode 13) is a four-state machine over
  * Task.variant: state 0 starts the move (velocity preset 34, effect 32,
- * animation 0x5CB) and installs the attack box gUnk_0873CCA4 in
+ * animation 0x5CB) and installs the attack box gPlayerBurningHitBoxSet in
  * PlayerState.hitBoxSet, state 1 swaps in the scripts gUnk_0873CB2C /
  * gUnk_0873BD3C (PlayerState.terrainBox/unk64) and cycles the hit-box row
  * Task.unk2C through 0-2, state 2 restores the default scripts
@@ -57,7 +57,7 @@ void PlayerActionBurning(void)
         TaskYieldTrampoline(1);
         PlayerStopAxes(2);
         TaskYieldTrampoline(3);
-        gCurTask->player->hitBoxSet = gUnk_0873CCA4;
+        gCurTask->player->hitBoxSet = gPlayerBurningHitBoxSet;
         PlayerSetMotionXPreset(11, 39);
         gCurTask->frame++;
         TaskYieldTrampoline(2);

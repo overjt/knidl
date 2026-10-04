@@ -394,7 +394,7 @@ void MetaKnightFollowUpdate(void)
     }
 }
 
-void MetaKnightState2(void)
+void MetaKnightStartFollowAhead(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_2;
     if (!(gCurTask->metaKnightFollowFlags & 2))
@@ -413,14 +413,14 @@ void MetaKnightState2(void)
     TaskSleepForever();
 }
 
-void MetaKnightState2Update(void)
+void MetaKnightStartFollowAheadUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != META_KNIGHT_STATE_2)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void MetaKnightState3(void)
+void MetaKnightStartFollowOtherSide(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_3;
     gCurTask->metaKnightFollowOffsetX = -gCurTask->metaKnightFollowOffsetX;
@@ -433,14 +433,14 @@ void MetaKnightState3(void)
     TaskSleepForever();
 }
 
-void MetaKnightState3Update(void)
+void MetaKnightStartFollowOtherSideUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != META_KNIGHT_STATE_3)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void MetaKnightState4(void)
+void MetaKnightExtendFollow(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_4;
     gCurTask->metaKnightFollowTimer = 48;
@@ -448,14 +448,14 @@ void MetaKnightState4(void)
     TaskSleepForever();
 }
 
-void MetaKnightState4Update(void)
+void MetaKnightExtendFollowUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != META_KNIGHT_STATE_4)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void MetaKnightState5(void)
+void MetaKnightStartFollowBack(void)
 {
     struct Task *t;
 
@@ -475,7 +475,7 @@ void MetaKnightState5(void)
     TaskSleepForever();
 }
 
-void MetaKnightState5Update(void)
+void MetaKnightStartFollowBackUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != META_KNIGHT_STATE_5)
@@ -971,7 +971,7 @@ void MetaKnightSlashLongUpdate(void)
         sub_080a7168();
 }
 
-void MetaKnightState22(void)
+void MetaKnightGuardHit(void)
 {
     struct Task *t;
 
@@ -1007,7 +1007,7 @@ void MetaKnightState22(void)
     TaskSleepForever();
 }
 
-void MetaKnightState22Update(void)
+void MetaKnightGuardHitUpdate(void)
 {
     s32 *pD;
     u8 *b3v;
@@ -1056,7 +1056,7 @@ void MetaKnightState22Update(void)
     }
 }
 
-void MetaKnightState23(void)
+void MetaKnightGuardCatch(void)
 {
     struct Task *t;
 
@@ -1076,7 +1076,7 @@ void MetaKnightState23(void)
     TaskSleepForever();
 }
 
-void MetaKnightState23Update(void)
+void MetaKnightGuardCatchUpdate(void)
 {
     u16 v;
 

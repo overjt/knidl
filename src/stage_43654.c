@@ -70,7 +70,7 @@ Lloop:
         {
             struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
 
-            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
+            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gMetaKnightActionSwordBodyBox;
         }
     }
     {
@@ -79,7 +79,7 @@ Lloop:
         {
             struct Task *t = gCurTask;
 
-            g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
+            g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gMetaKnightActionSwordHitBoxSet;
             t->playerAttackStep = -1;
             *(u32 *)((u8 *)t->player + 108) = 0;
             t->variant = 0;
@@ -110,7 +110,7 @@ Lloop:
         struct Task *t = gCurTask;
 
         LoadPlayerHitBoxSet(t->player->playerIndex,
-                     (s32)((u8 *)gUnk_0873D04C + ++t->playerAttackStep * 8));
+                     (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + ++t->playerAttackStep * 8));
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 1);
@@ -125,7 +125,7 @@ Lloop:
         struct Task *t = gCurTask;
 
         LoadPlayerHitBoxSet(t->player->playerIndex,
-                     (s32)((u8 *)gUnk_0873D04C + ++t->playerAttackStep * 8));
+                     (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + ++t->playerAttackStep * 8));
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 5);
@@ -179,7 +179,7 @@ Lloop:
         struct Task *t = gCurTask;
 
         LoadPlayerHitBoxSet(t->player->playerIndex,
-                     (s32)((u8 *)gUnk_0873D04C + --t->playerAttackStep * 8));
+                     (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + --t->playerAttackStep * 8));
         gCurTask->frame--;
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 1);
@@ -194,7 +194,7 @@ Lloop:
         struct Task *t = gCurTask;
 
         LoadPlayerHitBoxSet(t->player->playerIndex,
-                     (s32)((u8 *)gUnk_0873D04C + --t->playerAttackStep * 8));
+                     (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + --t->playerAttackStep * 8));
         gCurTask->frame--;
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 5);
@@ -238,7 +238,7 @@ void MetaKnightActionSlashUpdate(void)
         }
         u = gCurTask;
         if (u->playerAttackStep != -1) {
-            LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873CAA4 + u->playerAttackStep * 8);
+            LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gMetaKnightActionSwordBodyBoxRects + u->playerAttackStep * 8);
             RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                          (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
         }
@@ -276,14 +276,14 @@ void MetaKnightActionDashSlash(void)
         t->playerActionDone28 = 0;
         {
             struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
-            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
+            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gMetaKnightActionSwordBodyBox;
         }
     }
     {
         struct PlayerHitBoxSet *g8 = (struct PlayerHitBoxSet *)gPlayerHitBoxSets;
         {
             struct Task *t = gCurTask;
-            g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
+            g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gMetaKnightActionSwordHitBoxSet;
             t->playerAttackStep = -1;
             *(u32 *)((u8 *)t->player + 108) = 0;
         }
@@ -300,7 +300,7 @@ void MetaKnightActionDashSlash(void)
             t->speedLimitX = 0;
             *(u32 *)((u8 *)t->player + 108) = (u32)&g8[t->player->playerIndex];
             LoadPlayerHitBoxSet(t->player->playerIndex,
-                         (s32)((u8 *)gUnk_0873D04C + (t->playerAttackStep = 8) * 8));
+                         (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + (t->playerAttackStep = 8) * 8));
         }
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -316,14 +316,14 @@ void MetaKnightActionDashSlash(void)
             struct Task *t = gCurTask;
             t->player->playerSlashWindowTimer = 8;
             LoadPlayerHitBoxSet(t->player->playerIndex,
-                         (s32)((u8 *)gUnk_0873D04C + ++t->playerAttackStep * 8));
+                         (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + ++t->playerAttackStep * 8));
         }
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         {
             struct Task *t = gCurTask;
             LoadPlayerHitBoxSet(t->player->playerIndex,
-                         (s32)((u8 *)gUnk_0873D04C + ++t->playerAttackStep * 8));
+                         (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + ++t->playerAttackStep * 8));
         }
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -355,7 +355,7 @@ void MetaKnightActionDashSlash(void)
             do {
                 struct Task *t = gCurTask;
                 LoadPlayerHitBoxSet(t->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873D04C + --t->playerAttackStep * 8));
+                             (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + --t->playerAttackStep * 8));
                 gCurTask->frame--;
                 TaskYieldTrampoline(1);
             } while ((s16)++gCurTask->playerLoopCount <= 7);
@@ -404,7 +404,7 @@ void MetaKnightActionDashSlashUpdate(void)
     } else {
         if (gCurTask->playerAttackStep != -1) {
             LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
-                         (u8 *)gUnk_0873CAA4 + gCurTask->playerAttackStep * 8);
+                         (u8 *)gMetaKnightActionSwordBodyBoxRects + gCurTask->playerAttackStep * 8);
             RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                          (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
         }
@@ -445,13 +445,13 @@ void MetaKnightActionUpwardSlash(void)
         t->playerActionDone28 = 0;
         {
             struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
-            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
+            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gMetaKnightActionSwordBodyBox;
         }
     }
     {
         struct PlayerHitBoxSet *g8 = (struct PlayerHitBoxSet *)gPlayerHitBoxSets;
         struct Task *t = gCurTask;
-        g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
+        g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gMetaKnightActionSwordHitBoxSet;
         t->playerAttackStep = -1;
         *(u32 *)((u8 *)t->player + 108) = 0;
     }
@@ -486,14 +486,14 @@ void MetaKnightActionUpwardSlash(void)
         *(u32 *)((u8 *)t->player + 108) =
             (u32)((u8 *)gPlayerHitBoxSets + t->player->playerIndex * 8);
         LoadPlayerHitBoxSet(t->player->playerIndex,
-                     (s32)((u8 *)gUnk_0873D04C + (t->playerAttackStep = 11) * 8));
+                     (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + (t->playerAttackStep = 11) * 8));
     }
     gCurTask->frame++;
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
         LoadPlayerHitBoxSet(t->player->playerIndex,
-                     (s32)((u8 *)gUnk_0873D04C + ++t->playerAttackStep * 8));
+                     (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + ++t->playerAttackStep * 8));
     }
     gCurTask->frame++;
     TaskYieldTrampoline(2);
@@ -521,7 +521,7 @@ void MetaKnightActionUpwardSlashUpdate(void)
     if (t->playerActionDone28 != 0) {
         PlayerRequestLocomotion();
     } else if (t->playerAttackStep != -1) {
-        LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873CAA4 + t->playerAttackStep * 8);
+        LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gMetaKnightActionSwordBodyBoxRects + t->playerAttackStep * 8);
         RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                      (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
     }
@@ -555,12 +555,12 @@ void MetaKnightActionDownThrust(void)
             t->variant = 0;
             {
                 struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
-                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
+                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gMetaKnightActionSwordBodyBox;
             }
             {
                 struct PlayerHitBoxSet *g8 = (struct PlayerHitBoxSet *)gPlayerHitBoxSets;
                 struct Task *u = gCurTask;
-                g8[u->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
+                g8[u->player->playerIndex] = *(struct PlayerHitBoxSet *)gMetaKnightActionSwordHitBoxSet;
                 u->playerAttackStep = -1;
                 *(u32 *)((u8 *)u->player + 108) = 0;
             }
@@ -577,7 +577,7 @@ void MetaKnightActionDownThrust(void)
             *(u32 *)((u8 *)t->player + 108) =
                 (u32)((u8 *)gPlayerHitBoxSets + t->player->playerIndex * 8);
             LoadPlayerHitBoxSet(t->player->playerIndex,
-                         (s32)((u8 *)gUnk_0873D04C + (t->playerAttackStep = 13) * 8));
+                         (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + (t->playerAttackStep = 13) * 8));
         }
         TaskSetFrame(0x1225);
         TaskYieldTrampoline(2);
@@ -594,7 +594,7 @@ void MetaKnightActionDownThrust(void)
             *(u32 *)((u8 *)t->player + 108) =
                 (u32)((u8 *)gPlayerHitBoxSets + t->player->playerIndex * 8);
             LoadPlayerHitBoxSet(t->player->playerIndex,
-                         (s32)((u8 *)gUnk_0873D04C + (t->playerAttackStep = 14) * 8));
+                         (s32)((u8 *)gMetaKnightActionSwordHitBoxRects + (t->playerAttackStep = 14) * 8));
         }
         break;
     case 1:
@@ -673,7 +673,7 @@ void MetaKnightActionDownThrustUpdate(void)
                 struct Task *w = gCurTask;
                 if (w->playerAttackStep != -1) {
                     LoadPlayerBodyBoxRect(w->player->playerIndex,
-                                 (u8 *)gUnk_0873CAA4 + w->playerAttackStep * 8);
+                                 (u8 *)gMetaKnightActionSwordBodyBoxRects + w->playerAttackStep * 8);
                     RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX,
                                  gCurTask->pixelY,
                                  (u8 *)gPlayerBodyBoxes

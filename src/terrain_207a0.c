@@ -18,7 +18,7 @@
    under the probe point is solid, step the point along its cell -
    horizontally by the sign of Task.velX (gTerrainVelX), else vertically
    by the sign of Task.velY (gTerrainVelY) - up to two cells, mapping a
-   passable cell to its step tile (gUnk_087338F0) while unkB bit 0 is set;
+   passable cell to its step tile (gCollisionTileStepTile) while unkB bit 0 is set;
    otherwise remember in unkB bit 0 whether the cell below is passable. */
 void TerrainProbePointPushOut(void)
 {
@@ -48,7 +48,7 @@ right:
     {
         if (!(gTerrainProbeResult.unkB & 1))
             return;
-        t = gUnk_087338F0[gTerrainTile];
+        t = gCollisionTileStepTile[gTerrainTile];
     }
     else
     {
@@ -65,7 +65,7 @@ right:
     {
         if (!(gTerrainProbeResult.unkB & 1))
             return;
-        t = gUnk_087338F0[gTerrainTile];
+        t = gCollisionTileStepTile[gTerrainTile];
     }
     else
     {
@@ -79,7 +79,7 @@ left:
     {
         if (!(gTerrainProbeResult.unkB & 1))
             return;
-        t = gUnk_087338F0[gTerrainTile];
+        t = gCollisionTileStepTile[gTerrainTile];
     }
     else
     {
@@ -96,7 +96,7 @@ left:
     {
         if (!(gTerrainProbeResult.unkB & 1))
             return;
-        t = gUnk_087338F0[gTerrainTile];
+        t = gCollisionTileStepTile[gTerrainTile];
     }
     else
     {
@@ -139,7 +139,7 @@ down:
 
 /* The tile-edge probe of TerrainCollideBoxTileEdge (src/terrain_1c444.c): with the box
    moving sideways, a wall probe at the probe point that steps onto
-   gUnk_087338F0's step tiles and remembers passable wall tiles in
+   gCollisionTileStepTile's step tiles and remembers passable wall tiles in
    gTerrainProbeResult.unkB bits 1/2; with it moving vertically, a ceiling or
    floor probe that sets unkB to the side (2 = left, 4 = right) on which
    the tile edge it stopped at continues. */
@@ -183,7 +183,7 @@ right:
     {
         if ((gTerrainProbeResult.unkB & 4) == 0)
             return;
-        u = gUnk_087338F0[gTerrainTile];
+        u = gCollisionTileStepTile[gTerrainTile];
     }
     else
     {
@@ -199,7 +199,7 @@ right:
         {
             if ((gTerrainProbeResult.unkB & 4) == 0)
                 return;
-            u = gUnk_087338F0[gTerrainTile];
+            u = gCollisionTileStepTile[gTerrainTile];
         }
         else
         {
@@ -237,7 +237,7 @@ left:
     {
         if ((gTerrainProbeResult.unkB & 2) == 0)
             return;
-        u = gUnk_087338F0[gTerrainTile];
+        u = gCollisionTileStepTile[gTerrainTile];
     }
     else
     {
@@ -253,7 +253,7 @@ left:
         {
             if ((gTerrainProbeResult.unkB & 2) == 0)
                 return;
-            u = gUnk_087338F0[gTerrainTile];
+            u = gCollisionTileStepTile[gTerrainTile];
         }
         else
         {

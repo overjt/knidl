@@ -128,7 +128,7 @@ void TerrainProbeCeilingNoSlopeLink(void)
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxTop) != 0
         && gCollisionTileSlope[gTerrainTile] == 0
         && gCollisionTileOneWay[gTerrainTile] == 0
-        && (gUnk_087339F0[gTerrainTileRight] == 0 || gCollisionTileOneWay[gTerrainTileRight] != 0))
+        && (gCollisionTileCollides[gTerrainTileRight] == 0 || gCollisionTileOneWay[gTerrainTileRight] != 0))
     {
         gTerrainProbeY += GetTilePushDown(gTerrainTile);
         gTerrainProbeResult.ceilingHits++;
@@ -137,7 +137,7 @@ void TerrainProbeCeilingNoSlopeLink(void)
     if (TerrainQueryPixelAndSides(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxTop) != 0
         && gCollisionTileSlope[gTerrainTile] == 0
         && gCollisionTileOneWay[gTerrainTile] == 0
-        && (gUnk_087339F0[gTerrainTileLeft] == 0 || gCollisionTileOneWay[gTerrainTileLeft] != 0))
+        && (gCollisionTileCollides[gTerrainTileLeft] == 0 || gCollisionTileOneWay[gTerrainTileLeft] != 0))
     {
         gTerrainProbeY += GetTilePushDown(gTerrainTile);
         gTerrainProbeResult.ceilingHits++;

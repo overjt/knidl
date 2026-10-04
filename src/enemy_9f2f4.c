@@ -9,7 +9,7 @@
    types than the definition takes (lessons 3.428, 3.517). */
 extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 
-void sub_0809f2f4(void)
+void TridentKnightDrawOverlay(void)
 {
     if (gUnk_08747C30[gCurTask->frame] != -1)
         QueueSprite(gCurTask->layer,

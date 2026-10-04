@@ -69,7 +69,7 @@ s32 GetCollisionTileAtOffset(s16 x, s16 y, s16 dx, s16 dy)
 u16 sub_08021c14(s16 x, s16 y)
 {
     TerrainQueryPixel(x, y);
-    if (gTerrainTile <= 127 && gUnk_087339F0[gTerrainTile] == 0)
+    if (gTerrainTile <= 127 && gCollisionTileCollides[gTerrainTile] == 0)
         return 0;
     return 1;
 }

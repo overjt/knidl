@@ -101,7 +101,7 @@ void KrackoJrTransformUpdate(void)
             {
                 TaskGetNearestPlayerScreenPos();
                 if (gUnk_030023B4 == 128)
-                    gCurTask->posX = (gUnk_087490E4[RandomRange(2)] + gViewRect[0]) << 16;
+                    gCurTask->posX = (gKrackoSideX[RandomRange(2)] + gViewRect[0]) << 16;
                 if (gUnk_030023B4 <= 127)
                     gCurTask->posX = (gViewRect[0] + 168) << 16;
                 else

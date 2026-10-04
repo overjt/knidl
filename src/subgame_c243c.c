@@ -66,7 +66,7 @@ void AirGrindResults(void)
             gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->players[i].unk24;
     }
     for (i = 0; i < 4; i++)
-        gAirGrindResults.rankedPlayers[gUnk_080CFE2C[gAirGrindPtr->localPlayer][i]] = i;
+        gAirGrindResults.rankedPlayers[gAirGrindLocalPlayerSlots[gAirGrindPtr->localPlayer][i]] = i;
     for (j = 3; j > 0; j--) {
         for (i = 0; i < j; i++) {
             if (gAirGrindPtr->raceTimes[gAirGrindResults.rankedPlayers[i]] > gAirGrindPtr->raceTimes[gAirGrindResults.rankedPlayers[i + 1]]) {
@@ -112,7 +112,7 @@ void AirGrindResultsDraw(void)
         AirGrindSetDigitPalette(8);
         AirGrindDrawTime(gAirGrindPtr->raceTimes[p], 114, y);
         AirGrindDrawRatio(gAirGrindResults.unk1C[p], gAirGrindCoursePtr->players[p].unk20, 180, y);
-        pal = gUnk_080CFE2C[gAirGrindPtr->localPlayer][p];
+        pal = gAirGrindLocalPlayerSlots[gAirGrindPtr->localPlayer][p];
         layer = 4;
         if (p == 0)
             layer = 3;
@@ -230,7 +230,7 @@ void AirGrindResultsStep(void)
                 gAirGrindResults.state++;
             } else {
                 for (i = 0; i < 4; i++) {
-                    pal = gUnk_080CFE2C[gAirGrindPtr->localPlayer][i];
+                    pal = gAirGrindLocalPlayerSlots[gAirGrindPtr->localPlayer][i];
                     if (pal < gAirGrindPtr->playerCount) {
                         switch (gAirGrindResults.rankPlace[gAirGrindResults.playerRank[i]]) {
                         case 0:

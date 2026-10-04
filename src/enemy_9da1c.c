@@ -760,7 +760,7 @@ void sub_0809e824(void)
 void TridentKnightDraw(void)
 {
     ActorDrawWorldInViewOrDestroy();
-    sub_0809f2f4();
+    TridentKnightDrawOverlay();
 }
 
 void TridentKnightFallInInit(void)

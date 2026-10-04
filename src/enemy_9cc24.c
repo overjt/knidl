@@ -291,7 +291,7 @@ void sub_0809d13c(void)
 void JavelinKnightDraw(void)
 {
     ActorDrawWorldInViewOrDestroy();
-    sub_0809d994();
+    JavelinKnightDrawOverlay();
 }
 
 void JavelinKnightInit(void)
@@ -568,7 +568,7 @@ void JavelinKnightJumpUpdate(void)
         ActorCheckHitsWithBox(gUnk_08747B38[t->frame - 17]);
 }
 
-void JavelinKnightState5(void)
+void JavelinKnightLandFromJump(void)
 {
     gCurTask->updateState = 4;
     TaskSetFrame(4);
@@ -591,7 +591,7 @@ void JavelinKnightState5(void)
     TaskSleepForever();
 }
 
-void sub_0809d6b4(void)
+void JavelinKnightLandFromJumpUpdate(void)
 {
     if (gCurTask->state != JAVELIN_KNIGHT_STATE_5)
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);

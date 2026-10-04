@@ -9,7 +9,7 @@
  * The floor probe TerrainCollideBoxInCameraBounds runs for a box standing on the ground
  * (gTerrainProbeResult.unk6 != 0): a wall step in the moving direction first,
  * then the floor under the box (the step and slope attribute tables
- * gUnk_087338F0/gUnk_087337F0/gCollisionTileSlippery and gSlopeIndexTiles), the result
+ * gCollisionTileStepTile/gUnk_087337F0/gCollisionTileSlippery and gSlopeIndexTiles), the result
  * flags gTerrainProbeResult.unkD/unk5/unkE, and the ledge counter
  * gTerrainProbeResult.unk10 when the probe finds no floor. */
 
@@ -45,7 +45,7 @@ void TerrainProbeFloorInCameraBounds(void)
             gTerrainProbeResult.unk0 = d;
             if (gCollisionTileOneWay[gTerrainTile] != 0)
             {
-                tile = gUnk_087338F0[gTerrainTile];
+                tile = gCollisionTileStepTile[gTerrainTile];
                 goto right;
             }
             /* The ROM places this arm's `tile = t` and its steps after
@@ -56,14 +56,14 @@ void TerrainProbeFloorInCameraBounds(void)
         {
             gTerrainProbeResult.unk0 = 2;
             if (gCollisionTileOneWay[gTerrainTile] != 0)
-                tile = gUnk_087338F0[gTerrainTile];
+                tile = gCollisionTileStepTile[gTerrainTile];
             else
                 tile = gTerrainTile;
             gTerrainProbeX += GetTilePushRight(tile);
             if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
             {
                 if (gCollisionTileOneWay[gTerrainTile] != 0)
-                    tile = gUnk_087338F0[gTerrainTile];
+                    tile = gCollisionTileStepTile[gTerrainTile];
                 else
                     tile = gTerrainTile;
                 gTerrainProbeX += GetTilePushRight(tile);
@@ -77,7 +77,7 @@ void TerrainProbeFloorInCameraBounds(void)
         if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
         {
             if (gCollisionTileOneWay[gTerrainTile] != 0)
-                tile = gUnk_087338F0[gTerrainTile];
+                tile = gCollisionTileStepTile[gTerrainTile];
             else
                 tile = gTerrainTile;
             gTerrainProbeX += GetTilePushLeft(tile);

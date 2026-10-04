@@ -18,7 +18,7 @@
  * decreasing speeds, killed by PlayerEffectSlideDustUpdate once the player leaves mode 7),
  * each spawning its own sub-state 1, a small rising puff.  Variants 9-11 are
  * M09's player task effects: 9 (PlayerEffectSplash) and 10 (PlayerEffectLeaveWaterSplash) play
- * short animations from gUnk_0874C520, 9 first calling M11's
+ * short animations from gSplashFrames, 9 first calling M11's
  * PlaySfxIfLocalPlayer(134, ...) when the spawner is moving down (Task.velY > 0)
  * and 10 placed at the height the spawner passes in the low half of
  * Task.unk18; 11 (PlayerEffectBubble) asks M07's IsFullBlockAtPixel about its position
@@ -215,7 +215,7 @@ void PlayerEffectSplash(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C520;
+    t->frameTable = gSplashFrames;
     if ((t->u8C.parentTask)->velY > 0)
         PlaySfxIfLocalPlayer(134, t->parent);
     u = gCurTask;
@@ -241,7 +241,7 @@ void PlayerEffectLeaveWaterSplash(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C520;
+    t->frameTable = gSplashFrames;
     t->posX = (t->u8C.parentTask)->pixelX << 16;
     t->posY = (u16)t->playerEffectSpawnWord << 16;
     t->frame = 11;

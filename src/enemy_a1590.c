@@ -3417,8 +3417,8 @@ void Task_MrBrightBeamEffect(void)
     CallTableEntry(gCurTask->variant, 3, gMrBrightBeamEffectVariants);
 }
 
-/* MrBrightBeamEffectVariant0 (0x080A5524-0x080A556C) */
-void MrBrightBeamEffectVariant0(void)
+/* MrBrightBeamEffectFlicker (0x080A5524-0x080A556C) */
+void MrBrightBeamEffectFlicker(void)
 {
     struct Task **c;
     u16 z;
@@ -3441,8 +3441,8 @@ void MrBrightBeamEffectVariant0(void)
     }
 }
 
-/* MrBrightBeamEffectVariant1 (0x080A556C-0x080A55AC) */
-void MrBrightBeamEffectVariant1(void)
+/* MrBrightBeamEffectDropSlow (0x080A556C-0x080A55AC) */
+void MrBrightBeamEffectDropSlow(void)
 {
     struct Task **c;
     u32 *base;
@@ -3467,8 +3467,8 @@ void MrBrightBeamEffectVariant1(void)
     }
 }
 
-/* MrBrightBeamEffectVariant2 (0x080A55AC-0x080A55EC) */
-void MrBrightBeamEffectVariant2(void)
+/* MrBrightBeamEffectDropFast (0x080A55AC-0x080A55EC) */
+void MrBrightBeamEffectDropFast(void)
 {
     struct Task **c;
     u32 *base;

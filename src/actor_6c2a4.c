@@ -9,7 +9,7 @@
  * (ActorAttachedThrowFlight / ActorAttachedThrowFlightUpdate / ActorAttachedThrowFlightLateUpdate - a nine-step animation
  * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
  * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
- * walk Task.frame through a gfx list (gUnk_0874C520 / gUnk_0874CBC8) before
+ * walk Task.frame through a gfx list (gSplashFrames / gStarFlashFrames) before
  * TaskExitTrampoline.  CreateStarFlash and CreateDustTrail are the two helper
  * spawners that fix up Task.facing (facing) on the task they created.
  *
@@ -143,9 +143,9 @@ void ActorAttachedThrowHeldUpdate(void)
     ActorAttachedThrowHeldFollowCarrier();
     t = gCurTask;
     if (t->actorKind == ACTOR_KIND_MID_BOSS)
-        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F86C);
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedThrowMidBossCollider);
     else
-        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F858);
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedThrowCollider);
 }
 
 void ActorAttachedThrowHeldLateUpdate(void)
@@ -257,9 +257,9 @@ void ActorAttachedThrowFlightUpdate(void)
         }
         if (v->actorKind == ACTOR_KIND_MID_BOSS)
             RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX,
-                         gCurTask->pixelY, gUnk_0873F86C);
+                         gCurTask->pixelY, gActorAttachedThrowMidBossCollider);
         else
-            RegisterCollider((u8)gCurTaskIdx, v->pixelX, v->pixelY, gUnk_0873F858);
+            RegisterCollider((u8)gCurTaskIdx, v->pixelX, v->pixelY, gActorAttachedThrowCollider);
     }
 }
 
@@ -350,7 +350,7 @@ void ActorAttachedThrowFlightLateUpdate(void)
         if (IsWorldPosOnScreen((s16)(y->unk30 + y->unk34),
                          (s16)(y->unk1C + y->unk20)) != 0)
         {
-            tbl = gUnk_0874CC84;
+            tbl = gTrailFlashFrames;
             z = gCurTask;
             QueueSprite(z->layer, tbl[z->unk2C], 0, 0,
                          z->unk30 + z->unk34 - gSpriteCameraX,
@@ -423,7 +423,7 @@ void Task_ActorSplash(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874C520;
+    u->frameTable = gSplashFrames;
     u->frame = 11;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -478,7 +478,7 @@ void Task_StarFlash(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CBC8;
+    u->frameTable = gStarFlashFrames;
     TaskFaceLikeParent();
     gCurTask->frame = 0;
     TaskYieldTrampoline(2);
@@ -497,7 +497,7 @@ void Task_StarFlashOnParent(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CBC8;
+    u->frameTable = gStarFlashFrames;
     u->updateCallback = (u32)StarFlashFollowParent;
     TaskFaceLikeParent();
     gCurTask->starFlashOnParentLoopCount = 0;

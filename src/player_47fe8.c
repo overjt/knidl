@@ -309,7 +309,7 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->player->hitBoxSet = gUnk_0873CCA4;
+            gCurTask->player->hitBoxSet = gPlayerBurningHitBoxSet;
             TaskSetFrame(0x5E1);
             TaskYieldTrampoline(2);
             gCurTask->frame--;
@@ -444,11 +444,11 @@ void PlayerActionGetAbility(void)
             {
                 struct Task *u = gCurTask;
                 u->playerGetAbilityAttackOn = 1;
-                gPlayerBodyBoxes[u->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
+                gPlayerBodyBoxes[u->player->playerIndex] = *(struct PlayerBodyBox *)gPlayerNeedleBodyBox;
             }
             {
                 struct Task *u;
-                gPlayerHitBoxSets[(u = gCurTask)->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
+                gPlayerHitBoxSets[(u = gCurTask)->player->playerIndex] = *(struct PlayerHitBoxSet *)gPlayerNeedleHitBoxSet;
                 u->playerAttackStep30 = -1;
             }
             TaskSetFrame(0x96E);
@@ -773,9 +773,9 @@ void PlayerActionGetAbilityUpdate(void)
             break;
         case ABILITY_NEEDLE:
             if (t->playerAttackStep30 != -1) {
-                LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873C1C4 + t->playerAttackStep30 * 8);
+                LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gPlayerNeedleBodyBoxRects + t->playerAttackStep30 * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->playerAttackStep30 * 8));
+                             (s32)((u8 *)gPlayerNeedleHitBoxRects + gCurTask->playerAttackStep30 * 8));
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
                 TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex],
@@ -783,8 +783,8 @@ void PlayerActionGetAbilityUpdate(void)
             }
             break;
         case ABILITY_FREEZE:
-            RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873C214);
-            TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->player->playerIndex);
+            RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, gPlayerFreezeCollider);
+            TaskBreakBlocks((struct HitBoxSet *)gPlayerFreezeBlockBreakBox, gCurTask->player->playerIndex);
             break;
         }
     }

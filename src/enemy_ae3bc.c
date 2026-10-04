@@ -1087,7 +1087,7 @@ void NightmarePowerOrbStarUpdate(void)
     ActorReactToHit();
 }
 
-void NightmarePowerOrbStarVariant0(void)
+void NightmarePowerOrbStarFanUpFar(void)
 {
     struct Task **c;
     s32 va;
@@ -1158,7 +1158,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant1(void)
+void NightmarePowerOrbStarFanUpNear(void)
 {
     struct Task **c;
     s32 va;
@@ -1229,7 +1229,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant2(void)
+void NightmarePowerOrbStarFanDownNear(void)
 {
     struct Task **c;
     s32 va;
@@ -1300,7 +1300,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant3(void)
+void NightmarePowerOrbStarFanDownFar(void)
 {
     struct Task **c;
     s32 va;
@@ -1401,7 +1401,7 @@ void NightmarePowerOrbStarSetVelYTowardPlayer(void)
     }
 }
 
-void NightmarePowerOrbStarVariant4(void)
+void NightmarePowerOrbStarSpawnVolley(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1442,7 +1442,7 @@ void NightmarePowerOrbStarVariant4(void)
     TaskExitTrampoline();
 }
 
-void NightmarePowerOrbStarVariant5(void)
+void NightmarePowerOrbStarStraightFast(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1481,7 +1481,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant6(void)
+void NightmarePowerOrbStarDiagonalUp(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1521,7 +1521,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant7(void)
+void NightmarePowerOrbStarStraightSlow(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1560,7 +1560,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant8(void)
+void NightmarePowerOrbStarDiagonalDown(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1600,7 +1600,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant9(void)
+void NightmarePowerOrbStarSplitUp(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1645,7 +1645,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant10(void)
+void NightmarePowerOrbStarSplitDown(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1690,7 +1690,7 @@ top:
     goto top;
 }
 
-void NightmarePowerOrbStarVariant11(void)
+void NightmarePowerOrbStarShot(void)
 {
     struct Task **c;
     struct Task *u1;

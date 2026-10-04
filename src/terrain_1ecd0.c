@@ -129,7 +129,7 @@ walls:
         }
         if (side == 1)
             goto right;
-        if (gUnk_087339F0[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
+        if (gCollisionTileCollides[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
             goto right;
         if (gCollisionTileOneWay[gTerrainTile] != 0 && !(gTerrainProbeResult.unkB & 0x10))
         {
@@ -201,7 +201,7 @@ right:
         }
         if (side == 2)
             return;
-        if (gUnk_087339F0[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
+        if (gCollisionTileCollides[u] != 0 && (gCollisionTileOneWay[u] == 0 || (gTerrainProbeResult.unkB & 1)))
             return;
         if (gCollisionTileOneWay[gTerrainTile] != 0 && !(gTerrainProbeResult.unkB & 0x20))
         {

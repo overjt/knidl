@@ -1424,7 +1424,7 @@ s32 GipGetWallDistRight(s32 a, s32 b)
     p = (u16)*pa + x;
     q = (u16)t->pixelY + (s8)b;
     i = GetCollisionTileAtPixel(p, q);
-    if (gUnk_087339F0[i] == 0 || gCollisionTileOneWay[i] != 0
+    if (gCollisionTileCollides[i] == 0 || gCollisionTileOneWay[i] != 0
      || gUnk_087337F0[i] != 0 || gCollisionTileSlope[i] != 0
      || gCollisionTileDamaging[i] != 0)
         goto minus1;
@@ -1456,7 +1456,7 @@ s32 GipGetWallDistLeft(s32 a, s32 b)
     p = (u16)*pa - x;
     q = (u16)t->pixelY + (s8)b;
     i = GetCollisionTileAtPixel(p, q);
-    if (gUnk_087339F0[i] == 0 || gCollisionTileOneWay[i] != 0
+    if (gCollisionTileCollides[i] == 0 || gCollisionTileOneWay[i] != 0
      || gUnk_087337F0[i] != 0 || gCollisionTileSlope[i] != 0
      || gCollisionTileDamaging[i] != 0)
         goto minus1;

@@ -23,7 +23,7 @@
  *     `0x08741794`, per-frame hook `FlamerUpdate`, re-arm `FlamerEnterState`);
  *   * its terrain library: `FlamerGetSurfaceSlopeInDir` / `FlamerGetSurfaceSlopeOnSide` / `sub_08083bbc` /
  *     `FlamerGetSurfaceSlopeAt` probe the room with GetCollisionTileAtPixel/GetCollisionTileAtOffset and turn the
- *     `gUnk_087339F0` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
+ *     `gCollisionTileCollides` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
  *     tile class, `FlamerSetCrawlVelocity` turns a direction code into an aim angle plus
  *     a 16.16 velocity through AngleToVector, and `sub_08083dfc` is the
  *     five-times-four-frame animation wait;
@@ -612,7 +612,7 @@ u8 FlamerGetSurfaceSlopeInDir(s32 dir)
     a = t->pixelX + gUnk_08741684[dir];
     b = t->pixelY + gUnk_08741688[dir];
     i = GetCollisionTileAtPixel(a, b);
-    if (gUnk_087339F0[i] != 0)
+    if (gCollisionTileCollides[i] != 0)
     {
         r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->onGround == 0)
@@ -677,7 +677,7 @@ u8 sub_08083bbc(s32 dir, s32 k)
     i = GetCollisionTileAtOffset(a, b, *p, *q);
     if (i == -1)
         return 0;
-    if (gUnk_087339F0[i] != 0)
+    if (gCollisionTileCollides[i] != 0)
     {
         r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->onGround == 0)
@@ -695,7 +695,7 @@ u8 FlamerGetSurfaceSlopeAt(s16 x, s16 y)
     i = (s16)GetCollisionTileAtPixel(x, y);
     if (i == -1)
         return 0;
-    if (gUnk_087339F0[i] != 0)
+    if (gCollisionTileCollides[i] != 0)
     {
         r = gUnk_087416A4[gCollisionTileSlope[i]];
         if ((u8)(r - 2) <= 3 && gCurTask->onGround == 0)

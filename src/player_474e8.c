@@ -21,7 +21,7 @@
  * the HUD call SetPlayerAbility(0, -1, player); its handler PlayerActionSleepUpdate does
  * the same release when the ability PlayerState.ability is 11.
  * PlayerActionNeedle (action 43) is a re-entrant three-state machine: state 0
- * installs the hit boxes gUnk_0873C1B0 and gUnk_0873CEEC in the player
+ * installs the hit boxes gPlayerNeedleBodyBox and gPlayerNeedleHitBoxSet in the player
  * records gPlayerBodyBoxes[]/gPlayerHitBoxSets[] and steps the frame index
  * Task.unk46, state 1 plays frames 5-10 and waits while B is held,
  * state 2 plays the release.  Its handler PlayerActionNeedleUpdate shows frame
@@ -285,9 +285,9 @@ void PlayerActionNeedle(void)
         {
             struct Task *t = gCurTask;
             t->playerAttackStep = -1;
-            gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
+            gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gPlayerNeedleBodyBox;
         }
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gPlayerNeedleHitBoxSet;
         gCurTask->playerNeedleOnGround = gCurTask->onGround;
         gCurTask->playerNeedleStep = 0;
         TaskYieldTrampoline(8);
@@ -357,9 +357,9 @@ void PlayerActionNeedleUpdate(void)
         if (gCurTask->playerAttackStep >= 0) {
             if (gCurTask->playerNeedleOnGround != 0) {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
-                             (u8 *)gUnk_0873C1C4 + gCurTask->playerAttackStep * 8);
+                             (u8 *)gPlayerNeedleBodyBoxRects + gCurTask->playerAttackStep * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->playerAttackStep * 8));
+                             (s32)((u8 *)gPlayerNeedleHitBoxRects + gCurTask->playerAttackStep * 8));
             } else {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
                              (u8 *)gUnk_0873C1EC + gCurTask->playerAttackStep * 8);

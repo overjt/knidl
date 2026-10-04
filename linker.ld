@@ -1956,7 +1956,7 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.sram_id_string) == 0x080CFE20, "MATCHING: .sram_id_string moved")
 
-    /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gAirGrindSineTable, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer */
+    /* Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gAirGrindLocalPlayerSlots-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gAirGrindSineTable, gAirGrindDepthScales-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer */
     .air_grind_rodata : {
         KEEP(*(.air_grind_rodata))
     } > ROM

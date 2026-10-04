@@ -1485,13 +1485,13 @@ void CutsceneBombActorScript18(void)
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_0874CA1C;
+    gCurTask->frameTable = gExplosionFrames;
     gCurTask->tileWord = 0;
     gCurTask->posX = 0;
     gCurTask->posY = 0;
     TaskStop();
     c = &gCurTask;
-    p = (u16 *)gUnk_0873E640;
+    p = (u16 *)gExplosionAnimFrames;
     for (i = 22; i >= 0; p++, i--) {
         (*c)->frame = *p;
         TaskYieldTrampoline(2);

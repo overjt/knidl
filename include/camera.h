@@ -87,7 +87,7 @@ extern u32 gArenaDoorSignFrames[];
 extern u32 gBossDoorSignFrames[];
 extern u32 gUnk_087558C4[];
 extern u32 gDoorMarkerFrames[];
-extern u32 gUnk_087558DC[];
+extern u32 gDoorSignDoorFrames[];
 extern u32 gDoorOpeningFrames[];
 extern u32 gStageClearFlagFrames[];
 extern u32 gQuickDrawDoorSignFrames[];

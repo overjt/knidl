@@ -581,8 +581,8 @@ void MetaKnightActionDuck(void)
     t = gCurTask;
     if (t->player->prevMode != 6)
     {
-        ((u32 **)t->player)[25] = gUnk_0873BD28;
-        ((u32 **)t->player)[26] = gUnk_0873CB24;
+        ((u32 **)t->player)[25] = gPlayerDuckBodyBox;
+        ((u32 **)t->player)[26] = gPlayerDuckTerrainBox;
         t->playerPoseSlope = ((u8 *)t->player)[75];
         PlayerSetMotionXPreset(0, 72);
     }

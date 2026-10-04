@@ -434,7 +434,7 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionYPreset(20);
             t = gCurTask;
-            t->playerBaseFrame = gUnk_0873D3B8[t->player->ability][1];
+            t->playerBaseFrame = gPlayerFallFrames[t->player->ability][1];
             switch (t->player->ability)
             {
             case ABILITY_NORMAL:

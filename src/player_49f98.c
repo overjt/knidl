@@ -17,7 +17,7 @@
  * gUnk_0873CF5C with effects 42 x4 and sound 174 and runs velocity
  * presets 38, 0 and 1, and states 3-4 hand the player over to mode 5
  * with handler 7 (animation 0xAD2, then the ability's loop from
- * gUnk_0873D3B8[ability][1]).  Its handler PlayerActionHiJumpUpdate
+ * gPlayerFallFrames[ability][1]).  Its handler PlayerActionHiJumpUpdate
  * flashes the palette gUnk_081F59F0 (the VRAM transfer queue
  * RequestCopy) in state 1, re-binds state 3 on a newly-pressed B after
  * the PlayerState.unk14 frames, registers the collider gUnk_0873C228,
@@ -116,7 +116,7 @@ void PlayerActionHiJump(void)
         {
             struct Task *t = gCurTask;
             t->player->unk14 = 30;
-            t->unk46 = gUnk_0873D3B8[t->player->ability][1];
+            t->unk46 = gPlayerFallFrames[t->player->ability][1];
         }
         while (1) {
             TaskSetFrame(gCurTask->unk46);

@@ -314,7 +314,7 @@ void PlayerActionEnterDoor(void)
     case 1:
         gCurTask->player->mouthState = 0;
         CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 0);
-        TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);
+        TaskSetFrame(gPlayerFloatFrames[gCurTask->player->ability][2]);
         TaskYieldTrampoline(6);
         gCurTask->frame--;
         TaskYieldTrampoline(2);

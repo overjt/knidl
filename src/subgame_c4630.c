@@ -288,7 +288,7 @@ void AirGrindDrawRatio(s32 a, s32 b, s32 x, s32 y)
 
 void AirGrindDrawRacerSprite(s32 idx, s32 pal, s32 scale, s32 x, s32 y, u32 layer)
 {
-    QueueSprite(layer, AirGrindScaleSprite(gUnk_08755F54[idx], scale), 0x2000, (pal << 12) & 0xF000, x, y);
+    QueueSprite(layer, AirGrindScaleSprite(gAirGrindRacerFrames[idx], scale), 0x2000, (pal << 12) & 0xF000, x, y);
 }
 
 void AirGrindSeedRandom(void)

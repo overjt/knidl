@@ -12,7 +12,7 @@
  *   AirGrindRacerMove   a racer's Task.moveCallback callback: Task.velX (speed) +=
  *       Task.accelX (acceleration), with a catch-up bonus for the computer
  *       racers behind the leader (AirGrindState.leaderCoursePos), capped by the level's
- *       gUnk_080CFE3C[level][0]; then Task.posX += speed.
+ *       gAirGrindRacerSpeeds[level][0]; then Task.posX += speed.
  *   AirGrindRacerDraw / AirGrindEffectDrawOrFree   the Task.drawCallback draw callbacks of the
  *       racers (with a blinking extra sprite for three poses) and of the
  *       effect sprites (which end themselves off screen), both drawn scaled
@@ -89,7 +89,7 @@ void AirGrindRacerMove(void)
     s32 v;
     s32 d;
 
-    if (n <= 1 || gUnk_080CFE2C[g->localPlayer][gCurTask->unk1C] >= n) {
+    if (n <= 1 || gAirGrindLocalPlayerSlots[g->localPlayer][gCurTask->unk1C] >= n) {
         gCurTask->velX += gCurTask->accelX;
     } else {
         t = gCurTask;
@@ -104,8 +104,8 @@ void AirGrindRacerMove(void)
         }
     }
     if (gCurTask->velX > 0) {
-        if (gCurTask->velX > gUnk_080CFE3C[gAirGrindPtr->level][0])
-            gCurTask->velX = gUnk_080CFE3C[gAirGrindPtr->level][0];
+        if (gCurTask->velX > gAirGrindRacerSpeeds[gAirGrindPtr->level][0])
+            gCurTask->velX = gAirGrindRacerSpeeds[gAirGrindPtr->level][0];
     } else if (gCurTask->velX < 0) {
         gCurTask->velX = 0;
     }

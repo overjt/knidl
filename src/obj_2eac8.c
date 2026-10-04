@@ -117,7 +117,7 @@ void Task_BossDoorSign(void)
     u = gCurTask;
     u->tileWord = 0x8800;
     u->bossDoorSignTileFrame = -1;
-    u->bossDoorSignDoorFrames = (s32)gUnk_087558DC;
+    u->bossDoorSignDoorFrames = (s32)gDoorSignDoorFrames;
     u->bossDoorSignDoorFrame = 0;
     u->frame = 0;
     u->updateCallback = (u32)BossDoorSignUpdate;

@@ -608,7 +608,7 @@ void MrFrostyBounceOffWallUpdate(void)
 {
 }
 
-void MrFrostyState5(void)
+void MrFrostyBounceFromWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -631,7 +631,7 @@ void MrFrostyState5(void)
     TaskSleepForever();
 }
 
-void MrFrostyState5Update(void)
+void MrFrostyBounceFromWallUpdate(void)
 {
     struct Task *t;
 
@@ -644,7 +644,7 @@ void MrFrostyState5Update(void)
     }
 }
 
-void MrFrostyState6(void)
+void MrFrostyShake(void)
 {
     struct Task *t;
     struct Task *u;
@@ -669,7 +669,7 @@ void MrFrostyState6(void)
     }
 }
 
-void MrFrostyState6Update(void)
+void MrFrostyShakeUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -985,7 +985,7 @@ void MrFrostyDefeatUpdate(void)
     ActorFlashPalette(&gUnk_08274840, 16);
 }
 
-void MrFrostyState14(void)
+void MrFrostyBounceFromDefeat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1006,7 +1006,7 @@ void MrFrostyState14(void)
     TaskSleepForever();
 }
 
-void MrFrostyState14Update(void)
+void MrFrostyBounceFromDefeatUpdate(void)
 {
     struct Task *t;
 
@@ -1019,7 +1019,7 @@ void MrFrostyState14Update(void)
     }
 }
 
-void MrFrostyState15(void)
+void MrFrostyDefeatEnd(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1044,7 +1044,7 @@ void MrFrostyState15(void)
     TaskSleepForever();
 }
 
-void MrFrostyState15Update(void)
+void MrFrostyDefeatEndUpdate(void)
 {
     struct Task *t;
 

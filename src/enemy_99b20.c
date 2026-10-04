@@ -25,8 +25,8 @@
  *
  * Task_MrFrostyIceCube, Task_MrTickTockRing and Task_MrTickTockNote are the three companion tasks
  * (graphics gIceBlockFrames, gMrTickTockRingFrames, gMrTickTockNoteFrames).  They use
- * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; MrFrostyIceCubeState0Update and
- * MrTickTockRingState0Update read the parent's state out of gTasks[Task.parent], and
+ * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; MrFrostyIceCubePopUpUpdate and
+ * MrTickTockRingExpandUpdate read the parent's state out of gTasks[Task.parent], and
  * the third one's own states live in the next module - gMrTickTockNoteVariants points at
  * MrTickTockNoteInit.  MrTickTockRingEnterState is a dead copy of the gMrTickTockRingStates re-arm.
  */
@@ -1248,7 +1248,7 @@ void MrTickTockBounceOffWallUpdate(void)
 {
 }
 
-void MrTickTockState16(void)
+void MrTickTockShake(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1295,7 +1295,7 @@ void MrTickTockState16(void)
     }
 }
 
-void MrTickTockState16Update(void)
+void MrTickTockShakeUpdate(void)
 {
     struct Task *t;
 
@@ -1314,7 +1314,7 @@ void MrTickTockState16Update(void)
     }
 }
 
-void MrTickTockState17(void)
+void MrTickTockPace(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1376,7 +1376,7 @@ void MrTickTockState17(void)
     }
 }
 
-void MrTickTockState17Update(void)
+void MrTickTockPaceUpdate(void)
 {
     struct Task *t;
 
@@ -1396,7 +1396,7 @@ void MrTickTockState17Update(void)
     }
 }
 
-void MrTickTockState18(void)
+void MrTickTockPaceAtWall(void)
 {
     struct Task *t;
 
@@ -1486,7 +1486,7 @@ void MrTickTockDefeatUpdate(void)
     ActorFlashPalette(&gUnk_082797C8, 16);
 }
 
-void MrTickTockState20(void)
+void MrTickTockBounceFromDefeat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1507,7 +1507,7 @@ void MrTickTockState20(void)
     TaskSleepForever();
 }
 
-void MrTickTockState20Update(void)
+void MrTickTockBounceFromDefeatUpdate(void)
 {
     struct Task *t;
 
@@ -1520,7 +1520,7 @@ void MrTickTockState20Update(void)
     }
 }
 
-void MrTickTockState21(void)
+void MrTickTockDefeatEnd(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1545,7 +1545,7 @@ void MrTickTockState21(void)
     TaskSleepForever();
 }
 
-void MrTickTockState21Update(void)
+void MrTickTockDefeatEndUpdate(void)
 {
     struct Task *t;
 
@@ -1707,7 +1707,7 @@ void MrFrostyIceCubeEnterState(void)
     CallTableEntry(gCurTask->state, 3, gMrFrostyIceCubeStates);
 }
 
-void MrFrostyIceCubeState0(void)
+void MrFrostyIceCubePopUp(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1742,7 +1742,7 @@ void MrFrostyIceCubeState0(void)
     TaskSleepForever();
 }
 
-void MrFrostyIceCubeState0Update(void)
+void MrFrostyIceCubePopUpUpdate(void)
 {
     struct Task *t;
 
@@ -1874,7 +1874,7 @@ void MrTickTockRingEnterState(void)
     CallTableEntry(gCurTask->state, 1, gMrTickTockRingStates);
 }
 
-void MrTickTockRingState0(void)
+void MrTickTockRingExpand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1908,7 +1908,7 @@ void MrTickTockRingState0(void)
     }
 }
 
-void MrTickTockRingState0Update(void)
+void MrTickTockRingExpandUpdate(void)
 {
     struct Task *t;
 
