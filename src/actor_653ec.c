@@ -1169,7 +1169,7 @@ void sub_08066658(struct AnimCmd *p)
     t->updateCallback = (u32)sub_08066754;
     ActorStopAnim();
     if (p != NULL)
-        gCurTask->unk24 = ActorStartAnim(p);
+        gCurTask->actorAnimDelay24 = ActorStartAnim(p);
     TaskSetSkipMask(8, gCurTaskIdx);
     ActorSetAttackBox(a->unk60->altAttackBox);
 }
@@ -1181,7 +1181,7 @@ void sub_080666a4(void)
     TaskSetSkipMask(0, gCurTaskIdx);
     t = gCurTask;
     t->updateCallback = t->unk20;
-    t->unk24 = 0;
+    t->actorAnimDelay24 = 0;
     t->unk20 = 0;
 }
 
@@ -1226,9 +1226,9 @@ void sub_08066754(void)
 
     t = gCurTask;
     if (t->actorKind == 2 && t->u76.subtype == 5)
-        gCurTask->unk24 = ActorTickAnim(t->unk24);
+        gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
     else
-        gCurTask->unk24 = ActorTickAnimFacingNearestPlayer(gCurTask->unk24);
+        gCurTask->actorAnimDelay24 = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay24);
     sub_08068f68();
     ActorReactToHit();
 }

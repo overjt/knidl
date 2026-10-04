@@ -834,10 +834,10 @@ s32 WaddleDeeLand(void)
         {
             struct Task *t = gCurTask;
 
-            if (t->unk28 <= 0)
-                t->unk28 = 30;
+            if (t->waddleDeeJumpTimer <= 0)
+                t->waddleDeeJumpTimer = 30;
         }
-        gCurTask->unk34 = ActorStartAnim(gUnk_087406A0);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
         ActorSetState(0);
         TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
         r = 1;

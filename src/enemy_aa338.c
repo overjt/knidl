@@ -1233,15 +1233,15 @@ void Task_NightmareWizardPalmTornado(void)
     gCurTask->frameTable = gUnk_08754708;
     gCurTask->updateCallback = (u32)NightmareWizardPalmTornadoUpdate;
     TaskFaceLikeParent();
-    gCurTask->unk28 = 2;
+    gCurTask->nightmareWizardPalmTornadoFrameTimer = 2;
     TaskSetFrame(0);
     while (gUnk_02007D00[5] == 0)
     {
-        w = gCurTask->unk28 - 1;
-        gCurTask->unk28 = w;
+        w = gCurTask->nightmareWizardPalmTornadoFrameTimer - 1;
+        gCurTask->nightmareWizardPalmTornadoFrameTimer = w;
         if (w == 0)
         {
-            gCurTask->unk28 = 2;
+            gCurTask->nightmareWizardPalmTornadoFrameTimer = 2;
             gCurTask->frame++;
             if ((s16)gCurTask->frame > 3)
                 gCurTask->frame = w;
@@ -1334,30 +1334,30 @@ void Task_NightmareWizardPointTornado(void)
     gCurTask->frameTable = gUnk_08754718;
     gCurTask->updateCallback = (u32)NightmareWizardPointTornadoUpdate;
     TaskFaceLikeParent();
-    gCurTask->unk28 = 2;
+    gCurTask->nightmareWizardPointTornadoFrameTimer = 2;
     TaskSetFrame(0);
     while (gUnk_02007D00[7] == 0)
     {
-        w = gCurTask->unk28 - 1;
-        gCurTask->unk28 = w;
+        w = gCurTask->nightmareWizardPointTornadoFrameTimer - 1;
+        gCurTask->nightmareWizardPointTornadoFrameTimer = w;
         if (w == 0)
         {
-            gCurTask->unk28 = 2;
+            gCurTask->nightmareWizardPointTornadoFrameTimer = 2;
             gCurTask->frame++;
             if ((s16)gCurTask->frame > 3)
                 gCurTask->frame = w;
         }
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk28 = 2;
+    gCurTask->nightmareWizardPointTornadoFrameTimer = 2;
     TaskSetFrame(4);
     while (gUnk_02007D00[7] == 1)
     {
-        w2 = gCurTask->unk28 - 1;
-        gCurTask->unk28 = w2;
+        w2 = gCurTask->nightmareWizardPointTornadoFrameTimer - 1;
+        gCurTask->nightmareWizardPointTornadoFrameTimer = w2;
         if (w2 == 0)
         {
-            gCurTask->unk28 = 2;
+            gCurTask->nightmareWizardPointTornadoFrameTimer = 2;
             gCurTask->frame++;
             if ((s16)gCurTask->frame > 7)
                 gCurTask->frame = 4;
@@ -1401,23 +1401,23 @@ void Task_NightmareWizardCloakHands(void)
     gCurTask->updateCallback = (u32)sub_080ac30c;
     TaskFaceLikeParent();
     TaskSetFrame(4);
-    gCurTask->unk28 = 0;
+    gCurTask->nightmareWizardCloakHandsBobY = 0;
     for (;;)
     {
-        gCurTask->unk6C = 0;
+        gCurTask->nightmareWizardCloakHandsLoopCount = 0;
         do
         {
-            gCurTask->unk28--;
+            gCurTask->nightmareWizardCloakHandsBobY--;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
-        gCurTask->unk6C = 0;
+            gCurTask->nightmareWizardCloakHandsLoopCount++;
+        } while ((s16)gCurTask->nightmareWizardCloakHandsLoopCount <= 2);
+        gCurTask->nightmareWizardCloakHandsLoopCount = 0;
         do
         {
-            gCurTask->unk28++;
+            gCurTask->nightmareWizardCloakHandsBobY++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
+            gCurTask->nightmareWizardCloakHandsLoopCount++;
+        } while ((s16)gCurTask->nightmareWizardCloakHandsLoopCount <= 2);
     }
 }
 
@@ -1550,10 +1550,10 @@ void NightmareWizardHitBoxUpdate(void)
             wv0 = *(u16 *)((u8 *)o + 74);
     t->pixelY = wv0;
             t->facing = o->facing;
-            gCurTask->unk28 = gUnk_087494C8[o->frame];
-            if (gCurTask->unk28 == -1)
+            gCurTask->nightmareWizardHitBoxIndex = gUnk_087494C8[o->frame];
+            if (gCurTask->nightmareWizardHitBoxIndex == -1)
                 return;
-            ActorCheckHitsWithBox((s32)gUnk_08749458[gCurTask->unk28]);
+            ActorCheckHitsWithBox((s32)gUnk_08749458[gCurTask->nightmareWizardHitBoxIndex]);
             u = gCurTask;
             v = u->hitKind;
             if (v == 6 && u->hitEffect == 9)
@@ -1563,7 +1563,7 @@ void NightmareWizardHitBoxUpdate(void)
             }
             else
             {
-                w = gUnk_08749490[gCurTask->unk28];
+                w = gUnk_08749490[gCurTask->nightmareWizardHitBoxIndex];
                 if (w == 0)
                     return;
                 ActorCheckHitsWithBox(w);
@@ -1626,14 +1626,14 @@ void sub_080ac72c(void)
 
     sub_0806956c();
     CallTableEntry(gCurTask->updateState, 3, gUnk_08749B98);
-    if (gCurTask->unk28 > 0)
+    if (gCurTask->metaKnightSwordLanded > 0)
         ActorCheckHits();
     if (gCurTask->hitKind == 7)
     {
-        for (gCurTask->unk70 = 0; (s16)gCurTask->unk70 < gPlayerCount; gCurTask->unk70++)
+        for (gCurTask->metaKnightSwordPickerIndex = 0; (s16)gCurTask->metaKnightSwordPickerIndex < gPlayerCount; gCurTask->metaKnightSwordPickerIndex++)
         {
             d = gCurTask->hitterPlayer;
-            k = (s16)gCurTask->unk70;
+            k = (s16)gCurTask->metaKnightSwordPickerIndex;
             if ((d >> k) & 1)
             {
                 if (gPlayerStates[k].ability == 24)
@@ -1654,7 +1654,7 @@ void sub_080ac72c(void)
                 }
             }
         }
-        if ((s16)gCurTask->unk70 != gPlayerCount)
+        if ((s16)gCurTask->metaKnightSwordPickerIndex != gPlayerCount)
             ActorDestroy();
     }
 }
@@ -1678,18 +1678,18 @@ void sub_080ac868(void)
 
     gCurTask->updateState = 0;
     TaskSetMotionY(0, 168 << 5, 192 << 10);
-    gCurTask->unk28 = 0;
+    gCurTask->metaKnightSwordLanded = 0;
     gCurTask->onGround = 0;
-    gCurTask->unk2C = 2;
+    gCurTask->metaKnightSwordFallFrameTimer = 2;
     TaskSetFrame(10);
     while (gCurTask->onGround == 0)
     {
         TaskYieldTrampoline(1);
-        w = gCurTask->unk2C - 1;
-        gCurTask->unk2C = w;
+        w = gCurTask->metaKnightSwordFallFrameTimer - 1;
+        gCurTask->metaKnightSwordFallFrameTimer = w;
         if (w == 0)
         {
-            gCurTask->unk2C = 2;
+            gCurTask->metaKnightSwordFallFrameTimer = 2;
             gCurTask->frame++;
             if ((s16)gCurTask->frame > 11)
                 gCurTask->frame = 4;
@@ -1697,8 +1697,8 @@ void sub_080ac868(void)
     }
     TaskStop();
     TaskSetFrame(12);
-    gCurTask->unk28 = 1;
-    v74 = gCurTask->unk74;
+    gCurTask->metaKnightSwordLanded = 1;
+    v74 = gCurTask->actorSpawnArg;
     if (v74 == 0)
     {
         sp.subtype = 18;
@@ -1733,16 +1733,16 @@ void sub_080ac950(void)
     }
     TaskSetMotionY(-0x40000, 192 << 6, 192 << 10);
     gCurTask->onGround = 0;
-    gCurTask->unk28 = 2;
+    gCurTask->metaKnightSwordHopFrameTimer = 2;
     TaskSetFrame(22);
     while (gCurTask->onGround == 0)
     {
         TaskYieldTrampoline(1);
-        w = gCurTask->unk28 - 1;
-        gCurTask->unk28 = w;
+        w = gCurTask->metaKnightSwordHopFrameTimer - 1;
+        gCurTask->metaKnightSwordHopFrameTimer = w;
         if (w == 0)
         {
-            gCurTask->unk28 = 2;
+            gCurTask->metaKnightSwordHopFrameTimer = 2;
             gCurTask->frame++;
             if ((s16)gCurTask->frame > 23)
                 gCurTask->frame = 16;
@@ -1802,18 +1802,18 @@ void KrackoStarmanState0(void)
     gCurTask->onGround = 0;
     TaskSetMotionY(0, 148 << 10, 192 << 10);
     TaskSetMotionXFacing(192 << 8, 0x5A5A5A5A);
-    gCurTask->unk28 = 6;
+    gCurTask->krackoStarmanFrameTimer = 6;
     TaskSetFrame(11);
     while (gCurTask->onGround == 0)
     {
-        w = gCurTask->unk28 - 1;
-        gCurTask->unk28 = w;
+        w = gCurTask->krackoStarmanFrameTimer - 1;
+        gCurTask->krackoStarmanFrameTimer = w;
         if (w == 0)
         {
             gCurTask->frame++;
             if ((s16)gCurTask->frame > 13)
                 gCurTask->frame = 11;
-            gCurTask->unk28 = 6;
+            gCurTask->krackoStarmanFrameTimer = 6;
         }
         TaskYieldTrampoline(1);
     }
@@ -1851,7 +1851,7 @@ void KrackoStarmanCheckParent(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->u76.subtype == 6 && o->unk34 == 0)
+        if (o->u76.subtype == 6 && o->krackoDefeatStage == 0)
             return;
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }

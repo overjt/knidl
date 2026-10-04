@@ -273,24 +273,24 @@ void Task_KrackoJrOrbs(void)
     gCurTask->frameTable = gUnk_08754418;
     gCurTask->updateCallback = (u32)KrackoJrOrbsUpdate;
     TaskFaceNearestPlayer();
-    gCurTask->unk28 = gUnk_02007D00[0] & 15;
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = gUnk_087491A8[gCurTask->unk28];
+    gCurTask->krackoJrOrbsSpeedIndex = gUnk_02007D00[0] & 15;
+    gCurTask->krackoJrOrbsFrameStep = 0;
+    gCurTask->krackoJrOrbsFrameTimer = gUnk_087491A8[gCurTask->krackoJrOrbsSpeedIndex];
     gCurTask->frame = gUnk_087491A0[0];
     while (gUnk_02007D00[0] != 4) {
-        if (gCurTask->unk28 != (gUnk_02007D00[0] & 15)) {
-            gCurTask->unk28 = gUnk_02007D00[0] & 15;
-            gCurTask->unk30 = gUnk_087491A8[gCurTask->unk28];
+        if (gCurTask->krackoJrOrbsSpeedIndex != (gUnk_02007D00[0] & 15)) {
+            gCurTask->krackoJrOrbsSpeedIndex = gUnk_02007D00[0] & 15;
+            gCurTask->krackoJrOrbsFrameTimer = gUnk_087491A8[gCurTask->krackoJrOrbsSpeedIndex];
         }
-        w = gCurTask->unk30 - 1;
-        gCurTask->unk30 = w;
+        w = gCurTask->krackoJrOrbsFrameTimer - 1;
+        gCurTask->krackoJrOrbsFrameTimer = w;
         if (w == 0) {
-            n = gCurTask->unk2C + 1;
-            gCurTask->unk2C = n;
+            n = gCurTask->krackoJrOrbsFrameStep + 1;
+            gCurTask->krackoJrOrbsFrameStep = n;
             if (n > 3)
-                gCurTask->unk2C = w;
-            gCurTask->frame = gUnk_087491A0[gCurTask->unk2C];
-            gCurTask->unk30 = gUnk_087491A8[gCurTask->unk28];
+                gCurTask->krackoJrOrbsFrameStep = w;
+            gCurTask->frame = gUnk_087491A0[gCurTask->krackoJrOrbsFrameStep];
+            gCurTask->krackoJrOrbsFrameTimer = gUnk_087491A8[gCurTask->krackoJrOrbsSpeedIndex];
         }
         TaskYieldTrampoline(1);
     }
@@ -348,7 +348,7 @@ void Task_KrackoCloud(void)
     TaskYieldTrampoline(6);
     gCurTask->frame++;
     TaskYieldTrampoline(6);
-    gCurTask->unk6C = 0;
+    gCurTask->krackoCloudLoopCount = 0;
     do {
         gCurTask->frame = 8;
         TaskYieldTrampoline(2);
@@ -358,9 +358,9 @@ void Task_KrackoCloud(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
-    gCurTask->unk6C = 0;
+        gCurTask->krackoCloudLoopCount++;
+    } while ((s16)gCurTask->krackoCloudLoopCount <= 2);
+    gCurTask->krackoCloudLoopCount = 0;
     do {
         gCurTask->frame = 8;
         TaskYieldTrampoline(1);
@@ -370,9 +370,9 @@ void Task_KrackoCloud(void)
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+        gCurTask->krackoCloudLoopCount++;
+    } while ((s16)gCurTask->krackoCloudLoopCount <= 3);
+    gCurTask->krackoCloudLoopCount = 0;
     do {
         gCurTask->frame = 0;
         TaskYieldTrampoline(2);
@@ -382,29 +382,29 @@ void Task_KrackoCloud(void)
         TaskYieldTrampoline(1);
         gCurTask->frame--;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 6);
-    gCurTask->unk28 = (d = gUnk_02007D00[0]);
-    gCurTask->unk2C = 0;
+        gCurTask->krackoCloudLoopCount++;
+    } while ((s16)gCurTask->krackoCloudLoopCount <= 6);
+    gCurTask->krackoCloudSpeedIndex = (d = gUnk_02007D00[0]);
+    gCurTask->krackoCloudFrameStep = 0;
     gCurTask->frame = gUnk_087491BC[0];
     p = gUnk_087491D4[d];
-    gCurTask->unk30 = p[0];
+    gCurTask->krackoCloudFrameTimer = p[0];
     for (;;) {
-        if (gCurTask->unk28 != gUnk_02007D00[0]) {
+        if (gCurTask->krackoCloudSpeedIndex != gUnk_02007D00[0]) {
             d2 = gUnk_02007D00[0];
-            gCurTask->unk28 = d2;
+            gCurTask->krackoCloudSpeedIndex = d2;
             p = gUnk_087491D4[d2];
-            gCurTask->unk30 = p[gCurTask->unk2C];
+            gCurTask->krackoCloudFrameTimer = p[gCurTask->krackoCloudFrameStep];
         }
-        w = gCurTask->unk30 - 1;
-        gCurTask->unk30 = w;
+        w = gCurTask->krackoCloudFrameTimer - 1;
+        gCurTask->krackoCloudFrameTimer = w;
         if (w == 0) {
-            n = gCurTask->unk2C + 1;
-            gCurTask->unk2C = n;
+            n = gCurTask->krackoCloudFrameStep + 1;
+            gCurTask->krackoCloudFrameStep = n;
             if (n > 3)
-                gCurTask->unk2C = w;
-            gCurTask->frame = gUnk_087491BC[gCurTask->unk2C];
-            gCurTask->unk30 = p[gCurTask->unk2C];
+                gCurTask->krackoCloudFrameStep = w;
+            gCurTask->frame = gUnk_087491BC[gCurTask->krackoCloudFrameStep];
+            gCurTask->krackoCloudFrameTimer = p[gCurTask->krackoCloudFrameStep];
         }
         TaskYieldTrampoline(1);
     }
@@ -422,7 +422,7 @@ void sub_080a9ba0(void)
     if ((s16)arr[i] != -1) {
         struct Task *o = &gTasks[i];
 
-        if (o->u76.subtype == 6 && o->unk34 != 2) {
+        if (o->u76.subtype == 6 && o->krackoDefeatStage != 2) {
             t->pixelX = o->pixelX;
             t->pixelY = o->pixelY;
         } else {
@@ -445,8 +445,8 @@ void Task_KrackoLightningTop(void)
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->frame]);
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->unk46 = CreateChildTaskAtOffsetFacing(198, gUnk_087491FC[gCurTask->frame], 16, 1);
-    gTasks[gCurTask->unk46].parent = gCurTask->parent;
+    gCurTask->krackoLightningTopMiddleSlot = CreateChildTaskAtOffsetFacing(198, gUnk_087491FC[gCurTask->frame], 16, 1);
+    gTasks[gCurTask->krackoLightningTopMiddleSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -462,8 +462,8 @@ void Task_KrackoLightningMiddle(void)
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += gUnk_087491E4[gCurTask->frame];
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->unk46 = CreateChildTaskAtOffsetFacing(199, gUnk_087491FC[gCurTask->frame], 12, 1);
-    gTasks[gCurTask->unk46].parent = gCurTask->parent;
+    gCurTask->krackoLightningMiddleBottomSlot = CreateChildTaskAtOffsetFacing(199, gUnk_087491FC[gCurTask->frame], 12, 1);
+    gTasks[gCurTask->krackoLightningMiddleBottomSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
 }
@@ -517,7 +517,7 @@ void sub_080a9ea4(void)
     s16 i;
 
     arr = gTaskSlotTypes;
-    i = gCurTask->unk46;
+    i = gCurTask->krackoOrbsSlot;
     if ((s16)arr[i] != -1)
         ActorDestroySlot(i);
 }

@@ -111,37 +111,37 @@ void FlamerState0(void)
     TaskSetFrame(4);
     TaskYieldTrampoline(1);
     t = gCurTask;
-    t->unk18 = 0;
-    t->unk30 = 4;
+    t->flamerSurfaceSlope = 0;
+    t->flamerSurfaceSide = 4;
     do
     {
         t = gCurTask;
-        t->unk30 -= 2;
-        if (FlamerGetSurfaceSlopeInDir(t->unk30) != 0)
+        t->flamerSurfaceSide -= 2;
+        if (FlamerGetSurfaceSlopeInDir(t->flamerSurfaceSide) != 0)
         {
-            gCurTask->unk18 = 1;
+            gCurTask->flamerSurfaceSlope = 1;
             v = TaskGetAngleToNearestPlayer(2);
             t = gCurTask;
-            if ((t->unk30 & 1) == 0)
+            if ((t->flamerSurfaceSide & 1) == 0)
             {
                 if ((u16)(v - 64) > 128)
-                    t->unk34 = 3;
+                    t->flamerCrawlDir = 3;
                 else
-                    t->unk34 = 1;
+                    t->flamerCrawlDir = 1;
             }
             else
             {
                 if (v <= 127)
-                    t->unk34 = 0;
+                    t->flamerCrawlDir = 0;
                 else
-                    t->unk34 = 2;
+                    t->flamerCrawlDir = 2;
             }
-            gCurTask->unk1C = 0;
+            gCurTask->flamerCrawlPhase = 0;
             goto done;
         }
-    } while (gCurTask->unk30 != 0);
+    } while (gCurTask->flamerSurfaceSide != 0);
 done:
-    if (gCurTask->unk18 == 0)
+    if (gCurTask->flamerSurfaceSlope == 0)
         ActorSetState(2);
     else
         ActorSetState(1);
@@ -163,7 +163,7 @@ void FlamerCrawl(void)
     TaskSetFrame(4);
     while (1)
     {
-        TaskYieldTrampoline(gUnk_087416AD[gCurTask->unk74]);
+        TaskYieldTrampoline(gUnk_087416AD[gCurTask->flamerSpeedLevel]);
         t = gCurTask;
         t->frame++;
         if ((s16)t->frame > 7)
@@ -189,61 +189,61 @@ void FlamerCrawlUpdate(void)
     u8 f;
 
     t = gCurTask;
-    switch (t->unk1C)
+    switch (t->flamerCrawlPhase)
     {
     case 0:
-        d = FlamerGetSurfaceSlopeOnSide(t->unk30);
+        d = FlamerGetSurfaceSlopeOnSide(t->flamerSurfaceSide);
         if (d == 0)
         {
             u = gCurTask;
-            u->unk1C = 1;
+            u->flamerCrawlPhase = 1;
             u->velX = 0;
             u->velY = 0;
             break;
         }
         w = gCurTask;
-        w->unk18 = d;
-        if ((w->unk30 & 2) != 0 && d == 1)
+        w->flamerSurfaceSlope = d;
+        if ((w->flamerSurfaceSide & 2) != 0 && d == 1)
         {
-            e = sub_08083bbc(w->unk30, w->unk34);
-            f = sub_08083bbc(gCurTask->unk30, 0);
+            e = sub_08083bbc(w->flamerSurfaceSide, w->flamerCrawlDir);
+            f = sub_08083bbc(gCurTask->flamerSurfaceSide, 0);
             if (e > 5 && f > 5)
-                gCurTask->unk18 = e;
+                gCurTask->flamerSurfaceSlope = e;
         }
-        d = FlamerGetSurfaceSlopeInDir(gCurTask->unk34);
-        if (d == 1 || ((gCurTask->unk34 & 1) == 0 && d > 1))
+        d = FlamerGetSurfaceSlopeInDir(gCurTask->flamerCrawlDir);
+        if (d == 1 || ((gCurTask->flamerCrawlDir & 1) == 0 && d > 1))
         {
-            gUnk_03001F2C = n = gCurTask->unk34;
-            gCurTask->unk34 = (gCurTask->unk30 + 2) & 3;
-            gCurTask->unk30 = n;
+            gUnk_03001F2C = n = gCurTask->flamerCrawlDir;
+            gCurTask->flamerCrawlDir = (gCurTask->flamerSurfaceSide + 2) & 3;
+            gCurTask->flamerSurfaceSide = n;
             FlamerSetCrawlVelocity(d);
         }
         else
         {
-            FlamerSetCrawlVelocity(gCurTask->unk18);
+            FlamerSetCrawlVelocity(gCurTask->flamerSurfaceSlope);
         }
         break;
     case 1:
-        m = t->unk18;
+        m = t->flamerSurfaceSlope;
         if (m > 1)
         {
             t->posX &= 0xFFFF0000;
             t->posY &= 0xFFFF0000;
-            t->posX += gUnk_087416F8[t->unk30] - gUnk_08741718[t->unk34];
-            t->posY += gUnk_08741708[t->unk30] - gUnk_08741728[t->unk34];
-            t->unk18 = 1;
-            t->unk1C = 0;
+            t->posX += gUnk_087416F8[t->flamerSurfaceSide] - gUnk_08741718[t->flamerCrawlDir];
+            t->posY += gUnk_08741708[t->flamerSurfaceSide] - gUnk_08741728[t->flamerCrawlDir];
+            t->flamerSurfaceSlope = 1;
+            t->flamerCrawlPhase = 0;
         }
         else
         {
             t->posX = (t->posX & 0xFFF00000) | 0x80000;
             t->posY = (t->posY & 0xFFF00000) | 0x80000;
-            t->posX += gUnk_087416F8[t->unk30] + gUnk_08741718[t->unk34];
-            t->posY += gUnk_08741708[t->unk30] + gUnk_08741728[t->unk34];
-            t->unk1C = 2;
-            gUnk_03001F2C = n2 = t->unk30;
-            t->unk30 = (t->unk34 + 2) & 3;
-            t->unk34 = n2;
+            t->posX += gUnk_087416F8[t->flamerSurfaceSide] + gUnk_08741718[t->flamerCrawlDir];
+            t->posY += gUnk_08741708[t->flamerSurfaceSide] + gUnk_08741728[t->flamerCrawlDir];
+            t->flamerCrawlPhase = 2;
+            gUnk_03001F2C = n2 = t->flamerSurfaceSide;
+            t->flamerSurfaceSide = (t->flamerCrawlDir + 2) & 3;
+            t->flamerCrawlDir = n2;
             FlamerSetCrawlVelocity(m);
         }
         x = gCurTask;
@@ -251,21 +251,21 @@ void FlamerCrawlUpdate(void)
         x->pixelY = x->posY >> 16;
         break;
     case 2:
-        if (FlamerGetSurfaceSlopeOnSide(t->unk30) == 0)
+        if (FlamerGetSurfaceSlopeOnSide(t->flamerSurfaceSide) == 0)
             ActorSetState(0);
         y = gCurTask;
-        y->unk1C = 0;
-        if ((y->unk34 & 1) != 0)
+        y->flamerCrawlPhase = 0;
+        if ((y->flamerCrawlDir & 1) != 0)
             y->velY = 0;
         break;
     }
     v = gCurTask;
-    if (v->unk30 != 0)
+    if (v->flamerSurfaceSide != 0)
         v->onGround = 0;
     else
         v->onGround = 1;
     z = gCurTask;
-    if ((z->unk28 & 0x80) == 0 && --z->unk28 == 0)
+    if ((z->flamerCheckTimer & 0x80) == 0 && --z->flamerCheckTimer == 0)
     {
         p.x0 = z->pixelX - 64;
         p.y0 = z->pixelY - 64;
@@ -273,7 +273,7 @@ void FlamerCrawlUpdate(void)
         p.y1 = gCurTask->pixelY + 64;
         if (TaskIsNearestPlayerInRect(&p) != 0)
             ActorSetState(3);
-        gCurTask->unk28 = 20;
+        gCurTask->flamerCheckTimer = 20;
     }
     if (gCurTask->state != 1)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
@@ -285,8 +285,8 @@ void FlamerFall(void)
 
     gCurTask->updateState = 2;
     t = gCurTask;
-    t->unk30 = 0;
-    t->unk18 = 0;
+    t->flamerSurfaceSide = 0;
+    t->flamerSurfaceSlope = 0;
     t->onGround = 0;
     TaskStopX();
     TaskSetMotionY(0, 0x1500, 0x30000);
@@ -303,10 +303,10 @@ void FlamerFallUpdate(void)
         m = TaskGetAngleToNearestPlayer(2);
         m -= 64;
         if (m > 128)
-            gCurTask->unk34 = 3;
+            gCurTask->flamerCrawlDir = 3;
         else
-            gCurTask->unk34 = 1;
-        gCurTask->unk1C = 0;
+            gCurTask->flamerCrawlDir = 1;
+        gCurTask->flamerCrawlPhase = 0;
         ActorSetState(1);
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
     }
@@ -322,15 +322,15 @@ void FlamerState3(void)
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     TaskSetFrame(4);
-    gCurTask->unk6C = 0;
+    gCurTask->flamerLoopCount = 0;
     do
     {
         t = gCurTask;
-        t->velY = gUnk_087416B0[(s16)t->unk6C];
-        TaskYieldTrampoline(gUnk_087416CC[(s16)t->unk6C]);
+        t->velY = gUnk_087416B0[(s16)t->flamerLoopCount];
+        TaskYieldTrampoline(gUnk_087416CC[(s16)t->flamerLoopCount]);
         gCurTask->frame++;
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 6);
+        gCurTask->flamerLoopCount++;
+    } while ((s16)gCurTask->flamerLoopCount <= 6);
     sub_08083dfc();
     ActorSetState(4);
     TaskSleepForever();
@@ -348,20 +348,20 @@ void FlamerState4(void)
 
     gCurTask->updateState = 4;
     ActorSetAttackBox(gUnk_0873F758);
-    gCurTask->unk20 = TaskGetAngleToNearestPlayer(3);
-    gCurTask->unk1C = 1;
+    gCurTask->flamerFlightAngle = TaskGetAngleToNearestPlayer(3);
+    gCurTask->flamerSteerTimer = 1;
     while (1)
     {
         TaskSetFrame(8);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->flamerLoopCount = 0;
         do
         {
             t = gCurTask;
             t->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
+            gCurTask->flamerLoopCount++;
+        } while ((s16)gCurTask->flamerLoopCount <= 2);
     }
 }
 
@@ -374,7 +374,7 @@ void FlamerState4Update(void)
     struct PointPair p;
     s16 a;
 
-    if (--gCurTask->unk1C == 0)
+    if (--gCurTask->flamerSteerTimer == 0)
     {
         TaskGetNearestPlayerPos();
         if (TaskGetFacingTowardNearestPlayer() == 1)
@@ -382,16 +382,16 @@ void FlamerState4Update(void)
         else
             gUnk_030023B4 = gUnk_030023B4 + 64;
         a = (u16)ArcTan2(gUnk_030023B4 - gCurTask->pixelX, gUnk_030023D4 - gCurTask->pixelY) >> 7;
-        if (a > 384 && gCurTask->unk20 <= 127)
+        if (a > 384 && gCurTask->flamerFlightAngle <= 127)
             a = a - 512;
-        else if (a <= 127 && gCurTask->unk20 > 384)
+        else if (a <= 127 && gCurTask->flamerFlightAngle > 384)
             a = a + 512;
-        if (a > (u = gCurTask)->unk20)
-            u->unk20 = u->unk20 + 32;
+        if (a > (u = gCurTask)->flamerFlightAngle)
+            u->flamerFlightAngle = u->flamerFlightAngle + 32;
         else
-            u->unk20 = u->unk20 - 32;
+            u->flamerFlightAngle = u->flamerFlightAngle - 32;
         v = gCurTask;
-        v->unk20 &= 0x1FF;
+        v->flamerFlightAngle &= 0x1FF;
         p.x0 = v->pixelX;
         p.y0 = v->pixelY;
         p.x1 = gUnk_030023B4;
@@ -404,8 +404,8 @@ void FlamerState4Update(void)
         else
         {
             w = gCurTask;
-            w->unk1C = gUnk_08741738[w->unk74];
-            AngleToVector((s16)w->unk20, gUnk_0874173C[w->unk74]);
+            w->flamerSteerTimer = gUnk_08741738[w->flamerSpeedLevel];
+            AngleToVector((s16)w->flamerFlightAngle, gUnk_0874173C[w->flamerSpeedLevel]);
             x = gCurTask;
             x->velX = gUnk_030023B4;
             x->velY = gUnk_030023D4;
@@ -420,21 +420,21 @@ void FlamerState5(void)
     gCurTask->updateState = 5;
     TaskFaceNearestPlayer();
     TaskStop();
-    gCurTask->unk20 = ActorStartAnim(gUnk_08741744);
+    gCurTask->actorAnimDelay20 = ActorStartAnim(gUnk_08741744);
     TaskSetMotionXFacing(-0x18000, 0x5A5A5A5A);
     TaskYieldTrampoline(8);
     TaskSetMotionXFacing(-0xC000, 0x5A5A5A5A);
     TaskYieldTrampoline(8);
     TaskSetMotionXFacing(0x40000, 0x5A5A5A5A);
-    gCurTask->unk20 = ActorStartAnim(gUnk_08741758);
-    gCurTask->unk24 = -1;
+    gCurTask->actorAnimDelay20 = ActorStartAnim(gUnk_08741758);
+    gCurTask->flamerFlameTimer = -1;
     while (1)
     {
-        gCurTask->unk24++;
-        if ((gCurTask->unk24 & 3) == 0)
+        gCurTask->flamerFlameTimer++;
+        if ((gCurTask->flamerFlameTimer & 3) == 0)
         {
-            gCurTask->unk46 = CreateChildTaskAtOffsetFacing(176, 0, 0, 1);
-            (gTasks + (s16)gCurTask->unk46)->unk18 = (gCurTask->unk24 >> 2) & 3;
+            gCurTask->flamerFlameSlot = CreateChildTaskAtOffsetFacing(176, 0, 0, 1);
+            (gTasks + (s16)gCurTask->flamerFlameSlot)->flamerFlameArcIndex = (gCurTask->flamerFlameTimer >> 2) & 3;
         }
         n = TaskGetNearestPlayerDx();
         gCurTask->unk1C = n;
@@ -445,7 +445,7 @@ void FlamerState5(void)
         TaskYieldTrampoline(1);
     }
     TaskYieldTrampoline(12);
-    gCurTask->unk20 = ActorStartAnim(gUnk_08741744);
+    gCurTask->actorAnimDelay20 = ActorStartAnim(gUnk_08741744);
     TaskSetMotionXFacing(0x30000, 0x5A5A5A5A);
     gCurTask->velY = -0x10000;
     TaskYieldTrampoline(6);
@@ -455,7 +455,7 @@ void FlamerState5(void)
     TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
     gCurTask->velY = -0x30000;
     TaskYieldTrampoline(6);
-    if (gCurTask->unk2C == 0)
+    if (gCurTask->flamerDashCount == 0)
     {
         TaskSetMotionXFacing(0, 0x5A5A5A5A);
         gCurTask->velY = -0x20000;
@@ -463,7 +463,7 @@ void FlamerState5(void)
         gCurTask->velY = -0x10000;
         TaskYieldTrampoline(6);
         TaskStop();
-        gCurTask->unk2C++;
+        gCurTask->flamerDashCount++;
         ActorSetState(6);
     }
     TaskSleepForever();
@@ -471,7 +471,7 @@ void FlamerState5(void)
 
 void FlamerState5Update(void)
 {
-    gCurTask->unk20 = ActorTickAnim(gCurTask->unk20);
+    gCurTask->actorAnimDelay20 = ActorTickAnim(gCurTask->actorAnimDelay20);
     if (gCurTask->state != 5)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
@@ -482,10 +482,10 @@ void FlamerState6(void)
 
     gCurTask->updateState = 6;
     ActorSetAttackBox(gUnk_0873F720);
-    gCurTask->unk20 = TaskGetAngleToNearestPlayer(3);
-    gCurTask->unk1C = 1;
+    gCurTask->flamerFlightAngle = TaskGetAngleToNearestPlayer(3);
+    gCurTask->flamerSteerTimer = 1;
     TaskSetFrame(8);
-    while (gCurTask->unk1C != 0)
+    while (gCurTask->flamerSteerTimer != 0)
     {
         TaskYieldTrampoline(2);
         t = gCurTask;
@@ -497,25 +497,25 @@ void FlamerState6(void)
     sub_08083dfc();
     TaskSetFrame(8);
     TaskYieldTrampoline(6);
-    gCurTask->unk6C = 0;
+    gCurTask->flamerLoopCount = 0;
     do
     {
         t = gCurTask;
         t->frame++;
         TaskYieldTrampoline(6);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->flamerLoopCount++;
+    } while ((s16)gCurTask->flamerLoopCount <= 2);
     TaskSetFrame(4);
     TaskYieldTrampoline(8);
-    gCurTask->unk6C = 0;
+    gCurTask->flamerLoopCount = 0;
     do
     {
         t = gCurTask;
         t->frame++;
         TaskYieldTrampoline(8);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
-    gCurTask->unk28 = 20;
+        gCurTask->flamerLoopCount++;
+    } while ((s16)gCurTask->flamerLoopCount <= 2);
+    gCurTask->flamerCheckTimer = 20;
     ActorSetState(2);
     TaskSleepForever();
 }
@@ -529,24 +529,24 @@ void FlamerState6Update(void)
     u16 n;
 
     t = gCurTask;
-    if (t->unk1C != 0)
+    if (t->flamerSteerTimer != 0)
     {
-        if (--t->unk1C == 0)
+        if (--t->flamerSteerTimer == 0)
         {
             n = TaskGetAngleToNearestPlayer(3);
             u = gCurTask;
-            if (n > u->unk20)
-                u->unk20 = u->unk20 + 32;
+            if (n > u->flamerFlightAngle)
+                u->flamerFlightAngle = u->flamerFlightAngle + 32;
             else
-                u->unk20 = u->unk20 - 32;
+                u->flamerFlightAngle = u->flamerFlightAngle - 32;
             gUnk_03001F2C = 4;
             while (gUnk_03001F2C != 0 && FlamerGetSurfaceSlopeOnSide(gUnk_03001F2C - 1) == 0)
                 gUnk_03001F2C--;
             if (gUnk_03001F2C != 0)
             {
                 v = gCurTask;
-                v->unk1C = gUnk_08741738[v->unk74];
-                AngleToVector((s16)v->unk20, gUnk_0874173C[v->unk74]);
+                v->flamerSteerTimer = gUnk_08741738[v->flamerSpeedLevel];
+                AngleToVector((s16)v->flamerFlightAngle, gUnk_0874173C[v->flamerSpeedLevel]);
                 w = gCurTask;
                 w->velX = gUnk_030023B4;
                 w->velY = gUnk_030023D4;
@@ -631,7 +631,7 @@ u8 FlamerGetSurfaceSlopeOnSide(s32 dir)
     u8 r;
 
     t = gCurTask;
-    if ((t->unk34 & 2) != 0)
+    if ((t->flamerCrawlDir & 2) != 0)
     {
         a = t->pixelX + gUnk_0874168C[dir];
         b = t->pixelY + gUnk_08741690[dir];
@@ -662,7 +662,7 @@ u8 sub_08083bbc(s32 dir, s32 k)
     s8 *q;
     r = 0;
     t = gCurTask;
-    if ((t->unk34 & 2) != 0)
+    if ((t->flamerCrawlDir & 2) != 0)
     {
         a = t->pixelX + gUnk_0874168C[dir];
         b = t->pixelY + gUnk_08741690[dir];
@@ -712,7 +712,7 @@ s32 FlamerSetCrawlVelocity(u8 a)
     if (a > 5)
     {
         v = gUnk_087416D4[a - 2];
-        if (gCurTask->unk34 == 1)
+        if (gCurTask->flamerCrawlDir == 1)
             v = (v + 272) & 0x1FF;
         else
             v = (v - 16) & 0x1FF;
@@ -720,14 +720,14 @@ s32 FlamerSetCrawlVelocity(u8 a)
     else if (a > 1)
     {
         v = gUnk_087416D4[a - 2];
-        if (gCurTask->unk34 == 1)
+        if (gCurTask->flamerCrawlDir == 1)
             v = (v + 256) & 0x1FF;
     }
     else
     {
-        v = gUnk_087416E4[gCurTask->unk34];
+        v = gUnk_087416E4[gCurTask->flamerCrawlDir];
     }
-    AngleToVector(v, gUnk_087416EC[gCurTask->unk74][0]);
+    AngleToVector(v, gUnk_087416EC[gCurTask->flamerSpeedLevel][0]);
     t = gCurTask;
     t->velX = gUnk_030023B4;
     t->velY = gUnk_030023D4;
@@ -737,7 +737,7 @@ void sub_08083dfc(void)
 {
     struct Task *t;
 
-    gCurTask->unk6C = 0;
+    gCurTask->flamerLoopCount = 0;
     do
     {
         TaskSetFrame(8);
@@ -751,8 +751,8 @@ void sub_08083dfc(void)
         t = gCurTask;
         t->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 4);
+        gCurTask->flamerLoopCount++;
+    } while ((s16)gCurTask->flamerLoopCount <= 4);
 }
 
 u8 FlamerEnterWater(void)
@@ -803,7 +803,7 @@ void SirKibbleCutterState0(void)
 
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
-    TaskSetMotionXFacing(gUnk_08741E54[gCurTask->unk74], gUnk_08741E5C[gCurTask->unk74]);
+    TaskSetMotionXFacing(gUnk_08741E54[gCurTask->actorSpawnArg], gUnk_08741E5C[gCurTask->actorSpawnArg]);
     gCurTask->speedLimitX = 0x2A800;
     while (1)
     {
@@ -894,23 +894,23 @@ void sub_08084114(void)
     t->updateState = 0;
     u = gCurTask;
     if (u->facing == 1)
-        u->unk28 = 0;
+        u->hotHeadFireAngle = 0;
     else
-        u->unk28 = 256;
+        u->hotHeadFireAngle = 256;
     v = gCurTask;
     n = (s16)o->unk6E;
-    v->unk2C = n;
-    m = (v->unk28 + gUnk_08741E70[n]) & 0x1FF;
-    v->unk28 = m;
+    v->hotHeadFireFanIndex = n;
+    m = (v->hotHeadFireAngle + gUnk_08741E70[n]) & 0x1FF;
+    v->hotHeadFireAngle = m;
     if ((u32)(m - 128) > 255)
         v->posX = v->posX + 0xE0000;
     else
         v->posX = v->posX - 0xE0000;
-    AngleToVector((s16)gCurTask->unk28, 768);
+    AngleToVector((s16)gCurTask->hotHeadFireAngle, 768);
     w = gCurTask;
     w->velX = gUnk_030023B4;
     w->velY = gUnk_030023D4;
-    if ((w->unk2C & 2) != 0)
+    if ((w->hotHeadFireFanIndex & 2) != 0)
         w->spriteFlags = w->spriteFlags & 0x7FFF;
     else
         w->spriteFlags = w->spriteFlags | 0x8000;
@@ -977,16 +977,16 @@ void sub_08084308(void)
 
     gCurTask->updateState = 0;
     gCurTask->unk28 = 0;
-    gCurTask->unk2C = n = TaskGetAngleToNearestPlayer(3);
+    gCurTask->hotHeadFireAimAngle = n = TaskGetAngleToNearestPlayer(3);
     if (n >= 25 && n <= 127)
-        gCurTask->unk2C = 24;
+        gCurTask->hotHeadFireAimAngle = 24;
     else if (n >= 128 && n <= 231)
-        gCurTask->unk2C = 232;
+        gCurTask->hotHeadFireAimAngle = 232;
     else if (n >= 281 && n <= 383)
-        gCurTask->unk2C = 280;
+        gCurTask->hotHeadFireAimAngle = 280;
     else if (n >= 384 && n <= 487)
-        gCurTask->unk2C = 488;
-    AngleToVector((s16)gCurTask->unk2C, 768);
+        gCurTask->hotHeadFireAimAngle = 488;
+    AngleToVector((s16)gCurTask->hotHeadFireAimAngle, 768);
     u = gCurTask;
     u->velX = gUnk_030023B4;
     u->velY = gUnk_030023D4;
@@ -1031,8 +1031,8 @@ void Task_FlamerFlame(void)
     TaskFaceLikeParent();
     TaskSetMotionXFacing(0x10000, 0);
     u = gCurTask;
-    u->velY = gUnk_08741E94[u->unk18];
-    u->accelY = gUnk_08741EA4[u->unk18];
+    u->velY = gUnk_08741E94[u->flamerFlameArcIndex];
+    u->accelY = gUnk_08741EA4[u->flamerFlameArcIndex];
     TaskSetFrame(18);
     TaskYieldTrampoline(4);
     v = gCurTask;

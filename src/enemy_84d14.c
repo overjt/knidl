@@ -844,7 +844,7 @@ void ParasolWaddleDooShootUpdate(void)
 void ParasolWaddleDooDrift(void)
 {
     gCurTask->updateState = 3;
-    gCurTask->unk30 = ActorStartAnim(gUnk_08742050);
+    gCurTask->actorAnimDelay30 = ActorStartAnim(gUnk_08742050);
     TaskStartParasolDrift();
     while (1)
     {
@@ -855,7 +855,7 @@ void ParasolWaddleDooDrift(void)
 
 void ParasolWaddleDooDriftUpdate(void)
 {
-    gCurTask->unk30 = ActorTickAnim(gCurTask->unk30);
+    gCurTask->actorAnimDelay30 = ActorTickAnim(gCurTask->actorAnimDelay30);
 }
 
 void WaddleDooIdle(void)

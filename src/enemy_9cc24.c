@@ -210,7 +210,7 @@ void AxeKnightAxeUpdate(void)
     box.y0 = t->pixelY - 4;
     box.x1 = t->pixelX + 10;
     box.y1 = t->pixelY + 4;
-    if (gTaskSlotTypes[i = t->parent] == 58 && gTasks[i].unk74 == 0
+    if (gTaskSlotTypes[i = t->parent] == 58 && gTasks[i].actorSpawnArg == 0
         && TaskIsInRectSlot(&box, i) != 0)
     {
         w = &gTasks[gCurTask->parent];
@@ -301,7 +301,7 @@ void JavelinKnightVariant0(void)
 
     t = gCurTask;
     t->updateCallback = (u32)JavelinKnightUpdate;
-    t->unk28 = 3;
+    t->metaKnightsKnightJavelinHopsLeft = 3;
     sub_0809f90c();
     sub_0809d8f8();
     ActorSetState(1);
@@ -358,7 +358,7 @@ void JavelinKnightUpdate(void)
 void JavelinKnightState0(void)
 {
     gCurTask->updateState = 0;
-    gCurTask->unk28 = 3;
+    gCurTask->metaKnightsKnightJavelinHopsLeft = 3;
     ActorSetState(1);
     JavelinKnightHop();
 }
@@ -614,14 +614,14 @@ void JavelinKnightChooseNextState(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C != 1 && (gFrameCount & 1) != 0)
+    if (t->metaKnightsKnightJavelinJumpedLast != 1 && (gFrameCount & 1) != 0)
     {
-        t->unk2C = 1;
+        t->metaKnightsKnightJavelinJumpedLast = 1;
         ActorSetState(4);
         TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
         return;
     }
-    gCurTask->unk2C = 0;
+    gCurTask->metaKnightsKnightJavelinJumpedLast = 0;
     if (abs(TaskGetNearestPlayerDx()) > 39)
     {
         ActorSetState(3);
@@ -640,8 +640,8 @@ void JavelinKnightVariant1(void)
     TaskFaceScreenCenter();
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
     u = gCurTask;
-    u->unk28 = 4;
-    u->unk2C = 1;
+    u->metaKnightsKnightJavelinBouncesLeft = 4;
+    u->metaKnightsKnightJavelinFallDir = 1;
     while (1)
     {
         PlaySfx(231);
@@ -671,12 +671,12 @@ void sub_0809d83c(void)
     struct Task *v;
     struct Task *w;
 
-    gCurTask->unk30 = 1;
+    gCurTask->metaKnightsKnightJavelinPushOn = 1;
     ActorCollideTerrain();
     if (sub_0809f994() != 0)
     {
         JavelinKnightHitWall();
-        gCurTask->unk30 = 0;
+        gCurTask->metaKnightsKnightJavelinPushOn = 0;
     }
     if (gCurTask->pixelY <= 15)
     {
@@ -684,13 +684,13 @@ void sub_0809d83c(void)
         u = gCurTask;
         u->posY = 128 << 13;
         u->pixelY = 16;
-        if (u->unk2C == 0)
-            u->unk30 = 0;
+        if (u->metaKnightsKnightJavelinFallDir == 0)
+            u->metaKnightsKnightJavelinPushOn = 0;
     }
     v = gCurTask;
-    if (v->unk30 != 0)
+    if (v->metaKnightsKnightJavelinPushOn != 0)
     {
-        if (v->unk2C == 0)
+        if (v->metaKnightsKnightJavelinFallDir == 0)
             v->velY += 0xFFFFFB00;
         else
             v->velY += 160 << 3;

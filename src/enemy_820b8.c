@@ -80,15 +80,15 @@ void PoppyBrosJrRideUpdate(void)
     case 3:
     case 4:
         t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-        if (t->unk28 == 0)
-            gCurTask->unk46 =
-                CreateActorByKind(0, 31, 1, t->unk74, t->pixelX, t->pixelY, t->tileWord);
+        if (t->poppyBrosJrMountKind == 0)
+            gCurTask->poppyBrosJrSpawnSlot =
+                CreateActorByKind(0, 31, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
         else
-            gCurTask->unk46 =
-                CreateActorByKind(0, 32, 1, t->unk74, t->pixelX, t->pixelY, t->tileWord);
-        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
+            gCurTask->poppyBrosJrSpawnSlot =
+                CreateActorByKind(0, 32, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
+        TransferRoomObject(gCurTaskIdx, gCurTask->poppyBrosJrSpawnSlot);
         u = gCurTask;
-        u->tileWord = u->unk2C;
+        u->tileWord = u->poppyBrosJrSavedTileWord;
         if (gUnk_0300244C != 0)
             u->frameTable = gPoppyBrosJrFrames;
         TaskSetFrame(1);
@@ -101,10 +101,10 @@ void PoppyBrosJrRideUpdate(void)
         }
         else
         {
-            gCurTask->unk46 =
-                CreateActorByKind(0, 30, 1, t->unk74, t->pixelX, t->pixelY - 14, t->unk2C);
+            gCurTask->poppyBrosJrSpawnSlot =
+                CreateActorByKind(0, 30, 1, t->actorSpawnArg, t->pixelX, t->pixelY - 14, t->poppyBrosJrSavedTileWord);
         }
-        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
+        TransferRoomObject(gCurTaskIdx, gCurTask->poppyBrosJrSpawnSlot);
         break;
     }
     ActorReactToHit();
@@ -113,7 +113,7 @@ void PoppyBrosJrRideUpdate(void)
 void PoppyBrosJrRide(void)
 {
     gCurTask->updateState = 0;
-    TaskSetMotionXFacing(gUnk_087415E4[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_087415E4[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     PoppyBrosJrRiderHop();
 }
 
@@ -127,9 +127,9 @@ void PoppyBrosJrDroppedObjectInit(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)PoppyBrosJrDroppedObjectUpdate;
-    t->unk1C = 0;
+    t->poppyBrosJrDropFrameTimer = 0;
     t->unk20 = 0;
-    t->unk24 = 0;
+    t->poppyBrosJrBounceCount = 0;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
@@ -143,7 +143,7 @@ void PoppyBrosJrDroppedObjectUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 1, gPoppyBrosJrDroppedObjectStateUpdates);
-    if (gCurTask->unk24 == 2)
+    if (gCurTask->poppyBrosJrBounceCount == 2)
         ActorCheckHits();
     ActorReactToHit();
 }
@@ -172,7 +172,7 @@ void PoppyBrosJrDroppedObjectState0(void)
     AngleToVector(u->unk18, 128);
     gCurTask->velX = gUnk_030023B4;
     TaskSetFrame(4);
-    if (gCurTask->unk24 != 2)
+    if (gCurTask->poppyBrosJrBounceCount != 2)
     {
         g = &gCurTask;
         p = gUnk_087415F4;
@@ -180,7 +180,7 @@ void PoppyBrosJrDroppedObjectState0(void)
         {
             (*g)->onGround = 0;
             v = *g;
-            TaskSetMotionY(p[v->unk24], gUnk_087415FC[v->unk24], 0x30000);
+            TaskSetMotionY(p[v->poppyBrosJrBounceCount], gUnk_087415FC[v->poppyBrosJrBounceCount], 0x30000);
             if ((*g)->onGround == 0)
             {
                 do
@@ -189,14 +189,14 @@ void PoppyBrosJrDroppedObjectState0(void)
                 } while (gCurTask->onGround == 0);
             }
             w = *g;
-        } while (++w->unk24 != 2);
+        } while (++w->poppyBrosJrBounceCount != 2);
     }
     TaskStop();
     x = gCurTask;
-    if (x->unk28 == 1)
+    if (x->poppyBrosJrMountKind == 1)
     {
-        gCurTask->unk46 = CreateActorByKind(6, 2, 0, 0, x->pixelX, x->pixelY, 0);
-        TransferRoomObject(gCurTaskIdx, gCurTask->unk46);
+        gCurTask->poppyBrosJrSpawnSlot = CreateActorByKind(6, 2, 0, 0, x->pixelX, x->pixelY, 0);
+        TransferRoomObject(gCurTaskIdx, gCurTask->poppyBrosJrSpawnSlot);
         ActorDestroy();
     }
     TaskSleepForever();
@@ -206,11 +206,11 @@ void PoppyBrosJrDroppedObjectState0Update(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk24 != 2)
+    if (t->poppyBrosJrBounceCount != 2)
     {
-        if ((++t->unk1C & 3) == 0)
+        if ((++t->poppyBrosJrDropFrameTimer & 3) == 0)
         {
-            t->unk1C = 0;
+            t->poppyBrosJrDropFrameTimer = 0;
             if (++t->frame > 11)
                 t->frame = 4;
         }
@@ -246,7 +246,7 @@ void PoppyBrosJrRideIdleUpdate(void)
     case 3:
     case 4:
         t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-        t->tileWord = t->unk2C;
+        t->tileWord = t->poppyBrosJrSavedTileWord;
         TaskSetFrame(1);
         break;
     }
@@ -270,32 +270,32 @@ void PoppyBrosJrRiderHop(void)
     struct Task *v;
 
     TaskSetFrame(9);
-    gCurTask->unk20 = gUnk_087415F0[gCurTask->unk74];
+    gCurTask->poppyBrosJrRollTimer = gUnk_087415F0[gCurTask->actorSpawnArg];
     while (1)
     {
         t = gCurTask;
-        t->unk34 = 0;
-        t->unk18 = -1;
-        t->unk1C = 7;
+        t->poppyBrosJrRiderOffsetY = 0;
+        t->poppyBrosJrRiderVelY = -1;
+        t->poppyBrosJrRiderFrame = 7;
         TaskYieldTrampoline(4);
         u = gCurTask;
-        u->unk18 = 0xFFFE8000;
-        u->unk1C--;
+        u->poppyBrosJrRiderVelY = 0xFFFE8000;
+        u->poppyBrosJrRiderFrame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk1C--;
+        gCurTask->poppyBrosJrRiderFrame--;
         TaskYieldTrampoline(2);
-        gCurTask->unk1C--;
+        gCurTask->poppyBrosJrRiderFrame--;
         TaskYieldTrampoline(16);
-        gCurTask->unk1C++;
+        gCurTask->poppyBrosJrRiderFrame++;
         TaskYieldTrampoline(6);
         v = gCurTask;
-        v->unk1C++;
-        if (v->unk34 != 0)
+        v->poppyBrosJrRiderFrame++;
+        if (v->poppyBrosJrRiderOffsetY != 0)
         {
             do
             {
                 TaskYieldTrampoline(1);
-            } while (gCurTask->unk34 != 0);
+            } while (gCurTask->poppyBrosJrRiderOffsetY != 0);
         }
     }
 }
@@ -309,27 +309,27 @@ void PoppyBrosJrRiderHopUpdate(void)
     s16 h;
 
     t = gCurTask;
-    if (--t->unk20 == 0)
+    if (--t->poppyBrosJrRollTimer == 0)
     {
-        t->unk20 = gUnk_087415F0[t->unk74];
+        t->poppyBrosJrRollTimer = gUnk_087415F0[t->actorSpawnArg];
         if (++t->frame > 16)
             t->frame = 9;
     }
     u = gCurTask;
-    if (u->unk18 != -1)
+    if (u->poppyBrosJrRiderVelY != -1)
     {
-        u->unk18 += 0x1800;
-        u->unk34 += u->unk18;
-        if (u->unk34 > 0)
-            u->unk34 = 0;
+        u->poppyBrosJrRiderVelY += 0x1800;
+        u->poppyBrosJrRiderOffsetY += u->poppyBrosJrRiderVelY;
+        if (u->poppyBrosJrRiderOffsetY > 0)
+            u->poppyBrosJrRiderOffsetY = 0;
     }
     v = gCurTask;
     a = v->u8C.actor;
     a->unk16 = 0;
-    h = ((s16 *)&v->unk34)[1];
+    h = ((s16 *)&v->poppyBrosJrRiderOffsetY)[1];
     v->u8C.actor->extraOffsetY = h - 16;
-    v->u8C.actor->extraTileWord = v->unk2C;
-    v->u8C.actor->extraFrame = v->unk1C;
+    v->u8C.actor->extraTileWord = v->poppyBrosJrSavedTileWord;
+    v->u8C.actor->extraFrame = v->poppyBrosJrRiderFrame;
     v->u8C.actor->extraLayerOffset = -1;
 }
 
@@ -374,7 +374,7 @@ void WheelieInit(void)
 {
     gCurTask->updateCallback = (u32)WheelieUpdate;
     TaskFaceNearestPlayer();
-    gCurTask->unk28 = 30;
+    gCurTask->wheelieCheckTimer = 30;
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 6, gWheelieStates);
 }
@@ -397,8 +397,8 @@ void WheelieState0(void)
     struct Task *t;
 
     gCurTask->updateState = 0;
-    TaskSetMotionXFacing(gUnk_08741628[gCurTask->unk74], 0x5A5A5A5A);
-    *(s16 *)&gCurTask->unk6C = 0;
+    TaskSetMotionXFacing(gUnk_08741628[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    *(s16 *)&gCurTask->wheelieLoopCount = 0;
     do
     {
         TaskSetFrame(4);
@@ -407,7 +407,7 @@ void WheelieState0(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-    } while (++*(s16 *)&gCurTask->unk6C <= 3);
+    } while (++*(s16 *)&gCurTask->wheelieLoopCount <= 3);
     ActorSetState(1);
     TaskSleepForever();
 }
@@ -422,8 +422,8 @@ void WheelieState0Update(void)
 void WheelieState1(void)
 {
     gCurTask->updateState = 1;
-    TaskSetMotionXFacing(gUnk_08741630[gCurTask->unk74], 0x5A5A5A5A);
-    gCurTask->unk2C = 1;
+    TaskSetMotionXFacing(gUnk_08741630[gCurTask->actorSpawnArg], 0x5A5A5A5A);
+    gCurTask->wheelieFrameScale = 1;
     sub_08082cc4();
 }
 
@@ -440,8 +440,8 @@ void WheelieSkid(void)
 
     gCurTask->updateState = 2;
     t = gCurTask;
-    t->unk30 = 42;
-    t->unk34 = 0;
+    t->wheelieStateTimer = 42;
+    t->wheelieSkidStopped = 0;
     while (1)
     {
         CreateDustTrail(1, 1, -4, 6);
@@ -463,7 +463,7 @@ void WheelieSkidUpdate(void)
     struct Task *v;
 
     t = gCurTask;
-    if (t->unk34 == 0)
+    if (t->wheelieSkidStopped == 0)
     {
         if (t->velX > 0)
             t->velX = t->velX + 0xFFFFF400;
@@ -473,11 +473,11 @@ void WheelieSkidUpdate(void)
         if (u->onGround == 0)
         {
             TaskStopX();
-            gCurTask->unk34 = 1;
+            gCurTask->wheelieSkidStopped = 1;
         }
     }
     v = gCurTask;
-    if (--v->unk30 == 0)
+    if (--v->wheelieStateTimer == 0)
     {
         ActorSetState(3);
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
@@ -499,8 +499,8 @@ void WheelieState3(void)
         t->facing = 1;
     n = RandomRange(3);
     u = gCurTask;
-    u->unk30 = gUnk_08741638[n];
-    u->unk2C = 2;
+    u->wheelieStateTimer = gUnk_08741638[n];
+    u->wheelieFrameScale = 2;
     sub_08082cc4();
 }
 
@@ -508,9 +508,9 @@ void WheelieState3Update(void)
 {
     struct Task *t = gCurTask;
 
-    if (--t->unk30 == 0)
+    if (--t->wheelieStateTimer == 0)
     {
-        t->unk28 = 30;
+        t->wheelieCheckTimer = 30;
         ActorSetState(1);
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
     }
@@ -529,8 +529,8 @@ void WheelieBounceOffWall(void)
     gCurTask->onGround = 0;
     TaskSetMotionY(0xFFFD0000, 0x2500, 0x30000);
     t = gCurTask;
-    t->unk30 = 0;
-    t->unk34 = 3;
+    t->wheelieFrameIndex = 0;
+    t->wheelieFrameTimer = 3;
     TaskSetFrame(gUnk_0874163B[0]);
     if (gCurTask->onGround == 0)
     {
@@ -538,12 +538,12 @@ void WheelieBounceOffWall(void)
         {
             TaskYieldTrampoline(1);
             u = gCurTask;
-            if (--u->unk34 == 0)
+            if (--u->wheelieFrameTimer == 0)
             {
-                if (++u->unk30 > 3)
-                    u->unk30 = 0;
-                TaskSetFrame(gUnk_0874163B[gCurTask->unk30]);
-                gCurTask->unk34 = 3;
+                if (++u->wheelieFrameIndex > 3)
+                    u->wheelieFrameIndex = 0;
+                TaskSetFrame(gUnk_0874163B[gCurTask->wheelieFrameIndex]);
+                gCurTask->wheelieFrameTimer = 3;
             }
         } while (gCurTask->onGround == 0);
     }
@@ -570,9 +570,9 @@ void WheelieBounceOffWallUpdate(void)
 void WheelieFall(void)
 {
     gCurTask->updateState = 5;
-    gCurTask->unk30 = 0;
+    gCurTask->wheelieRestoreTimer = 0;
     TaskSetMotionY(0, 0x2500, 0x30000);
-    gCurTask->unk2C = 1;
+    gCurTask->wheelieFrameScale = 1;
     sub_08082cc4();
 }
 
@@ -580,12 +580,12 @@ void WheelieFallUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk30 != 0)
+    if (t->wheelieRestoreTimer != 0)
     {
-        if (--t->unk30 == 0)
+        if (--t->wheelieRestoreTimer == 0)
         {
-            t->posX = t->unk34;
-            t->posY = t->unk24;
+            t->posX = t->wheelieSavedPosX;
+            t->posY = t->wheelieSavedPosY;
         }
     }
     if (gCurTask->onGround != 0)
@@ -626,7 +626,7 @@ void WheelieIdleUpdate(void)
 void WheelieIdle(void)
 {
     gCurTask->updateState = 0;
-    gCurTask->unk2C = 1;
+    gCurTask->wheelieFrameScale = 1;
     sub_08082cc4();
 }
 
@@ -640,9 +640,9 @@ void WheelieCheckSkid(void)
 
     if (t->variant != 0)
         return;
-    if (--t->unk28 != 0)
+    if (--t->wheelieCheckTimer != 0)
         return;
-    t->unk28 = 30;
+    t->wheelieCheckTimer = 30;
     if (RandomRange(2) == 0)
         return;
     if (TaskGetFacingTowardNearestPlayer() == gCurTask->facing)
@@ -658,15 +658,15 @@ void sub_08082cc4(void)
     while (1)
     {
         TaskSetFrame(6);
-        TaskYieldTrampoline(gCurTask->unk2C * 2);
+        TaskYieldTrampoline(gCurTask->wheelieFrameScale * 2);
         TaskSetFrame(4);
         t = gCurTask;
-        TaskYieldTrampoline(t->unk2C * 3);
+        TaskYieldTrampoline(t->wheelieFrameScale * 3);
         TaskSetFrame(6);
-        TaskYieldTrampoline(gCurTask->unk2C * 2);
+        TaskYieldTrampoline(gCurTask->wheelieFrameScale * 2);
         TaskSetFrame(5);
         t = gCurTask;
-        TaskYieldTrampoline(t->unk2C * 3);
+        TaskYieldTrampoline(t->wheelieFrameScale * 3);
     }
 }
 
@@ -703,9 +703,9 @@ s32 WheelieHitWall(void)
     case 5:
         TaskTurnAroundAndReverseX();
         t = gCurTask;
-        t->unk30 = 2;
+        t->wheelieRestoreTimer = 2;
         t->unk34 = t->posX;
-        t->unk24 = t->posY;
+        t->wheelieSavedPosY = t->posY;
         break;
     case 2:
         TaskStopX();
@@ -720,7 +720,7 @@ s32 sub_08082db0(void)
     if (gCurTask->state == 2)
     {
         TaskStopX();
-        gCurTask->unk34 = 1;
+        gCurTask->wheelieSkidStopped = 1;
     }
     return 0;
 }
@@ -747,21 +747,21 @@ void Task_Flamer(void)
     switch (u->variant)
     {
     case 0:
-        u->unk28 = 20;
+        u->flamerCheckTimer = 20;
         break;
     case 1:
         u->variant = 0;
         v = gCurTask;
-        if (++v->unk74 > 2)
-            gCurTask->unk74 = 2;
-        gCurTask->unk28 = 128;
+        if (++v->flamerSpeedLevel > 2)
+            gCurTask->flamerSpeedLevel = 2;
+        gCurTask->flamerCheckTimer = 128;
         break;
     case 2:
         break;
     }
     w = gCurTask;
-    w->unk2C = 0;
-    w->unk30 = 0;
-    w->unk34 = 1;
+    w->flamerDashCount = 0;
+    w->flamerSurfaceSide = 0;
+    w->flamerCrawlDir = 1;
     CallTableEntry(w->variant, 3, gFlamerVariants);
 }

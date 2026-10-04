@@ -76,13 +76,13 @@ void MetaKnightSwordHitBoxUpdate(void)
         {
             if ((u16)(o->frame - 88) <= 33)
             {
-                t->unk28 = (s16)o->frame - 88;
-                if (gUnk_08748F8C[t->unk28] != 0)
+                t->metaKnightSwordHitBoxFrameIndex = (s16)o->frame - 88;
+                if (gUnk_08748F8C[t->metaKnightSwordHitBoxFrameIndex] != 0)
                 {
-                    t->pixelX = o->pixelX + gUnk_08749014[t->unk28] * o->facing;
-                    t->pixelY = o->pixelY + gUnk_08749058[t->unk28];
+                    t->pixelX = o->pixelX + gUnk_08749014[t->metaKnightSwordHitBoxFrameIndex] * o->facing;
+                    t->pixelY = o->pixelY + gUnk_08749058[t->metaKnightSwordHitBoxFrameIndex];
                     t->facing = o->facing;
-                    ActorCheckHitsWithBox(gUnk_08748F8C[gCurTask->unk28]);
+                    ActorCheckHitsWithBox(gUnk_08748F8C[gCurTask->metaKnightSwordHitBoxFrameIndex]);
                 }
             }
         }

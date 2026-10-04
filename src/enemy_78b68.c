@@ -118,7 +118,7 @@ void WaddleDeeWalk(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_08740648[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_08740648[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     sub_08078b68();
 }
 
@@ -169,8 +169,8 @@ void WaddleDeePaceWalk(void)
     gCurTask->updateState = 0;
     TaskStop();
     t = gCurTask;
-    t->unk28 = gUnk_08740668[t->unk74];
-    TaskSetMotionXFacing(gUnk_08740648[t->unk74], 0x5A5A5A5A);
+    t->waddleDeeTurnTimer = gUnk_08740668[t->actorSpawnArg];
+    TaskSetMotionXFacing(gUnk_08740648[t->actorSpawnArg], 0x5A5A5A5A);
     sub_08078b68();
 }
 
@@ -178,17 +178,17 @@ void WaddleDeePaceWalkUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 <= 0)
+    if (t->waddleDeeTurnTimer <= 0)
     {
         struct Task *u;
 
         TaskTurnAroundAndReverseX();
         u = gCurTask;
-        u->unk28 = gUnk_08740668[u->unk74];
+        u->waddleDeeTurnTimer = gUnk_08740668[u->actorSpawnArg];
     }
     else
     {
-        t->unk28--;
+        t->waddleDeeTurnTimer--;
     }
 }
 
@@ -208,9 +208,9 @@ void WaddleDeeJumpInit(void)
 {
     gCurTask->updateCallback = (u32)WaddleDeeJumpUpdate;
     TaskFaceNearestPlayer();
-    gCurTask->unk28 = 80;
+    gCurTask->waddleDeeJumpTimer = 80;
     ActorSetState(0);
-    gCurTask->unk34 = ActorStartAnim(gUnk_087406A0);
+    gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
     CallTableEntry(gCurTask->state, 3, gWaddleDeeJumpStates);
 }
 
@@ -234,14 +234,14 @@ void WaddleDeeJumpWalk(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
-    TaskSetMotionXFacing(gUnk_08740648[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_08740648[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     TaskSleepForever();
 }
 
 void WaddleDeeJumpWalkUpdate(void)
 {
-    gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
-    if (--gCurTask->unk28 < 0)
+    gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
+    if (--gCurTask->waddleDeeJumpTimer < 0)
     {
         if (RandomRange(4) == 0)
         {
@@ -250,7 +250,7 @@ void WaddleDeeJumpWalkUpdate(void)
         }
         else
         {
-            gCurTask->unk28 = 30;
+            gCurTask->waddleDeeJumpTimer = 30;
             ActorSetState(0);
             TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
         }
@@ -265,10 +265,10 @@ void WaddleDeeJump(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk2C = 0;
+        t->waddleDeeJumpLaunched = 0;
         saved = t->velX;
         t->velX = 0;
-        t->unk6C = 0;
+        t->waddleDeeLoopCount = 0;
     }
     do
     {
@@ -288,16 +288,16 @@ void WaddleDeeJump(void)
         TaskYieldTrampoline(4);
         gCurTask->frame--;
         TaskYieldTrampoline(4);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->waddleDeeLoopCount <= 1);
     {
         struct Task *u = gCurTask;
 
         u->velX = saved;
-        u->unk2C = 1;
+        u->waddleDeeJumpLaunched = 1;
         u->onGround = 0;
     }
-    TaskSetMotionY(-gUnk_08740680[gCurTask->unk74],
-                 gUnk_08740690[gCurTask->unk74], 0x30000);
+    TaskSetMotionY(-gUnk_08740680[gCurTask->actorSpawnArg],
+                 gUnk_08740690[gCurTask->actorSpawnArg], 0x30000);
     TaskSleepForever();
 }
 
@@ -305,11 +305,11 @@ void WaddleDeeJumpState1Update(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk2C != 0 && t->onGround != 0)
+    if (t->waddleDeeJumpLaunched != 0 && t->onGround != 0)
     {
         TaskStopY();
-        gCurTask->unk28 = 30;
-        gCurTask->unk34 = ActorStartAnim(gUnk_087406A0);
+        gCurTask->waddleDeeJumpTimer = 30;
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
         ActorSetState(0);
         TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
     }
@@ -375,7 +375,7 @@ void ParasolWaddleDeeWalkState1(void)
     }
     else
     {
-        gCurTask->unk34 = ActorStartAnim(gUnk_087406EC);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406EC);
         TaskStartParasolDrift();
         while (1)
         {
@@ -387,7 +387,7 @@ void ParasolWaddleDeeWalkState1(void)
 
 void ParasolWaddleDeeWalkState1Update(void)
 {
-    gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
+    gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
 }
 
 void WaddleDeeIdleInit(void)
@@ -474,7 +474,7 @@ void ParasolWaddleDeeStandState1(void)
     }
     else
     {
-        gCurTask->unk34 = ActorStartAnim(gUnk_087406EC);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406EC);
         TaskStartParasolDrift();
     }
     TaskSleepForever();
@@ -482,7 +482,7 @@ void ParasolWaddleDeeStandState1(void)
 
 void ParasolWaddleDeeStandState1Update(void)
 {
-    gCurTask->unk34 = ActorTickAnimFacingNearestPlayer(gCurTask->unk34);
+    gCurTask->actorAnimDelay34 = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay34);
 }
 
 void Task_Pengy(void)
@@ -549,17 +549,17 @@ void PengyPickStartState(void)
     struct Task *t = gCurTask;
     s32 r;
 
-    t->unk2C = 0;
-    t->unk30 = 0;
+    t->pengyNearTimer = 0;
+    t->pengyWaitTimer = 0;
     r = RandomRange(4);
     if (r == 0)
     {
-        gCurTask->unk28 = r;
+        gCurTask->pengyShotTimer = r;
         ActorSetState(0);
     }
     else
     {
-        gCurTask->unk28 = 240;
+        gCurTask->pengyShotTimer = 240;
         ActorSetState(2);
     }
 }
@@ -579,27 +579,27 @@ void PengyWait(void)
 void PengyWaitUpdate(void)
 {
     struct Task *t = gCurTask;
-    s32 n = t->unk28;
+    s32 n = t->pengyShotTimer;
 
     if (n <= 0)
     {
         if (abs(TaskGetNearestPlayerDx()) <= 63)
         {
-            if (gCurTask->unk2C <= 0 && RandomRange(2) == 0)
+            if (gCurTask->pengyNearTimer <= 0 && RandomRange(2) == 0)
                 PengyStartShoot();
             else
                 PengyCheckShoot();
         }
         else
         {
-            gCurTask->unk2C = 0;
+            gCurTask->pengyNearTimer = 0;
             PengyCheckWalk();
         }
     }
     else
     {
-        t->unk2C = 0;
-        t->unk28 = n - 1;
+        t->pengyNearTimer = 0;
+        t->pengyShotTimer = n - 1;
         PengyCheckWalk();
     }
 }
@@ -618,7 +618,7 @@ void PengyStartWalk(void)
 
 void PengyCheckWalk(void)
 {
-    s32 n = ++gCurTask->unk30;
+    s32 n = ++gCurTask->pengyWaitTimer;
 
     if (n == 120)
     {
@@ -626,7 +626,7 @@ void PengyCheckWalk(void)
     }
     else if (n == 75 || n == 90 || n == 105)
     {
-        if (RandomRange(gUnk_08740720[gCurTask->unk74]) == 0)
+        if (RandomRange(gUnk_08740720[gCurTask->actorSpawnArg]) == 0)
             PengyStartWalk();
     }
 }
@@ -635,9 +635,9 @@ void PengyCheckShoot(void)
 {
     struct Task *t = gCurTask;
 
-    if (++t->unk2C == 33)
+    if (++t->pengyNearTimer == 33)
     {
-        t->unk2C = 3;
+        t->pengyNearTimer = 3;
         if (RandomRange(3) == 0)
             PengyCheckWalk();
         else
@@ -662,8 +662,8 @@ void PengyWalk(void)
     t->u8C.actor->animScript = 0;
     t->updateState = 1;
     TaskStop();
-    gCurTask->unk34 = ActorStartAnim(gUnk_0874074C);
-    idx = gCurTask->unk74;
+    gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_0874074C);
+    idx = gCurTask->actorSpawnArg;
     cbase = gUnk_08740728;
     dbase = gUnk_08740740;
     i = 2;
@@ -689,10 +689,10 @@ void PengyWalk(void)
 
 void PengyWalkUpdate(void)
 {
-    gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
+    gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
     if (gCurTask->state != 1)
     {
-        gCurTask->unk30 = 0;
+        gCurTask->pengyWaitTimer = 0;
         TaskSetEntry(PengyEnterState, gCurTaskIdx);
     }
 }
@@ -710,14 +710,14 @@ void PengyShoot(void)
     spawn.taskType = 102;
     spawn.variant = 0;
     spawn.checkTerrain = 0;
-    gCurTask->unk6C = 0;
+    gCurTask->pengyLoopCount = 0;
     do
     {
         spawn.spawnArg = i;
         spawn.x = 10;
         spawn.y = 0;
         PlaySfx(164);
-        gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&spawn, 0);
+        gCurTask->pengyIceBreathSlot = CreateActorFromDescAtOffsetFacing(&spawn, 0);
         CreateChildTaskAtOffsetFacing(216, 10, 0, 1);
         {
             s32 id = CreateChildTaskAtOffsetFacing(217, 10, 0, 1);
@@ -726,7 +726,7 @@ void PengyShoot(void)
             {
                 struct Task *p = &gTasks[id];
 
-                p->unk74 = i;
+                p->pengyIceBreathSparkleIndex = i;
             }
         }
         TaskSetFrame(8);
@@ -735,7 +735,7 @@ void PengyShoot(void)
         TaskYieldTrampoline(5);
         if (++i > 2)
             i = 0;
-    } while ((s16)++gCurTask->unk6C <= 9);
+    } while ((s16)++gCurTask->pengyLoopCount <= 9);
     ActorSetState(0);
     TaskSleepForever();
 }
@@ -746,9 +746,9 @@ void PengyShootUpdate(void)
 
     if (t->state != 2)
     {
-        t->unk28 = 240;
-        t->unk2C = 0;
-        t->unk30 = 0;
+        t->pengyShotTimer = 240;
+        t->pengyNearTimer = 0;
+        t->pengyWaitTimer = 0;
         TaskSetEntry(PengyEnterState, gCurTaskIdx);
     }
 }
@@ -849,7 +849,7 @@ void BomberInit(void)
     gCurTask->updateCallback = (u32)BomberUpdate;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    gCurTask->unk28 = 0;
+    gCurTask->bomberHasWalked = 0;
     CallTableEntry(gCurTask->state, 4, gBomberStates);
 }
 
@@ -891,8 +891,8 @@ void BomberWalkUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0)
-        t->unk28 = 1;
+    if (t->bomberHasWalked == 0)
+        t->bomberHasWalked = 1;
 }
 
 void BomberState1(void)
@@ -917,9 +917,9 @@ void BomberState2(void)
     TaskStop();
     t = gCurTask;
     t->posX = (t->pixelX + t->facing * 4) << 16;
-    if (t->unk28 == 1)
+    if (t->bomberHasWalked == 1)
     {
-        t->unk6C = 0;
+        t->bomberLoopCount = 0;
         do
         {
             TaskSetFrame(8);
@@ -928,7 +928,7 @@ void BomberState2(void)
             TaskYieldTrampoline(5);
             gCurTask->frame--;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 4);
+        } while ((s16)++gCurTask->bomberLoopCount <= 4);
     }
     {
         struct Task *u = gCurTask;
@@ -956,14 +956,14 @@ void BomberExplode(void)
     {
         ActorSetAttackBox(gUnk_0873F7AC);
         FreezeStage(15);
-        gCurTask->unk6C = v;
+        gCurTask->bomberLoopCount = v;
         do
         {
             TaskSetFrame(11);
             TaskYieldTrampoline(1);
             TaskSetFrame(7);
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 3);
+        } while ((s16)++gCurTask->bomberLoopCount <= 3);
         ThawStage();
         ActorSetHitReactions(gBomberExplodeHitReactions);
         ActorDie();
@@ -1044,10 +1044,10 @@ void SparkySetJumpMotion(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0)
-        TaskSetMotionXFacing(gUnk_087407DC[t->unk74], 0x5A5A5A5A);
-    TaskSetMotionY(-gUnk_087407C4[gCurTask->unk28],
-                 gUnk_087407D0[gCurTask->unk28], 0x30000);
+    if (t->sparkyJumpIndex != 0)
+        TaskSetMotionXFacing(gUnk_087407DC[t->actorSpawnArg], 0x5A5A5A5A);
+    TaskSetMotionY(-gUnk_087407C4[gCurTask->sparkyJumpIndex],
+                 gUnk_087407D0[gCurTask->sparkyJumpIndex], 0x30000);
     gCurTask->onGround = 0;
 }
 
@@ -1055,9 +1055,9 @@ void sub_08079eec(u16 a)
 {
     s32 r = RandomRange(4);
 
-    gCurTask->unk28 = r;
+    gCurTask->sparkyJumpIndex = r;
     if (r > 2)
-        gCurTask->unk28 = 2;
+        gCurTask->sparkyJumpIndex = 2;
     ActorSetState(a);
 }
 
@@ -1169,7 +1169,7 @@ void SparkyJump(void)
     gCurTask->updateState = 2;
     TaskStop();
     TaskSetFrame(7);
-    TaskYieldTrampoline(gUnk_087407C0[gCurTask->unk74]);
+    TaskYieldTrampoline(gUnk_087407C0[gCurTask->actorSpawnArg]);
     SparkySetJumpMotion();
     gCurTask->frame--;
     TaskYieldTrampoline(3);
@@ -1194,8 +1194,8 @@ void SparkyJumpDischarge(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 3;
+    gCurTask->sparkyPhase = 0;
+    gCurTask->sparkySoundTimer = 3;
     gCurTask->frame = 20;
     TaskYieldTrampoline(2);
     gCurTask->frame = 22;
@@ -1230,8 +1230,8 @@ void SparkyJumpDischarge(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 23;
     TaskYieldTrampoline(4);
-    gCurTask->unk2C = 2;
-    gCurTask->unk6C = 0;
+    gCurTask->sparkyPhase = 2;
+    gCurTask->sparkyLoopCount = 0;
     do
     {
         ActorSetAttackBox(gUnk_08740DE4);
@@ -1258,15 +1258,15 @@ void SparkyJumpDischarge(void)
         ActorSetAttackBox(gUnk_0873F774);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 7);
-    gCurTask->unk2C = 1;
+    } while ((s16)++gCurTask->sparkyLoopCount <= 7);
+    gCurTask->sparkyPhase = 1;
     TaskSleepForever();
 }
 
 void SparkyJumpDischargeUpdate(void)
 {
     struct Task *t = gCurTask;
-    s32 n = t->unk2C;
+    s32 n = t->sparkyPhase;
 
     if (n == 1)
     {
@@ -1274,30 +1274,30 @@ void SparkyJumpDischargeUpdate(void)
     }
     else if (n == 2)
     {
-        if (t->unk30 <= 0)
+        if (t->sparkySoundTimer <= 0)
         {
             PlaySfx(191);
-            gCurTask->unk30 = 3;
+            gCurTask->sparkySoundTimer = 3;
         }
-        gCurTask->unk30--;
+        gCurTask->sparkySoundTimer--;
     }
 }
 
 void SparkyJumpLand(void)
 {
     gCurTask->updateState = 1;
-    gCurTask->unk2C = 0;
+    gCurTask->sparkyPhase = 0;
     TaskStopY();
     gCurTask->velX >>= 1;
     TaskSetFrame(7);
-    TaskYieldTrampoline(gUnk_087407BC[gCurTask->unk74]);
-    gCurTask->unk2C = 1;
+    TaskYieldTrampoline(gUnk_087407BC[gCurTask->actorSpawnArg]);
+    gCurTask->sparkyPhase = 1;
     TaskSleepForever();
 }
 
 void SparkyJumpLandUpdate(void)
 {
-    if (gCurTask->unk2C != 0)
+    if (gCurTask->sparkyPhase != 0)
         SparkyPickNextState(2);
 }
 
@@ -1399,8 +1399,8 @@ void SparkyStandDischarge(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
-    gCurTask->unk2C = 0;
-    gCurTask->unk30 = 3;
+    gCurTask->sparkyPhase = 0;
+    gCurTask->sparkySoundTimer = 3;
     gCurTask->frame = 20;
     TaskYieldTrampoline(2);
     gCurTask->frame = 22;
@@ -1435,8 +1435,8 @@ void SparkyStandDischarge(void)
     TaskYieldTrampoline(2);
     gCurTask->frame = 23;
     TaskYieldTrampoline(4);
-    gCurTask->unk2C = 2;
-    gCurTask->unk6C = 0;
+    gCurTask->sparkyPhase = 2;
+    gCurTask->sparkyLoopCount = 0;
     do
     {
         ActorSetAttackBox(gUnk_08740DE4);
@@ -1463,15 +1463,15 @@ void SparkyStandDischarge(void)
         ActorSetAttackBox(gUnk_0873F774);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 7);
-    gCurTask->unk2C = 1;
+    } while ((s16)++gCurTask->sparkyLoopCount <= 7);
+    gCurTask->sparkyPhase = 1;
     TaskSleepForever();
 }
 
 void SparkyStandDischargeUpdate(void)
 {
     struct Task *t = gCurTask;
-    s32 n = t->unk2C;
+    s32 n = t->sparkyPhase;
 
     if (n == 1)
     {
@@ -1479,30 +1479,30 @@ void SparkyStandDischargeUpdate(void)
     }
     else if (n == 2)
     {
-        if (t->unk30 <= 0)
+        if (t->sparkySoundTimer <= 0)
         {
             PlaySfx(191);
-            gCurTask->unk30 = 3;
+            gCurTask->sparkySoundTimer = 3;
         }
-        gCurTask->unk30--;
+        gCurTask->sparkySoundTimer--;
     }
 }
 
 void SparkyStandWait(void)
 {
     gCurTask->updateState = 1;
-    gCurTask->unk2C = 0;
+    gCurTask->sparkyPhase = 0;
     TaskStopY();
     gCurTask->velX >>= 1;
     TaskSetFrame(7);
-    TaskYieldTrampoline(gUnk_0874080C[gCurTask->unk74]);
-    gCurTask->unk2C = 1;
+    TaskYieldTrampoline(gUnk_0874080C[gCurTask->actorSpawnArg]);
+    gCurTask->sparkyPhase = 1;
     TaskSleepForever();
 }
 
 void SparkyStandWaitUpdate(void)
 {
-    if (gCurTask->unk2C != 0)
+    if (gCurTask->sparkyPhase != 0)
         SparkyPickNextState(1);
 }
 
@@ -1528,18 +1528,18 @@ void sub_0807a8fc(void)
     switch (gCurTask->variant)
     {
     case 0:
-        gCurTask->unk28 = -1;
-        gCurTask->unk34 = ActorStartAnim(gUnk_08740854);
+        gCurTask->scarfyWaveSign = -1;
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_08740854);
         break;
     case 1:
-        gCurTask->unk28 = 1;
+        gCurTask->scarfyWaveSign = 1;
         break;
     case 2:
-        gCurTask->unk28 = 1;
+        gCurTask->scarfyWaveSign = 1;
         break;
     case 3:
     case 4:
-        gCurTask->unk28 = -1;
+        gCurTask->scarfyWaveSign = -1;
         break;
     }
 }

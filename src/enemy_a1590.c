@@ -2811,7 +2811,7 @@ void sub_080a49cc(void)
     t = gCurTask;
     sub_08068950(t->pixelX, t->pixelY, -t->facing);
     RequestScreenShake(4);
-    gCurTask->unk18 = 1;
+    gCurTask->kingDededeStarReleased = 1;
 }
 
 /* sub_080a4a1c (0x080A4A1C-0x080A4A60) */
@@ -2852,11 +2852,11 @@ void sub_080a4ac4(void)
     gCurTask->onGround = 0;
     t = gCurTask;
     t->unk24 = 2;
-    t->unk1C = 1;
+    t->kingDededeStarFirstUpdate = 1;
     t->frame = 4;
     TaskSetMotionXFacing(128 << 11, 0x5A5A5A5A);
-    gCurTask->unk18 = 0;
-    while (gCurTask->unk18 == 0)
+    gCurTask->kingDededeStarReleased = 0;
+    while (gCurTask->kingDededeStarReleased == 0)
         TaskYieldTrampoline(1);
     ActorSetHitReactions((u32)gUnk_08748D04);
     ActorDie();
@@ -2867,10 +2867,10 @@ void sub_080a4b1c(void)
 {
     u8 v;
 
-    if (gCurTask->unk1C != 0)
+    if (gCurTask->kingDededeStarFirstUpdate != 0)
     {
         SetHeldPlayerState(gUnk_02007D00[1], 1);
-        gCurTask->unk1C = 0;
+        gCurTask->kingDededeStarFirstUpdate = 0;
     }
     else
     {
@@ -2997,16 +2997,16 @@ void MrShineCrescentState0(void)
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(128 << 11, 0x5A5A5A5A);
     if (gCurTask->facing == 1)
-        gCurTask->unk28 = ActorStartAnimNoFlip(gUnk_08748A14);
+        gCurTask->actorAnimDelay = ActorStartAnimNoFlip(gUnk_08748A14);
     else
-        gCurTask->unk28 = ActorStartAnimNoFlip(gUnk_08748A00);
+        gCurTask->actorAnimDelay = ActorStartAnimNoFlip(gUnk_08748A00);
     TaskSleepForever();
 }
 
 /* MrShineCrescentState0Update (0x080A4DD8-0x080A4DF4) */
 void MrShineCrescentState0Update(void)
 {
-    gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
+    gCurTask->actorAnimDelay = ActorTickAnim(gCurTask->actorAnimDelay);
 }
 
 /* MrShineCrescentState1 (0x080A4DF4-0x080A4E10) */
@@ -3030,12 +3030,12 @@ void MrShineFallingStarSetStart(void)
 
     m = RandomRange(32) + 16;
     gCurTask->posY = ((s16)m + gViewRect[2]) << 16;
-    gCurTask->posX = (gUnk_08748A38[gCurTask->unk74 & 3] + gViewRect[0]) << 16;
+    gCurTask->posX = (gUnk_08748A38[gCurTask->actorSpawnArg & 3] + gViewRect[0]) << 16;
     r = RandomRange(3);
-    gCurTask->unk28 = ((gCurTask->unk74 & 1) + 3) << 16;
+    gCurTask->mrShineAndMrBrightAttackStartVelY = ((gCurTask->actorSpawnArg & 1) + 3) << 16;
     if ((u8)TaskGetXDirBitToNearestPlayer() == 4)
         r += 2;
-    gCurTask->unk2C = gUnk_08748A40[r];
+    gCurTask->mrShineAndMrBrightAttackStartVelX = gUnk_08748A40[r];
 }
 
 /* MrShineFallingStarInit (0x080A4E9C-0x080A4EE0) */
@@ -3076,20 +3076,20 @@ void MrShineFallingStarState0(void)
     gCurTask->updateState = 0;
     TaskStop();
     gCurTask->onGround = 0;
-    gCurTask->unk18 = 0;
+    gCurTask->mrShineAndMrBrightAttackSpinning = 0;
     MrShineFallingStarSetStart();
-    gCurTask->unk6C = 0;
+    gCurTask->mrShineAndMrBrightAttackLoopCount = 0;
     do
     {
         gCurTask->frame = 4;
         TaskYieldTrampoline(4);
         gCurTask->frame++;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->mrShineAndMrBrightAttackLoopCount++;
+    } while ((s16)gCurTask->mrShineAndMrBrightAttackLoopCount <= 1);
     gCurTask->tileWord = 0;
-    gCurTask->velX = gCurTask->unk2C;
-    gCurTask->velY = gCurTask->unk28;
+    gCurTask->velX = gCurTask->mrShineAndMrBrightAttackStartVelX;
+    gCurTask->velY = gCurTask->mrShineAndMrBrightAttackStartVelY;
     switch ((s32)RandomRange(3))
     {
     case 0:
@@ -3105,7 +3105,7 @@ void MrShineFallingStarState0(void)
     t = gCurTask;
     t->frameTable = gUnk_0874C44C;
     t->frame = 4;
-    t->unk18 = 1;
+    t->mrShineAndMrBrightAttackSpinning = 1;
     t->unk24 = 2;
     TaskSleepForever();
 }
@@ -3113,7 +3113,7 @@ void MrShineFallingStarState0(void)
 /* MrShineFallingStarState0Update (0x080A5008-0x080A5020) */
 void MrShineFallingStarState0Update(void)
 {
-    if (gCurTask->unk18 != 0)
+    if (gCurTask->mrShineAndMrBrightAttackSpinning != 0)
         sub_08064bcc();
 }
 
@@ -3259,8 +3259,8 @@ void MrBrightBeamState0(void)
     gCurTask->updateState = 0;
     TaskStop();
     gCurTask->onGround = 0;
-    gCurTask->unk18 = 0;
-    gCurTask->unk1C = 0;
+    gCurTask->mrShineAndMrBrightAttackFrameTimer = 0;
+    gCurTask->mrShineAndMrBrightAttackBeamFrame = 0;
     TaskYieldTrampoline(2);
     MrBrightBeamDropStars();
     TaskYieldTrampoline(84);
@@ -3273,16 +3273,16 @@ void MrBrightBeamState0Update(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk18 <= 0)
+    if (t->mrShineAndMrBrightAttackFrameTimer <= 0)
     {
-        if (t->unk1C != 0)
+        if (t->mrShineAndMrBrightAttackBeamFrame != 0)
             t->frame = 3;
         else
             t->frame = 2;
-        gCurTask->unk18 = 2;
-        gCurTask->unk1C ^= 1;
+        gCurTask->mrShineAndMrBrightAttackFrameTimer = 2;
+        gCurTask->mrShineAndMrBrightAttackBeamFrame ^= 1;
     }
-    gCurTask->unk18--;
+    gCurTask->mrShineAndMrBrightAttackFrameTimer--;
 }
 
 /* MrBrightBeamState1 (0x080A5304-0x080A5320) */

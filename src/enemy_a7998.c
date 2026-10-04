@@ -77,13 +77,13 @@ void Task_MetaKnightCape(void)
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, -0xC000, 128 << 5, 0x5A5A5A5A);
     TaskSetFrame(0);
     TaskYieldTrampoline(3);
-    gCurTask->unk6E = 0;
+    gCurTask->metaKnightCapeLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk6E++;
-    } while ((s16)gCurTask->unk6E <= 2);
+        gCurTask->metaKnightCapeLoopCount++;
+    } while ((s16)gCurTask->metaKnightCapeLoopCount <= 2);
     TaskSetFrame(0);
     TaskYieldTrampoline(2);
     gCurTask->frame = 0xFFFF;
@@ -129,14 +129,14 @@ void Task_MetaKnightMask(void)
     gCurTask->accelY = -0x10000;
     TaskSetFrame(26);
     TaskYieldTrampoline(3);
-    gCurTask->unk6C = 0;
+    gCurTask->metaKnightMaskHalfCount = 0;
     do
     {
         t = gCurTask;
         v = CreateChildTask(187, t->pixelX, t->pixelY, t->tileWord);
-        gTasks[v].unk18 = (s16)gCurTask->unk6C;
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gTasks[v].metaKnightMaskHalfSide = (s16)gCurTask->metaKnightMaskHalfCount;
+        gCurTask->metaKnightMaskHalfCount++;
+    } while ((s16)gCurTask->metaKnightMaskHalfCount <= 1);
     gCurTask->frame = 0xFFFF;
     TaskSleepForever();
 }
@@ -148,12 +148,12 @@ void Task_MetaKnightMaskHalf(void)
     gCurTask->layer = 3;
     gCurTask->frameTable = gUnk_08753DA0;
     TaskFaceLikeParent();
-    if (gCurTask->unk18 == 0)
+    if (gCurTask->metaKnightMaskHalfSide == 0)
     {
         TaskSetMotionXFacing(-0xC000, 0);
         gCurTask->velY = -0x1F800;
         gCurTask->accelY = 192 << 5;
-        gCurTask->unk6C = 0;
+        gCurTask->metaKnightMaskHalfLoopCount = 0;
         do
         {
             TaskSetFrame(31);
@@ -164,15 +164,15 @@ void Task_MetaKnightMaskHalf(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->metaKnightMaskHalfLoopCount++;
+        } while ((s16)gCurTask->metaKnightMaskHalfLoopCount <= 4);
     }
     else
     {
         TaskSetMotionXFacing(192 << 8, 0);
         gCurTask->velY = -0x1F800;
         gCurTask->accelY = 192 << 5;
-        gCurTask->unk6C = 0;
+        gCurTask->metaKnightMaskHalfLoopCount = 0;
         do
         {
             TaskSetFrame(27);
@@ -183,8 +183,8 @@ void Task_MetaKnightMaskHalf(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->metaKnightMaskHalfLoopCount++;
+        } while ((s16)gCurTask->metaKnightMaskHalfLoopCount <= 4);
     }
     TaskExitTrampoline();
 }
