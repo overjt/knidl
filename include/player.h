@@ -792,8 +792,8 @@ void PlayerStarRodFlightSteer(void);
 
 /* src/plobj_507bc.c */
 void Task_PlayerObject(void);
-void sub_08050814(void);
-void sub_0805091c(void);
+void PlayerObjectVanish(void);
+void PlayerObjectLaserBeamVanish(void);
 
 /* src/plobj_509ec.c */
 void PlayerObjectAirPuff(void);

@@ -210,5 +210,5 @@ void BossEnduranceMain(void)
             gPlayerStates[i].sfxPlayer = -1;
         }
     }
-    sub_08027128();
+    StopRoomAndApplyExitFlags();
 }

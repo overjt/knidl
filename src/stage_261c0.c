@@ -16,7 +16,7 @@
  * player or the camera target, sub_080262e8 spawns a map event at a
  * tabled position, WrapLoopingRoom wraps every camera, object and task
  * coordinate back by 0x200 pixels in a looping room, ClampCameraFocusToRoom clamps
- * the player to the room bounds and sub_0802695c starts the next stage.
+ * the player to the room bounds and UnlockNextLevel starts the next stage.
  * CreateEntryDoorOpening, CloseDoorOpening, CreateEntryDoorStageClearFlag, sub_08026584 and sub_08026704
  * spawn and adjust the M08 stage objects of the door the player entered by
  * (gEntryDoorIndex, its slots in gDoorObjectTasks); CreateStageUnlockPan/CreateBigSwitchUnlockPan
@@ -330,7 +330,7 @@ void ClampCameraFocusToRoom(void)
         gCameraFocusY = gRoomBounds[3];
 }
 
-void sub_0802695c(void)
+void UnlockNextLevel(void)
 {
     gFurthestLevel = gCurLevel + 1;
     gFurthestStage = 0;
@@ -343,7 +343,7 @@ void sub_08026994(void)
 {
 }
 
-void sub_08026998(void)
+void SaveAndSetContinuePoint(void)
 {
     if (gMetaKnightmareMode == 0)
         SaveProgress(gCurSaveSlot);

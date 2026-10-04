@@ -77,7 +77,7 @@ void Task_Bonkers(void)
         gCurTask->bonkersIgnoreTerrainTimer = 24;
     else
         gCurTask->bonkersIgnoreTerrainTimer = 0;
-    sub_08066ae0();
+    MidBossResetHealth();
     CallTableEntry(gCurTask->variant, 1, gBonkersVariants);
 }
 
@@ -785,6 +785,6 @@ void Task_PoppyBrosSr(void)
     else
         gCurTask->poppyBrosSrIgnoreTerrainTimer = 0;
     TaskFaceNearestPlayer();
-    sub_08066ae0();
+    MidBossResetHealth();
     CallTableEntry(gCurTask->variant, 1, gPoppyBrosSrVariants);
 }

@@ -124,7 +124,7 @@ void HudAnimateHpBar(s32 from, s32 to, s32 i);
 s32 HudStartHpBarFill(s32 from, s32 to);
 void HudSetHpBar(s32 x, s32 i);
 void HudResetHpBar(s32 i);
-void sub_0800aaac(s32 i);
+void HudStopHpBarAnim(s32 i);
 
 /* src/hud_0aad0.c */
 void HudUpdateClock(void);

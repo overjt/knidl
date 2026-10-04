@@ -69,7 +69,7 @@ void sub_08097580(void)
     t->phanPhanCatchActive = 0;
     t->phanPhanMoveCount = 0;
     t->phanPhanHeldPlayerSlot = -1;
-    sub_08066ae0();
+    MidBossResetHealth();
 }
 
 void PhanPhanEnterState(void)

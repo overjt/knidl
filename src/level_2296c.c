@@ -17,7 +17,7 @@
  * the per-stage door masks gUsedSubGameDoors[] and the cleared-stage mask
  * gWarpStarStationLevels from the save flags (gHubDoorUnlocks[level][6] names each
  * stage's flag) and place the player at the matching door of the hub
- * room gRoomTable[8][stage][0]; sub_08022f50 (AgbMain) resets level,
+ * room gRoomTable[8][stage][0]; BossEnduranceSetStart (AgbMain) resets level,
  * stage and room; sub_08022f98/ClearRoomBgmStarted are M02's screen-setup hooks;
  * LoadRoom and sub_080233e0 are the loaders of M02's first screen
  * setup StageInit (see level_242d0.c); CreateRoomTask spawns task type
@@ -228,10 +228,10 @@ void ResetLevelStateForContinue(void)
     gCutscenePending = 1;
 }
 
-void sub_08022f50(void)
+void BossEnduranceSetStart(void)
 {
     gLevelIndex = 0;
-    gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
+    gStageIndex = gLevelStageCounts[gLevelIndex] - 1;
     gRoomIndex = 0;
     gRoomEntryMode = ROOM_ENTRY_NORMAL;
     gRoomEntrySet = 0;

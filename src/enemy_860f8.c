@@ -126,29 +126,29 @@ void BrontoBurtWaveState0Update(void)
     gCurTask->brontoBurtTurnTimer = 40;
 }
 
-void BrontoBurtVariant1(void)
+void BrontoBurtWeaveInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08086320;
+    gCurTask->updateCallback = (u32)BrontoBurtWeaveUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087420A0);
+    CallTableEntry(gCurTask->state, 1, gBrontoBurtWeaveStates);
 }
 
-void sub_080862fc(void)
+void BrontoBurtWeaveEnterState(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_08086320;
-    CallTableEntry(t->state, 1, gUnk_087420A0);
+    t->updateCallback = (u32)BrontoBurtWeaveUpdate;
+    CallTableEntry(t->state, 1, gBrontoBurtWeaveStates);
 }
 
-void sub_08086320(void)
+void BrontoBurtWeaveUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087420A4);
+    CallTableEntry(gCurTask->updateState, 1, gBrontoBurtWeaveStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08086344(void)
+void BrontoBurtWeave(void)
 {
     struct Task *t;
     s16 *p;
@@ -833,27 +833,27 @@ void TwizzyWaveState0Update(void)
     gCurTask->twizzyTurnTimer = 40;
 }
 
-void TwizzyVariant1(void)
+void TwizzyWeaveInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080872bc;
+    gCurTask->updateCallback = (u32)TwizzyWeaveUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087425D0);
+    CallTableEntry(gCurTask->state, 1, gTwizzyWeaveStates);
 }
 
-void sub_08087298(void)
+void TwizzyWeaveEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_080872bc;
-    CallTableEntry(gCurTask->state, 1, gUnk_087425D0);
+    gCurTask->updateCallback = (u32)TwizzyWeaveUpdate;
+    CallTableEntry(gCurTask->state, 1, gTwizzyWeaveStates);
 }
 
-void sub_080872bc(void)
+void TwizzyWeaveUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087425D4);
+    CallTableEntry(gCurTask->updateState, 1, gTwizzyWeaveStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080872e0(void)
+void TwizzyWeave(void)
 {
     s16 *p;
 

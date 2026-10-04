@@ -19,7 +19,7 @@
  *   * Task_UFO's row 0 `UFOInit`+`UFOUpdate` with the
  *     `UFOIsAtTarget` box test (`struct Rect` + GetDistSq) and the
  *     `UFOSetTarget` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
- *   * UFO's state check `UFOState1Update` (gUFOStateUpdates[1]), which walks a
+ *   * UFO's state check `UFOPickMoveUpdate` (gUFOStateUpdates[1]), which walks a
  *     sixteen-entry cue ring through
  *     `UFOPickNextPoint` (`15 & (rand + Task.unk24)`);
  *   * Task_Parasol's row 0 `ParasolRiseInit`+`ParasolRiseUpdate` and its aim
@@ -1441,7 +1441,7 @@ void UFOEnterState(void)
     CallTableEntry(gCurTask->state, 4, gUFOStates);
 }
 
-void UFOState0(void)
+void UFOZigzag(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1472,21 +1472,21 @@ void UFOState0(void)
     TaskSleepForever();
 }
 
-void UFOState0Update(void)
+void UFOZigzagUpdate(void)
 {
     gCurTask->actorAnimDelay18 = ActorTickAnim(gCurTask->actorAnimDelay18);
     if (gCurTask->state != 0)
         TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
-void UFOState1(void)
+void UFOPickMove(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
     TaskSleepForever();
 }
 
-void UFOState1Update(void)
+void UFOPickMoveUpdate(void)
 {
     struct Task *t;
     s32 v;
@@ -1518,7 +1518,7 @@ void UFOState1Update(void)
     TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
-void UFOState2(void)
+void UFOFlyToTarget(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -1526,7 +1526,7 @@ void UFOState2(void)
     TaskSleepForever();
 }
 
-void UFOState2Update(void)
+void UFOFlyToTargetUpdate(void)
 {
     struct Rect box;
 

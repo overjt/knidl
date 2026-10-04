@@ -589,16 +589,16 @@ u32 gUFOVariants[2] ACTOR_TBL(08740ac8) = {
 /* ---- 0x08740B84-0x08740BD4: 11 table(s), 20 function pointer(s), section .actor_tbl_08740b84 ---- */
 /* include/enemy.h; CallTableEntry(i, 4, ...) in UFOInit, UFOEnterState */
 u32 gUFOStates[4] ACTOR_TBL(08740b84) = {
-    (u32)UFOState0,
-    (u32)UFOState1,
-    (u32)UFOState2,
+    (u32)UFOZigzag,
+    (u32)UFOPickMove,
+    (u32)UFOFlyToTarget,
     (u32)UFOShoot,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in UFOUpdate */
 u32 gUFOStateUpdates[4] ACTOR_TBL(08740b84) = {
-    (u32)UFOState0Update,
-    (u32)UFOState1Update,
-    (u32)UFOState2Update,
+    (u32)UFOZigzagUpdate,
+    (u32)UFOPickMoveUpdate,
+    (u32)UFOFlyToTargetUpdate,
     (u32)UFOShootUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in UFOIdleInit, UFOIdleEnterState */
@@ -1205,18 +1205,18 @@ u32 gNoddyVariants[2] ACTOR_TBL(08741f70) = {
 /* include/enemy.h; CallTableEntry(i, 6, ...) in NoddyInit, NoddyEnterState */
 u32 gNoddyStates[6] ACTOR_TBL(08741f70) = {
     (u32)NoddyWalk,
-    (u32)NoddyState1,
+    (u32)NoddyFallAsleep,
     (u32)NoddySleep,
-    (u32)NoddyState3,
+    (u32)NoddyWakeUp,
     (u32)NoddySleepFall,
     (u32)NoddyState5,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in NoddyUpdate */
 u32 gNoddyStateUpdates[6] ACTOR_TBL(08741f70) = {
     (u32)NoddyWalkUpdate,
-    (u32)NoddyState1Update,
+    (u32)NoddyFallAsleepUpdate,
     (u32)NoddySleepUpdate,
-    (u32)NoddyState3Update,
+    (u32)NoddyWakeUpUpdate,
     (u32)NoddySleepFallUpdate,
     (u32)NoddyState5Update,
 };
@@ -1283,7 +1283,7 @@ u32 gParasolWaddleDooStateUpdates[4] ACTOR_TBL(08742030) = {
 /* include/enemy.h; CallTableEntry(i, 7, ...) in Task_BrontoBurt, BrontoBurtEnterVariant */
 u32 gBrontoBurtVariants[7] ACTOR_TBL(08742064) = {
     (u32)BrontoBurtWaveInit,
-    (u32)BrontoBurtVariant1,
+    (u32)BrontoBurtWeaveInit,
     (u32)BrontoBurtSwoopInit,
     (u32)BrontoBurtDiagonalInit,
     (u32)BrontoBurtChaseInit,
@@ -1300,12 +1300,12 @@ u32 gBrontoBurtWaveStateUpdates[1] ACTOR_TBL(08742064) = {
 };
 
 /* ---- 0x087420A0-0x087420AC: 3 table(s), 3 function pointer(s), section .actor_tbl_087420a0 ---- */
-/* include/enemy.h; CallTableEntry(i, 1, ...) in BrontoBurtVariant1, sub_080862fc */
-u32 gUnk_087420A0[1] ACTOR_TBL(087420a0) = {
-    (u32)sub_08086344,
+/* include/enemy.h; CallTableEntry(i, 1, ...) in BrontoBurtWeaveInit, BrontoBurtWeaveEnterState */
+u32 gBrontoBurtWeaveStates[1] ACTOR_TBL(087420a0) = {
+    (u32)BrontoBurtWeave,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_08086320 */
-u32 gUnk_087420A4[1] ACTOR_TBL(087420a0) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in BrontoBurtWeaveUpdate */
+u32 gBrontoBurtWeaveStateUpdates[1] ACTOR_TBL(087420a0) = {
     (u32)sub_08086444,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in BrontoBurtSwoopInit */
@@ -1357,7 +1357,7 @@ u32 gBrontoBurtTakeOffStateUpdates[3] ACTOR_TBL(0874212c) = {
 /* include/enemy.h; CallTableEntry(i, 10, ...) in Task_Twizzy, TwizzyEnterVariant */
 u32 gTwizzyVariants[10] ACTOR_TBL(08742570) = {
     (u32)TwizzyWaveInit,
-    (u32)TwizzyVariant1,
+    (u32)TwizzyWeaveInit,
     (u32)TwizzySwoopInit,
     (u32)TwizzyDiagonalInit,
     (u32)TwizzyChaseInit,
@@ -1379,12 +1379,12 @@ u32 gTwizzyWaveStateUpdates[1] ACTOR_TBL(087425b0) = {
 };
 
 /* ---- 0x087425D0-0x087425DC: 3 table(s), 3 function pointer(s), section .actor_tbl_087425d0 ---- */
-/* include/enemy.h; CallTableEntry(i, 1, ...) in TwizzyVariant1, sub_08087298 */
-u32 gUnk_087425D0[1] ACTOR_TBL(087425d0) = {
-    (u32)sub_080872e0,
+/* include/enemy.h; CallTableEntry(i, 1, ...) in TwizzyWeaveInit, TwizzyWeaveEnterState */
+u32 gTwizzyWeaveStates[1] ACTOR_TBL(087425d0) = {
+    (u32)TwizzyWeave,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_080872bc */
-u32 gUnk_087425D4[1] ACTOR_TBL(087425d0) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in TwizzyWeaveUpdate */
+u32 gTwizzyWeaveStateUpdates[1] ACTOR_TBL(087425d0) = {
     (u32)sub_080873b0,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in TwizzySwoopInit */

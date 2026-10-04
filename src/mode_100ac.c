@@ -80,7 +80,7 @@ void CutsceneMain(void)
         gDispCnt &= 0xDFFF;
         gWin0H = gWin0V = gWinIn0 = gWinOut = 0;
         gBldCntTarget1 = gBldCntTarget2 = gBldAlphaEva = gBldAlphaEvb = 0;
-        sub_08027178();
+        StopRoom();
     }
 }
 

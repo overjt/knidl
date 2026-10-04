@@ -1962,7 +1962,7 @@ SECTIONS
     } > ROM
     ASSERT(!MATCHING || ADDR(.air_grind_rodata) == 0x080CFE2C, "MATCHING: .air_grind_rodata moved")
 
-    /* Sprite sheets (asset, #36 phase 2 run 3): OAM template streams, tiles, palettes and struct TaskGfx records the frame tables reach; its head holds a RequestCopyList palette and the LZ77 streams gUnk_080D07C8/gUnk_080D1B78, its last 12 bytes the stage-count table gUnk_08334EB4 */
+    /* Sprite sheets (asset, #36 phase 2 run 3): OAM template streams, tiles, palettes and struct TaskGfx records the frame tables reach; its head holds a RequestCopyList palette and the LZ77 streams gUnk_080D07C8/gUnk_080D1B78, its last 12 bytes the stage-count table gLevelStageCounts */
     .sprite_sheets : {
         KEEP(*(.sprite_sheets))
     } > ROM
@@ -4047,7 +4047,7 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_08742050 == 0x08742050, "MATCHING: actor_rodata_08742050 moved")
     ASSERT(!MATCHING || gBrontoBurtVariants == 0x08742064, "MATCHING: actor_tbl_08742064 moved")
     ASSERT(!MATCHING || actor_rodata_08742088 == 0x08742088, "MATCHING: actor_rodata_08742088 moved")
-    ASSERT(!MATCHING || gUnk_087420A0 == 0x087420A0, "MATCHING: actor_tbl_087420a0 moved")
+    ASSERT(!MATCHING || gBrontoBurtWeaveStates == 0x087420A0, "MATCHING: actor_tbl_087420a0 moved")
     ASSERT(!MATCHING || actor_rodata_087420ac == 0x087420AC, "MATCHING: actor_rodata_087420ac moved")
     ASSERT(!MATCHING || gBrontoBurtSwoopStateUpdates == 0x087420BC, "MATCHING: actor_tbl_087420bc moved")
     ASSERT(!MATCHING || actor_rodata_087420c0 == 0x087420C0, "MATCHING: actor_rodata_087420c0 moved")
@@ -4061,7 +4061,7 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_08742598 == 0x08742598, "MATCHING: actor_rodata_08742598 moved")
     ASSERT(!MATCHING || gTwizzyWaveStates == 0x087425B0, "MATCHING: actor_tbl_087425b0 moved")
     ASSERT(!MATCHING || actor_rodata_087425b8 == 0x087425B8, "MATCHING: actor_rodata_087425b8 moved")
-    ASSERT(!MATCHING || gUnk_087425D0 == 0x087425D0, "MATCHING: actor_tbl_087425d0 moved")
+    ASSERT(!MATCHING || gTwizzyWeaveStates == 0x087425D0, "MATCHING: actor_tbl_087425d0 moved")
     ASSERT(!MATCHING || actor_rodata_087425dc == 0x087425DC, "MATCHING: actor_rodata_087425dc moved")
     ASSERT(!MATCHING || gTwizzySwoopStateUpdates == 0x087425EC, "MATCHING: actor_tbl_087425ec moved")
     ASSERT(!MATCHING || actor_rodata_087425f0 == 0x087425F0, "MATCHING: actor_rodata_087425f0 moved")

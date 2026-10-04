@@ -343,7 +343,7 @@ void Task_MrFrosty(void)
     u = gCurTask;
     u->mrFrostyFlashEnabled = 1;
     u->actorDustTrailSlot = zero;
-    sub_08066ae0();
+    MidBossResetHealth();
     CallTableEntry(gCurTask->variant, 1, gMrFrostyVariants);
 }
 

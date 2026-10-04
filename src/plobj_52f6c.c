@@ -18,13 +18,13 @@
  * 3, which flies in one of four directions gUnk_0873B862[Task.unk28] and
  * emits effect 33 every other frame; states 4 and 5 are a stationary
  * object with two callbacks, PlayerObjectUFOShotUpdate (the hit test, which ends the
- * object through the shared exit sub_08050814 once PlayerState.ability is
+ * object through the shared exit PlayerObjectVanish once PlayerState.ability is
  * 0) and PlayerObjectUFOShotLateUpdate (a six-step trail drawn with QueueSprite).
  * Variants 11 and 12 (PlayerObjectStarRodShot, PlayerObjectStarRodFlightShot) are two projectiles
  * that move 4 pixels a frame in the facing direction (animation table
  * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
  * callbacks PlayerObjectStarRodShotUpdate and PlayerObjectStarRodFlightShotUpdate register the collider and hand
- * over to sub_08050814 on contact (variant 11 bounces back once on
+ * over to PlayerObjectVanish on contact (variant 11 bounces back once on
  * collision result 6).  CreatePlayerObject and CreatePlayerObjectLowSlot are the spawners
  * the player's actions call (M09-M14): they start a task of type 6 in
  * the slot band of player 0-3 (4-6, 7-9, 10-12, 13-15; CreatePlayerObject
@@ -243,7 +243,7 @@ void PlayerObjectUFOShotUpdate(void)
 
     if (t->player->ability == ABILITY_NORMAL)
     {
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         return;
     }
     switch (t->playerObjectSpawnWord & 15)
@@ -263,7 +263,7 @@ void PlayerObjectUFOShotUpdate(void)
         {
             if (gTerrainResult.ceilingHits != 0 || (gCurTask->onGround & 1) || gTerrainResult.unk0 != 0)
                 PlaySfxIfLocalPlayer(125, gCurTask->parent);
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BE4C;
         }
         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BE4C);
@@ -362,7 +362,7 @@ void PlayerObjectStarRodShotUpdate(void)
     {
     case 1:
     case 2:
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         return;
     default:
         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BE74);
@@ -393,7 +393,7 @@ void PlayerObjectStarRodShotUpdate(void)
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)
         {
             PlaySfxIfLocalPlayer(125, t->parent);
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         }
     }
 }
@@ -444,7 +444,7 @@ void PlayerObjectStarRodFlightShotUpdate(void)
 
     t->health = 127;
     if (t->hitKind != 0)
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
     else
         RegisterCollider(gCurTaskIdx, t->pixelX + gSpriteCameraX, t->pixelY + gSpriteCameraY, gUnk_0873BE88);
 }

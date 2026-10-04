@@ -416,7 +416,7 @@ s32 HudStartHpBarFill(s32 from, s32 to)
 
 void HudSetHpBar(s32 x, s32 i)
 {
-    sub_0800aaac(i);
+    HudStopHpBarAnim(i);
     HudDrawHpBar(x);
     gHudHpBarIndex = i;
 }
@@ -431,7 +431,7 @@ void HudResetHpBar(s32 i)
     p->stepTimer = 0;
 }
 
-void sub_0800aaac(s32 i)
+void HudStopHpBarAnim(s32 i)
 {
     struct HudBar *p = &gHudHpBars[i];
 

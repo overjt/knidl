@@ -25,7 +25,7 @@
  *       (LoadEndingEpilogueRoom(0, 0) / LoadEndingStarRodReturnRoom(632, 248)), palette set 15 / 16
  *       (LoadBgLayout), DISPCNT BG bits 0x1D00 / 0x1C00, spawn the scene's
  *       task and run frames (RunLinkFrame) until it clears gEndingSceneActive,
- *       then tear the level down (sub_08027178).
+ *       then tear the level down (StopRoom).
  *   CreateEndingEpilogue / CreateEndingStarRodReturn   spawn M38's task type #100 / #101,
  *       retrying every frame until a slot is free, with Task.variant = 0. */
 
@@ -65,7 +65,7 @@ void EndingEpilogueScene(void)
         RunLinkFrame();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    sub_08027178();
+    StopRoom();
 }
 
 void CreateEndingEpilogue(void)
@@ -93,7 +93,7 @@ void EndingStarRodReturnScene(void)
         RunLinkFrame();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    sub_08027178();
+    StopRoom();
 }
 
 void CreateEndingStarRodReturn(void)

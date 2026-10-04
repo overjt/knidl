@@ -285,7 +285,7 @@ extern struct ScrollLock gScrollLock;
 extern u16 gBg3Pos[2];
 
 /* ROM */
-extern u8 gUnk_08334EB4[];
+extern u8 gLevelStageCounts[];
 extern struct RoomDef gLevel7Stage1Room0;
 extern struct RoomDef gLevel7Stage1Room1;
 extern struct RoomDef gLevel7Stage1Room2;
@@ -698,7 +698,7 @@ extern struct RoomDef *const gLevel8Stage7Rooms[];
 /* src/level_2296c.c */
 void ResetLevelStateAtHub(void);
 void ResetLevelStateForContinue(void);
-void sub_08022f50(void);
+void BossEnduranceSetStart(void);
 void sub_08022f98(void);
 void ClearRoomBgmStarted(void);
 void LoadRoom(void);
@@ -774,9 +774,9 @@ void sub_08026704(s32 i);
 s32 CreateStageUnlockPan(void);
 s32 CreateBigSwitchUnlockPan(void);
 void ClampCameraFocusToRoom(void);
-void sub_0802695c(void);
+void UnlockNextLevel(void);
 void sub_08026994(void);
-void sub_08026998(void);
+void SaveAndSetContinuePoint(void);
 void sub_080269e8(void);
 u32 WhispyWoodsCheckScrollLock(void);
 u32 KrackoCheckScrollLock(void);
@@ -789,9 +789,9 @@ void DrawDoors(void);
 
 /* src/stage_270d0.c */
 void sub_080270d0(void);
-void sub_08027128(void);
-void sub_08027178(void);
-void sub_08027198(void);
+void StopRoomAndApplyExitFlags(void);
+void StopRoom(void);
+void FreeRoomAndDoorObjects(void);
 void PauseRoom(void);
 void SetRoomUpdateFlags(u32 a);
 void ResumeRoom(void);

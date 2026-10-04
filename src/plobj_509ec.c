@@ -15,7 +15,7 @@
  * `switch (Task.unk18 & 15)` over its sub-states, each a yield script that
  * ends in TaskExitTrampoline; its per-frame callback (Task.updateCallback) runs
  * the hit test TaskBreakBlocks and the terrain checks and re-binds the body
- * in another sub-state, or the shared exit sub_08050814, on contact.
+ * in another sub-state, or the shared exit PlayerObjectVanish, on contact.
  * Variant 0 (PlayerObjectAirPuff, callback PlayerObjectAirPuffUpdate) spawns a copy of itself
  * in sub-state 1 while it moves; variants 1 and 2 (PlayerObjectSpitStar,
  * PlayerObjectSpitMultiStar) have the collision callbacks PlayerObjectSpitStarUpdate/PlayerObjectSpitMultiStarUpdate
@@ -226,7 +226,7 @@ void PlayerObjectSpitStarUpdate(void)
     if (hit)
     {
         struct Task *t;
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         t = gCurTask;
         t->unk24 = (s32)gUnk_0873BD78;
         if (gTerrainResult.ceilingHits != 0 || (t->onGround & 1) || gTerrainResult.unk0 != 0)
@@ -399,7 +399,7 @@ void PlayerObjectSpitMultiStarUpdate(void)
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)
         {
             PlaySfxIfLocalPlayer(125, t->parent);
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             gCurTask->unk24 = (s32)gUnk_0873BD8C;
         }
         else if (t->waterFlags & 1)

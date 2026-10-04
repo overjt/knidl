@@ -11,7 +11,7 @@
 /* stage_270d0.c (0x080270D0-0x0802739F, issue #93).
  *
  * Stage helpers, part 2.  sub_080270d0 restarts the room's BGM (with
- * the 0x800 flag), sub_08027128/sub_08027178/sub_08027198 tear the level
+ * the 0x800 flag), StopRoomAndApplyExitFlags/StopRoom/FreeRoomAndDoorObjects tear the level
  * down before a state change (flags in gStageExitFlags), PauseRoom/
  * SetRoomUpdateFlags/ResumeRoom set the per-frame flags gRoomUpdateFlags, and
  * PauseSaveBgPalette/PauseRestoreRoomGraphics save and restore the OBJ palette and tiles
@@ -42,13 +42,13 @@ void sub_080270d0(void)
     }
 }
 
-void sub_08027128(void)
+void StopRoomAndApplyExitFlags(void)
 {
     PauseBlockAnims();
     StopHBlankScroll();
     TaskFree(63);
     if (gStageExitFlags & 1)
-        sub_08026998();
+        SaveAndSetContinuePoint();
     if (gStageExitFlags & 2)
         StopAllSfx();
     if (gStageExitFlags & 4)
@@ -56,7 +56,7 @@ void sub_08027128(void)
     gStageExitFlags = 0;
 }
 
-void sub_08027178(void)
+void StopRoom(void)
 {
     PauseBlockAnims();
     StopHBlankScroll();
@@ -64,7 +64,7 @@ void sub_08027178(void)
     gStageExitFlags = 0;
 }
 
-void sub_08027198(void)
+void FreeRoomAndDoorObjects(void)
 {
     s32 i;
     s32 j;

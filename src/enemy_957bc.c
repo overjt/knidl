@@ -93,7 +93,7 @@ void sub_08095834(void)
     h->fireLionFlameSlots = 0;
     h->fireLionSequencePhase = 0;
     h->fireLionPalettePhase = 0;
-    sub_08066ae0();
+    MidBossResetHealth();
     gUnk_02007D00[9] = ActorComputeHealth();
 }
 

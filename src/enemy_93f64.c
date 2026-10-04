@@ -163,7 +163,7 @@ void Task_GrandWheelie(void)
     TaskFaceNearestPlayer();
     ActorCollideTerrain();
     ActorIntroPoseUntilMidBossFight(gUnk_0874433C);
-    sub_08066ae0();
+    MidBossResetHealth();
     CallTableEntry(gCurTask->variant, 1, gGrandWheelieVariants);
 }
 

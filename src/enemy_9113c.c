@@ -752,6 +752,6 @@ void Task_Bugzzy(void)
         gCurTask->bugzzyIgnoreTerrainTimer = 24;
     else
         gCurTask->bugzzyIgnoreTerrainTimer = 0;
-    sub_08066ae0();
+    MidBossResetHealth();
     CallTableEntry(gCurTask->variant, 1, gBugzzyVariants);
 }

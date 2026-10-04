@@ -637,7 +637,7 @@ s32 EnterDoor(void)
                 if (gCurLevel >= gFurthestLevel)
                 {
                     gLevelIndex = gStageIndex;
-                    gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
+                    gStageIndex = gLevelStageCounts[gLevelIndex] - 1;
                     gRoomIndex = 0;
                     gUnk_02008054 = 0x100;
                     gUnk_0200B038 = 1;
@@ -840,13 +840,13 @@ void ExitClearedStage(void)
         gEntryDoorEvent = 0;
         gRoomEntryMode = ROOM_ENTRY_DOOR;
         gCutscenePending = 1;
-        sub_0802695c();
+        UnlockNextLevel();
         gUnk_02007FF0 = 0;
     }
     else
     {
         gLevelIndex = gCurLevel + 1;
-        gStageIndex = gUnk_08334EB4[gLevelIndex] - 1;
+        gStageIndex = gLevelStageCounts[gLevelIndex] - 1;
         gRoomIndex = 0;
         gRoomEntryMode = ROOM_ENTRY_NORMAL;
         gRoomEntrySet = 0;

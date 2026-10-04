@@ -70,8 +70,8 @@ u32 IsWorldPosOnScreen(s16 x, s16 y);
 void LoadGoalGameRoom(void);
 void ExitClearedStage(void);
 void SetCameraFocus(s32 a, s32 b);
-void sub_08026998(void);
-void sub_08027178(void);
+void SaveAndSetContinuePoint(void);
+void StopRoom(void);
 void GoalGameInit(void);
 void sub_0805b370(void);
 s32 PlayerGoalGameUpdate(void);
@@ -199,8 +199,8 @@ void GoalGameMain(void)
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    sub_08026998();
-    sub_08027178();
+    SaveAndSetContinuePoint();
+    StopRoom();
 }
 
 void GoalGameInit(void)

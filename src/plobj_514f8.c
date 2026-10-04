@@ -17,11 +17,11 @@
  * PlayerObjectFireBreathUpdate, which registers the collider row gUnk_0873BDD4 and calls
  * the hit test TaskBreakBlocksAt at the spawner's position with only three
  * arguments.  Variant 5 (PlayerObjectCutterBlade, gUnk_08751A98) and its callback
- * PlayerObjectCutterBladeUpdate re-bind the body or the shared exit sub_08050814.  Variant
+ * PlayerObjectCutterBladeUpdate re-bind the body or the shared exit PlayerObjectVanish.  Variant
  * 6 (PlayerObjectLaserBeam, gUnk_08751AF8, the animation/velocity pairs
  * gUnk_0873B7B0) and its callback PlayerObjectLaserBeamUpdate (a nine-way `switch` on
  * the collision result gTerrainResult.unk4, sounds 173 and 211) turn the
- * object into variant 10's body PlayerObjectUFOShot or the burst sub_0805091c on
+ * object into variant 10's body PlayerObjectUFOShot or the burst PlayerObjectLaserBeamVanish on
  * contact. */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -395,7 +395,7 @@ void PlayerObjectCutterBladeUpdate(void)
 
     if (t->player->ability != ABILITY_CUTTER)
     {
-        TaskSetEntry(sub_08050814, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
         return;
     }
     switch (t->unk28)
@@ -405,7 +405,7 @@ void PlayerObjectCutterBladeUpdate(void)
             gCurTask->hitKind = 1;
         if (gCurTask->hitKind != 0)
         {
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             return;
         }
         TerrainCollideBoxAlongVelocity(gUnk_0873CB54);
@@ -451,7 +451,7 @@ void PlayerObjectCutterBladeUpdate(void)
     case 1:
         if (t->hitKind != 0)
         {
-            TaskSetEntry(sub_08050814, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectVanish, gCurTaskIdx);
             return;
         }
         if (--t->unk2C == 0)
@@ -631,7 +631,7 @@ void PlayerObjectLaserBeamUpdate(void)
     if (gCurTask->hitKind != 0)
     {
     rebind:
-        TaskSetEntry(sub_0805091c, gCurTaskIdx);
+        TaskSetEntry(PlayerObjectLaserBeamVanish, gCurTaskIdx);
         return;
     }
     switch (gTerrainResult.slope)

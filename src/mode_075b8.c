@@ -120,7 +120,7 @@ void HubMain(void)
             gPlayerStates[i].sfxPlayer = -1;
         }
     }
-    sub_08027178();
+    StopRoom();
 }
 
 void BigSwitchViewMain(void)
@@ -164,7 +164,7 @@ void BigSwitchViewMain(void)
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    sub_08027198();
+    FreeRoomAndDoorObjects();
     if (CheckNewMilestones() != 0 && gMetaKnightmareMode == 0)
         ShowMilestonePicture();
 }
@@ -272,7 +272,7 @@ void StageMain(void)
         InputRecorderUpdate();
     }
     gFadeBlankAtWhite = 0;
-    sub_08027128();
+    StopRoomAndApplyExitFlags();
     if (gMetaKnightmareMode == 0 && gGameState != GAME_STATE_BIG_SWITCH_VIEW
         && (gMilestoneFlags & (4 << gExtraMode))
         && !(gMilestoneFlags & (64 << gExtraMode))) {

@@ -403,7 +403,7 @@ void Task_MrTickTock(void)
     u->mrTickTockFlashEnabled = 1;
     u->actorDustTrailSlot = zero;
     ActorIntroPoseUntilMidBossFight(gUnk_08745744);
-    sub_08066ae0();
+    MidBossResetHealth();
     CallTableEntry(gCurTask->variant, 1, gMrTickTockVariants);
 }
 

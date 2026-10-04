@@ -1409,7 +1409,7 @@ void ActorSetDefaultPalette(u8 mode)
     a->paletteColorCount = n;
 }
 
-void sub_08066ae0(void)
+void MidBossResetHealth(void)
 {
     struct Task *t;
     struct Actor *a;

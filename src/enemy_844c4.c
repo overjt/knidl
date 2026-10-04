@@ -206,7 +206,7 @@ void NoddyState5Update(void)
 {
 }
 
-void NoddyState1(void)
+void NoddyFallAsleep(void)
 {
     struct Task *t;
 
@@ -227,7 +227,7 @@ void NoddyState1(void)
     TaskSleepForever();
 }
 
-void NoddyState1Update(void)
+void NoddyFallAsleepUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
@@ -283,7 +283,7 @@ void NoddySleepUpdate(void)
     }
 }
 
-void NoddyState3(void)
+void NoddyWakeUp(void)
 {
     struct Task *t;
 
@@ -303,7 +303,7 @@ void NoddyState3(void)
     TaskSleepForever();
 }
 
-void NoddyState3Update(void)
+void NoddyWakeUpUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);

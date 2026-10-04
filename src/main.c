@@ -120,7 +120,7 @@ void AgbMain(void)
                 gPlayerHealth[i] = 0;
             }
             ResetPlayTime();
-            sub_08022f50();
+            BossEnduranceSetStart();
             while (gGameState == GAME_STATE_BOSS_ENDURANCE)
                 BossEnduranceMain();
             gPrevGameState = GAME_STATE_BOSS_ENDURANCE;

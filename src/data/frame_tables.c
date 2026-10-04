@@ -2476,7 +2476,7 @@ u32 gUnk_0874C648[] FRAME_TABLE = {
     (u32)gUnk_080D2FB0,
 };
 
-/* gUnk_0874C650.  Consumer: sub_08050814 (src/plobj_507bc.c:50).  11 words,
+/* gUnk_0874C650.  Consumer: PlayerObjectVanish (src/plobj_507bc.c:50).  11 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x0874C650-0x0874C67C).  Declared
  * include/player.h:328. */
@@ -2629,7 +2629,7 @@ u32 gUnk_0874C7B4[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C7CC.  Consumers: sub_08056320 (src/effect_55b24.c:263),
- * sub_0805091c (src/plobj_507bc.c:91).  14 words, OAM template streams;
+ * PlayerObjectLaserBeamVanish (src/plobj_507bc.c:91).  14 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C7CC-0x0874C804).  Declared include/player.h:329. */
 u32 gUnk_0874C7CC[] FRAME_TABLE = {
@@ -13054,7 +13054,7 @@ u32 gUnk_08754E7C[] FRAME_TABLE = {
 
 /* gUnk_08754F68.  Consumers: CutsceneSingingKirby
  * (src/player_10b38.c:3163), CutsceneSingingRainbowBar
- * (src/player_10b38.c:3541), CutsceneSingingActorScript43 (src/player_10b38.c:3691) and 6
+ * (src/player_10b38.c:3541), CutsceneSingingBeamedNotes (src/player_10b38.c:3691) and 6
  * more.  64 words, OAM template streams; extent: the span to the next
  * label, every word such a target (pointer_tables 0x08754F68-0x08755068).
  * Declared include/cutscene.h:128. */

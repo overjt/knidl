@@ -479,7 +479,7 @@ u8 ActorIsInViewMargin(s16 dx, u16 dy);
 u8 ActorIsInNearView(void);
 u8 ActorIsInFarView(void);
 void ActorSetDefaultPalette(u8 mode);
-void sub_08066ae0(void);
+void MidBossResetHealth(void);
 void TaskBounceParasolDriftOffWall(void);
 void TaskStartParasolDrift(void);
 void TaskStepParasolDrift(void);
