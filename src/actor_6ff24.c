@@ -443,11 +443,11 @@ void MetaKnightWarpStarRideInit(void)
     TaskStop();
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;
-    RequestCopy(2, gUnk_0824A9E4.unk08,
-                 &gObjPalette[u->tileWord >> 12], gUnk_0824A9E4.unk00 << 5);
-    RequestCopy(3, gUnk_0824A9E4.unk0C,
+    RequestCopy(2, gUnk_0824A9E4.palette,
+                 &gObjPalette[u->tileWord >> 12], gUnk_0824A9E4.paletteBankCount << 5);
+    RequestCopy(3, gUnk_0824A9E4.tiles,
                  (u16 *)(OBJ_VRAM0 + ((gCurTask->tileWord & 0xFFF) << 5)),
-                 gUnk_0824A9E4.unk02 << 5);
+                 gUnk_0824A9E4.tileCount << 5);
     v = gCurTask;
     v->parent = gWarpStarRideSlot;
     if (gTasks[i = v->parent].unk74 == 0)

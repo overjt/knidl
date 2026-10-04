@@ -320,7 +320,7 @@ void RoomParticlesDrawBelowLine(void)
             struct M19Particle *base = gRoomParticles;
             struct M19Particle *p = &base[gCurTask->roomParticlesIndex];
 
-            if (p->unk03 > 8)
+            if (p->pixelY > 8)
                 RoomParticleDrawScrolled(p);
         }
     }
@@ -333,7 +333,7 @@ void RoomParticlesDrawBelowLine(void)
             struct M19Particle *base = gRoomParticles;
             struct M19Particle *p = &base[gCurTask->roomParticlesIndex];
 
-            if (p->unk03 > gCurTask->roomParticlesLineY - gSpriteCameraY)
+            if (p->pixelY > gCurTask->roomParticlesLineY - gSpriteCameraY)
                 RoomParticleDrawScrolled(p);
         }
     }
@@ -357,19 +357,19 @@ void RoomParticlesDrawRepeated(void)
 
 void RoomParticleStepX(struct M19Particle *p)
 {
-    p->unk01++;
-    if (gUnk_08740320[p->unk00][p->unk01].unk00 == 255)
-        p->unk01 = 0;
+    p->animStep++;
+    if (gUnk_08740320[p->animRow][p->animStep].frame == 255)
+        p->animStep = 0;
     {
-        s32 j = p->unk01 * 4;
-        s32 k = p->unk00 * 96;
+        s32 j = p->animStep * 4;
+        s32 k = p->animRow * 96;
 
-        p->unk02 += ((u8 *)gUnk_08740320)[j + k + 2];
+        p->pixelX += ((u8 *)gUnk_08740320)[j + k + 2];
     }
-    if (p->unk02 > 240)
+    if (p->pixelX > 240)
     {
-        p->unk02 = 0;
-        p->unk03 = RandomRange(132) + 8;
+        p->pixelX = 0;
+        p->pixelY = RandomRange(132) + 8;
     }
 }
 
@@ -379,26 +379,26 @@ void RoomParticleInit(struct M19Particle *p, u8 a, u8 b)
     {
     case 0:
     case 1:
-        p->unk02 = RandomRange(64) + 100;
+        p->pixelX = RandomRange(64) + 100;
         break;
     case 2:
-        p->unk02 = RandomRange(48) + 170;
+        p->pixelX = RandomRange(48) + 170;
         break;
     case 3:
         switch (b)
         {
         case 0:
-            p->unk02 = RandomRange(48) + 120;
+            p->pixelX = RandomRange(48) + 120;
             break;
         case 1:
-            p->unk02 = RandomRange(48) + 40;
+            p->pixelX = RandomRange(48) + 40;
             break;
         }
         break;
     }
-    p->unk03 = RandomRange(132) + 8;
-    p->unk01 = RandomRange(10);
-    p->unk00 = gUnk_08740620[gCurTask->unk28];
+    p->pixelY = RandomRange(132) + 8;
+    p->animStep = RandomRange(10);
+    p->animRow = gUnk_08740620[gCurTask->unk28];
 }
 
 void RoomParticleDrawFixed(struct M19Particle *p)
@@ -406,8 +406,8 @@ void RoomParticleDrawFixed(struct M19Particle *p)
     struct Task *t = gCurTask;
 
     QueueSprite(t->layer,
-                 gUnk_08752DB8[gUnk_08740320[p->unk00][p->unk01].unk00],
-                 t->spriteFlags, t->tileWord, p->unk02, p->unk03);
+                 gUnk_08752DB8[gUnk_08740320[p->animRow][p->animStep].frame],
+                 t->spriteFlags, t->tileWord, p->pixelX, p->pixelY);
 }
 
 void sub_08078258(struct M19Particle *p)
@@ -415,8 +415,8 @@ void sub_08078258(struct M19Particle *p)
     struct Task *t = gCurTask;
 
     QueueSprite(t->layer,
-                 gUnk_08752E00[gUnk_087404A0[p->unk00][p->unk01].unk00],
-                 t->spriteFlags, t->tileWord, p->unk02, p->unk03);
+                 gUnk_08752E00[gUnk_087404A0[p->animRow][p->animStep].frame],
+                 t->spriteFlags, t->tileWord, p->pixelX, p->pixelY);
 }
 
 void RoomParticleDrawScrolled(struct M19Particle *p)
@@ -424,8 +424,8 @@ void RoomParticleDrawScrolled(struct M19Particle *p)
     struct Task *t = gCurTask;
 
     QueueSprite(t->layer,
-                 gUnk_08752E00[gUnk_087404A0[p->unk00][p->unk01].unk00],
-                 t->spriteFlags, t->tileWord, p->unk02 - gSpriteCameraX, p->unk03);
+                 gUnk_08752E00[gUnk_087404A0[p->animRow][p->animStep].frame],
+                 t->spriteFlags, t->tileWord, p->pixelX - gSpriteCameraX, p->pixelY);
 }
 
 void RoomParticleDrawRepeated(struct M19Particle *p)
@@ -433,16 +433,16 @@ void RoomParticleDrawRepeated(struct M19Particle *p)
     gCurTask->unk2C = 0;
     do
     {
-        if (RoomParticleIsOnScreen(p->unk02 - gSpriteCameraX + gCurTask->unk2C * 192,
-                         p->unk03))
+        if (RoomParticleIsOnScreen(p->pixelX - gSpriteCameraX + gCurTask->unk2C * 192,
+                         p->pixelY))
         {
             struct Task *t = gCurTask;
 
             QueueSprite(t->layer,
-                         gUnk_08752E00[gUnk_087404A0[p->unk00][p->unk01].unk00],
+                         gUnk_08752E00[gUnk_087404A0[p->animRow][p->animStep].frame],
                          t->spriteFlags, t->tileWord,
-                         p->unk02 - gSpriteCameraX + t->unk2C * 192,
-                         p->unk03);
+                         p->pixelX - gSpriteCameraX + t->unk2C * 192,
+                         p->pixelY);
         }
         gCurTask->unk2C++;
     } while (gCurTask->unk2C <= 4);
@@ -463,95 +463,95 @@ u8 RoomParticleIsOnScreen(s16 x, s16 y)
 
 void RoomParticleStepY(struct M19Particle *p, u8 a)
 {
-    p->unk01++;
-    if (gUnk_087404A0[p->unk00][p->unk01].unk00 == 255)
-        p->unk01 = 0;
+    p->animStep++;
+    if (gUnk_087404A0[p->animRow][p->animStep].frame == 255)
+        p->animStep = 0;
     switch (a)
     {
     case 0:
         {
-            s32 i = p->unk01 * 4 + p->unk00 * 96;
+            s32 i = p->animStep * 4 + p->animRow * 96;
             u8 *q = (u8 *)gUnk_087404A0;
 
             q += 3;
-            p->unk03 -= q[i];
+            p->pixelY -= q[i];
         }
-        if (p->unk03 <= 7)
+        if (p->pixelY <= 7)
         {
-            p->unk02 = RandomRange(250);
-            p->unk03 = 160;
+            p->pixelX = RandomRange(250);
+            p->pixelY = 160;
         }
         break;
     case 2:
         {
-            s32 i = p->unk01 * 4 + p->unk00 * 96;
+            s32 i = p->animStep * 4 + p->animRow * 96;
             u8 *q = (u8 *)gUnk_087404A0;
 
             q += 3;
-            p->unk03 -= q[i];
+            p->pixelY -= q[i];
         }
-        if (p->unk03 <= 7)
+        if (p->pixelY <= 7)
         {
             {
                 s32 v = RandomRange(48) + 232;
 
-                p->unk02 = v + (u8)gCurTask->pixelX;
+                p->pixelX = v + (u8)gCurTask->pixelX;
             }
-            p->unk03 = 160;
+            p->pixelY = 160;
         }
         break;
     case 1:
         {
-            s32 i = p->unk01 * 4 + p->unk00 * 96;
+            s32 i = p->animStep * 4 + p->animRow * 96;
             u8 *q = (u8 *)gUnk_087404A0;
 
             q += 3;
-            p->unk03 -= q[i];
+            p->pixelY -= q[i];
         }
-        if (p->unk03 <= 7)
+        if (p->pixelY <= 7)
         {
             {
                 s32 v = RandomRange(64) + 224;
 
-                p->unk02 = v + (u8)gCurTask->pixelX;
+                p->pixelX = v + (u8)gCurTask->pixelX;
             }
-            p->unk03 = 160;
+            p->pixelY = 160;
         }
         break;
     case 3:
         {
-            s32 i = p->unk01 * 4 + p->unk00 * 96;
+            s32 i = p->animStep * 4 + p->animRow * 96;
             u8 *q = (u8 *)gUnk_087404A0;
 
             q += 3;
-            p->unk03 -= q[i];
+            p->pixelY -= q[i];
         }
-        if (p->unk03 <= 7)
+        if (p->pixelY <= 7)
         {
             {
                 s32 v = RandomRange(48) + 232;
 
-                p->unk02 = v + (u8)gCurTask->pixelX + 96;
+                p->pixelX = v + (u8)gCurTask->pixelX + 96;
             }
-            p->unk03 = 160;
+            p->pixelY = 160;
         }
         break;
     case 4:
         {
-            s32 i = p->unk01 * 4 + p->unk00 * 96;
+            s32 i = p->animStep * 4 + p->animRow * 96;
             u8 *q = (u8 *)gUnk_087404A0;
 
             q += 3;
-            p->unk03 += q[i];
+            p->pixelY += q[i];
         }
-        if (p->unk03 > 160)
+        if (p->pixelY > 160)
         {
             {
                 s32 v = RandomRange(48) + 232;
 
-                p->unk02 = v + (u8)gCurTask->pixelX;
+                p->pixelX = v + (u8)gCurTask->pixelX;
             }
-            p->unk03 = 0;
+            p->pixelY = 0;
         }
         break;
     }

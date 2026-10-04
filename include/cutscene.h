@@ -16,7 +16,7 @@ struct GfxHeader;
    step's delay. */
 struct M19Frame
 {
-    /*0x00*/ u8 unk00;
+    /*0x00*/ u8 frame;
     /*0x01*/ u8 unk01;
     /*0x02*/ u8 unk02;
     /*0x03*/ u8 unk03;
@@ -27,10 +27,10 @@ struct M19Frame
    (unk02) and the countdown RoomParticleDrawScrolled draws on (unk03). */
 struct M19Particle
 {
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
+    /*0x00*/ u8 animRow;
+    /*0x01*/ u8 animStep;
+    /*0x02*/ u8 pixelX;
+    /*0x03*/ u8 pixelY;
 };
 
 /* The 0x087401E4 script records M19's ending-sequence tasks walk: a pointer

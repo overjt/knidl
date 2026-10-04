@@ -27,11 +27,11 @@
 /* gUnk_02007E90[4][3]: M04's per-player spark records (src/player_10358.c) */
 struct M04Spark
 {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x00*/ s32 offsetX;
+    /*0x04*/ s32 offsetY;
+    /*0x08*/ s32 velX;
+    /*0x0C*/ u8 frameTimer;
+    /*0x0D*/ u8 frame;
     /*0x0E*/ u16 unk0E;
 };
 
@@ -515,11 +515,11 @@ void PlayerActionInhale(void)
         gUnk_03001F2C = 0;
         do
         {
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk00 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk04 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk08 = 0;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0C = 1;
-            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].unk0D = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetX = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].offsetY = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].velX = 0;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frameTimer = 1;
+            gUnk_02007E90[gCurTask->player->playerIndex][gUnk_03001F2C].frame = 0;
             gUnk_03001F2C++;
         } while (gUnk_03001F2C <= 2);
         LoadAbilityTiles();

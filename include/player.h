@@ -28,11 +28,11 @@ struct HitBoxSet
    unk08 is the 16.16 y-delta, unk0C a down-counter, unk0D a frame id. */
 struct M04Spark
 {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x00*/ s32 offsetX;
+    /*0x04*/ s32 offsetY;
+    /*0x08*/ s32 velX;
+    /*0x0C*/ u8 frameTimer;
+    /*0x0D*/ u8 frame;
     /*0x0E*/ u16 unk0E;
 };
 
@@ -46,9 +46,9 @@ struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 /* gUnk_0873B510[]: a palette fade, src/dst palettes and the blend step */
 struct M12Fade
 {
-    /*0x00*/ u16 *unk0;
-    /*0x04*/ u16 *unk4;
-    /*0x08*/ s32 unk8;
+    /*0x00*/ u16 *src;
+    /*0x04*/ u16 *dst;
+    /*0x08*/ s32 rate;
 };
 
 struct Unk02005E00
@@ -63,9 +63,9 @@ struct Unk02005E00
    & 128 = sound; a zero flags byte ends the script */
 struct Unk0873A994
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u8 unk4;
+    /*0x00*/ u16 offsetX;
+    /*0x02*/ u16 offsetY;
+    /*0x04*/ u8 flags;
     /*0x05*/ u8 filler5[3];
 };
 

@@ -215,10 +215,10 @@ void PlayerActionBurningUpdate(void)
             struct Task *t = gCurTask;
             if (t->unk2C != -1) {
                 struct M12Fade *f = &gUnk_0873B510[t->unk2C];
-                t->unk6E += f->unk8;
+                t->unk6E += f->rate;
                 if (t->unk6E > 255)
                     t->unk6E = 256;
-                BlendColors(f->unk0, f->unk4, (u16)gCurTask->unk6E, 16,
+                BlendColors(f->src, f->dst, (u16)gCurTask->unk6E, 16,
                              (u16 *)(gObjPalette + ((gCurTask->tileWord >> 12) << 5)));
             }
         }

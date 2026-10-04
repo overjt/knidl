@@ -155,7 +155,7 @@ void HudRedraw(s32 i)
             HudDrawClock(gHudClock);
     } else {
         HudShowHpBar();
-        HudDrawHpBar(gHudHpBars[gHudHpBarIndex].unk4);
+        HudDrawHpBar(gHudHpBars[gHudHpBarIndex].shownValue);
     }
     if (gUnk_020055F0[0] != 0) {
         if (gUnk_020055F0[0] == 2)

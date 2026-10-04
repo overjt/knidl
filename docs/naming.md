@@ -524,8 +524,8 @@ copies and module-local records).
 | ROM label | (named) | 5193 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
 | struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
-| struct field | `unk*` | 170 | tracked by #155: the field's role is not proven |
-| struct field | `unk*` | 247 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
+| struct field | `unk*` | 142 | tracked by #155: the field's role is not proven |
+| struct field | `unk*` | 242 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
 Named for comparison: 501 RAM cells by role and 24 by position, 2960 ROM labels by role and 5248 by position.
@@ -582,7 +582,7 @@ Register aliases (include/task_vars.h): 969 in 198 families: AbilityReleaseFlash
 
 Named constants (include/constants/, docs/naming.md section 7): 514 in 7 headers, spelled at 1840 sites: `abilities.h` 27 (653 sites), `actors.h` 8 (117 sites), `camera.h` 6 (73 sites), `game_states.h` 37 (239 sites), `hits.h` 8 (66 sites), `player.h` 162 (286 sites), `tasks.h` 266 (406 sites).  Integer literals left at a mechanical family's positions whose value has a constant: tasks 0, abilities 0, game_states 0, stage_requests 0, hits 0, actors 0, camera 0.
 
-`unk*` fields by header struct: `Task` 17, `AttackBox` 10, `PlayerState` 10, `Unk03005530` 9, `BodyBox` 8, `Unk03005550` 8, `M37Course` 7, `Actor` 6, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `M37Results` 4, `RoomDef` 4, `Unk03005670` 4, `M12Fade` 3, `M37CoursePlayer` 3, `SaveSlot` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `LinkSave` 2, `M11Buf` 2, `M11R8` 2, `M37Game` 2, `M37Player` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `LinkRec` 1, `M38LogoObj` 1, `Unk02007D70` 1, `Unk0873EEA0` 1.
+`unk*` fields by header struct: `Task` 17, `AttackBox` 10, `PlayerState` 10, `Unk03005530` 9, `BodyBox` 8, `Unk03005550` 8, `M37Course` 7, `Actor` 6, `Door` 6, `M37Obj` 5, `M37ObjSet` 5, `M19Script` 4, `M37Results` 4, `RoomDef` 4, `Unk03005670` 4, `M19Frame` 3, `M37CoursePlayer` 3, `SaveSlot` 3, `Unk03004B00` 3, `Unk03005680` 3, `ActorDef` 2, `BgMap` 2, `LinkSave` 2, `M11Buf` 2, `M11R8` 2, `M37Game` 2, `M37Player` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `GfxDesc` 1, `GfxHeader` 1, `GfxSrc` 1, `HitBoxSet` 1, `HudBar` 1, `LinkRec` 1, `M04Spark` 1, `M38LogoObj` 1, `Unk02007D70` 1, `Unk0873EEA0` 1.
 
 <!-- audit:placeholders:end -->
 

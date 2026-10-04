@@ -51,7 +51,7 @@ void AirGrindRacer(void)
     gAirGrindPtr->players[player].liftY = 0x80000;
     gAirGrindPtr->players[player].offsetX = 0;
     gAirGrindPtr->players[player].animStep = 0;
-    gAirGrindPtr->players[player].slowDownTimer = 0;
+    gAirGrindPtr->players[player].penaltyTimer = 0;
     gAirGrindPtr->players[player].unk0C = 0;
     gAirGrindPtr->players[player].boostCooldown = 0;
     gAirGrindPtr->players[player].grinding = 0;
@@ -189,8 +189,8 @@ void AirGrindRacerUpdate(void)
     u16 prev = gAirGrindPtr->players[player].heldKeys;
     s32 src;
 
-    if (gAirGrindPtr->players[player].slowDownTimer != 0)
-        gAirGrindPtr->players[player].slowDownTimer--;
+    if (gAirGrindPtr->players[player].penaltyTimer != 0)
+        gAirGrindPtr->players[player].penaltyTimer--;
     if (gAirGrindPtr->players[player].boostCooldown != 0)
         gAirGrindPtr->players[player].boostCooldown--;
     if (gAirGrindPtr->players[player].unk0C != 0)
@@ -224,7 +224,7 @@ void AirGrindRacerUpdate(void)
             gAirGrindPtr->players[player].aToggleCount++;
     }
     gAirGrindCoursePtr->players[player].coursePos = pos;
-    if ((gAirGrindPtr->players[player].heldKeys & 1) && gAirGrindPtr->players[player].slowDownTimer == 0)
+    if ((gAirGrindPtr->players[player].heldKeys & 1) && gAirGrindPtr->players[player].penaltyTimer == 0)
         gAirGrindCoursePtr->players[player].holdingA = 1;
     else
         gAirGrindCoursePtr->players[player].holdingA = 0;

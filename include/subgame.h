@@ -9,11 +9,11 @@
 
 struct GfxDesc
 {
-    u16 unk00;
-    u16 unk02;
+    u16 paletteBankCount;
+    u16 tileCount;
     u32 unk04;
-    u32 unk08;
-    const void *unk0C;
+    u32 palette;
+    const void *tiles;
 };
 
 /* per-player records of gAirGrindCourse, M37Course.players[4] (0x3C bytes) */
@@ -60,7 +60,7 @@ struct M37Player
     /*0x02*/ u16 heldKeys;
     /*0x04*/ u16 pressedKeys;
     /*0x06*/ s16 animStep;
-    /*0x08*/ s16 slowDownTimer;
+    /*0x08*/ s16 penaltyTimer;
     /*0x0A*/ s16 boostCooldown;
     /*0x0C*/ s16 unk0C;
     /*0x0E*/ u16 aToggleCount;

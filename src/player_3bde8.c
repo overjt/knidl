@@ -443,67 +443,67 @@ void sub_0803c9b4(s32 a)
             k = 0;
             if (a == 0)
                 k = gCurTask->tileWord + 0x180C;
-            d = p->unk0D;
+            d = p->frame;
             if (a == 0 && d == 0)
                 d = (gCurTask->facing == 1) ? 2 : 3;
         }
         else
         {
-            if (p->unk00 == 0)
+            if (p->offsetX == 0)
             {
-                p->unk08 = 0;
+                p->velX = 0;
                 n = RandomRange(16);
                 if (gCurTask->facing == 1)
-                    p->unk00 = gUnk_0873A924[0][n] << 16;
+                    p->offsetX = gUnk_0873A924[0][n] << 16;
                 else
-                    p->unk00 = -(gUnk_0873A924[0][n] << 16);
-                p->unk04 = gUnk_0873A924[1][n] << 16;
+                    p->offsetX = -(gUnk_0873A924[0][n] << 16);
+                p->offsetY = gUnk_0873A924[1][n] << 16;
             }
-            if (abs(p->unk00) <= 0xF0000)
+            if (abs(p->offsetX) <= 0xF0000)
             {
-                p->unk00 = 0;
-                p->unk0C = 1;
-                p->unk0D = 0;
+                p->offsetX = 0;
+                p->frameTimer = 1;
+                p->frame = 0;
                 continue;
             }
-            if (p->unk00 > 0)
-                p->unk08 -= 0x6000;
+            if (p->offsetX > 0)
+                p->velX -= 0x6000;
             else
-                p->unk08 += 0x6000;
+                p->velX += 0x6000;
             /* The two volatile reads are the twin's placeholders: the ROM
                re-reads unk00 here and unk04 below, and a plain read is
                folded into the earlier one by gcse's PRE. */
-            p->unk00 = *(volatile s32 *)&p->unk00 + p->unk08;
+            p->offsetX = *(volatile s32 *)&p->offsetX + p->velX;
             /* the shift count reuses n: its own local takes r1 (sh/u swap) */
-            n = (abs(p->unk00) >> 20) + 1;
-            u = *(volatile s32 *)&p->unk04;
+            n = (abs(p->offsetX) >> 20) + 1;
+            u = *(volatile s32 *)&p->offsetY;
             t = (abs(u) & 0xFFFF0000) >> n;
-            if (p->unk04 > 0)
+            if (p->offsetY > 0)
                 t = -t;
-            p->unk04 += t;
+            p->offsetY += t;
             d = a;
             k = 0;
             if (a == 0)
             {
-                if (--p->unk0C == 0)
+                if (--p->frameTimer == 0)
                 {
-                    if (p->unk0D == 0)
+                    if (p->frame == 0)
                     {
                         if (gCurTask->facing == 1)
-                            p->unk0D = 2;
+                            p->frame = 2;
                         else
-                            p->unk0D = 3;
+                            p->frame = 3;
                     }
-                    else if (p->unk0D <= 9)
-                        p->unk0D += 2;
-                    p->unk0C = 1;
+                    else if (p->frame <= 9)
+                        p->frame += 2;
+                    p->frameTimer = 1;
                 }
-                d = p->unk0D;
+                d = p->frame;
                 k = gCurTask->tileWord + 0x180C;
             }
         }
-        x = gCurTask->pixelX + ((s16 *)&p->unk00)[1];
-        y = gCurTask->pixelY + ((s16 *)&p->unk04)[1] + 4;
+        x = gCurTask->pixelX + ((s16 *)&p->offsetX)[1];
+        y = gCurTask->pixelY + ((s16 *)&p->offsetY)[1] + 4;
         if (IsWorldPosOnScreen(x, y))
         {
             x -= gSpriteCameraX;
@@ -523,23 +523,23 @@ void sub_0803cbd8(void)
     }
     e = gUnk_0873A994[(s8)gCurTask->player->offsetScript];
     e += (s8)gCurTask->player->offsetScriptStep;
-    if (e->unk4 != 0)
+    if (e->flags != 0)
     {
-        if (e->unk4 & 128)
+        if (e->flags & 128)
             TaskSetSkipMask(3, gCurTaskIdx);
-        if (e->unk4 & 64)
+        if (e->flags & 64)
         {
             if (gCurTask->facing == 1)
-                gCurTask->player->pixelOffsetX = e->unk0;
+                gCurTask->player->pixelOffsetX = e->offsetX;
             else
-                gCurTask->player->pixelOffsetX = -e->unk0;
+                gCurTask->player->pixelOffsetX = -e->offsetX;
         }
         else
         {
-            gCurTask->player->pixelOffsetX = e->unk0;
+            gCurTask->player->pixelOffsetX = e->offsetX;
         }
-        gCurTask->player->pixelOffsetY = e->unk2;
-        gCurTask->player->offsetScriptDelay = e->unk4 & 15;
+        gCurTask->player->pixelOffsetY = e->offsetY;
+        gCurTask->player->offsetScriptDelay = e->flags & 15;
         gCurTask->player->offsetScriptStep++;
     }
     else

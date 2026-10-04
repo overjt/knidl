@@ -15,11 +15,11 @@ struct ActorDef;
    plus two source pointers). */
 struct GfxSrc
 {
-    /*0x00*/ u16 unk00;
-    /*0x02*/ u16 unk02;
+    /*0x00*/ u16 paletteBankCount;
+    /*0x02*/ u16 tileCount;
     /*0x04*/ u32 unk04;
-    /*0x08*/ void *unk08;
-    /*0x0C*/ void *unk0C;
+    /*0x08*/ void *palette;
+    /*0x0C*/ void *tiles;
 };
 
 struct Unk0873EAC0

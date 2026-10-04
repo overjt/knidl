@@ -21,7 +21,7 @@
  *       thresholds gUnk_080CFE3C[level][], a well-timed press gives a boost
  *       (AirGrindRacerTryBoost, capped by gUnk_080CFE3C[level][0]), and holding A
  *       while the record's unk14 is 0 starts a 24-frame penalty
- *       (M37Player.slowDownTimer); the tilt and animation frame
+ *       (M37Player.penaltyTimer); the tilt and animation frame
  *       Task.frame come from the tables gUnk_080CFEE4/gUnk_080CFEE9/
  *       gUnk_080CFF01, and player 0's effects are variant 2 tasks
  *       (CreateAirGrindEffect).
@@ -132,10 +132,10 @@ void AirGrindRacerRaceStep(s32 player)
 {
     s32 ret;
 
-    if (gAirGrindPtr->players[player].slowDownTimer != 0) {
+    if (gAirGrindPtr->players[player].penaltyTimer != 0) {
         AirGrindRacerSlowDown();
-        if (player == 0 && gAirGrindPtr->players[0].slowDownTimer > 19)
-            CreateAirGrindEffect(0, gCurTask->unk18, (gAirGrindPtr->players[0].slowDownTimer & 1) ? 3 : 4);
+        if (player == 0 && gAirGrindPtr->players[0].penaltyTimer > 19)
+            CreateAirGrindEffect(0, gCurTask->unk18, (gAirGrindPtr->players[0].penaltyTimer & 1) ? 3 : 4);
     } else if (gAirGrindPtr->players[player].heldKeys & 1) {
         if (gAirGrindCoursePtr->players[player].onEvenSegment != 0) {
             ret = 0;
@@ -173,7 +173,7 @@ void AirGrindRacerRaceStep(s32 player)
             gAirGrindPtr->players[player].unk0C = 0;
             AirGrindUpdateEngineSound(player, 0);
             AirGrindRacerSlowDown();
-            gAirGrindPtr->players[player].slowDownTimer = 24;
+            gAirGrindPtr->players[player].penaltyTimer = 24;
             if (player == 0)
                 AirGrindStartScript(3);
             CreateAirGrindEffect(player, gCurTask->unk18, 8);
@@ -213,7 +213,7 @@ void AirGrindRacerRaceStep(s32 player)
     if (gAirGrindPtr->players[player].segmentEndDistance < -20)
         gAirGrindPtr->players[player].segmentEnd = gAirGrindCoursePtr->players[player].segmentEnd;
     gAirGrindPtr->players[player].segmentEndDistance = gAirGrindPtr->players[player].segmentEnd - gAirGrindCoursePtr->players[player].coursePos;
-    if (gAirGrindPtr->players[player].slowDownTimer == 0) {
+    if (gAirGrindPtr->players[player].penaltyTimer == 0) {
         if (gCurTask->frame > 8)
             gAirGrindPtr->players[player].animStep = 0;
         if (gAirGrindCoursePtr->players[player].unk1C > 16)
