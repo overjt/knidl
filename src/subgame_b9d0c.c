@@ -488,7 +488,7 @@ void QuickDrawFreeze(void)
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1000;
     t = &gTasks[gCurTask->quickDrawTimerSlot];
-    t->unk1C = 0;
+    t->quickDrawObjectRunning = 0;
 }
 
 void CreateQuickDrawTimer(void)
@@ -518,9 +518,9 @@ void CreateQuickDrawPlayers(s32 a0)
             struct Task *t = &gTasks[idx];
 
             t->parent = gCurTaskIdx;
-            t->unk18 = idx;
+            t->quickDrawObjectPlayerIndex = idx;
             t->variant = 0;
-            t->unk74 = a0;
+            t->quickDrawObjectStartMode = a0;
             t->unk28 = 0;
         }
     }
@@ -563,7 +563,7 @@ void QuickDrawStartTimer(void)
     PlaySfx(234);
     StopBgm();
     t = &gTasks[gCurTask->quickDrawTimerSlot];
-    t->unk1C = 1;
+    t->quickDrawObjectRunning = 1;
 }
 
 void QuickDrawWaitForSignal(void)

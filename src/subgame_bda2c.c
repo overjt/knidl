@@ -234,7 +234,7 @@ void CreateBombRallyBomb(u32 a)
 
         t->parent = gCurTaskIdx;
         t->variant = 1;
-        t->unk18 = a;
+        t->bombRallyObjectStartSeat = a;
     }
 }
 

@@ -292,16 +292,16 @@ void BombRallyBombStart(void)
     CreateBombRallyStartSign();
     v = gCurTask;
     v->unk30 = 0;
-    v->unk24 = u->unk34;
-    BombRallyBombPlaceAtSeat(v->unk24);
-    BombRallyScrollToSeat(gCurTask->unk18);
+    v->bombRallyObjectBombSeat = u->bombRallyTurnSeat;
+    BombRallyBombPlaceAtSeat(v->bombRallyObjectBombSeat);
+    BombRallyScrollToSeat(gCurTask->bombRallyObjectStartSeat);
     TaskYieldTrampoline(30);
-    BombRallyPanToSeat(gCurTask->unk24);
-    BombRallyScrollToSeat(gCurTask->unk24);
+    BombRallyPanToSeat(gCurTask->bombRallyObjectBombSeat);
+    BombRallyScrollToSeat(gCurTask->bombRallyObjectBombSeat);
     w = gCurTask;
     w->frameTable = 0;
     TaskYieldTrampoline(30);
-    u->unk28 = -2;
+    u->bombRallyThrow = -2;
     gCurTask->state = 1;
     TaskSleepForever();
 }
@@ -327,8 +327,8 @@ void BombRallyBombStartUpdate(void)
                 k = 1;
         }
         QueueSprite(8, DrawAffineSprite(gBombRallyBombFrames[k],
-                                    gUnk_08756770[gCurTask->unk24],
-                                    gUnk_08756770[gCurTask->unk24], 0),
+                                    gUnk_08756770[gCurTask->bombRallyObjectBombSeat],
+                                    gUnk_08756770[gCurTask->bombRallyObjectBombSeat], 0),
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX, gCurTask->pixelY);
     }
@@ -746,31 +746,31 @@ void BombRallyPanToSeat(u32 a)
     struct Task *z;
 
     t = gCurTask;
-    t->unk1C = -gBombRallyPanStepX[t->unk18][a];
-    t->unk20 = -gBombRallyPanStepY[t->unk18][a];
-    t->unk6C = 0;
+    t->bombRallyObjectPanVelX = -gBombRallyPanStepX[t->bombRallyObjectStartSeat][a];
+    t->bombRallyObjectPanVelY = -gBombRallyPanStepY[t->bombRallyObjectStartSeat][a];
+    t->bombRallyObjectPanLoopCount = 0;
     do {
         u = gCurTask;
-        if ((s16)u->unk6C <= 16) {
-            u->unk1C += gBombRallyPanStepX[u->unk18][a];
-            u->unk20 += gBombRallyPanStepY[u->unk18][a];
+        if ((s16)u->bombRallyObjectPanLoopCount <= 16) {
+            u->bombRallyObjectPanVelX += gBombRallyPanStepX[u->bombRallyObjectStartSeat][a];
+            u->bombRallyObjectPanVelY += gBombRallyPanStepY[u->bombRallyObjectStartSeat][a];
         } else {
-            u->unk1C -= gBombRallyPanStepX[u->unk18][a];
-            u->unk20 -= gBombRallyPanStepY[u->unk18][a];
+            u->bombRallyObjectPanVelX -= gBombRallyPanStepX[u->bombRallyObjectStartSeat][a];
+            u->bombRallyObjectPanVelY -= gBombRallyPanStepY[u->bombRallyObjectStartSeat][a];
         }
-        gBg3ScrollX += gCurTask->unk1C;
-        gBg3ScrollY += gCurTask->unk20;
-        if ((gCurTask->unk1C < 0 && gBg3ScrollX < gBombRallySeatScrollX[a])
-         || (gCurTask->unk1C > 0 && gBg3ScrollX > gBombRallySeatScrollX[a]))
+        gBg3ScrollX += gCurTask->bombRallyObjectPanVelX;
+        gBg3ScrollY += gCurTask->bombRallyObjectPanVelY;
+        if ((gCurTask->bombRallyObjectPanVelX < 0 && gBg3ScrollX < gBombRallySeatScrollX[a])
+         || (gCurTask->bombRallyObjectPanVelX > 0 && gBg3ScrollX > gBombRallySeatScrollX[a]))
             gBg3ScrollX = gBombRallySeatScrollX[a];
         w = gCurTask;
-        if ((w->unk20 < 0 && gBg3ScrollY < gBombRallySeatScrollY[a])
-         || (w->unk20 > 0 && gBg3ScrollY > gBombRallySeatScrollY[a]))
+        if ((w->bombRallyObjectPanVelY < 0 && gBg3ScrollY < gBombRallySeatScrollY[a])
+         || (w->bombRallyObjectPanVelY > 0 && gBg3ScrollY > gBombRallySeatScrollY[a]))
             gBg3ScrollY = gBombRallySeatScrollY[a];
         TaskYieldTrampoline(1);
         z = gCurTask;
-        z->unk6C++;
-    } while ((s16)z->unk6C <= 31);
+        z->bombRallyObjectPanLoopCount++;
+    } while ((s16)z->bombRallyObjectPanLoopCount <= 31);
 }
 
 void BombRallyBombSmoke(void)

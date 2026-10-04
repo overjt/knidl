@@ -123,8 +123,13 @@
    Task_BombRallyObject; gBombRallyObjectVariants: player, bomb, smoke, star
    burst, start sign, results player, menu item) */
 #define bombRallyObjectPlayerIndex unk18 /* s32: the player row's player index (0-3): whose buttons it reads */
+#define bombRallyObjectStartSeat unk18 /* s32: the bomb row's first seat (CreateBombRallyBomb's argument): where the camera pans from */
+#define bombRallyObjectPanVelX unk1C /* s32: the BG3 scroll step in X of the pan between seats (ramps up, then down) */
 #define bombRallyObjectSeat unk1C /* s32: the player row's seat (0-3): position, frames and layer, compared with the turn seat */
 #define bombRallyObjectAimSide unk20 /* s32: the side a player aims: 0 toward seat + 1 (throws 0-2), 1 toward seat - 1 (3-5) */
+#define bombRallyObjectPanVelY unk20 /* s32: the BG3 scroll step in Y of the pan between seats */
+#define bombRallyObjectBombSeat unk24 /* s32: the seat the bomb sits at when the round starts (the sub-game task's turn seat) */
+#define bombRallyObjectPanLoopCount unk6C /* s16: BombRallyPanToSeat's frame loop counter (32 frames) */
 
 /* Bonkers - Bonkers (task type #49, Task_Bonkers; gBonkersVariants,
    gBonkersStates / gBonkersStateUpdates) */
@@ -1112,6 +1117,10 @@
    gMetaKnightActionHandlers, and the Warp Star, cannon and goal-game rides)
    */
 #define playerHeldNextCaptor unk18 /* s32: slot of the task that called SetHeldPlayerState; the spit flight makes it the parent */
+#define playerLifeRequestCursor unk18 /* s32: Life request: the cursor row (state 0: the two choices; state 1: the giver list) */
+#define playerLifeGiver unk1C /* s32: Life request: the player index asked for a life (its gLifeRequests entry targets this one) */
+#define playerLifeGiverLastRow unk20 /* s32: Life request: the last row of the giver list (the number of askable players - 1) */
+#define playerLifeGiverMask unk24 /* s32: Life request: bit i set per player that can be asked (active, lives, no request) */
 #define playerActionDone28 unk28 /* s32: 1 once the action's body has finished; its update then hands over (as playerActionDone) */
 #define playerCrashBlendRatio unk28 /* s32: Crash: BlendColors ratio of the palette flash (0-256; +85 in the body, +10 in the update) */
 #define playerDuckDropTimer unk28 /* s32: Duck: frames (8) of ducking on a floor gTerrainResult.unk5 marks before it drops through */
@@ -1245,6 +1254,32 @@
 /* QuickDrawDoorSign - Quick Draw door sign (task type #225,
    Task_QuickDrawDoorSign; made by CreateQuickDrawDoorSign) */
 #define quickDrawDoorSignAnimated unk1C /* s32: non-zero: the sign's frames loop; 0: the still sign (the creator's argument) */
+
+/* QuickDrawObject - QuickDrawObject - Quick Draw's objects (task type #94,
+   Task_QuickDrawObject; gQuickDrawObjectKinds: player, label, timer, slash,
+   burst, opponent, sweat drop, bonus sign, bonus, rank label) */
+#define quickDrawObjectBonusIndex unk18 /* s32: the bonus row's index into gQuickDrawRankBonuses / gQuickDrawDefeatBonuses */
+#define quickDrawObjectCount unk18 /* s32: the timer row's count (0-99), +1 per frame while running; mirrored into the parent */
+#define quickDrawObjectDropIndex unk18 /* s32: which of the sweat drops (0-2): its frame and its velY (gUnk_087564A0) */
+#define quickDrawObjectLabelFrame unk18 /* s32: the label row's frame (in the table its kind picks) */
+#define quickDrawObjectOpponentIndex unk18 /* s32: which CPU opponent (0 Waddle Doo .. 4 Meta Knight); +1 after each defeat */
+#define quickDrawObjectPlayerIndex unk18 /* s32: the player row's player index (its task slot 0-3): palette, wins, local test */
+#define quickDrawObjectArriveDelay unk1C /* s32: frames the player waits after its tags appear before it walks in (60) */
+#define quickDrawObjectBonusPlayer unk1C /* s32: the player index the bonus is for (score / lives, the sound) */
+#define quickDrawObjectLabelKind unk1C /* s32: the label's kind (0-7): which frame table sub_080bccbc gives it */
+#define quickDrawObjectReactionTime unk1C /* s32: the CPU opponent's reaction time (gQuickDrawOpponentReactionTimes[level * 5 + opponent]) */
+#define quickDrawObjectRunning unk1C /* s32: 1 while the timer row counts (from the signal until the round is decided) */
+#define quickDrawObjectLabelLifetime unk20 /* s32: frames the label stays before it exits; -1 = it stays */
+#define quickDrawObjectOpponentArriveDelay unk20 /* s32: frames the CPU opponent waits after its tag appears before it walks in (60) */
+#define quickDrawObjectSubFrame unk24 /* s32: frame of the second sprite the label / timer draw adds (timer: the tens digit); -1 none */
+#define quickDrawObjectSubOffsetX unk28 /* s32: X offset of that second sprite (the timer: -8) */
+#define quickDrawObjectHomeX unk2C /* s32: the player's pixelX where QuickDrawPlacePlayer put it; picks its knock-back */
+#define quickDrawObjectSubOffsetY unk2C /* s32: Y offset of that second sprite (the timer: 0) */
+#define quickDrawObjectSweatDropSlot unk30 /* s32: task slot of the player's sweat drop (#94 row 6); -1 none */
+#define quickDrawObjectFalseStartMarkSlot unk34 /* s32: task slot of the player's false-start mark (#94 label); -1 none */
+#define quickDrawObjectSubTileWord unk34 /* s32: tileWord of the label's second sprite (its own tileWord) */
+#define quickDrawObjectLevel unk74 /* u8: the CPU opponent's level (gSubGameLevel): row of the reaction-time table */
+#define quickDrawObjectStartMode unk74 /* u8: how the player row starts: 0 / 1 arrive, 2 the results pose (state 5) */
 
 /* RingStar - Ring star (task type #155, Task_RingStar; eight made by
    CreateStarRing) */

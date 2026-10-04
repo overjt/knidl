@@ -123,9 +123,9 @@ void QuickDrawPlacePlayer(void)
     s32 k;
 
     t->spriteFlags &= 0x7FFF;
-    t->tileWord = t->unk18 << 12;
+    t->tileWord = t->quickDrawObjectPlayerIndex << 12;
     n = gPlayerCount - 1;
-    k = gLocalPlayer - t->unk18;
+    k = gLocalPlayer - t->quickDrawObjectPlayerIndex;
     t->pixelX = gQuickDrawSeatX[n * 8 + k];
     t->layer = 11;
     switch (gCurTask->pixelX)
@@ -165,9 +165,9 @@ void QuickDrawPlacePlayer(void)
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;
     u->frame = 0;
-    u->unk30 = -1;
-    u->unk34 = -1;
-    u->unk2C = u->pixelX;
+    u->quickDrawObjectSweatDropSlot = -1;
+    u->quickDrawObjectFalseStartMarkSlot = -1;
+    u->quickDrawObjectHomeX = u->pixelX;
 }
 
 void QuickDrawPlacePlayerStrike(void)
@@ -216,7 +216,7 @@ void QuickDrawPlayerSetKnockBack(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk2C)
+    switch (t->quickDrawObjectHomeX)
     {
     case 68:
         t->velX = -0x20000;
@@ -253,7 +253,7 @@ void sub_080bc460(void)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk2C)
+    switch (t->quickDrawObjectHomeX)
     {
     case 68:
         t->unk20 = 0;
@@ -293,7 +293,7 @@ void CreateQuickDrawFalseStartMark(void)
         t->pixelY = p->pixelY - gUnk_08756450[p->unk20];
         t->unk34 = 0;
     }
-    gCurTask->unk34 = id;
+    gCurTask->quickDrawObjectFalseStartMarkSlot = id;
 }
 
 void CreateQuickDrawSweatDrop(void)
@@ -311,7 +311,7 @@ void CreateQuickDrawSweatDrop(void)
         t->pixelX = p->pixelX + gUnk_08756458[p->unk20];
         t->pixelY = p->pixelY - gUnk_08756460[p->unk20];
     }
-    gCurTask->unk30 = id;
+    gCurTask->quickDrawObjectSweatDropSlot = id;
 }
 
 void CreateQuickDrawPlayerTag(void)
@@ -341,13 +341,13 @@ void CreateQuickDrawPlayerTag(void)
         n = &gTasks[idx];
         n->variant = 1;
         u = gCurTask;
-        n->unk18 = u->unk18;
+        n->unk18 = u->quickDrawObjectPlayerIndex;
         n->unk1C = 0;
         n->unk20 = 60;
         n->unk24 = -1;
         n->pixelX = x;
         n->pixelY = y;
-        if (gLocalPlayer == u->unk18)
+        if (gLocalPlayer == u->quickDrawObjectPlayerIndex)
         {
             n->unk18 = 4;
             n->pixelY = u->pixelY - 32;
@@ -356,7 +356,7 @@ void CreateQuickDrawPlayerTag(void)
         n->unk34 = 0;
         n->layer = gCurTask->layer - 8;
     }
-    gCurTask->unk1C = 60;
+    gCurTask->quickDrawObjectArriveDelay = 60;
 }
 
 void CreateQuickDrawWinCountLabel(void)
@@ -389,14 +389,14 @@ void CreateQuickDrawWinCountLabel(void)
         }
         n = &gTasks[idx];
         n->variant = 1;
-        n->unk18 = gQuickDrawWins[gCurTask->unk18];
+        n->unk18 = gQuickDrawWins[gCurTask->quickDrawObjectPlayerIndex];
         n->unk1C = 2;
         n->unk20 = 60;
         n->unk24 = -1;
         n->pixelX = x + 4;
         n->pixelY = y;
     }
-    gCurTask->unk1C = 60;
+    gCurTask->quickDrawObjectArriveDelay = 60;
 }
 
 void sub_080bc70c(void)
@@ -418,12 +418,12 @@ void QuickDrawSetPlayerState(s32 a0, u16 a1)
     {
         t->state = a1;
         TaskSetEntry(QuickDrawPlayerEnterState, a0);
-        if (t->unk34 != -1)
-            TaskFree(t->unk34);
-        if (t->unk30 != -1)
-            TaskFree(t->unk30);
-        t->unk30 = -1;
-        t->unk34 = -1;
+        if (t->quickDrawObjectFalseStartMarkSlot != -1)
+            TaskFree(t->quickDrawObjectFalseStartMarkSlot);
+        if (t->quickDrawObjectSweatDropSlot != -1)
+            TaskFree(t->quickDrawObjectSweatDropSlot);
+        t->quickDrawObjectSweatDropSlot = -1;
+        t->quickDrawObjectFalseStartMarkSlot = -1;
     }
 }
 
@@ -448,7 +448,7 @@ u8 QuickDrawIsTaskOnScreen(void)
 
 void QuickDrawPlacePlayerForResults(void)
 {
-    gCurTask->tileWord = gCurTask->unk18 << 12;
+    gCurTask->tileWord = gCurTask->quickDrawObjectPlayerIndex << 12;
     gCurTask->frameTable = gQuickDrawPlayerLeftFrames;
     gCurTask->layer = 8;
     gCurTask->frame = 0;
@@ -466,7 +466,7 @@ void QuickDrawPlayer(void)
     t->updateCallback = (u32)QuickDrawPlayerUpdate;
     t->layer = 7;
     t = gCurTask;
-    switch (t->unk74)
+    switch (t->quickDrawObjectStartMode)
     {
     case 0:
         t->state = 0;
@@ -500,11 +500,11 @@ void QuickDrawPlayerArrive(void)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(60);
     CreateQuickDrawPlayerTag();
-    TaskYieldTrampoline(gCurTask->unk1C);
+    TaskYieldTrampoline(gCurTask->quickDrawObjectArriveDelay);
     if (gPlayerCount != 1)
     {
         CreateQuickDrawWinCountLabel();
-        TaskYieldTrampoline(gCurTask->unk1C);
+        TaskYieldTrampoline(gCurTask->quickDrawObjectArriveDelay);
     }
     sub_080bc70c();
     TaskSleepForever();
@@ -655,11 +655,11 @@ void QuickDrawLabelDraw(void)
     {
         QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
         u = gCurTask;
-        if (u->unk24 != -1)
+        if (u->quickDrawObjectSubFrame != -1)
         {
             tbl = (u32 *)u->unk30;
-            QueueSprite(u->layer, tbl[u->unk24], u->spriteFlags, u->unk34,
-                         u->pixelX + u->unk28, (s16)(u->pixelY + u->unk2C));
+            QueueSprite(u->layer, tbl[u->quickDrawObjectSubFrame], u->spriteFlags, u->quickDrawObjectSubTileWord,
+                         u->pixelX + u->quickDrawObjectSubOffsetX, (s16)(u->pixelY + u->quickDrawObjectSubOffsetY));
         }
     }
 }
@@ -673,7 +673,7 @@ void sub_080bccbc(void)
         *p = 4;
     else
         *p += 4;
-    switch (gCurTask->unk1C)
+    switch (gCurTask->quickDrawObjectLabelKind)
     {
     case 0:
         gCurTask->frameTable = gQuickDrawPlayerTagFrames;
@@ -702,15 +702,15 @@ void sub_080bccbc(void)
     }
     t = gCurTask;
     t->tileWord |= 0x800;
-    t->unk34 = t->tileWord;
-    if (t->unk20 != -1)
+    t->quickDrawObjectSubTileWord = t->tileWord;
+    if (t->quickDrawObjectLabelLifetime != -1)
     {
-        t->frame = t->unk18;
-        TaskYieldTrampoline(t->unk20);
+        t->frame = t->quickDrawObjectLabelFrame;
+        TaskYieldTrampoline(t->quickDrawObjectLabelLifetime);
     }
     else
     {
-        t->frame = t->unk18;
+        t->frame = t->quickDrawObjectLabelFrame;
     }
 }
 
@@ -718,7 +718,7 @@ void QuickDrawLabel(void)
 {
     gCurTask->drawCallback = (u32)QuickDrawLabelDraw;
     sub_080bccbc();
-    if (gCurTask->unk20 != -1)
+    if (gCurTask->quickDrawObjectLabelLifetime != -1)
         TaskExitTrampoline();
     else
         TaskSleepForever();
@@ -732,13 +732,13 @@ void QuickDrawTimerInit(void)
     t = gCurTask;
     t->frameTable = gQuickDrawDigitFrames;
     t->frame = 0;
-    t->unk24 = 0;
+    t->quickDrawObjectSubFrame = 0;
     t->pixelX = 206;
     t->pixelY = 132;
-    t->unk28 = -8;
-    t->unk2C = 0;
-    t->unk1C = 0;
-    t->unk18 = 0;
+    t->quickDrawObjectSubOffsetX = -8;
+    t->quickDrawObjectSubOffsetY = 0;
+    t->quickDrawObjectRunning = 0;
+    t->quickDrawObjectCount = 0;
     t->tileWord |= 0x800;
 }
 
@@ -747,21 +747,21 @@ void QuickDrawTimerCount(void)
     struct Task *t = gCurTask;
     struct Task *p = &gTasks[t->parent];
 
-    if (t->unk18 <= 98)
+    if (t->quickDrawObjectCount <= 98)
     {
         s32 r;
         s32 q;
 
-        t->unk18++;
-        p->quickDrawReactionTime = t->unk18;
-        r = t->unk18;
+        t->quickDrawObjectCount++;
+        p->quickDrawReactionTime = t->quickDrawObjectCount;
+        r = t->quickDrawObjectCount;
         q = 0;
         while (r > 9)
         {
             r -= 10;
             q++;
         }
-        gCurTask->unk24 = q;
+        gCurTask->quickDrawObjectSubFrame = q;
         gCurTask->frame = r;
     }
 }
@@ -778,8 +778,8 @@ void QuickDrawTimerDraw(void)
     {
         QueueSprite(t->layer, tbl[t->frame], t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
         u = gCurTask;
-        QueueSprite(u->layer, tbl[u->unk24], u->spriteFlags, u->tileWord,
-                     u->pixelX + u->unk28, (s16)(u->pixelY + u->unk2C));
+        QueueSprite(u->layer, tbl[u->quickDrawObjectSubFrame], u->spriteFlags, u->tileWord,
+                     u->pixelX + u->quickDrawObjectSubOffsetX, (s16)(u->pixelY + u->quickDrawObjectSubOffsetY));
         v = gCurTask;
         QueueSprite(v->layer + 1, gQuickDrawTimerBoardFrames[0], v->spriteFlags, v->tileWord,
                      v->pixelX, (s16)(v->pixelY + 8));
@@ -799,7 +799,7 @@ void QuickDrawTimer(void)
 
 void QuickDrawTimerUpdate(void)
 {
-    if (gCurTask->unk1C != 0)
+    if (gCurTask->quickDrawObjectRunning != 0)
         QuickDrawTimerCount();
 }
 
@@ -873,8 +873,8 @@ void QuickDrawSweatDrop(void)
     t->tileWord |= 0x800;
     t->posX = t->pixelX << 16;
     t->posY = t->pixelY << 16;
-    t->frame = t->unk18;
-    t->velY = gUnk_087564A0[t->unk18];
+    t->frame = t->quickDrawObjectDropIndex;
+    t->velY = gUnk_087564A0[t->quickDrawObjectDropIndex];
     TaskYieldTrampoline(3);
     TaskStop();
     TaskSleepForever();
@@ -940,7 +940,7 @@ void QuickDrawPlaceOpponent(void)
     gCurTask->posY = gCurTask->pixelY << 16;
     gCurTask->facing = -1;
     gCurTask->spriteFlags &= 0x7FFF;
-    switch (gCurTask->unk18)
+    switch (gCurTask->quickDrawObjectOpponentIndex)
     {
     case 0:
         gCurTask->frameTable = gQuickDrawWaddleDooFrames;
@@ -960,8 +960,8 @@ void QuickDrawPlaceOpponent(void)
     }
     gCurTask->tileWord = 0x8180;
     gCurTask->frame = 0;
-    i = gCurTask->unk74 * 5 + gCurTask->unk18;
-    gCurTask->unk1C = gQuickDrawOpponentReactionTimes[i];
+    i = gCurTask->quickDrawObjectLevel * 5 + gCurTask->quickDrawObjectOpponentIndex;
+    gCurTask->quickDrawObjectReactionTime = gQuickDrawOpponentReactionTimes[i];
 }
 
 void CreateQuickDrawOpponentTag(void)
@@ -998,7 +998,7 @@ void CreateQuickDrawOpponentTag(void)
         n->pixelX = x;
         n->pixelY = y;
     }
-    gCurTask->unk20 = 60;
+    gCurTask->quickDrawObjectOpponentArriveDelay = 60;
 }
 
 void QuickDrawPlaceOpponentStrike(u8 a0)
@@ -1009,7 +1009,7 @@ void QuickDrawPlaceOpponentStrike(u8 a0)
 
         t->pixelX = 120;
         t->pixelY = 96;
-        switch (t->unk18)
+        switch (t->quickDrawObjectOpponentIndex)
         {
         case 0:
             PlaySfx(253);
@@ -1057,7 +1057,7 @@ void QuickDrawOpponent(void)
     gCurTask->updateCallback = (u32)QuickDrawOpponentUpdate;
     gCurTask->layer = 12;
     t = gCurTask;
-    t->unk18 = 0;
+    t->quickDrawObjectOpponentIndex = 0;
     if (t->u76.unk76 != 0)
         t->state = 5;
     else
@@ -1087,7 +1087,7 @@ void QuickDrawOpponentArrive(void)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(60);
     CreateQuickDrawOpponentTag();
-    TaskYieldTrampoline(gCurTask->unk20);
+    TaskYieldTrampoline(gCurTask->quickDrawObjectOpponentArriveDelay);
     gCurTask->state = 1;
     TaskSleepForever();
 }
@@ -1129,7 +1129,7 @@ void QuickDrawOpponentLose(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->updateState = 3;
     QuickDrawOpponentSetKnockBack();
-    gUnk_0200B048 = ++gCurTask->unk18;
+    gUnk_0200B048 = ++gCurTask->quickDrawObjectOpponentIndex;
     TaskSleepForever();
 }
 
@@ -1232,19 +1232,19 @@ void QuickDrawGiveBonus(void)
         switch (gCurTask->frame)
         {
         case 5:
-            AddPlayerScoreNoHud(10, gCurTask->unk1C);
+            AddPlayerScoreNoHud(10, gCurTask->quickDrawObjectBonusPlayer);
             break;
         case 2:
-            AddPlayerScoreNoHud(1000, gCurTask->unk1C);
+            AddPlayerScoreNoHud(1000, gCurTask->quickDrawObjectBonusPlayer);
             break;
         case 3:
-            AddPlayerScoreNoHud(3000, gCurTask->unk1C);
+            AddPlayerScoreNoHud(3000, gCurTask->quickDrawObjectBonusPlayer);
             break;
         case 4:
-            AddPlayerScoreNoHud(5000, gCurTask->unk1C);
+            AddPlayerScoreNoHud(5000, gCurTask->quickDrawObjectBonusPlayer);
             break;
         case 6:
-            AddPlayerLivesNoHud(1, gCurTask->unk1C);
+            AddPlayerLivesNoHud(1, gCurTask->quickDrawObjectBonusPlayer);
             break;
         }
     }
@@ -1259,10 +1259,10 @@ void QuickDrawBonus(void)
     t = gCurTask;
     t->frameTable = gQuickDrawBonusFrames;
     if (gPlayerCount != 1)
-        t->frame = gQuickDrawRankBonuses[t->unk18];
+        t->frame = gQuickDrawRankBonuses[t->quickDrawObjectBonusIndex];
     else
-        t->frame = gQuickDrawDefeatBonuses[t->unk18];
-    if (gCurTask->frame == 6 && gLocalPlayer == gCurTask->unk1C)
+        t->frame = gQuickDrawDefeatBonuses[t->quickDrawObjectBonusIndex];
+    if (gCurTask->frame == 6 && gLocalPlayer == gCurTask->quickDrawObjectBonusPlayer)
         PlaySfx(220);
     gCurTask->tileWord |= 0x800;
     QuickDrawGiveBonus();

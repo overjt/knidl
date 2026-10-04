@@ -112,8 +112,8 @@ void QuickDrawResetRound(void)
     QuickDrawSetAllPlayersState(gCurTask->quickDrawRestartPose);
     t = gCurTask;
     o = &gTasks[t->quickDrawTimerSlot];
-    o->unk1C = 0;
-    o->unk18 = 0;
+    o->quickDrawObjectRunning = 0;
+    o->quickDrawObjectCount = 0;
     o->frame = 0;
     o->unk24 = 0;
     t->quickDrawReactionTime = 0;
@@ -202,8 +202,8 @@ void QuickDrawAwardRound(void)
         {
             QuickDrawSetPlayerState(i, 2);
             o->unk20 = 4;
-            gQuickDrawWins[o->unk18]++;
-            QuickDrawUpdateRanking(o->unk18);
+            gQuickDrawWins[o->quickDrawObjectPlayerIndex]++;
+            QuickDrawUpdateRanking(o->quickDrawObjectPlayerIndex);
             if (gQuickDrawBestTime > gCurTask->quickDrawReactionTime)
                 gQuickDrawBestTime = gCurTask->quickDrawReactionTime;
         }
@@ -487,7 +487,7 @@ void CreateQuickDrawOpponent(void)
         t = &gTasks[i];
         t->parent = gCurTaskIdx;
         t->variant = 5;
-        t->unk74 = gSubGameLevel;
+        t->quickDrawObjectLevel = gSubGameLevel;
         t->u76.unk76 = 0;
         gCurTask->quickDrawOpponentSlot = i;
     }
@@ -498,7 +498,7 @@ void QuickDrawDecideRoundVsCpu(s32 a0)
     struct Task *t = gCurTask;
     struct Task *o = &gTasks[t->quickDrawOpponentSlot];
 
-    if (t->quickDrawReactionTime == o->unk1C)
+    if (t->quickDrawReactionTime == o->quickDrawObjectReactionTime)
     {
         if (a0 == 0)
             t->state = 4;

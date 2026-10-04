@@ -505,9 +505,9 @@ void CreateQuickDrawResultsPlayer(void)
         struct Task *t = &gTasks[id];
 
         t->parent = gCurTaskIdx;
-        t->unk18 = id;
+        t->quickDrawObjectPlayerIndex = id;
         t->variant = 0;
-        t->unk74 = 2;
+        t->quickDrawObjectStartMode = 2;
         t->unk28 = 0;
     }
 }
