@@ -609,7 +609,7 @@ void ActorAttachedEnterMouth(void)
         p->heldCount++;
         p->mouthState = 1;
     }
-    p->unk31 = 0;
+    p->ownStarInMouth = 0;
     if (*(s8 *)&a->ability == 0)
         return;
     u = gCurTask;
@@ -623,7 +623,7 @@ void ActorAttachedEnterMouth(void)
             p->pendingAbilityUses = v->unk1C;
             w = gCurTask;
             if (w->unk20 == w->parent)
-                p->unk31 = 1;
+                p->ownStarInMouth = 1;
             if (gUnk_0300244C == 0)
                 return;
             p->unk0A = f;

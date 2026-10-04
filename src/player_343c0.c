@@ -42,7 +42,7 @@ void PlayerActionRun(void)
     PlayerSetMotionXPreset(3, 72);
     if (gCurTask->player->prevMode != 2)
     {
-        gCurTask->player->unk46 = 0;
+        gCurTask->player->savedWallSide = 0;
         q = gLatchedHeldKeys;
         p = gCurTask->player;
         if (q[p->playerIndex] & 48)

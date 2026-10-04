@@ -87,7 +87,7 @@ void MetaKnightActionStand(void)
         t->unk28 = (u16)t->player->unk4E;
         t->unk2C = t->player->slope;
         if (t->player->wallSide != 0)
-            t->player->unk46 = t->player->wallSide;
+            t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
         t2->player->unk40 &= 0xFFEF;
@@ -116,7 +116,7 @@ void MetaKnightActionWalk(void)
     if (p->prevMode != 1)
     {
         p->running = 0;
-        gCurTask->player->unk46 = 0;
+        gCurTask->player->savedWallSide = 0;
         gCurTask->player->unk0F = 0;
         gCurTask->unk28 = 0;
         PlayerPlayBump();

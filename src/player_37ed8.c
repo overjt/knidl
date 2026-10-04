@@ -16,7 +16,7 @@
  * State 5, the entry, picks the next state from Task.hitEffect (its low
  * nibble, or 4 when bit 7 is set) and, for a player holding an ability
  * (PlayerState.ability) with bit 1 of PlayerState.unk42 clear, releases it
- * through M17's CreateAbilityStar(PlayerState.unk30) and M02's HUD
+ * through M17's CreateAbilityStar(PlayerState.ownStarSwallowCount) and M02's HUD
  * (SetPlayerAbility); states 0-4 play the ability's animations and state 6
  * leaves.  PlayerActionHurtUpdate, handler 16, steers every state into state 6 and
  * re-binds the coroutine. */
@@ -71,7 +71,7 @@ loop:
                 if (gCurTask->player->ability != 0)
                 {
                     gCurTask->player->unk42 &= 0xFFFB;
-                    CreateAbilityStar(gCurTask->player->unk30);
+                    CreateAbilityStar(gCurTask->player->ownStarSwallowCount);
                     SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
                 }
             }

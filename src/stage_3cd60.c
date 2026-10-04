@@ -213,13 +213,13 @@ void InitPlayerState(s32 a0)
     p->unk1E = 0;
     p->pixelOffsetY = 0;
     p->pixelOffsetX = 0;
-    p->unk2B = 0;
+    p->blockBreakCooldown = 0;
     p->offsetScriptDelay = 0;
     p->offsetScriptStep = 0;
     p->sfxPlayer = 0xFFFF;
     p->sfxId = 0;
-    p->unk30 = 0;
-    p->unk31 = 0;
+    p->ownStarSwallowCount = 0;
+    p->ownStarInMouth = 0;
     p->unk36 = 0;
     p->unk37 = 0;
     p->shareTimer = 0;
@@ -235,8 +235,8 @@ void InitPlayerState(s32 a0)
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
-    p->unk46 = 0;
-    p->unk47 = 1;
+    p->savedWallSide = 0;
+    p->hiJumpsLeft = 1;
     p->unk50 = 0;
     p->atDoor = 0;
     p->wallSide = 0;
@@ -284,13 +284,13 @@ void sub_0803d1c4(s32 a0)
     p->unk1E = 0;
     p->pixelOffsetY = 0;
     p->pixelOffsetX = 0;
-    p->unk2B = 0;
+    p->blockBreakCooldown = 0;
     p->offsetScriptDelay = 0;
     p->offsetScriptStep = 0;
     p->sfxPlayer = 0xFFFF;
     p->sfxId = 0;
-    p->unk30 = 0;
-    p->unk31 = 0;
+    p->ownStarSwallowCount = 0;
+    p->ownStarInMouth = 0;
     p->unk36 = 0;
     p->shareTimer = 0;
     p->sharedMask = 0;
@@ -305,8 +305,8 @@ void sub_0803d1c4(s32 a0)
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
-    p->unk46 = 0;
-    p->unk47 = 1;
+    p->savedWallSide = 0;
+    p->hiJumpsLeft = 1;
     p->unk50 = 0;
     p->atDoor = 0;
     p->wallSide = 0;
@@ -349,7 +349,7 @@ void sub_0803d2d4(s32 a0)
     p->unk1E = 0;
     p->pixelOffsetY = 0;
     p->pixelOffsetX = 0;
-    p->unk2B = 0;
+    p->blockBreakCooldown = 0;
     p->offsetScriptDelay = 0;
     p->offsetScriptStep = 0;
     p->sfxPlayer = 0xFFFF;
@@ -367,8 +367,8 @@ void sub_0803d2d4(s32 a0)
     p->blocksBroken = 0;
     p->hitsThisFrame = 0;
     p->unk50 = 0;
-    p->unk46 = 0;
-    p->unk47 = 1;
+    p->savedWallSide = 0;
+    p->hiJumpsLeft = 1;
     p->unk50 = 0;
     p->atDoor = 0;
     p->wallSide = 0;
@@ -2569,14 +2569,14 @@ s32 PlayerCheckDuckOrSwallow(void)
                 gCurTask->player->requestedAction = 15;
             else
                 gCurTask->player->requestedAction = 26;
-            if (gCurTask->player->unk31 != 0)
+            if (gCurTask->player->ownStarInMouth != 0)
             {
-                if (gCurTask->player->unk30 <= 2)
-                    gCurTask->player->unk30++;
-                gCurTask->player->unk31 = 0;
+                if (gCurTask->player->ownStarSwallowCount <= 2)
+                    gCurTask->player->ownStarSwallowCount++;
+                gCurTask->player->ownStarInMouth = 0;
             }
             else
-                gCurTask->player->unk30 = 0;
+                gCurTask->player->ownStarSwallowCount = 0;
         }
         else if ((gCurTask->waterFlags & 1) == 0)
             gCurTask->player->requestedAction = 10;
@@ -2669,7 +2669,7 @@ s32 PlayerCheckBButton(void)
     }
     if (gCurTask->player->ability == 15
      && ((gCurTask->onGround & 1) || (gCurTask->waterFlags & 1)))
-        gCurTask->player->unk47 = 1;
+        gCurTask->player->hiJumpsLeft = 1;
     if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 2) == 0)
         goto out;
     gCurTask->player->running = 0;
@@ -2685,9 +2685,9 @@ s32 PlayerCheckBButton(void)
     if (gCurTask->player->ability == 15 && (gCurTask->player->unk42 & 4) == 0
      && (gCurTask->waterFlags & 1) == 0)
     {
-        if (gCurTask->player->unk47 == 0)
+        if (gCurTask->player->hiJumpsLeft == 0)
             goto out;
-        gCurTask->player->unk47--;
+        gCurTask->player->hiJumpsLeft--;
         if (gCurTask->player->mode == 5)
             gCurTask->player->mode = 4;
     }
@@ -2729,7 +2729,7 @@ s32 PlayerCheckDropAbility(void)
      && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 4)
      && gCurTask->player->ability != 0)
     {
-        CreateAbilityStar(gCurTask->player->unk30);
+        CreateAbilityStar(gCurTask->player->ownStarSwallowCount);
         PlaySfxIfLocalPlayer(182, (u16)gCurTask->player->playerIndex);
         SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = gCurTask->player->action;

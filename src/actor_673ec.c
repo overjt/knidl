@@ -1132,7 +1132,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     {
         gCurTask->player->pixelOffsetY = 0;
         p->pixelOffsetX = 0;
-        p->unk2B = 0;
+        p->blockBreakCooldown = 0;
         p->offsetScriptDelay = 0;
         p->offsetScriptStep = 0;
         p->unk40 &= 0xFFFE;

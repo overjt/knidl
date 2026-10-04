@@ -32,7 +32,7 @@
  * PlayerUpdate (Task.updateCallback) runs every frame: the attack hit-boxes
  * (TaskBreakBlocks on PlayerState.hitBoxSet), the collision registry, the
  * per-frame handler and the damage and star-block reactions;
- * sub_0803332c (Task.lateUpdateCallback) runs the 10-frame timer PlayerState.unk2B;
+ * sub_0803332c (Task.lateUpdateCallback) runs the 10-frame timer PlayerState.blockBreakCooldown;
  * sub_08033414 (called by M11's sub_0803ddc0) turns the frame's hit
  * event Task.hitKind and the status bits PlayerState.unk40 into an action
  * request, re-binds the task to PlayerStartRequestedAction when one is pending and
@@ -436,10 +436,10 @@ void sub_0803332c(void)
         if (t->unk76 & 1)
         {
             t->unk76 &= 0xFFFE;
-            if ((s8)t->player->unk2B == 0)
+            if ((s8)t->player->blockBreakCooldown == 0)
             {
                 PlayerStartOffsetScript(0);
-                gCurTask->player->unk2B = 10;
+                gCurTask->player->blockBreakCooldown = 10;
             }
         }
         p = gCurTask->player;
@@ -453,9 +453,9 @@ void sub_0803332c(void)
                 gCurTask->player->requestedAction = 18;
             }
         }
-        else if ((s8)p->unk2B != 0)
+        else if ((s8)p->blockBreakCooldown != 0)
         {
-            p->unk2B--;
+            p->blockBreakCooldown--;
         }
     }
     if (gCurTask->player->requestedAction == 0)
@@ -524,7 +524,7 @@ void sub_08033414(void)
         {
             gCurTask->player->offsetScriptStep = 0;
             gCurTask->player->offsetScriptDelay = 1;
-            gCurTask->player->unk2B = 0;
+            gCurTask->player->blockBreakCooldown = 0;
             gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
             TaskSetSkipMask(0, gCurTaskIdx);
         }

@@ -268,11 +268,11 @@ struct PlayerState
     /*0x28*/ u8 offsetScriptStep;
     /*0x29*/ u8 offsetScriptDelay;
     /*0x2A*/ u8 offsetScript;
-    /*0x2B*/ u8 unk2B;
+    /*0x2B*/ u8 blockBreakCooldown;
     /*0x2C*/ s16 sfxPlayer;
     /*0x2E*/ s16 sfxId;
-    /*0x30*/ u8 unk30;
-    /*0x31*/ u8 unk31;
+    /*0x30*/ u8 ownStarSwallowCount;
+    /*0x31*/ u8 ownStarInMouth;
     /*0x32*/ s8 unk32;
     /*0x33*/ s8 unk33;
     /*0x34*/ s8 unk34;
@@ -291,8 +291,8 @@ struct PlayerState
     /*0x42*/ u16 unk42;
     /*0x44*/ u8 blocksBroken;
     /*0x45*/ u8 hitsThisFrame;
-    /*0x46*/ u8 unk46;
-    /*0x47*/ u8 unk47;
+    /*0x46*/ u8 savedWallSide;
+    /*0x47*/ u8 hiJumpsLeft;
     /*0x48*/ u8 boundsClamp;
     /*0x49*/ u8 onSlipperyFloor;
     /* gTerrainResult's byte 0 after the probes: 1 right wall, 2 left wall,
