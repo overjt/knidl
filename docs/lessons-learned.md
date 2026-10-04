@@ -4951,7 +4951,9 @@ cannot track; the natural source is one that leaves a store between a
 compare's load of the id and its PRE copy (or gives R one set) without
 changing the other 564 bytes.
 Two agents (a proposal agent for about 45 minutes and a racer for 12)
-reached the same verdict; the evidence above is why they stopped.
+reached the same verdict; the evidence above is why they stopped, and the
+owner's coordinator accepted the residue as final (the two levers are a
+sanctioned exception; a natural form would still be welcome).
 **Amends** 3.494 (the fold needs R's two sets; changing `obj` between a
 load and its copy, #100's suggestion, does not help).
 

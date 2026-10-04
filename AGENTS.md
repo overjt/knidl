@@ -89,12 +89,12 @@ module by module, is [`docs/history.md`](docs/history.md).
   interworking veneer) is `docs/audit.md` section 2, checked against
   `tools/calcrom.pl`'s exclusions.
 - **Code exceptions** (`docs/audit.md` section 3): no `register` pin is
-  left; one function keeps zero-byte `asm("")` levers,
-  `BootLogoUpdateObjects` (formerly `sub_080caab8`, #152's two approved
-  levers, lessons 3.494 and 3.527: #169 measured why its plain store
-  folds and found no natural source) - plus `BLOCK_CROSS_JUMP` tails the
-  ROM really duplicates, the SDK's own inline asm and commented zero-code
-  stand-ins.  #37 made the third #154 leftover, `sub_080b38f0`, plain
+  left; one function keeps two zero-byte `asm("")` levers by design,
+  `BootLogoUpdateObjects` (formerly `sub_080caab8`, #152's approved
+  levers; #169 measured why its plain store folds and accepted the
+  residue as final, lessons 3.494 and 3.527) - plus `BLOCK_CROSS_JUMP`
+  tails the ROM really duplicates, the SDK's own inline asm and commented
+  zero-code stand-ins.  #37 made the third #154 leftover, `sub_080b38f0`, plain
   (two zero-code stand-ins instead of 10 pins and 6 levers, lesson 3.524),
   and #169 made `PoppyBrosSrHeadUpdate` (formerly `sub_08091e18`) plain:
   a redundant end-of-script store, which post-reload cse deletes, replaces
@@ -141,8 +141,9 @@ module by module, is [`docs/history.md`](docs/history.md).
   states that no defined verb or single slot covers and one-caller
   helpers; 3 task bodies, #88, #209 and #220; 124 `gUnk_` RAM cells; the
   per-family `Task` fields `unk18`-`unk34`/`unk46`/`unk74`, which a census
-  showed need one member per family; asset labels); (4) a natural form
-  for `BootLogoUpdateObjects` (lesson 3.527 says what it must do).
+  showed need one member per family; asset labels).  A natural form
+  for `BootLogoUpdateObjects` would still be welcome but is not tracked
+  (lesson 3.527 says what it must do).
 - **Docs:** `docs/decomp-loop.md`, `docs/lessons-learned.md` (its "Start
   here" list first), `docs/splitting.md`, `docs/data.md`, `docs/naming.md`,
   `docs/header-conventions.md`, `docs/audit.md`, `docs/history.md`,

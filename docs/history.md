@@ -1008,7 +1008,9 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   gives the ROM's code, a compiler without combine's first-scan
   recording changes five other files, and 13 new spellings (a
   bit-field id, id locals, range tests, a read-before-store loop) and
-  13 compiler-flag variants fold or change the function.  New lessons
+  13 compiler-flag variants fold or change the function; the owner's
+  coordinator accepted that residue as final, so its two levers are a
+  sanctioned exception (closes #169).  New lessons
   3.526, 3.527 and 4.165 (3.156 corrected, 3.494 amended).  Done by two
   proposal agents, the first resumed as the racer on the second
   function.
