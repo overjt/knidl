@@ -498,8 +498,8 @@ u32 gSwordAndBladeKnightVariants[3] ACTOR_TBL(08740960) = {
 /* include/enemy.h; CallTableEntry(i, 8, ...) in SwordAndBladeKnightWalkInit, SwordAndBladeKnightWalkEnterState */
 u32 gSwordAndBladeKnightWalkStates[8] ACTOR_TBL(087409fc) = {
     (u32)SwordAndBladeKnightWalk,
-    (u32)SwordAndBladeKnightWalkState1,
-    (u32)SwordAndBladeKnightWalkState2,
+    (u32)SwordAndBladeKnightWalkSlashUpWindUp,
+    (u32)SwordAndBladeKnightWalkSlashDownWindUp,
     (u32)SwordAndBladeKnightWalkSlashUp,
     (u32)SwordAndBladeKnightWalkSlashDown,
     (u32)SwordAndBladeKnightWalkWalkBack,
@@ -509,8 +509,8 @@ u32 gSwordAndBladeKnightWalkStates[8] ACTOR_TBL(087409fc) = {
 /* include/enemy.h; CallTableEntry(i, 8, ...) in SwordAndBladeKnightWalkUpdate */
 u32 gSwordAndBladeKnightWalkStateUpdates[8] ACTOR_TBL(087409fc) = {
     (u32)SwordAndBladeKnightWalkState0Update,
-    (u32)SwordAndBladeKnightWalkState1Update,
-    (u32)SwordAndBladeKnightWalkState2Update,
+    (u32)SwordAndBladeKnightWalkSlashUpWindUpUpdate,
+    (u32)SwordAndBladeKnightWalkSlashDownWindUpUpdate,
     (u32)SwordAndBladeKnightWalkSlashUpUpdate,
     (u32)SwordAndBladeKnightWalkSlashDownUpdate,
     (u32)SwordAndBladeKnightWalkWalkBackUpdate,
@@ -527,21 +527,21 @@ u32 gSwordAndBladeKnightIdleStateUpdates[1] ACTOR_TBL(087409fc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in SwordAndBladeKnightStandInit, SwordAndBladeKnightStandEnterState */
 u32 gSwordAndBladeKnightStandStates[6] ACTOR_TBL(087409fc) = {
-    (u32)SwordAndBladeKnightStandState0,
-    (u32)SwordAndBladeKnightStandState1,
-    (u32)SwordAndBladeKnightStandState2,
+    (u32)SwordAndBladeKnightStandWaitForPlayer,
+    (u32)SwordAndBladeKnightStandSlashUpWindUp,
+    (u32)SwordAndBladeKnightStandSlashDownWindUp,
     (u32)SwordAndBladeKnightStandSlashUp,
     (u32)SwordAndBladeKnightStandSlashDown,
-    (u32)SwordAndBladeKnightStandState5,
+    (u32)SwordAndBladeKnightStandWaitAfterSlash,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in SwordAndBladeKnightStandUpdate */
 u32 gSwordAndBladeKnightStandStateUpdates[6] ACTOR_TBL(087409fc) = {
-    (u32)SwordAndBladeKnightStandState0Update,
-    (u32)SwordAndBladeKnightStandState1Update,
-    (u32)SwordAndBladeKnightStandState2Update,
+    (u32)SwordAndBladeKnightStandWaitForPlayerUpdate,
+    (u32)SwordAndBladeKnightStandSlashUpWindUpUpdate,
+    (u32)SwordAndBladeKnightStandSlashDownWindUpUpdate,
     (u32)SwordAndBladeKnightStandSlashUpUpdate,
     (u32)SwordAndBladeKnightStandSlashDownUpdate,
-    (u32)SwordAndBladeKnightStandState5Update,
+    (u32)SwordAndBladeKnightStandWaitAfterSlashUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_BlockStar */
 u32 gBlockStarVariants[1] ACTOR_TBL(087409fc) = {
@@ -1098,8 +1098,8 @@ u32 gWheelieVariants[3] ACTOR_TBL(08741640) = {
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in WheelieInit, WheelieEnterState */
 u32 gWheelieStates[6] ACTOR_TBL(08741640) = {
-    (u32)WheelieState0,
-    (u32)WheelieState1,
+    (u32)WheelieRollStart,
+    (u32)WheelieRollLoop,
     (u32)WheelieSkid,
     (u32)WheelieWait,
     (u32)WheelieBounceOffWall,
@@ -1107,8 +1107,8 @@ u32 gWheelieStates[6] ACTOR_TBL(08741640) = {
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in WheelieUpdate */
 u32 gWheelieStateUpdates[6] ACTOR_TBL(08741640) = {
-    (u32)WheelieState0Update,
-    (u32)WheelieState1Update,
+    (u32)WheelieRollStartUpdate,
+    (u32)WheelieRollLoopUpdate,
     (u32)WheelieSkidUpdate,
     (u32)WheelieWaitUpdate,
     (u32)WheelieBounceOffWallUpdate,

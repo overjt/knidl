@@ -562,7 +562,7 @@ void SwordAndBladeKnightWalkState0Update(void)
     }
 }
 
-void SwordAndBladeKnightWalkState1(void)
+void SwordAndBladeKnightWalkSlashUpWindUp(void)
 {
     gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_1;
     TaskStop();
@@ -572,7 +572,7 @@ void SwordAndBladeKnightWalkState1(void)
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightWalkState1Update(void)
+void SwordAndBladeKnightWalkSlashUpWindUpUpdate(void)
 {
     if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_1)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
@@ -605,7 +605,7 @@ void SwordAndBladeKnightWalkSlashUpUpdate(void)
         SwordAndBladeKnightStepLunge();
 }
 
-void SwordAndBladeKnightWalkState2(void)
+void SwordAndBladeKnightWalkSlashDownWindUp(void)
 {
     gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_WALK_STATE_2;
     TaskStop();
@@ -615,7 +615,7 @@ void SwordAndBladeKnightWalkState2(void)
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightWalkState2Update(void)
+void SwordAndBladeKnightWalkSlashDownWindUpUpdate(void)
 {
     if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_WALK_STATE_2)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
@@ -798,7 +798,7 @@ void SwordAndBladeKnightStandEnterState(void)
     CallTableEntry(gCurTask->state, 6, gSwordAndBladeKnightStandStates);
 }
 
-void SwordAndBladeKnightStandState0(void)
+void SwordAndBladeKnightStandWaitForPlayer(void)
 {
     gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_0;
     TaskStop();
@@ -808,7 +808,7 @@ void SwordAndBladeKnightStandState0(void)
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightStandState0Update(void)
+void SwordAndBladeKnightStandWaitForPlayerUpdate(void)
 {
     struct Task *t;
 
@@ -824,7 +824,7 @@ void SwordAndBladeKnightStandState0Update(void)
     }
 }
 
-void SwordAndBladeKnightStandState1(void)
+void SwordAndBladeKnightStandSlashUpWindUp(void)
 {
     gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_1;
     TaskStop();
@@ -834,7 +834,7 @@ void SwordAndBladeKnightStandState1(void)
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightStandState1Update(void)
+void SwordAndBladeKnightStandSlashUpWindUpUpdate(void)
 {
     if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_1)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
@@ -865,7 +865,7 @@ void SwordAndBladeKnightStandSlashUpUpdate(void)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void SwordAndBladeKnightStandState2(void)
+void SwordAndBladeKnightStandSlashDownWindUp(void)
 {
     gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_2;
     TaskStop();
@@ -875,7 +875,7 @@ void SwordAndBladeKnightStandState2(void)
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightStandState2Update(void)
+void SwordAndBladeKnightStandSlashDownWindUpUpdate(void)
 {
     if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_2)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
@@ -906,7 +906,7 @@ void SwordAndBladeKnightStandSlashDownUpdate(void)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void SwordAndBladeKnightStandState5(void)
+void SwordAndBladeKnightStandWaitAfterSlash(void)
 {
     gCurTask->updateState = SWORD_AND_BLADE_KNIGHT_STAND_STATE_5;
     TaskStop();
@@ -917,7 +917,7 @@ void SwordAndBladeKnightStandState5(void)
     TaskSleepForever();
 }
 
-void SwordAndBladeKnightStandState5Update(void)
+void SwordAndBladeKnightStandWaitAfterSlashUpdate(void)
 {
     gCurTask->actorAnimDelay34 = ActorTickAnim(gCurTask->actorAnimDelay34);
     if (gCurTask->state != SWORD_AND_BLADE_KNIGHT_STAND_STATE_5)

@@ -392,7 +392,7 @@ void WheelieUpdate(void)
     ActorReactToHit();
 }
 
-void WheelieState0(void)
+void WheelieRollStart(void)
 {
     struct Task *t;
 
@@ -412,14 +412,14 @@ void WheelieState0(void)
     TaskSleepForever();
 }
 
-void WheelieState0Update(void)
+void WheelieRollStartUpdate(void)
 {
     WheelieCheckSkid();
     if (gCurTask->state != WHEELIE_STATE_0)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
-void WheelieState1(void)
+void WheelieRollLoop(void)
 {
     gCurTask->updateState = WHEELIE_STATE_1;
     TaskSetMotionXFacing(gUnk_08741630[gCurTask->actorSpawnArg], 0x5A5A5A5A);
@@ -427,7 +427,7 @@ void WheelieState1(void)
     sub_08082cc4();
 }
 
-void WheelieState1Update(void)
+void WheelieRollLoopUpdate(void)
 {
     WheelieCheckSkid();
     if (gCurTask->state != WHEELIE_STATE_1)
