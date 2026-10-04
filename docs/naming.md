@@ -140,6 +140,23 @@ role is not proven on every path; the offset comments (`/*0x14*/`) stay.
   `waterFlags`, `hitKind`, `hitDirection`, `hitterSlot`, `hitterPlayer`;
   and `player`, the task's `struct PlayerState`.
 
+### 2.2.1 Per-family registers: alias macros (run 5 of #155)
+
+`Task.unk18`-`unk34`, `unk46`, `unk6C`-`unk70` and `unk74` are named per
+family by object-like alias macros in `include/task_vars.h`
+(docs/header-conventions.md, "Per-family registers"; the owner's decision
+D1): `<family><Role>` in lowerCamelCase (`fireLionHopCount`), or a shared
+role alias `actor<Role>` when a shared engine helper's contract fixes the
+role (`actorAnimDelay`, `actorSpawnArg`).  The role words are those of 2.1
+and 2.2: a **Timer** counts frames to an event, a **Count** counts events,
+a **Slot** is a task index a spawner returned (`gTasks[...]`), an
+**AnimDelay** is what the animation-script helpers return; **Base** /
+**Start** / **Target** / **Saved** prefix a saved coordinate or value.
+`tools/task_alias.py` applies them (section 6.2) and logs one
+`renames.csv` row of kind `alias` per macro (`Task.unk28` ->
+`Task.actorAnimDelay`), whose evidence is the store or read that proves the
+role.
+
 ### 2.3 Enemies and the abilities (run 2 of #155)
 
 No string says which enemy a script is; the local sprite renders do
@@ -606,6 +623,26 @@ follows; prose such as `task->unk14` does not.  Each field rename is a
 `renames.csv` row of kind `field`, written `Struct.old` -> `Struct.new`, one
 per local copy with its own old name.  Field names never reach code
 generation (lesson 3.516), and agbcc's `make compare` is still the proof.
+
+### 6.2 Register aliases: `tools/task_alias.py`
+
+```sh
+tools/task_alias.py --defs defs.csv --sites sites.csv          # dry run
+tools/task_alias.py --defs defs.csv --sites sites.csv --write  # apply
+tools/task_alias.py --verify-cpp HEAD    # every unit preprocesses the same
+tools/task_alias.py --verify-types       # gcc 12: aliases only on struct Task
+make clean && make compare
+tools/rename.py --verify-diff master     # covers the aliases too
+tools/task_alias.py --list               # the aliases per family
+```
+
+`defs.csv` (`family,header,alias,field,type,role,evidence`) gives one row
+per alias; `header` describes a new family's block.  `sites.csv`
+(`file,function,pointer,field,alias`) says where each alias is used: inside
+the body of FUNCTION, every `POINTER->FIELD` / `POINTER.FIELD` outside
+comments becomes `POINTER->ALIAS`, and a row that matches nothing is an
+error.  The tool writes `include/task_vars.h` (one block per family, the
+defines in offset order) and appends the `renames.csv` rows.
 
 Apply names in batches of about 50-100 and run `make clean && make compare`
 after every batch.  gcc 2.95 hashes some RTL by symbol name (lessons 4.79,
