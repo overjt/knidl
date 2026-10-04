@@ -178,7 +178,9 @@ Run 3 of #155 added these words, each defined by the whole body:
   hits - no velocity or `TaskSetMotion*` call, no attack or spawn, no
   state change of its own (`WaddleDeeIdleInit`, `gPengyIdleStates`); a
   row that also hops, spawns or steers is not Idle.  Nothing re-arms these
-  rows, so they have no EnterState.
+  rows; the one-line re-arm copy a one-state row still has
+  (`CallTableEntry(Task.state, 1, g<Row>States)`, `WheelieIdleEnterState`)
+  is a dead export that nothing references, named by its shape (run 4).
 - **Teleport**: the body hides the sprite, moves it and shows it again
   (`KabuTeleport`).
 - **Float** / **Exhale** (King Dedede): a puffed-up flight that drifts
@@ -199,6 +201,48 @@ Run 3 of #155 added these words, each defined by the whole body:
 - Two species that share one script get a pair prefix
   (`SwordAndBladeKnightWalkInit`, as `gMrShineAndMrBrightDef`); a verb
   that fits two states of one family names neither of them.
+
+Run 4 of #155 named the state bodies with these words, each defined by the
+whole body (the agents' notes in the run-4 PR give every family's verb
+list):
+
+- **The state pair.**  `g<Enemy>States[N]` is state N's entry and
+  `g<Enemy>StateUpdates[N]` the update it selects; when the entry has the
+  verb V, the update is `<Enemy>VUpdate`.  The update table is indexed by
+  `Task.updateState`, which each entry stores itself: an update is named
+  after state N only when `g<Enemy>States[N]`'s body stores
+  `updateState = N`.  Most families do; Fire Lion, Gip, Javelin Knight
+  (state k stores k-1), Bubbles' slot 2 and Mr. Tick-Tock's 18 do not, and
+  their updates are named from the entry that selects them or not at all.
+- **Hop**: a loop of small jumps, each waiting for `Task.onGround`, with or
+  without an X step (`CappyCappedHop`, `BonkersHop`, `JavelinKnightHop`);
+  a **Jump** is one jump whose landing hands over to another state.
+  **Land**: the state a landing enters, a recovery with no motion
+  (`MetaKnightLand`, `BubblesLand`).  **BounceOffWall**: the state a
+  mid-boss's wall hook enters during a rush: a shake, a hop backward, a
+  landing and a recovery (`BugzzyBounceOffWall`).  **Ascend** / **Descend**
+  (Mr. Shine & Mr. Bright), **Swoop** (one U-shaped dive and back up,
+  `KrackoSwoop`), **Hover** (in place in the air on a velY wave), **Drift**
+  (the parasol's swaying descent), **Spin** (Kabu's turning frames),
+  **Discharge** (Sparky's widened attack box), **Explode** (sets an
+  exploding death mode, then ActorDie), **Hide** (no sprite, no hit
+  checks), **Sleep**, **Skid**, **Vanish** (plays a disappearing animation
+  and destroys the actor).  **Stand** is a row word for a row that stays in
+  place (`CappyStandHop`).
+- **Hooks of the hit-reaction record** (`struct ActorVt`, called by
+  `ActorReactToDamage` / `ActorReactToDefeat`): `<Family>ReactToDamage` /
+  `<Family>ReactToDefeat`.  **Terrain handlers** (`struct ActorHandlers`,
+  called by `ActorCollideTerrain`): the record is `g<Family>TerrainHandlers`
+  and its functions `<Family>Land`, `<Family>StartFall`,
+  `<Family>EnterWater`, `<Family>BounceOffWall`, after the slot that calls
+  them.  A boss's defeat filter (`Actor.defeatSweepCallback`) is
+  `<Boss>DefeatSweepFilter`, its slot in the per-boss Star Rod table
+  `<Boss>DropStarRodPiece`.  A late hook (`Task.lateUpdateCallback`) is
+  `<State>LateUpdate`.
+- **Carried and held.**  The words of the actor a player carries
+  (`ActorAttached<Move>Held` / `Flight` / `BounceOff`) are reused, with the
+  captor's move as the row word, for the player a boss holds
+  (`HeldPlayerBackdropHeld`, `HeldPlayerThrowFlightForward`).
 
 **A species identity needs three agreeing sources** (run 3): the local
 render (`visual:`), the behaviour and `ActorDef.ability` from the code
@@ -274,7 +318,20 @@ as the code indexes it.  The evidence is `slot: g<Table>[N], <file>`.  A
 function that two tables, two families or two slots share, or that code
 also calls directly, keeps its placeholder; a body that proves a verb takes
 the verb, never the slot (the verb batches come first), and a verb proven
-later renames the slot name again (a `renames.csv` chain row).
+later renames the slot name again (a `renames.csv` chain row).  An update
+slot gets `State<N>Update` only where state N's body stores
+`updateState = N` (2.3, the state pair); the update tables of the
+families that index them otherwise keep their placeholders.
+
+**Class-value names** (run 4).  When the code sorts records by a value and
+no role word is true for every record in a group, the group is named by
+that value as the code writes it, which claims no role: the collider lists
+RegisterCollider fills for the box classes 0x10 and 0x20 are
+`gColliderClass10` / `gColliderClass10Count` / `HitTestColliderClass10` and
+`gColliderClass20` / `...Count` / `HitTestColliderClass20` (class 0x00 is
+the players' bodies, `gPlayerColliders`).  What each group holds is written
+next to its declaration (`include/collision.h`), so a later run can give it
+a role name if one word ever fits every member.
 
 What the level indices are in the game is proven for 0-6 by the boss each
 level's last stage spawns (room objects of kind 3, `gBossDefs[subtype]`,
