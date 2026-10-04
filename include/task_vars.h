@@ -594,7 +594,9 @@
 /* KingDedede - King Dedede (task type #59, Task_KingDedede;
    gKingDededeStates) */
 #define kingDededePickCount unk18 /* s32: moves picked since the last Float; the sixth pick is a Float (state 4) */
+#define kingDededeDefeatedWaitEnd unk1C /* s32: how the Defeated wait ended: 0 waiting, 1 every player counted down, 2 time limit */
 #define kingDededeNextState unk1C /* s32: the state KingDededeWalk hands over to once close enough (pair of gUnk_087482A8) */
+#define kingDededeDefeatedTimeLimit unk20 /* s32: frames the Defeated wait lasts at most (120); at 0 it ends with unk1C = 2 */
 #define kingDededeFloatTimer unk20 /* s32: frames KingDededeFloat drifts after the player (300); -2 while puffing up */
 #define kingDededeInhaling unk20 /* s32: nonzero while the inhale is on (sub_080a0098 sets 1, KingDededeInhale clears it) */
 #define kingDededeSlamCount unk20 /* s32: slams in this KingDededeSlam (1, or 4 every fourth time); the loop runs unk20 - 1 more */
@@ -603,6 +605,8 @@
 #define kingDededeFloatBumpTimer unk24 /* s32: frames the Float shows the bump frame 23 after hitting floor or ceiling; -2 = none */
 #define kingDededeJumpForward unk24 /* s32: 1 when the state-6 jump also moves toward the player, 0 straight up */
 #define kingDededeSlamKind unk24 /* s32: KingDededeSlam's kind: 0 one slam, 1 four slams, 2 sub_080a0768 (player high) */
+#define kingDededeDefeatedAnimating unk28 /* s32: 1 once the Defeated state 1 started its animation; the update ticks it only then */
+#define kingDededeDefeatedCheckingPlayers unk2C /* s32: 1 while the Defeated update runs the per-player checks (sub_080a1790 / 180c) */
 #define kingDededeSlamSetupCount unk30 /* s32: KingDededeSlam setups mod 4 (player low); at 0 the slam is the four-slam kind */
 #define kingDededeInhaleTimer unk34 /* s32: frames the inhale goes on catching nothing (90) before it stops */
 #define kingDededeWalkStopDist unk34 /* s32: distance to the target at which the walk hands over (46 Jump, 52 hammer, 8 spot, 0) */

@@ -307,7 +307,7 @@ void sub_080a180c(void)
     }
     if (sum == 0)
     {
-        gCurTask->unk1C = 1;
+        gCurTask->kingDededeDefeatedWaitEnd = 1;
         sub_080a1624();
     }
 }
@@ -330,10 +330,10 @@ void sub_080a1864(void)
         }
     }
     t = gCurTask;
-    t->unk1C = 0;
-    t->unk20 = 120;
-    t->unk28 = 0;
-    t->unk2C = 0;
+    t->kingDededeDefeatedWaitEnd = 0;
+    t->kingDededeDefeatedTimeLimit = 120;
+    t->kingDededeDefeatedAnimating = 0;
+    t->kingDededeDefeatedCheckingPlayers = 0;
 }
 
 /* sub_080a18d4 (0x080A18D4-0x080A1980) */
@@ -347,7 +347,7 @@ void sub_080a18d4(void)
     sub_080a1864();
     TaskYieldTrampoline(16);
     RequestScreenShake(4);
-    gCurTask->unk2C = 1;
+    gCurTask->kingDededeDefeatedCheckingPlayers = 1;
     TaskSetFrame(10);
     v = 128 << 10;
     for (i = 2; i >= 0; i--)
@@ -357,12 +357,12 @@ void sub_080a18d4(void)
         v >>= 1;
     }
     TaskStop();
-    gCurTask->unk24 = ActorStartAnim(gUnk_087484A4);
-    gCurTask->unk28 = 1;
-    while (gCurTask->unk1C == 0)
+    gCurTask->actorAnimDelay24 = ActorStartAnim(gUnk_087484A4);
+    gCurTask->kingDededeDefeatedAnimating = 1;
+    while (gCurTask->kingDededeDefeatedWaitEnd == 0)
         TaskYieldTrampoline(1);
-    gCurTask->unk2C = 0;
-    if (gCurTask->unk1C != 2)
+    gCurTask->kingDededeDefeatedCheckingPlayers = 0;
+    if (gCurTask->kingDededeDefeatedWaitEnd != 2)
         TaskYieldTrampoline(150);
     TaskYieldTrampoline(24);
     TaskYieldTrampoline(60);
@@ -374,19 +374,19 @@ void sub_080a18d4(void)
 /* sub_080a1980 (0x080A1980-0x080A19CC) */
 void sub_080a1980(void)
 {
-    if (gCurTask->unk28 != 0)
-        gCurTask->unk24 = ActorTickAnim(gCurTask->unk24);
-    if (gCurTask->unk1C == 0)
+    if (gCurTask->kingDededeDefeatedAnimating != 0)
+        gCurTask->actorAnimDelay24 = ActorTickAnim(gCurTask->actorAnimDelay24);
+    if (gCurTask->kingDededeDefeatedWaitEnd == 0)
     {
-        if (gCurTask->unk20 <= 0)
+        if (gCurTask->kingDededeDefeatedTimeLimit <= 0)
         {
-            gCurTask->unk1C = 2;
+            gCurTask->kingDededeDefeatedWaitEnd = 2;
             sub_080a1624();
         }
         else
         {
-            gCurTask->unk20--;
-            if (gCurTask->unk2C != 0)
+            gCurTask->kingDededeDefeatedTimeLimit--;
+            if (gCurTask->kingDededeDefeatedCheckingPlayers != 0)
             {
                 sub_080a1790();
                 sub_080a180c();
