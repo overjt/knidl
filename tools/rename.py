@@ -481,7 +481,16 @@ def verify_diff(ref):
     # `param` rows log parameter names (#155 run 5, D5): no symbol, proven by
     # the per-file assembly oracle, not by this check.
     added = [r for r in added if r["kind"] not in ("field", "alias", "param")]
-    field_pairs = compose_field_renames(fields)
+    tag_map = {}
+    for r in added:
+        if r["kind"] == "tag":
+            for k, v in list(tag_map.items()):
+                if v == r["old"]:
+                    tag_map[k] = r["new"]
+            tag_map.setdefault(r["old"], r["new"])
+    for v in list(tag_map.values()):
+        tag_map.setdefault(v, v)
+    field_pairs = compose_field_renames(fields, tag_map)
     # Task register aliases (tools/task_alias.py): `Task.unkXX` -> `Task.alias`,
     # an object-like macro in include/task_vars.h used after `.`/`->`.
     # A row whose old member is itself an alias renames (or merges) that
@@ -681,13 +690,18 @@ def verify_diff(ref):
 
 # ---- field renames (tools/rename_field.py) -------------------------------------
 
-def compose_field_renames(rows):
+def compose_field_renames(rows, tags=None):
     """{(struct tag, original member): final member} from renames.csv rows of
-    kind `field` (`Struct.old` -> `Struct.new`), following chains."""
+    kind `field` (`Struct.old` -> `Struct.new`), following chains.  `tags`
+    maps a struct tag to its final name (kind `tag` rows, #155 run 6), so a
+    field renamed before or after its struct's tag joins one chain under the
+    final tag."""
+    tags = tags or {}
     fwd = {}
     for r in rows:
         tag, old = r["old"].split(".", 1)
         tag2, new = r["new"].split(".", 1)
+        tag, tag2 = tags.get(tag, tag), tags.get(tag2, tag2)
         if tag != tag2:
             raise RenameError("field rename %s -> %s changes the struct" % (r["old"], r["new"]))
         hit = False
