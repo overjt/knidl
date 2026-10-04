@@ -112,7 +112,7 @@ void Task_BossDoorSign(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)sub_0802f718;
-    t->frameTable = gUnk_087558C0;
+    t->frameTable = gBossDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -182,7 +182,7 @@ void Task_DoorOpening(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_087558E8;
+    t->frameTable = gDoorOpeningFrames;
     t->frame = 0;
     t->layer = 14;
     u = gCurTask;
@@ -271,7 +271,7 @@ void Task_StageClearFlag(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)TaskDrawWorld;
-    t->frameTable = gUnk_087558EC;
+    t->frameTable = gStageClearFlagFrames;
     t->tileWord = 0x8800;
     for (;;)
     {
@@ -315,7 +315,7 @@ void Task_QuickDrawDoorSign(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
-    t->frameTable = gUnk_087558FC;
+    t->frameTable = gQuickDrawDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -399,7 +399,7 @@ void Task_BombRallyDoorSign(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
-    t->frameTable = gUnk_08755930;
+    t->frameTable = gBombRallyDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -465,7 +465,7 @@ void Task_AirGrindDoorSign(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
-    t->frameTable = gUnk_0875593C;
+    t->frameTable = gAirGrindDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;

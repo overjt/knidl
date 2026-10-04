@@ -357,7 +357,7 @@ void KingDededeDefeatedHoldBack(void)
         v >>= 1;
     }
     TaskStop();
-    gCurTask->actorAnimDelay24 = ActorStartAnim(gUnk_087484A4);
+    gCurTask->actorAnimDelay24 = ActorStartAnim(gKingDededeDefeatedHoldBackAnim);
     gCurTask->kingDededeDefeatedAnimating = 1;
     while (gCurTask->kingDededeDefeatedWaitEnd == 0)
         TaskYieldTrampoline(1);
@@ -702,7 +702,7 @@ void MrShineAndMrBrightStartAscend(void)
     if (gCurTask->variant == 2)
     {
         gUnk_02007D00[2] = 1;
-        ActorSetAttackBox((u32)gUnk_087488C8);
+        ActorSetAttackBox((u32)gMrShineAndMrBrightStartAscendAttackBox);
         sub_080275cc(0);
     }
     else
@@ -2026,7 +2026,7 @@ void MrShineRecoil(void)
     TaskStop();
     PlaySfx(0x1F7);
     RequestScreenShake(4);
-    ActorSetExtraAttackBox((u32)gUnk_08748890);
+    ActorSetExtraAttackBox((u32)gMrShineRecoilExtraAttackBox);
     gCurTask->onGround = 0;
     TaskSetFrame(14);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
@@ -2244,7 +2244,7 @@ void MrBrightAscend(void)
 {
     gCurTask->updateState = MR_BRIGHT_STATE_ASCEND;
     MrShineAndMrBrightStartAscend();
-    gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_087485EC);
+    gCurTask->actorAnimDelay1C = ActorStartAnim(gMrBrightAscendAnim);
     TaskSleepForever();
 }
 
@@ -2394,7 +2394,7 @@ void MrBrightHop(void)
         gCurTask->onGround = 0;
         TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
         TaskSetMotionY(-0x20000, 128 << 7, 128 << 10);
-        gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_087485B0);
+        gCurTask->actorAnimDelay1C = ActorStartAnim(gMrBrightHopAnim);
         if (!(gCurTask->onGround & 1))
         {
             while (!(gCurTask->onGround & 1))
@@ -2432,7 +2432,7 @@ void MrBrightJump(void)
     t = gCurTask;
     t->velX = t->mrShineAndMrBrightJumpDir * 9 << 13;
     TaskSetMotionY(-0x60000, 128 << 7, 192 << 11);
-    gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_087485C0);
+    gCurTask->actorAnimDelay1C = ActorStartAnim(gMrBrightJumpAnim);
     if (!(gCurTask->onGround & 1))
     {
         while (!(gCurTask->onGround & 1))
@@ -2469,7 +2469,7 @@ void MrBrightJumpBack(void)
     ActorStopAnim();
     sub_080a2b14();
     gCurTask->onGround = 0;
-    gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_087485D0);
+    gCurTask->actorAnimDelay1C = ActorStartAnim(gMrBrightJumpBackAnim);
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 168 << 5, 192 << 10);
     if (!(gCurTask->onGround & 1))
@@ -2539,7 +2539,7 @@ void MrBrightRecoil(void)
     PlaySfx(0x1F7);
     RequestScreenShake(4);
     gCurTask->onGround = 0;
-    gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_087485DC);
+    gCurTask->actorAnimDelay1C = ActorStartAnim(gMrBrightRecoilAnim);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     TaskSetMotionY(-0x20000, 168 << 5, 192 << 10);
     if (!(gCurTask->onGround & 1))
@@ -2569,7 +2569,7 @@ void MrBrightThrow(void)
     gCurTask->updateState = MR_BRIGHT_STATE_THROW;
     TaskStop();
     TaskFaceNearestPlayer();
-    gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_087485E4);
+    gCurTask->actorAnimDelay1C = ActorStartAnim(gMrBrightThrowAnim);
     TaskYieldTrampoline(64);
     CreateMrBrightFireball();
     TaskSetMotionXFacing(-0x40000, 0x5A5A5A5A);
@@ -2820,7 +2820,7 @@ void KingDededeStarInit(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->updateCallback = (u32)KingDededeStarUpdate;
     TaskFaceLikeParent();
-    ActorSetAttackBox((u32)gUnk_08748BD4);
+    ActorSetAttackBox((u32)gKingDededeStarInitAttackBox);
     ActorSetState(KING_DEDEDE_STAR_STATE_0);
     CallTableEntry(gCurTask->state, 1, gKingDededeStarStates);
 }
@@ -2961,7 +2961,7 @@ void MrShineCrescentInit(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)MrShineCrescentUpdate;
-    t->frameTable = gUnk_08754260;
+    t->frameTable = gMrShineCrescentFrames;
     TaskFaceLikeParent();
     ActorSetState(MR_SHINE_CRESCENT_STATE_0);
     CallTableEntry(gCurTask->state, 2, gMrShineCrescentStates);
@@ -3044,7 +3044,7 @@ void MrShineFallingStarInit(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)MrShineFallingStarUpdate;
-    t->frameTable = gUnk_087542A8;
+    t->frameTable = gMrShineFallingStarFrames;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B34);
     ActorSetState(MR_SHINE_FALLING_STAR_STATE_0);
@@ -3136,7 +3136,7 @@ void MrBrightFireballInit(void)
     struct Task *t = gCurTask;
 
     t->updateCallback = (u32)MrBrightFireballUpdate;
-    t->frameTable = gUnk_08754280;
+    t->frameTable = gMrBrightFireballFrames;
     TaskFaceLikeParent();
     ActorLoadDef(gUnk_08748B60);
     ActorSetState(MR_BRIGHT_FIREBALL_STATE_0);
@@ -3505,6 +3505,6 @@ void Task_MetaKnight(void)
     t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     t->layer = 11;
     gCurTask->frameTable = gMetaKnightFrames;
-    ActorSetExtraAttackBox((u32)gUnk_087495EC);
+    ActorSetExtraAttackBox((u32)gMetaKnightExtraAttackBox);
     CallTableEntry(gCurTask->variant, 1, gMetaKnightVariants);
 }

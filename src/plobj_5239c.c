@@ -9,17 +9,17 @@
  *
  * Task type #6, variants 7-9, each variant body followed by the callbacks
  * only it installs.  Variant 7 (PlayerObjectIceBreath, animation tables
- * gUnk_08751B40/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
+ * gPlayerObjectIceBreathFrames/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
  * and installs M11's PlayerDrawWorldLoadTilesAndPalette and its own collision callback
  * PlayerObjectIceBreathUpdate, which registers the collider row gUnk_0873BE24 and runs the
  * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
- * Variant 8 (PlayerObjectBeamOrb, gUnk_08751BB0) traces six-step paths from the
+ * Variant 8 (PlayerObjectBeamOrb, gPlayerObjectBeamOrbFrames) traces six-step paths from the
  * 8.8 velocity rows gUnk_0873B7C0[k] and the animation rows
  * gUnk_0873B808[k] (sound 129) with the callback PlayerObjectBeamOrbUpdate (collider row
  * gUnk_0873BE38, hit test gUnk_0873CC2C), which variant 10
  * (src/plobj_52f6c.c) installs too; both end in a `pop {r1}` epilogue
  * without setting r0, so they are declared s32 with no return.  Variant 9
- * (PlayerObjectLightOrb, gUnk_0875204C) is a copy of the spawner's sprite:
+ * (PlayerObjectLightOrb, gPlayerObjectLightOrbFrames) is a copy of the spawner's sprite:
  * sub-state 0 queues the tiles gUnk_08204B98 (four 320-byte rows) and the
  * palette gUnk_08204B78 into the spawner's OBJ slots through the VRAM
  * transfer queue RequestCopy, blinks, flies to the top centre of the
@@ -56,7 +56,7 @@ void PlayerObjectIceBreath(void)
         {
         case 0:
             t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
-            t->frameTable = gUnk_08751B40;
+            t->frameTable = gPlayerObjectIceBreathFrames;
             t->layer = 7;
             {
                 struct Task *u = gCurTask;
@@ -212,7 +212,7 @@ s32 PlayerObjectBeamOrb(void)
     }
     {
         struct Task *t = gCurTask;
-        t->frameTable = gUnk_08751BB0;
+        t->frameTable = gPlayerObjectBeamOrbFrames;
         t->u80.attackAbility = ABILITY_BEAM;
     }
     {
@@ -370,7 +370,7 @@ void PlayerObjectLightOrb(void)
 
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)TaskDrawScreen;
-    t->frameTable = gUnk_0875204C;
+    t->frameTable = gPlayerObjectLightOrbFrames;
     switch (t->playerObjectSpawnWord & 15)
     {
     case 0:

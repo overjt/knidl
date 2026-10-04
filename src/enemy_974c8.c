@@ -330,7 +330,7 @@ void PhanPhanCharge(void)
     TaskSetFrame(15);
     TaskYieldTrampoline(2);
     TaskStop();
-    v = ActorStartAnim(gUnk_08744900);
+    v = ActorStartAnim(gPhanPhanAnim);
     t = gCurTask;
     t->actorAnimDelay24 = v;
     if (t->actorSpawnArg == 0)
@@ -366,8 +366,8 @@ void PhanPhanBounceOffWall(void)
     zero = 0;
     PlaySfx(0x1F7);
     RequestScreenShake(4);
-    ActorSetAttackBox(gUnk_08745270);
-    ActorSetExtraAttackBox(gUnk_0874528C);
+    ActorSetAttackBox(gPhanPhanBounceOffWallAttackBox);
+    ActorSetExtraAttackBox(gPhanPhanBounceOffWallExtraAttackBox);
     t = gCurTask;
     t->phanPhanCatchActive = zero;
     t->onGround = zero;
@@ -586,7 +586,7 @@ void PhanPhanThrowApple(void)
     TaskYieldTrampoline(15);
     gCurTask->onGround = zero;
     gCurTask->phanPhanLanded = zero;
-    gCurTask->actorAnimDelay24 = ActorStartAnim(gUnk_08744900);
+    gCurTask->actorAnimDelay24 = ActorStartAnim(gPhanPhanAnim);
     TaskSetMotionY(-0x38000, 0x2000, 0x30000);
     TaskYieldTrampoline(gUnk_0874492C[RandomRange(8)]);
     ActorStopAnim();
@@ -638,11 +638,11 @@ void PhanPhanDefeat(void)
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x2500, 0x30000);
     TaskSetFrame(28);
-    ActorSetAttackBox(gUnk_08745254);
+    ActorSetAttackBox(gPhanPhanDefeatAttackBox);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     ActorSetAttackBox(gUnk_087452A8);
-    ActorSetExtraAttackBox(gUnk_087452C4);
+    ActorSetExtraAttackBox(gPhanPhanDefeatExtraAttackBox);
     while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
@@ -912,7 +912,7 @@ void Task_PhanPhanApple(void)
     u->frameTable = gPhanPhanAppleFrames;
     u->updateCallback = (u32)PhanPhanAppleUpdate;
     TaskFaceNearestPlayer();
-    v = ActorStartAnim(gUnk_0874550C);
+    v = ActorStartAnim(gPhanPhanAppleAnim);
     w = gCurTask;
     w->actorAnimDelay = v;
     w->onGround = zero;

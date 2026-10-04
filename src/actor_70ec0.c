@@ -208,7 +208,7 @@ void WarpStarBoard(void)
                 gCurTask->warpStarSparkleSlot = 0xFFFF;
             }
         }
-        ActorSetAttackBox((u32)gUnk_0873F554);
+        ActorSetAttackBox((u32)gWarpStarBoardAttackBox);
     }
     gPlayerStates[gCurTask->hitterSlot].mode = 16;
     sub_08040934(gCurTask->hitterSlot);
@@ -375,7 +375,7 @@ void WarpStarVanish(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_08752D8C;
+        t->frameTable = gWarpStarVanishFrames;
         t->frame = 0;
     }
     TaskYieldTrampoline(2);

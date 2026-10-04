@@ -52,8 +52,8 @@ extern u16 gUnk_0873DEA8[];
 extern u32 gPlayerDances[];
 extern u32 gUnk_0874C890[];
 extern u32 gUnk_0874CDF8[];
-extern u32 gUnk_08754850[];
-extern u32 gUnk_0875488C[];
+extern u32 gGoalGameSpringFrames[];
+extern u32 gGoalGamePlayerMarkerFrames[];
 extern u32 gUnk_087548A0[];
 
 /* Declared here, not through a header: the calls in this file pass other
@@ -1119,7 +1119,7 @@ void Task_GoalGameSpring(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 8;
     if (gActivePlayerCount == 1)
-        gCurTask->frameTable = gUnk_08754850;
+        gCurTask->frameTable = gGoalGameSpringFrames;
     else
         gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];
     gCurTask->tileWord = 0x00009010;
@@ -1143,7 +1143,7 @@ void Task_GoalGamePlayerMarker(void)
 {
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875488C;
+    gCurTask->frameTable = gGoalGamePlayerMarkerFrames;
     gCurTask->updateCallback = (u32)GoalGamePlayerMarkerFollowParent;
     gCurTask->tileWord = 0x0000A010;
     if (gLocalPlayer == gCurTask->variant)

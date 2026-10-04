@@ -49,7 +49,7 @@ void PlayerEffectDeathStarRing(void)
     gCurTask->lateUpdateCallback = (u32)PlayerEffectDeathStarRingLateUpdate;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_0874C6F4;
+    t->frameTable = gPlayerEffectDeathStarRingFrames;
     t->pixelX = (t->u8C.parentTask)->pixelX;
     t->pixelY = (t->u8C.parentTask)->pixelY;
     a = gUnk_0873BA4C[t->playerEffectSpawnWord & 7][0];

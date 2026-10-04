@@ -833,7 +833,7 @@ struct ActorVt gHotHeadFireHitReactions ACTOR_TBL(08741f4c) = {
     .defeatCallback = 0,
 };
 /* src/enemy_82e68.c */
-struct ActorVt gUnk_08741F64 ACTOR_TBL(08741f4c) = {
+struct ActorVt gHotHeadFireBallUpdateHitReactions ACTOR_TBL(08741f4c) = {
     .damageKind = 0,
     .defeatKind = 9,
     .filler02 = { 0x00, 0x00 },
@@ -1151,7 +1151,7 @@ struct ActorVt gCoconutHitReactions ACTOR_TBL(087434c4) = {
     .defeatCallback = 0,
 };
 /* src/enemy_8e404.c */
-struct ActorVt gUnk_08743558 ACTOR_TBL(087434c4) = {
+struct ActorVt gCoconutExplodeHitReactions ACTOR_TBL(087434c4) = {
     .damageKind = 0,
     .defeatKind = 3,
     .filler02 = { 0x00, 0x00 },
@@ -1789,7 +1789,7 @@ struct ActorVt gMetaKnightHitReactions ACTOR_TBL(08749b08) = {
     .defeatCallback = (u32)MetaKnightReactToDefeat,
 };
 /* src/enemy_a5644.c */
-struct ActorVt gUnk_08749B30 ACTOR_TBL(08749b08) = {
+struct ActorVt gMetaKnightReactToDefeatHitReactions ACTOR_TBL(08749b08) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },
@@ -1805,7 +1805,7 @@ struct ActorVt gKrackoHitReactions ACTOR_TBL(08749b08) = {
     .defeatCallback = (u32)KrackoReactToDefeat,
 };
 /* src/enemy_a93ec.c */
-struct ActorVt gUnk_08749B48 ACTOR_TBL(08749b08) = {
+struct ActorVt gKrackoReactToDefeatHitReactions ACTOR_TBL(08749b08) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },
@@ -1821,7 +1821,7 @@ struct ActorVt gNightmareWizardHitReactions ACTOR_TBL(08749b08) = {
     .defeatCallback = (u32)NightmareWizardReactToDefeat,
 };
 /* src/enemy_aa338.c */
-struct ActorVt gUnk_08749B60 ACTOR_TBL(08749b08) = {
+struct ActorVt gNightmareWizardReactToDefeatHitReactions ACTOR_TBL(08749b08) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },
@@ -1857,7 +1857,7 @@ struct ActorVt gPaintRollerHitReactions ACTOR_TBL(0874b4e0) = {
     .defeatCallback = (u32)PaintRollerReactToDefeat,
 };
 /* src/enemy_aa338.c */
-struct ActorVt gUnk_0874B4EC ACTOR_TBL(0874b4e0) = {
+struct ActorVt gPaintRollerReactToDefeatHitReactions ACTOR_TBL(0874b4e0) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },
@@ -1873,7 +1873,7 @@ struct ActorVt gHeavyMoleHitReactions ACTOR_TBL(0874b4e0) = {
     .defeatCallback = (u32)HeavyMoleReactToDefeat,
 };
 /* src/enemy_aa338.c */
-struct ActorVt gUnk_0874B504 ACTOR_TBL(0874b4e0) = {
+struct ActorVt gHeavyMoleReactToDefeatHitReactions ACTOR_TBL(0874b4e0) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },
@@ -1965,7 +1965,7 @@ struct ActorVt gUnk_0874BFC8 ACTOR_TBL(0874bf58) = {
     .defeatCallback = 0,
 };
 /* src/enemy_ae3bc.c */
-struct ActorVt gUnk_0874BFD4 ACTOR_TBL(0874bf58) = {
+struct ActorVt gPaintRollerPaintingParasolUpdateHitReactions ACTOR_TBL(0874bf58) = {
     .damageKind = 0,
     .defeatKind = 3,
     .filler02 = { 0x00, 0x00 },
@@ -1999,7 +1999,7 @@ struct ActorVt gWhispyWoodsHitReactions ACTOR_TBL(0874c204) = {
     .defeatCallback = (u32)WhispyWoodsReactToDefeat,
 };
 /* src/enemy_ae3bc.c */
-struct ActorVt gUnk_0874C210 ACTOR_TBL(0874c204) = {
+struct ActorVt gWhispyWoodsReactToDefeatHitReactions ACTOR_TBL(0874c204) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },

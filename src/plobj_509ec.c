@@ -316,7 +316,7 @@ void PlayerObjectSpitMultiStar(void)
     gCurTask->updateCallback = (u32)PlayerObjectSpitMultiStarUpdate;
     gCurTask->lateUpdateCallback = (u32)sub_080513d4;
     gCurTask->layer = 5;
-    gCurTask->frameTable = gUnk_0874C478;
+    gCurTask->frameTable = gPlayerObjectSpitMultiStarFrames;
     sub_0802205c(gUnk_0873CB4C);
     {
         struct Task *t = gCurTask;

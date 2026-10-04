@@ -1786,7 +1786,7 @@ void InhalableStarInitVariant(void)
         break;
     case 2:
     case 3:
-        ActorSetAttackBox((u32)gUnk_0873F7E4);
+        ActorSetAttackBox((u32)gInhalableStarInitVariantAttackBox);
         break;
     }
     if (gCurTask->facing == 0)

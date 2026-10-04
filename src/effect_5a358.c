@@ -12,7 +12,7 @@
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 45-48.  Variant 45 (PlayerEffectTornadoDust, M13) rides on its spawner
- * through three sub-states (gUnk_08751FCC); PlayerEffectTornadoDustUpdate kills it once the
+ * through three sub-states (gPlayerEffectTornadoDustFrames); PlayerEffectTornadoDustUpdate kills it once the
  * player leaves mode 13.  Variant 46 (PlayerEffectCrashBlast, M13) is the twin of
  * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
  * kinds 1, 2, 7 and 8 through gScreenAttackTasks and the task skip mask, around a
@@ -59,7 +59,7 @@ void PlayerEffectTornadoDust(void)
     gCurTask->updateCallback = (u32)PlayerEffectTornadoDustUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751FCC;
+    t->frameTable = gPlayerEffectTornadoDustFrames;
     switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
@@ -162,7 +162,7 @@ void PlayerEffectCrashBlast(void)
         t->drawCallback = (u32)TaskDrawWorldInView;
         t->layer = 8;
         u = gCurTask;
-        u->frameTable = gUnk_08752020;
+        u->frameTable = gPlayerEffectCrashBlastFrames;
         u->tileWord = (u->u8C.parentTask)->tileWord | 0xF008;
         u->posX = 0;
         u->posY = 0;
@@ -212,7 +212,7 @@ void PlayerEffectCrashBlast(void)
         t->updateCallback = (u32)PlayerEffectCrashBlastUpdate;
         t->layer = 15;
         w = gCurTask;
-        w->frameTable = gUnk_08752020;
+        w->frameTable = gPlayerEffectCrashBlastFrames;
         w->tileWord = ((w->u8C.parentTask)->tileWord + 0x800) | 4;
         x0 = gPlayerCameraPos[w->parent].x;
         x0 -= 120;
@@ -507,7 +507,7 @@ void PlayerEffectUFOChargeSparkle(void)
     gCurTask->updateCallback = (u32)PlayerEffectUFOChargeSparkleUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08752090;
+    t->frameTable = gPlayerEffectUFOChargeSparkleFrames;
     t->tileWord = (t->u8C.parentTask)->tileWord | 0xF004;
     t->posX = 0;
     t->posY = 0;

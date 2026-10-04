@@ -15,7 +15,7 @@
  * facing no longer matches the spawner's, and kills the task when the
  * ability is no longer 13 or PlayerState.unk40 bit 8 is clear while the
  * spawner's Task.waterFlags bit 0 is set.  Variant 41 (PlayerEffectFreezeAura, 1488 bytes)
- * is four sub-states in world space (gUnk_08751E7C); its callback
+ * is four sub-states in world space (gPlayerEffectFreezeAuraFrames); its callback
  * PlayerEffectFreezeAuraUpdate sets Task.unk28 when the player leaves mode 13 (or, while
  * PlayerState.unk40 bit 8 is clear, when the spawner's Task.variant is not 1)
  * and kills it on the same unk40/unk7B test. */
@@ -256,7 +256,7 @@ void PlayerEffectFreezeAura(void)
     gCurTask->updateCallback = (u32)PlayerEffectFreezeAuraUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751E7C;
+    t->frameTable = gPlayerEffectFreezeAuraFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     t->playerEffectStopRequested = 0;
     switch (t->playerEffectSpawnWord & 15)

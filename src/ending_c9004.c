@@ -117,7 +117,7 @@ void EndingStarRodReturnStarRod(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0875585C;
+    gCurTask->frameTable = gEndingStarRodReturnFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->posX = (gSpriteCameraX + 120) << 16;
     gCurTask->posY = (gSpriteCameraY - 24) << 16;
@@ -231,7 +231,7 @@ void EndingStarRodReturnWarpStar(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingStarRodReturnWarpStarDraw;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_0875585C;
+    gCurTask->frameTable = gEndingStarRodReturnFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->updateCallback = (u32)EndingStarRodReturnWarpStarUpdate;
     gCurTask->endingStarRodReturnBgmVolume = 255;
@@ -373,7 +373,7 @@ void EndingStarRodReturnKirby(void)
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = (u32)EndingStarRodReturnKirbyDraw;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_0875585C;
+    gCurTask->frameTable = gEndingStarRodReturnFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->spriteFlags &= 0x7FFF;
     gCurTask->frame = 0;

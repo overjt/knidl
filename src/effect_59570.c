@@ -271,7 +271,7 @@ void PlayerEffectStonePuff(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751ECC;
+    t->frameTable = gPlayerEffectStonePuffFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
     t->spriteFlags = 0;
     gCurTask->posX = (RandomSpreadFacing(-4, 1, 8) + (gCurTask->u8C.parentTask)->pixelX) << 16;

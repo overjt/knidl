@@ -662,7 +662,7 @@ void PengyWalk(void)
     t->u8C.actor->animScript = 0;
     t->updateState = PENGY_STATE_WALK;
     TaskStop();
-    gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_0874074C);
+    gCurTask->actorAnimDelay34 = ActorStartAnim(gPengyWalkAnim);
     idx = gCurTask->actorSpawnArg;
     cbase = gUnk_08740728;
     dbase = gUnk_08740740;
@@ -954,7 +954,7 @@ void BomberExplode(void)
     v = gScreenAttackActive;
     if (v == 0)
     {
-        ActorSetAttackBox(gUnk_0873F7AC);
+        ActorSetAttackBox(gBomberExplodeAttackBox);
         FreezeStage(15);
         gCurTask->bomberLoopCount = v;
         do
@@ -1573,7 +1573,7 @@ void ScarfyCheckTransform(void)
 
     if (t->hitKind == HIT_KIND_NO_DAMAGE && (u16)(t->hitEffect - 2) <= 1)
     {
-        ActorSetAttackBox(gUnk_08740E1C);
+        ActorSetAttackBox(gScarfyCheckTransformAttackBox);
         ActorSetState(SCARFY_STATE_TRANSFORM);
         TaskSetEntry(ScarfyEnterState, gCurTaskIdx);
     }

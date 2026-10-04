@@ -272,7 +272,7 @@ void PlayerEffectBubble(void)
     gCurTask->updateCallback = (u32)sub_08054a44;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C648;
+    t->frameTable = gPlayerEffectBubbleFrames;
     if (t->facing == 1)
         t->posX = (t->pixelX + 4) << 16;
     if (IsFullBlockAtPixel(gCurTask->posX >> 16, gCurTask->posY >> 10) == 0)

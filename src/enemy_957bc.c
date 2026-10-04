@@ -109,7 +109,7 @@ void FireLionDropIn(void)
 
     ActorSetState(FIRE_LION_STATE_DROP_IN);
     gCurTask->updateState = 0;
-    ActorSetTerrainBox(gUnk_0874530C);
+    ActorSetTerrainBox(gFireLionTerrainBox);
     gCurTask->onGround = 0;
     t = gCurTask;
     t->accelY = 0x5000;
@@ -473,7 +473,7 @@ void FireLionCharge(void)
     PlaySfx(500);
     gCurTask->fireLionWallHit = 0;
     TaskSetMotionXFacing(0x30000, 0x5A5A5A5A);
-    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_0874453C);
+    gCurTask->actorAnimDelay = ActorStartAnim(gFireLionChargeAnim);
     TaskYieldTrampoline(48);
     while (gCurTask->facing == TaskGetFacingTowardNearestPlayer()) {
         if (abs(TaskGetNearestPlayerDx()) > 48)
@@ -656,7 +656,7 @@ rest:
     RequestScreenShake(2);
     FireLionCreateLandingStar();
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744550);
-    ActorSetExtraAttackBox(gUnk_08745040);
+    ActorSetExtraAttackBox(gFireLionPounceExtraAttackBox);
     TaskYieldTrampoline(2);
     ActorSetExtraAttackBox(0);
     TaskYieldTrampoline(gUnk_08744562[gCurTask->actorSpawnArg]);
@@ -781,7 +781,7 @@ void FireLionWaitForLanding(void)
     t->fireLionWallHit = 0;
     t->fireLionLanded = 0;
     ActorStopAnim();
-    ActorSetTerrainBox(gUnk_0874530C);
+    ActorSetTerrainBox(gFireLionTerrainBox);
     TaskSetFrame(13);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
@@ -945,7 +945,7 @@ void FireLionDefeat(void)
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
     TaskSetFrame(21);
-    ActorSetAttackBox(gUnk_08744F0C);
+    ActorSetAttackBox(gFireLionDefeatAttackBox);
     ActorSetExtraAttackBox(gUnk_087446E8[gCurTask->frame]);
     ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     ActorSetTerrainBox(gUnk_08745304);
@@ -953,7 +953,7 @@ void FireLionDefeat(void)
         TaskYieldTrampoline(1);
     TaskSetFrame(38);
     ActorSetAttackBox(gUnk_087450CC);
-    ActorSetExtraAttackBox(gUnk_087450E8);
+    ActorSetExtraAttackBox(gFireLionDefeatExtraAttackBox);
     ActorSetAux(gUnk_087447B8[gCurTask->frame]);
     while (gCurTask->fireLionLanded == 0)
         TaskYieldTrampoline(1);

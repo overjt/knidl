@@ -1171,7 +1171,7 @@ void Task_Gordo(void)
         t->onGround = 0;
     }
     TaskFaceNearestPlayer();
-    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087412A8);
+    gCurTask->actorAnimDelay = ActorStartAnim(gGordoAnim);
     CallTableEntry(gCurTask->variant, 4, gGordoVariants);
 }
 
@@ -1354,7 +1354,7 @@ void Task_CoolSpook(void)
     gCurTask->frameTable = gCoolSpookFrames;
     AcquirePaletteAnim(0, 0);
     gCurTask->facing = 255;
-    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087412EC);
+    gCurTask->actorAnimDelay = ActorStartAnim(gCoolSpookAnim);
     CallTableEntry(gCurTask->variant, 2, gCoolSpookVariants);
 }
 

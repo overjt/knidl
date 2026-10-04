@@ -394,7 +394,7 @@ void Task_RingStar(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CC60;
+    u->frameTable = gRingStarFrames;
     u->updateCallback = (u32)RingStarUpdate;
     u->ringStarFrameTimer = 2;
     u->frame = 0;
@@ -499,7 +499,7 @@ void Task_CannonSmoke(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_08752E48;
+    t->frameTable = gCannonSmokeFrames;
     t->layer = 10;
     gCurTask->tileWord = 0;
     CannonSmokeInit();
@@ -608,7 +608,7 @@ void Task_CannonFuseSpark(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)CannonFuseSparkDraw;
-    t->frameTable = gUnk_08752D20;
+    t->frameTable = gCannonFuseSparkFrames;
     t->layer = 10;
     u = gCurTask;
     u->updateCallback = (u32)CannonFuseSparkCheckParent;
@@ -713,7 +713,7 @@ void Task_HitFrost(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CC48;
+    t->frameTable = gHitFrostFrames;
     t->layer = 6;
     u = gCurTask;
     u->updateCallback = (u32)HitFrostCheckParent;

@@ -220,7 +220,7 @@ void AirGrindResultsStep(void)
                 if (gAirGrindPtr->localPlayer == 0) {
                     t->pixelX = 120;
                     t->pixelY = 80;
-                    t->frameTable = gUnk_0875602C;
+                    t->frameTable = gAirGrindResultsStepFrames;
                     t->frame = 1;
                     t->spriteFlags = 0x2000;
                     t->layer = 1;

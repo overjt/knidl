@@ -142,7 +142,7 @@ void PlayerEffectSparkAura(void)
     gCurTask->updateCallback = (u32)PlayerEffectSparkAuraUpdate;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_08751CBC;
+    t->frameTable = gPlayerEffectSparkAuraFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
     if ((t->unk28 = t->playerEffectSpawnWord & 15) == 0)
         t->drawCallback = (u32)TaskDrawWorldLoadTiles;

@@ -32,7 +32,7 @@ void PlayerEffectBurningFlames(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751CF0;
+    t->frameTable = gPlayerEffectBurningFlamesFrames;
     s = t->playerEffectSpawnWord & 15;
     row = gUnk_0873BAB0[s];
     switch (s)

@@ -50,7 +50,7 @@ extern const u8 gBigSwitchTerrainBox[];
 extern const u8 gUnk_0873F720[];
 extern const u8 gUnk_0873F73C[];
 extern const u8 gUnk_0873F774[];
-extern const u8 gUnk_0873F7AC[];
+extern const u8 gBomberExplodeAttackBox[];
 extern const u8 gUnk_0873F7C8[];
 extern const u8 gUnk_0873F800[];
 extern const u8 gUnk_0873F89C[];
@@ -130,14 +130,14 @@ extern const u8 gUnk_08744DBC[];
 extern const u8 gUnk_08744E10[];
 extern const u8 gUnk_08744E64[];
 extern const u8 gUnk_08744EB8[];
-extern const u8 gUnk_08744F0C[];
+extern const u8 gFireLionDefeatAttackBox[];
 extern const u8 gUnk_08744F60[];
 extern const u8 gUnk_08744FB4[];
 extern const u8 gUnk_08745008[];
 extern const u8 gUnk_0874505C[];
 extern const u8 gUnk_087450B0[];
 extern const u8 gUnk_0874521C[];
-extern const u8 gUnk_08745254[];
+extern const u8 gPhanPhanDefeatAttackBox[];
 extern const u8 gGrandWheelieTerrainBox[];
 extern const u8 gUnk_08745304[];
 extern const u8 gPhanPhanTerrainBox[];
@@ -169,7 +169,7 @@ extern const u8 gUnk_08748804[];
 extern const u8 gUnk_0874883C[];
 extern const u8 gUnk_08748858[];
 extern const u8 gUnk_087488AC[];
-extern const u8 gUnk_087488C8[];
+extern const u8 gMrShineAndMrBrightStartAscendAttackBox[];
 extern const u8 gKingDededeTerrainBox[];
 extern const u8 gMrShineAndMrBrightTerrainBox[];
 extern const u8 gUnk_08748910[];
@@ -189,7 +189,7 @@ extern const u8 gUnk_08749608[];
 extern const u8 gKrackoAttackBox[];
 extern const u8 gUnk_0874973C[];
 extern const u8 gUnk_08749790[];
-extern const u8 gUnk_08749870[];
+extern const u8 gNightmareWizardUpdateAttackBox[];
 extern const u8 gUnk_0874988C[];
 extern const u8 gMetaKnightTerrainBox[];
 extern const u8 gKrackoTerrainBox[];
@@ -667,7 +667,7 @@ struct ActorDef gUnk_0873F6BC ACTOR_REC(0873f664) = {
 struct ActorAux gUnk_0873F8EC ACTOR_REC(0873f8ec) = {
     .hitDuration = 30,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_0873F7AC,
+    .altAttackBox = (u32)gBomberExplodeAttackBox,
 };
 
 /* ---- 0x08740BD4-0x08740DE4: 12 record(s), section .actor_rec_08740bd4 ---- */
@@ -817,7 +817,7 @@ struct ActorDef gBlockStarDef ACTOR_REC(08740bd4) = {
     .isItem = 0x0,
     .unk0E = 0x0,
     .unk10 = &gUnk_0873F8EC,
-    .attackBox = (u32)gUnk_0873F7AC,
+    .attackBox = (u32)gBomberExplodeAttackBox,
     .terrainBox = (s32)gUnk_0873F894,
     .terrainHandlers = 0,
     .hitReactions = (u32)&gBlockStarHitReactions,
@@ -1935,7 +1935,7 @@ struct ActorAux gUnk_0874537C ACTOR_REC(0874531c) = {
 struct ActorAux gUnk_08745384 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744F0C,
+    .altAttackBox = (u32)gFireLionDefeatAttackBox,
 };
 struct ActorAux gUnk_0874538C ACTOR_REC(0874531c) = {
     .hitDuration = 32,
@@ -1965,7 +1965,7 @@ struct ActorAux gUnk_087453AC ACTOR_REC(0874531c) = {
 struct ActorAux gUnk_087453B4 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08745254,
+    .altAttackBox = (u32)gPhanPhanDefeatAttackBox,
 };
 
 /* ---- 0x08745530-0x08745588: 2 record(s), section .actor_rec_08745530 ---- */
@@ -2397,7 +2397,7 @@ struct ActorAux gUnk_08748920 ACTOR_REC(08748918) = {
 struct ActorAux gUnk_08748928 ACTOR_REC(08748918) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_087488C8,
+    .altAttackBox = (u32)gMrShineAndMrBrightStartAscendAttackBox,
 };
 
 /* ---- 0x08748AB0-0x08748BB8: 6 record(s), section .actor_rec_08748ab0 ---- */
@@ -2571,7 +2571,7 @@ struct ActorAux gUnk_08749AF0 ACTOR_REC(08749ae8) = {
 struct ActorAux gUnk_08749AF8 ACTOR_REC(08749ae8) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08749870,
+    .altAttackBox = (u32)gNightmareWizardUpdateAttackBox,
 };
 struct ActorAux gUnk_08749B00 ACTOR_REC(08749ae8) = {
     .hitDuration = 32,

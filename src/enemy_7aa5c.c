@@ -252,7 +252,7 @@ void ScarfyChase(void)
     j = i * 2;
     t->scarfyChaseAccel = gUnk_08740950[j];
     t->scarfyChaseSpeedLimit = gUnk_08740950[j + 1];
-    gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_0874093C);
+    gCurTask->actorAnimDelay34 = ActorStartAnim(gScarfyChaseAnim);
     TaskSleepForever();
 }
 

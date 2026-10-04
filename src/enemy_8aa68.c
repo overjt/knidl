@@ -197,7 +197,7 @@ void BlipperWave(void)
     gCurTask->updateState = BLIPPER_WAVE_STATE_WAVE;
     TaskStop();
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
-    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08742894);
+    gCurTask->actorAnimDelay = ActorStartAnim(gBlipperWaveAnim);
     while (1)
     {
         gCurTask->velY = 0x8000;

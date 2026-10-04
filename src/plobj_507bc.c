@@ -13,7 +13,7 @@
  * variant, the top byte of Task.unk18, through the 13 variant bodies
  * gPlayerObjectVariants.  PlayerObjectVanish is the common exit most variants re-bind on
  * contact: it installs the sprite (TaskDrawScreen for PlayerState.unk37 == 2,
- * TaskDrawWorldInViewOrFree otherwise, animation table gUnk_0874C650), registers the
+ * TaskDrawWorldInViewOrFree otherwise, animation table gPlayerObjectVanishFrames), registers the
  * collider row Task.unk24 if there is one and steps animation frames
  * 0-10 before TaskExitTrampoline.  PlayerObjectLaserBeamVanish is a second, drifting burst
  * (gUnk_0874C7CC). */
@@ -47,7 +47,7 @@ void PlayerObjectVanish(void)
     gCurTask->lateUpdateCallback = 0;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C650;
+    t->frameTable = gPlayerObjectVanishFrames;
     t->spriteFlags = 0;
     t->tileWord = 0;
     if (t->unk24 != 0)

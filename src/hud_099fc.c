@@ -28,7 +28,7 @@ void Task_IntroStoryPicture(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_087555D8;
+    gCurTask->frameTable = gIntroStoryPictureFrames;
     gCurTask->tileWord = 0x800;
     gCurTask->posX = 0x300000;
     gCurTask->posY = 0x780000;

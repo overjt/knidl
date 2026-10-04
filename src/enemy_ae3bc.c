@@ -2539,7 +2539,7 @@ void PaintRollerPaintingBomb(void)
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
     gCurTask->updateCallback = (u32)PaintRollerPaintingBombUpdate;
-    gCurTask->actorAnimDelay = ActorStartAnim((struct AnimCmd *)gUnk_0874B560);
+    gCurTask->actorAnimDelay = ActorStartAnim((struct AnimCmd *)gPaintRollerPaintingBombAnim);
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
     gCurTask->velY = 128 << 8;
@@ -2575,7 +2575,7 @@ void PaintRollerPaintingBomb(void)
     TaskSetFrame(4);
     TaskYieldTrampoline(3);
     PlaySfx(189);
-    ActorSetAttackBox((u32)gUnk_0874BB98);
+    ActorSetAttackBox((u32)gPaintRollerPaintingBombAttackBox);
     PlayExplosionAnim();
     ActorDestroy();
 }
@@ -2612,7 +2612,7 @@ void PaintRollerPaintingCloud(void)
     TaskYieldTrampoline(8);
     TaskStop();
     TaskYieldTrampoline(16);
-    gCurTask->actorAnimDelay = ActorStartAnim((struct AnimCmd *)gUnk_0874B574);
+    gCurTask->actorAnimDelay = ActorStartAnim((struct AnimCmd *)gPaintRollerPaintingCloudAnim);
     TaskYieldTrampoline(16);
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
@@ -2709,7 +2709,7 @@ void PaintRollerPaintingParasol(void)
     TaskSetFrame(4);
     TaskYieldTrampoline(60);
     (*c)->updateCallback = (u32)PaintRollerPaintingParasolUpdate;
-    r = ActorStartAnim((struct AnimCmd *)gUnk_0874B590);
+    r = ActorStartAnim((struct AnimCmd *)gPaintRollerPaintingParasolAnim);
     u = *c;
     u->actorAnimDelay = r;
     u->paintRollerPaintingParasolTimer = -32;
@@ -2731,7 +2731,7 @@ void PaintRollerPaintingParasolUpdate(void)
     u->paintRollerPaintingParasolTimer = w;
     if (w > 128 << 1)
     {
-        ActorSetHitReactions((u32)gUnk_0874BFD4);
+        ActorSetHitReactions((u32)gPaintRollerPaintingParasolUpdateHitReactions);
         ActorReactToDefeat();
     }
     else if ((w & 15) == 0)
@@ -3605,7 +3605,7 @@ void Task_HeavyMoleYellowMissile(void)
     t = *c;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_087540AC;
+    t->frameTable = gHeavyMoleYellowMissileFrames;
     b42 = &t->layer;
     z = 0;
     *b42 = 11;
@@ -3689,7 +3689,7 @@ void Task_HeavyMoleRedMissile(void)
     t = *c;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_087540EC;
+    t->frameTable = gHeavyMoleRedMissileFrames;
     b42 = &t->layer;
     z = 0;
     *b42 = 11;
@@ -3757,7 +3757,7 @@ void HeavyMoleMissileUpdate(void)
 
 void WhispyWoodsReactToDefeat(void)
 {
-    ActorSetHitReactions((u32)gUnk_0874C210);
+    ActorSetHitReactions((u32)gWhispyWoodsReactToDefeatHitReactions);
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 

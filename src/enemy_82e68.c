@@ -957,7 +957,7 @@ void HotHeadFireBallUpdate(void)
 {
     if (ActorCollideTerrainAlongVelocity() == 1)
     {
-        ActorSetHitReactions(gUnk_08741F64);
+        ActorSetHitReactions(gHotHeadFireBallUpdateHitReactions);
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }
     else

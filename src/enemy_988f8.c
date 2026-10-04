@@ -73,7 +73,7 @@ u8 MrFrostyLand(void)
     case MR_FROSTY_STATE_BOUNCE_OFF_WALL:
         sub_0809a080(1);
         gCurTask->onGround = 0;
-        ActorSetTerrainBox(gUnk_08745A14);
+        ActorSetTerrainBox(gMrFrostyLandTerrainBox);
         ActorSetState(MR_FROSTY_STATE_5);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
@@ -82,7 +82,7 @@ u8 MrFrostyLand(void)
         break;
     case MR_FROSTY_STATE_DEFEAT:
         sub_0809a080(0);
-        ActorSetTerrainBox(gUnk_08745A14);
+        ActorSetTerrainBox(gMrFrostyLandTerrainBox);
         ActorSetState(MR_FROSTY_STATE_14);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;

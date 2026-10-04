@@ -249,7 +249,7 @@ s32 KrackoReactToDefeat(void)
 {
     ResetFadeAndBlend();
     TaskStop();
-    ActorSetHitReactions((u32)gUnk_08749B48);
+    ActorSetHitReactions((u32)gKrackoReactToDefeatHitReactions);
     gCurTask->krackoDefeatStage = 1;
     ResetBgPaletteBlend();
     TaskSetEntry(ActorDie, gCurTaskIdx);

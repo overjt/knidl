@@ -15,7 +15,7 @@ void CutsceneFountainKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)CutsceneFountainKirbyDraw;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08755068;
+    gCurTask->frameTable = gCutsceneFountainKirbyFrames;
     gCurTask->updateCallback = (u32)CutsceneFountainKirbyUpdate;
     gCurTask->cutsceneActorBgmFadeStep = -1;
     gCurTask->tileWord = 128 << 4;
@@ -620,7 +620,7 @@ void CutsceneFountainKingDedede(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)sub_0801a310;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08755378;
+    gCurTask->frameTable = gCutsceneFountainKingDededeFrames;
     gCurTask->updateCallback = (u32)CutsceneFountainKingDededeUpdate;
     gUnk_02007D00[0] = -1;
     gCurTask->cutsceneActorSfxTimer = -1;

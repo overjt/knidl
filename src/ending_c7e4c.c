@@ -302,7 +302,7 @@ void EndingEpilogueStarRod(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreenOrFree;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_0875581C;
+    gCurTask->frameTable = gEndingEpilogueStarRodFrames;
     gCurTask->tileWord = 0xA000;
     gCurTask->posX = (gTasks[gCurTask->parent].pixelX - 8) << 16;
     gCurTask->posY = (gTasks[gCurTask->parent].pixelY - 4) << 16;

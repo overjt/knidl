@@ -188,7 +188,7 @@ extern struct ActorDef gUnk_0873F690;
 extern struct ActorDef gUnk_0873F6BC;
 extern struct ActorDef gUnk_0873F6E8;
 extern struct ActorDef gUnk_0873F704;
-extern u8 gUnk_0873F7E4[];
+extern u8 gInhalableStarInitVariantAttackBox[];
 extern u8 gUnk_0873F81C[];
 extern u32 gUnk_0873F830[];
 extern u32 gUnk_0873F844[];
@@ -306,21 +306,21 @@ extern u32 gUnk_0874C9D8[];
 extern u32 gUnk_0874CA1C[];
 extern u32 gUnk_0874CA78[];
 extern u32 gUnk_0874CAD8[];
-extern u32 gUnk_0874CB3C[];
+extern u32 gAbilityReleaseFlashFrames[];
 extern u32 gUnk_0874CB7C[];
 extern u32 gUnk_0874CB90[];
 extern u32 gUnk_0874CBC8[];
 extern u32 gUnk_0874CBD0[];
-extern u32 gUnk_0874CC38[];
-extern u32 gUnk_0874CC48[];
-extern u32 gUnk_0874CC60[];
+extern u32 gHitSparksFrames[];
+extern u32 gHitFrostFrames[];
+extern u32 gRingStarFrames[];
 extern u32 gUnk_0874CC84[];
-extern u32 gUnk_0874CCA4[];
+extern u32 gDashFlameFrames[];
 extern u32 gInhalableStarFrames[];
 extern u32 gParasolFrames[];
-extern u32 gUnk_08752D20[];
+extern u32 gCannonFuseSparkFrames[];
 extern u32 gWarpStarFrames[];
-extern u32 gUnk_08752E48[];
+extern u32 gCannonSmokeFrames[];
 
 
 /* Functions (defined in the files named above each group). */

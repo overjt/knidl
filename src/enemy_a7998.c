@@ -236,7 +236,7 @@ void KrackoJrInit(void)
     struct Task *t;
 
     gCurTask->updateCallback = (u32)KrackoJrUpdate;
-    ActorSetAttackBox((u32)gUnk_08749704);
+    ActorSetAttackBox((u32)gKrackoJrAttackBox);
     t = gCurTask;
     t->krackoJrPhase = 0;
     t->krackoJrAirborneTimer = 0;

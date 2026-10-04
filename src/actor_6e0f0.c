@@ -42,11 +42,11 @@ extern u32 gLandingImpactVariants[];
 extern u8 gUnk_0873FAE8[];
 extern u32 gPlayerWarpStarRideStates[];
 extern u32 gPlayerWarpStarRideStateUpdates[];
-extern u32 gUnk_0874CB3C[];
+extern u32 gAbilityReleaseFlashFrames[];
 extern u32 gUnk_0874CB7C[];
 extern u32 gUnk_0874CBD0[];
-extern u32 gUnk_0874CC38[];
-extern u32 gUnk_0874CCA4[];
+extern u32 gHitSparksFrames[];
+extern u32 gDashFlameFrames[];
 extern u32 gWarpStarFrames[];
 
 /* Externals */
@@ -136,7 +136,7 @@ void Task_HitSparks(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CC38;
+    t->frameTable = gHitSparksFrames;
     t->layer = 10;
     gCurTask->updateCallback = (u32)HitSparksCheckParent;
     gCurTask->tileWord = 0;
@@ -277,7 +277,7 @@ void Task_AbilityReleaseFlash(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CB3C;
+    t->frameTable = gAbilityReleaseFlashFrames;
     t->layer = 4;
     u = gCurTask;
     u->updateCallback = (u32)AbilityReleaseFlashCheckParent;
@@ -328,7 +328,7 @@ void Task_DashFlame(void)
     t->drawCallback = (u32)ActorDrawWorldInView;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CCA4;
+    u->frameTable = gDashFlameFrames;
     u->updateCallback = (u32)DashFlameCheckParent;
     u->tileWord = 0;
     TaskFaceLikeParent();

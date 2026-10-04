@@ -268,7 +268,7 @@ extern u32 gUnk_08755FA8[];
 extern u32 gUnk_08755FBC[];
 extern u32 gUnk_08755FC4[];
 extern u32 gUnk_08755FEC[];
-extern u32 gUnk_0875602C[];
+extern u32 gAirGrindResultsStepFrames[];
 extern u32 gUnk_0875603C[];
 extern u32 gSubGameBgLayouts[][2];
 extern u16 gSubGameGfxSets[];

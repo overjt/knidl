@@ -10,15 +10,15 @@
  * Task type #6, variants 3-6, each variant body followed by the callbacks
  * only it installs; variants 3-5 read their spawner's task through
  * Task.u8C.parentTask (position, facing, OAM flags).  Variant 3 (PlayerObjectWaterShot,
- * animation table gUnk_087519E8) is a four-way `switch (Task.unk28)` of
+ * animation table gPlayerObjectWaterShotFrames) is a four-way `switch (Task.unk28)` of
  * endless loops that the ROM lays out in the order 3, 1, 0, 2, with M11's
  * callback PlayerDrawWorldLoadTilesAndPalette and the collision callback PlayerObjectWaterShotUpdate (sound
- * 133).  Variant 4 (PlayerObjectFireBreath, gUnk_08751A28/gUnk_08751CA4) installs
+ * 133).  Variant 4 (PlayerObjectFireBreath, gPlayerObjectFireBreathFrames/gUnk_08751CA4) installs
  * PlayerObjectFireBreathUpdate, which registers the collider row gUnk_0873BDD4 and calls
  * the hit test TaskBreakBlocksAt at the spawner's position with only three
  * arguments.  Variant 5 (PlayerObjectCutterBlade, gUnk_08751A98) and its callback
  * PlayerObjectCutterBladeUpdate re-bind the body or the shared exit PlayerObjectVanish.  Variant
- * 6 (PlayerObjectLaserBeam, gUnk_08751AF8, the animation/velocity pairs
+ * 6 (PlayerObjectLaserBeam, gPlayerObjectLaserBeamFrames, the animation/velocity pairs
  * gUnk_0873B7B0) and its callback PlayerObjectLaserBeamUpdate (a nine-way `switch` on
  * the collision result gTerrainResult.unk4, sounds 173 and 211) turn the
  * object into variant 10's body PlayerObjectUFOShot or the burst PlayerObjectLaserBeamVanish on
@@ -47,7 +47,7 @@ void PlayerObjectWaterShot(void)
     }
     {
         struct Task *t = gCurTask;
-        t->frameTable = gUnk_087519E8;
+        t->frameTable = gPlayerObjectWaterShotFrames;
         t->tileWord = (t->u8C.parentTask)->tileWord | 0xE006;
         t->unk28 = (t->u8C.parentTask)->unk28;
         t->unk2C = 1;
@@ -189,7 +189,7 @@ void PlayerObjectFireBreath(void)
     {
     case 0:
         t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
-        t->frameTable = gUnk_08751A28;
+        t->frameTable = gPlayerObjectFireBreathFrames;
         t->layer = 7;
         {
             struct Task *u = gCurTask;
@@ -485,7 +485,7 @@ void PlayerObjectLaserBeam(void)
         }
         {
             struct Task *t = gCurTask;
-            t->frameTable = gUnk_08751AF8;
+            t->frameTable = gPlayerObjectLaserBeamFrames;
             t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
             if (t->facing == 1)
             {

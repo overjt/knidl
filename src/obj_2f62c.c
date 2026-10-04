@@ -29,7 +29,7 @@ void Task_StageDoorSign(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)sub_0802f718;
-    t->frameTable = gUnk_08755948;
+    t->frameTable = gStageDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
@@ -400,7 +400,7 @@ void Task_LevelDoorSign(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
     t->drawCallback = (u32)DoorObjectDraw;
-    t->frameTable = gUnk_0875599C;
+    t->frameTable = gLevelDoorSignFrames;
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;

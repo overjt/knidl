@@ -13,8 +13,8 @@
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 35-39, all spawned by M12's actions (39 also by M11 and M13).
  * Variants 35 (PlayerEffectHammerDust, two sub-states), 36 (PlayerEffectParasolSparkle) and 39
- * (sub_08058720) are animations in world space (gUnk_08751D88,
- * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
+ * (sub_08058720) are animations in world space (gPlayerEffectHammerDustFrames,
+ * gPlayerEffectParasolSparkleFrames, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
  * tasks: it fills the 20-slot table gScreenAttackTasks with 0xFFFF, collects the
  * indices of the tasks of kinds 1, 2, 7 and 8 (Task.actorKind) whose
  * gTaskSlotTypes entry is not -1 (while gInHub is clear), stops them
@@ -40,7 +40,7 @@ void PlayerEffectHammerDust(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751D88;
+    t->frameTable = gPlayerEffectHammerDustFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     switch (t->playerEffectSpawnWord & 15)
     {
@@ -110,7 +110,7 @@ void PlayerEffectParasolSparkle(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751DB0;
+    t->frameTable = gPlayerEffectParasolSparkleFrames;
     t->tileWord = (t->u8C.parentTask)->tileWord | 0xF00C;
     if (t->facing == 1)
     {
@@ -350,7 +350,7 @@ void PlayerEffectSleepBubble(void)
         t->drawCallback = (u32)TaskDrawWorld;
         t->layer = 5;
         u = gCurTask;
-        u->frameTable = gUnk_08751DD0;
+        u->frameTable = gPlayerEffectSleepBubbleFrames;
         u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
         if (u->facing == 1)
             u->posX = 0x60000;

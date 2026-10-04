@@ -145,7 +145,7 @@ void NightmareWizardUpdate(void)
         {
             if (gUnk_02007D00[1] == 0)
             {
-                ActorSetAttackBox((u32)gUnk_08749870);
+                ActorSetAttackBox((u32)gNightmareWizardUpdateAttackBox);
                 ActorSetAux((struct ActorAux *)gUnk_08749AF8);
             }
             else
@@ -426,7 +426,7 @@ void NightmareWizardPoint(void)
                  gCurTask->u8C.actor->savedTileWord | (128 << 4));
     CreateChildTask(TASK_NIGHTMARE_WIZARD_POINT_TORNADO, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     PlaySfx(0x235);
-    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_087492C0);
+    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gNightmareWizardPointAnim);
     if (gUnk_02007D00[7] == 0)
     {
         do
@@ -508,7 +508,7 @@ void NightmareWizardOpenPalm(void)
         TaskYieldTrampoline(1);
     }
     TaskStop();
-    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_087492AC);
+    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gNightmareWizardOpenPalmAnim);
     gUnk_03001F2C = (s16)gCurTask->health > Div(gCurTask->nightmareWizardMaxHealth, 3);
     gUnk_02007D00[6] = gUnk_0874921C[gUnk_03001F2C];
     gUnk_02007D00[7] = gUnk_0874921E[gUnk_03001F2C];
@@ -566,7 +566,7 @@ void NightmareWizardOpenCloak(void)
     gCurTask->accelY = 128 << 6;
     TaskYieldTrampoline(16);
     TaskStopY();
-    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_08749298);
+    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gNightmareWizardOpenCloakAnim);
     CreateChildTask(TASK_NIGHTMARE_WIZARD_PENDANT, gCurTask->pixelX, gCurTask->pixelY,
                  gCurTask->u8C.actor->savedTileWord | (128 << 4));
     CreateChildTask(TASK_NIGHTMARE_WIZARD_CLOAK_HANDS, gCurTask->pixelX, gCurTask->pixelY,
@@ -627,7 +627,7 @@ void NightmareWizardTwist(void)
 
     gCurTask->updateState = NIGHTMARE_WIZARD_STATE_TWIST;
     gCurTask->nightmareWizardSfxTimer = 1;
-    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_087492E8);
+    gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gNightmareWizardTwistAnim);
     d = (s16)gCurTask->health;
     if (d > Div(gCurTask->nightmareWizardMaxHealth, 3))
     {
@@ -987,7 +987,7 @@ s32 NightmareWizardReactToDefeat(void)
     TaskStop();
     gPaletteAnimRefCounts[0] = 0;
     gCurTask->facing = TaskGetFacingToward(gCurTask->hitterPlayer);
-    ActorSetHitReactions((u32)gUnk_08749B60);
+    ActorSetHitReactions((u32)gNightmareWizardReactToDefeatHitReactions);
     gUnk_02007D00[0] |= 2;
     if (gGameState == GAME_STATE_BOSS_ENDURANCE)
     {
@@ -996,7 +996,7 @@ s32 NightmareWizardReactToDefeat(void)
     }
     if (gUnk_02007D00[1] != 0)
     {
-        gCurTask->frameTable = gUnk_08754568;
+        gCurTask->frameTable = gNightmareWizardReactToDefeatFrames;
         TaskFaceNearestPlayer();
         TaskSetFrame(0);
     }
@@ -1231,7 +1231,7 @@ void Task_NightmareWizardPalmTornado(void)
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = (u32)NightmareWizardTornadoDrawStreamedFrameNearView;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754708;
+    gCurTask->frameTable = gNightmareWizardPalmTornadoFrames;
     gCurTask->updateCallback = (u32)NightmareWizardPalmTornadoUpdate;
     TaskFaceLikeParent();
     gCurTask->nightmareWizardPalmTornadoFrameTimer = 2;
@@ -1332,7 +1332,7 @@ void Task_NightmareWizardPointTornado(void)
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = (u32)NightmareWizardTornadoDrawStreamedFrameNearView;
     gCurTask->layer = 9;
-    gCurTask->frameTable = gUnk_08754718;
+    gCurTask->frameTable = gNightmareWizardPointTornadoFrames;
     gCurTask->updateCallback = (u32)NightmareWizardPointTornadoUpdate;
     TaskFaceLikeParent();
     gCurTask->nightmareWizardPointTornadoFrameTimer = 2;
@@ -1474,7 +1474,7 @@ void Task_NightmareWizardCloakTornado(void)
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = (u32)NightmareWizardTornadoDrawStreamedFrameNearView;
     gCurTask->layer = 9;
-    gCurTask->frameTable = gUnk_087546F8;
+    gCurTask->frameTable = gNightmareWizardCloakTornadoFrames;
     gCurTask->updateCallback = (u32)NightmareWizardCloakTornadoUpdate;
     TaskFaceLikeParent();
     for (;;)
@@ -1964,7 +1964,7 @@ void Task_PaintRoller(void)
     gCurTask->frameTable = gPaintRollerFrames;
     gCurTask->layer = 11;
     ActorInitBossGfx(0);
-    ActorSetExtraAttackBox((u32)gUnk_0874B3A8);
+    ActorSetExtraAttackBox((u32)gPaintRollerExtraAttackBox);
     gCurTask->unk34 = 0;
     gUnk_02007D00[0] = 1;
     gUnk_02007D00[2] = 1;
@@ -1976,7 +1976,7 @@ void Task_PaintRoller(void)
     ActorSetState(PAINT_ROLLER_STATE_0);
     gCurTask->paintRollerEnteredState = 0;
     gCurTask->updateCallback = (u32)sub_080acf3c;
-    ActorIntroPoseUntilHpBarFull((struct AnimCmd *)gUnk_08749CEC);
+    ActorIntroPoseUntilHpBarFull((struct AnimCmd *)gPaintRollerAnim);
     ActorSetState(PAINT_ROLLER_STATE_RUN_TO_NEXT_SPOT);
     TaskSleepForever();
 }
@@ -2087,7 +2087,7 @@ void PaintRollerReactToDamage(void)
 
 s32 PaintRollerReactToDefeat(void)
 {
-    ActorSetHitReactions((u32)gUnk_0874B4EC);
+    ActorSetHitReactions((u32)gPaintRollerReactToDefeatHitReactions);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
@@ -2241,7 +2241,7 @@ void Task_HeavyMole(void)
     gCurTask->tileWord |= 128 << 4;
     sub_08066144();
     gCurTask->facing = 1;
-    ActorSetExtraAttackBox((u32)gUnk_0874B3FC);
+    ActorSetExtraAttackBox((u32)gHeavyMoleExtraAttackBox);
     t = gCurTask;
     t->heavyMoleCameraX = gCameraAnchorX << 16;
     t->posX = 176 << 16;
@@ -2574,7 +2574,7 @@ s32 HeavyMoleReactToDefeat(void)
 
     t = gCurTask;
     t->posX = t->pixelX << 16;
-    ActorSetHitReactions((u32)gUnk_0874B504);
+    ActorSetHitReactions((u32)gHeavyMoleReactToDefeatHitReactions);
     tb = gTasks;
     u = &tb[gUnk_02007D00[8]];
     u->frame = 13;

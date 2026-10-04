@@ -126,8 +126,8 @@ void KrackoIntro(void)
     while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
     ActorResetAttackBox();
-    ActorSetAttackBox((u32)gUnk_08749720);
-    ActorSetExtraAttackBox((u32)gUnk_08749758);
+    ActorSetAttackBox((u32)gKrackoIntroAttackBox);
+    ActorSetExtraAttackBox((u32)gKrackoIntroExtraAttackBox);
     ActorSetState(KRACKO_STATE_PICK_MOVE);
     TaskSleepForever();
 }

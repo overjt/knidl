@@ -448,7 +448,7 @@ void CoconutFall(void)
 
 void CoconutExplode(void)
 {
-    ActorSetHitReactions(gUnk_08743558);
+    ActorSetHitReactions(gCoconutExplodeHitReactions);
     ActorDie();
 }
 

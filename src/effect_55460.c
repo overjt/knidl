@@ -252,7 +252,7 @@ void PlayerEffectLocalPlayerArrow(void)
     gCurTask->updateCallback = (u32)PlayerEffectLocalPlayerArrowUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C780;
+    t->frameTable = gPlayerEffectLocalPlayerArrowFrames;
     t->posX = 0;
     t->posY = -0xC0000;
     t->playerEffectLoopCount = 0;

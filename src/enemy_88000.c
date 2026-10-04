@@ -937,7 +937,7 @@ void BubblesBounceOffWall(void)
         gCurTask->spriteFlags = gCurTask->spriteFlags & 0x7FFF;
     else
         gCurTask->spriteFlags = gCurTask->spriteFlags | 0x8000;
-    ActorSetAttackBox((u32)gUnk_08742CBC);
+    ActorSetAttackBox((u32)gBubblesBounceOffWallAttackBox);
     gCurTask->frame = 21;
     TaskYieldTrampoline(12);
     ActorSetAttackBox((u32)gUnk_08742C68);
@@ -992,7 +992,7 @@ void BubblesBounceOffCeiling(void)
 {
     gCurTask->updateState = 1;
     gCurTask->moveCallback = 0;
-    ActorSetAttackBox((u32)gUnk_08742C84);
+    ActorSetAttackBox((u32)gBubblesBounceOffCeilingAttackBox);
     gCurTask->frame = 17;
     TaskYieldTrampoline(12);
     ActorSetAttackBox((u32)gUnk_08742C30);
@@ -1048,7 +1048,7 @@ void BubblesLand(void)
     gCurTask->updateState = 3;
     gCurTask->moveCallback = 0;
     gCurTask->velY = 0;
-    ActorSetAttackBox((u32)gUnk_08742CA0);
+    ActorSetAttackBox((u32)gBubblesLandAttackBox);
     gCurTask->frame = 18;
     TaskYieldTrampoline(13);
     ActorSetAttackBox((u32)gUnk_08742C4C);

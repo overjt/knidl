@@ -21,7 +21,7 @@ void CutsceneFountainNightmarePowerOrb(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_087553DC;
+    gCurTask->frameTable = gCutsceneFountainNightmarePowerOrbFrames;
     gCurTask->updateCallback = (u32)CutsceneFountainNightmarePowerOrbUpdate;
     gCurTask->cutsceneActorPalettePhase = 0;
     gCurTask->tileWord = 0x9210;
@@ -268,7 +268,7 @@ void CutsceneFountainStarRod(void)
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)sub_0801a310;
     t->layer = 6;
-    gCurTask->frameTable = gUnk_087553FC;
+    gCurTask->frameTable = gCutsceneFountainStarRodFrames;
     gCurTask->tileWord = 0xA310;
     gCurTask->posX = 240 << 15;
     gCurTask->posY = 192 << 14;

@@ -1322,7 +1322,7 @@ void sub_080a72b0(void)
 s32 MetaKnightReactToDefeat(void)
 {
     TaskStop();
-    ActorSetHitReactions((u32)gUnk_08749B30);
+    ActorSetHitReactions((u32)gMetaKnightReactToDefeatHitReactions);
     gCurTask->metaKnightAttackBoxIndex = -1;
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;

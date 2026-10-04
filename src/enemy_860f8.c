@@ -551,7 +551,7 @@ void BrontoBurtTakeOffWait(void)
     gCurTask->updateState = BRONTO_BURT_TAKE_OFF_STATE_WAIT;
     gCurTask->brontoBurtGrounded = 1;
     gCurTask->onGround = 1;
-    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08742144);
+    gCurTask->actorAnimDelay = ActorStartAnim(gBrontoBurtTakeOffWaitAnim);
     while (gCurTask->onGround != 0)
     {
         if (TaskGetNearestPlayerDx() < 0)
@@ -1237,7 +1237,7 @@ void TwizzyTakeOffWait(void)
     gCurTask->updateState = TWIZZY_TAKE_OFF_STATE_WAIT;
     gCurTask->twizzyGrounded = 1;
     gCurTask->onGround = 1;
-    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08742634);
+    gCurTask->actorAnimDelay = ActorStartAnim(gTwizzyTakeOffWaitAnim);
     while (gCurTask->onGround != 0)
     {
         if (TaskGetNearestPlayerDx() < 0)
