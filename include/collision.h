@@ -219,6 +219,22 @@ extern u16 gUnk_08735098[];
 
 struct Task;
 
+/* The collider classes are the high nibble of a box's byte 8, which
+ * RegisterCollider (src/player_1a76c.c) sorts into three lists.  Class 0x00
+ * is the players' bodies (gPlayerColliders).  The other two are named by
+ * their class value, because no role word is true for every registrant
+ * (#155 run 4):
+ * - class 0x10 (gColliderClass10): every PlayerObject task (#6), the water
+ *   shot, the kicked ice block and the Backdrop/Throw held and thrown
+ *   enemies.  HitTestColliderClass10 assumes an owner player, skips the
+ *   last hitter's entries and damages the collider's own task;
+ * - class 0x20 (gColliderClass20): the player's own moves, Meta Knight's
+ *   attacks, the player-centred effects (spark aura, mike, crash) and one
+ *   ownerless actor, the defeat explosion.  HitTestColliderClass20 accepts
+ *   ownerless entries, never damages the collider and reacts by the box's
+ *   kind nibble (inhale, grab, slide, high fall, explosion, strike,
+ *   freeze). */
+
 /* src/hitbox_1a8c8.c */
 u8 HitTestPlayerColliders(void);
 u8 HitTestColliderClass10(void);
