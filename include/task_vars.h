@@ -77,6 +77,10 @@
 #define airGrindCursorBlendFrom unk6E /* s16: index (0 / 2 / 4) of gUnk_08609F40 the cursor highlight blends from (to the next) */
 #define airGrindGlowBlendTimer unk70 /* u16: frames left of the second blend step (palettes 6 -> 7), 8 down to 0 */
 
+/* AirGrindDoorSign - Air Grind door sign (task type #227,
+   Task_AirGrindDoorSign; made by CreateAirGrindDoorSign) */
+#define airGrindDoorSignAnimated unk1C /* s32: non-zero: the sign's frames loop; 0: the still sign (the creator's argument) */
+
 /* ArenaDoorSign - Arena door sign (task type #221, Task_ArenaDoorSign) */
 #define arenaDoorSignTileFrame unk28 /* s32: tile frame the update copies into OBJ VRAM next (-1: none pending) */
 
@@ -110,6 +114,10 @@
 #define bombRallyMenuMoveDir unk30 /* s32: the results cursor's last move: 1 up / left, 0 down / right */
 #define bombRallyPassTimer unk30 /* s32: frames counted up into the current pass (up to the pass length) */
 #define bombRallyTurnSeat unk34 /* s32: the seat (0-3) that holds the bomb; steps round with each pass */
+
+/* BombRallyDoorSign - Bomb Rally door sign (task type #226,
+   Task_BombRallyDoorSign; made by CreateBombRallyDoorSign) */
+#define bombRallyDoorSignAnimated unk1C /* s32: non-zero: the sign's frames loop; 0: the still sign (the creator's argument) */
 
 /* BombRallyObject - BombRallyObject - Bomb Rally's objects (task type #95,
    Task_BombRallyObject; gBombRallyObjectVariants: player, bomb, smoke, star
@@ -274,9 +282,15 @@
 #define dashFlameOffsetY unk20 /* s32: y offset from the parent each flame cycle starts at */
 #define dashFlameOffsetX unk24 /* s32: x offset from the parent each flame cycle starts at (TaskSetPosXFacing) */
 
+/* DoorObject - every door object: the door-sign tasks listed in
+   gDoorObjectTasks (stage, boss, arena, sub-game, museum, Warp Star Station
+   and level doors), drawn by DoorObjectDraw */
+#define doorObjectKind unk20 /* s32: the door's kind 0-2: the DoorOpening graphics CreateEntryDoorOpening shows for it */
+
 /* DoorOpening - Door opening (task type #223, Task_DoorOpening; made by
    CreateDoorOpening) */
 #define doorOpeningKind unk18 /* s32: which door graphics it plays (0-2: gUnk_085A12F8 / gUnk_085A1BF8 / gUnk_085A24F8) */
+#define doorOpeningClose unk1C /* s32: 1 once CloseDoorOpening asks it to close: it then plays its closing frames and exits */
 #define doorOpeningTileFrame unk28 /* s32: tile frame the update copies into OBJ VRAM next (-1: none pending) */
 
 /* DustBurst - Dust burst (task type #147, Task_DustBurst; made by
@@ -548,6 +562,10 @@
 /* ImpactStar - Impact star (task type #154, Task_ImpactStar) */
 #define impactStarDir unk28 /* s32: direction picked at random (0-7): indexes the offset / velocity tables gUnk_0873EB40/60/80 */
 
+/* InhalableStar - Inhalable star (task type #139, Task_InhalableStar;
+   gInhalableStarStates) */
+#define inhalableStarLoopCount unk6C /* s16: the state body's loop counter (four frame cycles of the drift) */
+
 /* IntroStoryPicture - IntroStoryPicture (task type #237,
    Task_IntroStoryPicture) */
 #define introStoryPictureIndex unk18 /* s32: which picture (0-8) of the intro story, from IntroStory's loop */
@@ -655,6 +673,10 @@
 #define laserBallMoveDir unk34 /* s32: 8-way direction (0-7) TaskAccelerateInDir steers the approach along */
 #define laserBallShotCount unk6C /* s16: lasers fired in LaserBallShoot (1-3, RandomRange(3) + 1 re-drawn each loop) */
 #define laserBallWindUpCount unk6E /* s16: wind-up cycles (frames 6, 7, 4) done before the first laser (loop of 8) */
+
+/* LevelDoorSign - Level door sign (task type #232, Task_LevelDoorSign; made
+   by CreateLevelDoorSign) */
+#define levelDoorSignFrame unk18 /* s32: the sign's frame (the creator's argument a) */
 
 /* LinkPlayCable - Link Play's cable (task type #253, Task_LinkPlayCable) */
 #define linkPlayCableIndex unk18 /* s32: which of the four cables (0-3), from its creator's loop; position, layer and column */
@@ -911,6 +933,10 @@
    CreateMrTickTockRing) */
 #define mrTickTockRingParentState unk28 /* s32: the parent's Task.state, copied each frame; the ring ends once it is not 8 or 13 */
 #define mrTickTockRingSfxPlayer unk2C /* s32: what PlaySfx(0x219) returned, for StopSfxOnPlayer when the ring ends */
+
+/* MuseumAbilitySign - Museum ability sign (task type #235,
+   Task_MuseumAbilitySign; made by CreateMuseumAbilitySign) */
+#define museumAbilitySignFrame unk18 /* s32: the sign's frame (the creator's argument) */
 
 /* Needlous - Needlous (task type #44, Task_Needlous; gNeedlousVariants,
    gNeedlousStates, gNeedlousIdleStates) */
@@ -1216,6 +1242,10 @@
 #define quickDrawFalseStartMask unk6E /* s16: players (bit per index) who false-started; their presses no longer count */
 #define quickDrawFalseStartCount unk70 /* u16: players who false-started this round; all of them ends the round */
 
+/* QuickDrawDoorSign - Quick Draw door sign (task type #225,
+   Task_QuickDrawDoorSign; made by CreateQuickDrawDoorSign) */
+#define quickDrawDoorSignAnimated unk1C /* s32: non-zero: the sign's frames loop; 0: the still sign (the creator's argument) */
+
 /* RingStar - Ring star (task type #155, Task_RingStar; eight made by
    CreateStarRing) */
 #define ringStarFrameTimer unk24 /* s32: frames until the ring star's next frame (2) */
@@ -1314,6 +1344,10 @@
 #define stageDoorSignDoorAnimated unk20 /* s32: 0 only from CreateCompletedStageDoorSign: the door sprite then stays still */
 #define stageDoorSignDoorFrame unk28 /* s32: frame of that door sprite while gDoorStates[door].unk1 is set (else frame 2) */
 #define stageDoorSignDoorFrames unk34 /* s32: frame table of the door sprite the shared draw sub_0802f718 shows at the door */
+
+/* StageEffect - Stage effect (task type #236, Task_StageEffect;
+   gStageEffectStates; made by CreateStageEffect) */
+#define stageEffectDone unk18 /* s32: 1 once state 1's animation reached its last frame; the map event waiting on it goes on */
 
 /* StarFlashOnParent - Star flash that follows its parent (task type #142,
    Task_StarFlashOnParent; made by CreateStarFlash(1, ...)) */
@@ -1446,6 +1480,19 @@
 /* WarpStarStationDoorSign - Warp Star Station door sign (task type #230,
    Task_WarpStarStationDoorSign) */
 #define warpStarStationDoorSignTileFrame unk34 /* s32: tile frame the update copies into OBJ VRAM next (-1: none pending) */
+
+/* WarpStarStationDoorSparkle - Warp Star Station door sparkle (task type
+   #231, Task_WarpStarStationDoorSparkle; made by
+   CreateWarpStarStationDoorSparkle) */
+#define warpStarStationDoorSparkleWaitReveal unk20 /* s32: non-zero: it stays hidden until the Warp Star Station door is revealed */
+
+/* WarpStarStationLevelSign - Warp Star Station level sign (task type #234,
+   Task_WarpStarStationLevelSign; made by CreateWarpStarStationLevelSign) */
+#define warpStarStationLevelSignFrame unk18 /* s32: the sign's frame (the creator's argument) */
+
+/* WarpStarStationNumber - Warp Star Station number (task type #233,
+   Task_WarpStarStationNumber; made by CreateWarpStarStationNumber) */
+#define warpStarStationNumberFrame unk18 /* s32: the sign's frame (the creator's argument) */
 
 /* WarpStarTrailStar - Warp Star trail star (task type #165,
    Task_WarpStarTrailStar) */

@@ -35,7 +35,7 @@ s32 CreateArenaDoorSign(s32 x, s32 y, s32 a)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk20 = 1;
+        t->doorObjectKind = 1;
         t->u76.doorIndex = a;
     }
     return id;
@@ -98,7 +98,7 @@ s32 CreateBossDoorSign(s32 x, s32 y, s32 a)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk20 = 2;
+        t->doorObjectKind = 2;
         t->u76.doorIndex = a;
     }
     return id;
@@ -198,10 +198,10 @@ void Task_DoorOpening(void)
     TaskYieldTrampoline(3);
     w = gCurTask;
     w->doorOpeningTileFrame = 2;
-    w->unk1C = 0;
+    w->doorOpeningClose = 0;
     do
         TaskYieldTrampoline(1);
-    while (gCurTask->unk1C == 0);
+    while (gCurTask->doorOpeningClose == 0);
     PlaySfx(223);
     gCurTask->doorOpeningTileFrame = 2;
     TaskYieldTrampoline(3);
@@ -301,8 +301,8 @@ s32 CreateQuickDrawDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk1C = a;
-        t->unk20 = 1;
+        t->quickDrawDoorSignAnimated = a;
+        t->doorObjectKind = 1;
         t->u76.doorIndex = b;
     }
     return id;
@@ -319,7 +319,7 @@ void Task_QuickDrawDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    if (u->unk1C == 0)
+    if (u->quickDrawDoorSignAnimated == 0)
         sub_0802f1dc();
     else
         sub_0802f110();
@@ -385,8 +385,8 @@ s32 CreateBombRallyDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk1C = a;
-        t->unk20 = 1;
+        t->bombRallyDoorSignAnimated = a;
+        t->doorObjectKind = 1;
         t->u76.doorIndex = b;
     }
     return id;
@@ -403,7 +403,7 @@ void Task_BombRallyDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    if (u->unk1C == 0)
+    if (u->bombRallyDoorSignAnimated == 0)
         sub_0802f2fc();
     else
         sub_0802f2b0();
@@ -451,8 +451,8 @@ s32 CreateAirGrindDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk1C = a;
-        t->unk20 = 1;
+        t->airGrindDoorSignAnimated = a;
+        t->doorObjectKind = 1;
         t->u76.doorIndex = b;
     }
     return id;
@@ -469,7 +469,7 @@ void Task_AirGrindDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    if (u->unk1C == 0)
+    if (u->airGrindDoorSignAnimated == 0)
         sub_0802f400();
     else
         sub_0802f3d0();
@@ -513,7 +513,7 @@ s32 CreateMuseumDoorSign(s32 x, s32 y, s32 a)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk20 = 1;
+        t->doorObjectKind = 1;
         t->u76.doorIndex = a;
     }
     return id;

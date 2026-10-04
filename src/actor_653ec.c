@@ -1843,7 +1843,7 @@ void sub_08067258(void)
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     u = gCurTask;
     u->velY = 0xFFFF8000;
-    u->unk6C = 0;
+    u->inhalableStarLoopCount = 0;
     do
     {
         t = gCurTask;
@@ -1872,8 +1872,8 @@ void sub_08067258(void)
         t->frame = 7;
         TaskYieldTrampoline(3);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 3);
+        t->inhalableStarLoopCount++;
+    } while ((s16)t->inhalableStarLoopCount <= 3);
     t = gCurTask;
     t->updateCallback = 0;
     t->frame = 11;

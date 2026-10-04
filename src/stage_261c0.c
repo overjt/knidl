@@ -159,7 +159,7 @@ s32 CreateEntryDoorOpening(void)
     if (gDoorObjectTasks[gEntryDoorIndex][0] != -1 && gEntryDoorIndex != -1)
     {
         d = &gCurRoomDef->doors[gEntryDoorIndex];
-        r = CreateDoorOpening((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gEntryDoorIndex][0]].unk20);
+        r = CreateDoorOpening((d->unk2 << 4) + 16, (d->unk4 << 4) + 8, gTasks[gDoorObjectTasks[gEntryDoorIndex][0]].doorObjectKind);
     }
     return r;
 }
@@ -167,7 +167,7 @@ s32 CreateEntryDoorOpening(void)
 void CloseDoorOpening(s32 i)
 {
     if (i != -1)
-        gTasks[i].unk1C = 1;
+        gTasks[i].doorOpeningClose = 1;
 }
 
 s32 CreateEntryDoorStageClearFlag(void)

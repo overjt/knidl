@@ -93,7 +93,7 @@ void sub_080302cc(void)
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     v = gCurTask;
-    v->unk18 = 1;
+    v->stageEffectDone = 1;
     v->frame++;
     TaskYieldTrampoline(1);
     TaskSleepForever();
