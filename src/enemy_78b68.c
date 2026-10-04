@@ -210,7 +210,7 @@ void WaddleDeeJumpInit(void)
     TaskFaceNearestPlayer();
     gCurTask->waddleDeeJumpTimer = 80;
     ActorSetState(WADDLE_DEE_JUMP_STATE_WALK);
-    gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
+    gCurTask->actorAnimDelay34 = ActorStartAnim(gWaddleDeeJumpAnim);
     CallTableEntry(gCurTask->state, 3, gWaddleDeeJumpStates);
 }
 
@@ -309,7 +309,7 @@ void WaddleDeeJumpState1Update(void)
     {
         TaskStopY();
         gCurTask->waddleDeeJumpTimer = 30;
-        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gWaddleDeeJumpAnim);
         ActorSetState(WADDLE_DEE_JUMP_STATE_WALK);
         TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
     }

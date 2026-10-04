@@ -24,7 +24,7 @@
  * CreateBlockStar's object and marks PlayerState.catchKind) and, in state 2,
  * requests action 53, 8 or 1 once the swing is over.  PlayerActionThrow
  * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
- * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
+ * records gUnk_02007E90[player][] (and gAbilityStarInMouth[player] in link
  * play), plays sound 103 and holds animation 0xF71 with PlayerState.actionFlags
  * bit 2 set until PlayerState.attachedCount is non-zero and equal to unk08, then
  * recovers or releases (sound 201, PlayerState.statusFlags bit 9). */
@@ -253,7 +253,7 @@ void PlayerActionThrow(void)
             p->attachedCount = 0;
         }
         if (gUnk_0300244C != 0)
-            gUnk_02007CF4[gCurTask->player->playerIndex] = 0;
+            gAbilityStarInMouth[gCurTask->player->playerIndex] = 0;
         gUnk_03001F2C = 0;
         do
         {

@@ -3248,11 +3248,11 @@ u32 gUnk_0874CDE0[] FRAME_TABLE = {
     (u32)gUnk_080DABC8,
 };
 
-/* gUnk_0874CDF8.  Consumers: DrawDoors (src/door_26b60.c:192), sub_0805d5fc
+/* gDoorOverlayFrames.  Consumers: DrawDoors (src/door_26b60.c:192), sub_0805d5fc
  * (src/effect_5afac.c:1494).  28 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874CDF8-0x0874CE68).  Declared include/room.h:632. */
-u32 gUnk_0874CDF8[] FRAME_TABLE = {
+u32 gDoorOverlayFrames[] FRAME_TABLE = {
     (u32)gUnk_080DABF0,
     (u32)gUnk_080DAC20,
     (u32)gUnk_080DAC48,
@@ -12663,11 +12663,11 @@ u32 gUnk_087549FC[] FRAME_TABLE = {
     (u32)gUnk_085E64A4,
 };
 
-/* gUnk_08754A14.  Consumers: CutsceneDuelKirby (src/player_10358.c:114),
+/* gCutsceneDuelFrames.  Consumers: CutsceneDuelKirby (src/player_10358.c:114),
  * CutsceneDuelBladeKnight (src/player_10b38.c:155).  42 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754A14-0x08754ABC).  Declared include/cutscene.h:122. */
-u32 gUnk_08754A14[] FRAME_TABLE = {
+u32 gCutsceneDuelFrames[] FRAME_TABLE = {
     (u32)gUnk_085BC198,
     (u32)gUnk_085BC1C8,
     (u32)gUnk_085BC1F8,
@@ -12712,12 +12712,12 @@ u32 gUnk_08754A14[] FRAME_TABLE = {
     (u32)gUnk_085BC7E0,
 };
 
-/* gUnk_08754ABC.  Consumers: CutsceneBeachKirby (src/player_10b38.c:286),
+/* gCutsceneBeachFrames.  Consumers: CutsceneBeachKirby (src/player_10b38.c:286),
  * CutsceneBeachChair (src/player_10b38.c:381), CutsceneBeachCandyDream
  * (src/player_10b38.c:405) and 6 more.  49 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754ABC-0x08754B80).  Declared include/cutscene.h:123. */
-u32 gUnk_08754ABC[] FRAME_TABLE = {
+u32 gCutsceneBeachFrames[] FRAME_TABLE = {
     (u32)gUnk_085BE648,
     (u32)gUnk_085BE678,
     (u32)gUnk_085BE680,
@@ -12769,12 +12769,12 @@ u32 gUnk_08754ABC[] FRAME_TABLE = {
     (u32)gUnk_085BEB60,
 };
 
-/* gUnk_08754B80.  Consumers: CutsceneBombKirby (src/player_10b38.c:925),
+/* gCutsceneBombFrames.  Consumers: CutsceneBombKirby (src/player_10b38.c:925),
  * CutsceneBombPoppyBrosSr (src/player_10b38.c:1160), CutsceneBombHeldBomb
  * (src/player_10b38.c:1308) and 3 more.  68 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754B80-0x08754C90).  Declared include/cutscene.h:124. */
-u32 gUnk_08754B80[] FRAME_TABLE = {
+u32 gCutsceneBombFrames[] FRAME_TABLE = {
     (u32)gUnk_085C122C,
     (u32)gUnk_085C124C,
     (u32)gUnk_085C126C,
@@ -12845,13 +12845,13 @@ u32 gUnk_08754B80[] FRAME_TABLE = {
     (u32)gUnk_085C1954,
 };
 
-/* gUnk_08754C90.  Consumers: CutsceneBalloonsKirby
+/* gCutsceneBalloonsFrames.  Consumers: CutsceneBalloonsKirby
  * (src/player_10b38.c:1805), CutsceneBalloonsLooseBalloon
  * (src/player_10b38.c:2040), CutsceneBalloonsYellowBalloon
  * (src/player_10b38.c:2075) and 2 more.  52 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754C90-0x08754D60).  Declared include/cutscene.h:125. */
-u32 gUnk_08754C90[] FRAME_TABLE = {
+u32 gCutsceneBalloonsFrames[] FRAME_TABLE = {
     (u32)gUnk_085C34A0,
     (u32)gUnk_085C3528,
     (u32)gUnk_085C35B0,
@@ -12906,12 +12906,12 @@ u32 gUnk_08754C90[] FRAME_TABLE = {
     (u32)gUnk_085C41F8,
 };
 
-/* gUnk_08754D60.  Consumers: CutsceneTomatoKirby (src/player_10b38.c:2422),
+/* gCutsceneTomatoFrames.  Consumers: CutsceneTomatoKirby (src/player_10b38.c:2422),
  * CutsceneTomatoMaximTomato (src/player_10b38.c:2618), CutsceneTomatoActorScript32
  * (src/player_10b38.c:2715) and 1 more.  71 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754D60-0x08754E7C).  Declared include/cutscene.h:126. */
-u32 gUnk_08754D60[] FRAME_TABLE = {
+u32 gCutsceneTomatoFrames[] FRAME_TABLE = {
     (u32)gUnk_085C6438,
     (u32)gUnk_085C6458,
     (u32)gUnk_085C6478,
@@ -12985,12 +12985,12 @@ u32 gUnk_08754D60[] FRAME_TABLE = {
     (u32)gUnk_085C6B90,
 };
 
-/* gUnk_08754E7C.  Consumers: CutsceneShipKirby (src/player_10b38.c:2826),
+/* gCutsceneShipFrames.  Consumers: CutsceneShipKirby (src/player_10b38.c:2826),
  * CutsceneShipSpyglass (src/player_10b38.c:2970), CutsceneShipPirateHat
  * (src/player_10b38.c:3027) and 2 more.  59 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754E7C-0x08754F68).  Declared include/cutscene.h:127. */
-u32 gUnk_08754E7C[] FRAME_TABLE = {
+u32 gCutsceneShipFrames[] FRAME_TABLE = {
     (u32)gUnk_085C88C0,
     (u32)gUnk_085C8900,
     (u32)gUnk_085C8940,
@@ -13052,13 +13052,13 @@ u32 gUnk_08754E7C[] FRAME_TABLE = {
     (u32)gUnk_085C91F0,
 };
 
-/* gUnk_08754F68.  Consumers: CutsceneSingingKirby
+/* gCutsceneSingingFrames.  Consumers: CutsceneSingingKirby
  * (src/player_10b38.c:3163), CutsceneSingingRainbowBar
  * (src/player_10b38.c:3541), CutsceneSingingBeamedNotes (src/player_10b38.c:3691) and 6
  * more.  64 words, OAM template streams; extent: the span to the next
  * label, every word such a target (pointer_tables 0x08754F68-0x08755068).
  * Declared include/cutscene.h:128. */
-u32 gUnk_08754F68[] FRAME_TABLE = {
+u32 gCutsceneSingingFrames[] FRAME_TABLE = {
     (u32)gUnk_085CBA60,
     (u32)gUnk_085CBA90,
     (u32)gUnk_085CBAC0,
@@ -13399,18 +13399,18 @@ u32 gCutsceneFountainStarRodFrames[] FRAME_TABLE = {
     (u32)&gUnk_085E0050,
 };
 
-/* gUnk_08755440.  Consumers: CutsceneFountainJet (src/player_19000.c:488) and
+/* gFountainJetFrames.  Consumers: CutsceneFountainJet (src/player_19000.c:488) and
  * EndingStarRodReturnFountainJet (src/ending_c9004.c:932) install it as Task.frameTable and
  * set frames 0-10 (src/player_19000.c:496-520, src/ending_c9004.c:938-952;
  * 0xFFFF hides the sprite).  11 words, all NULL; extent: that index bound,
- * also the span to the next label.  Their draw callback sub_0801a3e4 only
+ * also the span to the next label.  Their draw callback FountainSpriteDraw only
  * compares the table's address (src/player_1a3e4.c:58) and draws frame k
  * from its own 11-entry tables gUnk_08732190, gUnk_087321C0 and
  * gUnk_087321EC (include/player.h), so no entry is ever read: the 11 NULLs
  * are the frame slots of an 11-frame animation, not padding or a
  * terminator.  No pointer_tables entry covers them (a NULL stays a number).
  * Declared include/player.h:349. */
-u32 gUnk_08755440[] FRAME_TABLE = {
+u32 gFountainJetFrames[] FRAME_TABLE = {
     0,
     0,
     0,
@@ -13425,7 +13425,7 @@ u32 gUnk_08755440[] FRAME_TABLE = {
 };
 
 /* gUnk_0875546C.  Consumers: sub_080ca830 (src/ending_c9004.c:978),
- * CutsceneFountainActorScript59 (src/player_19000.c:533), sub_0801a3e4
+ * CutsceneFountainActorScript59 (src/player_19000.c:533), FountainSpriteDraw
  * (src/player_1a3e4.c:96).  6 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables
  * 0x0875546C-0x08755484).  Declared include/player.h:350. */
@@ -13439,7 +13439,7 @@ u32 gUnk_0875546C[] FRAME_TABLE = {
 };
 
 /* gUnk_08755484.  Consumers: sub_080ca8f0 (src/ending_c9004.c:1010),
- * CutsceneFountainActorScript60 (src/player_19000.c:573), sub_0801a3e4
+ * CutsceneFountainActorScript60 (src/player_19000.c:573), FountainSpriteDraw
  * (src/player_1a3e4.c:120).  6 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755484-0x0875549C).  Declared include/player.h:351. */
@@ -13452,12 +13452,12 @@ u32 gUnk_08755484[] FRAME_TABLE = {
     (u32)gUnk_085E26E8,
 };
 
-/* gUnk_0875549C.  Consumers: Task_NightmarePowerOrbEscape
+/* gNightmarePowerOrbEscapeFrames.  Consumers: Task_NightmarePowerOrbEscape
  * (src/actor_74c0c.c:204), Task_NightmarePowerOrbEscapeStar (src/actor_74c0c.c:352).  7 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x0875549C-0x087554B8).  Declared
  * include/cutscene.h:129. */
-u32 gUnk_0875549C[] FRAME_TABLE = {
+u32 gNightmarePowerOrbEscapeFrames[] FRAME_TABLE = {
     (u32)gUnk_085E727C,
     (u32)gUnk_085E7284,
     (u32)gUnk_085E728C,
@@ -13841,12 +13841,12 @@ u32 gUnk_087558C4[] FRAME_TABLE = {
     (u32)gUnk_085A3298,
 };
 
-/* gUnk_087558D0.  Consumers: sub_0802f93c (src/obj_2f62c.c:188),
+/* gDoorMarkerFrames.  Consumers: sub_0802f93c (src/obj_2f62c.c:188),
  * DoorObjectDraw (src/obj_2f62c.c:417), SubGameDoorSignDrawUsed (src/obj_2f62c.c:439).
  * 3 words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087558D0-0x087558DC).  Declared
  * include/camera.h:89. */
-u32 gUnk_087558D0[] FRAME_TABLE = {
+u32 gDoorMarkerFrames[] FRAME_TABLE = {
     (u32)gUnk_085A32A0,
     (u32)gUnk_085A32A8,
     (u32)gUnk_085A32C0,

@@ -144,8 +144,8 @@ extern s16 gUnk_087321B2[];
 extern u32 gUnk_087321C0[];
 extern u32 gUnk_087321EC[];
 extern u16 gUnk_0873A458[];
-extern u16 *gUnk_0873A47C[]; /* animation script per block kind */
-extern s8 gUnk_0873A494[];
+extern u16 *gBlockBreakScripts[]; /* animation script per block kind */
+extern s8 gBlockHardness[];
 extern s8 gUnk_0873A5D4[];
 extern u16 gUnk_0873A6D4[][3];
 extern u16 gUnk_0873A6EC[][3][3];
@@ -193,7 +193,7 @@ extern u32 gUnk_0873BD14[];
 extern u32 gUnk_0873BD28[];
 extern u32 gUnk_0873BD3C[];
 extern u32 gUnk_0873BD50[];
-extern u32 gUnk_0873BD64[]; /* collider row passed to RegisterCollider (4th arg) */
+extern u32 gPlayerAirPuffBodyBox[]; /* collider row passed to RegisterCollider (4th arg) */
 extern u32 gUnk_0873BD78[];
 extern u32 gUnk_0873BD8C[];
 extern u32 gUnk_0873BDA0[];
@@ -238,9 +238,9 @@ extern u32 gUnk_0873C2C8[];
 extern u32 gUnk_0873C2DC[];
 extern u32 gUnk_0873C304[];
 extern u32 gUnk_0873C318[];
-extern u32 gUnk_0873C358[];
+extern u32 gPlayerParasolBodyBox[];
 extern u32 gUnk_0873C36C[];
-extern u32 gUnk_0873CA54[];
+extern u32 gMetaKnightDefaultBodyBox[];
 extern u32 gUnk_0873CA68[];
 extern u32 gUnk_0873CA7C[];
 extern u32 gUnk_0873CA90[];
@@ -250,8 +250,8 @@ extern u32 gUnk_0873CB24[];
 extern u32 gUnk_0873CB2C[];
 extern u32 gUnk_0873CB34[];
 extern u32 gUnk_0873CB3C[];
-extern s8 gUnk_0873CB44[]; /* collision box passed to sub_0802205c / TerrainCollideBoxAlongVelocity */
-extern s8 gUnk_0873CB4C[];
+extern s8 gPlayerAirPuffTerrainBox[]; /* collision box passed to sub_0802205c / TerrainCollideBoxAlongVelocity */
+extern s8 gPlayerStarObjectTerrainBox[];
 extern s8 gUnk_0873CB54[];
 extern s8 gUnk_0873CB5C[];
 extern s8 gUnk_0873CB64[];
@@ -292,14 +292,14 @@ extern u32 gUnk_0873CF4C[]; /* hit-box set, passed as (struct HitBoxSet *) */
 extern u32 gUnk_0873CF5C[];
 extern u32 gUnk_0873CF6C[];
 extern u32 gUnk_0873CF7C[];
-extern u32 gUnk_0873CF94[];
+extern u32 gPlayerParasolHitBoxSet[];
 extern u32 gUnk_0873CF9C[];
 extern u32 gUnk_0873D03C[];
 extern u32 gUnk_0873D044[];
 extern u32 gUnk_0873D04C[];
 extern u8 gAbilityBButtonActions[];
-extern u16 gUnk_0873D0F8[][5];
-extern s16 gUnk_0873D206[];
+extern u16 gPlayerStandFrames[][5];
+extern s16 gMetaKnightStandFrames[];
 extern s16 gUnk_0873D210[];
 extern s16 gUnk_0873D2E0[];
 extern u16 gUnk_0873D2E8[];
@@ -347,7 +347,7 @@ extern u32 gCutsceneFountainKirbyFrames[];
 extern u32 gCutsceneFountainKingDededeFrames[];
 extern u32 gCutsceneFountainNightmarePowerOrbFrames[];
 extern u32 gCutsceneFountainStarRodFrames[];
-extern u32 gUnk_08755440[];
+extern u32 gFountainJetFrames[];
 extern u32 gUnk_0875546C[];
 extern u32 gUnk_08755484[];
 extern u8 gKirbyFlashBlendRatios[];
@@ -384,10 +384,10 @@ void CutsceneFountainActorScript62(void);
 /* src/player_1a07c.c */
 void CutsceneFountainActorScript56(void);
 void CutsceneFountainKirbyDraw(void);
-void sub_0801a310(void);
+void CutsceneActorDrawStreamedFrame(void);
 
 /* src/player_1a3e4.c */
-void sub_0801a3e4(void);
+void FountainSpriteDraw(void);
 
 /* src/player_1a76c.c */
 void sub_0801a76c(s32 i);
@@ -429,7 +429,7 @@ void Bg1BlockAnimBreakNeighbors(struct BreakingBlock *b);
 void Task_Player(void);
 void PlayerStartRequestedAction(void);
 void PlayerUpdate(void);
-void sub_0803332c(void);
+void PlayerLateUpdate(void);
 void sub_08033414(void);
 
 /* src/player_337f4.c */
@@ -485,7 +485,7 @@ void PlayerActionHurtUpdate(void);
 
 /* src/player_3919c.c */
 void PlayerActionDie(void);
-void sub_080396a4(void);
+void PlayerActionDieUpdate(void);
 void PlayerActionEnterDoor(void);
 
 /* src/player_39c24.c */
@@ -512,8 +512,8 @@ void PlayerActionRecoilUpdate(void);
 void PlayerActionShareItem(void);
 void PlayerActionShareItemUpdate(void);
 void sub_0803c9b4(s32 a);
-void sub_0803cbd8(void);
-void sub_0803ccd8(s32 a);
+void PlayerStepOffsetScript(void);
+void PlayerSetParasolDriftRow(s32 a);
 
 /* src/stage_3cd60.c */
 void PlayerPlayBump(void);
@@ -566,7 +566,7 @@ void PlayerStopAtCeilingAndWall(void);
 s32 PlayerStopAtWall(void);
 s32 PlayerCheckLanding(void);
 s32 PlayerCheckDie(void);
-void sub_0803fb54(void);
+void PlayerUpdateRunning(void);
 s32 PlayerHasCrossedWaterSurface(s32 a);
 s32 PlayerGetFacingSlope(s32 a0);
 s32 PlayerCheckSkid(void);
@@ -621,7 +621,7 @@ void MetaKnightActionLadderUpdate(void);
 void MetaKnightActionHurt(void);
 void MetaKnightActionHurtUpdate(void);
 void MetaKnightActionDie(void);
-void sub_08042c50(void);
+void MetaKnightActionDieUpdate(void);
 void MetaKnightActionRecoil(void);
 void MetaKnightActionRecoilUpdate(void);
 void MetaKnightActionEnterDoor(void);

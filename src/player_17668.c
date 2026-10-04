@@ -618,7 +618,7 @@ done:
 void CutsceneFountainKingDedede(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a310;
+    gCurTask->drawCallback = (u32)CutsceneActorDrawStreamedFrame;
     gCurTask->layer = 11;
     gCurTask->frameTable = gCutsceneFountainKingDededeFrames;
     gCurTask->updateCallback = (u32)CutsceneFountainKingDededeUpdate;

@@ -46,7 +46,7 @@ void PlayerObjectAirPuff(void)
         t->layer = 5;
     }
     gCurTask->frameTable = gAirPuffFrames;
-    sub_0802205c(gUnk_0873CB44);
+    sub_0802205c(gPlayerAirPuffTerrainBox);
     switch (gCurTask->playerObjectSpawnWord & 15)
     {
     case 0:
@@ -115,7 +115,7 @@ void PlayerObjectAirPuff(void)
         {
             struct Task *t = gCurTask;
             t->updateCallback = 0;
-            RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873BD64);
+            RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, gPlayerAirPuffBodyBox);
         }
         gCurTask->frame = 26;
         TaskYieldTrampoline(1);
@@ -134,7 +134,7 @@ void PlayerObjectAirPuffUpdate(void)
     if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB84, gCurTask->parent))
         gCurTask->hitKind = 1;
     else
-        TerrainCollideBoxAlongVelocity(gUnk_0873CB44);
+        TerrainCollideBoxAlongVelocity(gPlayerAirPuffTerrainBox);
     if (gTerrainResult.ceilingHits != 0 || (gCurTask->onGround & 1) || gTerrainResult.unk0 != 0
         || gCurTask->hitKind != 0)
     {
@@ -142,7 +142,7 @@ void PlayerObjectAirPuffUpdate(void)
         t->playerObjectSpawnWord = (t->playerObjectSpawnWord & ~15) | 2;
         TaskSetEntry(PlayerObjectAirPuff, gCurTaskIdx);
     }
-    RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873BD64);
+    RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gPlayerAirPuffBodyBox);
 }
 
 void PlayerObjectSpitStar(void)
@@ -155,7 +155,7 @@ void PlayerObjectSpitStar(void)
         t->layer = 5;
     }
     gCurTask->frameTable = gUnk_0874C44C;
-    sub_0802205c(gUnk_0873CB4C);
+    sub_0802205c(gPlayerStarObjectTerrainBox);
     {
         struct Task *t = gCurTask;
         t->posY = (t->pixelY + 4) << 16;
@@ -214,7 +214,7 @@ void PlayerObjectSpitStarUpdate(void)
     if (TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CB94, gCurTask->parent))
         gCurTask->hitKind = 1;
     else
-        TerrainCollideBoxAlongVelocity(gUnk_0873CB4C);
+        TerrainCollideBoxAlongVelocity(gPlayerStarObjectTerrainBox);
     hit = 0;
     {
         struct Task *t = gCurTask;
@@ -317,7 +317,7 @@ void PlayerObjectSpitMultiStar(void)
     gCurTask->lateUpdateCallback = (u32)sub_080513d4;
     gCurTask->layer = 5;
     gCurTask->frameTable = gPlayerObjectSpitMultiStarFrames;
-    sub_0802205c(gUnk_0873CB4C);
+    sub_0802205c(gPlayerStarObjectTerrainBox);
     {
         struct Task *t = gCurTask;
         if (t->facing == 1)
@@ -393,7 +393,7 @@ void PlayerObjectSpitMultiStarUpdate(void)
         t->health = 127;
         TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CBA4, t->parent);
     }
-    TerrainCollideBoxAlongVelocity(gUnk_0873CB4C);
+    TerrainCollideBoxAlongVelocity(gPlayerStarObjectTerrainBox);
     {
         struct Task *t = gCurTask;
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)

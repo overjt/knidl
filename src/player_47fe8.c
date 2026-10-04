@@ -417,9 +417,9 @@ void PlayerActionGetAbility(void)
             {
                 struct PlayerBodyBox *d = gPlayerBodyBoxes;
 
-                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C358;
+                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gPlayerParasolBodyBox;
             }
-            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CF94;
+            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gPlayerParasolHitBoxSet;
             TaskSetFrame(0x8DB);
             TaskYieldTrampoline(4);
             gCurTask->frame++;

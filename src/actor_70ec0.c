@@ -68,8 +68,8 @@ void MetaKnightWarpStarRideDraw(void)
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
         u->spriteFlags &= 0x7FFF;
         gfx = DrawAffineSprite((s32)gUnk_0824A9CC,
-                           (u16)gUnk_0873FF98[u->unk18 >> 16] * sign,
-                           gUnk_0873FF98[u->unk18 >> 16], 0);
+                           (u16)gSpriteScaleSteps[u->unk18 >> 16] * sign,
+                           gSpriteScaleSteps[u->unk18 >> 16], 0);
         if (sign < 0)
             gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     }
@@ -570,8 +570,8 @@ void WarpStarDrawFlight(void)
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
         u->spriteFlags &= 0x7FFF;
         gfx = DrawAffineSprite(g[u->frame],
-                           (u16)gUnk_0873FF98[u->warpStarScale >> 16] * sign,
-                           gUnk_0873FF98[u->warpStarScale >> 16], 0);
+                           (u16)gSpriteScaleSteps[u->warpStarScale >> 16] * sign,
+                           gSpriteScaleSteps[u->warpStarScale >> 16], 0);
         {
             struct Task *x = gCurTask;
 

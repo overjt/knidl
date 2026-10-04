@@ -109,7 +109,7 @@ extern struct RoomParticleAnimFrame gUnk_08740320[][24];
 extern struct RoomParticleAnimFrame gUnk_087404A0[][24];
 extern u8 gUnk_08740620[];
 extern u32 gWaddleDeeVariants[];
-extern struct AnimCmd gUnk_087406A0[];
+extern struct AnimCmd gWaddleDeeJumpAnim[];
 extern u32 gWaddleDeeDef[];
 extern u32 gWaddleDeeFrames[];
 extern u32 gCannonFrames[];
@@ -119,14 +119,14 @@ extern u32 gStakeFrames[];
 extern u32 gWarpStarVanishFrames[];
 extern u32 gUnk_08752DB8[];
 extern u32 gUnk_08752E00[];
-extern u32 gUnk_08754A14[];
-extern u32 gUnk_08754ABC[];
-extern u32 gUnk_08754B80[];
-extern u32 gUnk_08754C90[];
-extern u32 gUnk_08754D60[];
-extern u32 gUnk_08754E7C[];
-extern u32 gUnk_08754F68[];
-extern u32 gUnk_0875549C[];
+extern u32 gCutsceneDuelFrames[];
+extern u32 gCutsceneBeachFrames[];
+extern u32 gCutsceneBombFrames[];
+extern u32 gCutsceneBalloonsFrames[];
+extern u32 gCutsceneTomatoFrames[];
+extern u32 gCutsceneShipFrames[];
+extern u32 gCutsceneSingingFrames[];
+extern u32 gNightmarePowerOrbEscapeFrames[];
 
 
 /* Functions (defined in the files named above each group). */
@@ -148,7 +148,7 @@ void CutsceneActorScript1(void);
 void sub_080109c8(void);
 
 /* src/player_10b38.c */
-void sub_08010b38(void);
+void CutsceneActorDrawPlayerFrame(void);
 void CutsceneActorScript2(void);
 void CutsceneActorScript3(void);
 void CutsceneDuelBladeKnight(void);

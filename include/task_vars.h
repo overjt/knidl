@@ -158,7 +158,7 @@
 /* BossDoorSign - Boss door sign (task type #222, Task_BossDoorSign) */
 #define bossDoorSignDoorFrame unk28 /* s32: frame of that door sprite while gDoorStates[door].unk1 is set (else frame 2) */
 #define bossDoorSignTileFrame unk2C /* s32: tile frame the update copies into OBJ VRAM next (-1: none pending) */
-#define bossDoorSignDoorFrames unk34 /* s32: frame table of the door sprite the shared draw sub_0802f718 shows at the door */
+#define bossDoorSignDoorFrames unk34 /* s32: frame table of the door sprite the shared draw DoorSignDrawWithDoor shows at the door */
 
 /* BrontoBurt - Bronto Burt (task type #20, Task_BrontoBurt;
    gBrontoBurtVariants: rows Wave, 1, Swoop, Diagonal, Chase, TakeOff, Idle)
@@ -314,7 +314,7 @@
 
 /* EndingEpilogue - Ending epilogue scene (task type #100,
    Task_EndingEpilogue; gEndingEpilogueVariants) */
-#define endingEpilogueScale unk18 /* s32: variants 1 and 6: sprite scale (16.16 index into gUnk_0873FF98, clamped 0..127) */
+#define endingEpilogueScale unk18 /* s32: variants 1 and 6: sprite scale (16.16 index into gSpriteScaleSteps, clamped 0..127) */
 #define endingEpilogueFadeLevel unk1C /* s32: variant 6: palette blend ratio 0-255 its draw raises by endingEpilogueFadeStep */
 #define endingEpilogueFollowParent unk28 /* s32: variant 4: 1 while its draw keeps it on its parent's position */
 #define endingEpilogueScaleSpeed unk28 /* s32: per-frame change of endingEpilogueScale (variants 1 and 6) */
@@ -961,7 +961,7 @@
 /* NightmarePowerOrb - Nightmare Power Orb (task type #66,
    Task_NightmarePowerOrb; a fixed attack script,
    gNightmarePowerOrbStateUpdates) */
-#define nightmarePowerOrbScale unk18 /* s32: 16.16 index of the scale table gUnk_0873FF98 for the escape flight's affine draw; 0 plain */
+#define nightmarePowerOrbScale unk18 /* s32: 16.16 index of the scale table gSpriteScaleSteps for the escape flight's affine draw; 0 plain */
 #define nightmarePowerOrbMaxHealth unk24 /* s32: health at the start (ActorComputeHealth); under half of it the stars aim at the player */
 #define nightmarePowerOrbScaleSpeed unk28 /* s32: 16.16 change of the escape flight's scale per frame (shrinks: -0xD00) */
 #define nightmarePowerOrbAnimTimer unk2C /* s32: frames counted up on the gUnk_0874AD74 animation; at 40 gUnk_0874ADA8 starts */
@@ -974,7 +974,7 @@
 
 /* NightmarePowerOrbEscapeStar - Nightmare Power Orb's escape star (task type
    #99, Task_NightmarePowerOrbEscapeStar) */
-#define nightmarePowerOrbEscapeStarScale unk18 /* s32: 16.16 index of the scale table gUnk_0873FF98 for the affine draw (0x3F0000 full) */
+#define nightmarePowerOrbEscapeStarScale unk18 /* s32: 16.16 index of the scale table gSpriteScaleSteps for the affine draw (0x3F0000 full) */
 #define nightmarePowerOrbEscapeStarAngle unk1C /* s32: rotation angle of the affine draw (0-511, wraps); -1 at start */
 #define nightmarePowerOrbEscapeStarScaleSpeed unk28 /* s32: 16.16 change of the scale per frame (grow / shrink) */
 #define nightmarePowerOrbEscapeStarSpinSpeed unk2C /* s32: change of the rotation angle per frame (+-16, +-8) */
@@ -1463,7 +1463,7 @@
 #define stageDoorSignIndex unk18 /* s32: which sign it shows: frames 2n and 2n+1 of gStageDoorSignFrames (the creator's argument) */
 #define stageDoorSignAnimated unk1C /* s32: 1 only from CreateStageDoorSign: the sign's two frames alternate */
 #define stageDoorSignDoorFrame unk28 /* s32: frame of that door sprite while gDoorStates[door].unk1 is set (else frame 2) */
-#define stageDoorSignDoorFrames unk34 /* s32: frame table of the door sprite the shared draw sub_0802f718 shows at the door */
+#define stageDoorSignDoorFrames unk34 /* s32: frame table of the door sprite the shared draw DoorSignDrawWithDoor shows at the door */
 
 /* StageEffect - Stage effect (task type #236, Task_StageEffect;
    gStageEffectStates; made by CreateStageEffect) */
@@ -1584,7 +1584,7 @@
 
 /* WarpStar - Warp Star (task type #74, Task_WarpStar; gWarpStarStates,
    gWarpStarFlights) */
-#define warpStarScale unk18 /* s32: flight sprite scale (16.16 index into gUnk_0873FF98); -1 / <= -2 select other draw modes */
+#define warpStarScale unk18 /* s32: flight sprite scale (16.16 index into gSpriteScaleSteps); -1 / <= -2 select other draw modes */
 #define warpStarExitRequested unk24 /* s32: 1 once the flight has called ExitOnWarpStar (the request for the destination room) */
 #define warpStarRiderCount unk28 /* s32: players boarded before the flight; it starts when this equals gActivePlayerCount */
 #define warpStarScaleSpeed unk28 /* s32: per-frame change of warpStarScale during a flight (negative = shrinking) */

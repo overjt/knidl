@@ -17,7 +17,7 @@
  *   EndingEpilogueKingDedede / EndingEpilogueKingDededeDraw   variant 6: hidden for 2278 frames, then a
  *       sprite that drifts in, shrinks while it fades in and falls away.
  *   EndingEpilogueExplosion   variant 7: after 240 frames spawns the nine variant-8
- *       sprites (CreateEndingEpilogueExplosionSprites) and calls M07's sub_080269e8.
+ *       sprites (CreateEndingEpilogueExplosionSprites) and calls M07's EndingEpilogueBreakBlocks.
  *   EndingEpilogueExplosionSprite   variant 8, nine sprites: the centre one flickers, the
  *       other eight fly outwards along gUnk_08757374[]..gUnk_087573D4[].
  *   EndingEpilogueCamera / EndingEpilogueCameraUpdate   variant 9, an invisible task the camera
@@ -273,7 +273,7 @@ void EndingEpilogueKirbyDraw(void)
     t = gCurTask;
     if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY <= 223) {
         tbl = t->frameTable;
-        s = gUnk_0873FF98[p->endingEpilogueScale >> 16];
+        s = gSpriteScaleSteps[p->endingEpilogueScale >> 16];
         if ((u16)s != 0x100)
             QueueSprite(gCurTask->layer, DrawAffineSprite(tbl[t->frame + k], s, s, 0),
                          gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
@@ -442,7 +442,7 @@ void EndingEpilogueKingDededeDraw(void)
     t = gCurTask;
     if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY <= 223) {
         tbl = t->frameTable;
-        s = gUnk_0873FF98[t->endingEpilogueScale >> 16];
+        s = gSpriteScaleSteps[t->endingEpilogueScale >> 16];
         if ((u16)s != 0x100)
             QueueSprite(gCurTask->layer, DrawAffineSprite(tbl[t->frame + k], s, s, 0),
                          gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX, gCurTask->pixelY);
@@ -460,7 +460,7 @@ void EndingEpilogueExplosion(void)
     CreateEndingEpilogueExplosionSprites();
     PlaySfx(282);
     TaskYieldTrampoline(12);
-    sub_080269e8();
+    EndingEpilogueBreakBlocks();
     TaskExitTrampoline();
 }
 

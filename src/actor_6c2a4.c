@@ -88,7 +88,7 @@ void ActorAttachedPullIn(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->lateUpdateCallback = (u32)ActorAttachedPullInLateUpdate;
-    ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
+    ActorSetTerrainHandlers((u32)gNullTerrainHandlers);
     TaskSetPosRelativeToParent();
     u = gCurTask;
     u->actorMouthFull = 0;
@@ -130,7 +130,7 @@ void ActorAttachedThrowHeld(void)
     t->actorCarriedX = t->pixelX;
     t->actorCarriedY = t->pixelY;
     t->taskClass = 1;
-    ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
+    ActorSetTerrainHandlers((u32)gNullTerrainHandlers);
     TaskSleepForever();
 }
 

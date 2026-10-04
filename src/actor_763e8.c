@@ -232,7 +232,7 @@ void sub_08076798(void)
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
         if (gMetaKnightmareMode == 0)
-            TaskSetFrame(gUnk_0873D384[t->player->ability]);
+            TaskSetFrame(gPlayerJumpFrames[t->player->ability]);
         else
             TaskSetFrame(0x11E4);
     }

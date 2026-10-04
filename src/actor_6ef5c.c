@@ -446,19 +446,19 @@ void PlayerWarpStarRideState5(void)
         TaskYieldTrampoline(2);
         break;
     default:
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 6));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 6));
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 5));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 5));
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 4));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 4));
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 3));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 3));
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 2));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 2));
         gCurTask->velY = 0x10000;
         TaskYieldTrampoline(2);
-        TaskSetFrame((s16)(gUnk_0873D384[gCurTask->player->ability] + 1));
+        TaskSetFrame((s16)(gPlayerJumpFrames[gCurTask->player->ability] + 1));
         TaskYieldTrampoline(2);
         break;
     }

@@ -3957,7 +3957,7 @@ SECTIONS
     ASSERT(!MATCHING || gInhalableStarDef == 0x0873F664, "MATCHING: actor_rec_0873f664 moved")
     ASSERT(!MATCHING || actor_rodata_0873f6e8 == 0x0873F6E8, "MATCHING: actor_rodata_0873f6e8 moved")
     ASSERT(!MATCHING || gUnk_0873F8EC == 0x0873F8EC, "MATCHING: actor_rec_0873f8ec moved")
-    ASSERT(!MATCHING || gUnk_0873F8F4 == 0x0873F8F4, "MATCHING: actor_tbl_0873f8f4 moved")
+    ASSERT(!MATCHING || gNullTerrainHandlers == 0x0873F8F4, "MATCHING: actor_tbl_0873f8f4 moved")
     ASSERT(!MATCHING || gActorDrownTerrainHandlers == 0x0873F910, "MATCHING: actor_tbl_0873f910 moved")
     ASSERT(!MATCHING || gUnk_0873F92C == 0x0873F92C, "MATCHING: actor_tbl_0873f92c moved")
     ASSERT(!MATCHING || actor_rodata_0873f92c == 0x0873F950, "MATCHING: actor_rodata_0873f92c moved")

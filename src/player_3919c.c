@@ -14,7 +14,7 @@
 /* player_3919c.c (0x0803919C-0x08039C23, issue #91).
  *
  * Player action bodies, part 7: actions 17 and 20.  PlayerActionDie (action
- * 17) is the player's death: it installs sub_080396a4 as the task's
+ * 17) is the player's death: it installs PlayerActionDieUpdate as the task's
  * per-frame callback Task.updateCallback (state 1 falls until the player is below
  * the screen, state 2 waits PlayerState.unk14 frames, state 4 leaves for
  * the results screen), counts the players whose health gPlayerHealth[] is
@@ -43,7 +43,7 @@ void PlayerActionDie(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 18;
-    gCurTask->updateCallback = (u32)sub_080396a4;
+    gCurTask->updateCallback = (u32)PlayerActionDieUpdate;
     gCurTask->lateUpdateCallback = 0;
     gCurTask->facing = 1;
     t = gCurTask;
@@ -205,7 +205,7 @@ void PlayerActionDie(void)
     TaskSleepForever();
 }
 
-void sub_080396a4(void)
+void PlayerActionDieUpdate(void)
 {
     switch (gCurTask->variant)
     {

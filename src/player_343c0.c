@@ -331,7 +331,7 @@ void PlayerActionJump(void)
         gCurTask->frame++;
         TaskSleepForever();
     }
-    gCurTask->playerBaseFrame = gUnk_0873D384[gCurTask->player->ability];
+    gCurTask->playerBaseFrame = gPlayerJumpFrames[gCurTask->player->ability];
     switch (gCurTask->player->ability)
     {
     case ABILITY_NORMAL:
@@ -423,7 +423,7 @@ void PlayerActionReleaseJump(void)
         PlayerSetMotionYPreset(0);
         PlaySfxIfLocalPlayer(SE_JUMP, gCurTask->player->playerIndex);
     }
-    gCurTask->playerBaseFrame = gUnk_0873D384[gCurTask->player->ability];
+    gCurTask->playerBaseFrame = gPlayerJumpFrames[gCurTask->player->ability];
     switch (gCurTask->player->ability)
     {
     case ABILITY_FIRE:

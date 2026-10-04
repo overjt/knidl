@@ -19,10 +19,10 @@
  * through HealPlayerStep (src/hud_b2fe8.c), 2 gives one or two steps, 3
  * copies PlayerState.invincible/unk18.  sub_0803c9b4 (from M09's
  * sub_08033414, the twin of M04's sub_080109c8) steps and draws the
- * three spark records gUnk_02007E90[player][]; sub_0803cbd8 (M09's
- * sub_0803332c) steps the knock-back script
+ * three spark records gUnk_02007E90[player][]; PlayerStepOffsetScript (M09's
+ * PlayerLateUpdate) steps the knock-back script
  * gUnk_0873A994[PlayerState.offsetScript][PlayerState.offsetScriptStep] into the 8.8
- * offsets PlayerState.pixelOffsetX/unk26; sub_0803ccd8 (M09's PlayerActionFall)
+ * offsets PlayerState.pixelOffsetX/unk26; PlayerSetParasolDriftRow (M09's PlayerActionFall)
  * applies step n of the 8.8 motion table gUnk_0873AEBC. */
 
 /* Declared here, not through a header: the calls in this file pass other
@@ -513,7 +513,7 @@ void sub_0803c9b4(s32 a)
     }
 }
 
-void sub_0803cbd8(void)
+void PlayerStepOffsetScript(void)
 {
     struct OffsetScriptRow *e;
     if ((s8)--gCurTask->player->offsetScriptDelay > 0)
@@ -550,7 +550,7 @@ void sub_0803cbd8(void)
     }
 }
 
-void sub_0803ccd8(s32 a)
+void PlayerSetParasolDriftRow(s32 a)
 {
     u16 *e = gUnk_0873AEBC[a];
     s32 x = e[1] << 8;

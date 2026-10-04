@@ -314,7 +314,7 @@ void PlayerObjectStarRodShot(void)
         t->layer = 5;
     }
     gCurTask->frameTable = gUnk_0874C4E4;
-    sub_0802205c(gUnk_0873CB4C);
+    sub_0802205c(gPlayerStarObjectTerrainBox);
     {
         struct Task *t = gCurTask;
         t->posY = (t->pixelY + 4) << 16;
@@ -387,7 +387,7 @@ void PlayerObjectStarRodShotUpdate(void)
     case 4:
         break;
     }
-    TerrainCollideBoxAlongVelocity(gUnk_0873CB4C);
+    TerrainCollideBoxAlongVelocity(gPlayerStarObjectTerrainBox);
     {
         struct Task *t = gCurTask;
         if ((t->onGround & 1) || *(u16 *)&gTerrainResult != 0)

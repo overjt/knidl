@@ -18,7 +18,7 @@
  * SetRoomEntryPoint places the player at the room's start position
  * (RoomDef.entryX/unk52) unless a door already did, clamps it and records
  * the arrival for the next level change (gUnk_02008054, gUnk_0200AFF4,
- * gUnk_02008050).  sub_08029034 clamps the arrival position into the room
+ * gUnk_02008050).  ClampRoomEntryAndAnchorCamera clamps the arrival position into the room
  * and makes it the camera target, CameraSetFocusToLocalPlayer copies the current
  * player's camera position into the player cells, CameraInitPos and
  * CameraUpdatePos/CameraUpdatePosNoParallax/CameraUpdatePosBg3AutoScrollX
@@ -212,7 +212,7 @@ void SetRoomEntryPoint(void)
     }
 }
 
-void sub_08029034(void)
+void ClampRoomEntryAndAnchorCamera(void)
 {
     s32 v;
 
@@ -269,8 +269,8 @@ void PlayRoomBgm(void)
             cur = GetCurrentBgm();
             if (cur == -1 || cur != bgm)
             {
-                if (gUnk_087325A2[bgm] != -1)
-                    PlayBgm(gUnk_087325A2[bgm]);
+                if (gRoomBgmRemap[bgm] != -1)
+                    PlayBgm(gRoomBgmRemap[bgm]);
                 else
                     PlayBgm(bgm);
             }

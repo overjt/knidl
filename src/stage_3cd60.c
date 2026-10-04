@@ -1347,7 +1347,7 @@ s32 PlayerUpdateInvincibility(void)
     if (gPlayerCount == 1)
     {
         if ((s16)gCurTask->player->invincibleTimer == 240)
-            sub_080270d0();
+            RestartRoomBgm();
         return;
     }
     if ((s16)gCurTask->player->invincibleTimer != 240)
@@ -1359,7 +1359,7 @@ s32 PlayerUpdateInvincibility(void)
          && (s16)gPlayerStates[i].invincibleTimer > 240)
             return;
     }
-    sub_080270d0();
+    RestartRoomBgm();
 }
 
 void PlayerEndInvincibility(void)
@@ -1378,7 +1378,7 @@ void PlayerEndInvincibility(void)
             ok = 0;
     }
     if (ok != 0 && gCurrentBgm == 19)
-        sub_080270d0();
+        RestartRoomBgm();
     gCurTask->player->invincible = 0;
     gCurTask->player->invincibleTimer = 0;
     {
@@ -2429,7 +2429,7 @@ s32 PlayerCheckDie(void)
     return gCurTask->player->requestedAction;
 }
 
-void sub_0803fb54(void)
+void PlayerUpdateRunning(void)
 {
     u16 v;
 

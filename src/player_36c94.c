@@ -511,7 +511,7 @@ void PlayerActionInhale(void)
             p->pendingAbilityUses = -1;
         }
         if (gUnk_0300244C != 0)
-            gUnk_02007CF4[gCurTask->player->playerIndex] = 0;
+            gAbilityStarInMouth[gCurTask->player->playerIndex] = 0;
         gUnk_03001F2C = 0;
         do
         {

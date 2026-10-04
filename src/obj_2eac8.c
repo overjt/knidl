@@ -111,7 +111,7 @@ void Task_BossDoorSign(void)
 
     t = gCurTask;
     t->moveCallback = (u32)TaskUpdatePixelPos;
-    t->drawCallback = (u32)sub_0802f718;
+    t->drawCallback = (u32)DoorSignDrawWithDoor;
     t->frameTable = gBossDoorSignFrames;
     t->layer = 15;
     u = gCurTask;

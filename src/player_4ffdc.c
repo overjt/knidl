@@ -178,7 +178,7 @@ void PlayerStarRodFlightIntroUpdate(void)
     {
         t->variant = 1;
         gCurTask->updateCallback = (u32)PlayerUpdate;
-        gCurTask->lateUpdateCallback = (u32)sub_0803332c;
+        gCurTask->lateUpdateCallback = (u32)PlayerLateUpdate;
         TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);
         gPauseDisabled = 0;
     }

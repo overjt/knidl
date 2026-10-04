@@ -327,7 +327,7 @@ struct ActorVt gBigSwitchHitReactions ACTOR_TBL(0873f5fc) = {
 
 /* ---- 0x0873F8F4-0x0873F910: 1 record(s), section .actor_tbl_0873f8f4 ---- */
 /* 19 ActorDefs (gCannonDef, gCannonFuseDef, ...); src/actor_6b2e4.c, src/actor_6c2a4.c */
-struct ActorHandlers gUnk_0873F8F4[] ACTOR_TBL(0873f8f4) = { {
+struct ActorHandlers gNullTerrainHandlers[] ACTOR_TBL(0873f8f4) = { {
         .landCallback = 0,
         .leaveGroundCallback = 0,
         .enterWaterCallback = 0,

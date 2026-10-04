@@ -14,7 +14,7 @@
  * child (CreateMapEventBreakTwoBlocks/CreateMapEventBreakThreeBlocks) or updates two metatiles through
  * CreateBlockBreakEffect and M09's BreakBlockAt; MapEventBreakTwoBlocks and MapEventBreakThreeBlocks
  * update one or three metatiles behind type-#236 effects;
- * sub_0802d6cc and sub_0802d96c/sub_0802da8c fade the room palettes
+ * MapEventFadeToNextRoomPalettes and sub_0802d96c/sub_0802da8c fade the room palettes
  * towards another room's (the table gRoomTable, BlendColors into the
  * palette buffer gBgPalette); MapEventStageUnlockPan and MapEventBigSwitchUnlockPan pan the
  * camera four pixels a frame by the step counts of gUnk_08732428 /
@@ -38,7 +38,7 @@ struct Unk0200A6F0
 extern u16 gUnk_02005E10[];
 extern u8 gUnk_087328BC[];
 extern s8 gUnk_08732428[][3];
-extern u16 gUnk_087323C6[][2];
+extern u16 gWarpStarStationDoorCells[][2];
 extern u8 gWarpStarStationDoorRevealed;
 extern struct Unk0200A6F0 gBg1BreakingBlocks[];
 extern s8 gUnk_087324A6[][3];
@@ -165,7 +165,7 @@ void MapEventBreakThreeBlocks(void)
     TaskExitTrampoline();
 }
 
-void sub_0802d6cc(void)
+void MapEventFadeToNextRoomPalettes(void)
 {
     struct Task *t;
     struct Task *t1;
@@ -413,8 +413,8 @@ void MapEventStageUnlockPan(void)
         t8 = gCurTask;
         if (t8->mapEventRevealDoor != 0 && gWarpStarStationDoorRevealed == 0)
         {
-            t8->posX = gUnk_087323C6[gCurLevel][0];
-            t8->posY = gUnk_087323C6[gCurLevel][1];
+            t8->posX = gWarpStarStationDoorCells[gCurLevel][0];
+            t8->posY = gWarpStarStationDoorCells[gCurLevel][1];
             t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->mapEventLoopCount = 0; (s16)gCurTask->mapEventLoopCount <= 1; gCurTask->mapEventLoopCount++)
             {
@@ -598,8 +598,8 @@ void MapEventBigSwitchUnlockPan(void)
         t8 = gCurTask;
         if (t8->mapEventRevealDoor != 0 && gWarpStarStationDoorRevealed == 0)
         {
-            t8->posX = gUnk_087323C6[gCurLevel][0];
-            t8->posY = gUnk_087323C6[gCurLevel][1];
+            t8->posX = gWarpStarStationDoorCells[gCurLevel][0];
+            t8->posY = gWarpStarStationDoorCells[gCurLevel][1];
             t8->accelX = gRoomWidth * t8->posY + t8->posX;
             for (t8->mapEventLoopCount = 0; (s16)gCurTask->mapEventLoopCount <= 1; gCurTask->mapEventLoopCount++)
             {
@@ -677,7 +677,7 @@ void MapEventBigSwitchUnlockPan(void)
         }
     }
     TaskYieldTrampoline(10);
-    if (sub_08026584())
+    if (ApplyEntryDoorEvent())
         TaskYieldTrampoline(20);
     TaskYieldTrampoline(10);
     if (gUnk_020055D4 == 0x2000)

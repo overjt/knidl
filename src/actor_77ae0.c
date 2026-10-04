@@ -837,7 +837,7 @@ s32 WaddleDeeLand(void)
             if (t->waddleDeeJumpTimer <= 0)
                 t->waddleDeeJumpTimer = 30;
         }
-        gCurTask->actorAnimDelay34 = ActorStartAnim(gUnk_087406A0);
+        gCurTask->actorAnimDelay34 = ActorStartAnim(gWaddleDeeJumpAnim);
         ActorSetState(0);
         TaskSetEntry(WaddleDeeJumpEnterState, gCurTaskIdx);
         r = 1;

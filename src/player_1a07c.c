@@ -132,7 +132,7 @@ void CutsceneFountainKirbyDraw(void)
     QueueSprite(q->layer, anim, q->spriteFlags, 0x800 | q->tileWord, x, y);
 }
 
-void sub_0801a310(void)
+void CutsceneActorDrawStreamedFrame(void)
 {
     struct Task *t;
     struct Task *u;

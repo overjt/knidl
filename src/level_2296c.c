@@ -19,7 +19,7 @@
  * stage's flag) and place the player at the matching door of the hub
  * room gRoomTable[8][stage][0]; BossEnduranceSetStart (AgbMain) resets level,
  * stage and room; sub_08022f98/ClearRoomBgmStarted are M02's screen-setup hooks;
- * LoadRoom and sub_080233e0 are the loaders of M02's first screen
+ * LoadRoom and LoadRoomAfterBigSwitchView are the loaders of M02's first screen
  * setup StageInit (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
 
@@ -398,7 +398,7 @@ void LoadRoom(void)
     }
 }
 
-void sub_080233e0(void)
+void LoadRoomAfterBigSwitchView(void)
 {
     u32 a;
 
@@ -435,7 +435,7 @@ void sub_080233e0(void)
     StopScreenShake();
     CalcBg3Parallax();
     CalcRoomBounds();
-    sub_08028130();
+    InitRoomBgLayoutAfterBigSwitchView();
     LoadRoomObjectGfx();
     InitDoors();
     StartBlockAnims();

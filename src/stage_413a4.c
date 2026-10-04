@@ -96,7 +96,7 @@ void MetaKnightActionStand(void)
     }
 
     {
-        s16 *p = (s16 *)gUnk_0873D206;
+        s16 *p = (s16 *)gMetaKnightStandFrames;
 
         TaskSetFrame(p[PlayerGetFacingSlope(gCurTask->player->playerIndex)]);
     }
@@ -1131,7 +1131,7 @@ void MetaKnightActionHurtUpdate(void)
 }
 
 /* Stage entry (issue #85).  Clears the player's bit in gActivePlayerMask,
-   decrements gActivePlayerCount, installs sub_08042c50 as Task.updateCallback, spawns five
+   decrements gActivePlayerCount, installs MetaKnightActionDieUpdate as Task.updateCallback, spawns five
    sub-tasks through CreatePlayerEffect (id 12 four times, then id 13) and picks a
    random signed 8.8 value into Task.velX from the camera x (gSpriteCameraX)
    and gFrameCount.
@@ -1174,7 +1174,7 @@ void MetaKnightActionDie(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 18;
-    gCurTask->updateCallback = (u32)sub_08042c50;
+    gCurTask->updateCallback = (u32)MetaKnightActionDieUpdate;
     gCurTask->lateUpdateCallback = 0;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << gCurTask->player->playerIndex);
@@ -1250,7 +1250,7 @@ void MetaKnightActionDie(void)
     TaskSleepForever();
 }
 
-void sub_08042c50(void)
+void MetaKnightActionDieUpdate(void)
 {
     switch (gCurTask->variant)
     {
@@ -1383,7 +1383,7 @@ void MetaKnightActionExitDoor(void)
     TaskSetFrameByFacing(0x1208);
     TaskYieldTrampoline(2);
     {
-        s16 *p = (s16 *)gUnk_0873D206;
+        s16 *p = (s16 *)gMetaKnightStandFrames;
         TaskSetFrame(p[((s32 (*)(s32))PlayerGetFacingSlope)((s8)gCurTask->player->playerIndex)]);
     }
     if (gEntryDoorEvent == 1)
@@ -1396,7 +1396,7 @@ void MetaKnightActionExitDoor(void)
         TaskSetSkipMask(0, gCurTaskIdx);
     }
     gCurTask->spriteFlags = 0x4000;
-    ((void (*)(void))sub_08026584)();
+    ((void (*)(void))ApplyEntryDoorEvent)();
     gCurTask->playerActionDone28++;
     TaskSleepForever();
 }

@@ -51,7 +51,7 @@ extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
 extern u32 gPlayerDances[];
 extern u32 gGoalGameStarFrames[];
-extern u32 gUnk_0874CDF8[];
+extern u32 gDoorOverlayFrames[];
 extern u32 gGoalGameSpringFrames[];
 extern u32 gGoalGamePlayerMarkerFrames[];
 extern u32 gUnk_087548A0[];
@@ -1491,7 +1491,7 @@ void sub_0805d5fc(void)
     TaskDrawWorld();
     if (TaskIsOnScreen() != 0)
     {
-        u32 *tbl = gUnk_0874CDF8;
+        u32 *tbl = gDoorOverlayFrames;
         struct Task *t = gCurTask;
 
         QueueSprite(14, tbl[(s16)t->unk6C], 0, 0,

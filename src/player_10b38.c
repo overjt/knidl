@@ -18,7 +18,7 @@ s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
 void RequestScreenShake(s32 a);
 void LoadBackdropColor(u16 *p);
 
-void sub_08010b38(void)
+void CutsceneActorDrawPlayerFrame(void)
 {
     if (gCurTask->frameTable != 0 && gCurTask->frame != -1
         && IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) != 0)
@@ -152,7 +152,7 @@ void CutsceneDuelBladeKnight(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08754A14;
+    gCurTask->frameTable = gCutsceneDuelFrames;
     gCurTask->posX = 152 << 14;
     gCurTask->posY = 190 << 15;
     TaskStop();
@@ -283,7 +283,7 @@ void CutsceneBeachKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 248 << 15;
     gCurTask->posY = 186 << 15;
     gCurTask->frame = 27;
@@ -378,7 +378,7 @@ void CutsceneBeachChair(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 128 << 16;
     gCurTask->posY = 202 << 15;
     gCurTask->cutsceneActorLoopCount = 0;
@@ -402,7 +402,7 @@ void CutsceneBeachCandyDream(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 248 << 15;
     gCurTask->posY = 178 << 15;
     gCurTask->velX = 0xFFFFA000;
@@ -449,7 +449,7 @@ void CutsceneBeachDonutDream(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 248 << 15;
     gCurTask->posY = 178 << 15;
     TaskStop();
@@ -499,7 +499,7 @@ void CutsceneBeachMeatDream(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 248 << 15;
     gCurTask->posY = 178 << 15;
     TaskStop();
@@ -552,7 +552,7 @@ s32 CutsceneBeachThoughtBubble(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 248 << 15;
     gCurTask->posY = 178 << 15;
     TaskStop();
@@ -598,7 +598,7 @@ void CutsceneBeachWaddleDoo(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 216 << 15;
     gCurTask->posY = 152 << 15;
     TaskStop();
@@ -669,7 +669,7 @@ void CutsceneBeachSunglasses(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 5;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     gCurTask->posX = 248 << 15;
     gCurTask->posY = 186 << 15;
     TaskStop();
@@ -690,7 +690,7 @@ void CutsceneBeachQuestionMarks(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_08754ABC;
+    gCurTask->frameTable = gCutsceneBeachFrames;
     TaskStop();
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(220);
@@ -922,7 +922,7 @@ void CutsceneBombKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08754B80;
+    gCurTask->frameTable = gCutsceneBombFrames;
     gCurTask->posX = 150 << 15;
     gCurTask->posY = 184 << 15;
     TaskStop();
@@ -1157,7 +1157,7 @@ void CutsceneBombPoppyBrosSr(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08754B80;
+    gCurTask->frameTable = gCutsceneBombFrames;
     gCurTask->posX = 204 << 14;
     gCurTask->posY = 192 << 14;
     CreateCutsceneActor(16, 32);
@@ -1305,7 +1305,7 @@ void CutsceneBombHeldBomb(void)
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 13;
-    gCurTask->frameTable = gUnk_08754B80;
+    gCurTask->frameTable = gCutsceneBombFrames;
     CreateCutsceneActor(19, 32);
     gCurTask->posX = 200 << 13;
     gCurTask->posY = 0xFFED0000;
@@ -1372,7 +1372,7 @@ void CutsceneBombThrownBomb(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 13;
-    gCurTask->frameTable = gUnk_08754B80;
+    gCurTask->frameTable = gCutsceneBombFrames;
     CreateCutsceneActor(20, 32);
     gCurTask->posX = 254 << 15;
     gCurTask->posY = 0;
@@ -1506,7 +1506,7 @@ void CutsceneBombHeldBombFuse(void)
     gCurTask->moveCallback = (u32)sub_08012fe0;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754B80;
+    gCurTask->frameTable = gCutsceneBombFrames;
     gCurTask->posX = 128 << 12;
     gCurTask->posY = 0xFFF80000;
     TaskStop();
@@ -1603,7 +1603,7 @@ void CutsceneBombThrownBombFuse(void)
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754B80;
+    gCurTask->frameTable = gCutsceneBombFrames;
     gCurTask->posX = 128 << 12;
     gCurTask->posY = 0xFFF80000;
     TaskStop();
@@ -1802,7 +1802,7 @@ void CutsceneBalloonsKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08754C90;
+    gCurTask->frameTable = gCutsceneBalloonsFrames;
     gCurTask->posX = 224 << 14;
     gCurTask->posY = 208 << 15;
     TaskSetMotion(128 << 8, 0, 0x5A5A5A5A, 0xFFFE7000, 128 << 5, 0x5A5A5A5A);
@@ -2037,7 +2037,7 @@ void CutsceneBalloonsLooseBalloon(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08754C90;
+    gCurTask->frameTable = gCutsceneBalloonsFrames;
     gCurTask->posX = 128 << 16;
     gCurTask->posY = 172 << 15;
     TaskStop();
@@ -2072,7 +2072,7 @@ void CutsceneBalloonsYellowBalloon(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08754C90;
+    gCurTask->frameTable = gCutsceneBalloonsFrames;
     gCurTask->posX = 208 << 15;
     gCurTask->posY = 172 << 15;
     TaskStop();
@@ -2169,7 +2169,7 @@ void CutsceneBalloonsGreenBalloon(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08754C90;
+    gCurTask->frameTable = gCutsceneBalloonsFrames;
     gCurTask->posX = 188 << 15;
     gCurTask->posY = 178 << 15;
     TaskStop();
@@ -2266,7 +2266,7 @@ void CutsceneBalloonsLastBalloon(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08754C90;
+    gCurTask->frameTable = gCutsceneBalloonsFrames;
     gCurTask->posX = 192 << 16;
     gCurTask->posY = 152 << 15;
     TaskStop();
@@ -2419,7 +2419,7 @@ void CutsceneTomatoKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08754D60;
+    gCurTask->frameTable = gCutsceneTomatoFrames;
     gCurTask->posX = 188 << 14;
     gCurTask->posY = 242 << 15;
     CreateCutsceneActor(32, 32);
@@ -2615,7 +2615,7 @@ void CutsceneTomatoMaximTomato(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08754D60;
+    gCurTask->frameTable = gCutsceneTomatoFrames;
     gCurTask->posX = 238 << 15;
     gCurTask->posY = 130 << 15;
     TaskStop();
@@ -2712,7 +2712,7 @@ void CutsceneTomatoActorScript32(void)
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754D60;
+    gCurTask->frameTable = gCutsceneTomatoFrames;
     gCurTask->posX = 0xFFF80000;
     gCurTask->posY = 0xFFF80000;
     TaskStop();
@@ -2751,7 +2751,7 @@ void CutsceneTomatoExclamation(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754D60;
+    gCurTask->frameTable = gCutsceneTomatoFrames;
     gCurTask->posX = 238 << 15;
     gCurTask->posY = 132 << 14;
     TaskStop();
@@ -2823,7 +2823,7 @@ void CutsceneShipKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08754E7C;
+    gCurTask->frameTable = gCutsceneShipFrames;
     gCurTask->posX = 173 << 16;
     gCurTask->posY = 154 << 15;
     TaskStop();
@@ -2967,7 +2967,7 @@ void CutsceneShipSpyglass(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08754E7C;
+    gCurTask->frameTable = gCutsceneShipFrames;
     gCurTask->posX = 153 << 16;
     gCurTask->posY = 154 << 15;
     TaskStop();
@@ -3024,7 +3024,7 @@ void CutsceneShipPirateHat(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08754E7C;
+    gCurTask->frameTable = gCutsceneShipFrames;
     gCurTask->posX = 169 << 16;
     gCurTask->posY = 130 << 15;
     TaskStop();
@@ -3069,7 +3069,7 @@ void CutsceneShipShark(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08754E7C;
+    gCurTask->frameTable = gCutsceneShipFrames;
     gCurTask->posX = 169 << 16;
     gCurTask->posY = 129 << 16;
     TaskStop();
@@ -3120,7 +3120,7 @@ void CutsceneShipWaves(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754E7C;
+    gCurTask->frameTable = gCutsceneShipFrames;
     gCurTask->posX = 242 << 15;
     gCurTask->posY = 145 << 16;
     TaskStop();
@@ -3160,7 +3160,7 @@ void CutsceneSingingKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 213 << 16;
     gCurTask->posY = 220 << 15;
     TaskStop();
@@ -3538,7 +3538,7 @@ void CutsceneSingingRainbowBar(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 250 << 15;
     gCurTask->posY = 132 << 15;
     gCurTask->tileWord |= 192 << 4;
@@ -3688,7 +3688,7 @@ void CutsceneSingingBeamedNotes(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 250 << 15;
     gCurTask->posY = 220 << 15;
     TaskStop();
@@ -3811,7 +3811,7 @@ void CutsceneSingingDottedNote(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 250 << 15;
     gCurTask->posY = 220 << 15;
     TaskStop();
@@ -3942,7 +3942,7 @@ void CutsceneSingingActorScript45(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 141 << 16;
     gCurTask->posY = 220 << 15;
     TaskStop();
@@ -4076,7 +4076,7 @@ void CutsceneSingingQuarterNote(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 250 << 15;
     gCurTask->posY = 220 << 15;
     TaskStop();
@@ -4216,7 +4216,7 @@ void CutsceneSingingActorScript47(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 6;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 141 << 16;
     gCurTask->posY = 220 << 15;
     TaskStop();
@@ -4358,7 +4358,7 @@ void CutsceneSingingThoughtBubble(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 246 << 15;
     gCurTask->posY = 196 << 15;
     TaskStop();
@@ -4418,7 +4418,7 @@ void CutsceneSingingTrebleClef(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08754F68;
+    gCurTask->frameTable = gCutsceneSingingFrames;
     gCurTask->posX = 129 << 16;
     gCurTask->posY = 178 << 15;
     TaskStop();

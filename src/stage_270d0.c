@@ -10,7 +10,7 @@
 
 /* stage_270d0.c (0x080270D0-0x0802739F, issue #93).
  *
- * Stage helpers, part 2.  sub_080270d0 restarts the room's BGM (with
+ * Stage helpers, part 2.  RestartRoomBgm restarts the room's BGM (with
  * the 0x800 flag), StopRoomAndApplyExitFlags/StopRoom/FreeRoomAndDoorObjects tear the level
  * down before a state change (flags in gStageExitFlags), PauseRoom/
  * SetRoomUpdateFlags/ResumeRoom set the per-frame flags gRoomUpdateFlags, and
@@ -22,7 +22,7 @@
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_080270d0(void)
+void RestartRoomBgm(void)
 {
     s32 bgm = gCurRoomDef->bgm;
     s16 v;
@@ -31,9 +31,9 @@ void sub_080270d0(void)
     {
         StopBgm();
     }
-    else if (gUnk_087325A2[bgm] != -1)
+    else if (gRoomBgmRemap[bgm] != -1)
     {
-        v = gUnk_087325A2[bgm] | 0x800;
+        v = gRoomBgmRemap[bgm] | 0x800;
         PlayBgm(v);
     }
     else

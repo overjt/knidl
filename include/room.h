@@ -625,14 +625,14 @@ extern u32 gUnk_0873232C[];
 extern u16 gHubDoorUnlocks[][9];
 extern u8 gUnk_087323E2[][3][2];
 extern u16 *gUnk_0873240C[];
-extern s16 gUnk_087325A2[];
+extern s16 gRoomBgmRemap[];
 extern void (*gRoomTaskVariants[])(void);
 extern u8 gUnk_08732630[];
 extern u16 gUnk_08732638[][2];
-extern u8 gUnk_0873264C[][2];
+extern u8 gStarDoorOverlaySteps[][2];
 extern s16 gTileDrifts[];
 extern s16 gTileDriftsDoubled[];
-extern u32 gUnk_0874CDF8[];
+extern u32 gDoorOverlayFrames[];
 extern struct RoomDef *const *const gRoomTable[][8];
 extern struct RoomDef *const gLevel7Stage1Rooms[];
 extern struct RoomDef *const gLevel0Stage0Rooms[];
@@ -702,7 +702,7 @@ void BossEnduranceSetStart(void);
 void sub_08022f98(void);
 void ClearRoomBgmStarted(void);
 void LoadRoom(void);
-void sub_080233e0(void);
+void LoadRoomAfterBigSwitchView(void);
 void CreateRoomTask(s32 a);
 
 /* src/roomtask_23618.c */
@@ -769,7 +769,7 @@ void WrapLoopingRoom(void);
 s32 CreateEntryDoorOpening(void);
 void CloseDoorOpening(s32 i);
 s32 CreateEntryDoorStageClearFlag(void);
-s32 sub_08026584(void);
+s32 ApplyEntryDoorEvent(void);
 void sub_08026704(s32 i);
 s32 CreateStageUnlockPan(void);
 s32 CreateBigSwitchUnlockPan(void);
@@ -777,18 +777,18 @@ void ClampCameraFocusToRoom(void);
 void UnlockNextLevel(void);
 void sub_08026994(void);
 void SaveAndSetContinuePoint(void);
-void sub_080269e8(void);
+void EndingEpilogueBreakBlocks(void);
 u32 WhispyWoodsCheckScrollLock(void);
 u32 KrackoCheckScrollLock(void);
 u32 KingDededeCheckScrollLock(void);
 
 /* src/door_26b60.c */
-void sub_08026b60(void);
+void SetDoorsOpenNearRoomEntry(void);
 void UpdateDoors(void);
 void DrawDoors(void);
 
 /* src/stage_270d0.c */
-void sub_080270d0(void);
+void RestartRoomBgm(void);
 void StopRoomAndApplyExitFlags(void);
 void StopRoom(void);
 void FreeRoomAndDoorObjects(void);
@@ -815,11 +815,11 @@ s32 ArePlayerCamerasDoneGliding(void);
 void CameraResumeFollowFocus(void);
 
 /* src/level_27a6c.c */
-void sub_08027a6c(void);
+void LoadHubRoomMap(void);
 
 /* src/room_27e28.c */
 void InitRoomBgLayout(void);
-void sub_08028130(void);
+void InitRoomBgLayoutAfterBigSwitchView(void);
 void InitEndingRoomBgLayout(s32 a);
 void StartRoomBlockAnims(void);
 
@@ -834,7 +834,7 @@ void CameraResetBounds(void);
 void CameraResetRoomView(void);
 void CalcRoomAndCameraBounds(void);
 void SetRoomEntryPoint(void);
-void sub_08029034(void);
+void ClampRoomEntryAndAnchorCamera(void);
 void CameraSetFocusToLocalPlayer(void);
 void CameraInitPos(void);
 void PlayRoomBgm(void);

@@ -86,7 +86,7 @@ extern u32 gUnk_0873F720[];
 extern u32 gUnk_0873F758[];
 extern u32 gUnk_0873F774[];
 extern u32 gBomberExplodeAttackBox[];
-extern s16 gUnk_0873FF98[];
+extern s16 gSpriteScaleSteps[];
 extern u32 gUnk_08740648[];
 extern u32 gWaddleDeeWalkStates[];
 extern u32 gWaddleDeeWalkStateUpdates[];

@@ -19,7 +19,7 @@
  * Task_Player is the body: it binds the task to its player record
  * (Task.player = &gPlayerStates[gCurTaskIdx]), kills it when the player
  * has no lives and no health left, installs the callbacks (Task.moveCallback =
- * M11's PlayerMove, unk04 = PlayerUpdate, unk08 = sub_0803332c, unk0C =
+ * M11's PlayerMove, unk04 = PlayerUpdate, unk08 = PlayerLateUpdate, unk0C =
  * M11's sub_0803ddc0), sets up the ability (PlayerState.ability) and the
  * stage entry mode (gRoomPlayerMode, gRoomEntryMode), and starts the first
  * action.  The actions are two tables of void (*)(void) dispatched
@@ -32,7 +32,7 @@
  * PlayerUpdate (Task.updateCallback) runs every frame: the attack hit-boxes
  * (TaskBreakBlocks on PlayerState.hitBoxSet), the collision registry, the
  * per-frame handler and the damage and star-block reactions;
- * sub_0803332c (Task.lateUpdateCallback) runs the 10-frame timer PlayerState.blockBreakCooldown;
+ * PlayerLateUpdate (Task.lateUpdateCallback) runs the 10-frame timer PlayerState.blockBreakCooldown;
  * sub_08033414 (called by M11's sub_0803ddc0) turns the frame's hit
  * event Task.hitKind and the status bits PlayerState.actionFlags into an action
  * request, re-binds the task to PlayerStartRequestedAction when one is pending and
@@ -45,7 +45,7 @@ u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);   /* M09's callers pass ldrsh
 void sub_08021c74(s8 *box, s32 id);
 u16 TaskBreakBlocks(struct HitBoxSet *p, s32 e);
 void sub_0803c9b4(s32 a);                     /* M10: mov r8, r0 on entry, void epilogue */
-void sub_0803cbd8(void);                      /* M10: no argument read, void epilogue */
+void PlayerStepOffsetScript(void);                      /* M10: no argument read, void epilogue */
 
 void Task_Player(void)
 {
@@ -76,7 +76,7 @@ void Task_Player(void)
     t->moveCallback = (u32)PlayerMove;
     t->drawCallback = (u32)sub_0803ddc0;
     t->updateCallback = (u32)PlayerUpdate;
-    t->lateUpdateCallback = (u32)sub_0803332c;
+    t->lateUpdateCallback = (u32)PlayerLateUpdate;
     t->frameTable = gPlayerFrames;
     if (gPlayerCount > 1 && gLocalPlayer == t->player->playerIndex)
         t->layer = 6;
@@ -88,7 +88,7 @@ void Task_Player(void)
     if (gMetaKnightmareMode == 0)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
     else
-        gCurTask->player->bodyBox = (u32)gUnk_0873CA54;
+        gCurTask->player->bodyBox = (u32)gMetaKnightDefaultBodyBox;
     gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
     gCurTask->player->hitBoxSet = 0;
     gCurTask->player->prevPixelX = gCurTask->posX >> 16;
@@ -108,9 +108,9 @@ void Task_Player(void)
             {
                 struct PlayerBodyBox *d = gPlayerBodyBoxes;
 
-                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C358;
+                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gPlayerParasolBodyBox;
             }
-            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CF94;
+            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gPlayerParasolHitBoxSet;
             break;
         case ABILITY_MIKE:
         case ABILITY_CRASH:
@@ -236,7 +236,7 @@ void PlayerStartRequestedAction(void)
         if (gMetaKnightmareMode == 0)
             gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
         else
-            gCurTask->player->bodyBox = (u32)gUnk_0873CA54;
+            gCurTask->player->bodyBox = (u32)gMetaKnightDefaultBodyBox;
         gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
         gCurTask->player->hitBoxSet = 0;
     }
@@ -348,7 +348,7 @@ void PlayerUpdate(void)
     PlayerUpdateInvulnerability();
 post:
     gCurTask->player->hitsThisFrame = 0;
-    sub_0803fb54();
+    PlayerUpdateRunning();
     if (!(gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN))
         PlayerUpdatePaletteFlash();
     if ((gMetaKnightmareMode == 1 || gUnk_0300244C != 0)
@@ -425,7 +425,7 @@ tail:
     }
 }
 
-void sub_0803332c(void)
+void PlayerLateUpdate(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -445,7 +445,7 @@ void sub_0803332c(void)
         p = gCurTask->player;
         if (p->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT)
         {
-            sub_0803cbd8();
+            PlayerStepOffsetScript();
             p = gCurTask->player;
             if (!(p->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
             {

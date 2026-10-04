@@ -223,8 +223,8 @@ gGameOverDone = 0x02007BE0
 gUsedRoomObjects = 0x02007BF0
 	.global	gRoomExitKind
 gRoomExitKind = 0x02007CF0
-	.global	gUnk_02007CF4
-gUnk_02007CF4 = 0x02007CF4
+	.global	gAbilityStarInMouth
+gAbilityStarInMouth = 0x02007CF4
 	.global	gUnk_02007D00
 gUnk_02007D00 = 0x02007D00
 	.global	gGameOverPlayerTask

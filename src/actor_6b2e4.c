@@ -627,11 +627,11 @@ void ActorAttachedEnterMouth(void)
             if (gUnk_0300244C == 0)
                 return;
             p->abilitySwallowCount = f;
-            gUnk_02007CF4[p->playerIndex] = 1;
+            gAbilityStarInMouth[p->playerIndex] = 1;
             return;
         }
     }
-    if (gUnk_0300244C == 0 || gUnk_02007CF4[p->playerIndex] != 1)
+    if (gUnk_0300244C == 0 || gAbilityStarInMouth[p->playerIndex] != 1)
         p->abilitySwallowCount++;
     if (*(s8 *)&p->pendingAbility != ABILITY_NORMAL)
         return;
@@ -731,7 +731,7 @@ void ActorAttachedSwallow(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->lateUpdateCallback = (u32)ActorAttachedSwallowLateUpdate;
-    ActorSetTerrainHandlers(gUnk_0873F8F4);
+    ActorSetTerrainHandlers(gNullTerrainHandlers);
     TaskSetPosRelativeToParent();
     u = gCurTask;
     u->actorSwallowed = 0;
@@ -800,7 +800,7 @@ void ActorAttachedBackdropHeld(void)
     u->actorCarriedX = u->pixelX;
     u->actorCarriedY = u->pixelY;
     u->taskClass = 1;
-    ActorSetTerrainHandlers(gUnk_0873F8F4);
+    ActorSetTerrainHandlers(gNullTerrainHandlers);
     gCurTask->actorMouthFull = 0;
     sub_0806bc9c();
     TaskSleepForever();
@@ -820,9 +820,9 @@ void ActorAttachedBackdropHeldUpdate(void)
     ActorAttachedRestorePalette();
     u = gCurTask;
     if (u->actorKind == ACTOR_KIND_MID_BOSS)
-        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F844);
+        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gActorAttachedBackdropMidBossBodyBox);
     else
-        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F830);
+        RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gActorAttachedBackdropBodyBox);
 }
 
 void ActorAttachedBackdropHeldLateUpdate(void)
@@ -870,7 +870,7 @@ void ActorAttachedBackdropFlightUpdate(void)
     }
     t = gCurTask;
     if (t->actorKind == ACTOR_KIND_MID_BOSS)
-        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F844);
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedBackdropMidBossBodyBox);
     else
-        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F830);
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedBackdropBodyBox);
 }

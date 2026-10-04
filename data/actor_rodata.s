@@ -294,11 +294,11 @@ gUnk_0873F800:
 	.global	gUnk_0873F81C
 gUnk_0873F81C:
 	.incbin	"baserom.gba", 0x73F81C, 0x14
-	.global	gUnk_0873F830
-gUnk_0873F830:
+	.global	gActorAttachedBackdropBodyBox
+gActorAttachedBackdropBodyBox:
 	.incbin	"baserom.gba", 0x73F830, 0x14
-	.global	gUnk_0873F844
-gUnk_0873F844:
+	.global	gActorAttachedBackdropMidBossBodyBox
+gActorAttachedBackdropMidBossBodyBox:
 	.incbin	"baserom.gba", 0x73F844, 0x14
 	.global	gUnk_0873F858
 gUnk_0873F858:
@@ -499,8 +499,8 @@ gUnk_0873FD98:
 	.global	gUnk_0873FE98
 gUnk_0873FE98:
 	.incbin	"baserom.gba", 0x73FE98, 0x100
-	.global	gUnk_0873FF98
-gUnk_0873FF98:
+	.global	gSpriteScaleSteps
+gSpriteScaleSteps:
 	.incbin	"baserom.gba", 0x73FF98, 0x100
 	.global	gUnk_08740098
 gUnk_08740098:
@@ -616,8 +616,8 @@ gUnk_08740680:
 	.global	gUnk_08740690
 gUnk_08740690:
 	.incbin	"baserom.gba", 0x740690, 0x10
-	.global	gUnk_087406A0
-gUnk_087406A0:
+	.global	gWaddleDeeJumpAnim
+gWaddleDeeJumpAnim:
 	.incbin	"baserom.gba", 0x7406A0, 0x24
 
 @ 0x087406C4-0x087406EC: C, row actor_tbl_087406c4 (src/data/actor_tables.c section .actor_tbl_087406c4)

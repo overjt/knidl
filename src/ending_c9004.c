@@ -24,7 +24,7 @@
  *       gEndingSceneActive).
  *   EndingStarRodReturnTrailStar, EndingStarRodReturnKirby / EndingStarRodReturnKirbyDraw   variants 4 and 5.
  *   EndingStarRodReturnFountainJet, sub_080ca830, sub_080ca8f0   variants 6-8, scripted
- *       sprites drawn by M05's sub_0801a3e4.
+ *       sprites drawn by M05's FountainSpriteDraw.
  *   EndingStarRodReturnBurstStar   variant 9, eleven sprites bursting out of one point.
  *   EndingStarRodReturnFallingStar / EndingStarRodReturnFallingStarDriftFast / EndingStarRodReturnFallingStarDriftSlow   variant 10, sixteen falling
  *       sprites with two sway scripts.
@@ -927,9 +927,9 @@ void EndingStarRodReturnFallingStarDriftSlow(void)
 void EndingStarRodReturnFountainJet(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a3e4;
+    gCurTask->drawCallback = (u32)FountainSpriteDraw;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08755440;
+    gCurTask->frameTable = gFountainJetFrames;
     gCurTask->tileWord = 0xD350;
     gCurTask->posX = 128 << 16;
     gCurTask->posY = 192 << 16;
@@ -973,7 +973,7 @@ void EndingStarRodReturnFountainJet(void)
 void sub_080ca830(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a3e4;
+    gCurTask->drawCallback = (u32)FountainSpriteDraw;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_0875546C;
     gCurTask->tileWord = 0xD350;
@@ -1005,7 +1005,7 @@ void sub_080ca830(void)
 void sub_080ca8f0(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a3e4;
+    gCurTask->drawCallback = (u32)FountainSpriteDraw;
     gCurTask->layer = 10;
     gCurTask->frameTable = gUnk_08755484;
     gCurTask->tileWord = 0xD350;

@@ -1282,8 +1282,8 @@ gUnk_0873232C:
 	.global	gHubDoorUnlocks
 gHubDoorUnlocks:
 	.incbin	"baserom.gba", 0x732348, 0x7E
-	.global	gUnk_087323C6
-gUnk_087323C6:
+	.global	gWarpStarStationDoorCells
+gWarpStarStationDoorCells:
 	.incbin	"baserom.gba", 0x7323C6, 0x1C
 	.global	gUnk_087323E2
 gUnk_087323E2:
@@ -1306,8 +1306,8 @@ gUnk_087324A6:
 	.global	gUnk_087324DA
 gUnk_087324DA:
 	.incbin	"baserom.gba", 0x7324DA, 0xC8
-	.global	gUnk_087325A2
-gUnk_087325A2:
+	.global	gRoomBgmRemap
+gRoomBgmRemap:
 	.incbin	"baserom.gba", 0x7325A2, 0x72
 
 @ 0x08732614-0x08732630: C, row game_tbl_08732614 (src/data/game_tables.c section .game_tbl_08732614)
@@ -1324,8 +1324,8 @@ gUnk_08732630:
 	.global	gUnk_08732638
 gUnk_08732638:
 	.incbin	"baserom.gba", 0x732638, 0x14
-	.global	gUnk_0873264C
-gUnk_0873264C:
+	.global	gStarDoorOverlaySteps
+gStarDoorOverlaySteps:
 	.incbin	"baserom.gba", 0x73264C, 0xC
 	.global	gScreenShakePattern1
 gScreenShakePattern1:
@@ -1369,8 +1369,8 @@ game_rodata_087328bc:
 	.global	gUnk_087328BC
 gUnk_087328BC:
 	.incbin	"baserom.gba", 0x7328BC, 0x4
-	.global	gUnk_087328C0
-gUnk_087328C0:
+	.global	gMuseumAbilitySignX
+gMuseumAbilitySignX:
 	.incbin	"baserom.gba", 0x7328C0, 0x18
 
 @ 0x087328D8-0x087328F0: C, row game_tbl_087328d8 (src/data/game_tables.c section .game_tbl_087328d8)
@@ -3500,16 +3500,16 @@ gUnk_0873A450:
 	.global	gUnk_0873A458
 gUnk_0873A458:
 	.incbin	"baserom.gba", 0x73A458, 0x24
-	.global	gUnk_0873A47C
-gUnk_0873A47C:
+	.global	gBlockBreakScripts
+gBlockBreakScripts:
 	.word	gUnk_0873A420
 	.word	gUnk_0873A418
 	.word	gUnk_0873A428
 	.word	gUnk_0873A430
 	.word	gUnk_0873A440
 	.word	gUnk_0873A450
-	.global	gUnk_0873A494
-gUnk_0873A494:
+	.global	gBlockHardness
+gBlockHardness:
 	.incbin	"baserom.gba", 0x73A494, 0x140
 	.global	gUnk_0873A5D4
 gUnk_0873A5D4:
@@ -3803,8 +3803,8 @@ gUnk_0873BD3C:
 	.global	gUnk_0873BD50
 gUnk_0873BD50:
 	.incbin	"baserom.gba", 0x73BD50, 0x14
-	.global	gUnk_0873BD64
-gUnk_0873BD64:
+	.global	gPlayerAirPuffBodyBox
+gPlayerAirPuffBodyBox:
 	.incbin	"baserom.gba", 0x73BD64, 0x14
 	.global	gUnk_0873BD78
 gUnk_0873BD78:
@@ -3953,14 +3953,14 @@ gUnk_0873C304:
 	.global	gUnk_0873C318
 gUnk_0873C318:
 	.incbin	"baserom.gba", 0x73C318, 0x40
-	.global	gUnk_0873C358
-gUnk_0873C358:
+	.global	gPlayerParasolBodyBox
+gPlayerParasolBodyBox:
 	.incbin	"baserom.gba", 0x73C358, 0x14
 	.global	gUnk_0873C36C
 gUnk_0873C36C:
 	.incbin	"baserom.gba", 0x73C36C, 0x6E8
-	.global	gUnk_0873CA54
-gUnk_0873CA54:
+	.global	gMetaKnightDefaultBodyBox
+gMetaKnightDefaultBodyBox:
 	.incbin	"baserom.gba", 0x73CA54, 0x14
 	.global	gUnk_0873CA68
 gUnk_0873CA68:
@@ -3989,11 +3989,11 @@ gUnk_0873CB34:
 	.global	gUnk_0873CB3C
 gUnk_0873CB3C:
 	.incbin	"baserom.gba", 0x73CB3C, 0x8
-	.global	gUnk_0873CB44
-gUnk_0873CB44:
+	.global	gPlayerAirPuffTerrainBox
+gPlayerAirPuffTerrainBox:
 	.incbin	"baserom.gba", 0x73CB44, 0x8
-	.global	gUnk_0873CB4C
-gUnk_0873CB4C:
+	.global	gPlayerStarObjectTerrainBox
+gPlayerStarObjectTerrainBox:
 	.incbin	"baserom.gba", 0x73CB4C, 0x8
 	.global	gUnk_0873CB54
 gUnk_0873CB54:
@@ -4213,8 +4213,8 @@ gUnk_0873CF84:
 gUnk_0873CF8C:
 	.incbin	"baserom.gba", 0x73CF8C, 0x4
 	.word	gUnk_0873CF84
-	.global	gUnk_0873CF94
-gUnk_0873CF94:
+	.global	gPlayerParasolHitBoxSet
+gPlayerParasolHitBoxSet:
 	.incbin	"baserom.gba", 0x73CF94, 0x8
 	.global	gUnk_0873CF9C
 gUnk_0873CF9C:
@@ -4235,11 +4235,11 @@ gUnk_0873D04C:
 	.global	gAbilityBButtonActions
 gAbilityBButtonActions:
 	.incbin	"baserom.gba", 0x73D0C4, 0x34
-	.global	gUnk_0873D0F8
-gUnk_0873D0F8:
+	.global	gPlayerStandFrames
+gPlayerStandFrames:
 	.incbin	"baserom.gba", 0x73D0F8, 0x10E
-	.global	gUnk_0873D206
-gUnk_0873D206:
+	.global	gMetaKnightStandFrames
+gMetaKnightStandFrames:
 	.incbin	"baserom.gba", 0x73D206, 0xA
 	.global	gUnk_0873D210
 gUnk_0873D210:
@@ -4256,8 +4256,8 @@ gUnk_0873D31C:
 	.global	gUnk_0873D350
 gUnk_0873D350:
 	.incbin	"baserom.gba", 0x73D350, 0x34
-	.global	gUnk_0873D384
-gUnk_0873D384:
+	.global	gPlayerJumpFrames
+gPlayerJumpFrames:
 	.incbin	"baserom.gba", 0x73D384, 0x34
 	.global	gUnk_0873D3B8
 gUnk_0873D3B8:

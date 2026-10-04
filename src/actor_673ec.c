@@ -1173,7 +1173,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     t->parent = i;
     t->moveCallback = (u32)PlayerMove;
     t->updateCallback = (u32)PlayerUpdate;
-    t->lateUpdateCallback = (u32)sub_0803332c;
+    t->lateUpdateCallback = (u32)PlayerLateUpdate;
     if (b == 0)
     {
         if (t->waterFlags == 0)

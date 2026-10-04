@@ -201,7 +201,7 @@ void Task_NightmarePowerOrbEscape(void)
         t->drawCallback = (u32)ActorDrawWorldNearView;
         t->layer = 11;
     }
-    gCurTask->frameTable = gUnk_0875549C;
+    gCurTask->frameTable = gNightmarePowerOrbEscapeFrames;
     RequestCopy(2, (u32)gUnk_085E6FA4, IWRAM_START + 0x15B0, 64);
     LZ77UnCompWram(gUnk_085E6FE4, (void *)(EWRAM_START + 0x20000));
     RequestCopy(4, EWRAM_START + 0x20000, OBJ_VRAM0 + 0x3000, 0x800);
@@ -349,7 +349,7 @@ void Task_NightmarePowerOrbEscapeStar(void)
     {
         struct Task *t = gCurTask;
 
-        t->frameTable = gUnk_0875549C;
+        t->frameTable = gNightmarePowerOrbEscapeFrames;
         t->tileWord = 0xA210;
     }
     TaskStop();
@@ -1247,8 +1247,8 @@ void NightmarePowerOrbEscapeStarDraw(void)
 
     if (t->nightmarePowerOrbEscapeStarScale != 63 || t->nightmarePowerOrbEscapeStarAngle != 0)
     {
-        gfx = DrawAffineSprite(g[t->frame], gUnk_0873FF98[t->nightmarePowerOrbEscapeStarScale >> 16],
-                           gUnk_0873FF98[t->nightmarePowerOrbEscapeStarScale >> 16], (s16)t->nightmarePowerOrbEscapeStarAngle);
+        gfx = DrawAffineSprite(g[t->frame], gSpriteScaleSteps[t->nightmarePowerOrbEscapeStarScale >> 16],
+                           gSpriteScaleSteps[t->nightmarePowerOrbEscapeStarScale >> 16], (s16)t->nightmarePowerOrbEscapeStarAngle);
         {
             struct Task *u = gCurTask;
 

@@ -116,8 +116,8 @@ void PlayerWarpStarRideDraw(void)
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
         u->spriteFlags &= 0x7FFF;
         gfx = DrawAffineSprite(PlayerLoadFrameTilesAndPalette(0),
-                           (u16)gUnk_0873FF98[((s16 *)gCurTask)[13]] * sign,
-                           gUnk_0873FF98[((s16 *)gCurTask)[13]], 0);
+                           (u16)gSpriteScaleSteps[((s16 *)gCurTask)[13]] * sign,
+                           gSpriteScaleSteps[((s16 *)gCurTask)[13]], 0);
         if (sign < 0)
             gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     }

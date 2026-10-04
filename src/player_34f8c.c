@@ -31,7 +31,7 @@ void TaskSetEntry(void *a, u32 i);
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
 u32 RegisterCollider(u8 idx, s16 x, s16 y, u8 *p);
-void sub_0803ccd8(s32 a);                     /* M10: lsls r0, #2 on entry, void epilogue */
+void PlayerSetParasolDriftRow(s32 a);                     /* M10: lsls r0, #2 on entry, void epilogue */
 void PlayerSetMotionXPreset(s32 a0, s32 a1);           /* M11, still asm; M11's own spelling */
 void CreatePlayerObject(s32 a, s32 b, s32 c);
 
@@ -136,76 +136,76 @@ void PlayerActionFall(void)
                 gCurTask->playerParasolSwayAccelX = -0x400;
             else
                 gCurTask->playerParasolSwayAccelX = 0x400;
-            sub_0803ccd8(0);
+            PlayerSetParasolDriftRow(0);
             TaskSetFrame(0x839);
             TaskYieldTrampoline(8);
-            sub_0803ccd8(1);
+            PlayerSetParasolDriftRow(1);
             gCurTask->frame--;
             TaskYieldTrampoline(8);
-            sub_0803ccd8(2);
+            PlayerSetParasolDriftRow(2);
             gCurTask->frame--;
             TaskYieldTrampoline(8);
-            sub_0803ccd8(3);
+            PlayerSetParasolDriftRow(3);
             gCurTask->frame--;
             TaskYieldTrampoline(8);
-            sub_0803ccd8(4);
+            PlayerSetParasolDriftRow(4);
             gCurTask->frame--;
             TaskYieldTrampoline(8);
             if (gCurTask->facing == 1)
                 gCurTask->playerParasolSwayAccelX = -0x800;
             else
                 gCurTask->playerParasolSwayAccelX = 0x800;
-            sub_0803ccd8(5);
+            PlayerSetParasolDriftRow(5);
             TaskSetFrame(0x840);
             TaskYieldTrampoline(4);
-            sub_0803ccd8(6);
+            PlayerSetParasolDriftRow(6);
             TaskSetFrame(0x836);
             TaskYieldTrampoline(4);
-            sub_0803ccd8(7);
+            PlayerSetParasolDriftRow(7);
             gCurTask->frame++;
             TaskYieldTrampoline(4);
-            sub_0803ccd8(8);
+            PlayerSetParasolDriftRow(8);
             gCurTask->frame++;
             TaskYieldTrampoline(4);
-            sub_0803ccd8(9);
+            PlayerSetParasolDriftRow(9);
             gCurTask->frame++;
             TaskYieldTrampoline(4);
             if (gCurTask->facing == 1)
                 gCurTask->playerParasolSwayAccelX = 0x400;
             else
                 gCurTask->playerParasolSwayAccelX = -0x400;
-            sub_0803ccd8(10);
+            PlayerSetParasolDriftRow(10);
             TaskSetFrame(0x83A);
             TaskYieldTrampoline(8);
-            sub_0803ccd8(11);
+            PlayerSetParasolDriftRow(11);
             gCurTask->frame++;
             TaskYieldTrampoline(8);
-            sub_0803ccd8(12);
+            PlayerSetParasolDriftRow(12);
             gCurTask->frame++;
             TaskYieldTrampoline(8);
-            sub_0803ccd8(13);
+            PlayerSetParasolDriftRow(13);
             gCurTask->frame++;
             TaskYieldTrampoline(8);
-            sub_0803ccd8(14);
+            PlayerSetParasolDriftRow(14);
             gCurTask->frame++;
             TaskYieldTrampoline(8);
             if (gCurTask->facing == 1)
                 gCurTask->playerParasolSwayAccelX = 0x800;
             else
                 gCurTask->playerParasolSwayAccelX = -0x800;
-            sub_0803ccd8(15);
+            PlayerSetParasolDriftRow(15);
             TaskSetFrame(0x83F);
             TaskYieldTrampoline(4);
-            sub_0803ccd8(16);
+            PlayerSetParasolDriftRow(16);
             TaskSetFrame(0x83D);
             TaskYieldTrampoline(4);
-            sub_0803ccd8(17);
+            PlayerSetParasolDriftRow(17);
             gCurTask->frame--;
             TaskYieldTrampoline(4);
-            sub_0803ccd8(18);
+            PlayerSetParasolDriftRow(18);
             gCurTask->frame--;
             TaskYieldTrampoline(4);
-            sub_0803ccd8(19);
+            PlayerSetParasolDriftRow(19);
             gCurTask->frame--;
             TaskYieldTrampoline(4);
         }

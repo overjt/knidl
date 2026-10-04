@@ -443,7 +443,7 @@ void EndingEpilogueWarpStar(void)
 
 /* Task type #100 variant 1's draw callback: grow the scale Task.unk18 by
    Task.unk28 (clamped to 0 .. 127 in 16.16), alternate two animation frames
-   every three calls and draw the sprite, scaled through gUnk_0873FF98[] when
+   every three calls and draw the sprite, scaled through gSpriteScaleSteps[] when
    the scale is not 1.0 (0x100). */
 void EndingEpilogueWarpStarDraw(void)
 {
@@ -466,7 +466,7 @@ void EndingEpilogueWarpStarDraw(void)
         t = gCurTask;
         if ((u16)(t->pixelX + 63) <= 366 && t->pixelY > -64 && t->pixelY < 224) {
             tbl = t->frameTable;
-            scale = gUnk_0873FF98[t->endingEpilogueScale >> 16];
+            scale = gSpriteScaleSteps[t->endingEpilogueScale >> 16];
             if ((u16)scale != 0x100)
                 QueueSprite(gCurTask->layer, DrawAffineSprite(tbl[t->frame + n], scale, scale, 0),
                              gCurTask->spriteFlags, gCurTask->tileWord, gCurTask->pixelX,

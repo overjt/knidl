@@ -10,7 +10,7 @@
  * sizes, borders, object count and flags into the room cells; the camera
  * loads its palettes, tiles, metatile tiles and BG3 map
  * (src/camera_28b8c.c:298-340) and its entry point (:151), the doors are
- * walked by sub_08026b60 (src/door_26b60.c:26) and EnterDoor, the block
+ * walked by SetDoorsOpenNearRoomEntry (src/door_26b60.c:26) and EnterDoor, the block
  * table unk10 by src/block_30804.c:459.  filler00 is {level, stage, room,
  * 0} in every record, but no code reads it.
  *

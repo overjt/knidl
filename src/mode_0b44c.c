@@ -43,7 +43,7 @@ void ResetLevelStateAtHub(void);
 void sub_08022f98(void);
 void ClearRoomBgmStarted(void);
 void LoadRoom(void);
-void sub_080233e0(void);
+void LoadRoomAfterBigSwitchView(void);
 void LoadHubRoom(void);
 void LoadBigSwitchViewRoom(void);
 
@@ -156,7 +156,7 @@ void StageInit(void)
     if (gBigSwitchPressActive == 0)
         LoadRoom();
     else
-        sub_080233e0();
+        LoadRoomAfterBigSwitchView();
     if ((u8)(gRoomPlayerMode - 2) <= 1)
         sub_08008cb8();
     /* The ROM loads these four addresses before the clear loop below; only
@@ -188,7 +188,7 @@ void StageInit(void)
         gPlayerHeldKeys[player] = gPlayerPressedKeys[player] = gLatchedHeldKeys[player] = gLatchedPressedKeys[player] = 0;
     gStageRequest = STAGE_REQUEST_NONE;
     if (gUnk_0300244C != 0) {
-        b2 = gUnk_02007CF4;
+        b2 = gAbilityStarInMouth;
         zero2 = 0;
         p2 = b2 + 3;
         do {
