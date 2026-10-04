@@ -89,13 +89,16 @@ module by module, is [`docs/history.md`](docs/history.md).
   interworking veneer) is `docs/audit.md` section 2, checked against
   `tools/calcrom.pl`'s exclusions.
 - **Code exceptions** (`docs/audit.md` section 3): no `register` pin is
-  left; two functions keep zero-byte `asm("")` levers -
-  `PoppyBrosSrHeadUpdate` (formerly `sub_08091e18`, one lever, lesson
-  3.156) and `BootLogoUpdateObjects` (formerly `sub_080caab8`, #152's two
-  approved levers, lesson 3.494) - plus `BLOCK_CROSS_JUMP` tails the ROM
-  really duplicates, the SDK's own inline asm and commented zero-code
-  stand-ins.  #37 made the third #154 leftover, `sub_080b38f0`, plain
-  (two zero-code stand-ins instead of 10 pins and 6 levers, lesson 3.524).
+  left; one function keeps two zero-byte `asm("")` levers by design,
+  `BootLogoUpdateObjects` (formerly `sub_080caab8`, #152's approved
+  levers; #169 measured why its plain store folds and accepted the
+  residue as final, lessons 3.494 and 3.527) - plus `BLOCK_CROSS_JUMP`
+  tails the ROM really duplicates, the SDK's own inline asm and commented
+  zero-code stand-ins.  #37 made the third #154 leftover, `sub_080b38f0`, plain
+  (two zero-code stand-ins instead of 10 pins and 6 levers, lesson 3.524),
+  and #169 made `PoppyBrosSrHeadUpdate` (formerly `sub_08091e18`) plain:
+  a redundant end-of-script store, which post-reload cse deletes, replaces
+  its lever (lesson 3.526).
 - **Data: #36, closed by #162; #167; #168.**  `data/*.s` is structure only
   (labels, symbolic pointers, `.incbin "baserom.gba"` slices; `make
   check-data`), one file per zone (a zone cut around C runs keeps one
@@ -138,8 +141,9 @@ module by module, is [`docs/history.md`](docs/history.md).
   states that no defined verb or single slot covers and one-caller
   helpers; 3 task bodies, #88, #209 and #220; 124 `gUnk_` RAM cells; the
   per-family `Task` fields `unk18`-`unk34`/`unk46`/`unk74`, which a census
-  showed need one member per family; asset labels); (4) natural forms for
-  the two levered functions.
+  showed need one member per family; asset labels).  A natural form
+  for `BootLogoUpdateObjects` would still be welcome but is not tracked
+  (lesson 3.527 says what it must do).
 - **Docs:** `docs/decomp-loop.md`, `docs/lessons-learned.md` (its "Start
   here" list first), `docs/splitting.md`, `docs/data.md`, `docs/naming.md`,
   `docs/header-conventions.md`, `docs/audit.md`, `docs/history.md`,

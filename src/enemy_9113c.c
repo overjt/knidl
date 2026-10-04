@@ -31,8 +31,10 @@
  * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.palette) and dispatches
  * Task.variant through the 27-entry anchor table at 0x08743ADC.
  *
- * The one empty `asm` in PoppyBrosSrHeadUpdate is load-bearing and emits no code; see
- * lessons-learned 3.156 for why the register allocation needs it.
+ * PoppyBrosSrHeadUpdate's end-of-script store (`w->unk28 = 0`) emits no
+ * code: the timer is already 0 on that path, so post-reload cse deletes it,
+ * but until reload it keeps the decremented timer live into the frame test,
+ * which is the ROM's register allocation (lessons-learned 3.526).
  */#include "gba/gba.h"
 #include "global.h"
 #include "task.h"
@@ -668,11 +670,8 @@ void PoppyBrosSrHeadUpdate(void)
     struct Task *w;
     struct AnimCmd *p;
     struct AnimCmd *q;
-    s32 n;
-    s32 d2;
-    s32 n3;
-    u32 b2;
-    u16 frame;
+    u32 base;
+    s16 frame;
 
     if ((s16)gTaskSlotTypes[gCurTask->parent] != -1)
     {
@@ -694,27 +693,28 @@ void PoppyBrosSrHeadUpdate(void)
                 v->frame = p->frame;
             }
             w = gCurTask;
-            n3 = w->unk28;
-            if (n3 != 0)
+            if (w->unk28 != 0 && --w->unk28 == 0)
             {
-                d2 = n3 - 1;
-                w->unk28 = d2;
-                if (d2 == 0)
+                w->unk2C++;
+                base = (u32)gPoppyBrosSrHeadAnims[w->unk30];
+                q = (struct AnimCmd *)(w->unk2C * 4 + base);
+                frame = q->frame;
+                if (frame == -1)
                 {
-                    n = ++w->unk2C;
-                    b2 = (u32)gPoppyBrosSrHeadAnims[w->unk30];
-                    q = (struct AnimCmd *)(n * 4 + b2);
-                    frame = q->frame;
-                    if (q->frame != -1)
-                    {
-                        /* Emits no code: it keeps the decremented timer
-                         * live through this test, which is what pins the
-                         * ldrsh scratch registers and the subtract's
-                         * destination (lessons-learned 3.156). */
-                        asm("" : : "r"(d2));
-                        w->unk28 = q->delay;
-                        w->frame = frame;
-                    }
+                    /* End of the script: stop with the timer at 0.  The
+                     * store is redundant on this path (the timer is already
+                     * 0): cse turns it into a store of the decremented
+                     * value and post-reload cse (reload_cse) deletes it, so
+                     * it emits no code, but it keeps the decremented value
+                     * live into the frame test, as the ROM's registers show
+                     * (`subs r4, r0, #1` and the ldrsh scratches; lessons
+                     * 3.156, 3.526).  Do not remove it. */
+                    w->unk28 = 0;
+                }
+                else
+                {
+                    w->unk28 = q->delay;
+                    w->frame = frame;
                 }
             }
         }

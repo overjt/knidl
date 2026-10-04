@@ -92,8 +92,8 @@ into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
   [docs/audit.md](docs/audit.md) section 2.
 - **Code exceptions.** The C is plain C apart from the sites
   [docs/audit.md](docs/audit.md) section 3 lists: no register pin is left,
-  and two functions keep zero-byte `asm("")` levers
-  (`PoppyBrosSrHeadUpdate` and `BootLogoUpdateObjects`); the rest are
+  and one function keeps two zero-byte `asm("")` levers by design
+  (`BootLogoUpdateObjects`, lesson 3.527); the rest are
   `BLOCK_CROSS_JUMP` tails, the SDK's own inline asm and documented
   zero-code stand-ins.
 - **Data** (#36, closed; #167). The ROM's data is structure, not bytes:
