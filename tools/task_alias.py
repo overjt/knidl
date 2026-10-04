@@ -6,6 +6,7 @@ Usage:
     tools/task_alias.py --verify-cpp REF
     tools/task_alias.py --verify-types
     tools/task_alias.py --list
+    tools/task_alias.py --rename OLD NEW [--family F --header H --type T --role R] --evidence E [--write]
 
 `struct Task`'s registers (`unk18`-`unk34`, `unk46`, `unk6C`-`unk70`,
 `unk74`) hold a different thing in every task family.  pret names such
@@ -132,6 +133,11 @@ def blank_comments(text):
 
 
 def lcfirst(s):
+    """The family word in lowerCamelCase: `FireLion` -> `fireLion`, and a
+    leading acronym in lower case: `UFO` -> `ufo`, `UFOLaser` -> `ufoLaser`."""
+    m = re.match(r"^([A-Z]+)(?=[A-Z][a-z]|$)", s)
+    if m and len(m.group(1)) > 1:
+        return m.group(1).lower() + s[len(m.group(1)):]
     return s[:1].lower() + s[1:]
 
 
@@ -470,6 +476,65 @@ def verify_types():
     print("verify-types: OK - every alias names a member of struct Task")
 
 
+def rename_alias(old, new, family, header, typ, role, evidence, do_write):
+    """Rename an applied alias, or merge it into an existing alias of the same
+    member (a family alias that turned out to be a shared role)."""
+    blocks = parse_vars()
+    where = {d[0]: (b, d) for b in blocks for d in b[2]}
+    if old not in where:
+        raise AliasError("%s is not an alias" % old)
+    ob, od = where[old]
+    field = od[1]
+    if new in where:
+        if where[new][1][1] != field:
+            raise AliasError("%s is %s, not %s" % (new, where[new][1][1], field))
+        merge = True
+    else:
+        merge = False
+        if not ALIAS_RE.match(new) or new.lower() in tree_identifiers():
+            raise AliasError("%s: not a fresh lowerCamelCase identifier" % new)
+        if not family:
+            family = ob[0]
+        if not new.startswith(lcfirst(family)):
+            raise AliasError("%s must start with %s" % (new, lcfirst(family)))
+    edits = 0
+    changed = {}
+    for top in ("src", "include"):
+        for base, dirs, files in os.walk(os.path.join(ROOT, top)):
+            for f in files:
+                if not f.endswith((".c", ".h")) or f == "task_vars.h":
+                    continue
+                path = os.path.join(base, f)
+                text = read(path)
+                code = blank_comments(text)
+                pos = [m.start(1) for m in re.finditer(r"(?:->|\.)\s*(%s)(?![A-Za-z0-9_])" % re.escape(old), code)]
+                for p in sorted(pos, reverse=True):
+                    text = text[:p] + new + text[p + len(old):]
+                if pos:
+                    edits += len(pos)
+                    changed[path] = text
+    print("%s -> %s (%s): %d accesses in %d files%s" % (old, new, "merge" if merge else "rename",
+          edits, len(changed), "" if do_write else " (dry run)"))
+    if not do_write:
+        return
+    ob[2].remove(od)
+    if not ob[2]:
+        blocks.remove(ob)
+    if not merge:
+        byfam = {b[0]: b for b in blocks}
+        if family not in byfam:
+            if not header:
+                raise AliasError("family %s is new: give --header" % family)
+            byfam[family] = (family, header, [])
+            blocks.append(byfam[family])
+        byfam[family][2].append((new, field, typ or od[2], role or od[3]))
+    for path, text in changed.items():
+        write(path, text)
+    write(VARS_H, render_vars(blocks))
+    with open(RENAMES, "a", newline="", encoding="utf-8") as f:
+        csv.writer(f, lineterminator="\n").writerow(["Task." + old, "Task." + new, "alias", evidence, "155"])
+
+
 def list_aliases():
     blocks = parse_vars()
     total = 0
@@ -487,6 +552,13 @@ def main():
     ap.add_argument("--verify-cpp", metavar="REF")
     ap.add_argument("--verify-types", action="store_true")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--rename", nargs=2, metavar=("OLD", "NEW"),
+                    help="rename an applied alias, or merge it into an existing one of the same member")
+    ap.add_argument("--family")
+    ap.add_argument("--header")
+    ap.add_argument("--type")
+    ap.add_argument("--role")
+    ap.add_argument("--evidence")
     args = ap.parse_args()
     try:
         if args.verify_cpp:
@@ -495,6 +567,11 @@ def main():
             verify_types()
         elif args.list:
             list_aliases()
+        elif args.rename:
+            if not args.evidence:
+                ap.error("--rename needs --evidence")
+            rename_alias(args.rename[0], args.rename[1], args.family, args.header, args.type,
+                         args.role, args.evidence, args.write)
         elif args.defs:
             run(args.defs, args.sites, args.write)
         else:

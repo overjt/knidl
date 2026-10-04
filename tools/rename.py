@@ -466,13 +466,31 @@ def verify_diff(ref):
     field_pairs = compose_field_renames(fields)
     # Task register aliases (tools/task_alias.py): `Task.unkXX` -> `Task.alias`,
     # an object-like macro in include/task_vars.h used after `.`/`->`.
-    alias_pairs = set()
+    # A row whose old member is itself an alias renames (or merges) that
+    # alias; the final map is alias -> member, starting from REF's macros.
+    try:
+        ref_defs = defines_of(git("show", "%s:%s" % (ref, TASK_VARS))) or set()
+    except RenameError:
+        ref_defs = set()
+    alias_field = {a: f for a, f in ref_defs}
+    origin = {a: a for a in alias_field}  # final alias -> its name in REF
     for r in aliases:
         tag, o = r["old"].split(".", 1)
         tag2, n = r["new"].split(".", 1)
         if tag != "Task" or tag2 != "Task":
             raise RenameError("alias %s -> %s is not a struct Task register" % (r["old"], r["new"]))
-        alias_pairs.add((o, n))
+        if o in alias_field:
+            f = alias_field.pop(o)
+            if alias_field.get(n, f) != f:
+                raise RenameError("alias %s -> %s merges two members" % (o, n))
+            alias_field[n] = f
+            if o in origin:
+                origin.setdefault(n, origin.pop(o))
+        else:
+            alias_field[n] = o
+    # accepted token pairs (REF's token, the tree's token)
+    alias_pairs = {(f, a) for a, f in alias_field.items()}
+    alias_pairs |= {(old, a) for a, old in origin.items() if old != a}
     field_uses = {}
     # Compose the renames since REF into one forward map (old -> final name),
     # following chains (A -> B, then B -> C), and apply it to REF's text the
@@ -508,14 +526,9 @@ def verify_diff(ref):
             # The alias macros: only #define lines (and the guard) outside
             # comments, exactly the ref's aliases plus the logged ones.
             checked += 1
-            try:
-                old_defs = defines_of(git("show", "%s:%s" % (ref, path)))
-            except RenameError:
-                old_defs = set()
             with open(os.path.join(ROOT, path), encoding="utf-8") as f:
                 new_defs = defines_of(f.read())
-            if new_defs is None or old_defs is None or \
-                    new_defs != old_defs | {(n, o) for o, n in alias_pairs}:
+            if new_defs is None or new_defs != set(alias_field.items()):
                 problems.append("%s: its #define lines are not the logged aliases" % path)
             continue
         if not path.startswith(surface):
@@ -594,9 +607,9 @@ def verify_diff(ref):
     for (tag, o), n in sorted(field_pairs.items()):
         if not field_uses.get((o, n)):
             problems.append("field %s.%s -> %s: no use renamed" % (tag, o, n))
-    for o, n in sorted(alias_pairs):
-        if not field_uses.get((o, n)):
-            problems.append("alias Task.%s -> %s: no use" % (o, n))
+    for a, f in sorted(alias_field.items()):
+        if a not in origin and not field_uses.get((f, a)):
+            problems.append("alias Task.%s -> %s: no use" % (f, a))
     for p in comment_only:
         print("  comment edits (review them): %s" % p)
     for p in outside:
