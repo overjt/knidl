@@ -242,15 +242,15 @@ void sub_080a0588(void);
 u8 sub_080a0598(void);
 s32 sub_080a1df8(void);
 s32 sub_080a1e4c(void);
-s32 sub_080a1ec4(void);
-s32 sub_080a1fc8(void);
-s32 sub_080a7260(void);
-s32 sub_080a72fc(void);
+s32 MrShineAndMrBrightReactToDefeat(void);
+s32 MrShineAndMrBrightReactToDamage(void);
+s32 MetaKnightReactToDamage(void);
+s32 MetaKnightReactToDefeat(void);
 s32 sub_080a7334(void);
 s32 sub_080a9760(void);
 s32 sub_080a97d8(void);
-s32 sub_080ab854(void);
-s32 sub_080ab8a8(void);
+s32 NightmareWizardReactToDamage(void);
+s32 NightmareWizardReactToDefeat(void);
 void sub_080ad128(void);
 s32 sub_080ad13c(void);
 void sub_080adb58(void);
@@ -1715,8 +1715,8 @@ struct ActorVt gUnk_08748980 ACTOR_TBL(08748930) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080a1fc8,
-    .unk08 = (u32)sub_080a1ec4,
+    .unk04 = (u32)MrShineAndMrBrightReactToDamage,
+    .unk08 = (u32)MrShineAndMrBrightReactToDefeat,
 };
 /* src/enemy_a1590.c */
 struct ActorVt gUnk_0874898C ACTOR_TBL(08748930) = {
@@ -1731,8 +1731,8 @@ struct ActorVt gUnk_08748998 ACTOR_TBL(08748930) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080a1fc8,
-    .unk08 = (u32)sub_080a1ec4,
+    .unk04 = (u32)MrShineAndMrBrightReactToDamage,
+    .unk08 = (u32)MrShineAndMrBrightReactToDefeat,
 };
 
 /* ---- 0x08748CF8-0x08748D28: 4 record(s), section .actor_tbl_08748cf8 ---- */
@@ -1785,8 +1785,8 @@ struct ActorVt gUnk_08749B24 ACTOR_TBL(08749b08) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080a7260,
-    .unk08 = (u32)sub_080a72fc,
+    .unk04 = (u32)MetaKnightReactToDamage,
+    .unk08 = (u32)MetaKnightReactToDefeat,
 };
 /* src/enemy_a5644.c */
 struct ActorVt gUnk_08749B30 ACTOR_TBL(08749b08) = {
@@ -1817,8 +1817,8 @@ struct ActorVt gUnk_08749B54 ACTOR_TBL(08749b08) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080ab854,
-    .unk08 = (u32)sub_080ab8a8,
+    .unk04 = (u32)NightmareWizardReactToDamage,
+    .unk08 = (u32)NightmareWizardReactToDefeat,
 };
 /* src/enemy_aa338.c */
 struct ActorVt gUnk_08749B60 ACTOR_TBL(08749b08) = {

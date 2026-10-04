@@ -12133,7 +12133,7 @@ u32 gUnk_08754560[] FRAME_TABLE = {
     (u32)gUnk_082FFDE8,
 };
 
-/* gUnk_08754568.  Consumer: sub_080ab8a8 (src/enemy_aa338.c:998).  1 word,
+/* gUnk_08754568.  Consumer: NightmareWizardReactToDefeat (src/enemy_aa338.c:998).  1 word,
  * struct TaskGfx records; extent: the span to the next label, every word
  * such a target (pointer_tables 0x08754568-0x0875456C).  Declared
  * include/enemy.h:1272. */
@@ -12255,7 +12255,7 @@ u32 gUnk_087546D0[] FRAME_TABLE = {
     (u32)&gUnk_08331694,
 };
 
-/* gUnk_087546F8.  Consumer: sub_080ac410 (src/enemy_aa338.c:1476).  4
+/* gUnk_087546F8.  Consumer: Task_NightmareWizardCloakTornado (src/enemy_aa338.c:1476).  4
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087546F8-0x08754708).  Declared
  * include/enemy.h:1275. */
@@ -12266,7 +12266,7 @@ u32 gUnk_087546F8[] FRAME_TABLE = {
     (u32)&gUnk_083032DC,
 };
 
-/* gUnk_08754708.  Consumer: sub_080abf10 (src/enemy_aa338.c:1233).  4
+/* gUnk_08754708.  Consumer: Task_NightmareWizardPalmTornado (src/enemy_aa338.c:1233).  4
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754708-0x08754718).  Declared
  * include/enemy.h:1276. */
@@ -12277,7 +12277,7 @@ u32 gUnk_08754708[] FRAME_TABLE = {
     (u32)&gUnk_083111E0,
 };
 
-/* gUnk_08754718.  Consumer: sub_080ac124 (src/enemy_aa338.c:1334).  8
+/* gUnk_08754718.  Consumer: Task_NightmareWizardPointTornado (src/enemy_aa338.c:1334).  8
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08754718-0x08754738).  Declared
  * include/enemy.h:1277. */

@@ -212,11 +212,11 @@ void Task_KrackoLightningMiddle(void);
 void Task_KrackoLightningBottom(void);
 void Task_BugzzyAfterimage(void);
 void Task_NightmareWizardPalm(void);
-void sub_080abf10(void);
+void Task_NightmareWizardPalmTornado(void);
 void Task_NightmareWizardPointingHand(void);
-void sub_080ac124(void);
+void Task_NightmareWizardPointTornado(void);
 void Task_NightmareWizardCloakHands(void);
-void sub_080ac410(void);
+void Task_NightmareWizardCloakTornado(void);
 void Task_NightmareWizardPendant(void);
 void sub_080ac510(void);
 void sub_080abd04(void);
@@ -482,11 +482,11 @@ const struct TaskType gTaskTypes[] = {
     /* 199 */ { 4, { 0, 0, 0 }, (u32)Task_KrackoLightningBottom },
     /* 200 */ { 4, { 0, 0, 0 }, (u32)Task_BugzzyAfterimage },
     /* 201 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPalm },
-    /* 202 */ { 3, { 0, 0, 0 }, (u32)sub_080abf10 },
+    /* 202 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPalmTornado },
     /* 203 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPointingHand },
-    /* 204 */ { 3, { 0, 0, 0 }, (u32)sub_080ac124 },
+    /* 204 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPointTornado },
     /* 205 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardCloakHands },
-    /* 206 */ { 3, { 0, 0, 0 }, (u32)sub_080ac410 },
+    /* 206 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardCloakTornado },
     /* 207 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPendant },
     /* 208 */ { 3, { 0, 0, 0 }, (u32)sub_080ac510 },
     /* 209 */ { 3, { 0, 0, 0 }, (u32)sub_080abd04 },

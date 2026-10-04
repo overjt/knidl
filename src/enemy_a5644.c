@@ -117,7 +117,7 @@ void MetaKnightUpdate(void)
             switch (gCurTask->hitEffect)
             {
             case 4:
-                gUnk_03001F2C = sub_080a6e1c();
+                gUnk_03001F2C = MetaKnightGetHealthQuarter();
                 q = &gUnk_03002448;
                 rr = RandomRange(16);
                 *q = rr;
@@ -625,7 +625,7 @@ void sub_080a6330(void)
         sub_080a7168();
 }
 
-void sub_080a634c(void)
+void MetaKnightLand(void)
 {
     gCurTask->updateState = 10;
     TaskStop();
@@ -638,7 +638,7 @@ void sub_080a634c(void)
     TaskSleepForever();
 }
 
-void sub_080a638c(void)
+void MetaKnightLandUpdate(void)
 {
     if (gCurTask->state != 10)
         sub_080a7168();
@@ -676,7 +676,7 @@ void sub_080a6420(void)
         sub_080a7168();
 }
 
-void sub_080a6438(void)
+void MetaKnightSwordSpin(void)
 {
     struct Task *t;
     s32 i;
@@ -711,7 +711,7 @@ void sub_080a6438(void)
     TaskSleepForever();
 }
 
-void sub_080a650c(void)
+void MetaKnightSwordSpinUpdate(void)
 {
     if ((u8)sub_080a6f74() == 1)
         TaskTurnAroundAndReverseX();
@@ -739,7 +739,7 @@ void sub_080a6574(void)
         sub_080a7168();
 }
 
-void sub_080a658c(void)
+void MetaKnightDownThrust(void)
 {
     gCurTask->updateState = 15;
     TaskStop();
@@ -762,7 +762,7 @@ void sub_080a658c(void)
     TaskSleepForever();
 }
 
-void sub_080a6628(void)
+void MetaKnightDownThrustUpdate(void)
 {
     if ((u8)sub_080a6f74() == 1)
         TaskTurnAroundAndReverseX();
@@ -789,7 +789,7 @@ void sub_080a6680(void)
 void sub_080a6698(void)
 {
     gCurTask->updateState = 17;
-    sub_080a7080();
+    MetaKnightUpwardSlash();
     TaskSetMotionY(0, 168 << 5, 192 << 10);
     TaskSetFrame(80);
     TaskSleepForever();
@@ -812,7 +812,7 @@ void sub_080a6710(void)
 {
     gCurTask->updateState = 18;
     TaskStop();
-    sub_080a7080();
+    MetaKnightUpwardSlash();
     ActorSetState(2);
     TaskSleepForever();
 }
@@ -870,7 +870,7 @@ void sub_080a680c(void)
         sub_080a7168();
 }
 
-void sub_080a6868(void)
+void MetaKnightDoubleSlash(void)
 {
     struct Task *t;
 
@@ -909,7 +909,7 @@ void sub_080a6868(void)
     TaskSleepForever();
 }
 
-void sub_080a6988(void)
+void MetaKnightDoubleSlashUpdate(void)
 {
     s32 v;
 
@@ -1110,7 +1110,7 @@ void sub_080a6d60(void)
     }
 }
 
-s32 sub_080a6e1c(void)
+s32 MetaKnightGetHealthQuarter(void)
 {
     s32 x = gCurTask->health;
     s32 q = gUnk_02007D00[3] >> 2;
@@ -1230,7 +1230,7 @@ void sub_080a6fb4(void)
     }
 }
 
-void sub_080a7080(void)
+void MetaKnightUpwardSlash(void)
 {
     gUnk_02007D00[4] = -1;
     TaskSetFrame(98);
@@ -1292,14 +1292,14 @@ s32 sub_080a720c(void)
     if (gCurTask->unk28 & 3)
     {
         gCurTask->unk28--;
-        k = sub_080a6e1c();
+        k = MetaKnightGetHealthQuarter();
         if (RandomRange(16) < gUnk_08748D74[k])
             return 1;
     }
     return 0;
 }
 
-s32 sub_080a7260(void)
+s32 MetaKnightReactToDamage(void)
 {
     gBg2Cnt |= 64;
     gBg3Cnt |= 64;
@@ -1319,7 +1319,7 @@ void sub_080a72b0(void)
     }
 }
 
-s32 sub_080a72fc(void)
+s32 MetaKnightReactToDefeat(void)
 {
     TaskStop();
     ActorSetHitReactions((u32)gUnk_08749B30);
