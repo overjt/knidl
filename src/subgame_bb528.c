@@ -460,7 +460,7 @@ void CreateQuickDrawDefeatedLabel(void)
         quickDrawObject->pixelY = 16;
         quickDrawObject->unk28 = -12;
         quickDrawObject->unk2C = 80;
-        quickDrawObject->unk30 = (s32)gUnk_08755A88;
+        quickDrawObject->unk30 = (s32)gQuickDrawDefeatedFrames;
         quickDrawObject->unk34 = 0;
     }
 }

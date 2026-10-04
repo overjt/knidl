@@ -14,7 +14,7 @@
  * sub-states respawn variant 32 and install PlayerEffectBurningFlamesUpdate, which kills the
  * task once the player leaves mode 13 or the spawner's Task.waterFlags bit 0 is
  * set.  Variant 33 (PlayerEffectUFOLaserTrail, spawned by M14's task type #6) is a short
- * animation from gUnk_08751BF4.  Variant 34 (sub_08057ad4, M12) has two
+ * animation from gPlayerUFOShotFrames.  Variant 34 (sub_08057ad4, M12) has two
  * sub-states with the draw hooks TaskDrawWorldInViewOrFree and sub_0805af80 (shared with
  * variant 48) and the kill test sub_08057c98 (player mode 13). */
 
@@ -265,7 +265,7 @@ void PlayerEffectUFOLaserTrail(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_08751BF4;
+    t->frameTable = gPlayerUFOShotFrames;
     t->tileWord = gTasks[t->parent].tileWord;
     t->frame = gUnk_0873BAE6[t->playerEffectSpawnWord & 15];
     TaskYieldTrampoline(1);

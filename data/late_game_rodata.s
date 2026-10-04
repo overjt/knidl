@@ -36,8 +36,8 @@ gUnk_087560C0:
 	.section .late_game_rodata_087560ec, "a"
 	.global	late_game_rodata_087560ec
 late_game_rodata_087560ec:
-	.global	gUnk_087560EC
-gUnk_087560EC:
+	.global	gStarRodPieceAnim
+gStarRodPieceAnim:
 	.incbin	"baserom.gba", 0x7560EC, 0x64
 
 @ 0x08756150-0x08756178: C, row late_tbl_08756150 (src/data/late_game_tables.c section .late_tbl_08756150)
@@ -163,8 +163,8 @@ gUnk_08756460:
 	.section .late_game_rodata_08756498, "a"
 	.global	late_game_rodata_08756498
 late_game_rodata_08756498:
-	.global	gUnk_08756498
-gUnk_08756498:
+	.global	gQuickDrawShakeAmplitudes
+gQuickDrawShakeAmplitudes:
 	.incbin	"baserom.gba", 0x756498, 0x8
 	.global	gUnk_087564A0
 gUnk_087564A0:
@@ -523,8 +523,8 @@ late_game_rodata_0875735c:
 	.global	gEndingEpilogueObjectVariants
 gEndingEpilogueObjectVariants:
 	.incbin	"baserom.gba", 0x75735C, 0xC
-	.global	gUnk_08757368
-gUnk_08757368:
+	.global	gKirbyFlashBlendRatios
+gKirbyFlashBlendRatios:
 	.incbin	"baserom.gba", 0x757368, 0xC
 	.global	gUnk_08757374
 gUnk_08757374:

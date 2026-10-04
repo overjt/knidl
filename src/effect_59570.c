@@ -10,7 +10,7 @@
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 42-44, spawned by M13's actions (44 also by M14's action 49
  * sub-actions).  Variant 42 (sub_08059570) is a six-way jump table over its
- * sub-state, mixing forms that stay put and forms that move (gUnk_0874C804,
+ * sub-state, mixing forms that stay put and forms that move (gStarBurstFrames,
  * gUnk_0874C828, gUnk_08751F0C); its callbacks are sub_08059aac (the
  * collider rows gUnk_0873C23C and gUnk_0873C250 through RegisterCollider in
  * sub-states 3 and 4) and the draw hook sub_08059b18 (QueueSprite when on
@@ -129,7 +129,7 @@ void sub_08059570(void)
         gCurTask->moveCallback = (u32)TaskUpdatePixelPos;
         gCurTask->updateCallback = (u32)sub_08059aac;
         gCurTask->layer = 8;
-        gCurTask->frameTable = gUnk_0874C804;
+        gCurTask->frameTable = gStarBurstFrames;
         gCurTask->frame = 0;
         TaskYieldTrampoline(1);
         gCurTask->frame++;

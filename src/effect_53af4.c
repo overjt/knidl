@@ -32,7 +32,7 @@
  * picking the facing; 3 (M13's ability get) shows for three frames at a
  * random offset from its spawner (PlayerEffectAbilityGetSparkleUpdate is its empty Task.updateCallback
  * stub); 4 and 5 fly one of eight random trajectories of the s16 rows
- * gUnk_0873B9EC[6][8] (offsets and 8.8 velocities), 5 with TaskDrawScreen's
+ * gPlayerEffectStarTrajectories[6][8] (offsets and 8.8 velocities), 5 with TaskDrawScreen's
  * draw when PlayerState.unk37 == 2.  Variant 6 has two forms picked by the
  * third byte of Task.unk18: a loop that places a puff 6 pixels behind the
  * spawner and 8 below it and spawns the other form (a rising puff) each
@@ -68,7 +68,7 @@ void PlayerEffectInhaleAir(void)
     gCurTask->updateCallback = (u32)PlayerEffectInhaleAirUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_08751C44;
+    t->frameTable = gInhaleAirFrames;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 4;
     TaskSetPosXFacing(4);
     gCurTask->posY = 0x40000;
@@ -170,7 +170,7 @@ void PlayerEffectAbilityGetSparkle(void)
         t->moveCallback = (u32)TaskMoveRelativeToParent;
         t->drawCallback = (u32)TaskDrawWorld;
         t->layer = 5;
-        gCurTask->frameTable = gUnk_08751CEC;
+        gCurTask->frameTable = gSparkleFrames;
         gCurTask->posX = RandomSpreadFacing(-16, 1, 16) << 16;
         gCurTask->posY = (RandomSpread(-4, 1, 16) << 16) - 0x180000;
         gCurTask->frame = 0;
@@ -198,15 +198,15 @@ void PlayerEffectImpactStar(void)
     gCurTask->layer = 5;
     gCurTask->frameTable = gUnk_0874C500;
     n = RandomRange(8);
-    TaskStepForward(gUnk_0873B9EC[n]);
+    TaskStepForward(gPlayerEffectStarTrajectories[n]);
     t = gCurTask;
-    t->posY = (t->pixelY + (gUnk_0873B9EC + 8)[n] + 4) << 16;
-    a = (gUnk_0873B9EC + 16)[n];
+    t->posY = (t->pixelY + (gPlayerEffectStarTrajectories + 8)[n] + 4) << 16;
+    a = (gPlayerEffectStarTrajectories + 16)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->velX = b;
-    a = (gUnk_0873B9EC + 24)[n];
+    a = (gPlayerEffectStarTrajectories + 24)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -216,12 +216,12 @@ void PlayerEffectImpactStar(void)
     gCurTask->frame++;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    c = (gUnk_0873B9EC + 32)[n];
+    c = (gPlayerEffectStarTrajectories + 32)[n];
     b = c << 8;
     if (c & 0x8000)
         b |= 0xFF000000;
     v->velX = b;
-    a = (gUnk_0873B9EC + 40)[n];
+    a = (gPlayerEffectStarTrajectories + 40)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -263,15 +263,15 @@ void PlayerEffectDeathStar(void)
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_0874C500;
     n = RandomRange(8);
-    TaskStepForward(gUnk_0873B9EC[n]);
+    TaskStepForward(gPlayerEffectStarTrajectories[n]);
     t = gCurTask;
-    t->posY = (t->pixelY + (gUnk_0873B9EC + 8)[n] + 4) << 16;
-    a = (gUnk_0873B9EC + 16)[n];
+    t->posY = (t->pixelY + (gPlayerEffectStarTrajectories + 8)[n] + 4) << 16;
+    a = (gPlayerEffectStarTrajectories + 16)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->velX = b;
-    a = (gUnk_0873B9EC + 24)[n];
+    a = (gPlayerEffectStarTrajectories + 24)[n];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -281,12 +281,12 @@ void PlayerEffectDeathStar(void)
     gCurTask->frame++;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    c = (gUnk_0873B9EC + 32)[n];
+    c = (gPlayerEffectStarTrajectories + 32)[n];
     d = c << 8;
     if (c & 0x8000)
         d |= 0xFF000000;
     v->velX = d;
-    a = (gUnk_0873B9EC + 40)[n];
+    a = (gPlayerEffectStarTrajectories + 40)[n];
     d = a << 8;
     if (a & 0x8000)
         d |= 0xFF000000;

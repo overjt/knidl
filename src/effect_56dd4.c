@@ -21,7 +21,7 @@
  * Task.unk28 is clear, registers the collider row gUnk_0873C038 (M05's
  * RegisterCollider) and tests the block hit-box set gUnk_0873CC94 (M09's
  * TaskBreakBlocksAt) at the spawner's position.  Variant 31 (PlayerEffectSwordSparkle, M12)
- * is a single animation on its spawner (gUnk_08751CEC). */
+ * is a single animation on its spawner (gSparkleFrames). */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
 struct HitBoxSet;
@@ -223,7 +223,7 @@ void PlayerEffectSwordSparkle(void)
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 5;
-    gCurTask->frameTable = gUnk_08751CEC;
+    gCurTask->frameTable = gSparkleFrames;
     gCurTask->posX = RandomSpreadFacing(-32, 1, 16) << 16;
     gCurTask->posY = RandomSpread(-4, 1, 16) << 16;
     gCurTask->frame = 0;

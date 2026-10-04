@@ -25391,7 +25391,7 @@
     "0x08731C88": "gUnk_08731C88",
     "0x08731CC8": "gTitlePressStartLetterFrames",
     "0x08731CDC": "gUnk_08731CDC",
-    "0x08731CE6": "gUnk_08731CE6",
+    "0x08731CE6": "gIntroStorySceneDurations",
     "0x08731CF8": "gUnk_08731CF8",
     "0x08731D28": "gUnk_08731D28",
     "0x08731D58": "gUnk_08731D58",
@@ -25638,8 +25638,8 @@
     "0x0873B88A": "gUnk_0873B88A",
     "0x0873B8C6": "gUnk_0873B8C6",
     "0x0873B928": "gPlayerEffectVariants",
-    "0x0873B9EC": "gUnk_0873B9EC",
-    "0x0873BA4C": "gUnk_0873BA4C",
+    "0x0873B9EC": "gPlayerEffectStarTrajectories",
+    "0x0873BA4C": "gPlayerEffectDeathStarRingMotions",
     "0x0873BA8C": "gUnk_0873BA8C",
     "0x0873BAB0": "gUnk_0873BAB0",
     "0x0873BAE6": "gUnk_0873BAE6",
@@ -25820,7 +25820,7 @@
     "0x0873DB0A": "gUnk_0873DB0A",
     "0x0873DB34": "gUnk_0873DB34",
     "0x0873DB44": "gUnk_0873DB44",
-    "0x0873DBAC": "gUnk_0873DBAC",
+    "0x0873DBAC": "gGoalGameLaneX",
     "0x0873DBD4": "gGoalGameLayerHeights",
     "0x0873DBE4": "gPlayerGoalGameStates",
     "0x0873DC10": "gPlayerGoalGameStateUpdates",
@@ -25830,11 +25830,11 @@
     "0x0873DC80": "gUnk_0873DC80",
     "0x0873DC9A": "gGoalGameLayerScores",
     "0x0873DCA8": "gUnk_0873DCA8",
-    "0x0873DCC0": "gUnk_0873DCC0",
-    "0x0873DCC8": "gUnk_0873DCC8",
+    "0x0873DCC0": "gGoalGameTrailStarOffsetX",
+    "0x0873DCC8": "gGoalGameTrailStarOffsetY",
     "0x0873DCCC": "gGoalGameSpringDepths",
-    "0x0873DD16": "gUnk_0873DD16",
-    "0x0873DD30": "gUnk_0873DD30",
+    "0x0873DD16": "gGoalGameCameraRiseDurations",
+    "0x0873DD30": "gGoalGameCameraPauseDurations",
     "0x0873DD4C": "gUnk_0873DD4C",
     "0x0873DD5C": "gUnk_0873DD5C",
     "0x0873DD64": "gUnk_0873DD64",
@@ -27958,7 +27958,7 @@
     "0x0874C4E4": "gUnk_0874C4E4",
     "0x0874C500": "gUnk_0874C500",
     "0x0874C520": "gUnk_0874C520",
-    "0x0874C568": "gUnk_0874C568",
+    "0x0874C568": "gAirPuffFrames",
     "0x0874C600": "gUnk_0874C600",
     "0x0874C648": "gPlayerEffectBubbleFrames",
     "0x0874C650": "gPlayerObjectVanishFrames",
@@ -27969,10 +27969,10 @@
     "0x0874C784": "gUnk_0874C784",
     "0x0874C7A4": "gPlayerEffectHurtSparksFrames",
     "0x0874C7B4": "gUnk_0874C7B4",
-    "0x0874C7CC": "gUnk_0874C7CC",
-    "0x0874C804": "gUnk_0874C804",
+    "0x0874C7CC": "gSmokePuffFrames",
+    "0x0874C804": "gStarBurstFrames",
     "0x0874C828": "gUnk_0874C828",
-    "0x0874C890": "gUnk_0874C890",
+    "0x0874C890": "gGoalGameStarFrames",
     "0x0874C930": "gPlayerEffectHurtBurstFrames",
     "0x0874C960": "gUnk_0874C960",
     "0x0874C980": "gUnk_0874C980",
@@ -28001,7 +28001,7 @@
     "0x0874CD68": "gUnk_0874CD68",
     "0x0874CDE0": "gUnk_0874CDE0",
     "0x0874CDF8": "gUnk_0874CDF8",
-    "0x0874CE68": "gUnk_0874CE68",
+    "0x0874CE68": "gWhispyWoodsLeavesFrames",
     "0x0874CE90": "gUnk_0874CE90",
     "0x0874CEE8": "gUnk_0874CEE8",
     "0x0874CF28": "gUnk_0874CF28",
@@ -28015,12 +28015,12 @@
     "0x08751AF8": "gPlayerObjectLaserBeamFrames",
     "0x08751B40": "gPlayerObjectIceBreathFrames",
     "0x08751BB0": "gPlayerObjectBeamOrbFrames",
-    "0x08751BF4": "gUnk_08751BF4",
-    "0x08751C44": "gUnk_08751C44",
+    "0x08751BF4": "gPlayerUFOShotFrames",
+    "0x08751C44": "gInhaleAirFrames",
     "0x08751C74": "gUnk_08751C74",
     "0x08751CA4": "gUnk_08751CA4",
     "0x08751CBC": "gPlayerEffectSparkAuraFrames",
-    "0x08751CEC": "gUnk_08751CEC",
+    "0x08751CEC": "gSparkleFrames",
     "0x08751CF0": "gPlayerEffectBurningFlamesFrames",
     "0x08751D50": "gUnk_08751D50",
     "0x08751D80": "gUnk_08751D80",
@@ -28226,7 +28226,7 @@
     "0x08755688": "gUnk_08755688",
     "0x087556D4": "gUnk_087556D4",
     "0x087556E0": "gUnk_087556E0",
-    "0x08755708": "gUnk_08755708",
+    "0x08755708": "gEndingEpilogueFrames",
     "0x0875581C": "gEndingEpilogueStarRodFrames",
     "0x0875585C": "gEndingStarRodReturnFrames",
     "0x087558BC": "gArenaDoorSignFrames",
@@ -28256,8 +28256,8 @@
     "0x08755A5C": "gQuickDrawWinCountFrames",
     "0x08755A68": "gQuickDrawRankFrames",
     "0x08755A78": "gQuickDrawRedrawFrames",
-    "0x08755A7C": "gUnk_08755A7C",
-    "0x08755A88": "gUnk_08755A88",
+    "0x08755A7C": "gQuickDrawSlashFrames",
+    "0x08755A88": "gQuickDrawDefeatedFrames",
     "0x08755AA4": "gQuickDrawPlayerTagFrames",
     "0x08755AB8": "gQuickDrawFalseStartMarkFrames",
     "0x08755AC8": "gQuickDrawSweatDropFrames",
@@ -28305,7 +28305,7 @@
     "0x087560D0": "gAbilityStarStates",
     "0x087560D8": "gAbilityStarStateUpdates",
     "0x087560E0": "gStarRodPieceVariants",
-    "0x087560EC": "gUnk_087560EC",
+    "0x087560EC": "gStarRodPieceAnim",
     "0x08756150": "gStarRodPieceHoverStates",
     "0x08756158": "gStarRodPieceHoverStateUpdates",
     "0x08756160": "gStarRodPieceSlideOutStates",
@@ -28343,7 +28343,7 @@
     "0x08756460": "gUnk_08756460",
     "0x08756468": "gQuickDrawPlayerStates",
     "0x08756480": "gQuickDrawPlayerStateUpdates",
-    "0x08756498": "gUnk_08756498",
+    "0x08756498": "gQuickDrawShakeAmplitudes",
     "0x087564A0": "gUnk_087564A0",
     "0x087564B0": "gQuickDrawOpponentReactionTimes",
     "0x087564D0": "gQuickDrawOpponentGfx",
@@ -28443,7 +28443,7 @@
     "0x08757320": "gUnk_08757320",
     "0x08757330": "gEndingEpilogueVariants",
     "0x0875735C": "gEndingEpilogueObjectVariants",
-    "0x08757368": "gUnk_08757368",
+    "0x08757368": "gKirbyFlashBlendRatios",
     "0x08757374": "gUnk_08757374",
     "0x08757394": "gUnk_08757394",
     "0x087573B4": "gUnk_087573B4",
@@ -34538,7 +34538,7 @@
     {
       "start": "0x0874C568",
       "end": "0x0874C600",
-      "why": "frame table gUnk_0874C568 [38 words], consumer src/hud_b2fe8.c:376 `u->frameTable = gUnk_0874C568;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gAirPuffFrames [38 words], consumer src/hud_b2fe8.c:376 `u->frameTable = gAirPuffFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x0874C600",
@@ -34593,12 +34593,12 @@
     {
       "start": "0x0874C7CC",
       "end": "0x0874C804",
-      "why": "frame table gUnk_0874C7CC [14 words], consumer src/effect_55b24.c:263 `t->frameTable = gUnk_0874C7CC;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gSmokePuffFrames [14 words], consumer src/effect_55b24.c:263 `t->frameTable = gSmokePuffFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x0874C804",
       "end": "0x0874C828",
-      "why": "frame table gUnk_0874C804 [9 words], consumer src/effect_55460.c:130 `t->frameTable = gUnk_0874C804;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gStarBurstFrames [9 words], consumer src/effect_55460.c:130 `t->frameTable = gStarBurstFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x0874C828",
@@ -34608,7 +34608,7 @@
     {
       "start": "0x0874C890",
       "end": "0x0874C930",
-      "why": "frame table gUnk_0874C890 [40 words], consumer src/effect_5afac.c:724 `gCurTask->frameTable = gUnk_0874C890;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gGoalGameStarFrames [40 words], consumer src/effect_5afac.c:724 `gCurTask->frameTable = gGoalGameStarFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x0874C930",
@@ -34753,7 +34753,7 @@
     {
       "start": "0x0874CE68",
       "end": "0x0874CE90",
-      "why": "frame table gUnk_0874CE68 [10 words], consumer src/hud_b2fe8.c:819 `gCurTask->frameTable = (u32 *)gUnk_0874CE68;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gWhispyWoodsLeavesFrames [10 words], consumer src/hud_b2fe8.c:819 `gCurTask->frameTable = (u32 *)gWhispyWoodsLeavesFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x0874CE90",
@@ -34861,12 +34861,12 @@
     {
       "start": "0x08751BF4",
       "end": "0x08751C44",
-      "why": "frame table gUnk_08751BF4 [20 words], consumer src/effect_57494.c:268 `t->frameTable = gUnk_08751BF4;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gPlayerUFOShotFrames [20 words], consumer src/effect_57494.c:268 `t->frameTable = gPlayerUFOShotFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x08751C44",
       "end": "0x08751C74",
-      "why": "frame table gUnk_08751C44 [12 words] of struct TaskGfx * (include/task.h), consumer src/effect_53af4.c:71 `t->frameTable = gUnk_08751C44;`: Task.frameTable[Task.frame] is read as {oamTemplate, palette, tiles} (TaskLoadFrameTiles src/early_5acc.c:96, src/actor_653ec.c:104); extent: to the next label, every word points at such a record (evidence_d.py)",
+      "why": "frame table gInhaleAirFrames [12 words] of struct TaskGfx * (include/task.h), consumer src/effect_53af4.c:71 `t->frameTable = gInhaleAirFrames;`: Task.frameTable[Task.frame] is read as {oamTemplate, palette, tiles} (TaskLoadFrameTiles src/early_5acc.c:96, src/actor_653ec.c:104); extent: to the next label, every word points at such a record (evidence_d.py)",
       "targets": {
         "pointers": [
           "0x0",
@@ -34902,7 +34902,7 @@
     {
       "start": "0x08751CEC",
       "end": "0x08751CF0",
-      "why": "frame table gUnk_08751CEC [1 words], consumer src/effect_53af4.c:173 `gCurTask->frameTable = gUnk_08751CEC;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gSparkleFrames [1 words], consumer src/effect_53af4.c:173 `gCurTask->frameTable = gSparkleFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x08751CF0",
@@ -36149,7 +36149,7 @@
     {
       "start": "0x08755708",
       "end": "0x0875581C",
-      "why": "frame table gUnk_08755708 [69 words], consumer src/ending_c6c64.c:99 `gCurTask->frameTable = gUnk_08755708;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gEndingEpilogueFrames [69 words], consumer src/ending_c6c64.c:99 `gCurTask->frameTable = gEndingEpilogueFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x0875581C",
@@ -36299,12 +36299,12 @@
     {
       "start": "0x08755A7C",
       "end": "0x08755A88",
-      "why": "frame table gUnk_08755A7C [3 words], consumer src/subgame_bc0cc.c:688 `gCurTask->frameTable = gUnk_08755A7C;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gQuickDrawSlashFrames [3 words], consumer src/subgame_bc0cc.c:688 `gCurTask->frameTable = gQuickDrawSlashFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x08755A88",
       "end": "0x08755AA4",
-      "why": "frame table gUnk_08755A88 [7 words], consumer src/subgame_bc0cc.c:691 `gCurTask->frameTable = gUnk_08755A88;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "frame table gQuickDrawDefeatedFrames [7 words], consumer src/subgame_bc0cc.c:691 `gCurTask->frameTable = gQuickDrawDefeatedFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
     },
     {
       "start": "0x08755AA4",

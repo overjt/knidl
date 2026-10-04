@@ -82,7 +82,7 @@ extern u16 gUnk_085A6FC8[];
 extern u16 gUnk_085A6FF0[];
 extern u16 gUnk_085A6FF8[];
 extern u16 gUnk_085A6FFC[];
-extern u16 gUnk_08731CE6[];
+extern u16 gIntroStorySceneDurations[];
 extern u32 gIntroStoryPictureFrames[];
 extern struct GfxHeader *gUnk_087555FC[];
 

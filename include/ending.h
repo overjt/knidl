@@ -64,7 +64,7 @@ extern u32 gUnk_087549B0[];
 extern u32 gUnk_087549FC[];
 extern u32 gBootLogoSprites[];
 extern u32 gUnk_087556E0[];
-extern u32 gUnk_08755708[];
+extern u32 gEndingEpilogueFrames[];
 extern u32 gEndingEpilogueStarRodFrames[];
 extern u32 gEndingStarRodReturnFrames[];
 extern void (*gEndingEpilogueVariants[])(void);

@@ -2395,12 +2395,12 @@ u32 gUnk_0874C520[] FRAME_TABLE = {
     (u32)gUnk_080D25A8,
 };
 
-/* gUnk_0874C568.  Consumers: Task_WhispyWoodsAirPuff (src/hud_b2fe8.c:376),
+/* gAirPuffFrames.  Consumers: Task_WhispyWoodsAirPuff (src/hud_b2fe8.c:376),
  * WhispyWoodsAirPuffState0Update (src/hud_b2fe8.c:623), PlayerObjectAirPuff
  * (src/plobj_509ec.c:48).  38 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables
  * 0x0874C568-0x0874C600).  Declared include/enemy.h:1143. */
-u32 gUnk_0874C568[] FRAME_TABLE = {
+u32 gAirPuffFrames[] FRAME_TABLE = {
     (u32)gUnk_080D25C0,
     (u32)gUnk_080D25C8,
     (u32)gUnk_080D25D0,
@@ -2628,11 +2628,11 @@ u32 gUnk_0874C7B4[] FRAME_TABLE = {
     (u32)gUnk_080D3890,
 };
 
-/* gUnk_0874C7CC.  Consumers: sub_08056320 (src/effect_55b24.c:263),
+/* gSmokePuffFrames.  Consumers: sub_08056320 (src/effect_55b24.c:263),
  * PlayerObjectLaserBeamVanish (src/plobj_507bc.c:91).  14 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C7CC-0x0874C804).  Declared include/player.h:329. */
-u32 gUnk_0874C7CC[] FRAME_TABLE = {
+u32 gSmokePuffFrames[] FRAME_TABLE = {
     (u32)gUnk_080D38B8,
     (u32)gUnk_080D38C0,
     (u32)gUnk_080D38C8,
@@ -2649,12 +2649,12 @@ u32 gUnk_0874C7CC[] FRAME_TABLE = {
     (u32)gUnk_080D39D0,
 };
 
-/* gUnk_0874C804.  Consumers: PlayerEffectDanceStarBurst (src/effect_55460.c:130),
+/* gStarBurstFrames.  Consumers: PlayerEffectDanceStarBurst (src/effect_55460.c:130),
  * sub_08059570 (src/effect_59570.c:132), sub_08030604
  * (src/obj_30238.c:210).  9 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables
  * 0x0874C804-0x0874C828).  Declared include/effect.h:83. */
-u32 gUnk_0874C804[] FRAME_TABLE = {
+u32 gStarBurstFrames[] FRAME_TABLE = {
     (u32)gUnk_080D39D8,
     (u32)gUnk_080D39F8,
     (u32)gUnk_080D3A40,
@@ -2700,13 +2700,13 @@ u32 gUnk_0874C828[] FRAME_TABLE = {
     (u32)gUnk_080D3F30,
 };
 
-/* gUnk_0874C890.  Consumers: Task_GoalGameLaunchStars
+/* gGoalGameStarFrames.  Consumers: Task_GoalGameLaunchStars
  * (src/effect_5afac.c:725), Task_GoalGameBigTrailStar
  * (src/effect_5afac.c:833), Task_GoalGameSmallTrailStar
  * (src/effect_5afac.c:903).  40 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874C890-0x0874C930).  Declared include/effect.h:85. */
-u32 gUnk_0874C890[] FRAME_TABLE = {
+u32 gGoalGameStarFrames[] FRAME_TABLE = {
     (u32)gUnk_080D3F40,
     (u32)gUnk_080D3F80,
     (u32)gUnk_080D3FC0,
@@ -3283,11 +3283,11 @@ u32 gUnk_0874CDF8[] FRAME_TABLE = {
     (u32)gUnk_080DB650,
 };
 
-/* gUnk_0874CE68.  Consumers: WhispyWoodsLeavesDraw (src/hud_b2fe8.c:742),
+/* gWhispyWoodsLeavesFrames.  Consumers: WhispyWoodsLeavesDraw (src/hud_b2fe8.c:742),
  * Task_WhispyWoodsLeaves (src/hud_b2fe8.c:775).  10 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CE68-0x0874CE90).  Declared include/enemy.h:1150. */
-u32 gUnk_0874CE68[] FRAME_TABLE = {
+u32 gWhispyWoodsLeavesFrames[] FRAME_TABLE = {
     (u32)gUnk_080DB6B0,
     (u32)gUnk_080DB6B8,
     (u32)gUnk_080DB6C0,
@@ -8348,11 +8348,11 @@ u32 gPlayerObjectBeamOrbFrames[] FRAME_TABLE = {
     (u32)gUnk_081F71FC,
 };
 
-/* gUnk_08751BF4.  Consumers: PlayerEffectUFOLaserTrail (src/effect_57494.c:268),
+/* gPlayerUFOShotFrames.  Consumers: PlayerEffectUFOLaserTrail (src/effect_57494.c:268),
  * PlayerObjectUFOShot (src/plobj_52f6c.c:88).  20 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08751BF4-0x08751C44).  Declared include/player.h:340. */
-u32 gUnk_08751BF4[] FRAME_TABLE = {
+u32 gPlayerUFOShotFrames[] FRAME_TABLE = {
     (u32)gUnk_082185F0,
     (u32)gUnk_08218608,
     (u32)gUnk_08218620,
@@ -8375,11 +8375,11 @@ u32 gUnk_08751BF4[] FRAME_TABLE = {
     (u32)gUnk_08218780,
 };
 
-/* gUnk_08751C44.  Consumers: PlayerEffectInhaleAir (src/effect_53af4.c:71),
+/* gInhaleAirFrames.  Consumers: PlayerEffectInhaleAir (src/effect_53af4.c:71),
  * CutsceneActorScript1 (src/player_10358.c:253).  12 words, struct TaskGfx records;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08751C44-0x08751C74).  Declared include/effect.h:89. */
-u32 gUnk_08751C44[] FRAME_TABLE = {
+u32 gInhaleAirFrames[] FRAME_TABLE = {
     (u32)&gUnk_081AC2C0,
     (u32)&gUnk_081AC2CC,
     (u32)&gUnk_081AC2D8,
@@ -8446,13 +8446,13 @@ u32 gPlayerEffectSparkAuraFrames[] FRAME_TABLE = {
     (u32)&gUnk_081BEFE0,
 };
 
-/* gUnk_08751CEC.  Consumers: PlayerEffectAbilityGetSparkle
+/* gSparkleFrames.  Consumers: PlayerEffectAbilityGetSparkle
  * (src/effect_53af4.c:173), PlayerEffectSwordSparkle
  * (src/effect_56dd4.c:226), CutsceneActorScript2 (src/player_10b38.c:42).  1 word,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x08751CEC-0x08751CF0).  Declared
  * include/effect.h:92. */
-u32 gUnk_08751CEC[] FRAME_TABLE = {
+u32 gSparkleFrames[] FRAME_TABLE = {
     (u32)gUnk_081C986C,
 };
 
@@ -13683,12 +13683,12 @@ u32 gUnk_087556E0[] FRAME_TABLE = {
     (u32)gUnk_085865A8,
 };
 
-/* gUnk_08755708.  Consumers: EndingEpilogueWarpStar (src/ending_c6c64.c:99),
+/* gEndingEpilogueFrames.  Consumers: EndingEpilogueWarpStar (src/ending_c6c64.c:99),
  * EndingEpilogueKirby (src/ending_c7e4c.c:61), EndingEpilogueKingDedede
  * (src/ending_c7e4c.c:355).  69 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755708-0x0875581C).  Declared include/ending.h:67. */
-u32 gUnk_08755708[] FRAME_TABLE = {
+u32 gEndingEpilogueFrames[] FRAME_TABLE = {
     (u32)gUnk_08598D0C,
     (u32)gUnk_08598D1C,
     (u32)gUnk_08598D34,
@@ -14126,22 +14126,22 @@ u32 gQuickDrawRedrawFrames[] FRAME_TABLE = {
     (u32)gUnk_085F2CA4,
 };
 
-/* gUnk_08755A7C.  Consumers: QuickDrawLabelShow (src/subgame_bc0cc.c:688),
+/* gQuickDrawSlashFrames.  Consumers: QuickDrawLabelShow (src/subgame_bc0cc.c:688),
  * QuickDrawSlash (src/subgame_bc0cc.c:817).  3 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08755A7C-0x08755A88).  Declared include/subgame.h:241. */
-u32 gUnk_08755A7C[] FRAME_TABLE = {
+u32 gQuickDrawSlashFrames[] FRAME_TABLE = {
     (u32)gUnk_085F2F24,
     (u32)gUnk_085F303C,
     (u32)gUnk_085F30FC,
 };
 
-/* gUnk_08755A88.  Consumers: QuickDrawLabelShow (src/subgame_bc0cc.c:691),
+/* gQuickDrawDefeatedFrames.  Consumers: QuickDrawLabelShow (src/subgame_bc0cc.c:691),
  * CreateQuickDrawDefeatedLabel (src/subgame_bb528.c:463).  7 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755A88-0x08755AA4).  Declared
  * include/subgame.h:242. */
-u32 gUnk_08755A88[] FRAME_TABLE = {
+u32 gQuickDrawDefeatedFrames[] FRAME_TABLE = {
     (u32)gUnk_085F2CE4,
     (u32)gUnk_085F2D44,
     (u32)gUnk_085F2DA4,

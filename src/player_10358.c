@@ -250,7 +250,7 @@ void CutsceneActorScript1(void)
     gCurTask->drawCallback = (u32)sub_08010b38;
     gCurTask->updateCallback = (u32)sub_080109c8;
     gCurTask->layer = 5;
-    gCurTask->frameTable = gUnk_08751C44;
+    gCurTask->frameTable = gInhaleAirFrames;
     gCurTask->tileWord = 0x1004;
     gCurTask->cutsceneActorNextFrame = 0;
     gCurTask->cutsceneActorLoopCount = 0;

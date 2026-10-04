@@ -12,7 +12,7 @@
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 12-15.  Variant 12 (PlayerEffectDeathStarRing, M10/M11) has no motion or draw
  * hook: it picks one of eight directions by the low three bits of Task.unk18
- * and flies two particles from the spawner's position, rows gUnk_0873BA4C[i]
+ * and flies two particles from the spawner's position, rows gPlayerEffectDeathStarRingMotions[i]
  * and [i + 4] holding each one's 8.8 velocity and acceleration, which its
  * Task.lateUpdateCallback callback PlayerEffectDeathStarRingLateUpdate integrates every frame, drawing both with
  * QueueSprite when on screen (IsOnScreen; camera-relative unless
@@ -52,24 +52,24 @@ void PlayerEffectDeathStarRing(void)
     t->frameTable = gPlayerEffectDeathStarRingFrames;
     t->pixelX = (t->u8C.parentTask)->pixelX;
     t->pixelY = (t->u8C.parentTask)->pixelY;
-    a = gUnk_0873BA4C[t->playerEffectSpawnWord & 7][0];
+    a = gPlayerEffectDeathStarRingMotions[t->playerEffectSpawnWord & 7][0];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->unk28 = b;
-    a = gUnk_0873BA4C[t->playerEffectSpawnWord & 7][1];
+    a = gPlayerEffectDeathStarRingMotions[t->playerEffectSpawnWord & 7][1];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->unk2C = b;
     t->posX = t->pixelX;
     t->posY = t->pixelY;
-    a = gUnk_0873BA4C[(t->playerEffectSpawnWord & 7) + 4][0];
+    a = gPlayerEffectDeathStarRingMotions[(t->playerEffectSpawnWord & 7) + 4][0];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->unk30 = b;
-    a = gUnk_0873BA4C[(t->playerEffectSpawnWord & 7) + 4][1];
+    a = gPlayerEffectDeathStarRingMotions[(t->playerEffectSpawnWord & 7) + 4][1];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -123,13 +123,13 @@ void PlayerEffectDeathStarRingLateUpdate(void)
     if (IsOnScreen(x, y) != 0)
         QueueSprite(gCurTask->layer, tbl[gCurTask->frame], 0, 0, x, y);
     i = gCurTask->playerEffectSpawnWord & 7;
-    gCurTask->unk28 += (gUnk_0873BA4C[i][2] & 0x8000) ? (gUnk_0873BA4C[i][2] << 8) | 0xFF000000 : gUnk_0873BA4C[i][2] << 8;
-    gCurTask->unk2C += (gUnk_0873BA4C[i][3] & 0x8000) ? (gUnk_0873BA4C[i][3] << 8) | 0xFF000000 : gUnk_0873BA4C[i][3] << 8;
+    gCurTask->unk28 += (gPlayerEffectDeathStarRingMotions[i][2] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[i][2] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[i][2] << 8;
+    gCurTask->unk2C += (gPlayerEffectDeathStarRingMotions[i][3] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[i][3] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[i][3] << 8;
     gCurTask->pixelX += gCurTask->unk28 >> 16;
     gCurTask->pixelY += gCurTask->unk2C >> 16;
     j = (gCurTask->playerEffectSpawnWord & 7) + 4;
-    gCurTask->unk30 += (gUnk_0873BA4C[j][2] & 0x8000) ? (gUnk_0873BA4C[j][2] << 8) | 0xFF000000 : gUnk_0873BA4C[j][2] << 8;
-    gCurTask->unk34 += (gUnk_0873BA4C[j][3] & 0x8000) ? (gUnk_0873BA4C[j][3] << 8) | 0xFF000000 : gUnk_0873BA4C[j][3] << 8;
+    gCurTask->unk30 += (gPlayerEffectDeathStarRingMotions[j][2] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[j][2] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[j][2] << 8;
+    gCurTask->unk34 += (gPlayerEffectDeathStarRingMotions[j][3] & 0x8000) ? (gPlayerEffectDeathStarRingMotions[j][3] << 8) | 0xFF000000 : gPlayerEffectDeathStarRingMotions[j][3] << 8;
     gCurTask->posX += ((s16 *)&gCurTask->unk30)[1];
     gCurTask->posY += ((s16 *)&gCurTask->unk34)[1];
 }

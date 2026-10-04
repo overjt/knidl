@@ -373,7 +373,7 @@ void Task_WhispyWoodsAirPuff(void)
     z = 0;
     *b42 = 9;
     u = *c;
-    u->frameTable = gUnk_0874C568;
+    u->frameTable = gAirPuffFrames;
     u->tileWord = z;
     u->facing = 255;
     u2 = *c;
@@ -620,7 +620,7 @@ void WhispyWoodsAirPuffState0Update(void)
         w = t6->whispyWoodsAirPuffEffectX - d;
         t6->whispyWoodsAirPuffEffectX = w;
         a0v = t->layer + 1;
-        t68 = (u32 *)gUnk_0874C568;
+        t68 = (u32 *)gAirPuffFrames;
         t40 = (u8 *)gUnk_0874C240;
         QueueSprite(a0v, t68[t40[*a]], t->spriteFlags, t->tileWord,
                      w - gSpriteCameraX,
@@ -739,25 +739,25 @@ void WhispyWoodsLeavesDraw(void)
 {
     if (gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX - gSpriteCameraX + gCurTask->hitTimer,
                      gCurTask->pixelY - gSpriteCameraY + gCurTask->hitKind);
     if (gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      ((u32)gCurTask->unk20 >> 16) - gSpriteCameraX + gCurTask->onGround,
                      gCurTask->unk20 - gSpriteCameraY + (s8)gCurTask->hitDirection);
     if (gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->health - gSpriteCameraX + gCurTask->waterFlags,
                      gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->hitEffect);
     if (gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
+                     gWhispyWoodsLeavesFrames[gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->whispyWoodsLeavesStartX - gSpriteCameraX,
                      gCurTask->whispyWoodsLeavesStartY - gSpriteCameraY);
@@ -772,7 +772,7 @@ void Task_WhispyWoodsLeaves(void)
     gCurTask->tileWord = 0;
     gCurTask->drawCallback = (u32)WhispyWoodsLeavesDraw;
     gCurTask->layer = 8;
-    gCurTask->frameTable = (u32 *)gUnk_0874CE68;
+    gCurTask->frameTable = (u32 *)gWhispyWoodsLeavesFrames;
     gCurTask->updateCallback = (u32)WhispyWoodsLeavesUpdate;
     WhispyWoodsLeavesFillTrail();
     sub_080b3a00();
@@ -1732,7 +1732,7 @@ void StarRodPieceHoverState0(void)
     (*c)->updateState = 0;
     *(u8 *)((u8 *)*c + 67) = 1;
     TaskStop();
-    r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
+    r = ActorStartAnimNoFlip((struct AnimCmd *)gStarRodPieceAnim);
     t = *c;
     t->actorAnimDelay34 = r;
     v6 = 0xFFFFC000;
@@ -1824,7 +1824,7 @@ void StarRodPieceSlideOutState0(void)
     (*c)->updateState = 0;
     *(u8 *)((u8 *)*c + 67) = 255;
     TaskStop();
-    r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_087560EC);
+    r = ActorStartAnimNoFlip((struct AnimCmd *)gStarRodPieceAnim);
     t = *c;
     t->actorAnimDelay34 = r;
     t->velX = 0xFFFC0000;

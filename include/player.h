@@ -327,7 +327,7 @@ extern u16 gUnk_0873DB44[][2];
 extern u32 gPlayerObjectSpitMultiStarFrames[];
 extern u32 gUnk_0874C4E4[];
 extern u32 gPlayerObjectVanishFrames[];
-extern u32 gUnk_0874C7CC[];
+extern u32 gSmokePuffFrames[];
 extern u32 gUnk_0874CE90[];
 extern u32 gPlayerFrames[];
 extern u32 gUnk_08751990[];
@@ -338,7 +338,7 @@ extern u32 gUnk_08751A98[];
 extern u32 gPlayerObjectLaserBeamFrames[];
 extern u32 gPlayerObjectIceBreathFrames[];
 extern u32 gPlayerObjectBeamOrbFrames[];
-extern u32 gUnk_08751BF4[];
+extern u32 gPlayerUFOShotFrames[];
 extern u32 gUnk_08751CA4[];
 extern u32 gUnk_08751E5C[];
 extern u32 gPlayerObjectLightOrbFrames[];
@@ -350,7 +350,7 @@ extern u32 gCutsceneFountainStarRodFrames[];
 extern u32 gUnk_08755440[];
 extern u32 gUnk_0875546C[];
 extern u32 gUnk_08755484[];
-extern u8 gUnk_08757368[];
+extern u8 gKirbyFlashBlendRatios[];
 
 
 /* Functions (defined in the files named above each group). */

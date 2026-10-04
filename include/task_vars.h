@@ -271,7 +271,7 @@
 #define cutsceneActorBgmFadeStep unk24 /* s32: script 50's BGM fade step per frame (-1 = hold full volume) */
 #define cutsceneActorChildGate unk28 /* s32: 1 during script 51's two stroke phases; its child script 53 waits for it to play */
 #define cutsceneActorNextFrame unk28 /* s32: script 1's next frame number: shown for one frame, then blanked, 9 times */
-#define cutsceneActorFlashPhase unk34 /* s32: script 50's palette flash step (0-10, gUnk_08757368 weights) once its frame passes 49 */
+#define cutsceneActorFlashPhase unk34 /* s32: script 50's palette flash step (0-10, gKirbyFlashBlendRatios weights) once its frame passes 49 */
 #define cutsceneActorChildSlot unk46 /* s16: slot of the task the script just created to set up (a cutscene actor or an effect) */
 #define cutsceneActorLoopCount unk6C /* s16: the running script's loop counter (frame cycles, strokes, blend steps) */
 #define cutsceneActorPalettePhase unk70 /* s16: script 55's palette step (0-23, gUnk_0874AD44 weights) its update blends by */
@@ -320,7 +320,7 @@
 #define endingEpilogueScaleSpeed unk28 /* s32: per-frame change of endingEpilogueScale (variants 1 and 6) */
 #define endingEpilogueFadeStep unk2C /* s32: variant 6: palette fade-in step per frame (5, then 0) */
 #define endingEpilogueChildGate unk34 /* s32: variant 1: 1 once its sprite is set up; its four variant-2 helpers play only then */
-#define endingEpilogueFlashPhase unk34 /* s32: variant 4's palette flash step (0-10, gUnk_08757368 weights) */
+#define endingEpilogueFlashPhase unk34 /* s32: variant 4's palette flash step (0-10, gKirbyFlashBlendRatios weights) */
 #define endingEpilogueChildSlot unk46 /* s16: slot of the type-100 task the variant just created to set up */
 #define endingEpilogueLoopCount unk6C /* s16: the running variant's loop counter */
 #define endingEpilogueBlendStep unk6E /* s16: variant 10's blend step 0-31 (gBldAlphaEva / Evb = (it + 1) / 2) per BG picture */
@@ -1135,7 +1135,7 @@
 #define playerBallPosePlaying unk24 /* s32: Ball: 1 while a bump or landing pose plays; the update does not draw the roll frame */
 #define playerCannonExited unk24 /* s32: Cannon launch: 1 once the player left the screen's top and ExitByCannon ran */
 #define playerCannonPoseDir unk24 /* s32: Cannon, loaded: 0 while Down is held (the pose row steps up), 1 otherwise (it steps back) */
-#define playerGoalGameSpotX unk24 /* s32: Goal game after landing: the X it walks to, gUnk_0873DBAC by its landing order */
+#define playerGoalGameSpotX unk24 /* s32: Goal game after landing: the X it walks to, gGoalGameLaneX by its landing order */
 #define playerGoalGameTrailTimer unk24 /* s32: Goal game flight: frames 0-31 since the launch or the last big trail star */
 #define playerLifeGiverMask unk24 /* s32: Life request: bit i set per player that can be asked (active, lives, no request) */
 #define playerRideLandCount unk24 /* s32: Warp Star ride and cannon landing: counted up at each touchdown by the state's update; its body waits for it */

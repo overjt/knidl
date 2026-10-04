@@ -312,7 +312,7 @@ void IntroStory(void)
             if (IntroStoryWait(2))
                 goto end;
         }
-        if (IntroStoryWait(gUnk_08731CE6[i]))
+        if (IntroStoryWait(gIntroStorySceneDurations[i]))
             break;
         if (i == 8)
             break;

@@ -85,7 +85,7 @@ void PlayerObjectUFOShot(void)
                 u->updateCallback = (u32)PlayerObjectBeamOrbUpdate;
                 u->layer = 5;
                 u = gCurTask;
-                u->frameTable = gUnk_08751BF4;
+                u->frameTable = gPlayerUFOShotFrames;
                 if (u->facing == 1)
                     u->unk28 = 10;
                 else
@@ -139,7 +139,7 @@ void PlayerObjectUFOShot(void)
                 u->drawCallback = (u32)TaskDrawWorldInViewOrFree;
                 u->layer = 7;
                 u = gCurTask;
-                u->frameTable = gUnk_08751BF4;
+                u->frameTable = gPlayerUFOShotFrames;
                 u->posY = (u->pixelY + 4) << 16;
                 if (u->facing == 1)
                 {
@@ -208,7 +208,7 @@ void PlayerObjectUFOShot(void)
             u->lateUpdateCallback = (u32)PlayerObjectUFOShotLateUpdate;
             u->layer = 7;
         }
-            gCurTask->frameTable = gUnk_08751BF4;
+            gCurTask->frameTable = gPlayerUFOShotFrames;
             sub_0802205c(gUnk_0873CB6C);
             {
                 struct Task *u = gCurTask;

@@ -207,7 +207,7 @@ void sub_08030604(void)
     t->drawCallback = (u32)TaskDrawWorld;
     t->layer = 12;
     u = gCurTask;
-    u->frameTable = gUnk_0874C804;
+    u->frameTable = gStarBurstFrames;
     u->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame++;

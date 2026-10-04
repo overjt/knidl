@@ -1064,8 +1064,8 @@ gTitlePressStartLetterFrames:
 	.global	gUnk_08731CDC
 gUnk_08731CDC:
 	.incbin	"baserom.gba", 0x731CDC, 0xA
-	.global	gUnk_08731CE6
-gUnk_08731CE6:
+	.global	gIntroStorySceneDurations
+gIntroStorySceneDurations:
 	.incbin	"baserom.gba", 0x731CE6, 0x12
 	.global	gUnk_08731CF8
 gUnk_08731CF8:
@@ -3749,11 +3749,11 @@ gUnk_0873B8C6:
 	.section .game_rodata_0873b9ec, "a"
 	.global	game_rodata_0873b9ec
 game_rodata_0873b9ec:
-	.global	gUnk_0873B9EC
-gUnk_0873B9EC:
+	.global	gPlayerEffectStarTrajectories
+gPlayerEffectStarTrajectories:
 	.incbin	"baserom.gba", 0x73B9EC, 0x60
-	.global	gUnk_0873BA4C
-gUnk_0873BA4C:
+	.global	gPlayerEffectDeathStarRingMotions
+gPlayerEffectDeathStarRingMotions:
 	.incbin	"baserom.gba", 0x73BA4C, 0x40
 	.global	gUnk_0873BA8C
 gUnk_0873BA8C:
@@ -4319,8 +4319,8 @@ gUnk_0873DB34:
 	.global	gUnk_0873DB44
 gUnk_0873DB44:
 	.incbin	"baserom.gba", 0x73DB44, 0x68
-	.global	gUnk_0873DBAC
-gUnk_0873DBAC:
+	.global	gGoalGameLaneX
+gGoalGameLaneX:
 	.incbin	"baserom.gba", 0x73DBAC, 0x28
 	.global	gGoalGameLayerHeights
 gGoalGameLayerHeights:
@@ -4355,20 +4355,20 @@ gGoalGameLayerScores:
 	.global	gUnk_0873DCA8
 gUnk_0873DCA8:
 	.incbin	"baserom.gba", 0x73DCA8, 0x18
-	.global	gUnk_0873DCC0
-gUnk_0873DCC0:
+	.global	gGoalGameTrailStarOffsetX
+gGoalGameTrailStarOffsetX:
 	.incbin	"baserom.gba", 0x73DCC0, 0x8
-	.global	gUnk_0873DCC8
-gUnk_0873DCC8:
+	.global	gGoalGameTrailStarOffsetY
+gGoalGameTrailStarOffsetY:
 	.incbin	"baserom.gba", 0x73DCC8, 0x4
 	.global	gGoalGameSpringDepths
 gGoalGameSpringDepths:
 	.incbin	"baserom.gba", 0x73DCCC, 0x4A
-	.global	gUnk_0873DD16
-gUnk_0873DD16:
+	.global	gGoalGameCameraRiseDurations
+gGoalGameCameraRiseDurations:
 	.incbin	"baserom.gba", 0x73DD16, 0x1A
-	.global	gUnk_0873DD30
-gUnk_0873DD30:
+	.global	gGoalGameCameraPauseDurations
+gGoalGameCameraPauseDurations:
 	.incbin	"baserom.gba", 0x73DD30, 0x1C
 	.global	gUnk_0873DD4C
 gUnk_0873DD4C:

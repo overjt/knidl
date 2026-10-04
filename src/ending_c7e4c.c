@@ -58,7 +58,7 @@ void EndingEpilogueKirby(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingEpilogueKirbyDraw;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_08755708;
+    gCurTask->frameTable = gEndingEpilogueFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->endingEpilogueFollowParent = 1;
     TaskYieldTrampoline(200);
@@ -267,7 +267,7 @@ void EndingEpilogueKirbyDraw(void)
             gCurTask->endingEpilogueFlashPhase = 0;
         if (gCurTask->endingEpilogueFlashPhase > 10)
             gCurTask->endingEpilogueFlashPhase = 0;
-        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, gUnk_08757368[gCurTask->endingEpilogueFlashPhase], 16,
+        BlendColors(gUnk_0859A0B0, gUnk_0859A0D0, gKirbyFlashBlendRatios[gCurTask->endingEpilogueFlashPhase], 16,
                      &gObjPalette[((gCurTask->tileWord >> 12) + 2) * 16]);
     }
     t = gCurTask;
@@ -352,7 +352,7 @@ void EndingEpilogueKingDedede(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingEpilogueKingDededeDraw;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_08755708;
+    gCurTask->frameTable = gEndingEpilogueFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(200);

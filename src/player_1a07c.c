@@ -117,7 +117,7 @@ void CutsceneFountainKirbyDraw(void)
         w = gCurTask;
         if (w->cutsceneActorFlashPhase > 10)
             w->cutsceneActorFlashPhase = 0;
-        BlendColors((u32)gUnk_0859A0B0, (u32)gUnk_0859A0D0, gUnk_08757368[gCurTask->cutsceneActorFlashPhase], 16,
+        BlendColors((u32)gUnk_0859A0B0, (u32)gUnk_0859A0D0, gKirbyFlashBlendRatios[gCurTask->cutsceneActorFlashPhase], 16,
                      (void *)((u32)gObjPalette
                               + (((gCurTask->tileWord >> 12) + 1) << 5)));
     }

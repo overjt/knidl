@@ -39,7 +39,7 @@ void CutsceneActorScript2(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 5;
-    gCurTask->frameTable = gUnk_08751CEC;
+    gCurTask->frameTable = gSparkleFrames;
     gCurTask->tileWord = 0;
     gCurTask->cutsceneActorChildSlot = CreateCutsceneActor(3, 32);
     gTasks[gCurTask->cutsceneActorChildSlot].cutsceneActorPattern = 0;

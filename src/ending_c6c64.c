@@ -96,7 +96,7 @@ void EndingEpilogueWarpStar(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)EndingEpilogueWarpStarDraw;
     gCurTask->layer = 8;
-    gCurTask->frameTable = gUnk_08755708;
+    gCurTask->frameTable = gEndingEpilogueFrames;
     gCurTask->tileWord = 0x8810;
     gCurTask->endingEpilogueChildSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
     gTasks[gCurTask->endingEpilogueChildSlot].variant = 4;

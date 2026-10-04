@@ -37,7 +37,7 @@ void Task_IntroStoryPicture(void)
     LZ77UnCompVram(h->tiles, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);
     gCurTask->frame = gCurTask->introStoryPictureIndex;
-    TaskYieldTrampoline(gUnk_08731CE6[gCurTask->introStoryPictureIndex] + 67);
+    TaskYieldTrampoline(gIntroStorySceneDurations[gCurTask->introStoryPictureIndex] + 67);
     TaskExitTrampoline();
 }
 

@@ -45,7 +45,7 @@ void PlayerObjectAirPuff(void)
         t->drawCallback = (u32)TaskDrawWorldInViewOrFree;
         t->layer = 5;
     }
-    gCurTask->frameTable = gUnk_0874C568;
+    gCurTask->frameTable = gAirPuffFrames;
     sub_0802205c(gUnk_0873CB44);
     switch (gCurTask->playerObjectSpawnWord & 15)
     {

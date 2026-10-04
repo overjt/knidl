@@ -24,7 +24,7 @@ extern u16 gLatchedPressedKeys[];
 extern u32 gStageRequest[];
 extern u32 gUnk_085B9B2C[];
 extern u32 gUnk_085B9B6C[];
-extern s16 gUnk_0873DBAC[];
+extern s16 gGoalGameLaneX[];
 extern s16 gGoalGameLayerHeights[];
 extern u32 gPlayerGoalGameStates[];
 extern u32 gPlayerGoalGameStateUpdates[];
@@ -34,11 +34,11 @@ extern u8 gUnk_0873DC66[];
 extern u8 gUnk_0873DC80[];
 extern u16 gGoalGameLayerScores[];
 extern u32 gUnk_0873DCA8[];
-extern u32 gUnk_0873DCC0[];
-extern u32 gUnk_0873DCC8[];
+extern u32 gGoalGameTrailStarOffsetX[];
+extern u32 gGoalGameTrailStarOffsetY[];
 extern u32 gGoalGameSpringDepths[];
-extern u32 gUnk_0873DD16[];
-extern u32 gUnk_0873DD30[];
+extern u32 gGoalGameCameraRiseDurations[];
+extern u32 gGoalGameCameraPauseDurations[];
 extern u32 gUnk_0873DD4C[];
 extern u32 gUnk_0873DD5C[];
 extern u32 gUnk_0873DD64[];
@@ -50,7 +50,7 @@ extern u32 gUnk_0873DDE8[];
 extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
 extern u32 gPlayerDances[];
-extern u32 gUnk_0874C890[];
+extern u32 gGoalGameStarFrames[];
 extern u32 gUnk_0874CDF8[];
 extern u32 gGoalGameSpringFrames[];
 extern u32 gGoalGamePlayerMarkerFrames[];
@@ -286,7 +286,7 @@ void sub_0805b370(void)
         } while ((s16)gCurTask->playerLoopCount <= 6);
         TaskCreateFrom(TASK_GOAL_GAME_CAMERA, 32);
     }
-    gCurTask->posX = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->playerGoalGameActiveIndex] << 16;
+    gCurTask->posX = gGoalGameLaneX[gActivePlayerCount * 4 + gCurTask->playerGoalGameActiveIndex] << 16;
     gCurTask->posY = 232 << 18;
     TaskCreateFrom(TASK_88, 32);
     gCurTask->playerGoalGameSpringSlot = TaskCreateFrom(TASK_GOAL_GAME_SPRING, 32);
@@ -564,7 +564,7 @@ void PlayerGoalGameLand(void)
             }
             gCurTask->playerLoopCount++;
         }
-        gCurTask->playerGoalGameSpotX = ((s16 *)gUnk_0873DBAC)[gUnk_030023D4 * 4 + gUnk_030023B4];
+        gCurTask->playerGoalGameSpotX = ((s16 *)gGoalGameLaneX)[gUnk_030023D4 * 4 + gUnk_030023B4];
         if (gCurTask->playerGoalGameSpotX == gCurTask->pixelX)
         {
             gCurTask->state = PLAYER_GOAL_GAME_STATE_WAIT;
@@ -722,7 +722,7 @@ void Task_GoalGameLaunchStars(void)
     gCurTask->drawCallback = (u32)GoalGameLaunchStarsDraw;
     gCurTask->updateCallback = (u32)GoalGameLaunchStarsUpdate;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->frameTable = gGoalGameStarFrames;
     gCurTask->tileWord = 0;
     TaskStop();
     gCurTask->pixelX = gTasks[gCurTask->parent].pixelX;
@@ -830,12 +830,12 @@ void Task_GoalGameBigTrailStar(void)
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 11;
-    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->frameTable = gGoalGameStarFrames;
     gCurTask->tileWord = 0;
     gCurTask->pixelX = gTasks[gCurTask->parent].pixelX
-                         + ((s8 *)gUnk_0873DCC0)[RandomRange(8)];
+                         + ((s8 *)gGoalGameTrailStarOffsetX)[RandomRange(8)];
     gCurTask->pixelY = gTasks[gCurTask->parent].pixelY
-                         + ((s8 *)gUnk_0873DCC8)[RandomRange(4)];
+                         + ((s8 *)gGoalGameTrailStarOffsetY)[RandomRange(4)];
     gCurTask->posX = gCurTask->pixelX << 16;
     gCurTask->posY = gCurTask->pixelY << 16;
     TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 9),
@@ -900,12 +900,12 @@ void Task_GoalGameSmallTrailStar(void)
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 13;
-    gCurTask->frameTable = gUnk_0874C890;
+    gCurTask->frameTable = gGoalGameStarFrames;
     gCurTask->tileWord = 0;
     gCurTask->pixelX = gTasks[gCurTask->parent].pixelX
-                         + ((s8 *)gUnk_0873DCC0)[RandomRange(8)];
+                         + ((s8 *)gGoalGameTrailStarOffsetX)[RandomRange(8)];
     gCurTask->pixelY = gTasks[gCurTask->parent].pixelY
-                         + ((s8 *)gUnk_0873DCC8)[RandomRange(4)];
+                         + ((s8 *)gGoalGameTrailStarOffsetY)[RandomRange(4)];
     gCurTask->posX = gCurTask->pixelX << 16;
     gCurTask->posY = gCurTask->pixelY << 16;
     TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 8),
@@ -978,7 +978,7 @@ void Task_GoalGameCamera(void)
         TaskYieldTrampoline(1);
         gCurTask->velY = 0xFFF78000;
         {
-            u8 *t1 = (u8 *)gUnk_0873DD16;
+            u8 *t1 = (u8 *)gGoalGameCameraRiseDurations;
 
             TaskYieldTrampoline(t1[gTasks[gLocalPlayer].playerGoalGameLaunchPower]);
         }
@@ -986,7 +986,7 @@ void Task_GoalGameCamera(void)
         TaskYieldTrampoline(32);
         TaskStop();
         {
-            u8 *t2 = (u8 *)gUnk_0873DD30;
+            u8 *t2 = (u8 *)gGoalGameCameraPauseDurations;
 
             TaskYieldTrampoline(t2[gTasks[gLocalPlayer].playerGoalGameLaunchPower]);
         }
@@ -1030,7 +1030,7 @@ void GoalGameCameraFollowPlayer(void)
     TaskYieldTrampoline(1);
     gCurTask->velY = 0xFFF78000;
     {
-        u8 *t1 = (u8 *)gUnk_0873DD16;
+        u8 *t1 = (u8 *)gGoalGameCameraRiseDurations;
 
         TaskYieldTrampoline(t1[gTasks[gCurTask->unk28].unk34]
                             - (s16)gTasks[gCurTask->unk28].unk70 + 1);
@@ -1039,7 +1039,7 @@ void GoalGameCameraFollowPlayer(void)
     TaskYieldTrampoline(32);
     TaskStop();
     {
-        u8 *t2 = (u8 *)gUnk_0873DD30;
+        u8 *t2 = (u8 *)gGoalGameCameraPauseDurations;
 
         TaskYieldTrampoline(t2[gTasks[gCurTask->unk28].unk34]);
     }
@@ -1124,7 +1124,7 @@ void Task_GoalGameSpring(void)
         gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];
     gCurTask->tileWord = 0x00009010;
     {
-        s16 *tbl = (s16 *)gUnk_0873DBAC;
+        s16 *tbl = (s16 *)gGoalGameLaneX;
 
         gCurTask->posX = tbl[(gActivePlayerCount << 2)
             + gTasks[gCurTask->parent].unk2C] << 16;
@@ -1448,7 +1448,7 @@ void GoalGameHelperKirbyUpdate(void)
     {
         if (((gActivePlayerMask >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
             && ((gCurTask->unk2C >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
-            && gCurTask->pixelX < gUnk_0873DBAC[(gCurTask->unk30 << 2) + gCurTask->unk34] - 6)
+            && gCurTask->pixelX < gGoalGameLaneX[(gCurTask->unk30 << 2) + gCurTask->unk34] - 6)
         {
             if (gUnk_02006A14[(s16)gCurTask->goalGameHelperKirbyLoopCount] != 0)
             {
@@ -1511,7 +1511,7 @@ void Task_GoalGameOneUp(void)
     switch (gCurTask->variant)
     {
     case 0:
-        gCurTask->posX = (gUnk_0873DBAC[(gCurTask->unk30 << 2)
+        gCurTask->posX = (gGoalGameLaneX[(gCurTask->unk30 << 2)
             + gCurTask->unk34] - 6) << 16;
         gCurTask->posY = (gTasks + gCurTask->parent)->pixelY << 16;
         gCurTask->unk24 = 44 - gTasks[gCurTask->parent].unk24;

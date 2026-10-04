@@ -545,11 +545,11 @@ void QuickDrawPlayerStrike(void)
     for (i = 0; i < 2; i++)
     {
         t = gCurTask;
-        t->pixelX = x + gUnk_08756498[0] * (u16)t->facing;
+        t->pixelX = x + gQuickDrawShakeAmplitudes[0] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->pixelX = x - gUnk_08756498[0] * (u16)t->facing;
+        t->pixelX = x - gQuickDrawShakeAmplitudes[0] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
     }
@@ -609,11 +609,11 @@ void QuickDrawPlayerFalseStart(void)
     for (i = 0; i < 2; i++)
     {
         t = gCurTask;
-        t->pixelX = x + gUnk_08756498[t->unk20] * (u16)t->facing;
+        t->pixelX = x + gQuickDrawShakeAmplitudes[t->unk20] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->pixelX = x - gUnk_08756498[t->unk20] * (u16)t->facing;
+        t->pixelX = x - gQuickDrawShakeAmplitudes[t->unk20] * (u16)t->facing;
         t->posX = t->pixelX << 16;
         TaskYieldTrampoline(1);
     }
@@ -685,10 +685,10 @@ void QuickDrawLabelShow(void)
         gCurTask->frameTable = gQuickDrawWinCountFrames;
         break;
     case 3:
-        gCurTask->frameTable = gUnk_08755A7C;
+        gCurTask->frameTable = gQuickDrawSlashFrames;
         break;
     case 4:
-        gCurTask->frameTable = gUnk_08755A88;
+        gCurTask->frameTable = gQuickDrawDefeatedFrames;
         break;
     case 5:
         gCurTask->frameTable = gQuickDrawDigitFrames;
@@ -814,7 +814,7 @@ void QuickDrawSlash(void)
     t->moveCallback = (u32)TaskMove;
     t->layer = 4;
     u = gCurTask;
-    u->frameTable = gUnk_08755A7C;
+    u->frameTable = gQuickDrawSlashFrames;
     u->tileWord |= 0x800;
     u->pixelX = 240;
     u->pixelY = 0;

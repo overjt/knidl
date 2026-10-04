@@ -16,7 +16,7 @@
  * TaskDrawWorldInViewOrFree otherwise, animation table gPlayerObjectVanishFrames), registers the
  * collider row Task.unk24 if there is one and steps animation frames
  * 0-10 before TaskExitTrampoline.  PlayerObjectLaserBeamVanish is a second, drifting burst
- * (gUnk_0874C7CC). */
+ * (gSmokePuffFrames). */
 
 /* task / sprite services (landed prototypes) */
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
@@ -88,7 +88,7 @@ void PlayerObjectLaserBeamVanish(void)
     gCurTask->lateUpdateCallback = 0;
     gCurTask->layer = 5;
     t = gCurTask;
-    t->frameTable = gUnk_0874C7CC;
+    t->frameTable = gSmokePuffFrames;
     t->spriteFlags = 0;
     t->tileWord = 0;
     t->unk28 = 0;

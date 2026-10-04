@@ -12,7 +12,7 @@
  * the ROM).  Variants 16, 17 and 19 are spawned by M16 (16 also by M17's
  * actor core), 18 and 20 by M10, 21 by M11. 16 (PlayerEffectDanceStarBurst), 17
  * (PlayerEffectAbilityLoss) and 18 (sub_08055520) are animations that stay put
- * (TaskUpdatePixelPos), from gUnk_0874C804, gUnk_0874C960 and gUnk_0874C980; 19
+ * (TaskUpdatePixelPos), from gStarBurstFrames, gUnk_0874C960 and gUnk_0874C980; 19
  * (sub_0805574c) has no draw hook and draws itself through its Task.updateCallback
  * callback sub_080557d4 (QueueSprite); 20 (sub_0805587c) is a
  * three-sub-state puff whose sub-states 0 and 1 (one differing store, then a
@@ -127,7 +127,7 @@ void PlayerEffectDanceStarBurst(void)
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->layer = 8;
     t = gCurTask;
-    t->frameTable = gUnk_0874C804;
+    t->frameTable = gStarBurstFrames;
     t->frame = 0;
     TaskYieldTrampoline(1);
     gCurTask->frame++;
