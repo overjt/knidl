@@ -323,6 +323,30 @@ slot gets `State<N>Update` only where state N's body stores
 `updateState = N` (2.3, the state pair); the update tables of the
 families that index them otherwise keep their placeholders.
 
+**RAM position names** (run 5 of #155, the owner's decision D2).  Some
+RAM cells are not variables at all but addresses inside a larger buffer
+that the code passes to a copy, fade or blend routine: the cells inside the
+palette shadow buffers `gBgPalette` (0x03001270, 256 BG colours) and
+`gObjPalette` (0x03001470, 256 OBJ colours).  Each user copies or blends a
+run of colours from that address on, so the address's only identity is its
+position.  Such a cell is named after its position, 0-based and in
+decimal: `gBgPaletteBank<N>` / `gObjPaletteBank<N>` for the first colour of
+16-colour bank N, `g<Bg|Obj>PaletteBank<N>Color<C>` for colour C inside
+it (`gObjPaletteBank6Color6` is `gObjPalette` + 0xCC).  The evidence is
+`slot: <buffer> + <offset>`.  These are renames, never respellings: the C
+keeps the symbol and does not become `&gBgPalette[0x20]`, because gcc's
+cse may derive one `symbol+offset` from another and change the code.  They
+are counted with the position names.
+
+**Functional ROM records by position** (run 5, the owner's decision D4).
+The rule of this section covers any family size: the player's frame
+records and frame lists (seg 19, `player_frame_records`,
+`player_frame_lists`, docs/data.md) and the `*_rodata_*` records that a C
+table in `src/data/` reaches by slot are named after that slot, by a
+script, in their own commits.  A format-only chain (no code reads it;
+#161's `"proof": "format"`) may be named the same way; the census counts
+it apart.  Asset labels stay unnamed (section 5).
+
 **Class-value names** (run 4).  When the code sorts records by a value and
 no role word is true for every record in a group, the group is named by
 that value as the code writes it, which claims no role: the collider lists
@@ -397,6 +421,16 @@ obvious", "the model inferred it", a visual resemblance or a matching build
 are not evidence.
 
 ## 5. When to keep `sub_` / `gUnk_`, and what stays unnamed by design
+
+**Shared scratch** (run 5, the owner's decision D3).  A cell proven to be
+shared scratch - several unrelated users, and no value survives from one
+user to the next (every reader is preceded by its own writer on every
+path) - may take `gScratch<Shape>` (`gScratchBuffer`, `gScratchWord`), or
+`g<Subsystem>Scratch<Shape>` when one subsystem owns it and others borrow
+it.  The evidence lists every writer and reader.  A cell that holds two
+encodings gets one name only if one noun covers both (the stage's and the
+hub's arrival codes are both an arrival code); otherwise it stays `gUnk_`,
+with the reason in the census.
 
 Keep the placeholder when:
 
