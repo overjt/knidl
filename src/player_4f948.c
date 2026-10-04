@@ -133,19 +133,19 @@ void PlayerActionStarRodJump(void)
     PlaySfxIfLocalPlayer(SE_JUMP, (u16)gCurTask->player->playerIndex);
     {
         struct Task *t = gCurTask;
-        t->unk2C = t->facing;
+        t->playerStarRodJumpFacing = t->facing;
         t->u80.attackAbility = ABILITY_STAR_ROD;
     }
     {
         struct Task *t = gCurTask;
-        t->unk28 = -1;
+        t->playerAttackStep28 = -1;
         gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C304;
     }
     while (1)
     {
         {
             struct Task *t = gCurTask;
-            t->unk28++;
+            t->playerAttackStep28++;
             PlaySfxIfLocalPlayer(0x11D, (u16)t->player->playerIndex);
         }
         TaskSetFrame(0xFE5);
@@ -153,11 +153,11 @@ void PlayerActionStarRodJump(void)
         for (gCurTask->unk6E = 0; gCurTask->unk6E <= 6; gCurTask->unk6E++)
         {
             struct Task *t = gCurTask;
-            t->unk28++;
+            t->playerAttackStep28++;
             t->frame++;
             TaskYieldTrampoline(1);
         }
-        gCurTask->unk28 = -1;
+        gCurTask->playerAttackStep28 = -1;
     }
 }
 
@@ -189,9 +189,9 @@ void PlayerActionStarRodJumpUpdate(void)
     if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x30)
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x10)
-            gCurTask->unk2C = 1;
+            gCurTask->playerStarRodJumpFacing = 1;
         else
-            gCurTask->unk2C = -1;
+            gCurTask->playerStarRodJumpFacing = -1;
     }
     if (PlayerCheckFloat() == 0)
     {
@@ -201,19 +201,19 @@ void PlayerActionStarRodJumpUpdate(void)
             {
                 PlayerCheckBump();
                 PlayerRequestLocomotion();
-                gCurTask->facing = gCurTask->unk2C;
+                gCurTask->facing = gCurTask->playerStarRodJumpFacing;
             }
         }
         else
         {
-            gCurTask->facing = gCurTask->unk2C;
+            gCurTask->facing = gCurTask->playerStarRodJumpFacing;
         }
     }
     {
         struct Task *u = gCurTask;
-        if (u->unk28 != -1)
+        if (u->playerAttackStep28 != -1)
         {
-            LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C318 + u->unk28 * 8);
+            LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C318 + u->playerAttackStep28 * 8);
             RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                          &gPlayerBodyBoxes[gCurTask->player->playerIndex]);
         }

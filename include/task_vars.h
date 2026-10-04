@@ -1125,11 +1125,13 @@
    */
 #define playerHeldNextCaptor unk18 /* s32: slot of the task that called SetHeldPlayerState; the spit flight makes it the parent */
 #define playerLifeRequestCursor unk18 /* s32: Life request: the cursor row (state 0: the two choices; state 1: the giver list) */
+#define playerShareReceiver unk18 /* s32: Share item: the player index that receives the shared item, in both partners' tasks */
 #define playerLifeGiver unk1C /* s32: Life request: the player index asked for a life (its gLifeRequests entry targets this one) */
 #define playerLifeGiverLastRow unk20 /* s32: Life request: the last row of the giver list (the number of askable players - 1) */
 #define playerLifeGiverMask unk24 /* s32: Life request: bit i set per player that can be asked (active, lives, no request) */
 #define playerWarpStarRideLandCount unk24 /* s32: Warp Star ride: counted up at each touchdown by the state's update; its body waits for it */
 #define playerActionDone28 unk28 /* s32: 1 once the action's body has finished; its update then hands over (as playerActionDone) */
+#define playerAttackStep28 unk28 /* s32: the role of playerAttackStep kept in unk28 (Star Rod jump): body-box row, -1 when off */
 #define playerCrashBlendRatio unk28 /* s32: Crash: BlendColors ratio of the palette flash (0-256; +85 in the body, +10 in the update) */
 #define playerDuckDropTimer unk28 /* s32: Duck: frames (8) of ducking on a floor gTerrainResult.unk5 marks before it drops through */
 #define playerGoalGameSpringSlot unk28 /* s32: Goal game: the task index of the player's spring (TASK_GOAL_GAME_SPRING) */
@@ -1139,10 +1141,14 @@
 #define playerHurtPhase unk28 /* s32: Hurt: the step of the knock-back sequence (0 at the start, counted per stage) */
 #define playerLadderStep unk28 /* s32: Ladder: the climb step, a row of gUnk_0873D8B4 / D908 (up 0-9 or 0-15, down 10-13, 16-20) */
 #define playerParasolSwayAccelX unk28 /* s32: Parasol falling: the X acceleration of the sway (+-0x400 / 0x800 by facing) */
+#define playerShareHealDone unk28 /* s32: Share item: HealPlayerStep's result for the receiver: 1 once its health is full */
 #define playerSlashOnGround unk28 /* s32: Meta Knight's Slash: Task.onGround at the swing's start; on the ground the swing slides */
 #define playerStandInWaterSavedWallSide unk28 /* s32: Stand in water: PlayerState.wallSide when the pose began; no walk into that wall */
 #define playerStandSavedClampedTopY unk28 /* s32: Stand: PlayerState.clampedTopY when the pose began (-1: none), tested at the bounds top */
+#define playerThrowDir unk28 /* s32: Throw (holding): the throw the held d-pad picks: 0 up, 1 forward, 2 down */
+#define playerTornadoTurnTimer unk28 /* s32: Tornado: frames left before the spin may turn again (8 after a turn or a wall hit) */
 #define playerWalkStepDelay unk28 /* s32: Walk: frames added to every step of the walk cycle (0, or 2 when slowing without input) */
+#define playerWheelOnWater unk28 /* s32: Wheel: 1 while it rolls on a water surface, which counts as ground; 0 on land */
 #define playerAttackStep unk2C /* s32: an attack's hit-box step: the 8-byte row of its hit-box and body-box tables, -1 when off */
 #define playerBurningFadeStep unk2C /* s32: Burning: the row of gUnk_0873B510 (the palette fade of the dash), -1 when off */
 #define playerCrashSavedPosY unk2C /* s32: Crash: posY at the blast; the update keeps the player from falling below it */
@@ -1152,6 +1158,9 @@
 #define playerLadderSavedFacing unk2C /* s32: Ladder: the facing when it took the ladder, restored when it leaves */
 #define playerParasolSwayVelX unk2C /* s32: Parasol falling: the sway's X speed, added to posX every frame by PlayerUpdate */
 #define playerPoseSlope unk2C /* s32: Stand / Duck: the slope (PlayerState.slope) the pose was drawn for; a change re-enters it */
+#define playerStarRodJumpFacing unk2C /* s32: Star Rod jump: the facing it lands with: the start facing, then the last held direction */
+#define playerTornadoSfxTimer unk2C /* s32: Tornado: frames to the next spin sound (149) while B is held: every 4th frame */
+#define playerWheelWasOnGround unk2C /* s32: Wheel: Task.onGround as of the last frame (1 / 0); leaving the ground stops the Y axis */
 #define playerFallBumped unk30 /* s32: Fall: 1 when it began from a bump (bumpKind bit 0); the body then skips its start frames */
 #define playerGoalGameLayer unk30 /* s32: Goal game from the launch on: the layer (score sign) reached, row of the layer tables */
 #define playerGoalGameSpringTimer unk30 /* s32: Goal game before the launch: frames on the spring, to 35 (24 = fully pressed) */

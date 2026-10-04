@@ -44,8 +44,8 @@ void PlayerActionTornado(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_TORNADO;
-    gCurTask->unk28 = 0;
-    gCurTask->unk2C = 0;
+    gCurTask->playerTornadoTurnTimer = 0;
+    gCurTask->playerTornadoSfxTimer = 0;
     gCurTask->variant = 0;
     gCurTask->u80.attackAbility = ABILITY_TORNADO;
     switch (gCurTask->variant) {
@@ -120,9 +120,9 @@ void PlayerActionTornadoUpdate(void)
         }
         {
             struct Task *u = gCurTask;
-            if (u->unk2C-- == 0) {
+            if (u->playerTornadoSfxTimer-- == 0) {
                 PlaySfxIfLocalPlayer(149, u->player->playerIndex);
-                gCurTask->unk2C = 3;
+                gCurTask->playerTornadoSfxTimer = 3;
             }
         }
         goto common;
@@ -133,19 +133,19 @@ void PlayerActionTornadoUpdate(void)
     common:
         {
             struct Task *u = gCurTask;
-            if (u->unk28 == 0) {
+            if (u->playerTornadoTurnTimer == 0) {
                 if (PlayerFaceHeldDirection() != 0) {
                     struct Task *v = gCurTask;
-                    v->unk28 = 8;
+                    v->playerTornadoTurnTimer = 8;
                     v->velX = -v->velX;
                     v->accelX = -v->accelX;
                 }
             } else {
-                u->unk28--;
+                u->playerTornadoTurnTimer--;
             }
         }
         if (gTerrainResult.unk0 != 0) {
-            gCurTask->unk28 = 8;
+            gCurTask->playerTornadoTurnTimer = 8;
             gCurTask->facing = -gCurTask->facing;
             {
                 struct Task *v = gCurTask;

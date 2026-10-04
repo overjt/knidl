@@ -60,7 +60,7 @@ void PlayerActionShareItem(void)
     if (gCurTask->player->mouthState == 2)
         gCurTask->player->mouthState = 0;
     PlaySfxIfLocalPlayer(292, gCurTask->player->playerIndex);
-    if (gCurTask->unk18 == gCurTask->player->playerIndex)
+    if (gCurTask->playerShareReceiver == gCurTask->player->playerIndex)
     {
         gCurTask->layer = 5;
         TaskSetSkipMask(14, gCurTaskIdx);
@@ -122,11 +122,11 @@ void PlayerActionShareItem(void)
             TaskSleepForever();
         }
     }
-    q = &gPlayerStates[gCurTask->unk18];
-    u = &gTasks[gCurTask->unk18];
+    q = &gPlayerStates[gCurTask->playerShareReceiver];
+    u = &gTasks[gCurTask->playerShareReceiver];
     FreezeOtherTasks(15);
     TaskSetSkipMask(12, gCurTaskIdx);
-    TaskSetSkipMask(0, gCurTask->unk18);
+    TaskSetSkipMask(0, gCurTask->playerShareReceiver);
     a43 = gCurTask->facing;
     a42 = gCurTask->layer;
     PlayerStopAxes(3);
@@ -172,20 +172,20 @@ void PlayerActionShareItem(void)
             switch (gCurTask->player->shareItem)
             {
             case 1:
-                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
+                if (gPlayerHealth[gCurTask->playerShareReceiver] < gMaxHealth)
                 {
                     do
                     {
-                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->playerShareReceiver)
                             PlaySfx(221);
-                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
+                        gCurTask->playerShareHealDone = HealPlayerStep(gCurTask->playerShareReceiver);
                         TaskYieldTrampoline(8);
-                    } while (gCurTask->unk28 == 0);
+                    } while (gCurTask->playerShareHealDone == 0);
                 }
                 TaskYieldTrampoline(16);
                 break;
             case 2:
-                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
+                if (gPlayerHealth[gCurTask->playerShareReceiver] < gMaxHealth)
                 {
                     if (gExtraMode == 0)
                         n = 2;
@@ -193,11 +193,11 @@ void PlayerActionShareItem(void)
                         n = 1;
                     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount < n; gCurTask->playerLoopCount++)
                     {
-                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->playerShareReceiver)
                             PlaySfx(221);
-                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
+                        gCurTask->playerShareHealDone = HealPlayerStep(gCurTask->playerShareReceiver);
                         TaskYieldTrampoline(8);
-                        if (gCurTask->unk28 != 0)
+                        if (gCurTask->playerShareHealDone != 0)
                             break;
                     }
                 }
@@ -241,13 +241,13 @@ void PlayerActionShareItem(void)
             switch (gCurTask->player->shareItem)
             {
             case 1:
-                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
+                if (gPlayerHealth[gCurTask->playerShareReceiver] < gMaxHealth)
                 {
                     do
                     {
-                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->playerShareReceiver)
                             PlaySfx(221);
-                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
+                        gCurTask->playerShareHealDone = HealPlayerStep(gCurTask->playerShareReceiver);
                         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++)
                         {
                             TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
@@ -255,7 +255,7 @@ void PlayerActionShareItem(void)
                             TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                             TaskYieldTrampoline(2);
                         }
-                    } while (gCurTask->unk28 == 0);
+                    } while (gCurTask->playerShareHealDone == 0);
                 }
                 for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
                 {
@@ -266,7 +266,7 @@ void PlayerActionShareItem(void)
                 }
                 break;
             case 2:
-                if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
+                if (gPlayerHealth[gCurTask->playerShareReceiver] < gMaxHealth)
                 {
                     if (gExtraMode == 0)
                         n = 2;
@@ -274,9 +274,9 @@ void PlayerActionShareItem(void)
                         n = 1;
                     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount < n; gCurTask->playerLoopCount++)
                     {
-                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
+                        if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->playerShareReceiver)
                             PlaySfx(221);
-                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
+                        gCurTask->playerShareHealDone = HealPlayerStep(gCurTask->playerShareReceiver);
                         for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
                         {
                             TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
@@ -284,7 +284,7 @@ void PlayerActionShareItem(void)
                             TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                             TaskYieldTrampoline(2);
                         }
-                        if (gCurTask->unk28 != 0)
+                        if (gCurTask->playerShareHealDone != 0)
                             break;
                     }
                 }
@@ -351,20 +351,20 @@ void PlayerActionShareItem(void)
         switch (gCurTask->player->shareItem)
         {
         case 1:
-            if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
+            if (gPlayerHealth[gCurTask->playerShareReceiver] < gMaxHealth)
             {
                 do
                 {
-                    if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
+                    if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->playerShareReceiver)
                         PlaySfx(221);
-                    gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
+                    gCurTask->playerShareHealDone = HealPlayerStep(gCurTask->playerShareReceiver);
                     TaskYieldTrampoline(8);
-                } while (gCurTask->unk28 == 0);
+                } while (gCurTask->playerShareHealDone == 0);
             }
             TaskYieldTrampoline(16);
             break;
         case 2:
-            if (gPlayerHealth[gCurTask->unk18] < gMaxHealth)
+            if (gPlayerHealth[gCurTask->playerShareReceiver] < gMaxHealth)
             {
                 if (gExtraMode == 0)
                     n = 2;
@@ -372,11 +372,11 @@ void PlayerActionShareItem(void)
                     n = 1;
                 for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount < n; gCurTask->playerLoopCount++)
                 {
-                    if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
+                    if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->playerShareReceiver)
                         PlaySfx(221);
-                    gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
+                    gCurTask->playerShareHealDone = HealPlayerStep(gCurTask->playerShareReceiver);
                     TaskYieldTrampoline(8);
-                    if (gCurTask->unk28 != 0)
+                    if (gCurTask->playerShareHealDone != 0)
                         break;
                 }
             }
@@ -402,11 +402,11 @@ void PlayerActionShareItem(void)
     gCurTask->player->unk42 &= 0xFEFF;
     u->facing = b43;
     u->layer = b42;
-    gPlayerStates[gCurTask->unk18].unk42 &= 0xFEFF;
+    gPlayerStates[gCurTask->playerShareReceiver].unk42 &= 0xFEFF;
     u->taskClass--;
     FreezeOtherTasks(0);
     TaskSetSkipMask(0, gCurTaskIdx);
-    gCurTask->player->sharedMask |= 1 << gCurTask->unk18;
+    gCurTask->player->sharedMask |= 1 << gCurTask->playerShareReceiver;
     TaskSleepForever();
 }
 
