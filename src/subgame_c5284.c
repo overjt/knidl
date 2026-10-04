@@ -298,7 +298,7 @@ void AirGrindLayOutCourse(s32 a)
 void AirGrindBuildCourse(s32 a, s32 b)
 {
     s32 i;
-    struct M37CoursePlayer *p;
+    struct AirGrindCourseRacer *p;
 
     gBg0Cnt = 0x1C80;
     gBg1Cnt = 0x1D81;
@@ -358,7 +358,7 @@ void AirGrindDrawCourse(void)
     s32 lane;
     u16 zero;
     s32 x, y, z;
-    struct M37CoursePlayer *p;
+    struct AirGrindCourseRacer *p;
     s32 flag;
     s32 set, clear;
     s32 k;

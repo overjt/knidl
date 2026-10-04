@@ -24,7 +24,7 @@
  * of the room's object list gRoomObjectList (sorted along one axis) that
  * lie inside a rectangle, through SpawnRoomObject. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
@@ -544,7 +544,7 @@ void LockPlayersPastScrollLine(void)
 void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1)
 {
     s32 i;
-    struct Unk020055D8Entry *e;
+    struct RoomObjectEntry *e;
 
     if (x0 < 0)
         x0 = 0;

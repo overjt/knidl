@@ -13,7 +13,7 @@
  * race screen's sky.
  * 
  *   AirGrindResults   the results task body: ranks the four racers by their
- *       frame counts M37Game.raceTimes[] (a bubble sort into gAirGrindResults.unk04,
+ *       frame counts AirGrindState.raceTimes[] (a bubble sort into gAirGrindResults.unk04,
  *       ties share a place in unk0C), picks each one's score (course record
  *       unk20 or unk24) and installs AirGrindResultsDraw / AirGrindResultsUpdate.
  *   AirGrindResultsDraw   draws the table: time (AirGrindDrawTime), score
@@ -30,9 +30,9 @@
  *       two palette cycles through gUnk_08609F40 with the cursor sprite, and
  *       the cycle's start row for a menu choice.
  *   AirGrindBuildSky   the per-frame hook AirGrindSetupRace installs: builds the
- *       160-line sky gradient M37Game.skyLineColors[] from eleven RGB key colours,
+ *       160-line sky gradient AirGrindState.skyLineColors[] from eleven RGB key colours,
  *       fading from gUnk_080CFE60 to gUnk_080CFEA2 (level 2: gUnk_080CFE81 to
- *       gUnk_080CFEC3) between frames 0x4B0 and 0x8B0 of M37Game.frameCount.  It
+ *       gUnk_080CFEC3) between frames 0x4B0 and 0x8B0 of AirGrindState.frameCount.  It
  *       reads one key past the end of the eleven-entry local table, as the
  *       ROM does.
  *   AirGrindSkyVBlankCallback   the VBlank hook: sets backdrop colour 0 and re-arms DMA0

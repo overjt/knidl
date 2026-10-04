@@ -68,18 +68,18 @@ Lloop:
         t->unk30 = 0;
         t->player->unk14 = 0;
         {
-            struct M11R20 *d = (struct M11R20 *)gPlayerBodyBoxes;
+            struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
 
-            d[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873CA90;
+            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
         }
     }
     {
-        struct M11R8 *g8 = (struct M11R8 *)gPlayerHitBoxSets;
+        struct PlayerHitBoxSet *g8 = (struct PlayerHitBoxSet *)gPlayerHitBoxSets;
 
         {
             struct Task *t = gCurTask;
 
-            g8[t->player->playerIndex] = *(struct M11R8 *)gUnk_0873D044;
+            g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
             t->unk2C = -1;
             *(u32 *)((u8 *)t->player + 108) = 0;
             t->variant = 0;
@@ -171,7 +171,7 @@ Lloop:
 
         t->unk2C = 8;
         *(u32 *)((u8 *)t->player + 108) =
-            (u32)&((struct M11R8 *)gPlayerHitBoxSets)[t->player->playerIndex];
+            (u32)&((struct PlayerHitBoxSet *)gPlayerHitBoxSets)[t->player->playerIndex];
         t->playerLoopCount = 0;
     }
     do
@@ -275,15 +275,15 @@ void MetaKnightActionDashSlash(void)
         t->unk30 = 0;
         t->playerActionDone28 = 0;
         {
-            struct M11R20 *d = (struct M11R20 *)gPlayerBodyBoxes;
-            d[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873CA90;
+            struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
+            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
         }
     }
     {
-        struct M11R8 *g8 = (struct M11R8 *)gPlayerHitBoxSets;
+        struct PlayerHitBoxSet *g8 = (struct PlayerHitBoxSet *)gPlayerHitBoxSets;
         {
             struct Task *t = gCurTask;
-            g8[t->player->playerIndex] = *(struct M11R8 *)gUnk_0873D044;
+            g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
             t->unk2C = -1;
             *(u32 *)((u8 *)t->player + 108) = 0;
         }
@@ -444,14 +444,14 @@ void MetaKnightActionUpwardSlash(void)
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
         {
-            struct M11R20 *d = (struct M11R20 *)gPlayerBodyBoxes;
-            d[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873CA90;
+            struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
+            d[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
         }
     }
     {
-        struct M11R8 *g8 = (struct M11R8 *)gPlayerHitBoxSets;
+        struct PlayerHitBoxSet *g8 = (struct PlayerHitBoxSet *)gPlayerHitBoxSets;
         struct Task *t = gCurTask;
-        g8[t->player->playerIndex] = *(struct M11R8 *)gUnk_0873D044;
+        g8[t->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
         t->unk2C = -1;
         *(u32 *)((u8 *)t->player + 108) = 0;
     }
@@ -554,13 +554,13 @@ void MetaKnightActionDownThrust(void)
         if (t->player->prevMode != 13) {
             t->variant = 0;
             {
-                struct M11R20 *d = (struct M11R20 *)gPlayerBodyBoxes;
-                d[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873CA90;
+                struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
+                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873CA90;
             }
             {
-                struct M11R8 *g8 = (struct M11R8 *)gPlayerHitBoxSets;
+                struct PlayerHitBoxSet *g8 = (struct PlayerHitBoxSet *)gPlayerHitBoxSets;
                 struct Task *u = gCurTask;
-                g8[u->player->playerIndex] = *(struct M11R8 *)gUnk_0873D044;
+                g8[u->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873D044;
                 u->unk2C = -1;
                 *(u32 *)((u8 *)u->player + 108) = 0;
             }

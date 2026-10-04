@@ -12,8 +12,8 @@
  *       Task.unk1C = a, and each kind sets its sprite table, animation and one
  *       of the callbacks below.  The kinds as AirGrindRacerRaceStep/AirGrindRacerTryBoost use
  *       them (player 0 only unless noted): 0 and 1 every 4th / 8th frame while
- *       A is held on the course, 2 on a press (M37Game.pressEffectShown blocks a second
- *       copy), 5 on the release (M37Game.releaseEffectShown), 6 / 7 the two boost ratings,
+ *       A is held on the course, 2 on a press (AirGrindState.pressEffectShown blocks a second
+ *       copy), 5 on the release (AirGrindState.releaseEffectShown), 6 / 7 the two boost ratings,
  *       3 / 4 thrown to either side at the start of a penalty, 8 the penalty
  *       itself (for every racer).  Kinds 0 and 3/4 are scaled by
  *       AirGrindGetDepthScale and scattered with LCG stream 4.

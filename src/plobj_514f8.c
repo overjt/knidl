@@ -51,12 +51,12 @@ void PlayerObjectWaterShot(void)
         t->tileWord = (t->u8C.parentTask)->tileWord | 0xE006;
         t->unk28 = (t->u8C.parentTask)->unk28;
         t->unk2C = 1;
-        gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873BDA0;
+        gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873BDA0;
     }
     LoadPlayerBodyBoxRect(gCurTask->player->playerIndex, (u8 *)gUnk_0873BDB4 + gCurTask->unk28 * 8);
     {
         struct Task *t;
-        gPlayerHitBoxSets[(t = gCurTask)->player->playerIndex] = *(struct M11R8 *)gUnk_0873CBAC;
+        gPlayerHitBoxSets[(t = gCurTask)->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CBAC;
         LoadPlayerHitBoxSet(t->player->playerIndex, (s32)((u8 *)gUnk_0873CBB4 + t->unk28 * 8));
     }
     switch (gCurTask->unk28)

@@ -22,7 +22,7 @@ struct LinkRec
     /*0x50*/ u8 filler50[0x10];
 };
 
-struct LinkSave
+struct InputRecording
 {
     /*0x000*/ u32 rngValue;
     /*0x004*/ u16 vblankCount;
@@ -92,7 +92,7 @@ extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
 extern u16 gInputRecorderKeys[];
 extern u8 gInputRecorderEntryFrames[];
-extern struct LinkSave *gInputRecordingPtr;
+extern struct InputRecording *gInputRecordingPtr;
 extern u16 gInputRecorderEndPos[];
 extern u16 gInputRecorderNextPos[];
 extern u8 gInputRecording[];

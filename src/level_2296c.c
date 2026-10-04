@@ -23,7 +23,7 @@
  * setup StageInit (see level_242d0.c); CreateRoomTask spawns task type
  * #3 with its variant index. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;

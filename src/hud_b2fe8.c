@@ -17,7 +17,7 @@
 extern u32 gMaxHealth[];
 extern s16 gPlayerHealth[];
 extern s8 gUnk_02005590[];
-extern struct Unk020055D8 gRoomObjectList;
+extern struct RoomObjectList gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u8 gRoomEntryMode;
 extern u32 gUsedRoomObjects[8][8];
@@ -48,7 +48,7 @@ extern s8 gRoomIndex;
 extern u8 gTerrainResult[];
 extern u32 gTerrainBoundsClamp[];
 extern s16 gRoomBounds[];
-extern struct Unk03005680 gScrollLock;
+extern struct ScrollLock gScrollLock;
 
 /* External functions */
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);

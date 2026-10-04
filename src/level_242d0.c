@@ -41,7 +41,7 @@
  * reads an object-list entry's parameter, and ExitOnWarpStar, sub_080260b0
  * and ExitByCannon pick the position the player arrives at. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;
@@ -998,7 +998,7 @@ void sub_08025e0c(void)
 
 s32 sub_08025e88(s32 i)
 {
-    struct Unk020055D8Entry *e = &gRoomObjectList.entries[gUnk_02005590[i - 32]];
+    struct RoomObjectEntry *e = &gRoomObjectList.entries[gUnk_02005590[i - 32]];
 
     if (gUnk_0200B078 == 3)
     {

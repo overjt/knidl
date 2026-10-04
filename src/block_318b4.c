@@ -8,7 +8,7 @@
  * Breakable blocks, part 2: the three per-frame stage hooks M08's
  * src/obj_306b4.c stores into gBlockAnimHook, and their record helpers.
  * Each hook steps the animation script of every live record once a frame
- * (struct Unk020061F0: {op, arg} pairs - draw a frame, break the four
+ * (struct BreakingBlock: {op, arg} pairs - draw a frame, break the four
  * neighbours, wait, free) and then clears the "stepped" bit 15 of unk6.
  * UpdateBlockAnims draws the replacement metatiles into the BG map
  * (BlockAnimDrawColumn/BlockAnimWriteAndDrawColumn for a whole column of n blocks, through the
@@ -42,7 +42,7 @@ struct MapTile
    free the record), unk14 = the frames left to wait, unk16/unk18 = the
    metatile index and collision byte written back to the map, unk1A = the
    block kind, unk1C = the player that broke it (-1 = none). */
-struct Unk020061F0
+struct BreakingBlock
 {
     /*0x00*/ u16 cellX;
     /*0x02*/ u16 cellY;
@@ -69,7 +69,7 @@ struct RoomDef
 };
 
 /* Not from room.h: this file's view of gRoomMap differs (lesson 3.517). */
-extern struct Unk020061F0 gBreakingBlocks[];
+extern struct BreakingBlock gBreakingBlocks[];
 extern u16 gBlockLayer[];             /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern s16 gRoomHeight;               /* map height in metatiles */
 extern s16 gRoomWidth;               /* map width in metatiles */
@@ -81,7 +81,7 @@ extern u16 gUnk_080D71A0[];
 extern s32 gCameraCenterX;
 extern s32 gCameraCenterY;
 extern u16 gBg1MetatileMap[];
-extern struct Unk020061F0 gBg1BreakingBlocks[];
+extern struct BreakingBlock gBg1BreakingBlocks[];
 extern struct RoomDef **gRoomTable[][8];
 extern s8 gStageIndex;
 extern s8 gLevelIndex;
@@ -96,7 +96,7 @@ void SetBlockAnimClipRectWithEdges(void);
 void UpdateBlockAnims(void)
 {
     s32 i;
-    struct Unk020061F0 *b;
+    struct BreakingBlock *b;
     u16 *p;
 
     SetBlockAnimClipRect();
@@ -140,24 +140,24 @@ void UpdateBlockAnims(void)
         gBreakingBlocks[i].scriptPos &= 0x7FFF;
 }
 
-void FreeBlockAnimAndBlock(struct Unk020061F0 *b)
+void FreeBlockAnimAndBlock(struct BreakingBlock *b)
 {
     b->scriptPos = 0x7FFF;
     b->waitFrames = 0;
     gBlockLayer[b->mapIndex] = 0;
 }
 
-void FreeBlockAnim(struct Unk020061F0 *b)
+void FreeBlockAnim(struct BreakingBlock *b)
 {
     b->scriptPos = 0x7FFF;
     b->waitFrames = 0;
     gBlockLayer[b->mapIndex] &= 0x7FFF;
 }
 
-void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n)
+void BlockAnimWriteAndDrawColumn(struct BreakingBlock *b, s32 n)
 {
     s32 i;
-    struct Unk020061F0 *s;
+    struct BreakingBlock *s;
 
     if (n <= 0)
         return;
@@ -188,10 +188,10 @@ void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n)
     b->metatileCursor++;
 }
 
-void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n)
+void BlockAnimWriteColumn(struct BreakingBlock *b, s32 n)
 {
     s32 i;
-    struct Unk020061F0 *s;
+    struct BreakingBlock *s;
 
     if (n <= 0)
         return;
@@ -213,10 +213,10 @@ void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n)
     }
 }
 
-void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n)
+void BlockAnimDrawColumn(struct BreakingBlock *b, s32 n)
 {
     s32 i;
-    struct Unk020061F0 *s;
+    struct BreakingBlock *s;
 
     if (n <= 0)
         return;
@@ -247,7 +247,7 @@ void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n)
     b->metatileCursor++;
 }
 
-void BlockAnimWriteMetatile(struct Unk020061F0 *b)
+void BlockAnimWriteMetatile(struct BreakingBlock *b)
 {
     b->metatile = b->metatileCursor->metatile;
     b->collisionTile = b->metatileCursor->collisionTile;
@@ -256,7 +256,7 @@ void BlockAnimWriteMetatile(struct Unk020061F0 *b)
     gBlockLayer[b->mapIndex] = ((u8)gBlockLayer[b->mapIndex] + 1) | 0x8000;
 }
 
-void BlockAnimDrawTiles(struct Unk020061F0 *b)
+void BlockAnimDrawTiles(struct BreakingBlock *b)
 {
     s32 i, j;
 
@@ -277,7 +277,7 @@ void BlockAnimDrawTiles(struct Unk020061F0 *b)
     }
 }
 
-void BlockAnimBreakNeighbors(struct Unk020061F0 *b)
+void BlockAnimBreakNeighbors(struct BreakingBlock *b)
 {
     s32 slot;
 
@@ -310,7 +310,7 @@ void BlockAnimBreakNeighbors(struct Unk020061F0 *b)
 void UpdateBlockAnimsWithEdges(void)
 {
     s32 i;
-    struct Unk020061F0 *b;
+    struct BreakingBlock *b;
     u16 *p;
 
     SetBlockAnimClipRectWithEdges();
@@ -352,7 +352,7 @@ void UpdateBlockAnimsWithEdges(void)
     WrapLoopingRoom();
 }
 
-void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b)
+void BlockAnimWriteMetatileWrapped(struct BreakingBlock *b)
 {
     u32 x;
     u32 m;
@@ -372,7 +372,7 @@ void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b)
     gBlockLayer[b->mapIndex] = ((u8)gBlockLayer[b->mapIndex] + 1) | 0x8000;
 }
 
-void BlockAnimDrawWithEdges(struct Unk020061F0 *b)
+void BlockAnimDrawWithEdges(struct BreakingBlock *b)
 {
     s32 j, i, l, n;
     s32 x, y, v;
@@ -494,7 +494,7 @@ s32 CanBreakBg1Block(s32 x, s32 y)
 s16 BreakBg1BlockAtCursor(void)
 {
     s32 i;
-    struct Unk020061F0 *b;
+    struct BreakingBlock *b;
 
     i = 0;
     while (gBg1BreakingBlocks[i].scriptPos != 0x7FFF)
@@ -522,7 +522,7 @@ s16 BreakBg1BlockAtCursor(void)
 void UpdateBg1BlockAnims(void)
 {
     s32 i;
-    struct Unk020061F0 *b;
+    struct BreakingBlock *b;
     u16 *p;
 
     SetBg1BlockAnimClipRect();
@@ -564,20 +564,20 @@ void UpdateBg1BlockAnims(void)
         gBg1BreakingBlocks[i].scriptPos &= 0x7FFF;
 }
 
-void FreeBg1BlockAnimAndBlock(struct Unk020061F0 *b)
+void FreeBg1BlockAnimAndBlock(struct BreakingBlock *b)
 {
     b->scriptPos = 0x7FFF;
     b->waitFrames = 0;
     gBg1MetatileMap[b->mapIndex] = 0;
 }
 
-void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b)
+void Bg1BlockAnimWriteMetatile(struct BreakingBlock *b)
 {
     b->metatile = b->metatileCursor->metatile;
     gBg1MetatileMap[b->mapIndex] = b->metatile | 0x8000;
 }
 
-void Bg1BlockAnimDrawTiles(struct Unk020061F0 *b)
+void Bg1BlockAnimDrawTiles(struct BreakingBlock *b)
 {
     s32 i, j;
 
@@ -599,7 +599,7 @@ void Bg1BlockAnimDrawTiles(struct Unk020061F0 *b)
     b->metatileCursor++;
 }
 
-void Bg1BlockAnimBreakNeighbors(struct Unk020061F0 *b)
+void Bg1BlockAnimBreakNeighbors(struct BreakingBlock *b)
 {
     s16 slot;
 

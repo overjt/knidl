@@ -12,17 +12,17 @@
  *       three variants AirGrindRacer / AirGrindScenery / AirGrindEffect (entries
  *       2-4 of gAirGrindPhases; the two words after them are data).
  *   AirGrindRacer   variant 0, one per player (Task.unk1C): resets the
- *       player's M37Player record, picks the computer players' speed and
- *       jitter (M37Player.cpuTargetLead/unk24) from the level M37Game.level when at
- *       most one player is linked (M37Game.playerCount), runs until the player
+ *       player's AirGrindRacerState record, picks the computer players' speed and
+ *       jitter (AirGrindRacerState.cpuTargetLead/unk24) from the level AirGrindState.level when at
+ *       most one player is linked (AirGrindState.playerCount), runs until the player
  *       passes the finish line gAirGrindCoursePtr->unk010 (+240), counting frames
- *       in M37Game.raceTimes[player].
+ *       in AirGrindState.raceTimes[player].
  *   AirGrindCpuRollTarget / AirGrindCpuHoldsA   the computer players' input: a target
- *       M37Player.cpuTarget re-rolled from the LCG around the course record's
+ *       AirGrindRacerState.cpuTarget re-rolled from the LCG around the course record's
  *       unk28, and the resulting "hold A" decision.
  *   AirGrindRacerUpdate   variant 0's per-frame callback: reads the player's keys
  *       (gPlayerHeldKeys/gPlayerPressedKeys for a linked player, AirGrindCpuHoldsA for a
- *       computer one) into M37Player.heldKeys/unk04, counts A presses in unk0E
+ *       computer one) into AirGrindRacerState.heldKeys/unk04, counts A presses in unk0E
  *       and publishes the position and the pressed flag in the course
  *       record gAirGrindCoursePtr->unk018[player]. */
 

@@ -5,7 +5,7 @@
 #include "link.h"
 #include "room.h"
 
-struct LinkSave
+struct InputRecording
 {
     /*0x000*/ u32 rngValue;
     /*0x004*/ u16 vblankCount;
@@ -44,15 +44,15 @@ struct LinkSave
 };
 
 /* Not from save.h: this file's view of gInputRecorderDemo differs (lesson 3.517). */
-extern struct LinkSave *gInputRecorderDemo;
-extern struct LinkSave *gInputRecordingPtr;
+extern struct InputRecording *gInputRecorderDemo;
+extern struct InputRecording *gInputRecordingPtr;
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
 extern u16 gInputRecorderKeys[];
 extern u8 gInputRecorderEntryFrames[];
 extern u16 gInputRecorderEndPos[];
 extern u16 gInputRecorderNextPos[];
-extern struct LinkSave gInputRecording;
+extern struct InputRecording gInputRecording;
 extern u16 gBossEnduranceBestTime[];
 extern u16 gCompletionPercent;
 extern u16 gMetaKnightmareBestTime[];

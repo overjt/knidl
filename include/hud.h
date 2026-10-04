@@ -18,7 +18,7 @@ struct HudBar
     /*0x06*/ s16 stepTimer;
 };
 
-struct Unk020060A0
+struct RoomObjectGfxSlot
 {
     /*0x00*/ s8 unk0;
     /*0x01*/ s8 paletteBank;
@@ -50,7 +50,7 @@ extern u8 gHudMode;
 extern s32 gPlayerScores[]; /* score per player */
 extern u8 gHudShowsClock;
 extern u16 gHudClock[]; /* clock (four fields) */
-extern struct Unk020060A0 gRoomObjectGfxSlots[];
+extern struct RoomObjectGfxSlot gRoomObjectGfxSlots[];
 extern s8 gRoomObjectGfxSlotIds[];
 extern s8 gHudAbilityPanelActive;
 extern s8 gHudAbilityPanelState;

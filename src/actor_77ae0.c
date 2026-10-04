@@ -317,8 +317,8 @@ void RoomParticlesDrawBelowLine(void)
              gCurTask->roomParticlesIndex < gCurTask->roomParticlesCount;
              gCurTask->roomParticlesIndex++)
         {
-            struct M19Particle *base = gRoomParticles;
-            struct M19Particle *p = &base[gCurTask->roomParticlesIndex];
+            struct RoomParticle *base = gRoomParticles;
+            struct RoomParticle *p = &base[gCurTask->roomParticlesIndex];
 
             if (p->pixelY > 8)
                 RoomParticleDrawScrolled(p);
@@ -330,8 +330,8 @@ void RoomParticlesDrawBelowLine(void)
              gCurTask->roomParticlesIndex < gCurTask->roomParticlesCount;
              gCurTask->roomParticlesIndex++)
         {
-            struct M19Particle *base = gRoomParticles;
-            struct M19Particle *p = &base[gCurTask->roomParticlesIndex];
+            struct RoomParticle *base = gRoomParticles;
+            struct RoomParticle *p = &base[gCurTask->roomParticlesIndex];
 
             if (p->pixelY > gCurTask->roomParticlesLineY - gSpriteCameraY)
                 RoomParticleDrawScrolled(p);
@@ -355,7 +355,7 @@ void RoomParticlesDrawRepeated(void)
     } while (gCurTask->roomParticlesIndex <= 5);
 }
 
-void RoomParticleStepX(struct M19Particle *p)
+void RoomParticleStepX(struct RoomParticle *p)
 {
     p->animStep++;
     if (gUnk_08740320[p->animRow][p->animStep].frame == 255)
@@ -373,7 +373,7 @@ void RoomParticleStepX(struct M19Particle *p)
     }
 }
 
-void RoomParticleInit(struct M19Particle *p, u8 a, u8 b)
+void RoomParticleInit(struct RoomParticle *p, u8 a, u8 b)
 {
     switch (a)
     {
@@ -401,7 +401,7 @@ void RoomParticleInit(struct M19Particle *p, u8 a, u8 b)
     p->animRow = gUnk_08740620[gCurTask->unk28];
 }
 
-void RoomParticleDrawFixed(struct M19Particle *p)
+void RoomParticleDrawFixed(struct RoomParticle *p)
 {
     struct Task *t = gCurTask;
 
@@ -410,7 +410,7 @@ void RoomParticleDrawFixed(struct M19Particle *p)
                  t->spriteFlags, t->tileWord, p->pixelX, p->pixelY);
 }
 
-void sub_08078258(struct M19Particle *p)
+void sub_08078258(struct RoomParticle *p)
 {
     struct Task *t = gCurTask;
 
@@ -419,7 +419,7 @@ void sub_08078258(struct M19Particle *p)
                  t->spriteFlags, t->tileWord, p->pixelX, p->pixelY);
 }
 
-void RoomParticleDrawScrolled(struct M19Particle *p)
+void RoomParticleDrawScrolled(struct RoomParticle *p)
 {
     struct Task *t = gCurTask;
 
@@ -428,7 +428,7 @@ void RoomParticleDrawScrolled(struct M19Particle *p)
                  t->spriteFlags, t->tileWord, p->pixelX - gSpriteCameraX, p->pixelY);
 }
 
-void RoomParticleDrawRepeated(struct M19Particle *p)
+void RoomParticleDrawRepeated(struct RoomParticle *p)
 {
     gCurTask->unk2C = 0;
     do
@@ -461,7 +461,7 @@ u8 RoomParticleIsOnScreen(s16 x, s16 y)
     return 1;
 }
 
-void RoomParticleStepY(struct M19Particle *p, u8 a)
+void RoomParticleStepY(struct RoomParticle *p, u8 a)
 {
     p->animStep++;
     if (gUnk_087404A0[p->animRow][p->animStep].frame == 255)

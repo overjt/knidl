@@ -8,8 +8,8 @@
  * Sub-game 2: task type #96 variant 1 and the module's shared helpers.
  * 
  *   AirGrindScenery / AirGrindSceneryUpdate / AirGrindRollSceneryObject / AirGrindDrawSceneryObject   variant 1
- *       (one task, index in M37Game.sceneryTaskSlot): seven background objects
- *       (M37Game.scenery) that scroll with the camera at their own rate,
+ *       (one task, index in AirGrindState.sceneryTaskSlot): seven background objects
+ *       (AirGrindState.scenery) that scroll with the camera at their own rate,
  *       re-rolled from LCG stream 4 when they leave the screen (a sprite id
  *       1-4 and one of three height bands gUnk_080CFF60, never the same band
  *       twice in a row).
@@ -25,7 +25,7 @@
  *       (a goto loop over the divisors gUnk_080CFF70), a ratio capped at 1000,
  *       and a racer's sprite scaled by AirGrindScaleSprite.
  *   AirGrindSeedRandom / AirGrindRandom / AirGrindRandomRange   five LCG streams
- *       M37Game.randomStates[] (x = (x * 61 + 0x579) & 0xFFF): seed all, step one,
+ *       AirGrindState.randomStates[] (x = (x * 61 + 0x579) & 0xFFF): seed all, step one,
  *       step one and scale it to a range. */
 
 /* Not from main.h: this file's view of gObjPalette differs (lesson 3.517). */
@@ -47,9 +47,9 @@ void AirGrindDrawSceneryObject(s32 idx, s32 x, s32 y, u16 attr)
 
 void AirGrindRollSceneryObject(s32 i)
 {
-    struct M37Game *g = gAirGrindPtr;
-    struct M37ObjSet *set = &g->scenery;
-    struct M37Obj *o = &set->unk04[i];
+    struct AirGrindState *g = gAirGrindPtr;
+    struct AirGrindScenerySet *set = &g->scenery;
+    struct AirGrindSceneryObject *o = &set->unk04[i];
     u32 r;
     s32 k;
     s16 id;
@@ -71,7 +71,7 @@ void AirGrindRollSceneryObject(s32 i)
 
 void AirGrindScenery(void)
 {
-    struct M37Game *g = gAirGrindPtr;
+    struct AirGrindState *g = gAirGrindPtr;
     s32 *last = &g->scenery.unk00;
     s32 i;
     s32 x;
@@ -99,13 +99,13 @@ void AirGrindScenery(void)
 
 void AirGrindSceneryUpdate(void)
 {
-    struct M37Game *g = gAirGrindPtr;
+    struct AirGrindState *g = gAirGrindPtr;
     s32 *last = &g->scenery.unk00;
     s32 i;
-    struct M37Obj *o;
+    struct AirGrindSceneryObject *o;
 
     for (i = 0, o = g->scenery.unk04; i <= 6; o++, i++) {
-        struct M37Course *c = gAirGrindCoursePtr;
+        struct AirGrindCourse *c = gAirGrindCoursePtr;
         s32 x;
 
         o->unkC = o->unk4 - ((c->players[0].screenY - 160) << 16) / 4;

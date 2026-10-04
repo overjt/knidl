@@ -5,7 +5,7 @@
  *
  * M19 batch 4: task type #99's cutscene director tail plus type #75
  * (Task_Cannon) and type #76 (Task_CannonFuse) - the ending-pose and
- * script-walker families over struct M19Script.
+ * script-walker families over struct CannonFusePiece.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -1042,7 +1042,7 @@ void CannonFuseInitBurn(void)
     t->cannonFuseExit = 0;
 }
 
-s32 CannonFuseGetPieceFrame(struct M19Script *p)
+s32 CannonFuseGetPieceFrame(struct CannonFusePiece *p)
 {
     struct Task *t = gCurTask;
     u8 *q;
@@ -1083,7 +1083,7 @@ s32 CannonFuseGetPieceFrame(struct M19Script *p)
 
 void CannonFuseEnterPiece(s32 x, s32 y, s32 d)
 {
-    struct M19Script *p = gUnk_087401E4[gCurTask->cannonFusePieceKind];
+    struct CannonFusePiece *p = gUnk_087401E4[gCurTask->cannonFusePieceKind];
     struct Task *t = gCurTask;
 
     {
@@ -1115,7 +1115,7 @@ void CannonFuseEnterPiece(s32 x, s32 y, s32 d)
 
 void CannonFuseBurnStep(void)
 {
-    struct M19Script *p = gUnk_087401E4[gCurTask->cannonFusePieceKind];
+    struct CannonFusePiece *p = gUnk_087401E4[gCurTask->cannonFusePieceKind];
     struct Task *t = gCurTask;
 
     if (t->cannonFuseStepTimer <= 0)
@@ -1137,7 +1137,7 @@ void CannonFuseBurnStep(void)
     gCurTask->cannonFuseStepTimer--;
 }
 
-void CannonFuseStepCell(struct M19Script *p)
+void CannonFuseStepCell(struct CannonFusePiece *p)
 {
     struct Task *t = gCurTask;
     u8 d = p->unk00[t->cannonFuseExit];
@@ -1195,7 +1195,7 @@ void CannonFuseStepCell(struct M19Script *p)
 
 void sub_08077980(void)
 {
-    struct M19Script *p = gUnk_087401E4[gCurTask->cannonFusePieceKind];
+    struct CannonFusePiece *p = gUnk_087401E4[gCurTask->cannonFusePieceKind];
     struct Task *t = gCurTask;
 
     if (t->cannonFuseStepTimer <= 0)

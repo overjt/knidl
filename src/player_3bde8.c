@@ -515,7 +515,7 @@ void sub_0803c9b4(s32 a)
 
 void sub_0803cbd8(void)
 {
-    struct Unk0873A994 *e;
+    struct OffsetScriptRow *e;
     if ((s8)--gCurTask->player->offsetScriptDelay > 0)
     {
         gCurTask->player->offsetScriptDelay--;

@@ -30,7 +30,7 @@
  * gBg3MapShape from the map size) and InitDoors builds the door
  * objects. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;

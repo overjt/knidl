@@ -13,7 +13,7 @@
  * 
  *   CreateAirGrindRacers / CreateAirGrindScenery / CreateAirGrindEffect   spawn task type #96:
  *       variant 0 once per player (Task.unk1C = the player), variant 1 (its
- *       task index kept in M37Game.sceneryTaskSlot) and variant 2 (Task.unk18/unk1C/
+ *       task index kept in AirGrindState.sceneryTaskSlot) and variant 2 (Task.unk18/unk1C/
  *       unk20 from the caller).
  *   AirGrindSetupRace   the state set-up: gAirGrindPtr = &gAirGrind,
  *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode

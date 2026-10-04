@@ -9,7 +9,7 @@
    and the stage helpers (M07).  One declaration per symbol, with the type its
    consumers prove (issue #36 phase 2, docs/header-conventions.md). */
 
-struct Unk020055D8Entry;
+struct RoomObjectEntry;
 
 struct BgMap
 {
@@ -91,7 +91,7 @@ struct RoomDef
     /*0x57*/ u8 unk57;
 };
 
-struct Unk02004B90
+struct DoorState
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 unk1;
@@ -101,14 +101,14 @@ struct Unk02004B90
     /*0x05*/ u8 filler05[3];
 };
 
-struct Unk020055D8
+struct RoomObjectList
 {
     /*0x00*/ s16 count;
     /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
+    /*0x04*/ struct RoomObjectEntry *entries;
 };
 
-struct Unk020061F0
+struct BreakingBlock
 {
     /*0x00*/ u16 cellX;
     /*0x02*/ u16 cellY;
@@ -125,7 +125,7 @@ struct Unk020061F0
     /*0x1D*/ u8 filler1D[3];
 };
 
-struct Unk03005670
+struct ScreenShake
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 filler01;
@@ -134,7 +134,7 @@ struct Unk03005670
     /*0x06*/ u8 unk6;
 };
 
-struct Unk03005680
+struct ScrollLock
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 lockedAxes;
@@ -156,7 +156,7 @@ extern u16 gPlayerAbilities[];
 extern u8 gBigSwitchPressActive;
 extern s16 gObjectSpawnViewRect[4];
 extern u16 gBigSwitchReturnBg3X;
-extern struct Unk02004B90 gDoorStates[];
+extern struct DoorState gDoorStates[];
 extern s8 gUnk_02004C98;
 extern u16 gBg1MetatileMap[];
 extern u8 gUnk_02005574[];
@@ -168,13 +168,13 @@ extern u8 gBg3MapShape;
 extern s16 gBlockAnimClipRect[4];
 extern u8 gRoomBgmStarted;
 extern s16 gUnk_020055D4;
-extern struct Unk020055D8 gRoomObjectList;
+extern struct RoomObjectList gRoomObjectList;
 extern s16 gRoomEntryX;
 extern u8 gCameraPanDone;
 extern s8 gUnk_02006098[];
 extern s8 gSubGameLevel;
 extern u8 gRoomEntrySet;
-extern struct Unk020061F0 gBreakingBlocks[];
+extern struct BreakingBlock gBreakingBlocks[];
 extern u8 gRoomEntryMode;
 extern s8 gDoorObjectTasks[][3];
 extern struct MapCell gHubRoomMapBuffer[];
@@ -279,8 +279,8 @@ extern struct MapCell *gRoomMap; /* the room's metatile map */
 extern s32 gScrollLockSpeedY;
 extern u16 gBg3StreamPos[2];
 extern u16 gCameraStreamPos[2];
-extern struct Unk03005670 gScreenShake;
-extern struct Unk03005680 gScrollLock;
+extern struct ScreenShake gScreenShake;
+extern struct ScrollLock gScrollLock;
 extern u16 gBg3Pos[2];
 
 /* ROM */

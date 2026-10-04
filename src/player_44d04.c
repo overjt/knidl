@@ -50,8 +50,8 @@ void PlayerActionSword(void)
         gCurTask->variant = 1;
     switch (gCurTask->variant) {
     case 0:
-        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873BF28;
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CCAC;
+        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873BF28;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CCAC;
         if (gCurTask->unk30 == 0) {
             TaskSetFrame(0x4BA);
             TaskYieldTrampoline(1);
@@ -160,8 +160,8 @@ void PlayerActionSword(void)
         }
         break;
     case 1:
-        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873BF84;
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CCFC;
+        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873BF84;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CCFC;
         gCurTask->player->hitBoxSet = 0;
         if (gCurTask->unk30 == 0) {
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++) {

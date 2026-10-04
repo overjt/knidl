@@ -14,7 +14,7 @@
 #include "enemy.h"
 
 /* RAM cells / ROM tables */
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
@@ -178,7 +178,7 @@ s32 LoadRoomBossGfx(u8 *e, s32 i, s32 k)
 
 void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
 {
-    struct Unk0873EEA0 *d;
+    struct RoomObjectGfx *d;
     s32 i;
 
     gRoomObjectGfxSlotIds[idx] = n;
@@ -208,9 +208,9 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
     }
 }
 
-s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
+s32 sub_080b5a94(struct RoomObjectEntry *e, s32 idx, s32 n)
 {
-    struct Unk0873EEA0 *d;
+    struct RoomObjectGfx *d;
     s32 i;
 
     if (gUnk_08756178[e->unk1] == -1)
@@ -253,7 +253,7 @@ s32 sub_080b5a94(struct Unk020055D8Entry *e, s32 idx, s32 n)
     return 1;
 }
 
-s32 SpawnRoomEnemy(struct Unk020055D8Entry *e, s32 i)
+s32 SpawnRoomEnemy(struct RoomObjectEntry *e, s32 i)
 {
     s32 res = -1;
 
@@ -287,11 +287,11 @@ s32 SpawnRoomEnemy(struct Unk020055D8Entry *e, s32 i)
     return res;
 }
 
-s32 sub_080b5d84(struct Unk020055D8Entry *e)
+s32 sub_080b5d84(struct RoomObjectEntry *e)
 {
     s32 slot;
     struct Task *t;
-    struct Unk020055D8Entry *f;
+    struct RoomObjectEntry *f;
     s32 i;
     s32 n;
     s32 y;

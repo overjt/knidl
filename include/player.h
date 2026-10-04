@@ -9,7 +9,7 @@
    the type its consumers prove (issue #36 phase 2,
    docs/header-conventions.md). */
 
-struct Unk020061F0;
+struct BreakingBlock;
 
 /* A hit-box set: unk0 & 0x8000 = mirror with the task's facing, unk0 & 0xFFF
    = the attack id passed to CanBreakBlock; unk2/unk3 = (x, y) offset of the
@@ -38,20 +38,20 @@ struct M04Spark
 
 struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
 
-struct M11R20 { u32 w[5]; };
+struct PlayerBodyBox { u32 w[5]; };
 
 /* M11's per-player records */
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
+struct PlayerHitBoxSet { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 
 /* gUnk_0873B510[]: a palette fade, src/dst palettes and the blend step */
-struct M12Fade
+struct BurningPaletteFade
 {
     /*0x00*/ u16 *src;
     /*0x04*/ u16 *dst;
     /*0x08*/ s32 rate;
 };
 
-struct Unk02005E00
+struct LifeRequests
 {
     /*0x00*/ s32 timeout;
     /*0x04*/ u8 requests[4];
@@ -61,7 +61,7 @@ struct Unk02005E00
 /* one step of a player's knock-back script: {dx, dy, flags} with
    flags & 15 = frames to hold, & 64 = mirror dx with the facing,
    & 128 = sound; a zero flags byte ends the script */
-struct Unk0873A994
+struct OffsetScriptRow
 {
     /*0x00*/ u16 offsetX;
     /*0x02*/ u16 offsetY;
@@ -74,11 +74,11 @@ extern u16 gEndingLocalPlayer;
 extern u8 gBlockCursorPlayer; /*   the player that hit it */
 extern u8 gBlockCursorShake; /*   hit-box id bit 11 */
 extern s16 gBrokenBlockY[]; /*   y (pixels) */
-extern struct M11R8 gPlayerHitBoxSets[];
+extern struct PlayerHitBoxSet gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4;
-extern struct Unk02005E00 gLifeRequests;
+extern struct LifeRequests gLifeRequests;
 extern u16 gBlockCursorIndex; /*   map index */
-extern struct M11R20 gPlayerBodyBoxes[];
+extern struct PlayerBodyBox gPlayerBodyBoxes[];
 extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile; /*   the metatile's collision byte */
 extern u8 gUnk_020061E0;
@@ -86,7 +86,7 @@ extern struct M11Buf gPlayerHitBoxLists[];
 extern u16 gBlockCursorX; /* the block CanBreakBlock accepted: x */
 extern struct M04Spark gUnk_02007E90[][3];
 extern u16 gUnk_02007F60[];
-extern struct Unk020061F0 gBlockAnimScratchRecord;
+extern struct BreakingBlock gBlockAnimScratchRecord;
 extern u16 gBlockCursorY; /*   y */
 extern u16 gPlayerBubbleTimers[];
 extern u16 gUnk_0200B060[];
@@ -153,7 +153,7 @@ extern void (*gPlayerActions[])(void);
 extern void (*gPlayerActionHandlers[])(void);
 extern s16 gUnk_0873A924[][16];
 extern u32 gUnk_0873A964[];
-extern struct Unk0873A994 *gUnk_0873A994[];
+extern struct OffsetScriptRow *gUnk_0873A994[];
 extern u16 gUnk_0873AEBC[][2];
 extern u16 gUnk_0873AF0C[][2];
 extern s8 gUnk_0873AF20[][2];
@@ -166,7 +166,7 @@ extern u32 gPlayerMotionXPresets[];
 extern u32 gPlayerMotionYPresets[];
 extern void (*gMetaKnightActions[])(void);
 extern void (*gMetaKnightActionHandlers[])(void);
-extern struct M12Fade gUnk_0873B510[];
+extern struct BurningPaletteFade gUnk_0873B510[];
 extern u16 gUnk_0873B534[][32];
 extern u8 gUnk_0873B634[];
 extern s16 gUnk_0873B654[];
@@ -405,24 +405,24 @@ s32 BreakBlockAtCursor(void);
 
 /* src/block_318b4.c */
 void UpdateBlockAnims(void);
-void FreeBlockAnimAndBlock(struct Unk020061F0 *b);
-void FreeBlockAnim(struct Unk020061F0 *b);
-void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n);
-void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n);
-void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n);
-void BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void BlockAnimDrawTiles(struct Unk020061F0 *b);
-void BlockAnimBreakNeighbors(struct Unk020061F0 *b);
+void FreeBlockAnimAndBlock(struct BreakingBlock *b);
+void FreeBlockAnim(struct BreakingBlock *b);
+void BlockAnimWriteAndDrawColumn(struct BreakingBlock *b, s32 n);
+void BlockAnimWriteColumn(struct BreakingBlock *b, s32 n);
+void BlockAnimDrawColumn(struct BreakingBlock *b, s32 n);
+void BlockAnimWriteMetatile(struct BreakingBlock *b);
+void BlockAnimDrawTiles(struct BreakingBlock *b);
+void BlockAnimBreakNeighbors(struct BreakingBlock *b);
 void UpdateBlockAnimsWithEdges(void);
-void BlockAnimWriteMetatileWrapped(struct Unk020061F0 *b);
-void BlockAnimDrawWithEdges(struct Unk020061F0 *b);
+void BlockAnimWriteMetatileWrapped(struct BreakingBlock *b);
+void BlockAnimDrawWithEdges(struct BreakingBlock *b);
 s32 CanBreakBg1Block(s32 x, s32 y);
 s16 BreakBg1BlockAtCursor(void);
 void UpdateBg1BlockAnims(void);
-void FreeBg1BlockAnimAndBlock(struct Unk020061F0 *b);
-void Bg1BlockAnimWriteMetatile(struct Unk020061F0 *b);
-void Bg1BlockAnimDrawTiles(struct Unk020061F0 *b);
-void Bg1BlockAnimBreakNeighbors(struct Unk020061F0 *b);
+void FreeBg1BlockAnimAndBlock(struct BreakingBlock *b);
+void Bg1BlockAnimWriteMetatile(struct BreakingBlock *b);
+void Bg1BlockAnimDrawTiles(struct BreakingBlock *b);
+void Bg1BlockAnimBreakNeighbors(struct BreakingBlock *b);
 
 /* src/player_32688.c */
 void Task_Player(void);

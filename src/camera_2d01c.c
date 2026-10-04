@@ -21,7 +21,7 @@
  * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.state
  * into the seven camera tasks of the anchor table gMapEventVariants. */
 
-struct Unk03005680
+struct ScrollLock
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 lockedAxes;
@@ -37,18 +37,18 @@ struct Unk03005680
    8-byte commands (unk4, pc unk0, wait timer unk2) plus a palette fade
    (unk8 step, read signed, 0xFFFF = idle; unkC/unk10 the two palettes, unk14 the colour
    index into the BG palette buffer, unk16 the count, unk18 the rate). */
-struct Unk02007D70Cmd
+struct BgAnimCmd
 {
     /*0x00*/ u16 op;
     /*0x02*/ u16 arg;
     /*0x04*/ void *ptr;
 };
 
-struct Unk02007D70
+struct BgAnim
 {
     /*0x00*/ u16 cmdIndex;
     /*0x02*/ s16 waitFrames;
-    /*0x04*/ struct Unk02007D70Cmd *script;
+    /*0x04*/ struct BgAnimCmd *script;
     /*0x08*/ u16 fadeFrame;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 *fadeSrc;
@@ -81,14 +81,14 @@ struct RoomDef
     /*0x40*/ u16 bgAnimSet;
 };
 
-struct Unk0802D25C
+struct BgAnimTileFrame
 {
     /*0x00*/ u16 tileIndex;
     /*0x02*/ u16 size;
     /*0x04*/ u16 tiles[0];
 };
 
-struct Unk0802D278
+struct BgAnimPaletteFade
 {
     /*0x00*/ u16 *src;
     /*0x04*/ u16 *dst;
@@ -106,7 +106,7 @@ struct MapTile
 
 /* Not from room.h: this file's view of gRoomMap differs (lesson 3.517). */
 extern u16 gCameraMode;
-extern struct Unk03005680 gScrollLock;
+extern struct ScrollLock gScrollLock;
 extern s32 gScrollLockSpeedX;
 extern s32 gScrollLockSpeedY;
 extern u8 gActivePlayerMask;
@@ -116,8 +116,8 @@ extern s32 gCameraCenterY;
 extern s16 gCameraAnchorY;
 extern s8 gInHub;
 extern struct RoomDef *gCurRoomDef;
-extern struct Unk02007D70 gBgAnims[];
-extern struct Unk02007D70Cmd **gRoomBgAnimScripts[];
+extern struct BgAnim gBgAnims[];
+extern struct BgAnimCmd **gRoomBgAnimScripts[];
 extern u16 gBgPaletteBank2[];
 extern s16 gRoomHeight;
 extern s16 gRoomWidth;
@@ -131,11 +131,11 @@ void PlaySfx(u32 a);
 s32 TaskCreateHighSlot(s32 type);
 void CalcRoomBounds(void);
 void CameraResetBounds(void);
-void BgAnimCopyTiles(struct Unk0802D25C *a);
-void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q);
-void BgAnimStepPaletteFade(struct Unk02007D70 *p);
+void BgAnimCopyTiles(struct BgAnimTileFrame *a);
+void BgAnimStartPaletteFade(struct BgAnim *p, struct BgAnimPaletteFade *q);
+void BgAnimStepPaletteFade(struct BgAnim *p);
 void SetCollisionTile(u32 x, u32 y, u32 v);
-void BgAnimStop(struct Unk02007D70 *p);
+void BgAnimStop(struct BgAnim *p);
 
 void CameraLeaveScrollLock(void)
 {
@@ -189,7 +189,7 @@ void LoadRoomBgAnims(void)
     {
         while (gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i] != 0)
         {
-            struct Unk02007D70 *p = &gBgAnims[i];
+            struct BgAnim *p = &gBgAnims[i];
             p->script = gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i];
             p->cmdIndex = 0;
             p->waitFrames = 0;
@@ -206,8 +206,8 @@ void LoadRoomBgAnims(void)
 void UpdateBgAnims(void)
 {
     s32 i;
-    struct Unk02007D70 *p;
-    struct Unk02007D70Cmd *cmd;
+    struct BgAnim *p;
+    struct BgAnimCmd *cmd;
 
     for (i = 0; i < 10; i++)
     {
@@ -257,12 +257,12 @@ void UpdateBgAnims(void)
     }
 }
 
-void BgAnimCopyTiles(struct Unk0802D25C *a)
+void BgAnimCopyTiles(struct BgAnimTileFrame *a)
 {
     RequestCopy(1, (u32)a->tiles, (BG_VRAM + 0x4000) + a->tileIndex * 32, a->size);
 }
 
-void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q)
+void BgAnimStartPaletteFade(struct BgAnim *p, struct BgAnimPaletteFade *q)
 {
     p->fadeSrc = q->src;
     p->fadeDst = q->dst;
@@ -272,7 +272,7 @@ void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q)
     p->fadeFrame = 0;
 }
 
-void BgAnimStepPaletteFade(struct Unk02007D70 *p)
+void BgAnimStepPaletteFade(struct BgAnim *p)
 {
     s32 t;
 
@@ -291,7 +291,7 @@ void SetCollisionTile(u32 x, u32 y, u32 v)
         gRoomMap[y * gRoomWidth + x].collisionTile = v;
 }
 
-void BgAnimStop(struct Unk02007D70 *p)
+void BgAnimStop(struct BgAnim *p)
 {
     p->script = 0;
     p->cmdIndex = 0x7FFF;

@@ -214,7 +214,7 @@ void PlayerActionBurningUpdate(void)
         {
             struct Task *t = gCurTask;
             if (t->unk2C != -1) {
-                struct M12Fade *f = &gUnk_0873B510[t->unk2C];
+                struct BurningPaletteFade *f = &gUnk_0873B510[t->unk2C];
                 t->unk6E += f->rate;
                 if (t->unk6E > 255)
                     t->unk6E = 256;

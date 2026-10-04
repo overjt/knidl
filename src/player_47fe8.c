@@ -415,11 +415,11 @@ void PlayerActionGetAbility(void)
             break;
         case 9:
             {
-                struct M11R20 *d = gPlayerBodyBoxes;
+                struct PlayerBodyBox *d = gPlayerBodyBoxes;
 
-                d[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C358;
+                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C358;
             }
-            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CF94;
+            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CF94;
             TaskSetFrame(0x8DB);
             TaskYieldTrampoline(4);
             gCurTask->frame++;
@@ -444,11 +444,11 @@ void PlayerActionGetAbility(void)
             {
                 struct Task *u = gCurTask;
                 u->unk2C = 1;
-                gPlayerBodyBoxes[u->player->playerIndex] = *(struct M11R20 *)gUnk_0873C1B0;
+                gPlayerBodyBoxes[u->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
             }
             {
                 struct Task *u;
-                gPlayerHitBoxSets[(u = gCurTask)->player->playerIndex] = *(struct M11R8 *)gUnk_0873CEEC;
+                gPlayerHitBoxSets[(u = gCurTask)->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
                 u->unk30 = -1;
             }
             TaskSetFrame(0x96E);

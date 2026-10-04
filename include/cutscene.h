@@ -14,7 +14,7 @@ struct GfxHeader;
 /* The 24-entry animation rows at 0x08740320 / 0x087404A0 the credits
    particles walk: `unk00` indexes the gfx pointer table, `unk02` is the
    step's delay. */
-struct M19Frame
+struct RoomParticleAnimFrame
 {
     /*0x00*/ u8 frame;
     /*0x01*/ u8 unk01;
@@ -25,7 +25,7 @@ struct M19Frame
 /* The eight 4-byte records at 0x03000FE0 that M19's credits tasks animate:
    a frame table index (unk00), the frame within it (unk01), the timer
    (unk02) and the countdown RoomParticleDrawScrolled draws on (unk03). */
-struct M19Particle
+struct RoomParticle
 {
     /*0x00*/ u8 animRow;
     /*0x01*/ u8 animStep;
@@ -37,7 +37,7 @@ struct M19Particle
    table indexed by Task.unk20, each entry a header plus two `s16` step lists
    (the "forward" list at +6 and the "reverse" one at +18) that
    CannonFuseGetPieceFrame picks between on Task.unk18/unk24. */
-struct M19Script
+struct CannonFusePiece
 {
     /*0x00*/ u8 unk00[4];
     /*0x04*/ u16 unk04;
@@ -50,7 +50,7 @@ extern u32 gWarpStarFlightSfxPlayer;
 extern u32 gWarpStarFlightSfx;
 
 /* IWRAM */
-extern struct M19Particle gRoomParticles[];
+extern struct RoomParticle gRoomParticles[];
 
 /* ROM */
 extern u32 gUnk_080D21C8[];
@@ -95,7 +95,7 @@ extern u32 gCannonStateUpdates[];
 extern u32 gCannonFuseVariants[];
 extern u16 gUnk_08740124[];
 extern s8 gUnk_087401CC[];
-extern struct M19Script *gUnk_087401E4[];
+extern struct CannonFusePiece *gUnk_087401E4[];
 extern u32 gCannonFuseStates[];
 extern u32 gCannonFuseStateUpdates[];
 extern u32 gBigSwitchVariants[];
@@ -105,8 +105,8 @@ extern u32 gStakeVariants[];
 extern u32 gStakeStates[];
 extern u32 gStakeStateUpdates[];
 extern u32 gRoomParticlesVariants[];
-extern struct M19Frame gUnk_08740320[][24];
-extern struct M19Frame gUnk_087404A0[][24];
+extern struct RoomParticleAnimFrame gUnk_08740320[][24];
+extern struct RoomParticleAnimFrame gUnk_087404A0[][24];
 extern u8 gUnk_08740620[];
 extern u32 gWaddleDeeVariants[];
 extern struct AnimCmd gUnk_087406A0[];
@@ -368,10 +368,10 @@ void CannonState3(void);
 void CannonState3Update(void);
 void Task_CannonFuse(void);
 void CannonFuseInitBurn(void);
-s32 CannonFuseGetPieceFrame(struct M19Script *p);
+s32 CannonFuseGetPieceFrame(struct CannonFusePiece *p);
 void CannonFuseEnterPiece(s32 x, s32 y, s32 d);
 void CannonFuseBurnStep(void);
-void CannonFuseStepCell(struct M19Script *p);
+void CannonFuseStepCell(struct CannonFusePiece *p);
 void sub_08077980(void);
 void CannonFuseMoveSpark(void);
 void CreateCannonFuseSpark(void);
@@ -409,14 +409,14 @@ void StakeState0Update(void);
 void RoomParticlesDrawFixed(void);
 void RoomParticlesDrawBelowLine(void);
 void RoomParticlesDrawRepeated(void);
-void RoomParticleStepX(struct M19Particle *p);
-void RoomParticleInit(struct M19Particle *p, u8 a, u8 b);
-void RoomParticleDrawFixed(struct M19Particle *p);
-void sub_08078258(struct M19Particle *p);
-void RoomParticleDrawScrolled(struct M19Particle *p);
-void RoomParticleDrawRepeated(struct M19Particle *p);
+void RoomParticleStepX(struct RoomParticle *p);
+void RoomParticleInit(struct RoomParticle *p, u8 a, u8 b);
+void RoomParticleDrawFixed(struct RoomParticle *p);
+void sub_08078258(struct RoomParticle *p);
+void RoomParticleDrawScrolled(struct RoomParticle *p);
+void RoomParticleDrawRepeated(struct RoomParticle *p);
 u8 RoomParticleIsOnScreen(s16 x, s16 y);
-void RoomParticleStepY(struct M19Particle *p, u8 a);
+void RoomParticleStepY(struct RoomParticle *p, u8 a);
 void Task_RoomParticles(void);
 void RoomParticlesVariant0(void);
 void sub_080786b4(void);

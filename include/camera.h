@@ -9,11 +9,11 @@
    symbol, with the type its consumers prove (issue #36 phase 2,
    docs/header-conventions.md). */
 
-struct Unk02007D70
+struct BgAnim
 {
     /*0x00*/ u16 cmdIndex;
     /*0x02*/ s16 waitFrames;
-    /*0x04*/ struct Unk02007D70Cmd *script;
+    /*0x04*/ struct BgAnimCmd *script;
     /*0x08*/ u16 fadeFrame;
     /*0x0A*/ u16 unkA;
     /*0x0C*/ u16 *fadeSrc;
@@ -23,7 +23,7 @@ struct Unk02007D70
     /*0x18*/ u32 fadeRate;
 };
 
-struct Unk02007D70Cmd
+struct BgAnimCmd
 {
     /*0x00*/ u16 op;
     /*0x02*/ u16 arg;
@@ -34,7 +34,7 @@ struct Unk02007D70Cmd
    BgAnimStartPaletteFade copies it into a gBgAnims[] slot and
    BgAnimStepPaletteFade blends colorCount colours from src to dst into the
    palette buffer at colour colorIndex, at rate/256 per frame. */
-struct Unk0802D278
+struct BgAnimPaletteFade
 {
     /*0x00*/ u16 *src;
     /*0x04*/ u16 *dst;
@@ -53,9 +53,9 @@ struct Unk03004B00
 /* EWRAM */
 extern u8 gBlockAnimHookId;
 extern u8 gUnk_02005E10[];
-extern struct Unk02007D70 gBgAnims[];
+extern struct BgAnim gBgAnims[];
 extern u8 gWarpStarStationDoorRevealed;
-extern struct Unk020061F0 gBg1BreakingBlocks[];
+extern struct BreakingBlock gBg1BreakingBlocks[];
 extern s32 gHBlankScrollBaseX;
 
 /* IWRAM */
@@ -101,43 +101,43 @@ extern u32 gUnk_0875599C[];
 extern u32 gWarpStarStationNumberFrames[];
 extern u32 gWarpStarStationLevelSignFrames[];
 extern u32 gMuseumAbilitySignFrames[];
-extern struct Unk02007D70Cmd *const *const gRoomBgAnimScripts[];
+extern struct BgAnimCmd *const *const gRoomBgAnimScripts[];
 /* The BG animation scripts (src/data/bg_anim_scripts.c), in address order. */
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script1[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script2[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script3[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script4[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script5[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script6[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script7[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script8[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet1Script9[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet2Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet3Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet4Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet5Script2[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet6Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet5Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet5Script1[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet6Script1[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet6Script2[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet7Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet8Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet10Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet10Script1[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet10Script2[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet12Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet9Script0[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet9Script1[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet9Script2[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet11Script1[];
-extern struct Unk02007D70Cmd gRoomBgAnimSet11Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script1[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script2[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script3[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script4[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script5[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script6[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script7[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script8[];
+extern struct BgAnimCmd gRoomBgAnimSet1Script9[];
+extern struct BgAnimCmd gRoomBgAnimSet2Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet3Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet4Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet5Script2[];
+extern struct BgAnimCmd gRoomBgAnimSet6Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet5Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet5Script1[];
+extern struct BgAnimCmd gRoomBgAnimSet6Script1[];
+extern struct BgAnimCmd gRoomBgAnimSet6Script2[];
+extern struct BgAnimCmd gRoomBgAnimSet7Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet8Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet10Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet10Script1[];
+extern struct BgAnimCmd gRoomBgAnimSet10Script2[];
+extern struct BgAnimCmd gRoomBgAnimSet12Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet9Script0[];
+extern struct BgAnimCmd gRoomBgAnimSet9Script1[];
+extern struct BgAnimCmd gRoomBgAnimSet9Script2[];
+extern struct BgAnimCmd gRoomBgAnimSet11Script1[];
+extern struct BgAnimCmd gRoomBgAnimSet11Script0[];
 
 
 /* Functions (defined in the files named above each group). */
 
-struct Unk0802D25C;
+struct BgAnimTileFrame;
 
 /* src/camera_296a0.c */
 void StreamBg2MapLooping(void);
@@ -220,11 +220,11 @@ void CameraStartHoldAnchor(void);
 void sub_0802d0c4(void);
 void LoadRoomBgAnims(void);
 void UpdateBgAnims(void);
-void BgAnimCopyTiles(struct Unk0802D25C *a);
-void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q);
-void BgAnimStepPaletteFade(struct Unk02007D70 *p);
+void BgAnimCopyTiles(struct BgAnimTileFrame *a);
+void BgAnimStartPaletteFade(struct BgAnim *p, struct BgAnimPaletteFade *q);
+void BgAnimStepPaletteFade(struct BgAnim *p);
 void SetCollisionTile(u32 x, u32 y, u32 v);
-void BgAnimStop(struct Unk02007D70 *p);
+void BgAnimStop(struct BgAnim *p);
 s32 CreateMapEvent(s32 a);
 void Task_MapEvent(void);
 

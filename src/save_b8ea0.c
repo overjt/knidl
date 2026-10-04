@@ -17,7 +17,7 @@ extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
 void PlayerLifeRequestClear(void)
 {
-    struct Unk02005E00 *s;
+    struct LifeRequests *s;
     struct Task *t;
     u8 *f;
     u8 *e;
@@ -33,7 +33,7 @@ void PlayerLifeRequestClear(void)
 }
 void PlayerClearOwnLifeRequests(void)
 {
-    struct Unk02005E00 *s;
+    struct LifeRequests *s;
     u8 *f;
     u8 *e;
     s32 i;
@@ -126,7 +126,7 @@ void PlayerLifeRequestOpenGiverList(void)
 }
 void PlayerLifeRequestStartAsking(void)
 {
-    struct Unk02005E00 *s;
+    struct LifeRequests *s;
 
     s = &gLifeRequests;
     if (s->timeout == 0)
@@ -159,7 +159,7 @@ void PlayerLifeRequestStartNoGiver(void)
 }
 void PlayerLifeRequestShowGameOver(void)
 {
-    struct Unk02005E00 *s;
+    struct LifeRequests *s;
     vs32 *ip;
     u8 *g;
 

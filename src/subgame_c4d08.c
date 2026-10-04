@@ -11,13 +11,13 @@
  * 
  *   AirGrindRacerMove   a racer's Task.moveCallback callback: Task.velX (speed) +=
  *       Task.accelX (acceleration), with a catch-up bonus for the computer
- *       racers behind the leader (M37Game.leaderCoursePos), capped by the level's
+ *       racers behind the leader (AirGrindState.leaderCoursePos), capped by the level's
  *       gUnk_080CFE3C[level][0]; then Task.posX += speed.
  *   AirGrindRacerDraw / AirGrindEffectDrawOrFree   the Task.drawCallback draw callbacks of the
  *       racers (with a blinking extra sprite for three poses) and of the
  *       effect sprites (which end themselves off screen), both drawn scaled
  *       through AirGrindScaleSprite.
- *   AirGrindScaleSprite   copies a sprite's OAM list into M37Game.unk304/unk306[]
+ *   AirGrindScaleSprite   copies a sprite's OAM list into AirGrindState.unk304/unk306[]
  *       with its size and offsets scaled by `scale` (the depth table through
  *       AirGrindGetDepthScale, OBJ sizes from gUnk_080CFF76, double-size affine
  *       objects), fills the affine matrix gOamAffineCount of the OAM shadow
@@ -83,7 +83,7 @@ void AirGrindEffectDrawOrFree(void)
 
 void AirGrindRacerMove(void)
 {
-    struct M37Game *g = gAirGrindPtr;
+    struct AirGrindState *g = gAirGrindPtr;
     u16 n = g->playerCount;
     struct Task *t;
     s32 v;

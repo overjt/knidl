@@ -15,7 +15,7 @@
 #include "save.h"
 
 /* RAM cells / ROM tables */
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
@@ -80,8 +80,8 @@ void LoadRoomObjectGfx(void)
     s32 n;
     s32 i;
     s32 j;
-    struct Unk020055D8Entry *e;
-    struct Unk020055D8Entry *f;
+    struct RoomObjectEntry *e;
+    struct RoomObjectEntry *f;
 
     n = 0;
     if (gRoomObjectList.count == 0)

@@ -72,7 +72,7 @@ struct Collider
 
 /* The probe result block, filled by the terrain probes and mirrored into
    gTerrainResult by TerrainProbeEnd. */
-struct Unk03005530
+struct TerrainProbeResult
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 ceilingHits;
@@ -95,7 +95,7 @@ struct Unk03005530
 /* gTerrainResult: M06's collision result block; M09 reads unk8 with ldrsh.
    A 16-bit test of unk0/unk1 together is `*(u16 *)&gTerrainResult`
    (M12's PlayerActionBurningUpdate). */
-struct Unk03005550
+struct TerrainResult
 {
     /*0x00*/ u8 unk0;
     /*0x01*/ u8 ceilingHits;
@@ -162,9 +162,9 @@ extern s32 gTerrainVelY; /* Task.velY */
 extern s16 gTerrainPrevX; /* actor x (room-relative) */
 extern s16 gTerrainBoxLeft; /* box left offset */
 extern s16 gTerrainPrevY; /* actor y (room-relative) */
-extern struct Unk03005530 gTerrainProbeResult;
+extern struct TerrainProbeResult gTerrainProbeResult;
 extern u16 gTerrainClampedTopY;
-extern struct Unk03005550 gTerrainResult;
+extern struct TerrainResult gTerrainResult;
 extern s16 gTerrainProbeX; /* probe x */
 extern u8 gTerrainFacing; /* Task.facing */
 extern u8 gTerrainBoundsClamp;

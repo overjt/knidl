@@ -14,14 +14,14 @@
  *       AirGrindRacerUpdateDepth, then AirGrindRacerRaceStep or AirGrindRacerIdleStep, then AirGrindRacerUpdateScreenPos.
  *   AirGrindRacerUpdateDepth   player 0 drives the camera (AirGrindScrollCourseTo) and rebuilds the
  *       course view (AirGrindDrawCourse) and keeps the leader's position in
- *       M37Game.leaderCoursePos; every racer sets Task.layer/unk3E from the course
+ *       AirGrindState.leaderCoursePos; every racer sets Task.layer/unk3E from the course
  *       record's unk18 and Task.unk28 from its unk08.
- *   AirGrindRacerRaceStep   the racing step: holding A (M37Player.heldKeys & 1) on the
+ *   AirGrindRacerRaceStep   the racing step: holding A (AirGrindRacerState.heldKeys & 1) on the
  *       course (record unk14 != 0) accelerates Task.velX by the level's
  *       thresholds gUnk_080CFE3C[level][], a well-timed press gives a boost
  *       (AirGrindRacerTryBoost, capped by gUnk_080CFE3C[level][0]), and holding A
  *       while the record's unk14 is 0 starts a 24-frame penalty
- *       (M37Player.penaltyTimer); the tilt and animation frame
+ *       (AirGrindRacerState.penaltyTimer); the tilt and animation frame
  *       Task.frame come from the tables gUnk_080CFEE4/gUnk_080CFEE9/
  *       gUnk_080CFF01, and player 0's effects are variant 2 tasks
  *       (CreateAirGrindEffect).
@@ -50,7 +50,7 @@ void AirGrindRacerSlowDown(void)
 
 void AirGrindScrollCourseTo(s32 pos)
 {
-    struct M37Course *c = gAirGrindCoursePtr;
+    struct AirGrindCourse *c = gAirGrindCoursePtr;
 
     c->scrollPos = pos > c->finishLine ? c->finishLine : pos;
     c->unk004 = gAirGrindScript.unk4;

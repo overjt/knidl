@@ -10,7 +10,7 @@
 
 struct GfxHeader;
 
-struct Unk0873EEA0
+struct RoomObjectGfx
 {
     /*0x00*/ u16 paletteBankCount;
     /*0x02*/ u16 tileCount;
@@ -75,12 +75,12 @@ extern u32 gUnk_082FFDF0[];
 extern u16 gUnk_08334480[];
 extern u32 gUnk_083344C0[];
 extern u16 gUnk_087324DA[][4];
-extern struct Unk0873EEA0 *gEnemyGfx[];
+extern struct RoomObjectGfx *gEnemyGfx[];
 extern s8 gUnk_0873EF48[];
 extern u32 *gMidBossGfx[];
-extern struct Unk0873EEA0 *gMetaKnightsGfx[];
+extern struct RoomObjectGfx *gMetaKnightsGfx[];
 extern u32 *gBossGfx[];
-extern struct Unk0873EEA0 *gUnk_0873F180[];
+extern struct RoomObjectGfx *gUnk_0873F180[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_0873F720[];
 extern u32 gUnk_0873F758[];

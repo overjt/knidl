@@ -19,7 +19,7 @@
  * gHubRoomMapBuffer for LoadHubRoom/LoadBigSwitchViewRoom), landed separately as
  * src/level_27a6c.c. */
 
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ u8 filler0[4];
     /*0x04*/ u16 x;

@@ -285,9 +285,9 @@ void PlayerActionNeedle(void)
         {
             struct Task *t = gCurTask;
             t->unk2C = -1;
-            gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873C1B0;
+            gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
         }
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CEEC;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
         gCurTask->unk28 = gCurTask->onGround;
         gCurTask->playerNeedleStep = 0;
         TaskYieldTrampoline(8);

@@ -49,8 +49,8 @@ void PlayerActionHammer(void)
     switch (gCurTask->variant) {
     case 0:
         PlaySfxIfLocalPlayer(130, gCurTask->player->playerIndex);
-        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C060;
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CDB4;
+        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C060;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CDB4;
         gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
         LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDBC);
         if (gCurTask->unk30 == 0) {
@@ -159,8 +159,8 @@ void PlayerActionHammer(void)
         break;
     case 1:
         PlaySfxIfLocalPlayer(131, gCurTask->player->playerIndex);
-        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C060;
-        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CDF4;
+        gPlayerBodyBoxes[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C060;
+        gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CDF4;
         gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
         LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDFC);
         if (gCurTask->unk30 == 0) {

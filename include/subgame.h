@@ -16,8 +16,8 @@ struct GfxDesc
     const void *tiles;
 };
 
-/* per-player records of gAirGrindCourse, M37Course.players[4] (0x3C bytes) */
-struct M37CoursePlayer
+/* per-player records of gAirGrindCourse, AirGrindCourse.players[4] (0x3C bytes) */
+struct AirGrindCourseRacer
 {
     /*0x00*/ s32 coursePos;
     /*0x04*/ s32 holdingA;
@@ -38,7 +38,7 @@ struct M37CoursePlayer
 
 /* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
    0x080C5284-0x080C623C builder) */
-struct M37Course
+struct AirGrindCourse
 {
     /*0x000*/ s32 scrollPos;
     /*0x004*/ s32 unk004;
@@ -46,14 +46,14 @@ struct M37Course
     /*0x00C*/ s32 unk00C;
     /*0x010*/ s32 finishLine;
     /*0x014*/ s32 unk014;
-    /*0x018*/ struct M37CoursePlayer players[4];
+    /*0x018*/ struct AirGrindCourseRacer players[4];
     /*0x108*/ s32 unk108;
     /*0x10C*/ s32 unk10C;
     /*0x110*/ s32 unk110;
 };
 
-/* per-player records, M37Game.players[4] (0x34 bytes) */
-struct M37Player
+/* per-player records, AirGrindState.players[4] (0x34 bytes) */
+struct AirGrindRacerState
 {
     /*0x00*/ u8 grinding;
     /*0x01*/ u8 fullBoostCount;
@@ -77,8 +77,8 @@ struct M37Player
     /*0x30*/ s32 cpuTarget;
 };
 
-/* 16-byte object records, M37ObjSet.unk04[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
-struct M37Obj
+/* 16-byte object records, AirGrindScenerySet.unk04[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
+struct AirGrindSceneryObject
 {
     /*0x00*/ s16 unk0;
     /*0x02*/ u16 unk2;
@@ -87,29 +87,29 @@ struct M37Obj
     /*0x0C*/ s32 unkC;          /* 16.16; the ROM also reads its high half */
 };
 
-/* M37Game.scenery (0xB8 bytes with the compiler's 2-byte tail pad): task
+/* AirGrindState.scenery (0xB8 bytes with the compiler's 2-byte tail pad): task
    type #96 variant 1's seven scrolling objects.  AirGrindRollSceneryObject addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
-   AirGrindSetupRace fills end it exactly at M37Game.randomStates. */
-struct M37ObjSet
+   AirGrindSetupRace fills end it exactly at AirGrindState.randomStates. */
+struct AirGrindScenerySet
 {
     /*0x00*/ s32 unk00;         /* the scroll position last frame */
-    /*0x04*/ struct M37Obj unk04[7];
+    /*0x04*/ struct AirGrindSceneryObject unk04[7];
     /*0x74*/ s16 unk74;         /* the last object's sprite id */
-    /*0x76*/ u16 unk76[16];     /* M37Game + 0x162 */
-    /*0x96*/ u16 unk96[16];     /* M37Game + 0x182 */
+    /*0x76*/ u16 unk76[16];     /* AirGrindState + 0x162 */
+    /*0x96*/ u16 unk96[16];     /* AirGrindState + 0x182 */
 };
 
 /* gAirGrind, the game's state; always used through gAirGrindPtr */
-struct M37Game
+struct AirGrindState
 {
     /*0x000*/ s32 level;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 raceTimes[4];
     /*0x014*/ s32 engineSfxPlayer;
     /*0x018*/ s32 digitTileWord;
-    /*0x01C*/ struct M37Player players[4];
-    /*0x0EC*/ struct M37ObjSet scenery;
+    /*0x01C*/ struct AirGrindRacerState players[4];
+    /*0x0EC*/ struct AirGrindScenerySet scenery;
     /*0x1A4*/ s32 randomStates[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
     /*0x1B8*/ s32 leaderCoursePos;
     /*0x1BC*/ u16 skyLineColors[160]; /* per-scanline colour, HBlank DMA source */
@@ -128,7 +128,7 @@ struct M37Game
 };
 
 /* the results screen's state (AirGrindResults, AirGrindResultsDraw, AirGrindResultsStep) */
-struct M37Results
+struct AirGrindResultsState
 {
     /*0x00*/ s8 state;          /* state */
     /*0x01*/ s8 unk01;
@@ -146,7 +146,7 @@ struct M37Results
 /* gAirGrindScript: a cursor into one of the u16-pair scripts gUnk_087572EC[]
    (AirGrindClearScript clears it, AirGrindStepScript steps it, 0x8000 = end, 0x9999 =
    loop) */
-struct M37Script
+struct AirGrindScript
 {
     /*0x00*/ u8 scriptId;           /* script id, 0 = none */
     /*0x01*/ u8 step;           /* step */
@@ -155,7 +155,7 @@ struct M37Script
 };
 
 /* four 40-byte records at gAirGrindPaletteFades (AirGrindStartPaletteFade fills one) */
-struct M37Timer
+struct AirGrindPaletteFade
 {
     /*0x00*/ s32 active;         /* in use */
     /*0x04*/ s32 timer;
@@ -182,18 +182,18 @@ extern u8 gQuickDrawWins[];
 extern u8 gBombRallyFinishOrder[];
 extern u8 gUnk_0200B048;
 extern u8 gQuickDrawRanking[];
-extern struct M37Game gAirGrind;
-extern struct M37Game *gAirGrindPtr;
-extern struct M37Timer gAirGrindPaletteFades[4];
-extern struct M37Results gAirGrindResults;
-extern struct M37Course *gAirGrindCoursePtr;
+extern struct AirGrindState gAirGrind;
+extern struct AirGrindState *gAirGrindPtr;
+extern struct AirGrindPaletteFade gAirGrindPaletteFades[4];
+extern struct AirGrindResultsState gAirGrindResults;
+extern struct AirGrindCourse *gAirGrindCoursePtr;
 extern u16 gAirGrindFrame;
 extern s16 gAirGrindStripOnEvenSegment[4][256];
 extern s16 gAirGrindCourseToLane[4][500];
 extern u32 gAirGrindSegmentBits[];
 extern s16 gAirGrindLaneToCourse[4][500];
 extern u32 gAirGrindStripAddrs[4][256];
-extern struct M37Course gAirGrindCourse;
+extern struct AirGrindCourse gAirGrindCourse;
 extern s16 gUnk_0201B1F4;
 extern s32 gAirGrindLaneSegmentEnds[4][73];
 extern s32 gAirGrindSegmentEnds[];
@@ -202,7 +202,7 @@ extern s32 gAirGrindCoursePhase;
 
 /* IWRAM */
 extern u16 gObjPaletteBank5[];
-extern struct M37Script gAirGrindScript;
+extern struct AirGrindScript gAirGrindScript;
 
 /* ROM */
 extern u8 gUnk_080CFE2C[][4];

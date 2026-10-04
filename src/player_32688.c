@@ -106,11 +106,11 @@ void Task_Player(void)
             break;
         case ABILITY_PARASOL:
             {
-                struct M11R20 *d = gPlayerBodyBoxes;
+                struct PlayerBodyBox *d = gPlayerBodyBoxes;
 
-                d[gCurTask->player->playerIndex] = *(struct M11R20 *)gUnk_0873C358;
+                d[gCurTask->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C358;
             }
-            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CF94;
+            gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CF94;
             break;
         case ABILITY_MIKE:
         case ABILITY_CRASH:
@@ -390,12 +390,12 @@ check:
             {
                 if (gCurTask->frame <= 0x8D1)
                 {
-                    struct M11R20 *d = gPlayerBodyBoxes;
+                    struct PlayerBodyBox *d = gPlayerBodyBoxes;
                     ((u8 *)&d[gCurTask->player->playerIndex])[12] = 2;
                 }
                 else
                 {
-                    struct M11R20 *d = gPlayerBodyBoxes;
+                    struct PlayerBodyBox *d = gPlayerBodyBoxes;
                     ((u8 *)&d[gCurTask->player->playerIndex])[12] = 5;
                 }
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,

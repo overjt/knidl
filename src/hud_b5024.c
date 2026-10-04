@@ -17,7 +17,7 @@
 extern s16 gMaxHealth;
 extern s16 gPlayerHealth[];
 extern s8 gUnk_02005590[];
-struct Unk020055D8Entry
+struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
     /*0x01*/ s8 unk1;
@@ -26,13 +26,13 @@ struct Unk020055D8Entry
     /*0x04*/ u16 x;
     /*0x06*/ u16 y;
 };
-struct Unk020055D8
+struct RoomObjectList
 {
     /*0x00*/ s16 count;
     /*0x02*/ s16 sortedByY;
-    /*0x04*/ struct Unk020055D8Entry *entries;
+    /*0x04*/ struct RoomObjectEntry *entries;
 };
-extern struct Unk020055D8 gRoomObjectList;
+extern struct RoomObjectList gRoomObjectList;
 extern u8 gUnk_02005E10[];
 extern u8 gRoomEntryMode;
 extern u32 gUsedRoomObjects[8][8];
@@ -61,7 +61,7 @@ extern s32 gUnk_03002448;
 extern u8 gExtraMode;
 extern s8 gRoomIndex;
 extern s16 gRoomBounds[];
-extern struct Unk03005680 gScrollLock;
+extern struct ScrollLock gScrollLock;
 
 /* External functions */
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
@@ -123,8 +123,8 @@ s32 sub_080b5d84();
 
 void SpawnRoomObjectsOnLoad(void)
 {
-    struct Unk020055D8Entry *e;
-    struct Unk0873EEA0 *d;
+    struct RoomObjectEntry *e;
+    struct RoomObjectGfx *d;
     s32 i;
     s32 r;
 

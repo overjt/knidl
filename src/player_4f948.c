@@ -40,7 +40,7 @@ void PlayerActionStarRod(void)
         struct Task *t = gCurTask;
         t->playerActionDone = 0;
         t->unk2C = -1;
-        gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873C2C8;
+        gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C2C8;
     }
     {
         struct Task *t = gCurTask;
@@ -139,7 +139,7 @@ void PlayerActionStarRodJump(void)
     {
         struct Task *t = gCurTask;
         t->unk28 = -1;
-        gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873C304;
+        gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C304;
     }
     while (1)
     {

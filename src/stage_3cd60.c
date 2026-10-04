@@ -9,16 +9,16 @@
 #include "effect.h"
 #include "actor.h"
 
-struct M11R8 { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
+struct PlayerHitBoxSet { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
 struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
-struct M11R20 { u32 w[5]; };
+struct PlayerBodyBox { u32 w[5]; };
 
 /* Not from collision.h or player.h: this file's view of gTerrainResult and
    gUnk_020055C4 differs (lesson 3.517). */
 extern u16 gEndingLocalPlayer;
-extern struct M11R8 gPlayerHitBoxSets[];
+extern struct PlayerHitBoxSet gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4[];
-extern struct M11R20 gPlayerBodyBoxes[];
+extern struct PlayerBodyBox gPlayerBodyBoxes[];
 extern struct M11Buf gPlayerHitBoxLists[];
 extern u16 gUnk_02007F60[];
 extern u16 gPlayerBubbleTimers[];
@@ -1189,7 +1189,7 @@ s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6)
     if (src[0] == 128)
         return 0;
     {
-        struct M11R20 *tbl = (struct M11R20 *)gPlayerBodyBoxes;
+        struct PlayerBodyBox *tbl = (struct PlayerBodyBox *)gPlayerBodyBoxes;
         u8 *dst = (u8 *)&tbl[playerIdx];
 
         dst[0] = src[0];
@@ -1203,10 +1203,10 @@ s32 LoadPlayerBodyBoxRect(s32 playerIdx, u8 *src6)
 }
 
 /* NEEDS a byte-level view of the module's 8-byte rows in hdr.c (see report):
-       struct M11R8  { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
+       struct PlayerHitBoxSet  { u8 unk00; u8 unk01; u8 unk02; u8 unk03; u8 *unk04; };
        struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
        extern struct M11Buf gPlayerHitBoxLists[];
-   gPlayerHitBoxSets keeps its `struct M11R8[]` spelling - only M11R8's members
+   gPlayerHitBoxSets keeps its `struct PlayerHitBoxSet[]` spelling - only PlayerHitBoxSet's members
    change, and an 8-byte struct still copies with ldmia/stmia whatever its
    members are.  Only an ARRAY-typed extern with a SCALAR member at +4 puts the
    field offset on the SYMBOL (`adds r2,#4; adds r2,r3,r2`); a `(T *)` cast or a
