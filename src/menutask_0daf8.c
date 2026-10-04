@@ -71,7 +71,7 @@ void FileSelectSlotUpdate(void)
         i = slot * 256;
         if (gSaveSlots[slot].completionPercent[1] != 0 && gSaveSlots[slot].unk04 != 0x99999999)
             i++;
-        MenuLoadSaveSlotPalette(slot, (s8)s->unk16[i]);
+        MenuLoadSaveSlotPalette(slot, (s8)s->curLevel[i]);
         gCurTask->fileSelectSlotSavedCursor = gMenuCursor;
     }
 

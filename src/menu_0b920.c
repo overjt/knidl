@@ -189,7 +189,7 @@ void MenuDrawSaveSlots(void)
     for (i = 0; i < 3; i++)
     {
         MenuLoadSaveSlotLabel(i);
-        MenuLoadSaveSlotPicture(i, (s8)gSaveSlots[i].unk16[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
+        MenuLoadSaveSlotPicture(i, (s8)gSaveSlots[i].curLevel[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0]);
         MenuLoadSaveSlotPercent(i, gSaveSlots[i].completionPercent[gSaveSlots[i].completionPercent[1] ? (gSaveSlots[i].unk04 != 0x99999999) : 0], 0);
     }
 }

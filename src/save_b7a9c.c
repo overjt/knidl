@@ -83,14 +83,14 @@ void SaveMetaKnightmareBestTime(s32 a)
     s = 0;
     for (i = 0; i <= 3; i++)
     {
-        s += gSaveSlots[a].unk68[i] * m;
+        s += gSaveSlots[a].metaKnightmareBestTime[i] * m;
         t += gHudClock[i] * m;
         m = ((m << 4) - m) << 2;
     }
     if (s != 0 && s < t)
         return;
     for (i = 0; i < 4; i++)
-        gSaveSlots[a].unk68[i] = gHudClock[i];
+        gSaveSlots[a].metaKnightmareBestTime[i] = gHudClock[i];
     best = 0;
     for (i = 0; i < 3; i++)
     {
@@ -119,14 +119,14 @@ void SaveBossEnduranceBestTime(s32 a)
     s = 0;
     for (i = 0; i <= 3; i++)
     {
-        s += gSaveSlots[a].unk60[i] * m;
+        s += gSaveSlots[a].bossEnduranceBestTime[i] * m;
         t += gHudClock[i] * m;
         m = ((m << 4) - m) << 2;
     }
     if (s != 0 && s < t)
         return;
     for (i = 0; i < 4; i++)
-        gSaveSlots[a].unk60[i] = gHudClock[i];
+        gSaveSlots[a].bossEnduranceBestTime[i] = gHudClock[i];
     best = 0;
     for (i = 0; i < 3; i++)
     {
