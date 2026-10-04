@@ -261,7 +261,7 @@ void sub_08054fe4(void)
     u->unk28 = u->player->ability;
     switch (u->player->ability)
     {
-    case 1:
+    case ABILITY_FIRE:
         u->facing = -1;
         gCurTask->frameTable = gUnk_0874C718;
         for (;;)
@@ -294,7 +294,7 @@ void sub_08054fe4(void)
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(4);
         }
-    case 2:
+    case ABILITY_SPARK:
         v = gCurTask;
         v->frameTable = gUnk_08751C74;
         v->tileWord = ((v->u8C.parentTask)->tileWord + 0x1800) | 8;

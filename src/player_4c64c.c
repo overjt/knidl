@@ -42,7 +42,7 @@ void PlayerActionThrowHold(void)
             t->variant = 3;
             u = gCurTask;
             u->player->unk14 = 120;
-            u->u80.attackAbility = 23;
+            u->u80.attackAbility = ABILITY_THROW;
         }
     }
     while (1) {

@@ -237,10 +237,10 @@ void PlayerActionDuck(void)
     gCurTask->playerBaseFrame = gUnk_0873D4BC[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
-    case 1:
-    case 2:
-    case 5:
-    case 19:
+    case ABILITY_FIRE:
+    case ABILITY_SPARK:
+    case ABILITY_BURNING:
+    case ABILITY_TORNADO:
         while (1)
         {
             TaskSetFrame(gCurTask->playerBaseFrame);
@@ -251,7 +251,7 @@ void PlayerActionDuck(void)
                 TaskYieldTrampoline(2);
             }
         }
-    case 15:
+    case ABILITY_HI_JUMP:
         while (1)
         {
             TaskSetFrame(gCurTask->playerBaseFrame);
@@ -262,7 +262,7 @@ void PlayerActionDuck(void)
                 TaskYieldTrampoline(6);
             }
         }
-    case 0:
+    case ABILITY_NORMAL:
     default:
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskSleepForever();
@@ -343,13 +343,13 @@ void PlayerActionSlide(void)
         gCurTask->playerBaseFrame = gUnk_0873D5CA[gCurTask->player->ability][0];
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskSleepForever();
-        case 1:
-        case 2:
-        case 5:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
             while (1)
             {
                 TaskSetFrame(gCurTask->playerBaseFrame);
@@ -360,13 +360,13 @@ void PlayerActionSlide(void)
                     TaskYieldTrampoline(2);
                 }
             }
-        case 4:
-        case 15:
-        case 16:
-        case 17:
-        case 19:
-        case 22:
-        case 23:
+        case ABILITY_SWORD:
+        case ABILITY_HI_JUMP:
+        case ABILITY_BEAM:
+        case ABILITY_STONE:
+        case ABILITY_TORNADO:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
             while (1)
             {
                 TaskSetFrame(gCurTask->playerBaseFrame);

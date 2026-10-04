@@ -48,7 +48,7 @@ void PlayerObjectIceBreath(void)
         t->moveCallback = (u32)TaskMove;
         t->updateCallback = (u32)PlayerObjectIceBreathUpdate;
         t->unk28 = 0;
-        t->u80.attackAbility = 13;
+        t->u80.attackAbility = ABILITY_ICE;
     }
     {
         struct Task *t = gCurTask;
@@ -163,7 +163,7 @@ void PlayerObjectIceBreathUpdate(void)
         TaskFree(gCurTaskIdx);
         return;
     }
-    if (gCurTask->player->ability != 13)
+    if (gCurTask->player->ability != ABILITY_ICE)
     {
         TaskFree(gCurTaskIdx);
         return;
@@ -213,7 +213,7 @@ s32 PlayerObjectBeamOrb(void)
     {
         struct Task *t = gCurTask;
         t->frameTable = gUnk_08751BB0;
-        t->u80.attackAbility = 16;
+        t->u80.attackAbility = ABILITY_BEAM;
     }
     {
         struct Task *t = gCurTask;

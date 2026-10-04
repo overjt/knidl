@@ -57,7 +57,7 @@ void PlayerWarpStarRideState2(void)
     {
         n = 3;
         d = 2;
-        if (gCurTask->player->ability == 25)
+        if (gCurTask->player->ability == ABILITY_STAR_ROD)
         {
             n = 1;
             d = 1;
@@ -88,7 +88,7 @@ void PlayerWarpStarRideState1(void)
     gCurTask->unk24 = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
@@ -169,7 +169,7 @@ void PlayerWarpStarRideState3(void)
     gCurTask->unk24 = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
@@ -250,7 +250,7 @@ void PlayerWarpStarRideState4(void)
     gCurTask->unk24 = 0;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
@@ -348,7 +348,7 @@ void PlayerWarpStarRideState5(void)
     gCurTask->unk24 = 0;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
@@ -412,8 +412,8 @@ void PlayerWarpStarRideState5(void)
     gCurTask->frame--;
     switch (gCurTask->player->ability)
     {
-    case 4:
-    case 9:
+    case ABILITY_SWORD:
+    case ABILITY_HAMMER:
         TaskSetFrame(gUnk_0873D3B8[gCurTask->player->ability][1]);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(2);
@@ -429,7 +429,7 @@ void PlayerWarpStarRideState5(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         break;
-    case 10:
+    case ABILITY_PARASOL:
         TaskSetFrame(0x841);
         gCurTask->velY = 0x8000;
         TaskYieldTrampoline(2);
@@ -520,7 +520,7 @@ void PlayerWarpStarRideState6(void)
     gCurTask->unk24 = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
@@ -602,7 +602,7 @@ void PlayerWarpStarRideState7(void)
 
     gCurTask->updateState = 7;
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;

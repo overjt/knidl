@@ -1636,7 +1636,7 @@ void sub_080ac72c(void)
             k = (s16)gCurTask->metaKnightSwordPickerIndex;
             if ((d >> k) & 1)
             {
-                if (gPlayerStates[k].ability == 24)
+                if (gPlayerStates[k].ability == ABILITY_UFO)
                 {
                     if (gTasks[k].variant > 6)
                     {

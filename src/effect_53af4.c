@@ -53,7 +53,7 @@ void Task_PlayerEffect(void)
 {
     if (gCurTask->u8C.parentTask == NULL)
     {
-        gCurTask->u80.attackAbility = 0;
+        gCurTask->u80.attackAbility = ABILITY_NORMAL;
         gCurTask->u8C.parentTask = &gTasks[gCurTask->parent];
     }
     CallTableEntry(((u8 *)gCurTask)[27], 49, gPlayerEffectVariants);

@@ -39,7 +39,7 @@ void PlayerActionIce(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->u80.attackAbility = 13;
+            u->u80.attackAbility = ABILITY_ICE;
         }
     }
     switch (gCurTask->variant) {
@@ -130,7 +130,7 @@ void PlayerActionFreeze(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->u80.attackAbility = 14;
+            u->u80.attackAbility = ABILITY_FREEZE;
         }
     }
     switch (gCurTask->variant) {

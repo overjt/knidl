@@ -47,7 +47,7 @@ void PlayerActionTornado(void)
     gCurTask->unk28 = 0;
     gCurTask->unk2C = 0;
     gCurTask->variant = 0;
-    gCurTask->u80.attackAbility = 19;
+    gCurTask->u80.attackAbility = ABILITY_TORNADO;
     switch (gCurTask->variant) {
     case 0:
         PlaySfxIfLocalPlayer(150, gCurTask->player->playerIndex);
@@ -181,7 +181,7 @@ void PlayerActionCrash(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 48;
     gPauseDisabled = 1;
-    gCurTask->u80.attackAbility = 20;
+    gCurTask->u80.attackAbility = ABILITY_CRASH;
     PlayerStopAxes(3);
     FreezeOtherTasks(15);
     if ((gDispCnt & 0x400) == 0) {
@@ -313,7 +313,7 @@ void PlayerActionCrash(void)
     TaskYieldTrampoline(2);
     PlayerStopAxes(2);
     gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
-    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+    SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     gCurTask->variant = 2;
     gCurTask->frame++;
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 31; gCurTask->playerLoopCount++) {

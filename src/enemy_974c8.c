@@ -730,7 +730,7 @@ void PhanPhanCheckCatch(void)
         p = gPlayerStates;
         t = gCurTask;
         i = t->hitterSlot;
-        if (p[i].ability != 17 || p[i].mode != 13) {
+        if (p[i].ability != ABILITY_STONE || p[i].mode != 13) {
             t->phanPhanHeldPlayerSlot = i;
             TaskFaceToward(i);
             PlaySfx(568);

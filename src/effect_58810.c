@@ -243,7 +243,7 @@ void PlayerEffectIceBreathCloudUpdate(void)
         t->unk28 = 1;
     if (!(gCurTask->player->unk40 & 0x100) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);
-    if (gCurTask->player->ability != 13)
+    if (gCurTask->player->ability != ABILITY_ICE)
         TaskFree(gCurTaskIdx);
 }
 

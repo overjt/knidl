@@ -592,42 +592,42 @@ void ActorPlayHitSfx(void)
         u = &gTasks[t->hitterSlot];
         switch (u->u80.attackAbility)
         {
-        case 3:
+        case ABILITY_CUTTER:
             PlaySfx(145);
             break;
-        case 4:
+        case ABILITY_SWORD:
             PlaySfx(146);
             break;
-        case 9:
+        case ABILITY_HAMMER:
             PlaySfx(132);
             break;
-        case 12:
+        case ABILITY_NEEDLE:
             PlaySfx(139);
             break;
-        case 13:
-        case 14:
+        case ABILITY_ICE:
+        case ABILITY_FREEZE:
             PlaySfx(142);
             break;
-        case 0:
-        case 1:
-        case 2:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 10:
-        case 11:
-        case 15:
-        case 16:
-        case 17:
-        case 18:
-        case 19:
-        case 20:
-        case 21:
-        case 22:
-        case 23:
-        case 24:
-        case 25:
+        case ABILITY_NORMAL:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_LASER:
+        case ABILITY_MIKE:
+        case ABILITY_WHEEL:
+        case ABILITY_PARASOL:
+        case ABILITY_SLEEP:
+        case ABILITY_HI_JUMP:
+        case ABILITY_BEAM:
+        case ABILITY_STONE:
+        case ABILITY_BALL:
+        case ABILITY_TORNADO:
+        case ABILITY_CRASH:
+        case ABILITY_LIGHT:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
+        case ABILITY_UFO:
+        case ABILITY_STAR_ROD:
             sub_08069d78();
             break;
         }

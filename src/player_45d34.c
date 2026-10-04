@@ -36,7 +36,7 @@ void PlayerActionMike(void)
     gCurTask->variant = gCurTask->player->abilityUses - 1;
     gCurTask->player->unk42 &= 0xFFEF;
     if (--gCurTask->player->abilityUses == 0) {
-        SetPlayerAbilityNoHud(0, -1, gCurTask->player->playerIndex);
+        SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     } else {
         struct PlayerState *p = gCurTask->player;
         SetPlayerAbilityNoHud(p->ability, p->abilityUses, p->playerIndex);
@@ -195,7 +195,7 @@ void PlayerActionMike(void)
     FreezeOtherTasks(0);
     {
         struct PlayerState *p = gCurTask->player;
-        if (p->ability != 7)
+        if (p->ability != ABILITY_MIKE)
             HudShowAbility(p->ability, p->playerIndex);
         else
             p->unk22 = 2;

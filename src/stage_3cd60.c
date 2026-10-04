@@ -176,7 +176,7 @@ void CreatePlayer(s32 a0)
     t->pixelX = t->posX >> 16;
     t->pixelY = t->posY >> 16;
     if ((u8)(gUnk_02000020 - 2) <= 1)
-        SetPlayerAbilityNoHud(25, -1, a0);
+        SetPlayerAbilityNoHud(ABILITY_STAR_ROD, -1, a0);
 }
 
 /* Reset player record a0 to its start-of-stage state. */
@@ -195,7 +195,7 @@ void InitPlayerState(s32 a0)
     p->heldCount = 0;
     p->attachedCount = 0;
     p->unk09 = 0;
-    p->pendingAbility = 0;
+    p->pendingAbility = ABILITY_NORMAL;
     p->unk0A = 0;
     p->pendingAbilityUses = -1;
     p->ability = gPlayerAbilities[a0];
@@ -270,7 +270,7 @@ void sub_0803d1c4(s32 a0)
     p->heldCount = 0;
     p->attachedCount = 0;
     p->unk09 = 0;
-    p->pendingAbility = 0;
+    p->pendingAbility = ABILITY_NORMAL;
     p->unk0A = 0;
     p->pendingAbilityUses = -1;
     p->ability = gPlayerAbilities[a0];
@@ -623,7 +623,7 @@ s32 sub_0803d870(void)
     if (v >= 4551 && v <= 4554)
         return 64;
     ps = t->player;
-    if (ps->ability == 12 || ps->ability == 13) {
+    if (ps->ability == ABILITY_NEEDLE || ps->ability == ABILITY_ICE) {
         if ((t->waterFlags & 1) == 0)
             return -1;
         if ((ps->unk40 & 0x100) != 0)
@@ -638,15 +638,15 @@ s32 sub_0803d870(void)
     }
     if ((ps->unk42 & 16) == 0) {
         switch (ps->ability) {
-        case 9:
+        case ABILITY_HAMMER:
             return 320;
-        case 18:
+        case ABILITY_BALL:
             return 640;
-        case 22:
+        case ABILITY_BACKDROP:
             return 448;
-        case 23:
+        case ABILITY_THROW:
             return 512;
-        case 17:
+        case ABILITY_STONE:
             u = gCurTask;
             ps = u->player;
             if (ps->mode == 13)
@@ -669,35 +669,35 @@ s32 sub_0803d870(void)
     if (q->mode == 13) {
     second:
         switch (gCurTask->player->ability) {
-        case 5:
+        case ABILITY_BURNING:
             x = gCurTask;
             w = x->frame;
             if (w >= 1487 && w <= 1504)
                 return -1;
             break;
-        case 19:
+        case ABILITY_TORNADO:
             x = gCurTask;
             w = x->frame;
             if (w >= 3549 && w <= 3556)
                 return -1;
             break;
-        case 8:
+        case ABILITY_WHEEL:
             x = gCurTask;
             w = x->frame;
             if (w >= 1794 && w <= 1810)
                 return 256;
             break;
-        case 14:
+        case ABILITY_FREEZE:
             if ((gCurTask->player->unk42 & 16) != 0)
                 return -1;
             return 704;
-        case 17:
+        case ABILITY_STONE:
             x = gCurTask;
             w = x->frame;
             if (w >= 3144 && w <= 3148)
                 return 384;
             return -1;
-        case 24:
+        case ABILITY_UFO:
             y = gCurTask;
             if ((y->player->unk42 & 16) != 0)
                 return -1;
@@ -707,7 +707,7 @@ s32 sub_0803d870(void)
             break;
         }
     } else {
-        if (q->ability == 24) {
+        if (q->ability == ABILITY_UFO) {
             if ((q->unk42 & 16) != 0)
                 goto ret_m1;
             return 576;
@@ -931,7 +931,7 @@ void sub_0803e080(void)
 
             if (q->invincible != 0)
                 break;
-            if (q->ability != 7 && q->ability != 20 && q->ability != 21)
+            if (q->ability != ABILITY_MIKE && q->ability != ABILITY_CRASH && q->ability != ABILITY_LIGHT)
             {
                 q->unk22 = 0;
                 return;
@@ -1399,9 +1399,9 @@ void sub_0803e8ec(void)
         return;
     if (p->mode == 13)
     {
-        if (p->ability == 2)
+        if (p->ability == ABILITY_SPARK)
             return;
-        if (p->ability == 20 && (p->unk42 & 16))
+        if (p->ability == ABILITY_CRASH && (p->unk42 & 16))
             return;
     }
     gCurTask->player->unk42 &= ~0x10;
@@ -1416,9 +1416,9 @@ void sub_0803e8ec(void)
         }
         needBig = 0;
         needSmall = 0;
-        if (q->ability != 0)
+        if (q->ability != ABILITY_NORMAL)
             needBig = q->mode != 13;
-        if (!(q->mode == 13 && q->ability == 2))
+        if (!(q->mode == 13 && q->ability == ABILITY_SPARK))
             needSmall = 1;
     }
     {
@@ -1501,7 +1501,7 @@ s32 sub_0803eaf8(s32 a0)
     hi = 0;
     switch (gPlayerStates[a0].ability)
     {
-    case 1:
+    case ABILITY_FIRE:
         t = &gTasks[a0];
         if ((u16)t->frame >= 434 && (u16)t->frame <= 453)
         {
@@ -1738,7 +1738,7 @@ s32 sub_0803eaf8(s32 a0)
             }
         }
         break;
-    case 2:
+    case ABILITY_SPARK:
         t = &gTasks[a0];
         if ((u16)t->frame >= 675 && (u16)t->frame <= 694)
         {
@@ -1974,7 +1974,7 @@ s32 sub_0803eaf8(s32 a0)
             gCurTask->tileWord = (gCurTask->tileWord & ~15) | 8;
         }
         break;
-    case 5:
+    case ABILITY_BURNING:
         t = &gTasks[a0];
         if ((u16)t->frame >= 1284 && (u16)t->frame <= 1303)
         {
@@ -2299,16 +2299,16 @@ u16 sub_0803f7e0(u16 a0)
     default:
         k = 0;
         break;
-    case 4:
+    case ABILITY_SWORD:
         k = 1;
         break;
-    case 9:
+    case ABILITY_HAMMER:
         k = 2;
         break;
-    case 10:
+    case ABILITY_PARASOL:
         k = 3;
         break;
-    case 24:
+    case ABILITY_UFO:
         k = 4;
         break;
     }
@@ -2667,7 +2667,7 @@ s32 PlayerCheckBButton(void)
         gCurTask->player->running = 0;
         goto out;
     }
-    if (gCurTask->player->ability == 15
+    if (gCurTask->player->ability == ABILITY_HI_JUMP
      && ((gCurTask->onGround & 1) || (gCurTask->waterFlags & 1)))
         gCurTask->player->hiJumpsLeft = 1;
     if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 2) == 0)
@@ -2682,7 +2682,7 @@ s32 PlayerCheckBButton(void)
             gCurTask->player->requestedAction = 27;
         goto out;
     }
-    if (gCurTask->player->ability == 15 && (gCurTask->player->unk42 & 4) == 0
+    if (gCurTask->player->ability == ABILITY_HI_JUMP && (gCurTask->player->unk42 & 4) == 0
      && (gCurTask->waterFlags & 1) == 0)
     {
         if (gCurTask->player->hiJumpsLeft == 0)
@@ -2727,11 +2727,11 @@ s32 PlayerCheckDropAbility(void)
     if ((gCurTask->player->unk42 & 2) == 0
      && gCurTask->player->unk37 == 0
      && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 4)
-     && gCurTask->player->ability != 0)
+     && gCurTask->player->ability != ABILITY_NORMAL)
     {
         CreateAbilityStar(gCurTask->player->ownStarSwallowCount);
         PlaySfxIfLocalPlayer(182, (u16)gCurTask->player->playerIndex);
-        SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+        SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = gCurTask->player->action;
     }
     return gCurTask->player->requestedAction;
@@ -2811,7 +2811,7 @@ s32 PlayerCheckShareItem(void)
      || gCurTask->player->mode == 23 || gCurTask->player->requestedAction == 19
      || gCurTask->hitKind == 1 || gCurTask->hitKind == 2
      || (gCurTask->player->mode == 13
-         && (gCurTask->player->ability != 24 || gCurTask->variant <= 6)))
+         && (gCurTask->player->ability != ABILITY_UFO || gCurTask->variant <= 6)))
         return 0;
     for (i = 0; i < gPlayerCount; i++)
     {
@@ -2845,7 +2845,7 @@ s32 PlayerCheckShareItem(void)
             continue;
         if (q->mode == 13)
         {
-            if (q->ability != 24)
+            if (q->ability != ABILITY_UFO)
                 return 0;
             if (u->variant <= 6)
                 continue;
@@ -2988,8 +2988,8 @@ void sub_080409b8(s32 a0)
 
     switch (gPlayerStates[a0].ability)
     {
-    case 1:
-    case 2:
+    case ABILITY_FIRE:
+    case ABILITY_SPARK:
         n = CreatePlayerEffect((s8)a0, 15, 0);
         if (n != -1)
         {
@@ -3029,13 +3029,13 @@ void sub_08040a44(s16 p0, s16 p1)
         default:
             v = gCurTask->frame - 138;
             break;
-        case 4:
+        case ABILITY_SWORD:
             v = t->frame - 1122;
             break;
-        case 9:
+        case ABILITY_HAMMER:
             v = t->frame - 1923;
             break;
-        case 10:
+        case ABILITY_PARASOL:
             v = t->frame - 2180;
             break;
         }

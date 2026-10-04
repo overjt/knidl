@@ -77,7 +77,7 @@ void PlayerActionExitDoor(void)
             t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][1];
             switch (t->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
@@ -88,12 +88,12 @@ void PlayerActionExitDoor(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
                 break;
-            case 1:
-            case 2:
-            case 5:
-            case 19:
-            case 22:
-            case 23:
+            case ABILITY_FIRE:
+            case ABILITY_SPARK:
+            case ABILITY_BURNING:
+            case ABILITY_TORNADO:
+            case ABILITY_BACKDROP:
+            case ABILITY_THROW:
                 TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
@@ -232,11 +232,11 @@ void PlayerActionExitDoor(void)
                 }
                 else
                 {
-                    if (t->player->ability == 4)
+                    if (t->player->ability == ABILITY_SWORD)
                         t->playerBaseFrame = 0x4A0;
-                    else if (t->player->ability == 9)
+                    else if (t->player->ability == ABILITY_HAMMER)
                         t->playerBaseFrame = 0x7C1;
-                    else if (t->player->ability == 10)
+                    else if (t->player->ability == ABILITY_PARASOL)
                         t->playerBaseFrame = 0x8C1;
                     else
                         t->playerBaseFrame = 221;
@@ -261,7 +261,7 @@ void PlayerActionExitDoor(void)
                 t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][3];
                 switch (t->player->ability)
                 {
-                case 0:
+                case ABILITY_NORMAL:
                 default:
                     PlayerSetMotionXPreset(10, 11);
                     gCurTask->frame = gCurTask->playerBaseFrame;
@@ -269,12 +269,12 @@ void PlayerActionExitDoor(void)
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     break;
-                case 1:
-                case 2:
-                case 5:
-                case 19:
-                case 22:
-                case 23:
+                case ABILITY_FIRE:
+                case ABILITY_SPARK:
+                case ABILITY_BURNING:
+                case ABILITY_TORNADO:
+                case ABILITY_BACKDROP:
+                case ABILITY_THROW:
                     PlayerSetMotionXPreset(10, 12);
                     gCurTask->frame = gCurTask->playerBaseFrame;
                     TaskYieldTrampoline(2);
@@ -348,17 +348,17 @@ void PlayerActionExitDoor(void)
                 t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][5];
                 switch (t->player->ability)
                 {
-                case 0:
+                case ABILITY_NORMAL:
                 default:
                     gCurTask->frame = gCurTask->playerBaseFrame;
                     TaskYieldTrampoline(24);
                     break;
-                case 1:
-                case 2:
-                case 5:
-                case 19:
-                case 22:
-                case 23:
+                case ABILITY_FIRE:
+                case ABILITY_SPARK:
+                case ABILITY_BURNING:
+                case ABILITY_TORNADO:
+                case ABILITY_BACKDROP:
+                case ABILITY_THROW:
                     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 5; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame = gCurTask->playerBaseFrame;
@@ -385,17 +385,17 @@ void PlayerActionExitDoor(void)
             {
                 switch (t->player->ability)
                 {
-                case 0:
+                case ABILITY_NORMAL:
                 default:
                     while (gCameraPanDone == 0)
                         TaskYieldTrampoline(1);
                     break;
-                case 1:
-                case 2:
-                case 5:
-                case 19:
-                case 22:
-                case 23:
+                case ABILITY_FIRE:
+                case ABILITY_SPARK:
+                case ABILITY_BURNING:
+                case ABILITY_TORNADO:
+                case ABILITY_BACKDROP:
+                case ABILITY_THROW:
                     for (;;)
                     {
                         gCurTask->frame = gCurTask->playerBaseFrame;
@@ -437,10 +437,10 @@ void PlayerActionExitDoor(void)
             t->playerBaseFrame = gUnk_0873D3B8[t->player->ability][1];
             switch (t->player->ability)
             {
-            case 0:
-            case 7:
-            case 20:
-            case 21:
+            case ABILITY_NORMAL:
+            case ABILITY_MIKE:
+            case ABILITY_CRASH:
+            case ABILITY_LIGHT:
             {
                 struct Task *u;
 
@@ -456,10 +456,10 @@ void PlayerActionExitDoor(void)
                 }
                 break;
             }
-            case 10:
+            case ABILITY_PARASOL:
                 gCurTask->playerBaseFrame = 0x841;
                 goto anim;
-            case 2:
+            case ABILITY_SPARK:
                 PlayerLoadSparkTiles();
             default:
             anim:

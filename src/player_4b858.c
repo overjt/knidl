@@ -51,7 +51,7 @@ void PlayerActionBackdropHold(void)
         u = gCurTask;
         u->player->unk14 = 120;
         u->playerActionDone28 = 0;
-        u->u80.attackAbility = 22;
+        u->u80.attackAbility = ABILITY_BACKDROP;
     }
 loop:
     switch (gCurTask->variant)

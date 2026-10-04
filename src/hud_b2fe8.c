@@ -1561,7 +1561,7 @@ void StarRodPieceCollect(void)
                 sub_0803e68c(i);
                 w = (s8)*(u8 *)(b5 + 116 * i + 13);
                 if (w == 24 || w == 11)
-                    SetPlayerAbilityNoHud(0, -1, i);
+                    SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, i);
             }
             i++;
         } while (i < gPlayerCount);

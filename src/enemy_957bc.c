@@ -913,7 +913,7 @@ void FireLionCheckCatch(void)
     if (u->hitKind == 8) {
         p = gPlayerStates;
         i = u->hitterSlot;
-        if (p[i].ability != 17) {
+        if (p[i].ability != ABILITY_STONE) {
             u->fireLionHeldPlayerSlot = i;
             TaskFaceToward(i);
             HoldPlayer(gCurTask->fireLionHeldPlayerSlot, gCurTaskIdx, 5);

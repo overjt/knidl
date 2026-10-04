@@ -92,7 +92,7 @@ void ResetPlayerRecords(void)
     for (i = 0; i <= 3; i++) {
         gPlayerLives[i] = 3;
         gPlayerHealth[i] = 0;
-        gSavedPlayerAbilities[i] = gPlayerAbilities[i] = 0;
+        gSavedPlayerAbilities[i] = gPlayerAbilities[i] = ABILITY_NORMAL;
         /* Volatile all-ones stores reuse their dead pre-read (lesson 3.68);
          * the two cells differ in signedness, so the chain stores the
          * constant twice instead of re-reading the inner cell (3.361). */

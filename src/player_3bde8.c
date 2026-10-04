@@ -72,18 +72,18 @@ void PlayerActionShareItem(void)
             t->playerBaseFrame = gUnk_0873DA62[t->player->ability][1];
             switch (t->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
                 if (gCurTask->player->mouthState == 1)
                     gCurTask->playerBaseFrame = 324;
             default:
                 TaskSetFrame(gCurTask->playerBaseFrame);
-            case 24:
+            case ABILITY_UFO:
                 TaskSleepForever();
-            case 1:
-            case 2:
-            case 5:
-            case 15:
-            case 19:
+            case ABILITY_FIRE:
+            case ABILITY_SPARK:
+            case ABILITY_BURNING:
+            case ABILITY_HI_JUMP:
+            case ABILITY_TORNADO:
                 while (1)
                 {
                     TaskSetFrame(gCurTask->playerBaseFrame);
@@ -107,16 +107,16 @@ void PlayerActionShareItem(void)
                 else
                     TaskSetFrame(gUnk_0873DACA[0][1]);
                 break;
-            case 4:
+            case ABILITY_SWORD:
                 TaskSetFrame(gUnk_0873DACA[1][1]);
                 break;
-            case 9:
+            case ABILITY_HAMMER:
                 TaskSetFrame(gUnk_0873DACA[2][1]);
                 break;
-            case 10:
+            case ABILITY_PARASOL:
                 TaskSetFrame(gUnk_0873DACA[3][1]);
                 break;
-            case 24:
+            case ABILITY_UFO:
                 break;
             }
             TaskSleepForever();
@@ -153,7 +153,7 @@ void PlayerActionShareItem(void)
         switch (t->player->ability)
         {
         default:
-        case 0:
+        case ABILITY_NORMAL:
             if (gCurTask->player->mouthState == 1)
             {
                 TaskSetFrame(325);
@@ -226,12 +226,12 @@ void PlayerActionShareItem(void)
                 TaskYieldTrampoline(2);
             }
             break;
-        case 1:
-        case 2:
-        case 5:
-        case 19:
-        case 22:
-        case 23:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
@@ -328,16 +328,16 @@ void PlayerActionShareItem(void)
         default:
             gCurTask->playerBaseFrame = gUnk_0873DACA[0][0];
             break;
-        case 4:
+        case ABILITY_SWORD:
             t->playerBaseFrame = gUnk_0873DACA[1][0];
             break;
-        case 9:
+        case ABILITY_HAMMER:
             t->playerBaseFrame = gUnk_0873DACA[2][0];
             break;
-        case 10:
+        case ABILITY_PARASOL:
             t->playerBaseFrame = gUnk_0873DACA[3][0];
             break;
-        case 24:
+        case ABILITY_UFO:
             t->playerBaseFrame = gUnk_0873DACA[4][0];
             break;
         }
@@ -414,7 +414,7 @@ void PlayerActionShareItemUpdate(void)
 {
     struct PlayerState *p = gCurTask->player;
 
-    if (p->ability != 24)
+    if (p->ability != ABILITY_UFO)
         PlayerRequestStandOrFall();
     else
         p->requestedAction = 55;

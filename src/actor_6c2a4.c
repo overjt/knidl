@@ -68,7 +68,7 @@ void ActorAttachedBackdropBounceOff(void)
         w = -w;
     t->velY = -w;
     t->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskYieldTrampoline(12);
     gCurTask->actorBounceEnded = 1;
     TaskSleepForever();
@@ -178,7 +178,7 @@ void ActorAttachedThrowFlight(void)
     v = gCurTask;
     v->velY = gUnk_0873EAC0[i].unk04;
     v->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     w = gCurTask;
     w->unk46 = 0;
     w->unk34 = 0;
@@ -401,7 +401,7 @@ void ActorAttachedThrowBounceOff(void)
         break;
     }
     gCurTask->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskYieldTrampoline(12);
     gCurTask->actorBounceEnded = 1;
     TaskSleepForever();

@@ -175,7 +175,7 @@ void ActorInitFromDefSlot(u32 i)
         a->terrainHandlers = 0;
         a->prevTerrainHandlers = 0;
         a->hitReactions = 0;
-        a->ability = 0;
+        a->ability = ABILITY_NORMAL;
         a->score = 0;
         t->health = 0;
         a->unk60 = 0;

@@ -165,7 +165,7 @@ void PlayerEffectMikeAttack(void)
         t->moveCallback = 0;
         t->drawCallback = 0;
         t->updateCallback = (u32)PlayerEffectMikeAttackUpdate;
-        t->u80.attackAbility = 7;
+        t->u80.attackAbility = ABILITY_MIKE;
         while ((s8)gCurTask->player->unk16 == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;

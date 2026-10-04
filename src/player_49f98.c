@@ -42,7 +42,7 @@ void PlayerActionHiJump(void)
                 t->variant = 4;
             else
                 t->variant = 0;
-            gCurTask->u80.attackAbility = 15;
+            gCurTask->u80.attackAbility = ABILITY_HI_JUMP;
         }
     }
     switch (gCurTask->variant) {

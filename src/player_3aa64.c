@@ -91,13 +91,13 @@ void PlayerActionSwim(void)
     default:
         anim = gUnk_0873D9DA[0];
         break;
-    case 4:
+    case ABILITY_SWORD:
         anim = gUnk_0873D9DA[1];
         break;
-    case 9:
+    case ABILITY_HAMMER:
         anim = gUnk_0873D9DA[2];
         break;
-    case 10:
+    case ABILITY_PARASOL:
         anim = gUnk_0873D9DA[3];
         break;
     }
@@ -454,13 +454,13 @@ void PlayerActionStandInWater(void)
         default:
             gCurTask->playerBaseFrame = 221;
             break;
-        case 4:
+        case ABILITY_SWORD:
             gCurTask->playerBaseFrame = 1184;
             break;
-        case 9:
+        case ABILITY_HAMMER:
             gCurTask->playerBaseFrame = 0x7C1;
             break;
-        case 10:
+        case ABILITY_PARASOL:
             gCurTask->playerBaseFrame = 0x8C1;
             break;
         }
@@ -528,13 +528,13 @@ void PlayerActionWalkInWater(void)
     default:
         gCurTask->playerBaseFrame = 207;
         break;
-    case 4:
+    case ABILITY_SWORD:
         gCurTask->playerBaseFrame = 0x492;
         break;
-    case 9:
+    case ABILITY_HAMMER:
         gCurTask->playerBaseFrame = 0x7B3;
         break;
-    case 10:
+    case ABILITY_PARASOL:
         gCurTask->playerBaseFrame = 0x8B3;
         break;
     }

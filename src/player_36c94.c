@@ -124,7 +124,7 @@ void PlayerActionLadder(void)
             h3->variant = 2;
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             h4 = gCurTask;
             if (h4->variant == 1)
@@ -132,10 +132,10 @@ void PlayerActionLadder(void)
             else
                 h4->playerLadderStep = 10;
             break;
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             h4 = gCurTask;
             if (h4->variant == 1)
                 h4->playerLadderStep = 0;
@@ -155,7 +155,7 @@ void PlayerActionLadder(void)
         d->playerLadderDir = k;
         switch (d->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             for (;;)
             {
@@ -180,10 +180,10 @@ void PlayerActionLadder(void)
                 if (b1->playerLadderStep > 9)
                     b1->playerLadderStep = 0;
             }
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             for (;;)
             {
                 if (gCurTask->playerLadderStep == 0 || gCurTask->playerLadderStep == 9)
@@ -215,7 +215,7 @@ void PlayerActionLadder(void)
         PlaySfxIfLocalPlayer(124, c2->player->playerIndex);
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             for (;;)
             {
@@ -238,10 +238,10 @@ void PlayerActionLadder(void)
                 if (b2->playerLadderStep > 13)
                     b2->playerLadderStep = 10;
             }
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             for (;;)
             {
                 a4 = gCurTask;
@@ -269,13 +269,13 @@ void PlayerActionLadder(void)
         PlayerStopAxes(2);
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             TaskSleepForever();
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             e = gCurTask;
             e->playerLadderFrameOffset = gUnk_0873D908[e->playerLadderStep * 3];
             for (;;)
@@ -364,7 +364,7 @@ void PlayerActionLadderUpdate(void)
             break;
         switch (t->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             th = gCurTask;
             n = th->playerLadderDir;
@@ -398,10 +398,10 @@ void PlayerActionLadderUpdate(void)
                 gCurTask->playerLadderStep = 0;
             }
             goto callit;
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             tj = gCurTask;
             m = tj->playerLadderDir;
             if (m == 1)
@@ -501,8 +501,8 @@ void PlayerActionInhale(void)
         {
             struct PlayerState *p = gCurTask->player;
 
-            p->ability = 0;
-            p->pendingAbility = 0;
+            p->ability = ABILITY_NORMAL;
+            p->pendingAbility = ABILITY_NORMAL;
         }
         {
             struct PlayerState *p = gCurTask->player;
@@ -738,7 +738,7 @@ void PlayerActionSpit(void)
     TaskYieldTrampoline(1);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->player->pendingAbility = 0;
+    gCurTask->player->pendingAbility = ABILITY_NORMAL;
     if ((s8)gCurTask->player->attachedCount > 1)
         CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
     else

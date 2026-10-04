@@ -94,17 +94,17 @@ void Task_Player(void)
     gCurTask->player->prevPixelX = gCurTask->posX >> 16;
     gCurTask->player->prevPixelY = gCurTask->posY >> 16;
     gCurTask->health = gPlayerHealth[gCurTask->player->playerIndex];
-    if (gCurTask->player->ability != 0)
+    if (gCurTask->player->ability != ABILITY_NORMAL)
     {
         LoadAbilityTiles();
         switch (gCurTask->player->ability)
         {
-        case 1:
-        case 2:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
             PlayerLoadSparkTiles();
             break;
-        case 10:
+        case ABILITY_PARASOL:
             {
                 struct M11R20 *d = gPlayerBodyBoxes;
 
@@ -112,20 +112,20 @@ void Task_Player(void)
             }
             gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CF94;
             break;
-        case 7:
-        case 20:
-        case 21:
+        case ABILITY_MIKE:
+        case ABILITY_CRASH:
+        case ABILITY_LIGHT:
             gCurTask->player->unk22 = 2;
             break;
-        case 24:
+        case ABILITY_UFO:
             if (gGameState != 5)
                 break;
-        case 11:
-            SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+        case ABILITY_SLEEP:
+            SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             break;
-        case 25:
+        case ABILITY_STAR_ROD:
             if (gUnk_02000020 != 2 && gUnk_02000020 != 3)
-                SetPlayerAbilityNoHud(0, -1, gCurTask->player->playerIndex);
+                SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             break;
         }
     }
@@ -144,13 +144,13 @@ void Task_Player(void)
         TaskSleepForever();
     case 2:
         gCurTask->player->unk37 = 2;
-        SetPlayerAbility(25, -1, gCurTask->player->playerIndex);
+        SetPlayerAbility(ABILITY_STAR_ROD, -1, gCurTask->player->playerIndex);
         gCurTask->player->mouthState = 3;
         PlayerActionStarRodFlight();
         TaskSleepForever();
     case 3:
         gCurTask->player->unk37 = 3;
-        SetPlayerAbilityNoHud(25, -1, gCurTask->player->playerIndex);
+        SetPlayerAbilityNoHud(ABILITY_STAR_ROD, -1, gCurTask->player->playerIndex);
     }
     switch (gRoomEntryMode)
     {
@@ -193,7 +193,7 @@ void Task_Player(void)
             else
                 gCurTask->player->action = 23;
         }
-        if (gCurTask->player->ability == 24)
+        if (gCurTask->player->ability == ABILITY_UFO)
             gCurTask->player->action = 55;
         gCurTask->player->mode = 21;
         sub_08040808(gCurTask->player->playerIndex);
@@ -245,9 +245,9 @@ void PlayerStartRequestedAction(void)
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->player->prevAction == 28 && gCurTask->player->ability != 0)
+        if (gCurTask->player->prevAction == 28 && gCurTask->player->ability != ABILITY_NORMAL)
             LoadAbilityTiles();
-        if (gCurTask->player->ability != 0)
+        if (gCurTask->player->ability != ABILITY_NORMAL)
             gCurTask->player->unk36 = 1;
     }
     if (gMetaKnightmareMode == 0)
@@ -273,7 +273,7 @@ void PlayerUpdate(void)
 
     if ((gCurTask->player->unk40 & 1) && (gCurTask->skipMask & 1))
         goto post;
-    if (gCurTask->player->ability == 10 && gCurTask->player->mode == 5)
+    if (gCurTask->player->ability == ABILITY_PARASOL && gCurTask->player->mode == 5)
     {
         gCurTask->playerParasolSwayVelX += gCurTask->playerParasolSwayAccelX;
         gCurTask->posX += gCurTask->playerParasolSwayVelX;
@@ -383,7 +383,7 @@ post:
 check:
     if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->player->ability == 10)
+        if (gCurTask->player->ability == ABILITY_PARASOL)
         {
             x = gCurTask->frame - 0x808;
             if (x >= 0 && LoadPlayerBodyBoxRect(gCurTask->player->playerIndex, (u8 *)gUnk_0873C36C + x * 8) != 0)
@@ -474,17 +474,17 @@ void sub_08033414(void)
     default:
         if (gMetaKnightmareMode == 0 && (gCurTask->player->unk40 & 32))
         {
-            if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != 0)
+            if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != ABILITY_NORMAL)
             {
                 gSavedPlayerAbilities[gCurTask->player->playerIndex] = gPlayerAbilities[gCurTask->player->playerIndex];
                 gSavedPlayerAbilityUses[gCurTask->player->playerIndex] = gPlayerAbilityUses[gCurTask->player->playerIndex];
             }
             else
             {
-                gSavedPlayerAbilities[gCurTask->player->playerIndex] = 4;
+                gSavedPlayerAbilities[gCurTask->player->playerIndex] = ABILITY_SWORD;
                 gSavedPlayerAbilityUses[gCurTask->player->playerIndex] = 0xFFFF;
             }
-            gCurTask->player->pendingAbility = 4;
+            gCurTask->player->pendingAbility = ABILITY_SWORD;
             gCurTask->player->pendingAbilityUses = 255;
             gCurTask->player->unk37 = 1;
             gCurTask->player->requestedAction = 29;
@@ -533,7 +533,7 @@ void sub_08033414(void)
         gCurTask->u76.unk76 = 0;
         gCurTask->player->unk40 = 0;
         gCurTask->player->unk50 = 0;
-        gCurTask->u80.attackAbility = 0;
+        gCurTask->u80.attackAbility = ABILITY_NORMAL;
     }
     else if (gMetaKnightmareMode == 0)
     {
@@ -553,7 +553,7 @@ void sub_08033414(void)
     {
         if (gCurTask->player->unk40 & 4)
         {
-            if (gCurTask->player->ability == 0)
+            if (gCurTask->player->ability == ABILITY_NORMAL)
                 sub_0803c9b4(0);
             else
                 sub_0803c9b4(1);

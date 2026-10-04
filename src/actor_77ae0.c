@@ -134,7 +134,7 @@ s32 BigSwitchHitterCanPress(void)
 {
     struct PlayerState *p = &gPlayerStates[gCurTask->hitterSlot];
 
-    if (p->ability == 7 && p->mode == 13)
+    if (p->ability == ABILITY_MIKE && p->mode == 13)
         return 0;
     return 1;
 }

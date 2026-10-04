@@ -1320,7 +1320,7 @@ void HotHeadWalkShootUpdate(void)
 {
     struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
-    if (*(s8 *)&p->pendingAbility == 1 || p->ability == 1)
+    if (*(s8 *)&p->pendingAbility == ABILITY_FIRE || p->ability == ABILITY_FIRE)
     {
         TaskSetFrame(*(s16 *)&gCurTask->hotHeadLoopFrame);
         ActorSetState(0);
@@ -1499,7 +1499,7 @@ void HotHeadStandShootUpdate(void)
 {
     struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
-    if (*(s8 *)&p->pendingAbility == 1 || p->ability == 1)
+    if (*(s8 *)&p->pendingAbility == ABILITY_FIRE || p->ability == ABILITY_FIRE)
     {
         TaskSetFrame(*(s16 *)&gCurTask->hotHeadLoopFrame);
         ActorSetState(0);

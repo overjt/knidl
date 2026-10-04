@@ -80,7 +80,7 @@ void HubMain(void)
         case 6:
             if (gPlayerLives[gLocalPlayer] != 0) {
                 gPlayerHealth[gLocalPlayer] = gMaxHealth;
-                gPlayerAbilities[gLocalPlayer] = 0;
+                gPlayerAbilities[gLocalPlayer] = ABILITY_NORMAL;
                 gPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
             } else {
                 gGameState = 1;

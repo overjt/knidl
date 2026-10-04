@@ -806,72 +806,72 @@ s32 HeldPlayerAddAbilityFrameOffset(void)
 
     switch (gCurTask->player->ability)
     {
-    case 0:
-    case 7:
-    case 11:
-    case 20:
-    case 21:
-    case 24:
+    case ABILITY_NORMAL:
+    case ABILITY_MIKE:
+    case ABILITY_SLEEP:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
+    case ABILITY_UFO:
         d = 0;
         break;
-    case 1:
+    case ABILITY_FIRE:
         d = 0x143;
         break;
-    case 2:
+    case ABILITY_SPARK:
         d = 0x234;
         break;
-    case 3:
+    case ABILITY_CUTTER:
         d = 0x2B3;
         break;
-    case 4:
+    case ABILITY_SWORD:
         d = 0x384;
         break;
-    case 5:
+    case ABILITY_BURNING:
         d = 0x495;
         break;
-    case 6:
+    case ABILITY_LASER:
         d = 0x522;
         break;
-    case 8:
+    case ABILITY_WHEEL:
         d = 0x5CB;
         break;
-    case 9:
+    case ABILITY_HAMMER:
         d = 0x69C;
         break;
-    case 10:
+    case ABILITY_PARASOL:
         d = 0x79C;
         break;
-    case 12:
+    case ABILITY_NEEDLE:
         d = 0x838;
         break;
-    case 13:
+    case ABILITY_ICE:
         d = 0x8C4;
         break;
-    case 14:
+    case ABILITY_FREEZE:
         d = 0x950;
         break;
-    case 15:
+    case ABILITY_HI_JUMP:
         d = 0x9F5;
         break;
-    case 16:
+    case ABILITY_BEAM:
         d = 0xA87;
         break;
-    case 17:
+    case ABILITY_STONE:
         d = 0xB0A;
         break;
-    case 18:
+    case ABILITY_BALL:
         d = 0xB94;
         break;
-    case 19:
+    case ABILITY_TORNADO:
         d = 0xC8F;
         break;
-    case 22:
+    case ABILITY_BACKDROP:
         d = 0xD60;
         break;
-    case 23:
+    case ABILITY_THROW:
         d = 0xE38;
         break;
-    case 25:
+    case ABILITY_STAR_ROD:
         d = 0xF3A;
         break;
     default:
@@ -1100,10 +1100,10 @@ s32 HeldPlayerDamage(s32 a, s32 b)
     s32 r;
 
     r = AddPlayerHealth(a, gCurTaskIdx);
-    if (gCurTask->player->ability != 0)
+    if (gCurTask->player->ability != ABILITY_NORMAL)
     {
         CreateAbilityStar(0);
-        SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+        SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     }
     t = gCurTask;
     if (t->health == 0)
@@ -1197,12 +1197,12 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     }
     switch (p->ability)
     {
-    case 7:
-    case 20:
-    case 21:
+    case ABILITY_MIKE:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
         p->unk22 = 2;
         break;
-    case 24:
+    case ABILITY_UFO:
         p->requestedAction = 55;
         break;
     }

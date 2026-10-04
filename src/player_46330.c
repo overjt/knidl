@@ -44,7 +44,7 @@ void PlayerActionWheel(void)
                 t->unk2C = 0;
             gCurTask->unk30 = 0;
             CreatePlayerEffect(gCurTask->player->playerIndex, 34, 0);
-            gCurTask->u80.attackAbility = 8;
+            gCurTask->u80.attackAbility = ABILITY_WHEEL;
             gCurTask->variant = 0;
         }
     }

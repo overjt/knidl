@@ -49,7 +49,7 @@ void PlayerActionParasol(void)
         else
             t->unk2C = 0;
     }
-    gCurTask->u80.attackAbility = 10;
+    gCurTask->u80.attackAbility = ABILITY_PARASOL;
     PlayerSetMotionXPreset(0, 72);
     PlaySfxIfLocalPlayer(151, gCurTask->player->playerIndex);
     if (gCurTask->unk2C == 0) {
@@ -227,7 +227,7 @@ void PlayerActionSleep(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->player->unk42 &= 0xFFFD;
-    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+    SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     gCurTask->frame--;
     TaskYieldTrampoline(32);
     TaskSetFrame(0x8F6);
@@ -259,9 +259,9 @@ void PlayerActionSleepUpdate(void)
 {
     if (sub_0803e55c() != 0) {
         struct Task *t = gCurTask;
-        if (t->player->ability == 11) {
+        if (t->player->ability == ABILITY_SLEEP) {
             t->player->unk42 &= 0xFFFD;
-            SetPlayerAbility(0, -1, t->player->playerIndex);
+            SetPlayerAbility(ABILITY_NORMAL, -1, t->player->playerIndex);
         }
     } else if (gCurTask->playerActionDone28 != 0) {
         PlayerRequestLocomotion();
@@ -277,7 +277,7 @@ void PlayerActionNeedle(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             t->variant = 0;
-            gCurTask->u80.attackAbility = 12;
+            gCurTask->u80.attackAbility = ABILITY_NEEDLE;
         }
     }
     switch (gCurTask->variant) {

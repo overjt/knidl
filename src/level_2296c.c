@@ -325,15 +325,15 @@ void LoadRoom(void)
             if (gPlayerHealth[i] == 0)
             {
                 gPlayerHealth[i] = gMaxHealth;
-                gSavedPlayerAbilities[i] = 0;
+                gSavedPlayerAbilities[i] = ABILITY_NORMAL;
                 gSavedPlayerAbilityUses[i] = 0xFFFF;
                 AddPlayerLives(-1, i);
             }
-            if ((s16)gSavedPlayerAbilities[i] != 0)
+            if ((s16)gSavedPlayerAbilities[i] != ABILITY_NORMAL)
             {
                 gPlayerAbilities[i] = gSavedPlayerAbilities[i];
                 gPlayerAbilityUses[i] = gSavedPlayerAbilityUses[i];
-                gSavedPlayerAbilities[i] = 0;
+                gSavedPlayerAbilities[i] = ABILITY_NORMAL;
                 gSavedPlayerAbilityUses[i] = 0xFFFF;
             }
             gActivePlayerMask |= 1 << i;

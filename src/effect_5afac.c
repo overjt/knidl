@@ -221,10 +221,10 @@ void GoalGameInit(void)
     LoadGoalGameRoom();
     for (i = 0; i < gPlayerCount; i++)
     {
-        if (gPlayerStates[i].ability == 24)
-            SetPlayerAbility(0, -1, i);
+        if (gPlayerStates[i].ability == ABILITY_UFO)
+            SetPlayerAbility(ABILITY_NORMAL, -1, i);
         else
-            gPlayerStates[i].ability = 0;
+            gPlayerStates[i].ability = ABILITY_NORMAL;
     }
     gPauseDisabled = 1;
     gRoomExitKind = 0;
@@ -1760,18 +1760,18 @@ void sub_0805dc18(void)
     u->spriteFlags &= 0x7FFF;
     switch ((s8)u->player->ability)
     {
-    case 0:
-    case 7:
-    case 20:
-    case 21:
-    case 24:
+    case ABILITY_NORMAL:
+    case ABILITY_MIKE:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
+    case ABILITY_UFO:
         v = gCurTask;
         v->spriteFlags |= 128 << 8;
         break;
-    case 1:
-    case 2:
-    case 5:
-    case 19:
+    case ABILITY_FIRE:
+    case ABILITY_SPARK:
+    case ABILITY_BURNING:
+    case ABILITY_TORNADO:
         while (1)
         {
             w = gCurTask;
@@ -1817,17 +1817,17 @@ void sub_0805ddb0(s32 a0)
     gTasks[t->unk46].player = t->player;
     switch ((s8)gPlayerStates[a0].ability)
     {
-    case 0:
-    case 7:
-    case 11:
-    case 20:
-    case 21:
+    case ABILITY_NORMAL:
+    case ABILITY_MIKE:
+    case ABILITY_SLEEP:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
         break;
     default:
         gTasks[CreatePlayerEffect((s8)a0, 17, 0)].parent = a0;
         break;
     }
-    gPlayerStates[a0].ability = 0;
+    gPlayerStates[a0].ability = ABILITY_NORMAL;
     gPlayerStates[a0].mode = 22;
 }
 
@@ -1843,17 +1843,17 @@ void StartAllPlayersDance(void)
             {
                 switch ((s8)gPlayerStates[i].ability)
                 {
-                case 0:
-                case 7:
-                case 11:
-                case 20:
-                case 21:
+                case ABILITY_NORMAL:
+                case ABILITY_MIKE:
+                case ABILITY_SLEEP:
+                case ABILITY_CRASH:
+                case ABILITY_LIGHT:
                     break;
                 default:
                     gTasks[CreatePlayerEffect((s8)i, 17, 0)].parent = i;
                     break;
                 }
-                gPlayerStates[i].ability = 0;
+                gPlayerStates[i].ability = ABILITY_NORMAL;
                 gPlayerStates[i].mode = 22;
             }
             TaskSetEntry(PlayerDance, i);

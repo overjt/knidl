@@ -617,7 +617,7 @@ void MetaKnightActionSlide(void)
         gCurTask->variant = 1;
         /* fallthrough */
     case 1:
-        gCurTask->u80.attackAbility = 4;
+        gCurTask->u80.attackAbility = ABILITY_SWORD;
         gCurTask->player->unk14 = 10;
         PlayerSetMotionXPreset(11, 0);
         gCurTask->player->hitBoxSet = gUnk_0873D03C;
@@ -632,7 +632,7 @@ void MetaKnightActionSlide(void)
         /* fallthrough */
     case 2:
         gCurTask->player->hitBoxSet = 0;
-        gCurTask->u80.attackAbility = 0;
+        gCurTask->u80.attackAbility = ABILITY_NORMAL;
         break;
     }
     gCurTask->playerActionDone28++;

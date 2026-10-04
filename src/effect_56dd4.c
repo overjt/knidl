@@ -128,7 +128,7 @@ void PlayerEffectFireBreathFlamesUpdate(void)
         if (!(t->player->unk40 & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
             TaskFree(gCurTaskIdx);
     }
-    if (gCurTask->player->ability != 1)
+    if (gCurTask->player->ability != ABILITY_FIRE)
         TaskFree(gCurTaskIdx);
 }
 

@@ -56,10 +56,10 @@ loop:
         }
         else
         {
-            if (gCurTask->player->ability == 11)
+            if (gCurTask->player->ability == ABILITY_SLEEP)
             {
                 gCurTask->player->unk42 &= 0xFFFD;
-                SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+                SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             }
             u = gCurTask;
             if (u->hitEffect & 128)
@@ -68,11 +68,11 @@ loop:
                 u->variant = u->hitEffect & 15;
             if (!(gCurTask->player->unk42 & 2) && gCurTask->player->unk37 == 0)
             {
-                if (gCurTask->player->ability != 0)
+                if (gCurTask->player->ability != ABILITY_NORMAL)
                 {
                     gCurTask->player->unk42 &= 0xFFFB;
                     CreateAbilityStar(gCurTask->player->ownStarSwallowCount);
-                    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+                    SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
                 }
             }
             else
@@ -129,17 +129,17 @@ loop:
                 PlaySfxIfLocalPlayer(112, gCurTask->player->playerIndex);
             switch (gCurTask->player->ability)
             {
-            case 0:
+            case ABILITY_NORMAL:
             default:
                 if (!(gCurTask->waterFlags & 1))
                     anim = 243;
                 else
                     anim = 0x11D;
                 break;
-            case 4:
+            case ABILITY_SWORD:
                 anim = 0x4A1;
                 break;
-            case 25:
+            case ABILITY_STAR_ROD:
                 anim = 0x1036;
                 break;
             }

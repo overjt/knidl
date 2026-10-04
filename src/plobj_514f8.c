@@ -183,7 +183,7 @@ void PlayerObjectFireBreath(void)
     t->moveCallback = (u32)TaskMove;
     t->updateCallback = (u32)PlayerObjectFireBreathUpdate;
     t->unk28 = 0;
-    t->u80.attackAbility = 1;
+    t->u80.attackAbility = ABILITY_FIRE;
     t = gCurTask;
     switch (t->playerObjectSpawnWord & 15)
     {
@@ -291,7 +291,7 @@ void PlayerObjectFireBreathUpdate(void)
     }
     {
         struct Task *t = gCurTask;
-        if (t->player->ability != 1)
+        if (t->player->ability != ABILITY_FIRE)
         {
             TaskFree(gCurTaskIdx);
             return;
@@ -335,7 +335,7 @@ void PlayerObjectCutterBlade(void)
                 u->tileWord = ((u->u8C.parentTask)->tileWord + 0x1800) | 8;
             }
             sub_0802205c(gUnk_0873CB54);
-            gCurTask->u80.attackAbility = 3;
+            gCurTask->u80.attackAbility = ABILITY_CUTTER;
             {
                 struct Task *u = gCurTask;
                 u->unk28 = 0;
@@ -393,7 +393,7 @@ void PlayerObjectCutterBladeUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->player->ability != 3)
+    if (t->player->ability != ABILITY_CUTTER)
     {
         TaskSetEntry(sub_08050814, gCurTaskIdx);
         return;
@@ -505,7 +505,7 @@ void PlayerObjectLaserBeam(void)
         }
         TaskInitWaterFlags();
         sub_0802233c(gUnk_0873CB5C);
-        gCurTask->u80.attackAbility = 6;
+        gCurTask->u80.attackAbility = ABILITY_LASER;
     }
     else
     {
@@ -558,7 +558,7 @@ void PlayerObjectLaserBeamUpdate(void)
 {
     s32 hit;
 
-    if (gCurTask->player->ability == 0)
+    if (gCurTask->player->ability == ABILITY_NORMAL)
         goto rebind;
     hit = 0;
     gTerrainResult.unk2 = 0;
@@ -590,7 +590,7 @@ void PlayerObjectLaserBeamUpdate(void)
         struct Task *t = gCurTask;
         if (t->unk2C-- == 0)
             t->hitKind = 1;
-        else if (t->player->ability == 6)
+        else if (t->player->ability == ABILITY_LASER)
             TaskSetEntry(PlayerObjectLaserBeam, gCurTaskIdx);
         else
             TaskSetEntry(sub_08052f6c, gCurTaskIdx);
@@ -605,7 +605,7 @@ void PlayerObjectLaserBeamUpdate(void)
     {
         {
             struct Task *t = gCurTask;
-            if (t->player->ability == 6)
+            if (t->player->ability == ABILITY_LASER)
             {
                 if (!(t->player->unk42 & 128))
                     PlaySfxIfLocalPlayer(173, t->parent);

@@ -80,10 +80,10 @@ void PlayerActionStand(void)
         gCurTask->playerBaseFrame = gUnk_0873D0F8[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
-    case 1:
-    case 2:
-    case 5:
-    case 19:
+    case ABILITY_FIRE:
+    case ABILITY_SPARK:
+    case ABILITY_BURNING:
+    case ABILITY_TORNADO:
         while (1)
         {
             TaskSetFrame(gCurTask->playerBaseFrame);
@@ -95,7 +95,7 @@ void PlayerActionStand(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
-    case 15:
+    case ABILITY_HI_JUMP:
         while (1)
         {
             TaskSetFrame(gCurTask->playerBaseFrame);
@@ -107,7 +107,7 @@ void PlayerActionStand(void)
             gCurTask->frame++;
             TaskYieldTrampoline(6);
         }
-    case 0:
+    case ABILITY_NORMAL:
     default:
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskSleepForever();
@@ -263,7 +263,7 @@ void PlayerActionWalk(void)
         gCurTask->playerBaseFrame = gUnk_0873D2E8[gCurTask->player->ability];
         switch (gCurTask->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             while (1)
             {
@@ -280,10 +280,10 @@ void PlayerActionWalk(void)
                 t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
                 t = gCurTask; t->frame++; TaskYieldTrampoline(t->playerWalkStepDelay + 2);
             }
-        case 1:
-        case 2:
-        case 5:
-        case 19:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
             while (1)
             {
                 TaskSetFrame(gCurTask->playerBaseFrame);
@@ -307,12 +307,12 @@ void PlayerActionWalk(void)
                     gCurTask->playerLoopCount++;
                 } while ((s16)gCurTask->playerLoopCount <= 6);
             }
-        case 4:
-        case 15:
-        case 16:
-        case 17:
-        case 22:
-        case 23:
+        case ABILITY_SWORD:
+        case ABILITY_HI_JUMP:
+        case ABILITY_BEAM:
+        case ABILITY_STONE:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
             while (1)
             {
                 TaskSetFrame(gCurTask->playerBaseFrame);
@@ -339,10 +339,10 @@ void PlayerActionWalk(void)
         gCurTask->playerBaseFrame = gUnk_0873D350[gCurTask->player->ability];
     switch (gCurTask->player->ability)
     {
-    case 1:
-    case 2:
-    case 5:
-    case 19:
+    case ABILITY_FIRE:
+    case ABILITY_SPARK:
+    case ABILITY_BURNING:
+    case ABILITY_TORNADO:
         while (1)
         {
             TaskSetFrame(gCurTask->playerBaseFrame);
@@ -350,7 +350,7 @@ void PlayerActionWalk(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         }
-    case 0:
+    case ABILITY_NORMAL:
     default:
         TaskSetFrame(gCurTask->playerBaseFrame);
         TaskSleepForever();

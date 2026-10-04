@@ -422,7 +422,7 @@ void sub_08070614(u32 a)
 
     PlayerResumeControl(a, 0, 1, 0);
     p = gCurTask->player;
-    if (p->ability == 25)
+    if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
     sub_08040808(a);
 }

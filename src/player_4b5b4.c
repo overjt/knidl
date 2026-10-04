@@ -27,7 +27,7 @@ void PlayerActionLight(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 49;
     gPauseDisabled = 1;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     PlayerStopAxes(3);
     {
         struct Task *t = gCurTask;
@@ -87,7 +87,7 @@ void PlayerActionLight(void)
     {
         struct Task *t = gCurTask;
         t->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
-        SetPlayerAbility(0, -1, t->player->playerIndex);
+        SetPlayerAbility(ABILITY_NORMAL, -1, t->player->playerIndex);
     }
     FreezeOtherTasks(0);
     if (gCurTask->onGround & 1) {

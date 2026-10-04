@@ -115,6 +115,15 @@ FAMILIES = {
         "indexed": ["gTaskSlotTypes"],
         "skip_values": [-1],
     },
+    "abilities": {
+        "header": "abilities",
+        "calls": {
+            "SetPlayerAbility": 0, "SetPlayerAbilityNoHud": 0, "HudShowAbility": 0,
+            "HudShowAbilityAnimated": 0, "HudLoadAbilityPicture": 0,
+        },
+        "members": ["ability", "attackAbility", "pendingAbility"],
+        "indexed": ["gPlayerAbilities", "gSavedPlayerAbilities"],
+    },
 }
 
 
@@ -500,14 +509,82 @@ def literal_at(toks, i0, i1):
     return None
 
 
+def _close(toks, j):
+    """Index of the bracket that closes the one at toks[j]."""
+    depth = 0
+    for k in range(j, len(toks)):
+        if toks[k][1] in ("(", "[", "{"):
+            depth += 1
+        elif toks[k][1] in (")", "]", "}"):
+            depth -= 1
+            if depth == 0:
+                return k
+    return len(toks) - 1
+
+
+def _operand_end(toks, i):
+    """Index of the last token of the operand that starts at `i`: a member
+    or variable, with its `[...]` index if any."""
+    if i + 1 < len(toks) and toks[i + 1][1] == "[":
+        return _close(toks, i + 1)
+    return i
+
+
+def _value_after(toks, j):
+    """The literal right of the operator at toks[j] when it is the whole
+    right-hand side: (token index, value)."""
+    n = len(toks)
+    lit = literal_at(toks, j + 1, j + 2) or literal_at(toks, j + 1, j + 3)
+    if lit and lit[0] + 1 < n and toks[lit[0] + 1][1] in (";", ")", "&&", "||", ",", "?", "}"):
+        return lit[0], lit[1]
+    return None
+
+
+def _switch_cases(toks, open_brace):
+    """yield the token index of each `case` label's literal of the switch
+    whose body opens at toks[open_brace] (nested switches excluded)."""
+    end = _close(toks, open_brace)
+    k = open_brace + 1
+    while k < end:
+        t = toks[k][1]
+        if t == "switch" and toks[k + 1][1] == "(":
+            c = _close(toks, k + 1)
+            if c + 1 < end and toks[c + 1][1] == "{":
+                k = _close(toks, c + 1) + 1
+                continue
+        if t == "case":
+            lit = literal_at(toks, k + 1, k + 2) or literal_at(toks, k + 1, k + 3)
+            if lit and toks[lit[0] + 1][1] == ":":
+                yield lit[0], lit[1]
+        k += 1
+
+
 def family_positions(fam, toks):
     """yield (token index of the literal, value) of every literal at the
-    family's positions in the token list."""
+    family's positions in the token list: the argument of a listed call,
+    a literal stored into or compared with a listed member (after `.` or
+    `->`), variable (a plain identifier) or array element, and the `case`
+    labels of a switch on one of them."""
     spec = FAMILIES[fam]
     n = len(toks)
     calls = spec.get("calls", {})
     members = set(spec.get("members", []))
+    variables = set(spec.get("vars", []))
     indexed = set(spec.get("indexed", []))
+
+    def is_operand(i):
+        k, t = toks[i][0], toks[i][1]
+        if k != "id":
+            return False
+        prev = toks[i - 1][1] if i > 0 else ""
+        if t in members and prev in (".", "->"):
+            return True
+        if t in variables and prev not in (".", "->"):
+            return True
+        if t in indexed and prev not in (".", "->") and i + 1 < n and toks[i + 1][1] == "[":
+            return True
+        return False
+
     for i in range(n):
         k, t = toks[i][0], toks[i][1]
         if k == "id" and t in calls and i + 1 < n and toks[i + 1][1] == "(":
@@ -533,25 +610,32 @@ def family_positions(fam, toks):
                 lit = literal_at(toks, *args[want])
                 if lit:
                     yield lit[0], lit[1]
-        elif k == "id" and t in members and i > 0 and toks[i - 1][1] in (".", "->"):
-            if i + 2 < n and toks[i + 1][1] in ("=", "==", "!="):
-                lit = literal_at(toks, i + 2, i + 3) or literal_at(toks, i + 2, i + 4)
-                if lit and (i + 3 >= n or toks[lit[0] + 1][1] in (";", ")", "&&", "||", ",")):
-                    yield lit[0], lit[1]
-        elif k == "id" and t in indexed and i + 1 < n and toks[i + 1][1] == "[":
-            depth, j = 0, i + 1
-            while j < n:
-                if toks[j][1] == "[":
-                    depth += 1
-                elif toks[j][1] == "]":
-                    depth -= 1
-                    if depth == 0:
-                        break
-                j += 1
-            if j + 2 < n and toks[j + 1][1] in ("==", "!="):
-                lit = literal_at(toks, j + 2, j + 3) or literal_at(toks, j + 2, j + 4)
-                if lit and toks[lit[0] + 1][1] in (";", ")", "&&", "||", ","):
-                    yield lit[0], lit[1]
+        elif is_operand(i):
+            j = _operand_end(toks, i) + 1
+            if j < n and toks[j][1] in ("=", "==", "!="):
+                v = _value_after(toks, j)
+                if v:
+                    yield v
+        elif t == "switch" and i + 1 < n and toks[i + 1][1] == "(":
+            c = _close(toks, i + 1)
+            if c + 1 >= n or toks[c + 1][1] != "{":
+                continue
+            # the switch expression's operand: its last member, variable or
+            # array (casts allowed before it)
+            last = c - 1
+            if toks[last][1] == "]":
+                d = 0
+                for q in range(last, i, -1):
+                    if toks[q][1] == "]":
+                        d += 1
+                    elif toks[q][1] == "[":
+                        d -= 1
+                        if d == 0:
+                            last = q - 1
+                            break
+            if last > i + 1 and is_operand(last) and _operand_end(toks, last) == c - 1:
+                for pos in _switch_cases(toks, c + 1):
+                    yield pos
 
 
 def scan(fam):

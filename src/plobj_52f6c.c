@@ -94,7 +94,7 @@ void sub_08052f6c(void)
             {
                 struct Task *u = gCurTask;
                 u->unk2C = 4;
-                u->u80.attackAbility = 16;
+                u->u80.attackAbility = ABILITY_BEAM;
             }
             for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 7; gCurTask->playerObjectLoopCount++)
             {
@@ -153,7 +153,7 @@ void sub_08052f6c(void)
                 }
                 gCurTask->unk2C = 3;
                 sub_0802233c(gUnk_0873CB5C);
-                gCurTask->u80.attackAbility = 6;
+                gCurTask->u80.attackAbility = ABILITY_LASER;
             }
             else
             {
@@ -220,7 +220,7 @@ void sub_08052f6c(void)
             {
                 struct Task *u = gCurTask;
                 u->posY = (u->pixelY + 4) << 16;
-                u->u80.attackAbility = 24;
+                u->u80.attackAbility = ABILITY_UFO;
             }
             gCurTask->unk28 = 0;
             TaskSetMotionXFacing(0x60000, 0x5A5A5A5A);
@@ -241,7 +241,7 @@ void sub_08053380(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->player->ability == 0)
+    if (t->player->ability == ABILITY_NORMAL)
     {
         TaskSetEntry(sub_08050814, gCurTaskIdx);
         return;

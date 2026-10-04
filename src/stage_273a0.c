@@ -202,7 +202,7 @@ s32 ReleaseDeadPlayerView(s32 i)
         if (i == gLocalPlayer)
         {
             if (gPlayerLives[i] != 0)
-                HudShowAbilityAnimated(26, gCurTask->player->playerIndex);
+                HudShowAbilityAnimated(ABILITY_PICTURE_WAIT, gCurTask->player->playerIndex);
             else
                 sub_08009e2c(i);
         }

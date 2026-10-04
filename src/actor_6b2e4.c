@@ -610,7 +610,7 @@ void ActorAttachedEnterMouth(void)
         p->mouthState = 1;
     }
     p->ownStarInMouth = 0;
-    if (*(s8 *)&a->ability == 0)
+    if (*(s8 *)&a->ability == ABILITY_NORMAL)
         return;
     u = gCurTask;
     if (u->actorKind == 6)
@@ -633,17 +633,17 @@ void ActorAttachedEnterMouth(void)
     }
     if (gUnk_0300244C == 0 || gUnk_02007CF4[p->playerIndex] != 1)
         p->unk0A++;
-    if (*(s8 *)&p->pendingAbility != 0)
+    if (*(s8 *)&p->pendingAbility != ABILITY_NORMAL)
         return;
     p->pendingAbility = a->ability;
     switch ((s8)a->ability)
     {
-    case 7:
+    case ABILITY_MIKE:
         q = 3;
         break;
-    case 11:
-    case 20:
-    case 21:
+    case ABILITY_SLEEP:
+    case ABILITY_CRASH:
+    case ABILITY_LIGHT:
         q = 1;
         break;
     default:
@@ -844,7 +844,7 @@ void ActorAttachedBackdropFlight(void)
     TaskSetMotionXFacing(0x38000, 0x5A5A5A5A);
     TaskSetMotionY(0x30000, 0x8000, 0x60000);
     gCurTask->hitKind = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSleepForever();
 }
 

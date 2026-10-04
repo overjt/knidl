@@ -89,7 +89,7 @@ void CreditsMain(void)
     for (;;) {
         gInputRecorderDemo = scenes[gUnk_0201C1B0];
         InputRecorderStart();
-        gSavedPlayerAbilities[gLocalPlayer] = 0;
+        gSavedPlayerAbilities[gLocalPlayer] = ABILITY_NORMAL;
         gSavedPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
         CreditsLoadScene();
         gDispCnt &= 0xE0FF;

@@ -61,7 +61,7 @@ void MetaKnightActionSlash(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 23;
 Lloop:
-    gCurTask->u80.attackAbility = 4;
+    gCurTask->u80.attackAbility = ABILITY_SWORD;
     {
         struct Task *t = gCurTask;
 
@@ -269,7 +269,7 @@ void MetaKnightActionDashSlash(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 24;
-    gCurTask->u80.attackAbility = 4;
+    gCurTask->u80.attackAbility = ABILITY_SWORD;
     {
         struct Task *t = gCurTask;
         t->unk30 = 0;
@@ -439,7 +439,7 @@ void MetaKnightActionUpwardSlash(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = 25;
-    gCurTask->u80.attackAbility = 4;
+    gCurTask->u80.attackAbility = ABILITY_SWORD;
     {
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
@@ -565,7 +565,7 @@ void MetaKnightActionDownThrust(void)
                 *(u32 *)((u8 *)u->player + 108) = 0;
             }
             PlaySfx(0x10B);
-            gCurTask->u80.attackAbility = 4;
+            gCurTask->u80.attackAbility = ABILITY_SWORD;
         }
     }
     switch (gCurTask->variant) {
@@ -707,7 +707,7 @@ void PlayerActionFire(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->u80.attackAbility = 1;
+            u->u80.attackAbility = ABILITY_FIRE;
         }
     }
     switch (gCurTask->variant) {
@@ -798,7 +798,7 @@ void PlayerActionSpark(void)
             t->variant = 0;
             u = gCurTask;
             u->unk28 = 15;
-            u->u80.attackAbility = 2;
+            u->u80.attackAbility = ABILITY_SPARK;
         }
     }
     switch (gCurTask->variant) {

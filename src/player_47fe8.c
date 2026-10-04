@@ -75,7 +75,7 @@ void PlayerActionGetAbility(void)
                 struct PlayerState *q = gCurTask->player;
                 SetPlayerAbilityNoHud((s8)q->pendingAbility, (s8)q->pendingAbilityUses, q->playerIndex);
             }
-            gCurTask->player->pendingAbility = 0;
+            gCurTask->player->pendingAbility = ABILITY_NORMAL;
             gCurTask->player->pendingAbilityUses |= 0xFF;
             {
                 struct PlayerState *q = gCurTask->player;
@@ -103,7 +103,7 @@ void PlayerActionGetAbility(void)
 
                         while (1) {
                             if ((s8)++gCurTask->player->pendingAbility > 24)
-                                gCurTask->player->pendingAbility = 1;
+                                gCurTask->player->pendingAbility = ABILITY_FIRE;
                             PlaySfx(101);
                             {
                                 struct PlayerState *r = gCurTask->player;
@@ -124,12 +124,12 @@ void PlayerActionGetAbility(void)
                     default:
                         gCurTask->player->pendingAbilityUses = 0xFF;
                         break;
-                    case 7:
+                    case ABILITY_MIKE:
                         gCurTask->player->pendingAbilityUses = 3;
                         break;
-                    case 11:
-                    case 20:
-                    case 21:
+                    case ABILITY_SLEEP:
+                    case ABILITY_CRASH:
+                    case ABILITY_LIGHT:
                         gCurTask->player->pendingAbilityUses = 1;
                         break;
                     }
@@ -166,7 +166,7 @@ void PlayerActionGetAbility(void)
             }
         }
     }
-    gCurTask->player->pendingAbility = 0;
+    gCurTask->player->pendingAbility = ABILITY_NORMAL;
     PlaySfx(108);
     LoadAbilityTiles();
     {
@@ -703,10 +703,10 @@ void PlayerActionGetAbilityUpdate(void)
     if (t->playerActionDone28 != 0) {
         struct PlayerState *p = t->player;
         switch (p->ability) {
-        case 11:
+        case ABILITY_SLEEP:
             p->requestedAction = 42;
             break;
-        case 24:
+        case ABILITY_UFO:
             p->requestedAction = 55;
             break;
         default:
@@ -715,7 +715,7 @@ void PlayerActionGetAbilityUpdate(void)
         }
     } else if (t->unk2C != 0) {
         switch (t->player->ability) {
-        case 2:
+        case ABILITY_SPARK:
             switch (t->frame) {
             default:
             case 0x36B:
@@ -764,14 +764,14 @@ void PlayerActionGetAbilityUpdate(void)
                 break;
             }
             break;
-        case 4:
+        case ABILITY_SWORD:
             if (t->unk30 != -1) {
                 LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873BF64 + t->unk30 * 8);
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
             }
             break;
-        case 12:
+        case ABILITY_NEEDLE:
             if (t->unk30 != -1) {
                 LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873C1C4 + t->unk30 * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
@@ -782,7 +782,7 @@ void PlayerActionGetAbilityUpdate(void)
                              gCurTask->player->playerIndex);
             }
             break;
-        case 14:
+        case ABILITY_FREEZE:
             RegisterCollider(gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873C214);
             TaskBreakBlocks((struct HitBoxSet *)gUnk_0873CF4C, gCurTask->player->playerIndex);
             break;

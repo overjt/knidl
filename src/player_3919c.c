@@ -60,7 +60,7 @@ void PlayerActionDie(void)
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     PlayerStopAxes(3);
     gCurTask->player->mouthState = 0;
-    SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
+    SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     HoldPlayerCamera(gCurTask->player->playerIndex);
     gCurTask->player->unk16 = 255;
     anim = gUnk_0873D9FA[gCurTask->player->ability];
@@ -368,7 +368,7 @@ void PlayerActionEnterDoor(void)
         t->playerBaseFrame = gPlayerDoorAnims[t->player->ability][0];
         switch (t->player->ability)
         {
-        case 0:
+        case ABILITY_NORMAL:
         default:
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
@@ -378,12 +378,12 @@ void PlayerActionEnterDoor(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             break;
-        case 1:
-        case 2:
-        case 5:
-        case 19:
-        case 22:
-        case 23:
+        case ABILITY_FIRE:
+        case ABILITY_SPARK:
+        case ABILITY_BURNING:
+        case ABILITY_TORNADO:
+        case ABILITY_BACKDROP:
+        case ABILITY_THROW:
             TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;

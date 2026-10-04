@@ -40,7 +40,7 @@ void PlayerActionBurning(void)
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
             t->variant = 0;
-            gCurTask->u80.attackAbility = 5;
+            gCurTask->u80.attackAbility = ABILITY_BURNING;
             gCurTask->unk28 = 0;
         }
     }
@@ -248,7 +248,7 @@ void PlayerActionLaser(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = 34;
     gCurTask->playerActionDone28 = 0;
-    gCurTask->u80.attackAbility = 0;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSetFrame(0x658);
     TaskYieldTrampoline(2);
     gCurTask->frame++;

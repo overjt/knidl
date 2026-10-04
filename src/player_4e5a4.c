@@ -32,7 +32,7 @@ void PlayerActionBall(void)
     gCurTask->player->bumpKind = 0;
     gCurTask->unk24 = 0;
     gCurTask->variant = 0;
-    gCurTask->u80.attackAbility = 18;
+    gCurTask->u80.attackAbility = ABILITY_BALL;
     CallTableEntry(gCurTask->variant, 9, gPlayerBallVariants);
 }
 
