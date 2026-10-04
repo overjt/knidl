@@ -1646,7 +1646,7 @@ void MetaKnightSwordPickUpUpdate(void)
                         break;
                     }
                 }
-                else if (!(gPlayerStates[k].statusFlags & 2) && gPlayerStates[k].mode != 13
+                else if (!(gPlayerStates[k].statusFlags & PLAYER_STATUS_KEEP_ABILITY) && gPlayerStates[k].mode != 13
                          && gPlayerStates[k].mode != 10)
                 {
                     sub_08040858(k);
@@ -2531,7 +2531,7 @@ void HeavyMoleReactToDamage(void)
 {
     CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     BossStartHitStun(23, (u32)HeavyMoleHitStunUpdate, (u32)gUnk_082F65D4, 32, 0);
-    TaskSetSkipMask(4, gCurTaskIdx);
+    TaskSetSkipMask(TASK_SKIP_UPDATE, gCurTaskIdx);
 }
 
 void HeavyMoleHitStunUpdate(void)
@@ -2677,7 +2677,7 @@ void HeavyMoleMissileHatchFollowBody(void)
     if (gUnk_0200D120[*a - 32].hitState == 2)
         TaskSetEntry(sub_080ade98, gCurTaskIdx);
     else if (gUnk_02006190[3] != 0)
-        TaskSetSkipMask(1, gCurTaskIdx);
+        TaskSetSkipMask(TASK_SKIP_COROUTINE, gCurTaskIdx);
     else
         TaskSetSkipMask(0, gCurTaskIdx);
 }
@@ -2906,7 +2906,7 @@ void HeavyMoleEyeFollowBody(void)
     {
         k2 = 13;
         t->frame = k2;
-        TaskSetSkipMask(1, gCurTaskIdx);
+        TaskSetSkipMask(TASK_SKIP_COROUTINE, gCurTaskIdx);
     }
     else
         TaskSetSkipMask(0, gCurTaskIdx);

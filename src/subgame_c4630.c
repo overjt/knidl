@@ -93,7 +93,7 @@ void AirGrindScenery(void)
     }
     *last = gAirGrindCoursePtr->scrollPos;
     gCurTask->updateCallback = (u32)AirGrindSceneryUpdate;
-    TaskSetSkipMask(1, gCurTaskIdx);
+    TaskSetSkipMask(TASK_SKIP_COROUTINE, gCurTaskIdx);
     TaskSleepForever();
 }
 

@@ -219,7 +219,7 @@ void PlayerActionCrash(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->playerCrashBlendRatio = 0;
-    gCurTask->player->statusFlags |= 16;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
     gCurTask->playerLoopCount = 0;
     do {
         BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
@@ -238,7 +238,7 @@ void PlayerActionCrash(void)
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->playerCrashBlendRatio = 0;
-    gCurTask->player->statusFlags |= 16;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
     gCurTask->playerLoopCount = 0;
     do {
         BlendColors(gPlayerPalettes[gCurTask->player->playerIndex], gUnk_082030B8,
@@ -258,7 +258,7 @@ void PlayerActionCrash(void)
     PlayerSetMotionYPreset(53);
     TaskSetFrame(0xDE7);
     TaskYieldTrampoline(3);
-    gCurTask->player->statusFlags |= 16;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
     gCurTask->variant = 1;
     gCurTask->playerCrashBlendRatio = 0;
     gCurTask->player->unk16 = 1;
@@ -289,7 +289,7 @@ void PlayerActionCrash(void)
                 TaskYieldTrampoline(2);
             } while (++(*c)->playerLoopCount6E <= 9);
         } else {
-            TaskSetSkipMask(2, gCurTaskIdx);
+            TaskSetSkipMask(TASK_SKIP_MOVE, gCurTaskIdx);
             do {
                 if ((s8)(*c)->player->unk16 == 0) {
                     TaskSetSkipMask(0, gCurTaskIdx);

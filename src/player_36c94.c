@@ -530,7 +530,7 @@ void PlayerActionInhale(void)
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_INHALE_AIR, 0);
-        gCurTask->player->actionFlags |= 4;
+        gCurTask->player->actionFlags |= PLAYER_ACTION_FLAG_CATCHING;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->variant = 1;

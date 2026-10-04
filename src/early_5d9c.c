@@ -15,6 +15,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "main.h"
+#include "constants/sprites.h"
 
 /* The draw code's view of struct Task (include/task.h): gCurTask is the
  * running task and gTasks[] the 64 control blocks (stride 0x90, indexed
@@ -322,7 +323,7 @@ void TaskUpdateFlip(void)
     if (p->facing == 1)
         p->spriteFlags &= 0x7FFF;
     else
-        p->spriteFlags |= 0x8000;
+        p->spriteFlags |= SPRITE_FLAG_FLIP_X;
 }
 
 void TaskSetFrame(s32 frame)
@@ -345,7 +346,7 @@ void TaskSetFrameFlip(s32 frame)
     struct Sprite *p;
 
     p = gCurTask;
-    p->spriteFlags |= 0x8000;
+    p->spriteFlags |= SPRITE_FLAG_FLIP_X;
     p->frame = frame;
 }
 

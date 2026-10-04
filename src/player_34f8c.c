@@ -314,7 +314,7 @@ void PlayerActionHighFall(void)
             }
         }
     case 2:
-        gCurTask->player->statusFlags |= 0x100;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         gCurTask->player->bumpKind = 0;
         TaskSetFrame(anim[2]);
@@ -369,8 +369,8 @@ void PlayerActionHighFallUpdate(void)
             else
             {
                 if (gCurTask->player->blocksBroken != 0)
-                    gCurTask->player->actionFlags |= 2;
-                if (gCurTask->player->actionFlags & 2)
+                    gCurTask->player->actionFlags |= PLAYER_ACTION_FLAG_HIGH_FALL_BOUNCE;
+                if (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_HIGH_FALL_BOUNCE)
                 {
                     gCurTask->variant = 1;
                     TaskSetEntry(PlayerActionHighFall, gCurTaskIdx);

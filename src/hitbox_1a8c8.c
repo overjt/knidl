@@ -227,13 +227,13 @@ u8 HitTestPlayerColliders(void)
                 {
                     gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
-                    t->u76.unk76 = (t->u76.unk76 & 0x4000) | 1;
+                    t->u76.unk76 = (t->u76.unk76 & PLAYER_HIT_SHIELDED) | PLAYER_HIT_LANDED;
                 }
             }
             else if (s == 0)
             {
                 if (!(gAttackBox->playerHarmlessMask & 0x4005)
-                    && !((gAttackBox->attackFlags & ATTACK_BOX_FLAG_SHIELDABLE) && (t->u76.unk76 & 0x4000)))
+                    && !((gAttackBox->attackFlags & ATTACK_BOX_FLAG_SHIELDABLE) && (t->u76.unk76 & PLAYER_HIT_SHIELDED)))
                 {
                     t->hitEffect = gAttackBox->hitEffect;
                     /* the actor's x is read signed here (ldrsh) */
@@ -428,7 +428,7 @@ u8 HitTestColliderClass10(void)
             u = &gTasks[gColliderPlayer];
             if (!(gAttackBox->attackFlags & ATTACK_BOX_FLAG_NO_HIT_REACTION))
             {
-                u->u76.unk76 &= 0x4000;
+                u->u76.unk76 &= PLAYER_HIT_SHIELDED;
                 u->u76.unk76 |= gColliderBodyBox->bodyFlags & ~(BODY_BOX_FLAG_SHIELD | BODY_BOX_FLAG_NO_MIRROR);
             }
         }

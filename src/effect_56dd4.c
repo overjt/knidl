@@ -125,7 +125,7 @@ void PlayerEffectFireBreathFlamesUpdate(void)
     {
         struct Task *t = gCurTask;
 
-        if (!(t->player->actionFlags & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
+        if (!(t->player->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) && ((t->u8C.parentTask)->waterFlags & 1))
             TaskFree(gCurTaskIdx);
     }
     if (gCurTask->player->ability != ABILITY_FIRE)

@@ -37,7 +37,7 @@ void sub_0809fbd0(void)
     for (i = 0; i <= 3; i++)
     {
         if (((gActivePlayerMask >> i) & 1) != 0)
-            gPlayerStates[i].statusFlags |= 64;
+            gPlayerStates[i].statusFlags |= PLAYER_STATUS_INPUT_LOCKED;
     }
 }
 

@@ -381,7 +381,7 @@ void EndingStarRodReturnKirby(void)
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(207);
-    gCurTask->spriteFlags |= 0x8000;
+    gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     TaskYieldTrampoline(56);
     for (;;) {
         gCurTask->frame = 1;

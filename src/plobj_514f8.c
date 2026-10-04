@@ -283,7 +283,7 @@ void PlayerObjectFireBreathUpdate(void)
 {
     {
         struct Task *t = gCurTask;
-        if (!(t->player->actionFlags & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
+        if (!(t->player->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) && ((t->u8C.parentTask)->waterFlags & 1))
         {
             TaskFree(gCurTaskIdx);
             return;
@@ -607,12 +607,12 @@ void PlayerObjectLaserBeamUpdate(void)
             struct Task *t = gCurTask;
             if (t->player->ability == ABILITY_LASER)
             {
-                if (!(t->player->statusFlags & 128))
+                if (!(t->player->statusFlags & PLAYER_STATUS_NO_ATTACK_SFX))
                     PlaySfxIfLocalPlayer(173, t->parent);
             }
             else
             {
-                if (!(t->player->statusFlags & 128))
+                if (!(t->player->statusFlags & PLAYER_STATUS_NO_ATTACK_SFX))
                     PlaySfxIfLocalPlayer(211, t->parent);
             }
         }

@@ -136,7 +136,7 @@ void PlayerActionHiJumpUpdate(void)
         t->player->statusFlags &= 0xFFEF;
         if ((gFrameCount & 7) <= 3) {
             RequestCopy(2, gUnk_081F59F0, gObjPalette + (t->tileWord >> 12) * 32, 64);
-            gCurTask->player->statusFlags |= 16;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
         }
         /* fallthrough */
     case 2:

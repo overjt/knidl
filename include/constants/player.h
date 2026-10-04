@@ -187,4 +187,28 @@
 #define META_KNIGHT_ACTION_HANDLER_UPWARD_SLASH    25
 #define META_KNIGHT_ACTION_HANDLER_DOWN_THRUST     26
 
+/* Player action flags - PlayerState.actionFlags, one bit each (R3): the running action's flags, cleared by sub_08033414 whenever an action is requested (src/player_32688.c:534). Left as numbers: 8 (set by PlayerActionDie / MetaKnightActionDie, never read) and 128 (set by player effect 19, sub_0805574c, whose spawner sub_0805ddb0 is unread; makes sub_0803ddc0 draw the player twice more at x +- 48) */
+#define PLAYER_ACTION_FLAG_OFFSET_SCRIPT     1     /* an offset script is playing */
+#define PLAYER_ACTION_FLAG_HIGH_FALL_BOUNCE  2     /* the high fall bounces */
+#define PLAYER_ACTION_FLAG_CATCHING          4     /* the inhale / Throw catch loop runs */
+#define PLAYER_ACTION_FLAG_RUN_PENDING       16    /* a tapped run waits for PlayerActionRun */
+#define PLAYER_ACTION_FLAG_METAKNIGHT_SWORD  32    /* Meta Knight's sword was picked up */
+#define PLAYER_ACTION_FLAG_INVINCIBLE_CANDY  64    /* an Invincible Candy was collected */
+#define PLAYER_ACTION_FLAG_GET_ABILITY       0x100 /* PlayerActionGetAbility runs */
+
+/* Player status flags - PlayerState.statusFlags, one bit each (R3): the player's lasting status, cleared only by InitPlayerState* (src/stage_3cd60.c). Left as numbers: 1 (read by PlayerCheckEnterDoor, never set) and 4 (read by PlayerCheckBButton, cleared by PlayerActionHurt, never set) */
+#define PLAYER_STATUS_KEEP_ABILITY       2     /* the ability cannot be lost */
+#define PLAYER_STATUS_PALETTE_LOCKED     16    /* the frame loader leaves the palette alone */
+#define PLAYER_STATUS_TIMERS_FROZEN      32    /* the status timers stand still */
+#define PLAYER_STATUS_INPUT_LOCKED       64    /* the player's keys are ignored */
+#define PLAYER_STATUS_NO_ATTACK_SFX      128   /* attack sounds are muted */
+#define PLAYER_STATUS_NO_DRIFT           0x100 /* the drift velocity is not applied */
+#define PLAYER_STATUS_NO_TERRAIN_DAMAGE  0x200 /* terrain damage is ignored */
+#define PLAYER_STATUS_NO_BOUNDS_DEATH    1024  /* no out-of-bounds or crush death */
+
+/* Player hit bits - Task.u76.unk76 of a player task (sites only: the member is Quick Draw's opponent flag in src/subgame_*.c): set by the hit tests from the player's own boxes, cleared at every action request (src/player_32688.c:533) */
+#define PLAYER_HIT_LANDED            1      /* the player's attack landed: recoil */
+#define PLAYER_HIT_HIGH_FALL_BOUNCE  2      /* the high fall hit something: bounce */
+#define PLAYER_HIT_SHIELDED          0x4000 /* the Parasol blocked a shieldable attack */
+
 #endif // GUARD_CONSTANTS_PLAYER_H

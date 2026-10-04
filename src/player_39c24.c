@@ -50,7 +50,7 @@ void PlayerActionExitDoor(void)
             for (i = 0; i < gPlayerCount; i++)
             {
                 if (gPlayerHealth[i] == 0)
-                    TaskSetSkipMask(4, i);
+                    TaskSetSkipMask(TASK_SKIP_UPDATE, i);
             }
         }
     }
@@ -179,7 +179,7 @@ void PlayerActionExitDoor(void)
         break;
     case 1:
         for (i = 0; i < gPlayerCount; i++)
-            gPlayerStates[i].statusFlags |= 64;
+            gPlayerStates[i].statusFlags |= PLAYER_STATUS_INPUT_LOCKED;
         if (gCurTask->playerEntryOrder != 0)
         {
             switch (gCurTask->playerEntryOrder)

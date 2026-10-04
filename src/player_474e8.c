@@ -150,7 +150,7 @@ void PlayerActionSleep(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_SLEEP;
     gCurTask->playerActionDone28 = 0;
-    gCurTask->player->statusFlags |= 2;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_KEEP_ABILITY;
     PlayerSetMotionXPreset(0, 72);
     TaskSetFrame(0x8E5);
     TaskYieldTrampoline(16);

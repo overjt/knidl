@@ -84,7 +84,7 @@ void PlayerActionSparkUpdate(void)
                              u->playerNextBankBlendRatio, 16,
                              (u16 *)(gObjPalette + (((u->tileWord >> 12) + 1) << 5)));
             }
-            gCurTask->player->statusFlags |= 16;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             break;
         }
         break;

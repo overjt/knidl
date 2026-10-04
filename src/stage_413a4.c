@@ -980,7 +980,7 @@ void MetaKnightActionHurt(void)
             gCurTask->player->running = 0;
             RequestScreenShake(2);
             t5 = gCurTask;
-            if (t5->hitEffect & 128)
+            if (t5->hitEffect & HIT_EFFECT_TERRAIN_DAMAGE)
                 t5->variant = 4;
             else
                 t5->variant = t5->hitEffect & 15;
@@ -1178,10 +1178,10 @@ void MetaKnightActionDie(void)
     gCurTask->lateUpdateCallback = 0;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << gCurTask->player->playerIndex);
-    if (gCurTask->hitEffect == 512)
+    if (gCurTask->hitEffect == HIT_EFFECT_MID_BOSS)
         sub_08027548();
     gCurTask->player->actionFlags |= 8;
-    gCurTask->player->statusFlags |= 0x100;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     gCurTask->variant = 0;
     gCurTask->player->statusFlags &= 0xFFEF;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
@@ -1267,7 +1267,7 @@ void sub_08042c50(void)
                 gCurTask->variant = 2;
             }
         }
-        if ((gCurTask->player->statusFlags & 32) == 0)
+        if ((gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN) == 0)
             PlayerUpdatePaletteFlash();
         break;
     case 2:
@@ -1305,7 +1305,7 @@ void MetaKnightActionEnterDoor(void)
     gCurTask->player->running = 0;
     gPauseDisabled = 1;
     PlayerStopAxes(3);
-    gCurTask->player->statusFlags |= 0x100;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     RequestScreenShake(0);
     if (gInHub == 0)
     {

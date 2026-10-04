@@ -152,7 +152,7 @@ void PlayerUpdateBlink(void)
     if (sub_0803d010() != 0)
         return;
     QueueSprite(gCurTask->layer, gUnk_08751990[v],
-                 (u16)(gCurTask->spriteFlags & 0x8000),
+                 (u16)(gCurTask->spriteFlags & SPRITE_FLAG_FLIP_X),
                  gCurTask->tileWord & 0xF000,
                  gCurTask->pixelX - gSpriteCameraX,
                  gCurTask->pixelY - gSpriteCameraY);
@@ -459,7 +459,7 @@ void PlayerMove(void)
     t->velY = gUnk_03001F2C;
     t->speedLimitY = gUnk_03002344;
     t->velY += gUnk_03002448;
-    if ((t->player->statusFlags & 0x100) == 0) {
+    if ((t->player->statusFlags & PLAYER_STATUS_NO_DRIFT) == 0) {
         t->posX += t->player->driftVelX;
         if ((t->onGround & 1) == 0) {
             t->posY += t->player->driftVelY;
@@ -493,7 +493,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
     g = (struct TaskGfx *)tbl[t->frame + a0];
     if ((g->oamTemplate & 1) != 0) {
         p = &g->palette;
-        if ((t->player->statusFlags & 16) == 0 && g->palette != NULL)
+        if ((t->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0 && g->palette != NULL)
             RequestCopy(2, (u32)(g->palette + 1),
                          (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
         p++;
@@ -508,7 +508,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             } while (*s != 0xFFFF);
         }
         p++;
-        if ((gCurTask->player->statusFlags & 16) == 0 && *p != NULL)
+        if ((gCurTask->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0 && *p != NULL)
             RequestCopy(2, (u32)(*p + 1),
                          (u32)gObjPaletteBank1 + ((prio >> 12) << 5), **p);
         q = p[1];
@@ -525,7 +525,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
             }
         }
     } else {
-        if ((t->player->statusFlags & 16) == 0 && *g->palette != 0)
+        if ((t->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0 && *g->palette != 0)
             RequestCopy(2, (u32)(g->palette + 1),
                          (u32)gObjPalette + ((prio >> 12) << 5), *g->palette);
         s = g->tiles;
@@ -626,7 +626,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
     if (ps->ability == ABILITY_NEEDLE || ps->ability == ABILITY_ICE) {
         if ((t->waterFlags & 1) == 0)
             return -1;
-        if ((ps->actionFlags & 0x100) != 0)
+        if ((ps->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) != 0)
             return -1;
         if (ps->mouthState == 2)
             return -1;
@@ -636,7 +636,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
             return 0;
         return -1;
     }
-    if ((ps->statusFlags & 16) == 0) {
+    if ((ps->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0) {
         switch (ps->ability) {
         case ABILITY_HAMMER:
             return 320;
@@ -653,7 +653,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
                 goto second;
             if ((u->waterFlags & 1) == 0)
                 return -1;
-            if ((ps->actionFlags & 0x100) != 0)
+            if ((ps->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) != 0)
                 return -1;
             if (ps->mouthState == 2)
                 return -1;
@@ -688,7 +688,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
                 return 256;
             break;
         case ABILITY_FREEZE:
-            if ((gCurTask->player->statusFlags & 16) != 0)
+            if ((gCurTask->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) != 0)
                 return -1;
             return 704;
         case ABILITY_STONE:
@@ -699,7 +699,7 @@ s32 PlayerGetPlayerPaletteOffset(void)
             return -1;
         case ABILITY_UFO:
             y = gCurTask;
-            if ((y->player->statusFlags & 16) != 0)
+            if ((y->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) != 0)
                 return -1;
             w = y->frame;
             if (w >= 3976 && w <= 4068)
@@ -708,12 +708,12 @@ s32 PlayerGetPlayerPaletteOffset(void)
         }
     } else {
         if (q->ability == ABILITY_UFO) {
-            if ((q->statusFlags & 16) != 0)
+            if ((q->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) != 0)
                 goto ret_m1;
             return 576;
         }
     }
-    if ((gCurTask->player->statusFlags & 16) != 0)
+    if ((gCurTask->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) != 0)
         goto ret_m1;
     return 0;
 ret_m1:
@@ -735,21 +735,21 @@ void sub_0803db74(void)
         case 0:
         case 1:
             u = gCurTask;
-            if ((u->player->statusFlags & 16) == 0)
+            if ((u->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0)
                 RequestCopy(2, (u32)gUnk_08226254,
                              (u32)gObjPalette + (((u->tileWord >> 12) + 1) << 5),
                              32);
             break;
         case 2:
             u = gCurTask;
-            if ((u->player->statusFlags & 16) == 0)
+            if ((u->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0)
                 BlendColors(gUnk_08226254, gUnk_08226254 - 16, 128, 16,
                              (u16 *)((u32)gObjPalette
                                      + (((u->tileWord >> 12) + 1) << 5)));
             break;
         case 3:
             u3 = gCurTask;
-            if ((u3->player->statusFlags & 16) == 0)
+            if ((u3->player->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0)
                 BlendColors(gUnk_08226254, gUnk_08226254 - 16, 256, 16,
                              (u16 *)((u32)gObjPalette
                                      + (((u3->tileWord >> 12) + 1) << 5)));
@@ -761,20 +761,20 @@ void sub_0803db74(void)
         return;
     }
     if ((u16)(t->frame - 655) <= 218 || (u16)(t->frame - 4369) <= 23) {
-        if ((ps->statusFlags & 16) == 0)
+        if ((ps->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0)
             RequestCopy(2, (u32)gUnk_081BC050,
                          (u32)gObjPalette + (((t->tileWord >> 12) + 1) << 5), 32);
         return;
     }
     if ((u16)(t->frame - 874) <= 8) {
-        if ((ps->statusFlags & 16) == 0)
+        if ((ps->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0)
             RequestCopy(2, (u32)&gUnk_081BE6BC[ps->playerIndex * 128],
                          (u32)gObjPalette + ((t->tileWord >> 12) << 5), 32);
     }
     u = gCurTask;
     if ((u16)(u->frame - 3821) <= 128 || (u16)(u->frame - 4525) <= 5) {
         ps2 = u->player;
-        if ((ps2->statusFlags & 16) == 0) {
+        if ((ps2->statusFlags & PLAYER_STATUS_PALETTE_LOCKED) == 0) {
             if (gCreditsDemoSet == 0)
                 RequestCopy(2, (u32)&gUnk_080DCA28[ps2->playerIndex * 32],
                              (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
@@ -804,7 +804,7 @@ void sub_0803ddc0(void)
     u16 y;
     s32 pal;
 
-    if (gCurTask->lateUpdateCallback != 0 && (gCurTask->skipMask & 8) == 0)
+    if (gCurTask->lateUpdateCallback != 0 && (gCurTask->skipMask & TASK_SKIP_LATE_UPDATE) == 0)
         sub_08033414();
     if ((gLocalPlayer != gCurTask->player->playerIndex
          || gInHub != 0)
@@ -921,7 +921,7 @@ void PlayerUpdatePaletteFlash(void)
             RequestCopy(2, (u32)&gUnk_080DC728[q->playerIndex * 8],
                 (u32)&gObjPalette[(t->tileWord >> 12) << 5], 32);
         }
-        gCurTask->player->statusFlags |= 16;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
         break;
     case 2:
         p->statusFlags &= ~0x10;
@@ -951,7 +951,7 @@ void PlayerUpdatePaletteFlash(void)
             RequestCopy(2, src,
                 (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
         }
-        gCurTask->player->statusFlags |= 16;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
         break;
     }
     PlayerUpdateInvincibleFlash();
@@ -1019,7 +1019,7 @@ void sub_0803e28c(s32 a0)
         struct Task *t = gCurTask;
         struct PlayerState *p;
 
-        if (t->player->statusFlags & 0x200)
+        if (t->player->statusFlags & PLAYER_STATUS_NO_TERRAIN_DAMAGE)
             mask |= 0x200;
         t->player->statusFlags &= ~mask;
         p = t->player;
@@ -1033,7 +1033,7 @@ void PlayerUpdateInvulnerability(void)
 {
     struct PlayerState *p = gCurTask->player;
 
-    if ((p->statusFlags & 32) == 0)
+    if ((p->statusFlags & PLAYER_STATUS_TIMERS_FROZEN) == 0)
     {
         /* PlayerState+0x12 is invulnerabilityTimer, read here through an s16 view */
         if (((s16 *)p)[9] != -32768)
@@ -1042,7 +1042,7 @@ void PlayerUpdateInvulnerability(void)
                 ((s16 *)p)[9]--;
             else if (p->invulnerability != 0)
             {
-                if (p->invulnerability == 1 && (p->statusFlags & 0x200))
+                if (p->invulnerability == 1 && (p->statusFlags & PLAYER_STATUS_NO_TERRAIN_DAMAGE))
                     p->statusFlags &= ~0x200;
                 gCurTask->player->invulnerability = 0;
             }
@@ -1097,7 +1097,7 @@ void PlayerUpdateFlip(void)
     if (gCurTask->facing == 1)
         gCurTask->spriteFlags &= 0x7FFF;
     else
-        gCurTask->spriteFlags |= 0x8000;
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
 }
 
 s32 PlayerFaceHeldDirection(void)
@@ -1237,7 +1237,7 @@ void PlayerStartOffsetScript(s32 a0)
     gCurTask->player->offsetScript = a0;
     gCurTask->player->offsetScriptStep = 0;
     gCurTask->player->offsetScriptDelay = 1;
-    gCurTask->player->actionFlags |= 1;
+    gCurTask->player->actionFlags |= PLAYER_ACTION_FLAG_OFFSET_SCRIPT;
 }
 
 void sub_0803e68c(s32 a0)
@@ -1336,7 +1336,7 @@ s32 PlayerUpdateInvincibility(void)
     struct PlayerState *p = gCurTask->player;
     s32 i;
 
-    if (p->statusFlags & 32)
+    if (p->statusFlags & PLAYER_STATUS_TIMERS_FROZEN)
         return;
     if ((s16)p->invincibleTimer == 0)
     {
@@ -1401,7 +1401,7 @@ void PlayerUpdateInvincibleFlash(void)
     {
         if (p->ability == ABILITY_SPARK)
             return;
-        if (p->ability == ABILITY_CRASH && (p->statusFlags & 16))
+        if (p->ability == ABILITY_CRASH && (p->statusFlags & PLAYER_STATUS_PALETTE_LOCKED))
             return;
     }
     gCurTask->player->statusFlags &= ~0x10;
@@ -1433,7 +1433,7 @@ void PlayerUpdateInvincibleFlash(void)
                 return;
             RequestCopy(2, (u32)&gUnk_080DC728[q->playerIndex * 8],
                 (u32)&gObjPalette[(t->tileWord >> 12) << 5], 24);
-            gCurTask->player->statusFlags |= 16;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             return;
         }
         if (needSmall != 0 && (gFrameCount & 15) == 0)
@@ -1445,7 +1445,7 @@ void PlayerUpdateInvincibleFlash(void)
         if ((s16)r->invincibleFlashTimer != 0)
         {
             r->invincibleFlashTimer--;
-            gCurTask->player->statusFlags |= 16;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             return;
         }
         switch ((s16)r->invincibleFlashStep)
@@ -1456,13 +1456,13 @@ void PlayerUpdateInvincibleFlash(void)
             {
                 RequestCopy(2, (u32)gUnk_080DCC48,
                     (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
-                gCurTask->player->statusFlags |= 16;
+                gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             }
             if (needBig)
             {
                 RequestCopy(2, (u32)gUnk_080DCC48,
                     (u32)&gObjPalette[((gCurTask->tileWord >> 12) + 1) << 5], 32);
-                gCurTask->player->statusFlags |= 16;
+                gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             }
             gCurTask->player->invincibleFlashTimer = 1;
             gCurTask->player->invincibleFlashStep++;
@@ -1473,7 +1473,7 @@ void PlayerUpdateInvincibleFlash(void)
             {
                 RequestCopy(2, (u32)gUnk_080DCC28,
                     (u32)&gObjPalette[(gCurTask->tileWord >> 12) << 5], 24);
-                gCurTask->player->statusFlags |= 16;
+                gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             }
             gCurTask->player->invincibleFlashTimer = 2;
             gCurTask->player->invincibleFlashStep++;
@@ -1510,7 +1510,7 @@ s32 sub_0803eaf8(s32 a0)
         }
         else if ((u16)t->frame >= 486 && (u16)t->frame <= 487)
         {
-            if ((t->spriteFlags & 0x8000) == 0)
+            if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                 hi = -12;
             else
                 hi = 12;
@@ -1599,7 +1599,7 @@ s32 sub_0803eaf8(s32 a0)
                 lo = 4;
             else
                 lo = 8;
-            if ((t->spriteFlags & 0x8000) == 0)
+            if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                 hi = -8;
             else
                 hi = 8;
@@ -1612,14 +1612,14 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 0;
                 break;
             case 584:
-                if ((t->spriteFlags & 0x8000) == 0)
+                if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                     hi = 6;
                 else
                     hi = -6;
                 lo = 0;
                 break;
             case 585:
-                if ((t->spriteFlags & 0x8000) == 0)
+                if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                     hi = -8;
                 else
                     hi = 8;
@@ -1700,14 +1700,14 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = -8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = 8;
             }
             else if ((u16)t->frame >= 4349 && (u16)t->frame <= 4352)
             {
                 hi = 8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = -8;
             }
             else if ((u16)t->frame >= 4353 && (u16)t->frame <= 4356)
@@ -1719,21 +1719,21 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = 12;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = lo;
             }
             else if ((u16)t->frame >= 4361 && (u16)t->frame <= 4364)
             {
                 hi = -16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = 16;
             }
             else
             {
                 hi = 16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = -16;
             }
         }
@@ -1747,7 +1747,7 @@ s32 sub_0803eaf8(s32 a0)
         }
         else if ((u16)t->frame >= 727 && (u16)t->frame <= 728)
         {
-            if ((t->spriteFlags & 0x8000) == 0)
+            if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                 hi = -12;
             else
                 hi = 12;
@@ -1827,7 +1827,7 @@ s32 sub_0803eaf8(s32 a0)
                 lo = 4;
             else
                 lo = 8;
-            if ((t->spriteFlags & 0x8000) == 0)
+            if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                 hi = -8;
             else
                 hi = 8;
@@ -1840,14 +1840,14 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 0;
                 break;
             case 825:
-                if ((t->spriteFlags & 0x8000) == 0)
+                if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                     hi = 6;
                 else
                     hi = -6;
                 lo = 0;
                 break;
             case 826:
-                if ((t->spriteFlags & 0x8000) == 0)
+                if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                     hi = -8;
                 else
                     hi = 8;
@@ -1928,14 +1928,14 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = -8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = 8;
             }
             else if ((u16)t->frame >= 4373 && (u16)t->frame <= 4376)
             {
                 hi = 8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = -8;
             }
             else if ((u16)t->frame >= 4377 && (u16)t->frame <= 4380)
@@ -1947,21 +1947,21 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = 12;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = lo;
             }
             else if ((u16)t->frame >= 4385 && (u16)t->frame <= 4388)
             {
                 hi = -16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = 16;
             }
             else
             {
                 hi = 16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = -16;
             }
         }
@@ -1983,7 +1983,7 @@ s32 sub_0803eaf8(s32 a0)
         }
         else if ((u16)t->frame >= 1336 && (u16)t->frame <= 1337)
         {
-            if ((t->spriteFlags & 0x8000) == 0)
+            if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                 hi = -12;
             else
                 hi = 12;
@@ -2063,7 +2063,7 @@ s32 sub_0803eaf8(s32 a0)
                 lo = 4;
             else
                 lo = 8;
-            if ((t->spriteFlags & 0x8000) == 0)
+            if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                 hi = -8;
             else
                 hi = 8;
@@ -2076,14 +2076,14 @@ s32 sub_0803eaf8(s32 a0)
                 hi = 0;
                 break;
             case 1434:
-                if ((t->spriteFlags & 0x8000) == 0)
+                if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                     hi = 6;
                 else
                     hi = -6;
                 lo = 0;
                 break;
             case 1435:
-                if ((t->spriteFlags & 0x8000) == 0)
+                if ((t->spriteFlags & SPRITE_FLAG_FLIP_X) == 0)
                     hi = -8;
                 else
                     hi = 8;
@@ -2164,14 +2164,14 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = -8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = 8;
             }
             else if ((u16)t->frame >= 4409 && (u16)t->frame <= 4412)
             {
                 hi = 8;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = -8;
             }
             else if ((u16)t->frame >= 4413 && (u16)t->frame <= 4416)
@@ -2183,21 +2183,21 @@ s32 sub_0803eaf8(s32 a0)
             {
                 hi = 12;
                 lo = -12;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = lo;
             }
             else if ((u16)t->frame >= 4421 && (u16)t->frame <= 4424)
             {
                 hi = -16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = 16;
             }
             else
             {
                 hi = 16;
                 lo = 0;
-                if (gUnk_0300244C != 0 && (t->spriteFlags & 0x8000))
+                if (gUnk_0300244C != 0 && (t->spriteFlags & SPRITE_FLAG_FLIP_X))
                     hi = -16;
             }
         }
@@ -2416,7 +2416,7 @@ s32 PlayerCheckLanding(void)
 s32 PlayerCheckDie(void)
 {
     if (gCurTask->health != 0
-     && ((gCurTask->player->statusFlags & 1024)
+     && ((gCurTask->player->statusFlags & PLAYER_STATUS_NO_BOUNDS_DEATH)
       || (IsTaskBelowPlayerBounds(gCurTask) == 0
        && (gUnk_02005574[0] == 0 || (gCurTask->onGround & 1) == 0
            || (gCurTask->player->boundsClamp & 4) == 0)
@@ -2435,7 +2435,7 @@ void sub_0803fb54(void)
 
     if (gCurTask->waterFlags & 1)
     {
-        if (gCurTask->player->actionFlags & 16)
+        if (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_RUN_PENDING)
         {
             gCurTask->player->actionFlags &= ~16;
             gCurTask->player->running = 0;
@@ -2443,7 +2443,7 @@ void sub_0803fb54(void)
         }
         return;
     }
-    v = gCurTask->player->actionFlags & 16;
+    v = gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_RUN_PENDING;
     if (v == 0)
     {
         if (gCurTask->player->running != 0)
@@ -2456,7 +2456,7 @@ void sub_0803fb54(void)
         else if (gCurTask->player->invincible != 0)
         {
             gCurTask->player->running = 1;
-            gCurTask->player->actionFlags |= 16;
+            gCurTask->player->actionFlags |= PLAYER_ACTION_FLAG_RUN_PENDING;
             gCurTask->player->runTapTimer = 10;
         }
         else if ((s8)gCurTask->player->runTapTimer != 0
@@ -2468,7 +2468,7 @@ void sub_0803fb54(void)
                  && gCurTask->facing == -1))
             {
                 gCurTask->player->running = 1;
-                gCurTask->player->actionFlags |= 16;
+                gCurTask->player->actionFlags |= PLAYER_ACTION_FLAG_RUN_PENDING;
                 gCurTask->player->runTapTimer = 10;
             }
         }
@@ -2713,7 +2713,7 @@ s32 PlayerCheckEnterDoor(void)
     {
         gRoomExitKind = 1;
         gPauseDisabled = 1;
-        gCurTask->player->statusFlags |= 2;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_KEEP_ABILITY;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = PLAYER_ACTION_ENTER_DOOR;
     }
@@ -2724,7 +2724,7 @@ s32 PlayerCheckDropAbility(void)
 {
     if (gMetaKnightmareMode == 1)
         return 0;
-    if ((gCurTask->player->statusFlags & 2) == 0
+    if ((gCurTask->player->statusFlags & PLAYER_STATUS_KEEP_ABILITY) == 0
      && gCurTask->player->unk37 == 0
      && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 4)
      && gCurTask->player->ability != ABILITY_NORMAL)
@@ -2889,7 +2889,7 @@ void LatchPlayerKeys(void)
         gLatchedHeldKeys[player] = gPlayerHeldKeys[player];
         gLatchedPressedKeys[player] = gPlayerPressedKeys[player];
 
-        if (gPlayerStates[player].statusFlags & 64)
+        if (gPlayerStates[player].statusFlags & PLAYER_STATUS_INPUT_LOCKED)
         {
             gLatchedPressedKeys[player] = 0;
             gLatchedHeldKeys[player] = 0;
@@ -2913,13 +2913,13 @@ void sub_08040858(s32 a0)
 {
     struct PlayerState *p = gPlayerStates + a0;
 
-    p->actionFlags |= 32;
-    p->statusFlags |= 2;
+    p->actionFlags |= PLAYER_ACTION_FLAG_METAKNIGHT_SWORD;
+    p->statusFlags |= PLAYER_STATUS_KEEP_ABILITY;
 }
 
 void PlayerGiveInvincibleCandy(s32 a0)
 {
-    (gPlayerStates + a0)->actionFlags |= 64;
+    (gPlayerStates + a0)->actionFlags |= PLAYER_ACTION_FLAG_INVINCIBLE_CANDY;
 }
 
 void PlayerStartItemShare(s32 a0, u8 a1)

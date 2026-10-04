@@ -113,13 +113,13 @@ void PlayerWarpStarRideDraw(void)
     u = gCurTask;
     if (u->unk18 > 0)
     {
-        sign = (u->spriteFlags & 0x8000) ? -1 : 1;
+        sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
         u->spriteFlags &= 0x7FFF;
         gfx = DrawAffineSprite(PlayerLoadFrameTilesAndPalette(0),
                            (u16)gUnk_0873FF98[((s16 *)gCurTask)[13]] * sign,
                            gUnk_0873FF98[((s16 *)gCurTask)[13]], 0);
         if (sign < 0)
-            gCurTask->spriteFlags |= 0x8000;
+            gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
     }
     else
     {
@@ -391,14 +391,14 @@ void PlayerBoardWarpStar(u32 a, s32 b)
                 if ((s8)gWarpStarFlightFacings[WarpStarPickFlightSlot(gCurTaskIdx)] == 1)
                     e->spriteFlags &= 0x7FFF;
                 else
-                    e->spriteFlags |= 0x8000;
+                    e->spriteFlags |= SPRITE_FLAG_FLIP_X;
             }
             else
             {
                 if ((s8)gWarpStarFlightFacings[t->unk74] == 1)
                     e->spriteFlags &= 0x7FFF;
                 else
-                    e->spriteFlags |= 0x8000;
+                    e->spriteFlags |= SPRITE_FLAG_FLIP_X;
             }
         }
     }

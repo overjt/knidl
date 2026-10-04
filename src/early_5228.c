@@ -1,5 +1,6 @@
 #include "gba/gba.h"
 #include "global.h"
+#include "constants/task_skip.h"
 
 /* Early subsystem: the cooperative TASK ENGINE (0x08004FEC-0x08005653,
  * issue #32 batch F1).
@@ -178,7 +179,7 @@ void RunTasks(void)
                         gCurTask = &gTasks[gCurTaskIdx];
                         if ((s8)gCurTask->taskClass >= 0) {
                             gTaskRunPhase = 1;
-                            if ((gCurTask->skipMask & 1) == 0) {
+                            if ((gCurTask->skipMask & TASK_SKIP_COROUTINE) == 0) {
                                 if (gTaskResumeAddrs[gCurTaskIdx] != 0) {
                                     if (--gCurTask->sleepFrames <= 0) {
                                         gTaskSavedR0 = -1;
@@ -194,12 +195,12 @@ void RunTasks(void)
                                 }
                             }
                             gTaskRunPhase = 2;
-                            if ((gCurTask->skipMask & 2) == 0) {
+                            if ((gCurTask->skipMask & TASK_SKIP_MOVE) == 0) {
                                 if (gCurTask->moveCallback != 0)
                                     gCurTask->moveCallback();
                             }
                             gTaskRunPhase = 3;
-                            if ((gCurTask->skipMask & 4) == 0) {
+                            if ((gCurTask->skipMask & TASK_SKIP_UPDATE) == 0) {
                                 if (gCurTask->updateCallback != 0)
                                     gCurTask->updateCallback();
                             }
@@ -228,7 +229,7 @@ void RunTasks(void)
                     gCurTaskIdx = gTaskClassLists[i][j];
                     gCurTask = &gTasks[gCurTaskIdx];
                     if ((s8)gCurTask->taskClass >= 0) {
-                        if ((gCurTask->skipMask & 8) == 0) {
+                        if ((gCurTask->skipMask & TASK_SKIP_LATE_UPDATE) == 0) {
                             if (gCurTask->lateUpdateCallback != 0)
                                 gCurTask->lateUpdateCallback();
                         }
@@ -250,7 +251,7 @@ void RunTasks(void)
                     gCurTaskIdx = gTaskClassLists[i][j];
                     gCurTask = &gTasks[gCurTaskIdx];
                     if ((s8)gCurTask->taskClass >= 0) {
-                        if ((gCurTask->skipMask & 0x10) == 0) {
+                        if ((gCurTask->skipMask & TASK_SKIP_DRAW) == 0) {
                             if (gCurTask->drawCallback != 0)
                                 gCurTask->drawCallback();
                         }

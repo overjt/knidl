@@ -65,7 +65,7 @@ void PlayerActionShareItem(void)
         gCurTask->layer = 5;
         TaskSetSkipMask(14, gCurTaskIdx);
         t = gCurTask;
-        t->player->statusFlags |= 0x100;
+        t->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
         t->player->statusFlags &= 0xFFEF;
         if (!(t->waterFlags & 1))
         {
@@ -131,7 +131,7 @@ void PlayerActionShareItem(void)
     a42 = gCurTask->layer;
     PlayerStopAxes(3);
     t = gCurTask;
-    t->player->statusFlags |= 0x100;
+    t->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     t->player->statusFlags &= 0xFFEF;
     if (u->pixelX - t->pixelX > 0)
         t->facing = 1;
@@ -145,7 +145,7 @@ void PlayerActionShareItem(void)
     if ((u->facing = -gCurTask->facing) == 1)
         u->spriteFlags &= 0x7FFF;
     else
-        u->spriteFlags |= 0x8000;
+        u->spriteFlags |= SPRITE_FLAG_FLIP_X;
     t = gCurTask;
     if (!(t->waterFlags & 1))
     {
@@ -438,7 +438,7 @@ void sub_0803c9b4(s32 a)
     for (i = 0; i <= 2; i++)
     {
         p = &gUnk_02007E90[gCurTask->player->playerIndex][i];
-        if (gCurTask->skipMask & 1)
+        if (gCurTask->skipMask & TASK_SKIP_COROUTINE)
         {
             k = 0;
             if (a == 0)

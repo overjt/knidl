@@ -295,7 +295,7 @@ void sub_080768c8(void)
         struct Task *t = gCurTask;
         u16 x;
 
-        t->spriteFlags |= 0x8000;
+        t->spriteFlags |= SPRITE_FLAG_FLIP_X;
         t->playerRideLandCount = 0;
         t->playerRideIsCannon = 1;
         x = t->posX >> 16;

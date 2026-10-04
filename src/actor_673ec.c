@@ -63,7 +63,7 @@ void HeldPlayerUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 11, gHeldPlayerStateUpdates);
     PlayerUpdateInvulnerability();
-    if ((gCurTask->player->statusFlags & 32) == 0)
+    if ((gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN) == 0)
         PlayerUpdatePaletteFlash();
     if (gLocalPlayer == gCurTask->player->playerIndex)
         SetCameraFocus(gCurTask->pixelX, gCurTask->pixelY);
@@ -389,7 +389,7 @@ void HeldPlayerState5Update(void)
         TaskSetFrame(0x1243);
         u = gCurTask;
         if (u->facing == 1)
-            u->spriteFlags |= 0x8000;
+            u->spriteFlags |= SPRITE_FLAG_FLIP_X;
         else
             u->spriteFlags &= 0x7FFF;
         TaskSleepForever();
@@ -607,7 +607,7 @@ void HeldPlayerThrowFlightForward(void)
     TaskSetFrame(0x123C);
     x = gCurTask;
     if (x->facing == 1)
-        x->spriteFlags |= 0x8000;
+        x->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
         x->spriteFlags &= 0x7FFF;
     TaskSleepForever();
@@ -687,7 +687,7 @@ void HeldPlayerThrowFlightBackward(void)
     TaskSetFrame(0x123C);
     t = gCurTask;
     if (t->facing == 1)
-        t->spriteFlags |= 0x8000;
+        t->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
         t->spriteFlags &= 0x7FFF;
     TaskSleepForever();
@@ -1128,7 +1128,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     t->u76.unk76 = 0;
     t->variant = 0;
     t->hitKind = HIT_KIND_NONE;
-    if (p->actionFlags & 1)
+    if (p->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT)
     {
         gCurTask->player->pixelOffsetY = 0;
         p->pixelOffsetX = 0;

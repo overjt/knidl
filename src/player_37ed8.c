@@ -62,11 +62,11 @@ loop:
                 SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             }
             u = gCurTask;
-            if (u->hitEffect & 128)
+            if (u->hitEffect & HIT_EFFECT_TERRAIN_DAMAGE)
                 u->variant = 4;
             else
                 u->variant = u->hitEffect & 15;
-            if (!(gCurTask->player->statusFlags & 2) && gCurTask->player->unk37 == 0)
+            if (!(gCurTask->player->statusFlags & PLAYER_STATUS_KEEP_ABILITY) && gCurTask->player->unk37 == 0)
             {
                 if (gCurTask->player->ability != ABILITY_NORMAL)
                 {
@@ -644,7 +644,7 @@ loop:
         if (gCurTask->waterFlags & 1)
             PlayerSetWaterMotionY();
         SetPlayerInvulnerability(1, 96, gCurTask->player->playerIndex);
-        gCurTask->player->statusFlags |= 0x200;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_NO_TERRAIN_DAMAGE;
         break;
     }
     TaskSleepForever();

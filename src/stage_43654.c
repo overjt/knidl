@@ -729,7 +729,7 @@ void PlayerActionFire(void)
     case 1:
         {
             struct PlayerState *p = gCurTask->player;
-            if ((p->statusFlags & 128) == 0)
+            if ((p->statusFlags & PLAYER_STATUS_NO_ATTACK_SFX) == 0)
                 PlayerStartSfx(SE_FIRE_ATTACK, p->playerIndex);
         }
         CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_FIRE_BREATH, 0);

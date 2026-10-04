@@ -72,7 +72,7 @@ void PlayerActionBurning(void)
         gCurTask->player->terrainBox = (u32)gUnk_0873CB2C;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         gCurTask->player->bodyBox = (u32)gUnk_0873BD3C;
-        gCurTask->player->statusFlags |= 16;
+        gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
         gCurTask->playerLoopCount = 0;
         gCurTask->playerBurningFadeStep = 0;
         TaskSetFrame(0x5CF);

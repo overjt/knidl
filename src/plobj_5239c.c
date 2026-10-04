@@ -158,7 +158,7 @@ void PlayerObjectIceBreathUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (!(t->player->actionFlags & 0x100) && ((t->u8C.parentTask)->waterFlags & 1))
+    if (!(t->player->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) && ((t->u8C.parentTask)->waterFlags & 1))
     {
         TaskFree(gCurTaskIdx);
         return;
@@ -229,7 +229,7 @@ s32 PlayerObjectBeamOrb(void)
         switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
-            if (!(t->player->statusFlags & 0x80))
+            if (!(t->player->statusFlags & PLAYER_STATUS_NO_ATTACK_SFX))
                 PlaySfxIfLocalPlayer(129, t->parent);
             xs = gUnk_0873B7C0[0][0];
             ys = gUnk_0873B7C0[0][1];

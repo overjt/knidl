@@ -116,6 +116,11 @@ MAX_VALUE = 0x7FFFFFFF
 #            `t->spriteFlags |= 0x8000`); complements and masks of several
 #            bits are not values of the family and stay out of the scan
 #   bit_vars: the same for plain variables
+#   bit_calls: {function: argument index} whose argument is such a flag word
+#            (a single bit there takes the constant, a union of bits the
+#            second form's `(A | B)`)
+#   width:   the flag word's width in bits (16 when not given), for the
+#            complements of the second form
 #   prefix:  only the header's constants with this prefix (a header may hold
 #            two enumerations: GAME_STATE_ and STAGE_REQUEST_)
 #   skip_files / skip_sites: where the same member or variable holds another
@@ -213,6 +218,29 @@ FAMILIES = {
         "header": "hits",
         "prefix": "BODY_BOX_GUARD_",
         "bits": ["guardFlags"],
+    },
+    "player_action_flags": {
+        "header": "player",
+        "prefix": "PLAYER_ACTION_FLAG_",
+        "bits": ["actionFlags"],
+    },
+    "player_status": {
+        "header": "player",
+        "prefix": "PLAYER_STATUS_",
+        "bits": ["statusFlags"],
+    },
+    "sprite_flags": {
+        "header": "sprites",
+        "prefix": "SPRITE_FLAG_",
+        "bits": ["spriteFlags"],
+    },
+    "task_skip": {
+        "header": "task_skip",
+        "prefix": "TASK_SKIP_",
+        "bits": ["skipMask"],
+        "bit_calls": {"TaskSetSkipMask": 0, "TaskSetOthersSkipMask": 0, "TaskSetAllSkipMask": 0,
+                      "TaskFreezeOrThawOthers": 0, "FreezeOtherTasks": 0},
+        "width": 8,
     },
     "camera": {
         "header": "camera",
@@ -711,6 +739,30 @@ def _switch_cases(toks, open_brace):
         k += 1
 
 
+def call_argument(toks, i, want):
+    """(first, end) token range of argument `want` of the call whose name is
+    toks[i], or None (a declaration, or fewer arguments)."""
+    n = len(toks)
+    if i > 0 and toks[i - 1][0] == "id" and toks[i - 1][1] not in ("return", "else", "case"):
+        return None
+    depth, a0, args = 0, i + 2, []
+    j = i + 1
+    while j < n:
+        x = toks[j][1]
+        if x in ("(", "[", "{"):
+            depth += 1
+        elif x in (")", "]", "}"):
+            depth -= 1
+            if depth == 0:
+                args.append((a0, j))
+                break
+        elif x == "," and depth == 1:
+            args.append((a0, j))
+            a0 = j + 1
+        j += 1
+    return args[want] if want < len(args) else None
+
+
 def family_positions(fam, toks):
     """yield (token index of the literal, value) of every literal at the
     family's positions in the token list: the argument of a listed call,
@@ -725,6 +777,7 @@ def family_positions(fam, toks):
     indexed = set(spec.get("indexed", []))
     bit_members = set(spec.get("bits", []))
     bit_vars = set(spec.get("bit_vars", []))
+    bit_calls = spec.get("bit_calls", {})
 
     def is_bit_operand(i):
         k, t = toks[i][0], toks[i][1]
@@ -750,6 +803,13 @@ def family_positions(fam, toks):
 
     for i in range(n):
         k, t = toks[i][0], toks[i][1]
+        if k == "id" and t in bit_calls and i + 1 < n and toks[i + 1][1] == "(":
+            arg = call_argument(toks, i, bit_calls[t])
+            if arg:
+                lit = literal_at(toks, *arg)
+                if lit and lit[1] > 0 and not lit[1] & (lit[1] - 1):
+                    yield lit[0], lit[1]
+            continue
         if k == "id" and t in calls and i + 1 < n and toks[i + 1][1] == "(":
             if i > 0 and toks[i - 1][0] == "id" and toks[i - 1][1] not in ("return", "else", "case"):
                 continue  # a declaration or definition

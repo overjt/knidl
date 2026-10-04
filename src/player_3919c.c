@@ -50,11 +50,11 @@ void PlayerActionDie(void)
     t->spriteFlags &= 0x7FFF;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << t->player->playerIndex);
-    if (t->hitEffect == 0x200)
+    if (t->hitEffect == HIT_EFFECT_MID_BOSS)
         sub_08027548();
     u = gCurTask;
     u->player->actionFlags |= 8;
-    u->player->statusFlags |= 0x100;
+    u->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     u->variant = 0;
     gCurTask->player->statusFlags &= 0xFFEF;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
@@ -251,7 +251,7 @@ void sub_080396a4(void)
                 gCurTask->drawCallback = 0;
             }
         }
-        if (!(gCurTask->player->statusFlags & 32))
+        if (!(gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN))
             PlayerUpdatePaletteFlash();
         break;
     }
@@ -282,7 +282,7 @@ void PlayerActionEnterDoor(void)
     gCurTask->lateUpdateCallback = 0;
     gCurTask->player->running = 0;
     PlayerStopAxes(3);
-    gCurTask->player->statusFlags |= 0x100;
+    gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     RequestScreenShake(0);
     if (gInHub == 0)
     {

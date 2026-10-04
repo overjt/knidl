@@ -271,7 +271,7 @@ void PlayerUpdate(void)
     s32 r;
     struct PlayerState *p;
 
-    if ((gCurTask->player->actionFlags & 1) && (gCurTask->skipMask & 1))
+    if ((gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT) && (gCurTask->skipMask & TASK_SKIP_COROUTINE))
         goto post;
     if (gCurTask->player->ability == ABILITY_PARASOL && gCurTask->player->mode == 5)
     {
@@ -283,7 +283,7 @@ void PlayerUpdate(void)
     {
         gCurTask->player->blocksBroken = TaskBreakBlocks(gCurTask->player->hitBoxSet, gCurTask->player->playerIndex);
         if (gCurTask->player->blocksBroken != 0)
-            gCurTask->u76.unk76 |= 1;
+            gCurTask->u76.unk76 |= PLAYER_HIT_LANDED;
     }
     else
     {
@@ -298,13 +298,13 @@ void PlayerUpdate(void)
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
             gCurTask->player->clampedTopY = gTerrainClampedTopY;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
-        if (gTerrainResult.damage != 0 && !(gCurTask->player->statusFlags & 0x200)
+        if (gTerrainResult.damage != 0 && !(gCurTask->player->statusFlags & PLAYER_STATUS_NO_TERRAIN_DAMAGE)
          && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)
         {
             r = AddPlayerHealth(-8, gCurTask->player->playerIndex);
             if (r != 0)
             {
-                gCurTask->hitEffect = gTerrainResult.damage | 0x80;
+                gCurTask->hitEffect = gTerrainResult.damage | HIT_EFFECT_TERRAIN_DAMAGE;
                 gCurTask->hitKind = HIT_KIND_DAMAGE;
             }
             else
@@ -349,10 +349,10 @@ void PlayerUpdate(void)
 post:
     gCurTask->player->hitsThisFrame = 0;
     sub_0803fb54();
-    if (!(gCurTask->player->statusFlags & 32))
+    if (!(gCurTask->player->statusFlags & PLAYER_STATUS_TIMERS_FROZEN))
         PlayerUpdatePaletteFlash();
     if ((gMetaKnightmareMode == 1 || gUnk_0300244C != 0)
-     && (gCurTask->player->actionFlags & 1) && (gCurTask->skipMask & 1))
+     && (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT) && (gCurTask->skipMask & TASK_SKIP_COROUTINE))
         goto check;
     if (gCurTask->velY >= 0)
     {
@@ -418,7 +418,7 @@ check:
 tail:
     if (gCurTask->player->unk37 != 2 && gLocalPlayer == gCurTask->player->playerIndex)
         SetCameraFocus(gCurTask->posX >> 16, gCurTask->posY >> 16);
-    if (gCurTask->player->terrainBox != 0 && !(gCurTask->skipMask & 2))
+    if (gCurTask->player->terrainBox != 0 && !(gCurTask->skipMask & TASK_SKIP_MOVE))
     {
         gCurTask->player->prevPixelX = gCurTask->pixelX;
         gCurTask->player->prevPixelY = gCurTask->pixelY;
@@ -433,7 +433,7 @@ void sub_0803332c(void)
     t = gCurTask;
     if (t->player->requestedAction == PLAYER_ACTION_NONE)
     {
-        if (t->u76.unk76 & 1)
+        if (t->u76.unk76 & PLAYER_HIT_LANDED)
         {
             t->u76.unk76 &= 0xFFFE;
             if ((s8)t->player->blockBreakCooldown == 0)
@@ -443,11 +443,11 @@ void sub_0803332c(void)
             }
         }
         p = gCurTask->player;
-        if (p->actionFlags & 1)
+        if (p->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT)
         {
             sub_0803cbd8();
             p = gCurTask->player;
-            if (!(p->actionFlags & 1) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
+            if (!(p->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT) && gMetaKnightmareMode == 0 && p->mode == 7 && p->blocksBroken == 0)
             {
                 TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
                 gCurTask->player->requestedAction = PLAYER_ACTION_RECOIL;
@@ -472,7 +472,7 @@ void sub_08033414(void)
     switch (gCurTask->hitKind)
     {
     default:
-        if (gMetaKnightmareMode == 0 && (gCurTask->player->actionFlags & 32))
+        if (gMetaKnightmareMode == 0 && (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_METAKNIGHT_SWORD))
         {
             if ((s16)gPlayerAbilities[gCurTask->player->playerIndex] != ABILITY_NORMAL)
             {
@@ -489,7 +489,7 @@ void sub_08033414(void)
             gCurTask->player->unk37 = 1;
             gCurTask->player->requestedAction = PLAYER_ACTION_GET_ABILITY;
         }
-        else if (gCurTask->player->actionFlags & 64)
+        else if (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_INVINCIBLE_CANDY)
         {
             SetPlayerInvulnerability(5, 0, gCurTask->player->playerIndex);
             gCurTask->player->actionFlags &= 0xFFBF;
@@ -520,7 +520,7 @@ void sub_08033414(void)
     gCurTask->hitKind = HIT_KIND_NONE;
     if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
-        if (gCurTask->player->actionFlags & 1)
+        if (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_OFFSET_SCRIPT)
         {
             gCurTask->player->offsetScriptStep = 0;
             gCurTask->player->offsetScriptDelay = 1;
@@ -537,9 +537,9 @@ void sub_08033414(void)
     }
     else if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->u76.unk76 & 2)
+        if (gCurTask->u76.unk76 & PLAYER_HIT_HIGH_FALL_BOUNCE)
         {
-            gCurTask->player->actionFlags |= 2;
+            gCurTask->player->actionFlags |= PLAYER_ACTION_FLAG_HIGH_FALL_BOUNCE;
             gCurTask->variant = 1;
             gCurTask->player->requestedAction = PLAYER_ACTION_HIGH_FALL;
             gCurTask->u76.unk76 &= 0xFFFD;
@@ -551,7 +551,7 @@ void sub_08033414(void)
         TaskSetEntry(PlayerStartRequestedAction, gCurTaskIdx);
     if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->player->actionFlags & 4)
+        if (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_CATCHING)
         {
             if (gCurTask->player->ability == ABILITY_NORMAL)
                 sub_0803c9b4(0);

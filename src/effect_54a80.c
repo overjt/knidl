@@ -364,7 +364,7 @@ void sub_080552fc(void)
     if (gCurTask->player->mode == 20 && (gCurTask->u8C.parentTask)->unk18 != 0)
         ok = 0;
     if (ok == 0)
-        TaskSetSkipMask(8, gCurTaskIdx);
+        TaskSetSkipMask(TASK_SKIP_LATE_UPDATE, gCurTaskIdx);
     else
         TaskSetSkipMask(0, gCurTaskIdx);
 }

@@ -90,7 +90,7 @@ void PlayerEffectInhaleAir(void)
 void PlayerEffectInhaleAirUpdate(void)
 {
     gCurTask->skipMask = (gCurTask->u8C.parentTask)->skipMask & 0xFB;
-    if (!(gCurTask->player->actionFlags & 4))
+    if (!(gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_CATCHING))
         TaskFree(gCurTaskIdx);
 }
 

@@ -42,4 +42,8 @@
 /* Body box guard flags - BodyBox.guardFlags (R3): what the collider is protected from. Left as numbers: 2 and 4, tested only together (& 6: the player cannot be caught) and set by no ROM box read here */
 #define BODY_BOX_GUARD_NO_DAMAGE  0x8000 /* the collider's task takes no damage */
 
+/* Player hit effect bits - Task.hitEffect of a player task, beside the effect in its low nibble (sites only: an actor's Task.hitEffect is an index, gActorDefeatsByEffect) */
+#define HIT_EFFECT_TERRAIN_DAMAGE  0x80  /* hurt by the terrain */
+#define HIT_EFFECT_MID_BOSS        0x200 /* defeated by a mid-boss attack */
+
 #endif // GUARD_CONSTANTS_HITS_H

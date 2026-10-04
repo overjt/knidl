@@ -913,7 +913,7 @@ void HotHeadFireBreath(void)
     if ((w->hotHeadFireFanIndex & 2) != 0)
         w->spriteFlags = w->spriteFlags & 0x7FFF;
     else
-        w->spriteFlags = w->spriteFlags | 0x8000;
+        w->spriteFlags = w->spriteFlags | SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 4;
     TaskYieldTrampoline(2);
     x = gCurTask;

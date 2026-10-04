@@ -58,7 +58,7 @@ void PlayerActionGetAbility(void)
     gCurTask->player->unk16 = 0xFF;
     {
         struct Task *t = gCurTask;
-        t->player->actionFlags |= 0x100;
+        t->player->actionFlags |= PLAYER_ACTION_FLAG_GET_ABILITY;
         t->player->statusFlags |= 0x720;
         t->player->statusFlags &= 0xFFEF;
     }
@@ -171,7 +171,7 @@ void PlayerActionGetAbility(void)
     LoadAbilityTiles();
     {
         struct Task *t = gCurTask;
-        t->player->statusFlags |= 128;
+        t->player->statusFlags |= PLAYER_STATUS_NO_ATTACK_SFX;
         switch ((s8)(t->player->ability - 1)) {
         case 24:
             gCurTask->player->unk37 = 3;
@@ -299,7 +299,7 @@ void PlayerActionGetAbility(void)
             CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ABILITY_GET_SPARKLE, 0);
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->player->actionFlags & 32)
+            if (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_METAKNIGHT_SWORD)
                 gUnk_02007D00[2]++;
             break;
         case 4:
@@ -760,7 +760,7 @@ void PlayerActionGetAbilityUpdate(void)
                                  u->playerNextBankBlendRatio, 16,
                                  (u16 *)(gObjPalette + (((u->tileWord >> 12) + 1) << 5)));
                 }
-                gCurTask->player->statusFlags |= 16;
+                gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
                 break;
             }
             break;

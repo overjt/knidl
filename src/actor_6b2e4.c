@@ -270,7 +270,7 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
     {
         x = gCurTask;
         if (x->facing == 1)
-            x->spriteFlags |= 0x8000;
+            x->spriteFlags |= SPRITE_FLAG_FLIP_X;
         else
             x->spriteFlags &= 0x7FFF;
     }

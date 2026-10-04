@@ -399,7 +399,7 @@ void sub_0808d460(void)
 
     t = gCurTask;
     if (t->facing == 1)
-        t->spriteFlags |= 0x8000;
+        t->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
         t->spriteFlags &= 0x7FFF;
 }

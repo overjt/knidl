@@ -936,7 +936,7 @@ void BubblesBounceOffWall(void)
     if (gCurTask->facing == 1)
         gCurTask->spriteFlags = gCurTask->spriteFlags & 0x7FFF;
     else
-        gCurTask->spriteFlags = gCurTask->spriteFlags | 0x8000;
+        gCurTask->spriteFlags = gCurTask->spriteFlags | SPRITE_FLAG_FLIP_X;
     ActorSetAttackBox((u32)gBubblesBounceOffWallAttackBox);
     gCurTask->frame = 21;
     TaskYieldTrampoline(12);
@@ -1202,7 +1202,7 @@ void BubblesSetRollFrame(u8 a)
 {
     gCurTask->frame = gUnk_08742778[a * 2];
     if (gUnk_08742778[a * 2 + 1] != 0)
-        gCurTask->spriteFlags = gCurTask->spriteFlags | 0x8000;
+        gCurTask->spriteFlags = gCurTask->spriteFlags | SPRITE_FLAG_FLIP_X;
     else
         gCurTask->spriteFlags = gCurTask->spriteFlags & 0x7FFF;
 }
@@ -1513,10 +1513,10 @@ void SlippyState1(void)
             TaskYieldTrampoline(4);
             if (gUnk_030023D4 != 0)
             {
-                if (gCurTask->spriteFlags & 0x8000)
+                if (gCurTask->spriteFlags & SPRITE_FLAG_FLIP_X)
                     gCurTask->spriteFlags = gCurTask->spriteFlags & 0x7FFF;
                 else
-                    gCurTask->spriteFlags = gCurTask->spriteFlags | 0x8000;
+                    gCurTask->spriteFlags = gCurTask->spriteFlags | SPRITE_FLAG_FLIP_X;
             }
             else
             {

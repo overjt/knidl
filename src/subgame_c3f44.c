@@ -133,7 +133,7 @@ void AirGrindEffect(void)
         gCurTask->updateCallback = (u32)AirGrindPenaltyEffectUpdate;
         break;
     }
-    TaskSetSkipMask(1, gCurTaskIdx);
+    TaskSetSkipMask(TASK_SKIP_COROUTINE, gCurTaskIdx);
     TaskSleepForever();
 }
 

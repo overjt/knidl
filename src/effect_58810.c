@@ -241,7 +241,7 @@ void PlayerEffectIceBreathCloudUpdate(void)
 
     if (t->playerEffectStopRequested == 0 && (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing))
         t->playerEffectStopRequested = 1;
-    if (!(gCurTask->player->actionFlags & 0x100) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
+    if (!(gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);
     if (gCurTask->player->ability != ABILITY_ICE)
         TaskFree(gCurTaskIdx);
@@ -417,7 +417,7 @@ void PlayerEffectFreezeAuraUpdate(void)
     struct Task *t = gCurTask;
     struct PlayerState *p = t->player;
 
-    if (!(p->actionFlags & 0x100))
+    if (!(p->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY))
     {
         if (t->playerEffectStopRequested == 0 && (p->mode != 13 || (t->u8C.parentTask)->variant != 1))
             t->playerEffectStopRequested = 1;
@@ -427,6 +427,6 @@ void PlayerEffectFreezeAuraUpdate(void)
         if (t->playerEffectStopRequested == 0 && p->mode != 13)
             t->playerEffectStopRequested = 1;
     }
-    if (!(gCurTask->player->actionFlags & 0x100) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
+    if (!(gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_GET_ABILITY) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);
 }

@@ -606,6 +606,7 @@ UNNAMED_REASONS = {
     "write-only": "written but never read, or only cleared",
     "never-accessed": "no code reads or writes it",
     "unproven-bits": "a flag word whose bits are not all proven (docs/naming.md 7.0, R3)",
+    "asset": "a graphic, palette, tilemap or text picture in a functional segment: an asset label, unnamed by the data policy (docs/naming.md 5)",
 }
 UNNAMED_KINDS = {"function": "fn", "ram": "ram", "field": "field", "rom": "rom"}
 

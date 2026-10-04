@@ -1062,7 +1062,7 @@ void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p)
     struct Task *t;
 
     sub_08066544();
-    TaskSetSkipMask(8, gCurTaskIdx);
+    TaskSetSkipMask(TASK_SKIP_LATE_UPDATE, gCurTaskIdx);
     t = gCurTask;
     t->actorSavedUpdateCallback = t->updateCallback;
     t->updateCallback = (u32)ActorIntroPoseUpdate;
@@ -1170,7 +1170,7 @@ void ActorStartIntroPose(struct AnimCmd *p)
     ActorStopAnim();
     if (p != NULL)
         gCurTask->actorAnimDelay24 = ActorStartAnim(p);
-    TaskSetSkipMask(8, gCurTaskIdx);
+    TaskSetSkipMask(TASK_SKIP_LATE_UPDATE, gCurTaskIdx);
     ActorSetAttackBox(a->unk60->altAttackBox);
 }
 

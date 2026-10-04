@@ -151,7 +151,7 @@ void sub_08074ee0(u32 flag)
             struct PlayerState *p = &gPlayerStates[i];
 
             if (flag)
-                p->statusFlags |= 0x10;
+                p->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             else
                 p->statusFlags &= 0xFFEF;
         }

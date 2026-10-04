@@ -995,7 +995,7 @@ void CappyCappedHop(void)
             }
             while (gCurTask->onGround == 0)
                 TaskYieldTrampoline(1);
-            gCurTask->spriteFlags ^= 0x8000;
+            gCurTask->spriteFlags ^= SPRITE_FLAG_FLIP_X;
         }
     }
 }
@@ -1137,7 +1137,7 @@ void CappyStandHop(void)
         }
         while (gCurTask->onGround == 0)
             TaskYieldTrampoline(1);
-        gCurTask->spriteFlags ^= 0x8000;
+        gCurTask->spriteFlags ^= SPRITE_FLAG_FLIP_X;
     }
 }
 

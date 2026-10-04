@@ -133,7 +133,7 @@ void PlayerActionBackdrop(void)
         {
             PlaySfxIfLocalPlayer(177, gCurTask->player->playerIndex);
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-            gCurTask->player->statusFlags |= 0x200;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_NO_TERRAIN_DAMAGE;
             PlayerStopAxes(1);
             TaskSetFrame(0xE83);
             TaskYieldTrampoline(1);
@@ -270,7 +270,7 @@ void PlayerActionThrow(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->player->playerIndex);
-        gCurTask->player->actionFlags |= 4;
+        gCurTask->player->actionFlags |= PLAYER_ACTION_FLAG_CATCHING;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->variant = 1;
@@ -306,7 +306,7 @@ void PlayerActionThrow(void)
         {
             PlaySfxIfLocalPlayer(SE_THROW_GRAB, gCurTask->player->playerIndex);
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-            gCurTask->player->statusFlags |= 0x200;
+            gCurTask->player->statusFlags |= PLAYER_STATUS_NO_TERRAIN_DAMAGE;
             TaskSetFrame(0xF73);
             TaskYieldTrampoline(1);
         }
