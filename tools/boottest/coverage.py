@@ -8,7 +8,10 @@ per coverage file and for all of them together, how many functions ran at
 least one instruction and how many of their bytes ran.
 
 IWRAM ranges are mapped back to the ROM code copied there (COPIES below), so
-the ISR and the sound mixer count as the functions they are.  The coverage
+the ISR and the sound mixer count as the functions they are.  What runs in
+IWRAM outside those copies is code on the stack: the SRAM driver
+(src/agb_sram.c) copies ReadSram_Core and VerifySram_Core into a local
+buffer and calls it there; it is reported as a byte count.  The coverage
 files are build products (build/boottest/coverage-*.txt): never committed.
 
   python3 tools/boottest/coverage.py --syms build/boottest/syms.txt \\
@@ -130,7 +133,7 @@ def main():
         print("%-36s %5d of %d functions (%5.1f%%), %7d of %d bytes (%5.1f%%)%s"
               % (label, len(hit), len(funcs), 100.0 * len(hit) / len(funcs), nbytes,
                  total_bytes, 100.0 * nbytes / total_bytes,
-                 ", %d IWRAM bytes outside the copies" % unmapped if unmapped else ""))
+                 ", %d IWRAM bytes on the stack" % unmapped if unmapped else ""))
 
     union_hit, union_ranges, union_unmapped = set(), [], 0
     for path in args.coverage:
