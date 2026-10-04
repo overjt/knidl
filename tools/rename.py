@@ -854,13 +854,17 @@ def unbitexpr(a, b, values, uses):
             continue
         e = expr_at(j) if x.lastgroup == "num" else None
         if e is None:
-            return a, b
+            i += 1  # another kind of difference (a field, a symbol): left
+            j += 1  # to the checks that follow
+            continue
         v, comp, n = e
         lit = int_value(x.group(0))
         ok = lit == v if not comp else any(
             lit == (~v) & ((1 << w) - 1) for w in (8, 16, 32) if v < (1 << w))
         if not ok or x.group(0) != x.group(0).rstrip("uUlL"):
-            return a, b
+            i += 1
+            j += 1
+            continue
         out.append(b[pos:y.start()])
         out.append(x.group(0))
         pos = tb[j + n - 1].end()
