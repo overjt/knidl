@@ -4805,6 +4805,23 @@ address pseudo (still 2 refs), and the `*p` store forces an extra
 `gCurTask` reload (153 bytes).  Both shapes are listed in `docs/audit.md`
 section 3; the original probably had a loop or a macro there.
 
+### 3.525 The assembly oracle cannot see which union member an access names
+A per-family view respells every access to a union member, and every
+member of a `u16` union compiles to the same `ldrh`/`strh` at the same
+offset: the whole-tree oracle (4.128) proves the layout and the
+instructions, never the member choice.  #155 run 4's `Task.u76`
+(`{ subtype, doorIndex, unk76 }`, 98 accesses) was drafted on a copy of
+the tree 18 commits behind, so `patch` placed some hunks with fuzz and
+rejected one (a renamed `PlayerState` field next to it): the oracle still
+said 0 of 319 files differ, and it would have said so for any member.
+What made the member choice safe was reading the applied diff access by
+access against the agent's per-family census (61 `subtype`, 14
+`doorIndex`, 23 `unk76`).  So a view needs both proofs: the oracle for
+the code, a reviewed census for the members.  The halfword union itself
+behaves as 3.522 says (`packed, aligned(2)` keeps the 2-byte size and the
+`ldrh`), and `tools/header_smoke_game.c` now checks `u76`'s offset and
+size and `health`'s offset after it.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -11411,6 +11428,51 @@ source, not only `make datastats`.
   `.word MasterIsr`.  No shift-test point lies before `0x08000108`, so
   only reading the record's declared type showed it; it is a
   `not_pointers` entry now.
+
+### 4.160 A state's update table is indexed by what the state stores, not by the state
+The behaviour tables come in pairs: `CallTableEntry(Task.state, n,
+g<F>States)` runs state N's entry and `CallTableEntry(Task.updateState, n,
+g<F>StateUpdates)` the per-frame update, and run 2's convention named the
+update of `<F>V` as `<F>VUpdate` by the index alone.  The index of the
+second table is whatever the entry stores in `Task.updateState`.  In 148
+families every entry stores its own index, but Fire Lion's entries use
+their own numbering (its Hop sits in two state slots and selects update
+2), Gip's walk sits in states 0-2 and always stores 0, Javelin Knight's
+state k stores k-1, Bubbles' state 2 stores 1 and Mr. Tick-Tock's 18
+stores 17.  A slot name `State<N>Update` or a pair name `<V>Update` built
+from the index would have named the wrong function in those families.
+`pending/names4/tools/pairing.py` reads each entry's `updateState = K`
+(a constant, or a local assigned one: `one = 1; t->updateState = one;`)
+and the slot and pair generators skip every update whose state does not
+store its own index (docs/naming.md 2.3 and 2.4).  Agent M found it by
+reading Fire Lion's bodies; a table-only generator cannot.
+
+### 4.161 Harness notes from #155 run 4 (state bodies, slots, cells, fields)
+- Six proposal agents by subject (A bosses, M mid-bosses and knights,
+  B kind-0 enemies, C actor core and stage objects, then D RAM cells and
+  F fields), at most four at once, in 3-5 rounds each of 5-17 minutes,
+  resumed with `SendMessage`.  The C tables of #167 made the families
+  cheap: every state body's family and slot is one lookup in
+  `pending/names4/xref.json` (`tools/xref.py` there: every C definition,
+  what it mentions, every table by slot).
+- Verbs first, then the mechanical passes: `pairs.py` (the updates of
+  states with a verb) and `slots.py` (a function whose only referrer is
+  one slot of one named state table, docs/naming.md 2.4).  The slot pass
+  named 662 functions in two batches; nothing broke.  The approval
+  conditions (verbs before slots, counted apart, their own commits) cost
+  nothing once the generator existed.
+- Families need one verb list each, and two agents' words diverge: B's
+  Hop ("a loop of hops the body never leaves") and run 3's Hop ("repeated
+  jumps without X motion") were merged into one definition the same hour.
+  Writing the definitions into docs/naming.md 2.3 as they appear keeps
+  later rounds parallel.
+- When no role word fits every member of a group the code sorts by a
+  value, the value itself is a safe name (the collider classes 0x10 and
+  0x20, docs/naming.md 2.4); the reading goes into the header comment.
+- A usage limit stopped the run for about an hour; the agents' CSVs were
+  written incrementally and every agent resumed with its context.  The
+  heartbeat loop must be stopped while the coordinator is blocked, or the
+  supervisor sees a live worker that is not working.
 
 ## 5. Workflow that worked
 
