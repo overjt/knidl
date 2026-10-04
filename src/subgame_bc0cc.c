@@ -994,7 +994,7 @@ void CreateQuickDrawOpponentTag(void)
         }
         n = &gTasks[idx];
         n->variant = 5;
-        n->unk76 = 1;
+        n->u76.unk76 = 1;
         n->pixelX = x;
         n->pixelY = y;
     }
@@ -1058,7 +1058,7 @@ void QuickDrawOpponent(void)
     gCurTask->layer = 12;
     t = gCurTask;
     t->unk18 = 0;
-    if (t->unk76 != 0)
+    if (t->u76.unk76 != 0)
         t->state = 5;
     else
         t->state = 0;

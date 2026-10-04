@@ -309,7 +309,7 @@ void PlayerEffectCrashBlast(void)
             {
             case 5:
                 r = 0;
-                if (gTasks[i].unk76 == 2)
+                if (gTasks[i].u76.subtype == 2)
                 {
                     TaskRestoreSkipMask(i);
                     TaskYieldTrampoline(1);
@@ -318,7 +318,7 @@ void PlayerEffectCrashBlast(void)
                 break;
             case 6:
                 r = 0;
-                if (gTasks[i].unk76 != 5)
+                if (gTasks[i].u76.subtype != 5)
                 {
                     TaskRestoreSkipMask(i);
                     TaskYieldTrampoline(1);

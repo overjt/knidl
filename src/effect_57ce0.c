@@ -240,7 +240,7 @@ void PlayerEffectMikeAttack(void)
             {
             case 6:
                 r = 0;
-                if (gTasks[i].unk76 != 5)
+                if (gTasks[i].u76.subtype != 5)
                 {
                     TaskRestoreSkipMask(i);
                     m++;

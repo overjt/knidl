@@ -1211,7 +1211,7 @@ void sub_080abe7c(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 8 && gUnk_02007D00[0] == 0 && gUnk_02007D00[5] == 0)
+        if (o->u76.subtype == 8 && gUnk_02007D00[0] == 0 && gUnk_02007D00[5] == 0)
         {
             t->posX = o->pixelX << 16;
             t->posY = o->pixelY << 16;
@@ -1264,7 +1264,7 @@ void NightmareWizardPalmTornadoUpdate(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 8 && gUnk_02007D00[0] == 0)
+        if (o->u76.subtype == 8 && gUnk_02007D00[0] == 0)
         {
             t->pixelX = o->pixelX;
             t->pixelY = o->pixelY;
@@ -1306,7 +1306,7 @@ void sub_080ac08c(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 8 && gUnk_02007D00[0] == 0)
+        if (o->u76.subtype == 8 && gUnk_02007D00[0] == 0)
         {
             if (gUnk_02007D00[7] == 1)
             {
@@ -1380,7 +1380,7 @@ void NightmareWizardPointTornadoUpdate(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 8 && gUnk_02007D00[0] == 0)
+        if (o->u76.subtype == 8 && gUnk_02007D00[0] == 0)
         {
             t->pixelX = o->pixelX;
             t->pixelY = o->pixelY;
@@ -1434,7 +1434,7 @@ void sub_080ac30c(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 8 && o->state == 5 && gUnk_02007D00[0] == 0)
+        if (o->u76.subtype == 8 && o->state == 5 && gUnk_02007D00[0] == 0)
         {
             t->pixelX = o->pixelX;
             t->pixelY = o->pixelY + t->unk28;
@@ -1502,7 +1502,7 @@ void NightmareWizardCloakTornadoUpdate(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 8 && o->state == 5 && gUnk_02007D00[0] == 0)
+        if (o->u76.subtype == 8 && o->state == 5 && gUnk_02007D00[0] == 0)
         {
             t->pixelX = o->pixelX;
             t->pixelY = o->pixelY;
@@ -1542,7 +1542,7 @@ void NightmareWizardHitBoxUpdate(void)
     {
         o = &gTasks[i];
 
-        if (o->unk76 == 8 && gUnk_02007D00[0] != 2)
+        if (o->u76.subtype == 8 && gUnk_02007D00[0] != 2)
         {
             if (o->frame == -1)
                 return;
@@ -1851,7 +1851,7 @@ void KrackoStarmanCheckParent(void)
     {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 6 && o->unk34 == 0)
+        if (o->u76.subtype == 6 && o->unk34 == 0)
             return;
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }

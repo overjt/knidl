@@ -1231,7 +1231,7 @@ void BugzzyAfterimageUpdate(void)
     s32 i;
 
     if ((s16)gTaskSlotTypes[i = (t = gCurTask)->parent] != -1
-     && (u = &gTasks[i])->unk76 == 5 && u->unk18 != 0)
+     && (u = &gTasks[i])->u76.subtype == 5 && u->unk18 != 0)
     {
         if (--t->unk28 == 0)
         {

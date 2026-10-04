@@ -227,13 +227,13 @@ u8 HitTestPlayerColliders(void)
                 {
                     gHitKind = 2;
                     CalcHitDamageAndDirection();
-                    t->unk76 = (t->unk76 & 0x4000) | 1;
+                    t->u76.unk76 = (t->u76.unk76 & 0x4000) | 1;
                 }
             }
             else if (s == 0)
             {
                 if (!(gAttackBox->unk0C & 0x4005)
-                    && !((gAttackBox->unk1A & 0x40) && (t->unk76 & 0x4000)))
+                    && !((gAttackBox->unk1A & 0x40) && (t->u76.unk76 & 0x4000)))
                 {
                     t->hitEffect = gAttackBox->hitEffect;
                     /* the actor's x is read signed here (ldrsh) */
@@ -428,8 +428,8 @@ u8 HitTestColliderClass10(void)
             u = &gTasks[gColliderPlayer];
             if (!(gAttackBox->unk1A & 1))
             {
-                u->unk76 &= 0x4000;
-                u->unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
+                u->u76.unk76 &= 0x4000;
+                u->u76.unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
             }
         }
         if (!(gAttackBox->unk0E & 0x8000))

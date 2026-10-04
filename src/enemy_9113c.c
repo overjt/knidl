@@ -622,7 +622,7 @@ void PoppyBrosSrHandUpdate(void)
     {
         t = gCurTask;
         u = &gTasks[t->parent];
-        if (u->unk76 == 1 && u->unk2C == 0)
+        if (u->u76.subtype == 1 && u->unk2C == 0)
         {
             t->facing = u->facing;
             TaskUpdateFlip();
@@ -678,7 +678,7 @@ void PoppyBrosSrHeadUpdate(void)
     {
         t = gCurTask;
         u = &gTasks[t->parent];
-        if (u->unk76 == 1 && u->unk2C == 0)
+        if (u->u76.subtype == 1 && u->unk2C == 0)
         {
             t->pixelX = u->pixelX;
             t->pixelY = u->pixelY;

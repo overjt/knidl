@@ -195,8 +195,8 @@ u8 HitTestColliderClass20(void)
                 continue;
             if (gColliderPlayer == 4)
                 continue;
-            u->unk76 &= 0x4000;
-            u->unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
+            u->u76.unk76 &= 0x4000;
+            u->u76.unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
             continue;
         }
         m = gUnk_08732254[k];
@@ -208,7 +208,7 @@ u8 HitTestColliderClass20(void)
             {
                 if (gColliderPlayer == 4)
                     continue;
-                u->unk76 |= 0x4000;
+                u->u76.unk76 |= 0x4000;
                 continue;
             }
             if (gAttackBox->unk1A & 0x3E)
@@ -223,8 +223,8 @@ u8 HitTestColliderClass20(void)
             if (!(gAttackBox->unk1A & 1) && !(k == 5 && (gAttackBox->unk1A & 0x80))
                 && gColliderPlayer != 4)
             {
-                u->unk76 &= 0x4000;
-                u->unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
+                u->u76.unk76 &= 0x4000;
+                u->u76.unk76 |= gColliderBodyBox->unk10 & 0x3FFF;
             }
             switch (k)
             {
@@ -253,8 +253,8 @@ u8 HitTestColliderClass20(void)
         }
         if (!(a->unk1A & 1) && !(k == 5 && (a->unk1A & 0x80)) && gColliderPlayer != 4)
         {
-            u->unk76 &= 0x4000;
-            u->unk76 |= b->unk10 & 0x3FFF;
+            u->u76.unk76 &= 0x4000;
+            u->u76.unk76 |= b->unk10 & 0x3FFF;
         }
         if (gColliderSlot != (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass != 32)
         {

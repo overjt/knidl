@@ -422,7 +422,7 @@ void sub_080a9ba0(void)
     if ((s16)arr[i] != -1) {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 6 && o->unk34 != 2) {
+        if (o->u76.subtype == 6 && o->unk34 != 2) {
             t->pixelX = o->pixelX;
             t->pixelY = o->pixelY;
         } else {
@@ -495,7 +495,7 @@ void KrackoLightningUpdate(void)
     if ((s16)arr[i] != -1) {
         struct Task *o = &gTasks[i];
 
-        if (o->unk76 == 6 && o->unk34 != 1)
+        if (o->u76.subtype == 6 && o->unk34 != 1)
             ActorCheckHitsWithBox((s32)gUnk_08749774);
         else
             TaskFree(gCurTaskIdx);

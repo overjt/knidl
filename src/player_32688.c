@@ -83,7 +83,7 @@ void Task_Player(void)
     else
         t->layer = 7;
     gCurTask->tileWord = (gCurTask->player->playerIndex << 13) | (gCurTask->player->playerIndex << 7);
-    gCurTask->unk76 = 0;
+    gCurTask->u76.unk76 = 0;
     gCurTask->player->requestedAction = 0;
     if (gMetaKnightmareMode == 0)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
@@ -283,7 +283,7 @@ void PlayerUpdate(void)
     {
         gCurTask->player->blocksBroken = TaskBreakBlocks(gCurTask->player->hitBoxSet, gCurTask->player->playerIndex);
         if (gCurTask->player->blocksBroken != 0)
-            gCurTask->unk76 |= 1;
+            gCurTask->u76.unk76 |= 1;
     }
     else
     {
@@ -433,9 +433,9 @@ void sub_0803332c(void)
     t = gCurTask;
     if (t->player->requestedAction == 0)
     {
-        if (t->unk76 & 1)
+        if (t->u76.unk76 & 1)
         {
-            t->unk76 &= 0xFFFE;
+            t->u76.unk76 &= 0xFFFE;
             if ((s8)t->player->blockBreakCooldown == 0)
             {
                 PlayerStartOffsetScript(0);
@@ -530,19 +530,19 @@ void sub_08033414(void)
         }
         if (gCurTask->player->sfxPlayer != -1)
             PlayerStopSfx();
-        gCurTask->unk76 = 0;
+        gCurTask->u76.unk76 = 0;
         gCurTask->player->unk40 = 0;
         gCurTask->player->unk50 = 0;
         gCurTask->u80.attackAbility = 0;
     }
     else if (gMetaKnightmareMode == 0)
     {
-        if (gCurTask->unk76 & 2)
+        if (gCurTask->u76.unk76 & 2)
         {
             gCurTask->player->unk40 |= 2;
             gCurTask->variant = 1;
             gCurTask->player->requestedAction = 8;
-            gCurTask->unk76 &= 0xFFFD;
+            gCurTask->u76.unk76 &= 0xFFFD;
         }
         if (!(gCurTask->player->unk40 & 128))
             sub_0803ce98();

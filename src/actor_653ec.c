@@ -553,10 +553,10 @@ void sub_08065ce0(u32 i)
     switch (t->actorKind)
     {
     case 0:
-        tbl = gUnk_0873EF74[t->unk76];
+        tbl = gUnk_0873EF74[t->u76.subtype];
         break;
     case 1:
-        tbl = gUnk_0873F118[t->unk76];
+        tbl = gUnk_0873F118[t->u76.subtype];
         break;
     default:
         tbl = NULL;
@@ -804,10 +804,10 @@ u32 *sub_0806601c(void)
     a = t->u8C.actor;
     if (t->actorKind == 1)
     {
-        r = gUnk_0873F0C4[t->unk76];
+        r = gUnk_0873F0C4[t->u76.subtype];
         if (a->paletteVariant != 0)
         {
-            tbl = gUnk_0873F118[t->unk76];
+            tbl = gUnk_0873F118[t->u76.subtype];
             if (tbl != NULL)
             {
                 k = a->paletteVariant - 1;
@@ -820,7 +820,7 @@ u32 *sub_0806601c(void)
     }
     else
     {
-        r = gUnk_0873F138[t->unk76];
+        r = gUnk_0873F138[t->u76.subtype];
     }
     return r;
 }
@@ -841,9 +841,9 @@ u16 sub_08066088(u32 mode)
     p = sub_0806601c();
     t = gCurTask;
     if (t->actorKind == 1)
-        a->gfx.header = (struct GfxHeader *)gMidBossGfx[t->unk76];
+        a->gfx.header = (struct GfxHeader *)gMidBossGfx[t->u76.subtype];
     else
-        a->gfx.header = (struct GfxHeader *)gBossGfx[t->unk76];
+        a->gfx.header = (struct GfxHeader *)gBossGfx[t->u76.subtype];
     a->gfx.tileBits = gCurTask->tileWord & 0xFFF;
     a->gfx.paletteBank = gCurTask->tileWord >> 12;
     if (p != NULL)
@@ -1116,7 +1116,7 @@ void ActorShowHpBar(void)
     gHudHpBarFilled = 0;
     HudShowHpBar();
     t = *g;
-    if (t->actorKind == 1 || (t->actorKind == 2 && t->unk76 == 7))
+    if (t->actorKind == 1 || (t->actorKind == 2 && t->u76.subtype == 7))
     {
         v = t->health;
         HudStartTaskHpBar(v, v);
@@ -1208,7 +1208,7 @@ void sub_080666f8(struct AnimCmd *p)
 
 u32 sub_08066718(void)
 {
-    switch (gCurTask->unk76)
+    switch (gCurTask->u76.subtype)
     {
     case 5:
         return sub_08026a0c();
@@ -1225,7 +1225,7 @@ void sub_08066754(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->actorKind == 2 && t->unk76 == 5)
+    if (t->actorKind == 2 && t->u76.subtype == 5)
         gCurTask->unk24 = ActorTickAnim(t->unk24);
     else
         gCurTask->unk24 = ActorTickAnimFacingNearestPlayer(gCurTask->unk24);
@@ -1309,7 +1309,7 @@ void sub_080668c8(void)
         }
         p = &cls;
         cls = t->actorKind;
-        if (*p == 6 && t->unk76 == 0)
+        if (*p == 6 && t->u76.subtype == 0)
             continue;
         if (*p == 10)
             continue;
@@ -1594,7 +1594,7 @@ void sub_08066dcc(void)
     t = gCurTask;
     i = t->frame;
     j = i * 2;
-    switch (t->unk76)
+    switch (t->u76.subtype)
     {
     case 0:
         gUnk_030023B4 = gUnk_0873E1E8[i * 2] * t->facing;
@@ -1690,7 +1690,7 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
         else
         {
             t->variant = 2;
-            t->unk74 = gCurTask->unk76;
+            t->unk74 = gCurTask->u76.subtype;
         }
     }
 }

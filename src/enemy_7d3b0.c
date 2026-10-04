@@ -71,7 +71,7 @@ void SwordAndBladeKnightSlashUpdate(void)
         struct Task *o = &gTasks[t->parent];
         s16 *s;
 
-        if ((u16)(o->unk76 - 28) > 1)
+        if ((u16)(o->u76.subtype - 28) > 1)
             goto kill2;
         s = &o->pixelX;
         t->pixelX = o->unk2C * 20 + *s;

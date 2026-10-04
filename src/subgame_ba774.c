@@ -488,7 +488,7 @@ void CreateQuickDrawOpponent(void)
         t->parent = gCurTaskIdx;
         t->variant = 5;
         t->unk74 = gSubGameLevel;
-        t->unk76 = 0;
+        t->u76.unk76 = 0;
         gCurTask->unk46 = i;
     }
 }

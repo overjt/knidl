@@ -36,7 +36,7 @@ s32 CreateArenaDoorSign(s32 x, s32 y, s32 a)
         t->velX = x;
         t->velY = y;
         t->unk20 = 1;
-        t->unk76 = a;
+        t->u76.doorIndex = a;
     }
     return id;
 }
@@ -99,7 +99,7 @@ s32 CreateBossDoorSign(s32 x, s32 y, s32 a)
         t->velX = x;
         t->velY = y;
         t->unk20 = 2;
-        t->unk76 = a;
+        t->u76.doorIndex = a;
     }
     return id;
 }
@@ -303,7 +303,7 @@ s32 CreateQuickDrawDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->unk1C = a;
         t->unk20 = 1;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }
@@ -387,7 +387,7 @@ s32 CreateBombRallyDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->unk1C = a;
         t->unk20 = 1;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }
@@ -453,7 +453,7 @@ s32 CreateAirGrindDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->velY = y;
         t->unk1C = a;
         t->unk20 = 1;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }
@@ -514,7 +514,7 @@ s32 CreateMuseumDoorSign(s32 x, s32 y, s32 a)
         t->velX = x;
         t->velY = y;
         t->unk20 = 1;
-        t->unk76 = a;
+        t->u76.doorIndex = a;
     }
     return id;
 }
@@ -554,7 +554,7 @@ s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->unk18 = a;
         t->unk1C = 1;
         t->unk20 = 2;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }
@@ -577,7 +577,7 @@ s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->unk18 = a;
         t->unk1C = 0;
         t->unk20 = 2;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }
@@ -600,7 +600,7 @@ s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->unk18 = a;
         t->unk1C = 0;
         t->unk20 = 0;
-        t->unk76 = b;
+        t->u76.doorIndex = b;
     }
     return id;
 }

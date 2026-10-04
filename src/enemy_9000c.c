@@ -744,7 +744,7 @@ void BonkersHammerHitBoxUpdate(void)
     if ((s16)gTaskSlotTypes[gCurTask->parent] != -1)
     {
         u = &gTasks[gCurTask->parent];
-        if (u->unk76 == 0 && u->unk34 == 0)
+        if (u->u76.subtype == 0 && u->unk34 == 0)
         {
             d = u->frame - 16;
             if (d <= 6)

@@ -933,7 +933,7 @@ void sub_080b3f54(void)
     if (a->animScript == NULL)
         gCurTask->unk34 = ActorStartAnim((struct AnimCmd *)gUnk_08756084);
     gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
-    if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
+    if (gMetaKnightmareMode == 1 && gCurTask->u76.subtype == 1)
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     a->extraLayerOffset = 1;
     a->extraTileWord = 0xF000;
@@ -967,7 +967,7 @@ void sub_080b3ffc(void)
 {
     if (gCurTask->frame != 5)
     {
-        if (gMetaKnightmareMode == 1 && gCurTask->unk76 == 1)
+        if (gMetaKnightmareMode == 1 && gCurTask->u76.subtype == 1)
             gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xE000;
     }
     else

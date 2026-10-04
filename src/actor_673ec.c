@@ -1125,7 +1125,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     t->updateCallback = 0;
     t->updateState = 0;
     t->sleepFrames = 0;
-    t->unk76 = 0;
+    t->u76.unk76 = 0;
     t->variant = 0;
     t->hitKind = 0;
     if (p->unk40 & 1)

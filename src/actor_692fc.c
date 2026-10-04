@@ -858,10 +858,10 @@ void PickupCollect(void)
 {
     struct Task *t;
 
-    if (gCurTask->unk76 != 0)
+    if (gCurTask->u76.subtype != 0)
         MarkRoomObjectUsed(gCurTaskIdx);
     t = gCurTask;
-    switch (t->unk76)
+    switch (t->u76.subtype)
     {
     case 1:
         if (gLocalPlayer == t->hitterSlot)

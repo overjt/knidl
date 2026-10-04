@@ -187,7 +187,7 @@ void sub_0806b070(void)
 {
     void (*f)(void);
 
-    f = (void (*)(void))gUnk_0873E734[gCurTask->unk76];
+    f = (void (*)(void))gUnk_0873E734[gCurTask->u76.subtype];
     if (f != NULL)
         f();
 }
@@ -210,7 +210,7 @@ void sub_0806b098(void)
 
 s32 sub_0806b0f0(void)
 {
-    switch (gCurTask->unk76)
+    switch (gCurTask->u76.subtype)
     {
     case 1:
     case 3:
@@ -237,7 +237,7 @@ void ActorDefeatBoss(void)
     sub_0806b098();
     gCurTask->tileWord = gUnk_02007D00[9];
     LoadStarRodPieceGfx();
-    CallTableEntry(gCurTask->unk76, 9, gUnk_0873E758);
+    CallTableEntry(gCurTask->u76.subtype, 9, gUnk_0873E758);
 }
 
 void sub_0806b178(void)

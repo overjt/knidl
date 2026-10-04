@@ -97,7 +97,7 @@ void ActorDefeatPickup(void)
 
     t = gCurTask;
     t->updateCallback = 0;
-    if (t->unk76 != 0)
+    if (t->u76.subtype != 0)
         MarkRoomObjectUsed(gCurTaskIdx);
     TaskYieldTrampoline(1);
     u = gCurTask;
@@ -321,7 +321,7 @@ void ActorAttachedDie(void)
     t = gCurTask;
     if (t->actorKind == 0)
     {
-        v = t->unk76;
+        v = t->u76.subtype;
         if (v == 17 || v == 9 || v == 0 || v == 31 || v == 32)
             gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     }
@@ -361,7 +361,7 @@ void sub_0806b95c(void)
     t = gCurTask;
     a = t->u8C.actor;
     p = t->player;
-    if (t->actorKind != 0 || t->unk76 != 40)
+    if (t->actorKind != 0 || t->u76.subtype != 40)
         p->unk09 = 1;
     u = gCurTask;
     if (u->drawCallback == (u32)sub_08065640)
@@ -406,7 +406,7 @@ void sub_0806ba34(void)
     v = t->tileWord;
     z = v >> 12;
     if (a->palette != 0)
-        sub_08065d44(z, t->unk76, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
+        sub_08065d44(z, t->u76.subtype, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
     else if (t->actorKind == 0 || t->actorKind == 3)
     {
         m = 0xFFF;
@@ -531,7 +531,7 @@ void sub_0806bc54(void)
     t = gCurTask;
     if (t->actorKind == 1)
     {
-        n = t->unk76 * 2;
+        n = t->u76.subtype * 2;
         t->unk34 = gUnk_0873E7A4[n];
         t->unk30 = gUnk_0873E7A4[n + 1];
     }
@@ -592,7 +592,7 @@ void ActorAttachedEnterMouth(void)
     p = t->player;
     if ((s8)a->def->isItem == 1)
     {
-        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->unk76 != 0)
+        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->u76.subtype != 0)
         {
             p->unk09 = 3;
             gCurTask->unk30 = *(s8 *)&p->heldCount;
@@ -615,7 +615,7 @@ void ActorAttachedEnterMouth(void)
     u = gCurTask;
     if (u->actorKind == 6)
     {
-        f = u->unk76;
+        f = u->u76.subtype;
         if (f == 0)
         {
             p->pendingAbility = u->unk18;

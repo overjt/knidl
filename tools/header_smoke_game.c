@@ -37,6 +37,9 @@
  * array a negative size and fails the build. */
 #define SMOKE_OFFSET(type, field) ((unsigned long)&((type *)0)->field)
 #define SMOKE_ASSERT(name, cond) typedef char name[(cond) ? 1 : -1]
+SMOKE_ASSERT(smokeTaskU76, SMOKE_OFFSET(struct Task, u76) == 0x76);
+SMOKE_ASSERT(smokeTaskU76Size, sizeof(((struct Task *)0)->u76) == 2);
+SMOKE_ASSERT(smokeTaskHealth, SMOKE_OFFSET(struct Task, health) == 0x78);
 SMOKE_ASSERT(smokeTaskU80, SMOKE_OFFSET(struct Task, u80) == 0x80);
 SMOKE_ASSERT(smokeTaskU80Size, sizeof(((struct Task *)0)->u80) == 1);
 SMOKE_ASSERT(smokeTaskUnk81, SMOKE_OFFSET(struct Task, unk81) == 0x81);

@@ -75,7 +75,18 @@ struct Task
     /*0x73*/ u8 variant;
     /*0x74*/ u8 unk74;
     /*0x75*/ s8 hitTimer;
-    /*0x76*/ u16 unk76;
+    /* A per-family view (docs/header-conventions.md): an actor's subtype
+       (written by CreateActor, sub_08064a78 and sub_08064d9c;
+       ActorBindDefSlot binds Actor.def = gEnemyDefs[subtype] ...); the door
+       index into gDoorStates for the door signs (src/obj_2eac8.c,
+       obj_2f62c.c); the player's hit and status bits and Quick Draw's flag
+       stay unk76.  packed, aligned(2): agbcc pads every union to 4 bytes
+       (lesson 3.522). */
+    /*0x76*/ union {
+        u16 subtype;
+        u16 doorIndex;
+        u16 unk76;
+    } __attribute__((packed, aligned(2))) u76;
     /*0x78*/ s16 health;
     /*0x7A*/ s8 onGround;
     /*0x7B*/ s8 waterFlags;

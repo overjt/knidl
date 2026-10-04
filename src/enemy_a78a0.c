@@ -72,7 +72,7 @@ void MetaKnightSwordHitBoxUpdate(void)
     {
         t = gCurTask;
         o = &gTasks[t->parent];
-        if (o->unk76 == 2 && o->health > 0)
+        if (o->u76.subtype == 2 && o->health > 0)
         {
             if ((u16)(o->frame - 88) <= 33)
             {
