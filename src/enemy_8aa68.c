@@ -976,13 +976,13 @@ void GipClimbUp(void)
             gCurTask->gipLoopCount++;
         } while ((s16)gCurTask->gipLoopCount <= 2);
         GipPickNextState();
-    } while (gCurTask->state == GIP_STATE_4);
+    } while (gCurTask->state == GIP_STATE_CLIMB_UP);
     TaskSleepForever();
 }
 
 void GipClimbUpFromFloor(void)
 {
-    ActorSetState(GIP_STATE_4);
+    ActorSetState(GIP_STATE_CLIMB_UP);
     gCurTask->updateState = 2;
     gCurTask->gipCollideTerrain = 1;
     gCurTask->onGround = 0;
@@ -1018,19 +1018,19 @@ void GipClimbUpFromFloor(void)
 
 void GipClimbUpUpdate(void)
 {
-    if (gCurTask->state != GIP_STATE_4)
+    if (gCurTask->state != GIP_STATE_CLIMB_UP)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
         if (GipGetWallDistRight(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
-            ActorSetState(GIP_STATE_8);
+            ActorSetState(GIP_STATE_CLIMB_OVER_TOP);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
     else if (GipGetWallDistLeft(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
-        ActorSetState(GIP_STATE_8);
+        ActorSetState(GIP_STATE_CLIMB_OVER_TOP);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
@@ -1069,13 +1069,13 @@ void GipClimbDown(void)
             gCurTask->gipLoopCount++;
         } while ((s16)gCurTask->gipLoopCount <= 2);
         GipPickNextState();
-    } while (gCurTask->state == GIP_STATE_5);
+    } while (gCurTask->state == GIP_STATE_CLIMB_DOWN);
     TaskSleepForever();
 }
 
 void GipClimbDownFromLedge(void)
 {
-    ActorSetState(GIP_STATE_5);
+    ActorSetState(GIP_STATE_CLIMB_DOWN);
     gCurTask->updateState = 3;
     gCurTask->gipCollideTerrain = 0;
     gCurTask->onGround = 0;
@@ -1108,19 +1108,19 @@ void GipClimbDownFromLedge(void)
 
 void GipClimbDownUpdate(void)
 {
-    if (gCurTask->state != GIP_STATE_5)
+    if (gCurTask->state != GIP_STATE_CLIMB_DOWN)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     if (gCurTask->facing == 1)
     {
         if (GipGetWallDistRight(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
         {
-            ActorSetState(GIP_STATE_9);
+            ActorSetState(GIP_STATE_LET_GO);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
         }
     }
     else if (GipGetWallDistLeft(12, ((s8 *)gCurTask->u8C.actor->terrainBox)[3]) < 0)
     {
-        ActorSetState(GIP_STATE_9);
+        ActorSetState(GIP_STATE_LET_GO);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
     }
 }
@@ -1140,7 +1140,7 @@ void GipClimbOverTop(void)
 
 void GipClimbOverTopUpdate(void)
 {
-    if (gCurTask->state != GIP_STATE_8)
+    if (gCurTask->state != GIP_STATE_CLIMB_OVER_TOP)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
@@ -1269,7 +1269,7 @@ s32 GipStartFall(void)
 {
     if (gCurTask->variant != 1)
     {
-        ActorSetState(GIP_STATE_7);
+        ActorSetState(GIP_STATE_CLIMB_DOWN_FROM_LEDGE);
         TaskSetEntry(GipEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1291,10 +1291,10 @@ s32 GipHitWall(void)
         switch (gCurTask->state)
         {
         case GIP_STATE_0:
-            ActorSetState(GIP_STATE_6);
+            ActorSetState(GIP_STATE_CLIMB_UP_FROM_FLOOR);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
             return 1;
-        case GIP_STATE_9:
+        case GIP_STATE_LET_GO:
         case GIP_STATE_JUMP:
             ActorSetState(GIP_STATE_WAIT);
             TaskSetEntry(GipEnterState, gCurTaskIdx);
@@ -1308,7 +1308,7 @@ s32 GipHitCeiling(void)
 {
     if (gCurTask->variant != 1)
     {
-        if (gCurTask->state != GIP_STATE_4)
+        if (gCurTask->state != GIP_STATE_CLIMB_UP)
         {
             gCurTask->velY = 0;
             return 0;
@@ -1350,13 +1350,13 @@ void GipPickNextState(void)
     switch (gUnk_030023D4)
     {
     case 0:
-        ActorSetState(GIP_STATE_4);
+        ActorSetState(GIP_STATE_CLIMB_UP);
         break;
     case 1:
-        ActorSetState(GIP_STATE_5);
+        ActorSetState(GIP_STATE_CLIMB_DOWN);
         break;
     case 2:
-        ActorSetState(GIP_STATE_9);
+        ActorSetState(GIP_STATE_LET_GO);
         break;
     case 3:
         ActorSetState(GIP_STATE_JUMP);

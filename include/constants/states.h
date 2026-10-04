@@ -263,18 +263,18 @@
 #define FLAMER_STATE_6      6
 
 /* Gip states - gGipStates[N], CallTableEntry(Task.state) in GipInit */
-#define GIP_STATE_0      0
-#define GIP_STATE_1      1
-#define GIP_STATE_2      2
-#define GIP_STATE_WAIT   3
-#define GIP_STATE_4      4
-#define GIP_STATE_5      5
-#define GIP_STATE_6      6
-#define GIP_STATE_7      7
-#define GIP_STATE_8      8
-#define GIP_STATE_9      9
-#define GIP_STATE_JUMP   10
-#define GIP_STATE_SHOOT  11
+#define GIP_STATE_0                      0
+#define GIP_STATE_1                      1
+#define GIP_STATE_2                      2
+#define GIP_STATE_WAIT                   3
+#define GIP_STATE_CLIMB_UP               4
+#define GIP_STATE_CLIMB_DOWN             5
+#define GIP_STATE_CLIMB_UP_FROM_FLOOR    6
+#define GIP_STATE_CLIMB_DOWN_FROM_LEDGE  7
+#define GIP_STATE_CLIMB_OVER_TOP         8
+#define GIP_STATE_LET_GO                 9
+#define GIP_STATE_JUMP                   10
+#define GIP_STATE_SHOOT                  11
 
 /* Glunk states - gGlunkStates[N], CallTableEntry(Task.state) in GlunkInit */
 #define GLUNK_STATE_WAIT   0
