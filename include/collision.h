@@ -85,11 +85,11 @@ struct TerrainProbeResult
     /*0x08*/ u16 waterSurfaceY;
     /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 unkB;
-    /*0x0C*/ u8 unkC;
+    /*0x0C*/ u8 floorRow;
     /*0x0D*/ u8 unkD;
     /*0x0E*/ u8 onSlipperyFloor;
     /*0x0F*/ u8 damage;
-    /*0x10*/ u8 unk10;
+    /*0x10*/ u8 overGap;
 };
 
 /* gTerrainResult: M06's collision result block; M09 reads unk8 with ldrsh.
@@ -109,7 +109,7 @@ struct TerrainResult
     /*0x0A*/ u8 atDoor;
     /*0x0B*/ u8 onSlipperyFloor;
     /*0x0C*/ u8 damage;
-    /*0x0D*/ u8 unkD;
+    /*0x0D*/ u8 overGap;
 };
 
 /* IWRAM */

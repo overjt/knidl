@@ -575,7 +575,7 @@ copies and module-local records).
 | ROM label | (named) | 5200 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
 | struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
-| struct field | `unk*` | 126 | tracked by #155: the field's role is not proven |
+| struct field | `unk*` | 123 | tracked by #155: the field's role is not proven |
 | struct field | `unk*` | 221 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
@@ -633,7 +633,7 @@ Register aliases (include/task_vars.h): 1051 in 198 families: AbilityReleaseFlas
 
 Named constants (include/constants/, docs/naming.md section 7): 1513 in 11 headers, spelled at 4046 sites: `abilities.h` 27 (653 sites), `actors.h` 8 (120 sites), `camera.h` 6 (73 sites), `game_states.h` 37 (239 sites), `hits.h` 22 (126 sites), `player.h` 162 (286 sites), `rooms.h` 14 (87 sites), `sound.h` 30 (93 sites), `states.h` 689 (1711 sites), `tasks.h` 266 (406 sites), `variants.h` 252 (252 sites).  Integer literals left at a mechanical family's positions whose value has a constant: tasks 0, abilities 0, game_states 0, stage_requests 0, hits 0, actors 0, rooms 0, sound 0, songs 0, player_effect_variants 0, player_object_variants 0, attack_box_immunity 0, attack_box_flags 0, body_box_flags 0, body_box_guard 0, camera 0.
 
-`unk*` fields by header struct: `Task` 17, `PlayerState` 10, `TerrainProbeResult` 8, `AirGrindCourse` 7, `TerrainResult` 7, `Door` 6, `Actor` 5, `AirGrindSceneryObject` 5, `AirGrindScenerySet` 5, `BodyBox` 5, `AirGrindResultsState` 4, `CannonFusePiece` 4, `RoomDef` 4, `ScreenShake` 4, `AirGrindCourseRacer` 3, `AttackBox` 3, `RoomParticleAnimFrame` 3, `ScrollLock` 3, `Unk03004B00` 3, `ActorDef` 2, `AirGrindRacerState` 2, `AirGrindScript` 2, `AirGrindState` 2, `BgMap` 2, `DoorState` 2, `M11Buf` 2, `PlayerHitBoxSet` 2, `RoomObjectGfxSlot` 2, `SaveSlot` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `BgAnim` 1, `BootLogoObject` 1, `GfxDesc` 1, `GfxHeader` 1, `GfxSrc` 1, `HitBoxSet` 1, `HudBar` 1, `InputRecording` 1, `M04Spark` 1, `RoomObjectGfx` 1.
+`unk*` fields by header struct: `Task` 17, `PlayerState` 10, `AirGrindCourse` 7, `Door` 6, `TerrainProbeResult` 6, `TerrainResult` 6, `Actor` 5, `AirGrindSceneryObject` 5, `AirGrindScenerySet` 5, `BodyBox` 5, `AirGrindResultsState` 4, `CannonFusePiece` 4, `RoomDef` 4, `ScreenShake` 4, `AirGrindCourseRacer` 3, `AttackBox` 3, `RoomParticleAnimFrame` 3, `ScrollLock` 3, `Unk03004B00` 3, `ActorDef` 2, `AirGrindRacerState` 2, `AirGrindScript` 2, `AirGrindState` 2, `BgMap` 2, `DoorState` 2, `M11Buf` 2, `PlayerHitBoxSet` 2, `RoomObjectGfxSlot` 2, `SaveSlot` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `BgAnim` 1, `BootLogoObject` 1, `GfxDesc` 1, `GfxHeader` 1, `GfxSrc` 1, `HitBoxSet` 1, `HudBar` 1, `InputRecording` 1, `M04Spark` 1, `RoomObjectGfx` 1.
 
 <!-- audit:placeholders:end -->
 

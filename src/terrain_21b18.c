@@ -144,7 +144,7 @@ void sub_08021c74(s8 *box, s32 id)
     }
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0)
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     goto done;
 
 slope:
@@ -161,7 +161,7 @@ slope:
         flags &= ~2;
     if (flags == 0)
         goto clear;
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     goto done;
 
 edges:
@@ -178,7 +178,7 @@ edges:
     }
     if (n == 0)
         goto clear;
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     goto done;
 
 clear:
@@ -188,7 +188,7 @@ clear:
 
 done:
     t->onGround = gTerrainProbeResult.onGround;
-    t->unk84 = (gTerrainProbeResult.unkC << 8) | gTerrainProbeResult.unkB;
+    t->unk84 = (gTerrainProbeResult.floorRow << 8) | gTerrainProbeResult.unkB;
     n = gTerrainProbeX - box[0];
     if ((t->posX >> 16) != n)
     {
@@ -244,9 +244,9 @@ void sub_0802205c(s8 *box)
     {
         gTerrainProbeResult.unkB |= 1;
         if (gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
-            gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
+            gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
         else
-            gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
+            gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
 end:
     gCurTask->unk84 = gTerrainProbeResult.unkB;
@@ -255,19 +255,19 @@ end:
 void TerrainInitOneWayFloor(s32 x, s32 y)
 {
     gTerrainProbeResult.unkB = 0;
-    gTerrainProbeResult.unkC = 0;
+    gTerrainProbeResult.floorRow = 0;
     if (TerrainQueryPixelAndBelow(x, y) == 0 && gCollisionTileOneWay[gTerrainTileBelow] != 0)
     {
         gTerrainProbeResult.unkB |= 1;
         if (gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
-            gTerrainProbeResult.unkC = y >> 4;
+            gTerrainProbeResult.floorRow = y >> 4;
         else
-            gTerrainProbeResult.unkC = (y + 16) >> 4;
+            gTerrainProbeResult.floorRow = (y + 16) >> 4;
     }
     else
     {
         gTerrainProbeResult.unkB &= 0xFE;
-        gTerrainProbeResult.unkC = 0;
+        gTerrainProbeResult.floorRow = 0;
     }
 }
 

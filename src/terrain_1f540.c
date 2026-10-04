@@ -296,7 +296,7 @@ void TerrainProbeLandingNoSlopeLink(void)
         gTerrainProbeY += GetTilePushUp(gTerrainTile);
         gTerrainProbeResult.onGround = 1;
         gTerrainProbeResult.unk2 = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     }
     if (TerrainQueryPixel(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (a2 = gCollisionTileShapeClass[gTerrainTile]) == 1)

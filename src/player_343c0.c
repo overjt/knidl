@@ -147,7 +147,7 @@ void PlayerActionRunUpdate(void)
     t = gCurTask;
     if (t->unk28 == 0)
     {
-        m2 = gTerrainResult.unkD;
+        m2 = gTerrainResult.overGap;
         if (m2 != 0)
         {
             t->player->unk14 = 5;

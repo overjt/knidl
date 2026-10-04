@@ -177,7 +177,7 @@ void PlayerActionWheelUpdate(void)
     {
         struct Task *t = gCurTask;
         if (t->unk30 == 0) {
-            if (gTerrainResult.unkD != 0) {
+            if (gTerrainResult.overGap != 0) {
                 t->player->unk14 = 5;
                 t->unk30 = 1;
             } else {

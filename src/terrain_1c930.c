@@ -109,7 +109,7 @@ next:
         gTerrainProbeResult.unkB |= 1;
         if (gCollisionTileSlope[gTerrainTile] != 0)
             goto floor;
-        if (gTerrainProbeResult.unkC <= (gTerrainProbeY + gTerrainBoxBottom) >> 4)
+        if (gTerrainProbeResult.floorRow <= (gTerrainProbeY + gTerrainBoxBottom) >> 4)
             goto floor;
     }
     if (gSlopeIndexTiles[gTerrainSlopeIndex] != 0)
@@ -166,7 +166,7 @@ floor:
 check:
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gCollisionTileOneWay[gTerrainTile] == 0 || gCollisionTileSlope[gTerrainTile] != 0
-            || gTerrainProbeResult.unkC <= (gTerrainProbeY + gTerrainBoxBottom) >> 4))
+            || gTerrainProbeResult.floorRow <= (gTerrainProbeY + gTerrainBoxBottom) >> 4))
     {
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         TerrainLoadFloorAttributes(gTerrainTile);
@@ -180,7 +180,7 @@ check:
     else
         hit &= (s8)gUnk_087337F0[gTerrainTileBelow];
     gTerrainProbeResult.unk5 = hit;
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     return;
 
 slope:
@@ -237,14 +237,14 @@ sides:
         else
             gTerrainProbeResult.unkB = 32;
     }
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     return;
 
 edges:
     dir = 0;
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxLeft, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gCollisionTileOneWay[gTerrainTile] == 0 || gCollisionTileSlope[gTerrainTile] != 0
-            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.unkC))
+            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.floorRow))
     {
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         tile = gTerrainTile;
@@ -260,7 +260,7 @@ edges:
         gTerrainProbeResult.unkB |= 2;
     if (TerrainQueryPixelAndBelow(gTerrainProbeX + gTerrainBoxRight, gTerrainProbeY + gTerrainBoxBottom) != 0
         && (gCollisionTileOneWay[gTerrainTile] == 0 || gCollisionTileSlope[gTerrainTile] != 0
-            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.unkC))
+            || (gTerrainProbeY + gTerrainBoxBottom) >> 4 >= gTerrainProbeResult.floorRow))
     {
         gTerrainProbeY += GetTileFloorSnap(gTerrainTile);
         tile2 = gTerrainTile;
@@ -290,7 +290,7 @@ edges:
         }
     }
     gTerrainProbeResult.onSlipperyFloor = gCollisionTileSlippery[tile] | gCollisionTileSlippery[tile2];
-    gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+    gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
     return;
 
 clear:
@@ -307,7 +307,7 @@ clear:
             {
                 tile = GetCollisionTileAtPixel(gTerrainProbeX + 16, gTerrainProbeY + gTerrainBoxBottom + 1);
                 if (gCollisionTileShapeClass[tile] == 1)
-                    gTerrainProbeResult.unk10++;
+                    gTerrainProbeResult.overGap++;
             }
         }
         else
@@ -316,7 +316,7 @@ clear:
             {
                 tile = GetCollisionTileAtPixel(gTerrainProbeX - 16, gTerrainProbeY + gTerrainBoxBottom + 1);
                 if (gCollisionTileShapeClass[tile] == 1)
-                    gTerrainProbeResult.unk10++;
+                    gTerrainProbeResult.overGap++;
             }
         }
     }

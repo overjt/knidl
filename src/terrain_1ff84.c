@@ -175,7 +175,7 @@ vertical:
         {
             if ((gTerrainProbeResult.unkB & 1) == 0)
                 goto off;
-            if (gTerrainProbeResult.unkC > (gTerrainProbeY + gTerrainBoxBottom) >> 4)
+            if (gTerrainProbeResult.floorRow > (gTerrainProbeY + gTerrainBoxBottom) >> 4)
                 goto off;
         }
         gTerrainProbeResult.unk2 = 1;
@@ -189,7 +189,7 @@ vertical:
             {
                 if ((gTerrainProbeResult.unkB & 1) == 0)
                     goto done;
-                if ((gTerrainProbeY + gTerrainBoxBottom) >> 4 < gTerrainProbeResult.unkC)
+                if ((gTerrainProbeY + gTerrainBoxBottom) >> 4 < gTerrainProbeResult.floorRow)
                     goto done;
             }
             gTerrainProbeResult.slope = gCollisionTileSlope[t];
@@ -197,7 +197,7 @@ vertical:
         }
     done:
         gTerrainProbeResult.onGround = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 1) >> 4;
         return;
     }
 floor:
@@ -205,9 +205,9 @@ floor:
     {
         gTerrainProbeResult.unkB |= 1;
         if (gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
-            gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
+            gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom) >> 4;
         else
-            gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
+            gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
         return;
     }
 off:

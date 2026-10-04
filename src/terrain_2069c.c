@@ -26,9 +26,9 @@ u32 TerrainProbePointStop(void)
         {
             gTerrainProbeResult.unkB |= 1;
             if (gCollisionTileOneWay[gTerrainTile] != 0 && gCollisionTileSlope[gTerrainTile] != 0)
-                gTerrainProbeResult.unkC = (u16)gTerrainProbeY >> 4;
+                gTerrainProbeResult.floorRow = (u16)gTerrainProbeY >> 4;
             else
-                gTerrainProbeResult.unkC = (gTerrainProbeY + 16) >> 4;
+                gTerrainProbeResult.floorRow = (gTerrainProbeY + 16) >> 4;
         }
         else
         {
@@ -38,7 +38,7 @@ u32 TerrainProbePointStop(void)
     else
     {
         v = gCollisionTileOneWay[gTerrainTile];
-        if (v == 0 || ((gTerrainProbeResult.unkB & 1) && gTerrainProbeResult.unkC <= gTerrainProbeY >> 4))
+        if (v == 0 || ((gTerrainProbeResult.unkB & 1) && gTerrainProbeResult.floorRow <= gTerrainProbeY >> 4))
         {
             gTerrainProbeResult.unk2 = 1;
             gTerrainProbeResult.unk0 = 3;

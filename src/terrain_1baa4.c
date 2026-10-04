@@ -39,7 +39,7 @@ void PlayerProbeTerrain(u32 p)
     if (gTerrainProbeResult.unkB & 0x80)
     {
         gTerrainProbeResult.unkB = 1;
-        gTerrainProbeResult.unkC = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
+        gTerrainProbeResult.floorRow = (gTerrainProbeY + gTerrainBoxBottom + 16) >> 4;
     }
     TerrainClampBoxToPlayerBounds();
     if (gTerrainProbeResult.onGround != 0)
