@@ -106,6 +106,7 @@ listed.
 | [3.55](#355-read-loops-lifesavings-arithmetic-before-hunting-shapes) | [3.488](#3488-sub_08002378-merge_blocks-splices-a-gotos-target-back-in-and-when-it-does-decides-cse1s-view) | Corrected (#63): `sub_08002378`'s preheader load is a movable; merge_blocks' timing decided cse1's view. |
 | [3.62](#362-an-mmio-register-can-be-derived-from-another-live-io-address) | [3.481](#3481-multibootmain-is-an-older-sdk-revision-and-its-siomulti-is-the-io_regh-constant), [3.482](#3482-the-link-librarys-io-registers-are-the-io_regh-macros-gcse-keeps-a-symbols-address-alive-never-a-constants), [3.486](#3486-taskcreate-an-integer-literal-is-reloaded-a-symbol-is-a-local-quantity) | Amended (#63): the opposite also happens; there a symbol is what goes wrong, so decide per function. |
 | [3.73](#373-a-commutative-simode-op-with-a-16-bit-load-operand-order-proves-uses) | [3.485](#3485-three-more-32-verdicts-that-were-plain-source-taskfree-the-on-screen-test-the-group-b-upload-pair) | Corrected (#63): a pointer sum with a single use; the rule holds for an integer add only. |
+| [3.156](#3156-a-reload-scratch-register-is-chosen-by-liveness-and-an-empty-asm-is-the-lever), [3.514](#3514-regmoves-replacement-quality-a-flag-bit-spelling-and-what-still-resists) | [3.526](#3526-poppybrossrheadupdate-a-redundant-store-keeps-a-value-live-to-reload-and-post-reload-cse-deletes-it) | Corrected (#169): plain C keeps the value live: a redundant end-of-script store that post-reload cse deletes. |
 | [3.162](#3162-abs-in-a-condition-distributes-into-two-compares), [3.180](#3180-this-modules-x-is-n--0---n--n-not-globalhs-abs), [3.206](#3206-the-roms-absolute-value-is-n--0---n--n-not-globalhs-abs), [3.235](#3235-abs-on-a-variable-folds-to-abs_expr-on-a-call-it-does-not) | [3.360](#3360-abs-in-globalh-tests--0-first-use-it-for-every-x) | Updated: `global.h`'s `abs()` is now the `< 0` form; write `abs(x)`. |
 | [3.229](#3229-register-x-asmrn-is-the-practical-tie-break-for-a-global-alloc-priority-tie) | [3.496](#3496-ties-are-broken-by-declaration-order-and-statement-order-not-by-a-pin) | Corrected (#154): ties are broken by declaration and statement order, not by a pin. |
 | [3.231](#3231-one-local-per-straight-line-block-that-re-reads-gunk_03002490-per-arm-too) | [3.512](#3512-small-shapes-that-replaced-a-pin) | #154: per-block locals can be the defect; one reassigned local matched. |
@@ -4823,6 +4824,62 @@ behaves as 3.522 says (`packed, aligned(2)` keeps the 2-byte size and the
 `ldrh`), and `tools/header_smoke_game.c` now checks `u76`'s offset and
 size and `health`'s offset after it.
 
+### 3.526 `PoppyBrosSrHeadUpdate`: a redundant store keeps a value live to reload, and post-reload cse deletes it
+3.156 kept one empty `asm("" : : "r"(d2))` in `sub_08091e18` (now
+`PoppyBrosSrHeadUpdate`, `src/enemy_9113c.c`) because "pure C cannot
+express" a value that is live without being used: the ROM keeps the
+decremented animation timer in r4 (`subs r4, r0, #1`) through the
+`frame != -1` test, which makes reload's index scratches for the four
+`ldrsh` 4, 5, 5, 4 (spill set r2 r4 r5) where the strip test gives 4, 2,
+4, 4 (spill set r2 r4, 9 bytes).  #169's agent found the plain source:
+the end-of-script arm stores the timer's 0 explicitly, and it comes
+first:
+```c
+if (w->unk28 != 0 && --w->unk28 == 0) {
+    ...
+    frame = q->frame;
+    if (frame == -1) {
+        w->unk28 = 0;       /* stop at the end marker */
+    } else {
+        w->unk28 = q->delay;
+        w->frame = frame;
+    }
+}
+```
+* **cse** knows the decremented pseudo is 0 in that arm (the `== 0`
+  branch) and makes it the canonical register for the constant, so the
+  store becomes a store of the decremented register: the value is live
+  into the arm, global allocation gives it r4 (it now conflicts with
+  r0-r3), and reload's `ldrsh` at the frame test has to spill r5, which
+  puts r5 in the spill set and moves the round-robin of the other two;
+* **post-reload cse** (`reload_cse_regs_1` in `reload1.c`) then deletes
+  the store: `reload_cse_noop_set_p` finds r4 already recorded as the
+  value of `[r3, #40]` (the decrement's own `str r4, [r3, #40]`; the
+  `++unk2C` store to `[r3, #44]` does not invalidate it), and jump2
+  folds the emptied arm's `bne; b` into the ROM's `beq`.  No code
+  remains, as with the `asm`;
+* **the arm order is the control:** written `if (frame != -1) { ... }
+  else { w->unk28 = 0; }`, the store follows a label, and
+  `reload_cse_regs_1` forgets every register value at a `CODE_LABEL`, so
+  the store survives (`str r4, [r3, #40]; b`, +4 bytes; it stores r4,
+  which shows cse's substitution).
+The other measured shapes (with the end arm): a `frame` local read
+before the test is needed (`s16`, the field's type, tested as `frame`, or
+`u16` with the test on `q->frame`; no local: 20 bytes), and the
+integer-first `(struct AnimCmd *)(w->unk2C * 4 + base)` of the landed
+source stays (`&tbl[a][w->unk2C]` and every pointer-first spelling give
+`adds r1, r0, r1` for the ROM's `adds r1, r1, r0`, 1-29 bytes); every
+spelling of the timer test matches once the end arm is there, as 3.156
+found for the lever.  The owner's coordinator accepted the store as plain
+C, not a stand-in: unlike a dead store (3.490's `i = 4;`) it has a
+meaning of its own and nothing overwrites it; it is only redundant on
+its path, and the comment at the site says so.  The pattern is 3.270's
+and 3.279's (code that reload needs and post-reload passes delete) with
+a natural source: when the ROM keeps a value live that no instruction
+reads, look for a statement the compiler can prove redundant only after
+reload.  **Corrects** 3.156's "pure C cannot express that" and 3.514's
+verdict for `sub_08091e18`; see 3.156's note.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -5991,6 +6048,12 @@ liveness is per-insn, so a statement one block too early or one insn too late
 moves a different scratch. This is the third structural exception alongside
 3.63 (cycle-exact loop) and 3.65 (`register` pins) - a compiler hint that
 recreates the original allocation, not a claim about the original source.
+
+*Correction note (#169):* pure C can express it.  An end-of-script arm
+`if (frame == -1) w->unk28 = 0; else { ... }`, written first, makes cse
+store the decremented register (keeping it live into the frame test) and
+post-reload cse deletes the redundant store; `PoppyBrosSrHeadUpdate` (the
+former `sub_08091e18`) is plain C (lesson 3.526).
 
 ### 3.157 One more use of a temporary can flip a register-priority tie
 Global-alloc sorts by `floor_log2(refs) * refs / live_length` (4.31), so moving
