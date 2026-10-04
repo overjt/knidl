@@ -123,8 +123,8 @@ module by module, is [`docs/history.md`](docs/history.md).
   cores, so the census alone covers them (docs/data.md §8.4).
 - **Names: #155, open.**  263 of 266 task bodies and 3,800 of 5,348
   functions named (run 4: 689 by role and 662 by their state-table slot,
-  docs/naming.md 2.4); `make progress`: 9,520 of 34,017 symbols documented
-  (27.99%: 6,549 semantic, 2,971 position names - 2,309 data records and
+  docs/naming.md 2.4); `make progress`: 9,524 of 34,017 symbols documented
+  (28.00%: 6,553 semantic after #170's four I/O names, 2,971 position names - 2,309 data records and
   662 state-table slots; since #167 the segment-name labels split.py
   writes are not counted); 124 `gUnk_` RAM cells and 313 header / 322
   local / 11 per-family `Task` `unk*` fields left; three `Task` views
