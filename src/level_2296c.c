@@ -346,7 +346,7 @@ void LoadRoom(void)
             gPlayerCameraMode[i] = 3;
         }
         CreatePlayer(i);
-        sub_0803d1c4(i);
+        InitPlayerStateKeepInvincibility(i);
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }

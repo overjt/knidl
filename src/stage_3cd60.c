@@ -255,7 +255,7 @@ void InitPlayerState(s32 a0)
 }
 
 /* Reset player record a0 to its start-of-stage state. */
-void sub_0803d1c4(s32 a0)
+void InitPlayerStateKeepInvincibility(s32 a0)
 {
     struct PlayerState *p;
 

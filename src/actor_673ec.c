@@ -1148,7 +1148,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     a = p->mode;
     b = p->hitsThisFrame;
     if (flag != 0)
-        sub_0803d1c4(i);
+        InitPlayerStateKeepInvincibility(i);
     else
         InitPlayerStateKeepMouth(i);
     p->prevMode = a;
@@ -1165,7 +1165,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     t = &gTasks[i];
     p = &gPlayerStates[i];
     if (c != 0)
-        sub_0803d1c4(i);
+        InitPlayerStateKeepInvincibility(i);
     else
         InitPlayerStateKeepMouth(i);
     t->taskClass = 1;

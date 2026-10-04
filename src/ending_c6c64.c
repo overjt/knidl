@@ -15,7 +15,7 @@
  *   Task_EndingEpilogue   the body: variant 0 (Task.variant == 0) loads the graphics
  *       (EndingEpilogueLoadGraphics) and spawns variants 1, 6, 7, 9 and 10 from the list
  *       gEndingEpilogueObjectVariants (CreateEndingEpilogueObjects); variants 1-10 run gEndingEpilogueVariants[unk73].
- *   sub_080c6d84 / sub_080c769c   variant 1, the scene's main sprite, and its
+ *   EndingEpilogueWarpStar / EndingEpilogueWarpStarDraw   variant 1, the scene's main sprite, and its
  *       scaling draw callback; sub_080c77cc spawns its four variant-2 helpers.
  *   sub_080c7810   variant 2: while the spawner is drawn (Task.unk34), one of
  *       four effects by Task.unk74 (a shaking sprite, drifting puffs, spark
@@ -89,12 +89,12 @@ void CreateEndingEpilogueObjects(void)
 
 /* Task type #100 variant 1, the scene's main sprite: spawns variant 4 and
    the four variant-2 helpers (sub_080c77cc), draws itself through the
-   scaling callback sub_080c769c, runs its timed motion phases and ends the
+   scaling callback EndingEpilogueWarpStarDraw, runs its timed motion phases and ends the
    scene by clearing gEndingSceneActive, which M37's EndingEpilogueScene waits for. */
-void sub_080c6d84(void)
+void EndingEpilogueWarpStar(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_080c769c;
+    gCurTask->drawCallback = (u32)EndingEpilogueWarpStarDraw;
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_08755708;
     gCurTask->tileWord = 0x8810;
@@ -445,7 +445,7 @@ void sub_080c6d84(void)
    Task.unk28 (clamped to 0 .. 127 in 16.16), alternate two animation frames
    every three calls and draw the sprite, scaled through gUnk_0873FF98[] when
    the scale is not 1.0 (0x100). */
-void sub_080c769c(void)
+void EndingEpilogueWarpStarDraw(void)
 {
     s32 n;
     struct Task *t;

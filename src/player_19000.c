@@ -478,7 +478,7 @@ void CutsceneFountainStarRod(void)
     TaskSleepForever();
 }
 
-void CutsceneFountainActorScript58(void)
+void CutsceneFountainJet(void)
 {
     struct Task *t = gCurTask;
 

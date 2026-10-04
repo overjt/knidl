@@ -22,7 +22,7 @@
  * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
  * rebuilds the player mask gActivePlayerMask and restarts the player tasks
- * (CreatePlayer and InitPlayerState/sub_0803d1c4). */
+ * (CreatePlayer and InitPlayerState/InitPlayerStateKeepInvincibility). */
 
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
@@ -103,7 +103,7 @@ void LoadHubRoom(void)
             gPlayerCameraMode[i] = 3;
         }
         CreatePlayer(i);
-        sub_0803d1c4(i);
+        InitPlayerStateKeepInvincibility(i);
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = 0;
         gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     }

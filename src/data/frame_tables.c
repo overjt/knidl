@@ -13399,8 +13399,8 @@ u32 gUnk_087553FC[] FRAME_TABLE = {
     (u32)&gUnk_085E0050,
 };
 
-/* gUnk_08755440.  Consumers: CutsceneFountainActorScript58 (src/player_19000.c:488) and
- * sub_080ca71c (src/ending_c9004.c:932) install it as Task.frameTable and
+/* gUnk_08755440.  Consumers: CutsceneFountainJet (src/player_19000.c:488) and
+ * EndingStarRodReturnFountainJet (src/ending_c9004.c:932) install it as Task.frameTable and
  * set frames 0-10 (src/player_19000.c:496-520, src/ending_c9004.c:938-952;
  * 0xFFFF hides the sprite).  11 words, all NULL; extent: that index bound,
  * also the span to the next label.  Their draw callback sub_0801a3e4 only
@@ -13683,8 +13683,8 @@ u32 gUnk_087556E0[] FRAME_TABLE = {
     (u32)gUnk_085865A8,
 };
 
-/* gUnk_08755708.  Consumers: sub_080c6d84 (src/ending_c6c64.c:99),
- * sub_080c7e4c (src/ending_c7e4c.c:61), sub_080c85d8
+/* gUnk_08755708.  Consumers: EndingEpilogueWarpStar (src/ending_c6c64.c:99),
+ * EndingEpilogueKirby (src/ending_c7e4c.c:61), EndingEpilogueKingDedede
  * (src/ending_c7e4c.c:355).  69 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755708-0x0875581C).  Declared include/ending.h:67. */
@@ -13760,7 +13760,7 @@ u32 gUnk_08755708[] FRAME_TABLE = {
     (u32)gUnk_0859956C,
 };
 
-/* gUnk_0875581C.  Consumer: sub_080c8498 (src/ending_c7e4c.c:305).  16
+/* gUnk_0875581C.  Consumer: EndingEpilogueStarRod (src/ending_c7e4c.c:305).  16
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0875581C-0x0875585C).  Declared
  * include/ending.h:68. */
@@ -13783,8 +13783,8 @@ u32 gUnk_0875581C[] FRAME_TABLE = {
     (u32)gUnk_085998BC,
 };
 
-/* gUnk_0875585C.  Consumers: sub_080c9114 (src/ending_c9004.c:120),
- * sub_080c94cc (src/ending_c9004.c:234), sub_080c98d8
+/* gUnk_0875585C.  Consumers: EndingStarRodReturnStarRod (src/ending_c9004.c:120),
+ * EndingStarRodReturnWarpStar (src/ending_c9004.c:234), EndingStarRodReturnKirby
  * (src/ending_c9004.c:376).  24 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0875585C-0x087558BC).  Declared include/ending.h:69. */

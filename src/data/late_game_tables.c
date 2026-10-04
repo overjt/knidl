@@ -436,12 +436,12 @@ void (*gAirGrindObjectVariants[3])(void) LATE_TBL(087572cc) = {
 /* include/ending.h; CallTableEntry(i, 11, ...) in Task_EndingEpilogue */
 void (*gEndingEpilogueVariants[11])(void) LATE_TBL(08757330) = {
     NULL,
-    sub_080c6d84,
+    EndingEpilogueWarpStar,
     sub_080c7810,
     sub_080c7cc0,
-    sub_080c7e4c,
-    sub_080c8498,
-    sub_080c85d8,
+    EndingEpilogueKirby,
+    EndingEpilogueStarRod,
+    EndingEpilogueKingDedede,
     sub_080c88f0,
     sub_080c8958,
     sub_080c8cd4,
@@ -452,12 +452,12 @@ void (*gEndingEpilogueVariants[11])(void) LATE_TBL(08757330) = {
 /* include/ending.h; CallTableEntry(i, 12, ...) in Task_EndingStarRodReturn */
 void (*gEndingStarRodReturnVariants[12])(void) LATE_TBL(087573f4) = {
     NULL,
-    sub_080c9114,
+    EndingStarRodReturnStarRod,
     sub_080c9d10,
-    sub_080c94cc,
+    EndingStarRodReturnWarpStar,
     sub_080c9884,
-    sub_080c98d8,
-    sub_080ca71c,
+    EndingStarRodReturnKirby,
+    EndingStarRodReturnFountainJet,
     sub_080ca830,
     sub_080ca8f0,
     sub_080c9e8c,

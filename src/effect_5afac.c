@@ -78,7 +78,7 @@ s32 PlayerGoalGameUpdate(void);
 void PlayerGoalGameWaitForPress(void);
 s32 PlayerGoalGameCheckPress(void);
 void PlayerGoalGameSetLaunchPower(void);
-void sub_0805b670(void);
+void PlayerGoalGameWaitForLaunch(void);
 void sub_0805b83c(void);
 void sub_0805b8b8(void);
 void sub_0805b8f8(void);
@@ -389,7 +389,7 @@ void PlayerGoalGameState2(void)
 {
     gCurTask->updateState = 2;
     TaskYieldTrampoline(4);
-    sub_0805b670();
+    PlayerGoalGameWaitForLaunch();
 }
 
 void PlayerGoalGameState2Update(void)
@@ -398,13 +398,13 @@ void PlayerGoalGameState2Update(void)
     sub_0805c584();
 }
 
-void sub_0805b670(void)
+void PlayerGoalGameWaitForLaunch(void)
 {
     gCurTask->updateState = 3;
     TaskSleepForever();
 }
 
-void PlayerGoalGameState3Update(void)
+void PlayerGoalGameWaitForLaunchUpdate(void)
 {
     TaskUpdateFrameScript();
     sub_0805c584();
