@@ -9,7 +9,7 @@
  * so entry 0 is NULL; entry 13 is NULL too, and no room uses it (the 333
  * RoomDefs use sets 0-12).  Not const at the scripts: the lists hold the
  * struct Unk02007D70Cmd * that LoadRoomBgAnims stores in
- * Unk02007D70.unk4.  Carved by tools/carve_data.py. */
+ * Unk02007D70.script.  Carved by tools/carve_data.py. */
 
 /* gRoomBgAnimScripts[1] */
 struct Unk02007D70Cmd *const gRoomBgAnimSet1[] = {

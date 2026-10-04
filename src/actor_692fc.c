@@ -587,7 +587,7 @@ void ActorPlayHitSfx(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->u8C.actor->unk06 == 16 || t->u8C.actor->unk06 == 32)
+    if (t->u8C.actor->hitterClass == 16 || t->u8C.actor->hitterClass == 32)
     {
         u = &gTasks[t->hitterSlot];
         switch (u->u80.attackAbility)

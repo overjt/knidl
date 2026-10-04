@@ -64,18 +64,18 @@ struct MapTile
    block kind, unk1C = the player that broke it (-1 = none). */
 struct Unk020061F0
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ struct MapTile *unk8;
-    /*0x0C*/ u16 *unkC;
-    /*0x10*/ u16 *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 unk18;
-    /*0x1A*/ u16 unk1A;
-    /*0x1C*/ s8 unk1C;
+    /*0x00*/ u16 cellX;
+    /*0x02*/ u16 cellY;
+    /*0x04*/ u16 mapIndex;
+    /*0x06*/ u16 scriptPos;
+    /*0x08*/ struct MapTile *metatileCursor;
+    /*0x0C*/ u16 *bgMapEntry;
+    /*0x10*/ u16 *script;
+    /*0x14*/ u16 waitFrames;
+    /*0x16*/ u16 metatile;
+    /*0x18*/ u16 collisionTile;
+    /*0x1A*/ u16 chainAttack;
+    /*0x1C*/ s8 breakerPlayer;
     /*0x1D*/ u8 filler1D[3];
 };
 
@@ -448,25 +448,25 @@ s32 BreakBlockAt(u32 x, u32 y)
             gBlockCursorAttack = 0;
             if (gUnk_0873A494[gBlockCursorTile] <= 4)
             {
-                while (gBreakingBlocks[i].unk6 != 0x7FFF)
+                while (gBreakingBlocks[i].scriptPos != 0x7FFF)
                 {
                     i++;
                     if (i > 63)
                         return -1;
                 }
                 b = &gBreakingBlocks[i];
-                b->unk4 = gBlockCursorIndex;
-                b->unk8 = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex];
-                b->unk0 = gBlockCursorX;
-                b->unk2 = gBlockCursorY;
-                b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+                b->mapIndex = gBlockCursorIndex;
+                b->metatileCursor = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex];
+                b->cellX = gBlockCursorX;
+                b->cellY = gBlockCursorY;
+                b->bgMapEntry = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
                 gBlockLayer[gBlockCursorIndex] |= 0x8000;
-                b->unk1A = 0;
-                b->unk10 = gUnk_0873A47C[0];
-                b->unk14 = 0;
-                b->unk6 = 0;
-                if (b->unk10[0] == 1)
-                    BlockAnimWriteColumn(b, ((s16 *)b->unk10)[1]);
+                b->chainAttack = 0;
+                b->script = gUnk_0873A47C[0];
+                b->waitFrames = 0;
+                b->scriptPos = 0;
+                if (b->script[0] == 1)
+                    BlockAnimWriteColumn(b, ((s16 *)b->script)[1]);
                 return i;
             }
         }
@@ -557,22 +557,22 @@ s32 BreakBlockAtCursor(void)
     struct Unk020061F0 *b;
 
     i = 0;
-    while (gBreakingBlocks[i].unk6 != 0x7FFF)
+    while (gBreakingBlocks[i].scriptPos != 0x7FFF)
     {
         i++;
         if (i > 63)
             return -1;
     }
     b = &gBreakingBlocks[i];
-    b->unk4 = gBlockCursorIndex;
-    b->unk8 = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex];
-    b->unk0 = gBlockCursorX;
-    b->unk2 = gBlockCursorY;
-    b->unk1C = gBlockCursorPlayer;
+    b->mapIndex = gBlockCursorIndex;
+    b->metatileCursor = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex];
+    b->cellX = gBlockCursorX;
+    b->cellY = gBlockCursorY;
+    b->breakerPlayer = gBlockCursorPlayer;
     if (gUnk_0200B078 == 1)
-        b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 63) << 5));
+        b->bgMapEntry = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 63) << 5));
     else
-        b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+        b->bgMapEntry = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
     gBlockLayer[gBlockCursorIndex] |= 0x8000;
     switch (gBlockCursorAttack)
     {
@@ -582,46 +582,46 @@ s32 BreakBlockAtCursor(void)
         if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
-            b->unk1A = 0x805;
+            b->chainAttack = 0x805;
         }
         else
         {
             k = 0;
-            b->unk1A = 0;
+            b->chainAttack = 0;
         }
         break;
     case 1:
         k = 1;
-        b->unk1A = 1;
+        b->chainAttack = 1;
         break;
     case 2:
         CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
-        if (b->unk1C != -1)
-            AddPlayerScore(10, b->unk1C);
+        if (b->breakerPlayer != -1)
+            AddPlayerScore(10, b->breakerPlayer);
         if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
-            b->unk1A = 0x805;
-            if (b->unk1C != -1)
-                AddPlayerScore(50, b->unk1C);
+            b->chainAttack = 0x805;
+            if (b->breakerPlayer != -1)
+                AddPlayerScore(50, b->breakerPlayer);
         }
         else
         {
             k = 0;
-            b->unk1A = 2;
+            b->chainAttack = 2;
         }
         break;
     case 4:
-        if (b->unk1C != -1)
-            AddPlayerScore(10, b->unk1C);
+        if (b->breakerPlayer != -1)
+            AddPlayerScore(10, b->breakerPlayer);
         if (gBlockCursorTile == 51)
         {
             PlaySfx(159);
             k = 4;
-            b->unk1A = 0x805;
-            if (b->unk1C != -1)
-                AddPlayerScore(50, b->unk1C);
+            b->chainAttack = 0x805;
+            if (b->breakerPlayer != -1)
+                AddPlayerScore(50, b->breakerPlayer);
         }
         else
         {
@@ -633,49 +633,49 @@ s32 BreakBlockAtCursor(void)
             if (gUnk_0873A5D4[gBlockCursorTile] != 0)
             {
                 k = 4;
-                b->unk1A = 0x805;
-                if (b->unk1C != -1)
-                    AddPlayerScore(50, b->unk1C);
+                b->chainAttack = 0x805;
+                if (b->breakerPlayer != -1)
+                    AddPlayerScore(50, b->breakerPlayer);
             }
             else
             {
                 k = 0;
-                b->unk1A = 2;
+                b->chainAttack = 2;
             }
         }
         break;
     case 3:
-        if (b->unk1C != -1)
-            AddPlayerScore(10, b->unk1C);
+        if (b->breakerPlayer != -1)
+            AddPlayerScore(10, b->breakerPlayer);
         CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
         if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
-            b->unk1A = 0x805;
-            if (b->unk1C != -1)
-                AddPlayerScore(50, b->unk1C);
+            b->chainAttack = 0x805;
+            if (b->breakerPlayer != -1)
+                AddPlayerScore(50, b->breakerPlayer);
         }
         else
         {
             k = 0;
-            b->unk1A = 3;
+            b->chainAttack = 3;
         }
         break;
     case 5:
         CreateBlockBreakEffect(gBlockCursorX * 16 + 8, gBlockCursorY * 16 + 8);
         PlaySfx(159);
-        if (b->unk1C != -1)
-            AddPlayerScore(10, b->unk1C);
+        if (b->breakerPlayer != -1)
+            AddPlayerScore(10, b->breakerPlayer);
         if (gUnk_0873A5D4[gBlockCursorTile] != 0)
         {
             k = 4;
-            b->unk1A = 0x805;
+            b->chainAttack = 0x805;
         }
         else
         {
             k = 0;
-            b->unk1A = 2;
+            b->chainAttack = 2;
         }
         break;
     case 6:
@@ -685,10 +685,10 @@ s32 BreakBlockAtCursor(void)
             k = 3;
         else
             k = 2;
-        b->unk1A = 6;
+        b->chainAttack = 6;
         break;
     case 7:
-        b->unk1A = 7;
+        b->chainAttack = 7;
         k = 5;
         break;
     default:
@@ -696,15 +696,15 @@ s32 BreakBlockAtCursor(void)
     }
     if (gBlockCursorShake != 0)
         RequestScreenShake(1);
-    b->unk10 = gUnk_0873A47C[k];
-    b->unk14 = 0;
-    b->unk6 = 0;
-    if (b->unk10[0] == 1)
+    b->script = gUnk_0873A47C[k];
+    b->waitFrames = 0;
+    b->scriptPos = 0;
+    if (b->script[0] == 1)
     {
         if (gUnk_0200B078 == 1)
             BlockAnimWriteMetatileWrapped(b);
         else
-            BlockAnimWriteColumn(b, ((s16 *)b->unk10)[1]);
+            BlockAnimWriteColumn(b, ((s16 *)b->script)[1]);
     }
     return i;
 }
@@ -724,28 +724,28 @@ s32 sub_08031738(u32 x, u32 y, s32 n)
     if (gBlockLayer[gBlockCursorIndex] == 0 || (gBlockLayer[gBlockCursorIndex] & 0x8000))
         return -1;
     i = 0;
-    while (gBreakingBlocks[i].unk6 != 0x7FFF)
+    while (gBreakingBlocks[i].scriptPos != 0x7FFF)
     {
         i++;
         if (i > 63)
             return -1;
     }
     b = &gBreakingBlocks[i];
-    b->unk4 = gBlockCursorIndex;
+    b->mapIndex = gBlockCursorIndex;
     t = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex] + n;
-    b->unk8 = t;
-    b->unk0 = gBlockCursorX;
-    b->unk2 = gBlockCursorY;
-    b->unk1C = gBlockCursorPlayer;
-    b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
-    b->unk16 = t->metatile;
-    b->unk18 = t->collisionTile;
+    b->metatileCursor = t;
+    b->cellX = gBlockCursorX;
+    b->cellY = gBlockCursorY;
+    b->breakerPlayer = gBlockCursorPlayer;
+    b->bgMapEntry = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
+    b->metatile = t->metatile;
+    b->collisionTile = t->collisionTile;
     gBlockLayer[gBlockCursorIndex] |= 0x8000;
-    gRoomMap[gBlockCursorIndex].metatile = b->unk16;
-    gRoomMap[gBlockCursorIndex].collisionTile = b->unk18;
-    b->unk1A = 7;
-    b->unk10 = gUnk_0873A47C[5];
-    b->unk14 = 0;
-    b->unk6 = 0;
+    gRoomMap[gBlockCursorIndex].metatile = b->metatile;
+    gRoomMap[gBlockCursorIndex].collisionTile = b->collisionTile;
+    b->chainAttack = 7;
+    b->script = gUnk_0873A47C[5];
+    b->waitFrames = 0;
+    b->scriptPos = 0;
     return i;
 }

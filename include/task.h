@@ -199,8 +199,8 @@ struct Actor
     /*0x03*/ s8 extraLayerOffset;
     /*0x04*/ u8 unk04;
     /*0x05*/ u8 hitState;
-    /*0x06*/ u8 unk06;
-    /*0x07*/ u8 unk07;
+    /*0x06*/ u8 hitterClass;
+    /*0x07*/ u8 hitterKind;
     /*0x08*/ u8 animNoFlip;
     /*0x09*/ u8 animScriptPos;
     /*0x0A*/ u8 paletteOverridden;
@@ -229,7 +229,7 @@ struct Actor
     /*0x40*/ void (*teardown)(void);
     /*0x44*/ struct ActorDef *def;
     /*0x48*/ u32 attackBox;
-    /*0x4C*/ u32 unk4C;
+    /*0x4C*/ u32 extraAttackBox;
     /*0x50*/ u32 terrainBox;
     /*0x54*/ u32 terrainHandlers;
     /*0x58*/ u32 prevTerrainHandlers;

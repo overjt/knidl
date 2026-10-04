@@ -134,10 +134,10 @@ void WrapLoopingRoom(void)
         gBrokenBlockX &= 31;
         for (i = 0; i < 64; i++)
         {
-            if (gBreakingBlocks[i].unk6 != 0xFFFF)
+            if (gBreakingBlocks[i].scriptPos != 0xFFFF)
             {
-                gBreakingBlocks[i].unk0 &= 31;
-                gBreakingBlocks[i].unk4 = gBreakingBlocks[i].unk0 + gBreakingBlocks[i].unk2 * gRoomWidth;
+                gBreakingBlocks[i].cellX &= 31;
+                gBreakingBlocks[i].mapIndex = gBreakingBlocks[i].cellX + gBreakingBlocks[i].cellY * gRoomWidth;
             }
         }
         for (i = 0; i < 64; i++)

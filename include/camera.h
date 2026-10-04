@@ -11,16 +11,16 @@
 
 struct Unk02007D70
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk02007D70Cmd *unk4;
-    /*0x08*/ u16 unk8;
+    /*0x00*/ u16 cmdIndex;
+    /*0x02*/ s16 waitFrames;
+    /*0x04*/ struct Unk02007D70Cmd *script;
+    /*0x08*/ u16 fadeFrame;
     /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 *unkC;
-    /*0x10*/ u16 *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u32 unk18;
+    /*0x0C*/ u16 *fadeSrc;
+    /*0x10*/ u16 *fadeDst;
+    /*0x14*/ u16 fadeColorIndex;
+    /*0x16*/ u16 fadeColorCount;
+    /*0x18*/ u32 fadeRate;
 };
 
 struct Unk02007D70Cmd

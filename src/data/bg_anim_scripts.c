@@ -32,7 +32,7 @@
  * between the data pieces of room_bg_anims inside ONE output section
  * (docs/data.md 5.2).  The records are not const: the scripts are the
  * struct Unk02007D70Cmd * of gRoomBgAnimScripts' lists and of
- * Unk02007D70.unk4, a fade is a command's void * and
+ * Unk02007D70.script, a fade is a command's void * and
  * BgAnimStartPaletteFade's parameter, so the qualifier would not survive
  * -Werror; the section attribute is what places them in ROM. */
 

@@ -1305,7 +1305,7 @@ u32 ActorCheckHits(void)
     gAttackHealth = v->health;
     gAttackLastHitterSlot = v->hitterSlot;
     gAttackLastHitter = v->hitterPlayer;
-    gAttackLastHitterClass = a->unk06;
+    gAttackLastHitterClass = a->hitterClass;
     gAttackHitTimer = v->hitTimer;
     gAttackFacing = v->facing;
     if (a->unk60 != NULL)
@@ -1359,7 +1359,7 @@ u32 ActorCheckHitsWithExtraBox(void)
         gAttackHealth = v->health;
         gAttackLastHitterSlot = v->hitterSlot;
         gAttackLastHitter = v->hitterPlayer;
-        gAttackLastHitterClass = a->unk06;
+        gAttackLastHitterClass = a->hitterClass;
         gAttackHitTimer = v->hitTimer;
         gAttackFacing = v->facing;
         if (a->unk60 != NULL)
@@ -1380,9 +1380,9 @@ u32 ActorCheckHitsWithExtraBox(void)
         if (ActorTestColliders(1) == 1)
             return 1;
     }
-    if (a->unk4C == 0)
+    if (a->extraAttackBox == 0)
         return 0;
-    gAttackBox = a->unk4C;
+    gAttackBox = a->extraAttackBox;
     gAttackX = gCurTask->pixelX;
     w = gCurTask;
     gAttackY = w->pixelY;
@@ -1393,12 +1393,12 @@ u32 ActorCheckHitsWithExtraBox(void)
         if (gCurTask->hitTimer > (a->unk60->hitDuration >> 1))
             gAttackBox = a->unk60->altAttackBox;
         else
-            gAttackBox = a->unk4C;
+            gAttackBox = a->extraAttackBox;
     }
     else
     {
         gAttackHitDuration = 30;
-        gAttackBox = a->unk4C;
+        gAttackBox = a->extraAttackBox;
     }
     if (HitTestPlayerColliders() == 0)
         return 0;
@@ -1459,8 +1459,8 @@ void ActorStoreHit(u8 a)
             if (b->hitState != 2)
                 b->hitState = 1;
         }
-        b->unk06 = gHitterColliderClass;
-        b->unk07 = gHitterColliderKind;
+        b->hitterClass = gHitterColliderClass;
+        b->hitterKind = gHitterColliderKind;
         u = &gTasks[gCurTask->hitterSlot];
         b->hitterParent = u->parent;
     }

@@ -118,8 +118,8 @@ void ActorInitFromDefSlot(u32 i)
     a->prevState = 0xFFFF;
     a->unk04 = 0;
     a->hitState = 0;
-    a->unk06 = 0;
-    a->unk07 = 0;
+    a->hitterClass = 0;
+    a->hitterKind = 0;
     a->animScript = 0;
     a->hitStunTimer = 0;
     a->animNoFlip = 0;
@@ -155,7 +155,7 @@ void ActorInitFromDefSlot(u32 i)
     if (d != NULL)
     {
         a->attackBox = d->attackBox;
-        a->unk4C = 0;
+        a->extraAttackBox = 0;
         a->terrainBox = d->terrainBox;
         a->prevTerrainHandlers = a->terrainHandlers = d->terrainHandlers;
         a->hitReactions = d->hitReactions;
@@ -170,7 +170,7 @@ void ActorInitFromDefSlot(u32 i)
     else
     {
         a->attackBox = 0;
-        a->unk4C = 0;
+        a->extraAttackBox = 0;
         a->terrainBox = 0;
         a->terrainHandlers = 0;
         a->prevTerrainHandlers = 0;
@@ -270,7 +270,7 @@ void sub_08063a14(u32 i, u32 v)
     struct Task *t;
 
     t = &gTasks[i];
-    t->u8C.actor->unk4C = v;
+    t->u8C.actor->extraAttackBox = v;
 }
 
 /* Nearest task in slots 4..15 to the running one, along X. */

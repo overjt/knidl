@@ -108,18 +108,18 @@ struct Unk020055D8
 
 struct Unk020061F0
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4;
-    /*0x06*/ u16 unk6;
-    /*0x08*/ struct MapTile *unk8;
-    /*0x0C*/ u16 *unkC;
-    /*0x10*/ u16 *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u16 unk18;
-    /*0x1A*/ u16 unk1A;
-    /*0x1C*/ s8 unk1C;
+    /*0x00*/ u16 cellX;
+    /*0x02*/ u16 cellY;
+    /*0x04*/ u16 mapIndex;
+    /*0x06*/ u16 scriptPos;
+    /*0x08*/ struct MapTile *metatileCursor;
+    /*0x0C*/ u16 *bgMapEntry;
+    /*0x10*/ u16 *script;
+    /*0x14*/ u16 waitFrames;
+    /*0x16*/ u16 metatile;
+    /*0x18*/ u16 collisionTile;
+    /*0x1A*/ u16 chainAttack;
+    /*0x1C*/ s8 breakerPlayer;
     /*0x1D*/ u8 filler1D[3];
 };
 

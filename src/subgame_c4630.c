@@ -147,12 +147,12 @@ void AirGrindStepPaletteFades(void)
     s32 i;
 
     for (i = 0; i <= 3; i++) {
-        if (gAirGrindPaletteFades[i].unk00 != 0) {
-            if (--gAirGrindPaletteFades[i].unk04 < 0) {
-                gAirGrindPaletteFades[i].unk04 = gAirGrindPaletteFades[i].unk08;
-                if (++gAirGrindPaletteFades[i].unk0C >= gAirGrindPaletteFades[i].unk10) {
-                    if (gAirGrindPaletteFades[i].unk24 == 0 || --gAirGrindPaletteFades[i].unk24 > 0)
-                        gAirGrindPaletteFades[i].unk0C = 0;
+        if (gAirGrindPaletteFades[i].active != 0) {
+            if (--gAirGrindPaletteFades[i].timer < 0) {
+                gAirGrindPaletteFades[i].timer = gAirGrindPaletteFades[i].period;
+                if (++gAirGrindPaletteFades[i].step >= gAirGrindPaletteFades[i].lastStep) {
+                    if (gAirGrindPaletteFades[i].repeatCount == 0 || --gAirGrindPaletteFades[i].repeatCount > 0)
+                        gAirGrindPaletteFades[i].step = 0;
                     else {
                         AirGrindStopPaletteFade(i);
                         continue;
@@ -160,11 +160,11 @@ void AirGrindStepPaletteFades(void)
                 }
             }
         {
-            s32 k = gAirGrindPaletteFades[i].unk0C;
+            s32 k = gAirGrindPaletteFades[i].step;
             s32 k1 = k + 1;
-            s32 r = (gAirGrindPaletteFades[i].unk08 - gAirGrindPaletteFades[i].unk04) * gAirGrindPaletteFades[i].unk14;
-            u16 *pal = (u16 *)gAirGrindPaletteFades[i].unk1C;
-            BlendColors(pal + k * 16, pal + k1 * 16, (u16)r, (u16)gAirGrindPaletteFades[i].unk18, (u16 *)gAirGrindPaletteFades[i].unk20);
+            s32 r = (gAirGrindPaletteFades[i].period - gAirGrindPaletteFades[i].timer) * gAirGrindPaletteFades[i].ratioStep;
+            u16 *pal = (u16 *)gAirGrindPaletteFades[i].src;
+            BlendColors(pal + k * 16, pal + k1 * 16, (u16)r, (u16)gAirGrindPaletteFades[i].colorCount, (u16 *)gAirGrindPaletteFades[i].dst);
         }
         }
     }
@@ -175,7 +175,7 @@ void AirGrindStopAllPaletteFades(void)
     s32 i;
 
     for (i = 0; i < 4; i++)
-        gAirGrindPaletteFades[i].unk00 = 0;
+        gAirGrindPaletteFades[i].active = 0;
 }
 
 s32 AirGrindStartPaletteFade(u16 *src, s32 pal, s32 period, s32 steps, s32 count, s32 repeat)
@@ -183,30 +183,30 @@ s32 AirGrindStartPaletteFade(u16 *src, s32 pal, s32 period, s32 steps, s32 count
     s32 i;
 
     for (i = 0; i < 4; i++)
-        if (gAirGrindPaletteFades[i].unk00 == 0)
+        if (gAirGrindPaletteFades[i].active == 0)
             break;
     if (i > 3)
         while (1)
             ;
-    gAirGrindPaletteFades[i].unk00 = 1;
-    gAirGrindPaletteFades[i].unk04 = period;
-    gAirGrindPaletteFades[i].unk08 = period;
-    gAirGrindPaletteFades[i].unk0C = 0;
-    gAirGrindPaletteFades[i].unk10 = steps - 1;
-    gAirGrindPaletteFades[i].unk14 = Div(256, period);
-    gAirGrindPaletteFades[i].unk18 = count;
-    gAirGrindPaletteFades[i].unk1C = (s32)src;
-    gAirGrindPaletteFades[i].unk20 = (s32)&gObjPalette[pal];
-    gAirGrindPaletteFades[i].unk24 = repeat;
+    gAirGrindPaletteFades[i].active = 1;
+    gAirGrindPaletteFades[i].timer = period;
+    gAirGrindPaletteFades[i].period = period;
+    gAirGrindPaletteFades[i].step = 0;
+    gAirGrindPaletteFades[i].lastStep = steps - 1;
+    gAirGrindPaletteFades[i].ratioStep = Div(256, period);
+    gAirGrindPaletteFades[i].colorCount = count;
+    gAirGrindPaletteFades[i].src = (s32)src;
+    gAirGrindPaletteFades[i].dst = (s32)&gObjPalette[pal];
+    gAirGrindPaletteFades[i].repeatCount = repeat;
     return i;
 }
 
 void AirGrindStopPaletteFade(s32 i)
 {
-    if (i > 3 || gAirGrindPaletteFades[i].unk00 == 0)
+    if (i > 3 || gAirGrindPaletteFades[i].active == 0)
         while (1)
             ;
-    gAirGrindPaletteFades[i].unk00 = 0;
+    gAirGrindPaletteFades[i].active = 0;
 }
 
 void AirGrindSetDigitPalette(s32 pal)

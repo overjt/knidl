@@ -45,16 +45,16 @@ struct Unk02007D70Cmd
 
 struct Unk02007D70
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ s16 unk2;
-    /*0x04*/ struct Unk02007D70Cmd *unk4;
-    /*0x08*/ u16 unk8;
+    /*0x00*/ u16 cmdIndex;
+    /*0x02*/ s16 waitFrames;
+    /*0x04*/ struct Unk02007D70Cmd *script;
+    /*0x08*/ u16 fadeFrame;
     /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 *unkC;
-    /*0x10*/ u16 *unk10;
-    /*0x14*/ u16 unk14;
-    /*0x16*/ u16 unk16;
-    /*0x18*/ u32 unk18;
+    /*0x0C*/ u16 *fadeSrc;
+    /*0x10*/ u16 *fadeDst;
+    /*0x14*/ u16 fadeColorIndex;
+    /*0x16*/ u16 fadeColorCount;
+    /*0x18*/ u32 fadeRate;
 };
 
 struct BgMap
@@ -181,17 +181,17 @@ void LoadRoomBgAnims(void)
     i = 0;
     for (k = 0; k < 10; k++)
     {
-        gBgAnims[k].unk0 = 0x7FFF;
-        gBgAnims[k].unk8 |= 0xFFFF;
+        gBgAnims[k].cmdIndex = 0x7FFF;
+        gBgAnims[k].fadeFrame |= 0xFFFF;
     }
     if (gCurRoomDef->bgAnimSet != 0)
     {
         while (gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i] != 0)
         {
             struct Unk02007D70 *p = &gBgAnims[i];
-            p->unk4 = gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i];
-            p->unk0 = 0;
-            p->unk2 = 0;
+            p->script = gRoomBgAnimScripts[gCurRoomDef->bgAnimSet][i];
+            p->cmdIndex = 0;
+            p->waitFrames = 0;
             i++;
         }
     }
@@ -213,40 +213,40 @@ void UpdateBgAnims(void)
         do
         {
             p = &gBgAnims[i];
-            if (p->unk0 == 0x7FFF)
+            if (p->cmdIndex == 0x7FFF)
                 continue;
         loop:
-            if ((s16)p->unk8 != -1)
+            if ((s16)p->fadeFrame != -1)
                 BgAnimStepPaletteFade(p);
-            if (--p->unk2 > 0)
+            if (--p->waitFrames > 0)
                 continue;
-            cmd = &p->unk4[p->unk0];
+            cmd = &p->script[p->cmdIndex];
             switch (cmd->op)
             {
             case 0:
                 BgAnimCopyTiles(cmd->ptr);
-                p->unk2 = cmd->arg + 1;
-                p->unk0++;
+                p->waitFrames = cmd->arg + 1;
+                p->cmdIndex++;
                 goto loop;
             case 1:
                 BgAnimStartPaletteFade(p, cmd->ptr);
-                p->unk2 = cmd->arg + 1;
-                p->unk0++;
+                p->waitFrames = cmd->arg + 1;
+                p->cmdIndex++;
                 goto loop;
             case 2:
-                p->unk2 = cmd->arg + 1;
-                p->unk0++;
+                p->waitFrames = cmd->arg + 1;
+                p->cmdIndex++;
                 goto loop;
             case 3:
-                p->unk0 = 0;
+                p->cmdIndex = 0;
                 goto loop;
             case 5:
                 SetCollisionTile(cmd->arg >> 8, cmd->arg & 0xFF, (u16)(u32)cmd->ptr);
-                p->unk0++;
+                p->cmdIndex++;
                 goto loop;
             case 6:
                 PlaySfx(cmd->arg);
-                p->unk0++;
+                p->cmdIndex++;
                 goto loop;
             default:
                 BgAnimStop(p);
@@ -263,25 +263,25 @@ void BgAnimCopyTiles(struct Unk0802D25C *a)
 
 void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q)
 {
-    p->unkC = q->src;
-    p->unk10 = q->dst;
-    p->unk14 = q->colorIndex;
-    p->unk16 = q->colorCount;
-    p->unk18 = q->rate;
-    p->unk8 = 0;
+    p->fadeSrc = q->src;
+    p->fadeDst = q->dst;
+    p->fadeColorIndex = q->colorIndex;
+    p->fadeColorCount = q->colorCount;
+    p->fadeRate = q->rate;
+    p->fadeFrame = 0;
 }
 
 void BgAnimStepPaletteFade(struct Unk02007D70 *p)
 {
     s32 t;
 
-    p->unk8++;
-    t = (p->unk18 * (s16)p->unk8) >> 8;
+    p->fadeFrame++;
+    t = (p->fadeRate * (s16)p->fadeFrame) >> 8;
     if (t > 0x100)
         t = 0x100;
-    BlendColors(p->unkC, p->unk10, (u16)t, p->unk16, &gBgPaletteBank2[p->unk14]);
+    BlendColors(p->fadeSrc, p->fadeDst, (u16)t, p->fadeColorCount, &gBgPaletteBank2[p->fadeColorIndex]);
     if (t == 0x100)
-        p->unk8 = -1;
+        p->fadeFrame = -1;
 }
 
 void SetCollisionTile(u32 x, u32 y, u32 v)
@@ -292,10 +292,10 @@ void SetCollisionTile(u32 x, u32 y, u32 v)
 
 void BgAnimStop(struct Unk02007D70 *p)
 {
-    p->unk4 = 0;
-    p->unk0 = 0x7FFF;
-    p->unk2 = 0;
-    p->unk8 = -1;
+    p->script = 0;
+    p->cmdIndex = 0x7FFF;
+    p->waitFrames = 0;
+    p->fadeFrame = -1;
 }
 
 s32 CreateMapEvent(s32 a)

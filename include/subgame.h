@@ -157,16 +157,16 @@ struct M37Script
 /* four 40-byte records at gAirGrindPaletteFades (AirGrindStartPaletteFade fills one) */
 struct M37Timer
 {
-    /*0x00*/ s32 unk00;         /* in use */
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ s32 unk20;
-    /*0x24*/ s32 unk24;
+    /*0x00*/ s32 active;         /* in use */
+    /*0x04*/ s32 timer;
+    /*0x08*/ s32 period;
+    /*0x0C*/ s32 step;
+    /*0x10*/ s32 lastStep;
+    /*0x14*/ s32 ratioStep;
+    /*0x18*/ s32 colorCount;
+    /*0x1C*/ s32 src;
+    /*0x20*/ s32 dst;
+    /*0x24*/ s32 repeatCount;
 };
 
 /* EWRAM */
