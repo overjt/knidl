@@ -57,7 +57,7 @@ void CalcHitDamageAndDirection(void)
     gHitHealthLeft = gAttackHealth - gColliderBodyBox->damage;
     if ((s16)gHitHealthLeft <= 0)
     {
-        if (gAttackBox->unk0A & 2)
+        if (gAttackBox->immunityFlags & 2)
         {
             gHitKind = HIT_KIND_NO_DAMAGE;
             gHitEffect = 1;

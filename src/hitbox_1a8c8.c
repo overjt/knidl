@@ -40,7 +40,7 @@ struct AttackBox
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 damage;
     /*0x09*/ u8 hitEffect;
-    /*0x0A*/ u16 unk0A;
+    /*0x0A*/ u16 immunityFlags;
     /*0x0C*/ u16 unk0C;
     /*0x0E*/ u16 class10ImmuneMask;
     /*0x10*/ u16 unk10;
@@ -209,15 +209,15 @@ u8 HitTestPlayerColliders(void)
                 continue;
             if (ps->invincible == 1)
             {
-                if (gAttackBox->unk0A & 0x8000)
+                if (gAttackBox->immunityFlags & 0x8000)
                     continue;
-                if (gAttackBox->unk0A & 8)
+                if (gAttackBox->immunityFlags & 8)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 12;
                     gHitHealthLeft = gAttackHealth;
                 }
-                else if (gAttackBox->unk0A & 4)
+                else if (gAttackBox->immunityFlags & 4)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
@@ -253,15 +253,15 @@ u8 HitTestPlayerColliders(void)
                         t->hitKind = HIT_KIND_DAMAGE;
                     }
                 }
-                if (gAttackBox->unk0A & 0x8000)
+                if (gAttackBox->immunityFlags & 0x8000)
                     continue;
-                if (gAttackBox->unk0A & 4)
+                if (gAttackBox->immunityFlags & 4)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
-                else if (gAttackBox->unk0A & 1)
+                else if (gAttackBox->immunityFlags & 1)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 1;
@@ -275,9 +275,9 @@ u8 HitTestPlayerColliders(void)
             }
             else if (s == 1 || s == 3)
             {
-                if (gAttackBox->unk0A & 0x8000)
+                if (gAttackBox->immunityFlags & 0x8000)
                     continue;
-                if (gAttackBox->unk0A & 4)
+                if (gAttackBox->immunityFlags & 4)
                 {
                     gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;

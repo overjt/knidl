@@ -37,7 +37,7 @@ struct AttackBox
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 damage;
     /*0x09*/ u8 hitEffect;
-    /*0x0A*/ u16 unk0A;
+    /*0x0A*/ u16 immunityFlags;
     /*0x0C*/ u16 unk0C;
     /*0x0E*/ u16 class10ImmuneMask;
     /*0x10*/ u16 unk10;
