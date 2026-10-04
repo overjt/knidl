@@ -477,30 +477,30 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
 /* include/effect.h; CallTableEntry(i, 11, ...) in PlayerGoalGameInit, PlayerGoalGameEnterState */
 u32 gPlayerGoalGameStates[11] GAME_TBL(0873dbe4) = {
     (u32)sub_0805b4d8,
-    (u32)sub_0805b514,
+    (u32)PlayerGoalGameWaitForPress,
     (u32)sub_0805b644,
     (u32)sub_0805b670,
-    (u32)sub_0805b6c0,
+    (u32)PlayerGoalGameLaunch,
     (u32)sub_0805b8f8,
     (u32)sub_0805b9a4,
-    (u32)sub_0805ba08,
+    (u32)PlayerGoalGameLand,
     (u32)sub_0805bc1c,
-    (u32)sub_0805bce0,
-    (u32)sub_0805bd34,
+    (u32)PlayerGoalGameDance,
+    (u32)PlayerGoalGameFinish,
 };
 /* include/effect.h; CallTableEntry(i, 11, ...) in PlayerGoalGameUpdate */
 u32 gPlayerGoalGameStateUpdates[11] GAME_TBL(0873dbe4) = {
     (u32)sub_0805b508,
-    (u32)sub_0805b534,
+    (u32)PlayerGoalGameWaitForPressUpdate,
     (u32)sub_0805b660,
     (u32)sub_0805b688,
-    (u32)sub_0805b788,
+    (u32)PlayerGoalGameLaunchUpdate,
     (u32)sub_0805b998,
     (u32)sub_0805b9c0,
-    (u32)sub_0805bb84,
+    (u32)PlayerGoalGameLandUpdate,
     (u32)sub_0805bc50,
-    (u32)sub_0805bd28,
-    (u32)sub_0805be3c,
+    (u32)PlayerGoalGameDanceUpdate,
+    (u32)PlayerGoalGameFinishUpdate,
 };
 
 /* ---- 0x0873DEA0-0x0873DEA8: 1 table(s), 2 function pointer(s), section .game_tbl_0873dea0 ---- */

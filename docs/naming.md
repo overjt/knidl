@@ -440,7 +440,7 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 2224 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 2212 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 125 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
@@ -476,7 +476,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M13 | player action bodies, part 4 | 24 | 1 |
 | M14 | player action bodies, part 5, and task type #6 | 82 | 10 |
 | M15 | the player's effect objects (task type #7) | 84 | 58 |
-| M16 | effect spawner (task types #81-#90) | 89 | 55 |
+| M16 | effect spawner (task types #81-#90) | 89 | 43 |
 | M17 | actor core | 245 | 90 |
 | M18 | actor core, part 2 | 256 | 107 |
 | M19 | cutscenes and ending sequences | 220 | 148 |
@@ -501,7 +501,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 2237 |
+| all | | 5348 | 2225 |
 
 `unk*` fields by header struct: `LinkSave` 33, `PlayerState` 27, `M37Player` 19, `Task` 17, `M37CoursePlayer` 13, `Unk020061F0` 12, `M37Results` 11, `AttackBox` 10, `M37Timer` 10, `SaveSlot` 10, `Unk02007D70` 10, `Actor` 9, `M37Game` 9, `Unk03005530` 9, `BodyBox` 8, `LinkRec` 8, `Unk03005550` 8, `M37Course` 7, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `RoomDef` 5, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `Unk03005670` 4, `M12Fade` 3, `MapCell` 3, `Unk02005E00` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `MapTile` 1, `Unk0873EEA0` 1.
 

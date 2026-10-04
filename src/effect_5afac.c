@@ -75,21 +75,21 @@ void sub_08027178(void);
 void GoalGameInit(void);
 void sub_0805b370(void);
 s32 PlayerGoalGameUpdate(void);
-void sub_0805b514(void);
-s32 sub_0805b5b0(void);
-void sub_0805b61c(void);
+void PlayerGoalGameWaitForPress(void);
+s32 PlayerGoalGameCheckPress(void);
+void PlayerGoalGameSetLaunchPower(void);
 void sub_0805b670(void);
 void sub_0805b83c(void);
 void sub_0805b8b8(void);
 void sub_0805b8f8(void);
 void sub_0805b9a4(void);
-void sub_0805ba08(void);
+void PlayerGoalGameLand(void);
 void sub_0805bb90(void);
 void sub_0805bc1c(void);
 void sub_0805bc5c(void);
 void sub_0805bca4(void);
-void sub_0805bce0(void);
-void sub_0805bd34(void);
+void PlayerGoalGameDance(void);
+void PlayerGoalGameFinish(void);
 void sub_0805be48(void);
 void GoalGameLaunchStarsUpdate(void);
 void GoalGameLaunchStarsDraw(void);
@@ -310,7 +310,7 @@ void sub_0805b4d8(void)
     gCurTask->accelY = 128 << 7;
     TaskYieldTrampoline(27);
     gCurTask->state = 1;
-    sub_0805b514();
+    PlayerGoalGameWaitForPress();
 }
 
 void sub_0805b508(void)
@@ -318,7 +318,7 @@ void sub_0805b508(void)
     TaskUpdateFrameScript();
 }
 
-void sub_0805b514(void)
+void PlayerGoalGameWaitForPress(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -326,10 +326,10 @@ void sub_0805b514(void)
     TaskSleepForever();
 }
 
-void sub_0805b534(void)
+void PlayerGoalGameWaitForPressUpdate(void)
 {
     TaskUpdateFrameScript();
-    if (sub_0805b5b0() == 0)
+    if (PlayerGoalGameCheckPress() == 0)
     {
         sub_0805c584();
         sub_0805be48();
@@ -352,14 +352,14 @@ void sub_0805b534(void)
     }
 }
 
-s32 sub_0805b5b0(void)
+s32 PlayerGoalGameCheckPress(void)
 {
     u16 *p = (u16 *)gLatchedPressedKeys;
     s32 n;
 
     if ((p[gCurTask->player->playerIndex] & 3) != 0)
     {
-        sub_0805b61c();
+        PlayerGoalGameSetLaunchPower();
         n = gCurTask->unk30;
         if (n <= 24)
         {
@@ -376,7 +376,7 @@ s32 sub_0805b5b0(void)
     return 0;
 }
 
-void sub_0805b61c(void)
+void PlayerGoalGameSetLaunchPower(void)
 {
     if (gCurTask->unk30 > 24)
         gCurTask->unk34 = 24 - ((gCurTask->unk30 - 24) << 1);
@@ -416,7 +416,7 @@ void sub_0805b688(void)
     }
 }
 
-void sub_0805b6c0(void)
+void PlayerGoalGameLaunch(void)
 {
     gCurTask->updateState = 4;
     CreateBurstEffect(1, 0);
@@ -449,7 +449,7 @@ void sub_0805b6c0(void)
     }
 }
 
-void sub_0805b788(void)
+void PlayerGoalGameLaunchUpdate(void)
 {
     gCurTask->unk70++;
     TaskUpdateFrameScript();
@@ -509,7 +509,7 @@ void sub_0805b8f8(void)
     gCurTask->velY = -163840;
     gCurTask->accelY = 128 << 8;
     TaskYieldTrampoline(9);
-    sub_0805ba08();
+    PlayerGoalGameLand();
 }
 
 void sub_0805b998(void)
@@ -539,7 +539,7 @@ void sub_0805b9c0(void)
     }
 }
 
-void sub_0805ba08(void)
+void PlayerGoalGameLand(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
@@ -581,10 +581,10 @@ void sub_0805ba08(void)
     TaskStartFrameScriptId(6);
     sub_0805bca4();
     gCurTask->state = 9;
-    sub_0805bce0();
+    PlayerGoalGameDance();
 }
 
-void sub_0805bb84(void)
+void PlayerGoalGameLandUpdate(void)
 {
     TaskUpdateFrameScript();
 }
@@ -651,7 +651,7 @@ void sub_0805bca4(void)
     t->unk2C &= ~(1 << gCurTask->player->playerIndex);
 }
 
-void sub_0805bce0(void)
+void PlayerGoalGameDance(void)
 {
     gCurTask->updateState = 9;
     gCurTask->lateUpdateCallback = 0;
@@ -662,15 +662,15 @@ void sub_0805bce0(void)
     TaskStartFrameScriptId(0);
     PlayerDance();
     gCurTask->state = 10;
-    sub_0805bd34();
+    PlayerGoalGameFinish();
 }
 
-void sub_0805bd28(void)
+void PlayerGoalGameDanceUpdate(void)
 {
     TaskUpdateFrameScript();
 }
 
-void sub_0805bd34(void)
+void PlayerGoalGameFinish(void)
 {
     gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
     gCurTask->updateState = 10;
@@ -703,7 +703,7 @@ void sub_0805bd34(void)
     TaskSleepForever();
 }
 
-void sub_0805be3c(void)
+void PlayerGoalGameFinishUpdate(void)
 {
     TaskUpdateFrameScript();
 }
