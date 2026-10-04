@@ -229,7 +229,11 @@ types.  Any lever that remains is a code exception and must be listed in
 `docs/audit.md` §3.  The clobber sweep of #94 stays available as a last
 resort, archived as `tools/archive/clobber_sweep.py` (`tools/archive/README.md`):
 the two approved levers of `sub_080caab8` (`BootLogoUpdateObjects`) came from
-that kind of search.
+that kind of search.  When the ROM keeps a value live that no instruction
+reads, look for a meaningful statement the compiler can prove redundant only
+after reload: #169 replaced `PoppyBrosSrHeadUpdate`'s lever with an
+end-of-script store that cse rewrites and post-reload cse deletes (lesson
+3.526).
 
 ## 5. Land it with tools/carve.py
 

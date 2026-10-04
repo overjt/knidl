@@ -145,6 +145,7 @@ listed.
 | [3.370](#3370-a-4-byte-shortfall-with-one-arm-branching-into-the-other-is-cross-jumping) | [3.506](#3506-an-address-or-value-the-rom-loads-in-two-arms-is-two-full-arms-that-cross-jump) | #154: the shared store written in both arms, merged by jump2; no clobber. |
 | [3.452](#3452-in-a-big-function-variables-are-roles-the-rom-shares-or-splits-measure-each-one) | [3.493](#3493-sub_080c5b84-pres-slot-order-is-arithmetic---solve-the-bucket-inequalities-for-declaration-order-s-and-the-files-label-count-together) | Note (final campaign): block scoping was one way to reach the pseudo numbering; the landed source declares at function scope. |
 | [3.457](#3457-an-all-ones-halfword-store-keeps-its-orrs-only-when-combine-cannot-see-the-constant) | [3.494](#3494-sub_080caab8-dead-initializers-settle-the-slot-swap-the-all-ones-orrs-still-needs-two-levers) | Note (final campaign): the slot swap was the insn count; the `orrs` still needs two levers. |
+| [3.494](#3494-sub_080caab8-dead-initializers-settle-the-slot-swap-the-all-ones-orrs-still-needs-two-levers) | [3.527](#3527-bootlogoupdateobjects-the-orrs-folds-because-gcses-reaching-register-has-two-sets) | Amended (#169): the fold needs the reaching register's two sets; the likeliest original keeps a store between a compare's load and its copy. |
 | [3.464](#3464-a-gcse-reaching-register-set-in-n-arms-has-its-live-length-doubled-n-times-the-parked-sub_0801b24c) | [3.487](#3487-serialcb-sub_08006d28-66---15-bytes-parked-on-a-doubled-live-length), [3.491](#3491-the-doubled-n-times-live-length-is-when-jumpc-swaps-an-else-arm-a-dead-store-before-break-delays-it-to-jump2), [3.492](#3492-sub_0801b24c-no-p-local-one-mask-variable---and-the-triple-doubling-was-never-the-residue) | Corrected: the triple doubling was not `sub_0801b24c`'s residue. |
 | [3.478](#3478-sub_0801b24c-again-the-plain-rewrite-keeps-3464s-44-bytes-and-the-p-block-is-a-cse1cse2-path-effect) | [3.492](#3492-sub_0801b24c-no-p-local-one-mask-variable---and-the-triple-doubling-was-never-the-residue) | Corrected: the `p` block's path effect was the `p` local itself. |
 | [3.487](#3487-serialcb-sub_08006d28-66---15-bytes-parked-on-a-doubled-live-length) | [3.490](#3490-serialcbs-handshake-reads-the-struct-not-a-pointer-local), [3.491](#3491-the-doubled-n-times-live-length-is-when-jumpc-swaps-an-else-arm-a-dead-store-before-break-delays-it-to-jump2) | Corrected: matched; the extra doubling was jump.c's else-arm swap timing. |
@@ -4193,6 +4194,11 @@ PRE (556 bytes).  The natural best, the plain store with the dead
 initializers (40 differing bytes, 564 of 568), is on #100: the function is
 "matched with two levers, natural form pending".
 
+*Note (#169):* lesson 3.527 measured the fold's condition: gcse's
+reaching register for the id has two sets, so combine uses its first
+scan's union (0xFFFF); with one set the plain store gives the ROM's
+`orrs`.  Changing `obj` between a load and its copy does not help.
+
 ### 3.495 The natural-C campaign: the pins described the candidates, and a strip test finds the dead ones
 Issue #154 set out to remove every `register ... asm("rN")` pin and every
 zero-byte `asm("")` lever from the 133 functions (45 files) that still
@@ -4879,6 +4885,75 @@ a natural source: when the ROM keeps a value live that no instruction
 reads, look for a statement the compiler can prove redundant only after
 reload.  **Corrects** 3.156's "pure C cannot express that" and 3.514's
 verdict for `sub_08091e18`; see 3.156's note.
+
+### 3.527 `BootLogoUpdateObjects`: the `orrs` folds because gcse's reaching register has two sets
+#169 measured why the plain switch-off of the boot logo's off-screen
+objects, `obj->scriptId = 0xFFFF;` (564 of 568 bytes, 40 differing:
+`ldr r0, =0xFFFF; strh` for the ROM's `ldr r1, =0xFFFF; adds r0, r1, #0;
+orrs r0, r7; strh`), folds, with fin-gcse's `CIOR` prints (#100) at
+combine's IOR simplification:
+* The store expands as a bit-field store, `(ior old 0xFFFF)` (3.469),
+  where `old` is gcse's reaching register R for `(mem:HI obj+4)`.  R has
+  **two sets**, the PRE copies at the end of the loop-head block and of
+  the while-bottom block: the ROM's two `ldrh r7, [r5, #4]` (0x080CAACC,
+  0x080CAC40), so the ROM's compile had them too.
+* `nonzero_bits` (combine.c) uses a register's last value only if the
+  register has one set or its last set is in the use's label tick
+  (`get_last_value`); the switch-off is in another block, so it falls back
+  to `reg_nonzero_bits`, the union combine's first scan recorded over R's
+  sets: two halfword loads, 0xFFFF, and `(ior old 0xFFFF)` is the
+  constant (`CIOR nz=ffff nsets=2 glv=0`).
+* **With one set the ROM's code comes out.**  A probe that gives R one
+  set (a `continue` after the sleep decrement, which changes the function
+  elsewhere, 520 bytes) prints `nz=ffffffff glv=(clobber:HI 0)`:
+  `get_last_value` follows the copy to the halfword load, the movement
+  block's stores invalidate that load (combine assumes any store may
+  clobber memory), the bits are unknown, and the switch-off is exactly
+  the ROM's `ldr r1, =0xFFFF; adds r0, r1, #0; orrs r0, r7; strh`.  So the
+  ROM's source gave R one set, or a set whose source the scan cannot
+  track, or made R live at the function's start (the scan skips such a
+  register).  The first is not the ROM's (both copies are there, and one
+  OR reads one pseudo), the last needs a path from the entry to the OR
+  that skips the loop head, and a last set in the OR's own label tick is
+  ruled out by the ROM's labels at 0x080CAC54 and 0x080CACC8.  That leaves
+  the second: a store or call between a compare's load and its copy (the
+  copy's source then has no valid last value at the scan).  The likeliest
+  original reads `scriptId` in the while test BEFORE the `obj->scriptPos
+  = p` store, and combine later moves the load past the store, giving the
+  ROM's `str r4, [r5]; ldrsh; ldrh r7` order; no natural C for that was
+  found (a do-while reading an `s16 id` before the store: 516 bytes, the
+  loop gains an entry test).
+* **The compiler has that scan.**  A private agbcc that skips the scan's
+  recording compiles the plain body to the levered version's code, but it
+  also changes five matched files (`actor_653ec`, `block_30804`,
+  `player_3bde8`, `save_b6b08`, `save_b6d04`).
+* What does not help: changing `obj` between the compare's load and the
+  copy (combine keeps the memory reference, still 0xFFFF); a store inside
+  the header test or the while test (it breaks the gcse reuse, 184 and
+  504 bytes); the constant side (the HImode 65535 temp dies at the OR).
+  New spellings measured, all 40 bytes or worse: the init loop's style
+  (`obj++` at the end of the body), `case 8192` as `= -1`, a redundant
+  `else if (spriteId != -1)`, x/y computed inside the sprite test, an
+  on-screen flag, the off-screen arm first, the range test written `x >
+  -16 && x < 272 && y > -32 && y < 192` (the same code as `(u32)(x + 15)
+  <= 286 && ...`: `&&` groups left to right, so only the x pair merges into
+  one unsigned test, as in the ROM; with the two levers it matches, a
+  cosmetic change not landed), `scriptId` as a 16-bit bit-field in a
+  file-local struct (`s32 scriptId : 16`, the same 40 bytes), an id local
+  assigned in both tests (`u16`/`s16`/`s32`: no PRE, 472-525 bytes), and
+  13 compiler-flag variants.  cse2's widening-load reuse looks only for a
+  `zero_extend` (Thumb's `LOAD_EXTEND_OP`), so it cannot give a copy a
+  sign-extended source.  The final campaign's list (3.494) stands.
+`sub_080b75a4` (3.469) keeps its `orrs` from plain source because its old
+value has one set.  The two levers stay (docs/audit.md section 3): the
+first hides the constant, which has the same effect as an `old` combine
+cannot track; the natural source is one that leaves a store between a
+compare's load of the id and its PRE copy (or gives R one set) without
+changing the other 564 bytes.
+Two agents (a proposal agent for about 45 minutes and a racer for 12)
+reached the same verdict; the evidence above is why they stopped.
+**Amends** 3.494 (the fold needs R's two sets; changing `obj` between a
+load and its copy, #100's suggestion, does not help).
 
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
@@ -11597,6 +11672,31 @@ reach one family of scenes (the menus and stage 1-1, the sub-games, the
 game over, level 1 through stage 1-3); the census covers the rest
 (docs/data.md 8.4).  Link play needs linked cores of each image and is
 out of reach of a one-core-per-image harness.
+
+### 4.165 Harness notes from #169 (two levered functions, two agents)
+* **A scratch tree per agent, mounted alone.**  `rsync` of the worktree
+  without `.git`, `build` and `pending` (about 30 MB) into
+  `pending/<run>/wip/<agent>/tree`, with the instrumented agbcc copied to
+  `tree/rr/`; the agent's byte test mounts that copy in Docker as `/src`
+  and runs `tools/fnmatch.sh` there, so no agent build ever touches the
+  real tree's `build/`.  The whole-file test plus a per-symbol comparison
+  of the candidate's `nm` (#154's `fncmp.py`) reports the residue per
+  function.
+* **Read the reload trace of the levered version first.**  The RRTRACE
+  build's `ORDER`/`NEWSPILL`/`SPILLSET`/`RR` lines for the matching
+  (levered) file against the stripped one named the one fact the lever
+  supplied (r4 busy at one `ldrsh`, which adds r5 to the spill set) before
+  any source was written; the agent then looked for a source with that
+  liveness instead of a source with those registers.
+* **A finished agent is the racer.**  The agent that matched one function
+  was resumed with `SendMessage` as the fresh-eyes racer on the other,
+  with the first agent's measured findings in the message (what was
+  established, what not to redo): no new agent, no collision, and its
+  shapes were all new.  The racer gets the first agent's instrumented
+  compiler copied into its own tree.
+* **Ask before landing a zero-code statement**, even a meaningful one:
+  the coordinator's bar for 3.526's redundant store was "meaningful code,
+  not a placeholder", with a comment at the site so nobody cleans it up.
 
 ## 5. Workflow that worked
 

@@ -990,3 +990,25 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   (linked cores).  New lessons 4.162-4.164.  Done by three proposal
   agents (the sub-games, the game over and the credits study, level 1)
   and the coordinator, who wrote the harness features.
+- The two functions that kept zero-byte `asm("")` levers (issue #169):
+  **`PoppyBrosSrHeadUpdate` is plain C; `BootLogoUpdateObjects` keeps
+  its two levers, with the fold's cause measured**.  The Poppy Bros.
+  Sr. head's animation walker (formerly `sub_08091e18`, 9 bytes after
+  the strip test) now stops its timer explicitly at the end marker,
+  `if (frame == -1) w->unk28 = 0; else { ... }`: the store is
+  redundant on that path, so cse stores the decremented register
+  (keeping it live into the frame test, the ROM's `subs r4` and `ldrsh`
+  scratches 4, 5, 5, 4) and post-reload cse deletes it; written with
+  the other arm first, the store follows a label and survives (+4
+  bytes).  The owner's coordinator accepted it as plain C (meaningful,
+  not dead), so its docs/audit.md section 3 row went.  For the boot
+  logo's objects (40 bytes plain, 564 of 568) the instrumented compiler
+  showed that combine folds the switch-off's `orrs` because gcse's
+  reaching register for the old id has two sets; a probe with one set
+  gives the ROM's code, a compiler without combine's first-scan
+  recording changes five other files, and 13 new spellings (a
+  bit-field id, id locals, range tests, a read-before-store loop) and
+  13 compiler-flag variants fold or change the function.  New lessons
+  3.526, 3.527 and 4.165 (3.156 corrected, 3.494 amended).  Done by two
+  proposal agents, the first resumed as the racer on the second
+  function.
