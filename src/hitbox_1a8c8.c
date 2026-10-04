@@ -63,7 +63,7 @@ struct BodyBox
     /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
+    /*0x08*/ u8 classKind;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
     /*0x0B*/ u8 unk0B;
@@ -414,7 +414,7 @@ u8 HitTestColliderClass10(void)
             HitRecordHitter();
             return 1;
         }
-        k = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
+        k = (u32)(gColliderBodyBox->classKind << 28) >> 28;
         mask = gColliderClass10KindBits[k] | 0x4000;
         /* the body box's halfword at 0x0E (ldrh) */
         if (!(gColliderBodyBox->unk0E & 0x8000) && !(mask & gAttackBox->unk10))

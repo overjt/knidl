@@ -77,8 +77,8 @@ void CalcHitDamageAndDirection(void)
    the midpoint between the entry and the actor. */
 void HitRecordHitter(void)
 {
-    gHitterColliderClass = gColliderBodyBox->unk08 & 0xF0;
-    gHitterColliderKind = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
+    gHitterColliderClass = gColliderBodyBox->classKind & 0xF0;
+    gHitterColliderKind = (u32)(gColliderBodyBox->classKind << 28) >> 28;
     gHitterSlot = gColliderSlot;
     gUnk_03001F24 = gColliderPlayer;
     if (gHitKind == HIT_KIND_NO_DAMAGE || gHitKind == HIT_KIND_CATCH)
