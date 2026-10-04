@@ -967,3 +967,26 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   position names (2,309 data records, 662 state-table slots).  No rename
   changed a byte; `make shifttest` unchanged (16,961 unrelocated, 0
   proven pointers, 0 unknown).  New lessons 3.525, 4.160 and 4.161.
+- The boot test's reach (issue #168): **four scripts instead of one,
+  each checking its own scenes**.  `tools/boottest/boottest.c` gained
+  script checkpoints (`mark <scene>`, `expect <cell> <op> <value>` on the
+  reference's RAM, named from the ELF's `nm` list; a failed expectation
+  fails the run), `--peek` for tuning and `--coverage` (single-stepped
+  reference, mapped onto `symbols.csv` by `tools/boottest/coverage.py`,
+  `make boottest-coverage`); the Makefile runs every script of
+  `BOOTTEST_INPUT`.  New scripts: `subgames.txt` (Quick Draw, Bomb Rally
+  and Air Grind in single-player mode, Kirby winning each), `gameover.txt`
+  (three lives lost in stage 1-1, the game-over screen, CONTINUE) and
+  `level1.txt` (stages 1-1 and 1-2 cleared through their goal games,
+  the Warp Star, the mid-boss Poppy Bros. Sr., stage 1-3's first three
+  rooms); `input.txt` got
+  checkpoints, and its comments, which put every menu screen one key
+  early since #162, were corrected.  43,513 frames at all seven
+  shift-test points with no difference; executed code 847 -> 1,687 of
+  5,348 functions (31.5%); CI's boot-test step about 60 -> 180 s.
+  Out of reach, documented: the level 1 boss (behind stage 1-4, past
+  #168's time-box), the
+  ending and credits (the whole game, some 200,000 frames) and link play
+  (linked cores).  New lessons 4.162-4.164.  Done by three proposal
+  agents (the sub-games, the game over and the credits study, level 1)
+  and the coordinator, who wrote the harness features.

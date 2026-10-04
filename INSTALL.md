@@ -114,15 +114,23 @@ make progress     # code/data/symbol percentages (tools/calcrom.pl)
 make datastats    # data-structure metrics (docs/data.md section 6)
 make shifttest    # shift test + pointer census (docs/data.md section 8)
 make boottest     # boot test: shifted ROMs against knidl.gba in mGBA
+make boottest-coverage   # optional: the functions the boot test executes
 ```
 
 `make boottest` runs in a second image, `knidl-boottest` (mGBA built from a
 release tag, `tools/boottest/Dockerfile`). The first run builds it, which
 takes a few minutes; `make boottest-image` builds it on its own. The test
-plays the scripted input `tools/boottest/input.txt` (14,066 frames) on
-`knidl.gba` and on one shifted ROM per insertion point, and fails at the first frame whose video, audio or
-RAM differs. Never commit its output: screenshots, frame dumps and captures
-are assets.
+plays four scripted inputs, each from boot with an empty save (docs/data.md
+section 8.4): `tools/boottest/input.txt` (menus, stage 1-1, the intro story),
+`subgames.txt` (Quick Draw, Bomb Rally, Air Grind), `gameover.txt` (three
+lives lost, the game-over screen) and `level1.txt` (stages 1-1 to 1-3, two
+goal games, a mid-boss), 43,513 frames in all, on `knidl.gba` and on one
+shifted ROM per insertion point, and fails at the first frame whose video,
+audio or RAM differs, or when a script's checkpoint (`expect`) no longer
+holds. `BOOTTEST_INPUT=tools/boottest/<script>.txt` runs one script,
+`BOOTTEST_AT=<section>` one insertion point. `make boottest-coverage` counts
+the functions the scripts execute. Never commit its output: screenshots,
+frame dumps and captures are assets.
 
 `make MATCHING=0` links without `linker.ld`'s per-section address asserts, for
 a modified ROM (README.md, "For modders").

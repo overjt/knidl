@@ -728,9 +728,11 @@ What is left:
   `CallTableEntry(i, 5, ...)` but its span is 9 words; entries 5-8 have
   no reference, so no label is invented (the C keeps the span, with the
   note).
-- **A wider boot test**: the script plays level 1 only (8.4); the
-  sub-games, bosses, the credits and link play are reached by the census
-  alone.
+- **The boot test's reach** (#168, 8.4): four scripts play the menus,
+  stages 1-1 to 1-3 with two goal games and a mid-boss, the three
+  sub-games and a game over; the level 1 boss and every later level, the
+  ending and credits (they need the whole game) and link play (linked
+  cores) are reached by the census alone.
 - Assets stay `.incbin` (§1): the RoomDefs' maps, block layers, block
   tables, door geometry and object lists, the BG animations' tile frames
   and palettes, and everything the frame tables point at.
@@ -931,8 +933,8 @@ What that means for moving the ROM:
   insertion point: 0x08000000"), in the sense of this section: no word
   that points into the moved part is a raw pointer or unknown.
 - **Checked empirically** by the boot test (8.4) at the seven default
-  points: the shifted images run the scripted 14,066 frames exactly like
-  the original.
+  points: the shifted images run the four scripts' 43,513 frames
+  exactly like the original.
 - **What stays trusted, not proven**: 317 proven coincidences rest on a
   format parse alone (the frame lists' blocks, the unreached records' OAM
   streams, the sheet headers' LZ77 tiles), and the 63 unreachable words
@@ -949,35 +951,170 @@ the same objects, `linker.ld` with 0x1000 bytes in front of the section,
 every shifted image in lockstep in mGBA (`tools/boottest/boottest.c`
 against mGBA 0.10.5's core library, built from the release tag in its own
 image, `tools/boottest/Dockerfile`, so the toolchain image stays lean).
-All cores get the same scripted input (`tools/boottest/input.txt`), start
-from an empty save held in memory (no `.sav` is ever written) and run on
-the HLE BIOS; every frame compares the video buffer, the audio samples and
+All cores get the same scripted input, one run per script of
+`BOOTTEST_INPUT` (below), each from boot with an empty save held in
+memory (no `.sav` is ever written), on the HLE BIOS; every frame compares
+the video buffer, the audio samples and
 EWRAM + IWRAM, where a RAM word may differ only by exactly the padding and
 only if it points at or after the insertion point (a pointer the linker
 moved, a return address on the stack).  The run fails at the first frame
-that differs and prints it with both PCs; `--step <frame>` then walks that
+that differs and prints it with both PCs and the script's scene;
+`--step <frame>` then walks that
 frame an instruction at a time and prints the last PCs before the
 registers part.  Hashes are compared at run time only: no frame, frame
 hash, savestate or recording is written or committed.  `--shot` writes
-PNG frames of the reference for tuning the script, under `pending/` only.
+PNG frames of the reference for tuning a script, under `pending/` only.
 
 ```
-make boottest                           # all of shiftcheck.py's points
-make boottest BOOTTEST_AT="agb_init"    # one point
-make boottest BOOTTEST_FRAMES=3000      # a shorter run
+make boottest                                  # every script, every point
+make boottest BOOTTEST_AT="agb_init"           # one point
+make boottest BOOTTEST_INPUT=tools/boottest/subgames.txt   # one script
+make boottest BOOTTEST_FRAMES=3000             # shorter runs
+make boottest-coverage                         # the coverage figure (below)
 ```
 
-The script plays 14,066 frames (3.9 minutes of game time): the boot logo,
-the title screen, the file select, the game select menu and a new game
+**The scripts** (`tools/boottest/*.txt`; each says in its comments, frame
+by frame and in words, what it plays):
+
+| Script | Frames (run) | Checks | Reaches |
+| --- | --- | --- | --- |
+| `input.txt` | 13,466 (14,066) | 12 marks, 17 expects | boot, title, menus, a new game, stage 1-1, pause, a lost life, the intro story |
+| `subgames.txt` | 7,180 (7,780) | 24 marks, 53 expects | Quick Draw, Bomb Rally and Air Grind, single player |
+| `gameover.txt` | 7,596 (8,196) | 16 marks, 34 expects | three lives lost, GAME OVER, CONTINUE |
+| `level1.txt` | 12,871 (13,471) | 18 marks, 34 expects | stages 1-1 and 1-2 cleared, two goal games, a mid-boss, stage 1-3 |
+
+The run is the script plus 600 frames.  All of them run by default and
+in CI on every push and pull request.
+
+- `input.txt` (#36) plays the boot logo, the title screen, the file
+  select, the game select menu and a new game
 from an empty file, the level 1 intro scene and hub, and stage 1-1's
 three rooms (walking, jumping, floating, inhaling and swallowing, the Beam
 ability get and its HUD roulette, the ability knocked out by a hit, the
 pause screen, a lost life and the retry, five door transitions), then the
 soft reset (A+B+SELECT+START) back to the title and the nine-scene intro
 story.  The title never plays recorded gameplay when idle (it alternates
-with the intro story); the recorded demos are the staff credits', which
-the script does not reach, nor do the sub-games, the sound test, the
-goal game, a boss or link play.
+with the intro story); the recorded demos are the staff credits'.
+- `subgames.txt` (#168) skips the logo with START, makes FILE 1 and plays
+  the three sub-games from the mode list (menu screen 4, "1 player",
+  each one's title screen, level 1) against the computer: Quick Draw, a
+  round won (A eleven frames after the "!") and a round lost (no press),
+  the results; Bomb Rally, Kirby serving and returning the bomb in the
+  beat windows until the three computer players are blown up, one per
+  round, so Kirby wins; Air Grind, A held on the rails and released over
+  the course's ten gaps, so Kirby finishes first (1,301 frames, the
+  computer racers 1,493-1,526).  Each results screen's QUIT returns to
+  the mode list.
+- `gameover.txt` (#168) starts a new game as `input.txt` does and loses
+  all three lives in stage 1-1's first room: Kirby walks into the Waddle
+  Doo's beam, climbs the first steps and paces where the Waddle Dee,
+  Waddle Doo, Bronto Burts and Sparky keep respawning, six hits a life
+  (each costs one of six health bars), the death and the retry each time,
+  then the GAME OVER screen (state 22: the banner, the eight letters,
+  CONTINUE / QUIT), the cursor moved down and up, CONTINUE (the score
+  halved, three lives again), the level 1 intro scene and the hub.
+- `level1.txt` (#168) starts a new game and plays level 1 for real:
+  stage 1-1 floated through without a hit (air puffs at the Bronto
+  Burts), its goal door and the goal game (state 10), the hub opening
+  stage 2's door (`gFurthestStage` 1), then stage 1-2: the Warp Star ride
+  through the tall room, the mid-boss Poppy Bros. Sr. (Kirby inhales a
+  Bronto Burt and spits it as a star; the boss's HUD HP bar, the defeat
+  flash, the score), the cave (the Fire ability swallowed, a hit that
+  knocks it out), the goal room (up the left side, past a Sword Knight
+  on the planks), the second goal game, the hub opening stage 3's door,
+  and stage 1-3's first three rooms.  The level 1 boss, Whispy Woods,
+  is behind stage 1-4: the hub's boss door opens only with stage 1-4
+  cleared (`gHubDoorUnlocks`), and the stage doors open in order
+  (`gFurthestStage`).  The script stops in stage 1-3's third room, a
+  tall water room whose door needs a swim under a wall past an enemy
+  that kept hitting Kirby, who has had two health bars of six since
+  stage 1-2's cave; the rest of stage 1-3, stage 1-4 with its mid-boss
+  Mr. Frosty, and the boss did not fit #168's time-box.  The route is
+  known; a continuation would start from this script, frame for frame.
+
+**Checkpoints.**  A script names its scenes and proves them:
+`mark <scene>` names the scene that starts there (the run prints each
+one with its frame, and a difference is reported with its scene), and
+`expect <cell> <op> <value>` reads a RAM cell of the reference there
+(`<symbol>[+offset]:<size>` or `0xADDR:<size>`, size 1, 2 or 4; `==`,
+`!=`, `<`, `<=`, `>`, `>=`, unsigned).  Both sit between steps, outside
+`repeat` blocks, and take effect at the frame where the next step
+starts.  The symbols come from `build/boottest/syms.txt`, the ELF's `nm`
+list, which `boottest-roms` writes.  A failed expectation fails the run
+("SCRIPT DRIFT"): a script whose claims no longer hold (a changed menu
+timing, an enemy that moves differently in a modified ROM) fails loudly
+instead of playing on into a different game.  The scripts check the game
+state, the menu screen, the level, stage and room indices, lives and
+health, the sub-game index and phase, the win counters and race times,
+the game-over cursor and score; they name `gUnk_` cells by address, with
+the name in a comment, since `tools/rename.py` does not edit the scripts
+(a renamed symbol fails the run with exit status 2, not silently).
+Until #168, `input.txt`'s comments put each menu screen one key early
+(its START at frame 500 is ignored: after a completed logo the title
+reads keys only from about frame 570); two agents found it independently,
+and the expects now pin the real screens.
+
+**Tuning a script.**  `--shot F,...` / `--shot-every N` write PNG frames of
+the reference and `--peek CELL,...` with `--peek-every N` prints RAM cells
+(both diagnostics, local, under `pending/` only); the reference alone runs
+at about 1,000 frames a second (Air Grind's per-scanline effects about
+370).  What worked in #168: search for the first frame a menu accepts a
+key (the presses sit there, and the expects catch a shift); start each
+life's block on the frame Kirby drops back in, since enemies do not
+repeat between lives; read the game's own tables for timing windows
+(Bomb Rally's return windows, `0x087565F4`); move one hold or release at
+a time in a closed loop for Air Grind's rail gaps.  Every input is
+deterministic: the same script plays the same game in every run.
+
+**What no script reaches, and why.**
+
+- **The ending and the staff credits** (states 11 and 12).  Only two
+  writers raise the stage request 7 that enters state 11, both in
+  `src/level_242d0.c`: the Nightmare Wizard's defeat (entry 8 of the
+  boss-defeat table) and King Dedede's, which raises it only in Meta
+  Knightmare (otherwise it sends Kirby to the Nightmare's Power Orb).
+  Meta Knightmare and Boss Endurance are mode-list rows 4 and 3, both
+  locked behind `gMilestoneFlags` bits that only the Wizard's defeat
+  sets.  From an empty save the credits therefore need the whole game:
+  39 regular stages in levels 0-6, seven bosses (Whispy Woods, Paint
+  Roller, Mr. Shine & Mr. Bright, Kracko, Heavy Mole, Meta Knight, King
+  Dedede), the Power Orb and the Wizard, then 7,635 frames of credits
+  demos: some 200,000-250,000 frames of one continuous, frame-exact
+  script (an hour of game time, 10-15 minutes of CI), where any change
+  early on moves everything after it.  Out of reach for a maintained
+  script; the census (8.3) covers the ending's and the credits' data,
+  and `credits_demos`' extent was bounded by replaying the recorder
+  (lesson 4.145).
+- **Link play.**  The harness runs one core per image with nothing on
+  the serial port, while link play needs two to four linked cores of the
+  same image (the SIO multi-play handshake, the multiboot transfer of the
+  sub-games' program images).  mGBA's lockstep link driver could connect
+  cores, but comparing linked groups of shifted images is a different
+  test; link play stays covered by the census alone.
+- **Locked modes and the rest:** Boss Endurance and Meta Knightmare (see
+  above), the sound test (reachable, not scripted), the other levels'
+  stages, bosses and arenas.
+
+**Coverage.**  `make boottest-coverage` runs the reference alone, one
+instruction at a time (`--coverage FILE`: every ROM and IWRAM halfword
+an instruction starts at; as fast as the normal run), writes the
+executed ranges to `build/boottest/coverage-<script>.txt` (never
+committed) and maps them onto `docs/analysis/symbols.csv` with
+`tools/boottest/coverage.py`, the IWRAM copies of the master ISR,
+`BuildOam` and `SoundMainRAM` counted as those functions (the SRAM
+driver's cores run from a stack buffer and are only counted in bytes):
+
+| Script | Functions run | Bytes run |
+| --- | --- | --- |
+| `input.txt` | 847 of 5,348 (15.8%) | 100,168 of 849,708 (11.8%) |
+| `subgames.txt` | 560 (10.5%) | 60,192 (7.1%) |
+| `gameover.txt` | 744 (13.9%) | 83,276 (9.8%) |
+| `level1.txt` | 1,269 (23.7%) | 143,802 (16.9%) |
+| all four | 1,687 (31.5%) | 195,266 (23.0%) |
+
+Before #168 the boot test ran `input.txt` alone, 847 functions (15.8%);
+the four scripts together run 1,687 (31.5%), 23.0% of the code bytes.
+The census (8.3) remains the only check of the rest.
 
 What it found, at the first run:
 
@@ -1008,9 +1145,24 @@ What it found, at the first run:
 
 With the trampolines fixed, all seven points run the whole script with
 identical video, audio and RAM (the two allowed words apart, after crt0
-only) and identical emulator error counts (111 in every image: the HLE
-BIOS reports the same over-long LZ77 stream at `0x085BA25C` in all of
-them).  Timing does not enter: mGBA charges ROM wait states by region and
+only) and identical emulator error counts (111 in every image).  The
+errors are the game's own: the HLE BIOS warns about LZ77 streams whose
+header promises more than the destination holds (`0x085BA25C` into VRAM,
+`0x085BA4CC` and, in other scenes, `0x085B85A0`, `0x085E2CE0` and
+`0x085E4064` into the decompression buffer), and mGBA logs reads of the
+BIOS region through null pointers (`Bad BIOS Load8: 0x00000000`); the
+count is compared, since a shifted image names other addresses.
+
+#168's three new scripts added 29,447 frames: `subgames.txt`,
+`gameover.txt` and `level1.txt` run at all seven points with identical
+video, audio, RAM (the same two allowed words, after crt0 only) and
+error counts (0, 225 and 173), and every expectation of every script
+holds.  No shifted image differed, so the sub-games, the game over, the
+goal games, the Warp Star, a mid-boss and stages 1-2 and 1-3 follow
+every pointer they use correctly after a shift; the census had already
+said so.
+
+Timing does not enter: mGBA charges ROM wait states by region and
 by sequential/non-sequential access only (`src/gba/memory.c`, 0.10.5), and
 its prefetch model depends on PC distances, so the same code runs in the
 same cycles at any address.  (On hardware a sequential burst crossing a
@@ -1019,20 +1171,30 @@ those boundaries, which only timing-sensitive code would notice, and the
 emulator cannot tell.)
 
 What it proves and what it does not: it is empirical and only as wide as
-the script.  Every pointer the reached code follows (code, tables, rooms,
-sprites, the songs of the title, the story and level 1, the sound effects
-played) works shifted, at every point, so none of the census's
-coincidence or unreachable words that these scenes read was a real
-pointer.  Data the script never reaches (other levels, bosses, the
-sub-games, the credits, link play) is untested by it, and the census
-(8.3) remains the proof for those.  It is also the only check of what
+the scripts.  Every pointer the reached code follows (code, tables, rooms,
+sprites, the songs of the title, the story, level 1 and the sub-games,
+the sound effects played) works shifted, at every point, so none of the
+census's coincidence or unreachable words that these scenes read was a
+real pointer.  Data the scripts never reach (levels 2-7, the bosses, the
+arenas, the ending and the credits, the locked modes, link play) is
+untested by them, and the census (8.3) remains the proof for those.  It is also the only check of what
 the word compare cannot see: a relative branch written as raw bytes
 (which `tools/branchcheck.py` now checks statically at every shift-test
 point) and behaviour that depends on an address.
 
-`make boottest` takes about 40 s with both images built (8 threads; about
-100 s on one); the emulator image builds in about 90 s from scratch.  CI
-runs it after `make shifttest`, with the emulator image from the GitHub
-Actions layer cache (`docker/build-push-action`, `type=gha`), so it is
-rebuilt only when `tools/boottest/` changes.
+Time: on CI's runner (4 threads for eight cores) the four scripts took
+54, 31, 33 and 40 s (`level1.txt` at its first length, 9,671 frames;
+about 55 s at 13,471), plus 9 s to link the shifted images: the
+boot-test step went from about 60 s to 167 s with #168, about 180 s at
+the final length (runners vary: another run took 39, 22 and 24 s for
+the first three; the budget was 3 minutes more).  The emulator runs some 250-360 frames a second there with eight
+cores.  Locally (8 threads) `make boottest` takes about 120 s with
+both images built; the emulator image builds in about 90 s from
+scratch.  All four scripts run on every push and pull request,
+so no scheduled job is needed; a longer script (the level 1 boss, say)
+would join `BOOTTEST_INPUT` the same way, or run on its own with
+`make boottest BOOTTEST_INPUT=...`.  CI runs the test after `make
+shifttest`, with the emulator image from the GitHub Actions layer cache
+(`docker/build-push-action`, `type=gha`), so it is rebuilt only when
+`tools/boottest/` changes.
 
