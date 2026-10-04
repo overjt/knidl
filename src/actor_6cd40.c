@@ -34,7 +34,7 @@ void Task_DustTrail(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     while (u->dustTrailPuffCount != 0 && gTaskSlotTypes[u->parent] != -1)
     {
         if (TaskHasSameSerial(gCurTask->parent) != 1)
@@ -81,7 +81,7 @@ void Task_DustPuff(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     TaskFaceLikeParent();
     gCurTask->posX = (RandomSpreadFacing(-8, 1, 8) + gCurTask->pixelX) << 16;
     gCurTask->posY = (RandomSpread(-8, 1, 8) + gCurTask->pixelY) << 16;
@@ -107,7 +107,7 @@ void Task_BackwardDustPuff(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(0xFFFDC000, 0x1800);
     v = gCurTask;
@@ -168,7 +168,7 @@ void Task_LandingDust(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     if (u->facing != 1 && u->facing != -1)
         u->facing = 1;
     TaskSetMotionXFacing(0x24000, 0xFFFFE800);

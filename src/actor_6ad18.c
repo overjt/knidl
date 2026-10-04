@@ -133,7 +133,7 @@ void ActorDefeatMidBoss(void)
     TaskStop();
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->frameTable = gUnk_0874CA78;
+    t->frameTable = gStarScatterFrames;
     t->tileWord = 0;
     RequestScreenShake(4);
     ActorPlaySfx(0x1F9, 0);
@@ -265,7 +265,7 @@ void ActorBurstDefeatBurning(void)
     TaskStop();
     TaskSetFrame(0);
     t = gCurTask;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->tileWord = 0;
     ActorPlaySfx(212, 0);
     ActorPlayBurstDefeatAnim();
@@ -278,7 +278,7 @@ void ActorBurstDefeatShocked(void)
     TaskStop();
     TaskSetFrame(0);
     t = gCurTask;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->tileWord = 0;
     ActorPlaySfx(212, 0);
     ActorPlayBurstDefeatAnim();

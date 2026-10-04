@@ -39,7 +39,7 @@ extern void RequestScreenShake(u32 a);
 extern void ActorSetState(u8 v);
 extern void ActorSetAttackBox(u32 v);
 
-void sub_08070ec0(void)
+void MetaKnightWarpStarRideDraw(void)
 {
     struct Task *t;
     struct Task *u;
@@ -241,7 +241,7 @@ void CreateWarpStar(int x, int y, int c)
     CreateActorByKind(ACTOR_KIND_OBJECT, 0, 0, c, x, y, 0);
 }
 
-void WarpStarState0(void)
+void WarpStarHoverEmpty(void)
 {
     gCurTask->updateState = WARP_STAR_STATE_0;
     {
@@ -305,7 +305,7 @@ void WarpStarState0(void)
     }
 }
 
-void WarpStarState0Update(void)
+void WarpStarHoverEmptyUpdate(void)
 {
     if (gRoomExitKind != 0 && gActivePlayerCount != 1)
     {
@@ -337,7 +337,7 @@ void WarpStarState0Update(void)
     }
 }
 
-void WarpStarState1(void)
+void WarpStarHoverBoarded(void)
 {
     gCurTask->updateState = WARP_STAR_STATE_1;
     TaskStop();
@@ -350,7 +350,7 @@ void WarpStarState1(void)
     }
 }
 
-void WarpStarState1Update(void)
+void WarpStarHoverBoardedUpdate(void)
 {
     WarpStarAnimateTiles();
     if (gCurTask->warpStarRiderCount == gActivePlayerCount && AreInactivePlayerCamerasParked())
@@ -360,7 +360,7 @@ void WarpStarState1Update(void)
 
         if (v == 0)
         {
-            v = sub_08025e88(gCurTaskIdx);
+            v = WarpStarPickFlightSlot(gCurTaskIdx);
             t = gCurTask;
         }
         t->state = v;
@@ -430,9 +430,9 @@ void WarpStarStartFlight(void)
     t->health = 0xFFFF;
     t->warpStarTrailTimer = 0;
     if (t->actorSpawnArg == 0)
-        gCurTask->facing = gUnk_0873FAE8[sub_08025e88(gCurTaskIdx)];
+        gCurTask->facing = gWarpStarFlightFacings[WarpStarPickFlightSlot(gCurTaskIdx)];
     else
-        t->facing = gUnk_0873FAE8[t->actorSpawnArg];
+        t->facing = gWarpStarFlightFacings[t->actorSpawnArg];
     CreateChildTaskAt(TASK_WARP_STAR_CAMERA, gViewRect[0] + 120, gViewRect[2] + 80, 0);
     CallTableEntry(gCurTask->state, 26, gWarpStarFlights);
 }
@@ -657,7 +657,7 @@ void sub_08071d2c(void)
     gCurTask->unk24 = 0;
 }
 
-void sub_08071d60(void)
+void WarpStarTakeOff(void)
 {
     struct Task *t;
 
@@ -699,12 +699,12 @@ void sub_08071d60(void)
     TaskSleepForever();
 }
 
-void sub_08071e74(void)
+void WarpStarTakeOffUpdate(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08071e80(void)
+void WarpStarDescendSlow(void)
 {
     gCurTask->updateState = 1;
     gCurTask->moveCallback = (u32)TaskMove;
@@ -714,12 +714,12 @@ void sub_08071e80(void)
     TaskSleepForever();
 }
 
-void sub_08071ebc(void)
+void WarpStarDescendSlowUpdate(void)
 {
     struct Task *t;
 
     WarpStarEmitTrailStars();
-    TerrainCollideBox(gUnk_0873F5CC);
+    TerrainCollideBox(gWarpStarTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {

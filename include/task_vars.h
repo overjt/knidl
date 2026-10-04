@@ -41,12 +41,12 @@
 #define actorParasolSwayStep unk1C /* s32: step of a parasol drift's sway (0-11, index into gParasolDriftSwayVelX) */
 #define actorAnimDelay20 unk20 /* s32: frames until the next step of the animation script (ActorStartAnim / ActorTickAnim) */
 #define actorCarriedX unk20 /* s32: pixelX of the carried actor last frame (put back when the carry ends) */
-#define actorFreezeBlinkTimer unk20 /* s32: frames left of the current freeze-blink toggle (gUnk_0873E5F8) */
+#define actorFreezeBlinkTimer unk20 /* s32: frames left of the current freeze-blink toggle (gIceBlockBlinkTimes) */
 #define actorSavedUpdateCallback unk20 /* s32: the updateCallback saved while an intro-pose helper runs its own update */
 #define actorAnimDelay24 unk24 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
 #define actorBurstDone unk24 /* s32: 1 once the defeat's burst effect was spawned (CreateBurstEffect(3, 6)) */
 #define actorFlatGroundY unk24 /* s32: low half: last pixelY; bit 16: on flat ground since it left the ground (slope guard) */
-#define actorFreezeBlinkStep unk24 /* s32: freeze-blink toggles done (12: then the ice-block frames gUnk_0874CB7C) */
+#define actorFreezeBlinkStep unk24 /* s32: freeze-blink toggles done (12: then the ice-block frames gIceBlockFrames) */
 #define actorSpinFrameTimer unk24 /* s32: frames until TaskStepSpinFrameFacing's next spin frame (counts 2..0) */
 #define actorThrowWobbleStep unk24 /* s32: step of a thrown actor's wobble (0-15, x/y offsets gUnk_0873EAF0) */
 #define actorAnimDelay unk28 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
@@ -227,7 +227,7 @@
    gCannonFuseVariants, gCannonFuseStates) */
 #define cannonFuseExit unk18 /* s32: which exit of the piece the flame leaves by (gUnk_087401CC[entry dir + kind * 4]) */
 #define cannonFuseFrameStep unk1C /* s32: step in the current piece's frame list (counts up while burning, down in state 2) */
-#define cannonFusePieceKind unk20 /* s32: kind 0-5 of the fuse block the flame is on (gUnk_087401E4[it] = its script); -1 at the end */
+#define cannonFusePieceKind unk20 /* s32: kind 0-5 of the fuse block the flame is on (gCannonFusePieces[it] = its script); -1 at the end */
 #define cannonFuseBurnDir unk24 /* s32: 1 once lit (state 1 burns toward the cannon), -1 in state 2 (frames stepped back) */
 #define cannonFuseStartY unk2C /* s32: pixel Y the fuse was spawned at; CannonFuseWait returns there */
 #define cannonFuseStartX unk30 /* s32: pixel X the fuse was spawned at; CannonFuseWait returns there */
@@ -564,7 +564,7 @@
 /* IceBlock - Ice block (task type #171, Task_IceBlock; made by
    ActorFreezeIntoIceBlock) */
 #define iceBlockBlinkHide unk1C /* s32: 1: the next toggle hides the block (frame -1), 0: shows frame 4; flips each toggle */
-#define iceBlockBlinkTimer unk20 /* s32: frames left of the current blink toggle (gUnk_0873E5F8) */
+#define iceBlockBlinkTimer unk20 /* s32: frames left of the current blink toggle (gIceBlockBlinkTimes) */
 #define iceBlockBlinkStep unk70 /* s16: blink toggles done; after 12 the ice block frees itself */
 
 /* ImpactStar - Impact star (task type #154, Task_ImpactStar) */

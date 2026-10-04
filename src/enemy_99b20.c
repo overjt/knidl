@@ -24,7 +24,7 @@
  * the table word at 0x0874580C points at.
  *
  * Task_MrFrostyIceCube, Task_MrTickTockRing and Task_MrTickTockNote are the three companion tasks
- * (graphics gUnk_0874CB7C, gMrTickTockRingFrames, gMrTickTockNoteFrames).  They use
+ * (graphics gIceBlockFrames, gMrTickTockRingFrames, gMrTickTockNoteFrames).  They use
  * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; MrFrostyIceCubeState0Update and
  * MrTickTockRingState0Update read the parent's state out of gTasks[Task.parent], and
  * the third one's own states live in the next module - gMrTickTockNoteVariants points at
@@ -1675,7 +1675,7 @@ void Task_MrFrostyIceCube(void)
     zero = 0;
     u = gCurTask;
     u->mrFrostyIceCubeSavedTileWord = u->tileWord;
-    u->frameTable = gUnk_0874CB7C;
+    u->frameTable = gIceBlockFrames;
     u->tileWord = zero;
     CallTableEntry(u->variant, 1, gMrFrostyIceCubeVariants);
 }

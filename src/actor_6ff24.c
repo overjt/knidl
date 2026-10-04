@@ -78,7 +78,7 @@ void PlayerWarpStarRideState7Update(void)
         PlayerStepTumble();
         break;
     case 3:
-        sub_080702d8();
+        PlayerStepHighFallPose();
         break;
     }
 }
@@ -170,7 +170,7 @@ void PlayerSetWarpStarRideFrame(void)
     gCurTask->layer = pri;
 }
 
-void sub_08070174(void)
+void PlayerStartRideBounce(void)
 {
     struct Task *t;
 
@@ -214,7 +214,7 @@ void sub_08070208(void)
     PlayerSetWarpStarRideFrame();
 }
 
-void sub_0807022c(void)
+void PlayerWaitForRideLanding(void)
 {
     while (gCurTask->playerRideLandCount != 3)
         TaskYieldTrampoline(1);
@@ -222,12 +222,12 @@ void sub_0807022c(void)
     TaskSleepForever();
 }
 
-void sub_08070264(void)
+void PlayerStartHighFallPose(void)
 {
     struct Task *t;
     s16 *row;
 
-    row = gUnk_0873D420[gCurTask->player->ability];
+    row = gPlayerHighFallFrames[gCurTask->player->ability];
     TaskSetFrame(row[1]);
     t = gCurTask;
     t->playerTumbleFrameStep = 1;
@@ -245,7 +245,7 @@ void PlayerStartTumble(void)
     t->playerTumbleFrame = 13;
 }
 
-void sub_080702d8(void)
+void PlayerStepHighFallPose(void)
 {
     struct Task *t;
     u8 k;
@@ -299,7 +299,7 @@ void PlayerStepTumble(void)
     w->playerTumbleFrameTimer--;
 }
 
-void sub_080703a8(void)
+void PlayerStepRideBounces(void)
 {
     struct Task *t;
     struct Task *u;
@@ -321,18 +321,18 @@ void sub_080703a8(void)
             }
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
-            sub_08070174();
+            PlayerStartRideBounce();
             break;
         case 2:
             TaskSetMotionY(0xFFFD0000, 0x3000, 0x40000);
-            sub_08070264();
+            PlayerStartHighFallPose();
             break;
         }
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
-void sub_0807042c(void)
+void PlayerStepRideBouncePose(void)
 {
     switch (gCurTask->playerRideLandCount)
     {
@@ -340,7 +340,7 @@ void sub_0807042c(void)
         PlayerStepTumble();
         break;
     case 2:
-        sub_080702d8();
+        PlayerStepHighFallPose();
         break;
     }
 }
@@ -388,14 +388,14 @@ void PlayerBoardWarpStar(u32 a, s32 b)
             t = gCurTask;
             if (t->unk74 == 0)
             {
-                if ((s8)gUnk_0873FAE8[sub_08025e88(gCurTaskIdx)] == 1)
+                if ((s8)gWarpStarFlightFacings[WarpStarPickFlightSlot(gCurTaskIdx)] == 1)
                     e->spriteFlags &= 0x7FFF;
                 else
                     e->spriteFlags |= 0x8000;
             }
             else
             {
-                if ((s8)gUnk_0873FAE8[t->unk74] == 1)
+                if ((s8)gWarpStarFlightFacings[t->unk74] == 1)
                     e->spriteFlags &= 0x7FFF;
                 else
                     e->spriteFlags |= 0x8000;
@@ -436,7 +436,7 @@ void MetaKnightWarpStarRideInit(void)
     s32 i;
 
     t = gCurTask;
-    t->drawCallback = (u32)sub_08070ec0;
+    t->drawCallback = (u32)MetaKnightWarpStarRideDraw;
     t->updateCallback = (u32)MetaKnightWarpStarRideUpdate;
     t->lateUpdateCallback = 0;
     t->taskClass = 4;
@@ -451,9 +451,9 @@ void MetaKnightWarpStarRideInit(void)
     v = gCurTask;
     v->parent = gWarpStarRideSlot;
     if (gTasks[i = v->parent].unk74 == 0)
-        gCurTask->facing = gUnk_0873FAE8[sub_08025e88(i)];
+        gCurTask->facing = gWarpStarFlightFacings[WarpStarPickFlightSlot(i)];
     else
-        v->facing = gUnk_0873FAE8[gTasks[i].unk74];
+        v->facing = gWarpStarFlightFacings[gTasks[i].unk74];
     w = gCurTask;
     w->state = META_KNIGHT_WARP_STAR_RIDE_STATE_2;
     CallTableEntry(gCurTask->state, 7, gMetaKnightWarpStarRideStates);
@@ -537,7 +537,7 @@ void MetaKnightWarpStarRideState1Update(void)
     struct Task *t;
     struct Task *u;
 
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -605,7 +605,7 @@ void MetaKnightWarpStarRideState3Update(void)
     struct Task *t;
     struct Task *u;
 
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -673,7 +673,7 @@ void MetaKnightWarpStarRideState4Update(void)
     struct Task *t;
     struct Task *u;
 
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {
@@ -686,7 +686,7 @@ void MetaKnightWarpStarRideState4Update(void)
             CreateBurstEffect(0, 0);
         }
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void MetaKnightWarpStarRideState5(void)
@@ -734,7 +734,7 @@ void MetaKnightWarpStarRideState5Update(void)
 
     t = gCurTask;
     SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     u = gCurTask;
     if (u->onGround & 1)
     {
@@ -786,7 +786,7 @@ void MetaKnightWarpStarRideState6Update(void)
     struct Task *t;
     struct Task *u;
 
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     t = gCurTask;
     if (t->onGround & 1)
     {

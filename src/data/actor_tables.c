@@ -92,35 +92,35 @@ u32 gMetaKnightWarpStarRideStateUpdates[7] ACTOR_TBL(0873fb04) = {
 /* ---- 0x0873FBAC-0x0873FCF8: 5 table(s), 83 function pointer(s), section .actor_tbl_0873fbac ---- */
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in Task_WarpStar, WarpStarEnterState */
 u32 gWarpStarStates[3] ACTOR_TBL(0873fbac) = {
-    (u32)WarpStarState0,
-    (u32)WarpStarState1,
+    (u32)WarpStarHoverEmpty,
+    (u32)WarpStarHoverBoarded,
     (u32)WarpStarVanish,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in WarpStarUpdate */
 u32 gWarpStarStateUpdates[3] ACTOR_TBL(0873fbac) = {
-    (u32)WarpStarState0Update,
-    (u32)WarpStarState1Update,
+    (u32)WarpStarHoverEmptyUpdate,
+    (u32)WarpStarHoverBoardedUpdate,
     (u32)sub_08071774,
 };
 /* include/cutscene.h; CallTableEntry(i, 26, ...) in WarpStarStartFlight, WarpStarFlightEnterState */
 u32 gWarpStarFlights[26] ACTOR_TBL(0873fbac) = {
-    (u32)sub_08071d60,
-    (u32)sub_08071e80,
-    (u32)sub_08071d60,
-    (u32)sub_08071e80,
-    (u32)sub_08074420,
+    (u32)WarpStarTakeOff,
+    (u32)WarpStarDescendSlow,
+    (u32)WarpStarTakeOff,
+    (u32)WarpStarDescendSlow,
+    (u32)WarpStarDescendFast,
     (u32)WarpStarFlight5,
     (u32)WarpStarFlight6,
-    (u32)sub_08071e80,
+    (u32)WarpStarDescendSlow,
     (u32)WarpStarFlight8,
-    (u32)sub_08071e80,
+    (u32)WarpStarDescendSlow,
     (u32)WarpStarFlight10,
     (u32)WarpStarFlight11,
     (u32)WarpStarFlight12,
     (u32)WarpStarFlight13,
     (u32)WarpStarFlight14,
     (u32)WarpStarFlight15,
-    (u32)sub_08071e80,
+    (u32)WarpStarDescendSlow,
     (u32)WarpStarFlight17,
     (u32)WarpStarFlight18,
     (u32)WarpStarFlight19,
@@ -129,27 +129,27 @@ u32 gWarpStarFlights[26] ACTOR_TBL(0873fbac) = {
     (u32)WarpStarFlight22,
     (u32)WarpStarFlight23,
     (u32)WarpStarFlight24,
-    (u32)sub_08074420,
+    (u32)WarpStarDescendFast,
 };
 /* include/cutscene.h; CallTableEntry(i, 26, ...) in WarpStarFlightUpdate */
 u32 gWarpStarFlightUpdates[26] ACTOR_TBL(0873fbac) = {
-    (u32)sub_08071e74,
-    (u32)sub_08071ebc,
-    (u32)sub_08071e74,
-    (u32)sub_08071ebc,
-    (u32)WarpStarFlight4Update,
+    (u32)WarpStarTakeOffUpdate,
+    (u32)WarpStarDescendSlowUpdate,
+    (u32)WarpStarTakeOffUpdate,
+    (u32)WarpStarDescendSlowUpdate,
+    (u32)WarpStarDescendFastUpdate,
     (u32)WarpStarFlight5Update,
     (u32)WarpStarFlight6Update,
-    (u32)sub_08071ebc,
+    (u32)WarpStarDescendSlowUpdate,
     (u32)WarpStarFlight8Update,
-    (u32)sub_08071ebc,
+    (u32)WarpStarDescendSlowUpdate,
     (u32)WarpStarFlight10Update,
     (u32)WarpStarFlight11Update,
     (u32)WarpStarFlight12Update,
     (u32)WarpStarFlight13Update,
     (u32)WarpStarFlight14Update,
     (u32)WarpStarFlight15Update,
-    (u32)sub_08071ebc,
+    (u32)WarpStarDescendSlowUpdate,
     (u32)WarpStarFlight17Update,
     (u32)WarpStarFlight18Update,
     (u32)WarpStarFlight19Update,
@@ -158,13 +158,13 @@ u32 gWarpStarFlightUpdates[26] ACTOR_TBL(0873fbac) = {
     (u32)WarpStarFlight22Update,
     (u32)WarpStarFlight23Update,
     (u32)WarpStarFlight24Update,
-    (u32)sub_080743f0,
+    (u32)WarpStarCheckExit,
 };
 /* include/cutscene.h; CallTableEntry(i, 25, ...) in Task_WarpStarCamera */
 u32 gWarpStarCameraPaths[25] ACTOR_TBL(0873fbac) = {
-    (u32)sub_080745dc,
+    (u32)WarpStarCameraTakeOff,
     (u32)sub_08074628,
-    (u32)sub_080745dc,
+    (u32)WarpStarCameraTakeOff,
     (u32)sub_08074628,
     (u32)WarpStarCameraFollowPlayer,
     (u32)WarpStarCameraPath5,
@@ -192,20 +192,20 @@ u32 gWarpStarCameraPaths[25] ACTOR_TBL(0873fbac) = {
 /* ---- 0x087400B0-0x087400E4: 3 table(s), 13 function pointer(s), section .actor_tbl_087400b0 ---- */
 /* include/cutscene.h; CallTableEntry(i, 6, ...) in PlayerCannonInit, PlayerCannonEnterState */
 u32 gPlayerCannonStates[6] ACTOR_TBL(087400b0) = {
-    (u32)PlayerCannonState0,
-    (u32)PlayerCannonState1,
-    (u32)PlayerCannonState2,
-    (u32)PlayerCannonState3,
-    (u32)PlayerCannonState4,
+    (u32)PlayerCannonWait,
+    (u32)PlayerCannonLaunchUp,
+    (u32)PlayerCannonLaunchUpRight,
+    (u32)PlayerCannonLaunchShort,
+    (u32)PlayerCannonArrive,
     (u32)PlayerCannonState5,
 };
 /* include/cutscene.h; CallTableEntry(i, 6, ...) in PlayerCannonUpdate */
 u32 gPlayerCannonStateUpdates[6] ACTOR_TBL(087400b0) = {
-    (u32)PlayerCannonState0Update,
-    (u32)PlayerCannonState1Update,
-    (u32)PlayerCannonState2Update,
-    (u32)PlayerCannonState3Update,
-    (u32)PlayerCannonState4Update,
+    (u32)PlayerCannonWaitUpdate,
+    (u32)PlayerCannonLaunchUpUpdate,
+    (u32)PlayerCannonLaunchUpRightUpdate,
+    (u32)PlayerCannonLaunchShortUpdate,
+    (u32)PlayerCannonArriveUpdate,
     (u32)PlayerCannonState5Update,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_Cannon */
@@ -217,16 +217,16 @@ u32 gCannonVariants[1] ACTOR_TBL(087400b0) = {
 /* include/cutscene.h; CallTableEntry(i, 4, ...) in CannonInit, CannonEnterState */
 u32 gCannonStates[4] ACTOR_TBL(08740100) = {
     (u32)CannonWait,
-    (u32)CannonState1,
-    (u32)CannonState2,
-    (u32)CannonState3,
+    (u32)CannonLaunchShort,
+    (u32)CannonLaunchUp,
+    (u32)CannonLaunchUpRight,
 };
 /* include/cutscene.h; CallTableEntry(i, 4, ...) in CannonUpdate */
 u32 gCannonStateUpdates[4] ACTOR_TBL(08740100) = {
     (u32)CannonWaitUpdate,
-    (u32)CannonState1Update,
-    (u32)CannonState2Update,
-    (u32)CannonState3Update,
+    (u32)CannonLaunchShortUpdate,
+    (u32)CannonLaunchUpUpdate,
+    (u32)CannonLaunchUpRightUpdate,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_CannonFuse */
 u32 gCannonFuseVariants[1] ACTOR_TBL(08740100) = {
@@ -238,13 +238,13 @@ u32 gCannonFuseVariants[1] ACTOR_TBL(08740100) = {
 u32 gCannonFuseStates[3] ACTOR_TBL(087402bc) = {
     (u32)CannonFuseWait,
     (u32)CannonFuseBurn,
-    (u32)CannonFuseState2,
+    (u32)CannonFuseRestore,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in CannonFuseUpdate */
 u32 gCannonFuseStateUpdates[3] ACTOR_TBL(087402bc) = {
     (u32)CannonFuseWaitUpdate,
     (u32)CannonFuseBurnUpdate,
-    (u32)CannonFuseState2Update,
+    (u32)CannonFuseRestoreUpdate,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_BigSwitch */
 u32 gBigSwitchVariants[1] ACTOR_TBL(087402bc) = {
@@ -253,13 +253,13 @@ u32 gBigSwitchVariants[1] ACTOR_TBL(087402bc) = {
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in BigSwitchInit, BigSwitchEnterState */
 u32 gBigSwitchStates[3] ACTOR_TBL(087402bc) = {
     (u32)BigSwitchWait,
-    (u32)BigSwitchState1,
+    (u32)BigSwitchPress,
     (u32)BigSwitchRefill,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in BigSwitchUpdate */
 u32 gBigSwitchStateUpdates[3] ACTOR_TBL(087402bc) = {
     (u32)BigSwitchWaitUpdate,
-    (u32)BigSwitchState1Update,
+    (u32)BigSwitchPressUpdate,
     (u32)BigSwitchRefillUpdate,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_Stake */

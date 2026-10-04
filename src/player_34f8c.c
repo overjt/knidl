@@ -17,7 +17,7 @@
  * (PlayerState.prevMode = unk04), sets the new one and the task's animation
  * set (Task.updateState), then plays the animation of the current ability
  * (PlayerState.ability, 0..25) out of a per-mode table (gUnk_0873D3B8,
- * gUnk_0873D420, gUnk_0873D7E4) with TaskSetFrame and TaskYieldTrampoline;
+ * gPlayerHighFallFrames, gUnk_0873D7E4) with TaskSetFrame and TaskYieldTrampoline;
  * the per-frame handler runs M11's transition predicates in order and
  * writes the next mode request into PlayerState.requestedAction, or re-binds the
  * task to another coroutine with TaskSetEntry.  PlayerActionFall/PlayerActionFallUpdate
@@ -272,7 +272,7 @@ void PlayerActionHighFall(void)
     }
     gCurTask->player->hitBoxSet = 0;
     gCurTask->playerHighFallPhase = 0;
-    anim = gUnk_0873D420[gCurTask->player->ability];
+    anim = gPlayerHighFallFrames[gCurTask->player->ability];
     switch (gCurTask->variant)
     {
     case 0:

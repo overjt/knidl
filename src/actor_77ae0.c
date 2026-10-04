@@ -90,7 +90,7 @@ void CannonFuseBurnUpdate(void)
     }
 }
 
-void CannonFuseState2(void)
+void CannonFuseRestore(void)
 {
     gCurTask->updateState = CANNON_FUSE_STATE_2;
     TaskStop();
@@ -105,10 +105,10 @@ void CannonFuseState2(void)
     TaskSleepForever();
 }
 
-void CannonFuseState2Update(void)
+void CannonFuseRestoreUpdate(void)
 {
     if (gCurTask->cannonFusePieceKind != -1)
-        sub_08077980();
+        CannonFuseRestoreStep();
     if (gCurTask->state != CANNON_FUSE_STATE_2)
         TaskSetEntry(CannonFuseEnterState, gCurTaskIdx);
 }
@@ -227,7 +227,7 @@ void BigSwitchWaitUpdate(void)
         BigSwitchStartPress();
 }
 
-void BigSwitchState1(void)
+void BigSwitchPress(void)
 {
     gCurTask->updateState = BIG_SWITCH_STATE_1;
     TaskYieldTrampoline(8);
@@ -236,7 +236,7 @@ void BigSwitchState1(void)
     TaskSleepForever();
 }
 
-void BigSwitchState1Update(void)
+void BigSwitchPressUpdate(void)
 {
 }
 

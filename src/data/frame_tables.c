@@ -2812,12 +2812,12 @@ u32 gUnk_0874C980[] FRAME_TABLE = {
     (u32)gUnk_080D4B50,
 };
 
-/* gUnk_0874C9D8.  Consumers: ActorDefeatFrozenBurst (src/actor_6a344.c:459),
+/* gRayBurstFrames.  Consumers: ActorDefeatFrozenBurst (src/actor_6a344.c:459),
  * ActorDefeat4 (src/actor_6a344.c:634), ActorDefeatAbilityStar
  * (src/actor_6a344.c:650) and 5 more.  17 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C9D8-0x0874CA1C).  Declared include/actor.h:277. */
-u32 gUnk_0874C9D8[] FRAME_TABLE = {
+u32 gRayBurstFrames[] FRAME_TABLE = {
     (u32)gUnk_080D4B58,
     (u32)gUnk_080D4B98,
     (u32)gUnk_080D4BA8,
@@ -2868,11 +2868,11 @@ u32 gUnk_0874CA1C[] FRAME_TABLE = {
     (u32)gUnk_080D5E68,
 };
 
-/* gUnk_0874CA78.  Consumers: ActorDefeatMidBoss (src/actor_6ad18.c:136),
+/* gStarScatterFrames.  Consumers: ActorDefeatMidBoss (src/actor_6ad18.c:136),
  * PlayStarScatterAnim (src/actor_6d22c.c:256).  24 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CA78-0x0874CAD8).  Declared include/actor.h:279. */
-u32 gUnk_0874CA78[] FRAME_TABLE = {
+u32 gStarScatterFrames[] FRAME_TABLE = {
     (u32)gUnk_080D4F08,
     (u32)gUnk_080D4F28,
     (u32)gUnk_080D4F78,
@@ -2968,12 +2968,12 @@ u32 gBlockStarFrames[] FRAME_TABLE = {
     (u32)gUnk_080D70E8,
 };
 
-/* gUnk_0874CB7C.  Consumers: ActorDefeatFrozenBlink (src/actor_6a344.c:234),
+/* gIceBlockFrames.  Consumers: ActorDefeatFrozenBlink (src/actor_6a344.c:234),
  * Task_IceBlock (src/actor_6e0f0.c:553), Task_MrFrostyIceCube
  * (src/enemy_99b20.c:1678).  5 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874CB7C-0x0874CB90).  Declared include/actor.h:282. */
-u32 gUnk_0874CB7C[] FRAME_TABLE = {
+u32 gIceBlockFrames[] FRAME_TABLE = {
     (u32)gUnk_080D7110,
     (u32)gUnk_080D7110,
     (u32)gUnk_080D7110,
@@ -2981,12 +2981,12 @@ u32 gUnk_0874CB7C[] FRAME_TABLE = {
     (u32)gUnk_080D7110,
 };
 
-/* gUnk_0874CB90.  Consumers: Task_DustTrail (src/actor_6cd40.c:37),
+/* gDustFrames.  Consumers: Task_DustTrail (src/actor_6cd40.c:37),
  * Task_DustPuff (src/actor_6cd40.c:84), Task_BackwardDustPuff
  * (src/actor_6cd40.c:110) and 2 more.  14 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CB90-0x0874CBC8).  Declared include/actor.h:283. */
-u32 gUnk_0874CB90[] FRAME_TABLE = {
+u32 gDustFrames[] FRAME_TABLE = {
     (u32)gUnk_080D6398,
     (u32)gUnk_080D63A0,
     (u32)gUnk_080D63A8,
@@ -3012,11 +3012,11 @@ u32 gUnk_0874CBC8[] FRAME_TABLE = {
     (u32)gUnk_080D64A8,
 };
 
-/* gUnk_0874CBD0.  Consumers: Task_HitFlames (src/actor_6e0f0.c:96),
+/* gFlameFrames.  Consumers: Task_HitFlames (src/actor_6e0f0.c:96),
  * Task_HotHeadFlame (src/enemy_80b70.c:121).  26 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CBD0-0x0874CC38).  Declared include/actor.h:285. */
-u32 gUnk_0874CBD0[] FRAME_TABLE = {
+u32 gFlameFrames[] FRAME_TABLE = {
     (u32)gUnk_080D66F0,
     (u32)gUnk_080D66F8,
     (u32)gUnk_080D6700,

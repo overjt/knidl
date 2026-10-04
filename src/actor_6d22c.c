@@ -42,7 +42,7 @@ void Task_DustBurst(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 10;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB90;
+    u->frameTable = gDustFrames;
     u->updateCallback = (u32)DustBurstCheckParent;
     TaskFaceLikeParent();
 
@@ -226,7 +226,7 @@ void PlayRayBurstAnim(void)
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->layer = 10;
     u = gCurTask;
     u->tileWord = 0;
@@ -253,7 +253,7 @@ void PlayStarScatterAnim(void)
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CA78;
+    t->frameTable = gStarScatterFrames;
     t->layer = 10;
     gCurTask->tileWord = 0;
     for (i = 0; i < 23; i++)

@@ -159,7 +159,7 @@ void Task_Player(void)
         gCurTask->player->terrainBox = 0;
         gCurTask->player->hitBoxSet = 0;
         if (gCurTask->player->playerIndex == 0 || gUnk_020061E0 == 0)
-            CreateFlyingWarpStar(gCurTask->posX, gCurTask->posY, sub_080260b0());
+            CreateFlyingWarpStar(gCurTask->posX, gCurTask->posY, PickWarpStarArrivalFlight());
         PlayerWarpStarRideInit();
         TaskSleepForever();
     case ROOM_ENTRY_CANNON:

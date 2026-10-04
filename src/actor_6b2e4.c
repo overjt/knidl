@@ -79,7 +79,7 @@ void ActorDrownBurst(void)
 
     gCurTask->updateState = ACTOR_DROWN_STATE_BURST;
     t = gCurTask;
-    t->frameTable = gUnk_0874C9D8;
+    t->frameTable = gRayBurstFrames;
     t->tileWord = 0;
     ActorPlayRandomDefeatSfx();
     PlayRayBurstAnim();
@@ -101,7 +101,7 @@ void ActorDefeatPickup(void)
         MarkRoomObjectUsed(gCurTaskIdx);
     TaskYieldTrampoline(1);
     u = gCurTask;
-    u->frameTable = gUnk_0874C9D8;
+    u->frameTable = gRayBurstFrames;
     u->tileWord = 0;
     PlaySfx(109);
     PlayRayBurstAnim();

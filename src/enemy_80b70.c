@@ -118,7 +118,7 @@ void Task_HotHeadFlame(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->updateCallback = (u32)HotHeadFlameCheckParent;
     t->layer = 10;
-    gCurTask->frameTable = gUnk_0874CBD0;
+    gCurTask->frameTable = gFlameFrames;
     while (1)
     {
         o = &gTasks[gCurTask->parent];

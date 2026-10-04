@@ -4262,8 +4262,8 @@ gUnk_0873D384:
 	.global	gUnk_0873D3B8
 gUnk_0873D3B8:
 	.incbin	"baserom.gba", 0x73D3B8, 0x68
-	.global	gUnk_0873D420
-gUnk_0873D420:
+	.global	gPlayerHighFallFrames
+gPlayerHighFallFrames:
 	.incbin	"baserom.gba", 0x73D420, 0x9C
 	.global	gUnk_0873D4BC
 gUnk_0873D4BC:
@@ -4575,8 +4575,8 @@ gUnk_0873E5A4:
 	.section .game_rodata_0873e5f8, "a"
 	.global	game_rodata_0873e5f8
 game_rodata_0873e5f8:
-	.global	gUnk_0873E5F8
-gUnk_0873E5F8:
+	.global	gIceBlockBlinkTimes
+gIceBlockBlinkTimes:
 	.incbin	"baserom.gba", 0x73E5F8, 0x18
 	.global	gUnk_0873E610
 gUnk_0873E610:

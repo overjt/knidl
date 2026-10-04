@@ -233,17 +233,17 @@ gBigSwitchAttackBox:
 	.global	gUnk_0873F5C4
 gUnk_0873F5C4:
 	.incbin	"baserom.gba", 0x73F5C4, 0x8
-	.global	gUnk_0873F5CC
-gUnk_0873F5CC:
+	.global	gWarpStarTerrainBox
+gWarpStarTerrainBox:
 	.incbin	"baserom.gba", 0x73F5CC, 0x8
-	.global	gUnk_0873F5D4
-gUnk_0873F5D4:
+	.global	gWarpStarRiderTerrainBox
+gWarpStarRiderTerrainBox:
 	.incbin	"baserom.gba", 0x73F5D4, 0x8
 	.global	gCannonTerrainBox
 gCannonTerrainBox:
 	.incbin	"baserom.gba", 0x73F5DC, 0x8
-	.global	gUnk_0873F5E4
-gUnk_0873F5E4:
+	.global	gPlayerCannonTerrainBox
+gPlayerCannonTerrainBox:
 	.incbin	"baserom.gba", 0x73F5E4, 0x8
 	.global	gCannonFuseTerrainBox
 gCannonFuseTerrainBox:
@@ -450,8 +450,8 @@ gUnk_0873FAA8:
 	.global	gPlayerTumbleFrames
 gPlayerTumbleFrames:
 	.incbin	"baserom.gba", 0x73FAB4, 0x34
-	.global	gUnk_0873FAE8
-gUnk_0873FAE8:
+	.global	gWarpStarFlightFacings
+gWarpStarFlightFacings:
 	.incbin	"baserom.gba", 0x73FAE8, 0x1C
 
 @ 0x0873FB04-0x0873FB7C: C, row actor_tbl_0873fb04 (src/data/actor_tables.c section .actor_tbl_0873fb04)
@@ -537,8 +537,8 @@ gUnk_08740124:
 	.global	gUnk_087401CC
 gUnk_087401CC:
 	.incbin	"baserom.gba", 0x7401CC, 0x18
-	.global	gUnk_087401E4
-gUnk_087401E4:
+	.global	gCannonFusePieces
+gCannonFusePieces:
 	.word	gUnk_087401FC
 	.word	gUnk_0874021C
 	.word	gUnk_0874023C

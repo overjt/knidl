@@ -37,8 +37,8 @@
  * (a stage cleared: the hub's next stage door, or on to the next level),
  * ExitKingDededeStage, ExitToNextRoom, ExitToNextRoomOnWarpStar, ExitToEnding, PressBigSwitch and
  * ReturnFromBigSwitchView are the other exits, each setting the level/stage/room and a
- * stage request; sub_08025e0c lowers the room's bottom bound, sub_08025e88
- * reads an object-list entry's parameter, and ExitOnWarpStar, sub_080260b0
+ * stage request; sub_08025e0c lowers the room's bottom bound, WarpStarPickFlightSlot
+ * reads an object-list entry's parameter, and ExitOnWarpStar, PickWarpStarArrivalFlight
  * and ExitByCannon pick the position the player arrives at. */
 
 struct RoomObjectEntry
@@ -996,7 +996,7 @@ void sub_08025e0c(void)
     gViewRect[2] = gRoomBounds[2] - 80;
 }
 
-s32 sub_08025e88(s32 i)
+s32 WarpStarPickFlightSlot(s32 i)
 {
     struct RoomObjectEntry *e = &gRoomObjectList.entries[gUnk_02005590[i - 32]];
 
@@ -1063,7 +1063,7 @@ s32 ExitOnWarpStar(void)
     return 1;
 }
 
-s32 sub_080260b0(void)
+s32 PickWarpStarArrivalFlight(void)
 {
     s32 r;
 

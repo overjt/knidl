@@ -149,16 +149,16 @@ void PlayerWarpStarRideState1Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
         u->playerRideLandCount++;
         if (u->playerRideLandCount == 2)
-            sub_08070264();
+            PlayerStartHighFallPose();
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState3(void)
@@ -230,16 +230,16 @@ void PlayerWarpStarRideState3Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
         u->playerRideLandCount++;
         if (u->playerRideLandCount == 2)
-            sub_08070264();
+            PlayerStartHighFallPose();
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState4(void)
@@ -324,7 +324,7 @@ void PlayerWarpStarRideState4Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -333,10 +333,10 @@ void PlayerWarpStarRideState4Update(void)
         if (u->playerRideLandCount == 2)
         {
             u->facing = 1;
-            sub_08070264();
+            PlayerStartHighFallPose();
         }
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState5(void)
@@ -504,7 +504,7 @@ void PlayerWarpStarRideState5Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
@@ -581,16 +581,16 @@ void PlayerWarpStarRideState6Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    TerrainCollideBox(gUnk_0873F5D4);
+    TerrainCollideBox(gWarpStarRiderTerrainBox);
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
         u->playerRideLandCount++;
         if (u->playerRideLandCount == 2)
-            sub_08070264();
+            PlayerStartHighFallPose();
     }
-    sub_0807042c();
+    PlayerStepRideBouncePose();
 }
 
 void PlayerWarpStarRideState7(void)
@@ -678,7 +678,7 @@ void PlayerWarpStarRideState7(void)
     TaskYieldTrampoline(8);
     TaskStop();
     gCurTask->playerRideLandCount++;
-    sub_08070264();
+    PlayerStartHighFallPose();
     TaskStop();
     gCurTask->playerLoopCount = 0;
     do

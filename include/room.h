@@ -753,9 +753,9 @@ void PressBigSwitch(s32 id);
 void ReturnFromBigSwitchView(void);
 void sub_08025e00(void);
 void sub_08025e0c(void);
-s32 sub_08025e88(s32 i);
+s32 WarpStarPickFlightSlot(s32 i);
 s32 ExitOnWarpStar(void);
-s32 sub_080260b0(void);
+s32 PickWarpStarArrivalFlight(void);
 s32 ExitByCannon(void);
 
 /* src/stage_261c0.c */

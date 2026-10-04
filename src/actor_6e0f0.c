@@ -33,18 +33,18 @@
 #include "effect.h"
 
 /* RAM cells */
-/* Not from actor.h: this file's view of gUnk_0873E5F8 differs (lesson 3.517). */
+/* Not from actor.h: this file's view of gIceBlockBlinkTimes differs (lesson 3.517). */
 extern u16 gWarpStarRideSlot;
 
 /* ROM tables */
-extern s16 gUnk_0873E5F8[][2];
+extern s16 gIceBlockBlinkTimes[][2];
 extern u32 gLandingImpactVariants[];
-extern u8 gUnk_0873FAE8[];
+extern u8 gWarpStarFlightFacings[];
 extern u32 gPlayerWarpStarRideStates[];
 extern u32 gPlayerWarpStarRideStateUpdates[];
 extern u32 gAbilityReleaseFlashFrames[];
-extern u32 gUnk_0874CB7C[];
-extern u32 gUnk_0874CBD0[];
+extern u32 gIceBlockFrames[];
+extern u32 gFlameFrames[];
 extern u32 gHitSparksFrames[];
 extern u32 gDashFlameFrames[];
 extern u32 gWarpStarFrames[];
@@ -93,7 +93,7 @@ void Task_HitFlames(void)
     t = gCurTask;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->drawCallback = (u32)ActorDrawWorldInView;
-    t->frameTable = gUnk_0874CBD0;
+    t->frameTable = gFlameFrames;
     t->layer = 10;
     gCurTask->updateCallback = (u32)HitFlamesCheckParent;
     gCurTask->tileWord = 0;
@@ -550,7 +550,7 @@ void Task_IceBlock(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 7;
     u = gCurTask;
-    u->frameTable = gUnk_0874CB7C;
+    u->frameTable = gIceBlockFrames;
     u->updateCallback = (u32)IceBlockUpdate;
     u->tileWord = 0;
     u->posX = 0;
@@ -603,7 +603,7 @@ void IceBlockBlink(void)
             else
                 t->frame = 4;
             u = gCurTask;
-            u->iceBlockBlinkTimer = gUnk_0873E5F8[i][u->iceBlockBlinkHide];
+            u->iceBlockBlinkTimer = gIceBlockBlinkTimes[i][u->iceBlockBlinkHide];
             u->iceBlockBlinkHide ^= 1;
         }
         w = gCurTask;
@@ -674,9 +674,9 @@ void PlayerWarpStarRideInit(void)
     u->player->unk42 &= 0xFFEF;
     u->parent = gWarpStarRideSlot;
     if (gTasks[u->parent].unk74 == 0)
-        gCurTask->facing = gUnk_0873FAE8[sub_08025e88(u->parent)];
+        gCurTask->facing = gWarpStarFlightFacings[WarpStarPickFlightSlot(u->parent)];
     else
-        u->facing = gUnk_0873FAE8[gTasks[u->parent].unk74];
+        u->facing = gWarpStarFlightFacings[gTasks[u->parent].unk74];
     v = gCurTask;
     v->state = 2;
     CallTableEntry(gCurTask->state, 8, gPlayerWarpStarRideStates);
