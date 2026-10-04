@@ -107,7 +107,7 @@ ALL_OBJS  := $(ASM_OBJS) $(DATA_OBJS) $(SRC_OBJS)
 
 ELF := $(BUILD_DIR)/$(ROM:.gba=.elf)
 
-.PHONY: all compare check-headers check-data audit progress datastats shifttest boottest-roms boottest-run report symbols split modmap clean
+.PHONY: all compare check-headers check-data audit progress datastats shifttest boottest-roms boottest-run boottest-coverage-run boottest-coverage-report report symbols split modmap clean
 
 all: $(ROM)
 
@@ -193,16 +193,25 @@ shifttest: $(ELF)
 
 # The boot test (issue #36, docs/data.md section 8.4), in two halves because
 # it needs two images: boottest-roms (knidl-builder) links one shifted ROM
-# per insertion point into build/boottest/, as shiftcheck.py's image B;
+# per insertion point into build/boottest/, as shiftcheck.py's image B, and
+# writes the symbol list the scripts' checks name RAM cells with;
 # boottest-run (knidl-boottest, tools/boottest/Dockerfile) runs the
-# reference and every shifted ROM in lockstep in mGBA with the scripted
-# input and fails at the first frame whose video, audio or RAM differs.
-# BOOTTEST_AT picks the points (section names; default: shiftcheck.py's),
-# BOOTTEST_FRAMES the length (default: the script's plus 600 frames).
+# reference and every shifted ROM in lockstep in mGBA, once per script of
+# BOOTTEST_INPUT (each from boot with an empty save), and fails at the first
+# frame whose video, audio or RAM differs, or when a script's `expect` no
+# longer holds on the reference.  BOOTTEST_AT picks the points (section
+# names; default: shiftcheck.py's), BOOTTEST_INPUT the scripts (default:
+# the CI set below), BOOTTEST_FRAMES the length (default: each script's
+# plus 600 frames).
 BOOTTEST_DIR   := $(BUILD_DIR)/boottest
+BOOTTEST_SYMS  := $(BOOTTEST_DIR)/syms.txt
 BOOTTEST_INPUT := tools/boottest/input.txt
 
-boottest-roms: $(ROM)
+$(BOOTTEST_SYMS): $(ELF)
+	@mkdir -p $(BOOTTEST_DIR)
+	arm-none-eabi-nm $(ELF) > $@
+
+boottest-roms: $(ROM) $(BOOTTEST_SYMS)
 	python3 tools/boottest.py --elf $(ELF) --out $(BOOTTEST_DIR) $(foreach s,$(BOOTTEST_AT),--at $(s)) --objs $(ALL_OBJS)
 
 # BOOTTEST_RAM_ALLOW: RAM words allowed to differ, each with its evidence.
@@ -213,9 +222,29 @@ boottest-roms: $(ROM)
 # undefined behaviour, layout-dependent by nature (docs/data.md 8.4).
 BOOTTEST_RAM_ALLOW := 0x03001184,0x03001EF0
 
-# no prerequisites: the emulator image has no toolchain to rebuild them
+# no prerequisites: the emulator image has no toolchain to rebuild them.
+# Every script runs even after one fails, so one run shows them all.
 boottest-run:
-	knidl-boottest --input $(BOOTTEST_INPUT) --ram-allow $(BOOTTEST_RAM_ALLOW) $(if $(BOOTTEST_FRAMES),--frames $(BOOTTEST_FRAMES)) $(ROM) $$(cat $(BOOTTEST_DIR)/roms.txt)
+	@status=0; for s in $(BOOTTEST_INPUT); do \
+	  echo "knidl-boottest --input $$s"; \
+	  knidl-boottest --input $$s --syms $(BOOTTEST_SYMS) --ram-allow $(BOOTTEST_RAM_ALLOW) $(if $(BOOTTEST_FRAMES),--frames $(BOOTTEST_FRAMES)) $(ROM) $$(cat $(BOOTTEST_DIR)/roms.txt) || status=1; \
+	  echo; \
+	done; exit $$status
+
+# Execution coverage (docs/data.md 8.4): the reference alone, one
+# instruction at a time, per script; the ranges go to
+# build/boottest/coverage-<script>.txt (never committed) and
+# tools/boottest/coverage.py maps them onto docs/analysis/symbols.csv.
+BOOTTEST_COV := $(foreach s,$(BOOTTEST_INPUT),$(BOOTTEST_DIR)/coverage-$(basename $(notdir $(s))).txt)
+
+boottest-coverage-run:
+	@for s in $(BOOTTEST_INPUT); do \
+	  echo "knidl-boottest --input $$s --coverage"; \
+	  knidl-boottest --input $$s --syms $(BOOTTEST_SYMS) --coverage $(BOOTTEST_DIR)/coverage-$$(basename $$s .txt).txt $(ROM) || exit 1; \
+	done
+
+boottest-coverage-report:
+	python3 tools/boottest/coverage.py --syms $(BOOTTEST_SYMS) $(BOOTTEST_COV)
 
 # Data policy (AGENTS.md, docs/data.md): assets are never committed, and
 # data/ may hold only labels, symbolic .words and .incbin slices of
@@ -276,7 +305,7 @@ BOOTTEST_IMAGE := knidl-boottest
 # toolchain image (#170).
 .DEFAULT_GOAL := all
 
-.PHONY: image boottest-image need-baserom all compare check-headers check-data audit progress datastats shifttest boottest symbols split modmap clean
+.PHONY: image boottest-image need-baserom all compare check-headers check-data audit progress datastats shifttest boottest boottest-coverage symbols split modmap clean
 
 # The targets that read baserom.gba check for it first, before building any
 # image, and point at INSTALL.md instead of failing in the assembler with
@@ -322,9 +351,17 @@ shifttest: need-baserom image
 
 # The boot test (docs/data.md section 8.4): link the shifted ROMs in the
 # toolchain image, then run them against knidl.gba in the emulator image.
+BOOTTEST_VARS = $(if $(BOOTTEST_INPUT),BOOTTEST_INPUT="$(BOOTTEST_INPUT)") $(if $(BOOTTEST_FRAMES),BOOTTEST_FRAMES=$(BOOTTEST_FRAMES))
+
 boottest: need-baserom image boottest-image
 	$(DOCKER_RUN) make boottest-roms INSIDE_DOCKER=1 $(if $(BOOTTEST_AT),BOOTTEST_AT="$(BOOTTEST_AT)")
-	docker run --rm -v $(CURDIR):/src -w /src $(BOOTTEST_IMAGE) make boottest-run INSIDE_DOCKER=1 $(if $(BOOTTEST_FRAMES),BOOTTEST_FRAMES=$(BOOTTEST_FRAMES))
+	docker run --rm -v $(CURDIR):/src -w /src $(BOOTTEST_IMAGE) make boottest-run INSIDE_DOCKER=1 $(BOOTTEST_VARS)
+
+# How much of the code the scripts execute (docs/data.md section 8.4).
+boottest-coverage: need-baserom image boottest-image
+	$(DOCKER_RUN) make $(ROM) build/boottest/syms.txt INSIDE_DOCKER=1
+	docker run --rm -v $(CURDIR):/src -w /src $(BOOTTEST_IMAGE) make boottest-coverage-run INSIDE_DOCKER=1 $(BOOTTEST_VARS)
+	$(DOCKER_RUN) make boottest-coverage-report INSIDE_DOCKER=1 $(BOOTTEST_VARS)
 
 # report.json generation only needs Python + the repo's ground-truth CSVs,
 # so it runs directly on the host (no toolchain image required).
