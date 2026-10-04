@@ -359,13 +359,13 @@ void NoddySleepFallUpdate(void)
     }
 }
 
-void NoddyVariant1(void)
+void NoddyAsleep(void)
 {
     struct Task *t;
     struct Task *u;
     struct Task *w;
 
-    gCurTask->updateCallback = (u32)sub_08084ae8;
+    gCurTask->updateCallback = (u32)NoddyAsleepUpdate;
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     TaskFaceNearestPlayer();
@@ -385,7 +385,7 @@ void NoddyVariant1(void)
     }
 }
 
-void sub_08084ae8(void)
+void NoddyAsleepUpdate(void)
 {
     ActorCollideTerrain();
     ActorCheckHits();

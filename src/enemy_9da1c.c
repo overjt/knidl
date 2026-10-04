@@ -195,9 +195,9 @@ void sub_0809dc7c(void)
     CallTableEntry(u->variant, 3, gMaceKnightVariants);
 }
 
-void MaceKnightVariant0(void)
+void MaceKnightStand(void)
 {
-    gCurTask->updateCallback = (u32)sub_0809dd08;
+    gCurTask->updateCallback = (u32)MaceKnightStandUpdate;
     TaskFaceScreenCenter();
     while (1)
     {
@@ -209,11 +209,11 @@ void MaceKnightVariant0(void)
         TaskYieldTrampoline(8);
         TaskSetFrame(10);
         TaskYieldTrampoline(12);
-        sub_0809e04c();
+        MaceKnightThrowMace();
     }
 }
 
-void sub_0809dd08(void)
+void MaceKnightStandUpdate(void)
 {
     struct Task *t;
     s32 i;
@@ -331,7 +331,7 @@ void MaceKnightThrow(void)
 {
     gCurTask->updateState = MACE_KNIGHT_STATE_THROW;
     TaskStop();
-    sub_0809e04c();
+    MaceKnightThrowMace();
     ActorSetState(MACE_KNIGHT_STATE_WALK);
     TaskSleepForever();
 }
@@ -398,7 +398,7 @@ void sub_0809dfc8(void)
     }
 }
 
-void sub_0809e04c(void)
+void MaceKnightThrowMace(void)
 {
     s32 k;
 

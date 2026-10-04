@@ -1200,7 +1200,7 @@ u32 gHotHeadFireBallStateUpdates[1] ACTOR_TBL(08741e7c) = {
 /* include/enemy.h; CallTableEntry(i, 2, ...) in Task_Noddy */
 u32 gNoddyVariants[2] ACTOR_TBL(08741f70) = {
     (u32)NoddyInit,
-    (u32)NoddyVariant1,
+    (u32)NoddyAsleep,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in NoddyInit, NoddyEnterState */
 u32 gNoddyStates[6] ACTOR_TBL(08741f70) = {
@@ -1602,8 +1602,8 @@ u32 gBlipperVariants[6] ACTOR_TBL(087428c0) = {
     (u32)BlipperChaseInit,
     (u32)BlipperWaveInit,
     (u32)sub_0808af34,
-    (u32)sub_0808b1d0,
-    (u32)sub_0808b1d0,
+    (u32)BlipperLeapInit,
+    (u32)BlipperLeapInit,
     (u32)BlipperIdle,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in BlipperChaseInit, BlipperChaseEnterState */
@@ -1636,13 +1636,13 @@ u32 gUnk_08742918[2] ACTOR_TBL(08742908) = {
     (u32)sub_0808b094,
     (u32)sub_0808b1a8,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0808b1d0, sub_0808b210 */
-u32 gUnk_08742920[2] ACTOR_TBL(08742908) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in BlipperLeapInit, BlipperLeapEnterState */
+u32 gBlipperLeapStates[2] ACTOR_TBL(08742908) = {
     (u32)sub_0808b28c,
-    (u32)sub_0808b368,
+    (u32)BlipperLeap,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0808b234 */
-u32 gUnk_08742928[2] ACTOR_TBL(08742908) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in BlipperLeapUpdate */
+u32 gBlipperLeapStateUpdates[2] ACTOR_TBL(08742908) = {
     (u32)sub_0808b2fc,
     (u32)sub_0808b468,
 };
@@ -2323,7 +2323,7 @@ u32 gJavelinKnightStateUpdates[5] ACTOR_TBL(08747aa4) = {
 /* ---- 0x08747BCC-0x08747C28: 7 table(s), 23 function pointer(s), section .actor_tbl_08747bcc ---- */
 /* include/enemy.h; CallTableEntry(i, 3, ...) in sub_0809dc7c */
 u32 gMaceKnightVariants[3] ACTOR_TBL(08747bcc) = {
-    (u32)MaceKnightVariant0,
+    (u32)MaceKnightStand,
     (u32)MaceKnightVariant1,
     (u32)MaceKnightVariant2,
 };

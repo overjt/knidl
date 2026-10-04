@@ -330,33 +330,33 @@ void sub_0808b1a8(void)
         TaskSetEntry(sub_0808afac, gCurTaskIdx);
 }
 
-void sub_0808b1d0(void)
+void BlipperLeapInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808b234;
+    gCurTask->updateCallback = (u32)BlipperLeapUpdate;
     gCurTask->blipperCollideTerrain = 1;
     gCurTask->onGround = 0;
     TaskFaceNearestPlayer();
     gCurTask->blipperLeapTimer = 1;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08742920);
+    CallTableEntry(gCurTask->state, 2, gBlipperLeapStates);
 }
 
-void sub_0808b210(void)
+void BlipperLeapEnterState(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808b234;
-    CallTableEntry(gCurTask->state, 2, gUnk_08742920);
+    gCurTask->updateCallback = (u32)BlipperLeapUpdate;
+    CallTableEntry(gCurTask->state, 2, gBlipperLeapStates);
 }
 
-void sub_0808b234(void)
+void BlipperLeapUpdate(void)
 {
     if (gCurTask->blipperCollideTerrain != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 2, gUnk_08742928);
+            CallTableEntry(gCurTask->updateState, 2, gBlipperLeapStateUpdates);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 2, gUnk_08742928);
+        CallTableEntry(gCurTask->updateState, 2, gBlipperLeapStateUpdates);
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -402,7 +402,7 @@ void sub_0808b2fc(void)
     }
 }
 
-void sub_0808b368(void)
+void BlipperLeap(void)
 {
     gCurTask->updateState = 1;
     if (gCurTask->variant == 3)
@@ -448,7 +448,7 @@ void sub_0808b468(void)
     {
         gCurTask->velY >>= 2;
         ActorSetState(0);
-        TaskSetEntry(sub_0808b210, gCurTaskIdx);
+        TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
     }
 }
 
@@ -462,7 +462,7 @@ void sub_0808b4d0(void)
     if ((u8)IsWaterAtPixel(gCurTask->pixelX, gCurTask->pixelY) == 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0808b210, gCurTaskIdx);
+        TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
         return;
     }
     if (abs(TaskGetNearestPlayerDx()) > 64)
@@ -489,7 +489,7 @@ zero:
     gCurTask->blipperLeapSpeedIndex = 0;
 done:
     ActorSetState(1);
-    TaskSetEntry(sub_0808b210, gCurTaskIdx);
+    TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
 }
 
 void sub_0808b5b4(void)
@@ -648,7 +648,7 @@ void sub_0808b8c4(void)
             gCurTask->velY >>= 2;
             gCurTask->blipperLeapTimer = 90;
             ActorSetState(0);
-            gCurTask->updateCallback = (u32)sub_0808b234;
+            gCurTask->updateCallback = (u32)BlipperLeapUpdate;
             TaskSetEntry(sub_0808b28c, gCurTaskIdx);
             break;
         }

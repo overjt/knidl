@@ -2750,8 +2750,8 @@ vma,size,isa,evidence,name
 0x080849B4,0x28,thumb,rom-pointer,NoddyWakeUpUpdate
 0x080849DC,0x74,thumb,rom-pointer,NoddySleepFall
 0x08084A50,0x24,thumb,rom-pointer,NoddySleepFallUpdate
-0x08084A74,0x74,thumb,rom-pointer,NoddyVariant1
-0x08084AE8,0x14,thumb,rom-pointer,sub_08084ae8
+0x08084A74,0x74,thumb,rom-pointer,NoddyAsleep
+0x08084AE8,0x14,thumb,rom-pointer,NoddyAsleepUpdate
 0x08084AFC,0x80,thumb,rom-pointer,Task_NoddyBubble
 0x08084B7C,0x44,thumb,rom-pointer,NoddyBubbleUpdate
 0x08084BC0,0x4C,thumb,rom-pointer,NoddyLand
@@ -3050,12 +3050,12 @@ vma,size,isa,evidence,name
 0x0808B094,0x8C,thumb,rom-pointer,sub_0808b094
 0x0808B120,0x88,thumb,rom-pointer,sub_0808b120
 0x0808B1A8,0x28,thumb,rom-pointer,sub_0808b1a8
-0x0808B1D0,0x40,thumb,rom-pointer,sub_0808b1d0
-0x0808B210,0x24,thumb,rom-pointer,sub_0808b210
-0x0808B234,0x58,thumb,rom-pointer,sub_0808b234
+0x0808B1D0,0x40,thumb,rom-pointer,BlipperLeapInit
+0x0808B210,0x24,thumb,rom-pointer,BlipperLeapEnterState
+0x0808B234,0x58,thumb,rom-pointer,BlipperLeapUpdate
 0x0808B28C,0x70,thumb,rom-pointer,sub_0808b28c
 0x0808B2FC,0x6C,thumb,rom-pointer,sub_0808b2fc
-0x0808B368,0x100,thumb,rom-pointer,sub_0808b368
+0x0808B368,0x100,thumb,rom-pointer,BlipperLeap
 0x0808B468,0x68,thumb,rom-pointer,sub_0808b468
 0x0808B4D0,0xE4,thumb,bl-target,sub_0808b4d0
 0x0808B5B4,0x9C,thumb,bl-target+rom-pointer,sub_0808b5b4
@@ -3753,8 +3753,8 @@ vma,size,isa,evidence,name
 0x0809DBC4,0x78,thumb,bl-target+rom-pointer,JavelinKnightHitWall
 0x0809DC3C,0x40,thumb,bl-target+rom-pointer,JavelinKnightHitCeiling
 0x0809DC7C,0x40,thumb,bl-target,sub_0809dc7c
-0x0809DCBC,0x4C,thumb,rom-pointer,MaceKnightVariant0
-0x0809DD08,0x74,thumb,rom-pointer,sub_0809dd08
+0x0809DCBC,0x4C,thumb,rom-pointer,MaceKnightStand
+0x0809DD08,0x74,thumb,rom-pointer,MaceKnightStandUpdate
 0x0809DD7C,0x24,thumb,rom-pointer,MaceKnightVariant1
 0x0809DDA0,0x1C,thumb,rom-pointer,MaceKnightEnterState
 0x0809DDBC,0x98,thumb,rom-pointer,MaceKnightUpdate
@@ -3764,7 +3764,7 @@ vma,size,isa,evidence,name
 0x0809DF2C,0x28,thumb,rom-pointer,MaceKnightThrowUpdate
 0x0809DF54,0x74,thumb,rom-pointer,MaceKnightVariant2
 0x0809DFC8,0x84,thumb,rom-pointer,sub_0809dfc8
-0x0809E04C,0x1C8,thumb,bl-target,sub_0809e04c
+0x0809E04C,0x1C8,thumb,bl-target,MaceKnightThrowMace
 0x0809E214,0x70,thumb,bl-target,CreateMaceKnightMace
 0x0809E284,0x40,thumb,rom-pointer,Task_MaceKnightMace
 0x0809E2C4,0x5C,thumb,rom-pointer,MaceKnightMaceMove
