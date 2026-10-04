@@ -738,7 +738,7 @@ void sub_08071ebc(void)
     }
 }
 
-void sub_08071f54(void)
+void WarpStarFlight5(void)
 {
     struct Task *t;
 
@@ -797,12 +797,12 @@ void sub_08071f54(void)
     TaskSleepForever();
 }
 
-void sub_080720dc(void)
+void WarpStarFlight5Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_080720e8(void)
+void WarpStarFlight6(void)
 {
     struct Task *t;
 
@@ -912,12 +912,12 @@ void sub_080720e8(void)
     TaskSleepForever();
 }
 
-void sub_0807237c(void)
+void WarpStarFlight6Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08072388(void)
+void WarpStarFlight8(void)
 {
     struct Task *t;
 
@@ -1094,12 +1094,12 @@ void sub_08072388(void)
     TaskSleepForever();
 }
 
-void sub_08072678(void)
+void WarpStarFlight8Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08072684(void)
+void WarpStarFlight10(void)
 {
     struct Task *t;
 
@@ -1225,12 +1225,12 @@ void sub_08072684(void)
     TaskSleepForever();
 }
 
-void sub_080728a4(void)
+void WarpStarFlight10Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_080728b0(void)
+void WarpStarFlight11(void)
 {
     struct Task *t;
 
@@ -1347,12 +1347,12 @@ void sub_080728b0(void)
     TaskSleepForever();
 }
 
-void sub_08072af4(void)
+void WarpStarFlight11Update(void)
 {
     WarpStarEmitTrailStars();
 }
 
-void sub_08072b00(void)
+void WarpStarFlight12(void)
 {
     struct Task *t;
 
@@ -1483,7 +1483,7 @@ void sub_08072b00(void)
     ActorDestroy();
 }
 
-void sub_08072d80(void)
+void WarpStarFlight12Update(void)
 {
     WarpStarEmitTrailStars();
 }

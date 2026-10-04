@@ -15,7 +15,7 @@ void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
 s32 PlaySfx(s32 id);
 
-void sub_08019000(void)
+void CutsceneActorScript55(void)
 {
 
     gCurTask->moveCallback = (u32)TaskMove;
@@ -261,7 +261,7 @@ void sub_08019590(void)
     gCurTask->cutsceneActorPalettePhase++;
 }
 
-void sub_080195ec(void)
+void CutsceneActorScript57(void)
 {
     struct Task *t = gCurTask;
 
@@ -478,7 +478,7 @@ void sub_080195ec(void)
     TaskSleepForever();
 }
 
-void sub_08019b30(void)
+void CutsceneActorScript58(void)
 {
     struct Task *t = gCurTask;
 
@@ -523,7 +523,7 @@ void sub_08019b30(void)
     TaskSleepForever();
 }
 
-void sub_08019c44(void)
+void CutsceneActorScript59(void)
 {
     struct Task *t = gCurTask;
 
@@ -563,7 +563,7 @@ void sub_08019c44(void)
     TaskSleepForever();
 }
 
-void sub_08019d30(void)
+void CutsceneActorScript60(void)
 {
     struct Task *t = gCurTask;
 
@@ -610,7 +610,7 @@ void sub_08019d30(void)
     TaskSleepForever();
 }
 
-void sub_08019e48(void)
+void CutsceneActorScript61(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

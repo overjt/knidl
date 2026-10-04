@@ -29,7 +29,7 @@
 s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s16 f);
 s32 RandomRange(s32 n);
 
-void sub_08018e14(void)
+void CutsceneActorScript52(void)
 {
     s32 i;
     s32 r;

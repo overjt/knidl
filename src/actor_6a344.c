@@ -493,17 +493,17 @@ void ActorDefeatExplode(void)
     PlayExplosionAnim();
 }
 
-void sub_0806aa80(void)
+void ActorExplodeDefeat1(void)
 {
     ActorDefeatExplode();
 }
 
-void sub_0806aa8c(void)
+void ActorExplodeDefeat2(void)
 {
     ActorDefeatExplode();
 }
 
-void sub_0806aa98(void)
+void ActorExplodeDefeat3(void)
 {
     ActorDefeatFrozen();
 }
@@ -531,7 +531,7 @@ void ExplosionScreenFlash(void)
     LoadBackdropColor(&x);
 }
 
-void sub_0806ab34(void)
+void ActorDefeat2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -575,7 +575,7 @@ void sub_0806aba4(void)
     }
 }
 
-void sub_0806abec(void)
+void ActorDefeat3(void)
 {
     struct Task *t;
     struct Task *u;
@@ -611,7 +611,7 @@ void sub_0806ac48(void)
     }
 }
 
-void sub_0806ac6c(void)
+void ActorDefeat4(void)
 {
     struct Task *t;
     struct Task *u;

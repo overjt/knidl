@@ -14,7 +14,7 @@ void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
 s32 PlaySfx(s32 id);
 s32 IsOnScreen(s16 x, s16 y);
 
-void sub_0801a07c(void)
+void CutsceneActorScript56(void)
 {
     struct Task *t = gCurTask;
 

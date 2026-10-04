@@ -300,15 +300,15 @@ void PlayerDance(void);
 void PlayerDanceInGoalGame(void);
 void PlayerDanceAfterStageClear(void);
 void sub_0805e2d4(void);
-void sub_0805e7b4(void);
-void sub_0805eb2c(s32 a0, s32 a1, s32 a2);
-void sub_0805ee90(void);
-void sub_0805f1bc(void);
-void sub_0805f778(void);
-void sub_0805fb88(void);
-void sub_08060308(void);
-void sub_08060c2c(void);
-void sub_080613e4(void);
-void sub_08061cac(void);
+void PlayerDance1(void);
+void PlayerDance2(s32 a0, s32 a1, s32 a2);
+void PlayerDance3(void);
+void PlayerDance4(void);
+void PlayerDance5(void);
+void PlayerDance7(void);
+void PlayerDance8(void);
+void PlayerDance9(void);
+void PlayerDance10(void);
+void PlayerDance11(void);
 
 #endif /* GUARD_EFFECT_H */

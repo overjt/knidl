@@ -240,7 +240,7 @@ void ActorDefeatBoss(void)
     CallTableEntry(gCurTask->u76.subtype, 9, gUnk_0873E758);
 }
 
-void sub_0806b178(void)
+void ActorDefeat8(void)
 {
     struct Task *t;
 
@@ -289,7 +289,7 @@ void sub_0806b224(void)
     ActorDefeatFrozen();
 }
 
-void sub_0806b230(void)
+void ActorDefeat9(void)
 {
     struct Task *t;
 

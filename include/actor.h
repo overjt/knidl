@@ -328,8 +328,8 @@ extern u32 gUnk_08752E48[];
 struct InputState;
 
 /* src/actor_62584.c */
-void sub_08062584(void);
-void sub_08062f88(void);
+void PlayerDance12(void);
+void PlayerDance13(void);
 
 /* src/actor_63698.c */
 s32 sub_08063698(u32 type, s32 start);
@@ -600,15 +600,15 @@ void ActorDefeatFrozenState2(void);
 void sub_0806aa0c(void);
 void ActorDefeatExplodeByEffect(void);
 void ActorDefeatExplode(void);
-void sub_0806aa80(void);
-void sub_0806aa8c(void);
-void sub_0806aa98(void);
+void ActorExplodeDefeat1(void);
+void ActorExplodeDefeat2(void);
+void ActorExplodeDefeat3(void);
 void ExplosionScreenFlash(void);
-void sub_0806ab34(void);
+void ActorDefeat2(void);
 void sub_0806aba4(void);
-void sub_0806abec(void);
+void ActorDefeat3(void);
 void sub_0806ac48(void);
-void sub_0806ac6c(void);
+void ActorDefeat4(void);
 void sub_0806acc4(void);
 void ActorDefeatAbilityStar(void);
 
@@ -623,12 +623,12 @@ void sub_0806b070(void);
 void sub_0806b098(void);
 s32 sub_0806b0f0(void);
 void ActorDefeatBoss(void);
-void sub_0806b178(void);
+void ActorDefeat8(void);
 void sub_0806b1a8(void);
 void sub_0806b1c4(void);
 void sub_0806b1f4(void);
 void sub_0806b224(void);
-void sub_0806b230(void);
+void ActorDefeat9(void);
 s32 ActorDrownLand(void);
 void ActorDrownInit(void);
 void ActorDrownUpdate(void);

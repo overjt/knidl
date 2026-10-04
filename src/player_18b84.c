@@ -25,7 +25,7 @@ void sub_08018b84(void)
         t->cutsceneActorSfxTimer = 0;
 }
 
-void sub_08018bb8(void)
+void CutsceneActorScript53(void)
 {
     struct Task *t;
     struct Task *u;
@@ -83,7 +83,7 @@ void sub_08018bb8(void)
     }
 }
 
-void sub_08018d7c(void)
+void CutsceneActorScript54(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

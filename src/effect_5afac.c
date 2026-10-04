@@ -2180,7 +2180,7 @@ void sub_0805e2d4(void)
     TaskYieldTrampoline(0x15);
 }
 
-void sub_0805e7b4(void)
+void PlayerDance1(void)
 {
     gCurTask->velY = 144 << 10;
     gCurTask->accelY = 0xFFFF8000;
@@ -2294,7 +2294,7 @@ void sub_0805e7b4(void)
     TaskYieldTrampoline(21);
 }
 
-void sub_0805eb2c(s32 a0, s32 a1, s32 a2)
+void PlayerDance2(s32 a0, s32 a1, s32 a2)
 {
     TaskSetMotion(0xFFFFC000, 0, 0x5A5A5A5A, 0xFFFD4000, 128 << 8, 0x5A5A5A5A);
     gCurTask->frame = 0x133;
@@ -2389,7 +2389,7 @@ void sub_0805eb2c(s32 a0, s32 a1, s32 a2)
     TaskYieldTrampoline(21);
 }
 
-void sub_0805ee90(void)
+void PlayerDance3(void)
 {
     gCurTask->velY = 144 << 9;
     gCurTask->accelY = 0xFFFFC000;
@@ -2511,7 +2511,7 @@ void sub_0805ee90(void)
     TaskYieldTrampoline(21);
 }
 
-void sub_0805f1bc(void)
+void PlayerDance4(void)
 {
     gCurTask->velX = 128 << 9;
     gCurTask->spriteFlags |= 128 << 8;
@@ -2714,7 +2714,7 @@ void sub_0805f1bc(void)
     TaskYieldTrampoline(21);
 }
 
-void sub_0805f778(void)
+void PlayerDance5(void)
 {
     gCurTask->velX = 0xFFFD8000;
     gCurTask->accelX = 128 << 7;
@@ -2851,7 +2851,7 @@ void sub_0805f778(void)
     TaskYieldTrampoline(21);
 }
 
-void sub_0805fb88(void)
+void PlayerDance7(void)
 {
     TaskSetMotion(204 << 9, 0xFFFFE800, 0x5A5A5A5A, 0xFFFE7800, 224 << 6, 0x5A5A5A5A);
     gCurTask->spriteFlags &= 0x7FFF;
@@ -3118,7 +3118,7 @@ void sub_0805fb88(void)
     TaskYieldTrampoline(21);
 }
 
-void sub_08060308(void)
+void PlayerDance8(void)
 {
     TaskSetMotion(0xFFFF8C00, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
     gCurTask->spriteFlags |= 128 << 8;
@@ -3448,7 +3448,7 @@ void sub_08060308(void)
     TaskYieldTrampoline(20);
 }
 
-void sub_08060c2c(void)
+void PlayerDance9(void)
 {
     gCurTask->spriteFlags |= 128 << 8;
     gCurTask->velX = 0xFFFFC000;
@@ -3733,7 +3733,7 @@ void sub_08060c2c(void)
     TaskYieldTrampoline(21);
 }
 
-void sub_080613e4(void)
+void PlayerDance10(void)
 {
     gCurTask->spriteFlags |= 0x8000;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);
@@ -4042,7 +4042,7 @@ void sub_080613e4(void)
     TaskYieldTrampoline(0x15);
 }
 
-void sub_08061cac(void)
+void PlayerDance11(void)
 {
     gCurTask->spriteFlags &= 0x7FFF;
     TaskSetMotion(0, 0, 0x5A5A5A5A, 0, 0, 0x5A5A5A5A);

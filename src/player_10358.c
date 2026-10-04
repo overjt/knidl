@@ -225,7 +225,7 @@ void CutsceneDuelKirby(void)
 /* OBJ VRAM tile base; not in hdr.c. */
 extern u8 gObjVram[];
 
-void sub_08010834(void)
+void CutsceneActorScript1(void)
 {
     s32 t;
     s32 u;

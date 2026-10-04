@@ -355,33 +355,33 @@ extern u8 gUnk_08757368[];
 /* Functions (defined in the files named above each group). */
 
 /* src/player_17668.c */
-void sub_08017668(void);
+void CutsceneActorScript50(void);
 void sub_08018464(void);
-void sub_08018498(void);
+void CutsceneActorScript51(void);
 
 /* src/player_18b84.c */
 void sub_08018b84(void);
-void sub_08018bb8(void);
-void sub_08018d7c(void);
+void CutsceneActorScript53(void);
+void CutsceneActorScript54(void);
 
 /* src/player_18e14.c */
-void sub_08018e14(void);
+void CutsceneActorScript52(void);
 
 /* src/player_19000.c */
-void sub_08019000(void);
+void CutsceneActorScript55(void);
 void sub_08019590(void);
-void sub_080195ec(void);
-void sub_08019b30(void);
-void sub_08019c44(void);
-void sub_08019d30(void);
-void sub_08019e48(void);
+void CutsceneActorScript57(void);
+void CutsceneActorScript58(void);
+void CutsceneActorScript59(void);
+void CutsceneActorScript60(void);
+void CutsceneActorScript61(void);
 void sub_08019ecc(void);
 
 /* src/player_19eec.c */
-void sub_08019eec(void);
+void CutsceneActorScript62(void);
 
 /* src/player_1a07c.c */
-void sub_0801a07c(void);
+void CutsceneActorScript56(void);
 void sub_0801a1ec(void);
 void sub_0801a310(void);
 

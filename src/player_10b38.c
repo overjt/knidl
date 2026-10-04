@@ -34,7 +34,7 @@ void sub_08010b38(void)
    Task.unk46 here.  Real prototype: s16 CreateCutsceneActor(s32 a, s32 b).
    Aliased locally so this file can compile against the shared header. */
 
-void sub_08010bac(void)
+void CutsceneActorScript2(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -57,7 +57,7 @@ void sub_08010bac(void)
     TaskExitTrampoline();
 }
 
-void sub_08010cb4(void)
+void CutsceneActorScript3(void)
 {
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -547,7 +547,7 @@ void CutsceneBeachMeatDream(void)
     TaskSleepForever();
 }
 
-s32 sub_08011880(void)
+s32 CutsceneBeachActorScript10(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1476,7 +1476,7 @@ void CutsceneBombThrownBomb(void)
     TaskSleepForever();
 }
 
-void sub_08012df8(void)
+void CutsceneBombActorScript18(void)
 {
     struct Task **c;
     s32 i;
@@ -1501,7 +1501,7 @@ void sub_08012df8(void)
     TaskSleepForever();
 }
 
-void sub_08012e6c(void)
+void CutsceneBombActorScript19(void)
 {
     gCurTask->moveCallback = (u32)sub_08012fe0;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1598,7 +1598,7 @@ void sub_08012fe0(void)
     t->pixelY = (y >> 16) + (u16)tt2->pixelY;
 }
 
-void sub_08013058(void)
+void CutsceneBombActorScript20(void)
 {
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -1747,7 +1747,7 @@ void sub_08013058(void)
     TaskSleepForever();
 }
 
-void sub_08013348(void)
+void CutsceneBombActorScript21(void)
 {
     struct Task *t;
     struct Task *tb;
@@ -2296,7 +2296,7 @@ void CutsceneBalloonsLastBalloon(void)
     TaskSleepForever();
 }
 
-void sub_08014184(void)
+void CutsceneBalloonsActorScript27(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2333,7 +2333,7 @@ void sub_08014184(void)
     TaskSleepForever();
 }
 
-void sub_080142a0(void)
+void CutsceneBalloonsActorScript28(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2370,7 +2370,7 @@ void sub_080142a0(void)
     TaskSleepForever();
 }
 
-void sub_080143b4(void)
+void CutsceneBalloonsActorScript29(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -2707,7 +2707,7 @@ void CutsceneTomatoMaximTomato(void)
     TaskSleepForever();
 }
 
-void sub_08014c08(void)
+void CutsceneTomatoActorScript32(void)
 {
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3478,7 +3478,7 @@ void CutsceneSingingKirby(void)
     TaskSleepForever();
 }
 
-void sub_08015f18(void)
+void CutsceneSingingActorScript40(void)
 {
     struct Task *t;
     u16 v;
@@ -3629,7 +3629,7 @@ void CutsceneSingingRainbowBar(void)
     TaskSleepForever();
 }
 
-void sub_080162a0(void)
+void CutsceneSingingActorScript42(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = 0;
@@ -3683,7 +3683,7 @@ void sub_080162a0(void)
     TaskExitTrampoline();
 }
 
-void sub_08016514(void)
+void CutsceneSingingActorScript43(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3806,7 +3806,7 @@ void sub_08016514(void)
     TaskSleepForever();
 }
 
-void sub_080167dc(void)
+void CutsceneSingingActorScript44(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -3937,7 +3937,7 @@ void sub_080167dc(void)
     TaskSleepForever();
 }
 
-void sub_08016ac4(void)
+void CutsceneSingingActorScript45(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4071,7 +4071,7 @@ void sub_08016ac4(void)
     TaskSleepForever();
 }
 
-void sub_08016dd4(void)
+void CutsceneSingingActorScript46(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4211,7 +4211,7 @@ void sub_08016dd4(void)
     TaskSleepForever();
 }
 
-void sub_080170e4(void)
+void CutsceneSingingActorScript47(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4353,7 +4353,7 @@ void sub_080170e4(void)
     TaskSleepForever();
 }
 
-void sub_080173f4(void)
+void CutsceneSingingActorScript48(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
@@ -4413,7 +4413,7 @@ void sub_080173f4(void)
     TaskSleepForever();
 }
 
-void sub_0801757c(void)
+void CutsceneSingingActorScript49(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;

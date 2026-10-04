@@ -2495,7 +2495,7 @@ u32 gUnk_0874C650[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C67C.  Consumers: sub_08054de8 (src/effect_54a80.c:163),
- * sub_08010cb4 (src/player_10b38.c:65).  30 words, OAM template streams;
+ * CutsceneActorScript3 (src/player_10b38.c:65).  30 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C67C-0x0874C6F4).  Declared include/effect.h:76. */
 u32 gUnk_0874C67C[] FRAME_TABLE = {
@@ -2813,7 +2813,7 @@ u32 gUnk_0874C980[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C9D8.  Consumers: ActorDefeatFrozenState2 (src/actor_6a344.c:459),
- * sub_0806ac6c (src/actor_6a344.c:634), ActorDefeatAbilityStar
+ * ActorDefeat4 (src/actor_6a344.c:634), ActorDefeatAbilityStar
  * (src/actor_6a344.c:650) and 5 more.  17 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C9D8-0x0874CA1C).  Declared include/actor.h:277. */
@@ -2838,7 +2838,7 @@ u32 gUnk_0874C9D8[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CA1C.  Consumers: PlayExplosionAnim (src/actor_6d22c.c:273),
- * PlayerEffectMetaKnightDeathBlast (src/effect_54a80.c:146), sub_08012df8
+ * PlayerEffectMetaKnightDeathBlast (src/effect_54a80.c:146), CutsceneBombActorScript18
  * (src/player_10b38.c:1488).  23 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874CA1C-0x0874CA78).  Declared include/actor.h:278. */
@@ -3300,7 +3300,7 @@ u32 gUnk_0874CE68[] FRAME_TABLE = {
     (u32)gUnk_080DB790,
 };
 
-/* gUnk_0874CE90.  Consumer: sub_0801a07c (src/player_1a07c.c:24).  22
+/* gUnk_0874CE90.  Consumer: CutsceneActorScript56 (src/player_1a07c.c:24).  22
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0874CE90-0x0874CEE8).  Declared
  * include/player.h:330. */
@@ -8376,7 +8376,7 @@ u32 gUnk_08751BF4[] FRAME_TABLE = {
 };
 
 /* gUnk_08751C44.  Consumers: sub_08053b40 (src/effect_53af4.c:71),
- * sub_08010834 (src/player_10358.c:253).  12 words, struct TaskGfx records;
+ * CutsceneActorScript1 (src/player_10358.c:253).  12 words, struct TaskGfx records;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08751C44-0x08751C74).  Declared include/effect.h:89. */
 u32 gUnk_08751C44[] FRAME_TABLE = {
@@ -8448,7 +8448,7 @@ u32 gUnk_08751CBC[] FRAME_TABLE = {
 
 /* gUnk_08751CEC.  Consumers: PlayerEffectAbilityGetSparkle
  * (src/effect_53af4.c:173), PlayerEffectSwordSparkle
- * (src/effect_56dd4.c:226), sub_08010bac (src/player_10b38.c:42).  1 word,
+ * (src/effect_56dd4.c:226), CutsceneActorScript2 (src/player_10b38.c:42).  1 word,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x08751CEC-0x08751CF0).  Declared
  * include/effect.h:92. */
@@ -8574,7 +8574,7 @@ u32 gUnk_08751DD0[] FRAME_TABLE = {
 };
 
 /* gUnk_08751E00.  Consumers: sub_08058720 (src/effect_57ce0.c:439),
- * sub_08014184 (src/player_10b38.c:2304), sub_080142a0
+ * CutsceneBalloonsActorScript27 (src/player_10b38.c:2304), CutsceneBalloonsActorScript28
  * (src/player_10b38.c:2341) and 1 more.  23 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08751E00-0x08751E5C).  Declared include/effect.h:100. */
@@ -12124,7 +12124,7 @@ u32 gUnk_08754504[] FRAME_TABLE = {
     (u32)gUnk_082FEF9C,
 };
 
-/* gUnk_08754560.  Consumers: sub_08073f18 (src/actor_72d8c.c:1062),
+/* gUnk_08754560.  Consumers: WarpStarFlight23 (src/actor_72d8c.c:1062),
  * sub_080b0b04 (src/enemy_ae3bc.c:2311).  2 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754560-0x08754568).  Declared include/enemy.h:1271. */
@@ -12907,7 +12907,7 @@ u32 gUnk_08754C90[] FRAME_TABLE = {
 };
 
 /* gUnk_08754D60.  Consumers: CutsceneTomatoKirby (src/player_10b38.c:2422),
- * CutsceneTomatoMaximTomato (src/player_10b38.c:2618), sub_08014c08
+ * CutsceneTomatoMaximTomato (src/player_10b38.c:2618), CutsceneTomatoActorScript32
  * (src/player_10b38.c:2715) and 1 more.  71 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754D60-0x08754E7C).  Declared include/cutscene.h:126. */
@@ -13054,7 +13054,7 @@ u32 gUnk_08754E7C[] FRAME_TABLE = {
 
 /* gUnk_08754F68.  Consumers: CutsceneSingingKirby
  * (src/player_10b38.c:3163), CutsceneSingingRainbowBar
- * (src/player_10b38.c:3541), sub_08016514 (src/player_10b38.c:3691) and 6
+ * (src/player_10b38.c:3541), CutsceneSingingActorScript43 (src/player_10b38.c:3691) and 6
  * more.  64 words, OAM template streams; extent: the span to the next
  * label, every word such a target (pointer_tables 0x08754F68-0x08755068).
  * Declared include/cutscene.h:128. */
@@ -13125,7 +13125,7 @@ u32 gUnk_08754F68[] FRAME_TABLE = {
     (u32)gUnk_085CC2F0,
 };
 
-/* gUnk_08755068.  Consumer: sub_08017668 (src/player_17668.c:18).  196
+/* gUnk_08755068.  Consumer: CutsceneActorScript50 (src/player_17668.c:18).  196
  * words, the player's struct TaskGfx records (tagged 20-byte variant);
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08755068-0x08755378).  Declared include/player.h:345. */
@@ -13328,7 +13328,7 @@ u32 gUnk_08755068[] FRAME_TABLE = {
     (u32)&gUnk_087669C4,
 };
 
-/* gUnk_08755378.  Consumer: sub_08018498 (src/player_17668.c:623).  25
+/* gUnk_08755378.  Consumer: CutsceneActorScript51 (src/player_17668.c:623).  25
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08755378-0x087553DC).  Declared
  * include/player.h:346. */
@@ -13360,7 +13360,7 @@ u32 gUnk_08755378[] FRAME_TABLE = {
     (u32)&gUnk_085DFA7C,
 };
 
-/* gUnk_087553DC.  Consumer: sub_08019000 (src/player_19000.c:24).  8 words,
+/* gUnk_087553DC.  Consumer: CutsceneActorScript55 (src/player_19000.c:24).  8 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x087553DC-0x087553FC).  Declared
  * include/player.h:347. */
@@ -13375,7 +13375,7 @@ u32 gUnk_087553DC[] FRAME_TABLE = {
     (u32)gUnk_082FDF00,
 };
 
-/* gUnk_087553FC.  Consumer: sub_080195ec (src/player_19000.c:271).  17
+/* gUnk_087553FC.  Consumer: CutsceneActorScript57 (src/player_19000.c:271).  17
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087553FC-0x08755440).  Declared
  * include/player.h:348. */
@@ -13399,7 +13399,7 @@ u32 gUnk_087553FC[] FRAME_TABLE = {
     (u32)&gUnk_085E0050,
 };
 
-/* gUnk_08755440.  Consumers: sub_08019b30 (src/player_19000.c:488) and
+/* gUnk_08755440.  Consumers: CutsceneActorScript58 (src/player_19000.c:488) and
  * sub_080ca71c (src/ending_c9004.c:932) install it as Task.frameTable and
  * set frames 0-10 (src/player_19000.c:496-520, src/ending_c9004.c:938-952;
  * 0xFFFF hides the sprite).  11 words, all NULL; extent: that index bound,
@@ -13425,7 +13425,7 @@ u32 gUnk_08755440[] FRAME_TABLE = {
 };
 
 /* gUnk_0875546C.  Consumers: sub_080ca830 (src/ending_c9004.c:978),
- * sub_08019c44 (src/player_19000.c:533), sub_0801a3e4
+ * CutsceneActorScript59 (src/player_19000.c:533), sub_0801a3e4
  * (src/player_1a3e4.c:96).  6 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables
  * 0x0875546C-0x08755484).  Declared include/player.h:350. */
@@ -13439,7 +13439,7 @@ u32 gUnk_0875546C[] FRAME_TABLE = {
 };
 
 /* gUnk_08755484.  Consumers: sub_080ca8f0 (src/ending_c9004.c:1010),
- * sub_08019d30 (src/player_19000.c:573), sub_0801a3e4
+ * CutsceneActorScript60 (src/player_19000.c:573), sub_0801a3e4
  * (src/player_1a3e4.c:120).  6 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755484-0x0875549C).  Declared include/player.h:351. */

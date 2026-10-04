@@ -10,7 +10,7 @@
 s32 PlaySfx(s32 id);
 void RequestScreenShake(s32 a);
 
-void sub_08017668(void)
+void CutsceneActorScript50(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)sub_0801a1ec;
@@ -615,7 +615,7 @@ done:
     SetBgmVolume((u16)gCurTask->cutsceneActorBgmVolume);
 }
 
-void sub_08018498(void)
+void CutsceneActorScript51(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)sub_0801a310;
