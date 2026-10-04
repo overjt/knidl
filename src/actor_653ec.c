@@ -300,7 +300,7 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
 
     if (idx > 2)
         return;
-    if (gUnk_02007FB8[idx] == 0)
+    if (gPaletteAnimRefCounts[idx] == 0)
     {
         i = CreateChildTaskHere(174, 1);
         if (i != -1)
@@ -312,7 +312,7 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
             gPaletteAnimTasks[idx] = i;
         }
     }
-    gUnk_02007FB8[idx]++;
+    gPaletteAnimRefCounts[idx]++;
 }
 
 void Task_PaletteAnim(void)
@@ -335,7 +335,7 @@ void sub_080658d8(void)
     gCurTask->unk2C = 2;
     gCurTask->unk30 = 3;
     gCurTask->unk34 = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         u = gCurTask;
         u->unk28--;
@@ -383,7 +383,7 @@ void sub_080659b4(void)
     a = t->u8C.actor;
     t->unk18 = 10;
     t->unk1C = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0 && a->paletteVariant <= 3)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0 && a->paletteVariant <= 3)
     {
         u = gCurTask;
         if (u->unk18 <= 0)
@@ -418,7 +418,7 @@ void sub_08065a68(void)
     t->unk1C = 0;
     off = (t->tileWord >> 12) << 5;
     off += 26;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         u = gCurTask;
         if (u->unk18 <= 0)
@@ -457,7 +457,7 @@ void sub_08065b14(void)
     t->unk2C = 1;
     t->unk30 = 2;
     t->unk34 = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         u = gCurTask;
         u->unk28--;
@@ -500,7 +500,7 @@ void PaletteAnimBgBlend(void)
     struct Task *u;
 
     gCurTask->unk20 = 0;
-    while (gUnk_02007FB8[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
     {
         t = gCurTask;
         switch (t->unk1C)

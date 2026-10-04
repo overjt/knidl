@@ -984,7 +984,7 @@ s32 NightmareWizardReactToDamage(void)
 s32 NightmareWizardReactToDefeat(void)
 {
     TaskStop();
-    gUnk_02007FB8[0] = 0;
+    gPaletteAnimRefCounts[0] = 0;
     gCurTask->facing = TaskGetFacingToward(gCurTask->hitterPlayer);
     ActorSetHitReactions((u32)gUnk_08749B60);
     gUnk_02007D00[0] |= 2;
@@ -1005,7 +1005,7 @@ s32 NightmareWizardReactToDefeat(void)
 
 void NightmareWizardDefeat(void)
 {
-    gUnk_02007FB8[0] = 0;
+    gPaletteAnimRefCounts[0] = 0;
     gCurTask->drawCallback = (u32)sub_080a9ed8;
     gCurTask->updateCallback = (u32)sub_080abcb4;
     gCurTask->frameTable = gNightmareWizardFrames;

@@ -94,7 +94,7 @@ extern u32 gUnk_02020000[]; /* decompression buffer */
 
 /* IWRAM */
 extern u16 gUnk_03001490[];
-extern u8 gUnk_030023B0;
+extern u8 gCreditsDemoSet;
 
 /* ROM */
 extern u8 gUnk_080D07C8[];

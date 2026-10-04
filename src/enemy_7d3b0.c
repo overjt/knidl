@@ -1447,7 +1447,7 @@ void sub_0807ef7c(void)
 
 void sub_0807efec(void)
 {
-    gUnk_02007FB8[0]--;
+    gPaletteAnimRefCounts[0]--;
 }
 
 void Task_Kabu(void)

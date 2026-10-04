@@ -16,15 +16,15 @@
  * AgbMain state 12, part 1: the staff credits (skipped in link play and
  * after AgbMain state 20).  The credits text scrolls up BG0 over a run of
  * recorded demos of the game, one per scene.
- *   CreditsMain   the sequence: per scene of gUnk_087583CC[n] (n by
- *       gExtraMode), load the recorded input (gUnk_0200EC50,
+ *   CreditsMain   the sequence: per scene of gCreditsDemoRecordings[n] (n by
+ *       gExtraMode), load the recorded input (gInputRecorderDemo,
  *       InputRecorderStart) and the room (CreditsLoadScene), fade in, play it for
- *       gUnk_0875841E[n][scene] frames and fade out; then fade the music and
+ *       gCreditsDemoLengths[n][scene] frames and fade out; then fade the music and
  *       the screen and put back the player's score the demos overwrote.
  *   CreditsLoadScene   load a scene's room and reset the per-scene state (a twin
  *       of M02's HubInit).
  *   CreditsInitText / CreditsStreamText / CreditsScrollText   the text layer: load it,
- *       stream the 14 compressed pages gUnk_087583B4[] into the two BG0 map
+ *       stream the 14 compressed pages gCreditsTextPages[] into the two BG0 map
  *       halves, and scroll BG0 from the per-frame callback gVBlankEndCallback. */
 
 /* Not from main.h: this file's view of gBgPalette differs (lesson 3.517). */
@@ -54,8 +54,8 @@ void LoadGfxSet(u16 a0);                                   /* load screen graphi
 
 /* AgbMain state 12, part 1: the staff credits.  The credits text scrolls up
    BG0 (CreditsInitText, CreditsStreamText) over a run of recorded demos, one per
-   scene of gUnk_087583CC[n] (n = 2 when gExtraMode is 1, else 1), each
-   faded in, played for its length gUnk_0875841E[n][scene] and faded out;
+   scene of gCreditsDemoRecordings[n] (n = 2 when gExtraMode is 1, else 1), each
+   faded in, played for its length gCreditsDemoLengths[n][scene] and faded out;
    then the music and the screen fade out and the player's score, which the
    demos overwrite, is put back. */
 void CreditsMain(void)
@@ -72,12 +72,12 @@ void CreditsMain(void)
     gUnk_0201C1A4 = gPlayerScores[gEndingLocalPlayer];
     gLocalPlayer = 0;
     if (gExtraMode == 1)
-        gUnk_030023B0 = 2;
+        gCreditsDemoSet = 2;
     else
-        gUnk_030023B0 = 1;
+        gCreditsDemoSet = 1;
     gUnk_0201C1B0 = 0;
-    scenes = gUnk_087583CC[gUnk_030023B0];
-    frames = gUnk_0875841E[gUnk_030023B0];
+    scenes = gCreditsDemoRecordings[gCreditsDemoSet];
+    frames = gCreditsDemoLengths[gCreditsDemoSet];
     CreditsInitText();
     ResetScoresAndMaxHealth();
     ResetPlayerRecords();
@@ -87,7 +87,7 @@ void CreditsMain(void)
     gDispCnt &= ~0x80;
     PlayBgm(20);
     for (;;) {
-        gUnk_0200EC50 = scenes[gUnk_0201C1B0];
+        gInputRecorderDemo = scenes[gUnk_0201C1B0];
         InputRecorderStart();
         gSavedPlayerAbilities[gLocalPlayer] = 0;
         gSavedPlayerAbilityUses[gLocalPlayer] = 0xFFFF;
@@ -170,7 +170,7 @@ void CreditsLoadScene(void)
     ClearColliderLists();
     LoadBgLayout(17);
     LoadCreditsRoom();
-    b = gUnk_02007FB8;
+    b = gPaletteAnimRefCounts;
     zero = 0;
     p = b + 2;
     do {
@@ -210,7 +210,7 @@ void CreditsStreamText(void)
 
     if (gCreditsTextPageStaged == 0) {
         if (gCreditsTextPage < 14) {
-            LZ77UnCompWram(gUnk_087583B4[gCreditsTextPage], gHudTilemap);
+            LZ77UnCompWram(gCreditsTextPages[gCreditsTextPage], gHudTilemap);
         } else {
             zero = 0;
             CpuSet(&zero, gHudTilemap, 0x01000400);

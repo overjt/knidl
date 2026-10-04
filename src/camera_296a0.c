@@ -16,7 +16,7 @@
  * the 16.16 BG scroll shadows and the sprite camera
  * gSpriteCameraX/gSpriteCameraY from the camera plus the screen-shake offset
  * gScreenShake (BG3 follows gBg3Pos, at half the shake unless
- * gUnk_02000000 is set).  SpawnRoomObjectsScrolledIn calls SpawnRoomObjectsInRect for every edge of
+ * gRoomBg3FullShake is set).  SpawnRoomObjectsScrolledIn calls SpawnRoomObjectsInRect for every edge of
  * the visible rectangle gViewRect that moved past the previous one,
  * gObjectSpawnViewRect, while gRoomObjectList is set, then remembers it. */
 
@@ -162,7 +162,7 @@ void CameraWriteScrollParallax(void)
 {
     gBg2ScrollX = (gCameraPos[0] + gScreenShake.unk2) << 16;
     gBg2ScrollY = (gCameraPos[1] + gScreenShake.unk4) << 16;
-    if (gUnk_02000000 != 0)
+    if (gRoomBg3FullShake != 0)
     {
         gBg3ScrollX = (gBg3Pos[0] + gScreenShake.unk2) << 16;
         gBg3ScrollY = (gBg3Pos[1] + gScreenShake.unk4) << 16;
@@ -182,7 +182,7 @@ void CameraWriteScrollHBlank(void)
     gBg3ScrollY = (gBg3Pos[1] + gScreenShake.unk4) << 16;
     gSpriteCameraX = gCameraPos[0] + gScreenShake.unk2;
     gSpriteCameraY = gCameraPos[1] + gScreenShake.unk4;
-    gUnk_02016C30 = gCameraPos[0];
+    gHBlankScrollBaseX = gCameraPos[0];
 }
 
 void CameraWriteScrollBg23(void)

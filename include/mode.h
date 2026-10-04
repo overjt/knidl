@@ -14,7 +14,7 @@ struct M38LogoObj
 {
     /*0x00*/ s16 *scriptPos;    /* script cursor */
     /*0x04*/ s16 scriptId;     /* script id, -1 = off */
-    /*0x06*/ s16 spriteId;     /* sprite id (gUnk_087554B8), -1 = none */
+    /*0x06*/ s16 spriteId;     /* sprite id (gBootLogoSprites), -1 = none */
     /*0x08*/ s16 layer;     /* layer */
     /*0x0A*/ s16 sleepFrames;     /* frames to wait */
     /*0x0C*/ s32 posX;     /* x << 8 */

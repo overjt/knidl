@@ -11,8 +11,8 @@
 @ data segment defines as a real label: RAM and I/O cells, referenced
 @ symbolically from split literal pools and pointer tables (a ROM
 @ address here is a table still waiting for its label, docs/data.md):
-	.global	gUnk_02000000
-gUnk_02000000 = 0x02000000
+	.global	gRoomBg3FullShake
+gRoomBg3FullShake = 0x02000000
 	.global	gLinkSessionMode
 gLinkSessionMode = 0x02000004
 	.global	gNextActorSerial
@@ -101,8 +101,8 @@ gUnk_02005590 = 0x02005590
 gBg3MapShape = 0x020055B0
 	.global	gBlockAnimClipRect
 gBlockAnimClipRect = 0x020055B8
-	.global	gUnk_020055C0
-gUnk_020055C0 = 0x020055C0
+	.global	gWarpStarRideSlot
+gWarpStarRideSlot = 0x020055C0
 	.global	gUnk_020055C4
 gUnk_020055C4 = 0x020055C4
 	.global	gRoomBgmStarted
@@ -215,8 +215,8 @@ gUnk_02006A14 = 0x02006A14
 gDoorObjectTasks = 0x02006A20
 	.global	gUnk_02006A80
 gUnk_02006A80 = 0x02006A80
-	.global	gUnk_02006AA0
-gUnk_02006AA0 = 0x02006AA0
+	.global	gHubRoomMapBuffer
+gHubRoomMapBuffer = 0x02006AA0
 	.global	gGameOverDone
 gGameOverDone = 0x02007BE0
 	.global	gUsedRoomObjects
@@ -273,8 +273,8 @@ gSavedPlayerAbilityUses = 0x02007FA8
 gStageExitFlags = 0x02007FB0
 	.global	gBigSwitchReturnStage
 gBigSwitchReturnStage = 0x02007FB4
-	.global	gUnk_02007FB8
-gUnk_02007FB8 = 0x02007FB8
+	.global	gPaletteAnimRefCounts
+gPaletteAnimRefCounts = 0x02007FB8
 	.global	gHudHpBarValues
 gHudHpBarValues = 0x02007FBC
 	.global	gCutscenePending
@@ -325,8 +325,8 @@ gUnk_0200AEF4 = 0x0200AEF4
 gBlockCursorY = 0x0200AEFC
 	.global	gEntryDoorEvent
 gEntryDoorEvent = 0x0200AF00
-	.global	gUnk_0200AF04
-gUnk_0200AF04 = 0x0200AF04
+	.global	gSkipNextHubBgm
+gSkipNextHubBgm = 0x0200AF04
 	.global	gHubUnlockFlags
 gHubUnlockFlags = 0x0200AF08
 	.global	gUnk_0200AF0C
@@ -417,8 +417,8 @@ gLinkBlockWords = 0x0200EBAC
 gLinkBroadcastAcks = 0x0200EBB0
 	.global	gLinkBlockDst
 gLinkBlockDst = 0x0200EBB4
-	.global	gUnk_0200EBB8
-gUnk_0200EBB8 = 0x0200EBB8
+	.global	gLinkBlockAckCount
+gLinkBlockAckCount = 0x0200EBB8
 	.global	gLinkBlockIndex
 gLinkBlockIndex = 0x0200EBBC
 	.global	gMultiBootStruct
@@ -435,8 +435,8 @@ gLinkBlockChecksum = 0x0200EC44
 gLinkSetupMode = 0x0200EC48
 	.global	gUnk_0200EC4C
 gUnk_0200EC4C = 0x0200EC4C
-	.global	gUnk_0200EC50
-gUnk_0200EC50 = 0x0200EC50
+	.global	gInputRecorderDemo
+gInputRecorderDemo = 0x0200EC50
 	.global	gInputRecorderRunning
 gInputRecorderRunning = 0x0200EC54
 	.global	gInputRecorderMode
@@ -465,8 +465,8 @@ gHBlankScrollTable = 0x020164A0
 gHBlankScrollEffect = 0x02016860
 	.global	gHBlankScrollDmaTable
 gHBlankScrollDmaTable = 0x02016870
-	.global	gUnk_02016C30
-gUnk_02016C30 = 0x02016C30
+	.global	gHBlankScrollBaseX
+gHBlankScrollBaseX = 0x02016C30
 	.global	gAirGrind
 gAirGrind = 0x02016C40
 	.global	gAirGrindPtr
@@ -479,16 +479,16 @@ gAirGrindResults = 0x02017140
 gAirGrindCoursePtr = 0x0201716C
 	.global	gAirGrindFrame
 gAirGrindFrame = 0x02017170
-	.global	gUnk_02017180
-gUnk_02017180 = 0x02017180
-	.global	gUnk_02017980
-gUnk_02017980 = 0x02017980
+	.global	gAirGrindStripOnEvenSegment
+gAirGrindStripOnEvenSegment = 0x02017180
+	.global	gAirGrindCourseToLane
+gAirGrindCourseToLane = 0x02017980
 	.global	gAirGrindSegmentBits
 gAirGrindSegmentBits = 0x02018920
-	.global	gUnk_02019140
-gUnk_02019140 = 0x02019140
-	.global	gUnk_0201A0E0
-gUnk_0201A0E0 = 0x0201A0E0
+	.global	gAirGrindLaneToCourse
+gAirGrindLaneToCourse = 0x02019140
+	.global	gAirGrindStripAddrs
+gAirGrindStripAddrs = 0x0201A0E0
 	.global	gAirGrindCourse
 gAirGrindCourse = 0x0201B0E0
 	.global	gUnk_0201B1F4
@@ -497,12 +497,12 @@ gUnk_0201B1F4 = 0x0201B1F4
 gAirGrindLaneSegmentEnds = 0x0201B200
 	.global	gAirGrindSegmentEnds
 gAirGrindSegmentEnds = 0x0201B690
-	.global	gUnk_0201B7C0
-gUnk_0201B7C0 = 0x0201B7C0
-	.global	gUnk_0201BFC0
-gUnk_0201BFC0 = 0x0201BFC0
-	.global	gUnk_0201BFD0
-gUnk_0201BFD0 = 0x0201BFD0
+	.global	gAirGrindStripHeights
+gAirGrindStripHeights = 0x0201B7C0
+	.global	gAirGrindCoursePhase
+gAirGrindCoursePhase = 0x0201BFC0
+	.global	gBootLogoSavedCursors
+gBootLogoSavedCursors = 0x0201BFD0
 	.global	gCreditsTextPageStaged
 gCreditsTextPageStaged = 0x0201C19C
 	.global	gCreditsTextScrollY
@@ -875,8 +875,8 @@ gHitterColliderClass = 0x030023A4
 gUnk_030023A8 = 0x030023A8
 	.global	gPlayerCount
 gPlayerCount = 0x030023AC
-	.global	gUnk_030023B0
-gUnk_030023B0 = 0x030023B0
+	.global	gCreditsDemoSet
+gCreditsDemoSet = 0x030023B0
 	.global	gUnk_030023B4
 gUnk_030023B4 = 0x030023B4
 	.global	gCurLevel
@@ -985,8 +985,8 @@ gSendCmdFilled = 0x03004D2C
 gLinkPauseFrames = 0x03004D30
 	.global	gUnk_03004D34
 gUnk_03004D34 = 0x03004D34
-	.global	gUnk_03004D38
-gUnk_03004D38 = 0x03004D38
+	.global	gLinkRecvSnapshot
+gLinkRecvSnapshot = 0x03004D38
 	.global	gLastRecvQueueCount
 gLastRecvQueueCount = 0x03004D40
 	.global	gLinkSavedIme

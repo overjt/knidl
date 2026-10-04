@@ -57,7 +57,7 @@ void Task_Player(void)
     {
         gCurTask->updateCallback = 0;
         gCurTask->taskClass = 4;
-        if (gUnk_030023B0 == 0)
+        if (gCreditsDemoSet == 0)
         {
             if (gGameState != 20)
                 sub_080b9610();

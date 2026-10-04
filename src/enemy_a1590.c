@@ -19,7 +19,7 @@ extern u32 gUnk_02004C90;
 extern u32 gUnk_02006040[];
 extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
-extern s8 gUnk_02007FB8[];
+extern s8 gPaletteAnimRefCounts[];
 extern u8 gHudHpBarFilled;
 extern u8 gUnk_0200B030;
 extern struct PlayerState gPlayerStates[];
@@ -425,7 +425,7 @@ void MrShineAndMrBrightFillHpBars(void)
     HudStartHpBar(ta->health * 2, ta->health);
     while (gHudHpBarFilled == 0)
         TaskYieldTrampoline(1);
-    if (gUnk_030023B0 != 0)
+    if (gCreditsDemoSet != 0)
         TaskYieldTrampoline(120);
     ActorSetAttackBoxSlot(gUnk_02007D00[1], (u32)gUnk_0874883C);
     sub_08063a14(gUnk_02007D00[1], (u32)gUnk_08748874);

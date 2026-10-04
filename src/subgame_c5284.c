@@ -15,8 +15,8 @@
  *       the BG palette from gUnk_080D0198, then AirGrindLayOutCourse and a first
  *       render by AirGrindDrawCourse.
  *   AirGrindLayOutCourse   lays the course out: per lane the distance table
- *       gUnk_02017980[lane][500] (the running sum of 0x4000 / (depth + 512),
- *       scaled to 16000) and its inverse gUnk_02019140, then 2n + 1
+ *       gAirGrindCourseToLane[lane][500] (the running sum of 0x4000 / (depth + 512),
+ *       scaled to 16000) and its inverse gAirGrindLaneToCourse, then 2n + 1
  *       alternating segment lengths gAirGrindSegmentEnds[] from the LCG (n from the
  *       level table gUnk_080D075A), the bitmap gAirGrindSegmentBits with a bit per
  *       pixel of the odd segments, and each lane's segment boundaries
@@ -28,8 +28,8 @@
  *       position is on an even segment of the lane (the course record's
  *       unk14), the next boundary after it, and the set/clear bit counts of
  *       gAirGrindSegmentBits over a span (the racers' scores).
- *   sub_080c55d8 / sub_080c5628   linear interpolation in gUnk_02017980 /
- *       gUnk_02019140 at 32-pixel steps.
+ *   sub_080c55d8 / sub_080c5628   linear interpolation in gAirGrindCourseToLane /
+ *       gAirGrindLaneToCourse at 32-pixel steps.
  *   AirGrindDrawCourse   the course renderer (called every frame by player 0's
  *       racer step AirGrindRacerUpdateDepth, src/subgame_c3648.c, and once by
  *       AirGrindBuildCourse): per lane, every course
@@ -37,8 +37,8 @@
  *       (gAirGrindCourse.unk108 -> unk000) gets its BG map column at 0x0600E000
  *       and a vertical strip in its tiles, sized by the depth (gUnk_080D059A)
  *       and shaded by the segment it lies on; the strip's tile address,
- *       height and segment flag go to gUnk_0201A0E0/gUnk_0201B7C0/
- *       gUnk_02017180[lane][256].  Then the lane's racer record is updated
+ *       height and segment flag go to gAirGrindStripAddrs/gAirGrindStripHeights/
+ *       gAirGrindStripOnEvenSegment[lane][256].  Then the lane's racer record is updated
  *       (position, depth, the scroll/scale words gUnk_08757300[lane]/
  *       gUnk_08757310[lane]), the strips of the columns it passed are
  *       brightened, its score counts the segment bits over the passed span
@@ -132,7 +132,7 @@ void AirGrindCalcLanePoint(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
         k = 85;
         break;
     }
-    phase += gUnk_0201BFC0;
+    phase += gAirGrindCoursePhase;
     v = AirGrindSin(phase) * k * amp / 0x100000 - lane * 16;
     off = d + 16;
     *px = v + off;
@@ -185,8 +185,8 @@ s32 sub_080c55d8(s32 lane, s32 x)
 
     if (x < 0)
         x = 0;
-    lo = gUnk_02017980[lane][x / 32];
-    hi = gUnk_02017980[lane][x / 32 + 1];
+    lo = gAirGrindCourseToLane[lane][x / 32];
+    hi = gAirGrindCourseToLane[lane][x / 32 + 1];
     x -= (x / 32) * 32;
     return (hi - lo) * x + lo * 32;
 }
@@ -198,8 +198,8 @@ s32 sub_080c5628(s32 lane, s32 x)
 
     if (x < 0)
         x = 0;
-    lo = gUnk_02019140[lane][x / 32];
-    hi = gUnk_02019140[lane][x / 32 + 1];
+    lo = gAirGrindLaneToCourse[lane][x / 32];
+    hi = gAirGrindLaneToCourse[lane][x / 32 + 1];
     x -= (x / 32) * 32;
     return (hi - lo) * x + lo * 32;
 }
@@ -214,28 +214,28 @@ void AirGrindLayOutCourse(s32 a)
     s32 m;
     s32 v;
 
-    gUnk_0201BFC0 = Random();
+    gAirGrindCoursePhase = Random();
     for (i = 0; i < 4; i++)
     {
         for (j = 0; j < 500; j++)
         {
             AirGrindCalcLanePoint(i, j * 32, &x, &y, &z);
-            gUnk_02017980[i][j] = 0x4000 / (y + 512);
+            gAirGrindCourseToLane[i][j] = 0x4000 / (y + 512);
             if (j > 0)
-                gUnk_02017980[i][j] += gUnk_02017980[i][j - 1];
+                gAirGrindCourseToLane[i][j] += gAirGrindCourseToLane[i][j - 1];
         }
         for (j = 0; j < 500; j++)
-            gUnk_02017980[i][j] = gUnk_02017980[i][j] * 16000 / gUnk_02017980[i][499];
+            gAirGrindCourseToLane[i][j] = gAirGrindCourseToLane[i][j] * 16000 / gAirGrindCourseToLane[i][499];
     }
     for (i = 0; i < 4; i++)
     {
         z = 0;
         for (j = 1; j < 500; j++)
         {
-            while (z * 32 < gUnk_02017980[i][j])
+            while (z * 32 < gAirGrindCourseToLane[i][j])
             {
-                gUnk_02019140[i][z] = (z * 32 - gUnk_02017980[i][j - 1]) * 32
-                    / (gUnk_02017980[i][j] - gUnk_02017980[i][j - 1]) + (j - 1) * 32;
+                gAirGrindLaneToCourse[i][z] = (z * 32 - gAirGrindCourseToLane[i][j - 1]) * 32
+                    / (gAirGrindCourseToLane[i][j] - gAirGrindCourseToLane[i][j - 1]) + (j - 1) * 32;
                 z++;
             }
         }
@@ -457,9 +457,9 @@ void AirGrindDrawCourse(void)
                 addr -= 16;
                 h += 4;
             }
-            gUnk_0201A0E0[lane][col % 256] = addr;
-            gUnk_0201B7C0[lane][col % 256] = h + 1;
-            gUnk_02017180[lane][col % 256] = flag;
+            gAirGrindStripAddrs[lane][col % 256] = addr;
+            gAirGrindStripHeights[lane][col % 256] = h + 1;
+            gAirGrindStripOnEvenSegment[lane][col % 256] = flag;
             s <<= 8;
             step = gUnk_080D0766[h];
             if (addr & 1)
@@ -521,20 +521,20 @@ void AirGrindDrawCourse(void)
                         mark = 1;
                     for (k = a; k < b; k++)
                     {
-                        if (*(u8 *)gUnk_0201A0E0[lane][k % 256] != 0
-                            && (mark == 0 || gUnk_02017180[lane][k % 256] != 0))
+                        if (*(u8 *)gAirGrindStripAddrs[lane][k % 256] != 0
+                            && (mark == 0 || gAirGrindStripOnEvenSegment[lane][k % 256] != 0))
                         {
-                            addr = gUnk_0201A0E0[lane][k % 256];
+                            addr = gAirGrindStripAddrs[lane][k % 256];
                             if (lane != 0)
                                 col = 8;
-                            else if (gUnk_02017180[0][k % 256] != 0)
+                            else if (gAirGrindStripOnEvenSegment[0][k % 256] != 0)
                                 col = 8;
                             else
                                 col = 16;
                             if (addr & 1)
                             {
                                 addr &= ~1;
-                                for (m = 0; m < gUnk_0201B7C0[lane][k % 256]; m++)
+                                for (m = 0; m < gAirGrindStripHeights[lane][k % 256]; m++)
                                 {
                                     *(vu16 *)addr += col << 8;
                                     addr += 8;
@@ -542,7 +542,7 @@ void AirGrindDrawCourse(void)
                             }
                             else
                             {
-                                for (m = 0; m < gUnk_0201B7C0[lane][k % 256]; m++)
+                                for (m = 0; m < gAirGrindStripHeights[lane][k % 256]; m++)
                                 {
                                     *(vu16 *)addr += col;
                                     addr += 8;

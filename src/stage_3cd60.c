@@ -23,7 +23,7 @@ extern struct M11Buf gUnk_02006A80[];
 extern u16 gUnk_02007F60[];
 extern u16 gPlayerBubbleTimers[];
 extern u16 gUnk_03001490[];
-extern u8 gUnk_030023B0;
+extern u8 gCreditsDemoSet;
 extern u8 gTerrainResult[];
 extern u16 gPlayerPalettes[][16];
 extern u32 gUnk_080DC728[];
@@ -775,7 +775,7 @@ void sub_0803db74(void)
     if ((u16)(u->frame - 3821) <= 128 || (u16)(u->frame - 4525) <= 5) {
         ps2 = u->player;
         if ((ps2->unk42 & 16) == 0) {
-            if (gUnk_030023B0 == 0)
+            if (gCreditsDemoSet == 0)
                 RequestCopy(2, (u32)&gUnk_080DCA28[ps2->playerIndex * 32],
                              (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
             else
@@ -840,7 +840,7 @@ void sub_0803ddc0(void)
     pal = PlayerLoadFrameTilesAndPalette(speed);
     if (gMetaKnightmareMode == 0)
     {
-        if (gUnk_030023B0 == 0)
+        if (gCreditsDemoSet == 0)
         {
             if (gPlayerCount > 1)
                 sub_0803d7c4();

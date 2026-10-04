@@ -373,7 +373,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
     e->posY = e->pixelY << 16;
     e->taskClass = 4;
     e->parent = b;
-    gUnk_020055C0 = b;
+    gWarpStarRideSlot = b;
     if (gUnk_0300244C != 0)
     {
         if (gMetaKnightmareMode == 0)
@@ -449,7 +449,7 @@ void MetaKnightWarpStarRideInit(void)
                  (u16 *)(OBJ_VRAM0 + ((gCurTask->tileWord & 0xFFF) << 5)),
                  gUnk_0824A9E4.unk02 << 5);
     v = gCurTask;
-    v->parent = gUnk_020055C0;
+    v->parent = gWarpStarRideSlot;
     if (gTasks[i = v->parent].unk74 == 0)
         gCurTask->facing = gUnk_0873FAE8[sub_08025e88(i)];
     else

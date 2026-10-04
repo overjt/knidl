@@ -89,7 +89,7 @@ void HudShowHpBar(void)
 
 void HudStartHpBar(s32 max, s32 cur)
 {
-    if (gUnk_030023B0 != 0) {
+    if (gCreditsDemoSet != 0) {
         gHudHpBarMaxHp = max;
         gHudHpBarLength = 32;
         gHudHpBarValues[0] = 32;
@@ -121,7 +121,7 @@ void HudStartTaskHpBar(s32 max, s32 cur)
         idx = 0;
     else
         idx = gUnk_02005590[gCurTaskIdx - 32];
-    if (gUnk_030023B0 != 0) {
+    if (gCreditsDemoSet != 0) {
         if (gHudHpBarMaxHp == 0) {
             gHudHpBarMaxHp = max;
             gHudHpBarLength = 32;

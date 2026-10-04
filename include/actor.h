@@ -59,7 +59,7 @@ struct ActorVt
 /* EWRAM */
 extern u16 gNextActorSerial;
 extern u32 gUnk_02004C90;
-extern u16 gUnk_020055C0;
+extern u16 gWarpStarRideSlot;
 extern s32 gUnk_02006040[];
 extern s8 gCannonFuseState;
 extern u8 gScreenAttackActive;
@@ -68,7 +68,7 @@ extern s8 gPaletteAnimTasks[];
 extern u8 gUnk_02007CF4[];
 extern s32 gUnk_02007D00[];
 extern u32 gUnk_02007F50;
-extern s8 gUnk_02007FB8[];
+extern s8 gPaletteAnimRefCounts[];
 extern u32 gUnk_0200AEF4;
 extern u8 gHudHpBarFilled;
 extern u8 gUnk_0200B030;

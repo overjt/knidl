@@ -13467,11 +13467,11 @@ u32 gUnk_0875549C[] FRAME_TABLE = {
     (u32)gUnk_085E75F0,
 };
 
-/* gUnk_087554B8.  Consumer: BootLogoUpdateObjects (src/boot_caab8.c:129).
+/* gBootLogoSprites.  Consumer: BootLogoUpdateObjects (src/boot_caab8.c:129).
  * 63 words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087554B8-0x087555B4).  Declared
  * include/ending.h:65. */
-u32 gUnk_087554B8[] FRAME_TABLE = {
+u32 gBootLogoSprites[] FRAME_TABLE = {
     (u32)gUnk_08541AA0,
     (u32)gUnk_08541AA8,
     (u32)gUnk_08541AB0,

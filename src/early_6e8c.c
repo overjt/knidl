@@ -23,7 +23,7 @@
  *                 handshake (state 2).            [src/early_6d28.c]
  *   StartTransfer  re-arm the SIOCNT start bit.
  *   DoRecv  per-frame receive step: copies the four SIOMULTI words to
- *                 gUnk_03004D38 and folds them into the per-player buffer.
+ *                 gLinkRecvSnapshot and folds them into the per-player buffer.
  *                                                 [src/early_6e9c.c]
  *   DoSend  send step: pushes the next ring slot into SIOMLT_SEND.
  *   StopTimer  stop the link timeout timer (TM3).

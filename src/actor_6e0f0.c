@@ -34,7 +34,7 @@
 
 /* RAM cells */
 /* Not from actor.h: this file's view of gUnk_0873E5F8 differs (lesson 3.517). */
-extern u16 gUnk_020055C0;
+extern u16 gWarpStarRideSlot;
 
 /* ROM tables */
 extern s16 gUnk_0873E5F8[][2];
@@ -672,7 +672,7 @@ void PlayerWarpStarRideInit(void)
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;
     u->player->unk42 &= 0xFFEF;
-    u->parent = gUnk_020055C0;
+    u->parent = gWarpStarRideSlot;
     if (gTasks[u->parent].unk74 == 0)
         gCurTask->facing = gUnk_0873FAE8[sub_08025e88(u->parent)];
     else

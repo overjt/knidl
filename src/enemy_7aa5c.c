@@ -1318,7 +1318,7 @@ void Task_UFO(void)
 
 void sub_0807c484(void)
 {
-    if (--gUnk_02007FB8[0] < 0)
+    if (--gPaletteAnimRefCounts[0] < 0)
         sub_0806ee2c();
 }
 

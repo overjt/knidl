@@ -57,8 +57,8 @@ void sub_0800b44c(void)
     gPlayerCount = 1;
     gMetaKnightmareMode = 0;
     gInputRecorderMode = 0;
-    gUnk_030023B0 = 0;
-    gUnk_0200EC50 = 0;
+    gCreditsDemoSet = 0;
+    gInputRecorderDemo = 0;
 }
 
 void ResetScoresAndMaxHealth(void)
@@ -165,7 +165,7 @@ void StageInit(void)
     q2 = &gBoardedWarpStarSlot;
     q3 = &gCannonFuseState;
     q4 = &gUnk_020060CC;
-    b = gUnk_02007FB8;
+    b = gPaletteAnimRefCounts;
     zero = 0;
     p = b + 2;
     do {
@@ -214,7 +214,7 @@ void HubInit(void)
     LoadGfxSet(0);
     sub_08008c7c();
     LoadHubRoom();
-    b = gUnk_02007FB8;
+    b = gPaletteAnimRefCounts;
     zero = 0;
     p = b + 2;
     do {
@@ -245,7 +245,7 @@ void BigSwitchViewInit(void)
     LoadBigSwitchViewRoom();
     /* A reversed clear loop only strength-reduces as a do/while over a
      * signed pointer compare with a zero variable (lesson 3.30). */
-    b = gUnk_02007FB8;
+    b = gPaletteAnimRefCounts;
     zero = 0;
     p = b + 2;
     do {

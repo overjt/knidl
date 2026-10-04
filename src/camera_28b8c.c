@@ -282,7 +282,7 @@ void PlayRoomBgm(void)
 
 void sub_08029194(void)
 {
-    if (gUnk_0200AF04 == 0)
+    if (gSkipNextHubBgm == 0)
     {
         if (gCurRoomDef->bgm == -1)
             StopBgm();
@@ -291,7 +291,7 @@ void sub_08029194(void)
     }
     else
     {
-        gUnk_0200AF04 = 0;
+        gSkipNextHubBgm = 0;
     }
 }
 

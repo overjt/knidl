@@ -145,7 +145,7 @@ struct Unk03005680
 };
 
 /* EWRAM */
-extern s8 gUnk_02000000;
+extern s8 gRoomBg3FullShake;
 extern u16 gHubUnlockSource;
 extern u8 gUnk_02000020;
 extern u16 gFoundDoor;
@@ -175,7 +175,7 @@ extern u8 gRoomEntrySet;
 extern struct Unk020061F0 gBreakingBlocks[];
 extern u8 gRoomEntryMode;
 extern s8 gDoorObjectTasks[][3];
-extern struct MapCell gUnk_02006AA0[];
+extern struct MapCell gHubRoomMapBuffer[];
 extern u32 gUsedRoomObjects[8][8];
 extern u8 gRoomExitKind;
 extern u8 gCameraFocusPlayer;
@@ -200,7 +200,7 @@ extern u16 gUnk_02008060[];
 extern u16 gBlockLayer[]; /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern s16 gRoomEntryY;
 extern u8 gEntryDoorEvent;
-extern u8 gUnk_0200AF04;
+extern u8 gSkipNextHubBgm;
 extern u8 gHubUnlockFlags;
 extern s16 gUnk_0200AF0C;
 extern u16 gPlayerAbilityUses[];

@@ -188,17 +188,17 @@ extern struct M37Timer gAirGrindPaletteFades[4];
 extern struct M37Results gAirGrindResults;
 extern struct M37Course *gAirGrindCoursePtr;
 extern u16 gAirGrindFrame;
-extern s16 gUnk_02017180[4][256];
-extern s16 gUnk_02017980[4][500];
+extern s16 gAirGrindStripOnEvenSegment[4][256];
+extern s16 gAirGrindCourseToLane[4][500];
 extern u32 gAirGrindSegmentBits[];
-extern s16 gUnk_02019140[4][500];
-extern u32 gUnk_0201A0E0[4][256];
+extern s16 gAirGrindLaneToCourse[4][500];
+extern u32 gAirGrindStripAddrs[4][256];
 extern struct M37Course gAirGrindCourse;
 extern s16 gUnk_0201B1F4;
 extern s32 gAirGrindLaneSegmentEnds[4][73];
 extern s32 gAirGrindSegmentEnds[];
-extern s16 gUnk_0201B7C0[4][256];
-extern s32 gUnk_0201BFC0;
+extern s16 gAirGrindStripHeights[4][256];
+extern s32 gAirGrindCoursePhase;
 
 /* IWRAM */
 extern u16 gUnk_03001510[];

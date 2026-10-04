@@ -3,10 +3,10 @@
 
 /* level_27a6c.c (0x08027A6C-0x08027E27, issue #93).
  *
- * sub_08027a6c builds the room's map in the second buffer gUnk_02006AA0 for
+ * sub_08027a6c builds the room's map in the second buffer gHubRoomMapBuffer for
  * the room loaders LoadHubRoom and LoadBigSwitchViewRoom (src/level_23948.c).  It
  * decompresses the room's metatile table (RoomDef +0x20) into gMetatileTiles
- * and its metatile map (+0x08) into gUnk_02006AA0 (or CpuSet-copies it when
+ * and its metatile map (+0x08) into gHubRoomMapBuffer (or CpuSet-copies it when
  * +0x05 says the map is stored raw), then walks the map from row 1 with the
  * per-cell marker table gUnk_0873240C[gCurLevel][cell]: a cell whose
  * marker names a flag that is still clear (a gBigSwitchFlags bit for markers
@@ -24,7 +24,7 @@
  * 234 differing bytes; two plain source facts closed it.  The marker is one
  * `u16 v`, so `v & 0x100` is an unsigned-short AND whose constant is a
  * two-insn HImode chain that agbcc's second loop pass hoists (lesson 3.465),
- * and the map store is the plain struct copy `gUnk_02006AA0[idx] = *p;`. */
+ * and the map store is the plain struct copy `gHubRoomMapBuffer[idx] = *p;`. */
 
 struct MapCell
 {
@@ -89,7 +89,7 @@ struct RoomDef
 /* Not from room.h: this file's view of gHubUnlockBlocks differs (lesson 3.517). */
 extern struct RoomDef *gCurRoomDef;
 extern u16 gMetatileTiles[];
-extern struct MapCell gUnk_02006AA0[];
+extern struct MapCell gHubRoomMapBuffer[];
 extern s16 gRoomMetatileCount;
 extern struct RoomDef **gRoomTable[][8];
 extern s8 gStageIndex;
@@ -123,9 +123,9 @@ void sub_08027a6c(void)
     n = 0;
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
     if (gCurRoomDef->mapsCompressed != 0)
-        RequestCopy(8, (u32)gCurRoomDef->metatileMap, (u32)gUnk_02006AA0, 0);
+        RequestCopy(8, (u32)gCurRoomDef->metatileMap, (u32)gHubRoomMapBuffer, 0);
     else
-        CpuSet(gCurRoomDef->metatileMap, gUnk_02006AA0, (gRoomMetatileCount * 2) & 0x1FFFFF);
+        CpuSet(gCurRoomDef->metatileMap, gHubRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
     alt = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->metatileMap;
     if (gHubUnlockFlags != 0)
     {
@@ -172,14 +172,14 @@ void sub_08027a6c(void)
                         if (gHubUnlockSource == v)
                             gBg1MetatileMap[idx] = *(u16 *)p;
                         if (!(gBigSwitchFlags[0] & (1 << (v & 0xFF7F))))
-                            gUnk_02006AA0[idx] = *p;
+                            gHubRoomMapBuffer[idx] = *p;
                     }
                     else
                     {
                         if (gHubUnlockSource == v)
                             gBg1MetatileMap[idx] = *(u16 *)p;
                         if (!gStageClearStatus[gCurLevel][v - 1])
-                            gUnk_02006AA0[idx] = *p;
+                            gHubRoomMapBuffer[idx] = *p;
                     }
                 }
                 idx++;
@@ -222,12 +222,12 @@ void sub_08027a6c(void)
                     if (v & 0x100)
                     {
                         if (!(gBigSwitchFlags[0] & (1 << (v & 0xFF))))
-                            gUnk_02006AA0[idx] = *p;
+                            gHubRoomMapBuffer[idx] = *p;
                     }
                     else
                     {
                         if (!gStageClearStatus[gCurLevel][v - 1])
-                            gUnk_02006AA0[idx] = *p;
+                            gHubRoomMapBuffer[idx] = *p;
                     }
                 }
                 idx++;

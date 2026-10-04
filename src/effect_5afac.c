@@ -230,7 +230,7 @@ void GoalGameInit(void)
     gRoomExitKind = 0;
     *(s8 *)gUnk_02008010 = -1;
     *(s8 *)gStageRequest = 0;
-    q = gUnk_02007FB8;
+    q = gPaletteAnimRefCounts;
     z = 0;
     p = q + 2;
     do

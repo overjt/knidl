@@ -644,7 +644,7 @@ void CreateFlyingWarpStar(int x, int y, int c)
         TaskSetEntry(WarpStarStartFlight, id);
         t->tileWord = WarpStarCopyTilesToRider(gCurTaskIdx);
     }
-    gUnk_020055C0 = id;
+    gWarpStarRideSlot = id;
     DisablePause();
 }
 

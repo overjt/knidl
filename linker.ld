@@ -4356,7 +4356,7 @@ SECTIONS
     ASSERT(!MATCHING || gUnk_08758324 == 0x08758324, "MATCHING: late_tbl_08758324 moved")
     ASSERT(!MATCHING || late_game_rodata_08758334 == 0x08758334, "MATCHING: late_game_rodata_08758334 moved")
 
-    /* The 14 recorded input demos of the staff credits' rows 1 and 2 (gUnk_087583CC, CreditsMain src/credits_cd330.c; InputRecorderStart) */
+    /* The 14 recorded input demos of the staff credits' rows 1 and 2 (gCreditsDemoRecordings, CreditsMain src/credits_cd330.c; InputRecorderStart) */
     .credits_demos : {
         KEEP(*(.credits_demos))
     } > ROM

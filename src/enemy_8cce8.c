@@ -985,7 +985,7 @@ void sub_0808e050(void)
 
 void sub_0808e054(void)
 {
-    if (--gUnk_02007FB8[1] < 0)
+    if (--gPaletteAnimRefCounts[1] < 0)
         sub_0806ee2c();
 }
 

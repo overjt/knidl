@@ -17,7 +17,7 @@
  * room-task variants 1 and 2 of task type #3 (RoomTaskHubInit, RoomTaskBigSwitchViewInit)
  * and their per-frame bodies (RoomTaskHubUpdateCamera ... RoomTaskBigSwitchViewLateUpdate).
  * LoadHubRoom and LoadBigSwitchViewRoom build their map in the second buffer
- * gUnk_02006AA0 through sub_08027a6c instead of gRoomMapBuffer, spawn the
+ * gHubRoomMapBuffer through sub_08027a6c instead of gRoomMapBuffer, spawn the
  * door objects and set up the multi-player cameras; LoadGoalGameRoom loads
  * the fixed room gRoomTable[8][7][0] with the player at (136, 928) and
  * BGM 1.  Every loader ends with the per-player loop that refills health,
@@ -43,7 +43,7 @@ void LoadHubRoom(void)
     CreateRoomTask(1);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -55,7 +55,7 @@ void LoadHubRoom(void)
     gRoomBorder[1] = gCurRoomDef->borderY;
     gBg3Border[0] = gCurRoomDef->bg3BorderX;
     gBg3Border[1] = gCurRoomDef->bg3BorderY;
-    gRoomMap = gUnk_02006AA0;
+    gRoomMap = gHubRoomMapBuffer;
     sub_08027a6c();
     gRoomBgLayout = 0;
     gCurTileDrifts = gTileDrifts;
@@ -148,7 +148,7 @@ void LoadBigSwitchViewRoom(void)
     CreateRoomTask(2);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -160,7 +160,7 @@ void LoadBigSwitchViewRoom(void)
     gRoomBorder[1] = gCurRoomDef->borderY;
     gBg3Border[0] = gCurRoomDef->bg3BorderX;
     gBg3Border[1] = gCurRoomDef->bg3BorderY;
-    gRoomMap = gUnk_02006AA0;
+    gRoomMap = gHubRoomMapBuffer;
     z = 0;
     w = 0;
     sub_08027a6c();
@@ -296,7 +296,7 @@ void LoadGoalGameRoom(void)
     CreateRoomTask(4);
     gCurRoomDef = gRoomTable[8][7][0];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();

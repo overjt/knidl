@@ -46,7 +46,7 @@ void InputRecorderRestoreState(void)
     j = Div(0x3B6A, gPlayerCount);
     for (i = 0; i < gPlayerCount; i++)
         gInputRecorderEndPos[i] = j - 4;
-    if (gUnk_030023B0 == 0)
+    if (gCreditsDemoSet == 0)
     {
         gLocalPlayer = gInputRecordingPtr->unk11C;
         gExtraMode = gInputRecordingPtr->unk0B;

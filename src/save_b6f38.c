@@ -43,8 +43,8 @@ struct LinkSave
     /*0x12C*/ u16 unk12C[0x3B6A];
 };
 
-/* Not from save.h: this file's view of gUnk_0200EC50 differs (lesson 3.517). */
-extern struct LinkSave *gUnk_0200EC50;
+/* Not from save.h: this file's view of gInputRecorderDemo differs (lesson 3.517). */
+extern struct LinkSave *gInputRecorderDemo;
 extern struct LinkSave *gInputRecordingPtr;
 extern u8 gInputRecorderRunning;
 extern s16 gInputRecorderMode;
@@ -136,7 +136,7 @@ void InputRecorderStart(void)
         InputRecorderRestoreState();
         break;
     case 3:
-        gInputRecordingPtr = gUnk_0200EC50;
+        gInputRecordingPtr = gInputRecorderDemo;
         InputRecorderRestoreState();
         break;
     }

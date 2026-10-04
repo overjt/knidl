@@ -13,11 +13,11 @@
  * command is a bit mask and one argument, and bits 0-5 take one more word
  * each (x/y velocity, x/y acceleration, sprite id, wait; the word is skipped
  * when the bit is clear); bit 6 starts sound effect `arg` (PlaySfx),
- * bit 7 calls script `arg` (the cursor is saved in gUnk_0201BFD0[i]),
+ * bit 7 calls script `arg` (the cursor is saved in gBootLogoSavedCursors[i]),
  * bit 8 switches to script `arg`, bits 9/10 set and run a loop of `arg`
  * passes, bit 11 restarts the script, bit 12 returns to the saved cursor
  * and bit 13 switches the object off.  The object then moves in 24.8 fixed
- * point and is drawn (QueueSprite, sprite gUnk_087554B8[unk06], layer
+ * point and is drawn (QueueSprite, sprite gBootLogoSprites[unk06], layer
  * unk08), or switched off once it leaves the screen.
  *
  * Matching notes (#100's final campaign, lesson 3.494): the locals are
@@ -84,28 +84,28 @@ void BootLogoUpdateObjects(void)
                             PlaySfx(arg);
                             break;
                         case 128:
-                            gUnk_0201BFD0[i] = p;
-                            p = gUnk_087577D8[arg];
+                            gBootLogoSavedCursors[i] = p;
+                            p = gBootLogoScripts[arg];
                             break;
                         case 256:
                             obj->scriptId = arg;
-                            p = gUnk_087577D8[obj->scriptId];
+                            p = gBootLogoScripts[obj->scriptId];
                             break;
                         case 512:
-                            gUnk_0201BFD0[i] = p;
+                            gBootLogoSavedCursors[i] = p;
                             if (arg != 0)
                                 obj->loopCount = arg;
                             break;
                         case 1024:
                             if (obj->loopCount != 0 && --obj->loopCount == 0)
                                 break;
-                            p = gUnk_0201BFD0[i];
+                            p = gBootLogoSavedCursors[i];
                             break;
                         case 4096:
-                            p = gUnk_0201BFD0[i];
+                            p = gBootLogoSavedCursors[i];
                             break;
                         case 2048:
-                            p = gUnk_087577D8[obj->scriptId];
+                            p = gBootLogoScripts[obj->scriptId];
                             break;
                         case 8192:
                             obj->scriptId = 0xFFFF;
@@ -126,7 +126,7 @@ void BootLogoUpdateObjects(void)
         y = obj->posY >> 8;
         if (obj->spriteId != -1) {
             if ((u32)(x + 15) <= 286 && y > -32 && y <= 191)
-                QueueSprite(obj->layer, gUnk_087554B8[obj->spriteId], 0, 0, x, y);
+                QueueSprite(obj->layer, gBootLogoSprites[obj->spriteId], 0, 0, x, y);
             else {
                 s32 m;
 

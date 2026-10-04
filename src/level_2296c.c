@@ -70,7 +70,7 @@ void sub_0802296c(void)
     gLevelIndex = 8;
     gStageIndex = gCurLevel;
     gRoomIndex = 0;
-    gUnk_0200AF04 = 0;
+    gSkipNextHubBgm = 0;
     gContinueLevel = gStageIndex;
     gUnk_02007FF8 = gUnk_03001F20;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
@@ -172,7 +172,7 @@ void sub_08022c3c(void)
         gLevelIndex = 8;
         gStageIndex = gContinueLevel;
         gRoomIndex = 0;
-        gUnk_0200AF04 = 0;
+        gSkipNextHubBgm = 0;
         if (gFurthestLevel == 0 && gFurthestStage == 0)
         {
             gRoomEntryX = 70;
@@ -273,7 +273,7 @@ void LoadRoom(void)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -413,7 +413,7 @@ void sub_080233e0(void)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gUnk_02000000 = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->unk55;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();

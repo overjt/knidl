@@ -8,22 +8,22 @@
  *
  * The boot logo's 115 script-driven sprite objects (gUnk_02030000[],
  * struct M38LogoObj): BootLogoInitObjects, which M02's logo sequence PlayBootLogo
- * calls once, seeds them from the s16 stream gUnk_08757440 (script id, wait,
+ * calls once, seeds them from the s16 stream gBootLogoObjectSeeds (script id, wait,
  * x, y per object; the draw layer follows y) and clears their saved script
- * cursors gUnk_0201BFD0[].  Their per-frame interpreter BootLogoUpdateObjects
+ * cursors gBootLogoSavedCursors[].  Their per-frame interpreter BootLogoUpdateObjects
  * (called by M02's task type #0) is src/boot_caab8.c. */
 
-/* Seed the 115 boot-logo objects from gUnk_08757440[] (script id, wait,
+/* Seed the 115 boot-logo objects from gBootLogoObjectSeeds[] (script id, wait,
    x, y per object; the layer follows y). */
 void BootLogoInitObjects(void)
 {
-    s16 *s = gUnk_08757440;
+    s16 *s = gBootLogoObjectSeeds;
     struct M38LogoObj *obj = gUnk_02030000;
     s32 i;
 
     for (i = 0; i < 115; i++) {
         obj->scriptId = *s;
-        obj->scriptPos = gUnk_087577D8[*s++];
+        obj->scriptPos = gBootLogoScripts[*s++];
         obj->spriteId = 0xFFFF;
         obj->sleepFrames = *s++;
         obj->posX = *s++ << 8;
@@ -35,6 +35,6 @@ void BootLogoInitObjects(void)
         obj->layer = 15 - ((*s++ - 1) >> 4);
         obj->loopCount = 0;
         obj++;
-        gUnk_0201BFD0[i] = 0;
+        gBootLogoSavedCursors[i] = 0;
     }
 }
