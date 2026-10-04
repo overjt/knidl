@@ -1089,3 +1089,50 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   named per family.  No rename or alias changed a byte; `make shifttest`
   unchanged (16,961 unrelocated, 0 proven pointers, 0 unknown).  New
   lessons 4.166-4.170.
+- Names, run 6 (issue #155): **named constants**, struct tags, locals and
+  the long tail.  The owner's decisions D6-D8, applied: (D6) the magic
+  numbers whose meaning the names prove are pret-style object-like
+  `#define`s in 11 new headers `include/constants/*.h`, included by the
+  subsystem headers that define their fields: task types (`TASK_<BODY>`,
+  266), abilities (27, from the HUD banners), the player's and Meta
+  Knight's actions and handlers (162), every state table's slots
+  (`<FAMILY>_STATE_<VERB>`, 677, named after the slot's verb or by index)
+  and every variant table's role-named slots (236), game states and stage
+  requests, hit kinds and effects, actor kinds, camera modes, room entry
+  modes and door kinds, and the sound and song ids every call site agrees
+  on (1,473 constants, 3,980 literal sites, each constant logged with the
+  consumer that proves it in the new `docs/analysis/constants.csv`).
+  `tools/constants.py` writes the headers, respells the literals by a
+  position rule per family (`--scan`: 0 literals left at those positions)
+  or by site lists, and proves each family's commit with `--verify-cpp`
+  (every unit's `cpp -P` tokens equal the parent's, integer literals
+  compared by value), backed by the per-file assembly oracle; the state
+  constants are placed only inside functions proven to run that table's
+  machine.  (D7) 33 struct tags named after their proven cell or consumer
+  (`Unk02007D70` -> `BgAnim`, the Air Grind records, `LinkSave` ->
+  `InputRecording`), `tools/rename.py` kind `tag`.  (D8) 147 locals in
+  functions named by role (child task slots and pointers after their
+  TASK_ constant, player and level/stage loops), `tools/rename.py
+  --locals`.  `tools/rename.py --verify-diff` now accepts constants,
+  tags, locals and run 5's parameters, so the whole stacked branch
+  verifies from `origin/master` in one pass.  Six proposal agents (four in
+  wave 1 by subject, two in wave 2 on what wave 1 left, and one on the
+  player's registers) proposed names with renders, code and WiKirby text:
+  the bosses' and mid-bosses' states (new verbs Intro, DropIn, Follow,
+  PickMove, FigureEight, FlyAway, Twist, Pounce, Dive ..., new row words
+  Weave, Ambush, Leap, Asleep), the life-request screen in full, the
+  ability effects (the second palette bank comes from the player's own
+  frame records), the fountain cutscene and the ending's actors, the
+  player's palette, blink and goal-game helpers, the Warp Star ride's
+  tumble, the door signs; 126 fields (`PlayerState`, the input recording,
+  the link records, Air Grind, the HUD bars, `AttackBox`, `BodyBox`); 86
+  register aliases.  Figures: functions named 4,366 -> 4,659 of 5,348
+  (4,034 by role, 625 by slot); task bodies 265 of 266 (#88 still draws a
+  shape no source names); `make progress` 13,102 -> 13,443 of 34,017
+  symbols documented (38.52% -> 39.52%); `gUnk_` RAM cells 84 -> 73;
+  functional ROM labels 2,775 -> 2,739; `unk*` fields 257 -> 135 (header)
+  and 282 -> 233 (local copies); register aliases 965 -> 1,051 in 198
+  families (about 8,100 -> 9,000 of the 10,467 register accesses).  No
+  change moved a byte: `make compare` after every batch, `make shifttest`
+  unchanged (16,961 unrelocated, 0 proven pointers, 0 unknown).  New
+  lessons 3.528-3.529 and 4.171-4.172.
