@@ -102,7 +102,7 @@ void BrontoBurtWave(void)
     }
 }
 
-void sub_08086274(void)
+void BrontoBurtWaveState0Update(void)
 {
     struct Task *t = gCurTask;
     s32 n;
@@ -417,7 +417,7 @@ void BrontoBurtDiagonal(void)
     }
 }
 
-void sub_080869b8(void)
+void BrontoBurtDiagonalState0Update(void)
 {
     gCurTask->unk34--;
     if (gCurTask->u8C.actor->animScript != 0)
@@ -501,7 +501,7 @@ void BrontoBurtChase(void)
     }
 }
 
-void sub_08086b68(void)
+void BrontoBurtChaseState0Update(void)
 {
     if (gCurTask->unk30 != 0)
     {
@@ -602,7 +602,7 @@ void BrontoBurtTakeOff(void)
     TaskSleepForever();
 }
 
-void sub_08086da4(void)
+void BrontoBurtTakeOffState1Update(void)
 {
     if (gCurTask->state != 1)
     {
@@ -650,7 +650,7 @@ void BrontoBurtTakeOffState2(void)
     }
 }
 
-void sub_08086ec8(void)
+void BrontoBurtTakeOffState2Update(void)
 {
     if (gCurTask->u8C.actor->animScript != 0)
     {
@@ -809,7 +809,7 @@ void TwizzyWave(void)
     }
 }
 
-void sub_08087210(void)
+void TwizzyWaveState0Update(void)
 {
     struct Task *t = gCurTask;
     s32 n;
@@ -1113,7 +1113,7 @@ void TwizzyDiagonal(void)
     }
 }
 
-void sub_08087924(void)
+void TwizzyDiagonalState0Update(void)
 {
     gCurTask->unk34--;
     if (gCurTask->u8C.actor->animScript != 0)
@@ -1187,7 +1187,7 @@ void TwizzyChase(void)
     }
 }
 
-void sub_08087a98(void)
+void TwizzyChaseState0Update(void)
 {
     if (gCurTask->unk30 != 0)
     {
@@ -1288,7 +1288,7 @@ void TwizzyTakeOff(void)
     TaskSleepForever();
 }
 
-void sub_08087cd4(void)
+void TwizzyTakeOffState1Update(void)
 {
     if (gCurTask->state != 1)
     {
@@ -1336,7 +1336,7 @@ void TwizzyTakeOffState2(void)
     }
 }
 
-void sub_08087df8(void)
+void TwizzyTakeOffState2Update(void)
 {
     if (gCurTask->u8C.actor->animScript != 0)
     {

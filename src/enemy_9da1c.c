@@ -336,7 +336,7 @@ void MaceKnightState1(void)
     TaskSleepForever();
 }
 
-void sub_0809df2c(void)
+void MaceKnightState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);

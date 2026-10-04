@@ -268,7 +268,7 @@ void WhispyWoodsAppleState1(void)
         sub_080b3010(4);
 }
 
-void sub_080b31e0(void)
+void WhispyWoodsAppleState1Update(void)
 {
     struct Task *t;
 
@@ -303,7 +303,7 @@ void WhispyWoodsAppleState2(void)
         sub_080b3010(8);
 }
 
-void sub_080b3258(void)
+void WhispyWoodsAppleState2Update(void)
 {
     struct Task *t;
 
@@ -338,7 +338,7 @@ void WhispyWoodsAppleState3(void)
         sub_080b3010(8);
 }
 
-void sub_080b32d0(void)
+void WhispyWoodsAppleState3Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -593,7 +593,7 @@ top:
     goto top;
 }
 
-void sub_080b3758(void)
+void WhispyWoodsAirPuffState0Update(void)
 {
     struct Task *t;
     struct Task *t6;
@@ -1047,7 +1047,7 @@ void PickupState0(void)
     TaskSleepForever();
 }
 
-void sub_080b4190(void)
+void PickupState0Update(void)
 {
 }
 
@@ -1476,7 +1476,7 @@ void AbilityStarState0(void)
     TaskSleepForever();
 }
 
-void sub_080b4788(void)
+void AbilityStarState0Update(void)
 {
     AbilityStarCheckExpire();
 }
@@ -1754,7 +1754,7 @@ void StarRodPieceHoverState0(void)
     }
 }
 
-void sub_080b4b94(void)
+void StarRodPieceHoverState0Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1777,7 +1777,7 @@ void StarRodPieceHoverState1(void)
     TaskSleepForever();
 }
 
-void sub_080b4bd8(void)
+void StarRodPieceHoverState1Update(void)
 {
     sub_080b4a34();
 }
@@ -1840,7 +1840,7 @@ void StarRodPieceSlideOutState0(void)
     TaskSleepForever();
 }
 
-void sub_080b4d1c(void)
+void StarRodPieceSlideOutState0Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1884,7 +1884,7 @@ void StarRodPieceSlideOutState1(void)
     }
 }
 
-void sub_080b4db4(void)
+void StarRodPieceSlideOutState1Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1907,7 +1907,7 @@ void StarRodPieceSlideOutState2(void)
     TaskSleepForever();
 }
 
-void sub_080b4df8(void)
+void StarRodPieceSlideOutState2Update(void)
 {
     sub_080b4a34();
 }

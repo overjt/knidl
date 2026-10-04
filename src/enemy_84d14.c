@@ -136,7 +136,7 @@ void ChillyState0(void)
     TaskSleepForever();
 }
 
-void sub_08084e74(void)
+void ChillyState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
@@ -186,7 +186,7 @@ void ChillyState1(void)
     }
 }
 
-void sub_08084f50(void)
+void ChillyState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
@@ -331,7 +331,7 @@ void ChillyState3(void)
     TaskSleepForever();
 }
 
-void sub_08085274(void)
+void ChillyState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
@@ -522,7 +522,7 @@ void WaddleDooWalk(void)
     }
 }
 
-void sub_08085608(void)
+void WaddleDooWalkState0Update(void)
 {
     struct Task *t;
     u32 v;

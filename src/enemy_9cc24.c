@@ -395,7 +395,7 @@ void sub_0809d2a4(void)
     }
 }
 
-void sub_0809d308(void)
+void JavelinKnightState0Update(void)
 {
 }
 

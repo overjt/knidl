@@ -9,8 +9,8 @@
  *   * script 2's rows `LaserBallInit` / `LaserBallIdleInit` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
  *     with `LaserBallState0` / `LaserBallHover` / `LaserBallShoot` / `LaserBallState3`
- *     as the bodies and `sub_0808e510` / `LaserBallHoverUpdate` / `LaserBallShootUpdate` /
- *     `sub_0808e800` as their guards;
+ *     as the bodies and `LaserBallState0Update` / `LaserBallHoverUpdate` / `LaserBallShootUpdate` /
+ *     `LaserBallState3Update` as their guards;
  *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
  *     rows `CoconutInit` / `CoconutIdleInit`, bodies `0x08743230` (3) and
  *     `0x08743240`, guards `0x0874323C` and `0x08743244`;
@@ -118,7 +118,7 @@ void LaserBallState0(void)
     }
 }
 
-void sub_0808e510(void)
+void LaserBallState0Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -285,7 +285,7 @@ void LaserBallState3(void)
     }
 }
 
-void sub_0808e800(void)
+void LaserBallState3Update(void)
 {
 }
 
@@ -317,7 +317,7 @@ void LaserBallIdle(void)
     TaskSleepForever();
 }
 
-void sub_0808e8a0(void)
+void LaserBallIdleState0Update(void)
 {
 }
 
@@ -486,7 +486,7 @@ void CoconutIdle(void)
     }
 }
 
-void sub_0808ebdc(void)
+void CoconutIdleState0Update(void)
 {
 }
 
@@ -935,7 +935,7 @@ void ShotzoAim(void)
         ShotzoAimBarrel();
 }
 
-void sub_0808f400(void)
+void ShotzoAimState0Update(void)
 {
     if (sub_08069888() == 0)
         ShotzoCheckShoot(2, ShotzoAimEnterState);

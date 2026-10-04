@@ -29,7 +29,7 @@
  * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, CreateMrFrostyIceCube
  * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and sub_08098da4 is the "close
  * enough" probe (|TaskGetDxTo(Task.unk1C)| <= 10).  MrFrostyBounceOffWallUpdate and
- * sub_08099a0c are empty state handlers, and sub_08099ad0 is the timer leaf
+ * MrFrostyState16Update are empty state handlers, and MrFrostyState18Update is the timer leaf
  * the guard table word at 0x087456C8 points at.
  */
 #include "gba/gba.h"
@@ -532,7 +532,7 @@ void MrFrostyState2(void)
     }
 }
 
-void sub_08099180(void)
+void MrFrostyState2Update(void)
 {
     if (gCurTask->unk28 != 0)
     {
@@ -631,7 +631,7 @@ void MrFrostyState5(void)
     TaskSleepForever();
 }
 
-void sub_0809931c(void)
+void MrFrostyState5Update(void)
 {
     struct Task *t;
 
@@ -669,7 +669,7 @@ void MrFrostyState6(void)
     }
 }
 
-void sub_08099394(void)
+void MrFrostyState6Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -716,7 +716,7 @@ void MrFrostyState7(void)
     }
 }
 
-void sub_08099448(void)
+void MrFrostyState7Update(void)
 {
     if (gCurTask->unk28 != 0)
     {
@@ -762,7 +762,7 @@ void MrFrostyState8(void)
     }
 }
 
-void sub_08099508(void)
+void MrFrostyState8Update(void)
 {
     struct Task *t;
 
@@ -806,7 +806,7 @@ void MrFrostyState9(void)
     }
 }
 
-void sub_080995b8(void)
+void MrFrostyState9Update(void)
 {
     struct Task *t;
 
@@ -858,7 +858,7 @@ void MrFrostyState10(void)
     }
 }
 
-void sub_08099690(void)
+void MrFrostyState10Update(void)
 {
     struct Task *t;
 
@@ -899,7 +899,7 @@ void MrFrostyState11(void)
     }
 }
 
-void sub_08099734(void)
+void MrFrostyState11Update(void)
 {
     struct Task *t;
 
@@ -942,7 +942,7 @@ void MrFrostyState12(void)
     }
 }
 
-void sub_080997e4(void)
+void MrFrostyState12Update(void)
 {
     struct Task *t;
 
@@ -1006,7 +1006,7 @@ void MrFrostyState14(void)
     TaskSleepForever();
 }
 
-void sub_08099908(void)
+void MrFrostyState14Update(void)
 {
     struct Task *t;
 
@@ -1044,7 +1044,7 @@ void MrFrostyState15(void)
     TaskSleepForever();
 }
 
-void sub_0809998c(void)
+void MrFrostyState15Update(void)
 {
     struct Task *t;
 
@@ -1077,7 +1077,7 @@ void MrFrostyState16(void)
     }
 }
 
-void sub_08099a0c(void)
+void MrFrostyState16Update(void)
 {
 }
 
@@ -1098,7 +1098,7 @@ void MrFrostyState17(void)
     TaskSleepForever();
 }
 
-void sub_08099a54(void)
+void MrFrostyState17Update(void)
 {
     if (gCurTask->state != 17)
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
@@ -1128,7 +1128,7 @@ void MrFrostyState18(void)
     }
 }
 
-void sub_08099ad0(void)
+void MrFrostyState18Update(void)
 {
     struct Task *t;
     struct Task *u;

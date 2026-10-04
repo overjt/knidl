@@ -134,7 +134,7 @@ void sub_08097694(void)
     TaskSleepForever();
 }
 
-void sub_08097714(void)
+void PhanPhanState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
@@ -265,7 +265,7 @@ void sub_0809794c(void)
         TaskYieldTrampoline(1);
 }
 
-void sub_08097a54(void)
+void PhanPhanState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);

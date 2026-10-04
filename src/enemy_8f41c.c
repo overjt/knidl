@@ -21,7 +21,7 @@
  *   * script 7: entry `Task_ShotzoCannonball` (`0x0874362C`, 4 identical rows), row
  *     `ShotzoCannonballInit`, body `0x0874363C` (`ShotzoCannonballState0`, the class-2 wanderer
  *     that picks its heading from gTasks[Task.parent].unk34) and guard
- *     `0x08743640` (`sub_0808ffe0`).
+ *     `0x08743640` (`ShotzoCannonballState0Update`).
  *
  * `sub_0808fa04` and `ShotzoCannonballEnterState` are dead exports (twins of
  * `sub_0808f9f8` and of `ShotzoCannonballInit`'s cue call) that no ROM word points at;
@@ -132,7 +132,7 @@ void ShotzoFixedState0(void)
     TaskSleepForever();
 }
 
-void sub_0808f578(void)
+void ShotzoFixedState0Update(void)
 {
     struct Task *t;
 
@@ -334,7 +334,7 @@ void ParasolShotzoState2(void)
     }
 }
 
-void sub_0808f8dc(void)
+void ParasolShotzoState2Update(void)
 {
     ActorCollideTerrain();
 }
@@ -364,7 +364,7 @@ void ShotzoIdle(void)
     TaskSleepForever();
 }
 
-void sub_0808f974(void)
+void ShotzoIdleState0Update(void)
 {
 }
 
@@ -567,7 +567,7 @@ void LaserBallLaserState1(void)
     TaskSleepForever();
 }
 
-void sub_0808fd5c(void)
+void LaserBallLaserState1Update(void)
 {
 }
 
@@ -588,7 +588,7 @@ void LaserBallLaserState0(void)
     TaskSleepForever();
 }
 
-void sub_0808fdb4(void)
+void LaserBallLaserState0Update(void)
 {
 }
 
@@ -678,7 +678,7 @@ void ShotzoCannonballState0(void)
     }
 }
 
-void sub_0808ffe0(void)
+void ShotzoCannonballState0Update(void)
 {
     struct Task *t;
 

@@ -132,7 +132,7 @@ void KrackoState0(void)
     TaskSleepForever();
 }
 
-void sub_080a8948(void)
+void KrackoState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
@@ -227,7 +227,7 @@ st3:
     }
 }
 
-void sub_080a8b44(void)
+void KrackoState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
@@ -283,7 +283,7 @@ void KrackoState3(void)
     }
 }
 
-void sub_080a8c84(void)
+void KrackoState3Update(void)
 {
     struct Task *t;
 

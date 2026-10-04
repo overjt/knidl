@@ -3061,7 +3061,7 @@ void HeavyMoleArmState0(void)
     }
 }
 
-void sub_080b1b2c(void)
+void HeavyMoleArmState0Update(void)
 {
     struct Task *t;
     s32 v;
@@ -3208,7 +3208,7 @@ void HeavyMoleArmState1(void)
     }
 }
 
-void sub_080b1d2c(void)
+void HeavyMoleArmState1Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -3288,7 +3288,7 @@ void HeavyMoleArmState2(void)
     TaskSleepForever();
 }
 
-void sub_080b1e20(void)
+void HeavyMoleArmState2Update(void)
 {
     struct Task *t;
 
@@ -3365,7 +3365,7 @@ void HeavyMoleArmState3(void)
     TaskSleepForever();
 }
 
-void sub_080b1f80(void)
+void HeavyMoleArmState3Update(void)
 {
     struct Task *t;
 
@@ -3487,7 +3487,7 @@ loop:
     TaskSleepForever();
 }
 
-void sub_080b214c(void)
+void HeavyMoleArmState5Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -3531,7 +3531,7 @@ void HeavyMoleArmState4(void)
     TaskSleepForever();
 }
 
-void sub_080b2228(void)
+void HeavyMoleArmState4Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4183,7 +4183,7 @@ void WhispyWoodsState1(void)
     TaskSleepForever();
 }
 
-void sub_080b2bf0(void)
+void WhispyWoodsState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
@@ -4240,7 +4240,7 @@ void WhispyWoodsState2(void)
     TaskSleepForever();
 }
 
-void sub_080b2cc8(void)
+void WhispyWoodsState2Update(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);

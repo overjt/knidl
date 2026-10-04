@@ -24,7 +24,7 @@
  *     behind and within 31 units" probe shared by the bank's walkers.
  *
  * `PoppyBrosJrRideEnterState`, `PoppyBrosJrDroppedObjectEnterState`, `PoppyBrosJrRideIdleEnterState` and `WheelieIdleEnterState` are dead
- * exports; `sub_08082458` is a pointer-referenced leaf the census originally
+ * exports; `PoppyBrosJrDroppedObjectState0Update` is a pointer-referenced leaf the census originally
  * missed (both curated in tools/symdb.py).
  */
 #include "gba/gba.h"
@@ -117,7 +117,7 @@ void PoppyBrosJrRide(void)
     sub_08082554();
 }
 
-void sub_080822a4(void)
+void PoppyBrosJrRideState0Update(void)
 {
     sub_080825ec();
 }
@@ -202,7 +202,7 @@ void PoppyBrosJrDroppedObjectState0(void)
     TaskSleepForever();
 }
 
-void sub_08082458(void)
+void PoppyBrosJrDroppedObjectState0Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -412,7 +412,7 @@ void WheelieState0(void)
     TaskSleepForever();
 }
 
-void sub_08082818(void)
+void WheelieState0Update(void)
 {
     WheelieCheckSkid();
     if (gCurTask->state != 0)
@@ -427,7 +427,7 @@ void WheelieState1(void)
     sub_08082cc4();
 }
 
-void sub_0808287c(void)
+void WheelieState1Update(void)
 {
     WheelieCheckSkid();
     if (gCurTask->state != 1)
@@ -504,7 +504,7 @@ void WheelieState3(void)
     sub_08082cc4();
 }
 
-void sub_080829d4(void)
+void WheelieState3Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -561,7 +561,7 @@ void WheelieState4(void)
     TaskSleepForever();
 }
 
-void sub_08082aec(void)
+void WheelieState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
@@ -630,7 +630,7 @@ void WheelieIdle(void)
     sub_08082cc4();
 }
 
-void sub_08082c58(void)
+void WheelieIdleState0Update(void)
 {
 }
 

@@ -19,7 +19,7 @@
  *   * Task_UFO's row 0 `UFOInit`+`UFOUpdate` with the
  *     `UFOIsAtTarget` box test (`struct Rect` + GetDistSq) and the
  *     `sub_0807c530` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
- *   * UFO's state check `sub_0807c828` (gUFOStateUpdates[1]), which walks a
+ *   * UFO's state check `UFOState1Update` (gUFOStateUpdates[1]), which walks a
  *     sixteen-entry cue ring through
  *     `sub_0807c508` (`15 & (rand + Task.unk24)`);
  *   * Task_Parasol's row 0 `ParasolRiseInit`+`ParasolRiseUpdate` and its aim
@@ -146,7 +146,7 @@ void ScarfyState1(void)
     TaskSleepForever();
 }
 
-void sub_0807ac08(void)
+void ScarfyState1Update(void)
 {
     gCurTask->unk34 = ActorTickAnimFacingNearestPlayer(gCurTask->unk34);
     if (abs(TaskGetNearestPlayerDy()) <= 4)
@@ -544,7 +544,7 @@ void SwordAndBladeKnightWalkState0(void)
     TaskSleepForever();
 }
 
-void sub_0807b430(void)
+void SwordAndBladeKnightWalkState0Update(void)
 {
     struct Task *t;
 
@@ -572,7 +572,7 @@ void SwordAndBladeKnightWalkState1(void)
     TaskSleepForever();
 }
 
-void sub_0807b4c8(void)
+void SwordAndBladeKnightWalkState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
@@ -597,7 +597,7 @@ void SwordAndBladeKnightWalkState3(void)
     TaskSleepForever();
 }
 
-void sub_0807b558(void)
+void SwordAndBladeKnightWalkState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
@@ -615,7 +615,7 @@ void SwordAndBladeKnightWalkState2(void)
     TaskSleepForever();
 }
 
-void sub_0807b5b0(void)
+void SwordAndBladeKnightWalkState2Update(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
@@ -640,7 +640,7 @@ void SwordAndBladeKnightWalkState4(void)
     TaskSleepForever();
 }
 
-void sub_0807b640(void)
+void SwordAndBladeKnightWalkState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
@@ -661,7 +661,7 @@ void SwordAndBladeKnightWalkState5(void)
     TaskSleepForever();
 }
 
-void sub_0807b6b4(void)
+void SwordAndBladeKnightWalkState5Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
     if (gCurTask->state != 5)
@@ -704,7 +704,7 @@ void SwordAndBladeKnightWalkState6(void)
     TaskSleepForever();
 }
 
-void sub_0807b7a8(void)
+void SwordAndBladeKnightWalkState6Update(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
@@ -756,7 +756,7 @@ void SwordAndBladeKnightIdle(void)
     TaskSleepForever();
 }
 
-void sub_0807b8d0(void)
+void SwordAndBladeKnightIdleState0Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
@@ -808,7 +808,7 @@ void SwordAndBladeKnightStandState0(void)
     TaskSleepForever();
 }
 
-void sub_0807ba18(void)
+void SwordAndBladeKnightStandState0Update(void)
 {
     struct Task *t;
 
@@ -834,7 +834,7 @@ void SwordAndBladeKnightStandState1(void)
     TaskSleepForever();
 }
 
-void sub_0807baa8(void)
+void SwordAndBladeKnightStandState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
@@ -859,7 +859,7 @@ void SwordAndBladeKnightStandState3(void)
     TaskSleepForever();
 }
 
-void sub_0807bb38(void)
+void SwordAndBladeKnightStandState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
@@ -875,7 +875,7 @@ void SwordAndBladeKnightStandState2(void)
     TaskSleepForever();
 }
 
-void sub_0807bb8c(void)
+void SwordAndBladeKnightStandState2Update(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
@@ -900,7 +900,7 @@ void SwordAndBladeKnightStandState4(void)
     TaskSleepForever();
 }
 
-void sub_0807bc1c(void)
+void SwordAndBladeKnightStandState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
@@ -917,7 +917,7 @@ void SwordAndBladeKnightStandState5(void)
     TaskSleepForever();
 }
 
-void sub_0807bc78(void)
+void SwordAndBladeKnightStandState5Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
     if (gCurTask->state != 5)
@@ -1200,7 +1200,7 @@ void NeedlousState2(void)
     TaskSleepForever();
 }
 
-void sub_0807c22c(void)
+void NeedlousState2Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
@@ -1212,7 +1212,7 @@ void NeedlousState3(void)
     TaskSleepForever();
 }
 
-void sub_0807c264(void)
+void NeedlousState3Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
@@ -1224,7 +1224,7 @@ void NeedlousState4(void)
     TaskSleepForever();
 }
 
-void sub_0807c29c(void)
+void NeedlousState4Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
@@ -1303,7 +1303,7 @@ void NeedlousIdle(void)
     }
 }
 
-void sub_0807c440(void)
+void NeedlousIdleState0Update(void)
 {
 }
 
@@ -1472,7 +1472,7 @@ void UFOState0(void)
     TaskSleepForever();
 }
 
-void sub_0807c7d8(void)
+void UFOState0Update(void)
 {
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
     if (gCurTask->state != 0)
@@ -1486,7 +1486,7 @@ void UFOState1(void)
     TaskSleepForever();
 }
 
-void sub_0807c828(void)
+void UFOState1Update(void)
 {
     struct Task *t;
     s32 v;
@@ -1526,7 +1526,7 @@ void UFOState2(void)
     TaskSleepForever();
 }
 
-void sub_0807c8d0(void)
+void UFOState2Update(void)
 {
     struct Rect box;
 
@@ -1652,7 +1652,7 @@ void UFOIdle(void)
     }
 }
 
-void sub_0807cbb0(void)
+void UFOIdleState0Update(void)
 {
 }
 
@@ -1726,7 +1726,7 @@ void ParasolRise(void)
     }
 }
 
-void sub_0807cd60(void)
+void ParasolRiseState0Update(void)
 {
 }
 
@@ -1774,7 +1774,7 @@ void ParasolChase(void)
     }
 }
 
-void sub_0807ce68(void)
+void ParasolChaseState0Update(void)
 {
     struct Task *t;
 
@@ -1838,7 +1838,7 @@ void ParasolIdle(void)
     }
 }
 
-void sub_0807cfcc(void)
+void ParasolIdleState0Update(void)
 {
 }
 
@@ -1913,7 +1913,7 @@ void PengyIceBreathState0(void)
     ActorDestroy();
 }
 
-void sub_0807d178(void)
+void PengyIceBreathState0Update(void)
 {
 }
 
@@ -1983,7 +1983,7 @@ void UFOLaserState0(void)
     TaskSleepForever();
 }
 
-void sub_0807d2ec(void)
+void UFOLaserState0Update(void)
 {
     if ((u8)(gTerrainResult[4] - 1) <= 3)
     {

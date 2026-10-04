@@ -544,7 +544,7 @@ void KingDededeState0(void)
     TaskSleepForever();
 }
 
-void sub_080a0b74(void)
+void KingDededeState0Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -882,7 +882,7 @@ void KingDededeState6(void)
     TaskSleepForever();
 }
 
-void sub_080a1140(void)
+void KingDededeState6Update(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);

@@ -148,7 +148,7 @@ done:
     TaskSleepForever();
 }
 
-void sub_08082fb4(void)
+void FlamerState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
@@ -171,7 +171,7 @@ void FlamerState1(void)
     }
 }
 
-void sub_08083020(void)
+void FlamerState1Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -336,7 +336,7 @@ void FlamerState3(void)
     TaskSleepForever();
 }
 
-void sub_08083400(void)
+void FlamerState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
@@ -365,7 +365,7 @@ void FlamerState4(void)
     }
 }
 
-void sub_08083488(void)
+void FlamerState4Update(void)
 {
     struct Task *u;
     struct Task *v;
@@ -469,7 +469,7 @@ void FlamerState5(void)
     TaskSleepForever();
 }
 
-void sub_0808379c(void)
+void FlamerState5Update(void)
 {
     gCurTask->unk20 = ActorTickAnim(gCurTask->unk20);
     if (gCurTask->state != 5)
@@ -520,7 +520,7 @@ void FlamerState6(void)
     TaskSleepForever();
 }
 
-void sub_080838bc(void)
+void FlamerState6Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -595,7 +595,7 @@ void FlamerIdle(void)
     }
 }
 
-void sub_08083a44(void)
+void FlamerIdleState0Update(void)
 {
 }
 
@@ -821,7 +821,7 @@ void SirKibbleCutterState0(void)
     }
 }
 
-void sub_08083fbc(void)
+void SirKibbleCutterState0Update(void)
 {
     struct Task *t;
     struct PointPair p;

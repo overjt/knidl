@@ -2396,7 +2396,7 @@ u32 gUnk_0874C520[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C568.  Consumers: Task_WhispyWoodsAirPuff (src/hud_b2fe8.c:376),
- * sub_080b3758 (src/hud_b2fe8.c:623), PlayerObjectAirPuff
+ * WhispyWoodsAirPuffState0Update (src/hud_b2fe8.c:623), PlayerObjectAirPuff
  * (src/plobj_509ec.c:48).  38 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables
  * 0x0874C568-0x0874C600).  Declared include/enemy.h:1143. */

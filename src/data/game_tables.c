@@ -490,15 +490,15 @@ u32 gPlayerGoalGameStates[11] GAME_TBL(0873dbe4) = {
 };
 /* include/effect.h; CallTableEntry(i, 11, ...) in PlayerGoalGameUpdate */
 u32 gPlayerGoalGameStateUpdates[11] GAME_TBL(0873dbe4) = {
-    (u32)sub_0805b508,
+    (u32)PlayerGoalGameState0Update,
     (u32)PlayerGoalGameWaitForPressUpdate,
-    (u32)sub_0805b660,
-    (u32)sub_0805b688,
+    (u32)PlayerGoalGameState2Update,
+    (u32)PlayerGoalGameState3Update,
     (u32)PlayerGoalGameLaunchUpdate,
-    (u32)sub_0805b998,
-    (u32)sub_0805b9c0,
+    (u32)PlayerGoalGameState5Update,
+    (u32)PlayerGoalGameState6Update,
     (u32)PlayerGoalGameLandUpdate,
-    (u32)sub_0805bc50,
+    (u32)PlayerGoalGameState8Update,
     (u32)PlayerGoalGameDanceUpdate,
     (u32)PlayerGoalGameFinishUpdate,
 };
@@ -574,8 +574,8 @@ u32 gHeldPlayerStateUpdates[11] GAME_TBL(0873e2f0) = {
     (u32)HeldPlayerSpitBounceOffUpdate,
     (u32)HeldPlayerBackdropHeldUpdate,
     (u32)HeldPlayerBackdropBounceOffUpdate,
-    (u32)sub_08067a48,
-    (u32)sub_08067d30,
+    (u32)HeldPlayerState5Update,
+    (u32)HeldPlayerState6Update,
     (u32)HeldPlayerThrowHeldUpdate,
     (u32)HeldPlayerThrowFlightForwardUpdate,
     (u32)HeldPlayerThrowFlightBackwardUpdate,
@@ -667,8 +667,8 @@ u32 gActorDrownStates[3] GAME_TBL(0873e734) = {
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownUpdate */
 u32 gActorDrownStateUpdates[3] GAME_TBL(0873e734) = {
     (u32)ActorDrownSinkUpdate,
-    (u32)sub_0806b368,
-    (u32)sub_0806b3c0,
+    (u32)ActorDrownState1Update,
+    (u32)ActorDrownState2Update,
 };
 
 /* ---- 0x0873EAA0-0x0873EAC0: 1 table(s), 8 function pointer(s), section .game_tbl_0873eaa0 ---- */

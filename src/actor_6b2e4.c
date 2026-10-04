@@ -67,7 +67,7 @@ void ActorDrownState1(void)
     TaskSleepForever();
 }
 
-void sub_0806b368(void)
+void ActorDrownState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
@@ -86,7 +86,7 @@ void ActorDrownState2(void)
     ActorDestroy();
 }
 
-void sub_0806b3c0(void)
+void ActorDrownState2Update(void)
 {
 }
 

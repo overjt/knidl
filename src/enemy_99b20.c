@@ -20,13 +20,13 @@
  * MrTickTockUpdate and dispatches Task.state through the 24-word guard table
  * gMrTickTockStates, MrTickTockUpdate dispatches Task.updateState through the 24-word body
  * table gMrTickTockStateUpdates that follows it, and MrTickTockEnterState is its re-arm hook.
- * States 0-23 follow as <body, guard> pairs; sub_0809b438 is the timer leaf
+ * States 0-23 follow as <body, guard> pairs; MrTickTockState23Update is the timer leaf
  * the table word at 0x0874580C points at.
  *
  * Task_MrFrostyIceCube, Task_MrTickTockRing and Task_MrTickTockNote are the three companion tasks
  * (graphics gUnk_0874CB7C, gMrTickTockRingFrames, gMrTickTockNoteFrames).  They use
- * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; sub_0809b6ac and
- * sub_0809b964 read the parent's state out of gTasks[Task.parent], and
+ * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; MrFrostyIceCubeState0Update and
+ * MrTickTockRingState0Update read the parent's state out of gTasks[Task.parent], and
  * the third one's own states live in the next module - gMrTickTockNoteVariants points at
  * MrTickTockNoteInit.  MrTickTockRingEnterState is a dead copy of the gMrTickTockRingStates re-arm.
  */
@@ -527,7 +527,7 @@ void MrTickTockState1(void)
     TaskSleepForever();
 }
 
-void sub_0809a2c0(void)
+void MrTickTockState1Update(void)
 {
     struct Task *t;
 
@@ -623,7 +623,7 @@ void MrTickTockState3(void)
     }
 }
 
-void sub_0809a434(void)
+void MrTickTockState3Update(void)
 {
     struct Task *t;
 
@@ -673,7 +673,7 @@ void MrTickTockState4(void)
     TaskSleepForever();
 }
 
-void sub_0809a4f0(void)
+void MrTickTockState4Update(void)
 {
     struct Task *t;
 
@@ -737,7 +737,7 @@ void MrTickTockState5(void)
     TaskSleepForever();
 }
 
-void sub_0809a624(void)
+void MrTickTockState5Update(void)
 {
     struct Task *t;
 
@@ -838,7 +838,7 @@ void MrTickTockState7(void)
     TaskSleepForever();
 }
 
-void sub_0809a7d8(void)
+void MrTickTockState7Update(void)
 {
 }
 
@@ -865,7 +865,7 @@ void MrTickTockState8(void)
     }
 }
 
-void sub_0809a82c(void)
+void MrTickTockState8Update(void)
 {
     struct Task *t;
 
@@ -903,7 +903,7 @@ void MrTickTockState9(void)
     TaskSleepForever();
 }
 
-void sub_0809a8b4(void)
+void MrTickTockState9Update(void)
 {
 }
 
@@ -932,7 +932,7 @@ void MrTickTockState10(void)
     TaskSleepForever();
 }
 
-void sub_0809a918(void)
+void MrTickTockState10Update(void)
 {
 }
 
@@ -960,7 +960,7 @@ void MrTickTockState11(void)
     }
 }
 
-void sub_0809a974(void)
+void MrTickTockState11Update(void)
 {
     struct Task *t;
 
@@ -1035,7 +1035,7 @@ void MrTickTockState12(void)
     }
 }
 
-void sub_0809aaf0(void)
+void MrTickTockState12Update(void)
 {
     struct Task *t;
     s32 v;
@@ -1120,7 +1120,7 @@ void MrTickTockState13(void)
     }
 }
 
-void sub_0809ac54(void)
+void MrTickTockState13Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1192,7 +1192,7 @@ void MrTickTockState14(void)
     TaskSleepForever();
 }
 
-void sub_0809ad6c(void)
+void MrTickTockState14Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1295,7 +1295,7 @@ void MrTickTockState16(void)
     }
 }
 
-void sub_0809aefc(void)
+void MrTickTockState16Update(void)
 {
     struct Task *t;
 
@@ -1376,7 +1376,7 @@ void MrTickTockState17(void)
     }
 }
 
-void sub_0809b09c(void)
+void MrTickTockState17Update(void)
 {
     struct Task *t;
 
@@ -1507,7 +1507,7 @@ void MrTickTockState20(void)
     TaskSleepForever();
 }
 
-void sub_0809b310(void)
+void MrTickTockState20Update(void)
 {
     struct Task *t;
 
@@ -1545,7 +1545,7 @@ void MrTickTockState21(void)
     TaskSleepForever();
 }
 
-void sub_0809b394(void)
+void MrTickTockState21Update(void)
 {
     struct Task *t;
 
@@ -1574,7 +1574,7 @@ void MrTickTockState22(void)
     TaskSleepForever();
 }
 
-void sub_0809b404(void)
+void MrTickTockState22Update(void)
 {
 }
 
@@ -1593,7 +1593,7 @@ void MrTickTockState23(void)
     TaskSleepForever();
 }
 
-void sub_0809b438(void)
+void MrTickTockState23Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1742,7 +1742,7 @@ void MrFrostyIceCubeState0(void)
     TaskSleepForever();
 }
 
-void sub_0809b6ac(void)
+void MrFrostyIceCubeState0Update(void)
 {
     struct Task *t;
 
@@ -1828,7 +1828,7 @@ void MrFrostyIceCubeState2(void)
     ActorDestroy();
 }
 
-void sub_0809b7ec(void)
+void MrFrostyIceCubeState2Update(void)
 {
 }
 
@@ -1908,7 +1908,7 @@ void MrTickTockRingState0(void)
     }
 }
 
-void sub_0809b964(void)
+void MrTickTockRingState0Update(void)
 {
     struct Task *t;
 

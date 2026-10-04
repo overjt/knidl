@@ -196,7 +196,7 @@ void NightmareWizardState0(void)
     TaskSleepForever();
 }
 
-void sub_080aa52c(void)
+void NightmareWizardState0Update(void)
 {
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
     if (gCurTask->state != 0)
@@ -254,7 +254,7 @@ setv:
     TaskSleepForever();
 }
 
-void sub_080aa62c(void)
+void NightmareWizardState1Update(void)
 {
     s32 w;
 
@@ -279,7 +279,7 @@ void NightmareWizardState2(void)
     TaskSleepForever();
 }
 
-void sub_080aa6a8(void)
+void NightmareWizardState2Update(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
@@ -304,7 +304,7 @@ void NightmareWizardState3(void)
     TaskSleepForever();
 }
 
-void sub_080aa71c(void)
+void NightmareWizardState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
@@ -399,7 +399,7 @@ out:
     TaskSleepForever();
 }
 
-void sub_080aa970(void)
+void NightmareWizardState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
@@ -700,7 +700,7 @@ void NightmareWizardState8(void)
     TaskSleepForever();
 }
 
-void sub_080ab158(void)
+void NightmareWizardState8Update(void)
 {
     s32 w;
 
@@ -783,7 +783,7 @@ void NightmareWizardState9(void)
     TaskSleepForever();
 }
 
-void sub_080ab394(void)
+void NightmareWizardState9Update(void)
 {
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
     if (gCurTask->state != 9)
@@ -806,7 +806,7 @@ void NightmareWizardState10(void)
     TaskSleepForever();
 }
 
-void sub_080ab418(void)
+void NightmareWizardState10Update(void)
 {
     if (gCurTask->state != 10)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
@@ -1947,7 +1947,7 @@ void NightmareWizardStarState0(void)
     TaskSleepForever();
 }
 
-void sub_080ace60(void)
+void NightmareWizardStarState0Update(void)
 {
     gCurTask->unk30 = ActorTickAnim(gCurTask->unk30);
     if (gUnk_02007D00[0] == 2)

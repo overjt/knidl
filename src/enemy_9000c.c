@@ -16,7 +16,7 @@
  * per-frame row gUnk_087437D0[Task.frame].
  *
  * States 0-10 then follow as <body, guard> pairs (BonkersState0 /
- * sub_08090270, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
+ * BonkersState0Update, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
  * TaskYieldTrampoline waits that steps Task.frame, clears and then waits on
  * Task.onGround (set when the boss lands) and pushes 16.16 velocities through
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
@@ -169,7 +169,7 @@ void BonkersState0(void)
     TaskSleepForever();
 }
 
-void sub_08090270(void)
+void BonkersState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);

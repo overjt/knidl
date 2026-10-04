@@ -305,7 +305,7 @@ void WarpStarState0(void)
     }
 }
 
-void sub_0807156c(void)
+void WarpStarState0Update(void)
 {
     if (gRoomExitKind != 0 && gActivePlayerCount != 1)
     {
@@ -350,7 +350,7 @@ void WarpStarState1(void)
     }
 }
 
-void sub_08071640(void)
+void WarpStarState1Update(void)
 {
     WarpStarAnimateTiles();
     if (gCurTask->unk28 == gActivePlayerCount && sub_08027750())

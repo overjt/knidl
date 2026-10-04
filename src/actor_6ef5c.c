@@ -15,14 +15,14 @@
  *                     barriers between them.  PlayerWarpStarRideState1, PlayerWarpStarRideState3,
  *                     PlayerWarpStarRideState4, PlayerWarpStarRideState5 (the 0x474 leader),
  *                     PlayerWarpStarRideState6 and PlayerWarpStarRideState7.
- *   <per-frame hook>  sub_0806f174, sub_0806f36c, sub_0806f5c4,
- *                     sub_0806faac and sub_0806fc98: re-aim the camera at
+ *   <per-frame hook>  PlayerWarpStarRideState1Update, PlayerWarpStarRideState3Update, PlayerWarpStarRideState4Update,
+ *                     PlayerWarpStarRideState5Update and PlayerWarpStarRideState6Update: re-aim the camera at
  *                     the owning player, run TerrainCollideBox over a ROM
  *                     descriptor, and advance Task.unk24 on the
  *                     `Task.onGround & 1` edge.
  *
  * PlayerWarpStarRideState2 is the idle animation loop the sequences fall back to, and
- * sub_0806efe8 is a real no-op callback slot (a ROM-pointer entry, not
+ * PlayerWarpStarRideState2Update is a real no-op callback slot (a ROM-pointer entry, not
  * padding).
  *
  * Two symbol-DB false positives live in this range and are curated away in
@@ -76,7 +76,7 @@ void PlayerWarpStarRideState2(void)
     TaskSleepForever();
 }
 
-void sub_0806efe8(void)
+void PlayerWarpStarRideState2Update(void)
 {
 }
 
@@ -141,7 +141,7 @@ void PlayerWarpStarRideState1(void)
     TaskSleepForever();
 }
 
-void sub_0806f174(void)
+void PlayerWarpStarRideState1Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -222,7 +222,7 @@ void PlayerWarpStarRideState3(void)
     TaskSleepForever();
 }
 
-void sub_0806f36c(void)
+void PlayerWarpStarRideState3Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -316,7 +316,7 @@ void PlayerWarpStarRideState4(void)
     TaskSleepForever();
 }
 
-void sub_0806f5c4(void)
+void PlayerWarpStarRideState4Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -497,7 +497,7 @@ void PlayerWarpStarRideState5(void)
     TaskSleepForever();
 }
 
-void sub_0806faac(void)
+void PlayerWarpStarRideState5Update(void)
 {
     struct Task *t;
 
@@ -573,7 +573,7 @@ void PlayerWarpStarRideState6(void)
     TaskSleepForever();
 }
 
-void sub_0806fc98(void)
+void PlayerWarpStarRideState6Update(void)
 {
     struct Task *t;
     struct Task *u;

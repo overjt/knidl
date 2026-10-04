@@ -313,7 +313,7 @@ void PlayerGoalGameState0(void)
     PlayerGoalGameWaitForPress();
 }
 
-void sub_0805b508(void)
+void PlayerGoalGameState0Update(void)
 {
     TaskUpdateFrameScript();
 }
@@ -392,7 +392,7 @@ void PlayerGoalGameState2(void)
     sub_0805b670();
 }
 
-void sub_0805b660(void)
+void PlayerGoalGameState2Update(void)
 {
     TaskUpdateFrameScript();
     sub_0805c584();
@@ -404,7 +404,7 @@ void sub_0805b670(void)
     TaskSleepForever();
 }
 
-void sub_0805b688(void)
+void PlayerGoalGameState3Update(void)
 {
     TaskUpdateFrameScript();
     sub_0805c584();
@@ -512,7 +512,7 @@ void sub_0805b8f8(void)
     PlayerGoalGameLand();
 }
 
-void sub_0805b998(void)
+void PlayerGoalGameState5Update(void)
 {
     TaskUpdateFrameScript();
 }
@@ -524,7 +524,7 @@ void sub_0805b9a4(void)
     TaskSleepForever();
 }
 
-void sub_0805b9c0(void)
+void PlayerGoalGameState6Update(void)
 {
     s32 v;
     s16 *tbl;
@@ -626,7 +626,7 @@ void sub_0805bc1c(void)
     TaskSleepForever();
 }
 
-void sub_0805bc50(void)
+void PlayerGoalGameState8Update(void)
 {
     TaskUpdateFrameScript();
 }

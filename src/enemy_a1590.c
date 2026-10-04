@@ -1608,8 +1608,8 @@ void MrShineAndMrBrightState0(void)
     TaskSleepForever();
 }
 
-/* sub_080a31a4 (0x080A31A4-0x080A31D0) */
-void sub_080a31a4(void)
+/* MrShineAndMrBrightState0Update (0x080A31A4-0x080A31D0) */
+void MrShineAndMrBrightState0Update(void)
 {
     if (gCurTask->state != 0)
     {
@@ -1626,8 +1626,8 @@ void MrShineAndMrBrightState1(void)
     TaskSleepForever();
 }
 
-/* sub_080a31f0 (0x080A31F0-0x080A31F4) */
-void sub_080a31f0(void)
+/* MrShineAndMrBrightState1Update (0x080A31F0-0x080A31F4) */
+void MrShineAndMrBrightState1Update(void)
 {
 }
 
@@ -1652,8 +1652,8 @@ void MrShineAndMrBrightState2(void)
     TaskSleepForever();
 }
 
-/* sub_080a3250 (0x080A3250-0x080A3268) */
-void sub_080a3250(void)
+/* MrShineAndMrBrightState2Update (0x080A3250-0x080A3268) */
+void MrShineAndMrBrightState2Update(void)
 {
     if (gUnk_02007D00[7] == 2)
         sub_080a1d2c();
@@ -1666,8 +1666,8 @@ void MrShineAndMrBrightState3(void)
     TaskSleepForever();
 }
 
-/* sub_080a3280 (0x080A3280-0x080A3298) */
-void sub_080a3280(void)
+/* MrShineAndMrBrightState3Update (0x080A3280-0x080A3298) */
+void MrShineAndMrBrightState3Update(void)
 {
     if (gUnk_02007D00[7] == 2)
         sub_080a1d84();
@@ -1781,8 +1781,8 @@ void MrShineState3(void)
     TaskSleepForever();
 }
 
-/* sub_080a34b8 (0x080A34B8-0x080A34C8) */
-void sub_080a34b8(void)
+/* MrShineState3Update (0x080A34B8-0x080A34C8) */
+void MrShineState3Update(void)
 {
     sub_080a25c4(MrShineEnterState);
 }
@@ -1797,8 +1797,8 @@ void MrShineState4(void)
     TaskSleepForever();
 }
 
-/* sub_080a34f0 (0x080A34F0-0x080A352C) */
-void sub_080a34f0(void)
+/* MrShineState4Update (0x080A34F0-0x080A352C) */
+void MrShineState4Update(void)
 {
     void *f = MrShineEnterState;
 
@@ -1817,8 +1817,8 @@ void MrShineState5(void)
     TaskSleepForever();
 }
 
-/* sub_080a3548 (0x080A3548-0x080A3588) */
-void sub_080a3548(void)
+/* MrShineState5Update (0x080A3548-0x080A3588) */
+void MrShineState5Update(void)
 {
     void *f = MrShineEnterState;
 
@@ -1859,8 +1859,8 @@ void MrShineState7(void)
     TaskSleepForever();
 }
 
-/* sub_080a35d8 (0x080A35D8-0x080A35E8) */
-void sub_080a35d8(void)
+/* MrShineState7Update (0x080A35D8-0x080A35E8) */
+void MrShineState7Update(void)
 {
     sub_080a263c(MrShineEnterState);
 }
@@ -1978,8 +1978,8 @@ void MrShineState11(void)
     TaskSleepForever();
 }
 
-/* sub_080a3840 (0x080A3840-0x080A387C) */
-void sub_080a3840(void)
+/* MrShineState11Update (0x080A3840-0x080A387C) */
+void MrShineState11Update(void)
 {
     if (gCurTask->state != 11)
         TaskSetEntry(MrShineEnterState, gCurTaskIdx);
@@ -2108,8 +2108,8 @@ void MrShineState15(void)
     TaskSleepForever();
 }
 
-/* sub_080a3b78 (0x080A3B78-0x080A3B7C) */
-void sub_080a3b78(void)
+/* MrShineState15Update (0x080A3B78-0x080A3B7C) */
+void MrShineState15Update(void)
 {
 }
 
@@ -2263,8 +2263,8 @@ void MrBrightState3(void)
     TaskSleepForever();
 }
 
-/* sub_080a3e7c (0x080A3E7C-0x080A3EA0) */
-void sub_080a3e7c(void)
+/* MrBrightState3Update (0x080A3E7C-0x080A3EA0) */
+void MrBrightState3Update(void)
 {
     gCurTask->unk1C = ActorTickAnim(gCurTask->unk1C);
     sub_080a25c4(MrBrightEnterState);
@@ -2283,8 +2283,8 @@ void MrBrightState4(void)
     TaskSleepForever();
 }
 
-/* sub_080a3edc (0x080A3EDC-0x080A3F24) */
-void sub_080a3edc(void)
+/* MrBrightState4Update (0x080A3EDC-0x080A3F24) */
+void MrBrightState4Update(void)
 {
     void *f;
 
@@ -2309,8 +2309,8 @@ void MrBrightState5(void)
     TaskSleepForever();
 }
 
-/* sub_080a3f54 (0x080A3F54-0x080A3FB8) */
-void sub_080a3f54(void)
+/* MrBrightState5Update (0x080A3F54-0x080A3FB8) */
+void MrBrightState5Update(void)
 {
     void *f;
 
@@ -2359,8 +2359,8 @@ void MrBrightState7(void)
     TaskSleepForever();
 }
 
-/* sub_080a4018 (0x080A4018-0x080A403C) */
-void sub_080a4018(void)
+/* MrBrightState7Update (0x080A4018-0x080A403C) */
+void MrBrightState7Update(void)
 {
     gCurTask->unk1C = ActorTickAnim(gCurTask->unk1C);
     sub_080a263c(MrBrightEnterState);
@@ -2482,8 +2482,8 @@ void MrBrightState11(void)
     TaskSleepForever();
 }
 
-/* sub_080a42f8 (0x080A42F8-0x080A4350) */
-void sub_080a42f8(void)
+/* MrBrightState11Update (0x080A42F8-0x080A4350) */
+void MrBrightState11Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -2612,8 +2612,8 @@ void MrBrightState15(void)
     TaskSleepForever();
 }
 
-/* sub_080a4630 (0x080A4630-0x080A4634) */
-void sub_080a4630(void)
+/* MrBrightState15Update (0x080A4630-0x080A4634) */
+void MrBrightState15Update(void)
 {
 }
 
@@ -2937,8 +2937,8 @@ void KingDededeAirPuffState0(void)
     ActorDestroy();
 }
 
-/* sub_080a4c80 (0x080A4C80-0x080A4C84) */
-void sub_080a4c80(void)
+/* KingDededeAirPuffState0Update (0x080A4C80-0x080A4C84) */
+void KingDededeAirPuffState0Update(void)
 {
 }
 
@@ -3003,8 +3003,8 @@ void MrShineCrescentState0(void)
     TaskSleepForever();
 }
 
-/* sub_080a4dd8 (0x080A4DD8-0x080A4DF4) */
-void sub_080a4dd8(void)
+/* MrShineCrescentState0Update (0x080A4DD8-0x080A4DF4) */
+void MrShineCrescentState0Update(void)
 {
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
@@ -3110,8 +3110,8 @@ void MrShineFallingStarState0(void)
     TaskSleepForever();
 }
 
-/* sub_080a5008 (0x080A5008-0x080A5020) */
-void sub_080a5008(void)
+/* MrShineFallingStarState0Update (0x080A5008-0x080A5020) */
+void MrShineFallingStarState0Update(void)
 {
     if (gCurTask->unk18 != 0)
         sub_08064bcc();
@@ -3185,8 +3185,8 @@ void MrBrightFireballState0(void)
     }
 }
 
-/* sub_080a5164 (0x080A5164-0x080A5168) */
-void sub_080a5164(void)
+/* MrBrightFireballState0Update (0x080A5164-0x080A5168) */
+void MrBrightFireballState0Update(void)
 {
 }
 
@@ -3268,8 +3268,8 @@ void MrBrightBeamState0(void)
     TaskSleepForever();
 }
 
-/* sub_080a52c8 (0x080A52C8-0x080A5304) */
-void sub_080a52c8(void)
+/* MrBrightBeamState0Update (0x080A52C8-0x080A5304) */
+void MrBrightBeamState0Update(void)
 {
     struct Task *t = gCurTask;
 

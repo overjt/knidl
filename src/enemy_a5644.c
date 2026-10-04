@@ -237,7 +237,7 @@ void MetaKnightState0(void)
     TaskSleepForever();
 }
 
-void sub_080a5a78(void)
+void MetaKnightState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
@@ -266,7 +266,7 @@ void MetaKnightState1(void)
     sub_080a6e98();
 }
 
-void sub_080a5af4(void)
+void MetaKnightState1Update(void)
 {
     struct Task *pt;
     s16 *px;
@@ -413,7 +413,7 @@ void MetaKnightState2(void)
     TaskSleepForever();
 }
 
-void sub_080a5e30(void)
+void MetaKnightState2Update(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 2)
@@ -433,7 +433,7 @@ void MetaKnightState3(void)
     TaskSleepForever();
 }
 
-void sub_080a5e9c(void)
+void MetaKnightState3Update(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 3)
@@ -448,7 +448,7 @@ void MetaKnightState4(void)
     TaskSleepForever();
 }
 
-void sub_080a5ef0(void)
+void MetaKnightState4Update(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 4)
@@ -475,7 +475,7 @@ void MetaKnightState5(void)
     TaskSleepForever();
 }
 
-void sub_080a5f7c(void)
+void MetaKnightState5Update(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 5)
@@ -501,7 +501,7 @@ void MetaKnightState6(void)
     sub_080a6e98();
 }
 
-void sub_080a6020(void)
+void MetaKnightState6Update(void)
 {
     s32 d;
     s32 x;
@@ -584,7 +584,7 @@ void MetaKnightState9(void)
     TaskSleepForever();
 }
 
-void sub_080a6264(void)
+void MetaKnightState9Update(void)
 {
     sub_080a6fb4();
     if (gCurTask->state != 9)
@@ -618,7 +618,7 @@ void MetaKnightState8(void)
     TaskSleepForever();
 }
 
-void sub_080a6330(void)
+void MetaKnightState8Update(void)
 {
     sub_080a6fb4();
     if (gCurTask->state != 8)
@@ -654,7 +654,7 @@ void MetaKnightState11(void)
     TaskSleepForever();
 }
 
-void sub_080a63d8(void)
+void MetaKnightState11Update(void)
 {
     if (gCurTask->state != 11)
         sub_080a7168();
@@ -670,7 +670,7 @@ void MetaKnightState12(void)
     TaskSleepForever();
 }
 
-void sub_080a6420(void)
+void MetaKnightState12Update(void)
 {
     if (gCurTask->state != 12)
         sub_080a7168();
@@ -733,7 +733,7 @@ void MetaKnightState16(void)
     TaskSleepForever();
 }
 
-void sub_080a6574(void)
+void MetaKnightState16Update(void)
 {
     if (gCurTask->state != 16)
         sub_080a7168();
@@ -780,7 +780,7 @@ void MetaKnightState14(void)
     TaskSleepForever();
 }
 
-void sub_080a6680(void)
+void MetaKnightState14Update(void)
 {
     if (gCurTask->state != 14)
         sub_080a7168();
@@ -795,7 +795,7 @@ void MetaKnightState17(void)
     TaskSleepForever();
 }
 
-void sub_080a66c8(void)
+void MetaKnightState17Update(void)
 {
     if ((u8)sub_080a6f74() == 1)
         TaskTurnAroundAndReverseX();
@@ -817,7 +817,7 @@ void MetaKnightState18(void)
     TaskSleepForever();
 }
 
-void sub_080a6734(void)
+void MetaKnightState18Update(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != 18)
@@ -852,7 +852,7 @@ void MetaKnightState19(void)
     TaskSleepForever();
 }
 
-void sub_080a680c(void)
+void MetaKnightState19Update(void)
 {
     s32 v;
 
@@ -956,7 +956,7 @@ void MetaKnightState21(void)
     TaskSleepForever();
 }
 
-void sub_080a6aac(void)
+void MetaKnightState21Update(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gUnk_02007D00[7] <= 25)
@@ -1007,7 +1007,7 @@ void MetaKnightState22(void)
     TaskSleepForever();
 }
 
-void sub_080a6c3c(void)
+void MetaKnightState22Update(void)
 {
     s32 *pD;
     u8 *b3v;
@@ -1076,7 +1076,7 @@ void MetaKnightState23(void)
     TaskSleepForever();
 }
 
-void sub_080a6d60(void)
+void MetaKnightState23Update(void)
 {
     u16 v;
 

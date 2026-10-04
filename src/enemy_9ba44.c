@@ -100,7 +100,7 @@ void MrTickTockNoteState1(void)
     TaskSleepForever();
 }
 
-void sub_0809bbd4(void)
+void MrTickTockNoteState1Update(void)
 {
 }
 

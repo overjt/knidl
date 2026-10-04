@@ -123,7 +123,7 @@ void BugzzyLadybugState0(void)
     }
 }
 
-void sub_08094144(void)
+void BugzzyLadybugState0Update(void)
 {
     struct Task *t;
 
@@ -322,7 +322,7 @@ void GrandWheelieState0(void)
     TaskSleepForever();
 }
 
-void sub_08094640(void)
+void GrandWheelieState0Update(void)
 {
     gCurTask->unk28 = GrandWheelieTickAnim(gCurTask->unk28);
 }
@@ -335,7 +335,7 @@ void GrandWheelieState1(void)
     TaskSleepForever();
 }
 
-void sub_0809467c(void)
+void GrandWheelieState1Update(void)
 {
     struct Task *t;
 
@@ -376,7 +376,7 @@ void GrandWheelieState2(void)
     }
 }
 
-void sub_08094758(void)
+void GrandWheelieState2Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -677,7 +677,7 @@ void GrandWheelieState5(void)
     TaskSleepForever();
 }
 
-void sub_08094dec(void)
+void GrandWheelieState5Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -759,7 +759,7 @@ void GrandWheelieState6(void)
     TaskSleepForever();
 }
 
-void sub_08094f68(void)
+void GrandWheelieState6Update(void)
 {
     struct Task *t;
 
@@ -813,7 +813,7 @@ void GrandWheelieState7(void)
     TaskSleepForever();
 }
 
-void sub_080950b4(void)
+void GrandWheelieState7Update(void)
 {
     struct Task *t;
     s32 v;

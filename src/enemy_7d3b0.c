@@ -13,7 +13,7 @@
  *     seventeen-step cue script over `0x087410C0`), the effect tasks Pengy's
  *     breath state PengyShoot spawns with CreateChildTaskAtOffsetFacing;
  *   * Task_Rocky's (#9) row 0 `RockyWalkInit`+`RockyWalkUpdate`, whose per-frame
- *     handlers `sub_0807d82c` / `sub_0807d918` re-centre on the nearest
+ *     handlers `RockyWalkState0Update` / `RockyWalkState1Update` re-centre on the nearest
  *     player when `|TaskGetNearestPlayerDx()| <= 49` and `|TaskGetDyTo()| <= 15`;
  *   * the class-3 three-way branch pair `sub_0807dd70` / `sub_0807dddc`
  *     (`switch (Task.variant)` with an empty `case 1`);
@@ -277,7 +277,7 @@ void RockyWalk(void)
     TaskSleepForever();
 }
 
-void sub_0807d82c(void)
+void RockyWalkState0Update(void)
 {
     gCurTask->unk2C = TaskFindNearestPlayer();
     if (abs(TaskGetDxTo(gCurTask->unk2C)) <= 49)
@@ -311,7 +311,7 @@ void RockyWalkState1(void)
     TaskSleepForever();
 }
 
-void sub_0807d918(void)
+void RockyWalkState1Update(void)
 {
     gCurTask->unk2C = TaskFindNearestPlayer();
     if (abs(TaskGetDxTo(gCurTask->unk2C)) <= 49)
@@ -343,7 +343,7 @@ void RockyWalkState2(void)
     TaskSleepForever();
 }
 
-void sub_0807da08(void)
+void RockyWalkState2Update(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
@@ -359,7 +359,7 @@ void RockyWalkState3(void)
     TaskSleepForever();
 }
 
-void sub_0807da5c(void)
+void RockyWalkState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
@@ -373,7 +373,7 @@ void RockyWalkState4(void)
     TaskSleepForever();
 }
 
-void sub_0807daa8(void)
+void RockyWalkState4Update(void)
 {
 }
 
@@ -406,7 +406,7 @@ void RockyIdle(void)
         sub_0807dd10();
 }
 
-void sub_0807db44(void)
+void RockyIdleState0Update(void)
 {
 }
 
@@ -465,7 +465,7 @@ void RockyStandState0(void)
     TaskSleepForever();
 }
 
-void sub_0807dc78(void)
+void RockyStandState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
@@ -479,7 +479,7 @@ void RockyStandState1(void)
     TaskSleepForever();
 }
 
-void sub_0807dcc0(void)
+void RockyStandState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
@@ -493,7 +493,7 @@ void RockyStandState2(void)
     TaskSleepForever();
 }
 
-void sub_0807dd0c(void)
+void RockyStandState2Update(void)
 {
 }
 
@@ -704,7 +704,7 @@ void SirKibbleWalk(void)
     }
 }
 
-void sub_0807e100(void)
+void SirKibbleWalkState0Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -885,7 +885,7 @@ void SirKibbleIdle(void)
     sub_0807e484();
 }
 
-void sub_0807e480(void)
+void SirKibbleIdleState0Update(void)
 {
 }
 
@@ -1205,7 +1205,7 @@ void GordoBob(void)
     }
 }
 
-void sub_0807ead4(void)
+void GordoBobState0Update(void)
 {
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
@@ -1252,7 +1252,7 @@ void GordoBounceVertical(void)
     }
 }
 
-void sub_0807ebc4(void)
+void GordoBounceVerticalState0Update(void)
 {
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
@@ -1298,7 +1298,7 @@ void GordoBounceHorizontal(void)
     }
 }
 
-void sub_0807ecb0(void)
+void GordoBounceHorizontalState0Update(void)
 {
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
@@ -1341,7 +1341,7 @@ void GordoSweep(void)
     }
 }
 
-void sub_0807ed98(void)
+void GordoSweepState0Update(void)
 {
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
@@ -1384,7 +1384,7 @@ void CoolSpookFly(void)
     sub_0807ef7c();
 }
 
-void sub_0807eea8(void)
+void CoolSpookFlyState0Update(void)
 {
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
@@ -1417,7 +1417,7 @@ void CoolSpookBob(void)
     sub_0807ef7c();
 }
 
-void sub_0807ef60(void)
+void CoolSpookBobState0Update(void)
 {
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }

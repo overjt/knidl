@@ -202,7 +202,7 @@ void NoddyState5(void)
     }
 }
 
-void sub_080847f8(void)
+void NoddyState5Update(void)
 {
 }
 
@@ -227,7 +227,7 @@ void NoddyState1(void)
     TaskSleepForever();
 }
 
-void sub_08084854(void)
+void NoddyState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
@@ -303,7 +303,7 @@ void NoddyState3(void)
     TaskSleepForever();
 }
 
-void sub_080849b4(void)
+void NoddyState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);

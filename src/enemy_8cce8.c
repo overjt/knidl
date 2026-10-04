@@ -979,7 +979,7 @@ void BroomHatterIdle(void)
     }
 }
 
-void sub_0808e050(void)
+void BroomHatterIdleState0Update(void)
 {
 }
 

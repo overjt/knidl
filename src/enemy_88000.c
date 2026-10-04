@@ -398,7 +398,7 @@ void SquishyWalk(void)
     }
 }
 
-void sub_080887a0(void)
+void SquishyWalkState0Update(void)
 {
     s32 n = gCurTask->unk34 - 1;
 
@@ -444,7 +444,7 @@ void SquishyWalkState1(void)
     TaskSleepForever();
 }
 
-void sub_080888a0(void)
+void SquishyWalkState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
@@ -496,7 +496,7 @@ void SquishyWalkState3(void)
     }
 }
 
-void sub_080889c8(void)
+void SquishyWalkState3Update(void)
 {
 }
 
@@ -517,7 +517,7 @@ void SquishyWalkState4(void)
     TaskSleepForever();
 }
 
-void sub_08088a3c(void)
+void SquishyWalkState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
@@ -984,7 +984,7 @@ void BubblesState1(void)
     }
 }
 
-void sub_0808945c(void)
+void BubblesState1Update(void)
 {
 }
 
@@ -1493,7 +1493,7 @@ void SlippyState0(void)
     TaskSleepForever();
 }
 
-void sub_08089ea0(void)
+void SlippyState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
@@ -1558,7 +1558,7 @@ void SlippyState1(void)
     }
 }
 
-void sub_0808a020(void)
+void SlippyState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
@@ -1582,7 +1582,7 @@ void SlippyState2(void)
     TaskSleepForever();
 }
 
-void sub_0808a0a8(void)
+void SlippyState2Update(void)
 {
 }
 
@@ -1604,7 +1604,7 @@ void SlippyState3(void)
     TaskSleepForever();
 }
 
-void sub_0808a10c(void)
+void SlippyState3Update(void)
 {
 }
 
@@ -1636,7 +1636,7 @@ void SlippyState4(void)
     TaskSleepForever();
 }
 
-void sub_0808a1d0(void)
+void SlippyState4Update(void)
 {
     u8 r;
 
@@ -1667,7 +1667,7 @@ void SlippyState5(void)
     TaskSleepForever();
 }
 
-void sub_0808a270(void)
+void SlippyState5Update(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
@@ -1709,7 +1709,7 @@ void SlippyState6(void)
     TaskSleepForever();
 }
 
-void sub_0808a36c(void)
+void SlippyState6Update(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
@@ -1745,7 +1745,7 @@ void SlippyState7(void)
     TaskSleepForever();
 }
 
-void sub_0808a478(void)
+void SlippyState7Update(void)
 {
     if (gCurTask->state != 7)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
@@ -1793,7 +1793,7 @@ void SlippyState8(void)
     }
 }
 
-void sub_0808a5b8(void)
+void SlippyState8Update(void)
 {
     if (gCurTask->state != 8)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
@@ -1838,7 +1838,7 @@ void SlippyState9(void)
     TaskSleepForever();
 }
 
-void sub_0808a710(void)
+void SlippyState9Update(void)
 {
     if (gCurTask->state != 9)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);

@@ -473,7 +473,7 @@ void PlayerCannonState0(void)
     TaskSleepForever();
 }
 
-void sub_08076cac(void)
+void PlayerCannonState0Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -491,7 +491,7 @@ void PlayerCannonState1(void)
     TaskSleepForever();
 }
 
-void sub_08076d00(void)
+void PlayerCannonState1Update(void)
 {
     sub_0807685c(0);
 }
@@ -505,7 +505,7 @@ void PlayerCannonState2(void)
     TaskSleepForever();
 }
 
-void sub_08076d38(void)
+void PlayerCannonState2Update(void)
 {
     sub_0807685c(1);
 }
@@ -520,7 +520,7 @@ void PlayerCannonState3(void)
         TaskSleepForever();
 }
 
-void sub_08076d70(void)
+void PlayerCannonState3Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -547,7 +547,7 @@ void PlayerCannonState4(void)
     }
 }
 
-void sub_08076ddc(void)
+void PlayerCannonState4Update(void)
 {
     TerrainCollideBox(gUnk_0873F5E4);
     if (gMetaKnightmareMode == 0)
@@ -574,7 +574,7 @@ void PlayerCannonState5(void)
     sub_08076a58();
 }
 
-void sub_08076e48(void)
+void PlayerCannonState5Update(void)
 {
     if ((gCurTask->onGround & 1) == 0)
         TerrainCollideBox(gUnk_0873F5E4);
@@ -848,7 +848,7 @@ void CannonState1(void)
     TaskSleepForever();
 }
 
-void sub_080773a8(void)
+void CannonState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(CannonEnterState, gCurTaskIdx);
@@ -928,7 +928,7 @@ void CannonState2(void)
     TaskSleepForever();
 }
 
-void sub_08077564(void)
+void CannonState2Update(void)
 {
 }
 
@@ -1010,7 +1010,7 @@ void CannonState3(void)
     TaskSleepForever();
 }
 
-void sub_08077718(void)
+void CannonState3Update(void)
 {
 }
 

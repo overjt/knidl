@@ -142,7 +142,7 @@ void PoppyBrosSrState0(void)
     TaskSleepForever();
 }
 
-void sub_080912f8(void)
+void PoppyBrosSrState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
@@ -166,7 +166,7 @@ void PoppyBrosSrState1(void)
     TaskSleepForever();
 }
 
-void sub_08091368(void)
+void PoppyBrosSrState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
@@ -250,7 +250,7 @@ void PoppyBrosSrState2(void)
     TaskSleepForever();
 }
 
-void sub_08091558(void)
+void PoppyBrosSrState2Update(void)
 {
     struct Task *t;
 
@@ -283,7 +283,7 @@ void PoppyBrosSrState3(void)
     TaskSleepForever();
 }
 
-void sub_080915d0(void)
+void PoppyBrosSrState3Update(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
@@ -318,7 +318,7 @@ void PoppyBrosSrState4(void)
     TaskSleepForever();
 }
 
-void sub_080916c4(void)
+void PoppyBrosSrState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
@@ -363,7 +363,7 @@ void PoppyBrosSrState5(void)
     TaskSleepForever();
 }
 
-void sub_080917fc(void)
+void PoppyBrosSrState5Update(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);

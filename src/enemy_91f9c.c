@@ -197,7 +197,7 @@ void BugzzyState0(void)
     TaskSleepForever();
 }
 
-void sub_08092228(void)
+void BugzzyState0Update(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -562,7 +562,7 @@ void BugzzyState4(void)
     TaskSleepForever();
 }
 
-void sub_08092b30(void)
+void BugzzyState4Update(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -588,7 +588,7 @@ void BugzzyState5(void)
     TaskSleepForever();
 }
 
-void sub_08092bd8(void)
+void BugzzyState5Update(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -626,7 +626,7 @@ void BugzzyState6(void)
     TaskSleepForever();
 }
 
-void sub_08092cb4(void)
+void BugzzyState6Update(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -793,7 +793,7 @@ void BugzzyState11(void)
     TaskSleepForever();
 }
 
-void sub_08093084(void)
+void BugzzyState11Update(void)
 {
     if (gCurTask->state != 11)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -1309,7 +1309,7 @@ void BonkersNutState0(void)
     TaskSleepForever();
 }
 
-void sub_08093b80(void)
+void BonkersNutState0Update(void)
 {
     if (gCurTask->unk28 != 0)
     {

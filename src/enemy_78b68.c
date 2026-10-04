@@ -122,7 +122,7 @@ void WaddleDeeWalk(void)
     sub_08078b68();
 }
 
-void sub_08078cb8(void)
+void WaddleDeeWalkState0Update(void)
 {
 }
 
@@ -301,7 +301,7 @@ void WaddleDeeJump(void)
     TaskSleepForever();
 }
 
-void sub_0807906c(void)
+void WaddleDeeJumpState1Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -360,7 +360,7 @@ void ParasolWaddleDeeWalk(void)
     sub_08078b68();
 }
 
-void sub_080791bc(void)
+void ParasolWaddleDeeWalkState0Update(void)
 {
 }
 
@@ -385,7 +385,7 @@ void ParasolWaddleDeeWalkState1(void)
     }
 }
 
-void sub_0807921c(void)
+void ParasolWaddleDeeWalkState1Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
@@ -421,7 +421,7 @@ void WaddleDeeIdle(void)
     sub_08078b68();
 }
 
-void sub_080792f4(void)
+void WaddleDeeIdleState0Update(void)
 {
 }
 
@@ -458,7 +458,7 @@ void ParasolWaddleDeeStandState0(void)
     sub_08078b68();
 }
 
-void sub_080793c4(void)
+void ParasolWaddleDeeStandState0Update(void)
 {
     TaskFaceNearestPlayer();
 }
@@ -480,7 +480,7 @@ void ParasolWaddleDeeStandState1(void)
     TaskSleepForever();
 }
 
-void sub_08079424(void)
+void ParasolWaddleDeeStandState1Update(void)
 {
     gCurTask->unk34 = ActorTickAnimFacingNearestPlayer(gCurTask->unk34);
 }
@@ -798,7 +798,7 @@ void PengyIdle(void)
     TaskSleepForever();
 }
 
-void sub_080799dc(void)
+void PengyIdleState0Update(void)
 {
 }
 
@@ -905,7 +905,7 @@ void BomberState1(void)
     TaskSleepForever();
 }
 
-void sub_08079be0(void)
+void BomberState1Update(void)
 {
 }
 
@@ -939,7 +939,7 @@ void BomberState2(void)
     TaskSleepForever();
 }
 
-void sub_08079c84(void)
+void BomberState2Update(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(WaddleDeeWalkEnterState, gCurTaskIdx);
@@ -1020,7 +1020,7 @@ void BomberIdle(void)
     }
 }
 
-void sub_08079e20(void)
+void BomberIdleState0Update(void)
 {
 }
 
@@ -1186,7 +1186,7 @@ void SparkyJump(void)
     TaskSleepForever();
 }
 
-void sub_0807a1bc(void)
+void SparkyJumpState2Update(void)
 {
 }
 
@@ -1311,7 +1311,7 @@ void SparkyJumpState3(void)
     TaskSleepForever();
 }
 
-void sub_0807a458(void)
+void SparkyJumpState3Update(void)
 {
 }
 
@@ -1363,7 +1363,7 @@ void SparkyIdle(void)
     }
 }
 
-void sub_0807a574(void)
+void SparkyIdleState0Update(void)
 {
 }
 

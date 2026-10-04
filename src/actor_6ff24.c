@@ -7,11 +7,11 @@
  * that the 26-entry anchor table at 0x0873FB08 dispatches, continuing the
  * batch-7 range.  Each state is a body + a per-frame helper pair:
  *
- *   MetaKnightWarpStarRideState1 / sub_080708ec   state 1
- *   MetaKnightWarpStarRideState3 / sub_08070a84   state 3
- *   MetaKnightWarpStarRideState4 / sub_08070c0c   state 4
- *   MetaKnightWarpStarRideState5 / sub_08070d48   state 5
- *   MetaKnightWarpStarRideState6 / sub_08070e7c   state 6
+ *   MetaKnightWarpStarRideState1 / MetaKnightWarpStarRideState1Update   state 1
+ *   MetaKnightWarpStarRideState3 / MetaKnightWarpStarRideState3Update   state 3
+ *   MetaKnightWarpStarRideState4 / MetaKnightWarpStarRideState4Update   state 4
+ *   MetaKnightWarpStarRideState5 / MetaKnightWarpStarRideState5Update   state 5
+ *   MetaKnightWarpStarRideState6 / MetaKnightWarpStarRideState6Update   state 6
  *
  * The bodies are all the same shape: set Task.updateState (the state), unk24 (the
  * sub-step the helper advances on a unk7A bit), unk0C (the draw hook) and
@@ -64,7 +64,7 @@ extern s32 IsOnScreen(s16 x, s16 y);
 extern void TerrainCollideBox(u8 *a);
 extern void RequestScreenShake(s32 a);
 
-void sub_0806ff24(void)
+void PlayerWarpStarRideState7Update(void)
 {
     struct Task *t;
 
@@ -480,7 +480,7 @@ void MetaKnightWarpStarRideState2(void)
     TaskSleepForever();
 }
 
-void sub_08070798(void)
+void MetaKnightWarpStarRideState2Update(void)
 {
 }
 
@@ -532,7 +532,7 @@ void MetaKnightWarpStarRideState1(void)
     TaskSleepForever();
 }
 
-void sub_080708ec(void)
+void MetaKnightWarpStarRideState1Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -600,7 +600,7 @@ void MetaKnightWarpStarRideState3(void)
     TaskSleepForever();
 }
 
-void sub_08070a84(void)
+void MetaKnightWarpStarRideState3Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -668,7 +668,7 @@ void MetaKnightWarpStarRideState4(void)
     TaskSleepForever();
 }
 
-void sub_08070c0c(void)
+void MetaKnightWarpStarRideState4Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -726,7 +726,7 @@ void MetaKnightWarpStarRideState5(void)
     TaskSleepForever();
 }
 
-void sub_08070d48(void)
+void MetaKnightWarpStarRideState5Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -781,7 +781,7 @@ void MetaKnightWarpStarRideState6(void)
     TaskSleepForever();
 }
 
-void sub_08070e7c(void)
+void MetaKnightWarpStarRideState6Update(void)
 {
     struct Task *t;
     struct Task *u;

@@ -563,7 +563,7 @@ void StarmanJump(void)
     TaskSleepForever();
 }
 
-void sub_08081560(void)
+void StarmanJumpState1Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -646,7 +646,7 @@ void StarmanFly(void)
     }
 }
 
-void sub_080816e8(void)
+void StarmanFlyState0Update(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -730,7 +730,7 @@ void StarmanIdle(void)
     sub_08081814();
 }
 
-void sub_08081810(void)
+void StarmanIdleState0Update(void)
 {
 }
 

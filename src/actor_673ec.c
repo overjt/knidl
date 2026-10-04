@@ -349,7 +349,7 @@ void HeldPlayerState5(void)
             x->unk34 = 0;
     }
 }
-void sub_08067a48(void)
+void HeldPlayerState5Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -493,7 +493,7 @@ void HeldPlayerState6(void)
     TaskSleepForever();
 }
 
-void sub_08067d30(void)
+void HeldPlayerState6Update(void)
 {
     ClampTaskToRoom(gCurTask);
     TerrainCollideBox(gPlayerDefaultTerrainBox);

@@ -31,7 +31,7 @@
  *     `HotHeadStandUpdate` (`0x087414E0`);
  *   * the bank's four-corner terrain probe `sub_0807f6a8` (four
  *     sub_08021c14 samples around a box whose six signed offsets come from
- *     Actor.terrainBox) and the jump-table state machine `sub_0807fe18`
+ *     Actor.terrainBox) and the jump-table state machine `TwisterState0Update`
  *     (five states over Task.unk30);
  *   * the six-frame flap loop `sub_08080b2c` and the "spawn a puff of six
  *     class-6 actors" routines `HotHeadWalkShoot` / `HotHeadStandShoot`.
@@ -203,7 +203,7 @@ void KabuJump(void)
     }
 }
 
-void sub_0807f2b4(void)
+void KabuJumpState1Update(void)
 {
     if ((s8)gCurTask->onGround != 0)
     {
@@ -385,7 +385,7 @@ void KabuTeleport(void)
     TaskSleepForever();
 }
 
-void sub_0807f634(void)
+void KabuTeleportState1Update(void)
 {
     struct Task *t = gCurTask;
     s32 n;
@@ -508,7 +508,7 @@ void KabuTeleportState2(void)
     }
 }
 
-void sub_0807f888(void)
+void KabuTeleportState2Update(void)
 {
 }
 
@@ -576,7 +576,7 @@ void KabuSlide(void)
     }
 }
 
-void sub_0807f9a0(void)
+void KabuSlideState0Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -661,7 +661,7 @@ l1:
     goto loop;
 }
 
-void sub_0807fafc(void)
+void KabuSlideState1Update(void)
 {
 }
 
@@ -708,7 +708,7 @@ void KabuIdle(void)
     }
 }
 
-void sub_0807fbcc(void)
+void KabuIdleState0Update(void)
 {
 }
 
@@ -854,7 +854,7 @@ void TwisterState0(void)
     TaskSleepForever();
 }
 
-void sub_0807fe18(void)
+void TwisterState0Update(void)
 {
     struct Task *a;
     struct Task *b;
@@ -985,7 +985,7 @@ void TwisterState1(void)
     TaskSleepForever();
 }
 
-void sub_0808003c(void)
+void TwisterState1Update(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1095,7 +1095,7 @@ void TwisterState2(void)
     TaskSleepForever();
 }
 
-void sub_08080278(void)
+void TwisterState2Update(void)
 {
     struct Task *t = gCurTask;
 
@@ -1138,7 +1138,7 @@ void TwisterIdle(void)
     TaskSleepForever();
 }
 
-void sub_08080358(void)
+void TwisterIdleState0Update(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
@@ -1240,7 +1240,7 @@ void HotHeadWalk(void)
     sub_08080b2c();
 }
 
-void sub_0808051c(void)
+void HotHeadWalkState0Update(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -1374,7 +1374,7 @@ void HotHeadIdle(void)
     sub_08080b2c();
 }
 
-void sub_08080814(void)
+void HotHeadIdleState0Update(void)
 {
 }
 

@@ -439,7 +439,7 @@ void AxeKnightState1(void)
     TaskSleepForever();
 }
 
-void sub_0809c840(void)
+void AxeKnightState1Update(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
@@ -572,7 +572,7 @@ void AxeKnightState4(void)
     TaskSleepForever();
 }
 
-void sub_0809caac(void)
+void AxeKnightState4Update(void)
 {
 }
 

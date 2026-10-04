@@ -105,7 +105,7 @@ void CannonFuseState2(void)
     TaskSleepForever();
 }
 
-void sub_08077c2c(void)
+void CannonFuseState2Update(void)
 {
     if (gCurTask->unk20 != -1)
         sub_08077980();
@@ -236,7 +236,7 @@ void BigSwitchState1(void)
     TaskSleepForever();
 }
 
-void sub_08077ecc(void)
+void BigSwitchState1Update(void)
 {
 }
 
@@ -295,7 +295,7 @@ void StakeState0(void)
     ActorDestroy();
 }
 
-void sub_08077ff4(void)
+void StakeState0Update(void)
 {
 }
 

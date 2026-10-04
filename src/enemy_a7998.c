@@ -355,7 +355,7 @@ void KrackoJrState0(void)
     }
 }
 
-void sub_080a8038(void)
+void KrackoJrState0Update(void)
 {
     struct PointPair pp;
     struct Task *pt;
