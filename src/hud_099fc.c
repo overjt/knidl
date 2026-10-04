@@ -159,7 +159,7 @@ void HudRedraw(s32 i)
     }
     if (gUnk_020055F0[0] != 0) {
         if (gUnk_020055F0[0] == 2)
-            sub_0800b230(gLifeRequests.unk04[i] >> 4, gUnk_020055F0[0]);
+            sub_0800b230(gLifeRequests.requests[i] >> 4, gUnk_020055F0[0]);
         else
             sub_0800b230(i, gUnk_020055F0[0]);
     }

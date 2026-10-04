@@ -405,10 +405,10 @@ check:
             if (x >= 0 && LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CF9C + x * 8)) != 0)
                 TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
         }
-        if (gLifeRequests.unk04[gCurTaskIdx] & 1)
+        if (gLifeRequests.requests[gCurTaskIdx] & 1)
         {
             if ((gPlayerHeldKeys[gCurTask->player->playerIndex] & 0x300) == 0x300)
-                gLifeRequests.unk04[gCurTaskIdx] = (gLifeRequests.unk04[gCurTaskIdx] & 0xF0) | 2;
+                gLifeRequests.requests[gCurTaskIdx] = (gLifeRequests.requests[gCurTaskIdx] & 0xF0) | 2;
         }
     }
     else if (gCurTask->player->flightCoastTimer != 0)

@@ -53,9 +53,9 @@ struct M12Fade
 
 struct Unk02005E00
 {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ u8 unk04[4];
-    /*0x08*/ u8 unk08[4];
+    /*0x00*/ s32 timeout;
+    /*0x04*/ u8 requests[4];
+    /*0x08*/ u8 gameOver[4];
 };
 
 /* one step of a player's knock-back script: {dx, dy, flags} with

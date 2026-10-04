@@ -29,7 +29,7 @@ void PlayerLifeRequestClear(void)
     e = &f[t->playerLifeGiver];
     z = 0;
     *e = z;
-    s->unk00 = z;
+    s->timeout = z;
 }
 void PlayerClearOwnLifeRequests(void)
 {
@@ -51,7 +51,7 @@ void PlayerClearOwnLifeRequests(void)
         if (v != 0 && (u32)v >> 28 == gCurTaskIdx)
         {
             *e = z;
-            s->unk00 = z;
+            s->timeout = z;
         }
         i++;
     } while (i <= 3);
@@ -64,7 +64,7 @@ void PlayerLifeRequestPickStartState(void)
     t = gCurTask;
     t->moveCallback = 0;
     t->drawCallback = 0;
-    if (gLifeRequests.unk08[gCurTaskIdx] != 0)
+    if (gLifeRequests.gameOver[gCurTaskIdx] != 0)
     {
         t->state = 6;
     }
@@ -72,7 +72,7 @@ void PlayerLifeRequestPickStartState(void)
     {
         for (i = 0, n = 0; i < 4; i++)
         {
-            if (gLifeRequests.unk04[i] != 0 && gLifeRequests.unk04[i] >> 4 == gCurTaskIdx)
+            if (gLifeRequests.requests[i] != 0 && gLifeRequests.requests[i] >> 4 == gCurTaskIdx)
             {
                 gCurTask->playerLifeGiver = i;
                 n++;
@@ -129,8 +129,8 @@ void PlayerLifeRequestStartAsking(void)
     struct Unk02005E00 *s;
 
     s = &gLifeRequests;
-    if (s->unk00 == 0)
-        s->unk00 = 1200;
+    if (s->timeout == 0)
+        s->timeout = 1200;
     PlayerLifeRequestLoadGfx(1);
     PlayerLifeRequestDrawAsking(gCurTask->playerLifeGiver);
 }
@@ -281,7 +281,7 @@ void PlayerLifeRequestSelectGiver(void)
                 }
                 j++;
             }
-            gLifeRequests.unk04[gCurTask->playerLifeGiver] = (gCurTaskIdx << 4) | 1;
+            gLifeRequests.requests[gCurTask->playerLifeGiver] = (gCurTaskIdx << 4) | 1;
             gCurTask->state = 2;
         }
         else
@@ -337,7 +337,7 @@ s32 PlayerLifeRequestCountGivers(void)
     gCurTask->playerLifeGiverMask = 0;
     for (i = 0, n = 0; i < gPlayerCount; i++)
     {
-        if ((1 & (gActivePlayerMask >> i)) != 0 && gPlayerLives[i] > 0 && gLifeRequests.unk04[i] == 0)
+        if ((1 & (gActivePlayerMask >> i)) != 0 && gPlayerLives[i] > 0 && gLifeRequests.requests[i] == 0)
         {
             n++;
             gCurTask->playerLifeGiverMask |= 1 << i;
@@ -366,7 +366,7 @@ void PlayerLifeRequestRefreshGiverList(s32 a, s32 b)
     {
         for (i = 0, j = 0; i < gPlayerCount; i++)
         {
-            if ((1 & (gActivePlayerMask >> i)) != 0 && gLifeRequests.unk04[i] == 0)
+            if ((1 & (gActivePlayerMask >> i)) != 0 && gLifeRequests.requests[i] == 0)
             {
                 e = &gPlayerLives[i];
                 u = *e;
@@ -404,9 +404,9 @@ void PlayerLifeRequestCheckGiven(void)
 }
 void PlayerLifeRequestCheckTimeout(void)
 {
-    if (gLifeRequests.unk00 <= 0)
+    if (gLifeRequests.timeout <= 0)
         gCurTask->state = 4;
-    gLifeRequests.unk00--;
+    gLifeRequests.timeout--;
     if (gCurTask->state != 2)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
@@ -580,7 +580,7 @@ void PlayerLifeRequestDrawGiverList(void)
         HudClearTilemap();
         for (i = 0, j = 0; i < gPlayerCount; i++)
         {
-            f = gLifeRequests.unk04;
+            f = gLifeRequests.requests;
             if (((gActivePlayerMask >> i) & 1) != 0)
             {
                 pe = gPlayerLives;
