@@ -491,7 +491,7 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 1229 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 1204 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 100 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
@@ -518,20 +518,20 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M03 | main menu and its sprite tasks | 79 | 4 |
 | M04 | scripted-sequence director and scripts | 65 | 25 |
 | M05 | player animation bank and collision registry | 23 | 21 |
-| M06 | collision engine and hit tests | 55 | 11 |
-| M07 | level / room builder | 157 | 71 |
-| M08 | camera, BG streaming, map events, stage objects | 151 | 44 |
+| M06 | collision engine and hit tests | 55 | 10 |
+| M07 | level / room builder | 157 | 65 |
+| M08 | camera, BG streaming, map events, stage objects | 151 | 41 |
 | M09 | breakable blocks and the player task | 63 | 11 |
 | M10 | player action bodies, part 2 | 39 | 4 |
 | M11 | player mode machine and stage services | 121 | 34 |
 | M12 | player action bodies, part 3 | 21 | 0 |
 | M13 | player action bodies, part 4 | 24 | 0 |
 | M14 | player action bodies, part 5, and task type #6 | 82 | 9 |
-| M15 | the player's effect objects (task type #7) | 84 | 58 |
+| M15 | the player's effect objects (task type #7) | 84 | 48 |
 | M16 | effect spawner (task types #81-#90) | 89 | 35 |
-| M17 | actor core | 245 | 69 |
+| M17 | actor core | 245 | 68 |
 | M18 | actor core, part 2 | 256 | 65 |
-| M19 | cutscenes and ending sequences | 220 | 97 |
+| M19 | cutscenes and ending sequences | 220 | 95 |
 | M20 | enemies, bank 1 | 414 | 33 |
 | M21 | enemies, bank 2 | 200 | 22 |
 | M22 | enemies, bank 3 | 125 | 12 |
@@ -543,8 +543,8 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M28 | enemies, bank 9, and the player's death sequence | 204 | 73 |
 | M29 | enemies, bank 10 | 226 | 75 |
 | M30 | enemies, bank 11 | 131 | 27 |
-| M31 | enemies, bank 12 | 123 | 38 |
-| M32 | enemies, bank 13 | 135 | 48 |
+| M31 | enemies, bank 12 | 123 | 37 |
+| M32 | enemies, bank 13 | 135 | 47 |
 | M33 | HUD effects | 110 | 18 |
 | M34 | wavy scroll, save file, input recorder | 105 | 61 |
 | M35 | sub-game framework and Quick Draw | 196 | 9 |
@@ -553,7 +553,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 1242 |
+| all | | 5348 | 1217 |
 
 Register aliases (include/task_vars.h): 744 in 150 families: AbilityStar 3, Actor 9, Blipper 9, Bomber 2, Bonkers 10, BonkersHammerHitBox 1, BonkersNut 1, BrontoBurt 9, BroomHatter 4, Bubbles 2, Bugzzy 9, BugzzyAfterimage 3, BugzzyLadybug 5, Cannon 3, CannonFuse 8, Cappy 2, Chilly 3, ChillyFreeze 4, CutsceneActor 11, CutsceneDirector 1, EraseConfirmDialog 3, EraseFileWipe 4, FileMenuHighlight 4, FileMenuSlot 4, FileSelectCursor 4, FileSelectSlot 2, FileSelectSlotLabel 1, FireLion 11, Flamer 12, FlamerFlame 1, GameOverChoice 2, GameOverObject 2, GameOverPalette 4, GameOverPlayer 5, GameOverSprite 1, Gip 5, Glunk 2, GlunkShot 1, GrandWheelie 17, GrandWheelieMiniWheelie 2, HalveScore 2, HeavyMole 5, HeavyMoleArm 7, HeavyMoleEye 1, HeavyMoleRedMissile 1, HeavyMoleSmoke 3, HeavyMoleYellowMissile 1, HotHead 7, HotHeadFire 3, IntroStoryPicture 1, Kabu 13, KingDedede 16, KingDededeStar 2, Kracko 19, KrackoCloud 4, KrackoJrOrbs 3, KrackoLightningMiddle 1, KrackoLightningTop 1, KrackoStarman 1, LaserBall 12, LinkPlayCable 4, LinkPlayColorCycle 4, LinkPlayConsole 4, LinkPlayPalettePulse 6, LinkPlayPlayerList 9, MaceKnightMace 2, MenuBackground 4, MenuBgPaletteCycle 7, MenuScreenTitle 3, MetaKnight 10, MetaKnightCape 1, MetaKnightMask 1, MetaKnightMaskHalf 2, MetaKnightSword 4, MetaKnightSwordHitBox 1, MetaKnights 11, MetaKnightsKnight 16, ModeListCursor 4, ModePlayerCountPanel 3, MrFrosty 10, MrFrostyIceCube 4, MrShineAndMrBright 19, MrShineAndMrBrightAttack 6, MrTickTock 14, MrTickTockNote 1, MrTickTockRing 2, Needlous 5, NightmarePowerOrb 6, NightmarePowerOrbEscape 1, NightmarePowerOrbEscapeStar 5, NightmarePowerOrbIntroScroll 1, NightmarePowerOrbStar 1, NightmarePowerOrbStarAfterimage 1, NightmarePowerOrbStarTrail 1, NightmarePowerOrbStarTrailDown 1, NightmarePowerOrbStarTrailUp 1, NightmareWizard 11, NightmareWizardCloakHands 2, NightmareWizardHitBox 1, NightmareWizardPalmTornado 1, NightmareWizardPointTornado 1, NightmareWizardStar 3, Noddy 4, NormalExtraPanel 3, PaintRoller 3, PaintRollerPainting 3, Parasol 5, Pengy 5, PengyIceBreath 1, PengyIceBreathSparkle 1, PhanPhan 6, PhanPhanApple 1, Player 29, PlayerCountPanel 3, PoppyBrosJr 14, PoppyBrosSr 11, PoppyBrosSrBomb 1, PoppyBrosSrHand 8, PoppyBrosSrHead 3, Rocky 3, RoomParticles 3, Scarfy 8, Shotzo 15, ShotzoCannonball 2, SirKibble 3, Slippy 4, SoundTestCursors 3, SoundTestPulse 5, Sparky 4, Squishy 4, StarRodPiece 2, Starman 11, SwordAndBladeKnight 8, SwordAndBladeKnightSlash 1, TitlePalette 1, TitleSprites 4, TridentKnightTrident 1, Twister 7, Twizzy 11, UFO 8, WaddleDee 4, WaddleDoo 5, WaddleDooBeam 2, WarpStar 12, WarpStarTrailStar 3, Wheelie 10, WhispyWoods 5, WhispyWoodsAirPuff 3, WhispyWoodsApple 4, WhispyWoodsLeaves 4.
 

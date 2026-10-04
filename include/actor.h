@@ -529,7 +529,7 @@ void HeldPlayerThrowFlightBackward(void);
 void HeldPlayerThrowFlightBackwardUpdate(void);
 void HeldPlayerThrowBounceOff(void);
 void HeldPlayerThrowBounceOffUpdate(void);
-s32 sub_080684a4(void);
+s32 HeldPlayerAddAbilityFrameOffset(void);
 void HoldPlayer(s32 i, s32 j, u8 c);
 void DropHeldPlayer(s32 i);
 void sub_08068690(void);

@@ -121,25 +121,25 @@ void sub_08053c48(void);
 void sub_08053d08(void);
 void PlayerEffectAbilityGetSparkle(void);
 void sub_08053e34(void);
-void sub_08053e38(void);
+void PlayerEffectImpactStar(void);
 void PlayerEffectDeathStar(void);
-void sub_080540d0(void);
-void sub_08054298(void);
+void PlayerEffectSkidDust(void);
+void PlayerEffectSkidDustUpdate(void);
 
 /* src/effect_54330.c */
-void sub_08054330(void);
-void sub_08054504(void);
-void sub_08054538(void);
-void sub_08054838(void);
+void PlayerEffectRunDust(void);
+void PlayerEffectRunDustUpdate(void);
+void PlayerEffectSlideDust(void);
+void PlayerEffectSlideDustUpdate(void);
 void PlayerEffectSplash(void);
 void sub_080548f0(void);
 void PlayerEffectBubble(void);
 void sub_08054a44(void);
 
 /* src/effect_54a80.c */
-void sub_08054a80(void);
-void sub_08054b98(void);
-void sub_08054d94(void);
+void PlayerEffectDeathStarRing(void);
+void PlayerEffectDeathStarRingLateUpdate(void);
+void PlayerEffectMetaKnightDeathBlast(void);
 void sub_08054de8(void);
 void sub_08054fe4(void);
 void sub_080552fc(void);

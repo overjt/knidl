@@ -190,9 +190,9 @@ void RestoreMapColumn(s32 x);
 void RestoreMapCell(s32 x, s32 y);
 
 /* src/bgmap_2b2f0.c */
-void sub_0802b2f0(void);
-void sub_0802b368(void);
-void sub_0802b3e4(void);
+void SetBlockAnimClipRect(void);
+void SetBg1BlockAnimClipRect(void);
+void SetBlockAnimClipRectWithEdges(void);
 void SetBg23ScreenSize(u16 a);
 void SetBg3ScreenSize(u16 a);
 

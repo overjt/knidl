@@ -92,7 +92,7 @@ void sub_080764f8(void)
 
     if (p[t->player->playerIndex] & 1)
     {
-        sub_08076f50(gCurTaskIdx);
+        PlayerJumpOutOfCannon(gCurTaskIdx);
     }
     else
     {
@@ -527,7 +527,7 @@ void PlayerCannonState3Update(void)
     t->unk1C = t->pixelX;
     t->unk20 = t->pixelY;
     if (t->unk2C <= 0)
-        sub_08076f04(gCurTaskIdx);
+        PlayerEndCannonLaunch(gCurTaskIdx);
     else
         t->unk2C--;
 }
@@ -607,7 +607,7 @@ void PlayerLeaveCannon(s32 id)
     t->cannonRiderMask &= ~(1 << gCurTaskIdx);
 }
 
-void sub_08076f04(s32 id)
+void PlayerEndCannonLaunch(s32 id)
 {
     struct Task *t = &gTasks[id];
     struct PlayerState *p = &gPlayerStates[id];
@@ -619,7 +619,7 @@ void sub_08076f04(s32 id)
     HudShowAbility(p->ability, id);
 }
 
-void sub_08076f50(s32 id)
+void PlayerJumpOutOfCannon(s32 id)
 {
     struct Task *t = &gTasks[id];
     struct PlayerState *p = &gPlayerStates[id];

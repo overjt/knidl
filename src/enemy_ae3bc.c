@@ -2223,7 +2223,7 @@ void sub_080b08a0(void)
     }
 }
 
-void sub_080b08e4(void)
+void Task_NightmarePowerOrbStreak(void)
 {
     struct Task *t;
     struct Task *u;

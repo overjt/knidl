@@ -57,7 +57,7 @@ void RoomTaskGoalGameInit(void)
     t->moveCallback = 0;
     t->drawCallback = (u32)RoomTaskDraw;
     t->updateCallback = (u32)RoomTaskSnapCameraToFocus;
-    t->lateUpdateCallback = (u32)sub_080245d0;
+    t->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2Bg3NoObjects;
     TaskSleepForever();
 }
 
@@ -145,9 +145,9 @@ void RoomTaskCutsceneInit(void)
     t->drawCallback = 0;
     t->updateCallback = (u32)RoomTaskSnapCameraToFocus;
     if (gBg3MapShape != 0)
-        t->lateUpdateCallback = (u32)sub_080245d0;
+        t->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2Bg3NoObjects;
     else
-        t->lateUpdateCallback = (u32)sub_08024598;
+        t->lateUpdateCallback = (u32)RoomTaskLateUpdateBg2NoObjects;
     TaskSleepForever();
 }
 
@@ -157,7 +157,7 @@ void RoomTaskSnapCameraToFocus(void)
         CameraSnapToFocus();
 }
 
-void sub_08024598(void)
+void RoomTaskLateUpdateBg2NoObjects(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -170,7 +170,7 @@ void sub_08024598(void)
     CameraWriteScrollParallax();
 }
 
-void sub_080245d0(void)
+void RoomTaskLateUpdateBg2Bg3NoObjects(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();

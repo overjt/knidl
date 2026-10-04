@@ -12,7 +12,7 @@
  * one of the collider lists M05's RegisterCollider fills, places the collider's
  * body box the same way, tests the overlap and, on a hit, writes the hit
  * result (gHitKind = hit kind, gHitEffect, gHitHealthLeft) through
- * the shared tails CalcHitDamageAndDirection/sub_0801b9e4 and returns 1.
+ * the shared tails CalcHitDamageAndDirection/HitRecordHitter and returns 1.
  * HitTestPlayerColliders tests the players' list gPlayerColliders (by the attack's class
  * gAttackBox->unk06 & 7: 0 a damaging hit, 1 a hit the body box can
  * block, 2/3 a touch that marks the player in gUnk_03001F24);
@@ -21,7 +21,7 @@
  * 
  * Matching notes: the class 2/3 case is the last case in the source, because
  * merge_blocks moves its head up behind the dispatch; hit paths end at an
- * in-loop `sub_0801b9e4(); return 1;` (loop.c moves lone exit blocks out of
+ * in-loop `HitRecordHitter(); return 1;` (loop.c moves lone exit blocks out of
  * the loop); the attack's flags are read from gAttackBox at every test. */
 
 /* An actor's attack box (ROM), pointed to by gAttackBox during the
@@ -128,7 +128,7 @@ extern u16 gUnk_08732218[];
 extern u16 gColliderClass10KindBits[];
 
 void CalcHitDamageAndDirection(void);
-void sub_0801b9e4(void);
+void HitRecordHitter(void);
 
 /* Hit test of the actor's attack box against the players' hit list
    gPlayerColliders.  By the attack's class (unk06 & 7): 0 = a damaging hit
@@ -289,7 +289,7 @@ u8 HitTestPlayerColliders(void)
                     CalcHitDamageAndDirection();
                 }
             }
-            sub_0801b9e4();
+            HitRecordHitter();
             return 1;
         case 1:
             ps = gColliderPlayerState;
@@ -310,7 +310,7 @@ u8 HitTestPlayerColliders(void)
                 ps->hitsThisFrame++;
                 gHitKind = 8;
                 gHitHealthLeft = gAttackHealth;
-                sub_0801b9e4();
+                HitRecordHitter();
                 return 1;
             }
             gHitKind = 6;
@@ -411,7 +411,7 @@ u8 HitTestColliderClass10(void)
                 continue;
             gHitKind = 7;
             gHitHealthLeft = gAttackHealth;
-            sub_0801b9e4();
+            HitRecordHitter();
             return 1;
         }
         k = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
@@ -446,7 +446,7 @@ u8 HitTestColliderClass10(void)
                 gHitEffect = gUnk_08732218[k];
                 gHitHealthLeft = gAttackHealth;
             }
-            sub_0801b9e4();
+            HitRecordHitter();
             return 1;
         }
     }

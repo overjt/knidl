@@ -5,7 +5,7 @@
  *
  * Task bodies for the carried/helper actor states (unk15 = 3..10) plus the
  * player-record plumbing: spawn/teardown (HoldPlayer/DropHeldPlayer), the
- * per-character animation-offset switch (sub_080684A4), and the
+ * per-character animation-offset switch (HeldPlayerAddAbilityFrameOffset), and the
  * gPlayerStates[] save/restore used when a player is picked up or dropped.
  */
 #include "gba/gba.h"
@@ -159,7 +159,7 @@ void HeldPlayerBackdropHeld(void)
             u->unk2C = -8;
         }
         TaskSetFrame(*(s16 *)&gCurTask->unk28);
-        sub_080684a4();
+        HeldPlayerAddAbilityFrameOffset();
     }
     else
     {
@@ -196,7 +196,7 @@ void HeldPlayerFollowCaptorPose(void)
             t->frame = t->unk28 + t->unk2C;
         else
             t->frame = t->unk28;
-        sub_080684a4();
+        HeldPlayerAddAbilityFrameOffset();
     }
     else
     {
@@ -381,7 +381,7 @@ void HeldPlayerState5Update(void)
         else
         {
             TaskSetFrame(0x12D);
-            sub_080684a4();
+            HeldPlayerAddAbilityFrameOffset();
         }
     }
     else
@@ -545,7 +545,7 @@ void HeldPlayerThrowHeldUpdate(void)
     t->facing = u->facing * (s16)gUnk_0873E3C8[i + 2];
     TaskSetFrame((s16)gUnk_0873E3C8[i + 3]);
     if (gMetaKnightmareMode == 0)
-        sub_080684a4();
+        HeldPlayerAddAbilityFrameOffset();
     gCurTask->layer = gUnk_0873E3C8[i + 4];
 }
 
@@ -591,7 +591,7 @@ void HeldPlayerThrowFlightForward(void)
         while (1)
         {
             TaskSetFrame(0x135);
-            sub_080684a4();
+            HeldPlayerAddAbilityFrameOffset();
             TaskYieldTrampoline(1);
             gCurTask->unk6C = 0;
             do
@@ -674,7 +674,7 @@ void HeldPlayerThrowFlightBackward(void)
         while (1)
         {
             TaskSetFrame(0x135);
-            sub_080684a4();
+            HeldPlayerAddAbilityFrameOffset();
             TaskYieldTrampoline(1);
             gCurTask->unk6C = 0;
             do
@@ -800,7 +800,7 @@ void HeldPlayerThrowBounceOffUpdate(void)
     if (gCurTask->unk34 != 0)
         DropHeldPlayer(gCurTaskIdx);
 }
-s32 sub_080684a4(void)
+s32 HeldPlayerAddAbilityFrameOffset(void)
 {
     s32 d;
 
@@ -934,7 +934,7 @@ void sub_08068690(void)
             v = gCurTask;
             v->unk2C = -v->facing;
             v->frame = 0x133;
-            sub_080684a4();
+            HeldPlayerAddAbilityFrameOffset();
         }
     }
     else

@@ -1136,7 +1136,7 @@ void NightmareWizardScatterStarsAt(s32 x, s32 y, s32 d)
         TaskYieldTrampoline(d);
 }
 
-void sub_080abd04(void)
+void Task_NightmareWizardDefeatFlash(void)
 {
     gCurTask->moveCallback = (u32)ActorMove;
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;

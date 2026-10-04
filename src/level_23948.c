@@ -71,7 +71,7 @@ void LoadHubRoom(void)
     InitDoors();
     SetRoomEntryPoint();
     SpawnDoorObjects();
-    sub_08029194();
+    PlayHubRoomBgm();
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gLivingPlayerCount = 0;
@@ -197,9 +197,9 @@ void RoomTaskHubInit(void)
     t->drawCallback = (u32)RoomTaskDraw;
     t->updateCallback = (u32)RoomTaskHubUpdateCamera;
     if (gHubUnlockFlags != 0)
-        t->lateUpdateCallback = (u32)sub_08023f5c;
+        t->lateUpdateCallback = (u32)RoomTaskHubLateUpdateBg123;
     else
-        t->lateUpdateCallback = (u32)sub_08023f18;
+        t->lateUpdateCallback = (u32)RoomTaskHubLateUpdateBg23;
     TaskSleepForever();
 }
 
@@ -244,7 +244,7 @@ void RoomTaskBigSwitchViewUpdateCamera(void)
         CameraSnapBoundsToAnchor();
 }
 
-void sub_08023f18(void)
+void RoomTaskHubLateUpdateBg23(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();
@@ -259,7 +259,7 @@ void sub_08023f18(void)
     HudUpdateAbilityPanel();
 }
 
-void sub_08023f5c(void)
+void RoomTaskHubLateUpdateBg123(void)
 {
     if (gRoomUpdateFlags & 2)
         UpdateScreenShake();

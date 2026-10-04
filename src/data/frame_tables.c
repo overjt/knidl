@@ -2354,7 +2354,7 @@ u32 gUnk_0874C4E4[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C500.  Consumers: Task_ImpactStar (src/actor_6d22c.c:321),
- * Task_WarpStarTrailStar (src/actor_74c0c.c:82), sub_08053e38
+ * Task_WarpStarTrailStar (src/actor_74c0c.c:82), PlayerEffectImpactStar
  * (src/effect_53af4.c:199) and 6 more.  8 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C500-0x0874C520).  Declared include/enemy.h:1142. */
@@ -2442,7 +2442,7 @@ u32 gUnk_0874C568[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C600.  Consumers: sub_08053c48 (src/effect_53af4.c:113),
- * sub_08053d08 (src/effect_53af4.c:142), sub_080540d0
+ * sub_08053d08 (src/effect_53af4.c:142), PlayerEffectSkidDust
  * (src/effect_53af4.c:316) and 8 more.  18 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C600-0x0874C648).  Declared include/effect.h:74. */
@@ -2531,7 +2531,7 @@ u32 gUnk_0874C67C[] FRAME_TABLE = {
     (u32)gUnk_080D3570,
 };
 
-/* gUnk_0874C6F4.  Consumer: sub_08054a80 (src/effect_54a80.c:52).  9 words,
+/* gUnk_0874C6F4.  Consumer: PlayerEffectDeathStarRing (src/effect_54a80.c:52).  9 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x0874C6F4-0x0874C718).  Declared
  * include/effect.h:77. */
@@ -2838,7 +2838,7 @@ u32 gUnk_0874C9D8[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CA1C.  Consumers: PlayExplosionAnim (src/actor_6d22c.c:273),
- * sub_08054d94 (src/effect_54a80.c:146), sub_08012df8
+ * PlayerEffectMetaKnightDeathBlast (src/effect_54a80.c:146), sub_08012df8
  * (src/player_10b38.c:1488).  23 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874CA1C-0x0874CA78).  Declared include/actor.h:278. */
@@ -12066,7 +12066,7 @@ u32 gKrackoStarmanFrames[] FRAME_TABLE = {
 };
 
 /* gNightmarePowerOrbFrames.  Consumers: Task_NightmarePowerOrb
- * (src/enemy_ae3bc.c:81), sub_080b08e4 (src/enemy_ae3bc.c:2236).  20 words,
+ * (src/enemy_ae3bc.c:81), Task_NightmarePowerOrbStreak (src/enemy_ae3bc.c:2236).  20 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x087544B4-0x08754504).  Declared
  * include/enemy.h:1269. */
@@ -12292,7 +12292,7 @@ u32 gUnk_08754718[] FRAME_TABLE = {
     (u32)&gUnk_08316E8C,
 };
 
-/* gUnk_08754738.  Consumers: sub_080abd04 (src/enemy_aa338.c:1144),
+/* gUnk_08754738.  Consumers: Task_NightmareWizardDefeatFlash (src/enemy_aa338.c:1144),
  * Task_NightmareWizardPalm (src/enemy_aa338.c:1194),
  * Task_NightmareWizardPointingHand (src/enemy_aa338.c:1284) and 3 more.  18
  * words, OAM template streams; extent: the span to the next label, every

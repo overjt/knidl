@@ -36,7 +36,7 @@
  * draw when PlayerState.unk37 == 2.  Variant 6 has two forms picked by the
  * third byte of Task.unk18: a loop that places a puff 6 pixels behind the
  * spawner and 8 below it and spawns the other form (a rising puff) each
- * round until sub_08054298 sets Task.unk28 - when the player's mode differs
+ * round until PlayerEffectSkidDustUpdate sets Task.unk28 - when the player's mode differs
  * from the one saved at the start or is 16, or, by the second byte of
  * Task.unk18, when the spawner's Task.onGround clears, a countdown in
  * Task.unk30 runs out or M11's PlayerGetFacingSlope no longer returns 4. */
@@ -183,7 +183,7 @@ void sub_08053e34(void)
 {
 }
 
-void sub_08053e38(void)
+void PlayerEffectImpactStar(void)
 {
     struct Task *t;
     struct Task *v;
@@ -305,7 +305,7 @@ void PlayerEffectDeathStar(void)
     TaskExitTrampoline();
 }
 
-void sub_080540d0(void)
+void PlayerEffectSkidDust(void)
 {
     struct Task *t;
 
@@ -320,7 +320,7 @@ void sub_080540d0(void)
         t->unk28 = 0;
         t->unk2C = t->player->mode;
         t->unk30 = t->unk18 & 0xFF;
-        t->updateCallback = (u32)sub_08054298;
+        t->updateCallback = (u32)PlayerEffectSkidDustUpdate;
         do
         {
             struct Task *u = gCurTask;
@@ -367,7 +367,7 @@ void sub_080540d0(void)
     TaskExitTrampoline();
 }
 
-void sub_08054298(void)
+void PlayerEffectSkidDustUpdate(void)
 {
     struct Task *t = gCurTask;
 

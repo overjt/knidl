@@ -10,13 +10,13 @@
 /* effect_54a80.c (0x08054A80-0x0805545F, issue #89).
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
- * variants 12-15.  Variant 12 (sub_08054a80, M10/M11) has no motion or draw
+ * variants 12-15.  Variant 12 (PlayerEffectDeathStarRing, M10/M11) has no motion or draw
  * hook: it picks one of eight directions by the low three bits of Task.unk18
  * and flies two particles from the spawner's position, rows gUnk_0873BA4C[i]
  * and [i + 4] holding each one's 8.8 velocity and acceleration, which its
- * Task.lateUpdateCallback callback sub_08054b98 integrates every frame, drawing both with
+ * Task.lateUpdateCallback callback PlayerEffectDeathStarRingLateUpdate integrates every frame, drawing both with
  * QueueSprite when on screen (IsOnScreen; camera-relative unless
- * PlayerState.unk37 == 2).  Variant 13 (sub_08054d94, M11) plays the 23
+ * PlayerState.unk37 == 2).  Variant 13 (PlayerEffectMetaKnightDeathBlast, M11) plays the 23
  * frames of gUnk_0873E640.  Variant 14 (sub_08054de8, M13's ability get)
  * rides on its spawner through four sub-states of frame loops.  Variant 15
  * (sub_08054fe4; M09, M11, M13) runs one of two endless particle loops
@@ -38,7 +38,7 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src call
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 
-void sub_08054a80(void)
+void PlayerEffectDeathStarRing(void)
 {
     struct Task *t;
     s32 a;
@@ -46,7 +46,7 @@ void sub_08054a80(void)
 
     gCurTask->moveCallback = 0;
     gCurTask->drawCallback = 0;
-    gCurTask->lateUpdateCallback = (u32)sub_08054b98;
+    gCurTask->lateUpdateCallback = (u32)PlayerEffectDeathStarRingLateUpdate;
     gCurTask->layer = 8;
     t = gCurTask;
     t->frameTable = gUnk_0874C6F4;
@@ -86,7 +86,7 @@ void sub_08054a80(void)
     TaskExitTrampoline();
 }
 
-void sub_08054b98(void)
+void PlayerEffectDeathStarRingLateUpdate(void)
 {
     struct Task *t;
     u32 *tbl;
@@ -134,7 +134,7 @@ void sub_08054b98(void)
     gCurTask->posY += ((s16 *)&gCurTask->unk34)[1];
 }
 
-void sub_08054d94(void)
+void PlayerEffectMetaKnightDeathBlast(void)
 {
     struct Task *t;
     s32 i;

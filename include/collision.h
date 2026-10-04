@@ -245,7 +245,7 @@ u8 HitTestColliderClass20(void);
 /* src/hitbox_1b7dc.c */
 void PlaceAttackBox(void);
 void CalcHitDamageAndDirection(void);
-void sub_0801b9e4(void);
+void HitRecordHitter(void);
 
 /* src/terrain_1baa4.c */
 void PlayerProbeTerrain(u32 p);

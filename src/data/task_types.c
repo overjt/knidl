@@ -219,7 +219,7 @@ void Task_NightmareWizardCloakHands(void);
 void Task_NightmareWizardCloakTornado(void);
 void Task_NightmareWizardPendant(void);
 void Task_NightmareWizardHitBox(void);
-void sub_080abd04(void);
+void Task_NightmareWizardDefeatFlash(void);
 void Task_NightmarePowerOrbStarTrail(void);
 void Task_NightmarePowerOrbStarTrailUp(void);
 void Task_NightmarePowerOrbStarTrailDown(void);
@@ -230,7 +230,7 @@ void Task_PengyIceBreathPuff(void);
 void Task_PengyIceBreathSparkle(void);
 void Task_BlipperDroplet(void);
 void Task_GlunkShotSpray(void);
-void sub_080b08e4(void);
+void Task_NightmarePowerOrbStreak(void);
 void Task_ArenaDoorSign(void);
 void Task_BossDoorSign(void);
 void Task_DoorOpening(void);
@@ -489,7 +489,7 @@ const struct TaskType gTaskTypes[] = {
     /* 206 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardCloakTornado },
     /* 207 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPendant },
     /* 208 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardHitBox },
-    /* 209 */ { 3, { 0, 0, 0 }, (u32)sub_080abd04 },
+    /* 209 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardDefeatFlash },
     /* 210 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStarTrail },
     /* 211 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStarTrailUp },
     /* 212 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStarTrailDown },
@@ -500,7 +500,7 @@ const struct TaskType gTaskTypes[] = {
     /* 217 */ { 3, { 0, 0, 0 }, (u32)Task_PengyIceBreathSparkle },
     /* 218 */ { 3, { 0, 0, 0 }, (u32)Task_BlipperDroplet },
     /* 219 */ { 3, { 0, 0, 0 }, (u32)Task_GlunkShotSpray },
-    /* 220 */ { 3, { 0, 0, 0 }, (u32)sub_080b08e4 },
+    /* 220 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStreak },
     /* 221 */ { 3, { 0, 0, 0 }, (u32)Task_ArenaDoorSign },
     /* 222 */ { 3, { 0, 0, 0 }, (u32)Task_BossDoorSign },
     /* 223 */ { 3, { 0, 0, 0 }, (u32)Task_DoorOpening },

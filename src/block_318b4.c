@@ -89,9 +89,9 @@ extern s8 gRoomIndex;
 
 s32 PlaySfx(s32 id);
 void WrapLoopingRoom(void);
-void sub_0802b2f0(void);
-void sub_0802b368(void);
-void sub_0802b3e4(void);
+void SetBlockAnimClipRect(void);
+void SetBg1BlockAnimClipRect(void);
+void SetBlockAnimClipRectWithEdges(void);
 
 void UpdateBlockAnims(void)
 {
@@ -99,7 +99,7 @@ void UpdateBlockAnims(void)
     struct Unk020061F0 *b;
     u16 *p;
 
-    sub_0802b2f0();
+    SetBlockAnimClipRect();
     for (i = 0; i < 64; i++)
     {
         b = &gBreakingBlocks[i];
@@ -313,7 +313,7 @@ void UpdateBlockAnimsWithEdges(void)
     struct Unk020061F0 *b;
     u16 *p;
 
-    sub_0802b3e4();
+    SetBlockAnimClipRectWithEdges();
     for (i = 0; i < 64; i++)
     {
         b = &gBreakingBlocks[i];
@@ -525,7 +525,7 @@ void UpdateBg1BlockAnims(void)
     struct Unk020061F0 *b;
     u16 *p;
 
-    sub_0802b368();
+    SetBg1BlockAnimClipRect();
     for (i = 0; i < 64; i++)
     {
         b = &gBg1BreakingBlocks[i];
