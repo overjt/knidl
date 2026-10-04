@@ -77,8 +77,8 @@ void PlayerActionHammer(void)
                 if (r & 3) {
                     PlaySfxIfLocalPlayer(241, gCurTask->player->playerIndex);
                     RequestScreenShake(2);
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 0);
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HAMMER_DUST, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HAMMER_DUST, 1);
                     gCurTask->frame++;
                     TaskYieldTrampoline(1);
                     gCurTask->frame++;
@@ -130,8 +130,8 @@ void PlayerActionHammer(void)
                 if (r & 3) {
                     PlaySfxIfLocalPlayer(241, gCurTask->player->playerIndex);
                     RequestScreenShake(2);
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 0);
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 35, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HAMMER_DUST, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HAMMER_DUST, 1);
                     gCurTask->frame++;
                     TaskYieldTrampoline(1);
                     gCurTask->frame++;

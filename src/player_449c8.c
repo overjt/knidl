@@ -117,7 +117,7 @@ void PlayerActionCutter(void)
     TaskYieldTrampoline(2);
     if (gCurTask->onGround & 1)
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
-    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 5, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_CUTTER_BLADE, 0);
     gCurTask->unk28++;
     PlaySfxIfLocalPlayer(SE_CUTTER_ATTACK, gCurTask->player->playerIndex);
     gCurTask->frame++;

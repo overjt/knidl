@@ -70,7 +70,7 @@ void PlayerObjectAirPuff(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            CreatePlayerObject(gCurTask->player->playerIndex, 0, 1);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 1);
             gCurTask->frame -= 2;
             TaskYieldTrampoline(2);
             TaskSetFrameByFacing(4);

@@ -203,7 +203,7 @@ void MetaKnightActionRun(void)
         }
         PlayerPlayBump();
         PlayerStartSfx(117, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 7, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_RUN_DUST, 0);
     }
     while (1)
     {
@@ -313,7 +313,7 @@ void MetaKnightActionSkid(void)
     if (gCurTask->player->prevMode != 3)
     {
         PlaySfx(119);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 6, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 0);
     }
     TaskSetFrame(0x11E3);
     TaskSleepForever();
@@ -622,7 +622,7 @@ void MetaKnightActionSlide(void)
         PlayerSetMotionXPreset(11, 0);
         gCurTask->player->hitBoxSet = gUnk_0873D03C;
         PlayerStartSfx(118, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 8, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLIDE_DUST, 0);
         TaskSetFrame(0x1203);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -1006,7 +1006,7 @@ void MetaKnightActionHurt(void)
         case 1:
             PlaySfx(0x107);
             PlayerStartOffsetScript(16);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 22, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_FLAMES, 0);
             gCurTask->playerLoopCount = 0;
             do
             {
@@ -1026,7 +1026,7 @@ void MetaKnightActionHurt(void)
             goto spawn25;
         case 2:
             PlaySfx(0x107);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 23, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_SPARKS, 0);
             gCurTask->playerLoopCount = 0;
             do
             {
@@ -1210,8 +1210,8 @@ void MetaKnightActionDie(void)
     TaskYieldTrampoline(59);
     gCurTask->variant = 1;
     for (i = 0; i < 4; i++)
-        CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);
-    CreatePlayerEffect(gCurTask->player->playerIndex, 13, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DEATH_STAR_RING, i);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_META_KNIGHT_DEATH_BLAST, 0);
     gCurTask->player->paletteFlashMode = k = 1;
     gCurTask->player->invulnerabilityTimer = 0x8000;
     PlayBgm(BGM_LOST_LIFE);

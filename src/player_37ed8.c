@@ -249,7 +249,7 @@ loop:
                 gCurTask->playerHurtPhase = 1;
                 if (gCurTask->variant == 1)
                 {
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 22, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_FLAMES, 0);
                     while (1)
                     {
                         TaskSetFrame(252);
@@ -261,7 +261,7 @@ loop:
                         }
                     }
                 }
-                CreatePlayerEffect(gCurTask->player->playerIndex, 23, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_SPARKS, 0);
                 while (1)
                 {
                     TaskSetFrame(260);
@@ -275,9 +275,9 @@ loop:
                 }
             case 1:
                 if (gCurTask->variant == 1)
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 22, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_FLAMES, 1);
                 else
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 23, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_SPARKS, 1);
                 CreatePlayerEffect(gCurTask->player->playerIndex, 25, 0);
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(264);
@@ -322,7 +322,7 @@ loop:
                 gCurTask->playerHurtPhase++;
                 if (gCurTask->variant == 1)
                 {
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 22, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_FLAMES, 0);
                     while (1)
                     {
                         TaskSetFrame(372);
@@ -334,7 +334,7 @@ loop:
                         }
                     }
                 }
-                CreatePlayerEffect(gCurTask->player->playerIndex, 23, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_SPARKS, 0);
                 while (1)
                 {
                     TaskSetFrame(380);
@@ -348,9 +348,9 @@ loop:
                 }
             case 1:
                 if (gCurTask->variant == 1)
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 22, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_FLAMES, 1);
                 else
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 23, 1);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_SPARKS, 1);
                 CreatePlayerEffect(gCurTask->player->playerIndex, 25, 0);
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(0x183);
@@ -456,7 +456,7 @@ loop:
                 TaskYieldTrampoline(4);
                 TaskSetFrame(0x117);
                 TaskYieldTrampoline(48);
-                CreatePlayerEffect(gCurTask->player->playerIndex, 26, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_BURST, 0);
                 gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 gCurTask->frame--;
@@ -546,7 +546,7 @@ loop:
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(398);
                 TaskYieldTrampoline(2);
-                CreatePlayerEffect(gCurTask->player->playerIndex, 26, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_HURT_BURST, 0);
                 TaskSetFrame(0x193);
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;

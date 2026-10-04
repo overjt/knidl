@@ -419,7 +419,7 @@ void PlayerObjectLightOrb(void)
             TaskYieldTrampoline(1);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            CreatePlayerObject(gCurTask->player->playerIndex, 9, 1);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LIGHT_ORB, 1);
         }
         PlaySfx(176);
         sub_08027588();

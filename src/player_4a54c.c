@@ -45,9 +45,9 @@ void PlayerActionBeam(void)
     TaskYieldTrampoline(6);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    CreatePlayerObject(gCurTask->player->playerIndex, 8, 0);
-    CreatePlayerObject(gCurTask->player->playerIndex, 8, 1);
-    CreatePlayerObject(gCurTask->player->playerIndex, 8, 2);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 0);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 1);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 2);
     gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xBBF);
@@ -154,10 +154,10 @@ void PlayerActionStone(void)
         }
         TaskSetFrame(0xC4D);
         TaskYieldTrampoline(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 43, 3);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->playerLoopCount = 0;

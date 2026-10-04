@@ -55,7 +55,7 @@ void PlayerActionStarRod(void)
     TaskYieldTrampoline(1);
     TaskSetFrame(0x102A);
     TaskYieldTrampoline(1);
-    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 11, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_STAR_ROD_SHOT, 0);
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
     {
         struct Task *t = gCurTask;

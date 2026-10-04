@@ -240,7 +240,7 @@ void PlayerStarRodFlightShoot(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
     }
-    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, 12, 0);
+    CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_STAR_ROD_FLIGHT_SHOT, 0);
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 9; gCurTask->playerLoopCount++)
     {
         gCurTask->frame++;

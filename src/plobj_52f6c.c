@@ -195,7 +195,7 @@ void PlayerObjectUFOShot(void)
         }
             while (1)
             {
-                CreatePlayerEffect(gCurTask->player->playerIndex, 33, gCurTask->unk28);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_UFO_LASER_TRAIL, gCurTask->unk28);
                 TaskYieldTrampoline(2);
             }
         case 4:

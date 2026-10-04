@@ -174,7 +174,7 @@ void CreateQuickDrawBonusSign(u16 a0, u16 a1, u16 a2)
     {
         struct Task *t = &gTasks[i];
 
-        t->variant = 7;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS_SIGN;
         t->frame = a0;
         t->pixelX = a1;
         t->pixelY = a2;
@@ -206,7 +206,7 @@ void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3)
     {
         struct Task *t = &gTasks[i];
 
-        t->variant = 8;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_BONUS;
         t->unk18 = a0;
         t->pixelX = a1;
         t->pixelY = a2;
@@ -224,7 +224,7 @@ void CreateQuickDrawRankLabel(u8 a0, s16 a1, s16 a2, s8 a3)
 
         t->pixelX = a1;
         t->pixelY = a2;
-        t->variant = 9;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_RANK_LABEL;
         t->unk18 = a0;
         t->unk1C = a3;
         t->frame = a0;
@@ -451,7 +451,7 @@ void CreateQuickDrawDefeatedLabel(void)
     {
         struct Task *t = &gTasks[id];
 
-        t->variant = 1;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
         t->unk18 = gUnk_0200B048;
         t->unk1C = 4;
         t->unk20 = -1;
@@ -475,7 +475,7 @@ void CreateQuickDrawBestTimeLabel(void)
         s32 v;
         s32 n;
 
-        t->variant = 1;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
         t->unk1C = 5;
         t->unk20 = -1;
         t->pixelX = 172;
@@ -506,7 +506,7 @@ void CreateQuickDrawResultsPlayer(void)
 
         t->parent = gCurTaskIdx;
         t->quickDrawObjectPlayerIndex = id;
-        t->variant = 0;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_PLAYER;
         t->quickDrawObjectStartMode = 2;
         t->unk28 = 0;
     }

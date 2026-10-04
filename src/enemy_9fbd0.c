@@ -271,7 +271,7 @@ void CreateKingDededeStar(void)
     TaskSetFrame(29);
     sp.subtype = 10;
     sp.taskType = TASK_KING_DEDEDE_STAR;
-    sp.variant = 0;
+    sp.variant = KING_DEDEDE_STAR_VARIANT_INIT;
     sp.spawnArg = 0;
     sp.tileWord = 0;
     sp.x = 32;

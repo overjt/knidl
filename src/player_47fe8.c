@@ -222,11 +222,11 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(1);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            CreatePlayerObject(gCurTask->player->playerIndex, 4, 0);
-            CreatePlayerObject(gCurTask->player->playerIndex, 4, 1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 29, 0);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 29, 1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 29, 2);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_FIRE_BREATH, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_FIRE_BREATH, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FIRE_BREATH_FLAMES, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FIRE_BREATH_FLAMES, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FIRE_BREATH_FLAMES, 2);
             CreatePlayerEffect(gCurTask->player->playerIndex, 28, 4);
             TaskSetFrame(0x279);
             TaskYieldTrampoline(2);
@@ -247,9 +247,9 @@ void PlayerActionGetAbility(void)
             TaskSetFrame(0x36A);
             TaskYieldTrampoline(2);
             gCurTask->variant = 1;
-            CreatePlayerEffect(gCurTask->player->playerIndex, 30, 0);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 30, 1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 30, 2);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPARK_AURA, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPARK_AURA, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPARK_AURA, 2);
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++) {
                 TaskSetFrame(0x36B);
                 TaskYieldTrampoline(2);
@@ -280,7 +280,7 @@ void PlayerActionGetAbility(void)
                 if (u->onGround & 1)
                     CreatePlayerEffect(u->player->playerIndex, 28, 3);
             }
-            CreatePlayerObject(gCurTask->player->playerIndex, 5, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_CUTTER_BLADE, 0);
             gCurTask->frame++;
             TaskYieldTrampoline(4);
             gCurTask->frame++;
@@ -296,7 +296,7 @@ void PlayerActionGetAbility(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
             } while ((s16)++gCurTask->playerLoopCount <= 2);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 3, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ABILITY_GET_SPARKLE, 0);
             gCurTask->frame++;
             TaskYieldTrampoline(16);
             if (gCurTask->player->unk40 & 32)
@@ -335,10 +335,10 @@ void PlayerActionGetAbility(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             PlayerStopSfx();
-            CreatePlayerEffect(gCurTask->player->playerIndex, 32, 5);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 32, 6);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 32, 7);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 32, 8);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 5);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 6);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 7);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 8);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             PlayerLoadSparkTiles();
@@ -353,7 +353,7 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(2);
             TaskSetFrame(0x65A);
             TaskYieldTrampoline(2);
-            CreatePlayerObject(gCurTask->player->playerIndex, 6, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LASER_BEAM, 0);
             gCurTask->playerLoopCount = 0;
             do {
                 gCurTask->frame++;
@@ -499,11 +499,11 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(1);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            CreatePlayerObject(gCurTask->player->playerIndex, 7, 0);
-            CreatePlayerObject(gCurTask->player->playerIndex, 7, 1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 40, 0);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 40, 1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 40, 2);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 2);
             CreatePlayerEffect(gCurTask->player->playerIndex, 28, 4);
             TaskSetFrame(0x9FA);
             TaskYieldTrampoline(2);
@@ -523,11 +523,11 @@ void PlayerActionGetAbility(void)
             {
                 struct Task *u = gCurTask;
                 u->unk2C = 1;
-                CreatePlayerEffect(u->player->playerIndex, 41, 0);
+                CreatePlayerEffect(u->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 0);
             }
-            CreatePlayerEffect(gCurTask->player->playerIndex, 41, 1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 41, 2);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 41, 3);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 2);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 3);
             gCurTask->playerLoopCount = 0;
             do {
                 TaskSetFrame(0xA86);
@@ -548,9 +548,9 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(6);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            CreatePlayerObject(gCurTask->player->playerIndex, 8, 0);
-            CreatePlayerObject(gCurTask->player->playerIndex, 8, 1);
-            CreatePlayerObject(gCurTask->player->playerIndex, 8, 2);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 1);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_BEAM_ORB, 2);
             gCurTask->playerLoopCount = 0;
             do {
                 TaskSetFrame(0xBBF);
@@ -593,10 +593,10 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(6);
             TaskSetFrame(0xC4D);
             TaskYieldTrampoline(2);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 43, 0);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 43, 1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 43, 2);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 43, 3);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 2);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_STONE_PUFF, 3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
             gCurTask->playerLoopCount = 0;

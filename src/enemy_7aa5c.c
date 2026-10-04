@@ -1409,7 +1409,7 @@ void CreateUFOLaser(void)
     {
         spawn.subtype = 31;
         spawn.taskType = TASK_UFO_LASER;
-        spawn.variant = 0;
+        spawn.variant = UFO_LASER_VARIANT_INIT;
         spawn.spawnArg = 0;
         spawn.x = 8;
         spawn.y = 0;

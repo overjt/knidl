@@ -413,7 +413,7 @@ void BonkersThrow(void)
     TaskYieldTrampoline(4);
     spawn.subtype = 8;
     spawn.taskType = TASK_BONKERS_NUT;
-    spawn.variant = 0;
+    spawn.variant = BONKERS_NUT_VARIANT_INIT;
     spawn.spawnArg = 0;
     spawn.x = 24;
     spawn.y = 0;

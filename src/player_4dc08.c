@@ -74,7 +74,7 @@ void PlayerActionBackdrop(void)
         gCurTask->variant = 1;
     case 1:
         PlaySfxIfLocalPlayer(200, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 6, 260);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 260);
         PlayerSetMotionXPreset(11, 6);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
         {
@@ -88,7 +88,7 @@ void PlayerActionBackdrop(void)
         if ((s8)gCurTask->player->attachedCount == 0)
         {
             if (gCurTask->onGround & 1)
-                CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
             else if (!(gCurTask->waterFlags & 1))
                 PlayerSetMotionYPreset(2);
             else
@@ -209,7 +209,7 @@ void PlayerActionBackdropUpdate(void)
                 struct Task *v = gCurTask;
 
                 if (!(v->waterFlags & 1) && (v->velY & 0xFFFF0000))
-                    CreatePlayerEffect(v->player->playerIndex, 4, 0);
+                    CreatePlayerEffect(v->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
                 PlayerStopAxes(2);
             }
         }

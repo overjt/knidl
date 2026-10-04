@@ -639,9 +639,9 @@ void PlayerActionSpitInWater(void)
     gCurTask->frame--;
     TaskYieldTrampoline(2);
     if ((s8)gCurTask->player->attachedCount > 1)
-        CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_MULTI_STAR, 0);
     else
-        CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_STAR, 0);
     gCurTask->frame--;
     TaskYieldTrampoline(2);
     gCurTask->playerActionDone28++;
@@ -727,7 +727,7 @@ void PlayerActionWaterShot(void)
     case 3:
         if (gCurTask->variant == 0)
         {
-            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_WATER_SHOT, 0);
             while (1)
             {
                 TaskSetFrame(239);
@@ -746,7 +746,7 @@ void PlayerActionWaterShot(void)
     case 1:
         if (gCurTask->variant == 0)
         {
-            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_WATER_SHOT, 0);
             while (1)
             {
                 TaskSetFrame(235);
@@ -766,7 +766,7 @@ void PlayerActionWaterShot(void)
         if (gCurTask->variant == 0)
         {
             gCurTask->facing = 1;
-            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_WATER_SHOT, 0);
             while (1)
             {
                 TaskSetFrame(231);
@@ -786,7 +786,7 @@ void PlayerActionWaterShot(void)
         if (gCurTask->variant == 0)
         {
             gCurTask->facing = -1;
-            CreatePlayerObject(gCurTask->player->playerIndex, 3, 0);
+            CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_WATER_SHOT, 0);
             while (1)
             {
                 TaskSetFrame(231);

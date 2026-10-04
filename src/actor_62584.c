@@ -372,7 +372,7 @@ void PlayerDance12(void)
     TaskStop();
     t = gCurTask;
     t->spriteFlags |= 0x8000;
-    CreatePlayerEffect(t->player->playerIndex, 16, 0);
+    CreatePlayerEffect(t->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }
@@ -632,7 +632,7 @@ void PlayerDance13(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }

@@ -732,11 +732,11 @@ void PlayerActionFire(void)
             if ((p->unk42 & 128) == 0)
                 PlayerStartSfx(SE_FIRE_ATTACK, p->playerIndex);
         }
-        CreatePlayerObject(gCurTask->player->playerIndex, 4, 0);
-        CreatePlayerObject(gCurTask->player->playerIndex, 4, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 29, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 29, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 29, 2);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_FIRE_BREATH, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_FIRE_BREATH, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FIRE_BREATH_FLAMES, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FIRE_BREATH_FLAMES, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FIRE_BREATH_FLAMES, 2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 4);
         while (1) {
             TaskSetFrame(0x279);
@@ -812,10 +812,10 @@ void PlayerActionSpark(void)
             struct Task *t = gCurTask;
             t->playerNextBankBlendRatio = 0;
             t->playerBankBlendRatio = 0;
-            CreatePlayerEffect(t->player->playerIndex, 30, 0);
+            CreatePlayerEffect(t->player->playerIndex, PLAYER_EFFECT_VARIANT_SPARK_AURA, 0);
         }
-        CreatePlayerEffect(gCurTask->player->playerIndex, 30, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 30, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPARK_AURA, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPARK_AURA, 2);
         PlayerStartSfx(SE_SPARK_ATTACK, gCurTask->player->playerIndex);
         while (1) {
             TaskSetFrame(0x36B);

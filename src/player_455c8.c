@@ -49,8 +49,8 @@ void PlayerActionBurning(void)
         gCurTask->onGround = 0;
         PlayerSetMotionXPreset(11, 38);
         PlayerSetMotionYPreset(34);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 0);
         TaskSetFrame(0x5CB);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -79,8 +79,8 @@ void PlayerActionBurning(void)
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 3);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 4);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 3);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 4);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->frame++;
@@ -141,10 +141,10 @@ void PlayerActionBurning(void)
         gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
         PlayerSetMotionXPreset(11, 41);
         PlayerSetMotionYPreset(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 5);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 6);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 7);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 32, 8);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 5);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 6);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 7);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 8);
         TaskSetFrame(0x53C);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -257,7 +257,7 @@ void PlayerActionLaser(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(0x65A);
     TaskYieldTrampoline(2);
-    CreatePlayerObject(gCurTask->player->playerIndex, 6, 0);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LASER_BEAM, 0);
     PlaySfxIfLocalPlayer(SE_LASER_ATTACK, gCurTask->player->playerIndex);
     gCurTask->playerLoopCount = 0;
     do {

@@ -32,7 +32,7 @@ void Task_Blipper(void)
     gCurTask->layer = 11;
     gCurTask->frameTable = gBlipperFrames;
     gCurTask->onGround = 0;
-    if (gCurTask->variant == 5)
+    if (gCurTask->variant == BLIPPER_VARIANT_IDLE)
         BlipperIdle();
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)

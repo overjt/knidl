@@ -67,7 +67,7 @@ void PlayerEffectRunDust(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 7, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_RUN_DUST, 1);
             TaskSetMotionXFacing(0x5A5A5A5A, 0);
             TaskYieldTrampoline(1);
             gCurTask->frame -= 2;
@@ -135,7 +135,7 @@ void PlayerEffectSlideDust(void)
         TaskYieldTrampoline(2);
         gCurTask->frame += 2;
         TaskYieldTrampoline(1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 8, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLIDE_DUST, 1);
         TaskYieldTrampoline(1);
         gCurTask->frame -= 2;
         TaskYieldTrampoline(2);

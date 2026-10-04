@@ -315,7 +315,7 @@ void PlayerActionHighFall(void)
         }
     case 2:
         gCurTask->player->unk42 |= 0x100;
-        CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         gCurTask->player->bumpKind = 0;
         TaskSetFrame(anim[2]);
         TaskYieldTrampoline(2);
@@ -578,7 +578,7 @@ void PlayerActionFloat(void)
                 gCurTask->player->mouthState = 0;
                 gCurTask->player->bodyBox = (u32)gPlayerDefaultBodyBox;
                 gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
-                CreatePlayerObject(gCurTask->player->playerIndex, 0, 0);
+                CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_AIR_PUFF, 0);
                 gCurTask->unk28++;
                 PlayerSetMotionYPreset(2);
                 TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][2]);

@@ -49,7 +49,7 @@ void PlayerActionMike(void)
         gDispCnt |= 0x1D00;
     }
     gCurTask->player->unk16 = 0;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 37, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 0);
     gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
@@ -82,7 +82,7 @@ void PlayerActionMike(void)
         gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
         gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -117,7 +117,7 @@ void PlayerActionMike(void)
         gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
         gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
@@ -171,7 +171,7 @@ void PlayerActionMike(void)
         gCurTask->player->unk16++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
         gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);

@@ -708,7 +708,7 @@ void PengyShoot(void)
     i = 0;
     spawn.subtype = 0;
     spawn.taskType = TASK_PENGY_ICE_BREATH;
-    spawn.variant = 0;
+    spawn.variant = PENGY_ICE_BREATH_VARIANT_INIT;
     spawn.checkTerrain = 0;
     gCurTask->pengyLoopCount = 0;
     do

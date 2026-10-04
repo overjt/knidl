@@ -290,7 +290,7 @@ void CreateEndingEpilogueStarRod(void)
 
     id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
     t = &gTasks[id];
-    t->variant = 5;
+    t->variant = ENDING_EPILOGUE_VARIANT_STAR_ROD;
     t->parent = gCurTaskIdx;
 }
 

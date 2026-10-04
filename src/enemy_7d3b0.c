@@ -742,7 +742,7 @@ void SirKibbleShoot(void)
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
     spawn.taskType = TASK_SIR_KIBBLE_CUTTER;
-    spawn.variant = 0;
+    spawn.variant = SIR_KIBBLE_CUTTER_VARIANT_INIT;
     spawn.spawnArg = 0;
     spawn.x = 16;
     spawn.y = 0;
@@ -810,7 +810,7 @@ void SirKibbleJump(void)
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
     spawn.taskType = TASK_SIR_KIBBLE_CUTTER;
-    spawn.variant = 0;
+    spawn.variant = SIR_KIBBLE_CUTTER_VARIANT_INIT;
     spawn.spawnArg = 1;
     spawn.x = 16;
     spawn.y = 0;
@@ -967,7 +967,7 @@ void CappyCappedUpdate(void)
 
         if (t->hitKind == HIT_KIND_INHALE)
         {
-            gCurTask->cappyCaplessSlot = CreateActorByKind(ACTOR_KIND_ENEMY, 8, 1, 0, t->pixelX, t->pixelY,
+            gCurTask->cappyCaplessSlot = CreateActorByKind(ACTOR_KIND_ENEMY, 8, CAPPY_VARIANT_CAPLESS, 0, t->pixelX, t->pixelY,
                                                 t->tileWord);
             TransferRoomObject(gCurTaskIdx, gCurTask->cappyCaplessSlot);
         }

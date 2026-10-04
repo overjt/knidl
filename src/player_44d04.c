@@ -59,7 +59,7 @@ void PlayerActionSword(void)
             TaskYieldTrampoline(1);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 31, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SWORD_SPARKLE, 0);
             gCurTask->frame++;
             TaskYieldTrampoline(4);
             gCurTask->frame++;
@@ -111,7 +111,7 @@ void PlayerActionSword(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 31, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SWORD_SPARKLE, 0);
             gCurTask->frame++;
             TaskYieldTrampoline(4);
             gCurTask->frame++;

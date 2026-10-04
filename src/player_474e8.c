@@ -62,9 +62,9 @@ void PlayerActionParasol(void)
             gCurTask->frame++;
             TaskYieldTrampoline(1);
         } while ((s16)++gCurTask->playerLoopCount <= 4);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 2);
         gCurTask->playerLoopCount = 0;
         do {
             TaskSetFrame(0x8D8);
@@ -96,9 +96,9 @@ void PlayerActionParasol(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 36, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_PARASOL_SPARKLE, 2);
         gCurTask->playerLoopCount = 0;
         do {
             TaskSetFrame(0x8D8);
@@ -185,7 +185,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(6);
     gCurTask->frame++;
     TaskYieldTrampoline(6);
-    CreatePlayerEffect(gCurTask->player->playerIndex, 38, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLEEP_BUBBLE, 0);
     TaskSetFrame(0x8EA);
     TaskYieldTrampoline(20);
     gCurTask->playerLoopCount = 0;
@@ -202,7 +202,7 @@ void PlayerActionSleep(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(12);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 38, (s16)gCurTask->playerLoopCount + 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLEEP_BUBBLE, (s16)gCurTask->playerLoopCount + 1);
         gCurTask->frame++;
         TaskYieldTrampoline(12);
     } while ((s16)++gCurTask->playerLoopCount <= 1);
@@ -215,7 +215,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(0x8EB);
     TaskYieldTrampoline(4);
-    CreatePlayerEffect(gCurTask->player->playerIndex, 38, 3);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLEEP_BUBBLE, 3);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     gCurTask->frame++;

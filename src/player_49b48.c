@@ -64,11 +64,11 @@ void PlayerActionIce(void)
             if ((p->unk42 & 128) == 0)
                 PlayerStartSfx(SE_ICE_ATTACK, p->playerIndex);
         }
-        CreatePlayerObject(gCurTask->player->playerIndex, 7, 0);
-        CreatePlayerObject(gCurTask->player->playerIndex, 7, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 40, 2);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_ICE_BREATH, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_ICE_BREATH_CLOUD, 2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 4);
         while (1) {
             TaskSetFrame(0x9FA);
@@ -140,10 +140,10 @@ void PlayerActionFreeze(void)
         gCurTask->variant = 1;
         /* fallthrough */
     case 1:
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 41, 3);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 3);
         PlayerStartSfx(SE_FREEZE_ATTACK, gCurTask->player->playerIndex);
         while (1) {
             TaskSetFrame(0xA86);

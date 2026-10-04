@@ -7,6 +7,7 @@
 #include "constants/hits.h"
 #include "constants/player.h"
 #include "constants/tasks.h"
+#include "constants/variants.h"
 
 /*
  * Cooperative task system data model.

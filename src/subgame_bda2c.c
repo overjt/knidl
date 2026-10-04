@@ -233,7 +233,7 @@ void CreateBombRallyBomb(u32 a)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->variant = 1;
+        t->variant = BOMB_RALLY_OBJECT_VARIANT_BOMB;
         t->bombRallyObjectStartSeat = a;
     }
 }
@@ -246,7 +246,7 @@ void CreateBombRallyBombSmoke(s32 a, s32 b, u16 c, s32 d)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->variant = 2;
+        t->variant = BOMB_RALLY_OBJECT_VARIANT_BOMB_SMOKE;
         t->unk18 = (s16)c;
         t->unk1C = d;
         t->posX = a + (gCurTask->facing << 19);
@@ -264,7 +264,7 @@ void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->variant = 3;
+        t->variant = BOMB_RALLY_OBJECT_VARIANT_STAR_BURST;
         t->unk74 = c;
         t->facing = d;
         t->posX = a;
@@ -282,7 +282,7 @@ void CreateBombRallyBurstStar(u32 a)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->variant = 3;
+        t->variant = BOMB_RALLY_OBJECT_VARIANT_STAR_BURST;
         t->unk74 = a;
         t->facing = gCurTask->facing;
         t->posX = gCurTask->posX;
@@ -301,7 +301,7 @@ void CreateBombRallyStartSign(void)
         struct Task *t = &gTasks[i];
 
         t->parent = gCurTaskIdx;
-        t->variant = 4;
+        t->variant = BOMB_RALLY_OBJECT_VARIANT_START_SIGN;
     }
 }
 
@@ -343,7 +343,7 @@ void BombRallySeatPlayers(void)
             struct Task *t = &gTasks[k];
 
             t->parent = gCurTaskIdx;
-            t->variant = 0;
+            t->variant = BOMB_RALLY_OBJECT_VARIANT_PLAYER;
             t->bombRallyObjectPlayerIndex = i;
             t->bombRallyObjectSeat = j;
         }
@@ -524,7 +524,7 @@ void CreateBombRallyResultsPoses(void)
         if (k != -1) {
             t = &gTasks[k];
             t->parent = gCurTaskIdx;
-            t->variant = 5;
+            t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
             t->unk18 = 0;
             t->unk1C = 0;
             t->unk20 = 0;
@@ -535,7 +535,7 @@ void CreateBombRallyResultsPoses(void)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->variant = 5;
+                t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
                 t->unk18 = i;
                 t->unk1C = 0;
                 t->unk20 = gBombRallySeats[i];
@@ -555,7 +555,7 @@ void CreateBombRallyLivesIcons(void)
         if (k != -1) {
             t = &gTasks[k];
             t->parent = gCurTaskIdx;
-            t->variant = 5;
+            t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
             t->unk18 = 0;
             t->unk1C = 2;
             t->unk20 = 0;
@@ -566,7 +566,7 @@ void CreateBombRallyLivesIcons(void)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->variant = 5;
+                t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
                 t->unk18 = i;
                 t->unk1C = 2;
                 t->unk20 = gBombRallySeats[i];
@@ -587,7 +587,7 @@ void CreateBombRallyPlaceLabels(void)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->variant = 5;
+                t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
                 t->unk18 = 0;
                 t->unk1C = 1;
                 t->unk20 = 0;
@@ -598,7 +598,7 @@ void CreateBombRallyPlaceLabels(void)
                 if (k != -1) {
                     t = &gTasks[k];
                     t->parent = gCurTaskIdx;
-                    t->variant = 5;
+                    t->variant = BOMB_RALLY_OBJECT_VARIANT_RESULTS_PLAYER;
                     t->unk18 = i;
                     t->unk1C = 1;
                     t->unk20 = gBombRallySeats[i];
@@ -620,7 +620,7 @@ void CreateBombRallyContinueItems(u32 a)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->variant = 6;
+                t->variant = BOMB_RALLY_OBJECT_VARIANT_MENU_ITEM;
                 t->unk74 = 0;
                 t->unk18 = i;
                 t->unk1C = a;
@@ -641,7 +641,7 @@ void CreateBombRallyLevelItems(u32 a)
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
-                t->variant = 6;
+                t->variant = BOMB_RALLY_OBJECT_VARIANT_MENU_ITEM;
                 t->unk74 = 1;
                 t->unk18 = i;
                 t->unk1C = a;

@@ -340,7 +340,7 @@ void PlayerEffectSkidDust(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 6, 0x10000);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 0x10000);
             TaskYieldTrampoline(1);
             gCurTask->frame -= 2;
             TaskYieldTrampoline(2);

@@ -267,7 +267,7 @@ void PlayerActionUFO(void)
             gCurTask->frame++;
             TaskYieldTrampoline(3);
         } while ((s16)++gCurTask->playerLoopCount <= 2);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 48, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_UFO_CHARGE_SPARKLE, 0);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
         {
             gCurTask->player->unk14++;
@@ -281,7 +281,7 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(3);
         }
         PlaySfxIfLocalPlayer(240, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 48, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_UFO_CHARGE_SPARKLE, 0);
         gCurTask->player->unk14++;
         while (1)
         {
@@ -302,9 +302,9 @@ void PlayerActionUFO(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->player->playerIndex, 10, 0);
-        CreatePlayerObject(gCurTask->player->playerIndex, 10, 1);
-        CreatePlayerObject(gCurTask->player->playerIndex, 10, 2);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_UFO_SHOT, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_UFO_SHOT, 1);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_UFO_SHOT, 2);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++)
         {
             gCurTask->frame = 0xFD5;
@@ -360,7 +360,7 @@ void PlayerActionUFO(void)
         PlayerStartOffsetScript(6);
         TaskSetFrame(0xFC4);
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->player->playerIndex, 10, 3);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_UFO_SHOT, 3);
         PlaySfxIfLocalPlayer(208, gCurTask->player->playerIndex);
         {
             struct Task *u = gCurTask;
@@ -382,7 +382,7 @@ void PlayerActionUFO(void)
         PlayerStartOffsetScript(7);
         gCurTask->frame = 0xFC4;
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->player->playerIndex, 10, 4);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_UFO_SHOT, 4);
         PlaySfxIfLocalPlayer(209, gCurTask->player->playerIndex);
         {
             struct Task *u = gCurTask;
@@ -406,7 +406,7 @@ void PlayerActionUFO(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        CreatePlayerObject(gCurTask->player->playerIndex, 10, 5);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_UFO_SHOT, 5);
         PlaySfxIfLocalPlayer(210, gCurTask->player->playerIndex);
         gCurTask->frame++;
         TaskYieldTrampoline(1);

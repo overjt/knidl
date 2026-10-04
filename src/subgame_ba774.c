@@ -126,7 +126,7 @@ void CreateQuickDrawRedrawSign(void)
     if (i != -1)
     {
         struct Task *t = &gTasks[i];
-        t->variant = 1;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
         t->unk18 = 0;
         t->unk1C = 1;
         t->unk20 = 120;
@@ -145,7 +145,7 @@ void CreateQuickDrawSlash(void)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->variant = 3;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_SLASH;
     }
 }
 
@@ -157,7 +157,7 @@ void CreateQuickDrawBurst(void)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->variant = 4;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_BURST;
     }
 }
 
@@ -486,7 +486,7 @@ void CreateQuickDrawOpponent(void)
     {
         t = &gTasks[i];
         t->parent = gCurTaskIdx;
-        t->variant = 5;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_OPPONENT;
         t->quickDrawObjectLevel = gSubGameLevel;
         t->u76.unk76 = 0;
         gCurTask->quickDrawOpponentSlot = i;

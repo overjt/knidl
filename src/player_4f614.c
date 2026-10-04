@@ -23,7 +23,7 @@ s32 PlayerBallPlayBump(void)
 
     if (k != 0)
     {
-        CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         gCurTask->player->bumpKind = 0;
         gCurTask->unk24 = 1;
         switch (k)
@@ -164,7 +164,7 @@ s32 PlayerBallCheckLanding(s32 a0)
     {
         if ((gCurTask->waterFlags & 1) == 0
             && (gCurTask->velY & 0xFFFF0000) != 0 && a0 != 0)
-            CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         PlayerStopAxes(2);
         return 1;
     }

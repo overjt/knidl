@@ -500,7 +500,7 @@ void CreateQuickDrawTimer(void)
         struct Task *t = &gTasks[idx];
 
         t->parent = gCurTaskIdx;
-        t->variant = 2;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_TIMER;
         gCurTask->quickDrawTimerSlot = idx;
     }
 }
@@ -519,7 +519,7 @@ void CreateQuickDrawPlayers(s32 a0)
 
             t->parent = gCurTaskIdx;
             t->quickDrawObjectPlayerIndex = idx;
-            t->variant = 0;
+            t->variant = QUICK_DRAW_OBJECT_VARIANT_PLAYER;
             t->quickDrawObjectStartMode = a0;
             t->unk28 = 0;
         }
@@ -545,7 +545,7 @@ void CreateQuickDrawSignal(void)
     {
         struct Task *t = &gTasks[idx];
 
-        t->variant = 1;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
         t->unk18 = 0;
         t->unk1C = 3;
         t->unk20 = 16;

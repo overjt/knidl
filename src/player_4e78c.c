@@ -151,7 +151,7 @@ void PlayerBallStandUpdate(void)
         }
         break;
     }
-    if (gCurTask->variant != 1)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_STAND)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -213,7 +213,7 @@ void PlayerBallRollUpdate(void)
         }
         break;
     }
-    if (gCurTask->variant != 2)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_ROLL)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -227,7 +227,7 @@ void PlayerBallSkid(void)
 {
     PlayerSetMotionXPreset(11, 62);
     PlaySfxIfLocalPlayer(119, (u16)gCurTask->player->playerIndex);
-    gCurTask->unk34 = CreatePlayerEffect(gCurTask->player->playerIndex, 6, 60);
+    gCurTask->unk34 = CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 60);
     TaskSleepForever();
 }
 
@@ -266,7 +266,7 @@ void PlayerBallSkidUpdate(void)
         }
         break;
     }
-    if (gCurTask->variant != 3)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_SKID)
     {
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
         gTasks[gCurTask->unk34].unk28 = -1;

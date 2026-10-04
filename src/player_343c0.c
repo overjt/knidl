@@ -52,7 +52,7 @@ void PlayerActionRun(void)
         }
         PlayerPlayBump();
         PlayerStartSfx(117, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 7, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_RUN_DUST, 0);
         if (PlayerGetFacingSlope(gCurTask->player->playerIndex) == 4)
             gCurTask->variant = 1;
         else
@@ -105,7 +105,7 @@ void PlayerActionRun(void)
             }
         }
     }
-    CreatePlayerEffect(gCurTask->player->playerIndex, 6, 0x200);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 0x200);
     if (gCurTask->player->mouthState == 1)
         gCurTask->playerBaseFrame = 0x15D;
     else
@@ -243,7 +243,7 @@ void PlayerActionSkid(void)
     if (gCurTask->player->prevMode != 3)
     {
         PlaySfxIfLocalPlayer(119, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 6, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 0);
     }
     if (gCurTask->player->mouthState == 1)
         gCurTask->playerBaseFrame = 0x15D;

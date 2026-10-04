@@ -335,7 +335,7 @@ void PlayerActionSlide(void)
         PlayerStartSfx(118, gCurTask->player->playerIndex);
         gCurTask->player->hitBoxSet = gUnk_0873CC84;
         PlayerSetMotionXPreset(11, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 8, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SLIDE_DUST, 0);
     }
     switch (gCurTask->variant)
     {

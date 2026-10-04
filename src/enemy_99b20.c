@@ -249,7 +249,7 @@ s32 CreateMrTickTockRing(void)
     a = t->u8C.actor;
     sp.subtype = 16;
     sp.taskType = TASK_MR_TICK_TOCK_RING;
-    sp.variant = 0;
+    sp.variant = MR_TICK_TOCK_RING_VARIANT_INIT;
     sp.spawnArg = t->facing;
     sp.x = 0;
     sp.y = 0;

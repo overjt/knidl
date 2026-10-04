@@ -169,6 +169,16 @@ FAMILIES = {
         "prefix": "BGM_",
         "calls": {"PlayBgm": 0},
     },
+    "player_effect_variants": {
+        "header": "variants",
+        "prefix": "PLAYER_EFFECT_VARIANT_",
+        "calls": {"CreatePlayerEffect": 1, "CreatePlayerEffectHighSlot": 1},
+    },
+    "player_object_variants": {
+        "header": "variants",
+        "prefix": "PLAYER_OBJECT_VARIANT_",
+        "calls": {"CreatePlayerObject": 1, "CreatePlayerObjectLowSlot": 1},
+    },
     "camera": {
         "header": "camera",
         "prefix": "CAMERA_MODE_",

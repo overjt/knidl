@@ -81,9 +81,9 @@ void PlayerActionTornado(void)
         /* fallthrough */
     case 2:
         gCurTask->player->unk16 = 255;
-        CreatePlayerEffect(gCurTask->player->playerIndex, 45, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 45, 1);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 45, 2);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_TORNADO_DUST, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_TORNADO_DUST, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_TORNADO_DUST, 2);
         PlayerSetMotionXPreset(11, 65);
         {
             struct Task *t = gCurTask;
@@ -191,7 +191,7 @@ void PlayerActionCrash(void)
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
     gCurTask->player->unk42 |= 0x700;
     gCurTask->playerCrashSavedPosY = gCurTask->posY;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 46, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CRASH_BLAST, 0);
     gCurTask->player->terrainBox = 0;
     gCurTask->variant = 0;
     RequestScreenShake(5);
@@ -254,7 +254,7 @@ void PlayerActionCrash(void)
     TaskYieldTrampoline(2);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
-    CreatePlayerEffect(gCurTask->player->playerIndex, 46, 1);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CRASH_BLAST, 1);
     PlayerSetMotionYPreset(53);
     TaskSetFrame(0xDE7);
     TaskYieldTrampoline(3);

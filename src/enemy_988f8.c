@@ -276,7 +276,7 @@ void CreateMrFrostyIceCube(void)
     a = t->u8C.actor;
     sp.subtype = 13;
     sp.taskType = TASK_MR_FROSTY_ICE_CUBE;
-    sp.variant = 0;
+    sp.variant = MR_FROSTY_ICE_CUBE_VARIANT_INIT;
     sp.spawnArg = t->facing;
     sp.x = 0;
     sp.y = 0;

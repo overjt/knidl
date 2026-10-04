@@ -529,7 +529,7 @@ void PlayerActionInhale(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerStartSfx(103, gCurTask->player->playerIndex);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 0, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_INHALE_AIR, 0);
         gCurTask->player->unk40 |= 4;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -574,8 +574,8 @@ void PlayerActionInhale(void)
                 w = gCurTask;
                 if (w->onGround & 1)
                 {
-                    CreatePlayerEffect(w->player->playerIndex, 1, 0);
-                    CreatePlayerEffect(gCurTask->player->playerIndex, 1, 1);
+                    CreatePlayerEffect(w->player->playerIndex, PLAYER_EFFECT_VARIANT_CATCH_DUST, 0);
+                    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CATCH_DUST, 1);
                 }
                 TaskSetFrame(62);
                 TaskYieldTrampoline(1);
@@ -740,13 +740,13 @@ void PlayerActionSpit(void)
     TaskYieldTrampoline(1);
     gCurTask->player->pendingAbility = ABILITY_NORMAL;
     if ((s8)gCurTask->player->attachedCount > 1)
-        CreatePlayerObject(gCurTask->player->playerIndex, 2, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_MULTI_STAR, 0);
     else
-        CreatePlayerObject(gCurTask->player->playerIndex, 1, 0);
+        CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_SPIT_STAR, 0);
     if (gCurTask->onGround & 1)
     {
-        CreatePlayerEffect(gCurTask->player->playerIndex, 2, 0);
-        CreatePlayerEffect(gCurTask->player->playerIndex, 2, 1);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPIT_DUST, 0);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPIT_DUST, 1);
     }
     gCurTask->frame++;
     TaskYieldTrampoline(11);

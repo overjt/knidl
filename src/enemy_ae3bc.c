@@ -3908,7 +3908,7 @@ void CreateWhispyWoodsAirPuff(void)
     PlaySfx(0x223);
     sp.subtype = 23;
     sp.taskType = TASK_WHISPY_WOODS_AIR_PUFF;
-    sp.variant = 0;
+    sp.variant = WHISPY_WOODS_AIR_PUFF_VARIANT_INIT;
     sp.spawnArg = 0;
     z = 0;
     sp.x = 24;
@@ -3925,7 +3925,7 @@ void CreateWhispyWoodsApple(void)
 
     sp.subtype = 22;
     sp.taskType = TASK_WHISPY_WOODS_APPLE;
-    sp.variant = 0;
+    sp.variant = WHISPY_WOODS_APPLE_VARIANT_INIT;
     sp.spawnArg = 0;
     sp.x = (u8)sub_080b2804();
     z = 0;

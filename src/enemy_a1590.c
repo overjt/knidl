@@ -1147,7 +1147,7 @@ void CreateMrShineCrescent(void)
 
     sp.subtype = 24;
     sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
-    sp.variant = 0;
+    sp.variant = MR_SHINE_AND_MR_BRIGHT_ATTACK_VARIANT_MR_SHINE_CRESCENT;
     sp.spawnArg = 0;
     sp.x = 24;
     sp.y = 0;
@@ -1166,7 +1166,7 @@ void CreateMrShineFallingStar(void)
     t->mrShineAndMrBrightStarTimer = 45;
     sp.subtype = 24;
     sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
-    sp.variant = 2;
+    sp.variant = MR_SHINE_AND_MR_BRIGHT_ATTACK_VARIANT_MR_SHINE_FALLING_STAR;
     sp.spawnArg = t->mrShineAndMrBrightStarCount;
     sp.x = 0;
     sp.y = 0;
@@ -1360,7 +1360,7 @@ void CreateMrBrightFireball(void)
 
     sp.subtype = 24;
     sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
-    sp.variant = 1;
+    sp.variant = MR_SHINE_AND_MR_BRIGHT_ATTACK_VARIANT_MR_BRIGHT_FIREBALL;
     sp.spawnArg = 0;
     sp.x = 24;
     sp.y = 0;
@@ -1377,7 +1377,7 @@ void CreateMrBrightBeam(void)
 
     sp.subtype = 24;
     sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
-    sp.variant = 3;
+    sp.variant = MR_SHINE_AND_MR_BRIGHT_ATTACK_VARIANT_MR_BRIGHT_BEAM;
     sp.spawnArg = 0;
     sp.x = 0;
     sp.y = 64;

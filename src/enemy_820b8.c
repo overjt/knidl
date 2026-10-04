@@ -82,10 +82,10 @@ void PoppyBrosJrRideUpdate(void)
         t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
         if (t->poppyBrosJrMountKind == 0)
             gCurTask->poppyBrosJrSpawnSlot =
-                CreateActorByKind(ACTOR_KIND_ENEMY, 31, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
+                CreateActorByKind(ACTOR_KIND_ENEMY, 31, POPPY_BROS_JR_RIDE_VARIANT_DROPPED_OBJECT, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
         else
             gCurTask->poppyBrosJrSpawnSlot =
-                CreateActorByKind(ACTOR_KIND_ENEMY, 32, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
+                CreateActorByKind(ACTOR_KIND_ENEMY, 32, POPPY_BROS_JR_RIDE_VARIANT_DROPPED_OBJECT, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
         TransferRoomObject(gCurTaskIdx, gCurTask->poppyBrosJrSpawnSlot);
         u = gCurTask;
         u->tileWord = u->poppyBrosJrSavedTileWord;

@@ -37,7 +37,7 @@ void PlayerActionLight(void)
         t->player->terrainBox = 0;
     }
     FreezeOtherTasks(15);
-    CreatePlayerObject(gCurTask->player->playerIndex, 9, 0);
+    CreatePlayerObject(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_LIGHT_ORB, 0);
     gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDFD);

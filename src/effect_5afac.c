@@ -2175,7 +2175,7 @@ void sub_0805e2d4(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->spriteFlags &= 0x7FFF;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }
@@ -2289,7 +2289,7 @@ void PlayerDance1(void)
     TaskYieldTrampoline(7);
     TaskStop();
     gCurTask->spriteFlags |= 128 << 8;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
@@ -2384,7 +2384,7 @@ void PlayerDance2(s32 a0, s32 a1, s32 a2)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->spriteFlags |= 128 << 8;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
@@ -2506,7 +2506,7 @@ void PlayerDance3(void)
     TaskYieldTrampoline(1);
     TaskStop();
     gCurTask->spriteFlags |= 128 << 8;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
@@ -2709,7 +2709,7 @@ void PlayerDance4(void)
     TaskYieldTrampoline(7);
     TaskStop();
     gCurTask->spriteFlags |= 128 << 8;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
@@ -2846,7 +2846,7 @@ void PlayerDance5(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->spriteFlags |= 128 << 8;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
@@ -3113,7 +3113,7 @@ void PlayerDance7(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->spriteFlags |= 128 << 8;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
@@ -3441,7 +3441,7 @@ void PlayerDance8(void)
     TaskYieldTrampoline(2);
     gCurTask->velY = 0xFFFD0000;
     gCurTask->spriteFlags |= 128 << 8;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(1);
     TaskStop();
@@ -3728,7 +3728,7 @@ void PlayerDance9(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 146;
     TaskYieldTrampoline(21);
 }
@@ -4037,7 +4037,7 @@ void PlayerDance10(void)
     TaskYieldTrampoline(2);
     TaskStop();
     gCurTask->spriteFlags |= 0x8000;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }
@@ -4368,7 +4368,7 @@ void PlayerDance11(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
     TaskStop();
-    CreatePlayerEffect(gCurTask->player->playerIndex, 16, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST, 0);
     gCurTask->frame = 0x92;
     TaskYieldTrampoline(0x15);
 }

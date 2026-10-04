@@ -35,7 +35,7 @@ void CreateKingDededeAirPuff(void)
     a = gCurTask->u8C.actor;
     sp.subtype = 11;
     sp.taskType = TASK_KING_DEDEDE_AIR_PUFF;
-    sp.variant = 0;
+    sp.variant = KING_DEDEDE_AIR_PUFF_VARIANT_INIT;
     sp.spawnArg = 0;
     sp.x = 32;
     sp.y = 16;

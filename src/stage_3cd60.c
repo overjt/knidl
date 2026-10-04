@@ -88,7 +88,7 @@ void PlayerPlayBump(void)
         p = &gUnk_0873D210[gCurTask->player->ability * 4];
     else
         p = gUnk_0873D2E0;
-    CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
     if (gCurTask->player->mouthState == 1) {
         if (v == 2) {
             TaskSetFrame(0x15F);
@@ -1151,7 +1151,7 @@ s32 PlayerLand(s32 a0)
         {
             PlaySfxIfLocalPlayer(107, (u16)gCurTask->player->playerIndex);
             if ((gCurTask->velY & 0xFFFF0000) != 0 && a0 != 0)
-                CreatePlayerEffect(gCurTask->player->playerIndex, 4, 0);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
         }
         PlayerStopAxes(2);
         return 1;
@@ -1437,7 +1437,7 @@ void sub_0803e8ec(void)
             return;
         }
         if (needSmall != 0 && (gFrameCount & 15) == 0)
-            CreatePlayerEffectHighSlot(q->playerIndex, 4, 0);
+            CreatePlayerEffectHighSlot(q->playerIndex, PLAYER_EFFECT_VARIANT_IMPACT_STAR, 0);
     }
     {
         struct PlayerState *r = gCurTask->player;

@@ -357,23 +357,23 @@ post:
     if (gCurTask->velY >= 0)
     {
         if (gCurTask->waterFlags & 0x80)
-            CreatePlayerEffect(gCurTask->player->playerIndex, 9, gTerrainResult.unk8);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SPLASH, gTerrainResult.unk8);
     }
     else if (gCurTask->player->mouthState == 2)
     {
         if (gCurTask->waterFlags & 0x80)
-            CreatePlayerEffect(gCurTask->player->playerIndex, 10, gTerrainResult.unk8);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.unk8);
     }
     else if ((gCurTask->player->prevWaterFlags & 1) && !(gCurTask->waterFlags & 1))
     {
-        CreatePlayerEffect(gCurTask->player->playerIndex, 10, gTerrainResult.unk8);
+        CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_LEAVE_WATER_SPLASH, gTerrainResult.unk8);
     }
     if ((gCurTask->waterFlags & 65) == 1)
     {
         if (--gPlayerBubbleTimers[gCurTask->player->playerIndex] == 0)
         {
             gPlayerBubbleTimers[gCurTask->player->playerIndex] = RandomRange(90) + 120;
-            CreatePlayerEffectHighSlot(gCurTask->player->playerIndex, 11, 0);
+            CreatePlayerEffectHighSlot(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BUBBLE, 0);
         }
     }
     else

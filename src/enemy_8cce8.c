@@ -1073,7 +1073,7 @@ void CreateLaserBallLaser(void)
     {
         sp.subtype = 1;
         sp.taskType = TASK_LASER_BALL_LASER;
-        sp.variant = 0;
+        sp.variant = LASER_BALL_LASER_VARIANT_INIT;
         sp.spawnArg = gCurTask->laserBallLaserDir;
         sp.x = 16;
         sp.y = 0;

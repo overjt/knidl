@@ -84,7 +84,7 @@ void PlayerEffectBurningFlames(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 32, 1);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_BURNING_FLAMES, 1);
             TaskYieldTrampoline(1);
             gCurTask->frame -= 2;
             TaskYieldTrampoline(2);

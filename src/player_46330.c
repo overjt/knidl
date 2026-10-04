@@ -57,7 +57,7 @@ again:
             PlayerSetMotionXPreset(11, 44);
             TaskSetFrame(0x701);
             TaskYieldTrampoline(4);
-            CreatePlayerEffect(gCurTask->player->playerIndex, 6, 30);
+            CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 30);
             PlayerSetMotionXPreset(11, 45);
             gCurTask->playerLoopCount = 0;
             do {
@@ -91,7 +91,7 @@ again:
             SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
             PlaySfxIfLocalPlayer(245, gCurTask->player->playerIndex);
             if (gCurTask->onGround & 1 || gCurTask->playerWheelOnWater != 0) {
-                CreatePlayerEffect(gCurTask->player->playerIndex, 6, 4);
+                CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 4);
                 TaskSetFrame(0x70E);
                 TaskYieldTrampoline(4);
                 PlayerSetMotionXPreset(11, 47);
@@ -122,7 +122,7 @@ again:
             {
                 struct Task *u = gCurTask;
                 if (u->onGround & 1 || u->playerWheelOnWater != 0) {
-                    CreatePlayerEffect(u->player->playerIndex, 6, 4);
+                    CreatePlayerEffect(u->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 4);
                     PlayerSetMotionXPreset(11, 46);
                 }
             }

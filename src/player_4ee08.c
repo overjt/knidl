@@ -103,7 +103,7 @@ void PlayerBallJumpUpdate(void)
         }
         break;
     }
-    if (gCurTask->variant != 4)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_JUMP)
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     PlayerSetMotionXPreset(12, 0);
 }
@@ -195,7 +195,7 @@ void PlayerBallBounceUpdate(void)
         }
         break;
     }
-    if (gCurTask->variant != 5)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_BOUNCE)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;
@@ -235,7 +235,7 @@ void PlayerBallFallUpdate(void)
             t->facing = -t->facing;
         }
     }
-    if (gCurTask->variant != 6)
+    if (gCurTask->variant != PLAYER_BALL_VARIANT_FALL)
     {
         struct Task *t = gCurTask;
         t->unk24 = 0;

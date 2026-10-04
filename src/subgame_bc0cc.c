@@ -283,7 +283,7 @@ void CreateQuickDrawFalseStartMark(void)
         struct Task *t = &gTasks[id];
         struct Task *p;
 
-        t->variant = 1;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_LABEL;
         p = gCurTask;
         t->unk18 = p->unk20;
         t->unk1C = 6;
@@ -305,7 +305,7 @@ void CreateQuickDrawSweatDrop(void)
         struct Task *t = &gTasks[id];
         struct Task *p;
 
-        t->variant = 6;
+        t->variant = QUICK_DRAW_OBJECT_VARIANT_SWEAT_DROP;
         p = gCurTask;
         t->unk18 = p->unk20;
         t->pixelX = p->pixelX + gUnk_08756458[p->unk20];

@@ -362,7 +362,7 @@ void BugzzySummon(void)
     TaskYieldTrampoline(5);
     spawn.subtype = 30;
     spawn.taskType = TASK_BUGZZY_LADYBUG;
-    spawn.variant = 0;
+    spawn.variant = BUGZZY_LADYBUG_VARIANT_INIT;
     spawn.spawnArg = gCurTask->actorSpawnArg;
     spawn.x = 0xFFFE;
     spawn.y = 0;

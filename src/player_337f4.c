@@ -332,7 +332,7 @@ void PlayerActionWalk(void)
             }
         }
     }
-    CreatePlayerEffect(gCurTask->player->playerIndex, 6, 0x200);
+    CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_SKID_DUST, 0x200);
     if (gCurTask->player->mouthState == 1)
         gCurTask->playerBaseFrame = 0x15D;
     else

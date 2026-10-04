@@ -52,7 +52,7 @@ void CreateAirGrindRacers(void)
             t = &gTasks[id];
             t->unk18 = id;
             t->unk1C = i;
-            t->variant = 0;
+            t->variant = AIR_GRIND_OBJECT_VARIANT_RACER;
         }
     }
 }
@@ -65,7 +65,7 @@ void CreateAirGrindScenery(s32 unused)
     id = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
     if (id != -1) {
         t = &gTasks[id];
-        t->variant = 1;
+        t->variant = AIR_GRIND_OBJECT_VARIANT_SCENERY;
         gAirGrindPtr->sceneryTaskSlot = id;
     }
 }
@@ -80,7 +80,7 @@ void CreateAirGrindEffect(s32 a, s32 b, s32 c)
         t = &gTasks[id];
         t->unk18 = b;
         t->unk1C = a;
-        t->variant = 2;
+        t->variant = AIR_GRIND_OBJECT_VARIANT_EFFECT;
         t->unk20 = c;
     }
 }
