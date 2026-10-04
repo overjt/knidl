@@ -1462,6 +1462,6 @@ void ActorStoreHit(u8 a)
         b->unk06 = gHitterColliderClass;
         b->unk07 = gHitterColliderKind;
         u = &gTasks[gCurTask->hitterSlot];
-        b->unk0E = u->parent;
+        b->hitterParent = u->parent;
     }
 }

@@ -190,7 +190,7 @@ struct Actor
     /*0x0B*/ u8 paletteLocked;
     /*0x0C*/ u8 paletteVariant;
     /*0x0D*/ u8 unk0D;
-    /*0x0E*/ s16 unk0E;
+    /*0x0E*/ s16 hitterParent;
     /*0x10*/ s16 attachedTask;
     /*0x12*/ s16 attachedTaskLifetime;
     /*0x14*/ u16 savedFrame;

@@ -27,16 +27,16 @@
 
 struct AttackBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
-    /*0x09*/ u8 unk09;
+    /*0x08*/ u8 damage;
+    /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 unk0A;
     /*0x0C*/ u16 unk0C;
     /*0x0E*/ u16 unk0E;
@@ -49,32 +49,32 @@ struct AttackBox
 
 struct BodyBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 unk08;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
     /*0x0B*/ u8 unk0B;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x0C*/ u8 damage;
+    /*0x0D*/ u8 hitEffect;
     /*0x0E*/ u16 unk0E;
     /*0x10*/ u16 unk10;
 };
 
 struct HitEntry
 {
-    /*0x00*/ u8 unk00;
+    /*0x00*/ u8 slot;
     /*0x01*/ u8 filler01;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
+    /*0x02*/ u16 x;
+    /*0x04*/ u16 y;
     /*0x06*/ u16 filler06;
-    /*0x08*/ struct BodyBox *unk08;
+    /*0x08*/ struct BodyBox *bodyBox;
 };
 
 /* Not from collision.h: this file's view of gColliderClass20 differs (lesson
@@ -134,10 +134,10 @@ u8 HitTestColliderClass20(void)
     e = gColliderClass20;
     for (i = 0; i < gColliderClass20Count; i++)
     {
-        gColliderSlot = e->unk00;
+        gColliderSlot = e->slot;
         t = &gTasks[gColliderSlot];
         gColliderPlayerState = t->player;
-        gColliderBodyBox = e->unk08;
+        gColliderBodyBox = e->bodyBox;
         if (gColliderPlayerState == NULL)
             gColliderPlayer = 4;
         else
@@ -145,28 +145,28 @@ u8 HitTestColliderClass20(void)
         if (gColliderBodyBox->unk10 & 0x8000)
         {
             s32 x;
-            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
-            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
-            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
+            gColliderX = x = gColliderBodyBox->offsetX + e->x;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->left;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->right;
         }
         else if (t->facing == 1)
         {
             s32 x;
-            gColliderX = x = gColliderBodyBox->unk00 + e->unk02;
-            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk02;
-            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->unk04;
+            gColliderX = x = gColliderBodyBox->offsetX + e->x;
+            gColliderLeft = (x - (u16)gViewRect[0]) + gColliderBodyBox->left;
+            gColliderRight = (x - (u16)gViewRect[0]) + gColliderBodyBox->right;
         }
         else
         {
             s32 x;
-            gColliderX = x = -gColliderBodyBox->unk00 + e->unk02;
-            gColliderLeft = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk04;
-            gColliderRight = (x - (u16)gViewRect[0]) - gColliderBodyBox->unk02;
+            gColliderX = x = -gColliderBodyBox->offsetX + e->x;
+            gColliderLeft = (x - (u16)gViewRect[0]) - gColliderBodyBox->right;
+            gColliderRight = (x - (u16)gViewRect[0]) - gColliderBodyBox->left;
         }
-        gColliderY = gColliderBodyBox->unk01 + e->unk04;
+        gColliderY = gColliderBodyBox->offsetY + e->y;
         e++;
-        gColliderTop = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk03;
-        gColliderBottom = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->unk05;
+        gColliderTop = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->top;
+        gColliderBottom = (gColliderY - (u16)gViewRect[2]) + gColliderBodyBox->bottom;
         if (gColliderRight < gAttackBoxLeft)
             continue;
         if (gAttackBoxRight < gColliderLeft)
@@ -213,7 +213,7 @@ u8 HitTestColliderClass20(void)
             }
             if (gAttackBox->unk1A & 0x3E)
             {
-                if (!((gAttackBox->unk1A >> gColliderBodyBox->unk0D) & 1))
+                if (!((gAttackBox->unk1A >> gColliderBodyBox->hitEffect) & 1))
                     continue;
                 gHitKind = 7;
                 gHitHealthLeft = gAttackHealth;

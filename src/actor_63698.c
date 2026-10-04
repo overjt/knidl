@@ -126,7 +126,7 @@ void ActorInitFromDefSlot(u32 i)
     a->animScriptPos = 0;
     a->paletteOverridden = 0;
     a->paletteLocked = 0;
-    a->unk0E = -1;
+    a->hitterParent = -1;
     a->attachedTask = -1;
     a->attachedTaskLifetime = 0xFFFE;
     a->savedPaletteBits = t->tileWord & 0xF000;

@@ -260,7 +260,7 @@ void ActorFreezeIntoIceBlock(void)
     t->unk1C = z;
     t->unk20 = z;
     t->unk24 = z;
-    t->unk28 = a->unk0E;
+    t->unk28 = a->hitterParent;
     ActorAttachEffect(3, 0);
     gCurTask->u80.attackAbility = zero;
     gCurTask->onGround = zero;

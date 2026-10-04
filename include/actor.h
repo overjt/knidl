@@ -34,13 +34,13 @@ struct Unk0873EAC0
    (src/actor_692fc.c) walk it. */
 struct ActorHandlers
 {
-    /*0x00*/ u32 unk00;
-    /*0x04*/ u32 unk04;
-    /*0x08*/ u32 unk08;
-    /*0x0C*/ u32 unk0C;
-    /*0x10*/ u32 unk10;
+    /*0x00*/ u32 landCallback;
+    /*0x04*/ u32 leaveGroundCallback;
+    /*0x08*/ u32 enterWaterCallback;
+    /*0x0C*/ u32 leaveWaterCallback;
+    /*0x10*/ u32 hitWallCallback;
     /*0x14*/ u32 unk14;
-    /*0x18*/ u32 unk18;
+    /*0x18*/ u32 hitCeilingCallback;
 };
 
 /* Block Actor.hitReactions (and ActorDef.hitReactions) points at: two s8 mode
@@ -49,11 +49,11 @@ struct ActorHandlers
    block. */
 struct ActorVt
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
+    /*0x00*/ s8 damageKind;
+    /*0x01*/ s8 defeatKind;
     /*0x02*/ u8 filler02[2];
-    /*0x04*/ u32 unk04;
-    /*0x08*/ u32 unk08;
+    /*0x04*/ u32 damageCallback;
+    /*0x08*/ u32 defeatCallback;
 };
 
 /* EWRAM */

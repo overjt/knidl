@@ -29,28 +29,28 @@ void ClearColliderLists(void)
 
     for (i = 0; i < 4; i++)
     {
-        p->unk00 = 0;
-        p->unk02 = 0;
-        p->unk04 = 0;
-        p->unk08 = 0;
+        p->slot = 0;
+        p->x = 0;
+        p->y = 0;
+        p->bodyBox = 0;
         p++;
     }
     p = q;
     for (i = 0; i < 20; i++)
     {
-        p->unk00 = 0;
-        p->unk02 = 0;
-        p->unk04 = 0;
-        p->unk08 = 0;
+        p->slot = 0;
+        p->x = 0;
+        p->y = 0;
+        p->bodyBox = 0;
         p++;
     }
     p = r;
     for (i = 0; i < 20; i++)
     {
-        p->unk00 = 0;
-        p->unk02 = 0;
-        p->unk04 = 0;
-        p->unk08 = 0;
+        p->slot = 0;
+        p->x = 0;
+        p->y = 0;
+        p->bodyBox = 0;
         p++;
     }
     *cc = 0;
@@ -80,9 +80,9 @@ u32 RegisterCollider(u8 idx, u16 x, u16 y, u8 *p)
         r = &gColliderClass20[gColliderClass20Count++];
         break;
     }
-    r->unk00 = idx;
-    r->unk02 = x;
-    r->unk04 = y;
-    r->unk08 = p;
+    r->slot = idx;
+    r->x = x;
+    r->y = y;
+    r->bodyBox = p;
     return 0;
 }

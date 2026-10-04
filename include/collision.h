@@ -16,16 +16,16 @@ struct PlayerState;
    unk03, right unk04, bottom unk05), then the attack's kind and flags. */
 struct AttackBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
-    /*0x08*/ u8 unk08;
-    /*0x09*/ u8 unk09;
+    /*0x08*/ u8 damage;
+    /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 unk0A;
     /*0x0C*/ u16 unk0C;
     /*0x0E*/ u16 unk0E;
@@ -41,32 +41,32 @@ struct AttackBox
    then per-box bytes. */
 struct BodyBox
 {
-    /*0x00*/ s8 unk00;
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
-    /*0x04*/ s8 unk04;
-    /*0x05*/ s8 unk05;
+    /*0x00*/ s8 offsetX;
+    /*0x01*/ s8 offsetY;
+    /*0x02*/ s8 left;
+    /*0x03*/ s8 top;
+    /*0x04*/ s8 right;
+    /*0x05*/ s8 bottom;
     /*0x06*/ u8 unk06;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 unk08;
     /*0x09*/ u8 unk09;
     /*0x0A*/ u8 unk0A;
     /*0x0B*/ u8 unk0B;
-    /*0x0C*/ u8 unk0C;
-    /*0x0D*/ u8 unk0D;
+    /*0x0C*/ u8 damage;
+    /*0x0D*/ u8 hitEffect;
     /*0x0E*/ u16 unk0E;
     /*0x10*/ u16 unk10;
 };
 
 struct Collider
 {
-    /*0x00*/ u8 unk00;
+    /*0x00*/ u8 slot;
     /*0x01*/ u8 filler01;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
+    /*0x02*/ u16 x;
+    /*0x04*/ u16 y;
     /*0x06*/ u8 filler06[2];
-    /*0x08*/ u8 *unk08;
+    /*0x08*/ u8 *bodyBox;
 };
 
 /* The probe result block, filled by the terrain probes and mirrored into
