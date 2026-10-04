@@ -1168,7 +1168,7 @@ vma,size,isa,evidence,name
 0x0805239C,0x2F0,thumb,rom-pointer,PlayerObjectIceBreath
 0x0805268C,0x118,thumb,rom-pointer,PlayerObjectIceBreathUpdate
 0x080527A4,0x364,thumb,rom-pointer,PlayerObjectBeamOrb
-0x08052B08,0x80,thumb,rom-pointer,sub_08052b08
+0x08052B08,0x80,thumb,rom-pointer,PlayerObjectBeamOrbUpdate
 0x08052B88,0x3E4,thumb,rom-pointer,PlayerObjectLightOrb
 0x08052F6C,0x414,thumb,rom-pointer,PlayerObjectUFOShot
 0x08053380,0x150,thumb,rom-pointer,PlayerObjectUFOShotUpdate
@@ -1208,7 +1208,7 @@ vma,size,isa,evidence,name
 0x080553D4,0x8C,thumb,rom-pointer,sub_080553d4
 0x08055460,0xC0,thumb,rom-pointer,sub_08055460
 0x08055520,0x17C,thumb,rom-pointer,sub_08055520
-0x0805569C,0xB0,thumb,rom-pointer,sub_0805569c
+0x0805569C,0xB0,thumb,rom-pointer,PlayerEffectDanceStarBurst
 0x0805574C,0x88,thumb,rom-pointer,sub_0805574c
 0x080557D4,0xA8,thumb,rom-pointer,sub_080557d4
 0x0805587C,0x1C4,thumb,rom-pointer,sub_0805587c
@@ -2669,8 +2669,8 @@ vma,size,isa,evidence,name
 0x0808287C,0x2C,thumb,rom-pointer,WheelieState1Update
 0x080828A8,0x60,thumb,rom-pointer,WheelieSkid
 0x08082908,0x78,thumb,rom-pointer,WheelieSkidUpdate
-0x08082980,0x54,thumb,rom-pointer,WheelieState3
-0x080829D4,0x34,thumb,rom-pointer,WheelieState3Update
+0x08082980,0x54,thumb,rom-pointer,WheelieWait
+0x080829D4,0x34,thumb,rom-pointer,WheelieWaitUpdate
 0x08082A08,0xE4,thumb,rom-pointer,WheelieBounceOffWall
 0x08082AEC,0x28,thumb,rom-pointer,WheelieBounceOffWallUpdate
 0x08082B14,0x34,thumb,rom-pointer,WheelieFall
@@ -2765,8 +2765,8 @@ vma,size,isa,evidence,name
 0x08084D90,0x30,thumb,rom-pointer,ChillyUpdate
 0x08084DC0,0xB4,thumb,rom-pointer,ChillyState0
 0x08084E74,0x28,thumb,rom-pointer,ChillyState0Update
-0x08084E9C,0xB4,thumb,rom-pointer,ChillyState1
-0x08084F50,0x28,thumb,rom-pointer,ChillyState1Update
+0x08084E9C,0xB4,thumb,rom-pointer,ChillyWait
+0x08084F50,0x28,thumb,rom-pointer,ChillyWaitUpdate
 0x08084F78,0x1E0,thumb,rom-pointer,ChillySlide
 0x08085158,0x28,thumb,rom-pointer,ChillySlideUpdate
 0x08085180,0xF4,thumb,rom-pointer,ChillyState3
@@ -3090,8 +3090,8 @@ vma,size,isa,evidence,name
 0x0808C4BC,0x28,thumb,rom-pointer,sub_0808c4bc
 0x0808C4E4,0x54,thumb,rom-pointer,GipState9
 0x0808C538,0x4,thumb,rom-pointer,sub_0808c538
-0x0808C53C,0xAC,thumb,rom-pointer,GipState10
-0x0808C5E8,0x28,thumb,rom-pointer,sub_0808c5e8
+0x0808C53C,0xAC,thumb,rom-pointer,GipJump
+0x0808C5E8,0x28,thumb,rom-pointer,GipJumpUpdate
 0x0808C610,0x74,thumb,rom-pointer,GipShoot
 0x0808C684,0x28,thumb,rom-pointer,sub_0808c684
 0x0808C6AC,0x5C,thumb,rom-pointer,GipIdle
@@ -3555,8 +3555,8 @@ vma,size,isa,evidence,name
 0x08099004,0x1C,thumb,rom-pointer,MrFrostyWaitUpdate
 0x08099020,0x60,thumb,rom-pointer,MrFrostyHop
 0x08099080,0x54,thumb,rom-pointer,MrFrostyHopUpdate
-0x080990D4,0xAC,thumb,rom-pointer,MrFrostyState2
-0x08099180,0x2C,thumb,rom-pointer,MrFrostyState2Update
+0x080990D4,0xAC,thumb,rom-pointer,MrFrostyWalkBack
+0x08099180,0x2C,thumb,rom-pointer,MrFrostyWalkBackUpdate
 0x080991AC,0x8C,thumb,rom-pointer,MrFrostyDash
 0x08099238,0xC,thumb,rom-pointer,MrFrostyDashUpdate
 0x08099244,0x64,thumb,rom-pointer,MrFrostyBounceOffWall
@@ -3567,8 +3567,8 @@ vma,size,isa,evidence,name
 0x08099394,0x48,thumb,rom-pointer,MrFrostyState6Update
 0x080993DC,0x6C,thumb,rom-pointer,MrFrostyState7
 0x08099448,0x2C,thumb,rom-pointer,MrFrostyState7Update
-0x08099474,0x94,thumb,rom-pointer,MrFrostyState8
-0x08099508,0x1C,thumb,rom-pointer,MrFrostyState8Update
+0x08099474,0x94,thumb,rom-pointer,MrFrostySpin
+0x08099508,0x1C,thumb,rom-pointer,MrFrostySpinUpdate
 0x08099524,0x94,thumb,rom-pointer,MrFrostyState9
 0x080995B8,0x3C,thumb,rom-pointer,MrFrostyState9Update
 0x080995F4,0x9C,thumb,rom-pointer,MrFrostyState10
@@ -3760,8 +3760,8 @@ vma,size,isa,evidence,name
 0x0809DDBC,0x98,thumb,rom-pointer,MaceKnightUpdate
 0x0809DE54,0x8C,thumb,bl-target+rom-pointer,MaceKnightWalk
 0x0809DEE0,0x28,thumb,rom-pointer,MaceKnightWalkUpdate
-0x0809DF08,0x24,thumb,rom-pointer,MaceKnightState1
-0x0809DF2C,0x28,thumb,rom-pointer,MaceKnightState1Update
+0x0809DF08,0x24,thumb,rom-pointer,MaceKnightThrow
+0x0809DF2C,0x28,thumb,rom-pointer,MaceKnightThrowUpdate
 0x0809DF54,0x74,thumb,rom-pointer,MaceKnightVariant2
 0x0809DFC8,0x84,thumb,rom-pointer,sub_0809dfc8
 0x0809E04C,0x1C8,thumb,bl-target,sub_0809e04c

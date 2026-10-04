@@ -819,7 +819,7 @@ void PlayerObjectLaserBeamUpdate(void);
 void PlayerObjectIceBreath(void);
 void PlayerObjectIceBreathUpdate(void);
 s32 PlayerObjectBeamOrb(void);
-s32 sub_08052b08(void);
+s32 PlayerObjectBeamOrbUpdate(void);
 void PlayerObjectLightOrb(void);
 
 /* src/plobj_52f6c.c */

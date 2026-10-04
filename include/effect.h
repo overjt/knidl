@@ -148,7 +148,7 @@ void sub_080553d4(void);
 /* src/effect_55460.c */
 void sub_08055460(void);
 void sub_08055520(void);
-void sub_0805569c(void);
+void PlayerEffectDanceStarBurst(void);
 void sub_0805574c(void);
 void sub_080557d4(void);
 void sub_0805587c(void);

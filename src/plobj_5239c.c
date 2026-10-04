@@ -15,7 +15,7 @@
  * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
  * Variant 8 (PlayerObjectBeamOrb, gUnk_08751BB0) traces six-step paths from the
  * 8.8 velocity rows gUnk_0873B7C0[k] and the animation rows
- * gUnk_0873B808[k] (sound 129) with the callback sub_08052b08 (collider row
+ * gUnk_0873B808[k] (sound 129) with the callback PlayerObjectBeamOrbUpdate (collider row
  * gUnk_0873BE38, hit test gUnk_0873CC2C), which variant 10
  * (src/plobj_52f6c.c) installs too; both end in a `pop {r1}` epilogue
  * without setting r0, so they are declared s32 with no return.  Variant 9
@@ -39,7 +39,7 @@ u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
 s32 CreatePlayerObject(s8 player, u8 variant, s32 arg);
-s32 sub_08052b08(void);   /* returns a value: pop {r1} epilogue; plobj_52f6c.c spells it void */
+s32 PlayerObjectBeamOrbUpdate(void);   /* returns a value: pop {r1} epilogue; plobj_52f6c.c spells it void */
 
 void PlayerObjectIceBreath(void)
 {
@@ -207,7 +207,7 @@ s32 PlayerObjectBeamOrb(void)
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMoveRelativeToParent;
         t->drawCallback = (u32)TaskDrawWorld;
-        t->updateCallback = (u32)sub_08052b08;
+        t->updateCallback = (u32)PlayerObjectBeamOrbUpdate;
         t->layer = 5;
     }
     {
@@ -347,7 +347,7 @@ s32 PlayerObjectBeamOrb(void)
     TaskExitTrampoline();
 }
 
-s32 sub_08052b08(void)
+s32 PlayerObjectBeamOrbUpdate(void)
 {
     struct Task *t = gCurTask;
 

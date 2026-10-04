@@ -484,7 +484,7 @@ void WheelieSkidUpdate(void)
     }
 }
 
-void WheelieState3(void)
+void WheelieWait(void)
 {
     struct Task *t;
     struct Task *u;
@@ -504,7 +504,7 @@ void WheelieState3(void)
     sub_08082cc4();
 }
 
-void WheelieState3Update(void)
+void WheelieWaitUpdate(void)
 {
     struct Task *t = gCurTask;
 

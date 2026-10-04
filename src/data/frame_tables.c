@@ -2649,7 +2649,7 @@ u32 gUnk_0874C7CC[] FRAME_TABLE = {
     (u32)gUnk_080D39D0,
 };
 
-/* gUnk_0874C804.  Consumers: sub_0805569c (src/effect_55460.c:130),
+/* gUnk_0874C804.  Consumers: PlayerEffectDanceStarBurst (src/effect_55460.c:130),
  * sub_08059570 (src/effect_59570.c:132), sub_08030604
  * (src/obj_30238.c:210).  9 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables

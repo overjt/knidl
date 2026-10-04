@@ -491,7 +491,7 @@ void MrFrostyHopUpdate(void)
     }
 }
 
-void MrFrostyState2(void)
+void MrFrostyWalkBack(void)
 {
     struct Task *t;
     struct Task *u;
@@ -532,7 +532,7 @@ void MrFrostyState2(void)
     }
 }
 
-void MrFrostyState2Update(void)
+void MrFrostyWalkBackUpdate(void)
 {
     if (gCurTask->mrFrostyStatePhase != 0)
     {
@@ -725,7 +725,7 @@ void MrFrostyState7Update(void)
     }
 }
 
-void MrFrostyState8(void)
+void MrFrostySpin(void)
 {
     struct Task *t;
     struct Task *u;
@@ -762,7 +762,7 @@ void MrFrostyState8(void)
     }
 }
 
-void MrFrostyState8Update(void)
+void MrFrostySpinUpdate(void)
 {
     struct Task *t;
 

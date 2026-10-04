@@ -14,7 +14,7 @@
  * flags (Task.u8C.parentTask is the spawning task) and runs one of six sub-states
  * Task.unk18 & 15: states 0-2 trace an eight-step path (the 8.8 velocity
  * rows gUnk_0873B8C6[k] and the five-frame animation rows gUnk_0873B88A
- * that gUnk_0873B872[k] picks, callback sub_08052b08) and fall into state
+ * that gUnk_0873B872[k] picks, callback PlayerObjectBeamOrbUpdate) and fall into state
  * 3, which flies in one of four directions gUnk_0873B862[Task.unk28] and
  * emits effect 33 every other frame; states 4 and 5 are a stationary
  * object with two callbacks, PlayerObjectUFOShotUpdate (the hit test, which ends the
@@ -82,7 +82,7 @@ void PlayerObjectUFOShot(void)
                 struct Task *u = gCurTask;
                 u->moveCallback = (u32)TaskMoveRelativeToParent;
                 u->drawCallback = (u32)TaskDrawWorld;
-                u->updateCallback = (u32)sub_08052b08;
+                u->updateCallback = (u32)PlayerObjectBeamOrbUpdate;
                 u->layer = 5;
                 u = gCurTask;
                 u->frameTable = gUnk_08751BF4;

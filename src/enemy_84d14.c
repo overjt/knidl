@@ -142,7 +142,7 @@ void ChillyState0Update(void)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
-void ChillyState1(void)
+void ChillyWait(void)
 {
     s32 a;
     struct Task *u1;
@@ -186,7 +186,7 @@ void ChillyState1(void)
     }
 }
 
-void ChillyState1Update(void)
+void ChillyWaitUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);

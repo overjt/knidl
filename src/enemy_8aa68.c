@@ -1162,7 +1162,7 @@ void sub_0808c538(void)
 {
 }
 
-void GipState10(void)
+void GipJump(void)
 {
     gCurTask->updateState = 6;
     gCurTask->gipCollideTerrain = 0;
@@ -1195,7 +1195,7 @@ void GipState10(void)
     }
 }
 
-void sub_0808c5e8(void)
+void GipJumpUpdate(void)
 {
     if (gCurTask->state != 10)
         TaskSetEntry(GipEnterState, gCurTaskIdx);

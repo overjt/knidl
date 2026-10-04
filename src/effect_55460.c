@@ -8,9 +8,9 @@
 /* effect_55460.c (0x08055460-0x08055B23, issue #89).
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
- * variants 16-21 (entry 16, sub_0805569c, sits after entries 17 and 18 in
+ * variants 16-21 (entry 16, PlayerEffectDanceStarBurst, sits after entries 17 and 18 in
  * the ROM).  Variants 16, 17 and 19 are spawned by M16 (16 also by M17's
- * actor core), 18 and 20 by M10, 21 by M11. 16 (sub_0805569c), 17
+ * actor core), 18 and 20 by M10, 21 by M11. 16 (PlayerEffectDanceStarBurst), 17
  * (sub_08055460) and 18 (sub_08055520) are animations that stay put
  * (TaskUpdatePixelPos), from gUnk_0874C804, gUnk_0874C960 and gUnk_0874C980; 19
  * (sub_0805574c) has no draw hook and draws itself through its Task.updateCallback
@@ -119,7 +119,7 @@ void sub_08055520(void)
     TaskExitTrampoline();
 }
 
-void sub_0805569c(void)
+void PlayerEffectDanceStarBurst(void)
 {
     struct Task *t;
 

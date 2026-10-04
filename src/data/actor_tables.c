@@ -1101,7 +1101,7 @@ u32 gWheelieStates[6] ACTOR_TBL(08741640) = {
     (u32)WheelieState0,
     (u32)WheelieState1,
     (u32)WheelieSkid,
-    (u32)WheelieState3,
+    (u32)WheelieWait,
     (u32)WheelieBounceOffWall,
     (u32)WheelieFall,
 };
@@ -1110,7 +1110,7 @@ u32 gWheelieStateUpdates[6] ACTOR_TBL(08741640) = {
     (u32)WheelieState0Update,
     (u32)WheelieState1Update,
     (u32)WheelieSkidUpdate,
-    (u32)WheelieState3Update,
+    (u32)WheelieWaitUpdate,
     (u32)WheelieBounceOffWallUpdate,
     (u32)WheelieFallUpdate,
 };
@@ -1230,7 +1230,7 @@ u32 gChillyVariants[2] ACTOR_TBL(08741fb8) = {
 /* include/enemy.h; CallTableEntry(i, 5, ...) in ChillyInit, ChillyEnterState */
 u32 gChillyStates[5] ACTOR_TBL(08741fb8) = {
     (u32)ChillyState0,
-    (u32)ChillyState1,
+    (u32)ChillyWait,
     (u32)ChillySlide,
     (u32)ChillyState3,
     (u32)ChillyFall,
@@ -1238,7 +1238,7 @@ u32 gChillyStates[5] ACTOR_TBL(08741fb8) = {
 /* include/enemy.h; CallTableEntry(i, 5, ...) in ChillyUpdate */
 u32 gChillyStateUpdates[5] ACTOR_TBL(08741fb8) = {
     (u32)ChillyState0Update,
-    (u32)ChillyState1Update,
+    (u32)ChillyWaitUpdate,
     (u32)ChillySlideUpdate,
     (u32)ChillyState3Update,
     (u32)ChillyFallUpdate,
@@ -1665,7 +1665,7 @@ u32 gGipStates[12] ACTOR_TBL(08742940) = {
     (u32)GipState7,
     (u32)GipState8,
     (u32)GipState9,
-    (u32)GipState10,
+    (u32)GipJump,
     (u32)GipShoot,
 };
 /* include/enemy.h; CallTableEntry(i, 8, ...) in GipUpdate */
@@ -1676,7 +1676,7 @@ u32 gGipStateUpdates[8] ACTOR_TBL(08742940) = {
     (u32)sub_0808c3e8,
     (u32)sub_0808c4bc,
     (u32)sub_0808c538,
-    (u32)sub_0808c5e8,
+    (u32)GipJumpUpdate,
     (u32)sub_0808c684,
 };
 
@@ -2126,13 +2126,13 @@ u32 gMrFrostyVariants[1] ACTOR_TBL(08745630) = {
 u32 gMrFrostyStates[19] ACTOR_TBL(08745630) = {
     (u32)MrFrostyWait,
     (u32)MrFrostyHop,
-    (u32)MrFrostyState2,
+    (u32)MrFrostyWalkBack,
     (u32)MrFrostyDash,
     (u32)MrFrostyBounceOffWall,
     (u32)MrFrostyState5,
     (u32)MrFrostyState6,
     (u32)MrFrostyState7,
-    (u32)MrFrostyState8,
+    (u32)MrFrostySpin,
     (u32)MrFrostyState9,
     (u32)MrFrostyState10,
     (u32)MrFrostyState11,
@@ -2148,13 +2148,13 @@ u32 gMrFrostyStates[19] ACTOR_TBL(08745630) = {
 u32 gMrFrostyStateUpdates[19] ACTOR_TBL(08745630) = {
     (u32)MrFrostyWaitUpdate,
     (u32)MrFrostyHopUpdate,
-    (u32)MrFrostyState2Update,
+    (u32)MrFrostyWalkBackUpdate,
     (u32)MrFrostyDashUpdate,
     (u32)MrFrostyBounceOffWallUpdate,
     (u32)MrFrostyState5Update,
     (u32)MrFrostyState6Update,
     (u32)MrFrostyState7Update,
-    (u32)MrFrostyState8Update,
+    (u32)MrFrostySpinUpdate,
     (u32)MrFrostyState9Update,
     (u32)MrFrostyState10Update,
     (u32)MrFrostyState11Update,
@@ -2330,12 +2330,12 @@ u32 gMaceKnightVariants[3] ACTOR_TBL(08747bcc) = {
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MaceKnightEnterState */
 u32 gMaceKnightStates[2] ACTOR_TBL(08747bcc) = {
     (u32)MaceKnightWalk,
-    (u32)MaceKnightState1,
+    (u32)MaceKnightThrow,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MaceKnightUpdate */
 u32 gMaceKnightStateUpdates[2] ACTOR_TBL(08747bcc) = {
     (u32)MaceKnightWalkUpdate,
-    (u32)MaceKnightState1Update,
+    (u32)MaceKnightThrowUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_MaceKnightMace */
 u32 gMaceKnightMaceVariants[3] ACTOR_TBL(08747bcc) = {

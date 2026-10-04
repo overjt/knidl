@@ -438,7 +438,7 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
     PlayerEffectMetaKnightDeathBlast,
     sub_08054de8,
     sub_08054fe4,
-    sub_0805569c,
+    PlayerEffectDanceStarBurst,
     sub_08055460,
     sub_08055520,
     sub_0805574c,

@@ -327,7 +327,7 @@ void MaceKnightWalkUpdate(void)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
-void MaceKnightState1(void)
+void MaceKnightThrow(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -336,7 +336,7 @@ void MaceKnightState1(void)
     TaskSleepForever();
 }
 
-void MaceKnightState1Update(void)
+void MaceKnightThrowUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
