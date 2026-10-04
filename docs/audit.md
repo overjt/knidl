@@ -62,7 +62,6 @@ A row names `file:line` or `file:first-last`.
 | site | function | kind | reason |
 |---|---|---|---|
 | `src/hud_b2fe8.c:679-680` | `sub_080b38f0` | zero-code | #37: two nested `do { } while (0)` around the `unk70` store weight its address's use x3 (1 + 3 = 4 refs), which ranks the address above the `&gCurTask` pool value in local allocation, as the ROM's r3/r4 show (lesson 3.524); replaced #154's ten pins and six levers |
-| `src/enemy_9113c.c:714` | `PoppyBrosSrHeadUpdate` | lever | #154 leftover (`sub_08091e18` before #155): keeps the decremented timer live through the frame test; without it cse folds every use of the decremented value inside its `== 0` block (lesson 3.156, 9 bytes) |
 | `src/boot_caab8.c:137-142` | `BootLogoUpdateObjects` | lever | #152's two approved zero-byte levers (`sub_080caab8` before #155): an opaque `0xFFFF` and a live mask at one store (lessons 3.457, 3.494); its natural best is on #100 |
 | `src/enemy_9fbd0.c:189-216` | `sub_0809fe10` | cross-jump | `BLOCK_CROSS_JUMP` (`include/global.h`, a pret idiom) at four tails that the ROM really duplicates instead of cross-jumping (#154) |
 | `src/early_4734.c:56` | (file scope) | alias | the `MultiBoot` SWI thunk declared int-returning under a local name, as the ROM keeps the untruncated result (lesson 3.481) |

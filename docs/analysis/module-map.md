@@ -1960,7 +1960,10 @@ census below is the pre-decompilation one, kept for the record.
   and `make progress` counts 0 asm code bytes in the range.  The last one to
   fall, `sub_08091e18`, needed an empty `asm` statement to hold a dead value
   live so the register allocator reproduces the ROM's scratch registers
-  (lessons `3.156`); it emits no code.
+  (lessons `3.156`); it emits no code.  Since #169 the function
+  (`PoppyBrosSrHeadUpdate`) is plain C: a redundant end-of-script store of
+  the timer does the same job and post-reload cse deletes it (lesson
+  `3.526`).
 * **What it turned out to be** four self-contained boss scripts, one per
   anchor table, all built to the same pattern:
   * an **entry** function installs the draw hook (`Task.unk00` =
