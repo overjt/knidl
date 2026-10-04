@@ -18,6 +18,11 @@ IMAGE     := knidl-builder
 BUILD_DIR := build
 ROM       := knidl.gba
 
+# The modded ROM rebuilt from the edited assets/ tree (tools/
+# rebuild_assets.py, docs/assets.md).  Gitignored like every *.gba and
+# removed by `make clean`.
+MOD_ROM   := knidl-mod.gba
+
 ifeq ($(INSIDE_DOCKER),1)
 
 # Every compile rule is a pipeline (cpp | agbcc | as).  Without pipefail the
@@ -290,7 +295,7 @@ split: baserom.gba tools/split.py tools/split_config.json docs/analysis/segments
 	python3 tools/split.py --rom baserom.gba --config tools/split_config.json
 
 clean:
-	rm -rf $(BUILD_DIR) $(ROM)
+	rm -rf $(BUILD_DIR) $(ROM) $(MOD_ROM)
 
 else
 
@@ -305,7 +310,7 @@ BOOTTEST_IMAGE := knidl-boottest
 # toolchain image (#170).
 .DEFAULT_GOAL := all
 
-.PHONY: image boottest-image need-baserom all compare check-headers check-data audit progress datastats shifttest boottest boottest-coverage symbols split modmap assets assets-check clean
+.PHONY: image boottest-image need-baserom all compare check-headers check-data audit progress datastats shifttest boottest boottest-coverage symbols split modmap assets assets-check assets-mod assets-mod-check assets-selftest clean
 
 # The targets that read baserom.gba check for it first, before building any
 # image, and point at INSTALL.md instead of failing in the assembler with
@@ -383,6 +388,29 @@ assets: need-baserom $(ASSET_PREREQ)
 assets-check: need-baserom $(ASSET_PREREQ)
 	python3 tools/extract_assets.py --rom baserom.gba --check
 
+# Asset re-injection (docs/assets.md): the inverse of `make assets` —
+# rebuild the modded ROM knidl-mod.gba from baserom.gba plus the (possibly
+# edited) assets/ tree.  Never re-extracts, so it cannot overwrite edits;
+# unchanged objects are never touched, edited ones are re-encoded to their
+# ROM formats and spliced in place over their slots (growth past a slot
+# fails: that needs the future MATCHING=0 path, docs/data.md section 8).
+# assets-mod-check proves the pristine round-trip (an unedited tree
+# rebuilds a ROM byte-identical to baserom.gba); assets-selftest encodes
+# every object from the ROM and verifies it (no assets/ tree needed).
+MOD_PREREQ := baserom.gba tools/rebuild_assets.py tools/extract_assets.py \
+              tools/census_rooms.py tools/census_sprites.py \
+              tools/census_sheets.py tools/split_config.json \
+              docs/analysis/segments.txt tools/gbafix.py
+
+assets-mod: need-baserom $(MOD_PREREQ)
+	python3 tools/rebuild_assets.py --rom baserom.gba
+
+assets-mod-check: need-baserom $(MOD_PREREQ)
+	python3 tools/rebuild_assets.py --rom baserom.gba --check
+
+assets-selftest: need-baserom $(MOD_PREREQ)
+	python3 tools/rebuild_assets.py --rom baserom.gba --self-test
+
 symbols: need-baserom image
 	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
 
@@ -393,6 +421,6 @@ modmap: need-baserom image
 	$(DOCKER_RUN) make modmap INSIDE_DOCKER=1
 
 clean:
-	rm -rf $(BUILD_DIR) $(ROM)
+	rm -rf $(BUILD_DIR) $(ROM) $(MOD_ROM)
 
 endif

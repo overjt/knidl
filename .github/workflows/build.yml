@@ -131,17 +131,22 @@ jobs:
         if: steps.baserom.outputs.have == 'true'
         run: make compare
 
-      # Asset extraction fidelity (docs/assets.md): the gitignored assets/
-      # tree must regenerate byte-for-byte from baserom.gba.  CI does not
-      # keep the tree; it only proves the extractor still round-trips the
-      # ROM's proven asset objects (the same contract make compare gives
-      # the built ROM).
-      - name: Asset extraction check (make assets-check)
+      # Asset extraction fidelity + re-injection (docs/assets.md): the
+      # gitignored assets/ tree must regenerate byte-for-byte from
+      # baserom.gba, an unedited tree must rebuild a ROM byte-identical to
+      # baserom.gba (the pristine round-trip of tools/rebuild_assets.py),
+      # and every re-encoder must reproduce or decode back the whole ROM
+      # corpus (make assets-selftest).  CI does not keep the tree; it only
+      # proves the tools still round-trip the ROM's proven asset objects
+      # (the same contract make compare gives the built ROM).
+      - name: Asset extraction and re-injection checks (make assets-check, assets-mod-check, assets-selftest)
         if: steps.baserom.outputs.have == 'true'
         run: |
           set -eu
           make assets
           make assets-check
+          make assets-mod-check
+          make assets-selftest
           rm -rf assets
 
       - name: Progress report (make progress)

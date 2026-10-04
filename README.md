@@ -136,7 +136,9 @@ level maps) are `.incbin` slices of your own `baserom.gba` and are never
 committed. `make assets` decodes the census-proven graphics (palettes,
 tiles, LZ77 streams, maps, OAM templates) from your dump into the gitignored
 `assets/` directory for editing, and `make assets-check` verifies that tree
-byte for byte ([docs/assets.md](docs/assets.md)). Functional tables are C
+byte for byte; `make assets-mod` rebuilds a modded `knidl-mod.gba` from the
+edited tree, re-encoding only what changed and splicing it in place
+([docs/assets.md](docs/assets.md)). Functional tables are C
 only where a decompiled consumer proves their layout, and stay
 structure-only (labels and symbolic pointers) everywhere else.
 
