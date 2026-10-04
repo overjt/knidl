@@ -736,6 +736,7 @@ tools/constants.py --defs defs.csv [--preambles p.json]   # dry run
 tools/constants.py --defs defs.csv --write   # headers + constants.csv rows
 tools/constants.py --scan tasks --out sites.csv   # a mechanical family's sites
 tools/constants.py --sites sites.csv --write      # respell the literals
+tools/constants.py --bitexprs FAMILY   # R3's complements / unions of bits
 tools/constants.py --verify-cpp HEAD   # same tokens after cpp, literals by value
 make clean && make compare
 tools/rename.py --verify-diff master   # covers the constants too

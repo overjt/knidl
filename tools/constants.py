@@ -55,6 +55,14 @@ integer literal and the tree a constant of the same value, the new headers,
 the new #include lines), so a branch of renames, aliases and constants
 verifies in one pass.
 
+--bitexprs FAMILY prints the SITES rows of a `bits` family's complements
+and unions of its proven bits (`&= 0x7FFF` -> `~A`, `& 0x6000` -> `(A | B)`;
+#155 run 7, docs/naming.md 7.0's second form): a SITES row's `constant` may
+be such an expression, which --sites checks against the literal (the OR, or
+its complement in 8, 16 or 32 bits).  These are token changes: their proof
+is the per-file assembly oracle (every unit identical to the parent), make
+compare and tools/rename.py --verify-diff, which accepts them.
+
 --census counts the constants per header, the sites that spell them, and
 the literals left at a mechanical family's positions whose value has a
 constant (tools/audit.py prints it in docs/naming.md section 5.1).

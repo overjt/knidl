@@ -680,6 +680,7 @@ def verify_diff(ref):
                 # change.  (make compare remains the byte-level proof.)
                 a, b = collapse_ws(a), collapse_ws(b)
                 if const_values and a != b:
+                    a, b = unbitexpr(a, b, const_values, const_uses)
                     a, b = unconst(a, b, const_values, const_uses)
             if a != b and not ((field_pairs or alias_pairs) and not is_asm
                                and fields_only_differ(a, b, field_pairs, field_uses,
@@ -798,6 +799,78 @@ def constant_defines_of(text):
             return None
         out[m.group(1)] = int_value(m.group(2))
     return out
+
+
+def unbitexpr(a, b, values, uses):
+    """(a, b') where b' is b with each bit expression of logged single-bit
+    constants (`~A`, `~(A | B)`, `(A | B)`; docs/naming.md 7.0, the second
+    form of R3) that stands where a (REF's text) has an integer literal of its
+    value respelled as that literal: the OR, or (`~`) the OR's complement in
+    a field of 8, 16 or 32 bits.  The per-file assembly oracle is the proof
+    of these sites; this only shows that nothing else changed."""
+    ta = [m for m in CONST_TOK_RE.finditer(a) if m.lastgroup != "ws"]
+    tb = [m for m in CONST_TOK_RE.finditer(b) if m.lastgroup != "ws"]
+    if len(ta) == len(tb):
+        return a, b
+
+    def bit(m):
+        if m.lastgroup != "id" or m.group(0) not in values:
+            return None
+        v = values[m.group(0)]
+        return v if v > 0 and not v & (v - 1) else None
+
+    def expr_at(j):
+        """(value, complemented?, token count) of a bit expression at tb[j]."""
+        comp = tb[j].group(0) == "~"
+        k = j + 1 if comp else j
+        if k < len(tb) and bit(tb[k]) is not None and comp:
+            return bit(tb[k]), True, k + 1 - j
+        if k < len(tb) and tb[k].group(0) == "(":
+            v, n, q = 0, 0, k + 1
+            while q < len(tb):
+                x = bit(tb[q])
+                if x is None or v & x:
+                    return None
+                v |= x
+                n += 1
+                if q + 1 < len(tb) and tb[q + 1].group(0) == "|":
+                    q += 2
+                    continue
+                if q + 1 < len(tb) and tb[q + 1].group(0) == ")" and n >= 2:
+                    return v, comp, q + 2 - j
+                return None
+        return None
+    out, pos, i, j = [], 0, 0, 0
+    while i < len(ta) and j < len(tb):
+        x, y = ta[i], tb[j]
+        if x.group(0) == y.group(0):
+            i += 1
+            j += 1
+            continue
+        if (x.lastgroup == "num" and y.lastgroup == "id" and y.group(0) in values
+                and int_value(x.group(0)) == values[y.group(0)]):
+            i += 1  # a plain constant: unconst's case
+            j += 1
+            continue
+        e = expr_at(j) if x.lastgroup == "num" else None
+        if e is None:
+            return a, b
+        v, comp, n = e
+        lit = int_value(x.group(0))
+        ok = lit == v if not comp else any(
+            lit == (~v) & ((1 << w) - 1) for w in (8, 16, 32) if v < (1 << w))
+        if not ok or x.group(0) != x.group(0).rstrip("uUlL"):
+            return a, b
+        out.append(b[pos:y.start()])
+        out.append(x.group(0))
+        pos = tb[j + n - 1].end()
+        uses[0] += 1
+        i += 1
+        j += n
+    if i != len(ta) or j != len(tb):
+        return a, b
+    out.append(b[pos:])
+    return a, "".join(out)
 
 
 def unconst(a, b, values, uses):
