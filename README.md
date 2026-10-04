@@ -137,16 +137,17 @@ the linker right after the previous one. Moving code or data is safe as far as
 it has been measured: the shift test ([docs/data.md](docs/data.md) section 8)
 proves every insertion point after crt0 safe (no pointer-like word that fails
 to move is a pointer or unexplained), and the boot test runs shifted images
-frame for frame against the original through boot, menus, a new game and the
-first stage. The data policy sets the limits: assets (graphics, audio, text,
-level maps) are `.incbin` slices of your own `baserom.gba` and are never
-committed. `make assets` decodes the census-proven graphics (palettes,
-tiles, LZ77 streams, maps, OAM templates) from your dump into the gitignored
-`assets/` directory for editing, and `make assets-check` verifies that tree
-byte for byte; `make assets-mod` rebuilds a modded `knidl-mod.gba` from the
-edited tree, re-encoding only what changed and splicing it in place
-([docs/assets.md](docs/assets.md)). Functional tables are C
-only where a decompiled consumer proves their layout, and stay
+frame for frame against the original through four scripted runs from boot (the
+menus, stages 1-1 to 1-3 with two goal games and a mid-boss, the three
+sub-games and a game over; docs/data.md section 8.4). The data policy sets the
+limits: assets (graphics, audio, text, level maps) are `.incbin` slices of
+your own `baserom.gba` and are never committed. `make assets` decodes the
+census-proven graphics (palettes, tiles, LZ77 streams, maps, OAM templates)
+from your dump into the gitignored `assets/` directory for editing, and `make
+assets-check` verifies that tree byte for byte; `make assets-mod` rebuilds a
+modded `knidl-mod.gba` from the edited tree, re-encoding only what changed and
+splicing it in place ([docs/assets.md](docs/assets.md)). Functional tables are
+C only where a decompiled consumer proves their layout, and stay
 structure-only (labels and symbolic pointers) everywhere else.
 
 ## CI

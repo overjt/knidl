@@ -76,8 +76,9 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
 
 ## Status
 
-The state at the start of #37 (the final audit).  What each issue did,
-module by module, is [`docs/history.md`](docs/history.md).
+The state after #37 (the final audit, PR #171) and its follow-ups
+#164-#170.  What each issue did, module by module, is
+[`docs/history.md`](docs/history.md).
 
 - **Code: complete.**  `make compare` passes (byte-identical to the USA
   ROM).  Everything from `AgbInit` (`0x08000310`) to `0x080CD89B` (the m4a
@@ -167,15 +168,14 @@ module by module, is [`docs/history.md`](docs/history.md).
   `progress`, the `symbols`/`split`/`modmap` regeneration checks (`git diff
   --exit-code`), `datastats`, `shifttest` and `boottest`, and otherwise
   skips them visibly.
-- **Next.**  (1) #37: `make audit` clean and these docs; (2) data:
-  seg 18's value tables as C if wanted
-  (docs/data.md §7; #167 moved every handler table and record family);
-  (3) names: #155 is closed; what stays unnamed is a census with a
-  reason per symbol (docs/naming.md 5.1), so a later rename starts from a
-  row of `docs/analysis/unnamed.csv` and removes it (an identity that gains
-  a third source, a cell that gains a name, a state whose twin gains a
-  qualifier); asset labels stay unnamed by policy.  A natural form
-  for `BootLogoUpdateObjects` would still be welcome but is not tracked
+- **Next.**  (1) data: seg 18's value tables as C if wanted (docs/data.md
+  §7; #167 moved every handler table and record family); (2) names: #155
+  is closed; what stays unnamed is a census with a reason per symbol
+  (docs/naming.md 5.1), so a later rename starts from a row of
+  `docs/analysis/unnamed.csv` and removes it (an identity that gains a
+  third source, a cell that gains a name, a state whose twin gains a
+  qualifier); asset labels stay unnamed by policy.  A natural form for
+  `BootLogoUpdateObjects` would still be welcome but is not tracked
   (lesson 3.527 says what it must do).
 - **Docs:** `docs/decomp-loop.md`, `docs/lessons-learned.md` (its "Start
   here" list first), `docs/splitting.md`, `docs/data.md`, `docs/naming.md`,
