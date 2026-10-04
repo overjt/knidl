@@ -247,6 +247,7 @@ identifier.
 | an ActorDef bound by a named family through its kind table's slot | `g<Enemy>Def` | `gWaddleDeeDef` |
 | a graphics descriptor in a kind's descriptor table (`gEnemyGfx`, `gMidBossGfx`, `gBossGfx`, `gMetaKnightsGfx`) | `g<Enemy>Gfx` | `gCappyGfx` |
 | the palette and sprite-sheet tiles that descriptor alone points at | `g<Enemy>GfxPalette` / `g<Enemy>GfxTiles` | `gCappyGfxTiles` |
+| a state-table slot (run 4): the function in `g<Family>[<Row>]States[N]`, `...StateUpdates[N]` or `...Variants[N]` | `<Family>[<Row>]State<N>` / `<Family>[<Row>]State<N>Update` / `<Family>[<Row>]Variant<N>` | `BugzzyState3`, `BugzzyState3Update` |
 
 Rules: a record gets a position name only when that one slot is its only
 referrer (or when every slot that shares it belongs to one named family,
@@ -257,6 +258,23 @@ does the target of a field that has no name yet (`RoomDef.unk10`).
 Position names are applied in their own batches, and the progress figures
 count them apart from the semantic names (a slot is an address-free
 identity, not a role).
+
+**State-table slots** (run 4 of #155) extend the rule to functions.  A
+family's state tables are consumer-proven (`CallTableEntry(Task.state, n,
+g<Family>States)` in its EnterState, `Task.updateState` in its Update, the
+variant table in its `Task_<Family>` body; `src/data/actor_tables.c`
+names the consumer above each table).  A `sub_*` whose ONLY referrer, in
+the whole tree, is one slot of one such named table, and whose body
+proves no verb, is named after that slot: `g<Family>[<Row>]States[N]` ->
+`<Family>[<Row>]State<N>`, `...StateUpdates[N]` ->
+`<Family>[<Row>]State<N>Update` (state N's per-frame update, the pair of
+2.3's `<Enemy><Verb>` / `<Enemy><Verb>Update`), `...Variants[N]` ->
+`<Family>[<Row>]Variant<N>`.  `N` is the table's 0-based index in decimal,
+as the code indexes it.  The evidence is `slot: g<Table>[N], <file>`.  A
+function that two tables, two families or two slots share, or that code
+also calls directly, keeps its placeholder; a body that proves a verb takes
+the verb, never the slot (the verb batches come first), and a verb proven
+later renames the slot name again (a `renames.csv` chain row).
 
 What the level indices are in the game is proven for 0-6 by the boss each
 level's last stage spawns (room objects of kind 3, `gBossDefs[subtype]`,
