@@ -87,7 +87,7 @@ void MenuEnterModeList(void)
         gModeListExtraRows = 0;
     MenuDrawModeList();
     if (gMenuScreen != 5)
-        TaskCreateFrom(247, 32);
+        TaskCreateFrom(TASK_MODE_LIST_CURSOR, 32);
 }
 
 void MenuDrawModeList(void)
@@ -153,7 +153,7 @@ void MenuModeListSelect(void)
             gSubGameLevel = 0;
             gMenuScreen = 5;
             gMenuChoiceCursor = 0;
-            TaskCreateFrom(248, 32);
+            TaskCreateFrom(TASK_MODE_PLAYER_COUNT_PANEL, 32);
             RunFrames(6);
             return;
         }
@@ -203,7 +203,7 @@ void MenuEnterLinkPlay(void)
     gBg2ScrollY = gBg3ScrollY = 0;
     BgScrollStartX(0xFFF00000, 256, 2);
     BgScrollStartX(0xFFF00000, 256, 3);
-    TaskCreateFrom(250, 32);
+    TaskCreateFrom(TASK_LINK_PLAY_COLOR_CYCLE, 32);
     LoadGfxSet(33);
     StartHBlankScroll(5);
     for (i = 0; i < 16; i++) {
@@ -216,10 +216,10 @@ void MenuEnterLinkPlay(void)
     LoadGfxSet(37);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1E00;
-    TaskCreateFrom(249, 32);
+    TaskCreateFrom(TASK_LINK_PLAY_PALETTE_PULSE, 32);
     RunFrames(8);
     LoadGfxSet(42);
-    TaskCreateFrom(251, 32);
+    TaskCreateFrom(TASK_LINK_PLAY_PLAYER_LIST, 32);
 }
 
 void MenuModePlayerCountSelect(void)
@@ -236,9 +236,9 @@ void MenuModePlayerCountSelect(void)
             if (gMenuTransitionTimer == 0) {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
-                TaskCreateFrom(247, 32);
+                TaskCreateFrom(TASK_MODE_LIST_CURSOR, 32);
                 gMenuChoiceCursor = 1;
-                TaskCreateFrom(248, 32);
+                TaskCreateFrom(TASK_MODE_PLAYER_COUNT_PANEL, 32);
                 if (gMenuBufferedKeys != 0)
                     RunFrames(1);
             }

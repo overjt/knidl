@@ -433,7 +433,7 @@ void FlamerState5(void)
         gCurTask->flamerFlameTimer++;
         if ((gCurTask->flamerFlameTimer & 3) == 0)
         {
-            gCurTask->flamerFlameSlot = CreateChildTaskAtOffsetFacing(176, 0, 0, 1);
+            gCurTask->flamerFlameSlot = CreateChildTaskAtOffsetFacing(TASK_FLAMER_FLAME, 0, 0, 1);
             (gTasks + (s16)gCurTask->flamerFlameSlot)->flamerFlameArcIndex = (gCurTask->flamerFlameTimer >> 2) & 3;
         }
         n = TaskGetNearestPlayerDx();

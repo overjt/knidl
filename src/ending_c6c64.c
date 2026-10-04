@@ -78,7 +78,7 @@ void CreateEndingEpilogueObjects(void)
     struct Task *t;
 
     for (i = 0; v = gEndingEpilogueObjectVariants[i], (s16)gEndingEpilogueObjectVariants[i] <= 10; i++) {
-        id = TaskCreateFrom(100, 32);
+        id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         if (id == -1)
             for (;;)
                 ;
@@ -98,7 +98,7 @@ void sub_080c6d84(void)
     gCurTask->layer = 8;
     gCurTask->frameTable = gUnk_08755708;
     gCurTask->tileWord = 0x8810;
-    gCurTask->endingEpilogueChildSlot = TaskCreateFrom(100, 32);
+    gCurTask->endingEpilogueChildSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
     gTasks[gCurTask->endingEpilogueChildSlot].variant = 4;
     gTasks[gCurTask->endingEpilogueChildSlot].parent = gCurTaskIdx;
     sub_080c77cc();
@@ -486,7 +486,7 @@ void sub_080c77cc(void)
     struct Task *t;
 
     for (i = 0; i <= 3; i++) {
-        id = TaskCreateFrom(100, 32);
+        id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         t = &gTasks[id];
         t->variant = 2;
         t->endingEpilogueIndex = i;
@@ -622,22 +622,22 @@ void sub_080c7810(void)
             TaskYieldTrampoline(30);
             break;
         case 3:
-            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(100, 32);
+            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
             gTasks[gCurTask->endingEpilogueChildSlot].variant = 3;
             gTasks[gCurTask->endingEpilogueChildSlot].endingEpilogueIndex = 2;
             gTasks[gCurTask->endingEpilogueChildSlot].parent = gCurTaskIdx;
             TaskYieldTrampoline(16);
-            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(100, 32);
+            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
             gTasks[gCurTask->endingEpilogueChildSlot].variant = 3;
             gTasks[gCurTask->endingEpilogueChildSlot].endingEpilogueIndex = 1;
             gTasks[gCurTask->endingEpilogueChildSlot].parent = gCurTaskIdx;
             TaskYieldTrampoline(16);
-            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(100, 32);
+            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
             gTasks[gCurTask->endingEpilogueChildSlot].variant = 3;
             gTasks[gCurTask->endingEpilogueChildSlot].endingEpilogueIndex = 0;
             gTasks[gCurTask->endingEpilogueChildSlot].parent = gCurTaskIdx;
             TaskYieldTrampoline(8);
-            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(100, 32);
+            gCurTask->endingEpilogueChildSlot = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
             gTasks[gCurTask->endingEpilogueChildSlot].variant = 3;
             gTasks[gCurTask->endingEpilogueChildSlot].endingEpilogueIndex = 0;
             gTasks[gCurTask->endingEpilogueChildSlot].parent = gCurTaskIdx;

@@ -68,19 +68,19 @@ void sub_08095834(void)
     ActorInitBossGfx(1);
     gCurTask->speedLimitY = 0x30000;
     TaskFaceNearestPlayer();
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 0;
     b = gCurTask;
     b->fireLionFlameSlots = b->fireLionFlameSlot;
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 1;
     d = gCurTask;
     d->fireLionFlameSlots += d->fireLionFlameSlot << 8;
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 2;
     f = gCurTask;
     f->fireLionFlameSlots += f->fireLionFlameSlot << 8;
-    gCurTask->fireLionFlameSlot = CreateChildTaskHere(214, 0);
+    gCurTask->fireLionFlameSlot = CreateChildTaskHere(TASK_FIRE_LION_FLAME, 0);
     gTasks[gCurTask->fireLionFlameSlot].variant = 3;
     h = gCurTask;
     h->actorAnimDelay = 0;
@@ -750,7 +750,7 @@ void sub_08096680(void)
     do {
         if (gLocalPlayer == gCurTask->fireLionHeldPlayerSlot)
             PlaySfx(0x237);
-        CreateChildTaskAtOffsetFacing(141, 24, 0, 0);
+        CreateChildTaskAtOffsetFacing(TASK_STAR_FLASH, 24, 0, 0);
         TaskSetFrame(30);
         TaskYieldTrampoline(4);
         TaskSetFrame(31);
@@ -939,7 +939,7 @@ void FireLionDefeat(void)
     t->fireLionLanded = zero;
     t->fireLionCatchActive = zero;
     t->fireLionGlowing = 1;
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     ActorSetHitReactions(gFireLionDefeatedHitReactions);
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
@@ -964,7 +964,7 @@ void FireLionDefeat(void)
     sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
-    CreateChildTaskHere(141, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH, 0);
     gCurTask->fireLionDustTimer = 0;
     TaskSetMotionXFacing(-0x10000, 0x600);
     TaskYieldTrampoline(30);
@@ -1026,7 +1026,7 @@ s32 FireLionHitWall(void)
 
 s32 FireLionReactToDamage(void)
 {
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     RequestScreenShake(2);
     return 0;
 }

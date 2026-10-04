@@ -288,7 +288,7 @@ void sub_080c8468(void)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateFrom(100, 32);
+    id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
     t = &gTasks[id];
     t->variant = 5;
     t->parent = gCurTaskIdx;
@@ -472,7 +472,7 @@ void sub_080c8924(void)
     struct Task *t;
 
     for (i = 0; i <= 8; i++) {
-        id = TaskCreateFrom(100, 32);
+        id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         t = &gTasks[id];
         t->variant = 8;
         t->endingEpilogueIndex = i;

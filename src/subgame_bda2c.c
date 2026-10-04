@@ -227,7 +227,7 @@ void BombRallyRestartSpeed(void)
 
 void CreateBombRallyBomb(u32 a)
 {
-    s32 i = TaskCreateFrom(0x5F, 32);
+    s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
         struct Task *t = &gTasks[i];
@@ -240,7 +240,7 @@ void CreateBombRallyBomb(u32 a)
 
 void CreateBombRallyBombSmoke(s32 a, s32 b, u16 c, s32 d)
 {
-    s32 i = TaskCreateFrom(0x5F, 32);
+    s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
         struct Task *t = &gTasks[i];
@@ -258,7 +258,7 @@ void CreateBombRallyBombSmoke(s32 a, s32 b, u16 c, s32 d)
 
 void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d)
 {
-    s32 i = TaskCreateFrom(0x5F, 32);
+    s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
         struct Task *t = &gTasks[i];
@@ -276,7 +276,7 @@ void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d)
 
 void CreateBombRallyBurstStar(u32 a)
 {
-    s32 i = TaskCreateFrom(0x5F, 32);
+    s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
         struct Task *t = &gTasks[i];
@@ -295,7 +295,7 @@ void CreateBombRallyBurstStar(u32 a)
 
 void CreateBombRallyStartSign(void)
 {
-    s32 i = TaskCreateFrom(0x5F, 32);
+    s32 i = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
 
     if (i != -1) {
         struct Task *t = &gTasks[i];
@@ -338,7 +338,7 @@ void BombRallySeatPlayers(void)
         for (j = 0; j < 4; j++)
             if (i == gBombRallySeats[j])
                 break;
-        k = TaskCreateFrom(0x5F, 32);
+        k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
         if (k != -1) {
             struct Task *t = &gTasks[k];
 
@@ -520,7 +520,7 @@ void CreateBombRallyResultsPoses(void)
     s32 k;
 
     if (gPlayerCount == 1) {
-        k = TaskCreateFrom(0x5F, 32);
+        k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
         if (k != -1) {
             t = &gTasks[k];
             t->parent = gCurTaskIdx;
@@ -531,7 +531,7 @@ void CreateBombRallyResultsPoses(void)
         }
     } else {
         for (i = 0; i <= 3; i++) {
-            k = TaskCreateFrom(0x5F, 32);
+            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
@@ -551,7 +551,7 @@ void CreateBombRallyLivesIcons(void)
     s32 k;
 
     if (gPlayerCount == 1) {
-        k = TaskCreateFrom(0x5F, 32);
+        k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
         if (k != -1) {
             t = &gTasks[k];
             t->parent = gCurTaskIdx;
@@ -562,7 +562,7 @@ void CreateBombRallyLivesIcons(void)
         }
     } else {
         for (i = 0; i <= 3; i++) {
-            k = TaskCreateFrom(0x5F, 32);
+            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
@@ -583,7 +583,7 @@ void CreateBombRallyPlaceLabels(void)
 
     if (gPrevGameState != 5) {
         if (gPlayerCount == 1) {
-            k = TaskCreateFrom(0x5F, 32);
+            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
@@ -594,7 +594,7 @@ void CreateBombRallyPlaceLabels(void)
             }
         } else {
             for (i = 0; i <= 3; i++) {
-                k = TaskCreateFrom(0x5F, 32);
+                k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
                 if (k != -1) {
                     t = &gTasks[k];
                     t->parent = gCurTaskIdx;
@@ -616,7 +616,7 @@ void CreateBombRallyContinueItems(u32 a)
 
     if (gLocalPlayer == 0) {
         for (i = 0; i <= 1; i++) {
-            k = TaskCreateFrom(0x5F, 32);
+            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;
@@ -637,7 +637,7 @@ void CreateBombRallyLevelItems(u32 a)
 
     if (gLocalPlayer == 0) {
         for (i = 0; i <= 2; i++) {
-            k = TaskCreateFrom(0x5F, 32);
+            k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
             if (k != -1) {
                 t = &gTasks[k];
                 t->parent = gCurTaskIdx;

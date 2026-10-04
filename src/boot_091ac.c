@@ -60,7 +60,7 @@ s32 PlayBootLogo(void)
     BeginFastFadeInFromWhite();
     RunFramesUntilFadeDone();
     RunFrames(60);
-    TaskCreateFrom(0, 0);
+    TaskCreateFrom(TASK_BOOT_LOGO, 0);
     RunFrames(60);
     gLinkPlayerCount = 1;
     if (BootLogoWait(70) != 0)
@@ -181,7 +181,7 @@ void sub_080095e4(void)
 
     TaskYieldTrampoline(gCurTask->titleSpritesStartDelay);
     for (gCurTask->titleSpritesLoopCount = 0; (s16)gCurTask->titleSpritesLoopCount < 10; gCurTask->titleSpritesLoopCount++) {
-        idx = TaskCreateFrom(2, 0);
+        idx = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
         t = gCurTask;
         t->titleSpritesChildSlot = idx;
         gTasks[idx].titleSpritesIndex = (s16)t->titleSpritesLoopCount;
@@ -251,15 +251,15 @@ s32 TitleScreen(void)
     if (gPrevGameState != 1) {
         BeginFastFadeInFromWhite();
         RunFramesUntilFadeDone();
-        idx = TaskCreateFrom(2, 0);
+        idx = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
         gTasks[idx].titleSpritesIndex = -1;
         gTasks[idx].titleSpritesStartDelay = 0;
     } else {
-        idx = TaskCreateFrom(2, 0);
+        idx = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
         gTasks[idx].titleSpritesIndex = -1;
         gTasks[idx].titleSpritesStartDelay = 90;
     }
-    TaskCreateFrom(1, 0);
+    TaskCreateFrom(TASK_TITLE_PALETTE, 0);
     PlayBgm(26);
     if (gPrevGameState != 1)
         RunFrames(60);
@@ -304,7 +304,7 @@ void IntroStory(void)
     RunFramesUntilFadeDone();
     for (i = 0; i < 9; i++) {
         LoadGfxSet(gUnk_08731CDC[i]);
-        t = TaskCreateFrom(237, 0);
+        t = TaskCreateFrom(TASK_INTRO_STORY_PICTURE, 0);
         gTasks[t].introStoryPictureIndex = i;
         for (j = 0; j <= 16; j++) {
             gBldAlphaEva = j;

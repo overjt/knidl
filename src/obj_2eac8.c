@@ -25,7 +25,7 @@ s32 CreateArenaDoorSign(s32 x, s32 y, s32 a)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(221, 32, 63);
+    id = TaskCreateInRange(TASK_ARENA_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -88,7 +88,7 @@ s32 CreateBossDoorSign(s32 x, s32 y, s32 a)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(222, 32, 63);
+    id = TaskCreateInRange(TASK_BOSS_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -159,7 +159,7 @@ s32 CreateDoorOpening(s32 x, s32 y, s32 a)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(223, 32, 63);
+    id = TaskCreateInRange(TASK_DOOR_OPENING, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -250,7 +250,7 @@ s32 CreateStageClearFlag(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(224, 32, 63);
+    id = TaskCreateInRange(TASK_STAGE_CLEAR_FLAG, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -291,7 +291,7 @@ s32 CreateQuickDrawDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(225, 32, 63);
+    id = TaskCreateInRange(TASK_QUICK_DRAW_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -375,7 +375,7 @@ s32 CreateBombRallyDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(226, 32, 63);
+    id = TaskCreateInRange(TASK_BOMB_RALLY_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -441,7 +441,7 @@ s32 CreateAirGrindDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(227, 32, 63);
+    id = TaskCreateInRange(TASK_AIR_GRIND_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -503,7 +503,7 @@ s32 CreateMuseumDoorSign(s32 x, s32 y, s32 a)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(228, 32, 63);
+    id = TaskCreateInRange(TASK_MUSEUM_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -541,7 +541,7 @@ s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(229, 32, 63);
+    id = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -564,7 +564,7 @@ s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(229, 32, 63);
+    id = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -587,7 +587,7 @@ s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(229, 32, 63);
+    id = TaskCreateInRange(TASK_STAGE_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];

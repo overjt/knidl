@@ -124,22 +124,22 @@ void CreateBurstEffect(u32 a, s32 b)
     switch (a)
     {
     case 1:
-        i = CreateChildTaskHere(148, 0);
+        i = CreateChildTaskHere(TASK_STAR_SCATTER, 0);
         break;
     case 0:
-        i = CreateChildTaskHere(149, 0);
+        i = CreateChildTaskHere(TASK_RAY_BURST, 0);
         break;
     case 2:
-        i = CreateChildTaskHere(150, 0);
+        i = CreateChildTaskHere(TASK_SMALL_BLAST, 0);
         break;
     case 4:
-        i = CreateChildTaskHere(151, 0);
+        i = CreateChildTaskHere(TASK_STAR_SCATTER_ON_PARENT, 0);
         break;
     case 3:
-        i = CreateChildTaskHere(152, 0);
+        i = CreateChildTaskHere(TASK_RAY_BURST_ON_PARENT, 0);
         break;
     case 5:
-        i = CreateChildTaskHere(153, 0);
+        i = CreateChildTaskHere(TASK_SMALL_BLAST_ON_PARENT, 0);
         break;
     }
     if (i != -1 && b > 0)
@@ -372,7 +372,7 @@ void CreateStarRing(void)
 
     for (i = 0; i < 8; i++)
     {
-        j = CreateChildTaskHere(155, 0);
+        j = CreateChildTaskHere(TASK_RING_STAR, 0);
         if (j != -1)
         {
             p = &gTasks[j];
@@ -459,7 +459,7 @@ void CreateCannonSmoke(u32 a, u32 b)
     s32 i;
     struct Task *p;
 
-    i = CreateChildTaskHere(156, 0);
+    i = CreateChildTaskHere(TASK_CANNON_SMOKE, 0);
     if (i != -1)
     {
         p = &gTasks[i];
@@ -685,13 +685,13 @@ void ActorAttachEffect(s32 a, s32 b)
     switch (a)
     {
     case 1:
-        c = CreateChildTaskHere(160, 0);
+        c = CreateChildTaskHere(TASK_HIT_FLAMES, 0);
         break;
     case 2:
-        c = CreateChildTaskHere(161, 0);
+        c = CreateChildTaskHere(TASK_HIT_SPARKS, 0);
         break;
     case 3:
-        c = CreateChildTaskHere(159, 0);
+        c = CreateChildTaskHere(TASK_HIT_FROST, 0);
         break;
     case 0:
     default:

@@ -445,7 +445,7 @@ void Task_KrackoLightningTop(void)
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += RandomRange(16) + (u16)(0xFFF8 + gUnk_087491E4[gCurTask->frame]);
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->krackoLightningTopMiddleSlot = CreateChildTaskAtOffsetFacing(198, gUnk_087491FC[gCurTask->frame], 16, 1);
+    gCurTask->krackoLightningTopMiddleSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_MIDDLE, gUnk_087491FC[gCurTask->frame], 16, 1);
     gTasks[gCurTask->krackoLightningTopMiddleSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
@@ -462,7 +462,7 @@ void Task_KrackoLightningMiddle(void)
     gCurTask->frame = RandomRange(12);
     gCurTask->pixelX += gUnk_087491E4[gCurTask->frame];
     gCurTask->posX = gCurTask->pixelX << 16;
-    gCurTask->krackoLightningMiddleBottomSlot = CreateChildTaskAtOffsetFacing(199, gUnk_087491FC[gCurTask->frame], 12, 1);
+    gCurTask->krackoLightningMiddleBottomSlot = CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_BOTTOM, gUnk_087491FC[gCurTask->frame], 12, 1);
     gTasks[gCurTask->krackoLightningMiddleBottomSlot].parent = gCurTask->parent;
     TaskYieldTrampoline(2);
     TaskExitTrampoline();
@@ -663,6 +663,6 @@ void Task_NightmareWizard(void)
     gUnk_02007D00[2] = 0;
     gUnk_02007D00[3] = 1;
     gUnk_02007D00[4] = 0;
-    CreateChildTaskHere(208, 0);
+    CreateChildTaskHere(TASK_NIGHTMARE_WIZARD_HIT_BOX, 0);
     CallTableEntry(gCurTask->variant, 1, gNightmareWizardVariants);
 }

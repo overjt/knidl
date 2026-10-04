@@ -745,14 +745,14 @@ void CreateShotzoCannonball(void)
     struct ActorSpawn sp;
 
     sp.subtype = 7;
-    sp.taskType = 109;
+    sp.taskType = TASK_SHOTZO_CANNONBALL;
     sp.variant = 0;
     sp.spawnArg = gCurTask->shotzoSpeedLevel;
     sp.x = gUnk_0874324C[gCurTask->shotzoTargetBarrelDir];
     sp.y = gUnk_08743251[gCurTask->shotzoTargetBarrelDir];
     sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
-    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(172, gUnk_0874324C[gCurTask->shotzoTargetBarrelDir], gUnk_08743251[gCurTask->shotzoTargetBarrelDir], 0);
+    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(TASK_SMOKE_RING, gUnk_0874324C[gCurTask->shotzoTargetBarrelDir], gUnk_08743251[gCurTask->shotzoTargetBarrelDir], 0);
 }
 
 void CreateShotzoFixedCannonball(void)
@@ -760,14 +760,14 @@ void CreateShotzoFixedCannonball(void)
     struct ActorSpawn sp;
 
     sp.subtype = 7;
-    sp.taskType = 109;
+    sp.taskType = TASK_SHOTZO_CANNONBALL;
     sp.variant = 0;
     sp.spawnArg = 4;
     sp.x = gUnk_08743256[gCurTask->shotzoBarrelDir];
     sp.y = gUnk_08743251[gCurTask->shotzoBarrelDir];
     sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 0);
-    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(172, gUnk_08743256[gCurTask->shotzoBarrelDir], gUnk_08743251[gCurTask->shotzoBarrelDir], 0);
+    gCurTask->shotzoSmokeRingSlot = CreateChildTaskAtOffsetFacing(TASK_SMOKE_RING, gUnk_08743256[gCurTask->shotzoBarrelDir], gUnk_08743251[gCurTask->shotzoBarrelDir], 0);
 }
 
 void ShotzoAimBarrel(void)

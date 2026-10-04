@@ -64,7 +64,7 @@ void CutsceneMain(void)
         for (i = 0; i <= 3; i++)
             InitPlayerState(i);
         CutsceneLoadGraphics();
-        TaskCreateFrom(91, 32);
+        TaskCreateFrom(TASK_CUTSCENE_DIRECTOR, 32);
         LinkRequestSync();
         LinkSyncRandom();
         LinkStartKeyExchange();

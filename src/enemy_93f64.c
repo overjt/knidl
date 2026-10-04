@@ -540,7 +540,7 @@ void GrandWheelieChargeUpdate(void)
         return;
     v->grandWheelieRushCooldown = 1;
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
         TaskFree(gCurTask->grandWheelieFlameSlot);
     ActorSetState(7);
 rearm:
@@ -562,7 +562,7 @@ other:
             break;
         }
         StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
             TaskFree(gCurTask->grandWheelieFlameSlot);
         ActorSetState(5);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
@@ -577,7 +577,7 @@ other:
         return;
     gCurTask->grandWheelieRushCooldown = q;
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
         TaskFree(gCurTask->grandWheelieFlameSlot);
     ActorSetState(6);
     TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
@@ -799,7 +799,7 @@ void GrandWheelieState7(void)
     gCurTask->grandWheelieRushPhase = one;
     gUnk_02007D00[1] = PlaySfx(0x209);
     TaskYieldTrampoline(30);
-    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
         TaskFree(gCurTask->grandWheelieFlameSlot);
     gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_087443D0);
     StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
@@ -869,7 +869,7 @@ void GrandWheelieSummon(void)
     t = gCurTask;
     a = t->u8C.actor;
     sp.subtype = 12;
-    sp.taskType = 114;
+    sp.taskType = TASK_GRAND_WHEELIE_MINI_WHEELIE;
     sp.variant = t->variant;
     sp.spawnArg = t->actorSpawnArg;
     sp.x = 0;
@@ -947,7 +947,7 @@ void GrandWheelieDefeat(void)
 
     gCurTask->updateState = 10;
     z1 = 0;
-    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+    if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
         TaskFree(gCurTask->grandWheelieFlameSlot);
     ActorSetHitReactions(gGrandWheelieDefeatedHitReactions);
     gCurTask->grandWheelieDefeatPhase = z1;
@@ -955,7 +955,7 @@ void GrandWheelieDefeat(void)
     if (gUnk_02007D00[8] <= 0)
         sub_0806684c();
     sub_080667c0(1, 32);
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744408);
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
@@ -965,7 +965,7 @@ void GrandWheelieDefeat(void)
     TaskStop();
     RequestScreenShake(4);
     PlaySfx(0x1F7);
-    CreateChildTaskHere(141, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH, 0);
     GrandWheelieStartAnim(gUnk_0874441C);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
     RequestScreenShake(2);
@@ -975,7 +975,7 @@ void GrandWheelieDefeat(void)
     t = gCurTask;
     t->grandWheelieDefeatPhase = 2;
     t->grandWheelieDefeatDone = z2;
-    CreateChildTaskHere(141, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH, 0);
     TaskYieldTrampoline(170);
     ActorShakeVertically();
     gCurTask->grandWheelieDefeatDone = 1;
@@ -1040,7 +1040,7 @@ s32 GrandWheelieHitWall(void)
     switch (t->state) {
     case 4:
         StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
             TaskFree(gCurTask->grandWheelieFlameSlot);
         ActorSetState(9);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
@@ -1057,7 +1057,7 @@ s32 GrandWheelieHitWall(void)
         }
         TaskStop();
         StopSfxOnPlayer(gUnk_02007D00[1], 0x209);
-        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == 167)
+        if (gTaskSlotTypes[gCurTask->grandWheelieFlameSlot] == TASK_DASH_FLAME)
             TaskFree(gCurTask->grandWheelieFlameSlot);
         ActorSetState(9);
         TaskSetEntry(GrandWheelieEnterState, gCurTaskIdx);
@@ -1071,7 +1071,7 @@ s32 GrandWheelieHitWall(void)
 
 void GrandWheelieReactToDamage(void)
 {
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     RequestScreenShake(2);
     gCurTask->grandWheelieFlashTimer = 32;
 }

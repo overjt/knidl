@@ -309,7 +309,7 @@ void ChillyState3(void)
         u->chillyLoopCount++;
     } while ((s16)u->chillyLoopCount <= 14);
     sp.subtype = 2;
-    sp.taskType = 104;
+    sp.taskType = TASK_CHILLY_FREEZE;
     sp.variant = zero2 = 0;
     sp.spawnArg = u->actorSpawnArg;
     sp.checkTerrain = zero2;
@@ -615,7 +615,7 @@ void WaddleDooWalkShoot(void)
     while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
-        sp.taskType = 106;
+        sp.taskType = TASK_WADDLE_DOO_BEAM;
         sp.variant = 0;
         w = gCurTask;
         sp.spawnArg = w->actorSpawnArg;
@@ -810,7 +810,7 @@ void ParasolWaddleDooShoot(void)
     while ((s16)gCurTask->waddleDooLoopCount < gUnk_0874202C[gCurTask->actorSpawnArg])
     {
         sp.subtype = 4;
-        sp.taskType = 106;
+        sp.taskType = TASK_WADDLE_DOO_BEAM;
         sp.variant = 0;
         sp.spawnArg = 1;
         sp.x = 8;
@@ -971,7 +971,7 @@ void WaddleDooShoot(void)
         do
         {
             sp.subtype = 4;
-            sp.taskType = 106;
+            sp.taskType = TASK_WADDLE_DOO_BEAM;
             sp.variant = 0;
             sp.spawnArg = 0;
             sp.x = 8;

@@ -361,7 +361,7 @@ void BugzzySummon(void)
     gCurTask->frame++;
     TaskYieldTrampoline(5);
     spawn.subtype = 30;
-    spawn.taskType = 133;
+    spawn.taskType = TASK_BUGZZY_LADYBUG;
     spawn.variant = 0;
     spawn.spawnArg = gCurTask->actorSpawnArg;
     spawn.x = 0xFFFE;
@@ -371,7 +371,7 @@ void BugzzySummon(void)
     gCurTask->frame++;
     TaskYieldTrampoline(24);
     spawn.subtype = 30;
-    spawn.taskType = 133;
+    spawn.taskType = TASK_BUGZZY_LADYBUG;
     spawn.variant = 1;
     spawn.spawnArg = gCurTask->actorSpawnArg;
     spawn.x = 0xFFFE;
@@ -474,7 +474,7 @@ void BugzzyCharge(void)
     PlaySfx(500);
     x = gCurTask;
     x->bugzzyBoxSet = 3;
-    gTasks[CreateChildTask(200, x->pixelX, x->pixelY, ActorGetGfxTileWord())].unk74 =
+    gTasks[CreateChildTask(TASK_BUGZZY_AFTERIMAGE, x->pixelX, x->pixelY, ActorGetGfxTileWord())].unk74 =
         gCurTask->actorSpawnArg;
     gCurTask->bugzzyRushing = 1;
     TaskSetMotionXFacing(gUnk_08743A94[gCurTask->actorSpawnArg], 0x5A5A5A5A);
@@ -900,7 +900,7 @@ void BugzzyBackdrop(void)
             RequestScreenShake(2);
             BugzzyPlaySfxForHeldPlayer(504);
             TaskGetPosSlot(gCurTask->bugzzyHeldPlayerSlot);
-            CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
+            CreateChildTaskAt(TASK_IMPACT_STAR, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
             TaskYieldTrampoline(8);
         } while ((s16)++gCurTask->bugzzyLoopCount <= 5);
         SetHeldPlayerState(gCurTask->bugzzyHeldPlayerSlot, 4);
@@ -1069,7 +1069,7 @@ void sub_0809364c(void)
     SetHeldPlayerState(gCurTask->bugzzyHeldPlayerSlot, 4);
     RequestScreenShake(4);
     TaskGetPosSlot(gCurTask->bugzzyHeldPlayerSlot);
-    CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
+    CreateChildTaskAt(TASK_IMPACT_STAR, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
     BugzzyPlaySfxForHeldPlayer(504);
     sub_08093780();
     TaskStop();
@@ -1382,7 +1382,7 @@ void PoppyBrosSrBombHeld(void)
     while (1)
     {
         TaskYieldTrampoline(6);
-        CreateChildTaskAtOffsetFacing(181, -8, -8, 1);
+        CreateChildTaskAtOffsetFacing(TASK_POPPY_BROS_SR_BOMB_SPARK, -8, -8, 1);
     }
 }
 
@@ -1456,7 +1456,7 @@ void PoppyBrosSrBombFlight(void)
     while (1)
     {
         TaskYieldTrampoline(6);
-        CreateChildTaskAtOffsetFacing(181, -8, -8, 1);
+        CreateChildTaskAtOffsetFacing(TASK_POPPY_BROS_SR_BOMB_SPARK, -8, -8, 1);
     }
 }
 

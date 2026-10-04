@@ -308,7 +308,7 @@ s32 CreateDashFlame(s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = CreateChildTaskAt(167, 0, 0, 0);
+    i = CreateChildTaskAt(TASK_DASH_FLAME, 0, 0, 0);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -359,7 +359,7 @@ s32 CreateDashFireTrail(s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = CreateChildTaskAt(168, 0, 0, 0);
+    i = CreateChildTaskAt(TASK_DASH_FIRE_TRAIL, 0, 0, 0);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -427,7 +427,7 @@ s32 CreateLandingImpact(u8 a, s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = CreateChildTaskHere(169, 0);
+    i = CreateChildTaskHere(TASK_LANDING_IMPACT, 0);
     if (i != -1)
     {
         t = &gTasks[i];

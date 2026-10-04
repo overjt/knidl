@@ -29,7 +29,7 @@ s32 CreateCutsceneActor(s32 a, s32 b)
     struct Task *t;
     struct Task *dst;
 
-    i = TaskCreateInRange(92, b, 62);
+    i = TaskCreateInRange(TASK_CUTSCENE_ACTOR, b, 62);
     if (i != -1)
     {
         dst = &gTasks[i];

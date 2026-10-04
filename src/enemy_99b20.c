@@ -170,7 +170,7 @@ u8 MrTickTockHitWall(void)
 u8 MrTickTockReactToDamage(void)
 {
     gCurTask->mrTickTockFlashTimer = 32;
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     RequestScreenShake(4);
     return 0;
 }
@@ -248,7 +248,7 @@ s32 CreateMrTickTockRing(void)
     t = gCurTask;
     a = t->u8C.actor;
     sp.subtype = 16;
-    sp.taskType = 118;
+    sp.taskType = TASK_MR_TICK_TOCK_RING;
     sp.variant = 0;
     sp.spawnArg = t->facing;
     sp.x = 0;
@@ -285,7 +285,7 @@ void CreateMrTickTockNote(u8 a)
     gCurTask->mrTickTockNoteOffsetIndex = RandomRange(4);
     gCurTask->mrTickTockNoteOffsetX = (s8)gUnk_087456CC[(s16)gCurTask->mrTickTockNoteOffsetIndex];
     sp.subtype = 17;
-    sp.taskType = 119;
+    sp.taskType = TASK_MR_TICK_TOCK_NOTE;
     sp.variant = zero;
     sp.spawnArg = a;
     sp.x = gCurTask->mrTickTockNoteOffsetX;

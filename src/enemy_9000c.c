@@ -72,7 +72,7 @@ void Task_Bonkers(void)
     u = gCurTask;
     u->frameTable = gBonkersFrames;
     gUnk_02007D00[0]++;
-    gCurTask->bonkersHammerHitBoxSlot = CreateChildTaskHere(177, 1);
+    gCurTask->bonkersHammerHitBoxSlot = CreateChildTaskHere(TASK_BONKERS_HAMMER_HIT_BOX, 1);
     if (IsMidBossDroppingIn() == 1)
         gCurTask->bonkersIgnoreTerrainTimer = 24;
     else
@@ -412,7 +412,7 @@ void BonkersThrow(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     spawn.subtype = 8;
-    spawn.taskType = 110;
+    spawn.taskType = TASK_BONKERS_NUT;
     spawn.variant = 0;
     spawn.spawnArg = 0;
     spawn.x = 24;
@@ -422,7 +422,7 @@ void BonkersThrow(void)
     gCurTask->bonkersNutSlot = CreateActorFromDescAtOffsetFacing(&spawn, 1);
     PlaySfx(0x1FB);
     z = gCurTask;
-    CreateChildTask(145, (s16)(z->pixelX - z->facing * 16), (s16)(z->pixelY + 8), 0);
+    CreateChildTask(TASK_BACKWARD_DUST_PUFF, (s16)(z->pixelX - z->facing * 16), (s16)(z->pixelY + 8), 0);
     gCurTask->frame++;
     TaskYieldTrampoline(44);
     gCurTask->frame--;

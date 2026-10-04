@@ -425,7 +425,7 @@ void SubGameMain(void)
     }
     LinkRequestSync();
     LinkSyncRandom();
-    gSubGameTaskIdx = TaskCreateFrom(93, 63);
+    gSubGameTaskIdx = TaskCreateFrom(TASK_SUB_GAME, 63);
     SubGameInit();
     SubGameRunScreen(0);
     SubGameRunScreen(1);
@@ -493,7 +493,7 @@ void QuickDrawFreeze(void)
 
 void CreateQuickDrawTimer(void)
 {
-    s32 idx = TaskCreateFrom(94, 32);
+    s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (idx != -1)
     {
@@ -511,7 +511,7 @@ void CreateQuickDrawPlayers(s32 a0)
 
     for (i = 0; i < gPlayerCount; i++)
     {
-        s32 idx = TaskCreateFrom(94, 0);
+        s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 0);
 
         if (idx != -1)
         {
@@ -539,7 +539,7 @@ void QuickDrawSetupRound(void)
 
 void CreateQuickDrawSignal(void)
 {
-    s32 idx = TaskCreateFrom(94, 62);
+    s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 62);
 
     if (idx != -1)
     {

@@ -35,13 +35,13 @@ void CreateExtraModeTitleSprites(void)
     struct Task *t;
 
     if (gUnk_02006090 <= 2) {
-        idx = TaskCreateFrom(0x109, 32);
+        idx = TaskCreateFrom(TASK_EXTRA_MODE_TITLE_SPRITE, 32);
         if (idx != -1) {
             t = &gTasks[idx];
             t->parent = gCurTaskIdx;
             t->variant = 0;
         }
-        idx = TaskCreateFrom(0x109, 32);
+        idx = TaskCreateFrom(TASK_EXTRA_MODE_TITLE_SPRITE, 32);
         if (idx != -1) {
             t = &gTasks[idx];
             t->parent = gCurTaskIdx;

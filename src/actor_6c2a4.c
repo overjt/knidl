@@ -188,24 +188,24 @@ void ActorAttachedThrowFlight(void)
         while (1)
         {
         gCurTask->spriteFlags |= 0x8000;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         gCurTask->frame = 2;
         TaskYieldTrampoline(4);
         gCurTask->spriteFlags &= 0x7FFF;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         TaskYieldTrampoline(4);
         gCurTask->spriteFlags &= 0x7FFF;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         gCurTask->frame = 3;
         TaskYieldTrampoline(4);
         gCurTask->spriteFlags |= 0x8000;
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         TaskYieldTrampoline(4);
         }
     }
     while (1)
     {
-        CreateChildTaskHere(158, 0);
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         TaskYieldTrampoline(4);
     }
 }
@@ -452,10 +452,10 @@ s16 CreateStarFlash(u8 kind, s32 dx, s32 dy)
     switch (kind)
     {
     case 0:
-        r = CreateChildTaskAtOffsetFacing(141, (s16)dx, (s16)dy, 0);
+        r = CreateChildTaskAtOffsetFacing(TASK_STAR_FLASH, (s16)dx, (s16)dy, 0);
         break;
     case 1:
-        i = CreateChildTaskHere(142, 0);
+        i = CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
         r = i;
         if ((s16)i != -1)
         {
@@ -537,7 +537,7 @@ s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
     s32 i;
     u16 r;
 
-    i = CreateChildTaskAtOffsetFacing(143, (s16)c, (s16)d, 0);
+    i = CreateChildTaskAtOffsetFacing(TASK_DUST_TRAIL, (s16)c, (s16)d, 0);
     r = i;
     if ((s16)i != -1)
     {
@@ -562,5 +562,5 @@ s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
 
 void CreateDustPuff(void)
 {
-    CreateChildTaskHere(144, 0);
+    CreateChildTaskHere(TASK_DUST_PUFF, 0);
 }

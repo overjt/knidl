@@ -154,7 +154,7 @@ void Task_ChillyFreezeSparkle(void)
 
 void ChillyFreezeSparkleCheckParent(void)
 {
-    if (gTaskSlotTypes[gCurTask->parent] != 104)
+    if (gTaskSlotTypes[gCurTask->parent] != TASK_CHILLY_FREEZE)
         TaskExitTrampoline();
 }
 
@@ -1072,7 +1072,7 @@ void CreateLaserBallLaser(void)
     if (GetShapeAtPixelIgnoringOneWay(t->pixelX + (t->facing << 4), t->pixelY) == 0)
     {
         sp.subtype = 1;
-        sp.taskType = 103;
+        sp.taskType = TASK_LASER_BALL_LASER;
         sp.variant = 0;
         sp.spawnArg = gCurTask->laserBallLaserDir;
         sp.x = 16;

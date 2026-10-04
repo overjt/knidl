@@ -621,7 +621,7 @@ void HeldPlayerThrowFlightForwardUpdate(void)
     TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
     {
-        CreateChildTaskHere(148, 0);
+        CreateChildTaskHere(TASK_STAR_SCATTER, 0);
         PlaySfx(153);
         RequestScreenShake(2);
         t = gCurTask;
@@ -701,7 +701,7 @@ void HeldPlayerThrowFlightBackwardUpdate(void)
     TerrainCollideBox(gPlayerDefaultTerrainBox);
     if (gTerrainResult != 0)
     {
-        CreateChildTaskHere(148, 0);
+        CreateChildTaskHere(TASK_STAR_SCATTER, 0);
         PlaySfx(153);
         RequestScreenShake(2);
         t = gCurTask;

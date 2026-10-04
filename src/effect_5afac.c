@@ -130,7 +130,7 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
         base = 28;
     else
         return -1;
-    idx = TaskCreateInRange(7, base, base + 3);
+    idx = TaskCreateInRange(TASK_PLAYER_EFFECT, base, base + 3);
     if (idx == -1)
     {
         if (kind == 0)
@@ -143,7 +143,7 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
             base = 13;
         else
             return -1;
-        idx = TaskCreateInRange(7, base, base + 2);
+        idx = TaskCreateInRange(TASK_PLAYER_EFFECT, base, base + 2);
     }
     if (idx != -1)
     {
@@ -165,7 +165,7 @@ s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2)
     s32 idx;
     struct Task *t;
 
-    idx = TaskCreateInRange(7, 32, 62);
+    idx = TaskCreateInRange(TASK_PLAYER_EFFECT, 32, 62);
     if (idx != -1)
     {
         t = &gTasks[idx];
@@ -280,20 +280,20 @@ void sub_0805b370(void)
         gCurTask->playerLoopCount = 0;
         do
         {
-            gUnk_02007D00[(s16)gCurTask->playerLoopCount] = TaskCreateFrom(85, 32);
+            gUnk_02007D00[(s16)gCurTask->playerLoopCount] = TaskCreateFrom(TASK_GOAL_GAME_SIGN, 32);
             (gTasks + gUnk_02007D00[(s16)gCurTask->playerLoopCount])->variant = gCurTask->playerLoopCount;
             gCurTask->playerLoopCount++;
         } while ((s16)gCurTask->playerLoopCount <= 6);
-        TaskCreateFrom(90, 32);
+        TaskCreateFrom(TASK_GOAL_GAME_CAMERA, 32);
     }
     gCurTask->posX = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->unk2C] << 16;
     gCurTask->posY = 232 << 18;
-    TaskCreateFrom(88, 32);
-    gCurTask->unk28 = TaskCreateFrom(84, 32);
+    TaskCreateFrom(TASK_88, 32);
+    gCurTask->unk28 = TaskCreateFrom(TASK_GOAL_GAME_SPRING, 32);
     (gTasks + gCurTask->unk28)->variant = gCurTask->player->playerIndex;
     if (gActivePlayerCount > 1)
     {
-        gCurTask->playerGoalGameMarkerSlot = TaskCreateFrom(87, 32);
+        gCurTask->playerGoalGameMarkerSlot = TaskCreateFrom(TASK_GOAL_GAME_PLAYER_MARKER, 32);
         (gTasks + gCurTask->playerGoalGameMarkerSlot)->variant = gCurTask->player->playerIndex;
     }
 }
@@ -424,7 +424,7 @@ void PlayerGoalGameLaunch(void)
     sub_0805b83c();
     sub_0805b8b8();
     TaskStartFrameScriptId(3);
-    TaskCreateFrom(81, 32);
+    TaskCreateFrom(TASK_GOAL_GAME_LAUNCH_STARS, 32);
     gCurTask->unk24 = 0;
     if (gCurTask->player->playerIndex == gLocalPlayer)
     {
@@ -459,10 +459,10 @@ void PlayerGoalGameLaunchUpdate(void)
                      gCurTask->pixelX - gSpriteCameraX,
                      (s16)(gCurTask->pixelY - gSpriteCameraY + 16));
     if ((gCurTask->unk24 & 7) == 0)
-        TaskCreateFrom(83, 32);
+        TaskCreateFrom(TASK_GOAL_GAME_SMALL_TRAIL_STAR, 32);
     if (gCurTask->unk24 > 31)
     {
-        TaskCreateFrom(82, 32);
+        TaskCreateFrom(TASK_GOAL_GAME_BIG_TRAIL_STAR, 32);
         gCurTask->unk24 = 0;
     }
 }
@@ -1185,7 +1185,7 @@ void Task_GoalGameSign(void)
     {
         TaskYieldTrampoline(1);
     } while (gCurTask->unk28 != 0 || gCurTask->unk2C != 0);
-    gCurTask->unk46 = TaskCreateFrom(86, 32);
+    gCurTask->unk46 = TaskCreateFrom(TASK_GOAL_GAME_HELPER_KIRBY, 32);
     (gTasks + gCurTask->unk46)->unk74 = gCurTask->variant;
     (gTasks + gCurTask->unk46)->unk28 = gUnk_02007D00[7];
     gUnk_02007D00[7]++;
@@ -1386,7 +1386,7 @@ void Task_GoalGameHelperKirby(void)
                     if (((gActivePlayerMask >> gCurTask->unk6E) & 1)
                         && ((u8 *)gUnk_02006A14)[gCurTask->unk6E] == 0)
                     {
-                        gCurTask->unk46 = TaskCreateFrom(89, 32);
+                        gCurTask->unk46 = TaskCreateFrom(TASK_GOAL_GAME_ONE_UP, 32);
                         (gTasks + gCurTask->unk46)->unk2C
                             = gCurTask->unk6E;
                         (gTasks + gCurTask->unk46)->variant = 1;
@@ -1452,7 +1452,7 @@ void GoalGameHelperKirbyUpdate(void)
         {
             if (gUnk_02006A14[(s16)gCurTask->goalGameHelperKirbyLoopCount] != 0)
             {
-                gCurTask->unk46 = TaskCreateFrom(89, 32);
+                gCurTask->unk46 = TaskCreateFrom(TASK_GOAL_GAME_ONE_UP, 32);
                 (gTasks + gCurTask->unk46)->unk2C = (s16)gCurTask->goalGameHelperKirbyLoopCount;
                 (gTasks + gCurTask->unk46)->unk30 = gCurTask->unk30;
                 (gTasks + gCurTask->unk46)->unk34 = gCurTask->unk34;

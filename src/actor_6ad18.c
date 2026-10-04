@@ -119,7 +119,7 @@ void ActorDefeatMidBoss(void)
 
     TaskStop();
     TaskSetFrame(0);
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     gCurTask->actorLoopCount = 0;
     do
     {

@@ -276,7 +276,7 @@ void sub_080bc460(void)
 
 void CreateQuickDrawFalseStartMark(void)
 {
-    s32 id = TaskCreateFrom(94, 32);
+    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (id != -1)
     {
@@ -298,7 +298,7 @@ void CreateQuickDrawFalseStartMark(void)
 
 void CreateQuickDrawSweatDrop(void)
 {
-    s32 id = TaskCreateFrom(94, 32);
+    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (id != -1)
     {
@@ -316,7 +316,7 @@ void CreateQuickDrawSweatDrop(void)
 
 void CreateQuickDrawPlayerTag(void)
 {
-    s32 idx = TaskCreateFrom(94, 32);
+    s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (idx != -1)
     {
@@ -361,7 +361,7 @@ void CreateQuickDrawPlayerTag(void)
 
 void CreateQuickDrawWinCountLabel(void)
 {
-    s32 idx = TaskCreateFrom(94, 32);
+    s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (idx != -1)
     {
@@ -966,7 +966,7 @@ void QuickDrawPlaceOpponent(void)
 
 void CreateQuickDrawOpponentTag(void)
 {
-    s32 idx = TaskCreateFrom(94, 32);
+    s32 idx = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (idx != -1)
     {

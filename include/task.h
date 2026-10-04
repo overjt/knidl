@@ -2,6 +2,7 @@
 #define GUARD_TASK_H
 
 #include "gba/types.h"
+#include "constants/tasks.h"
 
 /*
  * Cooperative task system data model.

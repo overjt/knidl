@@ -47,7 +47,7 @@ void CreateAirGrindRacers(void)
     struct Task *t;
 
     for (i = 0; i < 4; i++) {
-        id = TaskCreateFrom(96, 0);
+        id = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 0);
         if (id != -1) {
             t = &gTasks[id];
             t->unk18 = id;
@@ -62,7 +62,7 @@ void CreateAirGrindScenery(s32 unused)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateFrom(96, 32);
+    id = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
     if (id != -1) {
         t = &gTasks[id];
         t->variant = 1;
@@ -75,7 +75,7 @@ void CreateAirGrindEffect(s32 a, s32 b, s32 c)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateFrom(96, 32);
+    id = TaskCreateFrom(TASK_AIR_GRIND_OBJECT, 32);
     if (id != -1) {
         t = &gTasks[id];
         t->unk18 = b;

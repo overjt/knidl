@@ -94,13 +94,13 @@ void GameOverScreen(void)
             if (gBg3ScrollX == 180 << 16) {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
-                TaskCreateFrom(262, 32);
+                TaskCreateFrom(TASK_GAME_OVER_PALETTE, 32);
             }
         }
         RunLinkFrame();
     }
     for (i = 0; i < 8; i++) {
-        struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
+        struct Task *t = &gTasks[TaskCreateFrom(TASK_GAME_OVER_SPRITE, 32)];
         t->gameOverSpriteIndex = i;
         RunLinkFrames(8);
     }
@@ -142,18 +142,18 @@ void GameOverMetaKnightmareScreen(void)
             if (gBg3ScrollX == 180 << 16) {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
-                TaskCreateFrom(262, 32);
+                TaskCreateFrom(TASK_GAME_OVER_PALETTE, 32);
             }
         }
         GameOverShowClock(1);
     }
     for (i = 0; i < 8; i++) {
-        struct Task *t = &gTasks[TaskCreateFrom(260, 32)];
+        struct Task *t = &gTasks[TaskCreateFrom(TASK_GAME_OVER_SPRITE, 32)];
         t->gameOverSpriteIndex = i;
         GameOverShowClock(8);
     }
     GameOverResetWait();
-    TaskCreateFrom(261, 32);
+    TaskCreateFrom(TASK_GAME_OVER_CURSOR, 32);
     GameOverShowClock(8);
     do {
         GameOverShowClock(1);
@@ -283,9 +283,9 @@ void CreateGameOverObjects(void)
     struct Task *t;
 
     if (gPlayerCount == 1) {
-        TaskCreateFrom(261, 32);
+        TaskCreateFrom(TASK_GAME_OVER_CURSOR, 32);
         for (i = 0; i <= 2; i++) {
-            id = TaskCreateFrom(264, 32);
+            id = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
             if (id != -1) {
                 t = &gTasks[id];
                 t->variant = i;
@@ -294,7 +294,7 @@ void CreateGameOverObjects(void)
             }
         }
     } else {
-        id = TaskCreateFrom(264, 32);
+        id = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
         if (id != -1) {
             struct Task *t2 = &gTasks[id];
             t2->variant = 5;

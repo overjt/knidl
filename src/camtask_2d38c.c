@@ -97,7 +97,7 @@ s32 sub_0802d478(s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateHighSlot(4);
+    id = TaskCreateHighSlot(TASK_MAP_EVENT);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -133,7 +133,7 @@ s32 sub_0802d5b4(s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateHighSlot(4);
+    id = TaskCreateHighSlot(TASK_MAP_EVENT);
     if (id != -1)
     {
         t = &gTasks[id];

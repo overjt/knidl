@@ -484,7 +484,7 @@ s32 CreateMaceKnightMace(void)
     s32 r;
 
     sp.subtype = 27;
-    sp.taskType = 130;
+    sp.taskType = TASK_MACE_KNIGHT_MACE;
     sp.variant = (t = gCurTask)->variant;
     z = 0;
     sp.spawnArg = t->unk74;
@@ -1363,7 +1363,7 @@ s32 CreateTridentKnightTrident(s32 a)
 
     PlaySfx(214);
     sp.subtype = 28;
-    sp.taskType = 131;
+    sp.taskType = TASK_TRIDENT_KNIGHT_TRIDENT;
     sp.variant = a;
     sp.spawnArg = gCurTask->actorSpawnArg;
     sp.x = 12;

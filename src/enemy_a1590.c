@@ -563,7 +563,7 @@ void sub_080a1d84(void)
 /* MrShineAndMrBrightDefeatSweepFilter (0x080A1DBC-0x080A1DD4) */
 s32 MrShineAndMrBrightDefeatSweepFilter(s32 a)
 {
-    if ((u16)gTaskSlotTypes[a] == 63)
+    if ((u16)gTaskSlotTypes[a] == TASK_MR_SHINE_AND_MR_BRIGHT)
         return 0;
     return 1;
 }
@@ -625,7 +625,7 @@ s32 MrShineAndMrBrightReactToDefeat(void)
     CreateBurstEffect(1, 0);
     HudSetTaskHpBar();
     PlaySfx(510);
-    CreateChildTaskHere(162, 1);
+    CreateChildTaskHere(TASK_BOSS_SCREEN_FLASH, 1);
     if (gCurTask->mrShineAndMrBrightDashTrailSlot != -1)
     {
         ActorDestroySlot(gCurTask->mrShineAndMrBrightDashTrailSlot);
@@ -1146,7 +1146,7 @@ void CreateMrShineCrescent(void)
     struct ActorSpawn sp;
 
     sp.subtype = 24;
-    sp.taskType = 127;
+    sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
     sp.variant = 0;
     sp.spawnArg = 0;
     sp.x = 24;
@@ -1165,7 +1165,7 @@ void CreateMrShineFallingStar(void)
     t->mrShineAndMrBrightStarCount--;
     t->mrShineAndMrBrightStarTimer = 45;
     sp.subtype = 24;
-    sp.taskType = 127;
+    sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
     sp.variant = 2;
     sp.spawnArg = t->mrShineAndMrBrightStarCount;
     sp.x = 0;
@@ -1359,7 +1359,7 @@ void CreateMrBrightFireball(void)
     struct ActorSpawn sp;
 
     sp.subtype = 24;
-    sp.taskType = 127;
+    sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
     sp.variant = 1;
     sp.spawnArg = 0;
     sp.x = 24;
@@ -1376,7 +1376,7 @@ void CreateMrBrightBeam(void)
     struct ActorSpawn sp;
 
     sp.subtype = 24;
-    sp.taskType = 127;
+    sp.taskType = TASK_MR_SHINE_AND_MR_BRIGHT_ATTACK;
     sp.variant = 3;
     sp.spawnArg = 0;
     sp.x = 0;
@@ -1393,21 +1393,21 @@ void CreateMrBrightBeamEffects(void)
     s32 r;
     struct Task *t;
 
-    r = CreateChildTask(193, 0, 96, (u16)ActorGetGfxTileWordPalOffset(2));
+    r = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 96, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[3] = r;
     if (r != -1)
     {
         t = &gTasks[r];
         t->variant = 0;
     }
-    r = CreateChildTask(193, 0, 16, (u16)ActorGetGfxTileWordPalOffset(2));
+    r = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 16, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[1] = r;
     if (r != -1)
     {
         t = &gTasks[r];
         t->variant = 1;
     }
-    r = CreateChildTask(193, 0, 8, (u16)ActorGetGfxTileWordPalOffset(2));
+    r = CreateChildTask(TASK_MR_BRIGHT_BEAM_EFFECT, 0, 8, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[2] = r;
     if (r != -1)
     {

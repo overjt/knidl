@@ -344,7 +344,7 @@ void KrackoLightningSweep(void)
     {
         for (gCurTask->krackoBoltCount = 0; (s16)gCurTask->krackoBoltCount <= 3; gCurTask->krackoBoltCount++)
         {
-            CreateChildTaskAtOffsetFacing(197, 0, 32, 1);
+            CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_TOP, 0, 32, 1);
             gCurTask->velY = gUnk_08749100[(s16)gCurTask->krackoBoltCount];
             for (gCurTask->krackoBoltFrameCount = 0; (s16)gCurTask->krackoBoltFrameCount <= 3; gCurTask->krackoBoltFrameCount++)
             {
@@ -357,7 +357,7 @@ void KrackoLightningSweep(void)
             }
         }
     }
-    CreateChildTaskAtOffsetFacing(197, 0, 32, 1);
+    CreateChildTaskAtOffsetFacing(TASK_KRACKO_LIGHTNING_TOP, 0, 32, 1);
     gCurTask->velY = 0;
     TaskYieldTrampoline(6);
     EndBgPaletteBlend(8);
@@ -398,7 +398,7 @@ void KrackoSummon(void)
     gUnk_02007D00[0] = 1;
     TaskYieldTrampoline(36);
     sp.subtype = 25;
-    sp.taskType = 128;
+    sp.taskType = TASK_KRACKO_STARMAN;
     sp.variant = 0;
     sp.spawnArg = 0;
     sp.x = 0;

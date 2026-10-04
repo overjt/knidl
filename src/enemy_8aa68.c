@@ -660,7 +660,7 @@ void sub_0808b8c4(void)
 
 void CreateBlipperDroplet(s32 a)
 {
-    gCurTask->blipperDropletSlot = CreateChildTaskHere(218, 1);
+    gCurTask->blipperDropletSlot = CreateChildTaskHere(TASK_BLIPPER_DROPLET, 1);
     gTasks[gCurTask->blipperDropletSlot].variant = a;
 }
 
@@ -1373,7 +1373,7 @@ void CreateGipStar(void)
     u8 zero;
 
     sp.subtype = 34;
-    sp.taskType = 137;
+    sp.taskType = TASK_GIP_STAR;
     sp.variant = gCurTask->variant;
     sp.spawnArg = gCurTask->actorSpawnArg;
     zero = 0;
@@ -1521,13 +1521,13 @@ void ChillyFreezeUpdate(void)
     n = t->chillyFreezeSparkleTimer;
     if (n == 0)
     {
-        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(215, 1);
+        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(TASK_CHILLY_FREEZE_SPARKLE, 1);
         gTasks[gCurTask->chillyFreezeSparkleSlot].state = 0;
         gCurTask->chillyFreezeSparkleTimer++;
     }
     else if (n == 10)
     {
-        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(215, 1);
+        gCurTask->chillyFreezeSparkleSlot = CreateChildTaskHere(TASK_CHILLY_FREEZE_SPARKLE, 1);
         gTasks[gCurTask->chillyFreezeSparkleSlot].state = 1;
         gCurTask->chillyFreezeSparkleTimer++;
     }

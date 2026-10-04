@@ -421,9 +421,9 @@ void NightmareWizardPoint(void)
     TaskYieldTrampoline(8);
     gCurTask->frame++;
     TaskYieldTrampoline(8);
-    CreateChildTask(203, gCurTask->pixelX, gCurTask->pixelY,
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_POINTING_HAND, gCurTask->pixelX, gCurTask->pixelY,
                  gCurTask->u8C.actor->savedTileWord | (128 << 4));
-    CreateChildTask(204, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_POINT_TORNADO, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     PlaySfx(0x235);
     gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_087492C0);
     if (gUnk_02007D00[7] == 0)
@@ -438,7 +438,7 @@ void NightmareWizardPoint(void)
     do
     {
         sp.subtype = 33;
-        sp.taskType = 136;
+        sp.taskType = TASK_NIGHTMARE_WIZARD_STAR;
         sp.spawnArg = 0;
         sp.x = 48;
         sp.y = 16;
@@ -512,9 +512,9 @@ void NightmareWizardOpenPalm(void)
     gUnk_02007D00[6] = gUnk_0874921C[gUnk_03001F2C];
     gUnk_02007D00[7] = gUnk_0874921E[gUnk_03001F2C];
     gUnk_02007D00[5] = 0;
-    CreateChildTask(201, gCurTask->pixelX, gCurTask->pixelY,
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_PALM, gCurTask->pixelX, gCurTask->pixelY,
                  gCurTask->u8C.actor->savedTileWord | 0x800);
-    CreateChildTask(202, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_PALM_TORNADO, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     gCurTask->nightmareWizardPalmStarDir = 0;
     for (gCurTask->nightmareWizardLoopCount = 0; (s16)gCurTask->nightmareWizardLoopCount < gUnk_02007D00[7]; gCurTask->nightmareWizardLoopCount++)
     {
@@ -523,7 +523,7 @@ void NightmareWizardOpenPalm(void)
         if (gCurTask->nightmareWizardPalmStarDir > 4)
             gCurTask->nightmareWizardPalmStarDir -= 5;
         sp.subtype = 33;
-        sp.taskType = 136;
+        sp.taskType = TASK_NIGHTMARE_WIZARD_STAR;
         sp.variant = 3;
         sp.x = 0;
         sp.y = 8;
@@ -566,13 +566,13 @@ void NightmareWizardOpenCloak(void)
     TaskYieldTrampoline(16);
     TaskStopY();
     gCurTask->actorAnimDelay18 = ActorStartAnim((struct AnimCmd *)gUnk_08749298);
-    CreateChildTask(207, gCurTask->pixelX, gCurTask->pixelY,
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_PENDANT, gCurTask->pixelX, gCurTask->pixelY,
                  gCurTask->u8C.actor->savedTileWord | (128 << 4));
-    CreateChildTask(205, gCurTask->pixelX, gCurTask->pixelY,
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_CLOAK_HANDS, gCurTask->pixelX, gCurTask->pixelY,
                  gCurTask->u8C.actor->savedTileWord | (128 << 4));
-    CreateChildTask(206, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_CLOAK_TORNADO, gCurTask->pixelX, gCurTask->pixelY, 0xD310);
     sp.subtype = 33;
-    sp.taskType = 136;
+    sp.taskType = TASK_NIGHTMARE_WIZARD_STAR;
     sp.variant = 4;
     sp.tileWord = gCurTask->u8C.actor->savedTileWord;
     sp.checkTerrain = 1;
@@ -1042,7 +1042,7 @@ void NightmareWizardDefeat(void)
         TaskYieldTrampoline(1);
         gCurTask->nightmareWizardLoopCount++;
     } while ((s16)gCurTask->nightmareWizardLoopCount <= 9);
-    CreateChildTask(209, gCurTask->pixelX, gCurTask->pixelY,
+    CreateChildTask(TASK_NIGHTMARE_WIZARD_DEFEAT_FLASH, gCurTask->pixelX, gCurTask->pixelY,
                  gCurTask->u8C.actor->savedTileWord);
     gCurTask->nightmareWizardLoopCount = 0;
     do
@@ -1131,7 +1131,7 @@ void sub_080abcb4(void)
 void NightmareWizardScatterStarsAt(s32 x, s32 y, s32 d)
 {
     PlaySfx(189);
-    CreateChildTaskAt(148, (s16)x, (s16)y, 0);
+    CreateChildTaskAt(TASK_STAR_SCATTER, (s16)x, (s16)y, 0);
     if (d != 0)
         TaskYieldTrampoline(d);
 }
@@ -1702,7 +1702,7 @@ void sub_080ac868(void)
     if (v74 == 0)
     {
         sp.subtype = 18;
-        sp.taskType = 120;
+        sp.taskType = TASK_META_KNIGHT_SWORD;
         sp.variant = 2;
         sp.spawnArg = v74;
         sp.x = gViewRect[0] + 120;
@@ -2080,7 +2080,7 @@ void PaintRollerUpdate(void)
 
 void PaintRollerReactToDamage(void)
 {
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     sub_080ad458();
 }
 
@@ -2199,7 +2199,7 @@ void CreatePaintRollerPainting(void)
     t = gCurTask;
     a = t->u8C.actor;
     sp.subtype = 14;
-    sp.taskType = 116;
+    sp.taskType = TASK_PAINT_ROLLER_PAINTING;
     sp.variant = t->variant;
     sp.spawnArg = t->actorSpawnArg;
     sp.x = gUnk_0874AAE4[gUnk_02007D00[0]];
@@ -2259,21 +2259,21 @@ void Task_HeavyMole(void)
     gUnk_02007D00[7] = 3;
     gUnk_02007D00[9] = ActorComputeHealth();
     sp.subtype = 19;
-    sp.taskType = 121;
+    sp.taskType = TASK_HEAVY_MOLE_UPPER_ARM;
     sp.variant = gCurTask->variant;
     sp.spawnArg = gCurTask->actorSpawnArg;
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 0);
     sp.subtype = 19;
-    sp.taskType = 122;
+    sp.taskType = TASK_HEAVY_MOLE_LOWER_ARM;
     sp.variant = gCurTask->variant;
     sp.spawnArg = gCurTask->actorSpawnArg;
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 0);
-    CreateChildTaskHere(190, 1);
-    CreateChildTaskHere(189, 1);
-    gUnk_02007D00[8] = CreateChildTaskHere(191, 1);
-    CreateChildTaskHere(192, 1);
+    CreateChildTaskHere(TASK_HEAVY_MOLE_TURBINES, 1);
+    CreateChildTaskHere(TASK_HEAVY_MOLE_MISSILE_HATCH, 1);
+    gUnk_02007D00[8] = CreateChildTaskHere(TASK_HEAVY_MOLE_EYE, 1);
+    CreateChildTaskHere(TASK_HEAVY_MOLE_SMOKE, 1);
     gCurTask->u8C.actor->defeatSweepCallback = (u32)HeavyMoleDefeatSweepFilter;
     sub_08066544();
     gCurTask->updateCallback = (u32)HeavyMoleUpdate;
@@ -2528,7 +2528,7 @@ s32 sub_080adaf8(s32 arg)
 
 void HeavyMoleReactToDamage(void)
 {
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     BossStartHitStun(23, (u32)sub_080adb90, (u32)gUnk_082F65D4, 32, 0);
     TaskSetSkipMask(4, gCurTaskIdx);
 }
@@ -2700,7 +2700,7 @@ void CreateHeavyMoleMissile(void)
     {
         gUnk_02007D00[4] = 1;
         sp.subtype = 21;
-        sp.taskType = 124;
+        sp.taskType = TASK_HEAVY_MOLE_RED_MISSILE;
         sp.variant = gCurTask->variant;
         sp.spawnArg = gCurTask->unk74;
         sp.checkTerrain = 1;
@@ -2709,7 +2709,7 @@ void CreateHeavyMoleMissile(void)
     else
     {
         sp.subtype = 20;
-        sp.taskType = 123;
+        sp.taskType = TASK_HEAVY_MOLE_YELLOW_MISSILE;
         sp.variant = gCurTask->variant;
         sp.spawnArg = gCurTask->unk74;
         CreateActorFromDescHere(&sp, 0);

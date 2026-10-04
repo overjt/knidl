@@ -478,7 +478,7 @@ void sub_080233e0(void)
 
 void CreateRoomTask(s32 a)
 {
-    s32 id = TaskCreateFrom(3, 63);
+    s32 id = TaskCreateFrom(TASK_ROOM, 63);
     struct Task *t;
 
     if (id != -1)

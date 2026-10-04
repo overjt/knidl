@@ -251,7 +251,7 @@ void NoddySleep(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(TASK_NODDY_BUBBLE, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -329,7 +329,7 @@ void NoddySleepFall(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(TASK_NODDY_BUBBLE, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;
@@ -376,7 +376,7 @@ void NoddyVariant1(void)
         u = gCurTask;
         u->frame++;
         TaskYieldTrampoline(22);
-        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(194, 12, 0, 1);
+        gCurTask->noddyBubbleSlot = CreateChildTaskAtOffsetFacing(TASK_NODDY_BUBBLE, 12, 0, 1);
         gCurTask->frame++;
         TaskYieldTrampoline(26);
         w = gCurTask;

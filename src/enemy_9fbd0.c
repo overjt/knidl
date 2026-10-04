@@ -270,7 +270,7 @@ void CreateKingDededeStar(void)
         gCurTask->facing = -1;
     TaskSetFrame(29);
     sp.subtype = 10;
-    sp.taskType = 112;
+    sp.taskType = TASK_KING_DEDEDE_STAR;
     sp.variant = 0;
     sp.spawnArg = 0;
     sp.tileWord = 0;
@@ -302,6 +302,6 @@ void sub_080a0098(void)
     (*tp)->kingDededeInhaling = 1;
     (*tp)->kingDededeInhaleTimer = 90;
     r[0] = -1;
-    (*tp)->kingDededeChildSlot = CreateChildTaskAtOffsetFacing(183, 38, 10, 0);
+    (*tp)->kingDededeChildSlot = CreateChildTaskAtOffsetFacing(TASK_KING_DEDEDE_INHALE_HIT_BOX, 38, 10, 0);
     r[9] = PlaySfx(0x21B);
 }

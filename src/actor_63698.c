@@ -1490,7 +1490,7 @@ s32 CreateAbilityStar(u8 p2)
     struct PlayerState *p;
     s32 i;
 
-    i = sub_08064e5c(0, 68, p2);
+    i = sub_08064e5c(0, TASK_ABILITY_STAR, p2);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1501,7 +1501,7 @@ s32 CreateAbilityStar(u8 p2)
         t->unk20 = gCurTaskIdx;
         a->ability = p->ability;
     }
-    CreateChildTaskHere(166, 0);
+    CreateChildTaskHere(TASK_ABILITY_RELEASE_FLASH, 0);
     return i;
 }
 
@@ -1590,7 +1590,7 @@ s32 CreateBlockStar(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
     struct Task *t;
     s32 i;
 
-    i = CreateActor(0, 40, 48, 0, 0, x, y, 0);
+    i = CreateActor(0, 40, TASK_BLOCK_STAR, 0, 0, x, y, 0);
     if (i != -1)
     {
         t = &gTasks[i];

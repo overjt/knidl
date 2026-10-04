@@ -72,7 +72,7 @@ void PoppyBrosSrInit(void)
     t->poppyBrosSrDefeatPhase = 0;
     t->poppyBrosSrHeadAnimIndex = 0;
     t->poppyBrosSrFlashing = 0;
-    gCurTask->poppyBrosSrHeadSlot = CreateChildTaskHere(179, 1);
+    gCurTask->poppyBrosSrHeadSlot = CreateChildTaskHere(TASK_POPPY_BROS_SR_HEAD, 1);
     ActorIntroPoseUntilMidBossFight(gUnk_0874397C);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 7, gPoppyBrosSrStates);
@@ -194,7 +194,7 @@ void PoppyBrosSrState2(void)
     else
         gCurTask->poppyBrosSrPlayerNearY = 0;
     gCurTask->poppyBrosSrAimTimer = -1;
-    p = &gTasks[(s16)CreateChildTaskHere(180, 1)];
+    p = &gTasks[(s16)CreateChildTaskHere(TASK_POPPY_BROS_SR_HAND, 1)];
     p->poppyBrosSrHandBombVariant = gCurTask->poppyBrosSrPlayerNearY;
     gCurTask->poppyBrosSrHeadAnimIndex = 2;
     TaskSetFrame(5);
@@ -554,7 +554,7 @@ void Task_PoppyBrosSrHand(void)
     v->poppyBrosSrHandOffsetY = 0x40000;
     v->poppyBrosSrHandReleased = zero;
     spawn.subtype = 9;
-    spawn.taskType = 111;
+    spawn.taskType = TASK_POPPY_BROS_SR_BOMB;
     spawn.variant = v->poppyBrosSrHandBombVariant;
     spawn.spawnArg = v->unk74;
     spawn.x = zero;

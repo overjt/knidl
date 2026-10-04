@@ -170,7 +170,7 @@ void CreatePlayer(s32 a0)
 {
     struct Task *t;
 
-    t = &gTasks[TaskCreateFrom(5, 0)];
+    t = &gTasks[TaskCreateFrom(TASK_PLAYER, 0)];
     t->posX = gRoomEntryX << 16;
     t->posY = gRoomEntryY << 16;
     t->pixelX = t->posX >> 16;
@@ -2245,7 +2245,7 @@ void FreePlayerEffectsAndObjects(s8 a0)
     }
     for (i = 32; i <= 62; i++)
     {
-        if (gTaskSlotTypes[i] == 7 || gTaskSlotTypes[i] == 6)
+        if (gTaskSlotTypes[i] == TASK_PLAYER_EFFECT || gTaskSlotTypes[i] == TASK_PLAYER_OBJECT)
             TaskFree(i);
     }
 }

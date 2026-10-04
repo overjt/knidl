@@ -73,7 +73,7 @@ void CreateEndingEpilogue(void)
     s32 id;
     struct Task *t;
 
-    while ((id = TaskCreateFrom(100, 32)) == -1)
+    while ((id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32)) == -1)
         RunLinkFrame();
     t = &gTasks[id];
     t->variant = 0;
@@ -101,7 +101,7 @@ void CreateEndingStarRodReturn(void)
     s32 id;
     struct Task *t;
 
-    while ((id = TaskCreateFrom(101, 32)) == -1)
+    while ((id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32)) == -1)
         RunLinkFrame();
     t = &gTasks[id];
     t->variant = 0;

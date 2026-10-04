@@ -35,8 +35,8 @@ void MenuSoundTest(void)
                 SoundTestDrawNumber(0);
                 SoundTestDrawNumber(1);
                 SoundTestHighlightCursor();
-                TaskCreateFrom(254, 32);
-                TaskCreateFrom(255, 32);
+                TaskCreateFrom(TASK_SOUND_TEST_CURSORS, 32);
+                TaskCreateFrom(TASK_SOUND_TEST_PULSE, 32);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1D00;
             }
@@ -228,15 +228,15 @@ void CreateFileSelectSprites(s32 mode)
     struct Task *t;
     s32 id;
 
-    id = TaskCreateFrom(240, 32);
+    id = TaskCreateFrom(TASK_FILE_SELECT_CURSOR, 32);
     t = &gTasks[id];
     t->unk18 = mode;
     for (i = 0; i <= 2; i++) {
-        id = TaskCreateFrom(238, 32);
+        id = TaskCreateFrom(TASK_FILE_SELECT_SLOT_LABEL, 32);
         t = &gTasks[id];
         t->unk18 = mode;
         t->unk1C = i;
-        id = TaskCreateFrom(239, 32);
+        id = TaskCreateFrom(TASK_FILE_SELECT_SLOT, 32);
         t = &gTasks[id];
         t->unk18 = mode;
         t->unk1C = i;

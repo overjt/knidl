@@ -121,7 +121,7 @@ void QuickDrawResetRound(void)
 
 void CreateQuickDrawRedrawSign(void)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
@@ -139,7 +139,7 @@ void CreateQuickDrawRedrawSign(void)
 
 void CreateQuickDrawSlash(void)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
     struct Task *t;
 
     if (i != -1)
@@ -151,7 +151,7 @@ void CreateQuickDrawSlash(void)
 
 void CreateQuickDrawBurst(void)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
     struct Task *t;
 
     if (i != -1)
@@ -481,7 +481,7 @@ void CreateQuickDrawOpponent(void)
     struct Task *t;
 
     QuickDrawLoadOpponentGraphics(0);
-    i = TaskCreateFrom(94, 32);
+    i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
     if (i != -1)
     {
         t = &gTasks[i];

@@ -100,7 +100,7 @@ void CreateEndingStarRodReturnObjects(void)
     struct Task *t;
 
     for (i = 0; v = gEndingStarRodReturnObjectVariants[i], (s16)gEndingStarRodReturnObjectVariants[i] <= 11; i++) {
-        id = TaskCreateFrom(101, 32);
+        id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
         if (id == -1)
             for (;;)
                 ;
@@ -236,7 +236,7 @@ void sub_080c94cc(void)
     gCurTask->updateCallback = (u32)sub_080c972c;
     gCurTask->endingStarRodReturnBgmVolume = 255;
     gCurTask->endingStarRodReturnBgmFadeStep = 0;
-    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
     gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 5;
     gTasks[gCurTask->endingStarRodReturnChildSlot].parent = gCurTaskIdx;
     TaskStop();
@@ -310,7 +310,7 @@ void sub_080c972c(void)
 
     if (gCurTask->endingStarRodReturnTrailOn != 0) {
         if (--gCurTask->endingStarRodReturnTrailTimer <= 0) {
-            id = TaskCreateFrom(101, 32);
+            id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
             t = &gTasks[id];
             t->variant = 4;
             t->pixelX = gCurTask->pixelX;
@@ -443,14 +443,14 @@ void sub_080c9a28(void)
     } while ((s16)gCurTask->endingStarRodReturnLoopCount <= 15);
     TaskYieldTrampoline(68);
     TaskYieldTrampoline(80);
-    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+    gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
     gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 2;
     TaskYieldTrampoline(60);
     TaskYieldTrampoline(60);
     TaskYieldTrampoline(30);
     gCurTask->endingStarRodReturnLoopCount = 0;
     do {
-        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
         gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 9;
         gTasks[gCurTask->endingStarRodReturnChildSlot].endingStarRodReturnIndex = gCurTask->endingStarRodReturnLoopCount;
         gCurTask->endingStarRodReturnLoopCount++;
@@ -476,7 +476,7 @@ void sub_080c9a28(void)
     TaskYieldTrampoline(120);
     gCurTask->endingStarRodReturnLoopCount = 0;
     do {
-        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(101, 32);
+        gCurTask->endingStarRodReturnChildSlot = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
         gTasks[gCurTask->endingStarRodReturnChildSlot].variant = 10;
         gTasks[gCurTask->endingStarRodReturnChildSlot].endingStarRodReturnIndex = gCurTask->endingStarRodReturnLoopCount;
         gCurTask->endingStarRodReturnLoopCount++;

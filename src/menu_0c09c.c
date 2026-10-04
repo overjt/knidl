@@ -96,7 +96,7 @@ void MenuFileSelect(void)
 void MenuSetupFileMenu(void)
 {
     gEraseConfirmCount = 0;
-    TaskCreateFrom(241, 32);
+    TaskCreateFrom(TASK_FILE_MENU_SLOT, 32);
     MenuUpdateFileMenuPalette();
     LoadGfxSet(21);
     MenuLoadSaveSlotLabel(gCurSaveSlot);
@@ -118,7 +118,7 @@ void MenuSetupFileMenu(void)
         LoadGfxSet(25);
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1F00;
-        TaskCreateFrom(242, 32);
+        TaskCreateFrom(TASK_FILE_MENU_HIGHLIGHT, 32);
         StartHBlankScroll(3);
         gMenuTransitionTimer = 17;
         break;
@@ -155,7 +155,7 @@ void MenuFileMenuSelect(void)
             if (gMenuTransitionTimer == 0)
             {
                 if (gPrevMenuScreen != 4)
-                    TaskCreateFrom(242, 32);
+                    TaskCreateFrom(TASK_FILE_MENU_HIGHLIGHT, 32);
                 if (gMenuBufferedKeys != 0)
                     RunFrames(4);
             }
@@ -172,14 +172,14 @@ void MenuFileMenuSelect(void)
                 {
                     gMenuScreen = 2;
                     gMenuChoiceCursor = 0;
-                    TaskCreateFrom(245, 32);
+                    TaskCreateFrom(TASK_NORMAL_EXTRA_PANEL, 32);
                     RunFrames(10);
                 }
                 else
                 {
                     gMenuScreen = 3;
                     gPlayerCountCursor = 0;
-                    TaskCreateFrom(246, 32);
+                    TaskCreateFrom(TASK_PLAYER_COUNT_PANEL, 32);
                     RunFrames(10);
                 }
                 break;
@@ -258,7 +258,7 @@ void MenuNormalExtraSelect(void)
     gExtraMode = gMenuChoiceCursor;
     *state = 3;
     gPlayerCountCursor = 0;
-    TaskCreateFrom(246, 32);
+    TaskCreateFrom(TASK_PLAYER_COUNT_PANEL, 32);
     RunFrames(10);
 }
 
@@ -280,14 +280,14 @@ void MenuPlayerCountSelect(void)
             {
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1F00;
-                TaskCreateFrom(242, 32);
+                TaskCreateFrom(TASK_FILE_MENU_HIGHLIGHT, 32);
                 if (gSaveSlots[gCurSaveSlot].milestoneFlags & 4)
                 {
                     gMenuChoiceCursor = gExtraMode;
-                    TaskCreateFrom(245, 32);
+                    TaskCreateFrom(TASK_NORMAL_EXTRA_PANEL, 32);
                 }
                 gPlayerCountCursor = 1;
-                TaskCreateFrom(246, 32);
+                TaskCreateFrom(TASK_PLAYER_COUNT_PANEL, 32);
                 if (gMenuBufferedKeys != 0)
                     RunFrames(1);
             }
@@ -311,7 +311,7 @@ void MenuPlayerCountSelect(void)
                 gBg2ScrollY = gBg3ScrollY = 0;
                 BgScrollStartX(0xFFF00000, 256, 2);
                 BgScrollStartX(0xFFF00000, 256, 3);
-                TaskCreateFrom(250, 32);
+                TaskCreateFrom(TASK_LINK_PLAY_COLOR_CYCLE, 32);
                 LoadGfxSet(26);
                 StartHBlankScroll(4);
                 RunFrames(16);
@@ -319,10 +319,10 @@ void MenuPlayerCountSelect(void)
                 LoadGfxSet(37);
                 gDispCnt &= 0xE0FF;
                 gDispCnt |= 0x1E00;
-                TaskCreateFrom(249, 32);
+                TaskCreateFrom(TASK_LINK_PLAY_PALETTE_PULSE, 32);
                 RunFrames(8);
                 LoadGfxSet(40);
-                TaskCreateFrom(251, 32);
+                TaskCreateFrom(TASK_LINK_PLAY_PLAYER_LIST, 32);
             }
             return;
         }
@@ -360,7 +360,7 @@ void MenuEraseSelect(void)
     gEraseConfirmCount = 0;
     gMenuChoiceCursor = 1;
     LoadGfxSet(29);
-    TaskCreateFrom(243, 32);
+    TaskCreateFrom(TASK_ERASE_CONFIRM_DIALOG, 32);
     RunFrames(10);
     keys = &gPressedKeys;
     while (1)
@@ -376,7 +376,7 @@ void MenuEraseSelect(void)
             }
             else
             {
-                TaskCreateFrom(244, 32);
+                TaskCreateFrom(TASK_ERASE_FILE_WIPE, 32);
                 RunFrames(10);
                 PlaySfx(268);
                 EraseSaveSlot(gCurSaveSlot);

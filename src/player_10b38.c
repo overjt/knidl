@@ -1138,7 +1138,7 @@ void CutsceneBombKirby(void)
     gCurTask->cutsceneActorLoopCount = 0;
     do
     {
-        if ((gCurTask->cutsceneActorChildSlot = TaskCreateFrom(7, 32)) != -1)
+        if ((gCurTask->cutsceneActorChildSlot = TaskCreateFrom(TASK_PLAYER_EFFECT, 32)) != -1)
         {
             gTasks[gCurTask->cutsceneActorChildSlot].unk18 = ((s16)gCurTask->cutsceneActorLoopCount & 0x00FFFFFF) | (192 << 20);
             gTasks[gCurTask->cutsceneActorChildSlot].posX = gCurTask->posX;

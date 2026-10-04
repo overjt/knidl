@@ -741,7 +741,7 @@ void SirKibbleShoot(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
-    spawn.taskType = 105;
+    spawn.taskType = TASK_SIR_KIBBLE_CUTTER;
     spawn.variant = 0;
     spawn.spawnArg = 0;
     spawn.x = 16;
@@ -809,7 +809,7 @@ void SirKibbleJump(void)
     gCurTask->frame++;
     TaskYieldTrampoline(4);
     spawn.subtype = 3;
-    spawn.taskType = 105;
+    spawn.taskType = TASK_SIR_KIBBLE_CUTTER;
     spawn.variant = 0;
     spawn.spawnArg = 1;
     spawn.x = 16;

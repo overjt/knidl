@@ -1232,7 +1232,7 @@ void CannonFuseMoveSpark(void)
 
 void CreateCannonFuseSpark(void)
 {
-    gCurTask->cannonFuseSparkSlot = CreateChildTaskHere(157, 1);
+    gCurTask->cannonFuseSparkSlot = CreateChildTaskHere(TASK_CANNON_FUSE_SPARK, 1);
 }
 
 void CannonFuseInit(void)

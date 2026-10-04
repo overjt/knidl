@@ -50,7 +50,7 @@ void GameOverChoiceUpdate(void)
 /* Spawn task type #264 with Task.variant = variant. */
 void CreateGameOverObject(u8 variant)
 {
-    s32 id = TaskCreateFrom(264, 32);
+    s32 id = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
     struct Task *t;
 
     if (id != -1) {
@@ -112,7 +112,7 @@ void GameOverChoiceWaitUpdate(void)
         if (gCurTask->gameOverChoiceGiveUp != 0) {
             gCurTask->state = 4;
         } else {
-            TaskCreateFrom(263, 32);
+            TaskCreateFrom(TASK_HALVE_SCORE, 32);
             gCurTask->state = 2;
         }
     }

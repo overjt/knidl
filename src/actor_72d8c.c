@@ -386,7 +386,7 @@ void WarpStarFlight15(void)
     TaskYieldTrampoline(10);
     gCurTask->accelY = 0x3000;
     TaskYieldTrampoline(8);
-    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
+    CreateChildTaskAt(TASK_STAR_SCATTER, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     WarpStarStopTrail();
@@ -516,7 +516,7 @@ void WarpStarFlight17(void)
         t->velY = -0x10000;
     }
     TaskYieldTrampoline(8);
-    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
+    CreateChildTaskAt(TASK_STAR_SCATTER, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     {
@@ -850,7 +850,7 @@ void WarpStarFlight20(void)
     TaskYieldTrampoline(2);
     gCurTask->velY = 0x10000;
     TaskYieldTrampoline(2);
-    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
+    CreateChildTaskAt(TASK_STAR_SCATTER, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     gCurTask->velY = 0x2000;
@@ -1087,7 +1087,7 @@ void WarpStarFlight24(void)
 {
     gCurTask->updateState = 24;
     PlayBgm(33);
-    TaskCreateFrom(98, 32);
+    TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE, 32);
     {
         struct Task *t = gCurTask;
 
@@ -1662,7 +1662,7 @@ void CreateWarpStarTrailStar(int a, int b, int c)
     u8 z = c;
     s32 id;
 
-    id = CreateChildTaskAt(165, gCurTask->pixelX, gCurTask->pixelY, 0);
+    id = CreateChildTaskAt(TASK_WARP_STAR_TRAIL_STAR, gCurTask->pixelX, gCurTask->pixelY, 0);
     gTasks[id].state = z;
     if (z != 2)
     {

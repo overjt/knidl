@@ -85,7 +85,7 @@ u32 ActorCollideTerrain(void)
     TerrainCollideBox(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
-        CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
+        CreateChildTaskAt(TASK_ACTOR_SPLASH, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -277,7 +277,7 @@ u32 ActorCollideTerrainInCameraBounds(void)
     sub_080b460c();
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
-        CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
+        CreateChildTaskAt(TASK_ACTOR_SPLASH, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) != 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -372,7 +372,7 @@ u32 ActorCollideTerrainFloor(void)
     TerrainCollideBoxFloor(&v);
     u = gCurTask;
     if ((u->waterFlags & 0x80) != 0)
-        CreateChildTaskAt(140, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
+        CreateChildTaskAt(TASK_ACTOR_SPLASH, u->pixelX, ((s16 *)gTerrainResult)[i], 0);
     if ((f & 1) == 0)
         goto b1;
     if ((f & 0x40) == 0)
@@ -769,8 +769,8 @@ void ActorHitStunLateUpdate(void)
 
 void sub_08069fc8(void)
 {
-    if (gTaskSlotTypes[gCurTaskIdx] == 107 || gTaskSlotTypes[gCurTaskIdx] == 109
-     || gTaskSlotTypes[gCurTaskIdx] == 137)
+    if (gTaskSlotTypes[gCurTaskIdx] == TASK_GLUNK_SHOT || gTaskSlotTypes[gCurTaskIdx] == TASK_SHOTZO_CANNONBALL
+     || gTaskSlotTypes[gCurTaskIdx] == TASK_GIP_STAR)
         PlaySmallBlastAnim();
     else
         PlayRayBurstAnim();

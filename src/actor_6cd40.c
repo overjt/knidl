@@ -130,11 +130,11 @@ void CreateLandingDust(s16 dx, s16 dy)
     s32 i;
 
     t = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(dx + t->pixelX), (s16)(dy + t->pixelY), 0);
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(dx + t->pixelX), (s16)(dy + t->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = 1;
     u = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(u->pixelX - dx), (s16)(dy + u->pixelY), 0);
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(u->pixelX - dx), (s16)(dy + u->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = 0xFF;
 }
@@ -146,12 +146,12 @@ void sub_0806d08c(s16 a, s16 b, s16 c)
     s32 i;
 
     t = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(t->pixelX + t->facing * a),
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(t->pixelX + t->facing * a),
                           (s16)(c + t->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = gCurTask->facing;
     u = gCurTask;
-    i = (s16)CreateChildTask(146, (s16)(u->pixelX - b * u->facing),
+    i = (s16)CreateChildTask(TASK_LANDING_DUST, (s16)(u->pixelX - b * u->facing),
                           (s16)(c + u->pixelY), 0);
     if (i != -1)
         gTasks[i].facing = -gCurTask->facing;
@@ -191,7 +191,7 @@ s32 CreateDustBurst(s16 a, s16 b)
     struct Task *p;
     s32 i;
 
-    i = CreateChildTaskAt(147, 0, 0, 0);
+    i = CreateChildTaskAt(TASK_DUST_BURST, 0, 0, 0);
     if (i != -1)
     {
         p = &gTasks[i];

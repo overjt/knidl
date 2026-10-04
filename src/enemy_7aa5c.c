@@ -449,7 +449,7 @@ other:
 
 void CreateSwordAndBladeKnightSlash(void)
 {
-    gCurTask->swordAndBladeKnightSlashSlot = CreateChildTaskHere(173, 1);
+    gCurTask->swordAndBladeKnightSlashSlot = CreateChildTaskHere(TASK_SWORD_AND_BLADE_KNIGHT_SLASH, 1);
 }
 
 void sub_0807b200(void)
@@ -1408,7 +1408,7 @@ void CreateUFOLaser(void)
     if (GetShapeAtPixelIgnoringOneWay(t->pixelX + t->facing * 16, t->pixelY) == 0)
     {
         spawn.subtype = 31;
-        spawn.taskType = 134;
+        spawn.taskType = TASK_UFO_LASER;
         spawn.variant = 0;
         spawn.spawnArg = 0;
         spawn.x = 8;

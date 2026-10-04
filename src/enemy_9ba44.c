@@ -143,7 +143,7 @@ void sub_0809bc1c(void)
     {
         t = gCurTask;
         q = (u8 *)(t->metaKnightsQueue0 + (t->metaKnightsQueue0Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         t2 = gCurTask;
         p2 = &t2->metaKnightsNewKnightSlot;
@@ -155,7 +155,7 @@ void sub_0809bc1c(void)
     {
         u = gCurTask;
         q = (u8 *)(u->metaKnightsQueue1 + (u->metaKnightsQueue1Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         u2 = gCurTask;
         p2 = &u2->metaKnightsNewKnightSlot;
@@ -167,7 +167,7 @@ void sub_0809bc1c(void)
     {
         v = gCurTask;
         q = (u8 *)(v->metaKnightsQueue2 + (v->metaKnightsQueue2Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         v2 = gCurTask;
         p2 = &v2->metaKnightsNewKnightSlot;
@@ -179,7 +179,7 @@ void sub_0809bc1c(void)
     {
         w = gCurTask;
         q = (u8 *)(w->metaKnightsQueue3 + (w->metaKnightsQueue3Index << 3));
-        r = CreateActor(3, 9, 58, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
+        r = CreateActor(3, 9, TASK_META_KNIGHTS_KNIGHT, q[1], q[0], ((s16 *)q)[1], ((s16 *)q)[2],
                          gUnk_08745CEC[q[0]]);
         w2 = gCurTask;
         p2 = &w2->metaKnightsNewKnightSlot;

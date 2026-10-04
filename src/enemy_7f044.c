@@ -1195,7 +1195,7 @@ void Task_HotHead(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
     gCurTask->frameTable = gHotHeadFrames;
-    CreateChildTaskHere(175, 0);
+    CreateChildTaskHere(TASK_HOT_HEAD_FLAME, 0);
     CallTableEntry(gCurTask->variant, 3, gHotHeadVariants);
 }
 
@@ -1274,7 +1274,7 @@ void HotHeadWalkShoot(void)
     if (abs(TaskGetNearestPlayerDistSq()) <= 0x143F)
     {
         sp.subtype = 6;
-        sp.taskType = 108;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
         sp.variant = 0;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
@@ -1296,7 +1296,7 @@ void HotHeadWalkShoot(void)
     else
     {
         sp.subtype = 6;
-        sp.taskType = 108;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
         sp.variant = 1;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
@@ -1452,7 +1452,7 @@ void HotHeadStandShoot(void)
     if (abs(TaskGetNearestPlayerDistSq()) <= 0x143F)
     {
         sp.subtype = 6;
-        sp.taskType = 108;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
         sp.variant = 0;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
@@ -1474,7 +1474,7 @@ void HotHeadStandShoot(void)
     else
     {
         sp.subtype = 6;
-        sp.taskType = 108;
+        sp.taskType = TASK_HOT_HEAD_FIRE;
         sp.variant = 1;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;

@@ -161,7 +161,7 @@ void MetaKnightState0(void)
         for (i = 0; i < gActivePlayerCount; i++)
         {
             sp.subtype = 18;
-            sp.taskType = 120;
+            sp.taskType = TASK_META_KNIGHT_SWORD;
             sp.variant = 0;
             sp.spawnArg = i;
             sp.x = gUnk_08748D28[i + (gActivePlayerCount - 1) * 4] + gViewRect[0];
@@ -191,7 +191,7 @@ void MetaKnightState0(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(185, (s16)(t->pixelX + 8), t->pixelY, t->u8C.actor->savedTileWord);
+    CreateChildTask(TASK_META_KNIGHT_CAPE, (s16)(t->pixelX + 8), t->pixelY, t->u8C.actor->savedTileWord);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     gCurTask->frame++;
@@ -215,7 +215,7 @@ void MetaKnightState0(void)
     gCurTask->frame++;
     TaskYieldTrampoline(3);
     t = gCurTask;
-    CreateChildTask(188, (s16)(t->pixelX - 32), t->pixelY, t->u8C.actor->savedTileWord | (240 << 8));
+    CreateChildTask(TASK_META_KNIGHT_SPARKLE, (s16)(t->pixelX - 32), t->pixelY, t->u8C.actor->savedTileWord | (240 << 8));
     gCurTask->velY = 128 << 10;
     gCurTask->accelY = -0x10000;
     TaskYieldTrampoline(3);
@@ -230,7 +230,7 @@ void MetaKnightState0(void)
     gCurTask->facing = 255;
     TaskSetFrame(60);
     TaskYieldTrampoline(10);
-    CreateChildTaskHere(184, 0);
+    CreateChildTaskHere(TASK_META_KNIGHT_SWORD_HIT_BOX, 0);
     gUnk_02007D00[5] = 192 << 9;
     gUnk_02007D00[6] = 0;
     ActorSetState(9);
@@ -835,7 +835,7 @@ void MetaKnightState19(void)
     TaskYieldTrampoline(12);
     PlaySfx(137 << 2);
     t = gCurTask;
-    CreateChildTask(145, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
+    CreateChildTask(TASK_BACKWARD_DUST_PUFF, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
     gCurTask->metaKnightLoopCount = 0;
     do
     {
@@ -881,7 +881,7 @@ void MetaKnightDoubleSlash(void)
     TaskYieldTrampoline(4);
     PlaySfx(137 << 2);
     t = gCurTask;
-    CreateChildTask(145, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
+    CreateChildTask(TASK_BACKWARD_DUST_PUFF, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
     gCurTask->metaKnightLoopCount = 0;
     do
     {
@@ -895,7 +895,7 @@ void MetaKnightDoubleSlash(void)
     TaskYieldTrampoline(4);
     PlaySfx(137 << 2);
     t = gCurTask;
-    CreateChildTask(145, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
+    CreateChildTask(TASK_BACKWARD_DUST_PUFF, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
     gCurTask->metaKnightLoopCount = 0;
     do
     {
@@ -940,7 +940,7 @@ void MetaKnightState21(void)
     TaskYieldTrampoline(4);
     PlaySfx(137 << 2);
     t = gCurTask;
-    CreateChildTask(145, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
+    CreateChildTask(TASK_BACKWARD_DUST_PUFF, (s16)(t->pixelX - t->facing * 8), (s16)(t->pixelY + 8), 0);
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
@@ -983,7 +983,7 @@ void MetaKnightState22(void)
     t = gCurTask;
     if (t->onGround == 0)
     {
-        CreateChildTask(188, (s16)(t->pixelX + t->facing * 4), (s16)(t->pixelY - 4),
+        CreateChildTask(TASK_META_KNIGHT_SPARKLE, (s16)(t->pixelX + t->facing * 4), (s16)(t->pixelY - 4),
                      t->u8C.actor->savedTileWord | (240 << 8));
         gCurTask->accelY = 168 << 5;
         gCurTask->speedLimitY = 192 << 10;
@@ -999,7 +999,7 @@ void MetaKnightState22(void)
     }
     else
     {
-        CreateChildTask(188, (s16)(t->pixelX + t->facing * 16), (s16)(t->pixelY + 4),
+        CreateChildTask(TASK_META_KNIGHT_SPARKLE, (s16)(t->pixelX + t->facing * 16), (s16)(t->pixelY + 4),
                      t->u8C.actor->savedTileWord | (240 << 8));
         TaskStop();
         TaskSetFrame(69);
@@ -1385,7 +1385,7 @@ void sub_080a7438(void)
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
     sp.subtype = 18;
-    sp.taskType = 120;
+    sp.taskType = TASK_META_KNIGHT_SWORD;
     sp.variant = 1;
     sp.spawnArg = 0;
     sp.x = 0;
@@ -1441,7 +1441,7 @@ void sub_080a75c8(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     t = gCurTask;
-    CreateChildTask(186, (s16)(t->pixelX - t->facing * 2), (s16)(t->pixelY - 1), t->u8C.actor->savedTileWord);
+    CreateChildTask(TASK_META_KNIGHT_MASK, (s16)(t->pixelX - t->facing * 2), (s16)(t->pixelY - 1), t->u8C.actor->savedTileWord);
     TaskSetFrame(24);
     TaskYieldTrampoline(8);
     gCurTask->frame++;

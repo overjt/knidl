@@ -160,7 +160,7 @@ void CreateAxeKnightAxe(void)
 
     PlaySfx(186);
     sp.subtype = 26;
-    sp.taskType = 129;
+    sp.taskType = TASK_AXE_KNIGHT_AXE;
     sp.variant = (t = gCurTask)->variant;
     sp.spawnArg = t->actorSpawnArg;
     sp.x = 20;
@@ -210,7 +210,7 @@ void AxeKnightAxeUpdate(void)
     box.y0 = t->pixelY - 4;
     box.x1 = t->pixelX + 10;
     box.y1 = t->pixelY + 4;
-    if (gTaskSlotTypes[i = t->parent] == 58 && gTasks[i].actorSpawnArg == 0
+    if (gTaskSlotTypes[i = t->parent] == TASK_META_KNIGHTS_KNIGHT && gTasks[i].actorSpawnArg == 0
         && TaskIsInRectSlot(&box, i) != 0)
     {
         w = &gTasks[gCurTask->parent];
@@ -730,7 +730,7 @@ void CreateJavelinKnightJavelin(void)
     struct Task *t;
 
     sp.subtype = 29;
-    sp.taskType = 132;
+    sp.taskType = TASK_JAVELIN_KNIGHT_JAVELIN;
     sp.variant = (t = gCurTask)->variant;
     sp.spawnArg = t->actorSpawnArg;
     sp.x = 0;

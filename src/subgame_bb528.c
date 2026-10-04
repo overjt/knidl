@@ -168,7 +168,7 @@ void QuickDrawLevelMenuInput(void)
 
 void CreateQuickDrawBonusSign(u16 a0, u16 a1, u16 a2)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
@@ -200,7 +200,7 @@ void QuickDrawCreateNextBonus(void)
 
 void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
@@ -216,7 +216,7 @@ void CreateQuickDrawBonus(u8 a0, s16 a1, s16 a2, s8 a3)
 
 void CreateQuickDrawRankLabel(u8 a0, s16 a1, s16 a2, s8 a3)
 {
-    s32 i = TaskCreateFrom(94, 32);
+    s32 i = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (i != -1)
     {
@@ -445,7 +445,7 @@ void QuickDrawSetupResultsVsCpu(void)
 
 void CreateQuickDrawDefeatedLabel(void)
 {
-    s32 id = TaskCreateFrom(94, 32);
+    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (id != -1)
     {
@@ -467,7 +467,7 @@ void CreateQuickDrawDefeatedLabel(void)
 
 void CreateQuickDrawBestTimeLabel(void)
 {
-    s32 id = TaskCreateFrom(94, 32);
+    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 32);
 
     if (id != -1)
     {
@@ -498,7 +498,7 @@ void CreateQuickDrawBestTimeLabel(void)
 
 void CreateQuickDrawResultsPlayer(void)
 {
-    s32 id = TaskCreateFrom(94, 0);
+    s32 id = TaskCreateFrom(TASK_QUICK_DRAW_OBJECT, 0);
 
     if (id != -1)
     {

@@ -464,7 +464,7 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
         prio = 13;
     else
         return -1;
-    idx = TaskCreateInRange(6, prio, prio + 2);
+    idx = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 2);
     if (idx == -1)
     {
         if (player == 0)
@@ -475,9 +475,9 @@ s32 CreatePlayerObject(s8 player, u8 variant, s32 arg)
             prio = 24;
         else if (player == 3)
             prio = 28;
-        idx = TaskCreateInRange(6, prio, prio + 3);
+        idx = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 3);
         if (idx == -1)
-            idx = TaskCreateInRange(7, 32, 62);
+            idx = TaskCreateInRange(TASK_PLAYER_EFFECT, 32, 62);
     }
     if (idx != -1)
     {
@@ -509,7 +509,7 @@ s32 CreatePlayerObjectLowSlot(s8 player, u8 variant, s32 arg)
         prio = 13;
     else
         return -1;
-    idx = TaskCreateInRange(6, prio, prio + 2);
+    idx = TaskCreateInRange(TASK_PLAYER_OBJECT, prio, prio + 2);
     if (idx != -1)
     {
         struct Task *t = &gTasks[idx];

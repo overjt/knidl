@@ -997,7 +997,7 @@ void CreateNightmarePowerOrbStar(u8 a)
     if (gUnk_02007D00[0] == 0)
     {
         sp.subtype = 32;
-        sp.taskType = 135;
+        sp.taskType = TASK_NIGHTMARE_POWER_ORB_STAR;
         sp.variant = a;
         sp.spawnArg = gCurTask->actorSpawnArg;
         sp.tileWord = 0xA110;
@@ -1141,18 +1141,18 @@ void NightmarePowerOrbStarVariant0(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1212,18 +1212,18 @@ void NightmarePowerOrbStarVariant1(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1283,18 +1283,18 @@ void NightmarePowerOrbStarVariant2(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1354,18 +1354,18 @@ void NightmarePowerOrbStarVariant3(void)
     sub_080af7d4();
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(211, t2->posX >> 16, t2->posY >> 16, 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_UP, t2->posX >> 16, t2->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(4);
     t4 = *c;
-    w3 = CreateChildTaskAt(212, t4->posX >> 16, t4->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL_DOWN, t4->posX >> 16, t4->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w3;
     TaskYieldTrampoline(2);
     t6 = *c;
-    w4 = CreateChildTaskAt(210, t6->posX >> 16, t6->posY >> 16, 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t6->posX >> 16, t6->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(2);
     goto top;
@@ -1465,17 +1465,17 @@ void NightmarePowerOrbStarVariant5(void)
     u1->velX = 0xFFFC0000;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1505,17 +1505,17 @@ void NightmarePowerOrbStarVariant6(void)
     u1->velY = 0xFFFE4CCD;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, (s16)((t2->posX >> 16) + 1), (s16)((t2->posY >> 16) - 1), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t2->posX >> 16) + 1), (s16)((t2->posY >> 16) - 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, (s16)((t4->posX >> 16) - 1), (s16)((t4->posY >> 16) + 1), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t4->posX >> 16) - 1), (s16)((t4->posY >> 16) + 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1544,17 +1544,17 @@ void NightmarePowerOrbStarVariant7(void)
     u1->velX = 0xFFFD0000;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1584,17 +1584,17 @@ void NightmarePowerOrbStarVariant8(void)
     u1->velY = 0x0001B333;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, (s16)((t2->posX >> 16) - 1), (s16)((t2->posY >> 16) - 1), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t2->posX >> 16) - 1), (s16)((t2->posY >> 16) - 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, (s16)((t4->posX >> 16) + 1), (s16)((t4->posY >> 16) + 1), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, (s16)((t4->posX >> 16) + 1), (s16)((t4->posY >> 16) + 1), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1629,17 +1629,17 @@ void NightmarePowerOrbStarVariant9(void)
     u2->velY = 0;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1674,17 +1674,17 @@ void NightmarePowerOrbStarVariant10(void)
     u2->velY = 0;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     t2 = *c;
     t2->nightmarePowerOrbStarTrailSlot = w;
-    w2 = CreateChildTaskAt(210, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
+    w2 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t2->posX >> 16, (s16)((t2->posY >> 16) + 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w2;
     TaskYieldTrampoline(8);
     t3 = *c;
-    w3 = CreateChildTaskAt(213, t3->posX >> 16, t3->posY >> 16, 1);
+    w3 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t3->posX >> 16, t3->posY >> 16, 1);
     t4 = *c;
     t4->nightmarePowerOrbStarTrailSlot = w3;
-    w4 = CreateChildTaskAt(210, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
+    w4 = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_TRAIL, t4->posX >> 16, (s16)((t4->posY >> 16) - 2), 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w4;
     TaskYieldTrampoline(8);
     goto top;
@@ -1707,7 +1707,7 @@ void NightmarePowerOrbStarVariant11(void)
     u1->velX = 0xFFFA0000;
 top:
     t = *c;
-    w = CreateChildTaskAt(213, t->posX >> 16, t->posY >> 16, 1);
+    w = CreateChildTaskAt(TASK_NIGHTMARE_POWER_ORB_STAR_AFTERIMAGE, t->posX >> 16, t->posY >> 16, 1);
     (*c)->nightmarePowerOrbStarTrailSlot = w;
     TaskYieldTrampoline(16);
     goto top;
@@ -2069,7 +2069,7 @@ void sub_080b05e8(void)
     u->u8C.actor->animScript = (struct AnimCmd *)z;
     p[6] = z;
     p[7] = 3;
-    TaskCreatePausedInScreenAttack(80, 32);
+    TaskCreatePausedInScreenAttack(TASK_NIGHTMARE_POWER_ORB_INTRO_SCROLL, 32);
     (*c)->updateCallback = (u32)sub_080b07d8;
     TaskYieldTrampoline(65);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B240);
@@ -2094,7 +2094,7 @@ void sub_080b05e8(void)
     u6 = *c;
     u6->velY = z;
     TaskYieldTrampoline(16);
-    CreateChildTaskHere(220, 1);
+    CreateChildTaskHere(TASK_NIGHTMARE_POWER_ORB_STREAK, 1);
     PlaySfx(0x241);
     r2 = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B254);
     u7 = *c;
@@ -2620,7 +2620,7 @@ void PaintRollerPaintingCloud(void)
     {
         PlaySfx(0x222);
         sp.subtype = 15;
-        sp.taskType = 117;
+        sp.taskType = TASK_PAINT_ROLLER_LIGHTNING;
         sp.variant = gCurTask->variant;
         sp.spawnArg = gCurTask->actorSpawnArg;
         sp.checkTerrain = 1;
@@ -3907,7 +3907,7 @@ void CreateWhispyWoodsAirPuff(void)
 
     PlaySfx(0x223);
     sp.subtype = 23;
-    sp.taskType = 126;
+    sp.taskType = TASK_WHISPY_WOODS_AIR_PUFF;
     sp.variant = 0;
     sp.spawnArg = 0;
     z = 0;
@@ -3924,7 +3924,7 @@ void CreateWhispyWoodsApple(void)
     s32 z;
 
     sp.subtype = 22;
-    sp.taskType = 125;
+    sp.taskType = TASK_WHISPY_WOODS_APPLE;
     sp.variant = 0;
     sp.spawnArg = 0;
     sp.x = (u8)sub_080b2804();
@@ -3932,7 +3932,7 @@ void CreateWhispyWoodsApple(void)
     sp.y = 224;
     sp.tileWord = ActorGetTileWordPalOffset(1);
     sp.checkTerrain = z;
-    CreateChildTask(170, sp.x, sp.y, 0);
+    CreateChildTask(TASK_WHISPY_WOODS_LEAVES, sp.x, sp.y, 0);
     CreateActorFromDesc(&sp, 1);
 }
 

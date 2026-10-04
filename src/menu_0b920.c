@@ -46,10 +46,10 @@ void MainMenuMain(void)
     LoadBgLayout(2);
     LoadGfxSet(22);
     BgScrollInit();
-    TaskCreateFrom(0x101, 32);
-    TaskCreateFrom(0x102, 32);
-    TaskCreateFrom(0x103, 32);
-    TaskCreateFrom(0x100, 32);
+    TaskCreateFrom(TASK_BG_SCROLL, 32);
+    TaskCreateFrom(TASK_MENU_BACKGROUND, 32);
+    TaskCreateFrom(TASK_MENU_BG_PALETTE_CYCLE, 32);
+    TaskCreateFrom(TASK_MENU_SCREEN_TITLE, 32);
     switch (gPrevGameState)
     {
     case 3:

@@ -147,7 +147,7 @@ u8 MrFrostyReactToDefeat(void)
 u8 MrFrostyReactToDamage(void)
 {
     gCurTask->mrFrostyFlashTimer = 32;
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     RequestScreenShake(4);
     return 0;
 }
@@ -155,7 +155,7 @@ u8 MrFrostyReactToDamage(void)
 void TaskFreeDustTrail(void)
 {
     if ((s16)gTaskSlotTypes[gCurTask->actorDustTrailSlot] != -1
-        && gTaskSlotTypes[gCurTask->actorDustTrailSlot] == 143
+        && gTaskSlotTypes[gCurTask->actorDustTrailSlot] == TASK_DUST_TRAIL
         && gTasks[gCurTask->actorDustTrailSlot].parent == gCurTaskIdx)
     {
         TaskFree(gCurTask->actorDustTrailSlot);
@@ -275,7 +275,7 @@ void CreateMrFrostyIceCube(void)
     t = gCurTask;
     a = t->u8C.actor;
     sp.subtype = 13;
-    sp.taskType = 115;
+    sp.taskType = TASK_MR_FROSTY_ICE_CUBE;
     sp.variant = 0;
     sp.spawnArg = t->facing;
     sp.x = 0;

@@ -316,7 +316,7 @@ void CreateNightmarePowerOrbEscapeStars(s32 a)
     {
         a = 3;
     loop:
-        id = TaskCreateFrom(99, 32);
+        id = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
         if (id != -1)
         {
             t = &gTasks[id];
@@ -328,7 +328,7 @@ void CreateNightmarePowerOrbEscapeStars(s32 a)
     }
     else
     {
-        id = TaskCreateFrom(99, 32);
+        id = TaskCreateFrom(TASK_NIGHTMARE_POWER_ORB_ESCAPE_STAR, 32);
         if (id != -1)
         {
             t = &gTasks[id];

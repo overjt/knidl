@@ -133,7 +133,7 @@ void Task_MetaKnightMask(void)
     do
     {
         t = gCurTask;
-        v = CreateChildTask(187, t->pixelX, t->pixelY, t->tileWord);
+        v = CreateChildTask(TASK_META_KNIGHT_MASK_HALF, t->pixelX, t->pixelY, t->tileWord);
         gTasks[v].metaKnightMaskHalfSide = (s16)gCurTask->metaKnightMaskHalfCount;
         gCurTask->metaKnightMaskHalfCount++;
     } while ((s16)gCurTask->metaKnightMaskHalfCount <= 1);
@@ -243,7 +243,7 @@ void KrackoJrInit(void)
     t->unk30 = 0;
     t->krackoJrStepTimer = 0;
     gUnk_02007D00[0] = 1;
-    gCurTask->krackoOrbsSlot = CreateChildTaskHere(195, 1);
+    gCurTask->krackoOrbsSlot = CreateChildTaskHere(TASK_KRACKO_JR_ORBS, 1);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 2, gKrackoJrStates);
 }

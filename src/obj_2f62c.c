@@ -115,7 +115,7 @@ s32 CreateWarpStarStationDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(230, 32, 63);
+    id = TaskCreateInRange(TASK_WARP_STAR_STATION_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -203,7 +203,7 @@ s32 CreateWarpStarStationDoorSparkle(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(231, 32, 63);
+    id = TaskCreateInRange(TASK_WARP_STAR_STATION_DOOR_SPARKLE, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -375,7 +375,7 @@ s32 CreateLevelDoorSign(s32 x, s32 y, s32 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(232, 32, 63);
+    id = TaskCreateInRange(TASK_LEVEL_DOOR_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -444,7 +444,7 @@ s32 CreateWarpStarStationNumber(s32 a, s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(233, 32, 63);
+    id = TaskCreateInRange(TASK_WARP_STAR_STATION_NUMBER, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -478,7 +478,7 @@ s32 CreateWarpStarStationLevelSign(s32 a)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(234, 32, 63);
+    id = TaskCreateInRange(TASK_WARP_STAR_STATION_LEVEL_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -527,7 +527,7 @@ s32 CreateMuseumAbilitySign(u8 a, s32 b)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(235, 32, 63);
+    id = TaskCreateInRange(TASK_MUSEUM_ABILITY_SIGN, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];
@@ -561,7 +561,7 @@ s32 CreateStageEffect(s32 a, s32 x, s32 y)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateInRange(236, 32, 63);
+    id = TaskCreateInRange(TASK_STAGE_EFFECT, 32, 63);
     if (id != -1)
     {
         t = &gTasks[id];

@@ -29,7 +29,7 @@ extern u8 ActorHasExtraFrame(void);
 
 void FireLionFlameCheckParent(void)
 {
-    if (gTaskSlotTypes[gCurTask->parent] != 55)
+    if (gTaskSlotTypes[gCurTask->parent] != TASK_FIRE_LION)
         TaskFree(gCurTaskIdx);
 }
 
@@ -631,7 +631,7 @@ void PhanPhanDefeat(void)
     if (gUnk_02007D00[8] <= 0)
         sub_0806684c();
     sub_080667c0(1, 28);
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     ActorSetHitReactions(gPhanPhanDefeatedHitReactions);
     gCurTask->onGround = zero;
     gCurTask->phanPhanLanded = zero;
@@ -648,7 +648,7 @@ void PhanPhanDefeat(void)
     TaskStop();
     TaskSetFrame(29);
     RequestScreenShake(4);
-    CreateChildTaskHere(141, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH, 0);
     CreateDustTrail(0, 1, -4, 12);
     TaskYieldTrampoline(170);
     ActorShakeVertically();
@@ -705,7 +705,7 @@ void CreatePhanPhanApple(void)
     s8 d;
 
     sp.subtype = 35;
-    sp.taskType = 138;
+    sp.taskType = TASK_PHAN_PHAN_APPLE;
     p = &sp;
     t = gCurTask;
     p->variant = t->variant;
@@ -774,7 +774,7 @@ miss:
 
 s32 PhanPhanReactToDamage(void)
 {
-    CreateChildTaskHere(142, 0);
+    CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     RequestScreenShake(2);
     return 0;
 }

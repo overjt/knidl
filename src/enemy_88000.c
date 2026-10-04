@@ -1283,7 +1283,7 @@ void GlunkShoot(void)
         if (gCurTask->actorSpawnArg == 1)
         {
             sp.subtype = 5;
-            sp.taskType = 107;
+            sp.taskType = TASK_GLUNK_SHOT;
             sp.variant = zero = 0;
             sp.spawnArg = gCurTask->actorSpawnArg;
             sp.x = zero;
@@ -1291,7 +1291,7 @@ void GlunkShoot(void)
             sp.checkTerrain = 1;
             PlaySfx(195);
             gCurTask->glunkShotSlot = CreateActorFromDescAtOffsetFacing(&sp, 0);
-            CreateChildTaskHere(219, 1);
+            CreateChildTaskHere(TASK_GLUNK_SHOT_SPRAY, 1);
         }
         gCurTask->frame = 4;
         TaskYieldTrampoline(12);

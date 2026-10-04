@@ -251,7 +251,7 @@ void WarpStarState0(void)
         t->warpStarBobTimer = 16;
         t->warpStarBobPhase = 0;
     }
-    gCurTask->warpStarSparkleSlot = CreateChildTaskHere(164, 0);
+    gCurTask->warpStarSparkleSlot = CreateChildTaskHere(TASK_WARP_STAR_SPARKLE, 0);
     while (1)
     {
         gCurTask->frame = 9;
@@ -433,7 +433,7 @@ void WarpStarStartFlight(void)
         gCurTask->facing = gUnk_0873FAE8[sub_08025e88(gCurTaskIdx)];
     else
         t->facing = gUnk_0873FAE8[t->actorSpawnArg];
-    CreateChildTaskAt(97, gViewRect[0] + 120, gViewRect[2] + 80, 0);
+    CreateChildTaskAt(TASK_WARP_STAR_CAMERA, gViewRect[0] + 120, gViewRect[2] + 80, 0);
     CallTableEntry(gCurTask->state, 26, gWarpStarFlights);
 }
 
@@ -682,7 +682,7 @@ void sub_08071d60(void)
     TaskYieldTrampoline(32);
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
-    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
+    CreateChildTaskAt(TASK_STAR_SCATTER, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     gCurTask->velY = 0x8000;
@@ -1029,7 +1029,7 @@ void WarpStarFlight8(void)
     TaskYieldTrampoline(6);
     gCurTask->velX = 0x10000;
     TaskYieldTrampoline(12);
-    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
+    CreateChildTaskAt(TASK_STAR_SCATTER, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     gCurTask->warpStarScaleSpeed = -0x2600;
@@ -1189,7 +1189,7 @@ void WarpStarFlight10(void)
         TaskYieldTrampoline(2);
         gCurTask->warpStarLoopCount++;
     } while ((s16)gCurTask->warpStarLoopCount <= 7);
-    CreateChildTaskAt(148, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
+    CreateChildTaskAt(TASK_STAR_SCATTER, gCurTask->pixelX, gCurTask->pixelY + 16, 0);
     RequestScreenShake(2);
     PlaySfx(272);
     {

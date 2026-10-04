@@ -707,7 +707,7 @@ void PengyShoot(void)
     TaskYieldTrampoline(15);
     i = 0;
     spawn.subtype = 0;
-    spawn.taskType = 102;
+    spawn.taskType = TASK_PENGY_ICE_BREATH;
     spawn.variant = 0;
     spawn.checkTerrain = 0;
     gCurTask->pengyLoopCount = 0;
@@ -718,9 +718,9 @@ void PengyShoot(void)
         spawn.y = 0;
         PlaySfx(164);
         gCurTask->pengyIceBreathSlot = CreateActorFromDescAtOffsetFacing(&spawn, 0);
-        CreateChildTaskAtOffsetFacing(216, 10, 0, 1);
+        CreateChildTaskAtOffsetFacing(TASK_PENGY_ICE_BREATH_PUFF, 10, 0, 1);
         {
-            s32 id = CreateChildTaskAtOffsetFacing(217, 10, 0, 1);
+            s32 id = CreateChildTaskAtOffsetFacing(TASK_PENGY_ICE_BREATH_SPARKLE, 10, 0, 1);
 
             if (id != -1)
             {

@@ -24,7 +24,7 @@ extern u8 ActorCollideTerrain(void);
 
 void CreateKingDededeLandingStar(void)
 {
-    CreateChildTaskAtOffsetFacing(178, -24, -8, 0);
+    CreateChildTaskAtOffsetFacing(TASK_KING_DEDEDE_LANDING_STAR, -24, -8, 0);
 }
 
 void CreateKingDededeAirPuff(void)
@@ -34,7 +34,7 @@ void CreateKingDededeAirPuff(void)
 
     a = gCurTask->u8C.actor;
     sp.subtype = 11;
-    sp.taskType = 113;
+    sp.taskType = TASK_KING_DEDEDE_AIR_PUFF;
     sp.variant = 0;
     sp.spawnArg = 0;
     sp.x = 32;
@@ -83,7 +83,7 @@ void sub_080a0358(void)
         n = 46;
         break;
     case 7:
-        r = CreateChildTaskHere(182, 0);
+        r = CreateChildTaskHere(TASK_KING_DEDEDE_HAMMER_HIT_BOX, 0);
         t = gCurTask;
         t->kingDededeChildSlot = r;
         n = 52;

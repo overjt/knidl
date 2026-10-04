@@ -251,7 +251,7 @@ void ActorFreezeIntoIceBlock(void)
     u8 zero;
 
     a = gCurTask->u8C.actor;
-    v = CreateChildTaskHere(171, 0);
+    v = CreateChildTaskHere(TASK_ICE_BLOCK, 0);
     t = gCurTask;
     t->actorIceBlockSlot = v;
     z = 0;
@@ -556,7 +556,7 @@ void ActorDefeat2(void)
     u->u80.attackAbility = zb;
     v = gCurTask;
     v->actorExplosionTimer = zero;
-    CreateChildTaskHere(163, 1);
+    CreateChildTaskHere(TASK_EXPLOSION_SCREEN_FLASH, 1);
     RequestScreenShake(2);
     ActorPlaySfx(189, 0);
     PlayExplosionAnim();

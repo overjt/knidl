@@ -302,7 +302,7 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
         return;
     if (gPaletteAnimRefCounts[idx] == 0)
     {
-        i = CreateChildTaskHere(174, 1);
+        i = CreateChildTaskHere(TASK_PALETTE_ANIM, 1);
         if (i != -1)
         {
             t = &gTasks[i];
@@ -684,7 +684,7 @@ void LockAllActorPalettes(void)
 
     for (i = 32; i < 63; i++)
     {
-        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != 4)
+        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != TASK_MAP_EVENT)
         {
             t = &gTasks[i];
             a = t->u8C.actor;
@@ -705,7 +705,7 @@ void ClearActorPaletteOverrides(void)
 
     for (i = 32; i < 63; i++)
     {
-        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != 4)
+        if (gTaskSlotTypes[i] != -1 && gTaskSlotTypes[i] != TASK_MAP_EVENT)
         {
             t = &gTasks[i];
             a = t->u8C.actor;
@@ -1236,7 +1236,7 @@ void ActorIntroPoseUpdate(void)
 void sub_08066798(void)
 {
     if (gGameState == 19)
-        sub_08064e90(2, 70, 0, 128, 0);
+        sub_08064e90(2, TASK_MAXIM_TOMATO, 0, 128, 0);
 }
 
 void sub_080667c0(u8 a, u16 b)
@@ -1299,7 +1299,7 @@ void BossDefeatSweep(void)
             continue;
         if (i == gCurTaskIdx)
             continue;
-        if (gTaskSlotTypes[i] == 4)
+        if (gTaskSlotTypes[i] == TASK_MAP_EVENT)
             continue;
         t = &gTasks[i];
         if (gCurTask->actorKind == 2 && a->defeatSweepCallback != 0)
@@ -1316,7 +1316,7 @@ void BossDefeatSweep(void)
         v = *p;
         if (v == 9 || v == 7 || v == 8)
         {
-            if (gTaskSlotTypes[i] == 174)
+            if (gTaskSlotTypes[i] == TASK_PALETTE_ANIM)
                 continue;
             ActorDestroySlot(i);
         }
@@ -1678,7 +1678,7 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = sub_08064d9c(5, 73, 0, x, y, 0xD3D0, 1);
+    i = sub_08064d9c(5, TASK_STAR_ROD_PIECE, 0, x, y, 0xD3D0, 1);
     if (i != -1)
     {
         t = &gTasks[i];
@@ -1758,7 +1758,7 @@ s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8)
     s32 i;
 
     sp.subtype = 36;
-    sp.taskType = 139;
+    sp.taskType = TASK_INHALABLE_STAR;
     sp.variant = p8;
     sp.spawnArg = 0;
     sp.x = x;

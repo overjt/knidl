@@ -303,7 +303,7 @@ s32 CreateMapEvent(s32 a)
     s32 id;
     struct Task *t;
 
-    id = TaskCreateHighSlot(4);
+    id = TaskCreateHighSlot(TASK_MAP_EVENT);
     if (id != -1)
     {
         t = &gTasks[id];
