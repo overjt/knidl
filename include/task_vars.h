@@ -24,7 +24,7 @@
 #define actorAnimDelay24 unk24 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
 #define actorAnimDelay unk28 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
 #define actorAnimDelay30 unk30 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) in unk30 */
-#define actorDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143); sub_08098afc frees it */
+#define actorDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143); TaskFreeDustTrail frees it */
 #define actorSpawnArg unk74 /* u8: the spawn argument (CreateActor's p4, ActorSpawn.spawnArg), set once at creation */
 
 /* Blipper - Blipper (task type #35, Task_Blipper; gBlipperVariants: rows 0,
@@ -367,7 +367,7 @@
 #define mrTickTockHopsLeft unk30 /* s32: jumps left in state 2 (MrTickTockHop), from gUnk_087456D0 */
 #define mrTickTockTimer unk30 /* s32: frames left (or, in state 16, frames since its start) of the running state's timed part */
 #define mrTickTockCheckPhase unk34 /* s32: step of sub_08099db0's count; every fourth call enters state 9 */
-#define mrTickTockDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143) of the dash; sub_08098afc frees it */
+#define mrTickTockDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143) of the dash; TaskFreeDustTrail frees it */
 #define mrTickTockLoopCount unk6C /* s16: iterations of the running state's frame loop, counted from 0 */
 #define mrTickTockNoteOffsetX unk6C /* s16: the X offset of the note CreateMrTickTockNote spawns, gUnk_087456CC[unk70] */
 #define mrTickTockRingSlot unk6C /* s16: the ring actor (task type #118) state 8 created; stored, never read */

@@ -116,7 +116,7 @@ void TridentKnightTridentVariant4(void)
     gCurTask->velY = 0xFFFF0000;
 }
 
-u8 sub_0809f52c(void)
+u8 TridentKnightLand(void)
 {
     switch (gCurTask->variant)
     {
@@ -138,7 +138,7 @@ u8 sub_0809f52c(void)
     }
 }
 
-u8 sub_0809f588(void)
+u8 TridentKnightHitWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -186,7 +186,7 @@ end:
     ;
 }
 
-u8 sub_0809f618(void)
+u8 TridentKnightHitCeiling(void)
 {
     return 0;
 }

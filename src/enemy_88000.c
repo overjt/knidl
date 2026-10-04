@@ -262,7 +262,7 @@ void TwizzyIdleUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_080884e4(void)
+s32 TwizzyLand(void)
 {
     if (gCurTask->variant != 9)
     {
@@ -281,7 +281,7 @@ s32 sub_080884e4(void)
     }
 }
 
-s32 sub_08088540(void)
+s32 TwizzyStartFall(void)
 {
     u8 s;
 
@@ -303,7 +303,7 @@ s32 sub_08088540(void)
     }
 }
 
-s32 sub_08088590(void)
+s32 TwizzyHitWall(void)
 {
     if (gCurTask->variant != 9)
     {
@@ -318,7 +318,7 @@ s32 sub_08088590(void)
     }
 }
 
-s32 sub_080885c0(void)
+s32 TwizzyHitCeiling(void)
 {
     if (gCurTask->variant != 9)
     {
@@ -748,7 +748,7 @@ void SquishyIdleUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_08088fc0(void)
+s32 SquishyLand(void)
 {
     if (gCurTask->variant != 3)
     {
@@ -770,7 +770,7 @@ s32 sub_08088fc0(void)
     }
 }
 
-s32 sub_08089024(void)
+s32 SquishyStartFall(void)
 {
     if (gCurTask->variant != 3)
     {
@@ -786,11 +786,11 @@ s32 sub_08089024(void)
     }
 }
 
-s32 sub_08089064(void)
+s32 SquishyEnterWater(void)
 {
     if (gCurTask->variant != 3)
     {
-        gCurTask->u8C.actor->hitReactions = (u32)gUnk_08742E5C;
+        gCurTask->u8C.actor->hitReactions = (u32)gSquishyInWaterHitReactions;
         switch (gCurTask->variant)
         {
         case 0:
@@ -807,11 +807,11 @@ s32 sub_08089064(void)
     }
 }
 
-s32 sub_080890d4(void)
+s32 SquishyLeaveWater(void)
 {
     if (gCurTask->variant != 3)
     {
-        gCurTask->u8C.actor->hitReactions = (u32)gUnk_08742E50;
+        gCurTask->u8C.actor->hitReactions = (u32)gSquishyHitReactions;
         if (gCurTask->variant != 0)
             return 0;
         ActorSetState(4);
@@ -820,7 +820,7 @@ s32 sub_080890d4(void)
     }
 }
 
-s32 sub_08089120(void)
+s32 SquishyBounceOffWall(void)
 {
     if (gCurTask->variant != 3)
     {
@@ -829,7 +829,7 @@ s32 sub_08089120(void)
     }
 }
 
-s32 sub_0808913c(void)
+s32 SquishyHitCeiling(void)
 {
     if (gCurTask->variant != 3)
     {
@@ -1357,7 +1357,7 @@ void GlunkIdleUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_08089bf0(void)
+s32 GlunkLand(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1366,7 +1366,7 @@ s32 sub_08089bf0(void)
     }
 }
 
-s32 sub_08089c0c(void)
+s32 GlunkStartFall(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1376,7 +1376,7 @@ s32 sub_08089c0c(void)
     }
 }
 
-s32 sub_08089c30(void)
+s32 GlunkEnterWater(void)
 {
     if (gCurTask->variant != 1)
     {

@@ -224,7 +224,7 @@ void AxeKnightAxeUpdate(void)
     }
 }
 
-u8 sub_0809d0a0(void)
+u8 AxeKnightLand(void)
 {
     u8 r;
 
@@ -240,7 +240,7 @@ u8 sub_0809d0a0(void)
     return r;
 }
 
-u8 sub_0809d0dc(void)
+u8 AxeKnightHitWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -269,7 +269,7 @@ u8 sub_0809d0dc(void)
     return 0;
 }
 
-u8 sub_0809d138(void)
+u8 AxeKnightHitCeiling(void)
 {
     return 0;
 }
@@ -327,7 +327,7 @@ void JavelinKnightUpdate(void)
     if (ActorCollideTerrain() == 0)
     {
         if (sub_0809f994() != 0)
-            sub_0809dbc4();
+            JavelinKnightHitWall();
         t = gCurTask;
         p = &t->pixelY;
         a = t->u8C.actor;
@@ -337,7 +337,7 @@ void JavelinKnightUpdate(void)
         {
             *p = lim;
             t->posY = *p << 16;
-            sub_0809dc3c();
+            JavelinKnightHitCeiling();
         }
         CallTableEntry(gCurTask->updateState, 5, gJavelinKnightStateUpdates);
     }
@@ -675,7 +675,7 @@ void sub_0809d83c(void)
     ActorCollideTerrain();
     if (sub_0809f994() != 0)
     {
-        sub_0809dbc4();
+        JavelinKnightHitWall();
         gCurTask->unk30 = 0;
     }
     if (gCurTask->pixelY <= 15)

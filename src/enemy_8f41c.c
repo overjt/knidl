@@ -11,8 +11,8 @@
  *     single-row `0x087432E4`/`0x087432E8`); the bodies walk the `s16[][4]`
  *     aim table `gUnk_0874325A` one row per Task.unk34 / Task.variant through
  *     `ShotzoSetRecoilVelocity`;
- *   * the class-3 hook row `0x08743518` — `sub_0808f9b8`, `sub_0808f978`,
- *     `sub_0808f9d8` and `sub_0808f9f8`;
+ *   * the class-3 hook row `0x08743518` — `ConerLand`, `ConerStartFall`,
+ *     `ConerEnterWater` and `ConerBounceOffWall`;
  *   * script 5: entry `Task_Coner` (`0x087432F4`, 2 rows), rows
  *     `ConerInit` / `ConerIdleInit`, bodies `0x087432FC` (3) and
  *     `0x08743308` (1);
@@ -24,7 +24,7 @@
  *     `0x08743640` (`ShotzoCannonballState0Update`).
  *
  * `sub_0808fa04` and `ShotzoCannonballEnterState` are dead exports (twins of
- * `sub_0808f9f8` and of `ShotzoCannonballInit`'s cue call) that no ROM word points at;
+ * `ConerBounceOffWall` and of `ShotzoCannonballInit`'s cue call) that no ROM word points at;
  * both are curated in tools/symdb.py.
  */
 #include "gba/gba.h"
@@ -368,7 +368,7 @@ void ShotzoIdleState0Update(void)
 {
 }
 
-s32 sub_0808f978(void)
+s32 ConerStartFall(void)
 {
     TaskInitWaterFlags();
     if (gCurTask->waterFlags == 3)
@@ -385,21 +385,21 @@ s32 sub_0808f978(void)
     }
 }
 
-s32 sub_0808f9b8(void)
+s32 ConerLand(void)
 {
     ActorSetState(0);
     TaskSetEntry(ConerEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_0808f9d8(void)
+s32 ConerEnterWater(void)
 {
     ActorSetState(2);
     TaskSetEntry(ConerEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_0808f9f8(void)
+s32 ConerBounceOffWall(void)
 {
     TaskTurnAroundAndReverseX();
     return 0;

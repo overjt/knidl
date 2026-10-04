@@ -318,7 +318,7 @@ extern struct ActorVt gWaddleDooHitReactions;
 extern struct ActorVt gParasolWaddleDooHitReactions;
 extern struct ActorVt gBrontoBurtHitReactions;
 extern struct ActorVt gTwizzyHitReactions;
-extern struct ActorVt gUnk_08742E50;
+extern struct ActorVt gSquishyHitReactions;
 extern struct ActorVt gBubblesHitReactions;
 extern struct ActorVt gGlunkHitReactions;
 extern struct ActorVt gSlippyHitReactions;
@@ -1355,7 +1355,7 @@ struct ActorDef gSquishyDef ACTOR_REC(087429e8) = {
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F8A4,
     .terrainHandlers = (u32)&gSquishyTerrainHandlers,
-    .hitReactions = (u32)&gUnk_08742E50,
+    .hitReactions = (u32)&gSquishyHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
 };

@@ -491,12 +491,12 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 1304 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 1259 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 100 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
-| ROM label | `gUnk_08*` | 2785 | tracked by #155: functional data whose consumer does not settle a name |
+| ROM label | `gUnk_08*` | 2783 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 5193 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
@@ -505,7 +505,7 @@ copies and module-local records).
 | struct field | `unk*` | 322 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 480 RAM cells by role and 24 by position, 2942 ROM labels by role and 5248 by position.
+Named for comparison: 480 RAM cells by role and 24 by position, 2944 ROM labels by role and 5248 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -535,17 +535,17 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M20 | enemies, bank 1 | 414 | 33 |
 | M21 | enemies, bank 2 | 200 | 22 |
 | M22 | enemies, bank 3 | 125 | 12 |
-| M23 | enemies, bank 4, and two bosses | 297 | 106 |
-| M24 | enemies, bank 5 | 158 | 35 |
+| M23 | enemies, bank 4, and two bosses | 297 | 88 |
+| M24 | enemies, bank 5 | 158 | 27 |
 | M25 | bosses | 121 | 8 |
 | M26 | enemies, bank 7 | 148 | 40 |
-| M27 | mid-bosses | 145 | 14 |
-| M28 | enemies, bank 9, and the player's death sequence | 204 | 86 |
+| M27 | mid-bosses | 145 | 13 |
+| M28 | enemies, bank 9, and the player's death sequence | 204 | 73 |
 | M29 | enemies, bank 10 | 226 | 75 |
 | M30 | enemies, bank 11 | 131 | 27 |
 | M31 | enemies, bank 12 | 123 | 38 |
-| M32 | enemies, bank 13 | 135 | 51 |
-| M33 | HUD effects | 110 | 20 |
+| M32 | enemies, bank 13 | 135 | 48 |
+| M33 | HUD effects | 110 | 18 |
 | M34 | wavy scroll, save file, input recorder | 105 | 61 |
 | M35 | sub-game framework and Quick Draw | 196 | 9 |
 | M36 | Bomb Rally | 117 | 2 |
@@ -553,7 +553,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 1317 |
+| all | | 5348 | 1272 |
 
 Register aliases (include/task_vars.h): 383 in 69 families: Actor 7, Blipper 9, Bonkers 10, BonkersHammerHitBox 1, BonkersNut 1, BrontoBurt 9, BroomHatter 4, Bubbles 2, Bugzzy 9, BugzzyAfterimage 3, BugzzyLadybug 5, Chilly 3, ChillyFreeze 4, FireLion 11, Gip 5, Glunk 2, GlunkShot 1, GrandWheelie 17, GrandWheelieMiniWheelie 2, HeavyMole 5, HeavyMoleArm 7, HeavyMoleEye 1, HeavyMoleRedMissile 1, HeavyMoleSmoke 3, HeavyMoleYellowMissile 1, KingDedede 16, Kracko 19, LaserBall 12, MaceKnightMace 2, MetaKnight 10, MetaKnights 11, MetaKnightsKnight 7, MrFrosty 11, MrFrostyIceCube 4, MrShineAndMrBright 19, MrTickTock 15, MrTickTockNote 1, MrTickTockRing 2, NightmarePowerOrb 6, NightmarePowerOrbEscape 1, NightmarePowerOrbEscapeStar 5, NightmarePowerOrbIntroScroll 1, NightmarePowerOrbStar 1, NightmarePowerOrbStarAfterimage 1, NightmarePowerOrbStarTrail 1, NightmarePowerOrbStarTrailDown 1, NightmarePowerOrbStarTrailUp 1, NightmareWizard 11, NightmareWizardStar 3, Noddy 4, PaintRoller 3, PaintRollerPainting 3, PhanPhan 6, PhanPhanApple 1, PoppyBrosSr 11, PoppyBrosSrBomb 1, PoppyBrosSrHand 8, PoppyBrosSrHead 3, Shotzo 15, ShotzoCannonball 2, Slippy 4, Squishy 4, Twizzy 11, WaddleDoo 5, WaddleDooBeam 2, WhispyWoods 5, WhispyWoodsAirPuff 3, WhispyWoodsApple 4, WhispyWoodsLeaves 4.
 

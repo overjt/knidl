@@ -126,55 +126,55 @@ u8 WaddleDooEnterWater(void);
 s32 WaddleDooHitCeiling(void);
 s32 WaddleDooHitWall(void);
 void ParasolWaddleDooReactToDefeat(void);
-s32 sub_080884e4(void);
-s32 sub_08088540(void);
-s32 sub_08088590(void);
-s32 sub_080885c0(void);
-s32 sub_08088fc0(void);
-s32 sub_08089024(void);
-s32 sub_08089064(void);
-s32 sub_080890d4(void);
-s32 sub_08089120(void);
-s32 sub_0808913c(void);
+s32 TwizzyLand(void);
+s32 TwizzyStartFall(void);
+s32 TwizzyHitWall(void);
+s32 TwizzyHitCeiling(void);
+s32 SquishyLand(void);
+s32 SquishyStartFall(void);
+s32 SquishyEnterWater(void);
+s32 SquishyLeaveWater(void);
+s32 SquishyBounceOffWall(void);
+s32 SquishyHitCeiling(void);
 s32 sub_080896ec(void);
 s32 BubblesStartFall(void);
 s32 BubblesEnterWater(void);
 s32 BubblesHitWall(void);
 s32 BubblesHitCeiling(void);
-s32 sub_08089bf0(void);
-s32 sub_08089c0c(void);
-s32 sub_08089c30(void);
+s32 GlunkLand(void);
+s32 GlunkStartFall(void);
+s32 GlunkEnterWater(void);
 s32 SlippyLand(void);
 s32 SlippyStartFall(void);
 s32 SlippyEnterWater(void);
 s32 SlippyHitWall(void);
 s32 SlippyHitCeiling(void);
-s32 sub_0808bb70(void);
-s32 sub_0808bc18(void);
-s32 sub_0808bc60(void);
-s32 sub_0808bd04(void);
+s32 BlipperLand(void);
+s32 BlipperStartFall(void);
+s32 BlipperHitWall(void);
+s32 BlipperHitCeiling(void);
 s32 GipLand(void);
 s32 GipStartFall(void);
 s32 GipEnterWater(void);
 s32 GipHitWall(void);
 s32 GipHitCeiling(void);
 void WaddleDooBeamHitTerrain(void);
-void sub_0808d200(void);
+void GlunkShotHitCeiling(void);
 s32 BroomHatterStartFall(void);
 s32 BroomHatterLand(void);
 s32 BroomHatterEnterWater(void);
 s32 sub_0808d388(void);
-s32 sub_0808e8a4(void);
-s32 sub_0808e8c4(void);
+s32 CoconutLand(void);
+s32 CoconutEnterWater(void);
 s32 ShotzoStartFall(void);
 s32 ShotzoLand(void);
 s32 ShotzoHitWall(void);
 s32 ShotzoEnterWater(void);
 s32 ParasolShotzoReactToDefeat(void);
-s32 sub_0808f978(void);
-s32 sub_0808f9b8(void);
-s32 sub_0808f9d8(void);
-s32 sub_0808f9f8(void);
+s32 ConerStartFall(void);
+s32 ConerLand(void);
+s32 ConerEnterWater(void);
+s32 ConerBounceOffWall(void);
 s32 BonkersReactToDamage(void);
 s32 BonkersReactToDefeat(void);
 s32 BonkersHitWall(void);
@@ -221,19 +221,19 @@ void MrFrostyIceCubeStartFall(void);
 u8 MrFrostyIceCubeHitWall(void);
 u8 MrTickTockNoteLand(void);
 u8 MrTickTockNoteHitWall(void);
-u8 sub_0809d0a0(void);
-u8 sub_0809d0dc(void);
-u8 sub_0809d138(void);
-u8 sub_0809db48(void);
-u8 sub_0809dbc4(void);
-u8 sub_0809dc3c(void);
-u8 sub_0809e7c8(void);
-u8 sub_0809e7d4(void);
-u8 sub_0809e7e8(void);
-u8 sub_0809e820(void);
-u8 sub_0809f52c(void);
-u8 sub_0809f588(void);
-u8 sub_0809f618(void);
+u8 AxeKnightLand(void);
+u8 AxeKnightHitWall(void);
+u8 AxeKnightHitCeiling(void);
+u8 JavelinKnightLand(void);
+u8 JavelinKnightHitWall(void);
+u8 JavelinKnightHitCeiling(void);
+u8 MaceKnightLand(void);
+u8 MaceKnightStartFall(void);
+u8 MaceKnightHitWall(void);
+u8 MaceKnightHitCeiling(void);
+u8 TridentKnightLand(void);
+u8 TridentKnightHitWall(void);
+u8 TridentKnightHitCeiling(void);
 void MetaKnightsKnightReactToDamage(void);
 u8 sub_0809fd64(void);
 u8 sub_0809fe10(void);
@@ -260,8 +260,8 @@ void NightmarePowerOrbReactToDefeat(void);
 s32 sub_080b1588(void);
 s32 sub_080b1594(void);
 s32 sub_080b15b4(void);
-void sub_080b2550(void);
-void sub_080b2574(void);
+void WhispyWoodsReactToDefeat(void);
+void WhispyWoodsReactToDamage(void);
 s32 sub_080b2f38(void);
 s32 PickupStartFall(void);
 s32 PickupLand(void);
@@ -874,23 +874,23 @@ struct ActorHandlers gWaddleDooTerrainHandlers ACTOR_TBL(08742cf0) = {
 };
 /* gTwizzyDef */
 struct ActorHandlers gTwizzyTerrainHandlers ACTOR_TBL(08742cf0) = {
-    .landCallback = (u32)sub_080884e4,
-    .leaveGroundCallback = (u32)sub_08088540,
+    .landCallback = (u32)TwizzyLand,
+    .leaveGroundCallback = (u32)TwizzyStartFall,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_08088590,
+    .hitWallCallback = (u32)TwizzyHitWall,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_080885c0,
+    .hitCeilingCallback = (u32)TwizzyHitCeiling,
 };
 /* gSquishyDef */
 struct ActorHandlers gSquishyTerrainHandlers ACTOR_TBL(08742cf0) = {
-    .landCallback = (u32)sub_08088fc0,
-    .leaveGroundCallback = (u32)sub_08089024,
-    .enterWaterCallback = (u32)sub_08089064,
-    .leaveWaterCallback = (u32)sub_080890d4,
-    .hitWallCallback = (u32)sub_08089120,
+    .landCallback = (u32)SquishyLand,
+    .leaveGroundCallback = (u32)SquishyStartFall,
+    .enterWaterCallback = (u32)SquishyEnterWater,
+    .leaveWaterCallback = (u32)SquishyLeaveWater,
+    .hitWallCallback = (u32)SquishyBounceOffWall,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_0808913c,
+    .hitCeilingCallback = (u32)SquishyHitCeiling,
 };
 /* gBubblesDef */
 struct ActorHandlers gBubblesTerrainHandlers ACTOR_TBL(08742cf0) = {
@@ -904,9 +904,9 @@ struct ActorHandlers gBubblesTerrainHandlers ACTOR_TBL(08742cf0) = {
 };
 /* gGlunkDef */
 struct ActorHandlers gGlunkTerrainHandlers ACTOR_TBL(08742cf0) = {
-    .landCallback = (u32)sub_08089bf0,
-    .leaveGroundCallback = (u32)sub_08089c0c,
-    .enterWaterCallback = (u32)sub_08089c30,
+    .landCallback = (u32)GlunkLand,
+    .leaveGroundCallback = (u32)GlunkStartFall,
+    .enterWaterCallback = (u32)GlunkEnterWater,
     .leaveWaterCallback = 0,
     .hitWallCallback = 0,
     .unk14 = 0,
@@ -924,13 +924,13 @@ struct ActorHandlers gSlippyTerrainHandlers ACTOR_TBL(08742cf0) = {
 };
 /* gBlipperDef */
 struct ActorHandlers gBlipperTerrainHandlers ACTOR_TBL(08742cf0) = {
-    .landCallback = (u32)sub_0808bb70,
-    .leaveGroundCallback = (u32)sub_0808bc18,
+    .landCallback = (u32)BlipperLand,
+    .leaveGroundCallback = (u32)BlipperStartFall,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_0808bc60,
+    .hitWallCallback = (u32)BlipperHitWall,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_0808bd04,
+    .hitCeilingCallback = (u32)BlipperHitCeiling,
 };
 /* gGipDef */
 struct ActorHandlers gGipTerrainHandlers ACTOR_TBL(08742cf0) = {
@@ -991,7 +991,7 @@ struct ActorVt gTwizzyHitReactions ACTOR_TBL(08742cf0) = {
     .defeatCallback = 0,
 };
 /* gSquishyDef; src/enemy_88000.c */
-struct ActorVt gUnk_08742E50 ACTOR_TBL(08742cf0) = {
+struct ActorVt gSquishyHitReactions ACTOR_TBL(08742cf0) = {
     .damageKind = 0,
     .defeatKind = 0,
     .filler02 = { 0x00, 0x00 },
@@ -999,7 +999,7 @@ struct ActorVt gUnk_08742E50 ACTOR_TBL(08742cf0) = {
     .defeatCallback = 0,
 };
 /* src/enemy_88000.c */
-struct ActorVt gUnk_08742E5C ACTOR_TBL(08742cf0) = {
+struct ActorVt gSquishyInWaterHitReactions ACTOR_TBL(08742cf0) = {
     .damageKind = 0,
     .defeatKind = 0,
     .filler02 = { 0x00, 0x00 },
@@ -1066,7 +1066,7 @@ struct ActorHandlers gGlunkShotTerrainHandlers ACTOR_TBL(087430ec) = {
     .leaveWaterCallback = 0,
     .hitWallCallback = 0,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_0808d200,
+    .hitCeilingCallback = (u32)GlunkShotHitCeiling,
 };
 /* gGlunkShotDef */
 struct ActorVt gGlunkShotHitReactions ACTOR_TBL(087430ec) = {
@@ -1098,9 +1098,9 @@ struct ActorHandlers gBroomHatterTerrainHandlers ACTOR_TBL(087434c4) = {
 };
 /* gCoconutDef */
 struct ActorHandlers gCoconutTerrainHandlers ACTOR_TBL(087434c4) = {
-    .landCallback = (u32)sub_0808e8a4,
+    .landCallback = (u32)CoconutLand,
     .leaveGroundCallback = 0,
-    .enterWaterCallback = (u32)sub_0808e8c4,
+    .enterWaterCallback = (u32)CoconutEnterWater,
     .leaveWaterCallback = 0,
     .hitWallCallback = 0,
     .unk14 = 0,
@@ -1118,11 +1118,11 @@ struct ActorHandlers gShotzoTerrainHandlers ACTOR_TBL(087434c4) = {
 };
 /* gConerDef */
 struct ActorHandlers gConerTerrainHandlers ACTOR_TBL(087434c4) = {
-    .landCallback = (u32)sub_0808f9b8,
-    .leaveGroundCallback = (u32)sub_0808f978,
-    .enterWaterCallback = (u32)sub_0808f9d8,
+    .landCallback = (u32)ConerLand,
+    .leaveGroundCallback = (u32)ConerStartFall,
+    .enterWaterCallback = (u32)ConerEnterWater,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_0808f9f8,
+    .hitWallCallback = (u32)ConerBounceOffWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };
@@ -1578,43 +1578,43 @@ struct ActorVt gMrTickTockNoteHitReactions ACTOR_TBL(08745ce0) = {
 /* ---- 0x087481A0-0x08748264: 11 record(s), section .actor_tbl_087481a0 ---- */
 /* gAxeKnightDef */
 struct ActorHandlers gAxeKnightTerrainHandlers ACTOR_TBL(087481a0) = {
-    .landCallback = (u32)sub_0809d0a0,
+    .landCallback = (u32)AxeKnightLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_0809d0dc,
-    .unk14 = (u32)sub_0809d0dc,
-    .hitCeilingCallback = (u32)sub_0809d138,
+    .hitWallCallback = (u32)AxeKnightHitWall,
+    .unk14 = (u32)AxeKnightHitWall,
+    .hitCeilingCallback = (u32)AxeKnightHitCeiling,
 };
 /* gMaceKnightDef */
 struct ActorHandlers gMaceKnightTerrainHandlers ACTOR_TBL(087481a0) = {
-    .landCallback = (u32)sub_0809e7c8,
-    .leaveGroundCallback = (u32)sub_0809e7d4,
+    .landCallback = (u32)MaceKnightLand,
+    .leaveGroundCallback = (u32)MaceKnightStartFall,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_0809e7e8,
-    .unk14 = (u32)sub_0809e7e8,
-    .hitCeilingCallback = (u32)sub_0809e820,
+    .hitWallCallback = (u32)MaceKnightHitWall,
+    .unk14 = (u32)MaceKnightHitWall,
+    .hitCeilingCallback = (u32)MaceKnightHitCeiling,
 };
 /* gTridentKnightDef */
 struct ActorHandlers gTridentKnightTerrainHandlers ACTOR_TBL(087481a0) = {
-    .landCallback = (u32)sub_0809f52c,
+    .landCallback = (u32)TridentKnightLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_0809f588,
-    .unk14 = (u32)sub_0809f588,
-    .hitCeilingCallback = (u32)sub_0809f618,
+    .hitWallCallback = (u32)TridentKnightHitWall,
+    .unk14 = (u32)TridentKnightHitWall,
+    .hitCeilingCallback = (u32)TridentKnightHitCeiling,
 };
 /* gJavelinKnightDef */
 struct ActorHandlers gJavelinKnightTerrainHandlers ACTOR_TBL(087481a0) = {
-    .landCallback = (u32)sub_0809db48,
+    .landCallback = (u32)JavelinKnightLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_0809dbc4,
-    .unk14 = (u32)sub_0809dbc4,
-    .hitCeilingCallback = (u32)sub_0809dc3c,
+    .hitWallCallback = (u32)JavelinKnightHitWall,
+    .unk14 = (u32)JavelinKnightHitWall,
+    .hitCeilingCallback = (u32)JavelinKnightHitCeiling,
 };
 /* gAxeKnightDef */
 struct ActorVt gAxeKnightHitReactions ACTOR_TBL(087481a0) = {
@@ -1995,16 +1995,16 @@ struct ActorVt gWhispyWoodsHitReactions ACTOR_TBL(0874c204) = {
     .damageKind = -1,
     .defeatKind = -1,
     .filler02 = { 0x00, 0x00 },
-    .damageCallback = (u32)sub_080b2574,
-    .defeatCallback = (u32)sub_080b2550,
+    .damageCallback = (u32)WhispyWoodsReactToDamage,
+    .defeatCallback = (u32)WhispyWoodsReactToDefeat,
 };
 /* src/enemy_ae3bc.c */
 struct ActorVt gUnk_0874C210 ACTOR_TBL(0874c204) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },
-    .damageCallback = (u32)sub_080b2574,
-    .defeatCallback = (u32)sub_080b2550,
+    .damageCallback = (u32)WhispyWoodsReactToDamage,
+    .defeatCallback = (u32)WhispyWoodsReactToDefeat,
 };
 
 /* ---- 0x0874C418-0x0874C44C: 3 record(s), section .actor_tbl_0874c418 ---- */

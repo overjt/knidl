@@ -3755,13 +3755,13 @@ void HeavyMoleMissileUpdate(void)
     TaskBreakBlocksNoPlayer(gUnk_0874C108);
 }
 
-void sub_080b2550(void)
+void WhispyWoodsReactToDefeat(void)
 {
     ActorSetHitReactions((u32)gUnk_0874C210);
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_080b2574(void)
+void WhispyWoodsReactToDamage(void)
 {
     struct Task *t;
 
@@ -3823,7 +3823,7 @@ void sub_080b25e8(void)
     u->whispyWoodsHurtTimer--;
 }
 
-void sub_080b2664(void)
+void WhispyWoodsPickAttack(void)
 {
     struct Task **c2;
     struct Task *ta;
@@ -4129,7 +4129,7 @@ void WhispyWoodsWait(void)
 void WhispyWoodsWaitUpdate(void)
 {
     if (gCurTask->whispyWoodsWaitDone != 0)
-        sub_080b2664();
+        WhispyWoodsPickAttack();
 }
 
 void WhispyWoodsState1(void)

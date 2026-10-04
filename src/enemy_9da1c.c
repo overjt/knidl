@@ -84,7 +84,7 @@ void JavelinKnightJavelinUpdate(void)
     ActorReactToHit();
 }
 
-u8 sub_0809db48(void)
+u8 JavelinKnightLand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -133,7 +133,7 @@ u8 sub_0809db48(void)
     }
 }
 
-u8 sub_0809dbc4(void)
+u8 JavelinKnightHitWall(void)
 {
     struct Task *t;
 
@@ -160,7 +160,7 @@ u8 sub_0809dbc4(void)
     }
 }
 
-u8 sub_0809dc3c(void)
+u8 JavelinKnightHitCeiling(void)
 {
     struct Task *t;
     struct Task *u;
@@ -706,19 +706,19 @@ void sub_0809e780(void)
     }
 }
 
-u8 sub_0809e7c8(void)
+u8 MaceKnightLand(void)
 {
     TaskStopY();
     return 0;
 }
 
-u8 sub_0809e7d4(void)
+u8 MaceKnightStartFall(void)
 {
     gCurTask->accelY = 148 << 6;
     return 0;
 }
 
-u8 sub_0809e7e8(void)
+u8 MaceKnightHitWall(void)
 {
     struct Task *t;
 
@@ -738,7 +738,7 @@ u8 sub_0809e7e8(void)
     return 0;
 }
 
-u8 sub_0809e820(void)
+u8 MaceKnightHitCeiling(void)
 {
     return 0;
 }

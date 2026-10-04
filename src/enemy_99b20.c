@@ -468,7 +468,7 @@ void MrTickTockUpdate(void)
 
 void MrTickTockEnterState(void)
 {
-    sub_08098afc();
+    TaskFreeDustTrail();
     CallTableEntry(gCurTask->state, 24, gMrTickTockStates);
 }
 

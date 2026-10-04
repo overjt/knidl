@@ -628,7 +628,7 @@ void WhispyWoodsAirPuffState0Update(void)
     }
 }
 
-void sub_080b37ec(void)
+void WhispyWoodsLeavesShiftTrail(void)
 {
     gCurTask->health = gCurTask->u80.nearestPlayer;
     gCurTask->u80.nearestPlayer = gCurTask->unk46;
@@ -654,7 +654,7 @@ void sub_080b37ec(void)
     gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF0000) + gCurTask->pixelY;
 }
 
-void sub_080b38f0(void)
+void WhispyWoodsLeavesFillTrail(void)
 {
     s32 x;
     u16 v;
@@ -774,7 +774,7 @@ void Task_WhispyWoodsLeaves(void)
     gCurTask->layer = 8;
     gCurTask->frameTable = (u32 *)gUnk_0874CE68;
     gCurTask->updateCallback = (u32)WhispyWoodsLeavesUpdate;
-    sub_080b38f0();
+    WhispyWoodsLeavesFillTrail();
     sub_080b3a00();
     gCurTask->whispyWoodsLeavesLifeTimer = 66;
     gCurTask->whispyWoodsLeavesLoopCount = 0;
@@ -852,7 +852,7 @@ void WhispyWoodsLeavesUpdate(void)
     u8 *su;
     s32 w;
 
-    sub_080b37ec();
+    WhispyWoodsLeavesShiftTrail();
     c = &gCurTask;
     su = (u8 *)*c + 108;
     w = *(u16 *)su - 1;

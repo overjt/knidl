@@ -321,14 +321,14 @@ void LaserBallIdleState0Update(void)
 {
 }
 
-s32 sub_0808e8a4(void)
+s32 CoconutLand(void)
 {
     ActorSetState(2);
     TaskSetEntry(CoconutEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_0808e8c4(void)
+s32 CoconutEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;

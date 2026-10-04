@@ -21,7 +21,7 @@
  * TaskSetEntry(fn, gCurTaskIdx).
  *
  * The rest are the states.  MrFrostyLand / MrFrostyHitWall are the two jump-table
- * dispatchers that turn Task.state into the next animation, sub_08098afc frees
+ * dispatchers that turn Task.state into the next animation, TaskFreeDustTrail frees
  * the helper task recorded in Task.unk46 once gTaskSlotTypes[] says its type is
  * 143 and gTasks[] says this task is its parent, MrFrostyChooseNextState walks the
  * gUnk_08745618 / gUnk_0874561F rows with the decimal-digit buffer
@@ -152,7 +152,7 @@ u8 MrFrostyReactToDamage(void)
     return 0;
 }
 
-void sub_08098afc(void)
+void TaskFreeDustTrail(void)
 {
     if ((s16)gTaskSlotTypes[gCurTask->actorDustTrailSlot] != -1
         && gTaskSlotTypes[gCurTask->actorDustTrailSlot] == 143
@@ -409,7 +409,7 @@ void MrFrostyUpdate(void)
 
 void MrFrostyEnterState(void)
 {
-    sub_08098afc();
+    TaskFreeDustTrail();
     CallTableEntry(gCurTask->state, 19, gMrFrostyStates);
 }
 

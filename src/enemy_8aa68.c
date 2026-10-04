@@ -727,7 +727,7 @@ void BlipperIdleUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_0808bb70(void)
+s32 BlipperLand(void)
 {
     if (gCurTask->variant != 5)
     {
@@ -754,7 +754,7 @@ s32 sub_0808bb70(void)
     }
 }
 
-s32 sub_0808bc18(void)
+s32 BlipperStartFall(void)
 {
     if (gCurTask->variant != 5)
     {
@@ -766,7 +766,7 @@ s32 sub_0808bc18(void)
     }
 }
 
-s32 sub_0808bc60(void)
+s32 BlipperHitWall(void)
 {
     if (gCurTask->variant != 5)
     {
@@ -794,7 +794,7 @@ s32 sub_0808bc60(void)
     }
 }
 
-s32 sub_0808bd04(void)
+s32 BlipperHitCeiling(void)
 {
     u8 r;
 

@@ -387,7 +387,7 @@ void BrontoBurtDiagonalUpdate(void)
 
     if ((u8)ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 1, gBrontoBurtDiagonalStateUpdates);
-    if (sub_08086f54() != 0)
+    if (TaskReflectFlightAngle() != 0)
     {
         AngleToVector((s16)gCurTask->brontoBurtFlightAngle,
                      gUnk_087420F4[gCurTask->actorSpawnArg] << 8 >> 16);
@@ -682,7 +682,7 @@ void BrontoBurtIdleUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_08086f54(void)
+s32 TaskReflectFlightAngle(void)
 {
     u8 n = 0;
     s16 v;
@@ -1083,7 +1083,7 @@ void TwizzyDiagonalUpdate(void)
 
     if ((u8)ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 1, gTwizzyDiagonalStateUpdates);
-    if (sub_08086f54() != 0)
+    if (TaskReflectFlightAngle() != 0)
     {
         AngleToVector((s16)gCurTask->twizzyFlightAngle,
                      gUnk_08742600[gCurTask->actorSpawnArg] << 8 >> 16);

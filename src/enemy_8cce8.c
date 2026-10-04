@@ -219,7 +219,7 @@ void Task_GlunkShot(void)
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0808d1d0;
+    t->updateCallback = (u32)GlunkShotUpdate;
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 11;
@@ -240,7 +240,7 @@ void Task_GlunkShot(void)
     ActorDestroy();
 }
 
-void sub_0808d1d0(void)
+void GlunkShotUpdate(void)
 {
     if (sub_08069604() != 0)
     {
@@ -254,7 +254,7 @@ void sub_0808d1d0(void)
     }
 }
 
-void sub_0808d200(void)
+void GlunkShotHitCeiling(void)
 {
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
