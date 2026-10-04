@@ -14302,11 +14302,11 @@ u32 gQuickDrawResultsMenuFrames[] FRAME_TABLE = {
     (u32)gUnk_085F3664,
 };
 
-/* gUnk_08755BC0.  Consumers: gBombRallyPlayerFrames[0]
+/* gBombRallyPlayerFrame0.  Consumers: gBombRallyPlayerFrames[0]
  * (data/late_game_rodata.s), read by src/subgame_bda2c.c.  32 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755BC0-0x08755C40).  No C file declares it. */
-u32 gUnk_08755BC0[] FRAME_TABLE = {
+u32 gBombRallyPlayerFrame0[] FRAME_TABLE = {
     (u32)gUnk_08600C90,
     (u32)gUnk_08600D58,
     (u32)gUnk_08600E10,
@@ -14341,11 +14341,11 @@ u32 gUnk_08755BC0[] FRAME_TABLE = {
     (u32)gUnk_08601878,
 };
 
-/* gUnk_08755C40.  Consumers: gBombRallyPlayerFrames[1]
+/* gBombRallyPlayerFrame1.  Consumers: gBombRallyPlayerFrames[1]
  * (data/late_game_rodata.s), read by src/subgame_bda2c.c.  32 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755C40-0x08755CC0).  No C file declares it. */
-u32 gUnk_08755C40[] FRAME_TABLE = {
+u32 gBombRallyPlayerFrame1[] FRAME_TABLE = {
     (u32)gUnk_08601940,
     (u32)gUnk_086019B0,
     (u32)gUnk_08601A28,
@@ -14380,11 +14380,11 @@ u32 gUnk_08755C40[] FRAME_TABLE = {
     (u32)gUnk_08602720,
 };
 
-/* gUnk_08755CC0.  Consumers: gBombRallyPlayerFrames[2]
+/* gBombRallyPlayerFrame2.  Consumers: gBombRallyPlayerFrames[2]
  * (data/late_game_rodata.s), read by src/subgame_bda2c.c.  32 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755CC0-0x08755D40).  No C file declares it. */
-u32 gUnk_08755CC0[] FRAME_TABLE = {
+u32 gBombRallyPlayerFrame2[] FRAME_TABLE = {
     (u32)gUnk_08602778,
     (u32)gUnk_08602800,
     (u32)gUnk_08602880,
@@ -14419,11 +14419,11 @@ u32 gUnk_08755CC0[] FRAME_TABLE = {
     (u32)gUnk_08602ED0,
 };
 
-/* gUnk_08755D40.  Consumers: gBombRallyPlayerFrames[3]
+/* gBombRallyPlayerFrame3.  Consumers: gBombRallyPlayerFrames[3]
  * (data/late_game_rodata.s), read by src/subgame_bda2c.c.  32 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755D40-0x08755DC0).  No C file declares it. */
-u32 gUnk_08755D40[] FRAME_TABLE = {
+u32 gBombRallyPlayerFrame3[] FRAME_TABLE = {
     (u32)gUnk_08602058,
     (u32)gUnk_086020D8,
     (u32)gUnk_08602140,
@@ -14465,11 +14465,11 @@ u32 gUnk_08755D40[] FRAME_TABLE = {
  * include/subgame.h:254. */
 u32 gUnk_08755DC0 FRAME_TABLE = (u32)gUnk_08602F48;
 
-/* gUnk_08755DC4.  Consumers: gBombRallyBubblesFrames[0]
+/* gBombRallyBubblesFrame0.  Consumers: gBombRallyBubblesFrames[0]
  * (data/late_game_rodata.s), read by src/subgame_bf994.c.  5 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755DC4-0x08755DD8).  No C file declares it. */
-u32 gUnk_08755DC4[] FRAME_TABLE = {
+u32 gBombRallyBubblesFrame0[] FRAME_TABLE = {
     (u32)gUnk_08603098,
     (u32)gUnk_08603108,
     (u32)gUnk_08603178,
@@ -14490,11 +14490,11 @@ u32 gUnk_08755DD8[] FRAME_TABLE = {
     (u32)gUnk_08603308,
 };
 
-/* gUnk_08755DEC.  Consumers: gBombRallyBubblesFrames[2]
+/* gBombRallyBubblesFrame2.  Consumers: gBombRallyBubblesFrames[2]
  * (data/late_game_rodata.s), read by src/subgame_bf994.c.  5 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755DEC-0x08755E00).  No C file declares it. */
-u32 gUnk_08755DEC[] FRAME_TABLE = {
+u32 gBombRallyBubblesFrame2[] FRAME_TABLE = {
     (u32)gUnk_08603320,
     (u32)gUnk_08603350,
     (u32)gUnk_08603380,

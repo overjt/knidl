@@ -2220,24 +2220,24 @@ gUnk_0874397C:
 	.section .actor_rodata_087439c0, "a"
 	.global	actor_rodata_087439c0
 actor_rodata_087439c0:
-	.global	gUnk_087439C0
-gUnk_087439C0:
+	.global	gPoppyBrosSrHeadAnim0
+gPoppyBrosSrHeadAnim0:
 	.incbin	"baserom.gba", 0x7439C0, 0x6
-	.global	gUnk_087439C6
-gUnk_087439C6:
+	.global	gPoppyBrosSrHeadAnim1
+gPoppyBrosSrHeadAnim1:
 	.incbin	"baserom.gba", 0x7439C6, 0x1A
-	.global	gUnk_087439E0
-gUnk_087439E0:
+	.global	gPoppyBrosSrHeadAnim2
+gPoppyBrosSrHeadAnim2:
 	.incbin	"baserom.gba", 0x7439E0, 0x6
-	.global	gUnk_087439E6
-gUnk_087439E6:
+	.global	gPoppyBrosSrHeadAnim3
+gPoppyBrosSrHeadAnim3:
 	.incbin	"baserom.gba", 0x7439E6, 0x1A
 	.global	gPoppyBrosSrHeadAnims
 gPoppyBrosSrHeadAnims:
-	.word	gUnk_087439C0
-	.word	gUnk_087439C6
-	.word	gUnk_087439E0
-	.word	gUnk_087439E6
+	.word	gPoppyBrosSrHeadAnim0
+	.word	gPoppyBrosSrHeadAnim1
+	.word	gPoppyBrosSrHeadAnim2
+	.word	gPoppyBrosSrHeadAnim3
 	.global	gUnk_08743A10
 gUnk_08743A10:
 	.word	gUnk_08743F18

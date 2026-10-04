@@ -248,20 +248,20 @@ gUnk_087565F4:
 	.word	gUnk_0875659A
 	.word	gUnk_087565BD
 	.word	gUnk_087565BD
-	.global	gUnk_08756610
-gUnk_08756610:
+	.global	gBombRallyBlastOdds0
+gBombRallyBlastOdds0:
 	.incbin	"baserom.gba", 0x756610, 0x15
-	.global	gUnk_08756625
-gUnk_08756625:
+	.global	gBombRallyBlastOdds1
+gBombRallyBlastOdds1:
 	.incbin	"baserom.gba", 0x756625, 0x15
-	.global	gUnk_0875663A
-gUnk_0875663A:
+	.global	gBombRallyBlastOdds2
+gBombRallyBlastOdds2:
 	.incbin	"baserom.gba", 0x75663A, 0x16
 	.global	gBombRallyBlastOdds
 gBombRallyBlastOdds:
-	.word	gUnk_08756610
-	.word	gUnk_08756625
-	.word	gUnk_0875663A
+	.word	gBombRallyBlastOdds0
+	.word	gBombRallyBlastOdds1
+	.word	gBombRallyBlastOdds2
 	.global	gBombRallyStartSpeeds
 gBombRallyStartSpeeds:
 	.incbin	"baserom.gba", 0x75665C, 0x3
@@ -282,15 +282,15 @@ gBombRallySafeBeats:
 late_game_rodata_0875670c:
 	.global	gBombRallyPlayerFrames
 gBombRallyPlayerFrames:
-	.word	gUnk_08755BC0
-	.word	gUnk_08755C40
-	.word	gUnk_08755CC0
-	.word	gUnk_08755D40
+	.word	gBombRallyPlayerFrame0
+	.word	gBombRallyPlayerFrame1
+	.word	gBombRallyPlayerFrame2
+	.word	gBombRallyPlayerFrame3
 	.global	gBombRallyBubblesFrames
 gBombRallyBubblesFrames:
-	.word	gUnk_08755DC4
+	.word	gBombRallyBubblesFrame0
 	.word	gUnk_08755DD8
-	.word	gUnk_08755DEC
+	.word	gBombRallyBubblesFrame2
 	.word	gUnk_08755DD8
 	.global	gUnk_0875672C
 gUnk_0875672C:
@@ -561,101 +561,101 @@ gBootLogoObjectSeeds:
 	.incbin	"baserom.gba", 0x757440, 0x398
 	.global	gBootLogoScripts
 gBootLogoScripts:
-	.word	gUnk_08757838
-	.word	gUnk_087578D2
-	.word	gUnk_087578EE
-	.word	gUnk_0875790A
-	.word	gUnk_087579CE
-	.word	gUnk_08757CC2
-	.word	gUnk_08757926
-	.word	gUnk_08757A4C
-	.word	gUnk_08757A68
-	.word	gUnk_08757A84
-	.word	gUnk_08757AA0
-	.word	gUnk_08757BAA
-	.word	gUnk_08757BC6
-	.word	gUnk_08757BE2
-	.word	gUnk_08757BFE
-	.word	gUnk_08757D40
-	.word	gUnk_08757D86
-	.word	gUnk_08757DCC
-	.word	gUnk_0875814C
-	.word	gUnk_0875821E
-	.word	gUnk_0875823A
-	.word	gUnk_08758256
-	.word	gUnk_08757E12
-	.word	gUnk_08757E90
-	.global	gUnk_08757838
-gUnk_08757838:
+	.word	gBootLogoScript0
+	.word	gBootLogoScript1
+	.word	gBootLogoScript2
+	.word	gBootLogoScript3
+	.word	gBootLogoScript4
+	.word	gBootLogoScript5
+	.word	gBootLogoScript6
+	.word	gBootLogoScript7
+	.word	gBootLogoScript8
+	.word	gBootLogoScript9
+	.word	gBootLogoScript10
+	.word	gBootLogoScript11
+	.word	gBootLogoScript12
+	.word	gBootLogoScript13
+	.word	gBootLogoScript14
+	.word	gBootLogoScript15
+	.word	gBootLogoScript16
+	.word	gBootLogoScript17
+	.word	gBootLogoScript18
+	.word	gBootLogoScript19
+	.word	gBootLogoScript20
+	.word	gBootLogoScript21
+	.word	gBootLogoScript22
+	.word	gBootLogoScript23
+	.global	gBootLogoScript0
+gBootLogoScript0:
 	.incbin	"baserom.gba", 0x757838, 0x9A
-	.global	gUnk_087578D2
-gUnk_087578D2:
+	.global	gBootLogoScript1
+gBootLogoScript1:
 	.incbin	"baserom.gba", 0x7578D2, 0x1C
-	.global	gUnk_087578EE
-gUnk_087578EE:
+	.global	gBootLogoScript2
+gBootLogoScript2:
 	.incbin	"baserom.gba", 0x7578EE, 0x1C
-	.global	gUnk_0875790A
-gUnk_0875790A:
+	.global	gBootLogoScript3
+gBootLogoScript3:
 	.incbin	"baserom.gba", 0x75790A, 0x1C
-	.global	gUnk_08757926
-gUnk_08757926:
+	.global	gBootLogoScript6
+gBootLogoScript6:
 	.incbin	"baserom.gba", 0x757926, 0xA8
-	.global	gUnk_087579CE
-gUnk_087579CE:
+	.global	gBootLogoScript4
+gBootLogoScript4:
 	.incbin	"baserom.gba", 0x7579CE, 0x7E
-	.global	gUnk_08757A4C
-gUnk_08757A4C:
+	.global	gBootLogoScript7
+gBootLogoScript7:
 	.incbin	"baserom.gba", 0x757A4C, 0x1C
-	.global	gUnk_08757A68
-gUnk_08757A68:
+	.global	gBootLogoScript8
+gBootLogoScript8:
 	.incbin	"baserom.gba", 0x757A68, 0x1C
-	.global	gUnk_08757A84
-gUnk_08757A84:
+	.global	gBootLogoScript9
+gBootLogoScript9:
 	.incbin	"baserom.gba", 0x757A84, 0x1C
-	.global	gUnk_08757AA0
-gUnk_08757AA0:
+	.global	gBootLogoScript10
+gBootLogoScript10:
 	.incbin	"baserom.gba", 0x757AA0, 0x10A
-	.global	gUnk_08757BAA
-gUnk_08757BAA:
+	.global	gBootLogoScript11
+gBootLogoScript11:
 	.incbin	"baserom.gba", 0x757BAA, 0x1C
-	.global	gUnk_08757BC6
-gUnk_08757BC6:
+	.global	gBootLogoScript12
+gBootLogoScript12:
 	.incbin	"baserom.gba", 0x757BC6, 0x1C
-	.global	gUnk_08757BE2
-gUnk_08757BE2:
+	.global	gBootLogoScript13
+gBootLogoScript13:
 	.incbin	"baserom.gba", 0x757BE2, 0x1C
-	.global	gUnk_08757BFE
-gUnk_08757BFE:
+	.global	gBootLogoScript14
+gBootLogoScript14:
 	.incbin	"baserom.gba", 0x757BFE, 0xC4
-	.global	gUnk_08757CC2
-gUnk_08757CC2:
+	.global	gBootLogoScript5
+gBootLogoScript5:
 	.incbin	"baserom.gba", 0x757CC2, 0x7E
-	.global	gUnk_08757D40
-gUnk_08757D40:
+	.global	gBootLogoScript15
+gBootLogoScript15:
 	.incbin	"baserom.gba", 0x757D40, 0x46
-	.global	gUnk_08757D86
-gUnk_08757D86:
+	.global	gBootLogoScript16
+gBootLogoScript16:
 	.incbin	"baserom.gba", 0x757D86, 0x46
-	.global	gUnk_08757DCC
-gUnk_08757DCC:
+	.global	gBootLogoScript17
+gBootLogoScript17:
 	.incbin	"baserom.gba", 0x757DCC, 0x46
-	.global	gUnk_08757E12
-gUnk_08757E12:
+	.global	gBootLogoScript22
+gBootLogoScript22:
 	.incbin	"baserom.gba", 0x757E12, 0x7E
-	.global	gUnk_08757E90
-gUnk_08757E90:
+	.global	gBootLogoScript23
+gBootLogoScript23:
 	.incbin	"baserom.gba", 0x757E90, 0x2BC
-	.global	gUnk_0875814C
-gUnk_0875814C:
+	.global	gBootLogoScript18
+gBootLogoScript18:
 	.incbin	"baserom.gba", 0x75814C, 0xD2
-	.global	gUnk_0875821E
-gUnk_0875821E:
+	.global	gBootLogoScript19
+gBootLogoScript19:
 	.incbin	"baserom.gba", 0x75821E, 0x1C
-	.global	gUnk_0875823A
-gUnk_0875823A:
+	.global	gBootLogoScript20
+gBootLogoScript20:
 	.incbin	"baserom.gba", 0x75823A, 0x1C
-	.global	gUnk_08758256
-gUnk_08758256:
+	.global	gBootLogoScript21
+gBootLogoScript21:
 	.incbin	"baserom.gba", 0x758256, 0x1E
 	.global	gUnk_08758274
 gUnk_08758274:
@@ -707,21 +707,21 @@ gCreditsDemoRecordings:
 	.word	gUnk_0859E6EC
 	.word	gUnk_0859E868
 	.word	gUnk_0859EA14
-	.word	gUnk_08758448
-	.word	gUnk_08758618
-	.word	gUnk_087587A8
-	.word	gUnk_08758968
-	.word	gUnk_08758B48
-	.word	gUnk_08758D08
-	.word	gUnk_08758F08
+	.word	gCreditsDemoRecording8
+	.word	gCreditsDemoRecording9
+	.word	gCreditsDemoRecording10
+	.word	gCreditsDemoRecording11
+	.word	gCreditsDemoRecording12
+	.word	gCreditsDemoRecording13
+	.word	gCreditsDemoRecording14
 	.incbin	"baserom.gba", 0x758408, 0x4
-	.word	gUnk_08759A18
-	.word	gUnk_087596A8
-	.word	gUnk_08759848
-	.word	gUnk_087590E8
-	.word	gUnk_08759BB8
+	.word	gCreditsDemoRecording16
+	.word	gCreditsDemoRecording17
+	.word	gCreditsDemoRecording18
+	.word	gCreditsDemoRecording19
+	.word	gCreditsDemoRecording20
 	.global	gCreditsDemoLengths
 	.set	gCreditsDemoLengths, . - 2
-	.word	gUnk_087592D8
-	.word	gUnk_087594A8
+	.word	gCreditsDemoRecording21
+	.word	gCreditsDemoRecording22
 	.incbin	"baserom.gba", 0x758428, 0x20

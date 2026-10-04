@@ -8,45 +8,45 @@
 	.section .credits_demos, "a"
 	.global	credits_demos
 credits_demos:
-	.global	gUnk_08758448
-gUnk_08758448:
+	.global	gCreditsDemoRecording8
+gCreditsDemoRecording8:
 	.incbin	"baserom.gba", 0x758448, 0x1D0
-	.global	gUnk_08758618
-gUnk_08758618:
+	.global	gCreditsDemoRecording9
+gCreditsDemoRecording9:
 	.incbin	"baserom.gba", 0x758618, 0x190
-	.global	gUnk_087587A8
-gUnk_087587A8:
+	.global	gCreditsDemoRecording10
+gCreditsDemoRecording10:
 	.incbin	"baserom.gba", 0x7587A8, 0x1C0
-	.global	gUnk_08758968
-gUnk_08758968:
+	.global	gCreditsDemoRecording11
+gCreditsDemoRecording11:
 	.incbin	"baserom.gba", 0x758968, 0x1E0
-	.global	gUnk_08758B48
-gUnk_08758B48:
+	.global	gCreditsDemoRecording12
+gCreditsDemoRecording12:
 	.incbin	"baserom.gba", 0x758B48, 0x1C0
-	.global	gUnk_08758D08
-gUnk_08758D08:
+	.global	gCreditsDemoRecording13
+gCreditsDemoRecording13:
 	.incbin	"baserom.gba", 0x758D08, 0x200
-	.global	gUnk_08758F08
-gUnk_08758F08:
+	.global	gCreditsDemoRecording14
+gCreditsDemoRecording14:
 	.incbin	"baserom.gba", 0x758F08, 0x1E0
-	.global	gUnk_087590E8
-gUnk_087590E8:
+	.global	gCreditsDemoRecording19
+gCreditsDemoRecording19:
 	.incbin	"baserom.gba", 0x7590E8, 0x1F0
-	.global	gUnk_087592D8
-gUnk_087592D8:
+	.global	gCreditsDemoRecording21
+gCreditsDemoRecording21:
 	.incbin	"baserom.gba", 0x7592D8, 0x1D0
-	.global	gUnk_087594A8
-gUnk_087594A8:
+	.global	gCreditsDemoRecording22
+gCreditsDemoRecording22:
 	.incbin	"baserom.gba", 0x7594A8, 0x200
-	.global	gUnk_087596A8
-gUnk_087596A8:
+	.global	gCreditsDemoRecording17
+gCreditsDemoRecording17:
 	.incbin	"baserom.gba", 0x7596A8, 0x1A0
-	.global	gUnk_08759848
-gUnk_08759848:
+	.global	gCreditsDemoRecording18
+gCreditsDemoRecording18:
 	.incbin	"baserom.gba", 0x759848, 0x1D0
-	.global	gUnk_08759A18
-gUnk_08759A18:
+	.global	gCreditsDemoRecording16
+gCreditsDemoRecording16:
 	.incbin	"baserom.gba", 0x759A18, 0x1A0
-	.global	gUnk_08759BB8
-gUnk_08759BB8:
+	.global	gCreditsDemoRecording20
+gCreditsDemoRecording20:
 	.incbin	"baserom.gba", 0x759BB8, 0x210
