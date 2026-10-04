@@ -247,7 +247,7 @@ void PlayerGoalGameInit(void)
     while ((s16)gCurTask->playerLoopCount < gPlayerCount)
     {
         if ((s16)gCurTask->playerLoopCount == gCurTask->player->playerIndex)
-            gCurTask->unk2C = gUnk_030023D4;
+            gCurTask->playerGoalGameActiveIndex = gUnk_030023D4;
         if (((gActivePlayerMask >> (s16)gCurTask->playerLoopCount) & 1) != 0)
             gUnk_030023D4++;
         gCurTask->playerLoopCount++;
@@ -272,7 +272,7 @@ void sub_0805b370(void)
     gUnk_02007D00[7] = 0;
     gUnk_02007D00[9] = 0;
     gCurTask->unk70 = 0xFFFF;
-    if (gCurTask->unk2C == 0)
+    if (gCurTask->playerGoalGameActiveIndex == 0)
     {
         LZ77UnCompWram((const void *)gUnk_085B9B6C[3], gUnk_02020000);
         RequestCopy(4, gUnk_02020000, gObjVram, ((u16 *)gUnk_085B9B6C)[1] << 5);
@@ -286,7 +286,7 @@ void sub_0805b370(void)
         } while ((s16)gCurTask->playerLoopCount <= 6);
         TaskCreateFrom(TASK_GOAL_GAME_CAMERA, 32);
     }
-    gCurTask->posX = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->unk2C] << 16;
+    gCurTask->posX = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->playerGoalGameActiveIndex] << 16;
     gCurTask->posY = 232 << 18;
     TaskCreateFrom(TASK_88, 32);
     gCurTask->playerGoalGameSpringSlot = TaskCreateFrom(TASK_GOAL_GAME_SPRING, 32);
@@ -425,7 +425,7 @@ void PlayerGoalGameLaunch(void)
     PlayerGoalGameAddToLayerSign();
     TaskStartFrameScriptId(3);
     TaskCreateFrom(TASK_GOAL_GAME_LAUNCH_STARS, 32);
-    gCurTask->unk24 = 0;
+    gCurTask->playerGoalGameTrailTimer = 0;
     if (gCurTask->player->playerIndex == gLocalPlayer)
     {
         if (gCurTask->playerGoalGameLayer <= 1)
@@ -453,17 +453,17 @@ void PlayerGoalGameLaunchUpdate(void)
 {
     gCurTask->unk70++;
     TaskUpdateFrameScript();
-    gCurTask->unk24++;
+    gCurTask->playerGoalGameTrailTimer++;
     if (IsWorldPosOnScreen(gCurTask->pixelX, gCurTask->pixelY) != 0)
-        QueueSprite(14, gUnk_0873DC3C[gCurTask->unk24 & 3], 0, 0,
+        QueueSprite(14, gUnk_0873DC3C[gCurTask->playerGoalGameTrailTimer & 3], 0, 0,
                      gCurTask->pixelX - gSpriteCameraX,
                      (s16)(gCurTask->pixelY - gSpriteCameraY + 16));
-    if ((gCurTask->unk24 & 7) == 0)
+    if ((gCurTask->playerGoalGameTrailTimer & 7) == 0)
         TaskCreateFrom(TASK_GOAL_GAME_SMALL_TRAIL_STAR, 32);
-    if (gCurTask->unk24 > 31)
+    if (gCurTask->playerGoalGameTrailTimer > 31)
     {
         TaskCreateFrom(TASK_GOAL_GAME_BIG_TRAIL_STAR, 32);
-        gCurTask->unk24 = 0;
+        gCurTask->playerGoalGameTrailTimer = 0;
     }
 }
 
@@ -564,13 +564,13 @@ void PlayerGoalGameLand(void)
             }
             gCurTask->playerLoopCount++;
         }
-        gCurTask->unk24 = ((s16 *)gUnk_0873DBAC)[gUnk_030023D4 * 4 + gUnk_030023B4];
-        if (gCurTask->unk24 == gCurTask->pixelX)
+        gCurTask->playerGoalGameSpotX = ((s16 *)gUnk_0873DBAC)[gUnk_030023D4 * 4 + gUnk_030023B4];
+        if (gCurTask->playerGoalGameSpotX == gCurTask->pixelX)
         {
             gCurTask->state = PLAYER_GOAL_GAME_STATE_WAIT;
             PlayerGoalGameWait();
         }
-        if (gCurTask->pixelX < gCurTask->unk24 + gSpriteCameraX)
+        if (gCurTask->pixelX < gCurTask->playerGoalGameSpotX + gSpriteCameraX)
             gCurTask->facing = 1;
         else
             gCurTask->facing = -1;
@@ -593,9 +593,9 @@ void PlayerGoalGameWalkToSpotUpdate(void)
 {
     if (gCurTask->facing == 1)
     {
-        if (gCurTask->pixelX >= gCurTask->unk24)
+        if (gCurTask->pixelX >= gCurTask->playerGoalGameSpotX)
         {
-            gCurTask->pixelX = gCurTask->unk24;
+            gCurTask->pixelX = gCurTask->playerGoalGameSpotX;
             gCurTask->posX = gCurTask->pixelX << 16;
             gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
             gCurTask->state = PLAYER_GOAL_GAME_STATE_WAIT;
@@ -604,9 +604,9 @@ void PlayerGoalGameWalkToSpotUpdate(void)
     }
     else
     {
-        if (gCurTask->pixelX <= gCurTask->unk24)
+        if (gCurTask->pixelX <= gCurTask->playerGoalGameSpotX)
         {
-            gCurTask->pixelX = gCurTask->unk24;
+            gCurTask->pixelX = gCurTask->playerGoalGameSpotX;
             gCurTask->posX = gCurTask->pixelX << 16;
             gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
             gCurTask->state = PLAYER_GOAL_GAME_STATE_WAIT;

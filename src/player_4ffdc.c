@@ -109,7 +109,7 @@ void PlayerStarRodFlightIntro(void)
         ShufflePlayerOrder();
     {
         struct Task *t = gCurTask;
-        u16 *e = gUnk_0873B6CC[t->unk2C];
+        u16 *e = gUnk_0873B6CC[t->playerEntryOrder];
         s32 v;
 
         t->velX = 0xFFFF8000;

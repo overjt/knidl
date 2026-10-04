@@ -41,7 +41,7 @@ void PlayerActionBurning(void)
         if (t->player->prevMode != 13) {
             t->variant = 0;
             gCurTask->u80.attackAbility = ABILITY_BURNING;
-            gCurTask->unk28 = 0;
+            gCurTask->playerBurningHitWall = 0;
         }
     }
     switch (gCurTask->variant) {
@@ -193,7 +193,7 @@ void PlayerActionBurningUpdate(void)
             s8 d = gCurTask->facing;
             if ((d == 1 && gTerrainResult.unk0 == 1)
                 || (d == -1 && gTerrainResult.unk0 == 2))
-                gCurTask->unk28 = 1;
+                gCurTask->playerBurningHitWall = 1;
         }
         break;
     case 1:
@@ -205,7 +205,7 @@ void PlayerActionBurningUpdate(void)
                     PlayerSetMotionXPreset(11, 41);
                     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                 }
-            } else if (*(u16 *)&gTerrainResult != 0 || t->unk28 != 0
+            } else if (*(u16 *)&gTerrainResult != 0 || t->playerBurningHitWall != 0
                        || (t->player->boundsClamp & 11) != 0) {
                 gCurTask->variant = 3;
                 TaskSetEntry(PlayerActionBurning, gCurTaskIdx);
@@ -215,10 +215,10 @@ void PlayerActionBurningUpdate(void)
             struct Task *t = gCurTask;
             if (t->playerBurningFadeStep != -1) {
                 struct BurningPaletteFade *f = &gUnk_0873B510[t->playerBurningFadeStep];
-                t->unk6E += f->rate;
-                if (t->unk6E > 255)
-                    t->unk6E = 256;
-                BlendColors(f->src, f->dst, (u16)gCurTask->unk6E, 16,
+                t->playerBurningFadeRatio += f->rate;
+                if (t->playerBurningFadeRatio > 255)
+                    t->playerBurningFadeRatio = 256;
+                BlendColors(f->src, f->dst, (u16)gCurTask->playerBurningFadeRatio, 16,
                              (u16 *)(gObjPalette + ((gCurTask->tileWord >> 12) << 5)));
             }
         }

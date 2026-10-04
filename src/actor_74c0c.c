@@ -1349,8 +1349,8 @@ void PlayerCannonUpdate(void)
     CallTableEntry(gCurTask->updateState, 6, gPlayerCannonStateUpdates);
     id = gLocalPlayer;
     t = gCurTask;
-    if (id == t->player->playerIndex && t->unk18 != 0)
-        SetCameraFocus(t->unk1C, t->unk20);
+    if (id == t->player->playerIndex && t->playerCannonCameraFollow != 0)
+        SetCameraFocus(t->playerCannonFocusX, t->playerCannonFocusY);
 }
 
 void PlayerCannonEnterState(void)

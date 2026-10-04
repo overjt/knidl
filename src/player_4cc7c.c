@@ -38,9 +38,9 @@ void PlayerActionUFO(void)
     t = gCurTask;
     if (t->player->prevMode != 13)
     {
-        t->unk70 = 0;
-        t->unk34 = 0;
-        t->unk74 = 0;
+        t->playerUfoCutIn = 0;
+        t->playerUfoSfxTimer = 0;
+        t->playerUfoLeaving = 0;
         gCurTask->variant = 0;
         gCurTask->u80.attackAbility = ABILITY_UFO;
     }
@@ -53,14 +53,14 @@ void PlayerActionUFO(void)
             u->playerUfoFrameIndex = 0;
             u->variant = 7;
         }
-        gCurTask->unk24 = -1;
+        gCurTask->playerUfoPosture = -1;
     case 7:
         PlayerStopAxes(3);
         {
             struct Task *u = gCurTask;
 
             u->playerUfoFrameIndex = 0xFFFF;
-            switch (u->unk24)
+            switch (u->playerUfoPosture)
             {
             case 8:
                 u->frame = 0xF90;
@@ -74,7 +74,7 @@ void PlayerActionUFO(void)
                 break;
             }
         }
-        gCurTask->unk24 = 7;
+        gCurTask->playerUfoPosture = 7;
         while (1)
         {
             gCurTask->playerUfoFrameIndex = 0;
@@ -86,7 +86,7 @@ void PlayerActionUFO(void)
             }
         }
     case 8:
-        switch (gCurTask->unk24)
+        switch (gCurTask->playerUfoPosture)
         {
         case 7:
             TaskSetFrame(0xF8C);
@@ -115,7 +115,7 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(2);
             break;
         }
-        gCurTask->unk24 = 8;
+        gCurTask->playerUfoPosture = 8;
         while (1)
         {
             TaskSetFrame(0xF91);
@@ -128,7 +128,7 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(2);
         }
     case 9:
-        switch (gCurTask->unk24)
+        switch (gCurTask->playerUfoPosture)
         {
         case 7:
             TaskSetFrame(0xF88);
@@ -157,7 +157,7 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(2);
             break;
         }
-        gCurTask->unk24 = 9;
+        gCurTask->playerUfoPosture = 9;
         while (1)
         {
             TaskSetFrame(0xF96);
@@ -170,7 +170,7 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(2);
         }
     case 10:
-        switch (gCurTask->unk24)
+        switch (gCurTask->playerUfoPosture)
         {
         case 8:
             if (PlayerGetHeldDirection() == 2)
@@ -218,7 +218,7 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(2);
             break;
         }
-        gCurTask->unk24 = 10;
+        gCurTask->playerUfoPosture = 10;
         while (1)
         {
             TaskSetFrame(0xF9A);
@@ -231,9 +231,9 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(5);
         }
     case 2:
-        gCurTask->unk2C = 0;
-        gCurTask->unk30 = 1;
-        gCurTask->unk70 = 0;
+        gCurTask->playerUfoCharging = 0;
+        gCurTask->playerUfoChargeSfxTimer = 1;
+        gCurTask->playerUfoCutIn = 0;
         TaskSetFrame(0xFD1);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -249,7 +249,7 @@ void PlayerActionUFO(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk2C++;
+            u->playerUfoCharging++;
             u->player->unk14 = 0;
             if (!(gLatchedHeldKeys[u->player->playerIndex] & 3))
                 break;
@@ -295,7 +295,7 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(3);
         }
     case 3:
-        gCurTask->unk70 = 0;
+        gCurTask->playerUfoCutIn = 0;
         TaskSetFrame(0xFD3);
         TaskYieldTrampoline(4);
         gCurTask->frame++;
@@ -335,7 +335,7 @@ void PlayerActionUFO(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk70++;
+            u->playerUfoCutIn++;
             u->frame++;
         }
         TaskYieldTrampoline(4);
@@ -353,10 +353,10 @@ void PlayerActionUFO(void)
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->unk70++;
+        gCurTask->playerUfoCutIn++;
         break;
     case 4:
-        gCurTask->unk70 = 0;
+        gCurTask->playerUfoCutIn = 0;
         PlayerStartOffsetScript(6);
         TaskSetFrame(0xFC4);
         TaskYieldTrampoline(2);
@@ -365,14 +365,14 @@ void PlayerActionUFO(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk70++;
+            u->playerUfoCutIn++;
             u->frame++;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk70++;
+        gCurTask->playerUfoCutIn++;
         break;
     case 5:
-        gCurTask->unk70 = 0;
+        gCurTask->playerUfoCutIn = 0;
         TaskSetFrame(0xFC6);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
@@ -387,14 +387,14 @@ void PlayerActionUFO(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk70++;
+            u->playerUfoCutIn++;
             u->frame++;
         }
         TaskYieldTrampoline(2);
-        gCurTask->unk70++;
+        gCurTask->playerUfoCutIn++;
         break;
     case 6:
-        gCurTask->unk70 = 0;
+        gCurTask->playerUfoCutIn = 0;
         TaskSetFrame(0xFC6);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
@@ -415,7 +415,7 @@ void PlayerActionUFO(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk70++;
+            u->playerUfoCutIn++;
             u->frame++;
         }
         TaskYieldTrampoline(1);
@@ -427,13 +427,13 @@ void PlayerActionUFO(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 0xFB4;
         TaskYieldTrampoline(1);
-        gCurTask->unk70++;
+        gCurTask->playerUfoCutIn++;
         break;
     case 1:
-        gCurTask->unk70 = 0;
+        gCurTask->playerUfoCutIn = 0;
         PlayerStopAxes(3);
         TaskYieldTrampoline(8);
-        gCurTask->unk70++;
+        gCurTask->playerUfoCutIn++;
         break;
     }
     TaskSleepForever();
@@ -448,7 +448,7 @@ void PlayerActionUFOUpdate(void)
     case 0:
         break;
     case 1:
-        if ((s16)gCurTask->unk70 != 0)
+        if ((s16)gCurTask->playerUfoCutIn != 0)
         {
             PlayerRequestLocomotion();
             return;
@@ -469,7 +469,7 @@ void PlayerActionUFOUpdate(void)
         {
             struct Task *t = gCurTask;
 
-            if (t->unk24 == 12)
+            if (t->playerUfoPosture == 12)
             {
                 if ((s16)t->player->unk14 == 3)
                     t->facing = -t->facing;
@@ -478,31 +478,31 @@ void PlayerActionUFOUpdate(void)
                     struct Task *u = gCurTask;
 
                     if (--u->player->unk14 == 0)
-                        u->unk24 = 7;
+                        u->playerUfoPosture = 7;
                 }
             }
             else if (PlayerGetHeldDirection() == 2)
             {
-                gCurTask->unk24 = 12;
+                gCurTask->playerUfoPosture = 12;
                 gCurTask->player->unk14 = 3;
                 break;
             }
             else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
             {
                 gCurTask->variant = 10;
-                gCurTask->unk24 = 7;
+                gCurTask->playerUfoPosture = 7;
                 break;
             }
         }
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
         {
             gCurTask->variant = 8;
-            gCurTask->unk24 = 7;
+            gCurTask->playerUfoPosture = 7;
         }
         else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
         {
             gCurTask->variant = 9;
-            gCurTask->unk24 = 7;
+            gCurTask->playerUfoPosture = 7;
         }
         break;
     case 8:
@@ -534,7 +534,7 @@ void PlayerActionUFOUpdate(void)
         }
         break;
     case 10:
-        if (gCurTask->unk24 == 11)
+        if (gCurTask->playerUfoPosture == 11)
             break;
         PlayerSetMotionXPreset(13, 72);
         {
@@ -563,14 +563,14 @@ void PlayerActionUFOUpdate(void)
         if (PlayerGetHeldDirection() == 2)
         {
             old = -1;
-            gCurTask->unk24 = 11;
+            gCurTask->playerUfoPosture = 11;
         }
         break;
     case 2:
         {
             struct Task *t = gCurTask;
 
-            if (t->unk2C != 0)
+            if (t->playerUfoCharging != 0)
             {
                 if (!(gLatchedHeldKeys[t->player->playerIndex] & 3))
                 {
@@ -585,24 +585,24 @@ void PlayerActionUFOUpdate(void)
                     else
                         t->variant = 6;
                 }
-                else if ((--t->unk30 & 0xFFFF) == 0 && (u32)(t->unk30 & 0xFFFF0000) <= 0xCFFFF)
+                else if ((--t->playerUfoChargeSfxTimer & 0xFFFF) == 0 && (u32)(t->playerUfoChargeSfxTimer & 0xFFFF0000) <= 0xCFFFF)
                 {
-                    switch (t->unk30 >> 18)
+                    switch (t->playerUfoChargeSfxTimer >> 18)
                     {
                     case 0:
-                        t->unk30 += 0x10008;
+                        t->playerUfoChargeSfxTimer += 0x10008;
                         PlaySfxIfLocalPlayer(203, t->player->playerIndex);
                         break;
                     case 1:
-                        t->unk30 += 0x10008;
+                        t->playerUfoChargeSfxTimer += 0x10008;
                         PlaySfxIfLocalPlayer(204, t->player->playerIndex);
                         break;
                     case 2:
-                        t->unk30 += 0x10008;
+                        t->playerUfoChargeSfxTimer += 0x10008;
                         PlaySfxIfLocalPlayer(205, t->player->playerIndex);
                         break;
                     default:
-                        gCurTask->unk30 |= 5;
+                        gCurTask->playerUfoChargeSfxTimer |= 5;
                         PlaySfxIfLocalPlayer(206, gCurTask->player->playerIndex);
                         break;
                     }
@@ -618,7 +618,7 @@ void PlayerActionUFOUpdate(void)
         PlayerSetMotionXPreset(13, 72);
         {
             struct Task *t = gCurTask;
-            s16 m = t->unk70;
+            s16 m = t->playerUfoCutIn;
 
             if (m != 0)
             {
@@ -626,19 +626,19 @@ void PlayerActionUFOUpdate(void)
                     t->variant = 2;
                 else if ((gLatchedHeldKeys[t->player->playerIndex] & 240) || m == 2)
                 {
-                    t->unk24 = -1;
+                    t->playerUfoPosture = -1;
                     t->variant = 7;
                 }
             }
         }
         break;
     }
-    if (gCurTask->unk34 == 0)
+    if (gCurTask->playerUfoSfxTimer == 0)
         PlaySfxIfLocalPlayer(239, gCurTask->player->playerIndex);
     {
         struct Task *t = gCurTask;
 
-        t->unk34 = (t->unk34 + 1) & 7;
+        t->playerUfoSfxTimer = (t->playerUfoSfxTimer + 1) & 7;
         switch (t->variant)
         {
         case 7:
@@ -652,9 +652,9 @@ void PlayerActionUFOUpdate(void)
             break;
         }
     }
-    if (gCurTask->unk74 == 0 && PlayerCheckEnterDoor() != 0)
+    if (gCurTask->playerUfoLeaving == 0 && PlayerCheckEnterDoor() != 0)
     {
-        gCurTask->unk74++;
+        gCurTask->playerUfoLeaving++;
         gCurTask->variant = 1;
     }
     PlayerStopAtCeilingAndWall();

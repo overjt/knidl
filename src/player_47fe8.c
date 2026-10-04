@@ -52,7 +52,7 @@ void PlayerActionGetAbility(void)
     {
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
-        t->unk2C = 0;
+        t->playerGetAbilityAttackOn = 0;
         t->player->mode = 13;
     }
     gCurTask->player->unk16 = 0xFF;
@@ -243,7 +243,7 @@ void PlayerActionGetAbility(void)
             CreatePlayerEffect(gCurTask->player->playerIndex, 15, 0);
             break;
         case 1:
-            gCurTask->unk2C = 1;
+            gCurTask->playerGetAbilityAttackOn = 1;
             TaskSetFrame(0x36A);
             TaskYieldTrampoline(2);
             gCurTask->variant = 1;
@@ -443,33 +443,33 @@ void PlayerActionGetAbility(void)
         case 11:
             {
                 struct Task *u = gCurTask;
-                u->unk2C = 1;
+                u->playerGetAbilityAttackOn = 1;
                 gPlayerBodyBoxes[u->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
             }
             {
                 struct Task *u;
                 gPlayerHitBoxSets[(u = gCurTask)->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
-                u->unk30 = -1;
+                u->playerAttackStep30 = -1;
             }
             TaskSetFrame(0x96E);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk30++;
+            gCurTask->playerAttackStep30++;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk30++;
+            gCurTask->playerAttackStep30++;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk30++;
+            gCurTask->playerAttackStep30++;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             CreatePlayerEffect(gCurTask->player->playerIndex, 39, 0);
             CreatePlayerEffect(gCurTask->player->playerIndex, 39, 1);
-            gCurTask->unk30 = 3;
+            gCurTask->playerAttackStep30 = 3;
             TaskSetFrame(0x978);
             TaskYieldTrampoline(2);
-            gCurTask->unk30 = 4;
+            gCurTask->playerAttackStep30 = 4;
             TaskSetFrame(0x973);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
@@ -480,7 +480,7 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk30 = 1;
+            gCurTask->playerAttackStep30 = 1;
             gCurTask->frame = 0x971;
             TaskYieldTrampoline(2);
             gCurTask->frame = 0x96E;
@@ -522,7 +522,7 @@ void PlayerActionGetAbility(void)
             TaskYieldTrampoline(2);
             {
                 struct Task *u = gCurTask;
-                u->unk2C = 1;
+                u->playerGetAbilityAttackOn = 1;
                 CreatePlayerEffect(u->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 0);
             }
             CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_FREEZE_AURA, 1);
@@ -532,13 +532,13 @@ void PlayerActionGetAbility(void)
             do {
                 TaskSetFrame(0xA86);
                 TaskYieldTrampoline(1);
-                gCurTask->unk6E = 0;
+                gCurTask->playerLoopCount6E = 0;
                 do {
                     gCurTask->frame++;
                     TaskYieldTrampoline(1);
-                } while (++gCurTask->unk6E <= 6);
+                } while (++gCurTask->playerLoopCount6E <= 6);
             } while ((s16)++gCurTask->playerLoopCount <= 2);
-            gCurTask->unk2C = 0;
+            gCurTask->playerGetAbilityAttackOn = 0;
             PlayerStopSfx();
             TaskSetFrame(0xA8E);
             TaskYieldTrampoline(1);
@@ -713,7 +713,7 @@ void PlayerActionGetAbilityUpdate(void)
             PlayerRequestStandOrFall();
             break;
         }
-    } else if (t->unk2C != 0) {
+    } else if (t->playerGetAbilityAttackOn != 0) {
         switch (t->player->ability) {
         case ABILITY_SPARK:
             switch (t->frame) {
@@ -765,17 +765,17 @@ void PlayerActionGetAbilityUpdate(void)
             }
             break;
         case ABILITY_SWORD:
-            if (t->unk30 != -1) {
-                LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873BF64 + t->unk30 * 8);
+            if (t->playerAttackStep30 != -1) {
+                LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873BF64 + t->playerAttackStep30 * 8);
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
             }
             break;
         case ABILITY_NEEDLE:
-            if (t->unk30 != -1) {
-                LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873C1C4 + t->unk30 * 8);
+            if (t->playerAttackStep30 != -1) {
+                LoadPlayerBodyBoxRect(t->player->playerIndex, (u8 *)gUnk_0873C1C4 + t->playerAttackStep30 * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->unk30 * 8));
+                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->playerAttackStep30 * 8));
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
                 TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex],

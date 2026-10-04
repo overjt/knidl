@@ -85,7 +85,7 @@ void MetaKnightActionStand(void)
         PlayerStopAxes(3);
         t = gCurTask;
         t->playerStandSavedClampedTopY = (u16)t->player->clampedTopY;
-        t->unk2C = t->player->slope;
+        t->playerPoseSlope = t->player->slope;
         if (t->player->wallSide != 0)
             t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
@@ -583,10 +583,10 @@ void MetaKnightActionDuck(void)
     {
         ((u32 **)t->player)[25] = gUnk_0873BD28;
         ((u32 **)t->player)[26] = gUnk_0873CB24;
-        t->unk2C = ((u8 *)t->player)[75];
+        t->playerPoseSlope = ((u8 *)t->player)[75];
         PlayerSetMotionXPreset(0, 72);
     }
-    gCurTask->unk28 = 8;
+    gCurTask->playerDuckDropTimer = 8;
     q = (s16 *)gUnk_0873D5C0;
     TaskSetFrame(q[PlayerGetFacingSlope(gCurTask->player->playerIndex)]);
     TaskSleepForever();
@@ -762,7 +762,7 @@ void MetaKnightActionLadder(void)
     switch (k)
     {
     case 1:
-        d->unk30 = k;
+        d->playerLadderDir = k;
         for (;;)
         {
             if (gCurTask->playerLadderStep == 0 || gCurTask->playerLadderStep == 6)
@@ -788,7 +788,7 @@ void MetaKnightActionLadder(void)
         }
     case 2:
         c2 = gCurTask;
-        c2->unk30 = c2->variant;
+        c2->playerLadderDir = c2->variant;
         c2->player->unk14 = 0;
         PlaySfx(124);
         for (;;)
@@ -890,7 +890,7 @@ void MetaKnightActionLadderUpdate(void)
     case 0:
         if ((gLatchedPressedKeys[t->player->playerIndex] & 192) == 0)
             break;
-        n = t->unk30;
+        n = t->playerLadderDir;
         if (n == 1)
         {
             if ((gLatchedPressedKeys[t->player->playerIndex] & 64) != 0)
@@ -1416,7 +1416,7 @@ void MetaKnightActionSwim(void)
             gCurTask->variant = 2;
         else
             gCurTask->variant = 0;
-        gCurTask->unk2C = gCurTask->variant;
+        gCurTask->playerSwimPrevState = gCurTask->variant;
         PlayerSetWaterMotionY();
         ((u8 *)gCurTask->player)[61] = 0;
     }
@@ -1425,7 +1425,7 @@ void MetaKnightActionSwim(void)
     case 0:
         PlayerSetMotionYPreset(13);
         PlayerSetMotionXPreset(11, 4);
-        if (gCurTask->unk2C == 2)
+        if (gCurTask->playerSwimPrevState == 2)
         {
             TaskSetFrame(0x1239);
             TaskYieldTrampoline(3);

@@ -487,9 +487,9 @@ void PlayerActionInhale(void)
     switch (u->variant)
     {
     case 0:
-        u->unk28 = 1;
+        u->playerCatchBlockDelay = 1;
         u->playerInhaleHoldTimer = 30;
-        u->unk34 = -1;
+        u->playerInhaleAirColliderTimer = -1;
         {
             struct PlayerState *p = u->player;
 
@@ -647,7 +647,7 @@ void PlayerActionInhaleUpdate(void)
             u = gCurTask;
             if (u->player->catchKind == 0)
             {
-                if (u->unk28 == 0)
+                if (u->playerCatchBlockDelay == 0)
                 {
                     if (TaskBreakFirstBlock(&gUnk_0873CC54, u->player->playerIndex) != 0)
                     {
@@ -657,7 +657,7 @@ void PlayerActionInhaleUpdate(void)
                 }
                 else
                 {
-                    u->unk28--;
+                    u->playerCatchBlockDelay--;
                 }
                 u = gCurTask;
                 if (u->player->catchKind == 0)
@@ -665,17 +665,17 @@ void PlayerActionInhaleUpdate(void)
             }
             else if (u->player->catchKind == 1)
             {
-                if (u->unk34 == -1)
+                if (u->playerInhaleAirColliderTimer == -1)
                 {
                     if (!(u->onGround & 1))
-                        u->unk34 = 8;
-                    if (gCurTask->unk34 == -1)
+                        u->playerInhaleAirColliderTimer = 8;
+                    if (gCurTask->playerInhaleAirColliderTimer == -1)
                         goto skip;
                 }
                 u = gCurTask;
-                if (u->unk34 != 0)
+                if (u->playerInhaleAirColliderTimer != 0)
                 {
-                    u->unk34--;
+                    u->playerInhaleAirColliderTimer--;
                     RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEC4);
                 }
             skip:;

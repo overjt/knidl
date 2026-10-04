@@ -33,13 +33,13 @@ void PlayerActionSparkUpdate(void)
     case 0:
         break;
     case 1:
-        if (t->unk28 == 0) {
+        if (t->playerAttackHoldTimer == 0) {
             if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
                 *st = 2;
                 TaskSetEntry(PlayerActionSpark, gCurTaskIdx);
             }
         } else {
-            t->unk28--;
+            t->playerAttackHoldTimer--;
         }
         switch (gCurTask->frame) {
         case 0x36B:
@@ -107,7 +107,7 @@ void PlayerActionCutter(void)
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_CUTTER;
-    gCurTask->unk28 = 0;
+    gCurTask->playerAttackCutIn = 0;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSetFrame(0x3E9);
     TaskYieldTrampoline(2);
@@ -118,7 +118,7 @@ void PlayerActionCutter(void)
     if (gCurTask->onGround & 1)
         CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
     CreatePlayerObjectLowSlot(gCurTask->player->playerIndex, PLAYER_OBJECT_VARIANT_CUTTER_BLADE, 0);
-    gCurTask->unk28++;
+    gCurTask->playerAttackCutIn++;
     PlaySfxIfLocalPlayer(SE_CUTTER_ATTACK, gCurTask->player->playerIndex);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
@@ -126,7 +126,7 @@ void PlayerActionCutter(void)
     TaskYieldTrampoline(3);
     gCurTask->frame++;
     TaskYieldTrampoline(3);
-    gCurTask->unk28++;
+    gCurTask->playerAttackCutIn++;
     TaskSleepForever();
 }
 
@@ -134,8 +134,8 @@ void PlayerActionCutterUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 != 0) {
-        if (t->unk28 == 1) {
+    if (t->playerAttackCutIn != 0) {
+        if (t->playerAttackCutIn == 1) {
             if (gLatchedPressedKeys[t->player->playerIndex] & 2) {
                 TaskSetEntry(PlayerActionCutter, gCurTaskIdx);
             } else if (t->onGround & 1) {

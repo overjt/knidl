@@ -58,7 +58,7 @@ void MetaKnightActionSwimUpdate(void)
     PlayerTurnToHeldDirection();
     t = gCurTask;
     st = &t->variant;
-    t->unk2C = *st;
+    t->playerSwimPrevState = *st;
     switch (*st)
     {
     case 0:
@@ -154,7 +154,7 @@ void MetaKnightActionSwimUpdate(void)
         PlayerSetMotionYPreset(13);
         break;
     }
-    if (gCurTask->unk2C != gCurTask->variant)
+    if (gCurTask->playerSwimPrevState != gCurTask->variant)
         TaskSetEntry(MetaKnightActionSwim, gCurTaskIdx);
     if (!PlayerCheckBButton() && !PlayerCheckEnterDoor())
     {

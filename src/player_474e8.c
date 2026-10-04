@@ -288,7 +288,7 @@ void PlayerActionNeedle(void)
             gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
         }
         gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
-        gCurTask->unk28 = gCurTask->onGround;
+        gCurTask->playerNeedleOnGround = gCurTask->onGround;
         gCurTask->playerNeedleStep = 0;
         TaskYieldTrampoline(8);
         PlaySfxIfLocalPlayer(SE_NEEDLE_ATTACK, gCurTask->player->playerIndex);
@@ -348,14 +348,14 @@ void PlayerActionNeedleUpdate(void)
         return;
     switch (gCurTask->variant) {
     case 1:
-        if (gCurTask->unk28 != gCurTask->onGround)
+        if (gCurTask->playerNeedleOnGround != gCurTask->onGround)
             TaskSetEntry(PlayerActionNeedle, gCurTaskIdx);
         /* fallthrough */
     case 0:
     case 2:
-        gCurTask->frame = e[gCurTask->unk28];
+        gCurTask->frame = e[gCurTask->playerNeedleOnGround];
         if (gCurTask->playerAttackStep >= 0) {
-            if (gCurTask->unk28 != 0) {
+            if (gCurTask->playerNeedleOnGround != 0) {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
                              (u8 *)gUnk_0873C1C4 + gCurTask->playerAttackStep * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
@@ -371,7 +371,7 @@ void PlayerActionNeedleUpdate(void)
             TaskBreakBlocks((struct HitBoxSet *)&gPlayerHitBoxSets[gCurTask->player->playerIndex],
                          gCurTask->player->playerIndex);
         }
-        gCurTask->unk28 = gCurTask->onGround;
+        gCurTask->playerNeedleOnGround = gCurTask->onGround;
         break;
     case 3:
         PlayerRequestLocomotion();

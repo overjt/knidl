@@ -58,7 +58,7 @@ void PlayerActionExitDoor(void)
         struct Task *t = gCurTask;
 
         t->playerActionDone28 = 0;
-        if (t->unk2C == 1 || t->unk2C == 3)
+        if (t->playerEntryOrder == 1 || t->playerEntryOrder == 3)
         {
             t->facing = -1;
             gCurTask->posX = (gCurTask->pixelX - 10) << 16;
@@ -66,7 +66,7 @@ void PlayerActionExitDoor(void)
     }
     while (gFadeSteps != 0)
         TaskYieldTrampoline(1);
-    if (gCurTask->unk2C == 0)
+    if (gCurTask->playerEntryOrder == 0)
         r = CreateEntryDoorOpening();
     TaskYieldTrampoline(4);
     {
@@ -128,7 +128,7 @@ void PlayerActionExitDoor(void)
     {
     case 0:
     default:
-        switch (gCurTask->unk2C)
+        switch (gCurTask->playerEntryOrder)
         {
         case 0:
         case 2:
@@ -137,7 +137,7 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionXPreset(10, 9);
             t = gCurTask;
-            t->velX += t->unk2C << 13;
+            t->velX += t->playerEntryOrder << 13;
             break;
         }
         case 1:
@@ -147,7 +147,7 @@ void PlayerActionExitDoor(void)
 
             PlayerSetMotionXPreset(10, 10);
             t = gCurTask;
-            t->velX -= (t->unk2C - 1) << 13;
+            t->velX -= (t->playerEntryOrder - 1) << 13;
             break;
         }
         }
@@ -163,7 +163,7 @@ void PlayerActionExitDoor(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        if (gCurTask->unk2C == 0)
+        if (gCurTask->playerEntryOrder == 0)
             CloseDoorOpening(r);
         for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
         {
@@ -171,7 +171,7 @@ void PlayerActionExitDoor(void)
             TaskYieldTrampoline(2);
         }
         PlayerStopAxes(1);
-        if (gCurTask->unk2C == 0)
+        if (gCurTask->playerEntryOrder == 0)
         {
             sub_08026584();
             CreateLocalPlayerArrow(gCurTask->player->playerIndex);
@@ -180,9 +180,9 @@ void PlayerActionExitDoor(void)
     case 1:
         for (i = 0; i < gPlayerCount; i++)
             gPlayerStates[i].unk42 |= 64;
-        if (gCurTask->unk2C != 0)
+        if (gCurTask->playerEntryOrder != 0)
         {
-            switch (gCurTask->unk2C)
+            switch (gCurTask->playerEntryOrder)
             {
             case 0:
             case 2:
@@ -192,7 +192,7 @@ void PlayerActionExitDoor(void)
                 gCurTask->facing = 1;
                 PlayerSetMotionXPreset(10, 9);
                 t = gCurTask;
-                t->velX += t->unk2C << 13;
+                t->velX += t->playerEntryOrder << 13;
                 break;
             }
             case 1:
@@ -203,7 +203,7 @@ void PlayerActionExitDoor(void)
                 gCurTask->facing = -1;
                 PlayerSetMotionXPreset(10, 10);
                 t = gCurTask;
-                t->velX -= (t->unk2C - 1) << 13;
+                t->velX -= (t->playerEntryOrder - 1) << 13;
                 break;
             }
             }

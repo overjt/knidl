@@ -36,25 +36,25 @@ void sub_080763e8(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 <= 0)
+    if (t->playerCannonPoseTimer <= 0)
     {
-        if (t->unk24 != 0)
+        if (t->playerCannonPoseDir != 0)
         {
-            if (t->unk2C > 0)
-                t->unk2C--;
+            if (t->playerCannonPoseRow > 0)
+                t->playerCannonPoseRow--;
         }
         else
         {
-            if (t->unk2C <= 3)
-                t->unk2C++;
+            if (t->playerCannonPoseRow <= 3)
+                t->playerCannonPoseRow++;
         }
         if (gMetaKnightmareMode == 0)
-            gCurTask->frame = gUnk_0874009C[gCurTask->unk2C];
+            gCurTask->frame = gUnk_0874009C[gCurTask->playerCannonPoseRow];
         else
-            gCurTask->frame = gUnk_087400A6[gCurTask->unk2C];
-        gCurTask->unk28 = 1;
+            gCurTask->frame = gUnk_087400A6[gCurTask->playerCannonPoseRow];
+        gCurTask->playerCannonPoseTimer = 1;
     }
-    gCurTask->unk28--;
+    gCurTask->playerCannonPoseTimer--;
 }
 
 void sub_08076454(void)
@@ -63,10 +63,10 @@ void sub_08076454(void)
 
     t->posX = 0;
     t->posY = -0x180000;
-    t->unk18 = 0;
-    t->unk28 = 1;
-    t->unk24 = 1;
-    t->unk2C = 2;
+    t->playerCannonCameraFollow = 0;
+    t->playerCannonPoseTimer = 1;
+    t->playerCannonPoseDir = 1;
+    t->playerCannonPoseRow = 2;
     if (gUnk_0300244C != 0 && gMetaKnightmareMode == 1)
         t->frame = 0x1265;
     else
@@ -97,9 +97,9 @@ void sub_080764f8(void)
     else
     {
         if (gPlayerHeldKeys[t->player->playerIndex] & 0x80)
-            t->unk24 = 0;
+            t->playerCannonPoseDir = 0;
         else
-            t->unk24 = 1;
+            t->playerCannonPoseDir = 1;
         sub_080763e8();
     }
 }
@@ -108,10 +108,10 @@ void sub_08076558(u16 a)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk30)
+    switch (t->playerCannonRiderIndex)
     {
     case 0:
-        if (t->unk34 == 2 || t->unk34 == 4)
+        if (t->playerCannonRiderCount == 2 || t->playerCannonRiderCount == 4)
             a = a + 8;
         break;
     case 1:
@@ -120,11 +120,11 @@ void sub_08076558(u16 a)
     case 2:
     case 3:
         a = a + 8;
-        if (t->unk34 == 4)
+        if (t->playerCannonRiderCount == 4)
             a = a + 16;
         break;
     }
-    if (gCurTask->unk30 & 1)
+    if (gCurTask->playerCannonRiderIndex & 1)
         gCurTask->facing = 255;
     else
         gCurTask->facing = 1;
@@ -137,10 +137,10 @@ void sub_080765f4(u16 a)
 {
     struct Task *t = gCurTask;
 
-    switch (t->unk30)
+    switch (t->playerCannonRiderIndex)
     {
     case 0:
-        if (t->unk34 == 2 || t->unk34 == 4)
+        if (t->playerCannonRiderCount == 2 || t->playerCannonRiderCount == 4)
             a = a + 8;
         break;
     case 1:
@@ -148,20 +148,20 @@ void sub_080765f4(u16 a)
         break;
     case 2:
     case 3:
-        if (t->unk30 & 1)
+        if (t->playerCannonRiderIndex & 1)
             a = a - 8;
         else
             a = a + 8;
-        if (gCurTask->unk34 == 4)
+        if (gCurTask->playerCannonRiderCount == 4)
         {
-            if (gCurTask->unk30 & 1)
+            if (gCurTask->playerCannonRiderIndex & 1)
                 a = a - 16;
             else
                 a = a + 16;
         }
         break;
     }
-    if (gCurTask->unk30 & 1)
+    if (gCurTask->playerCannonRiderIndex & 1)
         gCurTask->facing = 255;
     else
         gCurTask->facing = 1;
@@ -188,12 +188,12 @@ void sub_080766ac(void)
     PlayerStartTumble();
     TaskGetScreenPos();
     if (gUnk_030023D4 > 63)
-        gCurTask->unk18 = 1;
+        gCurTask->playerCannonCameraFollow = 1;
     {
         struct Task *t = gCurTask;
 
-        t->unk24 = 0;
-        t->unk70 = 8;
+        t->playerCannonExited = 0;
+        t->playerCannonSmokeTimer = 8;
     }
 }
 
@@ -214,12 +214,12 @@ void sub_08076710(void)
     PlayerStartTumble();
     TaskGetScreenPos();
     if (gUnk_030023B4 > 95 || gUnk_030023D4 > 63)
-        gCurTask->unk18 = 1;
+        gCurTask->playerCannonCameraFollow = 1;
     {
         struct Task *t = gCurTask;
 
-        t->unk24 = 0;
-        t->unk70 = 8;
+        t->playerCannonExited = 0;
+        t->playerCannonSmokeTimer = 8;
     }
 }
 
@@ -238,26 +238,26 @@ void sub_08076798(void)
     }
     TaskGetScreenPos();
     if (gUnk_030023D4 > 63)
-        gCurTask->unk18 = 1;
+        gCurTask->playerCannonCameraFollow = 1;
     {
         struct Task *t = gCurTask;
 
-        t->unk24 = 0;
-        t->unk2C = 10;
+        t->playerCannonExited = 0;
+        t->playerCannonEndTimer = 10;
     }
 }
 
 void sub_08076828(void)
 {
     TaskGetScreenPos();
-    if (gCurTask->unk24 == 0 && gUnk_030023D4 <= 0)
+    if (gCurTask->playerCannonExited == 0 && gUnk_030023D4 <= 0)
     {
         ExitByCannon();
         {
             struct Task *t = gCurTask;
 
-            t->unk18 = 0;
-            t->unk24 = 1;
+            t->playerCannonCameraFollow = 0;
+            t->playerCannonExited = 1;
         }
     }
 }
@@ -266,8 +266,8 @@ void sub_0807685c(s32 a)
 {
     struct Task *t = gCurTask;
 
-    t->unk1C = t->pixelX;
-    t->unk20 = t->pixelY;
+    t->playerCannonFocusX = t->pixelX;
+    t->playerCannonFocusY = t->pixelY;
     if (t->frame != -1)
     {
         if (gMetaKnightmareMode == 0)
@@ -275,13 +275,13 @@ void sub_0807685c(s32 a)
         {
             struct Task *u = gCurTask;
 
-            if ((s16)u->unk70 <= 0)
+            if ((s16)u->playerCannonSmokeTimer <= 0)
             {
-                u->unk70 = 8;
+                u->playerCannonSmokeTimer = 8;
                 CreateCannonSmoke(0, a);
             }
         }
-        gCurTask->unk70--;
+        gCurTask->playerCannonSmokeTimer--;
         sub_08076828();
     }
 }
@@ -289,15 +289,15 @@ void sub_0807685c(s32 a)
 void sub_080768c8(void)
 {
     gCurTask->facing = 1;
-    gCurTask->unk18 = 1;
+    gCurTask->playerCannonCameraFollow = 1;
     TaskSetMotionY(0x18000, 0x8000, 0x40000);
     {
         struct Task *t = gCurTask;
         u16 x;
 
         t->spriteFlags |= 0x8000;
-        t->unk24 = 0;
-        t->unk34 = 1;
+        t->playerWarpStarRideLandCount = 0;
+        t->playerRideIsCannon = 1;
         x = t->posX >> 16;
         switch (t->player->playerIndex)
         {
@@ -419,12 +419,12 @@ void sub_08076a58(void)
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
-    if (gCurTask->unk24 == 1)
+    if (gCurTask->playerWarpStarRideLandCount == 1)
     {
         do
         {
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk24 == 1);
+        } while (gCurTask->playerWarpStarRideLandCount == 1);
     }
     TaskYieldTrampoline(3);
     PlayerEndRideLanding(gCurTaskIdx);
@@ -437,13 +437,13 @@ void sub_08076c00(void)
 
     if (t->velY != 0 && (t->onGround & 1))
     {
-        t->unk24++;
+        t->playerWarpStarRideLandCount++;
         TaskStop();
         gCurTask->onGround = 0;
         {
             struct Task *u = gCurTask;
 
-            switch (u->unk24)
+            switch (u->playerWarpStarRideLandCount)
             {
             case 1:
                 PlaySfx(153);
@@ -477,8 +477,8 @@ void PlayerCannonState0Update(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk1C = t->pixelX;
-    t->unk20 = t->pixelY;
+    t->playerCannonFocusX = t->pixelX;
+    t->playerCannonFocusY = t->pixelY;
     sub_080764f8();
 }
 
@@ -524,12 +524,12 @@ void PlayerCannonState3Update(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk1C = t->pixelX;
-    t->unk20 = t->pixelY;
-    if (t->unk2C <= 0)
+    t->playerCannonFocusX = t->pixelX;
+    t->playerCannonFocusY = t->pixelY;
+    if (t->playerCannonEndTimer <= 0)
         PlayerEndCannonLaunch(gCurTaskIdx);
     else
-        t->unk2C--;
+        t->playerCannonEndTimer--;
 }
 
 void PlayerCannonState4(void)
@@ -553,7 +553,7 @@ void PlayerCannonState4Update(void)
     if (gMetaKnightmareMode == 0)
     {
         sub_080703a8();
-        if (gCurTask->unk24 == 0)
+        if (gCurTask->playerWarpStarRideLandCount == 0)
             sub_080702d8();
     }
     else
@@ -563,8 +563,8 @@ void PlayerCannonState4Update(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk1C = t->pixelX;
-        t->unk20 = t->pixelY;
+        t->playerCannonFocusX = t->pixelX;
+        t->playerCannonFocusY = t->pixelY;
     }
 }
 
@@ -582,8 +582,8 @@ void PlayerCannonState5Update(void)
     {
         struct Task *t = gCurTask;
 
-        t->unk1C = t->pixelX;
-        t->unk20 = t->pixelY;
+        t->playerCannonFocusX = t->pixelX;
+        t->playerCannonFocusY = t->pixelY;
     }
 }
 
@@ -656,9 +656,9 @@ void CannonLaunchPlayers(int a)
 
             if ((gCurTask->cannonRiderMask >> i) & 1)
             {
-                t->unk30 = n;
+                t->playerCannonRiderIndex = n;
                 n++;
-                t->unk34 = gCurTask->cannonRiderCount;
+                t->playerCannonRiderCount = gCurTask->cannonRiderCount;
                 t->state = v;
                 TaskSetEntry(PlayerCannonEnterState, i);
             }

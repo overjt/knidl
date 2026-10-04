@@ -71,11 +71,11 @@ void PlayerActionTornado(void)
         do {
             gCurTask->frame = 0xDDD;
             TaskYieldTrampoline(2);
-            gCurTask->unk6E = 0;
+            gCurTask->playerLoopCount6E = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-            } while (++gCurTask->unk6E <= 6);
+            } while (++gCurTask->playerLoopCount6E <= 6);
         } while ((s16)++gCurTask->playerLoopCount <= 5);
         gCurTask->variant = 2;
         /* fallthrough */
@@ -272,22 +272,22 @@ void PlayerActionCrash(void)
             TaskYieldTrampoline(2);
             TaskSetFrame(0xDEF);
             TaskYieldTrampoline(2);
-            gCurTask->unk6E = 0;
+            gCurTask->playerLoopCount6E = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-            } while (++gCurTask->unk6E <= 9);
+            } while (++gCurTask->playerLoopCount6E <= 9);
         } while ((s16)++gCurTask->playerLoopCount <= 1);
         if ((s8)(*c)->player->unk16 == 0) {
             TaskSetFrame(0xDE7);
             TaskYieldTrampoline(2);
             TaskSetFrame(0xDEF);
             TaskYieldTrampoline(2);
-            (*c)->unk6E = 0;
+            (*c)->playerLoopCount6E = 0;
             do {
                 (*c)->frame++;
                 TaskYieldTrampoline(2);
-            } while (++(*c)->unk6E <= 9);
+            } while (++(*c)->playerLoopCount6E <= 9);
         } else {
             TaskSetSkipMask(2, gCurTaskIdx);
             do {
@@ -299,11 +299,11 @@ void PlayerActionCrash(void)
                 TaskYieldTrampoline(2);
                 TaskSetFrame(0xDEF);
                 TaskYieldTrampoline(2);
-                (*c)->unk6E = 0;
+                (*c)->playerLoopCount6E = 0;
                 do {
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                } while (++gCurTask->unk6E <= 9);
+                } while (++gCurTask->playerLoopCount6E <= 9);
             } while ((s8)(*c)->player->unk16 != 2);
         }
     }

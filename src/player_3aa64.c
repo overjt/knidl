@@ -83,7 +83,7 @@ void PlayerActionSwim(void)
         else
             v->variant = 0;
         PlayerSetWaterMotionY();
-        gCurTask->unk2C = 0;
+        gCurTask->playerSwimLeftDive = 0;
     }
     gCurTask->player->running = 0;
     switch (gCurTask->player->ability)
@@ -106,9 +106,9 @@ void PlayerActionSwim(void)
     case 0:
         PlayerSetMotionYPreset(13);
         PlayerSetMotionXPreset(11, 4);
-        if (gCurTask->unk2C != 0)
+        if (gCurTask->playerSwimLeftDive != 0)
         {
-            gCurTask->unk2C = 0;
+            gCurTask->playerSwimLeftDive = 0;
             TaskSetFrame(anim[3]);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
@@ -307,7 +307,7 @@ void PlayerActionSwimUpdate(void)
             } while (0);
             break;
         case 2:
-            t->unk2C = 0;
+            t->playerSwimLeftDive = 0;
             if (gLatchedHeldKeys[t->player->playerIndex] & 65)
                 goto set1c;
             if (gLatchedHeldKeys[t->player->playerIndex] & 48)
@@ -389,7 +389,7 @@ void PlayerActionSwimUpdate(void)
             break;
         set0c:
             *st = 0;
-            gCurTask->unk2C = 1;
+            gCurTask->playerSwimLeftDive = 1;
             TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set25:

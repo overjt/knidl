@@ -38,7 +38,7 @@ void PlayerActionIce(void)
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
+            u->playerAttackHoldTimer = 15;
             u->u80.attackAbility = ABILITY_ICE;
         }
     }
@@ -99,14 +99,14 @@ void PlayerActionIceUpdate(void)
     case 0:
         break;
     case 1:
-        if (t->unk28 == 0) {
+        if (t->playerAttackHoldTimer == 0) {
             u16 *p = (u16 *)gLatchedHeldKeys;
             if ((p[t->player->playerIndex] & 2) == 0) {
                 t->variant = 2;
                 TaskSetEntry(PlayerActionIce, gCurTaskIdx);
             }
         } else {
-            t->unk28--;
+            t->playerAttackHoldTimer--;
         }
         break;
     case 2:
@@ -129,7 +129,7 @@ void PlayerActionFreeze(void)
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
+            u->playerAttackHoldTimer = 15;
             u->u80.attackAbility = ABILITY_FREEZE;
         }
     }
@@ -172,13 +172,13 @@ void PlayerActionFreezeUpdate(void)
     case 0:
         break;
     case 1:
-        if (t->unk28 == 0) {
+        if (t->playerAttackHoldTimer == 0) {
             if ((gLatchedHeldKeys[t->player->playerIndex] & 2) == 0) {
                 t->variant = 2;
                 TaskSetEntry(PlayerActionFreeze, gCurTaskIdx);
             }
         } else {
-            t->unk28--;
+            t->playerAttackHoldTimer--;
         }
         RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                      gUnk_0873C214);

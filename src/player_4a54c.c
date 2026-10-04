@@ -93,7 +93,7 @@ void PlayerActionStone(void)
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
+            u->playerAttackHoldTimer = 15;
             u->u80.attackAbility = ABILITY_STONE;
         }
     }
@@ -129,11 +129,11 @@ void PlayerActionStone(void)
         PlayerStopAxes(1);
         TaskSetFrame(0xC48);
         while (1) {
-            if (gCurTask->unk28 == 0) {
+            if (gCurTask->playerAttackHoldTimer == 0) {
                 if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
                     break;
             } else {
-                gCurTask->unk28--;
+                gCurTask->playerAttackHoldTimer--;
             }
             TaskYieldTrampoline(1);
         }

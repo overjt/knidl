@@ -65,7 +65,7 @@ void PlayerActionHiJump(void)
         CreatePlayerEffect(gCurTask->player->playerIndex, 42, 2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 42, 4);
         gCurTask->unk46 = 0;
-        gCurTask->unk28 = 2;
+        gCurTask->playerHiJumpPhaseTimer = 2;
         TaskYieldTrampoline(23);
         PlayerSetMotionYPreset(0);
         TaskYieldTrampoline(10);
@@ -160,9 +160,9 @@ void PlayerActionHiJumpUpdate(void)
     case 3:
         {
             struct Task *u = gCurTask;
-            if (u->unk28-- == 0) {
+            if (u->playerHiJumpPhaseTimer-- == 0) {
                 u->playerHiJumpFramePhase = (u->playerHiJumpFramePhase + 1) & 3;
-                u->unk28 = 2;
+                u->playerHiJumpPhaseTimer = 2;
             }
         }
         RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873C228);

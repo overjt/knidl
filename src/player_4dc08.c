@@ -235,15 +235,15 @@ void PlayerActionThrow(void)
     t = gCurTask;
     if (t->player->prevMode != 10)
     {
-        t->unk30 = 0;
+        t->playerThrowCaught = 0;
         t->variant = 0;
     }
     u = gCurTask;
     switch (u->variant)
     {
     case 0:
-        u->unk28 = 1;
-        u->unk2C = 30;
+        u->playerCatchBlockDelay = 1;
+        u->playerThrowGrabTimer = 30;
         u->player->unk16 = 0;
         {
             struct PlayerState *p = gCurTask->player;

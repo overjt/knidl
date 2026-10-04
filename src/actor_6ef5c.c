@@ -64,7 +64,7 @@ void PlayerWarpStarRideState2(void)
         }
         while (1)
         {
-            gCurTask->frame = gCurTask->unk28;
+            gCurTask->frame = gCurTask->playerWarpStarRideFrame;
             TaskYieldTrampoline(d);
             for (i = 0; i < n; i++)
             {
@@ -86,7 +86,7 @@ void PlayerWarpStarRideState1(void)
 
     gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_1;
     gCurTask->playerWarpStarRideLandCount = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->playerRideIsCannon = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
@@ -167,7 +167,7 @@ void PlayerWarpStarRideState3(void)
 
     gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_3;
     gCurTask->playerWarpStarRideLandCount = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->playerRideIsCannon = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
@@ -248,7 +248,7 @@ void PlayerWarpStarRideState4(void)
 
     gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_4;
     gCurTask->playerWarpStarRideLandCount = 0;
-    gCurTask->unk34 = 0;
+    gCurTask->playerRideIsCannon = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
@@ -346,7 +346,7 @@ void PlayerWarpStarRideState5(void)
 
     gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_5;
     gCurTask->playerWarpStarRideLandCount = 0;
-    gCurTask->unk34 = 0;
+    gCurTask->playerRideIsCannon = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
@@ -518,7 +518,7 @@ void PlayerWarpStarRideState6(void)
 
     gCurTask->updateState = PLAYER_WARP_STAR_RIDE_STATE_6;
     gCurTask->playerWarpStarRideLandCount = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->playerRideIsCannon = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
         p->unk37 = 3;
@@ -608,8 +608,8 @@ void PlayerWarpStarRideState7(void)
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
     gCurTask->spriteFlags &= 0x7FFF;
-    gCurTask->unk24 = 1;
-    gCurTask->unk34 = 0;
+    gCurTask->playerWarpStarRideLandCount = 1;
+    gCurTask->playerRideIsCannon = 0;
     PlayerStartTumble();
     t = gCurTask;
     switch (t->player->playerIndex)
@@ -667,7 +667,7 @@ void PlayerWarpStarRideState7(void)
     TaskYieldTrampoline(50);
     TaskStop();
     v = gCurTask;
-    v->unk24++;
+    v->playerWarpStarRideLandCount++;
     v->velY = 0xFFFE0000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0xFFFF0000;
@@ -677,7 +677,7 @@ void PlayerWarpStarRideState7(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     TaskStop();
-    gCurTask->unk24++;
+    gCurTask->playerWarpStarRideLandCount++;
     sub_08070264();
     TaskStop();
     gCurTask->playerLoopCount = 0;

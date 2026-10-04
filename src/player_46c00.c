@@ -36,11 +36,11 @@ void PlayerActionHammer(void)
         t->playerActionDone28 = 0;
         t->playerAttackStep = -1;
         if (t->waterFlags & 1)
-            t->unk30 = 1;
+            t->playerAttackInWater = 1;
         else
-            t->unk30 = 0;
+            t->playerAttackInWater = 0;
     }
-    gCurTask->unk34 = gCurTask->facing;
+    gCurTask->playerAttackEndFacing = gCurTask->facing;
     gCurTask->u80.attackAbility = ABILITY_HAMMER;
     if (gCurTask->onGround & 1)
         gCurTask->variant = 0;
@@ -53,7 +53,7 @@ void PlayerActionHammer(void)
         gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CDB4;
         gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
         LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDBC);
-        if (gCurTask->unk30 == 0) {
+        if (gCurTask->playerAttackInWater == 0) {
             gCurTask->playerAttackStep++;
             TaskSetFrame(0x7D2);
             TaskYieldTrampoline(8);
@@ -163,7 +163,7 @@ void PlayerActionHammer(void)
         gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CDF4;
         gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
         LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDFC);
-        if (gCurTask->unk30 == 0) {
+        if (gCurTask->playerAttackInWater == 0) {
             gCurTask->playerAttackStep++;
             TaskSetFrame(0x7EA);
             TaskYieldTrampoline(1);
@@ -175,7 +175,7 @@ void PlayerActionHammer(void)
             }
             gCurTask->playerAttackStep++;
             LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->playerAttackStep * 8));
-            gCurTask->facing = gCurTask->unk34;
+            gCurTask->facing = gCurTask->playerAttackEndFacing;
             TaskSetFrame(0x7F6);
             TaskYieldTrampoline(1);
         } else {
@@ -190,7 +190,7 @@ void PlayerActionHammer(void)
             }
             gCurTask->playerAttackStep++;
             LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->playerAttackStep * 8));
-            gCurTask->facing = gCurTask->unk34;
+            gCurTask->facing = gCurTask->playerAttackEndFacing;
             TaskSetFrame(0x807);
             TaskYieldTrampoline(1);
         }
@@ -223,9 +223,9 @@ void PlayerActionHammerUpdate(void)
     case 1:
         if (gLatchedHeldKeys[t->player->playerIndex] & 48) {
             if (gLatchedHeldKeys[t->player->playerIndex] & 16)
-                t->unk34 = 1;
+                t->playerAttackEndFacing = 1;
             else
-                t->unk34 = -1;
+                t->playerAttackEndFacing = -1;
         }
         {
             struct Task *u = gCurTask;
@@ -239,7 +239,7 @@ void PlayerActionHammerUpdate(void)
         {
             struct Task *u = gCurTask;
             if (u->playerAttackStep != -1) {
-                if (u->unk30 == 0)
+                if (u->playerAttackInWater == 0)
                     LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C0C0 + u->playerAttackStep * 8);
                 else
                     LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C128 + u->playerAttackStep * 8);
@@ -249,18 +249,18 @@ void PlayerActionHammerUpdate(void)
         }
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48) {
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) {
-                if (gCurTask->unk30 == 0)
+                if (gCurTask->playerAttackInWater == 0)
                     PlayerSetMotionXPreset(10, 52);
                 else
                     PlayerSetMotionXPreset(10, 54);
             } else {
-                if (gCurTask->unk30 == 0)
+                if (gCurTask->playerAttackInWater == 0)
                     PlayerSetMotionXPreset(10, 53);
                 else
                     PlayerSetMotionXPreset(10, 55);
             }
         } else {
-            if (gCurTask->unk30 == 0)
+            if (gCurTask->playerAttackInWater == 0)
                 PlayerSetMotionXPreset(11, 2);
             else
                 PlayerSetMotionXPreset(11, 4);

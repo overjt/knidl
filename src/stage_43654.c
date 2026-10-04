@@ -65,7 +65,7 @@ Lloop:
     {
         struct Task *t = gCurTask;
 
-        t->unk30 = 0;
+        t->playerSlashQueued = 0;
         t->player->unk14 = 0;
         {
             struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
@@ -145,9 +145,9 @@ Lloop:
     {
         struct Task *t = gCurTask;
 
-        if (t->unk30 == 0)
+        if (t->playerSlashQueued == 0)
             goto Lend;
-        t->unk30 = 0;
+        t->playerSlashQueued = 0;
         t->player->unk14 = 0;
         t->variant = 1;
     }
@@ -211,7 +211,7 @@ Lloop:
         t->frame--;
     }
     TaskYieldTrampoline(4);
-    if (gCurTask->unk30 == 0)
+    if (gCurTask->playerSlashQueued == 0)
         goto Lend;
     goto Lloop;
 Lend:
@@ -233,7 +233,7 @@ void MetaKnightActionSlashUpdate(void)
             {
                 u16 *q = (u16 *)gLatchedPressedKeys;
                 if (q[t->player->playerIndex] & 2)
-                    t->unk30 = 1;
+                    t->playerSlashQueued = 1;
             }
         }
         u = gCurTask;
@@ -272,7 +272,7 @@ void MetaKnightActionDashSlash(void)
     gCurTask->u80.attackAbility = ABILITY_SWORD;
     {
         struct Task *t = gCurTask;
-        t->unk30 = 0;
+        t->playerSlashQueued = 0;
         t->playerActionDone28 = 0;
         {
             struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
@@ -338,7 +338,7 @@ void MetaKnightActionDashSlash(void)
         TaskYieldTrampoline(10);
         PlayerStopAxes(1);
 
-        if (gCurTask->unk30 == 0) {
+        if (gCurTask->playerSlashQueued == 0) {
             TaskYieldTrampoline(10);
         } else {
             PlaySfx(0x10B);
@@ -416,7 +416,7 @@ void MetaKnightActionDashSlashUpdate(void)
                 {
                     u16 *q = (u16 *)gLatchedPressedKeys;
                     if (q[t->player->playerIndex] & 2)
-                        t->unk30 = 1;
+                        t->playerSlashQueued = 1;
                 }
             }
         }
@@ -706,7 +706,7 @@ void PlayerActionFire(void)
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
+            u->playerAttackHoldTimer = 15;
             u->u80.attackAbility = ABILITY_FIRE;
         }
     }
@@ -767,14 +767,14 @@ void PlayerActionFireUpdate(void)
     case 0:
         break;
     case 1:
-        if (t->unk28 == 0) {
+        if (t->playerAttackHoldTimer == 0) {
             u16 *p = (u16 *)gLatchedHeldKeys;
             if ((p[t->player->playerIndex] & 2) == 0) {
                 t->variant = 2;
                 TaskSetEntry(PlayerActionFire, gCurTaskIdx);
             }
         } else {
-            t->unk28--;
+            t->playerAttackHoldTimer--;
         }
         break;
     case 2:
@@ -797,7 +797,7 @@ void PlayerActionSpark(void)
             struct Task *u;
             t->variant = 0;
             u = gCurTask;
-            u->unk28 = 15;
+            u->playerAttackHoldTimer = 15;
             u->u80.attackAbility = ABILITY_SPARK;
         }
     }

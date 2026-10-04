@@ -2259,7 +2259,7 @@ void ShufflePlayerOrder(void)
     gPlayerOrderShuffleCount[0]++;
     if (gActivePlayerCount == 1)
     {
-        gCurTask->unk2C = 0;
+        gCurTask->playerEntryOrder = 0;
         return;
     }
     v = -1;
@@ -2281,12 +2281,12 @@ void ShufflePlayerOrder(void)
         sel[i] = gUnk_03001F2C;
     }
     for (i = 0; i < gPlayerCount; i++)
-        gTasks[i].unk2C = -1;
+        gTasks[i].playerEntryOrder = -1;
     k = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if ((gActivePlayerMask >> i) & 1)
-            gTasks[i].unk2C = sel[k++];
+            gTasks[i].playerEntryOrder = sel[k++];
     }
 }
 

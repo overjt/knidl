@@ -51,7 +51,7 @@ void PlayerActionThrowUpdate(void)
             p = t->player;
             if (p->catchKind == 0)
             {
-                if (t->unk28 == 0)
+                if (t->playerCatchBlockDelay == 0)
                 {
                     if (TaskBreakFirstBlock(gUnk_0873CC54, p->playerIndex) != 0)
                     {
@@ -61,7 +61,7 @@ void PlayerActionThrowUpdate(void)
                 }
                 else
                 {
-                    t->unk28--;
+                    t->playerCatchBlockDelay--;
                 }
                 u = gCurTask;
                 if (u->player->catchKind == 0)
@@ -70,7 +70,7 @@ void PlayerActionThrowUpdate(void)
             v = gCurTask;
             if ((s8)v->player->attachedCount == 0)
             {
-                if (v->unk2C == 0)
+                if (v->playerThrowGrabTimer == 0)
                 {
                     if (!(gLatchedHeldKeys[v->player->playerIndex] & 2))
                     {
@@ -80,13 +80,13 @@ void PlayerActionThrowUpdate(void)
                 }
                 else
                 {
-                    v->unk2C--;
+                    v->playerThrowGrabTimer--;
                 }
             }
-            else if (v->unk30 == 0)
+            else if (v->playerThrowCaught == 0)
             {
                 PlayerStartOffsetScript(1);
-                gCurTask->unk30++;
+                gCurTask->playerThrowCaught++;
             }
             break;
         case 0:

@@ -1123,23 +1123,45 @@
    / gPlayerActionHandlers, Meta Knightmare's gMetaKnightActions /
    gMetaKnightActionHandlers, and the Warp Star, cannon and goal-game rides)
    */
+#define playerCannonCameraFollow unk18 /* s32: Cannon: 1 while the local camera follows the launched player (at playerCannonFocusX / Y) */
 #define playerHeldNextCaptor unk18 /* s32: slot of the task that called SetHeldPlayerState; the spit flight makes it the parent */
 #define playerLifeRequestCursor unk18 /* s32: Life request: the cursor row (state 0: the two choices; state 1: the giver list) */
 #define playerShareReceiver unk18 /* s32: Share item: the player index that receives the shared item, in both partners' tasks */
+#define playerCannonFocusX unk1C /* s32: Cannon: pixelX as of this frame's state update, the camera focus while it follows */
 #define playerLifeGiver unk1C /* s32: Life request: the player index asked for a life (its gLifeRequests entry targets this one) */
+#define playerBallBumpVelY unk20 /* s32: Ball: velY when it bumped a ceiling (bumpKind 1); the bump pose sends it back down at -it */
+#define playerCannonFocusY unk20 /* s32: Cannon: pixelY as of this frame's state update, the camera focus while it follows */
 #define playerLifeGiverLastRow unk20 /* s32: Life request: the last row of the giver list (the number of askable players - 1) */
+#define playerBallPosePlaying unk24 /* s32: Ball: 1 while a bump or landing pose plays; the update does not draw the roll frame */
+#define playerCannonExited unk24 /* s32: Cannon launch: 1 once the player left the screen's top and ExitByCannon ran */
+#define playerCannonPoseDir unk24 /* s32: Cannon, loaded: 0 while Down is held (the pose row steps up), 1 otherwise (it steps back) */
+#define playerGoalGameSpotX unk24 /* s32: Goal game after landing: the X it walks to, gUnk_0873DBAC by its landing order */
+#define playerGoalGameTrailTimer unk24 /* s32: Goal game flight: frames 0-31 since the launch or the last big trail star */
 #define playerLifeGiverMask unk24 /* s32: Life request: bit i set per player that can be asked (active, lives, no request) */
+#define playerUfoPosture unk24 /* s32: UFO: posture shown (7 hover, 8 up, 9 down, 10 side, 11 / 12 turning, -1 none) */
 #define playerWarpStarRideLandCount unk24 /* s32: Warp Star ride: counted up at each touchdown by the state's update; its body waits for it */
 #define playerActionDone28 unk28 /* s32: 1 once the action's body has finished; its update then hands over (as playerActionDone) */
+#define playerAttackCutIn unk28 /* s32: Cutter / Star Rod: 1 once B may swing again and a held direction walk (Cutter: 2 done) */
+#define playerAttackHoldTimer unk28 /* s32: Fire / Spark / Ice / Freeze / Stone: frames (15) before B's release (Stone: press) ends it */
 #define playerAttackStep28 unk28 /* s32: the role of playerAttackStep kept in unk28 (Star Rod jump): body-box row, -1 when off */
+#define playerBallBounceVelY unk28 /* s32: Ball bounce: velY at the start, restored after the squat; its size picks the sound */
+#define playerBallJumpSavedRollFrame unk28 /* s32: Ball jump: the roll frame kept while the take-off frames show */
+#define playerBallReboundVelY unk28 /* s32: Ball landing: rebound speed (landing velY x 358 / 76 / 179 / 256 by key; 0 none) */
+#define playerBallRollDelay unk28 /* s32: Ball roll: frames per roll step (PlayerBallGetRollDelay: 4, 3, 2 as |velX| grows) */
+#define playerBallStandWallSide unk28 /* s32: Ball stand: PlayerState.wallSide at the start; no roll into that wall */
+#define playerBurningHitWall unk28 /* s32: Burning: 1 when the take-off hit a wall on the facing side; the dash then ends at once */
+#define playerCannonPoseTimer unk28 /* s32: Cannon, loaded: frames to the next pose step (1) */
+#define playerCatchBlockDelay unk28 /* s32: Inhale / Throw: frames (1) before the catch box may break a block (TaskBreakFirstBlock) */
 #define playerCrashBlendRatio unk28 /* s32: Crash: BlendColors ratio of the palette flash (0-256; +85 in the body, +10 in the update) */
 #define playerDuckDropTimer unk28 /* s32: Duck: frames (8) of ducking on a floor gTerrainResult.unk5 marks before it drops through */
 #define playerGoalGameSpringSlot unk28 /* s32: Goal game: the task index of the player's spring (TASK_GOAL_GAME_SPRING) */
 #define playerHeldBaseFrame unk28 /* s32: frame the captor-pose states start from (0x11C1 or 0x133, by PlayerState.mouthState) */
 #define playerHeldFrameTimer unk28 /* s32: frames until the held player's next frame step (8) */
+#define playerHiJumpPhaseTimer unk28 /* s32: Hi-Jump: frames to the next step of the update's frame phase (2: a step every 3 frames) */
 #define playerHighFallPhase unk28 /* s32: High fall: 0 in the opening frames, 1 after; the update then registers the body collider */
 #define playerHurtPhase unk28 /* s32: Hurt: the step of the knock-back sequence (0 at the start, counted per stage) */
 #define playerLadderStep unk28 /* s32: Ladder: the climb step, a row of gUnk_0873D8B4 / D908 (up 0-9 or 0-15, down 10-13, 16-20) */
+#define playerNeedleOnGround unk28 /* s32: Needle: Task.onGround at the last update: ground or air frame and boxes; change re-enters */
 #define playerParasolSwayAccelX unk28 /* s32: Parasol falling: the X acceleration of the sway (+-0x400 / 0x800 by facing) */
 #define playerShareHealDone unk28 /* s32: Share item: HealPlayerStep's result for the receiver: 1 once its health is full */
 #define playerSlashOnGround unk28 /* s32: Meta Knight's Slash: Task.onGround at the swing's start; on the ground the swing slides */
@@ -1147,12 +1169,22 @@
 #define playerStandSavedClampedTopY unk28 /* s32: Stand: PlayerState.clampedTopY when the pose began (-1: none), tested at the bounds top */
 #define playerThrowDir unk28 /* s32: Throw (holding): the throw the held d-pad picks: 0 up, 1 forward, 2 down */
 #define playerTornadoTurnTimer unk28 /* s32: Tornado: frames left before the spin may turn again (8 after a turn or a wall hit) */
+#define playerTumbleFrameTimer unk28 /* s32: tumble / wobble: frames to the next frame step (1 tumbling, 2 the wobble) */
 #define playerWalkStepDelay unk28 /* s32: Walk: frames added to every step of the walk cycle (0, or 2 when slowing without input) */
+#define playerWarpStarRideFrame unk28 /* s32: Warp Star ride: the riding frame PlayerSetWarpStarRideFrame picked; state 2 shows it again */
 #define playerWaterShotDir unk28 /* s32: Water shot: the spray's direction 0 right, 1 down, 2 left, 3 up; -1 once a spray ends */
 #define playerWheelOnWater unk28 /* s32: Wheel: 1 while it rolls on a water surface, which counts as ground; 0 on land */
 #define playerAttackStep unk2C /* s32: an attack's hit-box step: the 8-byte row of its hit-box and body-box tables, -1 when off */
+#define playerBallBounceSavedRollFrame unk2C /* s32: Ball bounce: the roll frame kept while the squat frames show */
+#define playerBallRollSlope unk2C /* s32: Ball roll: the slope (PlayerState.slope) the roll began on; a change re-enters it */
+#define playerBallStandRollDir unk2C /* s32: Ball stand: step (-1 / +1) turning the roll frame back to 0 the short way */
 #define playerBurningFadeStep unk2C /* s32: Burning: the row of gUnk_0873B510 (the palette fade of the dash), -1 when off */
+#define playerCannonEndTimer unk2C /* s32: Cannon launch state 3: frames (10) before PlayerEndCannonLaunch */
+#define playerCannonPoseRow unk2C /* s32: Cannon, loaded: the pose row 0-4 (gUnk_0874009C / 087400A6), up while Down is held */
 #define playerCrashSavedPosY unk2C /* s32: Crash: posY at the blast; the update keeps the player from falling below it */
+#define playerEntryOrder unk2C /* s32: the player's place in ShufflePlayerOrder's room-entry order (0 opens the door, -1 off) */
+#define playerGetAbilityAttackOn unk2C /* s32: Get ability: 1 while the Spark / Needle / Freeze pose attacks (blend or colliders) */
+#define playerGoalGameActiveIndex unk2C /* s32: Goal game: the player's place among the active players (0 sets up); picks its start X */
 #define playerHeldFrameStep unk2C /* s32: frame step per cycle (+1 or -1, from the facing) */
 #define playerHeldPoseFrameOffset unk2C /* s32: frame offset added to the base frame on the captor poses that flag it (3 or -8) */
 #define playerInhaleHoldTimer unk2C /* s32: Inhale: frames (30) the inhale lasts at least before releasing B ends it */
@@ -1160,20 +1192,38 @@
 #define playerParasolSwayVelX unk2C /* s32: Parasol falling: the sway's X speed, added to posX every frame by PlayerUpdate */
 #define playerPoseSlope unk2C /* s32: Stand / Duck: the slope (PlayerState.slope) the pose was drawn for; a change re-enters it */
 #define playerStarRodJumpFacing unk2C /* s32: Star Rod jump: the facing it lands with: the start facing, then the last held direction */
+#define playerSwimLeftDive unk2C /* s32: Swim: 1 when the update left the dive (state 2) for state 0; state 0 plays it back */
+#define playerSwimPrevState unk2C /* s32: Meta Knight's Swim: the state before this frame's key check; a change re-enters it */
+#define playerThrowGrabTimer unk2C /* s32: Throw: frames (30) the grab lasts at least before releasing B ends it */
 #define playerTornadoSfxTimer unk2C /* s32: Tornado: frames to the next spin sound (149) while B is held: every 4th frame */
+#define playerTumbleFrameStep unk2C /* s32: tumble / wobble: frame step (+1 / -1): the tumble's -facing, the wobble's alternating */
+#define playerUfoCharging unk2C /* s32: UFO charge: 1 once the opening frames are over; the update then reads the release */
 #define playerWaterShotCount unk2C /* s32: Water shot: sprays finished since the action began; once non-zero the update may leave */
 #define playerWheelWasOnGround unk2C /* s32: Wheel: Task.onGround as of the last frame (1 / 0); leaving the ground stops the Y axis */
+#define playerAttackInWater unk30 /* s32: Sword / Hammer: 1 when the swing began in water: water frames, hit-box rows, X presets */
+#define playerAttackStep30 unk30 /* s32: playerAttackStep's role kept in unk30 (Get ability's Needle pose): box row, -1 off */
+#define playerCannonRiderIndex unk30 /* s32: Cannon launch: the player's place among the riders launched together (odd ones face left) */
 #define playerFallBumped unk30 /* s32: Fall: 1 when it began from a bump (bumpKind bit 0); the body then skips its start frames */
 #define playerGoalGameLayer unk30 /* s32: Goal game from the launch on: the layer (score sign) reached, row of the layer tables */
 #define playerGoalGameSpringTimer unk30 /* s32: Goal game before the launch: frames on the spring, to 35 (24 = fully pressed) */
 #define playerHeldSwallowFrameCount unk30 /* s32: frame steps left while the player is being swallowed (2) */
 #define playerInhaleCaught unk30 /* s32: Inhale: 1 once something is attached and the catch offset script has started */
 #define playerLadderDir unk30 /* s32: Ladder: the direction it last climbed (the variant: 1 up, 2 down) */
+#define playerSlashQueued unk30 /* s32: Meta Knight's Slash / Dash slash: 1 when B was pressed in the window: slash again */
+#define playerThrowCaught unk30 /* s32: Throw: 1 once something is attached and the catch offset script has started */
+#define playerTumbleFrame unk30 /* s32: tumble: the frame 0-15 of gPlayerTumbleFrames[ability] shown (starts at 13, wraps) */
+#define playerUfoChargeSfxTimer unk30 /* s32: UFO charge: low half frames to the next charge sound, high half sounds played (203-206) */
+#define playerAttackEndFacing unk34 /* s32: Sword / Hammer: facing the air swing ends with (start facing; Hammer: last held side) */
+#define playerBallSkidDustSlot unk34 /* s32: Ball skid: task slot of its skid dust effect, stopped when the skid ends */
+#define playerCannonRiderCount unk34 /* s32: Cannon launch: how many players the cannon launched together (cannonRiderCount) */
 #define playerGoalGameLaunchPower unk34 /* s32: Goal game: the launch power 1..25 from the press timing, row of the launch tables */
 #define playerHeldBounceEnded unk34 /* s32: 1 once a bounce-off is over (or health is 0): the update drops the player */
 #define playerHeldSpitTimer unk34 /* s32: frames until the spat-out player is let go (48; 32 when its health is 0) */
 #define playerHeldWobbleStep unk34 /* s32: step of the wobble in the captor's hands (0-14: gUnk_0873E348 / gUnk_0873E388) */
+#define playerInhaleAirColliderTimer unk34 /* s32: Inhale, catchKind 1: frames (8) the collider stays after leaving the ground; -1 before */
 #define playerLadderFrameOffset unk34 /* s32: Ladder (abilities 1/2/5/19): the frame offset 0-51 cycled by 13 every 2 frames */
+#define playerRideIsCannon unk34 /* s32: Warp Star / cannon landing: 1 in the cannon's fall (state 4), 0 in the Warp Star ride */
+#define playerUfoSfxTimer unk34 /* s32: UFO: frame counter 0-7; the update plays sound 239 each time it is 0 */
 #define playerBallRollFrame unk46 /* s16: Ball: the roll frame index 0-15 into gUnk_0873DB0A (-1 while another animation plays) */
 #define playerBaseFrame unk46 /* s16: the running action's base frame, from its per-ability frame table; frames step from it */
 #define playerGoalGameMarkerSlot unk46 /* s16: the goal game's player marker child (task type #87, Task_GoalGamePlayerMarker) */
@@ -1184,9 +1234,16 @@
 #define playerUfoFrameIndex unk46 /* s16: UFO: the frame index the update shows (gUnk_0873DB34, or + 0xF88 / 0xFA8), -1 none */
 #define playerHeldLoopCount unk6C /* s16: the running HeldPlayer state's loop counter (frame-cycle steps) */
 #define playerLoopCount unk6C /* s16: the running action's loop counter (frame runs, steps, shakes, players), counted from 0 */
+#define playerBallRollFacing unk6E /* s16: Ball: facing the roll frames are drawn for (1 unflipped), restored at the revert */
 #define playerBankBlendRatio unk6E /* s16: Spark: ratio 0-256 (+128 a step) blending the sprite's palette bank to its charged colours */
+#define playerBurningFadeRatio unk6E /* s16: Burning: BlendColors ratio of the dash's palette fade (+ the fade row's rate, up to 256) */
+#define playerLoopCount6E unk6E /* s16: a second loop counter (the inner one when unk6C counts the outer), counted from 0 */
 #define playerActionDone unk70 /* s16: Ball / Star Rod: 1 once the action's body has finished; its update then hands over */
+#define playerCannonSmokeTimer unk70 /* s16: Cannon flight: frames (8) to the next cannon smoke puff */
 #define playerNextBankBlendRatio unk70 /* s16: Spark: ratio 0-256 (+64 a step) blending the next palette bank to its charged colours */
+#define playerUfoCutIn unk70 /* s16: UFO: an attack's end: 0 playing, 1 A / B or a direction may cut in, 2 done (state 1: 1) */
+#define playerBallEnterDoor unk74 /* u8: Ball: 1 when a door was found; the revert shakes the screen, then requests the door entry */
+#define playerUfoLeaving unk74 /* u8: UFO: 1 once PlayerCheckEnterDoor returned a request (a door); the state turns to 1 */
 
 /* PlayerCountPanel - PlayerCountPanel (task type #246, Task_PlayerCountPanel)
    */
@@ -1419,8 +1476,8 @@
 #define starFlashOnParentLoopCount unk6C /* s16: the body's loop counter (8 two-frame flashes); the update's offset step */
 
 /* Starman - Starman (task type #31, Task_Starman; gStarmanVariants: row 0
-   gStarmanAmbushStates, gStarmanJumpStates, gStarmanFlyStates, gStarmanIdleStates)
-   */
+   gStarmanAmbushStates, gStarmanJumpStates, gStarmanFlyStates,
+   gStarmanIdleStates) */
 #define starmanDropCount unk28 /* s32: drops of row 0's state 3 done: after the first it walks again, a later one flies off */
 #define starmanWalkTimer unk28 /* s32: frames walked in the 217-frame cycle, counted up (216 at the start) */
 #define starmanWaveTimer unk28 /* s32: frames until the next step of the flight's velY wave (6 or 8) */

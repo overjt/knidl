@@ -44,7 +44,7 @@ void PlayerActionStarRod(void)
     }
     {
         struct Task *t = gCurTask;
-        t->unk28 = 0;
+        t->playerAttackCutIn = 0;
         PlaySfxIfLocalPlayer(155, (u16)t->player->playerIndex);
     }
     TaskSetFrame(0x1026);
@@ -77,7 +77,7 @@ void PlayerActionStarRod(void)
     TaskYieldTrampoline(1);
     {
         struct Task *t = gCurTask;
-        t->unk28++;
+        t->playerAttackCutIn++;
         t->frame++;
     }
     TaskYieldTrampoline(1);
@@ -97,7 +97,7 @@ void PlayerActionStarRodUpdate(void)
     }
     else
     {
-        if (t->unk28 != 0)
+        if (t->playerAttackCutIn != 0)
         {
             if (gLatchedPressedKeys[t->player->playerIndex] & 2)
             {
@@ -150,7 +150,7 @@ void PlayerActionStarRodJump(void)
         }
         TaskSetFrame(0xFE5);
         TaskYieldTrampoline(1);
-        for (gCurTask->unk6E = 0; gCurTask->unk6E <= 6; gCurTask->unk6E++)
+        for (gCurTask->playerLoopCount6E = 0; gCurTask->playerLoopCount6E <= 6; gCurTask->playerLoopCount6E++)
         {
             struct Task *t = gCurTask;
             t->playerAttackStep28++;
