@@ -242,7 +242,7 @@ void InitPlayerState(s32 a0)
     p->wallSide = 0;
     p->slope = 0;
     p->onSlipperyFloor = 0;
-    p->unk4E = -1;
+    p->clampedTopY = -1;
     p->driftVelY = 0;
     p->driftVelX = 0;
     p->prevPixelY = 0;
@@ -312,7 +312,7 @@ void sub_0803d1c4(s32 a0)
     p->wallSide = 0;
     p->slope = 0;
     p->onSlipperyFloor = 0;
-    p->unk4E = -1;
+    p->clampedTopY = -1;
     p->driftVelY = 0;
     p->driftVelX = 0;
     p->bodyBox = 0;
@@ -374,7 +374,7 @@ void sub_0803d2d4(s32 a0)
     p->wallSide = 0;
     p->slope = 0;
     p->onSlipperyFloor = 0;
-    p->unk4E = -1;
+    p->clampedTopY = -1;
     p->driftVelY = 0;
     p->driftVelX = 0;
     p->bodyBox = 0;

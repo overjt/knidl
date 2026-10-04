@@ -50,7 +50,7 @@ s32 sub_08021b70(u32 x, u32 y)
     if (x >= w || y >= gRoomHeight)
         return 0;
     idx = y * w;
-    return (&gRoomMap[idx])[x].unk2;
+    return (&gRoomMap[idx])[x].slopeIndex;
 }
 
 s32 GetCollisionTileAtOffset(s16 x, s16 y, s16 dx, s16 dy)

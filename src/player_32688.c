@@ -290,13 +290,13 @@ void PlayerUpdate(void)
         gCurTask->player->blocksBroken = 0;
     }
     gCurTask->player->prevWaterFlags = gCurTask->waterFlags;
-    gCurTask->player->unk4E = 0xFFFF;
+    gCurTask->player->clampedTopY = 0xFFFF;
     if (gCurTask->player->terrainBox != 0)
     {
         PlayerProbeTerrain(gCurTask->player->terrainBox);
         gCurTask->player->boundsClamp = gTerrainBoundsClamp;
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
-            gCurTask->player->unk4E = gTerrainClampedTopY;
+            gCurTask->player->clampedTopY = gTerrainClampedTopY;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
         if (gTerrainResult.damage != 0 && !(gCurTask->player->unk42 & 0x200)
          && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)

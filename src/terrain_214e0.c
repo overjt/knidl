@@ -75,7 +75,7 @@ s32 TerrainQueryPixel(u32 x, u32 y)
     {
         idx = y * w + x;
         gTerrainTile = gRoomMap[idx].collisionTile;
-        gTerrainSlopeIndex = gRoomMap[idx].unk2;
+        gTerrainSlopeIndex = gRoomMap[idx].slopeIndex;
         gTerrainTileShape = gCollisionTileShapes[gTerrainTile];
         return gTerrainTileShape[gTerrainPixelIndex];
     }
@@ -99,14 +99,14 @@ s32 TerrainQueryPixelAndBelow(u32 x, u32 y)
         if (idx + w <= gRoomMetatileCount)
         {
             gTerrainTileBelow = (&gRoomMap[idx])[w].collisionTile;
-            gTerrainSlopeIndexBelow = (&gRoomMap[idx])[gRoomWidth].unk2;
+            gTerrainSlopeIndexBelow = (&gRoomMap[idx])[gRoomWidth].slopeIndex;
         }
         else
         {
             gTerrainTileBelow = gTerrainSlopeIndexBelow = 0;
         }
         gTerrainTile = gRoomMap[idx].collisionTile;
-        gTerrainSlopeIndex = gRoomMap[idx].unk2;
+        gTerrainSlopeIndex = gRoomMap[idx].slopeIndex;
         p = gCollisionTileShapes[gTerrainTile];
         return p[gTerrainPixelIndex];
     }
@@ -128,18 +128,18 @@ s32 TerrainQueryPixelAndSides(u32 x, u32 y)
     {
         idx = y * w + x;
         gTerrainTileLeft = (&gRoomMap[idx])[-1].collisionTile;
-        gTerrainSlopeIndexLeft = (&gRoomMap[idx])[-1].unk2;
+        gTerrainSlopeIndexLeft = (&gRoomMap[idx])[-1].slopeIndex;
         if (x + 1 < gRoomWidth)
         {
             gTerrainTileRight = (&gRoomMap[idx])[1].collisionTile;
-            gTerrainSlopeIndexRight = (&gRoomMap[idx])[1].unk2;
+            gTerrainSlopeIndexRight = (&gRoomMap[idx])[1].slopeIndex;
         }
         else
         {
             gTerrainTileRight = gTerrainSlopeIndexRight = 0;
         }
         gTerrainTile = gRoomMap[idx].collisionTile;
-        gTerrainSlopeIndex = gRoomMap[idx].unk2;
+        gTerrainSlopeIndex = gRoomMap[idx].slopeIndex;
         p = gCollisionTileShapes[gTerrainTile];
         return p[gTerrainPixelIndex];
     }

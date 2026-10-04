@@ -99,7 +99,7 @@ struct Unk0802D278
 struct MapTile
 {
     /*0x00*/ u16 metatile;
-    /*0x02*/ u8 unk2;
+    /*0x02*/ u8 slopeIndex;
     /*0x03*/ u8 collisionTile;
 };
 

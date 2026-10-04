@@ -84,7 +84,7 @@ void MetaKnightActionStand(void)
 
         PlayerStopAxes(3);
         t = gCurTask;
-        t->unk28 = (u16)t->player->unk4E;
+        t->unk28 = (u16)t->player->clampedTopY;
         t->unk2C = t->player->slope;
         if (t->player->wallSide != 0)
             t->player->savedWallSide = t->player->wallSide;

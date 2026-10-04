@@ -319,7 +319,7 @@ struct PlayerState
     /*0x4B*/ u8 slope;
     /*0x4C*/ u8 atDoor;
     /*0x4D*/ u8 filler4D;
-    /*0x4E*/ s16 unk4E;
+    /*0x4E*/ s16 clampedTopY;
     /*0x50*/ u8 unk50;
     /*0x51*/ u8 filler51[3];
     /*0x54*/ s32 driftVelX;

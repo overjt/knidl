@@ -77,7 +77,7 @@ void InitRoomBgLayout(void)
             {
                 idx = gRoomWidth * i + j;
                 ((struct MapTile *)gRoomMap)[idx].metatile = 0;
-                ((struct MapTile *)gRoomMap)[idx].unk2 = 0;
+                ((struct MapTile *)gRoomMap)[idx].slopeIndex = 0;
                 ((struct MapTile *)gRoomMap)[idx].collisionTile = 0;
                 gBlockLayer[idx] = 0;
             }

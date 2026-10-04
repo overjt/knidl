@@ -28,9 +28,9 @@
 
 struct MapCell
 {
-    /*0x00*/ u8 unk0;
-    /*0x01*/ u8 unk1;
-    /*0x02*/ u8 unk2;
+    /*0x00*/ u8 metatileLo;
+    /*0x01*/ u8 metatileHi;
+    /*0x02*/ u8 slopeIndex;
     /*0x03*/ u8 collisionTile;
 };
 struct BgMap
