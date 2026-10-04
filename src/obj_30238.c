@@ -8,7 +8,7 @@
 /* obj_30238.c (0x08030238-0x080306B3, issue #86).
  *
  * Task type #236 (class 4): Task_StageEffect dispatches on Task.state into the
- * six bodies of the anchor table gUnk_087328D8 (CreateStageEffect spawns it).
+ * six bodies of the anchor table gStageEffectStates (CreateStageEffect spawns it).
  * They are short sprite animations that step Task.frame, the frame of the
  * Task.frameTable graphics table, every one to four frames; sub_08030404 also
  * falls (Task.accelY = -0x400) and sub_080304ec rises (Task.velY =
@@ -18,7 +18,7 @@ void CallTableEntry(u32 idx, u32 count, void (**fns)(void));
 
 void Task_StageEffect(void)
 {
-    CallTableEntry(gCurTask->state, 6, gUnk_087328D8);
+    CallTableEntry(gCurTask->state, 6, gStageEffectStates);
 }
 
 void sub_08030254(void)

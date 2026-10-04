@@ -16,7 +16,7 @@
  * biases added (attr0 y in bits 7-0, attr1 x in bits 8-0, both wrapping in
  * their own field width) until a template entry has bit12 set ("last") or the
  * shadow fills up.  Afterwards gOamBufferCursor keeps the write cursor,
- * gUnk_03001EC8 the number of entries used, and every unused OAM slot gets
+ * gOamEntryCount the number of entries used, and every unused OAM slot gets
  * attr0 = 236 (off-screen y) to hide it.
  *
  * NOTE (IWRAM): AgbInit copies these 0x1C0 bytes to 0x03001F40 with a
@@ -105,7 +105,7 @@ void BuildOam(void)
 
 finish:
     gOamBufferCursor = dst;
-    gUnk_03001EC8 = ((u32)dst - (u32)gOamBuffer) >> 3;
+    gOamEntryCount = ((u32)dst - (u32)gOamBuffer) >> 3;
     for (q = (u32 *)dst; q < (u32 *)(gOamBuffer + 512); q += 2)
         *q = 236;
 }

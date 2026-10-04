@@ -15,7 +15,7 @@
 
 /* RAM cells / ROM tables */
 /* Not from actor.h: this file's view of gUnk_02006040 differs (lesson 3.517). */
-extern u32 gUnk_02004C90;
+extern u32 gBossHitStunFlashPalette;
 extern u32 gUnk_02006040[];
 extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
@@ -651,7 +651,7 @@ s32 MrShineAndMrBrightReactToDefeat(void)
 void sub_080a1f90(void)
 {
     if (gCurTask->variant == 2)
-        sub_080a2b2c(gUnk_02004C90, gUnk_02006190[4]);
+        sub_080a2b2c(gBossHitStunFlashPalette, gUnk_02006190[4]);
     if (gUnk_02006190[3] <= 0)
         BossEndHitStun();
 }

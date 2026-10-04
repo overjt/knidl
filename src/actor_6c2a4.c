@@ -95,7 +95,7 @@ void ActorAttachedPullIn(void)
     u->layer = 6;
     while (TaskIsParentWithinX(18) == 0)
     {
-        sub_0806bc28();
+        ActorAttachedPullInStep();
         TaskYieldTrampoline(1);
     }
     sub_0806bc9c();

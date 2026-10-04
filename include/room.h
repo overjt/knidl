@@ -828,8 +828,8 @@ void CameraResetBoundsToGroup(void);
 void CameraResetBounds(void);
 
 /* src/camera_28b8c.c */
-void sub_08028b8c(void);
-void sub_08028e3c(void);
+void CameraResetRoomView(void);
+void CalcRoomAndCameraBounds(void);
 void SetRoomEntryPoint(void);
 void sub_08029034(void);
 void CameraSetFocusToLocalPlayer(void);

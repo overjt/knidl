@@ -8,11 +8,11 @@
  * The probe sets of three more entry points in src/terrain_1bcac.c:
  * TerrainCollideBoxWalls's right/left wall probes sub_0801f540/sub_0801f6b0 (the
  * box's top corner through a gUnk_08732DF0 wall class, then the middle and
- * bottom corners), TerrainCollideBoxCeilingAndFloor's ceiling probe sub_0801f800 (TerrainProbeCeiling
+ * bottom corners), TerrainCollideBoxCeilingAndFloor's ceiling probe TerrainProbeCeilingNoSlopeLink (TerrainProbeCeiling
  * without the slope tiles) and landing probe sub_0801f9b8 (not while moving
  * up; it tracks passable floor tiles in gTerrainProbeResult.unkB bits 0-2), and
- * TerrainCollideBoxFloor's pair sub_0801fc48 (on the ground: follow the floor or
- * drop off it) / sub_0801fe2c (in the air: land). */
+ * TerrainCollideBoxFloor's pair TerrainProbeFloorNoSlopeLink (on the ground: follow the floor or
+ * drop off it) / TerrainProbeLandingNoSlopeLink (in the air: land). */
 
 /* Right wall probe of the third entry point (TerrainCollideBoxWalls). */
 void sub_0801f540(void)
@@ -110,7 +110,7 @@ void sub_0801f6b0(void)
 
 /* Ceiling probe of the fourth entry point (TerrainCollideBoxCeilingAndFloor): TerrainProbeCeiling
    without the slope-tile case. */
-void sub_0801f800(void)
+void TerrainProbeCeilingNoSlopeLink(void)
 {
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop) != 0
         && gCollisionTileOneWay[gTerrainTile] == 0)
@@ -213,7 +213,7 @@ void sub_0801f9b8(void)
    the ground: keep it on the floor cell under it (or the cell below), else
    count the floor cells under its two bottom corners and clear the
    on-ground flags when there are none (the box starts to fall). */
-void sub_0801fc48(void)
+void TerrainProbeFloorNoSlopeLink(void)
 {
     s32 n;
     u16 t;
@@ -272,7 +272,7 @@ count:
 /* Landing probe of the fifth entry point (TerrainCollideBoxFloor) for a box in the
    air: land the box's bottom on the floor cell under it, else a bottom
    corner on a floor cell, and set the on-ground flags. */
-void sub_0801fe2c(void)
+void TerrainProbeLandingNoSlopeLink(void)
 {
     s32 a;
     s32 a2;

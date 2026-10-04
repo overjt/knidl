@@ -17,7 +17,7 @@
  * variant 37 (src/effect_57ce0.c): the same stop and release of the tasks of
  * kinds 1, 2, 7 and 8 through gScreenAttackTasks and the task skip mask, around a
  * palette effect - it saves the palette buffer (CpuSet of gObjPaletteBank8 into
- * gUnk_0200AF20) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
+ * gObjPaletteBlendBase) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
  * LockAllActorPalettes and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
  * blends the saved palette towards gUnk_0873BC3E (while gInHub is
  * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
@@ -228,7 +228,7 @@ void PlayerEffectCrashBlast(void)
         v->unk28 = 0;
         v->unk2C = 0;
         LockAllActorPalettes();
-        CpuSet(gObjPaletteBank8, gUnk_0200AF20, 96);
+        CpuSet(gObjPaletteBank8, gObjPaletteBlendBase, 96);
         gCurTask->frame = 0;
         gCurTask->playerEffectLoopCount = 0;
         do
@@ -375,9 +375,9 @@ void PlayerEffectCrashBlastUpdate(void)
         break;
     case 1:
         if (gInHub != 0)
-            BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         else
-            BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         t = gCurTask;
         if (t->unk2C != 0x100)
         {
@@ -390,9 +390,9 @@ void PlayerEffectCrashBlastUpdate(void)
         break;
     case 2:
         if (gInHub != 0)
-            BlendColors(gUnk_0200AF20, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BC3E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         else
-            BlendColors(gUnk_0200AF20, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BB7E, (u16)gCurTask->unk2C, n << 4, gObjPaletteBank8);
         u = gCurTask;
         if (u->unk2C != 0)
         {

@@ -72,7 +72,7 @@ struct ActorDef *const gMidBossDefs[] = {
     NULL,
 };
 
-/* kind 2: the bosses (the subtype is also kept in gUnk_02007F50) */
+/* kind 2: the bosses (the subtype is also kept in gBossSubtype) */
 struct ActorDef *const gBossDefs[] = {
     &gKingDededeDef,
     &gPaintRollerDef,

@@ -879,7 +879,7 @@ void sub_08066144(void)
         gUnk_02006190[i] = 0;
     for (i = 0; i < 10; i++)
         gUnk_02006040[i] = 0;
-    gUnk_0200AEF4 = gUnk_02004C90 = 0;
+    gBossHitStunCallback = gBossHitStunFlashPalette = 0;
 }
 
 void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
@@ -892,10 +892,10 @@ void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
     gUnk_02006190[0] = t->pixelX;
     gUnk_02006190[1] = t->pixelY;
     gUnk_02006190[2] = t->frame;
-    gUnk_02004C90 = p2;
+    gBossHitStunFlashPalette = p2;
     gUnk_02006190[4] = p3;
     gUnk_02006190[3] = p0;
-    gUnk_0200AEF4 = p1;
+    gBossHitStunCallback = p1;
     gUnk_02006190[5] = p4;
 }
 
@@ -911,7 +911,7 @@ void BossEndHitStun(void)
     t->pixelX = gUnk_02006190[0];
     t->pixelY = gUnk_02006190[1];
     t->frame = gUnk_02006190[2];
-    if (gUnk_02004C90 != 0)
+    if (gBossHitStunFlashPalette != 0)
     {
         if (gUnk_02006190[5] != 0)
             ActorClearPaletteOverride();
@@ -945,22 +945,22 @@ void BossHitStunLateUpdate(void)
     a = gCurTask->u8C.actor;
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
-    if (gUnk_02004C90 != 0)
+    if (gBossHitStunFlashPalette != 0)
     {
         v = gUnk_02006190[5];
         switch (v)
         {
         case 1:
-            ActorFlashPalette((void *)gUnk_02004C90, gUnk_02006190[4]);
+            ActorFlashPalette((void *)gBossHitStunFlashPalette, gUnk_02006190[4]);
             break;
         case 0:
-            ActorFlashHeaderPalette(a->gfx.header, gUnk_02004C90, gUnk_02006190[4]);
+            ActorFlashHeaderPalette(a->gfx.header, gBossHitStunFlashPalette, gUnk_02006190[4]);
             break;
         }
     }
     BossHitStunShake();
-    if (gUnk_0200AEF4 != 0)
-        ((void (*)(void))gUnk_0200AEF4)();
+    if (gBossHitStunCallback != 0)
+        ((void (*)(void))gBossHitStunCallback)();
 }
 
 /* True when every active player is in state 1. */

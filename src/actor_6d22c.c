@@ -10,7 +10,7 @@
  * wrappers Task_StarScatter/564/574/5a4/5b8/5cc, the CreateChildTaskHere spawner
  * helpers CreateBurstEffect/d928/da3c, the eight-way "carried" body
  * Task_ImpactStar, the gTasks[].unk73-keyed body Task_CannonSmoke (with its
- * per-frame mover sub_0806da74), the two-sprite draw callback CannonFuseSparkDraw,
+ * per-frame mover CannonSmokeInit), the two-sprite draw callback CannonFuseSparkDraw,
  * and the two random-walk bodies Task_CannonFuseSpark and Task_HitFrost.
  */
 
@@ -468,7 +468,7 @@ void CreateCannonSmoke(u32 a, u32 b)
     }
 }
 
-void sub_0806da74(void)
+void CannonSmokeInit(void)
 {
     struct Task *t;
     s32 m;
@@ -502,7 +502,7 @@ void Task_CannonSmoke(void)
     t->frameTable = gUnk_08752E48;
     t->layer = 10;
     gCurTask->tileWord = 0;
-    sub_0806da74();
+    CannonSmokeInit();
     u = gCurTask;
     switch (u->variant)
     {

@@ -11,10 +11,10 @@
 
 /* camera_28b8c.c (0x08028B8C-0x0802969F, issue #93).
  *
- * Camera start-up for a new room.  sub_08028b8c (camera modes other than
+ * Camera start-up for a new room.  CameraResetRoomView (camera modes other than
  * 5) copies the room bounds into the camera bounds and puts the camera,
  * its 16.16 target and the visible rectangle on the player (one player)
- * or runs M08's multi-player updates; sub_08028e3c only sets the bounds.
+ * or runs M08's multi-player updates; CalcRoomAndCameraBounds only sets the bounds.
  * SetRoomEntryPoint places the player at the room's start position
  * (RoomDef.entryX/unk52) unless a door already did, clamps it and records
  * the arrival for the next level change (gUnk_02008054, gUnk_0200AFF4,
@@ -40,7 +40,7 @@ struct Unk020055D8Entry
 void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 void PlaySfx(s32 id);
 
-void sub_08028b8c(void)
+void CameraResetRoomView(void)
 {
     s32 x;
     s32 y;
@@ -136,7 +136,7 @@ void sub_08028b8c(void)
     }
 }
 
-void sub_08028e3c(void)
+void CalcRoomAndCameraBounds(void)
 {
     CalcRoomBounds();
     CameraResetBounds();

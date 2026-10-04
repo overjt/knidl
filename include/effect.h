@@ -12,7 +12,7 @@
 extern u32 gUnk_020060CC[];
 extern u8 gUnk_02006A14[];
 extern s8 gUnk_02008010;
-extern u16 gUnk_0200AF20[];
+extern u16 gObjPaletteBlendBase[];
 extern u16 gScreenAttackTasks[]; /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
 
 /* IWRAM */

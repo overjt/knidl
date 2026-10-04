@@ -73,8 +73,8 @@ gObjectSpawnViewRect = 0x02004B78
 gBigSwitchReturnBg3X = 0x02004B80
 	.global	gDoorStates
 gDoorStates = 0x02004B90
-	.global	gUnk_02004C90
-gUnk_02004C90 = 0x02004C90
+	.global	gBossHitStunFlashPalette
+gBossHitStunFlashPalette = 0x02004C90
 	.global	gEndingPlayerCount
 gEndingPlayerCount = 0x02004C94
 	.global	gUnk_02004C98
@@ -261,8 +261,8 @@ gPrevMenuScreen = 0x02007E88
 gPressedBigSwitchSlot = 0x02007E8C
 	.global	gUnk_02007E90
 gUnk_02007E90 = 0x02007E90
-	.global	gUnk_02007F50
-gUnk_02007F50 = 0x02007F50
+	.global	gBossSubtype
+gBossSubtype = 0x02007F50
 	.global	gUnk_02007F60
 gUnk_02007F60 = 0x02007F60
 	.global	gBrokenBlockX
@@ -319,8 +319,8 @@ gSoundTestSelection = 0x0200A6E0
 gBg1BreakingBlocks = 0x0200A6F0
 	.global	gRoomEntryY
 gRoomEntryY = 0x0200AEF0
-	.global	gUnk_0200AEF4
-gUnk_0200AEF4 = 0x0200AEF4
+	.global	gBossHitStunCallback
+gBossHitStunCallback = 0x0200AEF4
 	.global	gBlockCursorY
 gBlockCursorY = 0x0200AEFC
 	.global	gEntryDoorEvent
@@ -335,8 +335,8 @@ gUnk_0200AF0C = 0x0200AF0C
 gBombRallyOutMask = 0x0200AF10
 	.global	gPlayerAbilityUses
 gPlayerAbilityUses = 0x0200AF18
-	.global	gUnk_0200AF20
-gUnk_0200AF20 = 0x0200AF20
+	.global	gObjPaletteBlendBase
+gObjPaletteBlendBase = 0x0200AF20
 	.global	gHubUnlockBlocks
 gHubUnlockBlocks = 0x0200AFE0
 	.global	gPlayerBubbleTimers
@@ -761,8 +761,8 @@ gBg3Cnt = 0x03001EB4
 gPlayerPressedKeys = 0x03001EB8
 	.global	gWaitingForVBlank
 gWaitingForVBlank = 0x03001EC4
-	.global	gUnk_03001EC8
-gUnk_03001EC8 = 0x03001EC8
+	.global	gOamEntryCount
+gOamEntryCount = 0x03001EC8
 	.global	gKeyRepeatInterval
 gKeyRepeatInterval = 0x03001ECC
 	.global	gWinIn1

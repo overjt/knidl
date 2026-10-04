@@ -496,10 +496,10 @@ vma,size,isa,evidence,name
 0x0801ECD0,0x870,thumb,bl-target,TerrainProbeLanding
 0x0801F540,0x170,thumb,bl-target,sub_0801f540
 0x0801F6B0,0x150,thumb,bl-target,sub_0801f6b0
-0x0801F800,0x1B8,thumb,bl-target,sub_0801f800
+0x0801F800,0x1B8,thumb,bl-target,TerrainProbeCeilingNoSlopeLink
 0x0801F9B8,0x290,thumb,bl-target,sub_0801f9b8
-0x0801FC48,0x1E4,thumb,bl-target,sub_0801fc48
-0x0801FE2C,0x158,thumb,bl-target,sub_0801fe2c
+0x0801FC48,0x1E4,thumb,bl-target,TerrainProbeFloorNoSlopeLink
+0x0801FE2C,0x158,thumb,bl-target,TerrainProbeLandingNoSlopeLink
 0x0801FF84,0x714,thumb,bl-target,TerrainProbeAlongVelocity
 0x08020698,0x4,thumb,curated,sub_08020698
 0x0802069C,0x104,thumb,bl-target,TerrainProbePointStop
@@ -658,8 +658,8 @@ vma,size,isa,evidence,name
 0x08028948,0x48,thumb,bl-target,CalcRoomBounds
 0x08028990,0x18C,thumb,bl-target,CameraResetBoundsToGroup
 0x08028B1C,0x70,thumb,bl-target,CameraResetBounds
-0x08028B8C,0x2B0,thumb,bl-target,sub_08028b8c
-0x08028E3C,0x10,thumb,bl-target,sub_08028e3c
+0x08028B8C,0x2B0,thumb,bl-target,CameraResetRoomView
+0x08028E3C,0x10,thumb,bl-target,CalcRoomAndCameraBounds
 0x08028E4C,0x1E8,thumb,bl-target,SetRoomEntryPoint
 0x08029034,0x78,thumb,bl-target,sub_08029034
 0x080290AC,0x30,thumb,bl-target,CameraSetFocusToLocalPlayer
@@ -1708,8 +1708,8 @@ vma,size,isa,evidence,name
 0x0806BB34,0x48,thumb,bl-target,sub_0806bb34
 0x0806BB7C,0x6C,thumb,bl-target,ActorAttachToHitter
 0x0806BBE8,0x40,thumb,bl-target,ActorAttachedPullTowardCarrier
-0x0806BC28,0x2C,thumb,bl-target,sub_0806bc28
-0x0806BC54,0x48,thumb,bl-target,sub_0806bc54
+0x0806BC28,0x2C,thumb,bl-target,ActorAttachedPullInStep
+0x0806BC54,0x48,thumb,bl-target,ActorInitCarryOffset
 0x0806BC9C,0x40,thumb,bl-target,sub_0806bc9c
 0x0806BCDC,0x34,thumb,bl-target,ActorAttachedSwallowStep
 0x0806BD10,0x13C,thumb,bl-target,ActorAttachedEnterMouth
@@ -1772,7 +1772,7 @@ vma,size,isa,evidence,name
 0x0806DA04,0x1C,thumb,rom-pointer,Task_BossScreenFlash
 0x0806DA20,0x1C,thumb,rom-pointer,Task_ExplosionScreenFlash
 0x0806DA3C,0x38,thumb,bl-target,CreateCannonSmoke
-0x0806DA74,0x78,thumb,bl-target,sub_0806da74
+0x0806DA74,0x78,thumb,bl-target,CannonSmokeInit
 0x0806DAEC,0x1B4,thumb,rom-pointer,Task_CannonSmoke
 0x0806DCA0,0xF0,thumb,rom-pointer,CannonFuseSparkDraw
 0x0806DD90,0x88,thumb,rom-pointer,Task_CannonFuseSpark

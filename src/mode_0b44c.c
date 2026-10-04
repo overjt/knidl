@@ -152,7 +152,7 @@ void StageInit(void)
     ClearColliderLists();
     LoadGfxSet(0);
     sub_08008c7c();
-    gUnk_02007F50 = -1;
+    gBossSubtype = -1;
     if (gBigSwitchPressActive == 0)
         LoadRoom();
     else
@@ -222,7 +222,7 @@ void HubInit(void)
         p--;
     } while ((s32)p >= (s32)b);
     gUnk_020061E0 = 0;
-    gUnk_02007F50 = -1;
+    gBossSubtype = -1;
     sub_08066144();
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
@@ -253,7 +253,7 @@ void BigSwitchViewInit(void)
         p--;
     } while ((s32)p >= (s32)b);
     gUnk_020061E0 = 0;
-    gUnk_02007F50 = -1;
+    gBossSubtype = -1;
     sub_08066144();
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;

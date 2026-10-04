@@ -80,7 +80,7 @@ void ActorBindDefSlot(u32 i)
         break;
     case 2:
         a->def = gBossDefs[t->u76.subtype];
-        gUnk_02007F50 = t->u76.subtype;
+        gBossSubtype = t->u76.subtype;
         break;
     case 4:
         a->def = gChildActorDefs[t->u76.subtype];

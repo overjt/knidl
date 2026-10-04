@@ -78,7 +78,7 @@ extern u16 *gScreenShakePatterns[];
 extern void (*gMapEventVariants[])(void);
 extern u8 gUnk_087328BC[];
 extern s16 gUnk_087328C0[][2];
-extern void (*gUnk_087328D8[])(void);
+extern void (*gStageEffectStates[])(void);
 extern u32 gUnk_0874CD54[];
 extern u32 gUnk_0874CD68[];
 extern u32 gUnk_0874CDE0[];

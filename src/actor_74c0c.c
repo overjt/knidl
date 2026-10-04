@@ -17,11 +17,11 @@
 #include "enemy.h"
 
 /* RAM cells and ROM tables */
-/* Not from room.h or effect.h: this file's view of gUnk_0200AF20 and
+/* Not from room.h or effect.h: this file's view of gObjPaletteBlendBase and
    gBgPaletteBank8 differs (lesson 3.517). */
 extern s16 gViewRect[];
 extern u8 gUnk_02005E10[];
-extern u8 gUnk_0200AF20[];
+extern u8 gObjPaletteBlendBase[];
 extern u8 gBgPaletteBank8[];
 extern u8 gActivePlayerMask;
 
@@ -136,8 +136,8 @@ void sub_08074e8c(void)
 {
     CpuSet(gBgPaletteBank8, gUnk_02005E10, 128);
     CpuSet(gBgPaletteBank8 + 256, gUnk_02005E10 + 256, 128);
-    CpuSet(gBgPaletteBank8 + 576, gUnk_0200AF20, 32);
-    CpuSet(gBgPaletteBank8 + 704, gUnk_0200AF20 + 64, 32);
+    CpuSet(gBgPaletteBank8 + 576, gObjPaletteBlendBase, 32);
+    CpuSet(gBgPaletteBank8 + 704, gObjPaletteBlendBase + 64, 32);
 }
 
 void sub_08074ee0(u32 flag)
@@ -188,8 +188,8 @@ void sub_08074f48(u8 a)
     }
     BlendColors(gUnk_02005E10, gUnk_0873FD98, v1, 128, gBgPaletteBank8);
     BlendColors(gUnk_02005E10 + 256, gUnk_0873FE98, v2, 128, gBgPaletteBank8 + 256);
-    BlendColors(gUnk_0200AF20, gUnk_0873FE98, v2, 32, gBgPaletteBank8 + 576);
-    BlendColors(gUnk_0200AF20 + 64, gUnk_0873FE98, v2, 32, gBgPaletteBank8 + 704);
+    BlendColors(gObjPaletteBlendBase, gUnk_0873FE98, v2, 32, gBgPaletteBank8 + 576);
+    BlendColors(gObjPaletteBlendBase + 64, gUnk_0873FE98, v2, 32, gBgPaletteBank8 + 704);
 }
 
 void Task_NightmarePowerOrbEscape(void)

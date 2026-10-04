@@ -244,9 +244,9 @@ void CameraStartFollowFocusAt(s32 x, s32 y)
     if (gUnk_02007D64 != 2)
     {
         if (gInHub != 0)
-            sub_08028e3c();
+            CalcRoomAndCameraBounds();
         else
-            sub_08028b8c();
+            CameraResetRoomView();
     }
 }
 

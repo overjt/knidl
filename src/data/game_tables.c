@@ -160,7 +160,7 @@ void (*gMapEventVariants[7])(void) GAME_TBL(087328a0) = {
 
 /* ---- 0x087328D8-0x087328F0: 1 table(s), 6 function pointer(s), section .game_tbl_087328d8 ---- */
 /* include/camera.h; CallTableEntry(i, 6, ...) in Task_StageEffect */
-void (*gUnk_087328D8[6])(void) GAME_TBL(087328d8) = {
+void (*gStageEffectStates[6])(void) GAME_TBL(087328d8) = {
     sub_08030254,
     sub_080302cc,
     sub_08030404,

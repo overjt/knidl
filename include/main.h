@@ -100,7 +100,7 @@ extern vu8 gBgMosaic; /* MOSAIC lo shadow */
 extern vu16 gBg3Cnt; /* BG3CNT shadow */
 extern vu16 gPlayerPressedKeys[]; /* keys pressed per player */
 extern vu16 gWaitingForVBlank; /* VBlank wait flag */
-extern vu16 gUnk_03001EC8; /* number of OAM entries used */
+extern vu16 gOamEntryCount; /* number of OAM entries used */
 extern vu16 gKeyRepeatInterval; /* auto-repeat interval (4) */
 extern vu8 gWinIn1; /* WININ hi shadow */
 extern u16 *gFadeKeepMask;

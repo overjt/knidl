@@ -469,12 +469,12 @@ s32 ActorAttachToHitter(void)
         break;
     case 2:
         sub_0806b95c();
-        sub_0806bc54();
+        ActorInitCarryOffset();
         ActorSetState(4);
         break;
     case 3:
         sub_0806b95c();
-        sub_0806bc54();
+        ActorInitCarryOffset();
         ActorSetState(1);
         break;
     }
@@ -505,7 +505,7 @@ void ActorAttachedPullTowardCarrier(void)
         u->velY = -v;
 }
 
-void sub_0806bc28(void)
+void ActorAttachedPullInStep(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -523,7 +523,7 @@ void sub_0806bc28(void)
     }
 }
 
-void sub_0806bc54(void)
+void ActorInitCarryOffset(void)
 {
     struct Task *t;
     s16 n;

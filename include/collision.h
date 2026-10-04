@@ -284,10 +284,10 @@ void TerrainProbeLanding(void);
 /* src/terrain_1f540.c */
 void sub_0801f540(void);
 void sub_0801f6b0(void);
-void sub_0801f800(void);
+void TerrainProbeCeilingNoSlopeLink(void);
 void sub_0801f9b8(void);
-void sub_0801fc48(void);
-void sub_0801fe2c(void);
+void TerrainProbeFloorNoSlopeLink(void);
+void TerrainProbeLandingNoSlopeLink(void);
 
 /* src/terrain_1ff84.c */
 void TerrainProbeAlongVelocity(void);

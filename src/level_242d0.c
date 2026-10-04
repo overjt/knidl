@@ -979,7 +979,7 @@ void ReturnFromBigSwitchView(void)
 
 void sub_08025e00(void)
 {
-    sub_08028b8c();
+    CameraResetRoomView();
 }
 
 void sub_08025e0c(void)

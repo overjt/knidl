@@ -3601,7 +3601,7 @@ SECTIONS
     ASSERT(!MATCHING || game_rodata_08732630 == 0x08732630, "MATCHING: game_rodata_08732630 moved")
     ASSERT(!MATCHING || gMapEventVariants == 0x087328A0, "MATCHING: game_tbl_087328a0 moved")
     ASSERT(!MATCHING || game_rodata_087328bc == 0x087328BC, "MATCHING: game_rodata_087328bc moved")
-    ASSERT(!MATCHING || gUnk_087328D8 == 0x087328D8, "MATCHING: game_tbl_087328d8 moved")
+    ASSERT(!MATCHING || gStageEffectStates == 0x087328D8, "MATCHING: game_tbl_087328d8 moved")
     ASSERT(!MATCHING || game_rodata_087328f0 == 0x087328F0, "MATCHING: game_rodata_087328f0 moved")
     ASSERT(!MATCHING || gPlayerActions == 0x0873A748, "MATCHING: game_tbl_0873a748 moved")
     ASSERT(!MATCHING || game_rodata_0873a924 == 0x0873A924, "MATCHING: game_rodata_0873a924 moved")
