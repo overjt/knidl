@@ -144,10 +144,10 @@ void TerrainProbeCeiling(void)
     if (TerrainQueryPixel(gTerrainProbeX, gTerrainProbeY + gTerrainBoxTop) == 0)
     {
         tbl = gUnk_08735098;
-        p = &tbl[gUnk_03005574];
+        p = &tbl[gTerrainSlopeIndex];
         if (*p == 0)
             goto side;
-        slope = (gUnk_03005574 & 1) ? 1 : 2;
+        slope = (gTerrainSlopeIndex & 1) ? 1 : 2;
         t = *p;
         q = gCollisionTileShapes[t];
         if (q[gTerrainPixelIndex] == 0)

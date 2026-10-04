@@ -30,10 +30,10 @@ void TerrainProbeFloor(void)
         if (gTerrainProbeResult.unkC <= (gTerrainProbeY + gTerrainBoxBottom) >> 4)
             goto floor;
     }
-    if (gUnk_08735018[gUnk_03005574] != 0)
+    if (gSlopeIndexTiles[gTerrainSlopeIndex] != 0)
     {
         hit = 0;
-        if (gUnk_03005574 & 1)
+        if (gTerrainSlopeIndex & 1)
         {
             dir = 1;
             if (((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gTerrainProbeX & 0xFFF0))
@@ -55,10 +55,10 @@ void TerrainProbeFloor(void)
     }
     else
     {
-        if (gUnk_08735018[gUnk_030055AC] == 0)
+        if (gSlopeIndexTiles[gTerrainSlopeIndexBelow] == 0)
             goto edges;
         hit = 0;
-        if (gUnk_030055AC & 1)
+        if (gTerrainSlopeIndexBelow & 1)
         {
             dir = 1;
             if (((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gTerrainProbeX & 0xFFF0))
@@ -93,7 +93,7 @@ check:
     return;
 
 slope:
-    tile = gUnk_08735018[gUnk_03005574];
+    tile = gSlopeIndexTiles[gTerrainSlopeIndex];
     if (dir == 1)
     {
         if (hit != 0)
@@ -117,7 +117,7 @@ slope:
     goto sides;
 
 slope_below:
-    tile = gUnk_08735018[gUnk_030055AC];
+    tile = gSlopeIndexTiles[gTerrainSlopeIndexBelow];
     if (dir == 1)
     {
         gTerrainProbeResult.slope = gCollisionTileSlope[tile];

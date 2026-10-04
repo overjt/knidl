@@ -45,9 +45,9 @@ void WarpStarFlight13(void)
     {
         s32 r;
 
-        gUnk_02005584 = 251;
+        gWarpStarFlightSfx = 251;
         r = PlaySfx(251);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -304,7 +304,7 @@ void WarpStarFlight14(void)
     gCurTask->facing = 255;
     CameraStartFollowFocusAt(gCurTask->pixelX, gCurTask->pixelY);
     RequestScreenShake(4);
-    StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+    StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
     PlaySfx(219);
     CreateBurstEffect(0, 0);
     PlaySfx(272);
@@ -335,9 +335,9 @@ void WarpStarFlight15(void)
     {
         s32 r;
 
-        gUnk_02005584 = 250;
+        gWarpStarFlightSfx = 250;
         r = PlaySfx(250);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -479,9 +479,9 @@ void WarpStarFlight17(void)
     {
         s32 r;
 
-        gUnk_02005584 = 250;
+        gWarpStarFlightSfx = 250;
         r = PlaySfx(250);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -711,9 +711,9 @@ void WarpStarFlight19(void)
     {
         s32 r;
 
-        gUnk_02005584 = 218;
+        gWarpStarFlightSfx = 218;
         r = PlaySfx(218);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     gCurTask->moveCallback = (u32)TaskMove;
     TaskStop();
@@ -733,7 +733,7 @@ void WarpStarFlight19Update(void)
     {
         CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
-        StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+        StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         PlaySfx(272);
@@ -760,9 +760,9 @@ void WarpStarFlight20(void)
     {
         s32 r;
 
-        gUnk_02005584 = 250;
+        gWarpStarFlightSfx = 250;
         r = PlaySfx(250);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -948,9 +948,9 @@ void WarpStarFlight22(void)
     {
         s32 r;
 
-        gUnk_02005584 = 218;
+        gWarpStarFlightSfx = 218;
         r = PlaySfx(218);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     TaskStop();
     {
@@ -973,7 +973,7 @@ void WarpStarFlight22Update(void)
     {
         CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
-        StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+        StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         PlaySfx(272);
@@ -993,9 +993,9 @@ void WarpStarFlight23(void)
     {
         s32 r;
 
-        gUnk_02005584 = 126;
+        gWarpStarFlightSfx = 126;
         r = PlaySfx(126);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     WarpStarStopTrail();
     TaskStop();
@@ -1015,13 +1015,13 @@ void WarpStarFlight23(void)
     while (gViewRect[2] > 8)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(60);
-    StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+    StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
     {
         s32 r;
 
-        gUnk_02005584 = 217;
+        gWarpStarFlightSfx = 217;
         r = PlaySfx(217);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     {
         struct Task *t = gCurTask;
@@ -1256,7 +1256,7 @@ void WarpStarFlight24(void)
     RequestScreenShake(4);
     gCurTask->facing = 1;
     RequestScreenShake(4);
-    StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+    StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
     PlaySfx(219);
     CreateBurstEffect(0, 0);
     PlaySfx(272);
@@ -1301,9 +1301,9 @@ void sub_08074420(void)
     {
         s32 r;
 
-        gUnk_02005584 = 218;
+        gWarpStarFlightSfx = 218;
         r = PlaySfx(218);
-        gUnk_02004B4C = r;
+        gWarpStarFlightSfxPlayer = r;
     }
     gCurTask->facing = 1;
     WarpStarSetTrail(1, 11, 4, 0x400);
@@ -1327,7 +1327,7 @@ void WarpStarFlight4Update(void)
     {
         CameraStartFollowFocusAt(t->pixelX, t->pixelY);
         RequestScreenShake(4);
-        StopSfxOnPlayer(gUnk_02004B4C, gUnk_02005584);
+        StopSfxOnPlayer(gWarpStarFlightSfxPlayer, gWarpStarFlightSfx);
         PlaySfx(219);
         CreateBurstEffect(0, 0);
         if (gMetaKnightmareMode == 0)

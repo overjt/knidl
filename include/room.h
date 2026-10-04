@@ -196,7 +196,7 @@ extern u8 gBigSwitchReturnLevel;
 extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02008050;
 extern u16 gUnk_02008054;
-extern u16 gUnk_02008060[];
+extern u16 gPauseSavedBgPalette[];
 extern u16 gBlockLayer[]; /* per-cell block layer: low byte = replacement index, 0x8000 = being broken */
 extern s16 gRoomEntryY;
 extern u8 gEntryDoorEvent;
@@ -792,8 +792,8 @@ void sub_08027198(void);
 void PauseRoom(void);
 void SetRoomUpdateFlags(u32 a);
 void ResumeRoom(void);
-void sub_08027228(void);
-void sub_08027240(void);
+void PauseSaveBgPalette(void);
+void PauseRestoreRoomGraphics(void);
 void sub_080272dc(void);
 
 /* src/stage_273a0.c */

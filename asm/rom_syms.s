@@ -47,8 +47,8 @@ gBlockCursorPlayer = 0x02004B40
 gPlayerCountCursor = 0x02004B44
 	.global	gBlockCursorShake
 gBlockCursorShake = 0x02004B48
-	.global	gUnk_02004B4C
-gUnk_02004B4C = 0x02004B4C
+	.global	gWarpStarFlightSfxPlayer
+gWarpStarFlightSfxPlayer = 0x02004B4C
 	.global	gPlayerAbilities
 gPlayerAbilities = 0x02004B50
 	.global	gHudHpBarIndex
@@ -91,8 +91,8 @@ gContinueLevel = 0x02005578
 gGameOverTimer = 0x0200557C
 	.global	gMaxHealth
 gMaxHealth = 0x02005580
-	.global	gUnk_02005584
-gUnk_02005584 = 0x02005584
+	.global	gWarpStarFlightSfx
+gWarpStarFlightSfx = 0x02005584
 	.global	gPlayerHealth
 gPlayerHealth = 0x02005588
 	.global	gUnk_02005590
@@ -309,8 +309,8 @@ gRoomObjectTried = 0x02008020
 gUnk_02008050 = 0x02008050
 	.global	gUnk_02008054
 gUnk_02008054 = 0x02008054
-	.global	gUnk_02008060
-gUnk_02008060 = 0x02008060
+	.global	gPauseSavedBgPalette
+gPauseSavedBgPalette = 0x02008060
 	.global	gBlockLayer
 gBlockLayer = 0x02008160
 	.global	gSoundTestSelection
@@ -1063,8 +1063,8 @@ gColliderLeft = 0x030054EC
 gColliderPlayerState = 0x030054F0
 	.global	gColliderClass20Count
 gColliderClass20Count = 0x030054F4
-	.global	gUnk_03005504
-gUnk_03005504 = 0x03005504
+	.global	gTerrainSlopeIndexLeft
+gTerrainSlopeIndexLeft = 0x03005504
 	.global	gTerrainPixelIndex
 gTerrainPixelIndex = 0x03005508
 	.global	gTerrainPrevBoxLeft
@@ -1081,8 +1081,8 @@ gTerrainBoxLeft = 0x0300551C
 gTerrainPrevY = 0x03005520
 	.global	gTerrainProbeResult
 gTerrainProbeResult = 0x03005530
-	.global	gUnk_03005544
-gUnk_03005544 = 0x03005544
+	.global	gTerrainClampedTopY
+gTerrainClampedTopY = 0x03005544
 	.global	gTerrainResult
 gTerrainResult = 0x03005550
 	.global	gTerrainProbeX
@@ -1091,12 +1091,12 @@ gTerrainProbeX = 0x03005560
 gTerrainFacing = 0x03005564
 	.global	gTerrainBoundsClamp
 gTerrainBoundsClamp = 0x03005568
-	.global	gUnk_0300556C
-gUnk_0300556C = 0x0300556C
+	.global	gTerrainSlopeIndexRight
+gTerrainSlopeIndexRight = 0x0300556C
 	.global	gTerrainProbeY
 gTerrainProbeY = 0x03005570
-	.global	gUnk_03005574
-gUnk_03005574 = 0x03005574
+	.global	gTerrainSlopeIndex
+gTerrainSlopeIndex = 0x03005574
 	.global	gTerrainTile
 gTerrainTile = 0x03005578
 	.global	gTerrainBoxTop
@@ -1123,8 +1123,8 @@ gTerrainTileShape = 0x030055A0
 gTerrainPrevBoxTop = 0x030055A4
 	.global	gTerrainDriftX
 gTerrainDriftX = 0x030055A8
-	.global	gUnk_030055AC
-gUnk_030055AC = 0x030055AC
+	.global	gTerrainSlopeIndexBelow
+gTerrainSlopeIndexBelow = 0x030055AC
 	.global	gTerrainPrevBoxBottom
 gTerrainPrevBoxBottom = 0x030055B0
 	.global	gCameraMode

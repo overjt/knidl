@@ -821,6 +821,8 @@ KNOWN_SYMBOLS = {
     0x080271EC: "PauseRoom",
     0x08027204: "SetRoomUpdateFlags",
     0x08027210: "ResumeRoom",
+    0x08027228: "PauseSaveBgPalette",
+    0x08027240: "PauseRestoreRoomGraphics",
     0x08027750: "AreInactivePlayerCamerasParked",
     0x08027798: "CameraStartHoldAnchorAt",
     0x080277F0: "CameraStartFollowFocusAt",

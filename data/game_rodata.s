@@ -3221,8 +3221,8 @@ gCollisionTileFloorSnap:
 	.word	gUnk_08739B18
 	.word	gUnk_08739B18
 	.incbin	"baserom.gba", 0x734FF0, 0x28
-	.global	gUnk_08735018
-gUnk_08735018:
+	.global	gSlopeIndexTiles
+gSlopeIndexTiles:
 	.incbin	"baserom.gba", 0x735018, 0x80
 	.global	gUnk_08735098
 gUnk_08735098:

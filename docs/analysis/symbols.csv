@@ -632,8 +632,8 @@ vma,size,isa,evidence,name
 0x080271EC,0x18,thumb,bl-target+rom-pointer,PauseRoom
 0x08027204,0xC,thumb,bl-target,SetRoomUpdateFlags
 0x08027210,0x18,thumb,bl-target,ResumeRoom
-0x08027228,0x18,thumb,bl-target,sub_08027228
-0x08027240,0x9C,thumb,bl-target,sub_08027240
+0x08027228,0x18,thumb,bl-target,PauseSaveBgPalette
+0x08027240,0x9C,thumb,bl-target,PauseRestoreRoomGraphics
 0x080272DC,0xC4,thumb,bl-target,sub_080272dc
 0x080273A0,0x1A8,thumb,bl-target,sub_080273a0
 0x08027548,0x40,thumb,bl-target,sub_08027548

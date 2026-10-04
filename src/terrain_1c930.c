@@ -9,7 +9,7 @@
  * The floor probe TerrainCollideBoxInCameraBounds runs for a box standing on the ground
  * (gTerrainProbeResult.unk6 != 0): a wall step in the moving direction first,
  * then the floor under the box (the step and slope attribute tables
- * gUnk_087338F0/gUnk_087337F0/gCollisionTileSlippery and gUnk_08735018), the result
+ * gUnk_087338F0/gUnk_087337F0/gCollisionTileSlippery and gSlopeIndexTiles), the result
  * flags gTerrainProbeResult.unkD/unk5/unkE, and the ledge counter
  * gTerrainProbeResult.unk10 when the probe finds no floor. */
 
@@ -112,10 +112,10 @@ next:
         if (gTerrainProbeResult.unkC <= (gTerrainProbeY + gTerrainBoxBottom) >> 4)
             goto floor;
     }
-    if (gUnk_08735018[gUnk_03005574] != 0)
+    if (gSlopeIndexTiles[gTerrainSlopeIndex] != 0)
     {
         hit = 0;
-        if (gUnk_03005574 & 1)
+        if (gTerrainSlopeIndex & 1)
         {
             dir = 1;
             if (((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gTerrainProbeX & 0xFFF0))
@@ -137,10 +137,10 @@ next:
     }
     else
     {
-        if (gUnk_08735018[gUnk_030055AC] == 0)
+        if (gSlopeIndexTiles[gTerrainSlopeIndexBelow] == 0)
             goto edges;
         hit = 0;
-        if (gUnk_030055AC & 1)
+        if (gTerrainSlopeIndexBelow & 1)
         {
             dir = 1;
             if (((gTerrainProbeX + gTerrainBoxLeft) & 0xFFF0) < (gTerrainProbeX & 0xFFF0))
@@ -184,7 +184,7 @@ check:
     return;
 
 slope:
-    tile = gUnk_08735018[gUnk_03005574];
+    tile = gSlopeIndexTiles[gTerrainSlopeIndex];
     if (dir == 1)
     {
         if (hit != 0)
@@ -208,7 +208,7 @@ slope:
     goto sides;
 
 slope_below:
-    tile = gUnk_08735018[gUnk_030055AC];
+    tile = gSlopeIndexTiles[gTerrainSlopeIndexBelow];
     if (dir == 1)
     {
         TerrainLoadFloorAttributes(tile);
@@ -299,7 +299,7 @@ clear:
     gTerrainProbeResult.unk3 = 0;
     gTerrainProbeResult.unk2 = 0;
     TerrainQueryPixelAndSides(gTerrainProbeX, gTerrainProbeY + gTerrainBoxBottom);
-    if (gCollisionTileShapeClass[gTerrainTile] == 0 && gUnk_03005574 == 0 && gTerrainVelX != 0)
+    if (gCollisionTileShapeClass[gTerrainTile] == 0 && gTerrainSlopeIndex == 0 && gTerrainVelX != 0)
     {
         if (gTerrainVelX > 0)
         {

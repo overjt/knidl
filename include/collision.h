@@ -153,7 +153,7 @@ extern struct BodyBox *gColliderBodyBox; /* the current entry's body box */
 extern s16 gColliderLeft; /* body box left */
 extern struct PlayerState *gColliderPlayerState; /* the current entry's player */
 extern u8 gColliderClass20Count;
-extern u16 gUnk_03005504;
+extern u16 gTerrainSlopeIndexLeft;
 extern u16 gTerrainPixelIndex; /* pixel offset inside the queried cell */
 extern s16 gTerrainPrevBoxLeft; /* box left (room-relative) */
 extern u16 gTerrainTileRight;
@@ -162,14 +162,14 @@ extern s16 gTerrainPrevX; /* actor x (room-relative) */
 extern s16 gTerrainBoxLeft; /* box left offset */
 extern s16 gTerrainPrevY; /* actor y (room-relative) */
 extern struct Unk03005530 gTerrainProbeResult;
-extern u16 gUnk_03005544;
+extern u16 gTerrainClampedTopY;
 extern struct Unk03005550 gTerrainResult;
 extern s16 gTerrainProbeX; /* probe x */
 extern u8 gTerrainFacing; /* Task.facing */
 extern u8 gTerrainBoundsClamp;
-extern u16 gUnk_0300556C;
+extern u16 gTerrainSlopeIndexRight;
 extern s16 gTerrainProbeY; /* probe y */
-extern u16 gUnk_03005574; /* queried cell: byte 2 */
+extern u16 gTerrainSlopeIndex; /* queried cell: byte 2 */
 extern u16 gTerrainTile; /* queried cell: tile set */
 extern s16 gTerrainBoxTop; /* box top offset */
 extern s32 gTerrainDriftY;
@@ -182,7 +182,7 @@ extern s16 gTerrainBoxRight; /* box right offset */
 extern s8 *gTerrainTileShape;
 extern s16 gTerrainPrevBoxTop; /* box top (room-relative) */
 extern s32 gTerrainDriftX;
-extern u16 gUnk_030055AC; /* cell below: byte 2 */
+extern u16 gTerrainSlopeIndexBelow; /* cell below: byte 2 */
 extern s16 gTerrainPrevBoxBottom; /* box bottom (room-relative) */
 
 /* ROM */
@@ -211,7 +211,7 @@ extern u8 *const gCollisionTilePushUp[];
 extern u8 *const gCollisionTilePushRight[];
 extern u8 *const gCollisionTilePushLeft[];
 extern u8 *const gCollisionTileFloorSnap[];
-extern u16 gUnk_08735018[]; /* indexed by the cell's byte 2 */
+extern u16 gSlopeIndexTiles[]; /* indexed by the cell's byte 2 */
 extern u16 gUnk_08735098[];
 
 

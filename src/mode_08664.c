@@ -41,7 +41,7 @@ void PauseScreen(void)
     for (i = 0; i < 64; i++)
         TaskSetSkipMask(31, i);
     SuspendHBlankScroll();
-    sub_08027228();
+    PauseSaveBgPalette();
     mode = gGameState;
     flag = 0;
     if (mode == 8 && gStageClearStatus[gCurLevel][gUnk_03001F20] != 0)
@@ -120,7 +120,7 @@ void PauseScreen(void)
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();
         LoadBgLayout(3);
-        sub_08027240();
+        PauseRestoreRoomGraphics();
         for (i = 0; i < 64; i++)
             TaskSetSkipMask(15, i);
         RestoreRoomHBlankScroll();

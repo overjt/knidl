@@ -46,8 +46,8 @@ struct M19Script
 };
 
 /* EWRAM */
-extern u32 gUnk_02004B4C;
-extern u32 gUnk_02005584;
+extern u32 gWarpStarFlightSfxPlayer;
+extern u32 gWarpStarFlightSfx;
 
 /* IWRAM */
 extern struct M19Particle gRoomParticles[];

@@ -296,7 +296,7 @@ void PlayerUpdate(void)
         PlayerProbeTerrain(gCurTask->player->terrainBox);
         gCurTask->player->boundsClamp = gTerrainBoundsClamp;
         if (gUnk_02005574[0] == 0 && (gTerrainBoundsClamp & 4) && gTerrainResult.unk0 != 0)
-            gCurTask->player->unk4E = gUnk_03005544;
+            gCurTask->player->unk4E = gTerrainClampedTopY;
         gCurTask->player->prevTerrainBox = (u32 *)gCurTask->player->terrainBox;
         if (gTerrainResult.damage != 0 && !(gCurTask->player->unk42 & 0x200)
          && gCurTask->player->invulnerability != 1 && gCurTask->player->invincible == 0)
