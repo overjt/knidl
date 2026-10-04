@@ -12,8 +12,8 @@
  *       Task.unk1C = a, and each kind sets its sprite table, animation and one
  *       of the callbacks below.  The kinds as AirGrindRacerRaceStep/AirGrindRacerTryBoost use
  *       them (player 0 only unless noted): 0 and 1 every 4th / 8th frame while
- *       A is held on the course, 2 on a press (M37Game.unk450 blocks a second
- *       copy), 5 on the release (M37Game.unk451), 6 / 7 the two boost ratings,
+ *       A is held on the course, 2 on a press (M37Game.pressEffectShown blocks a second
+ *       copy), 5 on the release (M37Game.releaseEffectShown), 6 / 7 the two boost ratings,
  *       3 / 4 thrown to either side at the start of a penalty, 8 the penalty
  *       itself (for every racer).  Kinds 0 and 3/4 are scaled by
  *       AirGrindGetDepthScale and scattered with LCG stream 4.
@@ -52,7 +52,7 @@ void AirGrindEffect(void)
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->frameTable = gUnk_08755FC4;
         gCurTask->updateCallback = (u32)AirGrindPressEffectUpdate;
-        gAirGrindPtr->unk450 = 1;
+        gAirGrindPtr->pressEffectShown = 1;
         break;
     case 5:
         gCurTask->unk6C = 2;
@@ -63,10 +63,10 @@ void AirGrindEffect(void)
         gCurTask->frameTable = gUnk_087572E0;
         gCurTask->frame = 0;
         gCurTask->updateCallback = (u32)AirGrindReleaseEffectUpdate;
-        gAirGrindPtr->unk451 = 1;
+        gAirGrindPtr->releaseEffectShown = 1;
         break;
     case 0:
-        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
+        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].depth);
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->layer = u->layer;
         gCurTask->spriteFlags = u->spriteFlags & 0x6000;
@@ -85,7 +85,7 @@ void AirGrindEffect(void)
         break;
     case 3:
     case 4:
-        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].unk08);
+        scale = AirGrindGetDepthScale(gAirGrindCoursePtr->players[gCurTask->unk18].depth);
         gCurTask->drawCallback = (u32)AirGrindEffectDrawOrFree;
         gCurTask->moveCallback = (u32)TaskMove;
         gCurTask->layer = u->layer;
@@ -148,8 +148,8 @@ void AirGrindEffectFollowRacer(s32 layer)
         gCurTask->pixelX = u->pixelX;
         gCurTask->pixelY = u->pixelY;
     } else {
-        gCurTask->pixelX = gAirGrindCoursePtr->players[gCurTask->unk18].unk0C;
-        gCurTask->pixelY = gAirGrindCoursePtr->players[gCurTask->unk18].unk10;
+        gCurTask->pixelX = gAirGrindCoursePtr->players[gCurTask->unk18].screenX;
+        gCurTask->pixelY = gAirGrindCoursePtr->players[gCurTask->unk18].screenY;
     }
 }
 
@@ -214,7 +214,7 @@ void AirGrindPressEffectUpdate(void)
         if (gUnk_080CFF52[++t->unk6E] != -1) {
             t->frame = gUnk_080CFF52[t->unk6E];
         } else {
-            gAirGrindPtr->unk450 = 0;
+            gAirGrindPtr->pressEffectShown = 0;
             TaskFree(gCurTaskIdx);
             return;
         }
@@ -227,7 +227,7 @@ void AirGrindReleaseEffectUpdate(void)
     if ((s16)gCurTask->unk6C <= 0) {
         gCurTask->unk6C = 2;
         if (++gCurTask->frame > gCurTask->unk6E) {
-            gAirGrindPtr->unk451 = 0;
+            gAirGrindPtr->releaseEffectShown = 0;
             TaskFree(gCurTaskIdx);
             return;
         }

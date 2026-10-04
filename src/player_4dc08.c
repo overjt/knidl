@@ -21,7 +21,7 @@
  * PlayerState.unk42 bit 9 and stops; every pass counts Task.unk28.  Its
  * handler PlayerActionBackdropUpdate re-binds state 2 when PlayerState.attachedCount is set, runs
  * the hit test TaskBreakFirstBlock(gUnk_0873CC64) in state 1 (which spawns
- * CreateBlockStar's object and marks PlayerState.unk09) and, in state 2,
+ * CreateBlockStar's object and marks PlayerState.catchKind) and, in state 2,
  * requests action 53, 8 or 1 once the swing is over.  PlayerActionThrow
  * (action 31, mode 10; the twin of M10's PlayerActionInhale) clears the three
  * records gUnk_02007E90[player][] (and gUnk_02007CF4[player] in link
@@ -55,7 +55,7 @@ void PlayerActionBackdrop(void)
         {
             struct PlayerState *p = gCurTask->player;
 
-            p->unk09 = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }
@@ -160,15 +160,15 @@ void PlayerActionBackdropUpdate(void)
             t->variant = 2;
             TaskSetEntry(PlayerActionBackdrop, gCurTaskIdx);
         }
-        else if (t->player->unk09 == 0)
+        else if (t->player->catchKind == 0)
         {
             if (TaskBreakFirstBlock((struct HitBoxSet *)gUnk_0873CC64, t->player->playerIndex) != 0)
             {
                 CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 3);
-                gCurTask->player->unk09 = 2;
+                gCurTask->player->catchKind = 2;
             }
             u = gCurTask;
-            if (u->player->unk09 == 0)
+            if (u->player->catchKind == 0)
             {
                 if (gTerrainResult.unk0 != 0)
                 {
@@ -248,7 +248,7 @@ void PlayerActionThrow(void)
         {
             struct PlayerState *p = gCurTask->player;
 
-            p->unk09 = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }

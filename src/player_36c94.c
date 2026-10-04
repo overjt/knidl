@@ -493,8 +493,8 @@ void PlayerActionInhale(void)
         {
             struct PlayerState *p = u->player;
 
-            p->unk0A = 0;
-            p->unk09 = 0;
+            p->abilitySwallowCount = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }
@@ -560,7 +560,7 @@ void PlayerActionInhale(void)
         {
             struct PlayerState *q = gCurTask->player;
 
-            if ((s8)q->attachedCount == 0 || q->unk09 == 3)
+            if ((s8)q->attachedCount == 0 || q->catchKind == 3)
             {
                 TaskSetFrame(57);
                 TaskYieldTrampoline(2);
@@ -645,13 +645,13 @@ void PlayerActionInhaleUpdate(void)
                 }
             }
             u = gCurTask;
-            if (u->player->unk09 == 0)
+            if (u->player->catchKind == 0)
             {
                 if (u->unk28 == 0)
                 {
                     if (TaskBreakFirstBlock(&gUnk_0873CC54, u->player->playerIndex) != 0)
                     {
-                        gCurTask->player->unk09 = 2;
+                        gCurTask->player->catchKind = 2;
                         CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, 3, 1);
                     }
                 }
@@ -660,10 +660,10 @@ void PlayerActionInhaleUpdate(void)
                     u->unk28--;
                 }
                 u = gCurTask;
-                if (u->player->unk09 == 0)
+                if (u->player->catchKind == 0)
                     RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEC4);
             }
-            else if (u->player->unk09 == 1)
+            else if (u->player->catchKind == 1)
             {
                 if (u->unk34 == -1)
                 {

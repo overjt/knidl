@@ -10,54 +10,54 @@
 
 struct LinkRec
 {
-    /*0x00*/ u16 unk00;
-    /*0x02*/ u16 unk02[2];
-    /*0x06*/ u8 unk06[2];
+    /*0x00*/ u16 milestoneFlags;
+    /*0x02*/ u16 completionPercent[2];
+    /*0x06*/ u8 curLevel[2];
     /*0x08*/ u8 unk08[2];
-    /*0x0A*/ u8 unk0A[2];
-    /*0x0C*/ u8 unk0C[2];
+    /*0x0A*/ u8 furthestLevel[2];
+    /*0x0C*/ u8 furthestStage[2];
     /*0x0E*/ u16 pad0E;
-    /*0x10*/ u32 unk10[2];
-    /*0x18*/ u8 unk18[8][7];
+    /*0x10*/ u32 bigSwitchFlags[2];
+    /*0x18*/ u8 stageClearStatus[8][7];
     /*0x50*/ u8 filler50[0x10];
 };
 
 struct LinkSave
 {
-    /*0x000*/ u32 unk00;
-    /*0x004*/ u16 unk04;
-    /*0x006*/ u16 unk06;
-    /*0x008*/ u8 unk08;
-    /*0x009*/ u8 unk09;
-    /*0x00A*/ u8 unk0A;
-    /*0x00B*/ u8 unk0B;
-    /*0x00C*/ u16 unk0C;
-    /*0x00E*/ u16 unk0E;
-    /*0x010*/ u16 unk10;
-    /*0x012*/ u8 unk12;
+    /*0x000*/ u32 rngValue;
+    /*0x004*/ u16 vblankCount;
+    /*0x006*/ u16 frameCount;
+    /*0x008*/ u8 levelIndex;
+    /*0x009*/ u8 stageIndex;
+    /*0x00A*/ u8 roomIndex;
+    /*0x00B*/ u8 extraMode;
+    /*0x00C*/ u16 playerCount;
+    /*0x00E*/ u16 roomEntryX;
+    /*0x010*/ u16 roomEntryY;
+    /*0x012*/ u8 roomEntryMode;
     /*0x013*/ u8 unk13;
-    /*0x014*/ u16 unk14;
-    /*0x016*/ u16 unk16[4];
-    /*0x01E*/ u16 unk1E[4];
-    /*0x026*/ u16 unk26[4];
-    /*0x02E*/ u16 unk2E[4];
-    /*0x036*/ u16 unk36;
-    /*0x038*/ u8 unk38[8];
-    /*0x040*/ u16 unk40[8][8];
-    /*0x0C0*/ u16 unkC0;
-    /*0x0C2*/ u16 unkC2;
-    /*0x0C4*/ u8 unkC4[2];
+    /*0x014*/ u16 maxHealth;
+    /*0x016*/ u16 playerLives[4];
+    /*0x01E*/ u16 playerHealth[4];
+    /*0x026*/ u16 playerAbilities[4];
+    /*0x02E*/ u16 playerAbilityUses[4];
+    /*0x036*/ u16 warpStarStationLevels;
+    /*0x038*/ u8 usedSubGameDoors[8];
+    /*0x040*/ u16 usedRoomObjects[8][8];
+    /*0x0C0*/ u16 milestoneFlags;
+    /*0x0C2*/ u16 completionPercent;
+    /*0x0C4*/ u8 curLevel[2];
     /*0x0C6*/ u8 unkC6[2];
-    /*0x0C8*/ u8 unkC8[2];
-    /*0x0CA*/ u8 unkCA[2];
-    /*0x0CC*/ u32 unkCC[2];
-    /*0x0D4*/ u8 unkD4[8][7];
-    /*0x10C*/ u16 unk10C[4];
-    /*0x114*/ u16 unk114[4];
-    /*0x11C*/ u16 unk11C;
-    /*0x11E*/ u8 unk11E;
+    /*0x0C8*/ u8 furthestLevel[2];
+    /*0x0CA*/ u8 furthestStage[2];
+    /*0x0CC*/ u32 bigSwitchFlags[2];
+    /*0x0D4*/ u8 stageClearStatus[8][7];
+    /*0x10C*/ u16 bossEnduranceBestTime[4];
+    /*0x114*/ u16 metaKnightmareBestTime[4];
+    /*0x11C*/ u16 localPlayer;
+    /*0x11E*/ u8 metaKnightmareMode;
     /*0x11F*/ u8 pad11F[0xD];
-    /*0x12C*/ u16 unk12C[0x3B6A];
+    /*0x12C*/ u16 keyLog[0x3B6A];
 };
 
 struct SaveSlot

@@ -410,7 +410,7 @@ void PlayerActionSwimUpdate(void)
             else
                 q->requestedAction = PLAYER_ACTION_JUMP;
             gCurTask->player->running = 0;
-            gCurTask->player->unk0F = 0;
+            gCurTask->player->runTapTimer = 0;
         }
         else
         {

@@ -13,7 +13,7 @@
  * 
  *   CreateAirGrindRacers / CreateAirGrindScenery / CreateAirGrindEffect   spawn task type #96:
  *       variant 0 once per player (Task.unk1C = the player), variant 1 (its
- *       task index kept in M37Game.unk44C) and variant 2 (Task.unk18/unk1C/
+ *       task index kept in M37Game.sceneryTaskSlot) and variant 2 (Task.unk18/unk1C/
  *       unk20 from the caller).
  *   AirGrindSetupRace   the state set-up: gAirGrindPtr = &gAirGrind,
  *       gAirGrindCoursePtr = &gAirGrindCourse, the linked-player count and mode
@@ -66,7 +66,7 @@ void CreateAirGrindScenery(s32 unused)
     if (id != -1) {
         t = &gTasks[id];
         t->variant = 1;
-        gAirGrindPtr->unk44C = id;
+        gAirGrindPtr->sceneryTaskSlot = id;
     }
 }
 
@@ -100,16 +100,16 @@ void AirGrindSetupRace(void)
     AirGrindClearScript();
     for (i = 0; i < 4; i++) {
         gAirGrindCoursePtr->players[i].coursePos = gAirGrindCoursePtr->scrollPos;
-        gAirGrindCoursePtr->players[i].unk04 = 0;
+        gAirGrindCoursePtr->players[i].holdingA = 0;
     }
-    gAirGrindPtr->unk014 = -1;
+    gAirGrindPtr->engineSfxPlayer = -1;
     gAirGrindPtr->frameCount = 0;
     gFrameCallback = (u32)AirGrindBuildSky;
     gVBlankCallback = (u32)AirGrindSkyVBlankCallback;
     AirGrindStopAllPaletteFades();
     for (i = 0; i < 16; i++) {
-        gAirGrindPtr->unk0EC.unk76[i] = gUnk_08609E40[32 + i];
-        gAirGrindPtr->unk0EC.unk96[i] = gUnk_08609E40[64 + i];
+        gAirGrindPtr->scenery.unk76[i] = gUnk_08609E40[32 + i];
+        gAirGrindPtr->scenery.unk96[i] = gUnk_08609E40[64 + i];
     }
 }
 
@@ -147,7 +147,7 @@ void AirGrindRace(void)
     if (gFrameCallback != 0 && gAirGrind.level != 2) {
         while (gAirGrindPtr->frameCount <= 0x4AF)
             TaskYieldTrampoline(1);
-        AirGrindStartPaletteFade(&gAirGrindPtr->unk0EC.unk76[1], 161, 256, 2, 6, 1);
+        AirGrindStartPaletteFade(&gAirGrindPtr->scenery.unk76[1], 161, 256, 2, 6, 1);
     }
     while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->finishLine - 240)
         TaskYieldTrampoline(1);

@@ -60,7 +60,7 @@ void AirGrindResults(void)
     gCurTask->drawCallback = (u32)AirGrindResultsDraw;
     x = gAirGrindCoursePtr->unk014 * 2;
     for (i = 0; i < 4; i++) {
-        if (gAirGrindPtr->players[i].unk01 == x && gAirGrindPtr->players[i].unk0E == x + 1)
+        if (gAirGrindPtr->players[i].fullBoostCount == x && gAirGrindPtr->players[i].aToggleCount == x + 1)
             gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->players[i].unk20;
         else
             gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->players[i].unk24;

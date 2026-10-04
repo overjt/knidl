@@ -273,7 +273,7 @@ void LoadRoom(void)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -413,7 +413,7 @@ void sub_080233e0(void)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();

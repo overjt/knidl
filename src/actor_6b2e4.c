@@ -362,7 +362,7 @@ void sub_0806b95c(void)
     a = t->u8C.actor;
     p = t->player;
     if (t->actorKind != 0 || t->u76.subtype != 40)
-        p->unk09 = 1;
+        p->catchKind = 1;
     u = gCurTask;
     if (u->drawCallback == (u32)ActorDrawWorldInViewOrDestroyWithExtra)
         u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
@@ -594,7 +594,7 @@ void ActorAttachedEnterMouth(void)
     {
         if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->u76.subtype != 0)
         {
-            p->unk09 = 3;
+            p->catchKind = 3;
             gCurTask->actorSwallowOrder = *(s8 *)&p->heldCount;
             p->heldCount++;
         }
@@ -626,13 +626,13 @@ void ActorAttachedEnterMouth(void)
                 p->ownStarInMouth = 1;
             if (gUnk_0300244C == 0)
                 return;
-            p->unk0A = f;
+            p->abilitySwallowCount = f;
             gUnk_02007CF4[p->playerIndex] = 1;
             return;
         }
     }
     if (gUnk_0300244C == 0 || gUnk_02007CF4[p->playerIndex] != 1)
-        p->unk0A++;
+        p->abilitySwallowCount++;
     if (*(s8 *)&p->pendingAbility != ABILITY_NORMAL)
         return;
     p->pendingAbility = a->ability;
@@ -670,16 +670,16 @@ void sub_0806be4c(u32 i)
         }
         else
         {
-            p->unk0A = 0;
-            p->unk09 = 0;
+            p->abilitySwallowCount = 0;
+            p->catchKind = 0;
             p->heldCount = 0;
             p->attachedCount = 0;
         }
     }
     else
     {
-        p->unk0A = 0;
-        p->unk09 = 0;
+        p->abilitySwallowCount = 0;
+        p->catchKind = 0;
         p->heldCount = 0;
         p->attachedCount = 0;
     }

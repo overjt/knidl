@@ -204,7 +204,7 @@ void PlayerActionShareItem(void)
                 TaskYieldTrampoline(16);
                 break;
             case 3:
-                if ((s8)q->unk22 != 0)
+                if ((s8)q->paletteFlashMode != 0)
                     q->unk1E = q->unk20 = 0;
                 q->invincible = gCurTask->player->invincible;
                 q->invincibleTimer = gCurTask->player->invincibleTimer;
@@ -297,7 +297,7 @@ void PlayerActionShareItem(void)
                 }
                 break;
             case 3:
-                if ((s8)q->unk22 != 0)
+                if ((s8)q->paletteFlashMode != 0)
                     q->unk1E = q->unk20 = 0;
                 q->invincible = gCurTask->player->invincible;
                 q->invincibleTimer = gCurTask->player->invincibleTimer;
@@ -383,7 +383,7 @@ void PlayerActionShareItem(void)
             TaskYieldTrampoline(16);
             break;
         case 3:
-            if ((s8)q->unk22 != 0)
+            if ((s8)q->paletteFlashMode != 0)
                 q->unk1E = q->unk20 = 0;
             q->invincible = gCurTask->player->invincible;
             q->invincibleTimer = gCurTask->player->invincibleTimer;

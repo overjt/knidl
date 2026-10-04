@@ -1200,7 +1200,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     case ABILITY_MIKE:
     case ABILITY_CRASH:
     case ABILITY_LIGHT:
-        p->unk22 = 2;
+        p->paletteFlashMode = 2;
         break;
     case ABILITY_UFO:
         p->requestedAction = PLAYER_ACTION_UFO;

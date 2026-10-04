@@ -15,7 +15,7 @@
  * stage (gPauseDisabled = 1), starts the palette fade BeginFade over
  * the rows gUnk_0873B534[player] selects (unless gCreditsDemoSet is set)
  * and, when the swallowed object gives a random ability
- * (PlayerState.unk0A > 1), spins the HUD roulette: PlayerState.pendingAbility
+ * (PlayerState.abilitySwallowCount > 1), spins the HUD roulette: PlayerState.pendingAbility
  * steps through abilities 1-24 with the delays gUnk_0873B634[] until A
  * or B is pressed.  It then shows the new ability on the HUD
  * (SetPlayerAbilityNoHud, HudShowAbilityAnimated), loads its sprite tiles (M13's
@@ -91,8 +91,8 @@ void PlayerActionGetAbility(void)
             gCurTask->player->mouthState = 0;
             {
                 struct PlayerState *q = gCurTask->player;
-                if (q->unk0A > 1) {
-                    q->unk0A = 0;
+                if (q->abilitySwallowCount > 1) {
+                    q->abilitySwallowCount = 0;
                     HudShowAbilityAnimated(27, gCurTask->player->playerIndex);
                     TaskYieldTrampoline(6);
                     gCurTask->playerLoopCount = 0;
@@ -207,7 +207,7 @@ void PlayerActionGetAbility(void)
         case 20:
             TaskSetFrame(146);
             TaskYieldTrampoline(32);
-            gCurTask->player->unk22 = 2;
+            gCurTask->player->paletteFlashMode = 2;
             break;
         case 0:
             TaskSetFrame(0x289);

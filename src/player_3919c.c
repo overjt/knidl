@@ -77,7 +77,7 @@ void PlayerActionDie(void)
         gCurTask->layer = 4;
         gCurTask->player->invincible = n;
         gCurTask->player->invincibleTimer = n;
-        gCurTask->player->unk1A = gCurTask->player->unk1C = n;
+        gCurTask->player->invincibleFlashTimer = gCurTask->player->invincibleFlashStep = n;
     }
     else
     {
@@ -153,7 +153,7 @@ void PlayerActionDie(void)
         PlaySfxIfLocalPlayer(158, gCurTask->player->playerIndex);
     TaskYieldTrampoline(59);
     gCurTask->variant = 1;
-    gCurTask->player->unk22 = 1;
+    gCurTask->player->paletteFlashMode = 1;
     gCurTask->player->invulnerabilityTimer = 0x8000;
     for (i = 0; i <= 3; i++)
         CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);

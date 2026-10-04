@@ -8,8 +8,8 @@
  * Sub-game 2: task type #96 variant 1 and the module's shared helpers.
  * 
  *   AirGrindScenery / AirGrindSceneryUpdate / AirGrindRollSceneryObject / AirGrindDrawSceneryObject   variant 1
- *       (one task, index in M37Game.unk44C): seven background objects
- *       (M37Game.unk0EC) that scroll with the camera at their own rate,
+ *       (one task, index in M37Game.sceneryTaskSlot): seven background objects
+ *       (M37Game.scenery) that scroll with the camera at their own rate,
  *       re-rolled from LCG stream 4 when they leave the screen (a sprite id
  *       1-4 and one of three height bands gUnk_080CFF60, never the same band
  *       twice in a row).
@@ -48,7 +48,7 @@ void AirGrindDrawSceneryObject(s32 idx, s32 x, s32 y, u16 attr)
 void AirGrindRollSceneryObject(s32 i)
 {
     struct M37Game *g = gAirGrindPtr;
-    struct M37ObjSet *set = &g->unk0EC;
+    struct M37ObjSet *set = &g->scenery;
     struct M37Obj *o = &set->unk04[i];
     u32 r;
     s32 k;
@@ -59,7 +59,7 @@ void AirGrindRollSceneryObject(s32 i)
     k = r & 7;
     tbl = gUnk_080CFF60;
     id = tbl[k];
-    while (g->unk0EC.unk74 == id) {
+    while (g->scenery.unk74 == id) {
         k = (k + 1) & 7;
         id = tbl[k];
     }
@@ -72,7 +72,7 @@ void AirGrindRollSceneryObject(s32 i)
 void AirGrindScenery(void)
 {
     struct M37Game *g = gAirGrindPtr;
-    s32 *last = &g->unk0EC.unk00;
+    s32 *last = &g->scenery.unk00;
     s32 i;
     s32 x;
     s32 *p;
@@ -84,8 +84,8 @@ void AirGrindScenery(void)
     gCurTask->pixelY = 40;
     gCurTask->frameTable = gUnk_08755FBC;
     gCurTask->frame = 0xFFFF;
-    g->unk0EC.unk74 = 0;
-    for (i = 0, p = &g->unk0EC.unk04[0].unk8, x = 0; i <= 6; i++) {
+    g->scenery.unk74 = 0;
+    for (i = 0, p = &g->scenery.unk04[0].unk8, x = 0; i <= 6; i++) {
         AirGrindRollSceneryObject(i);
         *p = x;
         p += 4;
@@ -100,15 +100,15 @@ void AirGrindScenery(void)
 void AirGrindSceneryUpdate(void)
 {
     struct M37Game *g = gAirGrindPtr;
-    s32 *last = &g->unk0EC.unk00;
+    s32 *last = &g->scenery.unk00;
     s32 i;
     struct M37Obj *o;
 
-    for (i = 0, o = g->unk0EC.unk04; i <= 6; o++, i++) {
+    for (i = 0, o = g->scenery.unk04; i <= 6; o++, i++) {
         struct M37Course *c = gAirGrindCoursePtr;
         s32 x;
 
-        o->unkC = o->unk4 - ((c->players[0].unk10 - 160) << 16) / 4;
+        o->unkC = o->unk4 - ((c->players[0].screenY - 160) << 16) / 4;
         x = o->unk8;
         x += 0xFFFF0000;
         x += (*last - c->scrollPos) << 16;
@@ -136,7 +136,7 @@ void AirGrindCourseSignUpdate(void)
 
 void AirGrindShowCourseSign(s32 y)
 {
-    struct Task *t = &gTasks[gAirGrindPtr->unk44C];
+    struct Task *t = &gTasks[gAirGrindPtr->sceneryTaskSlot];
 
     t->posX = y << 16;
     t->lateUpdateCallback = (u32)AirGrindCourseSignUpdate;
@@ -211,12 +211,12 @@ void AirGrindStopPaletteFade(s32 i)
 
 void AirGrindSetDigitPalette(s32 pal)
 {
-    gAirGrindPtr->unk018 = (pal << 12) & 0xF000;
+    gAirGrindPtr->digitTileWord = (pal << 12) & 0xF000;
 }
 
 void AirGrindDrawDigit(s32 digit, s32 x, s32 y)
 {
-    QueueSprite(2, gUnk_08755FEC[digit], 0x2000, gAirGrindPtr->unk018, x, y);
+    QueueSprite(2, gUnk_08755FEC[digit], 0x2000, gAirGrindPtr->digitTileWord, x, y);
 }
 
 void AirGrindDrawSymbol(s32 idx, s32 x, s32 y)

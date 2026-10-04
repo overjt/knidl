@@ -400,7 +400,7 @@ struct RoomDef gLevel7Stage1Room0 ROOM_DEF(0835d08c) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -442,7 +442,7 @@ struct RoomDef gLevel7Stage1Room1 ROOM_DEF(0835d300) = {
     .entryX = 24,
     .entryY = 328,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -484,7 +484,7 @@ struct RoomDef gLevel7Stage1Room2 ROOM_DEF(0835d4f0) = {
     .entryX = 48,
     .entryY = 296,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -527,7 +527,7 @@ struct RoomDef gLevel0Stage0Room0 ROOM_DEF(0835ddc0) = {
     .entryX = 41,
     .entryY = 57,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -570,7 +570,7 @@ struct RoomDef gLevel0Stage0Room1 ROOM_DEF(0835e2a0) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -613,7 +613,7 @@ struct RoomDef gLevel0Stage0Room2 ROOM_DEF(0835e70c) = {
     .entryX = 56,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -656,7 +656,7 @@ struct RoomDef gLevel0Stage0Room3 ROOM_DEF(0835e924) = {
     .entryX = 136,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -699,7 +699,7 @@ struct RoomDef gLevel0Stage1Room0 ROOM_DEF(0835ef1c) = {
     .entryX = 48,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -742,7 +742,7 @@ struct RoomDef gLevel0Stage1Room1 ROOM_DEF(0835f1a4) = {
     .entryX = 24,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -785,7 +785,7 @@ struct RoomDef gLevel0Stage1Room2 ROOM_DEF(0835f544) = {
     .entryX = 8,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -828,7 +828,7 @@ struct RoomDef gLevel0Stage1Room3 ROOM_DEF(0835fc24) = {
     .entryX = 56,
     .entryY = 8,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -871,7 +871,7 @@ struct RoomDef gLevel0Stage1Room4 ROOM_DEF(0835ffe4) = {
     .entryX = 72,
     .entryY = 328,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -914,7 +914,7 @@ struct RoomDef gLevel0Stage1Room5 ROOM_DEF(083601dc) = {
     .entryX = 184,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -957,7 +957,7 @@ struct RoomDef gLevel0Stage2Room0 ROOM_DEF(08360690) = {
     .entryX = 56,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1000,7 +1000,7 @@ struct RoomDef gLevel0Stage2Room1 ROOM_DEF(08360b38) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1043,7 +1043,7 @@ struct RoomDef gLevel0Stage2Room2 ROOM_DEF(08360f38) = {
     .entryX = 72,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1086,7 +1086,7 @@ struct RoomDef gLevel0Stage2Room3 ROOM_DEF(083613a0) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1129,7 +1129,7 @@ struct RoomDef gLevel0Stage3Room0 ROOM_DEF(0836179c) = {
     .entryX = 40,
     .entryY = 199,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1172,7 +1172,7 @@ struct RoomDef gLevel0Stage3Room1 ROOM_DEF(08361cb8) = {
     .entryX = 71,
     .entryY = 90,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1215,7 +1215,7 @@ struct RoomDef gLevel0Stage3Room2 ROOM_DEF(08362104) = {
     .entryX = 104,
     .entryY = 504,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1258,7 +1258,7 @@ struct RoomDef gLevel0Stage3Room3 ROOM_DEF(08362788) = {
     .entryX = 56,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1300,7 +1300,7 @@ struct RoomDef gLevel0Stage4Room0 ROOM_DEF(08362ad0) = {
     .entryX = 24,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -1343,7 +1343,7 @@ struct RoomDef gLevel1Stage0Room0 ROOM_DEF(083630a0) = {
     .entryX = 56,
     .entryY = 74,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1386,7 +1386,7 @@ struct RoomDef gLevel1Stage0Room1 ROOM_DEF(083634e0) = {
     .entryX = 42,
     .entryY = 106,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1429,7 +1429,7 @@ struct RoomDef gLevel1Stage0Room2 ROOM_DEF(08363a0c) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1472,7 +1472,7 @@ struct RoomDef gLevel1Stage0Room3 ROOM_DEF(08363e04) = {
     .entryX = 56,
     .entryY = 216,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1515,7 +1515,7 @@ struct RoomDef gLevel1Stage1Room0 ROOM_DEF(08364014) = {
     .entryX = 58,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1558,7 +1558,7 @@ struct RoomDef gLevel1Stage1Room1 ROOM_DEF(083643bc) = {
     .entryX = 55,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1601,7 +1601,7 @@ struct RoomDef gLevel1Stage1Room2 ROOM_DEF(0836463c) = {
     .entryX = 26,
     .entryY = 440,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1644,7 +1644,7 @@ struct RoomDef gLevel1Stage1Room3 ROOM_DEF(08364a38) = {
     .entryX = 8,
     .entryY = 8,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1687,7 +1687,7 @@ struct RoomDef gLevel1Stage1Room4 ROOM_DEF(08365558) = {
     .entryX = 24,
     .entryY = 312,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1730,7 +1730,7 @@ struct RoomDef gLevel1Stage2Room0 ROOM_DEF(083657c0) = {
     .entryX = 40,
     .entryY = 41,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1773,7 +1773,7 @@ struct RoomDef gLevel1Stage2Room1 ROOM_DEF(08366340) = {
     .entryX = 377,
     .entryY = 328,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1816,7 +1816,7 @@ struct RoomDef gLevel1Stage2Room2 ROOM_DEF(0836663c) = {
     .entryX = 40,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1859,7 +1859,7 @@ struct RoomDef gLevel1Stage2Room3 ROOM_DEF(08366974) = {
     .entryX = 40,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1902,7 +1902,7 @@ struct RoomDef gLevel1Stage2Room4 ROOM_DEF(08366b98) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1945,7 +1945,7 @@ struct RoomDef gLevel1Stage2Room5 ROOM_DEF(08366d1c) = {
     .entryX = 56,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -1988,7 +1988,7 @@ struct RoomDef gLevel1Stage3Room0 ROOM_DEF(08367274) = {
     .entryX = 40,
     .entryY = 89,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2031,7 +2031,7 @@ struct RoomDef gLevel1Stage3Room1 ROOM_DEF(0836753c) = {
     .entryX = 72,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2074,7 +2074,7 @@ struct RoomDef gLevel1Stage3Room2 ROOM_DEF(083677f4) = {
     .entryX = 40,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2117,7 +2117,7 @@ struct RoomDef gLevel1Stage3Room3 ROOM_DEF(08367a50) = {
     .entryX = 39,
     .entryY = 105,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2160,7 +2160,7 @@ struct RoomDef gLevel1Stage3Room4 ROOM_DEF(08367e8c) = {
     .entryX = 24,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2203,7 +2203,7 @@ struct RoomDef gLevel1Stage3Room5 ROOM_DEF(083684d4) = {
     .entryX = 72,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2246,7 +2246,7 @@ struct RoomDef gLevel1Stage3Room6 ROOM_DEF(08368710) = {
     .entryX = 56,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2289,7 +2289,7 @@ struct RoomDef gLevel1Stage4Room0 ROOM_DEF(08368d30) = {
     .entryX = 41,
     .entryY = 73,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2332,7 +2332,7 @@ struct RoomDef gLevel1Stage4Room1 ROOM_DEF(083692d8) = {
     .entryX = 40,
     .entryY = 105,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2375,7 +2375,7 @@ struct RoomDef gLevel1Stage4Room2 ROOM_DEF(08369be0) = {
     .entryX = 216,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2418,7 +2418,7 @@ struct RoomDef gLevel1Stage4Room3 ROOM_DEF(0836a0a8) = {
     .entryX = 119,
     .entryY = 328,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2461,7 +2461,7 @@ struct RoomDef gLevel1Stage4Room4 ROOM_DEF(0836a318) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2504,7 +2504,7 @@ struct RoomDef gLevel1Stage4Room5 ROOM_DEF(0836a534) = {
     .entryX = 121,
     .entryY = 41,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2547,7 +2547,7 @@ struct RoomDef gLevel1Stage4Room6 ROOM_DEF(0836a6dc) = {
     .entryX = 89,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2589,7 +2589,7 @@ struct RoomDef gLevel1Stage5Room0 ROOM_DEF(0836a89c) = {
     .entryX = 24,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -2632,7 +2632,7 @@ struct RoomDef gLevel2Stage0Room0 ROOM_DEF(0836ac58) = {
     .entryX = 40,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2675,7 +2675,7 @@ struct RoomDef gLevel2Stage0Room1 ROOM_DEF(0836aee4) = {
     .entryX = 55,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2718,7 +2718,7 @@ struct RoomDef gLevel2Stage0Room2 ROOM_DEF(0836b160) = {
     .entryX = 72,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2761,7 +2761,7 @@ struct RoomDef gLevel2Stage0Room3 ROOM_DEF(0836b44c) = {
     .entryX = 41,
     .entryY = 201,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2803,7 +2803,7 @@ struct RoomDef gLevel2Stage0Room4 ROOM_DEF(0836b7b4) = {
     .entryX = 122,
     .entryY = 153,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2846,7 +2846,7 @@ struct RoomDef gLevel2Stage0Room5 ROOM_DEF(0836b968) = {
     .entryX = 56,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2889,7 +2889,7 @@ struct RoomDef gLevel2Stage1Room0 ROOM_DEF(0836bc70) = {
     .entryX = 39,
     .entryY = 281,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2932,7 +2932,7 @@ struct RoomDef gLevel2Stage1Room1 ROOM_DEF(0836c0b0) = {
     .entryX = 136,
     .entryY = 696,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -2975,7 +2975,7 @@ struct RoomDef gLevel2Stage1Room2 ROOM_DEF(0836c50c) = {
     .entryX = 119,
     .entryY = 536,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3018,7 +3018,7 @@ struct RoomDef gLevel2Stage1Room3 ROOM_DEF(0836ca98) = {
     .entryX = 216,
     .entryY = 329,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3061,7 +3061,7 @@ struct RoomDef gLevel2Stage1Room4 ROOM_DEF(0836cda8) = {
     .entryX = 137,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3104,7 +3104,7 @@ struct RoomDef gLevel2Stage1Room5 ROOM_DEF(0836d19c) = {
     .entryX = 40,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3147,7 +3147,7 @@ struct RoomDef gLevel2Stage1Room6 ROOM_DEF(0836d334) = {
     .entryX = 56,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3190,7 +3190,7 @@ struct RoomDef gLevel2Stage1Room7 ROOM_DEF(0836d4fc) = {
     .entryX = 200,
     .entryY = 89,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3233,7 +3233,7 @@ struct RoomDef gLevel2Stage2Room0 ROOM_DEF(0836dadc) = {
     .entryX = 104,
     .entryY = 200,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3276,7 +3276,7 @@ struct RoomDef gLevel2Stage2Room1 ROOM_DEF(0836dd44) = {
     .entryX = 56,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3319,7 +3319,7 @@ struct RoomDef gLevel2Stage2Room2 ROOM_DEF(0836e09c) = {
     .entryX = 57,
     .entryY = 313,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3362,7 +3362,7 @@ struct RoomDef gLevel2Stage2Room3 ROOM_DEF(0836e3f4) = {
     .entryX = 199,
     .entryY = 313,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3405,7 +3405,7 @@ struct RoomDef gLevel2Stage2Room4 ROOM_DEF(0836e660) = {
     .entryX = 41,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3448,7 +3448,7 @@ struct RoomDef gLevel2Stage3Room0 ROOM_DEF(0836e824) = {
     .entryX = 72,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3490,7 +3490,7 @@ struct RoomDef gLevel2Stage3Room1 ROOM_DEF(0836eed8) = {
     .entryX = 80,
     .entryY = 1672,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3532,7 +3532,7 @@ struct RoomDef gLevel2Stage3Room2 ROOM_DEF(0836f0a4) = {
     .entryX = 88,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3575,7 +3575,7 @@ struct RoomDef gLevel2Stage3Room3 ROOM_DEF(0836f270) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3618,7 +3618,7 @@ struct RoomDef gLevel2Stage3Room4 ROOM_DEF(0836f634) = {
     .entryX = 104,
     .entryY = 713,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3661,7 +3661,7 @@ struct RoomDef gLevel2Stage3Room5 ROOM_DEF(0836f7e4) = {
     .entryX = 120,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3704,7 +3704,7 @@ struct RoomDef gLevel2Stage4Room0 ROOM_DEF(0836f9b0) = {
     .entryX = 57,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3747,7 +3747,7 @@ struct RoomDef gLevel2Stage4Room1 ROOM_DEF(0836fd44) = {
     .entryX = 120,
     .entryY = 616,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3790,7 +3790,7 @@ struct RoomDef gLevel2Stage4Room2 ROOM_DEF(08370000) = {
     .entryX = 439,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3833,7 +3833,7 @@ struct RoomDef gLevel2Stage4Room3 ROOM_DEF(083702fc) = {
     .entryX = 216,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3876,7 +3876,7 @@ struct RoomDef gLevel2Stage4Room4 ROOM_DEF(083704e4) = {
     .entryX = 55,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3919,7 +3919,7 @@ struct RoomDef gLevel2Stage5Room0 ROOM_DEF(08370684) = {
     .entryX = 41,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -3962,7 +3962,7 @@ struct RoomDef gLevel2Stage5Room1 ROOM_DEF(08370af4) = {
     .entryX = 72,
     .entryY = 57,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4005,7 +4005,7 @@ struct RoomDef gLevel2Stage5Room2 ROOM_DEF(08370e08) = {
     .entryX = 56,
     .entryY = 296,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4048,7 +4048,7 @@ struct RoomDef gLevel2Stage5Room3 ROOM_DEF(0837108c) = {
     .entryX = 56,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4091,7 +4091,7 @@ struct RoomDef gLevel2Stage5Room4 ROOM_DEF(08371388) = {
     .entryX = 169,
     .entryY = 504,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4134,7 +4134,7 @@ struct RoomDef gLevel2Stage5Room5 ROOM_DEF(08371728) = {
     .entryX = 56,
     .entryY = 137,
     .unk54 = 6,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4175,7 +4175,7 @@ struct RoomDef gLevel2Stage5Room6 ROOM_DEF(0837181c) = {
     .entryX = 24,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4218,7 +4218,7 @@ struct RoomDef gLevel2Stage5Room7 ROOM_DEF(08371d90) = {
     .entryX = 88,
     .entryY = 1208,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4261,7 +4261,7 @@ struct RoomDef gLevel2Stage5Room8 ROOM_DEF(08372040) = {
     .entryX = 73,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4304,7 +4304,7 @@ struct RoomDef gLevel2Stage5Room9 ROOM_DEF(08372240) = {
     .entryX = 201,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4346,7 +4346,7 @@ struct RoomDef gLevel2Stage6Room0 ROOM_DEF(083723b0) = {
     .entryX = 128,
     .entryY = 136,
     .unk54 = 7,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -4387,7 +4387,7 @@ struct RoomDef gLevel2Stage6Room1 ROOM_DEF(08372518) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -4428,7 +4428,7 @@ struct RoomDef gLevel2Stage6Room2 ROOM_DEF(08372680) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -4471,7 +4471,7 @@ struct RoomDef gLevel3Stage0Room0 ROOM_DEF(08372a78) = {
     .entryX = 56,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4514,7 +4514,7 @@ struct RoomDef gLevel3Stage0Room1 ROOM_DEF(08372d58) = {
     .entryX = 120,
     .entryY = 330,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4557,7 +4557,7 @@ struct RoomDef gLevel3Stage0Room2 ROOM_DEF(0837301c) = {
     .entryX = 40,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4600,7 +4600,7 @@ struct RoomDef gLevel3Stage0Room3 ROOM_DEF(083736a8) = {
     .entryX = 39,
     .entryY = 122,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4643,7 +4643,7 @@ struct RoomDef gLevel3Stage0Room4 ROOM_DEF(08373914) = {
     .entryX = 56,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4686,7 +4686,7 @@ struct RoomDef gLevel3Stage0Room5 ROOM_DEF(08373ac4) = {
     .entryX = 120,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4729,7 +4729,7 @@ struct RoomDef gLevel3Stage1Room0 ROOM_DEF(0837410c) = {
     .entryX = 40,
     .entryY = 105,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4772,7 +4772,7 @@ struct RoomDef gLevel3Stage1Room1 ROOM_DEF(083742cc) = {
     .entryX = 120,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4815,7 +4815,7 @@ struct RoomDef gLevel3Stage1Room2 ROOM_DEF(083747d0) = {
     .entryX = 57,
     .entryY = 57,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4858,7 +4858,7 @@ struct RoomDef gLevel3Stage1Room3 ROOM_DEF(08374b28) = {
     .entryX = 88,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4901,7 +4901,7 @@ struct RoomDef gLevel3Stage1Room4 ROOM_DEF(08374c74) = {
     .entryX = 40,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4944,7 +4944,7 @@ struct RoomDef gLevel3Stage1Room5 ROOM_DEF(08374dbc) = {
     .entryX = 120,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -4987,7 +4987,7 @@ struct RoomDef gLevel3Stage2Room0 ROOM_DEF(0837531c) = {
     .entryX = 40,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5030,7 +5030,7 @@ struct RoomDef gLevel3Stage2Room1 ROOM_DEF(083761d0) = {
     .entryX = 48,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 1,
     .unk57 = 0,
 };
@@ -5073,7 +5073,7 @@ struct RoomDef gLevel3Stage2Room2 ROOM_DEF(08376b24) = {
     .entryX = 135,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 1,
     .unk57 = 0,
 };
@@ -5116,7 +5116,7 @@ struct RoomDef gLevel3Stage2Room3 ROOM_DEF(08376d94) = {
     .entryX = 72,
     .entryY = 248,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5159,7 +5159,7 @@ struct RoomDef gLevel3Stage2Room4 ROOM_DEF(08376f18) = {
     .entryX = 72,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5202,7 +5202,7 @@ struct RoomDef gLevel3Stage2Room5 ROOM_DEF(08377144) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 1,
     .unk57 = 0,
 };
@@ -5245,7 +5245,7 @@ struct RoomDef gLevel3Stage2Room6 ROOM_DEF(08377334) = {
     .entryX = 88,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5288,7 +5288,7 @@ struct RoomDef gLevel3Stage3Room0 ROOM_DEF(08377af0) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5331,7 +5331,7 @@ struct RoomDef gLevel3Stage3Room1 ROOM_DEF(08377fbc) = {
     .entryX = 41,
     .entryY = 122,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5374,7 +5374,7 @@ struct RoomDef gLevel3Stage3Room2 ROOM_DEF(08378a80) = {
     .entryX = 40,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5417,7 +5417,7 @@ struct RoomDef gLevel3Stage3Room3 ROOM_DEF(08378eb0) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5460,7 +5460,7 @@ struct RoomDef gLevel3Stage3Room4 ROOM_DEF(08379218) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5503,7 +5503,7 @@ struct RoomDef gLevel3Stage4Room0 ROOM_DEF(08379b84) = {
     .entryX = 24,
     .entryY = 296,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5546,7 +5546,7 @@ struct RoomDef gLevel3Stage4Room1 ROOM_DEF(08379e60) = {
     .entryX = 73,
     .entryY = 42,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5589,7 +5589,7 @@ struct RoomDef gLevel3Stage4Room2 ROOM_DEF(0837a0cc) = {
     .entryX = 104,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5632,7 +5632,7 @@ struct RoomDef gLevel3Stage4Room3 ROOM_DEF(0837a52c) = {
     .entryX = 57,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5675,7 +5675,7 @@ struct RoomDef gLevel3Stage4Room4 ROOM_DEF(0837ab88) = {
     .entryX = 72,
     .entryY = 376,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5718,7 +5718,7 @@ struct RoomDef gLevel3Stage4Room5 ROOM_DEF(0837ad38) = {
     .entryX = 103,
     .entryY = 105,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5761,7 +5761,7 @@ struct RoomDef gLevel3Stage4Room6 ROOM_DEF(0837af10) = {
     .entryX = 136,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5804,7 +5804,7 @@ struct RoomDef gLevel3Stage5Room0 ROOM_DEF(0837b7cc) = {
     .entryX = 57,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5847,7 +5847,7 @@ struct RoomDef gLevel3Stage5Room1 ROOM_DEF(0837bb9c) = {
     .entryX = 40,
     .entryY = 105,
     .unk54 = 6,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5888,7 +5888,7 @@ struct RoomDef gLevel3Stage5Room2 ROOM_DEF(0837bc90) = {
     .entryX = 24,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5931,7 +5931,7 @@ struct RoomDef gLevel3Stage5Room3 ROOM_DEF(0837bfa8) = {
     .entryX = 39,
     .entryY = 42,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -5974,7 +5974,7 @@ struct RoomDef gLevel3Stage5Room4 ROOM_DEF(0837c288) = {
     .entryX = 89,
     .entryY = 329,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6017,7 +6017,7 @@ struct RoomDef gLevel3Stage5Room5 ROOM_DEF(0837c424) = {
     .entryX = 89,
     .entryY = 56,
     .unk54 = 6,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6058,7 +6058,7 @@ struct RoomDef gLevel3Stage5Room6 ROOM_DEF(0837c520) = {
     .entryX = 24,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6101,7 +6101,7 @@ struct RoomDef gLevel3Stage5Room7 ROOM_DEF(0837c698) = {
     .entryX = 216,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6143,7 +6143,7 @@ struct RoomDef gLevel3Stage6Room0 ROOM_DEF(0837d968) = {
     .entryX = 56,
     .entryY = 2264,
     .unk54 = 2,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -6186,7 +6186,7 @@ struct RoomDef gLevel4Stage0Room0 ROOM_DEF(0837de3c) = {
     .entryX = 56,
     .entryY = 73,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6229,7 +6229,7 @@ struct RoomDef gLevel4Stage0Room1 ROOM_DEF(0837e598) = {
     .entryX = 56,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6272,7 +6272,7 @@ struct RoomDef gLevel4Stage0Room2 ROOM_DEF(0837eb34) = {
     .entryX = 56,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6315,7 +6315,7 @@ struct RoomDef gLevel4Stage0Room3 ROOM_DEF(0837eca8) = {
     .entryX = 183,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6358,7 +6358,7 @@ struct RoomDef gLevel4Stage0Room4 ROOM_DEF(0837ee60) = {
     .entryX = 72,
     .entryY = 42,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6400,7 +6400,7 @@ struct RoomDef gLevel4Stage1Room0 ROOM_DEF(0837f028) = {
     .entryX = 40,
     .entryY = 16,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6443,7 +6443,7 @@ struct RoomDef gLevel4Stage1Room1 ROOM_DEF(0837f73c) = {
     .entryX = 72,
     .entryY = 153,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6486,7 +6486,7 @@ struct RoomDef gLevel4Stage1Room2 ROOM_DEF(0837fa44) = {
     .entryX = 200,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6529,7 +6529,7 @@ struct RoomDef gLevel4Stage1Room3 ROOM_DEF(0837fdc8) = {
     .entryX = 488,
     .entryY = 168,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6572,7 +6572,7 @@ struct RoomDef gLevel4Stage1Room4 ROOM_DEF(083800d0) = {
     .entryX = 57,
     .entryY = 312,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6615,7 +6615,7 @@ struct RoomDef gLevel4Stage1Room5 ROOM_DEF(083805bc) = {
     .entryX = 326,
     .entryY = 344,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6658,7 +6658,7 @@ struct RoomDef gLevel4Stage1Room6 ROOM_DEF(08380758) = {
     .entryX = 24,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6701,7 +6701,7 @@ struct RoomDef gLevel4Stage2Room0 ROOM_DEF(08380cfc) = {
     .entryX = 56,
     .entryY = 984,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6744,7 +6744,7 @@ struct RoomDef gLevel4Stage2Room1 ROOM_DEF(083811a8) = {
     .entryX = 73,
     .entryY = 601,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6787,7 +6787,7 @@ struct RoomDef gLevel4Stage2Room2 ROOM_DEF(08381ccc) = {
     .entryX = 40,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6830,7 +6830,7 @@ struct RoomDef gLevel4Stage2Room3 ROOM_DEF(083821bc) = {
     .entryX = 72,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6873,7 +6873,7 @@ struct RoomDef gLevel4Stage2Room4 ROOM_DEF(083825d8) = {
     .entryX = 24,
     .entryY = 57,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6916,7 +6916,7 @@ struct RoomDef gLevel4Stage2Room5 ROOM_DEF(083828c4) = {
     .entryX = 40,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -6959,7 +6959,7 @@ struct RoomDef gLevel4Stage3Room0 ROOM_DEF(0838328c) = {
     .entryX = 88,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7002,7 +7002,7 @@ struct RoomDef gLevel4Stage3Room1 ROOM_DEF(08383b28) = {
     .entryX = 104,
     .entryY = 168,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7045,7 +7045,7 @@ struct RoomDef gLevel4Stage3Room2 ROOM_DEF(083840c0) = {
     .entryX = 472,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7088,7 +7088,7 @@ struct RoomDef gLevel4Stage3Room3 ROOM_DEF(083847b4) = {
     .entryX = 216,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7131,7 +7131,7 @@ struct RoomDef gLevel4Stage3Room4 ROOM_DEF(08384adc) = {
     .entryX = 41,
     .entryY = 328,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7174,7 +7174,7 @@ struct RoomDef gLevel4Stage3Room5 ROOM_DEF(08384cb0) = {
     .entryX = 73,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7217,7 +7217,7 @@ struct RoomDef gLevel4Stage3Room6 ROOM_DEF(08384e3c) = {
     .entryX = 72,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7260,7 +7260,7 @@ struct RoomDef gLevel4Stage4Room0 ROOM_DEF(08385964) = {
     .entryX = 24,
     .entryY = 248,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7303,7 +7303,7 @@ struct RoomDef gLevel4Stage4Room1 ROOM_DEF(08385fcc) = {
     .entryX = 40,
     .entryY = 105,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7345,7 +7345,7 @@ struct RoomDef gLevel4Stage4Room2 ROOM_DEF(08386348) = {
     .entryX = 8,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7388,7 +7388,7 @@ struct RoomDef gLevel4Stage4Room3 ROOM_DEF(08386700) = {
     .entryX = 73,
     .entryY = 42,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7431,7 +7431,7 @@ struct RoomDef gLevel4Stage4Room4 ROOM_DEF(08386bc0) = {
     .entryX = 39,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7474,7 +7474,7 @@ struct RoomDef gLevel4Stage4Room5 ROOM_DEF(08386f80) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7517,7 +7517,7 @@ struct RoomDef gLevel4Stage4Room6 ROOM_DEF(08387308) = {
     .entryX = 40,
     .entryY = 121,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7560,7 +7560,7 @@ struct RoomDef gLevel4Stage4Room7 ROOM_DEF(08387498) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7603,7 +7603,7 @@ struct RoomDef gLevel4Stage5Room0 ROOM_DEF(083879e8) = {
     .entryX = 72,
     .entryY = 153,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7646,7 +7646,7 @@ struct RoomDef gLevel4Stage5Room1 ROOM_DEF(083881d4) = {
     .entryX = 72,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7689,7 +7689,7 @@ struct RoomDef gLevel4Stage5Room2 ROOM_DEF(0838875c) = {
     .entryX = 56,
     .entryY = 42,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7731,7 +7731,7 @@ struct RoomDef gLevel4Stage5Room3 ROOM_DEF(08388970) = {
     .entryX = 56,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7774,7 +7774,7 @@ struct RoomDef gLevel4Stage5Room4 ROOM_DEF(08388bb8) = {
     .entryX = 57,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7816,7 +7816,7 @@ struct RoomDef gLevel4Stage6Room0 ROOM_DEF(0838928c) = {
     .entryX = 40,
     .entryY = 264,
     .unk54 = 1,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -7858,7 +7858,7 @@ struct RoomDef gLevel4Stage6Room1 ROOM_DEF(083893dc) = {
     .entryX = 120,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -7901,7 +7901,7 @@ struct RoomDef gLevel5Stage0Room0 ROOM_DEF(08389a60) = {
     .entryX = 88,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7944,7 +7944,7 @@ struct RoomDef gLevel5Stage0Room1 ROOM_DEF(08389f2c) = {
     .entryX = 56,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -7987,7 +7987,7 @@ struct RoomDef gLevel5Stage0Room2 ROOM_DEF(0838a420) = {
     .entryX = 40,
     .entryY = 73,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8030,7 +8030,7 @@ struct RoomDef gLevel5Stage0Room3 ROOM_DEF(0838a668) = {
     .entryX = 137,
     .entryY = 41,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8073,7 +8073,7 @@ struct RoomDef gLevel5Stage0Room4 ROOM_DEF(0838a85c) = {
     .entryX = 136,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8116,7 +8116,7 @@ struct RoomDef gLevel5Stage0Room5 ROOM_DEF(0838a9d0) = {
     .entryX = 40,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8159,7 +8159,7 @@ struct RoomDef gLevel5Stage1Room0 ROOM_DEF(0838af20) = {
     .entryX = 40,
     .entryY = 80,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8202,7 +8202,7 @@ struct RoomDef gLevel5Stage1Room1 ROOM_DEF(0838b394) = {
     .entryX = 40,
     .entryY = 297,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8245,7 +8245,7 @@ struct RoomDef gLevel5Stage1Room2 ROOM_DEF(0838b744) = {
     .entryX = 56,
     .entryY = 57,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8288,7 +8288,7 @@ struct RoomDef gLevel5Stage1Room3 ROOM_DEF(0838bb74) = {
     .entryX = 40,
     .entryY = 73,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8331,7 +8331,7 @@ struct RoomDef gLevel5Stage1Room4 ROOM_DEF(0838bd4c) = {
     .entryX = 137,
     .entryY = 25,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8374,7 +8374,7 @@ struct RoomDef gLevel5Stage1Room5 ROOM_DEF(0838bf0c) = {
     .entryX = 136,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8417,7 +8417,7 @@ struct RoomDef gLevel5Stage1Room6 ROOM_DEF(0838c068) = {
     .entryX = 121,
     .entryY = 105,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8460,7 +8460,7 @@ struct RoomDef gLevel5Stage2Room0 ROOM_DEF(0838c574) = {
     .entryX = 40,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8503,7 +8503,7 @@ struct RoomDef gLevel5Stage2Room1 ROOM_DEF(0838cb58) = {
     .entryX = 120,
     .entryY = 185,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8546,7 +8546,7 @@ struct RoomDef gLevel5Stage2Room2 ROOM_DEF(0838d190) = {
     .entryX = 56,
     .entryY = 296,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8589,7 +8589,7 @@ struct RoomDef gLevel5Stage2Room3 ROOM_DEF(0838d7fc) = {
     .entryX = 215,
     .entryY = 520,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8632,7 +8632,7 @@ struct RoomDef gLevel5Stage2Room4 ROOM_DEF(0838dbec) = {
     .entryX = 72,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8674,7 +8674,7 @@ struct RoomDef gLevel5Stage2Room5 ROOM_DEF(0838dd58) = {
     .entryX = 88,
     .entryY = 312,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8717,7 +8717,7 @@ struct RoomDef gLevel5Stage2Room6 ROOM_DEF(0838dec4) = {
     .entryX = 217,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8760,7 +8760,7 @@ struct RoomDef gLevel5Stage2Room7 ROOM_DEF(0838e038) = {
     .entryX = 57,
     .entryY = 103,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8803,7 +8803,7 @@ struct RoomDef gLevel5Stage2Room8 ROOM_DEF(0838e2c8) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8846,7 +8846,7 @@ struct RoomDef gLevel5Stage2Room9 ROOM_DEF(0838e478) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8889,7 +8889,7 @@ struct RoomDef gLevel5Stage2Room10 ROOM_DEF(0838e688) = {
     .entryX = 104,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8932,7 +8932,7 @@ struct RoomDef gLevel5Stage2Room11 ROOM_DEF(0838e818) = {
     .entryX = 40,
     .entryY = 8,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -8975,7 +8975,7 @@ struct RoomDef gLevel5Stage3Room0 ROOM_DEF(0838eee4) = {
     .entryX = 40,
     .entryY = 184,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9018,7 +9018,7 @@ struct RoomDef gLevel5Stage3Room1 ROOM_DEF(0838f788) = {
     .entryX = 56,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9061,7 +9061,7 @@ struct RoomDef gLevel5Stage3Room2 ROOM_DEF(0838f914) = {
     .entryX = 56,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9104,7 +9104,7 @@ struct RoomDef gLevel5Stage3Room3 ROOM_DEF(0838fcf4) = {
     .entryX = 56,
     .entryY = 520,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9147,7 +9147,7 @@ struct RoomDef gLevel5Stage3Room4 ROOM_DEF(083900ac) = {
     .entryX = 40,
     .entryY = 41,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9190,7 +9190,7 @@ struct RoomDef gLevel5Stage3Room5 ROOM_DEF(083902b0) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9233,7 +9233,7 @@ struct RoomDef gLevel5Stage4Room0 ROOM_DEF(0839059c) = {
     .entryX = 40,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9276,7 +9276,7 @@ struct RoomDef gLevel5Stage4Room1 ROOM_DEF(08390ba8) = {
     .entryX = 40,
     .entryY = 680,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9319,7 +9319,7 @@ struct RoomDef gLevel5Stage4Room2 ROOM_DEF(08391138) = {
     .entryX = 56,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9362,7 +9362,7 @@ struct RoomDef gLevel5Stage4Room3 ROOM_DEF(08391c40) = {
     .entryX = 40,
     .entryY = 312,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9405,7 +9405,7 @@ struct RoomDef gLevel5Stage4Room4 ROOM_DEF(08391d9c) = {
     .entryX = 88,
     .entryY = 8,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9448,7 +9448,7 @@ struct RoomDef gLevel5Stage5Room0 ROOM_DEF(08392308) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9491,7 +9491,7 @@ struct RoomDef gLevel5Stage5Room1 ROOM_DEF(08392778) = {
     .entryX = 40,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9533,7 +9533,7 @@ struct RoomDef gLevel5Stage5Room2 ROOM_DEF(08392aa8) = {
     .entryX = 56,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9576,7 +9576,7 @@ struct RoomDef gLevel5Stage5Room3 ROOM_DEF(08392f0c) = {
     .entryX = 88,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9619,7 +9619,7 @@ struct RoomDef gLevel5Stage5Room4 ROOM_DEF(08393430) = {
     .entryX = 40,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9661,7 +9661,7 @@ struct RoomDef gLevel5Stage5Room5 ROOM_DEF(083935ac) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9704,7 +9704,7 @@ struct RoomDef gLevel5Stage5Room6 ROOM_DEF(08393760) = {
     .entryX = 72,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9747,7 +9747,7 @@ struct RoomDef gLevel5Stage5Room7 ROOM_DEF(083938c0) = {
     .entryX = 56,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9790,7 +9790,7 @@ struct RoomDef gLevel5Stage5Room8 ROOM_DEF(08393a7c) = {
     .entryX = 136,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9833,7 +9833,7 @@ struct RoomDef gLevel5Stage5Room9 ROOM_DEF(08393c2c) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9876,7 +9876,7 @@ struct RoomDef gLevel5Stage5Room10 ROOM_DEF(08393dc8) = {
     .entryX = 152,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -9918,7 +9918,7 @@ struct RoomDef gLevel5Stage6Room0 ROOM_DEF(08393ef4) = {
     .entryX = 40,
     .entryY = 137,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -9961,7 +9961,7 @@ struct RoomDef gLevel6Stage0Room0 ROOM_DEF(08394458) = {
     .entryX = 56,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10004,7 +10004,7 @@ struct RoomDef gLevel6Stage0Room1 ROOM_DEF(08394c58) = {
     .entryX = 56,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10047,7 +10047,7 @@ struct RoomDef gLevel6Stage0Room2 ROOM_DEF(083950f8) = {
     .entryX = 56,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10090,7 +10090,7 @@ struct RoomDef gLevel6Stage0Room3 ROOM_DEF(08395298) = {
     .entryX = 136,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10132,7 +10132,7 @@ struct RoomDef gLevel6Stage1Room0 ROOM_DEF(08395450) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10174,7 +10174,7 @@ struct RoomDef gLevel6Stage1Room1 ROOM_DEF(0839570c) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10216,7 +10216,7 @@ struct RoomDef gLevel6Stage1Room2 ROOM_DEF(083959c8) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10258,7 +10258,7 @@ struct RoomDef gLevel6Stage1Room3 ROOM_DEF(08395c90) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10300,7 +10300,7 @@ struct RoomDef gLevel6Stage1Room4 ROOM_DEF(08395f34) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10342,7 +10342,7 @@ struct RoomDef gLevel6Stage1Room5 ROOM_DEF(083961e4) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10384,7 +10384,7 @@ struct RoomDef gLevel6Stage1Room6 ROOM_DEF(083964ac) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10426,7 +10426,7 @@ struct RoomDef gLevel6Stage1Room7 ROOM_DEF(08396754) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10468,7 +10468,7 @@ struct RoomDef gLevel6Stage1Room8 ROOM_DEF(08396a00) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10510,7 +10510,7 @@ struct RoomDef gLevel6Stage1Room9 ROOM_DEF(08396cb8) = {
     .entryX = 56,
     .entryY = 280,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10553,7 +10553,7 @@ struct RoomDef gLevel6Stage1Room10 ROOM_DEF(0839706c) = {
     .entryX = 136,
     .entryY = 872,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10596,7 +10596,7 @@ struct RoomDef gLevel6Stage1Room11 ROOM_DEF(08397358) = {
     .entryX = 24,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10639,7 +10639,7 @@ struct RoomDef gLevel6Stage1Room12 ROOM_DEF(08397508) = {
     .entryX = 56,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10682,7 +10682,7 @@ struct RoomDef gLevel6Stage1Room13 ROOM_DEF(08397680) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10725,7 +10725,7 @@ struct RoomDef gLevel6Stage1Room14 ROOM_DEF(08397804) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10768,7 +10768,7 @@ struct RoomDef gLevel6Stage1Room15 ROOM_DEF(08397970) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10811,7 +10811,7 @@ struct RoomDef gLevel6Stage1Room16 ROOM_DEF(08397b54) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10854,7 +10854,7 @@ struct RoomDef gLevel6Stage1Room17 ROOM_DEF(08397cfc) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10897,7 +10897,7 @@ struct RoomDef gLevel6Stage1Room18 ROOM_DEF(08397ed0) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10940,7 +10940,7 @@ struct RoomDef gLevel6Stage1Room19 ROOM_DEF(0839804c) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -10983,7 +10983,7 @@ struct RoomDef gLevel6Stage1Room20 ROOM_DEF(08398220) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11026,7 +11026,7 @@ struct RoomDef gLevel6Stage1Room21 ROOM_DEF(083983d8) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11069,7 +11069,7 @@ struct RoomDef gLevel6Stage1Room22 ROOM_DEF(083985d0) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11112,7 +11112,7 @@ struct RoomDef gLevel6Stage1Room23 ROOM_DEF(0839875c) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11154,7 +11154,7 @@ struct RoomDef gLevel6Stage1Room24 ROOM_DEF(08398858) = {
     .entryX = 8,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11197,7 +11197,7 @@ struct RoomDef gLevel6Stage2Room0 ROOM_DEF(08398ddc) = {
     .entryX = 40,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11240,7 +11240,7 @@ struct RoomDef gLevel6Stage2Room1 ROOM_DEF(08399208) = {
     .entryX = 120,
     .entryY = 664,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11283,7 +11283,7 @@ struct RoomDef gLevel6Stage2Room2 ROOM_DEF(083995ec) = {
     .entryX = 56,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11326,7 +11326,7 @@ struct RoomDef gLevel6Stage2Room3 ROOM_DEF(08399cb8) = {
     .entryX = 40,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11369,7 +11369,7 @@ struct RoomDef gLevel6Stage3Room0 ROOM_DEF(0839a214) = {
     .entryX = 56,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11412,7 +11412,7 @@ struct RoomDef gLevel6Stage3Room1 ROOM_DEF(0839a4c8) = {
     .entryX = 120,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11455,7 +11455,7 @@ struct RoomDef gLevel6Stage3Room2 ROOM_DEF(0839a774) = {
     .entryX = 120,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11498,7 +11498,7 @@ struct RoomDef gLevel6Stage3Room3 ROOM_DEF(0839aa40) = {
     .entryX = 232,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11541,7 +11541,7 @@ struct RoomDef gLevel6Stage3Room4 ROOM_DEF(0839ad18) = {
     .entryX = 40,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11584,7 +11584,7 @@ struct RoomDef gLevel6Stage3Room5 ROOM_DEF(0839b260) = {
     .entryX = 56,
     .entryY = 104,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11627,7 +11627,7 @@ struct RoomDef gLevel6Stage3Room6 ROOM_DEF(0839bb28) = {
     .entryX = 40,
     .entryY = 504,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11670,7 +11670,7 @@ struct RoomDef gLevel6Stage4Room0 ROOM_DEF(0839bed4) = {
     .entryX = 88,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11713,7 +11713,7 @@ struct RoomDef gLevel6Stage4Room1 ROOM_DEF(0839c0d0) = {
     .entryX = 40,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11756,7 +11756,7 @@ struct RoomDef gLevel6Stage4Room2 ROOM_DEF(0839c57c) = {
     .entryX = 24,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11799,7 +11799,7 @@ struct RoomDef gLevel6Stage4Room3 ROOM_DEF(0839cb34) = {
     .entryX = 72,
     .entryY = 88,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11842,7 +11842,7 @@ struct RoomDef gLevel6Stage4Room4 ROOM_DEF(0839cd48) = {
     .entryX = 72,
     .entryY = 8,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11885,7 +11885,7 @@ struct RoomDef gLevel6Stage5Room0 ROOM_DEF(0839d254) = {
     .entryX = 40,
     .entryY = 72,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11928,7 +11928,7 @@ struct RoomDef gLevel6Stage5Room1 ROOM_DEF(0839d5b4) = {
     .entryX = 24,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -11971,7 +11971,7 @@ struct RoomDef gLevel6Stage5Room2 ROOM_DEF(0839d8bc) = {
     .entryX = 40,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12014,7 +12014,7 @@ struct RoomDef gLevel6Stage5Room3 ROOM_DEF(0839dafc) = {
     .entryX = 72,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12057,7 +12057,7 @@ struct RoomDef gLevel6Stage5Room4 ROOM_DEF(0839ded4) = {
     .entryX = 40,
     .entryY = 56,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12100,7 +12100,7 @@ struct RoomDef gLevel6Stage5Room5 ROOM_DEF(0839e190) = {
     .entryX = 72,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12143,7 +12143,7 @@ struct RoomDef gLevel6Stage5Room6 ROOM_DEF(0839e590) = {
     .entryX = 40,
     .entryY = 120,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12186,7 +12186,7 @@ struct RoomDef gLevel6Stage5Room7 ROOM_DEF(0839e944) = {
     .entryX = 40,
     .entryY = 408,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12229,7 +12229,7 @@ struct RoomDef gLevel6Stage5Room8 ROOM_DEF(0839ebb4) = {
     .entryX = 136,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12271,7 +12271,7 @@ struct RoomDef gLevel6Stage6Room0 ROOM_DEF(0839ee14) = {
     .entryX = 40,
     .entryY = 24,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -12313,7 +12313,7 @@ struct RoomDef gLevel7Stage0Room0 ROOM_DEF(0839f3d8) = {
     .entryX = 24,
     .entryY = 852,
     .unk54 = 4,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -12356,7 +12356,7 @@ struct RoomDef gLevel7Stage0Room1 ROOM_DEF(0839f684) = {
     .entryX = 25,
     .entryY = 296,
     .unk54 = 5,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 5,
 };
@@ -12397,7 +12397,7 @@ struct RoomDef gLevel7Stage0Room2 ROOM_DEF(0839fc40) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 4,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12440,7 +12440,7 @@ struct RoomDef gLevel7Stage2Room0 ROOM_DEF(083a0058) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12483,7 +12483,7 @@ struct RoomDef gLevel7Stage2Room1 ROOM_DEF(083a0370) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12526,7 +12526,7 @@ struct RoomDef gLevel7Stage2Room2 ROOM_DEF(083a06dc) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12569,7 +12569,7 @@ struct RoomDef gLevel7Stage2Room3 ROOM_DEF(083a0aa0) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12612,7 +12612,7 @@ struct RoomDef gLevel7Stage2Room4 ROOM_DEF(083a0d2c) = {
     .entryX = 40,
     .entryY = 40,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12654,7 +12654,7 @@ struct RoomDef gLevel7Stage2Room5 ROOM_DEF(083a0f00) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12697,7 +12697,7 @@ struct RoomDef gLevel7Stage2Room6 ROOM_DEF(083a142c) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12739,7 +12739,7 @@ struct RoomDef gLevel7Stage2Room7 ROOM_DEF(083a1644) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12782,7 +12782,7 @@ struct RoomDef gLevel7Stage2Room8 ROOM_DEF(083a17cc) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12823,7 +12823,7 @@ struct RoomDef gLevel7Stage2Room9 ROOM_DEF(083a1b64) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12864,7 +12864,7 @@ struct RoomDef gLevel7Stage2Room10 ROOM_DEF(083a1fd8) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 0,
 };
@@ -12906,7 +12906,7 @@ struct RoomDef gLevel8Stage0Room0 ROOM_DEF(083a24f0) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 1,
 };
@@ -12947,7 +12947,7 @@ struct RoomDef gLevel8Stage0Room1 ROOM_DEF(083a2578) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 8,
 };
@@ -12990,7 +12990,7 @@ struct RoomDef gLevel8Stage0Room2 ROOM_DEF(083a2694) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 3,
 };
@@ -13033,7 +13033,7 @@ struct RoomDef gLevel8Stage0Room3 ROOM_DEF(083a291c) = {
     .entryX = 128,
     .entryY = 536,
     .unk54 = 3,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 2,
 };
@@ -13074,7 +13074,7 @@ struct RoomDef gLevel8Stage0Room4 ROOM_DEF(083a2ac4) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -13116,7 +13116,7 @@ struct RoomDef gLevel8Stage1Room0 ROOM_DEF(083a32bc) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 1,
 };
@@ -13157,7 +13157,7 @@ struct RoomDef gLevel8Stage1Room1 ROOM_DEF(083a3344) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -13200,7 +13200,7 @@ struct RoomDef gLevel8Stage1Room2 ROOM_DEF(083a34e4) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 4,
 };
@@ -13243,7 +13243,7 @@ struct RoomDef gLevel8Stage1Room3 ROOM_DEF(083a360c) = {
     .entryX = 136,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 3,
 };
@@ -13286,7 +13286,7 @@ struct RoomDef gLevel8Stage1Room4 ROOM_DEF(083a38fc) = {
     .entryX = 128,
     .entryY = 536,
     .unk54 = 3,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 2,
 };
@@ -13327,7 +13327,7 @@ struct RoomDef gLevel8Stage1Room5 ROOM_DEF(083a3a74) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -13369,7 +13369,7 @@ struct RoomDef gLevel8Stage2Room0 ROOM_DEF(083a3ff4) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 1,
 };
@@ -13410,7 +13410,7 @@ struct RoomDef gLevel8Stage2Room1 ROOM_DEF(083a407c) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 8,
 };
@@ -13453,7 +13453,7 @@ struct RoomDef gLevel8Stage2Room2 ROOM_DEF(083a421c) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 4,
 };
@@ -13496,7 +13496,7 @@ struct RoomDef gLevel8Stage2Room3 ROOM_DEF(083a433c) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 3,
 };
@@ -13539,7 +13539,7 @@ struct RoomDef gLevel8Stage2Room4 ROOM_DEF(083a45dc) = {
     .entryX = 128,
     .entryY = 536,
     .unk54 = 3,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 2,
 };
@@ -13580,7 +13580,7 @@ struct RoomDef gLevel8Stage2Room5 ROOM_DEF(083a46fc) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -13622,7 +13622,7 @@ struct RoomDef gLevel8Stage3Room0 ROOM_DEF(083a4d80) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 1,
 };
@@ -13663,7 +13663,7 @@ struct RoomDef gLevel8Stage3Room1 ROOM_DEF(083a4e08) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 8,
 };
@@ -13706,7 +13706,7 @@ struct RoomDef gLevel8Stage3Room2 ROOM_DEF(083a4fa8) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 4,
 };
@@ -13749,7 +13749,7 @@ struct RoomDef gLevel8Stage3Room3 ROOM_DEF(083a50d0) = {
     .entryX = 120,
     .entryY = 152,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 3,
 };
@@ -13792,7 +13792,7 @@ struct RoomDef gLevel8Stage3Room4 ROOM_DEF(083a5354) = {
     .entryX = 128,
     .entryY = 536,
     .unk54 = 3,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 2,
 };
@@ -13833,7 +13833,7 @@ struct RoomDef gLevel8Stage3Room5 ROOM_DEF(083a5480) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -13875,7 +13875,7 @@ struct RoomDef gLevel8Stage4Room0 ROOM_DEF(083a5be8) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 1,
 };
@@ -13916,7 +13916,7 @@ struct RoomDef gLevel8Stage4Room1 ROOM_DEF(083a5c70) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 8,
 };
@@ -13959,7 +13959,7 @@ struct RoomDef gLevel8Stage4Room2 ROOM_DEF(083a5e10) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 4,
 };
@@ -14002,7 +14002,7 @@ struct RoomDef gLevel8Stage4Room3 ROOM_DEF(083a5f3c) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 3,
 };
@@ -14045,7 +14045,7 @@ struct RoomDef gLevel8Stage4Room4 ROOM_DEF(083a61e4) = {
     .entryX = 120,
     .entryY = 536,
     .unk54 = 3,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 2,
 };
@@ -14086,7 +14086,7 @@ struct RoomDef gLevel8Stage4Room5 ROOM_DEF(083a633c) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -14128,7 +14128,7 @@ struct RoomDef gLevel8Stage5Room0 ROOM_DEF(083a6ae0) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 1,
 };
@@ -14169,7 +14169,7 @@ struct RoomDef gLevel8Stage5Room1 ROOM_DEF(083a6b68) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 8,
 };
@@ -14212,7 +14212,7 @@ struct RoomDef gLevel8Stage5Room2 ROOM_DEF(083a6d08) = {
     .entryX = 56,
     .entryY = 136,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 4,
 };
@@ -14255,7 +14255,7 @@ struct RoomDef gLevel8Stage5Room3 ROOM_DEF(083a6e24) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 3,
 };
@@ -14298,7 +14298,7 @@ struct RoomDef gLevel8Stage5Room4 ROOM_DEF(083a70a0) = {
     .entryX = 128,
     .entryY = 536,
     .unk54 = 3,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 2,
 };
@@ -14339,7 +14339,7 @@ struct RoomDef gLevel8Stage5Room5 ROOM_DEF(083a71e4) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -14381,7 +14381,7 @@ struct RoomDef gLevel8Stage6Room0 ROOM_DEF(083a77c4) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 1,
 };
@@ -14422,7 +14422,7 @@ struct RoomDef gLevel8Stage6Room1 ROOM_DEF(083a784c) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 8,
 };
@@ -14465,7 +14465,7 @@ struct RoomDef gLevel8Stage6Room2 ROOM_DEF(083a7adc) = {
     .entryX = 128,
     .entryY = 536,
     .unk54 = 3,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 2,
 };
@@ -14506,7 +14506,7 @@ struct RoomDef gLevel8Stage6Room3 ROOM_DEF(083a7c28) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };
@@ -14547,7 +14547,7 @@ struct RoomDef gLevel8Stage7Room0 ROOM_DEF(083a8364) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 1,
+    .bg3FullShake = 1,
     .unk56 = 0,
     .unk57 = 7,
 };
@@ -14588,7 +14588,7 @@ struct RoomDef gLevel8Stage7Room1 ROOM_DEF(083a85d4) = {
     .entryX = 64,
     .entryY = 64,
     .unk54 = 0,
-    .unk55 = 0,
+    .bg3FullShake = 0,
     .unk56 = 0,
     .unk57 = 6,
 };

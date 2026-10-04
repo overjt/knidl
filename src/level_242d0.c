@@ -80,7 +80,7 @@ void LoadCutsceneRoom(void)
     }
     gCurRoomDef = gRoomTable[8][gCurLevel][gUnk_08732630[gCurLevel]];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -220,7 +220,7 @@ void LoadEndingRoom(s32 a0)
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -345,7 +345,7 @@ void LoadCreditsRoom(void)
     CreateRoomTask(6);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();

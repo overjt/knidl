@@ -67,13 +67,13 @@ void PlayerActionStand(void)
         gCurTask->player->running = 0;
         t2 = gCurTask;
         t2->player->unk40 &= 0xFFEF;
-        t2->player->unk0F = 0;
+        t2->player->runTapTimer = 0;
         PlayerPlayBump();
     }
-    gCurTask->player->unk33 = PlayerGetFacingSlope(gCurTask->player->playerIndex);
+    gCurTask->player->facingSlope = PlayerGetFacingSlope(gCurTask->player->playerIndex);
     p = gCurTask->player;
-    p->unk35 = 0;
-    p->unk34 = 0;
+    p->blinkTimer = 0;
+    p->blinkScriptPos = 0;
     if (gCurTask->player->mouthState == 1)
         gCurTask->playerBaseFrame = gUnk_0873D0F8[26][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     else
@@ -225,7 +225,7 @@ void PlayerActionWalk(void)
     if (p->prevMode != 1)
     {
         p->running = 0;
-        gCurTask->player->unk0F = 0;
+        gCurTask->player->runTapTimer = 0;
         gCurTask->player->savedWallSide = 0;
         gCurTask->playerWalkStepDelay = 0;
         PlayerPlayBump();

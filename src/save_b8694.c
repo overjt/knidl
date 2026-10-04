@@ -28,15 +28,15 @@ void ReceiveLinkSaveSlots(void)
         case 0:
             break;
         case 1:
-            gLinkSaveSlots[i].unk06[gExtraMode] = gRecvCmds[1][i] >> 8;
+            gLinkSaveSlots[i].curLevel[gExtraMode] = gRecvCmds[1][i] >> 8;
             gLinkSaveSlots[i].unk08[gExtraMode] = gRecvCmds[1][i];
-            gLinkSaveSlots[i].unk0A[gExtraMode] = gRecvCmds[2][i] >> 8;
-            gLinkSaveSlots[i].unk0C[gExtraMode] = gRecvCmds[2][i];
-            gLinkSaveSlots[i].unk02[gExtraMode] = gRecvCmds[3][i];
+            gLinkSaveSlots[i].furthestLevel[gExtraMode] = gRecvCmds[2][i] >> 8;
+            gLinkSaveSlots[i].furthestStage[gExtraMode] = gRecvCmds[2][i];
+            gLinkSaveSlots[i].completionPercent[gExtraMode] = gRecvCmds[3][i];
             break;
         case 2:
-            gLinkSaveSlots[i].unk10[gExtraMode] = (gRecvCmds[1][i] << 16) | gRecvCmds[2][i];
-            gLinkSaveSlots[i].unk00 = gRecvCmds[3][i];
+            gLinkSaveSlots[i].bigSwitchFlags[gExtraMode] = (gRecvCmds[1][i] << 16) | gRecvCmds[2][i];
+            gLinkSaveSlots[i].milestoneFlags = gRecvCmds[3][i];
             break;
         default:
             q = Div((gRecvCmds[0][i] & 0xFF) - 3, 3);
@@ -46,17 +46,17 @@ void ReceiveLinkSaveSlots(void)
                 switch (r)
                 {
                 case 0:
-                    gLinkSaveSlots[i].unk18[q][0] = gRecvCmds[1][i];
-                    gLinkSaveSlots[i].unk18[q][1] = gRecvCmds[2][i];
-                    gLinkSaveSlots[i].unk18[q][2] = gRecvCmds[3][i];
+                    gLinkSaveSlots[i].stageClearStatus[q][0] = gRecvCmds[1][i];
+                    gLinkSaveSlots[i].stageClearStatus[q][1] = gRecvCmds[2][i];
+                    gLinkSaveSlots[i].stageClearStatus[q][2] = gRecvCmds[3][i];
                     break;
                 case 1:
-                    gLinkSaveSlots[i].unk18[q][3] = gRecvCmds[1][i];
-                    gLinkSaveSlots[i].unk18[q][4] = gRecvCmds[2][i];
-                    gLinkSaveSlots[i].unk18[q][5] = gRecvCmds[3][i];
+                    gLinkSaveSlots[i].stageClearStatus[q][3] = gRecvCmds[1][i];
+                    gLinkSaveSlots[i].stageClearStatus[q][4] = gRecvCmds[2][i];
+                    gLinkSaveSlots[i].stageClearStatus[q][5] = gRecvCmds[3][i];
                     break;
                 case 2:
-                    gLinkSaveSlots[i].unk18[q][6] = gRecvCmds[1][i];
+                    gLinkSaveSlots[i].stageClearStatus[q][6] = gRecvCmds[1][i];
                     break;
                 }
             }

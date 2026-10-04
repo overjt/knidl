@@ -245,7 +245,7 @@ void PlayerActionStarRodFlight(void)
     {
         gCurTask->player->running = 0;
         gCurTask->player->unk14 = 0;
-        gCurTask->player->unk10 = 0;
+        gCurTask->player->flightCoastTimer = 0;
         PlayerStopAxes(3);
         gCurTask->variant = 0;
         gCurTask->u80.attackAbility = ABILITY_NORMAL;

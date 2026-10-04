@@ -43,7 +43,7 @@ void LoadHubRoom(void)
     CreateRoomTask(1);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -148,7 +148,7 @@ void LoadBigSwitchViewRoom(void)
     CreateRoomTask(2);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();
@@ -296,7 +296,7 @@ void LoadGoalGameRoom(void)
     CreateRoomTask(4);
     gCurRoomDef = gRoomTable[8][7][0];
     gUnk_02007D64 = gCurRoomDef->unk57;
-    gRoomBg3FullShake = gCurRoomDef->unk55;
+    gRoomBg3FullShake = gCurRoomDef->bg3FullShake;
     ClearBg2Bg3Maps();
     LoadBg2Gfx();
     LoadBg3Gfx();

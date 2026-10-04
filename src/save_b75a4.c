@@ -54,8 +54,8 @@ void InputRecorderRecordFrame(void)
             gInputRecorderKeys[i] = 0xFFFF;
         }
         gInputRecorderEntryFrames[i] = count;
-        gInputRecordingPtr->unk12C[pos] = key | (count << 10);
-        WriteInputRecordingEntry((u8 *)&gInputRecordingPtr->unk12C[pos], pos);
+        gInputRecordingPtr->keyLog[pos] = key | (count << 10);
+        WriteInputRecordingEntry((u8 *)&gInputRecordingPtr->keyLog[pos], pos);
     }
 }
 
@@ -76,8 +76,8 @@ void InputRecorderPlayFrame(void)
         {
             gInputRecorderCurPos[i] = gInputRecorderNextPos[i];
             gInputRecorderNextPos[i] += gPlayerCount;
-            key = gInputRecordingPtr->unk12C[gInputRecorderCurPos[i]] & 0x3FF;
-            gInputRecorderEntryFrames[i] = gInputRecordingPtr->unk12C[gInputRecorderCurPos[i]] >> 10;
+            key = gInputRecordingPtr->keyLog[gInputRecorderCurPos[i]] & 0x3FF;
+            gInputRecorderEntryFrames[i] = gInputRecordingPtr->keyLog[gInputRecorderCurPos[i]] >> 10;
             if (key == 0x3FF)
             {
                 for (j = 0; j < gPlayerCount; j++)

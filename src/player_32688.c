@@ -115,7 +115,7 @@ void Task_Player(void)
         case ABILITY_MIKE:
         case ABILITY_CRASH:
         case ABILITY_LIGHT:
-            gCurTask->player->unk22 = 2;
+            gCurTask->player->paletteFlashMode = 2;
             break;
         case ABILITY_UFO:
             if (gGameState != 5)
@@ -411,9 +411,9 @@ check:
                 gLifeRequests.unk04[gCurTaskIdx] = (gLifeRequests.unk04[gCurTaskIdx] & 0xF0) | 2;
         }
     }
-    else if (gCurTask->player->unk10 != 0)
+    else if (gCurTask->player->flightCoastTimer != 0)
     {
-        gCurTask->player->unk10--;
+        gCurTask->player->flightCoastTimer--;
     }
 tail:
     if (gCurTask->player->unk37 != 2 && gLocalPlayer == gCurTask->player->playerIndex)
@@ -499,7 +499,7 @@ void sub_08033414(void)
         break;
     case 1:
         gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
-        gCurTask->player->unk22 = 0;
+        gCurTask->player->paletteFlashMode = 0;
         gCurTask->player->unk1E = gCurTask->player->unk20 = 0;
         break;
     case 2:
@@ -513,7 +513,7 @@ void sub_08033414(void)
             gCurTask->player->requestedAction = PLAYER_ACTION_STAR_ROD_FLIGHT;
             gCurTask->variant = 3;
         }
-        gCurTask->player->unk22 = 0;
+        gCurTask->player->paletteFlashMode = 0;
         gCurTask->player->unk1E = gCurTask->player->unk20 = 0;
         break;
     }

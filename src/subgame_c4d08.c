@@ -11,7 +11,7 @@
  * 
  *   AirGrindRacerMove   a racer's Task.moveCallback callback: Task.velX (speed) +=
  *       Task.accelX (acceleration), with a catch-up bonus for the computer
- *       racers behind the leader (M37Game.unk1B8), capped by the level's
+ *       racers behind the leader (M37Game.leaderCoursePos), capped by the level's
  *       gUnk_080CFE3C[level][0]; then Task.posX += speed.
  *   AirGrindRacerDraw / AirGrindEffectDrawOrFree   the Task.drawCallback draw callbacks of the
  *       racers (with a blinking extra sprite for three poses) and of the
@@ -95,7 +95,7 @@ void AirGrindRacerMove(void)
         t = gCurTask;
         v = t->accelX;
         if (v > 0) {
-            d = g->unk1B8 - (t->posX >> 16);
+            d = g->leaderCoursePos - (t->posX >> 16);
             if (d > 256)
                 d = 256;
             t->velX += v + ((v * d) >> 8);

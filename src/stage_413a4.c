@@ -91,7 +91,7 @@ void MetaKnightActionStand(void)
         gCurTask->player->running = 0;
         t2 = gCurTask;
         t2->player->unk40 &= 0xFFEF;
-        t2->player->unk0F = 0;
+        t2->player->runTapTimer = 0;
         PlayerPlayBump();
     }
 
@@ -117,7 +117,7 @@ void MetaKnightActionWalk(void)
     {
         p->running = 0;
         gCurTask->player->savedWallSide = 0;
-        gCurTask->player->unk0F = 0;
+        gCurTask->player->runTapTimer = 0;
         gCurTask->unk28 = 0;
         PlayerPlayBump();
     }
@@ -1137,7 +1137,7 @@ void MetaKnightActionHurtUpdate(void)
    and gFrameCount.
 
    Four shapes were load-bearing in the +/-1 chain:
-     * `k` is a REAL LOCAL holding the 1 stored into PlayerState.unk22, not a
+     * `k` is a REAL LOCAL holding the 1 stored into PlayerState.paletteFlashMode, not a
        literal.  A literal store leaves the RTL as `(set (mem:QI) (const_int 1))`
        and reload invents the register only after cse, so there is no pseudo for
        cse to reuse; with a local, cse follows the TAKEN side of the `beq` into
@@ -1212,7 +1212,7 @@ void MetaKnightActionDie(void)
     for (i = 0; i < 4; i++)
         CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);
     CreatePlayerEffect(gCurTask->player->playerIndex, 13, 0);
-    gCurTask->player->unk22 = k = 1;
+    gCurTask->player->paletteFlashMode = k = 1;
     gCurTask->player->invulnerabilityTimer = 0x8000;
     PlayBgm(3);
     if (IsTaskBelowPlayerBounds(gCurTask))

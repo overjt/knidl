@@ -82,9 +82,9 @@ struct RoomDef
 
 struct Unk0802D25C
 {
-    /*0x00*/ u16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ u16 unk4[0];
+    /*0x00*/ u16 tileIndex;
+    /*0x02*/ u16 size;
+    /*0x04*/ u16 tiles[0];
 };
 
 struct Unk0802D278
@@ -258,7 +258,7 @@ void UpdateBgAnims(void)
 
 void BgAnimCopyTiles(struct Unk0802D25C *a)
 {
-    RequestCopy(1, (u32)a->unk4, (BG_VRAM + 0x4000) + a->unk0 * 32, a->unk2);
+    RequestCopy(1, (u32)a->tiles, (BG_VRAM + 0x4000) + a->tileIndex * 32, a->size);
 }
 
 void BgAnimStartPaletteFade(struct Unk02007D70 *p, struct Unk0802D278 *q)

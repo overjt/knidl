@@ -316,12 +316,12 @@ void AirGrindBuildCourse(s32 a, s32 b)
     {
         p = &gAirGrindCourse.players[i];
         p->prevCoursePos = p->coursePos = gAirGrindCourse.unk108;
-        p->unk30 = 0;
-        p->unk04 = 0;
-        p->unk38 = 1;
+        p->prevHoldingA = 0;
+        p->holdingA = 0;
+        p->prevOnEvenSegment = 1;
         p->unk24 = 0;
         p->unk20 = 0;
-        p->unk2C = 0;
+        p->segmentIndex = 0;
     }
     gAirGrindCourse.unk00C = 1000;
     switch (a)
@@ -397,7 +397,7 @@ void AirGrindDrawCourse(void)
             c32 = t % 32;
             rem = col % 8;
             AirGrindCalcLanePoint(lane, col, &x, &y, &z);
-            AirGrindFindLaneSegment(lane, &p->unk2C, col * 32, &flag);
+            AirGrindFindLaneSegment(lane, &p->segmentIndex, col * 32, &flag);
             if (x < -90)
                 x = -90;
             if (x > 90)
@@ -484,25 +484,25 @@ void AirGrindDrawCourse(void)
         }
         *gUnk_08757300[lane] = (lo - 120) << 16;
         v = sub_080c55d8(lane, p->coursePos);
-        AirGrindCalcLanePoint(lane, v / 32, &p->unk10, &depth[lane], &p->unk1C);
-        p->unk38 = p->unk14;
-        AirGrindFindLaneSegment(lane, &p->unk2C, v, &p->unk14);
-        p->unk28 = AirGrindFindSegmentEnd(p->unk2C, p->coursePos);
+        AirGrindCalcLanePoint(lane, v / 32, &p->screenY, &depth[lane], &p->unk1C);
+        p->prevOnEvenSegment = p->onEvenSegment;
+        AirGrindFindLaneSegment(lane, &p->segmentIndex, v, &p->onEvenSegment);
+        p->segmentEnd = AirGrindFindSegmentEnd(p->segmentIndex, p->coursePos);
         v /= 32;
-        p->unk08 = depth[lane] + 512;
-        sn = gUnk_080D059A[p->unk08 / 4 - 32];
+        p->depth = depth[lane] + 512;
+        sn = gUnk_080D059A[p->depth / 4 - 32];
         *gUnk_08757310[lane] = (gAirGrindCourse.unk004 * sn << 8) + 0x300000;
-        sn = gUnk_080D059A[p->unk08 / 4 - 32];
+        sn = gUnk_080D059A[p->depth / 4 - 32];
         *gUnk_08757300[lane] += sn * gAirGrindCourse.unk008 << 8;
-        old = p->unk0C;
-        p->unk0C = v - lo + 120;
-        p->unk10 += 128 - *gUnk_08757310[lane] / 65536;
+        old = p->screenX;
+        p->screenX = v - lo + 120;
+        p->screenY += 128 - *gUnk_08757310[lane] / 65536;
         if (gAirGrindCourse.unk10C != 0)
         {
-            if (p->unk04 != 0 || p->unk30 != 0 || p->unk0C > 240)
+            if (p->holdingA != 0 || p->prevHoldingA != 0 || p->screenX > 240)
             {
                 a = old;
-                b = p->unk0C;
+                b = p->screenX;
                 if (a > -8)
                 {
                     if (a > 240)
@@ -514,10 +514,10 @@ void AirGrindDrawCourse(void)
                     j = b - 120;
                     b = j + lo;
                     mark = 0;
-                    if ((p->unk30 != 0 && p->unk38 != 0 && p->unk04 == 0 && p->unk14 == 0)
-                        || (p->unk30 == 0 && p->unk38 == 0 && p->unk04 != 0 && p->unk14 != 0))
+                    if ((p->prevHoldingA != 0 && p->prevOnEvenSegment != 0 && p->holdingA == 0 && p->onEvenSegment == 0)
+                        || (p->prevHoldingA == 0 && p->prevOnEvenSegment == 0 && p->holdingA != 0 && p->onEvenSegment != 0))
                         mark = 1;
-                    if (p->unk0C > 240)
+                    if (p->screenX > 240)
                         mark = 1;
                     for (k = a; k < b; k++)
                     {
@@ -562,11 +562,11 @@ void AirGrindDrawCourse(void)
             if (m > gAirGrindCourse.finishLine)
                 m = gAirGrindCourse.finishLine;
             AirGrindCountSegmentBits(k, m, &set, &clear);
-            if (p->unk04 != 0)
+            if (p->holdingA != 0)
                 p->unk24 += set;
             p->unk20 += set;
         }
-        p->unk30 = p->unk04;
+        p->prevHoldingA = p->holdingA;
         p->prevCoursePos = p->coursePos;
     }
     depth[1] += 256;
@@ -578,7 +578,7 @@ void AirGrindDrawCourse(void)
         for (k = 0; k < 4; k++)
             if (depth[lane] > depth[k])
                 m++;
-        gAirGrindCourse.players[lane].unk18 = m;
+        gAirGrindCourse.players[lane].depthRank = m;
         if (m == 3)
             m = 2;
         *gUnk_08757320[lane] = (*gUnk_08757320[lane] & 0xFFFC) | m;

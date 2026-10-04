@@ -49,14 +49,14 @@ void PlayerActionThrowUpdate(void)
         {
         case 1:
             p = t->player;
-            if (p->unk09 == 0)
+            if (p->catchKind == 0)
             {
                 if (t->unk28 == 0)
                 {
                     if (TaskBreakFirstBlock(gUnk_0873CC54, p->playerIndex) != 0)
                     {
                         CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 2);
-                        gCurTask->player->unk09 = 2;
+                        gCurTask->player->catchKind = 2;
                     }
                 }
                 else
@@ -64,7 +64,7 @@ void PlayerActionThrowUpdate(void)
                     t->unk28--;
                 }
                 u = gCurTask;
-                if (u->player->unk09 == 0)
+                if (u->player->catchKind == 0)
                     RegisterCollider(gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873BEEC);
             }
             v = gCurTask;

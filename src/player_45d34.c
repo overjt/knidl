@@ -198,7 +198,7 @@ void PlayerActionMike(void)
         if (p->ability != ABILITY_MIKE)
             HudShowAbility(p->ability, p->playerIndex);
         else
-            p->unk22 = 2;
+            p->paletteFlashMode = 2;
     }
     gCurTask->playerActionDone28++;
     gPauseDisabled = 0;

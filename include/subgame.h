@@ -20,20 +20,20 @@ struct GfxDesc
 struct M37CoursePlayer
 {
     /*0x00*/ s32 coursePos;
-    /*0x04*/ s32 unk04;
-    /*0x08*/ s32 unk08;
-    /*0x0C*/ s32 unk0C;
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
+    /*0x04*/ s32 holdingA;
+    /*0x08*/ s32 depth;
+    /*0x0C*/ s32 screenX;
+    /*0x10*/ s32 screenY;
+    /*0x14*/ s32 onEvenSegment;
+    /*0x18*/ s32 depthRank;
     /*0x1C*/ s32 unk1C;
     /*0x20*/ s32 unk20;
     /*0x24*/ s32 unk24;
-    /*0x28*/ s32 unk28;
-    /*0x2C*/ s32 unk2C;
-    /*0x30*/ s32 unk30;
+    /*0x28*/ s32 segmentEnd;
+    /*0x2C*/ s32 segmentIndex;
+    /*0x30*/ s32 prevHoldingA;
     /*0x34*/ s32 prevCoursePos;
-    /*0x38*/ s32 unk38;
+    /*0x38*/ s32 prevOnEvenSegment;
 };
 
 /* gAirGrindCourse, reached through gAirGrindCoursePtr (and directly by the
@@ -55,26 +55,26 @@ struct M37Course
 /* per-player records, M37Game.players[4] (0x34 bytes) */
 struct M37Player
 {
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u16 unk02;
-    /*0x04*/ u16 unk04;
-    /*0x06*/ s16 unk06;
-    /*0x08*/ s16 unk08;
-    /*0x0A*/ s16 unk0A;
+    /*0x00*/ u8 grinding;
+    /*0x01*/ u8 fullBoostCount;
+    /*0x02*/ u16 heldKeys;
+    /*0x04*/ u16 pressedKeys;
+    /*0x06*/ s16 animStep;
+    /*0x08*/ s16 slowDownTimer;
+    /*0x0A*/ s16 boostCooldown;
     /*0x0C*/ s16 unk0C;
-    /*0x0E*/ u16 unk0E;
-    /*0x10*/ s32 unk10;
-    /*0x14*/ s32 unk14;
-    /*0x18*/ s32 unk18;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ u8 unk20;
+    /*0x0E*/ u16 aToggleCount;
+    /*0x10*/ s32 segmentEndDistance;
+    /*0x14*/ s32 liftY;
+    /*0x18*/ s32 offsetX;
+    /*0x1C*/ s32 segmentEnd;
+    /*0x20*/ u8 cpuMode;
     /*0x21*/ u8 unk21;
     /*0x22*/ u8 pad22[2];
-    /*0x24*/ s32 unk24;
-    /*0x28*/ s32 unk28;
-    /*0x2C*/ s32 unk2C;
-    /*0x30*/ s32 unk30;
+    /*0x24*/ s32 cpuTargetSpread;
+    /*0x28*/ s32 cpuTargetLead;
+    /*0x2C*/ s32 cpuRollSegmentEnd;
+    /*0x30*/ s32 cpuTarget;
 };
 
 /* 16-byte object records, M37ObjSet.unk04[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
@@ -87,7 +87,7 @@ struct M37Obj
     /*0x0C*/ s32 unkC;          /* 16.16; the ROM also reads its high half */
 };
 
-/* M37Game.unk0EC (0xB8 bytes with the compiler's 2-byte tail pad): task
+/* M37Game.scenery (0xB8 bytes with the compiler's 2-byte tail pad): task
    type #96 variant 1's seven scrolling objects.  AirGrindRollSceneryObject addresses an
    object as &set->unk04[i] off the set's own base (`lsls #4; adds #4`), so
    the records are a sub-struct, not flat fields; the two 16-colour rows
@@ -106,12 +106,12 @@ struct M37Game
 {
     /*0x000*/ s32 level;       /* the level (M36's AirGrindInit copies gSubGameLevel) */
     /*0x004*/ s32 raceTimes[4];
-    /*0x014*/ s32 unk014;
-    /*0x018*/ s32 unk018;
+    /*0x014*/ s32 engineSfxPlayer;
+    /*0x018*/ s32 digitTileWord;
     /*0x01C*/ struct M37Player players[4];
-    /*0x0EC*/ struct M37ObjSet unk0EC;
+    /*0x0EC*/ struct M37ObjSet scenery;
     /*0x1A4*/ s32 randomStates[5];    /* five LCG streams (AirGrindRandom, AirGrindRandomRange) */
-    /*0x1B8*/ s32 unk1B8;
+    /*0x1B8*/ s32 leaderCoursePos;
     /*0x1BC*/ u16 skyLineColors[160]; /* per-scanline colour, HBlank DMA source */
     /*0x2FC*/ u16 backdropColor;
     /*0x2FE*/ u8 pad2FE[2];
@@ -121,9 +121,9 @@ struct M37Game
     /*0x446*/ u16 localPlayer;       /* gLocalPlayer */
     /*0x448*/ u16 playerCount;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
-    /*0x44C*/ s32 unk44C;       /* a task index into gTasks */
-    /*0x450*/ u8 unk450;
-    /*0x451*/ u8 unk451;
+    /*0x44C*/ s32 sceneryTaskSlot;       /* a task index into gTasks */
+    /*0x450*/ u8 pressEffectShown;
+    /*0x451*/ u8 releaseEffectShown;
     /*0x452*/ u8 pad452[2];
 };
 

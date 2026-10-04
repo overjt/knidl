@@ -84,7 +84,7 @@ struct RoomDef
     /*0x50*/ u16 entryX;
     /*0x52*/ u16 entryY;
     /*0x54*/ u8 unk54;
-    /*0x55*/ u8 unk55;
+    /*0x55*/ u8 bg3FullShake;
     /*0x56*/ u8 unk56;
     /*0x57*/ u8 unk57;
 };

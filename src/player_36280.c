@@ -230,10 +230,10 @@ void PlayerActionDuck(void)
         PlayerSetMotionXPreset(0, 72);
     }
     gCurTask->playerDuckDropTimer = 8;
-    gCurTask->player->unk33 = PlayerGetFacingSlope(gCurTask->player->playerIndex);
+    gCurTask->player->facingSlope = PlayerGetFacingSlope(gCurTask->player->playerIndex);
     p = gCurTask->player;
-    p->unk35 = 0;
-    p->unk34 = 0;
+    p->blinkTimer = 0;
+    p->blinkScriptPos = 0;
     gCurTask->playerBaseFrame = gUnk_0873D4BC[gCurTask->player->ability][PlayerGetFacingSlope(gCurTask->player->playerIndex)];
     switch (gCurTask->player->ability)
     {
