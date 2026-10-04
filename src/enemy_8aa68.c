@@ -942,7 +942,7 @@ void GipWaitUpdate(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void GipState4(void)
+void GipClimbUp(void)
 {
     gCurTask->updateState = 2;
     gCurTask->gipCollideTerrain = 1;
@@ -980,7 +980,7 @@ void GipState4(void)
     TaskSleepForever();
 }
 
-void GipState6(void)
+void GipClimbUpFromFloor(void)
 {
     ActorSetState(GIP_STATE_4);
     gCurTask->updateState = 2;
@@ -1016,7 +1016,7 @@ void GipState6(void)
     TaskSleepForever();
 }
 
-void sub_0808c1d0(void)
+void GipClimbUpUpdate(void)
 {
     if (gCurTask->state != GIP_STATE_4)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
@@ -1035,7 +1035,7 @@ void sub_0808c1d0(void)
     }
 }
 
-void GipState5(void)
+void GipClimbDown(void)
 {
     gCurTask->updateState = 3;
     gCurTask->gipCollideTerrain = 1;
@@ -1073,7 +1073,7 @@ void GipState5(void)
     TaskSleepForever();
 }
 
-void GipState7(void)
+void GipClimbDownFromLedge(void)
 {
     ActorSetState(GIP_STATE_5);
     gCurTask->updateState = 3;
@@ -1106,7 +1106,7 @@ void GipState7(void)
     TaskSleepForever();
 }
 
-void sub_0808c3e8(void)
+void GipClimbDownUpdate(void)
 {
     if (gCurTask->state != GIP_STATE_5)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
@@ -1125,7 +1125,7 @@ void sub_0808c3e8(void)
     }
 }
 
-void GipState8(void)
+void GipClimbOverTop(void)
 {
     gCurTask->updateState = 4;
     gCurTask->gipCollideTerrain = 0;
@@ -1138,13 +1138,13 @@ void GipState8(void)
     TaskSleepForever();
 }
 
-void sub_0808c4bc(void)
+void GipClimbOverTopUpdate(void)
 {
     if (gCurTask->state != GIP_STATE_8)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void GipState9(void)
+void GipLetGo(void)
 {
     gCurTask->updateState = 5;
     gCurTask->gipCollideTerrain = 1;
@@ -1158,7 +1158,7 @@ void GipState9(void)
     TaskSleepForever();
 }
 
-void sub_0808c538(void)
+void GipLetGoUpdate(void)
 {
 }
 
@@ -1223,7 +1223,7 @@ void GipShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808c684(void)
+void GipShootUpdate(void)
 {
     if (gCurTask->state != GIP_STATE_SHOOT)
         TaskSetEntry(GipEnterState, gCurTaskIdx);

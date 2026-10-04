@@ -1659,12 +1659,12 @@ u32 gGipStates[12] ACTOR_TBL(08742940) = {
     (u32)GipWalk,
     (u32)GipWalk,
     (u32)GipWait,
-    (u32)GipState4,
-    (u32)GipState5,
-    (u32)GipState6,
-    (u32)GipState7,
-    (u32)GipState8,
-    (u32)GipState9,
+    (u32)GipClimbUp,
+    (u32)GipClimbDown,
+    (u32)GipClimbUpFromFloor,
+    (u32)GipClimbDownFromLedge,
+    (u32)GipClimbOverTop,
+    (u32)GipLetGo,
     (u32)GipJump,
     (u32)GipShoot,
 };
@@ -1672,12 +1672,12 @@ u32 gGipStates[12] ACTOR_TBL(08742940) = {
 u32 gGipStateUpdates[8] ACTOR_TBL(08742940) = {
     (u32)GipWalkUpdate,
     (u32)GipWaitUpdate,
-    (u32)sub_0808c1d0,
-    (u32)sub_0808c3e8,
-    (u32)sub_0808c4bc,
-    (u32)sub_0808c538,
+    (u32)GipClimbUpUpdate,
+    (u32)GipClimbDownUpdate,
+    (u32)GipClimbOverTopUpdate,
+    (u32)GipLetGoUpdate,
     (u32)GipJumpUpdate,
-    (u32)sub_0808c684,
+    (u32)GipShootUpdate,
 };
 
 /* ---- 0x08743188-0x087431CC: 7 table(s), 17 function pointer(s), section .actor_tbl_08743188 ---- */
