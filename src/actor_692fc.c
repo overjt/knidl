@@ -670,7 +670,7 @@ void ActorStartHitStun(void)
     u->posY = u->pixelY << 16;
     a->savedFrame = u->frame;
     TaskSetFrame(0);
-    gCurTask->lateUpdateCallback = (u32)sub_08069fb0;
+    gCurTask->lateUpdateCallback = (u32)ActorHitStunLateUpdate;
     a->hitStunTimer = 11;
     v = gCurTask;
     v->u8C.actor->savedPaletteBits = v->tileWord & 0xF000;
@@ -731,7 +731,7 @@ u32 ActorReactToDamage(void)
     return r;
 }
 
-void sub_08069f0c(void)
+void ActorHitStunShake(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -746,7 +746,7 @@ void sub_08069f0c(void)
         ActorEndHitStun();
 }
 
-void sub_08069f70(void)
+void ActorHitStunBlink(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -759,12 +759,12 @@ void sub_08069f70(void)
         t->tileWord = (t->tileWord & 0xFFF) | a->savedPaletteBits;
 }
 
-void sub_08069fb0(void)
+void ActorHitStunLateUpdate(void)
 {
     ActorCheckHits();
     ActorReactToHit();
-    sub_08069f70();
-    sub_08069f0c();
+    ActorHitStunBlink();
+    ActorHitStunShake();
 }
 
 void sub_08069fc8(void)

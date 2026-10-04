@@ -1619,9 +1619,9 @@ vma,size,isa,evidence,name
 0x08069DC4,0x84,thumb,bl-target,ActorStartHitStun
 0x08069E48,0x58,thumb,bl-target,ActorEndHitStun
 0x08069EA0,0x6C,thumb,bl-target,ActorReactToDamage
-0x08069F0C,0x64,thumb,bl-target,sub_08069f0c
-0x08069F70,0x40,thumb,bl-target,sub_08069f70
-0x08069FB0,0x18,thumb,rom-pointer,sub_08069fb0
+0x08069F0C,0x64,thumb,bl-target,ActorHitStunShake
+0x08069F70,0x40,thumb,bl-target,ActorHitStunBlink
+0x08069FB0,0x18,thumb,rom-pointer,ActorHitStunLateUpdate
 0x08069FC8,0x40,thumb,bl-target,sub_08069fc8
 0x0806A008,0x34,thumb,bl-target,ActorFaceHitter
 0x0806A03C,0x90,thumb,bl-target,TaskGetHitAngle
