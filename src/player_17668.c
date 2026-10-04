@@ -10,13 +10,13 @@
 s32 PlaySfx(s32 id);
 void RequestScreenShake(s32 a);
 
-void CutsceneActorScript50(void)
+void CutsceneFountainKirby(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_0801a1ec;
+    gCurTask->drawCallback = (u32)CutsceneFountainKirbyDraw;
     gCurTask->layer = 7;
     gCurTask->frameTable = gUnk_08755068;
-    gCurTask->updateCallback = (u32)sub_08018464;
+    gCurTask->updateCallback = (u32)CutsceneFountainKirbyUpdate;
     gCurTask->cutsceneActorBgmFadeStep = -1;
     gCurTask->tileWord = 128 << 4;
     gCurTask->posX = 128 << 16;
@@ -592,7 +592,7 @@ void CutsceneActorScript50(void)
     TaskSleepForever();
 }
 
-void sub_08018464(void)
+void CutsceneFountainKirbyUpdate(void)
 {
     struct Task *t = gCurTask;
     s32 d = t->cutsceneActorBgmFadeStep;
@@ -615,13 +615,13 @@ done:
     SetBgmVolume((u16)gCurTask->cutsceneActorBgmVolume);
 }
 
-void CutsceneActorScript51(void)
+void CutsceneFountainKingDedede(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)sub_0801a310;
     gCurTask->layer = 11;
     gCurTask->frameTable = gUnk_08755378;
-    gCurTask->updateCallback = (u32)sub_08018b84;
+    gCurTask->updateCallback = (u32)CutsceneFountainKingDededeUpdate;
     gUnk_02007D00[0] = -1;
     gCurTask->cutsceneActorSfxTimer = -1;
     gCurTask->tileWord = 0x8010;

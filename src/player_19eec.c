@@ -22,7 +22,7 @@
 
 void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
 
-void CutsceneActorScript62(void)
+void CutsceneFountainActorScript62(void)
 {
     struct Task *t = gCurTask;
 

@@ -1150,7 +1150,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     if (flag != 0)
         sub_0803d1c4(i);
     else
-        sub_0803d2d4(i);
+        InitPlayerStateKeepMouth(i);
     p->prevMode = a;
     p->mode = 16;
     gPlayerStates[i].hitsThisFrame = b;
@@ -1167,7 +1167,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
     if (c != 0)
         sub_0803d1c4(i);
     else
-        sub_0803d2d4(i);
+        InitPlayerStateKeepMouth(i);
     t->taskClass = 1;
     t->layer = 7;
     t->parent = i;

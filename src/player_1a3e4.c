@@ -7,7 +7,7 @@
 /* player_1a3e4.c (0x0801A3E4-0x0801A76B, issue #125).
  *
  * Draw callback of the ending's big scripted sprites, installed by M05's
- * scripts CutsceneActorScript58/CutsceneActorScript59/CutsceneActorScript60 and by variants 6-8 of task
+ * scripts CutsceneFountainActorScript58/CutsceneFountainActorScript59/CutsceneFountainActorScript60 and by variants 6-8 of task
  * type #101 (src/ending_c9004.c).  It copies the current animation frame's
  * tiles from the decompressed sheet in gUnk_02020000 to the task's OBJ tiles
  * (Task.tileWord & 0xFFF, less 16) and draws the frame at the task's position

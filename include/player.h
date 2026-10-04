@@ -355,34 +355,34 @@ extern u8 gUnk_08757368[];
 /* Functions (defined in the files named above each group). */
 
 /* src/player_17668.c */
-void CutsceneActorScript50(void);
-void sub_08018464(void);
-void CutsceneActorScript51(void);
+void CutsceneFountainKirby(void);
+void CutsceneFountainKirbyUpdate(void);
+void CutsceneFountainKingDedede(void);
 
 /* src/player_18b84.c */
-void sub_08018b84(void);
-void CutsceneActorScript53(void);
-void CutsceneActorScript54(void);
+void CutsceneFountainKingDededeUpdate(void);
+void CutsceneFountainActorScript53(void);
+void CutsceneFountainActorScript54(void);
 
 /* src/player_18e14.c */
-void CutsceneActorScript52(void);
+void CutsceneFountainActorScript52(void);
 
 /* src/player_19000.c */
-void CutsceneActorScript55(void);
-void sub_08019590(void);
-void CutsceneActorScript57(void);
-void CutsceneActorScript58(void);
-void CutsceneActorScript59(void);
-void CutsceneActorScript60(void);
-void CutsceneActorScript61(void);
+void CutsceneFountainNightmarePowerOrb(void);
+void CutsceneFountainNightmarePowerOrbUpdate(void);
+void CutsceneFountainStarRod(void);
+void CutsceneFountainActorScript58(void);
+void CutsceneFountainActorScript59(void);
+void CutsceneFountainActorScript60(void);
+void CutsceneFountainActorScript61(void);
 void sub_08019ecc(void);
 
 /* src/player_19eec.c */
-void CutsceneActorScript62(void);
+void CutsceneFountainActorScript62(void);
 
 /* src/player_1a07c.c */
-void CutsceneActorScript56(void);
-void sub_0801a1ec(void);
+void CutsceneFountainActorScript56(void);
+void CutsceneFountainKirbyDraw(void);
 void sub_0801a310(void);
 
 /* src/player_1a3e4.c */
@@ -521,8 +521,8 @@ s32 sub_0803d010(void);
 void CreatePlayer(s32 a0);
 void InitPlayerState(s32 a0);
 void sub_0803d1c4(s32 a0);
-void sub_0803d2d4(s32 a0);
-void sub_0803d3d4(s32 a0, s32 a1, s32 a2);
+void InitPlayerStateKeepMouth(s32 a0);
+void PlayerAccelerateAxis(s32 a0, s32 a1, s32 a2);
 void PlayerMove(void);
 s32 PlayerLoadFrameTilesAndPalette(s32 a0);
 void sub_0803d710(void);

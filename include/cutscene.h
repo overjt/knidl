@@ -204,7 +204,7 @@ void CutsceneSingingActorScript46(void);
 void CutsceneSingingActorScript47(void);
 void CutsceneSingingActorScript48(void);
 void CutsceneSingingActorScript49(void);
-void sub_0801761c(void);
+void CutsceneFountainStart(void);
 
 /* src/actor_70ec0.c */
 void sub_08070ec0(void);

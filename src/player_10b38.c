@@ -4441,7 +4441,7 @@ void CutsceneSingingActorScript49(void)
     TaskSleepForever();
 }
 
-void sub_0801761c(void)
+void CutsceneFountainStart(void)
 {
     PlayBgm(31);
     CreateCutsceneActor(50, 0);

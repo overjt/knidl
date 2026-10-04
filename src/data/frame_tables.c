@@ -3300,7 +3300,7 @@ u32 gUnk_0874CE68[] FRAME_TABLE = {
     (u32)gUnk_080DB790,
 };
 
-/* gUnk_0874CE90.  Consumer: CutsceneActorScript56 (src/player_1a07c.c:24).  22
+/* gUnk_0874CE90.  Consumer: CutsceneFountainActorScript56 (src/player_1a07c.c:24).  22
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0874CE90-0x0874CEE8).  Declared
  * include/player.h:330. */
@@ -13125,7 +13125,7 @@ u32 gUnk_08754F68[] FRAME_TABLE = {
     (u32)gUnk_085CC2F0,
 };
 
-/* gUnk_08755068.  Consumer: CutsceneActorScript50 (src/player_17668.c:18).  196
+/* gUnk_08755068.  Consumer: CutsceneFountainKirby (src/player_17668.c:18).  196
  * words, the player's struct TaskGfx records (tagged 20-byte variant);
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08755068-0x08755378).  Declared include/player.h:345. */
@@ -13328,7 +13328,7 @@ u32 gUnk_08755068[] FRAME_TABLE = {
     (u32)&gUnk_087669C4,
 };
 
-/* gUnk_08755378.  Consumer: CutsceneActorScript51 (src/player_17668.c:623).  25
+/* gUnk_08755378.  Consumer: CutsceneFountainKingDedede (src/player_17668.c:623).  25
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08755378-0x087553DC).  Declared
  * include/player.h:346. */
@@ -13360,7 +13360,7 @@ u32 gUnk_08755378[] FRAME_TABLE = {
     (u32)&gUnk_085DFA7C,
 };
 
-/* gUnk_087553DC.  Consumer: CutsceneActorScript55 (src/player_19000.c:24).  8 words,
+/* gUnk_087553DC.  Consumer: CutsceneFountainNightmarePowerOrb (src/player_19000.c:24).  8 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x087553DC-0x087553FC).  Declared
  * include/player.h:347. */
@@ -13375,7 +13375,7 @@ u32 gUnk_087553DC[] FRAME_TABLE = {
     (u32)gUnk_082FDF00,
 };
 
-/* gUnk_087553FC.  Consumer: CutsceneActorScript57 (src/player_19000.c:271).  17
+/* gUnk_087553FC.  Consumer: CutsceneFountainStarRod (src/player_19000.c:271).  17
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087553FC-0x08755440).  Declared
  * include/player.h:348. */
@@ -13399,7 +13399,7 @@ u32 gUnk_087553FC[] FRAME_TABLE = {
     (u32)&gUnk_085E0050,
 };
 
-/* gUnk_08755440.  Consumers: CutsceneActorScript58 (src/player_19000.c:488) and
+/* gUnk_08755440.  Consumers: CutsceneFountainActorScript58 (src/player_19000.c:488) and
  * sub_080ca71c (src/ending_c9004.c:932) install it as Task.frameTable and
  * set frames 0-10 (src/player_19000.c:496-520, src/ending_c9004.c:938-952;
  * 0xFFFF hides the sprite).  11 words, all NULL; extent: that index bound,
@@ -13425,7 +13425,7 @@ u32 gUnk_08755440[] FRAME_TABLE = {
 };
 
 /* gUnk_0875546C.  Consumers: sub_080ca830 (src/ending_c9004.c:978),
- * CutsceneActorScript59 (src/player_19000.c:533), sub_0801a3e4
+ * CutsceneFountainActorScript59 (src/player_19000.c:533), sub_0801a3e4
  * (src/player_1a3e4.c:96).  6 words, OAM template streams; extent: the span
  * to the next label, every word such a target (pointer_tables
  * 0x0875546C-0x08755484).  Declared include/player.h:350. */
@@ -13439,7 +13439,7 @@ u32 gUnk_0875546C[] FRAME_TABLE = {
 };
 
 /* gUnk_08755484.  Consumers: sub_080ca8f0 (src/ending_c9004.c:1010),
- * CutsceneActorScript60 (src/player_19000.c:573), sub_0801a3e4
+ * CutsceneFountainActorScript60 (src/player_19000.c:573), sub_0801a3e4
  * (src/player_1a3e4.c:120).  6 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755484-0x0875549C).  Declared include/player.h:351. */

@@ -323,7 +323,7 @@ void sub_0803d1c4(s32 a0)
 }
 
 /* Reset player record a0 to its start-of-stage state. */
-void sub_0803d2d4(s32 a0)
+void InitPlayerStateKeepMouth(s32 a0)
 {
     struct PlayerState *p;
 
@@ -385,7 +385,7 @@ void sub_0803d2d4(s32 a0)
 }
 
 /* Set the camera/scroll target (a0 = dx, a1 = dy, a2 = limit). */
-void sub_0803d3d4(s32 a0, s32 a1, s32 a2)
+void PlayerAccelerateAxis(s32 a0, s32 a1, s32 a2)
 {
     s8 sign;
     s32 ax, ay;
@@ -449,12 +449,12 @@ void PlayerMove(void)
     struct Task *u;
 
     t = gCurTask;
-    sub_0803d3d4(t->velX, t->accelX, t->speedLimitX);
+    PlayerAccelerateAxis(t->velX, t->accelX, t->speedLimitX);
     t = gCurTask;
     t->velX = gUnk_03001F2C;
     t->speedLimitX = gUnk_03002344;
     t->velX += gUnk_03002448;
-    sub_0803d3d4(t->velY, t->accelY, t->speedLimitY);
+    PlayerAccelerateAxis(t->velY, t->accelY, t->speedLimitY);
     t = gCurTask;
     t->velY = gUnk_03001F2C;
     t->speedLimitY = gUnk_03002344;

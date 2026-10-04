@@ -65,7 +65,7 @@ u32 gCutsceneStarts[8] GAME_TBL(08731fa8) = {
     (u32)CutsceneTomatoStart,
     (u32)CutsceneShipStart,
     (u32)CutsceneSingingStart,
-    (u32)sub_0801761c,
+    (u32)CutsceneFountainStart,
 };
 /* include/cutscene.h; CallTableEntry(i, 63, ...) in Task_CutsceneActor */
 u32 gCutsceneActors[63] GAME_TBL(08731fa8) = {
@@ -119,19 +119,19 @@ u32 gCutsceneActors[63] GAME_TBL(08731fa8) = {
     (u32)CutsceneSingingActorScript47,
     (u32)CutsceneSingingActorScript48,
     (u32)CutsceneSingingActorScript49,
-    (u32)CutsceneActorScript50,
-    (u32)CutsceneActorScript51,
-    (u32)CutsceneActorScript52,
-    (u32)CutsceneActorScript53,
-    (u32)CutsceneActorScript54,
-    (u32)CutsceneActorScript55,
-    (u32)CutsceneActorScript56,
-    (u32)CutsceneActorScript57,
-    (u32)CutsceneActorScript58,
-    (u32)CutsceneActorScript59,
-    (u32)CutsceneActorScript60,
-    (u32)CutsceneActorScript61,
-    (u32)CutsceneActorScript62,
+    (u32)CutsceneFountainKirby,
+    (u32)CutsceneFountainKingDedede,
+    (u32)CutsceneFountainActorScript52,
+    (u32)CutsceneFountainActorScript53,
+    (u32)CutsceneFountainActorScript54,
+    (u32)CutsceneFountainNightmarePowerOrb,
+    (u32)CutsceneFountainActorScript56,
+    (u32)CutsceneFountainStarRod,
+    (u32)CutsceneFountainActorScript58,
+    (u32)CutsceneFountainActorScript59,
+    (u32)CutsceneFountainActorScript60,
+    (u32)CutsceneFountainActorScript61,
+    (u32)CutsceneFountainActorScript62,
 };
 
 /* ---- 0x08732614-0x08732630: 1 table(s), 7 function pointer(s), section .game_tbl_08732614 ---- */

@@ -14,7 +14,7 @@ void BlendColors(s32 a, s32 b, s32 c, s32 d, void *e);
 s32 PlaySfx(s32 id);
 s32 IsOnScreen(s16 x, s16 y);
 
-void CutsceneActorScript56(void)
+void CutsceneFountainActorScript56(void)
 {
     struct Task *t = gCurTask;
 
@@ -79,7 +79,7 @@ void CutsceneActorScript56(void)
     TaskExitTrampoline();
 }
 
-void sub_0801a1ec(void)
+void CutsceneFountainKirbyDraw(void)
 {
     struct Task *t;
     struct Task *u;
