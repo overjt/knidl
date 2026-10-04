@@ -275,15 +275,21 @@ macros in `include/constants/<topic>.h`, as in pret and katam:
   to one plain integer literal (no parentheses, no expression, no sign),
   so the preprocessed program is the same token for token and only a
   literal's spelling may change (hex or decimal; the define keeps the
-  spelling most sites used).  No `enum`: an enum constant has type `int`
-  and would be a type change at every site.
+  spelling most sites used).  No `enum`: its constants survive
+  preprocessing, so cpp identity could not prove them, and an enum type for
+  a variable or field would be a type change (lesson 3.528).
 - **Where.**  One header per topic, generated and checked by
   `tools/constants.py` (one block per enumeration, the defines in value
   order, a preamble that names the consumer); the subsystem header that
   defines the fields or declares the functions an enumeration belongs to
-  includes it (`task.h` includes `constants/tasks.h` and
-  `constants/abilities.h`), so a source file needs no new `#include`; a
-  file that reaches no such header gets the include from the tool.
+  includes it, so a source file needs no new `#include`; a file that
+  reaches no such header gets the include from the tool.  `task.h`
+  includes `abilities.h`, `actors.h`, `hits.h`, `player.h`, `states.h`,
+  `tasks.h` and `variants.h` (the fields of `struct Task`, `Actor`,
+  `ActorDef` and `PlayerState` they belong to); `room.h` includes
+  `camera.h`, `game_states.h` and `rooms.h`; `mode.h` `game_states.h`;
+  `collision.h` `hits.h`; `save.h` `rooms.h`; `sound.h` and `player.h`
+  `sound.h`.
 - **Use.**  Only where the parameter, field or variable belongs to that
   enumeration (docs/naming.md section 7); never as a count or a size.
 - **Proof.**  `tools/constants.py --verify-cpp REF` compares every

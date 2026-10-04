@@ -4957,6 +4957,35 @@ sanctioned exception; a natural form would still be welcome).
 **Amends** 3.494 (the fold needs R's two sets; changing `obj` between a
 load and its copy, #100's suggestion, does not help).
 
+### 3.528 A `#define` is codegen-neutral only as a bare literal of the same value and type
+
+Run 6 of #155 respelled about 3,800 integer literals as named constants
+(`CreateChildTaskHere(214, 0)` -> `CreateChildTaskHere(TASK_FIRE_LION_FLAME,
+0)`), and every translation unit's agbcc assembly stayed identical.  That
+holds because the macro expands to the same token class: one integer
+literal, no parentheses, no sign, no suffix.  A spelling change alone can
+still change a type in C89: `0x80000000` is `unsigned int` but
+`2147483648` is `unsigned long`, and hex literals take unsigned types where
+decimal ones go to `long`.  `tools/constants.py` therefore accepts a value
+only up to 0x7FFFFFFF and compares `cpp -P` token streams with integer
+literals by value and suffix (`--verify-cpp`); the per-file `.s` oracle
+backs it.  An `enum` could not be proven this way: its constants survive
+preprocessing as identifiers, so only the assembly could show it changed
+nothing, and an enum type for a variable or field would be a type change
+(out of D6's scope).  That is why D6's constants are `#define`s.
+
+### 3.529 Locals and struct tags never reach agbcc's assembly
+
+147 locals renamed (`i` -> `player`, `t` -> `blockStar`) and 33 struct tags
+renamed (`Unk02007D70` -> `BgAnim`) left all 319 units' `.s` files
+byte-identical: agbcc emits no debug information at `-O2` without `-g`, so
+neither a local's nor a tag's spelling appears anywhere in its output.  The
+per-file oracle is the whole proof; `make compare` adds nothing but costs
+nothing.  The trap is semantic, not codegen: a new local name that a macro
+or a global already uses would silently rebind the body, so
+`tools/rename.py --locals` refuses a NEW that is a macro, a global or
+already in the body, and an OLD that is a parameter.
+
 ## 4. Splitting ROM ranges into asm (tools/split.py)
 
 ### 4.1 objdump text only round-trips under `.syntax unified`
@@ -11779,6 +11808,60 @@ in nearly every coroutine) stays per family, with one word
   committed, the heartbeat was stopped, the agents resumed with their
   context.  One agent died mid-round and was resumed with a message saying
   where its files stood.
+
+### 4.171 Named constants: value-normalized cpp identity, positions by rule
+
+Run 6 of #155 (the owner's decision D6) gave the magic numbers pret-style
+`#define`s in `include/constants/<topic>.h`.  What worked:
+* **A position rule instead of a site list** for every family whose values
+  sit in one parameter, member or variable (`tools/constants.py`'s
+  `FAMILIES`: the type argument of the nine task creators, `.ability` /
+  `.attackAbility` / `gPlayerAbilities[]`, `gStageRequest`, `hitKind`,
+  `gCameraMode`...).  `--scan` lists every literal stored into, compared with
+  or `case`-switched on those positions, so the audit can count the
+  literals left where a constant exists (0 for every rule family).  A
+  variable that holds two enumerations (`gCameraMode` in the hub, a
+  projectile's private `hitKind`) takes `skip_files` / `skip_sites`, and a
+  header that holds two enumerations takes a `prefix` per family.
+* **Machine-proven sites for the per-family states.**  A state literal
+  belongs to a table only inside a function that runs that machine: a slot
+  of the table or of its update table, the EnterState / Init that
+  dispatches it, or a function only those call (a fixpoint over callers).
+  The "same family has one table" shortcut was wrong (Axe Knight's family
+  also runs unnamed tables: an out-of-range state index exposed it), and a
+  function that mentions another machine's consumer is skipped because it
+  may switch machines.
+* **`updateState` takes the state constants only in paired tables** (every
+  state N stores `updateState = N`, lesson 4.160).
+* **Name constants last, after the verbs.**  State and variant constants
+  are named from the slot functions, so they were generated after the
+  agents' verb rounds; a later verb renames its constant
+  (`pending/names6/tools/refresh_states.py`, cpp-identical).
+* **Proof per family commit:** `--verify-cpp` (value-normalized tokens),
+  the per-file `.s` oracle against the parent commit (not against the
+  run's baseline: renames change the labels), `make compare`, and
+  `tools/rename.py --verify-diff`, which accepts any logged constant where
+  the ref has a literal of its value.
+
+### 4.172 Harness notes from #155 run 6 (constants, tags, locals, long tail)
+
+* Four agents by subject (bosses and enemies; player, effects and
+  cutscenes; semantic constants and helpers; fields, cells, tags and
+  locals), resumed 4-8 rounds each, then two fresh wave-2 agents on what
+  wave 1 left.  Agents that wrote rows incrementally into one CSV per
+  subject were harder to batch than ones that also kept a per-round file
+  (`wip/<agent>/newN.csv`): one batch took a round in progress.  Ask for
+  the per-round file and the exact list of new rows in every report.
+* Order matters across kinds: aliases and constants whose site rows name
+  functions by their current spelling go before the rename batch that
+  changes them; field rows go before the tag batch that renames their
+  struct; and `tools/rename.py --verify-diff` keys a field chain by the
+  struct's final tag, so a range with both still verifies.
+* `tools/rename.py` now rewrites the function names `tools/constants.py`'s
+  rules mention (three `sub_08064d9c` spawners were renamed mid-run).
+* `--verify-diff` from `origin/master` verifies the whole stacked branch in
+  one pass once it replays run 5's parameters (prototypes in `include/` and
+  the defining file only, as their tool did) and run 6's locals.
 
 ## 5. Workflow that worked
 

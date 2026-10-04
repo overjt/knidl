@@ -35,11 +35,11 @@ everywhere it lives and logs it in `docs/analysis/renames.csv`.
 | Globals (RAM cells, ROM tables) | `g` + `PascalCase` | `gMultiBootParam`, `gTaskTypes` |
 | I/O registers kept as symbols (asm pools, lesson 3.523) | `gReg` + the GBATEK name in `PascalCase` | `gRegIme`, `gRegSound1CntL` (`REG_<NAME>` is `include/gba/io_reg.h`'s macro, which C code uses everywhere else) |
 | File-local statics | `s` + `PascalCase` | `sLinkTimer` |
-| Struct and union tags, typedefs | `PascalCase` | `struct Task`, `struct RoomDef` |
+| Struct and union tags, typedefs | `PascalCase` | `struct Task`, `struct RoomDef`, `struct BgAnim` (section 7.1) |
 | Struct fields | `camelCase` | `posX`, `sleepFrames`, `frameTable` (section 2.2) |
 | Macros, enum constants | `UPPER_CASE` | `REG_IME`, `TASK_CLASS_ACTOR` |
 | Unknown fields / regions | `unk<off>` / `filler<off>` | `unk3C`, `filler6C` |
-| Unknown parameters and locals | positional / register | `arg0`, `r4`, `sp00` |
+| Unknown parameters and locals | positional / register | `arg0`, `r4`, `sp00` (a proven local: `player`, `flame`, section 7.1) |
 
 Rules that follow from the table:
 
@@ -287,7 +287,8 @@ name: 0 NORMAL, 1 FIRE, 2 SPARK, 3 CUTTER, 4 SWORD, 5 BURNING, 6 LASER,
 21 LIGHT, 22 BACKDROP, 23 THROW, 24 U.F.O., 25 STAR ROD, 26 WAIT.  The
 ability moves are `PlayerAction<Ability>` / `PlayerAction<Ability>Update`
 (`PlayerActionFire`, `PlayerActionHiJumpUpdate`, `PlayerActionStarRod`).
-An enum for the ids would be a code change and waits for #36 phase 2.
+The ids are spelled as the `ABILITY_<NAME>` constants of
+`include/constants/abilities.h` (run 6, section 7).
 
 ### 2.4 Data records by position (run 3 of #155)
 
@@ -494,7 +495,8 @@ Unnamed by design, for #37's audit:
   accelY, speedLimitY)`, `ActorSetState(state)`; `renames.csv` rows of
   kind `param`, `Func.old` -> `Func.new`, proven by the per-file assembly
   oracle); positional parameters are left only where the role is not
-  proven, and locals keep their positional form;
+  proven; locals (run 6, D8) are named only where one role is proven on
+  every use (section 7.1), and keep their positional form otherwise;
 - segment names (`docs/analysis/segments.txt`) and source file names, which
   are not symbols; renaming them is not part of #155.
 
@@ -599,8 +601,10 @@ tools/rename.py --verify-diff master       # the branch is a pure rename
 ```
 
 A batch CSV has the header `old,new,kind,evidence` (optional `issue`);
-`kind` is `function`, `ram`, `io`, `rom` or `const` and is checked against
-the address.  The tool refuses a name that is not a C identifier, is a
+`kind` is `function`, `ram`, `io`, `rom`, `const` or `tag` (a struct or
+union tag, run 6) and is checked against the address.  `--locals CSV`
+(`file,function,old,new,evidence`) renames locals inside their function
+(section 7.1).  The tool refuses a name that is not a C identifier, is a
 keyword, uses a placeholder prefix, breaks the style of section 2 (unless
 `--allow-style`), or is already an identifier anywhere in the tree in any
 case.  It updates `tools/symdb.py` (`KNOWN_SYMBOLS`, or `ARM_ENTRIES` for
@@ -711,7 +715,8 @@ enumeration's fields includes (`task.h` includes `constants/tasks.h` and
 `constants/abilities.h`).  They are `#define`s, not `enum`s: a define
 changes no token after preprocessing except the spelling of an integer
 literal, which `tools/constants.py --verify-cpp` checks by value, while an
-enum would change the types the compiler sees.
+enum's constants survive preprocessing and an enum type would be a type
+change (lesson 3.528).
 
 - **Names.**  `<FAMILY>_<NAME>` in UPPER_SNAKE: the family prefix says
   which enumeration (`TASK_`, `ABILITY_`, `<FAMILY>_STATE_`), the name is
@@ -750,3 +755,39 @@ enum would change the types the compiler sees.
   picture, the dispatch or the branch that does the named thing.  A value
   that no consumer proves stays a number, and the reason is written next
   to the family's block.
+
+The families of run 6, with the consumer that names each and what stays a
+number (the counts are `tools/constants.py --census`'s):
+
+| header (included by) | family | named after | left as numbers |
+|---|---|---|---|
+| `tasks.h` (task.h) | `TASK_<BODY>` | the body of `gTaskTypes[N]` | none (#88's body is unnamed: `TASK_88`); `-1` / `0xFFFF` (no task) |
+| `abilities.h` (task.h) | `ABILITY_<NAME>`, `ABILITY_PICTURE_WAIT` | the HUD banner of `gAbilityPictures[N]` | picture 27, a second NORMAL banner |
+| `player.h` (task.h) | `PLAYER_ACTION_*`, `PLAYER_ACTION_HANDLER_*`, `META_KNIGHT_ACTION_*`, `META_KNIGHT_ACTION_HANDLER_*` | the slots of `gPlayerActions`, `gPlayerActionHandlers` and Meta Knight's twins | the other player machines' `updateState` (they index their own state tables) |
+| `states.h` (task.h) | `<FAMILY>_STATE_<VERB>` / `_<N>` | the slots of every `g<Family>States` table | the `updateState` stores of unpaired tables (lesson 4.160); states in functions that run two machines |
+| `variants.h` (task.h) | `<TABLE>_VARIANT_<VERB>` | the role-named slots of every variant table | slots with position names, `sub_*`, shared entries; variants that come from room data |
+| `game_states.h` (room.h, mode.h) | `GAME_STATE_*`, `STAGE_REQUEST_*` | AgbMain's cases; the frame loops' request cases | game state 2 (no writer) |
+| `hits.h` (task.h, collision.h) | `HIT_KIND_*`, `HIT_EFFECT_*` | ActorReactToHitKind's cases and the hit tests that write them; ActorAttachToHitter's effects | hit kinds 5 and 7 (two views); effects beyond the attaching three |
+| `actors.h` (task.h) | `ACTOR_KIND_*` | CreateActorByKind's and ActorBindDefSlot's tables, CreateChildTask's child kinds | 3 (one family), 9 and 10 |
+| `camera.h` (room.h) | `CAMERA_MODE_*` | RoomTaskUpdateCamera's cases | the hub's 2-4 (its own meanings) |
+| `rooms.h` (room.h, save.h) | `ROOM_ENTRY_*`, `DOOR_KIND_*` | Task_Player's entry cases; EnterDoor's and SpawnDoorObjects' door kinds | door-object kinds 0-2 |
+| `sound.h` (sound.h, player.h) | `SE_<ROLE>`, `BGM_<ROLE>` | ids every call site plays for one thing | every id with two roles, the cutscene songs (they are room music too); the sounds and songs themselves are assets |
+
+### 7.1 Struct tags and locals (run 6, the owner's decisions D7 and D8)
+
+- **Struct tags.**  A tag named by address or module (`Unk02007D70`,
+  `M37Game`) takes a PascalCase role name once the role of the whole
+  record is proven, usually by the cell it types or its only consumer
+  (`BgAnim`, `AirGrindState`); the module prefix goes away.
+  `tools/rename.py` renames a tag like a symbol (kind `tag`); a tag never
+  reaches the assembly (lesson 3.529).  The tags left keep their names
+  until a consumer proves the record (the census in 5.1 lists them).
+- **Locals.**  In a function named by role, a local that holds one proven
+  thing on every use is named after it: the slot a task creator returns
+  for one task type (`<child>Slot`, the TASK_ constant's noun) and
+  `&gTasks[that slot]` (`<child>`), a loop over the players (`player`), a
+  grid loop's `level` / `stage`.  `t = gCurTask` keeps its conventional
+  name, and a local that holds two things keeps its positional one.
+  `tools/rename.py --locals CSV` applies them (`renames.csv` rows of kind
+  `local`, `Func.old` -> `Func.new`); the proof is the per-file assembly
+  oracle and `make compare`.
