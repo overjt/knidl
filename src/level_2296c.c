@@ -39,7 +39,7 @@ void ResetLevelStateAtHub(void)
     struct RoomDef *room;
     struct Door *d;
 
-    gUnk_02004C98 = 0;
+    gWarpStarStationDirection = 0;
     gHubUnlockFlags = 0;
     gHubUnlockSource = 0;
     gBigSwitchPressActive = 0;
@@ -72,7 +72,7 @@ void ResetLevelStateAtHub(void)
     gRoomIndex = 0;
     gSkipNextHubBgm = 0;
     gContinueLevel = gStageIndex;
-    gUnk_02007FF8 = gUnk_03001F20;
+    gContinueStage = gCurStage;
     room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
     d = room->doors;
     if (gFurthestLevel == 0 && gFurthestStage == 0)
@@ -82,7 +82,7 @@ void ResetLevelStateAtHub(void)
     }
     else
     {
-        if ((s8)gUnk_03001F20 == 16)
+        if ((s8)gCurStage == 16)
         {
             for (i = 0; i < room->doorCount; d++, i++)
             {
@@ -94,7 +94,7 @@ void ResetLevelStateAtHub(void)
             gRoomEntryMode = ROOM_ENTRY_DOOR;
             gEntryDoorEvent = 0;
         }
-        else if ((s8)gUnk_03001F20 == 32)
+        else if ((s8)gCurStage == 32)
         {
             for (i = 0; i < room->doorCount; d++, i++)
             {
@@ -109,7 +109,7 @@ void ResetLevelStateAtHub(void)
         {
             for (i = 0; i < room->doorCount; d++, i++)
             {
-                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gUnk_03001F20)
+                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gCurStage)
                     break;
             }
             gRoomEntryX = d->unk2 * 16 + 22;
@@ -129,7 +129,7 @@ void ResetLevelStateForContinue(void)
     struct RoomDef *room;
     struct Door *d;
 
-    gUnk_02004C98 = 0;
+    gWarpStarStationDirection = 0;
     gHubUnlockFlags = 0;
     gHubUnlockSource = 0;
     gBigSwitchPressActive = 0;
@@ -184,7 +184,7 @@ void ResetLevelStateForContinue(void)
         {
             room = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
             d = room->doors;
-            if (gUnk_02007FF8 == 16)
+            if (gContinueStage == 16)
             {
                 for (i = 0; i < room->doorCount; d++, i++)
                 {
@@ -196,7 +196,7 @@ void ResetLevelStateForContinue(void)
                 gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 0;
             }
-            else if (gUnk_02007FF8 == 32)
+            else if (gContinueStage == 32)
             {
                 for (i = 0; i < room->doorCount; d++, i++)
                 {
@@ -212,7 +212,7 @@ void ResetLevelStateForContinue(void)
             {
                 for (i = 0; i < room->doorCount; d++, i++)
                 {
-                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == gUnk_02007FF8)
+                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == gContinueStage)
                         break;
                 }
                 gRoomEntryX = d->unk2 * 16 + 22;
@@ -258,12 +258,12 @@ void LoadRoom(void)
     if (gLevelIndex == 8)
     {
         gCurLevel = gStageIndex;
-        *(s8 *)&gUnk_03001F20 = -1;
+        *(s8 *)&gCurStage = -1;
     }
     else
     {
         gCurLevel = gLevelIndex;
-        gUnk_03001F20 = gStageIndex;
+        gCurStage = gStageIndex;
     }
     if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
@@ -300,7 +300,7 @@ void LoadRoom(void)
         CpuSet(gCurRoomDef->blockLayer, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
     }
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -407,7 +407,7 @@ void sub_080233e0(void)
     BigSwitchStartRefill(gPressedBigSwitchSlot);
     gInHub = 0;
     gCurLevel = gLevelIndex;
-    gUnk_03001F20 = gStageIndex;
+    gCurStage = gStageIndex;
     gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     LoadGfxSet(1);
     CreateRoomTask(0);

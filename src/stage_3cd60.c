@@ -175,7 +175,7 @@ void CreatePlayer(s32 a0)
     t->posY = gRoomEntryY << 16;
     t->pixelX = t->posX >> 16;
     t->pixelY = t->posY >> 16;
-    if ((u8)(gUnk_02000020 - 2) <= 1)
+    if ((u8)(gRoomPlayerMode - 2) <= 1)
         SetPlayerAbilityNoHud(ABILITY_STAR_ROD, -1, a0);
 }
 

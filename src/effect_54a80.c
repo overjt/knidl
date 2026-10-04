@@ -22,7 +22,7 @@
  * (sub_08054fe4; M09, M11, M13) runs one of two endless particle loops
  * chosen by the ability PlayerState.ability (1 or 2), re-seeding a random
  * position around the spawner every round.  Its callbacks: sub_080552fc
- * (Task.updateCallback) kills it when gRoomExitKind or gUnk_02000020 is 1, the
+ * (Task.updateCallback) kills it when gRoomExitKind or gRoomPlayerMode is 1, the
  * ability is no longer the one saved in Task.unk28 or the player is in mode
  * 13 or 22, and otherwise hides it (TaskSetSkipMask(8, ...)) while the
  * spawner's Task.waterFlags bit 0 is set, M11's sub_0803eaf8 has no offset
@@ -343,7 +343,7 @@ void sub_080552fc(void)
     if (gRoomExitKind == 1
      || (t = gCurTask, ps = t->player, t->unk28 != ps->ability)
      || ps->mode == 13 || ps->mode == 22
-     || gUnk_02000020 == 1)
+     || gRoomPlayerMode == 1)
     {
         TaskFree(gCurTaskIdx);
         return;

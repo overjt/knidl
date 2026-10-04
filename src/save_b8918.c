@@ -64,7 +64,7 @@ void MergeProgressIntoSaveSlot(s32 a)
     s32 j;
 
     gSaveSlots[3].curLevel[gExtraMode] = gCurLevel;
-    gSaveSlots[3].unk18[gExtraMode] = gUnk_03001F20;
+    gSaveSlots[3].unk18[gExtraMode] = gCurStage;
     gSaveSlots[3].furthestLevel[gExtraMode] = gFurthestLevel;
     gSaveSlots[3].furthestStage[gExtraMode] = gFurthestStage;
     gSaveSlots[3].bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];

@@ -101,7 +101,7 @@ void InitRoomBgLayout(void)
         *gUnk_02005574 = 1;
         SetBg23ScreenSize(0);
         StartRoomHBlankScroll(8);
-        gUnk_02000020 = 2;
+        gRoomPlayerMode = 2;
         gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
         break;
     case 5:
@@ -109,7 +109,7 @@ void InitRoomBgLayout(void)
         gRoomBgLayout = 5;
         gRoomBounds[1] = gRoomBorder[0] + 120;
         StartRoomHBlankScroll(9);
-        gUnk_02000020 = 3;
+        gRoomPlayerMode = 3;
         if (gRoomEntryMode != ROOM_ENTRY_WARP_STAR)
             sub_08025e0c();
         break;

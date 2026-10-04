@@ -335,7 +335,7 @@ void UnlockNextLevel(void)
     gFurthestLevel = gCurLevel + 1;
     gFurthestStage = 0;
     gCurLevel = gFurthestLevel;
-    gUnk_03001F20 = 16;
+    gCurStage = 16;
     gStageExitFlags |= 1;
 }
 
@@ -348,7 +348,7 @@ void SaveAndSetContinuePoint(void)
     if (gMetaKnightmareMode == 0)
         SaveProgress(gCurSaveSlot);
     gContinueLevel = gCurLevel;
-    gUnk_02007FF8 = gUnk_03001F20;
+    gContinueStage = gCurStage;
 }
 
 void sub_080269d8(u32 x, u32 y)

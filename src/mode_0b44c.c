@@ -19,7 +19,7 @@
 
 /* Not from room.h or effect.h: this file's view of gSavedPlayerAbilityUses
    and gStageClearDanceBgmPlayed differs (lesson 3.517). */
-extern u8 gUnk_02000020;
+extern u8 gRoomPlayerMode;
 extern u16 gPlayerAbilities[];
 extern u8 gBigSwitchPressActive;
 extern s16 gMaxHealth;
@@ -157,7 +157,7 @@ void StageInit(void)
         LoadRoom();
     else
         sub_080233e0();
-    if ((u8)(gUnk_02000020 - 2) <= 1)
+    if ((u8)(gRoomPlayerMode - 2) <= 1)
         sub_08008cb8();
     /* The ROM loads these four addresses before the clear loop below; only
      * pointer locals assigned here reproduce that order. */

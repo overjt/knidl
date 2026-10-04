@@ -71,12 +71,12 @@ void LoadCutsceneRoom(void)
     if (gLevelIndex == 8)
     {
         gCurLevel = gStageIndex;
-        gUnk_03001F20 = 48;
+        gCurStage = 48;
     }
     else
     {
         gCurLevel = gLevelIndex;
-        gUnk_03001F20 = 48;
+        gCurStage = 48;
     }
     gCurRoomDef = gRoomTable[8][gCurLevel][gUnk_08732630[gCurLevel]];
     gUnk_02007D64 = gCurRoomDef->unk57;
@@ -98,7 +98,7 @@ void LoadCutsceneRoom(void)
     else
         CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -116,7 +116,7 @@ void LoadCutsceneRoom(void)
     gActivePlayerMask = 0;
     gRoomBgLayout = 0;
     gUnk_0200B078 = 0;
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     CameraResetBounds();
     CameraSnapToFocus();
     CameraInitPos();
@@ -214,7 +214,7 @@ void LoadEndingRoom(s32 a0)
     ResetTasksAndOam();
     gInHub = 0;
     gCurLevel = gLevelIndex;
-    gUnk_03001F20 = gStageIndex;
+    gCurStage = gStageIndex;
     gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     LoadGfxSet(1);
     CreateRoomTask(0);
@@ -247,7 +247,7 @@ void LoadEndingRoom(s32 a0)
         CpuSet(gCurRoomDef->blockLayer, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
     }
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -331,12 +331,12 @@ void LoadCreditsRoom(void)
     if (gLevelIndex == 8)
     {
         gCurLevel = gStageIndex;
-        *(s8 *)&gUnk_03001F20 = -1;
+        *(s8 *)&gCurStage = -1;
     }
     else
     {
         gCurLevel = gLevelIndex;
-        gUnk_03001F20 = gStageIndex;
+        gCurStage = gStageIndex;
     }
     if (gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
@@ -372,7 +372,7 @@ void LoadCreditsRoom(void)
         CpuSet(gCurRoomDef->blockLayer, gBlockLayer, gRoomMetatileCount & 0x1FFFFF);
     }
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -742,7 +742,7 @@ s32 EnterDoor(void)
                 gEntryDoorEvent = 1;
                 gHubUnlockFlags = 1;
                 gHubUnlockSource = gStageIndex + 1;
-                if (gHubDoorUnlocks[gLevelIndex][DOOR_KIND_WARP_STAR_STATION] == (s8)gUnk_03001F20)
+                if (gHubDoorUnlocks[gLevelIndex][DOOR_KIND_WARP_STAR_STATION] == (s8)gCurStage)
                 {
                     gHubUnlockFlags = 17;
                     gWarpStarStationLevels |= 1 << gLevelIndex;
@@ -771,7 +771,7 @@ s32 EnterDoor(void)
             e = room->doors;
             for (i = 0; i < room->doorCount; e++, i++)
             {
-                if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == DOOR_KIND_STAGE && e->unk8 == (s8)gUnk_03001F20)
+                if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == DOOR_KIND_STAGE && e->unk8 == (s8)gCurStage)
                     break;
             }
             gRoomEntryX = e->unk2 * 16 + 22;
@@ -785,7 +785,7 @@ s32 EnterDoor(void)
             {
                 gStageRequest = STAGE_REQUEST_HUB;
                 gContinueLevel = gCurLevel;
-                gUnk_02007FF8 = gUnk_03001F20;
+                gContinueStage = gCurStage;
             }
             gRoomEntryMode = ROOM_ENTRY_DOOR;
         }
@@ -900,7 +900,7 @@ void ExitToNextRoomOnWarpStar(void)
     gRoomEntrySet = 0;
     gStageRequest = STAGE_REQUEST_CHANGE_ROOM;
     gEntryDoorEvent = 0;
-    gUnk_02004C98 = 0;
+    gWarpStarStationDirection = 0;
     gRoomEntryMode = ROOM_ENTRY_WARP_STAR;
     gUnk_0200B038 = 0;
     gUnk_02007FF0 = 0;
@@ -915,7 +915,7 @@ void ExitToEnding(void)
         else
             gMilestoneFlags |= 1;
         gCurLevel = 6;
-        gUnk_03001F20 = 32;
+        gCurStage = 32;
         gStageExitFlags |= 1;
     }
     gUnk_02007FF0 = 0;
@@ -942,7 +942,7 @@ void PressBigSwitch(s32 id)
     d = room->doors;
     for (i = 0; i < room->doorCount; d++, i++)
     {
-        if (d->unk0 == 0x270F && (u8)d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gUnk_03001F20)
+        if (d->unk0 == 0x270F && (u8)d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gCurStage)
             break;
     }
     gPressedBigSwitchSlot = id;
@@ -950,8 +950,8 @@ void PressBigSwitch(s32 id)
     v = ((s8 *)gRoomObjectList.entries[gUnk_02005590[id - 32]].filler0)[2];
     gHubUnlockSource = v | 0x100;
     gBigSwitchFlags[0] |= 1 << v;
-    if (gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] == 1)
-        gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] = 2;
+    if (gStageClearStatus[gCurLevel][(s8)gCurStage] == 1)
+        gStageClearStatus[gCurLevel][(s8)gCurStage] = 2;
     lvl = gCurLevel;
     if (gHubDoorUnlocks[lvl][DOOR_KIND_WARP_STAR_STATION] == gHubUnlockSource)
     {
@@ -1002,16 +1002,16 @@ s32 sub_08025e88(s32 i)
 
     if (gUnk_0200B078 == 3)
     {
-        gUnk_0200B02C = e->filler0[3] - 1;
-        if (gUnk_0200B02C < gStageIndex)
+        gWarpStarStationDest = e->filler0[3] - 1;
+        if (gWarpStarStationDest < gStageIndex)
         {
-            gUnk_02004C98 = 1;
+            gWarpStarStationDirection = 1;
             return 2;
         }
-        gUnk_02004C98 = 2;
+        gWarpStarStationDirection = 2;
         return 0;
     }
-    gUnk_02004C98 = 0;
+    gWarpStarStationDirection = 0;
     return ((s8 *)e->filler0)[2];
 }
 
@@ -1019,7 +1019,7 @@ s32 ExitOnWarpStar(void)
 {
     s32 i;
 
-    if (gUnk_02004C98 == 0)
+    if (gWarpStarStationDirection == 0)
     {
         struct Door *d = gCurRoomDef->doors;
 
@@ -1039,7 +1039,7 @@ s32 ExitOnWarpStar(void)
     }
     else
     {
-        gStageIndex = gUnk_0200B02C;
+        gStageIndex = gWarpStarStationDest;
         gRoomIndex = 0;
         for (i = 0; i < 32; i++)
         {
@@ -1049,7 +1049,7 @@ s32 ExitOnWarpStar(void)
                 break;
             }
         }
-        if (gUnk_02004C98 == 2)
+        if (gWarpStarStationDirection == 2)
             gRoomEntryX = 0;
         else
             gRoomEntryX = gRoomWidth * 16;
@@ -1067,7 +1067,7 @@ s32 sub_080260b0(void)
 {
     s32 r;
 
-    if (gUnk_02004C98 == 0)
+    if (gWarpStarStationDirection == 0)
     {
         struct Door *d = gCurRoomDef->doors;
         s32 i;
@@ -1083,10 +1083,10 @@ s32 sub_080260b0(void)
     else
     {
         r = 3;
-        if (gUnk_02004C98 == 2)
+        if (gWarpStarStationDirection == 2)
             r = 1;
     }
-    gUnk_02004C98 = 0;
+    gWarpStarStationDirection = 0;
     return r;
 }
 

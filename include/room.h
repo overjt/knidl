@@ -150,7 +150,7 @@ struct ScrollLock
 /* EWRAM */
 extern s8 gRoomBg3FullShake;
 extern u16 gHubUnlockSource;
-extern u8 gUnk_02000020;
+extern u8 gRoomPlayerMode;
 extern u16 gFoundDoor;
 extern struct MapCell gRoomMapBuffer[];
 extern u16 gPlayerAbilities[];
@@ -158,7 +158,7 @@ extern u8 gBigSwitchPressActive;
 extern s16 gObjectSpawnViewRect[4];
 extern u16 gBigSwitchReturnBg3X;
 extern struct DoorState gDoorStates[];
-extern s8 gUnk_02004C98;
+extern s8 gWarpStarStationDirection;
 extern u16 gBg1MetatileMap[];
 extern u8 gUnk_02005574[];
 extern u8 gContinueLevel;
@@ -194,7 +194,7 @@ extern u16 gStageExitFlags;
 extern u8 gBigSwitchReturnStage;
 extern u8 gCutscenePending;
 extern u16 gUnk_02007FF0;
-extern s8 gUnk_02007FF8;
+extern s8 gContinueStage;
 extern u8 gBigSwitchReturnLevel;
 extern u16 gSavedPlayerAbilities[];
 extern u16 gUnk_02008050;
@@ -209,7 +209,7 @@ extern s16 gUnk_0200AF0C;
 extern u16 gPlayerAbilityUses[];
 extern s16 gHubUnlockBlocks[4];
 extern u16 gUnk_0200AFF4;
-extern s8 gUnk_0200B02C;
+extern s8 gWarpStarStationDest;
 extern s8 gEntryDoorIndex;
 extern s8 gUnk_0200B038;
 extern u8 gHBlankScrollStarted;
@@ -224,7 +224,7 @@ extern u16 gBgPaletteBank2[];
 extern u16 gBgPaletteBank8[];
 extern s16 gCameraAnchorY;
 extern u32 gUnk_03001F10;
-extern s8 gUnk_03001F20;
+extern s8 gCurStage;
 extern s32 gUnk_03001F2C; /* boot_091ac.c spelling */
 extern u8 gMetaKnightmareMode; /* set only by the mode list's fifth row
                                        (src/menu_0ca10.c); not link play */

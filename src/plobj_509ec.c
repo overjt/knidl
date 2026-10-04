@@ -250,21 +250,21 @@ void sub_08050f80(void)
     {
     case 0:
     case 1:
-        if (gUnk_02000020 == 2 || gUnk_02000020 == 3)
+        if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
             gCurTask->unk34 = 4;
         else
             gCurTask->unk34 = 8;
         break;
     case 2:
     case 3:
-        if (gUnk_02000020 == 2 || gUnk_02000020 == 3)
+        if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
             gCurTask->unk34 = 5;
         else
             gCurTask->unk34 = 9;
         break;
     case 4:
     case 5:
-        if (gUnk_02000020 == 2 || gUnk_02000020 == 3)
+        if (gRoomPlayerMode == 2 || gRoomPlayerMode == 3)
             gCurTask->unk34 = 6;
         else
             gCurTask->unk34 = 10;

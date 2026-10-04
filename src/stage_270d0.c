@@ -132,7 +132,7 @@ void ReturnToHubStageDoor(void)
     d = r->doors;
     for (i = 0; i < r->doorCount; d++, i++)
     {
-        if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gUnk_03001F20)
+        if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gCurStage)
             break;
     }
     gRoomEntryX = (d->unk2 << 4) + 22;

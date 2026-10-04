@@ -21,7 +21,7 @@
  * has no lives and no health left, installs the callbacks (Task.moveCallback =
  * M11's PlayerMove, unk04 = PlayerUpdate, unk08 = sub_0803332c, unk0C =
  * M11's sub_0803ddc0), sets up the ability (PlayerState.ability) and the
- * stage entry mode (gUnk_02000020, gRoomEntryMode), and starts the first
+ * stage entry mode (gRoomPlayerMode, gRoomEntryMode), and starts the first
  * action.  The actions are two tables of void (*)(void) dispatched
  * through CallTableEntry(index, count, table), entry 0 NULL: the "enter"
  * coroutine of action PlayerState.action from gPlayerActions[62] (M11's
@@ -124,13 +124,13 @@ void Task_Player(void)
             SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             break;
         case ABILITY_STAR_ROD:
-            if (gUnk_02000020 != 2 && gUnk_02000020 != 3)
+            if (gRoomPlayerMode != 2 && gRoomPlayerMode != 3)
                 SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             break;
         }
     }
     gCurTask->player->unk36 = 0;
-    switch (gUnk_02000020)
+    switch (gRoomPlayerMode)
     {
     case 0:
         break;

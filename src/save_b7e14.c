@@ -13,7 +13,7 @@ void StoreProgressInSaveSlot(s32 a)
     s32 j;
 
     gSaveSlots[a].curLevel[gExtraMode] = gCurLevel;
-    gSaveSlots[a].unk18[gExtraMode] = gUnk_03001F20;
+    gSaveSlots[a].unk18[gExtraMode] = gCurStage;
     gSaveSlots[a].furthestLevel[gExtraMode] = gFurthestLevel;
     gSaveSlots[a].furthestStage[gExtraMode] = gFurthestStage;
     gSaveSlots[a].bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];
@@ -42,7 +42,7 @@ void StoreProgressInBothHalves(s32 a)
     for (i = 0; i <= 1; i++)
     {
         gSaveSlots[a].curLevel[i] = gCurLevel;
-        gSaveSlots[a].unk18[i] = gUnk_03001F20;
+        gSaveSlots[a].unk18[i] = gCurStage;
         gSaveSlots[a].furthestLevel[i] = gFurthestLevel;
         gSaveSlots[a].furthestStage[i] = gFurthestStage;
         gSaveSlots[a].bigSwitchFlags[i] = gBigSwitchFlags[0];
@@ -72,7 +72,7 @@ void LoadSaveSlot(s32 a)
         a = 3;
     gMilestoneFlags = gSaveSlots[a].milestoneFlags;
     gCurLevel = gSaveSlots[a].curLevel[gExtraMode];
-    gUnk_03001F20 = gSaveSlots[a].unk18[gExtraMode];
+    gCurStage = gSaveSlots[a].unk18[gExtraMode];
     gFurthestLevel = gSaveSlots[a].furthestLevel[gExtraMode];
     gFurthestStage = gSaveSlots[a].furthestStage[gExtraMode];
     gBigSwitchFlags[0] = gSaveSlots[a].bigSwitchFlags[gExtraMode];
@@ -94,7 +94,7 @@ void ResetLevelProgress(void)
     s32 j;
 
     gCurLevel = 0;
-    gUnk_03001F20 = 0;
+    gCurStage = 0;
     gFurthestLevel = 0;
     gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;
@@ -115,7 +115,7 @@ void ResetProgress(void)
     gExtraMode = 0;
     gMilestoneFlags = 0;
     gCurLevel = 0;
-    gUnk_03001F20 = 0;
+    gCurStage = 0;
     gFurthestLevel = 0;
     gFurthestStage = 0;
     gBigSwitchFlags[0] = 0;

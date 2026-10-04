@@ -34,7 +34,7 @@ void LoadHubRoom(void)
     ResetTasksAndOam();
     gInHub = 1;
     gCurLevel = gStageIndex;
-    gUnk_03001F20 = 16;
+    gCurStage = 16;
     if (gHubUnlockFlags != 0 || gRoomEntryMode == ROOM_ENTRY_WARP_STAR)
         gCameraMode = 4;
     else
@@ -60,7 +60,7 @@ void LoadHubRoom(void)
     gRoomBgLayout = 0;
     gCurTileDrifts = gTileDrifts;
     *gUnk_02005574 = 0;
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -142,7 +142,7 @@ void LoadBigSwitchViewRoom(void)
 
     gInHub = 1;
     gCurLevel = gStageIndex;
-    gUnk_03001F20 = 16;
+    gCurStage = 16;
     gCameraMode = 2;
     LoadGfxSet(1);
     CreateRoomTask(2);
@@ -167,7 +167,7 @@ void LoadBigSwitchViewRoom(void)
     gRoomBgLayout = z;
     gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = z;
-    gUnk_02000020 = z;
+    gRoomPlayerMode = z;
     gUnk_0200B078 = z;
     gHBlankScrollStarted = z;
     gRoomUpdateFlags = 3;
@@ -315,7 +315,7 @@ void LoadGoalGameRoom(void)
     else
         CpuSet(gCurRoomDef->metatileMap, gRoomMapBuffer, (gRoomMetatileCount * 2) & 0x1FFFFF);
     RequestCopy(8, (u32)gCurRoomDef->metatileTiles, (u32)gMetatileTiles, 0);
-    gUnk_02000020 = 0;
+    gRoomPlayerMode = 0;
     gUnk_0200B078 = 0;
     gHBlankScrollStarted = 0;
     gRoomUpdateFlags = 31;
@@ -333,7 +333,7 @@ void LoadGoalGameRoom(void)
     PlayBgm(1);
     gRoomBgLayout = 0;
     gUnk_0200B078 = 0;
-    gUnk_02000020 = 1;
+    gRoomPlayerMode = 1;
     gActivePlayerMask = 0;
     gActivePlayerCount = 0;
     gLivingPlayerCount = 0;

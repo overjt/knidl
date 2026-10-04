@@ -22,7 +22,7 @@ void InputRecorderRestoreState(void)
     gRoomEntryMode = gInputRecordingPtr->roomEntryMode;
     gRoomEntryX = gInputRecordingPtr->roomEntryX;
     gRoomEntryY = gInputRecordingPtr->roomEntryY;
-    gUnk_02000020 = gInputRecordingPtr->unk13;
+    gRoomPlayerMode = gInputRecordingPtr->unk13;
     gMaxHealth = gInputRecordingPtr->maxHealth;
     gWarpStarStationLevels = gInputRecordingPtr->warpStarStationLevels;
     gMetaKnightmareMode = gInputRecordingPtr->metaKnightmareMode;
@@ -52,7 +52,7 @@ void InputRecorderRestoreState(void)
         gExtraMode = gInputRecordingPtr->extraMode;
         gMilestoneFlags = gInputRecordingPtr->milestoneFlags;
         gCurLevel = gInputRecordingPtr->curLevel[gExtraMode];
-        gUnk_03001F20 = gInputRecordingPtr->unkC6[gExtraMode];
+        gCurStage = gInputRecordingPtr->unkC6[gExtraMode];
         gFurthestLevel = gInputRecordingPtr->furthestLevel[gExtraMode];
         gFurthestStage = gInputRecordingPtr->furthestStage[gExtraMode];
         gBigSwitchFlags[0] = gInputRecordingPtr->bigSwitchFlags[gExtraMode];

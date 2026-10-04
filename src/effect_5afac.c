@@ -10,9 +10,9 @@
 #include "actor.h"
 #include "enemy.h"
 
-/* Not from room.h or effect.h: this file's view of gUnk_02000020 and
+/* Not from room.h or effect.h: this file's view of gRoomPlayerMode and
    gDanceId differs (lesson 3.517). */
-extern u32 gUnk_02000020[];
+extern u32 gRoomPlayerMode[];
 extern u32 gStageClearDanceBgmPlayed[];
 extern u8 gUnk_02006A14[];
 extern u8 gRoomExitKind;
@@ -1964,7 +1964,7 @@ void PlayerDance(void)
     t->speedLimitX = 128 << 24;
     t->unk2C = t->posY;
     t->unk28 = t->posX;
-    if (((u8 *)gUnk_02000020)[0] == 1)
+    if (((u8 *)gRoomPlayerMode)[0] == 1)
     {
         PlayerDanceInGoalGame();
     }

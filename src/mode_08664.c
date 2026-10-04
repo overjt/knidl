@@ -44,7 +44,7 @@ void PauseScreen(void)
     PauseSaveBgPalette();
     mode = gGameState;
     flag = 0;
-    if (mode == GAME_STATE_STAGE && gStageClearStatus[gCurLevel][gUnk_03001F20] != 0)
+    if (mode == GAME_STATE_STAGE && gStageClearStatus[gCurLevel][gCurStage] != 0)
         flag = gUnk_02007D64 != 5;
     LoadBgLayout(5);
     if (gMetaKnightmareMode == 1) {
