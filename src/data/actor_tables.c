@@ -190,8 +190,8 @@ u32 gWarpStarCameraPaths[25] ACTOR_TBL(0873fbac) = {
 };
 
 /* ---- 0x087400B0-0x087400E4: 3 table(s), 13 function pointer(s), section .actor_tbl_087400b0 ---- */
-/* include/cutscene.h; CallTableEntry(i, 6, ...) in sub_08076318, sub_080763c4 */
-u32 gUnk_087400B0[6] ACTOR_TBL(087400b0) = {
+/* include/cutscene.h; CallTableEntry(i, 6, ...) in PlayerCannonInit, PlayerCannonEnterState */
+u32 gPlayerCannonStates[6] ACTOR_TBL(087400b0) = {
     (u32)sub_08076c88,
     (u32)sub_08076cd4,
     (u32)sub_08076d0c,
@@ -199,8 +199,8 @@ u32 gUnk_087400B0[6] ACTOR_TBL(087400b0) = {
     (u32)sub_08076dac,
     (u32)sub_08076e30,
 };
-/* include/cutscene.h; CallTableEntry(i, 6, ...) in sub_0807637c */
-u32 gUnk_087400C8[6] ACTOR_TBL(087400b0) = {
+/* include/cutscene.h; CallTableEntry(i, 6, ...) in PlayerCannonUpdate */
+u32 gPlayerCannonStateUpdates[6] ACTOR_TBL(087400b0) = {
     (u32)sub_08076cac,
     (u32)sub_08076d00,
     (u32)sub_08076d38,
@@ -216,14 +216,14 @@ u32 gCannonVariants[1] ACTOR_TBL(087400b0) = {
 /* ---- 0x08740100-0x08740124: 3 table(s), 9 function pointer(s), section .actor_tbl_08740100 ---- */
 /* include/cutscene.h; CallTableEntry(i, 4, ...) in CannonInit, CannonEnterState */
 u32 gCannonStates[4] ACTOR_TBL(08740100) = {
-    (u32)sub_0807728c,
+    (u32)CannonWait,
     (u32)sub_08077308,
     (u32)sub_080773d0,
     (u32)sub_08077568,
 };
 /* include/cutscene.h; CallTableEntry(i, 4, ...) in CannonUpdate */
 u32 gCannonStateUpdates[4] ACTOR_TBL(08740100) = {
-    (u32)sub_080772b0,
+    (u32)CannonWaitUpdate,
     (u32)sub_080773a8,
     (u32)sub_08077564,
     (u32)sub_08077718,
@@ -236,14 +236,14 @@ u32 gCannonFuseVariants[1] ACTOR_TBL(08740100) = {
 /* ---- 0x087402BC-0x08740320: 9 table(s), 25 function pointer(s), section .actor_tbl_087402bc ---- */
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in CannonFuseInit, CannonFuseEnterState */
 u32 gCannonFuseStates[3] ACTOR_TBL(087402bc) = {
-    (u32)sub_08077ae0,
-    (u32)sub_08077b60,
+    (u32)CannonFuseWait,
+    (u32)CannonFuseBurn,
     (u32)sub_08077bf0,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in CannonFuseUpdate */
 u32 gCannonFuseStateUpdates[3] ACTOR_TBL(087402bc) = {
-    (u32)sub_08077b24,
-    (u32)sub_08077ba8,
+    (u32)CannonFuseWaitUpdate,
+    (u32)CannonFuseBurnUpdate,
     (u32)sub_08077c2c,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_BigSwitch */
@@ -274,8 +274,8 @@ u32 gStakeStates[1] ACTOR_TBL(087402bc) = {
 u32 gStakeStateUpdates[1] ACTOR_TBL(087402bc) = {
     (u32)sub_08077ff4,
 };
-/* include/cutscene.h; CallTableEntry(i, 5, ...) in sub_08078598: entries 5-8 lie past that bound; the extent is the span up to the next label (docs/data.md 5.1) */
-u32 gUnk_087402FC[9] ACTOR_TBL(087402bc) = {
+/* include/cutscene.h; CallTableEntry(i, 5, ...) in Task_RoomParticles: entries 5-8 lie past that bound; the extent is the span up to the next label (docs/data.md 5.1) */
+u32 gRoomParticlesVariants[9] ACTOR_TBL(087402bc) = {
     (u32)sub_08078670,
     (u32)sub_080786e8,
     (u32)sub_0807876c,

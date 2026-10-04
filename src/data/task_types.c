@@ -89,7 +89,7 @@ void Task_Cannon(void);
 void Task_CannonFuse(void);
 void Task_BigSwitch(void);
 void Task_Stake(void);
-void sub_08078598(void);
+void Task_RoomParticles(void);
 void Task_NightmarePowerOrbIntroScroll(void);
 void Task_GoalGameLaunchStars(void);
 void Task_GoalGameBigTrailStar(void);
@@ -109,7 +109,7 @@ void Task_BombRallyObject(void);
 void Task_AirGrindObject(void);
 void Task_WarpStarCamera(void);
 void Task_NightmarePowerOrbEscape(void);
-void sub_080752f4(void);
+void Task_NightmarePowerOrbEscapeStar(void);
 void Task_EndingEpilogue(void);
 void Task_EndingStarRodReturn(void);
 void Task_PengyIceBreath(void);
@@ -155,7 +155,7 @@ void Task_StarFlash(void);
 void Task_StarFlashOnParent(void);
 void Task_DustTrail(void);
 void Task_DustPuff(void);
-void sub_0806cf70(void);
+void Task_BackwardDustPuff(void);
 void Task_LandingDust(void);
 void Task_DustBurst(void);
 void Task_StarScatter(void);
@@ -259,8 +259,8 @@ void Task_NormalExtraPanel(void);
 void Task_PlayerCountPanel(void);
 void Task_ModeListCursor(void);
 void Task_ModePlayerCountPanel(void);
-void sub_0800ef30(void);
-void sub_0800f084(void);
+void Task_LinkPlayPalettePulse(void);
+void Task_LinkPlayColorCycle(void);
 void Task_LinkPlayPlayerList(void);
 void Task_LinkPlayConsole(void);
 void Task_LinkPlayCable(void);
@@ -359,7 +359,7 @@ const struct TaskType gTaskTypes[] = {
     /*  76 */ { 3, { 0, 0, 0 }, (u32)Task_CannonFuse },
     /*  77 */ { 3, { 0, 0, 0 }, (u32)Task_BigSwitch },
     /*  78 */ { 3, { 0, 0, 0 }, (u32)Task_Stake },
-    /*  79 */ { 3, { 0, 0, 0 }, (u32)sub_08078598 },
+    /*  79 */ { 3, { 0, 0, 0 }, (u32)Task_RoomParticles },
     /*  80 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbIntroScroll },
     /*  81 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameLaunchStars },
     /*  82 */ { 3, { 0, 0, 0 }, (u32)Task_GoalGameBigTrailStar },
@@ -379,7 +379,7 @@ const struct TaskType gTaskTypes[] = {
     /*  96 */ { 3, { 0, 0, 0 }, (u32)Task_AirGrindObject },
     /*  97 */ { 3, { 0, 0, 0 }, (u32)Task_WarpStarCamera },
     /*  98 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbEscape },
-    /*  99 */ { 3, { 0, 0, 0 }, (u32)sub_080752f4 },
+    /*  99 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbEscapeStar },
     /* 100 */ { 3, { 0, 0, 0 }, (u32)Task_EndingEpilogue },
     /* 101 */ { 3, { 0, 0, 0 }, (u32)Task_EndingStarRodReturn },
     /* 102 */ { 2, { 0, 0, 0 }, (u32)Task_PengyIceBreath },
@@ -425,7 +425,7 @@ const struct TaskType gTaskTypes[] = {
     /* 142 */ { 1, { 0, 0, 0 }, (u32)Task_StarFlashOnParent },
     /* 143 */ { 1, { 0, 0, 0 }, (u32)Task_DustTrail },
     /* 144 */ { 1, { 0, 0, 0 }, (u32)Task_DustPuff },
-    /* 145 */ { 1, { 0, 0, 0 }, (u32)sub_0806cf70 },
+    /* 145 */ { 1, { 0, 0, 0 }, (u32)Task_BackwardDustPuff },
     /* 146 */ { 1, { 0, 0, 0 }, (u32)Task_LandingDust },
     /* 147 */ { 3, { 0, 0, 0 }, (u32)Task_DustBurst },
     /* 148 */ { 1, { 0, 0, 0 }, (u32)Task_StarScatter },
@@ -529,8 +529,8 @@ const struct TaskType gTaskTypes[] = {
     /* 246 */ { 4, { 0, 0, 0 }, (u32)Task_PlayerCountPanel },
     /* 247 */ { 4, { 0, 0, 0 }, (u32)Task_ModeListCursor },
     /* 248 */ { 4, { 0, 0, 0 }, (u32)Task_ModePlayerCountPanel },
-    /* 249 */ { 4, { 0, 0, 0 }, (u32)sub_0800ef30 },
-    /* 250 */ { 4, { 0, 0, 0 }, (u32)sub_0800f084 },
+    /* 249 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayPalettePulse },
+    /* 250 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayColorCycle },
     /* 251 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayPlayerList },
     /* 252 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayConsole },
     /* 253 */ { 4, { 0, 0, 0 }, (u32)Task_LinkPlayCable },

@@ -455,7 +455,7 @@ void sub_08076c00(void)
                     v->frame = 0x1255;
                     v->state = 5;
                 }
-                TaskSetEntry(sub_080763c4, gCurTaskIdx);
+                TaskSetEntry(PlayerCannonEnterState, gCurTaskIdx);
                 break;
             case 2:
                 u->frame = 0x1264;
@@ -587,7 +587,7 @@ void sub_08076e48(void)
     }
 }
 
-void sub_08076e88(s32 id, s32 v)
+void PlayerEnterCannon(s32 id, s32 v)
 {
     struct Task *t = &gTasks[id];
 
@@ -595,10 +595,10 @@ void sub_08076e88(s32 id, s32 v)
     t->state = 0;
     t->parent = v;
     t->waterFlags = 0;
-    TaskSetEntry(sub_08076318, id);
+    TaskSetEntry(PlayerCannonInit, id);
 }
 
-void sub_08076ec8(s32 id)
+void PlayerLeaveCannon(s32 id)
 {
     struct Task *u = &gTasks[id];
     struct Task *t = &gTasks[u->parent];
@@ -612,7 +612,7 @@ void sub_08076f04(s32 id)
     struct Task *t = &gTasks[id];
     struct PlayerState *p = &gPlayerStates[id];
 
-    sub_08076ec8(id);
+    PlayerLeaveCannon(id);
     t->onGround = 0;
     TaskStopY();
     PlayerResumeControl(id, 0, 1, 0);
@@ -625,7 +625,7 @@ void sub_08076f50(s32 id)
     struct PlayerState *p = &gPlayerStates[id];
     struct Task *u = &gTasks[t->parent];
 
-    sub_08076ec8(id);
+    PlayerLeaveCannon(id);
     t->facing = 1;
     t->onGround = 0;
     {
@@ -642,7 +642,7 @@ void sub_08076f50(s32 id)
         DisablePause();
 }
 
-void sub_08076fe4(int a)
+void CannonLaunchPlayers(int a)
 {
     u16 v = a;
     s32 i = 0;
@@ -660,7 +660,7 @@ void sub_08076fe4(int a)
                 n++;
                 t->unk34 = gCurTask->unk1C;
                 t->state = v;
-                TaskSetEntry(sub_080763c4, i);
+                TaskSetEntry(PlayerCannonEnterState, i);
             }
         }
     }
@@ -704,7 +704,7 @@ u16 sub_080770a0(void)
     return v;
 }
 
-void sub_080770f0(s32 id)
+void CannonLoadPlayer(s32 id)
 {
     if (gUnk_0300244C == 0 || gPlayerHealth[id] > 0)
     {
@@ -713,7 +713,7 @@ void sub_080770f0(s32 id)
 
         if (p->mouthState != 1 && t->velY > 0)
         {
-            sub_08076e88(id, gCurTaskIdx);
+            PlayerEnterCannon(id, gCurTaskIdx);
             {
                 struct Task *u = gCurTask;
 
@@ -750,13 +750,13 @@ void sub_080771c4(void)
     RequestScreenShake(4);
 }
 
-void sub_080771d8(void)
+void CannonFire(void)
 {
     if (gCurTask->unk1C == gActivePlayerCount)
-        sub_08076fe4((s16)sub_080770a0());
+        CannonLaunchPlayers((s16)sub_080770a0());
     else
     {
-        sub_08076fe4(3);
+        CannonLaunchPlayers(3);
         ActorSetState(1);
     }
     TaskSetEntry(CannonEnterState, gCurTaskIdx);
@@ -779,7 +779,7 @@ void CannonEnterState(void)
     CallTableEntry(gCurTask->state, 4, gCannonStates);
 }
 
-void sub_0807728c(void)
+void CannonWait(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -793,13 +793,13 @@ void sub_0807728c(void)
     TaskSleepForever();
 }
 
-void sub_080772b0(void)
+void CannonWaitUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
     {
         if (gCannonFuseState == 1)
         {
-            sub_080771d8();
+            CannonFire();
         }
         else
         {
@@ -808,7 +808,7 @@ void sub_080772b0(void)
             if (t->unk18 <= 0)
             {
                 if (ActorCheckHits())
-                    sub_080770f0(gCurTask->hitterSlot);
+                    CannonLoadPlayer(gCurTask->hitterSlot);
             }
             else
             {
@@ -1113,7 +1113,7 @@ void sub_080777bc(s32 x, s32 y, s32 d)
     }
 }
 
-void sub_08077830(void)
+void CannonFuseBurnStep(void)
 {
     struct M19Script *p = gUnk_087401E4[gCurTask->unk20];
     struct Task *t = gCurTask;
@@ -1126,18 +1126,18 @@ void sub_08077830(void)
             struct Task *u = gCurTask;
 
             u->unk1C++;
-            sub_080779dc();
+            CannonFuseMoveSpark();
         }
         else
         {
-            sub_08077898(p);
+            CannonFuseStepCell(p);
         }
         gCurTask->unk34 = 2;
     }
     gCurTask->unk34--;
 }
 
-void sub_08077898(struct M19Script *p)
+void CannonFuseStepCell(struct M19Script *p)
 {
     struct Task *t = gCurTask;
     u8 d = p->unk00[t->unk18];
@@ -1202,7 +1202,7 @@ void sub_08077980(void)
     {
         if (t->unk1C < 0)
         {
-            sub_08077898(p);
+            CannonFuseStepCell(p);
         }
         else
         {
@@ -1217,7 +1217,7 @@ void sub_08077980(void)
     gCurTask->unk34--;
 }
 
-void sub_080779dc(void)
+void CannonFuseMoveSpark(void)
 {
     struct Task *t = gCurTask;
     s32 i = t->frame;

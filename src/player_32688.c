@@ -168,7 +168,7 @@ void Task_Player(void)
         gCurTask->player->hitBoxSet = 0;
         gPauseDisabled = 1;
         gCurTask->state = 4;
-        sub_08076318();
+        PlayerCannonInit();
         TaskSleepForever();
     case 1:
         gPauseDisabled = 1;

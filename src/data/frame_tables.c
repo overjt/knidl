@@ -2982,7 +2982,7 @@ u32 gUnk_0874CB7C[] FRAME_TABLE = {
 };
 
 /* gUnk_0874CB90.  Consumers: Task_DustTrail (src/actor_6cd40.c:37),
- * Task_DustPuff (src/actor_6cd40.c:84), sub_0806cf70
+ * Task_DustPuff (src/actor_6cd40.c:84), Task_BackwardDustPuff
  * (src/actor_6cd40.c:110) and 2 more.  14 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CB90-0x0874CBC8).  Declared include/actor.h:283. */
@@ -10114,7 +10114,7 @@ u32 gUnk_08752D8C[] FRAME_TABLE = {
 };
 
 /* gUnk_08752DB8.  Consumers: sub_080781fc (src/actor_77ae0.c:409),
- * sub_08078598 (src/actor_77ae0.c:569).  18 words, OAM template streams;
+ * Task_RoomParticles (src/actor_77ae0.c:569).  18 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08752DB8-0x08752E00).  Declared include/cutscene.h:120. */
 u32 gUnk_08752DB8[] FRAME_TABLE = {
@@ -13453,7 +13453,7 @@ u32 gUnk_08755484[] FRAME_TABLE = {
 };
 
 /* gUnk_0875549C.  Consumers: Task_NightmarePowerOrbEscape
- * (src/actor_74c0c.c:204), sub_080752f4 (src/actor_74c0c.c:352).  7 words,
+ * (src/actor_74c0c.c:204), Task_NightmarePowerOrbEscapeStar (src/actor_74c0c.c:352).  7 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x0875549C-0x087554B8).  Declared
  * include/cutscene.h:129. */

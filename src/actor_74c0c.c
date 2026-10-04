@@ -295,19 +295,19 @@ void Task_NightmarePowerOrbEscape(void)
         t->frame = 5;
     }
     TaskYieldTrampoline(76);
-    sub_08075290(12);
+    CreateNightmarePowerOrbEscapeStars(12);
     TaskYieldTrampoline(52);
-    sub_08075290(0);
+    CreateNightmarePowerOrbEscapeStars(0);
     gCurTask->velX = 0x20000;
     TaskYieldTrampoline(16);
-    sub_08075290(1);
+    CreateNightmarePowerOrbEscapeStars(1);
     gCurTask->velX = 0x40000;
     TaskYieldTrampoline(19);
-    sub_08075290(2);
+    CreateNightmarePowerOrbEscapeStars(2);
     TaskExitTrampoline();
 }
 
-void sub_08075290(s32 a)
+void CreateNightmarePowerOrbEscapeStars(s32 a)
 {
     struct Task *t;
     s32 id;
@@ -337,13 +337,13 @@ void sub_08075290(s32 a)
     }
 }
 
-void sub_080752f4(void)
+void Task_NightmarePowerOrbEscapeStar(void)
 {
     {
         struct Task *t = gCurTask;
 
         t->moveCallback = (u32)TaskMove;
-        t->drawCallback = (u32)sub_08076074;
+        t->drawCallback = (u32)NightmarePowerOrbEscapeStarDraw;
         t->layer = 12;
     }
     {
@@ -1202,7 +1202,7 @@ void sub_080752f4(void)
     TaskExitTrampoline();
 }
 
-void sub_08076074(void)
+void NightmarePowerOrbEscapeStarDraw(void)
 {
     {
         struct Task *u = gCurTask;
@@ -1317,12 +1317,12 @@ void sub_080761b4(void)
     TaskExitTrampoline();
 }
 
-void sub_08076318(void)
+void PlayerCannonInit(void)
 {
     {
         struct Task *t = gCurTask;
 
-        t->updateCallback = (u32)sub_0807637c;
+        t->updateCallback = (u32)PlayerCannonUpdate;
         t->moveCallback = (u32)TaskMove;
     }
     TaskStop();
@@ -1337,26 +1337,26 @@ void sub_08076318(void)
         struct Task *t = gCurTask;
 
         t->player->unk42 &= 0xFFEF;
-        CallTableEntry(t->state, 6, gUnk_087400B0);
+        CallTableEntry(t->state, 6, gPlayerCannonStates);
     }
 }
 
-void sub_0807637c(void)
+void PlayerCannonUpdate(void)
 {
     u16 id;
     struct Task *t;
 
-    CallTableEntry(gCurTask->updateState, 6, gUnk_087400C8);
+    CallTableEntry(gCurTask->updateState, 6, gPlayerCannonStateUpdates);
     id = gLocalPlayer;
     t = gCurTask;
     if (id == t->player->playerIndex && t->unk18 != 0)
         SetCameraFocus(t->unk1C, t->unk20);
 }
 
-void sub_080763c4(void)
+void PlayerCannonEnterState(void)
 {
     struct Task *t = gCurTask;
 
     t->moveCallback = (u32)TaskMove;
-    CallTableEntry(t->state, 6, gUnk_087400B0);
+    CallTableEntry(t->state, 6, gPlayerCannonStates);
 }

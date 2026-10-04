@@ -698,7 +698,7 @@ void CreateDustPuff(void);
 /* src/actor_6cd40.c */
 void Task_DustTrail(void);
 void Task_DustPuff(void);
-void sub_0806cf70(void);
+void Task_BackwardDustPuff(void);
 void CreateLandingDust(s16 dx, s16 dy);
 void sub_0806d08c(s16 a, s16 b, s16 c);
 void Task_LandingDust(void);

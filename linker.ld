@@ -3965,7 +3965,7 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_0873fb7c == 0x0873FB7C, "MATCHING: actor_rodata_0873fb7c moved")
     ASSERT(!MATCHING || gWarpStarStates == 0x0873FBAC, "MATCHING: actor_tbl_0873fbac moved")
     ASSERT(!MATCHING || actor_rodata_0873fcf8 == 0x0873FCF8, "MATCHING: actor_rodata_0873fcf8 moved")
-    ASSERT(!MATCHING || gUnk_087400B0 == 0x087400B0, "MATCHING: actor_tbl_087400b0 moved")
+    ASSERT(!MATCHING || gPlayerCannonStates == 0x087400B0, "MATCHING: actor_tbl_087400b0 moved")
     ASSERT(!MATCHING || actor_rodata_087400e4 == 0x087400E4, "MATCHING: actor_rodata_087400e4 moved")
     ASSERT(!MATCHING || gCannonStates == 0x08740100, "MATCHING: actor_tbl_08740100 moved")
     ASSERT(!MATCHING || actor_rodata_08740124 == 0x08740124, "MATCHING: actor_rodata_08740124 moved")

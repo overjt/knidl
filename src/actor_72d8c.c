@@ -1229,7 +1229,7 @@ void sub_080740bc(void)
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 1);
     PlayBgm(34);
-    sub_08075290(11);
+    CreateNightmarePowerOrbEscapeStars(11);
     gCurTask->velX = -0x2000;
     TaskYieldTrampoline(8);
     {

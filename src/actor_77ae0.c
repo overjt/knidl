@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x08077AE0 0x08078B68 src/actor_77ae0.c --newpb
  *
  * M19 batch 5: task types #77 (Task_BigSwitch), #78 (Task_Stake), #79
- * (sub_08078598, the credits particle system over gUnk_03000FE0) and #8
+ * (Task_RoomParticles, the credits particle system over gUnk_03000FE0) and #8
  * (Task_WaddleDee), whose states hand off to module M20.
  */
 #include "gba/gba.h"
@@ -36,7 +36,7 @@ extern void ActorSetStateSlot(u32 i, u8 v);
 extern void sub_08066c08(u32 *p, s32 b);
 extern void sub_08066c3c(u32 *p);
 
-void sub_08077ae0(void)
+void CannonFuseWait(void)
 {
     gCurTask->updateState = 0;
     gCurTask->facing = 1;
@@ -52,7 +52,7 @@ void sub_08077ae0(void)
     TaskSleepForever();
 }
 
-void sub_08077b24(void)
+void CannonFuseWaitUpdate(void)
 {
     if (ActorCheckHits())
     {
@@ -63,7 +63,7 @@ void sub_08077b24(void)
     }
 }
 
-void sub_08077b60(void)
+void CannonFuseBurn(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -77,11 +77,11 @@ void sub_08077b60(void)
     TaskSleepForever();
 }
 
-void sub_08077ba8(void)
+void CannonFuseBurnUpdate(void)
 {
     if (gCurTask->unk20 != -1)
     {
-        sub_08077830();
+        CannonFuseBurnStep();
     }
     else if (gCannonFuseState == 0)
     {
@@ -299,7 +299,7 @@ void sub_08077ff4(void)
 {
 }
 
-void sub_08077ff8(void)
+void RoomParticlesDrawFixed(void)
 {
     gCurTask->unk28 = 0;
     do
@@ -309,7 +309,7 @@ void sub_08077ff8(void)
     } while (gCurTask->unk28 <= 7);
 }
 
-void sub_0807802c(void)
+void RoomParticlesDrawBelowLine(void)
 {
     if (gSpriteCameraY > gCurTask->unk34)
     {
@@ -339,7 +339,7 @@ void sub_0807802c(void)
     }
 }
 
-void sub_080780c4(void)
+void RoomParticlesDrawRepeated(void)
 {
     gCurTask->unk28 = 0;
     do
@@ -355,7 +355,7 @@ void sub_080780c4(void)
     } while (gCurTask->unk28 <= 5);
 }
 
-void sub_0807811c(struct M19Particle *p)
+void RoomParticleStepX(struct M19Particle *p)
 {
     p->unk01++;
     if (gUnk_08740320[p->unk00][p->unk01].unk00 == 255)
@@ -373,7 +373,7 @@ void sub_0807811c(struct M19Particle *p)
     }
 }
 
-void sub_0807817c(struct M19Particle *p, u8 a, u8 b)
+void RoomParticleInit(struct M19Particle *p, u8 a, u8 b)
 {
     switch (a)
     {
@@ -461,7 +461,7 @@ u8 sub_080783e0(s16 x, s16 y)
     return 1;
 }
 
-void sub_0807840c(struct M19Particle *p, u8 a)
+void RoomParticleStepY(struct M19Particle *p, u8 a)
 {
     p->unk01++;
     if (gUnk_087404A0[p->unk00][p->unk01].unk00 == 255)
@@ -557,7 +557,7 @@ void sub_0807840c(struct M19Particle *p, u8 a)
     }
 }
 
-void sub_08078598(void)
+void Task_RoomParticles(void)
 {
     switch (gCurTask->variant)
     {
@@ -565,7 +565,7 @@ void sub_08078598(void)
         {
             struct Task *t = gCurTask;
 
-            t->drawCallback = (u32)sub_08077ff8;
+            t->drawCallback = (u32)RoomParticlesDrawFixed;
             t->frameTable = gUnk_08752DB8;
         }
         break;
@@ -573,7 +573,7 @@ void sub_08078598(void)
         {
             struct Task *t = gCurTask;
 
-            t->drawCallback = (u32)sub_0807802c;
+            t->drawCallback = (u32)RoomParticlesDrawBelowLine;
             t->frameTable = gUnk_08752E00;
         }
         break;
@@ -581,7 +581,7 @@ void sub_08078598(void)
         {
             struct Task *t = gCurTask;
 
-            t->drawCallback = (u32)sub_0807802c;
+            t->drawCallback = (u32)RoomParticlesDrawBelowLine;
             t->frameTable = gUnk_08752E00;
         }
         break;
@@ -589,7 +589,7 @@ void sub_08078598(void)
         {
             struct Task *t = gCurTask;
 
-            t->drawCallback = (u32)sub_0807802c;
+            t->drawCallback = (u32)RoomParticlesDrawBelowLine;
             t->frameTable = gUnk_08752E00;
         }
         break;
@@ -597,7 +597,7 @@ void sub_08078598(void)
         {
             struct Task *t = gCurTask;
 
-            t->drawCallback = (u32)sub_080780c4;
+            t->drawCallback = (u32)RoomParticlesDrawRepeated;
             t->frameTable = gUnk_08752E00;
         }
         break;
@@ -610,7 +610,7 @@ void sub_08078598(void)
         struct Task *t = gCurTask;
 
         t->tileWord = 0xF000 | t->tileWord;
-        CallTableEntry(t->variant, 5, gUnk_087402FC);
+        CallTableEntry(t->variant, 5, gRoomParticlesVariants);
     }
 }
 
@@ -620,7 +620,7 @@ void sub_08078670(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807817c(&gUnk_03000FE0[gCurTask->unk28], 0, 0);
+        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 0, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
     TaskSleepForever();
@@ -631,7 +631,7 @@ void sub_080786b4(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807811c(&gUnk_03000FE0[gCurTask->unk28]);
+        RoomParticleStepX(&gUnk_03000FE0[gCurTask->unk28]);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
 }
@@ -648,7 +648,7 @@ void sub_080786e8(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807817c(&gUnk_03000FE0[gCurTask->unk28], 0, 0);
+        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 0, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
     TaskSleepForever();
@@ -659,7 +659,7 @@ void sub_08078734(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807840c(&gUnk_03000FE0[gCurTask->unk28], 0);
+        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
 }
@@ -676,7 +676,7 @@ void sub_0807876c(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807817c(&gUnk_03000FE0[gCurTask->unk28], 2, 0);
+        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 2, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
     TaskSleepForever();
@@ -687,7 +687,7 @@ void sub_080787b8(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807840c(&gUnk_03000FE0[gCurTask->unk28], 2);
+        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 2);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
 }
@@ -704,7 +704,7 @@ void sub_080787f0(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807817c(&gUnk_03000FE0[gCurTask->unk28], 1, 0);
+        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 1, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 3);
     TaskSleepForever();
@@ -715,7 +715,7 @@ void sub_0807883c(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807840c(&gUnk_03000FE0[gCurTask->unk28], 1);
+        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 1);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 3);
 }
@@ -726,13 +726,13 @@ void sub_08078874(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807817c(&gUnk_03000FE0[gCurTask->unk28], 3, 0);
+        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 3, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
     gCurTask->unk28 = 3;
     do
     {
-        sub_0807817c(&gUnk_03000FE0[gCurTask->unk28], 3, 1);
+        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 3, 1);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 5);
     TaskSleepForever();
@@ -743,13 +743,13 @@ void sub_080788e0(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807840c(&gUnk_03000FE0[gCurTask->unk28], 3);
+        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 3);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
     gCurTask->unk28 = 3;
     do
     {
-        sub_0807840c(&gUnk_03000FE0[gCurTask->unk28], 4);
+        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 4);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 5);
 }

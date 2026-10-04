@@ -13,7 +13,7 @@
  * (Task_SoundTestCursors, body sub_0800ecb8) and #255 (Task_SoundTestPulse) animate the
  * sound-test screen (menu screen 7: the cursor sprites and the palette
  * pulse of the selected column, which stays lit while its song plays);
- * task types #249 (sub_0800ef30) and #250 (sub_0800f084) cycle the
+ * task types #249 (Task_LinkPlayPalettePulse) and #250 (Task_LinkPlayColorCycle) cycle the
  * palettes of the link-play screen (menu screen 8) through BlendColors
  * blends. */
 
@@ -214,7 +214,7 @@ void Task_SoundTestPulse(void)
     TaskExitTrampoline();
 }
 
-void sub_0800ef30(void)
+void Task_LinkPlayPalettePulse(void)
 {
     struct Task *t = gCurTask;
 
@@ -269,7 +269,7 @@ void sub_0800ef30(void)
     TaskExitTrampoline();
 }
 
-void sub_0800f084(void)
+void Task_LinkPlayColorCycle(void)
 {
     struct Task *t = gCurTask;
 
