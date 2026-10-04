@@ -476,11 +476,12 @@ def verify_diff(ref):
     if now[:len(before)] != before:
         raise RenameError("%s: rows before %s were edited, not appended" % (renames_rel, ref))
     added = now[len(before):]
+    scoped = [r for r in added if r["kind"] in ("local", "param")]
     fields = [r for r in added if r["kind"] == "field"]
     aliases = [r for r in added if r["kind"] == "alias"]
     # `param` rows log parameter names (#155 run 5, D5): no symbol, proven by
     # the per-file assembly oracle, not by this check.
-    added = [r for r in added if r["kind"] not in ("field", "alias", "param")]
+    added = [r for r in added if r["kind"] not in ("field", "alias", "param", "local")]
     tag_map = {}
     for r in added:
         if r["kind"] == "tag":
@@ -568,6 +569,7 @@ def verify_diff(ref):
                "docs/analysis/callgraph.csv", "docs/analysis/module-map.csv",
                rel(CONFIG), rel(SYMDB)) + TEXT_FILES
     comment_only, checked, problems, outside = [], 0, [], []
+    scoped_uses = {}
     for line in status:
         if not line.strip():
             continue
@@ -606,6 +608,25 @@ def verify_diff(ref):
             old = remap(old)
         with open(os.path.join(ROOT, path), encoding="utf-8") as f:
             new = f.read()
+        if scoped and path.endswith((".c", ".h")):
+            # locals and parameters (D5, D8): rename them in REF's text inside
+            # their function, as tools/rename.py --locals and run 5's
+            # parameter tool did
+            for r in scoped:
+                func, o = r["old"].split(".", 1)
+                _, n = r["new"].split(".", 1)
+                func = fwd.get(key_of(func), func)
+                if not re.search(r"(?<![A-Za-z0-9_])%s\s*\(" % re.escape(func), old):
+                    continue
+                # a parameter is renamed in include/'s prototypes and in the
+                # file that defines the function (run 5's tool), not in other
+                # files' local extern declarations
+                if r["kind"] == "param" and not path.startswith("include/") and not re.search(
+                        r"(?m)^[A-Za-z_][^;{}\n]*\b%s\s*\([^;{]*\)\s*\{" % re.escape(func),
+                        _blank_comments(old)):
+                    continue
+                old, k = scoped_rename(old, func, o, n, r["kind"], _blank_comments(old))
+                scoped_uses[r["old"]] = scoped_uses.get(r["old"], 0) + k
         if path == "include/task.h" and '#include "task_vars.h"' not in old:
             new = new.replace('#include "task_vars.h"\n', "", 1)
         if path.endswith((".c", ".h")) and const_topics:
@@ -671,14 +692,18 @@ def verify_diff(ref):
         if old != new:
             problems.append("%s: differs beyond the renames" % path)
     print("verify-diff %s: %d renames, %d field renames, %d register aliases, %d constants "
-          "(%d sites), %d files checked"
-          % (ref, len(added), len(fields), len(aliases), added_consts, const_uses[0], checked))
+          "(%d sites), %d parameters and locals, %d files checked"
+          % (ref, len(added), len(fields), len(aliases), added_consts, const_uses[0],
+             len(scoped), checked))
     for (tag, o), n in sorted(field_pairs.items()):
         if not field_uses.get((o, n)):
             problems.append("field %s.%s -> %s: no use renamed" % (tag, o, n))
     for a, f in sorted(alias_field.items()):
         if a not in origin and not field_uses.get((f, a)):
             problems.append("alias Task.%s -> %s: no use" % (f, a))
+    for r in scoped:
+        if not scoped_uses.get(r["old"]):
+            problems.append("%s %s -> %s: no use renamed" % (r["kind"], r["old"], r["new"]))
     for p in comment_only:
         print("  comment edits (review them): %s" % p)
     for p in outside:
@@ -853,6 +878,153 @@ def fields_only_differ(a, b, pairs, uses, alias_pairs=()):
     return True
 
 
+# ---- locals and parameters (#155 runs 5-6, D5 and D8) ---------------------------
+
+SCOPE_IDENT_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
+
+
+def _match(text, i, open_ch, close_ch):
+    depth = 0
+    for j in range(i, len(text)):
+        if text[j] == open_ch:
+            depth += 1
+        elif text[j] == close_ch:
+            depth -= 1
+            if depth == 0:
+                return j
+    return -1
+
+
+def _rename_span(text, a, b, old, new, mask=None):
+    """Rename identifier OLD to NEW in text[a:b]: whole tokens only, never a
+    member after `.` or `->`, and never inside a comment when MASK (TEXT
+    with its comments blanked, same length) is given.  Returns (text, n)."""
+    mask = text if mask is None else mask
+    hits = []
+    for m in SCOPE_IDENT_RE.finditer(mask, a, b):
+        if m.group(0) != old:
+            continue
+        k = m.start() - 1
+        while k >= 0 and mask[k] in " \t\n":
+            k -= 1
+        if k >= 0 and (mask[k] == "." or (mask[k] == ">" and k > 0 and mask[k - 1] == "-")):
+            continue
+        hits.append((m.start(), m.end()))
+    for x, y in reversed(hits):
+        text = text[:x] + new + text[y:]
+    return text, len(hits)
+
+
+def scoped_rename(text, func, old, new, kind, code_mask=None):
+    """Rename a local (kind `local`: the body of FUNC's definition) or a
+    parameter (kind `param`: the parameter list of every declaration of FUNC
+    and its definition's body) in TEXT.  CODE_MASK, if given, is TEXT with
+    comments blanked to spaces (same length), used to find the spans.
+    Returns (text, count of renamed tokens)."""
+    mask = code_mask if code_mask is not None else text
+    total = 0
+    spans = []
+    for m in re.finditer(r"(?<![A-Za-z0-9_])%s\s*\(" % re.escape(func), mask):
+        # a declaration or definition starts its line (a type before it)
+        line_start = mask.rfind("\n", 0, m.start()) + 1
+        head = mask[line_start:m.start()]
+        if not re.match(r"^\s*[A-Za-z_][\w \t\*]*$", head) or head.strip() in ("return", "else"):
+            continue
+        lp = m.end() - 1
+        rp = _match(mask, lp, "(", ")")
+        if rp < 0:
+            continue
+        k = rp + 1
+        while k < len(mask) and mask[k] in " \t\n":
+            k += 1
+        body = None
+        if k < len(mask) and mask[k] == "{":
+            body = (k, _match(mask, k, "{", "}"))
+        elif k >= len(mask) or mask[k] != ";":
+            continue
+        if kind == "param":
+            spans.append((lp, rp))
+        if body:
+            spans.append(body)
+    for a, b in sorted(spans, reverse=True):
+        text, n = _rename_span(text, a, b + 1, old, new, mask if code_mask is not None else None)
+        total += n
+    return text, total
+
+
+def _blank_comments(text):
+    return C_COMMENT_RE.sub(lambda m: re.sub(r"[^\n]", " ", m.group(0)), text)
+
+
+def apply_locals(rows, write):
+    """rows: file,function,old,new,evidence (kind `local`, D8)."""
+    problems, edits, logged = [], {}, []
+    macros = set()
+    for p in text_files():
+        if p.endswith(".h"):
+            with open(p, encoding="utf-8") as f:
+                macros.update(re.findall(r"(?m)^\s*#\s*define\s+(\w+)", f.read()))
+    state_globals = set()
+    with open(SYMBOLS, encoding="utf-8") as f:
+        state_globals.update(r["name"] for r in csv.DictReader(f))
+    with open(CONFIG, encoding="utf-8") as f:
+        cfg = json.load(f)
+    state_globals.update(cfg.get("data_symbols", {}).values())
+    state_globals.update(cfg.get("extra_labels", {}).values())
+    for r in rows:
+        path = os.path.join(ROOT, r["file"])
+        func, old, new = r["function"].strip(), r["old"].strip(), r["new"].strip()
+        where = "%s %s: %s -> %s" % (r["file"], func, old, new)
+        if not (r.get("evidence") or "").strip():
+            problems.append("%s: evidence is required" % where)
+            continue
+        if not re.match(r"^[a-z][A-Za-z0-9]*$", new) or new in C_KEYWORDS:
+            problems.append("%s: not a lowerCamelCase identifier" % where)
+            continue
+        if new in macros or new in state_globals:
+            problems.append("%s: %s is a macro or a global" % (where, new))
+            continue
+        text = edits.get(path)
+        if text is None:
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+        mask = _blank_comments(text)
+        # the body must not use NEW already
+        probe, n_new = scoped_rename(mask, func, new, new + "_", "local")
+        if n_new:
+            problems.append("%s: %s already occurs in the body" % (where, new))
+            continue
+        _, n_par = scoped_rename(mask, func, old, old, "param")
+        _, n_loc = scoped_rename(mask, func, old, old, "local")
+        if n_par != n_loc:
+            problems.append("%s: %s is a parameter, not a local" % (where, old))
+            continue
+        decl = re.search(r"(?<![\w.>])(?:[A-Za-z_]\w*[\s*]+)+%s\s*[;=\[,)]" % re.escape(old), mask)
+        new_text, n = scoped_rename(text, func, old, new, "local", mask)
+        if n < 2 or not decl:
+            problems.append("%s: %d uses, or no declaration of %s" % (where, n, old))
+            continue
+        edits[path] = new_text
+        logged.append(("%s.%s" % (func, old), "%s.%s" % (func, new), r["evidence"].strip()))
+        print("local  %-36s %-6s -> %-24s %3d uses" % (func, old, new, n))
+    if problems:
+        for p in problems:
+            print("  PROBLEM: %s" % p)
+        raise RenameError("%d problem(s); nothing written" % len(problems))
+    if not write:
+        print("dry run: %d locals in %d files (use --write)" % (len(logged), len(edits)))
+        return
+    for path, text in edits.items():
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(text)
+    with open(RENAMES, "a", encoding="utf-8", newline="") as f:
+        w = csv.writer(f, lineterminator="\n")
+        for o, n, ev in logged:
+            w.writerow([o, n, "local", ev, "155"])
+    print("wrote %d locals in %d files; now: the per-file .s oracle and make compare" % (
+        len(logged), len(edits)))
+
+
 def regen():
     for cmd in (["make", "symbols"], ["make", "split"], ["make", "modmap"],
                 ["make", "clean"], ["make", "compare"]):
@@ -880,6 +1052,8 @@ def main():
     ap.add_argument("--regen", action="store_true",
                     help="after --write, run make symbols/split/modmap, "
                          "make clean and make compare")
+    ap.add_argument("--locals", metavar="CSV",
+                    help="rename locals (file,function,old,new,evidence; D8)")
     ap.add_argument("--verify-diff", metavar="REF",
                     help="check that every change since git REF is a rename "
                          "logged in renames.csv (nothing else)")
@@ -887,6 +1061,14 @@ def main():
     if args.verify_diff:
         try:
             verify_diff(args.verify_diff)
+        except RenameError as e:
+            sys.exit("rename.py: error: %s" % e)
+        return
+    if args.locals:
+        with open(args.locals, encoding="utf-8") as f:
+            rows = list(csv.DictReader(f))
+        try:
+            apply_locals(rows, args.write)
         except RenameError as e:
             sys.exit("rename.py: error: %s" % e)
         return
