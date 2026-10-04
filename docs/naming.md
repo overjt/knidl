@@ -487,7 +487,7 @@ copies and module-local records).
 | struct field | `unk*` | 322 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 504 RAM cells, 2920 ROM labels by role and 5130 by position.
+Named for comparison: 480 RAM cells by role and 24 by position, 2920 ROM labels by role and 5130 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
