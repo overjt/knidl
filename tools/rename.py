@@ -538,8 +538,10 @@ def verify_diff(ref):
         raise RenameError("%s: rows before %s were edited, not appended" % (const_rel, ref))
     for r in const_now:
         const_headers.setdefault(r["header"], {})[r["constant"]] = int_value(r["value"])
-    for r in const_now[len(const_before):]:
+        # any logged constant may stand where REF has a literal of its value
+        # (one logged in an earlier commit too); the headers are checked below
         const_values[r["constant"]] = int_value(r["value"])
+    added_consts = len(const_now) - len(const_before)
     const_topics = {h.split("/")[-1][:-2] for h in const_headers}
     const_uses = [0]
     # Compose the renames since REF into one forward map (old -> final name),
@@ -670,7 +672,7 @@ def verify_diff(ref):
             problems.append("%s: differs beyond the renames" % path)
     print("verify-diff %s: %d renames, %d field renames, %d register aliases, %d constants "
           "(%d sites), %d files checked"
-          % (ref, len(added), len(fields), len(aliases), len(const_values), const_uses[0], checked))
+          % (ref, len(added), len(fields), len(aliases), added_consts, const_uses[0], checked))
     for (tag, o), n in sorted(field_pairs.items()):
         if not field_uses.get((o, n)):
             problems.append("field %s.%s -> %s: no use renamed" % (tag, o, n))
