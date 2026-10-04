@@ -85,7 +85,7 @@ void SetCameraFocusOrAnchor(s32 x, s32 y)
             return;
         }
     }
-    else if (gCameraMode != 5)
+    else if (gCameraMode != CAMERA_MODE_HOLD_ANCHOR)
     {
         gCameraFocusX = x;
         gCameraFocusY = y;
@@ -370,19 +370,19 @@ u32 WhispyWoodsCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
-    case 0:
+    case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[3] > 0x167)
         {
             gScrollLock.unkC = 280;
             StartScrollLock(0xFFFF, 0xFFFF, 200, 360);
         }
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         return 1;
-    case 1:
-    case 2:
-    case 4:
-    case 5:
+    case CAMERA_MODE_FOLLOW_PLAYER:
+    case CAMERA_MODE_SLIDE_TO_LOCK:
+    case CAMERA_MODE_SLIDE_FROM_LOCK:
+    case CAMERA_MODE_HOLD_ANCHOR:
         break;
     }
     return 0;
@@ -392,19 +392,19 @@ u32 KrackoCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
-    case 0:
+    case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[2] <= 69)
         {
             gScrollLock.unkC = 149;
             StartScrollLock(0xFFFF, 0xFFFF, 16, 176);
         }
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         return 1;
-    case 1:
-    case 2:
-    case 4:
-    case 5:
+    case CAMERA_MODE_FOLLOW_PLAYER:
+    case CAMERA_MODE_SLIDE_TO_LOCK:
+    case CAMERA_MODE_SLIDE_FROM_LOCK:
+    case CAMERA_MODE_HOLD_ANCHOR:
         break;
     }
     return 0;
@@ -414,19 +414,19 @@ u32 KingDededeCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
-    case 0:
+    case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[3] > 0x147)
         {
             gScrollLock.unkC = 248;
             StartScrollLock(0xFFFF, 0xFFFF, 168, 328);
         }
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         return 1;
-    case 1:
-    case 2:
-    case 4:
-    case 5:
+    case CAMERA_MODE_FOLLOW_PLAYER:
+    case CAMERA_MODE_SLIDE_TO_LOCK:
+    case CAMERA_MODE_SLIDE_FROM_LOCK:
+    case CAMERA_MODE_HOLD_ANCHOR:
         break;
     }
     return 0;

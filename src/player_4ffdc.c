@@ -32,7 +32,7 @@ void PlayerStarRodFlightIntro(void)
         t->updateCallback = (u32)PlayerStarRodFlightIntroUpdate;
         t->playerActionDone = 0;
         t->frame = 0xFFFF;
-        if (gGameState != 20)
+        if (gGameState != GAME_STATE_BOSS_ENDURANCE)
         {
             gPlayerHealth[t->player->playerIndex] = 0;
             AddPlayerHealth(gMaxHealth, t->player->playerIndex);

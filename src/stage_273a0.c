@@ -57,7 +57,7 @@ void ReturnToRestartPoint(void)
         gRoomEntrySet = 1;
         gEntryDoorEvent = 0;
         gRoomEntryMode = 1;
-        gGameState = 5;
+        gGameState = GAME_STATE_HUB;
     }
     else
     {
@@ -195,7 +195,7 @@ s32 ReleaseDeadPlayerView(s32 i)
 {
     if (gPlayerCount > 1 && gActivePlayerMask != 0)
     {
-        if (gCameraMode != 5)
+        if (gCameraMode != CAMERA_MODE_HOLD_ANCHOR)
             gPlayerCameraMode[i] = 2;
         else
             gPlayerCameraMode[i] = 3;
@@ -230,7 +230,7 @@ void CameraStartHoldAnchorAt(s32 x, s32 y)
     if (gInHub != 0)
         gCameraMode = 4;
     else
-        gCameraMode = 5;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
 }
 
 void CameraStartFollowFocusAt(s32 x, s32 y)
@@ -238,9 +238,9 @@ void CameraStartFollowFocusAt(s32 x, s32 y)
     gCameraFocusX = x;
     gCameraFocusY = y;
     if (gInHub != 0)
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     else
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     if (gUnk_02007D64 != 2)
     {
         if (gInHub != 0)
@@ -259,12 +259,12 @@ void CameraStartFollowingPlayer(s32 a)
     if (gPlayerCount == 1)
     {
         gCameraFocusPlayer = gLocalPlayer;
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     }
     else
     {
         gCameraFocusPlayer = a;
-        gCameraMode = 1;
+        gCameraMode = CAMERA_MODE_FOLLOW_PLAYER;
         for (i = 0; i < gPlayerCount; i++)
         {
             x = gCameraAnchorX;
@@ -304,7 +304,7 @@ void CameraStartPlayersAtAnchor(void)
             y = gCameraBounds[3];
         gPlayerCameraPos[gLocalPlayer].x = x;
         gPlayerCameraPos[gLocalPlayer].y = y;
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     }
     else
     {
@@ -347,5 +347,5 @@ s32 ArePlayerCamerasDoneGliding(void)
 
 void CameraResumeFollowFocus(void)
 {
-    gCameraMode = 0;
+    gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
 }

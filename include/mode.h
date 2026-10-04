@@ -2,6 +2,7 @@
 #define GUARD_MODE_H
 
 #include "gba/types.h"
+#include "constants/game_states.h"
 
 /* mode.h: the RAM cells and ROM tables of the game-state bodies AgbMain
    dispatches into, the boot/title sequence and the screen loaders (M02).  One

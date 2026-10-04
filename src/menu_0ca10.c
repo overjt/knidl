@@ -136,7 +136,7 @@ void MenuModeListSelect(void)
                 gMenuScreen = 9;
                 gExtraMode = 0;
                 gMetaKnightmareMode = 1;
-                gGameState = 13;
+                gGameState = GAME_STATE_EXTRA_MODE_TITLE;
                 gUnk_02006090 = 7;
                 gUnk_02007FCC = 7;
                 return;
@@ -249,7 +249,7 @@ void MenuModePlayerCountSelect(void)
             if (gMenuChoiceCursor == 0) {
                 gMenuScreen = 9;
                 gMetaKnightmareMode = 0;
-                gGameState = 13;
+                gGameState = GAME_STATE_EXTRA_MODE_TITLE;
                 return;
             }
             MenuEnterLinkPlay();

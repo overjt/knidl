@@ -2,6 +2,7 @@
 #define GUARD_COLLISION_H
 
 #include "gba/types.h"
+#include "constants/hits.h"
 
 /* collision.h: the RAM cells and ROM tables of the box-vs-terrain collision
    engine, the actor-vs-collider hit tests (M06) and the map queries (M07). 

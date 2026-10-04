@@ -167,9 +167,9 @@ void MenuLinkPlay(void)
                 gMenuScreen = 9;
                 gMetaKnightmareMode = 0;
                 if (gPrevMenuScreen == 3)
-                    gGameState = 5;
+                    gGameState = GAME_STATE_HUB;
                 else
-                    gGameState = 13;
+                    gGameState = GAME_STATE_EXTRA_MODE_TITLE;
                 if (ConnectLink())
                     LinkErrorScreen();
                 return;

@@ -73,8 +73,8 @@ void MenuFileSelect(void)
         {
             PlaySfx(215);
             *state = 10;
-            gPrevGameState = 4;
-            gGameState = 3;
+            gPrevGameState = GAME_STATE_MAIN_MENU;
+            gGameState = GAME_STATE_TITLE;
             return;
         }
         if (gRepeatedKeys & 0x40)
@@ -299,7 +299,7 @@ void MenuPlayerCountSelect(void)
             {
                 gMenuScreen = 9;
                 gMetaKnightmareMode = 0;
-                gGameState = 5;
+                gGameState = GAME_STATE_HUB;
             }
             else
             {

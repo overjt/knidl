@@ -67,7 +67,7 @@ void ActorAttachedBackdropBounceOff(void)
     if (w < 0)
         w = -w;
     t->velY = -w;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskYieldTrampoline(12);
     gCurTask->actorBounceEnded = 1;
@@ -142,7 +142,7 @@ void ActorAttachedThrowHeldUpdate(void)
     ActorAttachedRestorePalette();
     ActorAttachedThrowHeldFollowCarrier();
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F86C);
     else
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F858);
@@ -177,13 +177,13 @@ void ActorAttachedThrowFlight(void)
     TaskSetMotionXFacing(gUnk_0873EAC0[i].unk00, 0x5A5A5A5A);
     v = gCurTask;
     v->velY = gUnk_0873EAC0[i].unk04;
-    v->hitKind = 0;
+    v->hitKind = HIT_KIND_NONE;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     w = gCurTask;
     w->unk46 = 0;
     w->unk34 = 0;
     w->unk20 = 0;
-    if (w->actorKind != 1)
+    if (w->actorKind != ACTOR_KIND_MID_BOSS)
     {
         while (1)
         {
@@ -218,7 +218,7 @@ void ActorAttachedThrowFlightUpdate(void)
 
     t = gCurTask;
     t->health = 127;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         TaskBreakBlocks(gUnk_0873F8DC, t->parent);
     else
         TaskBreakBlocks(gUnk_0873F8CC, t->parent);
@@ -249,13 +249,13 @@ void ActorAttachedThrowFlightUpdate(void)
             gCurTask->accelY = 0x1000;
         }
         v = gCurTask;
-        if (v->actorKind != 1)
+        if (v->actorKind != ACTOR_KIND_MID_BOSS)
         {
             v->pixelX += gUnk_0873EAF0[v->actorThrowWobbleStep * 2];
             v->pixelY += (&gUnk_0873EAF0[1])[v->actorThrowWobbleStep * 2];
             v->actorThrowWobbleStep = (v->actorThrowWobbleStep + 1) & 15;
         }
-        if (v->actorKind == 1)
+        if (v->actorKind == ACTOR_KIND_MID_BOSS)
             RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX,
                          gCurTask->pixelY, gUnk_0873F86C);
         else
@@ -286,7 +286,7 @@ void ActorAttachedThrowFlightLateUpdate(void)
         t = gCurTask;
         dx = t->posX >> 16;
         dy = t->posY >> 16;
-        if (t->actorKind == 1)
+        if (t->actorKind == ACTOR_KIND_MID_BOSS)
             k = 8;
         else
             k = 0;
@@ -400,7 +400,7 @@ void ActorAttachedThrowBounceOff(void)
         TaskSetMotionY(0xFFFE0000, 0x4000, 0x20000);
         break;
     }
-    gCurTask->hitKind = 0;
+    gCurTask->hitKind = HIT_KIND_NONE;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskYieldTrampoline(12);
     gCurTask->actorBounceEnded = 1;

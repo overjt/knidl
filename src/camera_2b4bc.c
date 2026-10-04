@@ -188,7 +188,7 @@ void CameraSlideToScrollLock(void)
             gPlayerCameraPos[gLocalPlayer].y = y;
         }
         if (done == gScrollLock.lockedAxes)
-            gCameraMode = 3;
+            gCameraMode = CAMERA_MODE_SCROLL_LOCKED;
         gCameraCenterX = x << 16;
         gCameraCenterY = y << 16;
         gViewRect[0] = x - 120;
@@ -397,7 +397,7 @@ void CameraSlideToScrollLock(void)
         gCameraCenterY = y << 16;
         SetViewRectToPlayersInScrollLock();
         if (done == gScrollLock.lockedAxes)
-            gCameraMode = 3;
+            gCameraMode = CAMERA_MODE_SCROLL_LOCKED;
         else
             LockPlayersPastScrollLine();
     }
@@ -550,7 +550,7 @@ void CameraSlideFromScrollLock(void)
                 }
             }
             if (gScrollLock.lockedAxes == 0)
-                gCameraMode = 0;
+                gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
             {
                 struct CamPos *c;
 
@@ -622,7 +622,7 @@ void CameraSlideFromScrollLock(void)
                 }
             }
             if (gScrollLock.lockedAxes == 0)
-                gCameraMode = 0;
+                gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
             UpdatePlayerCameras();
             SetPlayerBoundsFromCamera();
             if ((gActivePlayerMask >> gLocalPlayer) & 1)

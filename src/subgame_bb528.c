@@ -393,11 +393,11 @@ void QuickDrawPickResultsSong(void)
 
 void QuickDrawSetupResultsLink(void)
 {
-    if (gPrevGameState == 5)
+    if (gPrevGameState == GAME_STATE_HUB)
         CreateQuickDrawBonusSign(0, 120, 16);
     CreateQuickDrawPlayers(1);
     QuickDrawPickResultsSong();
-    if (gPrevGameState == 5)
+    if (gPrevGameState == GAME_STATE_HUB)
         gCurTask->quickDrawResultsNextState = 2;
     else
         gCurTask->quickDrawResultsNextState = 3;
@@ -426,7 +426,7 @@ void QuickDrawSetupResultsVsCpu(void)
 {
     CreateQuickDrawDefeatedLabel();
     CreateQuickDrawBestTimeLabel();
-    if (gPrevGameState != 5)
+    if (gPrevGameState != GAME_STATE_HUB)
         CreateQuickDrawResultsPlayer();
     switch (gUnk_0200B048)
     {
@@ -556,7 +556,7 @@ void QuickDrawResultsBonusSign(void)
 {
     gCurTask->updateState = 1;
     TaskYieldTrampoline(16);
-    if (gPrevGameState == 5)
+    if (gPrevGameState == GAME_STATE_HUB)
     {
         if (gUnk_0200B048 != 0)
         {

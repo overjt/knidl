@@ -11,6 +11,7 @@
 #include "actor.h"
 #include "enemy.h"
 #include "save.h"
+#include "constants/game_states.h"
 
 /* RAM cells / ROM tables */
 /* Not from room.h: this file's view of gCurSaveSlot differs (lesson 3.517). */
@@ -988,7 +989,7 @@ s32 NightmareWizardReactToDefeat(void)
     gCurTask->facing = TaskGetFacingToward(gCurTask->hitterPlayer);
     ActorSetHitReactions((u32)gUnk_08749B60);
     gUnk_02007D00[0] |= 2;
-    if (gGameState == 20)
+    if (gGameState == GAME_STATE_BOSS_ENDURANCE)
     {
         HudStopClock();
         SaveBossEnduranceBestTime(gCurSaveSlot[0]);
@@ -1098,7 +1099,7 @@ void NightmareWizardDefeat(void)
     gCurTask->frame = -1;
     RequestScreenShake(2);
     TaskYieldTrampoline(180);
-    if (gGameState == 20)
+    if (gGameState == GAME_STATE_BOSS_ENDURANCE)
         goto far;
     {
         RequestScreenShake(7);
@@ -2585,7 +2586,7 @@ void sub_080adc44(void)
 {
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(150);
-    if (gGameState == 8 && gMetaKnightmareMode == 0)
+    if (gGameState == GAME_STATE_STAGE && gMetaKnightmareMode == 0)
     {
         if (GetLivingActivePlayerHealth() != 0)
         {

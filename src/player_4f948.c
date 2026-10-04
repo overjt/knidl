@@ -296,7 +296,7 @@ void PlayerActionStarRodFlightUpdate(void)
     }
     if (gSpriteCameraY > 888)
     {
-        gCurTask->hitKind = 1;
+        gCurTask->hitKind = HIT_KIND_DEFEAT;
         AddPlayerHealth(-gPlayerHealth[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
         gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
     }

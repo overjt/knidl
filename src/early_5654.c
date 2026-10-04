@@ -87,14 +87,14 @@ void TaskFree(s32 id)
     t->u76.subtype = 0;
     t->unk74 = 0;
     t->variant = 0;
-    t->actorKind = 0;
+    t->actorKind = ACTOR_KIND_ENEMY;
     t->hitTimer = 0;
     t->health = 0;
     t->waterFlags = 0;
     t->onGround = 0;
     t->hitDirection = 0;
     t->hitEffect = 0;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     t->hitterSlot = -1;
     t->hitterPlayer = -1;
     t->u80.nearestPlayer = -1;

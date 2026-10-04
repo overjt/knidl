@@ -1154,7 +1154,7 @@ void SparkyJumpUpdate(void)
         ActorCheckHits();
         ActorReactToHit();
         t = gCurTask;
-        if (t->hitKind != 0 && t->unk46 != -1)
+        if (t->hitKind != HIT_KIND_NONE && t->unk46 != -1)
             ActorDestroySlot(t->unk46);
     }
 }
@@ -1385,7 +1385,7 @@ void SparkyStandUpdate(void)
         ActorCheckHits();
         ActorReactToHit();
         t = gCurTask;
-        if (t->hitKind != 0 && t->unk46 != -1)
+        if (t->hitKind != HIT_KIND_NONE && t->unk46 != -1)
             ActorDestroySlot(t->unk46);
     }
 }

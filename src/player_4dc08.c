@@ -164,7 +164,7 @@ void PlayerActionBackdropUpdate(void)
         {
             if (TaskBreakFirstBlock((struct HitBoxSet *)gUnk_0873CC64, t->player->playerIndex) != 0)
             {
-                CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 3);
+                CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, HIT_KIND_GRAB, HIT_EFFECT_BACKDROP);
                 gCurTask->player->catchKind = 2;
             }
             u = gCurTask;

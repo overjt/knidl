@@ -84,7 +84,7 @@ void InitRoomBgLayout(void)
         }
         CpuSet(p, p + 2048, (gRoomMetatileCount * 2) & 0x1FFFFF);
         CpuSet(gBlockLayer, gBlockLayer + 2048, gRoomMetatileCount & 0x1FFFFF);
-        gCameraMode = 5;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
         break;
     case 2:
         gUnk_0200B078 = 2;
@@ -102,7 +102,7 @@ void InitRoomBgLayout(void)
         SetBg23ScreenSize(0);
         StartRoomHBlankScroll(8);
         gUnk_02000020 = 2;
-        gCameraMode = 5;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
         break;
     case 5:
         gUnk_0200B078 = 7;
@@ -187,7 +187,7 @@ void InitEndingRoomBgLayout(s32 a)
     {
         SetBg3ScreenSize(0x8000);
     }
-    gCameraMode = 5;
+    gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
 }
 
 void StartRoomBlockAnims(void)

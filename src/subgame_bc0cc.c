@@ -1227,7 +1227,7 @@ void QuickDrawBonusSign(void)
 
 void QuickDrawGiveBonus(void)
 {
-    if (gPrevGameState == 5)
+    if (gPrevGameState == GAME_STATE_HUB)
     {
         switch (gCurTask->frame)
         {

@@ -64,7 +64,7 @@ void sub_0802d38c(void)
     t->drawCallback = 0;
     if (t->mapEventWaitScrollLock != 0)
     {
-        while (gCameraMode != 3)
+        while (gCameraMode != CAMERA_MODE_SCROLL_LOCKED)
             TaskYieldTrampoline(1);
         while (AreInactivePlayerCamerasParked() == 0)
             TaskYieldTrampoline(1);

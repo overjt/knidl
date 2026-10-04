@@ -73,20 +73,20 @@ void RoomTaskUpdateCamera(void)
         switch (gCameraMode)
         {
         default:
-        case 0:
-        case 1:
+        case CAMERA_MODE_FOLLOW_FOCUS:
+        case CAMERA_MODE_FOLLOW_PLAYER:
             CameraFollowFocus();
             break;
-        case 2:
+        case CAMERA_MODE_SLIDE_TO_LOCK:
             CameraSlideToScrollLock();
             break;
-        case 3:
+        case CAMERA_MODE_SCROLL_LOCKED:
             CameraFollowScrollLocked();
             break;
-        case 4:
+        case CAMERA_MODE_SLIDE_FROM_LOCK:
             CameraSlideFromScrollLock();
             break;
-        case 5:
+        case CAMERA_MODE_HOLD_ANCHOR:
             CameraHoldAnchor();
             break;
         }

@@ -521,7 +521,7 @@ void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1)
     }
     if (flags != 0)
     {
-        gCameraMode = 2;
+        gCameraMode = CAMERA_MODE_SLIDE_TO_LOCK;
         gScrollLock.lockedAxes = flags;
         gScrollLock.unk0 = 0;
         if (gPlayerCount == 1)

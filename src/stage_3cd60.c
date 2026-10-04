@@ -2424,7 +2424,7 @@ s32 PlayerCheckDie(void)
        && (gTerrainResult[0] != 2 || (gCurTask->player->boundsClamp & 2) == 0))))
         return 0;
     AddPlayerHealth(-gPlayerHealth[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
-    gCurTask->hitKind = 1;
+    gCurTask->hitKind = HIT_KIND_DEFEAT;
     gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
     return gCurTask->player->requestedAction;
 }
@@ -2809,7 +2809,7 @@ s32 PlayerCheckShareItem(void)
      || gCurTask->player->mode == 17 || gCurTask->player->mode == 18
      || gCurTask->player->mode == 19 || gCurTask->player->mode == 22
      || gCurTask->player->mode == 23 || gCurTask->player->requestedAction == PLAYER_ACTION_SHARE_ITEM
-     || gCurTask->hitKind == 1 || gCurTask->hitKind == 2
+     || gCurTask->hitKind == HIT_KIND_DEFEAT || gCurTask->hitKind == HIT_KIND_DAMAGE
      || (gCurTask->player->mode == 13
          && (gCurTask->player->ability != ABILITY_UFO || gCurTask->variant <= 6)))
         return 0;
@@ -2841,7 +2841,7 @@ s32 PlayerCheckShareItem(void)
         q = &gPlayerStates[i];
         if (q->mode == 10 || q->mode == 11 || q->mode == 12 || q->mode == 16
          || q->mode == 17 || q->mode == 18 || q->mode == 19 || q->mode == 22
-         || q->mode == 23 || q->requestedAction == PLAYER_ACTION_SHARE_ITEM || u->hitKind == 1 || u->hitKind == 2)
+         || q->mode == 23 || q->requestedAction == PLAYER_ACTION_SHARE_ITEM || u->hitKind == HIT_KIND_DEFEAT || u->hitKind == HIT_KIND_DAMAGE)
             continue;
         if (q->mode == 13)
         {

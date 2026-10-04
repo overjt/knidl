@@ -229,14 +229,14 @@ u8 HitTestColliderClass20(void)
             switch (k)
             {
             case 1:
-                gHitKind = 3;
+                gHitKind = HIT_KIND_INHALE;
                 gHitEffect = k;
                 gHitHealthLeft = gAttackHealth;
                 gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
                 break;
             case 2:
             case 3:
-                gHitKind = 4;
+                gHitKind = HIT_KIND_GRAB;
                 gHitEffect = k;
                 gHitHealthLeft = gAttackHealth;
                 gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;

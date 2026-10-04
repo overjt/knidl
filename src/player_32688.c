@@ -59,7 +59,7 @@ void Task_Player(void)
         gCurTask->taskClass = 4;
         if (gCreditsDemoSet == 0)
         {
-            if (gGameState != 20)
+            if (gGameState != GAME_STATE_BOSS_ENDURANCE)
                 PlayerLifeRequestInit();
             else
                 PlayerLifeRequestShowGameOver();
@@ -118,7 +118,7 @@ void Task_Player(void)
             gCurTask->player->paletteFlashMode = 2;
             break;
         case ABILITY_UFO:
-            if (gGameState != 5)
+            if (gGameState != GAME_STATE_HUB)
                 break;
         case ABILITY_SLEEP:
             SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
@@ -305,11 +305,11 @@ void PlayerUpdate(void)
             if (r != 0)
             {
                 gCurTask->hitEffect = gTerrainResult.damage | 0x80;
-                gCurTask->hitKind = 2;
+                gCurTask->hitKind = HIT_KIND_DAMAGE;
             }
             else
             {
-                gCurTask->hitKind = 1;
+                gCurTask->hitKind = HIT_KIND_DEFEAT;
                 gCurTask->hitEffect = 0;
                 goto post;
             }
@@ -497,12 +497,12 @@ void sub_08033414(void)
             PlayerStartItemShare(gCurTask->player->playerIndex, 3);
         }
         break;
-    case 1:
+    case HIT_KIND_DEFEAT:
         gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
         gCurTask->player->paletteFlashMode = 0;
         gCurTask->player->unk1E = gCurTask->player->unk20 = 0;
         break;
-    case 2:
+    case HIT_KIND_DAMAGE:
         if (gCurTask->player->unk37 != 2)
         {
             gCurTask->player->requestedAction = PLAYER_ACTION_HURT;
@@ -517,7 +517,7 @@ void sub_08033414(void)
         gCurTask->player->unk1E = gCurTask->player->unk20 = 0;
         break;
     }
-    gCurTask->hitKind = 0;
+    gCurTask->hitKind = HIT_KIND_NONE;
     if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
         if (gCurTask->player->unk40 & 1)

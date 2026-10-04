@@ -42,7 +42,7 @@ void GameOverMain(void)
     gKeyRepeatDelay = 10;
     gKeyRepeatInterval = 6;
     gGameOverCursor = 0;
-    if (gPrevGameState != 20) {
+    if (gPrevGameState != GAME_STATE_BOSS_ENDURANCE) {
         if (gMetaKnightmareMode == 0)
             GameOverScreen();
         else
@@ -53,12 +53,12 @@ void GameOverMain(void)
     LinkStopKeyExchange();
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();
-    if (gGameState == 5) {
+    if (gGameState == GAME_STATE_HUB) {
         gCutscenePending = 1;
         ResetPlayerRecords();
         sub_08022c3c();
-        if (gStageRequest != 1)
-            gGameState = 6;
+        if (gStageRequest != STAGE_REQUEST_HUB)
+            gGameState = GAME_STATE_STAGE_START;
     } else {
         DisconnectLink();
     }
@@ -234,10 +234,10 @@ void GameOverCheckTimeout(void)
         GameOverCheckConfirm();
     gGameOverTimer--;
     if (gGameOverDone != 0) {
-        if (gPrevGameState == 20)
-            gGameState = 4;
+        if (gPrevGameState == GAME_STATE_BOSS_ENDURANCE)
+            gGameState = GAME_STATE_MAIN_MENU;
         else
-            gGameState = 1;
+            gGameState = GAME_STATE_BOOT_LOGO;
     }
 }
 
@@ -245,9 +245,9 @@ void GameOverCheckChoice(void)
 {
     if (GameOverCheckConfirm()) {
         if (gGameOverCursor == 0 && gPlayerCount == 1)
-            gGameState = 5;
+            gGameState = GAME_STATE_HUB;
         else
-            gGameState = 1;
+            gGameState = GAME_STATE_BOOT_LOGO;
     }
 }
 

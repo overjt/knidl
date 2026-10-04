@@ -118,7 +118,7 @@ void AirGrindResultsDraw(void)
             layer = 3;
         AirGrindDrawRacerSprite(0, pal, scale, 76, y, layer);
         if (gAirGrindResults.state != 3) {
-            if (gAirGrindResults.state > 3 && gPrevGameState == 5)
+            if (gAirGrindResults.state > 3 && gPrevGameState == GAME_STATE_HUB)
                 blink = gAirGrindFrame & 64;
             else
                 blink = 1;
@@ -186,7 +186,7 @@ void AirGrindResultsStep(void)
         break;
     case 2:
         if (++gAirGrindResults.timer > 174) {
-            if (gPrevGameState != 5) {
+            if (gPrevGameState != GAME_STATE_HUB) {
                 gAirGrindResults.state = 4;
             } else {
                 gAirGrindResults.timer = 20;
@@ -213,7 +213,7 @@ void AirGrindResultsStep(void)
         break;
     case 4:
         if (gPlayerPressedKeys[0] & 9) {
-            if (gPrevGameState != 5) {
+            if (gPrevGameState != GAME_STATE_HUB) {
                 t = gCurTask;
                 t->airGrindContinueCursor = 0;
                 t->airGrindLevelCursor = gAirGrind.level;

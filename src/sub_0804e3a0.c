@@ -55,7 +55,7 @@ void PlayerActionThrowUpdate(void)
                 {
                     if (TaskBreakFirstBlock(gUnk_0873CC54, p->playerIndex) != 0)
                     {
-                        CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, 4, 2);
+                        CreateBlockStar(gBrokenBlockX[0] + 8, gBrokenBlockY[0] + 8, gCurTaskIdx, HIT_KIND_GRAB, HIT_EFFECT_THROW);
                         gCurTask->player->catchKind = 2;
                     }
                 }

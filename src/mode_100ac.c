@@ -73,7 +73,7 @@ void CutsceneMain(void)
         gLinkCommand = 0x8800;
         do
             RunLinkFrame();
-        while (gGameState == 7);
+        while (gGameState == GAME_STATE_CUTSCENE);
         LinkStopKeyExchange();
         BeginFastFadeOutToWhite();
         RunLinkFramesUntilFadeDone();

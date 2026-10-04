@@ -68,7 +68,7 @@ A row names `file:line` or `file:first-last`.
 | `src/early_4d6c.c:45` | (file scope) | alias | the same alias in the second MultiBoot unit |
 | `src/early_4d6c.c:199-213` | `MultiBootWaitCycles` | inline-asm | the SDK's own inline asm: pokeemerald's `src/multiboot.c` `MultiBootWaitCycles` is the same asm |
 | `src/m4a_c1.c:293` | `MusicPlayerJumpTableCopy` | inline-asm | a dead SDK export that is one `swi 0x2A` in inline asm, as in katam's SDK |
-| `src/camera_2d01c.c:255` | `UpdateBgAnims` | zero-code | its loop notes weight the body's references one loop level deeper, which puts the slot pointer in r4 and the command pointer in r5 as in the ROM (comment at the function) |
+| `src/camera_2d01c.c:256` | `UpdateBgAnims` | zero-code | its loop notes weight the body's references one loop level deeper, which puts the slot pointer in r4 and the command pointer in r5 as in the ROM (comment at the function) |
 | `src/enemy_a1590.c:847` | `MrShineAndMrBrightPickGroundMove` | zero-code | #154's commented stand-in: the loop note ranks `acc` (r2) above `r` (r3) in global allocation |
 | `src/player_37ed8.c:728` | `PlayerActionHurtUpdate` | zero-code | an empty loop whose loop-end note stops cse1 from following a jump into the block (comment at the site) |
 | `src/player_3aa64.c:307` | `PlayerActionSwimUpdate` | zero-code | counts case 1's references one loop level deeper, so the key mask wins its register ahead of the switch value (lessons 3.383, 3.412) |

@@ -147,7 +147,7 @@ void ExtraModeTitleLinkErrorScreen(void)
     BeginFastFadeOutToWhite();
     RunFramesNoTasksUntilFadeDone();
     gPrevGameState = gUnk_02007FCC + 14;
-    gGameState = 4;
+    gGameState = GAME_STATE_MAIN_MENU;
 }
 
 /* Stage the link-play payload at 0x02020000: the common blob
@@ -274,7 +274,7 @@ void ExtraModeTitleMain(void)
         PlaySfx(215);
         BeginFastFadeOutToWhite();
         RunFramesUntilFadeDone();
-        gGameState = 4;
+        gGameState = GAME_STATE_MAIN_MENU;
         gPrevGameState = gUnk_02007FCC + 14;
         return;
     } else {
@@ -290,7 +290,7 @@ select:
     gExtraModeTitlePhase = 3;
     while (1) {
         RunLinkFrame();
-        if (gPrevGameState == 4) {
+        if (gPrevGameState == GAME_STATE_MAIN_MENU) {
             if (gUnk_02006090 <= 2) {
                 if ((gPlayerPressedKeys[0] & 0x20) && gSubGameLevel != 0) {
                     PlaySfx(101);
@@ -322,7 +322,7 @@ select:
     LinkStopKeyExchange();
     /* store address first, then the one read of gUnk_02007FCC, kept in k */
     gGameState = (k = gUnk_02007FCC) + 14;
-    if (gPrevGameState == 4 && k <= 2)
+    if (gPrevGameState == GAME_STATE_MAIN_MENU && k <= 2)
         RunLinkFrames(32);
     BeginFastFadeOutToWhite();
     RunLinkFramesUntilFadeDone();

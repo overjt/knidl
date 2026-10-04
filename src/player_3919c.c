@@ -193,7 +193,7 @@ void PlayerActionDie(void)
     t2->lateUpdateCallback = 0;
     if (gLivingPlayerCount == 0)
     {
-        gStageRequest = 6;
+        gStageRequest = STAGE_REQUEST_LOST_LIFE;
         TaskExitTrampoline();
     }
     ReleaseDeadPlayerView(gCurTask->player->playerIndex);
@@ -215,7 +215,7 @@ void sub_080396a4(void)
 
         t->updateCallback = 0;
         t->taskClass = 4;
-        if (gGameState != 20)
+        if (gGameState != GAME_STATE_BOSS_ENDURANCE)
             TaskSetEntry(PlayerLifeRequestInit, gCurTaskIdx);
         else
             PlayerLifeRequestShowGameOver();

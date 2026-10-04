@@ -565,7 +565,7 @@ void IceBlockUpdate(void)
 
     if (gTaskSlotTypes[i = gCurTask->parent] != -1 && TaskHasSameSerial(i) == 1)
     {
-        if ((s8)gTasks[j = gCurTask->parent].hitKind == 4
+        if ((s8)gTasks[j = gCurTask->parent].hitKind == HIT_KIND_GRAB
             && (u16)(gTasks[j].hitEffect - 2) <= 1)
         {
             TaskFree(gCurTaskIdx);

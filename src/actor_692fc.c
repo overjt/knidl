@@ -530,8 +530,8 @@ u32 PickupReactToHit(void)
     r = 0;
     switch ((s8)gCurTask->hitKind)
     {
-    case 1:
-    case 2:
+    case HIT_KIND_DEFEAT:
+    case HIT_KIND_DAMAGE:
     case 5:
     case 7:
         /* PickupCollect is void in the ROM but its result is consumed here:
@@ -540,8 +540,8 @@ u32 PickupReactToHit(void)
            direct `bl` without tripping -Wimplicit -Werror. */
         r = ((u32 (*)(void))PickupCollect)();
         break;
-    case 3:
-    case 4:
+    case HIT_KIND_INHALE:
+    case HIT_KIND_GRAB:
         r = ActorAttachToHitter();
         break;
     case 6:
@@ -559,7 +559,7 @@ s8 ActorHitKindWithTerrainDamage(void)
     s32 c;
 
     t = gCurTask;
-    if ((s8)t->hitKind != 0)
+    if ((s8)t->hitKind != HIT_KIND_NONE)
     {
         v = t->hitKind;
     }
@@ -642,14 +642,14 @@ void sub_08069d78(void)
 {
     switch (gCurTask->actorKind)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
     case 3:
-    case 4:
-    case 5:
+    case ACTOR_KIND_CHILD:
+    case ACTOR_KIND_OBJECT:
         PlaySfx(127);
         break;
-    case 1:
-    case 2:
+    case ACTOR_KIND_MID_BOSS:
+    case ACTOR_KIND_BOSS:
         PlaySfx(508);
         break;
     }
@@ -706,7 +706,7 @@ u32 ActorReactToDamage(void)
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
-    if ((gCurTask->actorKind == 1 || gCurTask->actorKind == 2) && a->hitState != 2)
+    if ((gCurTask->actorKind == ACTOR_KIND_MID_BOSS || gCurTask->actorKind == ACTOR_KIND_BOSS) && a->hitState != 2)
         HudAnimateTaskHpBar();
     if (p != NULL)
     {
@@ -781,7 +781,7 @@ void ActorFaceHitter(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->actorKind == 1 || t->actorKind == 2)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS || t->actorKind == ACTOR_KIND_BOSS)
         gCurTask->facing = TaskGetFacingToward(t->hitterPlayer);
 }
 
@@ -904,10 +904,10 @@ u32 ActorReactToDefeat(void)
     p = (struct ActorVt *)a->hitReactions;
     r = 0;
     ActorPlayHitSfx();
-    if (gCurTask->actorKind == 1 || gCurTask->actorKind == 2)
+    if (gCurTask->actorKind == ACTOR_KIND_MID_BOSS || gCurTask->actorKind == ACTOR_KIND_BOSS)
         HudAnimateTaskHpBar();
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         ActorAwardScore(t->hitterPlayer, 1);
     else
         ActorAwardScore(t->hitterPlayer, 2);
@@ -920,9 +920,9 @@ u32 ActorReactToDefeat(void)
         }
         else
         {
-            if (gCurTask->actorKind == 1)
+            if (gCurTask->actorKind == ACTOR_KIND_MID_BOSS)
             {
-                if (gGameState != 19)
+                if (gGameState != GAME_STATE_ARENA)
                     PlaySfx(510);
                 else
                     PlaySfx(514);

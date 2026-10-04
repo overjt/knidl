@@ -186,7 +186,7 @@ void StageInit(void)
     gUnk_020055C4 = 0;
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
-    gStageRequest = 0;
+    gStageRequest = STAGE_REQUEST_NONE;
     if (gUnk_0300244C != 0) {
         b2 = gUnk_02007CF4;
         zero2 = 0;
@@ -227,7 +227,7 @@ void HubInit(void)
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     gLinkCommand = 0;
-    gStageRequest = 0;
+    gStageRequest = STAGE_REQUEST_NONE;
 }
 
 void BigSwitchViewInit(void)
@@ -258,5 +258,5 @@ void BigSwitchViewInit(void)
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
     gLinkCommand = 0;
-    gStageRequest = 0;
+    gStageRequest = STAGE_REQUEST_NONE;
 }

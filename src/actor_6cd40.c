@@ -39,10 +39,10 @@ void Task_DustTrail(void)
     {
         if (TaskHasSameSerial(gCurTask->parent) != 1)
             break;
-        if ((s8)gTasks[j = gCurTask->parent].hitKind == 3
-         && gTasks[j].hitEffect == 1)
+        if ((s8)gTasks[j = gCurTask->parent].hitKind == HIT_KIND_INHALE
+         && gTasks[j].hitEffect == HIT_EFFECT_INHALE)
             break;
-        if ((s8)gTasks[j].hitKind == 4
+        if ((s8)gTasks[j].hitKind == HIT_KIND_GRAB
          && (u16)(gTasks[j].hitEffect - 2) <= 1)
             break;
         v = gCurTask;

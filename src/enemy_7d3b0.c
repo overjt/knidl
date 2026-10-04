@@ -965,9 +965,9 @@ void CappyCappedUpdate(void)
     {
         struct Task *t = gCurTask;
 
-        if (t->hitKind == 3)
+        if (t->hitKind == HIT_KIND_INHALE)
         {
-            gCurTask->cappyCaplessSlot = CreateActorByKind(0, 8, 1, 0, t->pixelX, t->pixelY,
+            gCurTask->cappyCaplessSlot = CreateActorByKind(ACTOR_KIND_ENEMY, 8, 1, 0, t->pixelX, t->pixelY,
                                                 t->tileWord);
             TransferRoomObject(gCurTaskIdx, gCurTask->cappyCaplessSlot);
         }

@@ -1273,7 +1273,7 @@ void sub_08042c50(void)
     case 2:
         if (--gCurTask->player->unk14 == 0)
         {
-            gStageRequest = 6;
+            gStageRequest = STAGE_REQUEST_LOST_LIFE;
             TaskFree(gCurTaskIdx);
         }
         break;

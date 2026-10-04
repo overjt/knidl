@@ -217,7 +217,7 @@ s32 BossDefeatStopBgm(void)
     case 4:
     case 5:
     case 6:
-        if (gGameState != 20)
+        if (gGameState != GAME_STATE_BOSS_ENDURANCE)
             StopBgm();
         break;
     case 2:

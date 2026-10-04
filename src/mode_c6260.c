@@ -37,13 +37,13 @@ void EndingMain(void)
     gEndingLinkIsMaster = gLinkIsMaster;
     gEndingLinkPlayerCount = gLinkPlayerCount;
     gEndingPlayerCount = gPlayerCount;
-    if (gPrevGameState == 20) {
+    if (gPrevGameState == GAME_STATE_BOSS_ENDURANCE) {
         LinkRequestSync();
         LinkSyncClock();
     }
     DisconnectLink();
     StopAllSound();
-    if (gPrevGameState != 20 && gMetaKnightmareMode != 1) {
+    if (gPrevGameState != GAME_STATE_BOSS_ENDURANCE && gMetaKnightmareMode != 1) {
         EndingEpilogueScene();
         EndingStarRodReturnScene();
     }

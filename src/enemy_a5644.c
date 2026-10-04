@@ -100,11 +100,11 @@ void MetaKnightUpdate(void)
         ActorCheckHitsWithExtraBox();
         switch (gCurTask->hitKind)
         {
-        case 1:
-        case 2:
+        case HIT_KIND_DEFEAT:
+        case HIT_KIND_DAMAGE:
             if ((u8)sub_080a720c() == 1)
             {
-                gCurTask->hitKind = 0;
+                gCurTask->hitKind = HIT_KIND_NONE;
                 t = gCurTask;
                 t->health = gUnk_02007D00[1];
                 t->metaKnightAttackBoxIndex = 2;

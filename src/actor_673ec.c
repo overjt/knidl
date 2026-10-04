@@ -891,7 +891,7 @@ void HoldPlayer(s32 i, s32 j, u8 c)
     t->taskClass = 4;
     t->state = c;
     t->actorKind = gCurTask->actorKind;
-    if (u->actorKind == 2)
+    if (u->actorKind == ACTOR_KIND_BOSS)
         PlayerSuspendControl(i, 1);
     else
         PlayerSuspendControl(i, 0);
@@ -906,7 +906,7 @@ void DropHeldPlayer(s32 i)
     t = &gTasks[i];
     PlayerResumeControl(i, 0, 0, 1);
     gUnk_02007D00[1] = -1;
-    t->actorKind = 0;
+    t->actorKind = ACTOR_KIND_ENEMY;
 }
 void sub_08068690(void)
 {
@@ -1089,7 +1089,7 @@ void ReleaseHeldPlayer(s32 i, u8 d)
     t->onGround = 0;
     t->posX = t->pixelX << 16;
     t->posY = t->pixelY << 16;
-    t->actorKind = 0;
+    t->actorKind = ACTOR_KIND_ENEMY;
     TaskStopSlot(i);
     PlayerResumeControl(i, 6, 0, 0);
     p->unk14 = 4;
@@ -1127,7 +1127,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     t->sleepFrames = 0;
     t->u76.unk76 = 0;
     t->variant = 0;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (p->unk40 & 1)
     {
         gCurTask->player->pixelOffsetY = 0;
@@ -1243,7 +1243,7 @@ u32 ActorCheckHitsWithBox(s32 a)
 
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    gCurTask->hitKind = 0;
+    gCurTask->hitKind = HIT_KIND_NONE;
     t = gCurTask;
     saved = t->health;
     r = 0;
@@ -1284,7 +1284,7 @@ u32 ActorCheckHits(void)
         return 0;
     t = gCurTask;
     a = t->u8C.actor;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (a->attackBox == 0)
         return 0;
     u = gCurTask;
@@ -1338,7 +1338,7 @@ u32 ActorCheckHitsWithExtraBox(void)
         return 0;
     t = gCurTask;
     a = t->u8C.actor;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (a->attackBox != 0)
     {
         u = gCurTask;
@@ -1415,7 +1415,7 @@ u32 ActorCheckPlayerHitsWithBox(s32 a)
         return 0;
     t = gCurTask;
     b = t->u8C.actor;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     if (a == 0)
         return 0;
     gAttackX = gCurTask->pixelX;

@@ -146,7 +146,7 @@ void SpawnRoomObjectsOnLoad(void)
         case 7:
             break;
         case 3:
-            r = CreateActorByKind(2, e->unk1, e->unk2, e->unk3, e->x, e->y,
+            r = CreateActorByKind(ACTOR_KIND_BOSS, e->unk1, e->unk2, e->unk3, e->x, e->y,
                              (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             gHudHpBarTasks[0] = r;
             gHudHpBarCount = gHudHpBarsLeft = 1;
@@ -197,10 +197,10 @@ void SpawnRoomObjectsOnLoad(void)
             case 3:
             }
             if (d != NULL)
-                r = CreateActorByKind(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
                                  (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             else
-                r = CreateActorByKind(5, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
             break;
         }
         if (r != -1)
@@ -251,7 +251,7 @@ s32 SpawnRoomObject(s32 i)
         break;
     case 2:
         gMidBossFightState = 1;
-        res5 = CreateActorByKind(1, *(s8 *)(e4 + 1), e4[2], e4[3], *(u16 *)(e4 + 4), *(u16 *)(e4 + 6),
+        res5 = CreateActorByKind(ACTOR_KIND_MID_BOSS, *(s8 *)(e4 + 1), e4[2], e4[3], *(u16 *)(e4 + 4), *(u16 *)(e4 + 6),
             (pw2 = (u8 *)gRoomObjectGfxSlots, (((s32)*(s8 *)((b = (u8 *)((u32)pw2 + ((s32)(s8)*((u8 *)gRoomObjectGfxSlotIds + i6) << 2))) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
         break;
     case 4:
@@ -267,7 +267,7 @@ s32 SpawnRoomObject(s32 i)
         w3 &= m;
         if (w3 != 0)
             goto fail;
-        res5 = CreateActorByKind(6, *(s8 *)(e4 + 1), e4[2], 0, *(u16 *)(e4 + 4), *(u16 *)(e4 + 6), w3);
+        res5 = CreateActorByKind(ACTOR_KIND_ITEM, *(s8 *)(e4 + 1), e4[2], 0, *(u16 *)(e4 + 4), *(u16 *)(e4 + 6), w3);
         break;
     case 6:
         if (*(s8 *)(e4 + 1) != 0)

@@ -77,15 +77,15 @@ void PoppyBrosJrRideUpdate(void)
     t = gCurTask;
     switch (t->hitKind)
     {
-    case 3:
-    case 4:
+    case HIT_KIND_INHALE:
+    case HIT_KIND_GRAB:
         t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
         if (t->poppyBrosJrMountKind == 0)
             gCurTask->poppyBrosJrSpawnSlot =
-                CreateActorByKind(0, 31, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
+                CreateActorByKind(ACTOR_KIND_ENEMY, 31, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
         else
             gCurTask->poppyBrosJrSpawnSlot =
-                CreateActorByKind(0, 32, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
+                CreateActorByKind(ACTOR_KIND_ENEMY, 32, 1, t->actorSpawnArg, t->pixelX, t->pixelY, t->tileWord);
         TransferRoomObject(gCurTaskIdx, gCurTask->poppyBrosJrSpawnSlot);
         u = gCurTask;
         u->tileWord = u->poppyBrosJrSavedTileWord;
@@ -93,7 +93,7 @@ void PoppyBrosJrRideUpdate(void)
             u->frameTable = gPoppyBrosJrFrames;
         TaskSetFrame(1);
         break;
-    case 1:
+    case HIT_KIND_DEFEAT:
         if (gScreenAttackActive == 1)
         {
             t->u8C.actor->unk0D = 1;
@@ -102,7 +102,7 @@ void PoppyBrosJrRideUpdate(void)
         else
         {
             gCurTask->poppyBrosJrSpawnSlot =
-                CreateActorByKind(0, 30, 1, t->actorSpawnArg, t->pixelX, t->pixelY - 14, t->poppyBrosJrSavedTileWord);
+                CreateActorByKind(ACTOR_KIND_ENEMY, 30, 1, t->actorSpawnArg, t->pixelX, t->pixelY - 14, t->poppyBrosJrSavedTileWord);
         }
         TransferRoomObject(gCurTaskIdx, gCurTask->poppyBrosJrSpawnSlot);
         break;
@@ -195,7 +195,7 @@ void PoppyBrosJrDroppedObjectState0(void)
     x = gCurTask;
     if (x->poppyBrosJrMountKind == 1)
     {
-        gCurTask->poppyBrosJrSpawnSlot = CreateActorByKind(6, 2, 0, 0, x->pixelX, x->pixelY, 0);
+        gCurTask->poppyBrosJrSpawnSlot = CreateActorByKind(ACTOR_KIND_ITEM, 2, 0, 0, x->pixelX, x->pixelY, 0);
         TransferRoomObject(gCurTaskIdx, gCurTask->poppyBrosJrSpawnSlot);
         ActorDestroy();
     }
@@ -243,8 +243,8 @@ void PoppyBrosJrRideIdleUpdate(void)
     t = gCurTask;
     switch (t->hitKind)
     {
-    case 3:
-    case 4:
+    case HIT_KIND_INHALE:
+    case HIT_KIND_GRAB:
         t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
         t->tileWord = t->poppyBrosJrSavedTileWord;
         TaskSetFrame(1);

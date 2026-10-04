@@ -1513,7 +1513,7 @@ void ChillyFreezeUpdate(void)
     t = gCurTask;
     t->chillyFreezeSfxTimer--;
     u = &gTasks[t->parent];
-    if (u->hitKind != 0 || u->onGround == 0)
+    if (u->hitKind != HIT_KIND_NONE || u->onGround == 0)
     {
         TaskSetEntry(ActorDie, gCurTaskIdx);
         return;

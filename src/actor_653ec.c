@@ -552,10 +552,10 @@ void ActorSelectPaletteVariant(u32 i)
     a = t->u8C.actor;
     switch (t->actorKind)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
         tbl = gEnemyPaletteVariants[t->u76.subtype];
         break;
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
         tbl = gMidBossPaletteVariants[t->u76.subtype];
         break;
     default:
@@ -768,14 +768,14 @@ s16 ActorComputeHealthSlot(u32 i)
     }
     switch (t->actorKind)
     {
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
         m = gUnk_02007D60 & 15;
         if (w > 30)
             adj = m << 2;
         else
             adj = m << 1;
         break;
-    case 2:
+    case ACTOR_KIND_BOSS:
         m = gUnk_02007FF0 & 15;
         if (w > 30)
             adj = m << 2;
@@ -802,7 +802,7 @@ u32 *sub_0806601c(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
     {
         r = gUnk_0873F0C4[t->u76.subtype];
         if (a->paletteVariant != 0)
@@ -840,7 +840,7 @@ u16 ActorInitBossGfx(u32 mode)
     prio = gCurTask->tileWord;
     p = sub_0806601c();
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         a->gfx.header = (struct GfxHeader *)gMidBossGfx[t->u76.subtype];
     else
         a->gfx.header = (struct GfxHeader *)gBossGfx[t->u76.subtype];
@@ -1116,7 +1116,7 @@ void ActorShowHpBar(void)
     gHudHpBarFilled = 0;
     HudShowHpBar();
     t = *g;
-    if (t->actorKind == 1 || (t->actorKind == 2 && t->u76.subtype == 7))
+    if (t->actorKind == ACTOR_KIND_MID_BOSS || (t->actorKind == ACTOR_KIND_BOSS && t->u76.subtype == 7))
     {
         v = t->health;
         HudStartTaskHpBar(v, v);
@@ -1225,7 +1225,7 @@ void ActorIntroPoseUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->actorKind == 2 && t->u76.subtype == 5)
+    if (t->actorKind == ACTOR_KIND_BOSS && t->u76.subtype == 5)
         gCurTask->actorAnimDelay24 = ActorTickAnim(t->actorAnimDelay24);
     else
         gCurTask->actorAnimDelay24 = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay24);
@@ -1235,7 +1235,7 @@ void ActorIntroPoseUpdate(void)
 
 void sub_08066798(void)
 {
-    if (gGameState == 19)
+    if (gGameState == GAME_STATE_ARENA)
         sub_08064e90(2, TASK_MAXIM_TOMATO, 0, 128, 0);
 }
 
@@ -1275,7 +1275,7 @@ void ActorLoadPalette(void *src, u32 size, u8 force)
     t = gCurTask;
     a = t->u8C.actor;
     slot = t->tileWord >> 12;
-    if (force == 0 && t->actorKind == 1 && a->paletteVariant != 0 && a->palette != 0)
+    if (force == 0 && t->actorKind == ACTOR_KIND_MID_BOSS && a->paletteVariant != 0 && a->palette != 0)
         RequestCopy(2, a->palette, (u32)(gObjPalette + (slot << 5)), size);
     else
         RequestCopy(2, (u32)src, (u32)(gObjPalette + (slot << 5)), size);
@@ -1302,7 +1302,7 @@ void BossDefeatSweep(void)
         if (gTaskSlotTypes[i] == TASK_MAP_EVENT)
             continue;
         t = &gTasks[i];
-        if (gCurTask->actorKind == 2 && a->defeatSweepCallback != 0)
+        if (gCurTask->actorKind == ACTOR_KIND_BOSS && a->defeatSweepCallback != 0)
         {
             if ((u8)((u8 (*)(s32))a->defeatSweepCallback)(i) != 1)
                 continue;
@@ -1637,7 +1637,7 @@ void CreateDroppedParasol(u8 a)
     t = gCurTask;
     x = t->pixelX + gUnk_030023B4;
     y = t->pixelY + gUnk_030023D4;
-    i = CreateActorByKind(0, 38, kind, 0, x, y, 0);
+    i = CreateActorByKind(ACTOR_KIND_ENEMY, 38, kind, 0, x, y, 0);
     if (i != -1)
     {
         u = &gTasks[i];
@@ -1682,7 +1682,7 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
     if (i != -1)
     {
         t = &gTasks[i];
-        if (gGameState == 8 && gMetaKnightmareMode == 0)
+        if (gGameState == GAME_STATE_STAGE && gMetaKnightmareMode == 0)
         {
             t->variant = p3;
             PlayBgm(1);

@@ -409,7 +409,7 @@ void BombRallyResultsShow(void)
         TaskYieldTrampoline(168);
     else
         TaskYieldTrampoline(174);
-    if (gPrevGameState == 4) {
+    if (gPrevGameState == GAME_STATE_MAIN_MENU) {
         gCurTask->state = 1;
     } else {
         CreateBombRallyLivesIcons();
@@ -581,7 +581,7 @@ void CreateBombRallyPlaceLabels(void)
     s32 i;
     s32 k;
 
-    if (gPrevGameState != 5) {
+    if (gPrevGameState != GAME_STATE_HUB) {
         if (gPlayerCount == 1) {
             k = TaskCreateFrom(TASK_BOMB_RALLY_OBJECT, 32);
             if (k != -1) {

@@ -102,7 +102,7 @@ void SubGameReplay(s32 a0)
 
 void SubGameQuit(void)
 {
-    if (gPrevGameState == 4)
+    if (gPrevGameState == GAME_STATE_MAIN_MENU)
         gLinkErrorMask = 0;
     gCurTask->subGameNextPhase = 4;
 }
@@ -265,7 +265,7 @@ loop:
     SubGameRunLinkFrame();
     if (gSubGamePhase <= 1)
         goto loop;
-    if (gSubGamePhase == 4 && gPrevGameState == 4)
+    if (gSubGamePhase == 4 && gPrevGameState == GAME_STATE_MAIN_MENU)
     {
         if (gLinkSetupMode == 2)
             goto de8;

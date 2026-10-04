@@ -229,7 +229,7 @@ void GoalGameInit(void)
     gPauseDisabled = 1;
     gRoomExitKind = 0;
     *(s8 *)gUnk_02008010 = -1;
-    *(s8 *)gStageRequest = 0;
+    *(s8 *)gStageRequest = STAGE_REQUEST_NONE;
     q = gPaletteAnimRefCounts;
     z = 0;
     p = q + 2;
@@ -699,7 +699,7 @@ void PlayerGoalGameFinish(void)
     while (gUnk_02007D00[8] != 0)
         TaskYieldTrampoline(1);
     TaskYieldTrampoline(10);
-    *(s8 *)gStageRequest = 1;
+    *(s8 *)gStageRequest = STAGE_REQUEST_HUB;
     TaskSleepForever();
 }
 

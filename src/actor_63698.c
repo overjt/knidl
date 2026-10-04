@@ -71,21 +71,21 @@ void ActorBindDefSlot(u32 i)
     a->def = NULL;
     switch (t->actorKind)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
         a->def = gEnemyDefs[t->u76.subtype];
         break;
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
     case 3:
         a->def = gMidBossDefs[t->u76.subtype];
         break;
-    case 2:
+    case ACTOR_KIND_BOSS:
         a->def = gBossDefs[t->u76.subtype];
         gBossSubtype = t->u76.subtype;
         break;
-    case 4:
+    case ACTOR_KIND_CHILD:
         a->def = gChildActorDefs[t->u76.subtype];
         break;
-    case 5:
+    case ACTOR_KIND_OBJECT:
         a->def = gUnk_0873EE70[t->u76.subtype];
         break;
     default:
@@ -580,10 +580,10 @@ void ActorDestroySlot(s32 i)
         }
         switch (t->actorKind)
         {
-        case 0:
+        case ACTOR_KIND_ENEMY:
             ReleaseRoomObject(i);
             break;
-        case 6:
+        case ACTOR_KIND_ITEM:
             if (gCurTask->u76.subtype != 0)
                 ReleaseRoomObject(i);
             break;
@@ -1218,16 +1218,16 @@ void ActorAwardScore(u32 arg, s32 mul)
 
     t = gCurTask;
     a = t->u8C.actor;
-    if (gGameState == 18)
+    if (gGameState == GAME_STATE_MUSEUM)
         return;
     v = a->score;
-    if (t->actorKind == 0 && t->u76.subtype == 37)
+    if (t->actorKind == ACTOR_KIND_ENEMY && t->u76.subtype == 37)
     {
         k = gFrameCount & 3;
         v = gUnk_0873DF14[k];
     }
     v *= mul;
-    if (gCurTask->actorKind == 0 && gCurTask->u76.subtype == 40
+    if (gCurTask->actorKind == ACTOR_KIND_ENEMY && gCurTask->u76.subtype == 40
         && (u8)(a->unk04 - 2) <= 1)
         v = 200;
     AddPlayerScore(v, arg);
@@ -1263,7 +1263,7 @@ s32 sub_08064a78(struct ActorSpawn *p)
     if (i != -1)
     {
         t = &gTasks[i];
-        t->actorKind = 4;
+        t->actorKind = ACTOR_KIND_CHILD;
         t->u76.subtype = p->subtype;
         t->variant = p->variant;
         t->unk74 = p->spawnArg;
@@ -1360,13 +1360,13 @@ s32 CreateChildTask(u32 type, int xArg, int yArg, int prioArg)
         t = &gTasks[i];
         switch (gCurTask->actorKind)
         {
-        case 2:
-        case 7:
-            t->actorKind = 7;
+        case ACTOR_KIND_BOSS:
+        case ACTOR_KIND_BOSS_CHILD_TASK:
+            t->actorKind = ACTOR_KIND_BOSS_CHILD_TASK;
             break;
-        case 1:
-        case 8:
-            t->actorKind = 8;
+        case ACTOR_KIND_MID_BOSS:
+        case ACTOR_KIND_MID_BOSS_CHILD_TASK:
+            t->actorKind = ACTOR_KIND_MID_BOSS_CHILD_TASK;
             break;
         default:
             t->actorKind = 9;
@@ -1449,9 +1449,9 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
     {
         t = &gTasks[i];
         if (alt != 0)
-            t->actorKind = 6;
+            t->actorKind = ACTOR_KIND_ITEM;
         else
-            t->actorKind = 5;
+            t->actorKind = ACTOR_KIND_OBJECT;
         t->u76.subtype = sub;
         t->variant = 0;
         t->unk74 = p2;
@@ -1539,20 +1539,20 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
 
     switch (cls)
     {
-    case 0:
+    case ACTOR_KIND_ENEMY:
         type = gEnemyTaskTypes[sub];
         break;
-    case 1:
+    case ACTOR_KIND_MID_BOSS:
     case 3:
         type = gMidBossTaskTypes[sub];
         break;
-    case 2:
+    case ACTOR_KIND_BOSS:
         type = gBossTaskTypes[sub];
         break;
-    case 5:
+    case ACTOR_KIND_OBJECT:
         type = gUnk_0873F288[sub];
         break;
-    case 6:
+    case ACTOR_KIND_ITEM:
         type = gUnk_0873F2A0[sub];
         break;
     default:
@@ -1590,7 +1590,7 @@ s32 CreateBlockStar(s16 x, s16 y, u32 p2, u8 p3, u8 p4)
     struct Task *t;
     s32 i;
 
-    i = CreateActor(0, 40, TASK_BLOCK_STAR, 0, 0, x, y, 0);
+    i = CreateActor(ACTOR_KIND_ENEMY, 40, TASK_BLOCK_STAR, 0, 0, x, y, 0);
     if (i != -1)
     {
         t = &gTasks[i];

@@ -252,10 +252,10 @@ void PlayerEffectCrashBlast(void)
             {
                 switch (gTasks[i].actorKind)
                 {
-                case 1:
-                case 2:
-                case 7:
-                case 8:
+                case ACTOR_KIND_MID_BOSS:
+                case ACTOR_KIND_BOSS:
+                case ACTOR_KIND_BOSS_CHILD_TASK:
+                case ACTOR_KIND_MID_BOSS_CHILD_TASK:
                     gScreenAttackTasks[k++] = i;
                     break;
                 }
@@ -275,10 +275,10 @@ void PlayerEffectCrashBlast(void)
             n--;
             switch (gTasks[(s16)gScreenAttackTasks[n]].actorKind)
             {
-            case 1:
-            case 2:
-            case 7:
-            case 8:
+            case ACTOR_KIND_MID_BOSS:
+            case ACTOR_KIND_BOSS:
+            case ACTOR_KIND_BOSS_CHILD_TASK:
+            case ACTOR_KIND_MID_BOSS_CHILD_TASK:
                 TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             default:
@@ -307,7 +307,7 @@ void PlayerEffectCrashBlast(void)
                 gScreenAttackActive = 1;
             switch (gTasks[i].actorKind)
             {
-            case 5:
+            case ACTOR_KIND_OBJECT:
                 r = 0;
                 if (gTasks[i].u76.subtype == 2)
                 {
@@ -316,7 +316,7 @@ void PlayerEffectCrashBlast(void)
                     r = 1;
                 }
                 break;
-            case 6:
+            case ACTOR_KIND_ITEM:
                 r = 0;
                 if (gTasks[i].u76.subtype != 5)
                 {
@@ -325,9 +325,9 @@ void PlayerEffectCrashBlast(void)
                     r = 1;
                 }
                 break;
-            case 0:
+            case ACTOR_KIND_ENEMY:
             case 3:
-            case 4:
+            case ACTOR_KIND_CHILD:
             case 9:
                 TaskRestoreSkipMask(i);
                 TaskYieldTrampoline(2);

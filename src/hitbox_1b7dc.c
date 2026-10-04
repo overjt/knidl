@@ -65,7 +65,7 @@ void CalcHitDamageAndDirection(void)
             gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;
             return;
         }
-        gHitKind = 1;
+        gHitKind = HIT_KIND_DEFEAT;
         gHitHealthLeft = 0;
     }
     gHitDirection = ((((u16)ArcTan2(gAttackX - gColliderX, gAttackY - gColliderY) >> 7) + 32) >> 6) & 7;

@@ -652,7 +652,7 @@ void PlayerActionInhaleUpdate(void)
                     if (TaskBreakFirstBlock(&gUnk_0873CC54, u->player->playerIndex) != 0)
                     {
                         gCurTask->player->catchKind = 2;
-                        CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, 3, 1);
+                        CreateBlockStar(gBrokenBlockX + 8, gBrokenBlockY + 8, gCurTaskIdx, HIT_KIND_INHALE, HIT_EFFECT_INHALE);
                     }
                 }
                 else

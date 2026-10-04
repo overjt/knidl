@@ -47,7 +47,7 @@ void CameraResetRoomView(void)
     s32 i;
 
     CalcRoomBounds();
-    if (gCameraMode != 5)
+    if (gCameraMode != CAMERA_MODE_HOLD_ANCHOR)
     {
         if (gInHub != 0 || gPlayerCount == 1)
         {
@@ -197,7 +197,7 @@ void SetRoomEntryPoint(void)
                 gCameraAnchorY = gRoomBounds[3];
         }
     }
-    else if (gCameraMode == 5)
+    else if (gCameraMode == CAMERA_MODE_HOLD_ANCHOR)
     {
         gCameraAnchorX = gCameraFocusX;
         gCameraAnchorY = gCameraFocusY;

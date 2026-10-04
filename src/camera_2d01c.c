@@ -1,6 +1,7 @@
 #include "gba/gba.h"
 #include "global.h"
 #include "task.h"
+#include "constants/camera.h"
 
 /* camera_2d01c.c (0x0802D01C-0x0802D38B, issue #86).
  *
@@ -138,16 +139,16 @@ void BgAnimStop(struct Unk02007D70 *p);
 
 void CameraLeaveScrollLock(void)
 {
-    if (gCameraMode == 3)
+    if (gCameraMode == CAMERA_MODE_SCROLL_LOCKED)
     {
         if (gScrollLock.lockedAxes & 1)
             gScrollLockSpeedX = 6;
         if (gScrollLock.lockedAxes & 2)
             gScrollLockSpeedY = 3;
         if (gScrollLock.lockedAxes != 0)
-            gCameraMode = 4;
+            gCameraMode = CAMERA_MODE_SLIDE_FROM_LOCK;
         else
-            gCameraMode = 0;
+            gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
         gScrollLock.unk0 = gActivePlayerMask;
     }
 }
@@ -159,7 +160,7 @@ void CameraStartHoldAnchor(void)
     if (gInHub != 0)
         gCameraMode = 4;
     else
-        gCameraMode = 5;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
 }
 
 void sub_0802d0c4(void)
@@ -168,9 +169,9 @@ void sub_0802d0c4(void)
     CameraResetBounds();
     /* both arms store 0 in the ROM too (CameraStartHoldAnchor stores 4 / 5) */
     if (gInHub != 0)
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     else
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
 }
 
 void LoadRoomBgAnims(void)

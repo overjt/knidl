@@ -111,7 +111,7 @@ void ExtraModeTitleLevelBar(void)
 {
     gCurTask->updateState = 1;
     for (;;) {
-        if (gPrevGameState == 4 && gLocalPlayer == 0)
+        if (gPrevGameState == GAME_STATE_MAIN_MENU && gLocalPlayer == 0)
             QueueSprite(8, gUnk_08756054[gSubGameLevel + 4], 0, 0, 120, 144);
         else
             QueueSprite(8, gUnk_08756054[gSubGameLevel + 7], 0, 0, 200, 144);

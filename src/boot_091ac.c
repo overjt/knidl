@@ -40,7 +40,7 @@ void BootLogoMain(void)
         SetBgmVolume(256);
         ResetTasksAndOam();
     } else {
-        gPrevGameState = 1;
+        gPrevGameState = GAME_STATE_BOOT_LOGO;
     }
 }
 
@@ -240,7 +240,7 @@ s32 TitleScreen(void)
 {
     s32 idx, i, ret;
 
-    if (gPrevGameState != 1) {
+    if (gPrevGameState != GAME_STATE_BOOT_LOGO) {
         ResetTasksAndOam();
         LoadBgLayout(0);
         LoadGfxSet(7);
@@ -248,7 +248,7 @@ s32 TitleScreen(void)
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1E00;
     }
-    if (gPrevGameState != 1) {
+    if (gPrevGameState != GAME_STATE_BOOT_LOGO) {
         BeginFastFadeInFromWhite();
         RunFramesUntilFadeDone();
         idx = TaskCreateFrom(TASK_TITLE_SPRITES, 0);
@@ -261,7 +261,7 @@ s32 TitleScreen(void)
     }
     TaskCreateFrom(TASK_TITLE_PALETTE, 0);
     PlayBgm(26);
-    if (gPrevGameState != 1)
+    if (gPrevGameState != GAME_STATE_BOOT_LOGO)
         RunFrames(60);
     else
         RunFrames(210);
@@ -277,7 +277,7 @@ pressed:
     ret = 1;
     goto out;
 timeout:
-    gPrevGameState = 3;
+    gPrevGameState = GAME_STATE_TITLE;
     BeginFastFadeOutToWhite();
     RunFramesUntilFadeDone();
     ret = 0;

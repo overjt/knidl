@@ -69,7 +69,7 @@ void Task_CutsceneDirector(void)
             gCurTask->cutsceneDirectorTimer++;
         } while ((s16)gCurTask->cutsceneDirectorTimer < q[*(s8 *)&gCurLevel] - 60);
     }
-    gGameState = 5;
+    gGameState = GAME_STATE_HUB;
     TaskSleepForever();
 }
 
@@ -88,7 +88,7 @@ void CutsceneCheckSkip(void)
                 StopSfxOnPlayer(gUnk_02007D00[0], 0x21B);
                 gUnk_02007D00[0] = -1;
             }
-            gGameState = 5;
+            gGameState = GAME_STATE_HUB;
             TaskFree(gCurTaskIdx);
         }
     }

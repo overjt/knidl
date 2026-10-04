@@ -145,7 +145,7 @@ u8 HitTestPlayerColliders(void)
     s32 i;
     u8 s;
 
-    gHitKind = 0;
+    gHitKind = HIT_KIND_NONE;
     gUnk_03001F24 = 0;
     e = gPlayerColliders;
     for (i = 0; i < gPlayerColliderCount; i++)
@@ -225,7 +225,7 @@ u8 HitTestPlayerColliders(void)
                 }
                 else
                 {
-                    gHitKind = 2;
+                    gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
                     t->u76.unk76 = (t->u76.unk76 & 0x4000) | 1;
                 }
@@ -245,12 +245,12 @@ u8 HitTestPlayerColliders(void)
                     AddPlayerHealth(-gAttackBox->damage, gColliderPlayer);
                     if (gPlayerHealth[gColliderPlayer] <= 0)
                     {
-                        t->hitKind = 1;
+                        t->hitKind = HIT_KIND_DEFEAT;
                         t->hitEffect = gAttackBox->unk1A & 0x300;
                     }
                     else
                     {
-                        t->hitKind = 2;
+                        t->hitKind = HIT_KIND_DAMAGE;
                     }
                 }
                 if (gAttackBox->unk0A & 0x8000)
@@ -269,7 +269,7 @@ u8 HitTestPlayerColliders(void)
                 }
                 else
                 {
-                    gHitKind = 2;
+                    gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
                 }
             }
@@ -285,7 +285,7 @@ u8 HitTestPlayerColliders(void)
                 }
                 else
                 {
-                    gHitKind = 2;
+                    gHitKind = HIT_KIND_DAMAGE;
                     CalcHitDamageAndDirection();
                 }
             }
@@ -422,9 +422,9 @@ u8 HitTestColliderClass10(void)
             t->hitEffect = gAttackBox->hitEffect;
             t->health -= gAttackBox->damage;
             if (t->health <= 0)
-                t->hitKind = 1;
+                t->hitKind = HIT_KIND_DEFEAT;
             else
-                t->hitKind = 2;
+                t->hitKind = HIT_KIND_DAMAGE;
             u = &gTasks[gColliderPlayer];
             if (!(gAttackBox->unk1A & 1))
             {
@@ -437,7 +437,7 @@ u8 HitTestColliderClass10(void)
             mask = gColliderClass10KindBits[k];
             if (!(mask & gAttackBox->unk0E))
             {
-                gHitKind = 2;
+                gHitKind = HIT_KIND_DAMAGE;
                 CalcHitDamageAndDirection();
             }
             else

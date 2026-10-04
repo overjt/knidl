@@ -57,7 +57,7 @@ void GameOverPlayerWaitUpdate(void)
     if (gCurTask->gameOverPlayerReentered != 0) {
         if (gCurTask->gameOverPlayerEndTimer <= 0) {
             gGameOverDone = 1;
-            gGameState = 1;
+            gGameState = GAME_STATE_BOOT_LOGO;
         }
         gCurTask->gameOverPlayerEndTimer--;
     }
@@ -157,7 +157,7 @@ void GameOverPlayerContinue(void)
     gCurTask->frame++;
     TaskYieldTrampoline(8);
     gGameOverDone = 1;
-    gGameState = 5;
+    gGameState = GAME_STATE_HUB;
     TaskSleepForever();
 }
 

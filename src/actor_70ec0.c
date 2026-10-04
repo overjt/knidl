@@ -238,7 +238,7 @@ u16 WarpStarCopyTilesToRider(s32 idx)
 
 void CreateWarpStar(int x, int y, int c)
 {
-    CreateActorByKind(5, 0, 0, c, x, y, 0);
+    CreateActorByKind(ACTOR_KIND_OBJECT, 0, 0, c, x, y, 0);
 }
 
 void WarpStarState0(void)
@@ -634,7 +634,7 @@ void WarpStarSetMetaKnightRiderState(u16 a)
 
 void CreateFlyingWarpStar(int x, int y, int c)
 {
-    s32 id = CreateActorByKind(5, 0, 0, c, x >> 16, y >> 16, 0);
+    s32 id = CreateActorByKind(ACTOR_KIND_OBJECT, 0, 0, c, x >> 16, y >> 16, 0);
 
     if (id != -1)
     {

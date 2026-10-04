@@ -152,7 +152,7 @@ void ActorAttachedThrowHeldFollowCarrier(void)
         v->pixelX = v->actorCarriedX;
         v->pixelY = v->actorCarriedY;
         k = *(s16 *)&v->unk70 - 3;
-        if (v->actorKind == 1)
+        if (v->actorKind == ACTOR_KIND_MID_BOSS)
         {
             ActorSetTerrainBox(gUnk_0873F8BC);
             w = gCurTask;
@@ -319,7 +319,7 @@ void ActorAttachedDie(void)
     u16 v;
 
     t = gCurTask;
-    if (t->actorKind == 0)
+    if (t->actorKind == ACTOR_KIND_ENEMY)
     {
         v = t->u76.subtype;
         if (v == 17 || v == 9 || v == 0 || v == 31 || v == 32)
@@ -361,12 +361,12 @@ void sub_0806b95c(void)
     t = gCurTask;
     a = t->u8C.actor;
     p = t->player;
-    if (t->actorKind != 0 || t->u76.subtype != 40)
+    if (t->actorKind != ACTOR_KIND_ENEMY || t->u76.subtype != 40)
         p->catchKind = 1;
     u = gCurTask;
     if (u->drawCallback == (u32)ActorDrawWorldInViewOrDestroyWithExtra)
         u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    if (gCurTask->actorKind != 1)
+    if (gCurTask->actorKind != ACTOR_KIND_MID_BOSS)
         ActorSetHitReactions(gUnk_0873F92C);
     v = gCurTask;
     c = v->u8C.actor;
@@ -407,7 +407,7 @@ void ActorAttachedReloadPalette(void)
     z = v >> 12;
     if (a->palette != 0)
         LoadActorPaletteVariant(z, t->u76.subtype, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
-    else if (t->actorKind == 0 || t->actorKind == 3)
+    else if (t->actorKind == ACTOR_KIND_ENEMY || t->actorKind == 3)
     {
         m = 0xFFF;
         m &= v;
@@ -463,16 +463,16 @@ s32 ActorAttachToHitter(void)
     ActorAttachedReloadPalette();
     switch (gCurTask->hitEffect)
     {
-    case 1:
+    case HIT_EFFECT_INHALE:
         sub_0806b95c();
         ActorSetState(0);
         break;
-    case 2:
+    case HIT_EFFECT_THROW:
         sub_0806b95c();
         ActorInitCarryOffset();
         ActorSetState(4);
         break;
-    case 3:
+    case HIT_EFFECT_BACKDROP:
         sub_0806b95c();
         ActorInitCarryOffset();
         ActorSetState(1);
@@ -529,7 +529,7 @@ void ActorInitCarryOffset(void)
     s16 n;
 
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
     {
         n = t->u76.subtype * 2;
         t->actorCarryOffsetX = gUnk_0873E7A4[n];
@@ -592,7 +592,7 @@ void ActorAttachedEnterMouth(void)
     p = t->player;
     if ((s8)a->def->isItem == 1)
     {
-        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == 6 && t->u76.subtype != 0)
+        if (*(s8 *)&p->attachedCount == 1 && t->actorKind == ACTOR_KIND_ITEM && t->u76.subtype != 0)
         {
             p->catchKind = 3;
             gCurTask->actorSwallowOrder = *(s8 *)&p->heldCount;
@@ -613,7 +613,7 @@ void ActorAttachedEnterMouth(void)
     if (*(s8 *)&a->ability == ABILITY_NORMAL)
         return;
     u = gCurTask;
-    if (u->actorKind == 6)
+    if (u->actorKind == ACTOR_KIND_ITEM)
     {
         f = u->u76.subtype;
         if (f == 0)
@@ -701,7 +701,7 @@ u8 ActorAttachedCheckScreenAttack(void)
         t->tileWord = m | t->u8C.actor->savedPaletteBits;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        if (t->actorKind != 1 && t->actorKind != 6)
+        if (t->actorKind != ACTOR_KIND_MID_BOSS && t->actorKind != ACTOR_KIND_ITEM)
             ActorSetHitReactions(gUnk_0873F938);
         ActorAttachedDie();
     }
@@ -760,14 +760,14 @@ void ActorAttachedSwallowLateUpdate(void)
     t = gCurTask;
     if (t->actorSwallowed != 0)
     {
-        if (t->actorKind == 0)
+        if (t->actorKind == ACTOR_KIND_ENEMY)
             ActorAwardScore(t->parent, 1 << t->actorSwallowOrder);
         else
             ActorAwardScore(t->parent, 1);
         u = gCurTask;
-        if (u->actorKind != 1)
+        if (u->actorKind != ACTOR_KIND_MID_BOSS)
         {
-            if (u->actorKind == 6)
+            if (u->actorKind == ACTOR_KIND_ITEM)
             {
                 PickupCollect();
                 return;
@@ -795,7 +795,7 @@ void ActorAttachedBackdropHeld(void)
     t->lateUpdateCallback = (u32)ActorAttachedBackdropHeldLateUpdate;
     t->posY = 0;
     t->posX = 0;
-    t->hitKind = 0;
+    t->hitKind = HIT_KIND_NONE;
     u = gCurTask;
     u->actorCarriedX = u->pixelX;
     u->actorCarriedY = u->pixelY;
@@ -819,7 +819,7 @@ void ActorAttachedBackdropHeldUpdate(void)
         ActorAttachedBackdropHeldFollowCarrier();
     ActorAttachedRestorePalette();
     u = gCurTask;
-    if (u->actorKind == 1)
+    if (u->actorKind == ACTOR_KIND_MID_BOSS)
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F844);
     else
         RegisterCollider((u8)gCurTaskIdx, u->pixelX, u->pixelY, gUnk_0873F830);
@@ -843,7 +843,7 @@ void ActorAttachedBackdropFlight(void)
         ActorSetTerrainBox(gUnk_0873F894);
     TaskSetMotionXFacing(0x38000, 0x5A5A5A5A);
     TaskSetMotionY(0x30000, 0x8000, 0x60000);
-    gCurTask->hitKind = 0;
+    gCurTask->hitKind = HIT_KIND_NONE;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSleepForever();
 }
@@ -869,7 +869,7 @@ void ActorAttachedBackdropFlightUpdate(void)
         return;
     }
     t = gCurTask;
-    if (t->actorKind == 1)
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F844);
     else
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F830);

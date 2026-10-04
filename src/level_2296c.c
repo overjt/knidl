@@ -163,7 +163,7 @@ void sub_08022c3c(void)
         gStageIndex = 0;
         gRoomIndex = 0;
         gRoomEntrySet = 0;
-        gStageRequest = 2;
+        gStageRequest = STAGE_REQUEST_STAGE_START;
         gEntryDoorEvent = 0;
         gRoomEntryMode = 0;
     }
@@ -221,7 +221,7 @@ void sub_08022c3c(void)
                 gEntryDoorEvent = 0;
             }
         }
-        gStageRequest = 1;
+        gStageRequest = STAGE_REQUEST_HUB;
         gRoomEntrySet = 1;
     }
     gUnk_0200B038 = 0;
@@ -266,9 +266,9 @@ void LoadRoom(void)
         gUnk_03001F20 = gStageIndex;
     }
     if (gRoomEntryMode == 2)
-        gCameraMode = 5;
+        gCameraMode = CAMERA_MODE_HOLD_ANCHOR;
     else
-        gCameraMode = 0;
+        gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     LoadGfxSet(1);
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
@@ -359,14 +359,14 @@ void LoadRoom(void)
     switch (gCameraMode)
     {
     default:
-    case 0:
-    case 1:
+    case CAMERA_MODE_FOLLOW_FOCUS:
+    case CAMERA_MODE_FOLLOW_PLAYER:
         CameraFollowFocus();
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         CameraFollowScrollLocked();
         break;
-    case 5:
+    case CAMERA_MODE_HOLD_ANCHOR:
         CameraHoldAnchor();
         break;
     }
@@ -408,7 +408,7 @@ void sub_080233e0(void)
     gInHub = 0;
     gCurLevel = gLevelIndex;
     gUnk_03001F20 = gStageIndex;
-    gCameraMode = 0;
+    gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
     LoadGfxSet(1);
     CreateRoomTask(0);
     gCurRoomDef = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex];
@@ -447,14 +447,14 @@ void sub_080233e0(void)
     switch (gCameraMode)
     {
     default:
-    case 0:
-    case 1:
+    case CAMERA_MODE_FOLLOW_FOCUS:
+    case CAMERA_MODE_FOLLOW_PLAYER:
         CameraFollowFocus();
         break;
-    case 3:
+    case CAMERA_MODE_SCROLL_LOCKED:
         CameraFollowScrollLocked();
         break;
-    case 5:
+    case CAMERA_MODE_HOLD_ANCHOR:
         CameraHoldAnchor();
         break;
     }

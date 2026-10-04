@@ -353,7 +353,7 @@ void ActorDefeatFrozenUpdate(void)
     t = gCurTask;
     if (t->state == 1)
     {
-        if ((s8)t->hitKind != 0)
+        if ((s8)t->hitKind != HIT_KIND_NONE)
         {
             ActorSetState(2);
             TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
@@ -482,7 +482,7 @@ void ActorDefeatExplode(void)
 
     TaskStop();
     t = gCurTask;
-    if (t->actorKind == 0)
+    if (t->actorKind == ACTOR_KIND_ENEMY)
     {
         t->updateCallback = 0;
         TaskSetFrame(0);
@@ -619,7 +619,7 @@ void ActorDefeat4(void)
     s32 zero;
 
     t = gCurTask;
-    if (t->actorKind == 0)
+    if (t->actorKind == ACTOR_KIND_ENEMY)
     {
         t->updateCallback = 0;
         TaskSetFrame(0);
