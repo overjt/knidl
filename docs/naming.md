@@ -340,6 +340,23 @@ slot gets `State<N>Update` only where state N's body stores
 `updateState = N` (2.3, the state pair); the update tables of the
 families that index them otherwise keep their placeholders.
 
+**Dispatch-table slots** (run 5, approved by the owner's coordinator).
+The state-table rule covers the other named dispatch tables whose consumer
+is proven: a `sub_*` whose only referrer is one slot of `gCutsceneActors`
+(the cutscene actor's scripts; CreateCutsceneActor stores the index in
+`cutsceneActorScript`), `gWarpStarFlights` / `gWarpStarFlightUpdates`,
+`gWarpStarCameraPaths`, `gPlayerDances`, `gActorDefeats` or
+`gActorExplodeDefeatsByEffect` is `CutsceneActorScript<N>`,
+`WarpStarFlight<N>` / `WarpStarFlight<N>Update` (the update only where
+flight N's body stores `updateState = N`, lesson 4.160),
+`WarpStarCameraPath<N>`, `PlayerDance<N>`, `ActorDefeat<N>` or
+`ActorExplodeDefeat<N>`.  A cutscene script whose every
+`CreateCutsceneActor(N, ...)` call sits in one named scene (the level-intro
+scenes `Cutscene<Scene>Start` and their helpers) carries the scene:
+`Cutscene<Scene>ActorScript<N>` (`CutsceneBeachActorScript10`); N stays the
+table index.  Same rules as the state-table slots: counted apart, their own
+commits, and a verb proven later replaces them.
+
 **RAM position names** (run 5 of #155, the owner's decision D2).  Some
 RAM cells are not variables at all but addresses inside a larger buffer
 that the code passes to a copy, fade or blend routine: the cells inside the
