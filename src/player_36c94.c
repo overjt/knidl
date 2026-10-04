@@ -111,7 +111,7 @@ void PlayerActionLadder(void)
         PlayerStopAxes(3);
         gCurTask->facing = 1;
         h1 = gCurTask;
-        h1->spriteFlags &= 0x7FFF;
+        h1->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         h1->player->running = 0;
         gCurTask->player->unk50 = 1;
         h3 = gCurTask;
@@ -452,7 +452,7 @@ void PlayerActionLadderUpdate(void)
     {
         te->facing = te->playerLadderSavedFacing;
         tf = gCurTask;
-        tf->spriteFlags &= 0x7FFF;
+        tf->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         if (tf->velY != 0)
             PlayerStopAxes(2);
         PlayerRequestLocomotion();
@@ -555,7 +555,7 @@ void PlayerActionInhale(void)
     hit:
         gCurTask->variant = 2;
     case 2:
-        gCurTask->player->actionFlags &= 0xFFFB;
+        gCurTask->player->actionFlags &= ~PLAYER_ACTION_FLAG_CATCHING;
         PlayerStopSfx();
         {
             struct PlayerState *q = gCurTask->player;

@@ -66,7 +66,7 @@ void MetaKnightWarpStarRideDraw(void)
     if (u->unk18 > 0)
     {
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
-        u->spriteFlags &= 0x7FFF;
+        u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gfx = DrawAffineSprite((s32)gUnk_0824A9CC,
                            (u16)gSpriteScaleSteps[u->unk18 >> 16] * sign,
                            gSpriteScaleSteps[u->unk18 >> 16], 0);
@@ -568,7 +568,7 @@ void WarpStarDrawFlight(void)
     if (u->warpStarScale > 0)
     {
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
-        u->spriteFlags &= 0x7FFF;
+        u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gfx = DrawAffineSprite(g[u->frame],
                            (u16)gSpriteScaleSteps[u->warpStarScale >> 16] * sign,
                            gSpriteScaleSteps[u->warpStarScale >> 16], 0);

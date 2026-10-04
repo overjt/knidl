@@ -108,7 +108,7 @@ void MidBossDefeatScreenFlash(void)
 void MidBossDefeatFlash(void)
 {
     PlaySfx(0x200);
-    TaskSetSkipMask(14, gCurTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
     MidBossDefeatScreenFlash();
     TaskSetSkipMask(0, gCurTaskIdx);
 }

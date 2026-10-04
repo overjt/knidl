@@ -664,7 +664,7 @@ void ActorStartHitStun(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    TaskSetSkipMask(7, gCurTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE), gCurTaskIdx);
     u = gCurTask;
     u->posX = u->pixelX << 16;
     u->posY = u->pixelY << 16;

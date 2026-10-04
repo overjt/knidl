@@ -191,10 +191,10 @@ void ActorAttachedThrowFlight(void)
         CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         gCurTask->frame = 2;
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         TaskYieldTrampoline(4);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
         gCurTask->frame = 3;
         TaskYieldTrampoline(4);

@@ -90,7 +90,7 @@ void MetaKnightActionStand(void)
             t->player->savedWallSide = t->player->wallSide;
         gCurTask->player->running = 0;
         t2 = gCurTask;
-        t2->player->actionFlags &= 0xFFEF;
+        t2->player->actionFlags &= ~PLAYER_ACTION_FLAG_RUN_PENDING;
         t2->player->runTapTimer = 0;
         PlayerPlayBump();
     }
@@ -737,7 +737,7 @@ void MetaKnightActionLadder(void)
         PlayerStopAxes(3);
         gCurTask->facing = 1;
         h1 = gCurTask;
-        h1->spriteFlags &= 0x7FFF;
+        h1->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         h1->player->running = 0;
         ((u8 *)gCurTask->player)[80] = 1;
         q = gLatchedHeldKeys;
@@ -937,7 +937,7 @@ void MetaKnightActionLadderUpdate(void)
     {
         te->facing = te->playerLadderSavedFacing;
         tf = gCurTask;
-        tf->spriteFlags &= 0x7FFF;
+        tf->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         if (tf->velY != 0)
             PlayerStopAxes(2);
         PlayerRequestLocomotion();
@@ -969,7 +969,7 @@ void MetaKnightActionHurt(void)
     p = t->player;
     if (p->prevMode != 17)
     {
-        p->statusFlags &= 0xFFEF;
+        p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         t->variant = 5;
     }
     while (1)
@@ -1183,7 +1183,7 @@ void MetaKnightActionDie(void)
     gCurTask->player->actionFlags |= 8;
     gCurTask->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     gCurTask->variant = 0;
-    gCurTask->player->statusFlags &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     ((u8 *)gCurTask->player)[23] = 0;
     ((u16 *)gCurTask->player)[12] = 0;
@@ -1197,7 +1197,7 @@ void MetaKnightActionDie(void)
     StopAllSound();
     gPauseDisabled = 1;
     TaskSetFrame(0x123B);
-    FreezeOtherTasks(15);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
     SetRoomUpdateFlags(2);
     if ((gDispCnt & 0x400) == 0)
     {
@@ -1310,7 +1310,7 @@ void MetaKnightActionEnterDoor(void)
     if (gInHub == 0)
     {
         StopAllSfx();
-        FreezeOtherTasks(15);
+        FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
         if ((gDispCnt & 0x400) == 0)
         {
             gDispCnt &= 0xE0FF;
@@ -1388,7 +1388,7 @@ void MetaKnightActionExitDoor(void)
     }
     if (gEntryDoorEvent == 1)
     {
-        TaskSetSkipMask(14, gCurTaskIdx);
+        TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
         CreateStageUnlockPan();
         while (gCameraPanDone == 0)
             TaskYieldTrampoline(1);

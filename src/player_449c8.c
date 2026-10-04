@@ -48,7 +48,7 @@ void PlayerActionSparkUpdate(void)
         case 0x370:
             {
                 struct Task *u = gCurTask;
-                u->player->statusFlags &= 0xFFEF;
+                u->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
                 u->playerNextBankBlendRatio = 0;
                 u->playerBankBlendRatio = 0;
             }
@@ -98,7 +98,7 @@ void PlayerActionSparkUpdate(void)
     {
         struct PlayerState *p = gCurTask->player;
         if (p->requestedAction != PLAYER_ACTION_NONE)
-            p->statusFlags &= 0xFFEF;
+            p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     }
 }
 

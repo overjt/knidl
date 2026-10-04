@@ -1095,7 +1095,7 @@ void FreezeOtherTasks(s32 a0)
 void PlayerUpdateFlip(void)
 {
     if (gCurTask->facing == 1)
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     else
         gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
 }

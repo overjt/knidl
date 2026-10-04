@@ -245,8 +245,8 @@ void PlayerActionExitDoor(void)
                 }
             }
             PlayerStopAxes(1);
-            gCurTask->player->statusFlags &= 0xFFEF;
-            TaskSetSkipMask(15, gCurTaskIdx);
+            gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
             break;
         }
         LZ77UnCompWram(gUnk_080D07C8, gUnk_02020000);
@@ -375,8 +375,8 @@ void PlayerActionExitDoor(void)
                 TaskYieldTrampoline(24);
             }
         }
-        gCurTask->player->statusFlags &= 0xFFEF;
-        TaskSetSkipMask(14, gCurTaskIdx);
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
+        TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
         CreateStageUnlockPan();
         {
             struct Task *t = gCurTask;
@@ -517,7 +517,7 @@ void PlayerActionExitDoor(void)
         CameraResumeFollowFocus();
         for (i = 0; i < gPlayerCount; i++)
         {
-            gPlayerStates[i].statusFlags &= 0xFFBF;
+            gPlayerStates[i].statusFlags &= ~PLAYER_STATUS_INPUT_LOCKED;
             if (gPlayerHealth[i] != 0)
                 CreateLocalPlayerArrow(i);
             if (i != gCurTaskIdx)

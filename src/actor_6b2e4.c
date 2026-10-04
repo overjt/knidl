@@ -272,7 +272,7 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
         if (x->facing == 1)
             x->spriteFlags |= SPRITE_FLAG_FLIP_X;
         else
-            x->spriteFlags &= 0x7FFF;
+            x->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     }
 }
 

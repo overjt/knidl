@@ -1995,7 +1995,7 @@ void MrShineDash(void)
     PlaySfx(500);
     TaskSetMotionXFacing(144 << 11, 0x5A5A5A5A);
     gCurTask->mrShineAndMrBrightDashTrailSlot = CreateDashFlame(-16, 7);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     if (gCurTask->facing == 1)
         gCurTask->actorAnimDelay1C = ActorStartAnimNoFlip(gUnk_0874853C);
     else

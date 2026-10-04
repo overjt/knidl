@@ -53,7 +53,7 @@ void PlayerActionTornado(void)
         PlaySfxIfLocalPlayer(SE_TORNADO_ATTACK, gCurTask->player->playerIndex);
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
         PlayerSetMotionXPreset(11, 63);
-        gCurTask->spriteFlags &= 0x7FFF;
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         TaskSetFrame(0xDC5);
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
@@ -183,13 +183,13 @@ void PlayerActionCrash(void)
     gPauseDisabled = 1;
     gCurTask->u80.attackAbility = ABILITY_CRASH;
     PlayerStopAxes(3);
-    FreezeOtherTasks(15);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
     if ((gDispCnt & 0x400) == 0) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
     }
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-    gCurTask->player->statusFlags |= 0x700;
+    gCurTask->player->statusFlags |= (PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
     gCurTask->playerCrashSavedPosY = gCurTask->posY;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_CRASH_BLAST, 0);
     gCurTask->player->terrainBox = 0;
@@ -229,7 +229,7 @@ void PlayerActionCrash(void)
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 2);
     TaskYieldTrampoline(3);
-    gCurTask->player->statusFlags &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     TaskYieldTrampoline(1);
     PlayerStopAxes(2);
     gCurTask->frame++;
@@ -247,7 +247,7 @@ void PlayerActionCrash(void)
         gCurTask->playerCrashBlendRatio += 85;
         TaskYieldTrampoline(1);
     } while ((s16)++gCurTask->playerLoopCount <= 2);
-    gCurTask->player->statusFlags &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     TaskYieldTrampoline(9);
     PlayerStopAxes(2);
     gCurTask->frame++;
@@ -318,11 +318,11 @@ void PlayerActionCrash(void)
     gCurTask->frame++;
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 31; gCurTask->playerLoopCount++) {
         if (gPauseDisabled == 0)
-            gCurTask->player->statusFlags &= 0xFBFF;
+            gCurTask->player->statusFlags &= ~PLAYER_STATUS_NO_BOUNDS_DEATH;
         TaskYieldTrampoline(1);
     }
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
-    gCurTask->player->statusFlags &= 0xFCFF;
+    gCurTask->player->statusFlags &= ~(PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE);
     gCurTask->variant = 3;
     TaskSleepForever();
 }
@@ -354,7 +354,7 @@ void PlayerActionCrashUpdate(void)
             if (u->playerCrashBlendRatio == 0) {
                 u->variant = 0;
                 RequestScreenShake(0);
-                gCurTask->player->statusFlags &= 0xFFEF;
+                gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
             } else {
                 u->playerCrashBlendRatio -= 16;
                 if (u->playerCrashBlendRatio <= 0)

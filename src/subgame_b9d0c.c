@@ -148,7 +148,7 @@ void SubGameDimAndHalt(void)
 {
     s32 i;
 
-    TaskSetSkipMask(7, gSubGameTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE), gSubGameTaskIdx);
     gDispCnt |= 0x200;
     gBldCntTarget1 = 0xFD;
     for (i = 0; i <= 4; i++)
@@ -482,7 +482,7 @@ void QuickDrawFreeze(void)
 {
     struct Task *t;
 
-    TaskSetOthersSkipMask(31, gCurTaskIdx);
+    TaskSetOthersSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE | TASK_SKIP_DRAW), gCurTaskIdx);
     if (gTaskSlotTypes[62] != -1)
         TaskFree(62);
     gDispCnt &= 0xE0FF;

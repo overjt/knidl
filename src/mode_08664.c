@@ -32,14 +32,14 @@ void PauseScreen(void)
     id = gPlayerStates[gLocalPlayer].ability;
     PlaySfx(232);
     for (i = 0; i < 64; i++)
-        TaskSetSkipMask(15, i);
+        TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
     PauseRoom();
     BeginFastFadeOutToWhite();
     RunLinkFrames(8);
     FadeOutSfx(32);
     RunLinkFramesUntilFadeDone();
     for (i = 0; i < 64; i++)
-        TaskSetSkipMask(31, i);
+        TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE | TASK_SKIP_DRAW), i);
     SuspendHBlankScroll();
     PauseSaveBgPalette();
     mode = gGameState;
@@ -122,7 +122,7 @@ void PauseScreen(void)
         LoadBgLayout(3);
         PauseRestoreRoomGraphics();
         for (i = 0; i < 64; i++)
-            TaskSetSkipMask(15, i);
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
         RestoreRoomHBlankScroll();
         LinkRequestSync();
         LinkSyncRandom();

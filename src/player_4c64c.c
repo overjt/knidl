@@ -99,7 +99,7 @@ void PlayerActionThrowHold(void)
             gCurTask->variant = gCurTask->playerThrowDir;
             break;
         case 5:
-            gCurTask->player->statusFlags &= 0xFDFF;
+            gCurTask->player->statusFlags &= ~PLAYER_STATUS_NO_TERRAIN_DAMAGE;
             do {
                 SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
             } while (0);

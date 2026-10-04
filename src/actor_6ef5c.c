@@ -93,7 +93,7 @@ void PlayerWarpStarRideState1(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -174,7 +174,7 @@ void PlayerWarpStarRideState3(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -256,7 +256,7 @@ void PlayerWarpStarRideState4(void)
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
     gCurTask->facing = -1;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -525,7 +525,7 @@ void PlayerWarpStarRideState6(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     PlayerStartTumble();
     switch (gCurTask->player->playerIndex)
     {
@@ -607,7 +607,7 @@ void PlayerWarpStarRideState7(void)
     LoadAbilityTiles();
     gCurTask->drawCallback = (u32)sub_0803ddc0;
     gCurTask->layer = 7;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->playerRideLandCount = 1;
     gCurTask->playerRideIsCannon = 0;
     PlayerStartTumble();

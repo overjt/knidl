@@ -295,7 +295,7 @@ void PlayerActionThrow(void)
     hit:
         gCurTask->variant = 2;
     case 2:
-        gCurTask->player->actionFlags &= 0xFFFB;
+        gCurTask->player->actionFlags &= ~PLAYER_ACTION_FLAG_CATCHING;
         PlayerStopSfx();
         if ((s8)gCurTask->player->heldCount == 0)
         {

@@ -47,7 +47,7 @@ void PlayerActionDie(void)
     gCurTask->lateUpdateCallback = 0;
     gCurTask->facing = 1;
     t = gCurTask;
-    t->spriteFlags &= 0x7FFF;
+    t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gActivePlayerCount--;
     gActivePlayerMask &= ~(1 << t->player->playerIndex);
     if (t->hitEffect == HIT_EFFECT_MID_BOSS)
@@ -56,7 +56,7 @@ void PlayerActionDie(void)
     u->player->actionFlags |= 8;
     u->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
     u->variant = 0;
-    gCurTask->player->statusFlags &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     PlayerStopAxes(3);
     gCurTask->player->mouthState = 0;
@@ -90,7 +90,7 @@ void PlayerActionDie(void)
         {
             StopAllSfx();
             StopAllSound();
-            FreezeOtherTasks(15);
+            FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
             SetRoomUpdateFlags(2);
             if (!(gDispCnt & 0x400))
             {
@@ -103,7 +103,7 @@ void PlayerActionDie(void)
             for (i = 4; i <= 63; i++)
             {
                 if (gTaskSlotTypes[i] != -1 && i != 63)
-                    TaskSetSkipMask(15, i);
+                    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
             }
             StopAllSfx();
             PauseRoom();
@@ -129,7 +129,7 @@ void PlayerActionDie(void)
             for (i = 4; i <= 63; i++)
             {
                 if (gTaskSlotTypes[i] != -1 && i != 63)
-                    TaskSetSkipMask(15, i);
+                    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
             }
             StopAllSfx();
             PauseRoom();
@@ -286,7 +286,7 @@ void PlayerActionEnterDoor(void)
     RequestScreenShake(0);
     if (gInHub == 0)
     {
-        FreezeOtherTasks(15);
+        FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
         if (!(gDispCnt & 0x400))
         {
             gDispCnt &= 0xE0FF;

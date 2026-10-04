@@ -326,7 +326,7 @@ void PlayerBallRevert(void)
         {
             PlayerStopAxes(3);
             RequestScreenShake(0);
-            FreezeOtherTasks(15);
+            FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
         }
     }
     if (gCurTask->onGround & 1)

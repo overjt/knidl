@@ -78,7 +78,7 @@ void AirGrindScenery(void)
     s32 *p;
 
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->layer = 3;
     gCurTask->spriteFlags = 0;
     gCurTask->pixelY = 40;

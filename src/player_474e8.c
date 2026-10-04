@@ -226,7 +226,7 @@ void PlayerActionSleep(void)
     TaskYieldTrampoline(4);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
-    gCurTask->player->statusFlags &= 0xFFFD;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_KEEP_ABILITY;
     SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     gCurTask->frame--;
     TaskYieldTrampoline(32);
@@ -260,7 +260,7 @@ void PlayerActionSleepUpdate(void)
     if (sub_0803e55c() != 0) {
         struct Task *t = gCurTask;
         if (t->player->ability == ABILITY_SLEEP) {
-            t->player->statusFlags &= 0xFFFD;
+            t->player->statusFlags &= ~PLAYER_STATUS_KEEP_ABILITY;
             SetPlayerAbility(ABILITY_NORMAL, -1, t->player->playerIndex);
         }
     } else if (gCurTask->playerActionDone28 != 0) {

@@ -911,7 +911,7 @@ void HotHeadFireBreath(void)
     w->velX = gUnk_030023B4;
     w->velY = gUnk_030023D4;
     if ((w->hotHeadFireFanIndex & 2) != 0)
-        w->spriteFlags = w->spriteFlags & 0x7FFF;
+        w->spriteFlags = w->spriteFlags & ~SPRITE_FLAG_FLIP_X;
     else
         w->spriteFlags = w->spriteFlags | SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 4;

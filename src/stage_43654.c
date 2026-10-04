@@ -827,7 +827,7 @@ void PlayerActionSpark(void)
             } while ((s16)++gCurTask->playerLoopCount <= 6);
         }
     case 2:
-        gCurTask->player->statusFlags &= 0xFFEF;
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         PlayerStopSfx();
         TaskSetFrame(0x36A);
         TaskYieldTrampoline(2);

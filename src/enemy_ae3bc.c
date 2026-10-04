@@ -2339,7 +2339,7 @@ void NightmarePowerOrbShrinkAwayDraw(void)
         if (t->nightmarePowerOrbScale > 0)
         {
             sign = (t->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
-            t->spriteFlags &= 0x7FFF;
+            t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
             r = DrawAffineSprite(tbl[t->frame], (u16)gSpriteScaleSteps[t->nightmarePowerOrbScale >> 16] * sign, gSpriteScaleSteps[t->nightmarePowerOrbScale >> 16], 0);
             QueueSprite(gCurTask->layer, r, gCurTask->spriteFlags, gCurTask->tileWord,
                          gCurTask->pixelX - gSpriteCameraX,

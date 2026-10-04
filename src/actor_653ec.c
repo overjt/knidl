@@ -886,7 +886,7 @@ void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4)
 {
     struct Task *t;
 
-    TaskSetSkipMask(7, gCurTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE), gCurTaskIdx);
     t = gCurTask;
     t->lateUpdateCallback = (u32)BossHitStunLateUpdate;
     gUnk_02006190[0] = t->pixelX;
@@ -1547,7 +1547,7 @@ void ActorDrawWorldInViewOrDestroyWithParasol(void)
                      t->pixelX - gSpriteCameraX,
                      (s16)(t->pixelY - gSpriteCameraY));
         u = gCurTask;
-        if ((u->skipMask & 7) == 0)
+        if ((u->skipMask & (TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE)) == 0)
         {
             if (u->frame == 3)
             {
@@ -1904,10 +1904,10 @@ void HeldPlayerInit(void)
     TaskStop();
     gCurTask->facing = 1;
     u = gCurTask;
-    u->spriteFlags &= 0x7FFF;
+    u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     u->layer = 7;
     p = gCurTask->player;
-    p->statusFlags &= 0xFFEF;
+    p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     r = gCurTask->player;
     if (r->mouthState == 2)
         r->mouthState = 0;

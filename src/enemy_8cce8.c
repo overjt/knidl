@@ -401,7 +401,7 @@ void sub_0808d460(void)
     if (t->facing == 1)
         t->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
-        t->spriteFlags &= 0x7FFF;
+        t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
 }
 
 void sub_0808d494(void)

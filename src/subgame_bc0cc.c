@@ -122,7 +122,7 @@ void QuickDrawPlacePlayer(void)
     s32 n;
     s32 k;
 
-    t->spriteFlags &= 0x7FFF;
+    t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     t->tileWord = t->quickDrawObjectPlayerIndex << 12;
     n = gPlayerCount - 1;
     k = gLocalPlayer - t->quickDrawObjectPlayerIndex;
@@ -939,7 +939,7 @@ void QuickDrawPlaceOpponent(void)
     gCurTask->posX = gCurTask->pixelX << 16;
     gCurTask->posY = gCurTask->pixelY << 16;
     gCurTask->facing = -1;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     switch (gCurTask->quickDrawObjectOpponentIndex)
     {
     case 0:

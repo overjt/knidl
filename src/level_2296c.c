@@ -403,7 +403,7 @@ void LoadRoomAfterBigSwitchView(void)
     u32 a;
 
     TaskSetSkipMask(0, gPressedBigSwitchSlot);
-    TaskSetOthersSkipMask(15, gPressedBigSwitchSlot);
+    TaskSetOthersSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gPressedBigSwitchSlot);
     BigSwitchStartRefill(gPressedBigSwitchSlot);
     gInHub = 0;
     gCurLevel = gLevelIndex;

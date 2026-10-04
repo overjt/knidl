@@ -603,10 +603,32 @@ def apply_sites(rows, do_write, consts=None):
             ln, col = int(r["line"]), int(r["col"])
             off = starts[ln - 1] + col - 1
             tok = toks.get(off)
-            if not tok or tok[0] != "num" or tok[1] != r["literal"]:
+            shift = re.match(r"^(0[xX][0-9A-Fa-f]+|[0-9]+) << (0[xX][0-9A-Fa-f]+|[0-9]+)$", r["literal"])
+            if shift:
+                # a shift `N << M` spelling one value (the second form)
+                if text[off:off + len(r["literal"])] != r["literal"]:
+                    problems.append("%s:%d:%d: no %s there" % (path, ln, col, r["literal"]))
+                    continue
+            elif not tok or tok[0] != "num" or tok[1] != r["literal"]:
                 problems.append("%s:%d:%d: no literal %s there" % (path, ln, col, r["literal"]))
                 continue
-            if re.match(r"^[A-Z][A-Z0-9_]*$", r["constant"]):
+            if shift:
+                v = int_value(shift.group(1))[0] << int_value(shift.group(2))[0]
+                c = consts.get(r["constant"])
+                if c is not None:
+                    if v != c[0]:
+                        problems.append("%s:%d: %s is %d, %s is %d" % (path, ln, r["literal"], v,
+                                                                       r["constant"], c[0]))
+                        continue
+                    topic = c[1]
+                else:
+                    ev = bit_expr_value(r["constant"], consts)
+                    if ev is None or ev[1] or ev[0] != v:
+                        problems.append("%s:%d: %s does not equal %s" % (path, ln, r["literal"],
+                                                                         r["constant"]))
+                        continue
+                    topic = ev[2]
+            elif re.match(r"^[A-Z][A-Z0-9_]*$", r["constant"]):
                 c = consts.get(r["constant"])
                 if c is None:
                     problems.append("%s:%d: unknown constant %s" % (path, ln, r["constant"]))
@@ -919,7 +941,20 @@ def bit_expr_sites(fam):
         return ("~" if comp else "") + "(" + " | ".join(names) + ")"
     members = set(spec.get("bits", []))
     variables = set(spec.get("bit_vars", []))
+    calls = spec.get("bit_calls", {})
+    ends = (";", ")", "&&", "||", ",", "?", "}")
     rows, other = [], []
+
+    def operand(toks, j, text):
+        """(token index, end index, literal text, value) of the literal or
+        `N << M` shift that is the whole operand starting at toks[j]."""
+        if j + 1 < len(toks) and toks[j][0] == "num" and toks[j + 1][1] in ends:
+            return j, j, toks[j][1], int_value(toks[j][1])[0]
+        if (j + 3 < len(toks) and toks[j][0] == "num" and toks[j + 1][1] == "<<"
+                and toks[j + 2][0] == "num" and toks[j + 3][1] in ends):
+            a, b = int_value(toks[j][1])[0], int_value(toks[j + 2][1])[0]
+            return j, j + 2, text[toks[j][2]:toks[j + 2][2] + len(toks[j + 2][1])], a << b
+        return None
     for path in src_files():
         text = read(os.path.join(ROOT, path))
         starts = line_starts(text)
@@ -928,23 +963,34 @@ def bit_expr_sites(fam):
         for i in range(n):
             k, tk = toks[i][0], toks[i][1]
             prev = toks[i - 1][1] if i > 0 else ""
-            if not (k == "id" and ((tk in members and prev in (".", "->"))
-                                   or (tk in variables and prev not in (".", "->")))):
+            op = None
+            if k == "id" and tk in calls and i + 1 < n and toks[i + 1][1] == "(":
+                arg = call_argument(toks, i, calls[tk])
+                if not arg:
+                    continue
+                o = operand(toks, arg[0], text)
+                if not o or o[1] + 1 != arg[1]:
+                    continue
+                op = "call"
+            elif k == "id" and ((tk in members and prev in (".", "->"))
+                                or (tk in variables and prev not in (".", "->"))):
+                j = _operand_end(toks, i) + 1
+                if j >= n or toks[j][1] not in ("&", "|", "^", "&=", "|=", "^="):
+                    continue
+                o = operand(toks, j + 1, text)
+                if not o:
+                    continue
+                op = toks[j][1]
+            else:
                 continue
-            j = _operand_end(toks, i) + 1
-            if j >= n or toks[j][1] not in ("&", "|", "^", "&=", "|=", "^="):
-                continue
-            lit = _value_after(toks, j)
-            if not lit:
-                continue
-            pos, v = lit
-            if v <= 0 or not v & (v - 1):
-                continue  # a single bit: the first form
+            pos, _end, lit, v = o
+            if v <= 0 or (not v & (v - 1) and pos == _end):
+                continue  # zero, or a single-bit literal: the first form
             off = toks[pos][2]
             ln = max(x for x in range(len(starts)) if starts[x] <= off)
-            where = (path, ln + 1, off - starts[ln] + 1, toks[pos][1])
+            where = (path, ln + 1, off - starts[ln] + 1, lit)
             comp = (~v) & mask
-            if toks[j][1] in ("&", "&=") and comp and not comp & ~allbits and v <= mask:
+            if op in ("&", "&=") and comp and not comp & ~allbits and v <= mask:
                 rows.append(where + (expr(comp, True),))
             elif not v & ~allbits:
                 rows.append(where + (expr(v, False),))

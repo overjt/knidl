@@ -126,7 +126,7 @@ void PlayerActionBurning(void)
         TaskSetFrame(0x5DF);
         TaskYieldTrampoline(2);
         gCurTask->playerBurningFadeStep = -1;
-        gCurTask->player->statusFlags &= 0xFFEF;
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -163,7 +163,7 @@ void PlayerActionBurning(void)
     case 3:
         gCurTask->player->hitBoxSet = 0;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
-        gCurTask->player->statusFlags &= 0xFFEF;
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         PlayerStopSfx();
         gCurTask->onGround = 0;
         PlaySfxIfLocalPlayer(153, gCurTask->player->playerIndex);
@@ -238,7 +238,7 @@ void PlayerActionBurningUpdate(void)
     {
         struct PlayerState *p = gCurTask->player;
         if (p->requestedAction != PLAYER_ACTION_NONE)
-            p->statusFlags &= 0xFFEF;
+            p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     }
 }
 

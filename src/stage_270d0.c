@@ -52,7 +52,7 @@ void StopRoomAndApplyExitFlags(void)
     if (gStageExitFlags & 2)
         StopAllSfx();
     if (gStageExitFlags & 4)
-        TaskSetOthersSkipMask(31, 63);
+        TaskSetOthersSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE | TASK_SKIP_DRAW), 63);
     gStageExitFlags = 0;
 }
 

@@ -375,7 +375,7 @@ void EndingStarRodReturnKirby(void)
     gCurTask->layer = 7;
     gCurTask->frameTable = gEndingStarRodReturnFrames;
     gCurTask->tileWord = 0x8810;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->frame = 0;
     TaskYieldTrampoline(200);
     TaskYieldTrampoline(200);

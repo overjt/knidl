@@ -1020,7 +1020,7 @@ void NightmareWizardDefeat(void)
     gCurTask->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     PlaySfx(143 << 2);
     RequestScreenShake(7);
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->nightmareWizardLoopCount = 0;
     do
     {

@@ -114,7 +114,7 @@ void PlayerWarpStarRideDraw(void)
     if (u->unk18 > 0)
     {
         sign = (u->spriteFlags & SPRITE_FLAG_FLIP_X) ? -1 : 1;
-        u->spriteFlags &= 0x7FFF;
+        u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         gfx = DrawAffineSprite(PlayerLoadFrameTilesAndPalette(0),
                            (u16)gSpriteScaleSteps[((s16 *)gCurTask)[13]] * sign,
                            gSpriteScaleSteps[((s16 *)gCurTask)[13]], 0);
@@ -176,7 +176,7 @@ void PlayerStartRideBounce(void)
 
     t = gCurTask;
     t->drawCallback = (u32)sub_0803ddc0;
-    t->spriteFlags &= 0x7FFF;
+    t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     if (t->playerRideIsCannon != 0)
     {
         TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
@@ -389,14 +389,14 @@ void PlayerBoardWarpStar(u32 a, s32 b)
             if (t->unk74 == 0)
             {
                 if ((s8)gWarpStarFlightFacings[WarpStarPickFlightSlot(gCurTaskIdx)] == 1)
-                    e->spriteFlags &= 0x7FFF;
+                    e->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
                 else
                     e->spriteFlags |= SPRITE_FLAG_FLIP_X;
             }
             else
             {
                 if ((s8)gWarpStarFlightFacings[t->unk74] == 1)
-                    e->spriteFlags &= 0x7FFF;
+                    e->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
                 else
                     e->spriteFlags |= SPRITE_FLAG_FLIP_X;
             }
@@ -411,7 +411,7 @@ void PlayerBoardWarpStar(u32 a, s32 b)
                 k += 3;
         e->frame = tbl[k];
         p->unk37 = 0;
-        e->spriteFlags &= 0x7FFF;
+        e->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     }
     TaskSetEntry((u32)PlayerWarpStarRideInit, a);
 }
@@ -442,7 +442,7 @@ void MetaKnightWarpStarRideInit(void)
     t->taskClass = 4;
     TaskStop();
     u = gCurTask;
-    u->spriteFlags &= 0x7FFF;
+    u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     RequestCopy(2, gUnk_0824A9E4.palette,
                  &gObjPalette[u->tileWord >> 12], gUnk_0824A9E4.paletteBankCount << 5);
     RequestCopy(3, gUnk_0824A9E4.tiles,
@@ -756,7 +756,7 @@ void MetaKnightWarpStarRideState6(void)
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
     u = gCurTask;
-    u->spriteFlags &= 0x7FFF;
+    u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSetFrame(0x11E4);
     TaskSetMotionXFacing(0x9000, 0x5A5A5A5A);
     gCurTask->velY = 0xFFFC0000;

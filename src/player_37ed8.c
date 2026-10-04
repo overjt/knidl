@@ -39,7 +39,7 @@ void PlayerActionHurt(void)
     p = t->player;
     if (p->prevMode != 17)
     {
-        p->statusFlags &= 0xFEEF;
+        p->statusFlags &= ~(PLAYER_STATUS_PALETTE_LOCKED | PLAYER_STATUS_NO_DRIFT);
         t->variant = 5;
         if (gCurTask->player->mouthState == 2)
             gCurTask->player->mouthState = 0;
@@ -58,7 +58,7 @@ loop:
         {
             if (gCurTask->player->ability == ABILITY_SLEEP)
             {
-                gCurTask->player->statusFlags &= 0xFFFD;
+                gCurTask->player->statusFlags &= ~PLAYER_STATUS_KEEP_ABILITY;
                 SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
             }
             u = gCurTask;

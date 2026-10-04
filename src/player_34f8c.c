@@ -268,7 +268,7 @@ void PlayerActionHighFall(void)
     if (gCurTask->player->prevMode != 8)
     {
         gCurTask->variant = 0;
-        gCurTask->player->actionFlags &= 0xFFFD;
+        gCurTask->player->actionFlags &= ~PLAYER_ACTION_FLAG_HIGH_FALL_BOUNCE;
     }
     gCurTask->player->hitBoxSet = 0;
     gCurTask->playerHighFallPhase = 0;
@@ -350,7 +350,7 @@ void PlayerActionHighFallUpdate(void)
         PlayerCheckDropAbility();
     if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
-        gCurTask->player->statusFlags &= 0xFEFF;
+        gCurTask->player->statusFlags &= ~PLAYER_STATUS_NO_DRIFT;
     }
     else
     {
@@ -394,14 +394,14 @@ void PlayerActionHighFallUpdate(void)
                 PlayerCheckBump();
                 PlayerLand(0);
                 PlayerRequestLocomotion();
-                gCurTask->player->statusFlags &= 0xFEFF;
+                gCurTask->player->statusFlags &= ~PLAYER_STATUS_NO_DRIFT;
                 break;
             }
         case 2:
             if (gCurTask->playerHighFallPhase != 0)
             {
                 gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
-                gCurTask->player->statusFlags &= 0xFEFF;
+                gCurTask->player->statusFlags &= ~PLAYER_STATUS_NO_DRIFT;
             }
             break;
         }

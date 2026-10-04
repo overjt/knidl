@@ -42,7 +42,7 @@ void AirGrindRacer(void)
     gCurTask->drawCallback = (u32)AirGrindRacerDraw;
     gCurTask->moveCallback = (u32)AirGrindRacerMove;
     gCurTask->frameTable = (u32 *)gUnk_08755F54;
-    gCurTask->spriteFlags &= 0x7FFF;
+    gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     gCurTask->tileWord = gUnk_080CFE2C[gAirGrindPtr->localPlayer][player] << 12;
     gCurTask->updateCallback = (u32)AirGrindRacerUpdate;
     gCurTask->lateUpdateCallback = (u32)AirGrindRacerIdleUpdate;

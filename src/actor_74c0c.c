@@ -153,7 +153,7 @@ void sub_08074ee0(u32 flag)
             if (flag)
                 p->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
             else
-                p->statusFlags &= 0xFFEF;
+                p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         }
     }
 }
@@ -1330,13 +1330,13 @@ void PlayerCannonInit(void)
     {
         struct Task *t = gCurTask;
 
-        t->spriteFlags &= 0x7FFF;
+        t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         t->layer = 7;
     }
     {
         struct Task *t = gCurTask;
 
-        t->player->statusFlags &= 0xFFEF;
+        t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         CallTableEntry(t->state, 6, gPlayerCannonStates);
     }
 }

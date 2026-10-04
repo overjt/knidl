@@ -63,10 +63,10 @@ void PlayerActionShareItem(void)
     if (gCurTask->playerShareReceiver == gCurTask->player->playerIndex)
     {
         gCurTask->layer = 5;
-        TaskSetSkipMask(14, gCurTaskIdx);
+        TaskSetSkipMask((TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
         t = gCurTask;
         t->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
-        t->player->statusFlags &= 0xFFEF;
+        t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
         if (!(t->waterFlags & 1))
         {
             t->playerBaseFrame = gUnk_0873DA62[t->player->ability][1];
@@ -124,15 +124,15 @@ void PlayerActionShareItem(void)
     }
     q = &gPlayerStates[gCurTask->playerShareReceiver];
     u = &gTasks[gCurTask->playerShareReceiver];
-    FreezeOtherTasks(15);
-    TaskSetSkipMask(12, gCurTaskIdx);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
+    TaskSetSkipMask((TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), gCurTaskIdx);
     TaskSetSkipMask(0, gCurTask->playerShareReceiver);
     a43 = gCurTask->facing;
     a42 = gCurTask->layer;
     PlayerStopAxes(3);
     t = gCurTask;
     t->player->statusFlags |= PLAYER_STATUS_NO_DRIFT;
-    t->player->statusFlags &= 0xFFEF;
+    t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     if (u->pixelX - t->pixelX > 0)
         t->facing = 1;
     else
@@ -143,7 +143,7 @@ void PlayerActionShareItem(void)
     u->velX = u->accelX = u->speedLimitX = 0;
     u->velY = u->accelY = u->speedLimitY = 0;
     if ((u->facing = -gCurTask->facing) == 1)
-        u->spriteFlags &= 0x7FFF;
+        u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     else
         u->spriteFlags |= SPRITE_FLAG_FLIP_X;
     t = gCurTask;
@@ -399,10 +399,10 @@ void PlayerActionShareItem(void)
     }
     gCurTask->facing = a43;
     gCurTask->layer = a42;
-    gCurTask->player->statusFlags &= 0xFEFF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_NO_DRIFT;
     u->facing = b43;
     u->layer = b42;
-    gPlayerStates[gCurTask->playerShareReceiver].statusFlags &= 0xFEFF;
+    gPlayerStates[gCurTask->playerShareReceiver].statusFlags &= ~PLAYER_STATUS_NO_DRIFT;
     u->taskClass--;
     FreezeOtherTasks(0);
     TaskSetSkipMask(0, gCurTaskIdx);
@@ -526,7 +526,7 @@ void PlayerStepOffsetScript(void)
     if (e->flags != 0)
     {
         if (e->flags & 128)
-            TaskSetSkipMask(3, gCurTaskIdx);
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE), gCurTaskIdx);
         if (e->flags & 64)
         {
             if (gCurTask->facing == 1)
@@ -545,7 +545,7 @@ void PlayerStepOffsetScript(void)
     else
     {
         gCurTask->player->pixelOffsetX = gCurTask->player->pixelOffsetY = 0;
-        gCurTask->player->actionFlags &= 0xFFFE;
+        gCurTask->player->actionFlags &= ~PLAYER_ACTION_FLAG_OFFSET_SCRIPT;
         TaskSetSkipMask(0, gCurTaskIdx);
     }
 }

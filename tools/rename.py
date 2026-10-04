@@ -847,6 +847,27 @@ def unbitexpr(a, b, values, uses):
             i += 1
             j += 1
             continue
+        if (x.lastgroup == "num" and i + 2 < len(ta) and ta[i + 1].group(0) == "<"
+                and ta[i + 2].group(0) == "<" and i + 3 < len(ta) and ta[i + 3].lastgroup == "num"):
+            # REF spells the value as a shift `N << M` (CONST_TOK_RE splits
+            # `<<` into two tokens): a constant or a bit expression may
+            # stand for the whole shift
+            sv = int_value(x.group(0)) << int_value(ta[i + 3].group(0))
+            e = expr_at(j)
+            if e is not None and not e[1] and e[0] == sv:
+                n = e[2]
+            elif bit(y) is not None and values[y.group(0)] == sv:
+                n = 1
+            else:
+                n = 0
+            if n:
+                out.append(b[pos:y.start()])
+                out.append(a[x.start():ta[i + 3].end()])
+                pos = tb[j + n - 1].end()
+                uses[0] += 1
+                i += 4
+                j += n
+                continue
         if (x.lastgroup == "num" and y.lastgroup == "id" and y.group(0) in values
                 and int_value(x.group(0)) == values[y.group(0)]):
             i += 1  # a plain constant: unconst's case

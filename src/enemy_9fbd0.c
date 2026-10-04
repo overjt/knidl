@@ -48,7 +48,7 @@ void MetaKnightsUnlockPlayers(void)
     for (i = 0; i <= 3; i++)
     {
         if (((gActivePlayerMask >> i) & 1) != 0)
-            gPlayerStates[i].statusFlags &= 0xFFBF;
+            gPlayerStates[i].statusFlags &= ~PLAYER_STATUS_INPUT_LOCKED;
     }
 }
 
@@ -82,7 +82,7 @@ void KingDededeStartHitStun(void)
     s32 one;
 
     RequestScreenShake(4);
-    TaskSetSkipMask(7, gCurTaskIdx);
+    TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE), gCurTaskIdx);
     t = gCurTask;
     t->lateUpdateCallback = (u32)KingDededeHitStunLateUpdate;
     gUnk_02006190[0] = t->pixelX;

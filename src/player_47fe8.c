@@ -59,10 +59,10 @@ void PlayerActionGetAbility(void)
     {
         struct Task *t = gCurTask;
         t->player->actionFlags |= PLAYER_ACTION_FLAG_GET_ABILITY;
-        t->player->statusFlags |= 0x720;
-        t->player->statusFlags &= 0xFFEF;
+        t->player->statusFlags |= (PLAYER_STATUS_TIMERS_FROZEN | PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
+        t->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     }
-    FreezeOtherTasks(15);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
     if (gCreditsDemoSet == 0)
         BeginFade(4, -2, gUnk_0873B534[gCurTask->player->playerIndex]);
     {
@@ -680,7 +680,7 @@ void PlayerActionGetAbility(void)
     {
         struct Task *t = gCurTask;
         struct PlayerState *p;
-        t->player->statusFlags &= 0xF85F;
+        t->player->statusFlags &= ~(PLAYER_STATUS_TIMERS_FROZEN | PLAYER_STATUS_NO_ATTACK_SFX | PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
         p = t->player;
         if (p->invulnerability == 1)
             p->invulnerabilityTimer += 6;
@@ -690,7 +690,7 @@ void PlayerActionGetAbility(void)
     {
         struct Task *t = gCurTask;
         t->playerActionDone28++;
-        t->player->actionFlags &= 0xFEFF;
+        t->player->actionFlags &= ~PLAYER_ACTION_FLAG_GET_ABILITY;
     }
     gPauseDisabled = 0;
     TaskSleepForever();
@@ -724,7 +724,7 @@ void PlayerActionGetAbilityUpdate(void)
             case 0x370:
                 {
                     struct Task *u = gCurTask;
-                    u->player->statusFlags &= 0xFFEF;
+                    u->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
                     u->playerNextBankBlendRatio = 0;
                     u->playerBankBlendRatio = 0;
                 }

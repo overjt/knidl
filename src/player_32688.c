@@ -492,7 +492,7 @@ void sub_08033414(void)
         else if (gCurTask->player->actionFlags & PLAYER_ACTION_FLAG_INVINCIBLE_CANDY)
         {
             SetPlayerInvulnerability(5, 0, gCurTask->player->playerIndex);
-            gCurTask->player->actionFlags &= 0xFFBF;
+            gCurTask->player->actionFlags &= ~PLAYER_ACTION_FLAG_INVINCIBLE_CANDY;
             PlayBgm(BGM_INVINCIBLE);
             PlayerStartItemShare(gCurTask->player->playerIndex, 3);
         }

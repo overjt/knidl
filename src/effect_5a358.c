@@ -286,7 +286,7 @@ void PlayerEffectCrashBlast(void)
                 TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
                 break;
             }
-            TaskSetSkipMask(15, (s16)gScreenAttackTasks[n]);
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), (s16)gScreenAttackTasks[n]);
         }
         if (m != 0)
             TaskYieldTrampoline(3);
@@ -339,7 +339,7 @@ void PlayerEffectCrashBlast(void)
             if (r != 0)
             {
                 TaskSaveSkipMask(i);
-                TaskSetSkipMask(15, i);
+                TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
                 TaskYieldTrampoline(2);
                 gScreenAttackActive = 0;
             }

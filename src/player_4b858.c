@@ -130,7 +130,7 @@ loop:
         {
             struct Task *d = gCurTask;
 
-            d->player->statusFlags &= 0xFDFF;
+            d->player->statusFlags &= ~PLAYER_STATUS_NO_TERRAIN_DAMAGE;
             SetPlayerInvulnerability(255, 0, d->player->playerIndex);
         }
         TaskSleepForever();

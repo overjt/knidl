@@ -391,7 +391,7 @@ void HeldPlayerState5Update(void)
         if (u->facing == 1)
             u->spriteFlags |= SPRITE_FLAG_FLIP_X;
         else
-            u->spriteFlags &= 0x7FFF;
+            u->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
         TaskSleepForever();
     }
 }
@@ -609,7 +609,7 @@ void HeldPlayerThrowFlightForward(void)
     if (x->facing == 1)
         x->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
-        x->spriteFlags &= 0x7FFF;
+        x->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSleepForever();
     TaskSleepForever();
 }
@@ -689,7 +689,7 @@ void HeldPlayerThrowFlightBackward(void)
     if (t->facing == 1)
         t->spriteFlags |= SPRITE_FLAG_FLIP_X;
     else
-        t->spriteFlags &= 0x7FFF;
+        t->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
     TaskSleepForever();
     TaskSleepForever();
 }
@@ -1135,10 +1135,10 @@ void PlayerSuspendControl(s32 i, u8 flag)
         p->blockBreakCooldown = 0;
         p->offsetScriptDelay = 0;
         p->offsetScriptStep = 0;
-        p->actionFlags &= 0xFFFE;
+        p->actionFlags &= ~PLAYER_ACTION_FLAG_OFFSET_SCRIPT;
         t->skipMask = 0;
     }
-    p->statusFlags &= 0xFFEF;
+    p->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     t->accelY = 0;
     t->accelX = 0;
     t->velY = 0;

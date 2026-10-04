@@ -61,7 +61,7 @@ s32 PlayerBallPlayBump(void)
             {
                 TaskSetFrameFlip(0xCEA);
                 TaskYieldTrampoline(2);
-                gCurTask->spriteFlags &= 0x7FFF;
+                gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
             }
             else
             {

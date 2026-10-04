@@ -34,7 +34,7 @@ void PlayerActionMike(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_MIKE;
     gCurTask->variant = gCurTask->player->abilityUses - 1;
-    gCurTask->player->statusFlags &= 0xFFEF;
+    gCurTask->player->statusFlags &= ~PLAYER_STATUS_PALETTE_LOCKED;
     if (--gCurTask->player->abilityUses == 0) {
         SetPlayerAbilityNoHud(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     } else {
@@ -43,7 +43,7 @@ void PlayerActionMike(void)
     }
     gPauseDisabled = 1;
     PlayerStopAxes(3);
-    FreezeOtherTasks(15);
+    FreezeOtherTasks((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE));
     if (!(gDispCnt & 0x400)) {
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
@@ -52,7 +52,7 @@ void PlayerActionMike(void)
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 0);
     gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-    gCurTask->player->statusFlags |= 0x700;
+    gCurTask->player->statusFlags |= (PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
     switch (gCurTask->variant) {
     case 2:
         PlayerSetMotionXPreset(11, 42);
@@ -202,7 +202,7 @@ void PlayerActionMike(void)
     }
     gCurTask->playerActionDone28++;
     gPauseDisabled = 0;
-    gCurTask->player->statusFlags &= 0xF8FF;
+    gCurTask->player->statusFlags &= ~(PLAYER_STATUS_NO_DRIFT | PLAYER_STATUS_NO_TERRAIN_DAMAGE | PLAYER_STATUS_NO_BOUNDS_DEATH);
     TaskSleepForever();
 }
 
