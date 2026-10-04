@@ -33,7 +33,7 @@ jobs:
       # missed addsyms.py, carve.py, clobber_sweep.py, fnmatch_diff.py and
       # gen_report.py) and the asm-differ configuration.
       - name: Python tooling check (tools/*.py)
-        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/*.py tools/asm-differ/*.py
+        run: docker run --rm -v "$PWD":/src -w /src knidl-builder python3 -m py_compile tools/*.py tools/asm-differ/*.py tools/boottest/*.py
 
       - name: Shell tooling check (bash -n)
         run: docker run --rm -v "$PWD":/src -w /src knidl-builder bash -c 'set -e; for f in asmdiff.sh tools/*.sh tools/asm-differ/*.sh; do bash -n "$f"; done'
