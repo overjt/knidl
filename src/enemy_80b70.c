@@ -7,8 +7,8 @@
  * the three-table pattern all of M21 is built from).  It holds:
  *   * task #175, the only class-4 type in the bank: `Task_HotHeadFlame` is the
  *     coroutine itself (it re-seats the actor next to gTasks[unk44]
- *     every cycle) with per-frame hook `sub_08080d58`, and `sub_08080b70` /
- *     `sub_08080bcc` are its unk73 handlers (`0x08741BF4`);
+ *     every cycle) with per-frame hook `HotHeadFlameCheckParent`, and `HotHeadStartFall` /
+ *     `HotHeadLand` are its unk73 handlers (`0x08741BF4`);
  *   * task #31's dispatcher `Task_Starman` (`0x08741544`, four rows) and
  *     task #38's `Task_PoppyBrosJr` (`0x087415B8`, three rows);
  *   * six scripts in the entry/hook shape: `StarmanVariant0`+`sub_08080e5c`
@@ -23,8 +23,8 @@
  *     returning 1 when the input already matches the facing).
  *
  * `StarmanFlyEnterState`, `StarmanIdleEnterState` and `PoppyBrosJrStandEnterState` are dead exports of the
- * same kind as batch 1's; `sub_08081960`, `PoppyBrosJrStandHopUpdate`, `sub_08081f08` and
- * `sub_08081f18` are pointer-referenced leaves the census originally missed
+ * same kind as batch 1's; `StarmanLand`, `PoppyBrosJrStandHopUpdate`, `PoppyBrosJrHitCeiling` and
+ * `PoppyBrosJrStartFall` are pointer-referenced leaves the census originally missed
  * (both classes curated in tools/symdb.py).
  */
 #include "gba/gba.h"
@@ -56,7 +56,7 @@ extern void ActorSetState(u32 v);
 extern void ActorSetAttackBox(u32 *p);
 extern void ActorSetTerrainBox(u32 *p);
 
-s32 sub_08080b70(void)
+s32 HotHeadStartFall(void)
 {
     switch (gCurTask->variant)
     {
@@ -74,7 +74,7 @@ s32 sub_08080b70(void)
     return 1;
 }
 
-s32 sub_08080bcc(void)
+s32 HotHeadLand(void)
 {
     TaskStopY();
     switch (gCurTask->variant)
@@ -93,13 +93,13 @@ s32 sub_08080bcc(void)
     return 1;
 }
 
-s32 sub_08080c2c(void)
+s32 HotHeadBounceOffWall(void)
 {
     TaskTurnAroundAndReverseX();
     return 0;
 }
 
-s32 sub_08080c38(void)
+s32 HotHeadEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -116,7 +116,7 @@ void Task_HotHeadFlame(void)
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
-    t->updateCallback = (u32)sub_08080d58;
+    t->updateCallback = (u32)HotHeadFlameCheckParent;
     t->layer = 10;
     gCurTask->frameTable = gUnk_0874CBD0;
     while (1)
@@ -151,7 +151,7 @@ void Task_HotHeadFlame(void)
     }
 }
 
-void sub_08080d58(void)
+void HotHeadFlameCheckParent(void)
 {
     struct Task *p;
     struct Actor **q;
@@ -766,7 +766,7 @@ s32 sub_08081884(void)
     return 0;
 }
 
-s32 sub_080818a8(void)
+s32 StarmanHitCeiling(void)
 {
     s32 r = 0;
     struct Task *t = gCurTask;
@@ -793,7 +793,7 @@ s32 sub_080818a8(void)
     return r;
 }
 
-s32 sub_08081900(void)
+s32 StarmanStartFall(void)
 {
     s32 r = 0;
     struct Task *t = gCurTask;
@@ -820,7 +820,7 @@ s32 sub_08081900(void)
     return r;
 }
 
-s32 sub_08081960(void)
+s32 StarmanLand(void)
 {
     struct Task *t = gCurTask;
 
@@ -829,7 +829,7 @@ s32 sub_08081960(void)
     return 0;
 }
 
-s32 sub_08081984(void)
+s32 StarmanHitWall(void)
 {
     s32 n = gCurTask->variant;
 
@@ -841,7 +841,7 @@ s32 sub_08081984(void)
     return 0;
 }
 
-s32 sub_080819a4(void)
+s32 StarmanEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -1144,12 +1144,12 @@ s32 sub_08081e64(void)
     return r;
 }
 
-void sub_08081f08(void)
+void PoppyBrosJrHitCeiling(void)
 {
     gCurTask->velY = 0;
 }
 
-s32 sub_08081f18(void)
+s32 PoppyBrosJrStartFall(void)
 {
     struct Task *t = gCurTask;
 
@@ -1161,7 +1161,7 @@ s32 sub_08081f18(void)
     return 0;
 }
 
-s32 sub_08081f38(void)
+s32 PoppyBrosJrHitWall(void)
 {
     struct Task *t;
 
@@ -1171,7 +1171,7 @@ s32 sub_08081f38(void)
     t->unk28 = 0;
 }
 
-s32 sub_08081f50(void)
+s32 PoppyBrosJrEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -1193,7 +1193,7 @@ void Task_PoppyBrosJrOnApple(void)
     case 0:
     case 2:
         u = gCurTask;
-        u->drawCallback = (u32)sub_08065640;
+        u->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
         u->frameTable = gPoppyBrosJrOnAppleFrames;
         break;
     case 1:
@@ -1225,7 +1225,7 @@ void Task_PoppyBrosJrOnMaximTomato(void)
     case 0:
     case 2:
         u = gCurTask;
-        u->drawCallback = (u32)sub_08065640;
+        u->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
         u->frameTable = gPoppyBrosJrOnMaximTomatoFrames;
         u->unk74 = 0;
         break;

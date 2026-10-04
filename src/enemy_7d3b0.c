@@ -15,7 +15,7 @@
  *   * Task_Rocky's (#9) row 0 `RockyWalkInit`+`RockyWalkUpdate`, whose per-frame
  *     handlers `RockyWalkState0Update` / `RockyWalkState1Update` re-centre on the nearest
  *     player when `|TaskGetNearestPlayerDx()| <= 49` and `|TaskGetDyTo()| <= 15`;
- *   * the class-3 three-way branch pair `sub_0807dd70` / `sub_0807dddc`
+ *   * the class-3 three-way branch pair `RockyLand` / `RockyStartFall`
  *     (`switch (Task.variant)` with an empty `case 1`);
  *   * Task_SirKibble's `0x08741220` function-pointer table the three
  *     `SirKibbleShootUpdate` / `SirKibbleJumpUpdate` hooks dispatch through;
@@ -513,7 +513,7 @@ void sub_0807dd10(void)
     TaskYieldTrampoline(6);
 }
 
-s32 sub_0807dd70(void)
+s32 RockyLand(void)
 {
     s32 r;
 
@@ -544,7 +544,7 @@ s32 sub_0807dd70(void)
     return r;
 }
 
-s32 sub_0807dddc(void)
+s32 RockyStartFall(void)
 {
     s32 r = 0;
 
@@ -566,7 +566,7 @@ s32 sub_0807dddc(void)
     return r;
 }
 
-s32 sub_0807de30(void)
+s32 RockyHitCeiling(void)
 {
     s32 r = 0;
 
@@ -579,7 +579,7 @@ s32 sub_0807de30(void)
     return r;
 }
 
-s32 sub_0807de64(void)
+s32 RockyHitWall(void)
 {
     struct Task *t = gCurTask;
 
@@ -590,7 +590,7 @@ s32 sub_0807de64(void)
     return 0;
 }
 
-s32 sub_0807de88(void)
+s32 RockyEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -916,19 +916,19 @@ s32 sub_0807e4cc(void)
     return 0;
 }
 
-s32 sub_0807e4fc(void)
+s32 SirKibbleStartFall(void)
 {
     TaskSetMotionY(0, 0x2500, 0x30000);
     return 0;
 }
 
-s32 sub_0807e514(void)
+s32 SirKibbleLand(void)
 {
     TaskStopY();
     return 0;
 }
 
-s32 sub_0807e520(void)
+s32 SirKibbleEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -1010,7 +1010,7 @@ void CappyCaplessInit(void)
 
     t->updateCallback = (u32)CappyCaplessUpdate;
     t->frameTable = gCappyCaplessFrames;
-    ActorLoadDef(gUnk_0874183C);
+    ActorLoadDef(gCappyCaplessDef);
     ActorSetState(1);
     CallTableEntry(gCurTask->state, 2, gCappyCaplessStates);
 }
@@ -1145,7 +1145,7 @@ void CappyStandHopUpdate(void)
 {
 }
 
-s32 sub_0807e9b4(void)
+s32 CappyBounceOffWall(void)
 {
     struct Task *t = gCurTask;
 
@@ -1153,7 +1153,7 @@ s32 sub_0807e9b4(void)
     return 0;
 }
 
-s32 sub_0807e9c8(void)
+s32 CappyEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -1445,7 +1445,7 @@ void sub_0807ef7c(void)
     }
 }
 
-void sub_0807efec(void)
+void CoolSpookTeardown(void)
 {
     gPaletteAnimRefCounts[0]--;
 }

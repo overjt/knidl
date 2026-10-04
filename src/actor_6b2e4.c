@@ -364,7 +364,7 @@ void sub_0806b95c(void)
     if (t->actorKind != 0 || t->u76.subtype != 40)
         p->unk09 = 1;
     u = gCurTask;
-    if (u->drawCallback == (u32)sub_08065640)
+    if (u->drawCallback == (u32)ActorDrawWorldInViewOrDestroyWithExtra)
         u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     if (gCurTask->actorKind != 1)
         ActorSetHitReactions(gUnk_0873F92C);

@@ -21,10 +21,10 @@
  * This batch holds:
  *   * Task_Flamer's rows 0/1 `FlamerInit` (7 states, tables `0x08741778` /
  *     `0x08741794`, per-frame hook `FlamerUpdate`, re-arm `FlamerEnterState`);
- *   * its terrain library: `sub_08083a48` / `sub_08083ad4` / `sub_08083bbc` /
- *     `sub_08083cb8` probe the room with GetCollisionTileAtPixel/GetCollisionTileAtOffset and turn the
+ *   * its terrain library: `FlamerGetSurfaceSlopeInDir` / `FlamerGetSurfaceSlopeOnSide` / `sub_08083bbc` /
+ *     `FlamerGetSurfaceSlopeAt` probe the room with GetCollisionTileAtPixel/GetCollisionTileAtOffset and turn the
  *     `gUnk_087339F0` / `gCollisionTileSlope` / `gUnk_087416A4` index chain into a
- *     tile class, `sub_08083d28` turns a direction code into an aim angle plus
+ *     tile class, `FlamerSetCrawlVelocity` turns a direction code into an aim angle plus
  *     a 16.16 velocity through AngleToVector, and `sub_08083dfc` is the
  *     five-times-four-frame animation wait;
  *   * the one-state script `FlamerIdleInit` (`0x087417B0` / `0x087417B4`);
@@ -117,7 +117,7 @@ void FlamerState0(void)
     {
         t = gCurTask;
         t->unk30 -= 2;
-        if (sub_08083a48(t->unk30) != 0)
+        if (FlamerGetSurfaceSlopeInDir(t->unk30) != 0)
         {
             gCurTask->unk18 = 1;
             v = TaskGetAngleToNearestPlayer(2);
@@ -154,7 +154,7 @@ void FlamerState0Update(void)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void FlamerState1(void)
+void FlamerCrawl(void)
 {
     struct Task *t;
 
@@ -171,7 +171,7 @@ void FlamerState1(void)
     }
 }
 
-void FlamerState1Update(void)
+void FlamerCrawlUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -192,7 +192,7 @@ void FlamerState1Update(void)
     switch (t->unk1C)
     {
     case 0:
-        d = sub_08083ad4(t->unk30);
+        d = FlamerGetSurfaceSlopeOnSide(t->unk30);
         if (d == 0)
         {
             u = gCurTask;
@@ -210,17 +210,17 @@ void FlamerState1Update(void)
             if (e > 5 && f > 5)
                 gCurTask->unk18 = e;
         }
-        d = sub_08083a48(gCurTask->unk34);
+        d = FlamerGetSurfaceSlopeInDir(gCurTask->unk34);
         if (d == 1 || ((gCurTask->unk34 & 1) == 0 && d > 1))
         {
             gUnk_03001F2C = n = gCurTask->unk34;
             gCurTask->unk34 = (gCurTask->unk30 + 2) & 3;
             gCurTask->unk30 = n;
-            sub_08083d28(d);
+            FlamerSetCrawlVelocity(d);
         }
         else
         {
-            sub_08083d28(gCurTask->unk18);
+            FlamerSetCrawlVelocity(gCurTask->unk18);
         }
         break;
     case 1:
@@ -244,14 +244,14 @@ void FlamerState1Update(void)
             gUnk_03001F2C = n2 = t->unk30;
             t->unk30 = (t->unk34 + 2) & 3;
             t->unk34 = n2;
-            sub_08083d28(m);
+            FlamerSetCrawlVelocity(m);
         }
         x = gCurTask;
         x->pixelX = x->posX >> 16;
         x->pixelY = x->posY >> 16;
         break;
     case 2:
-        if (sub_08083ad4(t->unk30) == 0)
+        if (FlamerGetSurfaceSlopeOnSide(t->unk30) == 0)
             ActorSetState(0);
         y = gCurTask;
         y->unk1C = 0;
@@ -540,7 +540,7 @@ void FlamerState6Update(void)
             else
                 u->unk20 = u->unk20 - 32;
             gUnk_03001F2C = 4;
-            while (gUnk_03001F2C != 0 && sub_08083ad4(gUnk_03001F2C - 1) == 0)
+            while (gUnk_03001F2C != 0 && FlamerGetSurfaceSlopeOnSide(gUnk_03001F2C - 1) == 0)
                 gUnk_03001F2C--;
             if (gUnk_03001F2C != 0)
             {
@@ -599,7 +599,7 @@ void FlamerIdleState0Update(void)
 {
 }
 
-u8 sub_08083a48(s32 dir)
+u8 FlamerGetSurfaceSlopeInDir(s32 dir)
 {
     struct Task *t;
     s16 a;
@@ -621,7 +621,7 @@ u8 sub_08083a48(s32 dir)
     return r;
 }
 
-u8 sub_08083ad4(s32 dir)
+u8 FlamerGetSurfaceSlopeOnSide(s32 dir)
 {
     struct Task *t;
     u16 a;
@@ -645,9 +645,9 @@ u8 sub_08083ad4(s32 dir)
         c = t->pixelX + gUnk_0874168C[dir];
         d = t->pixelY + gUnk_08741690[dir];
     }
-    r = sub_08083cb8(a, b);
+    r = FlamerGetSurfaceSlopeAt(a, b);
     if (r == 0)
-        r = sub_08083cb8(c, d);
+        r = FlamerGetSurfaceSlopeAt(c, d);
     return r;
 }
 
@@ -686,7 +686,7 @@ u8 sub_08083bbc(s32 dir, s32 k)
     return r;
 }
 
-u8 sub_08083cb8(s16 x, s16 y)
+u8 FlamerGetSurfaceSlopeAt(s16 x, s16 y)
 {
     s32 i;
     u8 r;
@@ -704,7 +704,7 @@ u8 sub_08083cb8(s16 x, s16 y)
     return r;
 }
 
-s32 sub_08083d28(u8 a)
+s32 FlamerSetCrawlVelocity(u8 a)
 {
     struct Task *t;
     s16 v;
@@ -755,7 +755,7 @@ void sub_08083dfc(void)
     } while ((s16)gCurTask->unk6C <= 4);
 }
 
-u8 sub_08083e5c(void)
+u8 FlamerEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;

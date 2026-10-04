@@ -9909,7 +9909,7 @@ u32 gUFOLaserFrames[] FRAME_TABLE = {
     (u32)gUnk_0825B308,
 };
 
-/* gParasolFrames.  Consumers: sub_08066c74 (src/actor_653ec.c:1573),
+/* gParasolFrames.  Consumers: ActorDrawWorldInViewOrDestroyWithParasol (src/actor_653ec.c:1573),
  * sub_08066e88 (src/actor_653ec.c:1654), Task_Parasol
  * (src/enemy_7aa5c.c:1664).  11 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables

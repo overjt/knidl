@@ -435,7 +435,7 @@ void Task_BroomHatter(void)
     t->u8C.actor->extraTileWord = (t->tileWord & 0xFFF) | (240 << 8);
     t->broomHatterMove = 1;
     t->moveCallback = (u32)TaskMove;
-    t->drawCallback = (u32)sub_08065640;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gBroomHatterFrames;

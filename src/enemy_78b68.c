@@ -494,21 +494,21 @@ void Task_Pengy(void)
     CallTableEntry(gCurTask->variant, 2, gPengyVariants);
 }
 
-s32 sub_08079480(void)
+s32 PengyStartFall(void)
 {
     ActorSetState(3);
     TaskSetEntry(PengyEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080794a0(void)
+s32 PengyLand(void)
 {
     ActorSetState(1);
     TaskSetEntry(PengyEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080794c0(void)
+s32 PengyEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -811,21 +811,21 @@ void Task_Bomber(void)
     CallTableEntry(gCurTask->variant, 2, gBomberVariants);
 }
 
-s32 sub_08079a20(void)
+s32 BomberStartFall(void)
 {
     ActorSetState(1);
     TaskSetEntry(BomberEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_08079a40(void)
+s32 BomberLand(void)
 {
     ActorSetState(3);
     TaskSetEntry(BomberEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_08079a60(void)
+s32 BomberEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -838,7 +838,7 @@ s32 sub_08079a70(void)
     return 1;
 }
 
-s32 sub_08079a90(void)
+s32 BomberBounceOffWall(void)
 {
     TaskTurnAroundAndReverseX();
     return 0;
@@ -965,7 +965,7 @@ void BomberExplode(void)
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->unk6C <= 3);
         ThawStage();
-        ActorSetHitReactions(gUnk_08740F2C);
+        ActorSetHitReactions(gBomberExplodeHitReactions);
         ActorDie();
     }
     else
@@ -1034,7 +1034,7 @@ void Task_Sparky(void)
     CallTableEntry(gCurTask->variant, 3, gSparkyVariants);
 }
 
-void sub_08079e70(void)
+void SparkyTeardown(void)
 {
     if (--gPaletteAnimRefCounts[0] < 0)
         sub_0806ee2c();
@@ -1101,7 +1101,7 @@ void SparkyPickStartState(u16 a)
         sub_08079f18(a);
 }
 
-s32 sub_08079fd0(void)
+s32 SparkyStartFall(void)
 {
     if (gCurTask->variant != 0)
         return 0;
@@ -1110,7 +1110,7 @@ s32 sub_08079fd0(void)
     return 1;
 }
 
-s32 sub_0807a008(void)
+s32 SparkyLand(void)
 {
     if (gCurTask->variant != 0)
         return 0;
@@ -1119,19 +1119,19 @@ s32 sub_0807a008(void)
     return 1;
 }
 
-s32 sub_0807a040(void)
+s32 SparkyEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
 }
 
-s32 sub_0807a050(void)
+s32 SparkyBounceOffWall(void)
 {
     TaskTurnAroundAndReverseX();
     return 0;
 }
 
-void sub_0807a05c(void)
+void SparkyHitCeiling(void)
 {
     gCurTask->velY = 0;
 }

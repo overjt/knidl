@@ -429,11 +429,11 @@ void sub_0807883c(void);
 void RoomParticlesVariant4(void);
 void sub_080788e0(void);
 void Task_WaddleDee(void);
-s32 sub_08078984(void);
-s32 sub_080789ac(void);
-s32 sub_08078a48(void);
-s32 sub_08078b08(void);
-s32 sub_08078b38(void);
-s32 sub_08078b64(void);
+s32 ParasolWaddleDeeReactToDefeat(void);
+s32 WaddleDeeStartFall(void);
+s32 WaddleDeeLand(void);
+s32 WaddleDeeEnterWater(void);
+s32 WaddleDeeHitWall(void);
+s32 WaddleDeeHitCeiling(void);
 
 #endif /* GUARD_CUTSCENE_H */

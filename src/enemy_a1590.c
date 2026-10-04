@@ -103,7 +103,7 @@ extern void ActorDrawWorldInView(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
 extern void sub_080653ec(void);
 extern void sub_08065438(void);
-extern void sub_08065640(void);
+extern void ActorDrawWorldInViewOrDestroyWithExtra(void);
 extern void ActorMove(void);
 extern void TaskMoveRelativeToView(void);
 extern void ResetBgPaletteBlend(void);

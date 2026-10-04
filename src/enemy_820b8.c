@@ -7,9 +7,9 @@
  * It holds:
  *   * task #42's dispatcher `Task_Wheelie` (`0x08741640`) and task #43's
  *     `Task_Flamer` (`0x0874176C`), plus the unk73 quartets at
- *     `0x08741C44` (`sub_08082678` / `sub_080826a0` / `sub_080826bc` /
- *     `sub_080826c8`) and `0x08741C64` (`sub_08082d14` / `sub_08082d4c` /
- *     `sub_08082db0` / `sub_08082dd4`);
+ *     `0x08741C44` (`PoppyBrosJrRiderStartFall` / `PoppyBrosJrRiderLand` / `PoppyBrosJrRiderBounceOffWall` /
+ *     `PoppyBrosJrRiderEnterWater`) and `0x08741C64` (`WheelieStartFall` / `WheelieHitWall` /
+ *     `sub_08082db0` / `WheelieEnterWater`);
  *   * five scripts in the entry/hook shape: `PoppyBrosJrRideInit`+`PoppyBrosJrRideUpdate`
  *     (`0x08741610`/`0x08741614`; its hook is the one that spawns the
  *     class-0 sub-actors 30/31/32 through CreateActorByKind and hands them to
@@ -17,7 +17,7 @@
  *     `PoppyBrosJrRideIdleInit`+`PoppyBrosJrRideIdleUpdate` (`0x08741620`), `WheelieInit`+
  *     `WheelieUpdate` (`0x0874164C`/`0x08741664`, six states) and
  *     `WheelieIdleInit`+`WheelieIdleUpdate` (`0x0874167C`);
- *   * `sub_08082554` / `sub_080825ec`, the hop cycle that drives the actor
+ *   * `PoppyBrosJrRiderHop` / `PoppyBrosJrRiderHopUpdate`, the hop cycle that drives the actor
  *     record's unk16/unk18/unk1A/unk1E straight from the task, and
  *     `sub_08082cc4`, the four-step Task.unk2C-scaled animation loop;
  *   * `WheelieCheckSkid`, the "turn around once every 30 frames if the player is
@@ -114,12 +114,12 @@ void PoppyBrosJrRide(void)
 {
     gCurTask->updateState = 0;
     TaskSetMotionXFacing(gUnk_087415E4[gCurTask->unk74], 0x5A5A5A5A);
-    sub_08082554();
+    PoppyBrosJrRiderHop();
 }
 
 void PoppyBrosJrRideState0Update(void)
 {
-    sub_080825ec();
+    PoppyBrosJrRiderHopUpdate();
 }
 
 void PoppyBrosJrDroppedObjectInit(void)
@@ -255,15 +255,15 @@ void PoppyBrosJrRideIdleUpdate(void)
 
 void PoppyBrosJrRideIdle(void)
 {
-    sub_08082554();
+    PoppyBrosJrRiderHop();
 }
 
 void sub_08082548(void)
 {
-    sub_080825ec();
+    PoppyBrosJrRiderHopUpdate();
 }
 
-void sub_08082554(void)
+void PoppyBrosJrRiderHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -300,7 +300,7 @@ void sub_08082554(void)
     }
 }
 
-void sub_080825ec(void)
+void PoppyBrosJrRiderHopUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -333,27 +333,27 @@ void sub_080825ec(void)
     v->u8C.actor->extraLayerOffset = -1;
 }
 
-s32 sub_08082678(void)
+s32 PoppyBrosJrRiderStartFall(void)
 {
     if (gCurTask->variant == 0)
         TaskSetMotionY(0, 0x1500, 0x30000);
     return 0;
 }
 
-s32 sub_080826a0(void)
+s32 PoppyBrosJrRiderLand(void)
 {
     if (gCurTask->variant == 0)
         TaskStopY();
     return 0;
 }
 
-s32 sub_080826bc(void)
+s32 PoppyBrosJrRiderBounceOffWall(void)
 {
     TaskTurnAroundAndReverseX();
     return 0;
 }
 
-s32 sub_080826c8(void)
+s32 PoppyBrosJrRiderEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -516,7 +516,7 @@ void WheelieState3Update(void)
     }
 }
 
-void WheelieState4(void)
+void WheelieBounceOffWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -561,7 +561,7 @@ void WheelieState4(void)
     TaskSleepForever();
 }
 
-void WheelieState4Update(void)
+void WheelieBounceOffWallUpdate(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
@@ -670,7 +670,7 @@ void sub_08082cc4(void)
     }
 }
 
-s32 sub_08082d14(void)
+s32 WheelieStartFall(void)
 {
     s32 r = 0;
 
@@ -687,7 +687,7 @@ s32 sub_08082d14(void)
     return r;
 }
 
-s32 sub_08082d4c(void)
+s32 WheelieHitWall(void)
 {
     s32 r = 0;
     struct Task *t;
@@ -725,7 +725,7 @@ s32 sub_08082db0(void)
     return 0;
 }
 
-s32 sub_08082dd4(void)
+s32 WheelieEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;

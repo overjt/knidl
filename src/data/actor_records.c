@@ -28,9 +28,9 @@
 /* Functions whose prototype lives in a header this file does not include
  * (enemy.h and cutscene.h declare 31 of these records as u32 [], a view
  * that conflicts with the definitions below, lesson 3.517). */
-void sub_08079e70(void);
-void sub_0807c484(void);
-void sub_0807efec(void);
+void SparkyTeardown(void);
+void UFOTeardown(void);
+void CoolSpookTeardown(void);
 void sub_0808e054(void);
 void MetaKnightsKnightTeardown(void);
 void sub_080acc8c(void);
@@ -219,21 +219,21 @@ extern const u8 gWhispyWoodsAirPuffTerrainBox[];
 /* Actor.terrainHandlers and Actor.hitReactions targets: src/data/actor_handlers.c. */
 extern struct ActorHandlers gAbilityStarTerrainHandlers;
 extern struct ActorHandlers gPickupTerrainHandlers;
-extern struct ActorHandlers gUnk_08740E54;
+extern struct ActorHandlers gWaddleDeeTerrainHandlers;
 extern struct ActorHandlers gPengyTerrainHandlers;
 extern struct ActorHandlers gBomberTerrainHandlers;
 extern struct ActorHandlers gSparkyTerrainHandlers;
-extern struct ActorHandlers gUnk_08740EC4;
+extern struct ActorHandlers gSwordAndBladeKnightTerrainHandlers;
 extern struct ActorHandlers gNeedlousTerrainHandlers;
 extern struct ActorHandlers gRockyTerrainHandlers;
 extern struct ActorHandlers gSirKibbleTerrainHandlers;
-extern struct ActorHandlers gUnk_08741B9C;
+extern struct ActorHandlers gCappyTerrainHandlers;
 extern struct ActorHandlers gKabuTerrainHandlers;
 extern struct ActorHandlers gTwisterTerrainHandlers;
 extern struct ActorHandlers gStarmanTerrainHandlers;
 extern struct ActorHandlers gHotHeadTerrainHandlers;
 extern struct ActorHandlers gPoppyBrosJrTerrainHandlers;
-extern struct ActorHandlers gUnk_08741C44;
+extern struct ActorHandlers gPoppyBrosJrRiderTerrainHandlers;
 extern struct ActorHandlers gWheelieTerrainHandlers;
 extern struct ActorHandlers gFlamerTerrainHandlers;
 extern struct ActorHandlers gNoddyTerrainHandlers;
@@ -297,7 +297,7 @@ extern struct ActorVt gUFOLaserHitReactions;
 extern struct ActorVt gRockyHitReactions;
 extern struct ActorVt gSirKibbleHitReactions;
 extern struct ActorVt gCappyHitReactions;
-extern struct ActorVt gUnk_08741CBC;
+extern struct ActorVt gCappyCaplessHitReactions;
 extern struct ActorVt gCoolSpookHitReactions;
 extern struct ActorVt gKabuHitReactions;
 extern struct ActorVt gTwisterHitReactions;
@@ -683,7 +683,7 @@ struct ActorDef gWaddleDeeDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)&gUnk_08740E54,
+    .terrainHandlers = (u32)&gWaddleDeeTerrainHandlers,
     .hitReactions = (u32)&gWaddleDeeHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
@@ -700,7 +700,7 @@ struct ActorDef gParasolWaddleDeeDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F73C,
     .terrainBox = (s32)gUnk_0873F8A4,
-    .terrainHandlers = (u32)&gUnk_08740E54,
+    .terrainHandlers = (u32)&gWaddleDeeTerrainHandlers,
     .hitReactions = (u32)&gParasolWaddleDeeHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
@@ -754,7 +754,7 @@ struct ActorDef gSparkyDef ACTOR_REC(08740bd4) = {
     .terrainHandlers = (u32)&gSparkyTerrainHandlers,
     .hitReactions = (u32)&gSparkyHitReactions,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_08079e70,
+    .teardown = (void (*)(void))SparkyTeardown,
 };
 struct ActorDef gScarfyDef ACTOR_REC(08740bd4) = {
     .health1Player = 2,
@@ -785,7 +785,7 @@ struct ActorDef gSwordKnightDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)&gUnk_08740EC4,
+    .terrainHandlers = (u32)&gSwordAndBladeKnightTerrainHandlers,
     .hitReactions = (u32)&gUnk_08740F68,
     .initCallback = NULL,
     .teardown = NULL,
@@ -802,7 +802,7 @@ struct ActorDef gBladeKnightDef ACTOR_REC(08740bd4) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)&gUnk_08740EC4,
+    .terrainHandlers = (u32)&gSwordAndBladeKnightTerrainHandlers,
     .hitReactions = (u32)&gUnk_08740F68,
     .initCallback = NULL,
     .teardown = NULL,
@@ -856,7 +856,7 @@ struct ActorDef gUFODef ACTOR_REC(08740bd4) = {
     .terrainHandlers = 0,
     .hitReactions = (u32)&gUFOHitReactions,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_0807c484,
+    .teardown = (void (*)(void))UFOTeardown,
 };
 struct ActorDef gParasolDef ACTOR_REC(08740bd4) = {
     .health1Player = 2,
@@ -959,12 +959,12 @@ struct ActorDef gCappyDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B24,
-    .terrainHandlers = (u32)&gUnk_08741B9C,
+    .terrainHandlers = (u32)&gCappyTerrainHandlers,
     .hitReactions = (u32)&gCappyHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_0874183C ACTOR_REC(087417b8) = {
+struct ActorDef gCappyCaplessDef ACTOR_REC(087417b8) = {
     .health1Player = 2,
     .health2Players = 2,
     .health3Players = 2,
@@ -976,8 +976,8 @@ struct ActorDef gUnk_0874183C ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_08741B24,
-    .terrainHandlers = (u32)&gUnk_08741B9C,
-    .hitReactions = (u32)&gUnk_08741CBC,
+    .terrainHandlers = (u32)&gCappyTerrainHandlers,
+    .hitReactions = (u32)&gCappyCaplessHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
 };
@@ -1013,7 +1013,7 @@ struct ActorDef gCoolSpookDef ACTOR_REC(087417b8) = {
     .terrainHandlers = (u32)gUnk_0873F8F4,
     .hitReactions = (u32)&gCoolSpookHitReactions,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_0807efec,
+    .teardown = (void (*)(void))CoolSpookTeardown,
 };
 struct ActorDef gKabuDef ACTOR_REC(087417b8) = {
     .health1Player = 2,
@@ -1112,7 +1112,7 @@ struct ActorDef gPoppyBrosJrOnAppleDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08741AF8,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)&gUnk_08741C44,
+    .terrainHandlers = (u32)&gPoppyBrosJrRiderTerrainHandlers,
     .hitReactions = (u32)&gPoppyBrosJrOnAppleHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
@@ -1129,7 +1129,7 @@ struct ActorDef gPoppyBrosJrOnMaximTomatoDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_08741AF8,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)&gUnk_08741C44,
+    .terrainHandlers = (u32)&gPoppyBrosJrRiderTerrainHandlers,
     .hitReactions = (u32)&gPoppyBrosJrOnMaximTomatoHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
@@ -1146,7 +1146,7 @@ struct ActorDef gPoppyBrosJrAppleDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)&gUnk_08741C44,
+    .terrainHandlers = (u32)&gPoppyBrosJrRiderTerrainHandlers,
     .hitReactions = (u32)&gPoppyBrosJrAppleHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
@@ -1163,7 +1163,7 @@ struct ActorDef gPoppyBrosJrMaximTomatoDef ACTOR_REC(087417b8) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gUnk_0873F720,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)&gUnk_08741C44,
+    .terrainHandlers = (u32)&gPoppyBrosJrRiderTerrainHandlers,
     .hitReactions = (u32)&gPoppyBrosJrMaximTomatoHitReactions,
     .initCallback = NULL,
     .teardown = NULL,

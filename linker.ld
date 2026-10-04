@@ -3996,7 +3996,7 @@ SECTIONS
     ASSERT(!MATCHING || gUFOStates == 0x08740B84, "MATCHING: actor_tbl_08740b84 moved")
     ASSERT(!MATCHING || gWaddleDeeDef == 0x08740BD4, "MATCHING: actor_rec_08740bd4 moved")
     ASSERT(!MATCHING || actor_rodata_08740de4 == 0x08740DE4, "MATCHING: actor_rodata_08740de4 moved")
-    ASSERT(!MATCHING || gUnk_08740E54 == 0x08740E54, "MATCHING: actor_tbl_08740e54 moved")
+    ASSERT(!MATCHING || gWaddleDeeTerrainHandlers == 0x08740E54, "MATCHING: actor_tbl_08740e54 moved")
     ASSERT(!MATCHING || actor_rodata_08740fb0 == 0x08740FB0, "MATCHING: actor_rodata_08740fb0 moved")
     ASSERT(!MATCHING || gPengyIceBreathVariants == 0x08741088, "MATCHING: actor_tbl_08741088 moved")
     ASSERT(!MATCHING || actor_rodata_08741094 == 0x08741094, "MATCHING: actor_rodata_08741094 moved")

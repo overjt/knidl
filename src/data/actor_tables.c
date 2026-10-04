@@ -663,7 +663,7 @@ u32 gUFOLaserVariants[1] ACTOR_TBL(087410ac) = {
 /* include/enemy.h; CallTableEntry(i, 2, ...) in UFOLaserInit, UFOLaserEnterState */
 u32 gUFOLaserStates[2] ACTOR_TBL(087410ac) = {
     (u32)UFOLaserState0,
-    (u32)UFOLaserState1,
+    (u32)UFOLaserVanish,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in UFOLaserUpdate */
 u32 gUFOLaserStateUpdates[2] ACTOR_TBL(087410ac) = {
@@ -1102,7 +1102,7 @@ u32 gWheelieStates[6] ACTOR_TBL(08741640) = {
     (u32)WheelieState1,
     (u32)WheelieSkid,
     (u32)WheelieState3,
-    (u32)WheelieState4,
+    (u32)WheelieBounceOffWall,
     (u32)WheelieFall,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in WheelieUpdate */
@@ -1111,7 +1111,7 @@ u32 gWheelieStateUpdates[6] ACTOR_TBL(08741640) = {
     (u32)WheelieState1Update,
     (u32)WheelieSkidUpdate,
     (u32)WheelieState3Update,
-    (u32)WheelieState4Update,
+    (u32)WheelieBounceOffWallUpdate,
     (u32)WheelieFallUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in WheelieIdleInit, WheelieIdleEnterState */
@@ -1133,7 +1133,7 @@ u32 gFlamerVariants[3] ACTOR_TBL(0874176c) = {
 /* include/enemy.h; CallTableEntry(i, 7, ...) in FlamerInit, FlamerEnterState */
 u32 gFlamerStates[7] ACTOR_TBL(0874176c) = {
     (u32)FlamerState0,
-    (u32)FlamerState1,
+    (u32)FlamerCrawl,
     (u32)FlamerFall,
     (u32)FlamerState3,
     (u32)FlamerState4,
@@ -1143,7 +1143,7 @@ u32 gFlamerStates[7] ACTOR_TBL(0874176c) = {
 /* include/enemy.h; CallTableEntry(i, 7, ...) in FlamerUpdate */
 u32 gFlamerStateUpdates[7] ACTOR_TBL(0874176c) = {
     (u32)FlamerState0Update,
-    (u32)FlamerState1Update,
+    (u32)FlamerCrawlUpdate,
     (u32)FlamerFallUpdate,
     (u32)FlamerState3Update,
     (u32)FlamerState4Update,

@@ -122,7 +122,7 @@ void sub_08065470(void)
 }
 
 /* Draw the running task's main sprite plus its optional second part. */
-void sub_0806555c(void)
+void ActorDrawSpriteAndExtra(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -143,7 +143,7 @@ void sub_0806555c(void)
     }
 }
 
-void sub_08065640(void)
+void ActorDrawWorldInViewOrDestroyWithExtra(void)
 {
     struct Task *p;
 
@@ -156,7 +156,7 @@ void sub_08065640(void)
     {
         if (TaskIsOnScreen() == 0)
             return;
-        sub_0806555c();
+        ActorDrawSpriteAndExtra();
     }
     else
     {
@@ -177,7 +177,7 @@ void sub_0806567c(void)
         return;
     if (TaskIsOnScreen() == 0)
         return;
-    sub_0806555c();
+    ActorDrawSpriteAndExtra();
 }
 
 /* Integrate the running task's velocity, clamped to its per-axis maximum. */
@@ -964,7 +964,7 @@ void sub_080662d8(void)
 }
 
 /* True when every active player is in state 1. */
-u8 sub_08066338(void)
+u8 AreAllPlayersOnGround(void)
 {
     s32 n;
     s32 m;
@@ -1448,7 +1448,7 @@ void sub_08066b34(u32 def)
     a = t->u8C.actor;
     if (a->extraFrame != -1)
     {
-        t->drawCallback = (u32)sub_08066c74;
+        t->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithParasol;
         ActorLoadDef(def);
         gCurTask->u8C.actor->unk16 = 6;
     }
@@ -1522,7 +1522,7 @@ void sub_08066c3c(u32 def)
 
 /* Draw the running task plus its trailing "sparkle" sprite. */
 /* Draw the running task plus its trailing "sparkle" sprite. */
-void sub_08066c74(void)
+void ActorDrawWorldInViewOrDestroyWithParasol(void)
 {
     struct Task *p;
     struct Task *t;

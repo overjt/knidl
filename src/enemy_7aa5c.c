@@ -18,10 +18,10 @@
  *     and reacts through the shared `sub_0807b294` state entry;
  *   * Task_UFO's row 0 `UFOInit`+`UFOUpdate` with the
  *     `UFOIsAtTarget` box test (`struct Rect` + GetDistSq) and the
- *     `sub_0807c530` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
+ *     `UFOSetTarget` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
  *   * UFO's state check `UFOState1Update` (gUFOStateUpdates[1]), which walks a
  *     sixteen-entry cue ring through
- *     `sub_0807c508` (`15 & (rand + Task.unk24)`);
+ *     `UFOPickNextPoint` (`15 & (rand + Task.unk24)`);
  *   * Task_Parasol's row 0 `ParasolRiseInit`+`ParasolRiseUpdate` and its aim
  *     `sub_0807cbf4` (a 512-step angle from `TaskGetAngleTo`).
  *
@@ -52,7 +52,7 @@ extern s32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern s32 TaskIsInRectSlot(struct PointPair *box, s32 i);
 extern s32 ActorStartAnimNoFlip(u32 *p);
 extern s32 TaskGetAngleToNearestPlayer(s32 prec);
-extern s32 sub_08066338();
+extern s32 AreAllPlayersOnGround();
 extern s32 ActorReactToHit(void);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCollideTerrain(void);
@@ -164,7 +164,7 @@ void ScarfyTransform(void)
     gCurTask->updateState = 3;
     TaskStop();
     gCurTask->frameTable = gScarfyAngryFrames;
-    ActorSetHitReactions(gUnk_08740F50);
+    ActorSetHitReactions(gScarfyTransformHitReactions);
     t = gCurTask;
     t->unk28 = 2;
     t->unk2C = 0;
@@ -289,7 +289,7 @@ void ScarfyExplode(void)
         TaskYieldTrampoline(2);
     } while ((s16)++gCurTask->unk6C <= 5);
     TaskStopX();
-    ActorSetHitReactions(gUnk_08740F5C);
+    ActorSetHitReactions(gScarfyExplodeHitReactions);
     ActorDie();
 }
 
@@ -316,7 +316,7 @@ void Task_BladeKnight(void)
     CallTableEntry(gCurTask->variant, 3, gSwordAndBladeKnightVariants);
 }
 
-s32 sub_0807afd8(void)
+s32 SwordAndBladeKnightStartFall(void)
 {
     if (gCurTask->variant != 0)
         return 0;
@@ -325,7 +325,7 @@ s32 sub_0807afd8(void)
     return 1;
 }
 
-s32 sub_0807b010(void)
+s32 SwordAndBladeKnightLand(void)
 {
     if (gCurTask->variant != 0)
         return 0;
@@ -334,7 +334,7 @@ s32 sub_0807b010(void)
     return 1;
 }
 
-s32 sub_0807b048(void)
+s32 SwordAndBladeKnightEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -347,7 +347,7 @@ s32 sub_0807b058(void)
     return 0;
 }
 
-s32 sub_0807b070(void)
+s32 SwordAndBladeKnightHitWall(void)
 {
     TaskStop();
     gCurTask->unk1C = 1;
@@ -979,7 +979,7 @@ void NeedlousPickStartState(void)
         ActorSetState(2);
 }
 
-s32 sub_0807bdb8(void)
+s32 NeedlousStartFall(void)
 {
     struct Task *t = gCurTask;
 
@@ -993,7 +993,7 @@ s32 sub_0807bdb8(void)
     return 1;
 }
 
-s32 sub_0807be08(void)
+s32 NeedlousLand(void)
 {
     struct Task *t = gCurTask;
     struct Actor *a = t->u8C.actor;
@@ -1021,13 +1021,13 @@ s32 sub_0807be08(void)
     return 1;
 }
 
-s32 sub_0807be9c(void)
+s32 NeedlousEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
 }
 
-s32 sub_0807beac(void)
+s32 NeedlousHitWall(void)
 {
     if (gCurTask->state == 5)
     {
@@ -1055,7 +1055,7 @@ s32 sub_0807bed4(void)
     return 0;
 }
 
-void sub_0807befc(void)
+void NeedlousHitCeiling(void)
 {
     gCurTask->velY = 0;
 }
@@ -1316,7 +1316,7 @@ void Task_UFO(void)
     CallTableEntry(gCurTask->variant, 2, gUFOVariants);
 }
 
-void sub_0807c484(void)
+void UFOTeardown(void)
 {
     if (--gPaletteAnimRefCounts[0] < 0)
         sub_0806ee2c();
@@ -1348,7 +1348,7 @@ void sub_0807c4d4(void)
     UFOStartPaletteAnim();
 }
 
-s32 sub_0807c508(void)
+s32 UFOPickNextPoint(void)
 {
     s32 r = RandomRange(10);
 
@@ -1360,7 +1360,7 @@ s32 sub_0807c508(void)
     return 15 & r;
 }
 
-void sub_0807c530(s32 a)
+void UFOSetTarget(s32 a)
 {
     struct Rect box;
     struct Task *t;
@@ -1390,7 +1390,7 @@ s32 UFOIsAtTarget(struct Rect *r)
         return 0;
 }
 
-void sub_0807c5e4(void)
+void UFOSetFlightVelocity(void)
 {
     struct Task *t;
 
@@ -1503,17 +1503,17 @@ void UFOState1Update(void)
     }
     else
     {
-        v = sub_0807c508();
+        v = UFOPickNextPoint();
         if (v > 3)
         {
             if (v <= 11)
             {
-                if (sub_08066338() != 0)
-                    v = sub_0807c508();
+                if (AreAllPlayersOnGround() != 0)
+                    v = UFOPickNextPoint();
             }
         }
     }
-    sub_0807c530(v);
+    UFOSetTarget(v);
     ActorSetState(2);
     TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
@@ -1522,7 +1522,7 @@ void UFOState2(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
-    sub_0807c5e4();
+    UFOSetFlightVelocity();
     TaskSleepForever();
 }
 
@@ -1790,7 +1790,7 @@ void ParasolChaseState0Update(void)
     t->unk20--;
     if (t->unk24 <= 0)
     {
-        ActorSetHitReactions(gUnk_08740FA4);
+        ActorSetHitReactions(gParasolChaseHitReactions);
         TaskSetEntry(ActorDie, gCurTaskIdx);
     }
     gCurTask->unk24--;
@@ -1929,14 +1929,14 @@ void Task_UFOLaser(void)
     CallTableEntry(t->variant, 1, gUFOLaserVariants);
 }
 
-s32 sub_0807d1bc(void)
+s32 UFOLaserReactToDamage(void)
 {
     ActorSetState(1);
     TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_0807d1dc(void)
+s32 UFOLaserReactToDefeat(void)
 {
     ActorSetState(1);
     TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
@@ -1993,7 +1993,7 @@ void UFOLaserState0Update(void)
     }
 }
 
-void UFOLaserState1(void)
+void UFOLaserVanish(void)
 {
     struct Task *t;
 

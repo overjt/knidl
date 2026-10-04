@@ -361,7 +361,7 @@ struct ActorSpawn
  * TaskIsNearestPlayerInRect.  Four separate `s16` fields are what the CALLEE reads (that is
  * how src/actor_63698.c matches), but a caller that fills the box in the
  * caller's own stack frame does NOT necessarily see this type: M22 (issue #69)
- * has three of them (FlamerState1Update, FlamerState4Update, SirKibbleCutterState0Update) where the ROM
+ * has three of them (FlamerCrawlUpdate, FlamerState4Update, SirKibbleCutterState0Update) where the ROM
  * builds the argument with 32-bit read-modify-write over PAIRS of halfwords
  * (`ldr; ands 0xFFFF0000; orrs; str`), which four `s16` fields can only ever
  * compile to `strh`.  Those callers declare the helper as taking a

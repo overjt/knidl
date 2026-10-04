@@ -17,8 +17,8 @@
  *
  * This batch holds:
  *   * task #27's class-3 dispatcher `Task_Twister` (`0x08741488`, two rows)
- *     and its unk73 quartet `sub_0807fbd0` / `sub_0807fc20` / `sub_0807fc70` /
- *     `sub_0807fcac` (`0x08741BB8`);
+ *     and its unk73 quartet `KabuHitWall` / `KabuStartFall` / `KabuLand` /
+ *     `KabuEnterWater` (`0x08741BB8`);
  *   * task #32's dispatcher `Task_HotHead` (`0x087414B4`, three rows);
  *   * nine scripts in the entry/hook shape: `KabuJumpInit`+`KabuJumpUpdate`
  *     (`0x08741390`/`0x0874139C`), `KabuTeleportInit`+`KabuTeleportUpdate`
@@ -249,7 +249,7 @@ void KabuJumpFallUpdate(void)
 void KabuTeleportInit(void)
 {
     gCurTask->updateCallback = (u32)KabuTeleportUpdate;
-    ActorSetHitReactions(gUnk_08741CE0);
+    ActorSetHitReactions(gKabuTeleportHitReactions);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 3, gKabuTeleportStates);
 }
@@ -712,7 +712,7 @@ void KabuIdleState0Update(void)
 {
 }
 
-s32 sub_0807fbd0(void)
+s32 KabuHitWall(void)
 {
     struct Task *t;
     s32 r = 0;
@@ -734,7 +734,7 @@ s32 sub_0807fbd0(void)
     return r;
 }
 
-s32 sub_0807fc20(void)
+s32 KabuStartFall(void)
 {
     s32 r = 0;
 
@@ -755,7 +755,7 @@ s32 sub_0807fc20(void)
     return r;
 }
 
-s32 sub_0807fc70(void)
+s32 KabuLand(void)
 {
     switch (gCurTask->variant)
     {
@@ -770,7 +770,7 @@ s32 sub_0807fc70(void)
     return 0;
 }
 
-s32 sub_0807fc94(void)
+s32 KabuHitCeiling(void)
 {
     struct Task *t = gCurTask;
 
@@ -779,7 +779,7 @@ s32 sub_0807fc94(void)
     return 0;
 }
 
-s32 sub_0807fcac(void)
+s32 KabuEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -1155,24 +1155,24 @@ void TwisterTickSound(s32 a, s32 b)
     }
 }
 
-s32 sub_08080398(void)
+s32 TwisterLand(void)
 {
     TaskStopY();
     return 0;
 }
 
-s32 sub_080803a4(void)
+s32 TwisterStartFall(void)
 {
     TaskSetMotionY(0, 0x1500, 0x30000);
     return 0;
 }
 
-void sub_080803bc(void)
+void TwisterHitCeiling(void)
 {
     gCurTask->velY = 0;
 }
 
-s32 sub_080803cc(void)
+s32 TwisterEnterWater(void)
 {
     switch (gCurTask->state)
     {

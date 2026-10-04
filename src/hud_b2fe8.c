@@ -870,7 +870,7 @@ void Task_OneUp(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gOneUpFrames;
@@ -886,7 +886,7 @@ void Task_MaximTomato(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gMaximTomatoFrames;
@@ -902,7 +902,7 @@ void Task_InvincibleCandy(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gInvincibleCandyFrames;
@@ -918,7 +918,7 @@ void Task_EnergyDrink(void)
     c = &gCurTask;
     ta = *c;
     ta->moveCallback = (u32)TaskMove;
-    ta->drawCallback = (u32)sub_08065640;
+    ta->drawCallback = (u32)ActorDrawWorldInViewOrDestroyWithExtra;
     *(u8 *)((u8 *)ta + 66) = 11;
     tb = *c;
     tb->frameTable = (u32 *)gEnergyDrinkFrames;

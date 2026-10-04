@@ -772,14 +772,14 @@ void Task_WaddleDee(void)
     }
 }
 
-s32 sub_08078984(void)
+s32 ParasolWaddleDeeReactToDefeat(void)
 {
     sub_08066c08(gWaddleDeeDef, 0);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080789ac(void)
+s32 WaddleDeeStartFall(void)
 {
     s32 r = 0;
 
@@ -814,7 +814,7 @@ s32 sub_080789ac(void)
     return r;
 }
 
-s32 sub_08078a48(void)
+s32 WaddleDeeLand(void)
 {
     s32 r = 0;
 
@@ -857,7 +857,7 @@ s32 sub_08078a48(void)
     return r;
 }
 
-s32 sub_08078b08(void)
+s32 WaddleDeeEnterWater(void)
 {
     u8 v = gCurTask->variant;
 
@@ -867,7 +867,7 @@ s32 sub_08078b08(void)
     return 1;
 }
 
-s32 sub_08078b38(void)
+s32 WaddleDeeHitWall(void)
 {
     struct Task *t = gCurTask;
 
@@ -878,7 +878,7 @@ s32 sub_08078b38(void)
     return 0;
 }
 
-s32 sub_08078b64(void)
+s32 WaddleDeeHitCeiling(void)
 {
     return 0;
 }
