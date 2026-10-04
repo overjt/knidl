@@ -437,15 +437,15 @@ void (*gAirGrindObjectVariants[3])(void) LATE_TBL(087572cc) = {
 void (*gEndingEpilogueVariants[11])(void) LATE_TBL(08757330) = {
     NULL,
     EndingEpilogueWarpStar,
-    sub_080c7810,
-    sub_080c7cc0,
+    EndingEpilogueWarpStarEffect,
+    EndingEpilogueTrailStar,
     EndingEpilogueKirby,
     EndingEpilogueStarRod,
     EndingEpilogueKingDedede,
-    sub_080c88f0,
-    sub_080c8958,
-    sub_080c8cd4,
-    sub_080c8ea8,
+    EndingEpilogueExplosion,
+    EndingEpilogueExplosionSprite,
+    EndingEpilogueCamera,
+    EndingEpilogueStoryText,
 };
 
 /* ---- 0x087573F4-0x08757424: 1 table(s), 11 function pointer(s), section .late_tbl_087573f4 ---- */
@@ -453,15 +453,15 @@ void (*gEndingEpilogueVariants[11])(void) LATE_TBL(08757330) = {
 void (*gEndingStarRodReturnVariants[12])(void) LATE_TBL(087573f4) = {
     NULL,
     EndingStarRodReturnStarRod,
-    sub_080c9d10,
+    EndingStarRodReturnConvergingStars,
     EndingStarRodReturnWarpStar,
-    sub_080c9884,
+    EndingStarRodReturnTrailStar,
     EndingStarRodReturnKirby,
     EndingStarRodReturnFountainJet,
     sub_080ca830,
     sub_080ca8f0,
-    sub_080c9e8c,
-    sub_080ca344,
+    EndingStarRodReturnBurstStar,
+    EndingStarRodReturnFallingStar,
     sub_080c9a28,
 };
 
@@ -491,19 +491,19 @@ void (*gGameOverPlayerStateUpdates[3])(void) LATE_TBL(08758294) = {
 void (*gGameOverChoiceStates[6])(void) LATE_TBL(08758294) = {
     GameOverChoiceWait,
     GameOverChoiceMove,
-    sub_080cc180,
-    sub_080cc2e0,
-    sub_080cc608,
-    sub_080cc768,
+    GameOverChoiceContinueStart,
+    GameOverChoiceContinueEnd,
+    GameOverChoiceGiveUpStart,
+    GameOverChoiceGiveUpEnd,
 };
 /* include/ending.h; CallTableEntry(i, 6, ...) in GameOverChoiceUpdate */
 void (*gGameOverChoiceStateUpdates[6])(void) LATE_TBL(08758294) = {
     GameOverChoiceWaitUpdate,
     GameOverChoiceMoveUpdate,
-    sub_080cc2b8,
-    sub_080cc5d4,
-    sub_080cc740,
-    sub_080ccd10,
+    GameOverChoiceContinueStartUpdate,
+    GameOverChoiceContinueEndUpdate,
+    GameOverChoiceGiveUpStartUpdate,
+    GameOverChoiceGiveUpEndUpdate,
 };
 
 /* ---- 0x08758324-0x08758334: 2 table(s), 4 function pointer(s), section .late_tbl_08758324 ---- */

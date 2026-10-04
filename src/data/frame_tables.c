@@ -2286,7 +2286,7 @@ extern const u8
     gUnk_08609D08[], gUnk_08609D18[], gUnk_08609D28[], gUnk_08609D38[];
 
 /* gUnk_0874C44C.  Consumers: Task_WarpStarTrailStar (src/actor_74c0c.c:70),
- * sub_080c9e8c (src/ending_c9004.c:631), sub_080ca570
+ * EndingStarRodReturnBurstStar (src/ending_c9004.c:631), EndingStarRodReturnFallingStarDriftFast
  * (src/ending_c9004.c:862) and 3 more.  11 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C44C-0x0874C478).  Declared include/enemy.h:1141. */
@@ -3329,7 +3329,7 @@ u32 gUnk_0874CE90[] FRAME_TABLE = {
     (u32)gUnk_080DBCE0,
 };
 
-/* gUnk_0874CEE8.  Consumer: sub_080c8958 (src/ending_c7e4c.c:491).  16
+/* gUnk_0874CEE8.  Consumer: EndingEpilogueExplosionSprite (src/ending_c7e4c.c:491).  16
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0874CEE8-0x0874CF28).  Declared
  * include/ending.h:55. */
@@ -3352,8 +3352,8 @@ u32 gUnk_0874CEE8[] FRAME_TABLE = {
     (u32)gUnk_080DBDE8,
 };
 
-/* gUnk_0874CF28.  Consumers: sub_080c7810 (src/ending_c6c64.c:506),
- * sub_080c7cc0 (src/ending_c6c64.c:658), sub_080c9e8c
+/* gUnk_0874CF28.  Consumers: EndingEpilogueWarpStarEffect (src/ending_c6c64.c:506),
+ * EndingEpilogueTrailStar (src/ending_c6c64.c:658), EndingStarRodReturnBurstStar
  * (src/ending_c9004.c:615).  27 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874CF28-0x0874CF94).  Declared include/ending.h:56. */
@@ -3387,7 +3387,7 @@ u32 gUnk_0874CF28[] FRAME_TABLE = {
     (u32)gUnk_080DBFF0,
 };
 
-/* gUnk_0874CF94.  Consumer: sub_080c9d10 (src/ending_c9004.c:503).  22
+/* gUnk_0874CF94.  Consumer: EndingStarRodReturnConvergingStars (src/ending_c9004.c:503).  22
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0874CF94-0x0874CFEC).  Declared
  * include/ending.h:57. */

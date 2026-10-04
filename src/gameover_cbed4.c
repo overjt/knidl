@@ -19,7 +19,7 @@
  *       Task.unk24 set sub-state 4, otherwise task type #263 and sub-state 2.
  *   GameOverChoiceMove / GameOverChoiceMoveUpdate   sub-state 1, the move, which flips
  *       gGameOverCursor.
- *   sub_080cc180 ... sub_080cc768 / sub_080ccd10   sub-states 2-5, the cursor's
+ *   GameOverChoiceContinueStart ... GameOverChoiceGiveUpEnd / GameOverChoiceGiveUpEndUpdate   sub-states 2-5, the cursor's
  *       animations after a choice; handlers 3 and 5 hand over to variant 0. */
 
 void CallTableEntry(u32 idx, u32 count, void (**fns)(void));   /* if (idx < count) fns[idx](); */
@@ -152,7 +152,7 @@ void GameOverChoiceMoveUpdate(void)
 }
 
 /* Task type #264 variant 1, sub-state 2. */
-void sub_080cc180(void)
+void GameOverChoiceContinueStart(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -194,14 +194,14 @@ void sub_080cc180(void)
 }
 
 /* Task type #264 variant 1, handler 2. */
-void sub_080cc2b8(void)
+void GameOverChoiceContinueStartUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 3. */
-void sub_080cc2e0(void)
+void GameOverChoiceContinueEnd(void)
 {
     gCurTask->updateState = 3;
     TaskStop();
@@ -278,7 +278,7 @@ void sub_080cc2e0(void)
 }
 
 /* Task type #264 variant 1, handler 3. */
-void sub_080cc5d4(void)
+void GameOverChoiceContinueEndUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
@@ -287,7 +287,7 @@ void sub_080cc5d4(void)
 }
 
 /* Task type #264 variant 1, sub-state 4. */
-void sub_080cc608(void)
+void GameOverChoiceGiveUpStart(void)
 {
     gCurTask->updateState = 4;
     TaskStop();
@@ -326,14 +326,14 @@ void sub_080cc608(void)
 }
 
 /* Task type #264 variant 1, handler 4. */
-void sub_080cc740(void)
+void GameOverChoiceGiveUpStartUpdate(void)
 {
     if (gCurTask->state != 4)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
 }
 
 /* Task type #264 variant 1, sub-state 5. */
-void sub_080cc768(void)
+void GameOverChoiceGiveUpEnd(void)
 {
     gCurTask->updateState = 5;
     TaskStop();
@@ -479,7 +479,7 @@ void sub_080cc768(void)
 }
 
 /* Task type #264 variant 1, handler 5. */
-void sub_080ccd10(void)
+void GameOverChoiceGiveUpEndUpdate(void)
 {
     if (gCurTask->state != 5)
         TaskSetEntry(GameOverChoiceEnterState, gCurTaskIdx);
