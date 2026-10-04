@@ -577,7 +577,134 @@ REASONS = {
     "field-header": "tracked by #155: the field's role is not proven",
     "field-local": "local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`)",
     "loc": "none left: the code is C",
+    "field-task-family-local": "the per-family registers in the task engine's local copies of struct Task (src/early_58e4.c, early_5c4c.c): named per family by the aliases of include/task_vars.h, which the engine never uses",
+    # ROM labels by their referrers (#155 run 7, mechanical)
+    "rom-shared": "shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4)",
+    "rom-via-unnamed": "reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer",
+    "rom-via-slot": "one slot of a named record holds it and nothing else names it; its position name waits for the slot's word (docs/naming.md section 2.4)",
+    "rom-local": "read by one function only: its meaning is local to that function's algorithm, as for RAM cells (docs/naming.md section 5)",
+    "rom-several": "read by several named functions; the row in docs/analysis/unnamed.csv gives its reason",
+    "rom-unreferenced": "no code or record names it: a record boundary the data census cut, reached by an offset from a named neighbour",
 }
+
+# #155 run 7: why each placeholder stays unnamed (docs/analysis/unnamed.csv,
+# `symbol,kind,reason,note`).  Once the file exists every `sub_*`, `gUnk_`
+# RAM cell and header `unk*` field must have a row with one of these codes;
+# a placeholder without one is "not examined" and fails the audit.
+UNNAMED_CSV = "docs/analysis/unnamed.csv"
+UNNAMED_REASONS = {
+    "pair": "one verb fits it and a sibling state, and the code proves no qualifier that sets them apart (docs/naming.md 2.3, R1)",
+    "identity": "the name needs an identity (enemy, object, picture, scene) with fewer than three agreeing sources (docs/naming.md 2.3)",
+    "unnamed-input": "its role rests on a cell, field or value that stays unnamed (the row names it)",
+    "no-verb": "no defined verb or noun fits the whole of it; only an ordinal or a vague word would (docs/naming.md 1)",
+    "restates": "a thin helper whose name would only restate its body or its one caller's step (docs/naming.md 5)",
+    "mixed": "several unrelated jobs chosen by a parameter or a sub-state; no one role",
+    "dead": "nothing references it: no call, table slot or data word (kept for the match)",
+    "library": "runtime or library code with no upstream name (docs/analysis/rom-map.md sections 6 and 8)",
+    "two-meanings": "two encodings or meanings that no single noun covers (docs/naming.md 5)",
+    "local": "read and written by one function only; its meaning is local to that algorithm (docs/naming.md 5)",
+    "write-only": "written but never read, or only cleared",
+    "never-accessed": "no code reads or writes it",
+    "unproven-bits": "a flag word whose bits are not all proven (docs/naming.md 7.0, R3)",
+}
+UNNAMED_KINDS = {"function": "fn", "ram": "ram", "field": "field", "rom": "rom"}
+
+
+def load_unnamed():
+    """{(kind, symbol): (reason, note)} of docs/analysis/unnamed.csv, or None."""
+    path = os.path.join(ROOT, UNNAMED_CSV)
+    if not os.path.exists(path):
+        return None
+    out = {}
+    with open(path, encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            out[(row["kind"], row["symbol"])] = (row["reason"], row.get("note", ""))
+    return out
+
+
+ROM_TOK_RE = re.compile(r"\bgUnk_08[0-9A-Fa-f]{6}\b")
+
+
+def c_definitions(text):
+    """yield (name, kind, body) of the top-level definitions of a C text
+    (comments stripped): kind `function` or `record` (an initialised table)."""
+    depth = 0
+    head_start = 0
+    start = 0
+    head = ""
+    for i, ch in enumerate(text):
+        if ch == "{":
+            if depth == 0:
+                head = text[head_start:i]
+                start = i
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                m = re.search(r"([A-Za-z_]\w*)\s*(\[[^\]]*\])*\s*([A-Z][A-Z0-9_]*(\([^)]*\))?|"
+                              r"__attribute__\(\([^)]*\)\))?\s*=\s*$", head)
+                if m and "=" in head:
+                    yield m.group(1), "record", text[start:i]
+                else:
+                    m = re.search(r"([A-Za-z_]\w*)\s*\([^;{}]*\)\s*$", head)
+                    yield (m.group(1) if m else "?"), "function", text[start:i]
+                head_start = i + 1
+        elif ch == ";" and depth == 0:
+            head_start = i + 1
+
+
+def rom_referrers():
+    """{label: ({(kind, referrer)}, number of references)} of every gUnk_08
+    label: the C definitions of src/ and include/ that mention it (a function
+    or an initialised record), and the labels of data/*.s (records) and
+    asm/*.s (code) whose words name it."""
+    refs = {}
+    count = {}
+
+    def add(w, kind, who):
+        refs.setdefault(w, set()).add((kind, who))
+        count[w] = count.get(w, 0) + 1
+    for top in ("src", "include"):
+        for path in files_under(top, (".c", ".h")):
+            for name, kind, body in c_definitions(strip_c(read(path))):
+                for w in ROM_TOK_RE.findall(body):
+                    if w != name:
+                        add(w, kind, name)
+    for top, kind in (("data", "record"), ("asm", "function")):
+        for path in files_under(top, (".s",)):
+            cur = None
+            for line in read(path).split("\n"):
+                m = LABEL_RE.match(line)
+                if m:
+                    cur = m.group(1)
+                    continue
+                if line.lstrip().startswith((".global", ".globl", ".type", ".size")):
+                    continue
+                for w in ROM_TOK_RE.findall(line):
+                    if w != cur:
+                        add(w, kind, cur)
+    return refs, count
+
+
+def rom_label_class(name, refs, count):
+    """The census category of an unnamed functional ROM label, from its
+    referrers."""
+    r = refs.get(name, set())
+    if not r:
+        return "rom-unreferenced"
+    fns = sorted(n for k, n in r if k == "function")
+    if fns:
+        if all(f.startswith("sub_") for f in fns):
+            return "rom-via-unnamed"
+        if len(fns) == 1 and len(r) == 1:
+            return "rom-local"
+        return "rom-several"
+    if len(r) >= 2 or count.get(name, 0) >= 2:
+        return "rom-shared"
+    who = next(iter(r))[1] or ""
+    if who.startswith(("gUnk_", "sub_")):
+        return "rom-via-unnamed"
+    return "rom-via-slot"
 
 
 def zone_of(addr):
@@ -661,9 +788,24 @@ def placeholder_census():
     rows = {}  # (kind, category) -> count
     by_zone = {}  # zone -> [functions, sub_]
     extra = {}
+    unnamed = load_unnamed()
+    seen = set()  # (kind, symbol) of the placeholders the census found
+    missing = []  # placeholders with no unnamed.csv row
 
     def add(kind, cat, n=1):
         rows[(kind, cat)] = rows.get((kind, cat), 0) + n
+
+    def reason(kind, symbol, fallback):
+        """The census category of a placeholder: its unnamed.csv row's code
+        once the file exists, else the run-6 category `fallback`."""
+        if unnamed is None:
+            return fallback
+        seen.add((kind, symbol))
+        r = unnamed.get((kind, symbol))
+        if r is None:
+            missing.append("%s %s" % (kind, symbol))
+            return "%s:unexamined" % UNNAMED_KINDS[kind]
+        return "%s:%s" % (UNNAMED_KINDS[kind], r[0])
 
     add("I/O register", "io", 0)  # a row even at 0, like loc
 
@@ -677,11 +819,11 @@ def placeholder_census():
             if row["name"].startswith("sub_"):
                 z[1] += 1
                 if zone in ("m4a", "sdk", "crt0"):
-                    add("function", "fn-lib")
+                    add("function", reason("function", row["name"], "fn-lib"))
                 elif zone == "engine":
-                    add("function", "fn-engine")
+                    add("function", reason("function", row["name"], "fn-engine"))
                 else:
-                    add("function", "fn-game")
+                    add("function", reason("function", row["name"], "fn-game"))
     # RAM and I/O cells
     cfg = json.loads(read("tools/split_config.json"))
     positions = position_names()
@@ -691,7 +833,7 @@ def placeholder_census():
         region = int(addr, 16) >> 24
         if region in (2, 3):
             if name.startswith("gUnk_"):
-                add("RAM cell", "ram")
+                add("RAM cell", reason("ram", name, "ram"))
                 ram_unk += 1
             elif name in positions:
                 ram_pos += 1
@@ -700,9 +842,17 @@ def placeholder_census():
         elif region == 4 and name.startswith("gUnk_"):
             add("I/O register", "io")
     extra["ram"] = (ram_named, ram_unk, ram_pos)
-    # ROM labels: every label of data/*.s, by segment
+    # ROM labels: every label of data/*.s, by segment; an unnamed functional
+    # label is classed by its referrers (#155 run 7)
     assets = asset_segments()
     segs = load_segments()
+    rrefs, rcount = rom_referrers()
+
+    def rom_cat(name):
+        cat = rom_label_class(name, rrefs, rcount)
+        if cat == "rom-several" and unnamed is not None:
+            return reason("rom", name, cat)
+        return cat
     rom_named = rom_unk_asset = rom_unk_data = rom_pos = 0
     for path in files_under("data", (".s",)):
         seg = os.path.splitext(os.path.basename(path))[0]
@@ -730,7 +880,7 @@ def placeholder_census():
                     add("ROM label", "rom-asset")
                 else:
                     rom_unk_data += 1
-                    add("ROM label", "rom-data")
+                    add("ROM label", rom_cat(name))
             else:
                 rom_named += 1
     # ROM labels the C tables of src/data/ define (c_data rows): they left
@@ -745,7 +895,7 @@ def placeholder_census():
             add("ROM label", "rom-position")
         elif name.startswith("gUnk_"):
             rom_unk_data += 1
-            add("ROM label", "rom-data")
+            add("ROM label", rom_cat(name))
         else:
             rom_named += 1
     extra["rom"] = (rom_named, rom_unk_asset, rom_unk_data, rom_pos)
@@ -760,15 +910,24 @@ def placeholder_census():
             if s == "Task" and fld in TASK_FAMILY_FIELDS:
                 add("struct field", "field-task-family")
             else:
-                add("struct field", "field-header")
+                add("struct field", reason("field", "%s.%s" % (s, fld), "field-header"))
             header_structs[s] = header_structs.get(s, 0) + 1
     local = 0
     for path in files_under("src", (".c",)):
         for s, fld in struct_fields(path):
             if fld.startswith("unk"):
                 local += 1
-    if local:
+                if unnamed is None:
+                    continue
+                if s == "Task" and fld in TASK_FAMILY_FIELDS:
+                    add("struct field", "field-task-family-local")
+                else:
+                    add("struct field", reason("field", "%s.%s" % (s, fld), "field-local"))
+    if local and unnamed is None:
         add("struct field", "field-local", local)
+    extra["missing"] = missing
+    extra["stale"] = sorted("%s %s" % k for k in (unnamed or {}) if k not in seen and k[0] != "rom") + \
+        sorted("rom %s" % s for k, s in (unnamed or {}) if k == "rom" and ("rom", s) not in seen)
     extra["header_structs"] = header_structs
     # the per-family register aliases (include/task_vars.h, #155 run 5)
     aliases = {}
@@ -800,24 +959,36 @@ def placeholder_census():
     return rows, by_zone, extra
 
 
+def category_reason(cat):
+    if cat in REASONS:
+        return REASONS[cat]
+    code = cat.split(":", 1)[1]
+    if code == "unexamined":
+        return "NOT EXAMINED: no row in %s (the audit fails)" % UNNAMED_CSV
+    return UNNAMED_REASONS.get(code, "unknown reason code `%s` (the audit fails)" % code)
+
+
 def census_markdown(rows, by_zone, extra):
     out = [CENSUS_BEGIN, ""]
     out.append("| kind | placeholder | count | reason |")
     out.append("|---|---|---:|---|")
-    order = ["fn-game", "fn-engine", "fn-lib", "ram", "io", "rom-data",
-             "rom-asset", "rom-position", "rom-position-format", "field-task-family", "field-header",
-             "field-local", "loc"]
-    pattern = {
-        "fn-game": "`sub_*`", "fn-engine": "`sub_*`", "fn-lib": "`sub_*`",
-        "ram": "`gUnk_02*`, `gUnk_03*`", "io": "`gUnk_04*`",
-        "rom-data": "`gUnk_08*`", "rom-asset": "`gUnk_08*`",
-        "rom-position": "(named)", "rom-position-format": "(named)", "field-task-family": "`unk*`",
-        "field-header": "`unk*`", "field-local": "`unk*`", "loc": "`loc_*`",
-    }
-    for cat in order:
-        for (kind, c), n in sorted(rows.items()):
-            if c == cat:
-                out.append("| %s | %s | %d | %s |" % (kind, pattern[cat], n, REASONS[cat]))
+    kinds = ["function", "RAM cell", "I/O register", "ROM label", "struct field", "label"]
+    fixed = ["fn-game", "fn-engine", "fn-lib", "ram", "io", "rom-data", "rom-shared",
+             "rom-via-unnamed", "rom-via-slot", "rom-local", "rom-several", "rom-unreferenced",
+             "rom-asset", "rom-position", "rom-position-format", "field-task-family",
+             "field-task-family-local", "field-header", "field-local", "loc"]
+    pattern = {"function": "`sub_*`", "RAM cell": "`gUnk_02*`, `gUnk_03*`",
+               "I/O register": "`gUnk_04*`", "ROM label": "`gUnk_08*`",
+               "struct field": "`unk*`", "label": "`loc_*`"}
+
+    def key(item):
+        (kind, cat), n = item
+        coded = ":" in cat
+        return (kinds.index(kind), 1 if coded and cat.endswith(":unexamined") else 0,
+                fixed.index(cat) if cat in fixed else len(fixed), -n, cat)
+    for (kind, cat), n in sorted(rows.items(), key=key):
+        pat = "(named)" if cat.startswith("rom-position") else pattern[kind]
+        out.append("| %s | %s | %d | %s |" % (kind, pat, n, category_reason(cat)))
     ram_named, ram_unk, ram_pos = extra["ram"]
     rom_named, rom_asset, rom_data, rom_pos = extra["rom"]
     out.append("")
@@ -878,9 +1049,16 @@ def check_census(rep, write):
         rep.fail("%s: the audit:placeholders markers are missing" % NAMING_DOC)
     elif text[b:e + len(CENSUS_END)] != block:
         rep.fail("%s: the placeholder census is stale (run `python3 tools/audit.py --write`)" % NAMING_DOC)
+    for m in extra.get("missing", []):
+        rep.fail("placeholder not examined (no %s row): %s" % (UNNAMED_CSV, m))
+    for s in extra.get("stale", []):
+        rep.fail("%s row for a symbol that is no placeholder (renamed?): %s" % (UNNAMED_CSV, s))
+    for (kind, cat), n in rows.items():
+        if ":" in cat and cat.split(":", 1)[1] not in UNNAMED_REASONS and not cat.endswith(":unexamined"):
+            rep.fail("%s: unknown reason code in category %s" % (UNNAMED_CSV, cat))
     lines = []
     for (kind, cat), n in sorted(rows.items()):
-        lines.append("%-13s %-18s %6d  %s" % (kind, cat, n, REASONS[cat]))
+        lines.append("%-13s %-26s %6d  %s" % (kind, cat, n, category_reason(cat)))
     rep.section("6. Placeholder census", lines)
     return {"%s/%s" % k: v for k, v in rows.items()}
 
