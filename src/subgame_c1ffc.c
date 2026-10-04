@@ -136,14 +136,14 @@ void AirGrindRace(void)
     }
     gCurTask->pixelX = 144;
     gCurTask->pixelY = 80;
-    gCurTask->unk34 = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->airGrindSignFadeSlot = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
     gCurTask->frame = 0;
     PlayBgm(0x82A);
     while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->unk00C + 240)
         TaskYieldTrampoline(1);
     gCurTask->lateUpdateCallback = 0;
     gCurTask->frame = 0xFFFF;
-    AirGrindStopPaletteFade(gCurTask->unk34);
+    AirGrindStopPaletteFade(gCurTask->airGrindSignFadeSlot);
     if (gFrameCallback != 0 && gAirGrind.level != 2) {
         while (gAirGrindPtr->frameCount <= 0x4AF)
             TaskYieldTrampoline(1);
@@ -161,7 +161,7 @@ void AirGrindRace(void)
         TaskYieldTrampoline(1);
     gCurTask->pixelX = 112;
     gCurTask->pixelY = 80;
-    gCurTask->unk34 = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
+    gCurTask->airGrindSignFadeSlot = AirGrindStartPaletteFade(gUnk_0860A042, 241, 10, 8, 15, 0);
     gCurTask->frame = 1;
     PlayBgm(0x82C);
     while (1) {
@@ -178,7 +178,7 @@ void AirGrindRace(void)
     StopAllSfx();
     ClearHBlankIntr();
     gVBlankEndCallback = 0;
-    gCurTask->unk18 = 2;
+    gCurTask->subGameNextPhase = 2;
     TaskSleepForever();
 }
 

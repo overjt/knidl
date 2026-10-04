@@ -51,7 +51,7 @@ void ActorShakeVertically(void)
     t->u8C.actor->extraFrame = 0;
     t->posY = (t->pixelY + 1) << 16;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->actorLoopCount = 0;
     do
     {
         t = gCurTask;
@@ -61,8 +61,8 @@ void ActorShakeVertically(void)
         t->posY = (t->pixelY + 2) << 16;
         TaskYieldTrampoline(2);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 11);
+        t->actorLoopCount++;
+    } while ((s16)t->actorLoopCount <= 11);
     t = gCurTask;
     t->posY = (t->pixelY - 1) << 16;
     TaskYieldTrampoline(2);
@@ -78,7 +78,7 @@ void sub_0806adb0(void)
     SetRoomUpdateFlags(2);
     RequestScreenShake(5);
     v = gBgPalette;
-    gCurTask->unk6C = 0;
+    gCurTask->actorLoopCount = 0;
     do
     {
         gDispCnt &= 0xE0FF;
@@ -98,8 +98,8 @@ void sub_0806adb0(void)
         LoadBackdropColor(&v);
         TaskYieldTrampoline(3);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 1);
+        t->actorLoopCount++;
+    } while ((s16)t->actorLoopCount <= 1);
     RequestScreenShake(0);
     LoadBackdropColor(&v);
     ThawStage();
@@ -120,16 +120,16 @@ void ActorDefeatMidBoss(void)
     TaskStop();
     TaskSetFrame(0);
     CreateChildTaskHere(142, 0);
-    gCurTask->unk6C = 0;
+    gCurTask->actorLoopCount = 0;
     do
     {
-        TaskSetMotionXFacing(gUnk_0873E6A0[(s16)gCurTask->unk6C], 0x5A5A5A5A);
+        TaskSetMotionXFacing(gUnk_0873E6A0[(s16)gCurTask->actorLoopCount], 0x5A5A5A5A);
         t = gCurTask;
-        t->velY = gUnk_0873E6D0[(s16)t->unk6C];
+        t->velY = gUnk_0873E6D0[(s16)t->actorLoopCount];
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 5);
+        t->actorLoopCount++;
+    } while ((s16)t->actorLoopCount <= 5);
     TaskStop();
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;

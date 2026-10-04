@@ -418,7 +418,7 @@ u32 ActorStepBackFromSlope(void)
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         t = gCurTask;
-        if ((t->unk24 & 0xFFFF0000) != 0
+        if ((t->actorFlatGroundY & 0xFFFF0000) != 0
          && (t->onGround & 1) != 0
          && (gTerrainResult[4] == 1 || gTerrainResult[4] == 2
           || gTerrainResult[4] == 3 || gTerrainResult[4] == 4))
@@ -436,7 +436,7 @@ u32 ActorStepBackFromSlope(void)
             u = gCurTask;
             d = y - u->pixelX;
             u->pixelX = y + d;
-            u->pixelY = u->unk24;
+            u->pixelY = u->actorFlatGroundY;
             u->posX = u->pixelX << 16;
             u->posY = u->pixelY << 16;
             return 1;
@@ -839,9 +839,9 @@ void ActorStartDrown(s32 a)
     t = gCurTask;
     b = t->u8C.actor;
     if (a == -2)
-        t->unk18 = 0;
+        t->actorDrownFrame = 0;
     else
-        t->unk18 = a;
+        t->actorDrownFrame = a;
     b->hitState = 2;
     ActorSetTerrainHandlers((u32)gActorDrownTerrainHandlers);
     if (gCurTask->onGround & 1)

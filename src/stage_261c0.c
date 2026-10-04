@@ -261,9 +261,9 @@ s32 CreateStageUnlockPan(void)
         t = &gTasks[id];
         f = gHubUnlockFlags & 16;
         if (f != 0)
-            t->unk24 = 1;
+            t->mapEventRevealDoor = 1;
         else
-            t->unk24 = 0;
+            t->mapEventRevealDoor = 0;
         if (gPlayerCount == 1)
         {
             gCameraAnchorX = gCameraFocusX;
@@ -299,9 +299,9 @@ s32 CreateBigSwitchUnlockPan(void)
         t = &gTasks[id];
         f = gHubUnlockFlags & 16;
         if (f != 0)
-            t->unk24 = 1;
+            t->mapEventRevealDoor = 1;
         else
-            t->unk24 = 0;
+            t->mapEventRevealDoor = 0;
         gCameraAnchorX = gCameraFocusX = gRoomEntryX;
         gCameraAnchorY = gCameraFocusY = gRoomEntryY;
         if (gCameraAnchorX < gRoomBounds[0])

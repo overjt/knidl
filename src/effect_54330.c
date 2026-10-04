@@ -44,12 +44,12 @@ void PlayerEffectRunDust(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C600;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->updateCallback = (u32)PlayerEffectRunDustUpdate;
         t->unk28 = 0;
-        t->unk6C = 0;
+        t->playerEffectLoopCount = 0;
         while (t->unk28 == 0)
         {
             u = gCurTask;
@@ -77,8 +77,8 @@ void PlayerEffectRunDust(void)
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             t = gCurTask;
-            t->unk6C++;
-            if ((s16)t->unk6C > 2)
+            t->playerEffectLoopCount++;
+            if ((s16)t->playerEffectLoopCount > 2)
                 break;
         }
         break;
@@ -118,7 +118,7 @@ void PlayerEffectSlideDust(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C600;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->updateCallback = (u32)PlayerEffectSlideDustUpdate;
@@ -220,16 +220,16 @@ void PlayerEffectSplash(void)
         PlaySfxIfLocalPlayer(134, t->parent);
     u = gCurTask;
     u->posX = (u->u8C.parentTask)->pixelX << 16;
-    u->posY = (u16)u->unk18 << 16;
+    u->posY = (u16)u->playerEffectSpawnWord << 16;
     u->frame = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->playerEffectLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 9);
+        gCurTask->playerEffectLoopCount++;
+    } while ((s16)gCurTask->playerEffectLoopCount <= 9);
     TaskExitTrampoline();
 }
 
@@ -243,7 +243,7 @@ void sub_080548f0(void)
     t = gCurTask;
     t->frameTable = gUnk_0874C520;
     t->posX = (t->u8C.parentTask)->pixelX << 16;
-    t->posY = (u16)t->unk18 << 16;
+    t->posY = (u16)t->playerEffectSpawnWord << 16;
     t->frame = 11;
     TaskYieldTrampoline(2);
     gCurTask->frame++;

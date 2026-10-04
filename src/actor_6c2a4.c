@@ -58,7 +58,7 @@ void ActorAttachedBackdropBounceOff(void)
     t->moveCallback = (u32)ActorMove;
     t->updateCallback = (u32)ActorAttachedBackdropBounceOffUpdate;
     t->lateUpdateCallback = 0;
-    t->unk34 = 0;
+    t->actorBounceEnded = 0;
     v = t->velX >> 1;
     if (v < 0)
         v = -v;
@@ -70,13 +70,13 @@ void ActorAttachedBackdropBounceOff(void)
     t->hitKind = 0;
     gCurTask->u80.attackAbility = 0;
     TaskYieldTrampoline(12);
-    gCurTask->unk34 = 1;
+    gCurTask->actorBounceEnded = 1;
     TaskSleepForever();
 }
 
 void ActorAttachedBackdropBounceOffUpdate(void)
 {
-    if (gCurTask->unk34 != 0)
+    if (gCurTask->actorBounceEnded != 0)
         ActorAttachedDie();
 }
 
@@ -91,7 +91,7 @@ void ActorAttachedPullIn(void)
     ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
     TaskSetPosRelativeToParent();
     u = gCurTask;
-    u->unk18 = 0;
+    u->actorMouthFull = 0;
     u->layer = 6;
     while (TaskIsParentWithinX(18) == 0)
     {
@@ -110,7 +110,7 @@ void ActorAttachedPullInLateUpdate(void)
     ActorAttachedRestorePalette();
     sub_0806b938();
     t = gCurTask;
-    if (t->unk18 == 1)
+    if (t->actorMouthFull == 1)
         ActorAttachedDie();
     else if (t->state != 4)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
@@ -127,8 +127,8 @@ void ActorAttachedThrowHeld(void)
     t->lateUpdateCallback = (u32)ActorAttachedThrowHeldLateUpdate;
     t->posY = 0;
     t->posX = 0;
-    t->unk20 = t->pixelX;
-    t->unk1C = t->pixelY;
+    t->actorCarriedX = t->pixelX;
+    t->actorCarriedY = t->pixelY;
     t->taskClass = 1;
     ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
     TaskSleepForever();
@@ -173,7 +173,7 @@ void ActorAttachedThrowFlight(void)
     u = gCurTask;
     i = (s16)u->unk70 - 3;
     u->unk70 = i;
-    u->unk24 = 0;
+    u->actorThrowWobbleStep = 0;
     TaskSetMotionXFacing(gUnk_0873EAC0[i].unk00, 0x5A5A5A5A);
     v = gCurTask;
     v->velY = gUnk_0873EAC0[i].unk04;
@@ -226,13 +226,13 @@ void ActorAttachedThrowFlightUpdate(void)
     if ((*(u32 *)gTerrainResult & 0x00FFFFFF) != 0)
     {
         if (gTerrainResult[1] != 0)
-            gCurTask->unk30 = 0;
+            gCurTask->actorBounceSurface = 0;
         if (gTerrainResult[2] != 0)
-            gCurTask->unk30 = 1;
+            gCurTask->actorBounceSurface = 1;
         if (gTerrainResult[0] != 0)
-            gCurTask->unk30 = 2;
+            gCurTask->actorBounceSurface = 2;
         if (gTerrainResult[4] != 0)
-            gCurTask->unk30 = 2;
+            gCurTask->actorBounceSurface = 2;
         PlaySfx(237);
         RequestScreenShake(2);
         gCurTask->lateUpdateCallback = 0;
@@ -251,9 +251,9 @@ void ActorAttachedThrowFlightUpdate(void)
         v = gCurTask;
         if (v->actorKind != 1)
         {
-            v->pixelX += gUnk_0873EAF0[v->unk24 * 2];
-            v->pixelY += (&gUnk_0873EAF0[1])[v->unk24 * 2];
-            v->unk24 = (v->unk24 + 1) & 15;
+            v->pixelX += gUnk_0873EAF0[v->actorThrowWobbleStep * 2];
+            v->pixelY += (&gUnk_0873EAF0[1])[v->actorThrowWobbleStep * 2];
+            v->actorThrowWobbleStep = (v->actorThrowWobbleStep + 1) & 15;
         }
         if (v->actorKind == 1)
             RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX,
@@ -373,12 +373,12 @@ void ActorAttachedThrowBounceOff(void)
     t->moveCallback = (u32)ActorMove;
     t->updateCallback = (u32)ActorAttachedThrowBounceOffUpdate;
     t->lateUpdateCallback = 0;
-    t->unk34 = 0;
+    t->actorBounceEnded = 0;
     v = t->velX >> 1;
     if (v < 0)
         v = -v;
     t->velX = t->facing * v;
-    switch (t->unk30)
+    switch (t->actorBounceSurface)
     {
     case 0:
         w = t->velY >> 1;
@@ -403,13 +403,13 @@ void ActorAttachedThrowBounceOff(void)
     gCurTask->hitKind = 0;
     gCurTask->u80.attackAbility = 0;
     TaskYieldTrampoline(12);
-    gCurTask->unk34 = 1;
+    gCurTask->actorBounceEnded = 1;
     TaskSleepForever();
 }
 
 void ActorAttachedThrowBounceOffUpdate(void)
 {
-    if (gCurTask->unk34 != 0)
+    if (gCurTask->actorBounceEnded != 0)
         ActorAttachedDie();
 }
 
@@ -460,8 +460,8 @@ s16 CreateStarFlash(u8 kind, s32 dx, s32 dy)
         if ((s16)i != -1)
         {
             t = &gTasks[(s16)i];
-            t->unk18 = gCurTask->facing * dx;
-            t->unk1C = dy;
+            t->starFlashOnParentOffsetX = gCurTask->facing * dx;
+            t->starFlashOnParentOffsetY = dy;
         }
         break;
     }
@@ -500,14 +500,14 @@ void Task_StarFlashOnParent(void)
     u->frameTable = gUnk_0874CBC8;
     u->updateCallback = (u32)StarFlashFollowParent;
     TaskFaceLikeParent();
-    gCurTask->unk6C = 0;
+    gCurTask->starFlashOnParentLoopCount = 0;
     do
     {
         gCurTask->frame = 0;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-    } while (++*(s16 *)&gCurTask->unk6C <= 7);
+    } while (++*(s16 *)&gCurTask->starFlashOnParentLoopCount <= 7);
     TaskExitTrampoline();
 }
 
@@ -521,9 +521,9 @@ void StarFlashFollowParent(void)
     {
         t = gCurTask;
         p = &gTasks[t->parent];
-        t->pixelX = p->pixelX + t->unk18
-                 + gUnk_0873EB30[*(s16 *)&t->unk6C] * t->facing;
-        t->pixelY = p->pixelY + t->unk1C + gUnk_0873EB38[*(s16 *)&t->unk6C];
+        t->pixelX = p->pixelX + t->starFlashOnParentOffsetX
+                 + gUnk_0873EB30[*(s16 *)&t->starFlashOnParentLoopCount] * t->facing;
+        t->pixelY = p->pixelY + t->starFlashOnParentOffsetY + gUnk_0873EB38[*(s16 *)&t->starFlashOnParentLoopCount];
     }
     else
     {
@@ -542,7 +542,7 @@ s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
     if ((s16)i != -1)
     {
         p = &gTasks[(s16)i];
-        p->unk18 = vx;
+        p->dustTrailPuffCount = vx;
         if (flag == 0)
         {
             if (gCurTask->facing == 1)
@@ -554,8 +554,8 @@ s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
         {
             p->facing = gCurTask->facing;
         }
-        p->unk1C = gCurTask->facing * c;
-        p->unk20 = d;
+        p->dustTrailOffsetX = gCurTask->facing * c;
+        p->dustTrailOffsetY = d;
     }
     return r;
 }

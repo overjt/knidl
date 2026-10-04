@@ -602,7 +602,7 @@ void PlayerLeaveCannon(s32 id)
 {
     struct Task *u = &gTasks[id];
     struct Task *t = &gTasks[u->parent];
-    t->unk18 = 60;
+    t->cannonLoadTimer = 60;
     t->cannonRiderCount--;
     t->cannonRiderMask &= ~(1 << gCurTaskIdx);
 }
@@ -679,7 +679,7 @@ void Task_Cannon(void)
         struct Task *t = gCurTask;
 
         t->frameTable = gCannonFrames;
-        t->unk18 = 0;
+        t->cannonLoadTimer = 0;
         CallTableEntry(t->variant, 1, gCannonVariants);
     }
 }
@@ -718,7 +718,7 @@ void CannonLoadPlayer(s32 id)
                 struct Task *u = gCurTask;
 
                 u->cannonRiderCount++;
-                u->unk18 = 0;
+                u->cannonLoadTimer = 0;
                 u->cannonRiderMask |= 1 << id;
             }
         }
@@ -805,14 +805,14 @@ void CannonWaitUpdate(void)
         {
             struct Task *t = gCurTask;
 
-            if (t->unk18 <= 0)
+            if (t->cannonLoadTimer <= 0)
             {
                 if (ActorCheckHits())
                     CannonLoadPlayer(gCurTask->hitterSlot);
             }
             else
             {
-                t->unk18--;
+                t->cannonLoadTimer--;
             }
         }
     }

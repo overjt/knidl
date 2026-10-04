@@ -404,7 +404,7 @@ void sub_080bc70c(void)
     if (gCurTaskIdx == 0)
     {
         struct Task *p = &gTasks[gCurTask->parent];
-        p->unk24 = 1;
+        p->quickDrawPlayersReady = 1;
     }
     gCurTask->state = 1;
 }
@@ -414,7 +414,7 @@ void QuickDrawSetPlayerState(s32 a0, u16 a1)
     struct Task *t = &gTasks[a0];
     struct Task *p = &gTasks[t->parent];
 
-    if (p->unk18 != 2)
+    if (p->subGameNextPhase != 2)
     {
         t->state = a1;
         TaskSetEntry(QuickDrawPlayerEnterState, a0);
@@ -753,7 +753,7 @@ void QuickDrawTimerCount(void)
         s32 q;
 
         t->unk18++;
-        p->unk20 = t->unk18;
+        p->quickDrawReactionTime = t->unk18;
         r = t->unk18;
         q = 0;
         while (r > 9)
@@ -894,7 +894,7 @@ void QuickDrawSetOpponentState(s32 a0, u16 a1)
     struct Task *t = &gTasks[a0];
     struct Task *u = &gTasks[t->parent];
 
-    if (u->unk18 != 2)
+    if (u->subGameNextPhase != 2)
     {
         t->state = a1;
         TaskSetEntry(QuickDrawOpponentEnterState, a0);

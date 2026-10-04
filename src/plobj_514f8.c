@@ -185,7 +185,7 @@ void PlayerObjectFireBreath(void)
     t->unk28 = 0;
     t->u80.attackAbility = 1;
     t = gCurTask;
-    switch (t->unk18 & 15)
+    switch (t->playerObjectSpawnWord & 15)
     {
     case 0:
         t->drawCallback = (u32)sub_0803dfc8;
@@ -206,7 +206,7 @@ void PlayerObjectFireBreath(void)
             gCurTask->accelY = (RandomRange(36) - 24) << 8;
             TaskSetFrameByFacing(0);
             TaskYieldTrampoline(2);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+            for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 4; gCurTask->playerObjectLoopCount++)
             {
                 gCurTask->frame += 2;
                 TaskYieldTrampoline(2);
@@ -222,7 +222,7 @@ void PlayerObjectFireBreath(void)
             gCurTask->accelY = (RandomRange(36) - 24) << 8;
             TaskSetFrameByFacing(14);
             TaskYieldTrampoline(2);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+            for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 4; gCurTask->playerObjectLoopCount++)
             {
                 gCurTask->frame += 2;
                 TaskYieldTrampoline(2);
@@ -296,7 +296,7 @@ void PlayerObjectFireBreathUpdate(void)
             TaskFree(gCurTaskIdx);
             return;
         }
-        if ((t->unk18 & 15) == 1)
+        if ((t->playerObjectSpawnWord & 15) == 1)
         {
             s32 dx;
             t->health = 127;
@@ -378,7 +378,7 @@ void PlayerObjectCutterBlade(void)
             {
                 TaskSetFrameByFacing(8);
                 TaskYieldTrampoline(2);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+                for (gCurTask->playerObjectLoopCount = 0; (s16)gCurTask->playerObjectLoopCount <= 6; gCurTask->playerObjectLoopCount++)
                 {
                     gCurTask->frame += 2;
                     TaskYieldTrampoline(2);

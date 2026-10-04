@@ -35,7 +35,7 @@ void Task_DustTrail(void)
     t->layer = 10;
     u = gCurTask;
     u->frameTable = gUnk_0874CB90;
-    while (u->unk18 != 0 && gTaskSlotTypes[u->parent] != -1)
+    while (u->dustTrailPuffCount != 0 && gTaskSlotTypes[u->parent] != -1)
     {
         if (TaskHasSameSerial(gCurTask->parent) != 1)
             break;
@@ -46,8 +46,8 @@ void Task_DustTrail(void)
          && (u16)(gTasks[j].hitEffect - 2) <= 1)
             break;
         v = gCurTask;
-        v->posX = (gTasks[j].pixelX + v->unk1C) << 16;
-        v->posY = (gTasks[j].pixelY + v->unk20) << 16;
+        v->posX = (gTasks[j].pixelX + v->dustTrailOffsetX) << 16;
+        v->posY = (gTasks[j].pixelY + v->dustTrailOffsetY) << 16;
         v->accelY = -0x2000;
         TaskSetMotionXFacing(0xFFFD0000, 0x5A5A5A5A);
         TaskSetFrameByFacing(0);
@@ -66,7 +66,7 @@ void Task_DustTrail(void)
         TaskYieldTrampoline(1);
         TaskStop();
         u = gCurTask;
-        u->unk18--;
+        u->dustTrailPuffCount--;
     }
     TaskExitTrampoline();
 }
@@ -195,8 +195,8 @@ s32 CreateDustBurst(s16 a, s16 b)
     if (i != -1)
     {
         p = &gTasks[i];
-        p->unk24 = a;
-        p->unk20 = b;
+        p->dustBurstOffsetX = a;
+        p->dustBurstOffsetY = b;
     }
     return i;
 }

@@ -44,7 +44,7 @@ void PlayerEffectFireBreathFlames(void)
     t->frameTable = gUnk_08751CA4;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
     t->unk28 = 0;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->frame = 0xFFFF;
@@ -144,7 +144,7 @@ void PlayerEffectSparkAura(void)
     t = gCurTask;
     t->frameTable = gUnk_08751CBC;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x800) | 12;
-    if ((t->unk28 = t->unk18 & 15) == 0)
+    if ((t->unk28 = t->playerEffectSpawnWord & 15) == 0)
         t->drawCallback = (u32)TaskDrawWorldLoadTiles;
     else
         t->drawCallback = (u32)TaskDrawWorldTilesLoaded;

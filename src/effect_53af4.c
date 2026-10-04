@@ -75,15 +75,15 @@ void sub_08053b40(void)
     for (;;)
     {
         gCurTask->unk28 = 0;
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             TaskSetFrame((s16)gCurTask->unk28++);
             TaskYieldTrampoline(1);
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 11);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 11);
     }
 }
 
@@ -111,7 +111,7 @@ void sub_08053c48(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C600;
-    if ((t->unk18 & 15) == 0)
+    if ((t->playerEffectSpawnWord & 15) == 0)
         t->facing = -1;
     else
         t->facing = 1;
@@ -140,7 +140,7 @@ void sub_08053d08(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C600;
-    if ((t->unk18 & 15) == 0)
+    if ((t->playerEffectSpawnWord & 15) == 0)
         t->facing = -1;
     else
         t->facing = 1;
@@ -164,7 +164,7 @@ void PlayerEffectAbilityGetSparkle(void)
     s32 s;
 
     t->updateCallback = (u32)sub_08053e34;
-    s = t->unk18 & 15;
+    s = t->playerEffectSpawnWord & 15;
     if (s == 0)
     {
         t->moveCallback = (u32)TaskMoveRelativeToParent;
@@ -314,12 +314,12 @@ void PlayerEffectSkidDust(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C600;
-    switch (t->unk18 & 0xFF0000)
+    switch (t->playerEffectSpawnWord & 0xFF0000)
     {
     case 0:
         t->unk28 = 0;
         t->unk2C = t->player->mode;
-        t->unk30 = t->unk18 & 0xFF;
+        t->unk30 = t->playerEffectSpawnWord & 0xFF;
         t->updateCallback = (u32)PlayerEffectSkidDustUpdate;
         do
         {
@@ -380,7 +380,7 @@ void PlayerEffectSkidDustUpdate(void)
             t->unk28 = 1;
             return;
         }
-        switch (t->unk18 & 0xFF00)
+        switch (t->playerEffectSpawnWord & 0xFF00)
         {
         case 0:
             if ((t->u8C.parentTask)->onGround == 0)

@@ -215,8 +215,8 @@ void AirGrindResultsStep(void)
         if (gPlayerPressedKeys[0] & 9) {
             if (gPrevGameState != 5) {
                 t = gCurTask;
-                t->unk28 = 0;
-                t->unk2C = gAirGrind.level;
+                t->airGrindContinueCursor = 0;
+                t->airGrindLevelCursor = gAirGrind.level;
                 if (gAirGrindPtr->localPlayer == 0) {
                     t->pixelX = 120;
                     t->pixelY = 80;
@@ -252,27 +252,27 @@ void AirGrindResultsStep(void)
         break;
     case 5:
         if (gPlayerPressedKeys[0] & 64) {
-            if (--gCurTask->unk28 < 0)
-                gCurTask->unk28 = 1;
+            if (--gCurTask->airGrindContinueCursor < 0)
+                gCurTask->airGrindContinueCursor = 1;
             if (gAirGrindPtr->localPlayer == 0) {
-                AirGrindResultsSetCursorBlend(gCurTask->unk28);
+                AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
                 PlaySfx(101);
             }
         }
         if (gPlayerPressedKeys[0] & 128) {
-            if (++gCurTask->unk28 > 1)
-                gCurTask->unk28 = 0;
+            if (++gCurTask->airGrindContinueCursor > 1)
+                gCurTask->airGrindContinueCursor = 0;
             if (gAirGrindPtr->localPlayer == 0) {
-                AirGrindResultsSetCursorBlend(gCurTask->unk28);
+                AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
                 PlaySfx(101);
             }
         }
         if (gPlayerPressedKeys[0] & 9) {
-            if (gCurTask->unk28 == 0) {
-                gCurTask->unk2C = gAirGrind.level;
+            if (gCurTask->airGrindContinueCursor == 0) {
+                gCurTask->airGrindLevelCursor = gAirGrind.level;
                 if (gAirGrindPtr->localPlayer == 0) {
                     gCurTask->frame = 0;
-                    AirGrindResultsSetCursorBlend(gCurTask->unk2C);
+                    AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
                 }
                 gAirGrindResults.unk00++;
             } else {
@@ -285,30 +285,30 @@ void AirGrindResultsStep(void)
         break;
     case 6:
         if (gPlayerPressedKeys[0] & 64) {
-            if (--gCurTask->unk2C < 0)
-                gCurTask->unk2C = 2;
+            if (--gCurTask->airGrindLevelCursor < 0)
+                gCurTask->airGrindLevelCursor = 2;
             if (gAirGrindPtr->localPlayer == 0) {
-                AirGrindResultsSetCursorBlend(gCurTask->unk2C);
+                AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
                 PlaySfx(101);
             }
         }
         if (gPlayerPressedKeys[0] & 128) {
-            if (++gCurTask->unk2C > 2)
-                gCurTask->unk2C = 0;
+            if (++gCurTask->airGrindLevelCursor > 2)
+                gCurTask->airGrindLevelCursor = 0;
             if (gAirGrindPtr->localPlayer == 0) {
-                AirGrindResultsSetCursorBlend(gCurTask->unk2C);
+                AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
                 PlaySfx(101);
             }
         }
         if (gPlayerPressedKeys[0] & 9) {
-            SubGameReplay(gCurTask->unk2C);
+            SubGameReplay(gCurTask->airGrindLevelCursor);
             gAirGrindResults.unk00 = 99;
             if (gAirGrindPtr->localPlayer == 0)
                 PlaySfx(102);
         } else if (gPlayerPressedKeys[0] & 2) {
             if (gAirGrindPtr->localPlayer == 0) {
                 gCurTask->frame = 1;
-                AirGrindResultsSetCursorBlend(gCurTask->unk28);
+                AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
                 PlaySfx(215);
             }
             gAirGrindResults.unk00--;
@@ -333,17 +333,17 @@ void AirGrindResultsDrawCursor(void)
     s32 step;
     s32 step2;
 
-    gCurTask->unk6C--;
-    if ((s16)gCurTask->unk6C < 0)
-        gCurTask->unk6C = 8;
-    from = gCurTask->unk6E;
+    gCurTask->airGrindCursorBlendTimer--;
+    if ((s16)gCurTask->airGrindCursorBlendTimer < 0)
+        gCurTask->airGrindCursorBlendTimer = 8;
+    from = gCurTask->airGrindCursorBlendFrom;
     to = from + 1;
-    step = 8 - (s16)gCurTask->unk6C;
+    step = 8 - (s16)gCurTask->airGrindCursorBlendTimer;
     BlendColors(gUnk_08609F40[from], gUnk_08609F40[to], (u16)(step * 32), 16, gObjPaletteBank5);
-    gCurTask->unk70--;
-    if ((s16)gCurTask->unk70 < 0)
-        gCurTask->unk70 = 8;
-    step2 = 8 - (s16)gCurTask->unk70;
+    gCurTask->airGrindGlowBlendTimer--;
+    if ((s16)gCurTask->airGrindGlowBlendTimer < 0)
+        gCurTask->airGrindGlowBlendTimer = 8;
+    step2 = 8 - (s16)gCurTask->airGrindGlowBlendTimer;
     BlendColors(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gObjPaletteBank5[16]);
     if (gAirGrindPtr->localPlayer == 0) {
         t = gCurTask;
@@ -360,20 +360,20 @@ void AirGrindResultsSetCursorBlend(s32 mode)
 {
     switch (mode) {
     case 0:
-        gCurTask->unk6E = 0;
+        gCurTask->airGrindCursorBlendFrom = 0;
         break;
     case 1:
-        gCurTask->unk6E = 2;
+        gCurTask->airGrindCursorBlendFrom = 2;
         break;
     case 2:
-        gCurTask->unk6E = 4;
+        gCurTask->airGrindCursorBlendFrom = 4;
         break;
     default:
-        gCurTask->unk6E = 0;
-        gCurTask->unk70 = 8;
+        gCurTask->airGrindCursorBlendFrom = 0;
+        gCurTask->airGrindGlowBlendTimer = 8;
         break;
     }
-    gCurTask->unk6C = 8;
+    gCurTask->airGrindCursorBlendTimer = 8;
 }
 
 void AirGrindBuildSky(void)

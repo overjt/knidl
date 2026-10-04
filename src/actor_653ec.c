@@ -257,7 +257,7 @@ void ResetBgPaletteBlend(void)
     if (j != -1)
     {
         t = &gTasks[j];
-        t->unk1C = 2;
+        t->paletteAnimBlendMode = 2;
     }
 }
 
@@ -270,8 +270,8 @@ void EndBgPaletteBlend(u32 v)
     if (j != -1)
     {
         t = &gTasks[j];
-        t->unk18 = v;
-        t->unk1C = 1;
+        t->paletteAnimBlendStep = v;
+        t->paletteAnimBlendMode = 1;
     }
 }
 
@@ -285,9 +285,9 @@ void StartBgPaletteBlend(u32 a, u32 b)
     if (j != -1)
     {
         t = &gTasks[j];
-        t->unk18 = a;
-        t->unk1C = 0;
-        t->unk24 = b;
+        t->paletteAnimBlendStep = a;
+        t->paletteAnimBlendMode = 0;
+        t->paletteAnimBlendTarget = b;
         CpuSet(gBgPaletteBank2, gUnk_02005E10, 224);
     }
 }
@@ -306,9 +306,9 @@ void AcquirePaletteAnim(u32 p0, s32 idx)
         if (i != -1)
         {
             t = &gTasks[i];
-            t->unk18 = gCurTask->tileWord >> 12;
+            t->paletteAnimPaletteBank = gCurTask->tileWord >> 12;
             t->variant = p0;
-            t->unk74 = idx;
+            t->paletteAnimRefIndex = idx;
             gPaletteAnimTasks[idx] = i;
         }
     }
@@ -331,38 +331,38 @@ void PaletteAnimVariant0(void)
     struct Task *x;
     struct Task *y;
 
-    gCurTask->unk28 = 12;
-    gCurTask->unk2C = 2;
-    gCurTask->unk30 = 3;
-    gCurTask->unk34 = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    gCurTask->paletteAnimPairTimer = 12;
+    gCurTask->paletteAnimFromIndex = 2;
+    gCurTask->paletteAnimToIndex = 3;
+    gCurTask->paletteAnimPairRatio = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         u = gCurTask;
-        u->unk28--;
-        if (u->unk28 == 0)
+        u->paletteAnimPairTimer--;
+        if (u->paletteAnimPairTimer == 0)
         {
-            u->unk28 = 12;
-            u->unk2C++;
-            if (u->unk2C > 3)
-                u->unk2C = 0;
+            u->paletteAnimPairTimer = 12;
+            u->paletteAnimFromIndex++;
+            if (u->paletteAnimFromIndex > 3)
+                u->paletteAnimFromIndex = 0;
             v = gCurTask;
-            v->unk30++;
-            if (v->unk30 > 3)
-                v->unk30 = 0;
-            gCurTask->unk34 = 0;
+            v->paletteAnimToIndex++;
+            if (v->paletteAnimToIndex > 3)
+                v->paletteAnimToIndex = 0;
+            gCurTask->paletteAnimPairRatio = 0;
         }
         w = gCurTask;
-        if (w->unk30 == 0)
-            w->unk34 = w->unk34 + 128;
+        if (w->paletteAnimToIndex == 0)
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 128;
         else
-            w->unk34 = w->unk34 + 64;
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 64;
         x = gCurTask;
-        if (x->unk34 > 256)
-            x->unk34 = 256;
+        if (x->paletteAnimPairRatio > 256)
+            x->paletteAnimPairRatio = 256;
         y = gCurTask;
-        BlendColors((u32)(gUnk_0825088C + (y->unk2C << 5)),
-                     (u32)(gUnk_0825088C + (y->unk30 << 5)), (u16)y->unk34,
-                     16, (u32)(gObjPalette + (y->unk18 << 5)));
+        BlendColors((u32)(gUnk_0825088C + (y->paletteAnimFromIndex << 5)),
+                     (u32)(gUnk_0825088C + (y->paletteAnimToIndex << 5)), (u16)y->paletteAnimPairRatio,
+                     16, (u32)(gObjPalette + (y->paletteAnimPaletteBank << 5)));
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -381,24 +381,24 @@ void PaletteAnimCycle(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    t->unk18 = 10;
-    t->unk1C = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0 && a->paletteVariant <= 3)
+    t->paletteAnimTimer = 10;
+    t->paletteAnimCycleStep = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0 && a->paletteVariant <= 3)
     {
         u = gCurTask;
-        if (u->unk18 <= 0)
+        if (u->paletteAnimTimer <= 0)
         {
-            v = gUnk_0873DF38[a->paletteVariant][u->unk1C];
+            v = gUnk_0873DF38[a->paletteVariant][u->paletteAnimCycleStep];
             if (v == 0)
                 v = a->palette;
             RequestCopy(2, v,
                          (u32)(gObjPalette + ((u->tileWord >> 12) << 5)), 32);
             w = gCurTask;
-            w->unk18 = 10;
-            w->unk1C = (w->unk1C + 1) & 3;
+            w->paletteAnimTimer = 10;
+            w->paletteAnimCycleStep = (w->paletteAnimCycleStep + 1) & 3;
         }
         x = gCurTask;
-        x->unk18--;
+        x->paletteAnimTimer--;
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -414,27 +414,27 @@ void PaletteAnimFlashColor(void)
     u32 off;
 
     t = gCurTask;
-    t->unk18 = 2;
-    t->unk1C = 0;
+    t->paletteAnimTimer = 2;
+    t->paletteAnimFlashOn = 0;
     off = (t->tileWord >> 12) << 5;
     off += 26;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         u = gCurTask;
-        if (u->unk18 <= 0)
+        if (u->paletteAnimTimer <= 0)
         {
-            if (u->unk1C != 0)
+            if (u->paletteAnimFlashOn != 0)
                 RequestCopy(2, (u32)gUnk_0873DF78,
                              (u32)(gObjPalette + off), 2);
             else
                 RequestCopy(2, (u32)gUnk_082530C8,
                              (u32)(gObjPalette + off), 2);
             w = gCurTask;
-            w->unk18 = 2;
-            w->unk1C ^= 1;
+            w->paletteAnimTimer = 2;
+            w->paletteAnimFlashOn ^= 1;
         }
         x = gCurTask;
-        x->unk18--;
+        x->paletteAnimTimer--;
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -453,41 +453,41 @@ void PaletteAnimVariant3(void)
 
     t = gCurTask;
     a = t->u8C.actor;
-    t->unk28 = 10;
-    t->unk2C = 1;
-    t->unk30 = 2;
-    t->unk34 = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    t->paletteAnimPairTimer = 10;
+    t->paletteAnimFromIndex = 1;
+    t->paletteAnimToIndex = 2;
+    t->paletteAnimPairRatio = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         u = gCurTask;
-        u->unk28--;
-        if (u->unk28 == 0)
+        u->paletteAnimPairTimer--;
+        if (u->paletteAnimPairTimer == 0)
         {
-            u->unk28 = 10;
-            u->unk2C++;
-            if (u->unk2C > 2)
+            u->paletteAnimPairTimer = 10;
+            u->paletteAnimFromIndex++;
+            if (u->paletteAnimFromIndex > 2)
             {
-                u->unk2C = 0;
-                u->unk28 = 2;
+                u->paletteAnimFromIndex = 0;
+                u->paletteAnimPairTimer = 2;
             }
             v = gCurTask;
-            v->unk30++;
-            if (v->unk30 > 2)
-                v->unk30 = 0;
-            gCurTask->unk34 = 0;
+            v->paletteAnimToIndex++;
+            if (v->paletteAnimToIndex > 2)
+                v->paletteAnimToIndex = 0;
+            gCurTask->paletteAnimPairRatio = 0;
         }
         w = gCurTask;
-        if (w->unk30 == 0)
-            w->unk34 = w->unk34 + 16;
+        if (w->paletteAnimToIndex == 0)
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 16;
         else
-            w->unk34 = w->unk34 + 128;
+            w->paletteAnimPairRatio = w->paletteAnimPairRatio + 128;
         x = gCurTask;
-        if (x->unk34 > 256)
-            x->unk34 = 256;
+        if (x->paletteAnimPairRatio > 256)
+            x->paletteAnimPairRatio = 256;
         y = gCurTask;
-        BlendColors(gUnk_0873DF7C[a->paletteVariant][y->unk2C],
-                     gUnk_0873DF7C[a->paletteVariant][y->unk30], (u16)y->unk34, 16,
-                     (u32)(gObjPalette + (y->unk18 << 5)));
+        BlendColors(gUnk_0873DF7C[a->paletteVariant][y->paletteAnimFromIndex],
+                     gUnk_0873DF7C[a->paletteVariant][y->paletteAnimToIndex], (u16)y->paletteAnimPairRatio, 16,
+                     (u32)(gObjPalette + (y->paletteAnimPaletteBank << 5)));
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -499,38 +499,38 @@ void PaletteAnimBgBlend(void)
     struct Task *t;
     struct Task *u;
 
-    gCurTask->unk20 = 0;
-    while (gPaletteAnimRefCounts[gCurTask->unk74] != 0)
+    gCurTask->paletteAnimBlendRatio = 0;
+    while (gPaletteAnimRefCounts[gCurTask->paletteAnimRefIndex] != 0)
     {
         t = gCurTask;
-        switch (t->unk1C)
+        switch (t->paletteAnimBlendMode)
         {
         case 0:
-            t->unk20 += t->unk18;
-            if (t->unk20 > t->unk24)
+            t->paletteAnimBlendRatio += t->paletteAnimBlendStep;
+            if (t->paletteAnimBlendRatio > t->paletteAnimBlendTarget)
             {
-                t->unk20 = t->unk24;
-                t->unk1C = 3;
+                t->paletteAnimBlendRatio = t->paletteAnimBlendTarget;
+                t->paletteAnimBlendMode = 3;
             }
             u = gCurTask;
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
-                         (u16)u->unk20, 224, (u32)gBgPaletteBank2);
+                         (u16)u->paletteAnimBlendRatio, 224, (u32)gBgPaletteBank2);
             break;
         case 1:
-            t->unk20 -= t->unk18;
-            if (t->unk20 < 0)
+            t->paletteAnimBlendRatio -= t->paletteAnimBlendStep;
+            if (t->paletteAnimBlendRatio < 0)
             {
-                t->unk20 = 0;
-                t->unk1C = 3;
+                t->paletteAnimBlendRatio = 0;
+                t->paletteAnimBlendMode = 3;
             }
             u = gCurTask;
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
-                         (u16)u->unk20, 224, (u32)gBgPaletteBank2);
+                         (u16)u->paletteAnimBlendRatio, 224, (u32)gBgPaletteBank2);
             break;
         case 2:
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC, 0, 224,
                          (u32)gBgPaletteBank2);
-            gCurTask->unk1C = 3;
+            gCurTask->paletteAnimBlendMode = 3;
             break;
         }
         TaskYieldTrampoline(1);
@@ -1064,11 +1064,11 @@ void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p)
     sub_08066544();
     TaskSetSkipMask(8, gCurTaskIdx);
     t = gCurTask;
-    t->unk20 = t->updateCallback;
+    t->actorSavedUpdateCallback = t->updateCallback;
     t->updateCallback = (u32)ActorIntroPoseUpdate;
     ActorStopAnim();
     if (p != NULL)
-        gCurTask->unk24 = ActorStartAnim(p);
+        gCurTask->actorAnimDelay24 = ActorStartAnim(p);
     if (gHudHpBarFilled == 0)
     {
         do
@@ -1165,7 +1165,7 @@ void ActorStartIntroPose(struct AnimCmd *p)
 
     t = gCurTask;
     a = t->u8C.actor;
-    t->unk20 = t->updateCallback;
+    t->actorSavedUpdateCallback = t->updateCallback;
     t->updateCallback = (u32)ActorIntroPoseUpdate;
     ActorStopAnim();
     if (p != NULL)
@@ -1180,9 +1180,9 @@ void ActorEndIntroPose(void)
 
     TaskSetSkipMask(0, gCurTaskIdx);
     t = gCurTask;
-    t->updateCallback = t->unk20;
+    t->updateCallback = t->actorSavedUpdateCallback;
     t->actorAnimDelay24 = 0;
-    t->unk20 = 0;
+    t->actorSavedUpdateCallback = 0;
 }
 
 void sub_080666cc(struct AnimCmd *p)
@@ -1464,9 +1464,9 @@ void TaskBounceParasolDriftOffWall(void)
     if (a->extraFrame != -1)
     {
         if (t->velX >= 0)
-            t->unk1C = 3;
+            t->actorParasolSwayStep = 3;
         else
-            t->unk1C = 9;
+            t->actorParasolSwayStep = 9;
     }
     else
     {
@@ -1483,9 +1483,9 @@ void TaskStartParasolDrift(void)
     t = gCurTask;
     t->velY = 0x8000;
     if (t->facing == 1)
-        t->unk1C = 0;
+        t->actorParasolSwayStep = 0;
     else
-        t->unk1C = 6;
+        t->actorParasolSwayStep = 6;
 }
 
 void TaskStepParasolDrift(void)
@@ -1494,11 +1494,11 @@ void TaskStepParasolDrift(void)
     struct Task *u;
 
     t = gCurTask;
-    t->unk1C = t->unk1C + 1;
-    if (t->unk1C > 11)
-        t->unk1C = 0;
+    t->actorParasolSwayStep = t->actorParasolSwayStep + 1;
+    if (t->actorParasolSwayStep > 11)
+        t->actorParasolSwayStep = 0;
     u = gCurTask;
-    u->velX = gParasolDriftSwayVelX[u->unk1C];
+    u->velX = gParasolDriftSwayVelX[u->actorParasolSwayStep];
 }
 
 void sub_08066c08(u32 def, u8 b)

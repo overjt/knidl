@@ -47,8 +47,8 @@ void Task_DustBurst(void)
     TaskFaceLikeParent();
 
     v = gCurTask;
-    v->posX = (gTasks[v->parent].pixelX + -v->facing * v->unk24) << 16;
-    v->posY = (gTasks[v->parent].pixelY + v->unk20) << 16;
+    v->posX = (gTasks[v->parent].pixelX + -v->facing * v->dustBurstOffsetX) << 16;
+    v->posY = (gTasks[v->parent].pixelY + v->dustBurstOffsetY) << 16;
     TaskSetMotionXFacing(0xFFFD0000, 0);
     w = gCurTask;
     w->velY = 0;
@@ -71,8 +71,8 @@ void Task_DustBurst(void)
     TaskStop();
 
     x = gCurTask;
-    x->posX = (gTasks[x->parent].pixelX + -x->facing * x->unk24) << 16;
-    x->posY = (gTasks[x->parent].pixelY + x->unk20) << 16;
+    x->posX = (gTasks[x->parent].pixelX + -x->facing * x->dustBurstOffsetX) << 16;
+    x->posY = (gTasks[x->parent].pixelY + x->dustBurstOffsetY) << 16;
     TaskSetMotionXFacing(0xFFFDC000, 0x1000);
     w = gCurTask;
     w->velY = -0x4000;
@@ -92,8 +92,8 @@ void Task_DustBurst(void)
     TaskStop();
 
     y = gCurTask;
-    y->posX = (gTasks[y->parent].pixelX + -y->facing * y->unk24) << 16;
-    y->posY = (gTasks[y->parent].pixelY + y->unk20) << 16;
+    y->posX = (gTasks[y->parent].pixelX + -y->facing * y->dustBurstOffsetX) << 16;
+    y->posY = (gTasks[y->parent].pixelY + y->dustBurstOffsetY) << 16;
     TaskSetMotionXFacing(0xFFFEE000, 0x1800);
     w = gCurTask;
     w->velY = -0x4000;
@@ -145,7 +145,7 @@ void CreateBurstEffect(u32 a, s32 b)
     if (i != -1 && b > 0)
     {
         p = &gTasks[i];
-        p->unk24 = b;
+        p->burstStickFrames = b;
     }
 }
 
@@ -204,7 +204,7 @@ void BurstStickToParentUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (--t->unk24 <= 0)
+    if (--t->burstStickFrames <= 0)
     {
         t->updateCallback = 0;
         t->moveCallback = (u32)ActorMove;
@@ -321,7 +321,7 @@ void Task_ImpactStar(void)
     gCurTask->frameTable = gUnk_0874C500;
     n = RandomRange(8);
     u = gCurTask;
-    u->unk28 = n;
+    u->impactStarDir = n;
     u->posX = (u->pixelX + gUnk_0873EB40[n]) << 16;
     k = 4;
     u->posY = (u->pixelY + ((gUnk_0873EB40 + 8)[n] + k)) << 16;
@@ -340,12 +340,12 @@ void Task_ImpactStar(void)
     gCurTask->frame++;
     TaskYieldTrampoline(1);
     v = gCurTask;
-    a = gUnk_0873EB80[v->unk28];
+    a = gUnk_0873EB80[v->impactStarDir];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     v->velX = b;
-    a = (gUnk_0873EB80 + 8)[v->unk28];
+    a = (gUnk_0873EB80 + 8)[v->impactStarDir];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
@@ -396,7 +396,7 @@ void Task_RingStar(void)
     u = gCurTask;
     u->frameTable = gUnk_0874CC60;
     u->updateCallback = (u32)RingStarUpdate;
-    u->unk24 = 2;
+    u->ringStarFrameTimer = 2;
     u->frame = 0;
     k = u->variant * 4;
     for (i = 0; i < 4; i++)
@@ -414,7 +414,7 @@ void RingStarUpdate(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk24 <= 0)
+    if (t->ringStarFrameTimer <= 0)
     {
         if (t->frame > 7)
         {
@@ -423,12 +423,12 @@ void RingStarUpdate(void)
         else
         {
             t->frame++;
-            t->unk24 = 2;
+            t->ringStarFrameTimer = 2;
         }
     }
     else
     {
-        t->unk24--;
+        t->ringStarFrameTimer--;
     }
 }
 
@@ -464,7 +464,7 @@ void CreateCannonSmoke(u32 a, u32 b)
     {
         p = &gTasks[i];
         p->variant = a;
-        p->unk74 = b;
+        p->cannonSmokeSpot = b;
     }
 }
 
@@ -477,7 +477,7 @@ void sub_0806da74(void)
     t = gCurTask;
     if (t->variant != 0)
     {
-        m = t->unk74;
+        m = t->cannonSmokeSpot;
         j = m * 2;
         t->pixelX += gUnk_0873ECA0[m * 2];
         t->pixelY += gUnk_0873ECA0[j + 1];
@@ -521,18 +521,18 @@ void Task_CannonSmoke(void)
         TaskYieldTrampoline(1);
         break;
     case 1:
-        u->unk6E = 0;
+        u->cannonSmokePuffCount = 0;
         do
         {
             gCurTask->frame = 0;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C = 0;
+            gCurTask->cannonSmokeLoopCount = 0;
             do
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
-            } while (++*(s16 *)&gCurTask->unk6C <= 6);
-        } while (++*(s16 *)&gCurTask->unk6E <= 8);
+            } while (++*(s16 *)&gCurTask->cannonSmokeLoopCount <= 6);
+        } while (++*(s16 *)&gCurTask->cannonSmokePuffCount <= 8);
         break;
     case 2:
         u->frame = 33;
@@ -543,12 +543,12 @@ void Task_CannonSmoke(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 15;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->cannonSmokeLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while (++*(s16 *)&gCurTask->unk6C <= 5);
+        } while (++*(s16 *)&gCurTask->cannonSmokeLoopCount <= 5);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->frame++;
@@ -557,12 +557,12 @@ void Task_CannonSmoke(void)
     case 3:
         u->frame = 24;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->cannonSmokeLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while (++*(s16 *)&gCurTask->unk6C <= 5);
+        } while (++*(s16 *)&gCurTask->cannonSmokeLoopCount <= 5);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->frame++;
@@ -595,8 +595,8 @@ void CannonFuseSparkDraw(void)
                  (s16)(t->pixelY - gSpriteCameraY));
     u = gCurTask;
     QueueSprite(u->layer - 1, tbl[7], u->spriteFlags, u->tileWord,
-                 u->pixelX + u->unk24 - gSpriteCameraX,
-                 (s16)(u->pixelY + u->unk20 - gSpriteCameraY));
+                 u->pixelX + u->cannonFuseSparkOffsetX - gSpriteCameraX,
+                 (s16)(u->pixelY + u->cannonFuseSparkOffsetY - gSpriteCameraY));
 }
 
 void Task_CannonFuseSpark(void)
@@ -613,16 +613,16 @@ void Task_CannonFuseSpark(void)
     u = gCurTask;
     u->updateCallback = (u32)CannonFuseSparkCheckParent;
     u->tileWord = 0;
-    u->unk24 = 0;
-    u->unk20 = 0;
+    u->cannonFuseSparkOffsetX = 0;
+    u->cannonFuseSparkOffsetY = 0;
     while (1)
     {
         for (i = 0; i < 8; i++)
         {
             gCurTask->frame = gUnk_0873ECD0[i];
             TaskYieldTrampoline(3);
-            gCurTask->unk24 = (u16)RandomSpread(-12, 1, 24);
-            gCurTask->unk20 = (u16)RandomSpread(-12, 1, 24);
+            gCurTask->cannonFuseSparkOffsetX = (u16)RandomSpread(-12, 1, 24);
+            gCurTask->cannonFuseSparkOffsetY = (u16)RandomSpread(-12, 1, 24);
         }
     }
 }
@@ -718,7 +718,7 @@ void Task_HitFrost(void)
     u = gCurTask;
     u->updateCallback = (u32)HitFrostCheckParent;
     u->tileWord = 0;
-    u->unk6E = 0;
+    u->hitFrostCycleCount = 0;
     do
     {
         gCurTask->posX = RandomSpread(-12, 1, 24) << 16;
@@ -727,25 +727,25 @@ void Task_HitFrost(void)
                      0x5A5A5A5A);
         gCurTask->frame = 0;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C = 0;
+        gCurTask->hitFrostLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-        } while (++*(s16 *)&gCurTask->unk6C <= 4);
+        } while (++*(s16 *)&gCurTask->hitFrostLoopCount <= 4);
         gCurTask->posX = RandomSpread(-12, 1, 24) << 16;
         gCurTask->posY = RandomSpread(-12, 1, 24) << 16;
         TaskSetMotion(0xFFFFC000, 0x700, 0x5A5A5A5A, 0xFFFFC000, 0xFFFFF000,
                      0x5A5A5A5A);
         gCurTask->frame = 0;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C = 0;
+        gCurTask->hitFrostLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-        } while (++*(s16 *)&gCurTask->unk6C <= 4);
-    } while (++*(s16 *)&gCurTask->unk6E <= 1);
+        } while (++*(s16 *)&gCurTask->hitFrostLoopCount <= 4);
+    } while (++*(s16 *)&gCurTask->hitFrostCycleCount <= 1);
     gCurTask->frame = 0xFFFF;
     TaskSleepForever();
 }

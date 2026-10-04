@@ -87,21 +87,21 @@ void BombRallyPlayerBubblesServe(void)
     t->moveCallback = (u32)TaskMoveRelativeToBg3;
     t->updateState = 10;
     v = gCurTask;
-    v->posX = gUnk_0875674C[v->unk1C] << 16;
-    v->posY = gUnk_0875675C[v->unk1C] << 16;
-    v->frameTable = gBombRallyBubblesFrames[v->unk1C];
+    v->posX = gUnk_0875674C[v->bombRallyObjectSeat] << 16;
+    v->posY = gUnk_0875675C[v->bombRallyObjectSeat] << 16;
+    v->frameTable = gBombRallyBubblesFrames[v->bombRallyObjectSeat];
     v->tileWord = 0;
-    if (v->unk1C == 3)
+    if (v->bombRallyObjectSeat == 3)
         v->facing = -1;
     else
         v->facing = 1;
     TaskSetFrame(0);
     w = gCurTask;
     u = &gTasks[w->parent];
-    w->unk20 = 0;
-    if (u->unk34 == w->unk1C) {
+    w->bombRallyObjectAimSide = 0;
+    if (u->bombRallyTurnSeat == w->bombRallyObjectSeat) {
         TaskYieldTrampoline(30);
-        u->unk28 = -1;
+        u->bombRallyThrow = -1;
         gCurTask->frame++;
         TaskYieldTrampoline(6);
         gCurTask->frame--;
@@ -114,12 +114,12 @@ void BombRallyPlayerBubblesServe(void)
         TaskYieldTrampoline(3);
         PlaySfx(254);
         z = gCurTask;
-        CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
-                     z->posY + (gUnk_08756564[z->unk1C] << 16),
-                     z->unk1C, z->facing);
+        CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->bombRallyObjectSeat] << 16) * z->facing,
+                     z->posY + (gUnk_08756564[z->bombRallyObjectSeat] << 16),
+                     z->bombRallyObjectSeat, z->facing);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        u->unk28 = u->unk20;
+        u->bombRallyThrow = u->bombRallyNextThrow;
         TaskYieldTrampoline(4);
         gCurTask->frame--;
         TaskYieldTrampoline(2);
@@ -128,7 +128,7 @@ void BombRallyPlayerBubblesServe(void)
         gCurTask->frame--;
         TaskYieldTrampoline(2);
     } else {
-        while (u->unk28 < 0)
+        while (u->bombRallyThrow < 0)
             TaskYieldTrampoline(1);
     }
     gCurTask->state = 11;
@@ -166,8 +166,8 @@ void BombRallyPlayerBubblesWaitUpdate(void)
 
     t = gCurTask;
     u = &gTasks[t->parent];
-    if ((u->unk34 == ((t->unk1C + 3) & 3) && u->unk28 <= 2)
-     || (u->unk34 == ((t->unk1C + 1) & 3) && u->unk28 > 2)) {
+    if ((u->bombRallyTurnSeat == ((t->bombRallyObjectSeat + 3) & 3) && u->bombRallyThrow <= 2)
+     || (u->bombRallyTurnSeat == ((t->bombRallyObjectSeat + 1) & 3) && u->bombRallyThrow > 2)) {
         gCurTask->state = 12;
         TaskSetEntry(BombRallyPlayerEnterState, gCurTaskIdx);
     }
@@ -190,19 +190,19 @@ void BombRallyPlayerBubblesThrow(void)
     u = &gTasks[t->parent];
     t->updateState = 12;
     if (RandomRange(8) == 0) {
-        if (u->unk28 <= 2)
-            u->unk20 = u->unk28 + 3;
+        if (u->bombRallyThrow <= 2)
+            u->bombRallyNextThrow = u->bombRallyThrow + 3;
         else
-            u->unk20 = u->unk28;
+            u->bombRallyNextThrow = u->bombRallyThrow;
     } else {
-        if (u->unk28 > 2)
-            u->unk20 = u->unk28 - 3;
+        if (u->bombRallyThrow > 2)
+            u->bombRallyNextThrow = u->bombRallyThrow - 3;
         else
-            u->unk20 = u->unk28;
+            u->bombRallyNextThrow = u->bombRallyThrow;
     }
     v = gCurTask;
-    v->unk28 = u->unk20;
-    m = u->unk24;
+    v->unk28 = u->bombRallyNextThrow;
+    m = u->bombRallyPassFrames;
     v->unk30 = 6;
     v->unk34 = 0;
     gp = &gCurTask;
@@ -235,9 +235,9 @@ void BombRallyPlayerBubblesThrow(void)
     TaskYieldTrampoline(2);
     PlaySfx(254);
     z = gCurTask;
-    CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->unk1C] << 16) * z->facing,
-                 z->posY + (gUnk_08756564[z->unk1C] << 16),
-                 z->unk1C, z->facing);
+    CreateBombRallyStarBurst(z->posX + (gUnk_08756560[z->bombRallyObjectSeat] << 16) * z->facing,
+                 z->posY + (gUnk_08756564[z->bombRallyObjectSeat] << 16),
+                 z->bombRallyObjectSeat, z->facing);
     gCurTask->frame++;
     TaskYieldTrampoline(7);
     gCurTask->frame--;

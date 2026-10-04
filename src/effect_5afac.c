@@ -148,7 +148,7 @@ s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
     if (idx != -1)
     {
         t = &gTasks[idx];
-        t->unk18 = (param << 24) | (a2 & 0x00FFFFFF);
+        t->playerEffectSpawnWord = (param << 24) | (a2 & 0x00FFFFFF);
         t->posX = gCurTask->posX;
         t->pixelX = gCurTask->pixelX;
         t->posY = gCurTask->posY;
@@ -169,7 +169,7 @@ s32 CreatePlayerEffectHighSlot(s32 a0, s32 a1, s32 a2)
     if (idx != -1)
     {
         t = &gTasks[idx];
-        t->unk18 = (param << 24) | (a2 & 0x00FFFFFF);
+        t->playerEffectSpawnWord = (param << 24) | (a2 & 0x00FFFFFF);
         t->posX = gCurTask->posX;
         t->pixelX = gCurTask->pixelX;
         t->posY = gCurTask->posY;
@@ -783,7 +783,7 @@ void GoalGameLaunchStarsFall(void)
     gCurTask->updateCallback = 0;
     gCurTask->accelY = 128 << 7;
     gCurTask->speedLimitY = 192 << 10;
-    gCurTask->unk6C = 0;
+    gCurTask->goalGameLaunchStarsLoopCount = 0;
     do
     {
         gCurTask->frame = 10;
@@ -794,8 +794,8 @@ void GoalGameLaunchStarsFall(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 9;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 9);
+        gCurTask->goalGameLaunchStarsLoopCount++;
+    } while ((s16)gCurTask->goalGameLaunchStarsLoopCount <= 9);
     TaskExitTrampoline();
 }
 
@@ -840,7 +840,7 @@ void Task_GoalGameBigTrailStar(void)
     gCurTask->posY = gCurTask->pixelY << 16;
     TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 9),
                  128 << 7, 192 << 10);
-    gCurTask->unk6C = 0;
+    gCurTask->goalGameBigTrailStarLoopCount = 0;
     do
     {
         gCurTask->frame = 13;
@@ -851,9 +851,9 @@ void Task_GoalGameBigTrailStar(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 14;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+        gCurTask->goalGameBigTrailStarLoopCount++;
+    } while ((s16)gCurTask->goalGameBigTrailStarLoopCount <= 1);
+    gCurTask->goalGameBigTrailStarLoopCount = 0;
     do
     {
         gCurTask->frame = 16;
@@ -864,9 +864,9 @@ void Task_GoalGameBigTrailStar(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 19;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+        gCurTask->goalGameBigTrailStarLoopCount++;
+    } while ((s16)gCurTask->goalGameBigTrailStarLoopCount <= 1);
+    gCurTask->goalGameBigTrailStarLoopCount = 0;
     do
     {
         gCurTask->frame = 20;
@@ -877,9 +877,9 @@ void Task_GoalGameBigTrailStar(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 23;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+        gCurTask->goalGameBigTrailStarLoopCount++;
+    } while ((s16)gCurTask->goalGameBigTrailStarLoopCount <= 1);
+    gCurTask->goalGameBigTrailStarLoopCount = 0;
     do
     {
         gCurTask->frame = 24;
@@ -890,8 +890,8 @@ void Task_GoalGameBigTrailStar(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 27;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->goalGameBigTrailStarLoopCount++;
+    } while ((s16)gCurTask->goalGameBigTrailStarLoopCount <= 1);
     TaskExitTrampoline();
 }
 
@@ -910,7 +910,7 @@ void Task_GoalGameSmallTrailStar(void)
     gCurTask->posY = gCurTask->pixelY << 16;
     TaskSetMotionY(gTasks[gCurTask->parent].velY + (128 << 8),
                  128 << 7, 192 << 10);
-    gCurTask->unk6C = 0;
+    gCurTask->goalGameSmallTrailStarLoopCount = 0;
     do
     {
         gCurTask->frame = 20;
@@ -921,9 +921,9 @@ void Task_GoalGameSmallTrailStar(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 23;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
-    gCurTask->unk6C = 0;
+        gCurTask->goalGameSmallTrailStarLoopCount++;
+    } while ((s16)gCurTask->goalGameSmallTrailStarLoopCount <= 1);
+    gCurTask->goalGameSmallTrailStarLoopCount = 0;
     do
     {
         gCurTask->frame = 24;
@@ -934,8 +934,8 @@ void Task_GoalGameSmallTrailStar(void)
         TaskYieldTrampoline(1);
         gCurTask->frame = 27;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 1);
+        gCurTask->goalGameSmallTrailStarLoopCount++;
+    } while ((s16)gCurTask->goalGameSmallTrailStarLoopCount <= 1);
     TaskExitTrampoline();
 }
 
@@ -1198,7 +1198,7 @@ void Task_GoalGameSign(void)
         {
             TaskYieldTrampoline(1);
         } while (gCurTask->unk28 != 0);
-        gCurTask->unk6C = 0;
+        gCurTask->goalGameSignLoopCount = 0;
         do
         {
             gCurTask->frame = 1;
@@ -1215,8 +1215,8 @@ void Task_GoalGameSign(void)
             TaskYieldTrampoline(1);
             gCurTask->frame = 1;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
+            gCurTask->goalGameSignLoopCount++;
+        } while ((s16)gCurTask->goalGameSignLoopCount <= 2);
         gCurTask->frame = 1;
         TaskYieldTrampoline(3);
         gCurTask->frame = 2;
@@ -1312,7 +1312,7 @@ void Task_GoalGameHelperKirby(void)
         TaskStartFrameScript((s32)gUnk_0873DD80);
         TaskStop();
         (gTasks + gCurTask->parent)->unk28 = 0;
-        gCurTask->unk6C = 0;
+        gCurTask->goalGameHelperKirbyLoopCount = 0;
         do
         {
             gCurTask->velY = 0xFFFECD00;
@@ -1323,8 +1323,8 @@ void Task_GoalGameHelperKirby(void)
             TaskYieldTrampoline(3);
             gCurTask->velY = 0x00013300;
             TaskYieldTrampoline(3);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 7);
+            gCurTask->goalGameHelperKirbyLoopCount++;
+        } while ((s16)gCurTask->goalGameHelperKirbyLoopCount <= 7);
         gCurTask->velY = 0;
         TaskStartFrameScript((s32)gUnk_0873DDA2);
         gCurTask->velX = 0x00009A00;
@@ -1343,14 +1343,14 @@ void Task_GoalGameHelperKirby(void)
         TaskYieldTrampoline(5);
         gCurTask->velX = 0x00009A00;
         TaskYieldTrampoline(5);
-        for (gCurTask->unk6C = 0;
-             (s16)gCurTask->unk6C < gPlayerCount;
-             gCurTask->unk6C++)
+        for (gCurTask->goalGameHelperKirbyLoopCount = 0;
+             (s16)gCurTask->goalGameHelperKirbyLoopCount < gPlayerCount;
+             gCurTask->goalGameHelperKirbyLoopCount++)
         {
-            if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1)
-                && (gTasks + (s16)gCurTask->unk6C)->unk30 == 0)
+            if (((gActivePlayerMask >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
+                && (gTasks + (s16)gCurTask->goalGameHelperKirbyLoopCount)->unk30 == 0)
             {
-                gCurTask->unk2C |= 1 << (s16)gCurTask->unk6C;
+                gCurTask->unk2C |= 1 << (s16)gCurTask->goalGameHelperKirbyLoopCount;
                 gCurTask->unk30++;
             }
         }
@@ -1376,7 +1376,7 @@ void Task_GoalGameHelperKirby(void)
             gCurTask->velX = 128 << 8;
             TaskYieldTrampoline(8);
             TaskStop();
-            gCurTask->unk6C = 0;
+            gCurTask->goalGameHelperKirbyLoopCount = 0;
             do
             {
                 for (gCurTask->unk6E = 0;
@@ -1393,8 +1393,8 @@ void Task_GoalGameHelperKirby(void)
                     }
                 }
                 TaskYieldTrampoline(11);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 29);
+                gCurTask->goalGameHelperKirbyLoopCount++;
+            } while ((s16)gCurTask->goalGameHelperKirbyLoopCount <= 29);
         }
         TaskSleepForever();
         break;
@@ -1411,15 +1411,15 @@ void Task_GoalGameHelperKirby(void)
         TaskStop();
         TaskStartFrameScript(0);
         gCurTask->facing = 1;
-        gCurTask->unk6C = 0;
+        gCurTask->goalGameHelperKirbyLoopCount = 0;
         do
         {
             TaskSetFrame(165);
             TaskYieldTrampoline(4);
             TaskSetFrame(166);
             TaskYieldTrampoline(4);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 3);
+            gCurTask->goalGameHelperKirbyLoopCount++;
+        } while ((s16)gCurTask->goalGameHelperKirbyLoopCount <= 3);
         TaskSetFrame(167);
         TaskYieldTrampoline(4);
         (gTasks + gCurTask->parent)->unk28 = 0;
@@ -1442,23 +1442,23 @@ void GoalGameHelperKirbyUpdate(void)
     TaskUpdateFrameScript();
     if (gCurTask->unk2C == 0)
         return;
-    for (gCurTask->unk6C = gPlayerCount - 1;
-         (s16)gCurTask->unk6C >= 0;
-         gCurTask->unk6C--)
+    for (gCurTask->goalGameHelperKirbyLoopCount = gPlayerCount - 1;
+         (s16)gCurTask->goalGameHelperKirbyLoopCount >= 0;
+         gCurTask->goalGameHelperKirbyLoopCount--)
     {
-        if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1)
-            && ((gCurTask->unk2C >> (s16)gCurTask->unk6C) & 1)
+        if (((gActivePlayerMask >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
+            && ((gCurTask->unk2C >> (s16)gCurTask->goalGameHelperKirbyLoopCount) & 1)
             && gCurTask->pixelX < gUnk_0873DBAC[(gCurTask->unk30 << 2) + gCurTask->unk34] - 6)
         {
-            if (gUnk_02006A14[(s16)gCurTask->unk6C] != 0)
+            if (gUnk_02006A14[(s16)gCurTask->goalGameHelperKirbyLoopCount] != 0)
             {
                 gCurTask->unk46 = TaskCreateFrom(89, 32);
-                (gTasks + gCurTask->unk46)->unk2C = (s16)gCurTask->unk6C;
+                (gTasks + gCurTask->unk46)->unk2C = (s16)gCurTask->goalGameHelperKirbyLoopCount;
                 (gTasks + gCurTask->unk46)->unk30 = gCurTask->unk30;
                 (gTasks + gCurTask->unk46)->unk34 = gCurTask->unk34;
                 (gTasks + gCurTask->unk46)->variant = 0;
             }
-            gCurTask->unk2C &= ~(1 << (s16)gCurTask->unk6C);
+            gCurTask->unk2C &= ~(1 << (s16)gCurTask->goalGameHelperKirbyLoopCount);
             gCurTask->unk34--;
         }
     }

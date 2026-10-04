@@ -97,14 +97,14 @@ u32 IsLinkError(void);
 void SubGameReplay(s32 a0)
 {
     gSubGameLevel = a0;
-    gCurTask->unk18 = 3;
+    gCurTask->subGameNextPhase = 3;
 }
 
 void SubGameQuit(void)
 {
     if (gPrevGameState == 4)
         gLinkErrorMask = 0;
-    gCurTask->unk18 = 4;
+    gCurTask->subGameNextPhase = 4;
 }
 
 s32 SubGameInit(void)
@@ -164,7 +164,7 @@ void SubGameCheckEnd(void)
 {
     if (gSubGamePhase <= 1)
     {
-        s32 v = gCurTask->unk18;
+        s32 v = gCurTask->subGameNextPhase;
         if (v != 0)
             gSubGamePhase = v;
     }
@@ -444,7 +444,7 @@ void Task_SubGame(void)
     t->moveCallback = 0;
     t->drawCallback = 0;
     t->updateCallback = (u32)SubGameStartBody;
-    t->unk18 = 0;
+    t->subGameNextPhase = 0;
     FreeOtherTasks();
     TaskSleepForever();
 }
@@ -467,7 +467,7 @@ void QuickDrawInit(void)
     gQuickDrawMatchWinner = 0xFF;
     gQuickDrawBestTime = 99;
     gUnk_0200B048 = 0;
-    t->unk34 = 3;
+    t->quickDrawWinsToWin = 3;
     RequestCopy(2, (u32)gUnk_087562E4, (u32)gBgPalette, 2);
 }
 
@@ -487,7 +487,7 @@ void QuickDrawFreeze(void)
         TaskFree(62);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1000;
-    t = &gTasks[gCurTask->unk28];
+    t = &gTasks[gCurTask->quickDrawTimerSlot];
     t->unk1C = 0;
 }
 
@@ -501,7 +501,7 @@ void CreateQuickDrawTimer(void)
 
         t->parent = gCurTaskIdx;
         t->variant = 2;
-        gCurTask->unk28 = idx;
+        gCurTask->quickDrawTimerSlot = idx;
     }
 }
 
@@ -533,7 +533,7 @@ void QuickDrawSetupRound(void)
     CreateQuickDrawPlayers(0);
     CreateQuickDrawTimer();
     t = gCurTask;
-    t->unk24 = 0;
+    t->quickDrawPlayersReady = 0;
     t->hitTimer = 0;
 }
 
@@ -562,7 +562,7 @@ void QuickDrawStartTimer(void)
 
     PlaySfx(234);
     StopBgm();
-    t = &gTasks[gCurTask->unk28];
+    t = &gTasks[gCurTask->quickDrawTimerSlot];
     t->unk1C = 1;
 }
 
@@ -570,8 +570,8 @@ void QuickDrawWaitForSignal(void)
 {
     struct Task *t = gCurTask;
 
-    t->unk70 = 0;
-    t->unk6E = 0;
+    t->quickDrawFalseStartCount = 0;
+    t->quickDrawFalseStartMask = 0;
     TaskYieldTrampoline(RandomRange(gQuickDrawSignalDelayRange[gSubGameLevel]) + gQuickDrawSignalDelayMin[gSubGameLevel]);
     CreateQuickDrawSignal();
 }
@@ -584,12 +584,12 @@ s32 QuickDrawCountPresses(void)
 
     for (i = 0, n = 0; i < gPlayerCount; i++)
     {
-        if ((gPlayerPressedKeys[i] & 1) && !((gCurTask->unk6E >> i) & 1))
+        if ((gPlayerPressedKeys[i] & 1) && !((gCurTask->quickDrawFalseStartMask >> i) & 1))
         {
             n++;
             mask |= 1 << i;
         }
     }
-    gCurTask->unk2C = mask;
+    gCurTask->quickDrawPressMask = mask;
     return n;
 }

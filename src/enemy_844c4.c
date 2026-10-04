@@ -79,12 +79,12 @@ void NoddyUpdate(void)
     if ((t->onGround & 1) != 0)
     {
         if ((u8)(gTerrainResult[4] - 1) > 3)
-            t->unk24 = (u16)t->unk24 | 0x10000;
+            t->actorFlatGroundY = (u16)t->actorFlatGroundY | 0x10000;
         if ((gCurTask->onGround & 1) != 0)
             goto skip;
     }
     u = gCurTask;
-    u->unk24 = (u16)u->unk24;
+    u->actorFlatGroundY = (u16)u->actorFlatGroundY;
 skip:
     if (r == 0)
     {
@@ -92,7 +92,7 @@ skip:
         CallTableEntry(gCurTask->updateState, 6, gNoddyStateUpdates);
     }
     v = gCurTask;
-    v->unk24 = (v->unk24 & 0xFFFF0000) | v->pixelY;
+    v->actorFlatGroundY = (v->actorFlatGroundY & 0xFFFF0000) | v->pixelY;
     ActorCheckHits();
     ActorReactToHit();
 }

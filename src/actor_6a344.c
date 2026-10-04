@@ -97,20 +97,20 @@ void ActorDefeatKnockAway(void)
     t = gCurTask;
     a = t->u8C.actor;
     a->savedPaletteBits = t->tileWord & 0xF000;
-    t->unk2C = t->pixelY;
-    t->unk30 = 14;
-    t->unk34 = 14;
-    t->unk24 = 0;
+    t->actorKnockAwayBaseY = t->pixelY;
+    t->actorDefeatBlinkTimer = 14;
+    t->actorBurstDelay = 14;
+    t->actorBurstDone = 0;
     p = gUnk_0873E610;
     for (i = 0; i < 8; i++)
     {
         u = gCurTask;
-        u->pixelY = u->unk2C + p[i];
+        u->pixelY = u->actorKnockAwayBaseY + p[i];
         u->posY = u->pixelY << 16;
         TaskYieldTrampoline(1);
     }
     v = gCurTask;
-    v->posY = v->unk2C << 16;
+    v->posY = v->actorKnockAwayBaseY << 16;
     AngleToVector(TaskGetHitAngle(), 512);
     w = gCurTask;
     w->velX = gUnk_030023B4;
@@ -124,26 +124,26 @@ void ActorDefeatBlinkAndBurst(void)
     struct Task *u;
 
     t = gCurTask;
-    if (t->unk30 > 0)
+    if (t->actorDefeatBlinkTimer > 0)
     {
-        t->unk30--;
-        if ((t->unk30 & 1) == 0)
+        t->actorDefeatBlinkTimer--;
+        if ((t->actorDefeatBlinkTimer & 1) == 0)
             t->tileWord = (t->tileWord & 0xFFF) | 0xF000;
         else
             t->tileWord = (t->tileWord & 0xFFF) | t->u8C.actor->savedPaletteBits;
     }
     u = gCurTask;
-    if (u->unk34 <= 0)
+    if (u->actorBurstDelay <= 0)
     {
-        if (u->unk24 == 0)
+        if (u->actorBurstDone == 0)
         {
             CreateBurstEffect(3, 6);
-            gCurTask->unk24 = 1;
+            gCurTask->actorBurstDone = 1;
         }
     }
     else
     {
-        u->unk34--;
+        u->actorBurstDelay--;
     }
 }
 
@@ -206,28 +206,28 @@ void ActorDefeatFrozenBlink(void)
     s16 *tbl;
 
     t = gCurTask;
-    i = t->unk24 >> 1;
+    i = t->actorFreezeBlinkStep >> 1;
     if (i <= 5)
     {
-        if (t->unk20 <= 0)
+        if (t->actorFreezeBlinkTimer <= 0)
         {
-            t->unk24 = t->unk24 + 1;
-            if (t->unk1C != 0)
+            t->actorFreezeBlinkStep = t->actorFreezeBlinkStep + 1;
+            if (t->actorFreezeBlinkShown != 0)
                 t->frame = 0;
             else
                 t->frame = 0xFFFF;
             u = gCurTask;
             tbl = gUnk_0873E5F8;
-            n = u->unk1C;
+            n = u->actorFreezeBlinkShown;
             a = n << 1;
             a += i << 2;
             a += (u32)tbl;
-            u->unk20 = *(s16 *)a;
+            u->actorFreezeBlinkTimer = *(s16 *)a;
             n ^= 1;
-            u->unk1C = n;
+            u->actorFreezeBlinkShown = n;
         }
         v = gCurTask;
-        v->unk20--;
+        v->actorFreezeBlinkTimer--;
     }
     else
     {
@@ -253,14 +253,14 @@ void ActorFreezeIntoIceBlock(void)
     a = gCurTask->u8C.actor;
     v = CreateChildTaskHere(171, 0);
     t = gCurTask;
-    t->unk46 = v;
+    t->actorIceBlockSlot = v;
     z = 0;
     zero = 0;
     t->unk18 = z;
-    t->unk1C = z;
-    t->unk20 = z;
-    t->unk24 = z;
-    t->unk28 = a->hitterParent;
+    t->actorFreezeBlinkShown = z;
+    t->actorFreezeBlinkTimer = z;
+    t->actorFreezeBlinkStep = z;
+    t->actorFreezerPlayer = a->hitterParent;
     ActorAttachEffect(3, 0);
     gCurTask->u80.attackAbility = zero;
     gCurTask->onGround = zero;
@@ -273,7 +273,7 @@ void ActorFreezeIntoIceBlock(void)
 
 void sub_0806a6a0(void)
 {
-    if ((u8)(gPlayerStates[gCurTask->unk28].ability - 13) > 1)
+    if ((u8)(gPlayerStates[gCurTask->actorFreezerPlayer].ability - 13) > 1)
     {
         ActorSetState(2);
         TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
@@ -331,7 +331,7 @@ void ActorDefeatFrozen(void)
 
     t = gCurTask;
     t->updateCallback = 0;
-    t->unk46 = 0xFFFF;
+    t->actorIceBlockSlot = 0xFFFF;
     TaskSetFrame(0);
     TaskYieldTrampoline(6);
     gCurTask->updateCallback = (u32)ActorDefeatFrozenUpdate;
@@ -396,7 +396,7 @@ void ActorDefeatFrozenShake(void)
     struct Task *t;
 
     gCurTask->updateState = 0;
-    gCurTask->unk6C = 0;
+    gCurTask->actorLoopCount = 0;
     do
     {
         gCurTask->velY = 0x10000;
@@ -404,8 +404,8 @@ void ActorDefeatFrozenShake(void)
         gCurTask->velY = 0xFFFF0000;
         TaskYieldTrampoline(2);
         t = gCurTask;
-        t->unk6C = t->unk6C + 1;
-    } while ((s16)t->unk6C <= 7);
+        t->actorLoopCount = t->actorLoopCount + 1;
+    } while ((s16)t->actorLoopCount <= 7);
     gCurTask->velY = 0;
     TaskYieldTrampoline(120);
     ActorSetState(2);
@@ -514,7 +514,7 @@ void ExplosionScreenFlash(void)
     u16 x;
 
     x = gBgPalette;
-    gCurTask->unk6C = 0;
+    gCurTask->explosionScreenFlashLoopCount = 0;
     do
     {
         gDispCnt &= 0xE0FF;
@@ -526,8 +526,8 @@ void ExplosionScreenFlash(void)
         LoadBackdropColor(&x);
         TaskYieldTrampoline(2);
         t = gCurTask;
-        t->unk6C = t->unk6C + 1;
-    } while ((s16)t->unk6C <= 2);
+        t->explosionScreenFlashLoopCount = t->explosionScreenFlashLoopCount + 1;
+    } while ((s16)t->explosionScreenFlashLoopCount <= 2);
     LoadBackdropColor(&x);
 }
 
@@ -555,7 +555,7 @@ void sub_0806ab34(void)
     a->attackBox = (u32)&gUnk_0873F6E8;
     u->u80.attackAbility = zb;
     v = gCurTask;
-    v->unk2C = zero;
+    v->actorExplosionTimer = zero;
     CreateChildTaskHere(163, 1);
     RequestScreenShake(2);
     ActorPlaySfx(189, 0);
@@ -566,12 +566,12 @@ void sub_0806aba4(void)
 {
     struct Task *u;
 
-    if (gCurTask->unk2C <= 15)
+    if (gCurTask->actorExplosionTimer <= 15)
     {
         ActorCheckHits();
         RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY, gUnk_0873F81C);
         u = gCurTask;
-        u->unk2C = u->unk2C + 1;
+        u->actorExplosionTimer = u->actorExplosionTimer + 1;
     }
 }
 
@@ -593,7 +593,7 @@ void sub_0806abec(void)
     u->health = 127;
     u->updateCallback = (u32)sub_0806ac48;
     a->attackBox = (u32)&gUnk_0873F704;
-    u->unk2C = zero;
+    u->actorExplosionTimer = zero;
     RequestScreenShake(2);
     ActorPlaySfx(189, 0);
     PlayExplosionAnim();
@@ -603,11 +603,11 @@ void sub_0806ac48(void)
 {
     struct Task *u;
 
-    if (gCurTask->unk2C <= 15)
+    if (gCurTask->actorExplosionTimer <= 15)
     {
         ActorCheckHits();
         u = gCurTask;
-        u->unk2C = u->unk2C + 1;
+        u->actorExplosionTimer = u->actorExplosionTimer + 1;
     }
 }
 

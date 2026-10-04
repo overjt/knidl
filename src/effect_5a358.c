@@ -60,7 +60,7 @@ void PlayerEffectTornadoDust(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751FCC;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->posX = 0;
@@ -69,50 +69,50 @@ void PlayerEffectTornadoDust(void)
         TaskYieldTrampoline(6);
         gCurTask->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         u = gCurTask;
         u->posX = 0;
         u->posY = -0x180000;
         u->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         break;
     case 1:
         t->posX = 0;
         t->posY = 0;
         t->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         u = gCurTask;
         u->posX = 0;
         u->posY = -0x100000;
         u->frame = 0;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         break;
     case 2:
         t->posX = 0;
@@ -121,13 +121,13 @@ void PlayerEffectTornadoDust(void)
         TaskYieldTrampoline(20);
         gCurTask->frame = 14;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 5);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 5);
         break;
     }
     TaskExitTrampoline();
@@ -155,7 +155,7 @@ void PlayerEffectCrashBlast(void)
     u16 x0;
     u16 y0;
 
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->moveCallback = (u32)TaskMoveRelativeToParent;
@@ -230,16 +230,16 @@ void PlayerEffectCrashBlast(void)
         sub_08065e6c();
         CpuSet(gObjPaletteBank8, gUnk_0200AF20, 96);
         gCurTask->frame = 0;
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
-            if ((s16)gCurTask->unk6C == 10)
+            if ((s16)gCurTask->playerEffectLoopCount == 10)
                 BeginFade(6, 5, gUnk_02007F60);
-            if ((s16)gCurTask->unk6C == 4)
+            if ((s16)gCurTask->playerEffectLoopCount == 4)
                 gCurTask->unk28 = 1;
             TaskYieldTrampoline(4);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         gCurTask->frame = 0xFFFF;
         TaskYieldTrampoline(1);
         gScreenAttackActive = 0;
@@ -418,7 +418,7 @@ void PlayerEffectCrashBlastDraw(void)
     if (gCurTask->frame != -1 && IsInView(gCurTask->posX, gCurTask->posY)
         && IsWorldPosOnScreen(gCurTask->posX, gCurTask->posY))
     {
-        x = gUnk_0873BB26[(s16)gCurTask->unk6C];
+        x = gUnk_0873BB26[(s16)gCurTask->playerEffectLoopCount];
         g = DrawAffineSprite(*gCurTask->frameTable, x, x, 0);
         t = gCurTask;
         QueueSprite(t->layer, g, t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
@@ -432,7 +432,7 @@ void sub_0805acec(void)
     struct Task *v;
 
     t = gCurTask;
-    if ((t->unk18 & 15) == 0)
+    if ((t->playerEffectSpawnWord & 15) == 0)
     {
         t->moveCallback = (u32)TaskMove;
         t->drawCallback = (u32)TaskDrawWorld;
@@ -482,7 +482,7 @@ void sub_0805acec(void)
 void sub_0805ae00(void)
 {
     struct Task *t = gCurTask;
-    s32 s = t->unk18 & 15;
+    s32 s = t->playerEffectSpawnWord & 15;
 
     if (s == 0)
     {

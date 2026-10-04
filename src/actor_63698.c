@@ -1317,7 +1317,7 @@ void TaskStepSpinFrameFacing(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk24 <= 0)
+    if (t->actorSpinFrameTimer <= 0)
     {
         if (t->facing == 1)
         {
@@ -1331,11 +1331,11 @@ void TaskStepSpinFrameFacing(void)
             if (t->frame <= 3)
                 t->frame = 7;
         }
-        gCurTask->unk24 = 2;
+        gCurTask->actorSpinFrameTimer = 2;
     }
     else
     {
-        t->unk24--;
+        t->actorSpinFrameTimer--;
     }
 }
 

@@ -511,10 +511,10 @@ void SwordAndBladeKnightWalkUpdate(void)
     if ((gCurTask->onGround & 1) != 0)
     {
         if ((u8)(gTerrainResult[4] - 1) > 3)
-            gCurTask->unk24 = (u16)gCurTask->unk24 | 0x10000;
+            gCurTask->actorFlatGroundY = (u16)gCurTask->actorFlatGroundY | 0x10000;
     }
     if ((gCurTask->onGround & 1) == 0)
-        gCurTask->unk24 = (u16)gCurTask->unk24;
+        gCurTask->actorFlatGroundY = (u16)gCurTask->actorFlatGroundY;
     if (v == 0)
     {
         sub_0807b088();
@@ -522,7 +522,7 @@ void SwordAndBladeKnightWalkUpdate(void)
     }
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        gCurTask->unk24 = (gCurTask->unk24 & 0xFFFF0000) | gCurTask->pixelY;
+        gCurTask->actorFlatGroundY = (gCurTask->actorFlatGroundY & 0xFFFF0000) | gCurTask->pixelY;
         ActorCheckHits();
         ActorReactToHit();
     }
@@ -775,10 +775,10 @@ void SwordAndBladeKnightStandUpdate(void)
     if ((gCurTask->onGround & 1) != 0)
     {
         if ((u8)(gTerrainResult[4] - 1) > 3)
-            gCurTask->unk24 = (u16)gCurTask->unk24 | 0x10000;
+            gCurTask->actorFlatGroundY = (u16)gCurTask->actorFlatGroundY | 0x10000;
     }
     if ((gCurTask->onGround & 1) == 0)
-        gCurTask->unk24 = (u16)gCurTask->unk24;
+        gCurTask->actorFlatGroundY = (u16)gCurTask->actorFlatGroundY;
     if (v == 0)
     {
         sub_0807b088();
@@ -786,7 +786,7 @@ void SwordAndBladeKnightStandUpdate(void)
     }
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        gCurTask->unk24 = (gCurTask->unk24 & 0xFFFF0000) | gCurTask->pixelY;
+        gCurTask->actorFlatGroundY = (gCurTask->actorFlatGroundY & 0xFFFF0000) | gCurTask->pixelY;
         ActorCheckHits();
         ActorReactToHit();
     }

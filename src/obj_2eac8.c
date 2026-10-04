@@ -53,18 +53,18 @@ void Task_ArenaDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    u->unk28 = -1;
+    u->arenaDoorSignTileFrame = -1;
     u->frame = 0;
     u->updateCallback = (u32)sub_0802eba4;
     for (;;)
     {
-        gCurTask->unk28 = 0;
+        gCurTask->arenaDoorSignTileFrame = 0;
         TaskYieldTrampoline(60);
-        gCurTask->unk28 = 1;
+        gCurTask->arenaDoorSignTileFrame = 1;
         TaskYieldTrampoline(4);
-        gCurTask->unk28 = 2;
+        gCurTask->arenaDoorSignTileFrame = 2;
         TaskYieldTrampoline(4);
-        gCurTask->unk28 = 3;
+        gCurTask->arenaDoorSignTileFrame = 3;
         TaskYieldTrampoline(4);
     }
 }
@@ -73,13 +73,13 @@ void sub_0802eba4(void)
 {
     u8 *src;
 
-    if (gCurTask->unk28 != -1)
+    if (gCurTask->arenaDoorSignTileFrame != -1)
     {
-        RequestCopy(4, (u32)&gUnk_085A0638[gCurTask->unk28 * 384], OBJ_VRAM0 + 0x2180, 128);
+        RequestCopy(4, (u32)&gUnk_085A0638[gCurTask->arenaDoorSignTileFrame * 384], OBJ_VRAM0 + 0x2180, 128);
         src = gUnk_085A0638;
-        RequestCopy(4, (u32)(src + (gCurTask->unk28 * 384 + 128)), OBJ_VRAM0 + 0x2580, 128);
-        RequestCopy(4, (u32)(src + (gCurTask->unk28 * 384 + 256)), OBJ_VRAM0 + 0x2980, 128);
-        gCurTask->unk28 = -1;
+        RequestCopy(4, (u32)(src + (gCurTask->arenaDoorSignTileFrame * 384 + 128)), OBJ_VRAM0 + 0x2580, 128);
+        RequestCopy(4, (u32)(src + (gCurTask->arenaDoorSignTileFrame * 384 + 256)), OBJ_VRAM0 + 0x2980, 128);
+        gCurTask->arenaDoorSignTileFrame = -1;
     }
 }
 
@@ -116,26 +116,26 @@ void Task_BossDoorSign(void)
     t->layer = 15;
     u = gCurTask;
     u->tileWord = 0x8800;
-    u->unk2C = -1;
-    u->unk34 = (s32)gUnk_087558DC;
-    u->unk28 = 0;
+    u->bossDoorSignTileFrame = -1;
+    u->bossDoorSignDoorFrames = (s32)gUnk_087558DC;
+    u->bossDoorSignDoorFrame = 0;
     u->frame = 0;
     u->updateCallback = (u32)BossDoorSignUpdate;
     for (;;)
     {
-        gCurTask->unk2C = 0;
+        gCurTask->bossDoorSignTileFrame = 0;
         TaskYieldTrampoline(30);
-        gCurTask->unk2C = 1;
+        gCurTask->bossDoorSignTileFrame = 1;
         TaskYieldTrampoline(4);
-        gCurTask->unk2C = 2;
+        gCurTask->bossDoorSignTileFrame = 2;
         TaskYieldTrampoline(4);
-        gCurTask->unk2C = 3;
+        gCurTask->bossDoorSignTileFrame = 3;
         TaskYieldTrampoline(4);
-        gCurTask->unk2C = 4;
+        gCurTask->bossDoorSignTileFrame = 4;
         TaskYieldTrampoline(4);
-        gCurTask->unk2C = 0;
+        gCurTask->bossDoorSignTileFrame = 0;
         TaskYieldTrampoline(30);
-        gCurTask->unk2C = 5;
+        gCurTask->bossDoorSignTileFrame = 5;
         TaskYieldTrampoline(4);
     }
 }
@@ -144,13 +144,13 @@ void BossDoorSignUpdate(void)
 {
     u8 *src;
 
-    if (gCurTask->unk2C != -1)
+    if (gCurTask->bossDoorSignTileFrame != -1)
     {
-        RequestCopy(4, (u32)gUnk_085A0C38[gCurTask->unk2C * 9], OBJ_VRAM0 + 0x2100, 96);
+        RequestCopy(4, (u32)gUnk_085A0C38[gCurTask->bossDoorSignTileFrame * 9], OBJ_VRAM0 + 0x2100, 96);
         src = (u8 *)gUnk_085A0C38;
-        RequestCopy(4, (u32)(src + (gCurTask->unk2C * 9 + 3) * 32), OBJ_VRAM0 + 0x2500, 96);
-        RequestCopy(4, (u32)(src + (gCurTask->unk2C * 9 + 6) * 32), OBJ_VRAM0 + 0x2900, 96);
-        gCurTask->unk2C = -1;
+        RequestCopy(4, (u32)(src + (gCurTask->bossDoorSignTileFrame * 9 + 3) * 32), OBJ_VRAM0 + 0x2500, 96);
+        RequestCopy(4, (u32)(src + (gCurTask->bossDoorSignTileFrame * 9 + 6) * 32), OBJ_VRAM0 + 0x2900, 96);
+        gCurTask->bossDoorSignTileFrame = -1;
     }
 }
 
@@ -167,7 +167,7 @@ s32 CreateDoorOpening(s32 x, s32 y, s32 a)
         t->pixelY = y;
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
-        t->unk18 = a;
+        t->doorOpeningKind = a;
     }
     return id;
 }
@@ -189,23 +189,23 @@ void Task_DoorOpening(void)
     u->tileWord = 0x8800;
     u->taskClass = 4;
     v = gCurTask;
-    v->unk28 = -1;
+    v->doorOpeningTileFrame = -1;
     v->updateCallback = (u32)sub_0802ee88;
     PlaySfx(222);
-    gCurTask->unk28 = 0;
+    gCurTask->doorOpeningTileFrame = 0;
     TaskYieldTrampoline(3);
-    gCurTask->unk28 = 1;
+    gCurTask->doorOpeningTileFrame = 1;
     TaskYieldTrampoline(3);
     w = gCurTask;
-    w->unk28 = 2;
+    w->doorOpeningTileFrame = 2;
     w->unk1C = 0;
     do
         TaskYieldTrampoline(1);
     while (gCurTask->unk1C == 0);
     PlaySfx(223);
-    gCurTask->unk28 = 2;
+    gCurTask->doorOpeningTileFrame = 2;
     TaskYieldTrampoline(3);
-    gCurTask->unk28 = 1;
+    gCurTask->doorOpeningTileFrame = 1;
     TaskYieldTrampoline(1);
     TaskExitTrampoline();
 }
@@ -217,31 +217,31 @@ void sub_0802ee88(void)
     u8 *src;
 
     t = gCurTask;
-    idx = t->unk28;
+    idx = t->doorOpeningTileFrame;
     if (idx != -1)
     {
-        switch (t->unk18)
+        switch (t->doorOpeningKind)
         {
         case 0:
             RequestCopy(4, (u32)&gUnk_085A12F8[idx * 768], OBJ_VRAM0 + 0x1100, 256);
             src = gUnk_085A12F8;
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->doorOpeningTileFrame * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->doorOpeningTileFrame * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
             break;
         case 1:
             RequestCopy(4, (u32)&gUnk_085A1BF8[idx * 768], OBJ_VRAM0 + 0x1100, 256);
             src = gUnk_085A1BF8;
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->doorOpeningTileFrame * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->doorOpeningTileFrame * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
             break;
         case 2:
             RequestCopy(4, (u32)&gUnk_085A24F8[idx * 768], OBJ_VRAM0 + 0x1100, 256);
             src = gUnk_085A24F8;
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
-            RequestCopy(4, (u32)(src + (gCurTask->unk28 * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->doorOpeningTileFrame * 768 + 256)), OBJ_VRAM0 + 0x1500, 256);
+            RequestCopy(4, (u32)(src + (gCurTask->doorOpeningTileFrame * 768 + 512)), OBJ_VRAM0 + 0x1900, 256);
             break;
         }
-        gCurTask->unk28 = -1;
+        gCurTask->doorOpeningTileFrame = -1;
     }
 }
 
@@ -551,9 +551,9 @@ s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk18 = a;
-        t->unk1C = 1;
-        t->unk20 = 2;
+        t->stageDoorSignIndex = a;
+        t->stageDoorSignAnimated = 1;
+        t->stageDoorSignDoorAnimated = 2;
         t->u76.doorIndex = b;
     }
     return id;
@@ -574,9 +574,9 @@ s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk18 = a;
-        t->unk1C = 0;
-        t->unk20 = 2;
+        t->stageDoorSignIndex = a;
+        t->stageDoorSignAnimated = 0;
+        t->stageDoorSignDoorAnimated = 2;
         t->u76.doorIndex = b;
     }
     return id;
@@ -597,9 +597,9 @@ s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b)
         t->posY = t->pixelY << 16;
         t->velX = x;
         t->velY = y;
-        t->unk18 = a;
-        t->unk1C = 0;
-        t->unk20 = 0;
+        t->stageDoorSignIndex = a;
+        t->stageDoorSignAnimated = 0;
+        t->stageDoorSignDoorAnimated = 0;
         t->u76.doorIndex = b;
     }
     return id;

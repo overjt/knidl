@@ -2851,7 +2851,7 @@ void sub_080a4ac4(void)
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
     t = gCurTask;
-    t->unk24 = 2;
+    t->actorSpinFrameTimer = 2;
     t->kingDededeStarFirstUpdate = 1;
     t->frame = 4;
     TaskSetMotionXFacing(128 << 11, 0x5A5A5A5A);
@@ -3106,7 +3106,7 @@ void MrShineFallingStarState0(void)
     t->frameTable = gUnk_0874C44C;
     t->frame = 4;
     t->mrShineAndMrBrightAttackSpinning = 1;
-    t->unk24 = 2;
+    t->actorSpinFrameTimer = 2;
     TaskSleepForever();
 }
 

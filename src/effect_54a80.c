@@ -52,37 +52,37 @@ void PlayerEffectDeathStarRing(void)
     t->frameTable = gUnk_0874C6F4;
     t->pixelX = (t->u8C.parentTask)->pixelX;
     t->pixelY = (t->u8C.parentTask)->pixelY;
-    a = gUnk_0873BA4C[t->unk18 & 7][0];
+    a = gUnk_0873BA4C[t->playerEffectSpawnWord & 7][0];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->unk28 = b;
-    a = gUnk_0873BA4C[t->unk18 & 7][1];
+    a = gUnk_0873BA4C[t->playerEffectSpawnWord & 7][1];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->unk2C = b;
     t->posX = t->pixelX;
     t->posY = t->pixelY;
-    a = gUnk_0873BA4C[(t->unk18 & 7) + 4][0];
+    a = gUnk_0873BA4C[(t->playerEffectSpawnWord & 7) + 4][0];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->unk30 = b;
-    a = gUnk_0873BA4C[(t->unk18 & 7) + 4][1];
+    a = gUnk_0873BA4C[(t->playerEffectSpawnWord & 7) + 4][1];
     b = a << 8;
     if (a & 0x8000)
         b |= 0xFF000000;
     t->unk34 = b;
     t->frame = 0;
     TaskYieldTrampoline(2);
-    gCurTask->unk6C = 0;
+    gCurTask->playerEffectLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 7);
+        gCurTask->playerEffectLoopCount++;
+    } while ((s16)gCurTask->playerEffectLoopCount <= 7);
     TaskExitTrampoline();
 }
 
@@ -122,12 +122,12 @@ void PlayerEffectDeathStarRingLateUpdate(void)
     }
     if (IsOnScreen(x, y) != 0)
         QueueSprite(gCurTask->layer, tbl[gCurTask->frame], 0, 0, x, y);
-    i = gCurTask->unk18 & 7;
+    i = gCurTask->playerEffectSpawnWord & 7;
     gCurTask->unk28 += (gUnk_0873BA4C[i][2] & 0x8000) ? (gUnk_0873BA4C[i][2] << 8) | 0xFF000000 : gUnk_0873BA4C[i][2] << 8;
     gCurTask->unk2C += (gUnk_0873BA4C[i][3] & 0x8000) ? (gUnk_0873BA4C[i][3] << 8) | 0xFF000000 : gUnk_0873BA4C[i][3] << 8;
     gCurTask->pixelX += gCurTask->unk28 >> 16;
     gCurTask->pixelY += gCurTask->unk2C >> 16;
-    j = (gCurTask->unk18 & 7) + 4;
+    j = (gCurTask->playerEffectSpawnWord & 7) + 4;
     gCurTask->unk30 += (gUnk_0873BA4C[j][2] & 0x8000) ? (gUnk_0873BA4C[j][2] << 8) | 0xFF000000 : gUnk_0873BA4C[j][2] << 8;
     gCurTask->unk34 += (gUnk_0873BA4C[j][3] & 0x8000) ? (gUnk_0873BA4C[j][3] << 8) | 0xFF000000 : gUnk_0873BA4C[j][3] << 8;
     gCurTask->posX += ((s16 *)&gCurTask->unk30)[1];
@@ -161,7 +161,7 @@ void sub_08054de8(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C67C;
-    switch (t->unk18 & 15)
+    switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
         t->posX = -0xA0000;
@@ -202,13 +202,13 @@ void sub_08054de8(void)
         t->posY = 0x80000;
         t->frame = 0;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 10);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
         break;
     case 2:
         t->posX = 0;
@@ -217,13 +217,13 @@ void sub_08054de8(void)
         TaskYieldTrampoline(14);
         gCurTask->frame = 14;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 5);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 5);
         break;
     case 3:
         t->layer = 8;
@@ -233,13 +233,13 @@ void sub_08054de8(void)
         TaskYieldTrampoline(20);
         gCurTask->frame = 21;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerEffectLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 7);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 7);
         break;
     }
     TaskExitTrampoline();
@@ -266,7 +266,7 @@ void sub_08054fe4(void)
         gCurTask->frameTable = gUnk_0874C718;
         for (;;)
         {
-            gCurTask->unk6C = 0;
+            gCurTask->playerEffectLoopCount = 0;
             do
             {
                 gCurTask->facing = -gCurTask->facing;
@@ -289,8 +289,8 @@ void sub_08054fe4(void)
                 gCurTask->velY = -0x20000;
                 TaskSetFrameByFacing(24);
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 1);
+                gCurTask->playerEffectLoopCount++;
+            } while ((s16)gCurTask->playerEffectLoopCount <= 1);
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(4);
         }
@@ -300,26 +300,26 @@ void sub_08054fe4(void)
         v->tileWord = ((v->u8C.parentTask)->tileWord + 0x1800) | 8;
         for (;;)
         {
-            gCurTask->unk6C = 0;
+            gCurTask->playerEffectLoopCount = 0;
             do
             {
                 gCurTask->posX = (RandomSpreadFacing(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
                 gCurTask->posY = (RandomSpread(-16, 1, 12) + (gCurTask->u8C.parentTask)->pixelY) << 16;
                 gCurTask->frame = RandomRange(12);
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 2);
+                gCurTask->playerEffectLoopCount++;
+            } while ((s16)gCurTask->playerEffectLoopCount <= 2);
             ((volatile struct Task *)gCurTask)->frame = 0xFFFF;
             TaskYieldTrampoline(8);
-            gCurTask->unk6C = 0;
+            gCurTask->playerEffectLoopCount = 0;
             do
             {
                 gCurTask->posX = (RandomSpreadFacing(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
                 gCurTask->posY = (RandomSpread(-16, 1, 12) + (gCurTask->u8C.parentTask)->pixelY - 10) << 16;
                 gCurTask->frame = RandomRange(12);
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 2);
+                gCurTask->playerEffectLoopCount++;
+            } while ((s16)gCurTask->playerEffectLoopCount <= 2);
             ((volatile struct Task *)gCurTask)->frame = 0xFFFF;
             TaskYieldTrampoline(16);
             gCurTask->posX = (RandomSpreadFacing(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;

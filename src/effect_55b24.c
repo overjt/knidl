@@ -35,7 +35,7 @@ void sub_08055b24(void)
     t->frameTable = gUnk_0874C718;
     TaskStop();
     gCurTask->unk28 = 0;
-    if ((gCurTask->unk18 & 15) == 0)
+    if ((gCurTask->playerEffectSpawnWord & 15) == 0)
     {
         do
         {
@@ -96,7 +96,7 @@ void sub_08055d24(void)
 {
     struct Task *t = gCurTask;
 
-    if ((t->unk18 & 15) == 0)
+    if ((t->playerEffectSpawnWord & 15) == 0)
     {
         if (t->unk28 == 0 && (t->player->mode != 17 || (t->u8C.parentTask)->onGround != 0))
             t->unk28 = 1;
@@ -120,7 +120,7 @@ void sub_08055d74(void)
     t->frameTable = gUnk_0874C7A4;
     t->unk28 = 0;
     TaskStop();
-    if ((gCurTask->unk18 & 15) == 0)
+    if ((gCurTask->playerEffectSpawnWord & 15) == 0)
     {
         while (gCurTask->unk28 == 0)
         {
@@ -187,7 +187,7 @@ void sub_080560fc(void)
 {
     struct Task *t = gCurTask;
 
-    if ((t->unk18 & 15) == 0)
+    if ((t->playerEffectSpawnWord & 15) == 0)
     {
         if (t->unk28 == 0 && (t->player->mode != 17 || (t->u8C.parentTask)->onGround != 0))
             t->unk28 = 1;
@@ -211,7 +211,7 @@ void sub_0805614c(void)
     t->frameTable = gUnk_0874C7B4;
     t->unk28 = 0;
     TaskStop();
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1 && gCurTask->unk28 == 0; gCurTask->unk6C++)
+    for (gCurTask->playerEffectLoopCount = 0; (s16)gCurTask->playerEffectLoopCount <= 1 && gCurTask->unk28 == 0; gCurTask->playerEffectLoopCount++)
     {
         gCurTask->posX = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
         gCurTask->posY = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelY) << 16;
