@@ -175,31 +175,31 @@ s32 sub_0808f978(void);
 s32 sub_0808f9b8(void);
 s32 sub_0808f9d8(void);
 s32 sub_0808f9f8(void);
-s32 sub_08090ef0(void);
-s32 sub_08090f14(void);
+s32 BonkersReactToDamage(void);
+s32 BonkersReactToDefeat(void);
 s32 sub_08090f4c(void);
-s32 sub_08091b00(void);
-s32 sub_08091b24(void);
+s32 PoppyBrosSrReactToDamage(void);
+s32 PoppyBrosSrReactToDefeat(void);
 s32 sub_08091b60(void);
 s32 sub_080937d0(void);
 void sub_08093858(void);
-s32 sub_08093868(void);
-s32 sub_0809388c(void);
+s32 BugzzyReactToDamage(void);
+s32 BugzzyReactToDefeat(void);
 s32 sub_08093bb0(void);
 s32 sub_08093edc(void);
 s32 sub_08093f00(void);
 s32 sub_080954f0(void);
 s32 sub_080955a8(void);
-void sub_08095674(void);
-void sub_08095694(void);
+void GrandWheelieReactToDamage(void);
+void GrandWheelieReactToDefeat(void);
 s32 sub_08096d64(void);
 s32 sub_08096df4(void);
-s32 sub_08096e0c(void);
-s32 sub_08096e24(void);
+s32 FireLionReactToDamage(void);
+s32 FireLionReactToDefeat(void);
 s32 sub_08098528(void);
 s32 sub_08098540(void);
-s32 sub_0809857c(void);
-s32 sub_08098594(void);
+s32 PhanPhanReactToDamage(void);
+s32 PhanPhanReactToDefeat(void);
 void sub_080986ec(void);
 void sub_08098718(void);
 void sub_08098728(void);
@@ -209,13 +209,13 @@ s32 sub_080988b4(void);
 s32 sub_080988c4(void);
 u8 sub_080988f8(void);
 u8 sub_08098a04(void);
-u8 sub_08098aa0(void);
-u8 sub_08098ad8(void);
+u8 MrFrostyReactToDefeat(void);
+u8 MrFrostyReactToDamage(void);
 u8 sub_08099aec(void);
 u8 sub_08099b20(void);
 u8 sub_08099c4c(void);
-u8 sub_08099d40(void);
-u8 sub_08099d64(void);
+u8 MrTickTockReactToDamage(void);
+u8 MrTickTockReactToDefeat(void);
 u8 sub_0809b454(void);
 void sub_0809b4d8(void);
 u8 sub_0809b4dc(void);
@@ -1257,15 +1257,15 @@ struct ActorVt gUnk_087440D0 ACTOR_TBL(0874407c) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08090ef0,
-    .unk08 = (u32)sub_08090f14,
+    .unk04 = (u32)BonkersReactToDamage,
+    .unk08 = (u32)BonkersReactToDefeat,
 };
 /* src/enemy_9000c.c */
 struct ActorVt gUnk_087440DC ACTOR_TBL(0874407c) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08090ef0,
+    .unk04 = (u32)BonkersReactToDamage,
     .unk08 = 0,
 };
 /* gPoppyBrosSrDef */
@@ -1273,15 +1273,15 @@ struct ActorVt gUnk_087440E8 ACTOR_TBL(0874407c) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08091b00,
-    .unk08 = (u32)sub_08091b24,
+    .unk04 = (u32)PoppyBrosSrReactToDamage,
+    .unk08 = (u32)PoppyBrosSrReactToDefeat,
 };
 /* src/enemy_9113c.c */
 struct ActorVt gUnk_087440F4 ACTOR_TBL(0874407c) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08091b00,
+    .unk04 = (u32)PoppyBrosSrReactToDamage,
     .unk08 = 0,
 };
 /* gBugzzyDef */
@@ -1289,15 +1289,15 @@ struct ActorVt gUnk_08744100 ACTOR_TBL(0874407c) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08093868,
-    .unk08 = (u32)sub_0809388c,
+    .unk04 = (u32)BugzzyReactToDamage,
+    .unk08 = (u32)BugzzyReactToDefeat,
 };
 /* src/enemy_91f9c.c */
 struct ActorVt gUnk_0874410C ACTOR_TBL(0874407c) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08093868,
+    .unk04 = (u32)BugzzyReactToDamage,
     .unk08 = 0,
 };
 
@@ -1399,15 +1399,15 @@ struct ActorVt gUnk_08745410 ACTOR_TBL(087453bc) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08095674,
-    .unk08 = (u32)sub_08095694,
+    .unk04 = (u32)GrandWheelieReactToDamage,
+    .unk08 = (u32)GrandWheelieReactToDefeat,
 };
 /* src/enemy_93f64.c */
 struct ActorVt gUnk_0874541C ACTOR_TBL(087453bc) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08095674,
+    .unk04 = (u32)GrandWheelieReactToDamage,
     .unk08 = 0,
 };
 /* gFireLionDef */
@@ -1415,15 +1415,15 @@ struct ActorVt gUnk_08745428 ACTOR_TBL(087453bc) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08096e0c,
-    .unk08 = (u32)sub_08096e24,
+    .unk04 = (u32)FireLionReactToDamage,
+    .unk08 = (u32)FireLionReactToDefeat,
 };
 /* src/enemy_957bc.c */
 struct ActorVt gUnk_08745434 ACTOR_TBL(087453bc) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08096e0c,
+    .unk04 = (u32)FireLionReactToDamage,
     .unk08 = 0,
 };
 /* gPhanPhanDef */
@@ -1431,15 +1431,15 @@ struct ActorVt gUnk_08745440 ACTOR_TBL(087453bc) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_0809857c,
-    .unk08 = (u32)sub_08098594,
+    .unk04 = (u32)PhanPhanReactToDamage,
+    .unk08 = (u32)PhanPhanReactToDefeat,
 };
 /* src/enemy_974c8.c */
 struct ActorVt gUnk_0874544C ACTOR_TBL(087453bc) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_0809857c,
+    .unk04 = (u32)PhanPhanReactToDamage,
     .unk08 = 0,
 };
 
@@ -1507,15 +1507,15 @@ struct ActorVt gUnk_08745A74 ACTOR_TBL(08745a3c) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08098ad8,
-    .unk08 = (u32)sub_08098aa0,
+    .unk04 = (u32)MrFrostyReactToDamage,
+    .unk08 = (u32)MrFrostyReactToDefeat,
 };
 /* src/enemy_988f8.c */
 struct ActorVt gUnk_08745A80 ACTOR_TBL(08745a3c) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08098ad8,
+    .unk04 = (u32)MrFrostyReactToDamage,
     .unk08 = 0,
 };
 /* gMrTickTockDef */
@@ -1523,15 +1523,15 @@ struct ActorVt gUnk_08745A8C ACTOR_TBL(08745a3c) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08099d40,
-    .unk08 = (u32)sub_08099d64,
+    .unk04 = (u32)MrTickTockReactToDamage,
+    .unk08 = (u32)MrTickTockReactToDefeat,
 };
 /* src/enemy_99b20.c */
 struct ActorVt gUnk_08745A98 ACTOR_TBL(08745a3c) = {
     .unk00 = -1,
     .unk01 = 6,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_08099d40,
+    .unk04 = (u32)MrTickTockReactToDamage,
     .unk08 = 0,
 };
 

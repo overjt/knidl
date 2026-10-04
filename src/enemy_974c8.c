@@ -51,7 +51,7 @@ void Task_PhanPhan(void)
         gCurTask->updateCallback = (u32)sub_080975c8;
         sub_08097694();
     } else {
-        gCurTask->updateCallback = (u32)sub_080975fc;
+        gCurTask->updateCallback = (u32)PhanPhanUpdate;
         sub_08066580();
         ActorSetState(1);
         sub_0809773c();
@@ -72,21 +72,21 @@ void sub_08097580(void)
     sub_08066ae0();
 }
 
-void sub_080975ac(void)
+void PhanPhanEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 9, gUnk_0874489C);
+    CallTableEntry(gCurTask->state, 9, gPhanPhanStates);
 }
 
 void sub_080975c8(void)
 {
-    CallTableEntry(gCurTask->updateState, 9, gUnk_087448C0);
+    CallTableEntry(gCurTask->updateState, 9, gPhanPhanStateUpdates);
     if (gCurTask->unk2C != 0)
-        sub_080984b4();
+        PhanPhanCheckCatch();
     sub_08068f68();
     ActorReactToHit();
 }
 
-void sub_080975fc(void)
+void PhanPhanUpdate(void)
 {
     struct Task *t;
 
@@ -97,12 +97,12 @@ void sub_080975fc(void)
         ActorClearPaletteOverride();
     if (sub_0806acf8() == 0) {
         if (ActorCollideTerrain() == 0)
-            CallTableEntry(gCurTask->updateState, 9, gUnk_087448C0);
+            CallTableEntry(gCurTask->updateState, 9, gPhanPhanStateUpdates);
     } else {
-        CallTableEntry(gCurTask->updateState, 9, gUnk_087448C0);
+        CallTableEntry(gCurTask->updateState, 9, gPhanPhanStateUpdates);
     }
     if (gCurTask->unk2C != 0)
-        sub_080984b4();
+        PhanPhanCheckCatch();
     sub_08068f68();
     ActorReactToHit();
 }
@@ -119,7 +119,7 @@ void sub_08097694(void)
     gCurTask->accelY = 0x2500;
     TaskYieldTrampoline(24);
     t = gCurTask;
-    t->updateCallback = (u32)sub_080975fc;
+    t->updateCallback = (u32)PhanPhanUpdate;
     if (t->unk28 == 0) {
         do {
             TaskYieldTrampoline(1);
@@ -137,7 +137,7 @@ void sub_08097694(void)
 void sub_08097714(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
 void sub_0809773c(void)
@@ -268,10 +268,10 @@ void sub_0809794c(void)
 void sub_08097a54(void)
 {
     if (gCurTask->state != 1)
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
-void sub_08097a7c(void)
+void PhanPhanHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -304,13 +304,13 @@ void sub_08097a7c(void)
     TaskSleepForever();
 }
 
-void sub_08097b4c(void)
+void PhanPhanHopUpdate(void)
 {
     if (gCurTask->state != 2)
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
-void sub_08097b74(void)
+void PhanPhanCharge(void)
 {
     struct Task *t;
     s32 v;
@@ -345,19 +345,19 @@ void sub_08097b74(void)
     TaskSleepForever();
 }
 
-void sub_08097c44(void)
+void PhanPhanChargeUpdate(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->state != 3) {
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     } else {
         gCurTask->unk24 = ActorTickAnim(t->unk24);
     }
 }
 
-void sub_08097c78(void)
+void PhanPhanBounceOffWall(void)
 {
     struct Task *t;
     s32 zero;
@@ -396,13 +396,13 @@ void sub_08097c78(void)
     TaskSleepForever();
 }
 
-void sub_08097d7c(void)
+void PhanPhanBounceOffWallUpdate(void)
 {
     if (gCurTask->state != 4)
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
-void sub_08097da4(void)
+void PhanPhanJump(void)
 {
     struct Task *t;
     s32 zero;
@@ -432,13 +432,13 @@ void sub_08097da4(void)
     TaskSleepForever();
 }
 
-void sub_08097e68(void)
+void PhanPhanJumpUpdate(void)
 {
     if (gCurTask->state != 5)
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
-void sub_08097e90(void)
+void PhanPhanThrowPlayer(void)
 {
     struct Task *t;
     struct Task *u;
@@ -567,13 +567,13 @@ void sub_08098140(void)
     TaskYieldTrampoline(4);
 }
 
-void sub_0809816c(void)
+void PhanPhanThrowPlayerUpdate(void)
 {
     if (gCurTask->state != 6)
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
 }
 
-void sub_08098194(void)
+void PhanPhanThrowApple(void)
 {
     s32 zero;
 
@@ -607,19 +607,19 @@ void sub_08098194(void)
     TaskSleepForever();
 }
 
-void sub_08098268(void)
+void PhanPhanThrowAppleUpdate(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->state != 7) {
-        TaskSetEntry(sub_080975ac, gCurTaskIdx);
+        TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     } else {
         gCurTask->unk24 = ActorTickAnim(t->unk24);
     }
 }
 
-void sub_0809829c(void)
+void PhanPhanDefeat(void)
 {
     s32 zero;
 
@@ -655,7 +655,7 @@ void sub_0809829c(void)
     ActorDie();
 }
 
-void sub_080983a0(void)
+void PhanPhanDefeatUpdate(void)
 {
 }
 
@@ -720,7 +720,7 @@ void CreatePhanPhanApple(void)
     gCurTask->facing = d;
 }
 
-void sub_080984b4(void)
+void PhanPhanCheckCatch(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -736,7 +736,7 @@ void sub_080984b4(void)
             PlaySfx(568);
             sub_080685ec(gCurTask->unk18, gCurTaskIdx, 7);
             ActorSetState(6);
-            TaskSetEntry(sub_080975ac, gCurTaskIdx);
+            TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
         }
     }
 }
@@ -772,14 +772,14 @@ miss:
     return 0;
 }
 
-s32 sub_0809857c(void)
+s32 PhanPhanReactToDamage(void)
 {
     CreateChildTaskHere(142, 0);
     RequestScreenShake(2);
     return 0;
 }
 
-s32 sub_08098594(void)
+s32 PhanPhanReactToDefeat(void)
 {
     struct Task *t;
 
@@ -790,7 +790,7 @@ s32 sub_08098594(void)
         gCurTask->unk18 = -1;
     }
     ActorSetState(8);
-    TaskSetEntry(sub_080975ac, gCurTaskIdx);
+    TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
     return 1;
 }
 

@@ -167,7 +167,7 @@ u8 sub_08099c4c(void)
     return 0;
 }
 
-u8 sub_08099d40(void)
+u8 MrTickTockReactToDamage(void)
 {
     gCurTask->unk2C = 32;
     CreateChildTaskHere(142, 0);
@@ -175,7 +175,7 @@ u8 sub_08099d40(void)
     return 0;
 }
 
-u8 sub_08099d64(void)
+u8 MrTickTockReactToDefeat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -472,7 +472,7 @@ void MrTickTockEnterState(void)
     CallTableEntry(gCurTask->state, 24, gMrTickTockStates);
 }
 
-void sub_0809a214(void)
+void MrTickTockWait(void)
 {
     struct Task *t;
     struct Task *u;
@@ -500,7 +500,7 @@ void sub_0809a214(void)
     TaskSleepForever();
 }
 
-void sub_0809a270(void)
+void MrTickTockWaitUpdate(void)
 {
     struct Task *t;
 
@@ -543,7 +543,7 @@ void sub_0809a2c0(void)
     }
 }
 
-void sub_0809a2e8(void)
+void MrTickTockHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -565,7 +565,7 @@ void sub_0809a2e8(void)
     TaskSleepForever();
 }
 
-void sub_0809a32c(void)
+void MrTickTockHopUpdate(void)
 {
     struct Task *t;
 
@@ -1222,7 +1222,7 @@ void sub_0809ad6c(void)
     }
 }
 
-void sub_0809adf4(void)
+void MrTickTockBounceOffWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1244,7 +1244,7 @@ void sub_0809adf4(void)
     TaskSleepForever();
 }
 
-void sub_0809ae3c(void)
+void MrTickTockBounceOffWallUpdate(void)
 {
 }
 

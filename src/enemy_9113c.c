@@ -14,7 +14,7 @@
  * sub_08091a98 (they walk Task.frame up and down while yielding Task.unk24
  * frames per step), and waits on Task.onGround between passes.
  *
- * sub_08091b00 / sub_08091b24 / sub_08091b60 are the hit hooks (they return
+ * PoppyBrosSrReactToDamage / PoppyBrosSrReactToDefeat / sub_08091b60 are the hit hooks (they return
  * 1 when they take over the task), and Task_PoppyBrosSrHand is the class-4 companion
  * the boss spawns: it builds an ActorSpawn on the stack, then flies the task
  * along three 16.16 ramps (Task.unk28 / Task.unk30) with a wait in the middle
@@ -496,7 +496,7 @@ void sub_08091a98(void)
     TaskYieldTrampoline(y->unk24);
 }
 
-s32 sub_08091b00(void)
+s32 PoppyBrosSrReactToDamage(void)
 {
     gCurTask->unk34 = 1;
     CreateStarFlash(1, 0, -8);
@@ -504,7 +504,7 @@ s32 sub_08091b00(void)
     return 0;
 }
 
-s32 sub_08091b24(void)
+s32 PoppyBrosSrReactToDefeat(void)
 {
     TaskSetFrame(10);
     ActorSetHitReactions(gUnk_087440F4);

@@ -13,15 +13,15 @@
  * a re-seat of the actor at gUnk_030023B4 - Task.facing * 16, and a hand-off to
  * sub_080685ec / TaskSetEntry.
  *
- * States 0-12 follow as <body, guard> pairs.  sub_08092250 is the attack
+ * States 0-12 follow as <body, guard> pairs.  BugzzyWalk is the attack
  * chooser: it walks Task.unk6C over gUnk_08743A70[Task.unk74] rounds, and per
  * round stores |TaskGetNearestPlayerDx()| in gUnk_03001F2C, classifies it into
  * gUnk_02007D00[6] (0/1/2) against the RNG, and plays one of three yield
- * sequences; sub_080926fc is the three-phase charge, sub_08092cdc the
- * multi-hit dive, sub_080930ac the four-way finisher whose case 3 spawns the
+ * sequences; BugzzyCharge is the three-phase charge, BugzzyHop the
+ * multi-hit dive, BugzzyBackdrop the four-way finisher whose case 3 spawns the
  * actor 154 at gUnk_030023B4/gUnk_030023D4, and BugzzyDefeat the defeat
  * sequence.  sub_080934b8 is the shake helper the first states yield to and
- * sub_080934f8 is the collision probe: ten GetCollisionTileAtOffset samples along
+ * BugzzyChooseBackdrop is the collision probe: ten GetCollisionTileAtOffset samples along
  * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
@@ -202,7 +202,7 @@ void sub_08092228(void)
     if (gCurTask->state != 0)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_08092250(void)
+void BugzzyWalk(void)
 {
     struct Task *t;
     struct Task *u;
@@ -338,7 +338,7 @@ void sub_08092250(void)
     }
     TaskSleepForever();
 }
-void sub_08092590(void)
+void BugzzyWalkUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -395,7 +395,7 @@ void BugzzySummonUpdate(void)
     if (gCurTask->state != 2)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_080926fc(void)
+void BugzzyCharge(void)
 {
     struct Task *t;
     struct Task *u;
@@ -506,7 +506,7 @@ void sub_080926fc(void)
     ActorSetState(8);
     TaskSleepForever();
 }
-void sub_080929ec(void)
+void BugzzyChargeUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -631,7 +631,7 @@ void sub_08092cb4(void)
     if (gCurTask->state != 6)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_08092cdc(void)
+void BugzzyHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -687,13 +687,13 @@ void sub_08092cdc(void)
         ActorSetState(3);
     TaskSleepForever();
 }
-void sub_08092e40(void)
+void BugzzyHopUpdate(void)
 {
     if (gCurTask->state != 7)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092e68(void)
+void BugzzyFall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -724,13 +724,13 @@ void sub_08092e68(void)
     TaskSleepForever();
 }
 
-void sub_08092f04(void)
+void BugzzyFallUpdate(void)
 {
     if (gCurTask->state != 8)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092f2c(void)
+void BugzzyBounceOffWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -764,7 +764,7 @@ void sub_08092f2c(void)
     TaskSleepForever();
 }
 
-void sub_08092ff4(void)
+void BugzzyBounceOffWallUpdate(void)
 {
     if (gCurTask->state != 9)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -798,7 +798,7 @@ void sub_08093084(void)
     if (gCurTask->state != 11)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
-void sub_080930ac(void)
+void BugzzyBackdrop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -829,7 +829,7 @@ void sub_080930ac(void)
     while (gCurTask->onGround == 0)
         TaskYieldTrampoline(1);
     TaskStop();
-    sub_080934f8();
+    BugzzyChooseBackdrop();
     s = gCurTask;
     switch (s->unk28)
     {
@@ -910,7 +910,7 @@ void sub_080930ac(void)
     TaskSleepForever();
 }
 
-void sub_08093354(void)
+void BugzzyBackdropUpdate(void)
 {
     struct Task *t;
 
@@ -982,7 +982,7 @@ void sub_080934b8(void)
         gUnk_02007D00[4] = 2;
     }
 }
-void sub_080934f8(void)
+void BugzzyChooseBackdrop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1161,7 +1161,7 @@ void sub_08093858(void)
     gCurTask->velY = 0;
 }
 
-s32 sub_08093868(void)
+s32 BugzzyReactToDamage(void)
 {
     gCurTask->unk30 = 1;
     CreateStarFlash(1, 0, 0);
@@ -1169,7 +1169,7 @@ s32 sub_08093868(void)
     return 0;
 }
 
-s32 sub_0809388c(void)
+s32 BugzzyReactToDefeat(void)
 {
     struct Task *t;
     s32 n;
