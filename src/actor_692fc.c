@@ -845,7 +845,7 @@ void ActorStartDrown(s32 a)
     b->hitState = 2;
     ActorSetTerrainHandlers((u32)gActorDrownTerrainHandlers);
     if (gCurTask->onGround & 1)
-        ActorSetState(ACTOR_DROWN_STATE_1);
+        ActorSetState(ACTOR_DROWN_STATE_WAIT);
     else
         ActorSetState(ACTOR_DROWN_STATE_SINK);
     TaskSetEntry(ActorDrownInit, gCurTaskIdx);

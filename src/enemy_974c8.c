@@ -971,7 +971,7 @@ void sub_080988c0(void)
 s32 MrFrostyStartFall(void)
 {
     if (gCurTask->state == MR_FROSTY_STATE_WAIT) {
-        ActorSetState(MR_FROSTY_STATE_16);
+        ActorSetState(MR_FROSTY_STATE_FALL);
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
         return 1;
     }

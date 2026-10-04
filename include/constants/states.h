@@ -36,12 +36,12 @@
 /* ActorDefeatFrozen states - gActorDefeatFrozenStates[N], CallTableEntry(Task.state) in ActorDefeatFrozen */
 #define ACTOR_DEFEAT_FROZEN_STATE_SHAKE  0
 #define ACTOR_DEFEAT_FROZEN_STATE_SLIDE  1
-#define ACTOR_DEFEAT_FROZEN_STATE_2      2
+#define ACTOR_DEFEAT_FROZEN_STATE_BURST  2
 
 /* ActorDrown states - gActorDrownStates[N], CallTableEntry(Task.state) in ActorDrownInit */
-#define ACTOR_DROWN_STATE_SINK  0
-#define ACTOR_DROWN_STATE_1     1
-#define ACTOR_DROWN_STATE_2     2
+#define ACTOR_DROWN_STATE_SINK   0
+#define ACTOR_DROWN_STATE_WAIT   1
+#define ACTOR_DROWN_STATE_BURST  2
 
 /* AxeKnight states - gAxeKnightStates[N], CallTableEntry(Task.state) in AxeKnightEnterState */
 #define AXE_KNIGHT_STATE_WALK        0
@@ -428,30 +428,30 @@
 #define META_KNIGHT_DEFEATED_STATE_1  1
 
 /* MetaKnight states - gMetaKnightStates[N], CallTableEntry(Task.state) in MetaKnightInit */
-#define META_KNIGHT_STATE_INTRO         0
-#define META_KNIGHT_STATE_FOLLOW        1
-#define META_KNIGHT_STATE_2             2
-#define META_KNIGHT_STATE_3             3
-#define META_KNIGHT_STATE_4             4
-#define META_KNIGHT_STATE_5             5
-#define META_KNIGHT_STATE_APPROACH      6
-#define META_KNIGHT_STATE_RUN           7
-#define META_KNIGHT_STATE_8             8
-#define META_KNIGHT_STATE_9             9
-#define META_KNIGHT_STATE_LAND          10
-#define META_KNIGHT_STATE_11            11
-#define META_KNIGHT_STATE_12            12
-#define META_KNIGHT_STATE_SWORD_SPIN    13
-#define META_KNIGHT_STATE_14            14
-#define META_KNIGHT_STATE_DOWN_THRUST   15
-#define META_KNIGHT_STATE_16            16
-#define META_KNIGHT_STATE_17            17
-#define META_KNIGHT_STATE_18            18
-#define META_KNIGHT_STATE_19            19
-#define META_KNIGHT_STATE_DOUBLE_SLASH  20
-#define META_KNIGHT_STATE_21            21
-#define META_KNIGHT_STATE_22            22
-#define META_KNIGHT_STATE_23            23
+#define META_KNIGHT_STATE_INTRO                    0
+#define META_KNIGHT_STATE_FOLLOW                   1
+#define META_KNIGHT_STATE_2                        2
+#define META_KNIGHT_STATE_3                        3
+#define META_KNIGHT_STATE_4                        4
+#define META_KNIGHT_STATE_5                        5
+#define META_KNIGHT_STATE_APPROACH                 6
+#define META_KNIGHT_STATE_RUN                      7
+#define META_KNIGHT_STATE_JUMP_HIGH                8
+#define META_KNIGHT_STATE_JUMP_LOW                 9
+#define META_KNIGHT_STATE_LAND                     10
+#define META_KNIGHT_STATE_START_JUMP_FORWARD       11
+#define META_KNIGHT_STATE_START_JUMP_UP            12
+#define META_KNIGHT_STATE_SWORD_SPIN               13
+#define META_KNIGHT_STATE_START_JUMP_UPWARD_SLASH  14
+#define META_KNIGHT_STATE_DOWN_THRUST              15
+#define META_KNIGHT_STATE_START_JUMP_DOWN_THRUST   16
+#define META_KNIGHT_STATE_UPWARD_SLASH_IN_AIR      17
+#define META_KNIGHT_STATE_UPWARD_SLASH_ON_GROUND   18
+#define META_KNIGHT_STATE_SLASH_SHORT              19
+#define META_KNIGHT_STATE_DOUBLE_SLASH             20
+#define META_KNIGHT_STATE_SLASH_LONG               21
+#define META_KNIGHT_STATE_22                       22
+#define META_KNIGHT_STATE_23                       23
 
 /* MetaKnightWarpStarRide states - gMetaKnightWarpStarRideStates[N], CallTableEntry(Task.state) in MetaKnightWarpStarRideInit */
 #define META_KNIGHT_WARP_STAR_RIDE_STATE_0  0
@@ -493,28 +493,28 @@
 /* MrFrostyIceCube states - gMrFrostyIceCubeStates[N], CallTableEntry(Task.state) in MrFrostyIceCubeInit */
 #define MR_FROSTY_ICE_CUBE_STATE_0       0
 #define MR_FROSTY_ICE_CUBE_STATE_FLIGHT  1
-#define MR_FROSTY_ICE_CUBE_STATE_2       2
+#define MR_FROSTY_ICE_CUBE_STATE_BURST   2
 
 /* MrFrosty states - gMrFrostyStates[N], CallTableEntry(Task.state) in MrFrostyInit */
-#define MR_FROSTY_STATE_WAIT             0
-#define MR_FROSTY_STATE_HOP              1
-#define MR_FROSTY_STATE_WALK_BACK        2
-#define MR_FROSTY_STATE_DASH             3
-#define MR_FROSTY_STATE_BOUNCE_OFF_WALL  4
-#define MR_FROSTY_STATE_5                5
-#define MR_FROSTY_STATE_6                6
-#define MR_FROSTY_STATE_7                7
-#define MR_FROSTY_STATE_SPIN             8
-#define MR_FROSTY_STATE_9                9
-#define MR_FROSTY_STATE_10               10
-#define MR_FROSTY_STATE_11               11
-#define MR_FROSTY_STATE_12               12
-#define MR_FROSTY_STATE_DEFEAT           13
-#define MR_FROSTY_STATE_14               14
-#define MR_FROSTY_STATE_15               15
-#define MR_FROSTY_STATE_16               16
-#define MR_FROSTY_STATE_17               17
-#define MR_FROSTY_STATE_DROP_IN          18
+#define MR_FROSTY_STATE_WAIT                     0
+#define MR_FROSTY_STATE_HOP                      1
+#define MR_FROSTY_STATE_WALK_BACK                2
+#define MR_FROSTY_STATE_DASH                     3
+#define MR_FROSTY_STATE_BOUNCE_OFF_WALL          4
+#define MR_FROSTY_STATE_5                        5
+#define MR_FROSTY_STATE_6                        6
+#define MR_FROSTY_STATE_WALK_BACK_AT_WALL        7
+#define MR_FROSTY_STATE_SPIN                     8
+#define MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_BACK   9
+#define MR_FROSTY_STATE_TOSS_ICE_CUBE_HOP_AWAY   10
+#define MR_FROSTY_STATE_TOSS_ICE_CUBE_WALK_BACK  11
+#define MR_FROSTY_STATE_KICK                     12
+#define MR_FROSTY_STATE_DEFEAT                   13
+#define MR_FROSTY_STATE_14                       14
+#define MR_FROSTY_STATE_15                       15
+#define MR_FROSTY_STATE_FALL                     16
+#define MR_FROSTY_STATE_17                       17
+#define MR_FROSTY_STATE_DROP_IN                  18
 
 /* MrShineAndMrBright states - gMrShineAndMrBrightStates[N], CallTableEntry(Task.state) in MrShineAndMrBrightInit */
 #define MR_SHINE_AND_MR_BRIGHT_STATE_0  0
@@ -558,21 +558,21 @@
 #define MR_TICK_TOCK_RING_STATE_0  0
 
 /* MrTickTock states - gMrTickTockStates[N], CallTableEntry(Task.state) in MrTickTockInit */
-#define MR_TICK_TOCK_STATE_WAIT             0
+#define MR_TICK_TOCK_STATE_WAIT_LONG        0
 #define MR_TICK_TOCK_STATE_PICK_MOVE        1
 #define MR_TICK_TOCK_STATE_HOP              2
 #define MR_TICK_TOCK_STATE_WALK_BACK        3
 #define MR_TICK_TOCK_STATE_JUMP_FORWARD     4
-#define MR_TICK_TOCK_STATE_5                5
-#define MR_TICK_TOCK_STATE_DASH             6
-#define MR_TICK_TOCK_STATE_7                7
-#define MR_TICK_TOCK_STATE_8                8
-#define MR_TICK_TOCK_STATE_9                9
+#define MR_TICK_TOCK_STATE_DASH_WIND_UP     5
+#define MR_TICK_TOCK_STATE_DASH_START       6
+#define MR_TICK_TOCK_STATE_JUMP_HIGH        7
+#define MR_TICK_TOCK_STATE_RING_FROM_JUMP   8
+#define MR_TICK_TOCK_STATE_JUMP_LOW         9
 #define MR_TICK_TOCK_STATE_JUMP_BACK        10
 #define MR_TICK_TOCK_STATE_SHOOT_NOTES      11
-#define MR_TICK_TOCK_STATE_12               12
-#define MR_TICK_TOCK_STATE_13               13
-#define MR_TICK_TOCK_STATE_14               14
+#define MR_TICK_TOCK_STATE_DASH_LOOP        12
+#define MR_TICK_TOCK_STATE_RING_FROM_DASH   13
+#define MR_TICK_TOCK_STATE_WAIT_SHORT       14
 #define MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL  15
 #define MR_TICK_TOCK_STATE_16               16
 #define MR_TICK_TOCK_STATE_17               17
@@ -580,7 +580,7 @@
 #define MR_TICK_TOCK_STATE_DEFEAT           19
 #define MR_TICK_TOCK_STATE_20               20
 #define MR_TICK_TOCK_STATE_21               21
-#define MR_TICK_TOCK_STATE_22               22
+#define MR_TICK_TOCK_STATE_FALL             22
 #define MR_TICK_TOCK_STATE_DROP_IN          23
 
 /* NeedlousIdle states - gNeedlousIdleStates[N], CallTableEntry(Task.state) in NeedlousIdleInit */

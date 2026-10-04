@@ -59,17 +59,17 @@ void ActorDrownSinkUpdate(void)
 
 void ActorDrownWait(void)
 {
-    gCurTask->updateState = ACTOR_DROWN_STATE_1;
+    gCurTask->updateState = ACTOR_DROWN_STATE_WAIT;
     TaskStop();
     TaskSetFrame(*(s16 *)&gCurTask->actorDrownFrame);
     TaskYieldTrampoline(30);
-    ActorSetState(ACTOR_DROWN_STATE_2);
+    ActorSetState(ACTOR_DROWN_STATE_BURST);
     TaskSleepForever();
 }
 
 void ActorDrownWaitUpdate(void)
 {
-    if (gCurTask->state != ACTOR_DROWN_STATE_1)
+    if (gCurTask->state != ACTOR_DROWN_STATE_WAIT)
         TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
 }
 
@@ -77,7 +77,7 @@ void ActorDrownBurst(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = ACTOR_DROWN_STATE_2;
+    gCurTask->updateState = ACTOR_DROWN_STATE_BURST;
     t = gCurTask;
     t->frameTable = gUnk_0874C9D8;
     t->tileWord = 0;

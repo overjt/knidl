@@ -66,7 +66,7 @@ u8 MrTickTockLand(void)
 {
     switch (gCurTask->state)
     {
-    case MR_TICK_TOCK_STATE_9:
+    case MR_TICK_TOCK_STATE_JUMP_LOW:
         RequestScreenShake(1);
         PlaySfx(0x1F7);
         ActorSetState(MR_TICK_TOCK_STATE_JUMP_BACK);
@@ -90,14 +90,14 @@ u8 MrTickTockLand(void)
         sub_0809a080(1);
         CreateLandingDust(0, 16);
         goto stop;
-    case MR_TICK_TOCK_STATE_22:
+    case MR_TICK_TOCK_STATE_FALL:
         sub_0809a080(1);
-        ActorSetState(MR_TICK_TOCK_STATE_WAIT);
+        ActorSetState(MR_TICK_TOCK_STATE_WAIT_LONG);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
-    case MR_TICK_TOCK_STATE_7:
+    case MR_TICK_TOCK_STATE_JUMP_HIGH:
         sub_0809a080(1);
-        ActorSetState(MR_TICK_TOCK_STATE_8);
+        ActorSetState(MR_TICK_TOCK_STATE_RING_FROM_JUMP);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     case MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL:
@@ -113,7 +113,7 @@ u8 MrTickTockLand(void)
     case MR_TICK_TOCK_STATE_DROP_IN:
         sub_0809a080(0);
         sub_08066580();
-        ActorSetState(MR_TICK_TOCK_STATE_WAIT);
+        ActorSetState(MR_TICK_TOCK_STATE_WAIT_LONG);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     }
@@ -131,11 +131,11 @@ u8 MrTickTockHitWall(void)
     case MR_TICK_TOCK_STATE_JUMP_FORWARD:
         gCurTask->velX = 0;
         return 0;
-    case MR_TICK_TOCK_STATE_5:
-        ActorSetState(MR_TICK_TOCK_STATE_DASH);
+    case MR_TICK_TOCK_STATE_DASH_WIND_UP:
+        ActorSetState(MR_TICK_TOCK_STATE_DASH_START);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
-    case MR_TICK_TOCK_STATE_DASH:
+    case MR_TICK_TOCK_STATE_DASH_START:
         ActorSetState(MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL);
         ActorSetTerrainBox(gUnk_08745A24);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
@@ -143,7 +143,7 @@ u8 MrTickTockHitWall(void)
     case MR_TICK_TOCK_STATE_WALK_BACK:
         gCurTask->velX = -gCurTask->velX;
         break;
-    case MR_TICK_TOCK_STATE_12:
+    case MR_TICK_TOCK_STATE_DASH_LOOP:
         ActorSetState(MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL);
         ActorSetTerrainBox(gUnk_08745A24);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
@@ -154,8 +154,8 @@ u8 MrTickTockHitWall(void)
         break;
     case MR_TICK_TOCK_STATE_DEFEAT:
         ActorSetTerrainBox(gUnk_08745A24);
-    case MR_TICK_TOCK_STATE_7:
-    case MR_TICK_TOCK_STATE_13:
+    case MR_TICK_TOCK_STATE_JUMP_HIGH:
+    case MR_TICK_TOCK_STATE_RING_FROM_DASH:
     case MR_TICK_TOCK_STATE_BOUNCE_OFF_WALL:
         TaskStopX();
         break;
@@ -199,7 +199,7 @@ u8 MrTickTockCheckJumpLow(void)
     t->mrTickTockCheckPhase = (t->mrTickTockCheckPhase + 1) & 19;
     if (t->mrTickTockCheckPhase == 3)
     {
-        ActorSetState(MR_TICK_TOCK_STATE_9);
+        ActorSetState(MR_TICK_TOCK_STATE_JUMP_LOW);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         return 1;
     }
@@ -428,7 +428,7 @@ void MrTickTockInit(void)
         v->mrTickTockCollideTerrain = 1;
         sub_08066580();
         ActorSetState(MR_TICK_TOCK_STATE_DROP_IN);
-        ActorSetState(MR_TICK_TOCK_STATE_WAIT);
+        ActorSetState(MR_TICK_TOCK_STATE_WAIT_LONG);
     }
     CallTableEntry(gCurTask->state, 24, gMrTickTockStates);
 }
@@ -744,7 +744,7 @@ void MrTickTockDashWindUpUpdate(void)
     t = gCurTask;
     if (--t->mrTickTockTimer < 0)
     {
-        ActorSetState(MR_TICK_TOCK_STATE_DASH);
+        ActorSetState(MR_TICK_TOCK_STATE_DASH_START);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
 }
@@ -806,12 +806,12 @@ void MrTickTockDashStartUpdate(void)
             v = -v;
         if (v > 32)
         {
-            ActorSetState(MR_TICK_TOCK_STATE_12);
+            ActorSetState(MR_TICK_TOCK_STATE_DASH_LOOP);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
         else
         {
-            ActorSetState(MR_TICK_TOCK_STATE_7);
+            ActorSetState(MR_TICK_TOCK_STATE_JUMP_HIGH);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
@@ -874,7 +874,7 @@ void MrTickTockRingFromJumpUpdate(void)
     {
         if (MrTickTockCheckJumpLow() == 0)
         {
-            ActorSetState(MR_TICK_TOCK_STATE_14);
+            ActorSetState(MR_TICK_TOCK_STATE_WAIT_SHORT);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
@@ -987,7 +987,7 @@ void MrTickTockShootNotesUpdate(void)
         StopSfxOnPlayer(t->mrTickTockSfxPlayer, 0x219);
         if (MrTickTockCheckJumpLow() == 0)
         {
-            ActorSetState(MR_TICK_TOCK_STATE_14);
+            ActorSetState(MR_TICK_TOCK_STATE_WAIT_SHORT);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
         break;
@@ -1043,7 +1043,7 @@ void MrTickTockDashLoopUpdate(void)
     t = gCurTask;
     if (--t->mrTickTockTimer == 0)
     {
-        ActorSetState(MR_TICK_TOCK_STATE_9);
+        ActorSetState(MR_TICK_TOCK_STATE_JUMP_LOW);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
     }
     if (gCurTask->mrTickTockTimer < 0)
@@ -1053,7 +1053,7 @@ void MrTickTockDashLoopUpdate(void)
             v = -v;
         if (v <= 32)
         {
-            ActorSetState(MR_TICK_TOCK_STATE_7);
+            ActorSetState(MR_TICK_TOCK_STATE_JUMP_HIGH);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
@@ -1064,7 +1064,7 @@ void MrTickTockDashLoopUpdate(void)
             v = -v;
         if (v <= 32)
         {
-            ActorSetState(MR_TICK_TOCK_STATE_13);
+            ActorSetState(MR_TICK_TOCK_STATE_RING_FROM_DASH);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
@@ -1143,7 +1143,7 @@ void MrTickTockRingFromDashUpdate(void)
         if (--u->mrTickTockTimer <= 0)
         {
             MrTickTockCheckJumpLow();
-            ActorSetState(MR_TICK_TOCK_STATE_14);
+            ActorSetState(MR_TICK_TOCK_STATE_WAIT_SHORT);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
     }
@@ -1308,7 +1308,7 @@ void MrTickTockState16Update(void)
     case 62:
         t->velY = 0x10000;
         ActorSetTerrainBox(gUnk_08745A1C);
-        ActorSetState(MR_TICK_TOCK_STATE_14);
+        ActorSetState(MR_TICK_TOCK_STATE_WAIT_SHORT);
         TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         break;
     }
@@ -1614,7 +1614,7 @@ u8 MrFrostyIceCubeLand(void)
     t = gCurTask;
     if (t->state == MR_FROSTY_ICE_CUBE_STATE_0)
     {
-        ActorSetState(MR_FROSTY_ICE_CUBE_STATE_2);
+        ActorSetState(MR_FROSTY_ICE_CUBE_STATE_BURST);
         TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
         return 1;
     }
@@ -1644,7 +1644,7 @@ void MrFrostyIceCubeStartFall(void)
 
 u8 MrFrostyIceCubeHitWall(void)
 {
-    ActorSetState(MR_FROSTY_ICE_CUBE_STATE_2);
+    ActorSetState(MR_FROSTY_ICE_CUBE_STATE_BURST);
     TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
     return 1;
 }
@@ -1697,7 +1697,7 @@ void MrFrostyIceCubeUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 3, gMrFrostyIceCubeStateUpdates);
-    if (gCurTask->state != MR_FROSTY_ICE_CUBE_STATE_2)
+    if (gCurTask->state != MR_FROSTY_ICE_CUBE_STATE_BURST)
         ActorCheckHits();
     ActorReactToHit();
 }
@@ -1812,7 +1812,7 @@ void MrFrostyIceCubeBurst(void)
     t = gCurTask;
     a = t->u8C.actor;
     zero = 0;
-    t->updateState = MR_FROSTY_ICE_CUBE_STATE_2;
+    t->updateState = MR_FROSTY_ICE_CUBE_STATE_BURST;
     u = gCurTask;
     u->unk28 = zero;
     u->onGround = zero;

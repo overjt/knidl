@@ -275,7 +275,7 @@ void ActorDefeatFrozenCheckFreezerAbility(void)
 {
     if ((u8)(gPlayerStates[gCurTask->actorFreezerPlayer].ability - 13) > 1)
     {
-        ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
+        ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_BURST);
         TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
     }
 }
@@ -355,7 +355,7 @@ void ActorDefeatFrozenUpdate(void)
     {
         if ((s8)t->hitKind != HIT_KIND_NONE)
         {
-            ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
+            ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_BURST);
             TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
         }
         else
@@ -371,7 +371,7 @@ void ActorDefeatFrozenUpdate(void)
         if (r == 0)
         {
             gCurTask->hitKind = r;
-            if (gCurTask->state != ACTOR_DEFEAT_FROZEN_STATE_2)
+            if (gCurTask->state != ACTOR_DEFEAT_FROZEN_STATE_BURST)
                 ActorDefeatFrozenCheckFreezerAbility();
         }
         else
@@ -408,7 +408,7 @@ void ActorDefeatFrozenShake(void)
     } while ((s16)t->actorLoopCount <= 7);
     gCurTask->velY = 0;
     TaskYieldTrampoline(120);
-    ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_2);
+    ActorSetState(ACTOR_DEFEAT_FROZEN_STATE_BURST);
     TaskSleepForever();
 }
 
