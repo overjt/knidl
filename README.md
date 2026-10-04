@@ -133,10 +133,12 @@ to move is a pointer or unexplained), and the boot test runs shifted images
 frame for frame against the original through boot, menus, a new game and the
 first stage. The data policy sets the limits: assets (graphics, audio, text,
 level maps) are `.incbin` slices of your own `baserom.gba` and are never
-committed, so editing them needs a build-time extraction step that does not
-exist yet; functional tables are C only where a decompiled consumer proves
-their layout, and stay structure-only (labels and symbolic pointers)
-everywhere else.
+committed. `make assets` decodes the census-proven graphics (palettes,
+tiles, LZ77 streams, maps, OAM templates) from your dump into the gitignored
+`assets/` directory for editing, and `make assets-check` verifies that tree
+byte for byte ([docs/assets.md](docs/assets.md)). Functional tables are C
+only where a decompiled consumer proves their layout, and stay
+structure-only (labels and symbolic pointers) everywhere else.
 
 ## CI
 

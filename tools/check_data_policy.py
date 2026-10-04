@@ -101,7 +101,10 @@ def tracked_files():
         ).stdout
         return [p for p in out.decode().split("\0") if p]
     except (OSError, subprocess.CalledProcessError):
-        skip_dirs = {".git", "build", "pending", "__pycache__"}
+        # git unavailable, or .git is a worktree pointer to a path outside
+        # the container (the Orca worktree case): walk the disk instead,
+        # skipping the ignored inputs and generated directories
+        skip_dirs = {".git", "build", "pending", "assets", "__pycache__"}
         paths = []
         for root, dirs, files in os.walk("."):
             dirs[:] = sorted(d for d in dirs if d not in skip_dirs)

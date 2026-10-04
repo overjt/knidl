@@ -305,7 +305,7 @@ BOOTTEST_IMAGE := knidl-boottest
 # toolchain image (#170).
 .DEFAULT_GOAL := all
 
-.PHONY: image boottest-image need-baserom all compare check-headers check-data audit progress datastats shifttest boottest boottest-coverage symbols split modmap clean
+.PHONY: image boottest-image need-baserom all compare check-headers check-data audit progress datastats shifttest boottest boottest-coverage symbols split modmap assets assets-check clean
 
 # The targets that read baserom.gba check for it first, before building any
 # image, and point at INSTALL.md instead of failing in the assembler with
@@ -367,6 +367,21 @@ boottest-coverage: need-baserom image boottest-image
 # so it runs directly on the host (no toolchain image required).
 report:
 	python3 tools/gen_report.py
+
+# Asset extraction (docs/assets.md): decode the ROM's graphics assets into
+# the gitignored assets/ directory — the policy-sanctioned editable view
+# (never committed).  Needs baserom.gba; host Python only, no toolchain
+# image.  assets-check re-extracts into a temp dir and compares byte for
+# byte, failing on any drift or hand edit (the make compare of assets).
+ASSET_PREREQ := baserom.gba tools/extract_assets.py tools/census_rooms.py \
+                tools/census_sprites.py tools/census_sheets.py \
+                tools/split_config.json docs/analysis/segments.txt
+
+assets: need-baserom $(ASSET_PREREQ)
+	python3 tools/extract_assets.py --rom baserom.gba
+
+assets-check: need-baserom $(ASSET_PREREQ)
+	python3 tools/extract_assets.py --rom baserom.gba --check
 
 symbols: need-baserom image
 	$(DOCKER_RUN) make symbols INSIDE_DOCKER=1
