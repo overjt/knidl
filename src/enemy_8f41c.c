@@ -10,7 +10,7 @@
  *     `0x087432B4`/`0x087432C0`, `0x087432CC`/`0x087432D8` and the
  *     single-row `0x087432E4`/`0x087432E8`); the bodies walk the `s16[][4]`
  *     aim table `gUnk_0874325A` one row per Task.unk34 / Task.variant through
- *     `sub_0808eec4`;
+ *     `ShotzoSetRecoilVelocity`;
  *   * the class-3 hook row `0x08743518` — `sub_0808f9b8`, `sub_0808f978`,
  *     `sub_0808f9d8` and `sub_0808f9f8`;
  *   * script 5: entry `Task_Coner` (`0x087432F4`, 2 rows), rows
@@ -66,14 +66,14 @@ void ShotzoAimShoot(void)
     t->unk28 = 0;
     t->unk70 = 0;
     PlaySfx(190);
-    sub_0808efdc();
+    CreateShotzoCannonball();
     u = gCurTask;
     u->unk6E = 0;
     u->unk6C = 0;
     do
     {
         v = gCurTask;
-        sub_0808eec4(gUnk_0874325A[v->unk34][v->unk6E]);
+        ShotzoSetRecoilVelocity(gUnk_0874325A[v->unk34][v->unk6E]);
         w = gCurTask;
         w->unk6E++;
         TaskYieldTrampoline(2);
@@ -177,14 +177,14 @@ void ShotzoFixedShoot(void)
         {
             gCurTask->unk70 = 0;
             PlaySfx(190);
-            sub_0808f058();
+            CreateShotzoFixedCannonball();
             u = gCurTask;
             u->unk2C = 0;
             u->unk6E = 0;
             do
             {
                 v = gCurTask;
-                sub_0808eec4(gUnk_0874325A[v->variant][v->unk2C]);
+                ShotzoSetRecoilVelocity(gUnk_0874325A[v->variant][v->unk2C]);
                 w = gCurTask;
                 w->unk2C++;
                 TaskYieldTrampoline(2);
@@ -239,7 +239,7 @@ void ShotzoFixedFallUpdate(void)
     sub_08069888();
 }
 
-void sub_0808f728(void)
+void ParasolShotzoAim(void)
 {
     struct Task *t;
 
@@ -249,18 +249,18 @@ void sub_0808f728(void)
     t->unk28 = gUnk_08743248[t->unk74];
     TaskStop();
     while (1)
-        sub_0808f0d0();
+        ShotzoAimBarrel();
 }
 
-void sub_0808f75c(void)
+void ParasolShotzoAimUpdate(void)
 {
     if (gCurTask->u8C.actor->extraFrame == -1)
     {
         if (sub_08069888() == 0)
-            sub_0808f1b4(1, ParasolShotzoEnterState);
+            ShotzoCheckShoot(1, ParasolShotzoEnterState);
     }
     else if (ActorCollideTerrain() == 0)
-        sub_0808f1b4(1, ParasolShotzoEnterState);
+        ShotzoCheckShoot(1, ParasolShotzoEnterState);
 }
 
 void ParasolShotzoShoot(void)
@@ -278,14 +278,14 @@ void ParasolShotzoShoot(void)
     t->unk28 = 0;
     t->unk70 = 0;
     PlaySfx(190);
-    sub_0808efdc();
+    CreateShotzoCannonball();
     u = gCurTask;
     u->unk6E = 0;
     u->unk6C = 0;
     do
     {
         v = gCurTask;
-        sub_0808eec4(gUnk_0874325A[v->unk34][v->unk6E]);
+        ShotzoSetRecoilVelocity(gUnk_0874325A[v->unk34][v->unk6E]);
         w = gCurTask;
         w->unk6E++;
         TaskYieldTrampoline(2);
@@ -325,10 +325,10 @@ void sub_0808f888(void)
     }
     else
     {
-        sub_08066ba8();
+        TaskStartParasolDrift();
         while (1)
         {
-            sub_08066bdc();
+            TaskStepParasolDrift();
             TaskYieldTrampoline(8);
         }
     }

@@ -845,10 +845,10 @@ void ParasolWaddleDooDrift(void)
 {
     gCurTask->updateState = 3;
     gCurTask->unk30 = ActorStartAnim(gUnk_08742050);
-    sub_08066ba8();
+    TaskStartParasolDrift();
     while (1)
     {
-        sub_08066bdc();
+        TaskStepParasolDrift();
         TaskYieldTrampoline(8);
     }
 }

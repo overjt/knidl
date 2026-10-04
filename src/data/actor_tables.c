@@ -1342,13 +1342,13 @@ u32 gBrontoBurtChaseStateUpdates[1] ACTOR_TBL(08742100) = {
 /* ---- 0x0874212C-0x08742144: 2 table(s), 6 function pointer(s), section .actor_tbl_0874212c ---- */
 /* include/enemy.h; CallTableEntry(i, 3, ...) in BrontoBurtTakeOffInit, BrontoBurtTakeOffEnterState */
 u32 gBrontoBurtTakeOffStates[3] ACTOR_TBL(0874212c) = {
-    (u32)sub_08086c5c,
-    (u32)sub_08086d18,
+    (u32)BrontoBurtTakeOffWait,
+    (u32)BrontoBurtTakeOff,
     (u32)sub_08086df0,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in BrontoBurtTakeOffUpdate */
 u32 gBrontoBurtTakeOffStateUpdates[3] ACTOR_TBL(0874212c) = {
-    (u32)sub_08086ccc,
+    (u32)BrontoBurtTakeOffWaitUpdate,
     (u32)sub_08086da4,
     (u32)sub_08086ec8,
 };
@@ -1421,13 +1421,13 @@ u32 gTwizzyChaseStateUpdates[1] ACTOR_TBL(0874260c) = {
 /* ---- 0x0874263C-0x0874269C: 6 table(s), 24 function pointer(s), section .actor_tbl_0874263c ---- */
 /* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyTakeOffInit, TwizzyTakeOffEnterState */
 u32 gTwizzyTakeOffStates[3] ACTOR_TBL(0874263c) = {
-    (u32)sub_08087b8c,
-    (u32)sub_08087c48,
+    (u32)TwizzyTakeOffWait,
+    (u32)TwizzyTakeOff,
     (u32)sub_08087d20,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in TwizzyTakeOffUpdate */
 u32 gTwizzyTakeOffStateUpdates[3] ACTOR_TBL(0874263c) = {
-    (u32)sub_08087bfc,
+    (u32)TwizzyTakeOffWaitUpdate,
     (u32)sub_08087cd4,
     (u32)sub_08087df8,
 };
@@ -1482,7 +1482,7 @@ u32 gSquishyVariants[4] ACTOR_TBL(087426ac) = {
 u32 gSquishyWalkStates[5] ACTOR_TBL(087426ac) = {
     (u32)SquishyWalk,
     (u32)sub_0808880c,
-    (u32)sub_080888c8,
+    (u32)SquishyWalkFall,
     (u32)sub_08088948,
     (u32)sub_080889cc,
 };
@@ -1490,7 +1490,7 @@ u32 gSquishyWalkStates[5] ACTOR_TBL(087426ac) = {
 u32 gSquishyWalkStateUpdates[5] ACTOR_TBL(087426ac) = {
     (u32)sub_080887a0,
     (u32)sub_080888a0,
-    (u32)sub_08088920,
+    (u32)SquishyWalkFallUpdate,
     (u32)sub_080889c8,
     (u32)sub_08088a3c,
 };
@@ -1529,19 +1529,19 @@ u32 gBubblesVariants[2] ACTOR_TBL(0874273c) = {
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in BubblesInit, BubblesEnterState */
 u32 gBubblesStates[5] ACTOR_TBL(0874273c) = {
-    (u32)sub_0808924c,
+    (u32)BubblesJump,
     (u32)sub_08089334,
     (u32)sub_08089460,
-    (u32)sub_08089544,
-    (u32)sub_080895ec,
+    (u32)BubblesLand,
+    (u32)BubblesFall,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in BubblesUpdate */
 u32 gBubblesStateUpdates[5] ACTOR_TBL(0874273c) = {
-    (u32)sub_08089330,
+    (u32)BubblesJumpUpdate,
     (u32)sub_0808945c,
     (u32)sub_08089530,
-    (u32)sub_080895c4,
-    (u32)sub_0808967c,
+    (u32)BubblesLandUpdate,
+    (u32)BubblesFallUpdate,
 };
 
 /* ---- 0x08742798-0x087427B0: 3 table(s), 6 function pointer(s), section .actor_tbl_08742798 ---- */
@@ -1552,12 +1552,12 @@ u32 gGlunkVariants[2] ACTOR_TBL(08742798) = {
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in GlunkInit, GlunkEnterState */
 u32 gGlunkStates[2] ACTOR_TBL(08742798) = {
-    (u32)sub_0808990c,
+    (u32)GlunkWait,
     (u32)GlunkShoot,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in GlunkUpdate */
 u32 gGlunkStateUpdates[2] ACTOR_TBL(08742798) = {
-    (u32)sub_080899d4,
+    (u32)GlunkWaitUpdate,
     (u32)GlunkShootUpdate,
 };
 
@@ -1730,14 +1730,14 @@ u32 gLaserBallVariants[2] ACTOR_TBL(087431e4) = {
 u32 gLaserBallStates[4] ACTOR_TBL(087431e4) = {
     (u32)sub_0808e480,
     (u32)LaserBallShoot,
-    (u32)sub_0808e54c,
+    (u32)LaserBallHover,
     (u32)sub_0808e730,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in LaserBallUpdate */
 u32 gLaserBallStateUpdates[4] ACTOR_TBL(087431e4) = {
     (u32)sub_0808e510,
     (u32)LaserBallShootUpdate,
-    (u32)sub_0808e5cc,
+    (u32)LaserBallHoverUpdate,
     (u32)sub_0808e800,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in LaserBallIdleInit */
@@ -1787,7 +1787,7 @@ u32 gShotzoVariants[6] ACTOR_TBL(08743284) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in ShotzoAimInit, ShotzoAimEnterState */
 u32 gShotzoAimStates[3] ACTOR_TBL(08743284) = {
-    (u32)sub_0808f3d4,
+    (u32)ShotzoAim,
     (u32)ShotzoAimFall,
     (u32)ShotzoAimShoot,
 };
@@ -1811,13 +1811,13 @@ u32 gShotzoFixedStateUpdates[3] ACTOR_TBL(08743284) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in ParasolShotzoInit, ParasolShotzoEnterState */
 u32 gParasolShotzoStates[3] ACTOR_TBL(08743284) = {
-    (u32)sub_0808f728,
+    (u32)ParasolShotzoAim,
     (u32)ParasolShotzoShoot,
     (u32)sub_0808f888,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in ParasolShotzoUpdate */
 u32 gParasolShotzoStateUpdates[3] ACTOR_TBL(08743284) = {
-    (u32)sub_0808f75c,
+    (u32)ParasolShotzoAimUpdate,
     (u32)ParasolShotzoShootUpdate,
     (u32)sub_0808f8dc,
 };

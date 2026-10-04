@@ -1474,7 +1474,7 @@ void sub_08066b70(void)
     }
 }
 
-void sub_08066ba8(void)
+void TaskStartParasolDrift(void)
 {
     struct Task *t;
 
@@ -1488,7 +1488,7 @@ void sub_08066ba8(void)
         t->unk1C = 6;
 }
 
-void sub_08066bdc(void)
+void TaskStepParasolDrift(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1498,7 +1498,7 @@ void sub_08066bdc(void)
     if (t->unk1C > 11)
         t->unk1C = 0;
     u = gCurTask;
-    u->velX = gUnk_0873E1B8[u->unk1C];
+    u->velX = gParasolDriftSwayVelX[u->unk1C];
 }
 
 void sub_08066c08(u32 def, u8 b)

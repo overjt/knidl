@@ -546,7 +546,7 @@ void BrontoBurtTakeOffUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08086c5c(void)
+void BrontoBurtTakeOffWait(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk34 = 1;
@@ -567,7 +567,7 @@ void sub_08086c5c(void)
     TaskSleepForever();
 }
 
-void sub_08086ccc(void)
+void BrontoBurtTakeOffWaitUpdate(void)
 {
     if (gCurTask->state != 0)
     {
@@ -582,7 +582,7 @@ void sub_08086ccc(void)
     }
 }
 
-void sub_08086d18(void)
+void BrontoBurtTakeOff(void)
 {
     gCurTask->updateState = 1;
     gCurTask->unk34 = 0;
@@ -1232,7 +1232,7 @@ void TwizzyTakeOffUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08087b8c(void)
+void TwizzyTakeOffWait(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk34 = 1;
@@ -1253,7 +1253,7 @@ void sub_08087b8c(void)
     TaskSleepForever();
 }
 
-void sub_08087bfc(void)
+void TwizzyTakeOffWaitUpdate(void)
 {
     if (gCurTask->state != 0)
     {
@@ -1268,7 +1268,7 @@ void sub_08087bfc(void)
     }
 }
 
-void sub_08087c48(void)
+void TwizzyTakeOff(void)
 {
     gCurTask->updateState = 1;
     gCurTask->unk34 = 0;

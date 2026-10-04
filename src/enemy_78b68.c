@@ -376,10 +376,10 @@ void sub_080791c0(void)
     else
     {
         gCurTask->unk34 = ActorStartAnim(gUnk_087406EC);
-        sub_08066ba8();
+        TaskStartParasolDrift();
         while (1)
         {
-            sub_08066bdc();
+            TaskStepParasolDrift();
             TaskYieldTrampoline(8);
         }
     }
@@ -475,7 +475,7 @@ void sub_080793d0(void)
     else
     {
         gCurTask->unk34 = ActorStartAnim(gUnk_087406EC);
-        sub_08066ba8();
+        TaskStartParasolDrift();
     }
     TaskSleepForever();
 }

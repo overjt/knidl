@@ -4512,8 +4512,8 @@ gUnk_0873E184:
 	.global	gUnk_0873E1B4
 gUnk_0873E1B4:
 	.incbin	"baserom.gba", 0x73E1B4, 0x4
-	.global	gUnk_0873E1B8
-gUnk_0873E1B8:
+	.global	gParasolDriftSwayVelX
+gParasolDriftSwayVelX:
 	.incbin	"baserom.gba", 0x73E1B8, 0x30
 	.global	gUnk_0873E1E8
 gUnk_0873E1E8:

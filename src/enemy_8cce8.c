@@ -32,8 +32,8 @@
  *     `sub_0808d4d0` set the animation id in Actor.extraFrame;
  *   * script 2's entry `Task_LaserBall` (Task.variant -> `0x087431E4`) and its
  *     aiming half: `sub_0808e070` / `sub_0808e0d0` / `sub_0808e174` turn the
- *     vector to the target into a heading with ArcTan2, `sub_0808e254` spawns
- *     actor 103, `sub_0808e2b4` is the GetDistSq proximity test and
+ *     vector to the target into a heading with ArcTan2, `CreateLaserBallLaser` spawns
+ *     actor 103, `LaserBallCheckShoot` is the GetDistSq proximity test and
  *     `sub_0808e33c` / `sub_0808e36c` are the per-frame step.  The script's
  *     rows continue in src/enemy_8e404.c.
  *
@@ -1063,7 +1063,7 @@ void sub_0808e174(void)
     }
 }
 
-void sub_0808e254(void)
+void CreateLaserBallLaser(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -1082,7 +1082,7 @@ void sub_0808e254(void)
     }
 }
 
-void sub_0808e2b4(void)
+void LaserBallCheckShoot(void)
 {
     struct PointPair p;
     struct Task *t;

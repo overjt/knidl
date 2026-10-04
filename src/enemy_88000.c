@@ -450,7 +450,7 @@ void sub_080888a0(void)
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
 }
 
-void sub_080888c8(void)
+void SquishyWalkFall(void)
 {
     gCurTask->updateState = 2;
     gCurTask->unk28 = 0;
@@ -466,7 +466,7 @@ void sub_080888c8(void)
     TaskSleepForever();
 }
 
-void sub_08088920(void)
+void SquishyWalkFallUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(SquishyWalkEnterState, gCurTaskIdx);
@@ -874,7 +874,7 @@ void BubblesUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808924c(void)
+void BubblesJump(void)
 {
     s32 n;
 
@@ -923,7 +923,7 @@ void sub_0808924c(void)
     }
 }
 
-void sub_08089330(void)
+void BubblesJumpUpdate(void)
 {
 }
 
@@ -1043,7 +1043,7 @@ void sub_08089530(void)
     gCurTask->velY += gCurTask->accelY;
 }
 
-void sub_08089544(void)
+void BubblesLand(void)
 {
     gCurTask->updateState = 3;
     gCurTask->moveCallback = 0;
@@ -1068,13 +1068,13 @@ void sub_08089544(void)
     TaskSleepForever();
 }
 
-void sub_080895c4(void)
+void BubblesLandUpdate(void)
 {
     if (gCurTask->state != 3)
         TaskSetEntry(BubblesEnterState, gCurTaskIdx);
 }
 
-void sub_080895ec(void)
+void BubblesFall(void)
 {
     gCurTask->updateState = 4;
     gCurTask->moveCallback = (u32)ActorMove;
@@ -1111,7 +1111,7 @@ void sub_080895ec(void)
     }
 }
 
-void sub_0808967c(void)
+void BubblesFallUpdate(void)
 {
 }
 
@@ -1237,7 +1237,7 @@ void GlunkUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808990c(void)
+void GlunkWait(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk6C = 0;
@@ -1265,7 +1265,7 @@ void sub_0808990c(void)
     TaskSleepForever();
 }
 
-void sub_080899d4(void)
+void GlunkWaitUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(GlunkEnterState, gCurTaskIdx);
