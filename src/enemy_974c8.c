@@ -163,15 +163,15 @@ void sub_0809773c(void)
             if (r > 3) {
                 if (r <= 4) {
 anim:
-                    sub_08097844();
+                    PhanPhanHopBackward();
                 } else {
-                    sub_0809794c();
+                    PhanPhanHopForward();
                 }
             }
         }
         gCurTask->unk6C++;
     }
-    sub_080983a4();
+    PhanPhanChooseNextState();
     TaskSleepForever();
 }
 
@@ -187,7 +187,7 @@ void sub_0809780c(void)
     TaskYieldTrampoline(8);
 }
 
-void sub_08097844(void)
+void PhanPhanHopBackward(void)
 {
     struct Task *t;
     struct Task *u;
@@ -226,7 +226,7 @@ void sub_08097844(void)
         TaskYieldTrampoline(1);
 }
 
-void sub_0809794c(void)
+void PhanPhanHopForward(void)
 {
     struct Task *t;
     struct Task *u;
@@ -632,7 +632,7 @@ void PhanPhanDefeat(void)
         sub_0806684c();
     sub_080667c0(1, 28);
     CreateChildTaskHere(142, 0);
-    ActorSetHitReactions(gUnk_0874544C);
+    ActorSetHitReactions(gPhanPhanDefeatedHitReactions);
     gCurTask->onGround = zero;
     gCurTask->unk28 = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
@@ -659,7 +659,7 @@ void PhanPhanDefeatUpdate(void)
 {
 }
 
-void sub_080983a4(void)
+void PhanPhanChooseNextState(void)
 {
     struct Task *t;
     s32 k;
@@ -741,14 +741,14 @@ void PhanPhanCheckCatch(void)
     }
 }
 
-s32 sub_08098528(void)
+s32 PhanPhanLand(void)
 {
     TaskStopY();
     gCurTask->unk28 = 1;
     return 0;
 }
 
-s32 sub_08098540(void)
+s32 PhanPhanHitWall(void)
 {
     struct Task *t;
     s32 d;
@@ -801,7 +801,7 @@ void Task_GrandWheelieMiniWheelie(void)
     s32 zero;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809869c;
+    t->updateCallback = (u32)GrandWheelieMiniWheelieUpdate;
     t->moveCallback = (u32)ActorMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
@@ -829,7 +829,7 @@ void Task_GrandWheelieMiniWheelie(void)
     }
 }
 
-void sub_0809869c(void)
+void GrandWheelieMiniWheelieUpdate(void)
 {
     struct Task *t;
     s32 x;
@@ -844,7 +844,7 @@ void sub_0809869c(void)
         TaskSetMotionXFacing(gUnk_087454D8[gCurTask->unk1C], 0x5A5A5A5A);
 }
 
-void sub_080986ec(void)
+void GrandWheelieMiniWheelieLand(void)
 {
     struct Task *t;
 
@@ -859,18 +859,18 @@ void sub_08098708(void)
     gCurTask->unk2C = 0;
 }
 
-void sub_08098718(void)
+void GrandWheelieMiniWheelieEnterWater(void)
 {
     ActorStartDrown(-2);
 }
 
-void sub_08098728(void)
+void GrandWheelieMiniWheelieHitWall(void)
 {
     RequestScreenShake(1);
     ActorReactToDefeat();
 }
 
-void sub_08098738(void)
+void GrandWheelieMiniWheelieHitCeiling(void)
 {
     struct Task *t;
 
@@ -952,13 +952,13 @@ void PhanPhanAppleUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_080988a4(void)
+s32 PhanPhanAppleLand(void)
 {
     gCurTask->unk34 = 1;
     return 0;
 }
 
-s32 sub_080988b4(void)
+s32 PhanPhanAppleHitWall(void)
 {
     ActorReactToDefeat();
     return 1;

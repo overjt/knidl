@@ -491,12 +491,12 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 1535 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 1497 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 100 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
-| ROM label | `gUnk_08*` | 2812 | tracked by #155: functional data whose consumer does not settle a name |
+| ROM label | `gUnk_08*` | 2807 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 5188 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | ROM label | (named) | 55 | documented by position in a format-only chain: a slot no code reads, such as the frame list a graphics descriptor's trailer word points at (docs/naming.md section 2.4, docs/data.md 5.3) |
@@ -505,7 +505,7 @@ copies and module-local records).
 | struct field | `unk*` | 322 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 480 RAM cells by role and 24 by position, 2920 ROM labels by role and 5243 by position.
+Named for comparison: 480 RAM cells by role and 24 by position, 2925 ROM labels by role and 5243 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -537,9 +537,9 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M22 | enemies, bank 3 | 125 | 32 |
 | M23 | enemies, bank 4, and two bosses | 297 | 146 |
 | M24 | enemies, bank 5 | 158 | 54 |
-| M25 | bosses | 121 | 16 |
-| M26 | enemies, bank 7 | 148 | 69 |
-| M27 | mid-bosses | 145 | 27 |
+| M25 | bosses | 121 | 13 |
+| M26 | enemies, bank 7 | 148 | 41 |
+| M27 | mid-bosses | 145 | 20 |
 | M28 | enemies, bank 9, and the player's death sequence | 204 | 89 |
 | M29 | enemies, bank 10 | 226 | 82 |
 | M30 | enemies, bank 11 | 131 | 31 |
@@ -553,7 +553,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 1548 |
+| all | | 5348 | 1510 |
 
 Register aliases (include/task_vars.h): 2 in 1 families: Actor 2.
 

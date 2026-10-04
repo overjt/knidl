@@ -181,46 +181,46 @@ s32 sub_08090f4c(void);
 s32 PoppyBrosSrReactToDamage(void);
 s32 PoppyBrosSrReactToDefeat(void);
 s32 sub_08091b60(void);
-s32 sub_080937d0(void);
-void sub_08093858(void);
+s32 BugzzyHitWall(void);
+void BugzzyHitCeiling(void);
 s32 BugzzyReactToDamage(void);
 s32 BugzzyReactToDefeat(void);
 s32 sub_08093bb0(void);
 s32 sub_08093edc(void);
 s32 sub_08093f00(void);
-s32 sub_080954f0(void);
-s32 sub_080955a8(void);
+s32 GrandWheelieLand(void);
+s32 GrandWheelieHitWall(void);
 void GrandWheelieReactToDamage(void);
 void GrandWheelieReactToDefeat(void);
-s32 sub_08096d64(void);
-s32 sub_08096df4(void);
+s32 FireLionLand(void);
+s32 FireLionHitWall(void);
 s32 FireLionReactToDamage(void);
 s32 FireLionReactToDefeat(void);
-s32 sub_08098528(void);
-s32 sub_08098540(void);
+s32 PhanPhanLand(void);
+s32 PhanPhanHitWall(void);
 s32 PhanPhanReactToDamage(void);
 s32 PhanPhanReactToDefeat(void);
-void sub_080986ec(void);
-void sub_08098718(void);
-void sub_08098728(void);
-void sub_08098738(void);
-s32 sub_080988a4(void);
-s32 sub_080988b4(void);
+void GrandWheelieMiniWheelieLand(void);
+void GrandWheelieMiniWheelieEnterWater(void);
+void GrandWheelieMiniWheelieHitWall(void);
+void GrandWheelieMiniWheelieHitCeiling(void);
+s32 PhanPhanAppleLand(void);
+s32 PhanPhanAppleHitWall(void);
 s32 sub_080988c4(void);
 u8 sub_080988f8(void);
 u8 sub_08098a04(void);
 u8 MrFrostyReactToDefeat(void);
 u8 MrFrostyReactToDamage(void);
-u8 sub_08099aec(void);
-u8 sub_08099b20(void);
-u8 sub_08099c4c(void);
+u8 MrTickTockStartFall(void);
+u8 MrTickTockLand(void);
+u8 MrTickTockHitWall(void);
 u8 MrTickTockReactToDamage(void);
 u8 MrTickTockReactToDefeat(void);
 u8 sub_0809b454(void);
 void sub_0809b4d8(void);
 u8 sub_0809b4dc(void);
-u8 sub_0809b9c0(void);
-u8 sub_0809b9e0(void);
+u8 MrTickTockNoteLand(void);
+u8 MrTickTockNoteHitWall(void);
 u8 sub_0809d0a0(void);
 u8 sub_0809d0dc(void);
 u8 sub_0809d138(void);
@@ -1248,9 +1248,9 @@ struct ActorHandlers gBugzzyTerrainHandlers ACTOR_TBL(0874407c) = {
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_080937d0,
+    .hitWallCallback = (u32)BugzzyHitWall,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_08093858,
+    .hitCeilingCallback = (u32)BugzzyHitCeiling,
 };
 /* gBonkersDef */
 struct ActorVt gBonkersHitReactions ACTOR_TBL(0874407c) = {
@@ -1293,7 +1293,7 @@ struct ActorVt gBugzzyHitReactions ACTOR_TBL(0874407c) = {
     .defeatCallback = (u32)BugzzyReactToDefeat,
 };
 /* src/enemy_91f9c.c */
-struct ActorVt gUnk_0874410C ACTOR_TBL(0874407c) = {
+struct ActorVt gBugzzyDefeatedHitReactions ACTOR_TBL(0874407c) = {
     .damageKind = -1,
     .defeatKind = 6,
     .filler02 = { 0x00, 0x00 },
@@ -1366,31 +1366,31 @@ struct ActorVt gBugzzyLadybugHitReactions ACTOR_TBL(087442c8) = {
 /* ---- 0x087453BC-0x08745458: 9 record(s), section .actor_tbl_087453bc ---- */
 /* gGrandWheelieDef */
 struct ActorHandlers gGrandWheelieTerrainHandlers ACTOR_TBL(087453bc) = {
-    .landCallback = (u32)sub_080954f0,
+    .landCallback = (u32)GrandWheelieLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_080955a8,
+    .hitWallCallback = (u32)GrandWheelieHitWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };
 /* gFireLionDef */
 struct ActorHandlers gFireLionTerrainHandlers ACTOR_TBL(087453bc) = {
-    .landCallback = (u32)sub_08096d64,
+    .landCallback = (u32)FireLionLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_08096df4,
+    .hitWallCallback = (u32)FireLionHitWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };
 /* gPhanPhanDef */
 struct ActorHandlers gPhanPhanTerrainHandlers ACTOR_TBL(087453bc) = {
-    .landCallback = (u32)sub_08098528,
+    .landCallback = (u32)PhanPhanLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_08098540,
+    .hitWallCallback = (u32)PhanPhanHitWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };
@@ -1403,7 +1403,7 @@ struct ActorVt gGrandWheelieHitReactions ACTOR_TBL(087453bc) = {
     .defeatCallback = (u32)GrandWheelieReactToDefeat,
 };
 /* src/enemy_93f64.c */
-struct ActorVt gUnk_0874541C ACTOR_TBL(087453bc) = {
+struct ActorVt gGrandWheelieDefeatedHitReactions ACTOR_TBL(087453bc) = {
     .damageKind = -1,
     .defeatKind = 6,
     .filler02 = { 0x00, 0x00 },
@@ -1419,7 +1419,7 @@ struct ActorVt gFireLionHitReactions ACTOR_TBL(087453bc) = {
     .defeatCallback = (u32)FireLionReactToDefeat,
 };
 /* src/enemy_957bc.c */
-struct ActorVt gUnk_08745434 ACTOR_TBL(087453bc) = {
+struct ActorVt gFireLionDefeatedHitReactions ACTOR_TBL(087453bc) = {
     .damageKind = -1,
     .defeatKind = 6,
     .filler02 = { 0x00, 0x00 },
@@ -1435,7 +1435,7 @@ struct ActorVt gPhanPhanHitReactions ACTOR_TBL(087453bc) = {
     .defeatCallback = (u32)PhanPhanReactToDefeat,
 };
 /* src/enemy_974c8.c */
-struct ActorVt gUnk_0874544C ACTOR_TBL(087453bc) = {
+struct ActorVt gPhanPhanDefeatedHitReactions ACTOR_TBL(087453bc) = {
     .damageKind = -1,
     .defeatKind = 6,
     .filler02 = { 0x00, 0x00 },
@@ -1446,21 +1446,21 @@ struct ActorVt gUnk_0874544C ACTOR_TBL(087453bc) = {
 /* ---- 0x087455C8-0x08745618: 4 record(s), section .actor_tbl_087455c8 ---- */
 /* gGrandWheelieMiniWheelieDef */
 struct ActorHandlers gGrandWheelieMiniWheelieTerrainHandlers ACTOR_TBL(087455c8) = {
-    .landCallback = (u32)sub_080986ec,
-    .leaveGroundCallback = (u32)sub_080986ec,
-    .enterWaterCallback = (u32)sub_08098718,
+    .landCallback = (u32)GrandWheelieMiniWheelieLand,
+    .leaveGroundCallback = (u32)GrandWheelieMiniWheelieLand,
+    .enterWaterCallback = (u32)GrandWheelieMiniWheelieEnterWater,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_08098728,
+    .hitWallCallback = (u32)GrandWheelieMiniWheelieHitWall,
     .unk14 = 0,
-    .hitCeilingCallback = (u32)sub_08098738,
+    .hitCeilingCallback = (u32)GrandWheelieMiniWheelieHitCeiling,
 };
 /* gPhanPhanAppleDef */
 struct ActorHandlers gPhanPhanAppleTerrainHandlers ACTOR_TBL(087455c8) = {
-    .landCallback = (u32)sub_080988a4,
+    .landCallback = (u32)PhanPhanAppleLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_080988b4,
+    .hitWallCallback = (u32)PhanPhanAppleHitWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };
@@ -1494,11 +1494,11 @@ struct ActorHandlers gMrFrostyTerrainHandlers ACTOR_TBL(08745a3c) = {
 };
 /* gMrTickTockDef */
 struct ActorHandlers gMrTickTockTerrainHandlers ACTOR_TBL(08745a3c) = {
-    .landCallback = (u32)sub_08099b20,
-    .leaveGroundCallback = (u32)sub_08099aec,
+    .landCallback = (u32)MrTickTockLand,
+    .leaveGroundCallback = (u32)MrTickTockStartFall,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_08099c4c,
+    .hitWallCallback = (u32)MrTickTockHitWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };
@@ -1527,7 +1527,7 @@ struct ActorVt gMrTickTockHitReactions ACTOR_TBL(08745a3c) = {
     .defeatCallback = (u32)MrTickTockReactToDefeat,
 };
 /* src/enemy_99b20.c */
-struct ActorVt gUnk_08745A98 ACTOR_TBL(08745a3c) = {
+struct ActorVt gMrTickTockDefeatedHitReactions ACTOR_TBL(08745a3c) = {
     .damageKind = -1,
     .defeatKind = 6,
     .filler02 = { 0x00, 0x00 },
@@ -1548,11 +1548,11 @@ struct ActorHandlers gMrFrostyIceCubeTerrainHandlers ACTOR_TBL(08745c90) = {
 };
 /* gMrTickTockNoteDef */
 struct ActorHandlers gMrTickTockNoteTerrainHandlers ACTOR_TBL(08745c90) = {
-    .landCallback = (u32)sub_0809b9c0,
+    .landCallback = (u32)MrTickTockNoteLand,
     .leaveGroundCallback = 0,
     .enterWaterCallback = 0,
     .leaveWaterCallback = 0,
-    .hitWallCallback = (u32)sub_0809b9e0,
+    .hitWallCallback = (u32)MrTickTockNoteHitWall,
     .unk14 = 0,
     .hitCeilingCallback = 0,
 };

@@ -76,7 +76,7 @@ void MrTickTockNoteFlightUpdate(void)
 {
 }
 
-void MrTickTockNoteState1(void)
+void MrTickTockNoteVanish(void)
 {
     struct Task *t;
 
@@ -100,7 +100,7 @@ void MrTickTockNoteState1(void)
     TaskSleepForever();
 }
 
-void MrTickTockNoteState1Update(void)
+void MrTickTockNoteVanishUpdate(void)
 {
 }
 

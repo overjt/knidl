@@ -2082,7 +2082,7 @@ u32 gFireLionStateUpdates[13] ACTOR_TBL(08744564) = {
     (u32)sub_08095d20,
     (u32)sub_08096058,
     (u32)sub_08096640,
-    (u32)sub_08096278,
+    (u32)FireLionChargeUpdate,
     (u32)sub_080962ac,
     (u32)sub_0809616c,
     (u32)sub_080963c0,
@@ -2265,12 +2265,12 @@ u32 gMrTickTockNoteVariants[1] ACTOR_TBL(08745b1c) = {
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MrTickTockNoteInit, MrTickTockNoteEnterState */
 u32 gMrTickTockNoteStates[2] ACTOR_TBL(08745b1c) = {
     (u32)MrTickTockNoteFlight,
-    (u32)MrTickTockNoteState1,
+    (u32)MrTickTockNoteVanish,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MrTickTockNoteUpdate */
 u32 gMrTickTockNoteStateUpdates[2] ACTOR_TBL(08745b1c) = {
     (u32)MrTickTockNoteFlightUpdate,
-    (u32)MrTickTockNoteState1Update,
+    (u32)MrTickTockNoteVanishUpdate,
 };
 
 /* ---- 0x08747AA4-0x08747B10: 6 table(s), 27 function pointer(s), section .actor_tbl_08747aa4 ---- */

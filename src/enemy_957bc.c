@@ -166,7 +166,7 @@ void FireLionState2(void)
     if (t->health < gUnk_02007D00[9] >> 1)
         gUnk_030023D4 = v + 1;
     TaskYieldTrampoline(gUnk_08744526[gUnk_030023D4]);
-    sub_08096fc0();
+    FireLionChooseNextState();
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
@@ -195,7 +195,7 @@ void FireLionHop(void)
     gCurTask->unk6C = 0;
     while ((s16)gCurTask->unk6C < n) {
         TaskSetMotionY(-0x50000, 0x5000, 0x30000);
-        sub_0809680c();
+        FireLionWaitForLanding();
         RequestScreenShake(2);
         TaskFaceNearestPlayer();
         gCurTask->unk6C++;
@@ -251,7 +251,7 @@ void sub_08095be8(void)
         gCurTask->onGround = 0;
         TaskSetMotionY(-0x30000, 0x2000, 0x30000);
         TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
-        sub_0809680c();
+        FireLionWaitForLanding();
         ActorSetTerrainBox(gUnk_08745304);
         sub_08096924();
         if (gCurTask->state == 5)
@@ -352,7 +352,7 @@ void FireLionState7(void)
     ActorSetTerrainBox(gUnk_08745304);
     TaskFaceNearestPlayer();
     if (abs(TaskGetNearestPlayerDx()) <= 47) {
-        sub_08096888();
+        FireLionJumpBack();
         gCurTask->updateState = 4;
     } else if (abs(TaskGetNearestPlayerDx()) > 71) {
         sub_08095e4c();
@@ -380,7 +380,7 @@ void FireLionState7(void)
     TaskYieldTrampoline(8);
     TaskSetMotionXFacing(0xC000, 0x5A5A5A5A);
     TaskSetMotionY(-0x28000, 0x2000, 0x30000);
-    sub_0809680c();
+    FireLionWaitForLanding();
     ActorSetTerrainBox(gUnk_08745304);
     TaskStop();
     TaskFaceNearestPlayer();
@@ -400,7 +400,7 @@ void FireLionState7(void)
         u = gCurTask;
         u->unk6C++;
     } while ((s16)u->unk6C <= 2);
-    sub_08096888();
+    FireLionJumpBack();
     ActorSetState(2);
     gCurTask->updateState = 12;
     TaskSleepForever();
@@ -435,7 +435,7 @@ void FireLionState9(void)
     ActorSetTerrainBox(gUnk_08745304);
     gCurTask->unk1C = 1;
     if (abs(TaskGetNearestPlayerDx()) <= 31)
-        sub_08096888();
+        FireLionJumpBack();
     TaskStop();
     t = gCurTask;
     zero = 0;
@@ -445,7 +445,7 @@ void FireLionState9(void)
     TaskSetFrame(18);
     TaskYieldTrampoline(8);
     TaskSetMotionY(-0x40000, 0x2200, 0x30000);
-    sub_0809680c();
+    FireLionWaitForLanding();
     ActorSetTerrainBox(gUnk_08745304);
     TaskStop();
     gCurTask->unk1C = zero;
@@ -453,7 +453,7 @@ void FireLionState9(void)
     TaskYieldTrampoline(2);
     TaskSetFrame(45);
     TaskYieldTrampoline(2);
-    sub_0809619c();
+    FireLionCharge();
 }
 
 void sub_0809616c(void)
@@ -464,7 +464,7 @@ void sub_0809616c(void)
     }
 }
 
-void sub_0809619c(void)
+void FireLionCharge(void)
 {
     struct Task *t;
     struct Task *u;
@@ -491,14 +491,14 @@ void sub_0809619c(void)
     TaskYieldTrampoline(8);
     TaskSetFrame(48);
     TaskYieldTrampoline(8);
-    sub_0809680c();
+    FireLionWaitForLanding();
     sub_08096924();
     ActorSetState(2);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
 
-void sub_08096278(void)
+void FireLionChargeUpdate(void)
 {
     struct Task *t;
     s32 x;
@@ -507,7 +507,7 @@ void sub_08096278(void)
     t = gCurTask;
     t->unk28 = x;
     if (t->unk2C != 0)
-        TaskSetEntry(sub_08096320, gCurTaskIdx);
+        TaskSetEntry(FireLionBounceOffWall, gCurTaskIdx);
 }
 
 void sub_080962ac(void)
@@ -531,10 +531,10 @@ void sub_080962d0(void)
     TaskYieldTrampoline(2);
     TaskYieldTrampoline(12);
     TaskStop();
-    sub_0809619c();
+    FireLionCharge();
 }
 
-void sub_08096320(void)
+void FireLionBounceOffWall(void)
 {
     s32 zero;
 
@@ -554,7 +554,7 @@ void sub_08096320(void)
             TaskYieldTrampoline(1);
         } while (gCurTask->velY < 0);
     }
-    sub_0809680c();
+    FireLionWaitForLanding();
     ActorSetTerrainBox(gUnk_08745304);
     sub_08096924();
     ActorSetState(2);
@@ -654,7 +654,7 @@ rest:
     }
     PlaySfx(0x1F7);
     RequestScreenShake(2);
-    sub_08097088();
+    FireLionCreateLandingStar();
     gCurTask->unk28 = ActorStartAnim(gUnk_08744550);
     sub_08063a00(gUnk_08745040);
     TaskYieldTrampoline(2);
@@ -764,14 +764,14 @@ void sub_08096680(void)
     } while ((s16)y->unk6C <= 5);
     SetHeldPlayerState(gCurTask->unk18, 6);
     gCurTask->unk18 = -1;
-    sub_08096888();
+    FireLionJumpBack();
     gCurTask->unk30 = 0;
     ActorSetState(2);
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
 
-void sub_0809680c(void)
+void FireLionWaitForLanding(void)
 {
     struct Task *t;
     struct Task *u;
@@ -797,7 +797,7 @@ void sub_0809680c(void)
     TaskStop();
 }
 
-void sub_08096888(void)
+void FireLionJumpBack(void)
 {
     gCurTask->updateState = 10;
     TaskSetMotionY(-0x20000, 0x2000, 0x30000);
@@ -837,21 +837,21 @@ void sub_08096924(void)
             TaskFaceNearestPlayer();
             TaskSetFrame(17);
             TaskYieldTrampoline(8);
-            sub_08096888();
+            FireLionJumpBack();
         }
     } else {
         if (gCurTask->pixelX - gViewRect[0] <= 159) {
             TaskFaceNearestPlayer();
             TaskSetFrame(17);
             TaskYieldTrampoline(8);
-            sub_08096888();
+            FireLionJumpBack();
         }
     }
 }
 
 void sub_0809699c(void)
 {
-    sub_08096e9c();
+    FireLionUpdatePalette();
     CallTableEntry(gCurTask->updateState, 13, gFireLionStateUpdates);
     sub_08097024();
     sub_08068f68();
@@ -860,8 +860,8 @@ void sub_0809699c(void)
 
 void FireLionUpdate(void)
 {
-    sub_08096e9c();
-    sub_08096a40();
+    FireLionUpdatePalette();
+    FireLionCheckCatch();
     if (sub_0806acf8() == 0) {
         if (ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 13, gFireLionStateUpdates);
@@ -878,7 +878,7 @@ void sub_08096a28(void)
     TaskSetEntry(FireLionEnterState, gCurTaskIdx);
 }
 
-void sub_08096a40(void)
+void FireLionCheckCatch(void)
 {
     struct Task *t;
     struct Task *u;
@@ -940,7 +940,7 @@ void FireLionDefeat(void)
     t->unk30 = zero;
     t->unk1C = 1;
     CreateChildTaskHere(142, 0);
-    ActorSetHitReactions(gUnk_08745434);
+    ActorSetHitReactions(gFireLionDefeatedHitReactions);
     gCurTask->onGround = zero;
     TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
@@ -991,7 +991,7 @@ void FireLionDefeatUpdate(void)
     }
 }
 
-s32 sub_08096d64(void)
+s32 FireLionLand(void)
 {
     switch (gCurTask->state) {
     case 0:
@@ -1017,7 +1017,7 @@ s32 sub_08096d64(void)
     }
 }
 
-s32 sub_08096df4(void)
+s32 FireLionHitWall(void)
 {
     gCurTask->unk2C = 1;
     TaskStopX();
@@ -1058,7 +1058,7 @@ void sub_08096e70(void)
     }
 }
 
-void sub_08096e9c(void)
+void FireLionUpdatePalette(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1097,7 +1097,7 @@ void sub_08096e9c(void)
     }
 }
 
-void sub_08096fc0(void)
+void FireLionChooseNextState(void)
 {
     struct Task *t;
     u16 v;
@@ -1129,7 +1129,7 @@ void sub_08097024(void)
     }
 }
 
-void sub_08097088(void)
+void FireLionCreateLandingStar(void)
 {
     struct Task *t;
     s32 d;

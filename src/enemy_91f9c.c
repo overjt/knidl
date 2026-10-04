@@ -25,7 +25,7 @@
  * gUnk_08743AB8, mapped through the terrain-class table gUnk_087339F0 into a
  * two-bit result that picks the next Task.unk28 direction from gUnk_08743AC2.
  * sub_0809364c / sub_080936a0 / sub_08093780 are the shared step sequences,
- * sub_080937d0 the hit hook, sub_08093858 the four-instruction "stop moving"
+ * BugzzyHitWall the hit hook, BugzzyHitCeiling the four-instruction "stop moving"
  * leaf the census had missed, and BugzzyAfterimageUpdate the companion body.
  *
  * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
@@ -898,7 +898,7 @@ void BugzzyBackdrop(void)
             gCurTask->frame++;
             TaskYieldTrampoline(1);
             RequestScreenShake(2);
-            sub_08093a00(504);
+            BugzzyPlaySfxForHeldPlayer(504);
             TaskGetPosSlot(gCurTask->unk1C);
             CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
             TaskYieldTrampoline(8);
@@ -1070,7 +1070,7 @@ void sub_0809364c(void)
     RequestScreenShake(4);
     TaskGetPosSlot(gCurTask->unk1C);
     CreateChildTaskAt(154, *(s16 *)&gUnk_030023B4, *(s16 *)&gUnk_030023D4, 0);
-    sub_08093a00(504);
+    BugzzyPlaySfxForHeldPlayer(504);
     sub_08093780();
     TaskStop();
 }
@@ -1124,7 +1124,7 @@ void sub_08093780(void)
     } while ((s16)++gCurTask->unk6C <= 6);
 }
 
-s32 sub_080937d0(void)
+s32 BugzzyHitWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1156,7 +1156,7 @@ s32 sub_080937d0(void)
     return r;
 }
 
-void sub_08093858(void)
+void BugzzyHitCeiling(void)
 {
     gCurTask->velY = 0;
 }
@@ -1183,7 +1183,7 @@ s32 BugzzyReactToDefeat(void)
         ReleaseHeldPlayer(n, -t->facing);
         gCurTask->unk1C = -1;
     }
-    ActorSetHitReactions(gUnk_0874410C);
+    ActorSetHitReactions(gBugzzyDefeatedHitReactions);
     ActorSetState(12);
     TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
     return 1;
@@ -1248,7 +1248,7 @@ void BugzzyAfterimageUpdate(void)
     }
 }
 
-void sub_08093a00(s32 a)
+void BugzzyPlaySfxForHeldPlayer(s32 a)
 {
     if (gCurTask->unk1C == gLocalPlayer)
         PlaySfx(a);

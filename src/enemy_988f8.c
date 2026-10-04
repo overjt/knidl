@@ -1140,7 +1140,7 @@ void MrFrostyState18Update(void)
     u->unk30--;
 }
 
-u8 sub_08099aec(void)
+u8 MrTickTockStartFall(void)
 {
     if (gCurTask->state == 0)
     {

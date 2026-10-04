@@ -6,8 +6,8 @@
  * The tail of the first mid-boss script, M27's second one, and the three small
  * companion tasks that close the module.
  *
- * sub_08099b20 (22 cases) and sub_08099c4c (18) are the first script's
- * remaining jump-table dispatchers; sub_08099dec picks the next animation from
+ * MrTickTockLand (22 cases) and MrTickTockHitWall (18) are the first script's
+ * remaining jump-table dispatchers; MrTickTockChooseNextState picks the next animation from
  * one of gUnk_087456D4 / gUnk_087456E4 / gUnk_087456F4 / gUnk_08745704 by
  * classifying |TaskGetNearestPlayerDx()| against 128 and |TaskGetNearestPlayerDy()| against 64;
  * CreateMrTickTockRing and CreateMrTickTockNote build struct ActorSpawn records for the actors
@@ -62,7 +62,7 @@ extern s32 ActorReactToHit(void);
 /* Defined below */
 void sub_0809a080(u8 a);
 
-u8 sub_08099b20(void)
+u8 MrTickTockLand(void)
 {
     switch (gCurTask->state)
     {
@@ -120,7 +120,7 @@ u8 sub_08099b20(void)
     return 0;
 }
 
-u8 sub_08099c4c(void)
+u8 MrTickTockHitWall(void)
 {
     switch (gCurTask->state)
     {
@@ -183,7 +183,7 @@ u8 MrTickTockReactToDefeat(void)
     t = gCurTask;
     if (t->state == 11)
         StopSfxOnPlayer(t->unk1C, 0x219);
-    ActorSetHitReactions(gUnk_08745A98);
+    ActorSetHitReactions(gMrTickTockDefeatedHitReactions);
     u = gCurTask;
     u->unk18 = 0;
     ActorSetState(19);
@@ -206,7 +206,7 @@ u8 sub_08099db0(void)
     return 0;
 }
 
-void sub_08099dec(void)
+void MrTickTockChooseNextState(void)
 {
     s32 v;
 
@@ -295,7 +295,7 @@ void CreateMrTickTockNote(u8 a)
     CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
-u8 sub_08099fb4(void)
+u8 MrTickTockIsFarFromPlayer(void)
 {
     s32 v;
 
@@ -533,7 +533,7 @@ void MrTickTockState1Update(void)
 
     if (gCurTask->unk28 != 0)
     {
-        sub_08099dec();
+        MrTickTockChooseNextState();
     }
     else
     {
@@ -1200,7 +1200,7 @@ void MrTickTockState14Update(void)
     t = gCurTask;
     if (--t->unk30 < 0)
     {
-        if (sub_08099fb4() != 0)
+        if (MrTickTockIsFarFromPlayer() != 0)
         {
             u = gCurTask;
             if (GetShapeAtPixelIgnoringOneWay(u->pixelX - ((s8)u->facing << 4), u->pixelY) != 0)
@@ -1388,7 +1388,7 @@ void MrTickTockState17Update(void)
     }
     if ((gCurTask->unk30 & 1) != 0)
     {
-        if (sub_08099fb4() == 0)
+        if (MrTickTockIsFarFromPlayer() == 0)
         {
             ActorSetState(1);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
@@ -1465,7 +1465,7 @@ void MrTickTockDefeat(void)
     t = gCurTask;
     zero = 0;
     t->updateState = 19;
-    ActorSetHitReactions(gUnk_08745A98);
+    ActorSetHitReactions(gMrTickTockDefeatedHitReactions);
     ActorSetTerrainBox(gUnk_08745A24);
     u = gCurTask;
     u->onGround = zero;
@@ -1922,14 +1922,14 @@ void MrTickTockRingState0Update(void)
     }
 }
 
-u8 sub_0809b9c0(void)
+u8 MrTickTockNoteLand(void)
 {
     ActorSetState(1);
     TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     return 1;
 }
 
-u8 sub_0809b9e0(void)
+u8 MrTickTockNoteHitWall(void)
 {
     ActorSetState(1);
     TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
