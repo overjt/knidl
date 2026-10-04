@@ -57,7 +57,7 @@ void ActorDrownSinkUpdate(void)
 {
 }
 
-void sub_0806b334(void)
+void ActorDrownState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -73,7 +73,7 @@ void sub_0806b368(void)
         TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
 }
 
-void sub_0806b390(void)
+void ActorDrownState2(void)
 {
     struct Task *t;
 

@@ -30,7 +30,7 @@
  *
  * The fourth boss starts at Task_BonkersNut (table 0x087441A4, graphics
  * gBonkersNutFrames): BonkersNutInit installs BonkersNutUpdate as its body,
- * sub_08093ac8 is its one state, Task_PoppyBrosSrBomb / PoppyBrosSrBombInit are the second
+ * BonkersNutState0 is its one state, Task_PoppyBrosSrBomb / PoppyBrosSrBombInit are the second
  * entry pair (graphics gPoppyBrosSrBombFrames, Actor.sfxOverride = 0x20E), PoppyBrosSrBombHeld and
  * PoppyBrosSrBombFlight are the endless spawners that call CreateChildTaskAtOffsetFacing(181, -8, -8, 1)
  * every six frames, and PoppyBrosSrBombHeldUpdate / Task_PoppyBrosSrBombSpark / sub_08093f00 are the
@@ -167,7 +167,7 @@ void BugzzyUpdate(void)
     }
 }
 
-void sub_08092198(void)
+void BugzzyState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -512,7 +512,7 @@ void BugzzyChargeUpdate(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092a14(void)
+void BugzzyState4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -568,7 +568,7 @@ void sub_08092b30(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092b58(void)
+void BugzzyState5(void)
 {
     struct Task *t;
 
@@ -594,7 +594,7 @@ void sub_08092bd8(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_08092c00(void)
+void BugzzyState6(void)
 {
     struct Task *t;
     struct Task *u;
@@ -770,7 +770,7 @@ void BugzzyBounceOffWallUpdate(void)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
 }
 
-void sub_0809301c(void)
+void BugzzyState11(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1287,7 +1287,7 @@ void BonkersNutUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08093ac8(void)
+void BonkersNutState0(void)
 {
     struct Task *t;
 

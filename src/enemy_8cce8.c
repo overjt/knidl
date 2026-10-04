@@ -22,7 +22,7 @@
  *     gTaskSlotTypes[Task.parent] through `sub_0808cfec`) and `Task_WaddleDooBeam`,
  *     plus the smaller `Task_GlunkShot` and `Task_GipStar`;
  *   * script 1: entry `Task_BroomHatter` (Task.variant -> `0x08743188`, 3 rows) with
- *     the row bodies `sub_0808d558` / `sub_0808da00` / `BroomHatterIdleInit`, the
+ *     the row bodies `BroomHatterVariant0` / `BroomHatterVariant1` / `BroomHatterIdleInit`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
  *   * its movement library: `sub_0808d364` / `sub_0808d388` snap Task.unk2C to
@@ -442,7 +442,7 @@ void Task_BroomHatter(void)
     CallTableEntry(u->variant, 3, gBroomHatterVariants);
 }
 
-void sub_0808d558(void)
+void BroomHatterVariant0(void)
 {
     gCurTask->updateCallback = (u32)sub_0808d58c;
     TaskFaceNearestPlayer();
@@ -674,7 +674,7 @@ void sub_0808d9fc(void)
 {
 }
 
-void sub_0808da00(void)
+void BroomHatterVariant1(void)
 {
     gCurTask->updateCallback = (u32)sub_0808da34;
     TaskFaceNearestPlayer();

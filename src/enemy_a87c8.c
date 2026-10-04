@@ -97,7 +97,7 @@ void KrackoUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080a8878(void)
+void KrackoState0(void)
 {
     struct Task *t;
 
@@ -138,7 +138,7 @@ void sub_080a8948(void)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8970(void)
+void KrackoState1(void)
 {
     s32 idx;
 
@@ -255,7 +255,7 @@ void KrackoWaitUpdate(void)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void sub_080a8bf4(void)
+void KrackoState3(void)
 {
     gCurTask->updateState = 3;
     TaskStop();

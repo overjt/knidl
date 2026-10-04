@@ -165,7 +165,7 @@ void NightmareWizardUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080aa47c(void)
+void NightmareWizardState0(void)
 {
     gCurTask->updateState = 0;
     ActorStopAnim();
@@ -203,7 +203,7 @@ void sub_080aa52c(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080aa560(void)
+void NightmareWizardState1(void)
 {
     s32 v;
     struct Task *t;
@@ -269,7 +269,7 @@ void sub_080aa62c(void)
     }
 }
 
-void sub_080aa67c(void)
+void NightmareWizardState2(void)
 {
     gCurTask->updateState = 2;
     NightmareWizardMoveToNextSpot();
@@ -285,7 +285,7 @@ void sub_080aa6a8(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080aa6d0(void)
+void NightmareWizardState3(void)
 {
     s32 n;
 
@@ -310,7 +310,7 @@ void sub_080aa71c(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080aa744(void)
+void NightmareWizardState4(void)
 {
     struct Task **c;
     struct Task *u;
@@ -620,7 +620,7 @@ void NightmareWizardOpenCloakUpdate(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080aaf6c(void)
+void NightmareWizardState8(void)
 {
     s32 d;
 
@@ -716,7 +716,7 @@ void sub_080ab158(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080ab1a8(void)
+void NightmareWizardState9(void)
 {
     gCurTask->updateState = 9;
     TaskYieldTrampoline(24);
@@ -790,7 +790,7 @@ void sub_080ab394(void)
         TaskSetEntry(NightmareWizardEnterState, gCurTaskIdx);
 }
 
-void sub_080ab3c8(void)
+void NightmareWizardState10(void)
 {
     gCurTask->updateState = 10;
     gCurTask->unk6C = 0;
@@ -1794,7 +1794,7 @@ void KrackoStarmanUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080acb20(void)
+void KrackoStarmanState0(void)
 {
     s32 w;
 
@@ -1888,7 +1888,7 @@ void NightmareWizardStarUpdate(void)
     }
 }
 
-void sub_080acd38(void)
+void NightmareWizardStarState0(void)
 {
     struct Task *t;
     s32 w;
@@ -1991,7 +1991,7 @@ void PaintRollerEnterState(void)
     CallTableEntry(gCurTask->state, 3, gPaintRollerStates);
 }
 
-void sub_080acf68(void)
+void PaintRollerState1(void)
 {
     gCurTask->updateCallback = (u32)PaintRollerUpdate;
     gUnk_02007D00[5] = -1;

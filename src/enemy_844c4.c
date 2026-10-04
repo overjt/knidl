@@ -151,7 +151,7 @@ void NoddyWalkUpdate(void)
     }
 }
 
-void sub_080846f4(void)
+void NoddyState5(void)
 {
     struct Task *t;
     struct Task *u;
@@ -206,7 +206,7 @@ void sub_080847f8(void)
 {
 }
 
-void sub_080847fc(void)
+void NoddyState1(void)
 {
     struct Task *t;
 
@@ -283,7 +283,7 @@ void NoddySleepUpdate(void)
     }
 }
 
-void sub_08084960(void)
+void NoddyState3(void)
 {
     struct Task *t;
 
@@ -359,7 +359,7 @@ void NoddySleepFallUpdate(void)
     }
 }
 
-void sub_08084a74(void)
+void NoddyVariant1(void)
 {
     struct Task *t;
     struct Task *u;

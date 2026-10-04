@@ -148,7 +148,7 @@ void PoppyBrosJrDroppedObjectUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08082338(void)
+void PoppyBrosJrDroppedObjectState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -392,7 +392,7 @@ void WheelieUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808279c(void)
+void WheelieState0(void)
 {
     struct Task *t;
 
@@ -419,7 +419,7 @@ void sub_08082818(void)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
-void sub_08082844(void)
+void WheelieState1(void)
 {
     gCurTask->updateState = 1;
     TaskSetMotionXFacing(gUnk_08741630[gCurTask->unk74], 0x5A5A5A5A);
@@ -484,7 +484,7 @@ void WheelieSkidUpdate(void)
     }
 }
 
-void sub_08082980(void)
+void WheelieState3(void)
 {
     struct Task *t;
     struct Task *u;
@@ -516,7 +516,7 @@ void sub_080829d4(void)
     }
 }
 
-void sub_08082a08(void)
+void WheelieState4(void)
 {
     struct Task *t;
     struct Task *u;

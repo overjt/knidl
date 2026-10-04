@@ -101,7 +101,7 @@ void FlamerUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08082f04(void)
+void FlamerState0(void)
 {
     struct Task *t;
     u16 v;
@@ -154,7 +154,7 @@ void sub_08082fb4(void)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_08082fdc(void)
+void FlamerState1(void)
 {
     struct Task *t;
 
@@ -312,7 +312,7 @@ void FlamerFallUpdate(void)
     }
 }
 
-void sub_08083370(void)
+void FlamerState3(void)
 {
     struct Task *t;
 
@@ -342,7 +342,7 @@ void sub_08083400(void)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_08083428(void)
+void FlamerState4(void)
 {
     struct Task *t;
 
@@ -413,7 +413,7 @@ void sub_08083488(void)
     }
 }
 
-void sub_08083614(void)
+void FlamerState5(void)
 {
     s32 n;
 
@@ -476,7 +476,7 @@ void sub_0808379c(void)
         TaskSetEntry(FlamerEnterState, gCurTaskIdx);
 }
 
-void sub_080837d0(void)
+void FlamerState6(void)
 {
     struct Task *t;
 
@@ -797,7 +797,7 @@ void SirKibbleCutterUpdate(void)
     }
 }
 
-void sub_08083f48(void)
+void SirKibbleCutterState0(void)
 {
     struct Task *t;
 
@@ -859,7 +859,7 @@ void Task_HotHeadFire(void)
     CallTableEntry(gCurTask->variant, 2, gHotHeadFireVariants);
 }
 
-void sub_080840a4(void)
+void HotHeadFireVariant0(void)
 {
     gCurTask->updateCallback = (u32)sub_080840f0;
     ActorSetState(0);
@@ -938,7 +938,7 @@ void sub_08084248(void)
 {
 }
 
-void sub_0808424c(void)
+void HotHeadFireVariant1(void)
 {
     gCurTask->updateCallback = (u32)sub_080842b8;
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)

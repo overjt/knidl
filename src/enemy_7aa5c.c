@@ -12,7 +12,7 @@
  *     types #36/#37: `SwordAndBladeKnightWalkInit`+`SwordAndBladeKnightWalkUpdate`), whose hook
  *     packs Task.pixelY into the low half of Task.unk24 and ORs 0x10000 in
  *     when the four-player flag `gTerrainResult[4]` is out of range;
- *   * the sword knights' remaining states and rows `sub_0807b3f8`..
+ *   * the sword knights' remaining states and rows `SwordAndBladeKnightWalkState0`..
  *     `SwordAndBladeKnightStandInit`, which probe for a partner with `TaskIsInRectSlot` over a
  *     stack `struct PointPair`
  *     and reacts through the shared `sub_0807b294` state entry;
@@ -138,7 +138,7 @@ void ScarfyHideUpdate(void)
     }
 }
 
-void sub_0807abdc(void)
+void ScarfyState1(void)
 {
     gCurTask->updateState = 1;
     gCurTask->unk34 = ActorStartAnim(gUnk_08740854);
@@ -533,7 +533,7 @@ void SwordAndBladeKnightWalkEnterState(void)
     CallTableEntry(gCurTask->state, 8, gSwordAndBladeKnightWalkStates);
 }
 
-void sub_0807b3f8(void)
+void SwordAndBladeKnightWalkState0(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -562,7 +562,7 @@ void sub_0807b430(void)
     }
 }
 
-void sub_0807b49c(void)
+void SwordAndBladeKnightWalkState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -578,7 +578,7 @@ void sub_0807b4c8(void)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807b4f0(void)
+void SwordAndBladeKnightWalkState3(void)
 {
     gCurTask->updateState = 3;
     sub_0807b0f0();
@@ -605,7 +605,7 @@ void sub_0807b558(void)
         sub_0807b0b4();
 }
 
-void sub_0807b584(void)
+void SwordAndBladeKnightWalkState2(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -621,7 +621,7 @@ void sub_0807b5b0(void)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807b5d8(void)
+void SwordAndBladeKnightWalkState4(void)
 {
     gCurTask->updateState = 4;
     sub_0807b0f0();
@@ -648,7 +648,7 @@ void sub_0807b640(void)
         sub_0807b0b4();
 }
 
-void sub_0807b66c(void)
+void SwordAndBladeKnightWalkState5(void)
 {
     gCurTask->updateState = 5;
     TaskStop();
@@ -668,7 +668,7 @@ void sub_0807b6b4(void)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807b6e8(void)
+void SwordAndBladeKnightWalkState6(void)
 {
     gCurTask->updateState = 6;
     TaskStop();
@@ -798,7 +798,7 @@ void SwordAndBladeKnightStandEnterState(void)
     CallTableEntry(gCurTask->state, 6, gSwordAndBladeKnightStandStates);
 }
 
-void sub_0807b9ec(void)
+void SwordAndBladeKnightStandState0(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -824,7 +824,7 @@ void sub_0807ba18(void)
     }
 }
 
-void sub_0807ba7c(void)
+void SwordAndBladeKnightStandState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -840,7 +840,7 @@ void sub_0807baa8(void)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void sub_0807bad0(void)
+void SwordAndBladeKnightStandState3(void)
 {
     gCurTask->updateState = 3;
     sub_0807b0f0();
@@ -865,7 +865,7 @@ void sub_0807bb38(void)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void sub_0807bb60(void)
+void SwordAndBladeKnightStandState2(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -881,7 +881,7 @@ void sub_0807bb8c(void)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void sub_0807bbb4(void)
+void SwordAndBladeKnightStandState4(void)
 {
     gCurTask->updateState = 4;
     sub_0807b0f0();
@@ -906,7 +906,7 @@ void sub_0807bc1c(void)
         TaskSetEntry(SwordAndBladeKnightStandEnterState, gCurTaskIdx);
 }
 
-void sub_0807bc44(void)
+void SwordAndBladeKnightStandState5(void)
 {
     gCurTask->updateState = 5;
     TaskStop();
@@ -1193,7 +1193,7 @@ void NeedlousFallUpdate(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_0807c210(void)
+void NeedlousState2(void)
 {
     gCurTask->updateState = 2;
     sub_0807bf74();
@@ -1205,7 +1205,7 @@ void sub_0807c22c(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_0807c248(void)
+void NeedlousState3(void)
 {
     gCurTask->updateState = 3;
     sub_0807bfd0();
@@ -1217,7 +1217,7 @@ void sub_0807c264(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_0807c280(void)
+void NeedlousState4(void)
 {
     gCurTask->updateState = 4;
     sub_0807c000();
@@ -1441,7 +1441,7 @@ void UFOEnterState(void)
     CallTableEntry(gCurTask->state, 4, gUFOStates);
 }
 
-void sub_0807c710(void)
+void UFOState0(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1479,7 +1479,7 @@ void sub_0807c7d8(void)
         TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
-void sub_0807c80c(void)
+void UFOState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -1518,7 +1518,7 @@ void sub_0807c828(void)
     TaskSetEntry(UFOEnterState, gCurTaskIdx);
 }
 
-void sub_0807c8b0(void)
+void UFOState2(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -1842,7 +1842,7 @@ void sub_0807cfcc(void)
 {
 }
 
-void sub_0807cfd0(void)
+void ParasolVariant3(void)
 {
     struct Task *t = gCurTask;
 
@@ -1892,7 +1892,7 @@ void PengyIceBreathEnterState(void)
     CallTableEntry(gCurTask->state, 1, gPengyIceBreathStates);
 }
 
-void sub_0807d0f4(void)
+void PengyIceBreathState0(void)
 {
     struct Task *t;
 
@@ -1974,7 +1974,7 @@ void UFOLaserEnterState(void)
     CallTableEntry(gCurTask->state, 2, gUFOLaserStates);
 }
 
-void sub_0807d2b8(void)
+void UFOLaserState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
@@ -1993,7 +1993,7 @@ void sub_0807d2ec(void)
     }
 }
 
-void sub_0807d320(void)
+void UFOLaserState1(void)
 {
     struct Task *t;
 

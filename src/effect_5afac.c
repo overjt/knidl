@@ -303,7 +303,7 @@ s32 PlayerGoalGameUpdate(void)
     CallTableEntry(gCurTask->updateState, 11, gPlayerGoalGameStateUpdates);
 }
 
-void sub_0805b4d8(void)
+void PlayerGoalGameState0(void)
 {
     gCurTask->updateState = 0;
     TaskStartFrameScriptId(0);
@@ -385,7 +385,7 @@ void PlayerGoalGameSetLaunchPower(void)
     gCurTask->unk34++;
 }
 
-void sub_0805b644(void)
+void PlayerGoalGameState2(void)
 {
     gCurTask->updateState = 2;
     TaskYieldTrampoline(4);

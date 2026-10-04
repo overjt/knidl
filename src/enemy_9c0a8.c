@@ -251,7 +251,7 @@ void sub_0809c490(void)
     CallTableEntry(u->variant, 4, gAxeKnightVariants);
 }
 
-void sub_0809c4d0(void)
+void AxeKnightVariant0(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -384,7 +384,7 @@ stumble:
     TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
 }
 
-void sub_0809c74c(void)
+void AxeKnightState1(void)
 {
     struct Task *t;
     s32 k;
@@ -532,7 +532,7 @@ void AxeKnightJumpThrowUpdate(void)
 {
 }
 
-void sub_0809ca10(void)
+void AxeKnightState4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -576,7 +576,7 @@ void sub_0809caac(void)
 {
 }
 
-void sub_0809cab0(void)
+void AxeKnightVariant1(void)
 {
     struct Task *t;
 

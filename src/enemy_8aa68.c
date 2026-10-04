@@ -921,7 +921,7 @@ done:
     gCurTask->unk2C = 16;
 }
 
-void sub_0808bfc4(void)
+void GipState3(void)
 {
     gCurTask->updateState = 1;
     gCurTask->unk18 = 1;
@@ -942,7 +942,7 @@ void sub_0808c004(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void sub_0808c02c(void)
+void GipState4(void)
 {
     gCurTask->updateState = 2;
     gCurTask->unk18 = 1;
@@ -980,7 +980,7 @@ void sub_0808c02c(void)
     TaskSleepForever();
 }
 
-void sub_0808c0fc(void)
+void GipState6(void)
 {
     ActorSetState(4);
     gCurTask->updateState = 2;
@@ -1035,7 +1035,7 @@ void sub_0808c1d0(void)
     }
 }
 
-void sub_0808c260(void)
+void GipState5(void)
 {
     gCurTask->updateState = 3;
     gCurTask->unk18 = 1;
@@ -1073,7 +1073,7 @@ void sub_0808c260(void)
     TaskSleepForever();
 }
 
-void sub_0808c32c(void)
+void GipState7(void)
 {
     ActorSetState(5);
     gCurTask->updateState = 3;
@@ -1125,7 +1125,7 @@ void sub_0808c3e8(void)
     }
 }
 
-void sub_0808c478(void)
+void GipState8(void)
 {
     gCurTask->updateState = 4;
     gCurTask->unk18 = 0;
@@ -1144,7 +1144,7 @@ void sub_0808c4bc(void)
         TaskSetEntry(GipEnterState, gCurTaskIdx);
 }
 
-void sub_0808c4e4(void)
+void GipState9(void)
 {
     gCurTask->updateState = 5;
     gCurTask->unk18 = 1;
@@ -1162,7 +1162,7 @@ void sub_0808c538(void)
 {
 }
 
-void sub_0808c53c(void)
+void GipState10(void)
 {
     gCurTask->updateState = 6;
     gCurTask->unk18 = 0;

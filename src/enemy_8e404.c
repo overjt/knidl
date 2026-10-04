@@ -8,7 +8,7 @@
  * This batch holds:
  *   * script 2's rows `LaserBallInit` / `LaserBallIdleInit` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
- *     with `sub_0808e480` / `LaserBallHover` / `LaserBallShoot` / `sub_0808e730`
+ *     with `LaserBallState0` / `LaserBallHover` / `LaserBallShoot` / `LaserBallState3`
  *     as the bodies and `sub_0808e510` / `LaserBallHoverUpdate` / `LaserBallShootUpdate` /
  *     `sub_0808e800` as their guards;
  *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
@@ -78,7 +78,7 @@ void LaserBallEnterState(void)
     CallTableEntry(gCurTask->state, 4, gLaserBallStates);
 }
 
-void sub_0808e480(void)
+void LaserBallState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk30 = 16;
@@ -234,7 +234,7 @@ void LaserBallShootUpdate(void)
     }
 }
 
-void sub_0808e730(void)
+void LaserBallState3(void)
 {
     struct Task *t;
     struct Task *u;

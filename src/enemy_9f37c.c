@@ -86,31 +86,31 @@ void TridentKnightTridentUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0809f478(void)
+void TridentKnightTridentVariant0(void)
 {
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
     gCurTask->velY = 0xFFFE0000;
 }
 
-void sub_0809f49c(void)
+void TridentKnightTridentVariant1(void)
 {
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
     gCurTask->velY = 0xFFFE0000;
 }
 
-void sub_0809f4c0(void)
+void TridentKnightTridentVariant2(void)
 {
     TaskSetMotionXFacing(208 << 9, 0x5A5A5A5A);
     gCurTask->velY = 0xFFFE0000;
 }
 
-void sub_0809f4e4(void)
+void TridentKnightTridentVariant3(void)
 {
     TaskSetMotionXFacing(136 << 10, 0x5A5A5A5A);
     gCurTask->velY = 0xFFFE0000;
 }
 
-void sub_0809f508(void)
+void TridentKnightTridentVariant4(void)
 {
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
     gCurTask->velY = 0xFFFF0000;

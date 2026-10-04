@@ -1087,7 +1087,7 @@ void NightmarePowerOrbStarUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080af38c(void)
+void NightmarePowerOrbStarVariant0(void)
 {
     struct Task **c;
     s32 va;
@@ -1158,7 +1158,7 @@ top:
     goto top;
 }
 
-void sub_080af4a4(void)
+void NightmarePowerOrbStarVariant1(void)
 {
     struct Task **c;
     s32 va;
@@ -1229,7 +1229,7 @@ top:
     goto top;
 }
 
-void sub_080af5bc(void)
+void NightmarePowerOrbStarVariant2(void)
 {
     struct Task **c;
     s32 va;
@@ -1300,7 +1300,7 @@ top:
     goto top;
 }
 
-void sub_080af6c8(void)
+void NightmarePowerOrbStarVariant3(void)
 {
     struct Task **c;
     s32 va;
@@ -1401,7 +1401,7 @@ void sub_080af7d4(void)
     }
 }
 
-void sub_080af844(void)
+void NightmarePowerOrbStarVariant4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1442,7 +1442,7 @@ void sub_080af844(void)
     TaskExitTrampoline();
 }
 
-void sub_080af938(void)
+void NightmarePowerOrbStarVariant5(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1481,7 +1481,7 @@ top:
     goto top;
 }
 
-void sub_080af9e4(void)
+void NightmarePowerOrbStarVariant6(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1521,7 +1521,7 @@ top:
     goto top;
 }
 
-void sub_080afaa4(void)
+void NightmarePowerOrbStarVariant7(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1560,7 +1560,7 @@ top:
     goto top;
 }
 
-void sub_080afb50(void)
+void NightmarePowerOrbStarVariant8(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1600,7 +1600,7 @@ top:
     goto top;
 }
 
-void sub_080afc10(void)
+void NightmarePowerOrbStarVariant9(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1645,7 +1645,7 @@ top:
     goto top;
 }
 
-void sub_080afcd4(void)
+void NightmarePowerOrbStarVariant10(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -1690,7 +1690,7 @@ top:
     goto top;
 }
 
-void sub_080afd9c(void)
+void NightmarePowerOrbStarVariant11(void)
 {
     struct Task **c;
     struct Task *u1;
@@ -3022,7 +3022,7 @@ void HeavyMoleArmEnterState(void)
     CallTableEntry(gCurTask->state, 6, gHeavyMoleArmStates);
 }
 
-void sub_080b1a1c(void)
+void HeavyMoleArmState0(void)
 {
     gCurTask->updateState = 0;
     if (gCurTask->unk28 >> 16 > 2)
@@ -3106,7 +3106,7 @@ void sub_080b1b2c(void)
     }
 }
 
-void sub_080b1c04(void)
+void HeavyMoleArmState1(void)
 {
     struct Task **c;
     struct Task *t;
@@ -3241,7 +3241,7 @@ void sub_080b1d2c(void)
         u->unk28 = v + 120;
 }
 
-void sub_080b1d98(void)
+void HeavyMoleArmState2(void)
 {
     struct Task **c;
     struct Task **c2;
@@ -3318,7 +3318,7 @@ void sub_080b1e20(void)
         gCurTask->frame = gUnk_030023D4 + (gFrameCount & 3);
 }
 
-void sub_080b1ef8(void)
+void HeavyMoleArmState3(void)
 {
     struct Task **c;
     struct Task **c2;
@@ -3447,7 +3447,7 @@ xbody2:
     }
 }
 
-void sub_080b20d4(void)
+void HeavyMoleArmState5(void)
 {
     struct Task **c;
     u32 *t40;
@@ -3510,7 +3510,7 @@ void sub_080b214c(void)
     }
 }
 
-void sub_080b21a0(void)
+void HeavyMoleArmState4(void)
 {
     struct Task *t;
 
@@ -4132,7 +4132,7 @@ void WhispyWoodsWaitUpdate(void)
         sub_080b2664();
 }
 
-void sub_080b2b40(void)
+void WhispyWoodsState1(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4189,7 +4189,7 @@ void sub_080b2bf0(void)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
-void sub_080b2c18(void)
+void WhispyWoodsState2(void)
 {
     struct Task **c;
     struct Task *t;

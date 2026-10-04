@@ -2812,7 +2812,7 @@ u32 gUnk_0874C980[] FRAME_TABLE = {
     (u32)gUnk_080D4B50,
 };
 
-/* gUnk_0874C9D8.  Consumers: sub_0806a9d8 (src/actor_6a344.c:459),
+/* gUnk_0874C9D8.  Consumers: ActorDefeatFrozenState2 (src/actor_6a344.c:459),
  * sub_0806ac6c (src/actor_6a344.c:634), ActorDefeatAbilityStar
  * (src/actor_6a344.c:650) and 5 more.  17 words, OAM template streams;
  * extent: the span to the next label, every word such a target
@@ -11745,7 +11745,7 @@ u32 gMrBrightFrames[] FRAME_TABLE = {
     (u32)gUnk_082F81DC,
 };
 
-/* gUnk_08754180.  Consumers: sub_080a472c (src/enemy_a1590.c:2685),
+/* gUnk_08754180.  Consumers: MrShineAndMrBrightVariant3 (src/enemy_a1590.c:2685),
  * sub_080a4814 (src/enemy_a1590.c:2739).  12 words, struct TaskGfx records;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754180-0x087541B0).  Declared include/enemy.h:1253. */

@@ -444,7 +444,7 @@ void ActorDefeatFrozenSlideUpdate(void)
 {
 }
 
-void sub_0806a9d8(void)
+void ActorDefeatFrozenState2(void)
 {
     struct Task *t;
     struct Task *u;

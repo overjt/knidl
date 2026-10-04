@@ -7,11 +7,11 @@
  * that the 26-entry anchor table at 0x0873FB08 dispatches, continuing the
  * batch-7 range.  Each state is a body + a per-frame helper pair:
  *
- *   sub_0807079c / sub_080708ec   state 1
- *   sub_08070930 / sub_08070a84   state 3
- *   sub_08070ac8 / sub_08070c0c   state 4
- *   sub_08070c54 / sub_08070d48   state 5
- *   sub_08070d90 / sub_08070e7c   state 6
+ *   MetaKnightWarpStarRideState1 / sub_080708ec   state 1
+ *   MetaKnightWarpStarRideState3 / sub_08070a84   state 3
+ *   MetaKnightWarpStarRideState4 / sub_08070c0c   state 4
+ *   MetaKnightWarpStarRideState5 / sub_08070d48   state 5
+ *   MetaKnightWarpStarRideState6 / sub_08070e7c   state 6
  *
  * The bodies are all the same shape: set Task.updateState (the state), unk24 (the
  * sub-step the helper advances on a unk7A bit), unk0C (the draw hook) and
@@ -473,7 +473,7 @@ void MetaKnightWarpStarRideEnterState(void)
     CallTableEntry(t->state, 7, gMetaKnightWarpStarRideStates);
 }
 
-void sub_0807077c(void)
+void MetaKnightWarpStarRideState2(void)
 {
     gCurTask->updateState = 2;
     sub_08070ffc();
@@ -484,7 +484,7 @@ void sub_08070798(void)
 {
 }
 
-void sub_0807079c(void)
+void MetaKnightWarpStarRideState1(void)
 {
     struct Task *t;
 
@@ -552,7 +552,7 @@ void sub_080708ec(void)
     }
 }
 
-void sub_08070930(void)
+void MetaKnightWarpStarRideState3(void)
 {
     struct Task *t;
 
@@ -620,7 +620,7 @@ void sub_08070a84(void)
     }
 }
 
-void sub_08070ac8(void)
+void MetaKnightWarpStarRideState4(void)
 {
     struct Task *t;
 
@@ -689,7 +689,7 @@ void sub_08070c0c(void)
     sub_0807042c();
 }
 
-void sub_08070c54(void)
+void MetaKnightWarpStarRideState5(void)
 {
     struct Task *t;
 
@@ -744,7 +744,7 @@ void sub_08070d48(void)
     }
 }
 
-void sub_08070d90(void)
+void MetaKnightWarpStarRideState6(void)
 {
     struct Task *t;
     struct Task *u;

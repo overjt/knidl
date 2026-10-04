@@ -89,7 +89,7 @@ void ChillyUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08084dc0(void)
+void ChillyState0(void)
 {
     struct Task *t;
     u32 zero;
@@ -142,7 +142,7 @@ void sub_08084e74(void)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
-void sub_08084e9c(void)
+void ChillyState1(void)
 {
     s32 a;
     struct Task *u1;
@@ -283,7 +283,7 @@ void ChillySlideUpdate(void)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
-void sub_08085180(void)
+void ChillyState3(void)
 {
     struct Task *t;
     struct Task *u;

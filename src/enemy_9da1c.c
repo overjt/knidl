@@ -195,7 +195,7 @@ void sub_0809dc7c(void)
     CallTableEntry(u->variant, 3, gMaceKnightVariants);
 }
 
-void sub_0809dcbc(void)
+void MaceKnightVariant0(void)
 {
     gCurTask->updateCallback = (u32)sub_0809dd08;
     TaskFaceScreenCenter();
@@ -246,7 +246,7 @@ void sub_0809dd08(void)
     }
 }
 
-void sub_0809dd7c(void)
+void MaceKnightVariant1(void)
 {
     gCurTask->updateCallback = (u32)MaceKnightUpdate;
     TaskFaceScreenCenter();
@@ -327,7 +327,7 @@ void MaceKnightWalkUpdate(void)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
-void sub_0809df08(void)
+void MaceKnightState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -342,7 +342,7 @@ void sub_0809df2c(void)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
 }
 
-void sub_0809df54(void)
+void MaceKnightVariant2(void)
 {
     gCurTask->updateCallback = (u32)sub_0809dfc8;
     TaskFaceScreenCenter();
@@ -646,7 +646,7 @@ void sub_0809e630(void)
     }
 }
 
-void sub_0809e670(void)
+void MaceKnightMaceVariant2(void)
 {
     struct Task *t;
 
@@ -763,7 +763,7 @@ void sub_0809e864(void)
     sub_0809f2f4();
 }
 
-void sub_0809e874(void)
+void TridentKnightVariant0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1086,7 +1086,7 @@ void sub_0809ed74(void)
     TaskSetEntry(TridentKnightEnterState, gCurTaskIdx);
 }
 
-void sub_0809eddc(void)
+void TridentKnightVariant1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1194,7 +1194,7 @@ void sub_0809ef98(void)
     ActorReactToHit();
 }
 
-void sub_0809efc8(void)
+void TridentKnightVariant2(void)
 {
     struct Task *t;
     struct Task *v;
@@ -1272,7 +1272,7 @@ void sub_0809f0f0(void)
     ActorReactToHit();
 }
 
-void sub_0809f120(void)
+void TridentKnightVariant3(void)
 {
     struct Task *t;
     struct Task *v;

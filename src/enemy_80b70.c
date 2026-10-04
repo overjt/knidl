@@ -11,7 +11,7 @@
  *     `sub_08080bcc` are its unk73 handlers (`0x08741BF4`);
  *   * task #31's dispatcher `Task_Starman` (`0x08741544`, four rows) and
  *     task #38's `Task_PoppyBrosJr` (`0x087415B8`, three rows);
- *   * six scripts in the entry/hook shape: `sub_08080e10`+`sub_08080e5c`
+ *   * six scripts in the entry/hook shape: `StarmanVariant0`+`sub_08080e5c`
  *     (`0x08741554`/`0x0874156C`, six states), `StarmanJumpInit`+`StarmanJumpUpdate`
  *     (`0x08741584`), `StarmanFlyInit`+`StarmanFlyUpdate` (`0x0874159C`),
  *     `StarmanIdleInit`+`StarmanIdleUpdate` (`0x087415A4`), `PoppyBrosJrInit`+
@@ -188,7 +188,7 @@ void Task_Starman(void)
     CallTableEntry(u->variant, 4, gStarmanVariants);
 }
 
-void sub_08080e10(void)
+void StarmanVariant0(void)
 {
     struct Task *t = gCurTask;
 

@@ -453,7 +453,7 @@ s32 sub_0807f6a8(int px, int py, s8 *p)
     return 1;
 }
 
-void sub_0807f78c(void)
+void KabuTeleportState2(void)
 {
     struct Task *a;
     struct Task *b;
@@ -636,7 +636,7 @@ void sub_0807f9a0(void)
     }
 }
 
-void sub_0807fa98(void)
+void KabuSlideState1(void)
 {
     struct Task *t;
 
@@ -837,7 +837,7 @@ void TwisterUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807fdc8(void)
+void TwisterState0(void)
 {
     struct Task *t;
 
@@ -956,7 +956,7 @@ void sub_0807fe18(void)
     }
 }
 
-void sub_0807ffa0(void)
+void TwisterState1(void)
 {
     struct Task *t;
     s32 n;
@@ -1060,7 +1060,7 @@ void sub_0808003c(void)
         x->velX = x->unk1C;
 }
 
-void sub_080801cc(void)
+void TwisterState2(void)
 {
     struct Task *a;
     struct Task *b;

@@ -491,7 +491,7 @@ void MrFrostyHopUpdate(void)
     }
 }
 
-void sub_080990d4(void)
+void MrFrostyState2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -608,7 +608,7 @@ void MrFrostyBounceOffWallUpdate(void)
 {
 }
 
-void sub_080992ac(void)
+void MrFrostyState5(void)
 {
     struct Task *t;
     struct Task *u;
@@ -644,7 +644,7 @@ void sub_0809931c(void)
     }
 }
 
-void sub_08099350(void)
+void MrFrostyState6(void)
 {
     struct Task *t;
     struct Task *u;
@@ -686,7 +686,7 @@ void sub_08099394(void)
     }
 }
 
-void sub_080993dc(void)
+void MrFrostyState7(void)
 {
     struct Task *t;
     struct Task *u;
@@ -725,7 +725,7 @@ void sub_08099448(void)
     }
 }
 
-void sub_08099474(void)
+void MrFrostyState8(void)
 {
     struct Task *t;
     struct Task *u;
@@ -771,7 +771,7 @@ void sub_08099508(void)
         sub_08098cf4();
 }
 
-void sub_08099524(void)
+void MrFrostyState9(void)
 {
     struct Task *t;
     struct Task *u;
@@ -821,7 +821,7 @@ void sub_080995b8(void)
     }
 }
 
-void sub_080995f4(void)
+void MrFrostyState10(void)
 {
     struct Task *t;
     struct Task *u;
@@ -874,7 +874,7 @@ void sub_08099690(void)
     }
 }
 
-void sub_080996d0(void)
+void MrFrostyState11(void)
 {
     struct Task *t;
     struct Task *u;
@@ -914,7 +914,7 @@ void sub_08099734(void)
     }
 }
 
-void sub_08099770(void)
+void MrFrostyState12(void)
 {
     struct Task *t;
     struct Task *u;
@@ -985,7 +985,7 @@ void MrFrostyDefeatUpdate(void)
     ActorFlashPalette(&gUnk_08274840, 16);
 }
 
-void sub_080998a4(void)
+void MrFrostyState14(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1019,7 +1019,7 @@ void sub_08099908(void)
     }
 }
 
-void sub_08099944(void)
+void MrFrostyState15(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1057,7 +1057,7 @@ void sub_0809998c(void)
     }
 }
 
-void sub_080999c4(void)
+void MrFrostyState16(void)
 {
     struct Task *t;
 
@@ -1081,7 +1081,7 @@ void sub_08099a0c(void)
 {
 }
 
-void sub_08099a10(void)
+void MrFrostyState17(void)
 {
     struct Task *t;
 
@@ -1104,7 +1104,7 @@ void sub_08099a54(void)
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
 }
 
-void sub_08099a7c(void)
+void MrFrostyState18(void)
 {
     struct Task *t;
     struct Task *u;

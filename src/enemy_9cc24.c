@@ -21,7 +21,7 @@ extern u32 ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809cc24(void)
+void AxeKnightVariant2(void)
 {
     struct Task *t;
 
@@ -86,7 +86,7 @@ void sub_0809cd4c(void)
     ActorReactToHit();
 }
 
-void sub_0809cd8c(void)
+void AxeKnightVariant3(void)
 {
     struct Task *t;
 
@@ -294,7 +294,7 @@ void sub_0809d17c(void)
     sub_0809d994();
 }
 
-void sub_0809d18c(void)
+void JavelinKnightVariant0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -355,7 +355,7 @@ void JavelinKnightUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0809d25c(void)
+void JavelinKnightState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk28 = 3;
@@ -399,7 +399,7 @@ void sub_0809d308(void)
 {
 }
 
-void sub_0809d30c(void)
+void JavelinKnightState2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -568,7 +568,7 @@ void sub_0809d608(void)
         ActorCheckHitsWithBox(gUnk_08747B38[t->frame - 17]);
 }
 
-void sub_0809d638(void)
+void JavelinKnightState5(void)
 {
     gCurTask->updateState = 4;
     TaskSetFrame(4);
@@ -632,7 +632,7 @@ void JavelinKnightChooseNextState(void)
     TaskSetEntry(JavelinKnightEnterState, gCurTaskIdx);
 }
 
-void sub_0809d7a4(void)
+void JavelinKnightVariant1(void)
 {
     struct Task *u;
 

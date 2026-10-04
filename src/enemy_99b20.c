@@ -512,7 +512,7 @@ void MrTickTockWaitUpdate(void)
     }
 }
 
-void sub_0809a2a0(void)
+void MrTickTockState1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -580,7 +580,7 @@ void MrTickTockHopUpdate(void)
     }
 }
 
-void sub_0809a36c(void)
+void MrTickTockState3(void)
 {
     struct Task *t;
     struct Task *u;
@@ -635,7 +635,7 @@ void sub_0809a434(void)
     }
 }
 
-void sub_0809a464(void)
+void MrTickTockState4(void)
 {
     struct Task *t;
     struct Task *u;
@@ -688,7 +688,7 @@ void sub_0809a4f0(void)
     }
 }
 
-void sub_0809a528(void)
+void MrTickTockState5(void)
 {
     struct Task *t;
     struct Task *u;
@@ -817,7 +817,7 @@ void MrTickTockDashUpdate(void)
     }
 }
 
-void sub_0809a798(void)
+void MrTickTockState7(void)
 {
     struct Task *t;
     struct Task *u;
@@ -842,7 +842,7 @@ void sub_0809a7d8(void)
 {
 }
 
-void sub_0809a7dc(void)
+void MrTickTockState8(void)
 {
     struct Task *t;
     struct Task *u;
@@ -880,7 +880,7 @@ void sub_0809a82c(void)
     }
 }
 
-void sub_0809a868(void)
+void MrTickTockState9(void)
 {
     struct Task *t;
     struct Task *u;
@@ -907,7 +907,7 @@ void sub_0809a8b4(void)
 {
 }
 
-void sub_0809a8b8(void)
+void MrTickTockState10(void)
 {
     struct Task *t;
     struct Task *u;
@@ -936,7 +936,7 @@ void sub_0809a918(void)
 {
 }
 
-void sub_0809a91c(void)
+void MrTickTockState11(void)
 {
     struct Task *t;
     struct Task *u;
@@ -994,7 +994,7 @@ void sub_0809a974(void)
     }
 }
 
-void sub_0809aa24(void)
+void MrTickTockState12(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1070,7 +1070,7 @@ void sub_0809aaf0(void)
     }
 }
 
-void sub_0809ab70(void)
+void MrTickTockState13(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1151,7 +1151,7 @@ void sub_0809ac54(void)
     v->unk70 = v->velX;
 }
 
-void sub_0809acbc(void)
+void MrTickTockState14(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1248,7 +1248,7 @@ void MrTickTockBounceOffWallUpdate(void)
 {
 }
 
-void sub_0809ae40(void)
+void MrTickTockState16(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1314,7 +1314,7 @@ void sub_0809aefc(void)
     }
 }
 
-void sub_0809af4c(void)
+void MrTickTockState17(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1396,7 +1396,7 @@ void sub_0809b09c(void)
     }
 }
 
-void sub_0809b104(void)
+void MrTickTockState18(void)
 {
     struct Task *t;
 
@@ -1486,7 +1486,7 @@ void MrTickTockDefeatUpdate(void)
     ActorFlashPalette(&gUnk_082797C8, 16);
 }
 
-void sub_0809b2ac(void)
+void MrTickTockState20(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1520,7 +1520,7 @@ void sub_0809b310(void)
     }
 }
 
-void sub_0809b34c(void)
+void MrTickTockState21(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1559,7 +1559,7 @@ void sub_0809b394(void)
     }
 }
 
-void sub_0809b3d4(void)
+void MrTickTockState22(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1578,7 +1578,7 @@ void sub_0809b404(void)
 {
 }
 
-void sub_0809b408(void)
+void MrTickTockState23(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1707,7 +1707,7 @@ void MrFrostyIceCubeEnterState(void)
     CallTableEntry(gCurTask->state, 3, gMrFrostyIceCubeStates);
 }
 
-void sub_0809b608(void)
+void MrFrostyIceCubeState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1802,7 +1802,7 @@ void MrFrostyIceCubeFlightUpdate(void)
 {
 }
 
-void sub_0809b794(void)
+void MrFrostyIceCubeState2(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1874,7 +1874,7 @@ void MrTickTockRingEnterState(void)
     CallTableEntry(gCurTask->state, 1, gMrTickTockRingStates);
 }
 
-void sub_0809b8c8(void)
+void MrTickTockRingState0(void)
 {
     struct Task *t;
     struct Task *u;

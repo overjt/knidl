@@ -476,9 +476,9 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
 /* ---- 0x0873DBE4-0x0873DC3C: 2 table(s), 22 function pointer(s), section .game_tbl_0873dbe4 ---- */
 /* include/effect.h; CallTableEntry(i, 11, ...) in PlayerGoalGameInit, PlayerGoalGameEnterState */
 u32 gPlayerGoalGameStates[11] GAME_TBL(0873dbe4) = {
-    (u32)sub_0805b4d8,
+    (u32)PlayerGoalGameState0,
     (u32)PlayerGoalGameWaitForPress,
-    (u32)sub_0805b644,
+    (u32)PlayerGoalGameState2,
     (u32)sub_0805b670,
     (u32)PlayerGoalGameLaunch,
     (u32)sub_0805b8f8,
@@ -532,10 +532,10 @@ u32 gPlayerDances[14] GAME_TBL(0873dedc) = {
 /* ---- 0x0873DF24-0x0873DF38: 1 table(s), 5 function pointer(s), section .game_tbl_0873df24 ---- */
 /* include/actor.h; CallTableEntry(i, 5, ...) in Task_PaletteAnim */
 u32 gPaletteAnimVariants[5] GAME_TBL(0873df24) = {
-    (u32)sub_080658d8,
-    (u32)sub_080659b4,
-    (u32)sub_08065a68,
-    (u32)sub_08065b14,
+    (u32)PaletteAnimVariant0,
+    (u32)PaletteAnimVariant1,
+    (u32)PaletteAnimVariant2,
+    (u32)PaletteAnimVariant3,
     (u32)PaletteAnimBgBlend,
 };
 
@@ -560,8 +560,8 @@ u32 gHeldPlayerStates[11] GAME_TBL(0873e2f0) = {
     (u32)HeldPlayerSpitBounceOff,
     (u32)HeldPlayerBackdropHeld,
     (u32)HeldPlayerBackdropBounceOff,
-    (u32)sub_08067950,
-    (u32)sub_08067b24,
+    (u32)HeldPlayerState5,
+    (u32)HeldPlayerState6,
     (u32)HeldPlayerThrowHeld,
     (u32)HeldPlayerThrowFlightForward,
     (u32)HeldPlayerThrowFlightBackward,
@@ -610,7 +610,7 @@ u32 gActorDefeatsByEffect[4] GAME_TBL(0873e5bc) = {
 u32 gActorDefeatFrozenStates[3] GAME_TBL(0873e670) = {
     (u32)ActorDefeatFrozenShake,
     (u32)ActorDefeatFrozenSlide,
-    (u32)sub_0806a9d8,
+    (u32)ActorDefeatFrozenState2,
 };
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDefeatFrozenUpdate */
 u32 gActorDefeatFrozenStateUpdates[3] GAME_TBL(0873e670) = {
@@ -661,8 +661,8 @@ u32 gUnk_0873E77C[4] GAME_TBL(0873e734) = {
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownInit, ActorDrownEnterState */
 u32 gActorDrownStates[3] GAME_TBL(0873e734) = {
     (u32)ActorDrownSink,
-    (u32)sub_0806b334,
-    (u32)sub_0806b390,
+    (u32)ActorDrownState1,
+    (u32)ActorDrownState2,
 };
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownUpdate */
 u32 gActorDrownStateUpdates[3] GAME_TBL(0873e734) = {
@@ -687,7 +687,7 @@ u32 gActorAttachedStates[8] GAME_TBL(0873eaa0) = {
 /* ---- 0x0873ECE0-0x0873ECEC: 1 table(s), 3 function pointer(s), section .game_tbl_0873ece0 ---- */
 /* include/actor.h; CallTableEntry(i, 3, ...) in Task_LandingImpact */
 u32 gLandingImpactVariants[3] GAME_TBL(0873ece0) = {
-    (u32)sub_0806ea70,
-    (u32)sub_0806eb04,
-    (u32)sub_0806eba4,
+    (u32)LandingImpactVariant0,
+    (u32)LandingImpactVariant1,
+    (u32)LandingImpactVariant2,
 };

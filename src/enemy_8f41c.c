@@ -19,7 +19,7 @@
  *   * script 6: entry `Task_LaserBallLaser` (`0x08743600`, 1 row), row
  *     `LaserBallLaserInit`, bodies `0x08743604` (2), guards `0x0874360C` (2);
  *   * script 7: entry `Task_ShotzoCannonball` (`0x0874362C`, 4 identical rows), row
- *     `ShotzoCannonballInit`, body `0x0874363C` (`sub_0808fe88`, the class-2 wanderer
+ *     `ShotzoCannonballInit`, body `0x0874363C` (`ShotzoCannonballState0`, the class-2 wanderer
  *     that picks its heading from gTasks[Task.parent].unk34) and guard
  *     `0x08743640` (`sub_0808ffe0`).
  *
@@ -113,7 +113,7 @@ void ShotzoAimFallUpdate(void)
     sub_08069888();
 }
 
-void sub_0808f528(void)
+void ShotzoFixedState0(void)
 {
     gCurTask->updateState = 0;
     TaskStopY();
@@ -309,7 +309,7 @@ void ParasolShotzoShootUpdate(void)
     }
 }
 
-void sub_0808f888(void)
+void ParasolShotzoState2(void)
 {
     struct Task *t;
 
@@ -465,7 +465,7 @@ void ConerWalk(void)
     }
 }
 
-void sub_0808fb50(void)
+void ConerState1(void)
 {
     TaskInitWaterFlags();
     gCurTask->accelY = 128 << 5;
@@ -474,7 +474,7 @@ void sub_0808fb50(void)
     TaskSleepForever();
 }
 
-void sub_0808fb80(void)
+void ConerState2(void)
 {
     TaskStopY();
     gCurTask->velY = 128 << 7;
@@ -559,7 +559,7 @@ void LaserBallLaserEnterState(void)
     CallTableEntry(gCurTask->state, 2, gLaserBallLaserStates);
 }
 
-void sub_0808fd38(void)
+void LaserBallLaserState1(void)
 {
     gCurTask->updateState = 1;
     gCurTask->onGround = 0;
@@ -571,7 +571,7 @@ void sub_0808fd5c(void)
 {
 }
 
-void sub_0808fd60(void)
+void LaserBallLaserState0(void)
 {
     struct Task *t;
 
@@ -628,7 +628,7 @@ void ShotzoCannonballEnterState(void)
     CallTableEntry(gCurTask->state, 1, gShotzoCannonballStates);
 }
 
-void sub_0808fe88(void)
+void ShotzoCannonballState0(void)
 {
     struct Task *t;
     struct Task *u;

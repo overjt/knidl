@@ -245,7 +245,7 @@ void WhispyWoodsAppleFallUpdate(void)
 {
 }
 
-void sub_080b31a0(void)
+void WhispyWoodsAppleState1(void)
 {
     struct Task **c;
     s32 z;
@@ -280,7 +280,7 @@ void sub_080b31e0(void)
     }
 }
 
-void sub_080b3214(void)
+void WhispyWoodsAppleState2(void)
 {
     struct Task **c;
     s32 z;
@@ -315,7 +315,7 @@ void sub_080b3258(void)
     }
 }
 
-void sub_080b328c(void)
+void WhispyWoodsAppleState3(void)
 {
     struct Task **c;
     s32 z;
@@ -404,7 +404,7 @@ void sub_080b33bc(void)
     CallTableEntry(gCurTask->state, 1, gWhispyWoodsAirPuffStates);
 }
 
-void sub_080b33d8(void)
+void WhispyWoodsAirPuffState0(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1040,7 +1040,7 @@ void PickupEnterState(void)
     CallTableEntry(gCurTask->state, 3, gPickupStates);
 }
 
-void sub_080b4174(void)
+void PickupState0(void)
 {
     gCurTask->updateState = 0;
     TaskStopY();
@@ -1470,7 +1470,7 @@ void AbilityStarEnterState(void)
     CallTableEntry(gCurTask->state, 2, gAbilityStarStates);
 }
 
-void sub_080b4770(void)
+void AbilityStarState0(void)
 {
     gCurTask->updateState = 0;
     TaskSleepForever();
@@ -1720,7 +1720,7 @@ void StarRodPieceHoverEnterState(void)
     CallTableEntry(gCurTask->state, 2, gStarRodPieceHoverStates);
 }
 
-void sub_080b4b18(void)
+void StarRodPieceHoverState0(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1766,7 +1766,7 @@ void sub_080b4b94(void)
     t->unk34 = r;
 }
 
-void sub_080b4bb0(void)
+void StarRodPieceHoverState1(void)
 {
     struct Task **c;
 
@@ -1814,7 +1814,7 @@ void StarRodPieceSlideOutEnterState(void)
     CallTableEntry(gCurTask->state, 3, gStarRodPieceSlideOutStates);
 }
 
-void sub_080b4ca0(void)
+void StarRodPieceSlideOutState0(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1854,7 +1854,7 @@ void sub_080b4d1c(void)
         TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
 }
 
-void sub_080b4d50(void)
+void StarRodPieceSlideOutState1(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1896,7 +1896,7 @@ void sub_080b4db4(void)
     t->unk34 = r;
 }
 
-void sub_080b4dd0(void)
+void StarRodPieceSlideOutState2(void)
 {
     struct Task **c;
 
@@ -1912,7 +1912,7 @@ void sub_080b4df8(void)
     sub_080b4a34();
 }
 
-void sub_080b4e04(void)
+void StarRodPieceVariant2(void)
 {
     struct Task *t;
 

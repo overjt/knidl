@@ -526,7 +526,7 @@ void KingDededeEnterState(void)
     CallTableEntry(gCurTask->state, 11, gKingDededeStates);
 }
 
-void sub_080a0b30(void)
+void KingDededeState0(void)
 {
     struct Task *t;
     s32 z;
@@ -842,7 +842,7 @@ void KingDededeExhaleUpdate(void)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
-void sub_080a1058(void)
+void KingDededeState6(void)
 {
     struct Task *t;
     struct Task *u;

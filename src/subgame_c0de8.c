@@ -6,7 +6,7 @@
  *
  * Tail of M36: the sub-game's presentation layer.
  *
- *   sub_080c0de8 .. BombRallyStartSign   fourteen near-identical class-4 sprite
+ *   BombRallyStarBurstState0 .. BombRallyStartSign   fourteen near-identical class-4 sprite
  *       bodies, one per on-screen element; each sets Task.updateState/unk38 from
  *       its own gUnk_08755Exx animation script and walks a fixed 16.16
  *       position list with TaskYieldTrampoline.
@@ -172,7 +172,7 @@ extern void CreateBombRallyBombSmoke(s32 a, s32 b, s32 c, s32 d);
 extern void CreateBombRallyStarBurst(s32 a, s32 b, u32 c, u32 d);
 extern void BombRallyPlaySfxIfPlayer0(u32 a);
 
-void sub_080c0de8(void)
+void BombRallyStarBurstState0(void)
 {
     struct Task *t;
 
@@ -200,7 +200,7 @@ void sub_080c0de8(void)
     TaskExitTrampoline();
 }
 
-void sub_080c0e88(void)
+void BombRallyStarBurstState4(void)
 {
     struct Task *t;
 
@@ -234,7 +234,7 @@ void sub_080c0e88(void)
     TaskExitTrampoline();
 }
 
-void sub_080c0f54(void)
+void BombRallyStarBurstState5(void)
 {
     struct Task *t;
 
@@ -260,7 +260,7 @@ void sub_080c0f54(void)
     TaskExitTrampoline();
 }
 
-void sub_080c0fe4(void)
+void BombRallyStarBurstState6(void)
 {
     struct Task *t;
 
@@ -284,7 +284,7 @@ void sub_080c0fe4(void)
     TaskExitTrampoline();
 }
 
-void sub_080c1068(void)
+void BombRallyStarBurstState7(void)
 {
     struct Task *t;
 
@@ -346,7 +346,7 @@ void sub_080c1114(void)
     TaskExitTrampoline();
 }
 
-void sub_080c11cc(void)
+void BombRallyStarBurstState8(void)
 {
     struct Task *t;
 
@@ -372,7 +372,7 @@ void sub_080c11cc(void)
     TaskExitTrampoline();
 }
 
-void sub_080c1260(void)
+void BombRallyStarBurstState9(void)
 {
     struct Task *t;
 
@@ -400,7 +400,7 @@ void sub_080c1260(void)
     TaskExitTrampoline();
 }
 
-void sub_080c1300(void)
+void BombRallyStarBurstState10(void)
 {
     struct Task *t;
 
@@ -426,7 +426,7 @@ void sub_080c1300(void)
     TaskExitTrampoline();
 }
 
-void sub_080c1390(void)
+void BombRallyStarBurstState11(void)
 {
     struct Task *t;
 
@@ -452,7 +452,7 @@ void sub_080c1390(void)
     TaskExitTrampoline();
 }
 
-void sub_080c1424(void)
+void BombRallyStarBurstState2(void)
 {
     struct Task *t;
 
@@ -478,7 +478,7 @@ void sub_080c1424(void)
     TaskExitTrampoline();
 }
 
-void sub_080c14b8(void)
+void BombRallyStarBurstState12(void)
 {
     struct Task *t;
 
@@ -506,7 +506,7 @@ void sub_080c14b8(void)
     TaskExitTrampoline();
 }
 
-void sub_080c1558(void)
+void BombRallyStarBurstState13(void)
 {
     struct Task *t;
 
@@ -536,7 +536,7 @@ void sub_080c1558(void)
     TaskExitTrampoline();
 }
 
-void sub_080c1608(void)
+void BombRallyStarBurstState14(void)
 {
     struct Task *t;
 
@@ -560,7 +560,7 @@ void sub_080c1608(void)
     TaskExitTrampoline();
 }
 
-void sub_080c168c(void)
+void BombRallyStarBurstState15(void)
 {
     struct Task *t;
 

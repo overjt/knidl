@@ -149,7 +149,7 @@ void sub_080959ec(void)
     TaskSleepForever();
 }
 
-void sub_08095a54(void)
+void FireLionState2(void)
 {
     struct Task *t;
     s32 v;
@@ -343,7 +343,7 @@ void sub_08095e4c(void)
     } while ((s16)gCurTask->unk6C <= 1);
 }
 
-void sub_08095eac(void)
+void FireLionState7(void)
 {
     struct Task *t;
     struct Task *u;
@@ -426,7 +426,7 @@ void sub_08096058(void)
         TaskStopX();
 }
 
-void sub_080960bc(void)
+void FireLionState9(void)
 {
     struct Task *t;
     s32 zero;
@@ -571,7 +571,7 @@ void sub_080963c0(void)
         t->velY = 0;
 }
 
-void sub_080963dc(void)
+void FireLionState8(void)
 {
     struct Task *t;
     struct Task *u;

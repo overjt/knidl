@@ -241,7 +241,7 @@ void CreateWarpStar(int x, int y, int c)
     CreateActorByKind(5, 0, 0, c, x, y, 0);
 }
 
-void sub_08071418(void)
+void WarpStarState0(void)
 {
     gCurTask->updateState = 0;
     {
@@ -337,7 +337,7 @@ void sub_0807156c(void)
     }
 }
 
-void sub_0807160c(void)
+void WarpStarState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();

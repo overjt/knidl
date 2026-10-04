@@ -119,7 +119,7 @@ void PoppyBrosSrUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0809128c(void)
+void PoppyBrosSrState0(void)
 {
     struct Task *t;
     u8 zero;
@@ -148,7 +148,7 @@ void sub_080912f8(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_08091320(void)
+void PoppyBrosSrState1(void)
 {
     struct Task *t;
     struct Task *u;
@@ -172,7 +172,7 @@ void sub_08091368(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_08091390(void)
+void PoppyBrosSrState2(void)
 {
     struct Task *t;
     struct Task *v;
@@ -266,7 +266,7 @@ void sub_08091558(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_080915a4(void)
+void PoppyBrosSrState3(void)
 {
     struct Task *t;
     struct Task *u;
@@ -289,7 +289,7 @@ void sub_080915d0(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_080915f8(void)
+void PoppyBrosSrState4(void)
 {
     struct Task *t;
     u8 zero;
@@ -324,7 +324,7 @@ void sub_080916c4(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void sub_080916ec(void)
+void PoppyBrosSrState5(void)
 {
     struct Task *t;
     struct Task *u;

@@ -303,7 +303,7 @@ void sub_0807d82c(void)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807d8f8(void)
+void RockyWalkState1(void)
 {
     gCurTask->updateState = 1;
     sub_0807dd10();
@@ -323,7 +323,7 @@ void sub_0807d918(void)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807d9ac(void)
+void RockyWalkState2(void)
 {
     gCurTask->onGround = 0;
     gCurTask->updateState = 2;
@@ -349,7 +349,7 @@ void sub_0807da08(void)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807da30(void)
+void RockyWalkState3(void)
 {
     gCurTask->updateState = 3;
     TaskSetFrame(12);
@@ -365,7 +365,7 @@ void sub_0807da5c(void)
         TaskSetEntry(RockyWalkEnterState, gCurTaskIdx);
 }
 
-void sub_0807da84(void)
+void RockyWalkState4(void)
 {
     gCurTask->updateState = 4;
     gCurTask->velY = 0x80000;
@@ -432,7 +432,7 @@ void RockyStandUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807dbcc(void)
+void RockyStandState0(void)
 {
     gCurTask->updateState = 0;
     {
@@ -471,7 +471,7 @@ void sub_0807dc78(void)
         TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
 }
 
-void sub_0807dca0(void)
+void RockyStandState1(void)
 {
     gCurTask->updateState = 1;
     sub_0807dd10();
@@ -485,7 +485,7 @@ void sub_0807dcc0(void)
         TaskSetEntry(RockyStandEnterState, gCurTaskIdx);
 }
 
-void sub_0807dce8(void)
+void RockyStandState2(void)
 {
     gCurTask->updateState = 2;
     gCurTask->velY = 0x80000;

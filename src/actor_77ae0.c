@@ -90,7 +90,7 @@ void CannonFuseBurnUpdate(void)
     }
 }
 
-void sub_08077bf0(void)
+void CannonFuseState2(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -227,7 +227,7 @@ void BigSwitchWaitUpdate(void)
         BigSwitchStartPress();
 }
 
-void sub_08077e9c(void)
+void BigSwitchState1(void)
 {
     gCurTask->updateState = 1;
     TaskYieldTrampoline(8);
@@ -282,7 +282,7 @@ void StakeUpdate(void)
     CallTableEntry(gCurTask->updateState, 1, gStakeStateUpdates);
 }
 
-void sub_08077f98(void)
+void StakeState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->frame = 0;
@@ -614,7 +614,7 @@ void Task_RoomParticles(void)
     }
 }
 
-void sub_08078670(void)
+void RoomParticlesVariant0(void)
 {
     gCurTask->updateCallback = (u32)sub_080786b4;
     gCurTask->unk28 = 0;
@@ -636,7 +636,7 @@ void sub_080786b4(void)
     } while (gCurTask->unk28 <= 7);
 }
 
-void sub_080786e8(void)
+void RoomParticlesVariant1(void)
 {
     {
         struct Task *t = gCurTask;
@@ -664,7 +664,7 @@ void sub_08078734(void)
     } while (gCurTask->unk28 <= 7);
 }
 
-void sub_0807876c(void)
+void RoomParticlesVariant2(void)
 {
     {
         struct Task *t = gCurTask;
@@ -692,7 +692,7 @@ void sub_080787b8(void)
     } while (gCurTask->unk28 <= 2);
 }
 
-void sub_080787f0(void)
+void RoomParticlesVariant3(void)
 {
     {
         struct Task *t = gCurTask;
@@ -720,7 +720,7 @@ void sub_0807883c(void)
     } while (gCurTask->unk28 <= 3);
 }
 
-void sub_08078874(void)
+void RoomParticlesVariant4(void)
 {
     gCurTask->updateCallback = (u32)sub_080788e0;
     gCurTask->unk28 = 0;

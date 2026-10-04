@@ -323,7 +323,7 @@ void Task_PaletteAnim(void)
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
 /* Task body: cross-fade two palettes while the helper's refcount holds. */
-void sub_080658d8(void)
+void PaletteAnimVariant0(void)
 {
     struct Task *w;
     struct Task *u;
@@ -370,7 +370,7 @@ void sub_080658d8(void)
 
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
 /* Task body: cycle the actor's 32-byte palette out of gUnk_0873DF38. */
-void sub_080659b4(void)
+void PaletteAnimVariant1(void)
 {
     struct Task *w;
     struct Task *t;
@@ -405,7 +405,7 @@ void sub_080659b4(void)
 }
 
 /* Task body: flash one palette entry on and off. */
-void sub_08065a68(void)
+void PaletteAnimVariant2(void)
 {
     struct Task *w;
     struct Task *t;
@@ -441,7 +441,7 @@ void sub_08065a68(void)
 }
 
 /* Task body: cross-fade the actor's palette pair out of gUnk_0873DF7C. */
-void sub_08065b14(void)
+void PaletteAnimVariant3(void)
 {
     struct Task *w;
     struct Task *t;

@@ -311,7 +311,7 @@ void HeldPlayerBackdropBounceOffUpdate(void)
 }
 
 /* Task body: the carried task wobbling in the player's hands. */
-void sub_08067950(void)
+void HeldPlayerState5(void)
 {
     struct Task *t;
     struct Task *u;
@@ -395,7 +395,7 @@ void sub_08067a48(void)
         TaskSleepForever();
     }
 }
-void sub_08067b24(void)
+void HeldPlayerState6(void)
 {
     struct Task *t;
     struct PlayerState *p;

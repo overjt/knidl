@@ -76,7 +76,7 @@ void MrTickTockNoteFlightUpdate(void)
 {
 }
 
-void sub_0809bb6c(void)
+void MrTickTockNoteState1(void)
 {
     struct Task *t;
 

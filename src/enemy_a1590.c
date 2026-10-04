@@ -1599,8 +1599,8 @@ void MrShineAndMrBrightEnterState(void)
     CallTableEntry(gCurTask->state, 4, gMrShineAndMrBrightStates);
 }
 
-/* sub_080a3184 (0x080A3184-0x080A31A4) */
-void sub_080a3184(void)
+/* MrShineAndMrBrightState0 (0x080A3184-0x080A31A4) */
+void MrShineAndMrBrightState0(void)
 {
     gCurTask->updateState = 0;
     MrShineAndMrBrightFillHpBars();
@@ -1618,8 +1618,8 @@ void sub_080a31a4(void)
     }
 }
 
-/* sub_080a31d0 (0x080A31D0-0x080A31F0) */
-void sub_080a31d0(void)
+/* MrShineAndMrBrightState1 (0x080A31D0-0x080A31F0) */
+void MrShineAndMrBrightState1(void)
 {
     gCurTask->updateState = 1;
     gCurTask->lateUpdateCallback = (u32)sub_080a31f4;
@@ -1645,8 +1645,8 @@ void sub_080a31f4(void)
     }
 }
 
-/* sub_080a3238 (0x080A3238-0x080A3250) */
-void sub_080a3238(void)
+/* MrShineAndMrBrightState2 (0x080A3238-0x080A3250) */
+void MrShineAndMrBrightState2(void)
 {
     gCurTask->updateState = 2;
     TaskSleepForever();
@@ -1659,8 +1659,8 @@ void sub_080a3250(void)
         sub_080a1d2c();
 }
 
-/* sub_080a3268 (0x080A3268-0x080A3280) */
-void sub_080a3268(void)
+/* MrShineAndMrBrightState3 (0x080A3268-0x080A3280) */
+void MrShineAndMrBrightState3(void)
 {
     gCurTask->updateState = 3;
     TaskSleepForever();
@@ -1773,8 +1773,8 @@ void MrShineAscendUpdate(void)
     sub_080a21a0(MrShineEnterState);
 }
 
-/* sub_080a349c (0x080A349C-0x080A34B8) */
-void sub_080a349c(void)
+/* MrShineState3 (0x080A349C-0x080A34B8) */
+void MrShineState3(void)
 {
     gCurTask->updateState = 3;
     sub_080a29cc();
@@ -1787,8 +1787,8 @@ void sub_080a34b8(void)
     sub_080a25c4(MrShineEnterState);
 }
 
-/* sub_080a34c8 (0x080A34C8-0x080A34F0) */
-void sub_080a34c8(void)
+/* MrShineState4 (0x080A34C8-0x080A34F0) */
+void MrShineState4(void)
 {
     gCurTask->updateState = 4;
     sub_080a2a00();
@@ -1809,8 +1809,8 @@ void sub_080a34f0(void)
     }
 }
 
-/* sub_080a352c (0x080A352C-0x080A3548) */
-void sub_080a352c(void)
+/* MrShineState5 (0x080A352C-0x080A3548) */
+void MrShineState5(void)
 {
     gCurTask->updateState = 5;
     sub_080a2a24();
@@ -1850,8 +1850,8 @@ void MrShineChaseUpdate(void)
     sub_080a2608(MrShineEnterState);
 }
 
-/* sub_080a35b8 (0x080A35B8-0x080A35D8) */
-void sub_080a35b8(void)
+/* MrShineState7 (0x080A35B8-0x080A35D8) */
+void MrShineState7(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
@@ -1955,8 +1955,8 @@ void MrShineJumpUpdate(void)
     }
 }
 
-/* sub_080a37ac (0x080A37AC-0x080A3840) */
-void sub_080a37ac(void)
+/* MrShineState11 (0x080A37AC-0x080A3840) */
+void MrShineState11(void)
 {
     gCurTask->updateState = 11;
     TaskStop();
@@ -2098,8 +2098,8 @@ void MrShineThrowUpdate(void)
         gCurTask->velX = 0;
 }
 
-/* sub_080a3b4c (0x080A3B4C-0x080A3B78) */
-void sub_080a3b4c(void)
+/* MrShineState15 (0x080A3B4C-0x080A3B78) */
+void MrShineState15(void)
 {
     gCurTask->updateState = 15;
     TaskStop();
@@ -2113,8 +2113,8 @@ void sub_080a3b78(void)
 {
 }
 
-/* sub_080a3b7c (0x080A3B7C-0x080A3BA0) */
-void sub_080a3b7c(void)
+/* MrShineState16 (0x080A3B7C-0x080A3BA0) */
+void MrShineState16(void)
 {
     gCurTask->updateCallback = (u32)sub_080a3ba0;
     sub_080a2754();
@@ -2130,8 +2130,8 @@ void sub_080a3ba0(void)
     sub_080a2814();
 }
 
-/* sub_080a3bc0 (0x080A3BC0-0x080A3C08) */
-void sub_080a3bc0(void)
+/* MrShineState17 (0x080A3BC0-0x080A3C08) */
+void MrShineState17(void)
 {
     gCurTask->updateCallback = (u32)sub_080a3c08;
     sub_080a2754();
@@ -2255,8 +2255,8 @@ void MrBrightAscendUpdate(void)
     sub_080a21a0(MrBrightEnterState);
 }
 
-/* sub_080a3e60 (0x080A3E60-0x080A3E7C) */
-void sub_080a3e60(void)
+/* MrBrightState3 (0x080A3E60-0x080A3E7C) */
+void MrBrightState3(void)
 {
     gCurTask->updateState = 3;
     sub_080a2edc();
@@ -2270,8 +2270,8 @@ void sub_080a3e7c(void)
     sub_080a25c4(MrBrightEnterState);
 }
 
-/* sub_080a3ea0 (0x080A3EA0-0x080A3EDC) */
-void sub_080a3ea0(void)
+/* MrBrightState4 (0x080A3EA0-0x080A3EDC) */
+void MrBrightState4(void)
 {
     gCurTask->updateState = 4;
     sub_080a2f38();
@@ -2297,8 +2297,8 @@ void sub_080a3edc(void)
     }
 }
 
-/* sub_080a3f24 (0x080A3F24-0x080A3F54) */
-void sub_080a3f24(void)
+/* MrBrightState5 (0x080A3F24-0x080A3F54) */
+void MrBrightState5(void)
 {
     gCurTask->updateState = 5;
     sub_080a3000();
@@ -2350,8 +2350,8 @@ void MrBrightChaseUpdate(void)
     sub_080a2608(MrBrightEnterState);
 }
 
-/* sub_080a3ff8 (0x080A3FF8-0x080A4018) */
-void sub_080a3ff8(void)
+/* MrBrightState7 (0x080A3FF8-0x080A4018) */
+void MrBrightState7(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
@@ -2459,8 +2459,8 @@ void MrBrightJumpUpdate(void)
     }
 }
 
-/* sub_080a4260 (0x080A4260-0x080A42F8) */
-void sub_080a4260(void)
+/* MrBrightState11 (0x080A4260-0x080A42F8) */
+void MrBrightState11(void)
 {
     gCurTask->updateState = 11;
     TaskStop();
@@ -2602,8 +2602,8 @@ void MrBrightThrowUpdate(void)
         gCurTask->velX = 0;
 }
 
-/* sub_080a4604 (0x080A4604-0x080A4630) */
-void sub_080a4604(void)
+/* MrBrightState15 (0x080A4604-0x080A4630) */
+void MrBrightState15(void)
 {
     gCurTask->updateState = 15;
     TaskStop();
@@ -2617,8 +2617,8 @@ void sub_080a4630(void)
 {
 }
 
-/* sub_080a4634 (0x080A4634-0x080A4658) */
-void sub_080a4634(void)
+/* MrBrightState16 (0x080A4634-0x080A4658) */
+void MrBrightState16(void)
 {
     gCurTask->updateCallback = (u32)sub_080a4658;
     sub_080a2754();
@@ -2634,8 +2634,8 @@ void sub_080a4658(void)
     sub_080a2bc4();
 }
 
-/* sub_080a4678 (0x080A4678-0x080A46C0) */
-void sub_080a4678(void)
+/* MrBrightState17 (0x080A4678-0x080A46C0) */
+void MrBrightState17(void)
 {
     gCurTask->updateCallback = (u32)sub_080a46c0;
     sub_080a2754();
@@ -2673,8 +2673,8 @@ void MrShineAndMrBrightDropStarRodPiece(void)
     CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }
 
-/* sub_080a472c (0x080A472C-0x080A4808) */
-void sub_080a472c(void)
+/* MrShineAndMrBrightVariant3 (0x080A472C-0x080A4808) */
+void MrShineAndMrBrightVariant3(void)
 {
     struct Task *t;
 
@@ -2919,8 +2919,8 @@ void sub_080a4c20(void)
     CallTableEntry(gCurTask->state, 1, gKingDededeAirPuffStates);
 }
 
-/* sub_080a4c3c (0x080A4C3C-0x080A4C80) */
-void sub_080a4c3c(void)
+/* KingDededeAirPuffState0 (0x080A4C3C-0x080A4C80) */
+void KingDededeAirPuffState0(void)
 {
     s32 i;
     u32 *p;
@@ -2990,8 +2990,8 @@ void MrShineCrescentEnterState(void)
     CallTableEntry(gCurTask->state, 2, gMrShineCrescentStates);
 }
 
-/* sub_080a4d88 (0x080A4D88-0x080A4DD8) */
-void sub_080a4d88(void)
+/* MrShineCrescentState0 (0x080A4D88-0x080A4DD8) */
+void MrShineCrescentState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
@@ -3009,8 +3009,8 @@ void sub_080a4dd8(void)
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
 
-/* sub_080a4df4 (0x080A4DF4-0x080A4E10) */
-void sub_080a4df4(void)
+/* MrShineCrescentState1 (0x080A4DF4-0x080A4E10) */
+void MrShineCrescentState1(void)
 {
     gCurTask->updateCallback = 0;
     TaskStop();
@@ -3068,8 +3068,8 @@ void sub_080a4f24(void)
     CallTableEntry(gCurTask->state, 2, gMrShineFallingStarStates);
 }
 
-/* sub_080a4f40 (0x080A4F40-0x080A5008) */
-void sub_080a4f40(void)
+/* MrShineFallingStarState0 (0x080A4F40-0x080A5008) */
+void MrShineFallingStarState0(void)
 {
     struct Task *t;
 
@@ -3117,8 +3117,8 @@ void sub_080a5008(void)
         sub_08064bcc();
 }
 
-/* sub_080a5020 (0x080A5020-0x080A503C) */
-void sub_080a5020(void)
+/* MrShineFallingStarState1 (0x080A5020-0x080A503C) */
+void MrShineFallingStarState1(void)
 {
     gCurTask->updateCallback = 0;
     TaskStop();
@@ -3166,8 +3166,8 @@ void MrBrightFireballEnterState(void)
     CallTableEntry(gCurTask->state, 2, gMrBrightFireballStates);
 }
 
-/* sub_080a510c (0x080A510C-0x080A5164) */
-void sub_080a510c(void)
+/* MrBrightFireballState0 (0x080A510C-0x080A5164) */
+void MrBrightFireballState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
@@ -3190,8 +3190,8 @@ void sub_080a5164(void)
 {
 }
 
-/* sub_080a5168 (0x080A5168-0x080A5184) */
-void sub_080a5168(void)
+/* MrBrightFireballState1 (0x080A5168-0x080A5184) */
+void MrBrightFireballState1(void)
 {
     gCurTask->updateCallback = 0;
     TaskStop();
@@ -3253,8 +3253,8 @@ void MrBrightBeamDropStars(void)
     CreateInhalableStar(x, y, -1, 1);
 }
 
-/* sub_080a528c (0x080A528C-0x080A52C8) */
-void sub_080a528c(void)
+/* MrBrightBeamState0 (0x080A528C-0x080A52C8) */
+void MrBrightBeamState0(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -3285,8 +3285,8 @@ void sub_080a52c8(void)
     gCurTask->unk18--;
 }
 
-/* sub_080a5304 (0x080A5304-0x080A5320) */
-void sub_080a5304(void)
+/* MrBrightBeamState1 (0x080A5304-0x080A5320) */
+void MrBrightBeamState1(void)
 {
     gCurTask->updateCallback = 0;
     TaskStop();
@@ -3417,8 +3417,8 @@ void Task_MrBrightBeamEffect(void)
     CallTableEntry(gCurTask->variant, 3, gMrBrightBeamEffectVariants);
 }
 
-/* sub_080a5524 (0x080A5524-0x080A556C) */
-void sub_080a5524(void)
+/* MrBrightBeamEffectVariant0 (0x080A5524-0x080A556C) */
+void MrBrightBeamEffectVariant0(void)
 {
     struct Task **c;
     u16 z;
@@ -3441,8 +3441,8 @@ void sub_080a5524(void)
     }
 }
 
-/* sub_080a556c (0x080A556C-0x080A55AC) */
-void sub_080a556c(void)
+/* MrBrightBeamEffectVariant1 (0x080A556C-0x080A55AC) */
+void MrBrightBeamEffectVariant1(void)
 {
     struct Task **c;
     u32 *base;
@@ -3467,8 +3467,8 @@ void sub_080a556c(void)
     }
 }
 
-/* sub_080a55ac (0x080A55AC-0x080A55EC) */
-void sub_080a55ac(void)
+/* MrBrightBeamEffectVariant2 (0x080A55AC-0x080A55EC) */
+void MrBrightBeamEffectVariant2(void)
 {
     struct Task **c;
     u32 *base;

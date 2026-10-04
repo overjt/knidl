@@ -147,7 +147,7 @@ void MetaKnightUpdate(void)
     }
 }
 
-void sub_080a57d4(void)
+void MetaKnightState0(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -243,7 +243,7 @@ void sub_080a5a78(void)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void sub_080a5aa0(void)
+void MetaKnightState1(void)
 {
     struct Task *t;
     s32 v;
@@ -394,7 +394,7 @@ void sub_080a5af4(void)
     }
 }
 
-void sub_080a5dd0(void)
+void MetaKnightState2(void)
 {
     gCurTask->updateState = 2;
     if (!(gCurTask->unk34 & 2))
@@ -420,7 +420,7 @@ void sub_080a5e30(void)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void sub_080a5e60(void)
+void MetaKnightState3(void)
 {
     gCurTask->updateState = 3;
     gCurTask->unk18 = -gCurTask->unk18;
@@ -440,7 +440,7 @@ void sub_080a5e9c(void)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void sub_080a5ecc(void)
+void MetaKnightState4(void)
 {
     gCurTask->updateState = 4;
     gCurTask->unk1C = 48;
@@ -455,7 +455,7 @@ void sub_080a5ef0(void)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void sub_080a5f20(void)
+void MetaKnightState5(void)
 {
     struct Task *t;
 
@@ -482,7 +482,7 @@ void sub_080a5f7c(void)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void sub_080a5fac(void)
+void MetaKnightState6(void)
 {
     gCurTask->updateState = 6;
     if (gCurTask->unk18 < 0)
@@ -556,7 +556,7 @@ void MetaKnightRunUpdate(void)
     }
 }
 
-void sub_080a61b4(void)
+void MetaKnightState9(void)
 {
     gCurTask->updateState = 9;
     gCurTask->unk30 = 0;
@@ -591,7 +591,7 @@ void sub_080a6264(void)
         sub_080a7168();
 }
 
-void sub_080a6280(void)
+void MetaKnightState8(void)
 {
     gCurTask->updateState = 8;
     gUnk_02007D00[7] = 0;
@@ -644,7 +644,7 @@ void MetaKnightLandUpdate(void)
         sub_080a7168();
 }
 
-void sub_080a63a4(void)
+void MetaKnightState11(void)
 {
     gCurTask->updateState = 11;
     TaskFaceNearestPlayer();
@@ -660,7 +660,7 @@ void sub_080a63d8(void)
         sub_080a7168();
 }
 
-void sub_080a63f0(void)
+void MetaKnightState12(void)
 {
     gCurTask->updateState = 12;
     TaskFaceNearestPlayer();
@@ -723,7 +723,7 @@ void MetaKnightSwordSpinUpdate(void)
     }
 }
 
-void sub_080a6544(void)
+void MetaKnightState16(void)
 {
     gCurTask->updateState = 16;
     TaskFaceNearestPlayer();
@@ -770,7 +770,7 @@ void MetaKnightDownThrustUpdate(void)
         sub_080a7168();
 }
 
-void sub_080a6650(void)
+void MetaKnightState14(void)
 {
     gCurTask->updateState = 14;
     TaskFaceNearestPlayer();
@@ -786,7 +786,7 @@ void sub_080a6680(void)
         sub_080a7168();
 }
 
-void sub_080a6698(void)
+void MetaKnightState17(void)
 {
     gCurTask->updateState = 17;
     MetaKnightUpwardSlash();
@@ -808,7 +808,7 @@ void sub_080a66c8(void)
     }
 }
 
-void sub_080a6710(void)
+void MetaKnightState18(void)
 {
     gCurTask->updateState = 18;
     TaskStop();
@@ -824,7 +824,7 @@ void sub_080a6734(void)
         sub_080a7168();
 }
 
-void sub_080a6754(void)
+void MetaKnightState19(void)
 {
     struct Task *t;
 
@@ -927,7 +927,7 @@ void MetaKnightDoubleSlashUpdate(void)
         sub_080a7168();
 }
 
-void sub_080a69e4(void)
+void MetaKnightState21(void)
 {
     struct Task *t;
 
@@ -971,7 +971,7 @@ void sub_080a6aac(void)
         sub_080a7168();
 }
 
-void sub_080a6b3c(void)
+void MetaKnightState22(void)
 {
     struct Task *t;
 
@@ -1056,7 +1056,7 @@ void sub_080a6c3c(void)
     }
 }
 
-void sub_080a6d08(void)
+void MetaKnightState23(void)
 {
     struct Task *t;
 

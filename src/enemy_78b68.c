@@ -364,7 +364,7 @@ void sub_080791bc(void)
 {
 }
 
-void sub_080791c0(void)
+void ParasolWaddleDeeWalkState1(void)
 {
     gCurTask->updateState = 1;
     if (gCurTask->u8C.actor->extraFrame == -1)
@@ -451,7 +451,7 @@ void ParasolWaddleDeeStandEnterState(void)
     CallTableEntry(gCurTask->state, 2, gParasolWaddleDeeStandStates);
 }
 
-void sub_080793a8(void)
+void ParasolWaddleDeeStandState0(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -463,7 +463,7 @@ void sub_080793c4(void)
     TaskFaceNearestPlayer();
 }
 
-void sub_080793d0(void)
+void ParasolWaddleDeeStandState1(void)
 {
     gCurTask->updateState = 1;
     if (gCurTask->u8C.actor->extraFrame == -1)
@@ -895,7 +895,7 @@ void BomberWalkUpdate(void)
         t->unk28 = 1;
 }
 
-void sub_08079bac(void)
+void BomberState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -909,7 +909,7 @@ void sub_08079be0(void)
 {
 }
 
-void sub_08079be4(void)
+void BomberState2(void)
 {
     struct Task *t;
 
@@ -1301,7 +1301,7 @@ void SparkyJumpLandUpdate(void)
         SparkyPickNextState(2);
 }
 
-void sub_0807a424(void)
+void SparkyJumpState3(void)
 {
     gCurTask->updateState = 3;
     TaskStop();

@@ -69,7 +69,7 @@ void BugzzyLadybugUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08094040(void)
+void BugzzyLadybugState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -306,7 +306,7 @@ void sub_08094358(void)
     }
 }
 
-void sub_080945fc(void)
+void GrandWheelieState0(void)
 {
     struct Task *t;
     s32 v;
@@ -327,7 +327,7 @@ void sub_08094640(void)
     gCurTask->unk28 = GrandWheelieTickAnim(gCurTask->unk28);
 }
 
-void sub_0809465c(void)
+void GrandWheelieState1(void)
 {
     gCurTask->updateState = 1;
     sub_08066580();
@@ -347,7 +347,7 @@ void sub_0809467c(void)
     }
 }
 
-void sub_080946b0(void)
+void GrandWheelieState2(void)
 {
     struct Task *t;
 
@@ -663,7 +663,7 @@ s32 sub_08094d10(void)
     return -1;
 }
 
-void sub_08094da4(void)
+void GrandWheelieState5(void)
 {
     struct Task *t;
 
@@ -742,7 +742,7 @@ s32 GrandWheelieBrake(void)
     return 0;
 }
 
-void sub_08094f28(void)
+void GrandWheelieState6(void)
 {
     struct Task *t;
     s32 zero;
@@ -774,7 +774,7 @@ void sub_08094f68(void)
     }
 }
 
-void sub_08094fb0(void)
+void GrandWheelieState7(void)
 {
     struct Task *t;
     struct Task *u;

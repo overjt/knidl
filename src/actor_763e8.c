@@ -465,7 +465,7 @@ void sub_08076c00(void)
     }
 }
 
-void sub_08076c88(void)
+void PlayerCannonState0(void)
 {
     gCurTask->updateState = 0;
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
@@ -482,7 +482,7 @@ void sub_08076cac(void)
     sub_080764f8();
 }
 
-void sub_08076cd4(void)
+void PlayerCannonState1(void)
 {
     gCurTask->updateState = 1;
     sub_080766ac();
@@ -496,7 +496,7 @@ void sub_08076d00(void)
     sub_0807685c(0);
 }
 
-void sub_08076d0c(void)
+void PlayerCannonState2(void)
 {
     gCurTask->updateState = 2;
     sub_08076710();
@@ -510,7 +510,7 @@ void sub_08076d38(void)
     sub_0807685c(1);
 }
 
-void sub_08076d44(void)
+void PlayerCannonState3(void)
 {
     gCurTask->updateState = 3;
     sub_08076798();
@@ -532,7 +532,7 @@ void sub_08076d70(void)
         t->unk2C--;
 }
 
-void sub_08076dac(void)
+void PlayerCannonState4(void)
 {
     gCurTask->updateState = 4;
     sub_080768c8();
@@ -568,7 +568,7 @@ void sub_08076ddc(void)
     }
 }
 
-void sub_08076e30(void)
+void PlayerCannonState5(void)
 {
     gCurTask->updateState = 5;
     sub_08076a58();
@@ -818,7 +818,7 @@ void CannonWaitUpdate(void)
     }
 }
 
-void sub_08077308(void)
+void CannonState1(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
@@ -854,7 +854,7 @@ void sub_080773a8(void)
         TaskSetEntry(CannonEnterState, gCurTaskIdx);
 }
 
-void sub_080773d0(void)
+void CannonState2(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -932,7 +932,7 @@ void sub_08077564(void)
 {
 }
 
-void sub_08077568(void)
+void CannonState3(void)
 {
     gCurTask->updateState = 3;
     TaskStop();

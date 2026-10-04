@@ -262,7 +262,7 @@ void KrackoJrUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080a7e44(void)
+void KrackoJrState0(void)
 {
     gCurTask->updateState = 0;
     for (;;)

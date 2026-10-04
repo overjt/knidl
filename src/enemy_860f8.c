@@ -126,7 +126,7 @@ void sub_08086274(void)
     gCurTask->unk34 = 40;
 }
 
-void sub_080862cc(void)
+void BrontoBurtVariant1(void)
 {
     gCurTask->updateCallback = (u32)sub_08086320;
     ActorSetState(0);
@@ -240,7 +240,7 @@ void sub_08086444(void)
     gCurTask->unk34 = 40;
 }
 
-void sub_080864ec(void)
+void BrontoBurtVariant2(void)
 {
     struct Task *u;
     u32 r;
@@ -617,7 +617,7 @@ void sub_08086da4(void)
     }
 }
 
-void sub_08086df0(void)
+void BrontoBurtTakeOffState2(void)
 {
     gCurTask->updateState = 2;
     gCurTask->unk28 = ActorStartAnim(gUnk_087420D4);
@@ -833,7 +833,7 @@ void sub_08087210(void)
     gCurTask->unk34 = 40;
 }
 
-void sub_08087268(void)
+void TwizzyVariant1(void)
 {
     gCurTask->updateCallback = (u32)sub_080872bc;
     ActorSetState(0);
@@ -934,7 +934,7 @@ void sub_080873b0(void)
     gCurTask->unk34 = 40;
 }
 
-void sub_08087458(void)
+void TwizzyVariant2(void)
 {
     struct Task *u;
     u32 r;
@@ -1303,7 +1303,7 @@ void sub_08087cd4(void)
     }
 }
 
-void sub_08087d20(void)
+void TwizzyTakeOffState2(void)
 {
     gCurTask->updateState = 2;
     gCurTask->unk28 = ActorStartAnim(gUnk_087425A4);
@@ -1346,7 +1346,7 @@ void sub_08087df8(void)
     }
 }
 
-void sub_08087e2c(void)
+void TwizzyVariant6(void)
 {
     gCurTask->updateCallback = (u32)sub_08087e84;
     gCurTask->onGround = 1;
@@ -1427,7 +1427,7 @@ void sub_08087fc8(void)
 {
 }
 
-void sub_08087fcc(void)
+void TwizzyVariant7(void)
 {
     gCurTask->updateCallback = (u32)sub_08088024;
     gCurTask->onGround = 1;
