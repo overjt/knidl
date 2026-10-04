@@ -2,31 +2,55 @@
 #
 # One step per line: "<frames> <keys>", keys "-" (none) or names joined by
 # '+' (A B SELECT START RIGHT LEFT UP DOWN R L); "repeat <n>" ... "end"
-# repeats a block.  The run starts from a fresh, empty save (no .sav), so
+# repeats a block; "mark <scene>" names the scene that starts there and
+# "expect <cell> <op> <value>" checks a RAM cell of the reference there
+# (a failed check fails the run: the script no longer reaches what these
+# comments claim).  The run starts from a fresh, empty save (no .sav), so
 # every frame below is deterministic; the frame numbers in the comments are
 # where each step starts.  The script was tuned by looking at local frames of
 # the reference (never committed); what it reaches is described in words.
 #
 # Frame 0-499: the boot (HAL Laboratory / Nintendo logo, the Kirby swarm)
 # and the title screen.
+mark boot: the logos and the title screen
 500 -
-# 500: START on the title -> the file select (three empty files)
+expect gGameState:2 == 3        # the title screen (game state 3)
+# 500: START, ignored: after a completed logo the title reads keys only
+# from about frame 570.  804: A leaves the title; the menu (game state 4)
+# opens on the file select (three empty files) at 814.  (Until #168 these
+# comments put each screen one key early; #168's scripts found it.)
 4 START
 300 -
-# 804: A on FILE 1 -> GAME SELECT (start game, sub-games, sound test, erase)
+mark the file select
 4 A
 300 -
-# 1108: A on START GAME -> the ONE PLAYER / MULTIPLAYER pop-up
+expect gGameState:2 == 4        # the main menu (game state 4)
+expect gMenuScreen:1 == 0       # menu screen 0: the file select
+# 1108: A on FILE 1 -> GAME SELECT (start game, sub-games, sound test, erase)
+mark GAME SELECT
 4 A
 300 -
+expect gMenuScreen:1 == 1       # menu screen 1: the file menu
+# 1412: A on START GAME -> the ONE PLAYER / MULTIPLAYER pop-up
+mark the ONE PLAYER / MULTIPLAYER pop-up
 10 A
 300 -
-# 1722: START -> a new game: the level 1 intro scene, then the level 1 hub
+expect gMenuScreen:1 == 3       # menu screen 3: one player or link play
+# 1722: START on ONE PLAYER -> a new game: the level 1 intro scene, then
+# the level 1 hub
+mark a new game: the level 1 intro scene and the hub
 10 START
 478 -
+expect gGameState:2 == 5        # the hub's frame loop (game state 5)
+expect gLevelIndex:1 == 8       # level 8 is the hub
 # 2210: UP at the door of stage 1 -> stage 1-1, room 1
+mark stage 1-1, room 1
 10 UP
 400 -
+expect gGameState:2 == 8        # a stage's frame loop (game state 8)
+expect gLevelIndex:1 == 0
+expect gStageIndex:1 == 0
+expect gRoomIndex:2 == 0
 # 2620: walk right; jump and float over the walls; inhale (B), swallow
 # (DOWN), UP at doors.  Room 1: Waddle Dees, a Waddle Doo whose Beam ability
 # Kirby swallows (the ability get and its HUD roulette), hits that knock the
@@ -51,6 +75,7 @@ repeat 8
 4 -
 end
 # 4060: walk right to the door with UP taps -> room 2 (at ~4160)
+mark stage 1-1, the door to room 2
 4 DOWN
 60 -
 repeat 25
@@ -58,13 +83,18 @@ repeat 25
 2 UP
 end
 # 4274: the pause screen ("About Copy Abilities") and back
+expect gRoomIndex:2 == 1
+mark the pause screen
 40 -
 8 START
 150 -
+expect gStageRequest:1 == 5     # stage request 5: the pause screen is open
 8 START
 60 -
+expect gStageRequest:1 == 0
 # 4540: room 2: enemies, a lost life (the death, the retry from the room's
 # start with a new health bar), the slopes, the room's end door
+mark stage 1-1, room 2: a lost life and the retry
 repeat 15
 40 RIGHT
 8 RIGHT+A
@@ -86,6 +116,8 @@ repeat 15
 end
 # 7240: land and sweep over the door with UP taps -> room 3, back through
 # the door to room 2 and into room 3 again (two more door transitions)
+expect gPlayerLives:2 == 1      # one life lost (the HUD's 2 -> 1)
+mark stage 1-1, doors: room 3, room 2, room 3
 20 -
 4 B
 20 -
@@ -101,6 +133,8 @@ repeat 25
 end
 # 7648: room 3: the water, a Poppy Bros. Jr., Hot Heads, up to the stage's
 # goal door
+expect gRoomIndex:2 == 2
+mark stage 1-1, room 3
 60 -
 repeat 6
 40 RIGHT
@@ -137,6 +171,8 @@ end
 # 9196: the soft reset (A+B+SELECT+START) -> the title screen, then with no
 # input the nine-scene intro story ("The Fountain of Dreams") and the title
 # again; the run ends 600 frames after the script (frame 14066).
+mark the soft reset, the title and the intro story
 60 -
 10 A+B+SELECT+START
 4200 -
+expect gGameState:2 == 3        # back to the title / story (game state 3)

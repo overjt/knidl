@@ -51,7 +51,7 @@ Matching decompilation of Kirby: The Amazing Mirror's predecessor, **Kirby: Nigh
   - `make progress` — parse `build/knidl.map` with `tools/calcrom.pl` into code/data byte counts and percentages.
   - `make datastats` — data-structure metrics (`tools/datastats.py`): ROM data symbols still defined by absolute address, and pointer-like data words not yet symbolic (docs/data.md §6).
   - `make shifttest` — the shift test and pointer census (`tools/shiftcheck.py`, `tools/ptrcensus.py`, `tools/branchcheck.py`, docs/data.md §8): relinks with padding at a few section boundaries, checks every relative branch across them, and sorts every pointer-like word that did not move into proven pointer / proven coincidence / unreachable / unknown; fails on any proven pointer or unknown word (`--strict`); run after a build, CI runs it after `make compare`.
-  - `make boottest` — the boot test (docs/data.md §8.4): links one shifted ROM per shift-test point and runs it against `knidl.gba` in mGBA (emulator image `tools/boottest/Dockerfile`, mGBA built from a release tag), in lockstep with the scripted input `tools/boottest/input.txt`, failing at the first frame whose video, audio or RAM differs (`BOOTTEST_AT`, `BOOTTEST_FRAMES`); CI runs it after `make shifttest`.  Never commit a screenshot, frame dump, frame-hash list, savestate or capture: they are assets.
+  - `make boottest` — the boot test (docs/data.md §8.4): links one shifted ROM per shift-test point and runs it against `knidl.gba` in mGBA (emulator image `tools/boottest/Dockerfile`, mGBA built from a release tag), in lockstep with the scripted inputs `tools/boottest/*.txt` (`input.txt`, `subgames.txt`, `gameover.txt`, `level1.txt`, each from boot), failing at the first frame whose video, audio or RAM differs or when a script's `expect` checkpoint no longer holds (`BOOTTEST_INPUT`, `BOOTTEST_AT`, `BOOTTEST_FRAMES`); CI runs it after `make shifttest`.  `make boottest-coverage` counts the functions the scripts execute (docs/data.md §8.4).  Never commit a screenshot, frame dump, frame-hash list, savestate or capture: they are assets.
   - `make MATCHING=0` — link without `linker.ld`'s per-section address assertions (a modified ROM); the default `MATCHING=1` keeps every section at its original address.
   - `make check-data` — the no-ROM-bytes check (`tools/check_data_policy.py`): `data/*.s` may hold only labels, symbolic `.word`s and `.incbin` slices of `baserom.gba`; needs no baserom.
   - `make check-headers` — compile-only smoke test of `include/gba/*.h` (`tools/header_smoke.c`) with agbcc + old_agbcc, and of all the game headers `include/*.h` in one translation unit (`tools/header_smoke_game.c`); never linked into the ROM.
@@ -96,7 +96,7 @@ module by module, is [`docs/history.md`](docs/history.md).
   really duplicates, the SDK's own inline asm and commented zero-code
   stand-ins.  #37 made the third #154 leftover, `sub_080b38f0`, plain
   (two zero-code stand-ins instead of 10 pins and 6 levers, lesson 3.524).
-- **Data: #36, closed by #162; #167.**  `data/*.s` is structure only
+- **Data: #36, closed by #162; #167; #168.**  `data/*.s` is structure only
   (labels, symbolic pointers, `.incbin "baserom.gba"` slices; `make
   check-data`), one file per zone (a zone cut around C runs keeps one
   file, one section per piece); consumer-proven tables are typed C in
@@ -109,7 +109,12 @@ module by module, is [`docs/history.md`](docs/history.md).
   `make shifttest`: 16,961 unrelocated pointer-like words after crt0, 0
   proven pointers and 0 unknown (16,898 coincidences, 63 unreachable), so
   every insertion point is safe; `make boottest` runs seven shifted ROMs
-  against `knidl.gba` in mGBA, frame for frame, for 14,066 frames.
+  against `knidl.gba` in mGBA, frame for frame, through four scripts
+  (#168: 43,513 frames: menus, stage 1-1, the three sub-games, a game
+  over, stages 1-1 to 1-3 with two goal games and a mid-boss; 1,687 of
+  5,348 functions executed), each checking its scenes with `expect`
+  checkpoints; the credits need the whole game and link play linked
+  cores, so the census alone covers them (docs/data.md §8.4).
 - **Names: #155, open.**  263 of 266 task bodies and 3,800 of 5,348
   functions named (run 4: 689 by role and 662 by their state-table slot,
   docs/naming.md 2.4); `make progress`: 9,520 of 34,017 symbols documented
@@ -126,8 +131,8 @@ module by module, is [`docs/history.md`](docs/history.md).
   `progress`, the `symbols`/`split`/`modmap` regeneration checks (`git diff
   --exit-code`), `datastats`, `shifttest` and `boottest`, and otherwise
   skips them visibly.
-- **Next.**  (1) #37: `make audit` clean and these docs; (2) data: a
-  longer boot-test script, and seg 18's value tables as C if wanted
+- **Next.**  (1) #37: `make audit` clean and these docs; (2) data:
+  seg 18's value tables as C if wanted
   (docs/data.md §7; #167 moved every handler table and record family);
   (3) #155's long tail (about 1,550 `sub_*`, mostly enemy and boss
   states that no defined verb or single slot covers and one-caller

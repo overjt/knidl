@@ -9,9 +9,9 @@ The lessons keep the `sub_`/`gUnk_` names of their time; `docs/analysis/renames.
 
 ## Start here
 
-This file is the project's memory: about 695 numbered lessons in five
+This file is the project's memory: about 705 numbered lessons in five
 sections, each tied to the function, module or tool that taught it.
-The 40 lines below are the ones to read before your first function; each
+The 42 lines below are the ones to read before your first function; each
 names a lesson (and its closest companions) and says what it tells you.
 Then check [Superseded and amended lessons](#superseded-and-amended-lessons)
 before you rely on an older lesson: several were overturned by later runs,
@@ -70,6 +70,7 @@ The procedure itself is [`docs/decomp-loop.md`](decomp-loop.md).
 - [4.133](#4133-sizes-and-order-alone-reproduce-the-rom) Sizes and order alone reproduce the ROM: `linker.ld` places the sections one after another and only asserts their addresses (`MATCHING`).
 - [4.138](#4138-a-census-needs-three-classes-and-heuristics-stay-out-of-proven) (with [4.140](#4140-the-censuss-fourth-class-unreachable-with-a-mechanical-check)) The pointer census keeps heuristics out of "proven", and unreachable regions are a fourth class with a mechanical check.
 - [4.142](#4142-a-raw-relative-branch-is-invisible-to-the-shift-test) (with [4.143](#4143-the-boot-test-two-images-in-lockstep-compared-frame-by-frame)) A raw relative branch is invisible to the shift test; the boot test, which runs shifted images frame for frame, found three, and `tools/branchcheck.py` now checks them.
+- [4.162](#4162-a-scripted-input-drifts-silently-make-it-check-its-own-claims) (with [4.164](#4164-how-far-a-maintained-script-can-go-the-credits-need-the-whole-game)) A boot-test script checks its own claims (`mark`/`expect` on the reference's RAM), so it fails loudly instead of drifting; the credits need the whole game and stay with the census.
 
 **Names**
 
@@ -11128,7 +11129,9 @@ it useful:
   recording; local screenshots for tuning the script stay under
   `pending/`, and the script describes what it reaches in words.
 It is only as wide as its script (level 1, the menus, the story); the
-census stays the proof for the rest.
+census stays the proof for the rest.  (#168 widened it to four scripts with
+checkpoints: the sub-games, a game over, stage 1-2 and a mid-boss;
+4.162-4.164.)
 
 ### 4.144 Records interleaved with other data: one output section, many input sections
 The 179 ActorDef/ActorAux records lie in 34 runs between seg 18's other
@@ -11473,6 +11476,64 @@ reading Fire Lion's bodies; a table-only generator cannot.
   written incrementally and every agent resumed with its context.  The
   heartbeat loop must be stopped while the coordinator is blocked, or the
   supervisor sees a live worker that is not working.
+### 4.162 A scripted input drifts silently; make it check its own claims
+A boot-test script is a list of frame counts and keys; what it reaches
+lives only in its comments.  `input.txt`'s comments put every menu
+screen one key early from #162 on: its START at frame 500 is ignored
+(after a completed boot logo the title reads keys only from about frame
+570), so the A at 804 leaves the title, 1108 picks FILE 1, 1412 START
+GAME and 1722 ONE PLAYER.  The script still worked, by luck of the
+spare keys; two #168 agents found it independently while copying its
+opening.  The fix is in the harness: `mark <scene>` names a scene and
+`expect <cell> <op> <value>` reads a RAM cell of the reference where the
+script claims a scene (the game state, the menu screen, the level, stage
+and room, lives, a win counter), and a failed expectation fails the run.
+A modified ROM, a changed timing or a script edit upstream now stops at
+the first claim that no longer holds instead of playing on into another
+game.  The cells are named from the ELF's `nm` list (`--syms`), and
+`gUnk_` cells by address with the name in a comment: `tools/rename.py`
+does not edit the scripts, so a renamed symbol fails with status 2.
+
+### 4.163 Tuning a boot-test script by play (harness notes from #168)
+* RAM peeks (`--peek CELL --peek-every N`) steer faster than
+  screenshots: the game state, room, lives and health say where Kirby
+  is; the shots confirm what the screen shows.
+* A menu press belongs on the first frame the game accepts it, found by
+  a search over the frame; the expects then catch any shift upstream.
+* Enemies do not repeat between lives: the game-over script starts each
+  life's block on the frame Kirby drops back into the room and tunes the
+  pacing per life.  The game's own tables give timing windows (Bomb
+  Rally's return windows), and a closed loop that moves one hold or
+  release at a time found Air Grind's ten rail gaps.
+* A room's collision map is easier read from RAM than decoded from the
+  ROM, where the maps are compressed: `gRoomMap` points at it once the
+  room is loaded, and each cell's byte 3 is the collision value (1
+  solid, 0x80 water, 16 a door); the level script's agent routed rooms
+  with it.
+* Three proposal agents, one per script, each wrote only under
+  `pending/boot2/wip/<agent>/` and ran the emulator image against a
+  staged copy of the reference and the seven shifted ROMs, so a `make
+  clean` in the tree could not pull the ROMs from under them.  CPU
+  contention between them made local timings useless; CI's timestamps
+  per script gave the budget.
+* Coverage by single-stepping (`--coverage`: `core->step` and the ARM
+  core's PC per instruction) runs as fast as `runFrame`; the code that
+  runs from IWRAM is mapped back to the ROM functions copied there, and
+  the SRAM driver's cores, copied onto the stack, are only counted.
+
+### 4.164 How far a maintained script can go: the credits need the whole game
+The ending (state 11) is entered on stage request 7, which only the
+Nightmare Wizard's defeat raises (and King Dedede's, in Meta Knightmare
+only, a mode locked behind the bit the Wizard's defeat sets), so from an
+empty save the staff credits need 39 stages, seven bosses, the Power Orb
+and the Wizard: some 200,000-250,000 frames of one frame-exact script.
+That is buildable but not maintainable: any change early on moves every
+later frame, and a modified ROM would fail it for reasons unrelated to
+moving data.  The boot test keeps scripts that each start from boot and
+reach one family of scenes (the menus and stage 1-1, the sub-games, the
+game over, level 1 through stage 1-3); the census covers the rest
+(docs/data.md 8.4).  Link play needs linked cores of each image and is
+out of reach of a one-core-per-image harness.
 
 ## 5. Workflow that worked
 

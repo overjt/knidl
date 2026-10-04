@@ -14,9 +14,16 @@
  * matches for the whole run, 1 on any difference, 2 on a usage or load
  * error.
  *
+ * A script can name its scenes (`mark`) and check that the reference really
+ * reaches them (`expect`, a RAM cell of the reference at that frame); a
+ * failed expectation fails the run, so a script cannot drift silently away
+ * from what its comments claim (docs/data.md section 8.4).
+ *
  * Nothing is written except what --shot asks for (PNG frames of the
  * reference, for designing the input script; they are game assets and must
- * never be committed): hashes are compared at run time only.
+ * never be committed) and what --coverage asks for (the ROM address ranges
+ * the reference executed, for a coverage count; never committed either):
+ * hashes are compared at run time only.
  *
  * Built against mGBA's core library (MPL-2.0) in tools/boottest/Dockerfile.
  */
@@ -26,8 +33,10 @@
 #include <mgba/core/core.h>
 #include <mgba/core/log.h>
 #include <mgba/gba/core.h>
+#include <mgba/internal/arm/arm.h>
 #include <mgba-util/vfs.h>
 
+#include <ctype.h>
 #include <errno.h>
 #include <pthread.h>
 #include <unistd.h>
@@ -45,6 +54,95 @@
 #define REGION_EWRAM 2
 #define REGION_IWRAM 3
 
+/* ---------------------------------------------------------------- symbols */
+
+/* --syms: `nm` output ("<hex address> <type> <name>" per line), so that
+ * expect/--peek can name a RAM cell instead of writing its address. */
+struct Sym {
+	char* name;
+	uint32_t addr;
+};
+
+static struct Sym* syms;
+static size_t nsyms;
+
+static void load_syms(const char* path) {
+	FILE* f = fopen(path, "r");
+	char line[512];
+	size_t cap = 1024;
+	if (!f) {
+		fprintf(stderr, "%s: %s\n", path, strerror(errno));
+		exit(2);
+	}
+	syms = malloc(cap * sizeof(*syms));
+	while (fgets(line, sizeof(line), f)) {
+		char addr[64], type[8], name[256];
+		if (sscanf(line, "%63s %7s %255s", addr, type, name) != 3) {
+			continue;
+		}
+		if (nsyms == cap) {
+			cap *= 2;
+			syms = realloc(syms, cap * sizeof(*syms));
+		}
+		syms[nsyms].name = strdup(name);
+		syms[nsyms].addr = strtoul(addr, NULL, 16);
+		++nsyms;
+	}
+	fclose(f);
+}
+
+/* A RAM cell: "<symbol or 0xADDR>[+<offset>]:<size>", size 1, 2 or 4.  The
+ * values are read from the reference (rawRead, no side effects). */
+struct Cell {
+	char spec[96];
+	uint32_t addr;
+	int size;
+};
+
+static int parse_cell(const char* spec, struct Cell* c) {
+	char buf[96];
+	char* colon;
+	char* plus;
+	uint32_t off = 0;
+	snprintf(c->spec, sizeof(c->spec), "%s", spec);
+	snprintf(buf, sizeof(buf), "%s", spec);
+	colon = strrchr(buf, ':');
+	if (!colon) {
+		return 0;
+	}
+	*colon = '\0';
+	c->size = (int) strtol(colon + 1, NULL, 0);
+	if (c->size != 1 && c->size != 2 && c->size != 4) {
+		return 0;
+	}
+	plus = strchr(buf, '+');
+	if (plus) {
+		*plus = '\0';
+		off = strtoul(plus + 1, NULL, 0);
+	}
+	if (isdigit((unsigned char) buf[0])) {
+		c->addr = strtoul(buf, NULL, 0);
+	} else {
+		size_t i;
+		for (i = 0; i < nsyms && strcmp(syms[i].name, buf) != 0; ++i) {
+		}
+		if (i == nsyms) {
+			return 0;
+		}
+		c->addr = syms[i].addr;
+	}
+	c->addr += off;
+	return 1;
+}
+
+static uint32_t read_cell(struct mCore* core, const struct Cell* c) {
+	uint32_t v = 0;
+	for (int i = c->size - 1; i >= 0; --i) {
+		v = v << 8 | (core->rawRead8(core, c->addr + i, -1) & 0xFF);
+	}
+	return v;
+}
+
 /* ---------------------------------------------------------------- input */
 
 static const char* const KEY_NAMES[] = {
@@ -60,6 +158,25 @@ struct Step {
 static struct Step* steps;
 static size_t nsteps;
 static long script_frames;
+
+/* "mark <name>" and "expect <cell> <op> <value>" lines: checkpoints at the
+ * frame where the next step starts (after every frame above them ran). */
+enum { OP_EQ, OP_NE, OP_LT, OP_LE, OP_GT, OP_GE };
+static const char* const OP_NAMES[] = { "==", "!=", "<", "<=", ">", ">=" };
+
+struct Mark {
+	long frame;
+	int line;
+	int expect;          /* 0: a scene name; 1: a RAM check */
+	char name[400];      /* the scene (mark) or the line as written (expect) */
+	struct Cell cell;
+	int op;
+	uint32_t value;
+};
+
+static struct Mark* marks;
+static size_t nmarks, cap_marks;
+static long expects_failed, expects_passed;
 
 static uint32_t parse_keys(const char* spec, const char* path, int line) {
 	uint32_t keys = 0;
@@ -84,9 +201,28 @@ static uint32_t parse_keys(const char* spec, const char* path, int line) {
 	return keys;
 }
 
+static struct Mark* new_mark(const char* path, int lineno, long rep) {
+	if (rep) {
+		fprintf(stderr, "%s:%d: mark/expect inside a repeat block\n", path, lineno);
+		exit(2);
+	}
+	if (nmarks == cap_marks) {
+		cap_marks = cap_marks ? cap_marks * 2 : 64;
+		marks = realloc(marks, cap_marks * sizeof(*marks));
+	}
+	memset(&marks[nmarks], 0, sizeof(*marks));
+	marks[nmarks].frame = script_frames;
+	marks[nmarks].line = lineno;
+	return &marks[nmarks++];
+}
+
 /* One step per line: "<frames> <keys>", keys "-" (none) or names joined by
  * '+' (A B SELECT START RIGHT LEFT UP DOWN R L).  "#" starts a comment;
- * "repeat <n>" ... "end" repeats a block (not nested). */
+ * "repeat <n>" ... "end" repeats a block (not nested).  Outside a repeat
+ * block, "mark <name>" names the scene that starts there and "expect <cell>
+ * <op> <value>" checks a RAM cell of the reference there (<cell> as
+ * parse_cell, <op> one of == != < <= > >=, unsigned; a failed check fails
+ * the run).  Both take effect at the frame where the next step starts. */
 static void load_script(const char* path) {
 	FILE* f = fopen(path, "r");
 	char line[512];
@@ -94,6 +230,7 @@ static void load_script(const char* path) {
 	size_t cap = 256;
 	long rep = 0;
 	size_t rep_start = 0;
+	long rep_frames = 0;
 	if (!f) {
 		fprintf(stderr, "%s: %s\n", path, strerror(errno));
 		exit(2);
@@ -101,23 +238,62 @@ static void load_script(const char* path) {
 	steps = malloc(cap * sizeof(*steps));
 	while (fgets(line, sizeof(line), f)) {
 		char* hash = strchr(line, '#');
-		char a[64], b[256];
+		char a[64], b[256], c[64], d[64];
 		int n;
 		++lineno;
 		if (hash) {
 			*hash = '\0';
 		}
-		n = sscanf(line, "%63s %255s", a, b);
+		n = sscanf(line, "%63s %255s %63s %63s", a, b, c, d);
 		if (n <= 0) {
+			continue;
+		}
+		if (strcmp(a, "mark") == 0 && n >= 2) {
+			struct Mark* m = new_mark(path, lineno, rep);
+			char* name = strstr(line, "mark") + 4;
+			size_t len;
+			while (isspace((unsigned char) *name)) {
+				++name;
+			}
+			len = strlen(name);
+			while (len && isspace((unsigned char) name[len - 1])) {
+				name[--len] = '\0';
+			}
+			snprintf(m->name, sizeof(m->name), "%s", name);
+			continue;
+		}
+		if (strcmp(a, "expect") == 0) {
+			struct Mark* m;
+			int op;
+			if (n != 4) {
+				fprintf(stderr, "%s:%d: expected 'expect <cell> <op> <value>'\n",
+				        path, lineno);
+				exit(2);
+			}
+			for (op = 0; op < 6 && strcmp(OP_NAMES[op], c) != 0; ++op) {
+			}
+			m = new_mark(path, lineno, rep);
+			if (op == 6 || !parse_cell(b, &m->cell)) {
+				fprintf(stderr, "%s:%d: bad expect '%s %s %s' (a cell is "
+				        "<symbol|0xADDR>[+off]:<1|2|4>; symbols need --syms)\n",
+				        path, lineno, b, c, d);
+				exit(2);
+			}
+			m->expect = 1;
+			m->op = op;
+			m->value = strtoul(d, NULL, 0);
+			snprintf(m->name, sizeof(m->name), "%s %s %s", b, c, d);
 			continue;
 		}
 		if (strcmp(a, "repeat") == 0 && n == 2) {
 			rep = strtol(b, NULL, 0);
 			rep_start = nsteps;
+			rep_frames = script_frames;
 			continue;
 		}
 		if (strcmp(a, "end") == 0 && n == 1) {
 			size_t len = nsteps - rep_start;
+			long body = script_frames - rep_frames;
 			for (long r = 1; r < rep; ++r) {
 				for (size_t i = 0; i < len; ++i) {
 					if (nsteps == cap) {
@@ -126,6 +302,7 @@ static void load_script(const char* path) {
 					}
 					steps[nsteps++] = steps[rep_start + i];
 				}
+				script_frames += body;
 			}
 			rep = 0;
 			continue;
@@ -145,12 +322,52 @@ static void load_script(const char* path) {
 			fprintf(stderr, "%s:%d: frame count must be positive\n", path, lineno);
 			exit(2);
 		}
+		script_frames += steps[nsteps].frames;
 		++nsteps;
 	}
 	fclose(f);
-	for (size_t i = 0; i < nsteps; ++i) {
-		script_frames += steps[i].frames;
+}
+
+/* The scene running at frame f: the last mark at or before it, or NULL. */
+static const char* scene_at(long f) {
+	const char* name = NULL;
+	for (size_t i = 0; i < nmarks && marks[i].frame <= f; ++i) {
+		if (!marks[i].expect) {
+			name = marks[i].name;
+		}
 	}
+	return name;
+}
+
+/* Run the marks and expects due before frame f (the reference's state
+ * after frame f - 1). */
+static void check_marks(struct mCore* ref, long f, int last) {
+	static size_t next = 0;
+	while (next < nmarks && (marks[next].frame <= f || last)) {
+		struct Mark* m = &marks[next++];
+		if (m->frame > f) {
+			printf("script line %d: %s %s: not reached (the run ends at frame %ld)\n",
+			       m->line, m->expect ? "expect" : "mark", m->name, f);
+			continue;
+		}
+		if (!m->expect) {
+			printf("frame %6ld: %s\n", m->frame, m->name);
+			continue;
+		}
+		uint32_t v = read_cell(ref, &m->cell);
+		uint32_t w = m->value;
+		int ok = m->op == OP_EQ ? v == w : m->op == OP_NE ? v != w
+		    : m->op == OP_LT ? v < w : m->op == OP_LE ? v <= w
+		    : m->op == OP_GT ? v > w : v >= w;
+		if (ok) {
+			++expects_passed;
+		} else {
+			++expects_failed;
+			printf("frame %6ld: SCRIPT DRIFT: expect %s failed on the reference "
+			       "(value 0x%X, script line %d)\n", m->frame, m->name, v, m->line);
+		}
+	}
+	fflush(stdout);
 }
 
 /* keys for frame `frame` (0-based); the script's line through *line */
@@ -387,13 +604,11 @@ static void open_rom(struct Rom* r) {
 	r->first_ram_diff = -1;
 }
 
-static void run_frame(struct Rom* r, uint32_t keys) {
+static void hash_frame(struct Rom* r) {
 	struct mCore* core = r->core;
 	struct blip_t* left = core->getAudioChannel(core, 0);
 	struct blip_t* right = core->getAudioChannel(core, 1);
 	int n;
-	core->setKeys(core, keys);
-	core->runFrame(core);
 	r->vhash = fnv(FNV_INIT, r->video, WIDTH * HEIGHT * sizeof(color_t));
 	r->ahash = FNV_INIT;
 	while ((n = blip_samples_avail(left)) > 0) {
@@ -404,6 +619,96 @@ static void run_frame(struct Rom* r, uint32_t keys) {
 		blip_read_samples(right, audio_scratch + 1, n, 1);
 		r->ahash = fnv(r->ahash, audio_scratch, n * 2 * sizeof(int16_t));
 	}
+}
+
+static void run_frame(struct Rom* r, uint32_t keys) {
+	r->core->setKeys(r->core, keys);
+	r->core->runFrame(r->core);
+	hash_frame(r);
+}
+
+/* --coverage: the reference runs one instruction at a time, and every ROM
+ * or IWRAM halfword an instruction starts at (both halfwords of an ARM one)
+ * is set in a bitmap; instructions run elsewhere (the BIOS, EWRAM) are only
+ * counted.  IWRAM holds the code AgbInit and the sound driver copy there. */
+#define IWRAM_SIZE 0x8000
+
+static uint8_t* cov;
+static uint8_t cov_iwram[IWRAM_SIZE / 16];
+static uint32_t cov_size;    /* ROM bytes covered by the bitmap */
+static uint64_t cov_rom, cov_iw, cov_other;
+
+static void cov_set(uint8_t* map, uint32_t off, int thumb) {
+	map[off >> 4] |= 1u << ((off >> 1) & 7);
+	if (!thumb) {
+		off += 2;
+		map[off >> 4] |= 1u << ((off >> 1) & 7);
+	}
+}
+
+static void run_frame_stepped(struct Rom* r, uint32_t keys) {
+	struct mCore* core = r->core;
+	struct ARMCore* cpu = core->cpu;
+	uint32_t start = core->frameCounter(core);
+	core->setKeys(core, keys);
+	while (core->frameCounter(core) == start) {
+		int thumb = cpu->executionMode == MODE_THUMB;
+		uint32_t pc = (uint32_t) cpu->gprs[ARM_PC] - (thumb ? 2 : 4);
+		if (!cpu->halted) {
+			if (pc - 0x08000000u < cov_size) {
+				cov_set(cov, pc - 0x08000000u, thumb);
+				++cov_rom;
+			} else if (pc - 0x03000000u < IWRAM_SIZE) {
+				cov_set(cov_iwram, pc - 0x03000000u, thumb);
+				++cov_iw;
+			} else {
+				++cov_other;
+			}
+		}
+		core->step(core);
+	}
+	hash_frame(r);
+}
+
+/* One "<start> <end>" line (hex VMAs, end exclusive) per run of set
+ * halfwords of `map` (`size` bytes from `base`); returns the bytes. */
+static uint64_t write_ranges(FILE* f, const uint8_t* map, uint32_t size, uint32_t base,
+                             long* runs) {
+	uint64_t bytes = 0;
+	for (uint32_t h = 0; h < size / 2;) {
+		uint32_t e;
+		if (!(map[h >> 3] & (1u << (h & 7)))) {
+			++h;
+			continue;
+		}
+		for (e = h; e < size / 2 && (map[e >> 3] & (1u << (e & 7))); ++e) {
+		}
+		fprintf(f, "0x%08X 0x%08X\n", base + h * 2, base + e * 2);
+		bytes += (e - h) * 2;
+		++*runs;
+		h = e;
+	}
+	return bytes;
+}
+
+static void write_coverage(const char* path) {
+	FILE* f = fopen(path, "w");
+	uint64_t bytes, iw;
+	long runs = 0;
+	if (!f) {
+		fprintf(stderr, "%s: %s\n", path, strerror(errno));
+		exit(2);
+	}
+	fprintf(f, "# knidl-boottest --coverage: executed ranges (start end, end exclusive);"
+	        " %llu instructions in ROM, %llu in IWRAM, %llu elsewhere\n",
+	        (unsigned long long) cov_rom, (unsigned long long) cov_iw,
+	        (unsigned long long) cov_other);
+	bytes = write_ranges(f, cov, cov_size, 0x08000000u, &runs);
+	iw = write_ranges(f, cov_iwram, IWRAM_SIZE, 0x03000000u, &runs);
+	fclose(f);
+	printf("coverage: %llu ROM and %llu IWRAM bytes executed in %ld range(s), "
+	       "written to %s\n", (unsigned long long) bytes, (unsigned long long) iw,
+	       runs, path);
 }
 
 /* EWRAM + IWRAM of a test ROM against the reference, up to relocation.
@@ -533,7 +838,11 @@ static void phase_run(int t) {
 			continue;
 		}
 		current_rom = i;
-		run_frame(&roms[i], frame_keys);
+		if (i == 0 && cov) {
+			run_frame_stepped(&roms[i], frame_keys);
+		} else {
+			run_frame(&roms[i], frame_keys);
+		}
 	}
 	current_rom = -1;
 }
@@ -567,7 +876,9 @@ static void usage(void) {
 	fprintf(stderr,
 	    "usage: knidl-boottest [options] REF.gba [TEST.gba@POINT+PAD ...]\n"
 	    "  --frames N       frames to run (default: the script's length + 600)\n"
-	    "  --input FILE     input script (\"<frames> <keys>\" per line)\n"
+	    "  --input FILE     input script (\"<frames> <keys>\" per line, with\n"
+	    "                   mark/expect checkpoints; see load_script)\n"
+	    "  --syms FILE      nm output: symbol names for expect and --peek\n"
 	    "  --no-ram         compare video and audio only\n"
 	    "  --ram-allow A[,A...]  RAM words (addresses) whose difference is\n"
 	    "                   explained and not a pointer (counted, not failed)\n"
@@ -575,6 +886,11 @@ static void usage(void) {
 	    "  --shot F[,F...]  write PNGs of the reference at these frames\n"
 	    "  --shot-every N   ... and every N frames\n"
 	    "  --shot-dir DIR   where the PNGs go (default: .)\n"
+	    "  --peek C[,C...]  print these RAM cells of the reference (SYM[+off]:size\n"
+	    "                   or 0xADDR:size) at the --shot frames and the marks\n"
+	    "  --peek-every N   ... and every N frames\n"
+	    "  --coverage FILE  run the reference alone an instruction at a time and\n"
+	    "                   write the ROM ranges it executed to FILE\n"
 	    "  --step F         diagnostics: run frame F of the reference and the one\n"
 	    "                   test ROM an instruction at a time, report where their\n"
 	    "                   registers first differ beyond relocation, and stop\n"
@@ -593,6 +909,12 @@ int main(int argc, char** argv) {
 	long shot_every = 0;
 	int trace = 0;
 	long step_frame = -1;
+	const char* syms_path = NULL;
+	char* peek_list = NULL;
+	long peek_every = 0;
+	struct Cell peeks[32];
+	int npeeks = 0;
+	const char* cov_path = NULL;
 	pthread_t threads[MAX_ROMS];
 	int status = 0;
 	long distinct = 0;
@@ -604,6 +926,14 @@ int main(int argc, char** argv) {
 			frames = strtol(argv[++i], NULL, 0);
 		} else if (strcmp(a, "--input") == 0 && i + 1 < argc) {
 			input = argv[++i];
+		} else if (strcmp(a, "--syms") == 0 && i + 1 < argc) {
+			syms_path = argv[++i];
+		} else if (strcmp(a, "--peek") == 0 && i + 1 < argc) {
+			peek_list = argv[++i];
+		} else if (strcmp(a, "--peek-every") == 0 && i + 1 < argc) {
+			peek_every = strtol(argv[++i], NULL, 0);
+		} else if (strcmp(a, "--coverage") == 0 && i + 1 < argc) {
+			cov_path = argv[++i];
 		} else if (strcmp(a, "--no-ram") == 0) {
 			use_ram = 0;
 		} else if (strcmp(a, "--trace") == 0) {
@@ -655,8 +985,26 @@ int main(int argc, char** argv) {
 	if (nroms < 1) {
 		usage();
 	}
+	if (syms_path) {
+		load_syms(syms_path);
+	}
 	if (input) {
 		load_script(input);
+	}
+	if (peek_list) {
+		char* list = strdup(peek_list);
+		for (char* tok = strtok(list, ","); tok; tok = strtok(NULL, ",")) {
+			if (npeeks == (int) (sizeof(peeks) / sizeof(*peeks)) || !parse_cell(tok, &peeks[npeeks])) {
+				fprintf(stderr, "--peek: bad cell '%s' (<symbol|0xADDR>[+off]:<1|2|4>; "
+				        "symbols need --syms)\n", tok);
+				exit(2);
+			}
+			++npeeks;
+		}
+	}
+	if (cov_path && nroms != 1) {
+		fprintf(stderr, "--coverage runs the reference alone (no test ROMs)\n");
+		exit(2);
 	}
 	if (frames < 0) {
 		frames = script_frames + 600;
@@ -684,6 +1032,10 @@ int main(int argc, char** argv) {
 	if (step_frame >= 0) {
 		jobs = 1;
 	}
+	if (cov_path) {
+		cov_size = (uint32_t) roms[0].core->romSize(roms[0].core);
+		cov = calloc(cov_size / 16 + 1, 1);
+	}
 	if (jobs > nroms) {
 		jobs = nroms;
 	}
@@ -696,11 +1048,15 @@ int main(int argc, char** argv) {
 		pthread_create(&threads[t], NULL, worker, (void*) (intptr_t) t);
 	}
 
+	long ran = 0;
 	for (long f = 0; f < frames; ++f) {
 		int line;
 		uint32_t keys = keys_at(f, &line);
 		int alive = 0;
+		const char* scene;
 		current_frame = f;
+		check_marks(roms[0].core, f, 0);
+		scene = scene_at(f);
 		if (f == step_frame) {
 			if (nroms != 2) {
 				fprintf(stderr, "--step needs exactly one test ROM\n");
@@ -721,6 +1077,7 @@ int main(int argc, char** argv) {
 		if (jobs > 1) {
 			pthread_barrier_wait(&barrier);
 		}
+		ran = f + 1;
 		if (roms[0].vhash != last_vhash) {
 			++distinct;
 			last_vhash = roms[0].vhash;
@@ -745,6 +1102,29 @@ int main(int argc, char** argv) {
 				write_png(path, roms[0].video);
 			}
 		}
+		if (npeeks) {
+			int want = peek_every > 0 && f % peek_every == 0;
+			if (shots) {
+				char list[1024], key[32];
+				snprintf(list, sizeof(list), ",%s,", shots);
+				snprintf(key, sizeof(key), ",%ld,", f);
+				want |= strstr(list, key) != NULL;
+			}
+			want |= shot_every > 0 && f % shot_every == 0;
+			if (want) {
+				printf("peek %6ld:", f);
+				for (int k = 0; k < npeeks; ++k) {
+					uint32_t v = read_cell(roms[0].core, &peeks[k]);
+					int32_t sv = peeks[k].size == 1 ? (int8_t) v
+					    : peeks[k].size == 2 ? (int16_t) v : (int32_t) v;
+					printf(" %s=%d", peeks[k].spec, sv);
+					if (peeks[k].size == 4 || sv < 0) {
+						printf("(0x%X)", v);
+					}
+				}
+				printf("\n");
+			}
+		}
 		for (int i = 1; i < nroms; ++i) {
 			struct Rom* r = &roms[i];
 			if (r->done) {
@@ -762,8 +1142,9 @@ int main(int argc, char** argv) {
 				if (n && r->first_ram_diff < 0) {
 					r->first_ram_diff = f;
 					printf("%s: RAM differs beyond relocation at frame %ld "
-					       "(script line %d): %ld word(s); pc ref 0x%08X test 0x%08X\n",
-					       r->path, f, line, n, read_pc(&roms[0]), read_pc(r));
+					       "(script line %d%s%s): %ld word(s); pc ref 0x%08X test 0x%08X\n",
+					       r->path, f, line, scene ? ", scene: " : "", scene ? scene : "",
+					       n, read_pc(&roms[0]), read_pc(r));
 					for (long k = 0; k < n && k < 8; ++k) {
 						printf("  0x%08X: ref 0x%08X test 0x%08X\n", r->ram_addr[k],
 						       r->ram_ref[k], r->ram_test[k]);
@@ -776,8 +1157,9 @@ int main(int argc, char** argv) {
 				    ? (r->ahash != roms[0].ahash ? "video+audio" : "video")
 				    : "audio";
 				r->done = 1;
-				printf("%s: first difference at frame %ld (%s; script line %d); "
+				printf("%s: first difference at frame %ld (%s; script line %d%s%s); "
 				       "pc ref 0x%08X test 0x%08X\n", r->path, f, r->what, line,
+				       scene ? ", scene: " : "", scene ? scene : "",
 				       read_pc(&roms[0]), read_pc(r));
 				continue;
 			}
@@ -788,6 +1170,7 @@ int main(int argc, char** argv) {
 			break;
 		}
 	}
+	check_marks(roms[0].core, ran, 1);
 	stop_threads = 1;
 	if (jobs > 1) {
 		pthread_barrier_wait(&barrier);
@@ -830,7 +1213,19 @@ int main(int argc, char** argv) {
 		}
 	}
 	printf("\nreference: %ld frames, %ld distinct consecutive video frames\n",
-	       frames, distinct);
+	       ran, distinct);
+	if (expects_passed || expects_failed) {
+		printf("script checks: %ld of %ld expectation(s) held on the reference\n",
+		       expects_passed, expects_passed + expects_failed);
+	}
+	if (expects_failed) {
+		printf("SCRIPT DRIFT: the reference no longer reaches what the script "
+		       "expects (see above)\n");
+		status = 1;
+	}
+	if (cov) {
+		write_coverage(cov_path);
+	}
 	for (int i = 0; i < nroms; ++i) {
 		roms[i].core->deinit(roms[i].core);
 	}

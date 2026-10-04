@@ -1,0 +1,474 @@
+# The boot test's level 1 script (tools/boottest/boottest.c, docs/data.md
+# 8.4; issue #168): boot -> a new game -> stage 1-1 cleared through its
+# goal game -> the hub opens stage 2 -> stage 1-2 with the Warp Star and the
+# mid-boss Poppy Bros. Sr., cleared through its goal game -> the hub opens
+# stage 3 -> stage 1-3 (rooms 1-3).
+#
+# One step per line: "<frames> <keys>"; "repeat <n>" ... "end"; "mark <scene>"
+# and "expect <cell> <op> <value>" check the scenes every run (they apply at the
+# frame where the next step starts).  The run starts from a fresh, empty save.
+# Frames in the comments are where each step starts.  The level 1 boss (Whispy
+# Woods, gRoomTable[0][4]) needs stage 1-4 cleared (gHubDoorUnlocks); this
+# script stops in stage 1-3 (docs/data.md 8.4 says why).  gHudHpBars+2 is the
+# mid-boss's HP bar.
+#
+# Frame 0-499: the boot (HAL Laboratory / Nintendo logo, the Kirby swarm) and
+# the title screen.
+500 -
+# 500: START, ignored (the title reads keys from about frame 570)
+mark title screen
+expect gGameState:2 == 3
+4 START
+mark menus: file select, game select, one player
+300 -
+# 804: A leaves the title (the file select from 814); 1108: A on FILE 1 ->
+# GAME SELECT; 1412: A on START GAME -> the ONE PLAYER / MULTIPLAYER pop-up
+4 A
+300 -
+expect gGameState:2 == 4
+4 A
+300 -
+10 A
+300 -
+# 1722: START on ONE PLAYER -> a new game: the level 1 intro scene
+# (gGameState 7), then the level 1 hub (gLevelIndex 8) with Kirby at the
+# stage 1 door
+mark new game: level 1 intro scene, hub
+10 START
+478 -
+# 2210: UP at the door of stage 1 -> stage 1-1 (gLevelIndex 0, gStageIndex 0)
+expect gGameState:2 == 5
+expect gLevelIndex:1 == 8
+10 UP
+40 -
+# 2260: stage 1-1, room 1 (gRoomIndex 0): float right along the top (A every
+# 30 frames); at 2850 an air puff (B) knocks out the Bronto Burt ahead
+mark stage 1-1 room 1
+expect gGameState:2 == 8
+expect gLevelIndex:1 == 0
+expect gStageIndex:1 == 0
+expect gRoomIndex:2 == 0
+repeat 19
+22 RIGHT
+8 RIGHT+A
+end
+20 RIGHT
+4 RIGHT+B
+13 RIGHT
+8 RIGHT+A
+repeat 3
+22 RIGHT
+8 RIGHT+A
+end
+15 RIGHT
+repeat 5
+22 RIGHT
+8 RIGHT+A
+end
+# 3130: hover over the door until the Hot Head's fire is past, exhale, drop
+# onto the door, UP -> room 2
+8 A
+8 -
+8 A
+8 -
+8 -
+22 RIGHT
+4 B
+46 -
+30 UP
+# 3272: stage 1-1, room 2 (gRoomIndex 1): float right, an air puff at 3860 at
+# the Bronto Burt; exhale over the door, drop, UP -> room 3
+mark stage 1-1 room 2
+expect gRoomIndex:2 == 1
+expect gPlayerHealth:2 == 48
+repeat 19
+22 RIGHT
+8 RIGHT+A
+end
+18 RIGHT
+4 RIGHT+B
+1 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+29 RIGHT
+repeat 4
+22 RIGHT
+8 RIGHT+A
+end
+41 RIGHT
+4 B
+46 -
+30 UP
+# 4233: stage 1-1, room 3 (gRoomIndex 2): walk, rise fast past the Hot Head on
+# its ledge, an air puff at the Bronto Burt (4589), float to the stage's goal
+# door on its high ledge, hover, exhale, drop, UP
+mark stage 1-1 room 3
+expect gRoomIndex:2 == 2
+61 RIGHT
+repeat 18
+10 RIGHT
+6 RIGHT+A
+end
+7 RIGHT
+4 RIGHT+B
+1 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+10 RIGHT
+repeat 9
+22 RIGHT
+8 RIGHT+A
+end
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+28 RIGHT
+8 A
+8 -
+4 B
+40 -
+30 UP
+# 5180: the goal game (gGameState 10): A on the springboard at 5218 sends Kirby
+# to the top cloud; then back to the hub, where the stage 2 door opens
+mark goal game (stage 1-1 cleared)
+expect gGameState:2 == 10
+38 -
+4 A
+640 -
+# 5862: the hub again: walk right down the steps, UP at the stage 2 door
+mark hub: stage 2 door open
+expect gGameState:2 == 5
+expect gLevelIndex:1 == 8
+expect gFurthestStage:1 == 1
+96 RIGHT
+12 -
+20 UP
+# 5990: stage 1-2, room 1 (gStageIndex 1, gRoomIndex 0): float right along the
+# top; exhale at 6820 and drop onto the Warp Star -> it carries Kirby off the
+# screen and up through room 2 (the tall room) into room 3 (7080)
+mark stage 1-2 room 1
+expect gLevelIndex:1 == 0
+expect gStageIndex:1 == 1
+expect gRoomIndex:2 == 0
+repeat 27
+22 RIGHT
+8 RIGHT+A
+end
+20 RIGHT
+4 B
+290 -
+# 7114: stage 1-2, room 3 (gRoomIndex 2): Kirby lands (7264), walks, inhales
+# a Bronto Burt and spits it as a star (7460): the star hits the mid-boss
+# Poppy Bros. Sr. as he jumps in (7500, the boss HP bar, the defeat flash, +1000
+# points)
+mark stage 1-2 room 3: mid-boss Poppy Bros. Sr.
+expect gRoomIndex:2 == 2
+150 -
+22 RIGHT
+8 RIGHT+A
+4 B
+30 B
+4 -
+4 DOWN
+4 -
+20 RIGHT
+30 RIGHT
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+10 RIGHT
+4 B
+30 B
+4 -
+4 DOWN
+4 -
+# 7506: the mid-boss is down (score 2700: 800 + 900 + 1000 for him)
+mark mid-boss defeated
+expect gPlayerScores:4 >= 2700
+expect gHudHpBars+2:2 == 32
+30 RIGHT
+10 RIGHT
+20 RIGHT
+10 RIGHT
+4 B
+30 B
+4 -
+4 DOWN
+4 -
+# 7622: over the ledges (inhale, spit, jump) to the room's end door; swallow,
+# step back left onto the door, UP -> room 4
+24 RIGHT
+8 RIGHT
+6 RIGHT+A
+10 RIGHT
+12 RIGHT
+4 B
+26 B
+4 -
+4 RIGHT+B
+6 -
+4 B
+12 B
+12 RIGHT+A
+10 RIGHT
+4 RIGHT+B
+6 -
+4 RIGHT+B
+6 -
+8 RIGHT
+4 B
+6 B
+6 RIGHT+A
+10 RIGHT
+4 RIGHT+B
+6 -
+24 RIGHT
+4 RIGHT+B
+6 -
+4 DOWN
+12 -
+20 LEFT
+4 -
+20 UP
+# 7922: stage 1-2, room 4 (gRoomIndex 3): the cave: Kirby swallows a Hot Head
+# (the FIRE ability, its HUD panel) and breathes fire; a hit knocks it out; a
+# low float under the ceiling, over the water and the Waddle Dees (hits: the
+# health drops to 16), to the door at the top right; exhale, drop, UP
+mark stage 1-2 room 4 (cave)
+expect gRoomIndex:2 == 3
+22 RIGHT
+8 RIGHT+A
+12 RIGHT+A
+10 RIGHT
+20 RIGHT
+8 RIGHT+A
+4 RIGHT+B
+6 RIGHT
+8 RIGHT
+4 DOWN
+4 -
+22 RIGHT
+8 RIGHT+A
+12 RIGHT+A
+10 RIGHT
+2 RIGHT
+10 RIGHT
+4 DOWN
+4 -
+24 RIGHT
+6 RIGHT+A
+10 RIGHT
+22 RIGHT
+1 -
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+42 RIGHT
+8 RIGHT+A
+repeat 11
+22 RIGHT
+8 RIGHT+A
+end
+8 RIGHT
+4 B
+36 -
+20 UP
+# 9011: stage 1-2, room 5 (gRoomIndex 4), the room of the stage's goal door: the
+# middle band, then float up the left side to the top (9781), walk right,
+# wait for the Sword Knight on the planks to turn, jump onto the door's
+# ledge, UP
+mark stage 1-2 room 5 (goal room)
+expect gRoomIndex:2 == 4
+expect gPlayerLives:2 == 2
+4 -
+6 A
+10 UP
+12 RIGHT
+6 RIGHT+A
+5 -
+4 -
+6 A
+4 -
+3 A
+12 RIGHT
+6 RIGHT+A
+12 RIGHT
+6 RIGHT+A
+4 -
+6 A
+4 -
+6 A
+4 LEFT
+12 RIGHT
+6 RIGHT+A
+20 UP
+8 RIGHT
+10 UP
+4 RIGHT
+6 RIGHT
+6 RIGHT+A
+16 LEFT
+6 RIGHT
+6 RIGHT+A
+10 UP
+8 RIGHT
+2 B
+4 -
+6 A
+20 UP
+4 -
+6 A
+16 LEFT
+4 -
+12 LEFT
+6 LEFT+A
+4 -
+6 A
+8 RIGHT
+12 RIGHT
+6 RIGHT+A
+6 RIGHT
+4 -
+6 A
+8 RIGHT
+20 UP
+4 -
+6 A
+4 -
+6 A
+2 RIGHT
+150 LEFT
+repeat 16
+4 LEFT
+6 LEFT+A
+end
+40 LEFT
+6 A
+130 RIGHT
+61 -
+16 RIGHT+A
+20 RIGHT
+20 -
+20 UP
+# 10054: the goal game again (stage 1-2 cleared): A on the springboard; then
+# the hub, where the stage 3 door opens on top of the checkered block
+mark goal game (stage 1-2 cleared)
+expect gGameState:2 == 10
+expect gFurthestStage:1 == 2
+54 -
+4 A
+# 10112: the hub: float up right onto the checkered block, UP at the stage 3
+# door
+mark hub: stage 3 door open
+560 -
+expect gGameState:2 == 5
+expect gLevelIndex:1 == 8
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+4 RIGHT
+6 RIGHT+A
+40 RIGHT
+4 B
+30 -
+20 UP
+30 -
+# 10906: stage 1-3, room 1 (gStageIndex 2, gRoomIndex 0): float right along the
+# top; exhale before the door (a Sir Kibble waits there), drop beside it, walk
+# onto it, UP -> room 2
+mark stage 1-3 room 1
+expect gLevelIndex:1 == 0
+expect gStageIndex:1 == 2
+expect gRoomIndex:2 == 0
+repeat 28
+22 RIGHT
+8 RIGHT+A
+end
+36 RIGHT
+4 B
+20 -
+12 RIGHT
+4 -
+20 UP
+10 -
+# 11852: stage 1-3, room 2 (gRoomIndex 1): float right, an air puff (12026) at
+# the Bronto Burt, exhale over the door, drop, step onto it, UP -> room 3
+mark stage 1-3 room 2
+expect gRoomIndex:2 == 1
+repeat 5
+22 RIGHT
+8 RIGHT+A
+end
+24 RIGHT
+4 RIGHT+B
+1 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+22 RIGHT
+8 RIGHT+A
+23 RIGHT
+repeat 18
+22 RIGHT
+8 RIGHT+A
+end
+47 RIGHT
+8 RIGHT+A
+4 B
+20 -
+16 RIGHT
+4 -
+20 UP
+# the end: stage 1-3, room 3 (gRoomIndex 2), the tall room with the shaft and
+# the water; the run ends 600 frames after the script
+30 -
+mark stage 1-3 room 3
+expect gRoomIndex:2 == 2
+expect gPlayerHealth:2 == 16
+30 -
