@@ -186,9 +186,9 @@ void InitPlayerState(s32 a0)
 
     p = &gPlayerStates[a0];
     p->playerIndex = a0;
-    p->prevAction = 0;
-    p->action = 0;
-    p->requestedAction = 0;
+    p->prevAction = PLAYER_ACTION_NONE;
+    p->action = PLAYER_ACTION_NONE;
+    p->requestedAction = PLAYER_ACTION_NONE;
     p->prevMode = 255;
     p->mode = -1;
     p->mouthState = 0;
@@ -261,9 +261,9 @@ void sub_0803d1c4(s32 a0)
 
     p = &gPlayerStates[a0];
     p->playerIndex = a0;
-    p->prevAction = 0;
-    p->action = 0;
-    p->requestedAction = 0;
+    p->prevAction = PLAYER_ACTION_NONE;
+    p->action = PLAYER_ACTION_NONE;
+    p->requestedAction = PLAYER_ACTION_NONE;
     p->prevMode = 255;
     p->mode = -1;
     p->mouthState = 0;
@@ -329,9 +329,9 @@ void sub_0803d2d4(s32 a0)
 
     p = &gPlayerStates[a0];
     p->playerIndex = a0;
-    p->prevAction = 0;
-    p->action = 0;
-    p->requestedAction = 0;
+    p->prevAction = PLAYER_ACTION_NONE;
+    p->action = PLAYER_ACTION_NONE;
+    p->requestedAction = PLAYER_ACTION_NONE;
     p->prevMode = 255;
     p->mode = -1;
     p->ability = gPlayerAbilities[a0];
@@ -1177,7 +1177,7 @@ s32 sub_0803e55c(void)
     }
     else
     {
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     }
     return gCurTask->player->requestedAction;
 }
@@ -2425,7 +2425,7 @@ s32 PlayerCheckDie(void)
         return 0;
     AddPlayerHealth(-gPlayerHealth[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
     gCurTask->hitKind = 1;
-    gCurTask->player->requestedAction = 17;
+    gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
     return gCurTask->player->requestedAction;
 }
 
@@ -2519,10 +2519,10 @@ s32 PlayerCheckSkid(void)
     if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
     {
         if (gCurTask->facing == -1)
-            gCurTask->player->requestedAction = 4;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SKID;
     }
     else if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->facing == 1)
-        gCurTask->player->requestedAction = 4;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SKID;
     return gCurTask->player->requestedAction;
 }
 
@@ -2534,9 +2534,9 @@ s32 PlayerCheckJump(void)
      && gCurTask->player->unk37 != 2)
     {
         if (gCurTask->player->unk37 != 3)
-            gCurTask->player->requestedAction = 5;
+            gCurTask->player->requestedAction = PLAYER_ACTION_JUMP;
         else
-            gCurTask->player->requestedAction = 57;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAR_ROD_JUMP;
     }
     return gCurTask->player->requestedAction;
 }
@@ -2546,13 +2546,13 @@ s32 PlayerCheckFallOrWater(void)
     struct Task *t = gCurTask;
 
     if ((t->onGround & 1) == 0)
-        t->player->requestedAction = 7;
+        t->player->requestedAction = PLAYER_ACTION_FALL;
     else if (t->waterFlags & 1)
     {
         if (t->velX != 0)
-            t->player->requestedAction = 25;
+            t->player->requestedAction = PLAYER_ACTION_WALK_IN_WATER;
         else
-            t->player->requestedAction = 24;
+            t->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
     }
     return gCurTask->player->requestedAction;
 }
@@ -2564,11 +2564,11 @@ s32 PlayerCheckDuckOrSwallow(void)
         if (gCurTask->player->mouthState == 1 && gRoomExitKind != 1)
         {
             if (((s8 *)gCurTask->player)[11] != 0)
-                gCurTask->player->requestedAction = 29;
+                gCurTask->player->requestedAction = PLAYER_ACTION_GET_ABILITY;
             else if ((gCurTask->waterFlags & 1) == 0)
-                gCurTask->player->requestedAction = 15;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWALLOW;
             else
-                gCurTask->player->requestedAction = 26;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWALLOW_IN_WATER;
             if (gCurTask->player->ownStarInMouth != 0)
             {
                 if (gCurTask->player->ownStarSwallowCount <= 2)
@@ -2579,7 +2579,7 @@ s32 PlayerCheckDuckOrSwallow(void)
                 gCurTask->player->ownStarSwallowCount = 0;
         }
         else if ((gCurTask->waterFlags & 1) == 0)
-            gCurTask->player->requestedAction = 10;
+            gCurTask->player->requestedAction = PLAYER_ACTION_DUCK;
     }
     return gCurTask->player->requestedAction;
 }
@@ -2591,10 +2591,10 @@ s32 PlayerCheckLadder(void)
         if (gTerrainResult[6] & 1)
         {
             if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 64)
-                gCurTask->player->requestedAction = 12;
+                gCurTask->player->requestedAction = PLAYER_ACTION_LADDER;
         }
         else if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 128)
-            gCurTask->player->requestedAction = 12;
+            gCurTask->player->requestedAction = PLAYER_ACTION_LADDER;
     }
     return gCurTask->player->requestedAction;
 }
@@ -2615,13 +2615,13 @@ s32 PlayerCheckFloat(void)
                 if (++((s8 *)gCurTask->player)[16] == 9)
                 {
                     ((s8 *)gCurTask->player)[16] = 0;
-                    gCurTask->player->requestedAction = 9;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_FLOAT;
                 }
             }
             else if ((gCurTask->waterFlags & 1) == 0)
             {
                 ((s8 *)gCurTask->player)[16] = 0;
-                gCurTask->player->requestedAction = 9;
+                gCurTask->player->requestedAction = PLAYER_ACTION_FLOAT;
             }
         }
         else
@@ -2634,7 +2634,7 @@ s32 PlayerCheckAirFloat(void)
 {
     if (gCurTask->player->mouthState == 0
      && (gLatchedPressedKeys[gCurTask->player->playerIndex] & 1))
-        gCurTask->player->requestedAction = 9;
+        gCurTask->player->requestedAction = PLAYER_ACTION_FLOAT;
     return gCurTask->player->requestedAction;
 }
 
@@ -2649,20 +2649,20 @@ s32 PlayerCheckBButton(void)
         if (gCurTask->onGround & 1)
         {
             if (gCurTask->player->running != 0)
-                gCurTask->player->requestedAction = 27;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SPIT_IN_WATER;
             else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
-                gCurTask->player->requestedAction = 28;
+                gCurTask->player->requestedAction = PLAYER_ACTION_WATER_SHOT;
             else
-                gCurTask->player->requestedAction = 26;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWALLOW_IN_WATER;
         }
         else
         {
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
-                gCurTask->player->requestedAction = 29;
+                gCurTask->player->requestedAction = PLAYER_ACTION_GET_ABILITY;
             else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
-                gCurTask->player->requestedAction = 28;
+                gCurTask->player->requestedAction = PLAYER_ACTION_WATER_SHOT;
             else
-                gCurTask->player->requestedAction = 26;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWALLOW_IN_WATER;
         }
         gCurTask->player->running = 0;
         goto out;
@@ -2677,9 +2677,9 @@ s32 PlayerCheckBButton(void)
     if (gCurTask->player->mouthState == 1)
     {
         if ((gCurTask->waterFlags & 1) == 0)
-            gCurTask->player->requestedAction = 14;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SPIT;
         else
-            gCurTask->player->requestedAction = 27;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SPIT_IN_WATER;
         goto out;
     }
     if (gCurTask->player->ability == ABILITY_HI_JUMP && (gCurTask->player->unk42 & 4) == 0
@@ -2700,7 +2700,7 @@ out:
 s32 PlayerCheckEnterWater(void)
 {
     if (gCurTask->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     return gCurTask->player->requestedAction;
 }
 
@@ -2715,7 +2715,7 @@ s32 PlayerCheckEnterDoor(void)
         gPauseDisabled = 1;
         gCurTask->player->unk42 |= 2;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-        gCurTask->player->requestedAction = 20;
+        gCurTask->player->requestedAction = PLAYER_ACTION_ENTER_DOOR;
     }
     return gCurTask->player->requestedAction;
 }
@@ -2740,7 +2740,7 @@ s32 PlayerCheckDropAbility(void)
 s32 PlayerCheckStartSwim(void)
 {
     if ((gLatchedPressedKeys[gCurTask->player->playerIndex] & 65) || (gCurTask->onGround & 1) == 0)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     return gCurTask->player->requestedAction;
 }
 
@@ -2749,22 +2749,22 @@ s32 PlayerRequestLocomotion(void)
     if ((gCurTask->waterFlags & 1) == 0)
     {
         if ((gCurTask->onGround & 1) == 0)
-            gCurTask->player->requestedAction = 7;
+            gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
         else if (gCurTask->velX == 0)
-            gCurTask->player->requestedAction = 1;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND;
         else if (gCurTask->player->running == 0)
-            gCurTask->player->requestedAction = 2;
+            gCurTask->player->requestedAction = PLAYER_ACTION_WALK;
         else
-            gCurTask->player->requestedAction = 3;
+            gCurTask->player->requestedAction = PLAYER_ACTION_RUN;
     }
     else if ((gCurTask->onGround & 1) == 0)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     else if (gCurTask->velX == 0)
-        gCurTask->player->requestedAction = 24;
+        gCurTask->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
     else
-        gCurTask->player->requestedAction = 25;
+        gCurTask->player->requestedAction = PLAYER_ACTION_WALK_IN_WATER;
     return gCurTask->player->requestedAction;
 }
 
@@ -2808,7 +2808,7 @@ s32 PlayerCheckShareItem(void)
      || gCurTask->player->mode == 12 || gCurTask->player->mode == 16
      || gCurTask->player->mode == 17 || gCurTask->player->mode == 18
      || gCurTask->player->mode == 19 || gCurTask->player->mode == 22
-     || gCurTask->player->mode == 23 || gCurTask->player->requestedAction == 19
+     || gCurTask->player->mode == 23 || gCurTask->player->requestedAction == PLAYER_ACTION_SHARE_ITEM
      || gCurTask->hitKind == 1 || gCurTask->hitKind == 2
      || (gCurTask->player->mode == 13
          && (gCurTask->player->ability != ABILITY_UFO || gCurTask->variant <= 6)))
@@ -2841,7 +2841,7 @@ s32 PlayerCheckShareItem(void)
         q = &gPlayerStates[i];
         if (q->mode == 10 || q->mode == 11 || q->mode == 12 || q->mode == 16
          || q->mode == 17 || q->mode == 18 || q->mode == 19 || q->mode == 22
-         || q->mode == 23 || q->requestedAction == 19 || u->hitKind == 1 || u->hitKind == 2)
+         || q->mode == 23 || q->requestedAction == PLAYER_ACTION_SHARE_ITEM || u->hitKind == 1 || u->hitKind == 2)
             continue;
         if (q->mode == 13)
         {
@@ -2850,8 +2850,8 @@ s32 PlayerCheckShareItem(void)
             if (u->variant <= 6)
                 continue;
         }
-        gCurTask->player->requestedAction = 19;
-        q->requestedAction = 19;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SHARE_ITEM;
+        q->requestedAction = PLAYER_ACTION_SHARE_ITEM;
         gCurTask->unk18 = u->unk18 = i;
         u->taskClass++;
         u->unk1C = gCurTaskIdx;
@@ -2867,16 +2867,16 @@ void PlayerRequestStandOrFall(void)
     if ((t->waterFlags & 1) == 0)
     {
         if (t->onGround & 1)
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         else
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
     }
     else
     {
         if (!(t->onGround & 1) || (gLatchedHeldKeys[t->player->playerIndex] & 65))
-            t->player->requestedAction = 23;
+            t->player->requestedAction = PLAYER_ACTION_SWIM;
         else
-            t->player->requestedAction = 24;
+            t->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
     }
 }
 

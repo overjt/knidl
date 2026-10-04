@@ -3,6 +3,7 @@
 
 #include "gba/types.h"
 #include "constants/abilities.h"
+#include "constants/player.h"
 #include "constants/tasks.h"
 
 /*

@@ -46,7 +46,7 @@ void PlayerActionBackdrop(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 10;
-    gCurTask->updateState = 27;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BACKDROP;
     if (gCurTask->player->prevMode != 10)
     {
         gCurTask->playerActionDone28 = 0;
@@ -173,7 +173,7 @@ void PlayerActionBackdropUpdate(void)
                 if (gTerrainResult.unk0 != 0)
                 {
                     RequestScreenShake(1);
-                    gCurTask->player->requestedAction = 18;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_RECOIL;
                 }
                 else
                 {
@@ -187,11 +187,11 @@ void PlayerActionBackdropUpdate(void)
         {
             p = t->player;
             if ((s8)p->heldCount != 0)
-                p->requestedAction = 53;
+                p->requestedAction = PLAYER_ACTION_BACKDROP_HOLD;
             else if (!(t->onGround & 1))
-                p->requestedAction = 8;
+                p->requestedAction = PLAYER_ACTION_HIGH_FALL;
             else
-                p->requestedAction = 1;
+                p->requestedAction = PLAYER_ACTION_STAND;
         }
         if (gTerrainResult.unk0 != 0)
             PlayerStopAxes(1);
@@ -202,7 +202,7 @@ void PlayerActionBackdropUpdate(void)
             {
                 PlayerSetWaterMotionY();
                 if ((s8)gCurTask->player->attachedCount == 0)
-                    gCurTask->player->requestedAction = 23;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             }
             else if (PlayerCheckLanding() != 0)
             {
@@ -231,7 +231,7 @@ void PlayerActionThrow(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 10;
-    gCurTask->updateState = 28;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_THROW;
     t = gCurTask;
     if (t->player->prevMode != 10)
     {

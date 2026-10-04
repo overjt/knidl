@@ -39,7 +39,7 @@ void PlayerActionFall(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
-    gCurTask->updateState = 7;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_FALL;
     PlayerSetMotionYPreset(2);
     gCurTask->playerFallBumped = 0;
     if (gCurTask->player->prevMode != 5)
@@ -230,7 +230,7 @@ void PlayerActionFallUpdate(void)
             && gCurTask->player->mouthState == 0 && gCurTask->velY > 0
             && --gCurTask->player->unk14 == 0)
         {
-            gCurTask->player->requestedAction = 8;
+            gCurTask->player->requestedAction = PLAYER_ACTION_HIGH_FALL;
             break;
         }
         if (gCurTask->player->ability != ABILITY_PARASOL && gTerrainResult.unk0 != 0)
@@ -247,7 +247,7 @@ void PlayerActionFallUpdate(void)
                 && (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128))
             {
                 PlayerStopAxes(1);
-                gCurTask->player->requestedAction = 8;
+                gCurTask->player->requestedAction = PLAYER_ACTION_HIGH_FALL;
             }
         }
         break;
@@ -264,7 +264,7 @@ void PlayerActionHighFall(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 8;
-    gCurTask->updateState = 8;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_HIGH_FALL;
     if (gCurTask->player->prevMode != 8)
     {
         gCurTask->variant = 0;
@@ -348,7 +348,7 @@ void PlayerActionHighFallUpdate(void)
     if (PlayerCheckLadder() == 0 && PlayerCheckEnterDoor() == 0 && PlayerCheckEnterWater() == 0
         && PlayerCheckFloat() == 0 && PlayerCheckAirFloat() == 0 && PlayerCheckBButton() == 0)
         PlayerCheckDropAbility();
-    if (gCurTask->player->requestedAction != 0)
+    if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
     {
         gCurTask->player->unk42 &= 0xFEFF;
     }
@@ -400,7 +400,7 @@ void PlayerActionHighFallUpdate(void)
         case 2:
             if (gCurTask->playerHighFallPhase != 0)
             {
-                gCurTask->player->requestedAction = 7;
+                gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
                 gCurTask->player->unk42 &= 0xFEFF;
             }
             break;
@@ -413,7 +413,7 @@ void PlayerActionFloat(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 14;
-    gCurTask->updateState = 9;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_FLOAT;
     if (gCurTask->player->prevMode != 14)
     {
         gCurTask->player->running = 0;

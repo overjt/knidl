@@ -31,7 +31,7 @@ void PlayerActionIce(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 41;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_ICE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -122,7 +122,7 @@ void PlayerActionFreeze(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 42;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_FREEZE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {

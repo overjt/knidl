@@ -35,7 +35,7 @@ void PlayerActionSwim(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 15;
-    gCurTask->updateState = 20;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SWIM;
     t = gCurTask;
     if (t->player->mouthState != 0)
     {
@@ -393,7 +393,7 @@ void PlayerActionSwimUpdate(void)
             TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             break;
         set25:
-            w->player->requestedAction = 25;
+            w->player->requestedAction = PLAYER_ACTION_WALK_IN_WATER;
             goto out;
         dec:
             v->unk28--;
@@ -406,9 +406,9 @@ void PlayerActionSwimUpdate(void)
         if (!(x->waterFlags & 1))
         {
             if ((gLatchedHeldKeys[(q = x->player)->playerIndex] & 64) && q->mouthState != 1)
-                q->requestedAction = 9;
+                q->requestedAction = PLAYER_ACTION_FLOAT;
             else
-                q->requestedAction = 5;
+                q->requestedAction = PLAYER_ACTION_JUMP;
             gCurTask->player->running = 0;
             gCurTask->player->unk0F = 0;
         }
@@ -422,7 +422,7 @@ void PlayerActionSwimUpdate(void)
                 {
                     if (w->velX != 0)
                         goto set25;
-                    w->player->requestedAction = 24;
+                    w->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
                 }
             }
         }
@@ -437,7 +437,7 @@ void PlayerActionStandInWater(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 0;
-    gCurTask->updateState = 21;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAND_IN_WATER;
     if (gCurTask->player->prevMode != 0)
     {
         PlayerStopAxes(3);
@@ -481,7 +481,7 @@ void PlayerActionStandInWaterUpdate(void)
                 break;
             if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->unk28 == 2)
                 break;
-            gCurTask->player->requestedAction = 25;
+            gCurTask->player->requestedAction = PLAYER_ACTION_WALK_IN_WATER;
         }
         break;
     }
@@ -493,7 +493,7 @@ void PlayerActionWalkInWater(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 1;
-    gCurTask->updateState = 22;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_WALK_IN_WATER;
     t = gCurTask;
     if ((u32)abs(t->velX) > 0x9900)
     {
@@ -575,11 +575,11 @@ void PlayerActionWalkInWaterUpdate(void)
     {
         if (gCurTask->velX == 0 && gCurTask->speedLimitX == 0)
         {
-            gCurTask->player->requestedAction = 24;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
             break;
         }
         if (!(gCurTask->onGround & 1))
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         break;
     }
     PlayerSetMotionXPreset(9, 72);
@@ -589,7 +589,7 @@ void PlayerActionSwallowInWater(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 12;
-    gCurTask->updateState = 25;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SWALLOW_IN_WATER;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(225);
@@ -621,9 +621,9 @@ void PlayerActionSwallowInWaterUpdate(void)
     {
         gLatchedHeldKeys[t->player->playerIndex] = gLatchedPressedKeys[t->player->playerIndex] = 0;
         if (t->onGround & 1)
-            t->player->requestedAction = 24;
+            t->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
         else
-            t->player->requestedAction = 23;
+            t->player->requestedAction = PLAYER_ACTION_SWIM;
     }
 }
 
@@ -631,7 +631,7 @@ void PlayerActionSpitInWater(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 11;
-    gCurTask->updateState = 24;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SPIT_IN_WATER;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(224);
@@ -655,9 +655,9 @@ void PlayerActionSpitInWaterUpdate(void)
     if (t->playerActionDone28 != 0)
     {
         if (!(t->onGround & 1) || (gLatchedHeldKeys[t->player->playerIndex] & 65))
-            t->player->requestedAction = 23;
+            t->player->requestedAction = PLAYER_ACTION_SWIM;
         else
-            t->player->requestedAction = 24;
+            t->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
     }
     if (gCurTask->onGround & 1)
     {
@@ -679,7 +679,7 @@ void PlayerActionWaterShot(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 11;
-    gCurTask->updateState = 23;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_WATER_SHOT;
     t = gCurTask;
     if (t->player->prevMode != 11)
     {
@@ -845,16 +845,16 @@ void PlayerActionWaterShotUpdate(void)
     else if (t->unk2C != 0 && PlayerCheckStartSwim() == 0)
     {
         if (!(gCurTask->onGround & 1) || (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65))
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         else
-            gCurTask->player->requestedAction = 24;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
     }
     if (!(gCurTask->waterFlags & 1))
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
-            gCurTask->player->requestedAction = 9;
+            gCurTask->player->requestedAction = PLAYER_ACTION_FLOAT;
         else
-            gCurTask->player->requestedAction = 5;
+            gCurTask->player->requestedAction = PLAYER_ACTION_JUMP;
     }
     if (gCurTask->onGround & 1)
     {
@@ -873,7 +873,7 @@ void PlayerActionRecoil(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
-    gCurTask->updateState = 17;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_RECOIL;
     PlayerSetMotionXPreset(11, 16);
     PlayerSetMotionYPreset(22);
     gCurTask->onGround = 0;
@@ -882,5 +882,5 @@ void PlayerActionRecoil(void)
 
 void PlayerActionRecoilUpdate(void)
 {
-    gCurTask->player->requestedAction = 7;
+    gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
 }

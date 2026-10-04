@@ -242,7 +242,7 @@ void sub_080a1668(s32 a)
         else
             t->facing = 1;
     }
-    gPlayerStates[a].requestedAction = 18;
+    gPlayerStates[a].requestedAction = PLAYER_ACTION_RECOIL;
     gPlayerStates[a].unk42 = 64;
     gUnk_02007D00[a] = -1;
 }

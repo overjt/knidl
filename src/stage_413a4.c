@@ -75,7 +75,7 @@ void MetaKnightActionStand(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 0;
-    gCurTask->updateState = 1;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_STAND;
 
     if (gCurTask->player->prevMode != 0)
     {
@@ -110,7 +110,7 @@ void MetaKnightActionWalk(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 1;
-    gCurTask->updateState = 2;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_WALK;
     PlayerSetMotionXPreset(1, 72);
     p = gCurTask->player;
     if (p->prevMode != 1)
@@ -145,12 +145,12 @@ void MetaKnightActionWalkUpdate(void)
 
         if (t->velX == 0 && t->speedLimitX == 0)
         {
-            t->player->requestedAction = 1;
+            t->player->requestedAction = META_KNIGHT_ACTION_STAND;
         }
         else if (gTerrainResult[0] != 0)
         {
             PlayerCheckBump();
-            gCurTask->player->requestedAction = 1;
+            gCurTask->player->requestedAction = META_KNIGHT_ACTION_STAND;
         }
         else
         {
@@ -160,7 +160,7 @@ void MetaKnightActionWalkUpdate(void)
 
             if (v != 0)
             {
-                p->requestedAction = 3;
+                p->requestedAction = META_KNIGHT_ACTION_RUN;
             }
             else if ((gLatchedHeldKeys[p->playerIndex] & 48) == 0)
             {
@@ -188,7 +188,7 @@ void MetaKnightActionRun(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 2;
-    gCurTask->updateState = 3;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_RUN;
     gCurTask->unk28 = 0;
     PlayerSetMotionXPreset(3, 72);
     if (gCurTask->player->prevMode != 2)
@@ -290,14 +290,14 @@ void MetaKnightActionRunUpdate(void)
             if ((u32)x <= 0x1CBFF)
             {
                 p4->running = m;
-                gCurTask->player->requestedAction = 2;
+                gCurTask->player->requestedAction = META_KNIGHT_ACTION_WALK;
                 goto end;
             }
         }
         if (gTerrainResult[0] == 0)
             goto end;
         PlayerCheckBump();
-        gCurTask->player->requestedAction = 1;
+        gCurTask->player->requestedAction = META_KNIGHT_ACTION_STAND;
         goto end;
     }
 end:
@@ -308,7 +308,7 @@ void MetaKnightActionSkid(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 3;
-    gCurTask->updateState = 4;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_SKID;
     PlayerSetMotionXPreset(4, 72);
     if (gCurTask->player->prevMode != 3)
     {
@@ -326,7 +326,7 @@ void MetaKnightActionJump(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 4;
-    gCurTask->updateState = 5;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_5;
     t = gCurTask;
     if (t->player->prevMode != 4)
     {
@@ -394,7 +394,7 @@ void MetaKnightActionJumpUpdate(void)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);
-            gCurTask->player->requestedAction = 7;
+            gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;
             break;
         }
         if (k == 1)
@@ -410,14 +410,14 @@ void MetaKnightActionJumpUpdate(void)
         else if (t->unk28 != 0 && t->velY >= 0)
         {
             PlayerSetMotionYPreset(6);
-            gCurTask->player->requestedAction = 7;
+            gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;
         }
         p3 = gCurTask->player;
         if (((s8 *)p3)[16] == 0)
         {
             if (gLatchedPressedKeys[p3->playerIndex] & 1)
             {
-                p3->requestedAction = 9;
+                p3->requestedAction = META_KNIGHT_ACTION_FLOAT;
                 break;
             }
         }
@@ -436,7 +436,7 @@ void MetaKnightActionReleaseJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 4;
-    gCurTask->updateState = 6;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_6;
     if (gCurTask->player->prevMode != 4)
     {
         PlayerSetMotionYPreset(4);
@@ -452,7 +452,7 @@ void MetaKnightActionFall(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
-    gCurTask->updateState = 7;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_FALL;
     PlayerSetMotionYPreset(6);
     PlayerPlayBump();
     TaskSetFrame(0x11EC);
@@ -484,7 +484,7 @@ void MetaKnightActionFallUpdate(void)
         {
             if (gLatchedPressedKeys[p->playerIndex] & 1)
             {
-                p->requestedAction = 9;
+                p->requestedAction = META_KNIGHT_ACTION_FLOAT;
                 break;
             }
         }
@@ -505,7 +505,7 @@ void MetaKnightActionFloat(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 14;
-    gCurTask->updateState = 9;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_FLOAT;
     gCurTask->player->running = 0;
     ((s8 *)gCurTask->player)[16] = 7;
     PlayerSetMotionYPreset(11);
@@ -561,7 +561,7 @@ void MetaKnightActionFloatUpdate(void)
         if (gCurTask->velY > 0x10000)
         {
             PlayerSetMotionYPreset(6);
-            gCurTask->player->requestedAction = 7;
+            gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;
         }
         break;
     }
@@ -577,7 +577,7 @@ void MetaKnightActionDuck(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 6;
-    gCurTask->updateState = 10;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_DUCK;
     t = gCurTask;
     if (t->player->prevMode != 6)
     {
@@ -598,7 +598,7 @@ void MetaKnightActionSlide(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 7;
-    gCurTask->updateState = 11;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_SLIDE;
     t = gCurTask;
     if (t->player->prevMode != 7)
     {
@@ -662,7 +662,7 @@ void MetaKnightActionSlideUpdate(void)
             {
                 PlayerCheckBump();
                 PlayerStopAxes(1);
-                gCurTask->player->requestedAction = 1;
+                gCurTask->player->requestedAction = META_KNIGHT_ACTION_STAND;
                 break;
             }
             p = t->player;
@@ -683,7 +683,7 @@ void MetaKnightActionSlideUpdate(void)
             if (t->playerActionDone28 != 0)
             {
                 t->player->hitBoxSet = (void *)v;
-                t->player->requestedAction = 1;
+                t->player->requestedAction = META_KNIGHT_ACTION_STAND;
             }
             break;
         }
@@ -731,7 +731,7 @@ void MetaKnightActionLadder(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 9;
-    gCurTask->updateState = 12;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_LADDER;
     if (gCurTask->player->prevMode != 9)
     {
         PlayerStopAxes(3);
@@ -916,10 +916,10 @@ void MetaKnightActionLadderUpdate(void)
             goto arm3;
         goto callit;
     set5:
-        tg->player->requestedAction = 5;
+        tg->player->requestedAction = META_KNIGHT_ACTION_JUMP;
         return;
     set1:
-        tg->player->requestedAction = 1;
+        tg->player->requestedAction = META_KNIGHT_ACTION_STAND;
         return;
     arm3:
         t->variant = 2;
@@ -950,7 +950,7 @@ void MetaKnightActionLadderUpdate(void)
             goto set5;
         if (tg->onGround & 1)
             goto set1;
-        tg->player->requestedAction = 7;
+        tg->player->requestedAction = META_KNIGHT_ACTION_FALL;
     }
 }
 
@@ -964,7 +964,7 @@ void MetaKnightActionHurt(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 17;
-    gCurTask->updateState = 16;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_HURT;
     t = gCurTask;
     p = t->player;
     if (p->prevMode != 17)
@@ -1284,7 +1284,7 @@ void MetaKnightActionRecoil(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 5;
-    gCurTask->updateState = 17;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_RECOIL;
     PlayerSetMotionXPreset(11, 16);
     PlayerSetMotionYPreset(22);
     gCurTask->onGround = 0;
@@ -1293,7 +1293,7 @@ void MetaKnightActionRecoil(void)
 
 void MetaKnightActionRecoilUpdate(void)
 {
-    gCurTask->player->requestedAction = 7;
+    gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;
 }
 
 void MetaKnightActionEnterDoor(void)
@@ -1351,7 +1351,7 @@ void MetaKnightActionExitDoor(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 19;
-    gCurTask->updateState = 19;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_EXIT_DOOR;
     TaskInitWaterFlags();
     sub_08021c74((s32)gPlayerDefaultTerrainBox, gCurTaskIdx);
     gCurTask->playerActionDone28 = 0;
@@ -1405,7 +1405,7 @@ void MetaKnightActionSwim(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 15;
-    gCurTask->updateState = 20;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_SWIM;
     if (gCurTask->player->prevMode != 15)
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x30)

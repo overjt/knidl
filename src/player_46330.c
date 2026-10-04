@@ -33,7 +33,7 @@ void PlayerActionWheel(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 36;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_WHEEL;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -321,14 +321,14 @@ void PlayerActionWheelUpdate(void)
         PlayerRequestLocomotion();
         {
             struct PlayerState *p = gCurTask->player;
-            if (p->requestedAction == 2)
-                p->requestedAction = 4;
+            if (p->requestedAction == PLAYER_ACTION_WALK)
+                p->requestedAction = PLAYER_ACTION_SKID;
         }
         return;
     }
     if (gCurTask->waterFlags & 1) {
         PlayerStopSfx();
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     }
     {
         struct Task *t = gCurTask;

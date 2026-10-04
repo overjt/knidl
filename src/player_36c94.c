@@ -105,7 +105,7 @@ void PlayerActionLadder(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 9;
-    gCurTask->updateState = 12;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_LADDER;
     if (gCurTask->player->prevMode != 9)
     {
         PlayerStopAxes(3);
@@ -317,7 +317,7 @@ void PlayerActionLadderUpdate(void)
         t->frame = gUnk_0873D880[t->player->ability];
         TaskSetEntry(PlayerActionLadder, gCurTaskIdx);
         if (gUnk_0300244C != 0)
-            gCurTask->player->requestedAction = 0;
+            gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
         return;
     }
     t = gCurTask;
@@ -429,10 +429,10 @@ void PlayerActionLadderUpdate(void)
                 goto arm3;
             goto callit;
         set5:
-            tg->player->requestedAction = 5;
+            tg->player->requestedAction = PLAYER_ACTION_JUMP;
             return;
         set1:
-            tg->player->requestedAction = 1;
+            tg->player->requestedAction = PLAYER_ACTION_STAND;
             return;
         arm3:
             tj->variant = 2;
@@ -465,7 +465,7 @@ void PlayerActionLadderUpdate(void)
             goto set5;
         if (tg->onGround & 1)
             goto set1;
-        tg->player->requestedAction = 7;
+        tg->player->requestedAction = PLAYER_ACTION_FALL;
     }
 }
 
@@ -476,7 +476,7 @@ void PlayerActionInhale(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 10;
-    gCurTask->updateState = 13;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_INHALE;
     t = gCurTask;
     if (t->player->prevMode != 10)
     {
@@ -606,7 +606,7 @@ void PlayerActionInhaleUpdate(void)
             PlayerSetWaterMotionY();
             if ((s8)gCurTask->player->attachedCount == 0)
             {
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
                 break;
             }
         }
@@ -616,7 +616,7 @@ void PlayerActionInhaleUpdate(void)
             if ((t->waterFlags & 1) && (s8)t->player->attachedCount == 0)
             {
                 PlayerSetWaterMotionY();
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
                 break;
             }
         }
@@ -692,11 +692,11 @@ void PlayerActionInhaleUpdate(void)
             break;
         case 3:
             if (t->waterFlags & 1)
-                t->player->requestedAction = 23;
+                t->player->requestedAction = PLAYER_ACTION_SWIM;
             else if (t->onGround & 1)
-                t->player->requestedAction = 1;
+                t->player->requestedAction = PLAYER_ACTION_STAND;
             else
-                t->player->requestedAction = 7;
+                t->player->requestedAction = PLAYER_ACTION_FALL;
             break;
         }
         break;
@@ -730,7 +730,7 @@ void PlayerActionSpit(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 11;
-    gCurTask->updateState = 14;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SPIT;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     PlayerStartOffsetScript(3);
@@ -794,7 +794,7 @@ void PlayerActionSwallow(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 12;
-    gCurTask->updateState = 15;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SWALLOW;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->mouthState = 0;
     TaskSetFrame(68);

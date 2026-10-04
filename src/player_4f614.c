@@ -148,7 +148,7 @@ s32 PlayerBallCheckVariant(s32 a)
     case 3:
         if (PlayerCheckEnterDoor() != 0)
         {
-            gCurTask->player->requestedAction = 0;
+            gCurTask->player->requestedAction = PLAYER_ACTION_NONE;
             gCurTask->unk74 = 1;
             gCurTask->variant = 8;
             r = 8;

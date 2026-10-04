@@ -147,7 +147,7 @@ void MetaKnightActionSwimUpdate(void)
         k = 3;
         goto Lstore;
     L25:
-        gCurTask->player->requestedAction = 25;
+        gCurTask->player->requestedAction = META_KNIGHT_ACTION_WALK_IN_WATER;
         goto L2a;
     Ldec28:
         gCurTask->unk28--;
@@ -163,9 +163,9 @@ void MetaKnightActionSwimUpdate(void)
         if (m == 0)
         {
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x40)
-                gCurTask->player->requestedAction = 9;
+                gCurTask->player->requestedAction = META_KNIGHT_ACTION_FLOAT;
             else
-                gCurTask->player->requestedAction = 5;
+                gCurTask->player->requestedAction = META_KNIGHT_ACTION_JUMP;
             (*tp)->player->running = 0;
             ((u8 *)(*tp)->player)[15] = 0;
         }
@@ -178,7 +178,7 @@ void MetaKnightActionSwimUpdate(void)
                 {
                     if (gCurTask->velX != 0)
                         goto L25;
-                    gCurTask->player->requestedAction = 24;
+                    gCurTask->player->requestedAction = META_KNIGHT_ACTION_STAND_IN_WATER;
                 L2a: ;
                 }
             }

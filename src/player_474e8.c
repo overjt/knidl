@@ -40,7 +40,7 @@ void PlayerActionParasol(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 38;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_PARASOL;
     {
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
@@ -130,7 +130,7 @@ void PlayerActionParasolUpdate(void)
         PlayerRequestLocomotion();
     } else if (t->velY > 0) {
         if (PlayerHasCrossedWaterSurface(0) != 0)
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     }
     u = gCurTask;
     if ((u->onGround & 1) == 0) {
@@ -148,7 +148,7 @@ void PlayerActionSleep(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 39;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SLEEP;
     gCurTask->playerActionDone28 = 0;
     gCurTask->player->unk42 |= 2;
     PlayerSetMotionXPreset(0, 72);
@@ -272,7 +272,7 @@ void PlayerActionNeedle(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 40;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_NEEDLE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -344,7 +344,7 @@ void PlayerActionNeedleUpdate(void)
     u16 *e = gUnk_0873DADE[gCurTask->playerNeedleStep];
 
     sub_0803e55c();
-    if (gCurTask->player->requestedAction != 0)
+    if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
         return;
     switch (gCurTask->variant) {
     case 1:

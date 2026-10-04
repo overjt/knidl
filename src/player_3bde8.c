@@ -56,7 +56,7 @@ void PlayerActionShareItem(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 23;
-    gCurTask->updateState = 18;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SHARE_ITEM;
     if (gCurTask->player->mouthState == 2)
         gCurTask->player->mouthState = 0;
     PlaySfxIfLocalPlayer(292, gCurTask->player->playerIndex);
@@ -417,7 +417,7 @@ void PlayerActionShareItemUpdate(void)
     if (p->ability != ABILITY_UFO)
         PlayerRequestStandOrFall();
     else
-        p->requestedAction = 55;
+        p->requestedAction = PLAYER_ACTION_UFO;
 }
 
 /* M09's sub_08033414: step and draw the player's three sparks (twin of M04's

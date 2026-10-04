@@ -37,7 +37,7 @@ void PlayerActionExitDoor(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 19;
-    gCurTask->updateState = 19;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_EXIT_DOOR;
     gCurTask->facing = 1;
     gCurTask->frame = 0xFFFF;
     TaskInitWaterFlags();

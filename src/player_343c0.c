@@ -35,7 +35,7 @@ void PlayerActionRun(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 2;
-    gCurTask->updateState = 3;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_RUN;
     t = gCurTask;
     t->unk28 = 0;
     t->unk2C = -1;
@@ -204,7 +204,7 @@ void PlayerActionRunUpdate(void)
             if ((u32)x <= 0x14BFF)
             {
                 p4->running = m;
-                gCurTask->player->requestedAction = 2;
+                gCurTask->player->requestedAction = PLAYER_ACTION_WALK;
                 goto end;
             }
         }
@@ -212,7 +212,7 @@ void PlayerActionRunUpdate(void)
         if (m5 != 0)
         {
             PlayerCheckBump();
-            gCurTask->player->requestedAction = 1;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND;
             goto end;
         }
         if (gCurTask->variant == 0)
@@ -238,7 +238,7 @@ void PlayerActionSkid(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 3;
-    gCurTask->updateState = 4;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SKID;
     PlayerSetMotionXPreset(4, 72);
     if (gCurTask->player->prevMode != 3)
     {
@@ -288,21 +288,21 @@ void PlayerActionSkidUpdate(void)
                 }
                 gCurTask->accelX = 0;
                 if (gCurTask->player->running == 0)
-                    gCurTask->player->requestedAction = 2;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_WALK;
                 else
-                    gCurTask->player->requestedAction = 3;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_RUN;
             }
             else
             {
-                gCurTask->player->requestedAction = 1;
+                gCurTask->player->requestedAction = PLAYER_ACTION_STAND;
             }
-            if (gCurTask->player->requestedAction != 0)
+            if (gCurTask->player->requestedAction != PLAYER_ACTION_NONE)
                 break;
         }
         if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
-            gCurTask->player->requestedAction = 1;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND;
         }
         break;
     }
@@ -312,7 +312,7 @@ void PlayerActionJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 4;
-    gCurTask->updateState = 5;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_JUMP;
     if (gCurTask->player->prevMode != 4)
     {
         if (gCurTask->player->prevMode == 9)
@@ -376,7 +376,7 @@ void PlayerActionJumpUpdate(void)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);
-            gCurTask->player->requestedAction = 7;
+            gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
             break;
         }
         switch (gCurTask->variant)
@@ -395,7 +395,7 @@ void PlayerActionJumpUpdate(void)
             {
                 PlayerStopAxes(2);
                 PlayerSetMotionYPreset(2);
-                gCurTask->player->requestedAction = 7;
+                gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
             }
             break;
         }
@@ -416,7 +416,7 @@ void PlayerActionReleaseJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 4;
-    gCurTask->updateState = 6;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_RELEASE_JUMP;
     if (gCurTask->player->prevMode != 4)
     {
         gCurTask->variant = 0;
@@ -468,7 +468,7 @@ void PlayerActionReleaseJumpUpdate(void)
         {
             PlayerCheckBump();
             PlayerStopAxes(2);
-            gCurTask->player->requestedAction = 7;
+            gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
             break;
         }
         switch (gCurTask->variant)
@@ -486,7 +486,7 @@ void PlayerActionReleaseJumpUpdate(void)
             {
                 PlayerStopAxes(2);
                 PlayerSetMotionYPreset(2);
-                gCurTask->player->requestedAction = 7;
+                gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
             }
             break;
         }

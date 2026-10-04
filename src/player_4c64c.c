@@ -34,7 +34,7 @@ void PlayerActionThrowHold(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 51;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_THROW_HOLD;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -184,7 +184,7 @@ void PlayerActionThrowHoldUpdate(void)
         PlayerTurnToHeldDirection();
         if (PlayerHasCrossedWaterSurface(0) != 0) {
             PlayerSetWaterMotionY();
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             break;
         }
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
@@ -249,7 +249,7 @@ void PlayerActionThrowHoldUpdate(void)
     }
     PlayerStopAtCeilingAndWall();
     if (PlayerHasCrossedWaterSurface(0) != 0) {
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         gCurTask->player->unk16 = 255;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     } else if (!(gCurTask->onGround & 1)) {

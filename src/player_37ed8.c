@@ -34,7 +34,7 @@ void PlayerActionHurt(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 17;
-    gCurTask->updateState = 16;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_HURT;
     t = gCurTask;
     p = t->player;
     if (p->prevMode != 17)

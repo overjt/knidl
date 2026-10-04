@@ -18,7 +18,7 @@ void MetaKnightActionStandInWater(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 0;
-    gCurTask->updateState = 21;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_STAND_IN_WATER;
     if (gCurTask->player->prevMode != 0)
     {
         PlayerStopAxes(3);
@@ -32,7 +32,7 @@ void MetaKnightActionWalkInWater(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 1;
-    gCurTask->updateState = 22;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_WALK_IN_WATER;
     PlayerSetMotionXPreset(9, 72);
     while (1)
     {
@@ -59,7 +59,7 @@ void MetaKnightActionSlash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 23;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_SLASH;
 Lloop:
     gCurTask->u80.attackAbility = ABILITY_SWORD;
     {
@@ -268,7 +268,7 @@ void MetaKnightActionDashSlash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 24;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_DASH_SLASH;
     gCurTask->u80.attackAbility = ABILITY_SWORD;
     {
         struct Task *t = gCurTask;
@@ -379,26 +379,26 @@ void MetaKnightActionDashSlashUpdate(void)
     if (gCurTask->playerActionDone28 != 0) {
         if ((gCurTask->onGround & 1) == 0) {
             if ((gCurTask->waterFlags & 1) == 0)
-                gCurTask->player->requestedAction = 7;
+                gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;
             else
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = META_KNIGHT_ACTION_SWIM;
         } else {
             u16 *q = (u16 *)gLatchedHeldKeys;
             if ((q[gCurTask->player->playerIndex] & 48) != 0) {
                 PlayerTurnToHeldDirection();
                 if ((gCurTask->waterFlags & 1) == 0) {
                     *((u8 *)gCurTask->player + 61) = 1;
-                    gCurTask->player->requestedAction = 3;
+                    gCurTask->player->requestedAction = META_KNIGHT_ACTION_RUN;
                 } else {
                     *((u8 *)gCurTask->player + 61) = 0;
-                    gCurTask->player->requestedAction = 23;
+                    gCurTask->player->requestedAction = META_KNIGHT_ACTION_SWIM;
                 }
             } else {
                 *((u8 *)gCurTask->player + 61) = 0;
                 if ((gCurTask->waterFlags & 1) == 0)
-                    gCurTask->player->requestedAction = 1;
+                    gCurTask->player->requestedAction = META_KNIGHT_ACTION_STAND;
                 else
-                    gCurTask->player->requestedAction = 24;
+                    gCurTask->player->requestedAction = META_KNIGHT_ACTION_STAND_IN_WATER;
             }
         }
     } else {
@@ -438,7 +438,7 @@ void MetaKnightActionUpwardSlash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 25;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_UPWARD_SLASH;
     gCurTask->u80.attackAbility = ABILITY_SWORD;
     {
         struct Task *t = gCurTask;
@@ -548,7 +548,7 @@ void MetaKnightActionDownThrust(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 26;
+    gCurTask->updateState = META_KNIGHT_ACTION_HANDLER_DOWN_THRUST;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -638,11 +638,11 @@ void MetaKnightActionDownThrustUpdate(void)
                     if ((q[p->playerIndex] & 2) != 0) {
                         if ((u->waterFlags & 1) == 0) {
                             PlayerSetMotionYPreset(2);
-                            gCurTask->player->requestedAction = 7;
+                            gCurTask->player->requestedAction = META_KNIGHT_ACTION_FALL;
                             break;
                         } else {
                             PlayerSetWaterMotionY();
-                            gCurTask->player->requestedAction = 23;
+                            gCurTask->player->requestedAction = META_KNIGHT_ACTION_SWIM;
                             break;
                         }
                     }
@@ -666,7 +666,7 @@ void MetaKnightActionDownThrustUpdate(void)
                 }
             }
             if (PlayerHasCrossedWaterSurface(0) != 0) {
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = META_KNIGHT_ACTION_SWIM;
                 break;
             }
             {
@@ -699,7 +699,7 @@ void PlayerActionFire(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 29;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_FIRE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -790,7 +790,7 @@ void PlayerActionSpark(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 30;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SPARK;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {

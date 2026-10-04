@@ -35,7 +35,7 @@ void PlayerActionBurning(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 33;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BURNING;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -201,7 +201,7 @@ void PlayerActionBurningUpdate(void)
             struct Task *t = gCurTask;
             if (t->onGround & 1) {
                 if (gTerrainResult.slope != 0) {
-                    t->player->requestedAction = 2;
+                    t->player->requestedAction = PLAYER_ACTION_WALK;
                     PlayerSetMotionXPreset(11, 41);
                     SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
                 }
@@ -234,10 +234,10 @@ void PlayerActionBurningUpdate(void)
         break;
     }
     if (PlayerHasCrossedWaterSurface(0) != 0)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     {
         struct PlayerState *p = gCurTask->player;
-        if (p->requestedAction != 0)
+        if (p->requestedAction != PLAYER_ACTION_NONE)
             p->unk42 &= 0xFFEF;
     }
 }
@@ -246,7 +246,7 @@ void PlayerActionLaser(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 34;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_LASER;
     gCurTask->playerActionDone28 = 0;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSetFrame(0x658);

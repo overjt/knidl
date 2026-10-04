@@ -97,7 +97,7 @@ void PlayerActionSparkUpdate(void)
     sub_0803e55c();
     {
         struct PlayerState *p = gCurTask->player;
-        if (p->requestedAction != 0)
+        if (p->requestedAction != PLAYER_ACTION_NONE)
             p->unk42 &= 0xFFEF;
     }
 }
@@ -106,7 +106,7 @@ void PlayerActionCutter(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 31;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_CUTTER;
     gCurTask->unk28 = 0;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSetFrame(0x3E9);
@@ -141,7 +141,7 @@ void PlayerActionCutterUpdate(void)
             } else if (t->onGround & 1) {
                 if (gLatchedHeldKeys[t->player->playerIndex] & 48) {
                     PlayerTurnToHeldDirection();
-                    gCurTask->player->requestedAction = 2;
+                    gCurTask->player->requestedAction = PLAYER_ACTION_WALK;
                 }
             }
         } else {

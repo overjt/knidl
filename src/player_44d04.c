@@ -32,7 +32,7 @@ void PlayerActionSword(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 32;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SWORD;
     {
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
@@ -226,7 +226,7 @@ void PlayerActionSwordUpdate(void)
             PlayerRequestLocomotion();
         } else {
             if (t->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             {
                 struct Task *u = gCurTask;
                 if (u->unk2C != -1) {
@@ -242,7 +242,7 @@ void PlayerActionSwordUpdate(void)
         if ((t->onGround & 1) || t->playerActionDone28 != 0)
             PlayerRequestLocomotion();
         else if (t->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         {
             struct Task *u = gCurTask;
             if (u->unk2C != -1) {

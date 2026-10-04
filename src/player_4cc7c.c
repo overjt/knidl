@@ -34,7 +34,7 @@ void PlayerActionUFO(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 52;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_UFO;
     t = gCurTask;
     if (t->player->prevMode != 13)
     {

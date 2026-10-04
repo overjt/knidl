@@ -38,7 +38,7 @@ void PlayerActionBeam(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 44;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BEAM;
     gCurTask->playerActionDone28 = 0;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     TaskSetFrame(0xBBD);
@@ -86,7 +86,7 @@ void PlayerActionStone(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 45;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STONE;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {

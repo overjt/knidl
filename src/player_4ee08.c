@@ -222,7 +222,7 @@ void PlayerBallFallUpdate(void)
     if (!PlayerBallCheckVariant(3) && !PlayerBallCheckVariant(2))
     {
         if (PlayerHasCrossedWaterSurface(0) != 0)
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         else if (gCurTask->onGround & 1)
             gCurTask->variant = 7;
         else if (gTerrainResult.unk0 != 0)
@@ -373,10 +373,10 @@ void PlayerBallRevertUpdate(void)
     if ((s16)t->playerActionDone != 0)
     {
         if (t->unk74 != 0)
-            t->player->requestedAction = 20;
+            t->player->requestedAction = PLAYER_ACTION_ENTER_DOOR;
         else
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
     }
-    if (gCurTask->player->requestedAction == 0 && (gCurTask->waterFlags & 1))
-        gCurTask->player->requestedAction = 23;
+    if (gCurTask->player->requestedAction == PLAYER_ACTION_NONE && (gCurTask->waterFlags & 1))
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
 }

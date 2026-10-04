@@ -34,7 +34,7 @@ void PlayerActionStarRod(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 53;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAR_ROD;
     gCurTask->u80.attackAbility = ABILITY_STAR_ROD;
     {
         struct Task *t = gCurTask;
@@ -106,7 +106,7 @@ void PlayerActionStarRodUpdate(void)
             else if ((t->onGround & 1) && (gLatchedHeldKeys[t->player->playerIndex] & 0x30))
             {
                 PlayerTurnToHeldDirection();
-                gCurTask->player->requestedAction = 2;
+                gCurTask->player->requestedAction = PLAYER_ACTION_WALK;
             }
         }
         {
@@ -126,7 +126,7 @@ void PlayerActionStarRodJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 54;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAR_ROD_JUMP;
     gCurTask->variant = 0;
     gCurTask->player->unk14 = 23;
     PlayerSetMotionYPreset(0);
@@ -240,7 +240,7 @@ void PlayerActionStarRodFlight(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 55;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAR_ROD_FLIGHT;
     if (gCurTask->player->prevMode != 13)
     {
         gCurTask->player->running = 0;
@@ -298,6 +298,6 @@ void PlayerActionStarRodFlightUpdate(void)
     {
         gCurTask->hitKind = 1;
         AddPlayerHealth(-gPlayerHealth[gCurTask->player->playerIndex], gCurTask->player->playerIndex);
-        gCurTask->player->requestedAction = 17;
+        gCurTask->player->requestedAction = PLAYER_ACTION_DIE;
     }
 }

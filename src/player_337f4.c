@@ -51,7 +51,7 @@ void PlayerActionStand(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 0;
-    gCurTask->updateState = 1;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_STAND;
 
     if (gCurTask->player->prevMode != 0)
     {
@@ -174,7 +174,7 @@ void PlayerActionStandUpdate(void)
         }
         if (turn != 0)
         {
-            gCurTask->player->requestedAction = 2;
+            gCurTask->player->requestedAction = PLAYER_ACTION_WALK;
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 16)
                 gCurTask->posX = (gCurTask->posX & 0xFFFF0000) | 0xF000;
             else
@@ -218,7 +218,7 @@ void PlayerActionWalk(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 1;
-    gCurTask->updateState = 2;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_WALK;
     gCurTask->unk2C = -1;
     PlayerSetMotionXPreset(1, 72);
     p = gCurTask->player;
@@ -372,12 +372,12 @@ void PlayerActionWalkUpdate(void)
         t = gCurTask;
         if (t->velX == 0 && t->speedLimitX == 0)
         {
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         }
         else if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
-            gCurTask->player->requestedAction = 1;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND;
         }
         else
         {
@@ -387,7 +387,7 @@ void PlayerActionWalkUpdate(void)
 
             if (v != 0)
             {
-                p->requestedAction = 3;
+                p->requestedAction = PLAYER_ACTION_RUN;
             }
             else
             {

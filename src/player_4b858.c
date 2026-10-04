@@ -41,7 +41,7 @@ void PlayerActionBackdropHold(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 50;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BACKDROP_HOLD;
     h = gCurTask;
     if (h->player->prevMode != 13)
     {
@@ -508,7 +508,7 @@ void PlayerActionBackdropHoldUpdate(void)
     }
     PlayerStopAtCeilingAndWall();
     if (PlayerHasCrossedWaterSurface(0) != 0) {
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         gCurTask->player->unk16 = 255;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     } else if (gCurTask->onGround & 1) {

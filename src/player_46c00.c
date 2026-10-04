@@ -30,7 +30,7 @@ void PlayerActionHammer(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 37;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_HAMMER;
     {
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
@@ -209,7 +209,7 @@ void PlayerActionHammerUpdate(void)
         if (t->playerActionDone28 != 0)
             PlayerRequestLocomotion();
         else if (t->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0)
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         {
             struct Task *u = gCurTask;
             if (u->unk2C != -1) {
@@ -233,7 +233,7 @@ void PlayerActionHammerUpdate(void)
                 u->player->hitBoxSet = 0;
                 PlayerRequestLocomotion();
             } else if (u->velY > 0 && PlayerHasCrossedWaterSurface(0) != 0) {
-                gCurTask->player->requestedAction = 23;
+                gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             }
         }
         {

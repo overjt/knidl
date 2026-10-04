@@ -32,7 +32,7 @@ void PlayerActionMike(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 35;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_MIKE;
     gCurTask->variant = gCurTask->player->abilityUses - 1;
     gCurTask->player->unk42 &= 0xFFEF;
     if (--gCurTask->player->abilityUses == 0) {
@@ -212,9 +212,9 @@ void PlayerActionMikeUpdate(void)
 
     if (t->playerActionDone28 != 0) {
         if (t->onGround & 1)
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         else
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
     }
     PlayerStopAtCeilingAndWall();
 }

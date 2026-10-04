@@ -1179,16 +1179,16 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
         if (t->waterFlags == 0)
         {
             if (t->onGround != 0)
-                p->requestedAction = 1;
+                p->requestedAction = PLAYER_ACTION_STAND;
             else
-                p->requestedAction = 7;
+                p->requestedAction = PLAYER_ACTION_FALL;
         }
         else
         {
             if (t->onGround != 0)
-                p->requestedAction = 24;
+                p->requestedAction = PLAYER_ACTION_STAND_IN_WATER;
             else
-                p->requestedAction = 23;
+                p->requestedAction = PLAYER_ACTION_SWIM;
         }
     }
     else
@@ -1203,7 +1203,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)
         p->unk22 = 2;
         break;
     case ABILITY_UFO:
-        p->requestedAction = 55;
+        p->requestedAction = PLAYER_ACTION_UFO;
         break;
     }
     TaskSetEntry(PlayerStartRequestedAction, i);

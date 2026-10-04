@@ -209,7 +209,7 @@ void PlayerActionFloatUpdate(void)
     if (PlayerHasCrossedWaterSurface(0) != 0)
     {
         gCurTask->player->mouthState = 0;
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     }
 }
 
@@ -220,7 +220,7 @@ void PlayerActionDuck(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 6;
-    gCurTask->updateState = 10;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_DUCK;
     t = gCurTask;
     if (t->player->prevMode != 6)
     {
@@ -281,7 +281,7 @@ void PlayerActionDuckUpdate(void)
 
         if (q[t->player->playerIndex] & 3)
         {
-            t->player->requestedAction = 11;
+            t->player->requestedAction = PLAYER_ACTION_SLIDE;
             break;
         }
         if (!(gLatchedHeldKeys[t->player->playerIndex] & 128))
@@ -294,7 +294,7 @@ void PlayerActionDuckUpdate(void)
             if (t->playerDuckDropTimer == 0)
             {
                 t->onGround = 0;
-                gCurTask->player->requestedAction = 7;
+                gCurTask->player->requestedAction = PLAYER_ACTION_FALL;
                 gCurTask->unk84 = 0;
                 gCurTask->posY += 0x10000;
                 break;
@@ -325,7 +325,7 @@ void PlayerActionSlide(void)
 
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 7;
-    gCurTask->updateState = 11;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_SLIDE;
     t = gCurTask;
     if (t->player->prevMode != 7)
     {
@@ -402,13 +402,13 @@ void PlayerActionSlideUpdate(void)
         t = gCurTask;
         if (t->playerActionDone28 != 0)
         {
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         }
         else if (gTerrainResult.unk0 != 0)
         {
             PlayerCheckBump();
             PlayerStopAxes(1);
-            gCurTask->player->requestedAction = 1;
+            gCurTask->player->requestedAction = PLAYER_ACTION_STAND;
         }
         else
         {

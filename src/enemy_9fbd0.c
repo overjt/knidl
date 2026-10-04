@@ -256,7 +256,7 @@ void sub_0809ffec(void)
 
     t = gCurTask;
     if (t->hitKind == 6 && t->hitEffect == 4)
-        gPlayerStates[t->hitterSlot].requestedAction = 18;
+        gPlayerStates[t->hitterSlot].requestedAction = PLAYER_ACTION_RECOIL;
 }
 
 void CreateKingDededeStar(void)

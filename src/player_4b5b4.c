@@ -25,7 +25,7 @@ void PlayerActionLight(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 49;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_LIGHT;
     gPauseDisabled = 1;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     PlayerStopAxes(3);
@@ -117,11 +117,11 @@ void PlayerActionLightUpdate(void)
                deletes the branch, but the `ldr [t, #84]` that fed the test
                stays in the ROM (0x0804B834) as a dead load. */
             if (t->velX == 0)
-                t->player->requestedAction = 1;
+                t->player->requestedAction = PLAYER_ACTION_STAND;
             else
-                t->player->requestedAction = 1;
+                t->player->requestedAction = PLAYER_ACTION_STAND;
         } else {
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
         }
     }
     PlayerStopAtCeilingAndWall();

@@ -43,7 +43,7 @@ void PlayerActionTornado(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 47;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_TORNADO;
     gCurTask->unk28 = 0;
     gCurTask->unk2C = 0;
     gCurTask->variant = 0;
@@ -170,7 +170,7 @@ void PlayerActionTornadoUpdate(void)
         PlayerCheckLanding();
     if (gCurTask->waterFlags != 0 && PlayerHasCrossedWaterSurface(0) != 0) {
         PlayerSetWaterMotionY();
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         gCurTask->player->unk16 = 255;
     }
 }
@@ -179,7 +179,7 @@ void PlayerActionCrash(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 48;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_CRASH;
     gPauseDisabled = 1;
     gCurTask->u80.attackAbility = ABILITY_CRASH;
     PlayerStopAxes(3);
@@ -364,9 +364,9 @@ void PlayerActionCrashUpdate(void)
         break;
     case 3:
         if (t->onGround & 1)
-            t->player->requestedAction = 1;
+            t->player->requestedAction = PLAYER_ACTION_STAND;
         else
-            t->player->requestedAction = 7;
+            t->player->requestedAction = PLAYER_ACTION_FALL;
         break;
     }
     {

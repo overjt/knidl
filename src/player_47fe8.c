@@ -45,7 +45,7 @@ void PlayerActionGetAbility(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 19;
-    gCurTask->updateState = 26;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_GET_ABILITY;
     gPauseDisabled = 1;
     gCurTask->player->running = 0;
     PlayerStopAxes(3);
@@ -704,10 +704,10 @@ void PlayerActionGetAbilityUpdate(void)
         struct PlayerState *p = t->player;
         switch (p->ability) {
         case ABILITY_SLEEP:
-            p->requestedAction = 42;
+            p->requestedAction = PLAYER_ACTION_SLEEP;
             break;
         case ABILITY_UFO:
-            p->requestedAction = 55;
+            p->requestedAction = PLAYER_ACTION_UFO;
             break;
         default:
             PlayerRequestStandOrFall();

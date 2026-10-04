@@ -34,7 +34,7 @@ void PlayerActionHiJump(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 43;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_HI_JUMP;
     {
         struct Task *t = gCurTask;
         if (t->player->prevMode != 13) {
@@ -87,7 +87,7 @@ void PlayerActionHiJump(void)
         PlayerSetMotionYPreset(2);
         gCurTask->player->prevMode = gCurTask->player->mode;
         gCurTask->player->mode = 5;
-        gCurTask->updateState = 7;
+        gCurTask->updateState = PLAYER_ACTION_HANDLER_FALL;
         gCurTask->player->hitBoxSet = 0;
         gCurTask->variant = 4;
         gCurTask->player->unk14 = 300;
@@ -108,7 +108,7 @@ void PlayerActionHiJump(void)
             if (p->mode != 5) {
                 p->prevMode = p->mode;
                 gCurTask->player->mode = 5;
-                gCurTask->updateState = 7;
+                gCurTask->updateState = PLAYER_ACTION_HANDLER_FALL;
                 gCurTask->player->hitBoxSet = 0;
                 PlayerSetMotionYPreset(2);
             }
@@ -221,7 +221,7 @@ void PlayerActionHiJumpUpdate(void)
     }
     {
         struct PlayerState *p = gCurTask->player;
-        if (p->requestedAction != 0)
+        if (p->requestedAction != PLAYER_ACTION_NONE)
             p->unk42 &= 0xFFEF;
     }
 }

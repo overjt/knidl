@@ -27,7 +27,7 @@ void PlayerActionBall(void)
 {
     gCurTask->player->prevMode = gCurTask->player->mode;
     gCurTask->player->mode = 13;
-    gCurTask->updateState = 46;
+    gCurTask->updateState = PLAYER_ACTION_HANDLER_BALL;
     gCurTask->unk74 = 0;
     gCurTask->player->bumpKind = 0;
     gCurTask->unk24 = 0;
@@ -75,7 +75,7 @@ void PlayerActionBallUpdate(void)
         SetPlayerInvulnerability(0xFF, 0, gCurTask->player->playerIndex);
     }
     if (PlayerHasCrossedWaterSurface(0) != 0)
-        gCurTask->player->requestedAction = 23;
+        gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
     else
         CallTableEntry(gCurTask->variant, 9, gPlayerBallVariantUpdates);
 }

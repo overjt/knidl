@@ -41,7 +41,7 @@ void PlayerActionThrowUpdate(void)
             PlayerSetWaterMotionY();
             if ((s8)gCurTask->player->attachedCount != 0)
                 gCurTask->player->unk16 = 0xFF;
-            gCurTask->player->requestedAction = 23;
+            gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             break;
         }
         t = gCurTask;
@@ -95,11 +95,11 @@ void PlayerActionThrowUpdate(void)
         case 3:
             r = t->player;
             if ((s8)r->attachedCount != 0)
-                r->requestedAction = 54;
+                r->requestedAction = PLAYER_ACTION_THROW_HOLD;
             else if (t->onGround & 1)
-                r->requestedAction = 1;
+                r->requestedAction = PLAYER_ACTION_STAND;
             else
-                r->requestedAction = 7;
+                r->requestedAction = PLAYER_ACTION_FALL;
             break;
         }
         break;
