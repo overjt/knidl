@@ -187,11 +187,11 @@ extern s16 gTerrainPrevBoxBottom; /* box bottom (room-relative) */
 
 /* ROM */
 extern u16 gUnk_08732218[];
-extern u16 gUnk_08732224[];
-extern u16 gUnk_08732230[];
+extern u16 gColliderClass10KindBits[];
+extern u16 gColliderClass20KindHitKinds[];
 extern u16 gUnk_08732242[];
 extern u32 gUnk_08732254[];
-extern u32 gUnk_08732278[];
+extern u32 gColliderClass20KindBits[];
 extern u32 gUnk_0873229C[];
 extern s8 *const gCollisionTileShapes[]; /* per-tile-set pixel attribute tables */
 extern u8 gCollisionTileSlope[];

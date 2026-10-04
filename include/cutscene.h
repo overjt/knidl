@@ -50,7 +50,7 @@ extern u32 gUnk_02004B4C;
 extern u32 gUnk_02005584;
 
 /* IWRAM */
-extern struct M19Particle gUnk_03000FE0[];
+extern struct M19Particle gRoomParticles[];
 
 /* ROM */
 extern u32 gUnk_080D21C8[];

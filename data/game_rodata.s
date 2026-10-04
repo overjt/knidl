@@ -1252,11 +1252,11 @@ gUnk_087321EC:
 	.global	gUnk_08732218
 gUnk_08732218:
 	.incbin	"baserom.gba", 0x732218, 0xC
-	.global	gUnk_08732224
-gUnk_08732224:
+	.global	gColliderClass10KindBits
+gColliderClass10KindBits:
 	.incbin	"baserom.gba", 0x732224, 0xC
-	.global	gUnk_08732230
-gUnk_08732230:
+	.global	gColliderClass20KindHitKinds
+gColliderClass20KindHitKinds:
 	.incbin	"baserom.gba", 0x732230, 0x12
 	.global	gUnk_08732242
 gUnk_08732242:
@@ -1264,8 +1264,8 @@ gUnk_08732242:
 	.global	gUnk_08732254
 gUnk_08732254:
 	.incbin	"baserom.gba", 0x732254, 0x24
-	.global	gUnk_08732278
-gUnk_08732278:
+	.global	gColliderClass20KindBits
+gColliderClass20KindBits:
 	.incbin	"baserom.gba", 0x732278, 0x24
 	.global	gUnk_0873229C
 gUnk_0873229C:

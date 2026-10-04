@@ -125,7 +125,7 @@ extern s16 gColliderBottom;           /* body box bottom */
 extern struct HitEntry gColliderClass10[];
 extern u8 gColliderClass10Count;
 extern u16 gUnk_08732218[];
-extern u16 gUnk_08732224[];
+extern u16 gColliderClass10KindBits[];
 
 void CalcHitDamageAndDirection(void);
 void sub_0801b9e4(void);
@@ -415,7 +415,7 @@ u8 HitTestColliderClass10(void)
             return 1;
         }
         k = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
-        mask = gUnk_08732224[k] | 0x4000;
+        mask = gColliderClass10KindBits[k] | 0x4000;
         /* the body box's halfword at 0x0E (ldrh) */
         if (!(gColliderBodyBox->unk0E & 0x8000) && !(mask & gAttackBox->unk10))
         {
@@ -434,7 +434,7 @@ u8 HitTestColliderClass10(void)
         }
         if (!(gAttackBox->unk0E & 0x8000))
         {
-            mask = gUnk_08732224[k];
+            mask = gColliderClass10KindBits[k];
             if (!(mask & gAttackBox->unk0E))
             {
                 gHitKind = 2;

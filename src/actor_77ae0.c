@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x08077AE0 0x08078B68 src/actor_77ae0.c --newpb
  *
  * M19 batch 5: task types #77 (Task_BigSwitch), #78 (Task_Stake), #79
- * (Task_RoomParticles, the credits particle system over gUnk_03000FE0) and #8
+ * (Task_RoomParticles, the credits particle system over gRoomParticles) and #8
  * (Task_WaddleDee), whose states hand off to module M20.
  */
 #include "gba/gba.h"
@@ -304,7 +304,7 @@ void RoomParticlesDrawFixed(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_080781fc(&gUnk_03000FE0[gCurTask->unk28]);
+        sub_080781fc(&gRoomParticles[gCurTask->unk28]);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
 }
@@ -317,7 +317,7 @@ void RoomParticlesDrawBelowLine(void)
              gCurTask->unk28 < gCurTask->unk30;
              gCurTask->unk28++)
         {
-            struct M19Particle *base = gUnk_03000FE0;
+            struct M19Particle *base = gRoomParticles;
             struct M19Particle *p = &base[gCurTask->unk28];
 
             if (p->unk03 > 8)
@@ -330,7 +330,7 @@ void RoomParticlesDrawBelowLine(void)
              gCurTask->unk28 < gCurTask->unk30;
              gCurTask->unk28++)
         {
-            struct M19Particle *base = gUnk_03000FE0;
+            struct M19Particle *base = gRoomParticles;
             struct M19Particle *p = &base[gCurTask->unk28];
 
             if (p->unk03 > gCurTask->unk34 - gSpriteCameraY)
@@ -344,13 +344,13 @@ void RoomParticlesDrawRepeated(void)
     gCurTask->unk28 = 0;
     do
     {
-        sub_0807831c(&gUnk_03000FE0[gCurTask->unk28]);
+        sub_0807831c(&gRoomParticles[gCurTask->unk28]);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
     gCurTask->unk28 = 3;
     do
     {
-        sub_0807831c(&gUnk_03000FE0[gCurTask->unk28]);
+        sub_0807831c(&gRoomParticles[gCurTask->unk28]);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 5);
 }
@@ -620,7 +620,7 @@ void sub_08078670(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 0, 0);
+        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 0, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
     TaskSleepForever();
@@ -631,7 +631,7 @@ void sub_080786b4(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleStepX(&gUnk_03000FE0[gCurTask->unk28]);
+        RoomParticleStepX(&gRoomParticles[gCurTask->unk28]);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
 }
@@ -648,7 +648,7 @@ void sub_080786e8(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 0, 0);
+        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 0, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
     TaskSleepForever();
@@ -659,7 +659,7 @@ void sub_08078734(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 0);
+        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 7);
 }
@@ -676,7 +676,7 @@ void sub_0807876c(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 2, 0);
+        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 2, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
     TaskSleepForever();
@@ -687,7 +687,7 @@ void sub_080787b8(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 2);
+        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 2);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
 }
@@ -704,7 +704,7 @@ void sub_080787f0(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 1, 0);
+        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 1, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 3);
     TaskSleepForever();
@@ -715,7 +715,7 @@ void sub_0807883c(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 1);
+        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 1);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 3);
 }
@@ -726,13 +726,13 @@ void sub_08078874(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 3, 0);
+        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 3, 0);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
     gCurTask->unk28 = 3;
     do
     {
-        RoomParticleInit(&gUnk_03000FE0[gCurTask->unk28], 3, 1);
+        RoomParticleInit(&gRoomParticles[gCurTask->unk28], 3, 1);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 5);
     TaskSleepForever();
@@ -743,13 +743,13 @@ void sub_080788e0(void)
     gCurTask->unk28 = 0;
     do
     {
-        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 3);
+        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 3);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 2);
     gCurTask->unk28 = 3;
     do
     {
-        RoomParticleStepY(&gUnk_03000FE0[gCurTask->unk28], 4);
+        RoomParticleStepY(&gRoomParticles[gCurTask->unk28], 4);
         gCurTask->unk28++;
     } while (gCurTask->unk28 <= 5);
 }

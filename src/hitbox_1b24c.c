@@ -13,10 +13,10 @@
  * facing, unk43) against the camera rectangle, tests it against the actor's
  * attack box and, on an overlap, sorts the hit by the body box's kind k
  * (low nibble of unk08) through the per-kind mask tables gUnk_08732254,
- * gUnk_08732278 and gUnk_0873229C against the attack's flags: it may mark
+ * gColliderClass20KindBits and gUnk_0873229C against the attack's flags: it may mark
  * the collider's task (unk7C = 6/7) or its player (unk76), writes the hit
  * result gHitKind (3/4 with a knock-back direction from ArcTan2 into
- * gHitDirection, 6 or 7, or gUnk_08732230[k] with the damage of
+ * gHitDirection, 6 or 7, or gColliderClass20KindHitKinds[k] with the damage of
  * CalcHitDamageAndDirection) and returns 1; it returns 0 when nothing is hit.
  *
  * Matching notes (#84's final campaign, lesson 3.492): parked by #84 at 44
@@ -105,10 +105,10 @@ extern s16 gColliderTop;
 extern s16 gColliderBottom;
 extern struct HitEntry gColliderClass20[];
 extern u8 gColliderClass20Count;
-extern u16 gUnk_08732230[];
+extern u16 gColliderClass20KindHitKinds[];
 extern u16 gUnk_08732242[];
 extern u32 gUnk_08732254[];
-extern u32 gUnk_08732278[];
+extern u32 gColliderClass20KindBits[];
 extern u32 gUnk_0873229C[];
 
 void CalcHitDamageAndDirection(void);
@@ -184,7 +184,7 @@ u8 HitTestColliderClass20(void)
         {
             if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass == 32)
                 continue;
-            m = gUnk_08732278[k] | 0x4000;
+            m = gColliderClass20KindBits[k] | 0x4000;
             if (!(a->unk18 & m) && !(b->unk10 & 8))
                 t->hitKind = 6;
             if (k == 4)
@@ -244,7 +244,7 @@ u8 HitTestColliderClass20(void)
             default:
                 if (!(gColliderBodyBox->unk10 & 0x10))
                     t->hitKind = 7;
-                gHitKind = gUnk_08732230[k];
+                gHitKind = gColliderClass20KindHitKinds[k];
                 CalcHitDamageAndDirection();
                 break;
             }
@@ -258,7 +258,7 @@ u8 HitTestColliderClass20(void)
         }
         if (gColliderSlot != (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass != 32)
         {
-            m = gUnk_08732278[k] | 0x4000;
+            m = gColliderClass20KindBits[k] | 0x4000;
             if (!(gAttackBox->unk18 & m) && !(gColliderBodyBox->unk10 & 8))
                 t->hitKind = 6;
         }

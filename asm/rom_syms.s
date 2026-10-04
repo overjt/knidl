@@ -637,8 +637,8 @@ gFrameInProgress = 0x03000FD0
 gWin0H = 0x03000FD4
 	.global	gUnk_03000FD8
 gUnk_03000FD8 = 0x03000FD8
-	.global	gUnk_03000FE0
-gUnk_03000FE0 = 0x03000FE0
+	.global	gRoomParticles
+gRoomParticles = 0x03000FE0
 	.global	gObjMosaic
 gObjMosaic = 0x03001000
 	.global	gUnk_03001004
