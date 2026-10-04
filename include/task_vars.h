@@ -784,8 +784,8 @@
 /* MetaKnight - Meta Knight (task type #61, Task_MetaKnight;
    gMetaKnightStates) */
 #define metaKnightFollowOffsetX unk18 /* s32: X offset from the target player that state 1 keeps (+-64, gUnk_08748D60) */
-#define metaKnightFollowTimer unk1C /* s32: frames left in state 1 (follow) before sub_080a7190 picks the next state */
-#define metaKnightWalkAnimFlags unk20 /* s32: for the walk-frame loop sub_080a6e98: bit 1 fast step delays, bit 0 hold the frame */
+#define metaKnightFollowTimer unk1C /* s32: frames left in state 1 (follow) before MetaKnightPickNextState picks the next state */
+#define metaKnightWalkAnimFlags unk20 /* s32: for the walk-frame loop MetaKnightAnimateWalk: bit 1 fast step delays, bit 0 hold the frame */
 #define metaKnightFollowPhase unk24 /* s32: state 1's step: 0 walk to the spot by the player, 1 move with the player, 2 stand */
 #define metaKnightGuardFlags unk28 /* s32: guard rolls: bit 7 set by each state change, bits 0-1 rolls left after damage */
 #define metaKnightTargetPlayerSlot unk2C /* s32: task slot of the player state 1 last followed (TaskFindNearestPlayer); -1 at init */
@@ -880,7 +880,7 @@
 /* MrFrostyIceCube - Mr. Frosty's ice cube (task type #115,
    Task_MrFrostyIceCube; gMrFrostyIceCubeVariants, gMrFrostyIceCubeStates;
    spawned by CreateMrFrostyIceCube) */
-#define mrFrostyIceCubeArc unk28 /* s32: the flight's arc: 0 a high lob, 1 a flat fast throw (sub_0809b4fc, by the player's dy) */
+#define mrFrostyIceCubeArc unk28 /* s32: the flight's arc: 0 a high lob, 1 a flat fast throw (MrFrostyIceCubePickArc, by the player's dy) */
 #define mrFrostyIceCubeReady unk28 /* s32: 1 once state 0's rise and drop are over; its update then waits for Mr. Frosty's state 12 */
 #define mrFrostyIceCubeParentState unk2C /* s32: Mr. Frosty's Task.state, copied each frame; at 12 the cube enters its flight */
 #define mrFrostyIceCubeSavedTileWord unk70 /* u16: the tileWord the cube was created with, saved before tileWord is cleared (no reader) */
@@ -928,7 +928,7 @@
 #define mrTickTockDefeatDone unk30 /* s32: 1 once the defeat's 170-frame wait has ended; state 21's update then runs ActorDie */
 #define mrTickTockHopsLeft unk30 /* s32: jumps left in state 2 (MrTickTockHop), from gUnk_087456D0 */
 #define mrTickTockTimer unk30 /* s32: frames left (or, in state 16, frames since its start) of the running state's timed part */
-#define mrTickTockCheckPhase unk34 /* s32: step of sub_08099db0's count; every fourth call enters state 9 */
+#define mrTickTockCheckPhase unk34 /* s32: step of MrTickTockCheckJumpLow's count; every fourth call enters state 9 */
 #define mrTickTockLoopCount unk6C /* s16: iterations of the running state's frame loop, counted from 0 */
 #define mrTickTockNoteOffsetX unk6C /* s16: the X offset of the note CreateMrTickTockNote spawns, gUnk_087456CC[unk70] */
 #define mrTickTockRingSlot unk6C /* s16: the ring actor (task type #118) state 8 created; stored, never read */

@@ -2082,7 +2082,7 @@ void PaintRollerUpdate(void)
 void PaintRollerReactToDamage(void)
 {
     CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
-    sub_080ad458();
+    PaintRollerStartHitStun();
 }
 
 s32 PaintRollerReactToDefeat(void)
@@ -2210,12 +2210,12 @@ void CreatePaintRollerPainting(void)
     gCurTask->paintRollerPaintingSlot = CreateActorFromDesc(&sp, 1);
 }
 
-void sub_080ad458(void)
+void PaintRollerStartHitStun(void)
 {
-    BossStartHitStun(13, (u32)sub_080ad47c, (u32)gUnk_082DFFA8, 32, 1);
+    BossStartHitStun(13, (u32)PaintRollerHitStunUpdate, (u32)gUnk_082DFFA8, 32, 1);
 }
 
-void sub_080ad47c(void)
+void PaintRollerHitStunUpdate(void)
 {
     if (gUnk_02006190[3] == 0)
     {
@@ -2530,11 +2530,11 @@ s32 sub_080adaf8(s32 arg)
 void HeavyMoleReactToDamage(void)
 {
     CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
-    BossStartHitStun(23, (u32)sub_080adb90, (u32)gUnk_082F65D4, 32, 0);
+    BossStartHitStun(23, (u32)HeavyMoleHitStunUpdate, (u32)gUnk_082F65D4, 32, 0);
     TaskSetSkipMask(4, gCurTaskIdx);
 }
 
-void sub_080adb90(void)
+void HeavyMoleHitStunUpdate(void)
 {
     struct Task **c;
     struct Task *t;

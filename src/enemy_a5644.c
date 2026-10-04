@@ -102,7 +102,7 @@ void MetaKnightUpdate(void)
         {
         case HIT_KIND_DEFEAT:
         case HIT_KIND_DAMAGE:
-            if ((u8)sub_080a720c() == 1)
+            if ((u8)MetaKnightTryGuard() == 1)
             {
                 gCurTask->hitKind = HIT_KIND_NONE;
                 t = gCurTask;
@@ -263,7 +263,7 @@ void MetaKnightFollow(void)
             gCurTask->metaKnightTargetPlayerSlot = gUnk_02007D00[5];
         }
     }
-    sub_080a6e98();
+    MetaKnightAnimateWalk();
 }
 
 void MetaKnightFollowUpdate(void)
@@ -277,7 +277,7 @@ void MetaKnightFollowUpdate(void)
     gCurTask->metaKnightFollowTimer--;
     if (gCurTask->metaKnightFollowTimer == 0)
     {
-        sub_080a7190();
+        MetaKnightPickNextState();
         return;
     }
     pt = &gTasks[gUnk_02007D00[5]];
@@ -498,7 +498,7 @@ void MetaKnightApproach(void)
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
     TaskSetFrame(61);
-    sub_080a6e98();
+    MetaKnightAnimateWalk();
 }
 
 void MetaKnightApproachUpdate(void)
@@ -556,7 +556,7 @@ void MetaKnightRunUpdate(void)
     }
 }
 
-void MetaKnightState9(void)
+void MetaKnightJumpLow(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_9;
     gCurTask->metaKnightAttackBoxIndex = 0;
@@ -584,14 +584,14 @@ void MetaKnightState9(void)
     TaskSleepForever();
 }
 
-void MetaKnightState9Update(void)
+void MetaKnightJumpLowUpdate(void)
 {
     MetaKnightPickAirAttack();
     if (gCurTask->state != META_KNIGHT_STATE_9)
         sub_080a7168();
 }
 
-void MetaKnightState8(void)
+void MetaKnightJumpHigh(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_8;
     gUnk_02007D00[7] = 0;
@@ -618,7 +618,7 @@ void MetaKnightState8(void)
     TaskSleepForever();
 }
 
-void MetaKnightState8Update(void)
+void MetaKnightJumpHighUpdate(void)
 {
     MetaKnightPickAirAttack();
     if (gCurTask->state != META_KNIGHT_STATE_8)
@@ -644,7 +644,7 @@ void MetaKnightLandUpdate(void)
         sub_080a7168();
 }
 
-void MetaKnightState11(void)
+void MetaKnightStartJumpForward(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_11;
     TaskFaceNearestPlayer();
@@ -654,13 +654,13 @@ void MetaKnightState11(void)
     TaskSleepForever();
 }
 
-void MetaKnightState11Update(void)
+void MetaKnightStartJumpForwardUpdate(void)
 {
     if (gCurTask->state != META_KNIGHT_STATE_11)
         sub_080a7168();
 }
 
-void MetaKnightState12(void)
+void MetaKnightStartJumpUp(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_12;
     TaskFaceNearestPlayer();
@@ -670,7 +670,7 @@ void MetaKnightState12(void)
     TaskSleepForever();
 }
 
-void MetaKnightState12Update(void)
+void MetaKnightStartJumpUpUpdate(void)
 {
     if (gCurTask->state != META_KNIGHT_STATE_12)
         sub_080a7168();
@@ -723,7 +723,7 @@ void MetaKnightSwordSpinUpdate(void)
     }
 }
 
-void MetaKnightState16(void)
+void MetaKnightStartJumpDownThrust(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_16;
     TaskFaceNearestPlayer();
@@ -733,7 +733,7 @@ void MetaKnightState16(void)
     TaskSleepForever();
 }
 
-void MetaKnightState16Update(void)
+void MetaKnightStartJumpDownThrustUpdate(void)
 {
     if (gCurTask->state != META_KNIGHT_STATE_16)
         sub_080a7168();
@@ -770,7 +770,7 @@ void MetaKnightDownThrustUpdate(void)
         sub_080a7168();
 }
 
-void MetaKnightState14(void)
+void MetaKnightStartJumpUpwardSlash(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_14;
     TaskFaceNearestPlayer();
@@ -780,13 +780,13 @@ void MetaKnightState14(void)
     TaskSleepForever();
 }
 
-void MetaKnightState14Update(void)
+void MetaKnightStartJumpUpwardSlashUpdate(void)
 {
     if (gCurTask->state != META_KNIGHT_STATE_14)
         sub_080a7168();
 }
 
-void MetaKnightState17(void)
+void MetaKnightUpwardSlashInAir(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_17;
     MetaKnightUpwardSlash();
@@ -795,7 +795,7 @@ void MetaKnightState17(void)
     TaskSleepForever();
 }
 
-void MetaKnightState17Update(void)
+void MetaKnightUpwardSlashInAirUpdate(void)
 {
     if ((u8)MetaKnightClampToRoom() == 1)
         TaskTurnAroundAndReverseX();
@@ -808,7 +808,7 @@ void MetaKnightState17Update(void)
     }
 }
 
-void MetaKnightState18(void)
+void MetaKnightUpwardSlashOnGround(void)
 {
     gCurTask->updateState = META_KNIGHT_STATE_18;
     TaskStop();
@@ -817,14 +817,14 @@ void MetaKnightState18(void)
     TaskSleepForever();
 }
 
-void MetaKnightState18Update(void)
+void MetaKnightUpwardSlashOnGroundUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gCurTask->state != META_KNIGHT_STATE_18)
         sub_080a7168();
 }
 
-void MetaKnightState19(void)
+void MetaKnightSlashShort(void)
 {
     struct Task *t;
 
@@ -852,7 +852,7 @@ void MetaKnightState19(void)
     TaskSleepForever();
 }
 
-void MetaKnightState19Update(void)
+void MetaKnightSlashShortUpdate(void)
 {
     s32 v;
 
@@ -927,7 +927,7 @@ void MetaKnightDoubleSlashUpdate(void)
         sub_080a7168();
 }
 
-void MetaKnightState21(void)
+void MetaKnightSlashLong(void)
 {
     struct Task *t;
 
@@ -956,7 +956,7 @@ void MetaKnightState21(void)
     TaskSleepForever();
 }
 
-void MetaKnightState21Update(void)
+void MetaKnightSlashLongUpdate(void)
 {
     ClampTaskToRoom(gCurTask);
     if (gUnk_02007D00[7] <= 25)
@@ -1033,7 +1033,7 @@ void MetaKnightState22Update(void)
             {
                 TaskStop();
                 gCurTask->metaKnightFollowPhase = v;
-                sub_080a7190();
+                MetaKnightPickNextState();
             }
         }
     }
@@ -1132,7 +1132,7 @@ void MetaKnightSetFollowTimer(void)
         gCurTask->metaKnightFollowTimer = RandomRange(84) + 96;
 }
 
-void sub_080a6e98(void)
+void MetaKnightAnimateWalk(void)
 {
     struct Task **c = &gCurTask;
     struct Task **d;
@@ -1271,7 +1271,7 @@ void sub_080a7168(void)
     TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void sub_080a7190(void)
+void MetaKnightPickNextState(void)
 {
     struct Task *pt = &gTasks[TaskFindNearestPlayer()];
 
@@ -1283,7 +1283,7 @@ void sub_080a7190(void)
     sub_080a7168();
 }
 
-s32 sub_080a720c(void)
+s32 MetaKnightTryGuard(void)
 {
     u8 k;
 
@@ -1304,11 +1304,11 @@ s32 MetaKnightReactToDamage(void)
     gBg2Cnt |= 64;
     gBg3Cnt |= 64;
     gCurTask->metaKnightGuardFlags |= 2;
-    BossStartHitStun(13, (u32)sub_080a72b0, (u32)gUnk_082F427C, 16, 1);
+    BossStartHitStun(13, (u32)MetaKnightHitStunUpdate, (u32)gUnk_082F427C, 16, 1);
     return 0;
 }
 
-void sub_080a72b0(void)
+void MetaKnightHitStunUpdate(void)
 {
     gBgMosaic = gUnk_08748EAC[gUnk_02006190[3] >> 1];
     if (gUnk_02006190[3] == 0)

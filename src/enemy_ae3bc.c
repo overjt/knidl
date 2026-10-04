@@ -3768,7 +3768,7 @@ void WhispyWoodsReactToDamage(void)
     RequestScreenShake(4);
     t = gCurTask;
     t->whispyWoodsHurtTimer = 32;
-    BossStartHitStun(-1, (u32)sub_080b25e8, 0, 0, 0);
+    BossStartHitStun(-1, (u32)WhispyWoodsHitStunUpdate, 0, 0, 0);
 }
 
 void sub_080b25a4(void)
@@ -3785,7 +3785,7 @@ void sub_080b25a4(void)
     TaskYieldTrampoline(2);
 }
 
-void sub_080b25e8(void)
+void WhispyWoodsHitStunUpdate(void)
 {
     struct Task *t2;
     struct Task *u;

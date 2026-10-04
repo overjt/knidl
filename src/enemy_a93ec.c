@@ -229,13 +229,13 @@ void KrackoLookAtNearestPlayer(void)
 
 s32 KrackoReactToDamage(void)
 {
-    BossStartHitStun(13, (u32)sub_080a9794, (u32)gUnk_082FD438, 48, 0);
+    BossStartHitStun(13, (u32)KrackoHitStunUpdate, (u32)gUnk_082FD438, 48, 0);
     gUnk_02007D00[1] = gUnk_02007D00[0];
     gUnk_02007D00[0] = 2;
     return 0;
 }
 
-void sub_080a9794(void)
+void KrackoHitStunUpdate(void)
 {
     if (gFrameCount & 1)
         gCurTask->frame = (gCurTask->frame + 1) & 7;

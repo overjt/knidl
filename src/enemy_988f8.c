@@ -16,7 +16,7 @@
  * re-uploads (ActorFlashPalette) or drops (ActorClearPaletteOverride) the 16-byte graphics
  * record gUnk_08274840 while Task.unk18 is set, dispatches Task.updateState through
  * the 19-word body table gMrFrostyStateUpdates that follows it, and finishes with the
- * animation-row selector sub_08098de4 plus ActorCheckHitsWithExtraBox / ActorReactToHit.
+ * animation-row selector MrFrostyUpdateAttackBoxes plus ActorCheckHitsWithExtraBox / ActorReactToHit.
  * MrFrostyEnterState is the re-arm hook every guard installs through
  * TaskSetEntry(fn, gCurTaskIdx).
  *
@@ -29,7 +29,7 @@
  * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, CreateMrFrostyIceCube
  * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and MrFrostyCheckNearIceCube is the "close
  * enough" probe (|TaskGetDxTo(Task.unk1C)| <= 10).  MrFrostyBounceOffWallUpdate and
- * MrFrostyState16Update are empty state handlers, and MrFrostyDropInUpdate is the timer leaf
+ * MrFrostyFallUpdate are empty state handlers, and MrFrostyDropInUpdate is the timer leaf
  * the guard table word at 0x087456C8 points at.
  */
 #include "gba/gba.h"
@@ -245,7 +245,7 @@ void sub_08098c54(void)
     }
 }
 
-void sub_08098cf4(void)
+void MrFrostyPickToss(void)
 {
     IntToDigits((s16)RandomRange(30));
     switch ((s8)gDigits[1])
@@ -301,7 +301,7 @@ u8 MrFrostyCheckNearIceCube(void)
     return 0;
 }
 
-void sub_08098de4(void)
+void MrFrostyUpdateAttackBoxes(void)
 {
     switch (gCurTask->state)
     {
@@ -402,7 +402,7 @@ void MrFrostyUpdate(void)
     {
         CallTableEntry(u->updateState, 19, gMrFrostyStateUpdates);
     }
-    sub_08098de4();
+    MrFrostyUpdateAttackBoxes();
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
@@ -686,7 +686,7 @@ void MrFrostyState6Update(void)
     }
 }
 
-void MrFrostyState7(void)
+void MrFrostyWalkBackAtWall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -716,7 +716,7 @@ void MrFrostyState7(void)
     }
 }
 
-void MrFrostyState7Update(void)
+void MrFrostyWalkBackAtWallUpdate(void)
 {
     if (gCurTask->mrFrostyStatePhase != 0)
     {
@@ -768,10 +768,10 @@ void MrFrostySpinUpdate(void)
 
     t = gCurTask;
     if (--t->mrFrostyTimer < 0)
-        sub_08098cf4();
+        MrFrostyPickToss();
 }
 
-void MrFrostyState9(void)
+void MrFrostyTossIceCubeHopBack(void)
 {
     struct Task *t;
     struct Task *u;
@@ -806,7 +806,7 @@ void MrFrostyState9(void)
     }
 }
 
-void MrFrostyState9Update(void)
+void MrFrostyTossIceCubeHopBackUpdate(void)
 {
     struct Task *t;
 
@@ -821,7 +821,7 @@ void MrFrostyState9Update(void)
     }
 }
 
-void MrFrostyState10(void)
+void MrFrostyTossIceCubeHopAway(void)
 {
     struct Task *t;
     struct Task *u;
@@ -858,7 +858,7 @@ void MrFrostyState10(void)
     }
 }
 
-void MrFrostyState10Update(void)
+void MrFrostyTossIceCubeHopAwayUpdate(void)
 {
     struct Task *t;
 
@@ -874,7 +874,7 @@ void MrFrostyState10Update(void)
     }
 }
 
-void MrFrostyState11(void)
+void MrFrostyTossIceCubeWalkBack(void)
 {
     struct Task *t;
     struct Task *u;
@@ -899,7 +899,7 @@ void MrFrostyState11(void)
     }
 }
 
-void MrFrostyState11Update(void)
+void MrFrostyTossIceCubeWalkBackUpdate(void)
 {
     struct Task *t;
 
@@ -914,7 +914,7 @@ void MrFrostyState11Update(void)
     }
 }
 
-void MrFrostyState12(void)
+void MrFrostyKick(void)
 {
     struct Task *t;
     struct Task *u;
@@ -942,7 +942,7 @@ void MrFrostyState12(void)
     }
 }
 
-void MrFrostyState12Update(void)
+void MrFrostyKickUpdate(void)
 {
     struct Task *t;
 
@@ -1057,7 +1057,7 @@ void MrFrostyState15Update(void)
     }
 }
 
-void MrFrostyState16(void)
+void MrFrostyFall(void)
 {
     struct Task *t;
 
@@ -1077,7 +1077,7 @@ void MrFrostyState16(void)
     }
 }
 
-void MrFrostyState16Update(void)
+void MrFrostyFallUpdate(void)
 {
 }
 

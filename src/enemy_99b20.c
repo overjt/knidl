@@ -191,7 +191,7 @@ u8 MrTickTockReactToDefeat(void)
     return 1;
 }
 
-u8 sub_08099db0(void)
+u8 MrTickTockCheckJumpLow(void)
 {
     struct Task *t;
 
@@ -358,7 +358,7 @@ void sub_0809a00c(void)
     }
 }
 
-void sub_0809a03c(void)
+void MrTickTockUpdateAttackBoxes(void)
 {
     switch (gCurTask->state)
     {
@@ -461,7 +461,7 @@ void MrTickTockUpdate(void)
     {
         CallTableEntry(u->updateState, 24, gMrTickTockStateUpdates);
     }
-    sub_0809a03c();
+    MrTickTockUpdateAttackBoxes();
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
@@ -472,7 +472,7 @@ void MrTickTockEnterState(void)
     CallTableEntry(gCurTask->state, 24, gMrTickTockStates);
 }
 
-void MrTickTockWait(void)
+void MrTickTockWaitLong(void)
 {
     struct Task *t;
     struct Task *u;
@@ -500,7 +500,7 @@ void MrTickTockWait(void)
     TaskSleepForever();
 }
 
-void MrTickTockWaitUpdate(void)
+void MrTickTockWaitLongUpdate(void)
 {
     struct Task *t;
 
@@ -537,7 +537,7 @@ void MrTickTockPickMoveUpdate(void)
     }
     else
     {
-        sub_08099db0();
+        MrTickTockCheckJumpLow();
         t = gCurTask;
         t->mrTickTockStatePhase = 1;
     }
@@ -688,7 +688,7 @@ void MrTickTockJumpForwardUpdate(void)
     }
 }
 
-void MrTickTockState5(void)
+void MrTickTockDashWindUp(void)
 {
     struct Task *t;
     struct Task *u;
@@ -737,7 +737,7 @@ void MrTickTockState5(void)
     TaskSleepForever();
 }
 
-void MrTickTockState5Update(void)
+void MrTickTockDashWindUpUpdate(void)
 {
     struct Task *t;
 
@@ -749,7 +749,7 @@ void MrTickTockState5Update(void)
     }
 }
 
-void MrTickTockDash(void)
+void MrTickTockDashStart(void)
 {
     struct Task *t;
     struct Task *u;
@@ -795,7 +795,7 @@ void MrTickTockDash(void)
     TaskSleepForever();
 }
 
-void MrTickTockDashUpdate(void)
+void MrTickTockDashStartUpdate(void)
 {
     s32 v;
 
@@ -817,7 +817,7 @@ void MrTickTockDashUpdate(void)
     }
 }
 
-void MrTickTockState7(void)
+void MrTickTockJumpHigh(void)
 {
     struct Task *t;
     struct Task *u;
@@ -838,11 +838,11 @@ void MrTickTockState7(void)
     TaskSleepForever();
 }
 
-void MrTickTockState7Update(void)
+void MrTickTockJumpHighUpdate(void)
 {
 }
 
-void MrTickTockState8(void)
+void MrTickTockRingFromJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -865,14 +865,14 @@ void MrTickTockState8(void)
     }
 }
 
-void MrTickTockState8Update(void)
+void MrTickTockRingFromJumpUpdate(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (--t->mrTickTockTimer < 0)
     {
-        if (sub_08099db0() == 0)
+        if (MrTickTockCheckJumpLow() == 0)
         {
             ActorSetState(MR_TICK_TOCK_STATE_14);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
@@ -880,7 +880,7 @@ void MrTickTockState8Update(void)
     }
 }
 
-void MrTickTockState9(void)
+void MrTickTockJumpLow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -903,7 +903,7 @@ void MrTickTockState9(void)
     TaskSleepForever();
 }
 
-void MrTickTockState9Update(void)
+void MrTickTockJumpLowUpdate(void)
 {
 }
 
@@ -985,7 +985,7 @@ void MrTickTockShootNotesUpdate(void)
         break;
     case 0:
         StopSfxOnPlayer(t->mrTickTockSfxPlayer, 0x219);
-        if (sub_08099db0() == 0)
+        if (MrTickTockCheckJumpLow() == 0)
         {
             ActorSetState(MR_TICK_TOCK_STATE_14);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
@@ -994,7 +994,7 @@ void MrTickTockShootNotesUpdate(void)
     }
 }
 
-void MrTickTockState12(void)
+void MrTickTockDashLoop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1035,7 +1035,7 @@ void MrTickTockState12(void)
     }
 }
 
-void MrTickTockState12Update(void)
+void MrTickTockDashLoopUpdate(void)
 {
     struct Task *t;
     s32 v;
@@ -1070,7 +1070,7 @@ void MrTickTockState12Update(void)
     }
 }
 
-void MrTickTockState13(void)
+void MrTickTockRingFromDash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1120,7 +1120,7 @@ void MrTickTockState13(void)
     }
 }
 
-void MrTickTockState13Update(void)
+void MrTickTockRingFromDashUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1142,7 +1142,7 @@ void MrTickTockState13Update(void)
     {
         if (--u->mrTickTockTimer <= 0)
         {
-            sub_08099db0();
+            MrTickTockCheckJumpLow();
             ActorSetState(MR_TICK_TOCK_STATE_14);
             TaskSetEntry(MrTickTockEnterState, gCurTaskIdx);
         }
@@ -1151,7 +1151,7 @@ void MrTickTockState13Update(void)
     v->mrTickTockPrevVelX = v->velX;
 }
 
-void MrTickTockState14(void)
+void MrTickTockWaitShort(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1192,7 +1192,7 @@ void MrTickTockState14(void)
     TaskSleepForever();
 }
 
-void MrTickTockState14Update(void)
+void MrTickTockWaitShortUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1559,7 +1559,7 @@ void MrTickTockState21Update(void)
     }
 }
 
-void MrTickTockState22(void)
+void MrTickTockFall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1574,7 +1574,7 @@ void MrTickTockState22(void)
     TaskSleepForever();
 }
 
-void MrTickTockState22Update(void)
+void MrTickTockFallUpdate(void)
 {
 }
 
@@ -1649,7 +1649,7 @@ u8 MrFrostyIceCubeHitWall(void)
     return 1;
 }
 
-void sub_0809b4fc(void)
+void MrFrostyIceCubePickArc(void)
 {
     s32 v;
 
@@ -1779,7 +1779,7 @@ void MrFrostyIceCubeFlight(void)
         TaskFree(a->attachedTask);
         a->attachedTask = 0xFFFF;
     }
-    sub_0809b4fc();
+    MrFrostyIceCubePickArc();
     switch (gCurTask->mrFrostyIceCubeArc)
     {
     case 0:
@@ -1802,7 +1802,7 @@ void MrFrostyIceCubeFlightUpdate(void)
 {
 }
 
-void MrFrostyIceCubeState2(void)
+void MrFrostyIceCubeBurst(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1828,7 +1828,7 @@ void MrFrostyIceCubeState2(void)
     ActorDestroy();
 }
 
-void MrFrostyIceCubeState2Update(void)
+void MrFrostyIceCubeBurstUpdate(void)
 {
 }
 

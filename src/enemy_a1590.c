@@ -647,8 +647,8 @@ s32 MrShineAndMrBrightReactToDefeat(void)
     return 1;
 }
 
-/* sub_080a1f90 (0x080A1F90-0x080A1FC8) */
-void sub_080a1f90(void)
+/* MrShineAndMrBrightHitStunUpdate (0x080A1F90-0x080A1FC8) */
+void MrShineAndMrBrightHitStunUpdate(void)
 {
     if (gCurTask->variant == 2)
         sub_080a2b2c(gBossHitStunFlashPalette, gUnk_02006190[4]);
@@ -660,9 +660,9 @@ void sub_080a1f90(void)
 s32 MrShineAndMrBrightReactToDamage(void)
 {
     if (gCurTask->variant == 2)
-        BossStartHitStun(13, (u32)sub_080a1f90, (u32)gUnk_082FB230, 16, 2);
+        BossStartHitStun(13, (u32)MrShineAndMrBrightHitStunUpdate, (u32)gUnk_082FB230, 16, 2);
     else
-        BossStartHitStun(13, (u32)sub_080a1f90, (u32)gUnk_082FB210, 16, 0);
+        BossStartHitStun(13, (u32)MrShineAndMrBrightHitStunUpdate, (u32)gUnk_082FB210, 16, 0);
     CreateStarFlash(1, 0, 0);
     return 0;
 }
