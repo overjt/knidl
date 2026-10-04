@@ -1014,3 +1014,11 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   3.526, 3.527 and 4.165 (3.156 corrected, 3.494 amended).  Done by two
   proposal agents, the first resumed as the racer on the second
   function.
+- The decomp.dev report (#164): `tools/gen_report.py` counts the
+  asm-by-design zones (crt0, the ARM task switcher, the `m4a_1` core, SDK
+  libc and the task trampolines, the SWI thunks, SoftReset, the
+  interworking veneer) as matched/complete `[asm]` units, since their
+  checked-in asm is their source and `make compare` verifies it; the
+  module loop also treats module M265 (exactly the `m4a_1` core) as one of
+  them.  The badge moves from 99.51% to 100% ("every code byte built from
+  repository source"); `make progress` keeps the zones excluded.

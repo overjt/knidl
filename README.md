@@ -59,7 +59,13 @@ The project started as a full ROM split and was decompiled module by module
 into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
 [docs/history.md](docs/history.md)).
 
-<!-- Figures from `make progress` at the end of #167; refresh after any asm, naming or data change. -->
+The [decomp.dev](https://decomp.dev/overjt/knidl) badge reports **100%**:
+every byte of code in the ROM is built from source in this repository, C
+for the game and labeled assembly for the runtime zones kept as asm by
+design (each its own `[asm]` unit there, docs/decomp-dev.md). It measures
+code only; naming and data readability are the figures below.
+
+<!-- Figures from `make progress` after #176; refresh after any asm, naming or data change. -->
 
 ```
 851196 total bytes of code
@@ -70,8 +76,8 @@ into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
         4168 bytes excluded from decompilation tracking
 
 34017 total symbols
-    8015 symbols documented (23.5617%)
-    26002 symbols undocumented (76.4383%)
+    9524 symbols documented (27.9978%)
+    24493 symbols undocumented (72.0022%)
 
 7537432 total bytes of data
     95640 bytes of data in src (1.2689%)
@@ -104,15 +110,16 @@ into `src/`, following the pret conventions (see [AGENTS.md](AGENTS.md) and
   headers, the actor records and seg 18's handler tables). Assets are never committed
   ([docs/data.md](docs/data.md)). The shift test proves the ROM movable and
   the boot test runs it moved (see "For modders").
-- **Names** (#155, open). 2,449 of the 5,348 functions and 248 of the 266
+- **Names** (#155, open). 3,800 of the 5,348 functions and 263 of the 266
   task bodies have real names, each with its evidence in
   `docs/analysis/renames.csv` (convention: [docs/naming.md](docs/naming.md)).
-  Of the 8,015 documented symbols, 5,706 have semantic names and 2,309 are
-  position names (a data record named after its slot in a consumer-proven
-  table). Most of the undocumented symbols are ROM data labels, 17,074 of
-  them asset labels that stay unnamed by policy; the long tail (about 2,900
-  `sub_*` functions, enemy and boss state bodies and one-caller helpers
-  mostly) is #155's backlog. `make audit` keeps the census of what is left,
+  Of the 9,524 documented symbols, 6,553 have semantic names and 2,971 are
+  position names: 2,309 data records named after their slot in a
+  consumer-proven table and 662 state bodies named after their slot in
+  their family's state table. Most of the undocumented symbols are ROM data
+  labels, 17,074 of them asset labels that stay unnamed by policy; the long
+  tail (about 1,550 `sub_*` functions, mostly enemy and boss state bodies
+  no defined verb fits, and one-caller helpers) is #155's backlog. `make audit` keeps the census of what is left,
   and why, in [docs/naming.md](docs/naming.md) section 5.1.
 
 ## For modders
