@@ -56,12 +56,11 @@ Emission rules:
     ROM function pointer (`name+1` for Thumb entries);
   * branch targets are rewritten to labels (function names, local `.L_`
     labels inside the file, or database names for external targets);
-  * odd segment boundaries are handled explicitly: gas silently aligns
-    Thumb instructions to 2, so a segment with an odd start or an odd
-    trailing byte emits those bytes as raw `.byte`/`.short` (`.short`/
-    `.word` themselves are emitted unaligned without padding, which was
-    verified empirically); no configured segment has one since #37 moved
-    the two odd boundaries (0x080002E5, 0x080CFA7F) to instructions;
+  * a code segment must start and end on its alignment (2 for Thumb, 4
+    for ARM or a literal pool): gas aligns instructions and pads a
+    section's size, so a boundary inside an instruction would move bytes;
+    the tool refuses one (#37 moved the last two, #167 removed the
+    `.tail`-section and raw odd-start paths that handled them);
   * config "isa_ranges" switches the ISA inside a function (the ARM
     islands of m4a_1's Thumb functions), and every `add rd, pc, #imm` is
     written `adr rd, <label>`; config "raw_words" keeps a literal word a
@@ -95,6 +94,15 @@ bytes: `data/<name>.s` holds only labels, symbolic `.word`s and
     named RAM cell, and an unresolved one stops the run
     (`--missing-labels` writes the data_symbols entries it would need);
   * `.incbin` for every other run of bytes, whatever its length.
+
+  A data segment's config entry may name its "zone" (#167): the data
+  file it is written to.  The pieces of a zone that C runs cut apart
+  (tools/carve_data.py) share one `data/<zone>.s`, each piece its own
+  `.section .<piece>` named after its segments.txt row, so linker.ld lists
+  the pieces and the C runs in order inside one output section
+  (tools/ldgroup.py, docs/data.md 5.2).  Without "zone" a segment is its
+  own zone.  A generated data file that no zone writes any more is
+  removed.
 
 Run inside the knidl-builder image via `make split`, or directly:
 
@@ -143,23 +151,22 @@ LINK_FAILURE = "<link>"
 def compute_chunks(start, end, func_vmas, chunk_bytes):
     """Cut points for a chunked segment (issue #25).
 
-    Cuts land on EVEN function-boundary addresses roughly `chunk_bytes`
-    apart so that no function straddles a chunk and every chunk begins at
-    an even ROM address: gas aligns Thumb instructions to 2 within a
-    section and ld aligns each input section to its own sh_addralign at
-    absolute addresses, so a chunk whose first byte is odd can never
-    contain real instructions.  An odd segment start therefore produces a
-    tiny leading data-only chunk up to the nearest even function boundary.
+    Cuts land on word-aligned function-boundary addresses roughly
+    `chunk_bytes` apart, so that no function straddles a chunk and every
+    chunk starts and ends on its alignment (gas aligns instructions and
+    pads a section's size to its alignment; a chunk with a literal pool is
+    word-aligned).  The segment itself must start and end on its alignment
+    (SegmentEmitter.emit checks it).
     """
     cuts = [start]
     pos = start
     while pos < end:
         window_end = min(end, pos + chunk_bytes)
-        cands = [v for v in func_vmas if pos < v <= window_end and v % 2 == 0]
+        cands = [v for v in func_vmas if pos < v <= window_end and v % 4 == 0]
         if cands:
-            nxt = min(cands) if pos % 2 else max(cands)
+            nxt = max(cands)
         else:
-            later = [v for v in func_vmas if v > pos and v % 2 == 0]
+            later = [v for v in func_vmas if v > pos and v % 4 == 0]
             nxt = later[0] if later and later[0] < end else end
         cuts.append(nxt)
         pos = nxt
@@ -454,7 +461,6 @@ class SegmentEmitter(object):
         self.dis_cache = {}  # isa -> {addr: (size, text)}
         self.cursor = start  # emission frontier (labels behind it are placed)
         self.main_end = end
-        self._noted_raw = False
         self._extra_placed = set()
         self._required_placed = set()
         self._placed_labels = set()
@@ -691,27 +697,18 @@ class SegmentEmitter(object):
 
     def emit_func_region(self, rs, re, name, isa, tmpdir):
         runs = self.isa_runs(rs, re, isa)
-        pretty = (
-            self.level == 0
-            and (rs - self.start) % (4 if isa == "arm" else 2) == 0
-        )
+        pretty = self.level == 0
         if pretty:
             if isa == "thumb":
                 self.lines.append("\t.thumb_func")
             self.lines.append("\t.global\t%s" % name)
             self.lines.append("%s:" % name)
         else:
-            # Raw mode (or an odd section offset, which gas would pad):
-            # label only, no mode directives, so the section can stay at
-            # alignment 1 when no real instruction is ever emitted.
+            # Raw mode (the last-resort fallback): label only, no mode
+            # directives, so the section can stay at alignment 1 when no
+            # real instruction is ever emitted.
             self.lines.append("\t.global\t%s" % name)
             self.lines.append("%s:" % name)
-            if self.level == 0 and not self._noted_raw:
-                self._noted_raw = True
-                print(
-                    "    note: %s at 0x%08X (and any other function at an "
-                    "odd section offset) emitted as raw data" % (name, rs)
-                )
         for s, e, risa in runs:
             if pretty:
                 # The mode directive comes before the run's labels: gas
@@ -980,7 +977,6 @@ class SegmentEmitter(object):
         self.pool_addrs = set()
         self.pending = {}
         self.cursor = self.start
-        self._noted_raw = False
         self._extra_placed = set()
         self._required_placed = set()
         self._placed_labels = set()
@@ -994,13 +990,15 @@ class SegmentEmitter(object):
         }
         self.prescan()
 
-        # gas pads a section's SIZE up to its alignment (2 for Thumb, 4 for
-        # ARM) at assembly time.  A code segment with a size that is not a
-        # multiple of that alignment would therefore gain padding bytes, so
-        # the trailing odd bytes are parked in a separate alignment-1
-        # section ".name.tail" that the linker script appends right after
-        # the main section (until #37, the `bx lr' of SoundDriverVSyncOff
-        # split across the sdk_swi_wrappers/sdk_reset_helper boundary).
+        # gas aligns every instruction (2 for Thumb, 4 for ARM) and pads a
+        # section's SIZE up to its alignment at assembly time, and ld aligns
+        # the section's start: a code segment must therefore start and end
+        # on its alignment, or the bytes would move.  Until #37 two segment
+        # boundaries cut an instruction in two (the `b .` at 0x080002E4,
+        # SoundDriverVSyncOff's `bx lr` at 0x080CFA7E), and split.py parked
+        # odd trailing bytes in a `.name.tail` section and emitted an odd
+        # start as raw data; #37 moved both boundaries to instructions and
+        # #167 removed those paths (docs/splitting.md).
         align = 1
         for _vma, _name, isa in self.funcs:
             align = max(align, 4 if isa == "arm" else 2)
@@ -1010,8 +1008,13 @@ class SegmentEmitter(object):
             # a literal pool must stay word-aligned wherever ld puts the
             # section (MATCHING=0, the shift test)
             align = 4
-        tail_len = (self.end - self.start) % align if align > 1 else 0
-        main_end = self.end - tail_len
+        if self.start % align or (self.end - self.start) % align:
+            sys.exit(
+                "error: %s 0x%08X-0x%08X: a code segment must start and end"
+                " on its alignment (%d): move the boundary to an instruction"
+                " (docs/splitting.md, \"Segment boundaries\")"
+                % (self.name, self.start, self.end, align))
+        main_end = self.end
         self.main_end = main_end
 
         h = []
@@ -1038,13 +1041,6 @@ class SegmentEmitter(object):
             h.append("@ Functions (docs/analysis/symbols.csv):")
             for vma, name, _isa in self.funcs:
                 h.append("@   0x%08X %s" % (vma, name))
-        if tail_len:
-            h.append(
-                "@ Trailing %d byte(s) at 0x%08X live in .%s.tail: gas would"
-                " otherwise pad" % (tail_len, main_end, self.name)
-            )
-            h.append("@ the main section to its instruction alignment and"
-                     " shift every later segment.")
         h.append("")
         flags = '"ax"' if self.kind in CODE_KINDS else '"a"'
         h.append("\t.section .%s, %s" % (self.name, flags))
@@ -1080,33 +1076,6 @@ class SegmentEmitter(object):
                 self.emit_func_region(
                     region[1], region[2], region[3], region[4], tmpdir
                 )
-
-        if tail_len:
-            self.emit_labels_at(main_end)
-            self.emit_extra_label(main_end)
-            self.emit_required_at(main_end)
-            self.lines.append("")
-            self.lines.append(
-                "@ Odd trailing byte(s) split out to keep the main section's"
-                " size a multiple of its alignment (see header note)."
-            )
-            self.lines.append("\t.section .%s.tail, \"a\"" % self.name)
-            tail_label = DATA_PREFIX + "%08x" % main_end
-            self.lines.append("\t.global\t%s" % tail_label)
-            self.lines.append("%s:" % tail_label)
-            addr = main_end
-            while addr < self.end:
-                left = self.end - addr
-                if left >= 2 and addr % 2 == 0:
-                    self.lines.append(
-                        "\t.short\t0x%04X" % u16(self.rom, vma_off(addr))
-                    )
-                    addr += 2
-                else:
-                    self.lines.append(
-                        "\t.byte\t0x%02X" % self.rom[vma_off(addr)]
-                    )
-                    addr += 1
 
         if self.pending:
             raise FallbackNeeded(
@@ -1492,8 +1461,26 @@ class DataPlan(object):
         )
 
 
-def emit_data_segment(plan, name, start, end, kind, asset):
-    """Text of `data/<name>.s` for one structure-only segment."""
+GENERATED_HEADER = "@ Auto-generated by tools/split.py from baserom.gba"
+
+
+def c_data_notes(path):
+    """{name: comment} of the c_data rows of segments.txt (which C file
+    and section defines them), for the data files' C-run comments."""
+    notes = {}
+    with open(path) as f:
+        for line in f:
+            parts = line.split("#", 1)
+            p = parts[0].split()
+            if len(p) >= 4 and p[2] == C_DATA_KIND:
+                note = parts[1].strip() if len(parts) > 1 else ""
+                notes[p[3]] = re.sub(r"\s*\(carved by[^)]*\)", "", note)
+    return notes
+
+
+def emit_data_piece(plan, name, start, end):
+    """Body lines and stats of one structure-only data piece: its labels,
+    symbolic `.word`s and `.incbin` slices of [start, end)."""
     labels = dict(
         (a, n) for a, n in plan.labels.items() if start <= a < end
     )
@@ -1534,31 +1521,91 @@ def emit_data_segment(plan, name, start, end, kind, asset):
             cur = addr + 4
     if cur < end:
         incbin(cur, end - cur)
+    return body, stats
 
-    h = [
-        "@ Auto-generated by tools/split.py from baserom.gba - DO NOT EDIT.",
-        "@ Regenerate with: make split",
-        "@ Segment %s: 0x%08X-0x%08X (%s, 0x%X bytes)"
-        % (name, start, end, kind, end - start),
-        "@ Structure only (docs/data.md): labels, symbolic pointer words and",
-        "@ .incbin slices of the user's baserom.gba; no ROM bytes are committed.",
-        "@ %d label(s), %d code pointer(s), %d data pointer(s), %d .incbin"
-        " slice(s) (0x%X bytes)."
-        % (stats["labels"], stats["code"], stats["data"], stats["incbins"],
-           stats["incbin_bytes"]),
-    ]
+
+def data_counts_lines(stats):
+    h = ["@ %d label(s), %d code pointer(s), %d data pointer(s), %d .incbin"
+         " slice(s) (0x%X bytes)."
+         % (stats["labels"], stats["code"], stats["data"], stats["incbins"],
+            stats["incbin_bytes"])]
     if stats["heuristic"]:
         h.append("@ %d of the pointers are in next-label tables (docs/data.md"
                  " 5.1)." % stats["heuristic"])
+    return h
+
+
+def section_head(name):
+    return ['\t.section .%s, "a"' % name, "\t.global\t%s" % name,
+            "%s:" % name]
+
+
+def emit_data_zone(plan, zone, pieces, c_rows=()):
+    """Text of `data/<zone>.s` and its stats.
+
+    `pieces` are the zone's data segments [(name, start, end, kind, asset)]
+    in address order; each is its own section, named after its
+    segments.txt row, so linker.ld can list the C runs between them
+    (`c_rows`: [(name, start, end, note)], tools/ldgroup.py, docs/data.md
+    5.2).  A zone of one piece is the plain one-segment file.
+    """
+    total = {"labels": 0, "code": 0, "data": 0, "heuristic": 0,
+             "incbins": 0, "incbin_bytes": 0}
+    parts = []
+    for name, start, end, kind, asset in pieces:
+        body, stats = emit_data_piece(plan, name, start, end)
+        for k in total:
+            total[k] += stats[k]
+        parts.append((name, start, end, kind, asset, body, stats))
+    asset = any(p[4] for p in pieces)
+    h = [
+        "@ Auto-generated by tools/split.py from baserom.gba - DO NOT EDIT.",
+        "@ Regenerate with: make split",
+    ]
+    if len(pieces) == 1:
+        name, start, end, kind, _a = pieces[0]
+        h.append("@ Segment %s: 0x%08X-0x%08X (%s, 0x%X bytes)"
+                 % (name, start, end, kind, end - start))
+    else:
+        lo, hi = pieces[0][1], pieces[-1][2]
+        h.append("@ Zone %s: 0x%08X-0x%08X, %d data pieces (0x%X bytes) and"
+                 % (zone, lo, hi, len(pieces),
+                    sum(e - s for _n, s, e, _k, _a in pieces)))
+        h.append("@ %d C run(s) between them.  Each piece is its own section"
+                 " and segments.txt" % len(c_rows))
+        h.append("@ row; linker.ld lists the pieces and the C runs in address"
+                 " order")
+        h.append("@ (tools/ldgroup.py, docs/data.md 5.2).")
+    h += [
+        "@ Structure only (docs/data.md): labels, symbolic pointer words and",
+        "@ .incbin slices of the user's baserom.gba; no ROM bytes are committed.",
+    ]
+    h += data_counts_lines(total)
     if asset:
         h.append("@ Asset segment: its bytes stay extracted from baserom.gba"
                  " forever; only")
         h.append("@ labels and consumer-proven pointer tables are structure.")
-    h.append("")
-    h.append('\t.section .%s, "a"' % name)
-    h.append("\t.global\t%s" % name)
-    h.append("%s:" % name)
-    return "\n".join(h + body) + "\n", stats
+    out = h
+    if len(pieces) == 1:
+        out.append("")
+        out += section_head(pieces[0][0]) + parts[0][5]
+        return "\n".join(out) + "\n", total, parts
+    # every piece and every C run between them, in address order; a C run
+    # is a comment only (its bytes are the C file's section)
+    items = [(p[1], 1, p) for p in parts] + [(r[1], 0, r) for r in c_rows]
+    for _addr, is_piece, it in sorted(items, key=lambda x: (x[0], x[1])):
+        out.append("")
+        if not is_piece:
+            cname, cs, ce, note = it
+            out.append("@ 0x%08X-0x%08X: C, row %s%s"
+                       % (cs, ce, cname, (" (%s)" % note) if note else ""))
+            continue
+        name, start, end, kind, _a, body, stats = it
+        out.append("@ Piece %s: 0x%08X-0x%08X (%s, 0x%X bytes)"
+                   % (name, start, end, kind, end - start))
+        out += data_counts_lines(stats)
+        out += section_head(name) + body
+    return "\n".join(out) + "\n", total, parts
 
 
 # --------------------------------------------------------------------------
@@ -1626,12 +1673,14 @@ def assemble_text(text, opath, incdirs=()):
 def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
     """candidates: [(section, start, end, objpath)].
 
-    One row PER OBJECT: several chunked files share one section (issue #25)
-    and ld concatenates same-named input sections in command-line order, so
-    callers must list an address-ordered segment's objects consecutively.
+    One row per (section, object): several chunked files share one section
+    (issue #25) and ld concatenates same-named input sections in
+    command-line order, so callers must list an address-ordered segment's
+    objects consecutively; one data file holds the sections of all the
+    pieces of its zone (#167), and each object is linked once.
     Links all candidate objects together at their ROM VMAs and compares
-    each section's bytes (main + optional .tail, including any alignment
-    padding ld had to insert) with baserom.  Linking the whole group is
+    each section's bytes (including any alignment padding ld had to
+    insert) with baserom.  Linking the whole group is
     essential: split files reference labels that other files define (e.g.
     the IRQ handler table pointing into game_code_early).  Returns the set
     of section names that mismatch.
@@ -1652,7 +1701,7 @@ def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
         )
     for sec, (start, _end) in sorted(sections.items()):
         script.append(
-            "  .%s 0x%08X : { *(.%s) *(.%s.tail) }\n" % (sec, start, sec, sec)
+            "  .%s 0x%08X : { *(.%s) }\n" % (sec, start, sec)
         )
     script.append("}\n")
     lpath = os.path.join(tmpdir, "group.ld")
@@ -1663,7 +1712,8 @@ def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
     for _sec, _vma, obj in helpers or []:
         cmd.append(obj)
     for _sec, _s, _e, obj in candidates:
-        cmd.append(obj)
+        if obj not in cmd:
+            cmd.append(obj)
     try:
         run_checked(cmd, "ld (group verify)")
     except RuntimeError as e:
@@ -1675,9 +1725,6 @@ def verify_group(candidates, syms_obj, rom, tmpdir, helpers=None):
         return {LINK_FAILURE}
     failing = {}  # section -> first differing absolute address (None if ?)
     for sec, (start, end) in sorted(sections.items()):
-        # ld folds the optional .name.tail input sections into the .name
-        # output section (the patterns are listed in order), so one dump of
-        # .name covers the whole segment.
         dump = os.path.join(tmpdir, "dump_%s.bin" % sec)
         try:
             run_checked(
@@ -1878,6 +1925,9 @@ def main():
     try:
         entries = []
         data_entries = []  # structure-only segments (issue #36)
+        # "zone": the data file a piece is written to (#167): the pieces of
+        # a zone cut around C runs share data/<zone>.s, one section each
+        data_zone = {}
         for seg_cfg in cfg["segments"]:
             name = seg_cfg["name"]
             if seg_cfg.get("stays_asm"):
@@ -1904,14 +1954,30 @@ def main():
                 if chunk_bytes <= 0:
                     sys.exit("error: chunk_bytes must be positive")
             asset = bool(seg_cfg.get("asset", False))
+            zone = seg_cfg.get("zone", name)
             if kind in STRUCTURE_KINDS:
                 if chunk_bytes is not None:
                     sys.exit("error: data segment %r cannot be chunked" % name)
+                if not re.fullmatch(r"[a-z][a-z0-9_]*", zone):
+                    sys.exit("error: segment %r: zone %r is not snake_case"
+                             % (name, zone))
                 data_entries.append((name, start, end, kind, asset))
+                data_zone[name] = zone
                 continue
             if asset:
                 sys.exit("error: only data segments can be assets (%r)" % name)
+            if "zone" in seg_cfg:
+                sys.exit("error: only data segments have a zone (%r)" % name)
             entries.append((name, start, end, kind, chunk_bytes))
+        zones = {}  # zone -> [(name, start, end, kind, asset)] by address
+        for ent in data_entries:
+            zones.setdefault(data_zone[ent[0]], []).append(ent)
+        for zone, pieces in zones.items():
+            pieces.sort(key=lambda p: p[1])
+            row = segdefs.get(zone)
+            if row is not None and data_zone.get(zone) != zone:
+                sys.exit("error: zone %r is the name of segment %r, which is"
+                         " not one of its pieces" % (zone, zone))
         all_ranges = (
             [(s, e) for _n, s, e, _k, _c in entries]
             + [(s, e) for _n, s, e, _k, _a in data_entries]
@@ -2041,20 +2107,26 @@ def main():
         # Structure-only data files never fall back: they hold no
         # instructions, so a verification mismatch is a planning bug.
         rom_dir = os.path.dirname(os.path.abspath(args.rom))
-        data_results = {}  # name -> (text, objpath, stats)
-        for name, start, end, kind, asset in data_entries:
+        c_notes = c_data_notes(args.segments)
+        data_results = {}  # zone -> (text, objpath, stats, parts)
+        for zone, pieces in sorted(zones.items(), key=lambda z: z[1][0][1]):
+            lo, hi = pieces[0][1], pieces[-1][2]
+            c_rows = [
+                (n, s, e, c_notes.get(n, ""))
+                for n, (s, e, k) in segdefs.items()
+                if k == C_DATA_KIND and lo <= s < hi
+            ] if len(pieces) > 1 else []
             try:
-                text, dstats = emit_data_segment(
-                    plan, name, start, end, kind, asset
-                )
+                text, dstats, parts = emit_data_zone(plan, zone, pieces,
+                                                     c_rows)
             except ConfigError as e:
                 sys.exit("error: %s" % e)
-            obj = os.path.join(tmpdir, "data_%s.o" % name)
+            obj = os.path.join(tmpdir, "data_%s.o" % zone)
             ok, err = assemble_text(text, obj, incdirs=(rom_dir,))
             if not ok:
-                sys.exit("error: data segment %s does not assemble:\n%s"
-                         % (name, err))
-            data_results[name] = (text, obj, dstats)
+                sys.exit("error: data file %s does not assemble:\n%s"
+                         % (zone, err))
+            data_results[zone] = (text, obj, dstats, parts)
 
         # Plan emission units: one output file per unit. Flat segments are
         # a single unit owning section <name>; chunked segments (optional
@@ -2243,8 +2315,10 @@ def main():
                 candidates.append(
                     (u["section"], u["seg_start"], u["seg_end"], obj)
                 )
-            for name, start, end, _kind, _asset in data_entries:
-                candidates.append((name, start, end, data_results[name][1]))
+            for zone, pieces in zones.items():
+                for name, start, end, _kind, _asset in pieces:
+                    candidates.append((name, start, end,
+                                       data_results[zone][1]))
             failing = verify_group(
                 candidates, syms_obj, rom, tmpdir, helpers=helpers
             )
@@ -2255,7 +2329,7 @@ def main():
                     "error: group link failed even with every unit present\n%s"
                     % failing
                 )
-            bad_data = sorted(set(failing) & set(data_results))
+            bad_data = sorted(set(failing) & set(data_zone))
             if bad_data:
                 sys.exit(
                     "error: structure-only data segment(s) do not match "
@@ -2380,22 +2454,43 @@ def main():
                 )
 
         # Structure-only data segments live in data/ (pret layout: asm/ is
-        # code); a value-list file an older split left in asm/ is removed.
-        for name, start, end, kind, asset in data_entries:
-            text, _obj, dstats = data_results[name]
-            old = os.path.join(args.asm_dir, "%s.s" % name)
-            if os.path.exists(old):
-                os.remove(old)
-                print("    removed %s (moved to %s/)" % (old, args.data_dir))
-            out_path = os.path.join(args.data_dir, "%s.s" % name)
+        # code), one file per zone; a value-list file an older split left
+        # in asm/ is removed.
+        written = set()
+        for zone, pieces in sorted(zones.items(), key=lambda z: z[1][0][1]):
+            text, _obj, dstats, _parts = data_results[zone]
+            for name, _s, _e, _k, _a in pieces:
+                old = os.path.join(args.asm_dir, "%s.s" % name)
+                if os.path.exists(old):
+                    os.remove(old)
+                    print("    removed %s (moved to %s/)"
+                          % (old, args.data_dir))
+            out_path = os.path.join(args.data_dir, "%s.s" % zone)
             with open(out_path, "w") as f:
                 f.write(text)
+            written.add(os.path.basename(out_path))
             print(
-                "    wrote %s: %d labels, %d code + %d data pointers, "
+                "    wrote %s: %s%d labels, %d code + %d data pointers, "
                 "%d incbins%s"
-                % (out_path, dstats["labels"], dstats["code"], dstats["data"],
-                   dstats["incbins"], " [asset]" if asset else "")
+                % (out_path,
+                   ("%d pieces, " % len(pieces)) if len(pieces) > 1 else "",
+                   dstats["labels"], dstats["code"], dstats["data"],
+                   dstats["incbins"],
+                   " [asset]" if any(p[4] for p in pieces) else "")
             )
+        # A generated data file that no zone writes any more (its pieces
+        # moved into a zone file, or a carve consumed its segment) would
+        # still be assembled by the Makefile's data/*.s glob: remove it.
+        if os.path.isdir(args.data_dir):
+            for fname in sorted(os.listdir(args.data_dir)):
+                path = os.path.join(args.data_dir, fname)
+                if not fname.endswith(".s") or fname in written:
+                    continue
+                with open(path) as f:
+                    first = f.readline()
+                if first.startswith(GENERATED_HEADER):
+                    os.remove(path)
+                    print("    removed %s (no zone writes it)" % path)
     finally:
         if args.keep_tmp:
             print("kept scratch dir: %s" % tmpdir)

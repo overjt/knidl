@@ -8,7 +8,7 @@ Makefile links with `--defsym MATCHING=1` (the default, and what CI and
 `make compare` use):
 
     .name : {
-        KEEP(*(.name)) KEEP(*(.name.tail))
+        KEEP(*(.name))
     } > ROM
     ASSERT(!MATCHING || ADDR(.name) == 0x08XXXXXX, "MATCHING: .name moved")
 
@@ -44,8 +44,8 @@ def block(name, vma, body):
 
 
 def data_block(name, vma):
-    """The block of a split data/asm segment (its .name and .name.tail)."""
-    return block(name, vma, 'KEEP(*(.%s)) KEEP(*(.%s.tail))' % (name, name))
+    """The block of a split data/asm segment (its section .name)."""
+    return block(name, vma, 'KEEP(*(.%s))' % name)
 
 
 GROUP_RE = re.compile(r'^[ \t]*\.([A-Za-z0-9_]+)[ \t]*:[ \t]*\{([^}]*)\}', re.M)

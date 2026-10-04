@@ -35,7 +35,7 @@ struct MapTile
    gBg1MetatileMap): one 32-byte record per block being broken.  unk0/unk2 =
    metatile x/y, unk4 = its map index, unk6 = the position in the animation
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
-   the metatile the cell shows next (RoomDef.unk10[] + the layer's low byte,
+   the metatile the cell shows next (RoomDef.blockMetatiles[] + the layer's low byte,
    advanced by one per drawn frame), unkC = its tile entry in the BG map,
    unk10 = the script (gUnk_0873A47C[kind], {op, arg} pairs: 1 and 2 draw a
    frame, 3 breaks the four neighbours, 4 waits arg frames, 0x8000/0x8001
@@ -65,7 +65,7 @@ struct Unk020061F0
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x10];
-    /*0x10*/ struct MapTile *unk10;
+    /*0x10*/ struct MapTile *blockMetatiles;
 };
 
 /* Not from room.h: this file's view of gRoomMap differs (lesson 3.517). */
@@ -175,7 +175,7 @@ void BlockAnimWriteAndDrawColumn(struct Unk020061F0 *b, s32 n)
             s->unk4 = gRoomWidth * i + b->unk4;
             if (gBlockLayer[s->unk4] != 0)
             {
-                s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF];
+                s->unk8 = &gCurRoomDef->blockMetatiles[gBlockLayer[s->unk4] & 0xFF];
                 s->unkC = (u16 *)(BG_VRAM + 0x2000) + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
                 s->unk16 = s->unk8->metatile;
                 s->unk18 = s->unk8->collisionTile;
@@ -206,7 +206,7 @@ void BlockAnimWriteColumn(struct Unk020061F0 *b, s32 n)
         s->unk4 = gRoomWidth * i + b->unk4;
         if (gBlockLayer[s->unk4] != 0)
         {
-            s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF];
+            s->unk8 = &gCurRoomDef->blockMetatiles[gBlockLayer[s->unk4] & 0xFF];
             BlockAnimWriteMetatile(s);
             gBlockLayer[s->unk4] |= 0x8000;
         }
@@ -234,7 +234,7 @@ void BlockAnimDrawColumn(struct Unk020061F0 *b, s32 n)
             s->unk4 = gRoomWidth * i + b->unk4;
             if (gBlockLayer[s->unk4] != 0)
             {
-                s->unk8 = &gCurRoomDef->unk10[gBlockLayer[s->unk4] & 0xFF] - 1;
+                s->unk8 = &gCurRoomDef->blockMetatiles[gBlockLayer[s->unk4] & 0xFF] - 1;
                 s->unkC = (u16 *)(BG_VRAM + 0x2000) + (((s->unk0 * 2) & 31) + ((((s->unk2 * 2) & 31) + (u16)(s->unk0 & 16) * 2) << 5));
                 s->unk16 = s->unk8->metatile;
                 s->unk18 = s->unk8->collisionTile;
@@ -505,7 +505,7 @@ s16 BreakBg1BlockAtCursor(void)
     }
     b = &gBg1BreakingBlocks[i];
     b->unk4 = gBlockCursorIndex;
-    b->unk8 = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->unk10 + 1;
+    b->unk8 = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1]->blockMetatiles + 1;
     b->unk0 = gBlockCursorX;
     b->unk2 = gBlockCursorY;
     b->unkC = (u16 *)(BG_VRAM + 0x1800) + (((gBlockCursorX * 2) & 31) + (((gBlockCursorY * 2) & 31) << 5));

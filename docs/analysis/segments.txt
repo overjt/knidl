@@ -328,8 +328,752 @@
 0x080CFE20 0x080CFE2C data sram_id_string # The SRAM id string "AGB  KIRBY" (gSramIdString), WriteSramEx(.., 0x0E000000, 10) src/save_b7a9c.c:29 (#36 phase 2 run 3; formerly the head of lib_misc)
 0x080CFE2C 0x080D0788 data air_grind_rodata # Air Grind (M37) rodata (#36 phase 2 run 3; formerly lib_misc, lib_rodata_fir_tables and the head of level_object_tables, not sound-driver or FIR tables, #98): gUnk_080CFE2C-gUnk_080CFFDA (src/subgame_c243c.c ... src/subgame_c4d08.c), palette gUnk_080D0198, sine table gUnk_080D0398, gUnk_080D059A-gUnk_080D0766 (src/subgame_c5284.c); 0x080D0768-0x080D0788 has no consumer
 0x080D0788 0x08334EC0 data sprite_sheets # Sprite sheets (asset, #36 phase 2 run 3): OAM template streams, tiles, palettes and struct TaskGfx records the frame tables reach; its head holds a RequestCopyList palette and the LZ77 streams gUnk_080D07C8/gUnk_080D1B78, its last 12 bytes the stage-count table gUnk_08334EB4
-0x08334EC0 0x0835CFD4 data room_bg_anims # Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c)
-0x0835CFD4 0x083A862C data room_data # Room records (#36 phase 2): 333 RoomDefs, each after its metatile map, block layer, block table, doors and object list
+0x08334EC0 0x083356E0 data room_bg_anims # Room BG animations (#36 phase 2): 30 scripts, 181 tile frames, 14 palette fades, 28 palettes (LoadRoomBgAnims, src/camera_2d01c.c)
+0x083356E0 0x08335728 c_data bg_anim_083356e0 # src/data/bg_anim_scripts.c section .bg_anim_083356e0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08335728 0x08335B48 data room_bg_anims_08335728
+0x08335B48 0x08335B90 c_data bg_anim_08335b48 # src/data/bg_anim_scripts.c section .bg_anim_08335b48 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08335B90 0x08335DB0 data room_bg_anims_08335b90
+0x08335DB0 0x08335DF8 c_data bg_anim_08335db0 # src/data/bg_anim_scripts.c section .bg_anim_08335db0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08335DF8 0x08336618 data room_bg_anims_08335df8
+0x08336618 0x08336660 c_data bg_anim_08336618 # src/data/bg_anim_scripts.c section .bg_anim_08336618 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08336660 0x08336E80 data room_bg_anims_08336660
+0x08336E80 0x08336EC8 c_data bg_anim_08336e80 # src/data/bg_anim_scripts.c section .bg_anim_08336e80 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08336EC8 0x083376E8 data room_bg_anims_08336ec8
+0x083376E8 0x08337730 c_data bg_anim_083376e8 # src/data/bg_anim_scripts.c section .bg_anim_083376e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08337730 0x08337B50 data room_bg_anims_08337730
+0x08337B50 0x08337B98 c_data bg_anim_08337b50 # src/data/bg_anim_scripts.c section .bg_anim_08337b50 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08337B98 0x083396B8 data room_bg_anims_08337b98
+0x083396B8 0x08339700 c_data bg_anim_083396b8 # src/data/bg_anim_scripts.c section .bg_anim_083396b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08339700 0x08339B20 data room_bg_anims_08339700
+0x08339B20 0x08339B68 c_data bg_anim_08339b20 # src/data/bg_anim_scripts.c section .bg_anim_08339b20 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08339B68 0x08339D88 data room_bg_anims_08339b68
+0x08339D88 0x08339DD0 c_data bg_anim_08339d88 # src/data/bg_anim_scripts.c section .bg_anim_08339d88 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08339DD0 0x0833A0E8 data room_bg_anims_08339dd0
+0x0833A0E8 0x0833A120 c_data bg_anim_0833a0e8 # src/data/bg_anim_scripts.c section .bg_anim_0833a0e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833A120 0x0833ABB8 data room_bg_anims_0833a120
+0x0833ABB8 0x0833ABF0 c_data bg_anim_0833abb8 # src/data/bg_anim_scripts.c section .bg_anim_0833abb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833ABF0 0x0833EC10 data room_bg_anims_0833abf0
+0x0833EC10 0x0833EC58 c_data bg_anim_0833ec10 # src/data/bg_anim_scripts.c section .bg_anim_0833ec10 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833EC58 0x0833F45C data room_bg_anims_0833ec58
+0x0833F45C 0x0833F4C4 c_data bg_anim_0833f45c # src/data/bg_anim_scripts.c section .bg_anim_0833f45c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833F4C4 0x0833FCC8 data room_bg_anims_0833f4c4
+0x0833FCC8 0x0833FD30 c_data bg_anim_0833fcc8 # src/data/bg_anim_scripts.c section .bg_anim_0833fcc8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833FD30 0x0833FE30 data room_bg_anims_0833fd30
+0x0833FE30 0x0833FE40 c_data bg_anim_0833fe30 # src/data/bg_anim_scripts.c section .bg_anim_0833fe30 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833FE40 0x0833FF40 data room_bg_anims_0833fe40
+0x0833FF40 0x0833FF50 c_data bg_anim_0833ff40 # src/data/bg_anim_scripts.c section .bg_anim_0833ff40 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0833FF50 0x08340050 data room_bg_anims_0833ff50
+0x08340050 0x08340088 c_data bg_anim_08340050 # src/data/bg_anim_scripts.c section .bg_anim_08340050 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340088 0x08340108 data room_bg_anims_08340088
+0x08340108 0x08340118 c_data bg_anim_08340108 # src/data/bg_anim_scripts.c section .bg_anim_08340108 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340118 0x08340198 data room_bg_anims_08340118
+0x08340198 0x083401A8 c_data bg_anim_08340198 # src/data/bg_anim_scripts.c section .bg_anim_08340198 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083401A8 0x08340228 data room_bg_anims_083401a8
+0x08340228 0x08340260 c_data bg_anim_08340228 # src/data/bg_anim_scripts.c section .bg_anim_08340228 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340260 0x08340360 data room_bg_anims_08340260
+0x08340360 0x08340370 c_data bg_anim_08340360 # src/data/bg_anim_scripts.c section .bg_anim_08340360 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340370 0x08340470 data room_bg_anims_08340370
+0x08340470 0x08340480 c_data bg_anim_08340470 # src/data/bg_anim_scripts.c section .bg_anim_08340470 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340480 0x08340580 data room_bg_anims_08340480
+0x08340580 0x08340590 c_data bg_anim_08340580 # src/data/bg_anim_scripts.c section .bg_anim_08340580 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340590 0x08340690 data room_bg_anims_08340590
+0x08340690 0x083406D0 c_data bg_anim_08340690 # src/data/bg_anim_scripts.c section .bg_anim_08340690 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083406D0 0x08340750 data room_bg_anims_083406d0
+0x08340750 0x08340760 c_data bg_anim_08340750 # src/data/bg_anim_scripts.c section .bg_anim_08340750 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340760 0x083407E0 data room_bg_anims_08340760
+0x083407E0 0x083407F0 c_data bg_anim_083407e0 # src/data/bg_anim_scripts.c section .bg_anim_083407e0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083407F0 0x08340870 data room_bg_anims_083407f0
+0x08340870 0x08340880 c_data bg_anim_08340870 # src/data/bg_anim_scripts.c section .bg_anim_08340870 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340880 0x08340900 data room_bg_anims_08340880
+0x08340900 0x08340940 c_data bg_anim_08340900 # src/data/bg_anim_scripts.c section .bg_anim_08340900 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08340940 0x083447D0 data room_bg_anims_08340940
+0x083447D0 0x083447F8 c_data bg_anim_083447d0 # src/data/bg_anim_scripts.c section .bg_anim_083447d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083447F8 0x08344C08 data room_bg_anims_083447f8
+0x08344C08 0x08344C30 c_data bg_anim_08344c08 # src/data/bg_anim_scripts.c section .bg_anim_08344c08 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08344C30 0x08348248 data room_bg_anims_08344c30
+0x08348248 0x08348280 c_data bg_anim_08348248 # src/data/bg_anim_scripts.c section .bg_anim_08348248 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08348280 0x0834B898 data room_bg_anims_08348280
+0x0834B898 0x0834B8D0 c_data bg_anim_0834b898 # src/data/bg_anim_scripts.c section .bg_anim_0834b898 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0834B8D0 0x0834EEE8 data room_bg_anims_0834b8d0
+0x0834EEE8 0x0834EF20 c_data bg_anim_0834eee8 # src/data/bg_anim_scripts.c section .bg_anim_0834eee8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0834EF20 0x08350AF8 data room_bg_anims_0834ef20
+0x08350AF8 0x08350B30 c_data bg_anim_08350af8 # src/data/bg_anim_scripts.c section .bg_anim_08350af8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08350B30 0x08353248 data room_bg_anims_08350b30
+0x08353248 0x08353280 c_data bg_anim_08353248 # src/data/bg_anim_scripts.c section .bg_anim_08353248 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08353280 0x08355998 data room_bg_anims_08353280
+0x08355998 0x083559D0 c_data bg_anim_08355998 # src/data/bg_anim_scripts.c section .bg_anim_08355998 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083559D0 0x083580E8 data room_bg_anims_083559d0
+0x083580E8 0x08358120 c_data bg_anim_083580e8 # src/data/bg_anim_scripts.c section .bg_anim_083580e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08358120 0x0835B5BC data room_bg_anims_08358120
+0x0835B5BC 0x0835B604 c_data bg_anim_0835b5bc # src/data/bg_anim_scripts.c section .bg_anim_0835b5bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835B604 0x0835CF9C data room_bg_anims_0835b604
+0x0835CF9C 0x0835CFD4 c_data bg_anim_0835cf9c # src/data/bg_anim_scripts.c section .bg_anim_0835cf9c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835CFD4 0x0835D08C data room_data # Room records (#36 phase 2, #167): 333 rooms, each a metatile map, block layer, block table, doors and object list, then its RoomDef header (C: src/data/room_defs.c)
+0x0835D08C 0x0835D0E4 c_data room_def_0835d08c # src/data/room_defs.c section .room_def_0835d08c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835D0E4 0x0835D300 data room_data_0835d0e4
+0x0835D300 0x0835D358 c_data room_def_0835d300 # src/data/room_defs.c section .room_def_0835d300 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835D358 0x0835D4F0 data room_data_0835d358
+0x0835D4F0 0x0835D548 c_data room_def_0835d4f0 # src/data/room_defs.c section .room_def_0835d4f0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835D548 0x0835DDC0 data room_data_0835d548
+0x0835DDC0 0x0835DE18 c_data room_def_0835ddc0 # src/data/room_defs.c section .room_def_0835ddc0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835DE18 0x0835E2A0 data room_data_0835de18
+0x0835E2A0 0x0835E2F8 c_data room_def_0835e2a0 # src/data/room_defs.c section .room_def_0835e2a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835E2F8 0x0835E70C data room_data_0835e2f8
+0x0835E70C 0x0835E764 c_data room_def_0835e70c # src/data/room_defs.c section .room_def_0835e70c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835E764 0x0835E924 data room_data_0835e764
+0x0835E924 0x0835E97C c_data room_def_0835e924 # src/data/room_defs.c section .room_def_0835e924 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835E97C 0x0835EF1C data room_data_0835e97c
+0x0835EF1C 0x0835EF74 c_data room_def_0835ef1c # src/data/room_defs.c section .room_def_0835ef1c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835EF74 0x0835F1A4 data room_data_0835ef74
+0x0835F1A4 0x0835F1FC c_data room_def_0835f1a4 # src/data/room_defs.c section .room_def_0835f1a4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835F1FC 0x0835F544 data room_data_0835f1fc
+0x0835F544 0x0835F59C c_data room_def_0835f544 # src/data/room_defs.c section .room_def_0835f544 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835F59C 0x0835FC24 data room_data_0835f59c
+0x0835FC24 0x0835FC7C c_data room_def_0835fc24 # src/data/room_defs.c section .room_def_0835fc24 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0835FC7C 0x0835FFE4 data room_data_0835fc7c
+0x0835FFE4 0x0836003C c_data room_def_0835ffe4 # src/data/room_defs.c section .room_def_0835ffe4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836003C 0x083601DC data room_data_0836003c
+0x083601DC 0x08360234 c_data room_def_083601dc # src/data/room_defs.c section .room_def_083601dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08360234 0x08360690 data room_data_08360234
+0x08360690 0x083606E8 c_data room_def_08360690 # src/data/room_defs.c section .room_def_08360690 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083606E8 0x08360B38 data room_data_083606e8
+0x08360B38 0x08360B90 c_data room_def_08360b38 # src/data/room_defs.c section .room_def_08360b38 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08360B90 0x08360F38 data room_data_08360b90
+0x08360F38 0x08360F90 c_data room_def_08360f38 # src/data/room_defs.c section .room_def_08360f38 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08360F90 0x083613A0 data room_data_08360f90
+0x083613A0 0x083613F8 c_data room_def_083613a0 # src/data/room_defs.c section .room_def_083613a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083613F8 0x0836179C data room_data_083613f8
+0x0836179C 0x083617F4 c_data room_def_0836179c # src/data/room_defs.c section .room_def_0836179c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083617F4 0x08361CB8 data room_data_083617f4
+0x08361CB8 0x08361D10 c_data room_def_08361cb8 # src/data/room_defs.c section .room_def_08361cb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08361D10 0x08362104 data room_data_08361d10
+0x08362104 0x0836215C c_data room_def_08362104 # src/data/room_defs.c section .room_def_08362104 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836215C 0x08362788 data room_data_0836215c
+0x08362788 0x083627E0 c_data room_def_08362788 # src/data/room_defs.c section .room_def_08362788 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083627E0 0x08362AD0 data room_data_083627e0
+0x08362AD0 0x08362B28 c_data room_def_08362ad0 # src/data/room_defs.c section .room_def_08362ad0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08362B28 0x083630A0 data room_data_08362b28
+0x083630A0 0x083630F8 c_data room_def_083630a0 # src/data/room_defs.c section .room_def_083630a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083630F8 0x083634E0 data room_data_083630f8
+0x083634E0 0x08363538 c_data room_def_083634e0 # src/data/room_defs.c section .room_def_083634e0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08363538 0x08363A0C data room_data_08363538
+0x08363A0C 0x08363A64 c_data room_def_08363a0c # src/data/room_defs.c section .room_def_08363a0c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08363A64 0x08363E04 data room_data_08363a64
+0x08363E04 0x08363E5C c_data room_def_08363e04 # src/data/room_defs.c section .room_def_08363e04 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08363E5C 0x08364014 data room_data_08363e5c
+0x08364014 0x0836406C c_data room_def_08364014 # src/data/room_defs.c section .room_def_08364014 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836406C 0x083643BC data room_data_0836406c
+0x083643BC 0x08364414 c_data room_def_083643bc # src/data/room_defs.c section .room_def_083643bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08364414 0x0836463C data room_data_08364414
+0x0836463C 0x08364694 c_data room_def_0836463c # src/data/room_defs.c section .room_def_0836463c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08364694 0x08364A38 data room_data_08364694
+0x08364A38 0x08364A90 c_data room_def_08364a38 # src/data/room_defs.c section .room_def_08364a38 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08364A90 0x08365558 data room_data_08364a90
+0x08365558 0x083655B0 c_data room_def_08365558 # src/data/room_defs.c section .room_def_08365558 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083655B0 0x083657C0 data room_data_083655b0
+0x083657C0 0x08365818 c_data room_def_083657c0 # src/data/room_defs.c section .room_def_083657c0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08365818 0x08366340 data room_data_08365818
+0x08366340 0x08366398 c_data room_def_08366340 # src/data/room_defs.c section .room_def_08366340 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08366398 0x0836663C data room_data_08366398
+0x0836663C 0x08366694 c_data room_def_0836663c # src/data/room_defs.c section .room_def_0836663c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08366694 0x08366974 data room_data_08366694
+0x08366974 0x083669CC c_data room_def_08366974 # src/data/room_defs.c section .room_def_08366974 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083669CC 0x08366B98 data room_data_083669cc
+0x08366B98 0x08366BF0 c_data room_def_08366b98 # src/data/room_defs.c section .room_def_08366b98 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08366BF0 0x08366D1C data room_data_08366bf0
+0x08366D1C 0x08366D74 c_data room_def_08366d1c # src/data/room_defs.c section .room_def_08366d1c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08366D74 0x08367274 data room_data_08366d74
+0x08367274 0x083672CC c_data room_def_08367274 # src/data/room_defs.c section .room_def_08367274 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083672CC 0x0836753C data room_data_083672cc
+0x0836753C 0x08367594 c_data room_def_0836753c # src/data/room_defs.c section .room_def_0836753c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08367594 0x083677F4 data room_data_08367594
+0x083677F4 0x0836784C c_data room_def_083677f4 # src/data/room_defs.c section .room_def_083677f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836784C 0x08367A50 data room_data_0836784c
+0x08367A50 0x08367AA8 c_data room_def_08367a50 # src/data/room_defs.c section .room_def_08367a50 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08367AA8 0x08367E8C data room_data_08367aa8
+0x08367E8C 0x08367EE4 c_data room_def_08367e8c # src/data/room_defs.c section .room_def_08367e8c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08367EE4 0x083684D4 data room_data_08367ee4
+0x083684D4 0x0836852C c_data room_def_083684d4 # src/data/room_defs.c section .room_def_083684d4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836852C 0x08368710 data room_data_0836852c
+0x08368710 0x08368768 c_data room_def_08368710 # src/data/room_defs.c section .room_def_08368710 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08368768 0x08368D30 data room_data_08368768
+0x08368D30 0x08368D88 c_data room_def_08368d30 # src/data/room_defs.c section .room_def_08368d30 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08368D88 0x083692D8 data room_data_08368d88
+0x083692D8 0x08369330 c_data room_def_083692d8 # src/data/room_defs.c section .room_def_083692d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08369330 0x08369BE0 data room_data_08369330
+0x08369BE0 0x08369C38 c_data room_def_08369be0 # src/data/room_defs.c section .room_def_08369be0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08369C38 0x0836A0A8 data room_data_08369c38
+0x0836A0A8 0x0836A100 c_data room_def_0836a0a8 # src/data/room_defs.c section .room_def_0836a0a8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836A100 0x0836A318 data room_data_0836a100
+0x0836A318 0x0836A370 c_data room_def_0836a318 # src/data/room_defs.c section .room_def_0836a318 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836A370 0x0836A534 data room_data_0836a370
+0x0836A534 0x0836A58C c_data room_def_0836a534 # src/data/room_defs.c section .room_def_0836a534 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836A58C 0x0836A6DC data room_data_0836a58c
+0x0836A6DC 0x0836A734 c_data room_def_0836a6dc # src/data/room_defs.c section .room_def_0836a6dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836A734 0x0836A89C data room_data_0836a734
+0x0836A89C 0x0836A8F4 c_data room_def_0836a89c # src/data/room_defs.c section .room_def_0836a89c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836A8F4 0x0836AC58 data room_data_0836a8f4
+0x0836AC58 0x0836ACB0 c_data room_def_0836ac58 # src/data/room_defs.c section .room_def_0836ac58 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836ACB0 0x0836AEE4 data room_data_0836acb0
+0x0836AEE4 0x0836AF3C c_data room_def_0836aee4 # src/data/room_defs.c section .room_def_0836aee4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836AF3C 0x0836B160 data room_data_0836af3c
+0x0836B160 0x0836B1B8 c_data room_def_0836b160 # src/data/room_defs.c section .room_def_0836b160 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836B1B8 0x0836B44C data room_data_0836b1b8
+0x0836B44C 0x0836B4A4 c_data room_def_0836b44c # src/data/room_defs.c section .room_def_0836b44c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836B4A4 0x0836B7B4 data room_data_0836b4a4
+0x0836B7B4 0x0836B80C c_data room_def_0836b7b4 # src/data/room_defs.c section .room_def_0836b7b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836B80C 0x0836B968 data room_data_0836b80c
+0x0836B968 0x0836B9C0 c_data room_def_0836b968 # src/data/room_defs.c section .room_def_0836b968 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836B9C0 0x0836BC70 data room_data_0836b9c0
+0x0836BC70 0x0836BCC8 c_data room_def_0836bc70 # src/data/room_defs.c section .room_def_0836bc70 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836BCC8 0x0836C0B0 data room_data_0836bcc8
+0x0836C0B0 0x0836C108 c_data room_def_0836c0b0 # src/data/room_defs.c section .room_def_0836c0b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836C108 0x0836C50C data room_data_0836c108
+0x0836C50C 0x0836C564 c_data room_def_0836c50c # src/data/room_defs.c section .room_def_0836c50c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836C564 0x0836CA98 data room_data_0836c564
+0x0836CA98 0x0836CAF0 c_data room_def_0836ca98 # src/data/room_defs.c section .room_def_0836ca98 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836CAF0 0x0836CDA8 data room_data_0836caf0
+0x0836CDA8 0x0836CE00 c_data room_def_0836cda8 # src/data/room_defs.c section .room_def_0836cda8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836CE00 0x0836D19C data room_data_0836ce00
+0x0836D19C 0x0836D1F4 c_data room_def_0836d19c # src/data/room_defs.c section .room_def_0836d19c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836D1F4 0x0836D334 data room_data_0836d1f4
+0x0836D334 0x0836D38C c_data room_def_0836d334 # src/data/room_defs.c section .room_def_0836d334 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836D38C 0x0836D4FC data room_data_0836d38c
+0x0836D4FC 0x0836D554 c_data room_def_0836d4fc # src/data/room_defs.c section .room_def_0836d4fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836D554 0x0836DADC data room_data_0836d554
+0x0836DADC 0x0836DB34 c_data room_def_0836dadc # src/data/room_defs.c section .room_def_0836dadc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836DB34 0x0836DD44 data room_data_0836db34
+0x0836DD44 0x0836DD9C c_data room_def_0836dd44 # src/data/room_defs.c section .room_def_0836dd44 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836DD9C 0x0836E09C data room_data_0836dd9c
+0x0836E09C 0x0836E0F4 c_data room_def_0836e09c # src/data/room_defs.c section .room_def_0836e09c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836E0F4 0x0836E3F4 data room_data_0836e0f4
+0x0836E3F4 0x0836E44C c_data room_def_0836e3f4 # src/data/room_defs.c section .room_def_0836e3f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836E44C 0x0836E660 data room_data_0836e44c
+0x0836E660 0x0836E6B8 c_data room_def_0836e660 # src/data/room_defs.c section .room_def_0836e660 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836E6B8 0x0836E824 data room_data_0836e6b8
+0x0836E824 0x0836E87C c_data room_def_0836e824 # src/data/room_defs.c section .room_def_0836e824 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836E87C 0x0836EED8 data room_data_0836e87c
+0x0836EED8 0x0836EF30 c_data room_def_0836eed8 # src/data/room_defs.c section .room_def_0836eed8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836EF30 0x0836F0A4 data room_data_0836ef30
+0x0836F0A4 0x0836F0FC c_data room_def_0836f0a4 # src/data/room_defs.c section .room_def_0836f0a4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836F0FC 0x0836F270 data room_data_0836f0fc
+0x0836F270 0x0836F2C8 c_data room_def_0836f270 # src/data/room_defs.c section .room_def_0836f270 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836F2C8 0x0836F634 data room_data_0836f2c8
+0x0836F634 0x0836F68C c_data room_def_0836f634 # src/data/room_defs.c section .room_def_0836f634 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836F68C 0x0836F7E4 data room_data_0836f68c
+0x0836F7E4 0x0836F83C c_data room_def_0836f7e4 # src/data/room_defs.c section .room_def_0836f7e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836F83C 0x0836F9B0 data room_data_0836f83c
+0x0836F9B0 0x0836FA08 c_data room_def_0836f9b0 # src/data/room_defs.c section .room_def_0836f9b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836FA08 0x0836FD44 data room_data_0836fa08
+0x0836FD44 0x0836FD9C c_data room_def_0836fd44 # src/data/room_defs.c section .room_def_0836fd44 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0836FD9C 0x08370000 data room_data_0836fd9c
+0x08370000 0x08370058 c_data room_def_08370000 # src/data/room_defs.c section .room_def_08370000 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08370058 0x083702FC data room_data_08370058
+0x083702FC 0x08370354 c_data room_def_083702fc # src/data/room_defs.c section .room_def_083702fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08370354 0x083704E4 data room_data_08370354
+0x083704E4 0x0837053C c_data room_def_083704e4 # src/data/room_defs.c section .room_def_083704e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837053C 0x08370684 data room_data_0837053c
+0x08370684 0x083706DC c_data room_def_08370684 # src/data/room_defs.c section .room_def_08370684 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083706DC 0x08370AF4 data room_data_083706dc
+0x08370AF4 0x08370B4C c_data room_def_08370af4 # src/data/room_defs.c section .room_def_08370af4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08370B4C 0x08370E08 data room_data_08370b4c
+0x08370E08 0x08370E60 c_data room_def_08370e08 # src/data/room_defs.c section .room_def_08370e08 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08370E60 0x0837108C data room_data_08370e60
+0x0837108C 0x083710E4 c_data room_def_0837108c # src/data/room_defs.c section .room_def_0837108c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083710E4 0x08371388 data room_data_083710e4
+0x08371388 0x083713E0 c_data room_def_08371388 # src/data/room_defs.c section .room_def_08371388 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083713E0 0x08371728 data room_data_083713e0
+0x08371728 0x08371780 c_data room_def_08371728 # src/data/room_defs.c section .room_def_08371728 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08371780 0x0837181C data room_data_08371780
+0x0837181C 0x08371874 c_data room_def_0837181c # src/data/room_defs.c section .room_def_0837181c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08371874 0x08371D90 data room_data_08371874
+0x08371D90 0x08371DE8 c_data room_def_08371d90 # src/data/room_defs.c section .room_def_08371d90 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08371DE8 0x08372040 data room_data_08371de8
+0x08372040 0x08372098 c_data room_def_08372040 # src/data/room_defs.c section .room_def_08372040 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08372098 0x08372240 data room_data_08372098
+0x08372240 0x08372298 c_data room_def_08372240 # src/data/room_defs.c section .room_def_08372240 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08372298 0x083723B0 data room_data_08372298
+0x083723B0 0x08372408 c_data room_def_083723b0 # src/data/room_defs.c section .room_def_083723b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08372408 0x08372518 data room_data_08372408
+0x08372518 0x08372570 c_data room_def_08372518 # src/data/room_defs.c section .room_def_08372518 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08372570 0x08372680 data room_data_08372570
+0x08372680 0x083726D8 c_data room_def_08372680 # src/data/room_defs.c section .room_def_08372680 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083726D8 0x08372A78 data room_data_083726d8
+0x08372A78 0x08372AD0 c_data room_def_08372a78 # src/data/room_defs.c section .room_def_08372a78 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08372AD0 0x08372D58 data room_data_08372ad0
+0x08372D58 0x08372DB0 c_data room_def_08372d58 # src/data/room_defs.c section .room_def_08372d58 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08372DB0 0x0837301C data room_data_08372db0
+0x0837301C 0x08373074 c_data room_def_0837301c # src/data/room_defs.c section .room_def_0837301c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08373074 0x083736A8 data room_data_08373074
+0x083736A8 0x08373700 c_data room_def_083736a8 # src/data/room_defs.c section .room_def_083736a8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08373700 0x08373914 data room_data_08373700
+0x08373914 0x0837396C c_data room_def_08373914 # src/data/room_defs.c section .room_def_08373914 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837396C 0x08373AC4 data room_data_0837396c
+0x08373AC4 0x08373B1C c_data room_def_08373ac4 # src/data/room_defs.c section .room_def_08373ac4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08373B1C 0x0837410C data room_data_08373b1c
+0x0837410C 0x08374164 c_data room_def_0837410c # src/data/room_defs.c section .room_def_0837410c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08374164 0x083742CC data room_data_08374164
+0x083742CC 0x08374324 c_data room_def_083742cc # src/data/room_defs.c section .room_def_083742cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08374324 0x083747D0 data room_data_08374324
+0x083747D0 0x08374828 c_data room_def_083747d0 # src/data/room_defs.c section .room_def_083747d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08374828 0x08374B28 data room_data_08374828
+0x08374B28 0x08374B80 c_data room_def_08374b28 # src/data/room_defs.c section .room_def_08374b28 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08374B80 0x08374C74 data room_data_08374b80
+0x08374C74 0x08374CCC c_data room_def_08374c74 # src/data/room_defs.c section .room_def_08374c74 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08374CCC 0x08374DBC data room_data_08374ccc
+0x08374DBC 0x08374E14 c_data room_def_08374dbc # src/data/room_defs.c section .room_def_08374dbc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08374E14 0x0837531C data room_data_08374e14
+0x0837531C 0x08375374 c_data room_def_0837531c # src/data/room_defs.c section .room_def_0837531c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08375374 0x083761D0 data room_data_08375374
+0x083761D0 0x08376228 c_data room_def_083761d0 # src/data/room_defs.c section .room_def_083761d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08376228 0x08376B24 data room_data_08376228
+0x08376B24 0x08376B7C c_data room_def_08376b24 # src/data/room_defs.c section .room_def_08376b24 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08376B7C 0x08376D94 data room_data_08376b7c
+0x08376D94 0x08376DEC c_data room_def_08376d94 # src/data/room_defs.c section .room_def_08376d94 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08376DEC 0x08376F18 data room_data_08376dec
+0x08376F18 0x08376F70 c_data room_def_08376f18 # src/data/room_defs.c section .room_def_08376f18 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08376F70 0x08377144 data room_data_08376f70
+0x08377144 0x0837719C c_data room_def_08377144 # src/data/room_defs.c section .room_def_08377144 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837719C 0x08377334 data room_data_0837719c
+0x08377334 0x0837738C c_data room_def_08377334 # src/data/room_defs.c section .room_def_08377334 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837738C 0x08377AF0 data room_data_0837738c
+0x08377AF0 0x08377B48 c_data room_def_08377af0 # src/data/room_defs.c section .room_def_08377af0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08377B48 0x08377FBC data room_data_08377b48
+0x08377FBC 0x08378014 c_data room_def_08377fbc # src/data/room_defs.c section .room_def_08377fbc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08378014 0x08378A80 data room_data_08378014
+0x08378A80 0x08378AD8 c_data room_def_08378a80 # src/data/room_defs.c section .room_def_08378a80 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08378AD8 0x08378EB0 data room_data_08378ad8
+0x08378EB0 0x08378F08 c_data room_def_08378eb0 # src/data/room_defs.c section .room_def_08378eb0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08378F08 0x08379218 data room_data_08378f08
+0x08379218 0x08379270 c_data room_def_08379218 # src/data/room_defs.c section .room_def_08379218 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08379270 0x08379B84 data room_data_08379270
+0x08379B84 0x08379BDC c_data room_def_08379b84 # src/data/room_defs.c section .room_def_08379b84 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08379BDC 0x08379E60 data room_data_08379bdc
+0x08379E60 0x08379EB8 c_data room_def_08379e60 # src/data/room_defs.c section .room_def_08379e60 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08379EB8 0x0837A0CC data room_data_08379eb8
+0x0837A0CC 0x0837A124 c_data room_def_0837a0cc # src/data/room_defs.c section .room_def_0837a0cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837A124 0x0837A52C data room_data_0837a124
+0x0837A52C 0x0837A584 c_data room_def_0837a52c # src/data/room_defs.c section .room_def_0837a52c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837A584 0x0837AB88 data room_data_0837a584
+0x0837AB88 0x0837ABE0 c_data room_def_0837ab88 # src/data/room_defs.c section .room_def_0837ab88 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837ABE0 0x0837AD38 data room_data_0837abe0
+0x0837AD38 0x0837AD90 c_data room_def_0837ad38 # src/data/room_defs.c section .room_def_0837ad38 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837AD90 0x0837AF10 data room_data_0837ad90
+0x0837AF10 0x0837AF68 c_data room_def_0837af10 # src/data/room_defs.c section .room_def_0837af10 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837AF68 0x0837B7CC data room_data_0837af68
+0x0837B7CC 0x0837B824 c_data room_def_0837b7cc # src/data/room_defs.c section .room_def_0837b7cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837B824 0x0837BB9C data room_data_0837b824
+0x0837BB9C 0x0837BBF4 c_data room_def_0837bb9c # src/data/room_defs.c section .room_def_0837bb9c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837BBF4 0x0837BC90 data room_data_0837bbf4
+0x0837BC90 0x0837BCE8 c_data room_def_0837bc90 # src/data/room_defs.c section .room_def_0837bc90 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837BCE8 0x0837BFA8 data room_data_0837bce8
+0x0837BFA8 0x0837C000 c_data room_def_0837bfa8 # src/data/room_defs.c section .room_def_0837bfa8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837C000 0x0837C288 data room_data_0837c000
+0x0837C288 0x0837C2E0 c_data room_def_0837c288 # src/data/room_defs.c section .room_def_0837c288 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837C2E0 0x0837C424 data room_data_0837c2e0
+0x0837C424 0x0837C47C c_data room_def_0837c424 # src/data/room_defs.c section .room_def_0837c424 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837C47C 0x0837C520 data room_data_0837c47c
+0x0837C520 0x0837C578 c_data room_def_0837c520 # src/data/room_defs.c section .room_def_0837c520 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837C578 0x0837C698 data room_data_0837c578
+0x0837C698 0x0837C6F0 c_data room_def_0837c698 # src/data/room_defs.c section .room_def_0837c698 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837C6F0 0x0837D968 data room_data_0837c6f0
+0x0837D968 0x0837D9C0 c_data room_def_0837d968 # src/data/room_defs.c section .room_def_0837d968 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837D9C0 0x0837DE3C data room_data_0837d9c0
+0x0837DE3C 0x0837DE94 c_data room_def_0837de3c # src/data/room_defs.c section .room_def_0837de3c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837DE94 0x0837E598 data room_data_0837de94
+0x0837E598 0x0837E5F0 c_data room_def_0837e598 # src/data/room_defs.c section .room_def_0837e598 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837E5F0 0x0837EB34 data room_data_0837e5f0
+0x0837EB34 0x0837EB8C c_data room_def_0837eb34 # src/data/room_defs.c section .room_def_0837eb34 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837EB8C 0x0837ECA8 data room_data_0837eb8c
+0x0837ECA8 0x0837ED00 c_data room_def_0837eca8 # src/data/room_defs.c section .room_def_0837eca8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837ED00 0x0837EE60 data room_data_0837ed00
+0x0837EE60 0x0837EEB8 c_data room_def_0837ee60 # src/data/room_defs.c section .room_def_0837ee60 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837EEB8 0x0837F028 data room_data_0837eeb8
+0x0837F028 0x0837F080 c_data room_def_0837f028 # src/data/room_defs.c section .room_def_0837f028 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837F080 0x0837F73C data room_data_0837f080
+0x0837F73C 0x0837F794 c_data room_def_0837f73c # src/data/room_defs.c section .room_def_0837f73c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837F794 0x0837FA44 data room_data_0837f794
+0x0837FA44 0x0837FA9C c_data room_def_0837fa44 # src/data/room_defs.c section .room_def_0837fa44 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837FA9C 0x0837FDC8 data room_data_0837fa9c
+0x0837FDC8 0x0837FE20 c_data room_def_0837fdc8 # src/data/room_defs.c section .room_def_0837fdc8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0837FE20 0x083800D0 data room_data_0837fe20
+0x083800D0 0x08380128 c_data room_def_083800d0 # src/data/room_defs.c section .room_def_083800d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08380128 0x083805BC data room_data_08380128
+0x083805BC 0x08380614 c_data room_def_083805bc # src/data/room_defs.c section .room_def_083805bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08380614 0x08380758 data room_data_08380614
+0x08380758 0x083807B0 c_data room_def_08380758 # src/data/room_defs.c section .room_def_08380758 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083807B0 0x08380CFC data room_data_083807b0
+0x08380CFC 0x08380D54 c_data room_def_08380cfc # src/data/room_defs.c section .room_def_08380cfc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08380D54 0x083811A8 data room_data_08380d54
+0x083811A8 0x08381200 c_data room_def_083811a8 # src/data/room_defs.c section .room_def_083811a8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08381200 0x08381CCC data room_data_08381200
+0x08381CCC 0x08381D24 c_data room_def_08381ccc # src/data/room_defs.c section .room_def_08381ccc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08381D24 0x083821BC data room_data_08381d24
+0x083821BC 0x08382214 c_data room_def_083821bc # src/data/room_defs.c section .room_def_083821bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08382214 0x083825D8 data room_data_08382214
+0x083825D8 0x08382630 c_data room_def_083825d8 # src/data/room_defs.c section .room_def_083825d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08382630 0x083828C4 data room_data_08382630
+0x083828C4 0x0838291C c_data room_def_083828c4 # src/data/room_defs.c section .room_def_083828c4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838291C 0x0838328C data room_data_0838291c
+0x0838328C 0x083832E4 c_data room_def_0838328c # src/data/room_defs.c section .room_def_0838328c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083832E4 0x08383B28 data room_data_083832e4
+0x08383B28 0x08383B80 c_data room_def_08383b28 # src/data/room_defs.c section .room_def_08383b28 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08383B80 0x083840C0 data room_data_08383b80
+0x083840C0 0x08384118 c_data room_def_083840c0 # src/data/room_defs.c section .room_def_083840c0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08384118 0x083847B4 data room_data_08384118
+0x083847B4 0x0838480C c_data room_def_083847b4 # src/data/room_defs.c section .room_def_083847b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838480C 0x08384ADC data room_data_0838480c
+0x08384ADC 0x08384B34 c_data room_def_08384adc # src/data/room_defs.c section .room_def_08384adc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08384B34 0x08384CB0 data room_data_08384b34
+0x08384CB0 0x08384D08 c_data room_def_08384cb0 # src/data/room_defs.c section .room_def_08384cb0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08384D08 0x08384E3C data room_data_08384d08
+0x08384E3C 0x08384E94 c_data room_def_08384e3c # src/data/room_defs.c section .room_def_08384e3c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08384E94 0x08385964 data room_data_08384e94
+0x08385964 0x083859BC c_data room_def_08385964 # src/data/room_defs.c section .room_def_08385964 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083859BC 0x08385FCC data room_data_083859bc
+0x08385FCC 0x08386024 c_data room_def_08385fcc # src/data/room_defs.c section .room_def_08385fcc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08386024 0x08386348 data room_data_08386024
+0x08386348 0x083863A0 c_data room_def_08386348 # src/data/room_defs.c section .room_def_08386348 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083863A0 0x08386700 data room_data_083863a0
+0x08386700 0x08386758 c_data room_def_08386700 # src/data/room_defs.c section .room_def_08386700 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08386758 0x08386BC0 data room_data_08386758
+0x08386BC0 0x08386C18 c_data room_def_08386bc0 # src/data/room_defs.c section .room_def_08386bc0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08386C18 0x08386F80 data room_data_08386c18
+0x08386F80 0x08386FD8 c_data room_def_08386f80 # src/data/room_defs.c section .room_def_08386f80 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08386FD8 0x08387308 data room_data_08386fd8
+0x08387308 0x08387360 c_data room_def_08387308 # src/data/room_defs.c section .room_def_08387308 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08387360 0x08387498 data room_data_08387360
+0x08387498 0x083874F0 c_data room_def_08387498 # src/data/room_defs.c section .room_def_08387498 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083874F0 0x083879E8 data room_data_083874f0
+0x083879E8 0x08387A40 c_data room_def_083879e8 # src/data/room_defs.c section .room_def_083879e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08387A40 0x083881D4 data room_data_08387a40
+0x083881D4 0x0838822C c_data room_def_083881d4 # src/data/room_defs.c section .room_def_083881d4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838822C 0x0838875C data room_data_0838822c
+0x0838875C 0x083887B4 c_data room_def_0838875c # src/data/room_defs.c section .room_def_0838875c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083887B4 0x08388970 data room_data_083887b4
+0x08388970 0x083889C8 c_data room_def_08388970 # src/data/room_defs.c section .room_def_08388970 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083889C8 0x08388BB8 data room_data_083889c8
+0x08388BB8 0x08388C10 c_data room_def_08388bb8 # src/data/room_defs.c section .room_def_08388bb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08388C10 0x0838928C data room_data_08388c10
+0x0838928C 0x083892E4 c_data room_def_0838928c # src/data/room_defs.c section .room_def_0838928c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083892E4 0x083893DC data room_data_083892e4
+0x083893DC 0x08389434 c_data room_def_083893dc # src/data/room_defs.c section .room_def_083893dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08389434 0x08389A60 data room_data_08389434
+0x08389A60 0x08389AB8 c_data room_def_08389a60 # src/data/room_defs.c section .room_def_08389a60 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08389AB8 0x08389F2C data room_data_08389ab8
+0x08389F2C 0x08389F84 c_data room_def_08389f2c # src/data/room_defs.c section .room_def_08389f2c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08389F84 0x0838A420 data room_data_08389f84
+0x0838A420 0x0838A478 c_data room_def_0838a420 # src/data/room_defs.c section .room_def_0838a420 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838A478 0x0838A668 data room_data_0838a478
+0x0838A668 0x0838A6C0 c_data room_def_0838a668 # src/data/room_defs.c section .room_def_0838a668 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838A6C0 0x0838A85C data room_data_0838a6c0
+0x0838A85C 0x0838A8B4 c_data room_def_0838a85c # src/data/room_defs.c section .room_def_0838a85c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838A8B4 0x0838A9D0 data room_data_0838a8b4
+0x0838A9D0 0x0838AA28 c_data room_def_0838a9d0 # src/data/room_defs.c section .room_def_0838a9d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838AA28 0x0838AF20 data room_data_0838aa28
+0x0838AF20 0x0838AF78 c_data room_def_0838af20 # src/data/room_defs.c section .room_def_0838af20 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838AF78 0x0838B394 data room_data_0838af78
+0x0838B394 0x0838B3EC c_data room_def_0838b394 # src/data/room_defs.c section .room_def_0838b394 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838B3EC 0x0838B744 data room_data_0838b3ec
+0x0838B744 0x0838B79C c_data room_def_0838b744 # src/data/room_defs.c section .room_def_0838b744 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838B79C 0x0838BB74 data room_data_0838b79c
+0x0838BB74 0x0838BBCC c_data room_def_0838bb74 # src/data/room_defs.c section .room_def_0838bb74 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838BBCC 0x0838BD4C data room_data_0838bbcc
+0x0838BD4C 0x0838BDA4 c_data room_def_0838bd4c # src/data/room_defs.c section .room_def_0838bd4c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838BDA4 0x0838BF0C data room_data_0838bda4
+0x0838BF0C 0x0838BF64 c_data room_def_0838bf0c # src/data/room_defs.c section .room_def_0838bf0c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838BF64 0x0838C068 data room_data_0838bf64
+0x0838C068 0x0838C0C0 c_data room_def_0838c068 # src/data/room_defs.c section .room_def_0838c068 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838C0C0 0x0838C574 data room_data_0838c0c0
+0x0838C574 0x0838C5CC c_data room_def_0838c574 # src/data/room_defs.c section .room_def_0838c574 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838C5CC 0x0838CB58 data room_data_0838c5cc
+0x0838CB58 0x0838CBB0 c_data room_def_0838cb58 # src/data/room_defs.c section .room_def_0838cb58 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838CBB0 0x0838D190 data room_data_0838cbb0
+0x0838D190 0x0838D1E8 c_data room_def_0838d190 # src/data/room_defs.c section .room_def_0838d190 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838D1E8 0x0838D7FC data room_data_0838d1e8
+0x0838D7FC 0x0838D854 c_data room_def_0838d7fc # src/data/room_defs.c section .room_def_0838d7fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838D854 0x0838DBEC data room_data_0838d854
+0x0838DBEC 0x0838DC44 c_data room_def_0838dbec # src/data/room_defs.c section .room_def_0838dbec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838DC44 0x0838DD58 data room_data_0838dc44
+0x0838DD58 0x0838DDB0 c_data room_def_0838dd58 # src/data/room_defs.c section .room_def_0838dd58 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838DDB0 0x0838DEC4 data room_data_0838ddb0
+0x0838DEC4 0x0838DF1C c_data room_def_0838dec4 # src/data/room_defs.c section .room_def_0838dec4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838DF1C 0x0838E038 data room_data_0838df1c
+0x0838E038 0x0838E090 c_data room_def_0838e038 # src/data/room_defs.c section .room_def_0838e038 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838E090 0x0838E2C8 data room_data_0838e090
+0x0838E2C8 0x0838E320 c_data room_def_0838e2c8 # src/data/room_defs.c section .room_def_0838e2c8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838E320 0x0838E478 data room_data_0838e320
+0x0838E478 0x0838E4D0 c_data room_def_0838e478 # src/data/room_defs.c section .room_def_0838e478 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838E4D0 0x0838E688 data room_data_0838e4d0
+0x0838E688 0x0838E6E0 c_data room_def_0838e688 # src/data/room_defs.c section .room_def_0838e688 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838E6E0 0x0838E818 data room_data_0838e6e0
+0x0838E818 0x0838E870 c_data room_def_0838e818 # src/data/room_defs.c section .room_def_0838e818 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838E870 0x0838EEE4 data room_data_0838e870
+0x0838EEE4 0x0838EF3C c_data room_def_0838eee4 # src/data/room_defs.c section .room_def_0838eee4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838EF3C 0x0838F788 data room_data_0838ef3c
+0x0838F788 0x0838F7E0 c_data room_def_0838f788 # src/data/room_defs.c section .room_def_0838f788 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838F7E0 0x0838F914 data room_data_0838f7e0
+0x0838F914 0x0838F96C c_data room_def_0838f914 # src/data/room_defs.c section .room_def_0838f914 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838F96C 0x0838FCF4 data room_data_0838f96c
+0x0838FCF4 0x0838FD4C c_data room_def_0838fcf4 # src/data/room_defs.c section .room_def_0838fcf4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0838FD4C 0x083900AC data room_data_0838fd4c
+0x083900AC 0x08390104 c_data room_def_083900ac # src/data/room_defs.c section .room_def_083900ac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08390104 0x083902B0 data room_data_08390104
+0x083902B0 0x08390308 c_data room_def_083902b0 # src/data/room_defs.c section .room_def_083902b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08390308 0x0839059C data room_data_08390308
+0x0839059C 0x083905F4 c_data room_def_0839059c # src/data/room_defs.c section .room_def_0839059c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083905F4 0x08390BA8 data room_data_083905f4
+0x08390BA8 0x08390C00 c_data room_def_08390ba8 # src/data/room_defs.c section .room_def_08390ba8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08390C00 0x08391138 data room_data_08390c00
+0x08391138 0x08391190 c_data room_def_08391138 # src/data/room_defs.c section .room_def_08391138 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08391190 0x08391C40 data room_data_08391190
+0x08391C40 0x08391C98 c_data room_def_08391c40 # src/data/room_defs.c section .room_def_08391c40 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08391C98 0x08391D9C data room_data_08391c98
+0x08391D9C 0x08391DF4 c_data room_def_08391d9c # src/data/room_defs.c section .room_def_08391d9c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08391DF4 0x08392308 data room_data_08391df4
+0x08392308 0x08392360 c_data room_def_08392308 # src/data/room_defs.c section .room_def_08392308 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08392360 0x08392778 data room_data_08392360
+0x08392778 0x083927D0 c_data room_def_08392778 # src/data/room_defs.c section .room_def_08392778 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083927D0 0x08392AA8 data room_data_083927d0
+0x08392AA8 0x08392B00 c_data room_def_08392aa8 # src/data/room_defs.c section .room_def_08392aa8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08392B00 0x08392F0C data room_data_08392b00
+0x08392F0C 0x08392F64 c_data room_def_08392f0c # src/data/room_defs.c section .room_def_08392f0c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08392F64 0x08393430 data room_data_08392f64
+0x08393430 0x08393488 c_data room_def_08393430 # src/data/room_defs.c section .room_def_08393430 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08393488 0x083935AC data room_data_08393488
+0x083935AC 0x08393604 c_data room_def_083935ac # src/data/room_defs.c section .room_def_083935ac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08393604 0x08393760 data room_data_08393604
+0x08393760 0x083937B8 c_data room_def_08393760 # src/data/room_defs.c section .room_def_08393760 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083937B8 0x083938C0 data room_data_083937b8
+0x083938C0 0x08393918 c_data room_def_083938c0 # src/data/room_defs.c section .room_def_083938c0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08393918 0x08393A7C data room_data_08393918
+0x08393A7C 0x08393AD4 c_data room_def_08393a7c # src/data/room_defs.c section .room_def_08393a7c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08393AD4 0x08393C2C data room_data_08393ad4
+0x08393C2C 0x08393C84 c_data room_def_08393c2c # src/data/room_defs.c section .room_def_08393c2c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08393C84 0x08393DC8 data room_data_08393c84
+0x08393DC8 0x08393E20 c_data room_def_08393dc8 # src/data/room_defs.c section .room_def_08393dc8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08393E20 0x08393EF4 data room_data_08393e20
+0x08393EF4 0x08393F4C c_data room_def_08393ef4 # src/data/room_defs.c section .room_def_08393ef4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08393F4C 0x08394458 data room_data_08393f4c
+0x08394458 0x083944B0 c_data room_def_08394458 # src/data/room_defs.c section .room_def_08394458 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083944B0 0x08394C58 data room_data_083944b0
+0x08394C58 0x08394CB0 c_data room_def_08394c58 # src/data/room_defs.c section .room_def_08394c58 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08394CB0 0x083950F8 data room_data_08394cb0
+0x083950F8 0x08395150 c_data room_def_083950f8 # src/data/room_defs.c section .room_def_083950f8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08395150 0x08395298 data room_data_08395150
+0x08395298 0x083952F0 c_data room_def_08395298 # src/data/room_defs.c section .room_def_08395298 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083952F0 0x08395450 data room_data_083952f0
+0x08395450 0x083954A8 c_data room_def_08395450 # src/data/room_defs.c section .room_def_08395450 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083954A8 0x0839570C data room_data_083954a8
+0x0839570C 0x08395764 c_data room_def_0839570c # src/data/room_defs.c section .room_def_0839570c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08395764 0x083959C8 data room_data_08395764
+0x083959C8 0x08395A20 c_data room_def_083959c8 # src/data/room_defs.c section .room_def_083959c8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08395A20 0x08395C90 data room_data_08395a20
+0x08395C90 0x08395CE8 c_data room_def_08395c90 # src/data/room_defs.c section .room_def_08395c90 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08395CE8 0x08395F34 data room_data_08395ce8
+0x08395F34 0x08395F8C c_data room_def_08395f34 # src/data/room_defs.c section .room_def_08395f34 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08395F8C 0x083961E4 data room_data_08395f8c
+0x083961E4 0x0839623C c_data room_def_083961e4 # src/data/room_defs.c section .room_def_083961e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839623C 0x083964AC data room_data_0839623c
+0x083964AC 0x08396504 c_data room_def_083964ac # src/data/room_defs.c section .room_def_083964ac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08396504 0x08396754 data room_data_08396504
+0x08396754 0x083967AC c_data room_def_08396754 # src/data/room_defs.c section .room_def_08396754 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083967AC 0x08396A00 data room_data_083967ac
+0x08396A00 0x08396A58 c_data room_def_08396a00 # src/data/room_defs.c section .room_def_08396a00 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08396A58 0x08396CB8 data room_data_08396a58
+0x08396CB8 0x08396D10 c_data room_def_08396cb8 # src/data/room_defs.c section .room_def_08396cb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08396D10 0x0839706C data room_data_08396d10
+0x0839706C 0x083970C4 c_data room_def_0839706c # src/data/room_defs.c section .room_def_0839706c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083970C4 0x08397358 data room_data_083970c4
+0x08397358 0x083973B0 c_data room_def_08397358 # src/data/room_defs.c section .room_def_08397358 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083973B0 0x08397508 data room_data_083973b0
+0x08397508 0x08397560 c_data room_def_08397508 # src/data/room_defs.c section .room_def_08397508 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08397560 0x08397680 data room_data_08397560
+0x08397680 0x083976D8 c_data room_def_08397680 # src/data/room_defs.c section .room_def_08397680 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083976D8 0x08397804 data room_data_083976d8
+0x08397804 0x0839785C c_data room_def_08397804 # src/data/room_defs.c section .room_def_08397804 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839785C 0x08397970 data room_data_0839785c
+0x08397970 0x083979C8 c_data room_def_08397970 # src/data/room_defs.c section .room_def_08397970 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083979C8 0x08397B54 data room_data_083979c8
+0x08397B54 0x08397BAC c_data room_def_08397b54 # src/data/room_defs.c section .room_def_08397b54 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08397BAC 0x08397CFC data room_data_08397bac
+0x08397CFC 0x08397D54 c_data room_def_08397cfc # src/data/room_defs.c section .room_def_08397cfc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08397D54 0x08397ED0 data room_data_08397d54
+0x08397ED0 0x08397F28 c_data room_def_08397ed0 # src/data/room_defs.c section .room_def_08397ed0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08397F28 0x0839804C data room_data_08397f28
+0x0839804C 0x083980A4 c_data room_def_0839804c # src/data/room_defs.c section .room_def_0839804c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083980A4 0x08398220 data room_data_083980a4
+0x08398220 0x08398278 c_data room_def_08398220 # src/data/room_defs.c section .room_def_08398220 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08398278 0x083983D8 data room_data_08398278
+0x083983D8 0x08398430 c_data room_def_083983d8 # src/data/room_defs.c section .room_def_083983d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08398430 0x083985D0 data room_data_08398430
+0x083985D0 0x08398628 c_data room_def_083985d0 # src/data/room_defs.c section .room_def_083985d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08398628 0x0839875C data room_data_08398628
+0x0839875C 0x083987B4 c_data room_def_0839875c # src/data/room_defs.c section .room_def_0839875c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083987B4 0x08398858 data room_data_083987b4
+0x08398858 0x083988B0 c_data room_def_08398858 # src/data/room_defs.c section .room_def_08398858 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083988B0 0x08398DDC data room_data_083988b0
+0x08398DDC 0x08398E34 c_data room_def_08398ddc # src/data/room_defs.c section .room_def_08398ddc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08398E34 0x08399208 data room_data_08398e34
+0x08399208 0x08399260 c_data room_def_08399208 # src/data/room_defs.c section .room_def_08399208 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08399260 0x083995EC data room_data_08399260
+0x083995EC 0x08399644 c_data room_def_083995ec # src/data/room_defs.c section .room_def_083995ec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08399644 0x08399CB8 data room_data_08399644
+0x08399CB8 0x08399D10 c_data room_def_08399cb8 # src/data/room_defs.c section .room_def_08399cb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08399D10 0x0839A214 data room_data_08399d10
+0x0839A214 0x0839A26C c_data room_def_0839a214 # src/data/room_defs.c section .room_def_0839a214 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839A26C 0x0839A4C8 data room_data_0839a26c
+0x0839A4C8 0x0839A520 c_data room_def_0839a4c8 # src/data/room_defs.c section .room_def_0839a4c8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839A520 0x0839A774 data room_data_0839a520
+0x0839A774 0x0839A7CC c_data room_def_0839a774 # src/data/room_defs.c section .room_def_0839a774 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839A7CC 0x0839AA40 data room_data_0839a7cc
+0x0839AA40 0x0839AA98 c_data room_def_0839aa40 # src/data/room_defs.c section .room_def_0839aa40 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839AA98 0x0839AD18 data room_data_0839aa98
+0x0839AD18 0x0839AD70 c_data room_def_0839ad18 # src/data/room_defs.c section .room_def_0839ad18 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839AD70 0x0839B260 data room_data_0839ad70
+0x0839B260 0x0839B2B8 c_data room_def_0839b260 # src/data/room_defs.c section .room_def_0839b260 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839B2B8 0x0839BB28 data room_data_0839b2b8
+0x0839BB28 0x0839BB80 c_data room_def_0839bb28 # src/data/room_defs.c section .room_def_0839bb28 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839BB80 0x0839BED4 data room_data_0839bb80
+0x0839BED4 0x0839BF2C c_data room_def_0839bed4 # src/data/room_defs.c section .room_def_0839bed4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839BF2C 0x0839C0D0 data room_data_0839bf2c
+0x0839C0D0 0x0839C128 c_data room_def_0839c0d0 # src/data/room_defs.c section .room_def_0839c0d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839C128 0x0839C57C data room_data_0839c128
+0x0839C57C 0x0839C5D4 c_data room_def_0839c57c # src/data/room_defs.c section .room_def_0839c57c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839C5D4 0x0839CB34 data room_data_0839c5d4
+0x0839CB34 0x0839CB8C c_data room_def_0839cb34 # src/data/room_defs.c section .room_def_0839cb34 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839CB8C 0x0839CD48 data room_data_0839cb8c
+0x0839CD48 0x0839CDA0 c_data room_def_0839cd48 # src/data/room_defs.c section .room_def_0839cd48 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839CDA0 0x0839D254 data room_data_0839cda0
+0x0839D254 0x0839D2AC c_data room_def_0839d254 # src/data/room_defs.c section .room_def_0839d254 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839D2AC 0x0839D5B4 data room_data_0839d2ac
+0x0839D5B4 0x0839D60C c_data room_def_0839d5b4 # src/data/room_defs.c section .room_def_0839d5b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839D60C 0x0839D8BC data room_data_0839d60c
+0x0839D8BC 0x0839D914 c_data room_def_0839d8bc # src/data/room_defs.c section .room_def_0839d8bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839D914 0x0839DAFC data room_data_0839d914
+0x0839DAFC 0x0839DB54 c_data room_def_0839dafc # src/data/room_defs.c section .room_def_0839dafc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839DB54 0x0839DED4 data room_data_0839db54
+0x0839DED4 0x0839DF2C c_data room_def_0839ded4 # src/data/room_defs.c section .room_def_0839ded4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839DF2C 0x0839E190 data room_data_0839df2c
+0x0839E190 0x0839E1E8 c_data room_def_0839e190 # src/data/room_defs.c section .room_def_0839e190 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839E1E8 0x0839E590 data room_data_0839e1e8
+0x0839E590 0x0839E5E8 c_data room_def_0839e590 # src/data/room_defs.c section .room_def_0839e590 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839E5E8 0x0839E944 data room_data_0839e5e8
+0x0839E944 0x0839E99C c_data room_def_0839e944 # src/data/room_defs.c section .room_def_0839e944 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839E99C 0x0839EBB4 data room_data_0839e99c
+0x0839EBB4 0x0839EC0C c_data room_def_0839ebb4 # src/data/room_defs.c section .room_def_0839ebb4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839EC0C 0x0839EE14 data room_data_0839ec0c
+0x0839EE14 0x0839EE6C c_data room_def_0839ee14 # src/data/room_defs.c section .room_def_0839ee14 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839EE6C 0x0839F3D8 data room_data_0839ee6c
+0x0839F3D8 0x0839F430 c_data room_def_0839f3d8 # src/data/room_defs.c section .room_def_0839f3d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839F430 0x0839F684 data room_data_0839f430
+0x0839F684 0x0839F6DC c_data room_def_0839f684 # src/data/room_defs.c section .room_def_0839f684 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839F6DC 0x0839FC40 data room_data_0839f6dc
+0x0839FC40 0x0839FC98 c_data room_def_0839fc40 # src/data/room_defs.c section .room_def_0839fc40 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0839FC98 0x083A0058 data room_data_0839fc98
+0x083A0058 0x083A00B0 c_data room_def_083a0058 # src/data/room_defs.c section .room_def_083a0058 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A00B0 0x083A0370 data room_data_083a00b0
+0x083A0370 0x083A03C8 c_data room_def_083a0370 # src/data/room_defs.c section .room_def_083a0370 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A03C8 0x083A06DC data room_data_083a03c8
+0x083A06DC 0x083A0734 c_data room_def_083a06dc # src/data/room_defs.c section .room_def_083a06dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A0734 0x083A0AA0 data room_data_083a0734
+0x083A0AA0 0x083A0AF8 c_data room_def_083a0aa0 # src/data/room_defs.c section .room_def_083a0aa0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A0AF8 0x083A0D2C data room_data_083a0af8
+0x083A0D2C 0x083A0D84 c_data room_def_083a0d2c # src/data/room_defs.c section .room_def_083a0d2c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A0D84 0x083A0F00 data room_data_083a0d84
+0x083A0F00 0x083A0F58 c_data room_def_083a0f00 # src/data/room_defs.c section .room_def_083a0f00 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A0F58 0x083A142C data room_data_083a0f58
+0x083A142C 0x083A1484 c_data room_def_083a142c # src/data/room_defs.c section .room_def_083a142c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A1484 0x083A1644 data room_data_083a1484
+0x083A1644 0x083A169C c_data room_def_083a1644 # src/data/room_defs.c section .room_def_083a1644 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A169C 0x083A17CC data room_data_083a169c
+0x083A17CC 0x083A1824 c_data room_def_083a17cc # src/data/room_defs.c section .room_def_083a17cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A1824 0x083A1B64 data room_data_083a1824
+0x083A1B64 0x083A1BBC c_data room_def_083a1b64 # src/data/room_defs.c section .room_def_083a1b64 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A1BBC 0x083A1FD8 data room_data_083a1bbc
+0x083A1FD8 0x083A2030 c_data room_def_083a1fd8 # src/data/room_defs.c section .room_def_083a1fd8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A2030 0x083A24F0 data room_data_083a2030
+0x083A24F0 0x083A2548 c_data room_def_083a24f0 # src/data/room_defs.c section .room_def_083a24f0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A2548 0x083A2578 data room_data_083a2548
+0x083A2578 0x083A25D0 c_data room_def_083a2578 # src/data/room_defs.c section .room_def_083a2578 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A25D0 0x083A2694 data room_data_083a25d0
+0x083A2694 0x083A26EC c_data room_def_083a2694 # src/data/room_defs.c section .room_def_083a2694 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A26EC 0x083A291C data room_data_083a26ec
+0x083A291C 0x083A2974 c_data room_def_083a291c # src/data/room_defs.c section .room_def_083a291c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A2974 0x083A2AC4 data room_data_083a2974
+0x083A2AC4 0x083A2B1C c_data room_def_083a2ac4 # src/data/room_defs.c section .room_def_083a2ac4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A2B1C 0x083A32BC data room_data_083a2b1c
+0x083A32BC 0x083A3314 c_data room_def_083a32bc # src/data/room_defs.c section .room_def_083a32bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A3314 0x083A3344 data room_data_083a3314
+0x083A3344 0x083A339C c_data room_def_083a3344 # src/data/room_defs.c section .room_def_083a3344 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A339C 0x083A34E4 data room_data_083a339c
+0x083A34E4 0x083A353C c_data room_def_083a34e4 # src/data/room_defs.c section .room_def_083a34e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A353C 0x083A360C data room_data_083a353c
+0x083A360C 0x083A3664 c_data room_def_083a360c # src/data/room_defs.c section .room_def_083a360c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A3664 0x083A38FC data room_data_083a3664
+0x083A38FC 0x083A3954 c_data room_def_083a38fc # src/data/room_defs.c section .room_def_083a38fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A3954 0x083A3A74 data room_data_083a3954
+0x083A3A74 0x083A3ACC c_data room_def_083a3a74 # src/data/room_defs.c section .room_def_083a3a74 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A3ACC 0x083A3FF4 data room_data_083a3acc
+0x083A3FF4 0x083A404C c_data room_def_083a3ff4 # src/data/room_defs.c section .room_def_083a3ff4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A404C 0x083A407C data room_data_083a404c
+0x083A407C 0x083A40D4 c_data room_def_083a407c # src/data/room_defs.c section .room_def_083a407c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A40D4 0x083A421C data room_data_083a40d4
+0x083A421C 0x083A4274 c_data room_def_083a421c # src/data/room_defs.c section .room_def_083a421c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A4274 0x083A433C data room_data_083a4274
+0x083A433C 0x083A4394 c_data room_def_083a433c # src/data/room_defs.c section .room_def_083a433c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A4394 0x083A45DC data room_data_083a4394
+0x083A45DC 0x083A4634 c_data room_def_083a45dc # src/data/room_defs.c section .room_def_083a45dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A4634 0x083A46FC data room_data_083a4634
+0x083A46FC 0x083A4754 c_data room_def_083a46fc # src/data/room_defs.c section .room_def_083a46fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A4754 0x083A4D80 data room_data_083a4754
+0x083A4D80 0x083A4DD8 c_data room_def_083a4d80 # src/data/room_defs.c section .room_def_083a4d80 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A4DD8 0x083A4E08 data room_data_083a4dd8
+0x083A4E08 0x083A4E60 c_data room_def_083a4e08 # src/data/room_defs.c section .room_def_083a4e08 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A4E60 0x083A4FA8 data room_data_083a4e60
+0x083A4FA8 0x083A5000 c_data room_def_083a4fa8 # src/data/room_defs.c section .room_def_083a4fa8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A5000 0x083A50D0 data room_data_083a5000
+0x083A50D0 0x083A5128 c_data room_def_083a50d0 # src/data/room_defs.c section .room_def_083a50d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A5128 0x083A5354 data room_data_083a5128
+0x083A5354 0x083A53AC c_data room_def_083a5354 # src/data/room_defs.c section .room_def_083a5354 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A53AC 0x083A5480 data room_data_083a53ac
+0x083A5480 0x083A54D8 c_data room_def_083a5480 # src/data/room_defs.c section .room_def_083a5480 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A54D8 0x083A5BE8 data room_data_083a54d8
+0x083A5BE8 0x083A5C40 c_data room_def_083a5be8 # src/data/room_defs.c section .room_def_083a5be8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A5C40 0x083A5C70 data room_data_083a5c40
+0x083A5C70 0x083A5CC8 c_data room_def_083a5c70 # src/data/room_defs.c section .room_def_083a5c70 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A5CC8 0x083A5E10 data room_data_083a5cc8
+0x083A5E10 0x083A5E68 c_data room_def_083a5e10 # src/data/room_defs.c section .room_def_083a5e10 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A5E68 0x083A5F3C data room_data_083a5e68
+0x083A5F3C 0x083A5F94 c_data room_def_083a5f3c # src/data/room_defs.c section .room_def_083a5f3c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A5F94 0x083A61E4 data room_data_083a5f94
+0x083A61E4 0x083A623C c_data room_def_083a61e4 # src/data/room_defs.c section .room_def_083a61e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A623C 0x083A633C data room_data_083a623c
+0x083A633C 0x083A6394 c_data room_def_083a633c # src/data/room_defs.c section .room_def_083a633c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A6394 0x083A6AE0 data room_data_083a6394
+0x083A6AE0 0x083A6B38 c_data room_def_083a6ae0 # src/data/room_defs.c section .room_def_083a6ae0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A6B38 0x083A6B68 data room_data_083a6b38
+0x083A6B68 0x083A6BC0 c_data room_def_083a6b68 # src/data/room_defs.c section .room_def_083a6b68 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A6BC0 0x083A6D08 data room_data_083a6bc0
+0x083A6D08 0x083A6D60 c_data room_def_083a6d08 # src/data/room_defs.c section .room_def_083a6d08 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A6D60 0x083A6E24 data room_data_083a6d60
+0x083A6E24 0x083A6E7C c_data room_def_083a6e24 # src/data/room_defs.c section .room_def_083a6e24 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A6E7C 0x083A70A0 data room_data_083a6e7c
+0x083A70A0 0x083A70F8 c_data room_def_083a70a0 # src/data/room_defs.c section .room_def_083a70a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A70F8 0x083A71E4 data room_data_083a70f8
+0x083A71E4 0x083A723C c_data room_def_083a71e4 # src/data/room_defs.c section .room_def_083a71e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A723C 0x083A77C4 data room_data_083a723c
+0x083A77C4 0x083A781C c_data room_def_083a77c4 # src/data/room_defs.c section .room_def_083a77c4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A781C 0x083A784C data room_data_083a781c
+0x083A784C 0x083A78A4 c_data room_def_083a784c # src/data/room_defs.c section .room_def_083a784c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A78A4 0x083A7ADC data room_data_083a78a4
+0x083A7ADC 0x083A7B34 c_data room_def_083a7adc # src/data/room_defs.c section .room_def_083a7adc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A7B34 0x083A7C28 data room_data_083a7b34
+0x083A7C28 0x083A7C80 c_data room_def_083a7c28 # src/data/room_defs.c section .room_def_083a7c28 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A7C80 0x083A8364 data room_data_083a7c80
+0x083A8364 0x083A83BC c_data room_def_083a8364 # src/data/room_defs.c section .room_def_083a8364 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x083A83BC 0x083A85D4 data room_data_083a83bc
+0x083A85D4 0x083A862C c_data room_def_083a85d4 # src/data/room_defs.c section .room_def_083a85d4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x083A862C 0x083B5538 data room_metatiles # Room metatile tables (#36 phase 2): 23 LZ77 RoomDef.metatileTiles streams
 0x083B5538 0x083D0148 data room_bg3_maps # Room BG3 maps (#36 phase 2): 32 struct BgMap, 25 LZ77 and 7 raw
 0x083D0148 0x085C0000 data compressed_graphics # Compressed graphics (LZ77/RLE-class)
@@ -343,79 +1087,401 @@
 0x0872EA04 0x0872EA14 data sram_driver_fn_table
 0x0872EA14 0x0872FF30 data engine_rodata # Engine-zone rodata (#36 phase 2 run 3; formerly gap_sram_driver_fn_table_asset_metadata_index): 256 zero bytes, sprite half-dimensions gUnk_0872EB14, gBootSignature, the SE table gSfxTable, gCosTable; gTaskTypes follows
 0x0872FF30 0x08730780 c_data task_types # src/data/task_types.c (carved by tools/carve_data.py)
-0x08730780 0x0873ECEC data game_rodata # Game rodata in link order, M02-M18 (#36 phase 2 run 3; formerly asset_metadata_index): mode, menu, player, collision, room, camera and terrain tables, blocks, player actions, effects, actor core
+0x08730780 0x0873078C data game_rodata # Game rodata in link order, M02-M18 (#36 phase 2 run 3; formerly asset_metadata_index): mode, menu, player, collision, room, camera and terrain tables, blocks, player actions, effects, actor core
+0x0873078C 0x0873079C c_data game_tbl_0873078c # src/data/game_tables.c section .game_tbl_0873078c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873079C 0x08731FA8 data game_rodata_0873079c
+0x08731FA8 0x087320C4 c_data game_tbl_08731fa8 # src/data/game_tables.c section .game_tbl_08731fa8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087320C4 0x08732614 data game_rodata_087320c4
+0x08732614 0x08732630 c_data game_tbl_08732614 # src/data/game_tables.c section .game_tbl_08732614 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08732630 0x087328A0 data game_rodata_08732630
+0x087328A0 0x087328BC c_data game_tbl_087328a0 # src/data/game_tables.c section .game_tbl_087328a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087328BC 0x087328D8 data game_rodata_087328bc
+0x087328D8 0x087328F0 c_data game_tbl_087328d8 # src/data/game_tables.c section .game_tbl_087328d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087328F0 0x0873A748 data game_rodata_087328f0
+0x0873A748 0x0873A924 c_data game_tbl_0873a748 # src/data/game_tables.c section .game_tbl_0873a748 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873A924 0x0873B42C data game_rodata_0873a924
+0x0873B42C 0x0873B510 c_data game_tbl_0873b42c # src/data/game_tables.c section .game_tbl_0873b42c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B510 0x0873B664 data game_rodata_0873b510
+0x0873B664 0x0873B6CC c_data game_tbl_0873b664 # src/data/game_tables.c section .game_tbl_0873b664 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B6CC 0x0873B77C data game_rodata_0873b6cc
+0x0873B77C 0x0873B7B0 c_data game_tbl_0873b77c # src/data/game_tables.c section .game_tbl_0873b77c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B7B0 0x0873B928 data game_rodata_0873b7b0
+0x0873B928 0x0873B9EC c_data game_tbl_0873b928 # src/data/game_tables.c section .game_tbl_0873b928 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873B9EC 0x0873DBE4 data game_rodata_0873b9ec
+0x0873DBE4 0x0873DC3C c_data game_tbl_0873dbe4 # src/data/game_tables.c section .game_tbl_0873dbe4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DC3C 0x0873DEA0 data game_rodata_0873dc3c
+0x0873DEA0 0x0873DEA8 c_data game_tbl_0873dea0 # src/data/game_tables.c section .game_tbl_0873dea0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DEA8 0x0873DEDC data game_rodata_0873dea8
+0x0873DEDC 0x0873DF14 c_data game_tbl_0873dedc # src/data/game_tables.c section .game_tbl_0873dedc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DF14 0x0873DF24 data game_rodata_0873df14
+0x0873DF24 0x0873DF38 c_data game_tbl_0873df24 # src/data/game_tables.c section .game_tbl_0873df24 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873DF38 0x0873E280 data game_rodata_0873df38
+0x0873E280 0x0873E284 c_data game_tbl_0873e280 # src/data/game_tables.c section .game_tbl_0873e280 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E284 0x0873E288 c_data game_tbl_0873e284 # src/data/game_tables.c section .game_tbl_0873e284 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E288 0x0873E2F0 data game_rodata_0873e284
+0x0873E2F0 0x0873E348 c_data game_tbl_0873e2f0 # src/data/game_tables.c section .game_tbl_0873e2f0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E348 0x0873E5BC data game_rodata_0873e348
+0x0873E5BC 0x0873E5F8 c_data game_tbl_0873e5bc # src/data/game_tables.c section .game_tbl_0873e5bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E5F8 0x0873E670 data game_rodata_0873e5f8
+0x0873E670 0x0873E698 c_data game_tbl_0873e670 # src/data/game_tables.c section .game_tbl_0873e670 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E698 0x0873E734 data game_rodata_0873e698
+0x0873E734 0x0873E7A4 c_data game_tbl_0873e734 # src/data/game_tables.c section .game_tbl_0873e734 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873E7A4 0x0873EAA0 data game_rodata_0873e7a4
+0x0873EAA0 0x0873EAC0 c_data game_tbl_0873eaa0 # src/data/game_tables.c section .game_tbl_0873eaa0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873EAC0 0x0873ECE0 data game_rodata_0873eac0
+0x0873ECE0 0x0873ECEC c_data game_tbl_0873ece0 # src/data/game_tables.c section .game_tbl_0873ece0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0873ECEC 0x0873EEA0 c_data actor_defs # src/data/actor_defs.c (carved by tools/carve_data.py)
 0x0873EEA0 0x0873F2B8 data actor_rodata # Actor and enemy rodata, M17-M32 (#36 phase 2 run 3; formerly asset_metadata_index_0873eea0): behaviour tables, ActorDef/ActorAux records, HitBoxSets
 0x0873F2B8 0x0873F4C8 c_data actor_rec_0873f2b8 # src/data/actor_records.c section .actor_rec_0873f2b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0873F4C8 0x0873F664 data actor_rodata_0873f4c8
+0x0873F4C8 0x0873F5FC data actor_rodata_0873f4c8
+0x0873F5FC 0x0873F664 c_data actor_tbl_0873f5fc # src/data/actor_handlers.c section .actor_tbl_0873f5fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0873F664 0x0873F6E8 c_data actor_rec_0873f664 # src/data/actor_records.c section .actor_rec_0873f664 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0873F6E8 0x0873F8EC data actor_rodata_0873f6e8
 0x0873F8EC 0x0873F8F4 c_data actor_rec_0873f8ec # src/data/actor_records.c section .actor_rec_0873f8ec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0873F8F4 0x08740BD4 data actor_rodata_0873f8f4
+0x0873F8F4 0x0873F910 c_data actor_tbl_0873f8f4 # src/data/actor_handlers.c section .actor_tbl_0873f8f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873F910 0x0873F92C c_data actor_tbl_0873f910 # src/data/actor_handlers.c section .actor_tbl_0873f910 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873F92C 0x0873F950 c_data actor_tbl_0873f92c # src/data/actor_handlers.c section .actor_tbl_0873f92c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873F950 0x0873FB04 data actor_rodata_0873f92c
+0x0873FB04 0x0873FB7C c_data actor_tbl_0873fb04 # src/data/actor_tables.c section .actor_tbl_0873fb04 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873FB7C 0x0873FBAC data actor_rodata_0873fb7c
+0x0873FBAC 0x0873FCF8 c_data actor_tbl_0873fbac # src/data/actor_tables.c section .actor_tbl_0873fbac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0873FCF8 0x087400B0 data actor_rodata_0873fcf8
+0x087400B0 0x087400E4 c_data actor_tbl_087400b0 # src/data/actor_tables.c section .actor_tbl_087400b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087400E4 0x08740100 data actor_rodata_087400e4
+0x08740100 0x08740124 c_data actor_tbl_08740100 # src/data/actor_tables.c section .actor_tbl_08740100 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740124 0x087402BC data actor_rodata_08740124
+0x087402BC 0x08740320 c_data actor_tbl_087402bc # src/data/actor_tables.c section .actor_tbl_087402bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740320 0x08740630 data actor_rodata_08740320
+0x08740630 0x08740648 c_data actor_tbl_08740630 # src/data/actor_tables.c section .actor_tbl_08740630 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740648 0x08740658 data actor_rodata_08740648
+0x08740658 0x08740668 c_data actor_tbl_08740658 # src/data/actor_tables.c section .actor_tbl_08740658 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740668 0x08740670 data actor_rodata_08740668
+0x08740670 0x08740680 c_data actor_tbl_08740670 # src/data/actor_tables.c section .actor_tbl_08740670 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740680 0x087406C4 data actor_rodata_08740680
+0x087406C4 0x087406EC c_data actor_tbl_087406c4 # src/data/actor_tables.c section .actor_tbl_087406c4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087406EC 0x08740700 data actor_rodata_087406ec
+0x08740700 0x08740720 c_data actor_tbl_08740700 # src/data/actor_tables.c section .actor_tbl_08740700 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740720 0x08740758 data actor_rodata_08740720
+0x08740758 0x087407BC c_data actor_tbl_08740758 # src/data/actor_tables.c section .actor_tbl_08740758 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087407BC 0x087407E4 data actor_rodata_087407bc
+0x087407E4 0x0874080C c_data actor_tbl_087407e4 # src/data/actor_tables.c section .actor_tbl_087407e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874080C 0x08740810 data actor_rodata_0874080c
+0x08740810 0x08740824 c_data actor_tbl_08740810 # src/data/actor_tables.c section .actor_tbl_08740810 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740824 0x08740960 data actor_rodata_08740824
+0x08740960 0x0874099C c_data actor_tbl_08740960 # src/data/actor_tables.c section .actor_tbl_08740960 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874099C 0x087409FC data actor_rodata_0874099c
+0x087409FC 0x08740A80 c_data actor_tbl_087409fc # src/data/actor_tables.c section .actor_tbl_087409fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740A80 0x08740AC8 data actor_rodata_08740a80
+0x08740AC8 0x08740B08 c_data actor_tbl_08740ac8 # src/data/actor_tables.c section .actor_tbl_08740ac8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740B08 0x08740B84 data actor_rodata_08740b08
+0x08740B84 0x08740BD4 c_data actor_tbl_08740b84 # src/data/actor_tables.c section .actor_tbl_08740b84 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08740BD4 0x08740DE4 c_data actor_rec_08740bd4 # src/data/actor_records.c section .actor_rec_08740bd4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08740DE4 0x087410E4 data actor_rodata_08740de4
+0x08740DE4 0x08740E54 data actor_rodata_08740de4
+0x08740E54 0x08740FB0 c_data actor_tbl_08740e54 # src/data/actor_handlers.c section .actor_tbl_08740e54 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08740FB0 0x08741088 data actor_rodata_08740fb0
+0x08741088 0x08741094 c_data actor_tbl_08741088 # src/data/actor_tables.c section .actor_tbl_08741088 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741094 0x087410AC data actor_rodata_08741094
+0x087410AC 0x087410C0 c_data actor_tbl_087410ac # src/data/actor_tables.c section .actor_tbl_087410ac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087410C0 0x087410E4 data actor_rodata_087410c0
 0x087410E4 0x0874113C c_data actor_rec_087410e4 # src/data/actor_records.c section .actor_rec_087410e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874113C 0x087417B8 data actor_rodata_0874113c
+0x0874113C 0x087411B4 data actor_rodata_0874113c
+0x087411B4 0x087411C0 c_data actor_tbl_087411b4 # src/data/actor_handlers.c section .actor_tbl_087411b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087411C0 0x08741214 c_data actor_tbl_087411c0 # src/data/actor_tables.c section .actor_tbl_087411c0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741214 0x08741220 data actor_rodata_08741214
+0x08741220 0x08741298 c_data actor_tbl_08741220 # src/data/actor_tables.c section .actor_tbl_08741220 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741298 0x087412BC data actor_rodata_08741298
+0x087412BC 0x087412EC c_data actor_tbl_087412bc # src/data/actor_tables.c section .actor_tbl_087412bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087412EC 0x08741300 data actor_rodata_087412ec
+0x08741300 0x08741318 c_data actor_tbl_08741300 # src/data/actor_tables.c section .actor_tbl_08741300 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741318 0x08741380 data actor_rodata_08741318
+0x08741380 0x087413D8 c_data actor_tbl_08741380 # src/data/actor_tables.c section .actor_tbl_08741380 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087413D8 0x08741488 data actor_rodata_087413d8
+0x08741488 0x087414B0 c_data actor_tbl_08741488 # src/data/actor_tables.c section .actor_tbl_08741488 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087414B0 0x087414B4 data actor_rodata_087414b0
+0x087414B4 0x087414F8 c_data actor_tbl_087414b4 # src/data/actor_tables.c section .actor_tbl_087414b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087414F8 0x08741544 data actor_rodata_087414f8
+0x08741544 0x087415AC c_data actor_tbl_08741544 # src/data/actor_tables.c section .actor_tbl_08741544 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087415AC 0x087415B8 data actor_rodata_087415ac
+0x087415B8 0x087415E4 c_data actor_tbl_087415b8 # src/data/actor_tables.c section .actor_tbl_087415b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087415E4 0x08741604 data actor_rodata_087415e4
+0x08741604 0x08741628 c_data actor_tbl_08741604 # src/data/actor_tables.c section .actor_tbl_08741604 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741628 0x08741640 data actor_rodata_08741628
+0x08741640 0x08741684 c_data actor_tbl_08741640 # src/data/actor_tables.c section .actor_tbl_08741640 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741684 0x0874176C data actor_rodata_08741684
+0x0874176C 0x087417B8 c_data actor_tbl_0874176c # src/data/actor_tables.c section .actor_tbl_0874176c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087417B8 0x08741AA4 c_data actor_rec_087417b8 # src/data/actor_records.c section .actor_rec_087417b8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08741AA4 0x08741EB4 data actor_rodata_08741aa4
+0x08741AA4 0x08741B64 data actor_rodata_08741aa4
+0x08741B64 0x08741D64 c_data actor_tbl_08741b64 # src/data/actor_handlers.c section .actor_tbl_08741b64 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741D64 0x08741E64 data actor_rodata_08741d64
+0x08741E64 0x08741E70 c_data actor_tbl_08741e64 # src/data/actor_tables.c section .actor_tbl_08741e64 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741E70 0x08741E7C data actor_rodata_08741e70
+0x08741E7C 0x08741E94 c_data actor_tbl_08741e7c # src/data/actor_tables.c section .actor_tbl_08741e7c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741E94 0x08741EB4 data actor_rodata_08741e94
 0x08741EB4 0x08741F0C c_data actor_rec_08741eb4 # src/data/actor_records.c section .actor_rec_08741eb4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08741F0C 0x087429E8 data actor_rodata_08741f0c
+0x08741F0C 0x08741F4C data actor_rodata_08741f0c
+0x08741F4C 0x08741F70 c_data actor_tbl_08741f4c # src/data/actor_handlers.c section .actor_tbl_08741f4c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741F70 0x08741FA8 c_data actor_tbl_08741f70 # src/data/actor_tables.c section .actor_tbl_08741f70 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08741FA8 0x08741FB8 data actor_rodata_08741fa8
+0x08741FB8 0x08742010 c_data actor_tbl_08741fb8 # src/data/actor_tables.c section .actor_tbl_08741fb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742010 0x08742030 data actor_rodata_08742010
+0x08742030 0x08742050 c_data actor_tbl_08742030 # src/data/actor_tables.c section .actor_tbl_08742030 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742050 0x08742064 data actor_rodata_08742050
+0x08742064 0x08742088 c_data actor_tbl_08742064 # src/data/actor_tables.c section .actor_tbl_08742064 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742088 0x087420A0 data actor_rodata_08742088
+0x087420A0 0x087420AC c_data actor_tbl_087420a0 # src/data/actor_tables.c section .actor_tbl_087420a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087420AC 0x087420BC data actor_rodata_087420ac
+0x087420BC 0x087420C0 c_data actor_tbl_087420bc # src/data/actor_tables.c section .actor_tbl_087420bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087420C0 0x087420F0 data actor_rodata_087420c0
+0x087420F0 0x087420F4 c_data actor_tbl_087420f0 # src/data/actor_tables.c section .actor_tbl_087420f0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087420F4 0x08742100 data actor_rodata_087420f4
+0x08742100 0x0874210C c_data actor_tbl_08742100 # src/data/actor_tables.c section .actor_tbl_08742100 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874210C 0x0874212C data actor_rodata_0874210c
+0x0874212C 0x08742144 c_data actor_tbl_0874212c # src/data/actor_tables.c section .actor_tbl_0874212c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742144 0x08742570 data actor_rodata_08742144
+0x08742570 0x08742598 c_data actor_tbl_08742570 # src/data/actor_tables.c section .actor_tbl_08742570 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742598 0x087425B0 data actor_rodata_08742598
+0x087425B0 0x087425B8 c_data actor_tbl_087425b0 # src/data/actor_tables.c section .actor_tbl_087425b0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087425B8 0x087425D0 data actor_rodata_087425b8
+0x087425D0 0x087425DC c_data actor_tbl_087425d0 # src/data/actor_tables.c section .actor_tbl_087425d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087425DC 0x087425EC data actor_rodata_087425dc
+0x087425EC 0x087425F0 c_data actor_tbl_087425ec # src/data/actor_tables.c section .actor_tbl_087425ec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087425F0 0x087425F8 data actor_rodata_087425f0
+0x087425F8 0x08742600 c_data actor_tbl_087425f8 # src/data/actor_tables.c section .actor_tbl_087425f8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742600 0x0874260C data actor_rodata_08742600
+0x0874260C 0x08742614 c_data actor_tbl_0874260c # src/data/actor_tables.c section .actor_tbl_0874260c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742614 0x0874263C data actor_rodata_08742614
+0x0874263C 0x0874269C c_data actor_tbl_0874263c # src/data/actor_tables.c section .actor_tbl_0874263c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874269C 0x087426AC data actor_rodata_0874269c
+0x087426AC 0x087426EC c_data actor_tbl_087426ac # src/data/actor_tables.c section .actor_tbl_087426ac (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087426EC 0x08742704 data actor_rodata_087426ec
+0x08742704 0x08742734 c_data actor_tbl_08742704 # src/data/actor_tables.c section .actor_tbl_08742704 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742734 0x0874273C data actor_rodata_08742734
+0x0874273C 0x0874276C c_data actor_tbl_0874273c # src/data/actor_tables.c section .actor_tbl_0874273c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874276C 0x08742798 data actor_rodata_0874276c
+0x08742798 0x087427B0 c_data actor_tbl_08742798 # src/data/actor_tables.c section .actor_tbl_08742798 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087427B0 0x087427B4 data actor_rodata_087427b0
+0x087427B4 0x08742814 c_data actor_tbl_087427b4 # src/data/actor_tables.c section .actor_tbl_087427b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742814 0x087428C0 data actor_rodata_08742814
+0x087428C0 0x087428E8 c_data actor_tbl_087428c0 # src/data/actor_tables.c section .actor_tbl_087428c0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087428E8 0x08742908 data actor_rodata_087428e8
+0x08742908 0x08742930 c_data actor_tbl_08742908 # src/data/actor_tables.c section .actor_tbl_08742908 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742930 0x08742940 data actor_rodata_08742930
+0x08742940 0x08742998 c_data actor_tbl_08742940 # src/data/actor_tables.c section .actor_tbl_08742940 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742998 0x087429E8 data actor_rodata_08742998
 0x087429E8 0x08742BF8 c_data actor_rec_087429e8 # src/data/actor_records.c section .actor_rec_087429e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08742BF8 0x08742FBC data actor_rodata_08742bf8
+0x08742BF8 0x08742CF0 data actor_rodata_08742bf8
+0x08742CF0 0x08742EA4 c_data actor_tbl_08742cf0 # src/data/actor_handlers.c section .actor_tbl_08742cf0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08742EA4 0x08742FBC data actor_rodata_08742ea4
 0x08742FBC 0x0874306C c_data actor_rec_08742fbc # src/data/actor_records.c section .actor_rec_08742fbc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874306C 0x0874330C data actor_rodata_0874306c
+0x0874306C 0x087430EC data actor_rodata_0874306c
+0x087430EC 0x0874313C c_data actor_tbl_087430ec # src/data/actor_handlers.c section .actor_tbl_087430ec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874313C 0x08743188 data actor_rodata_0874313c
+0x08743188 0x087431CC c_data actor_tbl_08743188 # src/data/actor_tables.c section .actor_tbl_08743188 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087431CC 0x087431E4 data actor_rodata_087431cc
+0x087431E4 0x08743214 c_data actor_tbl_087431e4 # src/data/actor_tables.c section .actor_tbl_087431e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743214 0x08743224 data actor_rodata_08743214
+0x08743224 0x08743248 c_data actor_tbl_08743224 # src/data/actor_tables.c section .actor_tbl_08743224 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743248 0x08743284 data actor_rodata_08743248
+0x08743284 0x087432EC c_data actor_tbl_08743284 # src/data/actor_tables.c section .actor_tbl_08743284 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087432EC 0x087432F4 data actor_rodata_087432ec
+0x087432F4 0x0874330C c_data actor_tbl_087432f4 # src/data/actor_tables.c section .actor_tbl_087432f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874330C 0x08743414 c_data actor_rec_0874330c # src/data/actor_records.c section .actor_rec_0874330c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08743414 0x08743644 data actor_rodata_08743414
+0x08743414 0x087434C4 data actor_rodata_08743414
+0x087434C4 0x08743588 c_data actor_tbl_087434c4 # src/data/actor_handlers.c section .actor_tbl_087434c4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743588 0x08743600 data actor_rodata_08743588
+0x08743600 0x08743614 c_data actor_tbl_08743600 # src/data/actor_tables.c section .actor_tbl_08743600 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743614 0x0874362C data actor_rodata_08743614
+0x0874362C 0x08743644 c_data actor_tbl_0874362c # src/data/actor_tables.c section .actor_tbl_0874362c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08743644 0x0874369C c_data actor_rec_08743644 # src/data/actor_records.c section .actor_rec_08743644 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874369C 0x08743B4C data actor_rodata_0874369c
+0x0874369C 0x087436E4 data actor_rodata_0874369c
+0x087436E4 0x08743734 c_data actor_tbl_087436e4 # src/data/actor_handlers.c section .actor_tbl_087436e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743734 0x08743848 data actor_rodata_08743734
+0x08743848 0x087438A4 c_data actor_tbl_08743848 # src/data/actor_tables.c section .actor_tbl_08743848 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087438A4 0x08743984 data actor_rodata_087438a4
+0x08743984 0x087439C0 c_data actor_tbl_08743984 # src/data/actor_tables.c section .actor_tbl_08743984 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087439C0 0x08743ADC data actor_rodata_087439c0
+0x08743ADC 0x08743B48 c_data actor_tbl_08743adc # src/data/actor_tables.c section .actor_tbl_08743adc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08743B48 0x08743B4C data actor_rodata_08743b48
 0x08743B4C 0x08743BD0 c_data actor_rec_08743b4c # src/data/actor_records.c section .actor_rec_08743b4c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08743BD0 0x0874402C data actor_rodata_08743bd0
 0x0874402C 0x0874407C c_data actor_rec_0874402c # src/data/actor_records.c section .actor_rec_0874402c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874407C 0x087441D8 data actor_rodata_0874407c
+0x0874407C 0x08744118 c_data actor_tbl_0874407c # src/data/actor_handlers.c section .actor_tbl_0874407c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08744118 0x08744170 data actor_rodata_0874407c
+0x08744170 0x0874417C c_data actor_tbl_08744170 # src/data/actor_tables.c section .actor_tbl_08744170 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874417C 0x087441A4 data actor_rodata_0874417c
+0x087441A4 0x087441BC c_data actor_tbl_087441a4 # src/data/actor_tables.c section .actor_tbl_087441a4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087441BC 0x087441CC data actor_rodata_087441bc
+0x087441CC 0x087441D8 c_data actor_tbl_087441cc # src/data/actor_tables.c section .actor_tbl_087441cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087441D8 0x0874425C c_data actor_rec_087441d8 # src/data/actor_records.c section .actor_rec_087441d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874425C 0x08744964 data actor_rodata_0874425c
+0x0874425C 0x087442C8 data actor_rodata_0874425c
+0x087442C8 0x0874433C c_data actor_tbl_087442c8 # src/data/actor_handlers.c section .actor_tbl_087442c8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874433C 0x08744440 data actor_rodata_0874433c
+0x08744440 0x0874449C c_data actor_tbl_08744440 # src/data/actor_tables.c section .actor_tbl_08744440 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874449C 0x087444E4 data actor_rodata_0874449c
+0x087444E4 0x08744510 c_data actor_tbl_087444e4 # src/data/actor_tables.c section .actor_tbl_087444e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08744510 0x08744564 data actor_rodata_08744510
+0x08744564 0x08744598 c_data actor_tbl_08744564 # src/data/actor_tables.c section .actor_tbl_08744564 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08744598 0x0874489C data actor_rodata_08744598
+0x0874489C 0x087448E4 c_data actor_tbl_0874489c # src/data/actor_tables.c section .actor_tbl_0874489c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087448E4 0x08744964 data actor_rodata_087448e4
 0x08744964 0x087449E8 c_data actor_rec_08744964 # src/data/actor_records.c section .actor_rec_08744964 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087449E8 0x0874531C data actor_rodata_087449e8
 0x0874531C 0x087453BC c_data actor_rec_0874531c # src/data/actor_records.c section .actor_rec_0874531c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x087453BC 0x08745530 data actor_rodata_087453bc
+0x087453BC 0x08745458 c_data actor_tbl_087453bc # src/data/actor_handlers.c section .actor_tbl_087453bc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08745458 0x08745530 data actor_rodata_087453bc
 0x08745530 0x08745588 c_data actor_rec_08745530 # src/data/actor_records.c section .actor_rec_08745530 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08745588 0x08745810 data actor_rodata_08745588
+0x08745588 0x087455C8 data actor_rodata_08745588
+0x087455C8 0x08745618 c_data actor_tbl_087455c8 # src/data/actor_handlers.c section .actor_tbl_087455c8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08745618 0x08745630 data actor_rodata_08745618
+0x08745630 0x087456CC c_data actor_tbl_08745630 # src/data/actor_tables.c section .actor_tbl_08745630 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087456CC 0x0874574C data actor_rodata_087456cc
+0x0874574C 0x08745810 c_data actor_tbl_0874574c # src/data/actor_tables.c section .actor_tbl_0874574c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08745810 0x08745868 c_data actor_rec_08745810 # src/data/actor_records.c section .actor_rec_08745810 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08745868 0x08745A2C data actor_rodata_08745868
 0x08745A2C 0x08745A34 c_data actor_rec_08745a2c # src/data/actor_records.c section .actor_rec_08745a2c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08745A34 0x08745B30 data actor_rodata_08745a34
+0x08745A34 0x08745A3C data actor_rodata_08745a34
+0x08745A3C 0x08745AA4 c_data actor_tbl_08745a3c # src/data/actor_handlers.c section .actor_tbl_08745a3c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08745AA4 0x08745AE4 data actor_rodata_08745aa4
+0x08745AE4 0x08745B0C c_data actor_tbl_08745ae4 # src/data/actor_tables.c section .actor_tbl_08745ae4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08745B0C 0x08745B1C data actor_rodata_08745b0c
+0x08745B1C 0x08745B30 c_data actor_tbl_08745b1c # src/data/actor_tables.c section .actor_tbl_08745b1c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08745B30 0x08745BB4 c_data actor_rec_08745b30 # src/data/actor_records.c section .actor_rec_08745b30 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08745BB4 0x08747C80 data actor_rodata_08745bb4
+0x08745BB4 0x08745C90 data actor_rodata_08745bb4
+0x08745C90 0x08745CD4 c_data actor_tbl_08745c90 # src/data/actor_handlers.c section .actor_tbl_08745c90 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08745CD4 0x08745CE0 data actor_rodata_08745cd4
+0x08745CE0 0x08745CEC c_data actor_tbl_08745ce0 # src/data/actor_handlers.c section .actor_tbl_08745ce0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08745CEC 0x08747AA4 data actor_rodata_08745cec
+0x08747AA4 0x08747B10 c_data actor_tbl_08747aa4 # src/data/actor_tables.c section .actor_tbl_08747aa4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08747B10 0x08747BCC data actor_rodata_08747b10
+0x08747BCC 0x08747C28 c_data actor_tbl_08747bcc # src/data/actor_tables.c section .actor_tbl_08747bcc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08747C28 0x08747C6C data actor_rodata_08747c28
+0x08747C6C 0x08747C80 c_data actor_tbl_08747c6c # src/data/actor_tables.c section .actor_tbl_08747c6c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08747C80 0x08747EBC c_data actor_rec_08747c80 # src/data/actor_records.c section .actor_rec_08747c80 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08747EBC 0x08748198 data actor_rodata_08747ebc
 0x08748198 0x087481A0 c_data actor_rec_08748198 # src/data/actor_records.c section .actor_rec_08748198 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x087481A0 0x08748764 data actor_rodata_087481a0
+0x087481A0 0x08748264 c_data actor_tbl_087481a0 # src/data/actor_handlers.c section .actor_tbl_087481a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748264 0x08748268 c_data actor_tbl_08748264 # src/data/actor_tables.c section .actor_tbl_08748264 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748268 0x0874844C data actor_rodata_08748268
+0x0874844C 0x087484A4 c_data actor_tbl_0874844c # src/data/actor_tables.c section .actor_tbl_0874844c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087484A4 0x087484C4 data actor_rodata_087484a4
+0x087484C4 0x087484E4 c_data actor_tbl_087484c4 # src/data/actor_tables.c section .actor_tbl_087484c4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087484E4 0x08748624 data actor_rodata_087484e4
+0x08748624 0x08748764 c_data actor_tbl_08748624 # src/data/actor_tables.c section .actor_tbl_08748624 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08748764 0x087487E8 c_data actor_rec_08748764 # src/data/actor_records.c section .actor_rec_08748764 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x087487E8 0x08748918 data actor_rodata_087487e8
 0x08748918 0x08748930 c_data actor_rec_08748918 # src/data/actor_records.c section .actor_rec_08748918 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08748930 0x08748AB0 data actor_rodata_08748930
+0x08748930 0x087489A4 c_data actor_tbl_08748930 # src/data/actor_handlers.c section .actor_tbl_08748930 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087489A4 0x087489B4 data actor_rodata_08748930
+0x087489B4 0x087489C0 c_data actor_tbl_087489b4 # src/data/actor_tables.c section .actor_tbl_087489b4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087489C0 0x087489D4 data actor_rodata_087489c0
+0x087489D4 0x08748A00 c_data actor_tbl_087489d4 # src/data/actor_tables.c section .actor_tbl_087489d4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748A00 0x08748A28 data actor_rodata_08748a00
+0x08748A28 0x08748A38 c_data actor_tbl_08748a28 # src/data/actor_tables.c section .actor_tbl_08748a28 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748A38 0x08748A54 data actor_rodata_08748a38
+0x08748A54 0x08748A80 c_data actor_tbl_08748a54 # src/data/actor_tables.c section .actor_tbl_08748a54 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748A80 0x08748AB0 data actor_rodata_08748a80
 0x08748AB0 0x08748BB8 c_data actor_rec_08748ab0 # src/data/actor_records.c section .actor_rec_08748ab0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08748BB8 0x08749514 data actor_rodata_08748bb8
+0x08748BB8 0x08748CF8 data actor_rodata_08748bb8
+0x08748CF8 0x08748D28 c_data actor_tbl_08748cf8 # src/data/actor_handlers.c section .actor_tbl_08748cf8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748D28 0x08748EB8 data actor_rodata_08748d28
+0x08748EB8 0x08748F8C c_data actor_tbl_08748eb8 # src/data/actor_tables.c section .actor_tbl_08748eb8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08748F8C 0x08749150 data actor_rodata_08748f8c
+0x08749150 0x087491A0 c_data actor_tbl_08749150 # src/data/actor_tables.c section .actor_tbl_08749150 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087491A0 0x087493F4 data actor_rodata_087491a0
+0x087493F4 0x08749458 c_data actor_tbl_087493f4 # src/data/actor_tables.c section .actor_tbl_087493f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749458 0x08749514 data actor_rodata_08749458
 0x08749514 0x08749598 c_data actor_rec_08749514 # src/data/actor_records.c section .actor_rec_08749514 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08749598 0x08749AE8 data actor_rodata_08749598
 0x08749AE8 0x08749B08 c_data actor_rec_08749ae8 # src/data/actor_records.c section .actor_rec_08749ae8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08749B08 0x08749BEC data actor_rodata_08749b08
+0x08749B08 0x08749B6C c_data actor_tbl_08749b08 # src/data/actor_handlers.c section .actor_tbl_08749b08 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749B6C 0x08749B8C data actor_rodata_08749b08
+0x08749B8C 0x08749BAC c_data actor_tbl_08749b8c # src/data/actor_tables.c section .actor_tbl_08749b8c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749BAC 0x08749BE4 data actor_rodata_08749bac
+0x08749BE4 0x08749BEC c_data actor_tbl_08749be4 # src/data/actor_tables.c section .actor_tbl_08749be4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x08749BEC 0x08749C70 c_data actor_rec_08749bec # src/data/actor_records.c section .actor_rec_08749bec (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x08749C70 0x0874B2DC data actor_rodata_08749c70
+0x08749C70 0x08749CD4 data actor_rodata_08749c70
+0x08749CD4 0x08749CEC c_data actor_tbl_08749cd4 # src/data/actor_handlers.c section .actor_tbl_08749cd4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749CEC 0x08749D10 data actor_rodata_08749cec
+0x08749D10 0x08749D1C c_data actor_tbl_08749d10 # src/data/actor_tables.c section .actor_tbl_08749d10 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08749D1C 0x0874AD34 data actor_rodata_08749d1c
+0x0874AD34 0x0874AD44 c_data actor_tbl_0874ad34 # src/data/actor_tables.c section .actor_tbl_0874ad34 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874AD44 0x0874AD74 data actor_rodata_0874ad44
+0x0874AD74 0x0874B1A8 c_data actor_tbl_0874ad74 # src/data/actor_tables.c section .actor_tbl_0874ad74 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B1A8 0x0874B1DC data actor_rodata_0874b1a8
+0x0874B1DC 0x0874B20C c_data actor_tbl_0874b1dc # src/data/actor_tables.c section .actor_tbl_0874b1dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B20C 0x0874B2DC data actor_rodata_0874b20c
 0x0874B2DC 0x0874B38C c_data actor_rec_0874b2dc # src/data/actor_records.c section .actor_rec_0874b2dc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874B38C 0x0874B4C8 data actor_rodata_0874b38c
 0x0874B4C8 0x0874B4D8 c_data actor_rec_0874b4c8 # src/data/actor_records.c section .actor_rec_0874b4c8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874B4D8 0x0874B940 data actor_rodata_0874b4d8
+0x0874B4D8 0x0874B4E0 data actor_rodata_0874b4d8
+0x0874B4E0 0x0874B51C c_data actor_tbl_0874b4e0 # src/data/actor_handlers.c section .actor_tbl_0874b4e0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B51C 0x0874B540 data actor_rodata_0874b51c
+0x0874B540 0x0874B560 c_data actor_tbl_0874b540 # src/data/actor_tables.c section .actor_tbl_0874b540 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B560 0x0874B5E4 data actor_rodata_0874b560
+0x0874B5E4 0x0874B614 c_data actor_tbl_0874b5e4 # src/data/actor_tables.c section .actor_tbl_0874b5e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874B614 0x0874B940 data actor_rodata_0874b614
 0x0874B940 0x0874BB7C c_data actor_rec_0874b940 # src/data/actor_records.c section .actor_rec_0874b940 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874BB7C 0x0874C158 data actor_rodata_0874bb7c
+0x0874BB7C 0x0874BF58 data actor_rodata_0874bb7c
+0x0874BF58 0x0874BFF8 c_data actor_tbl_0874bf58 # src/data/actor_handlers.c section .actor_tbl_0874bf58 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874BFF8 0x0874C12C data actor_rodata_0874bff8
+0x0874C12C 0x0874C158 c_data actor_tbl_0874c12c # src/data/actor_tables.c section .actor_tbl_0874c12c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874C158 0x0874C184 c_data actor_rec_0874c158 # src/data/actor_records.c section .actor_rec_0874c158 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
 0x0874C184 0x0874C1FC data actor_rodata_0874c184
 0x0874C1FC 0x0874C204 c_data actor_rec_0874c1fc # src/data/actor_records.c section .actor_rec_0874c1fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874C204 0x0874C378 data actor_rodata_0874c204
+0x0874C204 0x0874C21C c_data actor_tbl_0874c204 # src/data/actor_handlers.c section .actor_tbl_0874c204 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874C21C 0x0874C240 c_data actor_tbl_0874c21c # src/data/actor_tables.c section .actor_tbl_0874c21c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874C240 0x0874C254 data actor_rodata_0874c240
+0x0874C254 0x0874C260 c_data actor_tbl_0874c254 # src/data/actor_tables.c section .actor_tbl_0874c254 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874C260 0x0874C378 data actor_rodata_0874c260
 0x0874C378 0x0874C3D0 c_data actor_rec_0874c378 # src/data/actor_records.c section .actor_rec_0874c378 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
-0x0874C3D0 0x0874C44C data actor_rodata_0874c3d0
-0x0874C44C 0x0875607C data frame_tables # Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gUnk_0874CFEC among them
-0x0875607C 0x08758448 data late_game_rodata # Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits
+0x0874C3D0 0x0874C418 data actor_rodata_0874c3d0
+0x0874C418 0x0874C44C c_data actor_tbl_0874c418 # src/data/actor_handlers.c section .actor_tbl_0874c418 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0874C44C 0x0875607C c_data frame_tables # src/data/frame_tables.c section .frame_tables (carved by tools/carve_data.py)
+0x0875607C 0x08756084 c_data late_tbl_0875607c # src/data/late_game_tables.c section .late_tbl_0875607c (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756084 0x087560A0 data late_game_rodata # Rodata of M33-M38 in link order (#36 phase 2 run 3): pickups, HUD effects, save, sub-games, ending, boot logo objects, game over, credits
+0x087560A0 0x087560C0 c_data late_tbl_087560a0 # src/data/late_game_tables.c section .late_tbl_087560a0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087560C0 0x087560D0 data late_game_rodata_087560c0
+0x087560D0 0x087560EC c_data late_tbl_087560d0 # src/data/late_game_tables.c section .late_tbl_087560d0 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087560EC 0x08756150 data late_game_rodata_087560ec
+0x08756150 0x08756178 c_data late_tbl_08756150 # src/data/late_game_tables.c section .late_tbl_08756150 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756178 0x08756198 data late_game_rodata_08756178
+0x08756198 0x087561C4 c_data late_tbl_08756198 # src/data/late_game_tables.c section .late_tbl_08756198 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087561C4 0x08756270 data late_game_rodata_087561c4
+0x08756270 0x087562A8 c_data late_tbl_08756270 # src/data/late_game_tables.c section .late_tbl_08756270 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562A8 0x087562CC data late_game_rodata_087562a8
+0x087562CC 0x087562D8 c_data late_tbl_087562cc # src/data/late_game_tables.c section .late_tbl_087562cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562D8 0x087562E4 c_data late_tbl_087562d8 # src/data/late_game_tables.c section .late_tbl_087562d8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562E4 0x087562E8 data late_game_rodata_087562e4
+0x087562E8 0x087562F0 c_data late_tbl_087562e8 # src/data/late_game_tables.c section .late_tbl_087562e8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087562F0 0x087562FC data late_game_rodata_087562f0
+0x087562FC 0x0875636C c_data late_tbl_087562fc # src/data/late_game_tables.c section .late_tbl_087562fc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0875636C 0x08756378 data late_game_rodata_0875636c
+0x08756378 0x087563D8 c_data late_tbl_08756378 # src/data/late_game_tables.c section .late_tbl_08756378 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087563D8 0x08756468 data late_game_rodata_087563d8
+0x08756468 0x08756498 c_data late_tbl_08756468 # src/data/late_game_tables.c section .late_tbl_08756468 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756498 0x087564E4 data late_game_rodata_08756498
+0x087564E4 0x08756514 c_data late_tbl_087564e4 # src/data/late_game_tables.c section .late_tbl_087564e4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756514 0x08756568 data late_game_rodata_08756514
+0x08756568 0x08756570 c_data late_tbl_08756568 # src/data/late_game_tables.c section .late_tbl_08756568 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756570 0x08756668 data late_game_rodata_08756570
+0x08756668 0x0875670C c_data late_tbl_08756668 # src/data/late_game_tables.c section .late_tbl_08756668 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0875670C 0x08756780 data late_game_rodata_0875670c
+0x08756780 0x08756798 c_data late_tbl_08756780 # src/data/late_game_tables.c section .late_tbl_08756780 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08756798 0x087571F8 data late_game_rodata_08756798
+0x087571F8 0x08757250 c_data late_tbl_087571f8 # src/data/late_game_tables.c section .late_tbl_087571f8 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08757250 0x08757270 data late_game_rodata_08757250
+0x08757270 0x08757280 c_data late_tbl_08757270 # src/data/late_game_tables.c section .late_tbl_08757270 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08757280 0x087572CC data late_game_rodata_08757280
+0x087572CC 0x087572E0 c_data late_tbl_087572cc # src/data/late_game_tables.c section .late_tbl_087572cc (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087572E0 0x08757330 data late_game_rodata_087572e0
+0x08757330 0x0875735C c_data late_tbl_08757330 # src/data/late_game_tables.c section .late_tbl_08757330 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x0875735C 0x087573F4 data late_game_rodata_0875735c
+0x087573F4 0x08757424 c_data late_tbl_087573f4 # src/data/late_game_tables.c section .late_tbl_087573f4 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08757424 0x08758294 data late_game_rodata_08757424
+0x08758294 0x087582F4 c_data late_tbl_08758294 # src/data/late_game_tables.c section .late_tbl_08758294 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x087582F4 0x08758324 data late_game_rodata_087582f4
+0x08758324 0x08758334 c_data late_tbl_08758324 # src/data/late_game_tables.c section .late_tbl_08758324 (carved by tools/carve_data.py, grouped by tools/ldgroup.py)
+0x08758334 0x08758448 data late_game_rodata_08758334
 0x08758448 0x08759DC8 data credits_demos # The 14 recorded input demos of the staff credits' rows 1 and 2 (gUnk_087583CC, CreditsMain src/credits_cd330.c; InputRecorderStart)
 0x08759DC8 0x08769250 data player_frame_records # Player frame records {oam | 1, palette, tiles, palette2, tiles2} (PlayerLoadFrameTilesAndPalette, src/stage_3cd60.c) (#36 phase 2 run 3)
 0x08769250 0x0876B1FC data player_frame_lists # The player sheets' frame lists, format-only (docs/data.md 5.3) (#36 phase 2 run 3)
@@ -424,7 +1490,7 @@
 0x087954C0 0x087C0A4C data bomb_rally_program # Separately linked GBA program (asset): sub-game 1 (Bomb Rally), sent to the other players by sub_08007c5c (src/mode_07b68.c)
 0x087C0A4C 0x087E1D58 data air_grind_program # Separately linked GBA program (asset): sub-game 2 (Air Grind), sent to the other players by sub_08007c5c (src/mode_07b68.c)
 0x087E1D58 0x087E1E78 c_data room_table # src/data/room_table.c (carved by tools/carve_data.py)
-0x087E1E78 0x087E1F58 data room_bg_anim_lists # Room BG-animation script lists (#36 phase 2): 12 NULL-ended lists of the 30 scripts and their index gRoomBgAnimScripts
+0x087E1E78 0x087E1F58 c_data room_bg_anim_lists # src/data/room_bg_anim_lists.c (carved by tools/carve_data.py)
 0x087E1F58 0x087E2570 c_data room_lists # src/data/room_lists.c (carved by tools/carve_data.py)
 0x087E2570 0x087E3088 data sprite_frame_lists # Sprite frame lists (#36 phase 2): 23 per-sheet lists of frame pointers, one per extended GfxHeader trailer; no code reference found
 0x087E3088 0x08800000 data zero_padding

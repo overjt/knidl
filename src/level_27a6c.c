@@ -57,7 +57,7 @@ struct RoomDef
     /*0x06*/ u8 filler06[2];
     /*0x08*/ void *metatileMap;
     /*0x0C*/ void *blockLayer;
-    /*0x10*/ void *unk10;
+    /*0x10*/ void *blockMetatiles;
     /*0x14*/ u16 width;
     /*0x16*/ u16 height;
     /*0x18*/ u16 *bg2Palette;
@@ -70,7 +70,7 @@ struct RoomDef
     /*0x30*/ struct BgMap *bg3Map;
     /*0x34*/ u16 bg3BorderX;
     /*0x36*/ u16 bg3BorderY;
-    /*0x38*/ u16 unk38;
+    /*0x38*/ u16 driftObjectIndex;
     /*0x3A*/ u16 doorCount;
     /*0x3C*/ u16 objectCount;
     /*0x3E*/ u16 objectsSortedByY;

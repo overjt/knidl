@@ -8,7 +8,7 @@
  *
  * Breakable blocks, part 1: the hit-box scans and the block spawner.
  * gBlockLayer[] is the room's block layer, one u16 per metatile: 0 = no
- * block, the low byte = which replacement metatile of RoomDef.unk10[] the
+ * block, the low byte = which replacement metatile of RoomDef.blockMetatiles[] the
  * cell turns into, bit 15 = being broken.  gBreakingBlocks[64] holds the
  * blocks being broken (struct Unk020061F0).  An attack's hit-box set
  * (struct HitBoxSet) is placed at the task's position and facing by the
@@ -55,7 +55,7 @@ struct MapTile
    gBg1MetatileMap): one 32-byte record per block being broken.  unk0/unk2 =
    metatile x/y, unk4 = its map index, unk6 = the position in the animation
    script (0x7FFF = free slot; bit 15 = already stepped this frame), unk8 =
-   the metatile the cell shows next (RoomDef.unk10[] + the layer's low byte,
+   the metatile the cell shows next (RoomDef.blockMetatiles[] + the layer's low byte,
    advanced by one per drawn frame), unkC = its tile entry in the BG map,
    unk10 = the script (gUnk_0873A47C[kind], {op, arg} pairs: 1 and 2 draw a
    frame, 3 breaks the four neighbours, 4 waits arg frames, 0x8000/0x8001
@@ -85,7 +85,7 @@ struct Unk020061F0
 struct RoomDef
 {
     /*0x00*/ u8 filler00[0x10];
-    /*0x10*/ struct MapTile *unk10;
+    /*0x10*/ struct MapTile *blockMetatiles;
 };
 
 /* Not from room.h or player.h: this file's view of gRoomMap and gBrokenBlockY
@@ -456,7 +456,7 @@ s32 BreakBlockAt(u32 x, u32 y)
                 }
                 b = &gBreakingBlocks[i];
                 b->unk4 = gBlockCursorIndex;
-                b->unk8 = gCurRoomDef->unk10 + gBlockLayer[gBlockCursorIndex];
+                b->unk8 = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex];
                 b->unk0 = gBlockCursorX;
                 b->unk2 = gBlockCursorY;
                 b->unkC = (u16 *)(BG_VRAM + 0x2000) + ((gBlockCursorX * 2 & 31) + ((gBlockCursorY * 2 & 31) + (gBlockCursorX & 16) * 2) * 32);
@@ -565,7 +565,7 @@ s32 BreakBlockAtCursor(void)
     }
     b = &gBreakingBlocks[i];
     b->unk4 = gBlockCursorIndex;
-    b->unk8 = gCurRoomDef->unk10 + gBlockLayer[gBlockCursorIndex];
+    b->unk8 = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex];
     b->unk0 = gBlockCursorX;
     b->unk2 = gBlockCursorY;
     b->unk1C = gBlockCursorPlayer;
@@ -732,7 +732,7 @@ s32 sub_08031738(u32 x, u32 y, s32 n)
     }
     b = &gBreakingBlocks[i];
     b->unk4 = gBlockCursorIndex;
-    t = gCurRoomDef->unk10 + gBlockLayer[gBlockCursorIndex] + n;
+    t = gCurRoomDef->blockMetatiles + gBlockLayer[gBlockCursorIndex] + n;
     b->unk8 = t;
     b->unk0 = gBlockCursorX;
     b->unk2 = gBlockCursorY;

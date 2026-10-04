@@ -42,9 +42,9 @@ void InitRoomBgLayout(void)
     gRoomBgLayout = 0;
     gCurTileDrifts = gTileDrifts;
     gUnk_02005574[0] = 0;
-    if ((s16)gCurRoomDef->unk38 != -1)
+    if ((s16)gCurRoomDef->driftObjectIndex != -1)
     {
-        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
+        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->driftObjectIndex];
         if (e[1] == 7)
         {
             gRoomDriftVelX = gRoomDriftVelocities[e[2]][0];
@@ -137,9 +137,9 @@ void sub_08028130(void)
     gRoomDriftVelY = 0;
     gRoomBgLayout = 0;
     gUnk_02005574[0] = 0;
-    if ((s16)gCurRoomDef->unk38 != -1)
+    if ((s16)gCurRoomDef->driftObjectIndex != -1)
     {
-        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->unk38];
+        e = (s8 *)&gRoomObjectList.entries[(s16)gCurRoomDef->driftObjectIndex];
         if (e[1] == 7)
         {
             gRoomDriftVelX = gRoomDriftVelocities[e[2]][0];

@@ -29,9 +29,9 @@ extern void ActorSetState(s32 a);
 extern u32 GetShapeAtPixelIgnoringOneWay(s32 x, s32 y);
 extern void ActorSetTerrainBox(u32 *p);
 
-extern void ActorSetHitReactions(u32 *p);
+extern void ActorSetHitReactions(struct ActorVt *p);
 extern s32 TaskGetDxTo(s32 i);
-extern void ActorSetTerrainHandlers(u32 *p);
+extern void ActorSetTerrainHandlers(struct ActorHandlers *p);
 extern void ActorCollideTerrain(void);
 extern void RequestScreenShake(u32 a);
 extern void RegisterCollider(u8 a, s16 x, s16 y, u32 *p);

@@ -28,6 +28,34 @@ struct Unk0873EAC0
     /*0x04*/ s32 unk04;
 };
 
+/* Seven-entry handler table hanging off Actor.terrainHandlers (and
+   ActorDef.terrainHandlers); every entry is a u8 (*)(void) that returns 1 when
+   it consumed the frame.  ActorCollideTerrain, sub_080696a0 and sub_08069888
+   (src/actor_692fc.c) walk it. */
+struct ActorHandlers
+{
+    /*0x00*/ u32 unk00;
+    /*0x04*/ u32 unk04;
+    /*0x08*/ u32 unk08;
+    /*0x0C*/ u32 unk0C;
+    /*0x10*/ u32 unk10;
+    /*0x14*/ u32 unk14;
+    /*0x18*/ u32 unk18;
+};
+
+/* Block Actor.hitReactions (and ActorDef.hitReactions) points at: two s8 mode
+   bytes and two u8 (*)(void) hooks (ActorReactToDamage, ActorReactToDefeat,
+   src/actor_692fc.c).  Compare struct ActorAux, which is the Actor.unk60
+   block. */
+struct ActorVt
+{
+    /*0x00*/ s8 unk00;
+    /*0x01*/ s8 unk01;
+    /*0x02*/ u8 filler02[2];
+    /*0x04*/ u32 unk04;
+    /*0x08*/ u32 unk08;
+};
+
 /* EWRAM */
 extern u16 gNextActorSerial;
 extern u32 gUnk_02004C90;
@@ -104,10 +132,10 @@ extern u16 gUnk_0873E700[];
 extern u16 gUnk_0873E72E;
 extern u16 gUnk_0873E730;
 extern u32 gUnk_0873E734[];
-extern u8 gUnk_0873E758[];
-extern u8 gUnk_0873E77C[];
+extern u32 gUnk_0873E758[];
+extern u32 gUnk_0873E77C[];
 extern u32 gUnk_0873E78C[];
-extern u8 gUnk_0873E798[];
+extern u32 gUnk_0873E798[];
 extern s16 gUnk_0873E7A4[];
 extern s16 gUnk_0873E7C4[];
 extern s16 gUnk_0873E864[];
@@ -172,10 +200,10 @@ extern u32 gUnk_0873F8B4[];
 extern u32 gUnk_0873F8BC[];
 extern u32 gUnk_0873F8CC[];
 extern u32 gUnk_0873F8DC[];
-extern u32 gUnk_0873F8F4[];
-extern u32 gUnk_0873F910[];
-extern u32 gUnk_0873F92C[];
-extern u32 gUnk_0873F938[];
+extern struct ActorHandlers gUnk_0873F8F4[];
+extern struct ActorHandlers gUnk_0873F910[];
+extern struct ActorVt gUnk_0873F92C[];
+extern struct ActorVt gUnk_0873F938[];
 extern s16 *gUnk_0873F950[];
 extern u16 gUnk_0873FAB4[];
 extern u8 gUnk_0873FAE8[];

@@ -20945,17 +20945,17 @@
     "0x0835CF9C": "gRoomBgAnimSet11Script0",
     "0x0835CFD4": "gLevel7Stage1Room0MetatileMap",
     "0x0835D048": "gLevel7Stage1Room0BlockLayer",
-    "0x0835D07C": "gUnk_0835D07C",
+    "0x0835D07C": "gLevel7Stage1Room0BlockMetatiles",
     "0x0835D084": "gLevel7Stage1Room0Objects",
     "0x0835D08C": "gLevel7Stage1Room0",
     "0x0835D0E4": "gLevel7Stage1Room1MetatileMap",
     "0x0835D290": "gLevel7Stage1Room1BlockLayer",
-    "0x0835D2F0": "gUnk_0835D2F0",
+    "0x0835D2F0": "gLevel7Stage1Room1BlockMetatiles",
     "0x0835D2F8": "gLevel7Stage1Room1Objects",
     "0x0835D300": "gLevel7Stage1Room1",
     "0x0835D358": "gLevel7Stage1Room2MetatileMap",
     "0x0835D480": "gLevel7Stage1Room2BlockLayer",
-    "0x0835D4E0": "gUnk_0835D4E0",
+    "0x0835D4E0": "gLevel7Stage1Room2BlockMetatiles",
     "0x0835D4E8": "gLevel7Stage1Room2Objects",
     "0x0835D4F0": "gLevel7Stage1Room2",
     "0x0835D548": "gUnk_0835D548",
@@ -20965,1897 +20965,1897 @@
     "0x0835D918": "gUnk_0835D918",
     "0x0835D9DC": "gLevel0Stage0Room0MetatileMap",
     "0x0835DCA4": "gLevel0Stage0Room0BlockLayer",
-    "0x0835DD54": "gUnk_0835DD54",
+    "0x0835DD54": "gLevel0Stage0Room0BlockMetatiles",
     "0x0835DD5C": "gLevel0Stage0Room0Doors",
     "0x0835DD68": "gLevel0Stage0Room0Objects",
     "0x0835DDC0": "gLevel0Stage0Room0",
     "0x0835DE18": "gLevel0Stage0Room1MetatileMap",
     "0x0835E15C": "gLevel0Stage0Room1BlockLayer",
-    "0x0835E228": "gUnk_0835E228",
+    "0x0835E228": "gLevel0Stage0Room1BlockMetatiles",
     "0x0835E230": "gLevel0Stage0Room1Doors",
     "0x0835E248": "gLevel0Stage0Room1Objects",
     "0x0835E2A0": "gLevel0Stage0Room1",
     "0x0835E2F8": "gLevel0Stage0Room2MetatileMap",
     "0x0835E5DC": "gLevel0Stage0Room2BlockLayer",
-    "0x0835E68C": "gUnk_0835E68C",
+    "0x0835E68C": "gLevel0Stage0Room2BlockMetatiles",
     "0x0835E694": "gLevel0Stage0Room2Doors",
     "0x0835E6AC": "gLevel0Stage0Room2Objects",
     "0x0835E70C": "gLevel0Stage0Room2",
     "0x0835E764": "gLevel0Stage0Room3MetatileMap",
     "0x0835E8CC": "gLevel0Stage0Room3BlockLayer",
-    "0x0835E900": "gUnk_0835E900",
+    "0x0835E900": "gLevel0Stage0Room3BlockMetatiles",
     "0x0835E908": "gLevel0Stage0Room3Doors",
     "0x0835E914": "gLevel0Stage0Room3Objects",
     "0x0835E924": "gLevel0Stage0Room3",
     "0x0835E97C": "gLevel0Stage1Room0MetatileMap",
     "0x0835ECF8": "gLevel0Stage1Room0BlockLayer",
-    "0x0835EE40": "gUnk_0835EE40",
+    "0x0835EE40": "gLevel0Stage1Room0BlockMetatiles",
     "0x0835EEC0": "gLevel0Stage1Room0Doors",
     "0x0835EECC": "gLevel0Stage1Room0Objects",
     "0x0835EF1C": "gLevel0Stage1Room0",
     "0x0835EF74": "gLevel0Stage1Room1MetatileMap",
     "0x0835F0FC": "gLevel0Stage1Room1BlockLayer",
-    "0x0835F180": "gUnk_0835F180",
+    "0x0835F180": "gLevel0Stage1Room1BlockMetatiles",
     "0x0835F188": "gLevel0Stage1Room1Doors",
     "0x0835F194": "gLevel0Stage1Room1Objects",
     "0x0835F1A4": "gLevel0Stage1Room1",
     "0x0835F1FC": "gLevel0Stage1Room2MetatileMap",
     "0x0835F458": "gLevel0Stage1Room2BlockLayer",
-    "0x0835F4DC": "gUnk_0835F4DC",
+    "0x0835F4DC": "gLevel0Stage1Room2BlockMetatiles",
     "0x0835F4E4": "gLevel0Stage1Room2Doors",
     "0x0835F4FC": "gLevel0Stage1Room2Objects",
     "0x0835F544": "gLevel0Stage1Room2",
     "0x0835F59C": "gLevel0Stage1Room3MetatileMap",
     "0x0835FADC": "gLevel0Stage1Room3BlockLayer",
-    "0x0835FB90": "gUnk_0835FB90",
+    "0x0835FB90": "gLevel0Stage1Room3BlockMetatiles",
     "0x0835FBA0": "gLevel0Stage1Room3Doors",
     "0x0835FBAC": "gLevel0Stage1Room3Objects",
     "0x0835FC24": "gLevel0Stage1Room3",
     "0x0835FC7C": "gLevel0Stage1Room4MetatileMap",
     "0x0835FF2C": "gLevel0Stage1Room4BlockLayer",
-    "0x0835FF90": "gUnk_0835FF90",
+    "0x0835FF90": "gLevel0Stage1Room4BlockMetatiles",
     "0x0835FF98": "gLevel0Stage1Room4Doors",
     "0x0835FFBC": "gLevel0Stage1Room4Objects",
     "0x0835FFE4": "gLevel0Stage1Room4",
     "0x0836003C": "gLevel0Stage1Room5MetatileMap",
     "0x08360180": "gLevel0Stage1Room5BlockLayer",
-    "0x083601B8": "gUnk_083601B8",
+    "0x083601B8": "gLevel0Stage1Room5BlockMetatiles",
     "0x083601C0": "gLevel0Stage1Room5Doors",
     "0x083601CC": "gLevel0Stage1Room5Objects",
     "0x083601DC": "gLevel0Stage1Room5",
     "0x08360234": "gLevel0Stage2Room0MetatileMap",
     "0x0836053C": "gLevel0Stage2Room0BlockLayer",
-    "0x08360610": "gUnk_08360610",
+    "0x08360610": "gLevel0Stage2Room0BlockMetatiles",
     "0x08360624": "gLevel0Stage2Room0Doors",
     "0x08360630": "gLevel0Stage2Room0Objects",
     "0x08360690": "gLevel0Stage2Room0",
     "0x083606E8": "gLevel0Stage2Room1MetatileMap",
     "0x083609F0": "gLevel0Stage2Room1BlockLayer",
-    "0x08360ABC": "gUnk_08360ABC",
+    "0x08360ABC": "gLevel0Stage2Room1BlockMetatiles",
     "0x08360AC4": "gLevel0Stage2Room1Doors",
     "0x08360AD0": "gLevel0Stage2Room1Objects",
     "0x08360B38": "gLevel0Stage2Room1",
     "0x08360B90": "gLevel0Stage2Room2MetatileMap",
     "0x08360E6C": "gLevel0Stage2Room2BlockLayer",
-    "0x08360EE0": "gUnk_08360EE0",
+    "0x08360EE0": "gLevel0Stage2Room2BlockMetatiles",
     "0x08360EE8": "gLevel0Stage2Room2Doors",
     "0x08360F00": "gLevel0Stage2Room2Objects",
     "0x08360F38": "gLevel0Stage2Room2",
     "0x08360F90": "gLevel0Stage2Room3MetatileMap",
     "0x0836125C": "gLevel0Stage2Room3BlockLayer",
-    "0x08361310": "gUnk_08361310",
+    "0x08361310": "gLevel0Stage2Room3BlockMetatiles",
     "0x08361318": "gLevel0Stage2Room3Doors",
     "0x08361330": "gLevel0Stage2Room3Objects",
     "0x083613A0": "gLevel0Stage2Room3",
     "0x083613F8": "gLevel0Stage3Room0MetatileMap",
     "0x083616E4": "gLevel0Stage3Room0BlockLayer",
-    "0x08361748": "gUnk_08361748",
+    "0x08361748": "gLevel0Stage3Room0BlockMetatiles",
     "0x08361758": "gLevel0Stage3Room0Doors",
     "0x08361764": "gLevel0Stage3Room0Objects",
     "0x0836179C": "gLevel0Stage3Room0",
     "0x083617F4": "gLevel0Stage3Room1MetatileMap",
     "0x08361B64": "gLevel0Stage3Room1BlockLayer",
-    "0x08361C14": "gUnk_08361C14",
+    "0x08361C14": "gLevel0Stage3Room1BlockMetatiles",
     "0x08361C1C": "gLevel0Stage3Room1Doors",
     "0x08361C28": "gLevel0Stage3Room1Objects",
     "0x08361CB8": "gLevel0Stage3Room1",
     "0x08361D10": "gLevel0Stage3Room2MetatileMap",
     "0x08362010": "gLevel0Stage3Room2BlockLayer",
-    "0x083620A0": "gUnk_083620A0",
+    "0x083620A0": "gLevel0Stage3Room2BlockMetatiles",
     "0x083620B0": "gLevel0Stage3Room2Doors",
     "0x083620BC": "gLevel0Stage3Room2Objects",
     "0x08362104": "gLevel0Stage3Room2",
     "0x0836215C": "gLevel0Stage3Room3MetatileMap",
     "0x083625D8": "gLevel0Stage3Room3BlockLayer",
-    "0x083626DC": "gUnk_083626DC",
+    "0x083626DC": "gLevel0Stage3Room3BlockMetatiles",
     "0x083626E4": "gLevel0Stage3Room3Doors",
     "0x083626F0": "gLevel0Stage3Room3Objects",
     "0x08362788": "gLevel0Stage3Room3",
     "0x083627E0": "gLevel0Stage4Room0MetatileMap",
     "0x08362A60": "gLevel0Stage4Room0BlockLayer",
-    "0x08362AC0": "gUnk_08362AC0",
+    "0x08362AC0": "gLevel0Stage4Room0BlockMetatiles",
     "0x08362AC8": "gLevel0Stage4Room0Objects",
     "0x08362AD0": "gLevel0Stage4Room0",
     "0x08362B28": "gLevel1Stage0Room0MetatileMap",
     "0x08362F08": "gLevel1Stage0Room0BlockLayer",
-    "0x08363008": "gUnk_08363008",
+    "0x08363008": "gLevel1Stage0Room0BlockMetatiles",
     "0x08363010": "gLevel1Stage0Room0Doors",
     "0x08363028": "gLevel1Stage0Room0Objects",
     "0x083630A0": "gLevel1Stage0Room0",
     "0x083630F8": "gLevel1Stage0Room1MetatileMap",
     "0x083633BC": "gLevel1Stage0Room1BlockLayer",
-    "0x0836346C": "gUnk_0836346C",
+    "0x0836346C": "gLevel1Stage0Room1BlockMetatiles",
     "0x08363474": "gLevel1Stage0Room1Doors",
     "0x08363480": "gLevel1Stage0Room1Objects",
     "0x083634E0": "gLevel1Stage0Room1",
     "0x08363538": "gLevel1Stage0Room2MetatileMap",
     "0x083638D4": "gLevel1Stage0Room2BlockLayer",
-    "0x08363980": "gUnk_08363980",
+    "0x08363980": "gLevel1Stage0Room2BlockMetatiles",
     "0x08363988": "gLevel1Stage0Room2Doors",
     "0x08363994": "gLevel1Stage0Room2Objects",
     "0x08363A0C": "gLevel1Stage0Room2",
     "0x08363A64": "gLevel1Stage0Room3MetatileMap",
     "0x08363D18": "gLevel1Stage0Room3BlockLayer",
-    "0x08363D94": "gUnk_08363D94",
+    "0x08363D94": "gLevel1Stage0Room3BlockMetatiles",
     "0x08363DCC": "gLevel1Stage0Room3Doors",
     "0x08363DE4": "gLevel1Stage0Room3Objects",
     "0x08363E04": "gLevel1Stage0Room3",
     "0x08363E5C": "gLevel1Stage1Room0MetatileMap",
     "0x08363FAC": "gLevel1Stage1Room0BlockLayer",
-    "0x08363FE0": "gUnk_08363FE0",
+    "0x08363FE0": "gLevel1Stage1Room0BlockMetatiles",
     "0x08363FE8": "gLevel1Stage1Room0Doors",
     "0x08363FF4": "gLevel1Stage1Room0Objects",
     "0x08364014": "gLevel1Stage1Room0",
     "0x0836406C": "gLevel1Stage1Room1MetatileMap",
     "0x08364230": "gLevel1Stage1Room1BlockLayer",
-    "0x083642E4": "gUnk_083642E4",
+    "0x083642E4": "gLevel1Stage1Room1BlockMetatiles",
     "0x08364398": "gLevel1Stage1Room1Doors",
     "0x083643A4": "gLevel1Stage1Room1Objects",
     "0x083643BC": "gLevel1Stage1Room1",
     "0x08364414": "gLevel1Stage1Room2MetatileMap",
     "0x083645A0": "gLevel1Stage1Room2BlockLayer",
-    "0x08364620": "gUnk_08364620",
+    "0x08364620": "gLevel1Stage1Room2BlockMetatiles",
     "0x08364628": "gLevel1Stage1Room2Doors",
     "0x08364634": "gLevel1Stage1Room2Objects",
     "0x0836463C": "gLevel1Stage1Room2",
     "0x08364694": "gLevel1Stage1Room3MetatileMap",
     "0x08364934": "gLevel1Stage1Room3BlockLayer",
-    "0x083649D0": "gUnk_083649D0",
+    "0x083649D0": "gLevel1Stage1Room3BlockMetatiles",
     "0x083649F0": "gLevel1Stage1Room3Doors",
     "0x08364A08": "gLevel1Stage1Room3Objects",
     "0x08364A38": "gLevel1Stage1Room3",
     "0x08364A90": "gLevel1Stage1Room4MetatileMap",
     "0x08365214": "gLevel1Stage1Room4BlockLayer",
-    "0x08365454": "gUnk_08365454",
+    "0x08365454": "gLevel1Stage1Room4BlockMetatiles",
     "0x0836548C": "gLevel1Stage1Room4Doors",
     "0x08365498": "gLevel1Stage1Room4Objects",
     "0x08365558": "gLevel1Stage1Room4",
     "0x083655B0": "gLevel1Stage2Room0MetatileMap",
     "0x08365720": "gLevel1Stage2Room0BlockLayer",
-    "0x0836578C": "gUnk_0836578C",
+    "0x0836578C": "gLevel1Stage2Room0BlockMetatiles",
     "0x08365794": "gLevel1Stage2Room0Doors",
     "0x083657A0": "gLevel1Stage2Room0Objects",
     "0x083657C0": "gLevel1Stage2Room0",
     "0x08365818": "gLevel1Stage2Room1MetatileMap",
     "0x08365F2C": "gLevel1Stage2Room1BlockLayer",
-    "0x08366124": "gUnk_08366124",
+    "0x08366124": "gLevel1Stage2Room1BlockMetatiles",
     "0x083662B0": "gLevel1Stage2Room1Doors",
     "0x083662E0": "gLevel1Stage2Room1Objects",
     "0x08366340": "gLevel1Stage2Room1",
     "0x08366398": "gLevel1Stage2Room2MetatileMap",
     "0x0836658C": "gLevel1Stage2Room2BlockLayer",
-    "0x083665E8": "gUnk_083665E8",
+    "0x083665E8": "gLevel1Stage2Room2BlockMetatiles",
     "0x083665F0": "gLevel1Stage2Room2Doors",
     "0x083665FC": "gLevel1Stage2Room2Objects",
     "0x0836663C": "gLevel1Stage2Room2",
     "0x08366694": "gLevel1Stage2Room3MetatileMap",
     "0x083668C4": "gLevel1Stage2Room3BlockLayer",
-    "0x08366930": "gUnk_08366930",
+    "0x08366930": "gLevel1Stage2Room3BlockMetatiles",
     "0x08366938": "gLevel1Stage2Room3Doors",
     "0x08366944": "gLevel1Stage2Room3Objects",
     "0x08366974": "gLevel1Stage2Room3",
     "0x083669CC": "gLevel1Stage2Room4MetatileMap",
     "0x08366B30": "gLevel1Stage2Room4BlockLayer",
-    "0x08366B64": "gUnk_08366B64",
+    "0x08366B64": "gLevel1Stage2Room4BlockMetatiles",
     "0x08366B6C": "gLevel1Stage2Room4Doors",
     "0x08366B78": "gLevel1Stage2Room4Objects",
     "0x08366B98": "gLevel1Stage2Room4",
     "0x08366BF0": "gLevel1Stage2Room5MetatileMap",
     "0x08366CBC": "gLevel1Stage2Room5BlockLayer",
-    "0x08366CF8": "gUnk_08366CF8",
+    "0x08366CF8": "gLevel1Stage2Room5BlockMetatiles",
     "0x08366D08": "gLevel1Stage2Room5Doors",
     "0x08366D14": "gLevel1Stage2Room5Objects",
     "0x08366D1C": "gLevel1Stage2Room5",
     "0x08366D74": "gLevel1Stage3Room0MetatileMap",
     "0x08367088": "gLevel1Stage3Room0BlockLayer",
-    "0x083671A0": "gUnk_083671A0",
+    "0x083671A0": "gLevel1Stage3Room0BlockMetatiles",
     "0x083671D4": "gLevel1Stage3Room0Doors",
     "0x083671EC": "gLevel1Stage3Room0Objects",
     "0x08367274": "gLevel1Stage3Room0",
     "0x083672CC": "gLevel1Stage3Room1MetatileMap",
     "0x0836748C": "gLevel1Stage3Room1BlockLayer",
-    "0x083674E8": "gUnk_083674E8",
+    "0x083674E8": "gLevel1Stage3Room1BlockMetatiles",
     "0x083674F0": "gLevel1Stage3Room1Doors",
     "0x083674FC": "gLevel1Stage3Room1Objects",
     "0x0836753C": "gLevel1Stage3Room1",
     "0x08367594": "gLevel1Stage3Room2MetatileMap",
     "0x08367740": "gLevel1Stage3Room2BlockLayer",
-    "0x083677A0": "gUnk_083677A0",
+    "0x083677A0": "gLevel1Stage3Room2BlockMetatiles",
     "0x083677A8": "gLevel1Stage3Room2Doors",
     "0x083677B4": "gLevel1Stage3Room2Objects",
     "0x083677F4": "gLevel1Stage3Room2",
     "0x0836784C": "gLevel1Stage3Room3MetatileMap",
     "0x08367994": "gLevel1Stage3Room3BlockLayer",
-    "0x083679F4": "gUnk_083679F4",
+    "0x083679F4": "gLevel1Stage3Room3BlockMetatiles",
     "0x083679FC": "gLevel1Stage3Room3Doors",
     "0x08367A08": "gLevel1Stage3Room3Objects",
     "0x08367A50": "gLevel1Stage3Room3",
     "0x08367AA8": "gLevel1Stage3Room4MetatileMap",
     "0x08367CB4": "gLevel1Stage3Room4BlockLayer",
-    "0x08367D7C": "gUnk_08367D7C",
+    "0x08367D7C": "gLevel1Stage3Room4BlockMetatiles",
     "0x08367E00": "gLevel1Stage3Room4Doors",
     "0x08367E0C": "gLevel1Stage3Room4Objects",
     "0x08367E8C": "gLevel1Stage3Room4",
     "0x08367EE4": "gLevel1Stage3Room5MetatileMap",
     "0x08368344": "gLevel1Stage3Room5BlockLayer",
-    "0x08368454": "gUnk_08368454",
+    "0x08368454": "gLevel1Stage3Room5BlockMetatiles",
     "0x0836845C": "gLevel1Stage3Room5Doors",
     "0x08368474": "gLevel1Stage3Room5Objects",
     "0x083684D4": "gLevel1Stage3Room5",
     "0x0836852C": "gLevel1Stage3Room6MetatileMap",
     "0x083686A0": "gLevel1Stage3Room6BlockLayer",
-    "0x083686D4": "gUnk_083686D4",
+    "0x083686D4": "gLevel1Stage3Room6BlockMetatiles",
     "0x083686DC": "gLevel1Stage3Room6Doors",
     "0x083686E8": "gLevel1Stage3Room6Objects",
     "0x08368710": "gLevel1Stage3Room6",
     "0x08368768": "gLevel1Stage4Room0MetatileMap",
     "0x08368BEC": "gLevel1Stage4Room0BlockLayer",
-    "0x08368CC4": "gUnk_08368CC4",
+    "0x08368CC4": "gLevel1Stage4Room0BlockMetatiles",
     "0x08368CCC": "gLevel1Stage4Room0Doors",
     "0x08368CD8": "gLevel1Stage4Room0Objects",
     "0x08368D30": "gLevel1Stage4Room0",
     "0x08368D88": "gLevel1Stage4Room1MetatileMap",
     "0x08369100": "gLevel1Stage4Room1BlockLayer",
-    "0x08369200": "gUnk_08369200",
+    "0x08369200": "gLevel1Stage4Room1BlockMetatiles",
     "0x08369250": "gLevel1Stage4Room1Doors",
     "0x08369268": "gLevel1Stage4Room1Objects",
     "0x083692D8": "gLevel1Stage4Room1",
     "0x08369330": "gLevel1Stage4Room2MetatileMap",
     "0x08369878": "gLevel1Stage4Room2BlockLayer",
-    "0x08369A80": "gUnk_08369A80",
+    "0x08369A80": "gLevel1Stage4Room2BlockMetatiles",
     "0x08369B08": "gLevel1Stage4Room2Doors",
     "0x08369B20": "gLevel1Stage4Room2Objects",
     "0x08369BE0": "gLevel1Stage4Room2",
     "0x08369C38": "gLevel1Stage4Room3MetatileMap",
     "0x08369DAC": "gLevel1Stage4Room3BlockLayer",
-    "0x08369EF4": "gUnk_08369EF4",
+    "0x08369EF4": "gLevel1Stage4Room3BlockMetatiles",
     "0x0836A05C": "gLevel1Stage4Room3Doors",
     "0x0836A068": "gLevel1Stage4Room3Objects",
     "0x0836A0A8": "gLevel1Stage4Room3",
     "0x0836A100": "gLevel1Stage4Room4MetatileMap",
     "0x0836A250": "gLevel1Stage4Room4BlockLayer",
-    "0x0836A2C4": "gUnk_0836A2C4",
+    "0x0836A2C4": "gLevel1Stage4Room4BlockMetatiles",
     "0x0836A2CC": "gLevel1Stage4Room4Doors",
     "0x0836A2D8": "gLevel1Stage4Room4Objects",
     "0x0836A318": "gLevel1Stage4Room4",
     "0x0836A370": "gLevel1Stage4Room5MetatileMap",
     "0x0836A4CC": "gLevel1Stage4Room5BlockLayer",
-    "0x0836A500": "gUnk_0836A500",
+    "0x0836A500": "gLevel1Stage4Room5BlockMetatiles",
     "0x0836A508": "gLevel1Stage4Room5Doors",
     "0x0836A514": "gLevel1Stage4Room5Objects",
     "0x0836A534": "gLevel1Stage4Room5",
     "0x0836A58C": "gLevel1Stage4Room6MetatileMap",
     "0x0836A67C": "gLevel1Stage4Room6BlockLayer",
-    "0x0836A6B0": "gUnk_0836A6B0",
+    "0x0836A6B0": "gLevel1Stage4Room6BlockMetatiles",
     "0x0836A6B8": "gLevel1Stage4Room6Doors",
     "0x0836A6C4": "gLevel1Stage4Room6Objects",
     "0x0836A6DC": "gLevel1Stage4Room6",
     "0x0836A734": "gLevel1Stage5Room0MetatileMap",
     "0x0836A854": "gLevel1Stage5Room0BlockLayer",
-    "0x0836A88C": "gUnk_0836A88C",
+    "0x0836A88C": "gLevel1Stage5Room0BlockMetatiles",
     "0x0836A894": "gLevel1Stage5Room0Objects",
     "0x0836A89C": "gLevel1Stage5Room0",
     "0x0836A8F4": "gLevel2Stage0Room0MetatileMap",
     "0x0836AB74": "gLevel2Stage0Room0BlockLayer",
-    "0x0836ABF8": "gUnk_0836ABF8",
+    "0x0836ABF8": "gLevel2Stage0Room0BlockMetatiles",
     "0x0836AC00": "gLevel2Stage0Room0Doors",
     "0x0836AC18": "gLevel2Stage0Room0Objects",
     "0x0836AC58": "gLevel2Stage0Room0",
     "0x0836ACB0": "gLevel2Stage0Room1MetatileMap",
     "0x0836ADCC": "gLevel2Stage0Room1BlockLayer",
-    "0x0836AE38": "gUnk_0836AE38",
+    "0x0836AE38": "gLevel2Stage0Room1BlockMetatiles",
     "0x0836AEB0": "gLevel2Stage0Room1Doors",
     "0x0836AEBC": "gLevel2Stage0Room1Objects",
     "0x0836AEE4": "gLevel2Stage0Room1",
     "0x0836AF3C": "gLevel2Stage0Room2MetatileMap",
     "0x0836B09C": "gLevel2Stage0Room2BlockLayer",
-    "0x0836B0F8": "gUnk_0836B0F8",
+    "0x0836B0F8": "gLevel2Stage0Room2BlockMetatiles",
     "0x0836B100": "gLevel2Stage0Room2Doors",
     "0x0836B118": "gLevel2Stage0Room2Objects",
     "0x0836B160": "gLevel2Stage0Room2",
     "0x0836B1B8": "gLevel2Stage0Room3MetatileMap",
     "0x0836B3A4": "gLevel2Stage0Room3BlockLayer",
-    "0x0836B408": "gUnk_0836B408",
+    "0x0836B408": "gLevel2Stage0Room3BlockMetatiles",
     "0x0836B418": "gLevel2Stage0Room3Doors",
     "0x0836B43C": "gLevel2Stage0Room3Objects",
     "0x0836B44C": "gLevel2Stage0Room3",
     "0x0836B4A4": "gLevel2Stage0Room4MetatileMap",
     "0x0836B5FC": "gLevel2Stage0Room4BlockLayer",
-    "0x0836B6A8": "gUnk_0836B6A8",
+    "0x0836B6A8": "gLevel2Stage0Room4BlockMetatiles",
     "0x0836B79C": "gLevel2Stage0Room4Doors",
     "0x0836B7B4": "gLevel2Stage0Room4",
     "0x0836B80C": "gLevel2Stage0Room5MetatileMap",
     "0x0836B900": "gLevel2Stage0Room5BlockLayer",
-    "0x0836B934": "gUnk_0836B934",
+    "0x0836B934": "gLevel2Stage0Room5BlockMetatiles",
     "0x0836B944": "gLevel2Stage0Room5Doors",
     "0x0836B950": "gLevel2Stage0Room5Objects",
     "0x0836B968": "gLevel2Stage0Room5",
     "0x0836B9C0": "gLevel2Stage1Room0MetatileMap",
     "0x0836BBA8": "gLevel2Stage1Room0BlockLayer",
-    "0x0836BC0C": "gUnk_0836BC0C",
+    "0x0836BC0C": "gLevel2Stage1Room0BlockMetatiles",
     "0x0836BC14": "gLevel2Stage1Room0Doors",
     "0x0836BC20": "gLevel2Stage1Room0Objects",
     "0x0836BC70": "gLevel2Stage1Room0",
     "0x0836BCC8": "gLevel2Stage1Room1MetatileMap",
     "0x0836BF74": "gLevel2Stage1Room1BlockLayer",
-    "0x0836C03C": "gUnk_0836C03C",
+    "0x0836C03C": "gLevel2Stage1Room1BlockMetatiles",
     "0x0836C044": "gLevel2Stage1Room1Doors",
     "0x0836C050": "gLevel2Stage1Room1Objects",
     "0x0836C0B0": "gLevel2Stage1Room1",
     "0x0836C108": "gLevel2Stage1Room2MetatileMap",
     "0x0836C418": "gLevel2Stage1Room2BlockLayer",
-    "0x0836C4A8": "gUnk_0836C4A8",
+    "0x0836C4A8": "gLevel2Stage1Room2BlockMetatiles",
     "0x0836C4B0": "gLevel2Stage1Room2Doors",
     "0x0836C4BC": "gLevel2Stage1Room2Objects",
     "0x0836C50C": "gLevel2Stage1Room2",
     "0x0836C564": "gLevel2Stage1Room3MetatileMap",
     "0x0836C918": "gLevel2Stage1Room3BlockLayer",
-    "0x0836C9EC": "gUnk_0836C9EC",
+    "0x0836C9EC": "gLevel2Stage1Room3BlockMetatiles",
     "0x0836CA2C": "gLevel2Stage1Room3Doors",
     "0x0836CA50": "gLevel2Stage1Room3Objects",
     "0x0836CA98": "gLevel2Stage1Room3",
     "0x0836CAF0": "gLevel2Stage1Room4MetatileMap",
     "0x0836CC04": "gLevel2Stage1Room4BlockLayer",
-    "0x0836CCA4": "gUnk_0836CCA4",
+    "0x0836CCA4": "gLevel2Stage1Room4BlockMetatiles",
     "0x0836CD7C": "gLevel2Stage1Room4Doors",
     "0x0836CD88": "gLevel2Stage1Room4Objects",
     "0x0836CDA8": "gLevel2Stage1Room4",
     "0x0836CE00": "gLevel2Stage1Room5MetatileMap",
     "0x0836D080": "gLevel2Stage1Room5BlockLayer",
-    "0x0836D110": "gUnk_0836D110",
+    "0x0836D110": "gLevel2Stage1Room5BlockMetatiles",
     "0x0836D118": "gLevel2Stage1Room5Doors",
     "0x0836D124": "gLevel2Stage1Room5Objects",
     "0x0836D19C": "gLevel2Stage1Room5",
     "0x0836D1F4": "gLevel2Stage1Room6MetatileMap",
     "0x0836D2CC": "gLevel2Stage1Room6BlockLayer",
-    "0x0836D300": "gUnk_0836D300",
+    "0x0836D300": "gLevel2Stage1Room6BlockMetatiles",
     "0x0836D310": "gLevel2Stage1Room6Doors",
     "0x0836D31C": "gLevel2Stage1Room6Objects",
     "0x0836D334": "gLevel2Stage1Room6",
     "0x0836D38C": "gLevel2Stage1Room7MetatileMap",
     "0x0836D4A4": "gLevel2Stage1Room7BlockLayer",
-    "0x0836D4D8": "gUnk_0836D4D8",
+    "0x0836D4D8": "gLevel2Stage1Room7BlockMetatiles",
     "0x0836D4E0": "gLevel2Stage1Room7Doors",
     "0x0836D4EC": "gLevel2Stage1Room7Objects",
     "0x0836D4FC": "gLevel2Stage1Room7",
     "0x0836D554": "gLevel2Stage2Room0MetatileMap",
     "0x0836D9A8": "gLevel2Stage2Room0BlockLayer",
-    "0x0836DA60": "gUnk_0836DA60",
+    "0x0836DA60": "gLevel2Stage2Room0BlockMetatiles",
     "0x0836DA68": "gLevel2Stage2Room0Doors",
     "0x0836DA74": "gLevel2Stage2Room0Objects",
     "0x0836DADC": "gLevel2Stage2Room0",
     "0x0836DB34": "gLevel2Stage2Room1MetatileMap",
     "0x0836DCE4": "gLevel2Stage2Room1BlockLayer",
-    "0x0836DD18": "gUnk_0836DD18",
+    "0x0836DD18": "gLevel2Stage2Room1BlockMetatiles",
     "0x0836DD20": "gLevel2Stage2Room1Doors",
     "0x0836DD2C": "gLevel2Stage2Room1Objects",
     "0x0836DD44": "gLevel2Stage2Room1",
     "0x0836DD9C": "gLevel2Stage2Room2MetatileMap",
     "0x0836DFB0": "gLevel2Stage2Room2BlockLayer",
-    "0x0836E010": "gUnk_0836E010",
+    "0x0836E010": "gLevel2Stage2Room2BlockMetatiles",
     "0x0836E018": "gLevel2Stage2Room2Doors",
     "0x0836E06C": "gLevel2Stage2Room2Objects",
     "0x0836E09C": "gLevel2Stage2Room2",
     "0x0836E0F4": "gLevel2Stage2Room3MetatileMap",
     "0x0836E300": "gLevel2Stage2Room3BlockLayer",
-    "0x0836E368": "gUnk_0836E368",
+    "0x0836E368": "gLevel2Stage2Room3BlockMetatiles",
     "0x0836E384": "gLevel2Stage2Room3Doors",
     "0x0836E3CC": "gLevel2Stage2Room3Objects",
     "0x0836E3F4": "gLevel2Stage2Room3",
     "0x0836E44C": "gLevel2Stage2Room4MetatileMap",
     "0x0836E580": "gLevel2Stage2Room4BlockLayer",
-    "0x0836E5D4": "gUnk_0836E5D4",
+    "0x0836E5D4": "gLevel2Stage2Room4BlockMetatiles",
     "0x0836E620": "gLevel2Stage2Room4Doors",
     "0x0836E638": "gLevel2Stage2Room4Objects",
     "0x0836E660": "gLevel2Stage2Room4",
     "0x0836E6B8": "gLevel2Stage3Room0MetatileMap",
     "0x0836E7D0": "gLevel2Stage3Room0BlockLayer",
-    "0x0836E808": "gUnk_0836E808",
+    "0x0836E808": "gLevel2Stage3Room0BlockMetatiles",
     "0x0836E810": "gLevel2Stage3Room0Doors",
     "0x0836E81C": "gLevel2Stage3Room0Objects",
     "0x0836E824": "gLevel2Stage3Room0",
     "0x0836E87C": "gLevel2Stage3Room1MetatileMap",
     "0x0836ED24": "gLevel2Stage3Room1BlockLayer",
-    "0x0836EEC4": "gUnk_0836EEC4",
+    "0x0836EEC4": "gLevel2Stage3Room1BlockMetatiles",
     "0x0836EECC": "gLevel2Stage3Room1Doors",
     "0x0836EED8": "gLevel2Stage3Room1",
     "0x0836EF30": "gLevel2Stage3Room2MetatileMap",
     "0x0836F040": "gLevel2Stage3Room2BlockLayer",
-    "0x0836F078": "gUnk_0836F078",
+    "0x0836F078": "gLevel2Stage3Room2BlockMetatiles",
     "0x0836F080": "gLevel2Stage3Room2Doors",
     "0x0836F0A4": "gLevel2Stage3Room2",
     "0x0836F0FC": "gLevel2Stage3Room3MetatileMap",
     "0x0836F1F8": "gLevel2Stage3Room3BlockLayer",
-    "0x0836F22C": "gUnk_0836F22C",
+    "0x0836F22C": "gLevel2Stage3Room3BlockMetatiles",
     "0x0836F234": "gLevel2Stage3Room3Doors",
     "0x0836F240": "gLevel2Stage3Room3Objects",
     "0x0836F270": "gLevel2Stage3Room3",
     "0x0836F2C8": "gLevel2Stage3Room4MetatileMap",
     "0x0836F504": "gLevel2Stage3Room4BlockLayer",
-    "0x0836F5C0": "gUnk_0836F5C0",
+    "0x0836F5C0": "gLevel2Stage3Room4BlockMetatiles",
     "0x0836F5C8": "gLevel2Stage3Room4Doors",
     "0x0836F5D4": "gLevel2Stage3Room4Objects",
     "0x0836F634": "gLevel2Stage3Room4",
     "0x0836F68C": "gLevel2Stage3Room5MetatileMap",
     "0x0836F780": "gLevel2Stage3Room5BlockLayer",
-    "0x0836F7C0": "gUnk_0836F7C0",
+    "0x0836F7C0": "gLevel2Stage3Room5BlockMetatiles",
     "0x0836F7D0": "gLevel2Stage3Room5Doors",
     "0x0836F7DC": "gLevel2Stage3Room5Objects",
     "0x0836F7E4": "gLevel2Stage3Room5",
     "0x0836F83C": "gLevel2Stage4Room0MetatileMap",
     "0x0836F948": "gLevel2Stage4Room0BlockLayer",
-    "0x0836F97C": "gUnk_0836F97C",
+    "0x0836F97C": "gLevel2Stage4Room0BlockMetatiles",
     "0x0836F984": "gLevel2Stage4Room0Doors",
     "0x0836F990": "gLevel2Stage4Room0Objects",
     "0x0836F9B0": "gLevel2Stage4Room0",
     "0x0836FA08": "gLevel2Stage4Room1MetatileMap",
     "0x0836FC40": "gLevel2Stage4Room1BlockLayer",
-    "0x0836FCF8": "gUnk_0836FCF8",
+    "0x0836FCF8": "gLevel2Stage4Room1BlockMetatiles",
     "0x0836FD00": "gLevel2Stage4Room1Doors",
     "0x0836FD0C": "gLevel2Stage4Room1Objects",
     "0x0836FD44": "gLevel2Stage4Room1",
     "0x0836FD9C": "gLevel2Stage4Room2MetatileMap",
     "0x0836FF48": "gLevel2Stage4Room2BlockLayer",
-    "0x0836FFA4": "gUnk_0836FFA4",
+    "0x0836FFA4": "gLevel2Stage4Room2BlockMetatiles",
     "0x0836FFAC": "gLevel2Stage4Room2Doors",
     "0x0836FFB8": "gLevel2Stage4Room2Objects",
     "0x08370000": "gLevel2Stage4Room2",
     "0x08370058": "gLevel2Stage4Room3MetatileMap",
     "0x0837018C": "gLevel2Stage4Room3BlockLayer",
-    "0x08370218": "gUnk_08370218",
+    "0x08370218": "gLevel2Stage4Room3BlockMetatiles",
     "0x083702D8": "gLevel2Stage4Room3Doors",
     "0x083702E4": "gLevel2Stage4Room3Objects",
     "0x083702FC": "gLevel2Stage4Room3",
     "0x08370354": "gLevel2Stage4Room4MetatileMap",
     "0x08370478": "gLevel2Stage4Room4BlockLayer",
-    "0x083704B0": "gUnk_083704B0",
+    "0x083704B0": "gLevel2Stage4Room4BlockMetatiles",
     "0x083704C0": "gLevel2Stage4Room4Doors",
     "0x083704CC": "gLevel2Stage4Room4Objects",
     "0x083704E4": "gLevel2Stage4Room4",
     "0x0837053C": "gLevel2Stage5Room0MetatileMap",
     "0x0837061C": "gLevel2Stage5Room0BlockLayer",
-    "0x08370650": "gUnk_08370650",
+    "0x08370650": "gLevel2Stage5Room0BlockMetatiles",
     "0x08370658": "gLevel2Stage5Room0Doors",
     "0x08370664": "gLevel2Stage5Room0Objects",
     "0x08370684": "gLevel2Stage5Room0",
     "0x083706DC": "gLevel2Stage5Room1MetatileMap",
     "0x08370A10": "gLevel2Stage5Room1BlockLayer",
-    "0x08370A9C": "gUnk_08370A9C",
+    "0x08370A9C": "gLevel2Stage5Room1BlockMetatiles",
     "0x08370AB0": "gLevel2Stage5Room1Doors",
     "0x08370ABC": "gLevel2Stage5Room1Objects",
     "0x08370AF4": "gLevel2Stage5Room1",
     "0x08370B4C": "gLevel2Stage5Room2MetatileMap",
     "0x08370D60": "gLevel2Stage5Room2BlockLayer",
-    "0x08370DBC": "gUnk_08370DBC",
+    "0x08370DBC": "gLevel2Stage5Room2BlockMetatiles",
     "0x08370DC4": "gLevel2Stage5Room2Doors",
     "0x08370DD0": "gLevel2Stage5Room2Objects",
     "0x08370E08": "gLevel2Stage5Room2",
     "0x08370E60": "gLevel2Stage5Room3MetatileMap",
     "0x08371024": "gLevel2Stage5Room3BlockLayer",
-    "0x08371058": "gUnk_08371058",
+    "0x08371058": "gLevel2Stage5Room3BlockMetatiles",
     "0x08371060": "gLevel2Stage5Room3Doors",
     "0x0837106C": "gLevel2Stage5Room3Objects",
     "0x0837108C": "gLevel2Stage5Room3",
     "0x083710E4": "gLevel2Stage5Room4MetatileMap",
     "0x08371280": "gLevel2Stage5Room4BlockLayer",
-    "0x08371318": "gUnk_08371318",
+    "0x08371318": "gLevel2Stage5Room4BlockMetatiles",
     "0x08371330": "gLevel2Stage5Room4Doors",
     "0x08371348": "gLevel2Stage5Room4Objects",
     "0x08371388": "gLevel2Stage5Room4",
     "0x083713E0": "gLevel2Stage5Room5MetatileMap",
     "0x08371638": "gLevel2Stage5Room5BlockLayer",
-    "0x083716BC": "gUnk_083716BC",
+    "0x083716BC": "gLevel2Stage5Room5BlockMetatiles",
     "0x083716C4": "gLevel2Stage5Room5Doors",
     "0x083716D0": "gLevel2Stage5Room5Objects",
     "0x08371728": "gLevel2Stage5Room5",
     "0x08371780": "gLevel2Stage5Room6MetatileMap",
     "0x083717E0": "gLevel2Stage5Room6BlockLayer",
-    "0x08371814": "gUnk_08371814",
+    "0x08371814": "gLevel2Stage5Room6BlockMetatiles",
     "0x0837181C": "gLevel2Stage5Room6",
     "0x08371874": "gLevel2Stage5Room7MetatileMap",
     "0x08371BA4": "gLevel2Stage5Room7BlockLayer",
-    "0x08371CD4": "gUnk_08371CD4",
+    "0x08371CD4": "gLevel2Stage5Room7BlockMetatiles",
     "0x08371CDC": "gLevel2Stage5Room7Doors",
     "0x08371CE8": "gLevel2Stage5Room7Objects",
     "0x08371D90": "gLevel2Stage5Room7",
     "0x08371DE8": "gLevel2Stage5Room8MetatileMap",
     "0x08371F64": "gLevel2Stage5Room8BlockLayer",
-    "0x08371FC4": "gUnk_08371FC4",
+    "0x08371FC4": "gLevel2Stage5Room8BlockMetatiles",
     "0x08372020": "gLevel2Stage5Room8Doors",
     "0x08372038": "gLevel2Stage5Room8Objects",
     "0x08372040": "gLevel2Stage5Room8",
     "0x08372098": "gLevel2Stage5Room9MetatileMap",
     "0x083721F0": "gLevel2Stage5Room9BlockLayer",
-    "0x08372224": "gUnk_08372224",
+    "0x08372224": "gLevel2Stage5Room9BlockMetatiles",
     "0x0837222C": "gLevel2Stage5Room9Doors",
     "0x08372238": "gLevel2Stage5Room9Objects",
     "0x08372240": "gLevel2Stage5Room9",
     "0x08372298": "gLevel2Stage6Room0MetatileMap",
     "0x0837236C": "gLevel2Stage6Room0BlockLayer",
-    "0x083723A0": "gUnk_083723A0",
+    "0x083723A0": "gLevel2Stage6Room0BlockMetatiles",
     "0x083723A8": "gLevel2Stage6Room0Objects",
     "0x083723B0": "gLevel2Stage6Room0",
     "0x08372408": "gLevel2Stage6Room1MetatileMap",
     "0x083724DC": "gLevel2Stage6Room1BlockLayer",
-    "0x08372510": "gUnk_08372510",
+    "0x08372510": "gLevel2Stage6Room1BlockMetatiles",
     "0x08372518": "gLevel2Stage6Room1",
     "0x08372570": "gLevel2Stage6Room2MetatileMap",
     "0x08372644": "gLevel2Stage6Room2BlockLayer",
-    "0x08372678": "gUnk_08372678",
+    "0x08372678": "gLevel2Stage6Room2BlockMetatiles",
     "0x08372680": "gLevel2Stage6Room2",
     "0x083726D8": "gLevel3Stage0Room0MetatileMap",
     "0x08372940": "gLevel3Stage0Room0BlockLayer",
-    "0x08372A0C": "gUnk_08372A0C",
+    "0x08372A0C": "gLevel3Stage0Room0BlockMetatiles",
     "0x08372A14": "gLevel3Stage0Room0Doors",
     "0x08372A20": "gLevel3Stage0Room0Objects",
     "0x08372A78": "gLevel3Stage0Room0",
     "0x08372AD0": "gLevel3Stage0Room1MetatileMap",
     "0x08372C94": "gLevel3Stage0Room1BlockLayer",
-    "0x08372CFC": "gUnk_08372CFC",
+    "0x08372CFC": "gLevel3Stage0Room1BlockMetatiles",
     "0x08372D04": "gLevel3Stage0Room1Doors",
     "0x08372D10": "gLevel3Stage0Room1Objects",
     "0x08372D58": "gLevel3Stage0Room1",
     "0x08372DB0": "gLevel3Stage0Room2MetatileMap",
     "0x08372F3C": "gLevel3Stage0Room2BlockLayer",
-    "0x08372FC0": "gUnk_08372FC0",
+    "0x08372FC0": "gLevel3Stage0Room2BlockMetatiles",
     "0x08372FC8": "gLevel3Stage0Room2Doors",
     "0x08372FD4": "gLevel3Stage0Room2Objects",
     "0x0837301C": "gLevel3Stage0Room2",
     "0x08373074": "gLevel3Stage0Room3MetatileMap",
     "0x0837326C": "gLevel3Stage0Room3BlockLayer",
-    "0x08373440": "gUnk_08373440",
+    "0x08373440": "gLevel3Stage0Room3BlockMetatiles",
     "0x08373620": "gLevel3Stage0Room3Doors",
     "0x08373638": "gLevel3Stage0Room3Objects",
     "0x083736A8": "gLevel3Stage0Room3",
     "0x08373700": "gLevel3Stage0Room4MetatileMap",
     "0x08373874": "gLevel3Stage0Room4BlockLayer",
-    "0x083738D0": "gUnk_083738D0",
+    "0x083738D0": "gLevel3Stage0Room4BlockMetatiles",
     "0x083738D8": "gLevel3Stage0Room4Doors",
     "0x083738E4": "gLevel3Stage0Room4Objects",
     "0x08373914": "gLevel3Stage0Room4",
     "0x0837396C": "gLevel3Stage0Room5MetatileMap",
     "0x08373A70": "gLevel3Stage0Room5BlockLayer",
-    "0x08373AA8": "gUnk_08373AA8",
+    "0x08373AA8": "gLevel3Stage0Room5BlockMetatiles",
     "0x08373AB0": "gLevel3Stage0Room5Doors",
     "0x08373ABC": "gLevel3Stage0Room5Objects",
     "0x08373AC4": "gLevel3Stage0Room5",
     "0x08373B1C": "gLevel3Stage1Room0MetatileMap",
     "0x08373F88": "gLevel3Stage1Room0BlockLayer",
-    "0x083740A0": "gUnk_083740A0",
+    "0x083740A0": "gLevel3Stage1Room0BlockMetatiles",
     "0x083740C0": "gLevel3Stage1Room0Doors",
     "0x083740CC": "gLevel3Stage1Room0Objects",
     "0x0837410C": "gLevel3Stage1Room0",
     "0x08374164": "gLevel3Stage1Room1MetatileMap",
     "0x08374268": "gLevel3Stage1Room1BlockLayer",
-    "0x083742A0": "gUnk_083742A0",
+    "0x083742A0": "gLevel3Stage1Room1BlockMetatiles",
     "0x083742A8": "gLevel3Stage1Room1Doors",
     "0x083742B4": "gLevel3Stage1Room1Objects",
     "0x083742CC": "gLevel3Stage1Room1",
     "0x08374324": "gLevel3Stage1Room2MetatileMap",
     "0x08374654": "gLevel3Stage1Room2BlockLayer",
-    "0x08374734": "gUnk_08374734",
+    "0x08374734": "gLevel3Stage1Room2BlockMetatiles",
     "0x08374778": "gLevel3Stage1Room2Doors",
     "0x08374790": "gLevel3Stage1Room2Objects",
     "0x083747D0": "gLevel3Stage1Room2",
     "0x08374828": "gLevel3Stage1Room3MetatileMap",
     "0x083749F8": "gLevel3Stage1Room3BlockLayer",
-    "0x08374AA8": "gUnk_08374AA8",
+    "0x08374AA8": "gLevel3Stage1Room3BlockMetatiles",
     "0x08374AB0": "gLevel3Stage1Room3Doors",
     "0x08374AC8": "gLevel3Stage1Room3Objects",
     "0x08374B28": "gLevel3Stage1Room3",
     "0x08374B80": "gLevel3Stage1Room4MetatileMap",
     "0x08374C04": "gLevel3Stage1Room4BlockLayer",
-    "0x08374C38": "gUnk_08374C38",
+    "0x08374C38": "gLevel3Stage1Room4BlockMetatiles",
     "0x08374C40": "gLevel3Stage1Room4Doors",
     "0x08374C4C": "gLevel3Stage1Room4Objects",
     "0x08374C74": "gLevel3Stage1Room4",
     "0x08374CCC": "gLevel3Stage1Room5MetatileMap",
     "0x08374D48": "gLevel3Stage1Room5BlockLayer",
-    "0x08374D80": "gUnk_08374D80",
+    "0x08374D80": "gLevel3Stage1Room5BlockMetatiles",
     "0x08374D90": "gLevel3Stage1Room5Doors",
     "0x08374D9C": "gLevel3Stage1Room5Objects",
     "0x08374DBC": "gLevel3Stage1Room5",
     "0x08374E14": "gLevel3Stage2Room0MetatileMap",
     "0x08375064": "gLevel3Stage2Room0BlockLayer",
-    "0x0837512C": "gUnk_0837512C",
+    "0x0837512C": "gLevel3Stage2Room0BlockMetatiles",
     "0x083752D4": "gLevel3Stage2Room0Doors",
     "0x083752EC": "gLevel3Stage2Room0Objects",
     "0x0837531C": "gLevel3Stage2Room0",
     "0x08375374": "gLevel3Stage2Room1MetatileMap",
     "0x08375DD8": "gLevel3Stage2Room1BlockLayer",
-    "0x083760FC": "gUnk_083760FC",
+    "0x083760FC": "gLevel3Stage2Room1BlockMetatiles",
     "0x08376104": "gLevel3Stage2Room1Doors",
     "0x08376128": "gLevel3Stage2Room1Objects",
     "0x083761D0": "gLevel3Stage2Room1",
     "0x08376228": "gLevel3Stage2Room2MetatileMap",
     "0x083768D4": "gLevel3Stage2Room2BlockLayer",
-    "0x08376A68": "gUnk_08376A68",
+    "0x08376A68": "gLevel3Stage2Room2BlockMetatiles",
     "0x08376A78": "gLevel3Stage2Room2Doors",
     "0x08376A84": "gLevel3Stage2Room2Objects",
     "0x08376B24": "gLevel3Stage2Room2",
     "0x08376B7C": "gLevel3Stage2Room3MetatileMap",
     "0x08376CE8": "gLevel3Stage2Room3BlockLayer",
-    "0x08376D4C": "gUnk_08376D4C",
+    "0x08376D4C": "gLevel3Stage2Room3BlockMetatiles",
     "0x08376D54": "gLevel3Stage2Room3Doors",
     "0x08376D6C": "gLevel3Stage2Room3Objects",
     "0x08376D94": "gLevel3Stage2Room3",
     "0x08376DEC": "gLevel3Stage2Room4MetatileMap",
     "0x08376EBC": "gLevel3Stage2Room4BlockLayer",
-    "0x08376EF0": "gUnk_08376EF0",
+    "0x08376EF0": "gLevel3Stage2Room4BlockMetatiles",
     "0x08376EF8": "gLevel3Stage2Room4Doors",
     "0x08376F10": "gLevel3Stage2Room4Objects",
     "0x08376F18": "gLevel3Stage2Room4",
     "0x08376F70": "gLevel3Stage2Room5MetatileMap",
     "0x083770F0": "gLevel3Stage2Room5BlockLayer",
-    "0x08377128": "gUnk_08377128",
+    "0x08377128": "gLevel3Stage2Room5BlockMetatiles",
     "0x08377130": "gLevel3Stage2Room5Doors",
     "0x0837713C": "gLevel3Stage2Room5Objects",
     "0x08377144": "gLevel3Stage2Room5",
     "0x0837719C": "gLevel3Stage2Room6MetatileMap",
     "0x083772C4": "gLevel3Stage2Room6BlockLayer",
-    "0x083772F8": "gUnk_083772F8",
+    "0x083772F8": "gLevel3Stage2Room6BlockMetatiles",
     "0x08377300": "gLevel3Stage2Room6Doors",
     "0x0837730C": "gLevel3Stage2Room6Objects",
     "0x08377334": "gLevel3Stage2Room6",
     "0x0837738C": "gLevel3Stage3Room0MetatileMap",
     "0x0837793C": "gLevel3Stage3Room0BlockLayer",
-    "0x08377A54": "gUnk_08377A54",
+    "0x08377A54": "gLevel3Stage3Room0BlockMetatiles",
     "0x08377A5C": "gLevel3Stage3Room0Doors",
     "0x08377A68": "gLevel3Stage3Room0Objects",
     "0x08377AF0": "gLevel3Stage3Room0",
     "0x08377B48": "gLevel3Stage3Room1MetatileMap",
     "0x08377E90": "gLevel3Stage3Room1BlockLayer",
-    "0x08377F40": "gUnk_08377F40",
+    "0x08377F40": "gLevel3Stage3Room1BlockMetatiles",
     "0x08377F48": "gLevel3Stage3Room1Doors",
     "0x08377F54": "gLevel3Stage3Room1Objects",
     "0x08377FBC": "gLevel3Stage3Room1",
     "0x08378014": "gLevel3Stage3Room2MetatileMap",
     "0x08378584": "gLevel3Stage3Room2BlockLayer",
-    "0x08378798": "gUnk_08378798",
+    "0x08378798": "gLevel3Stage3Room2BlockMetatiles",
     "0x083789F0": "gLevel3Stage3Room2Doors",
     "0x08378A08": "gLevel3Stage3Room2Objects",
     "0x08378A80": "gLevel3Stage3Room2",
     "0x08378AD8": "gLevel3Stage3Room3MetatileMap",
     "0x08378D44": "gLevel3Stage3Room3BlockLayer",
-    "0x08378DFC": "gUnk_08378DFC",
+    "0x08378DFC": "gLevel3Stage3Room3BlockMetatiles",
     "0x08378E64": "gLevel3Stage3Room3Doors",
     "0x08378E70": "gLevel3Stage3Room3Objects",
     "0x08378EB0": "gLevel3Stage3Room3",
     "0x08378F08": "gLevel3Stage3Room4MetatileMap",
     "0x08379180": "gLevel3Stage3Room4BlockLayer",
-    "0x083791DC": "gUnk_083791DC",
+    "0x083791DC": "gLevel3Stage3Room4BlockMetatiles",
     "0x083791E4": "gLevel3Stage3Room4Doors",
     "0x083791F0": "gLevel3Stage3Room4Objects",
     "0x08379218": "gLevel3Stage3Room4",
     "0x08379270": "gLevel3Stage4Room0MetatileMap",
     "0x08379854": "gLevel3Stage4Room0BlockLayer",
-    "0x08379A94": "gUnk_08379A94",
+    "0x08379A94": "gLevel3Stage4Room0BlockMetatiles",
     "0x08379AEC": "gLevel3Stage4Room0Doors",
     "0x08379B04": "gLevel3Stage4Room0Objects",
     "0x08379B84": "gLevel3Stage4Room0",
     "0x08379BDC": "gLevel3Stage4Room1MetatileMap",
     "0x08379DA8": "gLevel3Stage4Room1BlockLayer",
-    "0x08379E08": "gUnk_08379E08",
+    "0x08379E08": "gLevel3Stage4Room1BlockMetatiles",
     "0x08379E18": "gLevel3Stage4Room1Doors",
     "0x08379E30": "gLevel3Stage4Room1Objects",
     "0x08379E60": "gLevel3Stage4Room1",
     "0x08379EB8": "gLevel3Stage4Room2MetatileMap",
     "0x0837A02C": "gLevel3Stage4Room2BlockLayer",
-    "0x0837A084": "gUnk_0837A084",
+    "0x0837A084": "gLevel3Stage4Room2BlockMetatiles",
     "0x0837A08C": "gLevel3Stage4Room2Doors",
     "0x0837A0A4": "gLevel3Stage4Room2Objects",
     "0x0837A0CC": "gLevel3Stage4Room2",
     "0x0837A124": "gLevel3Stage4Room3MetatileMap",
     "0x0837A398": "gLevel3Stage4Room3BlockLayer",
-    "0x0837A468": "gUnk_0837A468",
+    "0x0837A468": "gLevel3Stage4Room3BlockMetatiles",
     "0x0837A4B8": "gLevel3Stage4Room3Doors",
     "0x0837A4C4": "gLevel3Stage4Room3Objects",
     "0x0837A52C": "gLevel3Stage4Room3",
     "0x0837A584": "gLevel3Stage4Room4MetatileMap",
     "0x0837A998": "gLevel3Stage4Room4BlockLayer",
-    "0x0837AB0C": "gUnk_0837AB0C",
+    "0x0837AB0C": "gLevel3Stage4Room4BlockMetatiles",
     "0x0837AB14": "gLevel3Stage4Room4Doors",
     "0x0837AB20": "gLevel3Stage4Room4Objects",
     "0x0837AB88": "gLevel3Stage4Room4",
     "0x0837ABE0": "gLevel3Stage4Room5MetatileMap",
     "0x0837ACE8": "gLevel3Stage4Room5BlockLayer",
-    "0x0837AD1C": "gUnk_0837AD1C",
+    "0x0837AD1C": "gLevel3Stage4Room5BlockMetatiles",
     "0x0837AD24": "gLevel3Stage4Room5Doors",
     "0x0837AD30": "gLevel3Stage4Room5Objects",
     "0x0837AD38": "gLevel3Stage4Room5",
     "0x0837AD90": "gLevel3Stage4Room6MetatileMap",
     "0x0837AEAC": "gLevel3Stage4Room6BlockLayer",
-    "0x0837AEEC": "gUnk_0837AEEC",
+    "0x0837AEEC": "gLevel3Stage4Room6BlockMetatiles",
     "0x0837AEFC": "gLevel3Stage4Room6Doors",
     "0x0837AF08": "gLevel3Stage4Room6Objects",
     "0x0837AF10": "gLevel3Stage4Room6",
     "0x0837AF68": "gLevel3Stage5Room0MetatileMap",
     "0x0837B2E0": "gLevel3Stage5Room0BlockLayer",
-    "0x0837B4D8": "gUnk_0837B4D8",
+    "0x0837B4D8": "gLevel3Stage5Room0BlockMetatiles",
     "0x0837B75C": "gLevel3Stage5Room0Doors",
     "0x0837B774": "gLevel3Stage5Room0Objects",
     "0x0837B7CC": "gLevel3Stage5Room0",
     "0x0837B824": "gLevel3Stage5Room1MetatileMap",
     "0x0837BA38": "gLevel3Stage5Room1BlockLayer",
-    "0x0837BB04": "gUnk_0837BB04",
+    "0x0837BB04": "gLevel3Stage5Room1BlockMetatiles",
     "0x0837BB0C": "gLevel3Stage5Room1Doors",
     "0x0837BB24": "gLevel3Stage5Room1Objects",
     "0x0837BB9C": "gLevel3Stage5Room1",
     "0x0837BBF4": "gLevel3Stage5Room2MetatileMap",
     "0x0837BC54": "gLevel3Stage5Room2BlockLayer",
-    "0x0837BC88": "gUnk_0837BC88",
+    "0x0837BC88": "gLevel3Stage5Room2BlockMetatiles",
     "0x0837BC90": "gLevel3Stage5Room2",
     "0x0837BCE8": "gLevel3Stage5Room3MetatileMap",
     "0x0837BD9C": "gLevel3Stage5Room3BlockLayer",
-    "0x0837BE58": "gUnk_0837BE58",
+    "0x0837BE58": "gLevel3Stage5Room3BlockMetatiles",
     "0x0837BF6C": "gLevel3Stage5Room3Doors",
     "0x0837BF78": "gLevel3Stage5Room3Objects",
     "0x0837BFA8": "gLevel3Stage5Room3",
     "0x0837C000": "gLevel3Stage5Room4MetatileMap",
     "0x0837C1D4": "gLevel3Stage5Room4BlockLayer",
-    "0x0837C234": "gUnk_0837C234",
+    "0x0837C234": "gLevel3Stage5Room4BlockMetatiles",
     "0x0837C23C": "gLevel3Stage5Room4Doors",
     "0x0837C248": "gLevel3Stage5Room4Objects",
     "0x0837C288": "gLevel3Stage5Room4",
     "0x0837C2E0": "gLevel3Stage5Room5MetatileMap",
     "0x0837C3C8": "gLevel3Stage5Room5BlockLayer",
-    "0x0837C400": "gUnk_0837C400",
+    "0x0837C400": "gLevel3Stage5Room5BlockMetatiles",
     "0x0837C410": "gLevel3Stage5Room5Doors",
     "0x0837C41C": "gLevel3Stage5Room5Objects",
     "0x0837C424": "gLevel3Stage5Room5",
     "0x0837C47C": "gLevel3Stage5Room6MetatileMap",
     "0x0837C4E4": "gLevel3Stage5Room6BlockLayer",
-    "0x0837C518": "gUnk_0837C518",
+    "0x0837C518": "gLevel3Stage5Room6BlockMetatiles",
     "0x0837C520": "gLevel3Stage5Room6",
     "0x0837C578": "gLevel3Stage5Room7MetatileMap",
     "0x0837C630": "gLevel3Stage5Room7BlockLayer",
-    "0x0837C664": "gUnk_0837C664",
+    "0x0837C664": "gLevel3Stage5Room7BlockMetatiles",
     "0x0837C674": "gLevel3Stage5Room7Doors",
     "0x0837C680": "gLevel3Stage5Room7Objects",
     "0x0837C698": "gLevel3Stage5Room7",
     "0x0837C6F0": "gLevel3Stage6Room0MetatileMap",
     "0x0837CB98": "gLevel3Stage6Room0BlockLayer",
-    "0x0837D188": "gUnk_0837D188",
+    "0x0837D188": "gLevel3Stage6Room0BlockMetatiles",
     "0x0837D908": "gLevel3Stage6Room0Objects",
     "0x0837D968": "gLevel3Stage6Room0",
     "0x0837D9C0": "gLevel4Stage0Room0MetatileMap",
     "0x0837DC9C": "gLevel4Stage0Room0BlockLayer",
-    "0x0837DDAC": "gUnk_0837DDAC",
+    "0x0837DDAC": "gLevel4Stage0Room0BlockMetatiles",
     "0x0837DDB4": "gLevel4Stage0Room0Doors",
     "0x0837DDCC": "gLevel4Stage0Room0Objects",
     "0x0837DE3C": "gLevel4Stage0Room0",
     "0x0837DE94": "gLevel4Stage0Room1MetatileMap",
     "0x0837E1AC": "gLevel4Stage0Room1BlockLayer",
-    "0x0837E3A0": "gUnk_0837E3A0",
+    "0x0837E3A0": "gLevel4Stage0Room1BlockMetatiles",
     "0x0837E508": "gLevel4Stage0Room1Doors",
     "0x0837E520": "gLevel4Stage0Room1Objects",
     "0x0837E598": "gLevel4Stage0Room1",
     "0x0837E5F0": "gLevel4Stage0Room2MetatileMap",
     "0x0837E9BC": "gLevel4Stage0Room2BlockLayer",
-    "0x0837EAD0": "gUnk_0837EAD0",
+    "0x0837EAD0": "gLevel4Stage0Room2BlockMetatiles",
     "0x0837EAD8": "gLevel4Stage0Room2Doors",
     "0x0837EAE4": "gLevel4Stage0Room2Objects",
     "0x0837EB34": "gLevel4Stage0Room2",
     "0x0837EB8C": "gLevel4Stage0Room3MetatileMap",
     "0x0837EC38": "gLevel4Stage0Room3BlockLayer",
-    "0x0837EC6C": "gUnk_0837EC6C",
+    "0x0837EC6C": "gLevel4Stage0Room3BlockMetatiles",
     "0x0837EC74": "gLevel4Stage0Room3Doors",
     "0x0837EC80": "gLevel4Stage0Room3Objects",
     "0x0837ECA8": "gLevel4Stage0Room3",
     "0x0837ED00": "gLevel4Stage0Room4MetatileMap",
     "0x0837EE08": "gLevel4Stage0Room4BlockLayer",
-    "0x0837EE3C": "gUnk_0837EE3C",
+    "0x0837EE3C": "gLevel4Stage0Room4BlockMetatiles",
     "0x0837EE44": "gLevel4Stage0Room4Doors",
     "0x0837EE50": "gLevel4Stage0Room4Objects",
     "0x0837EE60": "gLevel4Stage0Room4",
     "0x0837EEB8": "gLevel4Stage1Room0MetatileMap",
     "0x0837EFE0": "gLevel4Stage1Room0BlockLayer",
-    "0x0837F014": "gUnk_0837F014",
+    "0x0837F014": "gLevel4Stage1Room0BlockMetatiles",
     "0x0837F01C": "gLevel4Stage1Room0Doors",
     "0x0837F028": "gLevel4Stage1Room0",
     "0x0837F080": "gLevel4Stage1Room1MetatileMap",
     "0x0837F59C": "gLevel4Stage1Room1BlockLayer",
-    "0x0837F69C": "gUnk_0837F69C",
+    "0x0837F69C": "gLevel4Stage1Room1BlockMetatiles",
     "0x0837F6A4": "gLevel4Stage1Room1Doors",
     "0x0837F6D4": "gLevel4Stage1Room1Objects",
     "0x0837F73C": "gLevel4Stage1Room1",
     "0x0837F794": "gLevel4Stage1Room2MetatileMap",
     "0x0837F984": "gLevel4Stage1Room2BlockLayer",
-    "0x0837F9E0": "gUnk_0837F9E0",
+    "0x0837F9E0": "gLevel4Stage1Room2BlockMetatiles",
     "0x0837F9E8": "gLevel4Stage1Room2Doors",
     "0x0837FA0C": "gLevel4Stage1Room2Objects",
     "0x0837FA44": "gLevel4Stage1Room2",
     "0x0837FA9C": "gLevel4Stage1Room3MetatileMap",
     "0x0837FD04": "gLevel4Stage1Room3BlockLayer",
-    "0x0837FD74": "gUnk_0837FD74",
+    "0x0837FD74": "gLevel4Stage1Room3BlockMetatiles",
     "0x0837FD7C": "gLevel4Stage1Room3Doors",
     "0x0837FDA0": "gLevel4Stage1Room3Objects",
     "0x0837FDC8": "gLevel4Stage1Room3",
     "0x0837FE20": "gLevel4Stage1Room4MetatileMap",
     "0x0838002C": "gLevel4Stage1Room4BlockLayer",
-    "0x08380088": "gUnk_08380088",
+    "0x08380088": "gLevel4Stage1Room4BlockMetatiles",
     "0x08380090": "gLevel4Stage1Room4Doors",
     "0x083800A8": "gLevel4Stage1Room4Objects",
     "0x083800D0": "gLevel4Stage1Room4",
     "0x08380128": "gLevel4Stage1Room5MetatileMap",
     "0x08380484": "gLevel4Stage1Room5BlockLayer",
-    "0x08380548": "gUnk_08380548",
+    "0x08380548": "gLevel4Stage1Room5BlockMetatiles",
     "0x08380550": "gLevel4Stage1Room5Doors",
     "0x08380574": "gLevel4Stage1Room5Objects",
     "0x083805BC": "gLevel4Stage1Room5",
     "0x08380614": "gLevel4Stage1Room6MetatileMap",
     "0x083806F0": "gLevel4Stage1Room6BlockLayer",
-    "0x08380724": "gUnk_08380724",
+    "0x08380724": "gLevel4Stage1Room6BlockMetatiles",
     "0x08380734": "gLevel4Stage1Room6Doors",
     "0x08380740": "gLevel4Stage1Room6Objects",
     "0x08380758": "gLevel4Stage1Room6",
     "0x083807B0": "gLevel4Stage2Room0MetatileMap",
     "0x08380B34": "gLevel4Stage2Room0BlockLayer",
-    "0x08380C30": "gUnk_08380C30",
+    "0x08380C30": "gLevel4Stage2Room0BlockMetatiles",
     "0x08380C38": "gLevel4Stage2Room0Doors",
     "0x08380C44": "gLevel4Stage2Room0Objects",
     "0x08380CFC": "gLevel4Stage2Room0",
     "0x08380D54": "gLevel4Stage2Room1MetatileMap",
     "0x083810A0": "gLevel4Stage2Room1BlockLayer",
-    "0x0838114C": "gUnk_0838114C",
+    "0x0838114C": "gLevel4Stage2Room1BlockMetatiles",
     "0x08381154": "gLevel4Stage2Room1Doors",
     "0x08381160": "gLevel4Stage2Room1Objects",
     "0x083811A8": "gLevel4Stage2Room1",
     "0x08381200": "gLevel4Stage2Room2MetatileMap",
     "0x08381A28": "gLevel4Stage2Room2BlockLayer",
-    "0x08381C20": "gUnk_08381C20",
+    "0x08381C20": "gLevel4Stage2Room2BlockMetatiles",
     "0x08381C28": "gLevel4Stage2Room2Doors",
     "0x08381C34": "gLevel4Stage2Room2Objects",
     "0x08381CCC": "gLevel4Stage2Room2",
     "0x08381D24": "gLevel4Stage2Room3MetatileMap",
     "0x08382040": "gLevel4Stage2Room3BlockLayer",
-    "0x0838212C": "gUnk_0838212C",
+    "0x0838212C": "gLevel4Stage2Room3BlockMetatiles",
     "0x08382160": "gLevel4Stage2Room3Doors",
     "0x08382184": "gLevel4Stage2Room3Objects",
     "0x083821BC": "gLevel4Stage2Room3",
     "0x08382214": "gLevel4Stage2Room4MetatileMap",
     "0x0838250C": "gLevel4Stage2Room4BlockLayer",
-    "0x0838259C": "gUnk_0838259C",
+    "0x0838259C": "gLevel4Stage2Room4BlockMetatiles",
     "0x083825A4": "gLevel4Stage2Room4Doors",
     "0x083825B0": "gLevel4Stage2Room4Objects",
     "0x083825D8": "gLevel4Stage2Room4",
     "0x08382630": "gLevel4Stage2Room5MetatileMap",
     "0x0838271C": "gLevel4Stage2Room5BlockLayer",
-    "0x083827C0": "gUnk_083827C0",
+    "0x083827C0": "gLevel4Stage2Room5BlockMetatiles",
     "0x08382890": "gLevel4Stage2Room5Doors",
     "0x0838289C": "gLevel4Stage2Room5Objects",
     "0x083828C4": "gLevel4Stage2Room5",
     "0x0838291C": "gLevel4Stage3Room0MetatileMap",
     "0x08383078": "gLevel4Stage3Room0BlockLayer",
-    "0x083831F8": "gUnk_083831F8",
+    "0x083831F8": "gLevel4Stage3Room0BlockMetatiles",
     "0x0838323C": "gLevel4Stage3Room0Doors",
     "0x08383254": "gLevel4Stage3Room0Objects",
     "0x0838328C": "gLevel4Stage3Room0",
     "0x083832E4": "gLevel4Stage3Room1MetatileMap",
     "0x083838E0": "gLevel4Stage3Room1BlockLayer",
-    "0x08383A80": "gUnk_08383A80",
+    "0x08383A80": "gLevel4Stage3Room1BlockMetatiles",
     "0x08383A88": "gLevel4Stage3Room1Doors",
     "0x08383AA0": "gLevel4Stage3Room1Objects",
     "0x08383B28": "gLevel4Stage3Room1",
     "0x08383B80": "gLevel4Stage3Room2MetatileMap",
     "0x08383FC4": "gLevel4Stage3Room2BlockLayer",
-    "0x0838407C": "gUnk_0838407C",
+    "0x0838407C": "gLevel4Stage3Room2BlockMetatiles",
     "0x08384084": "gLevel4Stage3Room2Doors",
     "0x08384090": "gLevel4Stage3Room2Objects",
     "0x083840C0": "gLevel4Stage3Room2",
     "0x08384118": "gLevel4Stage3Room3MetatileMap",
     "0x083845BC": "gLevel4Stage3Room3BlockLayer",
-    "0x083846F8": "gUnk_083846F8",
+    "0x083846F8": "gLevel4Stage3Room3BlockMetatiles",
     "0x08384700": "gLevel4Stage3Room3Doors",
     "0x0838470C": "gLevel4Stage3Room3Objects",
     "0x083847B4": "gLevel4Stage3Room3",
     "0x0838480C": "gLevel4Stage3Room4MetatileMap",
     "0x08384A30": "gLevel4Stage3Room4BlockLayer",
-    "0x08384A94": "gUnk_08384A94",
+    "0x08384A94": "gLevel4Stage3Room4BlockMetatiles",
     "0x08384A9C": "gLevel4Stage3Room4Doors",
     "0x08384AB4": "gLevel4Stage3Room4Objects",
     "0x08384ADC": "gLevel4Stage3Room4",
     "0x08384B34": "gLevel4Stage3Room5MetatileMap",
     "0x08384C60": "gLevel4Stage3Room5BlockLayer",
-    "0x08384C94": "gUnk_08384C94",
+    "0x08384C94": "gLevel4Stage3Room5BlockMetatiles",
     "0x08384C9C": "gLevel4Stage3Room5Doors",
     "0x08384CA8": "gLevel4Stage3Room5Objects",
     "0x08384CB0": "gLevel4Stage3Room5",
     "0x08384D08": "gLevel4Stage3Room6MetatileMap",
     "0x08384DE0": "gLevel4Stage3Room6BlockLayer",
-    "0x08384E18": "gUnk_08384E18",
+    "0x08384E18": "gLevel4Stage3Room6BlockMetatiles",
     "0x08384E28": "gLevel4Stage3Room6Doors",
     "0x08384E34": "gLevel4Stage3Room6Objects",
     "0x08384E3C": "gLevel4Stage3Room6",
     "0x08384E94": "gLevel4Stage4Room0MetatileMap",
     "0x083856D0": "gLevel4Stage4Room0BlockLayer",
-    "0x083858B4": "gUnk_083858B4",
+    "0x083858B4": "gLevel4Stage4Room0BlockMetatiles",
     "0x083858BC": "gLevel4Stage4Room0Doors",
     "0x083858D4": "gLevel4Stage4Room0Objects",
     "0x08385964": "gLevel4Stage4Room0",
     "0x083859BC": "gLevel4Stage4Room1MetatileMap",
     "0x08385ED8": "gLevel4Stage4Room1BlockLayer",
-    "0x08385FB0": "gUnk_08385FB0",
+    "0x08385FB0": "gLevel4Stage4Room1BlockMetatiles",
     "0x08385FB8": "gLevel4Stage4Room1Doors",
     "0x08385FC4": "gLevel4Stage4Room1Objects",
     "0x08385FCC": "gLevel4Stage4Room1",
     "0x08386024": "gLevel4Stage4Room2MetatileMap",
     "0x08386278": "gLevel4Stage4Room2BlockLayer",
-    "0x08386304": "gUnk_08386304",
+    "0x08386304": "gLevel4Stage4Room2BlockMetatiles",
     "0x08386318": "gLevel4Stage4Room2Doors",
     "0x08386348": "gLevel4Stage4Room2",
     "0x083863A0": "gLevel4Stage4Room3MetatileMap",
     "0x08386624": "gLevel4Stage4Room3BlockLayer",
-    "0x083866B4": "gUnk_083866B4",
+    "0x083866B4": "gLevel4Stage4Room3BlockMetatiles",
     "0x083866BC": "gLevel4Stage4Room3Doors",
     "0x083866C8": "gLevel4Stage4Room3Objects",
     "0x08386700": "gLevel4Stage4Room3",
     "0x08386758": "gLevel4Stage4Room4MetatileMap",
     "0x08386A94": "gLevel4Stage4Room4BlockLayer",
-    "0x08386B44": "gUnk_08386B44",
+    "0x08386B44": "gLevel4Stage4Room4BlockMetatiles",
     "0x08386B4C": "gLevel4Stage4Room4Doors",
     "0x08386B58": "gLevel4Stage4Room4Objects",
     "0x08386BC0": "gLevel4Stage4Room4",
     "0x08386C18": "gLevel4Stage4Room5MetatileMap",
     "0x08386E9C": "gLevel4Stage4Room5BlockLayer",
-    "0x08386F2C": "gUnk_08386F2C",
+    "0x08386F2C": "gLevel4Stage4Room5BlockMetatiles",
     "0x08386F34": "gLevel4Stage4Room5Doors",
     "0x08386F40": "gLevel4Stage4Room5Objects",
     "0x08386F80": "gLevel4Stage4Room5",
     "0x08386FD8": "gLevel4Stage4Room6MetatileMap",
     "0x0838712C": "gLevel4Stage4Room6BlockLayer",
-    "0x083871AC": "gUnk_083871AC",
+    "0x083871AC": "gLevel4Stage4Room6BlockMetatiles",
     "0x083872D0": "gLevel4Stage4Room6Doors",
     "0x083872E8": "gLevel4Stage4Room6Objects",
     "0x08387308": "gLevel4Stage4Room6",
     "0x08387360": "gLevel4Stage4Room7MetatileMap",
     "0x0838743C": "gLevel4Stage4Room7BlockLayer",
-    "0x08387470": "gUnk_08387470",
+    "0x08387470": "gLevel4Stage4Room7BlockMetatiles",
     "0x08387478": "gLevel4Stage4Room7Doors",
     "0x08387490": "gLevel4Stage4Room7Objects",
     "0x08387498": "gLevel4Stage4Room7",
     "0x083874F0": "gLevel4Stage5Room0MetatileMap",
     "0x08387854": "gLevel4Stage5Room0BlockLayer",
-    "0x08387954": "gUnk_08387954",
+    "0x08387954": "gLevel4Stage5Room0BlockMetatiles",
     "0x0838795C": "gLevel4Stage5Room0Doors",
     "0x08387968": "gLevel4Stage5Room0Objects",
     "0x083879E8": "gLevel4Stage5Room0",
     "0x08387A40": "gLevel4Stage5Room1MetatileMap",
     "0x08387F18": "gLevel4Stage5Room1BlockLayer",
-    "0x083880A8": "gUnk_083880A8",
+    "0x083880A8": "gLevel4Stage5Room1BlockMetatiles",
     "0x08388198": "gLevel4Stage5Room1Doors",
     "0x083881A4": "gLevel4Stage5Room1Objects",
     "0x083881D4": "gLevel4Stage5Room1",
     "0x0838822C": "gLevel4Stage5Room2MetatileMap",
     "0x083885C4": "gLevel4Stage5Room2BlockLayer",
-    "0x083886C0": "gUnk_083886C0",
+    "0x083886C0": "gLevel4Stage5Room2BlockMetatiles",
     "0x083886C8": "gLevel4Stage5Room2Doors",
     "0x083886EC": "gLevel4Stage5Room2Objects",
     "0x0838875C": "gLevel4Stage5Room2",
     "0x083887B4": "gLevel4Stage5Room3MetatileMap",
     "0x083888D8": "gLevel4Stage5Room3BlockLayer",
-    "0x08388924": "gUnk_08388924",
+    "0x08388924": "gLevel4Stage5Room3BlockMetatiles",
     "0x0838894C": "gLevel4Stage5Room3Doors",
     "0x08388970": "gLevel4Stage5Room3",
     "0x083889C8": "gLevel4Stage5Room4MetatileMap",
     "0x08388B58": "gLevel4Stage5Room4BlockLayer",
-    "0x08388B8C": "gUnk_08388B8C",
+    "0x08388B8C": "gLevel4Stage5Room4BlockMetatiles",
     "0x08388B94": "gLevel4Stage5Room4Doors",
     "0x08388BA0": "gLevel4Stage5Room4Objects",
     "0x08388BB8": "gLevel4Stage5Room4",
     "0x08388C10": "gLevel4Stage6Room0MetatileMap",
     "0x0838908C": "gLevel4Stage6Room0BlockLayer",
-    "0x08389278": "gUnk_08389278",
+    "0x08389278": "gLevel4Stage6Room0BlockMetatiles",
     "0x08389284": "gLevel4Stage6Room0Objects",
     "0x0838928C": "gLevel4Stage6Room0",
     "0x083892E4": "gLevel4Stage6Room1MetatileMap",
     "0x08389398": "gLevel4Stage6Room1BlockLayer",
-    "0x083893CC": "gUnk_083893CC",
+    "0x083893CC": "gLevel4Stage6Room1BlockMetatiles",
     "0x083893D4": "gLevel4Stage6Room1Objects",
     "0x083893DC": "gLevel4Stage6Room1",
     "0x08389434": "gLevel5Stage0Room0MetatileMap",
     "0x083898A8": "gLevel5Stage0Room0BlockLayer",
-    "0x083899BC": "gUnk_083899BC",
+    "0x083899BC": "gLevel5Stage0Room0BlockMetatiles",
     "0x083899D0": "gLevel5Stage0Room0Doors",
     "0x083899E8": "gLevel5Stage0Room0Objects",
     "0x08389A60": "gLevel5Stage0Room0",
     "0x08389AB8": "gLevel5Stage0Room1MetatileMap",
     "0x08389DA0": "gLevel5Stage0Room1BlockLayer",
-    "0x08389E94": "gUnk_08389E94",
+    "0x08389E94": "gLevel5Stage0Room1BlockMetatiles",
     "0x08389E9C": "gLevel5Stage0Room1Doors",
     "0x08389EB4": "gLevel5Stage0Room1Objects",
     "0x08389F2C": "gLevel5Stage0Room1",
     "0x08389F84": "gLevel5Stage0Room2MetatileMap",
     "0x0838A2B8": "gLevel5Stage0Room2BlockLayer",
-    "0x0838A384": "gUnk_0838A384",
+    "0x0838A384": "gLevel5Stage0Room2BlockMetatiles",
     "0x0838A38C": "gLevel5Stage0Room2Doors",
     "0x0838A398": "gLevel5Stage0Room2Objects",
     "0x0838A420": "gLevel5Stage0Room2",
     "0x0838A478": "gLevel5Stage0Room3MetatileMap",
     "0x0838A5E4": "gLevel5Stage0Room3BlockLayer",
-    "0x0838A624": "gUnk_0838A624",
+    "0x0838A624": "gLevel5Stage0Room3BlockMetatiles",
     "0x0838A640": "gLevel5Stage0Room3Doors",
     "0x0838A658": "gLevel5Stage0Room3Objects",
     "0x0838A668": "gLevel5Stage0Room3",
     "0x0838A6C0": "gLevel5Stage0Room4MetatileMap",
     "0x0838A80C": "gLevel5Stage0Room4BlockLayer",
-    "0x0838A840": "gUnk_0838A840",
+    "0x0838A840": "gLevel5Stage0Room4BlockMetatiles",
     "0x0838A848": "gLevel5Stage0Room4Doors",
     "0x0838A854": "gLevel5Stage0Room4Objects",
     "0x0838A85C": "gLevel5Stage0Room4",
     "0x0838A8B4": "gLevel5Stage0Room5MetatileMap",
     "0x0838A978": "gLevel5Stage0Room5BlockLayer",
-    "0x0838A9AC": "gUnk_0838A9AC",
+    "0x0838A9AC": "gLevel5Stage0Room5BlockMetatiles",
     "0x0838A9B4": "gLevel5Stage0Room5Doors",
     "0x0838A9C0": "gLevel5Stage0Room5Objects",
     "0x0838A9D0": "gLevel5Stage0Room5",
     "0x0838AA28": "gLevel5Stage1Room0MetatileMap",
     "0x0838AD80": "gLevel5Stage1Room0BlockLayer",
-    "0x0838AE68": "gUnk_0838AE68",
+    "0x0838AE68": "gLevel5Stage1Room0BlockMetatiles",
     "0x0838AEA8": "gLevel5Stage1Room0Doors",
     "0x0838AEC0": "gLevel5Stage1Room0Objects",
     "0x0838AF20": "gLevel5Stage1Room0",
     "0x0838AF78": "gLevel5Stage1Room1MetatileMap",
     "0x0838B25C": "gLevel5Stage1Room1BlockLayer",
-    "0x0838B314": "gUnk_0838B314",
+    "0x0838B314": "gLevel5Stage1Room1BlockMetatiles",
     "0x0838B31C": "gLevel5Stage1Room1Doors",
     "0x0838B334": "gLevel5Stage1Room1Objects",
     "0x0838B394": "gLevel5Stage1Room1",
     "0x0838B3EC": "gLevel5Stage1Room2MetatileMap",
     "0x0838B634": "gLevel5Stage1Room2BlockLayer",
-    "0x0838B6C4": "gUnk_0838B6C4",
+    "0x0838B6C4": "gLevel5Stage1Room2BlockMetatiles",
     "0x0838B6CC": "gLevel5Stage1Room2Doors",
     "0x0838B6E4": "gLevel5Stage1Room2Objects",
     "0x0838B744": "gLevel5Stage1Room2",
     "0x0838B79C": "gLevel5Stage1Room3MetatileMap",
     "0x0838BA18": "gLevel5Stage1Room3BlockLayer",
-    "0x0838BAE8": "gUnk_0838BAE8",
+    "0x0838BAE8": "gLevel5Stage1Room3BlockMetatiles",
     "0x0838BAF8": "gLevel5Stage1Room3Doors",
     "0x0838BB04": "gLevel5Stage1Room3Objects",
     "0x0838BB74": "gLevel5Stage1Room3",
     "0x0838BBCC": "gLevel5Stage1Room4MetatileMap",
     "0x0838BCB0": "gLevel5Stage1Room4BlockLayer",
-    "0x0838BCF4": "gUnk_0838BCF4",
+    "0x0838BCF4": "gLevel5Stage1Room4BlockMetatiles",
     "0x0838BD1C": "gLevel5Stage1Room4Doors",
     "0x0838BD34": "gLevel5Stage1Room4Objects",
     "0x0838BD4C": "gLevel5Stage1Room4",
     "0x0838BDA4": "gLevel5Stage1Room5MetatileMap",
     "0x0838BEB0": "gLevel5Stage1Room5BlockLayer",
-    "0x0838BEE4": "gUnk_0838BEE4",
+    "0x0838BEE4": "gLevel5Stage1Room5BlockMetatiles",
     "0x0838BEEC": "gLevel5Stage1Room5Doors",
     "0x0838BF04": "gLevel5Stage1Room5Objects",
     "0x0838BF0C": "gLevel5Stage1Room5",
     "0x0838BF64": "gLevel5Stage1Room6MetatileMap",
     "0x0838C010": "gLevel5Stage1Room6BlockLayer",
-    "0x0838C044": "gUnk_0838C044",
+    "0x0838C044": "gLevel5Stage1Room6BlockMetatiles",
     "0x0838C04C": "gLevel5Stage1Room6Doors",
     "0x0838C058": "gLevel5Stage1Room6Objects",
     "0x0838C068": "gLevel5Stage1Room6",
     "0x0838C0C0": "gLevel5Stage2Room0MetatileMap",
     "0x0838C438": "gLevel5Stage2Room0BlockLayer",
-    "0x0838C50C": "gUnk_0838C50C",
+    "0x0838C50C": "gLevel5Stage2Room0BlockMetatiles",
     "0x0838C520": "gLevel5Stage2Room0Doors",
     "0x0838C52C": "gLevel5Stage2Room0Objects",
     "0x0838C574": "gLevel5Stage2Room0",
     "0x0838C5CC": "gLevel5Stage2Room1MetatileMap",
     "0x0838C8F8": "gLevel5Stage2Room1BlockLayer",
-    "0x0838CA18": "gUnk_0838CA18",
+    "0x0838CA18": "gLevel5Stage2Room1BlockMetatiles",
     "0x0838CAFC": "gLevel5Stage2Room1Doors",
     "0x0838CB20": "gLevel5Stage2Room1Objects",
     "0x0838CB58": "gLevel5Stage2Room1",
     "0x0838CBB0": "gLevel5Stage2Room2MetatileMap",
     "0x0838CFE0": "gLevel5Stage2Room2BlockLayer",
-    "0x0838D0CC": "gUnk_0838D0CC",
+    "0x0838D0CC": "gLevel5Stage2Room2BlockMetatiles",
     "0x0838D0D4": "gLevel5Stage2Room2Doors",
     "0x0838D128": "gLevel5Stage2Room2Objects",
     "0x0838D190": "gLevel5Stage2Room2",
     "0x0838D1E8": "gLevel5Stage2Room3MetatileMap",
     "0x0838D5F4": "gLevel5Stage2Room3BlockLayer",
-    "0x0838D78C": "gUnk_0838D78C",
+    "0x0838D78C": "gLevel5Stage2Room3BlockMetatiles",
     "0x0838D7A0": "gLevel5Stage2Room3Doors",
     "0x0838D7AC": "gLevel5Stage2Room3Objects",
     "0x0838D7FC": "gLevel5Stage2Room3",
     "0x0838D854": "gLevel5Stage2Room4MetatileMap",
     "0x0838DAD8": "gLevel5Stage2Room4BlockLayer",
-    "0x0838DB74": "gUnk_0838DB74",
+    "0x0838DB74": "gLevel5Stage2Room4BlockMetatiles",
     "0x0838DB7C": "gLevel5Stage2Room4Doors",
     "0x0838DB94": "gLevel5Stage2Room4Objects",
     "0x0838DBEC": "gLevel5Stage2Room4",
     "0x0838DC44": "gLevel5Stage2Room5MetatileMap",
     "0x0838DCEC": "gLevel5Stage2Room5BlockLayer",
-    "0x0838DD44": "gUnk_0838DD44",
+    "0x0838DD44": "gLevel5Stage2Room5BlockMetatiles",
     "0x0838DD4C": "gLevel5Stage2Room5Doors",
     "0x0838DD58": "gLevel5Stage2Room5",
     "0x0838DDB0": "gLevel5Stage2Room6MetatileMap",
     "0x0838DE68": "gLevel5Stage2Room6BlockLayer",
-    "0x0838DE9C": "gUnk_0838DE9C",
+    "0x0838DE9C": "gLevel5Stage2Room6BlockMetatiles",
     "0x0838DEA4": "gLevel5Stage2Room6Doors",
     "0x0838DEBC": "gLevel5Stage2Room6Objects",
     "0x0838DEC4": "gLevel5Stage2Room6",
     "0x0838DF1C": "gLevel5Stage2Room7MetatileMap",
     "0x0838DFD4": "gLevel5Stage2Room7BlockLayer",
-    "0x0838E008": "gUnk_0838E008",
+    "0x0838E008": "gLevel5Stage2Room7BlockMetatiles",
     "0x0838E010": "gLevel5Stage2Room7Doors",
     "0x0838E028": "gLevel5Stage2Room7Objects",
     "0x0838E038": "gLevel5Stage2Room7",
     "0x0838E090": "gLevel5Stage2Room8MetatileMap",
     "0x0838E1F4": "gLevel5Stage2Room8BlockLayer",
-    "0x0838E23C": "gUnk_0838E23C",
+    "0x0838E23C": "gLevel5Stage2Room8BlockMetatiles",
     "0x0838E28C": "gLevel5Stage2Room8Doors",
     "0x0838E2B0": "gLevel5Stage2Room8Objects",
     "0x0838E2C8": "gLevel5Stage2Room8",
     "0x0838E320": "gLevel5Stage2Room9MetatileMap",
     "0x0838E404": "gLevel5Stage2Room9BlockLayer",
-    "0x0838E43C": "gUnk_0838E43C",
+    "0x0838E43C": "gLevel5Stage2Room9BlockMetatiles",
     "0x0838E444": "gLevel5Stage2Room9Doors",
     "0x0838E468": "gLevel5Stage2Room9Objects",
     "0x0838E478": "gLevel5Stage2Room9",
     "0x0838E4D0": "gLevel5Stage2Room10MetatileMap",
     "0x0838E628": "gLevel5Stage2Room10BlockLayer",
-    "0x0838E664": "gUnk_0838E664",
+    "0x0838E664": "gLevel5Stage2Room10BlockMetatiles",
     "0x0838E66C": "gLevel5Stage2Room10Doors",
     "0x0838E678": "gLevel5Stage2Room10Objects",
     "0x0838E688": "gLevel5Stage2Room10",
     "0x0838E6E0": "gLevel5Stage2Room11MetatileMap",
     "0x0838E7BC": "gLevel5Stage2Room11BlockLayer",
-    "0x0838E7F0": "gUnk_0838E7F0",
+    "0x0838E7F0": "gLevel5Stage2Room11BlockMetatiles",
     "0x0838E7F8": "gLevel5Stage2Room11Doors",
     "0x0838E810": "gLevel5Stage2Room11Objects",
     "0x0838E818": "gLevel5Stage2Room11",
     "0x0838E870": "gLevel5Stage3Room0MetatileMap",
     "0x0838ECE8": "gLevel5Stage3Room0BlockLayer",
-    "0x0838EE28": "gUnk_0838EE28",
+    "0x0838EE28": "gLevel5Stage3Room0BlockMetatiles",
     "0x0838EE50": "gLevel5Stage3Room0Doors",
     "0x0838EE5C": "gLevel5Stage3Room0Objects",
     "0x0838EEE4": "gLevel5Stage3Room0",
     "0x0838EF3C": "gLevel5Stage3Room1MetatileMap",
     "0x0838F494": "gLevel5Stage3Room1BlockLayer",
-    "0x0838F60C": "gUnk_0838F60C",
+    "0x0838F60C": "gLevel5Stage3Room1BlockMetatiles",
     "0x0838F6D4": "gLevel5Stage3Room1Doors",
     "0x0838F6F8": "gLevel5Stage3Room1Objects",
     "0x0838F788": "gLevel5Stage3Room1",
     "0x0838F7E0": "gLevel5Stage3Room2MetatileMap",
     "0x0838F8B4": "gLevel5Stage3Room2BlockLayer",
-    "0x0838F8E8": "gUnk_0838F8E8",
+    "0x0838F8E8": "gLevel5Stage3Room2BlockMetatiles",
     "0x0838F8F0": "gLevel5Stage3Room2Doors",
     "0x0838F8FC": "gLevel5Stage3Room2Objects",
     "0x0838F914": "gLevel5Stage3Room2",
     "0x0838F96C": "gLevel5Stage3Room3MetatileMap",
     "0x0838FBF4": "gLevel5Stage3Room3BlockLayer",
-    "0x0838FC84": "gUnk_0838FC84",
+    "0x0838FC84": "gLevel5Stage3Room3BlockMetatiles",
     "0x0838FC8C": "gLevel5Stage3Room3Doors",
     "0x0838FCA4": "gLevel5Stage3Room3Objects",
     "0x0838FCF4": "gLevel5Stage3Room3",
     "0x0838FD4C": "gLevel5Stage3Room4MetatileMap",
     "0x0838FF7C": "gLevel5Stage3Room4BlockLayer",
-    "0x08390018": "gUnk_08390018",
+    "0x08390018": "gLevel5Stage3Room4BlockMetatiles",
     "0x08390020": "gLevel5Stage3Room4Doors",
     "0x0839002C": "gLevel5Stage3Room4Objects",
     "0x083900AC": "gLevel5Stage3Room4",
     "0x08390104": "gLevel5Stage3Room5MetatileMap",
     "0x08390260": "gLevel5Stage3Room5BlockLayer",
-    "0x08390294": "gUnk_08390294",
+    "0x08390294": "gLevel5Stage3Room5BlockMetatiles",
     "0x0839029C": "gLevel5Stage3Room5Doors",
     "0x083902A8": "gLevel5Stage3Room5Objects",
     "0x083902B0": "gLevel5Stage3Room5",
     "0x08390308": "gLevel5Stage4Room0MetatileMap",
     "0x083904E8": "gLevel5Stage4Room0BlockLayer",
-    "0x08390558": "gUnk_08390558",
+    "0x08390558": "gLevel5Stage4Room0BlockMetatiles",
     "0x08390560": "gLevel5Stage4Room0Doors",
     "0x0839056C": "gLevel5Stage4Room0Objects",
     "0x0839059C": "gLevel5Stage4Room0",
     "0x083905F4": "gLevel5Stage4Room1MetatileMap",
     "0x083909F0": "gLevel5Stage4Room1BlockLayer",
-    "0x08390B4C": "gUnk_08390B4C",
+    "0x08390B4C": "gLevel5Stage4Room1BlockMetatiles",
     "0x08390B54": "gLevel5Stage4Room1Doors",
     "0x08390B60": "gLevel5Stage4Room1Objects",
     "0x08390BA8": "gLevel5Stage4Room1",
     "0x08390C00": "gLevel5Stage4Room2MetatileMap",
     "0x08390E1C": "gLevel5Stage4Room2BlockLayer",
-    "0x08390F54": "gUnk_08390F54",
+    "0x08390F54": "gLevel5Stage4Room2BlockMetatiles",
     "0x083910F0": "gLevel5Stage4Room2Doors",
     "0x08391108": "gLevel5Stage4Room2Objects",
     "0x08391138": "gLevel5Stage4Room2",
     "0x08391190": "gLevel5Stage4Room3MetatileMap",
     "0x0839166C": "gLevel5Stage4Room3BlockLayer",
-    "0x083918D0": "gUnk_083918D0",
+    "0x083918D0": "gLevel5Stage4Room3BlockMetatiles",
     "0x08391BA0": "gLevel5Stage4Room3Doors",
     "0x08391BB8": "gLevel5Stage4Room3Objects",
     "0x08391C40": "gLevel5Stage4Room3",
     "0x08391C98": "gLevel5Stage4Room4MetatileMap",
     "0x08391D40": "gLevel5Stage4Room4BlockLayer",
-    "0x08391D74": "gUnk_08391D74",
+    "0x08391D74": "gLevel5Stage4Room4BlockMetatiles",
     "0x08391D7C": "gLevel5Stage4Room4Doors",
     "0x08391D94": "gLevel5Stage4Room4Objects",
     "0x08391D9C": "gLevel5Stage4Room4",
     "0x08391DF4": "gLevel5Stage5Room0MetatileMap",
     "0x08392164": "gLevel5Stage5Room0BlockLayer",
-    "0x08392298": "gUnk_08392298",
+    "0x08392298": "gLevel5Stage5Room0BlockMetatiles",
     "0x083922A8": "gLevel5Stage5Room0Doors",
     "0x083922C0": "gLevel5Stage5Room0Objects",
     "0x08392308": "gLevel5Stage5Room0",
     "0x08392360": "gLevel5Stage5Room1MetatileMap",
     "0x08392604": "gLevel5Stage5Room1BlockLayer",
-    "0x083926D0": "gUnk_083926D0",
+    "0x083926D0": "gLevel5Stage5Room1BlockMetatiles",
     "0x083926D8": "gLevel5Stage5Room1Doors",
     "0x083926F0": "gLevel5Stage5Room1Objects",
     "0x08392778": "gLevel5Stage5Room1",
     "0x083927D0": "gLevel5Stage5Room2MetatileMap",
     "0x08392940": "gLevel5Stage5Room2BlockLayer",
-    "0x083929D0": "gUnk_083929D0",
+    "0x083929D0": "gLevel5Stage5Room2BlockMetatiles",
     "0x08392A90": "gLevel5Stage5Room2Doors",
     "0x08392AA8": "gLevel5Stage5Room2",
     "0x08392B00": "gLevel5Stage5Room3MetatileMap",
     "0x08392DE0": "gLevel5Stage5Room3BlockLayer",
-    "0x08392EA8": "gUnk_08392EA8",
+    "0x08392EA8": "gLevel5Stage5Room3BlockMetatiles",
     "0x08392EB0": "gLevel5Stage5Room3Doors",
     "0x08392EBC": "gLevel5Stage5Room3Objects",
     "0x08392F0C": "gLevel5Stage5Room3",
     "0x08392F64": "gLevel5Stage5Room4MetatileMap",
     "0x083932A0": "gLevel5Stage5Room4BlockLayer",
-    "0x083933A4": "gUnk_083933A4",
+    "0x083933A4": "gLevel5Stage5Room4BlockMetatiles",
     "0x083933B4": "gLevel5Stage5Room4Doors",
     "0x083933C0": "gLevel5Stage5Room4Objects",
     "0x08393430": "gLevel5Stage5Room4",
     "0x08393488": "gLevel5Stage5Room5MetatileMap",
     "0x08393558": "gLevel5Stage5Room5BlockLayer",
-    "0x0839358C": "gUnk_0839358C",
+    "0x0839358C": "gLevel5Stage5Room5BlockMetatiles",
     "0x08393594": "gLevel5Stage5Room5Doors",
     "0x083935AC": "gLevel5Stage5Room5",
     "0x08393604": "gLevel5Stage5Room6MetatileMap",
     "0x08393708": "gLevel5Stage5Room6BlockLayer",
-    "0x08393744": "gUnk_08393744",
+    "0x08393744": "gLevel5Stage5Room6BlockMetatiles",
     "0x0839374C": "gLevel5Stage5Room6Doors",
     "0x08393758": "gLevel5Stage5Room6Objects",
     "0x08393760": "gLevel5Stage5Room6",
     "0x083937B8": "gLevel5Stage5Room7MetatileMap",
     "0x0839386C": "gLevel5Stage5Room7BlockLayer",
-    "0x083938A4": "gUnk_083938A4",
+    "0x083938A4": "gLevel5Stage5Room7BlockMetatiles",
     "0x083938AC": "gLevel5Stage5Room7Doors",
     "0x083938B8": "gLevel5Stage5Room7Objects",
     "0x083938C0": "gLevel5Stage5Room7",
     "0x08393918": "gLevel5Stage5Room8MetatileMap",
     "0x08393A08": "gLevel5Stage5Room8BlockLayer",
-    "0x08393A40": "gUnk_08393A40",
+    "0x08393A40": "gLevel5Stage5Room8BlockMetatiles",
     "0x08393A50": "gLevel5Stage5Room8Doors",
     "0x08393A5C": "gLevel5Stage5Room8Objects",
     "0x08393A7C": "gLevel5Stage5Room8",
     "0x08393AD4": "gLevel5Stage5Room9MetatileMap",
     "0x08393BB8": "gLevel5Stage5Room9BlockLayer",
-    "0x08393BF0": "gUnk_08393BF0",
+    "0x08393BF0": "gLevel5Stage5Room9BlockMetatiles",
     "0x08393C00": "gLevel5Stage5Room9Doors",
     "0x08393C0C": "gLevel5Stage5Room9Objects",
     "0x08393C2C": "gLevel5Stage5Room9",
     "0x08393C84": "gLevel5Stage5Room10MetatileMap",
     "0x08393D64": "gLevel5Stage5Room10BlockLayer",
-    "0x08393DA4": "gUnk_08393DA4",
+    "0x08393DA4": "gLevel5Stage5Room10BlockMetatiles",
     "0x08393DB4": "gLevel5Stage5Room10Doors",
     "0x08393DC0": "gLevel5Stage5Room10Objects",
     "0x08393DC8": "gLevel5Stage5Room10",
     "0x08393E20": "gLevel5Stage6Room0MetatileMap",
     "0x08393EB0": "gLevel5Stage6Room0BlockLayer",
-    "0x08393EE4": "gUnk_08393EE4",
+    "0x08393EE4": "gLevel5Stage6Room0BlockMetatiles",
     "0x08393EEC": "gLevel5Stage6Room0Objects",
     "0x08393EF4": "gLevel5Stage6Room0",
     "0x08393F4C": "gLevel6Stage0Room0MetatileMap",
     "0x083942F8": "gLevel6Stage0Room0BlockLayer",
-    "0x083943D0": "gUnk_083943D0",
+    "0x083943D0": "gLevel6Stage0Room0BlockMetatiles",
     "0x083943DC": "gLevel6Stage0Room0Doors",
     "0x083943E8": "gLevel6Stage0Room0Objects",
     "0x08394458": "gLevel6Stage0Room0",
     "0x083944B0": "gLevel6Stage0Room1MetatileMap",
     "0x08394718": "gLevel6Stage0Room1BlockLayer",
-    "0x08394914": "gUnk_08394914",
+    "0x08394914": "gLevel6Stage0Room1BlockMetatiles",
     "0x08394BF0": "gLevel6Stage0Room1Doors",
     "0x08394C08": "gLevel6Stage0Room1Objects",
     "0x08394C58": "gLevel6Stage0Room1",
     "0x08394CB0": "gLevel6Stage0Room2MetatileMap",
     "0x08394F74": "gLevel6Stage0Room2BlockLayer",
-    "0x0839504C": "gUnk_0839504C",
+    "0x0839504C": "gLevel6Stage0Room2BlockMetatiles",
     "0x0839506C": "gLevel6Stage0Room2Doors",
     "0x08395078": "gLevel6Stage0Room2Objects",
     "0x083950F8": "gLevel6Stage0Room2",
     "0x08395150": "gLevel6Stage0Room3MetatileMap",
     "0x08395248": "gLevel6Stage0Room3BlockLayer",
-    "0x0839527C": "gUnk_0839527C",
+    "0x0839527C": "gLevel6Stage0Room3BlockMetatiles",
     "0x08395284": "gLevel6Stage0Room3Doors",
     "0x08395290": "gLevel6Stage0Room3Objects",
     "0x08395298": "gLevel6Stage0Room3",
     "0x083952F0": "gLevel6Stage1Room0MetatileMap",
     "0x083953E4": "gLevel6Stage1Room0BlockLayer",
-    "0x08395418": "gUnk_08395418",
+    "0x08395418": "gLevel6Stage1Room0BlockMetatiles",
     "0x08395420": "gLevel6Stage1Room0Doors",
     "0x08395450": "gLevel6Stage1Room0",
     "0x083954A8": "gLevel6Stage1Room1MetatileMap",
     "0x08395690": "gLevel6Stage1Room1BlockLayer",
-    "0x083956EC": "gUnk_083956EC",
+    "0x083956EC": "gLevel6Stage1Room1BlockMetatiles",
     "0x083956F4": "gLevel6Stage1Room1Doors",
     "0x0839570C": "gLevel6Stage1Room1",
     "0x08395764": "gLevel6Stage1Room2MetatileMap",
     "0x0839594C": "gLevel6Stage1Room2BlockLayer",
-    "0x083959A8": "gUnk_083959A8",
+    "0x083959A8": "gLevel6Stage1Room2BlockMetatiles",
     "0x083959B0": "gLevel6Stage1Room2Doors",
     "0x083959C8": "gLevel6Stage1Room2",
     "0x08395A20": "gLevel6Stage1Room3MetatileMap",
     "0x08395C14": "gLevel6Stage1Room3BlockLayer",
-    "0x08395C70": "gUnk_08395C70",
+    "0x08395C70": "gLevel6Stage1Room3BlockMetatiles",
     "0x08395C78": "gLevel6Stage1Room3Doors",
     "0x08395C90": "gLevel6Stage1Room3",
     "0x08395CE8": "gLevel6Stage1Room4MetatileMap",
     "0x08395EB8": "gLevel6Stage1Room4BlockLayer",
-    "0x08395F14": "gUnk_08395F14",
+    "0x08395F14": "gLevel6Stage1Room4BlockMetatiles",
     "0x08395F1C": "gLevel6Stage1Room4Doors",
     "0x08395F34": "gLevel6Stage1Room4",
     "0x08395F8C": "gLevel6Stage1Room5MetatileMap",
     "0x08396168": "gLevel6Stage1Room5BlockLayer",
-    "0x083961C4": "gUnk_083961C4",
+    "0x083961C4": "gLevel6Stage1Room5BlockMetatiles",
     "0x083961CC": "gLevel6Stage1Room5Doors",
     "0x083961E4": "gLevel6Stage1Room5",
     "0x0839623C": "gLevel6Stage1Room6MetatileMap",
     "0x08396430": "gLevel6Stage1Room6BlockLayer",
-    "0x0839648C": "gUnk_0839648C",
+    "0x0839648C": "gLevel6Stage1Room6BlockMetatiles",
     "0x08396494": "gLevel6Stage1Room6Doors",
     "0x083964AC": "gLevel6Stage1Room6",
     "0x08396504": "gLevel6Stage1Room7MetatileMap",
     "0x083966D8": "gLevel6Stage1Room7BlockLayer",
-    "0x08396734": "gUnk_08396734",
+    "0x08396734": "gLevel6Stage1Room7BlockMetatiles",
     "0x0839673C": "gLevel6Stage1Room7Doors",
     "0x08396754": "gLevel6Stage1Room7",
     "0x083967AC": "gLevel6Stage1Room8MetatileMap",
     "0x08396984": "gLevel6Stage1Room8BlockLayer",
-    "0x083969E0": "gUnk_083969E0",
+    "0x083969E0": "gLevel6Stage1Room8BlockMetatiles",
     "0x083969E8": "gLevel6Stage1Room8Doors",
     "0x08396A00": "gLevel6Stage1Room8",
     "0x08396A58": "gLevel6Stage1Room9MetatileMap",
     "0x08396C3C": "gLevel6Stage1Room9BlockLayer",
-    "0x08396C98": "gUnk_08396C98",
+    "0x08396C98": "gLevel6Stage1Room9BlockMetatiles",
     "0x08396CA0": "gLevel6Stage1Room9Doors",
     "0x08396CB8": "gLevel6Stage1Room9",
     "0x08396D10": "gLevel6Stage1Room10MetatileMap",
     "0x08396F64": "gLevel6Stage1Room10BlockLayer",
-    "0x08397050": "gUnk_08397050",
+    "0x08397050": "gLevel6Stage1Room10BlockMetatiles",
     "0x08397058": "gLevel6Stage1Room10Doors",
     "0x08397064": "gLevel6Stage1Room10Objects",
     "0x0839706C": "gLevel6Stage1Room10",
     "0x083970C4": "gLevel6Stage1Room11MetatileMap",
     "0x083972C4": "gLevel6Stage1Room11BlockLayer",
-    "0x08397320": "gUnk_08397320",
+    "0x08397320": "gLevel6Stage1Room11BlockMetatiles",
     "0x08397328": "gLevel6Stage1Room11Doors",
     "0x08397340": "gLevel6Stage1Room11Objects",
     "0x08397358": "gLevel6Stage1Room11",
     "0x083973B0": "gLevel6Stage1Room12MetatileMap",
     "0x08397498": "gLevel6Stage1Room12BlockLayer",
-    "0x083974CC": "gUnk_083974CC",
+    "0x083974CC": "gLevel6Stage1Room12BlockMetatiles",
     "0x083974D4": "gLevel6Stage1Room12Doors",
     "0x083974E0": "gLevel6Stage1Room12Objects",
     "0x08397508": "gLevel6Stage1Room12",
     "0x08397560": "gLevel6Stage1Room13MetatileMap",
     "0x08397618": "gLevel6Stage1Room13BlockLayer",
-    "0x0839764C": "gUnk_0839764C",
+    "0x0839764C": "gLevel6Stage1Room13BlockMetatiles",
     "0x0839765C": "gLevel6Stage1Room13Doors",
     "0x08397668": "gLevel6Stage1Room13Objects",
     "0x08397680": "gLevel6Stage1Room13",
     "0x083976D8": "gLevel6Stage1Room14MetatileMap",
     "0x0839779C": "gLevel6Stage1Room14BlockLayer",
-    "0x083977D0": "gUnk_083977D0",
+    "0x083977D0": "gLevel6Stage1Room14BlockMetatiles",
     "0x083977E0": "gLevel6Stage1Room14Doors",
     "0x083977EC": "gLevel6Stage1Room14Objects",
     "0x08397804": "gLevel6Stage1Room14",
     "0x0839785C": "gLevel6Stage1Room15MetatileMap",
     "0x08397908": "gLevel6Stage1Room15BlockLayer",
-    "0x0839793C": "gUnk_0839793C",
+    "0x0839793C": "gLevel6Stage1Room15BlockMetatiles",
     "0x0839794C": "gLevel6Stage1Room15Doors",
     "0x08397958": "gLevel6Stage1Room15Objects",
     "0x08397970": "gLevel6Stage1Room15",
     "0x083979C8": "gLevel6Stage1Room16MetatileMap",
     "0x08397AEC": "gLevel6Stage1Room16BlockLayer",
-    "0x08397B20": "gUnk_08397B20",
+    "0x08397B20": "gLevel6Stage1Room16BlockMetatiles",
     "0x08397B30": "gLevel6Stage1Room16Doors",
     "0x08397B3C": "gLevel6Stage1Room16Objects",
     "0x08397B54": "gLevel6Stage1Room16",
     "0x08397BAC": "gLevel6Stage1Room17MetatileMap",
     "0x08397C94": "gLevel6Stage1Room17BlockLayer",
-    "0x08397CC8": "gUnk_08397CC8",
+    "0x08397CC8": "gLevel6Stage1Room17BlockMetatiles",
     "0x08397CD8": "gLevel6Stage1Room17Doors",
     "0x08397CE4": "gLevel6Stage1Room17Objects",
     "0x08397CFC": "gLevel6Stage1Room17",
     "0x08397D54": "gLevel6Stage1Room18MetatileMap",
     "0x08397E68": "gLevel6Stage1Room18BlockLayer",
-    "0x08397E9C": "gUnk_08397E9C",
+    "0x08397E9C": "gLevel6Stage1Room18BlockMetatiles",
     "0x08397EAC": "gLevel6Stage1Room18Doors",
     "0x08397EB8": "gLevel6Stage1Room18Objects",
     "0x08397ED0": "gLevel6Stage1Room18",
     "0x08397F28": "gLevel6Stage1Room19MetatileMap",
     "0x08397FE4": "gLevel6Stage1Room19BlockLayer",
-    "0x08398018": "gUnk_08398018",
+    "0x08398018": "gLevel6Stage1Room19BlockMetatiles",
     "0x08398028": "gLevel6Stage1Room19Doors",
     "0x08398034": "gLevel6Stage1Room19Objects",
     "0x0839804C": "gLevel6Stage1Room19",
     "0x083980A4": "gLevel6Stage1Room20MetatileMap",
     "0x083981B8": "gLevel6Stage1Room20BlockLayer",
-    "0x083981EC": "gUnk_083981EC",
+    "0x083981EC": "gLevel6Stage1Room20BlockMetatiles",
     "0x083981FC": "gLevel6Stage1Room20Doors",
     "0x08398208": "gLevel6Stage1Room20Objects",
     "0x08398220": "gLevel6Stage1Room20",
     "0x08398278": "gLevel6Stage1Room21MetatileMap",
     "0x08398370": "gLevel6Stage1Room21BlockLayer",
-    "0x083983A4": "gUnk_083983A4",
+    "0x083983A4": "gLevel6Stage1Room21BlockMetatiles",
     "0x083983B4": "gLevel6Stage1Room21Doors",
     "0x083983C0": "gLevel6Stage1Room21Objects",
     "0x083983D8": "gLevel6Stage1Room21",
     "0x08398430": "gLevel6Stage1Room22MetatileMap",
     "0x08398568": "gLevel6Stage1Room22BlockLayer",
-    "0x0839859C": "gUnk_0839859C",
+    "0x0839859C": "gLevel6Stage1Room22BlockMetatiles",
     "0x083985AC": "gLevel6Stage1Room22Doors",
     "0x083985B8": "gLevel6Stage1Room22Objects",
     "0x083985D0": "gLevel6Stage1Room22",
     "0x08398628": "gLevel6Stage1Room23MetatileMap",
     "0x083986F4": "gLevel6Stage1Room23BlockLayer",
-    "0x08398728": "gUnk_08398728",
+    "0x08398728": "gLevel6Stage1Room23BlockMetatiles",
     "0x08398738": "gLevel6Stage1Room23Doors",
     "0x08398744": "gLevel6Stage1Room23Objects",
     "0x0839875C": "gLevel6Stage1Room23",
     "0x083987B4": "gLevel6Stage1Room24MetatileMap",
     "0x08398810": "gLevel6Stage1Room24BlockLayer",
-    "0x08398844": "gUnk_08398844",
+    "0x08398844": "gLevel6Stage1Room24BlockMetatiles",
     "0x0839884C": "gLevel6Stage1Room24Doors",
     "0x08398858": "gLevel6Stage1Room24",
     "0x083988B0": "gLevel6Stage2Room0MetatileMap",
     "0x08398CB8": "gLevel6Stage2Room0BlockLayer",
-    "0x08398D68": "gUnk_08398D68",
+    "0x08398D68": "gLevel6Stage2Room0BlockMetatiles",
     "0x08398D70": "gLevel6Stage2Room0Doors",
     "0x08398D7C": "gLevel6Stage2Room0Objects",
     "0x08398DDC": "gLevel6Stage2Room0",
     "0x08398E34": "gLevel6Stage2Room1MetatileMap",
     "0x083990D4": "gLevel6Stage2Room1BlockLayer",
-    "0x08399194": "gUnk_08399194",
+    "0x08399194": "gLevel6Stage2Room1BlockMetatiles",
     "0x0839919C": "gLevel6Stage2Room1Doors",
     "0x083991A8": "gLevel6Stage2Room1Objects",
     "0x08399208": "gLevel6Stage2Room1",
     "0x08399260": "gLevel6Stage2Room2MetatileMap",
     "0x083994B4": "gLevel6Stage2Room2BlockLayer",
-    "0x08399578": "gUnk_08399578",
+    "0x08399578": "gLevel6Stage2Room2BlockMetatiles",
     "0x08399580": "gLevel6Stage2Room2Doors",
     "0x0839958C": "gLevel6Stage2Room2Objects",
     "0x083995EC": "gLevel6Stage2Room2",
     "0x08399644": "gLevel6Stage2Room3MetatileMap",
     "0x08399954": "gLevel6Stage2Room3BlockLayer",
-    "0x08399AC4": "gUnk_08399AC4",
+    "0x08399AC4": "gLevel6Stage2Room3BlockMetatiles",
     "0x08399C24": "gLevel6Stage2Room3Doors",
     "0x08399C30": "gLevel6Stage2Room3Objects",
     "0x08399CB8": "gLevel6Stage2Room3",
     "0x08399D10": "gLevel6Stage3Room0MetatileMap",
     "0x0839A0D0": "gLevel6Stage3Room0BlockLayer",
-    "0x0839A180": "gUnk_0839A180",
+    "0x0839A180": "gLevel6Stage3Room0BlockMetatiles",
     "0x0839A188": "gLevel6Stage3Room0Doors",
     "0x0839A194": "gLevel6Stage3Room0Objects",
     "0x0839A214": "gLevel6Stage3Room0",
     "0x0839A26C": "gLevel6Stage3Room1MetatileMap",
     "0x0839A450": "gLevel6Stage3Room1BlockLayer",
-    "0x0839A48C": "gUnk_0839A48C",
+    "0x0839A48C": "gLevel6Stage3Room1BlockMetatiles",
     "0x0839A49C": "gLevel6Stage3Room1Doors",
     "0x0839A4A8": "gLevel6Stage3Room1Objects",
     "0x0839A4C8": "gLevel6Stage3Room1",
     "0x0839A520": "gLevel6Stage3Room2MetatileMap",
     "0x0839A6FC": "gLevel6Stage3Room2BlockLayer",
-    "0x0839A738": "gUnk_0839A738",
+    "0x0839A738": "gLevel6Stage3Room2BlockMetatiles",
     "0x0839A748": "gLevel6Stage3Room2Doors",
     "0x0839A754": "gLevel6Stage3Room2Objects",
     "0x0839A774": "gLevel6Stage3Room2",
     "0x0839A7CC": "gLevel6Stage3Room3MetatileMap",
     "0x0839A9A8": "gLevel6Stage3Room3BlockLayer",
-    "0x0839A9EC": "gUnk_0839A9EC",
+    "0x0839A9EC": "gLevel6Stage3Room3BlockMetatiles",
     "0x0839AA14": "gLevel6Stage3Room3Doors",
     "0x0839AA20": "gLevel6Stage3Room3Objects",
     "0x0839AA40": "gLevel6Stage3Room3",
     "0x0839AA98": "gLevel6Stage3Room4MetatileMap",
     "0x0839AC80": "gLevel6Stage3Room4BlockLayer",
-    "0x0839ACC4": "gUnk_0839ACC4",
+    "0x0839ACC4": "gLevel6Stage3Room4BlockMetatiles",
     "0x0839ACEC": "gLevel6Stage3Room4Doors",
     "0x0839ACF8": "gLevel6Stage3Room4Objects",
     "0x0839AD18": "gLevel6Stage3Room4",
     "0x0839AD70": "gLevel6Stage3Room5MetatileMap",
     "0x0839B0CC": "gLevel6Stage3Room5BlockLayer",
-    "0x0839B1A4": "gUnk_0839B1A4",
+    "0x0839B1A4": "gLevel6Stage3Room5BlockMetatiles",
     "0x0839B214": "gLevel6Stage3Room5Doors",
     "0x0839B220": "gLevel6Stage3Room5Objects",
     "0x0839B260": "gLevel6Stage3Room5",
     "0x0839B2B8": "gLevel6Stage3Room6MetatileMap",
     "0x0839B7C0": "gLevel6Stage3Room6BlockLayer",
-    "0x0839B948": "gUnk_0839B948",
+    "0x0839B948": "gLevel6Stage3Room6BlockMetatiles",
     "0x0839BAC4": "gLevel6Stage3Room6Doors",
     "0x0839BAD0": "gLevel6Stage3Room6Objects",
     "0x0839BB28": "gLevel6Stage3Room6",
     "0x0839BB80": "gLevel6Stage4Room0MetatileMap",
     "0x0839BE04": "gLevel6Stage4Room0BlockLayer",
-    "0x0839BE88": "gUnk_0839BE88",
+    "0x0839BE88": "gLevel6Stage4Room0BlockMetatiles",
     "0x0839BE90": "gLevel6Stage4Room0Doors",
     "0x0839BE9C": "gLevel6Stage4Room0Objects",
     "0x0839BED4": "gLevel6Stage4Room0",
     "0x0839BF2C": "gLevel6Stage4Room1MetatileMap",
     "0x0839C05C": "gLevel6Stage4Room1BlockLayer",
-    "0x0839C094": "gUnk_0839C094",
+    "0x0839C094": "gLevel6Stage4Room1BlockMetatiles",
     "0x0839C0A4": "gLevel6Stage4Room1Doors",
     "0x0839C0B0": "gLevel6Stage4Room1Objects",
     "0x0839C0D0": "gLevel6Stage4Room1",
     "0x0839C128": "gLevel6Stage4Room2MetatileMap",
     "0x0839C434": "gLevel6Stage4Room2BlockLayer",
-    "0x0839C500": "gUnk_0839C500",
+    "0x0839C500": "gLevel6Stage4Room2BlockMetatiles",
     "0x0839C508": "gLevel6Stage4Room2Doors",
     "0x0839C514": "gLevel6Stage4Room2Objects",
     "0x0839C57C": "gLevel6Stage4Room2",
     "0x0839C5D4": "gLevel6Stage4Room3MetatileMap",
     "0x0839C99C": "gLevel6Stage4Room3BlockLayer",
-    "0x0839CA44": "gUnk_0839CA44",
+    "0x0839CA44": "gLevel6Stage4Room3BlockMetatiles",
     "0x0839CAD4": "gLevel6Stage4Room3Doors",
     "0x0839CAEC": "gLevel6Stage4Room3Objects",
     "0x0839CB34": "gLevel6Stage4Room3",
     "0x0839CB8C": "gLevel6Stage4Room4MetatileMap",
     "0x0839CCCC": "gLevel6Stage4Room4BlockLayer",
-    "0x0839CD00": "gUnk_0839CD00",
+    "0x0839CD00": "gLevel6Stage4Room4BlockMetatiles",
     "0x0839CD08": "gLevel6Stage4Room4Doors",
     "0x0839CD20": "gLevel6Stage4Room4Objects",
     "0x0839CD48": "gLevel6Stage4Room4",
     "0x0839CDA0": "gLevel6Stage5Room0MetatileMap",
     "0x0839D0C8": "gLevel6Stage5Room0BlockLayer",
-    "0x0839D1C8": "gUnk_0839D1C8",
+    "0x0839D1C8": "gLevel6Stage5Room0BlockMetatiles",
     "0x0839D1D0": "gLevel6Stage5Room0Doors",
     "0x0839D1DC": "gLevel6Stage5Room0Objects",
     "0x0839D254": "gLevel6Stage5Room0",
     "0x0839D2AC": "gLevel6Stage5Room1MetatileMap",
     "0x0839D4E8": "gLevel6Stage5Room1BlockLayer",
-    "0x0839D570": "gUnk_0839D570",
+    "0x0839D570": "gLevel6Stage5Room1BlockMetatiles",
     "0x0839D578": "gLevel6Stage5Room1Doors",
     "0x0839D584": "gLevel6Stage5Room1Objects",
     "0x0839D5B4": "gLevel6Stage5Room1",
     "0x0839D60C": "gLevel6Stage5Room2MetatileMap",
     "0x0839D7E8": "gLevel6Stage5Room2BlockLayer",
-    "0x0839D868": "gUnk_0839D868",
+    "0x0839D868": "gLevel6Stage5Room2BlockMetatiles",
     "0x0839D870": "gLevel6Stage5Room2Doors",
     "0x0839D87C": "gLevel6Stage5Room2Objects",
     "0x0839D8BC": "gLevel6Stage5Room2",
     "0x0839D914": "gLevel6Stage5Room3MetatileMap",
     "0x0839DA50": "gLevel6Stage5Room3BlockLayer",
-    "0x0839DAAC": "gUnk_0839DAAC",
+    "0x0839DAAC": "gLevel6Stage5Room3BlockMetatiles",
     "0x0839DAB4": "gLevel6Stage5Room3Doors",
     "0x0839DACC": "gLevel6Stage5Room3Objects",
     "0x0839DAFC": "gLevel6Stage5Room3",
     "0x0839DB54": "gLevel6Stage5Room4MetatileMap",
     "0x0839DD88": "gLevel6Stage5Room4BlockLayer",
-    "0x0839DE58": "gUnk_0839DE58",
+    "0x0839DE58": "gLevel6Stage5Room4BlockMetatiles",
     "0x0839DE68": "gLevel6Stage5Room4Doors",
     "0x0839DE74": "gLevel6Stage5Room4Objects",
     "0x0839DED4": "gLevel6Stage5Room4",
     "0x0839DF2C": "gLevel6Stage5Room5MetatileMap",
     "0x0839E078": "gLevel6Stage5Room5BlockLayer",
-    "0x0839E0F4": "gUnk_0839E0F4",
+    "0x0839E0F4": "gLevel6Stage5Room5BlockMetatiles",
     "0x0839E130": "gLevel6Stage5Room5Doors",
     "0x0839E148": "gLevel6Stage5Room5Objects",
     "0x0839E190": "gLevel6Stage5Room5",
     "0x0839E1E8": "gLevel6Stage5Room6MetatileMap",
     "0x0839E490": "gLevel6Stage5Room6BlockLayer",
-    "0x0839E52C": "gUnk_0839E52C",
+    "0x0839E52C": "gLevel6Stage5Room6BlockMetatiles",
     "0x0839E534": "gLevel6Stage5Room6Doors",
     "0x0839E540": "gLevel6Stage5Room6Objects",
     "0x0839E590": "gLevel6Stage5Room6",
     "0x0839E5E8": "gLevel6Stage5Room7MetatileMap",
     "0x0839E810": "gLevel6Stage5Room7BlockLayer",
-    "0x0839E8BC": "gUnk_0839E8BC",
+    "0x0839E8BC": "gLevel6Stage5Room7BlockMetatiles",
     "0x0839E8EC": "gLevel6Stage5Room7Doors",
     "0x0839E904": "gLevel6Stage5Room7Objects",
     "0x0839E944": "gLevel6Stage5Room7",
     "0x0839E99C": "gLevel6Stage5Room8MetatileMap",
     "0x0839EB20": "gLevel6Stage5Room8BlockLayer",
-    "0x0839EB88": "gUnk_0839EB88",
+    "0x0839EB88": "gLevel6Stage5Room8BlockMetatiles",
     "0x0839EB90": "gLevel6Stage5Room8Doors",
     "0x0839EB9C": "gLevel6Stage5Room8Objects",
     "0x0839EBB4": "gLevel6Stage5Room8",
     "0x0839EC0C": "gLevel6Stage6Room0MetatileMap",
     "0x0839EDA4": "gLevel6Stage6Room0BlockLayer",
-    "0x0839EE04": "gUnk_0839EE04",
+    "0x0839EE04": "gLevel6Stage6Room0BlockMetatiles",
     "0x0839EE0C": "gLevel6Stage6Room0Objects",
     "0x0839EE14": "gLevel6Stage6Room0",
     "0x0839EE6C": "gLevel7Stage0Room0MetatileMap",
     "0x0839F27C": "gLevel7Stage0Room0BlockLayer",
-    "0x0839F39C": "gUnk_0839F39C",
+    "0x0839F39C": "gLevel7Stage0Room0BlockMetatiles",
     "0x0839F3D0": "gLevel7Stage0Room0Objects",
     "0x0839F3D8": "gLevel7Stage0Room0",
     "0x0839F430": "gLevel7Stage0Room1MetatileMap",
     "0x0839F5A8": "gLevel7Stage0Room1BlockLayer",
-    "0x0839F668": "gUnk_0839F668",
+    "0x0839F668": "gLevel7Stage0Room1BlockMetatiles",
     "0x0839F670": "gLevel7Stage0Room1Doors",
     "0x0839F67C": "gLevel7Stage0Room1Objects",
     "0x0839F684": "gLevel7Stage0Room1",
     "0x0839F6DC": "gLevel7Stage0Room2MetatileMap",
     "0x0839FAEC": "gLevel7Stage0Room2BlockLayer",
-    "0x0839FC0C": "gUnk_0839FC0C",
+    "0x0839FC0C": "gLevel7Stage0Room2BlockMetatiles",
     "0x0839FC40": "gLevel7Stage0Room2",
     "0x0839FC98": "gLevel7Stage2Room0MetatileMap",
     "0x0839FEAC": "gLevel7Stage2Room0BlockLayer",
-    "0x0839FFB8": "gUnk_0839FFB8",
+    "0x0839FFB8": "gLevel7Stage2Room0BlockMetatiles",
     "0x083A0000": "gLevel7Stage2Room0Doors",
     "0x083A0048": "gLevel7Stage2Room0Objects",
     "0x083A0058": "gLevel7Stage2Room0",
     "0x083A00B0": "gLevel7Stage2Room1MetatileMap",
     "0x083A0254": "gLevel7Stage2Room1BlockLayer",
-    "0x083A0328": "gUnk_083A0328",
+    "0x083A0328": "gLevel7Stage2Room1BlockMetatiles",
     "0x083A0350": "gLevel7Stage2Room1Doors",
     "0x083A0368": "gLevel7Stage2Room1Objects",
     "0x083A0370": "gLevel7Stage2Room1",
     "0x083A03C8": "gLevel7Stage2Room2MetatileMap",
     "0x083A05EC": "gLevel7Stage2Room2BlockLayer",
-    "0x083A06AC": "gUnk_083A06AC",
+    "0x083A06AC": "gLevel7Stage2Room2BlockMetatiles",
     "0x083A06B4": "gLevel7Stage2Room2Doors",
     "0x083A06CC": "gLevel7Stage2Room2Objects",
     "0x083A06DC": "gLevel7Stage2Room2",
     "0x083A0734": "gLevel7Stage2Room3MetatileMap",
     "0x083A081C": "gLevel7Stage2Room3BlockLayer",
-    "0x083A0928": "gUnk_083A0928",
+    "0x083A0928": "gLevel7Stage2Room3BlockMetatiles",
     "0x083A0A70": "gLevel7Stage2Room3Doors",
     "0x083A0A88": "gLevel7Stage2Room3Objects",
     "0x083A0AA0": "gLevel7Stage2Room3",
     "0x083A0AF8": "gLevel7Stage2Room4MetatileMap",
     "0x083A0C80": "gLevel7Stage2Room4BlockLayer",
-    "0x083A0D04": "gUnk_083A0D04",
+    "0x083A0D04": "gLevel7Stage2Room4BlockMetatiles",
     "0x083A0D0C": "gLevel7Stage2Room4Doors",
     "0x083A0D24": "gLevel7Stage2Room4Objects",
     "0x083A0D2C": "gLevel7Stage2Room4",
     "0x083A0D84": "gLevel7Stage2Room5MetatileMap",
     "0x083A0E60": "gLevel7Stage2Room5BlockLayer",
-    "0x083A0EC8": "gUnk_083A0EC8",
+    "0x083A0EC8": "gLevel7Stage2Room5BlockMetatiles",
     "0x083A0EE8": "gLevel7Stage2Room5Doors",
     "0x083A0F00": "gLevel7Stage2Room5",
     "0x083A0F58": "gLevel7Stage2Room6MetatileMap",
     "0x083A10C8": "gLevel7Stage2Room6BlockLayer",
-    "0x083A11E4": "gUnk_083A11E4",
+    "0x083A11E4": "gLevel7Stage2Room6BlockMetatiles",
     "0x083A13D4": "gLevel7Stage2Room6Doors",
     "0x083A13EC": "gLevel7Stage2Room6Objects",
     "0x083A142C": "gLevel7Stage2Room6",
     "0x083A1484": "gLevel7Stage2Room7MetatileMap",
     "0x083A15A8": "gLevel7Stage2Room7BlockLayer",
-    "0x083A1630": "gUnk_083A1630",
+    "0x083A1630": "gLevel7Stage2Room7BlockMetatiles",
     "0x083A1638": "gLevel7Stage2Room7Doors",
     "0x083A1644": "gLevel7Stage2Room7",
     "0x083A169C": "gLevel7Stage2Room8MetatileMap",
     "0x083A1750": "gLevel7Stage2Room8BlockLayer",
-    "0x083A17A8": "gUnk_083A17A8",
+    "0x083A17A8": "gLevel7Stage2Room8BlockMetatiles",
     "0x083A17B0": "gLevel7Stage2Room8Doors",
     "0x083A17BC": "gLevel7Stage2Room8Objects",
     "0x083A17CC": "gLevel7Stage2Room8",
     "0x083A1824": "gLevel7Stage2Room9MetatileMap",
     "0x083A1A98": "gLevel7Stage2Room9BlockLayer",
-    "0x083A1B5C": "gUnk_083A1B5C",
+    "0x083A1B5C": "gLevel7Stage2Room9BlockMetatiles",
     "0x083A1B64": "gLevel7Stage2Room9",
     "0x083A1BBC": "gLevel7Stage2Room10MetatileMap",
     "0x083A1E94": "gLevel7Stage2Room10BlockLayer",
-    "0x083A1FD0": "gUnk_083A1FD0",
+    "0x083A1FD0": "gLevel7Stage2Room10BlockMetatiles",
     "0x083A1FD8": "gLevel7Stage2Room10",
     "0x083A2030": "gLevel8Stage0Room0MetatileMap",
     "0x083A23B4": "gLevel8Stage0Room0BlockLayer",
-    "0x083A2464": "gUnk_083A2464",
+    "0x083A2464": "gLevel8Stage0Room0BlockMetatiles",
     "0x083A246C": "gLevel8Stage0Room0Doors",
     "0x083A24F0": "gLevel8Stage0Room0",
     "0x083A2548": "gLevel8Stage0Room1MetatileMap",
     "0x083A2558": "gLevel8Stage0Room1BlockLayer",
-    "0x083A2560": "gUnk_083A2560",
+    "0x083A2560": "gLevel8Stage0Room1BlockMetatiles",
     "0x083A2578": "gLevel8Stage0Room1",
     "0x083A25D0": "gLevel8Stage0Room2MetatileMap",
     "0x083A2640": "gLevel8Stage0Room2BlockLayer",
-    "0x083A2678": "gUnk_083A2678",
+    "0x083A2678": "gLevel8Stage0Room2BlockMetatiles",
     "0x083A2680": "gLevel8Stage0Room2Doors",
     "0x083A268C": "gLevel8Stage0Room2Objects",
     "0x083A2694": "gLevel8Stage0Room2",
     "0x083A26EC": "gLevel8Stage0Room3MetatileMap",
     "0x083A2848": "gLevel8Stage0Room3BlockLayer",
-    "0x083A28D8": "gUnk_083A28D8",
+    "0x083A28D8": "gLevel8Stage0Room3BlockMetatiles",
     "0x083A28E0": "gLevel8Stage0Room3Doors",
     "0x083A28EC": "gLevel8Stage0Room3Objects",
     "0x083A291C": "gLevel8Stage0Room3",
     "0x083A2974": "gLevel8Stage0Room4MetatileMap",
     "0x083A2A88": "gLevel8Stage0Room4BlockLayer",
-    "0x083A2ABC": "gUnk_083A2ABC",
+    "0x083A2ABC": "gLevel8Stage0Room4BlockMetatiles",
     "0x083A2AC4": "gLevel8Stage0Room4",
     "0x083A2B1C": "gLevel8Stage1Room0MetatileMap",
     "0x083A30F4": "gLevel8Stage1Room0BlockLayer",
-    "0x083A3200": "gUnk_083A3200",
+    "0x083A3200": "gLevel8Stage1Room0BlockMetatiles",
     "0x083A3208": "gLevel8Stage1Room0Doors",
     "0x083A32BC": "gLevel8Stage1Room0",
     "0x083A3314": "gLevel8Stage1Room1MetatileMap",
     "0x083A3324": "gLevel8Stage1Room1BlockLayer",
-    "0x083A332C": "gUnk_083A332C",
+    "0x083A332C": "gLevel8Stage1Room1BlockMetatiles",
     "0x083A3344": "gLevel8Stage1Room1",
     "0x083A339C": "gLevel8Stage1Room2MetatileMap",
     "0x083A346C": "gLevel8Stage1Room2BlockLayer",
-    "0x083A34AC": "gUnk_083A34AC",
+    "0x083A34AC": "gLevel8Stage1Room2BlockMetatiles",
     "0x083A34C0": "gLevel8Stage1Room2Doors",
     "0x083A34CC": "gLevel8Stage1Room2Objects",
     "0x083A34E4": "gLevel8Stage1Room2",
     "0x083A353C": "gLevel8Stage1Room3MetatileMap",
     "0x083A35B0": "gLevel8Stage1Room3BlockLayer",
-    "0x083A35E8": "gUnk_083A35E8",
+    "0x083A35E8": "gLevel8Stage1Room3BlockMetatiles",
     "0x083A35F0": "gLevel8Stage1Room3Doors",
     "0x083A35FC": "gLevel8Stage1Room3Objects",
     "0x083A360C": "gLevel8Stage1Room3",
     "0x083A3664": "gLevel8Stage1Room4MetatileMap",
     "0x083A381C": "gLevel8Stage1Room4BlockLayer",
-    "0x083A38AC": "gUnk_083A38AC",
+    "0x083A38AC": "gLevel8Stage1Room4BlockMetatiles",
     "0x083A38B4": "gLevel8Stage1Room4Doors",
     "0x083A38CC": "gLevel8Stage1Room4Objects",
     "0x083A38FC": "gLevel8Stage1Room4",
     "0x083A3954": "gLevel8Stage1Room5MetatileMap",
     "0x083A3A34": "gLevel8Stage1Room5BlockLayer",
-    "0x083A3A6C": "gUnk_083A3A6C",
+    "0x083A3A6C": "gLevel8Stage1Room5BlockMetatiles",
     "0x083A3A74": "gLevel8Stage1Room5",
     "0x083A3ACC": "gLevel8Stage2Room0MetatileMap",
     "0x083A3E70": "gLevel8Stage2Room0BlockLayer",
-    "0x083A3F2C": "gUnk_083A3F2C",
+    "0x083A3F2C": "gLevel8Stage2Room0BlockMetatiles",
     "0x083A3F34": "gLevel8Stage2Room0Doors",
     "0x083A3FF4": "gLevel8Stage2Room0",
     "0x083A404C": "gLevel8Stage2Room1MetatileMap",
     "0x083A405C": "gLevel8Stage2Room1BlockLayer",
-    "0x083A4064": "gUnk_083A4064",
+    "0x083A4064": "gLevel8Stage2Room1BlockMetatiles",
     "0x083A407C": "gLevel8Stage2Room1",
     "0x083A40D4": "gLevel8Stage2Room2MetatileMap",
     "0x083A41A4": "gLevel8Stage2Room2BlockLayer",
-    "0x083A41E4": "gUnk_083A41E4",
+    "0x083A41E4": "gLevel8Stage2Room2BlockMetatiles",
     "0x083A41F8": "gLevel8Stage2Room2Doors",
     "0x083A4204": "gLevel8Stage2Room2Objects",
     "0x083A421C": "gLevel8Stage2Room2",
     "0x083A4274": "gLevel8Stage2Room3MetatileMap",
     "0x083A42E8": "gLevel8Stage2Room3BlockLayer",
-    "0x083A4320": "gUnk_083A4320",
+    "0x083A4320": "gLevel8Stage2Room3BlockMetatiles",
     "0x083A4328": "gLevel8Stage2Room3Doors",
     "0x083A4334": "gLevel8Stage2Room3Objects",
     "0x083A433C": "gLevel8Stage2Room3",
     "0x083A4394": "gLevel8Stage2Room4MetatileMap",
     "0x083A4508": "gLevel8Stage2Room4BlockLayer",
-    "0x083A4598": "gUnk_083A4598",
+    "0x083A4598": "gLevel8Stage2Room4BlockMetatiles",
     "0x083A45A0": "gLevel8Stage2Room4Doors",
     "0x083A45AC": "gLevel8Stage2Room4Objects",
     "0x083A45DC": "gLevel8Stage2Room4",
     "0x083A4634": "gLevel8Stage2Room5MetatileMap",
     "0x083A46C0": "gLevel8Stage2Room5BlockLayer",
-    "0x083A46F4": "gUnk_083A46F4",
+    "0x083A46F4": "gLevel8Stage2Room5BlockMetatiles",
     "0x083A46FC": "gLevel8Stage2Room5",
     "0x083A4754": "gLevel8Stage3Room0MetatileMap",
     "0x083A4BAC": "gLevel8Stage3Room0BlockLayer",
-    "0x083A4CB8": "gUnk_083A4CB8",
+    "0x083A4CB8": "gLevel8Stage3Room0BlockMetatiles",
     "0x083A4CC0": "gLevel8Stage3Room0Doors",
     "0x083A4D80": "gLevel8Stage3Room0",
     "0x083A4DD8": "gLevel8Stage3Room1MetatileMap",
     "0x083A4DE8": "gLevel8Stage3Room1BlockLayer",
-    "0x083A4DF0": "gUnk_083A4DF0",
+    "0x083A4DF0": "gLevel8Stage3Room1BlockMetatiles",
     "0x083A4E08": "gLevel8Stage3Room1",
     "0x083A4E60": "gLevel8Stage3Room2MetatileMap",
     "0x083A4F30": "gLevel8Stage3Room2BlockLayer",
-    "0x083A4F70": "gUnk_083A4F70",
+    "0x083A4F70": "gLevel8Stage3Room2BlockMetatiles",
     "0x083A4F84": "gLevel8Stage3Room2Doors",
     "0x083A4F90": "gLevel8Stage3Room2Objects",
     "0x083A4FA8": "gLevel8Stage3Room2",
     "0x083A5000": "gLevel8Stage3Room3MetatileMap",
     "0x083A5074": "gLevel8Stage3Room3BlockLayer",
-    "0x083A50AC": "gUnk_083A50AC",
+    "0x083A50AC": "gLevel8Stage3Room3BlockMetatiles",
     "0x083A50B4": "gLevel8Stage3Room3Doors",
     "0x083A50C0": "gLevel8Stage3Room3Objects",
     "0x083A50D0": "gLevel8Stage3Room3",
     "0x083A5128": "gLevel8Stage3Room4MetatileMap",
     "0x083A5280": "gLevel8Stage3Room4BlockLayer",
-    "0x083A5310": "gUnk_083A5310",
+    "0x083A5310": "gLevel8Stage3Room4BlockMetatiles",
     "0x083A5318": "gLevel8Stage3Room4Doors",
     "0x083A5324": "gLevel8Stage3Room4Objects",
     "0x083A5354": "gLevel8Stage3Room4",
     "0x083A53AC": "gLevel8Stage3Room5MetatileMap",
     "0x083A5444": "gLevel8Stage3Room5BlockLayer",
-    "0x083A5478": "gUnk_083A5478",
+    "0x083A5478": "gLevel8Stage3Room5BlockMetatiles",
     "0x083A5480": "gLevel8Stage3Room5",
     "0x083A54D8": "gLevel8Stage4Room0MetatileMap",
     "0x083A5A08": "gLevel8Stage4Room0BlockLayer",
-    "0x083A5B14": "gUnk_083A5B14",
+    "0x083A5B14": "gLevel8Stage4Room0BlockMetatiles",
     "0x083A5B1C": "gLevel8Stage4Room0Doors",
     "0x083A5BE8": "gLevel8Stage4Room0",
     "0x083A5C40": "gLevel8Stage4Room1MetatileMap",
     "0x083A5C50": "gLevel8Stage4Room1BlockLayer",
-    "0x083A5C58": "gUnk_083A5C58",
+    "0x083A5C58": "gLevel8Stage4Room1BlockMetatiles",
     "0x083A5C70": "gLevel8Stage4Room1",
     "0x083A5CC8": "gLevel8Stage4Room2MetatileMap",
     "0x083A5D98": "gLevel8Stage4Room2BlockLayer",
-    "0x083A5DD8": "gUnk_083A5DD8",
+    "0x083A5DD8": "gLevel8Stage4Room2BlockMetatiles",
     "0x083A5DEC": "gLevel8Stage4Room2Doors",
     "0x083A5DF8": "gLevel8Stage4Room2Objects",
     "0x083A5E10": "gLevel8Stage4Room2",
     "0x083A5E68": "gLevel8Stage4Room3MetatileMap",
     "0x083A5EE0": "gLevel8Stage4Room3BlockLayer",
-    "0x083A5F18": "gUnk_083A5F18",
+    "0x083A5F18": "gLevel8Stage4Room3BlockMetatiles",
     "0x083A5F20": "gLevel8Stage4Room3Doors",
     "0x083A5F2C": "gLevel8Stage4Room3Objects",
     "0x083A5F3C": "gLevel8Stage4Room3",
     "0x083A5F94": "gLevel8Stage4Room4MetatileMap",
     "0x083A6110": "gLevel8Stage4Room4BlockLayer",
-    "0x083A61A0": "gUnk_083A61A0",
+    "0x083A61A0": "gLevel8Stage4Room4BlockMetatiles",
     "0x083A61A8": "gLevel8Stage4Room4Doors",
     "0x083A61B4": "gLevel8Stage4Room4Objects",
     "0x083A61E4": "gLevel8Stage4Room4",
     "0x083A623C": "gLevel8Stage4Room5MetatileMap",
     "0x083A6300": "gLevel8Stage4Room5BlockLayer",
-    "0x083A6334": "gUnk_083A6334",
+    "0x083A6334": "gLevel8Stage4Room5BlockMetatiles",
     "0x083A633C": "gLevel8Stage4Room5",
     "0x083A6394": "gLevel8Stage5Room0MetatileMap",
     "0x083A6900": "gLevel8Stage5Room0BlockLayer",
-    "0x083A6A0C": "gUnk_083A6A0C",
+    "0x083A6A0C": "gLevel8Stage5Room0BlockMetatiles",
     "0x083A6A14": "gLevel8Stage5Room0Doors",
     "0x083A6AE0": "gLevel8Stage5Room0",
     "0x083A6B38": "gLevel8Stage5Room1MetatileMap",
     "0x083A6B48": "gLevel8Stage5Room1BlockLayer",
-    "0x083A6B50": "gUnk_083A6B50",
+    "0x083A6B50": "gLevel8Stage5Room1BlockMetatiles",
     "0x083A6B68": "gLevel8Stage5Room1",
     "0x083A6BC0": "gLevel8Stage5Room2MetatileMap",
     "0x083A6C90": "gLevel8Stage5Room2BlockLayer",
-    "0x083A6CD0": "gUnk_083A6CD0",
+    "0x083A6CD0": "gLevel8Stage5Room2BlockMetatiles",
     "0x083A6CE4": "gLevel8Stage5Room2Doors",
     "0x083A6CF0": "gLevel8Stage5Room2Objects",
     "0x083A6D08": "gLevel8Stage5Room2",
     "0x083A6D60": "gLevel8Stage5Room3MetatileMap",
     "0x083A6DD0": "gLevel8Stage5Room3BlockLayer",
-    "0x083A6E08": "gUnk_083A6E08",
+    "0x083A6E08": "gLevel8Stage5Room3BlockMetatiles",
     "0x083A6E10": "gLevel8Stage5Room3Doors",
     "0x083A6E1C": "gLevel8Stage5Room3Objects",
     "0x083A6E24": "gLevel8Stage5Room3",
     "0x083A6E7C": "gLevel8Stage5Room4MetatileMap",
     "0x083A6FCC": "gLevel8Stage5Room4BlockLayer",
-    "0x083A705C": "gUnk_083A705C",
+    "0x083A705C": "gLevel8Stage5Room4BlockMetatiles",
     "0x083A7064": "gLevel8Stage5Room4Doors",
     "0x083A7070": "gLevel8Stage5Room4Objects",
     "0x083A70A0": "gLevel8Stage5Room4",
     "0x083A70F8": "gLevel8Stage5Room5MetatileMap",
     "0x083A71A8": "gLevel8Stage5Room5BlockLayer",
-    "0x083A71DC": "gUnk_083A71DC",
+    "0x083A71DC": "gLevel8Stage5Room5BlockMetatiles",
     "0x083A71E4": "gLevel8Stage5Room5",
     "0x083A723C": "gLevel8Stage6Room0MetatileMap",
     "0x083A7680": "gLevel8Stage6Room0BlockLayer",
-    "0x083A7738": "gUnk_083A7738",
+    "0x083A7738": "gLevel8Stage6Room0BlockMetatiles",
     "0x083A7740": "gLevel8Stage6Room0Doors",
     "0x083A77C4": "gLevel8Stage6Room0",
     "0x083A781C": "gLevel8Stage6Room1MetatileMap",
     "0x083A782C": "gLevel8Stage6Room1BlockLayer",
-    "0x083A7834": "gUnk_083A7834",
+    "0x083A7834": "gLevel8Stage6Room1BlockMetatiles",
     "0x083A784C": "gLevel8Stage6Room1",
     "0x083A78A4": "gLevel8Stage6Room2MetatileMap",
     "0x083A7A08": "gLevel8Stage6Room2BlockLayer",
-    "0x083A7A98": "gUnk_083A7A98",
+    "0x083A7A98": "gLevel8Stage6Room2BlockMetatiles",
     "0x083A7AA0": "gLevel8Stage6Room2Doors",
     "0x083A7AAC": "gLevel8Stage6Room2Objects",
     "0x083A7ADC": "gLevel8Stage6Room2",
     "0x083A7B34": "gLevel8Stage6Room3MetatileMap",
     "0x083A7BEC": "gLevel8Stage6Room3BlockLayer",
-    "0x083A7C20": "gUnk_083A7C20",
+    "0x083A7C20": "gLevel8Stage6Room3BlockMetatiles",
     "0x083A7C28": "gLevel8Stage6Room3",
     "0x083A7C80": "gLevel8Stage7Room0MetatileMap",
     "0x083A823C": "gLevel8Stage7Room0BlockLayer",
-    "0x083A835C": "gUnk_083A835C",
+    "0x083A835C": "gLevel8Stage7Room0BlockMetatiles",
     "0x083A8364": "gLevel8Stage7Room0",
     "0x083A83BC": "gLevel8Stage7Room1MetatileMap",
     "0x083A8548": "gLevel8Stage7Room1BlockLayer",
-    "0x083A85CC": "gUnk_083A85CC",
+    "0x083A85CC": "gLevel8Stage7Room1BlockMetatiles",
     "0x083A85D4": "gLevel8Stage7Room1",
     "0x083A862C": "gUnk_083A862C",
     "0x083A8B50": "gUnk_083A8B50",
@@ -31869,8 +31869,9 @@
     "0x087E3078": "gUnk_087E3078"
   },
   "not_pointers": {
-    "0x0833F4B8": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to SetCollisionTile as the metatile's new collision tile",
-    "0x0833FD24": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->unk4 to SetCollisionTile as the metatile's new collision tile"
+    "0x0833F4B8": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->ptr to SetCollisionTile as the metatile's new collision tile",
+    "0x0833FD24": "BG animation op 5's ptr word is a VALUE: UpdateBgAnims (src/camera_2d01c.c) passes (u16)cmd->ptr to SetCollisionTile as the metatile's new collision tile",
+    "0x087404CC": "gUnk_087404A0[0][11]: struct M19Frame {u8 unk00..unk03} (include/cutscene.h, the credits particles' animation rows: unk00 the gfx table index, unk02 the step's delay), the bytes {8, 1, 0, 8} of the steps {n, 1, 0, 8} n = 0..11, which equal MasterIsr's address 0x08000108 by chance (#167)"
   },
   "isa_ranges": [
     {
@@ -35897,13 +35898,68 @@
     },
     {
       "start": "0x08754780",
+      "end": "0x087547C4",
+      "why": "frame table gStarRodPieceFrames [17 words], consumer Task_StarRodPiece (src/hud_b2fe8.c:1513 `tb->frameTable = (u32 *)gStarRodPieceFrames;`): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label gUnk_087547C4 = gUnk_0873DD64[0], every word points at such a stream (the 16-byte streams gUnk_08334CA0-gUnk_08334DA0 of sprite_sheets; the sign tables after it point into sprite_sheets_2)"
+    },
+    {
+      "start": "0x087547C4",
+      "end": "0x087547D8",
+      "why": "goal-game sign frame table gUnk_0873DD64[0] [5 words] (data/game_rodata.s), consumer Task_GoalGameSign (src/effect_5afac.c:1173 `gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];`), which shows frames 0-4 (src/effect_5afac.c:1183-1254): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x087547D8",
+      "end": "0x087547EC",
+      "why": "goal-game sign frame table gUnk_0873DD64[1] [5 words] (data/game_rodata.s), consumer Task_GoalGameSign (src/effect_5afac.c:1173 `gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];`), which shows frames 0-4 (src/effect_5afac.c:1183-1254): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x087547EC",
+      "end": "0x08754800",
+      "why": "goal-game sign frame table gUnk_0873DD64[2] [5 words] (data/game_rodata.s), consumer Task_GoalGameSign (src/effect_5afac.c:1173 `gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];`), which shows frames 0-4 (src/effect_5afac.c:1183-1254): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x08754800",
+      "end": "0x08754814",
+      "why": "goal-game sign frame table gUnk_0873DD64[3] [5 words] (data/game_rodata.s), consumer Task_GoalGameSign (src/effect_5afac.c:1173 `gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];`), which shows frames 0-4 (src/effect_5afac.c:1183-1254): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x08754814",
+      "end": "0x08754828",
+      "why": "goal-game sign frame table gUnk_0873DD64[4] [5 words] (data/game_rodata.s), consumer Task_GoalGameSign (src/effect_5afac.c:1173 `gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];`), which shows frames 0-4 (src/effect_5afac.c:1183-1254): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x08754828",
+      "end": "0x0875483C",
+      "why": "goal-game sign frame table gUnk_0873DD64[5] [5 words] (data/game_rodata.s), consumer Task_GoalGameSign (src/effect_5afac.c:1173 `gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];`), which shows frames 0-4 (src/effect_5afac.c:1183-1254): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x0875483C",
       "end": "0x08754850",
-      "why": "frame table gStarRodPieceFrames [52 words], consumer src/hud_b2fe8.c:1557 `tb->frameTable = (u32 *)gStarRodPieceFrames;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "goal-game sign frame table gUnk_0873DD64[6] [5 words] (data/game_rodata.s), consumer Task_GoalGameSign (src/effect_5afac.c:1173 `gCurTask->frameTable = (u32 *)gUnk_0873DD64[gCurTask->variant];`), which shows frames 0-4 (src/effect_5afac.c:1183-1254): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
     },
     {
       "start": "0x08754850",
+      "end": "0x0875485C",
+      "why": "goal-game spring frame table gUnk_08754850 [3 words], consumer Task_GoalGameSpring (src/effect_5afac.c:1122 `gCurTask->frameTable = gUnk_08754850;`, one player), frames 0-1 (src/effect_5afac.c:1135-1137) and 2 (the charge step sub_0805c584, src/effect_5afac.c:952): Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, the span to gUnk_0875485C = gUnk_0873DD4C[0]"
+    },
+    {
+      "start": "0x0875485C",
+      "end": "0x08754868",
+      "why": "goal-game spring frame table gUnk_0873DD4C[0] [3 words] (data/game_rodata.s), consumer Task_GoalGameSpring (src/effect_5afac.c:1124 `gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];`, two to four players), frames 0-2 as gUnk_08754850: Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x08754868",
+      "end": "0x08754874",
+      "why": "goal-game spring frame table gUnk_0873DD4C[1] [3 words] (data/game_rodata.s), consumer Task_GoalGameSpring (src/effect_5afac.c:1124 `gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];`, two to four players), frames 0-2 as gUnk_08754850: Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x08754874",
+      "end": "0x08754880",
+      "why": "goal-game spring frame table gUnk_0873DD4C[2] [3 words] (data/game_rodata.s), consumer Task_GoalGameSpring (src/effect_5afac.c:1124 `gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];`, two to four players), frames 0-2 as gUnk_08754850: Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
+    },
+    {
+      "start": "0x08754880",
       "end": "0x0875488C",
-      "why": "frame table gUnk_08754850 [15 words], consumer src/effect_5afac.c:1121 `gCurTask->frameTable = gUnk_08754850;`: Task.frameTable[Task.frame] (or the table indexed directly) is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: to the next label, every word points at such a stream (evidence_d.py)"
+      "why": "goal-game spring frame table gUnk_0873DD4C[3] [3 words] (data/game_rodata.s), consumer Task_GoalGameSpring (src/effect_5afac.c:1124 `gCurTask->frameTable = (u32 *)gUnk_0873DD4C[gCurTask->variant];`, two to four players), frames 0-2 as gUnk_08754850: Task.frameTable[Task.frame] is the OAM template pointer QueueSprite queues (TaskDrawWorld src/early_5d9c.c:85, src/actor_653ec.c:133) for BuildOam (src/early_1b08.c); extent: that index bound, also the span to the next label"
     },
     {
       "start": "0x0875488C",
@@ -39566,8 +39622,1863 @@
       "asset": true
     },
     {
+      "name": "room_bg_anims_08335728",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08335b90",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08335df8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08336660",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08336ec8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08337730",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08337b98",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08339700",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08339b68",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08339dd0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833a120",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833abf0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833ec58",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833f4c4",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833fd30",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833fe40",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0833ff50",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340088",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340118",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083401a8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340260",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340370",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340480",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340590",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083406d0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340760",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083407f0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340880",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08340940",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083447f8",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08344c30",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08348280",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0834b8d0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0834ef20",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08350b30",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08353280",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_083559d0",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_08358120",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
+      "name": "room_bg_anims_0835b604",
+      "asset": true,
+      "zone": "room_bg_anims"
+    },
+    {
       "name": "room_data",
       "asset": true
+    },
+    {
+      "name": "room_data_0835d0e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835d358",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835d548",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835de18",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835e2f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835e764",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835e97c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835ef74",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835f1fc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835f59c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0835fc7c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836003c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08360234",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083606e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08360b90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08360f90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083613f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083617f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08361d10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836215c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083627e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08362b28",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083630f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08363538",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08363a64",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08363e5c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836406c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08364414",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08364694",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08364a90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083655b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08365818",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366398",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366694",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083669cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366bf0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08366d74",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083672cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08367594",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836784c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08367aa8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08367ee4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836852c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08368768",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08368d88",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08369330",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08369c38",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a100",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a370",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a58c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a734",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836a8f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836acb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836af3c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b1b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b4a4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b80c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836b9c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836bcc8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836c108",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836c564",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836caf0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836ce00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836d1f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836d38c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836d554",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836db34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836dd9c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e0f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e44c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e6b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836e87c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836ef30",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f0fc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f2c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f68c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836f83c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836fa08",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0836fd9c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370058",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370354",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837053c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083706dc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370b4c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08370e60",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083710e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083713e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08371780",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08371874",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08371de8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372098",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372298",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372408",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372570",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083726d8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372ad0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08372db0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08373074",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08373700",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837396c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08373b1c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374164",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374324",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374828",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374b80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374ccc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08374e14",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08375374",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376228",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376b7c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376dec",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08376f70",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837719c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837738c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08377b48",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08378014",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08378ad8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08378f08",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08379270",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08379bdc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08379eb8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837a124",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837a584",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837abe0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837ad90",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837af68",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837b824",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837bbf4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837bce8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c000",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c2e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c47c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c578",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837c6f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837d9c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837de94",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837e5f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837eb8c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837ed00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837eeb8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837f080",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837f794",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837fa9c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0837fe20",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08380128",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08380614",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083807b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08380d54",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08381200",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08381d24",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08382214",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08382630",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838291c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083832e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08383b80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384118",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838480c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384b34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384d08",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08384e94",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083859bc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386024",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083863a0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386758",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386c18",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08386fd8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08387360",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083874f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08387a40",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838822c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083887b4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083889c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08388c10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083892e4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08389434",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08389ab8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08389f84",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838a478",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838a6c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838a8b4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838aa28",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838af78",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838b3ec",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838b79c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838bbcc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838bda4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838bf64",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838c0c0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838c5cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838cbb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838d1e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838d854",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838dc44",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838ddb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838df1c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e090",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e320",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e4d0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e6e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838e870",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838ef3c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838f7e0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838f96c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0838fd4c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08390104",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08390308",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083905f4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08390c00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08391190",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08391c98",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08391df4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08392360",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083927d0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08392b00",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08392f64",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393488",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393604",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083937b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393918",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393ad4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393c84",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393e20",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08393f4c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083944b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08394cb0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395150",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083952f0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083954a8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395764",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395a20",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395ce8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08395f8c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839623c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08396504",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083967ac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08396a58",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08396d10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083970c4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083973b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397560",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083976d8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839785c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083979c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397bac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397d54",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08397f28",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083980a4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398278",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398430",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398628",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083987b4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083988b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08398e34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08399260",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08399644",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_08399d10",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839a26c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839a520",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839a7cc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839aa98",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839ad70",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839b2b8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839bb80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839bf2c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839c128",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839c5d4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839cb8c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839cda0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839d2ac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839d60c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839d914",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839db54",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839df2c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839e1e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839e5e8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839e99c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839ec0c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839ee6c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839f430",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839f6dc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_0839fc98",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a00b0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a03c8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0734",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0af8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0d84",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a0f58",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a1484",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a169c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a1824",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a1bbc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2030",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2548",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a25d0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a26ec",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2974",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a2b1c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3314",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a339c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a353c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3664",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3954",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a3acc",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a404c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a40d4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4274",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4394",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4634",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4754",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4dd8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a4e60",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5000",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5128",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a53ac",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a54d8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5c40",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5cc8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5e68",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a5f94",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a623c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6394",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6b38",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6bc0",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6d60",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a6e7c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a70f8",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a723c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a781c",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a78a4",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a7b34",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a7c80",
+      "asset": true,
+      "zone": "room_data"
+    },
+    {
+      "name": "room_data_083a83bc",
+      "asset": true,
+      "zone": "room_data"
     },
     {
       "name": "room_metatiles",
@@ -39615,115 +41526,730 @@
       "name": "game_rodata"
     },
     {
+      "name": "game_rodata_0873079c",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_087320c4",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_08732630",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_087328bc",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_087328f0",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873a924",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b510",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b6cc",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b7b0",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873b9ec",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873dc3c",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873dea8",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873df14",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873df38",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e284",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e348",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e5f8",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e698",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873e7a4",
+      "zone": "game_rodata"
+    },
+    {
+      "name": "game_rodata_0873eac0",
+      "zone": "game_rodata"
+    },
+    {
       "name": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0873f4c8"
+      "name": "actor_rodata_0873f4c8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0873f6e8"
+      "name": "actor_rodata_0873f6e8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0873f8f4"
+      "name": "actor_rodata_0873f92c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08740de4"
+      "name": "actor_rodata_0873fb7c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874113c"
+      "name": "actor_rodata_0873fcf8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08741aa4"
+      "name": "actor_rodata_087400e4",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08741f0c"
+      "name": "actor_rodata_08740124",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08742bf8"
+      "name": "actor_rodata_08740320",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874306c"
+      "name": "actor_rodata_08740648",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08743414"
+      "name": "actor_rodata_08740668",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874369c"
+      "name": "actor_rodata_08740680",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08743bd0"
+      "name": "actor_rodata_087406ec",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874407c"
+      "name": "actor_rodata_08740720",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874425c"
+      "name": "actor_rodata_087407bc",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087449e8"
+      "name": "actor_rodata_0874080c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087453bc"
+      "name": "actor_rodata_08740824",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745588"
+      "name": "actor_rodata_0874099c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745868"
+      "name": "actor_rodata_08740a80",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745a34"
+      "name": "actor_rodata_08740b08",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08745bb4"
+      "name": "actor_rodata_08740de4",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08747ebc"
+      "name": "actor_rodata_08740fb0",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087481a0"
+      "name": "actor_rodata_08741094",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_087487e8"
+      "name": "actor_rodata_087410c0",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08748930"
+      "name": "actor_rodata_0874113c",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08748bb8"
+      "name": "actor_rodata_08741214",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08749598"
+      "name": "actor_rodata_08741298",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08749b08"
+      "name": "actor_rodata_087412ec",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_08749c70"
+      "name": "actor_rodata_08741318",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874b38c"
+      "name": "actor_rodata_087413d8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874b4d8"
+      "name": "actor_rodata_087414b0",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874bb7c"
+      "name": "actor_rodata_087414f8",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874c184"
+      "name": "actor_rodata_087415ac",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874c204"
+      "name": "actor_rodata_087415e4",
+      "zone": "actor_rodata"
     },
     {
-      "name": "actor_rodata_0874c3d0"
+      "name": "actor_rodata_08741628",
+      "zone": "actor_rodata"
     },
     {
-      "name": "frame_tables"
+      "name": "actor_rodata_08741684",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741aa4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741d64",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741e70",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741e94",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741f0c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08741fa8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742010",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742050",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742088",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087420ac",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087420c0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087420f4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874210c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742144",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742598",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087425b8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087425dc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087425f0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742600",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742614",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874269c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087426ec",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742734",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874276c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087427b0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742814",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087428e8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742930",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742998",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742bf8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08742ea4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874306c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874313c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087431cc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743214",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743248",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087432ec",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743414",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743588",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743614",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874369c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743734",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087438a4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087439c0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743b48",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08743bd0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874407c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874417c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087441bc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874425c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874433c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874449c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08744510",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08744598",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087448e4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087449e8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087453bc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745588",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745618",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087456cc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745868",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745a34",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745aa4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745b0c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745bb4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745cd4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08745cec",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08747b10",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08747c28",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08747ebc",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748268",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087484a4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087484e4",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087487e8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748930",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087489c0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748a00",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748a38",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748a80",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748bb8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748d28",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08748f8c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_087491a0",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749458",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749598",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749b08",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749bac",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749c70",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749cec",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_08749d1c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874ad44",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b1a8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b20c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b38c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b4d8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b51c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b560",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874b614",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874bb7c",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874bff8",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874c184",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874c240",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874c260",
+      "zone": "actor_rodata"
+    },
+    {
+      "name": "actor_rodata_0874c3d0",
+      "zone": "actor_rodata"
     },
     {
       "name": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087560c0",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087560ec",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756178",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087561c4",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087562a8",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087562e4",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087562f0",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_0875636c",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087563d8",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756498",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756514",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756570",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_0875670c",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08756798",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08757250",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08757280",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087572e0",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_0875735c",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08757424",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_087582f4",
+      "zone": "late_game_rodata"
+    },
+    {
+      "name": "late_game_rodata_08758334",
+      "zone": "late_game_rodata"
     },
     {
       "name": "credits_demos"
@@ -39749,9 +42275,6 @@
     {
       "name": "air_grind_program",
       "asset": true
-    },
-    {
-      "name": "room_bg_anim_lists"
     },
     {
       "name": "sprite_frame_lists"

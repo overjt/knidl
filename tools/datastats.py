@@ -58,7 +58,7 @@ CODE_KINDS = ("arm_code", "thumb_code", "c_code", "pool")
 # tools/gbafix.py), not ROM data: only its logo is extracted from baserom.
 NOT_MEASURED = ("rom_header",)
 
-SECTION_RE = re.compile(r'^\s*\.section\s+\.([A-Za-z0-9_]+)(?:\.tail)?\b')
+SECTION_RE = re.compile(r'^\s*\.section\s+\.([A-Za-z0-9_]+)\b')
 INCBIN_RE = re.compile(
     r'^\s*\.incbin\s+"([^"]+)"\s*,\s*(0x[0-9A-Fa-f]+|\d+)\s*,\s*'
     r'(0x[0-9A-Fa-f]+|\d+)\s*$'
@@ -90,7 +90,8 @@ def segment_of(segs, addr):
 
 def segment_files(data_names):
     """{segment name: [file, ...]} for every committed file that opens one
-    of the given sections (asm/*.s, asm/*/*.s, data/*.s)."""
+    of the given sections (asm/*.s, asm/*/*.s, data/*.s).  A data file
+    holds the sections of all the pieces of its zone (#167)."""
     files = {}
     paths = sorted(
         glob.glob("asm/*.s") + glob.glob("asm/*/*.s") + glob.glob("data/*.s")
@@ -100,26 +101,32 @@ def segment_files(data_names):
             for line in f:
                 m = SECTION_RE.match(line)
                 if m and m.group(1) in data_names:
-                    files.setdefault(m.group(1), []).append(path)
-                    break
+                    if path not in files.get(m.group(1), []):
+                        files.setdefault(m.group(1), []).append(path)
     return files
 
 
-def walk_file(path, start):
-    """Yield (addr, size, symbolic) for every byte-producing directive of a
-    segment file, plus the addresses of its labels.
+def walk_file(path, start, section):
+    """Yield (addr, size, symbolic) for every byte-producing directive of
+    one section of a segment file, plus the addresses of its labels.
 
     `symbolic` is True for a `.word` whose operand is not a plain number.
-    Addresses advance from `start`; a `.tail` section continues the count
-    (it is linked right after the main section).
+    Addresses advance from `start`, the section's segments.txt start.
     """
     items = []
     labels = []
     addr = start
+    inside = False
     with open(path) as f:
         for raw in f:
             line = raw.split("@", 1)[0].rstrip()
             if not line.strip():
+                continue
+            m = SECTION_RE.match(line)
+            if m:
+                inside = m.group(1) == section
+                continue
+            if not inside:
                 continue
             m = INCBIN_RE.match(line)
             if m:
@@ -225,7 +232,7 @@ def main():
         symbolic_at = set()
         covered = 0
         for path in paths:
-            items, labels, _end = walk_file(path, s)
+            items, labels, _end = walk_file(path, s, name)
             labels_total += sum(
                 1 for _a, n in labels if n != name
             )

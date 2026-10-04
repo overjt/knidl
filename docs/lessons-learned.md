@@ -9,7 +9,7 @@ The lessons keep the `sub_`/`gUnk_` names of their time; `docs/analysis/renames.
 
 ## Start here
 
-This file is the project's memory: about 690 numbered lessons in five
+This file is the project's memory: about 695 numbered lessons in five
 sections, each tied to the function, module or tool that taught it.
 The 40 lines below are the ones to read before your first function; each
 names a lesson (and its closest companions) and says what it tells you.
@@ -62,6 +62,7 @@ The procedure itself is [`docs/decomp-loop.md`](decomp-loop.md).
 - [4.11](#411-hand-labels-must-flow-through-the-split-config-never-edit-generated-asm) Every hand name goes through `tools/split_config.json` or `tools/symdb.py`: CI regenerates `asm/` and `data/` and fails on any diff.
 - [4.30](#430-the-census-has-two-systematic-blind-spots-in-the-game-code-zone--sweep-for-them-before-writing-c) (with [4.40](#440-a-bl-edge-whose-site-is-a-literal-pool-word-is-a-phantom), [4.90](#490-a-census-row-of-exactly-0x1000-is-symdbs-size-cap-look-for-long-jump-phantoms)) The function census has systematic phantoms (the pool word `0xFFFFF000` decodes as a `bl`, pool-skip branches, symdb's 0x1000 size cap): sweep for them before writing C.
 - [4.121](#4121-a-zones-census-name-is-a-guess-follow-the-consumers-pointers) A zone's census name is a guess: read a data zone through its consumers' pointers.
+- [4.156](#4156-one-data-file-per-zone-the-rows-stay-only-the-files-merge) (with [4.157](#4157-records-as-c-every-word-keeps-its-state-and-const-is-decided-by-the-consumers)) A record family becomes C as one file with a named section per run, a zone stays one data file with a section per piece, and every word keeps its state, so the census does not move.
 
 **Data policy, the shift test and the boot test**
 
@@ -11298,6 +11299,93 @@ insertion point lies between them today.
 * The clean-clone proof found a Dockerfile pin that never applied (`ARG
   AGBC_COMMIT` used as `AGBCC_COMMIT`): the image built the fork's default
   branch head, which only happened to be the pinned commit.
+
+### 4.156 One data file per zone: the rows stay, only the files merge
+Run 3's grouped records cut `actor_rodata` into 35 rows, and split.py
+wrote one data file per row (35 files around one C file).  The RoomDef
+headers would have added ~334 more.  The fix keeps every row
+(`segments.txt`, the linker sections, the ldgroup assertions, the census'
+segment-name exclusion) and changes only where a row is written: a data
+segment's config entry may name its `"zone"`, and split.py writes all the
+pieces of a zone into `data/<zone>.s`, one `.section .<piece>` each, with
+a comment where each C run sits.  carve_data.py sets `"zone"` on the piece
+after a carve (named `<zone>_<start>`), so a family carved later lands in
+the existing file.  The verification link needed one fix: several
+sections now share one object, which must be linked once.  The tools that
+read a data file as one section (datastats' walk, check-data's "one file
+per segment", audit's label census) now read it section by section, and
+split.py removes a generated data file no zone writes any more (the
+Makefile's `data/*.s` glob would otherwise assemble a stale piece twice).
+With the zone files, #170's last split.py item was cheap: the `.tail`
+sections and the raw odd-start path (4.152) went, and split.py now
+refuses a code segment that does not start and end on its alignment.
+
+### 4.157 Records as C: every word keeps its state, and `const` is decided by the consumers
+#167 moved five families to C (the BG animation scripts and fades, the
+script lists, the 343 frame tables, the 333 RoomDef headers and 705 seg
+18 handler tables and records) without changing one census number, because each
+generator copied the data file's state word by word: a `.word sym`
+became the same symbol in C (`(u32)sym`, `&sym`, `sym`), an `.incbin`
+word stayed a number, and the generator stopped on any record that did
+not round-trip against the ROM.  So `make shifttest` reads the same
+relocations before and after (16,961 unrelocated after crt0), and the
+only datastats line that moves besides the C-table line is "not
+symbolic, points at code" (11,152 -> 11,146): six RoomDef byte groups
+that read as `0x08000100` are now C numbers.  `const` was the recurring
+question, and the answer came from the consumers, not the data: a
+RoomDef, a script, a frame table or a `CallTableEntry` table const would
+drop the qualifier in `gCurRoomDef`, `Unk02007D70.unk4`,
+`t->frameTable = gUnk_X` (99 files; still 28 with a const
+`Task.frameTable`) or `CallTableEntry`'s `u32 *` under `-Werror`.  Only
+tables already declared const (`gRoomBgAnimScripts` and its lists,
+`gSubGameInitHooks`) are const; the others are placed in ROM by
+`__attribute__((section))`.
+
+### 4.158 Two metrics that only looked at data files
+Moving data into C exposed two tools that read only `data/*.s`:
+`tools/calcrom.pl` classified any named section of a `src/` object as
+code, so `actor_records.c`'s records had counted as code since #36 run 3
+(and the frame tables would have added 40 KiB more); it now counts a
+`src/data/*.o` section as data (`make progress`: 851,196 code bytes,
+847,028 in `src/`).  It also counted the label split.py writes at the
+start of every data file, named after its segment row, as a documented
+symbol: the zone files added about 500 of them (333 in `room_data`
+alone), so it skips the names of data, pool and split code rows now
+(8,015 of 34,017 documented; master by the same rule 7,682).
+`tools/audit.py`'s placeholder census counted ROM
+labels only in data files, so every label that moved to C left the
+census; it now counts the `c_data` rows' `data_symbols` too.  A data
+change that moves bytes between files must re-read every metric's
+source, not only `make datastats`.
+
+### 4.159 What the families taught about extents
+* docs/data.md said the BG animation scripts and fades were "none
+  adjacent"; four fades sit right before the script that uses them, so
+  the family is 40 runs, not 74.
+* Of the 343 frame tables, 14 had no `pointer_tables` entry that
+  delimits them (two entries predate labels added inside them; the
+  goal-game sign and spring tables): their extent is the consumer's
+  frame range, cited per array.  `gUnk_08755440` is 11 NULL words, a
+  real table: `sub_08019b30` and `sub_080ca71c` install it and its draw
+  callback only compares the table's address.
+* `CallTableEntry(index, count, table)` gives 489 of the first 500
+  behaviour tables an extent equal to their span; four bounds pass the span (the
+  ROM's own layout, e.g. `gCutsceneStarts`' index 8 reads
+  `gCutsceneActors[0]`), and one is shorter (`gUnk_087402FC`: bound 5,
+  span 9), which no label may fix without a consumer.
+* A record type can be declared in a code file only: the 58 seven-word
+  terrain-handler tables and the hit-reaction records looked untyped
+  until a second look found `struct ActorHandlers` and `struct ActorVt`
+  inside `src/actor_692fc.c`.  Moved to `include/actor.h` (an identical
+  assembly for every file), they typed 198 records, 98 of which hold no
+  function at all and were found from the pointers to them, not by a
+  scan for function words.
+* The function-entry rule (docs/data.md 2) can still be wrong outside
+  assets: `gUnk_087404A0[0][11]`, four `struct M19Frame` bytes
+  `{8, 1, 0, 8}`, equals `MasterIsr`'s address and had been
+  `.word MasterIsr`.  No shift-test point lies before `0x08000108`, so
+  only reading the record's declared type showed it; it is a
+  `not_pointers` entry now.
 
 ## 5. Workflow that worked
 
