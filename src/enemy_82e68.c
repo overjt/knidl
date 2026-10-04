@@ -36,7 +36,7 @@
  *   * the class-2 task #176 one-shot `Task_FlamerFlame` and the class-3 task #10
  *     entry `Task_Noddy`, whose script continues in src/enemy_844c4.c.
  *
- * `sub_080839d0`, `sub_08083ee8`, `sub_080840d4` and `sub_0808429c` are dead
+ * `FlamerIdleEnterState`, `SirKibbleCutterEnterState`, `sub_080840d4` and `sub_0808429c` are dead
  * exports: each is a copy of its host's tail dispatch that nothing in the ROM
  * references (lesson 4.30 / 4.34, curated in tools/symdb.py).
  */
@@ -294,7 +294,7 @@ void FlamerFall(void)
     TaskSleepForever();
 }
 
-void sub_0808330c(void)
+void FlamerFallUpdate(void)
 {
     u16 m;
 
@@ -567,7 +567,7 @@ void FlamerIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
 }
 
-void sub_080839d0(void)
+void FlamerIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gFlamerIdleStates);
 }
@@ -771,25 +771,25 @@ void Task_SirKibbleCutter(void)
     t->layer = 9;
     gCurTask->frameTable = gSirKibbleCutterFrames;
     PlaySfx(186);
-    CallTableEntry(gCurTask->variant, 1, gUnk_08741E64);
+    CallTableEntry(gCurTask->variant, 1, gSirKibbleCutterVariants);
 }
 
-void sub_08083eb4(void)
+void SirKibbleCutterInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_08083f04;
+    gCurTask->updateCallback = (u32)SirKibbleCutterUpdate;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E68);
+    CallTableEntry(gCurTask->state, 1, gSirKibbleCutterStates);
 }
 
-void sub_08083ee8(void)
+void SirKibbleCutterEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E68);
+    CallTableEntry(gCurTask->state, 1, gSirKibbleCutterStates);
 }
 
-void sub_08083f04(void)
+void SirKibbleCutterUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741E6C);
+    CallTableEntry(gCurTask->updateState, 1, gSirKibbleCutterStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();

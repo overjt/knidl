@@ -1301,7 +1301,7 @@ void GlunkShoot(void)
     TaskSleepForever();
 }
 
-void sub_08089aac(void)
+void GlunkShootUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(GlunkEnterState, gCurTaskIdx);
@@ -1862,7 +1862,7 @@ void SlippyFall(void)
     TaskSleepForever();
 }
 
-void sub_0808a7a4(void)
+void SlippyFallUpdate(void)
 {
 }
 

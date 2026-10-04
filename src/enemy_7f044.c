@@ -874,7 +874,7 @@ void sub_0807fe18(void)
         if (--a->unk34 == 0)
         {
             gCurTask->unk34 = ActorStepAnim();
-            sub_08080374(gCurTask->unk34, 10);
+            TwisterTickSound(gCurTask->unk34, 10);
         }
         b = gCurTask;
         if ((--b->unk2C & 28) == 0)
@@ -895,7 +895,7 @@ void sub_0807fe18(void)
                 break;
             c->unk34 = ~(n >> 3) & 3;
             ActorStepAnim();
-            sub_08080374(1, 10);
+            TwisterTickSound(1, 10);
         }
         else
         {
@@ -929,7 +929,7 @@ void sub_0807fe18(void)
                 break;
             e->unk34 = m >> 3;
             ActorStepAnim();
-            sub_08080374(1, 10);
+            TwisterTickSound(1, 10);
         }
         else
         {
@@ -944,7 +944,7 @@ void sub_0807fe18(void)
         if (--f->unk34 == 0)
         {
             gCurTask->unk34 = ActorStepAnim();
-            sub_08080374(gCurTask->unk34, 10);
+            TwisterTickSound(gCurTask->unk34, 10);
         }
         g = gCurTask;
         if ((--g->unk2C & 28) == 0)
@@ -1002,7 +1002,7 @@ void sub_0808003c(void)
     if (--t->unk34 == 0)
     {
         gCurTask->unk34 = ActorStepAnim();
-        sub_08080374(gCurTask->unk34, 8);
+        TwisterTickSound(gCurTask->unk34, 8);
     }
     t = gCurTask;
     m = t->unk30;
@@ -1102,7 +1102,7 @@ void sub_08080278(void)
     if (--t->unk34 == 0)
     {
         gCurTask->unk34 = ActorStepAnim();
-        sub_08080374(gCurTask->unk34, 8);
+        TwisterTickSound(gCurTask->unk34, 8);
     }
     if (gCurTask->state != 2)
         TaskSetEntry(TwisterEnterState, gCurTaskIdx);
@@ -1143,7 +1143,7 @@ void sub_08080358(void)
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
 
-void sub_08080374(s32 a, s32 b)
+void TwisterTickSound(s32 a, s32 b)
 {
     struct Task *t = gCurTask;
 

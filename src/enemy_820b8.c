@@ -20,7 +20,7 @@
  *   * `sub_08082554` / `sub_080825ec`, the hop cycle that drives the actor
  *     record's unk16/unk18/unk1A/unk1E straight from the task, and
  *     `sub_08082cc4`, the four-step Task.unk2C-scaled animation loop;
- *   * `sub_08082c5c`, the "turn around once every 30 frames if the player is
+ *   * `WheelieCheckSkid`, the "turn around once every 30 frames if the player is
  *     behind and within 31 units" probe shared by the bank's walkers.
  *
  * `PoppyBrosJrRideEnterState`, `PoppyBrosJrDroppedObjectEnterState`, `PoppyBrosJrRideIdleEnterState` and `WheelieIdleEnterState` are dead
@@ -110,7 +110,7 @@ void PoppyBrosJrRideUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08082270(void)
+void PoppyBrosJrRide(void)
 {
     gCurTask->updateState = 0;
     TaskSetMotionXFacing(gUnk_087415E4[gCurTask->unk74], 0x5A5A5A5A);
@@ -414,7 +414,7 @@ void sub_0808279c(void)
 
 void sub_08082818(void)
 {
-    sub_08082c5c();
+    WheelieCheckSkid();
     if (gCurTask->state != 0)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
@@ -429,12 +429,12 @@ void sub_08082844(void)
 
 void sub_0808287c(void)
 {
-    sub_08082c5c();
+    WheelieCheckSkid();
     if (gCurTask->state != 1)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
-void sub_080828a8(void)
+void WheelieSkid(void)
 {
     struct Task *t;
 
@@ -456,7 +456,7 @@ void sub_080828a8(void)
     }
 }
 
-void sub_08082908(void)
+void WheelieSkidUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -567,7 +567,7 @@ void sub_08082aec(void)
         TaskSetEntry(WheelieEnterState, gCurTaskIdx);
 }
 
-void sub_08082b14(void)
+void WheelieFall(void)
 {
     gCurTask->updateState = 5;
     gCurTask->unk30 = 0;
@@ -576,7 +576,7 @@ void sub_08082b14(void)
     sub_08082cc4();
 }
 
-void sub_08082b48(void)
+void WheelieFallUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -634,7 +634,7 @@ void sub_08082c58(void)
 {
 }
 
-void sub_08082c5c(void)
+void WheelieCheckSkid(void)
 {
     struct Task *t = gCurTask;
 

@@ -9,7 +9,7 @@
  *   * script 2's rows `LaserBallInit` / `LaserBallIdleInit` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
  *     with `sub_0808e480` / `sub_0808e54c` / `LaserBallShoot` / `sub_0808e730`
- *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `sub_0808e704` /
+ *     as the bodies and `sub_0808e510` / `sub_0808e5cc` / `LaserBallShootUpdate` /
  *     `sub_0808e800` as their guards;
  *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
  *     rows `CoconutInit` / `CoconutIdleInit`, bodies `0x08743230` (3) and
@@ -225,7 +225,7 @@ void LaserBallShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808e704(void)
+void LaserBallShootUpdate(void)
 {
     if (gCurTask->unk30 != 0)
     {
@@ -388,7 +388,7 @@ void CoconutWait(void)
     TaskSleepForever();
 }
 
-void sub_0808e9d4(void)
+void CoconutWaitUpdate(void)
 {
     s32 v;
 
@@ -446,7 +446,7 @@ void CoconutFall(void)
     }
 }
 
-void sub_0808eb10(void)
+void CoconutExplode(void)
 {
     ActorSetHitReactions(gUnk_08743558);
     ActorDie();

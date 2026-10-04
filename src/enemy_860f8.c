@@ -51,7 +51,7 @@ void BrontoBurtWaveUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08086170(void)
+void BrontoBurtWave(void)
 {
     struct Task *t;
     s16 *p;
@@ -405,7 +405,7 @@ void BrontoBurtDiagonalUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08086984(void)
+void BrontoBurtDiagonal(void)
 {
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
@@ -448,7 +448,7 @@ void BrontoBurtChaseUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08086a68(void)
+void BrontoBurtChase(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -770,7 +770,7 @@ void TwizzyWaveUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808713c(void)
+void TwizzyWave(void)
 {
     s16 *p;
 
@@ -1101,7 +1101,7 @@ void TwizzyDiagonalUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080878f0(void)
+void TwizzyDiagonal(void)
 {
     gCurTask->updateState = 0;
     gCurTask->onGround = 0;
@@ -1146,7 +1146,7 @@ void TwizzyChaseUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080879d4(void)
+void TwizzyChase(void)
 {
     gCurTask->updateState = 0;
     TaskStop();

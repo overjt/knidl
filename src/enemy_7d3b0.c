@@ -27,8 +27,8 @@
  *     `GordoBounceHorizontal`, `GordoSweep`) and Cool Spook's float `sub_0807ef7c`,
  *     each an infinite eight-step velocity ramp.
  *
- * `RockyIdleEnterState`, `SirKibbleIdleEnterState`, `CappyCappedEnterState`, `sub_0807e904`,
- * `sub_0807ee44` and `sub_0807ef08` are dead exports: each is a copy of its
+ * `RockyIdleEnterState`, `SirKibbleIdleEnterState`, `CappyCappedEnterState`, `CappyStandEnterState`,
+ * `CoolSpookFlyEnterState` and `CoolSpookBobEnterState` are dead exports: each is a copy of its
  * host's tail dispatch that nothing in the ROM references (curated in
  * tools/symdb.py).
  */
@@ -1096,33 +1096,33 @@ void CappyCaplessJumpUpdate(void)
     }
 }
 
-void sub_0807e8b8(void)
+void CappyStandInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0807e920;
+    t->updateCallback = (u32)CappyStandUpdate;
     t->frameTable = gCappyFrames;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741290);
+    CallTableEntry(gCurTask->state, 1, gCappyStandStates);
 }
 
-void sub_0807e904(void)
+void CappyStandEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741290);
+    CallTableEntry(gCurTask->state, 1, gCappyStandStates);
 }
 
-void sub_0807e920(void)
+void CappyStandUpdate(void)
 {
     if ((u8)ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08741294);
+        CallTableEntry(gCurTask->updateState, 1, gCappyStandStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807e950(void)
+void CappyStandHop(void)
 {
     gCurTask->updateState = 0;
     gCurTask->frame = 4;
@@ -1141,7 +1141,7 @@ void sub_0807e950(void)
     }
 }
 
-void sub_0807e9b0(void)
+void CappyStandHopUpdate(void)
 {
 }
 
@@ -1358,26 +1358,26 @@ void Task_CoolSpook(void)
     CallTableEntry(gCurTask->variant, 2, gCoolSpookVariants);
 }
 
-void sub_0807ee14(void)
+void CoolSpookFlyInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807ee60;
+    gCurTask->updateCallback = (u32)CoolSpookFlyUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741308);
+    CallTableEntry(gCurTask->state, 1, gCoolSpookFlyStates);
 }
 
-void sub_0807ee44(void)
+void CoolSpookFlyEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741308);
+    CallTableEntry(gCurTask->state, 1, gCoolSpookFlyStates);
 }
 
-void sub_0807ee60(void)
+void CoolSpookFlyUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0874130C);
+    CallTableEntry(gCurTask->updateState, 1, gCoolSpookFlyStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807ee84(void)
+void CoolSpookFly(void)
 {
     gCurTask->updateState = 0;
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
@@ -1389,29 +1389,29 @@ void sub_0807eea8(void)
     gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
 }
 
-void sub_0807eec4(void)
+void CoolSpookBobInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807ef24;
+    gCurTask->updateCallback = (u32)CoolSpookBobUpdate;
     TaskFaceNearestPlayer();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741310);
+    CallTableEntry(gCurTask->state, 1, gCoolSpookBobStates);
 }
 
-void sub_0807ef08(void)
+void CoolSpookBobEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741310);
+    CallTableEntry(gCurTask->state, 1, gCoolSpookBobStates);
 }
 
-void sub_0807ef24(void)
+void CoolSpookBobUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741314);
+    CallTableEntry(gCurTask->updateState, 1, gCoolSpookBobStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0807ef48(void)
+void CoolSpookBob(void)
 {
     gCurTask->updateState = 0;
     sub_0807ef7c();

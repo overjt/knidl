@@ -9098,7 +9098,7 @@ u32 gSirKibbleCutterFrames[] FRAME_TABLE = {
 };
 
 /* gCappyFrames.  Consumers: CappyCappedInit (src/enemy_7d3b0.c:950),
- * sub_0807e8b8 (src/enemy_7d3b0.c:1104).  8 words, OAM template streams;
+ * CappyStandInit (src/enemy_7d3b0.c:1104).  8 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0875235C-0x0875237C).  Declared include/enemy.h:1164. */
 u32 gCappyFrames[] FRAME_TABLE = {

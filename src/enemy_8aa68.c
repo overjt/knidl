@@ -889,7 +889,7 @@ void GipWalk(void)
     }
 }
 
-void sub_0808bf1c(void)
+void GipWalkUpdate(void)
 {
     if (--gCurTask->unk28 == 0)
     {

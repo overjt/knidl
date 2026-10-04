@@ -192,7 +192,7 @@ void sub_08084f50(void)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
 }
 
-void sub_08084f78(void)
+void ChillySlide(void)
 {
     struct Task *t;
     u16 zero;
@@ -277,7 +277,7 @@ void sub_08084f78(void)
     TaskSleepForever();
 }
 
-void sub_08085158(void)
+void ChillySlideUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(ChillyEnterState, gCurTaskIdx);
@@ -349,7 +349,7 @@ void ChillyFall(void)
     TaskSleepForever();
 }
 
-void sub_080852c8(void)
+void ChillyFallUpdate(void)
 {
 }
 
@@ -577,7 +577,7 @@ void WaddleDooWalkJump(void)
     TaskSleepForever();
 }
 
-void sub_080856dc(void)
+void WaddleDooWalkJumpUpdate(void)
 {
 }
 
@@ -637,7 +637,7 @@ void WaddleDooWalkShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808582c(void)
+void WaddleDooWalkShootUpdate(void)
 {
     struct Task *t;
 
@@ -717,7 +717,7 @@ void ParasolWaddleDooWalk(void)
     }
 }
 
-void sub_08085998(void)
+void ParasolWaddleDooWalkUpdate(void)
 {
     struct Task *t;
     u32 v;
@@ -772,7 +772,7 @@ void ParasolWaddleDooJump(void)
     TaskSleepForever();
 }
 
-void sub_08085a80(void)
+void ParasolWaddleDooJumpUpdate(void)
 {
 }
 
@@ -832,7 +832,7 @@ void ParasolWaddleDooShoot(void)
     TaskSleepForever();
 }
 
-void sub_08085bb8(void)
+void ParasolWaddleDooShootUpdate(void)
 {
     struct Task *t;
 
@@ -841,7 +841,7 @@ void sub_08085bb8(void)
         TaskSetEntry(ParasolWaddleDooEnterState, gCurTaskIdx);
 }
 
-void sub_08085be4(void)
+void ParasolWaddleDooDrift(void)
 {
     gCurTask->updateState = 3;
     gCurTask->unk30 = ActorStartAnim(gUnk_08742050);
@@ -853,7 +853,7 @@ void sub_08085be4(void)
     }
 }
 
-void sub_08085c10(void)
+void ParasolWaddleDooDriftUpdate(void)
 {
     gCurTask->unk30 = ActorTickAnim(gCurTask->unk30);
 }
@@ -1054,7 +1054,7 @@ u8 sub_08085ef0(void)
         else
         {
             ActorSetState(3);
-            TaskSetEntry(sub_08085be4, gCurTaskIdx);
+            TaskSetEntry(ParasolWaddleDooDrift, gCurTaskIdx);
         }
         return 1;
     }

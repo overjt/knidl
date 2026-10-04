@@ -19,7 +19,7 @@
  * `Task_Chilly` is the class-3 task #14 entry; its script is in
  * src/enemy_84d14.c.
  *
- * `sub_08084a50` is a leaf the census could not propose (no `push`, lesson
+ * `NoddySleepFallUpdate` is a leaf the census could not propose (no `push`, lesson
  * 4.30): the anchor-table word at `0x08741FA0` points at it and it counts the
  * <Task.unk30, Task.unk34> pair down, restoring both when unk34 underflows.
  */
@@ -142,7 +142,7 @@ void NoddyWalk(void)
     }
 }
 
-void sub_080846c4(void)
+void NoddyWalkUpdate(void)
 {
     if (--gCurTask->unk30 == 0)
     {
@@ -233,7 +233,7 @@ void sub_08084854(void)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
 }
 
-void sub_0808487c(void)
+void NoddySleep(void)
 {
     struct Task *t;
     struct Task *u;
@@ -260,7 +260,7 @@ void sub_0808487c(void)
     }
 }
 
-void sub_080848e4(void)
+void NoddySleepUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -309,7 +309,7 @@ void sub_080849b4(void)
         TaskSetEntry(NoddyEnterState, gCurTaskIdx);
 }
 
-void sub_080849dc(void)
+void NoddySleepFall(void)
 {
     struct Task *t;
     struct Task *u;
@@ -338,7 +338,7 @@ void sub_080849dc(void)
     }
 }
 
-void sub_08084a50(void)
+void NoddySleepFallUpdate(void)
 {
     struct Task *t;
     s32 a;
@@ -403,7 +403,7 @@ void Task_NoddyBubble(void)
     t->frameTable = gNoddyBubbleFrames;
     t->layer = 10;
     u = gCurTask;
-    u->updateCallback = (u32)sub_08084b7c;
+    u->updateCallback = (u32)NoddyBubbleUpdate;
     u->facing = (gTasks + (s16)u->parent)->facing;
     TaskSetMotionXFacing(0x2000, 0x5A5A5A5A);
     gCurTask->velY = -0x4000;
@@ -412,7 +412,7 @@ void Task_NoddyBubble(void)
     TaskExitTrampoline();
 }
 
-void sub_08084b7c(void)
+void NoddyBubbleUpdate(void)
 {
     struct Task *t;
 

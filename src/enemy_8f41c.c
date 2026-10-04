@@ -17,14 +17,14 @@
  *     `ConerInit` / `ConerIdleInit`, bodies `0x087432FC` (3) and
  *     `0x08743308` (1);
  *   * script 6: entry `Task_LaserBallLaser` (`0x08743600`, 1 row), row
- *     `sub_0808fc90`, bodies `0x08743604` (2), guards `0x0874360C` (2);
+ *     `LaserBallLaserInit`, bodies `0x08743604` (2), guards `0x0874360C` (2);
  *   * script 7: entry `Task_ShotzoCannonball` (`0x0874362C`, 4 identical rows), row
- *     `sub_0808fdf8`, body `0x0874363C` (`sub_0808fe88`, the class-2 wanderer
+ *     `ShotzoCannonballInit`, body `0x0874363C` (`sub_0808fe88`, the class-2 wanderer
  *     that picks its heading from gTasks[Task.parent].unk34) and guard
  *     `0x08743640` (`sub_0808ffe0`).
  *
- * `sub_0808fa04` and `sub_0808fe6c` are dead exports (twins of
- * `sub_0808f9f8` and of `sub_0808fdf8`'s cue call) that no ROM word points at;
+ * `sub_0808fa04` and `ShotzoCannonballEnterState` are dead exports (twins of
+ * `sub_0808f9f8` and of `ShotzoCannonballInit`'s cue call) that no ROM word points at;
  * both are curated in tools/symdb.py.
  */
 #include "gba/gba.h"
@@ -88,7 +88,7 @@ void ShotzoAimShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808f4b4(void)
+void ShotzoAimShootUpdate(void)
 {
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
@@ -108,7 +108,7 @@ void ShotzoAimFall(void)
     TaskSleepForever();
 }
 
-void sub_0808f51c(void)
+void ShotzoAimFallUpdate(void)
 {
     sub_08069888();
 }
@@ -201,7 +201,7 @@ void ShotzoFixedShoot(void)
     }
 }
 
-void sub_0808f678(void)
+void ShotzoFixedShootUpdate(void)
 {
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
@@ -234,7 +234,7 @@ void ShotzoFixedFall(void)
     TaskSleepForever();
 }
 
-void sub_0808f71c(void)
+void ShotzoFixedFallUpdate(void)
 {
     sub_08069888();
 }
@@ -300,7 +300,7 @@ void ParasolShotzoShoot(void)
     TaskSleepForever();
 }
 
-void sub_0808f844(void)
+void ParasolShotzoShootUpdate(void)
 {
     if ((s16)gCurTask->unk70 != 0 && sub_08069888() == 0 && gCurTask->unk28 != 0)
     {
@@ -529,34 +529,34 @@ void Task_LaserBallLaser(void)
     gCurTask->onGround = 0;
     u = gCurTask;
     u->unk28 = 0;
-    CallTableEntry(u->variant, 1, gUnk_08743600);
+    CallTableEntry(u->variant, 1, gLaserBallLaserVariants);
 }
 
-void sub_0808fc90(void)
+void LaserBallLaserInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808fcd4;
+    gCurTask->updateCallback = (u32)LaserBallLaserUpdate;
     PlaySfx(165);
     TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
     ActorSetState(1);
-    CallTableEntry(gCurTask->state, 2, gUnk_08743604);
+    CallTableEntry(gCurTask->state, 2, gLaserBallLaserStates);
 }
 
-void sub_0808fcd4(void)
+void LaserBallLaserUpdate(void)
 {
     if (sub_08069604() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_0874360C);
+        CallTableEntry(gCurTask->updateState, 2, gLaserBallLaserStateUpdates);
     else
     {
         ActorSetState(0);
-        TaskSetEntry(sub_0808fd1c, gCurTaskIdx);
+        TaskSetEntry(LaserBallLaserEnterState, gCurTaskIdx);
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808fd1c(void)
+void LaserBallLaserEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08743604);
+    CallTableEntry(gCurTask->state, 2, gLaserBallLaserStates);
 }
 
 void sub_0808fd38(void)
@@ -603,29 +603,29 @@ void Task_ShotzoCannonball(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gShotzoCannonballFrames;
-    CallTableEntry(u->variant, 4, gUnk_0874362C);
+    CallTableEntry(u->variant, 4, gShotzoCannonballVariants);
 }
 
-void sub_0808fdf8(void)
+void ShotzoCannonballInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0808fe28;
+    gCurTask->updateCallback = (u32)ShotzoCannonballUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874363C);
+    CallTableEntry(gCurTask->state, 1, gShotzoCannonballStates);
 }
 
-void sub_0808fe28(void)
+void ShotzoCannonballUpdate(void)
 {
     if (sub_08069660() == 0)
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08743640);
+        CallTableEntry(gCurTask->updateState, 1, gShotzoCannonballStateUpdates);
     else
         TaskSetEntry(ActorDie, gCurTaskIdx);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808fe6c(void)
+void ShotzoCannonballEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874363C);
+    CallTableEntry(gCurTask->state, 1, gShotzoCannonballStates);
 }
 
 void sub_0808fe88(void)
