@@ -35,7 +35,7 @@ extern void ActorLoadDef(u32 def);
 extern void ActorResetHealth(void);
 extern void ActorSetState(u8 v);
 extern void ActorCheckHits(void);
-extern s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
+extern s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                         int prioArg, int altArg);
 
 extern u32 TaskIsOnScreen(void);
@@ -1236,7 +1236,7 @@ void ActorIntroPoseUpdate(void)
 void ArenaDropMaximTomato(void)
 {
     if (gGameState == GAME_STATE_ARENA)
-        sub_08064e90(2, TASK_MAXIM_TOMATO, 0, 128, 0);
+        CreateItemAt(2, TASK_MAXIM_TOMATO, 0, 128, 0);
 }
 
 void sub_080667c0(u8 a, u16 b)
@@ -1260,7 +1260,7 @@ void sub_080667c0(u8 a, u16 b)
     sub_0806ae94();
 }
 
-void sub_0806684c(void)
+void EndMidBossFightWithReward(void)
 {
     EndMidBossFight();
     ArenaDropMaximTomato();
@@ -1678,7 +1678,7 @@ void CreateStarRodPiece(u8 p3, s16 x, s16 y)
     struct Task *t;
     s32 i;
 
-    i = sub_08064d9c(5, TASK_STAR_ROD_PIECE, 0, x, y, 0xD3D0, 1);
+    i = CreateItemOrObject(5, TASK_STAR_ROD_PIECE, 0, x, y, 0xD3D0, 1);
     if (i != -1)
     {
         t = &gTasks[i];

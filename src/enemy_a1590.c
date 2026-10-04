@@ -336,8 +336,8 @@ void sub_080a1864(void)
     t->kingDededeDefeatedCheckingPlayers = 0;
 }
 
-/* sub_080a18d4 (0x080A18D4-0x080A1980) */
-void sub_080a18d4(void)
+/* KingDededeDefeatedHoldBack (0x080A18D4-0x080A1980) */
+void KingDededeDefeatedHoldBack(void)
 {
     s32 i;
     s32 v;
@@ -371,8 +371,8 @@ void sub_080a18d4(void)
     TaskSleepForever();
 }
 
-/* sub_080a1980 (0x080A1980-0x080A19CC) */
-void sub_080a1980(void)
+/* KingDededeDefeatedHoldBackUpdate (0x080A1980-0x080A19CC) */
+void KingDededeDefeatedHoldBackUpdate(void)
 {
     if (gCurTask->kingDededeDefeatedAnimating != 0)
         gCurTask->actorAnimDelay24 = ActorTickAnim(gCurTask->actorAnimDelay24);

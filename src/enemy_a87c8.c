@@ -97,7 +97,7 @@ void KrackoUpdate(void)
     ActorReactToHit();
 }
 
-void KrackoState0(void)
+void KrackoIntro(void)
 {
     struct Task *t;
 
@@ -132,13 +132,13 @@ void KrackoState0(void)
     TaskSleepForever();
 }
 
-void KrackoState0Update(void)
+void KrackoIntroUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void KrackoState1(void)
+void KrackoPickMove(void)
 {
     s32 idx;
 
@@ -227,7 +227,7 @@ st3:
     }
 }
 
-void KrackoState1Update(void)
+void KrackoPickMoveUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
@@ -255,7 +255,7 @@ void KrackoWaitUpdate(void)
         TaskSetEntry(KrackoEnterState, gCurTaskIdx);
 }
 
-void KrackoState3(void)
+void KrackoCross(void)
 {
     gCurTask->updateState = 3;
     TaskStop();
@@ -283,7 +283,7 @@ void KrackoState3(void)
     }
 }
 
-void KrackoState3Update(void)
+void KrackoCrossUpdate(void)
 {
     struct Task *t;
 

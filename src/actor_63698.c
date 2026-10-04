@@ -32,7 +32,7 @@ extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
 s32 TaskGetDxTo(u32 i);
 s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 u16 TaskGetAngleToNearestPlayer(s32 prec);
-s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
+s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg, int prioArg,
                  int altArg);
 s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y,
                  u16 prio);
@@ -1433,7 +1433,7 @@ s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio)
 
 /* Spawn a class-5/6 task; the 16-bit arguments are `int` for the same
    reason as CreateChildTask's. */
-s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
+s32 CreateItemOrObject(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
                  int prioArg, int altArg)
 {
     struct Task *t;
@@ -1467,20 +1467,20 @@ s32 sub_08064d9c(u32 sub, u32 type, int p2Arg, int xArg, int yArg,
     return i;
 }
 
-s32 sub_08064e5c(u32 sub, u32 type, u8 p2)
+s32 CreateItemHere(u32 sub, u32 type, u8 p2)
 {
     struct Task *t;
 
     t = gCurTask;
-    return sub_08064d9c(sub, type, p2, t->pixelX, t->pixelY, 0, 1);
+    return CreateItemOrObject(sub, type, p2, t->pixelX, t->pixelY, 0, 1);
 }
 
-s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
+s32 CreateItemAt(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg)
 {
     s32 x = xArg;
     s32 y = yArg;
 
-    return sub_08064d9c(sub, type, p2, x, y, 0, 1);
+    return CreateItemOrObject(sub, type, p2, x, y, 0, 1);
 }
 
 s32 CreateAbilityStar(u8 p2)
@@ -1490,7 +1490,7 @@ s32 CreateAbilityStar(u8 p2)
     struct PlayerState *p;
     s32 i;
 
-    i = sub_08064e5c(0, TASK_ABILITY_STAR, p2);
+    i = CreateItemHere(0, TASK_ABILITY_STAR, p2);
     if (i != -1)
     {
         t = &gTasks[i];

@@ -70,7 +70,7 @@ void KingDededeCreateImpactStars(u8 a)
         CreateInhalableStar(gCurTask->pixelX - 32, yy, -1, 0);
 }
 
-void sub_080a0358(void)
+void KingDededeStartWalk(void)
 {
     struct Task *t;
     s32 n;
@@ -123,7 +123,7 @@ tail:
         gCurTask->kingDededeWalkTargetX = gRoomBounds[1] + 87;
 }
 
-void sub_080a043c(void)
+void KingDededePickSlamKind(void)
 {
     struct Task *t;
     s32 n;
@@ -153,7 +153,7 @@ void sub_080a043c(void)
     }
 }
 
-void sub_080a0480(u8 a)
+void KingDededeAimHighJump(u8 a)
 {
     struct Task *t;
     struct Task *u;
@@ -274,7 +274,7 @@ u8 sub_080a060c(void)
     return 0;
 }
 
-void sub_080a0658(void)
+void KingDededeStartWait(void)
 {
     struct Task *t;
     struct Task *u;
@@ -343,7 +343,7 @@ void KingDededeChooseNextState(void)
     }
 }
 
-void sub_080a0768(void)
+void KingDededeJumpSlam(void)
 {
     struct Task *t;
     struct Task *u;
@@ -378,7 +378,7 @@ void sub_080a0768(void)
     TaskYieldTrampoline(20);
 }
 
-void sub_080a0844(void)
+void KingDededeGroundSlam(void)
 {
     struct Task *t;
     struct Task *u;
@@ -526,7 +526,7 @@ void KingDededeEnterState(void)
     CallTableEntry(gCurTask->state, 11, gKingDededeStates);
 }
 
-void KingDededeState0(void)
+void KingDededeIntro(void)
 {
     struct Task *t;
     s32 z;
@@ -540,11 +540,11 @@ void KingDededeState0(void)
     ActorIntroPoseUntilHpBarFull(gUnk_08748384);
     sub_08063a00((u32)gUnk_08748820);
     gCurTask->unk2C = z;
-    sub_080a0658();
+    KingDededeStartWait();
     TaskSleepForever();
 }
 
-void KingDededeState0Update(void)
+void KingDededeIntroUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -574,7 +574,7 @@ void KingDededeWait(void)
     t->updateState = one;
     TaskStop();
     gCurTask->onGround = one;
-    sub_080a0658();
+    KingDededeStartWait();
     TaskSleepForever();
 }
 
@@ -598,7 +598,7 @@ void KingDededeWalk(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
-    sub_080a0358();
+    KingDededeStartWalk();
     sub_080a094c();
 }
 
@@ -842,7 +842,7 @@ void KingDededeExhaleUpdate(void)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
-void KingDededeState6(void)
+void KingDededeHighJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -856,7 +856,7 @@ void KingDededeState6(void)
     TaskSetFrame(41);
     TaskYieldTrampoline(24);
     gCurTask->onGround = z;
-    sub_080a0480(0);
+    KingDededeAimHighJump(0);
     u = gCurTask;
     u->frame++;
     PlaySfx(0x21E);
@@ -869,7 +869,7 @@ void KingDededeState6(void)
     v->accelY = 160 << 6;
     v->speedLimitY = 160 << 11;
     if (v->kingDededeJumpForward != 0)
-        sub_080a0480(1);
+        KingDededeAimHighJump(1);
     while ((gCurTask->onGround & 1) == 0)
         TaskYieldTrampoline(1);
     TaskStop();
@@ -882,7 +882,7 @@ void KingDededeState6(void)
     TaskSleepForever();
 }
 
-void KingDededeState6Update(void)
+void KingDededeHighJumpUpdate(void)
 {
     if (gCurTask->state != 6)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
@@ -892,11 +892,11 @@ void KingDededeSlam(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
-    sub_080a043c();
+    KingDededePickSlamKind();
     if (gCurTask->kingDededeSlamKind != 2)
-        sub_080a0844();
+        KingDededeGroundSlam();
     else
-        sub_080a0768();
+        KingDededeJumpSlam();
     ActorSetState(1);
     TaskSleepForever();
 }

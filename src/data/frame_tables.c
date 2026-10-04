@@ -11322,7 +11322,7 @@ u32 gPaintRollerPaintingFrames[] FRAME_TABLE = {
 };
 
 /* gMetaKnightFrames.  Consumers: Task_MetaKnight (src/enemy_a1590.c:3507),
- * sub_080a73b4 (src/enemy_a5644.c:1358).  123 words, struct TaskGfx
+ * MetaKnightDefeatedInit (src/enemy_a5644.c:1358).  123 words, struct TaskGfx
  * records; extent: the span to the next label, every word such a target
  * (pointer_tables 0x08753BB4-0x08753DA0).  Declared include/enemy.h:1246. */
 u32 gMetaKnightFrames[] FRAME_TABLE = {

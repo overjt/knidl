@@ -22,7 +22,7 @@
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
  * TaskSetEntry whenever Task.state leaves the state.  State 4 aims with
  * Div(|TaskGetNearestPlayerDx()|, 3), state 5 spawns the actors 8 and 145, and state 10
- * is the defeat sequence (sub_0806684c, CreateStarFlash, ActorShakeVertically).
+ * is the defeat sequence (EndMidBossFightWithReward, CreateStarFlash, ActorShakeVertically).
  *
  * The tail holds the pieces the states share - BonkersCreateSlamStar (fire a shot at
  * the boss's own position through CreateInhalableStar), BonkersChooseNextState (advance the
@@ -604,7 +604,7 @@ void BonkersDefeat(void)
     t = gCurTask;
     t->updateState = 10;
     if (--gUnk_02007D00[0] == 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 32);
     CreateStarFlash(1, 0, 0);
     TaskStop();

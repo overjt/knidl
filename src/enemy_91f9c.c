@@ -167,7 +167,7 @@ void BugzzyUpdate(void)
     }
 }
 
-void BugzzyState0(void)
+void BugzzyIntro(void)
 {
     struct Task *t;
     struct Task *u;
@@ -197,7 +197,7 @@ void BugzzyState0(void)
     TaskSleepForever();
 }
 
-void BugzzyState0Update(void)
+void BugzzyIntroUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(BugzzyEnterState, gCurTaskIdx);
@@ -931,7 +931,7 @@ void BugzzyDefeat(void)
     t->updateState = 12;
     gUnk_02007D00[4] = 0;
     if (--gUnk_02007D00[7] == 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 63);
     CreateStarFlash(1, 0, 0);
     TaskStop();

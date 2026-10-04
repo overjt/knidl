@@ -4132,7 +4132,7 @@ void WhispyWoodsWaitUpdate(void)
         WhispyWoodsPickAttack();
 }
 
-void WhispyWoodsState1(void)
+void WhispyWoodsBlowTwoPuffs(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4183,13 +4183,13 @@ void WhispyWoodsState1(void)
     TaskSleepForever();
 }
 
-void WhispyWoodsState1Update(void)
+void WhispyWoodsBlowTwoPuffsUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
-void WhispyWoodsState2(void)
+void WhispyWoodsBlowFourPuffs(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4240,7 +4240,7 @@ void WhispyWoodsState2(void)
     TaskSleepForever();
 }
 
-void WhispyWoodsState2Update(void)
+void WhispyWoodsBlowFourPuffsUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);

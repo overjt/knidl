@@ -147,7 +147,7 @@ void MetaKnightUpdate(void)
     }
 }
 
-void MetaKnightState0(void)
+void MetaKnightIntro(void)
 {
     struct ActorSpawn sp;
     struct Task *t;
@@ -237,7 +237,7 @@ void MetaKnightState0(void)
     TaskSleepForever();
 }
 
-void MetaKnightState0Update(void)
+void MetaKnightIntroUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
@@ -1349,28 +1349,28 @@ s32 MetaKnightHitWall(void)
     return 0;
 }
 
-void sub_080a73b4(void)
+void MetaKnightDefeatedInit(void)
 {
     struct Task *t = gCurTask;
 
     t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
-    t->updateCallback = (u32)sub_080a73fc;
+    t->updateCallback = (u32)MetaKnightDefeatedUpdate;
     t->frameTable = gMetaKnightFrames;
     t->layer = 4;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08748F7C);
+    CallTableEntry(gCurTask->state, 2, gMetaKnightDefeatedStates);
 }
 
-void sub_080a73fc(void)
+void MetaKnightDefeatedUpdate(void)
 {
     ActorCollideTerrain();
-    CallTableEntry(gCurTask->updateState, 2, gUnk_08748F84);
+    CallTableEntry(gCurTask->updateState, 2, gMetaKnightDefeatedStateUpdates);
 }
 
-void sub_080a741c(void)
+void MetaKnightDefeatedEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08748F7C);
+    CallTableEntry(gCurTask->state, 2, gMetaKnightDefeatedStates);
 }
 
 void sub_080a7438(void)
@@ -1423,7 +1423,7 @@ void sub_080a7438(void)
 void sub_080a75a0(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080a741c, gCurTaskIdx);
+        TaskSetEntry(MetaKnightDefeatedEnterState, gCurTaskIdx);
 }
 
 void sub_080a75c8(void)

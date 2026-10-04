@@ -1992,7 +1992,7 @@ void PaintRollerEnterState(void)
     CallTableEntry(gCurTask->state, 3, gPaintRollerStates);
 }
 
-void PaintRollerState1(void)
+void PaintRollerRunToNextSpot(void)
 {
     gCurTask->updateCallback = (u32)PaintRollerUpdate;
     gUnk_02007D00[5] = -1;

@@ -629,7 +629,7 @@ void PhanPhanDefeat(void)
     gCurTask->phanPhanCatchActive = zero;
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 28);
     CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     ActorSetHitReactions(gPhanPhanDefeatedHitReactions);

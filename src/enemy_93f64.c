@@ -306,7 +306,7 @@ void sub_08094358(void)
     }
 }
 
-void GrandWheelieState0(void)
+void GrandWheelieFall(void)
 {
     struct Task *t;
     s32 v;
@@ -322,7 +322,7 @@ void GrandWheelieState0(void)
     TaskSleepForever();
 }
 
-void GrandWheelieState0Update(void)
+void GrandWheelieFallUpdate(void)
 {
     gCurTask->actorAnimDelay = GrandWheelieTickAnim(gCurTask->actorAnimDelay);
 }
@@ -953,7 +953,7 @@ void GrandWheelieDefeat(void)
     gCurTask->grandWheelieDefeatPhase = z1;
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 32);
     CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
     gCurTask->actorAnimDelay = GrandWheelieStartAnim(gUnk_08744408);

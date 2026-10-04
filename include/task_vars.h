@@ -27,7 +27,7 @@
 #define abilityStarPickupDelay unk30 /* s32: frames (48) before the star's hits are checked, so it cannot be taken at once */
 
 /* Actor - every actor: a task made by CreateActor, CreateChildActor or
-   sub_08064d9c (src/actor_63698.c), which also bind Task.u8C.actor; the room
+   CreateItemOrObject (src/actor_63698.c), which also bind Task.u8C.actor; the room
    objects of kinds 0-6 come through CreateActor */
 #define actorAnimDelay18 unk18 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) in unk18 */
 #define actorDrownFrame unk18 /* s16: frame a drowning actor holds (ActorStartDrown's argument; -2 means 0) */
@@ -604,7 +604,7 @@
 #define kingDededeWalkTargetX unk20 /* s32: X KingDededeWalk heads for when its next state is 8 (by the player, inside the room) */
 #define kingDededeFloatBumpTimer unk24 /* s32: frames the Float shows the bump frame 23 after hitting floor or ceiling; -2 = none */
 #define kingDededeJumpForward unk24 /* s32: 1 when the state-6 jump also moves toward the player, 0 straight up */
-#define kingDededeSlamKind unk24 /* s32: KingDededeSlam's kind: 0 one slam, 1 four slams, 2 sub_080a0768 (player high) */
+#define kingDededeSlamKind unk24 /* s32: KingDededeSlam's kind: 0 one slam, 1 four slams, 2 KingDededeJumpSlam (player high) */
 #define kingDededeDefeatedAnimating unk28 /* s32: 1 once the Defeated state 1 started its animation; the update ticks it only then */
 #define kingDededeDefeatedCheckingPlayers unk2C /* s32: 1 while the Defeated update runs the per-player checks (sub_080a1790 / 180c) */
 #define kingDededeSlamSetupCount unk30 /* s32: KingDededeSlam setups mod 4 (player low); at 0 the slam is the four-slam kind */

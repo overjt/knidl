@@ -932,7 +932,7 @@ void FireLionDefeat(void)
     ActorStopAnim();
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 21);
     TaskStop();
     t = gCurTask;

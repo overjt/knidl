@@ -1470,7 +1470,7 @@ void MrTickTockDefeat(void)
     u = gCurTask;
     u->onGround = zero;
     if (--gUnk_02007D00[0] <= 0)
-        sub_0806684c();
+        EndMidBossFightWithReward();
     sub_080667c0(1, 7);
     TaskSetMotionXFacing(-65536, 0x5A5A5A5A);
     v = gCurTask;
