@@ -440,7 +440,7 @@ void ActorDefeatFrozenSlide(void)
     TaskSleepForever();
 }
 
-void sub_0806a9d4(void)
+void ActorDefeatFrozenSlideUpdate(void)
 {
 }
 

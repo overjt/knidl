@@ -400,7 +400,7 @@ void BigSwitchWaitUpdate(void);
 void sub_08077e9c(void);
 void sub_08077ecc(void);
 void BigSwitchRefill(void);
-void sub_08077f08(void);
+void BigSwitchRefillUpdate(void);
 void Task_Stake(void);
 void StakeInit(void);
 void StakeUpdate(void);

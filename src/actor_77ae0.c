@@ -249,7 +249,7 @@ void BigSwitchRefill(void)
     TaskSleepForever();
 }
 
-void sub_08077f08(void)
+void BigSwitchRefillUpdate(void)
 {
 }
 

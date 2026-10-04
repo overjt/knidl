@@ -53,7 +53,7 @@ void ActorDrownSink(void)
     TaskSleepForever();
 }
 
-void sub_0806b330(void)
+void ActorDrownSinkUpdate(void)
 {
 }
 

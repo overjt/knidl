@@ -60,8 +60,8 @@ u32 gPickupStates[3] LATE_TBL(087560a0) = {
 /* include/enemy.h; CallTableEntry(i, 3, ...) in PickupUpdate */
 u32 gPickupStateUpdates[3] LATE_TBL(087560a0) = {
     (u32)sub_080b4190,
-    (u32)sub_080b41c8,
-    (u32)sub_080b4200,
+    (u32)PickupFallUpdate,
+    (u32)PickupFallInWaterUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in PickupHeal */
 u32 gUnk_087560B8[2] LATE_TBL(087560a0) = {
@@ -78,7 +78,7 @@ u32 gAbilityStarStates[2] LATE_TBL(087560d0) = {
 /* include/enemy.h; CallTableEntry(i, 2, ...) in AbilityStarUpdate */
 u32 gAbilityStarStateUpdates[2] LATE_TBL(087560d0) = {
     (u32)sub_080b4788,
-    (u32)sub_080b47c0,
+    (u32)AbilityStarSinkUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_StarRodPiece */
 u32 gStarRodPieceVariants[3] LATE_TBL(087560d0) = {

@@ -595,7 +595,7 @@ void ActorDefeatFrozenEnterState(void);
 void ActorDefeatFrozenShake(void);
 void ActorDefeatFrozenShakeUpdate(void);
 void ActorDefeatFrozenSlide(void);
-void sub_0806a9d4(void);
+void ActorDefeatFrozenSlideUpdate(void);
 void sub_0806a9d8(void);
 void sub_0806aa0c(void);
 void ActorDefeatExplodeByEffect(void);
@@ -636,7 +636,7 @@ void ActorDrownUpdate(void);
 /* src/actor_6b2e4.c */
 void ActorDrownEnterState(void);
 void ActorDrownSink(void);
-void sub_0806b330(void);
+void ActorDrownSinkUpdate(void);
 void sub_0806b334(void);
 void sub_0806b368(void);
 void sub_0806b390(void);

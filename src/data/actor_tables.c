@@ -260,7 +260,7 @@ u32 gBigSwitchStates[3] ACTOR_TBL(087402bc) = {
 u32 gBigSwitchStateUpdates[3] ACTOR_TBL(087402bc) = {
     (u32)BigSwitchWaitUpdate,
     (u32)sub_08077ecc,
-    (u32)sub_08077f08,
+    (u32)BigSwitchRefillUpdate,
 };
 /* include/cutscene.h; CallTableEntry(i, 1, ...) in Task_Stake */
 u32 gStakeVariants[1] ACTOR_TBL(087402bc) = {
@@ -3059,7 +3059,7 @@ u32 gWhispyWoodsAppleStates[4] ACTOR_TBL(0874c21c) = {
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsAppleUpdate */
 u32 gWhispyWoodsAppleStateUpdates[4] ACTOR_TBL(0874c21c) = {
-    (u32)sub_080b319c,
+    (u32)WhispyWoodsAppleFallUpdate,
     (u32)sub_080b31e0,
     (u32)sub_080b3258,
     (u32)sub_080b32d0,

@@ -241,7 +241,7 @@ void WhispyWoodsAppleFall(void)
     }
 }
 
-void sub_080b319c(void)
+void WhispyWoodsAppleFallUpdate(void)
 {
 }
 
@@ -1071,7 +1071,7 @@ void PickupFall(void)
     TaskSleepForever();
 }
 
-void sub_080b41c8(void)
+void PickupFallUpdate(void)
 {
 }
 
@@ -1095,7 +1095,7 @@ void PickupFallInWater(void)
     TaskSleepForever();
 }
 
-void sub_080b4200(void)
+void PickupFallInWaterUpdate(void)
 {
 }
 
@@ -1493,7 +1493,7 @@ void AbilityStarSink(void)
     ActorDie();
 }
 
-void sub_080b47c0(void)
+void AbilityStarSinkUpdate(void)
 {
     AbilityStarCheckExpire();
 }

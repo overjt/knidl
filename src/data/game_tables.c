@@ -615,7 +615,7 @@ u32 gActorDefeatFrozenStates[3] GAME_TBL(0873e670) = {
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDefeatFrozenUpdate */
 u32 gActorDefeatFrozenStateUpdates[3] GAME_TBL(0873e670) = {
     (u32)ActorDefeatFrozenShakeUpdate,
-    (u32)sub_0806a9d4,
+    (u32)ActorDefeatFrozenSlideUpdate,
     (u32)sub_0806aa0c,
 };
 /* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeatExplodeByEffect */
@@ -666,7 +666,7 @@ u32 gActorDrownStates[3] GAME_TBL(0873e734) = {
 };
 /* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownUpdate */
 u32 gActorDrownStateUpdates[3] GAME_TBL(0873e734) = {
-    (u32)sub_0806b330,
+    (u32)ActorDrownSinkUpdate,
     (u32)sub_0806b368,
     (u32)sub_0806b3c0,
 };
