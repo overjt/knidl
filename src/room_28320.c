@@ -78,7 +78,7 @@ void SpawnDoorObjects(void)
         }
         switch (k)
         {
-        case 0:
+        case DOOR_KIND_STAGE:
             if (gFurthestLevel > gCurLevel || gFurthestStage >= d->unk8)
             {
                 switch (gStageClearStatus[gStageIndex][d->unk8])
@@ -119,16 +119,16 @@ void SpawnDoorObjects(void)
                 }
             }
             break;
-        case 1:
+        case DOOR_KIND_PREVIOUS:
             gDoorObjectTasks[i][0] = CreateLevelDoorSign(x, y, 0, i);
             break;
-        case 2:
+        case DOOR_KIND_NEXT:
             if (gCurLevel >= gFurthestLevel)
                 gDoorObjectTasks[i][0] = CreateBossDoorSign(x, y, i);
             else
                 gDoorObjectTasks[i][0] = CreateLevelDoorSign(x, y, 1, i);
             break;
-        case 3:
+        case DOOR_KIND_BOMB_RALLY:
             if (!(gUsedSubGameDoors[gStageIndex] & 1))
                 gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 1, i);
             else if (i == gEntryDoorIndex && gEntryDoorEvent == 2)
@@ -136,7 +136,7 @@ void SpawnDoorObjects(void)
             else
                 gDoorObjectTasks[i][0] = CreateBombRallyDoorSign(x, y, 0, i);
             break;
-        case 4:
+        case DOOR_KIND_AIR_GRIND:
             if (!(gUsedSubGameDoors[gStageIndex] & 2))
                 gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 1, i);
             else if (i == gEntryDoorIndex && gEntryDoorEvent == 2)
@@ -144,7 +144,7 @@ void SpawnDoorObjects(void)
             else
                 gDoorObjectTasks[i][0] = CreateAirGrindDoorSign(x, y, 0, i);
             break;
-        case 5:
+        case DOOR_KIND_QUICK_DRAW:
             if (!(gUsedSubGameDoors[gStageIndex] & 4))
                 gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 1, i);
             else if (i == gEntryDoorIndex && gEntryDoorEvent == 2)
@@ -152,7 +152,7 @@ void SpawnDoorObjects(void)
             else
                 gDoorObjectTasks[i][0] = CreateQuickDrawDoorSign(x, y, 0, i);
             break;
-        case 6:
+        case DOOR_KIND_WARP_STAR_STATION:
             gUnk_020055D4 = 0x4000;
             m = 0;
             if (gHubUnlockFlags != 0)
@@ -169,10 +169,10 @@ void SpawnDoorObjects(void)
             gDoorObjectTasks[i][1] = CreateWarpStarStationDoorSparkle(x, y, 0, m);
             gDoorObjectTasks[i][2] = CreateWarpStarStationDoorSparkle(x, y, 1, m);
             break;
-        case 8:
+        case DOOR_KIND_ARENA:
             gDoorObjectTasks[i][0] = CreateArenaDoorSign(x, y, i);
             break;
-        case 7:
+        case DOOR_KIND_MUSEUM:
             gDoorObjectTasks[i][0] = CreateMuseumDoorSign(x, y, i);
             break;
         }

@@ -213,13 +213,13 @@ u8 HitTestPlayerColliders(void)
                     continue;
                 if (gAttackBox->unk0A & 8)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 12;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 4)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
@@ -257,13 +257,13 @@ u8 HitTestPlayerColliders(void)
                     continue;
                 if (gAttackBox->unk0A & 4)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
                 else if (gAttackBox->unk0A & 1)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 1;
                     gHitHealthLeft = gAttackHealth;
                 }
@@ -279,7 +279,7 @@ u8 HitTestPlayerColliders(void)
                     continue;
                 if (gAttackBox->unk0A & 4)
                 {
-                    gHitKind = 6;
+                    gHitKind = HIT_KIND_NO_DAMAGE;
                     gHitEffect = 11;
                     gHitHealthLeft = gAttackHealth;
                 }
@@ -308,12 +308,12 @@ u8 HitTestPlayerColliders(void)
             if (!(gColliderBodyBox->unk0E & 6))
             {
                 ps->hitsThisFrame++;
-                gHitKind = 8;
+                gHitKind = HIT_KIND_CATCH;
                 gHitHealthLeft = gAttackHealth;
                 HitRecordHitter();
                 return 1;
             }
-            gHitKind = 6;
+            gHitKind = HIT_KIND_NO_DAMAGE;
             continue;
         default:
             continue;
@@ -442,7 +442,7 @@ u8 HitTestColliderClass10(void)
             }
             else
             {
-                gHitKind = 6;
+                gHitKind = HIT_KIND_NO_DAMAGE;
                 gHitEffect = gUnk_08732218[k];
                 gHitHealthLeft = gAttackHealth;
             }

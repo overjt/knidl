@@ -562,19 +562,19 @@ s32 FindDoorAt(s32 x, s32 y)
     {
         switch ((u8)d->unk6)
         {
-        case 3:
+        case DOOR_KIND_BOMB_RALLY:
             if (gUsedSubGameDoors[gCurLevel] & 1)
                 return 0;
             break;
-        case 4:
+        case DOOR_KIND_AIR_GRIND:
             if (gUsedSubGameDoors[gCurLevel] & 2)
                 return 0;
             break;
-        case 5:
+        case DOOR_KIND_QUICK_DRAW:
             if (gUsedSubGameDoors[gCurLevel] & 4)
                 return 0;
             break;
-        case 6:
+        case DOOR_KIND_WARP_STAR_STATION:
             if ((gWarpStarStationLevels & ~(1 << gCurLevel)) == 0)
                 return 0;
             break;
@@ -606,7 +606,7 @@ s32 EnterDoor(void)
             gEntryDoorIndex = idx;
             switch (d->unk6 & 0xFF)
             {
-            case 0:
+            case DOOR_KIND_STAGE:
                 gLevelIndex = gStageIndex;
                 gStageIndex = d->unk8;
                 gRoomIndex = 0;
@@ -614,7 +614,7 @@ s32 EnterDoor(void)
                 gRoomEntryMode = ROOM_ENTRY_NORMAL;
                 gEntryDoorEvent = 0;
                 break;
-            case 1:
+            case DOOR_KIND_PREVIOUS:
                 if (--gStageIndex < 0)
                     gStageIndex = 0;
                 gRoomIndex = 0;
@@ -622,7 +622,7 @@ s32 EnterDoor(void)
                 e = room->doors;
                 for (i = 0; i < room->doorCount; e++, i++)
                 {
-                    if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == 2)
+                    if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == DOOR_KIND_NEXT)
                         break;
                 }
                 gRoomEntryX = e->unk2 * 16 + 22;
@@ -633,7 +633,7 @@ s32 EnterDoor(void)
                 gEntryDoorEvent = 0;
                 gCutscenePending = 0;
                 break;
-            case 2:
+            case DOOR_KIND_NEXT:
                 if (gCurLevel >= gFurthestLevel)
                 {
                     gLevelIndex = gStageIndex;
@@ -653,7 +653,7 @@ s32 EnterDoor(void)
                     e = room->doors;
                     for (i = 0; i < room->doorCount; e++, i++)
                     {
-                        if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == 1)
+                        if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == DOOR_KIND_PREVIOUS)
                             break;
                     }
                     gRoomEntryX = e->unk2 * 16 + 22;
@@ -665,7 +665,7 @@ s32 EnterDoor(void)
                 }
                 gEntryDoorEvent = 0;
                 break;
-            case 3:
+            case DOOR_KIND_BOMB_RALLY:
                 gSubGameLevel = gUnk_087323E2[gCurLevel][0][gExtraMode];
                 gUsedSubGameDoors[gStageIndex] |= 1;
                 gRoomEntryX = d->unk2 * 16 + 22;
@@ -675,7 +675,7 @@ s32 EnterDoor(void)
                 gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 2;
                 break;
-            case 4:
+            case DOOR_KIND_AIR_GRIND:
                 gSubGameLevel = gUnk_087323E2[gCurLevel][1][gExtraMode];
                 gUsedSubGameDoors[gStageIndex] |= 2;
                 gRoomEntryX = d->unk2 * 16 + 22;
@@ -685,7 +685,7 @@ s32 EnterDoor(void)
                 gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 2;
                 break;
-            case 5:
+            case DOOR_KIND_QUICK_DRAW:
                 gSubGameLevel = gUnk_087323E2[gCurLevel][2][gExtraMode];
                 gUsedSubGameDoors[gStageIndex] |= 4;
                 gRoomEntryX = d->unk2 * 16 + 22;
@@ -695,9 +695,9 @@ s32 EnterDoor(void)
                 gRoomEntryMode = ROOM_ENTRY_DOOR;
                 gEntryDoorEvent = 2;
                 break;
-            case 6:
-            case 7:
-            case 8:
+            case DOOR_KIND_WARP_STAR_STATION:
+            case DOOR_KIND_MUSEUM:
+            case DOOR_KIND_ARENA:
                 gStageRequest = *(u8 *)&d->unk6 + 6;
                 d++;
                 gRoomIndex = d->unk0;
@@ -742,7 +742,7 @@ s32 EnterDoor(void)
                 gEntryDoorEvent = 1;
                 gHubUnlockFlags = 1;
                 gHubUnlockSource = gStageIndex + 1;
-                if (gHubDoorUnlocks[gLevelIndex][6] == (s8)gUnk_03001F20)
+                if (gHubDoorUnlocks[gLevelIndex][DOOR_KIND_WARP_STAR_STATION] == (s8)gUnk_03001F20)
                 {
                     gHubUnlockFlags = 17;
                     gWarpStarStationLevels |= 1 << gLevelIndex;
@@ -771,7 +771,7 @@ s32 EnterDoor(void)
             e = room->doors;
             for (i = 0; i < room->doorCount; e++, i++)
             {
-                if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == 0 && e->unk8 == (s8)gUnk_03001F20)
+                if (e->unk0 == 0x270F && *(u8 *)&e->unk6 == DOOR_KIND_STAGE && e->unk8 == (s8)gUnk_03001F20)
                     break;
             }
             gRoomEntryX = e->unk2 * 16 + 22;
@@ -829,7 +829,7 @@ void ExitClearedStage(void)
         d = room->doors;
         for (i = 0; i < room->doorCount; i++)
         {
-            if (d->unk0 == 0x270F && (u8)d->unk6 == 1)
+            if (d->unk0 == 0x270F && (u8)d->unk6 == DOOR_KIND_PREVIOUS)
                 break;
             d++;
         }
@@ -942,7 +942,7 @@ void PressBigSwitch(s32 id)
     d = room->doors;
     for (i = 0; i < room->doorCount; d++, i++)
     {
-        if (d->unk0 == 0x270F && (u8)d->unk6 == 0 && d->unk8 == (s8)gUnk_03001F20)
+        if (d->unk0 == 0x270F && (u8)d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gUnk_03001F20)
             break;
     }
     gPressedBigSwitchSlot = id;
@@ -953,7 +953,7 @@ void PressBigSwitch(s32 id)
     if (gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] == 1)
         gStageClearStatus[gCurLevel][(s8)gUnk_03001F20] = 2;
     lvl = gCurLevel;
-    if (gHubDoorUnlocks[lvl][6] == gHubUnlockSource)
+    if (gHubDoorUnlocks[lvl][DOOR_KIND_WARP_STAR_STATION] == gHubUnlockSource)
     {
         gHubUnlockFlags |= 16;
         gWarpStarStationLevels |= 1 << lvl;

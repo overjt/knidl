@@ -57,12 +57,12 @@ void ResetLevelStateAtHub(void)
             gUsedSubGameDoors[i] = 15;
         else
             gUsedSubGameDoors[i] = 0;
-        if (gHubDoorUnlocks[i][6] & 0x100)
+        if (gHubDoorUnlocks[i][DOOR_KIND_WARP_STAR_STATION] & 0x100)
         {
-            if (gBigSwitchFlags[0] & (1 << (gHubDoorUnlocks[i][6] & 0xFF)))
+            if (gBigSwitchFlags[0] & (1 << (gHubDoorUnlocks[i][DOOR_KIND_WARP_STAR_STATION] & 0xFF)))
                 gWarpStarStationLevels |= 1 << i;
         }
-        else if (gStageClearStatus[i][gHubDoorUnlocks[i][6]] != 0)
+        else if (gStageClearStatus[i][gHubDoorUnlocks[i][DOOR_KIND_WARP_STAR_STATION]] != 0)
         {
             gWarpStarStationLevels |= 1 << i;
         }
@@ -86,7 +86,7 @@ void ResetLevelStateAtHub(void)
         {
             for (i = 0; i < room->doorCount; d++, i++)
             {
-                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 1)
+                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_PREVIOUS)
                     break;
             }
             gRoomEntryX = d->unk2 * 16 + 22;
@@ -98,7 +98,7 @@ void ResetLevelStateAtHub(void)
         {
             for (i = 0; i < room->doorCount; d++, i++)
             {
-                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 2)
+                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_NEXT)
                     break;
             }
             gRoomEntryX = d->unk2 * 16 + 16;
@@ -109,7 +109,7 @@ void ResetLevelStateAtHub(void)
         {
             for (i = 0; i < room->doorCount; d++, i++)
             {
-                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 0 && d->unk8 == (s8)gUnk_03001F20)
+                if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == (s8)gUnk_03001F20)
                     break;
             }
             gRoomEntryX = d->unk2 * 16 + 22;
@@ -147,12 +147,12 @@ void ResetLevelStateForContinue(void)
             gUsedSubGameDoors[i] = 15;
         else
             gUsedSubGameDoors[i] = 0;
-        if (gHubDoorUnlocks[i][6] & 0x100)
+        if (gHubDoorUnlocks[i][DOOR_KIND_WARP_STAR_STATION] & 0x100)
         {
-            if (gBigSwitchFlags[0] & (1 << (gHubDoorUnlocks[i][6] & 0xFF)))
+            if (gBigSwitchFlags[0] & (1 << (gHubDoorUnlocks[i][DOOR_KIND_WARP_STAR_STATION] & 0xFF)))
                 gWarpStarStationLevels |= 1 << i;
         }
-        else if (gStageClearStatus[i][gHubDoorUnlocks[i][6]] != 0)
+        else if (gStageClearStatus[i][gHubDoorUnlocks[i][DOOR_KIND_WARP_STAR_STATION]] != 0)
         {
             gWarpStarStationLevels |= 1 << i;
         }
@@ -188,7 +188,7 @@ void ResetLevelStateForContinue(void)
             {
                 for (i = 0; i < room->doorCount; d++, i++)
                 {
-                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 1)
+                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_PREVIOUS)
                         break;
                 }
                 gRoomEntryX = d->unk2 * 16 + 22;
@@ -200,7 +200,7 @@ void ResetLevelStateForContinue(void)
             {
                 for (i = 0; i < room->doorCount; d++, i++)
                 {
-                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 2)
+                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_NEXT)
                         break;
                 }
                 gRoomEntryX = d->unk2 * 16 + 16;
@@ -212,7 +212,7 @@ void ResetLevelStateForContinue(void)
             {
                 for (i = 0; i < room->doorCount; d++, i++)
                 {
-                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == 0 && d->unk8 == gUnk_02007FF8)
+                    if (d->unk0 == 0x270F && *(u8 *)&d->unk6 == DOOR_KIND_STAGE && d->unk8 == gUnk_02007FF8)
                         break;
                 }
                 gRoomEntryX = d->unk2 * 16 + 22;

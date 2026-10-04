@@ -84,7 +84,7 @@ void SwordAndBladeKnightSlashUpdate(void)
     }
     if (ActorCheckHitsWithBox(gUnk_08741158) != 0)
     {
-        if (gCurTask->hitKind == 6)
+        if (gCurTask->hitKind == HIT_KIND_NO_DAMAGE)
         {
             PlaySfx(243);
             gCurTask->swordAndBladeKnightSlashStruck = v;

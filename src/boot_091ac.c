@@ -260,7 +260,7 @@ s32 TitleScreen(void)
         gTasks[idx].titleSpritesStartDelay = 90;
     }
     TaskCreateFrom(TASK_TITLE_PALETTE, 0);
-    PlayBgm(26);
+    PlayBgm(BGM_TITLE);
     if (gPrevGameState != GAME_STATE_BOOT_LOGO)
         RunFrames(60);
     else

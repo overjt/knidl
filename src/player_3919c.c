@@ -158,7 +158,7 @@ void PlayerActionDie(void)
     for (i = 0; i <= 3; i++)
         CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);
     if (n == 0)
-        PlayBgm(3);
+        PlayBgm(BGM_LOST_LIFE);
     else if (gRoomExitKind != 1)
         PlaySfx(270);
     PlayerSetMotionYPreset(32);

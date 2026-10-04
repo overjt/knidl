@@ -910,7 +910,7 @@ void FireLionCheckCatch(void)
         break;
     }
     u = gCurTask;
-    if (u->hitKind == 8) {
+    if (u->hitKind == HIT_KIND_CATCH) {
         p = gPlayerStates;
         i = u->hitterSlot;
         if (p[i].ability != ABILITY_STONE) {

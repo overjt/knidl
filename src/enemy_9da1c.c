@@ -235,7 +235,7 @@ void sub_0809dd08(void)
     ActorCheckHits();
     ActorReactToHit();
     v = gCurTask->hitKind;
-    if (v == 1 || v == 3 || v == 4)
+    if (v == HIT_KIND_DEFEAT || v == HIT_KIND_INHALE || v == HIT_KIND_GRAB)
     {
         p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)
@@ -286,7 +286,7 @@ void MaceKnightUpdate(void)
     ActorCheckHits();
     ActorReactToHit();
     v = gCurTask->hitKind;
-    if (v == 1 || v == 3 || v == 4)
+    if (v == HIT_KIND_DEFEAT || v == HIT_KIND_INHALE || v == HIT_KIND_GRAB)
     {
         p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)

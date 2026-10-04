@@ -255,7 +255,7 @@ void sub_0809ffec(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->hitKind == 6 && t->hitEffect == 4)
+    if (t->hitKind == HIT_KIND_NO_DAMAGE && t->hitEffect == 4)
         gPlayerStates[t->hitterSlot].requestedAction = PLAYER_ACTION_RECOIL;
 }
 

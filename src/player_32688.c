@@ -493,7 +493,7 @@ void sub_08033414(void)
         {
             SetPlayerInvulnerability(5, 0, gCurTask->player->playerIndex);
             gCurTask->player->unk40 &= 0xFFBF;
-            PlayBgm(19);
+            PlayBgm(BGM_INVINCIBLE);
             PlayerStartItemShare(gCurTask->player->playerIndex, 3);
         }
         break;

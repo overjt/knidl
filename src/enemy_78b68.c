@@ -1571,7 +1571,7 @@ void ScarfyCheckTransform(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->hitKind == 6 && (u16)(t->hitEffect - 2) <= 1)
+    if (t->hitKind == HIT_KIND_NO_DAMAGE && (u16)(t->hitEffect - 2) <= 1)
     {
         ActorSetAttackBox(gUnk_08740E1C);
         ActorSetState(3);

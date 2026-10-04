@@ -1309,12 +1309,12 @@ void BossDefeatSweep(void)
         }
         p = &cls;
         cls = t->actorKind;
-        if (*p == 6 && t->u76.subtype == 0)
+        if (*p == ACTOR_KIND_ITEM && t->u76.subtype == 0)
             continue;
         if (*p == 10)
             continue;
         v = *p;
-        if (v == 9 || v == 7 || v == 8)
+        if (v == 9 || v == ACTOR_KIND_BOSS_CHILD_TASK || v == ACTOR_KIND_MID_BOSS_CHILD_TASK)
         {
             if (gTaskSlotTypes[i] == TASK_PALETTE_ANIM)
                 continue;

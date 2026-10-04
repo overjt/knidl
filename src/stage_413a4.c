@@ -1214,7 +1214,7 @@ void MetaKnightActionDie(void)
     CreatePlayerEffect(gCurTask->player->playerIndex, 13, 0);
     gCurTask->player->paletteFlashMode = k = 1;
     gCurTask->player->invulnerabilityTimer = 0x8000;
-    PlayBgm(3);
+    PlayBgm(BGM_LOST_LIFE);
     if (IsTaskBelowPlayerBounds(gCurTask))
     {
         PlayerSetMotionYPreset(32);

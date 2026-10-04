@@ -17,4 +17,15 @@
 #define ROOM_ENTRY_CANNON      3
 #define ROOM_ENTRY_BIG_SWITCH  4 /* Task_Player starts it like ROOM_ENTRY_NORMAL */
 
+/* Hub door kinds - a hub door record's kind (struct Door byte 6, records 0x270F): the case EnterDoor (src/level_242d0.c:607) and SpawnDoorObjects (src/room_28320.c:79) switch on, and the gHubDoorUnlocks[level][kind] column */
+#define DOOR_KIND_STAGE              0
+#define DOOR_KIND_PREVIOUS           1
+#define DOOR_KIND_NEXT               2
+#define DOOR_KIND_BOMB_RALLY         3
+#define DOOR_KIND_AIR_GRIND          4
+#define DOOR_KIND_QUICK_DRAW         5
+#define DOOR_KIND_WARP_STAR_STATION  6
+#define DOOR_KIND_MUSEUM             7
+#define DOOR_KIND_ARENA              8
+
 #endif // GUARD_CONSTANTS_ROOMS_H

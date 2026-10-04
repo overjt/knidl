@@ -112,7 +112,7 @@ void MetaKnightUpdate(void)
                 sub_080a7168();
             }
             break;
-        case 6:
+        case HIT_KIND_NO_DAMAGE:
             gUnk_02007D00[0] = gCurTask->hitterPlayer;
             switch (gCurTask->hitEffect)
             {

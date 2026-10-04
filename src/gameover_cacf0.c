@@ -84,7 +84,7 @@ void GameOverScreen(void)
     LinkRequestSync();
     LinkSyncRandom();
     LinkStartKeyExchange();
-    PlayBgm(16);
+    PlayBgm(BGM_GAME_OVER);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     while (gBg2ScrollX != 0) {
@@ -132,7 +132,7 @@ void GameOverMetaKnightmareScreen(void)
     LinkStartKeyExchange();
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1D00;
-    PlayBgm(16);
+    PlayBgm(BGM_GAME_OVER);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     while (gBg2ScrollX != 0) {
@@ -186,7 +186,7 @@ void GameOverBossEnduranceScreen(void)
     DrawClockToBgMap(gHudClock, 22, 18);
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x900;
-    PlayBgm(16);
+    PlayBgm(BGM_GAME_OVER);
     ResetFadeAndBlend();
     BeginFastFadeInFromWhite();
     RunLinkFramesUntilFadeDone();

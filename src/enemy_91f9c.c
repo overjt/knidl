@@ -142,7 +142,7 @@ void BugzzyUpdate(void)
     {
         ActorCheckPlayerHitsWithBox(gUnk_08743A58[gCurTask->bugzzyBoxSet]);
         v = gCurTask;
-        if (v->hitKind == 8)
+        if (v->hitKind == HIT_KIND_CATCH)
         {
             v->bugzzyHeldPlayerSlot = v->hitterSlot;
             TaskFaceToward(v->bugzzyHeldPlayerSlot);

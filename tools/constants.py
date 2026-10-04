@@ -164,6 +164,11 @@ FAMILIES = {
         "prefix": "SE_",
         "calls": {"PlaySfx": 0, "PlaySfxIfLocalPlayer": 0, "PlayerStartSfx": 0},
     },
+    "songs": {
+        "header": "sound",
+        "prefix": "BGM_",
+        "calls": {"PlayBgm": 0},
+    },
     "camera": {
         "header": "camera",
         "prefix": "CAMERA_MODE_",

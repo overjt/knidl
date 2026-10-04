@@ -186,7 +186,7 @@ u8 HitTestColliderClass20(void)
                 continue;
             m = gColliderClass20KindBits[k] | 0x4000;
             if (!(a->unk18 & m) && !(b->unk10 & 8))
-                t->hitKind = 6;
+                t->hitKind = HIT_KIND_NO_DAMAGE;
             if (k == 4)
                 continue;
             if (k == 5 && (gAttackBox->unk1A & 0x80))
@@ -260,12 +260,12 @@ u8 HitTestColliderClass20(void)
         {
             m = gColliderClass20KindBits[k] | 0x4000;
             if (!(gAttackBox->unk18 & m) && !(gColliderBodyBox->unk10 & 8))
-                t->hitKind = 6;
+                t->hitKind = HIT_KIND_NO_DAMAGE;
         }
         m = gUnk_0873229C[k];
         if (gAttackBox->unk14 & m)
             continue;
-        gHitKind = 6;
+        gHitKind = HIT_KIND_NO_DAMAGE;
         gHitEffect = gUnk_08732242[k];
         gHitHealthLeft = gAttackHealth;
         HitRecordHitter();

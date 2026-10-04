@@ -544,8 +544,8 @@ u32 PickupReactToHit(void)
     case HIT_KIND_GRAB:
         r = ActorAttachToHitter();
         break;
-    case 6:
-    case 8:
+    case HIT_KIND_NO_DAMAGE:
+    case HIT_KIND_CATCH:
         break;
     }
     return r;
