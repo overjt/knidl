@@ -4183,7 +4183,7 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_08748268 == 0x08748268, "MATCHING: actor_rodata_08748268 moved")
     ASSERT(!MATCHING || gKingDededeStates == 0x0874844C, "MATCHING: actor_tbl_0874844c moved")
     ASSERT(!MATCHING || actor_rodata_087484a4 == 0x087484A4, "MATCHING: actor_rodata_087484a4 moved")
-    ASSERT(!MATCHING || gUnk_087484C4 == 0x087484C4, "MATCHING: actor_tbl_087484c4 moved")
+    ASSERT(!MATCHING || gKingDededeDefeatedStates == 0x087484C4, "MATCHING: actor_tbl_087484c4 moved")
     ASSERT(!MATCHING || actor_rodata_087484e4 == 0x087484E4, "MATCHING: actor_rodata_087484e4 moved")
     ASSERT(!MATCHING || gMrShineAndMrBrightStates == 0x08748624, "MATCHING: actor_tbl_08748624 moved")
     ASSERT(!MATCHING || gKingDededeDef == 0x08748764, "MATCHING: actor_rec_08748764 moved")

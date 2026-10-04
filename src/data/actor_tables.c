@@ -2413,14 +2413,14 @@ u32 gKingDededeStateUpdates[11] ACTOR_TBL(0874844c) = {
 };
 
 /* ---- 0x087484C4-0x087484E4: 3 table(s), 8 function pointer(s), section .actor_tbl_087484c4 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a150c, sub_080a1570 */
-u32 gUnk_087484C4[2] ACTOR_TBL(087484c4) = {
-    (u32)sub_080a1590,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in KingDededeDefeatedInit, KingDededeDefeatedEnterState */
+u32 gKingDededeDefeatedStates[2] ACTOR_TBL(087484c4) = {
+    (u32)KingDededeDefeatedFall,
     (u32)sub_080a18d4,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080a1550 */
-u32 gUnk_087484CC[2] ACTOR_TBL(087484c4) = {
-    (u32)sub_080a15f0,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in KingDededeDefeatedUpdate */
+u32 gKingDededeDefeatedStateUpdates[2] ACTOR_TBL(087484c4) = {
+    (u32)KingDededeDefeatedFallUpdate,
     (u32)sub_080a1980,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in Task_MrShineAndMrBright */
@@ -2451,15 +2451,15 @@ u32 gMrShineStates[18] ACTOR_TBL(08748624) = {
     (u32)MrShineFall,
     (u32)MrShineWait,
     (u32)MrShineAscend,
-    (u32)MrShineState3,
+    (u32)MrShineWaitToAttack,
     (u32)MrShineState4,
-    (u32)MrShineState5,
+    (u32)MrShineDropStars,
     (u32)MrShineChase,
-    (u32)MrShineState7,
+    (u32)MrShineWaitToDescend,
     (u32)MrShineDescend,
     (u32)MrShineWalk,
     (u32)MrShineJump,
-    (u32)MrShineState11,
+    (u32)MrShineJumpBack,
     (u32)MrShineDash,
     (u32)MrShineRecoil,
     (u32)MrShineThrow,
@@ -2472,15 +2472,15 @@ u32 gMrShineStateUpdates[18] ACTOR_TBL(08748624) = {
     (u32)MrShineFallUpdate,
     (u32)MrShineWaitUpdate,
     (u32)MrShineAscendUpdate,
-    (u32)MrShineState3Update,
+    (u32)MrShineWaitToAttackUpdate,
     (u32)MrShineState4Update,
-    (u32)MrShineState5Update,
+    (u32)MrShineDropStarsUpdate,
     (u32)MrShineChaseUpdate,
-    (u32)MrShineState7Update,
+    (u32)MrShineWaitToDescendUpdate,
     (u32)MrShineDescendUpdate,
     (u32)MrShineWalkUpdate,
     (u32)MrShineJumpUpdate,
-    (u32)MrShineState11Update,
+    (u32)MrShineJumpBackUpdate,
     (u32)MrShineDashUpdate,
     (u32)MrShineRecoilUpdate,
     (u32)MrShineThrowUpdate,
@@ -2493,15 +2493,15 @@ u32 gMrBrightStates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightFall,
     (u32)MrBrightWait,
     (u32)MrBrightAscend,
-    (u32)MrBrightState3,
+    (u32)MrBrightWaitToAttack,
     (u32)MrBrightState4,
     (u32)MrBrightState5,
     (u32)MrBrightChase,
-    (u32)MrBrightState7,
+    (u32)MrBrightWaitToDescend,
     (u32)MrBrightDescend,
     (u32)MrBrightHop,
     (u32)MrBrightJump,
-    (u32)MrBrightState11,
+    (u32)MrBrightJumpBack,
     (u32)MrBrightDash,
     (u32)MrBrightRecoil,
     (u32)MrBrightThrow,
@@ -2514,15 +2514,15 @@ u32 gMrBrightStateUpdates[18] ACTOR_TBL(08748624) = {
     (u32)MrBrightFallUpdate,
     (u32)MrBrightWaitUpdate,
     (u32)MrBrightAscendUpdate,
-    (u32)MrBrightState3Update,
+    (u32)MrBrightWaitToAttackUpdate,
     (u32)MrBrightState4Update,
     (u32)MrBrightState5Update,
     (u32)MrBrightChaseUpdate,
-    (u32)MrBrightState7Update,
+    (u32)MrBrightWaitToDescendUpdate,
     (u32)MrBrightDescendUpdate,
     (u32)MrBrightHopUpdate,
     (u32)MrBrightJumpUpdate,
-    (u32)MrBrightState11Update,
+    (u32)MrBrightJumpBackUpdate,
     (u32)MrBrightDashUpdate,
     (u32)MrBrightRecoilUpdate,
     (u32)MrBrightThrowUpdate,

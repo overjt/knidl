@@ -1103,27 +1103,27 @@ void KingDededeFallUpdate(void)
         TaskSetEntry(KingDededeEnterState, gCurTaskIdx);
 }
 
-void sub_080a150c(void)
+void KingDededeDefeatedInit(void)
 {
     struct Task *t;
 
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
-    t->updateCallback = (u32)sub_080a1550;
+    t->updateCallback = (u32)KingDededeDefeatedUpdate;
     t->frameTable = gKingDededeFrames;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_087484C4);
+    CallTableEntry(gCurTask->state, 2, gKingDededeDefeatedStates);
 }
 
-void sub_080a1550(void)
+void KingDededeDefeatedUpdate(void)
 {
     ActorCollideTerrain();
-    CallTableEntry(gCurTask->updateState, 2, gUnk_087484CC);
+    CallTableEntry(gCurTask->updateState, 2, gKingDededeDefeatedStateUpdates);
 }
 
-void sub_080a1570(void)
+void KingDededeDefeatedEnterState(void)
 {
     TaskFaceNearestPlayer();
-    CallTableEntry(gCurTask->state, 2, gUnk_087484C4);
+    CallTableEntry(gCurTask->state, 2, gKingDededeDefeatedStates);
 }

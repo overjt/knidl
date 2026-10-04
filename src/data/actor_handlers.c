@@ -1719,7 +1719,7 @@ struct ActorVt gMrShineAndMrBrightHitReactions ACTOR_TBL(08748930) = {
     .defeatCallback = (u32)MrShineAndMrBrightReactToDefeat,
 };
 /* src/enemy_a1590.c */
-struct ActorVt gUnk_0874898C ACTOR_TBL(08748930) = {
+struct ActorVt gMrShineAndMrBrightDefeatedHitReactions ACTOR_TBL(08748930) = {
     .damageKind = -1,
     .defeatKind = 7,
     .filler02 = { 0x00, 0x00 },

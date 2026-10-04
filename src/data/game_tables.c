@@ -641,7 +641,7 @@ u32 gUnk_0873E734[9] GAME_TBL(0873e734) = {
 };
 /* include/actor.h; CallTableEntry(i, 9, ...) in ActorDefeatBoss */
 u32 gUnk_0873E758[9] GAME_TBL(0873e734) = {
-    (u32)sub_080a150c,
+    (u32)KingDededeDefeatedInit,
     (u32)PaintRollerDropStarRodPiece,
     (u32)sub_080a73b4,
     (u32)sub_080adc44,

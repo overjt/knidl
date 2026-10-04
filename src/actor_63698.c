@@ -1563,7 +1563,7 @@ s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio)
 }
 
 /* Clone the running task's class/sub into a fresh task. */
-s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
+s32 CreateChildActorOfSameType(u8 p3, u8 p4, u32 x, u32 y, u16 prio)
 {
     struct Task *t;
     struct Task *u;

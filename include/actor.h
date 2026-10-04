@@ -407,7 +407,7 @@ s32 sub_08064e5c(u32 sub, u32 type, u8 p2);
 s32 sub_08064e90(u32 sub, u32 type, u8 p2, s16 xArg, s16 yArg);
 s32 CreateAbilityStar(u8 p2);
 s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
-s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio);
+s32 CreateChildActorOfSameType(u8 p3, u8 p4, u32 x, u32 y, u16 prio);
 u8 ActorIsInView(void);
 void ActorDrawWorldInView(void);
 void ActorDrawWorldInViewOrDestroy(void);

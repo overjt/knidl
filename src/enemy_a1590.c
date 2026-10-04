@@ -97,7 +97,7 @@ extern s32 CreateChildTaskAtOffsetFacing(u32 type, s16 dx, s16 dy, u8 keepPrio);
 extern s32 CreateChildTaskHere(u32 type, u8 keepPrio);
 extern s32 CreateChildTaskAt(u32 type, s16 xArg, s16 yArg, u8 keepPrio);
 extern s32 CreateActorByKind(u8 cls, u32 sub, u8 p3, u8 p4, int x, int y, u16 prio);
-extern s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio);
+extern s32 CreateChildActorOfSameType(u8 p3, u8 p4, u32 x, u32 y, u16 prio);
 extern u8 ActorIsInView(void);
 extern void ActorDrawWorldInView(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
@@ -175,8 +175,8 @@ s32 sub_080b5a94();
 s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
 
-/* sub_080a1590 (0x080A1590-0x080A15F0) */
-void sub_080a1590(void)
+/* KingDededeDefeatedFall (0x080A1590-0x080A15F0) */
+void KingDededeDefeatedFall(void)
 {
     struct Task *t;
 
@@ -197,11 +197,11 @@ void sub_080a1590(void)
     TaskSleepForever();
 }
 
-/* sub_080a15f0 (0x080A15F0-0x080A1618) */
-void sub_080a15f0(void)
+/* KingDededeDefeatedFallUpdate (0x080A15F0-0x080A1618) */
+void KingDededeDefeatedFallUpdate(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_080a1570, gCurTaskIdx);
+        TaskSetEntry(KingDededeDefeatedEnterState, gCurTaskIdx);
 }
 
 /* sub_080a1618 (0x080A1618-0x080A1624) */
@@ -442,11 +442,11 @@ void CreateMrShineAndMrBright(void)
     s32 r;
 
     a = gCurTask->u8C.actor;
-    gUnk_02007D00[1] = sub_0806505c(1, 0, gViewRect[0] + 192, gViewRect[2] + 48, a->savedTileWord);
+    gUnk_02007D00[1] = CreateChildActorOfSameType(1, 0, gViewRect[0] + 192, gViewRect[2] + 48, a->savedTileWord);
     v = a->savedTileWord & 0xFFF;
     w = gCurTask->tileWord & 0xF000;
-    gUnk_02007D00[0] = sub_0806505c(2, 0, gViewRect[0] + 32, gViewRect[2] + 64, v | w);
-    r = sub_0806505c(3, 0, 0, 0, gCurTask->tileWord);
+    gUnk_02007D00[0] = CreateChildActorOfSameType(2, 0, gViewRect[0] + 32, gViewRect[2] + 64, v | w);
+    r = CreateChildActorOfSameType(3, 0, 0, 0, gCurTask->tileWord);
     gUnk_02006040[5] = r;
     if (r != -1)
     {
@@ -555,7 +555,7 @@ void sub_080a1d84(void)
     struct Actor *a;
 
     a = gCurTask->u8C.actor;
-    ActorSetHitReactions((u32)gUnk_0874898C);
+    ActorSetHitReactions((u32)gMrShineAndMrBrightDefeatedHitReactions);
     a->defeatSweepCallback = (u32)MrShineAndMrBrightDefeatSweepFilter;
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
@@ -568,8 +568,8 @@ s32 MrShineAndMrBrightDefeatSweepFilter(s32 a)
     return 1;
 }
 
-/* sub_080a1dd4 (0x080A1DD4-0x080A1DF8) */
-void sub_080a1dd4(void)
+/* MrShineAndMrBrightCheckAscend (0x080A1DD4-0x080A1DF8) */
+void MrShineAndMrBrightCheckAscend(void)
 {
     if (gUnk_02007D00[5] == 0 && gUnk_02007D00[3] != 0)
     {
@@ -674,8 +674,8 @@ void sub_080a2020(void)
     ActorReactToHit();
 }
 
-/* sub_080a2030 (0x080A2030-0x080A2090) */
-void sub_080a2030(void)
+/* MrShineAndMrBrightStartDescend (0x080A2030-0x080A2090) */
+void MrShineAndMrBrightStartDescend(void)
 {
     HudSetTaskHpBar();
     if (gCurTask->pixelY - gViewRect[2] <= 31)
@@ -686,8 +686,8 @@ void sub_080a2030(void)
     gCurTask->layer = 10;
 }
 
-/* sub_080a2090 (0x080A2090-0x080A2164) */
-void sub_080a2090(void)
+/* MrShineAndMrBrightStartAscend (0x080A2090-0x080A2164) */
+void MrShineAndMrBrightStartAscend(void)
 {
     struct Task *t;
     s32 v;
@@ -720,8 +720,8 @@ void sub_080a2090(void)
     gCurTask->layer = 12;
 }
 
-/* sub_080a2164 (0x080A2164-0x080A21A0) */
-void sub_080a2164(void)
+/* MrShineAndMrBrightDescendUpdate (0x080A2164-0x080A21A0) */
+void MrShineAndMrBrightDescendUpdate(void)
 {
     struct Task *t = gCurTask;
     u16 d = t->pixelY - gViewRect[2];
@@ -734,8 +734,8 @@ void sub_080a2164(void)
     }
 }
 
-/* sub_080a21a0 (0x080A21A0-0x080A2224) */
-void sub_080a21a0(void *a)
+/* MrShineAndMrBrightAscendUpdate (0x080A21A0-0x080A2224) */
+void MrShineAndMrBrightAscendUpdate(void *a)
 {
     struct Task *t = gCurTask;
     u16 d = t->pixelY - gViewRect[2];
@@ -788,8 +788,8 @@ s32 sub_080a2224(void *a)
     return 0;
 }
 
-/* sub_080a2274 (0x080A2274-0x080A22B0) */
-void sub_080a2274(void *a)
+/* MrShineAndMrBrightCheckChase (0x080A2274-0x080A22B0) */
+void MrShineAndMrBrightCheckChase(void *a)
 {
     if (TaskFindNearestPlayerInScreenYBand(16, 64) != 0)
     {
@@ -858,8 +858,8 @@ sel:
     ActorSetState(gUnk_087484E4[i]);
 }
 
-/* sub_080a2390 (0x080A2390-0x080A23C0) */
-s32 sub_080a2390(void)
+/* MrShineAndMrBrightClampToRoom (0x080A2390-0x080A23C0) */
+s32 MrShineAndMrBrightClampToRoom(void)
 {
     s32 ret = 0;
     u8 v = ClampTaskToRoom(gCurTask);
@@ -869,8 +869,8 @@ s32 sub_080a2390(void)
     return ret;
 }
 
-/* sub_080a23c0 (0x080A23C0-0x080A2400) */
-void sub_080a23c0(void)
+/* MrShineAndMrBrightPickJumpDir (0x080A23C0-0x080A2400) */
+void MrShineAndMrBrightPickJumpDir(void)
 {
     TaskFaceNearestPlayer();
     if (RandomRange(4) == 0)
@@ -879,8 +879,8 @@ void sub_080a23c0(void)
         gCurTask->mrShineAndMrBrightJumpDir = gCurTask->facing;
 }
 
-/* sub_080a2400 (0x080A2400-0x080A2448) */
-void sub_080a2400(void *a)
+/* MrShineAndMrBrightEndSkyAttack (0x080A2400-0x080A2448) */
+void MrShineAndMrBrightEndSkyAttack(void *a)
 {
     gUnk_02007D00[4] = 0;
     if (gCurTask->mrShineAndMrBrightKnockedOut != 0)
@@ -894,14 +894,14 @@ void sub_080a2400(void *a)
     TaskSetEntry(a, gCurTaskIdx);
 }
 
-/* sub_080a2448 (0x080A2448-0x080A2488) */
-void sub_080a2448(void *a)
+/* MrShineAndMrBrightEndChase (0x080A2448-0x080A2488) */
+void MrShineAndMrBrightEndChase(void *a)
 {
     if (gUnk_02007D00[7] == 0)
     {
         if (gUnk_02007D00[3] == 0)
             gUnk_02007D00[3] = 1;
-        sub_080a2590(a);
+        MrShineAndMrBrightCheckDescend(a);
     }
     else
     {
@@ -938,7 +938,7 @@ s32 sub_080a24f8(void)
 
     if (d >= 16 && d <= 63)
     {
-        if ((u8)sub_080a2390() == 0 && TaskFindNearestPlayerInScreenYBand(16, 64) != 0 && TaskFindNearestPlayerInScreenXBand(16, 208) != 0)
+        if ((u8)MrShineAndMrBrightClampToRoom() == 0 && TaskFindNearestPlayerInScreenYBand(16, 64) != 0 && TaskFindNearestPlayerInScreenXBand(16, 208) != 0)
         {
             gCurTask->mrShineAndMrBrightTargetSlot = gUnk_030023D4;
             ret = 1;
@@ -956,8 +956,8 @@ s32 sub_080a24f8(void)
     return ret;
 }
 
-/* sub_080a2590 (0x080A2590-0x080A25C4) */
-void sub_080a2590(void *a)
+/* MrShineAndMrBrightCheckDescend (0x080A2590-0x080A25C4) */
+void MrShineAndMrBrightCheckDescend(void *a)
 {
     if ((gUnk_02007D00[3] >> 1) & 1)
     {
@@ -967,8 +967,8 @@ void sub_080a2590(void *a)
     }
 }
 
-/* sub_080a25c4 (0x080A25C4-0x080A2608) */
-void sub_080a25c4(void *a)
+/* MrShineAndMrBrightWaitToAttackUpdate (0x080A25C4-0x080A2608) */
+void MrShineAndMrBrightWaitToAttackUpdate(void *a)
 {
     if ((u8)sub_080a2224(a) == 0)
     {
@@ -979,25 +979,25 @@ void sub_080a25c4(void *a)
             TaskSetEntry(a, gCurTaskIdx);
         }
         else
-            sub_080a2274(a);
+            MrShineAndMrBrightCheckChase(a);
     }
 }
 
-/* sub_080a2608 (0x080A2608-0x080A263C) */
-void sub_080a2608(void *a)
+/* MrShineAndMrBrightChaseUpdate (0x080A2608-0x080A263C) */
+void MrShineAndMrBrightChaseUpdate(void *a)
 {
     if ((u8)sub_080a2224(a) == 0)
     {
         gCurTask->mrShineAndMrBrightSkyTimer--;
         if (gCurTask->mrShineAndMrBrightSkyTimer <= 0)
-            sub_080a2448(a);
+            MrShineAndMrBrightEndChase(a);
         else
             sub_080a2488(a);
     }
 }
 
-/* sub_080a263c (0x080A263C-0x080A268C) */
-void sub_080a263c(void *a)
+/* MrShineAndMrBrightWaitToDescendUpdate (0x080A263C-0x080A268C) */
+void MrShineAndMrBrightWaitToDescendUpdate(void *a)
 {
     if ((u8)sub_080a2224(a) == 0)
     {
@@ -1005,20 +1005,20 @@ void sub_080a263c(void *a)
         {
             gCurTask->mrShineAndMrBrightSkyTimer--;
             if (gCurTask->mrShineAndMrBrightSkyTimer > 0)
-                sub_080a2274(a);
+                MrShineAndMrBrightCheckChase(a);
             else
             {
                 gUnk_02007D00[3]++;
-                sub_080a2590(a);
+                MrShineAndMrBrightCheckDescend(a);
             }
         }
         else
-            sub_080a2590(a);
+            MrShineAndMrBrightCheckDescend(a);
     }
 }
 
-/* sub_080a268c (0x080A268C-0x080A2754) */
-void sub_080a268c(s32 a)
+/* MrShineAndMrBrightStopNearParent (0x080A268C-0x080A2754) */
+void MrShineAndMrBrightStopNearParent(s32 a)
 {
     if (gCurTask->velX != 0)
     {
@@ -1040,8 +1040,8 @@ void sub_080a268c(s32 a)
         gUnk_02007D00[7]++;
 }
 
-/* sub_080a2754 (0x080A2754-0x080A27B8) */
-void sub_080a2754(void)
+/* MrShineAndMrBrightAimAtParent (0x080A2754-0x080A27B8) */
+void MrShineAndMrBrightAimAtParent(void)
 {
     TaskStop();
     gCurTask->mrShineAndMrBrightArrivedAxes = 0;
@@ -1118,8 +1118,8 @@ void MrShineUpdatePalette(void)
     }
 }
 
-/* sub_080a28d0 (0x080A28D0-0x080A291C) */
-void sub_080a28d0(void)
+/* MrShineUpdateWalkSpeed (0x080A28D0-0x080A291C) */
+void MrShineUpdateWalkSpeed(void)
 {
     s32 i;
     s32 *p;
@@ -1174,8 +1174,8 @@ void CreateMrShineFallingStar(void)
     CreateActorFromDescAtOffsetFacing(&sp, 0);
 }
 
-/* sub_080a2994 (0x080A2994-0x080A29CC) */
-void sub_080a2994(void)
+/* MrShineSetSkyFrame (0x080A2994-0x080A29CC) */
+void MrShineSetSkyFrame(void)
 {
     struct Task *t = gCurTask;
 
@@ -1187,14 +1187,14 @@ void sub_080a2994(void)
         TaskSetFrame(19);
 }
 
-/* sub_080a29cc (0x080A29CC-0x080A2A00) */
-void sub_080a29cc(void)
+/* MrShineStartWaitToAttack (0x080A29CC-0x080A2A00) */
+void MrShineStartWaitToAttack(void)
 {
     struct Actor *a;
 
     a = gCurTask->u8C.actor;
     TaskStop();
-    sub_080a2994();
+    MrShineSetSkyFrame();
     if (a->prevState != 6)
         gCurTask->mrShineAndMrBrightSkyTimer = 300;
     gUnk_02007D00[7] = 1;
@@ -1206,16 +1206,16 @@ void sub_080a2a00(void)
     TaskStop();
     gUnk_02007D00[4] = 1;
     gCurTask->mrShineAndMrBrightFlashing = 1;
-    sub_080a2994();
+    MrShineSetSkyFrame();
 }
 
-/* sub_080a2a24 (0x080A2A24-0x080A2A44) */
-void sub_080a2a24(void)
+/* MrShineStartDropStars (0x080A2A24-0x080A2A44) */
+void MrShineStartDropStars(void)
 {
     TaskStop();
     gCurTask->mrShineAndMrBrightStarTimer = 45;
     gCurTask->mrShineAndMrBrightStarCount = 8;
-    sub_080a2994();
+    MrShineSetSkyFrame();
 }
 
 /* sub_080a2a44 (0x080A2A44-0x080A2A94) */
@@ -1241,8 +1241,8 @@ void sub_080a2a44(void)
     gCurTask->mrShineAndMrBrightTargetScreenX = 0;
 }
 
-/* sub_080a2a94 (0x080A2A94-0x080A2AF4) */
-void sub_080a2a94(void)
+/* MrBrightUpdateBob (0x080A2A94-0x080A2AF4) */
+void MrBrightUpdateBob(void)
 {
     s32 i;
     s32 *p;
@@ -1270,7 +1270,7 @@ void sub_080a2a94(void)
 void sub_080a2af4(void)
 {
     TaskStop();
-    sub_080a23c0();
+    MrShineAndMrBrightPickJumpDir();
     ActorStopAnim();
     TaskSetFrame(4);
     TaskYieldTrampoline(12);
@@ -1452,8 +1452,8 @@ s32 sub_080a2de0(void)
     return ret;
 }
 
-/* sub_080a2e88 (0x080A2E88-0x080A2EDC) */
-void sub_080a2e88(u8 a)
+/* MrBrightStartSkyAnim (0x080A2E88-0x080A2EDC) */
+void MrBrightStartSkyAnim(u8 a)
 {
     TaskStop();
     if (a == 1)
@@ -1467,8 +1467,8 @@ void sub_080a2e88(u8 a)
         gCurTask->actorAnimDelay1C = ActorStartAnimNoFlip(gUnk_08748588);
 }
 
-/* sub_080a2edc (0x080A2EDC-0x080A2F38) */
-void sub_080a2edc(void)
+/* MrBrightStartWaitToAttack (0x080A2EDC-0x080A2F38) */
+void MrBrightStartWaitToAttack(void)
 {
     struct Actor *a;
 
@@ -1492,7 +1492,7 @@ void sub_080a2f38(void)
     TaskStop();
     gUnk_02007D00[4] = 1;
     gCurTask->mrShineAndMrBrightFlashing = 1;
-    sub_080a2e88(1);
+    MrBrightStartSkyAnim(1);
     gCurTask->mrShineAndMrBrightTargetSlot = TaskGetNearestPlayerScreenPos();
     if (gUnk_030023B4 <= 15)
         gUnk_030023B4 = 16;
@@ -1522,11 +1522,11 @@ void sub_080a3000(void)
 {
     TaskStop();
     gCurTask->mrShineAndMrBrightBeamTimer = 120;
-    sub_080a2e88(1);
+    MrBrightStartSkyAnim(1);
 }
 
-/* sub_080a301c (0x080A301C-0x080A306C) */
-void sub_080a301c(void)
+/* MrBrightMoveTowardNearestPlayer (0x080A301C-0x080A306C) */
+void MrBrightMoveTowardNearestPlayer(void)
 {
     switch ((u8)TaskGetXDirBitTo(TaskGetNearestPlayerScreenPos()))
     {
@@ -1735,7 +1735,7 @@ void MrShineWait(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
-    sub_080a1dd4();
+    MrShineAndMrBrightCheckAscend();
     gCurTask->mrShineAndMrBrightFaceTimer = 8;
     ActorSetAttackBox((u32)gUnk_0874883C);
     TaskSetFrame(10);
@@ -1763,28 +1763,28 @@ void MrShineAscend(void)
 {
     gCurTask->updateState = 2;
     TaskSetFrame(13);
-    sub_080a2090();
+    MrShineAndMrBrightStartAscend();
     TaskSleepForever();
 }
 
 /* MrShineAscendUpdate (0x080A348C-0x080A349C) */
 void MrShineAscendUpdate(void)
 {
-    sub_080a21a0(MrShineEnterState);
+    MrShineAndMrBrightAscendUpdate(MrShineEnterState);
 }
 
-/* MrShineState3 (0x080A349C-0x080A34B8) */
-void MrShineState3(void)
+/* MrShineWaitToAttack (0x080A349C-0x080A34B8) */
+void MrShineWaitToAttack(void)
 {
     gCurTask->updateState = 3;
-    sub_080a29cc();
+    MrShineStartWaitToAttack();
     TaskSleepForever();
 }
 
-/* MrShineState3Update (0x080A34B8-0x080A34C8) */
-void MrShineState3Update(void)
+/* MrShineWaitToAttackUpdate (0x080A34B8-0x080A34C8) */
+void MrShineWaitToAttackUpdate(void)
 {
-    sub_080a25c4(MrShineEnterState);
+    MrShineAndMrBrightWaitToAttackUpdate(MrShineEnterState);
 }
 
 /* MrShineState4 (0x080A34C8-0x080A34F0) */
@@ -1809,16 +1809,16 @@ void MrShineState4Update(void)
     }
 }
 
-/* MrShineState5 (0x080A352C-0x080A3548) */
-void MrShineState5(void)
+/* MrShineDropStars (0x080A352C-0x080A3548) */
+void MrShineDropStars(void)
 {
     gCurTask->updateState = 5;
-    sub_080a2a24();
+    MrShineStartDropStars();
     TaskSleepForever();
 }
 
-/* MrShineState5Update (0x080A3548-0x080A3588) */
-void MrShineState5Update(void)
+/* MrShineDropStarsUpdate (0x080A3548-0x080A3588) */
+void MrShineDropStarsUpdate(void)
 {
     void *f = MrShineEnterState;
 
@@ -1830,7 +1830,7 @@ void MrShineState5Update(void)
             if (gCurTask->mrShineAndMrBrightStarCount > 0)
                 CreateMrShineFallingStar();
             else
-                sub_080a2400(f);
+                MrShineAndMrBrightEndSkyAttack(f);
         }
     }
 }
@@ -1840,29 +1840,29 @@ void MrShineChase(void)
 {
     gCurTask->updateState = 6;
     TaskStop();
-    sub_080a2994();
+    MrShineSetSkyFrame();
     TaskSleepForever();
 }
 
 /* MrShineChaseUpdate (0x080A35A8-0x080A35B8) */
 void MrShineChaseUpdate(void)
 {
-    sub_080a2608(MrShineEnterState);
+    MrShineAndMrBrightChaseUpdate(MrShineEnterState);
 }
 
-/* MrShineState7 (0x080A35B8-0x080A35D8) */
-void MrShineState7(void)
+/* MrShineWaitToDescend (0x080A35B8-0x080A35D8) */
+void MrShineWaitToDescend(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
-    sub_080a2994();
+    MrShineSetSkyFrame();
     TaskSleepForever();
 }
 
-/* MrShineState7Update (0x080A35D8-0x080A35E8) */
-void MrShineState7Update(void)
+/* MrShineWaitToDescendUpdate (0x080A35D8-0x080A35E8) */
+void MrShineWaitToDescendUpdate(void)
 {
-    sub_080a263c(MrShineEnterState);
+    MrShineAndMrBrightWaitToDescendUpdate(MrShineEnterState);
 }
 
 /* MrShineDescend (0x080A35E8-0x080A361C) */
@@ -1873,14 +1873,14 @@ void MrShineDescend(void)
     TaskSetFrame(12);
     TaskYieldTrampoline(4);
     gCurTask->frame++;
-    sub_080a2030();
+    MrShineAndMrBrightStartDescend();
     TaskSleepForever();
 }
 
 /* MrShineDescendUpdate (0x080A361C-0x080A3628) */
 void MrShineDescendUpdate(void)
 {
-    sub_080a2164();
+    MrShineAndMrBrightDescendUpdate();
 }
 
 /* MrShineWalk (0x080A3628-0x080A368C) */
@@ -1911,8 +1911,8 @@ void MrShineWalkUpdate(void)
         TaskSetEntry(MrShineEnterState, gCurTaskIdx);
     else
     {
-        sub_080a28d0();
-        if ((u8)sub_080a2390() != 0)
+        MrShineUpdateWalkSpeed();
+        if ((u8)MrShineAndMrBrightClampToRoom() != 0)
             TaskTurnAroundAndReverseX();
     }
 }
@@ -1922,7 +1922,7 @@ void MrShineJump(void)
 {
     gCurTask->updateState = 10;
     TaskStop();
-    sub_080a23c0();
+    MrShineAndMrBrightPickJumpDir();
     TaskSetFrame(10);
     TaskYieldTrampoline(10);
     gCurTask->frame++;
@@ -1948,15 +1948,15 @@ void MrShineJumpUpdate(void)
 {
     if (gCurTask->state != 10)
         TaskSetEntry(MrShineEnterState, gCurTaskIdx);
-    else if ((u8)sub_080a2390() != 0)
+    else if ((u8)MrShineAndMrBrightClampToRoom() != 0)
     {
         gCurTask->velX = -gCurTask->velX;
         gCurTask->mrShineAndMrBrightJumpDir = -gCurTask->mrShineAndMrBrightJumpDir;
     }
 }
 
-/* MrShineState11 (0x080A37AC-0x080A3840) */
-void MrShineState11(void)
+/* MrShineJumpBack (0x080A37AC-0x080A3840) */
+void MrShineJumpBack(void)
 {
     gCurTask->updateState = 11;
     TaskStop();
@@ -1978,12 +1978,12 @@ void MrShineState11(void)
     TaskSleepForever();
 }
 
-/* MrShineState11Update (0x080A3840-0x080A387C) */
-void MrShineState11Update(void)
+/* MrShineJumpBackUpdate (0x080A3840-0x080A387C) */
+void MrShineJumpBackUpdate(void)
 {
     if (gCurTask->state != 11)
         TaskSetEntry(MrShineEnterState, gCurTaskIdx);
-    else if ((u8)sub_080a2390() != 0)
+    else if ((u8)MrShineAndMrBrightClampToRoom() != 0)
         gCurTask->velX = 0;
 }
 
@@ -2006,7 +2006,7 @@ void MrShineDash(void)
 /* MrShineDashUpdate (0x080A38EC-0x080A3954) */
 void MrShineDashUpdate(void)
 {
-    if ((u8)sub_080a2390() != 0)
+    if ((u8)MrShineAndMrBrightClampToRoom() != 0)
     {
         gCurTask->velX = 0;
         MrShineAndMrBrightEndFlash();
@@ -2094,7 +2094,7 @@ void MrShineThrowUpdate(void)
 {
     if (gCurTask->state != 14)
         TaskSetEntry(MrShineEnterState, gCurTaskIdx);
-    else if ((u8)sub_080a2390() != 0)
+    else if ((u8)MrShineAndMrBrightClampToRoom() != 0)
         gCurTask->velX = 0;
 }
 
@@ -2117,7 +2117,7 @@ void MrShineState15Update(void)
 void MrShineState16(void)
 {
     gCurTask->updateCallback = (u32)sub_080a3ba0;
-    sub_080a2754();
+    MrShineAndMrBrightAimAtParent();
     TaskSetFrame(19);
     TaskSleepForever();
 }
@@ -2126,7 +2126,7 @@ void MrShineState16(void)
 void sub_080a3ba0(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
-        sub_080a268c(8);
+        MrShineAndMrBrightStopNearParent(8);
     MrShineUpdatePalette();
 }
 
@@ -2134,7 +2134,7 @@ void sub_080a3ba0(void)
 void MrShineState17(void)
 {
     gCurTask->updateCallback = (u32)sub_080a3c08;
-    sub_080a2754();
+    MrShineAndMrBrightAimAtParent();
     TaskSetFrame(19);
     for (;;)
     {
@@ -2151,7 +2151,7 @@ void MrShineState17(void)
 void sub_080a3c08(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
-        sub_080a268c(3);
+        MrShineAndMrBrightStopNearParent(3);
     MrShineUpdatePalette();
 }
 
@@ -2218,7 +2218,7 @@ void MrBrightWait(void)
 {
     gCurTask->updateState = 1;
     TaskStop();
-    sub_080a1dd4();
+    MrShineAndMrBrightCheckAscend();
     ActorSetAttackBox((u32)gUnk_087488AC);
     gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_08748574);
     gCurTask->mrShineAndMrBrightBobFrame = 48;
@@ -2233,7 +2233,7 @@ void MrBrightWaitUpdate(void)
     struct Task *t;
 
     gCurTask->actorAnimDelay1C = ActorTickAnimFacingNearestPlayer(gCurTask->actorAnimDelay1C);
-    sub_080a2a94();
+    MrBrightUpdateBob();
     t = gCurTask;
     if (t->state != 1 && t->mrShineAndMrBrightBobFrame == 47)
         TaskSetEntry(MrBrightEnterState, gCurTaskIdx);
@@ -2243,7 +2243,7 @@ void MrBrightWaitUpdate(void)
 void MrBrightAscend(void)
 {
     gCurTask->updateState = 2;
-    sub_080a2090();
+    MrShineAndMrBrightStartAscend();
     gCurTask->actorAnimDelay1C = ActorStartAnim(gUnk_087485EC);
     TaskSleepForever();
 }
@@ -2252,22 +2252,22 @@ void MrBrightAscend(void)
 void MrBrightAscendUpdate(void)
 {
     gCurTask->actorAnimDelay1C = ActorTickAnim(gCurTask->actorAnimDelay1C);
-    sub_080a21a0(MrBrightEnterState);
+    MrShineAndMrBrightAscendUpdate(MrBrightEnterState);
 }
 
-/* MrBrightState3 (0x080A3E60-0x080A3E7C) */
-void MrBrightState3(void)
+/* MrBrightWaitToAttack (0x080A3E60-0x080A3E7C) */
+void MrBrightWaitToAttack(void)
 {
     gCurTask->updateState = 3;
-    sub_080a2edc();
+    MrBrightStartWaitToAttack();
     TaskSleepForever();
 }
 
-/* MrBrightState3Update (0x080A3E7C-0x080A3EA0) */
-void MrBrightState3Update(void)
+/* MrBrightWaitToAttackUpdate (0x080A3E7C-0x080A3EA0) */
+void MrBrightWaitToAttackUpdate(void)
 {
     gCurTask->actorAnimDelay1C = ActorTickAnim(gCurTask->actorAnimDelay1C);
-    sub_080a25c4(MrBrightEnterState);
+    MrShineAndMrBrightWaitToAttackUpdate(MrBrightEnterState);
 }
 
 /* MrBrightState4 (0x080A3EA0-0x080A3EDC) */
@@ -2319,10 +2319,10 @@ void MrBrightState5Update(void)
     if ((u8)sub_080a2224(f) == 0)
     {
         if (gCurTask->mrShineAndMrBrightBeamTimer <= 95)
-            sub_080a301c();
+            MrBrightMoveTowardNearestPlayer();
         if (gCurTask->mrShineAndMrBrightBeamTimer <= 0)
         {
-            sub_080a2400(f);
+            MrShineAndMrBrightEndSkyAttack(f);
             EndBgPaletteBlend(16);
             MrBrightRemoveBeam();
         }
@@ -2339,7 +2339,7 @@ void MrBrightState5Update(void)
 void MrBrightChase(void)
 {
     gCurTask->updateState = 6;
-    sub_080a2e88(0);
+    MrBrightStartSkyAnim(0);
     TaskSleepForever();
 }
 
@@ -2347,23 +2347,23 @@ void MrBrightChase(void)
 void MrBrightChaseUpdate(void)
 {
     gCurTask->actorAnimDelay1C = ActorTickAnim(gCurTask->actorAnimDelay1C);
-    sub_080a2608(MrBrightEnterState);
+    MrShineAndMrBrightChaseUpdate(MrBrightEnterState);
 }
 
-/* MrBrightState7 (0x080A3FF8-0x080A4018) */
-void MrBrightState7(void)
+/* MrBrightWaitToDescend (0x080A3FF8-0x080A4018) */
+void MrBrightWaitToDescend(void)
 {
     gCurTask->updateState = 7;
     TaskStop();
-    sub_080a2e88(0);
+    MrBrightStartSkyAnim(0);
     TaskSleepForever();
 }
 
-/* MrBrightState7Update (0x080A4018-0x080A403C) */
-void MrBrightState7Update(void)
+/* MrBrightWaitToDescendUpdate (0x080A4018-0x080A403C) */
+void MrBrightWaitToDescendUpdate(void)
 {
     gCurTask->actorAnimDelay1C = ActorTickAnim(gCurTask->actorAnimDelay1C);
-    sub_080a263c(MrBrightEnterState);
+    MrShineAndMrBrightWaitToDescendUpdate(MrBrightEnterState);
 }
 
 /* MrBrightDescend (0x080A403C-0x080A406C) */
@@ -2372,7 +2372,7 @@ void MrBrightDescend(void)
     gCurTask->updateState = 8;
     TaskStop();
     gCurTask->actorAnimDelay1C = ActorStartAnimNoFlip(gUnk_087485FC);
-    sub_080a2030();
+    MrShineAndMrBrightStartDescend();
     TaskSleepForever();
 }
 
@@ -2380,7 +2380,7 @@ void MrBrightDescend(void)
 void MrBrightDescendUpdate(void)
 {
     gCurTask->actorAnimDelay1C = ActorTickAnim(gCurTask->actorAnimDelay1C);
-    sub_080a2164();
+    MrShineAndMrBrightDescendUpdate();
 }
 
 /* MrBrightHop (0x080A408C-0x080A412C) */
@@ -2417,7 +2417,7 @@ void MrBrightHopUpdate(void)
         gCurTask->actorAnimDelay1C = ActorTickAnim(t->actorAnimDelay1C);
     if (gCurTask->state != 9)
         TaskSetEntry(MrBrightEnterState, gCurTaskIdx);
-    else if ((u8)sub_080a2390() != 0)
+    else if ((u8)MrShineAndMrBrightClampToRoom() != 0)
         TaskTurnAroundAndReverseX();
 }
 
@@ -2452,15 +2452,15 @@ void MrBrightJumpUpdate(void)
         gCurTask->actorAnimDelay1C = ActorTickAnim(t->actorAnimDelay1C);
     if (gCurTask->state != 10)
         TaskSetEntry(MrBrightEnterState, gCurTaskIdx);
-    else if ((u8)sub_080a2390() != 0)
+    else if ((u8)MrShineAndMrBrightClampToRoom() != 0)
     {
         gCurTask->velX = -gCurTask->velX;
         gCurTask->mrShineAndMrBrightJumpDir = -gCurTask->mrShineAndMrBrightJumpDir;
     }
 }
 
-/* MrBrightState11 (0x080A4260-0x080A42F8) */
-void MrBrightState11(void)
+/* MrBrightJumpBack (0x080A4260-0x080A42F8) */
+void MrBrightJumpBack(void)
 {
     gCurTask->updateState = 11;
     TaskStop();
@@ -2482,8 +2482,8 @@ void MrBrightState11(void)
     TaskSleepForever();
 }
 
-/* MrBrightState11Update (0x080A42F8-0x080A4350) */
-void MrBrightState11Update(void)
+/* MrBrightJumpBackUpdate (0x080A42F8-0x080A4350) */
+void MrBrightJumpBackUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -2491,7 +2491,7 @@ void MrBrightState11Update(void)
         gCurTask->actorAnimDelay1C = ActorTickAnim(t->actorAnimDelay1C);
     if (gCurTask->state != 11)
         TaskSetEntry(MrBrightEnterState, gCurTaskIdx);
-    else if ((u8)sub_080a2390() != 0)
+    else if ((u8)MrShineAndMrBrightClampToRoom() != 0)
         gCurTask->velX = 0;
 }
 
@@ -2519,7 +2519,7 @@ void MrBrightDash(void)
 /* MrBrightDashUpdate (0x080A43D8-0x080A4430) */
 void MrBrightDashUpdate(void)
 {
-    if ((u8)sub_080a2390() != 0)
+    if ((u8)MrShineAndMrBrightClampToRoom() != 0)
     {
         gCurTask->velX = 0;
         MrShineAndMrBrightEndFlash();
@@ -2598,7 +2598,7 @@ void MrBrightThrowUpdate(void)
     gCurTask->actorAnimDelay1C = ActorTickAnim(gCurTask->actorAnimDelay1C);
     if (gCurTask->state != 14)
         TaskSetEntry(MrBrightEnterState, gCurTaskIdx);
-    else if ((u8)sub_080a2390() != 0)
+    else if ((u8)MrShineAndMrBrightClampToRoom() != 0)
         gCurTask->velX = 0;
 }
 
@@ -2621,7 +2621,7 @@ void MrBrightState15Update(void)
 void MrBrightState16(void)
 {
     gCurTask->updateCallback = (u32)sub_080a4658;
-    sub_080a2754();
+    MrShineAndMrBrightAimAtParent();
     TaskSetFrame(20);
     TaskSleepForever();
 }
@@ -2630,7 +2630,7 @@ void MrBrightState16(void)
 void sub_080a4658(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
-        sub_080a268c(8);
+        MrShineAndMrBrightStopNearParent(8);
     MrBrightUpdatePalette();
 }
 
@@ -2638,7 +2638,7 @@ void sub_080a4658(void)
 void MrBrightState17(void)
 {
     gCurTask->updateCallback = (u32)sub_080a46c0;
-    sub_080a2754();
+    MrShineAndMrBrightAimAtParent();
     TaskSetFrame(20);
     for (;;)
     {
@@ -2655,7 +2655,7 @@ void MrBrightState17(void)
 void sub_080a46c0(void)
 {
     if (gCurTask->mrShineAndMrBrightArrivedAxes != 2)
-        sub_080a268c(3);
+        MrShineAndMrBrightStopNearParent(3);
     MrBrightUpdatePalette();
 }
 

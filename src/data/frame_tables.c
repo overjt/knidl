@@ -11048,7 +11048,7 @@ u32 gPhanPhanAppleFrames[] FRAME_TABLE = {
 };
 
 /* gKingDededeFrames.  Consumers: Task_KingDedede (src/enemy_9fbd0.c:69),
- * sub_080a150c (src/enemy_a0274.c:1113).  44 words, struct TaskGfx records;
+ * KingDededeDefeatedInit (src/enemy_a0274.c:1113).  44 words, struct TaskGfx records;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x087538E0-0x08753990).  Declared include/enemy.h:1233. */
 u32 gKingDededeFrames[] FRAME_TABLE = {
