@@ -288,7 +288,7 @@ void StartBgPaletteBlend(u32 a, u32 b)
         t->unk18 = a;
         t->unk1C = 0;
         t->unk24 = b;
-        CpuSet(gUnk_030012B0, gUnk_02005E10, 224);
+        CpuSet(gBgPaletteBank2, gUnk_02005E10, 224);
     }
 }
 
@@ -514,7 +514,7 @@ void PaletteAnimBgBlend(void)
             }
             u = gCurTask;
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
-                         (u16)u->unk20, 224, (u32)gUnk_030012B0);
+                         (u16)u->unk20, 224, (u32)gBgPaletteBank2);
             break;
         case 1:
             t->unk20 -= t->unk18;
@@ -525,11 +525,11 @@ void PaletteAnimBgBlend(void)
             }
             u = gCurTask;
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC,
-                         (u16)u->unk20, 224, (u32)gUnk_030012B0);
+                         (u16)u->unk20, 224, (u32)gBgPaletteBank2);
             break;
         case 2:
             BlendColors((u32)gUnk_02005E10, (u32)gUnk_0873DFAC, 0, 224,
-                         (u32)gUnk_030012B0);
+                         (u32)gBgPaletteBank2);
             gCurTask->unk1C = 3;
             break;
         }
@@ -1669,7 +1669,7 @@ void LoadStarRodPieceGfx(void)
 
     h = (struct GfxHeader *)gUnk_08334DC0;
     RequestCopy(4, (u32)h->tiles, OBJ_VRAM0 + 0x7800, h->tileCount << 5);
-    RequestCopy(2, gStarRodPiecePalettes[gLevelIndex], (u32)gUnk_03001610,
+    RequestCopy(2, gStarRodPiecePalettes[gLevelIndex], (u32)gObjPaletteBank13,
                  h->paletteBankCount << 5);
 }
 

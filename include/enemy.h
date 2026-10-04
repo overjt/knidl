@@ -21,10 +21,10 @@ struct Unk0873EEA0
 };
 
 /* IWRAM */
-extern u32 gUnk_0300158E[];
-extern u32 gUnk_030015A0[];
-extern u32 gUnk_030015CE[];
-extern u32 gUnk_030015EC[];
+extern u32 gObjPaletteBank8Color15[];
+extern u32 gObjPaletteBank9Color8[];
+extern u32 gObjPaletteBank10Color15[];
+extern u32 gObjPaletteBank11Color14[];
 
 /* ROM */
 extern u32 gUnk_080A7358[];

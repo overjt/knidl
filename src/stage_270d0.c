@@ -98,7 +98,7 @@ void ResumeRoom(void)
 
 void sub_08027228(void)
 {
-    CpuSet(gUnk_03001370, gUnk_02008060, 128);
+    CpuSet(gBgPaletteBank8, gUnk_02008060, 128);
 }
 
 void sub_08027240(void)
@@ -106,7 +106,7 @@ void sub_08027240(void)
     gDispCnt &= 0xE0FF;
     gDispCnt |= 0x1F00;
     RequestCopy(8, (u32)gCurRoomDef->bg3Tiles, BG_VRAM + 0x8000, 0);
-    CpuSet(gUnk_02008060, gUnk_03001370, 128);
+    CpuSet(gUnk_02008060, gBgPaletteBank8, 128);
     if (gBg3MapShape == 1)
         SetBg3ScreenSize(0x8000);
     if (gUnk_0200B078 == 6)

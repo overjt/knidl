@@ -199,7 +199,7 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
         }
     }
     if (d->paletteBankCount != 0)
-        RequestCopy(2, d->palette, (u32)gUnk_03001570, d->paletteBankCount << 5);
+        RequestCopy(2, d->palette, (u32)gObjPaletteBank8, d->paletteBankCount << 5);
     for (i = 1; i <= 4; i++)
     {
         d = gMetaKnightsGfx[i];

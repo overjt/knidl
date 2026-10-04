@@ -26,16 +26,16 @@ extern s16 gSoundTestSelection[];
 extern s8 gMenuCursor;
 
 /* IWRAM */
-extern u16 gUnk_030012F0[][16];
-extern u16 gUnk_03001310[][16];
-extern u16 gUnk_03001372[];
-extern u16 gUnk_0300153C[];
-extern u16 gUnk_03001550[];
-extern u16 gUnk_030015D0[];
-extern u16 gUnk_030015F0[];
-extern u16 gUnk_030015F4[];
-extern u16 gUnk_03001612[];
-extern u16 gUnk_03001668[];
+extern u16 gBgPaletteBank4[][16];
+extern u16 gBgPaletteBank5[][16];
+extern u16 gBgPaletteBank8Color1[];
+extern u16 gObjPaletteBank6Color6[];
+extern u16 gObjPaletteBank7[];
+extern u16 gObjPaletteBank11[];
+extern u16 gObjPaletteBank12[];
+extern u16 gObjPaletteBank12Color2[];
+extern u16 gObjPaletteBank13Color1[];
+extern u16 gObjPaletteBank15Color12[];
 
 /* ROM */
 extern u8 gUnk_08550B9C[];

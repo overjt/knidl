@@ -138,7 +138,7 @@ void PauseScreen(void)
 
 void PauseScreenLoadChoicePalette(s32 n)
 {
-    RequestCopy(2, (u32)gPauseChoicePalettes[n], (u32)gUnk_03001390, 22);
+    RequestCopy(2, (u32)gPauseChoicePalettes[n], (u32)gBgPaletteBank9, 22);
 }
 
 void BossEnduranceMain(void)

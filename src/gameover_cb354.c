@@ -92,7 +92,7 @@ void Task_GameOverPalette(void)
         if (gCurTask->unk34 > 256)
             gCurTask->unk34 = 256;
         BlendColors(gUnk_08584BB0[gCurTask->unk2C], gUnk_08584BB0[gCurTask->unk30],
-            (u16)gCurTask->unk34, 4, gUnk_03001390);
+            (u16)gCurTask->unk34, 4, gBgPaletteBank9);
         TaskYieldTrampoline(1);
     }
 }

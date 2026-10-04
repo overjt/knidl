@@ -61,10 +61,10 @@ void NormalExtraPanelUpdate(void)
     if (gMenuScreen == 2) {
         k = gMenuChoiceCursor * 3;
         w = gCurTask;
-        BlendColors(gUnk_08559C24[k + w->unk2C], gUnk_08559C24[k + w->unk30], (u16)w->unk34, 16, gUnk_03001570);
+        BlendColors(gUnk_08559C24[k + w->unk2C], gUnk_08559C24[k + w->unk30], (u16)w->unk34, 16, gObjPaletteBank8);
         MenuLoadPicture(1, gMenuChoiceCursor);
     } else {
-        BlendColors((u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16)gCurTask->unk34, 16, gUnk_03001570);
+        BlendColors((u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16 *)gUnk_08559C24 + (gMenuChoiceCursor * 3 + 2) * 16, (u16)gCurTask->unk34, 16, gObjPaletteBank8);
     }
 }
 
@@ -110,7 +110,7 @@ void PlayerCountPanelUpdate(void)
         v->unk34 = 256;
     k = gPlayerCountCursor * 3;
     w = gCurTask;
-    BlendColors(gUnk_08559C24[k + w->unk2C], gUnk_08559C24[k + w->unk30], (u16)w->unk34, 16, gUnk_03001550);
+    BlendColors(gUnk_08559C24[k + w->unk2C], gUnk_08559C24[k + w->unk30], (u16)w->unk34, 16, gObjPaletteBank7);
     MenuLoadPicture(2, gPlayerCountCursor);
 }
 
@@ -157,7 +157,7 @@ void ModeListCursorUpdate(void)
         v->unk34 = 256;
     if (gMenuScreen == 4) {
         w = gCurTask;
-        BlendColors(gUnk_0855D2F8[w->unk2C], gUnk_0855D2F8[w->unk30], (u16)w->unk34, 10, gUnk_0300153C);
+        BlendColors(gUnk_0855D2F8[w->unk2C], gUnk_0855D2F8[w->unk30], (u16)w->unk34, 10, gObjPaletteBank6Color6);
         if (gMenuCursor != gCurTask->unk28) {
             ModeListHighlightRow();
             if (gMenuScreen == 4)
@@ -165,7 +165,7 @@ void ModeListCursorUpdate(void)
             gCurTask->unk28 = gMenuCursor;
         }
     } else {
-        BlendColors(gUnk_0855D320, gUnk_0855D320, (u16)gCurTask->unk34, 10, gUnk_0300153C);
+        BlendColors(gUnk_0855D320, gUnk_0855D320, (u16)gCurTask->unk34, 10, gObjPaletteBank6Color6);
         gCurTask->unk28 = -1;
     }
     if (TaskIsOnScreenNoCamera()) {
@@ -181,7 +181,7 @@ void ModeListHighlightRow(void)
     u16 *p;
 
     for (i = 0; i < gModeListExtraRows + 3; i++) {
-        p = gUnk_030012F0[0];
+        p = gBgPaletteBank4[0];
         if (i == gMenuCursor)
             RequestCopy(2, (u32)gUnk_08559CE6, (u32)&p[i * 3 + 1], 6);
         else
@@ -227,10 +227,10 @@ void ModePlayerCountPanelUpdate(void)
     if (gMenuScreen == 5) {
         k = gMenuChoiceCursor * 2;
         w = gCurTask;
-        BlendColors(gUnk_0855D334[k + w->unk2C], gUnk_0855D334[k + w->unk30], (u16)w->unk34, 16, gUnk_03001550);
+        BlendColors(gUnk_0855D334[k + w->unk2C], gUnk_0855D334[k + w->unk30], (u16)w->unk34, 16, gObjPaletteBank7);
         MenuLoadPicture(4, gMenuCursor * 2 + gMenuChoiceCursor);
     } else {
-        BlendColors((u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16)gCurTask->unk34, 16, gUnk_03001550);
+        BlendColors((u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16 *)gUnk_0855D334 + (gMenuChoiceCursor + 4) * 16, (u16)gCurTask->unk34, 16, gObjPaletteBank7);
     }
 }
 

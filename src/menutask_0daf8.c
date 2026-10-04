@@ -139,7 +139,7 @@ void FileSelectCursorUpdate(void)
     if ((v->unk34 += 32) > 256)
         v->unk34 = 256;
     w = gCurTask;
-    BlendColors(gUnk_08554B60[w->unk2C], gUnk_08554B60[w->unk30], (u16)w->unk34, 4, gUnk_03001668);
+    BlendColors(gUnk_08554B60[w->unk2C], gUnk_08554B60[w->unk30], (u16)w->unk34, 4, gObjPaletteBank15Color12);
     cur = gMenuCursor;
     if (cur != gCurTask->unk28) {
         u8 *p;
@@ -279,7 +279,7 @@ void FileMenuHighlightUpdate(void)
         v->unk34 = 256;
     if (gMenuScreen == 1) {
         w = gCurTask;
-        BlendColors(gUnk_08559B68[w->unk2C], gUnk_08559B68[w->unk30], (u16)w->unk34, 10, gUnk_0300153C);
+        BlendColors(gUnk_08559B68[w->unk2C], gUnk_08559B68[w->unk30], (u16)w->unk34, 10, gObjPaletteBank6Color6);
         LoadGfxSet(23);
         if (gFileMenuCursor != gCurTask->unk28) {
             MenuUpdateFileMenuPalette();
@@ -287,7 +287,7 @@ void FileMenuHighlightUpdate(void)
             gCurTask->unk28 = gFileMenuCursor;
         }
     } else {
-        BlendColors(gUnk_08559B90, gUnk_08559B90, (u16)gCurTask->unk34, 10, gUnk_0300153C);
+        BlendColors(gUnk_08559B90, gUnk_08559B90, (u16)gCurTask->unk34, 10, gObjPaletteBank6Color6);
         LoadGfxSet(24);
         gCurTask->unk28 = -1;
     }

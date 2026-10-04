@@ -21,7 +21,7 @@
  *   other BgAnimStop (op 4: the end of a one-shot script).
  * Nothing after a script's op 3 or op 4 is read.  A fade is the 16 bytes
  * BgAnimStartPaletteFade copies: BgAnimStepPaletteFade blends colorCount
- * colours from src to dst into gUnk_030012B0[colorIndex], rate/256 more of
+ * colours from src to dst into gBgPaletteBank2[colorIndex], rate/256 more of
  * the way each frame.
  *
  * The tile frames and the palettes are assets: they stay baserom slices

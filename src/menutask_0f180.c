@@ -116,9 +116,9 @@ void LinkPlayPlayerListUpdate(void)
     if (n > 256)
         v->unk34 = 256;
     w = gCurTask;
-    BlendColors(gUnk_08562FE4[w->unk2C], gUnk_08562FE4[w->unk30], (u16)w->unk34, 8, gUnk_03001612);
+    BlendColors(gUnk_08562FE4[w->unk2C], gUnk_08562FE4[w->unk30], (u16)w->unk34, 8, gObjPaletteBank13Color1);
     y = gCurTask;
-    BlendColors(gUnk_08563024[y->unk2C], gUnk_08563024[y->unk30], (u16)y->unk34, 13, &gUnk_03001612[16]);
+    BlendColors(gUnk_08563024[y->unk2C], gUnk_08563024[y->unk30], (u16)y->unk34, 13, &gObjPaletteBank13Color1[16]);
     x = gCurTask;
     if (x->unk20 == 0 && x->unk24 != 0 && gMultiBootStruct[0] == 0 && gUnk_02007FC8 == 0)
         x->frame = 17;
@@ -417,15 +417,15 @@ void Task_MenuBgPaletteCycle(void)
         x = gCurTask;
         switch (x->unk20) {
         case 0:
-            BlendColors(gUnk_08731D28[x->unk18] + x->unk2C * 16, gUnk_08731D28[x->unk18] + x->unk30 * 16, (u16)x->unk34, 16, gUnk_03001430 - 176);
+            BlendColors(gUnk_08731D28[x->unk18] + x->unk2C * 16, gUnk_08731D28[x->unk18] + x->unk30 * 16, (u16)x->unk34, 16, gBgPaletteBank14 - 176);
             break;
         case 1:
-            BlendColors(gUnk_08731D28[x->unk1C] + x->unk2C * 16, gUnk_08731D28[x->unk1C] + x->unk30 * 16, (u16)x->unk34, 16, gUnk_03001430);
+            BlendColors(gUnk_08731D28[x->unk1C] + x->unk2C * 16, gUnk_08731D28[x->unk1C] + x->unk30 * 16, (u16)x->unk34, 16, gBgPaletteBank14);
             y = gCurTask;
-            BlendColors(gUnk_08731D28[y->unk18] + y->unk2C * 16, gUnk_08731D28[y->unk18] + y->unk30 * 16, (u16)y->unk34, 16, gUnk_03001430 + 16);
+            BlendColors(gUnk_08731D28[y->unk18] + y->unk2C * 16, gUnk_08731D28[y->unk18] + y->unk30 * 16, (u16)y->unk34, 16, gBgPaletteBank14 + 16);
             z = gCurTask;
             z->unk24 += 16;
-            BlendColors(gUnk_03001430, gUnk_03001430 + 16, (u16)z->unk24, 16, gUnk_03001430 - 176);
+            BlendColors(gBgPaletteBank14, gBgPaletteBank14 + 16, (u16)z->unk24, 16, gBgPaletteBank14 - 176);
             a = gCurTask;
             if (a->unk24 == 256) {
                 a->unk20 = 0;
@@ -450,7 +450,7 @@ void Task_MenuBackground(void)
     t->unk20 = 0;
     t->unk24 = 0;
     LoadGfxSet(gUnk_08731D58[s]);
-    RequestCopy(2, (u32)gUnk_08731CF8[gCurTask->unk18], (u32)gUnk_030012B0, 32);
+    RequestCopy(2, (u32)gUnk_08731CF8[gCurTask->unk18], (u32)gBgPaletteBank2, 32);
     for (;;) {
         p = gUnk_08731CF8[gMenuScreen];
         if (p != NULL && gUnk_08731CF8[gCurTask->unk18] != p) {
@@ -464,7 +464,7 @@ void Task_MenuBackground(void)
             u->unk24 += 32;
             switch (u->unk20) {
             case 1:
-                BlendColors(gUnk_08731CF8[u->unk1C], gUnk_085563C8, (u16)u->unk24, 16, gUnk_030012B0);
+                BlendColors(gUnk_08731CF8[u->unk1C], gUnk_085563C8, (u16)u->unk24, 16, gBgPaletteBank2);
                 w = gCurTask;
                 if (w->unk24 == 256) {
                     w->unk24 = 0;
@@ -473,7 +473,7 @@ void Task_MenuBackground(void)
                 }
                 break;
             case 2:
-                BlendColors(gUnk_085563C8, gUnk_08731CF8[u->unk18], (u16)u->unk24, 16, gUnk_030012B0);
+                BlendColors(gUnk_085563C8, gUnk_08731CF8[u->unk18], (u16)u->unk24, 16, gBgPaletteBank2);
                 w = gCurTask;
                 if (w->unk24 == 256) {
                     w->unk24 = 0;

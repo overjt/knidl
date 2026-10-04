@@ -93,7 +93,7 @@ extern u16 gUnk_0200B060[];
 extern u32 gUnk_02020000[]; /* decompression buffer */
 
 /* IWRAM */
-extern u16 gUnk_03001490[];
+extern u16 gObjPaletteBank1[];
 extern u8 gCreditsDemoSet;
 
 /* ROM */

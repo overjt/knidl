@@ -17,7 +17,7 @@ extern u32 gUnk_020060CC[];
 extern u8 gUnk_02006A14[];
 extern u8 gRoomExitKind;
 extern u32 gUnk_02008010[];
-extern u16 gUnk_03001570[];
+extern u16 gObjPaletteBank8[];
 extern u8 gActivePlayerMask;
 extern u8 gActivePlayerCount;
 extern u16 gLatchedPressedKeys[];
@@ -276,7 +276,7 @@ void sub_0805b370(void)
     {
         LZ77UnCompWram((const void *)gUnk_085B9B6C[3], gUnk_02020000);
         RequestCopy(4, gUnk_02020000, gObjVram, ((u16 *)gUnk_085B9B6C)[1] << 5);
-        RequestCopy(2, (void *)gUnk_085B9B6C[2], gUnk_03001570, ((u16 *)gUnk_085B9B6C)[0] << 5);
+        RequestCopy(2, (void *)gUnk_085B9B6C[2], gObjPaletteBank8, ((u16 *)gUnk_085B9B6C)[0] << 5);
         gCurTask->unk6C = 0;
         do
         {

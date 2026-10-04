@@ -75,7 +75,7 @@ extern u8 gUnk_0200B030;
 extern struct Actor gActors[];
 
 /* IWRAM */
-extern u32 gUnk_03001610[];
+extern u32 gObjPaletteBank13[];
 extern u8 gPauseDisabled;
 extern struct PlayerState gPlayerStates[];
 extern s32 gUnk_030023B4;

@@ -83,10 +83,10 @@ void EndingStarRodReturnLoadGraphics(void)
 
     LZ77UnCompWram(h->tiles, gUnk_02020000);
     RequestCopy(4, (u32)gUnk_02020000, (u32)gObjVram, h->tileCount << 5);
-    RequestCopy(2, (u32)h->palette, (u32)gUnk_03001570, h->paletteBankCount << 5);
+    RequestCopy(2, (u32)h->palette, (u32)gObjPaletteBank8, h->paletteBankCount << 5);
     if (gEndingPlayerCount > 1)
-        RequestCopy(2, (u32)gPlayerPalettes[gEndingLocalPlayer], (u32)gUnk_03001570, 22);
-    RequestCopy(2, (u32)gUnk_085E0070, (u32)&gUnk_03001570[80], 32);
+        RequestCopy(2, (u32)gPlayerPalettes[gEndingLocalPlayer], (u32)gObjPaletteBank8, 22);
+    RequestCopy(2, (u32)gUnk_085E0070, (u32)&gObjPaletteBank8[80], 32);
     LZ77UnCompWram(gUnk_085E0090, gUnk_02020000);
 }
 
@@ -425,19 +425,19 @@ void sub_080c9a28(void)
     TaskYieldTrampoline(99);
     gCurTask->unk6C = 0;
     do {
-        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gCurTask->unk6C * 32), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gCurTask->unk6C * 32), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 7);
     gCurTask->unk6C = 0;
     do {
-        BlendColors(gUnk_085E2B20, gUnk_085E2920, (u16)((s16)gCurTask->unk6C * 32), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2B20, gUnk_085E2920, (u16)((s16)gCurTask->unk6C * 32), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 7);
     gCurTask->unk6C = 0;
     do {
-        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gCurTask->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gCurTask->unk6C * 16), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 15);

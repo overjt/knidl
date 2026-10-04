@@ -29,7 +29,7 @@ extern u8 gUnk_0201C1B0; /* credits: current demo scene */
 extern s32 gCreditsTextPageScroll; /* credits: scroll since the last page copy, 1/16 pixel */
 
 /* IWRAM */
-extern u16 gUnk_030014F0[];
+extern u16 gObjPaletteBank4[];
 
 /* ROM */
 extern u32 gUnk_080DBEF8[];

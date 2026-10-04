@@ -130,17 +130,17 @@ void Task_TitlePalette(void)
     t->moveCallback = 0;
     t->drawCallback = 0;
     for (t->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++) {
-        RequestCopy(2, (u32)gUnk_08541D98[(s16)gCurTask->unk6C], (u32)gUnk_03001430, 32);
+        RequestCopy(2, (u32)gUnk_08541D98[(s16)gCurTask->unk6C], (u32)gBgPaletteBank14, 32);
         TaskYieldTrampoline(1);
     }
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 11; gCurTask->unk6C++) {
-        BlendColors(gUnk_08541D98[13], gUnk_08541D98[11], (u16)(((s16)gCurTask->unk6C + 1) * 21), 16, gUnk_03001430);
-        BlendColors(gUnk_08541F58, gUnk_08541F58 + 8, (u16)(((s16)gCurTask->unk6C + 1) * 21), 8, gUnk_03001430 + 17);
+        BlendColors(gUnk_08541D98[13], gUnk_08541D98[11], (u16)(((s16)gCurTask->unk6C + 1) * 21), 16, gBgPaletteBank14);
+        BlendColors(gUnk_08541F58, gUnk_08541F58 + 8, (u16)(((s16)gCurTask->unk6C + 1) * 21), 8, gBgPaletteBank14 + 17);
         TaskYieldTrampoline(1);
     }
     for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++) {
-        BlendColors(gUnk_08541D98[11], gUnk_08541D98[12], (u16)(((s16)gCurTask->unk6C + 1) * 32), 16, gUnk_03001430);
-        BlendColors(gUnk_08541F58 + 8, gUnk_08541F58, (u16)(((s16)gCurTask->unk6C + 1) * 32), 8, gUnk_03001430 + 17);
+        BlendColors(gUnk_08541D98[11], gUnk_08541D98[12], (u16)(((s16)gCurTask->unk6C + 1) * 32), 16, gBgPaletteBank14);
+        BlendColors(gUnk_08541F58 + 8, gUnk_08541F58, (u16)(((s16)gCurTask->unk6C + 1) * 32), 8, gBgPaletteBank14 + 17);
         TaskYieldTrampoline(1);
     }
     /* Loop 4: the ROM hoists the store's &gUnk_03001F2C (after the task
@@ -160,7 +160,7 @@ void Task_TitlePalette(void)
         for (; (s16)gCurTask->unk6C <= 15; gCurTask->unk6C++) {
             *p = ((s16)gCurTask->unk6C > 7 ? 16 - (s16)gCurTask->unk6C : (s16)gCurTask->unk6C) << 5;
             q = (u16 *)&gUnk_03001F2C;
-            BlendColors(gUnk_08541D98[12], gUnk_08541D98[13], *q, 16, gUnk_03001430);
+            BlendColors(gUnk_08541D98[12], gUnk_08541D98[13], *q, 16, gBgPaletteBank14);
             TaskYieldTrampoline(1);
         }
     }

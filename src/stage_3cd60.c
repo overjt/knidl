@@ -22,7 +22,7 @@ extern struct M11R20 gPlayerBodyBoxes[];
 extern struct M11Buf gUnk_02006A80[];
 extern u16 gUnk_02007F60[];
 extern u16 gPlayerBubbleTimers[];
-extern u16 gUnk_03001490[];
+extern u16 gObjPaletteBank1[];
 extern u8 gCreditsDemoSet;
 extern u8 gTerrainResult[];
 extern u16 gPlayerPalettes[][16];
@@ -510,7 +510,7 @@ s32 PlayerLoadFrameTilesAndPalette(s32 a0)
         p++;
         if ((gCurTask->player->unk42 & 16) == 0 && *p != NULL)
             RequestCopy(2, (u32)(*p + 1),
-                         (u32)gUnk_03001490 + ((prio >> 12) << 5), **p);
+                         (u32)gObjPaletteBank1 + ((prio >> 12) << 5), **p);
         q = p[1];
         if (q != NULL) {
             s = q;

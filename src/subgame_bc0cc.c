@@ -886,7 +886,7 @@ void QuickDrawLoadOpponentGraphics(s32 a0)
 
     LZ77UnCompWram(d->unk0C, gUnk_02020000);
     RequestCopy(3, (u32)gUnk_02020000, OBJ_VRAM0 + 0x3000, d->unk02 << 5);
-    RequestCopy(2, d->unk08, (u32)gUnk_03001570, d->unk00 << 5);
+    RequestCopy(2, d->unk08, (u32)gObjPaletteBank8, d->unk00 << 5);
 }
 
 void QuickDrawSetOpponentState(s32 a0, u16 a1)

@@ -236,9 +236,9 @@ s32 MenuLoadSaveSlotPalette(s32 slot, u32 pal)
     if (pal > 6)
         pal = 7;
     if (slot == gMenuCursor)
-        RequestCopy(2, (u32)&gUnk_08554B78[pal * 16], (u32)&gUnk_03001490[slot * 16], 32);
+        RequestCopy(2, (u32)&gUnk_08554B78[pal * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
     else
-        RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gUnk_03001490[slot * 16], 32);
+        RequestCopy(2, (u32)&gUnk_08554B78[(pal + 8) * 16], (u32)&gObjPaletteBank1[slot * 16], 32);
 }
 
 void MenuLoadSaveSlotPercent(s32 slot, s32 value, s32 mode)

@@ -190,13 +190,13 @@ void sub_0809bc1c(void)
     if ((s16)gCurTask->unk6C > 63)
     {
         BlendColors(gUnk_0827AC78, gUnk_0827AC7C,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gUnk_0300158E);
+                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gObjPaletteBank8Color15);
         BlendColors(gUnk_0827B90C, gUnk_0827B914,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 3, gUnk_030015A0);
+                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 3, gObjPaletteBank9Color8);
         BlendColors(gUnk_0827CA5C, gUnk_0827CA60,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gUnk_030015CE);
+                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gObjPaletteBank10Color15);
         BlendColors(gUnk_0827D81C, gUnk_0827D820,
-                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gUnk_030015EC);
+                     (u16)(abs(72 - (s16)gCurTask->unk6C) * 255 / 8), 1, gObjPaletteBank11Color14);
     }
     x = gCurTask;
     p = &x->unk6C;
@@ -234,7 +234,7 @@ void MetaKnightsLoadGfx(void)
 
     RequestCopy(4, (u32)gUnk_02020000, OBJ_VRAM0, 240 << 6);
     g = (struct GfxHeader *)gAxeKnightGfx;
-    RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gUnk_03001570), g->paletteBankCount << 5);
+    RequestCopy(2, (u32)g->palette, (u32)(p = (u16 *)gObjPaletteBank8), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gJavelinKnightGfx;
     RequestCopy(2, (u32)g->palette, (u32)(p + 16), g->paletteBankCount << 5);
     g = (struct GfxHeader *)gMaceKnightGfx;

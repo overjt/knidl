@@ -255,7 +255,7 @@ void GameOverCheckChoice(void)
    single-player play). */
 void GameOverLoadGraphics(void)
 {
-    RequestCopy(2, (u32)gUnk_085E2C20, (u32)gUnk_030014F0, 192);
+    RequestCopy(2, (u32)gUnk_085E2C20, (u32)gObjPaletteBank4, 192);
     if (gPlayerCount == 1) {
         LZ77UnCompWram(gUnk_085E2CE0, gUnk_02020000);
         RequestCopy(3, (u32)gUnk_02020000, OBJ_VRAM0 + 0x2C00, 0x2A00);

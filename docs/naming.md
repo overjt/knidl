@@ -477,7 +477,7 @@ copies and module-local records).
 | function | `sub_*` | 1535 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
-| RAM cell | `gUnk_02*`, `gUnk_03*` | 124 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
+| RAM cell | `gUnk_02*`, `gUnk_03*` | 100 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
 | ROM label | `gUnk_08*` | 5747 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
@@ -487,7 +487,7 @@ copies and module-local records).
 | struct field | `unk*` | 322 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 480 RAM cells, 2919 ROM labels by role and 2309 by position.
+Named for comparison: 504 RAM cells, 2919 ROM labels by role and 2309 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 

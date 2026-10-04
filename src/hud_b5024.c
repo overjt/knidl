@@ -358,7 +358,7 @@ void sub_080b5558(void)
     s32 i;
 
     mask = 0;
-    CpuSet(gUnk_03001570, gUnk_02005E10, 96);
+    CpuSet(gObjPaletteBank8, gUnk_02005E10, 96);
     for (i = 0; i < 10 && gRoomObjectGfxSlots[i].unk0 != -1; i++)
     {
         if (!((mask >> gRoomObjectGfxSlots[i].paletteBank) & 1))
@@ -367,7 +367,7 @@ void sub_080b5558(void)
             mask |= 1 << i;
         }
     }
-    CpuSet(gUnk_03001570, gUnk_02005F10, 96);
+    CpuSet(gObjPaletteBank8, gUnk_02005F10, 96);
 }
 
 s32 AllocObjTilesAndPalettes(u32 a, u32 b)

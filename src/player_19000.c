@@ -487,7 +487,7 @@ void sub_08019b30(void)
     t->layer = 15;
     gCurTask->frameTable = gUnk_08755440;
     gCurTask->tileWord = 0xD350;
-    RequestCopy(2, (u32)gUnk_085E0070, (u32)gUnk_03001610, 32);
+    RequestCopy(2, (u32)gUnk_085E0070, (u32)gObjPaletteBank13, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
     gCurTask->unk6C = 0;
@@ -532,7 +532,7 @@ void sub_08019c44(void)
     t->layer = 15;
     gCurTask->frameTable = gUnk_0875546C;
     gCurTask->tileWord = 0xD350;
-    RequestCopy(2, (u32)gUnk_085E0070, (u32)gUnk_03001610, 32);
+    RequestCopy(2, (u32)gUnk_085E0070, (u32)gObjPaletteBank13, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
     gCurTask->frame = 5;
@@ -572,7 +572,7 @@ void sub_08019d30(void)
     t->layer = 14;
     gCurTask->frameTable = gUnk_08755484;
     gCurTask->tileWord = 0xD350;
-    RequestCopy(2, (u32)gUnk_085E0070, (u32)gUnk_03001610, 32);
+    RequestCopy(2, (u32)gUnk_085E0070, (u32)gObjPaletteBank13, 32);
     gCurTask->posX = 160 << 17;
     gCurTask->posY = 160 << 15;
     gCurTask->unk6C = 0;

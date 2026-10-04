@@ -14,7 +14,7 @@
  * gRoomBgAnimScripts[gCurRoomDef->unk40]; UpdateBgAnims runs them every frame,
  * eight-byte commands: 0 copies tiles to 0x06004000 (BgAnimCopyTiles), 1
  * starts a palette fade (BgAnimStartPaletteFade, stepped by BgAnimStepPaletteFade into the
- * palette buffer gUnk_030012B0), 2 waits, 3 loops, 5 sets a metatile's
+ * palette buffer gBgPaletteBank2), 2 waits, 3 loops, 5 sets a metatile's
  * solid flag (SetCollisionTile), 6 plays a sound effect, anything else stops
  * the slot (BgAnimStop).  CreateMapEvent spawns task type #4 through M07's
  * TaskCreateHighSlot; Task_MapEvent, the type's body, dispatches on Task.state
@@ -117,7 +117,7 @@ extern s8 gInHub;
 extern struct RoomDef *gCurRoomDef;
 extern struct Unk02007D70 gBgAnims[];
 extern struct Unk02007D70Cmd **gRoomBgAnimScripts[];
-extern u16 gUnk_030012B0[];
+extern u16 gBgPaletteBank2[];
 extern s16 gRoomHeight;
 extern s16 gRoomWidth;
 extern struct MapTile *gRoomMap;
@@ -279,7 +279,7 @@ void BgAnimStepPaletteFade(struct Unk02007D70 *p)
     t = (p->unk18 * (s16)p->unk8) >> 8;
     if (t > 0x100)
         t = 0x100;
-    BlendColors(p->unkC, p->unk10, (u16)t, p->unk16, &gUnk_030012B0[p->unk14]);
+    BlendColors(p->unkC, p->unk10, (u16)t, p->unk16, &gBgPaletteBank2[p->unk14]);
     if (t == 0x100)
         p->unk8 = -1;
 }

@@ -11,7 +11,7 @@
  * sequence.  It turns alpha blending on (the BLDCNT shadows gBldCntTarget1 and
  * gBldCntTarget2), holds for 272 frames, cross-fades the BLDALPHA shadows
  * (gBldAlphaEva down, gBldAlphaEvb up) over 64 frames, holds for 798 more,
- * then blends the 128 colours of the palette buffer gUnk_03001370 from
+ * then blends the 128 colours of the palette buffer gBgPaletteBank8 from
  * gUnk_085E2920 to gUnk_085E2A20, back, and from gUnk_085E2920 to
  * gUnk_085E2B20, 16 frames each (the same three palettes M38's ending uses,
  * src/ending_c9004.c), and ends the task.
@@ -52,7 +52,7 @@ void sub_08019eec(void)
     gCurTask->unk6C = 0;
     do
     {
-        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gCurTask->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2A20, (u16)((s16)gCurTask->unk6C * 16), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 15);
@@ -60,14 +60,14 @@ void sub_08019eec(void)
     gCurTask->unk6C = 0;
     do
     {
-        BlendColors(gUnk_085E2A20, gUnk_085E2920, (u16)((s16)gCurTask->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2A20, gUnk_085E2920, (u16)((s16)gCurTask->unk6C * 16), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 15);
     gCurTask->unk6C = 0;
     do
     {
-        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gCurTask->unk6C * 16), 128, gUnk_03001370);
+        BlendColors(gUnk_085E2920, gUnk_085E2B20, (u16)((s16)gCurTask->unk6C * 16), 128, gBgPaletteBank8);
         TaskYieldTrampoline(1);
         gCurTask->unk6C++;
     } while ((s16)gCurTask->unk6C <= 15);

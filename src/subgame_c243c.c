@@ -339,12 +339,12 @@ void AirGrindResultsDrawCursor(void)
     from = gCurTask->unk6E;
     to = from + 1;
     step = 8 - (s16)gCurTask->unk6C;
-    BlendColors(gUnk_08609F40[from], gUnk_08609F40[to], (u16)(step * 32), 16, gUnk_03001510);
+    BlendColors(gUnk_08609F40[from], gUnk_08609F40[to], (u16)(step * 32), 16, gObjPaletteBank5);
     gCurTask->unk70--;
     if ((s16)gCurTask->unk70 < 0)
         gCurTask->unk70 = 8;
     step2 = 8 - (s16)gCurTask->unk70;
-    BlendColors(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gUnk_03001510[16]);
+    BlendColors(gUnk_08609F40[6], gUnk_08609F40[7], (u16)(step2 * 32), 16, &gObjPaletteBank5[16]);
     if (gAirGrindPtr->localPlayer == 0) {
         t = gCurTask;
         tbl = t->frameTable;

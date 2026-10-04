@@ -217,8 +217,8 @@ extern u16 gMetatileTiles[];
 extern u8 gUnk_0200D080;
 
 /* IWRAM */
-extern u16 gUnk_030012B0[];
-extern u16 gUnk_03001370[];
+extern u16 gBgPaletteBank2[];
+extern u16 gBgPaletteBank8[];
 extern s16 gCameraAnchorY;
 extern u32 gUnk_03001F10;
 extern s8 gUnk_03001F20;

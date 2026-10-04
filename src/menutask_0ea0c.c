@@ -55,7 +55,7 @@ void EraseConfirmDialogUpdate(void)
         v->unk34 = 256;
     k = gMenuChoiceCursor * 2;
     x = gCurTask;
-    BlendColors(gUnk_08559BA4[k + x->unk2C], gUnk_08559BA4[k + x->unk30], (u16)x->unk34, 16, gUnk_030015D0);
+    BlendColors(gUnk_08559BA4[k + x->unk2C], gUnk_08559BA4[k + x->unk30], (u16)x->unk34, 16, gObjPaletteBank11);
 }
 
 void Task_EraseFileWipe(void)
@@ -146,7 +146,7 @@ void sub_0800ecb8(void)
     if (v > 256)
         u->unk34 = 256;
     w = gCurTask;
-    BlendColors(gUnk_08564F38[w->unk2C], gUnk_08564F38[w->unk30], (u16)w->unk34, 5, gUnk_030015F4);
+    BlendColors(gUnk_08564F38[w->unk2C], gUnk_08564F38[w->unk30], (u16)w->unk34, 5, gObjPaletteBank12Color2);
 }
 
 void Task_SoundTestPulse(void)
@@ -188,9 +188,9 @@ void Task_SoundTestPulse(void)
         if (gMenuCursor == 0) {
             if ((s32)gMPlayTable[gSongTable[gSoundTestSelection[gMenuCursor]].ms].info->status >= 0) {
                 w = gCurTask;
-                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gMenuCursor]);
+                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gBgPaletteBank5[gMenuCursor]);
             } else {
-                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)gCurTask->unk34, 16, gUnk_03001310[gMenuCursor]);
+                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)gCurTask->unk34, 16, gBgPaletteBank5[gMenuCursor]);
             }
         } else {
             if (gPressedKeys & 1) {
@@ -204,11 +204,11 @@ void Task_SoundTestPulse(void)
             }
             w = gCurTask;
             if (w->unk18 != 0)
-                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gUnk_03001310[gMenuCursor]);
+                BlendColors(gUnk_085634D8[w->unk2C], gUnk_085634D8[w->unk30], (u16)w->unk34, 16, gBgPaletteBank5[gMenuCursor]);
             else
-                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)w->unk34, 16, gUnk_03001310[gMenuCursor]);
+                BlendColors(gUnk_085634D8[5], gUnk_085634D8[5], (u16)w->unk34, 16, gBgPaletteBank5[gMenuCursor]);
         }
-        RequestCopy(2, (u32)&gUnk_085634D8[0][(gMenuCursor + 6) * 16], (u32)gUnk_03001310[(s8)(gMenuCursor ^ 1)], 32);
+        RequestCopy(2, (u32)&gUnk_085634D8[0][(gMenuCursor + 6) * 16], (u32)gBgPaletteBank5[(s8)(gMenuCursor ^ 1)], 32);
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();
@@ -260,9 +260,9 @@ void Task_LinkPlayPalettePulse(void)
             s32 i = (s16)w->unk6C;
 
             if (i == w->unk28)
-                BlendColors(gUnk_08560DBC[w->unk2C], gUnk_08560DBC[w->unk30], (u16)w->unk34, 16, gUnk_030012F0[i]);
+                BlendColors(gUnk_08560DBC[w->unk2C], gUnk_08560DBC[w->unk30], (u16)w->unk34, 16, gBgPaletteBank4[i]);
             else
-                RequestCopy(2, (u32)gUnk_08560F9C, (u32)gUnk_030012F0[i], 32);
+                RequestCopy(2, (u32)gUnk_08560F9C, (u32)gBgPaletteBank4[i], 32);
         }
         TaskYieldTrampoline(1);
     }
@@ -299,9 +299,9 @@ void Task_LinkPlayColorCycle(void)
             v->unk34 = 256;
         w = gCurTask;
         if (w->unk28 == 3)
-            BlendColors(gUnk_08561224[w->unk2C], gUnk_08561224[w->unk30], (u16)w->unk34, 10, gUnk_03001372);
+            BlendColors(gUnk_08561224[w->unk2C], gUnk_08561224[w->unk30], (u16)w->unk34, 10, gBgPaletteBank8Color1);
         else
-            BlendColors(gUnk_0856342C[w->unk2C], gUnk_0856342C[w->unk30], (u16)w->unk34, 10, gUnk_03001372);
+            BlendColors(gUnk_0856342C[w->unk2C], gUnk_0856342C[w->unk30], (u16)w->unk34, 10, gBgPaletteBank8Color1);
         TaskYieldTrampoline(1);
     }
     TaskExitTrampoline();

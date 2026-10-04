@@ -158,8 +158,8 @@ void sub_08028130(void)
         if (gUnk_02006098[0] == 1)
         {
             next = gRoomTable[gLevelIndex][gStageIndex][gRoomIndex + 1];
-            RequestCopy(2, (u32)(next->bg2Palette + 1), (u32)gUnk_030012B0, *gCurRoomDef->bg2Palette);
-            RequestCopy(2, (u32)(next->bg3Palette + 1), (u32)gUnk_030012B0 + 0x1C0 - *gCurRoomDef->bg3Palette, *gCurRoomDef->bg3Palette);
+            RequestCopy(2, (u32)(next->bg2Palette + 1), (u32)gBgPaletteBank2, *gCurRoomDef->bg2Palette);
+            RequestCopy(2, (u32)(next->bg3Palette + 1), (u32)gBgPaletteBank2 + 0x1C0 - *gCurRoomDef->bg3Palette, *gCurRoomDef->bg3Palette);
         }
     }
 }

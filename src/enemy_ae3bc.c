@@ -2305,7 +2305,7 @@ void sub_080b0b04(void)
 
     q = (u16 *)gUnk_082FFDF0;
     RequestCopy(4, ((u32 *)q)[3], OBJ_VRAM0, q[1] << 5);
-    RequestCopy(2, ((u32 *)q)[2], (u32)gUnk_03001570, 32);
+    RequestCopy(2, ((u32 *)q)[2], (u32)gObjPaletteBank8, 32);
     t = gCurTask;
     t->tileWord = 0x8010;
     t->frameTable = gUnk_08754560;

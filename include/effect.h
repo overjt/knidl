@@ -16,7 +16,7 @@ extern u16 gUnk_0200AF20[];
 extern u16 gScreenAttackTasks[]; /* 20 task indices, 0xFFFF = empty; non-volatile, signed reads cast (s16) (variant 37 in effect_57ce0.c) */
 
 /* IWRAM */
-extern u16 gUnk_03001570[]; /* palette buffer */
+extern u16 gObjPaletteBank8[]; /* palette buffer */
 
 /* ROM */
 extern u8 gUnk_081FD870[];

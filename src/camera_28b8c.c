@@ -298,7 +298,7 @@ void sub_08029194(void)
 void LoadBg2Gfx(void)
 {
     RequestCopy(8, (u32)gCurRoomDef->bg2Tiles, BG_VRAM + 0x4000, 0);
-    RequestCopy(2, (u32)(gCurRoomDef->bg2Palette + 1), (u32)gUnk_030012B0, gCurRoomDef->bg2Palette[0]);
+    RequestCopy(2, (u32)(gCurRoomDef->bg2Palette + 1), (u32)gBgPaletteBank2, gCurRoomDef->bg2Palette[0]);
 }
 
 void LoadBg3Gfx(void)

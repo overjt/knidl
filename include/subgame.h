@@ -201,7 +201,7 @@ extern s16 gAirGrindStripHeights[4][256];
 extern s32 gAirGrindCoursePhase;
 
 /* IWRAM */
-extern u16 gUnk_03001510[];
+extern u16 gObjPaletteBank5[];
 extern struct M37Script gAirGrindScript;
 
 /* ROM */
