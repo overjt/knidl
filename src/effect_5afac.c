@@ -82,11 +82,11 @@ void sub_0805b670(void);
 void sub_0805b83c(void);
 void sub_0805b8b8(void);
 void sub_0805b8f8(void);
-void sub_0805b9a4(void);
+void PlayerGoalGameFall(void);
 void PlayerGoalGameLand(void);
 void sub_0805bb90(void);
-void sub_0805bc1c(void);
-void sub_0805bc5c(void);
+void PlayerGoalGameWait(void);
+void PlayerGoalGameWaitLateUpdate(void);
 void sub_0805bca4(void);
 void PlayerGoalGameDance(void);
 void PlayerGoalGameFinish(void);
@@ -445,7 +445,7 @@ void PlayerGoalGameLaunch(void)
     else
     {
         gCurTask->state = 6;
-        sub_0805b9a4();
+        PlayerGoalGameFall();
     }
 }
 
@@ -517,14 +517,14 @@ void PlayerGoalGameState5Update(void)
     TaskUpdateFrameScript();
 }
 
-void sub_0805b9a4(void)
+void PlayerGoalGameFall(void)
 {
     gCurTask->updateState = 6;
     TaskStartFrameScriptId(0);
     TaskSleepForever();
 }
 
-void PlayerGoalGameState6Update(void)
+void PlayerGoalGameFallUpdate(void)
 {
     s32 v;
     s16 *tbl;
@@ -568,7 +568,7 @@ void PlayerGoalGameLand(void)
         if (gCurTask->unk24 == gCurTask->pixelX)
         {
             gCurTask->state = 8;
-            sub_0805bc1c();
+            PlayerGoalGameWait();
         }
         if (gCurTask->pixelX < gCurTask->unk24 + gSpriteCameraX)
             gCurTask->facing = 1;
@@ -615,10 +615,10 @@ void sub_0805bb90(void)
     }
 }
 
-void sub_0805bc1c(void)
+void PlayerGoalGameWait(void)
 {
     gCurTask->updateState = 8;
-    gCurTask->lateUpdateCallback = (u32)sub_0805bc5c;
+    gCurTask->lateUpdateCallback = (u32)PlayerGoalGameWaitLateUpdate;
     gCurTask->facing = 1;
     TaskStop();
     TaskStartFrameScriptId(6);
@@ -626,12 +626,12 @@ void sub_0805bc1c(void)
     TaskSleepForever();
 }
 
-void PlayerGoalGameState8Update(void)
+void PlayerGoalGameWaitUpdate(void)
 {
     TaskUpdateFrameScript();
 }
 
-void sub_0805bc5c(void)
+void PlayerGoalGameWaitLateUpdate(void)
 {
     struct Task *t;
 

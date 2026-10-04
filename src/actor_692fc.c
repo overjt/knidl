@@ -872,7 +872,7 @@ void PickupCollect(void)
     case 3:
         if (gLocalPlayer == t->hitterSlot)
             PlaySfx(198);
-        sub_0804087c(gCurTask->hitterSlot);
+        PlayerGiveInvincibleCandy(gCurTask->hitterSlot);
         ActorDestroy();
         break;
     case 2:

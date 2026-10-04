@@ -68,7 +68,7 @@ void PlayerActionGetAbility(void)
     {
         struct PlayerState *p = gCurTask->player;
         if (p->unk37 == 1) {
-            sub_0803f5fc(p->playerIndex);
+            FreePlayerEffectsAndObjects(p->playerIndex);
             PlayerStopSfx();
             gCurTask->player->mouthState = 0;
             {

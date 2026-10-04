@@ -2211,7 +2211,7 @@ s32 sub_0803eaf8(s32 a0)
     return (hi << 16) | lo;
 }
 
-void sub_0803f5fc(s8 a0)
+void FreePlayerEffectsAndObjects(s8 a0)
 {
     s32 i, n;
 
@@ -2917,7 +2917,7 @@ void sub_08040858(s32 a0)
     p->unk42 |= 2;
 }
 
-void sub_0804087c(s32 a0)
+void PlayerGiveInvincibleCandy(s32 a0)
 {
     (gPlayerStates + a0)->unk40 |= 64;
 }

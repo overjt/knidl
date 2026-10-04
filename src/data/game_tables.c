@@ -482,9 +482,9 @@ u32 gPlayerGoalGameStates[11] GAME_TBL(0873dbe4) = {
     (u32)sub_0805b670,
     (u32)PlayerGoalGameLaunch,
     (u32)sub_0805b8f8,
-    (u32)sub_0805b9a4,
+    (u32)PlayerGoalGameFall,
     (u32)PlayerGoalGameLand,
-    (u32)sub_0805bc1c,
+    (u32)PlayerGoalGameWait,
     (u32)PlayerGoalGameDance,
     (u32)PlayerGoalGameFinish,
 };
@@ -496,9 +496,9 @@ u32 gPlayerGoalGameStateUpdates[11] GAME_TBL(0873dbe4) = {
     (u32)PlayerGoalGameState3Update,
     (u32)PlayerGoalGameLaunchUpdate,
     (u32)PlayerGoalGameState5Update,
-    (u32)PlayerGoalGameState6Update,
+    (u32)PlayerGoalGameFallUpdate,
     (u32)PlayerGoalGameLandUpdate,
-    (u32)PlayerGoalGameState8Update,
+    (u32)PlayerGoalGameWaitUpdate,
     (u32)PlayerGoalGameDanceUpdate,
     (u32)PlayerGoalGameFinishUpdate,
 };

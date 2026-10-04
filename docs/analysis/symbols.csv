@@ -970,7 +970,7 @@ vma,size,isa,evidence,name
 0x0803E868,0x84,thumb,bl-target,PlayerEndInvincibility
 0x0803E8EC,0x20C,thumb,bl-target,sub_0803e8ec
 0x0803EAF8,0xB04,thumb,bl-target,sub_0803eaf8
-0x0803F5FC,0xE4,thumb,bl-target,sub_0803f5fc
+0x0803F5FC,0xE4,thumb,bl-target,FreePlayerEffectsAndObjects
 0x0803F6E0,0x100,thumb,bl-target,sub_0803f6e0
 0x0803F7E0,0x54,thumb,bl-target,sub_0803f7e0
 0x0803F834,0x3C,thumb,bl-target,sub_0803f834
@@ -1003,7 +1003,7 @@ vma,size,isa,evidence,name
 0x08040788,0x80,thumb,bl-target,LatchPlayerKeys
 0x08040808,0x50,thumb,bl-target,sub_08040808
 0x08040858,0x24,thumb,bl-target,sub_08040858
-0x0804087C,0x18,thumb,bl-target,sub_0804087c
+0x0804087C,0x18,thumb,bl-target,PlayerGiveInvincibleCandy
 0x08040894,0x50,thumb,bl-target,PlayerStartItemShare
 0x080408E4,0x50,thumb,bl-target,sub_080408e4
 0x08040934,0x84,thumb,bl-target,sub_08040934
@@ -1287,14 +1287,14 @@ vma,size,isa,evidence,name
 0x0805B8B8,0x40,thumb,bl-target,sub_0805b8b8
 0x0805B8F8,0xA0,thumb,bl-target+rom-pointer,sub_0805b8f8
 0x0805B998,0xC,thumb,rom-pointer,PlayerGoalGameState5Update
-0x0805B9A4,0x1C,thumb,bl-target+rom-pointer,sub_0805b9a4
-0x0805B9C0,0x48,thumb,rom-pointer,PlayerGoalGameState6Update
+0x0805B9A4,0x1C,thumb,bl-target+rom-pointer,PlayerGoalGameFall
+0x0805B9C0,0x48,thumb,rom-pointer,PlayerGoalGameFallUpdate
 0x0805BA08,0x17C,thumb,bl-target+rom-pointer,PlayerGoalGameLand
 0x0805BB84,0xC,thumb,rom-pointer,PlayerGoalGameLandUpdate
 0x0805BB90,0x8C,thumb,rom-pointer,sub_0805bb90
-0x0805BC1C,0x34,thumb,bl-target+rom-pointer,sub_0805bc1c
-0x0805BC50,0xC,thumb,rom-pointer,PlayerGoalGameState8Update
-0x0805BC5C,0x48,thumb,rom-pointer,sub_0805bc5c
+0x0805BC1C,0x34,thumb,bl-target+rom-pointer,PlayerGoalGameWait
+0x0805BC50,0xC,thumb,rom-pointer,PlayerGoalGameWaitUpdate
+0x0805BC5C,0x48,thumb,rom-pointer,PlayerGoalGameWaitLateUpdate
 0x0805BCA4,0x3C,thumb,bl-target,sub_0805bca4
 0x0805BCE0,0x48,thumb,bl-target+rom-pointer,PlayerGoalGameDance
 0x0805BD28,0xC,thumb,rom-pointer,PlayerGoalGameDanceUpdate
