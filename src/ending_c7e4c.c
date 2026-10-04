@@ -474,7 +474,7 @@ void CreateEndingEpilogueExplosionSprites(void)
     for (i = 0; i <= 8; i++) {
         id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         t = &gTasks[id];
-        t->variant = 8;
+        t->variant = ENDING_EPILOGUE_VARIANT_EXPLOSION_SPRITE;
         t->endingEpilogueIndex = i;
     }
 }

@@ -488,7 +488,7 @@ void CreateEndingEpilogueWarpStarEffects(void)
     for (i = 0; i <= 3; i++) {
         id = TaskCreateFrom(TASK_ENDING_EPILOGUE, 32);
         t = &gTasks[id];
-        t->variant = 2;
+        t->variant = ENDING_EPILOGUE_VARIANT_WARP_STAR_EFFECT;
         t->endingEpilogueIndex = i;
         t->parent = gCurTaskIdx;
     }

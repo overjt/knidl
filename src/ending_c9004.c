@@ -312,7 +312,7 @@ void EndingStarRodReturnWarpStarUpdate(void)
         if (--gCurTask->endingStarRodReturnTrailTimer <= 0) {
             id = TaskCreateFrom(TASK_ENDING_STAR_ROD_RETURN, 32);
             t = &gTasks[id];
-            t->variant = 4;
+            t->variant = ENDING_STAR_ROD_RETURN_VARIANT_TRAIL_STAR;
             t->pixelX = gCurTask->pixelX;
             t->pixelY = gCurTask->pixelY;
             t->posX = t->pixelX << 16;

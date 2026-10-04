@@ -98,16 +98,26 @@
 #define COOL_SPOOK_VARIANT_BOB  1
 
 /* Ending Epilogue variants - gEndingEpilogueVariants[N], CallTableEntry(Task.variant) in Task_EndingEpilogue */
-#define ENDING_EPILOGUE_VARIANT_WARP_STAR    1
-#define ENDING_EPILOGUE_VARIANT_KIRBY        4
-#define ENDING_EPILOGUE_VARIANT_STAR_ROD     5
-#define ENDING_EPILOGUE_VARIANT_KING_DEDEDE  6
+#define ENDING_EPILOGUE_VARIANT_WARP_STAR         1
+#define ENDING_EPILOGUE_VARIANT_WARP_STAR_EFFECT  2
+#define ENDING_EPILOGUE_VARIANT_TRAIL_STAR        3
+#define ENDING_EPILOGUE_VARIANT_KIRBY             4
+#define ENDING_EPILOGUE_VARIANT_STAR_ROD          5
+#define ENDING_EPILOGUE_VARIANT_KING_DEDEDE       6
+#define ENDING_EPILOGUE_VARIANT_EXPLOSION         7
+#define ENDING_EPILOGUE_VARIANT_EXPLOSION_SPRITE  8
+#define ENDING_EPILOGUE_VARIANT_CAMERA            9
+#define ENDING_EPILOGUE_VARIANT_STORY_TEXT        10
 
 /* Ending Star Rod Return variants - gEndingStarRodReturnVariants[N], CallTableEntry(Task.variant) in Task_EndingStarRodReturn */
-#define ENDING_STAR_ROD_RETURN_VARIANT_STAR_ROD      1
-#define ENDING_STAR_ROD_RETURN_VARIANT_WARP_STAR     3
-#define ENDING_STAR_ROD_RETURN_VARIANT_KIRBY         5
-#define ENDING_STAR_ROD_RETURN_VARIANT_FOUNTAIN_JET  6
+#define ENDING_STAR_ROD_RETURN_VARIANT_STAR_ROD          1
+#define ENDING_STAR_ROD_RETURN_VARIANT_CONVERGING_STARS  2
+#define ENDING_STAR_ROD_RETURN_VARIANT_WARP_STAR         3
+#define ENDING_STAR_ROD_RETURN_VARIANT_TRAIL_STAR        4
+#define ENDING_STAR_ROD_RETURN_VARIANT_KIRBY             5
+#define ENDING_STAR_ROD_RETURN_VARIANT_FOUNTAIN_JET      6
+#define ENDING_STAR_ROD_RETURN_VARIANT_BURST_STAR        9
+#define ENDING_STAR_ROD_RETURN_VARIANT_FALLING_STAR      10
 
 /* Flamer variants - gFlamerVariants[N], CallTableEntry(Task.variant) in Task_Flamer */
 #define FLAMER_VARIANT_IDLE  2
@@ -290,8 +300,9 @@
 #define SPARKY_VARIANT_STAND  2
 
 /* Squishy variants - gSquishyVariants[N], CallTableEntry(Task.variant) in Task_Squishy */
-#define SQUISHY_VARIANT_WALK  0
-#define SQUISHY_VARIANT_IDLE  3
+#define SQUISHY_VARIANT_WALK          0
+#define SQUISHY_VARIANT_JUMP_TO_WALK  2
+#define SQUISHY_VARIANT_IDLE          3
 
 /* Stake variants - gStakeVariants[N], CallTableEntry(Task.variant) in Task_Stake */
 #define STAKE_VARIANT_INIT  0
@@ -312,14 +323,16 @@
 #define TWISTER_VARIANT_IDLE  1
 
 /* Twizzy variants - gTwizzyVariants[N], CallTableEntry(Task.variant) in Task_Twizzy, TwizzyEnterVariant */
-#define TWIZZY_VARIANT_WAVE      0
-#define TWIZZY_VARIANT_WEAVE     1
-#define TWIZZY_VARIANT_SWOOP     2
-#define TWIZZY_VARIANT_DIAGONAL  3
-#define TWIZZY_VARIANT_CHASE     4
-#define TWIZZY_VARIANT_TAKE_OFF  5
-#define TWIZZY_VARIANT_HOVER     8
-#define TWIZZY_VARIANT_IDLE      9
+#define TWIZZY_VARIANT_WAVE          0
+#define TWIZZY_VARIANT_WEAVE         1
+#define TWIZZY_VARIANT_SWOOP         2
+#define TWIZZY_VARIANT_DIAGONAL      3
+#define TWIZZY_VARIANT_CHASE         4
+#define TWIZZY_VARIANT_TAKE_OFF      5
+#define TWIZZY_VARIANT_HOP           6
+#define TWIZZY_VARIANT_HOP_TO_CHASE  7
+#define TWIZZY_VARIANT_HOVER         8
+#define TWIZZY_VARIANT_IDLE          9
 
 /* UFOLaser variants - gUFOLaserVariants[N], CallTableEntry(Task.variant) in Task_UFOLaser */
 #define UFO_LASER_VARIANT_INIT  0
@@ -411,5 +424,10 @@
 
 /* Mace Knight variants - gMaceKnightVariants[N], CallTableEntry(Task.variant) in sub_0809dc7c */
 #define MACE_KNIGHT_VARIANT_STAND  0
+
+/* Landing Impact variants - gLandingImpactVariants[N], CallTableEntry(Task.variant) in Task_LandingImpact */
+#define LANDING_IMPACT_VARIANT_CENTER  0
+#define LANDING_IMPACT_VARIANT_LEFT    1
+#define LANDING_IMPACT_VARIANT_RIGHT   2
 
 #endif // GUARD_CONSTANTS_VARIANTS_H
