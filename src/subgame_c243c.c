@@ -52,7 +52,7 @@ void AirGrindResults(void)
     s32 j;
     u8 t;
 
-    gAirGrindResults.unk00 = 0;
+    gAirGrindResults.state = 0;
     gAirGrindResults.unk01 = 0;
     gAirGrindResults.unk02 = 0;
     gCurTask->updateCallback = (u32)AirGrindResultsUpdate;
@@ -66,30 +66,30 @@ void AirGrindResults(void)
             gAirGrindResults.unk1C[i] = gAirGrindCoursePtr->players[i].unk24;
     }
     for (i = 0; i < 4; i++)
-        gAirGrindResults.unk04[gUnk_080CFE2C[gAirGrindPtr->localPlayer][i]] = i;
+        gAirGrindResults.rankedPlayers[gUnk_080CFE2C[gAirGrindPtr->localPlayer][i]] = i;
     for (j = 3; j > 0; j--) {
         for (i = 0; i < j; i++) {
-            if (gAirGrindPtr->raceTimes[gAirGrindResults.unk04[i]] > gAirGrindPtr->raceTimes[gAirGrindResults.unk04[i + 1]]) {
-                t = gAirGrindResults.unk04[i];
-                gAirGrindResults.unk04[i] = gAirGrindResults.unk04[i + 1];
-                gAirGrindResults.unk04[i + 1] = t;
+            if (gAirGrindPtr->raceTimes[gAirGrindResults.rankedPlayers[i]] > gAirGrindPtr->raceTimes[gAirGrindResults.rankedPlayers[i + 1]]) {
+                t = gAirGrindResults.rankedPlayers[i];
+                gAirGrindResults.rankedPlayers[i] = gAirGrindResults.rankedPlayers[i + 1];
+                gAirGrindResults.rankedPlayers[i + 1] = t;
             }
         }
     }
     for (i = 0; i < 4; i++)
-        gAirGrindResults.unk08[gAirGrindResults.unk04[i]] = i;
+        gAirGrindResults.playerRank[gAirGrindResults.rankedPlayers[i]] = i;
     j = 0;
     for (i = 0; i < 3; i++) {
-        if (gAirGrindPtr->raceTimes[gAirGrindResults.unk04[i]] < gAirGrindPtr->raceTimes[gAirGrindResults.unk04[i + 1]]) {
-            gAirGrindResults.unk0C[i] = j;
+        if (gAirGrindPtr->raceTimes[gAirGrindResults.rankedPlayers[i]] < gAirGrindPtr->raceTimes[gAirGrindResults.rankedPlayers[i + 1]]) {
+            gAirGrindResults.rankPlace[i] = j;
             j = i + 1;
-            gAirGrindResults.unk0C[i + 1] = j;
+            gAirGrindResults.rankPlace[i + 1] = j;
         } else {
-            gAirGrindResults.unk0C[i] = gAirGrindResults.unk0C[i + 1] = j;
+            gAirGrindResults.rankPlace[i] = gAirGrindResults.rankPlace[i + 1] = j;
         }
     }
-    gAirGrindResults.unk10 = 0x200;
-    gAirGrindResults.unk14 = -4;
+    gAirGrindResults.winnerScale = 0x200;
+    gAirGrindResults.winnerScaleStep = -4;
     TaskSleepForever();
 }
 
@@ -105,10 +105,10 @@ void AirGrindResultsDraw(void)
 
     for (i = 0; i < 4; i++) {
         y = i * 32 + 43;
-        p = gAirGrindResults.unk04[i];
+        p = gAirGrindResults.rankedPlayers[i];
         scale = 0x200;
         if (p == 0)
-            scale = gAirGrindResults.unk10;
+            scale = gAirGrindResults.winnerScale;
         AirGrindSetDigitPalette(8);
         AirGrindDrawTime(gAirGrindPtr->raceTimes[p], 114, y);
         AirGrindDrawRatio(gAirGrindResults.unk1C[p], gAirGrindCoursePtr->players[p].unk20, 180, y);
@@ -117,8 +117,8 @@ void AirGrindResultsDraw(void)
         if (p == 0)
             layer = 3;
         AirGrindDrawRacerSprite(0, pal, scale, 76, y, layer);
-        if (gAirGrindResults.unk00 != 3) {
-            if (gAirGrindResults.unk00 > 3 && gPrevGameState == 5)
+        if (gAirGrindResults.state != 3) {
+            if (gAirGrindResults.state > 3 && gPrevGameState == 5)
                 blink = gAirGrindFrame & 64;
             else
                 blink = 1;
@@ -127,7 +127,7 @@ void AirGrindResultsDraw(void)
         }
         if (p != 0) {
         place:
-            AirGrindDrawSymbol(gAirGrindResults.unk0C[i] + 2, 28, y);
+            AirGrindDrawSymbol(gAirGrindResults.rankPlace[i] + 2, 28, y);
         } else if (gAirGrindResults.unk01 != 0 || gAirGrindResults.unk02 != 0) {
             switch (gAirGrindResults.unk01) {
             case 1:
@@ -156,19 +156,19 @@ void AirGrindResultsStep(void)
     s32 i;
     u8 pal;
 
-    gAirGrindResults.unk10 += gAirGrindResults.unk14;
-    if (gAirGrindResults.unk10 <= 384)
-        gAirGrindResults.unk14 = 4;
-    if (gAirGrindResults.unk10 > 507)
-        gAirGrindResults.unk14 = -4;
-    switch (gAirGrindResults.unk00) {
+    gAirGrindResults.winnerScale += gAirGrindResults.winnerScaleStep;
+    if (gAirGrindResults.winnerScale <= 384)
+        gAirGrindResults.winnerScaleStep = 4;
+    if (gAirGrindResults.winnerScale > 507)
+        gAirGrindResults.winnerScaleStep = -4;
+    switch (gAirGrindResults.state) {
     case 0:
-        gAirGrindResults.unk18 = 0;
-        gAirGrindResults.unk00++;
+        gAirGrindResults.timer = 0;
+        gAirGrindResults.state++;
         break;
     case 1:
-        if (++gAirGrindResults.unk18 > 10) {
-            switch (gAirGrindResults.unk0C[gAirGrindResults.unk08[0]]) {
+        if (++gAirGrindResults.timer > 10) {
+            switch (gAirGrindResults.rankPlace[gAirGrindResults.playerRank[0]]) {
             case 0:
                 PlayBgm(0x81D);
                 break;
@@ -180,26 +180,26 @@ void AirGrindResultsStep(void)
                 PlayBgm(0x817);
                 break;
             }
-            gAirGrindResults.unk18 = 0;
-            gAirGrindResults.unk00++;
+            gAirGrindResults.timer = 0;
+            gAirGrindResults.state++;
         }
         break;
     case 2:
-        if (++gAirGrindResults.unk18 > 174) {
+        if (++gAirGrindResults.timer > 174) {
             if (gPrevGameState != 5) {
-                gAirGrindResults.unk00 = 4;
+                gAirGrindResults.state = 4;
             } else {
-                gAirGrindResults.unk18 = 20;
-                gAirGrindResults.unk02 = 3 - gAirGrindResults.unk0C[gAirGrindResults.unk08[0]];
+                gAirGrindResults.timer = 20;
+                gAirGrindResults.unk02 = 3 - gAirGrindResults.rankPlace[gAirGrindResults.playerRank[0]];
                 gAirGrindResults.unk03 = 4;
-                gAirGrindResults.unk00++;
+                gAirGrindResults.state++;
             }
         }
         break;
     case 3:
         if (gAirGrindResults.unk03 > 0) {
-            if (++gAirGrindResults.unk18 > 20) {
-                gAirGrindResults.unk18 = 0;
+            if (++gAirGrindResults.timer > 20) {
+                gAirGrindResults.timer = 0;
                 gAirGrindResults.unk03--;
                 if (gAirGrindResults.unk02 > 0) {
                     gAirGrindResults.unk02--;
@@ -208,7 +208,7 @@ void AirGrindResultsStep(void)
                 }
             }
         } else {
-            gAirGrindResults.unk00++;
+            gAirGrindResults.state++;
         }
         break;
     case 4:
@@ -227,12 +227,12 @@ void AirGrindResultsStep(void)
                     AirGrindResultsSetCursorBlend(-1);
                     PlaySfx(102);
                 }
-                gAirGrindResults.unk00++;
+                gAirGrindResults.state++;
             } else {
                 for (i = 0; i < 4; i++) {
                     pal = gUnk_080CFE2C[gAirGrindPtr->localPlayer][i];
                     if (pal < gAirGrindPtr->playerCount) {
-                        switch (gAirGrindResults.unk0C[gAirGrindResults.unk08[i]]) {
+                        switch (gAirGrindResults.rankPlace[gAirGrindResults.playerRank[i]]) {
                         case 0:
                             AddPlayerLivesNoHud(3, pal);
                             break;
@@ -245,7 +245,7 @@ void AirGrindResultsStep(void)
                         }
                     }
                 }
-                gAirGrindResults.unk00 = 99;
+                gAirGrindResults.state = 99;
                 SubGameQuit();
             }
         }
@@ -274,10 +274,10 @@ void AirGrindResultsStep(void)
                     gCurTask->frame = 0;
                     AirGrindResultsSetCursorBlend(gCurTask->airGrindLevelCursor);
                 }
-                gAirGrindResults.unk00++;
+                gAirGrindResults.state++;
             } else {
                 SubGameQuit();
-                gAirGrindResults.unk00 = 99;
+                gAirGrindResults.state = 99;
             }
             if (gAirGrindPtr->localPlayer == 0)
                 PlaySfx(102);
@@ -302,7 +302,7 @@ void AirGrindResultsStep(void)
         }
         if (gPlayerPressedKeys[0] & 9) {
             SubGameReplay(gCurTask->airGrindLevelCursor);
-            gAirGrindResults.unk00 = 99;
+            gAirGrindResults.state = 99;
             if (gAirGrindPtr->localPlayer == 0)
                 PlaySfx(102);
         } else if (gPlayerPressedKeys[0] & 2) {
@@ -311,7 +311,7 @@ void AirGrindResultsStep(void)
                 AirGrindResultsSetCursorBlend(gCurTask->airGrindContinueCursor);
                 PlaySfx(215);
             }
-            gAirGrindResults.unk00--;
+            gAirGrindResults.state--;
         }
         break;
     }
