@@ -864,7 +864,7 @@ void sub_0803ddc0(void)
                  2048 | gCurTask->tileWord, (s16)x + 48, (s16)y);
 }
 
-void sub_0803dfc8(void)
+void PlayerDrawWorldLoadTilesAndPalette(void)
 {
     if (gCurTask->frameTable == 0)
         return;

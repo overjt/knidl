@@ -37,7 +37,7 @@ extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -243,7 +243,7 @@ void MetaKnightIntroUpdate(void)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void MetaKnightState1(void)
+void MetaKnightFollow(void)
 {
     struct Task *t;
     s32 v;
@@ -266,7 +266,7 @@ void MetaKnightState1(void)
     sub_080a6e98();
 }
 
-void MetaKnightState1Update(void)
+void MetaKnightFollowUpdate(void)
 {
     struct Task *pt;
     s16 *px;
@@ -482,7 +482,7 @@ void MetaKnightState5Update(void)
         TaskSetEntry(MetaKnightEnterState, gCurTaskIdx);
 }
 
-void MetaKnightState6(void)
+void MetaKnightApproach(void)
 {
     gCurTask->updateState = 6;
     if (gCurTask->metaKnightFollowOffsetX < 0)
@@ -501,7 +501,7 @@ void MetaKnightState6(void)
     sub_080a6e98();
 }
 
-void MetaKnightState6Update(void)
+void MetaKnightApproachUpdate(void)
 {
     s32 d;
     s32 x;

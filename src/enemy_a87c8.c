@@ -37,7 +37,7 @@ extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -127,7 +127,7 @@ void KrackoIntro(void)
         TaskYieldTrampoline(1);
     ActorResetAttackBox();
     ActorSetAttackBox((u32)gUnk_08749720);
-    sub_08063a00((u32)gUnk_08749758);
+    ActorSetExtraAttackBox((u32)gUnk_08749758);
     ActorSetState(1);
     TaskSleepForever();
 }

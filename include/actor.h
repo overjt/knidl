@@ -339,7 +339,7 @@ void ActorResetHealthSlot(u32 i);
 void ActorInitFromDefSlot(u32 i);
 void ActorLoadDefSlot(u32 i, struct ActorDef *d);
 void ActorSetAttackBoxSlot(u32 i, u32 v);
-void sub_08063a14(u32 i, u32 v);
+void ActorSetExtraAttackBoxSlot(u32 i, u32 v);
 s32 sub_08063a2c(void);
 s32 TaskFindNearestPlayerSlot(u32 i);
 s32 TaskFindNearestPlayer(void);

@@ -230,10 +230,10 @@ void Task_MapEvent(void);
 
 /* src/camtask_2d38c.c */
 void MapEventMidBossFight(void);
-s32 sub_0802d478(s32 x, s32 y);
-void sub_0802d4bc(void);
-s32 sub_0802d5b4(s32 x, s32 y);
-void sub_0802d5f8(void);
+s32 CreateMapEventBreakTwoBlocks(s32 x, s32 y);
+void MapEventBreakTwoBlocks(void);
+s32 CreateMapEventBreakThreeBlocks(s32 x, s32 y);
+void MapEventBreakThreeBlocks(void);
 void sub_0802d6cc(void);
 void sub_0802d96c(void);
 void sub_0802da8c(void);

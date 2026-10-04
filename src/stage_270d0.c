@@ -15,7 +15,7 @@
  * down before a state change (flags in gStageExitFlags), PauseRoom/
  * SetRoomUpdateFlags/ResumeRoom set the per-frame flags gRoomUpdateFlags, and
  * PauseSaveBgPalette/PauseRestoreRoomGraphics save and restore the OBJ palette and tiles
- * around M02's pause screen.  sub_080272dc picks the hub door the player
+ * around M02's pause screen.  ReturnToHubStageDoor picks the hub door the player
  * returns to (gRoomEntryX/gRoomEntryY).  The file stops before
  * ReturnToRestartPoint because that function only matches without these nine in
  * front of it in the translation unit (lesson 4.79). */
@@ -119,7 +119,7 @@ void PauseRestoreRoomGraphics(void)
     HudRedrawClock();
 }
 
-void sub_080272dc(void)
+void ReturnToHubStageDoor(void)
 {
     struct RoomDef *r;
     struct Door *d;

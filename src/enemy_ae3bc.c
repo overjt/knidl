@@ -37,7 +37,7 @@ extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -150,7 +150,7 @@ void sub_080ae4c4(void)
     q = (u16 *)gUnk_082FEFF4;
     RequestCopy(4, ((u32 *)q)[3], OBJ_VRAM0 + 0x2000, q[1] << 5);
     RequestCopy(2, ((u32 *)q)[2], IWRAM_START + 0x15B0, q[0] << 5);
-    sub_08063a00((u32)gUnk_0874B450);
+    ActorSetExtraAttackBox((u32)gUnk_0874B450);
     c = &gCurTask;
     t = *c;
     t->u8C.actor->animScript = 0;

@@ -52,8 +52,8 @@ extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
 extern void ActorSetAttackBoxSlot(u32 i, u32 v);
 extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
-extern void sub_08063a14(u32 i, u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
+extern void ActorSetExtraAttackBoxSlot(u32 i, u32 v);
 extern s32 TaskFindNearestPlayer(void);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskGetNearestPlayerDx(void);
@@ -428,9 +428,9 @@ void MrShineAndMrBrightFillHpBars(void)
     if (gCreditsDemoSet != 0)
         TaskYieldTrampoline(120);
     ActorSetAttackBoxSlot(gUnk_02007D00[1], (u32)gUnk_0874883C);
-    sub_08063a14(gUnk_02007D00[1], (u32)gUnk_08748874);
+    ActorSetExtraAttackBoxSlot(gUnk_02007D00[1], (u32)gUnk_08748874);
     ActorSetAttackBoxSlot(gUnk_02007D00[0], (u32)gUnk_087488AC);
-    sub_08063a14(gUnk_02007D00[0], (u32)gUnk_087488E4);
+    ActorSetExtraAttackBoxSlot(gUnk_02007D00[0], (u32)gUnk_087488E4);
 }
 
 /* CreateMrShineAndMrBright (0x080A1AD0-0x080A1B94) */
@@ -2026,7 +2026,7 @@ void MrShineRecoil(void)
     TaskStop();
     PlaySfx(0x1F7);
     RequestScreenShake(4);
-    sub_08063a00((u32)gUnk_08748890);
+    ActorSetExtraAttackBox((u32)gUnk_08748890);
     gCurTask->onGround = 0;
     TaskSetFrame(14);
     TaskSetMotionXFacing(-0x8000, 0x5A5A5A5A);
@@ -2052,7 +2052,7 @@ void MrShineRecoilUpdate(void)
 {
     if (gCurTask->state != 13)
     {
-        sub_08063a00((u32)gUnk_08748874);
+        ActorSetExtraAttackBox((u32)gUnk_08748874);
         TaskSetEntry(MrShineEnterState, gCurTaskIdx);
     }
 }
@@ -2798,11 +2798,11 @@ void Task_KingDededeStar(void)
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->layer = 9;
     gCurTask->frameTable = gUnk_0874C44C;
-    CallTableEntry(gCurTask->variant, 1, gUnk_087489B4);
+    CallTableEntry(gCurTask->variant, 1, gKingDededeStarVariants);
 }
 
-/* sub_080a49cc (0x080A49CC-0x080A4A1C) */
-void sub_080a49cc(void)
+/* KingDededeStarReleasePlayer (0x080A49CC-0x080A4A1C) */
+void KingDededeStarReleasePlayer(void)
 {
     struct Task *t;
 
@@ -2814,22 +2814,22 @@ void sub_080a49cc(void)
     gCurTask->kingDededeStarReleased = 1;
 }
 
-/* sub_080a4a1c (0x080A4A1C-0x080A4A60) */
-void sub_080a4a1c(void)
+/* KingDededeStarInit (0x080A4A1C-0x080A4A60) */
+void KingDededeStarInit(void)
 {
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
-    gCurTask->updateCallback = (u32)sub_080a4a60;
+    gCurTask->updateCallback = (u32)KingDededeStarUpdate;
     TaskFaceLikeParent();
     ActorSetAttackBox((u32)gUnk_08748BD4);
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087489B8);
+    CallTableEntry(gCurTask->state, 1, gKingDededeStarStates);
 }
 
-/* sub_080a4a60 (0x080A4A60-0x080A4AA8) */
-void sub_080a4a60(void)
+/* KingDededeStarUpdate (0x080A4A60-0x080A4AA8) */
+void KingDededeStarUpdate(void)
 {
     TaskStepSpinFrameFacing();
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087489BC);
+    CallTableEntry(gCurTask->updateState, 1, gKingDededeStarStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -2837,10 +2837,10 @@ void sub_080a4a60(void)
     }
 }
 
-/* sub_080a4aa8 (0x080A4AA8-0x080A4AC4) */
-void sub_080a4aa8(void)
+/* KingDededeStarEnterState (0x080A4AA8-0x080A4AC4) */
+void KingDededeStarEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_087489B8);
+    CallTableEntry(gCurTask->state, 1, gKingDededeStarStates);
 }
 
 /* sub_080a4ac4 (0x080A4AC4-0x080A4B1C) */
@@ -2876,7 +2876,7 @@ void sub_080a4b1c(void)
     {
         v = ClampTaskToRoom(gCurTask);
         if ((v & 1) || (v & 2))
-            sub_080a49cc();
+            KingDededeStarReleasePlayer();
     }
 }
 
@@ -3505,6 +3505,6 @@ void Task_MetaKnight(void)
     t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     t->layer = 11;
     gCurTask->frameTable = gMetaKnightFrames;
-    sub_08063a00((u32)gUnk_087495EC);
+    ActorSetExtraAttackBox((u32)gUnk_087495EC);
     CallTableEntry(gCurTask->variant, 1, gMetaKnightVariants);
 }

@@ -10,7 +10,7 @@
  * Task type #6, variants 7-9, each variant body followed by the callbacks
  * only it installs.  Variant 7 (PlayerObjectIceBreath, animation tables
  * gUnk_08751B40/gUnk_08751E5C) switches on the sub-state Task.unk18 & 15
- * and installs M11's sub_0803dfc8 and its own collision callback
+ * and installs M11's PlayerDrawWorldLoadTilesAndPalette and its own collision callback
  * PlayerObjectIceBreathUpdate, which registers the collider row gUnk_0873BE24 and runs the
  * hit test TaskBreakBlocksAt(gUnk_0873CC1C) at the spawner's position (Task.u8C.parentTask).
  * Variant 8 (PlayerObjectBeamOrb, gUnk_08751BB0) traces six-step paths from the
@@ -55,7 +55,7 @@ void PlayerObjectIceBreath(void)
         switch (t->playerObjectSpawnWord & 15)
         {
         case 0:
-            t->drawCallback = (u32)sub_0803dfc8;
+            t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
             t->frameTable = gUnk_08751B40;
             t->layer = 7;
             {

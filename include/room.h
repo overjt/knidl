@@ -796,7 +796,7 @@ void SetRoomUpdateFlags(u32 a);
 void ResumeRoom(void);
 void PauseSaveBgPalette(void);
 void PauseRestoreRoomGraphics(void);
-void sub_080272dc(void);
+void ReturnToHubStageDoor(void);
 
 /* src/stage_273a0.c */
 void ReturnToRestartPoint(void);

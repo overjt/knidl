@@ -18,7 +18,7 @@ extern s32 PlaySfx(s32 id);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern u8 ActorCollideTerrain(void);
 
@@ -538,7 +538,7 @@ void KingDededeIntro(void)
     ActorCollideTerrain();
     ActorIntroPoseUntilScrollLocked(gUnk_08748384);
     ActorIntroPoseUntilHpBarFull(gUnk_08748384);
-    sub_08063a00((u32)gUnk_08748820);
+    ActorSetExtraAttackBox((u32)gUnk_08748820);
     gCurTask->unk2C = z;
     KingDededeStartWait();
     TaskSleepForever();

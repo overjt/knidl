@@ -151,8 +151,8 @@ void (*gRoomTaskVariants[7])(void) GAME_TBL(08732614) = {
 void (*gMapEventVariants[7])(void) GAME_TBL(087328a0) = {
     MapEventMidBossFight,
     sub_0802d6cc,
-    sub_0802d4bc,
-    sub_0802d5f8,
+    MapEventBreakTwoBlocks,
+    MapEventBreakThreeBlocks,
     sub_0802d96c,
     MapEventStageUnlockPan,
     MapEventBigSwitchUnlockPan,

@@ -218,7 +218,7 @@ void StageMain(void)
         case STAGE_REQUEST_PAUSE:
             PauseScreen();
             if (gGameState == GAME_STATE_HUB) {
-                sub_080272dc();
+                ReturnToHubStageDoor();
                 done = 1;
             } else {
                 gStageRequest = STAGE_REQUEST_NONE;

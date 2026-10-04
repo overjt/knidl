@@ -80,7 +80,7 @@ extern void ActorSetStateSlot(u32 i, u16 v);
 extern void ActorSetHitReactions(u32 v);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(struct ActorAux *v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 TaskGetDxTo(u32 i);
 extern s32 TaskIsInRectSlot(struct Rect *r, u32 i);
 extern s32 ActorStartAnimNoFlip(struct AnimCmd *p);
@@ -135,7 +135,7 @@ void NightmareWizardUpdate(void)
     {
         gUnk_03001F2C = gUnk_08749380[gCurTask->frame];
         ActorSetAttackBox(gUnk_08749358[gUnk_03001F2C]);
-        sub_08063a00(gUnk_0874936C[gUnk_03001F2C]);
+        ActorSetExtraAttackBox(gUnk_0874936C[gUnk_03001F2C]);
         ActorCheckHitsWithExtraBox();
     }
     else
@@ -1964,7 +1964,7 @@ void Task_PaintRoller(void)
     gCurTask->frameTable = gPaintRollerFrames;
     gCurTask->layer = 11;
     ActorInitBossGfx(0);
-    sub_08063a00((u32)gUnk_0874B3A8);
+    ActorSetExtraAttackBox((u32)gUnk_0874B3A8);
     gCurTask->unk34 = 0;
     gUnk_02007D00[0] = 1;
     gUnk_02007D00[2] = 1;
@@ -2241,7 +2241,7 @@ void Task_HeavyMole(void)
     gCurTask->tileWord |= 128 << 4;
     sub_08066144();
     gCurTask->facing = 1;
-    sub_08063a00((u32)gUnk_0874B3FC);
+    ActorSetExtraAttackBox((u32)gUnk_0874B3FC);
     t = gCurTask;
     t->heavyMoleCameraX = gCameraAnchorX << 16;
     t->posX = 176 << 16;

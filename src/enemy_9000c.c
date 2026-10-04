@@ -48,7 +48,7 @@ extern u8 ActorHasExtraFrame(void);
 extern u8 ActorCollideTerrain(void);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern void ActorCheckHitsWithExtraBox(void);
 extern s32 ActorReactToHit(void);
 extern void PlaySfx(s32 id);
@@ -134,7 +134,7 @@ void BonkersUpdate(void)
     }
     ActorSetAttackBox(gUnk_087437F4[gUnk_087437D0[gCurTask->frame]]);
     sub_080639f0(gUnk_08743810[gUnk_087437D0[gCurTask->frame]]);
-    sub_08063a00(gUnk_0874382C[gUnk_087437D0[gCurTask->frame]]);
+    ActorSetExtraAttackBox(gUnk_0874382C[gUnk_087437D0[gCurTask->frame]]);
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }

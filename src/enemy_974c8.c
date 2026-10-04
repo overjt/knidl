@@ -18,7 +18,7 @@ extern void RequestScreenShake(s32 a);
 extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
-extern void sub_08063a00(void *p);
+extern void ActorSetExtraAttackBox(void *p);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
@@ -62,7 +62,7 @@ void sub_08097580(void)
 {
     struct Task *t;
 
-    sub_08063a00(gUnk_08745238);
+    ActorSetExtraAttackBox(gUnk_08745238);
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->phanPhanLanded = 0;
@@ -367,7 +367,7 @@ void PhanPhanBounceOffWall(void)
     PlaySfx(0x1F7);
     RequestScreenShake(4);
     ActorSetAttackBox(gUnk_08745270);
-    sub_08063a00(gUnk_0874528C);
+    ActorSetExtraAttackBox(gUnk_0874528C);
     t = gCurTask;
     t->phanPhanCatchActive = zero;
     t->onGround = zero;
@@ -387,7 +387,7 @@ void PhanPhanBounceOffWall(void)
     if (gCurTask->actorSpawnArg == 0)
         TaskYieldTrampoline(40);
     ActorSetAttackBox(gUnk_0874521C);
-    sub_08063a00(gUnk_08745238);
+    ActorSetExtraAttackBox(gUnk_08745238);
     TaskSetFrame(14);
     TaskYieldTrampoline(4);
     TaskSetFrame(15);
@@ -642,7 +642,7 @@ void PhanPhanDefeat(void)
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     ActorSetAttackBox(gUnk_087452A8);
-    sub_08063a00(gUnk_087452C4);
+    ActorSetExtraAttackBox(gUnk_087452C4);
     while (gCurTask->phanPhanLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();

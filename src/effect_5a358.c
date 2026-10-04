@@ -31,7 +31,7 @@
  * sub-states tests the block hit-box set gUnk_0873CF8C (TaskBreakBlocksAt) at the
  * spawner's position offset by PlayerState.pixelOffsetX/unk26 (8.8).  Variant 48
  * (PlayerEffectUFOChargeSparkle, M14's action 55) rides on its spawner with the draw hook
- * sub_0805af80 (shared with variant 34: M11's sub_0803dfc8 in player mode
+ * sub_0805af80 (shared with variant 34: M11's PlayerDrawWorldLoadTilesAndPalette in player mode
  * 13, otherwise the task dies) and the callback PlayerEffectUFOChargeSparkleUpdate, which kills it
  * once the player leaves mode 13 or releases both A and B. */
 
@@ -539,5 +539,5 @@ void sub_0805af80(void)
     if (gCurTask->player->mode != 13)
         TaskFree(gCurTaskIdx);
     else
-        sub_0803dfc8();
+        PlayerDrawWorldLoadTilesAndPalette();
 }

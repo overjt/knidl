@@ -24,7 +24,7 @@
  * way.  Its callback PlayerEffectMikeAttackUpdate kills it once the player leaves mode 13
  * and otherwise, while PlayerState.unk16 is set, registers the collider row
  * gUnk_0873C04C (RegisterCollider).  Variant 38 (PlayerEffectSleepBubble) rides on its
- * spawner through four sub-states and draws through M11's sub_0803dfc8;
+ * spawner through four sub-states and draws through M11's PlayerDrawWorldLoadTilesAndPalette;
  * PlayerEffectSleepBubbleUpdate kills it once the player leaves mode 13. */
 
 void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
@@ -391,7 +391,7 @@ void PlayerEffectSleepBubble(void)
         break;
     case 3:
         t->moveCallback = (u32)TaskMoveRelativeToParent;
-        t->drawCallback = (u32)sub_0803dfc8;
+        t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         t->layer = 8;
         u = gCurTask;
         u->frameTable = gUnk_08751DBC;

@@ -4191,7 +4191,7 @@ SECTIONS
     ASSERT(!MATCHING || gUnk_08748918 == 0x08748918, "MATCHING: actor_rec_08748918 moved")
     ASSERT(!MATCHING || gKingDededeTerrainHandlers == 0x08748930, "MATCHING: actor_tbl_08748930 moved")
     ASSERT(!MATCHING || actor_rodata_08748930 == 0x087489A4, "MATCHING: actor_rodata_08748930 moved")
-    ASSERT(!MATCHING || gUnk_087489B4 == 0x087489B4, "MATCHING: actor_tbl_087489b4 moved")
+    ASSERT(!MATCHING || gKingDededeStarVariants == 0x087489B4, "MATCHING: actor_tbl_087489b4 moved")
     ASSERT(!MATCHING || actor_rodata_087489c0 == 0x087489C0, "MATCHING: actor_rodata_087489c0 moved")
     ASSERT(!MATCHING || gKingDededeAirPuffVariants == 0x087489D4, "MATCHING: actor_tbl_087489d4 moved")
     ASSERT(!MATCHING || actor_rodata_08748a00 == 0x08748A00, "MATCHING: actor_rodata_08748a00 moved")

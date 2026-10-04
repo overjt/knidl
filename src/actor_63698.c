@@ -260,12 +260,12 @@ void sub_080639f0(struct ActorAux *v)
     gCurTask->u8C.actor->unk60 = v;
 }
 
-void sub_08063a00(u32 v)
+void ActorSetExtraAttackBox(u32 v)
 {
-    sub_08063a14(gCurTaskIdx, v);
+    ActorSetExtraAttackBoxSlot(gCurTaskIdx, v);
 }
 
-void sub_08063a14(u32 i, u32 v)
+void ActorSetExtraAttackBoxSlot(u32 i, u32 v)
 {
     struct Task *t;
 

@@ -26,7 +26,7 @@
  * (PlayerEffectInhaleAir, spawned by M10) rides on its spawner and cycles frames
  * 0-11, hidden every other frame; PlayerEffectInhaleAirUpdate copies the spawner's
  * Task.skipMask with bit 2 cleared and kills it once PlayerState.unk40 bit 2
- * clears, and its draw hook PlayerEffectInhaleAirDraw draws through M11's sub_0803dfc8 in
+ * clears, and its draw hook PlayerEffectInhaleAirDraw draws through M11's PlayerDrawWorldLoadTilesAndPalette in
  * player mode 10 and kills it otherwise.  Variants 1 and 2 (M10) are short
  * puffs launched from 12 pixels behind the point they face, the sub-state
  * picking the facing; 3 (M13's ability get) shows for three frames at a
@@ -97,7 +97,7 @@ void PlayerEffectInhaleAirUpdate(void)
 void PlayerEffectInhaleAirDraw(void)
 {
     if (gCurTask->player->mode == 10)
-        sub_0803dfc8();
+        PlayerDrawWorldLoadTilesAndPalette();
     else
         TaskFree(gCurTaskIdx);
 }

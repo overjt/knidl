@@ -21,7 +21,7 @@ extern void ActorSetHitReactions(void *p);
 extern void ActorSetAttackBox(void *p);
 extern void ActorSetTerrainBox(void *p);
 extern void sub_080639f0(void *p);
-extern void sub_08063a00(void *p);
+extern void ActorSetExtraAttackBox(void *p);
 extern s16 ActorComputeHealth(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
 extern void ReleaseHeldPlayer(s32 i, s32 d);
@@ -656,9 +656,9 @@ rest:
     RequestScreenShake(2);
     FireLionCreateLandingStar();
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744550);
-    sub_08063a00(gUnk_08745040);
+    ActorSetExtraAttackBox(gUnk_08745040);
     TaskYieldTrampoline(2);
-    sub_08063a00(0);
+    ActorSetExtraAttackBox(0);
     TaskYieldTrampoline(gUnk_08744562[gCurTask->actorSpawnArg]);
     gCurTask->fireLionLoopCount = 0;
     do {
@@ -946,21 +946,21 @@ void FireLionDefeat(void)
     TaskSetMotionY(-0x30000, 0x1A00, 0x30000);
     TaskSetFrame(21);
     ActorSetAttackBox(gUnk_08744F0C);
-    sub_08063a00(gUnk_087446E8[gCurTask->frame]);
+    ActorSetExtraAttackBox(gUnk_087446E8[gCurTask->frame]);
     sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     ActorSetTerrainBox(gUnk_08745304);
     while (gCurTask->velY < 0)
         TaskYieldTrampoline(1);
     TaskSetFrame(38);
     ActorSetAttackBox(gUnk_087450CC);
-    sub_08063a00(gUnk_087450E8);
+    ActorSetExtraAttackBox(gUnk_087450E8);
     sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     while (gCurTask->fireLionLanded == 0)
         TaskYieldTrampoline(1);
     gCurTask->actorAnimDelay = ActorStartAnim(gUnk_08744550);
     TaskSetFrameByFacing(40);
     ActorSetAttackBox(gUnk_08745104);
-    sub_08063a00(gUnk_08745120);
+    ActorSetExtraAttackBox(gUnk_08745120);
     sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     RequestScreenShake(4);
     PlaySfx(0x1F7);
@@ -1124,7 +1124,7 @@ void sub_08097024(void)
         u = gCurTask;
         v = u->frame;
         if (v < 40 || v > 43)
-            sub_08063a00(gUnk_087446E8[u->frame]);
+            ActorSetExtraAttackBox(gUnk_087446E8[u->frame]);
         sub_080639f0(gUnk_087447B8[gCurTask->frame]);
     }
 }

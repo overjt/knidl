@@ -531,7 +531,7 @@ void sub_0803d824(void);
 s32 sub_0803d870(void);
 void sub_0803db74(void);
 void sub_0803ddc0(void);
-void sub_0803dfc8(void);
+void PlayerDrawWorldLoadTilesAndPalette(void);
 void PlayerStopAxes(s32 axes);
 void sub_0803e080(void);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);

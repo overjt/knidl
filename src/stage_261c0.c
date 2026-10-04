@@ -102,7 +102,7 @@ void EndMidBossFight(void)
 
 void sub_080262e8(s32 a)
 {
-    sub_0802d478(gUnk_08732638[a][0], gUnk_08732638[a][1]);
+    CreateMapEventBreakTwoBlocks(gUnk_08732638[a][0], gUnk_08732638[a][1]);
 }
 
 void WrapLoopingRoom(void)

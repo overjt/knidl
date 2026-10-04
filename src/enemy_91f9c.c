@@ -68,7 +68,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 v);
 extern void sub_080639f0(u32 v);
-extern void sub_08063a00(u32 v);
+extern void ActorSetExtraAttackBox(u32 v);
 extern s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8);
 extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCheckHitsWithBox(s32 a);
@@ -135,7 +135,7 @@ void BugzzyUpdate(void)
     }
     ActorSetAttackBox(gUnk_08743A10[gCurTask->bugzzyBoxSet]);
     sub_080639f0(gUnk_08743A28[gCurTask->bugzzyBoxSet]);
-    sub_08063a00(gUnk_08743A40[gCurTask->bugzzyBoxSet]);
+    ActorSetExtraAttackBox(gUnk_08743A40[gCurTask->bugzzyBoxSet]);
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
     if (gUnk_08743A58[gCurTask->bugzzyBoxSet] != 0)

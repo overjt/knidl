@@ -50,7 +50,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
 extern void ActorSetTerrainBox(u32 *p);
-extern void sub_08063a00(u32 *p);
+extern void ActorSetExtraAttackBox(u32 *p);
 extern s32 TaskGetDxTo(s32 i);
 extern void RequestScreenShake(s32 a);
 extern void ActorCheckHitsWithExtraBox(void);
@@ -309,18 +309,18 @@ void sub_08098de4(void)
     case 14:
     case 15:
         ActorSetAttackBox(gUnk_087458F4);
-        sub_08063a00(gUnk_08745910);
+        ActorSetExtraAttackBox(gUnk_08745910);
         break;
     case 8:
         ActorSetAttackBox(gUnk_087458A0);
-        sub_08063a00(gUnk_087458BC);
+        ActorSetExtraAttackBox(gUnk_087458BC);
         break;
     case 1:
         ActorSetAttackBox(gUnk_0874592C);
-        sub_08063a00(gUnk_08745948);
+        ActorSetExtraAttackBox(gUnk_08745948);
     default:
         ActorSetAttackBox(gUnk_08745868);
-        sub_08063a00(gUnk_08745884);
+        ActorSetExtraAttackBox(gUnk_08745884);
         break;
     }
 }

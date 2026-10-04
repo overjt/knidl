@@ -12,7 +12,7 @@
  * Task.u8C.parentTask (position, facing, OAM flags).  Variant 3 (PlayerObjectWaterShot,
  * animation table gUnk_087519E8) is a four-way `switch (Task.unk28)` of
  * endless loops that the ROM lays out in the order 3, 1, 0, 2, with M11's
- * callback sub_0803dfc8 and the collision callback PlayerObjectWaterShotUpdate (sound
+ * callback PlayerDrawWorldLoadTilesAndPalette and the collision callback PlayerObjectWaterShotUpdate (sound
  * 133).  Variant 4 (PlayerObjectFireBreath, gUnk_08751A28/gUnk_08751CA4) installs
  * PlayerObjectFireBreathUpdate, which registers the collider row gUnk_0873BDD4 and calls
  * the hit test TaskBreakBlocksAt at the spawner's position with only three
@@ -41,7 +41,7 @@ void PlayerObjectWaterShot(void)
     {
         struct Task *t = gCurTask;
         t->moveCallback = (u32)TaskMoveRelativeToParent;
-        t->drawCallback = (u32)sub_0803dfc8;
+        t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         t->updateCallback = (u32)PlayerObjectWaterShotUpdate;
         t->layer = 7;
     }
@@ -188,7 +188,7 @@ void PlayerObjectFireBreath(void)
     switch (t->playerObjectSpawnWord & 15)
     {
     case 0:
-        t->drawCallback = (u32)sub_0803dfc8;
+        t->drawCallback = (u32)PlayerDrawWorldLoadTilesAndPalette;
         t->frameTable = gUnk_08751A28;
         t->layer = 7;
         {

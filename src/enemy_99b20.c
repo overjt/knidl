@@ -52,7 +52,7 @@ extern void ActorSetState(u16 v);
 extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
 extern void ActorSetTerrainBox(u32 *p);
-extern void sub_08063a00(u32 *p);
+extern void ActorSetExtraAttackBox(u32 *p);
 extern s32 TaskGetDxTo(s32 i);
 extern u32 ActorCheckHits(void);
 extern void ActorCheckHitsWithExtraBox(void);
@@ -366,11 +366,11 @@ void sub_0809a03c(void)
     case 20:
     case 21:
         ActorSetAttackBox(gUnk_087459D4);
-        sub_08063a00(gUnk_087459F0);
+        ActorSetExtraAttackBox(gUnk_087459F0);
         break;
     default:
         ActorSetAttackBox(gUnk_08745964);
-        sub_08063a00(gUnk_08745980);
+        ActorSetExtraAttackBox(gUnk_08745980);
         break;
     }
 }
@@ -512,7 +512,7 @@ void MrTickTockWaitUpdate(void)
     }
 }
 
-void MrTickTockState1(void)
+void MrTickTockPickMove(void)
 {
     struct Task *t;
     struct Task *u;
@@ -527,7 +527,7 @@ void MrTickTockState1(void)
     TaskSleepForever();
 }
 
-void MrTickTockState1Update(void)
+void MrTickTockPickMoveUpdate(void)
 {
     struct Task *t;
 
@@ -936,7 +936,7 @@ void MrTickTockState10Update(void)
 {
 }
 
-void MrTickTockState11(void)
+void MrTickTockShootNotes(void)
 {
     struct Task *t;
     struct Task *u;
@@ -960,7 +960,7 @@ void MrTickTockState11(void)
     }
 }
 
-void MrTickTockState11Update(void)
+void MrTickTockShootNotesUpdate(void)
 {
     struct Task *t;
 
