@@ -36,7 +36,7 @@
  *   * the class-2 task #176 one-shot `Task_FlamerFlame` and the class-3 task #10
  *     entry `Task_Noddy`, whose script continues in src/enemy_844c4.c.
  *
- * `FlamerIdleEnterState`, `SirKibbleCutterEnterState`, `sub_080840d4` and `sub_0808429c` are dead
+ * `FlamerIdleEnterState`, `SirKibbleCutterEnterState`, `HotHeadFireBreathEnterState` and `HotHeadFireBallEnterState` are dead
  * exports: each is a copy of its host's tail dispatch that nothing in the ROM
  * references (lesson 4.30 / 4.34, curated in tools/symdb.py).
  */
@@ -859,26 +859,26 @@ void Task_HotHeadFire(void)
     CallTableEntry(gCurTask->variant, 2, gHotHeadFireVariants);
 }
 
-void HotHeadFireVariant0(void)
+void HotHeadFireBreathInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080840f0;
+    gCurTask->updateCallback = (u32)HotHeadFireBreathUpdate;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E84);
+    CallTableEntry(gCurTask->state, 1, gHotHeadFireBreathStates);
 }
 
-void sub_080840d4(void)
+void HotHeadFireBreathEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E84);
+    CallTableEntry(gCurTask->state, 1, gHotHeadFireBreathStates);
 }
 
-void sub_080840f0(void)
+void HotHeadFireBreathUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741E88);
+    CallTableEntry(gCurTask->updateState, 1, gHotHeadFireBreathStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_08084114(void)
+void HotHeadFireBreath(void)
 {
     struct Task *t;
     struct Task *o;
@@ -938,22 +938,22 @@ void sub_08084248(void)
 {
 }
 
-void HotHeadFireVariant1(void)
+void HotHeadFireBallInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080842b8;
+    gCurTask->updateCallback = (u32)HotHeadFireBallUpdate;
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorSetState(0);
-        CallTableEntry(gCurTask->state, 1, gUnk_08741E8C);
+        CallTableEntry(gCurTask->state, 1, gHotHeadFireBallStates);
     }
 }
 
-void sub_0808429c(void)
+void HotHeadFireBallEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08741E8C);
+    CallTableEntry(gCurTask->state, 1, gHotHeadFireBallStates);
 }
 
-void sub_080842b8(void)
+void HotHeadFireBallUpdate(void)
 {
     if (ActorCollideTerrainAlongVelocity() == 1)
     {
@@ -962,13 +962,13 @@ void sub_080842b8(void)
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 1, gUnk_08741E90);
+        CallTableEntry(gCurTask->updateState, 1, gHotHeadFireBallStateUpdates);
         ActorCheckHits();
         ActorReactToHit();
     }
 }
 
-void sub_08084308(void)
+void HotHeadFireBall(void)
 {
     struct Task *t;
     struct Task *u;

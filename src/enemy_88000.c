@@ -1564,7 +1564,7 @@ void SlippyState1Update(void)
         TaskSetEntry(SlippyEnterState, gCurTaskIdx);
 }
 
-void SlippyState2(void)
+void SlippyJump(void)
 {
     gCurTask->updateState = SLIPPY_STATE_2;
     gCurTask->slippyCollideTerrain = 1;
@@ -1582,11 +1582,11 @@ void SlippyState2(void)
     TaskSleepForever();
 }
 
-void SlippyState2Update(void)
+void SlippyJumpUpdate(void)
 {
 }
 
-void SlippyState3(void)
+void SlippyHighJump(void)
 {
     gCurTask->updateState = SLIPPY_STATE_3;
     gCurTask->slippyCollideTerrain = 1;
@@ -1604,7 +1604,7 @@ void SlippyState3(void)
     TaskSleepForever();
 }
 
-void SlippyState3Update(void)
+void SlippyHighJumpUpdate(void)
 {
 }
 

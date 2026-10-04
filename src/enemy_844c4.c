@@ -13,7 +13,7 @@
  * kind) is outside 1-4.
  *
  * `NoddyLand` / `NoddyStartFall` / `NoddyEnterWater` / `NoddyBounceOffWall` plus the
- * shared `sub_08084c84` are the four class-3 hook rows at `0x08742CF0` /
+ * shared `NoddyTurnAtSlope` are the four class-3 hook rows at `0x08742CF0` /
  * `0x08742D00`: each returns 1 when it has handed the task to a new state and
  * 0 otherwise, and all four open with the same `Task.variant == 1` bail-out.
  * `Task_Chilly` is the class-3 task #14 entry; its script is in
@@ -88,7 +88,7 @@ void NoddyUpdate(void)
 skip:
     if (r == 0)
     {
-        sub_08084c84();
+        NoddyTurnAtSlope();
         CallTableEntry(gCurTask->updateState, 6, gNoddyStateUpdates);
     }
     v = gCurTask;
@@ -486,7 +486,7 @@ u8 NoddyEnterWater(void)
     return 1;
 }
 
-s32 sub_08084c84(void)
+s32 NoddyTurnAtSlope(void)
 {
     struct Task *t;
     u8 r;

@@ -31,7 +31,7 @@
 void SparkyTeardown(void);
 void UFOTeardown(void);
 void CoolSpookTeardown(void);
-void sub_0808e054(void);
+void LaserBallTeardown(void);
 void MetaKnightsKnightTeardown(void);
 void sub_080acc8c(void);
 
@@ -1548,7 +1548,7 @@ struct ActorDef gLaserBallDef ACTOR_REC(0874330c) = {
     .terrainHandlers = (u32)gUnk_0873F8F4,
     .hitReactions = (u32)&gLaserBallHitReactions,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_0808e054,
+    .teardown = (void (*)(void))LaserBallTeardown,
 };
 struct ActorDef gCoconutDef ACTOR_REC(0874330c) = {
     .health1Player = 2,

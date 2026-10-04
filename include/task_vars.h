@@ -1419,7 +1419,7 @@
 #define starFlashOnParentLoopCount unk6C /* s16: the body's loop counter (8 two-frame flashes); the update's offset step */
 
 /* Starman - Starman (task type #31, Task_Starman; gStarmanVariants: row 0
-   gUnk_08741554, gStarmanJumpStates, gStarmanFlyStates, gStarmanIdleStates)
+   gStarmanAmbushStates, gStarmanJumpStates, gStarmanFlyStates, gStarmanIdleStates)
    */
 #define starmanDropCount unk28 /* s32: drops of row 0's state 3 done: after the first it walks again, a later one flies off */
 #define starmanWalkTimer unk28 /* s32: frames walked in the 217-frame cycle, counted up (216 at the start) */

@@ -25,7 +25,7 @@
  *     the row bodies `BroomHatterVariant0` / `BroomHatterVariant1` / `BroomHatterIdleInit`, the
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
- *   * its movement library: `sub_0808d364` / `sub_0808d388` snap Task.unk2C to
+ *   * its movement library: `BroomHatterStopAtSlope` / `sub_0808d388` snap Task.unk2C to
  *     the 16-pixel grid, `BroomHatterPickNextState` rolls a new mode out of the 8-entry
  *     table `gUnk_0874313C`, `sub_0808d460` flips the sprite through
  *     Task.spriteFlags and `sub_0808d494` / `sub_0808d4a8` / `sub_0808d4bc` /
@@ -335,7 +335,7 @@ s32 BroomHatterEnterWater(void)
     return 1;
 }
 
-s32 sub_0808d364(void)
+s32 BroomHatterStopAtSlope(void)
 {
     if (gCurTask->velX != 0 && ActorStepBackFromSlope() != 0)
         TaskStop();
@@ -471,7 +471,7 @@ void sub_0808d58c(void)
 skip:
     if (r == 0)
     {
-        sub_0808d364();
+        BroomHatterStopAtSlope();
         CallTableEntry(gCurTask->updateState, 3, gUnk_087431A0);
     }
     v = gCurTask;
@@ -703,7 +703,7 @@ void sub_0808da34(void)
 skip:
     if (r == 0)
     {
-        sub_0808d364();
+        BroomHatterStopAtSlope();
         CallTableEntry(gCurTask->updateState, 3, gUnk_087431B8);
     }
     v = gCurTask;
@@ -983,7 +983,7 @@ void BroomHatterIdleState0Update(void)
 {
 }
 
-void sub_0808e054(void)
+void LaserBallTeardown(void)
 {
     if (--gPaletteAnimRefCounts[1] < 0)
         sub_0806ee2c();
