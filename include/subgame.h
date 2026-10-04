@@ -26,9 +26,9 @@ struct AirGrindCourseRacer
     /*0x10*/ s32 screenY;
     /*0x14*/ s32 onEvenSegment;
     /*0x18*/ s32 depthRank;
-    /*0x1C*/ s32 unk1C;
-    /*0x20*/ s32 unk20;
-    /*0x24*/ s32 unk24;
+    /*0x1C*/ s32 laneLean;
+    /*0x20*/ s32 segmentBitsPassed;
+    /*0x24*/ s32 segmentBitsHoldingA;
     /*0x28*/ s32 segmentEnd;
     /*0x2C*/ s32 segmentIndex;
     /*0x30*/ s32 prevHoldingA;
@@ -43,11 +43,11 @@ struct AirGrindCourse
     /*0x000*/ s32 scrollPos;
     /*0x004*/ s32 unk004;
     /*0x008*/ s32 unk008;
-    /*0x00C*/ s32 unk00C;
+    /*0x00C*/ s32 startLine;
     /*0x010*/ s32 finishLine;
-    /*0x014*/ s32 unk014;
+    /*0x014*/ s32 oddSegmentCount;
     /*0x018*/ struct AirGrindCourseRacer players[4];
-    /*0x108*/ s32 unk108;
+    /*0x108*/ s32 prevScrollPos;
     /*0x10C*/ s32 unk10C;
     /*0x110*/ s32 unk110;
 };
@@ -62,7 +62,7 @@ struct AirGrindRacerState
     /*0x06*/ s16 animStep;
     /*0x08*/ s16 penaltyTimer;
     /*0x0A*/ s16 boostCooldown;
-    /*0x0C*/ s16 unk0C;
+    /*0x0C*/ s16 dashTimer;
     /*0x0E*/ u16 aToggleCount;
     /*0x10*/ s32 segmentEndDistance;
     /*0x14*/ s32 liftY;
@@ -77,14 +77,14 @@ struct AirGrindRacerState
     /*0x30*/ s32 cpuTarget;
 };
 
-/* 16-byte object records, AirGrindScenerySet.unk04[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
+/* 16-byte object records, AirGrindScenerySet.objects[7] (AirGrindRollSceneryObject, AirGrindSceneryUpdate) */
 struct AirGrindSceneryObject
 {
-    /*0x00*/ s16 unk0;
-    /*0x02*/ u16 unk2;
-    /*0x04*/ s32 unk4;
-    /*0x08*/ s32 unk8;          /* 16.16; the ROM also reads its high half */
-    /*0x0C*/ s32 unkC;          /* 16.16; the ROM also reads its high half */
+    /*0x00*/ s16 frame;
+    /*0x02*/ u16 tileWord;
+    /*0x04*/ s32 baseY;
+    /*0x08*/ s32 posX;          /* 16.16; the ROM also reads its high half */
+    /*0x0C*/ s32 posY;          /* 16.16; the ROM also reads its high half */
 };
 
 /* AirGrindState.scenery (0xB8 bytes with the compiler's 2-byte tail pad): task
@@ -94,9 +94,9 @@ struct AirGrindSceneryObject
    AirGrindSetupRace fills end it exactly at AirGrindState.randomStates. */
 struct AirGrindScenerySet
 {
-    /*0x00*/ s32 unk00;         /* the scroll position last frame */
-    /*0x04*/ struct AirGrindSceneryObject unk04[7];
-    /*0x74*/ s16 unk74;         /* the last object's sprite id */
+    /*0x00*/ s32 prevScrollPos;         /* the scroll position last frame */
+    /*0x04*/ struct AirGrindSceneryObject objects[7];
+    /*0x74*/ s16 lastBaseY;         /* the last object's sprite id */
     /*0x76*/ u16 unk76[16];     /* AirGrindState + 0x162 */
     /*0x96*/ u16 unk96[16];     /* AirGrindState + 0x182 */
 };
@@ -116,8 +116,8 @@ struct AirGrindState
     /*0x2FC*/ u16 backdropColor;
     /*0x2FE*/ u8 pad2FE[2];
     /*0x300*/ u32 frameCount;       /* frame counter */
-    /*0x304*/ s16 unk304;       /* AirGrindScaleSprite's OAM list: entry count */
-    /*0x306*/ s16 unk306[160];  /* ... and entries */
+    /*0x304*/ s16 scaledOamCount;       /* AirGrindScaleSprite's OAM list: entry count */
+    /*0x306*/ s16 scaledOam[160];  /* ... and entries */
     /*0x446*/ u16 localPlayer;       /* gLocalPlayer */
     /*0x448*/ u16 playerCount;       /* gLinkPlayerCount */
     /*0x44A*/ u8 pad44A[2];
@@ -131,16 +131,16 @@ struct AirGrindState
 struct AirGrindResultsState
 {
     /*0x00*/ s8 state;          /* state */
-    /*0x01*/ s8 unk01;
-    /*0x02*/ s8 unk02;
-    /*0x03*/ s8 unk03;
+    /*0x01*/ s8 symbolsShown;
+    /*0x02*/ s8 symbolsLeft;
+    /*0x03*/ s8 symbolSteps;
     /*0x04*/ u8 rankedPlayers[4];       /* the players, sorted by score */
     /*0x08*/ u8 playerRank[4];       /* each player's index into unk04 */
     /*0x0C*/ u8 rankPlace[4];       /* the places, ties shared */
     /*0x10*/ s32 winnerScale;         /* the winner's pulsing scale */
     /*0x14*/ s32 winnerScaleStep;
     /*0x18*/ s32 timer;         /* frame timer */
-    /*0x1C*/ s32 unk1C[4];
+    /*0x1C*/ s32 score[4];
 };
 
 /* gAirGrindScript: a cursor into one of the u16-pair scripts gUnk_087572EC[]

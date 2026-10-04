@@ -20,9 +20,9 @@ struct HudBar
 
 struct RoomObjectGfxSlot
 {
-    /*0x00*/ s8 unk0;
+    /*0x00*/ s8 subtype;
     /*0x01*/ s8 paletteBank;
-    /*0x02*/ s16 unk2;
+    /*0x02*/ s16 tileOffset;
 };
 
 struct Unk0200D120

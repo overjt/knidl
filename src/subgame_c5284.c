@@ -72,7 +72,7 @@ void AirGrindCalcLanePoint(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
     s32 v;
     s32 off;
 
-    if (x < gAirGrindCourse.unk00C)
+    if (x < gAirGrindCourse.startLine)
     {
         amp = 0;
         switch (lane)
@@ -104,7 +104,7 @@ void AirGrindCalcLanePoint(s32 lane, s32 x, s32 *px, s32 *py, s32 *pz)
         if (d > 100)
             d = 100;
     }
-    else if (x < gAirGrindCourse.unk00C + 1000)
+    else if (x < gAirGrindCourse.startLine + 1000)
         amp = Div((x - 1000) << 8, 1000);
     else if (x < gAirGrindCourse.finishLine - 1000)
         amp = 256;
@@ -243,7 +243,7 @@ void AirGrindLayOutCourse(s32 a)
     n = gUnk_080D075A[a];
     m = gUnk_080D0760[a];
     sums[0] = sums[1] = 0;
-    gAirGrindCourse.unk014 = n;
+    gAirGrindCourse.oddSegmentCount = n;
     for (i = 0; i < n * 2 + 1; i++)
     {
         if (!(i & 1))
@@ -259,7 +259,7 @@ void AirGrindLayOutCourse(s32 a)
     {
         v = gAirGrindSegmentEnds[i];
         if (!(i & 1))
-            gAirGrindSegmentEnds[i] = (gAirGrindCourse.finishLine - gAirGrindCourse.unk00C - m) * v;
+            gAirGrindSegmentEnds[i] = (gAirGrindCourse.finishLine - gAirGrindCourse.startLine - m) * v;
         else
             gAirGrindSegmentEnds[i] = m * v;
         gAirGrindSegmentEnds[i] /= sums[i % 2];
@@ -308,22 +308,22 @@ void AirGrindBuildCourse(s32 a, s32 b)
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0x300000;
     gAirGrindCourse.unk110 = a;
     gAirGrindCourse.unk10C = b;
-    gAirGrindCourse.unk108 = 0;
+    gAirGrindCourse.prevScrollPos = 0;
     gAirGrindCourse.scrollPos = 240;
     gAirGrindCourse.unk004 = 0;
     gAirGrindCourse.unk008 = 0;
     for (i = 0; i < 4; i++)
     {
         p = &gAirGrindCourse.players[i];
-        p->prevCoursePos = p->coursePos = gAirGrindCourse.unk108;
+        p->prevCoursePos = p->coursePos = gAirGrindCourse.prevScrollPos;
         p->prevHoldingA = 0;
         p->holdingA = 0;
         p->prevOnEvenSegment = 1;
-        p->unk24 = 0;
-        p->unk20 = 0;
+        p->segmentBitsHoldingA = 0;
+        p->segmentBitsPassed = 0;
         p->segmentIndex = 0;
     }
-    gAirGrindCourse.unk00C = 1000;
+    gAirGrindCourse.startLine = 1000;
     switch (a)
     {
     case 0:
@@ -388,7 +388,7 @@ void AirGrindDrawCourse(void)
     {
         p = &gAirGrindCourse.players[lane];
         lo = AirGrindCourseToLanePos(lane, gAirGrindCourse.scrollPos) / 32;
-        hi = AirGrindCourseToLanePos(lane, gAirGrindCourse.unk108) / 32;
+        hi = AirGrindCourseToLanePos(lane, gAirGrindCourse.prevScrollPos) / 32;
         for (k = 0; k < lo - hi; k++)
         {
             j = k + 120;
@@ -484,7 +484,7 @@ void AirGrindDrawCourse(void)
         }
         *gUnk_08757300[lane] = (lo - 120) << 16;
         v = AirGrindCourseToLanePos(lane, p->coursePos);
-        AirGrindCalcLanePoint(lane, v / 32, &p->screenY, &depth[lane], &p->unk1C);
+        AirGrindCalcLanePoint(lane, v / 32, &p->screenY, &depth[lane], &p->laneLean);
         p->prevOnEvenSegment = p->onEvenSegment;
         AirGrindFindLaneSegment(lane, &p->segmentIndex, v, &p->onEvenSegment);
         p->segmentEnd = AirGrindFindSegmentEnd(p->segmentIndex, p->coursePos);
@@ -553,18 +553,18 @@ void AirGrindDrawCourse(void)
                 }
             }
         }
-        if (gAirGrindCourse.unk00C <= p->coursePos && p->prevCoursePos <= gAirGrindCourse.finishLine)
+        if (gAirGrindCourse.startLine <= p->coursePos && p->prevCoursePos <= gAirGrindCourse.finishLine)
         {
             k = p->prevCoursePos;
             m = p->coursePos;
-            if (k < gAirGrindCourse.unk00C)
-                k = gAirGrindCourse.unk00C;
+            if (k < gAirGrindCourse.startLine)
+                k = gAirGrindCourse.startLine;
             if (m > gAirGrindCourse.finishLine)
                 m = gAirGrindCourse.finishLine;
             AirGrindCountSegmentBits(k, m, &set, &clear);
             if (p->holdingA != 0)
-                p->unk24 += set;
-            p->unk20 += set;
+                p->segmentBitsHoldingA += set;
+            p->segmentBitsPassed += set;
         }
         p->prevHoldingA = p->holdingA;
         p->prevCoursePos = p->coursePos;
@@ -583,5 +583,5 @@ void AirGrindDrawCourse(void)
             m = 2;
         *gUnk_08757320[lane] = (*gUnk_08757320[lane] & 0xFFFC) | m;
     }
-    gAirGrindCourse.unk108 = gAirGrindCourse.scrollPos;
+    gAirGrindCourse.prevScrollPos = gAirGrindCourse.scrollPos;
 }

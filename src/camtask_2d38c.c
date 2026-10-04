@@ -29,7 +29,7 @@ struct Unk02006098Bits { s8 unk0; s8 unk1; s8 unk2; s32 unk3:8; };
 struct Unk0200A6F0
 {
     /*0x00*/ u8 filler00[6];
-    /*0x06*/ u16 unk6;
+    /*0x06*/ u16 scriptPos;
     /*0x08*/ u8 filler08[0x18];
 };
 
@@ -433,7 +433,7 @@ void MapEventStageUnlockPan(void)
         t10->mapEventBlocksBreaking = 0;
         for (t10->mapEventLoopCount = 0; (s16)gCurTask->mapEventLoopCount <= 63; gCurTask->mapEventLoopCount++)
         {
-            if (gBg1BreakingBlocks[(s16)gCurTask->mapEventLoopCount].unk6 != 0x7FFF)
+            if (gBg1BreakingBlocks[(s16)gCurTask->mapEventLoopCount].scriptPos != 0x7FFF)
             {
                 gCurTask->mapEventBlocksBreaking++;
                 break;
@@ -618,7 +618,7 @@ void MapEventBigSwitchUnlockPan(void)
         t10->mapEventBlocksBreaking = 0;
         for (t10->mapEventLoopCount = 0; (s16)gCurTask->mapEventLoopCount <= 63; gCurTask->mapEventLoopCount++)
         {
-            if (gBg1BreakingBlocks[(s16)gCurTask->mapEventLoopCount].unk6 != 0x7FFF)
+            if (gBg1BreakingBlocks[(s16)gCurTask->mapEventLoopCount].scriptPos != 0x7FFF)
             {
                 gCurTask->mapEventBlocksBreaking++;
                 break;

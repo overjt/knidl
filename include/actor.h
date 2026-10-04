@@ -24,8 +24,8 @@ struct GfxSrc
 
 struct Unk0873EAC0
 {
-    /*0x00*/ s32 unk00;
-    /*0x04*/ s32 unk04;
+    /*0x00*/ s32 velX;
+    /*0x04*/ s32 velY;
 };
 
 /* Seven-entry handler table hanging off Actor.terrainHandlers (and
@@ -45,7 +45,7 @@ struct ActorHandlers
 
 /* Block Actor.hitReactions (and ActorDef.hitReactions) points at: two s8 mode
    bytes and two u8 (*)(void) hooks (ActorReactToDamage, ActorReactToDefeat,
-   src/actor_692fc.c).  Compare struct ActorAux, which is the Actor.unk60
+   src/actor_692fc.c).  Compare struct ActorAux, which is the Actor.aux
    block. */
 struct ActorVt
 {

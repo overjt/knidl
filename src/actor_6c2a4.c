@@ -174,9 +174,9 @@ void ActorAttachedThrowFlight(void)
     i = (s16)u->unk70 - 3;
     u->unk70 = i;
     u->actorThrowWobbleStep = 0;
-    TaskSetMotionXFacing(gUnk_0873EAC0[i].unk00, 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_0873EAC0[i].velX, 0x5A5A5A5A);
     v = gCurTask;
-    v->velY = gUnk_0873EAC0[i].unk04;
+    v->velY = gUnk_0873EAC0[i].velY;
     v->hitKind = HIT_KIND_NONE;
     gCurTask->u80.attackAbility = ABILITY_NORMAL;
     w = gCurTask;

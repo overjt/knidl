@@ -18,7 +18,7 @@
 struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
-    /*0x01*/ s8 unk1;
+    /*0x01*/ s8 subtype;
     /*0x02*/ s8 unk2;
     /*0x03*/ s8 unk3;
     /*0x04*/ u16 x;
@@ -110,7 +110,7 @@ void LoadRoomObjectGfx(void)
                 n++;
             break;
         case 6:
-            if (e->unk1 == 0)
+            if (e->subtype == 0)
             {
                 f = &gRoomObjectList.entries[e->unk2];
                 for (j = e->unk2; j < e->unk2 + e->unk3; f++, j++)

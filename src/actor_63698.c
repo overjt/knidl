@@ -144,7 +144,7 @@ void ActorInitFromDefSlot(u32 i)
     a->defeatSweepCallback = 0;
     a->unk34 = -1;
     a->sfxOverride = -1;
-    a->unk0D = 0;
+    a->keepExtraOnDefeat = 0;
     a->extraOffsetY = 0;
     a->unk16 = 0;
     a->extraLayerOffset = 0;
@@ -165,7 +165,7 @@ void ActorInitFromDefSlot(u32 i)
         if (a->def->initCallback != NULL)
             a->def->initCallback(i);
         a->teardown = a->def->teardown;
-        a->unk60 = a->def->unk10;
+        a->aux = a->def->aux;
     }
     else
     {
@@ -178,7 +178,7 @@ void ActorInitFromDefSlot(u32 i)
         a->ability = ABILITY_NORMAL;
         a->score = 0;
         t->health = 0;
-        a->unk60 = 0;
+        a->aux = 0;
         a->teardown = 0;
     }
 }
@@ -257,7 +257,7 @@ void ActorSetTerrainBox(u32 box)
 
 void ActorSetAux(struct ActorAux *v)
 {
-    gCurTask->u8C.actor->unk60 = v;
+    gCurTask->u8C.actor->aux = v;
 }
 
 void ActorSetExtraAttackBox(u32 v)

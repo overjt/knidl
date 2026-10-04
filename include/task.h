@@ -164,7 +164,7 @@ struct ActorDef
     /*0x0C*/ u8 ability;
     /*0x0D*/ u8 isItem;
     /*0x0E*/ u16 unk0E;
-    /*0x10*/ struct ActorAux *unk10;
+    /*0x10*/ struct ActorAux *aux;
     /*0x14*/ u32 attackBox;
     /*0x18*/ s32 terrainBox;
     /*0x1C*/ u32 terrainHandlers;
@@ -173,7 +173,7 @@ struct ActorDef
     /*0x28*/ void (*teardown)(void);
 };
 
-/* Block ActorDef.unk10 / Actor.unk60 point at (0x08068E04). */
+/* Block ActorDef.aux / Actor.aux point at (0x08068E04). */
 struct ActorAux
 {
     /*0x00*/ s8 hitDuration;
@@ -215,7 +215,7 @@ struct Actor
     /*0x0A*/ u8 paletteOverridden;
     /*0x0B*/ u8 paletteLocked;
     /*0x0C*/ u8 paletteVariant;
-    /*0x0D*/ u8 unk0D;
+    /*0x0D*/ u8 keepExtraOnDefeat;
     /*0x0E*/ s16 hitterParent;
     /*0x10*/ s16 attachedTask;
     /*0x12*/ s16 attachedTaskLifetime;
@@ -243,7 +243,7 @@ struct Actor
     /*0x54*/ u32 terrainHandlers;
     /*0x58*/ u32 prevTerrainHandlers;
     /*0x5C*/ u32 hitReactions;
-    /*0x60*/ struct ActorAux *unk60;
+    /*0x60*/ struct ActorAux *aux;
     /*0x64*/ struct ActorTail gfx;
 };
 

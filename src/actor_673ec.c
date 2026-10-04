@@ -1308,11 +1308,11 @@ u32 ActorCheckHits(void)
     gAttackLastHitterClass = a->hitterClass;
     gAttackHitTimer = v->hitTimer;
     gAttackFacing = v->facing;
-    if (a->unk60 != NULL)
+    if (a->aux != NULL)
     {
-        gAttackHitDuration = a->unk60->hitDuration;
-        if (v->hitTimer > (a->unk60->hitDuration >> 1))
-            gAttackBox = a->unk60->altAttackBox;
+        gAttackHitDuration = a->aux->hitDuration;
+        if (v->hitTimer > (a->aux->hitDuration >> 1))
+            gAttackBox = a->aux->altAttackBox;
         else
             gAttackBox = a->attackBox;
     }
@@ -1362,11 +1362,11 @@ u32 ActorCheckHitsWithExtraBox(void)
         gAttackLastHitterClass = a->hitterClass;
         gAttackHitTimer = v->hitTimer;
         gAttackFacing = v->facing;
-        if (a->unk60 != NULL)
+        if (a->aux != NULL)
         {
-            gAttackHitDuration = a->unk60->hitDuration;
-            if (v->hitTimer > (a->unk60->hitDuration >> 1))
-                gAttackBox = a->unk60->altAttackBox;
+            gAttackHitDuration = a->aux->hitDuration;
+            if (v->hitTimer > (a->aux->hitDuration >> 1))
+                gAttackBox = a->aux->altAttackBox;
             else
                 gAttackBox = a->attackBox;
         }
@@ -1387,11 +1387,11 @@ u32 ActorCheckHitsWithExtraBox(void)
     w = gCurTask;
     gAttackY = w->pixelY;
     PlaceAttackBox();
-    if (a->unk60 != NULL)
+    if (a->aux != NULL)
     {
-        gAttackHitDuration = a->unk60->hitDuration;
-        if (gCurTask->hitTimer > (a->unk60->hitDuration >> 1))
-            gAttackBox = a->unk60->altAttackBox;
+        gAttackHitDuration = a->aux->hitDuration;
+        if (gCurTask->hitTimer > (a->aux->hitDuration >> 1))
+            gAttackBox = a->aux->altAttackBox;
         else
             gAttackBox = a->extraAttackBox;
     }
@@ -1426,8 +1426,8 @@ u32 ActorCheckPlayerHitsWithBox(s32 a)
     gAttackLastHitter = u->hitterPlayer;
     gAttackHitTimer = u->hitTimer;
     gAttackFacing = u->facing;
-    if (b->unk60 != NULL)
-        gAttackHitDuration = b->unk60->hitDuration;
+    if (b->aux != NULL)
+        gAttackHitDuration = b->aux->hitDuration;
     else
         gAttackHitDuration = 30;
     gAttackBox = a;

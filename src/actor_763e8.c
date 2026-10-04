@@ -1098,7 +1098,7 @@ void CannonFuseEnterPiece(s32 x, s32 y, s32 d)
             struct Task *u = gCurTask;
 
             u->cannonFuseFrameStep = 0;
-            u->frame = p->unk04;
+            u->frame = p->enterFrame;
         }
     }
     else

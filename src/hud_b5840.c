@@ -17,7 +17,7 @@
 struct RoomObjectEntry
 {
     /*0x00*/ s8 kind;
-    /*0x01*/ s8 unk1;
+    /*0x01*/ s8 subtype;
     /*0x02*/ s8 unk2;
     /*0x03*/ s8 unk3;
     /*0x04*/ u16 x;
@@ -182,8 +182,8 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
     s32 i;
 
     gRoomObjectGfxSlotIds[idx] = n;
-    gRoomObjectGfxSlots[n].unk0 = e[1];
-    gRoomObjectGfxSlots[n].unk2 = 0;
+    gRoomObjectGfxSlots[n].subtype = e[1];
+    gRoomObjectGfxSlots[n].tileOffset = 0;
     gRoomObjectGfxSlots[n].paletteBank = 8;
     d = gMetaKnightsGfx[0];
     if (d->tileCount != 0)
@@ -213,9 +213,9 @@ s32 LoadRoomStageObjectGfx(struct RoomObjectEntry *e, s32 idx, s32 n)
     struct RoomObjectGfx *d;
     s32 i;
 
-    if (gStageObjectSubtypes[e->unk1] == -1)
+    if (gStageObjectSubtypes[e->subtype] == -1)
         return 0;
-    d = gStageObjectGfx[gStageObjectSubtypes[e->unk1]];
+    d = gStageObjectGfx[gStageObjectSubtypes[e->subtype]];
     if (d == NULL)
         return 0;
     for (i = 0; i < idx; i++)
@@ -223,7 +223,7 @@ s32 LoadRoomStageObjectGfx(struct RoomObjectEntry *e, s32 idx, s32 n)
         if (gRoomObjectList.entries[i].kind == 5)
         {
             if (gRoomObjectGfxSlotIds[i] != -1
-             && gStageObjectGfx[gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk0] == d)
+             && gStageObjectGfx[gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].subtype] == d)
             {
                 gRoomObjectGfxSlotIds[idx] = gRoomObjectGfxSlotIds[i];
                 return 0;
@@ -231,18 +231,18 @@ s32 LoadRoomStageObjectGfx(struct RoomObjectEntry *e, s32 idx, s32 n)
         }
     }
     gRoomObjectGfxSlotIds[idx] = n;
-    gRoomObjectGfxSlots[n].unk0 = e->unk1;
+    gRoomObjectGfxSlots[n].subtype = e->subtype;
     if (d->tileCount != 0)
     {
-        gRoomObjectGfxSlots[n].unk2 = AllocObjTiles(d->tileCount);
+        gRoomObjectGfxSlots[n].tileOffset = AllocObjTiles(d->tileCount);
         if (d->tilesCompressed != 0)
         {
             LZ77UnCompVram((void *)d->tiles, gUnk_02020000);
-            RequestCopy(4, (u32)gUnk_02020000, (gRoomObjectGfxSlots[n].unk2 << 6) + OBJ_VRAM0, d->tileCount << 5);
+            RequestCopy(4, (u32)gUnk_02020000, (gRoomObjectGfxSlots[n].tileOffset << 6) + OBJ_VRAM0, d->tileCount << 5);
         }
         else
         {
-            RequestCopy(4, d->tiles, (gRoomObjectGfxSlots[n].unk2 << 6) + OBJ_VRAM0, d->tileCount << 5);
+            RequestCopy(4, d->tiles, (gRoomObjectGfxSlots[n].tileOffset << 6) + OBJ_VRAM0, d->tileCount << 5);
         }
     }
     if (d->paletteBankCount != 0)
@@ -259,30 +259,30 @@ s32 SpawnRoomEnemy(struct RoomObjectEntry *e, s32 i)
 
     if (gRoomObjectGfxSlotIds[i] != -1)
     {
-        if (e->unk1 == 32)
+        if (e->subtype == 32)
         {
             if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
-                res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, 0, e->x, e->y,
-                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                res = CreateActorByKind(ACTOR_KIND_ENEMY, e->subtype, e->unk2, 0, e->x, e->y,
+                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].tileOffset * 2) + 16));
         }
-        else if (e->unk1 == 37)
+        else if (e->subtype == 37)
         {
             if (!(gUsedRoomObjects[gLevelIndex][gStageIndex] & (1 << (e->unk3 & 31))))
             {
-                res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, 0, e->x, e->y,
-                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+                res = CreateActorByKind(ACTOR_KIND_ENEMY, e->subtype, e->unk2, 0, e->x, e->y,
+                                   (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].tileOffset * 2) + 16));
                 gUsedRoomObjects[gLevelIndex][gStageIndex] |= 1 << (e->unk3 & 31);
             }
         }
         else
         {
-            res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y,
-                               (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+            res = CreateActorByKind(ACTOR_KIND_ENEMY, e->subtype, e->unk2, e->unk3 & 31, e->x, e->y,
+                               (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].tileOffset * 2) + 16));
         }
     }
     else
     {
-        res = CreateActorByKind(ACTOR_KIND_ENEMY, e->unk1, e->unk2, e->unk3 & 31, e->x, e->y, 0);
+        res = CreateActorByKind(ACTOR_KIND_ENEMY, e->subtype, e->unk2, e->unk3 & 31, e->x, e->y, 0);
     }
     return res;
 }
@@ -317,23 +317,23 @@ s32 SpawnRoomMapEvent(struct RoomObjectEntry *e)
     {
         if (f->kind == 6)
         {
-            switch (f->unk1)
+            switch (f->subtype)
             {
             case 1:
                 break;
             case 2:
                 if (e->x < (gViewRect[0] + gViewRect[1]) >> 1)
-                    gScrollLock.unkA = e->x + 156;
+                    gScrollLock.lineX = e->x + 156;
                 else
-                    gScrollLock.unkA = e->x - 156;
+                    gScrollLock.lineX = e->x - 156;
                 StartScrollLock(f->x, f->x + 240, 0xFFFF, 0xFFFF);
                 t->mapEventWaitScrollLock = 1;
                 break;
             case 3:
                 if (e->y < (gViewRect[3] + gViewRect[2]) >> 1)
-                    gScrollLock.unkC = e->y + 120;
+                    gScrollLock.lineY = e->y + 120;
                 else
-                    gScrollLock.unkC = e->y - 120;
+                    gScrollLock.lineY = e->y - 120;
                 StartScrollLock(0xFFFF, 0xFFFF, f->y, f->y + 160);
                 t->mapEventWaitScrollLock = 1;
                 break;
@@ -377,8 +377,8 @@ s32 SpawnRoomMapEvent(struct RoomObjectEntry *e)
                 gMidBossDropsIn = 0;
                 y = f->y;
             }
-            r = CreateActorByKind(ACTOR_KIND_MID_BOSS, f->unk1, f->unk2, f->unk3, f->x, y,
-                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
+            r = CreateActorByKind(ACTOR_KIND_MID_BOSS, f->subtype, f->unk2, f->unk3, f->x, y,
+                             (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].tileOffset * 2) + 16));
             if (r != -1)
             {
                 gUnk_02005590[r - 32] = n;

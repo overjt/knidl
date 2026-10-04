@@ -37,7 +37,7 @@ struct M04Spark
     /*0x0E*/ u16 unk0E;
 };
 
-struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
+struct M11Buf { u8 box[4]; u8 terminator[4]; };
 
 struct PlayerBodyBox { u32 w[5]; };
 

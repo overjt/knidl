@@ -52,7 +52,7 @@ void AirGrindRacer(void)
     gAirGrindPtr->players[player].offsetX = 0;
     gAirGrindPtr->players[player].animStep = 0;
     gAirGrindPtr->players[player].penaltyTimer = 0;
-    gAirGrindPtr->players[player].unk0C = 0;
+    gAirGrindPtr->players[player].dashTimer = 0;
     gAirGrindPtr->players[player].boostCooldown = 0;
     gAirGrindPtr->players[player].grinding = 0;
     gAirGrindPtr->players[player].segmentEndDistance = -9999;
@@ -121,7 +121,7 @@ void AirGrindRacer(void)
     if (gAirGrindPtr->players[player].cpuMode != 0)
         AirGrindCpuRollTarget(player);
     gAirGrindPtr->players[player].unk21 = 1;
-    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->unk00C)
+    while (gAirGrindCoursePtr->scrollPos < gAirGrindCoursePtr->startLine)
         TaskYieldTrampoline(1);
     gCurTask->state = 1;
     gCurTask->lateUpdateCallback = (u32)AirGrindRacerRaceUpdate;
@@ -193,8 +193,8 @@ void AirGrindRacerUpdate(void)
         gAirGrindPtr->players[player].penaltyTimer--;
     if (gAirGrindPtr->players[player].boostCooldown != 0)
         gAirGrindPtr->players[player].boostCooldown--;
-    if (gAirGrindPtr->players[player].unk0C != 0)
-        gAirGrindPtr->players[player].unk0C--;
+    if (gAirGrindPtr->players[player].dashTimer != 0)
+        gAirGrindPtr->players[player].dashTimer--;
     if (pos > gAirGrindCoursePtr->finishLine + 240)
         pos = gAirGrindCoursePtr->finishLine + 240;
     if (gCurTask->state == 1) {

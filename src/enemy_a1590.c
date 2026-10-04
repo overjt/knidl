@@ -413,8 +413,8 @@ void MrShineAndMrBrightFillHpBars(void)
     ta = &gTasks[gUnk_02007D00[0]];
     ab = tb->u8C.actor;
     aa = ta->u8C.actor;
-    ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->unk60->altAttackBox);
-    ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->unk60->altAttackBox);
+    ActorSetAttackBoxSlot(gUnk_02007D00[1], ab->aux->altAttackBox);
+    ActorSetAttackBoxSlot(gUnk_02007D00[0], aa->aux->altAttackBox);
     gHudHpBarFilled = 0;
     HudShowHpBar();
     HudStartHpBar(tb->health * 2, tb->health);

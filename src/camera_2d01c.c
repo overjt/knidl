@@ -23,14 +23,14 @@
 
 struct ScrollLock
 {
-    /*0x00*/ u8 unk0;
+    /*0x00*/ u8 lockedPlayerMask;
     /*0x01*/ u8 lockedAxes;
     /*0x02*/ u16 x0;
     /*0x04*/ u16 x1;
     /*0x06*/ u16 y0;
     /*0x08*/ u16 y1;
-    /*0x0A*/ u16 unkA;
-    /*0x0C*/ u16 unkC;
+    /*0x0A*/ u16 lineX;
+    /*0x0C*/ u16 lineY;
 };
 
 /* One of the ten BG animation slots at 0x02007D70 (28 bytes): a script of
@@ -149,7 +149,7 @@ void CameraLeaveScrollLock(void)
             gCameraMode = CAMERA_MODE_SLIDE_FROM_LOCK;
         else
             gCameraMode = CAMERA_MODE_FOLLOW_FOCUS;
-        gScrollLock.unk0 = gActivePlayerMask;
+        gScrollLock.lockedPlayerMask = gActivePlayerMask;
     }
 }
 

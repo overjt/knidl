@@ -1085,7 +1085,7 @@ void sub_08066544(void)
     struct Actor *a;
 
     a = gCurTask->u8C.actor;
-    ActorSetAttackBox(a->unk60->altAttackBox);
+    ActorSetAttackBox(a->aux->altAttackBox);
     ActorShowHpBar();
 }
 
@@ -1171,7 +1171,7 @@ void ActorStartIntroPose(struct AnimCmd *p)
     if (p != NULL)
         gCurTask->actorAnimDelay24 = ActorStartAnim(p);
     TaskSetSkipMask(TASK_SKIP_LATE_UPDATE, gCurTaskIdx);
-    ActorSetAttackBox(a->unk60->altAttackBox);
+    ActorSetAttackBox(a->aux->altAttackBox);
 }
 
 void ActorEndIntroPose(void)
@@ -1647,7 +1647,7 @@ void CreateDroppedParasol(u8 a)
         u->unk28 = a;
         if (gScreenAttackActive == 1)
         {
-            gCurTask->u8C.actor->unk0D = 1;
+            gCurTask->u8C.actor->keepExtraOnDefeat = 1;
             u->variant = 3;
             u->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
             u->layer = 11;

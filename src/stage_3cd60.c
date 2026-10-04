@@ -10,7 +10,7 @@
 #include "actor.h"
 
 struct PlayerHitBoxSet { u8 unk00; u8 unk01; u8 offsetX; u8 offsetY; u8 *boxes; };
-struct M11Buf { u8 unk00[4]; u8 unk04[4]; };
+struct M11Buf { u8 box[4]; u8 terminator[4]; };
 struct PlayerBodyBox { u32 w[5]; };
 
 /* Not from collision.h or player.h: this file's view of gTerrainResult and
@@ -1221,12 +1221,12 @@ s32 LoadPlayerHitBoxSet(s32 a0, s32 a1)
         return 0;
     gPlayerHitBoxSets[a0].offsetX = src[0];
     gPlayerHitBoxSets[a0].offsetY = src[1];
-    gPlayerHitBoxSets[a0].boxes = gPlayerHitBoxLists[a0].unk00;
-    gPlayerHitBoxLists[a0].unk00[0] = src[2];
-    gPlayerHitBoxLists[a0].unk00[1] = src[3];
-    gPlayerHitBoxLists[a0].unk00[2] = src[4];
-    gPlayerHitBoxLists[a0].unk00[3] = src[5];
-    q = gPlayerHitBoxLists[a0].unk04;
+    gPlayerHitBoxSets[a0].boxes = gPlayerHitBoxLists[a0].box;
+    gPlayerHitBoxLists[a0].box[0] = src[2];
+    gPlayerHitBoxLists[a0].box[1] = src[3];
+    gPlayerHitBoxLists[a0].box[2] = src[4];
+    gPlayerHitBoxLists[a0].box[3] = src[5];
+    q = gPlayerHitBoxLists[a0].terminator;
     q[0] = 127;
     q[1] = q[2] = q[3] = 0;
     return 1;
@@ -2783,8 +2783,8 @@ s32 sub_080404e4(void)
    a one-field struct: only a struct field gives agbcc's `lsls #16; cmp`
    test instead of `lsls #16; lsrs #16; cmp`.  Whether a plain
    `p->unk38` now matches is untested. */
-struct M11Ctr { u16 unk00; };
-#define CTR(p) (((struct M11Ctr *)&(p)->shareTimer)->unk00)
+struct M11Ctr { u16 shareTimer; };
+#define CTR(p) (((struct M11Ctr *)&(p)->shareTimer)->shareTimer)
 
 s32 PlayerCheckShareItem(void)
 {

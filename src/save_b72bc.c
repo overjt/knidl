@@ -22,7 +22,7 @@ void InputRecorderRestoreState(void)
     gRoomEntryMode = gInputRecordingPtr->roomEntryMode;
     gRoomEntryX = gInputRecordingPtr->roomEntryX;
     gRoomEntryY = gInputRecordingPtr->roomEntryY;
-    gRoomPlayerMode = gInputRecordingPtr->unk13;
+    gRoomPlayerMode = gInputRecordingPtr->roomPlayerMode;
     gMaxHealth = gInputRecordingPtr->maxHealth;
     gWarpStarStationLevels = gInputRecordingPtr->warpStarStationLevels;
     gMetaKnightmareMode = gInputRecordingPtr->metaKnightmareMode;

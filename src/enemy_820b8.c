@@ -96,7 +96,7 @@ void PoppyBrosJrRideUpdate(void)
     case HIT_KIND_DEFEAT:
         if (gScreenAttackActive == 1)
         {
-            t->u8C.actor->unk0D = 1;
+            t->u8C.actor->keepExtraOnDefeat = 1;
             gCurTask->u8C.actor->extraFrame = 8;
         }
         else

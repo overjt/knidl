@@ -28,12 +28,12 @@
    faces left (Task.facing == -1). */
 struct InputState
 {
-    /*0x00*/ u8 unk00;
-    /*0x01*/ u8 unk01;
-    /*0x02*/ u8 unk02;
-    /*0x03*/ u8 unk03;
-    /*0x04*/ u8 unk04;
-    /*0x05*/ u8 unk05;
+    /*0x00*/ u8 offsetX;
+    /*0x01*/ u8 offsetY;
+    /*0x02*/ u8 top;
+    /*0x03*/ u8 bottom;
+    /*0x04*/ u8 left;
+    /*0x05*/ u8 right;
 };
 
 /* Not from collision.h: this file's view of gTerrainResult differs (lesson
@@ -452,20 +452,20 @@ void ActorGetTerrainBox(struct InputState *out)
 
     t = gCurTask;
     a = t->u8C.actor;
-    out->unk01 = ((struct InputState *)a->terrainBox)->unk01;
-    out->unk02 = ((struct InputState *)a->terrainBox)->unk02;
-    out->unk03 = ((struct InputState *)a->terrainBox)->unk03;
+    out->offsetY = ((struct InputState *)a->terrainBox)->offsetY;
+    out->top = ((struct InputState *)a->terrainBox)->top;
+    out->bottom = ((struct InputState *)a->terrainBox)->bottom;
     if (t->facing == -1)
     {
-        out->unk00 = -((struct InputState *)a->terrainBox)->unk00;
-        out->unk04 = -((struct InputState *)a->terrainBox)->unk05;
-        out->unk05 = -((struct InputState *)a->terrainBox)->unk04;
+        out->offsetX = -((struct InputState *)a->terrainBox)->offsetX;
+        out->left = -((struct InputState *)a->terrainBox)->right;
+        out->right = -((struct InputState *)a->terrainBox)->left;
     }
     else
     {
-        out->unk00 = ((struct InputState *)a->terrainBox)->unk00;
-        out->unk04 = ((struct InputState *)a->terrainBox)->unk04;
-        out->unk05 = ((struct InputState *)a->terrainBox)->unk05;
+        out->offsetX = ((struct InputState *)a->terrainBox)->offsetX;
+        out->left = ((struct InputState *)a->terrainBox)->left;
+        out->right = ((struct InputState *)a->terrainBox)->right;
     }
 }
 
@@ -938,7 +938,7 @@ u32 ActorReactToDefeat(void)
     {
         sub_0806ee2c();
     }
-    if (a->unk0D == 0)
+    if (a->keepExtraOnDefeat == 0)
         a->extraFrame = 0xFFFF;
     return r;
 }

@@ -17,7 +17,7 @@
  *       racers (with a blinking extra sprite for three poses) and of the
  *       effect sprites (which end themselves off screen), both drawn scaled
  *       through AirGrindScaleSprite.
- *   AirGrindScaleSprite   copies a sprite's OAM list into AirGrindState.unk304/unk306[]
+ *   AirGrindScaleSprite   copies a sprite's OAM list into AirGrindState.scaledOamCount/unk306[]
  *       with its size and offsets scaled by `scale` (the depth table through
  *       AirGrindGetDepthScale, OBJ sizes from gUnk_080CFF76, double-size affine
  *       objects), fills the affine matrix gOamAffineCount of the OAM shadow
@@ -123,7 +123,7 @@ u32 AirGrindScaleSprite(u16 *src, s16 scale)
     s32 k;
     s32 v;
 
-    ret = (u32)&gAirGrindPtr->unk306[gAirGrindPtr->unk304];
+    ret = (u32)&gAirGrindPtr->scaledOam[gAirGrindPtr->scaledOamCount];
 loop:
     a = *src++;
     b = *src++;
@@ -150,7 +150,7 @@ loop:
     v >>= 8;
     v -= h;
     v &= 0xFF;
-    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = (s16)((a & 0xFF00) | v | 0x100) | (s16)dbl;
+    gAirGrindPtr->scaledOam[gAirGrindPtr->scaledOamCount++] = (s16)((a & 0xFF00) | v | 0x100) | (s16)dbl;
     v = b & 0x1FF;
     if (v & 0x100)
         v |= 0xFFFFFF00;
@@ -166,10 +166,10 @@ loop:
     v >>= 8;
     v -= w;
     v &= 0x1FF;
-    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = (b & 0xC000) | v | (gOamAffineCount << 9);
-    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = 0;
+    gAirGrindPtr->scaledOam[gAirGrindPtr->scaledOamCount++] = (b & 0xC000) | v | (gOamAffineCount << 9);
+    gAirGrindPtr->scaledOam[gAirGrindPtr->scaledOamCount++] = 0;
     src++;
-    gAirGrindPtr->unk306[gAirGrindPtr->unk304++] = *src++ & 0xF3FF;
+    gAirGrindPtr->scaledOam[gAirGrindPtr->scaledOamCount++] = *src++ & 0xF3FF;
     if (!(a & 0x1000))
         goto loop;
     gOamBuffer[(s16)gOamAffineCount * 16 + 3] = half;

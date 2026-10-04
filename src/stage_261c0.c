@@ -41,17 +41,17 @@ void RequestScreenShake(u16 a)
         return;
     if (a == 0)
     {
-        gScreenShake.unk0 = 0;
-        gScreenShake.unk2 = 0;
-        gScreenShake.unk4 = 0;
-        gScreenShake.unk6 = 0;
+        gScreenShake.pattern = 0;
+        gScreenShake.offsetX = 0;
+        gScreenShake.offsetY = 0;
+        gScreenShake.step = 0;
     }
-    else if (gScreenShake.unk0 == 0 || gScreenShake.unk0 > 4 || gScreenShake.unk0 <= a)
+    else if (gScreenShake.pattern == 0 || gScreenShake.pattern > 4 || gScreenShake.pattern <= a)
     {
-        gScreenShake.unk0 = a;
-        gScreenShake.unk2 = 0;
-        gScreenShake.unk4 = 0;
-        gScreenShake.unk6 = 0;
+        gScreenShake.pattern = a;
+        gScreenShake.offsetX = 0;
+        gScreenShake.offsetY = 0;
+        gScreenShake.step = 0;
     }
 }
 
@@ -373,7 +373,7 @@ u32 WhispyWoodsCheckScrollLock(void)
     case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[3] > 0x167)
         {
-            gScrollLock.unkC = 280;
+            gScrollLock.lineY = 280;
             StartScrollLock(0xFFFF, 0xFFFF, 200, 360);
         }
         break;
@@ -395,7 +395,7 @@ u32 KrackoCheckScrollLock(void)
     case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[2] <= 69)
         {
-            gScrollLock.unkC = 149;
+            gScrollLock.lineY = 149;
             StartScrollLock(0xFFFF, 0xFFFF, 16, 176);
         }
         break;
@@ -417,7 +417,7 @@ u32 KingDededeCheckScrollLock(void)
     case CAMERA_MODE_FOLLOW_FOCUS:
         if (gViewRect[3] > 0x147)
         {
-            gScrollLock.unkC = 248;
+            gScrollLock.lineY = 248;
             StartScrollLock(0xFFFF, 0xFFFF, 168, 328);
         }
         break;

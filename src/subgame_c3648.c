@@ -157,20 +157,20 @@ void AirGrindRacerRaceStep(s32 player)
             if (gAirGrindPtr->players[player].pressedKeys & 1) {
                 if (player == 0 && gAirGrindPtr->pressEffectShown == 0)
                     CreateAirGrindEffect(0, gCurTask->unk18, 2);
-                gAirGrindPtr->players[player].unk0C = 4;
+                gAirGrindPtr->players[player].dashTimer = 4;
                 if (ret == 1) {
-                    gAirGrindPtr->players[player].unk0C = 6;
+                    gAirGrindPtr->players[player].dashTimer = 6;
                     if (player == 0)
                         PlaySfx(149);
                 } else if (ret == 2) {
-                    gAirGrindPtr->players[player].unk0C = 8;
+                    gAirGrindPtr->players[player].dashTimer = 8;
                     if (player == 0)
                         PlaySfx(149);
                 }
             }
             gAirGrindPtr->players[player].grinding = 1;
         } else {
-            gAirGrindPtr->players[player].unk0C = 0;
+            gAirGrindPtr->players[player].dashTimer = 0;
             AirGrindUpdateEngineSound(player, 0);
             AirGrindRacerSlowDown();
             gAirGrindPtr->players[player].penaltyTimer = 24;
@@ -183,7 +183,7 @@ void AirGrindRacerRaceStep(s32 player)
         if (gAirGrindPtr->players[player].liftY < 0)
             gAirGrindPtr->players[player].liftY = 0;
     } else {
-        gAirGrindPtr->players[player].unk0C = 0;
+        gAirGrindPtr->players[player].dashTimer = 0;
         AirGrindUpdateEngineSound(player, 0);
         if (gCurTask->velX < 0x18000) {
             gCurTask->accelX = 0;
@@ -203,7 +203,7 @@ void AirGrindRacerRaceStep(s32 player)
         gAirGrindPtr->players[player].grinding = 0;
     }
 
-    if (gAirGrindPtr->players[player].unk0C != 0) {
+    if (gAirGrindPtr->players[player].dashTimer != 0) {
         gAirGrindPtr->players[player].offsetX += 0x20000;
     } else {
         gAirGrindPtr->players[player].offsetX -= 0x20000;
@@ -216,9 +216,9 @@ void AirGrindRacerRaceStep(s32 player)
     if (gAirGrindPtr->players[player].penaltyTimer == 0) {
         if (gCurTask->frame > 8)
             gAirGrindPtr->players[player].animStep = 0;
-        if (gAirGrindCoursePtr->players[player].unk1C > 16)
+        if (gAirGrindCoursePtr->players[player].laneLean > 16)
             gCurTask->frame = 0;
-        else if (gAirGrindCoursePtr->players[player].unk1C < -16)
+        else if (gAirGrindCoursePtr->players[player].laneLean < -16)
             gCurTask->frame = 6;
         else
             gCurTask->frame = 3;
@@ -253,9 +253,9 @@ void AirGrindRacerIdleStep(s32 player)
     }
     if (gCurTask->frame > 8)
         gAirGrindPtr->players[player].animStep = 0;
-    if (gAirGrindCoursePtr->players[player].unk1C > 16)
+    if (gAirGrindCoursePtr->players[player].laneLean > 16)
         gCurTask->frame = 0;
-    else if (gAirGrindCoursePtr->players[player].unk1C < -16)
+    else if (gAirGrindCoursePtr->players[player].laneLean < -16)
         gCurTask->frame = 6;
     else
         gCurTask->frame = 3;

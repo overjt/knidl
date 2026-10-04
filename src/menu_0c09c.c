@@ -36,7 +36,7 @@ void MenuFileSelect(void)
         {
             PlaySfx(SE_CONFIRM);
             gCurSaveSlot = gMenuCursor;
-            if (gSaveSlots[gCurSaveSlot].unk04 == 0x99999999)
+            if (gSaveSlots[gCurSaveSlot].slotIndex == 0x99999999)
                 InitNewSaveFile(gCurSaveSlot);
             done = 0;
             for (i = 0; i < 2; i++)

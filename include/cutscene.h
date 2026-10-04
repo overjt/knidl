@@ -40,7 +40,7 @@ struct RoomParticle
 struct CannonFusePiece
 {
     /*0x00*/ u8 unk00[4];
-    /*0x04*/ u16 unk04;
+    /*0x04*/ u16 enterFrame;
     /*0x06*/ u16 unk06[6];
     /*0x12*/ u16 unk12[1];
 };

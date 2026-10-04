@@ -49,7 +49,7 @@ void AirGrindRollSceneryObject(s32 i)
 {
     struct AirGrindState *g = gAirGrindPtr;
     struct AirGrindScenerySet *set = &g->scenery;
-    struct AirGrindSceneryObject *o = &set->unk04[i];
+    struct AirGrindSceneryObject *o = &set->objects[i];
     u32 r;
     s32 k;
     s16 id;
@@ -59,20 +59,20 @@ void AirGrindRollSceneryObject(s32 i)
     k = r & 7;
     tbl = gUnk_080CFF60;
     id = tbl[k];
-    while (g->scenery.unk74 == id) {
+    while (g->scenery.lastBaseY == id) {
         k = (k + 1) & 7;
         id = tbl[k];
     }
-    set->unk74 = id;
-    o->unk4 = (id + r) << 16;
-    o->unk0 = AirGrindRandomRange(4, 4) + 1;
-    o->unk2 = 0xA000;
+    set->lastBaseY = id;
+    o->baseY = (id + r) << 16;
+    o->frame = AirGrindRandomRange(4, 4) + 1;
+    o->tileWord = 0xA000;
 }
 
 void AirGrindScenery(void)
 {
     struct AirGrindState *g = gAirGrindPtr;
-    s32 *last = &g->scenery.unk00;
+    s32 *last = &g->scenery.prevScrollPos;
     s32 i;
     s32 x;
     s32 *p;
@@ -84,8 +84,8 @@ void AirGrindScenery(void)
     gCurTask->pixelY = 40;
     gCurTask->frameTable = gUnk_08755FBC;
     gCurTask->frame = 0xFFFF;
-    g->scenery.unk74 = 0;
-    for (i = 0, p = &g->scenery.unk04[0].unk8, x = 0; i <= 6; i++) {
+    g->scenery.lastBaseY = 0;
+    for (i = 0, p = &g->scenery.objects[0].posX, x = 0; i <= 6; i++) {
         AirGrindRollSceneryObject(i);
         *p = x;
         p += 4;
@@ -100,24 +100,24 @@ void AirGrindScenery(void)
 void AirGrindSceneryUpdate(void)
 {
     struct AirGrindState *g = gAirGrindPtr;
-    s32 *last = &g->scenery.unk00;
+    s32 *last = &g->scenery.prevScrollPos;
     s32 i;
     struct AirGrindSceneryObject *o;
 
-    for (i = 0, o = g->scenery.unk04; i <= 6; o++, i++) {
+    for (i = 0, o = g->scenery.objects; i <= 6; o++, i++) {
         struct AirGrindCourse *c = gAirGrindCoursePtr;
         s32 x;
 
-        o->unkC = o->unk4 - ((c->players[0].screenY - 160) << 16) / 4;
-        x = o->unk8;
+        o->posY = o->baseY - ((c->players[0].screenY - 160) << 16) / 4;
+        x = o->posX;
         x += 0xFFFF0000;
         x += (*last - c->scrollPos) << 16;
-        o->unk8 = x;
+        o->posX = x;
         if (x >> 16 < -64) {
             AirGrindRollSceneryObject(i);
-            o->unk8 += 0x1700000;
+            o->posX += 0x1700000;
         }
-        AirGrindDrawSceneryObject(o->unk0, o->unk8 >> 16, o->unkC >> 16, o->unk2);
+        AirGrindDrawSceneryObject(o->frame, o->posX >> 16, o->posY >> 16, o->tileWord);
     }
     *last = gAirGrindCoursePtr->scrollPos;
 }
