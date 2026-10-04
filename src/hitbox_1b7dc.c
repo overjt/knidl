@@ -22,7 +22,7 @@ void PlaceAttackBox(void)
 {
     s32 y;
 
-    if (gAttackBox->unk1A & 0x8000)
+    if (gAttackBox->attackFlags & 0x8000)
     {
         s32 x;
         gAttackX = x = gAttackBox->offsetX + gAttackX;

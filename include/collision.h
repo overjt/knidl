@@ -28,13 +28,13 @@ struct AttackBox
     /*0x08*/ u8 damage;
     /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 immunityFlags;
-    /*0x0C*/ u16 unk0C;
+    /*0x0C*/ u16 playerHarmlessMask;
     /*0x0E*/ u16 class10ImmuneMask;
-    /*0x10*/ u16 unk10;
+    /*0x10*/ u16 class10HarmlessMask;
     /*0x12*/ u16 unk12;
     /*0x14*/ u32 class20ImmuneMask;
     /*0x18*/ u16 unk18;
-    /*0x1A*/ u16 unk1A;
+    /*0x1A*/ u16 attackFlags;
 };
 
 /* A player's body box, pointed to by each entry of the hit list
@@ -56,8 +56,8 @@ struct BodyBox
     /*0x0B*/ u8 unk0B;
     /*0x0C*/ u8 damage;
     /*0x0D*/ u8 hitEffect;
-    /*0x0E*/ u16 unk0E;
-    /*0x10*/ u16 unk10;
+    /*0x0E*/ u16 guardFlags;
+    /*0x10*/ u16 bodyFlags;
 };
 
 struct Collider
