@@ -49,7 +49,7 @@ extern u32 gUnk_0873DDBE[];
 extern u32 gUnk_0873DDE8[];
 extern u32 gUnk_0873DEA0[];
 extern u16 gUnk_0873DEA8[];
-extern u32 gUnk_0873DEDC[];
+extern u32 gPlayerDances[];
 extern u32 gUnk_0874C890[];
 extern u32 gUnk_0874CDF8[];
 extern u32 gUnk_08754850[];
@@ -107,10 +107,10 @@ void TaskAdvanceFrameScript(void);
 void sub_0805d994(s32 a0, s32 a1);
 void sub_0805da2c(void);
 void sub_0805dd4c(void);
-void sub_0805deac(void);
-void sub_0805e15c(void);
-void sub_0805e1bc(void);
-void sub_0805e24c(void);
+void StartAllPlayersDance(void);
+void PlayerDance(void);
+void PlayerDanceInGoalGame(void);
+void PlayerDanceAfterStageClear(void);
 
 s32 CreatePlayerEffect(s32 a0, s32 a1, s32 a2)
 {
@@ -660,7 +660,7 @@ void sub_0805bce0(void)
     else
         TaskYieldTrampoline(30);
     TaskStartFrameScriptId(0);
-    sub_0805e15c();
+    PlayerDance();
     gCurTask->state = 10;
     sub_0805bd34();
 }
@@ -1795,7 +1795,7 @@ void sub_0805dd4c(void)
     if (gActivePlayerCount == 1)
     {
         if ((s16)gTaskSlotTypes[gCurTask->unk46] == -1)
-            sub_0805deac();
+            StartAllPlayersDance();
     }
 }
 
@@ -1831,7 +1831,7 @@ void sub_0805ddb0(s32 a0)
     gPlayerStates[a0].mode = 22;
 }
 
-void sub_0805deac(void)
+void StartAllPlayersDance(void)
 {
     s32 i;
 
@@ -1856,7 +1856,7 @@ void sub_0805deac(void)
                 gPlayerStates[i].ability = 0;
                 gPlayerStates[i].mode = 22;
             }
-            TaskSetEntry(sub_0805e15c, i);
+            TaskSetEntry(PlayerDance, i);
         }
     }
 }
@@ -1872,7 +1872,7 @@ void sub_0805df9c(void)
     TaskStop();
 }
 
-void sub_0805dfe8(void)
+void PlayerWalkToDanceSpotUpdate(void)
 {
     struct Task *t;
     u16 d;
@@ -1891,7 +1891,7 @@ void sub_0805dfe8(void)
     }
 }
 
-void sub_0805e038(s32 a0)
+void PlayerSetDanceSpot(s32 a0)
 {
     struct PlayerState *ps;
     struct Task *t;
@@ -1933,7 +1933,7 @@ void sub_0805e038(s32 a0)
     }
 }
 
-void sub_0805e110(s32 a0)
+void PlayerWalkToDanceSpot(s32 a0)
 {
     struct PlayerState *ps;
     struct Task *t;
@@ -1941,13 +1941,13 @@ void sub_0805e110(s32 a0)
     ps = &gPlayerStates[a0];
     t = &gTasks[a0];
     PlayerSuspendControl(a0, 1);
-    sub_0805e038(a0);
+    PlayerSetDanceSpot(a0);
     TaskSetEntry(PlayerActionWalk, a0);
     ps->unk16 = 1;
-    t->updateCallback = (u32)sub_0805dfe8;
+    t->updateCallback = (u32)PlayerWalkToDanceSpotUpdate;
 }
 
-void sub_0805e15c(void)
+void PlayerDance(void)
 {
     struct PlayerState *ps;
     struct Task *t;
@@ -1966,16 +1966,16 @@ void sub_0805e15c(void)
     t->unk28 = t->posX;
     if (((u8 *)gUnk_02000020)[0] == 1)
     {
-        sub_0805e1bc();
+        PlayerDanceInGoalGame();
     }
     else
     {
-        sub_0805e24c();
+        PlayerDanceAfterStageClear();
         TaskSleepForever();
     }
 }
 
-void sub_0805e1bc(void)
+void PlayerDanceInGoalGame(void)
 {
     struct Task *t;
 
@@ -1986,17 +1986,17 @@ void sub_0805e1bc(void)
     {
         if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(14);
-        CallTableEntry(*(s8 *)gUnk_02008010, 14, gUnk_0873DEDC);
+        CallTableEntry(*(s8 *)gUnk_02008010, 14, gPlayerDances);
     }
     else
     {
         if (gLocalPlayer == t->player->playerIndex)
             PlayBgm(13);
-        CallTableEntry(*(s8 *)gUnk_02008010 + 7, 14, gUnk_0873DEDC);
+        CallTableEntry(*(s8 *)gUnk_02008010 + 7, 14, gPlayerDances);
     }
 }
 
-void sub_0805e24c(void)
+void PlayerDanceAfterStageClear(void)
 {
     TaskSetFrameFlip(146);
     TaskYieldTrampoline(30);
@@ -2014,7 +2014,7 @@ void sub_0805e24c(void)
         PlayBgm(13);
         *(u8 *)gUnk_020060CC = 1;
     }
-    CallTableEntry(*(s8 *)gUnk_02008010, 14, gUnk_0873DEDC);
+    CallTableEntry(*(s8 *)gUnk_02008010, 14, gPlayerDances);
     TaskYieldTrampoline(60);
     if (gCurTask->unk34 != 0)
         ExitClearedStage();

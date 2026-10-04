@@ -1514,7 +1514,7 @@ void Task_StarRodPiece(void)
     CallTableEntry(*(u8 *)((u8 *)tb + 115), 3, gStarRodPieceVariants);
 }
 
-void sub_080b480c(void)
+void DefeatAllAbilityStars(void)
 {
     s32 i;
     s32 o;
@@ -1544,7 +1544,7 @@ void sub_080b480c(void)
     } while (i <= 62);
 }
 
-void sub_080b4878(void)
+void StarRodPieceCollect(void)
 {
     s32 i;
     u8 *b5;
@@ -1566,7 +1566,7 @@ void sub_080b4878(void)
             i++;
         } while (i < gPlayerCount);
     }
-    sub_080b480c();
+    DefeatAllAbilityStars();
     DisablePause();
 }
 
@@ -1580,7 +1580,7 @@ void sub_080b48e0(void)
     t->unk18 = 0;
 }
 
-void sub_080b48f8(void)
+void StarRodPieceStartDance(void)
 {
     s32 i;
     s32 k;
@@ -1618,7 +1618,7 @@ void sub_080b48f8(void)
         if (*pb == 1)
             sub_0805ddb0(0);
         else
-            sub_0805deac();
+            StartAllPlayersDance();
         ActorDestroy();
     }
 }
@@ -1663,7 +1663,7 @@ void sub_080b4968(void)
                     }
                     else
                     {
-                        sub_0805e110(i);
+                        PlayerWalkToDanceSpot(i);
                         t = *c;
                         t->unk18 |= b;
                         t->unk1C++;
@@ -1683,41 +1683,41 @@ void sub_080b4968(void)
 void sub_080b4a34(void)
 {
     if (gCurTask->unk1C == gActivePlayerCount)
-        sub_080b48f8();
+        StarRodPieceStartDance();
     else
         sub_080b4968();
 }
 
-void sub_080b4a5c(void)
+void StarRodPieceHoverInit(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080b4a8c;
+    (*c)->updateCallback = (u32)StarRodPieceHoverUpdate;
     ActorSetState(0);
-    CallTableEntry((*c)->state, 2, gUnk_08756150);
+    CallTableEntry((*c)->state, 2, gStarRodPieceHoverStates);
 }
 
-void sub_080b4a8c(void)
+void StarRodPieceHoverUpdate(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    CallTableEntry((*c)->updateState, 2, gUnk_08756158);
+    CallTableEntry((*c)->updateState, 2, gStarRodPieceHoverStateUpdates);
     if ((*c)->state == 0 && ActorCheckHits() != 0)
     {
-        sub_080b4878();
+        StarRodPieceCollect();
         CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(1);
-        TaskSetEntry(sub_080b4afc, gCurTaskIdx);
+        TaskSetEntry(StarRodPieceHoverEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080b4afc(void)
+void StarRodPieceHoverEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08756150);
+    CallTableEntry(gCurTask->state, 2, gStarRodPieceHoverStates);
 }
 
 void sub_080b4b18(void)
@@ -1782,36 +1782,36 @@ void sub_080b4bd8(void)
     sub_080b4a34();
 }
 
-void sub_080b4be4(void)
+void StarRodPieceSlideOutInit(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080b4c14;
+    (*c)->updateCallback = (u32)StarRodPieceSlideOutUpdate;
     ActorSetState(0);
-    CallTableEntry((*c)->state, 3, gUnk_08756160);
+    CallTableEntry((*c)->state, 3, gStarRodPieceSlideOutStates);
 }
 
-void sub_080b4c14(void)
+void StarRodPieceSlideOutUpdate(void)
 {
     struct Task **c;
 
     c = &gCurTask;
-    CallTableEntry((*c)->updateState, 3, gUnk_0875616C);
+    CallTableEntry((*c)->updateState, 3, gStarRodPieceSlideOutStateUpdates);
     if ((*c)->state == 1 && ActorCheckHits() != 0)
     {
-        sub_080b4878();
+        StarRodPieceCollect();
         CreateBurstEffect(0, 0);
         if (gLocalPlayer == (s8)*(u8 *)((u8 *)*c + 126))
             PlaySfx(198);
         ActorSetState(2);
-        TaskSetEntry(sub_080b4c84, gCurTaskIdx);
+        TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
     }
 }
 
-void sub_080b4c84(void)
+void StarRodPieceSlideOutEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08756160);
+    CallTableEntry(gCurTask->state, 3, gStarRodPieceSlideOutStates);
 }
 
 void sub_080b4ca0(void)
@@ -1851,7 +1851,7 @@ void sub_080b4d1c(void)
     t = *c;
     t->unk34 = r;
     if (t->state != 0)
-        TaskSetEntry(sub_080b4c84, gCurTaskIdx);
+        TaskSetEntry(StarRodPieceSlideOutEnterState, gCurTaskIdx);
 }
 
 void sub_080b4d50(void)

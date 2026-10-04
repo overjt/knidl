@@ -82,30 +82,30 @@ u32 gAbilityStarStateUpdates[2] LATE_TBL(087560d0) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_StarRodPiece */
 u32 gStarRodPieceVariants[3] LATE_TBL(087560d0) = {
-    (u32)sub_080b4a5c,
-    (u32)sub_080b4be4,
+    (u32)StarRodPieceHoverInit,
+    (u32)StarRodPieceSlideOutInit,
     (u32)sub_080b4e04,
 };
 
 /* ---- 0x08756150-0x08756178: 4 table(s), 10 function pointer(s), section .late_tbl_08756150 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080b4a5c, sub_080b4afc */
-u32 gUnk_08756150[2] LATE_TBL(08756150) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in StarRodPieceHoverInit, StarRodPieceHoverEnterState */
+u32 gStarRodPieceHoverStates[2] LATE_TBL(08756150) = {
     (u32)sub_080b4b18,
     (u32)sub_080b4bb0,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080b4a8c */
-u32 gUnk_08756158[2] LATE_TBL(08756150) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in StarRodPieceHoverUpdate */
+u32 gStarRodPieceHoverStateUpdates[2] LATE_TBL(08756150) = {
     (u32)sub_080b4b94,
     (u32)sub_080b4bd8,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_080b4be4, sub_080b4c84 */
-u32 gUnk_08756160[3] LATE_TBL(08756150) = {
+/* include/enemy.h; CallTableEntry(i, 3, ...) in StarRodPieceSlideOutInit, StarRodPieceSlideOutEnterState */
+u32 gStarRodPieceSlideOutStates[3] LATE_TBL(08756150) = {
     (u32)sub_080b4ca0,
     (u32)sub_080b4d50,
     (u32)sub_080b4dd0,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_080b4c14 */
-u32 gUnk_0875616C[3] LATE_TBL(08756150) = {
+/* include/enemy.h; CallTableEntry(i, 3, ...) in StarRodPieceSlideOutUpdate */
+u32 gStarRodPieceSlideOutStateUpdates[3] LATE_TBL(08756150) = {
     (u32)sub_080b4d1c,
     (u32)sub_080b4db4,
     (u32)sub_080b4df8,

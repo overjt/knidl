@@ -511,8 +511,8 @@ u32 gUnk_0873DEA0[2] GAME_TBL(0873dea0) = {
 };
 
 /* ---- 0x0873DEDC-0x0873DF14: 1 table(s), 14 function pointer(s), section .game_tbl_0873dedc ---- */
-/* include/effect.h; CallTableEntry(i, 14, ...) in sub_0805e1bc, sub_0805e24c */
-u32 gUnk_0873DEDC[14] GAME_TBL(0873dedc) = {
+/* include/effect.h; CallTableEntry(i, 14, ...) in PlayerDanceInGoalGame, PlayerDanceAfterStageClear */
+u32 gPlayerDances[14] GAME_TBL(0873dedc) = {
     (u32)sub_0805e2d4,
     (u32)sub_0805e7b4,
     (u32)sub_0805eb2c,

@@ -313,7 +313,7 @@ struct PlayerState
     /*0x5E*/ u16 prevPixelX;
     /*0x60*/ u16 prevPixelY;
     /*0x62*/ u8 filler62[2];
-    /* M16's sub_0805e15c zeroes bodyBox/terrainBox/hitBoxSet per player
+    /* M16's PlayerDance zeroes bodyBox/terrainBox/hitBoxSet per player
        when a run starts (issue #83). */
     /*0x64*/ u32 bodyBox;
     /*0x68*/ u32 terrainBox;
