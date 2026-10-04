@@ -970,7 +970,7 @@ void MrFrostyDefeat(void)
     u->onGround = zero;
     if (--gUnk_02007D00[0] <= 0)
         EndMidBossFightWithReward();
-    sub_080667c0(1, 24);
+    MidBossStartDefeat(1, 24);
     TaskSetMotionXFacing(-65536, 0x5A5A5A5A);
     v = gCurTask;
     v->velY = -196608;

@@ -6,7 +6,7 @@
  * The tail of the vehicle/ride block: Task_DustTrail's per-frame integrator
  * over the gTasks[] task table, the two sprite-list players
  * Task_DustPuff / Task_BackwardDustPuff, and the spawn/teardown helpers
- * CreateLandingDust / sub_0806d08c / Task_LandingDust / CreateDustBurst.  Every literal
+ * CreateLandingDust / CreateLandingDustFacing / Task_LandingDust / CreateDustBurst.  Every literal
  * pool in this range ends exactly on the next function's entry, so any
  * symbols.csv boundary here is a valid carve point.
  */
@@ -139,7 +139,7 @@ void CreateLandingDust(s16 dx, s16 dy)
         gTasks[i].facing = 0xFF;
 }
 
-void sub_0806d08c(s16 a, s16 b, s16 c)
+void CreateLandingDustFacing(s16 a, s16 b, s16 c)
 {
     struct Task *t;
     struct Task *u;

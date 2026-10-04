@@ -275,7 +275,7 @@ void ActorSetExtraAttackBoxSlot(u32 i, u32 v)
 
 /* Nearest task in slots 4..15 to the running one, along X. */
 /* Nearest task in slots 4..15 to the running one, along X. */
-s32 sub_08063a2c(void)
+s32 TaskFindNearestPlayerObject(void)
 {
     struct Task *o;
     s32 best;
@@ -1661,7 +1661,7 @@ void ActorDrawWorldInViewOrDestroy(void)
     }
 }
 
-void sub_080652c8(void)
+void ActorDrawWorldNearView(void)
 {
     struct Task *p;
     struct Task *t;
@@ -1683,7 +1683,7 @@ void sub_080652c8(void)
                  (s16)(t->pixelY - gSpriteCameraY));
 }
 
-void sub_08065350(void)
+void ActorDrawWorldNearViewOrDestroy(void)
 {
     struct Task *p;
     struct Task *t;

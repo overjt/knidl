@@ -457,7 +457,7 @@ void Task_LandingImpact(void)
     TaskSleepForever();
 }
 
-void LandingImpactVariant0(void)
+void LandingImpactCenter(void)
 {
     gCurTask->frame = 16;
     TaskYieldTrampoline(1);
@@ -480,7 +480,7 @@ void LandingImpactVariant0(void)
     TaskExitTrampoline();
 }
 
-void LandingImpactVariant1(void)
+void LandingImpactLeft(void)
 {
     struct Task *t;
     struct Task *u;
@@ -510,7 +510,7 @@ void LandingImpactVariant1(void)
     TaskExitTrampoline();
 }
 
-void LandingImpactVariant2(void)
+void LandingImpactRight(void)
 {
     struct Task *t;
     struct Task *u;

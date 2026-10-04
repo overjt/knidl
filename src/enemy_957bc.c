@@ -933,7 +933,7 @@ void FireLionDefeat(void)
     gUnk_02007D00[8]--;
     if (gUnk_02007D00[8] <= 0)
         EndMidBossFightWithReward();
-    sub_080667c0(1, 21);
+    MidBossStartDefeat(1, 21);
     TaskStop();
     t = gCurTask;
     t->fireLionLanded = zero;

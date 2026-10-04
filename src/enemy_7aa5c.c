@@ -455,7 +455,7 @@ void CreateSwordAndBladeKnightSlash(void)
 void sub_0807b200(void)
 {
     struct PointPair box;
-    s32 id = sub_08063a2c();
+    s32 id = TaskFindNearestPlayerObject();
 
     if (id != -1)
     {

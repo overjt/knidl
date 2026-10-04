@@ -198,7 +198,7 @@ void Task_NightmarePowerOrbEscape(void)
         struct Task *t = gCurTask;
 
         t->moveCallback = (u32)TaskMove;
-        t->drawCallback = (u32)sub_080652c8;
+        t->drawCallback = (u32)ActorDrawWorldNearView;
         t->layer = 11;
     }
     gCurTask->frameTable = gUnk_0875549C;

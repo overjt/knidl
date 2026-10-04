@@ -605,7 +605,7 @@ void BonkersDefeat(void)
     t->updateState = BONKERS_STATE_DEFEAT;
     if (--gUnk_02007D00[0] == 0)
         EndMidBossFightWithReward();
-    sub_080667c0(1, 32);
+    MidBossStartDefeat(1, 32);
     CreateStarFlash(1, 0, 0);
     TaskStop();
     TaskSetFrame(32);
@@ -775,7 +775,7 @@ void Task_PoppyBrosSr(void)
     ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065350;
+    t->drawCallback = (u32)ActorDrawWorldNearViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gPoppyBrosSrFrames;

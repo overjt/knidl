@@ -271,7 +271,7 @@ void ActorFreezeIntoIceBlock(void)
     a->teardown = fn;
 }
 
-void sub_0806a6a0(void)
+void ActorDefeatFrozenCheckFreezerAbility(void)
 {
     if ((u8)(gPlayerStates[gCurTask->actorFreezerPlayer].ability - 13) > 1)
     {
@@ -280,7 +280,7 @@ void sub_0806a6a0(void)
     }
 }
 
-void sub_0806a6e0(void)
+void ActorDefeatFrozenCheckPush(void)
 {
     struct Task *t;
     struct Task *u;
@@ -366,13 +366,13 @@ void ActorDefeatFrozenUpdate(void)
     else if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
-        sub_0806a6e0();
+        ActorDefeatFrozenCheckPush();
         r = ActorReactToHit();
         if (r == 0)
         {
             gCurTask->hitKind = r;
             if (gCurTask->state != ACTOR_DEFEAT_FROZEN_STATE_2)
-                sub_0806a6a0();
+                ActorDefeatFrozenCheckFreezerAbility();
         }
         else
         {
@@ -444,7 +444,7 @@ void ActorDefeatFrozenSlideUpdate(void)
 {
 }
 
-void ActorDefeatFrozenState2(void)
+void ActorDefeatFrozenBurst(void)
 {
     struct Task *t;
     struct Task *u;
@@ -493,17 +493,17 @@ void ActorDefeatExplode(void)
     PlayExplosionAnim();
 }
 
-void ActorExplodeDefeat1(void)
+void ActorExplodeDefeatBurning(void)
 {
     ActorDefeatExplode();
 }
 
-void ActorExplodeDefeat2(void)
+void ActorExplodeDefeatShocked(void)
 {
     ActorDefeatExplode();
 }
 
-void ActorExplodeDefeat3(void)
+void ActorExplodeDefeatFrozen(void)
 {
     ActorDefeatFrozen();
 }

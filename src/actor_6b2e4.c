@@ -7,7 +7,7 @@
  * position integrators ActorAttachedThrowHeldFollowCarrier and ActorAttachedBackdropHeldFollowCarrier that walk the two stride-5
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
  * actor back to the generic task body (ActorAttachedDie), the player-record
- * bookkeeping around gPlayerStates[] (ActorAttachedBindCarrier, ActorAttachedEnterMouth, sub_0806be4c),
+ * bookkeeping around gPlayerStates[] (ActorAttachedBindCarrier, ActorAttachedEnterMouth, ActorAttachedReleaseCarrierSlot),
  * and the class-1 task bodies ActorAttachedSwallow / ActorAttachedBackdropHeld / ActorAttachedBackdropFlight with
  * their per-frame callbacks.
  */
@@ -57,7 +57,7 @@ void ActorDrownSinkUpdate(void)
 {
 }
 
-void ActorDrownState1(void)
+void ActorDrownWait(void)
 {
     gCurTask->updateState = ACTOR_DROWN_STATE_1;
     TaskStop();
@@ -67,13 +67,13 @@ void ActorDrownState1(void)
     TaskSleepForever();
 }
 
-void ActorDrownState1Update(void)
+void ActorDrownWaitUpdate(void)
 {
     if (gCurTask->state != ACTOR_DROWN_STATE_1)
         TaskSetEntry(ActorDrownEnterState, gCurTaskIdx);
 }
 
-void ActorDrownState2(void)
+void ActorDrownBurst(void)
 {
     struct Task *t;
 
@@ -86,7 +86,7 @@ void ActorDrownState2(void)
     ActorDestroy();
 }
 
-void ActorDrownState2Update(void)
+void ActorDrownBurstUpdate(void)
 {
 }
 
@@ -653,7 +653,7 @@ void ActorAttachedEnterMouth(void)
     p->pendingAbilityUses = q;
 }
 
-void sub_0806be4c(u32 i)
+void ActorAttachedReleaseCarrierSlot(u32 i)
 {
     struct Task *s;
     struct Actor *a;
@@ -693,7 +693,7 @@ u8 ActorAttachedCheckScreenAttack(void)
 
     if (gScreenAttackActive == 1)
     {
-        sub_0806be4c(gCurTaskIdx);
+        ActorAttachedReleaseCarrierSlot(gCurTaskIdx);
         t = gCurTask;
         w = t->tileWord;
         m = 0xFFF;

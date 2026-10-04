@@ -202,7 +202,7 @@ u8 KingDededeLand(void)
     case 4:
         t->kingDededeFloatBumpTimer = 4;
         t->onGround = 0;
-        sub_0806d08c(24, 8, 32);
+        CreateLandingDustFacing(24, 8, 32);
         TaskSetFrame(23);
         u = gCurTask;
         TaskSetMotionY(-u->velY, -u->accelY, u->speedLimitY);

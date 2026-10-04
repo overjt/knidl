@@ -2812,7 +2812,7 @@ u32 gUnk_0874C980[] FRAME_TABLE = {
     (u32)gUnk_080D4B50,
 };
 
-/* gUnk_0874C9D8.  Consumers: ActorDefeatFrozenState2 (src/actor_6a344.c:459),
+/* gUnk_0874C9D8.  Consumers: ActorDefeatFrozenBurst (src/actor_6a344.c:459),
  * ActorDefeat4 (src/actor_6a344.c:634), ActorDefeatAbilityStar
  * (src/actor_6a344.c:650) and 5 more.  17 words, OAM template streams;
  * extent: the span to the next label, every word such a target

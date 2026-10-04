@@ -767,7 +767,7 @@ void ActorHitStunLateUpdate(void)
     ActorHitStunShake();
 }
 
-void sub_08069fc8(void)
+void ActorPlayBurstDefeatAnim(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == TASK_GLUNK_SHOT || gTaskSlotTypes[gCurTaskIdx] == TASK_SHOTZO_CANNONBALL
      || gTaskSlotTypes[gCurTaskIdx] == TASK_GIP_STAR)

@@ -932,7 +932,7 @@ void BugzzyDefeat(void)
     gUnk_02007D00[4] = 0;
     if (--gUnk_02007D00[7] == 0)
         EndMidBossFightWithReward();
-    sub_080667c0(1, 63);
+    MidBossStartDefeat(1, 63);
     CreateStarFlash(1, 0, 0);
     TaskStop();
     gCurTask->onGround = 0;

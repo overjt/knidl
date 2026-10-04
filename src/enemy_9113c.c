@@ -379,7 +379,7 @@ void PoppyBrosSrDefeat(void)
     t->updateState = POPPY_BROS_SR_STATE_DEFEAT;
     if (--gUnk_02007D00[0] == 0)
         EndMidBossFightWithReward();
-    sub_080667c0(0, 10);
+    MidBossStartDefeat(0, 10);
     CreateStarFlash(1, 0, 0);
     gCurTask->onGround = 0;
     TaskSetMotionXFacing(0xFFFF0000, 0x5A5A5A5A);

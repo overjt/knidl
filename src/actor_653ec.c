@@ -1239,7 +1239,7 @@ void ArenaDropMaximTomato(void)
         CreateItemAt(2, TASK_MAXIM_TOMATO, 0, 128, 0);
 }
 
-void sub_080667c0(u8 a, u16 b)
+void MidBossStartDefeat(u8 a, u16 b)
 {
     struct Task *t;
     struct Actor *p;
@@ -1250,14 +1250,14 @@ void sub_080667c0(u8 a, u16 b)
     if (t->drawCallback == (u32)ActorDrawStreamedFrameNearView || t->drawCallback == (u32)ActorDrawStreamedFrameNearViewOrDestroy)
         t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     else
-        t->drawCallback = (u32)sub_08065350;
+        t->drawCallback = (u32)ActorDrawWorldNearViewOrDestroy;
     gCurTask->health += gUnk_0873E1B4[gActivePlayerCount - 1];
     p->hitState = 2;
     p->score = 0;
     ActorSetDefaultPalette(a);
     ActorFaceHitter();
     TaskSetFrame((s16)b);
-    sub_0806ae94();
+    MidBossDefeatFlash();
 }
 
 void EndMidBossFightWithReward(void)
@@ -1339,7 +1339,7 @@ void sub_08066988(u32 i)
     if (a->unk04 != 0)
     {
         p = t->player;
-        sub_0806be4c(i);
+        ActorAttachedReleaseCarrierSlot(i);
         t->posX = t->pixelX << 16;
         t->posY = t->pixelY << 16;
         if (a->unk04 != 1)
