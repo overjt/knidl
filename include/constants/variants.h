@@ -424,10 +424,31 @@
 
 /* Mace Knight variants - gMaceKnightVariants[N], CallTableEntry(Task.variant) in sub_0809dc7c */
 #define MACE_KNIGHT_VARIANT_STAND  0
+#define MACE_KNIGHT_VARIANT_WALK   1
+#define MACE_KNIGHT_VARIANT_SWING  2
 
 /* Landing Impact variants - gLandingImpactVariants[N], CallTableEntry(Task.variant) in Task_LandingImpact */
 #define LANDING_IMPACT_VARIANT_CENTER  0
 #define LANDING_IMPACT_VARIANT_LEFT    1
 #define LANDING_IMPACT_VARIANT_RIGHT   2
+
+/* Axe Knight variants - gAxeKnightVariants[N], CallTableEntry(Task.variant) in sub_0809c490 */
+#define AXE_KNIGHT_VARIANT_FALL_IN        0
+#define AXE_KNIGHT_VARIANT_SLASH_LOOP     1
+#define AXE_KNIGHT_VARIANT_WALK_IN_SHORT  2
+#define AXE_KNIGHT_VARIANT_WALK_IN_LONG   3
+
+/* Javelin Knight variants - gJavelinKnightVariants[N], CallTableEntry(Task.variant) in sub_0809d13c */
+#define JAVELIN_KNIGHT_VARIANT_INIT    0
+#define JAVELIN_KNIGHT_VARIANT_BOUNCE  1
+
+/* Mace Knight Mace variants - gMaceKnightMaceVariants[N], CallTableEntry(Task.variant) in Task_MaceKnightMace */
+#define MACE_KNIGHT_MACE_VARIANT_SWING  2
+
+/* Trident Knight variants - gTridentKnightVariants[N], CallTableEntry(Task.variant) in sub_0809e824 */
+#define TRIDENT_KNIGHT_VARIANT_FALL_IN        0
+#define TRIDENT_KNIGHT_VARIANT_STAND          1
+#define TRIDENT_KNIGHT_VARIANT_WALK_IN_SHORT  2
+#define TRIDENT_KNIGHT_VARIANT_WALK_IN_LONG   3
 
 #endif // GUARD_CONSTANTS_VARIANTS_H

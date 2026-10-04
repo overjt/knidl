@@ -1604,17 +1604,17 @@ void Task_MetaKnightSword(void)
     case 0:
         t->layer = 12;
         gCurTask->updateCallback = (u32)MetaKnightSwordPickUpUpdate;
-        ActorSetState(0);
+        ActorSetState(META_KNIGHT_SWORD_STATE_FALL);
         break;
     case 1:
         t->layer = 3;
         gCurTask->updateCallback = (u32)sub_080ac82c;
-        ActorSetState(1);
+        ActorSetState(META_KNIGHT_SWORD_STATE_1);
         break;
     case 2:
         t->layer = 12;
         gCurTask->updateCallback = (u32)sub_080ac84c;
-        ActorSetState(2);
+        ActorSetState(META_KNIGHT_SWORD_STATE_2);
         break;
     }
     CallTableEntry(gCurTask->state, 3, gMetaKnightSwordStates);
@@ -1677,7 +1677,7 @@ void MetaKnightSwordFall(void)
     s32 w;
     u8 v74;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = META_KNIGHT_SWORD_STATE_FALL;
     TaskSetMotionY(0, 168 << 5, 192 << 10);
     gCurTask->metaKnightSwordLanded = 0;
     gCurTask->onGround = 0;
@@ -1723,7 +1723,7 @@ void sub_080ac950(void)
 {
     s32 w;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = META_KNIGHT_SWORD_STATE_1;
     if (abs(TaskGetNearestPlayerDx()) <= 15)
     {
         TaskGetNearestPlayerScreenPos();
@@ -1762,7 +1762,7 @@ void sub_080aca38(void)
 
 void sub_080aca3c(void)
 {
-    gCurTask->updateState = 2;
+    gCurTask->updateState = META_KNIGHT_SWORD_STATE_2;
     gCurTask->frame = 35;
     TaskYieldTrampoline(216);
     TaskExitTrampoline();

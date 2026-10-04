@@ -1064,4 +1064,9 @@
 #define TWIZZY_HOP_TO_CHASE_STATE_TAKE_OFF    4
 #define TWIZZY_HOP_TO_CHASE_STATE_FALL        5
 
+/* MetaKnightSword states - gMetaKnightSwordStates[N], CallTableEntry(Task.state) in Task_MetaKnightSword */
+#define META_KNIGHT_SWORD_STATE_FALL  0
+#define META_KNIGHT_SWORD_STATE_1     1
+#define META_KNIGHT_SWORD_STATE_2     2
+
 #endif // GUARD_CONSTANTS_STATES_H
