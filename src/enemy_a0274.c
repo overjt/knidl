@@ -536,7 +536,7 @@ void KingDededeState0(void)
     t->updateState = z;
     TaskStop();
     ActorCollideTerrain();
-    sub_080666f8(gUnk_08748384);
+    ActorIntroPoseUntilScrollLocked(gUnk_08748384);
     ActorIntroPoseUntilHpBarFull(gUnk_08748384);
     sub_08063a00((u32)gUnk_08748820);
     gCurTask->unk2C = z;
@@ -1108,7 +1108,7 @@ void sub_080a150c(void)
     struct Task *t;
 
     t = gCurTask;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->updateCallback = (u32)sub_080a1550;
     t->frameTable = gKingDededeFrames;
     TaskFaceNearestPlayer();

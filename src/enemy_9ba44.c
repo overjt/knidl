@@ -20,7 +20,7 @@ extern void TaskSetEntry(void *fn, s32 i);
 extern void ActorSetState(u16 v);
 extern s32 CreateActor(u8 cls, u32 sub, u32 type, u8 p3, u8 p4, int x, int y, u32 prio);
 extern u32 ActorCheckHits(void);
-extern u8 sub_0806951c(void);
+extern u8 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorReactToHit(void);
 
 void MrTickTockNoteInit(void)
@@ -35,7 +35,7 @@ void MrTickTockNoteInit(void)
 
 void MrTickTockNoteUpdate(void)
 {
-    if (sub_0806951c() == 0)
+    if (ActorCollideTerrainAlongVelocity() == 0)
     {
         CallTableEntry(gCurTask->updateState, 2, gMrTickTockNoteStateUpdates);
     }

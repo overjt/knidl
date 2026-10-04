@@ -49,7 +49,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
@@ -76,11 +76,11 @@ void KrackoJrTransformUpdate(void)
             gUnk_02007D00[0] = 4;
             gCurTask->krackoJrPhase++;
         }
-        sub_08066718();
+        BossCheckScrollLock();
         break;
     case 1:
         gCurTask->posY = (gViewRect[2] - 62) << 16;
-        if (sub_08066718() == 1)
+        if (BossCheckScrollLock() == 1)
             gCurTask->krackoJrPhase++;
         break;
     case 2:

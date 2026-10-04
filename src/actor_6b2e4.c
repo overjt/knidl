@@ -4,7 +4,7 @@
  *   ./tools/fnmatch.sh 0x0806B2E4 0x0806C2A4 src/actor_6b2e4.c --newpb
  *
  * The "carried by / riding on another task" movement block: the per-frame
- * position integrators sub_0806b410 and sub_0806b670 that walk the two stride-5
+ * position integrators ActorAttachedThrowHeldFollowCarrier and ActorAttachedBackdropHeldFollowCarrier that walk the two stride-5
  * offset tables at 0x0873E7C4 / 0x0873E864, the handover helpers that hand the
  * actor back to the generic task body (ActorAttachedDie), the player-record
  * bookkeeping around gPlayerStates[] (ActorAttachedBindCarrier, ActorAttachedEnterMouth, sub_0806be4c),
@@ -111,7 +111,7 @@ void sub_0806b40c(void)
 {
 }
 
-void sub_0806b410(void)
+void ActorAttachedThrowHeldFollowCarrier(void)
 {
     struct Task *t;
     struct Task *u;
@@ -199,7 +199,7 @@ void sub_0806b410(void)
     gCurTask->layer = b;
 }
 
-void sub_0806b670(void)
+void ActorAttachedBackdropHeldFollowCarrier(void)
 {
     struct Task *t;
     struct Task *u;
@@ -276,7 +276,7 @@ void sub_0806b670(void)
     }
 }
 
-void sub_0806b848(void)
+void ActorAttachedHeldAddPlayerOffset(void)
 {
     struct Task *t;
     struct PlayerState *p;
@@ -333,7 +333,7 @@ void ActorAttachedDie(void)
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_0806b938(void)
+void ActorAttachedDieUnlessInhaling(void)
 {
     struct PlayerState *p;
     u8 z;
@@ -393,7 +393,7 @@ void ActorAttachedBindCarrier(void)
     u->actorCarrierFacing = s->facing;
 }
 
-void sub_0806ba34(void)
+void ActorAttachedReloadPalette(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -406,7 +406,7 @@ void sub_0806ba34(void)
     v = t->tileWord;
     z = v >> 12;
     if (a->palette != 0)
-        sub_08065d44(z, t->u76.subtype, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
+        LoadActorPaletteVariant(z, t->u76.subtype, a->paletteVariant, a->paletteColorCount, t->actorKind, a->palette);
     else if (t->actorKind == 0 || t->actorKind == 3)
     {
         m = 0xFFF;
@@ -460,7 +460,7 @@ void sub_0806bb34(s32 a)
 s32 ActorAttachToHitter(void)
 {
     ActorAttachedBindCarrier();
-    sub_0806ba34();
+    ActorAttachedReloadPalette();
     switch (gCurTask->hitEffect)
     {
     case 1:
@@ -780,7 +780,7 @@ void ActorAttachedSwallowLateUpdate(void)
         return;
     if (ActorAttachedCheckScreenAttack() != 0)
         return;
-    sub_0806b938();
+    ActorAttachedDieUnlessInhaling();
     ActorAttachedRestorePalette();
 }
 
@@ -816,7 +816,7 @@ void ActorAttachedBackdropHeldUpdate(void)
     if (t->actorMouthFull == 1)
         ActorAttachedDie();
     else
-        sub_0806b670();
+        ActorAttachedBackdropHeldFollowCarrier();
     ActorAttachedRestorePalette();
     u = gCurTask;
     if (u->actorKind == 1)
@@ -827,7 +827,7 @@ void ActorAttachedBackdropHeldUpdate(void)
 
 void ActorAttachedBackdropHeldLateUpdate(void)
 {
-    sub_0806b848();
+    ActorAttachedHeldAddPlayerOffset();
     ActorAttachedCheckScreenAttack();
 }
 

@@ -21,7 +21,7 @@ extern s32 gUnk_02006190[];
 extern s32 gUnk_02007D00[];
 extern s8 gPaletteAnimRefCounts[];
 extern u8 gHudHpBarFilled;
-extern u8 gUnk_0200B030;
+extern u8 gMidBossDropsIn;
 extern struct PlayerState gPlayerStates[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
@@ -101,15 +101,15 @@ extern s32 sub_0806505c(u8 p3, u8 p4, u32 x, u32 y, u16 prio);
 extern u8 ActorIsInView(void);
 extern void ActorDrawWorldInView(void);
 extern void ActorDrawWorldInViewOrDestroy(void);
-extern void sub_080653ec(void);
-extern void sub_08065438(void);
+extern void ActorDrawStreamedFrameNearViewOrDestroy(void);
+extern void ActorDrawStreamedFrameNearView(void);
 extern void ActorDrawWorldInViewOrDestroyWithExtra(void);
 extern void ActorMove(void);
 extern void TaskMoveRelativeToView(void);
 extern void ResetBgPaletteBlend(void);
 extern void EndBgPaletteBlend(u32 v);
 extern void StartBgPaletteBlend(u32 a, u32 b);
-extern void sub_08065dbc(u32 slot, u32 sub);
+extern void LoadEnemyPaletteVariant(u32 slot, u32 sub);
 extern void sub_08065dd0(u32 slot, u32 i);
 extern void sub_08065dfc(u32 slot);
 extern u8 TaskHasSameSerial(u32 i);
@@ -118,18 +118,18 @@ extern u16 ActorInitBossGfx(u32 mode);
 extern void sub_08066144(void);
 extern void BossStartHitStun(u32 p0, u32 p1, u32 p2, u16 p3, u8 p4);
 extern void BossEndHitStun(void);
-extern s32 sub_08066394(void);
+extern s32 GetLivingActivePlayerHealth(void);
 extern void ActorIntroPoseUntilHpBarFull(struct AnimCmd *p);
 extern void sub_08066544(void);
 extern void ActorResetAttackBox(void);
 extern void sub_08066580(void);
-extern u16 sub_0806660c(u16 a);
-extern u16 sub_08066630(u16 a);
-extern void sub_080666f8(struct AnimCmd *p);
-extern u32 sub_08066718(void);
+extern u16 ActorGetGfxTileWordPalOffset(u16 a);
+extern u16 ActorGetTileWordPalOffset(u16 a);
+extern void ActorIntroPoseUntilScrollLocked(struct AnimCmd *p);
+extern u32 BossCheckScrollLock(void);
 extern void ActorLoadPalette(void *src, u32 size, u8 force);
-extern u8 sub_08066a6c(void);
-extern void sub_08066f50(s32 x, s32 y);
+extern u8 ActorIsInNearView(void);
+extern void CreateNextRoomWarpStar(s32 x, s32 y);
 extern void CreateStarRodPiece(u8 p3, s16 x, s16 y);
 extern void CreateRoomStarRodPiece(void);
 extern void FreezeStage(u16 a);
@@ -144,18 +144,18 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
-extern u32 sub_0806956c(void);
-extern u32 sub_080695bc(void);
-extern u32 sub_080696a0(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
+extern u32 ActorCollideTerrainCeilingAndFloor(void);
+extern u32 ActorCollideTerrainWalls(void);
+extern u32 ActorCollideTerrainInCameraBounds(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
-extern u32 sub_08069b84(void);
-extern u32 sub_08069bbc(void);
+extern u32 ActorReactToHitOrTerrainDamage(void);
+extern u32 PickupReactToHit(void);
 extern u32 ActorReactToDefeat(void);
 extern void ActorDie(void);
-extern void sub_0806b05c(void);
-extern void sub_0806b098(void);
+extern void BossDefeatFlash(void);
+extern void BossDefeatExplode(void);
 extern s16 CreateStarFlash(u8 kind, s32 dx, s32 dy);
 extern s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 extern void CreateBurstEffect(u32 a, s32 b);
@@ -367,7 +367,7 @@ void sub_080a18d4(void)
     TaskYieldTrampoline(24);
     TaskYieldTrampoline(60);
     gCurTask->updateCallback = 0;
-    sub_08025a30();
+    ExitKingDededeStage();
     TaskSleepForever();
 }
 
@@ -1364,7 +1364,7 @@ void CreateMrBrightFireball(void)
     sp.spawnArg = 0;
     sp.x = 24;
     sp.y = 0;
-    sp.tileWord = sub_0806660c(1);
+    sp.tileWord = ActorGetGfxTileWordPalOffset(1);
     sp.checkTerrain = 1;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
     PlaySfx(0x227);
@@ -1381,7 +1381,7 @@ void CreateMrBrightBeam(void)
     sp.spawnArg = 0;
     sp.x = 0;
     sp.y = 64;
-    sp.tileWord = sub_0806660c(2);
+    sp.tileWord = ActorGetGfxTileWordPalOffset(2);
     sp.checkTerrain = 0;
     gUnk_02006040[0] = CreateActorFromDesc(&sp, 1);
     gUnk_02006040[6] = PlaySfx(0x216);
@@ -1393,21 +1393,21 @@ void CreateMrBrightBeamEffects(void)
     s32 r;
     struct Task *t;
 
-    r = CreateChildTask(193, 0, 96, (u16)sub_0806660c(2));
+    r = CreateChildTask(193, 0, 96, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[3] = r;
     if (r != -1)
     {
         t = &gTasks[r];
         t->variant = 0;
     }
-    r = CreateChildTask(193, 0, 16, (u16)sub_0806660c(2));
+    r = CreateChildTask(193, 0, 16, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[1] = r;
     if (r != -1)
     {
         t = &gTasks[r];
         t->variant = 1;
     }
-    r = CreateChildTask(193, 0, 8, (u16)sub_0806660c(2));
+    r = CreateChildTask(193, 0, 8, (u16)ActorGetGfxTileWordPalOffset(2));
     gUnk_02006040[2] = r;
     if (r != -1)
     {
@@ -2757,7 +2757,7 @@ void sub_080a488c(void)
     u32 dst;
     u32 x;
 
-    if ((u8)sub_08066a6c() != 0 && TaskIsOnScreen() != 0)
+    if ((u8)ActorIsInNearView() != 0 && TaskIsOnScreen() != 0)
     {
         t = gCurTask;
         x = t->tileWord;
@@ -2970,7 +2970,7 @@ void MrShineCrescentInit(void)
 /* MrShineCrescentUpdate (0x080A4D00-0x080A4D6C) */
 void MrShineCrescentUpdate(void)
 {
-    if ((u8)sub_080695bc() != 0)
+    if ((u8)ActorCollideTerrainWalls() != 0)
     {
         ActorSetState(1);
         TaskSetEntry(MrShineCrescentEnterState, gCurTaskIdx);
@@ -3146,7 +3146,7 @@ void MrBrightFireballInit(void)
 /* MrBrightFireballUpdate (0x080A5084-0x080A50F0) */
 void MrBrightFireballUpdate(void)
 {
-    if ((u8)sub_080695bc() != 0)
+    if ((u8)ActorCollideTerrainWalls() != 0)
     {
         ActorSetState(1);
         TaskSetEntry(MrBrightFireballEnterState, gCurTaskIdx);
@@ -3502,7 +3502,7 @@ void Task_MetaKnight(void)
     sub_08066144();
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_080653ec;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     t->layer = 11;
     gCurTask->frameTable = gMetaKnightFrames;
     sub_08063a00((u32)gUnk_087495EC);

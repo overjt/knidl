@@ -37,7 +37,7 @@ struct MusicPlayerTrack;
 
 /* src/early_3110.c */
 s32 PlayBgm(s32 songId);
-void sub_08003184(void);
+void ResetBgmPlayer(void);
 s32 GetCurrentBgm(void);
 
 /* src/early_3484.c */

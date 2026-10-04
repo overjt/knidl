@@ -5,7 +5,7 @@
  *
  * Actor drawing and per-frame upkeep: OAM priority/palette packing
  * (ActorInitBossGfx), graphics upload out of the Task.frameTable descriptor table
- * (ActorFlashPalette/sub_08066A94), the per-task update sweep (sub_080668C8), and
+ * (ActorFlashPalette/ActorSetDefaultPalette), the per-task update sweep (BossDefeatSweep), and
  * the class-2/class-4 task bodies that drive them.
  */
 #include "gba/gba.h"
@@ -47,7 +47,7 @@ extern void BlendColors(u32 a, u32 b, u32 c, u32 d, u32 e);
 s16 ActorComputeHealthSlot(u32 i);
 void ActorDropParasol(u32 def, u8 b);
 
-void sub_080653ec(void)
+void ActorDrawStreamedFrameNearViewOrDestroy(void)
 {
     struct Task *p;
 
@@ -56,20 +56,20 @@ void sub_080653ec(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() != 0)
+    if (ActorIsInNearView() != 0)
     {
         if (TaskIsOnScreen() == 0)
             return;
         ActorDrawStreamedFrame();
     }
-    else if (sub_08066a80() != 0)
+    else if (ActorIsInFarView() != 0)
     {
         HudRemoveHpBar();
         ActorDestroy();
     }
 }
 
-void sub_08065438(void)
+void ActorDrawStreamedFrameNearView(void)
 {
     struct Task *p;
 
@@ -78,7 +78,7 @@ void sub_08065438(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() == 0)
+    if (ActorIsInNearView() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
@@ -164,7 +164,7 @@ void ActorDrawWorldInViewOrDestroyWithExtra(void)
     }
 }
 
-void sub_0806567c(void)
+void ActorDrawSpriteAndExtraInView(void)
 {
     struct Task *p;
 
@@ -539,7 +539,7 @@ void PaletteAnimBgBlend(void)
 }
 
 /* Point the actor at the palette its class/sub/level combination wants. */
-void sub_08065ce0(u32 i)
+void ActorSelectPaletteVariant(u32 i)
 {
     struct Task *t;
     struct Actor *a;
@@ -553,10 +553,10 @@ void sub_08065ce0(u32 i)
     switch (t->actorKind)
     {
     case 0:
-        tbl = gUnk_0873EF74[t->u76.subtype];
+        tbl = gEnemyPaletteVariants[t->u76.subtype];
         break;
     case 1:
-        tbl = gUnk_0873F118[t->u76.subtype];
+        tbl = gMidBossPaletteVariants[t->u76.subtype];
         break;
     default:
         tbl = NULL;
@@ -583,7 +583,7 @@ void sub_08065ce0(u32 i)
    the ROM's register use. */
 /* Copy one palette bank out of the class/sub/level palette tables.
    `sub` is reused as the table pointer, matching the ROM's register use. */
-void sub_08065d44(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
+void LoadActorPaletteVariant(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
 {
     u32 off;
     u32 k;
@@ -593,10 +593,10 @@ void sub_08065d44(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
     switch (kind)
     {
     case 0:
-        sub = (u32)gUnk_0873EF74[sub];
+        sub = (u32)gEnemyPaletteVariants[sub];
         break;
     case 1:
-        sub = (u32)gUnk_0873F118[sub];
+        sub = (u32)gMidBossPaletteVariants[sub];
         break;
     default:
         sub = 0;
@@ -627,9 +627,9 @@ void sub_08065d44(u32 slot, u32 sub, u32 level, u32 n, u8 kind, u32 src)
     RequestCopy(2, p, (u32)(gObjPalette + slot), n << 1);
 }
 
-void sub_08065dbc(u32 slot, u32 sub, u32 level)
+void LoadEnemyPaletteVariant(u32 slot, u32 sub, u32 level)
 {
-    sub_08065d44(slot, sub, level, 0, 0, 0);
+    LoadActorPaletteVariant(slot, sub, level, 0, 0, 0);
 }
 
 void sub_08065dd0(u32 slot, u32 i)
@@ -697,7 +697,7 @@ void LockAllActorPalettes(void)
     }
 }
 
-void sub_08065ed0(void)
+void ClearActorPaletteOverrides(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -807,7 +807,7 @@ u32 *sub_0806601c(void)
         r = gUnk_0873F0C4[t->u76.subtype];
         if (a->paletteVariant != 0)
         {
-            tbl = gUnk_0873F118[t->u76.subtype];
+            tbl = gMidBossPaletteVariants[t->u76.subtype];
             if (tbl != NULL)
             {
                 k = a->paletteVariant - 1;
@@ -988,7 +988,7 @@ u8 AreAllPlayersOnGround(void)
     return 0;
 }
 
-s32 sub_08066394(void)
+s32 GetLivingActivePlayerHealth(void)
 {
     s32 i;
     s32 v;
@@ -1128,12 +1128,12 @@ void ActorShowHpBar(void)
     }
 }
 
-u16 sub_080665fc(void)
+u16 ActorGetGfxTileWord(void)
 {
-    return sub_0806660c(0);
+    return ActorGetGfxTileWordPalOffset(0);
 }
 
-u16 sub_0806660c(u16 a)
+u16 ActorGetGfxTileWordPalOffset(u16 a)
 {
     struct Actor *p;
 
@@ -1141,7 +1141,7 @@ u16 sub_0806660c(u16 a)
     return ((a + p->gfx.paletteBank) << 12) | p->gfx.tileBits;
 }
 
-u16 sub_08066630(u16 a)
+u16 ActorGetTileWordPalOffset(u16 a)
 {
     struct Task *t;
     u16 v;
@@ -1185,37 +1185,37 @@ void ActorEndIntroPose(void)
     t->actorSavedUpdateCallback = 0;
 }
 
-void sub_080666cc(struct AnimCmd *p)
+void ActorIntroPoseUntilMidBossFight(struct AnimCmd *p)
 {
     ActorStartIntroPose(p);
-    if (gUnk_0200D080 == 0)
+    if (gMidBossFightState == 0)
     {
         do
         {
             TaskYieldTrampoline(1);
-        } while (gUnk_0200D080 == 0);
+        } while (gMidBossFightState == 0);
     }
     ActorEndIntroPose();
 }
 
-void sub_080666f8(struct AnimCmd *p)
+void ActorIntroPoseUntilScrollLocked(struct AnimCmd *p)
 {
     ActorStartIntroPose(p);
-    while (sub_08066718() == 0)
+    while (BossCheckScrollLock() == 0)
         TaskYieldTrampoline(1);
     ActorEndIntroPose();
 }
 
-u32 sub_08066718(void)
+u32 BossCheckScrollLock(void)
 {
     switch (gCurTask->u76.subtype)
     {
     case 5:
-        return sub_08026a0c();
+        return WhispyWoodsCheckScrollLock();
     case 6:
-        return sub_08026a80();
+        return KrackoCheckScrollLock();
     case 0:
-        return sub_08026aec();
+        return KingDededeCheckScrollLock();
     }
     return 0;
 }
@@ -1247,14 +1247,14 @@ void sub_080667c0(u8 a, u16 b)
     p = gCurTask->u8C.actor;
     HudRemoveHpBar();
     t = gCurTask;
-    if (t->drawCallback == (u32)sub_08065438 || t->drawCallback == (u32)sub_080653ec)
-        t->drawCallback = (u32)sub_080653ec;
+    if (t->drawCallback == (u32)ActorDrawStreamedFrameNearView || t->drawCallback == (u32)ActorDrawStreamedFrameNearViewOrDestroy)
+        t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     else
         t->drawCallback = (u32)sub_08065350;
     gCurTask->health += gUnk_0873E1B4[gActivePlayerCount - 1];
     p->hitState = 2;
     p->score = 0;
-    sub_08066a94(a);
+    ActorSetDefaultPalette(a);
     ActorFaceHitter();
     TaskSetFrame((s16)b);
     sub_0806ae94();
@@ -1262,7 +1262,7 @@ void sub_080667c0(u8 a, u16 b)
 
 void sub_0806684c(void)
 {
-    sub_080262dc();
+    EndMidBossFight();
     sub_08066798();
 }
 
@@ -1283,7 +1283,7 @@ void ActorLoadPalette(void *src, u32 size, u8 force)
 }
 
 /* Retire every other live task the running one is allowed to clean up. */
-void sub_080668c8(void)
+void BossDefeatSweep(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -1369,17 +1369,17 @@ u8 ActorIsInViewMargin(s16 dx, u16 dy)
     return 0;
 }
 
-u8 sub_08066a6c(void)
+u8 ActorIsInNearView(void)
 {
     return ActorIsInViewMargin(80, 40);
 }
 
-u8 sub_08066a80(void)
+u8 ActorIsInFarView(void)
 {
     return ActorIsInViewMargin(360, 240);
 }
 
-void sub_08066a94(u8 mode)
+void ActorSetDefaultPalette(u8 mode)
 {
     struct Task *t;
     struct Actor *a;
@@ -1657,7 +1657,7 @@ void CreateDroppedParasol(u8 a)
     }
 }
 
-void sub_08066f50(s32 x, s32 y)
+void CreateNextRoomWarpStar(s32 x, s32 y)
 {
     CreateWarpStar(x - gViewRect[0], y - gViewRect[2], 23);
     PlayBgm(1);
@@ -1701,9 +1701,9 @@ void CreateRoomStarRodPiece(void)
     CreateStarRodPiece(0, 128, 104);
 }
 
-u8 sub_08067060(void)
+u8 IsMidBossDroppingIn(void)
 {
-    if (gUnk_0200B030 == 0)
+    if (gMidBossDropsIn == 0)
         return 0;
     return 1;
 }
@@ -1774,7 +1774,7 @@ s32 CreateInhalableStar(s16 x, s16 y, u16 dir, u8 p8)
     return i;
 }
 
-void sub_08067170(void)
+void InhalableStarInitVariant(void)
 {
     s32 v;
 
@@ -1804,7 +1804,7 @@ void Task_InhalableStar(void)
     t = gCurTask;
     t->frameTable = gInhalableStarFrames;
     t->updateCallback = (u32)InhalableStarUpdate;
-    sub_08067170();
+    InhalableStarInitVariant();
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 1, gInhalableStarStates);
 }

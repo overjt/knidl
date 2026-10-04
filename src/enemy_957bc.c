@@ -37,14 +37,14 @@ void Task_FireLion(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     gCurTask->frameTable = gFireLionFrames;
     gUnk_02007D00[8]++;
     sub_08095834();
     ActorCollideTerrain();
-    sub_080666cc(gUnk_08744510);
-    if (sub_08067060() != 0) {
+    ActorIntroPoseUntilMidBossFight(gUnk_08744510);
+    if (IsMidBossDroppingIn() != 0) {
         gCurTask->updateCallback = (u32)sub_0809699c;
         sub_0809595c();
     } else {

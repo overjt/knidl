@@ -394,7 +394,7 @@ void Task_MrTickTock(void)
     TaskFaceNearestPlayer();
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     zero = 0;
     u = gCurTask;
@@ -402,7 +402,7 @@ void Task_MrTickTock(void)
     gUnk_02007D00[0]++;
     u->mrTickTockFlashEnabled = 1;
     u->actorDustTrailSlot = zero;
-    sub_080666cc(gUnk_08745744);
+    ActorIntroPoseUntilMidBossFight(gUnk_08745744);
     sub_08066ae0();
     CallTableEntry(gCurTask->variant, 1, gMrTickTockVariants);
 }
@@ -415,7 +415,7 @@ void MrTickTockInit(void)
 
     t = gCurTask;
     t->updateCallback = (u32)MrTickTockUpdate;
-    if (sub_08067060() != 0)
+    if (IsMidBossDroppingIn() != 0)
     {
         u = gCurTask;
         u->mrTickTockCollideTerrain = 0;

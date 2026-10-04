@@ -1192,7 +1192,7 @@ void MetaKnightActionDie(void)
     q[13] = 0;
     PlayerStopAxes(3);
     gCurTask->layer = 4;
-    sub_080276ac(gCurTask->player->playerIndex);
+    HoldPlayerCamera(gCurTask->player->playerIndex);
     StopAllSfx();
     StopAllSound();
     gPauseDisabled = 1;
@@ -1358,7 +1358,7 @@ void MetaKnightActionExitDoor(void)
     gCurTask->frame = -1;
     if (gEntryDoorEvent == 1)
     {
-        ((void (*)(void))sub_08027a60)();
+        ((void (*)(void))CameraResumeFollowFocus)();
         a = ((s32 (*)(void))CreateEntryDoorStageClearFlag)();
         TaskYieldTrampoline(1);
         sub_08026704(a);
@@ -1392,7 +1392,7 @@ void MetaKnightActionExitDoor(void)
         CreateStageUnlockPan();
         while (gCameraPanDone == 0)
             TaskYieldTrampoline(1);
-        ((void (*)(void))sub_08027a60)();
+        ((void (*)(void))CameraResumeFollowFocus)();
         TaskSetSkipMask(0, gCurTaskIdx);
     }
     gCurTask->spriteFlags = 0x4000;

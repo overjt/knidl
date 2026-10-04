@@ -5,7 +5,7 @@
  *
  * The first of M25's four boss scripts, dispatched through the 23-entry
  * anchor table at 0x08743848.  Task_Bonkers is the task entry: it installs
- * ActorMove as the draw hook (Task.moveCallback) and sub_08065438 as the
+ * ActorMove as the draw hook (Task.moveCallback) and ActorDrawStreamedFrameNearView as the
  * per-frame hook (Task.drawCallback), points Task.frameTable at the graphics block
  * gBonkersFrames, counts the boss into gUnk_02007D00[0], spawns its helper
  * task with CreateChildTaskHere(177, 1) and hands Task.variant to CallTableEntry, which
@@ -67,13 +67,13 @@ void Task_Bonkers(void)
     ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gBonkersFrames;
     gUnk_02007D00[0]++;
     gCurTask->bonkersHammerHitBoxSlot = CreateChildTaskHere(177, 1);
-    if (sub_08067060() == 1)
+    if (IsMidBossDroppingIn() == 1)
         gCurTask->bonkersIgnoreTerrainTimer = 24;
     else
         gCurTask->bonkersIgnoreTerrainTimer = 0;
@@ -91,7 +91,7 @@ void BonkersInit(void)
     t->bonkersSlamsLeft = 2;
     t->bonkersFlashing = 0;
     t->bonkersDefeatPhase = 0;
-    sub_080666cc(gUnk_08743758);
+    ActorIntroPoseUntilMidBossFight(gUnk_08743758);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 11, gBonkersStates);
 }
@@ -147,7 +147,7 @@ void BonkersState0(void)
     t = gCurTask;
     zero = 0;
     t->updateState = zero;
-    if (sub_08067060() == 1)
+    if (IsMidBossDroppingIn() == 1)
     {
         gCurTask->onGround = zero;
         TaskSetFrame(13);
@@ -780,7 +780,7 @@ void Task_PoppyBrosSr(void)
     u = gCurTask;
     u->frameTable = gPoppyBrosSrFrames;
     gUnk_02007D00[0]++;
-    if (sub_08067060() == 1)
+    if (IsMidBossDroppingIn() == 1)
         gCurTask->poppyBrosSrIgnoreTerrainTimer = 24;
     else
         gCurTask->poppyBrosSrIgnoreTerrainTimer = 0;

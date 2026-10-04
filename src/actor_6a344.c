@@ -551,7 +551,7 @@ void ActorDefeat2(void)
     u = gCurTask;
     zb = 0;
     u->health = 127;
-    u->updateCallback = (u32)sub_0806aba4;
+    u->updateCallback = (u32)ActorDefeat2Update;
     a->attackBox = (u32)&gUnk_0873F6E8;
     u->u80.attackAbility = zb;
     v = gCurTask;
@@ -562,7 +562,7 @@ void ActorDefeat2(void)
     PlayExplosionAnim();
 }
 
-void sub_0806aba4(void)
+void ActorDefeat2Update(void)
 {
     struct Task *u;
 
@@ -591,7 +591,7 @@ void ActorDefeat3(void)
     gCurTask->taskClass = 1;
     u = gCurTask;
     u->health = 127;
-    u->updateCallback = (u32)sub_0806ac48;
+    u->updateCallback = (u32)ActorDefeat3Update;
     a->attackBox = (u32)&gUnk_0873F704;
     u->actorExplosionTimer = zero;
     RequestScreenShake(2);
@@ -599,7 +599,7 @@ void ActorDefeat3(void)
     PlayExplosionAnim();
 }
 
-void sub_0806ac48(void)
+void ActorDefeat3Update(void)
 {
     struct Task *u;
 
@@ -628,7 +628,7 @@ void ActorDefeat4(void)
     u = gCurTask;
     u->health = 127;
     zero = 0;
-    u->updateCallback = (u32)sub_0806acc4;
+    u->updateCallback = (u32)ActorDefeat4Update;
     ActorPlaySfx(109, 0);
     v = gCurTask;
     v->frameTable = gUnk_0874C9D8;
@@ -636,7 +636,7 @@ void ActorDefeat4(void)
     PlayRayBurstAnim();
 }
 
-void sub_0806acc4(void)
+void ActorDefeat4Update(void)
 {
 }
 

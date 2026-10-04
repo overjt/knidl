@@ -9,7 +9,7 @@
  * order.
  *
  * - struct ActorHandlers (7 words) is what Actor.terrainHandlers points at:
- *   ActorCollideTerrain, sub_080696a0 and ActorCollideTerrainFloor (src/actor_692fc.c)
+ *   ActorCollideTerrain, ActorCollideTerrainInCameraBounds and ActorCollideTerrainFloor (src/actor_692fc.c)
  *   read all seven entries and call the first that claims the frame.
  * - struct ActorVt (12 bytes) is what Actor.hitReactions points at:
  *   ActorReactToDamage and ActorReactToDefeat (src/actor_692fc.c) read the

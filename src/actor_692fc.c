@@ -7,10 +7,10 @@
  * (0x080694E0-0x080696A0) snapshot the current task's directional state into a
  * 6-byte stack record (ActorGetTerrainBox) and hand it to one of the input decoders
  * at 0x0801BCAC..0x0801C3A4; the three big dispatchers (ActorCollideTerrain,
- * sub_080696a0, ActorCollideTerrainFloor) then walk the actor's seven-entry handler table
+ * ActorCollideTerrainInCameraBounds, ActorCollideTerrainFloor) then walk the actor's seven-entry handler table
  * at Actor.terrainHandlers, calling the first handler that claims the frame.  The tail
  * of the module is the class-1 "carried" task body: state machine entry
- * points (ActorReactToHitKind/sub_08069bbc), the ActorPlayHitSfx sound dispatcher and
+ * points (ActorReactToHitKind/PickupReactToHit), the ActorPlayHitSfx sound dispatcher and
  * the ActorStartHitStun/ActorEndHitStun push/pop of the actor's transform.
  */
 #include "gba/gba.h"
@@ -166,7 +166,7 @@ u32 sub_080694e0(void)
     sub_0802205c(&v);
 }
 
-u32 sub_0806951c(void)
+u32 ActorCollideTerrainAlongVelocity(void)
 {
     struct InputState v;
     u32 r;
@@ -184,7 +184,7 @@ u32 sub_0806951c(void)
     return 0;
 }
 
-u32 sub_0806956c(void)
+u32 ActorCollideTerrainCeilingAndFloor(void)
 {
     struct InputState v;
     u32 r;
@@ -202,7 +202,7 @@ u32 sub_0806956c(void)
     return 0;
 }
 
-u32 sub_080695bc(void)
+u32 ActorCollideTerrainWalls(void)
 {
     struct InputState v;
     u32 r;
@@ -252,7 +252,7 @@ u32 ActorCollideTerrainPointStop(void)
     return r;
 }
 
-u32 sub_080696a0(void)
+u32 ActorCollideTerrainInCameraBounds(void)
 {
     struct Task *t;
     struct Task *u;
@@ -469,7 +469,7 @@ void ActorGetTerrainBox(struct InputState *out)
     }
 }
 
-void sub_08069ac4(s32 i)
+void ActorInitTerrainFlagsSlot(s32 i)
 {
     struct Task *t;
 
@@ -513,14 +513,14 @@ u32 ActorReactToHit(void)
     return ActorReactToHitKind(gCurTask->hitKind);
 }
 
-u32 sub_08069b84(void)
+u32 ActorReactToHitOrTerrainDamage(void)
 {
     if (gTaskSlotTypes[gCurTaskIdx] == -1)
         return 0;
-    return ActorReactToHitKind(sub_08069c48());
+    return ActorReactToHitKind(ActorHitKindWithTerrainDamage());
 }
 
-u32 sub_08069bbc(void)
+u32 PickupReactToHit(void)
 {
     u32 r;
 
@@ -551,7 +551,7 @@ u32 sub_08069bbc(void)
     return r;
 }
 
-s8 sub_08069c48(void)
+s8 ActorHitKindWithTerrainDamage(void)
 {
     struct Task *t;
     u8 *g;
@@ -852,7 +852,7 @@ void ActorStartDrown(s32 a)
 }
 
 /* No return value: the ROM's epilogue is `pop {r0}; bx r0`.  Its caller
-   sub_08069bbc nevertheless propagates whatever r0 holds - see the comment
+   PickupReactToHit nevertheless propagates whatever r0 holds - see the comment
    there. */
 void PickupCollect(void)
 {

@@ -108,7 +108,7 @@ void ActorAttachedPullInLateUpdate(void)
     struct Task *t;
 
     ActorAttachedRestorePalette();
-    sub_0806b938();
+    ActorAttachedDieUnlessInhaling();
     t = gCurTask;
     if (t->actorMouthFull == 1)
         ActorAttachedDie();
@@ -140,7 +140,7 @@ void ActorAttachedThrowHeldUpdate(void)
 
     gCurTask->health = 127;
     ActorAttachedRestorePalette();
-    sub_0806b410();
+    ActorAttachedThrowHeldFollowCarrier();
     t = gCurTask;
     if (t->actorKind == 1)
         RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gUnk_0873F86C);
@@ -150,7 +150,7 @@ void ActorAttachedThrowHeldUpdate(void)
 
 void ActorAttachedThrowHeldLateUpdate(void)
 {
-    sub_0806b848();
+    ActorAttachedHeldAddPlayerOffset();
     ActorAttachedCheckScreenAttack();
 }
 

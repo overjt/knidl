@@ -49,7 +49,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
@@ -1353,7 +1353,7 @@ void sub_080a73b4(void)
 {
     struct Task *t = gCurTask;
 
-    t->drawCallback = (u32)sub_080653ec;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     t->updateCallback = (u32)sub_080a73fc;
     t->frameTable = gMetaKnightFrames;
     t->layer = 4;

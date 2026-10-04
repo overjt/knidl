@@ -61,7 +61,7 @@ void PlayerActionDie(void)
     PlayerStopAxes(3);
     gCurTask->player->mouthState = 0;
     SetPlayerAbility(0, -1, gCurTask->player->playerIndex);
-    sub_080276ac(gCurTask->player->playerIndex);
+    HoldPlayerCamera(gCurTask->player->playerIndex);
     gCurTask->player->unk16 = 255;
     anim = gUnk_0873D9FA[gCurTask->player->ability];
     n = 0;
@@ -196,7 +196,7 @@ void PlayerActionDie(void)
         gStageRequest = 6;
         TaskExitTrampoline();
     }
-    sub_080276cc(gCurTask->player->playerIndex);
+    ReleaseDeadPlayerView(gCurTask->player->playerIndex);
     if (gPlayerLives[gCurTask->player->playerIndex] == 0)
         gCurTask->variant = 4;
     else

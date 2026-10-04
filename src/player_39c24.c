@@ -17,7 +17,7 @@
  * sub_0803f7e0 for the form with Task.waterFlags bit 0 set), moves the player
  * by the door side kept in Task.unk2C, drives the door's M08 stage
  * objects through M07's helpers (CreateEntryDoorOpening ... sub_08026704) and the
- * cameras through CameraStartFollowingPlayer/sub_08027908/ArePlayerCamerasDoneGliding/sub_08027a60;
+ * cameras through CameraStartFollowingPlayer/CameraStartPlayersAtAnchor/ArePlayerCamerasDoneGliding/CameraResumeFollowFocus;
  * the second mode of gEntryDoorEvent also uploads an OBJ graphic
  * (LZ77UnCompWram of gUnk_080D07C8 into gUnk_02020000, then 0x06014000).
  * PlayerActionExitDoorUpdate, per-frame handler 19, only releases the player once
@@ -426,7 +426,7 @@ void PlayerActionExitDoor(void)
         gCurTask->spriteFlags = 0x4000;
         sub_08026704(i);
         RequestCopy(3, (u32)gUnk_02020000, OBJ_VRAM0 + 0x4000, 0x400);
-        sub_08027908();
+        CameraStartPlayersAtAnchor();
         PlayerSetMotionXPreset(10, 14);
         if (!(gCurTask->waterFlags & 1))
         {
@@ -514,7 +514,7 @@ void PlayerActionExitDoor(void)
         sub_08026584();
         while (ArePlayerCamerasDoneGliding() == 0)
             TaskYieldTrampoline(1);
-        sub_08027a60();
+        CameraResumeFollowFocus();
         for (i = 0; i < gPlayerCount; i++)
         {
             gPlayerStates[i].unk42 &= 0xFFBF;

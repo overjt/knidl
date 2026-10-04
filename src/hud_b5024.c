@@ -42,7 +42,7 @@ extern u32 gUnk_02007D64[];
 extern s16 gUnk_0200AF0C;
 extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200D080;
+extern u8 gMidBossFightState;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
 extern u8 gMetaKnightmareMode;
@@ -76,9 +76,9 @@ extern void TaskSetEntry(void *a, u32 i);
 extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ExitClearedStage();
-extern void sub_08025a30();
-extern void sub_08025acc();
-extern void sub_08025b5c();
+extern void ExitKingDededeStage();
+extern void ExitToNextRoom();
+extern void ExitToEnding();
 extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
@@ -106,7 +106,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
@@ -250,7 +250,7 @@ s32 SpawnRoomObject(s32 i)
         res5 = SpawnRoomEnemy(e4, i6);
         break;
     case 2:
-        gUnk_0200D080 = 1;
+        gMidBossFightState = 1;
         res5 = CreateActorByKind(1, *(s8 *)(e4 + 1), e4[2], e4[3], *(u16 *)(e4 + 4), *(u16 *)(e4 + 6),
             (pw2 = (u8 *)gRoomObjectGfxSlots, (((s32)*(s8 *)((b = (u8 *)((u32)pw2 + ((s32)(s8)*((u8 *)gRoomObjectGfxSlotIds + i6) << 2))) + 1) << 12) | ((*(s16 *)(b + 2) << 1) + 16))));
         break;

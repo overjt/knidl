@@ -21,7 +21,7 @@
  * spawn and adjust the M08 stage objects of the door the player entered by
  * (gEntryDoorIndex, its slots in gDoorObjectTasks); CreateStageUnlockPan/CreateBigSwitchUnlockPan
  * spawn a map-event task and put the camera on the player or a partner.
- * sub_08026a0c, sub_08026a80 and sub_08026aec arm the scroll lock of one
+ * WhispyWoodsCheckScrollLock, KrackoCheckScrollLock and KingDededeCheckScrollLock arm the scroll lock of one
  * room each.  sub_08026994 is an empty dead export. */
 
 void PlaySfx(s32 id);
@@ -95,9 +95,9 @@ void SetCameraFocusOrAnchor(s32 x, s32 y)
     gCameraAnchorY = y;
 }
 
-void sub_080262dc(void)
+void EndMidBossFight(void)
 {
-    gUnk_0200D080 = 2;
+    gMidBossFightState = 2;
 }
 
 void sub_080262e8(s32 a)
@@ -366,7 +366,7 @@ void sub_080269e8(void)
             BreakBlockAt(i, j);
 }
 
-u32 sub_08026a0c(void)
+u32 WhispyWoodsCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
@@ -388,7 +388,7 @@ u32 sub_08026a0c(void)
     return 0;
 }
 
-u32 sub_08026a80(void)
+u32 KrackoCheckScrollLock(void)
 {
     switch (gCameraMode)
     {
@@ -410,7 +410,7 @@ u32 sub_08026a80(void)
     return 0;
 }
 
-u32 sub_08026aec(void)
+u32 KingDededeCheckScrollLock(void)
 {
     switch (gCameraMode)
     {

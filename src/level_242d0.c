@@ -35,7 +35,7 @@
  * level/stage/room, the arrival position gRoomEntryX/gRoomEntryY and
  * the stage request gStageRequest for M02's state bodies.  ExitClearedStage
  * (a stage cleared: the hub's next stage door, or on to the next level),
- * sub_08025a30, sub_08025acc, sub_08025b0c, sub_08025b5c, PressBigSwitch and
+ * ExitKingDededeStage, ExitToNextRoom, ExitToNextRoomOnWarpStar, ExitToEnding, PressBigSwitch and
  * ReturnFromBigSwitchView are the other exits, each setting the level/stage/room and a
  * stage request; sub_08025e0c lowers the room's bottom bound, sub_08025e88
  * reads an object-list entry's parameter, and sub_08025f00, sub_080260b0
@@ -855,7 +855,7 @@ void ExitClearedStage(void)
     gUnk_0200B038 = 0;
 }
 
-void sub_08025a30(void)
+void ExitKingDededeStage(void)
 {
     if (gMetaKnightmareMode == 0)
     {
@@ -884,7 +884,7 @@ void sub_08025a30(void)
     gStageExitFlags |= 2;
 }
 
-void sub_08025acc(void)
+void ExitToNextRoom(void)
 {
     gRoomIndex++;
     gRoomEntrySet = 0;
@@ -894,7 +894,7 @@ void sub_08025acc(void)
     gStageExitFlags |= 2;
 }
 
-void sub_08025b0c(void)
+void ExitToNextRoomOnWarpStar(void)
 {
     gRoomIndex++;
     gRoomEntrySet = 0;
@@ -906,7 +906,7 @@ void sub_08025b0c(void)
     gUnk_02007FF0 = 0;
 }
 
-void sub_08025b5c(void)
+void ExitToEnding(void)
 {
     if (gGameState == 8)
     {

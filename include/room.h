@@ -214,7 +214,7 @@ extern u8 gWarpStarStationLevels;
 extern u8 gRoomBgLayout;
 extern u8 gUnk_0200B078;
 extern u16 gMetatileTiles[];
-extern u8 gUnk_0200D080;
+extern u8 gMidBossFightState;
 
 /* IWRAM */
 extern u16 gBgPaletteBank2[];
@@ -742,10 +742,10 @@ void RoomTaskCreditsInit(void);
 s32 FindDoorAt(s32 x, s32 y);
 s32 EnterDoor(void);
 void ExitClearedStage(void);
-void sub_08025a30(void);
-void sub_08025acc(void);
-void sub_08025b0c(void);
-void sub_08025b5c(void);
+void ExitKingDededeStage(void);
+void ExitToNextRoom(void);
+void ExitToNextRoomOnWarpStar(void);
+void ExitToEnding(void);
 void PressBigSwitch(s32 id);
 void ReturnFromBigSwitchView(void);
 void sub_08025e00(void);
@@ -760,7 +760,7 @@ s32 CreateBlockBreakEffect(s32 x, s32 y);
 s32 TaskCreateHighSlot(s32 type);
 void SetCameraFocus(s32 x, s32 y);
 void SetCameraFocusOrAnchor(s32 x, s32 y);
-void sub_080262dc(void);
+void EndMidBossFight(void);
 void sub_080262e8(s32 a);
 void WrapLoopingRoom(void);
 s32 CreateEntryDoorOpening(void);
@@ -775,9 +775,9 @@ void sub_0802695c(void);
 void sub_08026994(void);
 void sub_08026998(void);
 void sub_080269e8(void);
-u32 sub_08026a0c(void);
-u32 sub_08026a80(void);
-u32 sub_08026aec(void);
+u32 WhispyWoodsCheckScrollLock(void);
+u32 KrackoCheckScrollLock(void);
+u32 KingDededeCheckScrollLock(void);
 
 /* src/door_26b60.c */
 void sub_08026b60(void);
@@ -797,19 +797,19 @@ void PauseRestoreRoomGraphics(void);
 void sub_080272dc(void);
 
 /* src/stage_273a0.c */
-void sub_080273a0(void);
+void ReturnToRestartPoint(void);
 void sub_08027548(void);
 s32 sub_08027588(void);
 s32 sub_080275cc(s32 a);
-s32 sub_080276ac(s32 a);
-s32 sub_080276cc(s32 i);
+s32 HoldPlayerCamera(s32 a);
+s32 ReleaseDeadPlayerView(s32 i);
 s32 AreInactivePlayerCamerasParked(void);
 void CameraStartHoldAnchorAt(s32 x, s32 y);
 void CameraStartFollowFocusAt(s32 x, s32 y);
 void CameraStartFollowingPlayer(s32 a);
-void sub_08027908(void);
+void CameraStartPlayersAtAnchor(void);
 s32 ArePlayerCamerasDoneGliding(void);
-void sub_08027a60(void);
+void CameraResumeFollowFocus(void);
 
 /* src/level_27a6c.c */
 void sub_08027a6c(void);

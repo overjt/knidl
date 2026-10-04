@@ -23,7 +23,7 @@
    types than the definition takes (lessons 3.428, 3.517). */
 extern u16 ActorComputeHealth(u32 a);
 extern u16 ActorComputeHealthSlot(u32 i);
-extern void sub_08069ac4(u32 i);
+extern void ActorInitTerrainFlagsSlot(u32 i);
 extern void ReleaseRoomObject(u32 i);
 extern s32 GetShapeAtPixelIgnoringOneWay(s16 x, s16 y);
 extern u32 TaskIsOnScreen(void);
@@ -58,7 +58,7 @@ void ActorInitSlot(u32 i)
     ActorBindDefSlot(i);
     ActorInitFromDefSlot(i);
     TaskFindNearestPlayerSlot(i);
-    sub_08069ac4(i);
+    ActorInitTerrainFlagsSlot(i);
 }
 
 void ActorBindDefSlot(u32 i)
@@ -135,7 +135,7 @@ void ActorInitFromDefSlot(u32 i)
     a->paletteVariant = t->variant >> 4;
     t->variant = t->variant & 15;
     if (a->paletteVariant != 0)
-        sub_08065ce0(i);
+        ActorSelectPaletteVariant(i);
     t->serial = gNextActorSerial;
     if (gNextActorSerial > 0xFFFE)
         gNextActorSerial = 0;
@@ -1672,7 +1672,7 @@ void sub_080652c8(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() == 0)
+    if (ActorIsInNearView() == 0)
         return;
     if (TaskIsOnScreen() == 0)
         return;
@@ -1694,7 +1694,7 @@ void sub_08065350(void)
         return;
     if (p->frame == -1)
         return;
-    if (sub_08066a6c() != 0)
+    if (ActorIsInNearView() != 0)
     {
         if (TaskIsOnScreen() == 0)
             return;
@@ -1704,7 +1704,7 @@ void sub_08065350(void)
                      t->pixelX - gSpriteCameraX,
                      (s16)(t->pixelY - gSpriteCameraY));
     }
-    else if (sub_08066a80() != 0)
+    else if (ActorIsInFarView() != 0)
     {
         HudRemoveHpBar();
         ActorDestroy();

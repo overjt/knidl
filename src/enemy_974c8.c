@@ -39,15 +39,15 @@ void Task_PhanPhan(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     gCurTask->frameTable = gPhanPhanFrames;
     gUnk_02007D00[8]++;
     ActorInitBossGfx(0);
     sub_08097580();
     ActorCollideTerrain();
-    sub_080666cc(gUnk_08744888);
-    if (sub_08067060() != 0) {
+    ActorIntroPoseUntilMidBossFight(gUnk_08744888);
+    if (IsMidBossDroppingIn() != 0) {
         gCurTask->updateCallback = (u32)sub_080975c8;
         sub_08097694();
     } else {

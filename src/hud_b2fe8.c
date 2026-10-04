@@ -27,7 +27,7 @@ extern s8 gUnk_02007D64;
 extern s16 gUnk_0200AF0C;
 extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200D080;
+extern u8 gMidBossFightState;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
 extern u8 gMetaKnightmareMode;
@@ -68,9 +68,9 @@ extern void TaskInitWaterFlags(void);
 extern u8 ClampTaskToRoom(struct Task *t);
 extern u32 IsTaskBelowRoom();
 extern void ExitClearedStage();
-extern void sub_08025a30();
-extern void sub_08025acc();
-extern void sub_08025b5c();
+extern void ExitKingDededeStage();
+extern void ExitToNextRoom();
+extern void ExitToEnding();
 extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
@@ -96,7 +96,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
@@ -1032,7 +1032,7 @@ void PickupUpdate(void)
         sub_080b3ffc();
     }
     ActorCheckHits();
-    sub_08069bbc();
+    PickupReactToHit();
 }
 
 void PickupEnterState(void)
@@ -1454,7 +1454,7 @@ void AbilityStarUpdate(void)
     struct Task *t;
     s32 w;
 
-    if ((u8)sub_080696a0() == 0)
+    if ((u8)ActorCollideTerrainInCameraBounds() == 0)
         CallTableEntry(gCurTask->updateState, 2, gAbilityStarStateUpdates);
     t = gCurTask;
     w = t->abilityStarPickupDelay;
@@ -1462,7 +1462,7 @@ void AbilityStarUpdate(void)
         ActorCheckHits();
     else
         t->abilityStarPickupDelay = w - 1;
-    sub_08069b84();
+    ActorReactToHitOrTerrainDamage();
 }
 
 void AbilityStarEnterState(void)
@@ -1922,7 +1922,7 @@ void StarRodPieceVariant2(void)
     t->updateCallback = 0;
     if (*(u8 *)((u8 *)t + 116) != 2)
         TaskYieldTrampoline(60);
-    if (sub_08066394() != 0)
+    if (GetLivingActivePlayerHealth() != 0)
     {
         FreezeStage(15);
         ExitClearedStage();

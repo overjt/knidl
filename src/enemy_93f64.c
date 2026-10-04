@@ -154,7 +154,7 @@ void Task_GrandWheelie(void)
 
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     gCurTask->frameTable = gGrandWheelieFrames;
     ActorInitBossGfx(0);
@@ -162,7 +162,7 @@ void Task_GrandWheelie(void)
     gCurTask->grandWheelieSummonPhase = -1;
     TaskFaceNearestPlayer();
     ActorCollideTerrain();
-    sub_080666cc(gUnk_0874433C);
+    ActorIntroPoseUntilMidBossFight(gUnk_0874433C);
     sub_08066ae0();
     CallTableEntry(gCurTask->variant, 1, gGrandWheelieVariants);
 }
@@ -172,7 +172,7 @@ void GrandWheelieInit(void)
     struct Task *t;
     struct Task *u;
 
-    if (sub_08067060() != 0) {
+    if (IsMidBossDroppingIn() != 0) {
         t = gCurTask;
         t->updateCallback = (u32)sub_080942b4;
         t->onGround = 0;

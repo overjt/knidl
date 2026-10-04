@@ -8,8 +8,8 @@
  * DISPCNT-shadow fades (gDispCnt masked to 0xE0FF and re-ORed with the
  * BG-enable pattern, alternating a ROM window descriptor with a copy of
  * gBgPalette on the stack); ActorDefeatMidBoss plays the six-step
- * gUnk_0873E6A0/gUnk_0873E6D0 blend-and-offset table. sub_0806b070
- * dispatches through gUnk_0873E734[Task.unk76], sub_0806b098 is the
+ * gUnk_0873E6A0/gUnk_0873E6D0 blend-and-offset table. BossRunDefeatHook
+ * dispatches through gUnk_0873E734[Task.unk76], BossDefeatExplode is the
  * transition body proper, and ActorDefeatBoss is the entry point that saves and
  * restores Task.tileWord around it. The tail (0x0806B12C-0x0806B2E4) is the
  * small task-field setters and their gUnk_0873E7xx descriptor tables.
@@ -177,13 +177,13 @@ void BossDefeatScreenFlash(void)
     ThawStage();
 }
 
-void sub_0806b05c(void)
+void BossDefeatFlash(void)
 {
     PlaySfx(0x1FF);
     BossDefeatScreenFlash();
 }
 
-void sub_0806b070(void)
+void BossRunDefeatHook(void)
 {
     void (*f)(void);
 
@@ -192,23 +192,23 @@ void sub_0806b070(void)
         f();
 }
 
-void sub_0806b098(void)
+void BossDefeatExplode(void)
 {
     FreezeStage(15);
-    sub_080668c8();
+    BossDefeatSweep();
     SetRoomUpdateFlags(2);
     ActorPlaySfx(0x1FD, 0);
     RequestScreenShake(4);
     CreateStarRing();
     CreateBurstEffect(1, 0);
     gCurTask->frame = 0xFFFF;
-    sub_0806b070();
+    BossRunDefeatHook();
     TaskYieldTrampoline(24);
     ThawStage();
     DisablePause();
 }
 
-s32 sub_0806b0f0(void)
+s32 BossDefeatStopBgm(void)
 {
     switch (gCurTask->u76.subtype)
     {
@@ -232,9 +232,9 @@ void ActorDefeatBoss(void)
 {
     gUnk_02007D00[9] = gCurTask->tileWord;
     HudRemoveHpBar();
-    sub_0806b0f0();
-    sub_0806b05c();
-    sub_0806b098();
+    BossDefeatStopBgm();
+    BossDefeatFlash();
+    BossDefeatExplode();
     gCurTask->tileWord = gUnk_02007D00[9];
     LoadStarRodPieceGfx();
     CallTableEntry(gCurTask->u76.subtype, 9, gUnk_0873E758);

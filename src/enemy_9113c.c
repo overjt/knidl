@@ -25,7 +25,7 @@
  * companion's own AnimCmd script from gPoppyBrosSrHeadAnims.
  *
  * Task_Bugzzy (the last function here) is the entry of M25's third boss, whose
- * states live in src/enemy_91f9c.c: it installs ActorMove / sub_080653ec as
+ * states live in src/enemy_91f9c.c: it installs ActorMove / ActorDrawStreamedFrameNearViewOrDestroy as
  * the draw and per-frame hooks, points Task.frameTable at gBugzzyFrames, counts the
  * boss into gUnk_02007D00[7], seeds the state block (Task.unk28 = -1,
  * Task.unk34 = 1, Task.unk1C = -1, Task.unk24 = Actor.palette) and dispatches
@@ -73,7 +73,7 @@ void PoppyBrosSrInit(void)
     t->poppyBrosSrHeadAnimIndex = 0;
     t->poppyBrosSrFlashing = 0;
     gCurTask->poppyBrosSrHeadSlot = CreateChildTaskHere(179, 1);
-    sub_080666cc(gUnk_0874397C);
+    ActorIntroPoseUntilMidBossFight(gUnk_0874397C);
     ActorSetState(0);
     CallTableEntry(gCurTask->state, 7, gPoppyBrosSrStates);
 }
@@ -129,7 +129,7 @@ void PoppyBrosSrState0(void)
     t = gCurTask;
     zero = 0;
     t->updateState = zero;
-    if (sub_08067060() == 1)
+    if (IsMidBossDroppingIn() == 1)
     {
         gCurTask->onGround = zero;
         TaskSetFrame(4);
@@ -560,7 +560,7 @@ void Task_PoppyBrosSrHand(void)
     spawn.x = zero;
     spawn.y = zero;
     spawn.checkTerrain = 1;
-    spawn.tileWord = sub_08066630(1);
+    spawn.tileWord = ActorGetTileWordPalOffset(1);
     gCurTask->poppyBrosSrHandBombSlot = CreateActorFromDescAtOffsetFacing(&spawn, 1);
     gCurTask->poppyBrosSrHandOffsetVelX = 0x30000;
     gCurTask->poppyBrosSrHandOffsetVelY = 0xFFFA0000;
@@ -737,7 +737,7 @@ void Task_Bugzzy(void)
     ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_080653ec;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearViewOrDestroy;
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gBugzzyFrames;
@@ -748,7 +748,7 @@ void Task_Bugzzy(void)
     u->bugzzyBoxSet = 1;
     u->bugzzyHeldPlayerSlot = -1;
     u->bugzzySavedPalette = u->u8C.actor->palette;
-    if (sub_08067060() == 1)
+    if (IsMidBossDroppingIn() == 1)
         gCurTask->bugzzyIgnoreTerrainTimer = 24;
     else
         gCurTask->bugzzyIgnoreTerrainTimer = 0;

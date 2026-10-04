@@ -6,7 +6,7 @@
  * - IntrDummy is the DEFAULT (no-op) IRQ handler: the 14-entry handler
  *   table at 0x080CFDE8 (copied to 0x030004B0 by AgbInit) points at it, as
  *   do the un-hook paths of ClearHBlankIntr/ClearVCountIntr.
- * - sub_0800151c / sub_08001560 (no symbols.csv entries; the census merged
+ * - EnableForcedBlank / DisableForcedBlank (no symbols.csv entries; the census merged
  *   0x1518-0x157C into one "function") set/clear the DISPCNT forced-blank
  *   bit through the gDispCnt shadow; 0x151C also restores REG_IE /
  *   REG_DISPSTAT from their shadows.  Neither is referenced anywhere in the
@@ -85,7 +85,7 @@ void IntrDummy(void)
 {
 }
 
-void sub_0800151c(void)
+void EnableForcedBlank(void)
 {
     gDispCnt |= 0x80;
     REG_DISPCNT = gDispCnt;
@@ -95,7 +95,7 @@ void sub_0800151c(void)
     REG_DISPSTAT = gDispStat;
 }
 
-void sub_08001560(void)
+void DisableForcedBlank(void)
 {
     gDispCnt &= 0xFF7F;
     REG_DISPCNT = gDispCnt;

@@ -64,7 +64,7 @@ void Task_KingDedede(void)
     t = gCurTask;
     t->kingDededeThirdHealth = v;
     t->moveCallback = (u32)TaskMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     gCurTask->frameTable = gKingDededeFrames;
     CallTableEntry(gCurTask->variant, 1, gKingDededeVariants);

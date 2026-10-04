@@ -17,7 +17,7 @@
    TerrainCollideBoxInCameraBounds's counterpart of TerrainProbeFloor: a wall step into the moving
    direction first, the flags gTerrainProbeResult.unkD/unk5/unkE on top, and the
    ledge counter gTerrainProbeResult.unk10 when the probe finds no floor. */
-void sub_0801c930(void)
+void TerrainProbeFloorInCameraBounds(void)
 {
     s32 d;
     s32 hit;

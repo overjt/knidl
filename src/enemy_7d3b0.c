@@ -1219,7 +1219,7 @@ void GordoBounceVerticalInit(void)
 
 void GordoBounceVerticalUpdate(void)
 {
-    if ((u8)sub_0806956c() == 1)
+    if ((u8)ActorCollideTerrainCeilingAndFloor() == 1)
     {
         struct Task *t = gCurTask;
 
@@ -1266,7 +1266,7 @@ void GordoBounceHorizontalInit(void)
 
 void GordoBounceHorizontalUpdate(void)
 {
-    if ((u8)sub_080695bc() == 1)
+    if ((u8)ActorCollideTerrainWalls() == 1)
     {
         struct Task *t = gCurTask;
 

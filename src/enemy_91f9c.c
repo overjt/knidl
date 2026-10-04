@@ -84,7 +84,7 @@ void BugzzyInit(void)
 
     t = gCurTask;
     t->updateCallback = (u32)BugzzyUpdate;
-    sub_080666cc(gUnk_08743AC8);
+    ActorIntroPoseUntilMidBossFight(gUnk_08743AC8);
     u = gCurTask;
     u->bugzzySavedPalette = u->u8C.actor->palette;
     ActorSetState(0);
@@ -366,7 +366,7 @@ void BugzzySummon(void)
     spawn.spawnArg = gCurTask->actorSpawnArg;
     spawn.x = 0xFFFE;
     spawn.y = 0;
-    spawn.tileWord = sub_0806660c(1);
+    spawn.tileWord = ActorGetGfxTileWordPalOffset(1);
     CreateActorFromDescAtOffsetFacing(&spawn, 1);
     gCurTask->frame++;
     TaskYieldTrampoline(24);
@@ -376,7 +376,7 @@ void BugzzySummon(void)
     spawn.spawnArg = gCurTask->actorSpawnArg;
     spawn.x = 0xFFFE;
     spawn.y = 0;
-    spawn.tileWord = sub_0806660c(1);
+    spawn.tileWord = ActorGetGfxTileWordPalOffset(1);
     spawn.checkTerrain = 0;
     CreateActorFromDescAtOffsetFacing(&spawn, 1);
     TaskYieldTrampoline(4);
@@ -474,7 +474,7 @@ void BugzzyCharge(void)
     PlaySfx(500);
     x = gCurTask;
     x->bugzzyBoxSet = 3;
-    gTasks[CreateChildTask(200, x->pixelX, x->pixelY, sub_080665fc())].unk74 =
+    gTasks[CreateChildTask(200, x->pixelX, x->pixelY, ActorGetGfxTileWord())].unk74 =
         gCurTask->actorSpawnArg;
     gCurTask->bugzzyRushing = 1;
     TaskSetMotionXFacing(gUnk_08743A94[gCurTask->actorSpawnArg], 0x5A5A5A5A);

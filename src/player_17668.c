@@ -440,7 +440,7 @@ void CutsceneActorScript50(void)
     gCurTask->frame = 5;
     TaskYieldTrampoline(64);
     PlayBgm(56);
-    sub_08003184();
+    ResetBgmPlayer();
     gCurTask->cutsceneActorBgmFadeStep = -1;
     TaskStop();
     gCurTask->frame = 5;

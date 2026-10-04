@@ -353,8 +353,8 @@ gScreenAttackTasks = 0x0200B000
 gHudShowsHpBar = 0x0200B028
 	.global	gUnk_0200B02C
 gUnk_0200B02C = 0x0200B02C
-	.global	gUnk_0200B030
-gUnk_0200B030 = 0x0200B030
+	.global	gMidBossDropsIn
+gMidBossDropsIn = 0x0200B030
 	.global	gEntryDoorIndex
 gEntryDoorIndex = 0x0200B034
 	.global	gUnk_0200B038
@@ -383,8 +383,8 @@ gQuickDrawRanking = 0x0200B07C
 gMetatileTiles = 0x0200B080
 	.global	gActors
 gActors = 0x0200C320
-	.global	gUnk_0200D080
-gUnk_0200D080 = 0x0200D080
+	.global	gMidBossFightState
+gMidBossFightState = 0x0200D080
 	.global	gTaskSkipMaskStack
 gTaskSkipMaskStack = 0x0200D090
 	.global	gTaskSkipMaskDepth

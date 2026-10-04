@@ -158,8 +158,8 @@ void ClearVCountIntr(void);
 
 /* src/early_1518.c */
 void IntrDummy(void);
-void sub_0800151c(void);
-void sub_08001560(void);
+void EnableForcedBlank(void);
+void DisableForcedBlank(void);
 void RequestCopyList(struct TransferNode *node);
 void ResetOamShadow(void);
 void ResetSpriteQueue(void);

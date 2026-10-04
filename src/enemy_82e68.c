@@ -60,7 +60,7 @@ extern void ActorSetHitReactions(u32 *p);
 extern void ActorSetAttackBox(u32 *p);
 extern u16 TaskGetAngleToNearestPlayer(s32 a);
 extern void AngleToVector(s32 a, s32 b);
-extern u8 sub_0806951c(void);
+extern u8 ActorCollideTerrainAlongVelocity(void);
 extern s32 TaskIsNearestPlayerInRect(struct PointPair *p);
 extern s32 TaskIsInRect(struct PointPair *r);
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
@@ -955,7 +955,7 @@ void sub_0808429c(void)
 
 void sub_080842b8(void)
 {
-    if (sub_0806951c() == 1)
+    if (ActorCollideTerrainAlongVelocity() == 1)
     {
         ActorSetHitReactions(gUnk_08741F64);
         TaskSetEntry(ActorDie, gCurTaskIdx);

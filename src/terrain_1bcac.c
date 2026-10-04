@@ -105,7 +105,7 @@ void TerrainCollideBoxInCameraBounds(const s8 *p)
                 TerrainProbeWallRightOnGround();
         }
         sub_0801c8dc();
-        sub_0801c930();
+        TerrainProbeFloorInCameraBounds();
     }
     else
     {
@@ -118,7 +118,7 @@ void TerrainCollideBoxInCameraBounds(const s8 *p)
                 TerrainProbeWallRightInAir();
         }
         TerrainProbeCeiling();
-        sub_0801e178();
+        TerrainProbeLandingInCameraBounds();
     }
     TerrainProbeWater();
     TerrainProbeDamage();

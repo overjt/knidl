@@ -68,7 +68,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 extern void SaveBossEnduranceBestTime();
@@ -358,23 +358,23 @@ s32 sub_080b5d84(struct Unk020055D8Entry *e)
     {
         if (f->kind == 7)
         {
-            gUnk_0200D080 = 0;
+            gMidBossFightState = 0;
             if (t->mapEventWaitScrollLock != 0)
             {
                 if (gActivePlayerCount == 1)
                 {
-                    gUnk_0200B030 = 0;
+                    gMidBossDropsIn = 0;
                     y = f->y;
                 }
                 else
                 {
-                    gUnk_0200B030 = 1;
+                    gMidBossDropsIn = 1;
                     y = -16;
                 }
             }
             else
             {
-                gUnk_0200B030 = 0;
+                gMidBossDropsIn = 0;
                 y = f->y;
             }
             r = CreateActorByKind(1, f->unk1, f->unk2, f->unk3, f->x, y,

@@ -49,7 +49,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
@@ -1034,10 +1034,10 @@ void NightmarePowerOrbDefeat(void)
     ActorSetAttackBox(0);
     (*c)->u8C.actor->sfxOverride = 0x23E;
     HudRemoveHpBar();
-    sub_0806b05c();
-    sub_0806b098();
+    BossDefeatFlash();
+    BossDefeatExplode();
     u = *c;
-    sub_08066f50(u->pixelX, u->pixelY);
+    CreateNextRoomWarpStar(u->pixelX, u->pixelY);
     sub_080aeef8();
     (*c)->updateCallback = (u32)sub_080aef50;
     sub_080b09ac();
@@ -2057,7 +2057,7 @@ void sub_080b05e8(void)
     struct Task *u21;
 
     PlayBgm(32);
-    sub_08003184();
+    ResetBgmPlayer();
     SetBgmVolume(0);
     p = gUnk_02007D00;
     z = 0;
@@ -3913,7 +3913,7 @@ void CreateWhispyWoodsAirPuff(void)
     z = 0;
     sp.x = 24;
     sp.y = 40;
-    sp.tileWord = sub_08066630(8);
+    sp.tileWord = ActorGetTileWordPalOffset(8);
     sp.checkTerrain = z;
     CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
@@ -3930,7 +3930,7 @@ void CreateWhispyWoodsApple(void)
     sp.x = (u8)sub_080b2804();
     z = 0;
     sp.y = 224;
-    sp.tileWord = sub_08066630(1);
+    sp.tileWord = ActorGetTileWordPalOffset(1);
     sp.checkTerrain = z;
     CreateChildTask(170, sp.x, sp.y, 0);
     CreateActorFromDesc(&sp, 1);
@@ -4004,7 +4004,7 @@ void sub_080b2890(void)
         return;
     if (t0->frame == -1)
         return;
-    if ((u8)sub_08066a6c() && TaskIsOnScreen())
+    if ((u8)ActorIsInNearView() && TaskIsOnScreen())
     {
         t = *c;
         a42v = t->layer;
@@ -4017,7 +4017,7 @@ void sub_080b2890(void)
     u = gCurTask;
     a74 = (u16 *)((u8 *)u + 74);
     *a74 += 26;
-    if ((u8)sub_08066a6c() && TaskIsOnScreen())
+    if ((u8)ActorIsInNearView() && TaskIsOnScreen())
     {
         t2 = gCurTask;
         aw = (u16 *)(74 + (u32)t2);
@@ -4033,7 +4033,7 @@ void sub_080b2890(void)
     u2 = gCurTask;
     a74b = (u16 *)((u8 *)u2 + 74);
     *a74b += 42;
-    if ((u8)sub_08066a6c() && TaskIsOnScreen())
+    if ((u8)ActorIsInNearView() && TaskIsOnScreen())
     {
         t3 = gCurTask;
         aw2 = (u16 *)(74 + (u32)t3);
@@ -4071,7 +4071,7 @@ void Task_WhispyWoods(void)
     u2->posX = 206 << 16;
     u2->posY = 128 << 17;
     k4 = (struct AnimCmd *)gUnk_0874C110;
-    sub_080666f8(k4);
+    ActorIntroPoseUntilScrollLocked(k4);
     ActorIntroPoseUntilHpBarFull(k4);
     u3 = *c;
     CallTableEntry(u3->variant, 1, gWhispyWoodsVariants);

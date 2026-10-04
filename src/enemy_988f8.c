@@ -5,7 +5,7 @@
  *
  * M27's first mid-boss script, built exactly like M25's bosses (rom-map section 9).
  * Task_MrFrosty is the task entry: it installs ActorMove as the draw hook
- * (Task.moveCallback) and sub_08065438 as the per-frame hook (Task.drawCallback), points
+ * (Task.moveCallback) and ActorDrawStreamedFrameNearView as the per-frame hook (Task.drawCallback), points
  * Task.frameTable at the graphics block gMrFrostyFrames, counts the enemy into
  * gUnk_02007D00[0], loads the animation script gUnk_08745624 and hands
  * Task.variant to CallTableEntry with the one-word table gMrFrostyVariants, whose only
@@ -334,12 +334,12 @@ void Task_MrFrosty(void)
     ActorInitBossGfx(0);
     t = gCurTask;
     t->moveCallback = (u32)ActorMove;
-    t->drawCallback = (u32)sub_08065438;
+    t->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     t->layer = 11;
     zero = 0;
     gCurTask->frameTable = gMrFrostyFrames;
     gUnk_02007D00[0]++;
-    sub_080666cc(gUnk_08745624);
+    ActorIntroPoseUntilMidBossFight(gUnk_08745624);
     u = gCurTask;
     u->mrFrostyFlashEnabled = 1;
     u->actorDustTrailSlot = zero;
@@ -357,7 +357,7 @@ void MrFrostyInit(void)
     t->updateCallback = (u32)MrFrostyUpdate;
     t->mrFrostyTimer = 90;
     t->mrFrostyIceCubeTurnsLeft = 2;
-    if (sub_08067060() != 0)
+    if (IsMidBossDroppingIn() != 0)
     {
         u = gCurTask;
         u->mrFrostyCollideTerrain = 0;

@@ -227,7 +227,7 @@ void StageMain(void)
         case 6:
             if (gPlayerCount == 1) {
                 if (gPlayerLives[gLocalPlayer] != 0) {
-                    sub_080273a0();
+                    ReturnToRestartPoint();
                 } else {
                 gameover:
                     gGameState = 22;
@@ -240,7 +240,7 @@ void StageMain(void)
                 }
                 if (n == 0)
                     goto gameover;
-                sub_080273a0();
+                ReturnToRestartPoint();
             }
             done = 1;
             break;

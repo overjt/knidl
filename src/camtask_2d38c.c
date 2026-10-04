@@ -10,7 +10,7 @@
  * The seven bodies of task type #4 (Task_MapEvent dispatches Task.state
  * into the anchor table gMapEventVariants), the level's scripted map events:
  * sub_0802d38c waits for camera mode 3 and M07's AreInactivePlayerCamerasParked, raises
- * gUnk_0200D080 until it drops, then by Task.unk18 spawns a type-#4
+ * gMidBossFightState until it drops, then by Task.unk18 spawns a type-#4
  * child (sub_0802d478/sub_0802d5b4) or updates two metatiles through
  * CreateBlockBreakEffect and M09's BreakBlockAt; sub_0802d4bc and sub_0802d5f8
  * update one or three metatiles behind type-#236 effects;
@@ -69,10 +69,10 @@ void sub_0802d38c(void)
         while (AreInactivePlayerCamerasParked() == 0)
             TaskYieldTrampoline(1);
     }
-    gUnk_0200D080 = 1;
+    gMidBossFightState = 1;
     do
         TaskYieldTrampoline(1);
-    while (gUnk_0200D080 == 1);
+    while (gMidBossFightState == 1);
     gUnk_02007D60 |= 0x8000;
     CameraLeaveScrollLock();
     if (gCurTask->mapEventEndAction == 1)

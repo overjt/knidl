@@ -24,7 +24,7 @@
  * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
  * (with the collider row gUnk_0873C2B4 at the player's camera position
  * gPlayerCameraPos) and lowering it by 46 to 0 in state 2 (then calling M17's
- * sub_08065ed0), and the draw hook PlayerEffectCrashBlastDraw.  Variant 47 (sub_0805acec,
+ * ClearActorPaletteOverrides), and the draw hook PlayerEffectCrashBlastDraw.  Variant 47 (sub_0805acec,
  * M13) is an animation in world space; its callback sub_0805ae00 clears
  * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
  * Task.variant is not 4 (and copies the spawner's facing), and in the other
@@ -403,7 +403,7 @@ void PlayerEffectCrashBlastUpdate(void)
         else
         {
             u->unk28 = 0;
-            sub_08065ed0();
+            ClearActorPaletteOverrides();
         }
         break;
     }

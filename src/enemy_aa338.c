@@ -27,7 +27,7 @@ extern s8 gUnk_02007D64;
 extern s16 gUnk_0200AF0C;
 extern u8 gWarpStarStationLevels;
 extern u8 gUnk_0200B078;
-extern u8 gUnk_0200D080;
+extern u8 gMidBossFightState;
 extern s16 gCameraAnchorY;
 extern s32 gUnk_03001F2C;
 extern u8 gMetaKnightmareMode;
@@ -63,9 +63,9 @@ extern void TaskSetEntry(void *a, u32 i);
 extern void HudStartHpBar();
 extern s32 GetCollisionTileAtOffset(s16 x, s16 y, s32 c, s32 d);
 extern void ExitClearedStage();
-extern void sub_08025a30();
-extern void sub_08025acc();
-extern void sub_08025b5c();
+extern void ExitKingDededeStage();
+extern void ExitToNextRoom();
+extern void ExitToEnding();
 extern void RequestScreenShake(u32 a);
 extern void sub_080275cc();
 extern void StartScrollLock();
@@ -91,7 +91,7 @@ extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
 extern u32 ActorCheckHitsWithExtraBox(void);
 extern u32 ActorCollideTerrain(void);
-extern u32 sub_0806951c(void);
+extern u32 ActorCollideTerrainAlongVelocity(void);
 extern u32 ActorCollideTerrainFloor(void);
 extern u32 ActorReactToHit(void);
 
@@ -896,7 +896,7 @@ void sub_080ab5c0(void)
 
 void NightmareWizardAppear(s32 a)
 {
-    gCurTask->drawCallback = (u32)sub_08065438;
+    gCurTask->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     if (a != 0)
         PlaySfx(141 << 2);
     TaskSetFrame(67);
@@ -925,7 +925,7 @@ void NightmareWizardAppear(s32 a)
 void NightmareWizardVanish(s32 a)
 {
     TaskStop();
-    gCurTask->drawCallback = (u32)sub_08065438;
+    gCurTask->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     if (a != 0)
         PlaySfx(0x233);
     TaskSetFrame(60);
@@ -1016,7 +1016,7 @@ void NightmareWizardDefeat(void)
     NightmareWizardMoveToSpot(6);
     TaskStop();
     NightmareWizardAppear(0);
-    gCurTask->drawCallback = (u32)sub_08065438;
+    gCurTask->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     PlaySfx(143 << 2);
     RequestScreenShake(7);
     gCurTask->spriteFlags &= 0x7FFF;
@@ -1119,7 +1119,7 @@ void NightmareWizardDefeat(void)
 far:
     TaskYieldTrampoline(180);
 fin:
-    sub_08025b5c();
+    ExitToEnding();
     TaskExitTrampoline();
 }
 
@@ -1624,7 +1624,7 @@ void sub_080ac72c(void)
     s32 d;
     s32 k;
 
-    sub_0806956c();
+    ActorCollideTerrainCeilingAndFloor();
     CallTableEntry(gCurTask->updateState, 3, gUnk_08749B98);
     if (gCurTask->metaKnightSwordLanded > 0)
         ActorCheckHits();
@@ -1661,7 +1661,7 @@ void sub_080ac72c(void)
 
 void sub_080ac82c(void)
 {
-    sub_0806956c();
+    ActorCollideTerrainCeilingAndFloor();
     CallTableEntry(gCurTask->updateState, 3, gUnk_08749B98);
 }
 
@@ -1878,7 +1878,7 @@ void Task_NightmareWizardStar(void)
 
 void NightmareWizardStarUpdate(void)
 {
-    if ((u8)sub_0806951c() == 1)
+    if ((u8)ActorCollideTerrainAlongVelocity() == 1)
         TaskSetEntry(ActorDie, gCurTaskIdx);
     else
     {
@@ -1959,7 +1959,7 @@ void NightmareWizardStarState0Update(void)
 void Task_PaintRoller(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
-    gCurTask->drawCallback = (u32)sub_08065438;
+    gCurTask->drawCallback = (u32)ActorDrawStreamedFrameNearView;
     gCurTask->frameTable = gPaintRollerFrames;
     gCurTask->layer = 11;
     ActorInitBossGfx(0);
@@ -2587,15 +2587,15 @@ void sub_080adc44(void)
     TaskYieldTrampoline(150);
     if (gGameState == 8 && gMetaKnightmareMode == 0)
     {
-        if (sub_08066394() != 0)
+        if (GetLivingActivePlayerHealth() != 0)
         {
             FreezeStage(15);
-            sub_08025acc();
+            ExitToNextRoom();
         }
     }
     else
     {
-        if (sub_08066394() != 0)
+        if (GetLivingActivePlayerHealth() != 0)
         {
             FreezeStage(15);
             ExitClearedStage();

@@ -6,7 +6,7 @@
 /* terrain_1d394.c (0x0801D394-0x0801D9C7, issue #84).
  *
  * The floor probe TerrainCollideBox runs for a box standing on the ground
- * (gTerrainProbeResult.unk6 != 0), the simpler sibling of sub_0801c930 in
+ * (gTerrainProbeResult.unk6 != 0), the simpler sibling of TerrainProbeFloorInCameraBounds in
  * src/terrain_1c930.c. */
 
 /* Floor probe of a box standing on the ground (gTerrainProbeResult.unk6 != 0). */

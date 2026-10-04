@@ -133,7 +133,7 @@
 
 /* Bonkers - Bonkers (task type #49, Task_Bonkers; gBonkersVariants,
    gBonkersStates / gBonkersStateUpdates) */
-#define bonkersIgnoreTerrainTimer unk18 /* s32: frames left in which BonkersUpdate skips ActorCollideTerrain (24 if sub_08067060) */
+#define bonkersIgnoreTerrainTimer unk18 /* s32: frames left in which BonkersUpdate skips ActorCollideTerrain (24 if IsMidBossDroppingIn) */
 #define bonkersMoveLength unk1C /* s32: the length of the walk, the hop series or the dash (walk cycles, hops, frames) */
 #define bonkersDashStepCount unk24 /* s32: animation steps of the dash so far; a dust trail on every odd one */
 #define bonkersSequencePhase unk28 /* s32: step 4..0 through the state sequence gUnk_08743744 (BonkersChooseNextState) */
@@ -186,7 +186,7 @@
    / gBugzzyStateUpdates) */
 #define bugzzyRushing unk18 /* s32: 1 from the charge's rush to a catch, a wall or the defeat; the afterimages follow it */
 #define bugzzyHeldPlayerSlot unk1C /* s32: the caught player's task slot (HoldPlayer, SetHeldPlayerState), -1 if none */
-#define bugzzyIgnoreTerrainTimer unk20 /* s32: frames left in which BugzzyUpdate skips ActorCollideTerrain (24 if sub_08067060) */
+#define bugzzyIgnoreTerrainTimer unk20 /* s32: frames left in which BugzzyUpdate skips ActorCollideTerrain (24 if IsMidBossDroppingIn) */
 #define bugzzySavedPalette unk24 /* s32: Actor.palette saved while a blink frame draws with palette 0 */
 #define bugzzyBackdropMove unk28 /* s32: which Backdrop throw (0-3) BugzzyChooseBackdrop picked; kept to avoid repeating it */
 #define bugzzyWalkCount unk2C /* s32: BugzzyWalk runs since the last summon; the third enters state 2 (BugzzySummon) */
@@ -1197,7 +1197,7 @@
 
 /* PoppyBrosSr - Poppy Bros. Sr. (task type #50, Task_PoppyBrosSr;
    gPoppyBrosSrVariants, gPoppyBrosSrStates / gPoppyBrosSrStateUpdates) */
-#define poppyBrosSrIgnoreTerrainTimer unk18 /* s32: frames left in which PoppyBrosSrUpdate skips ActorCollideTerrain (24 if sub_08067060) */
+#define poppyBrosSrIgnoreTerrainTimer unk18 /* s32: frames left in which PoppyBrosSrUpdate skips ActorCollideTerrain (24 if IsMidBossDroppingIn) */
 #define poppyBrosSrHopsLeft unk1C /* s32: hops left in sub_08091954's loop (state 1: gUnk_087438DC, state 3: 2) */
 #define poppyBrosSrPlayerNearY unk1C /* s32: state 2: 1 when the nearest player is within 63 px vertically (the bomb's variant) */
 #define poppyBrosSrAimTimer unk20 /* s32: state 2: frames left before the hand throws, facing the player meanwhile (-1 outside) */

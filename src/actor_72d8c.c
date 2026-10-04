@@ -1073,7 +1073,7 @@ void WarpStarFlight23(void)
     TaskYieldTrampoline(50);
     gCurTask->velY = 0x1000;
     TaskYieldTrampoline(84);
-    sub_08025b0c();
+    ExitToNextRoomOnWarpStar();
     TaskSleepForever();
 }
 

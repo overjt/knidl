@@ -265,7 +265,7 @@ void TerrainProbeWallLeftOnGround(void);
 void sub_0801c8dc(void);
 
 /* src/terrain_1c930.c */
-void sub_0801c930(void);
+void TerrainProbeFloorInCameraBounds(void);
 
 /* src/terrain_1d394.c */
 void TerrainProbeFloor(void);
@@ -276,7 +276,7 @@ void TerrainProbeWallLeftInAir(void);
 void TerrainProbeCeiling(void);
 
 /* src/terrain_1e178.c */
-void sub_0801e178(void);
+void TerrainProbeLandingInCameraBounds(void);
 
 /* src/terrain_1ecd0.c */
 void TerrainProbeLanding(void);

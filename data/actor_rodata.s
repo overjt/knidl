@@ -61,8 +61,8 @@ gEnemyGfx:
 	.global	gUnk_0873EF48
 gUnk_0873EF48:
 	.incbin	"baserom.gba", 0x73EF48, 0x2C
-	.global	gUnk_0873EF74
-gUnk_0873EF74:
+	.global	gEnemyPaletteVariants
+gEnemyPaletteVariants:
 	.word	gUnk_08740FB0
 	.word	gUnk_08741D64
 	.word	gUnk_08742EA4
@@ -142,8 +142,8 @@ gMetaKnightsGfx:
 	.word	gJavelinKnightGfx
 	.word	gMaceKnightGfx
 	.word	gTridentKnightGfx
-	.global	gUnk_0873F118
-gUnk_0873F118:
+	.global	gMidBossPaletteVariants
+gMidBossPaletteVariants:
 	.word	gUnk_08744128
 	.word	gUnk_08744140
 	.word	gUnk_08745470
