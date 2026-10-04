@@ -328,7 +328,7 @@ def arm_decode(rom, off):
         imm = w & 0xFFF
         base = (ROM_BASE + off + 8) & ~3
         target = base + imm if (w & 0x00800000) else base - imm
-        return 4, {"pool": target}
+        return 4, {"pool": target, "rd": (w >> 12) & 0xF, "arm": True}
     op = w & 0xFFFF0000
     if op in (0xE28F0000, 0xE24F0000):
         # add/sub rd, pc, #imm (adr): an always-executed data-processing
@@ -474,6 +474,11 @@ class SegmentEmitter(object):
         # functions umul3232H32 and SoundMainRAM); decoded, labelled and
         # emitted in that ISA, with `.arm`/`.thumb` at each boundary
         self.isa_ranges = []
+        # [(name, start, end)] of every configured segment: an ARM pool
+        # load whose literal lies in ANOTHER segment is written with the
+        # R_ARM_LDR_PC_G0 group relocation against that segment's label,
+        # as crt0 does (#170, lesson 4.153), so it survives a shift
+        self.seg_bounds = []
         # addr -> reason of config "raw_words": literal words that stay
         # numbers (constants, not addresses), emitted with `@ raw: <reason>`
         self.raw_words = {}
@@ -855,7 +860,27 @@ class SegmentEmitter(object):
             return True
 
         if info and "pool" in info:
-            self._append_insn("\t%s\t@ 0x%08X" % (text, info["pool"]))
+            target = info["pool"]
+            if info.get("arm") and not (
+                self.seg_start <= target < self.seg_end
+            ):
+                # gas cannot resolve `ldr rN, label` across sections and a
+                # numeric `[pc, #imm]` is wrong once the two sections move
+                # apart; `#:pc_g0:(label - 8)` (-8 = the ARM pc bias) lets
+                # ld fill the offset in from the final addresses
+                seg = [n for n, s, e in self.seg_bounds if s <= target < e]
+                if len(seg) != 1:
+                    return False
+                start = [s for n, s, e in self.seg_bounds if n == seg[0]][0]
+                expr = seg[0] + (
+                    " + 0x%X" % (target - start) if target != start else "")
+                self._append_insn(
+                    "\t%s\tr%d, [pc, #:pc_g0:(%s - 8)]\t@ 0x%08X"
+                    % (mnemonic, info["rd"], expr, target)
+                )
+                self.stats["instructions"] += 1
+                return True
+            self._append_insn("\t%s\t@ 0x%08X" % (text, target))
             self.stats["instructions"] += 1
             return True
 
@@ -1986,6 +2011,10 @@ def main():
             (a, n) for a, n in extra_labels.items()
             if any(s <= a < e for _n, s, e, _k, _a in data_entries)
         )
+        seg_bounds = (
+            [(n, s, e) for n, s, e, _k, _c in entries]
+            + [(n, s, e) for n, s, e, _k, _a in data_entries]
+        )
 
         # Config sanity: every extra label must live inside one configured
         # segment and must not shadow a database symbol defined elsewhere.
@@ -2276,6 +2305,7 @@ def main():
                     (a, w) for a, w in raw_words.items()
                     if u["start"] <= a < u["end"])
                 em.data_labels = data_labels
+                em.seg_bounds = seg_bounds
                 text = None
                 obj = os.path.join(
                     tmpdir, "%s_%d_%d.o" % (uid, em.level, attempt % 2)

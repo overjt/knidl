@@ -911,3 +911,19 @@ moved the record here; `AGENTS.md`'s `## Status` stays the current state.
   by their slot.  New lessons 4.156-4.159.  Done by four proposal agents
   in scratch copies of the tree, one of them in two rounds, plus the
   coordinator, who wrote the zone emitter and applied every change.
+- Tooling follow-ups from #37's audit (issue #170): `tools/split.py`
+  writes every ARM pool load whose literal lies in another segment as
+  `ldr rN, [pc, #:pc_g0:(<segment> + <off> - 8)]`, crt0's form (the task
+  switch helpers' ten loads from `task_literals` and the interworking
+  veneer's one); a boot test with 0x100 bytes inserted before
+  `task_literals` crashed at frame 88 with the old numeric offsets and
+  ran all 14,066 frames with the relocations (lesson 4.155).
+  `tools/fnmatch.sh` defaults to the Makefile's recipe
+  (`-fprologue-bugfix`; `--newpb` kept, `--nopb` the old default); the
+  baserom-reading targets check for `baserom.gba` first and point at
+  INSTALL.md; a bare host `make` builds the ROM (`.DEFAULT_GOAL` was the
+  first rule, `image`); `.gitignore`'s inline comment had left
+  `report.json` unignored; the four `gUnk_04*` I/O symbols are
+  `gRegVcount`, `gRegSound1CntL`, `gRegDma1Sad` and `gRegIme`
+  (`REG_<NAME>` is io_reg.h's macro).  Item 4, split.py's unused `.tail`
+  and odd-start paths, went with #167.

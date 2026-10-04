@@ -136,11 +136,16 @@ the authoritative check.
   `.word sub_08001518+1` (Thumb pointer), `.word MasterIsr` (ARM pointer).
   `asm/rom_syms.s` provides the absolute symbol when the target is not yet
   split, so references resolve at link time with identical bytes.
+  An ARM load whose pool word lies in ANOTHER segment (the task switch
+  helpers and `task_literals`, the interworking veneer and the data word
+  after it) is written `ldr rN, [pc, #:pc_g0:(<segment> + <off> - 8)]`, an
+  `R_ARM_LDR_PC_G0` relocation ld resolves, so it stays right when the two
+  sections move apart (#170, lessons 4.153 and 4.155).
 * Branches are re-written to labels: in-file function names, local `.L_XXXXXXXX`
   labels for intra-file targets without database entries, or database names
   for external targets. A `@ 0x........` comment preserves the target address.
 * Non-function pointer words are symbolic when the value is a
-  `data_symbols` cell (`.word gUnk_04000208`, `.word gSoundMainRAM_Buffer+1`
+  `data_symbols` cell (`.word gRegIme`, `.word gSoundMainRAM_Buffer+1`
   for the Thumb entry of RAM-copied code); a word that is a constant, not
   an address, is a `raw_words` entry and carries a same-line `@ raw:
   <reason>` (docs/data.md 3.5).

@@ -127,7 +127,7 @@ SoundMain:
 	.word	SOUND_INFO_PTR
 	.word	0x68736D53	@ raw: constant, ID_NUMBER 'Smsh' (include/gba/m4a_internal.h), the idle value of SoundInfo.ident that SoundMain checks before it locks the driver
 	.word	gSoundMainRAM_Buffer+1
-	.word	gUnk_04000006
+	.word	gRegVcount
 	.word	0x00000350	@ raw: constant, offsetof(struct SoundInfo, pcmBuffer) (0x350)
 	.word	0x00000630	@ raw: constant, PCM_DMA_BUF_SIZE (1584), the offset of the right channel's half of pcmBuffer
 	.thumb_func
@@ -218,7 +218,7 @@ SoundMainRAM_ChanLoop:
 	bcc.n	.L_080cd9e8	@ 0x080CD9E8
 	b.n	.L_080cdcba	@ 0x080CDCBA
 	movs	r0, r0
-	.word	gUnk_04000006
+	.word	gRegVcount
 .L_080cd9e8:
 	ldrb	r6, [r4, #0]
 	movs	r0, #199
@@ -878,7 +878,7 @@ ply_port:
 	bl	sub_080cdd72	@ 0x080CDD72
 	strb	r3, [r0, #0]
 	bx	ip
-	.word	gUnk_04000060
+	.word	gRegSound1CntL
 	.thumb_func
 	.global	m4aSoundVSync
 m4aSoundVSync:
@@ -920,7 +920,7 @@ m4aSoundVSync:
 .L_080cdf40:
 	bx	lr
 	movs	r0, r0
-	.word	gUnk_040000BC
+	.word	gRegDma1Sad
 	.word	0x84400004	@ raw: constant, DMA1/DMA2 control for the sound FIFOs: enable, special (FIFO) timing, 32-bit, repeat, 4 words
 	.thumb_func
 	.global	MPlayMain

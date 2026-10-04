@@ -48,7 +48,7 @@
  * pseudo and shifts the whole register allocation by one.  The ROM pools
  * 0x04000208 on its own at every mention.
  * raw: stays a symbol, REG_IME changes this file's allocation (lesson 3.523) */
-#define GIME gUnk_04000208
+#define GIME gRegIme
 
 /* The MultiBoot SWI thunk returns an error code; syscall.h declares it u8,
  * but the ROM keeps the value untruncated, i.e. the original prototype was

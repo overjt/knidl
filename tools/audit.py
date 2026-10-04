@@ -564,7 +564,7 @@ REASONS = {
     "fn-engine": "tracked by #155: engine-zone helpers whose role is not settled",
     "fn-lib": "runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8)",
     "ram": "tracked by #155: role not proven; many are proven shared scratch or hold two encodings",
-    "io": "I/O registers kept as symbols: the m4a_1 and SoftReset asm pools (VCOUNT, SOUND1CNT_L, DMA1SAD, IME) and early_4734.c's IME, where REG_IME changes the allocation (lesson 3.523); the rest of the C spells REG_*",
+    "io": "none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_*",
     "rom-asset": "asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
     "rom-position": "documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4)",
@@ -656,6 +656,8 @@ def placeholder_census():
 
     def add(kind, cat, n=1):
         rows[(kind, cat)] = rows.get((kind, cat), 0) + n
+
+    add("I/O register", "io", 0)  # a row even at 0, like loc
 
     # functions
     with open(os.path.join(ROOT, "docs/analysis/symbols.csv"), encoding="utf-8") as f:
