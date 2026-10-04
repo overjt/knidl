@@ -399,7 +399,7 @@ void CreateQuickDrawWinCountLabel(void)
     gCurTask->quickDrawObjectArriveDelay = 60;
 }
 
-void sub_080bc70c(void)
+void QuickDrawPlayerSetReady(void)
 {
     if (gCurTaskIdx == 0)
     {
@@ -506,7 +506,7 @@ void QuickDrawPlayerArrive(void)
         CreateQuickDrawWinCountLabel();
         TaskYieldTrampoline(gCurTask->quickDrawObjectArriveDelay);
     }
-    sub_080bc70c();
+    QuickDrawPlayerSetReady();
     TaskSleepForever();
 }
 
@@ -664,7 +664,7 @@ void QuickDrawLabelDraw(void)
     }
 }
 
-void sub_080bccbc(void)
+void QuickDrawLabelShow(void)
 {
     struct Task *t;
     u8 *p = &gCurTask->layer;
@@ -717,7 +717,7 @@ void sub_080bccbc(void)
 void QuickDrawLabel(void)
 {
     gCurTask->drawCallback = (u32)QuickDrawLabelDraw;
-    sub_080bccbc();
+    QuickDrawLabelShow();
     if (gCurTask->quickDrawObjectLabelLifetime != -1)
         TaskExitTrampoline();
     else

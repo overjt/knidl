@@ -8,9 +8,9 @@
  *
  * Menu sprite and palette tasks, second part.  EraseConfirmDialogUpdate is the
  * per-frame body of task type #243 (two sprites plus a palette
- * cross-fade); task type #244 (Task_EraseFileWipe, body sub_0800ec08) slides a
+ * cross-fade); task type #244 (Task_EraseFileWipe, body EraseFileWipeDraw) slides a
  * sprite pair in, bobs it and slides it out; task types #254
- * (Task_SoundTestCursors, body sub_0800ecb8) and #255 (Task_SoundTestPulse) animate the
+ * (Task_SoundTestCursors, body SoundTestCursorsUpdate) and #255 (Task_SoundTestPulse) animate the
  * sound-test screen (menu screen 7: the cursor sprites and the palette
  * pulse of the selected column, which stays lit while its song plays);
  * task types #249 (Task_LinkPlayPalettePulse) and #250 (Task_LinkPlayColorCycle) cycle the
@@ -64,7 +64,7 @@ void Task_EraseFileWipe(void)
 
     t->moveCallback = (u32)TaskMove;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_0800ec08;
+    t->updateCallback = (u32)EraseFileWipeDraw;
     t->frameTable = gUnk_08755650;
     t->eraseFileWipeOffsetX = 0;
     t->eraseFileWipeShakeY = 0;
@@ -94,7 +94,7 @@ void Task_EraseFileWipe(void)
     TaskExitTrampoline();
 }
 
-void sub_0800ec08(void)
+void EraseFileWipeDraw(void)
 {
     if (TaskIsOnScreenNoCamera()) {
         struct Task *t = gCurTask;
@@ -111,7 +111,7 @@ void Task_SoundTestCursors(void)
 
     t->moveCallback = 0;
     t->drawCallback = 0;
-    t->updateCallback = (u32)sub_0800ecb8;
+    t->updateCallback = (u32)SoundTestCursorsUpdate;
     t->soundTestCursorsBlendFrom = 0;
     t->soundTestCursorsBlendTo = 1;
     t->soundTestCursorsBlendRatio = 0;
@@ -120,7 +120,7 @@ void Task_SoundTestCursors(void)
     TaskExitTrampoline();
 }
 
-void sub_0800ecb8(void)
+void SoundTestCursorsUpdate(void)
 {
     struct Task *t;
     struct Task *u;

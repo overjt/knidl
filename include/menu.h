@@ -161,9 +161,9 @@ void Task_EraseConfirmDialog(void);
 /* src/menutask_0ea0c.c */
 void EraseConfirmDialogUpdate(void);
 void Task_EraseFileWipe(void);
-void sub_0800ec08(void);
+void EraseFileWipeDraw(void);
 void Task_SoundTestCursors(void);
-void sub_0800ecb8(void);
+void SoundTestCursorsUpdate(void);
 void Task_SoundTestPulse(void);
 void Task_LinkPlayPalettePulse(void);
 void Task_LinkPlayColorCycle(void);

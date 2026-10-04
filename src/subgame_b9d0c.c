@@ -178,7 +178,7 @@ void SubGameLoadScreen(s32 a0)
     m = m * 2 + a0;
     if (gSubGameGfxSets[m] != 0)
         LoadGfxSet(gSubGameGfxSets[m]);
-    sub_08008d10(gUnk_02007FCC, a0);
+    SubGameLoadObjTiles(gUnk_02007FCC, a0);
     gSubGamePhase = a0;
 }
 

@@ -2768,7 +2768,7 @@ u32 gPlayerEffectHurtBurstFrames[] FRAME_TABLE = {
     (u32)gUnk_080D4820,
 };
 
-/* gUnk_0874C960.  Consumer: sub_08055460 (src/effect_55460.c:39).  8 words,
+/* gUnk_0874C960.  Consumer: PlayerEffectAbilityLoss (src/effect_55460.c:39).  8 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x0874C960-0x0874C980).  Declared
  * include/effect.h:87. */
@@ -13537,7 +13537,7 @@ u32 gBootLogoSprites[] FRAME_TABLE = {
     (u32)gUnk_08541C90,
 };
 
-/* gUnk_087555B4.  Consumer: sub_08009640 (src/boot_091ac.c:200).  9 words,
+/* gUnk_087555B4.  Consumer: TitleSpritesLetter (src/boot_091ac.c:200).  9 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x087555B4-0x087555D8).  Declared
  * include/mode.h:113. */
@@ -13656,7 +13656,7 @@ u32 gUnk_08755688[] FRAME_TABLE = {
     (u32)gUnk_085633D4,
 };
 
-/* gUnk_087556D4.  Consumer: sub_0800ecb8 (src/menutask_0ea0c.c:131).  3
+/* gUnk_087556D4.  Consumer: SoundTestCursorsUpdate (src/menutask_0ea0c.c:131).  3
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087556D4-0x087556E0).  Declared
  * include/menu.h:96. */
@@ -14078,7 +14078,7 @@ u32 gQuickDrawKingDededeFrames[] FRAME_TABLE = {
     (u32)gUnk_085F2AF8,
 };
 
-/* gQuickDrawDigitFrames.  Consumers: sub_080bccbc
+/* gQuickDrawDigitFrames.  Consumers: QuickDrawLabelShow
  * (src/subgame_bc0cc.c:694), QuickDrawTimerInit (src/subgame_bc0cc.c:733),
  * CreateQuickDrawBestTimeLabel (src/subgame_bb528.c:485).  10 words, OAM
  * template streams; extent: the span to the next label, every word such a
@@ -14097,7 +14097,7 @@ u32 gQuickDrawDigitFrames[] FRAME_TABLE = {
     (u32)gUnk_085F2BBC,
 };
 
-/* gQuickDrawWinCountFrames.  Consumer: sub_080bccbc
+/* gQuickDrawWinCountFrames.  Consumer: QuickDrawLabelShow
  * (src/subgame_bc0cc.c:685).  3 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755A5C-0x08755A68).  Declared include/subgame.h:238. */
@@ -14118,7 +14118,7 @@ u32 gQuickDrawRankFrames[] FRAME_TABLE = {
     (u32)gUnk_085F2C8C,
 };
 
-/* gQuickDrawRedrawFrames.  Consumer: sub_080bccbc
+/* gQuickDrawRedrawFrames.  Consumer: QuickDrawLabelShow
  * (src/subgame_bc0cc.c:682).  1 word, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755A78-0x08755A7C).  Declared include/subgame.h:240. */
@@ -14126,7 +14126,7 @@ u32 gQuickDrawRedrawFrames[] FRAME_TABLE = {
     (u32)gUnk_085F2CA4,
 };
 
-/* gUnk_08755A7C.  Consumers: sub_080bccbc (src/subgame_bc0cc.c:688),
+/* gUnk_08755A7C.  Consumers: QuickDrawLabelShow (src/subgame_bc0cc.c:688),
  * QuickDrawSlash (src/subgame_bc0cc.c:817).  3 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08755A7C-0x08755A88).  Declared include/subgame.h:241. */
@@ -14136,7 +14136,7 @@ u32 gUnk_08755A7C[] FRAME_TABLE = {
     (u32)gUnk_085F30FC,
 };
 
-/* gUnk_08755A88.  Consumers: sub_080bccbc (src/subgame_bc0cc.c:691),
+/* gUnk_08755A88.  Consumers: QuickDrawLabelShow (src/subgame_bc0cc.c:691),
  * CreateQuickDrawDefeatedLabel (src/subgame_bb528.c:463).  7 words, OAM
  * template streams; extent: the span to the next label, every word such a
  * target (pointer_tables 0x08755A88-0x08755AA4).  Declared
@@ -14151,7 +14151,7 @@ u32 gUnk_08755A88[] FRAME_TABLE = {
     (u32)gUnk_085F2FFC,
 };
 
-/* gQuickDrawPlayerTagFrames.  Consumer: sub_080bccbc
+/* gQuickDrawPlayerTagFrames.  Consumer: QuickDrawLabelShow
  * (src/subgame_bc0cc.c:679).  5 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755AA4-0x08755AB8).  Declared include/subgame.h:243. */
@@ -14163,7 +14163,7 @@ u32 gQuickDrawPlayerTagFrames[] FRAME_TABLE = {
     (u32)gUnk_085F32CC,
 };
 
-/* gQuickDrawFalseStartMarkFrames.  Consumer: sub_080bccbc
+/* gQuickDrawFalseStartMarkFrames.  Consumer: QuickDrawLabelShow
  * (src/subgame_bc0cc.c:697).  4 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x08755AB8-0x08755AC8).  Declared include/subgame.h:244. */
@@ -14174,7 +14174,7 @@ u32 gQuickDrawFalseStartMarkFrames[] FRAME_TABLE = {
     (u32)gUnk_085F333C,
 };
 
-/* gQuickDrawSweatDropFrames.  Consumers: sub_080bccbc
+/* gQuickDrawSweatDropFrames.  Consumers: QuickDrawLabelShow
  * (src/subgame_bc0cc.c:700), QuickDrawSweatDrop (src/subgame_bc0cc.c:872).
  * 4 words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08755AC8-0x08755AD8).  Declared

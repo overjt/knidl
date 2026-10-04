@@ -15,7 +15,7 @@
  * AgbMain state 7 (CutsceneMain), entered instead of states 5/6 while
  * gCutscenePending is set: the scripted sequence of stage gCurLevel.
  * It clears the blend and window shadows, loads the sequence's palette
- * set and pictures (sub_08008d98, and CutsceneLoadGraphics: the sprite sheet
+ * set and pictures (CutsceneLoadBgGraphics, and CutsceneLoadGraphics: the sprite sheet
  * gCutsceneSheets[stage] plus, in link play, the player palette), opens
  * window 0 (full width for sequence 7), spawns M04's director, task
  * type #91, and pumps frames until the director leaves state 7. */
@@ -36,7 +36,7 @@ void CutsceneMain(void)
             LoadBgLayout(8);
         else
             LoadBgLayout(9);
-        sub_08008d98(gCurLevel);
+        CutsceneLoadBgGraphics(gCurLevel);
         gBg2ScrollX = gBg3ScrollX = 0;
         gBg2ScrollY = gBg3ScrollY = 0;
         gBg0ScrollY = 0x280000;

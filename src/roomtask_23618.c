@@ -63,7 +63,7 @@ void RoomTaskStageInit(void)
 void RoomTaskDraw(void)
 {
     DrawDoors();
-    sub_0800a6a4();
+    HudUpdate();
 }
 
 void RoomTaskUpdateCamera(void)

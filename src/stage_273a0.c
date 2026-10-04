@@ -19,7 +19,7 @@
 
 /* Declared here, not through a header: the calls in this file pass other
    types than the definition takes (lessons 3.428, 3.517). */
-void sub_08009e2c(s32 a);
+void HudClearDeadPlayer(s32 a);
 
 void ReturnToRestartPoint(void)
 {
@@ -204,7 +204,7 @@ s32 ReleaseDeadPlayerView(s32 i)
             if (gPlayerLives[i] != 0)
                 HudShowAbilityAnimated(ABILITY_PICTURE_WAIT, gCurTask->player->playerIndex);
             else
-                sub_08009e2c(i);
+                HudClearDeadPlayer(i);
         }
     }
 }

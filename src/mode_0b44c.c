@@ -151,7 +151,7 @@ void StageInit(void)
     ResetBgScroll();
     ClearColliderLists();
     LoadGfxSet(0);
-    sub_08008c7c();
+    LoadMetaKnightmareOneUpTiles();
     gBossSubtype = -1;
     if (gBigSwitchPressActive == 0)
         LoadRoom();
@@ -212,7 +212,7 @@ void HubInit(void)
     gBg0ScrollX = gBg1ScrollX = gBg2ScrollX = gBg3ScrollX = 0;
     gBg0ScrollY = gBg1ScrollY = gBg2ScrollY = gBg3ScrollY = 0;
     LoadGfxSet(0);
-    sub_08008c7c();
+    LoadMetaKnightmareOneUpTiles();
     LoadHubRoom();
     b = gPaletteAnimRefCounts;
     zero = 0;
@@ -241,7 +241,7 @@ void BigSwitchViewInit(void)
     ResetFadeAndBlend();
     ResetBgScroll();
     LoadGfxSet(0);
-    sub_08008c7c();
+    LoadMetaKnightmareOneUpTiles();
     LoadBigSwitchViewRoom();
     /* A reversed clear loop only strength-reduces as a do/while over a
      * signed pointer compare with a zero variable (lesson 3.30). */

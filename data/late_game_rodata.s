@@ -47,8 +47,8 @@ gUnk_087560EC:
 	.section .late_game_rodata_08756178, "a"
 	.global	late_game_rodata_08756178
 late_game_rodata_08756178:
-	.global	gUnk_08756178
-gUnk_08756178:
+	.global	gStageObjectSubtypes
+gStageObjectSubtypes:
 	.incbin	"baserom.gba", 0x756178, 0xC
 	.global	gUnk_08756184
 gUnk_08756184:

@@ -30,7 +30,7 @@
  * player mode 10 and kills it otherwise.  Variants 1 and 2 (M10) are short
  * puffs launched from 12 pixels behind the point they face, the sub-state
  * picking the facing; 3 (M13's ability get) shows for three frames at a
- * random offset from its spawner (sub_08053e34 is its empty Task.updateCallback
+ * random offset from its spawner (PlayerEffectAbilityGetSparkleUpdate is its empty Task.updateCallback
  * stub); 4 and 5 fly one of eight random trajectories of the s16 rows
  * gUnk_0873B9EC[6][8] (offsets and 8.8 velocities), 5 with TaskDrawScreen's
  * draw when PlayerState.unk37 == 2.  Variant 6 has two forms picked by the
@@ -163,7 +163,7 @@ void PlayerEffectAbilityGetSparkle(void)
     struct Task *t = gCurTask;
     s32 s;
 
-    t->updateCallback = (u32)sub_08053e34;
+    t->updateCallback = (u32)PlayerEffectAbilityGetSparkleUpdate;
     s = t->playerEffectSpawnWord & 15;
     if (s == 0)
     {
@@ -179,7 +179,7 @@ void PlayerEffectAbilityGetSparkle(void)
     TaskExitTrampoline();
 }
 
-void sub_08053e34(void)
+void PlayerEffectAbilityGetSparkleUpdate(void)
 {
 }
 

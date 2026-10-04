@@ -172,8 +172,8 @@ gBossGfx:
 	.word	gKrackoGfx
 	.word	gNightmarePowerOrbGfx
 	.word	gNightmareWizardGfx
-	.global	gUnk_0873F180
-gUnk_0873F180:
+	.global	gStageObjectGfx
+gStageObjectGfx:
 	.incbin	"baserom.gba", 0x73F180, 0x4
 	.word	gUnk_0825C6B4
 	.word	gUnk_0825CA30

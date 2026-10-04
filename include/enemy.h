@@ -80,7 +80,7 @@ extern s8 gUnk_0873EF48[];
 extern u32 *gMidBossGfx[];
 extern struct RoomObjectGfx *gMetaKnightsGfx[];
 extern u32 *gBossGfx[];
-extern struct RoomObjectGfx *gUnk_0873F180[];
+extern struct RoomObjectGfx *gStageObjectGfx[];
 extern u32 gUnk_0873F500[];
 extern u32 gUnk_0873F720[];
 extern u32 gUnk_0873F758[];
@@ -1291,7 +1291,7 @@ extern u32 gStarRodPieceHoverStates[];
 extern u32 gStarRodPieceHoverStateUpdates[];
 extern u32 gStarRodPieceSlideOutStates[];
 extern u32 gStarRodPieceSlideOutStateUpdates[];
-extern s8 gUnk_08756178[];
+extern s8 gStageObjectSubtypes[];
 extern u32 gUnk_08756184[];
 extern s16 (*gHBlankScrollEffects[])(void);
 

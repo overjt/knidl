@@ -117,9 +117,9 @@ s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 void SpawnRoomObjectsOnLoad(void)
 {
@@ -158,9 +158,9 @@ void SpawnRoomObjectsOnLoad(void)
             gHudHpBarCount = gHudHpBarsLeft = 1;
             break;
         case 5:
-            if (gUnk_08756178[e->unk1] == -1)
+            if (gStageObjectSubtypes[e->unk1] == -1)
                 continue;
-            d = gUnk_0873F180[gUnk_08756178[e->unk1]];
+            d = gStageObjectGfx[gStageObjectSubtypes[e->unk1]];
             gUnk_03001F2C = 0;
             switch (e->unk1)
             {
@@ -197,10 +197,10 @@ void SpawnRoomObjectsOnLoad(void)
             case 3:
             }
             if (d != NULL)
-                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gStageObjectSubtypes[e->unk1], gUnk_03001F2C, 0, e->x, e->y,
                                  (gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].paletteBank << 12) | ((gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk2 * 2) + 16));
             else
-                r = CreateActorByKind(ACTOR_KIND_OBJECT, gUnk_08756178[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
+                r = CreateActorByKind(ACTOR_KIND_OBJECT, gStageObjectSubtypes[e->unk1], gUnk_03001F2C, 0, e->x, e->y, 0);
             break;
         }
         if (r != -1)
@@ -272,7 +272,7 @@ s32 SpawnRoomObject(s32 i)
     case 6:
         if (*(s8 *)(e4 + 1) != 0)
             break;
-        res5 = sub_080b5d84(e4);
+        res5 = SpawnRoomMapEvent(e4);
         break;
     }
     pz = (u8 *)gRoomObjectTried + i6;

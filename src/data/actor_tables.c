@@ -3053,16 +3053,16 @@ u32 gWhispyWoodsAppleVariants[1] ACTOR_TBL(0874c21c) = {
 /* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsAppleInit, WhispyWoodsAppleEnterState */
 u32 gWhispyWoodsAppleStates[4] ACTOR_TBL(0874c21c) = {
     (u32)WhispyWoodsAppleFall,
-    (u32)WhispyWoodsAppleState1,
-    (u32)WhispyWoodsAppleState2,
-    (u32)WhispyWoodsAppleState3,
+    (u32)WhispyWoodsAppleBounce1,
+    (u32)WhispyWoodsAppleBounce2,
+    (u32)WhispyWoodsAppleBounce3,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsAppleUpdate */
 u32 gWhispyWoodsAppleStateUpdates[4] ACTOR_TBL(0874c21c) = {
     (u32)WhispyWoodsAppleFallUpdate,
-    (u32)WhispyWoodsAppleState1Update,
-    (u32)WhispyWoodsAppleState2Update,
-    (u32)WhispyWoodsAppleState3Update,
+    (u32)WhispyWoodsAppleBounce1Update,
+    (u32)WhispyWoodsAppleBounce2Update,
+    (u32)WhispyWoodsAppleBounce3Update,
 };
 
 /* ---- 0x0874C254-0x0874C260: 3 table(s), 3 function pointer(s), section .actor_tbl_0874c254 ---- */
@@ -3070,7 +3070,7 @@ u32 gWhispyWoodsAppleStateUpdates[4] ACTOR_TBL(0874c21c) = {
 u32 gWhispyWoodsAirPuffVariants[1] ACTOR_TBL(0874c254) = {
     (u32)WhispyWoodsAirPuffInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in WhispyWoodsAirPuffInit, sub_080b33bc */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in WhispyWoodsAirPuffInit, WhispyWoodsAirPuffEnterState */
 u32 gWhispyWoodsAirPuffStates[1] ACTOR_TBL(0874c254) = {
     (u32)WhispyWoodsAirPuffState0,
 };

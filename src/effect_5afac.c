@@ -97,7 +97,7 @@ void PlayerGoalGameRideSpring(void);
 void GoalGameCameraFollowPlayer(void);
 void GoalGameCameraUpdate(void);
 s32 GoalGamePlayerMarkerFollowParent(void);
-void sub_0805ceec(void);
+void GoalGameSignFollowHelperKirby(void);
 void GoalGameHelperKirbyUpdate(void);
 void sub_0805d5fc(void);
 void TaskStartFrameScript(s32 a0);
@@ -1192,7 +1192,7 @@ void Task_GoalGameSign(void)
     if (gCurTask->variant == 0)
     {
         TaskYieldTrampoline(24);
-        gCurTask->updateCallback = (u32)sub_0805ceec;
+        gCurTask->updateCallback = (u32)GoalGameSignFollowHelperKirby;
         gCurTask->unk28 = 1;
         do
         {
@@ -1256,7 +1256,7 @@ void Task_GoalGameSign(void)
     TaskSleepForever();
 }
 
-void sub_0805ceec(void)
+void GoalGameSignFollowHelperKirby(void)
 {
     gCurTask->pixelX = (gTasks + gCurTask->unk46)->pixelX - 4;
     gCurTask->pixelY = (gTasks + gCurTask->unk46)->pixelY - 16;

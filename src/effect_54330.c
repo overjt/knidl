@@ -23,7 +23,7 @@
  * and 10 placed at the height the spawner passes in the low half of
  * Task.unk18; 11 (PlayerEffectBubble) asks M07's IsFullBlockAtPixel about its position
  * and, when that returns 0, rises while swaying left and right, until its
- * companion sub_08054a44 (the collision box gUnk_0873CB74 through
+ * companion PlayerEffectBubbleUpdate (the collision box gUnk_0873CB74 through
  * TerrainCollidePointStop) kills it once its Task.waterFlags is clear or gTerrainResult.unk1
  * is set. */
 
@@ -269,7 +269,7 @@ void PlayerEffectBubble(void)
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorldInViewOrFree;
-    gCurTask->updateCallback = (u32)sub_08054a44;
+    gCurTask->updateCallback = (u32)PlayerEffectBubbleUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gPlayerEffectBubbleFrames;
@@ -291,7 +291,7 @@ void PlayerEffectBubble(void)
     TaskExitTrampoline();
 }
 
-void sub_08054a44(void)
+void PlayerEffectBubbleUpdate(void)
 {
     TerrainCollidePointStop(gUnk_0873CB74);
     if (gCurTask->waterFlags == 0 || gTerrainResult.ceilingHits != 0)

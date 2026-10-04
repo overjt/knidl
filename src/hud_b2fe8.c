@@ -107,9 +107,9 @@ s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 void sub_080b2fe8(void)
 {
@@ -121,7 +121,7 @@ void sub_080b2fe8(void)
     t->whispyWoodsAirPuffEffectY = t->pixelY;
 }
 
-void sub_080b3010(u8 a)
+void WhispyWoodsAppleAdvanceRollFrame(u8 a)
 {
     struct Task **c;
     struct Task *t;
@@ -235,9 +235,9 @@ void WhispyWoodsAppleFall(void)
     u3->speedLimitY = 128 << 11;
     for (;;)
     {
-        sub_080b3010(15);
-        sub_080b3010(8);
-        sub_080b3010(4);
+        WhispyWoodsAppleAdvanceRollFrame(15);
+        WhispyWoodsAppleAdvanceRollFrame(8);
+        WhispyWoodsAppleAdvanceRollFrame(4);
     }
 }
 
@@ -245,7 +245,7 @@ void WhispyWoodsAppleFallUpdate(void)
 {
 }
 
-void WhispyWoodsAppleState1(void)
+void WhispyWoodsAppleBounce1(void)
 {
     struct Task **c;
     s32 z;
@@ -265,10 +265,10 @@ void WhispyWoodsAppleState1(void)
     u2->velY = 0xFFFE0000;
     u2->accelY = 168 << 5;
     for (;;)
-        sub_080b3010(4);
+        WhispyWoodsAppleAdvanceRollFrame(4);
 }
 
-void WhispyWoodsAppleState1Update(void)
+void WhispyWoodsAppleBounce1Update(void)
 {
     struct Task *t;
 
@@ -280,7 +280,7 @@ void WhispyWoodsAppleState1Update(void)
     }
 }
 
-void WhispyWoodsAppleState2(void)
+void WhispyWoodsAppleBounce2(void)
 {
     struct Task **c;
     s32 z;
@@ -300,10 +300,10 @@ void WhispyWoodsAppleState2(void)
     u2->velY = 0xFFFF0000;
     u2->accelY = 192 << 4;
     for (;;)
-        sub_080b3010(8);
+        WhispyWoodsAppleAdvanceRollFrame(8);
 }
 
-void WhispyWoodsAppleState2Update(void)
+void WhispyWoodsAppleBounce2Update(void)
 {
     struct Task *t;
 
@@ -315,7 +315,7 @@ void WhispyWoodsAppleState2Update(void)
     }
 }
 
-void WhispyWoodsAppleState3(void)
+void WhispyWoodsAppleBounce3(void)
 {
     struct Task **c;
     s32 z;
@@ -335,10 +335,10 @@ void WhispyWoodsAppleState3(void)
     u2->velY = 0xFFFFC000;
     u2->accelY = 224 << 3;
     for (;;)
-        sub_080b3010(8);
+        WhispyWoodsAppleAdvanceRollFrame(8);
 }
 
-void WhispyWoodsAppleState3Update(void)
+void WhispyWoodsAppleBounce3Update(void)
 {
     struct Task **c;
     struct Task *t;
@@ -399,7 +399,7 @@ void WhispyWoodsAirPuffUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080b33bc(void)
+void WhispyWoodsAirPuffEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gWhispyWoodsAirPuffStates);
 }
@@ -925,7 +925,7 @@ void Task_EnergyDrink(void)
     CallTableEntry(*(u8 *)((u8 *)tb + 115), 2, gPickupVariants);
 }
 
-void sub_080b3f54(void)
+void PickupInitSprite(void)
 {
     struct Actor *a;
 
@@ -1014,7 +1014,7 @@ void PickupInit(void)
         ActorSetState(PICKUP_STATE_FALL_IN_WATER);
     else
         ActorSetState(PICKUP_STATE_FALL);
-    sub_080b3f54();
+    PickupInitSprite();
     CallTableEntry(gCurTask->state, 3, gPickupStates);
 }
 

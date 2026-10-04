@@ -37,9 +37,9 @@ void HudRedrawClock(void)
         HudDrawClock(gHudClock);
 }
 
-void sub_0800ab3c(void)
+void HudDrawLevelName(void)
 {
-    sub_08008e6c(gCurLevel);
+    HudLoadLevelName(gCurLevel);
     HudDrawTiles(gUnk_085A5654, 0, 0, 64);
 }
 
@@ -301,7 +301,7 @@ void HudDrawHpBarChange(s32 from, s32 to)
     }
 }
 
-void sub_0800b230(s32 a, s32 b)
+void HudDrawLifeRequestPanel(s32 a, s32 b)
 {
     s32 row;
 

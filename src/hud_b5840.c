@@ -80,9 +80,9 @@ s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 s32 LoadRoomMidBossGfx(u8 *e, s32 i, s32 k)
 {
@@ -208,14 +208,14 @@ void LoadRoomMetaKnightsGfx(u8 *e, s32 idx, s32 n)
     }
 }
 
-s32 sub_080b5a94(struct RoomObjectEntry *e, s32 idx, s32 n)
+s32 LoadRoomStageObjectGfx(struct RoomObjectEntry *e, s32 idx, s32 n)
 {
     struct RoomObjectGfx *d;
     s32 i;
 
-    if (gUnk_08756178[e->unk1] == -1)
+    if (gStageObjectSubtypes[e->unk1] == -1)
         return 0;
-    d = gUnk_0873F180[gUnk_08756178[e->unk1]];
+    d = gStageObjectGfx[gStageObjectSubtypes[e->unk1]];
     if (d == NULL)
         return 0;
     for (i = 0; i < idx; i++)
@@ -223,7 +223,7 @@ s32 sub_080b5a94(struct RoomObjectEntry *e, s32 idx, s32 n)
         if (gRoomObjectList.entries[i].kind == 5)
         {
             if (gRoomObjectGfxSlotIds[i] != -1
-             && gUnk_0873F180[gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk0] == d)
+             && gStageObjectGfx[gRoomObjectGfxSlots[gRoomObjectGfxSlotIds[i]].unk0] == d)
             {
                 gRoomObjectGfxSlotIds[idx] = gRoomObjectGfxSlotIds[i];
                 return 0;
@@ -287,7 +287,7 @@ s32 SpawnRoomEnemy(struct RoomObjectEntry *e, s32 i)
     return res;
 }
 
-s32 sub_080b5d84(struct RoomObjectEntry *e)
+s32 SpawnRoomMapEvent(struct RoomObjectEntry *e)
 {
     s32 slot;
     struct Task *t;

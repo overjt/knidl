@@ -1058,8 +1058,8 @@ gUnk_08731BA0:
 	.global	gUnk_08731C88
 gUnk_08731C88:
 	.incbin	"baserom.gba", 0x731C88, 0x40
-	.global	gUnk_08731CC8
-gUnk_08731CC8:
+	.global	gTitlePressStartLetterFrames
+gTitlePressStartLetterFrames:
 	.incbin	"baserom.gba", 0x731CC8, 0x14
 	.global	gUnk_08731CDC
 gUnk_08731CDC:

@@ -120,7 +120,7 @@ void PlayerEffectInhaleAirDraw(void);
 void PlayerEffectCatchDust(void);
 void PlayerEffectSpitDust(void);
 void PlayerEffectAbilityGetSparkle(void);
-void sub_08053e34(void);
+void PlayerEffectAbilityGetSparkleUpdate(void);
 void PlayerEffectImpactStar(void);
 void PlayerEffectDeathStar(void);
 void PlayerEffectSkidDust(void);
@@ -134,7 +134,7 @@ void PlayerEffectSlideDustUpdate(void);
 void PlayerEffectSplash(void);
 void PlayerEffectLeaveWaterSplash(void);
 void PlayerEffectBubble(void);
-void sub_08054a44(void);
+void PlayerEffectBubbleUpdate(void);
 
 /* src/effect_54a80.c */
 void PlayerEffectDeathStarRing(void);
@@ -146,7 +146,7 @@ void sub_080552fc(void);
 void sub_080553d4(void);
 
 /* src/effect_55460.c */
-void sub_08055460(void);
+void PlayerEffectAbilityLoss(void);
 void sub_08055520(void);
 void PlayerEffectDanceStarBurst(void);
 void sub_0805574c(void);
@@ -273,7 +273,7 @@ void Task_GoalGameSpring(void);
 void Task_GoalGamePlayerMarker(void);
 s32 GoalGamePlayerMarkerFollowParent(void);
 void Task_GoalGameSign(void);
-void sub_0805ceec(void);
+void GoalGameSignFollowHelperKirby(void);
 void Task_GoalGameHelperKirby(void);
 void GoalGameHelperKirbyUpdate(void);
 void sub_0805d564(void);

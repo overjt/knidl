@@ -1010,7 +1010,7 @@
 #define WHEELIE_STATE_BOUNCE_OFF_WALL  4
 #define WHEELIE_STATE_FALL             5
 
-/* WhispyWoodsAirPuff states - gWhispyWoodsAirPuffStates[N], CallTableEntry(Task.state) in sub_080b33bc */
+/* WhispyWoodsAirPuff states - gWhispyWoodsAirPuffStates[N], CallTableEntry(Task.state) in WhispyWoodsAirPuffEnterState */
 #define WHISPY_WOODS_AIR_PUFF_STATE_0  0
 
 /* WhispyWoodsApple states - gWhispyWoodsAppleStates[N], CallTableEntry(Task.state) in WhispyWoodsAppleEnterState */

@@ -439,7 +439,7 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
     sub_08054de8,
     sub_08054fe4,
     PlayerEffectDanceStarBurst,
-    sub_08055460,
+    PlayerEffectAbilityLoss,
     sub_08055520,
     sub_0805574c,
     sub_0805587c,

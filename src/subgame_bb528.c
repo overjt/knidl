@@ -23,7 +23,7 @@
  * CreateQuickDrawBonusSign / CreateQuickDrawBonus / CreateQuickDrawRankLabel spawn task type #94 objects of
  * kinds 7, 8 and 9; CreateQuickDrawDefeatedLabel / CreateQuickDrawBestTimeLabel / CreateQuickDrawResultsPlayer (kinds 1
  * and 0, the second one the reaction-time readout of gQuickDrawBestTime) and the
- * single-player placers sub_080bbbb8 / QuickDrawSetupResultsVsCpu fill the screen.
+ * single-player placers QuickDrawCreateNextBonusVsCpu / QuickDrawSetupResultsVsCpu fill the screen.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -192,9 +192,9 @@ void QuickDrawInitBonusSteps(void)
 void QuickDrawCreateNextBonus(void)
 {
     if (gPlayerCount != 1)
-        sub_080bba1c();
+        QuickDrawCreateNextBonusByRank();
     else
-        sub_080bbbb8();
+        QuickDrawCreateNextBonusVsCpu();
     gCurTask->quickDrawBonusStepsLeft--;
 }
 
@@ -237,10 +237,10 @@ void QuickDrawPlaceRankLabel(u8 a0, s8 a1)
     s16 x = t->pixelX - 24;
     s16 y = t->pixelY - 32;
 
-    /* The ROM keeps a dead `ldrsh` of t->unk48: the switch sub_080bb930 has
+    /* The ROM keeps a dead `ldrsh` of t->unk48: the switch QuickDrawCreateRankBonus has
        on unk4A, with every arm reduced to a no-op.  Merging the arms into
        one loses the load, so the four labels stay (the values are
-       sub_080bb930's; the ROM cannot show them). */
+       QuickDrawCreateRankBonus's; the ROM cannot show them). */
     switch (t->pixelX)
     {
     case 120:
@@ -275,7 +275,7 @@ void QuickDrawCreateRankLabels(void)
         QuickDrawPlaceRankLabel(i, gQuickDrawRanking[i]);
 }
 
-void sub_080bb930(u8 a0, s8 a1)
+void QuickDrawCreateRankBonus(u8 a0, s8 a1)
 {
     struct Task *base = gTasks;
     struct Task *t = &base[a1];
@@ -305,23 +305,23 @@ void sub_080bb930(u8 a0, s8 a1)
 
 void sub_080bb9b4(void)
 {
-    sub_080bb930(2, gQuickDrawRanking[1]);
+    QuickDrawCreateRankBonus(2, gQuickDrawRanking[1]);
 }
 
 void sub_080bb9cc(void)
 {
-    sub_080bb930(1, gQuickDrawRanking[1]);
-    sub_080bb930(2, gQuickDrawRanking[2]);
+    QuickDrawCreateRankBonus(1, gQuickDrawRanking[1]);
+    QuickDrawCreateRankBonus(2, gQuickDrawRanking[2]);
 }
 
 void sub_080bb9f0(void)
 {
-    sub_080bb930(1, gQuickDrawRanking[1]);
-    sub_080bb930(2, gQuickDrawRanking[2]);
-    sub_080bb930(3, gQuickDrawRanking[3]);
+    QuickDrawCreateRankBonus(1, gQuickDrawRanking[1]);
+    QuickDrawCreateRankBonus(2, gQuickDrawRanking[2]);
+    QuickDrawCreateRankBonus(3, gQuickDrawRanking[3]);
 }
 
-void sub_080bba1c(void)
+void QuickDrawCreateNextBonusByRank(void)
 {
     struct Task *base = gTasks;
     struct Task *t = &base[gQuickDrawRanking[0]];
@@ -403,7 +403,7 @@ void QuickDrawSetupResultsLink(void)
         gCurTask->quickDrawResultsNextState = 3;
 }
 
-void sub_080bbbb8(void)
+void QuickDrawCreateNextBonusVsCpu(void)
 {
     u16 y;
 

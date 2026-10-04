@@ -1352,7 +1352,7 @@
 #define quickDrawObjectPlayerIndex unk18 /* s32: the player row's player index (its task slot 0-3): palette, wins, local test */
 #define quickDrawObjectArriveDelay unk1C /* s32: frames the player waits after its tags appear before it walks in (60) */
 #define quickDrawObjectBonusPlayer unk1C /* s32: the player index the bonus is for (score / lives, the sound) */
-#define quickDrawObjectLabelKind unk1C /* s32: the label's kind (0-7): which frame table sub_080bccbc gives it */
+#define quickDrawObjectLabelKind unk1C /* s32: the label's kind (0-7): which frame table QuickDrawLabelShow gives it */
 #define quickDrawObjectReactionTime unk1C /* s32: the CPU opponent's reaction time (gQuickDrawOpponentReactionTimes[level * 5 + opponent]) */
 #define quickDrawObjectRunning unk1C /* s32: 1 while the timer row counts (from the signal until the round is decided) */
 #define quickDrawObjectLabelLifetime unk20 /* s32: frames the label stays before it exits; -1 = it stays */
@@ -1651,7 +1651,7 @@
    Task_WhispyWoodsApple; gWhispyWoodsAppleStates) */
 #define whispyWoodsAppleFirstFall unk28 /* s32: nonzero until the first landing; meanwhile the update checks terrain first */
 #define whispyWoodsAppleFloorY unk2C /* s32: pixelY of the first landing; the bounce states check pixelY > unk2C */
-#define whispyWoodsAppleRollFrame unk30 /* s32: step (0-7) of the 8-frame cycle gUnk_0874C24C that sub_080b3010 shows */
+#define whispyWoodsAppleRollFrame unk30 /* s32: step (0-7) of the 8-frame cycle gUnk_0874C24C that WhispyWoodsAppleAdvanceRollFrame shows */
 #define whispyWoodsAppleLoopCount unk6C /* s16: WhispyWoodsAppleFall's blink loop counter (6 passes) */
 
 /* WhispyWoodsLeaves - Whispy Woods' leaves (task type #170,

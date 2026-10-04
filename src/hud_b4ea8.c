@@ -71,9 +71,9 @@ s32 LoadRoomEnemyGfx();
 s32 LoadRoomMidBossGfx();
 s32 LoadRoomBossGfx();
 void LoadRoomMetaKnightsGfx();
-s32 sub_080b5a94();
+s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
-s32 sub_080b5d84();
+s32 SpawnRoomMapEvent();
 
 void LoadRoomObjectGfx(void)
 {
@@ -102,7 +102,7 @@ void LoadRoomObjectGfx(void)
                 n++;
             break;
         case 5:
-            if (sub_080b5a94(e, i, n) != 0)
+            if (LoadRoomStageObjectGfx(e, i, n) != 0)
                 n++;
             break;
         case 2:
