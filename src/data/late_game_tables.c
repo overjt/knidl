@@ -130,23 +130,23 @@ s16 (*gHBlankScrollEffects[11])(void) LATE_TBL(08756198) = {
 /* ---- 0x08756270-0x087562A8: 2 table(s), 14 function pointer(s), section .late_tbl_08756270 ---- */
 /* include/save.h; CallTableEntry(i, 7, ...) in PlayerLifeRequestInit, PlayerLifeRequestEnterState */
 u32 gPlayerLifeRequestStates[7] LATE_TBL(08756270) = {
-    (u32)sub_080b9674,
-    (u32)sub_080b96a0,
+    (u32)PlayerLifeRequestState0,
+    (u32)PlayerLifeRequestState1,
     (u32)PlayerLifeRequestWait,
     (u32)PlayerLifeRequestReceive,
-    (u32)sub_080b9770,
-    (u32)sub_080b97a4,
-    (u32)sub_080b97dc,
+    (u32)PlayerLifeRequestState4,
+    (u32)PlayerLifeRequestState5,
+    (u32)PlayerLifeRequestState6,
 };
 /* include/save.h; CallTableEntry(i, 7, ...) in PlayerLifeRequestUpdate */
 u32 gPlayerLifeRequestStateUpdates[7] LATE_TBL(08756270) = {
-    (u32)sub_080b9690,
-    (u32)sub_080b96bc,
+    (u32)PlayerLifeRequestState0Update,
+    (u32)PlayerLifeRequestState1Update,
     (u32)PlayerLifeRequestWaitUpdate,
     (u32)PlayerLifeRequestReceiveUpdate,
-    (u32)sub_080b9798,
-    (u32)sub_080b97d0,
-    (u32)sub_080b97f8,
+    (u32)PlayerLifeRequestState4Update,
+    (u32)PlayerLifeRequestState5Update,
+    (u32)PlayerLifeRequestState6Update,
 };
 
 /* ---- 0x087562CC-0x087562D8: 1 table(s), 3 function pointer(s), section .late_tbl_087562cc ---- */

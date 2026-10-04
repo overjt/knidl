@@ -499,8 +499,8 @@ void EnablePause(void);
 void InhalableStarInitVariant(void);
 void Task_InhalableStar(void);
 void InhalableStarUpdate(void);
-void sub_08067258(void);
-void sub_08067378(void);
+void InhalableStarState0(void);
+void InhalableStarState0Update(void);
 void HeldPlayerInit(void);
 
 /* src/actor_673ec.c */

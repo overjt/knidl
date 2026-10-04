@@ -12190,3 +12190,15 @@ sub_08003184,ResetBgmPlayer,function,"code: src/early_3110.c:99 m4aMPlayImmInit(
 sub_08026a0c,WhispyWoodsCheckScrollLock,function,"code: src/stage_261c0.c:369 in camera mode 0 starts the room's scroll lock (gScrollLock.unkC = 280, StartScrollLock(..., 200, 360)) once gViewRect[3] passes 0x167; returns 1 only in camera mode 3 (CameraFollowScrollLocked); only caller sub_08066718 for boss subtype 5 = gBossDefs[5] = gWhispyWoodsDef (src/data/actor_defs.c:82)",155
 sub_08026a80,KrackoCheckScrollLock,function,"code: src/stage_261c0.c:391 as sub_08026a0c with its own line (gViewRect[2] <= 69, gScrollLock.unkC = 149, StartScrollLock(..., 16, 176)); only caller sub_08066718 for boss subtype 6 = gKrackoDef (src/data/actor_defs.c:83)",155
 sub_08026aec,KingDededeCheckScrollLock,function,"code: src/stage_261c0.c:413 as sub_08026a0c with its own line (gViewRect[3] > 0x147, gScrollLock.unkC = 248, StartScrollLock(..., 168, 328)); only caller sub_08066718 for boss subtype 0 = gKingDededeDef (src/data/actor_defs.c:77)",155
+sub_08067258,InhalableStarState0,function,"slot: gInhalableStarStates[0], src/data/game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_08067378,InhalableStarState0Update,function,"slot: gInhalableStarStateUpdates[0], src/data/game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b9674,PlayerLifeRequestState0,function,"slot: gPlayerLifeRequestStates[0], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b9690,PlayerLifeRequestState0Update,function,"slot: gPlayerLifeRequestStateUpdates[0], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b96a0,PlayerLifeRequestState1,function,"slot: gPlayerLifeRequestStates[1], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b96bc,PlayerLifeRequestState1Update,function,"slot: gPlayerLifeRequestStateUpdates[1], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b9770,PlayerLifeRequestState4,function,"slot: gPlayerLifeRequestStates[4], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b9798,PlayerLifeRequestState4Update,function,"slot: gPlayerLifeRequestStateUpdates[4], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b97a4,PlayerLifeRequestState5,function,"slot: gPlayerLifeRequestStates[5], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b97d0,PlayerLifeRequestState5Update,function,"slot: gPlayerLifeRequestStateUpdates[5], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b97dc,PlayerLifeRequestState6,function,"slot: gPlayerLifeRequestStates[6], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+sub_080b97f8,PlayerLifeRequestState6Update,function,"slot: gPlayerLifeRequestStateUpdates[6], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155

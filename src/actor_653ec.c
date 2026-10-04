@@ -1820,7 +1820,7 @@ void InhalableStarUpdate(void)
 }
 
 /* Task body: the player's "spin out and vanish" death animation. */
-void sub_08067258(void)
+void InhalableStarState0(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1887,7 +1887,7 @@ void sub_08067258(void)
     ActorDestroy();
 }
 
-void sub_08067378(void)
+void InhalableStarState0Update(void)
 {
 }
 

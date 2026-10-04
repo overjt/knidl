@@ -434,24 +434,24 @@ void PlayerLifeRequestEnterState(void)
 {
     CallTableEntry(gCurTask->state, 7, gPlayerLifeRequestStates);
 }
-void sub_080b9674(void)
+void PlayerLifeRequestState0(void)
 {
     gCurTask->updateState = 0;
     sub_080b8ff0();
     TaskSleepForever();
 }
-void sub_080b9690(void)
+void PlayerLifeRequestState0Update(void)
 {
     sub_080b9140();
     sub_080b9198();
 }
-void sub_080b96a0(void)
+void PlayerLifeRequestState1(void)
 {
     gCurTask->updateState = 1;
     sub_080b902c();
     TaskSleepForever();
 }
-void sub_080b96bc(void)
+void PlayerLifeRequestState1Update(void)
 {
     s32 a;
     s32 b;
@@ -498,7 +498,7 @@ void PlayerLifeRequestReceiveUpdate(void)
 {
     sub_080b9344();
 }
-void sub_080b9770(void)
+void PlayerLifeRequestState4(void)
 {
     gCurTask->updateState = 4;
     sub_080b90f8();
@@ -506,11 +506,11 @@ void sub_080b9770(void)
     gCurTask->state = 0;
     TaskSleepForever();
 }
-void sub_080b9798(void)
+void PlayerLifeRequestState4Update(void)
 {
     sub_080b938c();
 }
-void sub_080b97a4(void)
+void PlayerLifeRequestState5(void)
 {
     gCurTask->updateState = 5;
     sub_080b9108();
@@ -518,17 +518,17 @@ void sub_080b97a4(void)
     gCurTask->state = 0;
     TaskSleepForever();
 }
-void sub_080b97d0(void)
+void PlayerLifeRequestState5Update(void)
 {
     sub_080b93d8();
 }
-void sub_080b97dc(void)
+void PlayerLifeRequestState6(void)
 {
     gCurTask->updateState = 6;
     sub_080b9118();
     TaskSleepForever();
 }
-void sub_080b97f8(void)
+void PlayerLifeRequestState6Update(void)
 {
 }
 void sub_080b97fc(s32 a)
