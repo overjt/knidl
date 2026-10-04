@@ -490,7 +490,7 @@ void MetaKnightWarpStarRideState1(void)
 
     gCurTask->updateState = 1;
     t = gCurTask;
-    t->unk24 = 1;
+    t->playerWarpStarRideLandCount = 1;
     t->unk34 = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->facing = 1;
@@ -525,7 +525,7 @@ void MetaKnightWarpStarRideState1(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -543,8 +543,8 @@ void MetaKnightWarpStarRideState1Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 1)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -558,7 +558,7 @@ void MetaKnightWarpStarRideState3(void)
 
     gCurTask->updateState = 3;
     t = gCurTask;
-    t->unk24 = 1;
+    t->playerWarpStarRideLandCount = 1;
     t->unk34 = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -593,7 +593,7 @@ void MetaKnightWarpStarRideState3(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -611,8 +611,8 @@ void MetaKnightWarpStarRideState3Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 1)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -626,7 +626,7 @@ void MetaKnightWarpStarRideState4(void)
 
     gCurTask->updateState = 4;
     t = gCurTask;
-    t->unk24 = 0;
+    t->playerWarpStarRideLandCount = 0;
     t->unk34 = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -661,7 +661,7 @@ void MetaKnightWarpStarRideState4(void)
     gCurTask->velY = 0x30000;
     TaskYieldTrampoline(4);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -679,8 +679,8 @@ void MetaKnightWarpStarRideState4Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 1)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -695,7 +695,7 @@ void MetaKnightWarpStarRideState5(void)
 
     gCurTask->updateState = 5;
     t = gCurTask;
-    t->unk24 = 0;
+    t->playerWarpStarRideLandCount = 0;
     t->unk34 = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -719,7 +719,7 @@ void MetaKnightWarpStarRideState5(void)
     gCurTask->velY = 0x30000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -740,7 +740,7 @@ void MetaKnightWarpStarRideState5Update(void)
     {
         u->onGround = 0;
         v = gCurTask;
-        v->unk24++;
+        v->playerWarpStarRideLandCount++;
     }
 }
 
@@ -751,7 +751,7 @@ void MetaKnightWarpStarRideState6(void)
 
     gCurTask->updateState = 6;
     t = gCurTask;
-    t->unk24 = 1;
+    t->playerWarpStarRideLandCount = 1;
     t->unk34 = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -774,7 +774,7 @@ void MetaKnightWarpStarRideState6(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -792,8 +792,8 @@ void MetaKnightWarpStarRideState6Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 2)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 2)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);

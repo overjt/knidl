@@ -284,7 +284,7 @@ void PlayerActionNeedle(void)
     case 0:
         {
             struct Task *t = gCurTask;
-            t->unk2C = -1;
+            t->playerAttackStep = -1;
             gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C1B0;
         }
         gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct PlayerHitBoxSet *)gUnk_0873CEEC;
@@ -294,13 +294,13 @@ void PlayerActionNeedle(void)
         PlaySfxIfLocalPlayer(SE_NEEDLE_ATTACK, gCurTask->player->playerIndex);
         gCurTask->playerNeedleStep = 1;
         TaskYieldTrampoline(4);
-        gCurTask->unk2C++;
+        gCurTask->playerAttackStep++;
         gCurTask->playerNeedleStep = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk2C++;
+        gCurTask->playerAttackStep++;
         gCurTask->playerNeedleStep = 3;
         TaskYieldTrampoline(2);
-        gCurTask->unk2C++;
+        gCurTask->playerAttackStep++;
         gCurTask->playerNeedleStep = 4;
         TaskYieldTrampoline(2);
         gCurTask->variant = 1;
@@ -310,10 +310,10 @@ void PlayerActionNeedle(void)
         }
         /* fallthrough */
     case 1:
-        gCurTask->unk2C = 3;
+        gCurTask->playerAttackStep = 3;
         gCurTask->playerNeedleStep = 5;
         TaskYieldTrampoline(2);
-        gCurTask->unk2C = 4;
+        gCurTask->playerAttackStep = 4;
         gCurTask->playerNeedleStep = 6;
         TaskYieldTrampoline(2);
         gCurTask->playerNeedleStep = 7;
@@ -328,7 +328,7 @@ void PlayerActionNeedle(void)
         gCurTask->variant = 2;
         /* fallthrough */
     case 2:
-        gCurTask->unk2C = 1;
+        gCurTask->playerAttackStep = 1;
         gCurTask->playerNeedleStep = 3;
         TaskYieldTrampoline(2);
         gCurTask->playerNeedleStep = 0;
@@ -354,17 +354,17 @@ void PlayerActionNeedleUpdate(void)
     case 0:
     case 2:
         gCurTask->frame = e[gCurTask->unk28];
-        if (gCurTask->unk2C >= 0) {
+        if (gCurTask->playerAttackStep >= 0) {
             if (gCurTask->unk28 != 0) {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
-                             (u8 *)gUnk_0873C1C4 + gCurTask->unk2C * 8);
+                             (u8 *)gUnk_0873C1C4 + gCurTask->playerAttackStep * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->unk2C * 8));
+                             (s32)((u8 *)gUnk_0873CEF4 + gCurTask->playerAttackStep * 8));
             } else {
                 LoadPlayerBodyBoxRect(gCurTask->player->playerIndex,
-                             (u8 *)gUnk_0873C1EC + gCurTask->unk2C * 8);
+                             (u8 *)gUnk_0873C1EC + gCurTask->playerAttackStep * 8);
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex,
-                             (s32)((u8 *)gUnk_0873CF1C + gCurTask->unk2C * 8));
+                             (s32)((u8 *)gUnk_0873CF1C + gCurTask->playerAttackStep * 8));
             }
             RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                          (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);

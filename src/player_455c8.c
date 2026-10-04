@@ -74,7 +74,7 @@ void PlayerActionBurning(void)
         gCurTask->player->bodyBox = (u32)gUnk_0873BD3C;
         gCurTask->player->unk42 |= 16;
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 0;
+        gCurTask->playerBurningFadeStep = 0;
         TaskSetFrame(0x5CF);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
@@ -86,11 +86,11 @@ void PlayerActionBurning(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 1;
+        gCurTask->playerBurningFadeStep = 1;
         TaskSetFrame(0x5D3);
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 2;
+        gCurTask->playerBurningFadeStep = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -98,17 +98,17 @@ void PlayerActionBurning(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 0;
+        gCurTask->playerBurningFadeStep = 0;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 1;
+        gCurTask->playerBurningFadeStep = 1;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 2;
+        gCurTask->playerBurningFadeStep = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
@@ -116,16 +116,16 @@ void PlayerActionBurning(void)
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 0;
+        gCurTask->playerBurningFadeStep = 0;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         gCurTask->playerLoopCount = 0;
-        gCurTask->unk2C = 1;
+        gCurTask->playerBurningFadeStep = 1;
         TaskSetFrame(0x5DF);
         TaskYieldTrampoline(2);
-        gCurTask->unk2C = -1;
+        gCurTask->playerBurningFadeStep = -1;
         gCurTask->player->unk42 &= 0xFFEF;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -213,8 +213,8 @@ void PlayerActionBurningUpdate(void)
         }
         {
             struct Task *t = gCurTask;
-            if (t->unk2C != -1) {
-                struct BurningPaletteFade *f = &gUnk_0873B510[t->unk2C];
+            if (t->playerBurningFadeStep != -1) {
+                struct BurningPaletteFade *f = &gUnk_0873B510[t->playerBurningFadeStep];
                 t->unk6E += f->rate;
                 if (t->unk6E > 255)
                     t->unk6E = 256;

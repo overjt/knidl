@@ -60,7 +60,7 @@ void PlayerActionStand(void)
 
         PlayerStopAxes(3);
         t = gCurTask;
-        t->unk28 = (u16)t->player->clampedTopY;
+        t->playerStandSavedClampedTopY = (u16)t->player->clampedTopY;
         t->playerPoseSlope = t->player->slope;
         if (t->player->wallSide != 0)
             t->player->savedWallSide = t->player->wallSide;
@@ -167,7 +167,7 @@ void PlayerActionStandUpdate(void)
         if (turn != 0)
         {
             struct Task *u = gCurTask;
-            s32 x = u->unk28;
+            s32 x = u->playerStandSavedClampedTopY;
 
             if (x != -1 && dir == u->facing && IsAtPlayerBoundsTop(x, u->player->playerIndex) != 0)
                 turn = 0;

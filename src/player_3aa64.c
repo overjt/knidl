@@ -441,7 +441,7 @@ void PlayerActionStandInWater(void)
     if (gCurTask->player->prevMode != 0)
     {
         PlayerStopAxes(3);
-        gCurTask->unk28 = gCurTask->player->wallSide;
+        gCurTask->playerStandInWaterSavedWallSide = gCurTask->player->wallSide;
     }
     if (gCurTask->player->mouthState == 1)
     {
@@ -477,9 +477,9 @@ void PlayerActionStandInWaterUpdate(void)
     {
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 48)
         {
-            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) && gCurTask->unk28 == 1)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 16) && gCurTask->playerStandInWaterSavedWallSide == 1)
                 break;
-            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->unk28 == 2)
+            if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 32) && gCurTask->playerStandInWaterSavedWallSide == 2)
                 break;
             gCurTask->player->requestedAction = PLAYER_ACTION_WALK_IN_WATER;
         }

@@ -85,7 +85,7 @@ void PlayerWarpStarRideState1(void)
     struct PlayerState *p;
 
     gCurTask->updateState = 1;
-    gCurTask->unk24 = 1;
+    gCurTask->playerWarpStarRideLandCount = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
@@ -125,7 +125,7 @@ void PlayerWarpStarRideState1(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     gCurTask->velY = 0xFFFF0000;
     TaskYieldTrampoline(8);
@@ -134,7 +134,7 @@ void PlayerWarpStarRideState1(void)
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x10000;
-    while (gCurTask->unk24 != 3)
+    while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -154,8 +154,8 @@ void PlayerWarpStarRideState1Update(void)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 2)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 2)
             sub_08070264();
     }
     sub_0807042c();
@@ -166,7 +166,7 @@ void PlayerWarpStarRideState3(void)
     struct PlayerState *p;
 
     gCurTask->updateState = 3;
-    gCurTask->unk24 = 1;
+    gCurTask->playerWarpStarRideLandCount = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
@@ -206,7 +206,7 @@ void PlayerWarpStarRideState3(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     gCurTask->velY = 0xFFFF0000;
     TaskYieldTrampoline(8);
@@ -215,7 +215,7 @@ void PlayerWarpStarRideState3(void)
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x10000;
-    while (gCurTask->unk24 != 3)
+    while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -235,8 +235,8 @@ void PlayerWarpStarRideState3Update(void)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 2)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 2)
             sub_08070264();
     }
     sub_0807042c();
@@ -247,7 +247,7 @@ void PlayerWarpStarRideState4(void)
     struct PlayerState *p;
 
     gCurTask->updateState = 4;
-    gCurTask->unk24 = 0;
+    gCurTask->playerWarpStarRideLandCount = 0;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
@@ -300,7 +300,7 @@ void PlayerWarpStarRideState4(void)
     gCurTask->velY = 0x30000;
     TaskYieldTrampoline(4);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     gCurTask->velY = 0xFFFF0000;
     TaskYieldTrampoline(8);
@@ -309,7 +309,7 @@ void PlayerWarpStarRideState4(void)
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x10000;
-    while (gCurTask->unk24 != 3)
+    while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -329,8 +329,8 @@ void PlayerWarpStarRideState4Update(void)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 2)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 2)
         {
             u->facing = 1;
             sub_08070264();
@@ -345,7 +345,7 @@ void PlayerWarpStarRideState5(void)
     s32 k;
 
     gCurTask->updateState = 5;
-    gCurTask->unk24 = 0;
+    gCurTask->playerWarpStarRideLandCount = 0;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
@@ -490,7 +490,7 @@ void PlayerWarpStarRideState5(void)
     TaskYieldTrampoline(2);
     gCurTask->frame--;
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -508,7 +508,7 @@ void PlayerWarpStarRideState5Update(void)
     if (gCurTask->onGround & 1)
     {
         gCurTask->onGround = 0;
-        gCurTask->unk24++;
+        gCurTask->playerWarpStarRideLandCount++;
     }
 }
 
@@ -517,7 +517,7 @@ void PlayerWarpStarRideState6(void)
     struct PlayerState *p;
 
     gCurTask->updateState = 6;
-    gCurTask->unk24 = 1;
+    gCurTask->playerWarpStarRideLandCount = 1;
     gCurTask->unk34 = 0;
     p = gCurTask->player;
     if (p->ability == ABILITY_STAR_ROD)
@@ -557,7 +557,7 @@ void PlayerWarpStarRideState6(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->unk24 != 2)
+    while (gCurTask->playerWarpStarRideLandCount != 2)
         TaskYieldTrampoline(1);
     gCurTask->velY = 0xFFFF0000;
     TaskYieldTrampoline(8);
@@ -566,7 +566,7 @@ void PlayerWarpStarRideState6(void)
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x10000;
-    while (gCurTask->unk24 != 3)
+    while (gCurTask->playerWarpStarRideLandCount != 3)
         TaskYieldTrampoline(1);
     TaskStop();
     sub_08070614(gCurTaskIdx);
@@ -586,8 +586,8 @@ void PlayerWarpStarRideState6Update(void)
     {
         gCurTask->onGround = 0;
         u = gCurTask;
-        u->unk24++;
-        if (u->unk24 == 2)
+        u->playerWarpStarRideLandCount++;
+        if (u->playerWarpStarRideLandCount == 2)
             sub_08070264();
     }
     sub_0807042c();

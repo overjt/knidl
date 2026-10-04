@@ -39,7 +39,7 @@ void PlayerActionStarRod(void)
     {
         struct Task *t = gCurTask;
         t->playerActionDone = 0;
-        t->unk2C = -1;
+        t->playerAttackStep = -1;
         gPlayerBodyBoxes[t->player->playerIndex] = *(struct PlayerBodyBox *)gUnk_0873C2C8;
     }
     {
@@ -59,13 +59,13 @@ void PlayerActionStarRod(void)
     for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
     {
         struct Task *t = gCurTask;
-        t->unk2C++;
+        t->playerAttackStep++;
         t->frame++;
         TaskYieldTrampoline(1);
     }
     {
         struct Task *t = gCurTask;
-        t->unk2C = -1;
+        t->playerAttackStep = -1;
         t->frame++;
     }
     TaskYieldTrampoline(1);
@@ -111,9 +111,9 @@ void PlayerActionStarRodUpdate(void)
         }
         {
             struct Task *u = gCurTask;
-            if (u->unk2C != -1)
+            if (u->playerAttackStep != -1)
             {
-                LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C2DC + u->unk2C * 8);
+                LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C2DC + u->playerAttackStep * 8);
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              &gPlayerBodyBoxes[gCurTask->player->playerIndex]);
             }

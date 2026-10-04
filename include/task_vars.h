@@ -1128,6 +1128,7 @@
 #define playerLifeGiver unk1C /* s32: Life request: the player index asked for a life (its gLifeRequests entry targets this one) */
 #define playerLifeGiverLastRow unk20 /* s32: Life request: the last row of the giver list (the number of askable players - 1) */
 #define playerLifeGiverMask unk24 /* s32: Life request: bit i set per player that can be asked (active, lives, no request) */
+#define playerWarpStarRideLandCount unk24 /* s32: Warp Star ride: counted up at each touchdown by the state's update; its body waits for it */
 #define playerActionDone28 unk28 /* s32: 1 once the action's body has finished; its update then hands over (as playerActionDone) */
 #define playerCrashBlendRatio unk28 /* s32: Crash: BlendColors ratio of the palette flash (0-256; +85 in the body, +10 in the update) */
 #define playerDuckDropTimer unk28 /* s32: Duck: frames (8) of ducking on a floor gTerrainResult.unk5 marks before it drops through */
@@ -1138,7 +1139,12 @@
 #define playerHurtPhase unk28 /* s32: Hurt: the step of the knock-back sequence (0 at the start, counted per stage) */
 #define playerLadderStep unk28 /* s32: Ladder: the climb step, a row of gUnk_0873D8B4 / D908 (up 0-9 or 0-15, down 10-13, 16-20) */
 #define playerParasolSwayAccelX unk28 /* s32: Parasol falling: the X acceleration of the sway (+-0x400 / 0x800 by facing) */
+#define playerSlashOnGround unk28 /* s32: Meta Knight's Slash: Task.onGround at the swing's start; on the ground the swing slides */
+#define playerStandInWaterSavedWallSide unk28 /* s32: Stand in water: PlayerState.wallSide when the pose began; no walk into that wall */
+#define playerStandSavedClampedTopY unk28 /* s32: Stand: PlayerState.clampedTopY when the pose began (-1: none), tested at the bounds top */
 #define playerWalkStepDelay unk28 /* s32: Walk: frames added to every step of the walk cycle (0, or 2 when slowing without input) */
+#define playerAttackStep unk2C /* s32: an attack's hit-box step: the 8-byte row of its hit-box and body-box tables, -1 when off */
+#define playerBurningFadeStep unk2C /* s32: Burning: the row of gUnk_0873B510 (the palette fade of the dash), -1 when off */
 #define playerCrashSavedPosY unk2C /* s32: Crash: posY at the blast; the update keeps the player from falling below it */
 #define playerHeldFrameStep unk2C /* s32: frame step per cycle (+1 or -1, from the facing) */
 #define playerHeldPoseFrameOffset unk2C /* s32: frame offset added to the base frame on the captor poses that flag it (3 or -8) */

@@ -34,7 +34,7 @@ void PlayerActionHammer(void)
     {
         struct Task *t = gCurTask;
         t->playerActionDone28 = 0;
-        t->unk2C = -1;
+        t->playerAttackStep = -1;
         if (t->waterFlags & 1)
             t->unk30 = 1;
         else
@@ -54,18 +54,18 @@ void PlayerActionHammer(void)
         gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
         LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDBC);
         if (gCurTask->unk30 == 0) {
-            gCurTask->unk2C++;
+            gCurTask->playerAttackStep++;
             TaskSetFrame(0x7D2);
             TaskYieldTrampoline(8);
             CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++) {
-                gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+                gCurTask->playerAttackStep++;
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->playerAttackStep * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
-            gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+            gCurTask->playerAttackStep++;
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->playerAttackStep * 8));
             {
                 u16 x;
                 s16 r;
@@ -92,7 +92,7 @@ void PlayerActionHammer(void)
                     TaskYieldTrampoline(11);
                 }
             }
-            gCurTask->unk2C = -1;
+            gCurTask->playerAttackStep = -1;
             gCurTask->player->hitBoxSet = 0;
             TaskSetFrame(0x7DD);
             TaskYieldTrampoline(2);
@@ -103,22 +103,22 @@ void PlayerActionHammer(void)
             gCurTask->frame++;
             TaskYieldTrampoline(1);
         } else {
-            gCurTask->unk2C++;
+            gCurTask->playerAttackStep++;
             TaskSetFrame(0x7DE);
             TaskYieldTrampoline(10);
             CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++) {
-                gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+                gCurTask->playerAttackStep++;
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->playerAttackStep * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
             }
-            gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+            gCurTask->playerAttackStep++;
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->playerAttackStep * 8));
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
+            gCurTask->playerAttackStep++;
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->playerAttackStep * 8));
             {
                 u16 x;
                 s16 r;
@@ -145,7 +145,7 @@ void PlayerActionHammer(void)
                     TaskYieldTrampoline(13);
                 }
             }
-            gCurTask->unk2C = -1;
+            gCurTask->playerAttackStep = -1;
             gCurTask->player->hitBoxSet = 0;
             TaskSetFrame(0x7E9);
             TaskYieldTrampoline(4);
@@ -164,32 +164,32 @@ void PlayerActionHammer(void)
         gCurTask->player->hitBoxSet = &gPlayerHitBoxSets[gCurTask->player->playerIndex];
         LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)gUnk_0873CDFC);
         if (gCurTask->unk30 == 0) {
-            gCurTask->unk2C++;
+            gCurTask->playerAttackStep++;
             TaskSetFrame(0x7EA);
             TaskYieldTrampoline(1);
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 10; gCurTask->playerLoopCount++) {
-                gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->unk2C * 8));
+                gCurTask->playerAttackStep++;
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->playerAttackStep * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
-            gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->unk2C * 8));
+            gCurTask->playerAttackStep++;
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->playerAttackStep * 8));
             gCurTask->facing = gCurTask->unk34;
             TaskSetFrame(0x7F6);
             TaskYieldTrampoline(1);
         } else {
-            gCurTask->unk2C++;
+            gCurTask->playerAttackStep++;
             TaskSetFrame(0x7F7);
             TaskYieldTrampoline(1);
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 14; gCurTask->playerLoopCount++) {
-                gCurTask->unk2C++;
-                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->unk2C * 8));
+                gCurTask->playerAttackStep++;
+                LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->playerAttackStep * 8));
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
             }
-            gCurTask->unk2C++;
-            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->unk2C * 8));
+            gCurTask->playerAttackStep++;
+            LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->playerAttackStep * 8));
             gCurTask->facing = gCurTask->unk34;
             TaskSetFrame(0x807);
             TaskYieldTrampoline(1);
@@ -212,8 +212,8 @@ void PlayerActionHammerUpdate(void)
             gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
         {
             struct Task *u = gCurTask;
-            if (u->unk2C != -1) {
-                LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C074 + u->unk2C * 8);
+            if (u->playerAttackStep != -1) {
+                LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C074 + u->playerAttackStep * 8);
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
             }
@@ -238,11 +238,11 @@ void PlayerActionHammerUpdate(void)
         }
         {
             struct Task *u = gCurTask;
-            if (u->unk2C != -1) {
+            if (u->playerAttackStep != -1) {
                 if (u->unk30 == 0)
-                    LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C0C0 + u->unk2C * 8);
+                    LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C0C0 + u->playerAttackStep * 8);
                 else
-                    LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C128 + u->unk2C * 8);
+                    LoadPlayerBodyBoxRect(u->player->playerIndex, (u8 *)gUnk_0873C128 + u->playerAttackStep * 8);
                 RegisterCollider(gCurTaskIdx, gCurTask->pixelX, gCurTask->pixelY,
                              (u8 *)gPlayerBodyBoxes + gCurTask->player->playerIndex * 20);
             }
