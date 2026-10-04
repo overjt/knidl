@@ -1138,8 +1138,8 @@
 #define playerGoalGameSpotX unk24 /* s32: Goal game after landing: the X it walks to, gUnk_0873DBAC by its landing order */
 #define playerGoalGameTrailTimer unk24 /* s32: Goal game flight: frames 0-31 since the launch or the last big trail star */
 #define playerLifeGiverMask unk24 /* s32: Life request: bit i set per player that can be asked (active, lives, no request) */
+#define playerRideLandCount unk24 /* s32: Warp Star ride and cannon landing: counted up at each touchdown by the state's update; its body waits for it */
 #define playerUfoPosture unk24 /* s32: UFO: posture shown (7 hover, 8 up, 9 down, 10 side, 11 / 12 turning, -1 none) */
-#define playerWarpStarRideLandCount unk24 /* s32: Warp Star ride: counted up at each touchdown by the state's update; its body waits for it */
 #define playerActionDone28 unk28 /* s32: 1 once the action's body has finished; its update then hands over (as playerActionDone) */
 #define playerAttackCutIn unk28 /* s32: Cutter / Star Rod: 1 once B may swing again and a held direction walk (Cutter: 2 done) */
 #define playerAttackHoldTimer unk28 /* s32: Fire / Spark / Ice / Freeze / Stone: frames (15) before B's release (Stone: press) ends it */

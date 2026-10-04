@@ -71,7 +71,7 @@ void PlayerWarpStarRideState7Update(void)
     t = gCurTask;
     if (t->player->playerIndex == gLocalPlayer)
         SetCameraFocus(t->pixelX, t->pixelY);
-    switch (gCurTask->playerWarpStarRideLandCount)
+    switch (gCurTask->playerRideLandCount)
     {
     case 1:
     case 2:
@@ -216,7 +216,7 @@ void sub_08070208(void)
 
 void sub_0807022c(void)
 {
-    while (gCurTask->playerWarpStarRideLandCount != 3)
+    while (gCurTask->playerRideLandCount != 3)
         TaskYieldTrampoline(1);
     PlayerEndRideLanding(gCurTaskIdx);
     TaskSleepForever();
@@ -309,8 +309,8 @@ void sub_080703a8(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->playerWarpStarRideLandCount++;
-        switch (u->playerWarpStarRideLandCount)
+        u->playerRideLandCount++;
+        switch (u->playerRideLandCount)
         {
         case 1:
             if (u->playerRideIsCannon == 1)
@@ -334,7 +334,7 @@ void sub_080703a8(void)
 
 void sub_0807042c(void)
 {
-    switch (gCurTask->playerWarpStarRideLandCount)
+    switch (gCurTask->playerRideLandCount)
     {
     case 1:
         PlayerStepTumble();
@@ -490,7 +490,7 @@ void MetaKnightWarpStarRideState1(void)
 
     gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_1;
     t = gCurTask;
-    t->playerWarpStarRideLandCount = 1;
+    t->playerRideLandCount = 1;
     t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->facing = 1;
@@ -525,7 +525,7 @@ void MetaKnightWarpStarRideState1(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->playerWarpStarRideLandCount != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     PlayerEndRideLanding(gCurTaskIdx);
@@ -543,8 +543,8 @@ void MetaKnightWarpStarRideState1Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->playerWarpStarRideLandCount++;
-        if (u->playerWarpStarRideLandCount == 1)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -558,7 +558,7 @@ void MetaKnightWarpStarRideState3(void)
 
     gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_3;
     t = gCurTask;
-    t->playerWarpStarRideLandCount = 1;
+    t->playerRideLandCount = 1;
     t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -593,7 +593,7 @@ void MetaKnightWarpStarRideState3(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->playerWarpStarRideLandCount != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     PlayerEndRideLanding(gCurTaskIdx);
@@ -611,8 +611,8 @@ void MetaKnightWarpStarRideState3Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->playerWarpStarRideLandCount++;
-        if (u->playerWarpStarRideLandCount == 1)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -626,7 +626,7 @@ void MetaKnightWarpStarRideState4(void)
 
     gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_4;
     t = gCurTask;
-    t->playerWarpStarRideLandCount = 0;
+    t->playerRideLandCount = 0;
     t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -661,7 +661,7 @@ void MetaKnightWarpStarRideState4(void)
     gCurTask->velY = 0x30000;
     TaskYieldTrampoline(4);
     gCurTask->velY = 0x40000;
-    while (gCurTask->playerWarpStarRideLandCount != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     PlayerEndRideLanding(gCurTaskIdx);
@@ -679,8 +679,8 @@ void MetaKnightWarpStarRideState4Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->playerWarpStarRideLandCount++;
-        if (u->playerWarpStarRideLandCount == 1)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 1)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);
@@ -695,7 +695,7 @@ void MetaKnightWarpStarRideState5(void)
 
     gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_5;
     t = gCurTask;
-    t->playerWarpStarRideLandCount = 0;
+    t->playerRideLandCount = 0;
     t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -719,7 +719,7 @@ void MetaKnightWarpStarRideState5(void)
     gCurTask->velY = 0x30000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->playerWarpStarRideLandCount != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     PlayerEndRideLanding(gCurTaskIdx);
@@ -740,7 +740,7 @@ void MetaKnightWarpStarRideState5Update(void)
     {
         u->onGround = 0;
         v = gCurTask;
-        v->playerWarpStarRideLandCount++;
+        v->playerRideLandCount++;
     }
 }
 
@@ -751,7 +751,7 @@ void MetaKnightWarpStarRideState6(void)
 
     gCurTask->updateState = META_KNIGHT_WARP_STAR_RIDE_STATE_6;
     t = gCurTask;
-    t->playerWarpStarRideLandCount = 1;
+    t->playerRideLandCount = 1;
     t->playerRideIsCannon = 0;
     t->drawCallback = (u32)sub_0803ddc0;
     t->layer = 7;
@@ -774,7 +774,7 @@ void MetaKnightWarpStarRideState6(void)
     gCurTask->velY = 0x20000;
     TaskYieldTrampoline(8);
     gCurTask->velY = 0x40000;
-    while (gCurTask->playerWarpStarRideLandCount != 2)
+    while (gCurTask->playerRideLandCount != 2)
         TaskYieldTrampoline(1);
     TaskStop();
     PlayerEndRideLanding(gCurTaskIdx);
@@ -792,8 +792,8 @@ void MetaKnightWarpStarRideState6Update(void)
     {
         t->onGround = 0;
         u = gCurTask;
-        u->playerWarpStarRideLandCount++;
-        if (u->playerWarpStarRideLandCount == 2)
+        u->playerRideLandCount++;
+        if (u->playerRideLandCount == 2)
         {
             RequestScreenShake(4);
             CreateBurstEffect(0, 0);

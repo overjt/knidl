@@ -296,7 +296,7 @@ void sub_080768c8(void)
         u16 x;
 
         t->spriteFlags |= 0x8000;
-        t->playerWarpStarRideLandCount = 0;
+        t->playerRideLandCount = 0;
         t->playerRideIsCannon = 1;
         x = t->posX >> 16;
         switch (t->player->playerIndex)
@@ -419,12 +419,12 @@ void sub_08076a58(void)
     gCurTask->frame++;
     TaskYieldTrampoline(2);
     gCurTask->frame++;
-    if (gCurTask->playerWarpStarRideLandCount == 1)
+    if (gCurTask->playerRideLandCount == 1)
     {
         do
         {
             TaskYieldTrampoline(1);
-        } while (gCurTask->playerWarpStarRideLandCount == 1);
+        } while (gCurTask->playerRideLandCount == 1);
     }
     TaskYieldTrampoline(3);
     PlayerEndRideLanding(gCurTaskIdx);
@@ -437,13 +437,13 @@ void sub_08076c00(void)
 
     if (t->velY != 0 && (t->onGround & 1))
     {
-        t->playerWarpStarRideLandCount++;
+        t->playerRideLandCount++;
         TaskStop();
         gCurTask->onGround = 0;
         {
             struct Task *u = gCurTask;
 
-            switch (u->playerWarpStarRideLandCount)
+            switch (u->playerRideLandCount)
             {
             case 1:
                 PlaySfx(153);
@@ -553,7 +553,7 @@ void PlayerCannonState4Update(void)
     if (gMetaKnightmareMode == 0)
     {
         sub_080703a8();
-        if (gCurTask->playerWarpStarRideLandCount == 0)
+        if (gCurTask->playerRideLandCount == 0)
             sub_080702d8();
     }
     else
