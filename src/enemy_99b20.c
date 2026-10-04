@@ -27,8 +27,8 @@
  * (graphics gUnk_0874CB7C, gMrTickTockRingFrames, gMrTickTockNoteFrames).  They use
  * ActorDrawWorldInViewOrDestroy as the per-frame hook and Task.layer = 9; sub_0809b6ac and
  * sub_0809b964 read the parent's state out of gTasks[Task.parent], and
- * the third one's own states live in the next module - gUnk_08745B1C points at
- * sub_0809ba44.  sub_0809b8ac is a dead copy of the gUnk_08745B04 re-arm.
+ * the third one's own states live in the next module - gMrTickTockNoteVariants points at
+ * MrTickTockNoteInit.  MrTickTockRingEnterState is a dead copy of the gMrTickTockRingStates re-arm.
  */
 #include "gba/gba.h"
 #include "global.h"
@@ -1615,7 +1615,7 @@ u8 sub_0809b454(void)
     if (t->state == 0)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_0809b5ec, gCurTaskIdx);
+        TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
         return 1;
     }
     t->onGround = 0;
@@ -1645,7 +1645,7 @@ void sub_0809b4d8(void)
 u8 sub_0809b4dc(void)
 {
     ActorSetState(2);
-    TaskSetEntry(sub_0809b5ec, gCurTaskIdx);
+    TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1677,34 +1677,34 @@ void Task_MrFrostyIceCube(void)
     u->unk70 = u->tileWord;
     u->frameTable = gUnk_0874CB7C;
     u->tileWord = zero;
-    CallTableEntry(u->variant, 1, gUnk_08745AE4);
+    CallTableEntry(u->variant, 1, gMrFrostyIceCubeVariants);
 }
 
-void sub_0809b57c(void)
+void MrFrostyIceCubeInit(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809b5b4;
+    t->updateCallback = (u32)MrFrostyIceCubeUpdate;
     t->facing = t->unk74;
     ActorSetState(0);
     u = gCurTask;
-    CallTableEntry(u->state, 3, gUnk_08745AE8);
+    CallTableEntry(u->state, 3, gMrFrostyIceCubeStates);
 }
 
-void sub_0809b5b4(void)
+void MrFrostyIceCubeUpdate(void)
 {
     if (ActorCollideTerrain() == 0)
-        CallTableEntry(gCurTask->updateState, 3, gUnk_08745AF4);
+        CallTableEntry(gCurTask->updateState, 3, gMrFrostyIceCubeStateUpdates);
     if (gCurTask->state != 2)
         ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0809b5ec(void)
+void MrFrostyIceCubeEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_08745AE8);
+    CallTableEntry(gCurTask->state, 3, gMrFrostyIceCubeStates);
 }
 
 void sub_0809b608(void)
@@ -1753,12 +1753,12 @@ void sub_0809b6ac(void)
         if (t->unk2C == 12)
         {
             ActorSetState(1);
-            TaskSetEntry(sub_0809b5ec, gCurTaskIdx);
+            TaskSetEntry(MrFrostyIceCubeEnterState, gCurTaskIdx);
         }
     }
 }
 
-void sub_0809b6f8(void)
+void MrFrostyIceCubeFlight(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1798,7 +1798,7 @@ void sub_0809b6f8(void)
     TaskSleepForever();
 }
 
-void sub_0809b790(void)
+void MrFrostyIceCubeFlightUpdate(void)
 {
 }
 
@@ -1843,25 +1843,25 @@ void Task_MrTickTockRing(void)
     t->layer = 9;
     u = gCurTask;
     u->frameTable = gMrTickTockRingFrames;
-    CallTableEntry(u->variant, 1, gUnk_08745B00);
+    CallTableEntry(u->variant, 1, gMrTickTockRingVariants);
 }
 
-void sub_0809b830(void)
+void MrTickTockRingInit(void)
 {
     struct Task *t;
     struct Task *u;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809b868;
+    t->updateCallback = (u32)MrTickTockRingUpdate;
     t->facing = t->unk74;
     ActorSetState(0);
     u = gCurTask;
-    CallTableEntry(u->state, 1, gUnk_08745B04);
+    CallTableEntry(u->state, 1, gMrTickTockRingStates);
 }
 
-void sub_0809b868(void)
+void MrTickTockRingUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08745B08);
+    CallTableEntry(gCurTask->updateState, 1, gMrTickTockRingStateUpdates);
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1869,9 +1869,9 @@ void sub_0809b868(void)
     }
 }
 
-void sub_0809b8ac(void)
+void MrTickTockRingEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_08745B04);
+    CallTableEntry(gCurTask->state, 1, gMrTickTockRingStates);
 }
 
 void sub_0809b8c8(void)
@@ -1925,14 +1925,14 @@ void sub_0809b964(void)
 u8 sub_0809b9c0(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0809baec, gCurTaskIdx);
+    TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     return 1;
 }
 
 u8 sub_0809b9e0(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0809baec, gCurTaskIdx);
+    TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     return 1;
 }
 
@@ -1948,5 +1948,5 @@ void Task_MrTickTockNote(void)
     u = gCurTask;
     u->frameTable = gMrTickTockNoteFrames;
     u->facing = 1;
-    CallTableEntry(gCurTask->variant, 1, gUnk_08745B1C);
+    CallTableEntry(gCurTask->variant, 1, gMrTickTockNoteVariants);
 }

@@ -591,7 +591,7 @@ void PlayerEnterCannon(s32 id, s32 v)
 {
     struct Task *t = &gTasks[id];
 
-    sub_08068a8c(id, 1);
+    PlayerSuspendControl(id, 1);
     t->state = 0;
     t->parent = v;
     t->waterFlags = 0;

@@ -36,7 +36,7 @@ void Task_JavelinKnightJavelin(void)
     t->layer = 9;
     u = gCurTask;
     u->frameTable = gJavelinKnightJavelinFrames;
-    u->updateCallback = (u32)sub_0809da9c;
+    u->updateCallback = (u32)JavelinKnightJavelinUpdate;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(128 << 10, 0x5A5A5A5A);
     if ((u8)TaskGetYDirBitToNearestPlayer() == 2)
@@ -47,7 +47,7 @@ void Task_JavelinKnightJavelin(void)
     TaskSleepForever();
 }
 
-void sub_0809da9c(void)
+void JavelinKnightJavelinUpdate(void)
 {
     struct Task *t;
     s32 vx;
@@ -189,7 +189,7 @@ void sub_0809dc7c(void)
     t = gCurTask;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->frameTable = gMaceKnightFrames;
-    ActorLoadDef((u32)gUnk_08747DB4);
+    ActorLoadDef((u32)gMaceKnightDef);
     u = gCurTask;
     u->unk24 = 0;
     CallTableEntry(u->variant, 3, gMaceKnightVariants);
@@ -226,11 +226,11 @@ void sub_0809dd08(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -251,7 +251,7 @@ void sub_0809dd7c(void)
     gCurTask->updateCallback = (u32)MaceKnightUpdate;
     TaskFaceScreenCenter();
     ActorSetState(0);
-    sub_0809de54();
+    MaceKnightWalk();
 }
 
 void MaceKnightEnterState(void)
@@ -277,11 +277,11 @@ void MaceKnightUpdate(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -297,7 +297,7 @@ void MaceKnightUpdate(void)
     }
 }
 
-void sub_0809de54(void)
+void MaceKnightWalk(void)
 {
     gCurTask->updateState = 0;
     TaskSetMotionXFacing(128 << 7, 0x5A5A5A5A);
@@ -321,7 +321,7 @@ void sub_0809de54(void)
     TaskSleepForever();
 }
 
-void sub_0809dee0(void)
+void MaceKnightWalkUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(MaceKnightEnterState, gCurTaskIdx);
@@ -378,11 +378,11 @@ void sub_0809dfc8(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -504,15 +504,15 @@ void Task_MaceKnightMace(void)
     struct Task *u;
 
     t = gCurTask;
-    t->moveCallback = (u32)sub_0809e2c4;
+    t->moveCallback = (u32)MaceKnightMaceMove;
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->frameTable = gMaceKnightMaceFrames;
     TaskFaceLikeParent();
     u = gCurTask;
-    CallTableEntry(u->variant, 3, gUnk_08747BE8);
+    CallTableEntry(u->variant, 3, gMaceKnightMaceVariants);
 }
 
-void sub_0809e2c4(void)
+void MaceKnightMaceMove(void)
 {
     struct Task *t;
     s16 *q;
@@ -751,7 +751,7 @@ void sub_0809e824(void)
     t = gCurTask;
     t->drawCallback = (u32)sub_0809e864;
     t->frameTable = gTridentKnightFrames;
-    ActorLoadDef((u32)gUnk_08747E0C);
+    ActorLoadDef((u32)gTridentKnightDef);
     u = gCurTask;
     u->unk24 = 0;
     CallTableEntry(u->variant, 4, gTridentKnightVariants);
@@ -777,7 +777,7 @@ void sub_0809e874(void)
     u = gCurTask;
     u->accelY = 148 << 6;
     u->updateState = 4;
-    sub_0809e914();
+    TridentKnightWalk();
 }
 
 void TridentKnightEnterState(void)
@@ -795,17 +795,17 @@ void TridentKnightUpdate(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0809e914(void)
+void TridentKnightWalk(void)
 {
     if (gCurTask->unk28 == 0)
     {
@@ -902,7 +902,7 @@ void sub_0809ea08(void)
     }
 }
 
-void sub_0809eab8(void)
+void TridentKnightJump(void)
 {
     struct Task *t;
     struct Task *u;
@@ -926,11 +926,11 @@ void sub_0809eab8(void)
     TaskSleepForever();
 }
 
-void sub_0809eb10(void)
+void TridentKnightJumpUpdate(void)
 {
 }
 
-void sub_0809eb14(void)
+void TridentKnightThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -950,7 +950,7 @@ void sub_0809eb14(void)
     TaskSleepForever();
 }
 
-void sub_0809eb50(void)
+void TridentKnightThrowUpdate(void)
 {
     struct Task *t;
 
@@ -962,7 +962,7 @@ void sub_0809eb50(void)
     }
 }
 
-void sub_0809eb7c(void)
+void TridentKnightJumpThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -983,7 +983,7 @@ void sub_0809eb7c(void)
     TaskSleepForever();
 }
 
-void sub_0809ebbc(void)
+void TridentKnightJumpThrowUpdate(void)
 {
 }
 
@@ -1184,11 +1184,11 @@ void sub_0809ef98(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -1250,7 +1250,7 @@ void sub_0809efc8(void)
     v->updateState = z;
     w = gCurTask;
     w->unk2C = 60;
-    sub_0809e914();
+    TridentKnightWalk();
 }
 
 void sub_0809f0f0(void)
@@ -1262,11 +1262,11 @@ void sub_0809f0f0(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -1334,7 +1334,7 @@ void sub_0809f120(void)
     v->updateState = z;
     w = gCurTask;
     w->unk2C = 60;
-    sub_0809e914();
+    TridentKnightWalk();
 }
 
 void sub_0809f26c(void)
@@ -1346,11 +1346,11 @@ void sub_0809f26c(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();

@@ -32,7 +32,7 @@ void sub_08079e70(void);
 void sub_0807c484(void);
 void sub_0807efec(void);
 void sub_0808e054(void);
-void sub_0809f808(void);
+void MetaKnightsKnightTeardown(void);
 void sub_080acc8c(void);
 
 /* Record targets no header declares: labels of the data files. */
@@ -2186,7 +2186,7 @@ struct ActorDef gUnk_08747D30 ACTOR_REC(08747c80) = {
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08747D5C ACTOR_REC(08747c80) = {
+struct ActorDef gAxeKnightDef ACTOR_REC(08747c80) = {
     .health1Player = 6,
     .health2Players = 6,
     .health3Players = 6,
@@ -2201,7 +2201,7 @@ struct ActorDef gUnk_08747D5C ACTOR_REC(08747c80) = {
     .terrainHandlers = (u32)&gUnk_087481A0,
     .hitReactions = (u32)&gUnk_08748210,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_0809f808,
+    .teardown = (void (*)(void))MetaKnightsKnightTeardown,
 };
 struct ActorDef gAxeKnightAxeDef ACTOR_REC(08747c80) = {
     .health1Player = 2,
@@ -2220,7 +2220,7 @@ struct ActorDef gAxeKnightAxeDef ACTOR_REC(08747c80) = {
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08747DB4 ACTOR_REC(08747c80) = {
+struct ActorDef gMaceKnightDef ACTOR_REC(08747c80) = {
     .health1Player = 8,
     .health2Players = 8,
     .health3Players = 8,
@@ -2235,7 +2235,7 @@ struct ActorDef gUnk_08747DB4 ACTOR_REC(08747c80) = {
     .terrainHandlers = (u32)&gUnk_087481BC,
     .hitReactions = (u32)&gUnk_08748228,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_0809f808,
+    .teardown = (void (*)(void))MetaKnightsKnightTeardown,
 };
 struct ActorDef gMaceKnightMaceDef ACTOR_REC(08747c80) = {
     .health1Player = 2,
@@ -2254,7 +2254,7 @@ struct ActorDef gMaceKnightMaceDef ACTOR_REC(08747c80) = {
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08747E0C ACTOR_REC(08747c80) = {
+struct ActorDef gTridentKnightDef ACTOR_REC(08747c80) = {
     .health1Player = 6,
     .health2Players = 6,
     .health3Players = 6,
@@ -2269,7 +2269,7 @@ struct ActorDef gUnk_08747E0C ACTOR_REC(08747c80) = {
     .terrainHandlers = (u32)&gUnk_087481D8,
     .hitReactions = (u32)&gUnk_08748234,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_0809f808,
+    .teardown = (void (*)(void))MetaKnightsKnightTeardown,
 };
 struct ActorDef gTridentKnightTridentDef ACTOR_REC(08747c80) = {
     .health1Player = 2,
@@ -2288,7 +2288,7 @@ struct ActorDef gTridentKnightTridentDef ACTOR_REC(08747c80) = {
     .initCallback = NULL,
     .teardown = NULL,
 };
-struct ActorDef gUnk_08747E64 ACTOR_REC(08747c80) = {
+struct ActorDef gJavelinKnightDef ACTOR_REC(08747c80) = {
     .health1Player = 4,
     .health2Players = 4,
     .health3Players = 4,
@@ -2303,7 +2303,7 @@ struct ActorDef gUnk_08747E64 ACTOR_REC(08747c80) = {
     .terrainHandlers = (u32)&gUnk_087481F4,
     .hitReactions = (u32)&gUnk_0874824C,
     .initCallback = NULL,
-    .teardown = (void (*)(void))sub_0809f808,
+    .teardown = (void (*)(void))MetaKnightsKnightTeardown,
 };
 struct ActorDef gJavelinKnightJavelinDef ACTOR_REC(08747c80) = {
     .health1Player = 2,

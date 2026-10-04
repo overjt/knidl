@@ -1940,7 +1940,7 @@ void sub_0805e110(s32 a0)
 
     ps = &gPlayerStates[a0];
     t = &gTasks[a0];
-    sub_08068a8c(a0, 1);
+    PlayerSuspendControl(a0, 1);
     sub_0805e038(a0);
     TaskSetEntry(PlayerActionWalk, a0);
     ps->unk16 = 1;

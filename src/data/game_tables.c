@@ -553,8 +553,8 @@ u32 gUnk_0873E284[1] GAME_TBL(0873e284) = {
 };
 
 /* ---- 0x0873E2F0-0x0873E348: 2 table(s), 22 function pointer(s), section .game_tbl_0873e2f0 ---- */
-/* include/actor.h; CallTableEntry(i, 11, ...) in sub_0806737c, sub_080673ec */
-u32 gUnk_0873E2F0[11] GAME_TBL(0873e2f0) = {
+/* include/actor.h; CallTableEntry(i, 11, ...) in HeldPlayerInit, HeldPlayerEnterState */
+u32 gHeldPlayerStates[11] GAME_TBL(0873e2f0) = {
     (u32)sub_08067470,
     (u32)sub_080674d8,
     (u32)sub_080674f8,
@@ -567,8 +567,8 @@ u32 gUnk_0873E2F0[11] GAME_TBL(0873e2f0) = {
     (u32)sub_080680ac,
     (u32)sub_080682a8,
 };
-/* include/actor.h; CallTableEntry(i, 11, ...) in sub_08067408 */
-u32 gUnk_0873E31C[11] GAME_TBL(0873e2f0) = {
+/* include/actor.h; CallTableEntry(i, 11, ...) in HeldPlayerUpdate */
+u32 gHeldPlayerStateUpdates[11] GAME_TBL(0873e2f0) = {
     (u32)sub_080674a8,
     (u32)sub_080674f4,
     (u32)sub_08067520,

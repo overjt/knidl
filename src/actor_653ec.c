@@ -1891,7 +1891,7 @@ void sub_08067378(void)
 {
 }
 
-void sub_0806737c(void)
+void HeldPlayerInit(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1899,7 +1899,7 @@ void sub_0806737c(void)
     struct PlayerState *r;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_08067408;
+    t->updateCallback = (u32)HeldPlayerUpdate;
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     TaskStop();
     gCurTask->facing = 1;
@@ -1911,5 +1911,5 @@ void sub_0806737c(void)
     r = gCurTask->player;
     if (r->mouthState == 2)
         r->mouthState = 0;
-    CallTableEntry(gCurTask->state, 11, gUnk_0873E2F0);
+    CallTableEntry(gCurTask->state, 11, gHeldPlayerStates);
 }

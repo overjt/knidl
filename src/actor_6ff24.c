@@ -366,7 +366,7 @@ void sub_08070498(u32 a, s32 b)
     p = &gPlayerStates[a];
     e = &gTasks[a];
     s = &gTasks[b];
-    sub_08068a8c(a, 1);
+    PlayerSuspendControl(a, 1);
     e->pixelX = s->pixelX;
     e->pixelY = s->pixelY;
     e->posX = e->pixelX << 16;

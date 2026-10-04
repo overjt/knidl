@@ -1980,33 +1980,33 @@ u32 gBugzzyStateUpdates[13] ACTOR_TBL(08743adc) = {
 
 /* ---- 0x08744170-0x0874417C: 3 table(s), 3 function pointer(s), section .actor_tbl_08744170 ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_BonkersNut */
-u32 gUnk_08744170[1] ACTOR_TBL(08744170) = {
-    (u32)sub_08093a64,
+u32 gBonkersNutVariants[1] ACTOR_TBL(08744170) = {
+    (u32)BonkersNutInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_08093a64 */
-u32 gUnk_08744174[1] ACTOR_TBL(08744170) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in BonkersNutInit */
+u32 gBonkersNutStates[1] ACTOR_TBL(08744170) = {
     (u32)sub_08093ac8,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_08093a98 */
-u32 gUnk_08744178[1] ACTOR_TBL(08744170) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in BonkersNutUpdate */
+u32 gBonkersNutStateUpdates[1] ACTOR_TBL(08744170) = {
     (u32)sub_08093b80,
 };
 
 /* ---- 0x087441A4-0x087441BC: 3 table(s), 6 function pointer(s), section .actor_tbl_087441a4 ---- */
 /* include/enemy.h; CallTableEntry(i, 2, ...) in Task_PoppyBrosSrBomb */
-u32 gUnk_087441A4[2] ACTOR_TBL(087441a4) = {
-    (u32)sub_08093c30,
-    (u32)sub_08093c30,
+u32 gPoppyBrosSrBombVariants[2] ACTOR_TBL(087441a4) = {
+    (u32)PoppyBrosSrBombInit,
+    (u32)PoppyBrosSrBombInit,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_08093c30, sub_08093c60 */
-u32 gUnk_087441AC[2] ACTOR_TBL(087441a4) = {
-    (u32)sub_08093ccc,
-    (u32)sub_08093dcc,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in PoppyBrosSrBombInit, PoppyBrosSrBombEnterState */
+u32 gPoppyBrosSrBombStates[2] ACTOR_TBL(087441a4) = {
+    (u32)PoppyBrosSrBombHeld,
+    (u32)PoppyBrosSrBombFlight,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_08093c7c */
-u32 gUnk_087441B4[2] ACTOR_TBL(087441a4) = {
-    (u32)sub_08093cf8,
-    (u32)sub_08093e54,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in PoppyBrosSrBombUpdate */
+u32 gPoppyBrosSrBombStateUpdates[2] ACTOR_TBL(087441a4) = {
+    (u32)PoppyBrosSrBombHeldUpdate,
+    (u32)PoppyBrosSrBombFlightUpdate,
 };
 
 /* ---- 0x087441CC-0x087441D8: 3 table(s), 3 function pointer(s), section .actor_tbl_087441cc ---- */
@@ -2229,47 +2229,47 @@ u32 gMrTickTockStateUpdates[24] ACTOR_TBL(0874574c) = {
 
 /* ---- 0x08745AE4-0x08745B0C: 6 table(s), 10 function pointer(s), section .actor_tbl_08745ae4 ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_MrFrostyIceCube */
-u32 gUnk_08745AE4[1] ACTOR_TBL(08745ae4) = {
-    (u32)sub_0809b57c,
+u32 gMrFrostyIceCubeVariants[1] ACTOR_TBL(08745ae4) = {
+    (u32)MrFrostyIceCubeInit,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_0809b57c, sub_0809b5ec */
-u32 gUnk_08745AE8[3] ACTOR_TBL(08745ae4) = {
+/* include/enemy.h; CallTableEntry(i, 3, ...) in MrFrostyIceCubeInit, MrFrostyIceCubeEnterState */
+u32 gMrFrostyIceCubeStates[3] ACTOR_TBL(08745ae4) = {
     (u32)sub_0809b608,
-    (u32)sub_0809b6f8,
+    (u32)MrFrostyIceCubeFlight,
     (u32)sub_0809b794,
 };
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_0809b5b4 */
-u32 gUnk_08745AF4[3] ACTOR_TBL(08745ae4) = {
+/* include/enemy.h; CallTableEntry(i, 3, ...) in MrFrostyIceCubeUpdate */
+u32 gMrFrostyIceCubeStateUpdates[3] ACTOR_TBL(08745ae4) = {
     (u32)sub_0809b6ac,
-    (u32)sub_0809b790,
+    (u32)MrFrostyIceCubeFlightUpdate,
     (u32)sub_0809b7ec,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_MrTickTockRing */
-u32 gUnk_08745B00[1] ACTOR_TBL(08745ae4) = {
-    (u32)sub_0809b830,
+u32 gMrTickTockRingVariants[1] ACTOR_TBL(08745ae4) = {
+    (u32)MrTickTockRingInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_0809b830, sub_0809b8ac */
-u32 gUnk_08745B04[1] ACTOR_TBL(08745ae4) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in MrTickTockRingInit, MrTickTockRingEnterState */
+u32 gMrTickTockRingStates[1] ACTOR_TBL(08745ae4) = {
     (u32)sub_0809b8c8,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_0809b868 */
-u32 gUnk_08745B08[1] ACTOR_TBL(08745ae4) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in MrTickTockRingUpdate */
+u32 gMrTickTockRingStateUpdates[1] ACTOR_TBL(08745ae4) = {
     (u32)sub_0809b964,
 };
 
 /* ---- 0x08745B1C-0x08745B30: 3 table(s), 5 function pointer(s), section .actor_tbl_08745b1c ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_MrTickTockNote */
-u32 gUnk_08745B1C[1] ACTOR_TBL(08745b1c) = {
-    (u32)sub_0809ba44,
+u32 gMrTickTockNoteVariants[1] ACTOR_TBL(08745b1c) = {
+    (u32)MrTickTockNoteInit,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0809ba44, sub_0809baec */
-u32 gUnk_08745B20[2] ACTOR_TBL(08745b1c) = {
-    (u32)sub_0809bb08,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrTickTockNoteInit, MrTickTockNoteEnterState */
+u32 gMrTickTockNoteStates[2] ACTOR_TBL(08745b1c) = {
+    (u32)MrTickTockNoteFlight,
     (u32)sub_0809bb6c,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0809ba94 */
-u32 gUnk_08745B28[2] ACTOR_TBL(08745b1c) = {
-    (u32)sub_0809bb68,
+/* include/enemy.h; CallTableEntry(i, 2, ...) in MrTickTockNoteUpdate */
+u32 gMrTickTockNoteStateUpdates[2] ACTOR_TBL(08745b1c) = {
+    (u32)MrTickTockNoteFlightUpdate,
     (u32)sub_0809bbd4,
 };
 
@@ -2283,18 +2283,18 @@ u32 gAxeKnightVariants[4] ACTOR_TBL(08747aa4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in AxeKnightEnterState */
 u32 gAxeKnightStates[5] ACTOR_TBL(08747aa4) = {
-    (u32)sub_0809c570,
+    (u32)AxeKnightWalk,
     (u32)sub_0809c74c,
-    (u32)sub_0809c880,
-    (u32)sub_0809c984,
+    (u32)AxeKnightThrow,
+    (u32)AxeKnightJumpThrow,
     (u32)sub_0809ca10,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in AxeKnightUpdate */
 u32 gAxeKnightStateUpdates[5] ACTOR_TBL(08747aa4) = {
-    (u32)sub_0809c638,
+    (u32)AxeKnightWalkUpdate,
     (u32)sub_0809c840,
-    (u32)sub_0809c8f8,
-    (u32)sub_0809ca0c,
+    (u32)AxeKnightThrowUpdate,
+    (u32)AxeKnightJumpThrowUpdate,
     (u32)sub_0809caac,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0809d13c */
@@ -2307,7 +2307,7 @@ u32 gJavelinKnightStates[6] ACTOR_TBL(08747aa4) = {
     (u32)sub_0809d25c,
     (u32)sub_0809d280,
     (u32)sub_0809d30c,
-    (u32)sub_0809d4a0,
+    (u32)JavelinKnightJumpThrow,
     (u32)sub_0809d56c,
     (u32)sub_0809d638,
 };
@@ -2329,16 +2329,16 @@ u32 gMaceKnightVariants[3] ACTOR_TBL(08747bcc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MaceKnightEnterState */
 u32 gMaceKnightStates[2] ACTOR_TBL(08747bcc) = {
-    (u32)sub_0809de54,
+    (u32)MaceKnightWalk,
     (u32)sub_0809df08,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in MaceKnightUpdate */
 u32 gMaceKnightStateUpdates[2] ACTOR_TBL(08747bcc) = {
-    (u32)sub_0809dee0,
+    (u32)MaceKnightWalkUpdate,
     (u32)sub_0809df2c,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_MaceKnightMace */
-u32 gUnk_08747BE8[3] ACTOR_TBL(08747bcc) = {
+u32 gMaceKnightMaceVariants[3] ACTOR_TBL(08747bcc) = {
     (u32)sub_0809e320,
     (u32)sub_0809e320,
     (u32)sub_0809e670,
@@ -2352,23 +2352,23 @@ u32 gTridentKnightVariants[4] ACTOR_TBL(08747bcc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in TridentKnightEnterState */
 u32 gTridentKnightStates[4] ACTOR_TBL(08747bcc) = {
-    (u32)sub_0809e914,
-    (u32)sub_0809eab8,
-    (u32)sub_0809eb14,
-    (u32)sub_0809eb7c,
+    (u32)TridentKnightWalk,
+    (u32)TridentKnightJump,
+    (u32)TridentKnightThrow,
+    (u32)TridentKnightJumpThrow,
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in TridentKnightUpdate */
 u32 gTridentKnightStateUpdates[5] ACTOR_TBL(08747bcc) = {
     (u32)sub_0809ea08,
-    (u32)sub_0809eb10,
-    (u32)sub_0809eb50,
-    (u32)sub_0809ebbc,
+    (u32)TridentKnightJumpUpdate,
+    (u32)TridentKnightThrowUpdate,
+    (u32)TridentKnightJumpThrowUpdate,
     (u32)sub_0809ec80,
 };
 
 /* ---- 0x08747C6C-0x08747C80: 1 table(s), 5 function pointer(s), section .actor_tbl_08747c6c ---- */
 /* include/enemy.h; CallTableEntry(i, 5, ...) in Task_TridentKnightTrident */
-u32 gUnk_08747C6C[5] ACTOR_TBL(08747c6c) = {
+u32 gTridentKnightTridentVariants[5] ACTOR_TBL(08747c6c) = {
     (u32)sub_0809f478,
     (u32)sub_0809f49c,
     (u32)sub_0809f4c0,

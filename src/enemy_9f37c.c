@@ -34,18 +34,18 @@ void Task_TridentKnightTrident(void)
     *p = 9;
     u = gCurTask;
     u->frameTable = gTridentKnightTridentFrames;
-    u->updateCallback = (u32)sub_0809f3e0;
+    u->updateCallback = (u32)TridentKnightTridentUpdate;
     TaskFaceLikeParent();
     v = gCurTask;
     v->unk28 = z;
-    CallTableEntry(v->variant, 5, gUnk_08747C6C);
+    CallTableEntry(v->variant, 5, gTridentKnightTridentVariants);
     w = gCurTask;
     w->accelY = 148 << 6;
     w->speedLimitY = 192 << 10;
     TaskSleepForever();
 }
 
-void sub_0809f3e0(void)
+void TridentKnightTridentUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -280,12 +280,12 @@ void sub_0809f7e4(void)
     TaskExitTrampoline();
 }
 
-void sub_0809f7f8(void)
+void MetaKnightsKnightReactToDamage(void)
 {
     gCurTask->unk24 = 18;
 }
 
-void sub_0809f808(void)
+void MetaKnightsKnightTeardown(void)
 {
     sub_0809f818(0);
     sub_0809f874();

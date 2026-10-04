@@ -76,11 +76,11 @@ void sub_0809cd4c(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -143,11 +143,11 @@ void sub_0809cec4(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -181,7 +181,7 @@ void Task_AxeKnightAxe(void)
     t->layer = 11;
     u = gCurTask;
     u->frameTable = gAxeKnightAxeFrames;
-    u->updateCallback = (u32)sub_0809cfe0;
+    u->updateCallback = (u32)AxeKnightAxeUpdate;
     TaskFaceLikeParent();
     TaskSetMotionXFacing(224 << 10, 0xFFFFDB00);
     gCurTask->speedLimitX = 128 << 11;
@@ -198,7 +198,7 @@ void Task_AxeKnightAxe(void)
     }
 }
 
-void sub_0809cfe0(void)
+void AxeKnightAxeUpdate(void)
 {
     struct PointPair box;
     struct Task *t;
@@ -282,7 +282,7 @@ void sub_0809d13c(void)
     t = gCurTask;
     t->drawCallback = (u32)sub_0809d17c;
     t->frameTable = gJavelinKnightFrames;
-    ActorLoadDef((u32)gUnk_08747E64);
+    ActorLoadDef((u32)gJavelinKnightDef);
     u = gCurTask;
     u->unk24 = 0;
     CallTableEntry(u->variant, 2, gJavelinKnightVariants);
@@ -345,11 +345,11 @@ void JavelinKnightUpdate(void)
     if (u->unk24 > 0)
     {
         u->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
@@ -469,7 +469,7 @@ void sub_0809d42c(void)
         ActorCheckHitsWithBox(gUnk_08747B24[t->frame - 28]);
 }
 
-void sub_0809d4a0(void)
+void JavelinKnightJumpThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -700,11 +700,11 @@ void sub_0809d83c(void)
     if (w->unk24 > 0)
     {
         w->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();

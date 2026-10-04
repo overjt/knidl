@@ -234,7 +234,7 @@ u8 sub_0809e820(void);
 u8 sub_0809f52c(void);
 u8 sub_0809f588(void);
 u8 sub_0809f618(void);
-void sub_0809f7f8(void);
+void MetaKnightsKnightReactToDamage(void);
 u8 sub_0809fd64(void);
 u8 sub_0809fe10(void);
 u8 sub_080a0538(void);
@@ -1576,7 +1576,7 @@ struct ActorVt gUnk_08745CE0 ACTOR_TBL(08745ce0) = {
 };
 
 /* ---- 0x087481A0-0x08748264: 11 record(s), section .actor_tbl_087481a0 ---- */
-/* gUnk_08747D5C */
+/* gAxeKnightDef */
 struct ActorHandlers gUnk_087481A0 ACTOR_TBL(087481a0) = {
     .unk00 = (u32)sub_0809d0a0,
     .unk04 = 0,
@@ -1586,7 +1586,7 @@ struct ActorHandlers gUnk_087481A0 ACTOR_TBL(087481a0) = {
     .unk14 = (u32)sub_0809d0dc,
     .unk18 = (u32)sub_0809d138,
 };
-/* gUnk_08747DB4 */
+/* gMaceKnightDef */
 struct ActorHandlers gUnk_087481BC ACTOR_TBL(087481a0) = {
     .unk00 = (u32)sub_0809e7c8,
     .unk04 = (u32)sub_0809e7d4,
@@ -1596,7 +1596,7 @@ struct ActorHandlers gUnk_087481BC ACTOR_TBL(087481a0) = {
     .unk14 = (u32)sub_0809e7e8,
     .unk18 = (u32)sub_0809e820,
 };
-/* gUnk_08747E0C */
+/* gTridentKnightDef */
 struct ActorHandlers gUnk_087481D8 ACTOR_TBL(087481a0) = {
     .unk00 = (u32)sub_0809f52c,
     .unk04 = 0,
@@ -1606,7 +1606,7 @@ struct ActorHandlers gUnk_087481D8 ACTOR_TBL(087481a0) = {
     .unk14 = (u32)sub_0809f588,
     .unk18 = (u32)sub_0809f618,
 };
-/* gUnk_08747E64 */
+/* gJavelinKnightDef */
 struct ActorHandlers gUnk_087481F4 ACTOR_TBL(087481a0) = {
     .unk00 = (u32)sub_0809db48,
     .unk04 = 0,
@@ -1616,12 +1616,12 @@ struct ActorHandlers gUnk_087481F4 ACTOR_TBL(087481a0) = {
     .unk14 = (u32)sub_0809dbc4,
     .unk18 = (u32)sub_0809dc3c,
 };
-/* gUnk_08747D5C */
+/* gAxeKnightDef */
 struct ActorVt gUnk_08748210 ACTOR_TBL(087481a0) = {
     .unk00 = -1,
     .unk01 = 0,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_0809f7f8,
+    .unk04 = (u32)MetaKnightsKnightReactToDamage,
     .unk08 = 0,
 };
 /* gAxeKnightAxeDef */
@@ -1632,20 +1632,20 @@ struct ActorVt gUnk_0874821C ACTOR_TBL(087481a0) = {
     .unk04 = 0,
     .unk08 = 0,
 };
-/* gUnk_08747DB4 */
+/* gMaceKnightDef */
 struct ActorVt gUnk_08748228 ACTOR_TBL(087481a0) = {
     .unk00 = -1,
     .unk01 = 0,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_0809f7f8,
+    .unk04 = (u32)MetaKnightsKnightReactToDamage,
     .unk08 = 0,
 };
-/* gUnk_08747E0C */
+/* gTridentKnightDef */
 struct ActorVt gUnk_08748234 ACTOR_TBL(087481a0) = {
     .unk00 = -1,
     .unk01 = 0,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_0809f7f8,
+    .unk04 = (u32)MetaKnightsKnightReactToDamage,
     .unk08 = 0,
 };
 /* gTridentKnightTridentDef */
@@ -1656,12 +1656,12 @@ struct ActorVt gUnk_08748240 ACTOR_TBL(087481a0) = {
     .unk04 = 0,
     .unk08 = 0,
 };
-/* gUnk_08747E64 */
+/* gJavelinKnightDef */
 struct ActorVt gUnk_0874824C ACTOR_TBL(087481a0) = {
     .unk00 = -1,
     .unk01 = 0,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_0809f7f8,
+    .unk04 = (u32)MetaKnightsKnightReactToDamage,
     .unk08 = 0,
 };
 /* gJavelinKnightJavelinDef */

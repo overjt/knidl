@@ -23,38 +23,38 @@ extern u32 ActorCheckHits(void);
 extern u8 sub_0806951c(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809ba44(void)
+void MrTickTockNoteInit(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_0809ba94;
+    t->updateCallback = (u32)MrTickTockNoteUpdate;
     t->unk2C = -gTasks[t->parent].facing;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_08745B20);
+    CallTableEntry(gCurTask->state, 2, gMrTickTockNoteStates);
 }
 
-void sub_0809ba94(void)
+void MrTickTockNoteUpdate(void)
 {
     if (sub_0806951c() == 0)
     {
-        CallTableEntry(gCurTask->updateState, 2, gUnk_08745B28);
+        CallTableEntry(gCurTask->updateState, 2, gMrTickTockNoteStateUpdates);
     }
     else
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0809baec, gCurTaskIdx);
+        TaskSetEntry(MrTickTockNoteEnterState, gCurTaskIdx);
     }
     if (gCurTask->state != 1)
         ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0809baec(void)
+void MrTickTockNoteEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_08745B20);
+    CallTableEntry(gCurTask->state, 2, gMrTickTockNoteStates);
 }
 
-void sub_0809bb08(void)
+void MrTickTockNoteFlight(void)
 {
     struct Task *t;
 
@@ -72,7 +72,7 @@ void sub_0809bb08(void)
     TaskSleepForever();
 }
 
-void sub_0809bb68(void)
+void MrTickTockNoteFlightUpdate(void)
 {
 }
 
@@ -114,7 +114,7 @@ void Task_MetaKnights(void)
     sub_08066544();
     sub_0809c0a8();
     sub_0809fc08();
-    sub_0809bfac();
+    MetaKnightsLoadGfx();
     EnablePause();
     t = gCurTask;
     t->updateCallback = (u32)sub_0809bc1c;
@@ -227,7 +227,7 @@ void sub_0809bf2c(void)
     gUnk_02007D00[5] = 0;
 }
 
-void sub_0809bfac(void)
+void MetaKnightsLoadGfx(void)
 {
     struct GfxHeader *g;
     u16 *p;

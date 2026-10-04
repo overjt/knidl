@@ -496,7 +496,7 @@ chk2:
         goto other;
 yes:
     sub_0809809c();
-    sub_08068920(gCurTask->unk18, 8);
+    SetHeldPlayerState(gCurTask->unk18, 8);
     if (gLocalPlayer == gCurTask->unk18)
         PlaySfx(0x23A);
     gCurTask->unk18 = -1;
@@ -507,7 +507,7 @@ yes:
     goto tail;
 other:
     sub_08098140();
-    sub_08068920(gCurTask->unk18, 9);
+    SetHeldPlayerState(gCurTask->unk18, 9);
     if (gLocalPlayer == gCurTask->unk18)
         PlaySfx(0x23A);
     gCurTask->unk18 = -1;
@@ -734,7 +734,7 @@ void PhanPhanCheckCatch(void)
             t->unk18 = i;
             TaskFaceToward(i);
             PlaySfx(568);
-            sub_080685ec(gCurTask->unk18, gCurTaskIdx, 7);
+            HoldPlayer(gCurTask->unk18, gCurTaskIdx, 7);
             ActorSetState(6);
             TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);
         }

@@ -245,7 +245,7 @@ void sub_0809c490(void)
 
     t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     t->frameTable = gAxeKnightFrames;
-    ActorLoadDef((u32)gUnk_08747D5C);
+    ActorLoadDef((u32)gAxeKnightDef);
     u = gCurTask;
     u->unk24 = 0;
     CallTableEntry(u->variant, 4, gAxeKnightVariants);
@@ -282,17 +282,17 @@ void AxeKnightUpdate(void)
     if (t->unk24 > 0)
     {
         t->unk24--;
-        sub_0809f9dc();
+        MetaKnightsKnightFlashPalette();
     }
     else
     {
-        sub_0809fb10();
+        MetaKnightsKnightRestorePalette();
     }
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0809c570(void)
+void AxeKnightWalk(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk2C = 90;
@@ -329,7 +329,7 @@ void sub_0809c5a4(void)
     }
 }
 
-void sub_0809c638(void)
+void AxeKnightWalkUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -369,7 +369,7 @@ void sub_0809c638(void)
     if (TaskGetNearestPlayerDx() > 59)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_0809c880, gCurTaskIdx);
+        TaskSetEntry(AxeKnightThrow, gCurTaskIdx);
         return;
     }
     if (RandomRange(3) != 0)
@@ -447,7 +447,7 @@ void sub_0809c840(void)
         ActorCheckHitsWithBox((s32)gUnk_08747EF4);
 }
 
-void sub_0809c880(void)
+void AxeKnightThrow(void)
 {
     gCurTask->updateState = 2;
     TaskStop();
@@ -470,15 +470,15 @@ void sub_0809c880(void)
     TaskSleepForever();
 }
 
-void sub_0809c8f8(void)
+void AxeKnightThrowUpdate(void)
 {
     if (gCurTask->state != 2)
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
     if (gCurTask->unk18 != 0)
-        TaskSetEntry(sub_0809c938, gCurTaskIdx);
+        TaskSetEntry(AxeKnightCatchAxe, gCurTaskIdx);
 }
 
-void sub_0809c938(void)
+void AxeKnightCatchAxe(void)
 {
     struct Task *t = gCurTask;
 
@@ -495,7 +495,7 @@ void sub_0809c938(void)
     TaskSleepForever();
 }
 
-void sub_0809c984(void)
+void AxeKnightJumpThrow(void)
 {
     struct Task *t;
     struct Task *u;
@@ -528,7 +528,7 @@ void sub_0809c984(void)
     TaskSleepForever();
 }
 
-void sub_0809ca0c(void)
+void AxeKnightJumpThrowUpdate(void)
 {
 }
 

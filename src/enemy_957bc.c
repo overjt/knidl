@@ -762,7 +762,7 @@ void sub_08096680(void)
         y = gCurTask;
         y->unk6C++;
     } while ((s16)y->unk6C <= 5);
-    sub_08068920(gCurTask->unk18, 6);
+    SetHeldPlayerState(gCurTask->unk18, 6);
     gCurTask->unk18 = -1;
     sub_08096888();
     gCurTask->unk30 = 0;
@@ -916,7 +916,7 @@ void sub_08096a40(void)
         if (p[i].ability != 17) {
             u->unk18 = i;
             TaskFaceToward(i);
-            sub_080685ec(gCurTask->unk18, gCurTaskIdx, 5);
+            HoldPlayer(gCurTask->unk18, gCurTaskIdx, 5);
             TaskSetEntry(sub_08096680, gCurTaskIdx);
         }
     }

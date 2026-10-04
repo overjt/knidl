@@ -137,8 +137,8 @@ extern void ThawStage(void);
 extern void DisablePause(void);
 extern void EnablePause(void);
 extern s32 CreateInhalableStar(s16 x, s16 y, s16 dir, u8 p8);
-extern void sub_080685ec(s32 i, s32 j, u8 c);
-extern void sub_08068920(s32 i, u8 c);
+extern void HoldPlayer(s32 i, s32 j, u8 c);
+extern void SetHeldPlayerState(s32 i, u8 c);
 extern void sub_08068950(s16 x, s16 y, s16 d);
 extern u32 ActorCheckHitsWithBox(s32 a);
 extern u32 ActorCheckHits(void);
@@ -2807,7 +2807,7 @@ void sub_080a49cc(void)
     struct Task *t;
 
     gUnk_02007D00[8] = -1;
-    sub_08068920(gUnk_02007D00[1], 2);
+    SetHeldPlayerState(gUnk_02007D00[1], 2);
     t = gCurTask;
     sub_08068950(t->pixelX, t->pixelY, -t->facing);
     RequestScreenShake(4);
@@ -2869,7 +2869,7 @@ void sub_080a4b1c(void)
 
     if (gCurTask->unk1C != 0)
     {
-        sub_08068920(gUnk_02007D00[1], 1);
+        SetHeldPlayerState(gUnk_02007D00[1], 1);
         gCurTask->unk1C = 0;
     }
     else
@@ -3400,7 +3400,7 @@ void KingDededeInhaleHitBoxUpdate(void)
     if (ActorCheckHitsWithBox((s32)gUnk_08748C44) != 0)
     {
         gUnk_02007D00[8] = (*c)->hitterSlot;
-        sub_080685ec((*c)->hitterSlot, (*c)->parent, 0);
+        HoldPlayer((*c)->hitterSlot, (*c)->parent, 0);
     }
 }
 
