@@ -20,7 +20,7 @@ void MergeLinkSaveSlots(void)
             gSaveSlots[3].furthestLevel[gExtraMode] = gLinkSaveSlots[i].furthestLevel[gExtraMode];
             gSaveSlots[3].furthestStage[gExtraMode] = gLinkSaveSlots[i].furthestStage[gExtraMode];
             gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[i].curLevel[gExtraMode];
-            gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+            gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[i].curStage[gExtraMode];
         }
         else if ((s8)gSaveSlots[3].furthestLevel[gExtraMode] == (s8)gLinkSaveSlots[i].furthestLevel[gExtraMode])
         {
@@ -28,19 +28,19 @@ void MergeLinkSaveSlots(void)
             {
                 gSaveSlots[3].furthestStage[gExtraMode] = gLinkSaveSlots[i].furthestStage[gExtraMode];
                 gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[i].curLevel[gExtraMode];
-                gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+                gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[i].curStage[gExtraMode];
             }
             else if ((s8)gSaveSlots[3].furthestStage[gExtraMode] == (s8)gLinkSaveSlots[i].furthestStage[gExtraMode])
             {
                 if ((s8)gSaveSlots[3].curLevel[gExtraMode] > (s8)gLinkSaveSlots[i].curLevel[gExtraMode])
                 {
                     gSaveSlots[3].curLevel[gExtraMode] = gLinkSaveSlots[i].curLevel[gExtraMode];
-                    gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+                    gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[i].curStage[gExtraMode];
                 }
                 else if ((s8)gSaveSlots[3].curLevel[gExtraMode] == (s8)gLinkSaveSlots[i].curLevel[gExtraMode])
                 {
-                    if ((s8)gSaveSlots[3].unk18[gExtraMode] > (s8)gLinkSaveSlots[i].unk08[gExtraMode])
-                        gSaveSlots[3].unk18[gExtraMode] = gLinkSaveSlots[i].unk08[gExtraMode];
+                    if ((s8)gSaveSlots[3].curStage[gExtraMode] > (s8)gLinkSaveSlots[i].curStage[gExtraMode])
+                        gSaveSlots[3].curStage[gExtraMode] = gLinkSaveSlots[i].curStage[gExtraMode];
                 }
             }
         }
@@ -64,7 +64,7 @@ void MergeProgressIntoSaveSlot(s32 a)
     s32 j;
 
     gSaveSlots[3].curLevel[gExtraMode] = gCurLevel;
-    gSaveSlots[3].unk18[gExtraMode] = gCurStage;
+    gSaveSlots[3].curStage[gExtraMode] = gCurStage;
     gSaveSlots[3].furthestLevel[gExtraMode] = gFurthestLevel;
     gSaveSlots[3].furthestStage[gExtraMode] = gFurthestStage;
     gSaveSlots[3].bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];
@@ -80,7 +80,7 @@ void MergeProgressIntoSaveSlot(s32 a)
     gSaveSlots[3].completionPercent[gExtraMode] = gCompletionPercent;
     gSaveSlots[3].milestoneFlags = gMilestoneFlags;
     gSaveSlots[a].curLevel[gExtraMode] = gSaveSlots[3].curLevel[gExtraMode];
-    gSaveSlots[a].unk18[gExtraMode] = gSaveSlots[3].unk18[gExtraMode];
+    gSaveSlots[a].curStage[gExtraMode] = gSaveSlots[3].curStage[gExtraMode];
     if ((s8)gSaveSlots[a].furthestLevel[gExtraMode] < (s8)gSaveSlots[3].furthestLevel[gExtraMode])
     {
         gSaveSlots[a].furthestLevel[gExtraMode] = gSaveSlots[3].furthestLevel[gExtraMode];

@@ -33,16 +33,16 @@ struct AttackBox
     /*0x03*/ s8 top;
     /*0x04*/ s8 right;
     /*0x05*/ s8 bottom;
-    /*0x06*/ u8 unk06;
+    /*0x06*/ u8 playerHitMode;
     /*0x07*/ u8 unk07;
     /*0x08*/ u8 damage;
     /*0x09*/ u8 hitEffect;
     /*0x0A*/ u16 unk0A;
     /*0x0C*/ u16 unk0C;
-    /*0x0E*/ u16 unk0E;
+    /*0x0E*/ u16 class10ImmuneMask;
     /*0x10*/ u16 unk10;
     /*0x12*/ u16 unk12;
-    /*0x14*/ u32 unk14;
+    /*0x14*/ u32 class20ImmuneMask;
     /*0x18*/ u16 unk18;
     /*0x1A*/ u16 unk1A;
 };
@@ -180,7 +180,7 @@ u8 HitTestColliderClass20(void)
         b = gColliderBodyBox;
         k = (u32)(b->classKind << 28) >> 28;
         a = gAttackBox;
-        if ((s32)a->unk14 < 0)
+        if ((s32)a->class20ImmuneMask < 0)
         {
             if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass == 32)
                 continue;
@@ -200,7 +200,7 @@ u8 HitTestColliderClass20(void)
             continue;
         }
         m = gUnk_08732254[k];
-        if (!(a->unk14 & m))
+        if (!(a->class20ImmuneMask & m))
         {
             if (gColliderSlot == (s8)gAttackLastHitterSlot && (s8)gAttackLastHitterClass == 32)
                 continue;
@@ -263,7 +263,7 @@ u8 HitTestColliderClass20(void)
                 t->hitKind = HIT_KIND_NO_DAMAGE;
         }
         m = gUnk_0873229C[k];
-        if (gAttackBox->unk14 & m)
+        if (gAttackBox->class20ImmuneMask & m)
             continue;
         gHitKind = HIT_KIND_NO_DAMAGE;
         gHitEffect = gUnk_08732242[k];

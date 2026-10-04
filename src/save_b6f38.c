@@ -30,7 +30,7 @@ struct InputRecording
     /*0x0C0*/ u16 milestoneFlags;
     /*0x0C2*/ u16 completionPercent;
     /*0x0C4*/ u8 curLevel[2];
-    /*0x0C6*/ u8 unkC6[2];
+    /*0x0C6*/ u8 curStage[2];
     /*0x0C8*/ u8 furthestLevel[2];
     /*0x0CA*/ u8 furthestStage[2];
     /*0x0CC*/ u32 bigSwitchFlags[2];
@@ -107,7 +107,7 @@ void InputRecorderStart(void)
         }
         gInputRecordingPtr->milestoneFlags = gMilestoneFlags;
         gInputRecordingPtr->curLevel[gExtraMode] = gCurLevel;
-        gInputRecordingPtr->unkC6[gExtraMode] = gCurStage;
+        gInputRecordingPtr->curStage[gExtraMode] = gCurStage;
         gInputRecordingPtr->furthestLevel[gExtraMode] = gFurthestLevel;
         gInputRecordingPtr->furthestStage[gExtraMode] = gFurthestStage;
         gInputRecordingPtr->bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];

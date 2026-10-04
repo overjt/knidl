@@ -13,7 +13,7 @@ void StoreProgressInSaveSlot(s32 a)
     s32 j;
 
     gSaveSlots[a].curLevel[gExtraMode] = gCurLevel;
-    gSaveSlots[a].unk18[gExtraMode] = gCurStage;
+    gSaveSlots[a].curStage[gExtraMode] = gCurStage;
     gSaveSlots[a].furthestLevel[gExtraMode] = gFurthestLevel;
     gSaveSlots[a].furthestStage[gExtraMode] = gFurthestStage;
     gSaveSlots[a].bigSwitchFlags[gExtraMode] = gBigSwitchFlags[0];
@@ -42,7 +42,7 @@ void StoreProgressInBothHalves(s32 a)
     for (i = 0; i <= 1; i++)
     {
         gSaveSlots[a].curLevel[i] = gCurLevel;
-        gSaveSlots[a].unk18[i] = gCurStage;
+        gSaveSlots[a].curStage[i] = gCurStage;
         gSaveSlots[a].furthestLevel[i] = gFurthestLevel;
         gSaveSlots[a].furthestStage[i] = gFurthestStage;
         gSaveSlots[a].bigSwitchFlags[i] = gBigSwitchFlags[0];
@@ -72,7 +72,7 @@ void LoadSaveSlot(s32 a)
         a = 3;
     gMilestoneFlags = gSaveSlots[a].milestoneFlags;
     gCurLevel = gSaveSlots[a].curLevel[gExtraMode];
-    gCurStage = gSaveSlots[a].unk18[gExtraMode];
+    gCurStage = gSaveSlots[a].curStage[gExtraMode];
     gFurthestLevel = gSaveSlots[a].furthestLevel[gExtraMode];
     gFurthestStage = gSaveSlots[a].furthestStage[gExtraMode];
     gBigSwitchFlags[0] = gSaveSlots[a].bigSwitchFlags[gExtraMode];
@@ -193,7 +193,7 @@ void CopySaveSlotToLinkSlot(void)
     s32 j;
 
     gSaveSlots[3].curLevel[gExtraMode] = gSaveSlots[gCurSaveSlot].curLevel[gExtraMode];
-    gSaveSlots[3].unk18[gExtraMode] = gSaveSlots[gCurSaveSlot].unk18[gExtraMode];
+    gSaveSlots[3].curStage[gExtraMode] = gSaveSlots[gCurSaveSlot].curStage[gExtraMode];
     gSaveSlots[3].furthestLevel[gExtraMode] = gSaveSlots[gCurSaveSlot].furthestLevel[gExtraMode];
     gSaveSlots[3].furthestStage[gExtraMode] = gSaveSlots[gCurSaveSlot].furthestStage[gExtraMode];
     gSaveSlots[3].bigSwitchFlags[gExtraMode] = gSaveSlots[gCurSaveSlot].bigSwitchFlags[gExtraMode];
@@ -222,7 +222,7 @@ void FillSendCmdWithSaveSlot(void)
         break;
     case 1:
         gSendCmd[1] = ((s8)gSaveSlots[gCurSaveSlot].curLevel[gExtraMode] << 8)
-                         | (s8)gSaveSlots[gCurSaveSlot].unk18[gExtraMode];
+                         | (s8)gSaveSlots[gCurSaveSlot].curStage[gExtraMode];
         gSendCmd[2] = ((s8)gSaveSlots[gCurSaveSlot].furthestLevel[gExtraMode] << 8)
                          | (s8)gSaveSlots[gCurSaveSlot].furthestStage[gExtraMode];
         gSendCmd[3] = gSaveSlots[gCurSaveSlot].completionPercent[gExtraMode];

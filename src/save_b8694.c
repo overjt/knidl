@@ -29,7 +29,7 @@ void ReceiveLinkSaveSlots(void)
             break;
         case 1:
             gLinkSaveSlots[i].curLevel[gExtraMode] = gRecvCmds[1][i] >> 8;
-            gLinkSaveSlots[i].unk08[gExtraMode] = gRecvCmds[1][i];
+            gLinkSaveSlots[i].curStage[gExtraMode] = gRecvCmds[1][i];
             gLinkSaveSlots[i].furthestLevel[gExtraMode] = gRecvCmds[2][i] >> 8;
             gLinkSaveSlots[i].furthestStage[gExtraMode] = gRecvCmds[2][i];
             gLinkSaveSlots[i].completionPercent[gExtraMode] = gRecvCmds[3][i];

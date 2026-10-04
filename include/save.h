@@ -14,7 +14,7 @@ struct LinkRec
     /*0x00*/ u16 milestoneFlags;
     /*0x02*/ u16 completionPercent[2];
     /*0x06*/ u8 curLevel[2];
-    /*0x08*/ u8 unk08[2];
+    /*0x08*/ u8 curStage[2];
     /*0x0A*/ u8 furthestLevel[2];
     /*0x0C*/ u8 furthestStage[2];
     /*0x0E*/ u16 pad0E;
@@ -48,7 +48,7 @@ struct InputRecording
     /*0x0C0*/ u16 milestoneFlags;
     /*0x0C2*/ u16 completionPercent;
     /*0x0C4*/ u8 curLevel[2];
-    /*0x0C6*/ u8 unkC6[2];
+    /*0x0C6*/ u8 curStage[2];
     /*0x0C8*/ u8 furthestLevel[2];
     /*0x0CA*/ u8 furthestStage[2];
     /*0x0CC*/ u32 bigSwitchFlags[2];
@@ -70,7 +70,7 @@ struct SaveSlot
     /*0x10*/ u16 milestoneFlags;
     /*0x12*/ u16 completionPercent[2];
     /*0x16*/ u8 curLevel[2];
-    /*0x18*/ u8 unk18[2];
+    /*0x18*/ u8 curStage[2];
     /*0x1A*/ u8 furthestLevel[2];
     /*0x1C*/ u8 furthestStage[2];
     /*0x1E*/ u8 pad1E[2];
