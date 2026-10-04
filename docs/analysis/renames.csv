@@ -12202,3 +12202,30 @@ sub_080b97a4,PlayerLifeRequestState5,function,"slot: gPlayerLifeRequestStates[5]
 sub_080b97d0,PlayerLifeRequestState5Update,function,"slot: gPlayerLifeRequestStateUpdates[5], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
 sub_080b97dc,PlayerLifeRequestState6,function,"slot: gPlayerLifeRequestStates[6], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
 sub_080b97f8,PlayerLifeRequestState6Update,function,"slot: gPlayerLifeRequestStateUpdates[6], src/data/late_game_tables.c (docs/naming.md 2.4, state-table slot; its only referrer)",155
+ActorSetState.v,ActorSetState.state,param,code: t->state = v after saving the old state in Actor.prevState (src/actor_63698.c),155
+TaskSetEntry.a,TaskSetEntry.entry,param,"code: gTaskResumeAddrs[i] = a, the coroutine entry the ARM task switcher resumes (src/early_5d9c.c)",155
+TaskSetEntry.i,TaskSetEntry.slot,param,code: indexes gTasks / gTaskResumeAddrs / gTaskStackPtrs: the task slot (src/early_5d9c.c),155
+TaskSetFrame.a,TaskSetFrame.frame,param,"code: gCurTask->frame = a, then TaskUpdateFlip (src/early_5d9c.c)",155
+TaskSetFrameByFacing.a,TaskSetFrameByFacing.frame,param,"code: Task.frame = a, or a | 1 when not facing right (src/early_5d9c.c)",155
+TaskSetFrameNoFlip.a,TaskSetFrameNoFlip.frame,param,code: clears the flip bit of Task.spriteFlags and stores Task.frame = a (src/early_5d9c.c),155
+TaskSetFrameFlip.a,TaskSetFrameFlip.frame,param,code: sets the flip bit of Task.spriteFlags and stores Task.frame = a (src/early_5d9c.c),155
+TaskSetMotionXFacing.a,TaskSetMotionXFacing.velX,param,"code: Task.velX = a (negated when facing left) unless 0x5A5A5A5A, the keep marker (src/early_5d9c.c)",155
+TaskSetMotionXFacing.b,TaskSetMotionXFacing.accelX,param,code: Task.accelX = b (negated when facing left) unless 0x5A5A5A5A (src/early_5d9c.c),155
+TaskSetMotionY.a,TaskSetMotionY.velY,param,code: Task.velY = a (src/early_5d9c.c),155
+TaskSetMotionY.b,TaskSetMotionY.accelY,param,code: Task.accelY = b (src/early_5d9c.c),155
+TaskSetMotionY.c,TaskSetMotionY.speedLimitY,param,code: Task.speedLimitY = abs(c) (src/early_5d9c.c),155
+TaskSetMotion.a,TaskSetMotion.velX,param,code: Task.velX = a unless 0x5A5A5A5A (src/early_5d9c.c),155
+TaskSetMotion.b,TaskSetMotion.accelX,param,code: Task.accelX = b unless 0x5A5A5A5A (src/early_5d9c.c),155
+TaskSetMotion.c,TaskSetMotion.speedLimitX,param,code: Task.speedLimitX = abs(c) unless 0x5A5A5A5A (src/early_5d9c.c),155
+TaskSetMotion.d,TaskSetMotion.velY,param,code: Task.velY = d unless 0x5A5A5A5A (src/early_5d9c.c),155
+TaskSetMotion.e,TaskSetMotion.accelY,param,code: Task.accelY = e unless 0x5A5A5A5A (src/early_5d9c.c),155
+TaskSetMotion.f,TaskSetMotion.speedLimitY,param,code: Task.speedLimitY = abs(f) unless 0x5A5A5A5A (src/early_5d9c.c),155
+ActorSetAttackBox.v,ActorSetAttackBox.box,param,"code: ActorSetAttackBoxSlot(gCurTaskIdx, v) (src/actor_63698.c)",155
+ActorSetTerrainBox.v,ActorSetTerrainBox.box,param,code: Actor.terrainBox = v (src/actor_63698.c),155
+ActorSetHitReactions.v,ActorSetHitReactions.reactions,param,code: Actor.hitReactions = v (src/actor_63698.c),155
+ActorLoadDef.d,ActorLoadDef.def,param,"code: ActorLoadDefSlot(gCurTaskIdx, d), the struct ActorDef the actor binds (src/actor_63698.c)",155
+ActorTickAnim.n,ActorTickAnim.delay,param,"code: the animation-script delay: steps the script when it reaches 0, returns it minus 1 (src/actor_63698.c)",155
+ActorTickAnimFacingNearestPlayer.n,ActorTickAnimFacingNearestPlayer.delay,param,"code: as ActorTickAnim, facing the nearest player at each step (src/actor_63698.c)",155
+PlayerStopAxes.a0,PlayerStopAxes.axes,param,"code: bit 0 clears the X motion, bit 1 the Y motion (src/stage_3cd60.c)",155
+LoadGfxSet.a0,LoadGfxSet.set,param,code: RequestCopyList(gUnk_0873185C[a0]) (src/gfx_08b8c.c),155
+LoadBgLayout.a0,LoadBgLayout.layout,param,code: ApplyBgLayout(gUnk_08730884[a0]) (src/gfx_08b8c.c),155

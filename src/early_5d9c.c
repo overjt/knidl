@@ -206,22 +206,22 @@ void TaskSleepForever(void)
         TaskYieldTrampoline(0x7FFF);
 }
 
-void TaskSetEntry(void *a, u32 i)
+void TaskSetEntry(void *entry, u32 slot)
 {
-    gTasks[i].sleepFrames = 0;
-    gTaskResumeAddrs[i] = a;
-    gTaskStackPtrs[i] = (EWRAM_START + 0x3BFE0) + (i << 8);
+    gTasks[slot].sleepFrames = 0;
+    gTaskResumeAddrs[slot] = entry;
+    gTaskStackPtrs[slot] = (EWRAM_START + 0x3BFE0) + (slot << 8);
 }
 
-void TaskSetFrameByFacing(s16 a)
+void TaskSetFrameByFacing(s16 frame)
 {
     struct Sprite *p;
 
     p = gCurTask;
     if (p->facing == 1)
-        p->frame = a;
+        p->frame = frame;
     else
-        p->frame = a | 1;
+        p->frame = frame | 1;
 }
 
 void TaskSetMotionX(s32 a, s32 b, s32 c)
@@ -234,17 +234,17 @@ void TaskSetMotionX(s32 a, s32 b, s32 c)
     p->speedLimitX = abs(c);
 }
 
-void TaskSetMotionXFacing(s32 a, s32 b)
+void TaskSetMotionXFacing(s32 velX, s32 accelX)
 {
     struct Sprite *p;
 
     p = gCurTask;
     if (p->facing == 1) {
-        if (a != 0x5A5A5A5A) p->velX = a;
-        if (b != 0x5A5A5A5A) gCurTask->accelX = b;
+        if (velX != 0x5A5A5A5A) p->velX = velX;
+        if (accelX != 0x5A5A5A5A) gCurTask->accelX = accelX;
     } else {
-        if (a != 0x5A5A5A5A) p->velX = -a;
-        if (b != 0x5A5A5A5A) gCurTask->accelX = -b;
+        if (velX != 0x5A5A5A5A) p->velX = -velX;
+        if (accelX != 0x5A5A5A5A) gCurTask->accelX = -accelX;
     }
 }
 
@@ -258,14 +258,14 @@ void TaskStopX(void)
     p->speedLimitX = 0x80000000;
 }
 
-void TaskSetMotionY(s32 a, s32 b, s32 c)
+void TaskSetMotionY(s32 velY, s32 accelY, s32 speedLimitY)
 {
     struct Sprite *p;
 
     p = gCurTask;
-    p->velY = a;
-    p->accelY = b;
-    p->speedLimitY = abs(c);
+    p->velY = velY;
+    p->accelY = accelY;
+    p->speedLimitY = abs(speedLimitY);
 }
 
 void TaskStopY(void)
@@ -278,14 +278,14 @@ void TaskStopY(void)
     p->speedLimitY = 0x80000000;
 }
 
-void TaskSetMotion(s32 a, s32 b, s32 c, s32 d, s32 e, s32 f)
+void TaskSetMotion(s32 velX, s32 accelX, s32 speedLimitX, s32 velY, s32 accelY, s32 speedLimitY)
 {
-    if (a != 0x5A5A5A5A) gCurTask->velX = a;
-    if (b != 0x5A5A5A5A) gCurTask->accelX = b;
-    if (c != 0x5A5A5A5A) gCurTask->speedLimitX = abs(c);
-    if (d != 0x5A5A5A5A) gCurTask->velY = d;
-    if (e != 0x5A5A5A5A) gCurTask->accelY = e;
-    if (f != 0x5A5A5A5A) gCurTask->speedLimitY = abs(f);
+    if (velX != 0x5A5A5A5A) gCurTask->velX = velX;
+    if (accelX != 0x5A5A5A5A) gCurTask->accelX = accelX;
+    if (speedLimitX != 0x5A5A5A5A) gCurTask->speedLimitX = abs(speedLimitX);
+    if (velY != 0x5A5A5A5A) gCurTask->velY = velY;
+    if (accelY != 0x5A5A5A5A) gCurTask->accelY = accelY;
+    if (speedLimitY != 0x5A5A5A5A) gCurTask->speedLimitY = abs(speedLimitY);
 }
 
 void TaskStop(void)
@@ -325,28 +325,28 @@ void TaskUpdateFlip(void)
         p->spriteFlags |= 0x8000;
 }
 
-void TaskSetFrame(s32 a)
+void TaskSetFrame(s32 frame)
 {
-    gCurTask->frame = a;
+    gCurTask->frame = frame;
     TaskUpdateFlip();
 }
 
-void TaskSetFrameNoFlip(s32 a)
+void TaskSetFrameNoFlip(s32 frame)
 {
     struct Sprite *p;
 
     p = gCurTask;
     p->spriteFlags &= 0x7FFF;
-    p->frame = a;
+    p->frame = frame;
 }
 
-void TaskSetFrameFlip(s32 a)
+void TaskSetFrameFlip(s32 frame)
 {
     struct Sprite *p;
 
     p = gCurTask;
     p->spriteFlags |= 0x8000;
-    p->frame = a;
+    p->frame = frame;
 }
 
 void TaskSetPosXFacing(u16 a)

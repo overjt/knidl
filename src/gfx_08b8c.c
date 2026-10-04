@@ -57,14 +57,14 @@ void LinkErrorScreen(void)
     SoftReset(0x1C);
 }
 
-void LoadBgLayout(s32 a0)
+void LoadBgLayout(s32 layout)
 {
-    ApplyBgLayout(gUnk_08730884[a0]);
+    ApplyBgLayout(gUnk_08730884[layout]);
 }
 
-void LoadGfxSet(u16 a0)
+void LoadGfxSet(u16 set)
 {
-    RequestCopyList(gUnk_0873185C[a0]);
+    RequestCopyList(gUnk_0873185C[set]);
 }
 
 void sub_08008c7c(void)

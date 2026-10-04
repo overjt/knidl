@@ -183,9 +183,9 @@ void ActorInitFromDefSlot(u32 i)
     }
 }
 
-void ActorLoadDef(struct ActorDef *d)
+void ActorLoadDef(struct ActorDef *def)
 {
-    ActorLoadDefSlot(gCurTaskIdx, d);
+    ActorLoadDefSlot(gCurTaskIdx, def);
 }
 
 void ActorLoadDefSlot(u32 i, struct ActorDef *d)
@@ -205,13 +205,13 @@ void ActorLoadDefSlot(u32 i, struct ActorDef *d)
     ActorResetHealthSlot(i);
 }
 
-void ActorSetState(u8 v)
+void ActorSetState(u8 state)
 {
     struct Task *t;
 
     t = gCurTask;
     t->u8C.actor->prevState = t->state;
-    t->state = v;
+    t->state = state;
 }
 
 void ActorSetStateSlot(u32 i, u8 v)
@@ -232,14 +232,14 @@ void ActorSetTerrainHandlers(u32 v)
     a->terrainHandlers = v;
 }
 
-void ActorSetHitReactions(u32 v)
+void ActorSetHitReactions(u32 reactions)
 {
-    gCurTask->u8C.actor->hitReactions = v;
+    gCurTask->u8C.actor->hitReactions = reactions;
 }
 
-void ActorSetAttackBox(u32 v)
+void ActorSetAttackBox(u32 box)
 {
-    ActorSetAttackBoxSlot(gCurTaskIdx, v);
+    ActorSetAttackBoxSlot(gCurTaskIdx, box);
 }
 
 void ActorSetAttackBoxSlot(u32 i, u32 v)
@@ -250,9 +250,9 @@ void ActorSetAttackBoxSlot(u32 i, u32 v)
     t->u8C.actor->attackBox = v;
 }
 
-void ActorSetTerrainBox(u32 v)
+void ActorSetTerrainBox(u32 box)
 {
-    gCurTask->u8C.actor->terrainBox = v;
+    gCurTask->u8C.actor->terrainBox = box;
 }
 
 void sub_080639f0(struct ActorAux *v)
@@ -693,29 +693,29 @@ s32 ActorStepAnim(void)
     return delay;
 }
 
-s32 ActorTickAnimFacingNearestPlayer(s32 n)
+s32 ActorTickAnimFacingNearestPlayer(s32 delay)
 {
     if (gCurTask->u8C.actor->animScript != NULL)
     {
-        if (n <= 0)
+        if (delay <= 0)
         {
             TaskFaceNearestPlayer();
-            n = ActorStepAnim();
+            delay = ActorStepAnim();
         }
-        n--;
+        delay--;
     }
-    return n;
+    return delay;
 }
 
-s32 ActorTickAnim(s32 n)
+s32 ActorTickAnim(s32 delay)
 {
     if (gCurTask->u8C.actor->animScript != NULL)
     {
-        if (n <= 0)
-            n = ActorStepAnim();
-        n--;
+        if (delay <= 0)
+            delay = ActorStepAnim();
+        delay--;
     }
-    return n;
+    return delay;
 }
 
 /* Dead export: split `mag` into the trig-table components of the angle from

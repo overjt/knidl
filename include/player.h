@@ -532,7 +532,7 @@ s32 sub_0803d870(void);
 void sub_0803db74(void);
 void sub_0803ddc0(void);
 void sub_0803dfc8(void);
-void PlayerStopAxes(s32 a0);
+void PlayerStopAxes(s32 axes);
 void sub_0803e080(void);
 void SetPlayerInvulnerability(s32 a0, s32 a1, s32 a2);
 void sub_0803e28c(s32 a0);

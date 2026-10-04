@@ -462,7 +462,9 @@ def verify_diff(ref):
     added = now[len(before):]
     fields = [r for r in added if r["kind"] == "field"]
     aliases = [r for r in added if r["kind"] == "alias"]
-    added = [r for r in added if r["kind"] not in ("field", "alias")]
+    # `param` rows log parameter names (#155 run 5, D5): no symbol, proven by
+    # the per-file assembly oracle, not by this check.
+    added = [r for r in added if r["kind"] not in ("field", "alias", "param")]
     field_pairs = compose_field_renames(fields)
     # Task register aliases (tools/task_alias.py): `Task.unkXX` -> `Task.alias`,
     # an object-like macro in include/task_vars.h used after `.`/`->`.

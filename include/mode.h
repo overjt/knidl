@@ -149,8 +149,8 @@ void BossEnduranceMain(void);
 
 /* src/gfx_08b8c.c */
 void LinkErrorScreen(void);
-void LoadBgLayout(s32 a0);
-void LoadGfxSet(u16 a0);
+void LoadBgLayout(s32 layout);
+void LoadGfxSet(u16 set);
 void sub_08008c7c(void);
 void sub_08008cb8(void);
 void sub_08008d10(s32 a0, s32 a1);

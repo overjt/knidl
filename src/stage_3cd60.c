@@ -878,15 +878,15 @@ void sub_0803dfc8(void)
                  gCurTask->pixelY - gSpriteCameraY);
 }
 
-void PlayerStopAxes(s32 a0)
+void PlayerStopAxes(s32 axes)
 {
-    if (a0 & 1)
+    if (axes & 1)
     {
         gCurTask->speedLimitX = 0;
         gCurTask->accelX = 0;
         gCurTask->velX = 0;
     }
-    if (a0 & 2)
+    if (axes & 2)
     {
         gCurTask->speedLimitY = 0;
         gCurTask->accelY = 0;
