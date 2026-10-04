@@ -2903,7 +2903,7 @@ void CreateLocalPlayerArrow(s32 a0)
 
     if (gPlayerCount != 1 && a0 == gLocalPlayer)
     {
-        t = CreatePlayerEffectHighSlot((s8)a0, 21, 0);
+        t = CreatePlayerEffectHighSlot((s8)a0, PLAYER_EFFECT_VARIANT_LOCAL_PLAYER_ARROW, 0);
         gTasks[t].parent = a0;
         gTasks[t].player = gTasks[a0].player;
     }

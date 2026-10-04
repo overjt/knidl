@@ -1463,25 +1463,25 @@ void SlippyState0(void)
     switch (gUnk_030023D4)
     {
     case 0:
-        ActorSetState(SLIPPY_STATE_2);
+        ActorSetState(SLIPPY_STATE_JUMP);
         TaskSleepForever();
         break;
     case 1:
-        ActorSetState(SLIPPY_STATE_3);
+        ActorSetState(SLIPPY_STATE_HIGH_JUMP);
         TaskSleepForever();
         break;
     case 2:
-        ActorSetState(SLIPPY_STATE_2);
+        ActorSetState(SLIPPY_STATE_JUMP);
         TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskSleepForever();
         break;
     case 3:
-        ActorSetState(SLIPPY_STATE_3);
+        ActorSetState(SLIPPY_STATE_HIGH_JUMP);
         TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskSleepForever();
         break;
     case 4:
-        ActorSetState(SLIPPY_STATE_2);
+        ActorSetState(SLIPPY_STATE_JUMP);
         TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
         TaskTurnAroundAndReverseX();
         TaskSleepForever();
@@ -1529,25 +1529,25 @@ void SlippyState1(void)
         switch (gUnk_030023D4)
         {
         case 0:
-            ActorSetState(SLIPPY_STATE_2);
+            ActorSetState(SLIPPY_STATE_JUMP);
             TaskSleepForever();
             break;
         case 1:
-            ActorSetState(SLIPPY_STATE_3);
+            ActorSetState(SLIPPY_STATE_HIGH_JUMP);
             TaskSleepForever();
             break;
         case 2:
-            ActorSetState(SLIPPY_STATE_2);
+            ActorSetState(SLIPPY_STATE_JUMP);
             TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSleepForever();
             break;
         case 3:
-            ActorSetState(SLIPPY_STATE_3);
+            ActorSetState(SLIPPY_STATE_HIGH_JUMP);
             TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskSleepForever();
             break;
         case 4:
-            ActorSetState(SLIPPY_STATE_2);
+            ActorSetState(SLIPPY_STATE_JUMP);
             TaskSetMotionXFacing(gUnk_08742818[gCurTask->actorSpawnArg], 0x5A5A5A5A);
             TaskTurnAroundAndReverseX();
             TaskSleepForever();
@@ -1566,7 +1566,7 @@ void SlippyState1Update(void)
 
 void SlippyJump(void)
 {
-    gCurTask->updateState = SLIPPY_STATE_2;
+    gCurTask->updateState = SLIPPY_STATE_JUMP;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     PlaySfx(188);
@@ -1588,7 +1588,7 @@ void SlippyJumpUpdate(void)
 
 void SlippyHighJump(void)
 {
-    gCurTask->updateState = SLIPPY_STATE_3;
+    gCurTask->updateState = SLIPPY_STATE_HIGH_JUMP;
     gCurTask->slippyCollideTerrain = 1;
     gCurTask->onGround = 0;
     PlaySfx(188);
@@ -1940,8 +1940,8 @@ s32 SlippyLand(void)
             return 0;
         case SLIPPY_STATE_0:
         case SLIPPY_STATE_1:
-        case SLIPPY_STATE_2:
-        case SLIPPY_STATE_3:
+        case SLIPPY_STATE_JUMP:
+        case SLIPPY_STATE_HIGH_JUMP:
         case SLIPPY_STATE_4:
         case SLIPPY_STATE_FALL:
             ActorSetState(SLIPPY_STATE_0);

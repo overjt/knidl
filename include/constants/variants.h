@@ -113,8 +113,9 @@
 #define FLAMER_VARIANT_IDLE  2
 
 /* Game Over Object variants - gGameOverObjectVariants[N], CallTableEntry(Task.variant) in Task_GameOverObject */
-#define GAME_OVER_OBJECT_VARIANT_PLAYER  0
-#define GAME_OVER_OBJECT_VARIANT_CHOICE  1
+#define GAME_OVER_OBJECT_VARIANT_PLAYER               0
+#define GAME_OVER_OBJECT_VARIANT_CHOICE               1
+#define GAME_OVER_OBJECT_VARIANT_KNOCKED_OUT_PLAYERS  5
 
 /* Gip variants - gGipVariants[N], CallTableEntry(Task.variant) in Task_Gip */
 #define GIP_VARIANT_INIT  0
@@ -201,7 +202,8 @@
 #define NIGHTMARE_WIZARD_VARIANT_INIT  0
 
 /* Noddy variants - gNoddyVariants[N], CallTableEntry(Task.variant) in Task_Noddy */
-#define NODDY_VARIANT_INIT  0
+#define NODDY_VARIANT_INIT    0
+#define NODDY_VARIANT_ASLEEP  1
 
 /* Palette Anim variants - gPaletteAnimVariants[N], CallTableEntry(Task.variant) in Task_PaletteAnim */
 #define PALETTE_ANIM_VARIANT_CYCLE        1
@@ -295,9 +297,10 @@
 #define STAKE_VARIANT_INIT  0
 
 /* Starman variants - gStarmanVariants[N], CallTableEntry(Task.variant) in Task_Starman */
-#define STARMAN_VARIANT_JUMP  1
-#define STARMAN_VARIANT_FLY   2
-#define STARMAN_VARIANT_IDLE  3
+#define STARMAN_VARIANT_AMBUSH  0
+#define STARMAN_VARIANT_JUMP    1
+#define STARMAN_VARIANT_FLY     2
+#define STARMAN_VARIANT_IDLE    3
 
 /* Sword And Blade Knight variants - gSwordAndBladeKnightVariants[N], CallTableEntry(Task.variant) in Task_BladeKnight, Task_SwordKnight */
 #define SWORD_AND_BLADE_KNIGHT_VARIANT_WALK   0
@@ -367,6 +370,7 @@
 #define PLAYER_EFFECT_VARIANT_DEATH_STAR_RING          12
 #define PLAYER_EFFECT_VARIANT_META_KNIGHT_DEATH_BLAST  13
 #define PLAYER_EFFECT_VARIANT_DANCE_STAR_BURST         16
+#define PLAYER_EFFECT_VARIANT_LOCAL_PLAYER_ARROW       21
 #define PLAYER_EFFECT_VARIANT_HURT_FLAMES              22
 #define PLAYER_EFFECT_VARIANT_HURT_SPARKS              23
 #define PLAYER_EFFECT_VARIANT_HURT_BURST               26
@@ -400,5 +404,12 @@
 #define PLAYER_OBJECT_VARIANT_UFO_SHOT              10
 #define PLAYER_OBJECT_VARIANT_STAR_ROD_SHOT         11
 #define PLAYER_OBJECT_VARIANT_STAR_ROD_FLIGHT_SHOT  12
+
+/* Hot Head Fire variants - gHotHeadFireVariants[N], CallTableEntry(Task.variant) in Task_HotHeadFire */
+#define HOT_HEAD_FIRE_VARIANT_BREATH  0
+#define HOT_HEAD_FIRE_VARIANT_BALL    1
+
+/* Mace Knight variants - gMaceKnightVariants[N], CallTableEntry(Task.variant) in sub_0809dc7c */
+#define MACE_KNIGHT_VARIANT_STAND  0
 
 #endif // GUARD_CONSTANTS_VARIANTS_H

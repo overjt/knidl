@@ -862,7 +862,7 @@ void Task_HotHeadFire(void)
 void HotHeadFireBreathInit(void)
 {
     gCurTask->updateCallback = (u32)HotHeadFireBreathUpdate;
-    ActorSetState(0);
+    ActorSetState(HOT_HEAD_FIRE_BREATH_STATE_BREATH);
     CallTableEntry(gCurTask->state, 1, gHotHeadFireBreathStates);
 }
 
@@ -891,7 +891,7 @@ void HotHeadFireBreath(void)
 
     t = gCurTask;
     o = gTasks + (s16)t->parent;
-    t->updateState = 0;
+    t->updateState = HOT_HEAD_FIRE_BREATH_STATE_BREATH;
     u = gCurTask;
     if (u->facing == 1)
         u->hotHeadFireAngle = 0;
@@ -943,7 +943,7 @@ void HotHeadFireBallInit(void)
     gCurTask->updateCallback = (u32)HotHeadFireBallUpdate;
     if ((s16)gTaskSlotTypes[gCurTaskIdx] != -1)
     {
-        ActorSetState(0);
+        ActorSetState(HOT_HEAD_FIRE_BALL_STATE_BALL);
         CallTableEntry(gCurTask->state, 1, gHotHeadFireBallStates);
     }
 }
@@ -975,7 +975,7 @@ void HotHeadFireBall(void)
     struct Task *v;
     s32 n;
 
-    gCurTask->updateState = 0;
+    gCurTask->updateState = HOT_HEAD_FIRE_BALL_STATE_BALL;
     gCurTask->unk28 = 0;
     gCurTask->hotHeadFireAimAngle = n = TaskGetAngleToNearestPlayer(3);
     if (n >= 25 && n <= 127)

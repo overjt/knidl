@@ -337,7 +337,7 @@ void BlipperLeapInit(void)
     gCurTask->onGround = 0;
     TaskFaceNearestPlayer();
     gCurTask->blipperLeapTimer = 1;
-    ActorSetState(0);
+    ActorSetState(BLIPPER_LEAP_STATE_0);
     CallTableEntry(gCurTask->state, 2, gBlipperLeapStates);
 }
 
@@ -365,7 +365,7 @@ void BlipperLeapUpdate(void)
 
 void sub_0808b28c(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = BLIPPER_LEAP_STATE_0;
     gCurTask->blipperTurnTimer = 192;
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     gCurTask->accelY = 0xFFFFCD00;
@@ -404,7 +404,7 @@ void sub_0808b2fc(void)
 
 void BlipperLeap(void)
 {
-    gCurTask->updateState = 1;
+    gCurTask->updateState = BLIPPER_LEAP_STATE_LEAP;
     if (gCurTask->variant == 3)
         gCurTask->blipperCollideTerrain = 0;
     else
@@ -447,7 +447,7 @@ void sub_0808b468(void)
                                 + ((s8 *)gCurTask->u8C.actor->terrainBox)[2]) != 0)
     {
         gCurTask->velY >>= 2;
-        ActorSetState(0);
+        ActorSetState(BLIPPER_LEAP_STATE_0);
         TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
     }
 }
@@ -461,7 +461,7 @@ void sub_0808b4d0(void)
     }
     if ((u8)IsWaterAtPixel(gCurTask->pixelX, gCurTask->pixelY) == 0)
     {
-        ActorSetState(1);
+        ActorSetState(BLIPPER_LEAP_STATE_LEAP);
         TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
         return;
     }
@@ -488,7 +488,7 @@ one:
 zero:
     gCurTask->blipperLeapSpeedIndex = 0;
 done:
-    ActorSetState(1);
+    ActorSetState(BLIPPER_LEAP_STATE_LEAP);
     TaskSetEntry(BlipperLeapEnterState, gCurTaskIdx);
 }
 

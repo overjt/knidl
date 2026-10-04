@@ -1275,7 +1275,7 @@ void HotHeadWalkShoot(void)
     {
         sp.subtype = 6;
         sp.taskType = TASK_HOT_HEAD_FIRE;
-        sp.variant = 0;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BREATH;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 0;
@@ -1297,7 +1297,7 @@ void HotHeadWalkShoot(void)
     {
         sp.subtype = 6;
         sp.taskType = TASK_HOT_HEAD_FIRE;
-        sp.variant = 1;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BALL;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         gCurTask->hotHeadFireSlot = CreateActorFromDescHere(&sp, 1);
@@ -1453,7 +1453,7 @@ void HotHeadStandShoot(void)
     {
         sp.subtype = 6;
         sp.taskType = TASK_HOT_HEAD_FIRE;
-        sp.variant = 0;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BREATH;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 0;
@@ -1475,7 +1475,7 @@ void HotHeadStandShoot(void)
     {
         sp.subtype = 6;
         sp.taskType = TASK_HOT_HEAD_FIRE;
-        sp.variant = 1;
+        sp.variant = HOT_HEAD_FIRE_VARIANT_BALL;
         sp.spawnArg = 0;
         sp.tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
         sp.checkTerrain = 1;

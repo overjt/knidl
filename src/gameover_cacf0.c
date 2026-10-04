@@ -297,7 +297,7 @@ void CreateGameOverObjects(void)
         gameOverObjectSlot = TaskCreateFrom(TASK_GAME_OVER_OBJECT, 32);
         if (gameOverObjectSlot != -1) {
             struct Task *t2 = &gTasks[gameOverObjectSlot];
-            t2->variant = 5;
+            t2->variant = GAME_OVER_OBJECT_VARIANT_KNOCKED_OUT_PLAYERS;
         }
     }
 }

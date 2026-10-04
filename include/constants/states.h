@@ -850,17 +850,17 @@
 #define SIR_KIBBLE_WALK_STATE_JUMP   2
 
 /* Slippy states - gSlippyStates[N], CallTableEntry(Task.state) in SlippyInit */
-#define SLIPPY_STATE_0     0
-#define SLIPPY_STATE_1     1
-#define SLIPPY_STATE_2     2
-#define SLIPPY_STATE_3     3
-#define SLIPPY_STATE_4     4
-#define SLIPPY_STATE_5     5
-#define SLIPPY_STATE_6     6
-#define SLIPPY_STATE_7     7
-#define SLIPPY_STATE_8     8
-#define SLIPPY_STATE_9     9
-#define SLIPPY_STATE_FALL  10
+#define SLIPPY_STATE_0          0
+#define SLIPPY_STATE_1          1
+#define SLIPPY_STATE_JUMP       2
+#define SLIPPY_STATE_HIGH_JUMP  3
+#define SLIPPY_STATE_4          4
+#define SLIPPY_STATE_5          5
+#define SLIPPY_STATE_6          6
+#define SLIPPY_STATE_7          7
+#define SLIPPY_STATE_8          8
+#define SLIPPY_STATE_9          9
+#define SLIPPY_STATE_FALL       10
 
 /* SparkyIdle states - gSparkyIdleStates[N], CallTableEntry(Task.state) in SparkyIdleInit */
 #define SPARKY_IDLE_STATE_IDLE  0
@@ -909,22 +909,22 @@
 #define SWORD_AND_BLADE_KNIGHT_IDLE_STATE_0  0
 
 /* SwordAndBladeKnightStand states - gSwordAndBladeKnightStandStates[N], CallTableEntry(Task.state) in SwordAndBladeKnightStandInit */
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_0  0
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_1  1
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_2  2
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_3  3
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_4  4
-#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_5  5
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_0           0
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_1           1
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_2           2
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_UP    3
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_SLASH_DOWN  4
+#define SWORD_AND_BLADE_KNIGHT_STAND_STATE_5           5
 
 /* SwordAndBladeKnightWalk states - gSwordAndBladeKnightWalkStates[N], CallTableEntry(Task.state) in SwordAndBladeKnightWalkInit */
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_0     0
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_1     1
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_2     2
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_3     3
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_4     4
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_5     5
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_6     6
-#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_FALL  7
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_0           0
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_1           1
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_2           2
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_UP    3
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_SLASH_DOWN  4
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_WALK_BACK   5
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_6           6
+#define SWORD_AND_BLADE_KNIGHT_WALK_STATE_FALL        7
 
 /* TridentKnight states - gTridentKnightStates[N], CallTableEntry(Task.state) in TridentKnightEnterState */
 #define TRIDENT_KNIGHT_STATE_WALK        0
@@ -1027,5 +1027,23 @@
 #define WHISPY_WOODS_STATE_BLOW_TWO_PUFFS   1
 #define WHISPY_WOODS_STATE_BLOW_FOUR_PUFFS  2
 #define WHISPY_WOODS_STATE_DROP_APPLES      3
+
+/* BlipperLeap states - gBlipperLeapStates[N], CallTableEntry(Task.state) in BlipperLeapInit */
+#define BLIPPER_LEAP_STATE_0     0
+#define BLIPPER_LEAP_STATE_LEAP  1
+
+/* HotHeadFireBall states - gHotHeadFireBallStates[N], CallTableEntry(Task.state) in HotHeadFireBallInit */
+#define HOT_HEAD_FIRE_BALL_STATE_BALL  0
+
+/* HotHeadFireBreath states - gHotHeadFireBreathStates[N], CallTableEntry(Task.state) in HotHeadFireBreathInit */
+#define HOT_HEAD_FIRE_BREATH_STATE_BREATH  0
+
+/* StarmanAmbush states - gStarmanAmbushStates[N], CallTableEntry(Task.state) in StarmanAmbushInit */
+#define STARMAN_AMBUSH_STATE_WALK      0
+#define STARMAN_AMBUSH_STATE_1         1
+#define STARMAN_AMBUSH_STATE_HIDE      2
+#define STARMAN_AMBUSH_STATE_DIVE      3
+#define STARMAN_AMBUSH_STATE_4         4
+#define STARMAN_AMBUSH_STATE_FLY_AWAY  5
 
 #endif // GUARD_CONSTANTS_STATES_H

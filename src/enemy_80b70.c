@@ -194,7 +194,7 @@ void StarmanAmbushInit(void)
 
     t->updateCallback = (u32)StarmanAmbushUpdate;
     t->starmanDropCount = 0;
-    ActorSetState(0);
+    ActorSetState(STARMAN_AMBUSH_STATE_WALK);
     CallTableEntry(gCurTask->state, 6, gStarmanAmbushStates);
 }
 
@@ -207,7 +207,7 @@ void StarmanAmbushUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->state == 5)
+    if (t->state == STARMAN_AMBUSH_STATE_FLY_AWAY)
     {
         CallTableEntry(t->updateState, 6, gStarmanAmbushStateUpdates);
     }
@@ -221,7 +221,7 @@ void StarmanAmbushUpdate(void)
 
 void StarmanAmbushWalk(void)
 {
-    gCurTask->updateState = 0;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_WALK;
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(gUnk_087414F8[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     sub_08081814();
@@ -234,7 +234,7 @@ void StarmanAmbushWalkUpdate(void)
     {
         if (abs(TaskGetNearestPlayerDx()) <= 47)
         {
-            ActorSetState(1);
+            ActorSetState(STARMAN_AMBUSH_STATE_1);
             TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
         }
     }
@@ -246,7 +246,7 @@ void sub_08080f34(void)
     struct Task *b;
     struct Task *c;
 
-    gCurTask->updateState = 1;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_1;
     a = gCurTask;
     a->starmanHideCount = 0;
     a->velX = 0;
@@ -285,7 +285,7 @@ void sub_08080fa4(void)
     {
         TaskStop();
         gCurTask->frame = 0xFFFF;
-        ActorSetState(2);
+        ActorSetState(STARMAN_AMBUSH_STATE_HIDE);
         TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
         return;
     }
@@ -323,7 +323,7 @@ void StarmanAmbushHide(void)
     struct Task *a;
     struct Task *b;
 
-    gCurTask->updateState = 2;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_HIDE;
     a = gCurTask;
     a->starmanHideCount++;
     TaskStop();
@@ -346,7 +346,7 @@ void StarmanAmbushHideUpdate(void)
     t->starmanHideTimer = n;
     if (n == 0)
     {
-        ActorSetState(3);
+        ActorSetState(STARMAN_AMBUSH_STATE_DIVE);
         TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
     }
     else
@@ -366,7 +366,7 @@ void StarmanAmbushDive(void)
     struct Task *b;
     struct Task *c;
 
-    gCurTask->updateState = 3;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_DIVE;
     TaskSetMotionY(0x20000, 0x1500, 0x30000);
     TaskSetFrame(20);
     while ((s8)gCurTask->onGround == 0)
@@ -400,18 +400,18 @@ void StarmanAmbushDive(void)
     {
         TaskSetFrame(13);
         TaskYieldTrampoline(60);
-        ActorSetState(0);
+        ActorSetState(STARMAN_AMBUSH_STATE_WALK);
     }
     else
     {
-        ActorSetState(5);
+        ActorSetState(STARMAN_AMBUSH_STATE_FLY_AWAY);
     }
     TaskSleepForever();
 }
 
 void StarmanAmbushDiveUpdate(void)
 {
-    if (gCurTask->state != 3)
+    if (gCurTask->state != STARMAN_AMBUSH_STATE_DIVE)
         TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
 }
 
@@ -419,7 +419,7 @@ void StarmanAmbushFlyAway(void)
 {
     struct Task *t;
 
-    gCurTask->updateState = 5;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_FLY_AWAY;
     if (TaskGetFacingTowardNearestPlayer() == 1)
         gCurTask->facing = -1;
     else
@@ -447,7 +447,7 @@ void sub_080812f0(void)
     struct Task *b;
     struct Task *c;
 
-    gCurTask->updateState = 4;
+    gCurTask->updateState = STARMAN_AMBUSH_STATE_4;
     ActorSetTerrainBox(gUnk_08741B44);
     a = gCurTask;
     a->accelX = 0;
@@ -491,7 +491,7 @@ void sub_080813a4(void)
         {
             TaskStopX();
             ActorSetTerrainBox(gUnk_08741B3C);
-            ActorSetState(0);
+            ActorSetState(STARMAN_AMBUSH_STATE_WALK);
             TaskSetEntry(StarmanAmbushEnterState, gCurTaskIdx);
         }
     }
