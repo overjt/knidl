@@ -36,7 +36,7 @@ void BrontoBurtWaveInit(void)
     CallTableEntry(gCurTask->state, 1, gBrontoBurtWaveStates);
 }
 
-void sub_08086128(void)
+void BrontoBurtWaveEnterState(void)
 {
     struct Task *t = gCurTask;
 
@@ -240,12 +240,12 @@ void sub_08086444(void)
     gCurTask->unk34 = 40;
 }
 
-void BrontoBurtVariant2(void)
+void BrontoBurtSwoopInit(void)
 {
     struct Task *u;
     u32 r;
 
-    gCurTask->updateCallback = (u32)sub_0808659c;
+    gCurTask->updateCallback = (u32)BrontoBurtSwoopUpdate;
     if (TaskGetNearestPlayerDy() <= 31)
     {
         u = &gTasks[TaskFindNearestPlayer()];
@@ -264,17 +264,17 @@ void BrontoBurtVariant2(void)
     gCurTask->unk34 = 0;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, (u32 *)gUnk_087420A8);
+    CallTableEntry(gCurTask->state, 1, (u32 *)gBrontoBurtSwoopStates);
 }
 
-void sub_0808659c(void)
+void BrontoBurtSwoopUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087420BC);
+    CallTableEntry(gCurTask->updateState, 1, gBrontoBurtSwoopStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080865c0(void)
+void BrontoBurtSwoop(void)
 {
     u8 k;
 
@@ -338,7 +338,7 @@ void sub_080867b8(void)
 {
     if (gCurTask->variant != 2)
     {
-        TaskSetEntry(sub_080860d8, gCurTaskIdx);
+        TaskSetEntry(BrontoBurtEnterVariant, gCurTaskIdx);
         return;
     }
     if (gCurTask->u8C.actor->animScript != 0)
@@ -375,7 +375,7 @@ void BrontoBurtDiagonalInit(void)
     CallTableEntry(gCurTask->state, 1, gBrontoBurtDiagonalStates);
 }
 
-void sub_080868b8(void)
+void BrontoBurtDiagonalEnterState(void)
 {
     gCurTask->updateCallback = (u32)BrontoBurtDiagonalUpdate;
     CallTableEntry(gCurTask->state, 1, gBrontoBurtDiagonalStates);
@@ -435,7 +435,7 @@ void BrontoBurtChaseInit(void)
     CallTableEntry(gCurTask->state, 1, gBrontoBurtChaseStates);
 }
 
-void sub_08086a20(void)
+void BrontoBurtChaseEnterState(void)
 {
     gCurTask->updateCallback = (u32)BrontoBurtChaseUpdate;
     CallTableEntry(gCurTask->state, 1, gBrontoBurtChaseStates);
@@ -745,7 +745,7 @@ void Task_Twizzy(void)
     CallTableEntry(gCurTask->variant, 10, gTwizzyVariants);
 }
 
-void sub_080870a4(void)
+void TwizzyEnterVariant(void)
 {
     CallTableEntry(gCurTask->variant, 10, gTwizzyVariants);
 }
@@ -757,7 +757,7 @@ void TwizzyWaveInit(void)
     CallTableEntry(gCurTask->state, 1, gTwizzyWaveStates);
 }
 
-void sub_080870f4(void)
+void TwizzyWaveEnterState(void)
 {
     gCurTask->updateCallback = (u32)TwizzyWaveUpdate;
     CallTableEntry(gCurTask->state, 1, gTwizzyWaveStates);
@@ -934,12 +934,12 @@ void sub_080873b0(void)
     gCurTask->unk34 = 40;
 }
 
-void TwizzyVariant2(void)
+void TwizzySwoopInit(void)
 {
     struct Task *u;
     u32 r;
 
-    gCurTask->updateCallback = (u32)sub_08087508;
+    gCurTask->updateCallback = (u32)TwizzySwoopUpdate;
     if (TaskGetNearestPlayerDy() <= 31)
     {
         u = &gTasks[TaskFindNearestPlayer()];
@@ -958,17 +958,17 @@ void TwizzyVariant2(void)
     gCurTask->unk34 = 0;
     TaskFaceNearestPlayer();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, (u32 *)gUnk_087425D8);
+    CallTableEntry(gCurTask->state, 1, (u32 *)gTwizzySwoopStates);
 }
 
-void sub_08087508(void)
+void TwizzySwoopUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087425EC);
+    CallTableEntry(gCurTask->updateState, 1, gTwizzySwoopStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_0808752c(void)
+void TwizzySwoop(void)
 {
     u8 k;
 
@@ -1032,7 +1032,7 @@ void sub_08087724(void)
 {
     if (gCurTask->variant != 2)
     {
-        TaskSetEntry(sub_080870a4, gCurTaskIdx);
+        TaskSetEntry(TwizzyEnterVariant, gCurTaskIdx);
         return;
     }
     if (gCurTask->u8C.actor->animScript != 0)
@@ -1069,7 +1069,7 @@ void TwizzyDiagonalInit(void)
     CallTableEntry(gCurTask->state, 1, gTwizzyDiagonalStates);
 }
 
-void sub_08087824(void)
+void TwizzyDiagonalEnterState(void)
 {
     struct Task *t = gCurTask;
 
@@ -1131,7 +1131,7 @@ void TwizzyChaseInit(void)
     CallTableEntry(gCurTask->state, 1, gTwizzyChaseStates);
 }
 
-void sub_0808798c(void)
+void TwizzyChaseEnterState(void)
 {
     struct Task *t = gCurTask;
 

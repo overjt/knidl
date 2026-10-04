@@ -188,7 +188,7 @@ void sub_080a0480(u8 a)
     }
 }
 
-u8 sub_080a0538(void)
+u8 KingDededeLand(void)
 {
     struct Task *t;
     struct Task *u;
@@ -211,12 +211,12 @@ u8 sub_080a0538(void)
     return 0;
 }
 
-void sub_080a0588(void)
+void KingDededeHitWall(void)
 {
     gCurTask->velX = 0;
 }
 
-u8 sub_080a0598(void)
+u8 KingDededeHitCeiling(void)
 {
     struct Task *t;
     struct Task *u;

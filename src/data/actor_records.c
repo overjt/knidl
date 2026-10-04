@@ -250,7 +250,7 @@ extern struct ActorHandlers gWaddleDooBeamTerrainHandlers;
 extern struct ActorHandlers gGlunkShotTerrainHandlers;
 extern struct ActorHandlers gBroomHatterTerrainHandlers;
 extern struct ActorHandlers gCoconutTerrainHandlers;
-extern struct ActorHandlers gUnk_087434FC;
+extern struct ActorHandlers gShotzoTerrainHandlers;
 extern struct ActorHandlers gConerTerrainHandlers;
 extern struct ActorHandlers gLaserBallLaserTerrainHandlers;
 extern struct ActorHandlers gShotzoCannonballTerrainHandlers;
@@ -1579,7 +1579,7 @@ struct ActorDef gShotzoDef ACTOR_REC(0874330c) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gShotzoAttackBox,
     .terrainBox = (s32)gUnk_08743414,
-    .terrainHandlers = (u32)&gUnk_087434FC,
+    .terrainHandlers = (u32)&gShotzoTerrainHandlers,
     .hitReactions = (u32)&gShotzoHitReactions,
     .initCallback = NULL,
     .teardown = NULL,
@@ -1613,7 +1613,7 @@ struct ActorDef gParasolShotzoDef ACTOR_REC(0874330c) = {
     .unk10 = &gUnk_0873F8EC,
     .attackBox = (u32)gParasolShotzoAttackBox,
     .terrainBox = (s32)gUnk_08743414,
-    .terrainHandlers = (u32)&gUnk_087434FC,
+    .terrainHandlers = (u32)&gShotzoTerrainHandlers,
     .hitReactions = (u32)&gParasolShotzoHitReactions,
     .initCallback = NULL,
     .teardown = NULL,

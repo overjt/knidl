@@ -11,7 +11,7 @@
  *     `0x08742004`, per-frame hook `WaddleDooWalkUpdate`;
  *   * the `ParasolWaddleDooInit` script: `0x08742030` / `0x08742040`, per-frame hook
  *     `ParasolWaddleDooUpdate`;
- *   * class-3 task #20 (`Task_BrontoBurt` / `sub_080860d8`), whose seven unk73
+ *   * class-3 task #20 (`Task_BrontoBurt` / `BrontoBurtEnterVariant`), whose seven unk73
  *     rows at `0x08742064` all point INTO module M23 - the first cross-module
  *     dispatch found in the behaviour banks.
  *
@@ -1138,7 +1138,7 @@ void Task_BrontoBurt(void)
     CallTableEntry(gCurTask->variant, 7, gBrontoBurtVariants);
 }
 
-void sub_080860d8(void)
+void BrontoBurtEnterVariant(void)
 {
     CallTableEntry(gCurTask->variant, 7, gBrontoBurtVariants);
 }

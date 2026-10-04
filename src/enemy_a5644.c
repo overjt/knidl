@@ -373,7 +373,7 @@ void MetaKnightState1Update(void)
             gCurTask->unk20 |= 1;
         break;
     }
-    if ((u8)sub_080a6f74() == 1)
+    if ((u8)MetaKnightClampToRoom() == 1)
     {
         gCurTask->velX = 0;
         gCurTask->unk24 = 2;
@@ -404,7 +404,7 @@ void MetaKnightState2(void)
         else
             gCurTask->unk18 = -64;
     }
-    sub_080a6e58();
+    MetaKnightSetFollowTimer();
     gCurTask->unk20 = 0;
     gCurTask->unk24 = 0;
     gCurTask->unk34 &= 2;
@@ -424,7 +424,7 @@ void MetaKnightState3(void)
 {
     gCurTask->updateState = 3;
     gCurTask->unk18 = -gCurTask->unk18;
-    sub_080a6e58();
+    MetaKnightSetFollowTimer();
     gCurTask->unk20 = 0;
     gCurTask->unk24 = 0;
     gCurTask->unk34 = 2;
@@ -467,7 +467,7 @@ void MetaKnightState5(void)
         t->unk18 = -64;
     else
         t->unk18 = 64;
-    sub_080a6e58();
+    MetaKnightSetFollowTimer();
     gCurTask->unk20 = 0;
     gCurTask->unk24 = 0;
     TaskSetFrame(61);
@@ -586,7 +586,7 @@ void MetaKnightState9(void)
 
 void MetaKnightState9Update(void)
 {
-    sub_080a6fb4();
+    MetaKnightPickAirAttack();
     if (gCurTask->state != 9)
         sub_080a7168();
 }
@@ -620,7 +620,7 @@ void MetaKnightState8(void)
 
 void MetaKnightState8Update(void)
 {
-    sub_080a6fb4();
+    MetaKnightPickAirAttack();
     if (gCurTask->state != 8)
         sub_080a7168();
 }
@@ -713,7 +713,7 @@ void MetaKnightSwordSpin(void)
 
 void MetaKnightSwordSpinUpdate(void)
 {
-    if ((u8)sub_080a6f74() == 1)
+    if ((u8)MetaKnightClampToRoom() == 1)
         TaskTurnAroundAndReverseX();
     if (gCurTask->onGround != 0)
     {
@@ -764,7 +764,7 @@ void MetaKnightDownThrust(void)
 
 void MetaKnightDownThrustUpdate(void)
 {
-    if ((u8)sub_080a6f74() == 1)
+    if ((u8)MetaKnightClampToRoom() == 1)
         TaskTurnAroundAndReverseX();
     if (gCurTask->state != 15)
         sub_080a7168();
@@ -797,7 +797,7 @@ void MetaKnightState17(void)
 
 void MetaKnightState17Update(void)
 {
-    if ((u8)sub_080a6f74() == 1)
+    if ((u8)MetaKnightClampToRoom() == 1)
         TaskTurnAroundAndReverseX();
     if (gCurTask->onGround != 0)
     {
@@ -1124,7 +1124,7 @@ s32 MetaKnightGetHealthQuarter(void)
     return 3;
 }
 
-void sub_080a6e58(void)
+void MetaKnightSetFollowTimer(void)
 {
     if (gCurTask->health >= gUnk_02007D00[3] >> 1)
         gCurTask->unk1C = RandomRange(54) + 48;
@@ -1186,7 +1186,7 @@ s32 sub_080a6f38(s16 x, s16 y)
     return 1;
 }
 
-s32 sub_080a6f74(void)
+s32 MetaKnightClampToRoom(void)
 {
     u8 v = ClampTaskToRoom(gCurTask);
 
@@ -1195,12 +1195,12 @@ s32 sub_080a6f74(void)
     return 0;
 }
 
-void sub_080a6fb4(void)
+void MetaKnightPickAirAttack(void)
 {
     s32 k;
     s32 g;
 
-    if ((u8)sub_080a6f74() == 1)
+    if ((u8)MetaKnightClampToRoom() == 1)
         TaskTurnAroundAndReverseX();
     if (gUnk_02007D00[7] == 0 && gCurTask->onGround == 0 && gCurTask->velY > 0)
     {
@@ -1328,7 +1328,7 @@ s32 MetaKnightReactToDefeat(void)
     return 1;
 }
 
-s32 sub_080a7334(void)
+s32 MetaKnightHitWall(void)
 {
     struct Task *t;
 

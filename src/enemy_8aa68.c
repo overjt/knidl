@@ -1346,7 +1346,7 @@ s32 sub_0808c82c(void)
 
 void sub_0808c8bc(void)
 {
-    sub_0808a84c(gUnk_08742998[(u16)TaskGetAngleToNearestPlayer(1)], 100);
+    PickWeightedRandomIndex(gUnk_08742998[(u16)TaskGetAngleToNearestPlayer(1)], 100);
     switch (gUnk_030023D4)
     {
     case 0:

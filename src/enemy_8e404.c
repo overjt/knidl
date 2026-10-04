@@ -8,18 +8,18 @@
  * This batch holds:
  *   * script 2's rows `LaserBallInit` / `LaserBallIdleInit` (bodies `0x087431EC`
  *     (4) and `0x0874320C` (1), guards `0x087431FC` (4) and `0x08743210`),
- *     with `LaserBallState0` / `LaserBallHover` / `LaserBallShoot` / `LaserBallState3`
- *     as the bodies and `LaserBallState0Update` / `LaserBallHoverUpdate` / `LaserBallShootUpdate` /
- *     `LaserBallState3Update` as their guards;
+ *     with `LaserBallApproach` / `LaserBallHover` / `LaserBallShoot` / `LaserBallRetreat`
+ *     as the bodies and `LaserBallApproachUpdate` / `LaserBallHoverUpdate` / `LaserBallShootUpdate` /
+ *     `LaserBallRetreatUpdate` as their guards;
  *   * script 3: entry `Task_Coconut` (Task.variant -> `0x08743224`, 3 rows),
  *     rows `CoconutInit` / `CoconutIdleInit`, bodies `0x08743230` (3) and
  *     `0x08743240`, guards `0x0874323C` and `0x08743244`;
- *   * the class-3 hook row `0x087434FC` — `sub_0808ec34`, `sub_0808ebe0`,
- *     `sub_0808ecb4` and `sub_0808ec90`, every one returning s32;
- *   * the module's shared aiming library: `sub_0808ed38` classifies the
+ *   * the class-3 hook row `0x087434FC` — `ShotzoLand`, `ShotzoStartFall`,
+ *     `ShotzoEnterWater` and `ShotzoHitWall`, every one returning s32;
+ *   * the module's shared aiming library: `ShotzoTargetNearestPlayer` classifies the
  *     direction to the target into 16 sectors ((u16)ArcTan2 >> 12) and stores
  *     it in Task.unk30 with the parity in Task.unk20, `ShotzoStepBarrel` turns
- *     Task.unk34 one notch towards it, `sub_0808ee9c` reports arrival in
+ *     Task.unk34 one notch towards it, `ShotzoTestBarrelOnTarget` reports arrival in
  *     Task.unk1C, `ShotzoSetRecoilVelocity` converts the heading into an aim angle for
  *     AngleToVector, `CreateShotzoCannonball` / `CreateShotzoFixedCannonball` fire actor 109 through
  *     CreateActorFromDescAtOffsetFacing + CreateChildTaskAtOffsetFacing, and `ShotzoAimBarrel` / `ShotzoCheckShoot` are the
@@ -29,7 +29,7 @@
  *     `0x087432B4`/`0x087432C0` and `0x087432CC`/`0x087432D8`.  Its bodies
  *     continue in src/enemy_8f41c.c.
  *
- * `sub_0808ed0c` is a dead export: a byte-for-byte twin of `sub_0808ece0`
+ * `sub_0808ed0c` is a dead export: a byte-for-byte twin of `ParasolShotzoReactToDefeat`
  * that no ROM word points at (lesson 4.30, curated in tools/symdb.py).
  */
 #include "gba/gba.h"
@@ -78,7 +78,7 @@ void LaserBallEnterState(void)
     CallTableEntry(gCurTask->state, 4, gLaserBallStates);
 }
 
-void LaserBallState0(void)
+void LaserBallApproach(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk30 = 16;
@@ -118,7 +118,7 @@ void LaserBallState0(void)
     }
 }
 
-void LaserBallState0Update(void)
+void LaserBallApproachUpdate(void)
 {
     struct Task *t;
     struct Task *u;
@@ -126,12 +126,12 @@ void LaserBallState0Update(void)
     t = gCurTask;
     if (t->unk20 != TaskGetXDirBitToNearestPlayer())
         gCurTask->unk1C = 1;
-    sub_0808e070();
+    LaserBallSetTargetX();
     LaserBallCheckShoot();
     u = gCurTask;
     u->unk30--;
-    sub_0808e33c();
-    sub_0808e36c();
+    LaserBallReaim();
+    LaserBallAccelerateInMoveDir();
 }
 
 void LaserBallHover(void)
@@ -234,7 +234,7 @@ void LaserBallShootUpdate(void)
     }
 }
 
-void LaserBallState3(void)
+void LaserBallRetreat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -285,7 +285,7 @@ void LaserBallState3(void)
     }
 }
 
-void LaserBallState3Update(void)
+void LaserBallRetreatUpdate(void)
 {
 }
 
@@ -490,7 +490,7 @@ void CoconutIdleState0Update(void)
 {
 }
 
-s32 sub_0808ebe0(void)
+s32 ShotzoStartFall(void)
 {
     switch (gCurTask->variant)
     {
@@ -509,7 +509,7 @@ s32 sub_0808ebe0(void)
     }
 }
 
-s32 sub_0808ec34(void)
+s32 ShotzoLand(void)
 {
     switch (gCurTask->variant)
     {
@@ -529,7 +529,7 @@ s32 sub_0808ec34(void)
     }
 }
 
-s32 sub_0808ec90(void)
+s32 ShotzoHitWall(void)
 {
     struct Task *t;
 
@@ -539,7 +539,7 @@ s32 sub_0808ec90(void)
     return 0;
 }
 
-s32 sub_0808ecb4(void)
+s32 ShotzoEnterWater(void)
 {
     if (gCurTask->variant == 4)
         sub_08066c08(gShotzoDef, 0);
@@ -547,7 +547,7 @@ s32 sub_0808ecb4(void)
     return 1;
 }
 
-s32 sub_0808ece0(void)
+s32 ParasolShotzoReactToDefeat(void)
 {
     sub_08066c08(gShotzoDef, 0);
     ActorSetState(2);
@@ -563,7 +563,7 @@ s32 sub_0808ed0c(void)
     return 1;
 }
 
-void sub_0808ed38(void)
+void ShotzoTargetNearestPlayer(void)
 {
     s32 dx;
     s32 dy;
@@ -651,7 +651,7 @@ void ShotzoStepBarrel(void)
     }
 }
 
-void sub_0808ee9c(void)
+void ShotzoTestBarrelOnTarget(void)
 {
     struct Task *t;
 
@@ -712,7 +712,7 @@ void ShotzoSetRecoilVelocity(s32 a)
     t->velY = gUnk_030023D4;
 }
 
-void sub_0808ef88(void)
+void ShotzoInitBarrel(void)
 {
     struct Task *t;
     struct Task *u;
@@ -772,7 +772,7 @@ void CreateShotzoFixedCannonball(void)
 
 void ShotzoAimBarrel(void)
 {
-    sub_0808ed38();
+    ShotzoTargetNearestPlayer();
     ShotzoStepBarrel();
     switch (gCurTask->unk34)
     {
@@ -825,8 +825,8 @@ void ShotzoCheckShoot(u16 a, void *b)
     if (--t->unk28 <= 0)
     {
         t->unk28 = gUnk_08743248[t->unk74];
-        sub_0808ed38();
-        sub_0808ee9c();
+        ShotzoTargetNearestPlayer();
+        ShotzoTestBarrelOnTarget();
         u = gCurTask;
         if (u->unk1C != 0)
         {
@@ -866,7 +866,7 @@ void ShotzoAimInit(void)
 {
     gCurTask->updateCallback = (u32)ShotzoAimUpdate;
     ActorSetState(0);
-    sub_0808ef88();
+    ShotzoInitBarrel();
     CallTableEntry(gCurTask->state, 3, gShotzoAimStates);
 }
 
@@ -896,7 +896,7 @@ void ParasolShotzoInit(void)
 {
     gCurTask->updateCallback = (u32)ParasolShotzoUpdate;
     ActorSetState(0);
-    sub_0808ef88();
+    ShotzoInitBarrel();
     sub_08066b34(gParasolShotzoDef);
     CallTableEntry(gCurTask->state, 3, gParasolShotzoStates);
 }

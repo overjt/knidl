@@ -26,15 +26,15 @@
  *     body tables `0x08743194` / `0x087431AC` / `0x087431C4` and the guard
  *     tables `0x087431A0` / `0x087431B8` / `0x087431C8`;
  *   * its movement library: `sub_0808d364` / `sub_0808d388` snap Task.unk2C to
- *     the 16-pixel grid, `sub_0808d3e4` rolls a new mode out of the 8-entry
+ *     the 16-pixel grid, `BroomHatterPickNextState` rolls a new mode out of the 8-entry
  *     table `gUnk_0874313C`, `sub_0808d460` flips the sprite through
  *     Task.spriteFlags and `sub_0808d494` / `sub_0808d4a8` / `sub_0808d4bc` /
  *     `sub_0808d4d0` set the animation id in Actor.extraFrame;
  *   * script 2's entry `Task_LaserBall` (Task.variant -> `0x087431E4`) and its
- *     aiming half: `sub_0808e070` / `sub_0808e0d0` / `sub_0808e174` turn the
+ *     aiming half: `LaserBallSetTargetX` / `sub_0808e0d0` / `LaserBallSetMoveDir` turn the
  *     vector to the target into a heading with ArcTan2, `CreateLaserBallLaser` spawns
  *     actor 103, `LaserBallCheckShoot` is the GetDistSq proximity test and
- *     `sub_0808e33c` / `sub_0808e36c` are the per-frame step.  The script's
+ *     `LaserBallReaim` / `LaserBallAccelerateInMoveDir` are the per-frame step.  The script's
  *     rows continue in src/enemy_8e404.c.
  *
  * `sub_0808d388` is a pointer-referenced leaf the prologue scan could not
@@ -292,7 +292,7 @@ void GipStarUpdate(void)
     ActorReactToHit();
 }
 
-s32 sub_0808d2b8(void)
+s32 BroomHatterStartFall(void)
 {
     switch (gCurTask->variant)
     {
@@ -308,7 +308,7 @@ s32 sub_0808d2b8(void)
     return 0;
 }
 
-s32 sub_0808d304(void)
+s32 BroomHatterLand(void)
 {
     struct Task *t;
 
@@ -329,7 +329,7 @@ s32 sub_0808d304(void)
     return 0;
 }
 
-s32 sub_0808d354(void)
+s32 BroomHatterEnterWater(void)
 {
     ActorStartDrown(-2);
     return 1;
@@ -359,7 +359,7 @@ s32 sub_0808d388(void)
     return 0;
 }
 
-void sub_0808d3e4(void)
+void BroomHatterPickNextState(void)
 {
     struct Task *t;
     s8 i;
@@ -547,7 +547,7 @@ void sub_0808d764(void)
 {
     if (gCurTask->unk28 == 2)
     {
-        sub_0808d3e4();
+        BroomHatterPickNextState();
         TaskSetEntry(sub_0808d624, gCurTaskIdx);
     }
 }
@@ -629,7 +629,7 @@ void sub_0808d938(void)
 {
     if (gCurTask->unk28 == 1)
     {
-        sub_0808d3e4();
+        BroomHatterPickNextState();
         TaskSetEntry(sub_0808d624, gCurTaskIdx);
     }
 }
@@ -790,7 +790,7 @@ void sub_0808dc68(void)
 {
     if (gCurTask->unk28 == 2)
     {
-        sub_0808d3e4();
+        BroomHatterPickNextState();
         TaskSetEntry(sub_0808dacc, gCurTaskIdx);
     }
 }
@@ -885,7 +885,7 @@ void sub_0808de90(void)
 {
     if (gCurTask->unk28 == 1)
     {
-        sub_0808d3e4();
+        BroomHatterPickNextState();
         TaskSetEntry(sub_0808dacc, gCurTaskIdx);
     }
 }
@@ -989,7 +989,7 @@ void sub_0808e054(void)
         sub_0806ee2c();
 }
 
-void sub_0808e070(void)
+void LaserBallSetTargetX(void)
 {
     switch (TaskGetXDirBitToNearestPlayer())
     {
@@ -1023,7 +1023,7 @@ void sub_0808e0d0(void)
     gCurTask->unk18 = (((u16)ArcTan2(dx, dy) >> 8) + 16) >> 5;
 }
 
-void sub_0808e174(void)
+void LaserBallSetMoveDir(void)
 {
     struct Task *t;
     s32 dx;
@@ -1099,7 +1099,7 @@ void LaserBallCheckShoot(void)
     }
 }
 
-void sub_0808e33c(void)
+void LaserBallReaim(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1112,11 +1112,11 @@ void sub_0808e33c(void)
         sub_0808e0d0();
         u = gCurTask;
         if (u->unk28 != u->unk18)
-            sub_0808e174();
+            LaserBallSetMoveDir();
     }
 }
 
-void sub_0808e36c(void)
+void LaserBallAccelerateInMoveDir(void)
 {
     struct Task *t;
 

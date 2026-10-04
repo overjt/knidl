@@ -183,30 +183,30 @@ void sub_0808835c(void)
 {
 }
 
-void TwizzyVariant8(void)
+void TwizzyHoverInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_080883b8;
+    gCurTask->updateCallback = (u32)TwizzyHoverUpdate;
     gCurTask->onGround = 0;
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_087426AC);
+    CallTableEntry(gCurTask->state, 1, gTwizzyHoverStates);
 }
 
-void sub_08088394(void)
+void TwizzyHoverEnterState(void)
 {
     struct Task *t = gCurTask;
 
-    t->updateCallback = (u32)sub_080883b8;
-    CallTableEntry(t->state, 1, gUnk_087426AC);
+    t->updateCallback = (u32)TwizzyHoverUpdate;
+    CallTableEntry(t->state, 1, gTwizzyHoverStates);
 }
 
-void sub_080883b8(void)
+void TwizzyHoverUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_087426B0);
+    CallTableEntry(gCurTask->updateState, 1, gTwizzyHoverStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080883dc(void)
+void TwizzyHover(void)
 {
     gCurTask->updateState = 0;
     TaskFaceNearestPlayer();
@@ -1459,7 +1459,7 @@ void SlippyState0(void)
     TaskFaceNearestPlayer();
     TaskSetFrame(4);
     TaskYieldTrampoline(gUnk_08742814[gCurTask->unk74]);
-    sub_0808a7f4(15);
+    SlippyPickMove(15);
     switch (gUnk_030023D4)
     {
     case 0:
@@ -1525,7 +1525,7 @@ void SlippyState1(void)
             TaskYieldTrampoline(16);
             gCurTask->unk6C++;
         }
-        sub_0808a7f4(0);
+        SlippyPickMove(0);
         switch (gUnk_030023D4)
         {
         case 0:
@@ -1727,7 +1727,7 @@ void SlippyState7(void)
     gCurTask->unk28 = 1;
     gCurTask->onGround = 0;
     TaskStop();
-    sub_0808a880(0);
+    SlippySetSwimAngleToPlayer(0);
     TaskSetFrame(7);
     AngleToVector((s16)gCurTask->unk2C, gUnk_08742824[0]);
     gCurTask->velX = gUnk_030023B4;
@@ -1767,7 +1767,7 @@ void SlippyState8(void)
         TaskStop();
         TaskSetFrame(9);
         TaskYieldTrampoline(gUnk_08742830[gCurTask->unk74]);
-        sub_0808a880(8);
+        SlippySetSwimAngleToPlayer(8);
         TaskSetFrame(7);
         AngleToVector((s16)gCurTask->unk2C, gUnk_08742834[0]);
         gCurTask->velX = gUnk_030023B4;
@@ -1813,7 +1813,7 @@ void SlippyState9(void)
     TaskStop();
     TaskSetFrame(9);
     TaskYieldTrampoline(gUnk_08742830[gCurTask->unk74]);
-    sub_0808a880(16);
+    SlippySetSwimAngleToPlayer(16);
     TaskSetFrame(7);
     AngleToVector((s16)gCurTask->unk2C, gUnk_08742844[0]);
     gCurTask->velX = gUnk_030023B4;
@@ -1883,7 +1883,7 @@ void SlippyIdleUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808a7f4(u8 a)
+void SlippyPickMove(u8 a)
 {
     s32 n;
     u8 v;
@@ -1895,12 +1895,12 @@ void sub_0808a7f4(u8 a)
     else
         v = a;
     if ((gCurTask->unk34 & 1) == 0)
-        sub_0808a84c(gUnk_08742856, v);
+        PickWeightedRandomIndex(gUnk_08742856, v);
     else
-        sub_0808a84c(gUnk_0874285C, v);
+        PickWeightedRandomIndex(gUnk_0874285C, v);
 }
 
-void sub_0808a84c(u8 *p, s32 b)
+void PickWeightedRandomIndex(u8 *p, s32 b)
 {
     s32 r;
     s32 i;
@@ -1913,7 +1913,7 @@ void sub_0808a84c(u8 *p, s32 b)
     gUnk_030023D4 = i;
 }
 
-void sub_0808a880(s32 a)
+void SlippySetSwimAngleToPlayer(s32 a)
 {
     u32 v;
 
@@ -1924,7 +1924,7 @@ void sub_0808a880(s32 a)
         gCurTask->facing = -1;
 }
 
-s32 sub_0808a8d4(void)
+s32 SlippyLand(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1953,7 +1953,7 @@ s32 sub_0808a8d4(void)
     }
 }
 
-s32 sub_0808a964(void)
+s32 SlippyStartFall(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1969,7 +1969,7 @@ s32 sub_0808a964(void)
     }
 }
 
-s32 sub_0808a9a8(void)
+s32 SlippyEnterWater(void)
 {
     if (gCurTask->variant != 1)
     {
@@ -1979,7 +1979,7 @@ s32 sub_0808a9a8(void)
     }
 }
 
-s32 sub_0808a9d8(void)
+s32 SlippyHitWall(void)
 {
     s32 n;
 
@@ -2010,7 +2010,7 @@ s32 sub_0808a9d8(void)
     }
 }
 
-s32 sub_0808aa28(void)
+s32 SlippyHitCeiling(void)
 {
     if (gCurTask->variant != 1)
     {
