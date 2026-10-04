@@ -1148,6 +1148,7 @@
 #define playerThrowDir unk28 /* s32: Throw (holding): the throw the held d-pad picks: 0 up, 1 forward, 2 down */
 #define playerTornadoTurnTimer unk28 /* s32: Tornado: frames left before the spin may turn again (8 after a turn or a wall hit) */
 #define playerWalkStepDelay unk28 /* s32: Walk: frames added to every step of the walk cycle (0, or 2 when slowing without input) */
+#define playerWaterShotDir unk28 /* s32: Water shot: the spray's direction 0 right, 1 down, 2 left, 3 up; -1 once a spray ends */
 #define playerWheelOnWater unk28 /* s32: Wheel: 1 while it rolls on a water surface, which counts as ground; 0 on land */
 #define playerAttackStep unk2C /* s32: an attack's hit-box step: the 8-byte row of its hit-box and body-box tables, -1 when off */
 #define playerBurningFadeStep unk2C /* s32: Burning: the row of gUnk_0873B510 (the palette fade of the dash), -1 when off */
@@ -1160,6 +1161,7 @@
 #define playerPoseSlope unk2C /* s32: Stand / Duck: the slope (PlayerState.slope) the pose was drawn for; a change re-enters it */
 #define playerStarRodJumpFacing unk2C /* s32: Star Rod jump: the facing it lands with: the start facing, then the last held direction */
 #define playerTornadoSfxTimer unk2C /* s32: Tornado: frames to the next spin sound (149) while B is held: every 4th frame */
+#define playerWaterShotCount unk2C /* s32: Water shot: sprays finished since the action began; once non-zero the update may leave */
 #define playerWheelWasOnGround unk2C /* s32: Wheel: Task.onGround as of the last frame (1 / 0); leaving the ground stops the Y axis */
 #define playerFallBumped unk30 /* s32: Fall: 1 when it began from a bump (bumpKind bit 0); the body then skips its start frames */
 #define playerGoalGameLayer unk30 /* s32: Goal game from the launch on: the layer (score sign) reached, row of the layer tables */

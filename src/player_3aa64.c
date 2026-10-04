@@ -686,27 +686,27 @@ void PlayerActionWaterShot(void)
         if (gLatchedHeldKeys[t->player->playerIndex] & 240)
         {
             if (gLatchedHeldKeys[t->player->playerIndex] & 64)
-                t->unk28 = 3;
+                t->playerWaterShotDir = 3;
             else if (gLatchedHeldKeys[t->player->playerIndex] & 128)
-                t->unk28 = 1;
+                t->playerWaterShotDir = 1;
             else if (gLatchedHeldKeys[t->player->playerIndex] & 16)
-                t->unk28 = 0;
+                t->playerWaterShotDir = 0;
             else if (gLatchedHeldKeys[t->player->playerIndex] & 32)
-                t->unk28 = 2;
+                t->playerWaterShotDir = 2;
         }
         else if (t->facing == 1)
         {
-            t->unk28 = 0;
+            t->playerWaterShotDir = 0;
         }
         else
         {
-            t->unk28 = 2;
+            t->playerWaterShotDir = 2;
         }
         gCurTask->variant = 0;
         {
             struct Task *u = gCurTask;
 
-            u->unk2C = 0;
+            u->playerWaterShotCount = 0;
             u->player->unk14 = 15;
             if ((u32)abs(u->velX) > 0x10C00)
                 TaskSetMotionXFacing(0x10C00, 0x5A5A5A5A);
@@ -722,7 +722,7 @@ void PlayerActionWaterShot(void)
             }
         }
     }
-    switch (gCurTask->unk28)
+    switch (gCurTask->playerWaterShotDir)
     {
     case 3:
         if (gCurTask->variant == 0)
@@ -736,12 +736,12 @@ void PlayerActionWaterShot(void)
                 TaskYieldTrampoline(3);
             }
         }
-        gCurTask->unk28 = -1;
+        gCurTask->playerWaterShotDir = -1;
         TaskSetFrame(241);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk2C++;
+        gCurTask->playerWaterShotCount++;
         break;
     case 1:
         if (gCurTask->variant == 0)
@@ -755,12 +755,12 @@ void PlayerActionWaterShot(void)
                 TaskYieldTrampoline(3);
             }
         }
-        gCurTask->unk28 = -1;
+        gCurTask->playerWaterShotDir = -1;
         TaskSetFrame(237);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk2C++;
+        gCurTask->playerWaterShotCount++;
         break;
     case 0:
         if (gCurTask->variant == 0)
@@ -775,12 +775,12 @@ void PlayerActionWaterShot(void)
                 TaskYieldTrampoline(3);
             }
         }
-        gCurTask->unk28 = -1;
+        gCurTask->playerWaterShotDir = -1;
         TaskSetFrame(233);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk2C++;
+        gCurTask->playerWaterShotCount++;
         break;
     case 2:
         if (gCurTask->variant == 0)
@@ -795,12 +795,12 @@ void PlayerActionWaterShot(void)
                 TaskYieldTrampoline(3);
             }
         }
-        gCurTask->unk28 = -1;
+        gCurTask->playerWaterShotDir = -1;
         TaskSetFrame(233);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk2C++;
+        gCurTask->playerWaterShotCount++;
         break;
     }
     TaskSleepForever();
@@ -820,7 +820,7 @@ void PlayerActionWaterShotUpdate(void)
         }
         else
         {
-            s32 d = gCurTask->unk28;
+            s32 d = gCurTask->playerWaterShotDir;
 
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 240)
             {
@@ -833,16 +833,16 @@ void PlayerActionWaterShotUpdate(void)
                 else if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 32)
                     d = 2;
             }
-            if (d != gCurTask->unk28)
+            if (d != gCurTask->playerWaterShotDir)
             {
-                gCurTask->unk28 = d;
+                gCurTask->playerWaterShotDir = d;
                 TaskSetEntry(PlayerActionWaterShot, gCurTaskIdx);
             }
         }
         if ((s16)gCurTask->player->unk14 != 0)
             gCurTask->player->unk14--;
     }
-    else if (t->unk2C != 0 && PlayerCheckStartSwim() == 0)
+    else if (t->playerWaterShotCount != 0 && PlayerCheckStartSwim() == 0)
     {
         if (!(gCurTask->onGround & 1) || (gLatchedHeldKeys[gCurTask->player->playerIndex] & 65))
             gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
