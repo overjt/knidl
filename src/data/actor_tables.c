@@ -307,7 +307,7 @@ u32 gWaddleDeeWalkStates[2] ACTOR_TBL(08740658) = {
 /* include/enemy.h; CallTableEntry(i, 2, ...) in WaddleDeeWalkUpdate */
 u32 gWaddleDeeWalkStateUpdates[2] ACTOR_TBL(08740658) = {
     (u32)sub_08078cb8,
-    (u32)sub_08078ce4,
+    (u32)WaddleDeeWalkFallUpdate,
 };
 
 /* ---- 0x08740670-0x08740680: 2 table(s), 4 function pointer(s), section .actor_tbl_08740670 ---- */
@@ -318,22 +318,22 @@ u32 gWaddleDeePaceStates[2] ACTOR_TBL(08740670) = {
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in WaddleDeePaceUpdate */
 u32 gWaddleDeePaceStateUpdates[2] ACTOR_TBL(08740670) = {
-    (u32)sub_08078dd4,
-    (u32)sub_08078e38,
+    (u32)WaddleDeePaceWalkUpdate,
+    (u32)WaddleDeePaceFallUpdate,
 };
 
 /* ---- 0x087406C4-0x087406EC: 4 table(s), 10 function pointer(s), section .actor_tbl_087406c4 ---- */
 /* include/enemy.h; CallTableEntry(i, 3, ...) in WaddleDeeJumpInit, WaddleDeeJumpEnterState */
 u32 gWaddleDeeJumpStates[3] ACTOR_TBL(087406c4) = {
-    (u32)sub_08078eec,
+    (u32)WaddleDeeJumpWalk,
     (u32)WaddleDeeJump,
     (u32)WaddleDeeJumpFall,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in WaddleDeeJumpUpdate */
 u32 gWaddleDeeJumpStateUpdates[3] ACTOR_TBL(087406c4) = {
-    (u32)sub_08078f24,
+    (u32)WaddleDeeJumpWalkUpdate,
     (u32)sub_0807906c,
-    (u32)sub_080790e8,
+    (u32)WaddleDeeJumpFallUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in ParasolWaddleDeeWalkInit, ParasolWaddleDeeWalkEnterState */
 u32 gParasolWaddleDeeWalkStates[2] ACTOR_TBL(087406c4) = {
@@ -347,7 +347,7 @@ u32 gParasolWaddleDeeWalkStateUpdates[2] ACTOR_TBL(087406c4) = {
 };
 
 /* ---- 0x08740700-0x08740720: 5 table(s), 8 function pointer(s), section .actor_tbl_08740700 ---- */
-/* include/enemy.h; CallTableEntry(i, 1, ...) in WaddleDeeIdleInit, sub_0807927c */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in WaddleDeeIdleInit, WaddleDeeIdleEnterState */
 u32 gWaddleDeeIdleStates[1] ACTOR_TBL(08740700) = {
     (u32)WaddleDeeIdle,
 };
@@ -381,12 +381,12 @@ u32 gPengyStates[4] ACTOR_TBL(08740758) = {
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in PengyUpdate */
 u32 gPengyStateUpdates[4] ACTOR_TBL(08740758) = {
-    (u32)sub_080795d8,
-    (u32)sub_080797b4,
-    (u32)sub_080798b8,
-    (u32)sub_08079914,
+    (u32)PengyWaitUpdate,
+    (u32)PengyWalkUpdate,
+    (u32)PengyShootUpdate,
+    (u32)PengyFallUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in PengyIdleInit, sub_080799a0 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in PengyIdleInit, PengyIdleEnterState */
 u32 gPengyIdleStates[1] ACTOR_TBL(08740758) = {
     (u32)PengyIdle,
 };
@@ -404,16 +404,16 @@ u32 gBomberStates[4] ACTOR_TBL(08740758) = {
     (u32)BomberWalk,
     (u32)sub_08079bac,
     (u32)sub_08079be4,
-    (u32)sub_08079cac,
+    (u32)BomberExplode,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in BomberUpdate */
 u32 gBomberStateUpdates[4] ACTOR_TBL(08740758) = {
-    (u32)sub_08079b98,
+    (u32)BomberWalkUpdate,
     (u32)sub_08079be0,
     (u32)sub_08079c84,
-    (u32)sub_08079d2c,
+    (u32)BomberExplodeUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in BomberIdleInit, sub_08079db8 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in BomberIdleInit, BomberIdleEnterState */
 u32 gBomberIdleStates[1] ACTOR_TBL(08740758) = {
     (u32)BomberIdle,
 };
@@ -431,19 +431,19 @@ u32 gSparkyVariants[3] ACTOR_TBL(08740758) = {
 /* ---- 0x087407E4-0x0874080C: 4 table(s), 10 function pointer(s), section .actor_tbl_087407e4 ---- */
 /* include/enemy.h; CallTableEntry(i, 4, ...) in SparkyJumpInit, SparkyJumpEnterState */
 u32 gSparkyJumpStates[4] ACTOR_TBL(087407e4) = {
-    (u32)sub_0807a1c0,
-    (u32)sub_0807a3bc,
+    (u32)SparkyJumpDischarge,
+    (u32)SparkyJumpLand,
     (u32)SparkyJump,
     (u32)sub_0807a424,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in SparkyJumpUpdate */
 u32 gSparkyJumpStateUpdates[4] ACTOR_TBL(087407e4) = {
-    (u32)sub_0807a380,
-    (u32)sub_0807a408,
+    (u32)SparkyJumpDischargeUpdate,
+    (u32)SparkyJumpLandUpdate,
     (u32)sub_0807a1bc,
     (u32)sub_0807a458,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in SparkyIdleInit, sub_0807a4e4 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in SparkyIdleInit, SparkyIdleEnterState */
 u32 gSparkyIdleStates[1] ACTOR_TBL(087407e4) = {
     (u32)SparkyIdle,
 };
@@ -455,37 +455,37 @@ u32 gSparkyIdleStateUpdates[1] ACTOR_TBL(087407e4) = {
 /* ---- 0x08740810-0x08740824: 3 table(s), 5 function pointer(s), section .actor_tbl_08740810 ---- */
 /* include/enemy.h; CallTableEntry(i, 2, ...) in SparkyStandInit, SparkyStandEnterState */
 u32 gSparkyStandStates[2] ACTOR_TBL(08740810) = {
-    (u32)sub_0807a634,
-    (u32)sub_0807a830,
+    (u32)SparkyStandDischarge,
+    (u32)SparkyStandWait,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in SparkyStandUpdate */
 u32 gSparkyStandStateUpdates[2] ACTOR_TBL(08740810) = {
-    (u32)sub_0807a7f4,
-    (u32)sub_0807a87c,
+    (u32)SparkyStandDischargeUpdate,
+    (u32)SparkyStandWaitUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_Scarfy */
-u32 gUnk_08740820[1] ACTOR_TBL(08740810) = {
+u32 gScarfyVariants[1] ACTOR_TBL(08740810) = {
     (u32)ScarfyInit,
 };
 
 /* ---- 0x08740960-0x0874099C: 3 table(s), 15 function pointer(s), section .actor_tbl_08740960 ---- */
 /* include/enemy.h; CallTableEntry(i, 6, ...) in ScarfyInit, ScarfyEnterState */
 u32 gScarfyStates[6] ACTOR_TBL(08740960) = {
-    (u32)sub_0807ab8c,
+    (u32)ScarfyHide,
     (u32)sub_0807abdc,
-    (u32)sub_0807ab54,
+    (u32)ScarfyHover,
     (u32)ScarfyTransform,
     (u32)ScarfyChase,
-    (u32)sub_0807aecc,
+    (u32)ScarfyExplode,
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in ScarfyUpdate */
 u32 gScarfyStateUpdates[6] ACTOR_TBL(08740960) = {
-    (u32)sub_0807abb4,
+    (u32)ScarfyHideUpdate,
     (u32)sub_0807ac08,
-    (u32)sub_0807ab70,
-    (u32)sub_0807adcc,
+    (u32)ScarfyHoverUpdate,
+    (u32)ScarfyTransformUpdate,
     (u32)ScarfyChaseUpdate,
-    (u32)sub_0807af3c,
+    (u32)ScarfyExplodeUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in Task_SwordKnight, Task_BladeKnight */
 u32 gSwordAndBladeKnightVariants[3] ACTOR_TBL(08740960) = {
@@ -515,9 +515,9 @@ u32 gSwordAndBladeKnightWalkStateUpdates[8] ACTOR_TBL(087409fc) = {
     (u32)sub_0807b640,
     (u32)sub_0807b6b4,
     (u32)sub_0807b7a8,
-    (u32)sub_0807b7fc,
+    (u32)SwordAndBladeKnightWalkFallUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in SwordAndBladeKnightIdleInit, sub_0807b888 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in SwordAndBladeKnightIdleInit, SwordAndBladeKnightIdleEnterState */
 u32 gSwordAndBladeKnightIdleStates[1] ACTOR_TBL(087409fc) = {
     (u32)SwordAndBladeKnightIdle,
 };
@@ -556,7 +556,7 @@ u32 gNeedlousVariants[2] ACTOR_TBL(087409fc) = {
 /* ---- 0x08740AC8-0x08740B08: 5 table(s), 16 function pointer(s), section .actor_tbl_08740ac8 ---- */
 /* include/enemy.h; CallTableEntry(i, 6, ...) in NeedlousInit, NeedlousEnterState */
 u32 gNeedlousStates[6] ACTOR_TBL(08740ac8) = {
-    (u32)sub_0807c118,
+    (u32)NeedlousWalk,
     (u32)NeedlousFall,
     (u32)sub_0807c210,
     (u32)sub_0807c248,
@@ -565,14 +565,14 @@ u32 gNeedlousStates[6] ACTOR_TBL(08740ac8) = {
 };
 /* include/enemy.h; CallTableEntry(i, 6, ...) in NeedlousUpdate */
 u32 gNeedlousStateUpdates[6] ACTOR_TBL(08740ac8) = {
-    (u32)sub_0807c138,
-    (u32)sub_0807c1f4,
+    (u32)NeedlousWalkUpdate,
+    (u32)NeedlousFallUpdate,
     (u32)sub_0807c22c,
     (u32)sub_0807c264,
     (u32)sub_0807c29c,
-    (u32)sub_0807c2e0,
+    (u32)NeedlousDashUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in NeedlousIdleInit, sub_0807c3d8 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in NeedlousIdleInit, NeedlousIdleEnterState */
 u32 gNeedlousIdleStates[1] ACTOR_TBL(08740ac8) = {
     (u32)NeedlousIdle,
 };
@@ -599,9 +599,9 @@ u32 gUFOStateUpdates[4] ACTOR_TBL(08740b84) = {
     (u32)sub_0807c7d8,
     (u32)sub_0807c828,
     (u32)sub_0807c8d0,
-    (u32)sub_0807ca18,
+    (u32)UFOShootUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in UFOIdleInit, sub_0807cadc */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in UFOIdleInit, UFOIdleEnterState */
 u32 gUFOIdleStates[1] ACTOR_TBL(08740b84) = {
     (u32)UFOIdle,
 };
@@ -616,23 +616,23 @@ u32 gParasolVariants[4] ACTOR_TBL(08740b84) = {
     (u32)ParasolIdleInit,
     (u32)sub_0807cfd0,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolRiseInit, sub_0807ccec */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolRiseInit, ParasolRiseEnterState */
 u32 gParasolRiseStates[1] ACTOR_TBL(08740b84) = {
-    (u32)sub_0807cd08,
+    (u32)ParasolRise,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolRiseUpdate */
 u32 gParasolRiseStateUpdates[1] ACTOR_TBL(08740b84) = {
     (u32)sub_0807cd60,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolChaseInit, sub_0807cdec */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolChaseInit, ParasolChaseEnterState */
 u32 gParasolChaseStates[1] ACTOR_TBL(08740b84) = {
-    (u32)sub_0807ce08,
+    (u32)ParasolChase,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolChaseUpdate */
 u32 gParasolChaseStateUpdates[1] ACTOR_TBL(08740b84) = {
     (u32)sub_0807ce68,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolIdleInit, sub_0807cf64 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in ParasolIdleInit, ParasolIdleEnterState */
 u32 gParasolIdleStates[1] ACTOR_TBL(08740b84) = {
     (u32)ParasolIdle,
 };
@@ -643,30 +643,30 @@ u32 gParasolIdleStateUpdates[1] ACTOR_TBL(08740b84) = {
 
 /* ---- 0x08741088-0x08741094: 3 table(s), 3 function pointer(s), section .actor_tbl_08741088 ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_PengyIceBreath */
-u32 gUnk_08741088[1] ACTOR_TBL(08741088) = {
-    (u32)sub_0807d060,
+u32 gPengyIceBreathVariants[1] ACTOR_TBL(08741088) = {
+    (u32)PengyIceBreathInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_0807d060, sub_0807d0d8 */
-u32 gUnk_0874108C[1] ACTOR_TBL(08741088) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in PengyIceBreathInit, PengyIceBreathEnterState */
+u32 gPengyIceBreathStates[1] ACTOR_TBL(08741088) = {
     (u32)sub_0807d0f4,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_0807d094 */
-u32 gUnk_08741090[1] ACTOR_TBL(08741088) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in PengyIceBreathUpdate */
+u32 gPengyIceBreathStateUpdates[1] ACTOR_TBL(08741088) = {
     (u32)sub_0807d178,
 };
 
 /* ---- 0x087410AC-0x087410C0: 3 table(s), 5 function pointer(s), section .actor_tbl_087410ac ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_UFOLaser */
-u32 gUnk_087410AC[1] ACTOR_TBL(087410ac) = {
-    (u32)sub_0807d1fc,
+u32 gUFOLaserVariants[1] ACTOR_TBL(087410ac) = {
+    (u32)UFOLaserInit,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0807d1fc, sub_0807d29c */
-u32 gUnk_087410B0[2] ACTOR_TBL(087410ac) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in UFOLaserInit, UFOLaserEnterState */
+u32 gUFOLaserStates[2] ACTOR_TBL(087410ac) = {
     (u32)sub_0807d2b8,
     (u32)sub_0807d320,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_0807d230 */
-u32 gUnk_087410B8[2] ACTOR_TBL(087410ac) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in UFOLaserUpdate */
+u32 gUFOLaserStateUpdates[2] ACTOR_TBL(087410ac) = {
     (u32)sub_0807d2ec,
     (u32)sub_0807d384,
 };
@@ -680,7 +680,7 @@ u32 gRockyVariants[3] ACTOR_TBL(087411c0) = {
 };
 /* include/enemy.h; CallTableEntry(i, 5, ...) in RockyWalkInit, RockyWalkEnterState */
 u32 gRockyWalkStates[5] ACTOR_TBL(087411c0) = {
-    (u32)sub_0807d748,
+    (u32)RockyWalk,
     (u32)sub_0807d8f8,
     (u32)sub_0807d9ac,
     (u32)sub_0807da30,
@@ -694,7 +694,7 @@ u32 gRockyWalkStateUpdates[5] ACTOR_TBL(087411c0) = {
     (u32)sub_0807da5c,
     (u32)sub_0807daa8,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in RockyIdleInit, sub_0807daf0 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in RockyIdleInit, RockyIdleEnterState */
 u32 gRockyIdleStates[1] ACTOR_TBL(087411c0) = {
     (u32)RockyIdle,
 };
@@ -716,8 +716,8 @@ u32 gRockyStandStateUpdates[3] ACTOR_TBL(087411c0) = {
 };
 
 /* ---- 0x08741220-0x08741298: 15 table(s), 30 function pointer(s), section .actor_tbl_08741220 ---- */
-/* include/enemy.h; read by sub_0807e244, sub_0807e3b0 */
-u32 gUnk_08741220[2] ACTOR_TBL(08741220) = {
+/* include/enemy.h; read by SirKibbleShootUpdate, SirKibbleJumpUpdate */
+u32 gSirKibbleEnterStates[2] ACTOR_TBL(08741220) = {
     (u32)SirKibbleStandEnterState,
     (u32)SirKibbleWalkEnterState,
 };
@@ -735,9 +735,9 @@ u32 gSirKibbleStandStates[3] ACTOR_TBL(08741220) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in SirKibbleStandUpdate */
 u32 gSirKibbleStandStateUpdates[3] ACTOR_TBL(08741220) = {
-    (u32)sub_0807df8c,
-    (u32)sub_0807e244,
-    (u32)sub_0807e3b0,
+    (u32)SirKibbleWaitUpdate,
+    (u32)SirKibbleShootUpdate,
+    (u32)SirKibbleJumpUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in SirKibbleWalkInit, SirKibbleWalkEnterState */
 u32 gSirKibbleWalkStates[3] ACTOR_TBL(08741220) = {
@@ -748,10 +748,10 @@ u32 gSirKibbleWalkStates[3] ACTOR_TBL(08741220) = {
 /* include/enemy.h; CallTableEntry(i, 3, ...) in SirKibbleWalkUpdate */
 u32 gSirKibbleWalkStateUpdates[3] ACTOR_TBL(08741220) = {
     (u32)sub_0807e100,
-    (u32)sub_0807e244,
-    (u32)sub_0807e3b0,
+    (u32)SirKibbleShootUpdate,
+    (u32)SirKibbleJumpUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in SirKibbleIdleInit, sub_0807e428 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in SirKibbleIdleInit, SirKibbleIdleEnterState */
 u32 gSirKibbleIdleStates[1] ACTOR_TBL(08741220) = {
     (u32)SirKibbleIdle,
 };
@@ -765,23 +765,23 @@ u32 gCappyVariants[3] ACTOR_TBL(08741220) = {
     (u32)CappyCaplessInit,
     (u32)sub_0807e8b8,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in CappyCappedInit, sub_0807e5a0 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in CappyCappedInit, CappyCappedEnterState */
 u32 gCappyCappedStates[1] ACTOR_TBL(08741220) = {
-    (u32)sub_0807e640,
+    (u32)CappyCappedHop,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in CappyCappedUpdate */
 u32 gCappyCappedStateUpdates[1] ACTOR_TBL(08741220) = {
-    (u32)sub_0807e6d0,
+    (u32)CappyCappedHopUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in CappyCaplessInit, CappyCaplessEnterState */
 u32 gCappyCaplessStates[2] ACTOR_TBL(08741220) = {
-    (u32)sub_0807e768,
-    (u32)sub_0807e814,
+    (u32)CappyCaplessHop,
+    (u32)CappyCaplessJump,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in CappyCaplessUpdate */
 u32 gCappyCaplessStateUpdates[2] ACTOR_TBL(08741220) = {
-    (u32)sub_0807e810,
-    (u32)sub_0807e884,
+    (u32)CappyCaplessHopUpdate,
+    (u32)CappyCaplessJumpUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in sub_0807e8b8, sub_0807e904 */
 u32 gUnk_08741290[1] ACTOR_TBL(08741220) = {
@@ -802,7 +802,7 @@ u32 gGordoVariants[4] ACTOR_TBL(087412bc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoBobInit */
 u32 gGordoBobStates[1] ACTOR_TBL(087412bc) = {
-    (u32)sub_0807ea84,
+    (u32)GordoBob,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoBobUpdate */
 u32 gGordoBobStateUpdates[1] ACTOR_TBL(087412bc) = {
@@ -810,7 +810,7 @@ u32 gGordoBobStateUpdates[1] ACTOR_TBL(087412bc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoBounceVerticalInit */
 u32 gGordoBounceVerticalStates[1] ACTOR_TBL(087412bc) = {
-    (u32)sub_0807eb60,
+    (u32)GordoBounceVertical,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoBounceVerticalUpdate */
 u32 gGordoBounceVerticalStateUpdates[1] ACTOR_TBL(087412bc) = {
@@ -818,7 +818,7 @@ u32 gGordoBounceVerticalStateUpdates[1] ACTOR_TBL(087412bc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoBounceHorizontalInit */
 u32 gGordoBounceHorizontalStates[1] ACTOR_TBL(087412bc) = {
-    (u32)sub_0807ec4c,
+    (u32)GordoBounceHorizontal,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoBounceHorizontalUpdate */
 u32 gGordoBounceHorizontalStateUpdates[1] ACTOR_TBL(087412bc) = {
@@ -826,7 +826,7 @@ u32 gGordoBounceHorizontalStateUpdates[1] ACTOR_TBL(087412bc) = {
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoSweepInit */
 u32 gGordoSweepStates[1] ACTOR_TBL(087412bc) = {
-    (u32)sub_0807ed20,
+    (u32)GordoSweep,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in GordoSweepUpdate */
 u32 gGordoSweepStateUpdates[1] ACTOR_TBL(087412bc) = {
@@ -866,31 +866,31 @@ u32 gKabuVariants[4] ACTOR_TBL(08741380) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in KabuJumpInit, KabuJumpEnterState */
 u32 gKabuJumpStates[3] ACTOR_TBL(08741380) = {
-    (u32)sub_0807f0c4,
+    (u32)KabuJumpSpin,
     (u32)KabuJump,
     (u32)KabuJumpFall,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in KabuJumpUpdate */
 u32 gKabuJumpStateUpdates[3] ACTOR_TBL(08741380) = {
-    (u32)sub_0807f1f0,
+    (u32)KabuJumpSpinUpdate,
     (u32)sub_0807f2b4,
-    (u32)sub_0807f348,
+    (u32)KabuJumpFallUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in KabuTeleportInit, KabuTeleportEnterState */
 u32 gKabuTeleportStates[3] ACTOR_TBL(08741380) = {
-    (u32)sub_0807f42c,
+    (u32)KabuTeleportSpin,
     (u32)KabuTeleport,
     (u32)sub_0807f78c,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in KabuTeleportUpdate */
 u32 gKabuTeleportStateUpdates[3] ACTOR_TBL(08741380) = {
-    (u32)sub_0807f488,
+    (u32)KabuTeleportSpinUpdate,
     (u32)sub_0807f634,
     (u32)sub_0807f888,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in KabuSlideInit, KabuSlideEnterState */
 u32 gKabuSlideStates[2] ACTOR_TBL(08741380) = {
-    (u32)sub_0807f920,
+    (u32)KabuSlide,
     (u32)sub_0807fa98,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in KabuSlideUpdate */
@@ -898,7 +898,7 @@ u32 gKabuSlideStateUpdates[2] ACTOR_TBL(08741380) = {
     (u32)sub_0807f9a0,
     (u32)sub_0807fafc,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in KabuIdleInit, sub_0807fb44 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in KabuIdleInit, KabuIdleEnterState */
 u32 gKabuIdleStates[1] ACTOR_TBL(08741380) = {
     (u32)KabuIdle,
 };
@@ -925,7 +925,7 @@ u32 gTwisterStateUpdates[3] ACTOR_TBL(08741488) = {
     (u32)sub_0808003c,
     (u32)sub_08080278,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in TwisterIdleInit, sub_08080300 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in TwisterIdleInit, TwisterIdleEnterState */
 u32 gTwisterIdleStates[1] ACTOR_TBL(08741488) = {
     (u32)TwisterIdle,
 };
@@ -950,10 +950,10 @@ u32 gHotHeadWalkStates[3] ACTOR_TBL(087414b4) = {
 /* include/enemy.h; CallTableEntry(i, 3, ...) in HotHeadWalkUpdate */
 u32 gHotHeadWalkStateUpdates[3] ACTOR_TBL(087414b4) = {
     (u32)sub_0808051c,
-    (u32)sub_080806e8,
-    (u32)sub_08080768,
+    (u32)HotHeadWalkShootUpdate,
+    (u32)HotHeadWalkFallUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in HotHeadIdleInit, sub_080807bc */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in HotHeadIdleInit, HotHeadIdleEnterState */
 u32 gHotHeadIdleStates[1] ACTOR_TBL(087414b4) = {
     (u32)HotHeadIdle,
 };
@@ -963,15 +963,15 @@ u32 gHotHeadIdleStateUpdates[1] ACTOR_TBL(087414b4) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in HotHeadStandInit, HotHeadStandEnterState */
 u32 gHotHeadStandStates[3] ACTOR_TBL(087414b4) = {
-    (u32)sub_080808bc,
+    (u32)HotHeadStandWait,
     (u32)HotHeadStandShoot,
     (u32)HotHeadStandFall,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in HotHeadStandUpdate */
 u32 gHotHeadStandStateUpdates[3] ACTOR_TBL(087414b4) = {
-    (u32)sub_080808dc,
-    (u32)sub_08080aa8,
-    (u32)sub_08080b28,
+    (u32)HotHeadStandWaitUpdate,
+    (u32)HotHeadStandShootUpdate,
+    (u32)HotHeadStandFallUpdate,
 };
 
 /* ---- 0x08741544-0x087415AC: 9 table(s), 26 function pointer(s), section .actor_tbl_08741544 ---- */
@@ -1008,19 +1008,19 @@ u32 gStarmanJumpStates[3] ACTOR_TBL(08741544) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in StarmanJumpUpdate */
 u32 gStarmanJumpStateUpdates[3] ACTOR_TBL(08741544) = {
-    (u32)sub_080814b4,
+    (u32)StarmanJumpWalkUpdate,
     (u32)sub_08081560,
-    (u32)sub_080815dc,
+    (u32)StarmanJumpFallUpdate,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in StarmanFlyInit, sub_0808164c */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in StarmanFlyInit, StarmanFlyEnterState */
 u32 gStarmanFlyStates[1] ACTOR_TBL(08741544) = {
-    (u32)sub_0808168c,
+    (u32)StarmanFly,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in StarmanFlyUpdate */
 u32 gStarmanFlyStateUpdates[1] ACTOR_TBL(08741544) = {
     (u32)sub_080816e8,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in StarmanIdleInit, sub_080817b8 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in StarmanIdleInit, StarmanIdleEnterState */
 u32 gStarmanIdleStates[1] ACTOR_TBL(08741544) = {
     (u32)StarmanIdle,
 };
@@ -1038,15 +1038,15 @@ u32 gPoppyBrosJrVariants[3] ACTOR_TBL(087415b8) = {
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in PoppyBrosJrInit, PoppyBrosJrEnterState */
 u32 gPoppyBrosJrStates[3] ACTOR_TBL(087415b8) = {
-    (u32)sub_08081aac,
+    (u32)PoppyBrosJrHop,
     (u32)PoppyBrosJrWalk,
     (u32)PoppyBrosJrJump,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in PoppyBrosJrUpdate */
 u32 gPoppyBrosJrStateUpdates[3] ACTOR_TBL(087415b8) = {
-    (u32)sub_08081b5c,
-    (u32)sub_08081c3c,
-    (u32)sub_08081ce0,
+    (u32)PoppyBrosJrHopUpdate,
+    (u32)PoppyBrosJrWalkUpdate,
+    (u32)PoppyBrosJrJumpUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in sub_08081d24, sub_08081d68 */
 u32 gUnk_087415DC[1] ACTOR_TBL(087415b8) = {
@@ -1064,7 +1064,7 @@ u32 gPoppyBrosJrRideVariants[3] ACTOR_TBL(08741604) = {
     (u32)PoppyBrosJrDroppedObjectInit,
     (u32)PoppyBrosJrRideIdleInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in PoppyBrosJrRideInit, sub_080820ec */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in PoppyBrosJrRideInit, PoppyBrosJrRideEnterState */
 u32 gPoppyBrosJrRideStates[1] ACTOR_TBL(08741604) = {
     (u32)sub_08082270,
 };
@@ -1072,7 +1072,7 @@ u32 gPoppyBrosJrRideStates[1] ACTOR_TBL(08741604) = {
 u32 gPoppyBrosJrRideStateUpdates[1] ACTOR_TBL(08741604) = {
     (u32)sub_080822a4,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in PoppyBrosJrDroppedObjectInit, sub_080822e4 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in PoppyBrosJrDroppedObjectInit, PoppyBrosJrDroppedObjectEnterState */
 u32 gPoppyBrosJrDroppedObjectStates[1] ACTOR_TBL(08741604) = {
     (u32)sub_08082338,
 };
@@ -1080,7 +1080,7 @@ u32 gPoppyBrosJrDroppedObjectStates[1] ACTOR_TBL(08741604) = {
 u32 gPoppyBrosJrDroppedObjectStateUpdates[1] ACTOR_TBL(08741604) = {
     (u32)sub_08082458,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in PoppyBrosJrRideIdleInit, sub_080824d0 */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in PoppyBrosJrRideIdleInit, PoppyBrosJrRideIdleEnterState */
 u32 gPoppyBrosJrRideIdleStates[1] ACTOR_TBL(08741604) = {
     (u32)PoppyBrosJrRideIdle,
 };
@@ -1114,7 +1114,7 @@ u32 gWheelieStateUpdates[6] ACTOR_TBL(08741640) = {
     (u32)sub_08082aec,
     (u32)sub_08082b48,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in WheelieIdleInit, sub_08082bfc */
+/* include/enemy.h; CallTableEntry(i, 1, ...) in WheelieIdleInit, WheelieIdleEnterState */
 u32 gWheelieIdleStates[1] ACTOR_TBL(08741640) = {
     (u32)WheelieIdle,
 };

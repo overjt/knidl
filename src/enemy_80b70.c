@@ -22,7 +22,7 @@
  *     and `sub_08081e64` (flip Task.facing from the gTerrainResult[4] input,
  *     returning 1 when the input already matches the facing).
  *
- * `sub_0808164c`, `sub_080817b8` and `sub_08081d68` are dead exports of the
+ * `StarmanFlyEnterState`, `StarmanIdleEnterState` and `sub_08081d68` are dead exports of the
  * same kind as batch 1's; `sub_08081960`, `sub_08081e40`, `sub_08081f08` and
  * `sub_08081f18` are pointer-referenced leaves the census originally missed
  * (both classes curated in tools/symdb.py).
@@ -530,7 +530,7 @@ void StarmanJumpWalk(void)
     sub_08081814();
 }
 
-void sub_080814b4(void)
+void StarmanJumpWalkUpdate(void)
 {
     struct Task *t = gCurTask;
     s32 n;
@@ -592,7 +592,7 @@ void StarmanJumpFall(void)
     }
 }
 
-void sub_080815dc(void)
+void StarmanJumpFallUpdate(void)
 {
     if ((s8)gCurTask->onGround != 0)
     {
@@ -613,7 +613,7 @@ void StarmanFlyInit(void)
     CallTableEntry(gCurTask->state, 1, gStarmanFlyStates);
 }
 
-void sub_0808164c(void)
+void StarmanFlyEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gStarmanFlyStates);
 }
@@ -625,7 +625,7 @@ void StarmanFlyUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0808168c(void)
+void StarmanFly(void)
 {
     struct Task *t;
 
@@ -712,7 +712,7 @@ void StarmanIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
 }
 
-void sub_080817b8(void)
+void StarmanIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gStarmanIdleStates);
 }
@@ -898,7 +898,7 @@ void PoppyBrosJrUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08081aac(void)
+void PoppyBrosJrHop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -934,7 +934,7 @@ void sub_08081aac(void)
     }
 }
 
-void sub_08081b5c(void)
+void PoppyBrosJrHopUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -977,7 +977,7 @@ void PoppyBrosJrWalk(void)
     }
 }
 
-void sub_08081c3c(void)
+void PoppyBrosJrWalkUpdate(void)
 {
     if (gCurTask->onGround != 0 && (u8)sub_08081e64() == 0)
     {
@@ -1002,7 +1002,7 @@ void PoppyBrosJrJump(void)
     TaskSleepForever();
 }
 
-void sub_08081ce0(void)
+void PoppyBrosJrJumpUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

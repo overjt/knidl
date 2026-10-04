@@ -17,7 +17,7 @@
  *     stack `struct PointPair`
  *     and reacts through the shared `sub_0807b294` state entry;
  *   * Task_UFO's row 0 `UFOInit`+`UFOUpdate` with the
- *     `sub_0807c5ac` box test (`struct Rect` + GetDistSq) and the
+ *     `UFOIsAtTarget` box test (`struct Rect` + GetDistSq) and the
  *     `sub_0807c530` aim helper that clamps into `0x08740B3C`/`0x08740B60`;
  *   * UFO's state check `sub_0807c828` (gUFOStateUpdates[1]), which walks a
  *     sixteen-entry cue ring through
@@ -25,8 +25,8 @@
  *   * Task_Parasol's row 0 `ParasolRiseInit`+`ParasolRiseUpdate` and its aim
  *     `sub_0807cbf4` (a 512-step angle from `TaskGetAngleTo`).
  *
- * `sub_0807b888`, `sub_0807bd60`, `sub_0807c3d8`, `sub_0807cadc`,
- * `sub_0807ccec`, `sub_0807cdec`, `sub_0807cf64` and `sub_0807d0d8` are dead
+ * `SwordAndBladeKnightIdleEnterState`, `sub_0807bd60`, `NeedlousIdleEnterState`, `UFOIdleEnterState`,
+ * `ParasolRiseEnterState`, `ParasolChaseEnterState`, `ParasolIdleEnterState` and `PengyIceBreathEnterState` are dead
  * exports: each is a copy of its host's tail dispatch that nothing in the ROM
  * references (curated in tools/symdb.py).
  */
@@ -89,7 +89,7 @@ void sub_0807aa5c(void)
 void ScarfyInit(void)
 {
     gCurTask->updateCallback = (u32)ScarfyUpdate;
-    sub_0807a8d4();
+    ScarfyPickStartState();
     CallTableEntry(gCurTask->state, 6, gScarfyStates);
 }
 
@@ -100,7 +100,7 @@ void ScarfyUpdate(void)
     {
         ActorCheckHits();
         ActorReactToHit();
-        sub_0807aa0c();
+        ScarfyCheckTransform();
     }
 }
 
@@ -109,19 +109,19 @@ void ScarfyEnterState(void)
     CallTableEntry(gCurTask->state, 6, gScarfyStates);
 }
 
-void sub_0807ab54(void)
+void ScarfyHover(void)
 {
     gCurTask->updateState = 2;
     sub_0807a8fc();
     sub_0807aa5c();
 }
 
-void sub_0807ab70(void)
+void ScarfyHoverUpdate(void)
 {
     gCurTask->unk34 = ActorTickAnimFacingNearestPlayer(gCurTask->unk34);
 }
 
-void sub_0807ab8c(void)
+void ScarfyHide(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -129,7 +129,7 @@ void sub_0807ab8c(void)
     TaskSleepForever();
 }
 
-void sub_0807abb4(void)
+void ScarfyHideUpdate(void)
 {
     if (TaskIsNearestPlayerWithinX(10) != 0)
     {
@@ -222,7 +222,7 @@ void ScarfyTransform(void)
     TaskSleepForever();
 }
 
-void sub_0807adcc(void)
+void ScarfyTransformUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -276,7 +276,7 @@ void ScarfyChaseUpdate(void)
     }
 }
 
-void sub_0807aecc(void)
+void ScarfyExplode(void)
 {
     gCurTask->updateState = 5;
     TaskStop();
@@ -293,7 +293,7 @@ void sub_0807aecc(void)
     ActorDie();
 }
 
-void sub_0807af3c(void)
+void ScarfyExplodeUpdate(void)
 {
     gCurTask->unk34 = ActorTickAnimFacingNearestPlayer(gCurTask->unk34);
 }
@@ -719,7 +719,7 @@ void SwordAndBladeKnightWalkFall(void)
     TaskSleepForever();
 }
 
-void sub_0807b7fc(void)
+void SwordAndBladeKnightWalkFallUpdate(void)
 {
 }
 
@@ -743,7 +743,7 @@ void SwordAndBladeKnightIdleUpdate(void)
     }
 }
 
-void sub_0807b888(void)
+void SwordAndBladeKnightIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gSwordAndBladeKnightIdleStates);
 }
@@ -961,7 +961,7 @@ void sub_0807bd60(void)
     TaskSetEntry(NeedlousEnterState, gCurTaskIdx);
 }
 
-void sub_0807bd7c(void)
+void NeedlousPickStartState(void)
 {
     s32 r;
     struct Task *t;
@@ -1126,7 +1126,7 @@ void sub_0807c030(void)
 void NeedlousInit(void)
 {
     gCurTask->updateCallback = (u32)NeedlousUpdate;
-    sub_0807bd7c();
+    NeedlousPickStartState();
     CallTableEntry(gCurTask->state, 6, gNeedlousStates);
 }
 
@@ -1146,7 +1146,7 @@ void NeedlousEnterState(void)
     CallTableEntry(gCurTask->state, 6, gNeedlousStates);
 }
 
-void sub_0807c118(void)
+void NeedlousWalk(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1154,7 +1154,7 @@ void sub_0807c118(void)
     TaskSleepForever();
 }
 
-void sub_0807c138(void)
+void NeedlousWalkUpdate(void)
 {
     struct Task *t;
 
@@ -1188,7 +1188,7 @@ void NeedlousFall(void)
     TaskSleepForever();
 }
 
-void sub_0807c1f4(void)
+void NeedlousFallUpdate(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
 }
@@ -1240,7 +1240,7 @@ void NeedlousDash(void)
     }
 }
 
-void sub_0807c2e0(void)
+void NeedlousDashUpdate(void)
 {
     struct Task *t;
 
@@ -1281,7 +1281,7 @@ void NeedlousIdleUpdate(void)
     }
 }
 
-void sub_0807c3d8(void)
+void NeedlousIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gNeedlousIdleStates);
 }
@@ -1322,7 +1322,7 @@ void sub_0807c484(void)
         sub_0806ee2c();
 }
 
-void sub_0807c4a0(void)
+void UFOStartPaletteAnim(void)
 {
     struct Actor *a = gCurTask->u8C.actor;
     u32 v;
@@ -1345,7 +1345,7 @@ void sub_0807c4d4(void)
     t->unk20 = 0;
     t->unk24 = 0;
     gCurTask->unk18 = ActorStartAnimNoFlip(gUnk_08740B08);
-    sub_0807c4a0();
+    UFOStartPaletteAnim();
 }
 
 s32 sub_0807c508(void)
@@ -1370,13 +1370,13 @@ void sub_0807c530(s32 a)
     t = gCurTask;
     t->unk2C = gUnk_08740B3C[t->unk24] + gUnk_030023B4;
     t->unk28 = gUnk_08740B60[t->unk24] + gUnk_030023D4;
-    sub_0807c5ac(&box);
+    UFOIsAtTarget(&box);
     gCurTask->unk34 = (u16)GetPointAngle(box.left, box.top,
                                              (s16)gCurTask->unk2C,
                                              (s16)gCurTask->unk28, 3);
 }
 
-s32 sub_0807c5ac(struct Rect *r)
+s32 UFOIsAtTarget(struct Rect *r)
 {
     struct Task *t = gCurTask;
 
@@ -1400,7 +1400,7 @@ void sub_0807c5e4(void)
     t->velY = gUnk_030023D4;
 }
 
-void sub_0807c618(void)
+void CreateUFOLaser(void)
 {
     struct ActorSpawn spawn;
     struct Task *t = gCurTask;
@@ -1531,7 +1531,7 @@ void sub_0807c8d0(void)
     struct Rect box;
 
     gCurTask->unk18 = ActorTickAnim(gCurTask->unk18);
-    if ((u8)sub_0807c5ac(&box) != 0)
+    if ((u8)UFOIsAtTarget(&box) != 0)
     {
         struct Task *t = gCurTask;
 
@@ -1576,7 +1576,7 @@ void UFOShoot(void)
     TaskYieldTrampoline(8);
     gCurTask->frame++;
     TaskYieldTrampoline(4);
-    sub_0807c618();
+    CreateUFOLaser();
     gCurTask->frame--;
     TaskYieldTrampoline(8);
     TaskYieldTrampoline(20);
@@ -1584,7 +1584,7 @@ void UFOShoot(void)
     TaskSleepForever();
 }
 
-void sub_0807ca18(void)
+void UFOShootUpdate(void)
 {
     if (gCurTask->state != 3)
     {
@@ -1597,7 +1597,7 @@ void UFOIdleInit(void)
 {
     gCurTask->updateCallback = (u32)UFOIdleUpdate;
     TaskFaceNearestPlayer();
-    sub_0807c4a0();
+    UFOStartPaletteAnim();
     ActorSetAttackBox(gUnk_0873F500);
     gCurTask->health = 2;
     ActorSetState(0);
@@ -1614,7 +1614,7 @@ void UFOIdleUpdate(void)
     }
 }
 
-void sub_0807cadc(void)
+void UFOIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gUFOIdleStates);
 }
@@ -1702,12 +1702,12 @@ void ParasolRiseUpdate(void)
     }
 }
 
-void sub_0807ccec(void)
+void ParasolRiseEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gParasolRiseStates);
 }
 
-void sub_0807cd08(void)
+void ParasolRise(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1749,12 +1749,12 @@ void ParasolChaseUpdate(void)
     }
 }
 
-void sub_0807cdec(void)
+void ParasolChaseEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gParasolChaseStates);
 }
 
-void sub_0807ce08(void)
+void ParasolChase(void)
 {
     gCurTask->updateState = 0;
     sub_0807cbf4();
@@ -1816,7 +1816,7 @@ void ParasolIdleUpdate(void)
     }
 }
 
-void sub_0807cf64(void)
+void ParasolIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gParasolIdleStates);
 }
@@ -1866,20 +1866,20 @@ void Task_PengyIceBreath(void)
     t = gCurTask;
     t->frameTable = gPengyIceBreathFrames;
     t->tileWord = (0xFFF & t->tileWord) | 0xF000;
-    CallTableEntry(t->variant, 1, gUnk_08741088);
+    CallTableEntry(t->variant, 1, gPengyIceBreathVariants);
 }
 
-void sub_0807d060(void)
+void PengyIceBreathInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807d094;
+    gCurTask->updateCallback = (u32)PengyIceBreathUpdate;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 1, gUnk_0874108C);
+    CallTableEntry(gCurTask->state, 1, gPengyIceBreathStates);
 }
 
-void sub_0807d094(void)
+void PengyIceBreathUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_08741090);
+    CallTableEntry(gCurTask->updateState, 1, gPengyIceBreathStateUpdates);
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
         ActorCheckHits();
@@ -1887,9 +1887,9 @@ void sub_0807d094(void)
     }
 }
 
-void sub_0807d0d8(void)
+void PengyIceBreathEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874108C);
+    CallTableEntry(gCurTask->state, 1, gPengyIceBreathStates);
 }
 
 void sub_0807d0f4(void)
@@ -1926,41 +1926,41 @@ void Task_UFOLaser(void)
     gCurTask->layer = 9;
     t = gCurTask;
     t->frameTable = gUFOLaserFrames;
-    CallTableEntry(t->variant, 1, gUnk_087410AC);
+    CallTableEntry(t->variant, 1, gUFOLaserVariants);
 }
 
 s32 sub_0807d1bc(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0807d29c, gCurTaskIdx);
+    TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     return 1;
 }
 
 s32 sub_0807d1dc(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_0807d29c, gCurTaskIdx);
+    TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     return 1;
 }
 
-void sub_0807d1fc(void)
+void UFOLaserInit(void)
 {
-    gCurTask->updateCallback = (u32)sub_0807d230;
+    gCurTask->updateCallback = (u32)UFOLaserUpdate;
     TaskFaceLikeParent();
     ActorSetState(0);
-    CallTableEntry(gCurTask->state, 2, gUnk_087410B0);
+    CallTableEntry(gCurTask->state, 2, gUFOLaserStates);
 }
 
-void sub_0807d230(void)
+void UFOLaserUpdate(void)
 {
     if ((u8)sub_08069604() != 0)
     {
         ActorSetState(1);
-        TaskSetEntry(sub_0807d29c, gCurTaskIdx);
+        TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     }
     else
     {
-        CallTableEntry(gCurTask->updateState, 2, gUnk_087410B8);
+        CallTableEntry(gCurTask->updateState, 2, gUFOLaserStateUpdates);
     }
     if (gTaskSlotTypes[gCurTaskIdx] != -1)
     {
@@ -1969,9 +1969,9 @@ void sub_0807d230(void)
     }
 }
 
-void sub_0807d29c(void)
+void UFOLaserEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_087410B0);
+    CallTableEntry(gCurTask->state, 2, gUFOLaserStates);
 }
 
 void sub_0807d2b8(void)
@@ -1989,7 +1989,7 @@ void sub_0807d2ec(void)
     {
         TaskStop();
         ActorSetState(1);
-        TaskSetEntry(sub_0807d29c, gCurTaskIdx);
+        TaskSetEntry(UFOLaserEnterState, gCurTaskIdx);
     }
 }
 

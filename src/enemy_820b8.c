@@ -23,7 +23,7 @@
  *   * `sub_08082c5c`, the "turn around once every 30 frames if the player is
  *     behind and within 31 units" probe shared by the bank's walkers.
  *
- * `sub_080820ec`, `sub_080822e4`, `sub_080824d0` and `sub_08082bfc` are dead
+ * `PoppyBrosJrRideEnterState`, `PoppyBrosJrDroppedObjectEnterState`, `PoppyBrosJrRideIdleEnterState` and `WheelieIdleEnterState` are dead
  * exports; `sub_08082458` is a pointer-referenced leaf the census originally
  * missed (both curated in tools/symdb.py).
  */
@@ -60,7 +60,7 @@ void PoppyBrosJrRideInit(void)
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideStates);
 }
 
-void sub_080820ec(void)
+void PoppyBrosJrRideEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideStates);
 }
@@ -134,7 +134,7 @@ void PoppyBrosJrDroppedObjectInit(void)
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
 
-void sub_080822e4(void)
+void PoppyBrosJrDroppedObjectEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrDroppedObjectStates);
 }
@@ -229,7 +229,7 @@ void PoppyBrosJrRideIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
 }
 
-void sub_080824d0(void)
+void PoppyBrosJrRideIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gPoppyBrosJrRideIdleStates);
 }
@@ -611,7 +611,7 @@ void WheelieIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);
 }
 
-void sub_08082bfc(void)
+void WheelieIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gWheelieIdleStates);
 }

@@ -18,16 +18,16 @@
  *   * the class-3 three-way branch pair `sub_0807dd70` / `sub_0807dddc`
  *     (`switch (Task.variant)` with an empty `case 1`);
  *   * Task_SirKibble's `0x08741220` function-pointer table the three
- *     `sub_0807e244` / `sub_0807e3b0` hooks dispatch through;
+ *     `SirKibbleShootUpdate` / `SirKibbleJumpUpdate` hooks dispatch through;
  *   * Sir Kibble's jump-and-throw state `SirKibbleJump` (rows 0/1, state 2)
- *     and the capless Cappy's hop `sub_0807e768` (row 1, state 0), which
+ *     and the capless Cappy's hop `CappyCaplessHop` (row 1, state 0), which
  *     spawn a companion with `CreateActorFromDescAtOffsetFacing` and then
  *     bounce between velocity presets until Task.onGround fires;
- *   * Gordo's four movement states (`sub_0807ea84`, `sub_0807eb60`,
- *     `sub_0807ec4c`, `sub_0807ed20`) and Cool Spook's float `sub_0807ef7c`,
+ *   * Gordo's four movement states (`GordoBob`, `GordoBounceVertical`,
+ *     `GordoBounceHorizontal`, `GordoSweep`) and Cool Spook's float `sub_0807ef7c`,
  *     each an infinite eight-step velocity ramp.
  *
- * `sub_0807daf0`, `sub_0807e428`, `sub_0807e5a0`, `sub_0807e904`,
+ * `RockyIdleEnterState`, `SirKibbleIdleEnterState`, `CappyCappedEnterState`, `sub_0807e904`,
  * `sub_0807ee44` and `sub_0807ef08` are dead exports: each is a copy of its
  * host's tail dispatch that nothing in the ROM references (curated in
  * tools/symdb.py).
@@ -235,7 +235,7 @@ void RockyWalkUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807d748(void)
+void RockyWalk(void)
 {
     gCurTask->updateState = 0;
     gCurTask->unk6C = 0;
@@ -387,7 +387,7 @@ void RockyIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gRockyIdleStates);
 }
 
-void sub_0807daf0(void)
+void RockyIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gRockyIdleStates);
 }
@@ -641,7 +641,7 @@ void SirKibbleWait(void)
     sub_0807e484();
 }
 
-void sub_0807df8c(void)
+void SirKibbleWaitUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -768,7 +768,7 @@ void SirKibbleShoot(void)
     TaskSleepForever();
 }
 
-void sub_0807e244(void)
+void SirKibbleShootUpdate(void)
 {
     {
         struct Task *t = gCurTask;
@@ -780,7 +780,7 @@ void sub_0807e244(void)
         struct Task *t = gCurTask;
 
         if (t->state != 1)
-            TaskSetEntry((void *)gUnk_08741220[t->variant], gCurTaskIdx);
+            TaskSetEntry((void *)gSirKibbleEnterStates[t->variant], gCurTaskIdx);
     }
 }
 
@@ -849,12 +849,12 @@ void SirKibbleJump(void)
     TaskSleepForever();
 }
 
-void sub_0807e3b0(void)
+void SirKibbleJumpUpdate(void)
 {
     struct Task *t = gCurTask;
 
     if (t->state != 2)
-        TaskSetEntry((void *)gUnk_08741220[t->variant], gCurTaskIdx);
+        TaskSetEntry((void *)gSirKibbleEnterStates[t->variant], gCurTaskIdx);
 }
 
 void SirKibbleIdleInit(void)
@@ -867,7 +867,7 @@ void SirKibbleIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gSirKibbleIdleStates);
 }
 
-void sub_0807e428(void)
+void SirKibbleIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gSirKibbleIdleStates);
 }
@@ -952,7 +952,7 @@ void CappyCappedInit(void)
     CallTableEntry(gCurTask->state, 1, gCappyCappedStates);
 }
 
-void sub_0807e5a0(void)
+void CappyCappedEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gCappyCappedStates);
 }
@@ -975,7 +975,7 @@ void CappyCappedUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807e640(void)
+void CappyCappedHop(void)
 {
     gCurTask->updateState = 0;
     gCurTask->frame = 4;
@@ -1000,7 +1000,7 @@ void sub_0807e640(void)
     }
 }
 
-void sub_0807e6d0(void)
+void CappyCappedHopUpdate(void)
 {
 }
 
@@ -1029,7 +1029,7 @@ void CappyCaplessUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807e768(void)
+void CappyCaplessHop(void)
 {
     gCurTask->updateState = 0;
     TaskSetFrame(4);
@@ -1058,11 +1058,11 @@ void sub_0807e768(void)
     }
 }
 
-void sub_0807e810(void)
+void CappyCaplessHopUpdate(void)
 {
 }
 
-void sub_0807e814(void)
+void CappyCaplessJump(void)
 {
     gCurTask->updateState = 1;
     TaskFaceNearestPlayer();
@@ -1087,7 +1087,7 @@ void sub_0807e814(void)
     }
 }
 
-void sub_0807e884(void)
+void CappyCaplessJumpUpdate(void)
 {
     if (gCurTask->onGround != 0)
     {
@@ -1189,7 +1189,7 @@ void GordoBobUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807ea84(void)
+void GordoBob(void)
 {
     gCurTask->updateState = 0;
     while (1)
@@ -1231,7 +1231,7 @@ void GordoBounceVerticalUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807eb60(void)
+void GordoBounceVertical(void)
 {
     gCurTask->updateState = 0;
     {
@@ -1277,7 +1277,7 @@ void GordoBounceHorizontalUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807ec4c(void)
+void GordoBounceHorizontal(void)
 {
     gCurTask->updateState = 0;
     {
@@ -1317,7 +1317,7 @@ void GordoSweepUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807ed20(void)
+void GordoSweep(void)
 {
     gCurTask->updateState = 0;
     while (1)

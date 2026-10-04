@@ -22,25 +22,25 @@
  *   * the `0x08740648` / `0x08740668` cue+delay pair Task_WaddleDee's walk
  *     states (rows 0/1: `WaddleDeeWalk`, `WaddleDeePaceWalk`) index by Task.unk74;
  *   * Task_Pengy's (#12) four-state row `PengyInit`+`PengyUpdate` with its
- *     state table gPengyStates (`0x08740758`) and the `sub_080795d8` check
+ *     state table gPengyStates (`0x08740758`) and the `PengyWaitUpdate` check
  *     (the nearest player within 64 px horizontally, plus a cooldown timer);
  *   * `PengyShoot`, Pengy's breath state, which spawns actor type 102 ten
  *     times (cycling Task.unk74 0-2) from a stack `struct ActorSpawn` and
  *     clears Task.unk74 on the companion it gets back from
  *     CreateChildTaskAtOffsetFacing;
- *   * the `sub_08079eec` / `sub_08079f18` / `sub_08079f54` sound-cue chain
+ *   * the `sub_08079eec` / `sub_08079f18` / `SparkyPickNextState` sound-cue chain
  *     (all `u16`-parameterised) that every later script funnels its
  *     "player hit me" reaction through;
- *   * the two 0x1C0-byte Task_Sparky states `sub_0807a1c0` (row 0) and
- *     `sub_0807a634` (row 2) (identical: a seventeen-step frame script followed by an
+ *   * the two 0x1C0-byte Task_Sparky states `SparkyJumpDischarge` (row 0) and
+ *     `SparkyStandDischarge` (row 2) (identical: a seventeen-step frame script followed by an
  *     eight-iteration palette flip between `0x08740DE4` and `0x0873F774`);
  *   * Task_Scarfy's `sub_0807a8fc`, the bank's only `mov pc` jump table (five
  *     cases over Task.variant), and `sub_0807a968`, which places Scarfy at an
  *     offset from the nearest player, clamping the point from
  *     `0x08740824` into the camera box `gViewRect[0..3]`.
  *
- * `sub_0807927c`, `sub_080794d0`, `sub_080799a0`, `sub_08079db8` and
- * `sub_0807a4e4` are dead exports: each is a copy of its host's tail dispatch
+ * `WaddleDeeIdleEnterState`, `sub_080794d0`, `PengyIdleEnterState`, `BomberIdleEnterState` and
+ * `SparkyIdleEnterState` are dead exports: each is a copy of its host's tail dispatch
  * that nothing in the ROM references (curated in tools/symdb.py).
  */
 #include "gba/gba.h"
@@ -134,7 +134,7 @@ void WaddleDeeWalkFall(void)
     TaskSleepForever();
 }
 
-void sub_08078ce4(void)
+void WaddleDeeWalkFallUpdate(void)
 {
 }
 
@@ -174,7 +174,7 @@ void WaddleDeePaceWalk(void)
     sub_08078b68();
 }
 
-void sub_08078dd4(void)
+void WaddleDeePaceWalkUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -200,7 +200,7 @@ void WaddleDeePaceFall(void)
     TaskSleepForever();
 }
 
-void sub_08078e38(void)
+void WaddleDeePaceFallUpdate(void)
 {
 }
 
@@ -230,7 +230,7 @@ void WaddleDeeJumpUpdate(void)
     }
 }
 
-void sub_08078eec(void)
+void WaddleDeeJumpWalk(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -238,7 +238,7 @@ void sub_08078eec(void)
     TaskSleepForever();
 }
 
-void sub_08078f24(void)
+void WaddleDeeJumpWalkUpdate(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
     if (--gCurTask->unk28 < 0)
@@ -323,7 +323,7 @@ void WaddleDeeJumpFall(void)
     TaskSleepForever();
 }
 
-void sub_080790e8(void)
+void WaddleDeeJumpFallUpdate(void)
 {
 }
 
@@ -400,7 +400,7 @@ void WaddleDeeIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gWaddleDeeIdleStates);
 }
 
-void sub_0807927c(void)
+void WaddleDeeIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gWaddleDeeIdleStates);
 }
@@ -524,7 +524,7 @@ void PengyInit(void)
 {
     gCurTask->updateCallback = (u32)PengyUpdate;
     TaskFaceNearestPlayer();
-    sub_08079578();
+    PengyPickStartState();
     CallTableEntry(gCurTask->state, 4, gPengyStates);
 }
 
@@ -544,7 +544,7 @@ void PengyEnterState(void)
     CallTableEntry(gCurTask->state, 4, gPengyStates);
 }
 
-void sub_08079578(void)
+void PengyPickStartState(void)
 {
     struct Task *t = gCurTask;
     s32 r;
@@ -576,7 +576,7 @@ void PengyWait(void)
     }
 }
 
-void sub_080795d8(void)
+void PengyWaitUpdate(void)
 {
     struct Task *t = gCurTask;
     s32 n = t->unk28;
@@ -586,52 +586,52 @@ void sub_080795d8(void)
         if (abs(TaskGetNearestPlayerDx()) <= 63)
         {
             if (gCurTask->unk2C <= 0 && RandomRange(2) == 0)
-                sub_0807964c();
+                PengyStartShoot();
             else
-                sub_080796d8();
+                PengyCheckShoot();
         }
         else
         {
             gCurTask->unk2C = 0;
-            sub_0807968c();
+            PengyCheckWalk();
         }
     }
     else
     {
         t->unk2C = 0;
         t->unk28 = n - 1;
-        sub_0807968c();
+        PengyCheckWalk();
     }
 }
 
-void sub_0807964c(void)
+void PengyStartShoot(void)
 {
     ActorSetState(2);
     TaskSetEntry(PengyEnterState, gCurTaskIdx);
 }
 
-void sub_0807966c(void)
+void PengyStartWalk(void)
 {
     ActorSetState(1);
     TaskSetEntry(PengyEnterState, gCurTaskIdx);
 }
 
-void sub_0807968c(void)
+void PengyCheckWalk(void)
 {
     s32 n = ++gCurTask->unk30;
 
     if (n == 120)
     {
-        sub_0807966c();
+        PengyStartWalk();
     }
     else if (n == 75 || n == 90 || n == 105)
     {
         if (RandomRange(gUnk_08740720[gCurTask->unk74]) == 0)
-            sub_0807966c();
+            PengyStartWalk();
     }
 }
 
-void sub_080796d8(void)
+void PengyCheckShoot(void)
 {
     struct Task *t = gCurTask;
 
@@ -639,13 +639,13 @@ void sub_080796d8(void)
     {
         t->unk2C = 3;
         if (RandomRange(3) == 0)
-            sub_0807968c();
+            PengyCheckWalk();
         else
-            sub_0807964c();
+            PengyStartShoot();
     }
     else
     {
-        sub_0807968c();
+        PengyCheckWalk();
     }
 }
 
@@ -687,7 +687,7 @@ void PengyWalk(void)
     TaskSleepForever();
 }
 
-void sub_080797b4(void)
+void PengyWalkUpdate(void)
 {
     gCurTask->unk34 = ActorTickAnim(gCurTask->unk34);
     if (gCurTask->state != 1)
@@ -740,7 +740,7 @@ void PengyShoot(void)
     TaskSleepForever();
 }
 
-void sub_080798b8(void)
+void PengyShootUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -761,7 +761,7 @@ void PengyFall(void)
     TaskSleepForever();
 }
 
-void sub_08079914(void)
+void PengyFallUpdate(void)
 {
 }
 
@@ -785,7 +785,7 @@ void PengyIdleUpdate(void)
     }
 }
 
-void sub_080799a0(void)
+void PengyIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gPengyIdleStates);
 }
@@ -887,7 +887,7 @@ void BomberWalk(void)
     }
 }
 
-void sub_08079b98(void)
+void BomberWalkUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -945,7 +945,7 @@ void sub_08079c84(void)
         TaskSetEntry(WaddleDeeWalkEnterState, gCurTaskIdx);
 }
 
-void sub_08079cac(void)
+void BomberExplode(void)
 {
     u8 v;
 
@@ -974,7 +974,7 @@ void sub_08079cac(void)
     }
 }
 
-void sub_08079d2c(void)
+void BomberExplodeUpdate(void)
 {
 }
 
@@ -998,7 +998,7 @@ void BomberIdleUpdate(void)
     }
 }
 
-void sub_08079db8(void)
+void BomberIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gBomberIdleStates);
 }
@@ -1040,7 +1040,7 @@ void sub_08079e70(void)
         sub_0806ee2c();
 }
 
-void sub_08079e8c(void)
+void SparkySetJumpMotion(void)
 {
     struct Task *t = gCurTask;
 
@@ -1077,7 +1077,7 @@ void sub_08079f18(u16 a)
     }
 }
 
-void sub_08079f54(u16 a)
+void SparkyPickNextState(u16 a)
 {
     TaskFaceNearestPlayer();
     sub_08079f18(a);
@@ -1092,7 +1092,7 @@ void sub_08079f54(u16 a)
     }
 }
 
-void sub_08079fa8(u16 a)
+void SparkyPickStartState(u16 a)
 {
     TaskFaceNearestPlayer();
     if (RandomRange(4) == 0)
@@ -1139,7 +1139,7 @@ void sub_0807a05c(void)
 void SparkyJumpInit(void)
 {
     gCurTask->updateCallback = (u32)SparkyJumpUpdate;
-    sub_08079fa8(2);
+    SparkyPickStartState(2);
     CallTableEntry(gCurTask->state, 4, gSparkyJumpStates);
 }
 
@@ -1170,7 +1170,7 @@ void SparkyJump(void)
     TaskStop();
     TaskSetFrame(7);
     TaskYieldTrampoline(gUnk_087407C0[gCurTask->unk74]);
-    sub_08079e8c();
+    SparkySetJumpMotion();
     gCurTask->frame--;
     TaskYieldTrampoline(3);
     gCurTask->frame--;
@@ -1190,7 +1190,7 @@ void sub_0807a1bc(void)
 {
 }
 
-void sub_0807a1c0(void)
+void SparkyJumpDischarge(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1263,14 +1263,14 @@ void sub_0807a1c0(void)
     TaskSleepForever();
 }
 
-void sub_0807a380(void)
+void SparkyJumpDischargeUpdate(void)
 {
     struct Task *t = gCurTask;
     s32 n = t->unk2C;
 
     if (n == 1)
     {
-        sub_08079f54(2);
+        SparkyPickNextState(2);
     }
     else if (n == 2)
     {
@@ -1283,7 +1283,7 @@ void sub_0807a380(void)
     }
 }
 
-void sub_0807a3bc(void)
+void SparkyJumpLand(void)
 {
     gCurTask->updateState = 1;
     gCurTask->unk2C = 0;
@@ -1295,10 +1295,10 @@ void sub_0807a3bc(void)
     TaskSleepForever();
 }
 
-void sub_0807a408(void)
+void SparkyJumpLandUpdate(void)
 {
     if (gCurTask->unk2C != 0)
-        sub_08079f54(2);
+        SparkyPickNextState(2);
 }
 
 void sub_0807a424(void)
@@ -1335,7 +1335,7 @@ void SparkyIdleUpdate(void)
     }
 }
 
-void sub_0807a4e4(void)
+void SparkyIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gSparkyIdleStates);
 }
@@ -1370,7 +1370,7 @@ void sub_0807a574(void)
 void SparkyStandInit(void)
 {
     gCurTask->updateCallback = (u32)SparkyStandUpdate;
-    sub_08079fa8(1);
+    SparkyPickStartState(1);
     CallTableEntry(gCurTask->state, 2, gSparkyStandStates);
 }
 
@@ -1395,7 +1395,7 @@ void SparkyStandEnterState(void)
     CallTableEntry(gCurTask->state, 2, gSparkyStandStates);
 }
 
-void sub_0807a634(void)
+void SparkyStandDischarge(void)
 {
     gCurTask->updateState = 0;
     TaskStop();
@@ -1468,14 +1468,14 @@ void sub_0807a634(void)
     TaskSleepForever();
 }
 
-void sub_0807a7f4(void)
+void SparkyStandDischargeUpdate(void)
 {
     struct Task *t = gCurTask;
     s32 n = t->unk2C;
 
     if (n == 1)
     {
-        sub_08079f54(1);
+        SparkyPickNextState(1);
     }
     else if (n == 2)
     {
@@ -1488,7 +1488,7 @@ void sub_0807a7f4(void)
     }
 }
 
-void sub_0807a830(void)
+void SparkyStandWait(void)
 {
     gCurTask->updateState = 1;
     gCurTask->unk2C = 0;
@@ -1500,10 +1500,10 @@ void sub_0807a830(void)
     TaskSleepForever();
 }
 
-void sub_0807a87c(void)
+void SparkyStandWaitUpdate(void)
 {
     if (gCurTask->unk2C != 0)
-        sub_08079f54(1);
+        SparkyPickNextState(1);
 }
 
 void Task_Scarfy(void)
@@ -1512,10 +1512,10 @@ void Task_Scarfy(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
     gCurTask->layer = 11;
     gCurTask->frameTable = gScarfyFrames;
-    CallTableEntry(0, 1, gUnk_08740820);
+    CallTableEntry(0, 1, gScarfyVariants);
 }
 
-void sub_0807a8d4(void)
+void ScarfyPickStartState(void)
 {
     if (gCurTask->variant == 0)
         ActorSetState(2);
@@ -1567,7 +1567,7 @@ void sub_0807a968(void)
     gCurTask->posY = y << 16;
 }
 
-void sub_0807aa0c(void)
+void ScarfyCheckTransform(void)
 {
     struct Task *t = gCurTask;
 

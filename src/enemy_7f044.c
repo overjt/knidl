@@ -36,7 +36,7 @@
  *   * the six-frame flap loop `sub_08080b2c` and the "spawn a puff of six
  *     class-6 actors" routines `HotHeadWalkShoot` / `HotHeadStandShoot`.
  *
- * `sub_0807fb44`, `sub_08080300` and `sub_080807bc` are dead exports: each is
+ * `KabuIdleEnterState`, `TwisterIdleEnterState` and `HotHeadIdleEnterState` are dead exports: each is
  * a copy of its host's tail dispatch that nothing in the ROM references
  * (curated in tools/symdb.py).
  */
@@ -87,7 +87,7 @@ void KabuJumpUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807f0c4(void)
+void KabuJumpSpin(void)
 {
     struct Task *a;
     struct Task *b;
@@ -169,7 +169,7 @@ void sub_0807f0c4(void)
     TaskSleepForever();
 }
 
-void sub_0807f1f0(void)
+void KabuJumpSpinUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(KabuJumpEnterState, gCurTaskIdx);
@@ -236,7 +236,7 @@ void KabuJumpFall(void)
     }
 }
 
-void sub_0807f348(void)
+void KabuJumpFallUpdate(void)
 {
     if ((s8)gCurTask->onGround != 0)
     {
@@ -277,7 +277,7 @@ void KabuTeleportUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807f42c(void)
+void KabuTeleportSpin(void)
 {
     struct Task *a;
     struct Task *b;
@@ -299,7 +299,7 @@ void sub_0807f42c(void)
     }
 }
 
-void sub_0807f488(void)
+void KabuTeleportSpinUpdate(void)
 {
     struct Task *t;
 
@@ -540,7 +540,7 @@ void KabuSlideUpdate(void)
     ActorReactToHit();
 }
 
-void sub_0807f920(void)
+void KabuSlide(void)
 {
     struct Task *t;
     struct Task *u;
@@ -677,7 +677,7 @@ void KabuIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gKabuIdleStates);
 }
 
-void sub_0807fb44(void)
+void KabuIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gKabuIdleStates);
 }
@@ -1120,7 +1120,7 @@ void TwisterIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gTwisterIdleStates);
 }
 
-void sub_08080300(void)
+void TwisterIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gTwisterIdleStates);
 }
@@ -1316,7 +1316,7 @@ void HotHeadWalkShoot(void)
     TaskSleepForever();
 }
 
-void sub_080806e8(void)
+void HotHeadWalkShootUpdate(void)
 {
     struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
@@ -1337,7 +1337,7 @@ void HotHeadWalkFall(void)
     sub_08080b2c();
 }
 
-void sub_08080768(void)
+void HotHeadWalkFallUpdate(void)
 {
 }
 
@@ -1356,7 +1356,7 @@ void HotHeadIdleInit(void)
     CallTableEntry(gCurTask->state, 1, gHotHeadIdleStates);
 }
 
-void sub_080807bc(void)
+void HotHeadIdleEnterState(void)
 {
     CallTableEntry(gCurTask->state, 1, gHotHeadIdleStates);
 }
@@ -1407,7 +1407,7 @@ void HotHeadStandUpdate(void)
     ActorReactToHit();
 }
 
-void sub_080808bc(void)
+void HotHeadStandWait(void)
 {
     struct Task *t;
 
@@ -1418,7 +1418,7 @@ void sub_080808bc(void)
     sub_08080b2c();
 }
 
-void sub_080808dc(void)
+void HotHeadStandWaitUpdate(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;
@@ -1495,7 +1495,7 @@ void HotHeadStandShoot(void)
     TaskSleepForever();
 }
 
-void sub_08080aa8(void)
+void HotHeadStandShootUpdate(void)
 {
     struct PlayerState *p = &gPlayerStates[TaskFindNearestPlayer()];
 
@@ -1516,7 +1516,7 @@ void HotHeadStandFall(void)
     sub_08080b2c();
 }
 
-void sub_08080b28(void)
+void HotHeadStandFallUpdate(void)
 {
 }
 
