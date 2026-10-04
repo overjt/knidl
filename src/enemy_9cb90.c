@@ -15,9 +15,9 @@ void sub_0809cb90(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else

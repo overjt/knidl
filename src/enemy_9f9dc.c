@@ -16,16 +16,16 @@ void MetaKnightsKnightFlashPalette(void)
     {
         w = gCurTask;
         w->tileWord = (w->tileWord & 0xFFF) | (240 << 8);
-        if (w->unk74 == 2)
+        if (w->actorSpawnArg == 2)
         {
-            if (gTaskSlotTypes[w->unk46] == 130)
-                gTasks[w->unk46].tileWord = (w->tileWord & 0xFFF) | (240 << 8);
+            if (gTaskSlotTypes[w->metaKnightsKnightWeaponSlot] == 130)
+                gTasks[w->metaKnightsKnightWeaponSlot].tileWord = (w->tileWord & 0xFFF) | (240 << 8);
         }
     }
     else
     {
         t = gCurTask;
-        s = &t->unk74;
+        s = &t->actorSpawnArg;
         switch (*s)
         {
         case 0:
@@ -38,8 +38,8 @@ void MetaKnightsKnightFlashPalette(void)
             t->tileWord = (t->tileWord & 0xFFF) | (160 << 8);
             if (*s == 2)
             {
-                if (gTaskSlotTypes[t->unk46] == 130)
-                    gTasks[t->unk46].tileWord = (t->tileWord & 0xFFF) | (160 << 8);
+                if (gTaskSlotTypes[t->metaKnightsKnightWeaponSlot] == 130)
+                    gTasks[t->metaKnightsKnightWeaponSlot].tileWord = (t->tileWord & 0xFFF) | (160 << 8);
             }
             break;
         case 3:
@@ -55,7 +55,7 @@ void MetaKnightsKnightRestorePalette(void)
     u8 *s;
 
     t = gCurTask;
-    s = &t->unk74;
+    s = &t->actorSpawnArg;
     switch (*s)
     {
     case 0:
@@ -68,8 +68,8 @@ void MetaKnightsKnightRestorePalette(void)
         t->tileWord = (t->tileWord & 0xFFF) | (160 << 8);
         if (*s == 2)
         {
-            if (gTaskSlotTypes[t->unk46] == 130)
-                gTasks[t->unk46].tileWord = (t->tileWord & 0xFFF) | (160 << 8);
+            if (gTaskSlotTypes[t->metaKnightsKnightWeaponSlot] == 130)
+                gTasks[t->metaKnightsKnightWeaponSlot].tileWord = (t->tileWord & 0xFFF) | (160 << 8);
         }
         break;
     case 3:

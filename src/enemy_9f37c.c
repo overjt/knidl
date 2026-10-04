@@ -282,7 +282,7 @@ void sub_0809f7e4(void)
 
 void MetaKnightsKnightReactToDamage(void)
 {
-    gCurTask->unk24 = 18;
+    gCurTask->metaKnightsKnightFlashTimer = 18;
 }
 
 void MetaKnightsKnightTeardown(void)
@@ -293,7 +293,7 @@ void MetaKnightsKnightTeardown(void)
 
 void sub_0809f818(s32 v)
 {
-    switch (gCurTask->unk6E)
+    switch (gCurTask->metaKnightsKnightQueue)
     {
     case 0:
         gUnk_02007D00[0] = v;
@@ -315,7 +315,7 @@ void sub_0809f818(s32 v)
 
 void sub_0809f874(void)
 {
-    switch (gCurTask->unk6E)
+    switch (gCurTask->metaKnightsKnightQueue)
     {
     case 0:
         gUnk_02007D00[5] |= 1;

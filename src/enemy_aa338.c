@@ -1973,7 +1973,7 @@ void Task_PaintRoller(void)
     gUnk_02007D00[9] = ActorComputeHealth();
     PaintRollerMoveToSpot();
     ActorSetState(0);
-    gCurTask->unk28 = 0;
+    gCurTask->paintRollerEnteredState = 0;
     gCurTask->updateCallback = (u32)sub_080acf3c;
     sub_080664e0((struct AnimCmd *)gUnk_08749CEC);
     ActorSetState(1);
@@ -1987,7 +1987,7 @@ void sub_080acf3c(void)
 
 void PaintRollerEnterState(void)
 {
-    gCurTask->unk28 = gCurTask->state;
+    gCurTask->paintRollerEnteredState = gCurTask->state;
     CallTableEntry(gCurTask->state, 3, gPaintRollerStates);
 }
 
@@ -1997,12 +1997,12 @@ void PaintRollerState1(void)
     gUnk_02007D00[5] = -1;
     PaintRollerMoveToSpot();
     gUnk_02007D00[1] = 0;
-    gCurTask->unk30 = 16;
+    gCurTask->paintRollerStepsLeft = 16;
     CreateDustTrail(1, 3, 8, 10);
-    while (gCurTask->unk30 > 0)
+    while (gCurTask->paintRollerStepsLeft > 0)
         PaintRollerRunMoveStep();
     PaintRollerPickNextSpot();
-    while (gCurTask->unk30 > 0)
+    while (gCurTask->paintRollerStepsLeft > 0)
         PaintRollerRunMoveStep();
     TaskStop();
     PaintRollerMoveToSpot();
@@ -2021,25 +2021,25 @@ void PaintRollerSummon(void)
 
     gUnk_02007D00[5] = -1;
     gUnk_02007D00[1] = 7;
-    gCurTask->unk30 = 10;
-    while (gCurTask->unk30 > 0)
+    gCurTask->paintRollerStepsLeft = 10;
+    while (gCurTask->paintRollerStepsLeft > 0)
         PaintRollerRunMoveStep();
     if (PaintRollerHasHalfHealth() != 0)
         TaskYieldTrampoline(32);
     CreatePaintRollerPainting();
     gUnk_02007D00[1] = 8;
-    gCurTask->unk30 = 27;
-    while (gCurTask->unk30 > 0)
+    gCurTask->paintRollerStepsLeft = 27;
+    while (gCurTask->paintRollerStepsLeft > 0)
         PaintRollerRunMoveStep();
     sub_080ad3a0();
     gUnk_02007D00[5] = 1;
-    if (gCurTask->unk30 > 0)
+    if (gCurTask->paintRollerStepsLeft > 0)
     {
         do
         {
             sub_080ad08c();
-            w = gCurTask->unk30 - 1;
-            gCurTask->unk30 = w;
+            w = gCurTask->paintRollerStepsLeft - 1;
+            gCurTask->paintRollerStepsLeft = w;
         } while (w > 0);
     }
     ActorSetState(1);
@@ -2074,7 +2074,7 @@ void PaintRollerUpdate(void)
     sub_08068f68();
     ActorReactToHit();
     t = gCurTask;
-    if (t->unk28 != t->state)
+    if (t->paintRollerEnteredState != t->state)
         TaskSetEntry(PaintRollerEnterState, gCurTaskIdx);
 }
 
@@ -2137,25 +2137,25 @@ void PaintRollerPickNextSpot(void)
     }
     gUnk_02007D00[0] = v5;
     gUnk_02007D00[1] = gUnk_08749D2C[gUnk_030023D4];
-    gCurTask->unk30 = gUnk_08749D44[gUnk_02007D00[1]];
+    gCurTask->paintRollerStepsLeft = gUnk_08749D44[gUnk_02007D00[1]];
 }
 
 void PaintRollerRunMoveStep(void)
 {
     s32 w;
 
-    w = gCurTask->unk30 - 1;
-    gCurTask->unk30 = w;
+    w = gCurTask->paintRollerStepsLeft - 1;
+    gCurTask->paintRollerStepsLeft = w;
     gUnk_030023D4 = gUnk_08749D4C[gUnk_02007D00[1]];
     TaskSetFrame(*(s16 *)(gUnk_030023D4 + w * 2));
     gUnk_030023D4 = gUnk_08749D70[gUnk_02007D00[1]];
-    TaskSetMotionXFacing(*(s32 *)(gUnk_030023D4 + gCurTask->unk30 * 4), 0x5A5A5A5A);
+    TaskSetMotionXFacing(*(s32 *)(gUnk_030023D4 + gCurTask->paintRollerStepsLeft * 4), 0x5A5A5A5A);
     gUnk_030023D4 = gUnk_08749D94[gUnk_02007D00[1]];
-    gCurTask->velY = *(s32 *)(gUnk_030023D4 + gCurTask->unk30 * 4);
+    gCurTask->velY = *(s32 *)(gUnk_030023D4 + gCurTask->paintRollerStepsLeft * 4);
     gUnk_030023D4 = gUnk_08749DB8[gUnk_02007D00[1]];
-    PlaySfx(*(s32 *)(gUnk_030023D4 + gCurTask->unk30 * 4));
+    PlaySfx(*(s32 *)(gUnk_030023D4 + gCurTask->paintRollerStepsLeft * 4));
     gUnk_030023D4 = gUnk_08749DDC[gUnk_02007D00[1]];
-    TaskYieldTrampoline(*(u8 *)(gUnk_030023D4 + gCurTask->unk30));
+    TaskYieldTrampoline(*(u8 *)(gUnk_030023D4 + gCurTask->paintRollerStepsLeft));
 }
 
 void PaintRollerMoveToSpot(void)
@@ -2187,7 +2187,7 @@ void sub_080ad3a0(void)
     else
         gUnk_030023D4 = r;
     gUnk_02007D00[2] = (gUnk_02007D00[2] + 1) & 1;
-    gCurTask->unk30 = gUnk_02007D00[2] + gUnk_030023D4;
+    gCurTask->paintRollerStepsLeft = gUnk_02007D00[2] + gUnk_030023D4;
 }
 
 void CreatePaintRollerPainting(void)
@@ -2201,12 +2201,12 @@ void CreatePaintRollerPainting(void)
     sp.subtype = 14;
     sp.taskType = 116;
     sp.variant = t->variant;
-    sp.spawnArg = t->unk74;
+    sp.spawnArg = t->actorSpawnArg;
     sp.x = gUnk_0874AAE4[gUnk_02007D00[0]];
     sp.y = gUnk_0874AAEC[gUnk_02007D00[0]];
     sp.tileWord = a->savedTileWord;
     sp.checkTerrain = 0;
-    gCurTask->unk46 = CreateActorFromDesc(&sp, 1);
+    gCurTask->paintRollerPaintingSlot = CreateActorFromDesc(&sp, 1);
 }
 
 void sub_080ad458(void)
@@ -2242,13 +2242,13 @@ void Task_HeavyMole(void)
     gCurTask->facing = 1;
     sub_08063a00((u32)gUnk_0874B3FC);
     t = gCurTask;
-    t->unk1C = gCameraAnchorX << 16;
+    t->heavyMoleCameraX = gCameraAnchorX << 16;
     t->posX = 176 << 16;
     t->pixelX = gCameraAnchorX + 56;
     t->posY = gCameraAnchorY << 16;
     t->pixelY = t->posY >> 16;
-    t->unk28 = 120;
-    t->unk2C = 120;
+    t->heavyMoleMoveTimer = 120;
+    t->heavyMoleAnimSpeedTimer = 120;
     gUnk_02007D00[0] = 0;
     gUnk_02007D00[1] = 0;
     gUnk_02007D00[2] = 128 << 10;
@@ -2261,13 +2261,13 @@ void Task_HeavyMole(void)
     sp.subtype = 19;
     sp.taskType = 121;
     sp.variant = gCurTask->variant;
-    sp.spawnArg = gCurTask->unk74;
+    sp.spawnArg = gCurTask->actorSpawnArg;
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 0);
     sp.subtype = 19;
     sp.taskType = 122;
     sp.variant = gCurTask->variant;
-    sp.spawnArg = gCurTask->unk74;
+    sp.spawnArg = gCurTask->actorSpawnArg;
     sp.checkTerrain = 0;
     CreateActorFromDescHere(&sp, 0);
     CreateChildTaskHere(190, 1);
@@ -2325,8 +2325,8 @@ void HeavyMoleMove(void)
     if (v2 >= w2)
         tb->posY = (w2 << 16) + -0x8000;
     t = gCurTask;
-    t->unk1C = (u16)t->unk1C + (gCameraAnchorX << 16) + t->unk18;
-    gCameraAnchorX = t->unk1C >> 16;
+    t->heavyMoleCameraX = (u16)t->heavyMoleCameraX + (gCameraAnchorX << 16) + t->heavyMoleScrollSpeed;
+    gCameraAnchorX = t->heavyMoleCameraX >> 16;
     gCameraAnchorY = t->posY >> 16;
     t->pixelX = gCameraAnchorX + (t->posX >> 16) - 120;
     t->pixelY = t->posY >> 16;
@@ -2344,16 +2344,16 @@ void HeavyMoleUpdate(void)
     sub_08068f68();
     ActorReactToHit();
     TaskBreakBlocksNoPlayer((u32)gUnk_0874B538);
-    w = gCurTask->unk28 - 1;
-    gCurTask->unk28 = w;
+    w = gCurTask->heavyMoleMoveTimer - 1;
+    gCurTask->heavyMoleMoveTimer = w;
     if (w <= 0)
         HeavyMoleStartNextMove();
-    w2 = gCurTask->unk2C - 1;
-    gCurTask->unk2C = w2;
+    w2 = gCurTask->heavyMoleAnimSpeedTimer - 1;
+    gCurTask->heavyMoleAnimSpeedTimer = w2;
     if (w2 == 0)
     {
         sub_080ad788();
-        gCurTask->unk2C = 120;
+        gCurTask->heavyMoleAnimSpeedTimer = 120;
     }
     if (gUnk_02007D00[6] > 0)
     {
@@ -2401,7 +2401,7 @@ void HeavyMoleStartNextMove(void)
     struct Task *u2;
 
     gUnk_030023D4 = gUnk_0874AAF7[gUnk_02007D00[1]];
-    gCurTask->unk28 = gUnk_0874AB26[gUnk_030023D4];
+    gCurTask->heavyMoleMoveTimer = gUnk_0874AB26[gUnk_030023D4];
     gUnk_030023B4 = gUnk_0874AB50[gUnk_030023D4] + gUnk_02007D00[3];
     gCurTask->velX = gUnk_0874ABA0[gUnk_030023B4];
     gCurTask->velY = gUnk_0874AC24[gUnk_030023B4];
@@ -2411,7 +2411,7 @@ void HeavyMoleStartNextMove(void)
         HeavyMoleSetPhaseFromHealth();
         c8 = &gCurTask;
         t = *c8;
-        t->unk18 = gUnk_0874ACBC[gUnk_02007D00[3]];
+        t->heavyMoleScrollSpeed = gUnk_0874ACBC[gUnk_02007D00[3]];
         gUnk_030023D4 = va = gUnk_0874ACA8[gUnk_02007D00[3]];
         gUnk_030023B4 = gUnk_0874ACB4[gUnk_02007D00[3]];
         d = (gUnk_030023B4 << 16) - t->posX;
@@ -2419,7 +2419,7 @@ void HeavyMoleStartNextMove(void)
             d = t->posX - (gUnk_030023B4 << 16);
         r = Div(d, va);
         t = *c8;
-        t->unk28 = r;
+        t->heavyMoleMoveTimer = r;
         if (t->posX >> 16 > gUnk_030023B4)
             gUnk_030023D4 = -gUnk_030023D4;
         t->velX = gUnk_030023D4;
@@ -2486,20 +2486,20 @@ void sub_080ada20(void)
     gUnk_030023D4 = 255 - gUnk_0874ACD4[gUnk_02007D00[3] * 4 + (gUnk_02007D00[0] & 255)];
     gUnk_030023B4 = RandomRange(gUnk_030023D4);
     gUnk_030023D4 = 0;
-    gCurTask->unk6C = 0;
+    gCurTask->heavyMolePatternIndex = 0;
     while (1)
     {
-        if ((s16)gCurTask->unk6C != gUnk_02007D00[0])
+        if ((s16)gCurTask->heavyMolePatternIndex != gUnk_02007D00[0])
         {
-            gUnk_030023D4 += gUnk_0874ACD4[gUnk_02007D00[3] * 4 + (s16)gCurTask->unk6C];
+            gUnk_030023D4 += gUnk_0874ACD4[gUnk_02007D00[3] * 4 + (s16)gCurTask->heavyMolePatternIndex];
             if (gUnk_030023D4 >= gUnk_030023B4)
                 break;
-            if ((s16)gCurTask->unk6C == 3)
+            if ((s16)gCurTask->heavyMolePatternIndex == 3)
                 break;
         }
-        gCurTask->unk6C++;
+        gCurTask->heavyMolePatternIndex++;
     }
-    v = gCurTask->unk6C;
+    v = gCurTask->heavyMolePatternIndex;
     gUnk_030023D4 = v;
     gUnk_02007D00[0] = v;
     gUnk_02007D00[1] = gUnk_0874ACE4[(gUnk_030023B4 & gUnk_0874ACE0[v]) + v * 2];
@@ -2543,12 +2543,12 @@ void sub_080adb90(void)
     TaskBreakBlocksNoPlayer(gUnk_0874B538);
     c = &gCurTask;
     t = *c;
-    t->unk2C--;
-    if (t->unk2C == 0)
+    t->heavyMoleAnimSpeedTimer--;
+    if (t->heavyMoleAnimSpeedTimer == 0)
     {
         sub_080ad788();
         u = *c;
-        u->unk2C = 120;
+        u->heavyMoleAnimSpeedTimer = 120;
     }
     p = gUnk_02007D00;
     if (p[6] > 0)
@@ -2840,15 +2840,15 @@ void Task_HeavyMoleEye(void)
     t->layer = 9;
     u = gCurTask;
     u->lateUpdateCallback = (u32)HeavyMoleEyeFollowBody;
-    u->unk28 = 96;
+    u->heavyMoleEyeBlinkTimer = 96;
     c = &gCurTask;
     k = 11;
 top:
     t2 = *c;
-    w = t2->unk28;
+    w = t2->heavyMoleEyeBlinkTimer;
     if (w >= 0)
     {
-        t2->unk28 = w - 1;
+        t2->heavyMoleEyeBlinkTimer = w - 1;
         t2->frame = 0xFFFF;
         TaskYieldTrampoline(1);
         goto top;
@@ -2862,7 +2862,7 @@ top:
     u3->frame = k;
     TaskYieldTrampoline(4);
     u4 = *c;
-    u4->unk28 = 96;
+    u4->heavyMoleEyeBlinkTimer = 96;
     goto top;
 }
 
@@ -2957,27 +2957,27 @@ void Task_HeavyMoleSmoke(void)
             TaskYieldTrampoline(1);
         while (gUnk_02007D00[6] > 0)
             TaskYieldTrampoline(1);
-        gCurTask->unk2C = 20;
+        gCurTask->heavyMoleSmokePuffCount = 20;
         while (gUnk_02007D00[7] > 0)
         {
             if (gUnk_02007D00[5] == 0)
-                gUnk_030023D4 = (gCurTask->unk2C & 1) + 1;
+                gUnk_030023D4 = (gCurTask->heavyMoleSmokePuffCount & 1) + 1;
             else
                 gUnk_030023D4 = gUnk_02007D00[5];
-            gCurTask->unk28 = gUnk_030023D4 >> 1;
+            gCurTask->heavyMoleSmokeRow = gUnk_030023D4 >> 1;
             gCurTask->posX = (gTasks[gCurTask->parent].pixelX - 24) << 16;
             gCurTask->posY = (gTasks[gCurTask->parent].pixelY
-                                    + gUnk_0874ACFA[gCurTask->unk28]) << 16;
-            gCurTask->unk30 = 3;
+                                    + gUnk_0874ACFA[gCurTask->heavyMoleSmokeRow]) << 16;
+            gCurTask->heavyMoleSmokeStep = 3;
             do
             {
-                gCurTask->unk30--;
-                gCurTask->frame = gUnk_0874ACFE[gCurTask->unk30 * 2 + gCurTask->unk28];
-                gCurTask->velX = gUnk_0874AD0C[gCurTask->unk30];
-                gCurTask->velY = gUnk_0874AD18[gCurTask->unk30 * 2 + gCurTask->unk28];
-                TaskYieldTrampoline(gUnk_0874AD30[gCurTask->unk30]);
-            } while (gCurTask->unk30 > 0);
-            if (--gCurTask->unk2C <= 0)
+                gCurTask->heavyMoleSmokeStep--;
+                gCurTask->frame = gUnk_0874ACFE[gCurTask->heavyMoleSmokeStep * 2 + gCurTask->heavyMoleSmokeRow];
+                gCurTask->velX = gUnk_0874AD0C[gCurTask->heavyMoleSmokeStep];
+                gCurTask->velY = gUnk_0874AD18[gCurTask->heavyMoleSmokeStep * 2 + gCurTask->heavyMoleSmokeRow];
+                TaskYieldTrampoline(gUnk_0874AD30[gCurTask->heavyMoleSmokeStep]);
+            } while (gCurTask->heavyMoleSmokeStep > 0);
+            if (--gCurTask->heavyMoleSmokePuffCount <= 0)
                 break;
         }
         gUnk_02007D00[6] = 240;

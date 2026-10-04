@@ -154,12 +154,12 @@ u8 MrFrostyReactToDamage(void)
 
 void sub_08098afc(void)
 {
-    if ((s16)gTaskSlotTypes[gCurTask->unk46] != -1
-        && gTaskSlotTypes[gCurTask->unk46] == 143
-        && gTasks[gCurTask->unk46].parent == gCurTaskIdx)
+    if ((s16)gTaskSlotTypes[gCurTask->actorDustTrailSlot] != -1
+        && gTaskSlotTypes[gCurTask->actorDustTrailSlot] == 143
+        && gTasks[gCurTask->actorDustTrailSlot].parent == gCurTaskIdx)
     {
-        TaskFree(gCurTask->unk46);
-        gCurTask->unk46 = 0;
+        TaskFree(gCurTask->actorDustTrailSlot);
+        gCurTask->actorDustTrailSlot = 0;
     }
 }
 

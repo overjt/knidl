@@ -577,7 +577,7 @@ void Task_PoppyBrosSrHand(void)
     y->poppyBrosSrHandOffsetVelX = 0;
     y->poppyBrosSrHandOffsetVelY = 0;
     p = gCurTask;
-    while ((q = &gTasks[p->parent])->unk20 != 0)
+    while ((q = &gTasks[p->parent])->poppyBrosSrAimTimer != 0)
     {
         TaskYieldTrampoline(1);
         p = gCurTask;

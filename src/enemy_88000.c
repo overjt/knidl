@@ -383,26 +383,26 @@ void SquishyWalkUpdate(void)
 void SquishyWalk(void)
 {
     gCurTask->updateState = 0;
-    gCurTask->unk34 = 100;
-    TaskSetMotionXFacing(gUnk_087426EC[gCurTask->unk74], 0x5A5A5A5A);
+    gCurTask->squishyWalkTimer = 100;
+    TaskSetMotionXFacing(gUnk_087426EC[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     while (1)
     {
         TaskSetFrame(6);
-        TaskYieldTrampoline(gUnk_087426F4[gCurTask->unk74 * 2]);
+        TaskYieldTrampoline(gUnk_087426F4[gCurTask->actorSpawnArg * 2]);
         gCurTask->frame++;
-        TaskYieldTrampoline(gUnk_087426F4[gCurTask->unk74 * 2 + 1]);
+        TaskYieldTrampoline(gUnk_087426F4[gCurTask->actorSpawnArg * 2 + 1]);
         gCurTask->frame++;
-        TaskYieldTrampoline(gUnk_087426F4[gCurTask->unk74 * 2]);
+        TaskYieldTrampoline(gUnk_087426F4[gCurTask->actorSpawnArg * 2]);
         gCurTask->frame++;
-        TaskYieldTrampoline(gUnk_087426F4[gCurTask->unk74 * 2 + 1]);
+        TaskYieldTrampoline(gUnk_087426F4[gCurTask->actorSpawnArg * 2 + 1]);
     }
 }
 
 void SquishyWalkState0Update(void)
 {
-    s32 n = gCurTask->unk34 - 1;
+    s32 n = gCurTask->squishyWalkTimer - 1;
 
-    gCurTask->unk34 = n;
+    gCurTask->squishyWalkTimer = n;
     switch (n)
     {
     case 20:
@@ -425,7 +425,7 @@ void SquishyWalkState0Update(void)
 void SquishyWalkState1(void)
 {
     gCurTask->updateState = 1;
-    gCurTask->unk28 = 0;
+    gCurTask->squishyLanded = 0;
     TaskStop();
     TaskSetFrame(5);
     TaskYieldTrampoline(24);
@@ -435,7 +435,7 @@ void SquishyWalkState1(void)
     TaskSetMotionXFacing(0xC000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 0x1500, 0x30000);
     TaskSetFrame(4);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->squishyLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(5);
@@ -453,11 +453,11 @@ void SquishyWalkState1Update(void)
 void SquishyWalkFall(void)
 {
     gCurTask->updateState = 2;
-    gCurTask->unk28 = 0;
+    gCurTask->squishyLanded = 0;
     gCurTask->accelY = 0x1500;
     gCurTask->speedLimitY = 0x30000;
     TaskSetFrame(6);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->squishyLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(5);
@@ -503,12 +503,12 @@ void SquishyWalkState3Update(void)
 void SquishyWalkState4(void)
 {
     gCurTask->updateState = 4;
-    gCurTask->unk28 = 0;
+    gCurTask->squishyLanded = 0;
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(0x18000, 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD0000, 0x1500, 0x30000);
     TaskSetFrame(4);
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->squishyLanded == 0)
         TaskYieldTrampoline(1);
     TaskStop();
     TaskSetFrame(5);
@@ -543,7 +543,7 @@ void sub_08088aec(void)
 
 void sub_08088b10(void)
 {
-    if (gCurTask->unk28 != 0)
+    if (gCurTask->squishyCollideTerrain != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
             CallTableEntry(gCurTask->updateState, 3, gUnk_08742710);
@@ -559,7 +559,7 @@ void sub_08088b10(void)
 void sub_08088b58(void)
 {
     gCurTask->updateState = 0;
-    gCurTask->unk28 = 0;
+    gCurTask->squishyCollideTerrain = 0;
     TaskFaceNearestPlayer();
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
     gCurTask->velY = 0xFFFC0000;
@@ -579,7 +579,7 @@ void sub_08088b98(void)
 void sub_08088bd8(void)
 {
     gCurTask->updateState = 1;
-    gCurTask->unk28 = 0;
+    gCurTask->squishyCollideTerrain = 0;
     TaskFaceNearestPlayer();
     TaskSetFrame(4);
     TaskSetMotionXFacing(0x8000, 0x5A5A5A5A);
@@ -599,7 +599,7 @@ void sub_08088bd8(void)
     TaskYieldTrampoline(8);
     TaskSetMotionY(0x40000, 0x1500, 0x30000);
     gCurTask->onGround = 0;
-    gCurTask->unk28 = 1;
+    gCurTask->squishyCollideTerrain = 1;
     TaskSleepForever();
 }
 
@@ -610,7 +610,7 @@ void sub_08088ca0(void)
 void sub_08088ca4(void)
 {
     gCurTask->updateState = 2;
-    gCurTask->unk28 = 0;
+    gCurTask->squishyCollideTerrain = 0;
     TaskStop();
     TaskSetFrame(5);
     TaskYieldTrampoline(8);
@@ -669,17 +669,17 @@ void sub_08088dac(void)
     a = t->posY;
     d = (a >> 16) - (u->posY >> 16);
     if (d > 0)
-        t->unk34 = 37;
+        t->squishyHopTimer = 37;
     else if (d < 0)
-        t->unk34 = 43;
+        t->squishyHopTimer = 43;
     else if ((a & 0xFF) - (u->posY & 0xFF) >= 0
                  ? (a & 0xFF) - (u->posY & 0xFF) <= 15
                  : (u->posY & 0xFF) - (a & 0xFF) <= 15)
-        gCurTask->unk34 = 37;
+        gCurTask->squishyHopTimer = 37;
     else
-        gCurTask->unk34 = 40;
+        gCurTask->squishyHopTimer = 40;
     TaskFaceNearestPlayer();
-    TaskSetMotionXFacing(gUnk_08742734[gCurTask->unk74], 0x5A5A5A5A);
+    TaskSetMotionXFacing(gUnk_08742734[gCurTask->actorSpawnArg], 0x5A5A5A5A);
     TaskSetMotionY(0xFFFD8000, 0x2000, 0x30000);
     TaskSetFrame(4);
     TaskSleepForever();
@@ -687,7 +687,7 @@ void sub_08088dac(void)
 
 void sub_08088e78(void)
 {
-    if (--gCurTask->unk34 == 0)
+    if (--gCurTask->squishyHopTimer == 0)
         TaskSetEntry(sub_08088d58, gCurTaskIdx);
 }
 
@@ -755,7 +755,7 @@ s32 sub_08088fc0(void)
         switch (gCurTask->variant)
         {
         case 0:
-            gCurTask->unk28 = 1;
+            gCurTask->squishyLanded = 1;
             return 0;
         case 1:
             ActorSetState(2);
@@ -1240,8 +1240,8 @@ void GlunkUpdate(void)
 void GlunkWait(void)
 {
     gCurTask->updateState = 0;
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gUnk_087427B0[gCurTask->unk74])
+    gCurTask->glunkLoopCount = 0;
+    while ((s16)gCurTask->glunkLoopCount < gUnk_087427B0[gCurTask->actorSpawnArg])
     {
         gCurTask->frame = 8;
         TaskYieldTrampoline(28);
@@ -1259,7 +1259,7 @@ void GlunkWait(void)
         TaskYieldTrampoline(4);
         gCurTask->frame++;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C++;
+        gCurTask->glunkLoopCount++;
     }
     ActorSetState(1);
     TaskSleepForever();
@@ -1277,25 +1277,25 @@ void GlunkShoot(void)
     u8 zero;
 
     gCurTask->updateState = 1;
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gUnk_087427B2[gCurTask->unk74])
+    gCurTask->glunkLoopCount = 0;
+    while ((s16)gCurTask->glunkLoopCount < gUnk_087427B2[gCurTask->actorSpawnArg])
     {
-        if (gCurTask->unk74 == 1)
+        if (gCurTask->actorSpawnArg == 1)
         {
             sp.subtype = 5;
             sp.taskType = 107;
             sp.variant = zero = 0;
-            sp.spawnArg = gCurTask->unk74;
+            sp.spawnArg = gCurTask->actorSpawnArg;
             sp.x = zero;
             sp.y = -8;
             sp.checkTerrain = 1;
             PlaySfx(195);
-            gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 0);
+            gCurTask->glunkShotSlot = CreateActorFromDescAtOffsetFacing(&sp, 0);
             CreateChildTaskHere(219, 1);
         }
         gCurTask->frame = 4;
         TaskYieldTrampoline(12);
-        gCurTask->unk6C++;
+        gCurTask->glunkLoopCount++;
     }
     ActorSetState(0);
     TaskSleepForever();

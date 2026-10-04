@@ -57,8 +57,8 @@ void AxeKnightVariant2(void)
     t->updateCallback = (u32)AxeKnightUpdate;
     t->updateState = 0;
     t = gCurTask;
-    t->unk2C = 90;
-    t->unk30 = 0;
+    t->metaKnightsKnightAxeWalkTimer = 90;
+    t->metaKnightsKnightAxeWaitTimer = 0;
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
     TaskYieldTrampoline(3);
     gCurTask->frame--;
@@ -73,9 +73,9 @@ void sub_0809cd4c(void)
     if (ActorCollideTerrain() == 0 && sub_0809f994() != 0)
         sub_0809f930();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -125,8 +125,8 @@ void AxeKnightVariant3(void)
     t->updateCallback = (u32)AxeKnightUpdate;
     t->updateState = 0;
     t = gCurTask;
-    t->unk2C = 90;
-    t->unk30 = 0;
+    t->metaKnightsKnightAxeWalkTimer = 90;
+    t->metaKnightsKnightAxeWaitTimer = 0;
     TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
     gCurTask->frame--;
     TaskYieldTrampoline(5);
@@ -140,9 +140,9 @@ void sub_0809cec4(void)
     if (ActorCollideTerrain() == 0 && sub_0809f994() != 0)
         sub_0809f930();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -162,12 +162,12 @@ void CreateAxeKnightAxe(void)
     sp.subtype = 26;
     sp.taskType = 129;
     sp.variant = (t = gCurTask)->variant;
-    sp.spawnArg = t->unk74;
+    sp.spawnArg = t->actorSpawnArg;
     sp.x = 20;
     sp.y = 0;
     sp.tileWord = gUnk_08745CEC[0];
     sp.checkTerrain = 0;
-    gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
+    gCurTask->metaKnightsKnightWeaponSlot = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }
 
 void Task_AxeKnightAxe(void)
@@ -214,7 +214,7 @@ void AxeKnightAxeUpdate(void)
         && TaskIsInRectSlot(&box, i) != 0)
     {
         w = &gTasks[gCurTask->parent];
-        w->unk18 = 1;
+        w->metaKnightsKnightAxeCaught = 1;
         ActorDestroy();
     }
     else
@@ -284,7 +284,7 @@ void sub_0809d13c(void)
     t->frameTable = gJavelinKnightFrames;
     ActorLoadDef((u32)gJavelinKnightDef);
     u = gCurTask;
-    u->unk24 = 0;
+    u->metaKnightsKnightFlashTimer = 0;
     CallTableEntry(u->variant, 2, gJavelinKnightVariants);
 }
 
@@ -342,9 +342,9 @@ void JavelinKnightUpdate(void)
         CallTableEntry(gCurTask->updateState, 5, gJavelinKnightStateUpdates);
     }
     u = gCurTask;
-    if (u->unk24 > 0)
+    if (u->metaKnightsKnightFlashTimer > 0)
     {
-        u->unk24--;
+        u->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -599,14 +599,14 @@ void sub_0809d6b4(void)
 
 void sub_0809d6dc(void)
 {
-    gCurTask->unk6C = 0;
+    gCurTask->metaKnightsKnightLoopCount = 0;
     do
     {
         TaskSetFrame(25);
         TaskYieldTrampoline(2);
         TaskSetFrame(8);
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->metaKnightsKnightLoopCount <= 3);
 }
 
 void JavelinKnightChooseNextState(void)
@@ -697,9 +697,9 @@ void sub_0809d83c(void)
     }
     gCurTask->onGround = 0;
     w = gCurTask;
-    if (w->unk24 > 0)
+    if (w->metaKnightsKnightFlashTimer > 0)
     {
-        w->unk24--;
+        w->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -732,10 +732,10 @@ void CreateJavelinKnightJavelin(void)
     sp.subtype = 29;
     sp.taskType = 132;
     sp.variant = (t = gCurTask)->variant;
-    sp.spawnArg = t->unk74;
+    sp.spawnArg = t->actorSpawnArg;
     sp.x = 0;
     sp.y = 0;
     sp.tileWord = 0xF110;
     sp.checkTerrain = 0;
-    gCurTask->unk46 = CreateActorFromDescAtOffsetFacing(&sp, 1);
+    gCurTask->metaKnightsKnightWeaponSlot = CreateActorFromDescAtOffsetFacing(&sp, 1);
 }

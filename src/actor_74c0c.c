@@ -218,17 +218,17 @@ void Task_NightmarePowerOrbEscape(void)
     }
     TaskYieldTrampoline(128);
     TaskYieldTrampoline(128);
-    gCurTask->unk6C = 0;
+    gCurTask->nightmarePowerOrbEscapeLoopCount = 0;
     do
     {
         gCurTask->frame = 1;
         TaskYieldTrampoline(2);
         gCurTask->frame = 0;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 8);
+        gCurTask->nightmarePowerOrbEscapeLoopCount++;
+    } while ((s16)gCurTask->nightmarePowerOrbEscapeLoopCount <= 8);
     sub_08074e8c();
-    gCurTask->unk6C = 0;
+    gCurTask->nightmarePowerOrbEscapeLoopCount = 0;
     do
     {
         sub_08074f48(0);
@@ -237,9 +237,9 @@ void Task_NightmarePowerOrbEscape(void)
         sub_08074f48(3);
         gCurTask->frame = 1;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 8);
-    gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeLoopCount++;
+    } while ((s16)gCurTask->nightmarePowerOrbEscapeLoopCount <= 8);
+    gCurTask->nightmarePowerOrbEscapeLoopCount = 0;
     do
     {
         sub_08074f48(0);
@@ -248,9 +248,9 @@ void Task_NightmarePowerOrbEscape(void)
         sub_08074f48(1);
         gCurTask->frame = 2;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 8);
-    gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeLoopCount++;
+    } while ((s16)gCurTask->nightmarePowerOrbEscapeLoopCount <= 8);
+    gCurTask->nightmarePowerOrbEscapeLoopCount = 0;
     do
     {
         sub_08074f48(1);
@@ -259,8 +259,8 @@ void Task_NightmarePowerOrbEscape(void)
         sub_08074f48(2);
         gCurTask->frame = 3;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 8);
+        gCurTask->nightmarePowerOrbEscapeLoopCount++;
+    } while ((s16)gCurTask->nightmarePowerOrbEscapeLoopCount <= 8);
     sub_08074f48(2);
     gCurTask->frame = 5;
     TaskYieldTrampoline(2);
@@ -357,8 +357,8 @@ void Task_NightmarePowerOrbEscapeStar(void)
         struct Task *t = gCurTask;
 
         t->frame = 0xFFFF;
-        t->unk18 = 0;
-        t->unk1C = -1;
+        t->nightmarePowerOrbEscapeStarScale = 0;
+        t->nightmarePowerOrbEscapeStarAngle = -1;
         switch (t->variant)
         {
     case 0:
@@ -372,10 +372,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x30000;
-            t->unk28 = 0x50000;
-            t->unk1C = 0;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x30000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0x50000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x40000;
             t->velY = -0x80000;
         }
@@ -389,9 +389,9 @@ void Task_NightmarePowerOrbEscapeStar(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk18 = 0x3F0000;
-            t->unk28 = 0;
-            t->unk2C = 8;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 8;
         }
         TaskStop();
         TaskYieldTrampoline(3);
@@ -404,17 +404,17 @@ void Task_NightmarePowerOrbEscapeStar(void)
 
             t->velX = -0x80000;
             t->velY = 0x20000;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 1:
         {
@@ -428,10 +428,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x30000;
-            t->unk28 = 0x50000;
-            t->unk1C = 0;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x30000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0x50000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x40000;
             t->velY = -0x80000;
         }
@@ -445,9 +445,9 @@ void Task_NightmarePowerOrbEscapeStar(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk18 = 0x3F0000;
-            t->unk28 = 0;
-            t->unk2C = 8;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 8;
         }
         TaskStop();
         TaskYieldTrampoline(3);
@@ -460,17 +460,17 @@ void Task_NightmarePowerOrbEscapeStar(void)
 
             t->velX = -0x80000;
             t->velY = 0x20000;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 2:
         {
@@ -484,10 +484,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x30000;
-            t->unk28 = 0x20000;
-            t->unk1C = 0;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x30000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0x20000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x40000;
             t->velY = 0x40000;
         }
@@ -506,9 +506,9 @@ void Task_NightmarePowerOrbEscapeStar(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk18 = 0x3F0000;
-            t->unk28 = 0;
-            t->unk2C = 8;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 8;
             t->velY = -0x8000;
         }
         TaskYieldTrampoline(8);
@@ -521,17 +521,17 @@ void Task_NightmarePowerOrbEscapeStar(void)
 
             t->velX = -0x10000;
             t->velY = -0x40000;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 3:
         {
@@ -545,10 +545,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x3F0000;
-            t->unk28 = -0x10000;
-            t->unk1C = 0;
-            t->unk2C = -16;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = -0x10000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = -16;
             t->velX = -0x60000;
             t->velY = 0x40000;
         }
@@ -567,7 +567,7 @@ void Task_NightmarePowerOrbEscapeStar(void)
             t->velY = -0x20000;
         }
         TaskYieldTrampoline(5);
-        gCurTask->unk2C = -8;
+        gCurTask->nightmarePowerOrbEscapeStarSpinSpeed = -8;
         CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
@@ -603,17 +603,17 @@ void Task_NightmarePowerOrbEscapeStar(void)
 
             t->velX = -0x40000;
             t->velY = 0x10000;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 4:
         {
@@ -627,10 +627,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x3F0000;
-            t->unk28 = -0x10000;
-            t->unk1C = 0;
-            t->unk2C = -16;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = -0x10000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = -16;
             t->velX = -0x80000;
             t->velY = -0x80000;
         }
@@ -649,7 +649,7 @@ void Task_NightmarePowerOrbEscapeStar(void)
             t->velY = -0x20000;
         }
         TaskYieldTrampoline(6);
-        gCurTask->unk2C = -8;
+        gCurTask->nightmarePowerOrbEscapeStarSpinSpeed = -8;
         CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
@@ -685,18 +685,18 @@ void Task_NightmarePowerOrbEscapeStar(void)
 
             t->velX = -0x8000;
             t->velY = 0x10000;
-            t->unk28 = 0;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 16);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 16);
         break;
     case 5:
         {
@@ -710,10 +710,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x30000;
-            t->unk28 = 0x20000;
-            t->unk1C = 0;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x30000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0x20000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x80000;
             t->velY = -0x40000;
         }
@@ -770,9 +770,9 @@ void Task_NightmarePowerOrbEscapeStar(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk18 = 0x3F0000;
-            t->unk28 = 0;
-            t->unk2C = 8;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 8;
             t->velX = -0x8000;
             t->velY = 0x14000;
         }
@@ -802,16 +802,16 @@ void Task_NightmarePowerOrbEscapeStar(void)
         TaskYieldTrampoline(4);
         gCurTask->velX = 0x40000;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C = 0;
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 6:
         {
@@ -825,10 +825,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x3F0000;
-            t->unk28 = -0x10000;
-            t->unk1C = 0;
-            t->unk2C = -16;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = -0x10000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = -16;
             t->velX = -0x40000;
             t->velY = 0x10000;
         }
@@ -837,7 +837,7 @@ void Task_NightmarePowerOrbEscapeStar(void)
         TaskYieldTrampoline(12);
         gCurTask->velY = -0x8000;
         TaskYieldTrampoline(4);
-        gCurTask->unk2C = -8;
+        gCurTask->nightmarePowerOrbEscapeStarSpinSpeed = -8;
         CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
@@ -868,15 +868,15 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x3F0000;
-            t->unk28 = -0x20000;
-            t->unk1C = 0;
-            t->unk2C = -16;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = -0x20000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = -16;
             t->velX = -0x2000;
             t->velY = -0x40000;
         }
         TaskYieldTrampoline(12);
-        gCurTask->unk2C = -8;
+        gCurTask->nightmarePowerOrbEscapeStarSpinSpeed = -8;
         CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
@@ -906,17 +906,17 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->velY = 0x20000;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 8:
         {
@@ -930,10 +930,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x30000;
-            t->unk28 = 0x20000;
-            t->unk1C = 256;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x30000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0x20000;
+            t->nightmarePowerOrbEscapeStarAngle = 256;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x40000;
             t->velY = 0x80000;
         }
@@ -955,17 +955,17 @@ void Task_NightmarePowerOrbEscapeStar(void)
 
             t->velX = -0x80000;
             t->velY = -0x20000;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 9:
         {
@@ -980,10 +980,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x30000;
-            t->unk28 = 0x20000;
-            t->unk1C = 256;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x30000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0x20000;
+            t->nightmarePowerOrbEscapeStarAngle = 256;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x80000;
             t->velY = 0x40000;
         }
@@ -1069,16 +1069,16 @@ void Task_NightmarePowerOrbEscapeStar(void)
         TaskYieldTrampoline(4);
         gCurTask->velX = 0x40000;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C = 0;
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 10:
         {
@@ -1092,15 +1092,15 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x3F0000;
-            t->unk28 = -0x10000;
-            t->unk1C = 0;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = -0x10000;
+            t->nightmarePowerOrbEscapeStarAngle = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x2000;
             t->velY = 0x40000;
         }
         TaskYieldTrampoline(12);
-        gCurTask->unk2C = 8;
+        gCurTask->nightmarePowerOrbEscapeStarSpinSpeed = 8;
         CreateBurstEffect(4, 256);
         PlaySfx(189);
         {
@@ -1121,16 +1121,16 @@ void Task_NightmarePowerOrbEscapeStar(void)
         TaskYieldTrampoline(4);
         gCurTask->velY = -0x10000;
         TaskYieldTrampoline(4);
-        gCurTask->unk6C = 0;
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 4);
         break;
     case 11:
         {
@@ -1144,10 +1144,10 @@ void Task_NightmarePowerOrbEscapeStar(void)
             struct Task *t = gCurTask;
 
             t->frame = 6;
-            t->unk18 = 0x30000;
-            t->unk28 = 0x20000;
-            t->unk1C = 32;
-            t->unk2C = 16;
+            t->nightmarePowerOrbEscapeStarScale = 0x30000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0x20000;
+            t->nightmarePowerOrbEscapeStarAngle = 32;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 16;
             t->velX = -0x40000;
             t->velY = 0x20000;
         }
@@ -1155,7 +1155,7 @@ void Task_NightmarePowerOrbEscapeStar(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk2C = 8;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 8;
             t->velY = 0x10000;
         }
         TaskYieldTrampoline(12);
@@ -1163,9 +1163,9 @@ void Task_NightmarePowerOrbEscapeStar(void)
         {
             struct Task *t = gCurTask;
 
-            t->unk18 = 0x3F0000;
-            t->unk28 = 0;
-            t->unk2C = 8;
+            t->nightmarePowerOrbEscapeStarScale = 0x3F0000;
+            t->nightmarePowerOrbEscapeStarScaleSpeed = 0;
+            t->nightmarePowerOrbEscapeStarSpinSpeed = 8;
         }
         CreateBurstEffect(4, 256);
         PlaySfx(189);
@@ -1185,17 +1185,17 @@ void Task_NightmarePowerOrbEscapeStar(void)
 
             t->velX = 0x20000;
             t->velY = 0x20000;
-            t->unk6C = 0;
+            t->nightmarePowerOrbEscapeStarLoopCount = 0;
         }
-        gCurTask->unk6C = 0;
+        gCurTask->nightmarePowerOrbEscapeStarLoopCount = 0;
         do
         {
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             gCurTask->frame = 6;
             TaskYieldTrampoline(1);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 8);
+            gCurTask->nightmarePowerOrbEscapeStarLoopCount++;
+        } while ((s16)gCurTask->nightmarePowerOrbEscapeStarLoopCount <= 8);
         break;
         }
     }
@@ -1207,28 +1207,28 @@ void NightmarePowerOrbEscapeStarDraw(void)
     {
         struct Task *u = gCurTask;
 
-        u->unk18 += u->unk28;
-        if (u->unk18 < 0)
-            u->unk18 = 0;
+        u->nightmarePowerOrbEscapeStarScale += u->nightmarePowerOrbEscapeStarScaleSpeed;
+        if (u->nightmarePowerOrbEscapeStarScale < 0)
+            u->nightmarePowerOrbEscapeStarScale = 0;
     }
     {
         struct Task *u = gCurTask;
 
-        if (u->unk18 > 0x3F0000)
-            u->unk18 = 0x3F0000;
+        if (u->nightmarePowerOrbEscapeStarScale > 0x3F0000)
+            u->nightmarePowerOrbEscapeStarScale = 0x3F0000;
     }
     {
         struct Task *u = gCurTask;
 
-        u->unk1C += u->unk2C;
-        if (u->unk1C < 0)
-            u->unk1C += 512;
+        u->nightmarePowerOrbEscapeStarAngle += u->nightmarePowerOrbEscapeStarSpinSpeed;
+        if (u->nightmarePowerOrbEscapeStarAngle < 0)
+            u->nightmarePowerOrbEscapeStarAngle += 512;
     }
     {
         struct Task *u = gCurTask;
 
-        if (u->unk1C > 0x1FF)
-            u->unk1C -= 512;
+        if (u->nightmarePowerOrbEscapeStarAngle > 0x1FF)
+            u->nightmarePowerOrbEscapeStarAngle -= 512;
     }
     {
         struct Task *u = gCurTask;
@@ -1245,10 +1245,10 @@ void NightmarePowerOrbEscapeStarDraw(void)
     u32 *g = t->frameTable;
     s32 gfx;
 
-    if (t->unk18 != 63 || t->unk1C != 0)
+    if (t->nightmarePowerOrbEscapeStarScale != 63 || t->nightmarePowerOrbEscapeStarAngle != 0)
     {
-        gfx = DrawAffineSprite(g[t->frame], gUnk_0873FF98[t->unk18 >> 16],
-                           gUnk_0873FF98[t->unk18 >> 16], (s16)t->unk1C);
+        gfx = DrawAffineSprite(g[t->frame], gUnk_0873FF98[t->nightmarePowerOrbEscapeStarScale >> 16],
+                           gUnk_0873FF98[t->nightmarePowerOrbEscapeStarScale >> 16], (s16)t->nightmarePowerOrbEscapeStarAngle);
         {
             struct Task *u = gCurTask;
 

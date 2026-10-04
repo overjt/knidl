@@ -452,16 +452,16 @@ void ConerWalk(void)
     {
         TaskSetMotionXFacing(128 << 9, 0x5A5A5A5A);
         TaskSetFrame(5);
-        TaskYieldTrampoline(gUnk_087432EC[gCurTask->unk74][0]);
+        TaskYieldTrampoline(gUnk_087432EC[gCurTask->actorSpawnArg][0]);
         TaskSetMotionXFacing(128 << 8, 0x5A5A5A5A);
         TaskSetFrame(6);
-        TaskYieldTrampoline(gUnk_087432EC[gCurTask->unk74][1]);
+        TaskYieldTrampoline(gUnk_087432EC[gCurTask->actorSpawnArg][1]);
         TaskSetMotionXFacing(128 << 7, 0x5A5A5A5A);
         TaskSetFrame(5);
-        TaskYieldTrampoline(gUnk_087432EC[gCurTask->unk74][2]);
+        TaskYieldTrampoline(gUnk_087432EC[gCurTask->actorSpawnArg][2]);
         gCurTask->velX = 0;
         TaskSetFrame(4);
-        TaskYieldTrampoline(gUnk_087432EC[gCurTask->unk74][3]);
+        TaskYieldTrampoline(gUnk_087432EC[gCurTask->actorSpawnArg][3]);
     }
 }
 

@@ -116,9 +116,9 @@ void sub_080b2fe8(void)
     struct Task *t;
 
     t = gCurTask;
-    t->unk6C = 6;
-    t->unk30 = t->pixelX;
-    t->unk34 = t->pixelY;
+    t->whispyWoodsAirPuffEffectTimer = 6;
+    t->whispyWoodsAirPuffEffectX = t->pixelX;
+    t->whispyWoodsAirPuffEffectY = t->pixelY;
 }
 
 void sub_080b3010(u8 a)
@@ -130,12 +130,12 @@ void sub_080b3010(u8 a)
 
     c = &gCurTask;
     t = *c;
-    if (t->unk30 > 7)
-        t->unk30 = 0;
+    if (t->whispyWoodsAppleRollFrame > 7)
+        t->whispyWoodsAppleRollFrame = 0;
     tb = (u8 *)gUnk_0874C24C;
-    TaskSetFrame(tb[(*c)->unk30]);
+    TaskSetFrame(tb[(*c)->whispyWoodsAppleRollFrame]);
     u = *c;
-    u->unk30++;
+    u->whispyWoodsAppleRollFrame++;
     TaskYieldTrampoline(a);
 }
 
@@ -152,7 +152,7 @@ void Task_WhispyWoodsApple(void)
     t->layer = 9;
     u = *c;
     u->frameTable = gWhispyWoodsAppleFrames;
-    u->unk28 = 1;
+    u->whispyWoodsAppleFirstFall = 1;
     CallTableEntry(u->variant, 1, gWhispyWoodsAppleVariants);
 }
 
@@ -165,7 +165,7 @@ void WhispyWoodsAppleInit(void)
     c = &gCurTask;
     t = *c;
     t->updateCallback = (u32)WhispyWoodsAppleUpdate;
-    t->facing = t->unk74;
+    t->facing = t->actorSpawnArg;
     ActorSetState(0);
     u = *c;
     CallTableEntry(u->state, 4, gWhispyWoodsAppleStates);
@@ -179,7 +179,7 @@ void WhispyWoodsAppleUpdate(void)
 
     c = &gCurTask;
     t = *c;
-    if (t->unk28 != 0)
+    if (t->whispyWoodsAppleFirstFall != 0)
     {
         if ((u8)ActorCollideTerrain() == 0)
         {
@@ -218,7 +218,7 @@ void WhispyWoodsAppleFall(void)
     u = *c;
     u->onGround = z;
     u2 = *c;
-    u2->unk6C = z;
+    u2->whispyWoodsAppleLoopCount = z;
     do
     {
         q1 = *c;
@@ -228,8 +228,8 @@ void WhispyWoodsAppleFall(void)
         q2->frame = 0xFFFF;
         TaskYieldTrampoline(4);
         q3 = *c;
-        q3->unk6C++;
-    } while ((s16)q3->unk6C <= 5);
+        q3->whispyWoodsAppleLoopCount++;
+    } while ((s16)q3->whispyWoodsAppleLoopCount <= 5);
     u3 = gCurTask;
     u3->accelY = 148 << 6;
     u3->speedLimitY = 128 << 11;
@@ -273,7 +273,7 @@ void WhispyWoodsAppleState1Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->pixelY > t->unk2C)
+    if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
         ActorSetState(2);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
@@ -308,7 +308,7 @@ void WhispyWoodsAppleState2Update(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->pixelY > t->unk2C)
+    if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
         ActorSetState(3);
         TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
@@ -346,7 +346,7 @@ void WhispyWoodsAppleState3Update(void)
 
     c = &gCurTask;
     t = *c;
-    if (t->pixelY > t->unk2C)
+    if (t->pixelY > t->whispyWoodsAppleFloorY)
     {
         t->onGround = 0;
         TaskSetMotionXFacing(0x1CD00, 0x5A5A5A5A);
@@ -617,14 +617,14 @@ void WhispyWoodsAirPuffState0Update(void)
         dv = t46[*a];
         d = (s8)dv;
         t6 = t;
-        w = t6->unk30 - d;
-        t6->unk30 = w;
+        w = t6->whispyWoodsAirPuffEffectX - d;
+        t6->whispyWoodsAirPuffEffectX = w;
         a0v = t->layer + 1;
         t68 = (u32 *)gUnk_0874C568;
         t40 = (u8 *)gUnk_0874C240;
         QueueSprite(a0v, t68[t40[*a]], t->spriteFlags, t->tileWord,
                      w - gSpriteCameraX,
-                     (s16)(t->unk34 - (u16)gSpriteCameraY));
+                     (s16)(t->whispyWoodsAirPuffEffectY - (u16)gSpriteCameraY));
     }
 }
 
@@ -669,7 +669,7 @@ void sub_080b38f0(void)
     gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF) + (gCurTask->pixelX << 16);
     gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF) + (gCurTask->pixelX << 16);
     x = gCurTask->pixelX;
-    gCurTask->unk18 = x;
+    gCurTask->whispyWoodsLeavesStartX = x;
     /* Zero-code lever: two loop levels weight the unk70 address's use x3
        (flow counts refs by loop depth), 1 + 3 = 4 refs, which ranks it
        above the &gCurTask pool value in local-alloc (r3, not r4). */
@@ -687,7 +687,7 @@ void sub_080b38f0(void)
     gCurTask->unk2C = (gCurTask->unk2C & 0xFFFF0000) + gCurTask->pixelY;
     gCurTask->unk28 = (gCurTask->unk28 & 0xFFFF0000) + gCurTask->pixelY;
     gCurTask->unk84 = gCurTask->hitterPlayer = gCurTask->parent
-        = gCurTask->facing = gCurTask->unk1C = gCurTask->pixelY;
+        = gCurTask->facing = gCurTask->whispyWoodsLeavesStartY = gCurTask->pixelY;
 }
 
 void sub_080b3a00(void)
@@ -737,30 +737,30 @@ void sub_080b3a00(void)
 
 void WhispyWoodsLeavesDraw(void)
 {
-    if (gUnk_0874C260[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C260[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C260[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->pixelX - gSpriteCameraX + gCurTask->hitTimer,
                      gCurTask->pixelY - gSpriteCameraY + gCurTask->hitKind);
-    if (gUnk_0874C2A6[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C2A6[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      ((u32)gCurTask->unk20 >> 16) - gSpriteCameraX + gCurTask->onGround,
                      gCurTask->unk20 - gSpriteCameraY + (s8)gCurTask->hitDirection);
-    if (gUnk_0874C2EC[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C2EC[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
                      gCurTask->health - gSpriteCameraX + gCurTask->waterFlags,
                      gCurTask->unk84 - gSpriteCameraY + (s8)gCurTask->hitEffect);
-    if (gUnk_0874C332[65 - (s16)gCurTask->unk6C] != -1)
+    if (gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer] != -1)
         QueueSprite(gCurTask->layer,
-                     gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->unk6C]],
+                     gUnk_0874CE68[gUnk_0874C332[65 - (s16)gCurTask->whispyWoodsLeavesLifeTimer]],
                      gCurTask->spriteFlags, gCurTask->tileWord,
-                     gCurTask->unk18 - gSpriteCameraX,
-                     gCurTask->unk1C - gSpriteCameraY);
+                     gCurTask->whispyWoodsLeavesStartX - gSpriteCameraX,
+                     gCurTask->whispyWoodsLeavesStartY - gSpriteCameraY);
 }
 
 void Task_WhispyWoodsLeaves(void)
@@ -776,8 +776,8 @@ void Task_WhispyWoodsLeaves(void)
     gCurTask->updateCallback = (u32)WhispyWoodsLeavesUpdate;
     sub_080b38f0();
     sub_080b3a00();
-    gCurTask->unk6C = 66;
-    gCurTask->unk6E = 0;
+    gCurTask->whispyWoodsLeavesLifeTimer = 66;
+    gCurTask->whispyWoodsLeavesLoopCount = 0;
     /* the two constants the loop keeps in r5/r8 are variables (lesson 3.471) */
     m = 0x8000;
     z = 0;
@@ -812,7 +812,7 @@ void Task_WhispyWoodsLeaves(void)
         gCurTask->velX = -0x4000;
         gCurTask->velY = 0x2000;
         TaskYieldTrampoline(2);
-    } while (++gCurTask->unk6E <= 2);
+    } while (++gCurTask->whispyWoodsLeavesLoopCount <= 2);
     gCurTask->velX = 0;
     gCurTask->velY = 0x8000;
     TaskYieldTrampoline(1);

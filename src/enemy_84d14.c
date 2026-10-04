@@ -105,7 +105,7 @@ void ChillyState0(void)
     t->updateState = zero;
     TaskStop();
     TaskFaceNearestPlayer();
-    gCurTask->unk6C = zero;
+    gCurTask->chillyLoopCount = zero;
     do
     {
         TaskSetFrame(4);
@@ -129,8 +129,8 @@ void ChillyState0(void)
         u6->frame--;
         TaskYieldTrampoline(1);
         gCurTask->facing = -gCurTask->facing;
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 3);
+        gCurTask->chillyLoopCount++;
+    } while ((s16)gCurTask->chillyLoopCount <= 3);
     gCurTask->facing = -gCurTask->facing;
     ActorSetState(1);
     TaskSleepForever();
@@ -200,9 +200,9 @@ void ChillySlide(void)
     gCurTask->updateState = 2;
     t = gCurTask;
     zero = 0;
-    if (t->unk74 == 0)
+    if (t->actorSpawnArg == 0)
     {
-        t->unk6C = zero;
+        t->chillyLoopCount = zero;
         do
         {
             TaskFaceNearestPlayer();
@@ -233,12 +233,12 @@ void ChillySlide(void)
             TaskYieldTrampoline(5);
             TaskSetFrame(4);
             TaskYieldTrampoline(4);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 3);
+            gCurTask->chillyLoopCount++;
+        } while ((s16)gCurTask->chillyLoopCount <= 3);
     }
     else
     {
-        t->unk6C = zero;
+        t->chillyLoopCount = zero;
         do
         {
             TaskFaceNearestPlayer();
@@ -269,8 +269,8 @@ void ChillySlide(void)
             TaskYieldTrampoline(4);
             TaskSetFrame(4);
             TaskYieldTrampoline(3);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 2);
+            gCurTask->chillyLoopCount++;
+        } while ((s16)gCurTask->chillyLoopCount <= 2);
     }
     TaskFaceNearestPlayer();
     ActorSetState(3);
@@ -296,7 +296,7 @@ void ChillyState3(void)
     t->updateState = 3;
     TaskStop();
     TaskSetFrame(10);
-    gCurTask->unk6C = zero1;
+    gCurTask->chillyLoopCount = zero1;
     do
     {
         TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
@@ -306,15 +306,15 @@ void ChillyState3(void)
         TaskSetMotionXFacing(-0x10000, 0x5A5A5A5A);
         TaskYieldTrampoline(1);
         u = gCurTask;
-        u->unk6C++;
-    } while ((s16)u->unk6C <= 14);
+        u->chillyLoopCount++;
+    } while ((s16)u->chillyLoopCount <= 14);
     sp.subtype = 2;
     sp.taskType = 104;
     sp.variant = zero2 = 0;
-    sp.spawnArg = u->unk74;
+    sp.spawnArg = u->actorSpawnArg;
     sp.checkTerrain = zero2;
-    gCurTask->unk46 = CreateActorFromDescHere(&sp, 0);
-    gCurTask->unk6C = zero2;
+    gCurTask->chillyFreezeSlot = CreateActorFromDescHere(&sp, 0);
+    gCurTask->chillyLoopCount = zero2;
     do
     {
         gCurTask->velX = -0x10000;
@@ -324,8 +324,8 @@ void ChillyState3(void)
         TaskYieldTrampoline(2);
         gCurTask->velX = -0x10000;
         TaskYieldTrampoline(1);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 63);
+        gCurTask->chillyLoopCount++;
+    } while ((s16)gCurTask->chillyLoopCount <= 63);
     TaskStop();
     ActorSetState(0);
     TaskSleepForever();
@@ -400,7 +400,7 @@ u8 ChillyLand(void)
     t = gCurTask;
     if (t->variant == 1)
         return 0;
-    ActorSetState((u16)t->unk28);
+    ActorSetState((u16)t->chillySavedState);
     TaskSetEntry(ChillyEnterState, gCurTaskIdx);
     return 1;
 }
@@ -412,7 +412,7 @@ u8 ChillyStartFall(void)
     t = gCurTask;
     if (t->variant == 1)
         return 0;
-    t->unk28 = t->state;
+    t->chillySavedState = t->state;
     ActorSetState(4);
     TaskSetEntry(ChillyEnterState, gCurTaskIdx);
     return 1;

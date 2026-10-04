@@ -405,8 +405,8 @@ void CoconutFall(void)
     struct Task *t;
 
     t = gCurTask;
-    t->accelY = gUnk_08743214[t->unk74];
-    t->speedLimitY = gUnk_0874321C[t->unk74];
+    t->accelY = gUnk_08743214[t->actorSpawnArg];
+    t->speedLimitY = gUnk_0874321C[t->actorSpawnArg];
     while (1)
     {
         TaskSetFrame(7);

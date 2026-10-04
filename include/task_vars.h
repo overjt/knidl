@@ -24,7 +24,20 @@
 #define actorAnimDelay24 unk24 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
 #define actorAnimDelay unk28 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) */
 #define actorAnimDelay30 unk30 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) in unk30 */
+#define actorDustTrailSlot unk46 /* s16: the dust trail child (CreateDustTrail, task type #143); sub_08098afc frees it */
 #define actorSpawnArg unk74 /* u8: the spawn argument (CreateActor's p4, ActorSpawn.spawnArg), set once at creation */
+
+/* Blipper - Blipper (task type #35, Task_Blipper; gBlipperVariants: rows 0,
+   1, 2, 3/4, Idle) */
+#define blipperStroking unk28 /* s32: row 0: nonzero when the last steering step accelerated (stroke frames), 0 = glide frame */
+#define blipperCollideTerrain unk2C /* s32: rows 3/4: 1 when their update runs ActorCollideTerrain (0 in row 3's leap) */
+#define blipperTurnTimer unk30 /* s32: rows 3/4: frames to the next turn-around while swimming (192) */
+#define blipperChaseTimer unk34 /* s32: row 0's frame count: steers every 8th frame, chases until 0x700, then swims away */
+#define blipperLeapTimer unk34 /* s32: rows 3/4: frames before the next leap check near a player (90 after a leap, 16 on a miss) */
+#define blipperSavedFacing unk34 /* s32: row 2's facing, saved at spawn and restored by both of its states */
+#define blipperDropletSlot unk46 /* s16: slot of the last Task_BlipperDroplet (task type 218) CreateBlipperDroplet made */
+#define blipperLoopCount unk6C /* s16: row 2's state 0 loop counter: zigzag strokes (3) */
+#define blipperLeapSpeedIndex unk74 /* u8: leap X speed index (gUnk_08742930): the spawn arg, then 1 / 0 by a player within 32 px */
 
 /* Bonkers - Bonkers (task type #49, Task_Bonkers; gBonkersVariants,
    gBonkersStates / gBonkersStateUpdates) */
@@ -98,6 +111,18 @@
 #define bugzzyLadybugFrameTimer unk34 /* s32: frames until the sprite toggles frame bit 0 again (every 2) */
 #define bugzzyLadybugLoopCount unk6C /* s16: iterations of BugzzyLadybugState0's two loops (launch frames, bobs), counted from 0 */
 
+/* Chilly - Chilly (task type #14, Task_Chilly; gChillyVariants,
+   gChillyStates) */
+#define chillySavedState unk28 /* s32: Task.state saved by ChillyStartFall; ChillyLand re-enters it */
+#define chillyFreezeSlot unk46 /* s16: slot of the Task_ChillyFreeze (task type 104) its freeze attack created */
+#define chillyLoopCount unk6C /* s16: the running state's loop counter (looks, slide steps, shake steps) */
+
+/* ChillyFreeze - Chilly's freeze (task type #104, Task_ChillyFreeze) */
+#define chillyFreezeSparkleTimer unk30 /* s32: frames into the 21-frame sparkle cycle (a Task_ChillyFreezeSparkle at 0 and at 10) */
+#define chillyFreezeSfxTimer unk34 /* s32: frames to the next sound 185 (replayed every 5 frames) */
+#define chillyFreezeSparkleSlot unk46 /* s16: slot of the Task_ChillyFreezeSparkle (task type 215) just created */
+#define chillyFreezeLoopCount unk6C /* s16: Task_ChillyFreeze's loop counter: 4-frame flash cycles before ActorDestroy (60) */
+
 /* FireLion - Fire Lion (task type #55, Task_FireLion; gFireLionStates /
    gFireLionStateUpdates) */
 #define fireLionHeldPlayerSlot unk18 /* s32: the caught player's task slot (HoldPlayer, SetHeldPlayerState), -1 if none */
@@ -111,6 +136,20 @@
 #define fireLionLoopCount unk6C /* s16: iterations of the running move's loop (hops, lunges, swipes, shakes), counted from 0 */
 #define fireLionSequencePhase unk6E /* s16: step 0-7 through the state sequence gUnk_087445E8[actorSpawnArg] (FireLionChooseNextState) */
 #define fireLionPalettePhase unk70 /* s16: step 0-7 of the palette blend cycle, indexes the ratios gUnk_087445D8 */
+
+/* Gip - Gip (task type #47, Task_Gip; gGipVariants, gGipStates) */
+#define gipCollideTerrain unk18 /* s32: 1 when GipUpdate runs ActorCollideTerrain before the state update (0 on the wall) */
+#define gipShootTimer unk28 /* s32: frames GipWalk walks before GipShoot (120, reloaded after each shot) */
+#define gipTurnTimer unk2C /* s32: frames to the walk's next turn check (16): away from a player within 63 px, else toward */
+#define gipStarSlot unk46 /* s16: slot of the last Task_GipStar (task type 137) GipShoot spat */
+#define gipLoopCount unk6C /* s16: the wall states' loop counter (3 strokes in states 4-7, 8 shakes in state 10) */
+
+/* Glunk - Glunk (task type #33, Task_Glunk; gGlunkVariants, gGlunkStates) */
+#define glunkShotSlot unk46 /* s16: slot of the last shot actor (task type 107, Task_GlunkShot) GlunkShoot fired */
+#define glunkLoopCount unk6C /* s16: the running state's loop counter (GlunkWait's cycles, GlunkShoot's shots) */
+
+/* GlunkShot - Glunk's shot (task type #107, Task_GlunkShot) */
+#define glunkShotLoopCount unk6C /* s16: Task_GlunkShot's loop counter: frame 4/5 cycles before ActorDestroy (4) */
 
 /* GrandWheelie - Grand Wheelie (task type #51, Task_GrandWheelie;
    gGrandWheelieVariants, gGrandWheelieStates / gGrandWheelieStateUpdates) */
@@ -136,6 +175,41 @@
    Task_GrandWheelieMiniWheelie; spawned by GrandWheelieSummon) */
 #define grandWheelieMiniWheelieGroundClass unk1C /* s8: the ground class sub_08094d10 gave last (-1 after a landing); indexes the roll speeds */
 #define grandWheelieMiniWheelieRolling unk2C /* s32: 0 while thrown in the air, 1 once it has landed and rolls */
+
+/* HeavyMole - Heavy Mole (task type #62, Task_HeavyMole; a timed move script,
+   no state table) */
+#define heavyMoleScrollSpeed unk18 /* s32: 16.16 X speed HeavyMoleMove adds to the camera anchor each frame (gUnk_0874ACBC) */
+#define heavyMoleCameraX unk1C /* s32: the camera anchor X in 16.16 (gCameraAnchorX = unk1C >> 16), moved by the scroll speed */
+#define heavyMoleMoveTimer unk28 /* s32: frames left in the current step of the move script; at 0 HeavyMoleStartNextMove */
+#define heavyMoleAnimSpeedTimer unk2C /* s32: frames until sub_080ad788 re-picks the body's frame-delay level (every 120) */
+#define heavyMolePatternIndex unk6C /* s16: candidate (0-3) of sub_080ada20's weighted pattern pick; the last one is skipped */
+
+/* HeavyMoleArm - Heavy Mole's arms (task types #121 / #122,
+   Task_HeavyMoleUpperArm / Task_HeavyMoleLowerArm; gHeavyMoleArmStates) */
+#define heavyMoleArmSpinLevel unk28 /* s32: high half: claw spin speed level 0-3 (gUnk_0874B82A delays); low half: frames to its step */
+#define heavyMoleArmPathStep unk2C /* s32: step counted down through the state's path tables (state 4: 24 poses, state 5: 11 moves) */
+#define heavyMoleArmStateTimer unk2C /* s32: frames until state 0 goes to state 1, and state 1 to a random attack (gUnk_0874B831) */
+#define heavyMoleArmSwingStep unk30 /* s32: the swing's angle step in states 2/3: +-1 (state 2) or +-2 (state 3), 0 = not swinging */
+#define heavyMoleArmTimeLimit unk30 /* s32: frames state 4 may run (gUnk_0874B8C4 by phase) before it is cut back to state 0 */
+#define heavyMoleArmAngleIndex unk34 /* s32: the arm's angle (0-4) in a swing; frame block unk34 * 6 of the arm frames */
+#define heavyMoleArmBaseFrame unk34 /* s32: state 4's pose: the base arm frame from gUnk_0874B8C8 / gUnk_0874B8F8, plus the spin frame */
+
+/* HeavyMoleEye - Heavy Mole's eye (task type #191, Task_HeavyMoleEye) */
+#define heavyMoleEyeBlinkTimer unk28 /* s32: frames the eye stays hidden (96) before its three-frame 11-12-11 flash */
+
+/* HeavyMoleRedMissile - Heavy Mole's red missile (task type #124,
+   Task_HeavyMoleRedMissile) */
+#define heavyMoleRedMissileLoopCount unk6C /* s16: the flight loop's counter: 4-frame cycles flown before the turn (up to unk6E, 1-32) */
+
+/* HeavyMoleSmoke - Heavy Mole's smoke (task type #192, Task_HeavyMoleSmoke)
+   */
+#define heavyMoleSmokeRow unk28 /* s32: which of the two puff heights (0/1): Y offset gUnk_0874ACFA, column of the puff tables */
+#define heavyMoleSmokePuffCount unk2C /* s32: puffs left in this burst (20); its bit 0 alternates the two heights */
+#define heavyMoleSmokeStep unk30 /* s32: step of one puff (2 down to 0): index of its frame, velocity and sleep tables */
+
+/* HeavyMoleYellowMissile - Heavy Mole's yellow missile (task type #123,
+   Task_HeavyMoleYellowMissile) */
+#define heavyMoleYellowMissileLoopCount unk6C /* s16: the flight loop's counter: 4-frame cycles flown before the turn (up to unk6E, 1-32) */
 
 /* KingDedede - King Dedede (task type #59, Task_KingDedede;
    gKingDededeStates) */
@@ -193,6 +267,12 @@
 #define laserBallShotCount unk6C /* s16: lasers fired in LaserBallShoot (1-3, RandomRange(3) + 1 re-drawn each loop) */
 #define laserBallWindUpCount unk6E /* s16: wind-up cycles (frames 6, 7, 4) done before the first laser (loop of 8) */
 
+/* MaceKnightMace - the Mace Knight's mace (task type #130,
+   Task_MaceKnightMace; gMaceKnightMaceVariants; created by
+   CreateMaceKnightMace) */
+#define maceKnightMaceDismissed unk2C /* s32: 1 once its knight was hit (hitKind 1, 3 or 4); the mace then lets go and is destroyed */
+#define maceKnightMaceLoopCount unk6C /* s16: the mace's loop counter (swing passes), counted from 0 */
+
 /* MetaKnight - Meta Knight (task type #61, Task_MetaKnight;
    gMetaKnightStates) */
 #define metaKnightFollowOffsetX unk18 /* s32: X offset from the target player that state 1 keeps (+-64, gUnk_08748D60) */
@@ -205,6 +285,31 @@
 #define metaKnightFollowFlags unk34 /* s32: state-1 flags: bit 0 stopped at a room edge, bits 1-2 keep the side (no near-player pick) */
 #define metaKnightLoopCount unk6C /* s16: iterations of the running state's loop: frame steps, spins (SwordSpin), speed steps */
 #define metaKnightSpinFrameCount unk6E /* s16: frame steps done in one spin of MetaKnightSwordSpin (0-6) */
+
+/* MetaKnights - the Meta-Knights group (task type #57, Task_MetaKnights):
+   spawns the four knights' queues */
+#define metaKnightsQueue0Index unk18 /* s32: the next spawn record of queue 0 (the record list metaKnightsQueue0) */
+#define metaKnightsQueue1Index unk1C /* s32: the next spawn record of queue 1 (the record list metaKnightsQueue1) */
+#define metaKnightsQueue2Index unk20 /* s32: the next spawn record of queue 2 (the record list metaKnightsQueue2) */
+#define metaKnightsQueue3Index unk24 /* s32: the next spawn record of queue 3 (the record list metaKnightsQueue3) */
+#define metaKnightsQueue0 unk28 /* s32: queue 0: the 8-byte knight spawn records (kind, variant, x, y) for place 0 */
+#define metaKnightsQueue1 unk2C /* s32: queue 1: the 8-byte knight spawn records (kind, variant, x, y) for place 1 */
+#define metaKnightsQueue2 unk30 /* s32: queue 2: the 8-byte knight spawn records (kind, variant, x, y) for place 2 */
+#define metaKnightsQueue3 unk34 /* s32: queue 3: the 8-byte knight spawn records (kind, variant, x, y) for place 3 */
+#define metaKnightsNewKnightSlot unk46 /* s16: the knight (task type #58) sub_0809bc1c just created, while it stores the knight's place */
+#define metaKnightsLoopCount unk6C /* s16: the intro's loop counter (frame loops), counted from 0 */
+#define metaKnightsPaletteTimer unk6C /* s16: frame 0-80 of the group's palette pulse; the four knight palettes blend while above 63 */
+
+/* MetaKnightsKnight - a knight of the Meta-Knights (task type #58,
+   Task_MetaKnightsKnight; the kind in actorSpawnArg: 0 Axe, 1 Javelin, 2
+   Mace, 3 Trident) */
+#define metaKnightsKnightAxeCaught unk18 /* s32: Axe Knight: 1 once its thrown axe has flown back into it; the throw then catches it */
+#define metaKnightsKnightFlashTimer unk24 /* s32: frames left of the damage flash (MetaKnightsKnightFlashPalette while > 0) */
+#define metaKnightsKnightAxeWalkTimer unk2C /* s32: Axe Knight: frames left of the walk before it decides its next move (90) */
+#define metaKnightsKnightAxeWaitTimer unk30 /* s32: Axe Knight: frames the walk waits before it may lunge or decide again (90 after each) */
+#define metaKnightsKnightWeaponSlot unk46 /* s16: its weapon actor: axe #129, mace #130, trident #131 or javelin #132 (-1: mace gone) */
+#define metaKnightsKnightLoopCount unk6C /* s16: the running state's loop counter (frame loops), counted from 0 */
+#define metaKnightsKnightQueue unk6E /* s16: the group's queue (place) 0-3 it was spawned from; indexes gUnk_02007D00[0..3] */
 
 /* MrFrosty - Mr. Frosty (task type #52, Task_MrFrosty; gMrFrostyVariants,
    gMrFrostyStates / gMrFrostyStateUpdates) */
@@ -280,6 +385,52 @@
 #define mrTickTockRingParentState unk28 /* s32: the parent's Task.state, copied each frame; the ring ends once it is not 8 or 13 */
 #define mrTickTockRingSfxPlayer unk2C /* s32: what PlaySfx(0x219) returned, for StopSfxOnPlayer when the ring ends */
 
+/* NightmarePowerOrb - Nightmare Power Orb (task type #66,
+   Task_NightmarePowerOrb; a fixed attack script,
+   gNightmarePowerOrbStateUpdates) */
+#define nightmarePowerOrbScale unk18 /* s32: 16.16 index of the scale table gUnk_0873FF98 for the escape flight's affine draw; 0 plain */
+#define nightmarePowerOrbMaxHealth unk24 /* s32: health at the start (ActorComputeHealth); under half of it the stars aim at the player */
+#define nightmarePowerOrbScaleSpeed unk28 /* s32: 16.16 change of the escape flight's scale per frame (shrinks: -0xD00) */
+#define nightmarePowerOrbAnimTimer unk2C /* s32: frames counted up on the gUnk_0874AD74 animation; at 40 gUnk_0874ADA8 starts */
+#define nightmarePowerOrbStarSlot unk46 /* s16: task slot of the last star CreateNightmarePowerOrbStar made (#135) */
+#define nightmarePowerOrbLoopCount unk6C /* s16: the attack script's loop counter (two rounds before the last steps) */
+
+/* NightmarePowerOrbEscape - Nightmare Power Orb's escape (task type #98,
+   Task_NightmarePowerOrbEscape) */
+#define nightmarePowerOrbEscapeLoopCount unk6C /* s16: the running loop's counter (four 9-pass loops) */
+
+/* NightmarePowerOrbEscapeStar - Nightmare Power Orb's escape star (task type
+   #99, Task_NightmarePowerOrbEscapeStar) */
+#define nightmarePowerOrbEscapeStarScale unk18 /* s32: 16.16 index of the scale table gUnk_0873FF98 for the affine draw (0x3F0000 full) */
+#define nightmarePowerOrbEscapeStarAngle unk1C /* s32: rotation angle of the affine draw (0-511, wraps); -1 at start */
+#define nightmarePowerOrbEscapeStarScaleSpeed unk28 /* s32: 16.16 change of the scale per frame (grow / shrink) */
+#define nightmarePowerOrbEscapeStarSpinSpeed unk2C /* s32: change of the rotation angle per frame (+-16, +-8) */
+#define nightmarePowerOrbEscapeStarLoopCount unk6C /* s16: the running loop's counter (the frame-step loops of each row) */
+
+/* NightmarePowerOrbIntroScroll - Nightmare Power Orb's intro scroll (task
+   type #80, Task_NightmarePowerOrbIntroScroll) */
+#define nightmarePowerOrbIntroScrollSpeed unk28 /* s32: pixels per frame sub_080b08a0 adds to gCameraAnchorY (-4 easing to 0) */
+
+/* NightmarePowerOrbStar - Nightmare Power Orb's star (task type #135,
+   Task_NightmarePowerOrbStar; gNightmarePowerOrbStarVariants) */
+#define nightmarePowerOrbStarTrailSlot unk46 /* s16: task slot of the last trail the star made (#210-#213) */
+
+/* NightmarePowerOrbStarAfterimage - Nightmare Power Orb star's afterimage
+   (task type #213, Task_NightmarePowerOrbStarAfterimage) */
+#define nightmarePowerOrbStarAfterimageLoopCount unk6C /* s16: the frame loop's counter */
+
+/* NightmarePowerOrbStarTrail - Nightmare Power Orb star's trail (task type
+   #210, Task_NightmarePowerOrbStarTrail) */
+#define nightmarePowerOrbStarTrailLoopCount unk6C /* s16: the sparkle loop's counter (frames 19-22 per pass) */
+
+/* NightmarePowerOrbStarTrailDown - Nightmare Power Orb star's downward trail
+   (task type #212, Task_NightmarePowerOrbStarTrailDown) */
+#define nightmarePowerOrbStarTrailDownLoopCount unk6C /* s16: the sparkle loop's counter (frames 19-22 per pass) */
+
+/* NightmarePowerOrbStarTrailUp - Nightmare Power Orb star's upward trail
+   (task type #211, Task_NightmarePowerOrbStarTrailUp) */
+#define nightmarePowerOrbStarTrailUpLoopCount unk6C /* s16: the sparkle loop's counter (frames 19-22 per pass) */
+
 /* NightmareWizard - Nightmare Wizard (task type #67, Task_NightmareWizard;
    gNightmareWizardStates) */
 #define nightmareWizardMaxHealth unk1C /* s32: health at the start (ActorComputeHealth); under a third of it the attacks change */
@@ -305,6 +456,18 @@
 #define noddyWalkTimer unk30 /* s32: frames NoddyWalk walks (gUnk_08741FA8[spawn arg]) before it sits down (state 1) */
 #define noddySleepPeriodCount unk34 /* s32: 224-frame sleep periods left (starts at 1); NoddySleep wakes when it and the timer are 0 */
 #define noddyBubbleSlot unk46 /* s16: slot of the last Task_NoddyBubble (type 194) the sleeping loop puffed */
+
+/* PaintRoller - Paint Roller (task type #60, Task_PaintRoller;
+   gPaintRollerStates) */
+#define paintRollerEnteredState unk28 /* s32: the state PaintRollerEnterState last entered; the update re-enters on a change */
+#define paintRollerStepsLeft unk30 /* s32: steps left in the running loop: move-script steps, or the pose repeats after a Summon */
+#define paintRollerPaintingSlot unk46 /* s16: task slot of the painting CreatePaintRollerPainting made (#116) */
+
+/* PaintRollerPainting - Paint Roller's painting (task type #116,
+   Task_PaintRollerPainting; gPaintRollerPaintingStates) */
+#define paintRollerPaintingParasolTimer unk2C /* s32: frames counted up from -32 by the parasol: hits once > 0, chases every 16, gone after 256 */
+#define paintRollerPaintingLightningSlot unk46 /* s16: task slot of the last lightning the cloud row made (#117) */
+#define paintRollerPaintingLoopCount unk6C /* s16: the running row's loop counter */
 
 /* PhanPhan - Phan Phan (task type #56, Task_PhanPhan; gPhanPhanStates /
    gPhanPhanStateUpdates) */
@@ -385,6 +548,13 @@
 #define slippyMovePickCount unk34 /* s32: calls of SlippyPickMove; its parity picks one of the two weight tables */
 #define slippyLoopCount unk6C /* s16: SlippyState1's loop counter: frame cycles done (gUnk_08742820[spawn arg]: 3 or 2) */
 
+/* Squishy - Squishy (task type #28, Task_Squishy; gSquishyVariants: rows
+   Walk, 1, 2, Idle) */
+#define squishyCollideTerrain unk28 /* s32: 1 when row 1's update runs ActorCollideTerrain (set at the end of its leap) */
+#define squishyLanded unk28 /* s32: 1 once SquishyLand has run: the Walk row's jump and fall states wait for it */
+#define squishyHopTimer unk34 /* s32: frames of row 2's hop at the player (37 above it, 43 below, 40 level); then the next */
+#define squishyWalkTimer unk34 /* s32: frames SquishyWalk walks (100); at 80/60/40/20 a 1-in-4 jump, at 0 always */
+
 /* Twizzy - Twizzy (task type #24, Task_Twizzy; gTwizzyVariants: rows Wave, 1,
    Swoop, Diagonal, Chase, TakeOff, 6, 7, Hover, Idle) */
 #define twizzySteerTimer unk28 /* s32: frames counted up to 8 between the Chase row's TaskAccelerateTowardNearestPlayer steps */
@@ -410,5 +580,33 @@
 /* WaddleDooBeam - Waddle Doo's beam (task type #106, Task_WaddleDooBeam) */
 #define waddleDooBeamAngleIndex unk34 /* s32: index into the beam angle table gUnk_08742FAC: the parent's beam step (halved for arg 0-1) */
 #define waddleDooBeamLoopCount unk6C /* s16: Task_WaddleDooBeam's loop counter: frame 0/1 cycles shown before ActorDestroy (3) */
+
+/* WhispyWoods - Whispy Woods (task type #64, Task_WhispyWoods;
+   gWhispyWoodsStates) */
+#define whispyWoodsWaitDone unk28 /* s32: nonzero once WhispyWoodsWait's blinks are over; the update then picks the attack */
+#define whispyWoodsHurtTimer unk2C /* s32: frames of the hurt animation after a hit (32): frames 9, 7, 4 at 32, 20, 16 */
+#define whispyWoodsAppleTimer unk30 /* s32: frames counted down in WhispyWoodsDropApples (150); an apple at 150, 100 and 50 */
+#define whispyWoodsAttackPhase unk34 /* s32: step (0-4) of the attack sequence WhispyWoodsPickAttack walks; picks state 1, 2 or 3 */
+#define whispyWoodsLoopCount unk6C /* s16: the running state's loop counter (states 1 and 2, WhispyWoodsDropApples) */
+
+/* WhispyWoodsAirPuff - Whispy Woods' air puff (task type #126,
+   Task_WhispyWoodsAirPuff; gWhispyWoodsAirPuffStates) */
+#define whispyWoodsAirPuffEffectX unk30 /* s32: X of the extra sprite State0Update draws for 6 frames (the spawn X, drifting) */
+#define whispyWoodsAirPuffEffectY unk34 /* s32: Y of that extra sprite (the spawn Y) */
+#define whispyWoodsAirPuffEffectTimer unk6C /* u16: frames the extra sprite is still drawn (6); index of its frame and drift tables */
+
+/* WhispyWoodsApple - Whispy Woods' apple (task type #125,
+   Task_WhispyWoodsApple; gWhispyWoodsAppleStates) */
+#define whispyWoodsAppleFirstFall unk28 /* s32: nonzero until the first landing; meanwhile the update checks terrain first */
+#define whispyWoodsAppleFloorY unk2C /* s32: pixelY of the first landing; the bounce states check pixelY > unk2C */
+#define whispyWoodsAppleRollFrame unk30 /* s32: step (0-7) of the 8-frame cycle gUnk_0874C24C that sub_080b3010 shows */
+#define whispyWoodsAppleLoopCount unk6C /* s16: WhispyWoodsAppleFall's blink loop counter (6 passes) */
+
+/* WhispyWoodsLeaves - Whispy Woods' leaves (task type #170,
+   Task_WhispyWoodsLeaves) */
+#define whispyWoodsLeavesStartX unk18 /* s32: pixelX at creation; the fourth leaf stays drawn there */
+#define whispyWoodsLeavesStartY unk1C /* s32: pixelY at creation; the fourth leaf stays drawn there */
+#define whispyWoodsLeavesLifeTimer unk6C /* u16: frames the leaves live (66); 65 - unk6C indexes the four leaves' frame tables */
+#define whispyWoodsLeavesLoopCount unk6E /* s16: Task_WhispyWoodsLeaves' swaying loop counter (3 passes) */
 
 #endif // GUARD_TASK_VARS_H

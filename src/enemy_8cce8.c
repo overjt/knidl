@@ -227,7 +227,7 @@ void Task_GlunkShot(void)
     gCurTask->facing = TaskGetParentFacing();
     gCurTask->onGround = 0;
     gCurTask->velY = 0xFFFA0000;
-    gCurTask->unk6C = 0;
+    gCurTask->glunkShotLoopCount = 0;
     do
     {
         TaskSetFrame(4);
@@ -235,8 +235,8 @@ void Task_GlunkShot(void)
         TaskSetFrame(5);
         TaskYieldTrampoline(1);
         t = gCurTask;
-        t->unk6C++;
-    } while ((s16)t->unk6C <= 3);
+        t->glunkShotLoopCount++;
+    } while ((s16)t->glunkShotLoopCount <= 3);
     ActorDestroy();
 }
 

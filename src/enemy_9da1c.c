@@ -191,7 +191,7 @@ void sub_0809dc7c(void)
     t->frameTable = gMaceKnightFrames;
     ActorLoadDef((u32)gMaceKnightDef);
     u = gCurTask;
-    u->unk24 = 0;
+    u->metaKnightsKnightFlashTimer = 0;
     CallTableEntry(u->variant, 3, gMaceKnightVariants);
 }
 
@@ -223,9 +223,9 @@ void sub_0809dd08(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -237,7 +237,7 @@ void sub_0809dd08(void)
     v = gCurTask->hitKind;
     if (v == 1 || v == 3 || v == 4)
     {
-        p = &gCurTask->unk46;
+        p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)
         {
             w = &gTasks[*p];
@@ -274,9 +274,9 @@ void MaceKnightUpdate(void)
         CallTableEntry(gCurTask->updateState, 2, gMaceKnightStateUpdates);
     }
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -288,7 +288,7 @@ void MaceKnightUpdate(void)
     v = gCurTask->hitKind;
     if (v == 1 || v == 3 || v == 4)
     {
-        p = &gCurTask->unk46;
+        p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)
         {
             w = &gTasks[*p];
@@ -375,9 +375,9 @@ void sub_0809dfc8(void)
     if (ActorCollideTerrain() == 0 && sub_0809f994() != 0)
         sub_0809f930();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -389,7 +389,7 @@ void sub_0809dfc8(void)
     v = gCurTask->hitKind;
     if (v == 1 || v == 3 || v == 4)
     {
-        p = &gCurTask->unk46;
+        p = &gCurTask->metaKnightsKnightWeaponSlot;
         if (*p != -1)
         {
             w = &gTasks[*p];
@@ -493,9 +493,9 @@ s32 CreateMaceKnightMace(void)
     sp.tileWord = gUnk_08745CEC[2];
     sp.checkTerrain = 0;
     r = CreateActorFromDesc(&sp, 1);
-    p = &gCurTask->unk46;
+    p = &gCurTask->metaKnightsKnightWeaponSlot;
     *p = r;
-    ((struct Task *)(*p * 144 + (s32)gTasks))->unk2C = z;
+    ((struct Task *)(*p * 144 + (s32)gTasks))->maceKnightMaceDismissed = z;
 }
 
 void Task_MaceKnightMace(void)
@@ -533,7 +533,7 @@ void sub_0809e320(void)
     t = gCurTask;
     t->updateCallback = (u32)sub_0809e630;
     t->layer = 10;
-    gCurTask->unk6C = 0;
+    gCurTask->maceKnightMaceLoopCount = 0;
     do
     {
         PlaySfx(213);
@@ -564,7 +564,7 @@ void sub_0809e320(void)
         TaskYieldTrampoline(2);
         TaskSetMotionXFacing(128 << 12, 0x5A5A5A5A);
         TaskYieldTrampoline(2);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->maceKnightMaceLoopCount <= 1);
     PlaySfx(213);
     TaskSetFrame(1);
     TaskSetMotionXFacing(128 << 12, k = 0x5A5A5A5A);
@@ -626,7 +626,7 @@ void sub_0809e320(void)
     TaskYieldTrampoline(7);
     TaskStop();
     TaskYieldTrampoline(2);
-    gTasks[gCurTask->parent].unk46 = 0xFFFF;
+    gTasks[gCurTask->parent].metaKnightsKnightWeaponSlot = 0xFFFF;
     ActorDestroy();
 }
 
@@ -635,9 +635,9 @@ void sub_0809e630(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C != 0)
+    if (t->maceKnightMaceDismissed != 0)
     {
-        gTasks[t->parent].unk46 = 0xFFFF;
+        gTasks[t->parent].metaKnightsKnightWeaponSlot = 0xFFFF;
         ActorDestroy();
     }
     else
@@ -694,9 +694,9 @@ void sub_0809e780(void)
     struct Task *t;
 
     t = gCurTask;
-    if (t->unk2C != 0)
+    if (t->maceKnightMaceDismissed != 0)
     {
-        gTasks[t->parent].unk46 = 0xFFFF;
+        gTasks[t->parent].metaKnightsKnightWeaponSlot = 0xFFFF;
         ActorDestroy();
     }
     else
@@ -753,7 +753,7 @@ void sub_0809e824(void)
     t->frameTable = gTridentKnightFrames;
     ActorLoadDef((u32)gTridentKnightDef);
     u = gCurTask;
-    u->unk24 = 0;
+    u->metaKnightsKnightFlashTimer = 0;
     CallTableEntry(u->variant, 4, gTridentKnightVariants);
 }
 
@@ -792,9 +792,9 @@ void TridentKnightUpdate(void)
     if (ActorCollideTerrain() == 0)
         CallTableEntry(gCurTask->updateState, 5, gTridentKnightStateUpdates);
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -1181,9 +1181,9 @@ void sub_0809ef98(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -1259,9 +1259,9 @@ void sub_0809f0f0(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -1343,9 +1343,9 @@ void sub_0809f26c(void)
 
     ActorCollideTerrain();
     t = gCurTask;
-    if (t->unk24 > 0)
+    if (t->metaKnightsKnightFlashTimer > 0)
     {
-        t->unk24--;
+        t->metaKnightsKnightFlashTimer--;
         MetaKnightsKnightFlashPalette();
     }
     else
@@ -1365,11 +1365,11 @@ s32 CreateTridentKnightTrident(s32 a)
     sp.subtype = 28;
     sp.taskType = 131;
     sp.variant = a;
-    sp.spawnArg = gCurTask->unk74;
+    sp.spawnArg = gCurTask->actorSpawnArg;
     sp.x = 12;
     sp.y = 0xFFEC;
     sp.tileWord = 0xF310;
     sp.checkTerrain = 0;
     r = CreateActorFromDescAtOffsetFacing(&sp, 1);
-    gCurTask->unk46 = r;
+    gCurTask->metaKnightsKnightWeaponSlot = r;
 }
