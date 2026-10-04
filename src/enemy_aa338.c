@@ -1231,7 +1231,7 @@ void Task_NightmareWizardPalmTornado(void)
     gCurTask->drawCallback = (u32)sub_080aa16c;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_08754708;
-    gCurTask->updateCallback = (u32)sub_080abf94;
+    gCurTask->updateCallback = (u32)NightmareWizardPalmTornadoUpdate;
     TaskFaceLikeParent();
     gCurTask->unk28 = 2;
     TaskSetFrame(0);
@@ -1251,7 +1251,7 @@ void Task_NightmareWizardPalmTornado(void)
     TaskExitTrampoline();
 }
 
-void sub_080abf94(void)
+void NightmareWizardPalmTornadoUpdate(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -1332,7 +1332,7 @@ void Task_NightmareWizardPointTornado(void)
     gCurTask->drawCallback = (u32)sub_080aa16c;
     gCurTask->layer = 9;
     gCurTask->frameTable = gUnk_08754718;
-    gCurTask->updateCallback = (u32)sub_080ac1f0;
+    gCurTask->updateCallback = (u32)NightmareWizardPointTornadoUpdate;
     TaskFaceLikeParent();
     gCurTask->unk28 = 2;
     TaskSetFrame(0);
@@ -1367,7 +1367,7 @@ void Task_NightmareWizardPointTornado(void)
     TaskExitTrampoline();
 }
 
-void sub_080ac1f0(void)
+void NightmareWizardPointTornadoUpdate(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -1474,7 +1474,7 @@ void Task_NightmareWizardCloakTornado(void)
     gCurTask->drawCallback = (u32)sub_080aa16c;
     gCurTask->layer = 9;
     gCurTask->frameTable = gUnk_087546F8;
-    gCurTask->updateCallback = (u32)sub_080ac47c;
+    gCurTask->updateCallback = (u32)NightmareWizardCloakTornadoUpdate;
     TaskFaceLikeParent();
     for (;;)
     {
@@ -1489,7 +1489,7 @@ void Task_NightmareWizardCloakTornado(void)
     }
 }
 
-void sub_080ac47c(void)
+void NightmareWizardCloakTornadoUpdate(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -1971,7 +1971,7 @@ void Task_PaintRoller(void)
     gUnk_02007D00[4] = 0;
     gUnk_02007D00[5] = -1;
     gUnk_02007D00[9] = ActorComputeHealth();
-    sub_080ad32c();
+    PaintRollerMoveToSpot();
     ActorSetState(0);
     gCurTask->unk28 = 0;
     gCurTask->updateCallback = (u32)sub_080acf3c;
@@ -1982,31 +1982,31 @@ void Task_PaintRoller(void)
 
 void sub_080acf3c(void)
 {
-    sub_080ad0f8();
+    PaintRollerUpdate();
 }
 
-void sub_080acf48(void)
+void PaintRollerEnterState(void)
 {
     gCurTask->unk28 = gCurTask->state;
-    CallTableEntry(gCurTask->state, 3, gUnk_08749D10);
+    CallTableEntry(gCurTask->state, 3, gPaintRollerStates);
 }
 
 void sub_080acf68(void)
 {
-    gCurTask->updateCallback = (u32)sub_080ad0f8;
+    gCurTask->updateCallback = (u32)PaintRollerUpdate;
     gUnk_02007D00[5] = -1;
-    sub_080ad32c();
+    PaintRollerMoveToSpot();
     gUnk_02007D00[1] = 0;
     gCurTask->unk30 = 16;
     CreateDustTrail(1, 3, 8, 10);
     while (gCurTask->unk30 > 0)
-        sub_080ad278();
-    sub_080ad170();
+        PaintRollerRunMoveStep();
+    PaintRollerPickNextSpot();
     while (gCurTask->unk30 > 0)
-        sub_080ad278();
+        PaintRollerRunMoveStep();
     TaskStop();
-    sub_080ad32c();
-    if (sub_080ad37c() != 0)
+    PaintRollerMoveToSpot();
+    if (PaintRollerHasHalfHealth() != 0)
     {
         gUnk_02007D00[5] = 2;
         sub_080ad08c();
@@ -2015,7 +2015,7 @@ void sub_080acf68(void)
     TaskSleepForever();
 }
 
-void sub_080acffc(void)
+void PaintRollerSummon(void)
 {
     s32 w;
 
@@ -2023,14 +2023,14 @@ void sub_080acffc(void)
     gUnk_02007D00[1] = 7;
     gCurTask->unk30 = 10;
     while (gCurTask->unk30 > 0)
-        sub_080ad278();
-    if (sub_080ad37c() != 0)
+        PaintRollerRunMoveStep();
+    if (PaintRollerHasHalfHealth() != 0)
         TaskYieldTrampoline(32);
     CreatePaintRollerPainting();
     gUnk_02007D00[1] = 8;
     gCurTask->unk30 = 27;
     while (gCurTask->unk30 > 0)
-        sub_080ad278();
+        PaintRollerRunMoveStep();
     sub_080ad3a0();
     gUnk_02007D00[5] = 1;
     if (gCurTask->unk30 > 0)
@@ -2067,7 +2067,7 @@ void sub_080ad08c(void)
     TaskYieldTrampoline(11);
 }
 
-void sub_080ad0f8(void)
+void PaintRollerUpdate(void)
 {
     struct Task *t;
 
@@ -2075,28 +2075,28 @@ void sub_080ad0f8(void)
     ActorReactToHit();
     t = gCurTask;
     if (t->unk28 != t->state)
-        TaskSetEntry(sub_080acf48, gCurTaskIdx);
+        TaskSetEntry(PaintRollerEnterState, gCurTaskIdx);
 }
 
-void sub_080ad128(void)
+void PaintRollerReactToDamage(void)
 {
     CreateChildTaskHere(142, 0);
     sub_080ad458();
 }
 
-s32 sub_080ad13c(void)
+s32 PaintRollerReactToDefeat(void)
 {
     ActorSetHitReactions((u32)gUnk_0874B4EC);
     TaskSetEntry(ActorDie, gCurTaskIdx);
     return 1;
 }
 
-void sub_080ad160(void)
+void PaintRollerDropStarRodPiece(void)
 {
     CreateStarRodPiece(0, 128, 104);
 }
 
-void sub_080ad170(void)
+void PaintRollerPickNextSpot(void)
 {
     s32 v3;
     u8 v5;
@@ -2140,7 +2140,7 @@ void sub_080ad170(void)
     gCurTask->unk30 = gUnk_08749D44[gUnk_02007D00[1]];
 }
 
-void sub_080ad278(void)
+void PaintRollerRunMoveStep(void)
 {
     s32 w;
 
@@ -2158,7 +2158,7 @@ void sub_080ad278(void)
     TaskYieldTrampoline(*(u8 *)(gUnk_030023D4 + gCurTask->unk30));
 }
 
-void sub_080ad32c(void)
+void PaintRollerMoveToSpot(void)
 {
     struct Task *t;
 
@@ -2168,7 +2168,7 @@ void sub_080ad32c(void)
     t->posY = gUnk_0874AADC[gUnk_02007D00[0]] << 16;
 }
 
-s32 sub_080ad37c(void)
+s32 PaintRollerHasHalfHealth(void)
 {
     s32 r = 0;
 
@@ -2181,7 +2181,7 @@ void sub_080ad3a0(void)
 {
     s32 r;
 
-    r = sub_080ad37c();
+    r = PaintRollerHasHalfHealth();
     if (r != 0)
         gUnk_030023D4 = 2;
     else
@@ -2222,7 +2222,7 @@ void sub_080ad47c(void)
         if (gUnk_02007D00[5] >= 0)
         {
             ActorSetState((u16)gUnk_02007D00[5]);
-            TaskSetEntry(sub_080acf48, gCurTaskIdx);
+            TaskSetEntry(PaintRollerEnterState, gCurTaskIdx);
         }
     }
 }
@@ -2232,7 +2232,7 @@ void Task_HeavyMole(void)
     struct ActorSpawn sp;
     struct Task *t;
 
-    gCurTask->moveCallback = (u32)sub_080ad650;
+    gCurTask->moveCallback = (u32)HeavyMoleMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
     gCurTask->frameTable = gHeavyMoleFrames;
     gCurTask->layer = 10;
@@ -2274,9 +2274,9 @@ void Task_HeavyMole(void)
     CreateChildTaskHere(189, 1);
     gUnk_02007D00[8] = CreateChildTaskHere(191, 1);
     CreateChildTaskHere(192, 1);
-    gCurTask->u8C.actor->defeatSweepCallback = (u32)sub_080ae380;
+    gCurTask->u8C.actor->defeatSweepCallback = (u32)HeavyMoleDefeatSweepFilter;
     sub_08066544();
-    gCurTask->updateCallback = (u32)sub_080ad710;
+    gCurTask->updateCallback = (u32)HeavyMoleUpdate;
     for (;;)
     {
         gCurTask->frame = 4;
@@ -2298,7 +2298,7 @@ void sub_080ad630(void)
     TaskYieldTrampoline(tb[p[5]]);
 }
 
-void sub_080ad650(void)
+void HeavyMoleMove(void)
 {
     struct Task *t;
     struct Task *ta;
@@ -2334,7 +2334,7 @@ void sub_080ad650(void)
     gUnk_02006190[1] = t->pixelY;
 }
 
-void sub_080ad710(void)
+void HeavyMoleUpdate(void)
 {
     s32 w;
     s32 w2;
@@ -2408,7 +2408,7 @@ void sub_080ad7f0(void)
     switch (gUnk_030023D4)
     {
     case 0:
-        sub_080ad9dc();
+        HeavyMoleSetPhaseFromHealth();
         c8 = &gCurTask;
         t = *c8;
         t->unk18 = gUnk_0874ACBC[gUnk_02007D00[3]];
@@ -2469,7 +2469,7 @@ void sub_080ad7f0(void)
     }
 }
 
-void sub_080ad9dc(void)
+void HeavyMoleSetPhaseFromHealth(void)
 {
     if (gCurTask->health < gUnk_02007D00[9] >> 1)
         gUnk_02007D00[3] = 2;
@@ -2526,7 +2526,7 @@ s32 sub_080adaf8(s32 arg)
     return *pd;
 }
 
-void sub_080adb58(void)
+void HeavyMoleReactToDamage(void)
 {
     CreateChildTaskHere(142, 0);
     sub_0806619c(23, (u32)sub_080adb90, (u32)gUnk_082F65D4, 32, 0);
@@ -2565,7 +2565,7 @@ void sub_080adb90(void)
         sub_0806621c();
 }
 
-s32 sub_080adbf0(void)
+s32 HeavyMoleReactToDefeat(void)
 {
     struct Task *t;
     struct Task *u;
@@ -2988,7 +2988,7 @@ void sub_080ae37c(void)
 {
 }
 
-s32 sub_080ae380(s32 i)
+s32 HeavyMoleDefeatSweepFilter(s32 i)
 {
     s32 v;
 

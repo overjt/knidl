@@ -2695,31 +2695,31 @@ u32 gKrackoVariants[2] ACTOR_TBL(08749150) = {
 /* include/enemy.h; CallTableEntry(i, 2, ...) in KrackoJrInit, KrackoJrEnterState */
 u32 gKrackoJrStates[2] ACTOR_TBL(08749150) = {
     (u32)sub_080a7e44,
-    (u32)sub_080a85e4,
+    (u32)KrackoJrTransform,
 };
 /* include/enemy.h; CallTableEntry(i, 2, ...) in KrackoJrUpdate */
 u32 gKrackoJrStateUpdates[2] ACTOR_TBL(08749150) = {
     (u32)sub_080a8038,
-    (u32)sub_080a860c,
+    (u32)KrackoJrTransformUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 7, ...) in KrackoInit, KrackoEnterState */
 u32 gKrackoStates[7] ACTOR_TBL(08749150) = {
     (u32)sub_080a8878,
     (u32)sub_080a8970,
-    (u32)sub_080a8b6c,
+    (u32)KrackoWait,
     (u32)sub_080a8bf4,
-    (u32)sub_080a8d1c,
-    (u32)sub_080a8fdc,
+    (u32)KrackoLightningSweep,
+    (u32)KrackoSwoop,
     (u32)KrackoSummon,
 };
 /* include/enemy.h; CallTableEntry(i, 7, ...) in KrackoUpdate */
 u32 gKrackoStateUpdates[7] ACTOR_TBL(08749150) = {
     (u32)sub_080a8948,
     (u32)sub_080a8b44,
-    (u32)sub_080a8bcc,
+    (u32)KrackoWaitUpdate,
     (u32)sub_080a8c84,
-    (u32)sub_080a8f18,
-    (u32)sub_080a9304,
+    (u32)KrackoLightningSweepUpdate,
+    (u32)KrackoSwoopUpdate,
     (u32)KrackoSummonUpdate,
 };
 
@@ -2792,16 +2792,16 @@ u32 gNightmareWizardStarStateUpdates[1] ACTOR_TBL(08749be4) = {
 };
 
 /* ---- 0x08749D10-0x08749D1C: 1 table(s), 3 function pointer(s), section .actor_tbl_08749d10 ---- */
-/* include/enemy.h; CallTableEntry(i, 3, ...) in sub_080acf48 */
-u32 gUnk_08749D10[3] ACTOR_TBL(08749d10) = {
+/* include/enemy.h; CallTableEntry(i, 3, ...) in PaintRollerEnterState */
+u32 gPaintRollerStates[3] ACTOR_TBL(08749d10) = {
     (u32)Task_PaintRoller,
     (u32)sub_080acf68,
-    (u32)sub_080acffc,
+    (u32)PaintRollerSummon,
 };
 
 /* ---- 0x0874AD34-0x0874AD44: 1 table(s), 4 function pointer(s), section .actor_tbl_0874ad34 ---- */
-/* include/enemy.h; CallTableEntry(i, 4, ...) in sub_080ae470 */
-u32 gUnk_0874AD34[4] ACTOR_TBL(0874ad34) = {
+/* include/enemy.h; CallTableEntry(i, 4, ...) in NightmarePowerOrbUpdate */
+u32 gNightmarePowerOrbStateUpdates[4] ACTOR_TBL(0874ad34) = {
     (u32)sub_080af114,
     (u32)sub_080af144,
     (u32)sub_080af188,
@@ -2998,8 +2998,8 @@ u32 gPaintRollerPaintingStates[8] ACTOR_TBL(0874b540) = {
 };
 
 /* ---- 0x0874B5E4-0x0874B614: 2 table(s), 12 function pointer(s), section .actor_tbl_0874b5e4 ---- */
-/* include/enemy.h; CallTableEntry(i, 6, ...) in Task_HeavyMoleUpperArm, Task_HeavyMoleLowerArm, sub_080b1a00 */
-u32 gUnk_0874B5E4[6] ACTOR_TBL(0874b5e4) = {
+/* include/enemy.h; CallTableEntry(i, 6, ...) in Task_HeavyMoleUpperArm, Task_HeavyMoleLowerArm, HeavyMoleArmEnterState */
+u32 gHeavyMoleArmStates[6] ACTOR_TBL(0874b5e4) = {
     (u32)sub_080b1a1c,
     (u32)sub_080b1c04,
     (u32)sub_080b1d98,
@@ -3007,8 +3007,8 @@ u32 gUnk_0874B5E4[6] ACTOR_TBL(0874b5e4) = {
     (u32)sub_080b21a0,
     (u32)sub_080b20d4,
 };
-/* include/enemy.h; CallTableEntry(i, 6, ...) in sub_080b1910 */
-u32 gUnk_0874B5FC[6] ACTOR_TBL(0874b5e4) = {
+/* include/enemy.h; CallTableEntry(i, 6, ...) in HeavyMoleArmUpdate */
+u32 gHeavyMoleArmStateUpdates[6] ACTOR_TBL(0874b5e4) = {
     (u32)sub_080b1b2c,
     (u32)sub_080b1d2c,
     (u32)sub_080b1e20,
@@ -3024,17 +3024,17 @@ u32 gWhispyWoodsVariants[1] ACTOR_TBL(0874c12c) = {
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsInit, WhispyWoodsEnterState */
 u32 gWhispyWoodsStates[4] ACTOR_TBL(0874c12c) = {
-    (u32)sub_080b2ae4,
+    (u32)WhispyWoodsWait,
     (u32)sub_080b2b40,
     (u32)sub_080b2c18,
-    (u32)sub_080b2cf0,
+    (u32)WhispyWoodsDropApples,
 };
 /* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsUpdate */
 u32 gWhispyWoodsStateUpdates[4] ACTOR_TBL(0874c12c) = {
-    (u32)sub_080b2b28,
+    (u32)WhispyWoodsWaitUpdate,
     (u32)sub_080b2bf0,
     (u32)sub_080b2cc8,
-    (u32)sub_080b2d80,
+    (u32)WhispyWoodsDropApplesUpdate,
 };
 /* include/enemy.h; CallTableEntry(i, 1, ...) in sub_080b2dd4, sub_080b2e3c */
 u32 gUnk_0874C150[1] ACTOR_TBL(0874c12c) = {
@@ -3047,18 +3047,18 @@ u32 gUnk_0874C154[1] ACTOR_TBL(0874c12c) = {
 
 /* ---- 0x0874C21C-0x0874C240: 3 table(s), 9 function pointer(s), section .actor_tbl_0874c21c ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_WhispyWoodsApple */
-u32 gUnk_0874C21C[1] ACTOR_TBL(0874c21c) = {
-    (u32)sub_080b3090,
+u32 gWhispyWoodsAppleVariants[1] ACTOR_TBL(0874c21c) = {
+    (u32)WhispyWoodsAppleInit,
 };
-/* include/enemy.h; CallTableEntry(i, 4, ...) in sub_080b3090, sub_080b3110 */
-u32 gUnk_0874C220[4] ACTOR_TBL(0874c21c) = {
-    (u32)sub_080b312c,
+/* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsAppleInit, WhispyWoodsAppleEnterState */
+u32 gWhispyWoodsAppleStates[4] ACTOR_TBL(0874c21c) = {
+    (u32)WhispyWoodsAppleFall,
     (u32)sub_080b31a0,
     (u32)sub_080b3214,
     (u32)sub_080b328c,
 };
-/* include/enemy.h; CallTableEntry(i, 4, ...) in sub_080b30c8 */
-u32 gUnk_0874C230[4] ACTOR_TBL(0874c21c) = {
+/* include/enemy.h; CallTableEntry(i, 4, ...) in WhispyWoodsAppleUpdate */
+u32 gWhispyWoodsAppleStateUpdates[4] ACTOR_TBL(0874c21c) = {
     (u32)sub_080b319c,
     (u32)sub_080b31e0,
     (u32)sub_080b3258,
@@ -3067,14 +3067,14 @@ u32 gUnk_0874C230[4] ACTOR_TBL(0874c21c) = {
 
 /* ---- 0x0874C254-0x0874C260: 3 table(s), 3 function pointer(s), section .actor_tbl_0874c254 ---- */
 /* include/enemy.h; CallTableEntry(i, 1, ...) in Task_WhispyWoodsAirPuff */
-u32 gUnk_0874C254[1] ACTOR_TBL(0874c254) = {
-    (u32)sub_080b3368,
+u32 gWhispyWoodsAirPuffVariants[1] ACTOR_TBL(0874c254) = {
+    (u32)WhispyWoodsAirPuffInit,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_080b3368, sub_080b33bc */
-u32 gUnk_0874C258[1] ACTOR_TBL(0874c254) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in WhispyWoodsAirPuffInit, sub_080b33bc */
+u32 gWhispyWoodsAirPuffStates[1] ACTOR_TBL(0874c254) = {
     (u32)sub_080b33d8,
 };
-/* include/enemy.h; CallTableEntry(i, 1, ...) in sub_080b3398 */
-u32 gUnk_0874C25C[1] ACTOR_TBL(0874c254) = {
+/* include/enemy.h; CallTableEntry(i, 1, ...) in WhispyWoodsAirPuffUpdate */
+u32 gWhispyWoodsAirPuffStateUpdates[1] ACTOR_TBL(0874c254) = {
     (u32)sub_080b3758,
 };

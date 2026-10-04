@@ -153,10 +153,10 @@ void Task_WhispyWoodsApple(void)
     u = *c;
     u->frameTable = gWhispyWoodsAppleFrames;
     u->unk28 = 1;
-    CallTableEntry(u->variant, 1, gUnk_0874C21C);
+    CallTableEntry(u->variant, 1, gWhispyWoodsAppleVariants);
 }
 
-void sub_080b3090(void)
+void WhispyWoodsAppleInit(void)
 {
     struct Task **c;
     struct Task *t;
@@ -164,14 +164,14 @@ void sub_080b3090(void)
 
     c = &gCurTask;
     t = *c;
-    t->updateCallback = (u32)sub_080b30c8;
+    t->updateCallback = (u32)WhispyWoodsAppleUpdate;
     t->facing = t->unk74;
     ActorSetState(0);
     u = *c;
-    CallTableEntry(u->state, 4, gUnk_0874C220);
+    CallTableEntry(u->state, 4, gWhispyWoodsAppleStates);
 }
 
-void sub_080b30c8(void)
+void WhispyWoodsAppleUpdate(void)
 {
     struct Task **c;
     struct Task *t;
@@ -184,21 +184,21 @@ void sub_080b30c8(void)
         if ((u8)ActorCollideTerrain() == 0)
         {
             u = *c;
-            CallTableEntry(u->updateState, 4, gUnk_0874C230);
+            CallTableEntry(u->updateState, 4, gWhispyWoodsAppleStateUpdates);
         }
     }
     else
-        CallTableEntry(t->updateState, 4, gUnk_0874C230);
+        CallTableEntry(t->updateState, 4, gWhispyWoodsAppleStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
-void sub_080b3110(void)
+void WhispyWoodsAppleEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 4, gUnk_0874C220);
+    CallTableEntry(gCurTask->state, 4, gWhispyWoodsAppleStates);
 }
 
-void sub_080b312c(void)
+void WhispyWoodsAppleFall(void)
 {
     struct Task **c;
     s32 z;
@@ -276,7 +276,7 @@ void sub_080b31e0(void)
     if (t->pixelY > t->unk2C)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_080b3110, gCurTaskIdx);
+        TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
 
@@ -311,7 +311,7 @@ void sub_080b3258(void)
     if (t->pixelY > t->unk2C)
     {
         ActorSetState(3);
-        TaskSetEntry(sub_080b3110, gCurTaskIdx);
+        TaskSetEntry(WhispyWoodsAppleEnterState, gCurTaskIdx);
     }
 }
 
@@ -377,31 +377,31 @@ void Task_WhispyWoodsAirPuff(void)
     u->tileWord = z;
     u->facing = 255;
     u2 = *c;
-    CallTableEntry(u2->variant, 1, gUnk_0874C254);
+    CallTableEntry(u2->variant, 1, gWhispyWoodsAirPuffVariants);
 }
 
-void sub_080b3368(void)
+void WhispyWoodsAirPuffInit(void)
 {
     struct Task **c;
     struct Task *u;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080b3398;
+    (*c)->updateCallback = (u32)WhispyWoodsAirPuffUpdate;
     ActorSetState(0);
     u = *c;
-    CallTableEntry(u->state, 1, gUnk_0874C258);
+    CallTableEntry(u->state, 1, gWhispyWoodsAirPuffStates);
 }
 
-void sub_080b3398(void)
+void WhispyWoodsAirPuffUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0874C25C);
+    CallTableEntry(gCurTask->updateState, 1, gWhispyWoodsAirPuffStateUpdates);
     ActorCheckHits();
     ActorReactToHit();
 }
 
 void sub_080b33bc(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874C258);
+    CallTableEntry(gCurTask->state, 1, gWhispyWoodsAirPuffStates);
 }
 
 void sub_080b33d8(void)

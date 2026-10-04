@@ -247,16 +247,16 @@ s32 MrShineAndMrBrightReactToDamage(void);
 s32 MetaKnightReactToDamage(void);
 s32 MetaKnightReactToDefeat(void);
 s32 sub_080a7334(void);
-s32 sub_080a9760(void);
-s32 sub_080a97d8(void);
+s32 KrackoReactToDamage(void);
+s32 KrackoReactToDefeat(void);
 s32 NightmareWizardReactToDamage(void);
 s32 NightmareWizardReactToDefeat(void);
-void sub_080ad128(void);
-s32 sub_080ad13c(void);
-void sub_080adb58(void);
-s32 sub_080adbf0(void);
-void sub_080af26c(void);
-void sub_080af278(void);
+void PaintRollerReactToDamage(void);
+s32 PaintRollerReactToDefeat(void);
+void HeavyMoleReactToDamage(void);
+s32 HeavyMoleReactToDefeat(void);
+void NightmarePowerOrbReactToDamage(void);
+void NightmarePowerOrbReactToDefeat(void);
 s32 sub_080b1588(void);
 s32 sub_080b1594(void);
 s32 sub_080b15b4(void);
@@ -1801,8 +1801,8 @@ struct ActorVt gUnk_08749B3C ACTOR_TBL(08749b08) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080a9760,
-    .unk08 = (u32)sub_080a97d8,
+    .unk04 = (u32)KrackoReactToDamage,
+    .unk08 = (u32)KrackoReactToDefeat,
 };
 /* src/enemy_a93ec.c */
 struct ActorVt gUnk_08749B48 ACTOR_TBL(08749b08) = {
@@ -1853,8 +1853,8 @@ struct ActorVt gUnk_0874B4E0 ACTOR_TBL(0874b4e0) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080ad128,
-    .unk08 = (u32)sub_080ad13c,
+    .unk04 = (u32)PaintRollerReactToDamage,
+    .unk08 = (u32)PaintRollerReactToDefeat,
 };
 /* src/enemy_aa338.c */
 struct ActorVt gUnk_0874B4EC ACTOR_TBL(0874b4e0) = {
@@ -1869,8 +1869,8 @@ struct ActorVt gUnk_0874B4F8 ACTOR_TBL(0874b4e0) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080adb58,
-    .unk08 = (u32)sub_080adbf0,
+    .unk04 = (u32)HeavyMoleReactToDamage,
+    .unk08 = (u32)HeavyMoleReactToDefeat,
 };
 /* src/enemy_aa338.c */
 struct ActorVt gUnk_0874B504 ACTOR_TBL(0874b4e0) = {
@@ -1885,8 +1885,8 @@ struct ActorVt gUnk_0874B510 ACTOR_TBL(0874b4e0) = {
     .unk00 = -1,
     .unk01 = -1,
     .filler02 = { 0x00, 0x00 },
-    .unk04 = (u32)sub_080af26c,
-    .unk08 = (u32)sub_080af278,
+    .unk04 = (u32)NightmarePowerOrbReactToDamage,
+    .unk08 = (u32)NightmarePowerOrbReactToDefeat,
 };
 
 /* ---- 0x0874BF58-0x0874BFF8: 12 record(s), section .actor_tbl_0874bf58 ---- */

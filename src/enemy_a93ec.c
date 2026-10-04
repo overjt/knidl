@@ -219,7 +219,7 @@ void sub_080a96dc(void)
         gUnk_02007D00[4] = (g + 16) & m;
 }
 
-void sub_080a9738(void)
+void KrackoLookAtNearestPlayer(void)
 {
     s32 v;
 
@@ -227,7 +227,7 @@ void sub_080a9738(void)
     gCurTask->frame = (v >> 6) + 4;
 }
 
-s32 sub_080a9760(void)
+s32 KrackoReactToDamage(void)
 {
     sub_0806619c(13, (u32)sub_080a9794, (u32)gUnk_082FD438, 48, 0);
     gUnk_02007D00[1] = gUnk_02007D00[0];
@@ -245,7 +245,7 @@ void sub_080a9794(void)
     }
 }
 
-s32 sub_080a97d8(void)
+s32 KrackoReactToDefeat(void)
 {
     ResetFadeAndBlend();
     TaskStop();
@@ -256,7 +256,7 @@ s32 sub_080a97d8(void)
     return 1;
 }
 
-void sub_080a9814(void)
+void KrackoDropStarRodPiece(void)
 {
     gCurTask->unk34 = 2;
     CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
@@ -504,7 +504,7 @@ void KrackoLightningUpdate(void)
     }
 }
 
-s32 sub_080a9e88(s32 a)
+s32 KrackoDefeatSweepFilter(s32 a)
 {
     if (a == gCurTask->unk46)
         return 0;

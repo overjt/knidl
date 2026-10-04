@@ -63,7 +63,7 @@ void LoadRoomMetaKnightsGfx();
 s32 sub_080b5a94();
 s32 SpawnRoomEnemy();
 s32 sub_080b5d84();
-void sub_080a932c(void)
+void KrackoJrClampToView(void)
 {
     struct Task *t = gCurTask;
     struct Task *u;

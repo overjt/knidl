@@ -556,12 +556,12 @@ void sub_080a1d84(void)
 
     a = gCurTask->u8C.actor;
     ActorSetHitReactions((u32)gUnk_0874898C);
-    a->defeatSweepCallback = (u32)sub_080a1dbc;
+    a->defeatSweepCallback = (u32)MrShineAndMrBrightDefeatSweepFilter;
     TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-/* sub_080a1dbc (0x080A1DBC-0x080A1DD4) */
-s32 sub_080a1dbc(s32 a)
+/* MrShineAndMrBrightDefeatSweepFilter (0x080A1DBC-0x080A1DD4) */
+s32 MrShineAndMrBrightDefeatSweepFilter(s32 a)
 {
     if ((u16)gTaskSlotTypes[a] == 63)
         return 0;
@@ -2667,8 +2667,8 @@ void sub_080a46e0(void)
     ActorDestroySlot(gUnk_02006040[5]);
 }
 
-/* sub_080a4708 (0x080A4708-0x080A472C) */
-void sub_080a4708(void)
+/* MrShineAndMrBrightDropStarRodPiece (0x080A4708-0x080A472C) */
+void MrShineAndMrBrightDropStarRodPiece(void)
 {
     CreateStarRodPiece(0, gCurTask->pixelX, gCurTask->pixelY);
 }

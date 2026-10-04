@@ -642,12 +642,12 @@ u32 gUnk_0873E734[9] GAME_TBL(0873e734) = {
 /* include/actor.h; CallTableEntry(i, 9, ...) in sub_0806b12c */
 u32 gUnk_0873E758[9] GAME_TBL(0873e734) = {
     (u32)sub_080a150c,
-    (u32)sub_080ad160,
+    (u32)PaintRollerDropStarRodPiece,
     (u32)sub_080a73b4,
     (u32)sub_080adc44,
-    (u32)sub_080a4708,
+    (u32)MrShineAndMrBrightDropStarRodPiece,
     (u32)sub_080b2dd4,
-    (u32)sub_080a9814,
+    (u32)KrackoDropStarRodPiece,
     (u32)sub_080af308,
     (u32)sub_080ab93c,
 };
