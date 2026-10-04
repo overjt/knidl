@@ -502,11 +502,14 @@ def verify_diff(ref):
         ref_defs = set()
     alias_field = {a: f for a, f in ref_defs}
     origin = {a: a for a in alias_field}  # final alias -> its name in REF
+    alias_tag = {}  # alias -> the struct whose member it names (#155 run 7: PlayerState)
     for r in aliases:
         tag, o = r["old"].split(".", 1)
         tag2, n = r["new"].split(".", 1)
-        if tag != "Task" or tag2 != "Task":
-            raise RenameError("alias %s -> %s is not a struct Task register" % (r["old"], r["new"]))
+        if tag != tag2 or tag not in ("Task", "PlayerState"):
+            raise RenameError("alias %s -> %s is not a struct Task or PlayerState register"
+                              % (r["old"], r["new"]))
+        alias_tag[n] = tag
         if o in alias_field:
             f = alias_field.pop(o)
             if alias_field.get(n, f) != f:
@@ -517,8 +520,8 @@ def verify_diff(ref):
         else:
             alias_field[n] = o
     # accepted token pairs (REF's token, the tree's token)
-    alias_pairs = {(f, a) for a, f in alias_field.items()}
-    alias_pairs |= {(old, a) for a, old in origin.items() if old != a}
+    alias_pairs = {(f, a): alias_tag.get(a, "Task") for a, f in alias_field.items()}
+    alias_pairs.update({(old, a): alias_tag.get(a, "Task") for a, old in origin.items() if old != a})
     field_uses = {}
     # Named constants (tools/constants.py, #155 run 6): `docs/analysis/
     # constants.csv` rows added since REF.  A C site may spell such a
@@ -932,8 +935,8 @@ def fields_only_differ(a, b, pairs, uses, alias_pairs=()):
     by_pair = {}
     for (tag, o), n in pairs.items():
         by_pair.setdefault((o, n), set()).add(tag)
-    for o, n in alias_pairs:
-        by_pair.setdefault((o, n), set()).add("Task")
+    for (o, n), tag in dict(alias_pairs).items():
+        by_pair.setdefault((o, n), set()).add(tag)
     depth = 0
     stack = []      # (tag, depth of its body)
     pending = None  # tag of a `struct TAG` whose `{` may follow
