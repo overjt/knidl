@@ -15,8 +15,8 @@
  * ActorFlashPalette / ActorClearPaletteOverride and drives the three animation calls from the
  * per-frame row gUnk_087437D0[Task.frame].
  *
- * States 0-10 then follow as <body, guard> pairs (BonkersState0 /
- * BonkersState0Update, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
+ * States 0-10 then follow as <body, guard> pairs (BonkersIntro /
+ * BonkersIntroUpdate, BonkersWalk / BonkersWalkUpdate, ...): the body is a run of
  * TaskYieldTrampoline waits that steps Task.frame, clears and then waits on
  * Task.onGround (set when the boss lands) and pushes 16.16 velocities through
  * TaskSetMotionXFacing / TaskSetMotionY, and the guard re-arms BonkersEnterState through
@@ -139,7 +139,7 @@ void BonkersUpdate(void)
     ActorReactToHit();
 }
 
-void BonkersState0(void)
+void BonkersIntro(void)
 {
     struct Task *t;
     u8 zero;
@@ -169,7 +169,7 @@ void BonkersState0(void)
     TaskSleepForever();
 }
 
-void BonkersState0Update(void)
+void BonkersIntroUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(BonkersEnterState, gCurTaskIdx);

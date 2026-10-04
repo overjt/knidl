@@ -121,7 +121,7 @@ void PoppyBrosSrUpdate(void)
     ActorReactToHit();
 }
 
-void PoppyBrosSrState0(void)
+void PoppyBrosSrIntro(void)
 {
     struct Task *t;
     u8 zero;
@@ -144,7 +144,7 @@ void PoppyBrosSrState0(void)
     TaskSleepForever();
 }
 
-void PoppyBrosSrState0Update(void)
+void PoppyBrosSrIntroUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);

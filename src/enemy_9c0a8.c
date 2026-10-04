@@ -384,7 +384,7 @@ stumble:
     TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);
 }
 
-void AxeKnightState1(void)
+void AxeKnightSlash(void)
 {
     struct Task *t;
     s32 k;
@@ -439,7 +439,7 @@ void AxeKnightState1(void)
     TaskSleepForever();
 }
 
-void AxeKnightState1Update(void)
+void AxeKnightSlashUpdate(void)
 {
     if (gCurTask->state != 1)
         TaskSetEntry(AxeKnightEnterState, gCurTaskIdx);

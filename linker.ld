@@ -4083,7 +4083,7 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_08742814 == 0x08742814, "MATCHING: actor_rodata_08742814 moved")
     ASSERT(!MATCHING || gBlipperVariants == 0x087428C0, "MATCHING: actor_tbl_087428c0 moved")
     ASSERT(!MATCHING || actor_rodata_087428e8 == 0x087428E8, "MATCHING: actor_rodata_087428e8 moved")
-    ASSERT(!MATCHING || gUnk_08742908 == 0x08742908, "MATCHING: actor_tbl_08742908 moved")
+    ASSERT(!MATCHING || gBlipperWaveStates == 0x08742908, "MATCHING: actor_tbl_08742908 moved")
     ASSERT(!MATCHING || actor_rodata_08742930 == 0x08742930, "MATCHING: actor_rodata_08742930 moved")
     ASSERT(!MATCHING || gGipVariants == 0x08742940, "MATCHING: actor_tbl_08742940 moved")
     ASSERT(!MATCHING || actor_rodata_08742998 == 0x08742998, "MATCHING: actor_rodata_08742998 moved")
