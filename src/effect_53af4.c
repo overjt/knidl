@@ -317,7 +317,7 @@ void PlayerEffectSkidDust(void)
     switch (t->playerEffectSpawnWord & 0xFF0000)
     {
     case 0:
-        t->unk28 = 0;
+        t->playerEffectStopRequested = 0;
         t->unk2C = t->player->mode;
         t->unk30 = t->playerEffectSpawnWord & 0xFF;
         t->updateCallback = (u32)PlayerEffectSkidDustUpdate;
@@ -349,7 +349,7 @@ void PlayerEffectSkidDust(void)
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(1);
             TaskStop();
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
         break;
     case 0x10000:
         gCurTask->posX = (gCurTask->pixelX + RandomSpreadFacing(-8, 1, 8)) << 16;
@@ -371,31 +371,31 @@ void PlayerEffectSkidDustUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0)
+    if (t->playerEffectStopRequested == 0)
     {
         u8 m = t->player->mode;
 
         if (m != t->unk2C || m == 16)
         {
-            t->unk28 = 1;
+            t->playerEffectStopRequested = 1;
             return;
         }
         switch (t->playerEffectSpawnWord & 0xFF00)
         {
         case 0:
             if ((t->u8C.parentTask)->onGround == 0)
-                t->unk28 = 1;
+                t->playerEffectStopRequested = 1;
         case 0x100:
         {
             struct Task *u = gCurTask;
 
             if (((u8 *)u)[24] != 0 && --u->unk30 == 0)
-                u->unk28++;
+                u->playerEffectStopRequested++;
             break;
         }
         case 0x200:
             if (PlayerGetFacingSlope(t->parent) != 4)
-                gCurTask->unk28++;
+                gCurTask->playerEffectStopRequested++;
             break;
         }
     }

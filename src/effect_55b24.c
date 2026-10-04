@@ -34,7 +34,7 @@ void sub_08055b24(void)
     t = gCurTask;
     t->frameTable = gUnk_0874C718;
     TaskStop();
-    gCurTask->unk28 = 0;
+    gCurTask->playerEffectStopRequested = 0;
     if ((gCurTask->playerEffectSpawnWord & 15) == 0)
     {
         do
@@ -62,7 +62,7 @@ void sub_08055b24(void)
             TaskYieldTrampoline(2);
             gCurTask->frame += 2;
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
     }
     else
     {
@@ -87,7 +87,7 @@ void sub_08055b24(void)
             TaskYieldTrampoline(2);
             gCurTask->frame = 0xFFFF;
             TaskYieldTrampoline(4);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
     }
     TaskExitTrampoline();
 }
@@ -98,13 +98,13 @@ void sub_08055d24(void)
 
     if ((t->playerEffectSpawnWord & 15) == 0)
     {
-        if (t->unk28 == 0 && (t->player->mode != 17 || (t->u8C.parentTask)->onGround != 0))
-            t->unk28 = 1;
+        if (t->playerEffectStopRequested == 0 && (t->player->mode != 17 || (t->u8C.parentTask)->onGround != 0))
+            t->playerEffectStopRequested = 1;
     }
     else
     {
-        if (t->unk28 == 0 && t->player->mode != 17)
-            t->unk28 = 1;
+        if (t->playerEffectStopRequested == 0 && t->player->mode != 17)
+            t->playerEffectStopRequested = 1;
     }
 }
 
@@ -118,11 +118,11 @@ void sub_08055d74(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C7A4;
-    t->unk28 = 0;
+    t->playerEffectStopRequested = 0;
     TaskStop();
     if ((gCurTask->playerEffectSpawnWord & 15) == 0)
     {
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->playerEffectStopRequested == 0)
         {
             gCurTask->posX = (RandomSpreadFacing(-16, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(-16, 1, 32) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -164,7 +164,7 @@ void sub_08055d74(void)
     }
     else
     {
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->playerEffectStopRequested == 0)
         {
             gCurTask->posX = (RandomSpreadFacing(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -189,13 +189,13 @@ void sub_080560fc(void)
 
     if ((t->playerEffectSpawnWord & 15) == 0)
     {
-        if (t->unk28 == 0 && (t->player->mode != 17 || (t->u8C.parentTask)->onGround != 0))
-            t->unk28 = 1;
+        if (t->playerEffectStopRequested == 0 && (t->player->mode != 17 || (t->u8C.parentTask)->onGround != 0))
+            t->playerEffectStopRequested = 1;
     }
     else
     {
-        if (t->unk28 == 0 && t->player->mode != 17)
-            t->unk28 = 1;
+        if (t->playerEffectStopRequested == 0 && t->player->mode != 17)
+            t->playerEffectStopRequested = 1;
     }
 }
 
@@ -209,9 +209,9 @@ void sub_0805614c(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C7B4;
-    t->unk28 = 0;
+    t->playerEffectStopRequested = 0;
     TaskStop();
-    for (gCurTask->playerEffectLoopCount = 0; (s16)gCurTask->playerEffectLoopCount <= 1 && gCurTask->unk28 == 0; gCurTask->playerEffectLoopCount++)
+    for (gCurTask->playerEffectLoopCount = 0; (s16)gCurTask->playerEffectLoopCount <= 1 && gCurTask->playerEffectStopRequested == 0; gCurTask->playerEffectLoopCount++)
     {
         gCurTask->posX = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
         gCurTask->posY = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -225,7 +225,7 @@ void sub_0805614c(void)
             TaskYieldTrampoline(3);
             gCurTask->unk6E++;
         } while (gCurTask->unk6E <= 4);
-        if (gCurTask->unk28 != 0)
+        if (gCurTask->playerEffectStopRequested != 0)
             break;
         gCurTask->posX = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelX) << 16;
         gCurTask->posY = (RandomSpread(-12, 1, 24) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -247,8 +247,8 @@ void sub_08056300(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0 && t->player->mode != 17)
-        t->unk28 = 1;
+    if (t->playerEffectStopRequested == 0 && t->player->mode != 17)
+        t->playerEffectStopRequested = 1;
 }
 
 void sub_08056320(void)
@@ -261,14 +261,14 @@ void sub_08056320(void)
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C7CC;
-    t->unk28 = 0;
+    t->playerEffectStopRequested = 0;
     TaskStop();
     if (gFrameCount & 1)
         gCurTask->facing = 1;
     else
         gCurTask->facing = -gCurTask->facing;
     gCurTask->velY = -0x8000;
-    while (gCurTask->unk28 == 0)
+    while (gCurTask->playerEffectStopRequested == 0)
     {
         struct Task *u = gCurTask;
 
@@ -296,6 +296,6 @@ void sub_08056428(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0 && t->player->mode != 17)
-        t->unk28 = 1;
+    if (t->playerEffectStopRequested == 0 && t->player->mode != 17)
+        t->playerEffectStopRequested = 1;
 }

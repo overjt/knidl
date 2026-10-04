@@ -618,11 +618,11 @@ void ActorAttachedEnterMouth(void)
         f = u->u76.subtype;
         if (f == 0)
         {
-            p->pendingAbility = u->unk18;
+            p->pendingAbility = u->abilityStarAbility;
             v = gCurTask;
-            p->pendingAbilityUses = v->unk1C;
+            p->pendingAbilityUses = v->abilityStarAbilityUses;
             w = gCurTask;
-            if (w->unk20 == w->parent)
+            if (w->abilityStarOwnerSlot == w->parent)
                 p->ownStarInMouth = 1;
             if (gUnk_0300244C == 0)
                 return;

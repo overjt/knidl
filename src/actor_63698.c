@@ -1496,9 +1496,9 @@ s32 CreateAbilityStar(u8 p2)
         t = &gTasks[i];
         t->player = p = &gPlayerStates[gCurTaskIdx];
         a = t->u8C.actor;
-        t->unk18 = p->ability;
-        t->unk1C = p->abilityUses;
-        t->unk20 = gCurTaskIdx;
+        t->abilityStarAbility = p->ability;
+        t->abilityStarAbilityUses = p->abilityUses;
+        t->abilityStarOwnerSlot = gCurTaskIdx;
         a->ability = p->ability;
     }
     CreateChildTaskHere(TASK_ABILITY_RELEASE_FLASH, 0);

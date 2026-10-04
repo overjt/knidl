@@ -22,13 +22,16 @@
 
 /* AbilityStar - Ability Star (task type #68, Task_AbilityStar;
    gAbilityStarStates) */
+#define abilityStarAbility unk18 /* s32: the ability the star gives: the dropping player's ability */
+#define abilityStarAbilityUses unk1C /* s32: the uses left of that ability */
+#define abilityStarOwnerSlot unk20 /* s32: task slot of the player who dropped the star */
 #define abilityStarLifeTimer unk28 /* s32: frames the ability star lasts (260); at 0 it dies */
 #define abilityStarFrameTimer unk2C /* s32: frames until the star's next spin frame (every 2; frames 4-19) */
 #define abilityStarPickupDelay unk30 /* s32: frames (48) before the star's hits are checked, so it cannot be taken at once */
 
 /* Actor - every actor: a task made by CreateActor, CreateChildActor or
-   CreateItemOrObject (src/actor_63698.c), which also bind Task.u8C.actor; the room
-   objects of kinds 0-6 come through CreateActor */
+   CreateItemOrObject (src/actor_63698.c), which also bind Task.u8C.actor; the
+   room objects of kinds 0-6 come through CreateActor */
 #define actorAnimDelay18 unk18 /* s32: frames until the next animation-script step (ActorStartAnim / ActorTickAnim) in unk18 */
 #define actorDrownFrame unk18 /* s16: frame a drowning actor holds (ActorStartDrown's argument; -2 means 0) */
 #define actorMouthFull unk18 /* s32: 1 when the carrier already held something (PlayerState.heldCount): the actor is let go */
@@ -1128,6 +1131,7 @@
 #define playerActionDone28 unk28 /* s32: 1 once the action's body has finished; its update then hands over (as playerActionDone) */
 #define playerCrashBlendRatio unk28 /* s32: Crash: BlendColors ratio of the palette flash (0-256; +85 in the body, +10 in the update) */
 #define playerDuckDropTimer unk28 /* s32: Duck: frames (8) of ducking on a floor gTerrainResult.unk5 marks before it drops through */
+#define playerGoalGameSpringSlot unk28 /* s32: Goal game: the task index of the player's spring (TASK_GOAL_GAME_SPRING) */
 #define playerHeldBaseFrame unk28 /* s32: frame the captor-pose states start from (0x11C1 or 0x133, by PlayerState.mouthState) */
 #define playerHeldFrameTimer unk28 /* s32: frames until the held player's next frame step (8) */
 #define playerHighFallPhase unk28 /* s32: High fall: 0 in the opening frames, 1 after; the update then registers the body collider */
@@ -1143,9 +1147,12 @@
 #define playerParasolSwayVelX unk2C /* s32: Parasol falling: the sway's X speed, added to posX every frame by PlayerUpdate */
 #define playerPoseSlope unk2C /* s32: Stand / Duck: the slope (PlayerState.slope) the pose was drawn for; a change re-enters it */
 #define playerFallBumped unk30 /* s32: Fall: 1 when it began from a bump (bumpKind bit 0); the body then skips its start frames */
+#define playerGoalGameLayer unk30 /* s32: Goal game from the launch on: the layer (score sign) reached, row of the layer tables */
+#define playerGoalGameSpringTimer unk30 /* s32: Goal game before the launch: frames on the spring, to 35 (24 = fully pressed) */
 #define playerHeldSwallowFrameCount unk30 /* s32: frame steps left while the player is being swallowed (2) */
 #define playerInhaleCaught unk30 /* s32: Inhale: 1 once something is attached and the catch offset script has started */
 #define playerLadderDir unk30 /* s32: Ladder: the direction it last climbed (the variant: 1 up, 2 down) */
+#define playerGoalGameLaunchPower unk34 /* s32: Goal game: the launch power 1..25 from the press timing, row of the launch tables */
 #define playerHeldBounceEnded unk34 /* s32: 1 once a bounce-off is over (or health is 0): the update drops the player */
 #define playerHeldSpitTimer unk34 /* s32: frames until the spat-out player is let go (48; 32 when its health is 0) */
 #define playerHeldWobbleStep unk34 /* s32: step of the wobble in the captor's hands (0-14: gUnk_0873E348 / gUnk_0873E388) */
@@ -1173,6 +1180,7 @@
 /* PlayerEffect - the player's effect objects (task type #7,
    Task_PlayerEffect; gPlayerEffectVariants) */
 #define playerEffectSpawnWord unk18 /* s32: variant << 24 | the spawner's 24-bit argument; the low bits pick the effect's form */
+#define playerEffectStopRequested unk28 /* s32: set to 1 by the effect's update when its player condition ends; the body loops until then */
 #define playerEffectLoopCount unk6C /* s16: the effect's loop counter (frame runs, puffs), counted from 0 */
 
 /* PlayerObject - the player's objects (task type #6, Task_PlayerObject;

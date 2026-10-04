@@ -34,7 +34,7 @@ void PlayerEffectIceBreathCloud(void)
     t->updateCallback = (u32)PlayerEffectIceBreathCloudUpdate;
     t->frameTable = gUnk_08751E5C;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 8;
-    t->unk28 = 0;
+    t->playerEffectStopRequested = 0;
     switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
@@ -50,7 +50,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x800;
             gCurTask->frame = 4;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(-4, 1, 8) << 16;
@@ -59,7 +59,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x400;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 8) << 16;
@@ -68,7 +68,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x400;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(16, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 16) << 16;
@@ -77,7 +77,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x800;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(16, 1, 32) << 16;
             gCurTask->posY = RandomSpread(-12, 1, 16) << 16;
@@ -86,7 +86,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x800;
             gCurTask->frame = 5;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(-4, 1, 8) << 16;
@@ -95,7 +95,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x400;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 8) << 16;
@@ -104,7 +104,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x400;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(16, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 16) << 16;
@@ -113,7 +113,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x800;
             gCurTask->frame = 4;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(16, 1, 32) << 16;
             gCurTask->posY = RandomSpread(-12, 1, 16) << 16;
@@ -122,7 +122,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x800;
             gCurTask->frame += 2;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(-4, 1, 8) << 16;
@@ -131,7 +131,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x400;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 8) << 16;
@@ -140,7 +140,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x400;
             gCurTask->frame = 4;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(16, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 16) << 16;
@@ -149,7 +149,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x800;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(16, 1, 32) << 16;
             gCurTask->posY = RandomSpread(-12, 1, 16) << 16;
@@ -158,7 +158,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x800;
             gCurTask->frame += 2;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(-4, 1, 8) << 16;
@@ -167,7 +167,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = 0x400;
             gCurTask->frame = 4;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(12, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 8) << 16;
@@ -176,7 +176,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x400;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = RandomSpreadFacing(16, 1, 32) << 16;
             gCurTask->posY = RandomSpread(4, 1, 16) << 16;
@@ -185,7 +185,7 @@ void PlayerEffectIceBreathCloud(void)
             gCurTask->accelY = -0x800;
             gCurTask->frame++;
             TaskYieldTrampoline(16);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
         }
         break;
@@ -208,7 +208,7 @@ void PlayerEffectIceBreathCloud(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
         break;
     case 2:
         gCurTask->layer = 8;
@@ -229,7 +229,7 @@ void PlayerEffectIceBreathCloud(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk28 == 0);
+        } while (gCurTask->playerEffectStopRequested == 0);
         break;
     }
     TaskExitTrampoline();
@@ -239,8 +239,8 @@ void PlayerEffectIceBreathCloudUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0 && (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing))
-        t->unk28 = 1;
+    if (t->playerEffectStopRequested == 0 && (t->player->mode != 13 || t->facing != (t->u8C.parentTask)->facing))
+        t->playerEffectStopRequested = 1;
     if (!(gCurTask->player->unk40 & 0x100) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);
     if (gCurTask->player->ability != ABILITY_ICE)
@@ -258,7 +258,7 @@ void PlayerEffectFreezeAura(void)
     t = gCurTask;
     t->frameTable = gUnk_08751E7C;
     t->tileWord = ((t->u8C.parentTask)->tileWord + 0x1800) | 12;
-    t->unk28 = 0;
+    t->playerEffectStopRequested = 0;
     switch (t->playerEffectSpawnWord & 15)
     {
     case 0:
@@ -277,7 +277,7 @@ void PlayerEffectFreezeAura(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = (RandomSpread(-24, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(-12, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -296,14 +296,14 @@ void PlayerEffectFreezeAura(void)
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
         }
         break;
     case 1:
         t->frame = 0xFFFF;
         TaskYieldTrampoline(5);
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->playerEffectStopRequested == 0)
         {
             gCurTask->posX = (RandomSpread(-20, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(16, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -318,7 +318,7 @@ void PlayerEffectFreezeAura(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = (RandomSpread(-20, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(0, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -338,7 +338,7 @@ void PlayerEffectFreezeAura(void)
     case 2:
         t->frame = 0xFFFF;
         TaskYieldTrampoline(10);
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->playerEffectStopRequested == 0)
         {
             gCurTask->posX = (RandomSpread(-12, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(20, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -353,7 +353,7 @@ void PlayerEffectFreezeAura(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posY = (RandomSpread(4, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
             TaskSetMotionXFacing(0xC000, -0x1000);
@@ -372,7 +372,7 @@ void PlayerEffectFreezeAura(void)
     case 3:
         t->frame = 0xFFFF;
         TaskYieldTrampoline(15);
-        while (gCurTask->unk28 == 0)
+        while (gCurTask->playerEffectStopRequested == 0)
         {
             gCurTask->posX = (RandomSpread(-8, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(4, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -387,7 +387,7 @@ void PlayerEffectFreezeAura(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-            if (gCurTask->unk28 != 0)
+            if (gCurTask->playerEffectStopRequested != 0)
                 break;
             gCurTask->posX = (RandomSpread(-8, 1, 32) + (gCurTask->u8C.parentTask)->pixelX) << 16;
             gCurTask->posY = (RandomSpread(-12, 1, 8) + (gCurTask->u8C.parentTask)->pixelY) << 16;
@@ -419,13 +419,13 @@ void PlayerEffectFreezeAuraUpdate(void)
 
     if (!(p->unk40 & 0x100))
     {
-        if (t->unk28 == 0 && (p->mode != 13 || (t->u8C.parentTask)->variant != 1))
-            t->unk28 = 1;
+        if (t->playerEffectStopRequested == 0 && (p->mode != 13 || (t->u8C.parentTask)->variant != 1))
+            t->playerEffectStopRequested = 1;
     }
     else
     {
-        if (t->unk28 == 0 && p->mode != 13)
-            t->unk28 = 1;
+        if (t->playerEffectStopRequested == 0 && p->mode != 13)
+            t->playerEffectStopRequested = 1;
     }
     if (!(gCurTask->player->unk40 & 0x100) && ((gCurTask->u8C.parentTask)->waterFlags & 1))
         TaskFree(gCurTaskIdx);

@@ -48,9 +48,9 @@ void PlayerEffectRunDust(void)
     {
     case 0:
         t->updateCallback = (u32)PlayerEffectRunDustUpdate;
-        t->unk28 = 0;
+        t->playerEffectStopRequested = 0;
         t->playerEffectLoopCount = 0;
-        while (t->unk28 == 0)
+        while (t->playerEffectStopRequested == 0)
         {
             u = gCurTask;
             if (u->facing == 1)
@@ -102,8 +102,8 @@ void PlayerEffectRunDustUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if (t->unk28 == 0 && (t->player->mode != 2 || (t->u8C.parentTask)->onGround == 0))
-        t->unk28 = 1;
+    if (t->playerEffectStopRequested == 0 && (t->player->mode != 2 || (t->u8C.parentTask)->onGround == 0))
+        t->playerEffectStopRequested = 1;
 }
 
 void PlayerEffectSlideDust(void)
