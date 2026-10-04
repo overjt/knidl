@@ -555,9 +555,12 @@ ZONES = (
     ("data", 0x080CFDE4, "(data)"),
 )
 
-# Struct Task fields whose meaning changes with the task family.
+# Struct Task fields whose meaning changes with the task family: the
+# registers include/task_vars.h names per family (#155 run 5), and u76's
+# unk76 member.
 TASK_FAMILY_FIELDS = {"unk18", "unk1C", "unk20", "unk24", "unk28", "unk2C",
-                      "unk30", "unk34", "unk46", "unk74", "unk76"}
+                      "unk30", "unk34", "unk46", "unk6C", "unk6E", "unk70",
+                      "unk74", "unk76"}
 
 REASONS = {
     "fn-game": "tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5)",
@@ -568,7 +571,7 @@ REASONS = {
     "rom-asset": "asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
     "rom-position": "documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4)",
-    "field-task-family": "per-family Task fields: the meaning changes with the task type, a view per family needs the owner (#155)",
+    "field-task-family": "per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits",
     "field-header": "tracked by #155: the field's role is not proven",
     "field-local": "local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`)",
     "loc": "none left: the code is C",
@@ -756,6 +759,19 @@ def placeholder_census():
     if local:
         add("struct field", "field-local", local)
     extra["header_structs"] = header_structs
+    # the per-family register aliases (include/task_vars.h, #155 run 5)
+    aliases = {}
+    vars_h = os.path.join(ROOT, "include", "task_vars.h")
+    if os.path.exists(vars_h):
+        fam = None
+        for line in read("include/task_vars.h").split("\n"):
+            m = re.match(r"/\* ([A-Z]\w*) - ", line)
+            if m:
+                fam = m.group(1)
+            m = re.match(r"#define (\w+) (unk[0-9A-F]+) ", line)
+            if m and fam:
+                aliases.setdefault(fam, []).append(m.group(1))
+    extra["aliases"] = aliases
     # loc_ labels
     loc = 0
     for top in ("asm", "src", "include", "data"):
@@ -801,6 +817,12 @@ def census_markdown(rows, by_zone, extra):
     unk = sum(v[1] for v in by_zone.values())
     out.append("| all | | %d | %d |" % (tot, unk))
     out.append("")
+    aliases = extra["aliases"]
+    if aliases:
+        out.append("Register aliases (include/task_vars.h): %d in %d families: " % (
+            sum(len(v) for v in aliases.values()), len(aliases)) + ", ".join(
+            "%s %d" % (f, len(v)) for f, v in sorted(aliases.items())) + ".")
+        out.append("")
     out.append("`unk*` fields by header struct: " + ", ".join(
         "`%s` %d" % (s, n) for s, n in sorted(extra["header_structs"].items(), key=lambda x: (-x[1], x[0]))) + ".")
     out.append("")

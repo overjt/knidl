@@ -461,8 +461,18 @@ def verify_diff(ref):
         raise RenameError("%s: rows before %s were edited, not appended" % (renames_rel, ref))
     added = now[len(before):]
     fields = [r for r in added if r["kind"] == "field"]
-    added = [r for r in added if r["kind"] != "field"]
+    aliases = [r for r in added if r["kind"] == "alias"]
+    added = [r for r in added if r["kind"] not in ("field", "alias")]
     field_pairs = compose_field_renames(fields)
+    # Task register aliases (tools/task_alias.py): `Task.unkXX` -> `Task.alias`,
+    # an object-like macro in include/task_vars.h used after `.`/`->`.
+    alias_pairs = set()
+    for r in aliases:
+        tag, o = r["old"].split(".", 1)
+        tag2, n = r["new"].split(".", 1)
+        if tag != "Task" or tag2 != "Task":
+            raise RenameError("alias %s -> %s is not a struct Task register" % (r["old"], r["new"]))
+        alias_pairs.add((o, n))
     field_uses = {}
     # Compose the renames since REF into one forward map (old -> final name),
     # following chains (A -> B, then B -> C), and apply it to REF's text the
@@ -494,6 +504,20 @@ def verify_diff(ref):
         code, path = line.split("\t", 1)
         if path == renames_rel:
             continue
+        if path == TASK_VARS:
+            # The alias macros: only #define lines (and the guard) outside
+            # comments, exactly the ref's aliases plus the logged ones.
+            checked += 1
+            try:
+                old_defs = defines_of(git("show", "%s:%s" % (ref, path)))
+            except RenameError:
+                old_defs = set()
+            with open(os.path.join(ROOT, path), encoding="utf-8") as f:
+                new_defs = defines_of(f.read())
+            if new_defs is None or old_defs is None or \
+                    new_defs != old_defs | {(n, o) for o, n in alias_pairs}:
+                problems.append("%s: its #define lines are not the logged aliases" % path)
+            continue
         if not path.startswith(surface):
             outside.append(path)
             continue
@@ -508,6 +532,8 @@ def verify_diff(ref):
             old = remap(old)
         with open(os.path.join(ROOT, path), encoding="utf-8") as f:
             new = f.read()
+        if path == "include/task.h" and '#include "task_vars.h"' not in old:
+            new = new.replace('#include "task_vars.h"\n', "", 1)
         if path == rel(CONFIG):
             # Compare the config structurally: the tool re-sorts
             # external_defined, which moves JSON's comma-less last line.
@@ -553,8 +579,9 @@ def verify_diff(ref):
                 # different run of whitespace behind, which is not a code
                 # change.  (make compare remains the byte-level proof.)
                 a, b = collapse_ws(a), collapse_ws(b)
-            if a != b and not (field_pairs and not is_asm
-                               and fields_only_differ(a, b, field_pairs, field_uses)):
+            if a != b and not ((field_pairs or alias_pairs) and not is_asm
+                               and fields_only_differ(a, b, field_pairs, field_uses,
+                                                      alias_pairs)):
                 problems.append("%s: code differs beyond the renames" % path)
             elif ([qualify_fields(c, field_pairs) for c in comments_of(old, is_asm)]
                   != comments_of(new, is_asm)):
@@ -562,11 +589,14 @@ def verify_diff(ref):
             continue
         if old != new:
             problems.append("%s: differs beyond the renames" % path)
-    print("verify-diff %s: %d renames, %d field renames, %d files checked"
-          % (ref, len(added), len(fields), checked))
+    print("verify-diff %s: %d renames, %d field renames, %d register aliases, %d files checked"
+          % (ref, len(added), len(fields), len(aliases), checked))
     for (tag, o), n in sorted(field_pairs.items()):
         if not field_uses.get((o, n)):
             problems.append("field %s.%s -> %s: no use renamed" % (tag, o, n))
+    for o, n in sorted(alias_pairs):
+        if not field_uses.get((o, n)):
+            problems.append("alias Task.%s -> %s: no use" % (o, n))
     for p in comment_only:
         print("  comment edits (review them): %s" % p)
     for p in outside:
@@ -610,7 +640,26 @@ def qualify_fields(comment, pairs):
 FIELD_SPLIT_RE = re.compile(r"([A-Za-z_][A-Za-z0-9_]*)")
 
 
-def fields_only_differ(a, b, pairs, uses):
+TASK_VARS = "include/task_vars.h"
+DEFINE_LINE_RE = re.compile(r"^#define (\w+) (\w+)$")
+
+
+def defines_of(text):
+    """{(alias, member)} of task_vars.h's #define lines (comments stripped),
+    or None if it holds code other than its guard and those lines."""
+    out = set()
+    for ln in strip_comments(text, False).split("\n"):
+        ln = " ".join(ln.split())
+        if not ln or ln in ("#ifndef GUARD_TASK_VARS_H", "#define GUARD_TASK_VARS_H", "#endif"):
+            continue
+        m = DEFINE_LINE_RE.match(ln)
+        if not m:
+            return None
+        out.add((m.group(1), m.group(2)))
+    return out
+
+
+def fields_only_differ(a, b, pairs, uses, alias_pairs=()):
     """True if the comment-stripped texts a (the ref, symbols remapped) and b
     (the tree) differ only by logged field renames: every differing
     identifier is a (member, new member) pair of `pairs`, and sits after `.`
@@ -622,6 +671,8 @@ def fields_only_differ(a, b, pairs, uses):
     by_pair = {}
     for (tag, o), n in pairs.items():
         by_pair.setdefault((o, n), set()).add(tag)
+    for o, n in alias_pairs:
+        by_pair.setdefault((o, n), set()).add("Task")
     depth = 0
     stack = []      # (tag, depth of its body)
     pending = None  # tag of a `struct TAG` whose `{` may follow

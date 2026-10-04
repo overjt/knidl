@@ -448,8 +448,8 @@ copies and module-local records).
 | ROM label | `gUnk_08*` | 5747 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 2309 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
-| struct field | `unk*` | 11 | per-family Task fields: the meaning changes with the task type, a view per family needs the owner (#155) |
-| struct field | `unk*` | 313 | tracked by #155: the field's role is not proven |
+| struct field | `unk*` | 14 | per-family registers, named per family by the aliases in include/task_vars.h (docs/header-conventions.md; the member keeps its unk name, lessons and history cite it); `unk76` is u76's member for the player's bits |
+| struct field | `unk*` | 310 | tracked by #155: the field's role is not proven |
 | struct field | `unk*` | 322 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
@@ -502,6 +502,8 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
 | all | | 5348 | 1548 |
+
+Register aliases (include/task_vars.h): 2 in 1 families: Actor 2.
 
 `unk*` fields by header struct: `LinkSave` 33, `PlayerState` 22, `M37Player` 19, `Task` 17, `M37CoursePlayer` 13, `Unk020061F0` 12, `M37Results` 11, `AttackBox` 10, `M37Timer` 10, `SaveSlot` 10, `Unk02007D70` 10, `Actor` 9, `M37Game` 9, `Unk03005530` 9, `BodyBox` 8, `LinkRec` 8, `Unk03005550` 8, `M37Course` 7, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `RoomDef` 5, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `Unk03005670` 4, `M12Fade` 3, `MapCell` 3, `Unk02005E00` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorHandlers` 1, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `MapTile` 1, `Unk0873EEA0` 1.
 

@@ -1171,7 +1171,7 @@ void Task_Gordo(void)
         t->onGround = 0;
     }
     TaskFaceNearestPlayer();
-    gCurTask->unk28 = ActorStartAnim(gUnk_087412A8);
+    gCurTask->actorAnimDelay = ActorStartAnim(gUnk_087412A8);
     CallTableEntry(gCurTask->variant, 4, gGordoVariants);
 }
 
@@ -1207,7 +1207,7 @@ void GordoBob(void)
 
 void GordoBobState0Update(void)
 {
-    gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
+    gCurTask->actorAnimDelay = ActorTickAnim(gCurTask->actorAnimDelay);
 }
 
 void GordoBounceVerticalInit(void)
@@ -1237,7 +1237,7 @@ void GordoBounceVertical(void)
     {
         struct Task *t = gCurTask;
 
-        t->velY = gUnk_08741298[t->unk74];
+        t->velY = gUnk_08741298[t->actorSpawnArg];
     }
     while (1)
     {
@@ -1254,7 +1254,7 @@ void GordoBounceVertical(void)
 
 void GordoBounceVerticalState0Update(void)
 {
-    gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
+    gCurTask->actorAnimDelay = ActorTickAnim(gCurTask->actorAnimDelay);
 }
 
 void GordoBounceHorizontalInit(void)
@@ -1283,7 +1283,7 @@ void GordoBounceHorizontal(void)
     {
         struct Task *t = gCurTask;
 
-        t->velX = gUnk_087412A0[t->unk74];
+        t->velX = gUnk_087412A0[t->actorSpawnArg];
     }
     while (1)
     {
@@ -1300,7 +1300,7 @@ void GordoBounceHorizontal(void)
 
 void GordoBounceHorizontalState0Update(void)
 {
-    gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
+    gCurTask->actorAnimDelay = ActorTickAnim(gCurTask->actorAnimDelay);
 }
 
 void GordoSweepInit(void)
@@ -1343,7 +1343,7 @@ void GordoSweep(void)
 
 void GordoSweepState0Update(void)
 {
-    gCurTask->unk28 = ActorTickAnim(gCurTask->unk28);
+    gCurTask->actorAnimDelay = ActorTickAnim(gCurTask->actorAnimDelay);
 }
 
 void Task_CoolSpook(void)

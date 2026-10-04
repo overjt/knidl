@@ -39,6 +39,10 @@ struct Task
     /*0x14*/ u8 state;
     /*0x15*/ u8 updateState;
     /*0x16*/ u16 serial;
+    /* The per-family registers unk18-unk34, unk46, unk6C-unk70 and unk74
+       hold a different thing in every task family; their names are the
+       family aliases of include/task_vars.h (#155 run 5), and the members
+       keep their unk names (the lessons and the history cite them). */
     /*0x18*/ s32 unk18;
     /*0x1C*/ s32 unk1C;
     /*0x20*/ s32 unk20;
@@ -65,9 +69,11 @@ struct Task
     /*0x60*/ s32 accelY;
     /*0x64*/ s32 speedLimitX;
     /*0x68*/ s32 speedLimitY;
-    /* 0x6C and 0x70 are read with `ldrsh`/`(s16)` casts throughout M18
+    /* Per-family registers (include/task_vars.h names them per family).
+       0x6C and 0x70 are read with `ldrsh`/`(s16)` casts throughout M18
        (issue #64) but unsigned in M17's src/actor_673ec.c, so they stay u16
-       and the signed sites cast. 0x6E is signed everywhere. */
+       and the signed sites cast; each alias line in task_vars.h says which
+       type its family reads.  0x6E is signed everywhere. */
     /*0x6C*/ u16 unk6C;
     /*0x6E*/ s16 unk6E;
     /*0x70*/ u16 unk70;
@@ -458,5 +464,7 @@ void TaskDrawScreenOrFree(void);
 void TaskExitTrampoline(void);
 void TaskSwitchTrampoline(s32 id, u32 fn, u32 stack);
 void TaskYieldTrampoline(u32 frames);
+
+#include "task_vars.h"
 
 #endif // GUARD_TASK_H
