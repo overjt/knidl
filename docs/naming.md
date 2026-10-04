@@ -488,7 +488,13 @@ Unnamed by design, for #37's audit:
   labels, split-only labels in `asm/rom_syms.s`, and the dead SDK exports
   that nothing references and no reference names;
 - **unknown parameters and locals** (`arg0`, `r4`, `sp00`), which keep
-  katam's positional form;
+  katam's positional form.  A parameter of a named function whose role is
+  proven gets its role in the definition and the `include/*.h` prototype
+  (the owner's decision D5, run 5: the engine API, `TaskSetMotionY(velY,
+  accelY, speedLimitY)`, `ActorSetState(state)`; `renames.csv` rows of
+  kind `param`, `Func.old` -> `Func.new`, proven by the per-file assembly
+  oracle); positional parameters are left only where the role is not
+  proven, and locals keep their positional form;
 - segment names (`docs/analysis/segments.txt`) and source file names, which
   are not symbols; renaming them is not part of #155.
 
