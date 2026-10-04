@@ -186,6 +186,11 @@ FAMILIES = {
         "prefix": "PLAYER_OBJECT_VARIANT_",
         "calls": {"CreatePlayerObject": 1, "CreatePlayerObjectLowSlot": 1},
     },
+    "attack_box_immunity": {
+        "header": "hits",
+        "prefix": "ATTACK_BOX_IMMUNITY_",
+        "bits": ["immunityFlags"],
+    },
     "camera": {
         "header": "camera",
         "prefix": "CAMERA_MODE_",

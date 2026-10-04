@@ -22,4 +22,11 @@
 #define HIT_EFFECT_THROW     2
 #define HIT_EFFECT_BACKDROP  3
 
+/* Attack box immunities - AttackBox.immunityFlags, one bit each (R3): the hit results the box's owner is spared, tested by HitTestPlayerColliders (src/hitbox_1a8c8.c) and CalcHitDamageAndDirection (src/hitbox_1b7dc.c); the boxes are ROM records, so no code sets them */
+#define ATTACK_BOX_IMMUNITY_TOUCH       1      /* a vulnerable player's touch: NO_DAMAGE (effect 1) */
+#define ATTACK_BOX_IMMUNITY_DEFEAT      2      /* a defeating hit: NO_DAMAGE (effect 1) */
+#define ATTACK_BOX_IMMUNITY_PLAYERS     4      /* any player's touch: NO_DAMAGE (effect 11) */
+#define ATTACK_BOX_IMMUNITY_INVINCIBLE  8      /* an invincible player's touch: NO_DAMAGE (effect 12) */
+#define ATTACK_BOX_IMMUNITY_NO_RESULT   0x8000 /* no result at all from a player's touch */
+
 #endif // GUARD_CONSTANTS_HITS_H
