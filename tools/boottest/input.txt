@@ -15,23 +15,29 @@
 mark boot: the logos and the title screen
 500 -
 expect gGameState:2 == 3        # the title screen (game state 3)
-# 500: START on the title -> the file select (three empty files)
-mark the file select
+# 500: START, ignored: after a completed logo the title reads keys only
+# from about frame 570.  804: A leaves the title; the menu (game state 4)
+# opens on the file select (three empty files) at 814.  (Until #168 these
+# comments put each screen one key early; #168's scripts found it.)
 4 START
 300 -
-# 804: A on FILE 1 -> GAME SELECT (start game, sub-games, sound test, erase)
-mark GAME SELECT
+mark the file select
 4 A
 300 -
 expect gGameState:2 == 4        # the main menu (game state 4)
-# 1108: A on START GAME -> the ONE PLAYER / MULTIPLAYER pop-up
-mark the ONE PLAYER / MULTIPLAYER pop-up
+expect gMenuScreen:1 == 0       # menu screen 0: the file select
+# 1108: A on FILE 1 -> GAME SELECT (start game, sub-games, sound test, erase)
+mark GAME SELECT
 4 A
 300 -
+expect gMenuScreen:1 == 1       # menu screen 1: the file menu
+# 1412: A on START GAME -> the ONE PLAYER / MULTIPLAYER pop-up
+mark the ONE PLAYER / MULTIPLAYER pop-up
 10 A
 300 -
 expect gMenuScreen:1 == 3       # menu screen 3: one player or link play
-# 1722: START -> a new game: the level 1 intro scene, then the level 1 hub
+# 1722: START on ONE PLAYER -> a new game: the level 1 intro scene, then
+# the level 1 hub
 mark a new game: the level 1 intro scene and the hub
 10 START
 478 -
