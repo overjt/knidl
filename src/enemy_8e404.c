@@ -330,7 +330,7 @@ s32 sub_0808e8a4(void)
 
 s32 sub_0808e8c4(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -543,7 +543,7 @@ s32 sub_0808ecb4(void)
 {
     if (gCurTask->variant == 4)
         sub_08066c08(gShotzoDef, 0);
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 

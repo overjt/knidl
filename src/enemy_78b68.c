@@ -510,7 +510,7 @@ s32 sub_080794a0(void)
 
 s32 sub_080794c0(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -827,7 +827,7 @@ s32 sub_08079a40(void)
 
 s32 sub_08079a60(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -1121,7 +1121,7 @@ s32 sub_0807a008(void)
 
 s32 sub_0807a040(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 

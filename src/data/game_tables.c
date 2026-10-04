@@ -584,18 +584,18 @@ u32 gUnk_0873E31C[11] GAME_TBL(0873e2f0) = {
 
 /* ---- 0x0873E5BC-0x0873E5F8: 2 table(s), 15 function pointer(s), section .game_tbl_0873e5bc ---- */
 /* include/actor.h; CallTableEntry(i, 11, ...) in ActorDie */
-u32 gUnk_0873E5BC[11] GAME_TBL(0873e5bc) = {
+u32 gActorDefeats[11] GAME_TBL(0873e5bc) = {
     (u32)ActorDefeatByEffect,
-    (u32)sub_0806aa10,
+    (u32)ActorDefeatExplodeByEffect,
     (u32)sub_0806ab34,
     (u32)sub_0806abec,
     (u32)sub_0806ac6c,
-    (u32)sub_0806acc8,
-    (u32)sub_0806aec0,
-    (u32)sub_0806b12c,
+    (u32)ActorDefeatAbilityStar,
+    (u32)ActorDefeatMidBoss,
+    (u32)ActorDefeatBoss,
     (u32)sub_0806b178,
     (u32)sub_0806b230,
-    (u32)sub_0806b3c4,
+    (u32)ActorDefeatPickup,
 };
 /* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeatByEffect */
 u32 gActorDefeatsByEffect[4] GAME_TBL(0873e5bc) = {
@@ -606,21 +606,21 @@ u32 gActorDefeatsByEffect[4] GAME_TBL(0873e5bc) = {
 };
 
 /* ---- 0x0873E670-0x0873E698: 3 table(s), 10 function pointer(s), section .game_tbl_0873e670 ---- */
-/* include/actor.h; CallTableEntry(i, 3, ...) in ActorDefeatFrozen, sub_0806a8d8 */
-u32 gUnk_0873E670[3] GAME_TBL(0873e670) = {
-    (u32)sub_0806a8f4,
-    (u32)sub_0806a980,
+/* include/actor.h; CallTableEntry(i, 3, ...) in ActorDefeatFrozen, ActorDefeatFrozenEnterState */
+u32 gActorDefeatFrozenStates[3] GAME_TBL(0873e670) = {
+    (u32)ActorDefeatFrozenShake,
+    (u32)ActorDefeatFrozenSlide,
     (u32)sub_0806a9d8,
 };
-/* include/actor.h; CallTableEntry(i, 3, ...) in sub_0806a7f4 */
-u32 gUnk_0873E67C[3] GAME_TBL(0873e670) = {
-    (u32)sub_0806a958,
+/* include/actor.h; CallTableEntry(i, 3, ...) in ActorDefeatFrozenUpdate */
+u32 gActorDefeatFrozenStateUpdates[3] GAME_TBL(0873e670) = {
+    (u32)ActorDefeatFrozenShakeUpdate,
     (u32)sub_0806a9d4,
     (u32)sub_0806aa0c,
 };
-/* include/actor.h; CallTableEntry(i, 4, ...) in sub_0806aa10 */
-u32 gUnk_0873E688[4] GAME_TBL(0873e670) = {
-    (u32)sub_0806aa40,
+/* include/actor.h; CallTableEntry(i, 4, ...) in ActorDefeatExplodeByEffect */
+u32 gActorExplodeDefeatsByEffect[4] GAME_TBL(0873e670) = {
+    (u32)ActorDefeatExplode,
     (u32)sub_0806aa80,
     (u32)sub_0806aa8c,
     (u32)sub_0806aa98,
@@ -639,7 +639,7 @@ u32 gUnk_0873E734[9] GAME_TBL(0873e734) = {
     0,
     (u32)sub_080ac678,
 };
-/* include/actor.h; CallTableEntry(i, 9, ...) in sub_0806b12c */
+/* include/actor.h; CallTableEntry(i, 9, ...) in ActorDefeatBoss */
 u32 gUnk_0873E758[9] GAME_TBL(0873e734) = {
     (u32)sub_080a150c,
     (u32)PaintRollerDropStarRodPiece,
@@ -658,14 +658,14 @@ u32 gUnk_0873E77C[4] GAME_TBL(0873e734) = {
     (u32)sub_0806b1f4,
     (u32)sub_0806b224,
 };
-/* include/actor.h; CallTableEntry(i, 3, ...) in sub_0806b26c, sub_0806b2e4 */
-u32 gUnk_0873E78C[3] GAME_TBL(0873e734) = {
-    (u32)sub_0806b300,
+/* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownInit, ActorDrownEnterState */
+u32 gActorDrownStates[3] GAME_TBL(0873e734) = {
+    (u32)ActorDrownSink,
     (u32)sub_0806b334,
     (u32)sub_0806b390,
 };
-/* include/actor.h; CallTableEntry(i, 3, ...) in sub_0806b2ac */
-u32 gUnk_0873E798[3] GAME_TBL(0873e734) = {
+/* include/actor.h; CallTableEntry(i, 3, ...) in ActorDrownUpdate */
+u32 gActorDrownStateUpdates[3] GAME_TBL(0873e734) = {
     (u32)sub_0806b330,
     (u32)sub_0806b368,
     (u32)sub_0806b3c0,

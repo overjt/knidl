@@ -77,7 +77,7 @@ void ActorAttachedBackdropBounceOff(void)
 void sub_0806c30c(void)
 {
     if (gCurTask->unk34 != 0)
-        sub_0806b8bc();
+        ActorAttachedDie();
 }
 
 void ActorAttachedPullIn(void)
@@ -89,7 +89,7 @@ void ActorAttachedPullIn(void)
     t->moveCallback = (u32)TaskMoveRelativeToParent;
     t->lateUpdateCallback = (u32)sub_0806c384;
     ActorSetTerrainHandlers((u32)gUnk_0873F8F4);
-    sub_0806ba9c();
+    TaskSetPosRelativeToParent();
     u = gCurTask;
     u->unk18 = 0;
     u->layer = 6;
@@ -111,10 +111,10 @@ void sub_0806c384(void)
     sub_0806b938();
     t = gCurTask;
     if (t->unk18 == 1)
-        sub_0806b8bc();
+        ActorAttachedDie();
     else if (t->state != 4)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
-    sub_0806be84();
+    ActorAttachedCheckScreenAttack();
 }
 
 void ActorAttachedThrowHeld(void)
@@ -151,7 +151,7 @@ void sub_0806c418(void)
 void sub_0806c490(void)
 {
     sub_0806b848();
-    sub_0806be84();
+    ActorAttachedCheckScreenAttack();
 }
 
 void ActorAttachedThrowFlight(void)
@@ -410,7 +410,7 @@ void ActorAttachedThrowBounceOff(void)
 void sub_0806c9e8(void)
 {
     if (gCurTask->unk34 != 0)
-        sub_0806b8bc();
+        ActorAttachedDie();
 }
 
 void Task_ActorSplash(void)

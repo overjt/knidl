@@ -404,7 +404,7 @@ void sub_080233e0(void)
 
     TaskSetSkipMask(0, gUnk_02007E8C);
     TaskSetOthersSkipMask(15, gUnk_02007E8C);
-    sub_08077d38(gUnk_02007E8C);
+    BigSwitchStartRefill(gUnk_02007E8C);
     gInHub = 0;
     gCurLevel = gLevelIndex;
     gUnk_03001F20 = gStageIndex;

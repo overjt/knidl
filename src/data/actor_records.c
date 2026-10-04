@@ -217,8 +217,8 @@ extern const u8 gUnk_0874C408[];
 extern const u8 gUnk_0874C410[];
 
 /* Actor.terrainHandlers and Actor.hitReactions targets: src/data/actor_handlers.c. */
-extern struct ActorHandlers gUnk_0873F5FC;
-extern struct ActorHandlers gUnk_0873F618;
+extern struct ActorHandlers gAbilityStarTerrainHandlers;
+extern struct ActorHandlers gPickupTerrainHandlers;
 extern struct ActorHandlers gUnk_08740E54;
 extern struct ActorHandlers gUnk_08740E70;
 extern struct ActorHandlers gUnk_08740E8C;
@@ -417,7 +417,7 @@ struct ActorDef gAbilityStarDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4C8,
     .terrainBox = (s32)gUnk_0873F894,
-    .terrainHandlers = (u32)&gUnk_0873F5FC,
+    .terrainHandlers = (u32)&gAbilityStarTerrainHandlers,
     .hitReactions = (u32)&gUnk_0873F634,
     .initCallback = NULL,
     .teardown = NULL,
@@ -434,7 +434,7 @@ struct ActorDef gOneUpDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)&gUnk_0873F618,
+    .terrainHandlers = (u32)&gPickupTerrainHandlers,
     .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,
@@ -451,7 +451,7 @@ struct ActorDef gMaximTomatoDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)&gUnk_0873F618,
+    .terrainHandlers = (u32)&gPickupTerrainHandlers,
     .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,
@@ -468,7 +468,7 @@ struct ActorDef gInvincibleCandyDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)&gUnk_0873F618,
+    .terrainHandlers = (u32)&gPickupTerrainHandlers,
     .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,
@@ -485,7 +485,7 @@ struct ActorDef gEnergyDrinkDef ACTOR_REC(0873f2b8) = {
     .unk10 = NULL,
     .attackBox = (u32)gUnk_0873F4E4,
     .terrainBox = (s32)gUnk_0873F5C4,
-    .terrainHandlers = (u32)&gUnk_0873F618,
+    .terrainHandlers = (u32)&gPickupTerrainHandlers,
     .hitReactions = (u32)&gUnk_0873F640,
     .initCallback = NULL,
     .teardown = NULL,

@@ -383,12 +383,12 @@ copies and module-local records).
 
 | kind | placeholder | count | reason |
 |---|---|---:|---|
-| function | `sub_*` | 2537 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
+| function | `sub_*` | 2489 | tracked by #155: role not settled (mostly enemy and boss state bodies and one-caller helpers, docs/naming.md section 5) |
 | function | `sub_*` | 5 | tracked by #155: engine-zone helpers whose role is not settled |
 | function | `sub_*` | 8 | runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8) |
 | RAM cell | `gUnk_02*`, `gUnk_03*` | 173 | tracked by #155: role not proven; many are proven shared scratch or hold two encodings |
 | I/O register | `gUnk_04*` | 0 | none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_* |
-| ROM label | `gUnk_08*` | 5826 | tracked by #155: functional data whose consumer does not settle a name |
+| ROM label | `gUnk_08*` | 5815 | tracked by #155: functional data whose consumer does not settle a name |
 | ROM label | `gUnk_08*` | 17074 | asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md) |
 | ROM label | (named) | 2309 | documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4) |
 | struct field | `unk*` | 11 | per-family Task fields: the meaning changes with the task type, a view per family needs the owner (#155) |
@@ -396,7 +396,7 @@ copies and module-local records).
 | struct field | `unk*` | 362 | local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`) |
 | label | `loc_*` | 0 | none left: the code is C |
 
-Named for comparison: 431 RAM cells, 2840 ROM labels by role and 2309 by position.
+Named for comparison: 431 RAM cells, 2851 ROM labels by role and 2309 by position.
 
 Functions by zone (the #34 module map, docs/analysis/module-map.md):
 
@@ -421,8 +421,8 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M15 | the player's effect objects (task type #7) | 84 | 58 |
 | M16 | effect spawner (task types #81-#90) | 89 | 62 |
 | M17 | actor core | 245 | 125 |
-| M18 | actor core, part 2 | 256 | 157 |
-| M19 | cutscenes and ending sequences | 220 | 162 |
+| M18 | actor core, part 2 | 256 | 129 |
+| M19 | cutscenes and ending sequences | 220 | 156 |
 | M20 | enemies, bank 1 | 414 | 181 |
 | M21 | enemies, bank 2 | 200 | 99 |
 | M22 | enemies, bank 3 | 125 | 84 |
@@ -436,7 +436,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M30 | enemies, bank 11 | 131 | 77 |
 | M31 | enemies, bank 12 | 123 | 66 |
 | M32 | enemies, bank 13 | 135 | 96 |
-| M33 | HUD effects | 110 | 72 |
+| M33 | HUD effects | 110 | 58 |
 | M34 | wavy scroll, save file, input recorder | 105 | 61 |
 | M35 | sub-game framework and Quick Draw | 196 | 9 |
 | M36 | Bomb Rally | 117 | 16 |
@@ -444,7 +444,7 @@ Functions by zone (the #34 module map, docs/analysis/module-map.md):
 | M38 | ending, staff credits, game over | 110 | 54 |
 | m4a | the m4a sound engine (asm core and C driver) | 95 | 3 |
 | sdk | SDK stubs: SWI thunks, SoftReset, SRAM driver, lib1funcs, trampolines, veneer | 32 | 4 |
-| all | | 5348 | 2550 |
+| all | | 5348 | 2502 |
 
 `unk*` fields by header struct: `LinkSave` 33, `PlayerState` 27, `M37Player` 19, `AttackBox` 18, `Task` 17, `BodyBox` 16, `M37CoursePlayer` 13, `Unk020061F0` 12, `M37Results` 11, `Actor` 10, `M37Timer` 10, `SaveSlot` 10, `Unk02007D70` 10, `M37Game` 9, `Unk03005530` 9, `LinkRec` 8, `Unk03005550` 8, `ActorHandlers` 7, `M37Course` 7, `Door` 6, `M04Spark` 6, `GfxDesc` 5, `GfxSrc` 5, `HudBar` 5, `M37Obj` 5, `M37ObjSet` 5, `RoomDef` 5, `ActorVt` 4, `Collider` 4, `M19Frame` 4, `M19Particle` 4, `M19Script` 4, `Unk03005670` 4, `M12Fade` 3, `MapCell` 3, `Unk02005E00` 3, `Unk03004B00` 3, `Unk03005680` 3, `Unk0873A994` 3, `ActorDef` 2, `BgMap` 2, `M11Buf` 2, `M11R8` 2, `M37Script` 2, `Unk02004B90` 2, `Unk020060A0` 2, `Unk0873EAC0` 2, `ActorSpawn` 1, `GfxHeader` 1, `HitBoxSet` 1, `M38LogoObj` 1, `MapTile` 1, `Unk0873EEA0` 1.
 

@@ -336,7 +336,7 @@ s32 sub_0807b010(void)
 
 s32 sub_0807b048(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -557,7 +557,7 @@ void sub_0807b430(void)
     if (t->unk18 == 0)
     {
         if ((t->waterFlags & 1) != 0)
-            sub_0806a0f0(-2);
+            ActorStartDrown(-2);
         gCurTask->unk18 = 1;
     }
 }
@@ -819,7 +819,7 @@ void sub_0807ba18(void)
     if (t->unk18 == 0)
     {
         if ((t->waterFlags & 1) != 0)
-            sub_0806a0f0(-2);
+            ActorStartDrown(-2);
         gCurTask->unk18 = 1;
     }
 }
@@ -1023,7 +1023,7 @@ s32 sub_0807be08(void)
 
 s32 sub_0807be9c(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 

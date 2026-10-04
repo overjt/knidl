@@ -1168,7 +1168,7 @@ s32 sub_0808976c(void)
 {
     if (gCurTask->variant != 1)
     {
-        sub_0806a0f0(-2);
+        ActorStartDrown(-2);
         return 1;
     }
 }

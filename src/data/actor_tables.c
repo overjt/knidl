@@ -252,13 +252,13 @@ u32 gBigSwitchVariants[1] ACTOR_TBL(087402bc) = {
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in BigSwitchInit, BigSwitchEnterState */
 u32 gBigSwitchStates[3] ACTOR_TBL(087402bc) = {
-    (u32)sub_08077e4c,
+    (u32)BigSwitchWait,
     (u32)sub_08077e9c,
-    (u32)sub_08077ed0,
+    (u32)BigSwitchRefill,
 };
 /* include/cutscene.h; CallTableEntry(i, 3, ...) in BigSwitchUpdate */
 u32 gBigSwitchStateUpdates[3] ACTOR_TBL(087402bc) = {
-    (u32)sub_08077e74,
+    (u32)BigSwitchWaitUpdate,
     (u32)sub_08077ecc,
     (u32)sub_08077f08,
 };

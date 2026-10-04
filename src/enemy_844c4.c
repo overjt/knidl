@@ -482,7 +482,7 @@ u8 sub_08084c5c(void)
 {
     if (gCurTask->variant == 1)
         return 0;
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 

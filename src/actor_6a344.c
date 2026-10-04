@@ -3,15 +3,15 @@
  * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
  *   ./tools/fnmatch.sh 0x0806A344 0x0806AD18 src/actor_6a344.c --newpb
  *
- * Actor defeat bodies, the variants ActorDie (gUnk_0873E5BC) runs (an older
+ * Actor defeat bodies, the variants ActorDie (gActorDefeats) runs (an older
  * reading called them warp-star exits, a level-clear dance and a death
  * sequence): ActorDefeatByEffect dispatches the hit effect code Task.hitEffect
  * through gActorDefeatsByEffect to the knock-away defeats
  * ActorDefeatPlain/Burning/Shocked (the shake and launch
  * ActorDefeatKnockAway, then ActorDefeatBlinkAndBurst) and to
  * ActorDefeatFrozen, which turns the actor into a kickable ice block
- * (ActorFreezeIntoIceBlock; per-frame sub_0806a7f4; states gUnk_0873E670:
- * sub_0806a8f4 shakes, sub_0806a980 slides away when kicked), and a family
+ * (ActorFreezeIntoIceBlock; per-frame ActorDefeatFrozenUpdate; states gActorDefeatFrozenStates:
+ * ActorDefeatFrozenShake shakes, ActorDefeatFrozenSlide slides away when kicked), and a family
  * of one-shot bodies that re-arm the actor and hand control to
  * PlayRayBurstAnim / PlayExplosionAnim.  Every function here runs as gCurTask (the current
  * task), so almost all of them are a run of `gCurTask->field = K`
@@ -62,7 +62,7 @@ void ActorDie(void)
     TaskStop();
     TaskSetFrame(0);
     if (p != NULL)
-        CallTableEntry(p[1], 11, gUnk_0873E5BC);
+        CallTableEntry(p[1], 11, gActorDefeats);
     if (a->attachedTask != -1)
     {
         TaskFree(a->attachedTask);
@@ -149,13 +149,13 @@ void ActorDefeatBlinkAndBurst(void)
 
 void ActorDefeatPlain(void)
 {
-    gCurTask->updateCallback = (u32)sub_0806a524;
+    gCurTask->updateCallback = (u32)ActorDefeatPlainUpdate;
     ActorDefeatKnockAway();
     TaskStop();
-    sub_0806a0cc();
+    ActorPlayRandomDefeatSfx();
 }
 
-void sub_0806a524(void)
+void ActorDefeatPlainUpdate(void)
 {
     ActorDefeatBlinkAndBurst();
 }
@@ -165,14 +165,14 @@ void ActorDefeatBurning(void)
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0806a55c;
+    t->updateCallback = (u32)ActorDefeatBurningUpdate;
     ActorAttachEffect(t->hitEffect, 0);
     ActorDefeatKnockAway();
     TaskStop();
-    sub_0806a0cc();
+    ActorPlayRandomDefeatSfx();
 }
 
-void sub_0806a55c(void)
+void ActorDefeatBurningUpdate(void)
 {
     ActorDefeatBlinkAndBurst();
 }
@@ -182,14 +182,14 @@ void ActorDefeatShocked(void)
     struct Task *t;
 
     t = gCurTask;
-    t->updateCallback = (u32)sub_0806a594;
+    t->updateCallback = (u32)ActorDefeatShockedUpdate;
     ActorAttachEffect(t->hitEffect, 0);
     ActorDefeatKnockAway();
     TaskStop();
-    sub_0806a0cc();
+    ActorPlayRandomDefeatSfx();
 }
 
-void sub_0806a594(void)
+void ActorDefeatShockedUpdate(void)
 {
     ActorDefeatBlinkAndBurst();
 }
@@ -276,7 +276,7 @@ void sub_0806a6a0(void)
     if ((u8)(gPlayerStates[gCurTask->unk28].ability - 13) > 1)
     {
         ActorSetState(2);
-        TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
+        TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
     }
 }
 
@@ -322,7 +322,7 @@ void sub_0806a6e0(void)
     u->parent = u->hitterSlot;
     u->player = &gPlayerStates[u->parent];
     ActorSetState(1);
-    TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
+    TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
 }
 
 void ActorDefeatFrozen(void)
@@ -334,21 +334,21 @@ void ActorDefeatFrozen(void)
     t->unk46 = 0xFFFF;
     TaskSetFrame(0);
     TaskYieldTrampoline(6);
-    gCurTask->updateCallback = (u32)sub_0806a7f4;
+    gCurTask->updateCallback = (u32)ActorDefeatFrozenUpdate;
     TaskStop();
     gCurTask->layer = 7;
     ActorFreezeIntoIceBlock();
-    CallTableEntry(gCurTask->state, 3, gUnk_0873E670);
+    CallTableEntry(gCurTask->state, 3, gActorDefeatFrozenStates);
 }
 
-void sub_0806a7f4(void)
+void ActorDefeatFrozenUpdate(void)
 {
     struct Task *t;
     struct Actor *a;
     s32 r;
 
     gCurTask->onGround = 0;
-    CallTableEntry(gCurTask->updateState, 3, gUnk_0873E67C);
+    CallTableEntry(gCurTask->updateState, 3, gActorDefeatFrozenStateUpdates);
     sub_0806a5a0();
     t = gCurTask;
     if (t->state == 1)
@@ -356,7 +356,7 @@ void sub_0806a7f4(void)
         if ((s8)t->hitKind != 0)
         {
             ActorSetState(2);
-            TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
+            TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
         }
         else
         {
@@ -386,12 +386,12 @@ void sub_0806a7f4(void)
     }
 }
 
-void sub_0806a8d8(void)
+void ActorDefeatFrozenEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 3, gUnk_0873E670);
+    CallTableEntry(gCurTask->state, 3, gActorDefeatFrozenStates);
 }
 
-void sub_0806a8f4(void)
+void ActorDefeatFrozenShake(void)
 {
     struct Task *t;
 
@@ -412,13 +412,13 @@ void sub_0806a8f4(void)
     TaskSleepForever();
 }
 
-void sub_0806a958(void)
+void ActorDefeatFrozenShakeUpdate(void)
 {
     if (gCurTask->state != 0)
-        TaskSetEntry(sub_0806a8d8, gCurTaskIdx);
+        TaskSetEntry(ActorDefeatFrozenEnterState, gCurTaskIdx);
 }
 
-void sub_0806a980(void)
+void ActorDefeatFrozenSlide(void)
 {
     struct Task *t;
     struct Actor *a;
@@ -466,17 +466,17 @@ void sub_0806aa0c(void)
 {
 }
 
-void sub_0806aa10(void)
+void ActorDefeatExplodeByEffect(void)
 {
     struct Task *t;
 
     t = gCurTask;
     if (t->hitEffect > 3)
         t->hitEffect = 0;
-    CallTableEntry(gCurTask->hitEffect, 4, gUnk_0873E688);
+    CallTableEntry(gCurTask->hitEffect, 4, gActorExplodeDefeatsByEffect);
 }
 
-void sub_0806aa40(void)
+void ActorDefeatExplode(void)
 {
     struct Task *t;
 
@@ -495,12 +495,12 @@ void sub_0806aa40(void)
 
 void sub_0806aa80(void)
 {
-    sub_0806aa40();
+    ActorDefeatExplode();
 }
 
 void sub_0806aa8c(void)
 {
-    sub_0806aa40();
+    ActorDefeatExplode();
 }
 
 void sub_0806aa98(void)
@@ -640,7 +640,7 @@ void sub_0806acc4(void)
 {
 }
 
-void sub_0806acc8(void)
+void ActorDefeatAbilityStar(void)
 {
     struct Task *t;
 

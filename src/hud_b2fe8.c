@@ -974,21 +974,21 @@ void sub_080b3ffc(void)
         gCurTask->tileWord = (gCurTask->tileWord & 0xFFF) | 0xF000;
 }
 
-s32 sub_080b404c(void)
+s32 PickupStartFall(void)
 {
     ActorSetState(1);
     TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080b406c(void)
+s32 PickupLand(void)
 {
     ActorSetState(0);
     TaskSetEntry(PickupEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080b408c(void)
+s32 PickupEnterWater(void)
 {
     struct Task *t;
 
@@ -1051,7 +1051,7 @@ void sub_080b4190(void)
 {
 }
 
-void sub_080b4194(void)
+void PickupFall(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1075,7 +1075,7 @@ void sub_080b41c8(void)
 {
 }
 
-void sub_080b41cc(void)
+void PickupFallInWater(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1099,7 +1099,7 @@ void sub_080b4200(void)
 {
 }
 
-s32 sub_080b4204(u32 a)
+s32 HealPlayerStep(u32 a)
 {
     s32 r;
 
@@ -1149,7 +1149,7 @@ void MaximTomatoHeal(void)
     {
         if (gLocalPlayer == *(s16 *)((u8 *)*c + 68))
             PlaySfx(221);
-        k4 = sub_080b4204(*(s16 *)((u8 *)*c + 68));
+        k4 = HealPlayerStep(*(s16 *)((u8 *)*c + 68));
         TaskYieldTrampoline(8);
     } while (k4 == 0);
     PlayerStartItemShare(*(s16 *)((u8 *)gCurTask + 68), 1);
@@ -1186,7 +1186,7 @@ void EnergyDrinkHeal(void)
 xbody:
     if (gLocalPlayer == *(s16 *)((u8 *)*c + 68))
         PlaySfx(221);
-    k4 = sub_080b4204(*(s16 *)((u8 *)*c + 68));
+    k4 = HealPlayerStep(*(s16 *)((u8 *)*c + 68));
     TaskYieldTrampoline(8);
     if (k4 != 0)
         goto xend;
@@ -1201,7 +1201,7 @@ xend:
     EnablePause();
 }
 
-s32 sub_080b4390(void)
+s32 AbilityStarBounceOffFloor(void)
 {
     struct Task **c;
     struct Task *t;
@@ -1224,14 +1224,14 @@ s32 sub_080b4390(void)
     return r;
 }
 
-s32 sub_080b43d4(void)
+s32 AbilityStarEnterWater(void)
 {
     ActorSetState(1);
-    TaskSetEntry(sub_080b4754, gCurTaskIdx);
+    TaskSetEntry(AbilityStarEnterState, gCurTaskIdx);
     return 1;
 }
 
-s32 sub_080b43f4(void)
+s32 AbilityStarBounceOffWall(void)
 {
     s32 r;
 
@@ -1328,7 +1328,7 @@ void sub_080b44f0(void)
     t3->unk2C = t3->unk2C - 1;
 }
 
-s32 sub_080b4524(void)
+s32 AbilityStarCheckPlayerFar(void)
 {
     struct PointPair box;
     struct Task *t = gCurTask;
@@ -1387,7 +1387,7 @@ skip:
         gCurTask->velY = 0;
 }
 
-void sub_080b4648(void)
+void AbilityStarCheckExpire(void)
 {
     struct Task *t;
     s32 w;
@@ -1395,7 +1395,7 @@ void sub_080b4648(void)
 
     if (sub_080b45c0() != 0)
         return;
-    if (sub_080b4524() != 0)
+    if (AbilityStarCheckPlayerFar() != 0)
         return;
     t = gCurTask;
     wl = t->unk28;
@@ -1430,7 +1430,7 @@ void Task_AbilityStar(void)
     *(u8 *)((u8 *)ta + 66) = 5;
     tb = *c;
     tb->frameTable = (u32 *)gAbilityStarFrames;
-    tb->updateCallback = (u32)sub_080b4714;
+    tb->updateCallback = (u32)AbilityStarUpdate;
     sub_080b447c();
     w = *(u8 *)((u8 *)*c + 123);
     w2 = 1;
@@ -1446,16 +1446,16 @@ void Task_AbilityStar(void)
 elsecall:
     ActorSetState(0);
 after:
-    CallTableEntry(gCurTask->state, 2, gUnk_087560D0);
+    CallTableEntry(gCurTask->state, 2, gAbilityStarStates);
 }
 
-void sub_080b4714(void)
+void AbilityStarUpdate(void)
 {
     struct Task *t;
     s32 w;
 
     if ((u8)sub_080696a0() == 0)
-        CallTableEntry(gCurTask->updateState, 2, gUnk_087560D8);
+        CallTableEntry(gCurTask->updateState, 2, gAbilityStarStateUpdates);
     t = gCurTask;
     w = t->unk30;
     if (w <= 0)
@@ -1465,9 +1465,9 @@ void sub_080b4714(void)
     sub_08069b84();
 }
 
-void sub_080b4754(void)
+void AbilityStarEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 2, gUnk_087560D0);
+    CallTableEntry(gCurTask->state, 2, gAbilityStarStates);
 }
 
 void sub_080b4770(void)
@@ -1478,10 +1478,10 @@ void sub_080b4770(void)
 
 void sub_080b4788(void)
 {
-    sub_080b4648();
+    AbilityStarCheckExpire();
 }
 
-void sub_080b4794(void)
+void AbilityStarSink(void)
 {
     struct Task **c;
 
@@ -1495,7 +1495,7 @@ void sub_080b4794(void)
 
 void sub_080b47c0(void)
 {
-    sub_080b4648();
+    AbilityStarCheckExpire();
 }
 
 void Task_StarRodPiece(void)

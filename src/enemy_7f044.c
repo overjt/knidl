@@ -781,7 +781,7 @@ s32 sub_0807fc94(void)
 
 s32 sub_0807fcac(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -1177,11 +1177,11 @@ s32 sub_080803cc(void)
     switch (gCurTask->state)
     {
     case 0:
-        sub_0806a0f0(-2);
+        ActorStartDrown(-2);
         break;
     case 1:
     case 2:
-        sub_0806a0f0(-2);
+        ActorStartDrown(-2);
         break;
     }
     return 1;

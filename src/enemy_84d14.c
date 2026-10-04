@@ -422,7 +422,7 @@ u8 sub_08085404(void)
 {
     if (gCurTask->variant == 1)
         return 0;
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 
@@ -1068,11 +1068,11 @@ u8 sub_08085fa0(void)
     case 3:
         return 0;
     case 0:
-        sub_0806a0f0(-2);
+        ActorStartDrown(-2);
         return 1;
     case 1:
         sub_08066c08(gWaddleDooDef, 0);
-        sub_0806a0f0(-2);
+        ActorStartDrown(-2);
         return 1;
     }
 }

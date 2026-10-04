@@ -2813,7 +2813,7 @@ u32 gUnk_0874C980[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C9D8.  Consumers: sub_0806a9d8 (src/actor_6a344.c:459),
- * sub_0806ac6c (src/actor_6a344.c:634), sub_0806acc8
+ * sub_0806ac6c (src/actor_6a344.c:634), ActorDefeatAbilityStar
  * (src/actor_6a344.c:650) and 5 more.  17 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C9D8-0x0874CA1C).  Declared include/actor.h:277. */
@@ -2868,7 +2868,7 @@ u32 gUnk_0874CA1C[] FRAME_TABLE = {
     (u32)gUnk_080D5E68,
 };
 
-/* gUnk_0874CA78.  Consumers: sub_0806aec0 (src/actor_6ad18.c:136),
+/* gUnk_0874CA78.  Consumers: ActorDefeatMidBoss (src/actor_6ad18.c:136),
  * PlayStarScatterAnim (src/actor_6d22c.c:256).  24 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874CA78-0x0874CAD8).  Declared include/actor.h:279. */

@@ -146,7 +146,7 @@ void sub_08077cd4(void)
     SetRoomUpdateFlags(2);
 }
 
-void sub_08077cf4(void)
+void BigSwitchStartPress(void)
 {
     DisablePause();
     gUnk_02004B64 = 1;
@@ -158,13 +158,13 @@ void sub_08077cf4(void)
     TaskSetEntry(BigSwitchEnterState, gCurTaskIdx);
 }
 
-void sub_08077d38(s32 id)
+void BigSwitchStartRefill(s32 id)
 {
     ActorSetStateSlot(id, 2);
     TaskSetEntry(BigSwitchEnterState, id);
 }
 
-void sub_08077d54(void)
+void BigSwitchRefillHealth(void)
 {
     u8 i;
 
@@ -183,7 +183,7 @@ void sub_08077d54(void)
             do
             {
                 PlaySfx(221);
-                done = sub_080b4204(i);
+                done = HealPlayerStep(i);
                 TaskYieldTrampoline(8);
             } while (done == 0);
         }
@@ -212,7 +212,7 @@ void BigSwitchEnterState(void)
     CallTableEntry(gCurTask->state, 3, gBigSwitchStates);
 }
 
-void sub_08077e4c(void)
+void BigSwitchWait(void)
 {
     gCurTask->updateState = 0;
     gCurTask->facing = 1;
@@ -221,10 +221,10 @@ void sub_08077e4c(void)
     TaskSleepForever();
 }
 
-void sub_08077e74(void)
+void BigSwitchWaitUpdate(void)
 {
     if (gUnk_02004B64 == 0 && ActorCheckHits() && (u8)sub_08077ca4())
-        sub_08077cf4();
+        BigSwitchStartPress();
 }
 
 void sub_08077e9c(void)
@@ -240,12 +240,12 @@ void sub_08077ecc(void)
 {
 }
 
-void sub_08077ed0(void)
+void BigSwitchRefill(void)
 {
     gCurTask->updateState = 2;
     while (gBrightness != 0)
         TaskYieldTrampoline(1);
-    sub_08077d54();
+    BigSwitchRefillHealth();
     TaskSleepForever();
 }
 
@@ -863,7 +863,7 @@ s32 sub_08078b08(void)
 
     if (v == 3 || v == 5)
         sub_08066c08(gWaddleDeeDef, 0);
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 

@@ -16,7 +16,7 @@
  * Task.unk18: the two face each other, play the rows of gUnk_0873DA62 by
  * ability, and PlayerState.shareItem says what passes - 1 refills the
  * partner's health gPlayerHealth[] up to gMaxHealth step by step
- * through sub_080b4204 (src/hud_b2fe8.c), 2 gives one or two steps, 3
+ * through HealPlayerStep (src/hud_b2fe8.c), 2 gives one or two steps, 3
  * copies PlayerState.invincible/unk18.  sub_0803c9b4 (from M09's
  * sub_08033414, the twin of M04's sub_080109c8) steps and draws the
  * three spark records gUnk_02007E90[player][]; sub_0803cbd8 (M09's
@@ -38,7 +38,7 @@ u32 IsWorldPosOnScreen(s16 a, s16 b);        /* u8 in early_5d9c.c; u32 as in pl
    Task.waterFlags bit 0 is set) and ends; otherwise it turns to face the target
    task gTasks[unk18], plays gUnk_0873DA62[ability][0] (or
    gUnk_0873DACA[k][0]) and, by PlayerState.shareItem, raises the target's
-   health gPlayerHealth[] through sub_080b4204 while it is below the maximum
+   health gPlayerHealth[] through HealPlayerStep while it is below the maximum
    gMaxHealth (1: until full, 2: at most 1 or 2 steps by gExtraMode)
    or copies its own unk17/unk18 to the target (3); then it restores both
    tasks' Task.layer/unk43 (saved on the stack), clears PlayerState.unk42
@@ -178,7 +178,7 @@ void PlayerActionShareItem(void)
                     {
                         if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
-                        gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
+                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
                         TaskYieldTrampoline(8);
                     } while (gCurTask->unk28 == 0);
                 }
@@ -195,7 +195,7 @@ void PlayerActionShareItem(void)
                     {
                         if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
-                        gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
+                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
                         TaskYieldTrampoline(8);
                         if (gCurTask->unk28 != 0)
                             break;
@@ -247,7 +247,7 @@ void PlayerActionShareItem(void)
                     {
                         if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
-                        gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
+                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
                         for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
                         {
                             TaskSetFrame((s16)(gCurTask->unk46 + 3));
@@ -276,7 +276,7 @@ void PlayerActionShareItem(void)
                     {
                         if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
-                        gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
+                        gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
                         for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
                         {
                             TaskSetFrame((s16)(gCurTask->unk46 + 3));
@@ -357,7 +357,7 @@ void PlayerActionShareItem(void)
                 {
                     if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                         PlaySfx(221);
-                    gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
+                    gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
                     TaskYieldTrampoline(8);
                 } while (gCurTask->unk28 == 0);
             }
@@ -374,7 +374,7 @@ void PlayerActionShareItem(void)
                 {
                     if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                         PlaySfx(221);
-                    gCurTask->unk28 = sub_080b4204(gCurTask->unk18);
+                    gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
                     TaskYieldTrampoline(8);
                     if (gCurTask->unk28 != 0)
                         break;

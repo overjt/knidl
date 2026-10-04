@@ -5,7 +5,7 @@
 /* The actor handler records of actor_rodata (issue #167): 62 struct
  * ActorHandlers tables and 136 struct ActorVt records (include/actor.h),
  * 261 function pointers, in 28 runs of adjacent records (one of them round 1's
- * row of gUnk_0873F910, moved here from actor_tables.c), each run in address
+ * row of gActorDrownTerrainHandlers, moved here from actor_tables.c), each run in address
  * order.
  *
  * - struct ActorHandlers (7 words) is what Actor.terrainHandlers points at:
@@ -263,30 +263,30 @@ s32 sub_080b15b4(void);
 void sub_080b2550(void);
 void sub_080b2574(void);
 s32 sub_080b2f38(void);
-s32 sub_080b404c(void);
-s32 sub_080b406c(void);
-s32 sub_080b408c(void);
-s32 sub_080b4390(void);
-s32 sub_080b43d4(void);
-s32 sub_080b43f4(void);
+s32 PickupStartFall(void);
+s32 PickupLand(void);
+s32 PickupEnterWater(void);
+s32 AbilityStarBounceOffFloor(void);
+s32 AbilityStarEnterWater(void);
+s32 AbilityStarBounceOffWall(void);
 s32 sub_080b442c(void);
 
 /* ---- 0x0873F5FC-0x0873F664: 6 record(s), section .actor_tbl_0873f5fc ---- */
 /* gAbilityStarDef */
-struct ActorHandlers gUnk_0873F5FC ACTOR_TBL(0873f5fc) = {
-    .unk00 = (u32)sub_080b4390,
+struct ActorHandlers gAbilityStarTerrainHandlers ACTOR_TBL(0873f5fc) = {
+    .unk00 = (u32)AbilityStarBounceOffFloor,
     .unk04 = 0,
-    .unk08 = (u32)sub_080b43d4,
+    .unk08 = (u32)AbilityStarEnterWater,
     .unk0C = 0,
-    .unk10 = (u32)sub_080b43f4,
+    .unk10 = (u32)AbilityStarBounceOffWall,
     .unk14 = 0,
     .unk18 = (u32)sub_080b442c,
 };
 /* 4 ActorDefs (gOneUpDef, gMaximTomatoDef, ...) */
-struct ActorHandlers gUnk_0873F618 ACTOR_TBL(0873f5fc) = {
-    .unk00 = (u32)sub_080b406c,
-    .unk04 = (u32)sub_080b404c,
-    .unk08 = (u32)sub_080b408c,
+struct ActorHandlers gPickupTerrainHandlers ACTOR_TBL(0873f5fc) = {
+    .unk00 = (u32)PickupLand,
+    .unk04 = (u32)PickupStartFall,
+    .unk08 = (u32)PickupEnterWater,
     .unk0C = 0,
     .unk10 = 0,
     .unk14 = 0,
@@ -339,8 +339,8 @@ struct ActorHandlers gUnk_0873F8F4[] ACTOR_TBL(0873f8f4) = { {
 
 /* ---- 0x0873F910-0x0873F92C: 1 record(s), section .actor_tbl_0873f910 ---- */
 /* src/actor_692fc.c */
-struct ActorHandlers gUnk_0873F910[] ACTOR_TBL(0873f910) = { {
-        .unk00 = (u32)sub_0806b24c,
+struct ActorHandlers gActorDrownTerrainHandlers[] ACTOR_TBL(0873f910) = { {
+        .unk00 = (u32)ActorDrownLand,
         .unk04 = 0,
         .unk08 = 0,
         .unk0C = 0,

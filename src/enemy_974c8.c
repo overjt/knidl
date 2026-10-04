@@ -861,7 +861,7 @@ void sub_08098708(void)
 
 void sub_08098718(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
 }
 
 void sub_08098728(void)

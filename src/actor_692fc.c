@@ -812,7 +812,7 @@ s16 TaskGetHitAngle(void)
     return r;
 }
 
-void sub_0806a0cc(void)
+void ActorPlayRandomDefeatSfx(void)
 {
     u32 v;
 
@@ -831,7 +831,7 @@ void sub_0806a0cc(void)
     ActorPlaySfx(v, 0);
 }
 
-void sub_0806a0f0(s32 a)
+void ActorStartDrown(s32 a)
 {
     struct Task *t;
     struct Actor *b;
@@ -843,12 +843,12 @@ void sub_0806a0f0(s32 a)
     else
         t->unk18 = a;
     b->hitState = 2;
-    ActorSetTerrainHandlers((u32)gUnk_0873F910);
+    ActorSetTerrainHandlers((u32)gActorDrownTerrainHandlers);
     if (gCurTask->onGround & 1)
         ActorSetState(1);
     else
         ActorSetState(0);
-    TaskSetEntry(sub_0806b26c, gCurTaskIdx);
+    TaskSetEntry(ActorDrownInit, gCurTaskIdx);
 }
 
 /* No return value: the ROM's epilogue is `pop {r0}; bx r0`.  Its caller

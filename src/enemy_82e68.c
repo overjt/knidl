@@ -757,7 +757,7 @@ void sub_08083dfc(void)
 
 u8 sub_08083e5c(void)
 {
-    sub_0806a0f0(-2);
+    ActorStartDrown(-2);
     return 1;
 }
 

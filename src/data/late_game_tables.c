@@ -54,8 +54,8 @@ u32 gPickupVariants[2] LATE_TBL(0875607c) = {
 /* include/enemy.h; CallTableEntry(i, 3, ...) in PickupInit, PickupEnterState */
 u32 gPickupStates[3] LATE_TBL(087560a0) = {
     (u32)sub_080b4174,
-    (u32)sub_080b4194,
-    (u32)sub_080b41cc,
+    (u32)PickupFall,
+    (u32)PickupFallInWater,
 };
 /* include/enemy.h; CallTableEntry(i, 3, ...) in PickupUpdate */
 u32 gPickupStateUpdates[3] LATE_TBL(087560a0) = {
@@ -70,13 +70,13 @@ u32 gUnk_087560B8[2] LATE_TBL(087560a0) = {
 };
 
 /* ---- 0x087560D0-0x087560EC: 3 table(s), 7 function pointer(s), section .late_tbl_087560d0 ---- */
-/* include/enemy.h; CallTableEntry(i, 2, ...) in Task_AbilityStar, sub_080b4754 */
-u32 gUnk_087560D0[2] LATE_TBL(087560d0) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in Task_AbilityStar, AbilityStarEnterState */
+u32 gAbilityStarStates[2] LATE_TBL(087560d0) = {
     (u32)sub_080b4770,
-    (u32)sub_080b4794,
+    (u32)AbilityStarSink,
 };
-/* include/enemy.h; CallTableEntry(i, 2, ...) in sub_080b4714 */
-u32 gUnk_087560D8[2] LATE_TBL(087560d0) = {
+/* include/enemy.h; CallTableEntry(i, 2, ...) in AbilityStarUpdate */
+u32 gAbilityStarStateUpdates[2] LATE_TBL(087560d0) = {
     (u32)sub_080b4788,
     (u32)sub_080b47c0,
 };
