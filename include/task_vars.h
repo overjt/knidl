@@ -386,7 +386,7 @@
 #define fireLionDustTimer unk20 /* s32: frames since the last dust trail while the defeated lion slides (a puff every 16) */
 #define fireLionFlameSlots unk24 /* s32: the four flame children's slots, one per byte (cleared after; unreferenced reader) */
 #define fireLionWallHit unk2C /* s32: set by the wall hook FireLionHitWall; cleared before each move, then tested */
-#define fireLionCatchActive unk30 /* s32: 1 while sub_08096a40 tests the catch boxes (the lunges, state 8's leap) */
+#define fireLionCatchActive unk30 /* s32: 1 while FireLionCheckCatch tests the catch boxes (the lunges, state 8's leap) */
 #define fireLionLanded unk34 /* s32: set by the land hook FireLionLand; cleared before each jump and waited on */
 #define fireLionFlameSlot unk46 /* s16: the flame child (Task_FireLionFlame, task type #214) just created by sub_08095834 */
 #define fireLionLoopCount unk6C /* s16: iterations of the running move's loop (hops, lunges, swipes, shakes), counted from 0 */
