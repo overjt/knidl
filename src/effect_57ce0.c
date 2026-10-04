@@ -166,7 +166,7 @@ void PlayerEffectMikeAttack(void)
         t->drawCallback = 0;
         t->updateCallback = (u32)PlayerEffectMikeAttackUpdate;
         t->u80.attackAbility = ABILITY_MIKE;
-        while ((s8)gCurTask->player->unk16 == 0)
+        while ((s8)gCurTask->player->playerMikeShoutCount == 0)
             TaskYieldTrampoline(1);
         u = gCurTask;
         u->unk28 = gPlayerCameraPos[u->parent].x;
@@ -270,7 +270,7 @@ void PlayerEffectMikeAttack(void)
         }
         if (m == 0)
             TaskYieldTrampoline(1);
-        gCurTask->player->unk16--;
+        gCurTask->player->playerMikeShoutCount--;
         gScreenAttackActive = 0;
         TaskExitTrampoline();
     }
@@ -328,7 +328,7 @@ void PlayerEffectMikeAttackUpdate(void)
 
     if (t->player->mode != 13)
         TaskFree(gCurTaskIdx);
-    else if ((s8)t->player->unk16 != 0)
+    else if ((s8)t->player->playerMikeShoutCount != 0)
         RegisterCollider((u8)gCurTaskIdx, t->unk28, t->unk2C, gUnk_0873C04C);
 }
 

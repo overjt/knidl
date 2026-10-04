@@ -1344,7 +1344,7 @@ void sub_08066988(u32 i)
         t->posY = t->pixelY << 16;
         if (a->attachEffect != 1)
         {
-            if ((u8)(p->unk16 + 2) <= 1)
+            if ((u8)(p->playerHoldPose + 2) <= 1)
             {
                 ActorDestroySlot(i);
                 return;

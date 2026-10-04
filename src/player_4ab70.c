@@ -261,7 +261,7 @@ void PlayerActionCrash(void)
     gCurTask->player->statusFlags |= PLAYER_STATUS_PALETTE_LOCKED;
     gCurTask->variant = 1;
     gCurTask->playerCrashBlendRatio = 0;
-    gCurTask->player->unk16 = 1;
+    gCurTask->player->playerCrashBlastPhase = 1;
     {
         /* a second pseudo for the task-pointer address (lesson 3.291) */
         struct Task **c = &gCurTask;
@@ -278,7 +278,7 @@ void PlayerActionCrash(void)
                 TaskYieldTrampoline(2);
             } while (++gCurTask->playerLoopCount6E <= 9);
         } while ((s16)++gCurTask->playerLoopCount <= 1);
-        if ((s8)(*c)->player->unk16 == 0) {
+        if ((s8)(*c)->player->playerCrashBlastPhase == 0) {
             TaskSetFrame(0xDE7);
             TaskYieldTrampoline(2);
             TaskSetFrame(0xDEF);
@@ -291,9 +291,9 @@ void PlayerActionCrash(void)
         } else {
             TaskSetSkipMask(TASK_SKIP_MOVE, gCurTaskIdx);
             do {
-                if ((s8)(*c)->player->unk16 == 0) {
+                if ((s8)(*c)->player->playerCrashBlastPhase == 0) {
                     TaskSetSkipMask(0, gCurTaskIdx);
-                    (*c)->player->unk16 = 2;
+                    (*c)->player->playerCrashBlastPhase = 2;
                 }
                 TaskSetFrame(0xDE7);
                 TaskYieldTrampoline(2);
@@ -304,7 +304,7 @@ void PlayerActionCrash(void)
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 } while (++gCurTask->playerLoopCount6E <= 9);
-            } while ((s8)(*c)->player->unk16 != 2);
+            } while ((s8)(*c)->player->playerCrashBlastPhase != 2);
         }
     }
     TaskSetFrame(0xDE7);

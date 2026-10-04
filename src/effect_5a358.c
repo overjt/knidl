@@ -345,7 +345,7 @@ void PlayerEffectCrashBlast(void)
             }
         }
         gScreenAttackActive = 0;
-        gCurTask->player->unk16 = 0;
+        gCurTask->player->playerCrashBlastPhase = 0;
         while (gCurTask->player->terrainBox == 0)
             TaskYieldTrampoline(1);
         TaskYieldTrampoline(10);

@@ -1092,7 +1092,7 @@ void ReleaseHeldPlayer(s32 i, u8 d)
     t->actorKind = ACTOR_KIND_ENEMY;
     TaskStopSlot(i);
     PlayerResumeControl(i, 6, 0, 0);
-    p->unk14 = 4;
+    p->playerJumpPhaseTimer = 4;
 }
 s32 HeldPlayerDamage(s32 a, s32 b)
 {
@@ -1154,7 +1154,7 @@ void PlayerSuspendControl(s32 i, u8 flag)
     p->prevMode = a;
     p->mode = 16;
     gPlayerStates[i].hitsThisFrame = b;
-    p->unk16 = 255;
+    p->playerHoldPose = 255;
     DisablePause();
 }
 void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d)

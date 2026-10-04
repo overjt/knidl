@@ -48,7 +48,7 @@ void PlayerActionMike(void)
         gDispCnt &= 0xE0FF;
         gDispCnt |= 0x1D00;
     }
-    gCurTask->player->unk16 = 0;
+    gCurTask->player->playerMikeShoutCount = 0;
     CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 0);
     gCurTask->playerActionDone28 = 0;
     SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
@@ -79,7 +79,7 @@ void PlayerActionMike(void)
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlaySfx(160);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerMikeShoutCount++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
@@ -91,7 +91,7 @@ void PlayerActionMike(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->playerLoopCount <= 7);
-        while ((s8)gCurTask->player->unk16 != 0) {
+        while ((s8)gCurTask->player->playerMikeShoutCount != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
             TaskYieldTrampoline(2);
@@ -114,7 +114,7 @@ void PlayerActionMike(void)
         StopSfx(160);
         TaskYieldTrampoline(1);
         PlaySfx(161);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerMikeShoutCount++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
@@ -126,7 +126,7 @@ void PlayerActionMike(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->playerLoopCount <= 7);
-        while ((s8)gCurTask->player->unk16 != 0) {
+        while ((s8)gCurTask->player->playerMikeShoutCount != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
             TaskYieldTrampoline(2);
@@ -168,7 +168,7 @@ void PlayerActionMike(void)
         gCurTask->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
         PlayerStopAxes(2);
         PlaySfx(162);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerMikeShoutCount++;
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, PLAYER_EFFECT_VARIANT_MIKE_ATTACK, 1);
@@ -180,7 +180,7 @@ void PlayerActionMike(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
         } while ((s16)++gCurTask->playerLoopCount <= 7);
-        while ((s8)gCurTask->player->unk16 != 0) {
+        while ((s8)gCurTask->player->playerMikeShoutCount != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
             TaskYieldTrampoline(2);

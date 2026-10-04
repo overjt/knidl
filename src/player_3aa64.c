@@ -43,7 +43,7 @@ void PlayerActionSwim(void)
         {
             t->variant = 0;
             u = gCurTask;
-            u->player->unk14 = 1;
+            u->player->playerSwimStrokeTimer = 1;
             if (gLatchedHeldKeys[u->player->playerIndex] & 65)
                 u->unk28 = 2;
             else
@@ -172,7 +172,7 @@ void PlayerActionSwim(void)
     case 2:
         PlayerSetMotionYPreset(14);
         PlayerSetMotionXPreset(11, 4);
-        gCurTask->player->unk14 = 15;
+        gCurTask->player->playerSwimStrokeTimer = 15;
         TaskSetFrame(anim[3]);
         TaskYieldTrampoline(3);
         gCurTask->frame++;
@@ -194,7 +194,7 @@ void PlayerActionSwim(void)
             PlayerSetMotionYPreset(13);
             gCurTask->unk28 = 10;
         }
-        gCurTask->player->unk14 = 15;
+        gCurTask->player->playerSwimStrokeTimer = 15;
         gCurTask->playerBaseFrame = anim[2];
         while (1)
         {
@@ -258,11 +258,11 @@ void PlayerActionSwimUpdate(void)
         else
         {
             t->unk28 = 5;
-            t->player->unk14 = 1;
+            t->player->playerSwimStrokeTimer = 1;
         }
-        if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 65) && --gCurTask->player->unk14 == 0)
+        if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 65) && --gCurTask->player->playerSwimStrokeTimer == 0)
         {
-            gCurTask->player->unk14 = 15;
+            gCurTask->player->playerSwimStrokeTimer = 15;
             PlayerSetMotionYPreset(18);
         }
         if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
@@ -314,8 +314,8 @@ void PlayerActionSwimUpdate(void)
                 goto set3c;
             if (!(gLatchedHeldKeys[t->player->playerIndex] & 240))
                 goto set0c;
-            if ((s16)t->player->unk14 != 0)
-                t->player->unk14--;
+            if ((s16)t->player->playerSwimStrokeTimer != 0)
+                t->player->playerSwimStrokeTimer--;
             break;
         set1d:
             *st = 1;
@@ -326,7 +326,7 @@ void PlayerActionSwimUpdate(void)
             TaskSetEntry(PlayerActionSwim, gCurTaskIdx);
             goto keys;
         dec2:
-            t->player->unk14--;
+            t->player->playerSwimStrokeTimer--;
             goto keys;
         case 3:
             if (gLatchedHeldKeys[t->player->playerIndex] & 48)
@@ -335,7 +335,7 @@ void PlayerActionSwimUpdate(void)
                 goto set1d;
             if (gLatchedHeldKeys[t->player->playerIndex] & 128)
                 goto set2d;
-            if ((s16)t->player->unk14 != 0)
+            if ((s16)t->player->playerSwimStrokeTimer != 0)
                 goto dec2;
             if (gLatchedHeldKeys[t->player->playerIndex] & 241)
                 goto keys;
@@ -707,7 +707,7 @@ void PlayerActionWaterShot(void)
             struct Task *u = gCurTask;
 
             u->playerWaterShotCount = 0;
-            u->player->unk14 = 15;
+            u->player->playerWaterShotHoldTimer = 15;
             if ((u32)abs(u->velX) > 0x10C00)
                 TaskSetMotionXFacing(0x10C00, 0x5A5A5A5A);
         }
@@ -813,7 +813,7 @@ void PlayerActionWaterShotUpdate(void)
 
     if (*st == 0)
     {
-        if (!(gLatchedHeldKeys[t->player->playerIndex] & 2) && (s16)t->player->unk14 == 0)
+        if (!(gLatchedHeldKeys[t->player->playerIndex] & 2) && (s16)t->player->playerWaterShotHoldTimer == 0)
         {
             *st = 1;
             TaskSetEntry(PlayerActionWaterShot, gCurTaskIdx);
@@ -839,8 +839,8 @@ void PlayerActionWaterShotUpdate(void)
                 TaskSetEntry(PlayerActionWaterShot, gCurTaskIdx);
             }
         }
-        if ((s16)gCurTask->player->unk14 != 0)
-            gCurTask->player->unk14--;
+        if ((s16)gCurTask->player->playerWaterShotHoldTimer != 0)
+            gCurTask->player->playerWaterShotHoldTimer--;
     }
     else if (t->playerWaterShotCount != 0 && PlayerCheckStartSwim() == 0)
     {

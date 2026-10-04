@@ -211,7 +211,7 @@ void PlayerActionLadder(void)
     case 2:
         c2 = gCurTask;
         c2->playerLadderDir = c2->variant;
-        c2->player->unk14 = 0;
+        c2->player->playerLadderSfxTimer = 0;
         PlaySfxIfLocalPlayer(124, c2->player->playerIndex);
         switch (gCurTask->player->ability)
         {
@@ -339,15 +339,15 @@ void PlayerActionLadderUpdate(void)
         break;
     case 2:
         p = t->player;
-        k &= p->unk14;
+        k &= p->playerLadderSfxTimer;
         if (k != 0)
         {
             PlaySfxIfLocalPlayer(124, p->playerIndex);
-            gCurTask->player->unk14 = 0;
+            gCurTask->player->playerLadderSfxTimer = 0;
         }
         else
         {
-            p->unk14++;
+            p->playerLadderSfxTimer++;
         }
         qb = gLatchedHeldKeys;
         tb = gCurTask;

@@ -240,7 +240,7 @@ loop:
                 PlayerSetMotionXPreset(10, 30);
             PlayerSetMotionYPreset(24);
         }
-        gCurTask->player->unk14 = 120;
+        gCurTask->player->playerHurtTimer = 120;
         if (gCurTask->player->mouthState == 0)
         {
             switch (gCurTask->playerHurtPhase)
@@ -307,10 +307,10 @@ loop:
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                 }
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             default:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -403,11 +403,11 @@ loop:
                 TaskYieldTrampoline(2);
                 TaskSetFrame(384);
                 TaskYieldTrampoline(2);
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             case 4:
             default:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -425,7 +425,7 @@ loop:
                 PlayerSetMotionXPreset(10, 30);
             PlayerSetMotionYPreset(24);
         }
-        gCurTask->player->unk14 = 120;
+        gCurTask->player->playerHurtTimer = 120;
         if (gCurTask->player->mouthState == 0)
         {
             switch (gCurTask->playerHurtPhase)
@@ -466,7 +466,7 @@ loop:
                 gCurTask->frame--;
                 TaskYieldTrampoline(2);
                 PlayerSetMotionYPreset(26);
-                gCurTask->player->unk14 = 120;
+                gCurTask->player->playerHurtTimer = 120;
             case 2:
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(250);
@@ -482,10 +482,10 @@ loop:
                 }
                 gCurTask->frame++;
                 TaskYieldTrampoline(4);
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             default:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -507,7 +507,7 @@ loop:
             case 1:
                 gCurTask->playerHurtPhase++;
                 PlayerSetMotionYPreset(27);
-                gCurTask->player->unk14 = 120;
+                gCurTask->player->playerHurtTimer = 120;
             case 2:
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(0x191);
@@ -541,7 +541,7 @@ loop:
                 TaskSetFrame(402);
                 TaskYieldTrampoline(2);
                 PlayerSetMotionYPreset(28);
-                gCurTask->player->unk14 = 120;
+                gCurTask->player->playerHurtTimer = 120;
             case 3:
                 gCurTask->playerHurtPhase++;
                 TaskSetFrame(398);
@@ -574,13 +574,13 @@ loop:
                 if (gCurTask->onGround & 1)
                 {
                     PlayerSetMotionYPreset(29);
-                    gCurTask->player->unk14 = 120;
+                    gCurTask->player->playerHurtTimer = 120;
                     TaskSetFrame(410);
                     while (!(gCurTask->onGround & 1))
                         TaskYieldTrampoline(1);
                 }
             case 4:
-                gCurTask->player->unk14 = 1;
+                gCurTask->player->playerHurtTimer = 1;
                 break;
             }
         }
@@ -672,7 +672,7 @@ void PlayerActionHurtUpdate(void)
             if (PlayerCheckLanding() != 0)
                 goto e1;
             t = gCurTask;
-            if (--t->player->unk14 != 0)
+            if (--t->player->playerHurtTimer != 0)
                 break;
             t->variant = 6;
             TaskSetEntry(PlayerActionHurt, gCurTaskIdx);
@@ -702,7 +702,7 @@ void PlayerActionHurtUpdate(void)
                     goto e3;
             }
             t = gCurTask;
-            if (--t->player->unk14 != 0)
+            if (--t->player->playerHurtTimer != 0)
                 break;
             if (t->player->mouthState != 1)
             {

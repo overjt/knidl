@@ -137,18 +137,18 @@ void ActorAttachedThrowHeldFollowCarrier(void)
         t->facing = -t->facing;
     u = gCurTask;
     u->actorCarrierFacing = s->facing;
-    if (*(s8 *)&p->unk16 == -1)
+    if (*(s8 *)&p->playerHoldPose == -1)
     {
         u->pixelX = u->actorCarriedX;
         u->pixelY = u->actorCarriedY;
         ActorAttachedDie();
         return;
     }
-    if ((u8)(p->unk16 + 5) <= 2)
+    if ((u8)(p->playerHoldPose + 5) <= 2)
     {
         u->facing = s->facing;
         v = gCurTask;
-        v->unk70 = -*(s8 *)&p->unk16;
+        v->unk70 = -*(s8 *)&p->playerHoldPose;
         v->pixelX = v->actorCarriedX;
         v->pixelY = v->actorCarriedY;
         k = *(s16 *)&v->unk70 - 3;
@@ -182,7 +182,7 @@ void ActorAttachedThrowHeldFollowCarrier(void)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
-    n = *(s8 *)&p->unk16 * 5;
+    n = *(s8 *)&p->playerHoldPose * 5;
     g = (gUnk_0873E7C4[n] + u->actorCarryOffsetX) * s->facing;
     if (e == 1)
         h = gUnk_0873E7C4[n + 1] - u->actorCarryOffsetY;
@@ -218,14 +218,14 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
     t = gCurTask;
     s = &gTasks[t->parent];
     p = t->player;
-    if (*(s8 *)&p->unk16 == -1)
+    if (*(s8 *)&p->playerHoldPose == -1)
     {
         t->pixelX = t->actorCarriedX;
         t->pixelY = t->actorCarriedY;
         ActorAttachedDie();
         return;
     }
-    if (*(s8 *)&p->unk16 == -2)
+    if (*(s8 *)&p->playerHoldPose == -2)
     {
         t->pixelX = t->actorCarriedX;
         t->pixelY = t->actorCarriedY;
@@ -251,7 +251,7 @@ void ActorAttachedBackdropHeldFollowCarrier(void)
         TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
         return;
     }
-    n = *(s8 *)&p->unk16 * 5;
+    n = *(s8 *)&p->playerHoldPose * 5;
     g = (gUnk_0873E864[n] + t->actorCarryOffsetX) * s->facing;
     if (e == 1)
         h = gUnk_0873E864[n + 1] - t->actorCarryOffsetY;

@@ -315,9 +315,9 @@ s32 PlayerStarRodFlightCheckShoot(void)
 {
     if (!(gLatchedPressedKeys[gCurTask->player->playerIndex] & 3)
         && (!(gLatchedHeldKeys[gCurTask->player->playerIndex] & 3)
-            || (s16)++gCurTask->player->unk14 != 10))
+            || (s16)++gCurTask->player->playerStarRodHoldFrames != 10))
         return 0;
-    gCurTask->player->unk14 = 0;
+    gCurTask->player->playerStarRodHoldFrames = 0;
     gCurTask->variant = 2;
     TaskSetEntry(PlayerActionStarRodFlightEnterVariant, gCurTaskIdx);
     return 1;

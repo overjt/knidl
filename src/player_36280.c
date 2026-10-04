@@ -331,7 +331,7 @@ void PlayerActionSlide(void)
     {
         t->playerActionDone28 = 0;
         t->variant = 0;
-        gCurTask->player->unk14 = 10;
+        gCurTask->player->playerSlideBrakeTimer = 10;
         PlayerStartSfx(118, gCurTask->player->playerIndex);
         gCurTask->player->hitBoxSet = gUnk_0873CC84;
         PlayerSetMotionXPreset(11, 0);
@@ -423,13 +423,13 @@ void PlayerActionSlideUpdate(void)
         break;
     }
     p = gCurTask->player;
-    if ((s16)p->unk14 == 0)
+    if ((s16)p->playerSlideBrakeTimer == 0)
     {
         PlayerSetMotionXPreset(5, 72);
-        gCurTask->player->unk14--;
+        gCurTask->player->playerSlideBrakeTimer--;
     }
-    else if ((s16)p->unk14 > 0)
+    else if ((s16)p->playerSlideBrakeTimer > 0)
     {
-        p->unk14--;
+        p->playerSlideBrakeTimer--;
     }
 }

@@ -55,7 +55,7 @@ void PlayerActionGetAbility(void)
         t->playerGetAbilityAttackOn = 0;
         t->player->mode = 13;
     }
-    gCurTask->player->unk16 = 0xFF;
+    gCurTask->player->playerHoldPose = 0xFF;
     {
         struct Task *t = gCurTask;
         t->player->actionFlags |= PLAYER_ACTION_FLAG_GET_ABILITY;

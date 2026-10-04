@@ -51,7 +51,7 @@ void PlayerActionBackdrop(void)
     {
         gCurTask->playerActionDone28 = 0;
         gCurTask->variant = 0;
-        gCurTask->player->unk16 = 0;
+        gCurTask->player->playerHoldPose = 0;
         {
             struct PlayerState *p = gCurTask->player;
 
@@ -244,7 +244,7 @@ void PlayerActionThrow(void)
     case 0:
         u->playerCatchBlockDelay = 1;
         u->playerThrowGrabTimer = 30;
-        u->player->unk16 = 0;
+        u->player->playerHoldPose = 0;
         {
             struct PlayerState *p = gCurTask->player;
 

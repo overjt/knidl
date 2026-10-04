@@ -1262,6 +1262,25 @@
 #define playerObjectSpawnWord unk18 /* s32: variant << 24 | the spawner's 24-bit argument; the low bits pick the object's form */
 #define playerObjectLoopCount unk6C /* s16: the object's loop counter (frame steps), counted from 0; the step reads its tables by it */
 
+/* PlayerState - PlayerState - the player's struct PlayerState (Task.player);
+   unk14 / unk16 are per-action scratch, each alias used only inside the
+   functions it lists (#155 run 7, agent D) */
+#define playerDieTimer unk14 /* s16: Die: frames (90) the dead player stays hidden after the death star */
+#define playerDownThrustCancelTimer unk14 /* s16: Meta Knight's down thrust: frames (10) before B may end it in the air */
+#define playerGrabHoldTimer unk14 /* s16: Backdrop / Throw hold: frames (120) before the hold ends by itself */
+#define playerHurtTimer unk14 /* s16: Hurt: frames (120 or 1) before the hurt gives way to the next step */
+#define playerJumpPhaseTimer unk14 /* s16: jumps: frames left in the rise (23 / 20 / 4 / 8), then in the slow-down (6 / 5) */
+#define playerLadderSfxTimer unk14 /* s16: Ladder, climbing down: counts 0-2, the climb sound plays every third frame */
+#define playerOverGapTimer unk14 /* s16: Run, Wheel: frames (5) the run carries on over a gap before it looks for a floor */
+#define playerSlashWindowTimer unk14 /* s16: Meta Knight's slashes: frames (8) in which a B press queues the next slash */
+#define playerSlideBrakeTimer unk14 /* s16: Slide: frames (10) before the slide slows down; -1 afterwards */
+#define playerStarRodHoldFrames unk14 /* s16: Star Rod flight: frames B has been held since the last shot (a shot at 10) */
+#define playerSwimStrokeTimer unk14 /* s16: Swim: frames (15) to the next stroke while A or up is held */
+#define playerWaterShotHoldTimer unk14 /* s16: Water shot: frames (15) the shot lasts at least before releasing B ends it */
+#define playerCrashBlastPhase unk16 /* s8: Crash: 1 while the blast runs, 0 once its effect ended it, 2 once seen */
+#define playerHoldPose unk16 /* s8: Backdrop / Throw: the held actor's carry row (>= 0), or end / destroy / throw (< 0) */
+#define playerMikeShoutCount unk16 /* s8: Mike: shouts whose attack effect is still running */
+
 /* PoppyBrosJr - Poppy Bros. Jr. (task type #38, Task_PoppyBrosJr;
    gPoppyBrosJrVariants, gPoppyBrosJrStates) and its riders (#39
    Task_PoppyBrosJrOnApple, #40 Task_PoppyBrosJrOnMaximTomato;

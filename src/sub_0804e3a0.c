@@ -40,7 +40,7 @@ void PlayerActionThrowUpdate(void)
         {
             PlayerSetWaterMotionY();
             if ((s8)gCurTask->player->attachedCount != 0)
-                gCurTask->player->unk16 = 0xFF;
+                gCurTask->player->playerHoldPose = 0xFF;
             gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
             break;
         }

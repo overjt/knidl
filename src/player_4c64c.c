@@ -41,7 +41,7 @@ void PlayerActionThrowHold(void)
             struct Task *u;
             t->variant = 3;
             u = gCurTask;
-            u->player->unk14 = 120;
+            u->player->playerGrabHoldTimer = 120;
             u->u80.attackAbility = ABILITY_THROW;
         }
     }
@@ -57,19 +57,19 @@ void PlayerActionThrowHold(void)
                 else
                     PlayerStopAxes(2);
             }
-            gCurTask->player->unk16 = 0;
+            gCurTask->player->playerHoldPose = 0;
             TaskSetFrame(0xF73);
             TaskYieldTrampoline(1);
-            gCurTask->player->unk16 = 1;
+            gCurTask->player->playerHoldPose = 1;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->player->unk16 = 2;
+            gCurTask->player->playerHoldPose = 2;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->player->unk16 = 1;
+            gCurTask->player->playerHoldPose = 1;
             gCurTask->frame--;
             TaskYieldTrampoline(2);
-            gCurTask->player->unk16 = 2;
+            gCurTask->player->playerHoldPose = 2;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 64)
@@ -89,7 +89,7 @@ void PlayerActionThrowHold(void)
                     if ((s8)t->player->heldCount == 0)
                         t->variant = 5;
                 }
-                if ((u16)--gCurTask->player->unk14 == 0)
+                if ((u16)--gCurTask->player->playerGrabHoldTimer == 0)
                     goto done;
                 if (gLatchedPressedKeys[gCurTask->player->playerIndex] & 2)
                     goto done;
@@ -108,17 +108,17 @@ void PlayerActionThrowHold(void)
         case 0:
             PlayerStartOffsetScript(9);
             CreatePlayerEffect(gCurTask->player->playerIndex, 47, 1);
-            gCurTask->player->unk16 = 8;
+            gCurTask->player->playerHoldPose = 8;
             TaskSetFrame(0xF7C);
             TaskYieldTrampoline(1);
-            gCurTask->player->unk16 = 9;
+            gCurTask->player->playerHoldPose = 9;
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->player->unk16 = 10;
+            gCurTask->player->playerHoldPose = 10;
             gCurTask->frame++;
             TaskYieldTrampoline(1);
             PlaySfxIfLocalPlayer(236, gCurTask->player->playerIndex);
-            gCurTask->player->unk16 = 253;
+            gCurTask->player->playerHoldPose = 253;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             TaskSetFrame(0xF80);
@@ -130,17 +130,17 @@ void PlayerActionThrowHold(void)
         case 1:
             PlayerStartOffsetScript(10);
             CreatePlayerEffect(gCurTask->player->playerIndex, 47, 1);
-            gCurTask->player->unk16 = 3;
+            gCurTask->player->playerHoldPose = 3;
             TaskSetFrame(0xF76);
             TaskYieldTrampoline(1);
-            gCurTask->player->unk16 = 4;
+            gCurTask->player->playerHoldPose = 4;
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->player->unk16 = 5;
+            gCurTask->player->playerHoldPose = 5;
             gCurTask->frame++;
             TaskYieldTrampoline(1);
             PlaySfxIfLocalPlayer(236, gCurTask->player->playerIndex);
-            gCurTask->player->unk16 = 252;
+            gCurTask->player->playerHoldPose = 252;
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             TaskSetFrame(0xF80);
@@ -152,17 +152,17 @@ void PlayerActionThrowHold(void)
         case 2:
             PlayerStartOffsetScript(11);
             CreatePlayerEffect(gCurTask->player->playerIndex, 47, 1);
-            gCurTask->player->unk16 = 13;
+            gCurTask->player->playerHoldPose = 13;
             TaskSetFrame(0xF84);
             TaskYieldTrampoline(1);
-            gCurTask->player->unk16 = 14;
+            gCurTask->player->playerHoldPose = 14;
             gCurTask->frame++;
             TaskYieldTrampoline(1);
-            gCurTask->player->unk16 = 15;
+            gCurTask->player->playerHoldPose = 15;
             gCurTask->frame++;
             TaskYieldTrampoline(1);
             PlaySfxIfLocalPlayer(236, gCurTask->player->playerIndex);
-            gCurTask->player->unk16 = 251;
+            gCurTask->player->playerHoldPose = 251;
             gCurTask->frame++;
             TaskYieldTrampoline(7);
             TaskSetFrame(0xF80);
@@ -199,26 +199,26 @@ void PlayerActionThrowHoldUpdate(void)
             case 0:
             case 1:
                 if (v->playerThrowDir == 0) {
-                    v->player->unk16 = 6;
+                    v->player->playerHoldPose = 6;
                     TaskSetFrame(0xF7A);
                 } else if (v->playerThrowDir == 2) {
-                    v->player->unk16 = 11;
+                    v->player->playerHoldPose = 11;
                     TaskSetFrame(0xF82);
                 } else {
-                    v->player->unk16 = 1;
+                    v->player->playerHoldPose = 1;
                     TaskSetFrame(0xF74);
                 }
                 break;
             case 2:
             case 3:
                 if (v->playerThrowDir == 0) {
-                    v->player->unk16 = 7;
+                    v->player->playerHoldPose = 7;
                     TaskSetFrame(0xF7B);
                 } else if (v->playerThrowDir == 2) {
-                    v->player->unk16 = 12;
+                    v->player->playerHoldPose = 12;
                     TaskSetFrame(0xF83);
                 } else {
-                    v->player->unk16 = 2;
+                    v->player->playerHoldPose = 2;
                     TaskSetFrame(0xF75);
                 }
                 break;
@@ -231,7 +231,7 @@ void PlayerActionThrowHoldUpdate(void)
     case 2:
         {
             struct PlayerState *p = t->player;
-            if ((s8)p->unk16 >= 0 && (s8)p->heldCount == 0)
+            if ((s8)p->playerHoldPose >= 0 && (s8)p->heldCount == 0)
                 goto rebind;
         }
         break;
@@ -250,7 +250,7 @@ void PlayerActionThrowHoldUpdate(void)
     PlayerStopAtCeilingAndWall();
     if (PlayerHasCrossedWaterSurface(0) != 0) {
         gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     } else if (!(gCurTask->onGround & 1)) {
         PlayerSetMotionYPreset(2);

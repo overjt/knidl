@@ -62,7 +62,7 @@ void PlayerActionDie(void)
     gCurTask->player->mouthState = 0;
     SetPlayerAbility(ABILITY_NORMAL, -1, gCurTask->player->playerIndex);
     HoldPlayerCamera(gCurTask->player->playerIndex);
-    gCurTask->player->unk16 = 255;
+    gCurTask->player->playerHoldPose = 255;
     anim = gUnk_0873D9FA[gCurTask->player->ability];
     n = 0;
     for (i = 0; i < gPlayerCount; i++)
@@ -241,7 +241,7 @@ void PlayerActionDieUpdate(void)
                 struct Task *u;
                 struct PlayerState *q;
 
-                gCurTask->player->unk14 = 90;
+                gCurTask->player->playerDieTimer = 90;
                 gCurTask->variant = 2;
                 PlayerStopAxes(2);
                 u = gCurTask;
@@ -259,7 +259,7 @@ void PlayerActionDieUpdate(void)
     {
         struct Task *t = gCurTask;
 
-        if (--t->player->unk14 == 0)
+        if (--t->player->playerDieTimer == 0)
             t->variant = 3;
         break;
     }

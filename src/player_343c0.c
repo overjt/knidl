@@ -150,18 +150,18 @@ void PlayerActionRunUpdate(void)
         m2 = gTerrainResult.overGap;
         if (m2 != 0)
         {
-            t->player->unk14 = 5;
+            t->player->playerOverGapTimer = 5;
             t->unk28 = 1;
         }
         else
         {
-            t->player->unk14 = m2;
+            t->player->playerOverGapTimer = m2;
         }
     }
     else
     {
         p = t->player;
-        if ((s16)p->unk14 == 0)
+        if ((s16)p->playerOverGapTimer == 0)
         {
             if (IsFullBlockAtPixel(((u16 *)t)[36],
                              (y = ((u16 *)t)[37], m3 = -16, m3 &= y, m3 + 16)) != 0)
@@ -169,14 +169,14 @@ void PlayerActionRunUpdate(void)
         }
         else
         {
-            p->unk14--;
+            p->playerOverGapTimer--;
         }
     }
     t = gCurTask;
     if ((t->onGround & 1) != 0 || (t->player->boundsClamp & 3) != 0)
     {
         t->unk28 = 0;
-        t->player->unk14 = 0;
+        t->player->playerOverGapTimer = 0;
     }
     while (PlayerCheckSkid() == 0 && PlayerCheckJump() == 0)
     {
@@ -316,9 +316,9 @@ void PlayerActionJump(void)
     if (gCurTask->player->prevMode != 4)
     {
         if (gCurTask->player->prevMode == 9)
-            gCurTask->player->unk14 = 4;
+            gCurTask->player->playerJumpPhaseTimer = 4;
         else
-            gCurTask->player->unk14 = 23;
+            gCurTask->player->playerJumpPhaseTimer = 23;
         PlayerSetMotionYPreset(0);
         PlaySfxIfLocalPlayer(SE_JUMP, gCurTask->player->playerIndex);
         gCurTask->variant = 0;
@@ -382,16 +382,16 @@ void PlayerActionJumpUpdate(void)
         switch (gCurTask->variant)
         {
         case 0:
-            if (--gCurTask->player->unk14 == 0
+            if (--gCurTask->player->playerJumpPhaseTimer == 0
                 || (gLatchedHeldKeys[gCurTask->player->playerIndex] & 1) == 0)
             {
                 gCurTask->variant = 1;
                 PlayerSetMotionYPreset(1);
-                gCurTask->player->unk14 = 6;
+                gCurTask->player->playerJumpPhaseTimer = 6;
             }
             break;
         case 1:
-            if (PlayerCheckAirFloat() == 0 && --gCurTask->player->unk14 == 0)
+            if (PlayerCheckAirFloat() == 0 && --gCurTask->player->playerJumpPhaseTimer == 0)
             {
                 PlayerStopAxes(2);
                 PlayerSetMotionYPreset(2);
@@ -474,15 +474,15 @@ void PlayerActionReleaseJumpUpdate(void)
         switch (gCurTask->variant)
         {
         case 0:
-            if (--gCurTask->player->unk14 == 0)
+            if (--gCurTask->player->playerJumpPhaseTimer == 0)
             {
                 gCurTask->variant = 1;
                 PlayerSetMotionYPreset(1);
-                gCurTask->player->unk14 = 5;
+                gCurTask->player->playerJumpPhaseTimer = 5;
             }
             break;
         case 1:
-            if (--gCurTask->player->unk14 == 0)
+            if (--gCurTask->player->playerJumpPhaseTimer == 0)
             {
                 PlayerStopAxes(2);
                 PlayerSetMotionYPreset(2);

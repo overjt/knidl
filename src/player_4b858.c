@@ -49,7 +49,7 @@ void PlayerActionBackdropHold(void)
 
         h->variant = 6;
         u = gCurTask;
-        u->player->unk14 = 120;
+        u->player->playerGrabHoldTimer = 120;
         u->playerActionDone28 = 0;
         u->u80.attackAbility = ABILITY_BACKDROP;
     }
@@ -61,7 +61,7 @@ loop:
             struct Task *a;
 
             SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
-            gCurTask->player->unk16 = 0;
+            gCurTask->player->playerHoldPose = 0;
             TaskSetFrame(0xE84);
             PlayerStartOffsetScript(12);
             a = gCurTask;
@@ -83,7 +83,7 @@ loop:
             struct PlayerState *p;
 
             b = gCurTask;
-            if (--b->player->unk14 == 0)
+            if (--b->player->playerGrabHoldTimer == 0)
             {
                 gCurTask->variant = gUnk_0873B65E[RandomRange(4)];
                 goto loop;
@@ -135,31 +135,31 @@ loop:
         }
         TaskSleepForever();
     case 0:
-        gCurTask->player->unk16 = 1;
+        gCurTask->player->playerHoldPose = 1;
         TaskSetFrame(0xE97);
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 2;
+        gCurTask->player->playerHoldPose = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 3;
+        gCurTask->player->playerHoldPose = 3;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 4;
+        gCurTask->player->playerHoldPose = 4;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 5;
+        gCurTask->player->playerHoldPose = 5;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 6;
+        gCurTask->player->playerHoldPose = 6;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerSetMotionYPreset(58);
         PlaySfxIfLocalPlayer(178, gCurTask->player->playerIndex);
-        gCurTask->player->unk16 = 7;
+        gCurTask->player->playerHoldPose = 7;
         gCurTask->frame++;
         TaskYieldTrampoline(17);
         PlayerSetMotionYPreset(59);
-        gCurTask->player->unk16 = 24;
+        gCurTask->player->playerHoldPose = 24;
         TaskSetFrame(0xEBA);
         while (!(gCurTask->onGround & 1))
             TaskYieldTrampoline(1);
@@ -167,45 +167,45 @@ loop:
         RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->player->playerIndex);
         PlayerStopAxes(2);
-        gCurTask->player->unk16 = 25;
+        gCurTask->player->playerHoldPose = 25;
         TaskSetFrame(0xEBB);
         TaskYieldTrampoline(20);
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         gCurTask->variant = 7;
         goto loop;
     case 1:
-        gCurTask->player->unk16 = 1;
+        gCurTask->player->playerHoldPose = 1;
         TaskSetFrame(0xE97);
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 2;
+        gCurTask->player->playerHoldPose = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 3;
+        gCurTask->player->playerHoldPose = 3;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 4;
+        gCurTask->player->playerHoldPose = 4;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 5;
+        gCurTask->player->playerHoldPose = 5;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 6;
+        gCurTask->player->playerHoldPose = 6;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerSetMotionXPreset(11, 66);
         PlayerSetMotionYPreset(60);
         PlaySfxIfLocalPlayer(178, gCurTask->player->playerIndex);
-        gCurTask->player->unk16 = 7;
+        gCurTask->player->playerHoldPose = 7;
         gCurTask->frame++;
         TaskYieldTrampoline(13);
-        gCurTask->player->unk16 = 8;
+        gCurTask->player->playerHoldPose = 8;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 9;
+        gCurTask->player->playerHoldPose = 9;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerSetMotionYPreset(61);
-        gCurTask->player->unk16 = 10;
+        gCurTask->player->playerHoldPose = 10;
         gCurTask->frame++;
         while (!(gCurTask->onGround & 1))
             TaskYieldTrampoline(1);
@@ -213,10 +213,10 @@ loop:
         RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->player->playerIndex);
         PlayerStopAxes(3);
-        gCurTask->player->unk16 = 11;
+        gCurTask->player->playerHoldPose = 11;
         TaskSetFrame(0xEA1);
         TaskYieldTrampoline(20);
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         PlayerSetMotionYPreset(56);
         gCurTask->playerLoopCount = 0;
         do {
@@ -228,49 +228,49 @@ loop:
         gCurTask->variant = 7;
         goto loop;
     case 3:
-        gCurTask->player->unk16 = 1;
+        gCurTask->player->playerHoldPose = 1;
         TaskSetFrame(0xE97);
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 2;
+        gCurTask->player->playerHoldPose = 2;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 3;
+        gCurTask->player->playerHoldPose = 3;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 4;
+        gCurTask->player->playerHoldPose = 4;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 5;
+        gCurTask->player->playerHoldPose = 5;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 6;
+        gCurTask->player->playerHoldPose = 6;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerSetMotionYPreset(62);
         PlaySfxIfLocalPlayer(178, gCurTask->player->playerIndex);
-        gCurTask->player->unk16 = 7;
+        gCurTask->player->playerHoldPose = 7;
         gCurTask->frame++;
         TaskYieldTrampoline(11);
-        gCurTask->player->unk16 = 12;
+        gCurTask->player->playerHoldPose = 12;
         TaskSetFrame(0xEA8);
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 13;
+        gCurTask->player->playerHoldPose = 13;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 14;
+        gCurTask->player->playerHoldPose = 14;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerSetMotionYPreset(63);
         do
         {
-            gCurTask->player->unk16 = 15;
+            gCurTask->player->playerHoldPose = 15;
             TaskSetFrame(0xEAB);
             TaskYieldTrampoline(1);
             if (gCurTask->onGround & 1)
                 goto done3;
             for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
             {
-                gCurTask->player->unk16++;
+                gCurTask->player->playerHoldPose++;
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
                 if (gCurTask->onGround & 1)
@@ -282,10 +282,10 @@ loop:
         RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->player->playerIndex);
         PlayerStopAxes(2);
-        gCurTask->player->unk16 = 23;
+        gCurTask->player->playerHoldPose = 23;
         TaskSetFrame(0xEB3);
         TaskYieldTrampoline(20);
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         PlayerSetMotionYPreset(56);
         gCurTask->playerLoopCount = 0;
         do {
@@ -299,41 +299,41 @@ loop:
     case 4:
         gCurTask->playerActionDone28 = 0;
         PlayerSetMotionXPreset(11, 67);
-        gCurTask->player->unk16 = 37;
+        gCurTask->player->playerHoldPose = 37;
         TaskSetFrame(0xECE);
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 38;
+        gCurTask->player->playerHoldPose = 38;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 39;
+        gCurTask->player->playerHoldPose = 39;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 40;
+        gCurTask->player->playerHoldPose = 40;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 41;
+        gCurTask->player->playerHoldPose = 41;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerStopAxes(1);
-        gCurTask->player->unk16 = 42;
+        gCurTask->player->playerHoldPose = 42;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerSetMotionYPreset(64);
         PlaySfxIfLocalPlayer(178, gCurTask->player->playerIndex);
-        gCurTask->player->unk16 = 43;
+        gCurTask->player->playerHoldPose = 43;
         gCurTask->frame++;
         TaskYieldTrampoline(11);
-        gCurTask->player->unk16 = 44;
+        gCurTask->player->playerHoldPose = 44;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 45;
+        gCurTask->player->playerHoldPose = 45;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 46;
+        gCurTask->player->playerHoldPose = 46;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerSetMotionYPreset(65);
-        gCurTask->player->unk16 = 47;
+        gCurTask->player->playerHoldPose = 47;
         TaskSetFrame(0xED8);
         while (!(gCurTask->onGround & 1))
             TaskYieldTrampoline(1);
@@ -342,10 +342,10 @@ loop:
         PlaySfxIfLocalPlayer(179, gCurTask->player->playerIndex);
         PlayerStopAxes(3);
         gCurTask->playerActionDone28++;
-        gCurTask->player->unk16 = 48;
+        gCurTask->player->playerHoldPose = 48;
         TaskSetFrame(0xED9);
         TaskYieldTrampoline(20);
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         PlayerSetMotionYPreset(57);
         gCurTask->playerLoopCount = 0;
         do {
@@ -358,36 +358,36 @@ loop:
         goto loop;
     case 2:
         PlayerSetMotionXPreset(11, 68);
-        gCurTask->player->unk16 = 26;
+        gCurTask->player->playerHoldPose = 26;
         TaskSetFrame(0xEBD);
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 27;
+        gCurTask->player->playerHoldPose = 27;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerStopAxes(1);
-        gCurTask->player->unk16 = 28;
+        gCurTask->player->playerHoldPose = 28;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         PlayerSetMotionXPreset(11, 69);
         PlayerSetMotionYPreset(66);
         PlaySfxIfLocalPlayer(178, gCurTask->player->playerIndex);
-        gCurTask->player->unk16 = 29;
+        gCurTask->player->playerHoldPose = 29;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 30;
+        gCurTask->player->playerHoldPose = 30;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 31;
+        gCurTask->player->playerHoldPose = 31;
         gCurTask->frame++;
         TaskYieldTrampoline(9);
-        gCurTask->player->unk16 = 32;
+        gCurTask->player->playerHoldPose = 32;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 33;
+        gCurTask->player->playerHoldPose = 33;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerSetMotionYPreset(67);
-        gCurTask->player->unk16 = 34;
+        gCurTask->player->playerHoldPose = 34;
         TaskSetFrame(0xEC5);
         while (!(gCurTask->onGround & 1))
             TaskYieldTrampoline(1);
@@ -395,13 +395,13 @@ loop:
         RequestScreenShake(2);
         PlaySfxIfLocalPlayer(179, gCurTask->player->playerIndex);
         PlayerStopAxes(3);
-        gCurTask->player->unk16 = 35;
+        gCurTask->player->playerHoldPose = 35;
         TaskSetFrame(0xEC6);
         TaskYieldTrampoline(20);
-        gCurTask->player->unk16 = 36;
+        gCurTask->player->playerHoldPose = 36;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         PlayerSetMotionYPreset(56);
         gCurTask->playerLoopCount = 0;
         do {
@@ -415,34 +415,34 @@ loop:
     case 5:
         PlayerStopAxes(3);
         PlayerSetMotionYPreset(68);
-        gCurTask->player->unk16 = 49;
+        gCurTask->player->playerHoldPose = 49;
         TaskSetFrame(0xEE4);
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerHoldPose++;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerHoldPose++;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerHoldPose++;
         gCurTask->frame++;
         TaskYieldTrampoline(2);
         PlayerSetMotionYPreset(2);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerHoldPose++;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerHoldPose++;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16++;
+        gCurTask->player->playerHoldPose++;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-        gCurTask->player->unk16 = 254;
+        gCurTask->player->playerHoldPose = 254;
         gCurTask->frame++;
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(8);
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         gCurTask->variant = 7;
         goto loop;
     }
@@ -460,7 +460,7 @@ void PlayerActionBackdropHoldUpdate(void)
     case 4:
         {
             struct Task *t = gCurTask;
-            if (t->playerActionDone28 == 0 && !(t->onGround & 1) && (s8)t->player->unk16 != -1) {
+            if (t->playerActionDone28 == 0 && !(t->onGround & 1) && (s8)t->player->playerHoldPose != -1) {
                 s32 k, x, v;
                 k = PlayerGetHeldDirection();
                 gUnk_03001F2C = k;
@@ -494,7 +494,7 @@ void PlayerActionBackdropHoldUpdate(void)
         {
             struct Task *u = gCurTask;
             struct PlayerState *p = u->player;
-            if ((s8)p->unk16 >= 0 && (s8)p->heldCount == 0) {
+            if ((s8)p->playerHoldPose >= 0 && (s8)p->heldCount == 0) {
                 if (!(u->onGround & 1)) {
                     PlayerStopAxes(2);
                     PlayerSetMotionYPreset(2);
@@ -509,11 +509,11 @@ void PlayerActionBackdropHoldUpdate(void)
     PlayerStopAtCeilingAndWall();
     if (PlayerHasCrossedWaterSurface(0) != 0) {
         gCurTask->player->requestedAction = PLAYER_ACTION_SWIM;
-        gCurTask->player->unk16 = 255;
+        gCurTask->player->playerHoldPose = 255;
         SetPlayerInvulnerability(255, 0, gCurTask->player->playerIndex);
     } else if (gCurTask->onGround & 1) {
         PlayerLand(0);
-    } else if ((s8)gCurTask->player->unk16 == -1) {
+    } else if ((s8)gCurTask->player->playerHoldPose == -1) {
         PlayerTurnToHeldDirection();
         PlayerSetMotionXPreset(7, 72);
     }

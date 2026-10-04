@@ -66,7 +66,7 @@ Lloop:
         struct Task *t = gCurTask;
 
         t->playerSlashQueued = 0;
-        t->player->unk14 = 0;
+        t->player->playerSlashWindowTimer = 0;
         {
             struct PlayerBodyBox *d = (struct PlayerBodyBox *)gPlayerBodyBoxes;
 
@@ -117,7 +117,7 @@ Lloop:
     {
         struct Task *t = gCurTask;
 
-        t->player->unk14 = 8;
+        t->player->playerSlashWindowTimer = 8;
         t->playerLoopCount = 0;
     }
     do
@@ -148,7 +148,7 @@ Lloop:
         if (t->playerSlashQueued == 0)
             goto Lend;
         t->playerSlashQueued = 0;
-        t->player->unk14 = 0;
+        t->player->playerSlashWindowTimer = 0;
         t->variant = 1;
     }
     if (gCurTask->playerSlashOnGround != 0)
@@ -186,7 +186,7 @@ Lloop:
     {
         struct Task *t = gCurTask;
 
-        t->player->unk14 = 8;
+        t->player->playerSlashWindowTimer = 8;
         t->playerLoopCount = 0;
     }
     do
@@ -228,8 +228,8 @@ void MetaKnightActionSlashUpdate(void)
 
     if (t->variant != 2) {
         p = t->player;
-        if ((s16)p->unk14 != 0) {
-            p->unk14--;
+        if ((s16)p->playerSlashWindowTimer != 0) {
+            p->playerSlashWindowTimer--;
             {
                 u16 *q = (u16 *)gLatchedPressedKeys;
                 if (q[t->player->playerIndex] & 2)
@@ -314,7 +314,7 @@ void MetaKnightActionDashSlash(void)
         }
         {
             struct Task *t = gCurTask;
-            t->player->unk14 = 8;
+            t->player->playerSlashWindowTimer = 8;
             LoadPlayerHitBoxSet(t->player->playerIndex,
                          (s32)((u8 *)gUnk_0873D04C + ++t->playerAttackStep * 8));
         }
@@ -411,8 +411,8 @@ void MetaKnightActionDashSlashUpdate(void)
         {
             struct Task *t = gCurTask;
             struct PlayerState *p = t->player;
-            if ((s16)p->unk14 != 0) {
-                p->unk14--;
+            if ((s16)p->playerSlashWindowTimer != 0) {
+                p->playerSlashWindowTimer--;
                 {
                     u16 *q = (u16 *)gLatchedPressedKeys;
                     if (q[t->player->playerIndex] & 2)
@@ -573,7 +573,7 @@ void MetaKnightActionDownThrust(void)
         PlayerStopAxes(3);
         {
             struct Task *t = gCurTask;
-            t->player->unk14 = 10;
+            t->player->playerDownThrustCancelTimer = 10;
             *(u32 *)((u8 *)t->player + 108) =
                 (u32)((u8 *)gPlayerHitBoxSets + t->player->playerIndex * 8);
             LoadPlayerHitBoxSet(t->player->playerIndex,
@@ -633,7 +633,7 @@ void MetaKnightActionDownThrustUpdate(void)
             struct Task *u = gCurTask;
             if (u->velY != 0) {
                 struct PlayerState *p = u->player;
-                if ((s16)p->unk14 == 0) {
+                if ((s16)p->playerDownThrustCancelTimer == 0) {
                     u16 *q = (u16 *)gLatchedPressedKeys;
                     if ((q[p->playerIndex] & 2) != 0) {
                         if ((u->waterFlags & 1) == 0) {
@@ -647,7 +647,7 @@ void MetaKnightActionDownThrustUpdate(void)
                         }
                     }
                 } else {
-                    p->unk14--;
+                    p->playerDownThrustCancelTimer--;
                 }
                 {
                     u16 *q = (u16 *)gLatchedHeldKeys;

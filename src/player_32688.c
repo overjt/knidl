@@ -506,7 +506,7 @@ void sub_08033414(void)
         if (gCurTask->player->unk37 != 2)
         {
             gCurTask->player->requestedAction = PLAYER_ACTION_HURT;
-            gCurTask->player->unk16 = 255;
+            gCurTask->player->playerHoldPose = 255;
         }
         else
         {

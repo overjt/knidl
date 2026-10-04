@@ -128,7 +128,7 @@ void PlayerActionStarRodJump(void)
     gCurTask->player->mode = 13;
     gCurTask->updateState = PLAYER_ACTION_HANDLER_STAR_ROD_JUMP;
     gCurTask->variant = 0;
-    gCurTask->player->unk14 = 23;
+    gCurTask->player->playerJumpPhaseTimer = 23;
     PlayerSetMotionYPreset(0);
     PlaySfxIfLocalPlayer(SE_JUMP, (u16)gCurTask->player->playerIndex);
     {
@@ -168,15 +168,15 @@ void PlayerActionStarRodJumpUpdate(void)
     switch (t->variant)
     {
     case 0:
-        if (--t->player->unk14 == 0 || !(gLatchedHeldKeys[t->player->playerIndex] & 1))
+        if (--t->player->playerJumpPhaseTimer == 0 || !(gLatchedHeldKeys[t->player->playerIndex] & 1))
         {
             t->variant = 1;
             PlayerSetMotionYPreset(1);
-            gCurTask->player->unk14 = 5;
+            gCurTask->player->playerJumpPhaseTimer = 5;
         }
         break;
     case 1:
-        if (--t->player->unk14 == 0)
+        if (--t->player->playerJumpPhaseTimer == 0)
         {
             PlayerStopAxes(2);
             PlayerSetMotionYPreset(2);
@@ -244,7 +244,7 @@ void PlayerActionStarRodFlight(void)
     if (gCurTask->player->prevMode != 13)
     {
         gCurTask->player->running = 0;
-        gCurTask->player->unk14 = 0;
+        gCurTask->player->playerStarRodHoldFrames = 0;
         gCurTask->player->flightCoastTimer = 0;
         PlayerStopAxes(3);
         gCurTask->variant = 0;
