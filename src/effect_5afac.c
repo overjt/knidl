@@ -1662,7 +1662,7 @@ void sub_0805d994(s32 a0, s32 a1)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)sub_0805da2c;
     gCurTask->layer = 7;
-    gCurTask->frameTable = gUnk_0874CFEC;
+    gCurTask->frameTable = gPlayerFrames;
 }
 
 void sub_0805da2c(void)
@@ -1731,7 +1731,7 @@ void sub_0805dba0(void)
     t->updateCallback = 0;
     t->lateUpdateCallback = 0;
     t->moveCallback = (u32)TaskMove;
-    t->frameTable = gUnk_0874CFEC;
+    t->frameTable = gPlayerFrames;
     TaskStop();
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;

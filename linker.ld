@@ -4256,7 +4256,7 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_0874c3d0 == 0x0874C3D0, "MATCHING: actor_rodata_0874c3d0 moved")
     ASSERT(!MATCHING || gWhispyWoodsAppleTerrainHandlers == 0x0874C418, "MATCHING: actor_tbl_0874c418 moved")
 
-    /* Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gUnk_0874CFEC among them; functional table in C (src/data/frame_tables.c, carved by tools/carve_data.py) */
+    /* Sprite frame tables (#36 phase 2 run 3): the struct TaskGfx * arrays the code installs as Task.frameTable, the player's gPlayerFrames among them; functional table in C (src/data/frame_tables.c, carved by tools/carve_data.py) */
     .frame_tables : {
         build/src/data/frame_tables.o(.frame_tables)
     } > ROM

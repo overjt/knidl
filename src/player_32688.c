@@ -77,7 +77,7 @@ void Task_Player(void)
     t->drawCallback = (u32)sub_0803ddc0;
     t->updateCallback = (u32)PlayerUpdate;
     t->lateUpdateCallback = (u32)sub_0803332c;
-    t->frameTable = gUnk_0874CFEC;
+    t->frameTable = gPlayerFrames;
     if (gPlayerCount > 1 && gLocalPlayer == t->player->playerIndex)
         t->layer = 6;
     else

@@ -667,7 +667,7 @@ void PlayerWarpStarRideInit(void)
     t->updateCallback = (u32)PlayerWarpStarRideUpdate;
     t->lateUpdateCallback = 0;
     t->taskClass = 4;
-    gCurTask->frameTable = gUnk_0874CFEC;
+    gCurTask->frameTable = gPlayerFrames;
     TaskStop();
     u = gCurTask;
     u->spriteFlags &= 0x7FFF;

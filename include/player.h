@@ -328,7 +328,7 @@ extern u32 gUnk_0874C4E4[];
 extern u32 gUnk_0874C650[];
 extern u32 gUnk_0874C7CC[];
 extern u32 gUnk_0874CE90[];
-extern u32 gUnk_0874CFEC[];
+extern u32 gPlayerFrames[];
 extern u32 gUnk_08751990[];
 extern u32 gUnk_087519CC[];
 extern u32 gUnk_087519E8[];
