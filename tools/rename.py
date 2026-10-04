@@ -494,6 +494,29 @@ def verify_diff(ref):
     alias_pairs = {(f, a) for a, f in alias_field.items()}
     alias_pairs |= {(old, a) for a, old in origin.items() if old != a}
     field_uses = {}
+    # Named constants (tools/constants.py, #155 run 6): `docs/analysis/
+    # constants.csv` rows added since REF.  A C site may spell such a
+    # constant where REF has an integer literal of the same value, a file may
+    # gain `#include "constants/<topic>.h"`, and include/constants/ must
+    # define exactly the logged constants.
+    const_values, const_headers = {}, {}
+    const_rel = "docs/analysis/constants.csv"
+    try:
+        const_before = list(csv.DictReader(io.StringIO(git("show", "%s:%s" % (ref, const_rel)))))
+    except RenameError:
+        const_before = []
+    const_now = []
+    if os.path.exists(os.path.join(ROOT, const_rel)):
+        with open(os.path.join(ROOT, const_rel), encoding="utf-8") as f:
+            const_now = list(csv.DictReader(f))
+    if const_now[:len(const_before)] != const_before:
+        raise RenameError("%s: rows before %s were edited, not appended" % (const_rel, ref))
+    for r in const_now:
+        const_headers.setdefault(r["header"], {})[r["constant"]] = int_value(r["value"])
+    for r in const_now[len(const_before):]:
+        const_values[r["constant"]] = int_value(r["value"])
+    const_topics = {h.split("/")[-1][:-2] for h in const_headers}
+    const_uses = [0]
     # Compose the renames since REF into one forward map (old -> final name),
     # following chains (A -> B, then B -> C), and apply it to REF's text the
     # way the tool does.  Mapping back instead would be lossy wherever a new
@@ -522,7 +545,16 @@ def verify_diff(ref):
         if not line.strip():
             continue
         code, path = line.split("\t", 1)
-        if path == renames_rel:
+        if path in (renames_rel, const_rel):
+            continue
+        if path.startswith("include/constants/"):
+            # A constants header: its guard and #define lines (comments
+            # stripped) are exactly the logged constants of that header.
+            checked += 1
+            with open(os.path.join(ROOT, path), encoding="utf-8") as f:
+                got = constant_defines_of(f.read())
+            if got is None or got != const_headers.get(path, {}):
+                problems.append("%s: its #define lines are not the logged constants" % path)
             continue
         if path == TASK_VARS:
             # The alias macros: only #define lines (and the guard) outside
@@ -549,6 +581,11 @@ def verify_diff(ref):
             new = f.read()
         if path == "include/task.h" and '#include "task_vars.h"' not in old:
             new = new.replace('#include "task_vars.h"\n', "", 1)
+        if path.endswith((".c", ".h")) and const_topics:
+            for topic in const_topics:
+                inc = '#include "constants/%s.h"\n' % topic
+                if inc not in old:
+                    new = new.replace(inc, "", 1)
         if path == rel(CONFIG):
             # Compare the config structurally: the tool re-sorts
             # external_defined, which moves JSON's comma-less last line.
@@ -594,6 +631,8 @@ def verify_diff(ref):
                 # different run of whitespace behind, which is not a code
                 # change.  (make compare remains the byte-level proof.)
                 a, b = collapse_ws(a), collapse_ws(b)
+                if const_values and a != b:
+                    a, b = unconst(a, b, const_values, const_uses)
             if a != b and not ((field_pairs or alias_pairs) and not is_asm
                                and fields_only_differ(a, b, field_pairs, field_uses,
                                                       alias_pairs)):
@@ -604,8 +643,9 @@ def verify_diff(ref):
             continue
         if old != new:
             problems.append("%s: differs beyond the renames" % path)
-    print("verify-diff %s: %d renames, %d field renames, %d register aliases, %d files checked"
-          % (ref, len(added), len(fields), len(aliases), checked))
+    print("verify-diff %s: %d renames, %d field renames, %d register aliases, %d constants "
+          "(%d sites), %d files checked"
+          % (ref, len(added), len(fields), len(aliases), len(const_values), const_uses[0], checked))
     for (tag, o), n in sorted(field_pairs.items()):
         if not field_uses.get((o, n)):
             problems.append("field %s.%s -> %s: no use renamed" % (tag, o, n))
@@ -672,6 +712,57 @@ def defines_of(text):
             return None
         out.add((m.group(1), m.group(2)))
     return out
+
+
+CONST_TOK_RE = re.compile(r"""(?P<num>(?:0[xX][0-9A-Fa-f]+|[0-9]+)[uUlL]*(?![\w.]))
+    |(?P<id>[A-Za-z_]\w*)|(?P<ws>\s+)|(?P<other>.)""", re.X | re.S)
+CONST_DEFINE_RE = re.compile(r"^#define (\w+) +(0[xX][0-9A-Fa-f]+|[0-9]+)$")
+
+
+def int_value(s):
+    body = s.rstrip("uUlL")
+    if body[:2] in ("0x", "0X"):
+        return int(body, 16)
+    if len(body) > 1 and body[0] == "0":
+        return int(body, 8)
+    return int(body)
+
+
+def constant_defines_of(text):
+    """{constant: value} of a constants header's #define lines (comments
+    stripped), or None if it holds code other than its guard and those."""
+    out = {}
+    for ln in strip_comments(text, False).split("\n"):
+        ln = " ".join(ln.split())
+        if not ln or ln == "#endif" or re.match(r"^#(ifndef|define) GUARD_CONSTANTS_\w+_H$", ln):
+            continue
+        m = CONST_DEFINE_RE.match(ln)
+        if not m:
+            return None
+        out[m.group(1)] = int_value(m.group(2))
+    return out
+
+
+def unconst(a, b, values, uses):
+    """(a, b') where b' is b with each logged constant that stands where a
+    (REF's text) has an integer literal of the same value respelled as that
+    literal; (a, b) unchanged when the token streams do not line up."""
+    ta = [m for m in CONST_TOK_RE.finditer(a) if m.lastgroup != "ws"]
+    tb = [m for m in CONST_TOK_RE.finditer(b) if m.lastgroup != "ws"]
+    if len(ta) != len(tb):
+        return a, b
+    out, pos, n = [], 0, 0
+    for x, y in zip(ta, tb):
+        if (y.lastgroup == "id" and y.group(0) in values and x.lastgroup == "num"
+                and int_value(x.group(0)) == values[y.group(0)]
+                and x.group(0) == x.group(0).rstrip("uUlL")):
+            out.append(b[pos:y.start()])
+            out.append(x.group(0))
+            pos = y.end()
+            n += 1
+    out.append(b[pos:])
+    uses[0] += n
+    return a, "".join(out)
 
 
 def fields_only_differ(a, b, pairs, uses, alias_pairs=()):

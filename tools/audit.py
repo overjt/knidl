@@ -42,6 +42,7 @@ Usage:
 
 import argparse
 import csv
+import importlib.util
 import json
 import os
 import re
@@ -782,6 +783,14 @@ def placeholder_census():
             if m and fam:
                 aliases.setdefault(fam, []).append(m.group(1))
     extra["aliases"] = aliases
+    # the named constants (include/constants/, tools/constants.py, #155 run 6)
+    extra["constants"] = None
+    if os.path.isdir(os.path.join(ROOT, "include", "constants")):
+        spec = importlib.util.spec_from_file_location(
+            "constants", os.path.join(ROOT, "tools", "constants.py"))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        extra["constants"] = mod.census()
     # loc_ labels
     loc = 0
     for top in ("asm", "src", "include", "data"):
@@ -832,6 +841,17 @@ def census_markdown(rows, by_zone, extra):
         out.append("Register aliases (include/task_vars.h): %d in %d families: " % (
             sum(len(v) for v in aliases.values()), len(aliases)) + ", ".join(
             "%s %d" % (f, len(v)) for f, v in sorted(aliases.items())) + ".")
+        out.append("")
+    consts = extra["constants"]
+    if consts:
+        out.append("Named constants (include/constants/, docs/naming.md section 7): %d in %d headers, "
+                   "spelled at %d sites: " % (
+                       sum(consts["constants"].values()), len(consts["constants"]),
+                       sum(consts["uses"].values())) + ", ".join(
+            "`%s.h` %d (%d sites)" % (t, n, consts["uses"][t]) for t, n in consts["constants"].items())
+                   + ".  Integer literals left at a mechanical family's positions whose value has a "
+                   "constant: " + ", ".join("%s %d" % (f, n) for f, n in consts["literals_left"].items())
+                   + ".")
         out.append("")
     out.append("`unk*` fields by header struct: " + ", ".join(
         "`%s` %d" % (s, n) for s, n in sorted(extra["header_structs"].items(), key=lambda x: (-x[1], x[0]))) + ".")
