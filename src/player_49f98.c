@@ -93,11 +93,11 @@ void PlayerActionHiJump(void)
         gCurTask->player->unk14 = 300;
         TaskSetFrame(0xAD2);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 4);
+        } while ((s16)++gCurTask->playerLoopCount <= 4);
         /* fallthrough */
     case 4:
         {
@@ -161,7 +161,7 @@ void PlayerActionHiJumpUpdate(void)
         {
             struct Task *u = gCurTask;
             if (u->unk28-- == 0) {
-                u->unk46 = (u->unk46 + 1) & 3;
+                u->playerHiJumpFramePhase = (u->playerHiJumpFramePhase + 1) & 3;
                 u->unk28 = 2;
             }
         }
@@ -191,11 +191,11 @@ void PlayerActionHiJumpUpdate(void)
                 {
                     struct Task *w = gCurTask;
                     if (w->velX == 0)
-                        TaskSetFrame((s16)(w->unk46 + a));
+                        TaskSetFrame((s16)(w->playerHiJumpFramePhase + a));
                     else if (w->velX < 0)
-                        TaskSetFrameFlip(w->unk46 + a);
+                        TaskSetFrameFlip(w->playerHiJumpFramePhase + a);
                     else
-                        TaskSetFrameNoFlip((s16)(w->unk46 + a));
+                        TaskSetFrameNoFlip((s16)(w->playerHiJumpFramePhase + a));
                 }
             }
         }

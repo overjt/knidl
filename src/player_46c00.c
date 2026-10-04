@@ -58,7 +58,7 @@ void PlayerActionHammer(void)
             TaskSetFrame(0x7D2);
             TaskYieldTrampoline(8);
             CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++) {
                 gCurTask->unk2C++;
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
                 gCurTask->frame++;
@@ -107,7 +107,7 @@ void PlayerActionHammer(void)
             TaskSetFrame(0x7DE);
             TaskYieldTrampoline(10);
             CreatePlayerEffect(gCurTask->player->playerIndex, 28, 3);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++) {
                 gCurTask->unk2C++;
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDBC + gCurTask->unk2C * 8));
                 gCurTask->frame++;
@@ -167,7 +167,7 @@ void PlayerActionHammer(void)
             gCurTask->unk2C++;
             TaskSetFrame(0x7EA);
             TaskYieldTrampoline(1);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 10; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 10; gCurTask->playerLoopCount++) {
                 gCurTask->unk2C++;
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CDFC + gCurTask->unk2C * 8));
                 gCurTask->frame++;
@@ -182,7 +182,7 @@ void PlayerActionHammer(void)
             gCurTask->unk2C++;
             TaskSetFrame(0x7F7);
             TaskYieldTrampoline(1);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 14; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 14; gCurTask->playerLoopCount++) {
                 gCurTask->unk2C++;
                 LoadPlayerHitBoxSet(gCurTask->player->playerIndex, (s32)((u8 *)gUnk_0873CE64 + gCurTask->unk2C * 8));
                 gCurTask->frame++;

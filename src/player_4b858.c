@@ -218,11 +218,11 @@ loop:
         TaskYieldTrampoline(20);
         gCurTask->player->unk16 = 255;
         PlayerSetMotionYPreset(56);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 4);
+        } while ((s16)++gCurTask->playerLoopCount <= 4);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->variant = 7;
@@ -268,7 +268,7 @@ loop:
             TaskYieldTrampoline(1);
             if (gCurTask->onGround & 1)
                 goto done3;
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
             {
                 gCurTask->player->unk16++;
                 gCurTask->frame++;
@@ -287,11 +287,11 @@ loop:
         TaskYieldTrampoline(20);
         gCurTask->player->unk16 = 255;
         PlayerSetMotionYPreset(56);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 4);
+        } while ((s16)++gCurTask->playerLoopCount <= 4);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->variant = 7;
@@ -347,11 +347,11 @@ loop:
         TaskYieldTrampoline(20);
         gCurTask->player->unk16 = 255;
         PlayerSetMotionYPreset(57);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 7);
+        } while ((s16)++gCurTask->playerLoopCount <= 7);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->variant = 7;
@@ -403,11 +403,11 @@ loop:
         TaskYieldTrampoline(2);
         gCurTask->player->unk16 = 255;
         PlayerSetMotionYPreset(56);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 4);
+        } while ((s16)++gCurTask->playerLoopCount <= 4);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         gCurTask->variant = 7;

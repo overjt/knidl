@@ -680,14 +680,14 @@ void PlayerWarpStarRideState7(void)
     gCurTask->unk24++;
     sub_08070264();
     TaskStop();
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do
     {
         gCurTask->velX = 0x10000;
         TaskYieldTrampoline(2);
         gCurTask->velX = 0xFFFE0000;
         TaskYieldTrampoline(2);
-    } while (++*(s16 *)&gCurTask->unk6C <= 25);
+    } while (++*(s16 *)&gCurTask->playerLoopCount <= 25);
     TaskStop();
     sub_08070614(gCurTaskIdx);
     TaskSleepForever();

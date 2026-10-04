@@ -50,7 +50,7 @@ void PlayerActionUFO(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk46 = 0;
+            u->playerUfoFrameIndex = 0;
             u->variant = 7;
         }
         gCurTask->unk24 = -1;
@@ -59,7 +59,7 @@ void PlayerActionUFO(void)
         {
             struct Task *u = gCurTask;
 
-            u->unk46 = 0xFFFF;
+            u->playerUfoFrameIndex = 0xFFFF;
             switch (u->unk24)
             {
             case 8:
@@ -77,11 +77,11 @@ void PlayerActionUFO(void)
         gCurTask->unk24 = 7;
         while (1)
         {
-            gCurTask->unk46 = 0;
+            gCurTask->playerUfoFrameIndex = 0;
             TaskYieldTrampoline(5);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
             {
-                gCurTask->unk46++;
+                gCurTask->playerUfoFrameIndex++;
                 TaskYieldTrampoline(5);
             }
         }
@@ -253,7 +253,7 @@ void PlayerActionUFO(void)
             u->player->unk14 = 0;
             if (!(gLatchedHeldKeys[u->player->playerIndex] & 3))
                 break;
-            u->unk6C = 0;
+            u->playerLoopCount = 0;
         }
         do
         {
@@ -266,9 +266,9 @@ void PlayerActionUFO(void)
             TaskYieldTrampoline(3);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
-        } while ((s16)++gCurTask->unk6C <= 2);
+        } while ((s16)++gCurTask->playerLoopCount <= 2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 48, 0);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
         {
             gCurTask->player->unk14++;
             TaskSetFrame(0xFBC);
@@ -305,21 +305,21 @@ void PlayerActionUFO(void)
         CreatePlayerObject(gCurTask->player->playerIndex, 10, 0);
         CreatePlayerObject(gCurTask->player->playerIndex, 10, 1);
         CreatePlayerObject(gCurTask->player->playerIndex, 10, 2);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++)
         {
             gCurTask->frame = 0xFD5;
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++)
         {
             gCurTask->frame = 0xFD7;
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(3);
         }
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++)
         {
             gCurTask->frame = 0xFD9;
             TaskYieldTrampoline(2);
@@ -458,12 +458,12 @@ void PlayerActionUFOUpdate(void)
         {
             struct Task *t = gCurTask;
 
-            if (t->unk46 != -1)
+            if (t->playerUfoFrameIndex != -1)
             {
                 if (t->facing == 1)
-                    TaskSetFrame((s16)(t->unk46 + 0xF88));
+                    TaskSetFrame((s16)(t->playerUfoFrameIndex + 0xF88));
                 else
-                    TaskSetFrame((s16)(t->unk46 + 0xFA8));
+                    TaskSetFrame((s16)(t->playerUfoFrameIndex + 0xFA8));
             }
         }
         {
@@ -473,7 +473,7 @@ void PlayerActionUFOUpdate(void)
             {
                 if ((s16)t->player->unk14 == 3)
                     t->facing = -t->facing;
-                TaskSetFrameNoFlip(gUnk_0873DB34[gCurTask->unk46]);
+                TaskSetFrameNoFlip(gUnk_0873DB34[gCurTask->playerUfoFrameIndex]);
                 {
                     struct Task *u = gCurTask;
 

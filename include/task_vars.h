@@ -661,6 +661,23 @@
    spawned by CreatePhanPhanApple) */
 #define phanPhanAppleLanded unk34 /* s32: set by the land hook PhanPhanAppleLand; cleared before each bounce and waited on */
 
+/* Player - the player (task type #5, Task_Player; its actions gPlayerActions
+   / gPlayerActionHandlers, Meta Knightmare's gMetaKnightActions /
+   gMetaKnightActionHandlers, and the Warp Star, cannon and goal-game rides)
+   */
+#define playerBallRollFrame unk46 /* s16: Ball: the roll frame index 0-15 into gUnk_0873DB0A (-1 while another animation plays) */
+#define playerBaseFrame unk46 /* s16: the running action's base frame, from its per-ability frame table; frames step from it */
+#define playerGoalGameMarkerSlot unk46 /* s16: the goal game's player marker child (task type #87, Task_GoalGamePlayerMarker) */
+#define playerHiJumpFramePhase unk46 /* s16: Hi-Jump: step 0-3 of the four-frame cycle added to the update's base frame */
+#define playerNeedleStep unk46 /* s16: Needle: step 0-10 of the spikes' sprout and retract; indexes gUnk_0873DADE */
+#define playerStarRodFrameIndex unk46 /* s16: Star Rod flight: the index into the frame row the update steps through */
+#define playerThrowHoldFramePhase unk46 /* s16: Throw (holding): step 0-3 of the held pose's cycle (0/1 one frame set, 2/3 the other) */
+#define playerUfoFrameIndex unk46 /* s16: UFO: the frame index the update shows (gUnk_0873DB34, or + 0xF88 / 0xFA8), -1 none */
+#define playerLoopCount unk6C /* s16: the running action's loop counter (frame runs, steps, shakes, players), counted from 0 */
+#define playerBankBlendRatio unk6E /* s16: Spark: ratio 0-256 (+128 a step) blending the sprite's palette bank to its charged colours */
+#define playerActionDone unk70 /* s16: Ball / Star Rod: 1 once the action's body has finished; its update then hands over */
+#define playerNextBankBlendRatio unk70 /* s16: Spark: ratio 0-256 (+64 a step) blending the next palette bank to its charged colours */
+
 /* PoppyBrosJr - Poppy Bros. Jr. (task type #38, Task_PoppyBrosJr;
    gPoppyBrosJrVariants, gPoppyBrosJrStates) and its riders (#39
    Task_PoppyBrosJrOnApple, #40 Task_PoppyBrosJrOnMaximTomato;

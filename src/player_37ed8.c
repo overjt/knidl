@@ -166,7 +166,7 @@ loop:
                     PlayerSetMotionXPreset(10, 20);
                 else
                     PlayerSetMotionXPreset(10, 23);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame++;
                     TaskYieldTrampoline(3);
@@ -202,7 +202,7 @@ loop:
                     PlayerSetMotionXPreset(10, 20);
                 else
                     PlayerSetMotionXPreset(10, 23);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame--;
                     TaskYieldTrampoline(2);
@@ -254,7 +254,7 @@ loop:
                     {
                         TaskSetFrame(252);
                         TaskYieldTrampoline(2);
-                        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+                        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
                         {
                             gCurTask->frame++;
                             TaskYieldTrampoline(2);
@@ -291,7 +291,7 @@ loop:
                 {
                     TaskSetFrame(0x109);
                     TaskYieldTrampoline(3);
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame++;
                         TaskYieldTrampoline(3);
@@ -302,7 +302,7 @@ loop:
                 TaskSetFrame(43);
                 TaskYieldTrampoline(2);
                 PlayerSetMotionYPreset(26);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
@@ -327,7 +327,7 @@ loop:
                     {
                         TaskSetFrame(372);
                         TaskYieldTrampoline(2);
-                        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+                        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
                         {
                             gCurTask->frame++;
                             TaskYieldTrampoline(2);
@@ -434,7 +434,7 @@ loop:
                 gCurTask->unk28 = 1;
                 TaskSetFrame(0x111);
                 TaskYieldTrampoline(4);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame++;
                     TaskYieldTrampoline(4);
@@ -475,7 +475,7 @@ loop:
                 TaskYieldTrampoline(2);
                 TaskSetFrame(244);
                 TaskYieldTrampoline(3);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
@@ -497,7 +497,7 @@ loop:
                 gCurTask->unk28++;
                 TaskSetFrame(0x185);
                 TaskYieldTrampoline(4);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame++;
                     TaskYieldTrampoline(4);
@@ -612,7 +612,7 @@ loop:
                 TaskSetFrame(0x11D);
                 TaskYieldTrampoline(2);
             }
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 6; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 6; gCurTask->playerLoopCount++)
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);

@@ -243,14 +243,14 @@ void GoalGameInit(void)
 void PlayerGoalGameInit(void)
 {
     gUnk_030023D4 = 0;
-    gCurTask->unk6C = 0;
-    while ((s16)gCurTask->unk6C < gPlayerCount)
+    gCurTask->playerLoopCount = 0;
+    while ((s16)gCurTask->playerLoopCount < gPlayerCount)
     {
-        if ((s16)gCurTask->unk6C == gCurTask->player->playerIndex)
+        if ((s16)gCurTask->playerLoopCount == gCurTask->player->playerIndex)
             gCurTask->unk2C = gUnk_030023D4;
-        if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1) != 0)
+        if (((gActivePlayerMask >> (s16)gCurTask->playerLoopCount) & 1) != 0)
             gUnk_030023D4++;
-        gCurTask->unk6C++;
+        gCurTask->playerLoopCount++;
     }
     gCurTask->facing = 1;
     gCurTask->updateCallback = (u32)PlayerGoalGameUpdate;
@@ -277,13 +277,13 @@ void sub_0805b370(void)
         LZ77UnCompWram((const void *)gUnk_085B9B6C[3], gUnk_02020000);
         RequestCopy(4, gUnk_02020000, gObjVram, ((u16 *)gUnk_085B9B6C)[1] << 5);
         RequestCopy(2, (void *)gUnk_085B9B6C[2], gObjPaletteBank8, ((u16 *)gUnk_085B9B6C)[0] << 5);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do
         {
-            gUnk_02007D00[(s16)gCurTask->unk6C] = TaskCreateFrom(85, 32);
-            (gTasks + gUnk_02007D00[(s16)gCurTask->unk6C])->variant = gCurTask->unk6C;
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 6);
+            gUnk_02007D00[(s16)gCurTask->playerLoopCount] = TaskCreateFrom(85, 32);
+            (gTasks + gUnk_02007D00[(s16)gCurTask->playerLoopCount])->variant = gCurTask->playerLoopCount;
+            gCurTask->playerLoopCount++;
+        } while ((s16)gCurTask->playerLoopCount <= 6);
         TaskCreateFrom(90, 32);
     }
     gCurTask->posX = gUnk_0873DBAC[gActivePlayerCount * 4 + gCurTask->unk2C] << 16;
@@ -293,8 +293,8 @@ void sub_0805b370(void)
     (gTasks + gCurTask->unk28)->variant = gCurTask->player->playerIndex;
     if (gActivePlayerCount > 1)
     {
-        gCurTask->unk46 = TaskCreateFrom(87, 32);
-        (gTasks + gCurTask->unk46)->variant = gCurTask->player->playerIndex;
+        gCurTask->playerGoalGameMarkerSlot = TaskCreateFrom(87, 32);
+        (gTasks + gCurTask->playerGoalGameMarkerSlot)->variant = gCurTask->player->playerIndex;
     }
 }
 
@@ -552,17 +552,17 @@ void PlayerGoalGameLand(void)
     gUnk_030023B4 = 0;
     if (gPlayerCount > 1)
     {
-        gCurTask->unk6C = 0;
-        while ((s16)gCurTask->unk6C < gPlayerCount)
+        gCurTask->playerLoopCount = 0;
+        while ((s16)gCurTask->playerLoopCount < gPlayerCount)
         {
-            if (((gActivePlayerMask >> (s16)gCurTask->unk6C) & 1) != 0
-             && gTasks[(s16)gCurTask->unk6C].unk30 == gCurTask->unk30)
+            if (((gActivePlayerMask >> (s16)gCurTask->playerLoopCount) & 1) != 0
+             && gTasks[(s16)gCurTask->playerLoopCount].unk30 == gCurTask->unk30)
             {
-                if ((s16)gCurTask->unk6C == gCurTaskIdx)
+                if ((s16)gCurTask->playerLoopCount == gCurTaskIdx)
                     gUnk_030023B4 = gUnk_030023D4;
                 gUnk_030023D4++;
             }
-            gCurTask->unk6C++;
+            gCurTask->playerLoopCount++;
         }
         gCurTask->unk24 = ((s16 *)gUnk_0873DBAC)[gUnk_030023D4 * 4 + gUnk_030023B4];
         if (gCurTask->unk24 == gCurTask->pixelX)

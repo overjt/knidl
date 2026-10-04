@@ -73,11 +73,11 @@ void PlayerActionIce(void)
         while (1) {
             TaskSetFrame(0x9FA);
             TaskYieldTrampoline(2);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-            } while ((s16)++gCurTask->unk6C <= 14);
+            } while ((s16)++gCurTask->playerLoopCount <= 14);
         }
     case 2:
         TaskSetFrame(0xA0E);
@@ -148,11 +148,11 @@ void PlayerActionFreeze(void)
         while (1) {
             TaskSetFrame(0xA86);
             TaskYieldTrampoline(1);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 6);
+            } while ((s16)++gCurTask->playerLoopCount <= 6);
         }
     case 2:
         PlayerStopSfx();

@@ -25,8 +25,8 @@ void PlayerBallTransform(void)
 {
     {
         struct Task *t = gCurTask;
-        t->unk70 = 0;
-        t->unk46 = 0xFFFF;
+        t->playerActionDone = 0;
+        t->playerBallRollFrame = 0xFFFF;
         t->player->bodyBox = (u32)gUnk_0873BD50;
         t->player->terrainBox = (u32)gUnk_0873CB3C;
         PlaySfxIfLocalPlayer(171, (u16)t->player->playerIndex);
@@ -41,14 +41,14 @@ void PlayerBallTransform(void)
     }
     TaskSetFrame(0xCCC);
     TaskYieldTrampoline(2);
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
     }
     gCurTask->frame = 0xCDA;
     TaskYieldTrampoline(2);
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
+    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 5; gCurTask->playerLoopCount++)
     {
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -56,7 +56,7 @@ void PlayerBallTransform(void)
     {
         struct Task *t = gCurTask;
         t->unk6E = t->facing;
-        t->unk70++;
+        t->playerActionDone++;
         CreatePlayerEffect(t->player->playerIndex, 44, 0x100);
     }
     CreatePlayerEffect(gCurTask->player->playerIndex, 44, 0x200);
@@ -70,7 +70,7 @@ void PlayerBallTransformUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 != 0)
+    if ((s16)t->playerActionDone != 0)
     {
         if (t->onGround & 1)
         {
@@ -81,7 +81,7 @@ void PlayerBallTransformUpdate(void)
         }
         else
             t->variant = 6;
-        gCurTask->unk46 = 0;
+        gCurTask->playerBallRollFrame = 0;
         TaskSetEntry(PlayerActionBallEnterVariant, gCurTaskIdx);
     }
     PlayerBallCheckLanding(0);
@@ -97,41 +97,41 @@ void PlayerBallStand(void)
     PlayerBallPlayBump();
     {
         struct Task *t = gCurTask;
-        if (t->unk46 == 0)
+        if (t->playerBallRollFrame == 0)
             t->unk2C = 0;
-        else if (t->unk46 <= 7)
+        else if (t->playerBallRollFrame <= 7)
             t->unk2C = -1;
         else
             t->unk2C = 1;
     }
-    if (gCurTask->unk46 != 0)
+    if (gCurTask->playerBallRollFrame != 0)
     {
         do
         {
             struct Task *t = gCurTask;
-            t->unk46 += t->unk2C;
-            if (t->unk46 > 15)
-                t->unk46 = 0;
+            t->playerBallRollFrame += t->unk2C;
+            if (t->playerBallRollFrame > 15)
+                t->playerBallRollFrame = 0;
             TaskYieldTrampoline(1);
-        } while (gCurTask->unk46 != 0);
+        } while (gCurTask->playerBallRollFrame != 0);
     }
     while (1)
     {
-        gCurTask->unk46 = 16;
+        gCurTask->playerBallRollFrame = 16;
         TaskYieldTrampoline(3);
-        gCurTask->unk46++;
+        gCurTask->playerBallRollFrame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk46++;
+        gCurTask->playerBallRollFrame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk46++;
+        gCurTask->playerBallRollFrame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk46++;
+        gCurTask->playerBallRollFrame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk46--;
+        gCurTask->playerBallRollFrame--;
         TaskYieldTrampoline(3);
-        gCurTask->unk46--;
+        gCurTask->playerBallRollFrame--;
         TaskYieldTrampoline(3);
-        gCurTask->unk46--;
+        gCurTask->playerBallRollFrame--;
         TaskYieldTrampoline(3);
     }
 }

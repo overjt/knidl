@@ -38,34 +38,34 @@ void PlayerActionLight(void)
     }
     FreezeOtherTasks(15);
     CreatePlayerObject(gCurTask->player->playerIndex, 9, 0);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDFD);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 3);
-    gCurTask->unk6C = 0;
+    } while ((s16)++gCurTask->playerLoopCount <= 3);
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xDFF);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
     TaskSetFrame(0xE01);
     TaskYieldTrampoline(1);
     PlayerSetMotionYPreset(54);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xE03);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 3);
+    } while ((s16)++gCurTask->playerLoopCount <= 3);
     PlayerStopAxes(2);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xE03);
         TaskYieldTrampoline(1);
@@ -75,15 +75,15 @@ void PlayerActionLight(void)
         TaskYieldTrampoline(1);
         TaskSetFrame(0xE05);
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 4);
+    } while ((s16)++gCurTask->playerLoopCount <= 4);
     PlayerSetMotionYPreset(55);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do {
         TaskSetFrame(0xE03);
         TaskYieldTrampoline(1);
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 15);
+    } while ((s16)++gCurTask->playerLoopCount <= 15);
     {
         struct Task *t = gCurTask;
         t->player->terrainBox = (u32)gPlayerDefaultTerrainBox;

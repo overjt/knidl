@@ -72,14 +72,14 @@ void PlayerActionFall(void)
         }
         else
         {
-            gCurTask->unk46 = gUnk_0873D3B8[gCurTask->player->ability][0];
+            gCurTask->playerBaseFrame = gUnk_0873D3B8[gCurTask->player->ability][0];
             switch (gCurTask->player->ability)
             {
             case 0:
             default:
-                TaskSetFrame(gCurTask->unk46);
+                TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                 {
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
@@ -90,7 +90,7 @@ void PlayerActionFall(void)
             case 9:
             case 10:
             case 25:
-                TaskSetFrame(gCurTask->unk46);
+                TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(4);
                 gCurTask->player->unk14 = 28;
                 break;
@@ -108,14 +108,14 @@ void PlayerActionFall(void)
             TaskYieldTrampoline(4);
         }
     }
-    gCurTask->unk46 = gUnk_0873D3B8[gCurTask->player->ability][1];
+    gCurTask->playerBaseFrame = gUnk_0873D3B8[gCurTask->player->ability][1];
     switch (gCurTask->player->ability)
     {
     case 0:
     default:
         while (1)
         {
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
@@ -304,10 +304,10 @@ void PlayerActionHighFall(void)
             gCurTask->frame++;
             TaskYieldTrampoline(2);
             gCurTask->unk28++;
-            gCurTask->unk46 = anim[1];
+            gCurTask->playerBaseFrame = anim[1];
             while (1)
             {
-                TaskSetFrame(gCurTask->unk46);
+                TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
@@ -428,7 +428,7 @@ void PlayerActionFloat(void)
             PlaySfxIfLocalPlayer(228, gCurTask->player->playerIndex);
             TaskSetFrame(gUnk_0873D7E4[gCurTask->player->ability][0]);
             TaskYieldTrampoline(2);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
@@ -438,14 +438,14 @@ void PlayerActionFloat(void)
             break;
         case 1:
             PlaySfxIfLocalPlayer(115, gCurTask->player->playerIndex);
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case 0:
             default:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(4);
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
@@ -469,13 +469,13 @@ void PlayerActionFloat(void)
             case 19:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(2);
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 5));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 5));
                     TaskYieldTrampoline(2);
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
@@ -483,7 +483,7 @@ void PlayerActionFloat(void)
                     TaskYieldTrampoline(2);
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 5));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 5));
                     TaskYieldTrampoline(2);
                     if (!(gLatchedHeldKeys[gCurTask->player->playerIndex] & 65))
                         break;
@@ -495,20 +495,20 @@ void PlayerActionFloat(void)
             gCurTask->variant = 2;
             break;
         case 2:
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case 0:
             default:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(6);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 5));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 5));
                     TaskYieldTrampoline(3);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 1));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 1));
                     TaskYieldTrampoline(6);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 5));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 5));
                     TaskYieldTrampoline(3);
                 }
             case 1:
@@ -517,36 +517,36 @@ void PlayerActionFloat(void)
             case 19:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(3);
                     gCurTask->frame++;
                     TaskYieldTrampoline(3);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 10));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 10));
                     TaskYieldTrampoline(3);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 3));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
                     TaskYieldTrampoline(3);
                     gCurTask->frame--;
                     TaskYieldTrampoline(3);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 9));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 9));
                     TaskYieldTrampoline(3);
                 }
             }
         case 3:
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case 0:
             default:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(4);
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame++;
                         TaskYieldTrampoline(4);
                     }
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 2; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame--;
                         TaskYieldTrampoline(4);
@@ -558,14 +558,14 @@ void PlayerActionFloat(void)
             case 19:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(2);
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 7; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame++;
                         TaskYieldTrampoline(2);
                     }
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 5; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame--;
                         TaskYieldTrampoline(2);
@@ -604,23 +604,23 @@ void PlayerActionFloat(void)
             }
             TaskSleepForever();
         case 5:
-            gCurTask->unk46 = gUnk_0873D7E4[gCurTask->player->ability][1];
+            gCurTask->playerBaseFrame = gUnk_0873D7E4[gCurTask->player->ability][1];
             switch (gCurTask->player->ability)
             {
             case 0:
             default:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(4);
                     PlayerSetMotionYPreset(9);
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame++;
                         TaskYieldTrampoline(4);
                     }
                     PlayerSetMotionYPreset(10);
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 2; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame--;
                         TaskYieldTrampoline(4);
@@ -633,9 +633,9 @@ void PlayerActionFloat(void)
                 while (1)
                 {
                     PlayerSetMotionYPreset(9);
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(2);
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 5; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 5; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame++;
                         TaskYieldTrampoline(2);
@@ -645,7 +645,7 @@ void PlayerActionFloat(void)
                     TaskYieldTrampoline(2);
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
                     {
                         gCurTask->frame--;
                         TaskYieldTrampoline(2);

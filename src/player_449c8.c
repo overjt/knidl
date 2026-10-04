@@ -49,23 +49,23 @@ void PlayerActionSparkUpdate(void)
             {
                 struct Task *u = gCurTask;
                 u->player->unk42 &= 0xFFEF;
-                u->unk70 = 0;
-                u->unk6E = 0;
+                u->playerNextBankBlendRatio = 0;
+                u->playerBankBlendRatio = 0;
             }
             break;
         case 0x36E:
         case 0x372:
             {
                 struct Task *u = gCurTask;
-                u->unk6E += 128;
-                if (u->unk6E > 256)
-                    u->unk6E = 256;
+                u->playerBankBlendRatio += 128;
+                if (u->playerBankBlendRatio > 256)
+                    u->playerBankBlendRatio = 256;
             }
             {
                 struct Task *u = gCurTask;
                 BlendColors((u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128],
                              (u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 32],
-                             (u16)u->unk6E, 16,
+                             (u16)u->playerBankBlendRatio, 16,
                              (u16 *)(gObjPalette + ((u->tileWord >> 12) << 5)));
             }
             /* fallthrough */
@@ -73,15 +73,15 @@ void PlayerActionSparkUpdate(void)
         case 0x371:
             {
                 struct Task *u = gCurTask;
-                u->unk70 += 64;
-                if ((s16)u->unk70 > 256)
-                    u->unk70 = 256;
+                u->playerNextBankBlendRatio += 64;
+                if ((s16)u->playerNextBankBlendRatio > 256)
+                    u->playerNextBankBlendRatio = 256;
             }
             {
                 struct Task *u = gCurTask;
                 BlendColors((u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 64],
                              (u16 *)&gUnk_081BE6BC[u->player->playerIndex * 128 + 96],
-                             u->unk70, 16,
+                             u->playerNextBankBlendRatio, 16,
                              (u16 *)(gObjPalette + (((u->tileWord >> 12) + 1) << 5)));
             }
             gCurTask->player->unk42 |= 16;

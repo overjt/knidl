@@ -76,7 +76,7 @@ void PlayerActionBackdrop(void)
         PlaySfxIfLocalPlayer(200, gCurTask->player->playerIndex);
         CreatePlayerEffect(gCurTask->player->playerIndex, 6, 260);
         PlayerSetMotionXPreset(11, 6);
-        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
         {
             TaskSetFrame(0xE7C);
             TaskYieldTrampoline(2);
@@ -278,14 +278,14 @@ void PlayerActionThrow(void)
         while (1)
         {
             TaskSetFrame(0xF71);
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 2; gCurTask->playerLoopCount++)
             {
                 if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;
                 TaskYieldTrampoline(1);
             }
             gCurTask->frame++;
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 2; gCurTask->unk6C++)
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 2; gCurTask->playerLoopCount++)
             {
                 if ((s8)gCurTask->player->attachedCount != 0 && (s8)gCurTask->player->attachedCount == (s8)gCurTask->player->heldCount)
                     goto hit;

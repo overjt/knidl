@@ -209,13 +209,13 @@ void MetaKnightActionRun(void)
     {
         TaskSetFrame(0x11DD);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->playerLoopCount++;
+        } while ((s16)gCurTask->playerLoopCount <= 4);
     }
 }
 
@@ -354,13 +354,13 @@ void MetaKnightActionJump(void)
     gCurTask->unk28 = 0;
     TaskSetFrame(0x11E5);
     TaskYieldTrampoline(3);
-    gCurTask->unk6C = 0;
+    gCurTask->playerLoopCount = 0;
     do
     {
         gCurTask->frame++;
         TaskYieldTrampoline(3);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 5);
+        gCurTask->playerLoopCount++;
+    } while ((s16)gCurTask->playerLoopCount <= 5);
     gCurTask->unk28 = 1;
     TaskSleepForever();
 }
@@ -757,7 +757,7 @@ void MetaKnightActionLadder(void)
         h3->posX = ((h3->pixelX & 0xFFF0) | 8) << 16;
     }
     d = gCurTask;
-    d->unk46 = 0x11F4;
+    d->playerBaseFrame = 0x11F4;
     k = d->variant;
     switch (k)
     {
@@ -1007,7 +1007,7 @@ void MetaKnightActionHurt(void)
             PlaySfx(0x107);
             PlayerStartOffsetScript(16);
             CreatePlayerEffect(gCurTask->player->playerIndex, 22, 0);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 TaskSetFrame(0x1244);
@@ -1018,8 +1018,8 @@ void MetaKnightActionHurt(void)
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 3);
+                gCurTask->playerLoopCount++;
+            } while ((s16)gCurTask->playerLoopCount <= 3);
             TaskSetFrame(0x1244);
             TaskYieldTrampoline(1);
             tj = gCurTask;
@@ -1027,7 +1027,7 @@ void MetaKnightActionHurt(void)
         case 2:
             PlaySfx(0x107);
             CreatePlayerEffect(gCurTask->player->playerIndex, 23, 0);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 PlayerStartOffsetScript(17);
@@ -1035,8 +1035,8 @@ void MetaKnightActionHurt(void)
                 TaskYieldTrampoline(2);
                 TaskSetFrame(0x1249);
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 7);
+                gCurTask->playerLoopCount++;
+            } while ((s16)gCurTask->playerLoopCount <= 7);
             TaskSetFrame(0x123B);
             TaskYieldTrampoline(1);
             tj = gCurTask;
@@ -1058,13 +1058,13 @@ void MetaKnightActionHurt(void)
             PlayerSetMotionYPreset(30);
             TaskSetFrame(0x123C);
             TaskYieldTrampoline(2);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-                gCurTask->unk6C++;
-            } while ((s16)gCurTask->unk6C <= 5);
+                gCurTask->playerLoopCount++;
+            } while ((s16)gCurTask->playerLoopCount <= 5);
             TaskSetFrame(0x11EC);
             TaskYieldTrampoline(2);
             goto again;
@@ -1076,13 +1076,13 @@ void MetaKnightActionHurt(void)
         PlayerStartOffsetScript(15);
         TaskSetFrame(0x123C);
         TaskYieldTrampoline(3);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 4);
+            gCurTask->playerLoopCount++;
+        } while ((s16)gCurTask->playerLoopCount <= 4);
         if ((s8)gCurTask->hitDirection == 0)
             PlayerSetMotionXPreset(10, 34);
         else
@@ -1456,7 +1456,7 @@ void MetaKnightActionSwim(void)
                 gCurTask->frame++;
                 TaskYieldTrampoline(4);
                 gCurTask->frame++;
-                gCurTask->unk6C = 0;
+                gCurTask->playerLoopCount = 0;
                 do
                 {
                     if (gCurTask->unk28 != 0)
@@ -1465,28 +1465,28 @@ void MetaKnightActionSwim(void)
                     if (gCurTask->unk28 != 0)
                         goto lab1;
                     TaskYieldTrampoline(1);
-                } while ((s16)++gCurTask->unk6C <= 4);
+                } while ((s16)++gCurTask->playerLoopCount <= 4);
                 gCurTask->speedLimitY = 0x10000;
             }
             TaskSetFrame(0x1233);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 if (gCurTask->unk28 != 0)
                     goto lab1;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 14);
+            } while ((s16)++gCurTask->playerLoopCount <= 14);
             {
                 if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 0x41)
                     goto lab1;
             }
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 if (gCurTask->unk28 != 0)
                     goto lab1;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 44);
+            } while ((s16)++gCurTask->playerLoopCount <= 44);
             gCurTask->unk28 = -1;
             TaskSleepForever();
         }
@@ -1519,12 +1519,12 @@ void MetaKnightActionSwim(void)
             PlaySfx(120);
             TaskSetFrame(0x1228);
             TaskYieldTrampoline(5);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do
             {
                 gCurTask->frame++;
                 TaskYieldTrampoline(5);
-            } while ((s16)++gCurTask->unk6C <= 6);
+            } while ((s16)++gCurTask->playerLoopCount <= 6);
         }
     }
     TaskSleepForever();

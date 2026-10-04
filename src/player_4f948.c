@@ -38,7 +38,7 @@ void PlayerActionStarRod(void)
     gCurTask->u80.attackAbility = 25;
     {
         struct Task *t = gCurTask;
-        t->unk70 = 0;
+        t->playerActionDone = 0;
         t->unk2C = -1;
         gPlayerBodyBoxes[t->player->playerIndex] = *(struct M11R20 *)gUnk_0873C2C8;
     }
@@ -56,7 +56,7 @@ void PlayerActionStarRod(void)
     TaskSetFrame(0x102A);
     TaskYieldTrampoline(1);
     sub_08053a44(gCurTask->player->playerIndex, 11, 0);
-    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 4; gCurTask->unk6C++)
+    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 4; gCurTask->playerLoopCount++)
     {
         struct Task *t = gCurTask;
         t->unk2C++;
@@ -83,7 +83,7 @@ void PlayerActionStarRod(void)
     TaskYieldTrampoline(1);
     gCurTask->frame++;
     TaskYieldTrampoline(1);
-    gCurTask->unk70++;
+    gCurTask->playerActionDone++;
     TaskSleepForever();
 }
 
@@ -91,7 +91,7 @@ void PlayerActionStarRodUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 != 0)
+    if ((s16)t->playerActionDone != 0)
     {
         PlayerRequestLocomotion();
     }

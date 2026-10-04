@@ -27,14 +27,14 @@ void PlayerBallJump(void)
 
     {
         struct Task *t = gCurTask;
-        t->unk70 = 0;
+        t->playerActionDone = 0;
         t->player->unk14 = 0xFFFF;
         t->player->running = 1;
     }
     {
         struct Task *t = gCurTask;
-        t->unk28 = t->unk46;
-        t->unk46 = -1;
+        t->unk28 = t->playerBallRollFrame;
+        t->playerBallRollFrame = -1;
         t->frame = 0xCE9;
     }
     TaskYieldTrampoline(2);
@@ -42,7 +42,7 @@ void PlayerBallJump(void)
     TaskYieldTrampoline(2);
     {
         struct Task *t = gCurTask;
-        t->unk46 = t->unk28;
+        t->playerBallRollFrame = t->unk28;
         PlaySfxIfLocalPlayer(170, (u16)t->player->playerIndex);
     }
     PlayerSetMotionYPreset(43);
@@ -60,7 +60,7 @@ void PlayerBallJump(void)
         PlayerBallStepRoll();
         TaskYieldTrampoline(1);
     }
-    gCurTask->unk70++;
+    gCurTask->playerActionDone++;
     PlayerStopAxes(2);
     TaskSleepForever();
 }
@@ -98,7 +98,7 @@ void PlayerBallJumpUpdate(void)
                 t->accelX = -t->accelX;
                 t->facing = -t->facing;
             }
-            if ((s16)gCurTask->unk70 != 0)
+            if ((s16)gCurTask->playerActionDone != 0)
                 gCurTask->variant = 6;
         }
         break;
@@ -118,8 +118,8 @@ void PlayerBallBounce(void)
     PlayerStopAxes(2);
     {
         struct Task *t = gCurTask;
-        t->unk2C = t->unk46;
-        t->unk46 = 0xFFFF;
+        t->unk2C = t->playerBallRollFrame;
+        t->playerBallRollFrame = 0xFFFF;
         t->frame = 0xCE9;
     }
     TaskYieldTrampoline(2);
@@ -127,7 +127,7 @@ void PlayerBallBounce(void)
     TaskYieldTrampoline(2);
     {
         struct Task *t = gCurTask;
-        t->unk46 = t->unk2C;
+        t->playerBallRollFrame = t->unk2C;
         t->onGround = 0;
     }
     gCurTask->velY = gCurTask->unk28;
@@ -251,7 +251,7 @@ void PlayerBallLand(void)
 
     {
         struct Task *t = gCurTask;
-        t->unk70 = 0;
+        t->playerActionDone = 0;
         t->unk28 = t->velY;
     }
     PlayerBallCheckLanding(1);
@@ -289,7 +289,7 @@ void PlayerBallLand(void)
         if (t->unk28 <= 0x17FFF)
             t->unk28 = 0;
     }
-    gCurTask->unk70++;
+    gCurTask->playerActionDone++;
     TaskSleepForever();
 }
 
@@ -297,7 +297,7 @@ void PlayerBallLandUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 != 0)
+    if ((s16)t->playerActionDone != 0)
     {
         t->unk24 = 0;
         if (t->unk28 != 0)
@@ -320,8 +320,8 @@ void PlayerBallRevert(void)
 {
     {
         struct Task *t = gCurTask;
-        t->unk70 = 0;
-        t->unk46 = 0xFFFF;
+        t->playerActionDone = 0;
+        t->playerBallRollFrame = 0xFFFF;
         if (t->unk74 != 0)
         {
             PlayerStopAxes(3);
@@ -361,7 +361,7 @@ void PlayerBallRevert(void)
         struct Task *t = gCurTask;
         t->player->bodyBox = (u32)gPlayerDefaultBodyBox;
         t->player->terrainBox = (u32)gPlayerDefaultTerrainBox;
-        t->unk70++;
+        t->playerActionDone++;
     }
     TaskSleepForever();
 }
@@ -370,7 +370,7 @@ void PlayerBallRevertUpdate(void)
 {
     struct Task *t = gCurTask;
 
-    if ((s16)t->unk70 != 0)
+    if ((s16)t->playerActionDone != 0)
     {
         if (t->unk74 != 0)
             t->player->requestedAction = 20;

@@ -164,7 +164,7 @@ void PlayerActionSword(void)
         gPlayerHitBoxSets[gCurTask->player->playerIndex] = *(struct M11R8 *)gUnk_0873CCFC;
         gCurTask->player->hitBoxSet = 0;
         if (gCurTask->unk30 == 0) {
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++) {
                 PlaySfxIfLocalPlayer(148, gCurTask->player->playerIndex);
                 {
                     struct Task *t = gCurTask;
@@ -187,7 +187,7 @@ void PlayerActionSword(void)
             TaskSetFrame(0x4E2);
             TaskYieldTrampoline(1);
         } else {
-            for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++) {
+            for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++) {
                 PlaySfxIfLocalPlayer(148, gCurTask->player->playerIndex);
                 {
                     struct Task *t = gCurTask;

@@ -102,7 +102,7 @@ Lloop:
             struct Task *t = gCurTask;
 
             *(u32 *)((u8 *)t->player + 108) = (u32)&g8[t->player->playerIndex];
-            t->unk6C = 0;
+            t->playerLoopCount = 0;
         }
     }
     do
@@ -113,12 +113,12 @@ Lloop:
                      (s32)((u8 *)gUnk_0873D04C + ++t->unk2C * 8));
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
     {
         struct Task *t = gCurTask;
 
         t->player->unk14 = 8;
-        t->unk6C = 0;
+        t->playerLoopCount = 0;
     }
     do
     {
@@ -128,7 +128,7 @@ Lloop:
                      (s32)((u8 *)gUnk_0873D04C + ++t->unk2C * 8));
         gCurTask->frame++;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 5);
+    } while ((s16)++gCurTask->playerLoopCount <= 5);
     if (gCurTask->unk28 != 0)
     {
         TaskSetMotionXFacing(0x4000, 0);
@@ -172,7 +172,7 @@ Lloop:
         t->unk2C = 8;
         *(u32 *)((u8 *)t->player + 108) =
             (u32)&((struct M11R8 *)gPlayerHitBoxSets)[t->player->playerIndex];
-        t->unk6C = 0;
+        t->playerLoopCount = 0;
     }
     do
     {
@@ -182,12 +182,12 @@ Lloop:
                      (s32)((u8 *)gUnk_0873D04C + --t->unk2C * 8));
         gCurTask->frame--;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 1);
+    } while ((s16)++gCurTask->playerLoopCount <= 1);
     {
         struct Task *t = gCurTask;
 
         t->player->unk14 = 8;
-        t->unk6C = 0;
+        t->playerLoopCount = 0;
     }
     do
     {
@@ -197,7 +197,7 @@ Lloop:
                      (s32)((u8 *)gUnk_0873D04C + --t->unk2C * 8));
         gCurTask->frame--;
         TaskYieldTrampoline(1);
-    } while ((s16)++gCurTask->unk6C <= 5);
+    } while ((s16)++gCurTask->playerLoopCount <= 5);
     if (gCurTask->unk28 != 0)
     {
         TaskSetMotionXFacing(-0x4000, 0);
@@ -350,7 +350,7 @@ void MetaKnightActionDashSlash(void)
                 t->speedLimitX = 0;
                 t->unk2C = 8;
                 *(u32 *)((u8 *)t->player + 108) = (u32)&g8[t->player->playerIndex];
-                t->unk6C = 0;
+                t->playerLoopCount = 0;
             }
             do {
                 struct Task *t = gCurTask;
@@ -358,7 +358,7 @@ void MetaKnightActionDashSlash(void)
                              (s32)((u8 *)gUnk_0873D04C + --t->unk2C * 8));
                 gCurTask->frame--;
                 TaskYieldTrampoline(1);
-            } while ((s16)++gCurTask->unk6C <= 7);
+            } while ((s16)++gCurTask->playerLoopCount <= 7);
             TaskSetMotionXFacing(-0x4000, 0);
             {
                 struct Task *t = gCurTask;
@@ -741,11 +741,11 @@ void PlayerActionFire(void)
         while (1) {
             TaskSetFrame(0x279);
             TaskYieldTrampoline(2);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-            } while ((s16)++gCurTask->unk6C <= 14);
+            } while ((s16)++gCurTask->playerLoopCount <= 14);
         }
     case 2:
         TaskSetFrame(0x28D);
@@ -810,8 +810,8 @@ void PlayerActionSpark(void)
     case 1:
         {
             struct Task *t = gCurTask;
-            t->unk70 = 0;
-            t->unk6E = 0;
+            t->playerNextBankBlendRatio = 0;
+            t->playerBankBlendRatio = 0;
             CreatePlayerEffect(t->player->playerIndex, 30, 0);
         }
         CreatePlayerEffect(gCurTask->player->playerIndex, 30, 1);
@@ -820,11 +820,11 @@ void PlayerActionSpark(void)
         while (1) {
             TaskSetFrame(0x36B);
             TaskYieldTrampoline(2);
-            gCurTask->unk6C = 0;
+            gCurTask->playerLoopCount = 0;
             do {
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
-            } while ((s16)++gCurTask->unk6C <= 6);
+            } while ((s16)++gCurTask->playerLoopCount <= 6);
         }
     case 2:
         gCurTask->player->unk42 &= 0xFFEF;

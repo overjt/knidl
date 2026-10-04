@@ -69,14 +69,14 @@ void PlayerActionShareItem(void)
         t->player->unk42 &= 0xFFEF;
         if (!(t->waterFlags & 1))
         {
-            t->unk46 = gUnk_0873DA62[t->player->ability][1];
+            t->playerBaseFrame = gUnk_0873DA62[t->player->ability][1];
             switch (t->player->ability)
             {
             case 0:
                 if (gCurTask->player->mouthState == 1)
-                    gCurTask->unk46 = 324;
+                    gCurTask->playerBaseFrame = 324;
             default:
-                TaskSetFrame(gCurTask->unk46);
+                TaskSetFrame(gCurTask->playerBaseFrame);
             case 24:
                 TaskSleepForever();
             case 1:
@@ -86,7 +86,7 @@ void PlayerActionShareItem(void)
             case 19:
                 while (1)
                 {
-                    TaskSetFrame(gCurTask->unk46);
+                    TaskSetFrame(gCurTask->playerBaseFrame);
                     TaskYieldTrampoline(2);
                     gCurTask->frame++;
                     TaskYieldTrampoline(2);
@@ -149,7 +149,7 @@ void PlayerActionShareItem(void)
     t = gCurTask;
     if (!(t->waterFlags & 1))
     {
-        t->unk46 = gUnk_0873DA62[t->player->ability][0];
+        t->playerBaseFrame = gUnk_0873DA62[t->player->ability][0];
         switch (t->player->ability)
         {
         default:
@@ -161,7 +161,7 @@ void PlayerActionShareItem(void)
             }
             else
             {
-                TaskSetFrame(gCurTask->unk46);
+                TaskSetFrame(gCurTask->playerBaseFrame);
                 TaskYieldTrampoline(2);
                 gCurTask->frame++;
                 TaskYieldTrampoline(2);
@@ -191,7 +191,7 @@ void PlayerActionShareItem(void)
                         n = 2;
                     else
                         n = 1;
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < n; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount < n; gCurTask->playerLoopCount++)
                     {
                         if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
@@ -232,7 +232,7 @@ void PlayerActionShareItem(void)
         case 19:
         case 22:
         case 23:
-            TaskSetFrame(gCurTask->unk46);
+            TaskSetFrame(gCurTask->playerBaseFrame);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
@@ -248,20 +248,20 @@ void PlayerActionShareItem(void)
                         if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
                         gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
-                        for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 1; gCurTask->unk6C++)
+                        for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 1; gCurTask->playerLoopCount++)
                         {
-                            TaskSetFrame((s16)(gCurTask->unk46 + 3));
+                            TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
                             TaskYieldTrampoline(2);
-                            TaskSetFrame((s16)(gCurTask->unk46 + 15));
+                            TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                             TaskYieldTrampoline(2);
                         }
                     } while (gCurTask->unk28 == 0);
                 }
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 3; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 3; gCurTask->playerLoopCount++)
                 {
-                    TaskSetFrame((s16)(gCurTask->unk46 + 3));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
                     TaskYieldTrampoline(2);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 15));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                     TaskYieldTrampoline(2);
                 }
                 break;
@@ -272,16 +272,16 @@ void PlayerActionShareItem(void)
                         n = 2;
                     else
                         n = 1;
-                    for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < n; gCurTask->unk6C++)
+                    for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount < n; gCurTask->playerLoopCount++)
                     {
                         if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                             PlaySfx(221);
                         gCurTask->unk28 = HealPlayerStep(gCurTask->unk18);
                         for (gCurTask->unk6E = 0; gCurTask->unk6E <= 1; gCurTask->unk6E++)
                         {
-                            TaskSetFrame((s16)(gCurTask->unk46 + 3));
+                            TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
                             TaskYieldTrampoline(2);
-                            TaskSetFrame((s16)(gCurTask->unk46 + 15));
+                            TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                             TaskYieldTrampoline(2);
                         }
                         if (gCurTask->unk28 != 0)
@@ -290,9 +290,9 @@ void PlayerActionShareItem(void)
                 }
                 for (gCurTask->unk6E = 0; gCurTask->unk6E <= 3; gCurTask->unk6E++)
                 {
-                    TaskSetFrame((s16)(gCurTask->unk46 + 3));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
                     TaskYieldTrampoline(2);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 15));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                     TaskYieldTrampoline(2);
                 }
                 break;
@@ -301,16 +301,16 @@ void PlayerActionShareItem(void)
                     q->unk1E = q->unk20 = 0;
                 q->invincible = gCurTask->player->invincible;
                 q->invincibleTimer = gCurTask->player->invincibleTimer;
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C <= 7; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount <= 7; gCurTask->playerLoopCount++)
                 {
-                    TaskSetFrame((s16)(gCurTask->unk46 + 3));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
                     TaskYieldTrampoline(2);
-                    TaskSetFrame((s16)(gCurTask->unk46 + 15));
+                    TaskSetFrame((s16)(gCurTask->playerBaseFrame + 15));
                     TaskYieldTrampoline(2);
                 }
                 break;
             }
-            TaskSetFrame((s16)(gCurTask->unk46 + 3));
+            TaskSetFrame((s16)(gCurTask->playerBaseFrame + 3));
             TaskYieldTrampoline(2);
             gCurTask->frame--;
             TaskYieldTrampoline(2);
@@ -326,22 +326,22 @@ void PlayerActionShareItem(void)
         switch (t->player->ability)
         {
         default:
-            gCurTask->unk46 = gUnk_0873DACA[0][0];
+            gCurTask->playerBaseFrame = gUnk_0873DACA[0][0];
             break;
         case 4:
-            t->unk46 = gUnk_0873DACA[1][0];
+            t->playerBaseFrame = gUnk_0873DACA[1][0];
             break;
         case 9:
-            t->unk46 = gUnk_0873DACA[2][0];
+            t->playerBaseFrame = gUnk_0873DACA[2][0];
             break;
         case 10:
-            t->unk46 = gUnk_0873DACA[3][0];
+            t->playerBaseFrame = gUnk_0873DACA[3][0];
             break;
         case 24:
-            t->unk46 = gUnk_0873DACA[4][0];
+            t->playerBaseFrame = gUnk_0873DACA[4][0];
             break;
         }
-        TaskSetFrame(gCurTask->unk46);
+        TaskSetFrame(gCurTask->playerBaseFrame);
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
@@ -370,7 +370,7 @@ void PlayerActionShareItem(void)
                     n = 2;
                 else
                     n = 1;
-                for (gCurTask->unk6C = 0; (s16)gCurTask->unk6C < n; gCurTask->unk6C++)
+                for (gCurTask->playerLoopCount = 0; (s16)gCurTask->playerLoopCount < n; gCurTask->playerLoopCount++)
                 {
                     if (gLocalPlayer == gCurTask->player->playerIndex || gLocalPlayer == gCurTask->unk18)
                         PlaySfx(221);

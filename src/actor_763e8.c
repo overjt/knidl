@@ -342,13 +342,13 @@ void sub_080769d0(void)
     {
         TaskSetFrame(0x124D);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 6);
+            gCurTask->playerLoopCount++;
+        } while ((s16)gCurTask->playerLoopCount <= 6);
     }
 }
 
@@ -358,13 +358,13 @@ void sub_08076a14(void)
     {
         TaskSetFrame(0x124D);
         TaskYieldTrampoline(2);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do
         {
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-            gCurTask->unk6C++;
-        } while ((s16)gCurTask->unk6C <= 6);
+            gCurTask->playerLoopCount++;
+        } while ((s16)gCurTask->playerLoopCount <= 6);
     }
 }
 
@@ -380,7 +380,7 @@ void sub_08076a58(void)
 
         t->velY = -0x49800;
         t->accelY = 0x3800;
-        t->unk6C = 0;
+        t->playerLoopCount = 0;
     }
     do
     {
@@ -388,8 +388,8 @@ void sub_08076a58(void)
         TaskYieldTrampoline(2);
         gCurTask->frame++;
         TaskYieldTrampoline(2);
-        gCurTask->unk6C++;
-    } while ((s16)gCurTask->unk6C <= 2);
+        gCurTask->playerLoopCount++;
+    } while ((s16)gCurTask->playerLoopCount <= 2);
     TaskSetMotionXFacing(0x50000, -0x20000);
     gCurTask->frame++;
     TaskYieldTrampoline(3);

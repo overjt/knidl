@@ -83,14 +83,14 @@ void PlayerActionMike(void)
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 7);
+        } while ((s16)++gCurTask->playerLoopCount <= 7);
         while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x674);
@@ -104,11 +104,11 @@ void PlayerActionMike(void)
     case 1:
         TaskSetFrame(0x676);
         TaskYieldTrampoline(4);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             gCurTask->frame++;
             TaskYieldTrampoline(4);
-        } while ((s16)++gCurTask->unk6C <= 5);
+        } while ((s16)++gCurTask->playerLoopCount <= 5);
         gCurTask->frame++;
         TaskYieldTrampoline(3);
         StopSfx(160);
@@ -118,14 +118,14 @@ void PlayerActionMike(void)
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 7);
+        } while ((s16)++gCurTask->playerLoopCount <= 7);
         while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x67D);
@@ -172,14 +172,14 @@ void PlayerActionMike(void)
         RequestScreenShake(4);
         SetRoomUpdateFlags(2);
         CreatePlayerEffect(gCurTask->player->playerIndex, 37, 1);
-        gCurTask->unk6C = 0;
+        gCurTask->playerLoopCount = 0;
         do {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
             TaskYieldTrampoline(2);
             gCurTask->frame++;
             TaskYieldTrampoline(2);
-        } while ((s16)++gCurTask->unk6C <= 7);
+        } while ((s16)++gCurTask->playerLoopCount <= 7);
         while ((s8)gCurTask->player->unk16 != 0) {
             PlayerStartOffsetScript(4);
             TaskSetFrame(0x689);
