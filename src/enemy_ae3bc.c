@@ -101,13 +101,13 @@ void Task_NightmarePowerOrb(void)
         sub_080ae79c();
         sub_080ae628();
         sub_080ae628();
-        sub_080ae7ec();
+        NightmarePowerOrbShoot();
         sub_080ae548();
         sub_080ae548();
         sub_080ae79c();
         sub_080ae628();
         sub_080ae628();
-        sub_080ae8e0();
+        NightmarePowerOrbDash();
         u2 = gCurTask;
         u2->unk6C++;
     } while ((s16)u2->unk6C <= 1);
@@ -376,7 +376,7 @@ void sub_080ae79c(void)
     TaskYieldTrampoline(80);
 }
 
-void sub_080ae7ec(void)
+void NightmarePowerOrbShoot(void)
 {
     struct Task **c;
     s32 v1;
@@ -447,12 +447,12 @@ void NightmarePowerOrbShootStar(void)
     TaskYieldTrampoline(8);
 }
 
-void sub_080ae8e0(void)
+void NightmarePowerOrbDash(void)
 {
     ActorSetState(4);
     sub_080aefd4((u32)gUnk_0874AF90);
     gCurTask->updateState = 3;
-    switch ((u8)sub_080aeeb0())
+    switch ((u8)NightmarePowerOrbPickDashLane())
     {
     case 0:
         gCurTask->velX = 0xFFFD0000;
@@ -763,7 +763,7 @@ void sub_080aed5c(void)
     TaskYieldTrampoline(32);
 }
 
-s32 sub_080aeeb0(void)
+s32 NightmarePowerOrbPickDashLane(void)
 {
     struct Task *tt;
     struct Task *tt2;
@@ -1071,7 +1071,7 @@ void Task_NightmarePowerOrbStar(void)
     CallTableEntry(v->variant, 12, gNightmarePowerOrbStarVariants);
 }
 
-void sub_080af358(void)
+void NightmarePowerOrbStarUpdate(void)
 {
     struct Task **c;
     struct Task *u;
@@ -1109,7 +1109,7 @@ void sub_080af38c(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1180,7 +1180,7 @@ void sub_080af4a4(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1251,7 +1251,7 @@ void sub_080af5bc(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1322,7 +1322,7 @@ void sub_080af6c8(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1457,7 +1457,7 @@ void sub_080af938(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1496,7 +1496,7 @@ void sub_080af9e4(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1536,7 +1536,7 @@ void sub_080afaa4(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1575,7 +1575,7 @@ void sub_080afb50(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1616,7 +1616,7 @@ void sub_080afc10(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1661,7 +1661,7 @@ void sub_080afcd4(void)
     s16 w4;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B488);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B20C);
     u1 = *c;
@@ -1699,7 +1699,7 @@ void sub_080afd9c(void)
     s32 r;
 
     c = &gCurTask;
-    (*c)->updateCallback = (u32)sub_080af358;
+    (*c)->updateCallback = (u32)NightmarePowerOrbStarUpdate;
     ActorSetAttackBox((u32)gUnk_0874B4A4);
     r = ActorStartAnimNoFlip((struct AnimCmd *)gUnk_0874B234);
     u1 = *c;
@@ -1713,7 +1713,7 @@ top:
     goto top;
 }
 
-void sub_080afdf0(void)
+void Task_NightmarePowerOrbStarTrail(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1759,7 +1759,7 @@ void sub_080afdf0(void)
     TaskExitTrampoline();
 }
 
-void sub_080aff40(void)
+void Task_NightmarePowerOrbStarTrailUp(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1831,7 +1831,7 @@ void sub_080aff40(void)
     TaskExitTrampoline();
 }
 
-void sub_080b0144(void)
+void Task_NightmarePowerOrbStarTrailDown(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1903,7 +1903,7 @@ void sub_080b0144(void)
     TaskExitTrampoline();
 }
 
-void sub_080b0338(void)
+void Task_NightmarePowerOrbStarAfterimage(void)
 {
     struct Task *t;
     struct Task *u;

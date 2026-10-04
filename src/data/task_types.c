@@ -220,10 +220,10 @@ void Task_NightmareWizardCloakTornado(void);
 void Task_NightmareWizardPendant(void);
 void Task_NightmareWizardHitBox(void);
 void sub_080abd04(void);
-void sub_080afdf0(void);
-void sub_080aff40(void);
-void sub_080b0144(void);
-void sub_080b0338(void);
+void Task_NightmarePowerOrbStarTrail(void);
+void Task_NightmarePowerOrbStarTrailUp(void);
+void Task_NightmarePowerOrbStarTrailDown(void);
+void Task_NightmarePowerOrbStarAfterimage(void);
 void Task_FireLionFlame(void);
 void Task_ChillyFreezeSparkle(void);
 void Task_PengyIceBreathPuff(void);
@@ -490,10 +490,10 @@ const struct TaskType gTaskTypes[] = {
     /* 207 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardPendant },
     /* 208 */ { 3, { 0, 0, 0 }, (u32)Task_NightmareWizardHitBox },
     /* 209 */ { 3, { 0, 0, 0 }, (u32)sub_080abd04 },
-    /* 210 */ { 3, { 0, 0, 0 }, (u32)sub_080afdf0 },
-    /* 211 */ { 3, { 0, 0, 0 }, (u32)sub_080aff40 },
-    /* 212 */ { 3, { 0, 0, 0 }, (u32)sub_080b0144 },
-    /* 213 */ { 3, { 0, 0, 0 }, (u32)sub_080b0338 },
+    /* 210 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStarTrail },
+    /* 211 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStarTrailUp },
+    /* 212 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStarTrailDown },
+    /* 213 */ { 3, { 0, 0, 0 }, (u32)Task_NightmarePowerOrbStarAfterimage },
     /* 214 */ { 3, { 0, 0, 0 }, (u32)Task_FireLionFlame },
     /* 215 */ { 3, { 0, 0, 0 }, (u32)Task_ChillyFreezeSparkle },
     /* 216 */ { 3, { 0, 0, 0 }, (u32)Task_PengyIceBreathPuff },

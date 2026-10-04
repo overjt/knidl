@@ -12094,8 +12094,8 @@ u32 gNightmarePowerOrbFrames[] FRAME_TABLE = {
 };
 
 /* gUnk_08754504.  Consumers: Task_NightmarePowerOrbStar
- * (src/enemy_ae3bc.c:1067), sub_080afdf0 (src/enemy_ae3bc.c:1728),
- * sub_080aff40 (src/enemy_ae3bc.c:1775) and 2 more.  23 words, OAM template
+ * (src/enemy_ae3bc.c:1067), Task_NightmarePowerOrbStarTrail (src/enemy_ae3bc.c:1728),
+ * Task_NightmarePowerOrbStarTrailUp (src/enemy_ae3bc.c:1775) and 2 more.  23 words, OAM template
  * streams; extent: the span to the next label, every word such a target
  * (pointer_tables 0x08754504-0x08754560).  Declared include/enemy.h:1270. */
 u32 gUnk_08754504[] FRAME_TABLE = {
