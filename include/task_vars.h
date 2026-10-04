@@ -209,7 +209,7 @@
 #define bugzzyLadybugHitsActive unk2C /* s32: 1 once the launch is over; BugzzyLadybugUpdate checks hits only then */
 #define bugzzyLadybugSpeed unk30 /* s32: the launch speed (AngleToVector's length): 384, less 48 per launch frame */
 #define bugzzyLadybugFrameTimer unk34 /* s32: frames until the sprite toggles frame bit 0 again (every 2) */
-#define bugzzyLadybugLoopCount unk6C /* s16: iterations of BugzzyLadybugState0's two loops (launch frames, bobs), counted from 0 */
+#define bugzzyLadybugLoopCount unk6C /* s16: iterations of BugzzyLadybugFlight's two loops (launch frames, bobs), counted from 0 */
 
 /* Burst - Burst on parent (task types #151 Task_StarScatterOnParent, #152
    Task_RayBurstOnParent, #153 Task_SmallBlastOnParent; BurstStickToParent /
@@ -481,10 +481,10 @@
    gGrandWheelieVariants, gGrandWheelieStates / gGrandWheelieStateUpdates) */
 #define grandWheelieRushCooldown unk18 /* s32: 0 when the second rush (state 7) and the summon may come; state 7 sets 1, counted to 4 */
 #define grandWheelieDustTimer unk1C /* s32: frames since the last dust trail while skidding (every 8) or sliding defeated (every 16) */
-#define grandWheelieGroundClass unk1C /* s8: the ground class sub_08094d10 gave last (-1 in the air); a change re-picks the roll speed */
+#define grandWheelieGroundClass unk1C /* s8: the ground class GrandWheelieGetGroundClass gave last (-1 in the air); a change re-picks the roll speed */
 #define grandWheelieFlashTimer unk20 /* s32: frames left of the hit flash after a damage hit (ActorFlashPalette while > 0) */
 #define grandWheelieDefeatPhase unk2C /* s32: the defeat's step: 0 knocked into the air, 1 landed and sliding, 2 stopped */
-#define grandWheelieHopsLeft unk2C /* s32: jumps left in state 3 (1 or 3, from sub_08094908) */
+#define grandWheelieHopsLeft unk2C /* s32: jumps left in state 3 (1 or 3, from GrandWheeliePickHopCount) */
 #define grandWheelieLanded unk2C /* s32: set by the land hook GrandWheelieLand in states 8-10; cleared before a jump and waited on */
 #define grandWheelieRushRange unk2C /* s32: during the rush: 1 within 63 px of the player, 0 farther ahead, -1 farther after passing */
 #define grandWheelieSavedPixelX unk2C /* s32: the pixel X at the start of state 2, restored when its jitter ends */
@@ -499,7 +499,7 @@
 
 /* GrandWheelieMiniWheelie - Grand Wheelie's mini wheelie (task type #114,
    Task_GrandWheelieMiniWheelie; spawned by GrandWheelieSummon) */
-#define grandWheelieMiniWheelieGroundClass unk1C /* s8: the ground class sub_08094d10 gave last (-1 after a landing); indexes the roll speeds */
+#define grandWheelieMiniWheelieGroundClass unk1C /* s8: the ground class GrandWheelieGetGroundClass gave last (-1 after a landing); indexes the roll speeds */
 #define grandWheelieMiniWheelieRolling unk2C /* s32: 0 while thrown in the air, 1 once it has landed and rolls */
 
 /* HalveScore - Score halving (task type #263, Task_HalveScore) */
@@ -601,7 +601,7 @@
 #define kingDededeNextState unk1C /* s32: the state KingDededeWalk hands over to once close enough (pair of gUnk_087482A8) */
 #define kingDededeDefeatedTimeLimit unk20 /* s32: frames the Defeated wait lasts at most (120); at 0 it ends with unk1C = 2 */
 #define kingDededeFloatTimer unk20 /* s32: frames KingDededeFloat drifts after the player (300); -2 while puffing up */
-#define kingDededeInhaling unk20 /* s32: nonzero while the inhale is on (sub_080a0098 sets 1, KingDededeInhale clears it) */
+#define kingDededeInhaling unk20 /* s32: nonzero while the inhale is on (KingDededeStartInhale sets 1, KingDededeInhale clears it) */
 #define kingDededeSlamCount unk20 /* s32: slams in this KingDededeSlam (1, or 4 every fourth time); the loop runs unk20 - 1 more */
 #define kingDededeWaitTimer unk20 /* s32: frames left in the wait (state 0 / KingDededeWait) before the next move */
 #define kingDededeWalkTargetX unk20 /* s32: X KingDededeWalk heads for when its next state is 8 (by the player, inside the room) */
@@ -817,7 +817,7 @@
 #define metaKnightsQueue1 unk2C /* s32: queue 1: the 8-byte knight spawn records (kind, variant, x, y) for place 1 */
 #define metaKnightsQueue2 unk30 /* s32: queue 2: the 8-byte knight spawn records (kind, variant, x, y) for place 2 */
 #define metaKnightsQueue3 unk34 /* s32: queue 3: the 8-byte knight spawn records (kind, variant, x, y) for place 3 */
-#define metaKnightsNewKnightSlot unk46 /* s16: the knight (task type #58) sub_0809bc1c just created, while it stores the knight's place */
+#define metaKnightsNewKnightSlot unk46 /* s16: the knight (task type #58) MetaKnightsUpdate just created, while it stores the knight's place */
 #define metaKnightsLoopCount unk6C /* s16: the intro's loop counter (frame loops), counted from 0 */
 #define metaKnightsPaletteTimer unk6C /* s16: frame 0-80 of the group's palette pulse; the four knight palettes blend while above 63 */
 
@@ -1284,7 +1284,7 @@
 /* PoppyBrosSr - Poppy Bros. Sr. (task type #50, Task_PoppyBrosSr;
    gPoppyBrosSrVariants, gPoppyBrosSrStates / gPoppyBrosSrStateUpdates) */
 #define poppyBrosSrIgnoreTerrainTimer unk18 /* s32: frames left in which PoppyBrosSrUpdate skips ActorCollideTerrain (24 if IsMidBossDroppingIn) */
-#define poppyBrosSrHopsLeft unk1C /* s32: hops left in sub_08091954's loop (state 1: gUnk_087438DC, state 3: 2) */
+#define poppyBrosSrHopsLeft unk1C /* s32: hops left in PoppyBrosSrHopBackAndForth's loop (state 1: gUnk_087438DC, state 3: 2) */
 #define poppyBrosSrPlayerNearY unk1C /* s32: state 2: 1 when the nearest player is within 63 px vertically (the bomb's variant) */
 #define poppyBrosSrAimTimer unk20 /* s32: state 2: frames left before the hand throws, facing the player meanwhile (-1 outside) */
 #define poppyBrosSrHopPhase unk20 /* s32: 0/1, toggled each hop; indexes the X speeds gUnk_087438E4 and the hop frames */
@@ -1301,7 +1301,7 @@
 #define poppyBrosSrBombBouncesLeft unk28 /* s32: bounces left (3) before the bomb bursts at a landing */
 
 /* PoppyBrosSrHand - Poppy Bros. Sr.'s hand (task type #180,
-   Task_PoppyBrosSrHand; created by PoppyBrosSrState2) */
+   Task_PoppyBrosSrHand; created by PoppyBrosSrJumpThrow) */
 #define poppyBrosSrHandBombVariant unk18 /* s32: the variant of the bomb it holds: the parent's poppyBrosSrPlayerNearY */
 #define poppyBrosSrHandReleased unk1C /* s32: 0 while holding the bomb, 1 once it lets go (the bomb then starts its flight) */
 #define poppyBrosSrHandOffsetVelX unk28 /* s32: the X step added to the hand's offset each frame (16.16) */

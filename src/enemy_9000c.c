@@ -26,7 +26,7 @@
  *
  * The tail holds the pieces the states share - BonkersCreateSlamStar (fire a shot at
  * the boss's own position through CreateInhalableStar), BonkersChooseNextState (advance the
- * animation from gUnk_08743744[Task.unk28]), sub_08090e9c (the hover loop),
+ * animation from gUnk_08743744[Task.unk28]), BonkersShakeVertically (the hover loop),
  * the BonkersReactToDamage / BonkersReactToDefeat / BonkersHitWall hit hooks, the companion
  * task Task_BonkersHammerHitBox / BonkersHammerHitBoxUpdate that mirrors the boss's position while
  * gTaskSlotTypes[Task.parent] says the boss is alive - and Task_PoppyBrosSr, the
@@ -586,7 +586,7 @@ void BonkersBounceOffWall(void)
         TaskYieldTrampoline(1);
     TaskStop();
     RequestScreenShake(2);
-    sub_08090e9c();
+    BonkersShakeVertically();
     BonkersChooseNextState();
     TaskSleepForever();
 }
@@ -663,7 +663,7 @@ void BonkersChooseNextState(void)
         t->bonkersSequencePhase = 4;
 }
 
-void sub_08090e9c(void)
+void BonkersShakeVertically(void)
 {
     gCurTask->bonkersLoopCount = 0;
     do

@@ -9,7 +9,7 @@
  * per-frame body PoppyBrosSrUpdate and the animation script gUnk_0874397C,
  * PoppyBrosSrUpdate dispatches Task.updateState and reloads the graphics record
  * gPoppyBrosSrGfx, and states 0-6 are <body, guard> pairs.  Two states shell out
- * to sub_08091954, which runs the boss's attack loop: it repeats Task.unk1C
+ * to PoppyBrosSrHopBackAndForth, which runs the boss's attack loop: it repeats Task.unk1C
  * times, flips Task.unk20 between the two step helpers sub_08091a30 and
  * sub_08091a98 (they walk Task.frame up and down while yielding Task.unk24
  * frames per step), and waits on Task.onGround between passes.
@@ -163,7 +163,7 @@ void PoppyBrosSrState1(void)
     u->poppyBrosSrHopPhase = zero;
     gCurTask->poppyBrosSrHopsLeft =
         gUnk_087438DC[RandomRange(4) + gCurTask->actorSpawnArg * 4];
-    sub_08091954();
+    PoppyBrosSrHopBackAndForth();
     ActorSetState(POPPY_BROS_SR_STATE_2);
     TaskSleepForever();
 }
@@ -174,7 +174,7 @@ void PoppyBrosSrState1Update(void)
         TaskSetEntry(PoppyBrosSrEnterState, gCurTaskIdx);
 }
 
-void PoppyBrosSrState2(void)
+void PoppyBrosSrJumpThrow(void)
 {
     struct Task *t;
     struct Task *v;
@@ -252,7 +252,7 @@ void PoppyBrosSrState2(void)
     TaskSleepForever();
 }
 
-void PoppyBrosSrState2Update(void)
+void PoppyBrosSrJumpThrowUpdate(void)
 {
     struct Task *t;
 
@@ -280,7 +280,7 @@ void PoppyBrosSrState3(void)
     u = gCurTask;
     u->poppyBrosSrHopPhase = zero;
     u->poppyBrosSrHopsLeft = 2;
-    sub_08091954();
+    PoppyBrosSrHopBackAndForth();
     ActorSetState(POPPY_BROS_SR_STATE_4);
     TaskSleepForever();
 }
@@ -410,7 +410,7 @@ void PoppyBrosSrDefeatUpdate(void)
         TaskSetEntry(ActorDie, gCurTaskIdx);
 }
 
-void sub_08091954(void)
+void PoppyBrosSrHopBackAndForth(void)
 {
     struct Task *u;
     struct Task *v;

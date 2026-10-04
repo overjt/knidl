@@ -10746,7 +10746,7 @@ u32 gTridentKnightTridentFrames[] FRAME_TABLE = {
     (u32)gUnk_0827D488,
 };
 
-/* gUnk_08753510.  Consumer: sub_0809c0a8 (src/enemy_9c0a8.c:64).  38 words,
+/* gUnk_08753510.  Consumer: MetaKnightsIntro (src/enemy_9c0a8.c:64).  38 words,
  * OAM template streams; extent: the span to the next label, every word such
  * a target (pointer_tables 0x08753510-0x087535A8).  Declared
  * include/enemy.h:1225. */
@@ -10791,7 +10791,7 @@ u32 gUnk_08753510[] FRAME_TABLE = {
     (u32)gUnk_0827F808,
 };
 
-/* gUnk_087535A8.  Consumer: sub_0809f61c (src/enemy_9f37c.c:226).  21
+/* gUnk_087535A8.  Consumer: MetaKnightsKnightQueueDelay (src/enemy_9f37c.c:226).  21
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087535A8-0x087535FC).  Declared
  * include/enemy.h:1226. */

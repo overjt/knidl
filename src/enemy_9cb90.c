@@ -28,7 +28,7 @@ void sub_0809cb90(void)
     ActorReactToHit();
     if ((u16)(gCurTask->frame - 22) <= 1)
         ActorCheckHitsWithBox((s32)gUnk_08747EF4);
-    if (sub_0809f994() != 0)
+    if (MetaKnightsKnightIsAtEdge() != 0)
     {
         if (gCurTask->pixelX < ((s8 *)gCurTask->u8C.actor->terrainBox)[4] + 24)
             gCurTask->pixelX = ((s8 *)gCurTask->u8C.actor->terrainBox)[4] + 24;

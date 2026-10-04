@@ -269,7 +269,7 @@ void MaceKnightUpdate(void)
 
     if (ActorCollideTerrain() == 0)
     {
-        if (sub_0809f994() != 0)
+        if (MetaKnightsKnightIsAtEdge() != 0)
             sub_0809f930();
         CallTableEntry(gCurTask->updateState, 2, gMaceKnightStateUpdates);
     }
@@ -372,7 +372,7 @@ void sub_0809dfc8(void)
     s16 *p;
     s8 v;
 
-    if (ActorCollideTerrain() == 0 && sub_0809f994() != 0)
+    if (ActorCollideTerrain() == 0 && MetaKnightsKnightIsAtEdge() != 0)
         sub_0809f930();
     t = gCurTask;
     if (t->metaKnightsKnightFlashTimer > 0)
@@ -874,7 +874,7 @@ void sub_0809ea08(void)
         }
         return;
     }
-    if (sub_0809f994() != 0)
+    if (MetaKnightsKnightIsAtEdge() != 0)
     {
         sub_0809ec84();
         return;

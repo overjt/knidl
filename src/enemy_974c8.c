@@ -495,7 +495,7 @@ chk2:
     if (k < 0)
         goto other;
 yes:
-    sub_0809809c();
+    PhanPhanThrowPlayerWindUpLong();
     SetHeldPlayerState(gCurTask->phanPhanHeldPlayerSlot, 8);
     if (gLocalPlayer == gCurTask->phanPhanHeldPlayerSlot)
         PlaySfx(0x23A);
@@ -506,7 +506,7 @@ yes:
     TaskYieldTrampoline(8);
     goto tail;
 other:
-    sub_08098140();
+    PhanPhanThrowPlayerWindUpShort();
     SetHeldPlayerState(gCurTask->phanPhanHeldPlayerSlot, 9);
     if (gLocalPlayer == gCurTask->phanPhanHeldPlayerSlot)
         PlaySfx(0x23A);
@@ -528,7 +528,7 @@ tail:
     TaskSleepForever();
 }
 
-void sub_0809809c(void)
+void PhanPhanThrowPlayerWindUpLong(void)
 {
     struct Task *t;
 
@@ -557,7 +557,7 @@ void sub_0809809c(void)
     } while ((s16)t->phanPhanLoopCount <= 2);
 }
 
-void sub_08098140(void)
+void PhanPhanThrowPlayerWindUpShort(void)
 {
     TaskSetFrame(40);
     TaskYieldTrampoline(8);
@@ -840,7 +840,7 @@ void GrandWheelieMiniWheelieUpdate(void)
     x = ActorTickAnim(gCurTask->actorAnimDelay);
     t = gCurTask;
     t->actorAnimDelay = x;
-    if (t->grandWheelieMiniWheelieRolling != 0 && sub_08098748() != 0)
+    if (t->grandWheelieMiniWheelieRolling != 0 && GrandWheelieMiniWheelieUpdateGroundClass() != 0)
         TaskSetMotionXFacing(gUnk_087454D8[gCurTask->grandWheelieMiniWheelieGroundClass], 0x5A5A5A5A);
 }
 
@@ -878,12 +878,12 @@ void GrandWheelieMiniWheelieHitCeiling(void)
     t->velY = -t->velY;
 }
 
-s32 sub_08098748(void)
+s32 GrandWheelieMiniWheelieUpdateGroundClass(void)
 {
     struct Task *t;
     s32 v;
 
-    v = sub_08094d10();
+    v = GrandWheelieGetGroundClass();
     t = gCurTask;
     if (t->grandWheelieMiniWheelieGroundClass != (s8)v) {
         t->grandWheelieMiniWheelieGroundClass = (s8)v;

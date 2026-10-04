@@ -631,11 +631,11 @@ u32 gActorExplodeDefeatsByEffect[4] GAME_TBL(0873e670) = {
 u32 gUnk_0873E734[9] GAME_TBL(0873e734) = {
     (u32)KingDededeDefeatHook,
     0,
-    (u32)sub_080a7d20,
+    (u32)MetaKnightDefeatHook,
     0,
     (u32)MrShineAndMrBrightDefeatHook,
     (u32)WhispyWoodsDefeatHook,
-    (u32)sub_080a9ea4,
+    (u32)KrackoDefeatHook,
     0,
     (u32)NightmareWizardDefeatHook,
 };

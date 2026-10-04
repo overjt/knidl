@@ -210,8 +210,8 @@ s32 KingDededeDefeatHook(void)
     TaskSetFrame(0);
 }
 
-/* sub_080a1624 (0x080A1624-0x080A1668) */
-void sub_080a1624(void)
+/* KingDededeDefeatedLockPlayers (0x080A1624-0x080A1668) */
+void KingDededeDefeatedLockPlayers(void)
 {
     s32 i;
     struct PlayerState *p;
@@ -308,7 +308,7 @@ void KingDededeDefeatedCheckWaitEnd(void)
     if (sum == 0)
     {
         gCurTask->kingDededeDefeatedWaitEnd = 1;
-        sub_080a1624();
+        KingDededeDefeatedLockPlayers();
     }
 }
 
@@ -381,7 +381,7 @@ void KingDededeDefeatedHoldBackUpdate(void)
         if (gCurTask->kingDededeDefeatedTimeLimit <= 0)
         {
             gCurTask->kingDededeDefeatedWaitEnd = 2;
-            sub_080a1624();
+            KingDededeDefeatedLockPlayers();
         }
         else
         {

@@ -109,20 +109,20 @@ void Task_MetaKnights(void)
     struct Task *t;
 
     sub_0809c028();
-    sub_0809fbd0();
+    MetaKnightsLockPlayers();
     DisablePause();
     sub_08066544();
-    sub_0809c0a8();
-    sub_0809fc08();
+    MetaKnightsIntro();
+    MetaKnightsUnlockPlayers();
     MetaKnightsLoadGfx();
     EnablePause();
     t = gCurTask;
-    t->updateCallback = (u32)sub_0809bc1c;
-    t->lateUpdateCallback = (u32)sub_0809bf2c;
+    t->updateCallback = (u32)MetaKnightsUpdate;
+    t->lateUpdateCallback = (u32)MetaKnightsLateUpdate;
     TaskSleepForever();
 }
 
-void sub_0809bc1c(void)
+void MetaKnightsUpdate(void)
 {
     struct Task *t;
     struct Task *t2;
@@ -212,7 +212,7 @@ void sub_0809bc1c(void)
     }
 }
 
-void sub_0809bf2c(void)
+void MetaKnightsLateUpdate(void)
 {
     if (gUnk_02007D00[5] & 1)
         gCurTask->health -= gUnk_02007D00[4];

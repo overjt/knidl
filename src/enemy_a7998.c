@@ -210,7 +210,7 @@ void Task_MetaKnightSparkle(void)
     TaskExitTrampoline();
 }
 
-s32 sub_080a7d20(void)
+s32 MetaKnightDefeatHook(void)
 {
     TaskSetFrame(0);
 }
@@ -413,7 +413,7 @@ next:
     w = gCurTask->unk30;
     if (w & (128 << 8))
     {
-        if (sub_080a93ec() != 0)
+        if (KrackoJrIsPlayerAbove() != 0)
             goto sw;
         goto retreat;
     }
@@ -445,7 +445,7 @@ next:
                 else if (r > 1)
                     goto sw;
 chk:
-                if (sub_080a93ec() != 0)
+                if (KrackoJrIsPlayerAbove() != 0)
                     goto strong;
 retreat:
                 sub_080a9434(pt);
@@ -468,16 +468,16 @@ sw:
             gUnk_02007D00[0] = 129;
             gCurTask->krackoJrSteerTimer = 4;
             gCurTask->krackoJrPhase = 1;
-            sub_080a94d4();
+            KrackoJrPickMoveAxis();
         }
         sub_080a96a4();
         break;
     case 1:
-        if (sub_080a95dc() == 1)
+        if (KrackoJrTrySwitchMoveAxis() == 1)
         {
             gCurTask->krackoJrPhase = 2;
             gCurTask->krackoJrSteerTimer = 4;
-            sub_080a96dc();
+            KrackoJrSteerTowardPlayer();
             AngleToVector((s16)gUnk_02007D00[4], 320);
             gCurTask->velX = gUnk_030023B4;
             gCurTask->velY = gUnk_030023D4;
@@ -485,12 +485,12 @@ sw:
         sub_080a96a4();
         break;
     case 2:
-        sub_080a95dc();
+        KrackoJrTrySwitchMoveAxis();
         gCurTask->krackoJrSteerTimer--;
         if (gCurTask->krackoJrSteerTimer == 0)
         {
             gCurTask->krackoJrSteerTimer = 4;
-            sub_080a96dc();
+            KrackoJrSteerTowardPlayer();
             AngleToVector((s16)gUnk_02007D00[4], 320);
             gCurTask->velX = gUnk_030023B4;
             gCurTask->velY = gUnk_030023D4;
@@ -634,7 +634,7 @@ retreat2:
                 if (gCurTask->krackoJrSteerTimer == 0)
                 {
                     gCurTask->krackoJrSteerTimer = 4;
-                    sub_080a96dc();
+                    KrackoJrSteerTowardPlayer();
                     AngleToVector((s16)gUnk_02007D00[4], (s16)gUnk_02007D00[1]);
                     gCurTask->velX = gUnk_030023B4;
                     gCurTask->velY = gUnk_030023D4;

@@ -21,7 +21,7 @@ extern u32 ActorCheckHits(void);
 extern u8 ActorCollideTerrain(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809c0a8(void)
+void MetaKnightsIntro(void)
 {
     struct Task *t;
     struct Task *u;
@@ -214,7 +214,7 @@ void Task_MetaKnightsKnight(void)
     u = gCurTask;
     a = u->u8C.actor;
     a->savedPaletteBits = 0xF000 & u->tileWord;
-    sub_0809f818(1);
+    MetaKnightsKnightSetQueueState(1);
     switch (gCurTask->actorSpawnArg)
     {
     case 0:
@@ -230,10 +230,10 @@ void Task_MetaKnightsKnight(void)
         sub_0809e824();
         break;
     case 4:
-        sub_0809f61c();
+        MetaKnightsKnightQueueDelay();
         break;
     case 5:
-        sub_0809f7e4();
+        MetaKnightsKnightQueueEnd();
         break;
     }
 }
@@ -336,7 +336,7 @@ void AxeKnightWalkUpdate(void)
     struct Task *v;
     s32 n;
 
-    if (sub_0809f994() != 0)
+    if (MetaKnightsKnightIsAtEdge() != 0)
         sub_0809f930();
     t = gCurTask;
     if (t->metaKnightsKnightAxeWaitTimer > 0)

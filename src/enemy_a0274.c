@@ -429,7 +429,7 @@ void KingDededeGroundSlam(void)
     }
 }
 
-void sub_080a094c(void)
+void KingDededeWalkLoop(void)
 {
     struct Task *t;
     struct Task *u;
@@ -599,7 +599,7 @@ void KingDededeWalk(void)
     gCurTask->updateState = KING_DEDEDE_STATE_WALK;
     TaskStop();
     KingDededeStartWalk();
-    sub_080a094c();
+    KingDededeWalkLoop();
 }
 
 void KingDededeWalkUpdate(void)
@@ -935,7 +935,7 @@ void KingDededeInhale(void)
     u = gCurTask;
     u->frame++;
     TaskYieldTrampoline(20);
-    sub_080a0098();
+    KingDededeStartInhale();
     while (gUnk_02007D00[0] != 1)
     {
         TaskSetFrame(26);

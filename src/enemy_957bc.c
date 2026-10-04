@@ -49,7 +49,7 @@ void Task_FireLion(void)
         FireLionDropIn();
     } else {
         gCurTask->updateCallback = (u32)FireLionUpdate;
-        sub_080959ec();
+        FireLionShowHpBar();
     }
 }
 
@@ -135,7 +135,7 @@ void FireLionDropInUpdate(void)
 {
 }
 
-void sub_080959ec(void)
+void FireLionShowHpBar(void)
 {
     ActorSetState(FIRE_LION_STATE_1);
     gCurTask->updateState = 1;
@@ -221,7 +221,7 @@ void FireLionHopUpdate(void)
 {
 }
 
-void sub_08095be8(void)
+void FireLionLunge(void)
 {
     struct Task *t;
     struct Task *u;
@@ -232,7 +232,7 @@ void sub_08095be8(void)
     gCurTask->updateState = 3;
     ActorSetTerrainBox(gUnk_08745304);
     TaskFaceNearestPlayer();
-    sub_08095e4c();
+    FireLionLungeWindUp();
     t = gCurTask;
     t->fireLionWallHit = 0;
     t->fireLionLoopCount = 0;
@@ -242,7 +242,7 @@ void sub_08095be8(void)
             u->facing = -u->facing;
         else
             TaskFaceNearestPlayer();
-        sub_08095d40();
+        FireLionLungeOnce();
         v = gCurTask;
         v->fireLionLoopCount++;
     } while ((s16)v->fireLionLoopCount <= 1);
@@ -253,7 +253,7 @@ void sub_08095be8(void)
         TaskSetMotionXFacing(0x10000, 0x5A5A5A5A);
         FireLionWaitForLanding();
         ActorSetTerrainBox(gUnk_08745304);
-        sub_08096924();
+        FireLionCheckJumpBack();
         if (gCurTask->state == FIRE_LION_STATE_5)
             ActorSetState(FIRE_LION_STATE_WAIT);
         else
@@ -266,18 +266,18 @@ void sub_08095be8(void)
                 w->facing = -w->facing;
             else
                 TaskFaceNearestPlayer();
-            sub_08095d40();
+            FireLionLungeOnce();
             x = gCurTask;
             x->fireLionLoopCount++;
         } while ((s16)x->fireLionLoopCount <= 1);
-        sub_08096924();
+        FireLionCheckJumpBack();
         ActorSetState(FIRE_LION_STATE_WAIT);
     }
     gCurTask->updateState = 12;
     TaskSleepForever();
 }
 
-void sub_08095d20(void)
+void FireLionLungeUpdate(void)
 {
     struct Task *t;
 
@@ -286,7 +286,7 @@ void sub_08095d20(void)
         TaskStopX();
 }
 
-void sub_08095d40(void)
+void FireLionLungeOnce(void)
 {
     struct Task *t;
     s32 zero;
@@ -325,7 +325,7 @@ void sub_08095d40(void)
     gCurTask->fireLionCatchActive = 0;
 }
 
-void sub_08095e4c(void)
+void FireLionLungeWindUp(void)
 {
     TaskStop();
     ActorStopAnim();
@@ -355,17 +355,17 @@ void FireLionSlash(void)
         FireLionJumpBack();
         gCurTask->updateState = 4;
     } else if (abs(TaskGetNearestPlayerDx()) > 71) {
-        sub_08095e4c();
+        FireLionLungeWindUp();
         gCurTask->fireLionLoopCount = 0;
         while ((s16)gCurTask->fireLionLoopCount <= 3) {
             if (abs(TaskGetNearestPlayerDx()) <= 71)
                 break;
             TaskFaceNearestPlayer();
-            sub_08095d40();
+            FireLionLungeOnce();
             t = gCurTask;
             if (t->fireLionWallHit != 0) {
                 t->facing = -t->facing;
-                sub_08095d40();
+                FireLionLungeOnce();
                 break;
             }
             t->fireLionLoopCount++;
@@ -492,7 +492,7 @@ void FireLionCharge(void)
     TaskSetFrame(48);
     TaskYieldTrampoline(8);
     FireLionWaitForLanding();
-    sub_08096924();
+    FireLionCheckJumpBack();
     ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
@@ -510,7 +510,7 @@ void FireLionChargeUpdate(void)
         TaskSetEntry(FireLionBounceOffWall, gCurTaskIdx);
 }
 
-void sub_080962ac(void)
+void FireLionChargeEndUpdate(void)
 {
     struct Task *t;
 
@@ -556,7 +556,7 @@ void FireLionBounceOffWall(void)
     }
     FireLionWaitForLanding();
     ActorSetTerrainBox(gUnk_08745304);
-    sub_08096924();
+    FireLionCheckJumpBack();
     ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
@@ -594,7 +594,7 @@ void FireLionPounce(void)
     goto rest;
 flip:
     t->facing = -t->facing;
-    sub_08095d40();
+    FireLionLungeOnce();
     goto rest;
 poscheck:
     if (TaskGetNearestPlayerDx() > 80)
@@ -603,10 +603,10 @@ poscheck:
 doloop:
     {
         TaskFaceNearestPlayer();
-        sub_08095e4c();
+        FireLionLungeWindUp();
         gCurTask->fireLionLoopCount = 0;
         do {
-            sub_08095d40();
+            FireLionLungeOnce();
             t = gCurTask;
             if (t->fireLionWallHit != 0)
                 goto flip;
@@ -676,7 +676,7 @@ rest:
     TaskYieldTrampoline(4);
     TaskSetFrame(36);
     TaskYieldTrampoline(8);
-    sub_08096924();
+    FireLionCheckJumpBack();
     ActorSetState(FIRE_LION_STATE_WAIT);
     gCurTask->updateState = 12;
     TaskSleepForever();
@@ -698,7 +698,7 @@ void FireLionPounceUpdate(void)
         TaskStopX();
 }
 
-void sub_08096680(void)
+void FireLionMaulHeldPlayer(void)
 {
     struct Task *t;
     struct Task *u;
@@ -826,11 +826,11 @@ void sub_080968c0(void)
     TaskYieldTrampoline(1);
 }
 
-void sub_08096920(void)
+void FireLionJumpBackUpdate(void)
 {
 }
 
-void sub_08096924(void)
+void FireLionCheckJumpBack(void)
 {
     if (TaskGetFacingTowardNearestPlayer() == 1) {
         if (gCurTask->pixelX - gViewRect[0] > 80) {
@@ -853,7 +853,7 @@ void sub_0809699c(void)
 {
     FireLionUpdatePalette();
     CallTableEntry(gCurTask->updateState, 13, gFireLionStateUpdates);
-    sub_08097024();
+    FireLionUpdateAttackBoxes();
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
@@ -868,7 +868,7 @@ void FireLionUpdate(void)
     } else {
         CallTableEntry(gCurTask->updateState, 13, gFireLionStateUpdates);
     }
-    sub_08097024();
+    FireLionUpdateAttackBoxes();
     ActorCheckHitsWithExtraBox();
     ActorReactToHit();
 }
@@ -917,7 +917,7 @@ void FireLionCheckCatch(void)
             u->fireLionHeldPlayerSlot = i;
             TaskFaceToward(i);
             HoldPlayer(gCurTask->fireLionHeldPlayerSlot, gCurTaskIdx, 5);
-            TaskSetEntry(sub_08096680, gCurTaskIdx);
+            TaskSetEntry(FireLionMaulHeldPlayer, gCurTaskIdx);
         }
     }
 }
@@ -1112,7 +1112,7 @@ void FireLionChooseNextState(void)
     ActorSetState(v);
 }
 
-void sub_08097024(void)
+void FireLionUpdateAttackBoxes(void)
 {
     struct Task *t;
     struct Task *u;

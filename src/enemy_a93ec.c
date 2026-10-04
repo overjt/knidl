@@ -64,7 +64,7 @@ s32 LoadRoomStageObjectGfx();
 s32 SpawnRoomEnemy();
 s32 SpawnRoomMapEvent();
 
-s32 sub_080a93ec(void)
+s32 KrackoJrIsPlayerAbove(void)
 {
     if ((u8)TaskGetYDirBitTo(gUnk_02007D00[5]) == 2)
     {
@@ -97,7 +97,7 @@ void sub_080a9434(struct Task *pt)
     gCurTask->krackoJrPhase = 4;
 }
 
-void sub_080a94d4(void)
+void KrackoJrPickMoveAxis(void)
 {
     if (TaskGetDxTo(gUnk_02007D00[5]) < 0)
         gUnk_03001F2C = 0;
@@ -131,7 +131,7 @@ void sub_080a94d4(void)
     gCurTask->velY = gUnk_030023D4;
 }
 
-s32 sub_080a95dc(void)
+s32 KrackoJrTrySwitchMoveAxis(void)
 {
     struct Task *t;
 
@@ -187,7 +187,7 @@ void sub_080a96a4(void)
     }
 }
 
-void sub_080a96dc(void)
+void KrackoJrSteerTowardPlayer(void)
 {
     s32 *q;
     s32 *p;
@@ -334,7 +334,7 @@ void Task_KrackoCloud(void)
     gCurTask->drawCallback = (u32)ActorDrawWorldInView;
     gCurTask->layer = 12;
     gCurTask->frameTable = gUnk_08754418;
-    gCurTask->updateCallback = (u32)sub_080a9ba0;
+    gCurTask->updateCallback = (u32)KrackoCloudFollowBody;
     gCurTask->facing = 1;
     gCurTask->frame = 10;
     TaskYieldTrampoline(6);
@@ -410,7 +410,7 @@ void Task_KrackoCloud(void)
     }
 }
 
-void sub_080a9ba0(void)
+void KrackoCloudFollowBody(void)
 {
     vs16 *arr;
     struct Task *t;
@@ -511,7 +511,7 @@ s32 KrackoDefeatSweepFilter(s32 a)
     return 1;
 }
 
-void sub_080a9ea4(void)
+void KrackoDefeatHook(void)
 {
     vs16 *arr;
     s16 i;

@@ -30,7 +30,7 @@ extern void ReleaseHeldPlayer(s32 i, s32 d);
 extern void ActorCheckHitsWithExtraBox(void);
 extern u32 ActorReactToHit(void);
 
-void sub_0809fbd0(void)
+void MetaKnightsLockPlayers(void)
 {
     s32 i;
 
@@ -41,7 +41,7 @@ void sub_0809fbd0(void)
     }
 }
 
-void sub_0809fc08(void)
+void MetaKnightsUnlockPlayers(void)
 {
     s32 i;
 
@@ -281,7 +281,7 @@ void CreateKingDededeStar(void)
     PlaySfx(0x21D);
 }
 
-void sub_080a0098(void)
+void KingDededeStartInhale(void)
 {
     struct Task **tp;
     s32 *p;

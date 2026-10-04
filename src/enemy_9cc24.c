@@ -70,7 +70,7 @@ void sub_0809cd4c(void)
 {
     struct Task *t;
 
-    if (ActorCollideTerrain() == 0 && sub_0809f994() != 0)
+    if (ActorCollideTerrain() == 0 && MetaKnightsKnightIsAtEdge() != 0)
         sub_0809f930();
     t = gCurTask;
     if (t->metaKnightsKnightFlashTimer > 0)
@@ -137,7 +137,7 @@ void sub_0809cec4(void)
 {
     struct Task *t;
 
-    if (ActorCollideTerrain() == 0 && sub_0809f994() != 0)
+    if (ActorCollideTerrain() == 0 && MetaKnightsKnightIsAtEdge() != 0)
         sub_0809f930();
     t = gCurTask;
     if (t->metaKnightsKnightFlashTimer > 0)
@@ -326,7 +326,7 @@ void JavelinKnightUpdate(void)
 
     if (ActorCollideTerrain() == 0)
     {
-        if (sub_0809f994() != 0)
+        if (MetaKnightsKnightIsAtEdge() != 0)
             JavelinKnightHitWall();
         t = gCurTask;
         p = &t->pixelY;
@@ -673,7 +673,7 @@ void sub_0809d83c(void)
 
     gCurTask->metaKnightsKnightJavelinPushOn = 1;
     ActorCollideTerrain();
-    if (sub_0809f994() != 0)
+    if (MetaKnightsKnightIsAtEdge() != 0)
     {
         JavelinKnightHitWall();
         gCurTask->metaKnightsKnightJavelinPushOn = 0;
