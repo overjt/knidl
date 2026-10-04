@@ -30,9 +30,9 @@
  * Task.variant is not 4 (and copies the spawner's facing), and in the other
  * sub-states tests the block hit-box set gUnk_0873CF8C (TaskBreakBlocksAt) at the
  * spawner's position offset by PlayerState.pixelOffsetX/unk26 (8.8).  Variant 48
- * (sub_0805ae94, M14's action 55) rides on its spawner with the draw hook
+ * (PlayerEffectUFOChargeSparkle, M14's action 55) rides on its spawner with the draw hook
  * sub_0805af80 (shared with variant 34: M11's sub_0803dfc8 in player mode
- * 13, otherwise the task dies) and the callback sub_0805af44, which kills it
+ * 13, otherwise the task dies) and the callback PlayerEffectUFOChargeSparkleUpdate, which kills it
  * once the player leaves mode 13 or releases both A and B. */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -498,13 +498,13 @@ void sub_0805ae00(void)
     }
 }
 
-void sub_0805ae94(void)
+void PlayerEffectUFOChargeSparkle(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)sub_0805af80;
-    gCurTask->updateCallback = (u32)sub_0805af44;
+    gCurTask->updateCallback = (u32)PlayerEffectUFOChargeSparkleUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08752090;
@@ -526,7 +526,7 @@ void sub_0805ae94(void)
     TaskExitTrampoline();
 }
 
-void sub_0805af44(void)
+void PlayerEffectUFOChargeSparkleUpdate(void)
 {
     struct PlayerState *p = gCurTask->player;
 

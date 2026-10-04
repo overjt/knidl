@@ -19,7 +19,7 @@
  * gUnk_0873BE38, hit test gUnk_0873CC2C), which variant 10
  * (src/plobj_52f6c.c) installs too; both end in a `pop {r1}` epilogue
  * without setting r0, so they are declared s32 with no return.  Variant 9
- * (sub_08052b88, gUnk_0875204C) is a copy of the spawner's sprite:
+ * (PlayerObjectLightOrb, gUnk_0875204C) is a copy of the spawner's sprite:
  * sub-state 0 queues the tiles gUnk_08204B98 (four 320-byte rows) and the
  * palette gUnk_08204B78 into the spawner's OBJ slots through the VRAM
  * transfer queue RequestCopy, blinks, flies to the top centre of the
@@ -364,7 +364,7 @@ s32 sub_08052b08(void)
     }
 }
 
-void sub_08052b88(void)
+void PlayerObjectLightOrb(void)
 {
     struct Task *t = gCurTask;
 

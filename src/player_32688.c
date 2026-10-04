@@ -62,14 +62,14 @@ void Task_Player(void)
             if (gGameState != 20)
                 PlayerLifeRequestInit();
             else
-                sub_080b9118();
+                PlayerLifeRequestShowGameOver();
             TaskSleepForever();
         }
         TaskSleepForever();
     }
     else
     {
-        sub_080b8ebc();
+        PlayerClearOwnLifeRequests();
     }
     gCurTask->facing = 1;
     t = gCurTask;

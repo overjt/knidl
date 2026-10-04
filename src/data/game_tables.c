@@ -413,8 +413,8 @@ void (*gPlayerObjectVariants[13])(void) GAME_TBL(0873b77c) = {
     PlayerObjectLaserBeam,
     PlayerObjectIceBreath,
     (void (*)(void))PlayerObjectBeamOrb,
-    sub_08052b88,
-    sub_08052f6c,
+    PlayerObjectLightOrb,
+    PlayerObjectUFOShot,
     PlayerObjectStarRodShot,
     PlayerObjectStarRodFlightShot,
 };
@@ -422,7 +422,7 @@ void (*gPlayerObjectVariants[13])(void) GAME_TBL(0873b77c) = {
 /* ---- 0x0873B928-0x0873B9EC: 1 table(s), 49 function pointer(s), section .game_tbl_0873b928 ---- */
 /* include/effect.h; CallTableEntry(i, 49, ...) in Task_PlayerEffect */
 void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
-    sub_08053b40,
+    PlayerEffectInhaleAir,
     sub_08053c48,
     sub_08053d08,
     PlayerEffectAbilityGetSparkle,
@@ -455,22 +455,22 @@ void (*gPlayerEffectVariants[49])(void) GAME_TBL(0873b928) = {
     PlayerEffectSparkAura,
     PlayerEffectSwordSparkle,
     PlayerEffectBurningFlames,
-    sub_08057a48,
+    PlayerEffectUFOLaserTrail,
     sub_08057ad4,
-    sub_08057ce0,
-    sub_08057e90,
+    PlayerEffectHammerDust,
+    PlayerEffectParasolSparkle,
     PlayerEffectMikeAttack,
     PlayerEffectSleepBubble,
     sub_08058720,
     PlayerEffectIceBreathCloud,
     PlayerEffectFreezeAura,
     sub_08059570,
-    sub_08059c28,
+    PlayerEffectStonePuff,
     sub_08059d7c,
     PlayerEffectTornadoDust,
     PlayerEffectCrashBlast,
     sub_0805acec,
-    sub_0805ae94,
+    PlayerEffectUFOChargeSparkle,
 };
 
 /* ---- 0x0873DBE4-0x0873DC3C: 2 table(s), 22 function pointer(s), section .game_tbl_0873dbe4 ---- */

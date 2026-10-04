@@ -10,16 +10,16 @@
 /* plobj_52f6c.c (0x08052F6C-0x08053AF3, issue #90).
  *
  * Task type #6 (the objects the player's actions spawn), variants 10-12,
- * and the two spawners.  sub_08052f6c (variant 10) takes its owner's OAM
+ * and the two spawners.  PlayerObjectUFOShot (variant 10) takes its owner's OAM
  * flags (Task.u8C.parentTask is the spawning task) and runs one of six sub-states
  * Task.unk18 & 15: states 0-2 trace an eight-step path (the 8.8 velocity
  * rows gUnk_0873B8C6[k] and the five-frame animation rows gUnk_0873B88A
  * that gUnk_0873B872[k] picks, callback sub_08052b08) and fall into state
  * 3, which flies in one of four directions gUnk_0873B862[Task.unk28] and
  * emits effect 33 every other frame; states 4 and 5 are a stationary
- * object with two callbacks, sub_08053380 (the hit test, which ends the
+ * object with two callbacks, PlayerObjectUFOShotUpdate (the hit test, which ends the
  * object through the shared exit sub_08050814 once PlayerState.ability is
- * 0) and sub_080534d0 (a six-step trail drawn with QueueSprite).
+ * 0) and PlayerObjectUFOShotLateUpdate (a six-step trail drawn with QueueSprite).
  * Variants 11 and 12 (PlayerObjectStarRodShot, PlayerObjectStarRodFlightShot) are two projectiles
  * that move 4 pixels a frame in the facing direction (animation table
  * gUnk_0874C4E4, M14's shared callback sub_08050f80); their per-frame
@@ -47,7 +47,7 @@ void TerrainCollideBoxAlongVelocity(const s8 *p);
 void sub_0802205c(s8 *box);
 s32 TaskBreakBlocks(struct HitBoxSet *p, s32 e);   /* M14's callers test r0 unnarrowed (good/PlayerObjectAirPuffUpdate.c); landed M09/M12/M13 files spell it u16 */
 
-void sub_08052f6c(void)
+void PlayerObjectUFOShot(void)
 {
     u16 *xs;
     u16 *ys;
@@ -204,8 +204,8 @@ void sub_08052f6c(void)
             struct Task *u = gCurTask;
             u->moveCallback = (u32)TaskMove;
             u->drawCallback = (u32)TaskDrawWorldInViewOrFree;
-            u->updateCallback = (u32)sub_08053380;
-            u->lateUpdateCallback = (u32)sub_080534d0;
+            u->updateCallback = (u32)PlayerObjectUFOShotUpdate;
+            u->lateUpdateCallback = (u32)PlayerObjectUFOShotLateUpdate;
             u->layer = 7;
         }
             gCurTask->frameTable = gUnk_08751BF4;
@@ -237,7 +237,7 @@ void sub_08052f6c(void)
     TaskSleepForever();
 }
 
-void sub_08053380(void)
+void PlayerObjectUFOShotUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -277,7 +277,7 @@ void sub_08053380(void)
     }
 }
 
-void sub_080534d0(void)
+void PlayerObjectUFOShotLateUpdate(void)
 {
     s32 k = -1;
 

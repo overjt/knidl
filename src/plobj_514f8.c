@@ -21,7 +21,7 @@
  * 6 (PlayerObjectLaserBeam, gUnk_08751AF8, the animation/velocity pairs
  * gUnk_0873B7B0) and its callback PlayerObjectLaserBeamUpdate (a nine-way `switch` on
  * the collision result gTerrainResult.unk4, sounds 173 and 211) turn the
- * object into variant 10's body sub_08052f6c or the burst sub_0805091c on
+ * object into variant 10's body PlayerObjectUFOShot or the burst sub_0805091c on
  * contact. */
 
 /* M09's hit-box set (src/block_30804.c); only a pointer is passed here */
@@ -593,7 +593,7 @@ void PlayerObjectLaserBeamUpdate(void)
         else if (t->player->ability == ABILITY_LASER)
             TaskSetEntry(PlayerObjectLaserBeam, gCurTaskIdx);
         else
-            TaskSetEntry(sub_08052f6c, gCurTaskIdx);
+            TaskSetEntry(PlayerObjectUFOShot, gCurTaskIdx);
         hit = 1;
     }
     else if (*(u32 *)&gTerrainResult & 0xFFFFFF)

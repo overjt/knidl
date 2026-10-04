@@ -15,7 +15,7 @@ extern void HudDrawTiles(u8 *s, s32 a, s32 b, s32 c);
 extern void TaskSetEntry(void *fn, s32 i);
 extern void RequestCopy(u32 mode, u32 src, u32 dst, u32 size);
 
-void sub_080b8ea0(void)
+void PlayerLifeRequestClear(void)
 {
     struct Unk02005E00 *s;
     struct Task *t;
@@ -31,7 +31,7 @@ void sub_080b8ea0(void)
     *e = z;
     s->unk00 = z;
 }
-void sub_080b8ebc(void)
+void PlayerClearOwnLifeRequests(void)
 {
     struct Unk02005E00 *s;
     u8 *f;
@@ -56,7 +56,7 @@ void sub_080b8ebc(void)
         i++;
     } while (i <= 3);
 }
-void sub_080b8ef4(void)
+void PlayerLifeRequestPickStartState(void)
 {
     struct Task *t;
     s32 i;
@@ -80,7 +80,7 @@ void sub_080b8ef4(void)
         }
         if (n != 0)
         {
-            sub_080b8f8c(1);
+            PlayerLifeRequestLoadGfx(1);
             if (gPlayerLives[gCurTask->playerLifeGiver] > 0)
                 gCurTask->state = 2;
             else
@@ -92,7 +92,7 @@ void sub_080b8ef4(void)
         }
     }
 }
-void sub_080b8f8c(s32 a)
+void PlayerLifeRequestLoadGfx(s32 a)
 {
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
@@ -101,7 +101,7 @@ void sub_080b8f8c(s32 a)
             RequestCopy(1, gUnk_0875625C[a], 192 << 19, gUnk_08756268[a] << 5);
     }
 }
-void sub_080b8ff0(void)
+void PlayerLifeRequestOpenMenu(void)
 {
     struct Task *t;
 
@@ -109,68 +109,68 @@ void sub_080b8ff0(void)
     t->playerLifeRequestCursor = 0;
     if (gLocalPlayer == t->player->playerIndex)
     {
-        sub_080b8f8c(0);
+        PlayerLifeRequestLoadGfx(0);
         HudClearTilemap();
-        sub_080b97fc(gCurTask->playerLifeRequestCursor);
+        PlayerLifeRequestDrawMenu(gCurTask->playerLifeRequestCursor);
     }
 }
-void sub_080b902c(void)
+void PlayerLifeRequestOpenGiverList(void)
 {
     s32 i;
 
     for (i = 0; i < 4; i++)
-        gUnk_02000010[i] |= 0xFFFF;
+        gLifeRequestShownLives[i] |= 0xFFFF;
     gCurTask->playerLifeRequestCursor = 0;
     gCurTask->playerLifeGiverMask = 0;
-    sub_080b98c0();
+    PlayerLifeRequestDrawGiverList();
 }
-void sub_080b9064(void)
+void PlayerLifeRequestStartAsking(void)
 {
     struct Unk02005E00 *s;
 
     s = &gLifeRequests;
     if (s->unk00 == 0)
         s->unk00 = 1200;
-    sub_080b8f8c(1);
-    sub_080b9b08(gCurTask->playerLifeGiver);
+    PlayerLifeRequestLoadGfx(1);
+    PlayerLifeRequestDrawAsking(gCurTask->playerLifeGiver);
 }
-void sub_080b9090(void)
+void PlayerLifeRequestTakeLife(void)
 {
     AddPlayerLives(-1, gCurTask->playerLifeGiver);
     AddPlayerLives(1, gCurTask->player->playerIndex);
-    sub_080b8ea0();
-    sub_080b9b98(gCurTask->playerLifeGiver);
+    PlayerLifeRequestClear();
+    PlayerLifeRequestDrawBorrowed(gCurTask->playerLifeGiver);
 }
-void sub_080b90c8(void)
+void PlayerLifeRequestFinish(void)
 {
     if (gLocalPlayer == gCurTask->player->playerIndex)
         HudRedraw(gLocalPlayer);
     TaskExitTrampoline();
 }
-void sub_080b90f8(void)
+void PlayerLifeRequestStartFail(void)
 {
-    sub_080b8ea0();
-    sub_080b9c28();
+    PlayerLifeRequestClear();
+    PlayerLifeRequestDrawCannotBorrow();
 }
-void sub_080b9108(void)
+void PlayerLifeRequestStartNoGiver(void)
 {
-    sub_080b8f8c(2);
-    sub_080b9c74();
+    PlayerLifeRequestLoadGfx(2);
+    PlayerLifeRequestDrawGotNothing();
 }
-void sub_080b9118(void)
+void PlayerLifeRequestShowGameOver(void)
 {
     struct Unk02005E00 *s;
     vs32 *ip;
     u8 *g;
 
-    sub_080b8f8c(2);
-    sub_080b9cc0();
+    PlayerLifeRequestLoadGfx(2);
+    PlayerLifeRequestDrawGameOver();
     s = &gLifeRequests;
     ip = &gCurTaskIdx;
     g = (u8 *)s + 8;
     g[*ip] = 1;
 }
-void sub_080b9140(void)
+void PlayerLifeRequestMoveMenuCursor(void)
 {
     vu16 *k;
     vu16 *e;
@@ -186,17 +186,17 @@ void sub_080b9140(void)
             if (t->playerLifeRequestCursor == 1)
             {
                 t->playerLifeRequestCursor = 0;
-                sub_080b97fc(0);
+                PlayerLifeRequestDrawMenu(0);
             }
         }
         else if (t->playerLifeRequestCursor == 0)
         {
             t->playerLifeRequestCursor = 1;
-            sub_080b97fc(1);
+            PlayerLifeRequestDrawMenu(1);
         }
     }
 }
-void sub_080b9198(void)
+void PlayerLifeRequestSelectChoice(void)
 {
     vu16 *k;
     struct Task *t;
@@ -207,7 +207,7 @@ void sub_080b9198(void)
     {
         if (t->playerLifeRequestCursor == 0)
         {
-            if (sub_080b9424() != 0)
+            if (PlayerLifeRequestCountGivers() != 0)
                 gCurTask->state = 1;
             else
                 gCurTask->state = 5;
@@ -219,7 +219,7 @@ void sub_080b9198(void)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
     }
 }
-void sub_080b91fc(void)
+void PlayerLifeRequestMoveListCursor(void)
 {
     vu16 *k;
     vu16 *e;
@@ -230,7 +230,7 @@ void sub_080b91fc(void)
         do
         {
             gCurTask->playerLifeRequestCursor--;
-            sub_080b9a88(gCurTask->playerLifeRequestCursor);
+            PlayerLifeRequestDrawListCursor(gCurTask->playerLifeRequestCursor);
         } while (gCurTask->playerLifeRequestCursor > gCurTask->playerLifeGiverLastRow);
     }
     k = gPlayerPressedKeys;
@@ -243,17 +243,17 @@ void sub_080b91fc(void)
             if (t->playerLifeRequestCursor != 0)
             {
                 t->playerLifeRequestCursor--;
-                sub_080b9a88(t->playerLifeRequestCursor);
+                PlayerLifeRequestDrawListCursor(t->playerLifeRequestCursor);
             }
         }
         else if (t->playerLifeRequestCursor < t->playerLifeGiverLastRow)
         {
             t->playerLifeRequestCursor++;
-            sub_080b9a88(t->playerLifeRequestCursor);
+            PlayerLifeRequestDrawListCursor(t->playerLifeRequestCursor);
         }
     }
 }
-void sub_080b927c(void)
+void PlayerLifeRequestSelectGiver(void)
 {
     vu16 *k;
     vu16 *e;
@@ -290,7 +290,7 @@ void sub_080b927c(void)
         }
     }
 }
-void sub_080b9344(void)
+void PlayerLifeRequestReceiveCheckPress(void)
 {
     vu16 *k;
     s32 p;
@@ -304,7 +304,7 @@ void sub_080b9344(void)
         TaskFree(gCurTaskIdx);
     }
 }
-void sub_080b938c(void)
+void PlayerLifeRequestFailCheckPress(void)
 {
     vu16 *k;
     struct Task *t;
@@ -316,7 +316,7 @@ void sub_080b938c(void)
     if (gCurTask->state != 4)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
-void sub_080b93d8(void)
+void PlayerLifeRequestNoGiverCheckPress(void)
 {
     vu16 *k;
     struct Task *t;
@@ -328,7 +328,7 @@ void sub_080b93d8(void)
     if (gCurTask->state != 5)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
-s32 sub_080b9424(void)
+s32 PlayerLifeRequestCountGivers(void)
 {
     s32 i;
     s32 n;
@@ -346,7 +346,7 @@ s32 sub_080b9424(void)
     gCurTask->playerLifeGiverLastRow = n - 1;
     return n;
 }
-void sub_080b94b4(s32 a, s32 b)
+void PlayerLifeRequestRefreshGiverList(s32 a, s32 b)
 {
     struct Task *t;
     s32 i;
@@ -360,7 +360,7 @@ void sub_080b94b4(s32 a, s32 b)
     t = gCurTask;
     if (a != t->playerLifeGiverLastRow || b != t->playerLifeGiverMask)
     {
-        sub_080b98c0();
+        PlayerLifeRequestDrawGiverList();
     }
     else
     {
@@ -375,18 +375,18 @@ void sub_080b94b4(s32 a, s32 b)
                 {
                     if (((gCurTask->playerLifeGiverMask >> i) & 1) != 0)
                     {
-                        q = (s16 *)&gUnk_02000010[i];
+                        q = (s16 *)&gLifeRequestShownLives[i];
                         if (*q != v)
                             *q = u;
                     }
-                    sub_080b99e8(i, j, gPlayerLives[i]);
+                    PlayerLifeRequestDrawLives(i, j, gPlayerLives[i]);
                     j++;
                 }
             }
         }
     }
 }
-void sub_080b9578(void)
+void PlayerLifeRequestCheckGiven(void)
 {
     struct Task *t;
     u8 v;
@@ -402,7 +402,7 @@ void sub_080b9578(void)
             t->state = 3;
     }
 }
-void sub_080b95ac(void)
+void PlayerLifeRequestCheckTimeout(void)
 {
     if (gLifeRequests.unk00 <= 0)
         gCurTask->state = 4;
@@ -410,7 +410,7 @@ void sub_080b95ac(void)
     if (gCurTask->state != 2)
         TaskSetEntry(PlayerLifeRequestEnterState, gCurTaskIdx);
 }
-void sub_080b95ec(void)
+void PlayerLifeRequestCheckGiverLives(void)
 {
     struct Task *t;
     s16 *p;
@@ -423,7 +423,7 @@ void sub_080b95ec(void)
 void PlayerLifeRequestInit(void)
 {
     gCurTask->updateCallback = (u32)PlayerLifeRequestUpdate;
-    sub_080b8ef4();
+    PlayerLifeRequestPickStartState();
     CallTableEntry(gCurTask->state, 7, gPlayerLifeRequestStates);
 }
 void PlayerLifeRequestUpdate(void)
@@ -434,35 +434,35 @@ void PlayerLifeRequestEnterState(void)
 {
     CallTableEntry(gCurTask->state, 7, gPlayerLifeRequestStates);
 }
-void PlayerLifeRequestState0(void)
+void PlayerLifeRequestChoose(void)
 {
     gCurTask->updateState = 0;
-    sub_080b8ff0();
+    PlayerLifeRequestOpenMenu();
     TaskSleepForever();
 }
-void PlayerLifeRequestState0Update(void)
+void PlayerLifeRequestChooseUpdate(void)
 {
-    sub_080b9140();
-    sub_080b9198();
+    PlayerLifeRequestMoveMenuCursor();
+    PlayerLifeRequestSelectChoice();
 }
-void PlayerLifeRequestState1(void)
+void PlayerLifeRequestPickGiver(void)
 {
     gCurTask->updateState = 1;
-    sub_080b902c();
+    PlayerLifeRequestOpenGiverList();
     TaskSleepForever();
 }
-void PlayerLifeRequestState1Update(void)
+void PlayerLifeRequestPickGiverUpdate(void)
 {
     s32 a;
     s32 b;
 
     a = gCurTask->playerLifeGiverLastRow;
     b = gCurTask->playerLifeGiverMask;
-    if (sub_080b9424() != 0)
+    if (PlayerLifeRequestCountGivers() != 0)
     {
-        sub_080b94b4(a, b);
-        sub_080b91fc();
-        sub_080b927c();
+        PlayerLifeRequestRefreshGiverList(a, b);
+        PlayerLifeRequestMoveListCursor();
+        PlayerLifeRequestSelectGiver();
     }
     else
     {
@@ -474,64 +474,64 @@ void PlayerLifeRequestState1Update(void)
 void PlayerLifeRequestWait(void)
 {
     gCurTask->updateState = 2;
-    sub_080b9064();
+    PlayerLifeRequestStartAsking();
     while (1)
     {
         TaskYieldTrampoline(4);
-        sub_080b95ec();
+        PlayerLifeRequestCheckGiverLives();
     }
 }
 void PlayerLifeRequestWaitUpdate(void)
 {
-    sub_080b9578();
-    sub_080b95ac();
+    PlayerLifeRequestCheckGiven();
+    PlayerLifeRequestCheckTimeout();
 }
 void PlayerLifeRequestReceive(void)
 {
     gCurTask->updateState = 3;
-    sub_080b9090();
+    PlayerLifeRequestTakeLife();
     TaskYieldTrampoline(180);
-    sub_080b90c8();
+    PlayerLifeRequestFinish();
     TaskSleepForever();
 }
 void PlayerLifeRequestReceiveUpdate(void)
 {
-    sub_080b9344();
+    PlayerLifeRequestReceiveCheckPress();
 }
-void PlayerLifeRequestState4(void)
+void PlayerLifeRequestFail(void)
 {
     gCurTask->updateState = 4;
-    sub_080b90f8();
+    PlayerLifeRequestStartFail();
     TaskYieldTrampoline(180);
     gCurTask->state = 0;
     TaskSleepForever();
 }
-void PlayerLifeRequestState4Update(void)
+void PlayerLifeRequestFailUpdate(void)
 {
-    sub_080b938c();
+    PlayerLifeRequestFailCheckPress();
 }
-void PlayerLifeRequestState5(void)
+void PlayerLifeRequestNoGiver(void)
 {
     gCurTask->updateState = 5;
-    sub_080b9108();
+    PlayerLifeRequestStartNoGiver();
     TaskYieldTrampoline(300);
     gCurTask->state = 0;
     TaskSleepForever();
 }
-void PlayerLifeRequestState5Update(void)
+void PlayerLifeRequestNoGiverUpdate(void)
 {
-    sub_080b93d8();
+    PlayerLifeRequestNoGiverCheckPress();
 }
-void PlayerLifeRequestState6(void)
+void PlayerLifeRequestGameOver(void)
 {
     gCurTask->updateState = 6;
-    sub_080b9118();
+    PlayerLifeRequestShowGameOver();
     TaskSleepForever();
 }
-void PlayerLifeRequestState6Update(void)
+void PlayerLifeRequestGameOverUpdate(void)
 {
 }
-void sub_080b97fc(s32 a)
+void PlayerLifeRequestDrawMenu(s32 a)
 {
     u8 *p;
     u8 *q;
@@ -554,7 +554,7 @@ void sub_080b97fc(s32 a)
         HudDrawTiles(q + 26, 1, 5, 13);
     }
 }
-void sub_080b9878(void)
+void PlayerLifeRequestDrawListTitle(void)
 {
     u8 *p;
 
@@ -566,7 +566,7 @@ void sub_080b9878(void)
         HudDrawTiles(p, 1, 3, 19);
     }
 }
-void sub_080b98c0(void)
+void PlayerLifeRequestDrawGiverList(void)
 {
     s32 i;
     s32 j;
@@ -588,18 +588,18 @@ void sub_080b98c0(void)
                 v = *e;
                 if (*e > 0 && f[i] == 0)
                 {
-                    gUnk_02000010[i] = v;
-                    sub_080b9968(i, j);
-                    sub_080b99e8(i, j, *e);
+                    gLifeRequestShownLives[i] = v;
+                    PlayerLifeRequestDrawGiverIcon(i, j);
+                    PlayerLifeRequestDrawLives(i, j, *e);
                     j++;
                 }
             }
         }
-        sub_080b9878();
-        sub_080b9a88(gCurTask->playerLifeRequestCursor);
+        PlayerLifeRequestDrawListTitle();
+        PlayerLifeRequestDrawListCursor(gCurTask->playerLifeRequestCursor);
     }
 }
-void sub_080b9968(s32 a, s32 b)
+void PlayerLifeRequestDrawGiverIcon(s32 a, s32 b)
 {
     u8 *p;
     u8 *q;
@@ -619,7 +619,7 @@ void sub_080b9968(s32 a, s32 b)
         HudDrawTiles(q, 5, b * 2 + 5, 1);
     }
 }
-void sub_080b99e8(s32 a, s32 b, s32 c)
+void PlayerLifeRequestDrawLives(s32 a, s32 b, s32 c)
 {
     if (gLocalPlayer == gCurTask->player->playerIndex)
     {
@@ -630,7 +630,7 @@ void sub_080b99e8(s32 a, s32 b, s32 c)
         HudDrawTiles(&gUnk_085B0AD4[20 + gDigits[0] * 2], 7, b * 2 + 5, 1);
     }
 }
-void sub_080b9a88(s32 a)
+void PlayerLifeRequestDrawListCursor(s32 a)
 {
     s32 i;
     u8 *p;
@@ -648,7 +648,7 @@ void sub_080b9a88(s32 a)
         HudDrawTiles(p, 2, a * 2 + 5, 1);
     }
 }
-void sub_080b9b08(s32 a)
+void PlayerLifeRequestDrawAsking(s32 a)
 {
     u8 *p;
     u8 *q;
@@ -672,7 +672,7 @@ void sub_080b9b08(s32 a)
         HudDrawTiles(r, 10, 9, 6);
     }
 }
-void sub_080b9b98(s32 a)
+void PlayerLifeRequestDrawBorrowed(s32 a)
 {
     u8 *p;
     u8 *q;
@@ -696,7 +696,7 @@ void sub_080b9b98(s32 a)
         HudDrawTiles(r, 6, 9, 13);
     }
 }
-void sub_080b9c28(void)
+void PlayerLifeRequestDrawCannotBorrow(void)
 {
     u8 *p;
 
@@ -709,7 +709,7 @@ void sub_080b9c28(void)
         HudDrawTiles(p, 4, 9, 22);
     }
 }
-void sub_080b9c74(void)
+void PlayerLifeRequestDrawGotNothing(void)
 {
     u8 *p;
 
@@ -722,7 +722,7 @@ void sub_080b9c74(void)
         HudDrawTiles(p, 4, 9, 22);
     }
 }
-void sub_080b9cc0(void)
+void PlayerLifeRequestDrawGameOver(void)
 {
     u8 *p;
 

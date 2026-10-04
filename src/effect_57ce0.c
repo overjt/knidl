@@ -12,7 +12,7 @@
  *
  * Task type #7 (the player's effect objects, see src/effect_53af4.c):
  * variants 35-39, all spawned by M12's actions (39 also by M11 and M13).
- * Variants 35 (sub_08057ce0, two sub-states), 36 (sub_08057e90) and 39
+ * Variants 35 (PlayerEffectHammerDust, two sub-states), 36 (PlayerEffectParasolSparkle) and 39
  * (sub_08058720) are animations in world space (gUnk_08751D88,
  * gUnk_08751DB0, gUnk_08751E00).  Variant 37 (PlayerEffectMikeAttack) stops other
  * tasks: it fills the 20-slot table gScreenAttackTasks with 0xFFFF, collects the
@@ -31,7 +31,7 @@ void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 l
 void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
 void LoadBackdropColor(u32 src);
 
-void sub_08057ce0(void)
+void PlayerEffectHammerDust(void)
 {
     struct Task *t;
     struct Task *u;
@@ -96,7 +96,7 @@ void sub_08057ce0(void)
     TaskExitTrampoline();
 }
 
-void sub_08057e90(void)
+void PlayerEffectParasolSparkle(void)
 {
     struct Task *t;
     struct Task *u;

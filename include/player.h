@@ -819,12 +819,12 @@ void PlayerObjectIceBreath(void);
 void PlayerObjectIceBreathUpdate(void);
 s32 PlayerObjectBeamOrb(void);
 s32 sub_08052b08(void);
-void sub_08052b88(void);
+void PlayerObjectLightOrb(void);
 
 /* src/plobj_52f6c.c */
-void sub_08052f6c(void);
-void sub_08053380(void);
-void sub_080534d0(void);
+void PlayerObjectUFOShot(void);
+void PlayerObjectUFOShotUpdate(void);
+void PlayerObjectUFOShotLateUpdate(void);
 void PlayerObjectStarRodShot(void);
 void PlayerObjectStarRodShotUpdate(void);
 void PlayerObjectStarRodFlightShot(void);

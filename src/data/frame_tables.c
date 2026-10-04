@@ -8348,8 +8348,8 @@ u32 gUnk_08751BB0[] FRAME_TABLE = {
     (u32)gUnk_081F71FC,
 };
 
-/* gUnk_08751BF4.  Consumers: sub_08057a48 (src/effect_57494.c:268),
- * sub_08052f6c (src/plobj_52f6c.c:88).  20 words, OAM template streams;
+/* gUnk_08751BF4.  Consumers: PlayerEffectUFOLaserTrail (src/effect_57494.c:268),
+ * PlayerObjectUFOShot (src/plobj_52f6c.c:88).  20 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08751BF4-0x08751C44).  Declared include/player.h:340. */
 u32 gUnk_08751BF4[] FRAME_TABLE = {
@@ -8375,7 +8375,7 @@ u32 gUnk_08751BF4[] FRAME_TABLE = {
     (u32)gUnk_08218780,
 };
 
-/* gUnk_08751C44.  Consumers: sub_08053b40 (src/effect_53af4.c:71),
+/* gUnk_08751C44.  Consumers: PlayerEffectInhaleAir (src/effect_53af4.c:71),
  * CutsceneActorScript1 (src/player_10358.c:253).  12 words, struct TaskGfx records;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x08751C44-0x08751C74).  Declared include/effect.h:89. */
@@ -8515,7 +8515,7 @@ u32 gUnk_08751D80[] FRAME_TABLE = {
     (u32)&gUnk_081D5AF0,
 };
 
-/* gUnk_08751D88.  Consumer: sub_08057ce0 (src/effect_57ce0.c:43).  10
+/* gUnk_08751D88.  Consumer: PlayerEffectHammerDust (src/effect_57ce0.c:43).  10
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08751D88-0x08751DB0).  Declared
  * include/effect.h:96. */
@@ -8532,7 +8532,7 @@ u32 gUnk_08751D88[] FRAME_TABLE = {
     (u32)gUnk_081DD054,
 };
 
-/* gUnk_08751DB0.  Consumer: sub_08057e90 (src/effect_57ce0.c:113).  3
+/* gUnk_08751DB0.  Consumer: PlayerEffectParasolSparkle (src/effect_57ce0.c:113).  3
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08751DB0-0x08751DBC).  Declared
  * include/effect.h:97. */
@@ -8647,7 +8647,7 @@ u32 gUnk_08751E7C[] FRAME_TABLE = {
     (u32)gUnk_081F1F38,
 };
 
-/* gUnk_08751ECC.  Consumer: sub_08059c28 (src/effect_59570.c:274).  16
+/* gUnk_08751ECC.  Consumer: PlayerEffectStonePuff (src/effect_59570.c:274).  16
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08751ECC-0x08751F0C).  Declared
  * include/effect.h:102. */
@@ -8779,7 +8779,7 @@ u32 gUnk_08752020[] FRAME_TABLE = {
     (u32)gUnk_08203BA8,
 };
 
-/* gUnk_0875204C.  Consumer: sub_08052b88 (src/plobj_5239c.c:373).  17
+/* gUnk_0875204C.  Consumer: PlayerObjectLightOrb (src/plobj_5239c.c:373).  17
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0875204C-0x08752090).  Declared
  * include/player.h:343. */
@@ -8803,7 +8803,7 @@ u32 gUnk_0875204C[] FRAME_TABLE = {
     (u32)gUnk_082055B8,
 };
 
-/* gUnk_08752090.  Consumer: sub_0805ae94 (src/effect_5a358.c:510).  6
+/* gUnk_08752090.  Consumer: PlayerEffectUFOChargeSparkle (src/effect_5a358.c:510).  6
  * words, struct TaskGfx records; extent: the span to the next label, every
  * word such a target (pointer_tables 0x08752090-0x087520A8).  Declared
  * include/effect.h:107. */
@@ -8816,7 +8816,7 @@ u32 gUnk_08752090[] FRAME_TABLE = {
     (u32)&gUnk_082181DC,
 };
 
-/* gUnk_087520A8.  Consumer: sub_080534d0 (src/plobj_52f6c.c:296).  24
+/* gUnk_087520A8.  Consumer: PlayerObjectUFOShotLateUpdate (src/plobj_52f6c.c:296).  24
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x087520A8-0x08752108).  Declared
  * include/player.h:344. */

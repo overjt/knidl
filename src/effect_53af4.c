@@ -23,10 +23,10 @@
  * per-frame callback in Task.updateCallback and an animation table in Task.frameTable,
  * then runs a TaskYieldTrampoline script and ends in TaskExitTrampoline;
  * the functions after a body are the callbacks only it installs.  Variant 0
- * (sub_08053b40, spawned by M10) rides on its spawner and cycles frames
- * 0-11, hidden every other frame; sub_08053be0 copies the spawner's
+ * (PlayerEffectInhaleAir, spawned by M10) rides on its spawner and cycles frames
+ * 0-11, hidden every other frame; PlayerEffectInhaleAirUpdate copies the spawner's
  * Task.skipMask with bit 2 cleared and kills it once PlayerState.unk40 bit 2
- * clears, and its draw hook sub_08053c1c draws through M11's sub_0803dfc8 in
+ * clears, and its draw hook PlayerEffectInhaleAirDraw draws through M11's sub_0803dfc8 in
  * player mode 10 and kills it otherwise.  Variants 1 and 2 (M10) are short
  * puffs launched from 12 pixels behind the point they face, the sub-state
  * picking the facing; 3 (M13's ability get) shows for three frames at a
@@ -59,13 +59,13 @@ void Task_PlayerEffect(void)
     CallTableEntry(((u8 *)gCurTask)[27], 49, gPlayerEffectVariants);
 }
 
-void sub_08053b40(void)
+void PlayerEffectInhaleAir(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
-    gCurTask->drawCallback = (u32)sub_08053c1c;
-    gCurTask->updateCallback = (u32)sub_08053be0;
+    gCurTask->drawCallback = (u32)PlayerEffectInhaleAirDraw;
+    gCurTask->updateCallback = (u32)PlayerEffectInhaleAirUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_08751C44;
@@ -87,14 +87,14 @@ void sub_08053b40(void)
     }
 }
 
-void sub_08053be0(void)
+void PlayerEffectInhaleAirUpdate(void)
 {
     gCurTask->skipMask = (gCurTask->u8C.parentTask)->skipMask & 0xFB;
     if (!(gCurTask->player->unk40 & 4))
         TaskFree(gCurTaskIdx);
 }
 
-void sub_08053c1c(void)
+void PlayerEffectInhaleAirDraw(void)
 {
     if (gCurTask->player->mode == 10)
         sub_0803dfc8();

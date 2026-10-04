@@ -218,7 +218,7 @@ void sub_080396a4(void)
         if (gGameState != 20)
             TaskSetEntry(PlayerLifeRequestInit, gCurTaskIdx);
         else
-            sub_080b9118();
+            PlayerLifeRequestShowGameOver();
         break;
     }
     case 1:

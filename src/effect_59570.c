@@ -14,7 +14,7 @@
  * gUnk_0874C828, gUnk_08751F0C); its callbacks are sub_08059aac (the
  * collider rows gUnk_0873C23C and gUnk_0873C250 through RegisterCollider in
  * sub-states 3 and 4) and the draw hook sub_08059b18 (QueueSprite when on
- * screen).  Variant 43 (sub_08059c28) has four sub-states with the draw
+ * screen).  Variant 43 (PlayerEffectStonePuff) has four sub-states with the draw
  * hooks TaskDrawWorldTilesLoaded and M11's sub_0803dfc8.  Variant 44 (sub_08059d7c)
  * selects on the second byte of Task.unk18 (0x100-0x500), queues a VRAM
  * transfer (RequestCopy) and installs sub_0805a320, which kills it when the
@@ -263,7 +263,7 @@ void sub_08059b18(void)
     }
 }
 
-void sub_08059c28(void)
+void PlayerEffectStonePuff(void)
 {
     struct Task *t;
     struct Task *u;

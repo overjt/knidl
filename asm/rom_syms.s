@@ -19,8 +19,8 @@ gLinkSessionMode = 0x02000004
 gNextActorSerial = 0x02000008
 	.global	gObjTileCursor
 gObjTileCursor = 0x0200000C
-	.global	gUnk_02000010
-gUnk_02000010 = 0x02000010
+	.global	gLifeRequestShownLives
+gLifeRequestShownLives = 0x02000010
 	.global	gModeListExtraRows
 gModeListExtraRows = 0x02000018
 	.global	gHubUnlockSource

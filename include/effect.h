@@ -114,9 +114,9 @@ extern u32 gUnk_087548A0[];
 
 /* src/effect_53af4.c */
 void Task_PlayerEffect(void);
-void sub_08053b40(void);
-void sub_08053be0(void);
-void sub_08053c1c(void);
+void PlayerEffectInhaleAir(void);
+void PlayerEffectInhaleAirUpdate(void);
+void PlayerEffectInhaleAirDraw(void);
 void sub_08053c48(void);
 void sub_08053d08(void);
 void PlayerEffectAbilityGetSparkle(void);
@@ -181,13 +181,13 @@ void PlayerEffectSwordSparkle(void);
 /* src/effect_57494.c */
 void PlayerEffectBurningFlames(void);
 void PlayerEffectBurningFlamesUpdate(void);
-void sub_08057a48(void);
+void PlayerEffectUFOLaserTrail(void);
 void sub_08057ad4(void);
 void sub_08057c98(void);
 
 /* src/effect_57ce0.c */
-void sub_08057ce0(void);
-void sub_08057e90(void);
+void PlayerEffectHammerDust(void);
+void PlayerEffectParasolSparkle(void);
 void PlayerEffectMikeAttack(void);
 void PlayerEffectMikeAttackUpdate(void);
 void PlayerEffectSleepBubble(void);
@@ -204,7 +204,7 @@ void PlayerEffectFreezeAuraUpdate(void);
 void sub_08059570(void);
 void sub_08059aac(void);
 void sub_08059b18(void);
-void sub_08059c28(void);
+void PlayerEffectStonePuff(void);
 void sub_08059d7c(void);
 void sub_0805a320(void);
 
@@ -216,8 +216,8 @@ void PlayerEffectCrashBlastUpdate(void);
 void PlayerEffectCrashBlastDraw(void);
 void sub_0805acec(void);
 void sub_0805ae00(void);
-void sub_0805ae94(void);
-void sub_0805af44(void);
+void PlayerEffectUFOChargeSparkle(void);
+void PlayerEffectUFOChargeSparkleUpdate(void);
 void sub_0805af80(void);
 
 /* src/effect_5afac.c */
