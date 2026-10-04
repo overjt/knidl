@@ -512,7 +512,7 @@
 #define heavyMoleCameraX unk1C /* s32: the camera anchor X in 16.16 (gCameraAnchorX = unk1C >> 16), moved by the scroll speed */
 #define heavyMoleMoveTimer unk28 /* s32: frames left in the current step of the move script; at 0 HeavyMoleStartNextMove */
 #define heavyMoleAnimSpeedTimer unk2C /* s32: frames until sub_080ad788 re-picks the body's frame-delay level (every 120) */
-#define heavyMolePatternIndex unk6C /* s16: candidate (0-3) of sub_080ada20's weighted pattern pick; the last one is skipped */
+#define heavyMolePatternIndex unk6C /* s16: candidate (0-3) of HeavyMolePickPattern's weighted pattern pick; the last one is skipped */
 
 /* HeavyMoleArm - Heavy Mole's arms (task types #121 / #122,
    Task_HeavyMoleUpperArm / Task_HeavyMoleLowerArm; gHeavyMoleArmStates) */

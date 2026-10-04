@@ -4312,7 +4312,7 @@ void WhispyWoodsDropApplesUpdate(void)
         TaskSetEntry(WhispyWoodsEnterState, gCurTaskIdx);
 }
 
-void sub_080b2dd4(void)
+void WhispyWoodsDefeatedInit(void)
 {
     struct Task **c;
     struct Task *t;
@@ -4321,7 +4321,7 @@ void sub_080b2dd4(void)
 
     c = &gCurTask;
     t = *c;
-    t->updateCallback = (u32)sub_080b2e20;
+    t->updateCallback = (u32)WhispyWoodsDefeatedUpdate;
     t->moveCallback = (u32)ActorMove;
     t->layer = 11;
     u = *c;
@@ -4329,17 +4329,17 @@ void sub_080b2dd4(void)
     u->facing = 255;
     ActorSetState(0);
     u2 = *c;
-    CallTableEntry(u2->state, 1, gUnk_0874C150);
+    CallTableEntry(u2->state, 1, gWhispyWoodsDefeatedStates);
 }
 
-void sub_080b2e20(void)
+void WhispyWoodsDefeatedUpdate(void)
 {
-    CallTableEntry(gCurTask->updateState, 1, gUnk_0874C154);
+    CallTableEntry(gCurTask->updateState, 1, gWhispyWoodsDefeatedStateUpdates);
 }
 
-void sub_080b2e3c(void)
+void WhispyWoodsDefeatedEnterState(void)
 {
-    CallTableEntry(gCurTask->state, 1, gUnk_0874C150);
+    CallTableEntry(gCurTask->state, 1, gWhispyWoodsDefeatedStates);
 }
 
 void sub_080b2e58(void)

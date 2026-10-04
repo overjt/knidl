@@ -49,7 +49,7 @@ void Task_PhanPhan(void)
     ActorIntroPoseUntilMidBossFight(gUnk_08744888);
     if (IsMidBossDroppingIn() != 0) {
         gCurTask->updateCallback = (u32)sub_080975c8;
-        sub_08097694();
+        PhanPhanDropIn();
     } else {
         gCurTask->updateCallback = (u32)PhanPhanUpdate;
         sub_08066580();
@@ -107,7 +107,7 @@ void PhanPhanUpdate(void)
     ActorReactToHit();
 }
 
-void sub_08097694(void)
+void PhanPhanDropIn(void)
 {
     struct Task *t;
 
@@ -134,7 +134,7 @@ void sub_08097694(void)
     TaskSleepForever();
 }
 
-void PhanPhanState0Update(void)
+void PhanPhanDropInUpdate(void)
 {
     if (gCurTask->state != 0)
         TaskSetEntry(PhanPhanEnterState, gCurTaskIdx);

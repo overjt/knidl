@@ -20,7 +20,7 @@
  * MrTickTockUpdate and dispatches Task.state through the 24-word guard table
  * gMrTickTockStates, MrTickTockUpdate dispatches Task.updateState through the 24-word body
  * table gMrTickTockStateUpdates that follows it, and MrTickTockEnterState is its re-arm hook.
- * States 0-23 follow as <body, guard> pairs; MrTickTockState23Update is the timer leaf
+ * States 0-23 follow as <body, guard> pairs; MrTickTockDropInUpdate is the timer leaf
  * the table word at 0x0874580C points at.
  *
  * Task_MrFrostyIceCube, Task_MrTickTockRing and Task_MrTickTockNote are the three companion tasks
@@ -580,7 +580,7 @@ void MrTickTockHopUpdate(void)
     }
 }
 
-void MrTickTockState3(void)
+void MrTickTockWalkBack(void)
 {
     struct Task *t;
     struct Task *u;
@@ -623,7 +623,7 @@ void MrTickTockState3(void)
     }
 }
 
-void MrTickTockState3Update(void)
+void MrTickTockWalkBackUpdate(void)
 {
     struct Task *t;
 
@@ -635,7 +635,7 @@ void MrTickTockState3Update(void)
     }
 }
 
-void MrTickTockState4(void)
+void MrTickTockJumpForward(void)
 {
     struct Task *t;
     struct Task *u;
@@ -673,7 +673,7 @@ void MrTickTockState4(void)
     TaskSleepForever();
 }
 
-void MrTickTockState4Update(void)
+void MrTickTockJumpForwardUpdate(void)
 {
     struct Task *t;
 
@@ -907,7 +907,7 @@ void MrTickTockState9Update(void)
 {
 }
 
-void MrTickTockState10(void)
+void MrTickTockJumpBack(void)
 {
     struct Task *t;
     struct Task *u;
@@ -932,7 +932,7 @@ void MrTickTockState10(void)
     TaskSleepForever();
 }
 
-void MrTickTockState10Update(void)
+void MrTickTockJumpBackUpdate(void)
 {
 }
 
@@ -1578,7 +1578,7 @@ void MrTickTockState22Update(void)
 {
 }
 
-void MrTickTockState23(void)
+void MrTickTockDropIn(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1593,7 +1593,7 @@ void MrTickTockState23(void)
     TaskSleepForever();
 }
 
-void MrTickTockState23Update(void)
+void MrTickTockDropInUpdate(void)
 {
     struct Task *t;
     struct Task *u;

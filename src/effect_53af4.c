@@ -102,7 +102,7 @@ void PlayerEffectInhaleAirDraw(void)
         TaskFree(gCurTaskIdx);
 }
 
-void sub_08053c48(void)
+void PlayerEffectCatchDust(void)
 {
     struct Task *t;
 
@@ -131,7 +131,7 @@ void sub_08053c48(void)
     TaskExitTrampoline();
 }
 
-void sub_08053d08(void)
+void PlayerEffectSpitDust(void)
 {
     struct Task *t;
 

@@ -158,7 +158,7 @@ void CutsceneBeachChair(void);
 void CutsceneBeachCandyDream(void);
 void CutsceneBeachDonutDream(void);
 void CutsceneBeachMeatDream(void);
-s32 CutsceneBeachActorScript10(void);
+s32 CutsceneBeachThoughtBubble(void);
 void CutsceneBeachWaddleDoo(void);
 void CutsceneBeachSunglasses(void);
 void CutsceneBeachQuestionMarks(void);

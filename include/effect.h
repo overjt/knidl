@@ -117,8 +117,8 @@ void Task_PlayerEffect(void);
 void PlayerEffectInhaleAir(void);
 void PlayerEffectInhaleAirUpdate(void);
 void PlayerEffectInhaleAirDraw(void);
-void sub_08053c48(void);
-void sub_08053d08(void);
+void PlayerEffectCatchDust(void);
+void PlayerEffectSpitDust(void);
 void PlayerEffectAbilityGetSparkle(void);
 void sub_08053e34(void);
 void PlayerEffectImpactStar(void);
@@ -132,7 +132,7 @@ void PlayerEffectRunDustUpdate(void);
 void PlayerEffectSlideDust(void);
 void PlayerEffectSlideDustUpdate(void);
 void PlayerEffectSplash(void);
-void sub_080548f0(void);
+void PlayerEffectLeaveWaterSplash(void);
 void PlayerEffectBubble(void);
 void sub_08054a44(void);
 
@@ -156,10 +156,10 @@ void sub_08055a40(void);
 void sub_08055abc(void);
 
 /* src/effect_55b24.c */
-void sub_08055b24(void);
-void sub_08055d24(void);
-void sub_08055d74(void);
-void sub_080560fc(void);
+void PlayerEffectHurtFlames(void);
+void PlayerEffectHurtFlamesUpdate(void);
+void PlayerEffectHurtSparks(void);
+void PlayerEffectHurtSparksUpdate(void);
 void sub_0805614c(void);
 void sub_08056300(void);
 void sub_08056320(void);

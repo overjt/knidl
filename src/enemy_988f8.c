@@ -29,7 +29,7 @@
  * RandomRange-gated transitions at Task.unk30 == 120 / 60 / 45, CreateMrFrostyIceCube
  * spawns the actor 13 through CreateActorFromDescAtOffsetFacing and MrFrostyCheckNearIceCube is the "close
  * enough" probe (|TaskGetDxTo(Task.unk1C)| <= 10).  MrFrostyBounceOffWallUpdate and
- * MrFrostyState16Update are empty state handlers, and MrFrostyState18Update is the timer leaf
+ * MrFrostyState16Update are empty state handlers, and MrFrostyDropInUpdate is the timer leaf
  * the guard table word at 0x087456C8 points at.
  */
 #include "gba/gba.h"
@@ -1104,7 +1104,7 @@ void MrFrostyState17Update(void)
         TaskSetEntry(MrFrostyEnterState, gCurTaskIdx);
 }
 
-void MrFrostyState18(void)
+void MrFrostyDropIn(void)
 {
     struct Task *t;
     struct Task *u;
@@ -1128,7 +1128,7 @@ void MrFrostyState18(void)
     }
 }
 
-void MrFrostyState18Update(void)
+void MrFrostyDropInUpdate(void)
 {
     struct Task *t;
     struct Task *u;

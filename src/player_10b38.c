@@ -547,7 +547,7 @@ void CutsceneBeachMeatDream(void)
     TaskSleepForever();
 }
 
-s32 CutsceneBeachActorScript10(void)
+s32 CutsceneBeachThoughtBubble(void)
 {
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;

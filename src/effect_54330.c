@@ -17,7 +17,7 @@
  * player leaves mode 2 or the spawner's Task.onGround clears; 8 three puffs at
  * decreasing speeds, killed by PlayerEffectSlideDustUpdate once the player leaves mode 7),
  * each spawning its own sub-state 1, a small rising puff.  Variants 9-11 are
- * M09's player task effects: 9 (PlayerEffectSplash) and 10 (sub_080548f0) play
+ * M09's player task effects: 9 (PlayerEffectSplash) and 10 (PlayerEffectLeaveWaterSplash) play
  * short animations from gUnk_0874C520, 9 first calling M11's
  * PlaySfxIfLocalPlayer(134, ...) when the spawner is moving down (Task.velY > 0)
  * and 10 placed at the height the spawner passes in the low half of
@@ -233,7 +233,7 @@ void PlayerEffectSplash(void)
     TaskExitTrampoline();
 }
 
-void sub_080548f0(void)
+void PlayerEffectLeaveWaterSplash(void)
 {
     struct Task *t;
 

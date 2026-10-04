@@ -2432,7 +2432,7 @@ void HeavyMoleStartNextMove(void)
         TaskStop();
         gUnk_030023D4 = gUnk_0874ACB4[gUnk_02007D00[3]];
         gCurTask->posX = (gUnk_030023D4 << 16) + (128 << 8);
-        sub_080ada20();
+        HeavyMolePickPattern();
         if (gUnk_02007D00[7] > 0)
             gUnk_02007D00[7]--;
         break;
@@ -2480,7 +2480,7 @@ void HeavyMoleSetPhaseFromHealth(void)
         gUnk_02007D00[3] = 0;
 }
 
-void sub_080ada20(void)
+void HeavyMolePickPattern(void)
 {
     s16 v;
 
@@ -2582,7 +2582,7 @@ s32 HeavyMoleReactToDefeat(void)
     return 1;
 }
 
-void sub_080adc44(void)
+void HeavyMoleExitAfterDefeat(void)
 {
     gCurTask->frame = 0xFFFF;
     TaskYieldTrampoline(150);

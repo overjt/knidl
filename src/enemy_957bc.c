@@ -46,7 +46,7 @@ void Task_FireLion(void)
     ActorIntroPoseUntilMidBossFight(gUnk_08744510);
     if (IsMidBossDroppingIn() != 0) {
         gCurTask->updateCallback = (u32)sub_0809699c;
-        sub_0809595c();
+        FireLionDropIn();
     } else {
         gCurTask->updateCallback = (u32)FireLionUpdate;
         sub_080959ec();
@@ -102,7 +102,7 @@ void FireLionEnterState(void)
     CallTableEntry(gCurTask->state, 12, gFireLionStates);
 }
 
-void sub_0809595c(void)
+void FireLionDropIn(void)
 {
     struct Task *t;
     struct Task *u;
@@ -131,7 +131,7 @@ void sub_0809595c(void)
     TaskSleepForever();
 }
 
-void sub_080959e8(void)
+void FireLionDropInUpdate(void)
 {
 }
 
@@ -149,7 +149,7 @@ void sub_080959ec(void)
     TaskSleepForever();
 }
 
-void FireLionState2(void)
+void FireLionWait(void)
 {
     struct Task *t;
     s32 v;
@@ -343,7 +343,7 @@ void sub_08095e4c(void)
     } while ((s16)gCurTask->fireLionLoopCount <= 1);
 }
 
-void FireLionState7(void)
+void FireLionSlash(void)
 {
     struct Task *t;
     struct Task *u;
@@ -406,7 +406,7 @@ void FireLionState7(void)
     TaskSleepForever();
 }
 
-void sub_08096058(void)
+void FireLionSlashUpdate(void)
 {
     struct Task *t;
 
@@ -571,7 +571,7 @@ void sub_080963c0(void)
         t->velY = 0;
 }
 
-void FireLionState8(void)
+void FireLionPounce(void)
 {
     struct Task *t;
     struct Task *u;
@@ -682,7 +682,7 @@ rest:
     TaskSleepForever();
 }
 
-void sub_08096640(void)
+void FireLionPounceUpdate(void)
 {
     struct Task *t;
     struct Task *u;

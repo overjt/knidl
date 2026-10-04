@@ -12,24 +12,24 @@
  * Each is a loop of short animations around its spawner (22-24 at random
  * offsets from RandomSpread/RandomSpreadFacing; tables gUnk_0874C718,
  * gUnk_0874C7A4, gUnk_0874C7B4, gUnk_0874C7CC) that ends once its companion
- * sets Task.unk28: sub_08055d24, sub_080560fc, sub_08056300 and sub_08056428
+ * sets Task.unk28: PlayerEffectHurtFlamesUpdate, PlayerEffectHurtSparksUpdate, sub_08056300 and sub_08056428
  * do so when the player leaves mode 17 (in sub-state 0 of 22 and 23 also
  * when the spawner's Task.onGround is set).  Variant 24 (sub_0805614c) sets its
  * velocities with TaskSetMotion and alternates two directions; variant 25
  * (sub_08056320) stays on the spawner's position, with Task.facing = 1 when
  * gFrameCount bit 0 is set and the inherited facing flipped otherwise;
- * variant 23 (sub_08055d74, 904 bytes) is the longest. */
+ * variant 23 (PlayerEffectHurtSparks, 904 bytes) is the longest. */
 
 u16 RandomSpread(s32 base, u8 scale, u8 amount);   /* base + ((rand(256) * amount) >> 8) * scale */
 s16 RandomSpreadFacing(s32 base, u8 scale, u8 amount);   /* the same, negated when Task.facing != 1 */
 
-void sub_08055b24(void)
+void PlayerEffectHurtFlames(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
-    gCurTask->updateCallback = (u32)sub_08055d24;
+    gCurTask->updateCallback = (u32)PlayerEffectHurtFlamesUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C718;
@@ -92,7 +92,7 @@ void sub_08055b24(void)
     TaskExitTrampoline();
 }
 
-void sub_08055d24(void)
+void PlayerEffectHurtFlamesUpdate(void)
 {
     struct Task *t = gCurTask;
 
@@ -108,13 +108,13 @@ void sub_08055d24(void)
     }
 }
 
-void sub_08055d74(void)
+void PlayerEffectHurtSparks(void)
 {
     struct Task *t;
 
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawWorld;
-    gCurTask->updateCallback = (u32)sub_080560fc;
+    gCurTask->updateCallback = (u32)PlayerEffectHurtSparksUpdate;
     gCurTask->layer = 5;
     t = gCurTask;
     t->frameTable = gUnk_0874C7A4;
@@ -183,7 +183,7 @@ void sub_08055d74(void)
     TaskExitTrampoline();
 }
 
-void sub_080560fc(void)
+void PlayerEffectHurtSparksUpdate(void)
 {
     struct Task *t = gCurTask;
 

@@ -363,7 +363,7 @@ void sub_0807b088(void)
     }
 }
 
-void sub_0807b0b4(void)
+void SwordAndBladeKnightStepLunge(void)
 {
     struct Task *t = gCurTask;
 
@@ -378,7 +378,7 @@ void sub_0807b0b4(void)
     }
 }
 
-void sub_0807b0f0(void)
+void SwordAndBladeKnightStartLunge(void)
 {
     struct Task *t = gCurTask;
 
@@ -581,7 +581,7 @@ void SwordAndBladeKnightWalkState1Update(void)
 void SwordAndBladeKnightWalkState3(void)
 {
     gCurTask->updateState = 3;
-    sub_0807b0f0();
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame--;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();
@@ -602,7 +602,7 @@ void SwordAndBladeKnightWalkState3Update(void)
     if (gCurTask->state != 3)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     else
-        sub_0807b0b4();
+        SwordAndBladeKnightStepLunge();
 }
 
 void SwordAndBladeKnightWalkState2(void)
@@ -624,7 +624,7 @@ void SwordAndBladeKnightWalkState2Update(void)
 void SwordAndBladeKnightWalkState4(void)
 {
     gCurTask->updateState = 4;
-    sub_0807b0f0();
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame = 10;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();
@@ -645,7 +645,7 @@ void SwordAndBladeKnightWalkState4Update(void)
     if (gCurTask->state != 4)
         TaskSetEntry(SwordAndBladeKnightWalkEnterState, gCurTaskIdx);
     else
-        sub_0807b0b4();
+        SwordAndBladeKnightStepLunge();
 }
 
 void SwordAndBladeKnightWalkState5(void)
@@ -672,7 +672,7 @@ void SwordAndBladeKnightWalkState6(void)
 {
     gCurTask->updateState = 6;
     TaskStop();
-    sub_0807b0f0();
+    SwordAndBladeKnightStartLunge();
     CreateSwordAndBladeKnightSlash();
     if (RandomRange(4) != 0)
     {
@@ -843,7 +843,7 @@ void SwordAndBladeKnightStandState1Update(void)
 void SwordAndBladeKnightStandState3(void)
 {
     gCurTask->updateState = 3;
-    sub_0807b0f0();
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame--;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();
@@ -884,7 +884,7 @@ void SwordAndBladeKnightStandState2Update(void)
 void SwordAndBladeKnightStandState4(void)
 {
     gCurTask->updateState = 4;
-    sub_0807b0f0();
+    SwordAndBladeKnightStartLunge();
     gCurTask->frame = 10;
     TaskYieldTrampoline(2);
     CreateSwordAndBladeKnightSlash();

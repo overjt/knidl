@@ -2370,7 +2370,7 @@ u32 gUnk_0874C500[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C520.  Consumers: Task_ActorSplash (src/actor_6c2a4.c:426),
- * PlayerEffectSplash (src/effect_54330.c:218), sub_080548f0
+ * PlayerEffectSplash (src/effect_54330.c:218), PlayerEffectLeaveWaterSplash
  * (src/effect_54330.c:244).  18 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874C520-0x0874C568).  Declared include/actor.h:276. */
@@ -2441,8 +2441,8 @@ u32 gUnk_0874C568[] FRAME_TABLE = {
     (u32)gUnk_080D2978,
 };
 
-/* gUnk_0874C600.  Consumers: sub_08053c48 (src/effect_53af4.c:113),
- * sub_08053d08 (src/effect_53af4.c:142), PlayerEffectSkidDust
+/* gUnk_0874C600.  Consumers: PlayerEffectCatchDust (src/effect_53af4.c:113),
+ * PlayerEffectSpitDust (src/effect_53af4.c:142), PlayerEffectSkidDust
  * (src/effect_53af4.c:316) and 8 more.  18 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C600-0x0874C648).  Declared include/effect.h:74. */
@@ -2548,7 +2548,7 @@ u32 gUnk_0874C6F4[] FRAME_TABLE = {
 };
 
 /* gUnk_0874C718.  Consumers: Task_DashFireTrail (src/actor_6e0f0.c:382),
- * sub_08054fe4 (src/effect_54a80.c:266), sub_08055b24
+ * sub_08054fe4 (src/effect_54a80.c:266), PlayerEffectHurtFlames
  * (src/effect_55b24.c:35) and 1 more.  26 words, OAM template streams;
  * extent: the span to the next label, every word such a target
  * (pointer_tables 0x0874C718-0x0874C780).  Declared include/effect.h:78. */
@@ -2604,7 +2604,7 @@ u32 gUnk_0874C784[] FRAME_TABLE = {
     (u32)gUnk_080D37D8,
 };
 
-/* gUnk_0874C7A4.  Consumer: sub_08055d74 (src/effect_55b24.c:120).  4
+/* gUnk_0874C7A4.  Consumer: PlayerEffectHurtSparks (src/effect_55b24.c:120).  4
  * words, OAM template streams; extent: the span to the next label, every
  * word such a target (pointer_tables 0x0874C7A4-0x0874C7B4).  Declared
  * include/effect.h:81. */
@@ -11882,7 +11882,7 @@ u32 gUnk_087542A8[] FRAME_TABLE = {
 };
 
 /* gWhispyWoodsFrames.  Consumers: sub_080b2890 (src/enemy_ae3bc.c:4011),
- * Task_WhispyWoods (src/enemy_ae3bc.c:4067), sub_080b2dd4
+ * Task_WhispyWoods (src/enemy_ae3bc.c:4067), WhispyWoodsDefeatedInit
  * (src/enemy_ae3bc.c:4328).  18 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x087542C0-0x08754308).  Declared include/enemy.h:1261. */
