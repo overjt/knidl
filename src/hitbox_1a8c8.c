@@ -101,11 +101,11 @@ extern struct AttackBox *gAttackBox; /* the actor's attack box (s32 in actor_673
 extern u8 gHitKind;            /* hit result */
 extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
-extern u8 gUnk_030023A4;
+extern u8 gHitterColliderClass;
 extern u8 gHitterSlot;
 extern u8 gAttackLastHitter;
 extern u8 gHitEffect;
-extern u8 gUnk_03002460;
+extern u8 gAttackLastHitterClass;
 extern s16 gAttackBoxBottom;           /* attack box bottom */
 extern s16 gAttackBoxTop;           /* attack box top */
 extern s16 gAttackBoxRight;           /* attack box right */
@@ -151,8 +151,8 @@ u8 HitTestPlayerColliders(void)
     for (i = 0; i < gPlayerColliderCount; i++)
     {
         gColliderSlot = e->unk00;
-        /* gUnk_03002460 is compared signed (lsls/asrs) */
-        if (gColliderSlot == (s8)gAttackLastHitterSlot && *(s8 *)&gUnk_03002460 == 0)
+        /* gAttackLastHitterClass is compared signed (lsls/asrs) */
+        if (gColliderSlot == (s8)gAttackLastHitterSlot && *(s8 *)&gAttackLastHitterClass == 0)
         {
             e++;
             continue;
@@ -332,7 +332,7 @@ u8 HitTestPlayerColliders(void)
         if (gAttackBoxBottom < gColliderTop)
             continue;
         gHitKind = 7;
-        gUnk_030023A4 = 0;
+        gHitterColliderClass = 0;
         gHitHealthLeft = gAttackHealth;
         gHitterSlot = gColliderSlot;
         gHitTimer = gAttackHitDuration;

@@ -70,16 +70,16 @@ struct Unk0873A994
 };
 
 /* EWRAM */
-extern u16 gUnk_02000028;
+extern u16 gEndingLocalPlayer;
 extern u8 gBlockCursorPlayer; /*   the player that hit it */
-extern u8 gUnk_02004B48; /*   hit-box id bit 11 */
+extern u8 gBlockCursorShake; /*   hit-box id bit 11 */
 extern s16 gBrokenBlockY[]; /*   y (pixels) */
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4;
 extern struct Unk02005E00 gUnk_02005E00;
 extern u16 gBlockCursorIndex; /*   map index */
 extern struct M11R20 gPlayerBodyBoxes[];
-extern u16 gUnk_02006174; /*   the block kind (hit-box id low byte) */
+extern u16 gBlockCursorAttack; /*   the block kind (hit-box id low byte) */
 extern s16 gBlockCursorTile; /*   the metatile's collision byte */
 extern u8 gUnk_020061E0;
 extern struct M11Buf gUnk_02006A80[];

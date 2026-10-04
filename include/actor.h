@@ -80,7 +80,7 @@ extern u8 gPauseDisabled;
 extern struct PlayerState gPlayerStates[];
 extern s32 gUnk_030023B4;
 extern s32 gUnk_030023D4;
-extern u8 gUnk_030023F0;
+extern u8 gAttackHitTimer;
 
 /* ROM */
 extern struct GfxSrc gUnk_0824A9E4;

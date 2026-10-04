@@ -15,7 +15,7 @@ struct M11R20 { u32 w[5]; };
 
 /* Not from collision.h or player.h: this file's view of gTerrainResult and
    gUnk_020055C4 differs (lesson 3.517). */
-extern u16 gUnk_02000028;
+extern u16 gEndingLocalPlayer;
 extern struct M11R8 gPlayerHitBoxSets[];
 extern u8 gUnk_020055C4[];
 extern struct M11R20 gPlayerBodyBoxes[];
@@ -595,7 +595,7 @@ void sub_0803d824(void)
     idx = sub_0803d870();
     if (idx == -1)
         return;
-    RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes + (gUnk_02000028 << 5),
+    RequestCopy(2, (idx << 1) + (u32)gPlayerPalettes + (gEndingLocalPlayer << 5),
                  (u32)gObjPalette + ((gCurTask->tileWord >> 12) << 5), 32);
 }
 
@@ -779,7 +779,7 @@ void sub_0803db74(void)
                 RequestCopy(2, (u32)&gUnk_080DCA28[ps2->playerIndex * 32],
                              (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
             else
-                RequestCopy(2, (u32)&gUnk_080DCA28[gUnk_02000028 * 32],
+                RequestCopy(2, (u32)&gUnk_080DCA28[gEndingLocalPlayer * 32],
                              (u32)gObjPalette + ((u->tileWord >> 12) << 5), 32);
         }
     }
@@ -2561,7 +2561,7 @@ s32 PlayerCheckDuckOrSwallow(void)
 {
     if (gLatchedHeldKeys[gCurTask->player->playerIndex] & 128)
     {
-        if (gCurTask->player->mouthState == 1 && gUnk_02007CF0 != 1)
+        if (gCurTask->player->mouthState == 1 && gRoomExitKind != 1)
         {
             if (((s8 *)gCurTask->player)[11] != 0)
                 gCurTask->player->requestedAction = 29;
@@ -2706,12 +2706,12 @@ s32 PlayerCheckEnterWater(void)
 
 s32 PlayerCheckEnterDoor(void)
 {
-    if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && gUnk_02007CF0 == 0
+    if ((gLatchedHeldKeys[gCurTask->player->playerIndex] & 64) && gRoomExitKind == 0
      && gCurTask->player->atDoor != 0
      && (gCurTask->player->unk42 & 1) == 0
      && FindDoorAt(gCurTask->pixelX, gCurTask->pixelY) != 0)
     {
-        gUnk_02007CF0 = 1;
+        gRoomExitKind = 1;
         gPauseDisabled = 1;
         gCurTask->player->unk42 |= 2;
         SetPlayerInvulnerability(3, 0, gCurTask->player->playerIndex);
@@ -2800,7 +2800,7 @@ s32 PlayerCheckShareItem(void)
         gCurTask->player->sharedMask = 0;
         return 0;
     }
-    if (gUnk_02007CF0 != 0)
+    if (gRoomExitKind != 0)
         return 0;
     if (gActivePlayerCount == 1)
         return 0;

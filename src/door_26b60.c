@@ -165,7 +165,7 @@ void DrawDoors(void)
         {
         case 1:
             gUnk_03001F2C = 16;
-            if ((gUnk_02007CF0 != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
+            if ((gRoomExitKind != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
                 gUnk_03001F10 = 8;
             else
                 gUnk_03001F10 = 12;
@@ -174,7 +174,7 @@ void DrawDoors(void)
         default:
         case 0:
             gUnk_03001F2C = 8;
-            if ((gUnk_02007CF0 != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
+            if ((gRoomExitKind != 2 || gActivePlayerCount <= 1) && p->unk1 != 0)
                 gUnk_03001F10 = 0;
             else
                 gUnk_03001F10 = 4;

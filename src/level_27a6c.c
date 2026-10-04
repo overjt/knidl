@@ -14,7 +14,7 @@
  * matching cell of the next room's 2x2 pattern (gRoomTable[level][stage]
  * [room + 1]'s map).  With gHubUnlockFlags set it first clears the BG map at
  * 0x06001800 and gBg1MetatileMap, records up to two cells whose marker is
- * gHubUnlockSource | 0x80 in gUnk_0200AFE0 (y then x; src/camtask_2d38c.c
+ * gHubUnlockSource | 0x80 in gHubUnlockBlocks (y then x; src/camtask_2d38c.c
  * reads them as a flat s16[4]) and copies the pattern cell of every
  * gHubUnlockSource marker into gBg1MetatileMap; otherwise it returns early when
  * gCurLevel < gFurthestLevel and gUnk_0873232C[gCurLevel]'s flags
@@ -86,7 +86,7 @@ struct RoomDef
     /*0x56*/ u8 unk56;
     /*0x57*/ u8 unk57;
 };
-/* Not from room.h: this file's view of gUnk_0200AFE0 differs (lesson 3.517). */
+/* Not from room.h: this file's view of gHubUnlockBlocks differs (lesson 3.517). */
 extern struct RoomDef *gCurRoomDef;
 extern u16 gMetatileTiles[];
 extern struct MapCell gUnk_02006AA0[];
@@ -97,7 +97,7 @@ extern s8 gLevelIndex;
 extern s8 gRoomIndex;
 extern u8 gHubUnlockFlags;
 extern u16 gBg1MetatileMap[];
-extern s16 gUnk_0200AFE0[][2];
+extern s16 gHubUnlockBlocks[][2];
 extern s16 gRoomWidth;
 extern s16 gRoomHeight;
 extern s8 gCurLevel;
@@ -135,8 +135,8 @@ void sub_08027a6c(void)
         CpuFastSet(&b, (u32 *)gBg1MetatileMap, ((gRoomMetatileCount / 2) & 0x1FFFFF) | 0x01000000);
         for (idx = 0; idx < 2; idx++)
         {
-            gUnk_0200AFE0[idx][0] = -1;
-            gUnk_0200AFE0[idx][1] = -1;
+            gHubUnlockBlocks[idx][0] = -1;
+            gHubUnlockBlocks[idx][1] = -1;
         }
         idx = gRoomWidth;
         for (y = 1; y < gRoomHeight; y++)
@@ -162,8 +162,8 @@ void sub_08027a6c(void)
                 {
                     if (v == (gHubUnlockSource | 0x80) && n <= 1)
                     {
-                        gUnk_0200AFE0[n][1] = y;
-                        gUnk_0200AFE0[n][0] = x;
+                        gHubUnlockBlocks[n][1] = y;
+                        gHubUnlockBlocks[n][0] = x;
                         n++;
                     }
                     v &= 0xFF7F;

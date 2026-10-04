@@ -69,7 +69,7 @@ void CreditsMain(void)
     ResetTasksAndOam();
     LoadBgLayout(17);
     gSfxDisabled = 1;
-    gUnk_0201C1A4 = gPlayerScores[gUnk_02000028];
+    gUnk_0201C1A4 = gPlayerScores[gEndingLocalPlayer];
     gLocalPlayer = 0;
     if (gExtraMode == 1)
         gUnk_030023B0 = 2;
@@ -154,7 +154,7 @@ void CreditsMain(void)
     ResetTasksAndOam();
     RunFramesNoTasks(2);
     SetBgmVolume(255);
-    gPlayerScores[gUnk_02000028] = gUnk_0201C1A4;
+    gPlayerScores[gEndingLocalPlayer] = gUnk_0201C1A4;
 }
 
 /* Load the staff credits' next demo scene: the room, palette set 17, and
@@ -181,7 +181,7 @@ void CreditsLoadScene(void)
     sub_08066144();
     gNextActorSerial = 0;
     gScreenAttackActive = 0;
-    gUnk_02007CF0 = 0;
+    gRoomExitKind = 0;
     gPauseDisabled = 1;
     for (i = 0; i < 4; i++)
         gPlayerHeldKeys[i] = gPlayerPressedKeys[i] = gLatchedHeldKeys[i] = gLatchedPressedKeys[i] = 0;
@@ -192,12 +192,12 @@ void CreditsLoadScene(void)
 void CreditsInitText(void)
 {
     LoadGfxSet(72);
-    gUnk_0201C1A0 = 0x400000;
-    gUnk_0201C1AC = 0x40000;
+    gCreditsTextScrollY = 0x400000;
+    gCreditsTextScrollX = 0x40000;
     gVBlankEndCallback = (u32)CreditsScrollText;
-    gUnk_0201C1A8 = 0;
-    gUnk_0201C19C = 0;
-    gUnk_0201C1B4 = gUnk_0201C1A0 >> 12;
+    gCreditsTextPage = 0;
+    gCreditsTextPageStaged = 0;
+    gCreditsTextPageScroll = gCreditsTextScrollY >> 12;
 }
 
 /* Stream the staff credits' text into BG0: stage the next page (a blank one
@@ -208,23 +208,23 @@ void CreditsStreamText(void)
 {
     u16 zero;
 
-    if (gUnk_0201C19C == 0) {
-        if (gUnk_0201C1A8 < 14) {
-            LZ77UnCompWram(gUnk_087583B4[gUnk_0201C1A8], gHudTilemap);
+    if (gCreditsTextPageStaged == 0) {
+        if (gCreditsTextPage < 14) {
+            LZ77UnCompWram(gUnk_087583B4[gCreditsTextPage], gHudTilemap);
         } else {
             zero = 0;
             CpuSet(&zero, gHudTilemap, 0x01000400);
         }
-        gUnk_0201C19C = 1;
-        gUnk_0201C1A8++;
+        gCreditsTextPageStaged = 1;
+        gCreditsTextPage++;
     }
-    if ((gUnk_0201C1B4 & 0x1000) && gUnk_0201C19C != 0) {
-        if (gUnk_0201C1A8 & 1)
+    if ((gCreditsTextPageScroll & 0x1000) && gCreditsTextPageStaged != 0) {
+        if (gCreditsTextPage & 1)
             RequestCopy(1, (u32)gHudTilemap, BG_VRAM + 0x1000, 0x800);
         else
             RequestCopy(1, (u32)gHudTilemap, BG_VRAM + 0x1800, 0x800);
-        gUnk_0201C19C = 0;
-        gUnk_0201C1B4 = 0;
+        gCreditsTextPageStaged = 0;
+        gCreditsTextPageScroll = 0;
     }
 }
 
@@ -233,11 +233,11 @@ void CreditsStreamText(void)
    gone by, then park it through the BG0 scroll shadows. */
 void CreditsScrollText(void)
 {
-    if (gUnk_0201C1A0 < 0x0F580000) {
-        gUnk_0201C1A0 += 0x8000;
-        gUnk_0201C1B4 += 8;
-        REG_BG0VOFS = gUnk_0201C1A0 >> 16;
-        REG_BG0HOFS = gUnk_0201C1AC >> 16;
+    if (gCreditsTextScrollY < 0x0F580000) {
+        gCreditsTextScrollY += 0x8000;
+        gCreditsTextPageScroll += 8;
+        REG_BG0VOFS = gCreditsTextScrollY >> 16;
+        REG_BG0HOFS = gCreditsTextScrollX >> 16;
     } else {
         gBg0ScrollY = 0x0F580000;
         gBg0ScrollX = 0x40000;

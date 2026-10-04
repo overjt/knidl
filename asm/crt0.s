@@ -291,7 +291,7 @@ lit_isr_stack_limit:
 
 @ 0x08000224 — ISR sp spill cell address (target of ldr r1 at 0x080001AC)
 lit_isr_sp_save:
-	.word	gUnk_03000FA0
+	.word	gIsrSavedSp
 
 @ 0x08000228 — ISR overflow stack top (target of ldr r1/r0 at 0x080001B4 / 0x080001D8)
 lit_isr_stack_top:
@@ -303,4 +303,4 @@ lit_intr_table:
 
 @ 0x08000230 — ISR sp spill cell address copy (target of ldr r1 at 0x080001E4)
 lit_isr_sp_save_2:
-	.word	gUnk_03000FA0
+	.word	gIsrSavedSp

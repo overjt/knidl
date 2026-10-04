@@ -133,7 +133,7 @@ void Task_WarpStar(void)
 void WarpStarUpdate(void)
 {
     CallTableEntry(gCurTask->updateState, 3, gWarpStarStateUpdates);
-    if (gUnk_02006160 == -1 || gUnk_02006160 == gCurTaskIdx)
+    if (gBoardedWarpStarSlot == -1 || gBoardedWarpStarSlot == gCurTaskIdx)
     {
         if (ActorCheckHits())
             WarpStarBoard();
@@ -200,8 +200,8 @@ void WarpStarBoard(void)
             struct Task *t2 = gCurTask;
 
             t2->tileWord = f;
-            gUnk_02006160 = gCurTaskIdx;
-            gUnk_02007CF0 = 2;
+            gBoardedWarpStarSlot = gCurTaskIdx;
+            gRoomExitKind = 2;
             if (t2->unk46 != -1)
             {
                 TaskFree(t2->unk46);
@@ -307,7 +307,7 @@ void sub_08071418(void)
 
 void sub_0807156c(void)
 {
-    if (gUnk_02007CF0 != 0 && gActivePlayerCount != 1)
+    if (gRoomExitKind != 0 && gActivePlayerCount != 1)
     {
         struct Task *t = gCurTask;
 

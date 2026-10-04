@@ -113,11 +113,11 @@ struct Unk03005550
 
 /* IWRAM */
 /* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
-extern s16 gUnk_03001F04;
+extern s16 gHitMidpointX;
 extern u8 gUnk_03001F24;
 extern s8 gAttackHitDuration;
 extern u8 gHitDirection;
-extern s16 gUnk_03002148;
+extern s16 gHitMidpointY;
 extern u16 gAttackY; /* actor y */
 extern u8 gHitTimer;
 extern u16 gAttackX; /* actor x */
@@ -127,12 +127,12 @@ extern u8 gHitKind; /* hit result */
 extern u8 gAttackLastHitterSlot;
 extern u16 gHitHealthLeft;
 extern s16 gAttackFacing;
-extern u8 gUnk_030023A4;
-extern u8 gUnk_030023D0;
+extern u8 gHitterColliderClass;
+extern u8 gHitterColliderKind;
 extern u8 gHitterSlot;
 extern u8 gAttackLastHitter;
 extern u8 gHitEffect;
-extern u8 gUnk_03002460;
+extern u8 gAttackLastHitterClass;
 extern u8 gPlayerColliderCount; /* number of hit-list entries */
 extern s16 gAttackBoxBottom; /* attack box bottom */
 extern struct Collider gUnk_030052A0[];

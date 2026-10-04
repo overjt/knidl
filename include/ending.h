@@ -11,22 +11,22 @@
 struct GfxHeader;
 
 /* EWRAM */
-extern u16 gUnk_02004C94;
+extern u16 gEndingPlayerCount;
 extern s16 gGameOverTimer; /* game-over screen: frames left */
 extern s8 gGameOverCursor; /* game-over screen: cursor (continue = 0?) */
-extern u16 gUnk_0200616C;
+extern u16 gEndingLinkPlayerCount;
 extern u8 gGameOverDone; /* game-over screen: done flag */
 extern s16 gGameOverPlayerTask; /* game-over screen: the #264 variant-0 task's index */
-extern u16 gUnk_02007D3C;
+extern u16 gEndingLinkIsMaster;
 extern u8 gEndingSceneActive;
 extern s16 *gUnk_0201BFD0[];
-extern u8 gUnk_0201C19C;
-extern s32 gUnk_0201C1A0; /* credits: BG0 vertical scroll, 16.16 */
+extern u8 gCreditsTextPageStaged;
+extern s32 gCreditsTextScrollY; /* credits: BG0 vertical scroll, 16.16 */
 extern s32 gUnk_0201C1A4; /* credits: the score saved over the demos */
-extern u8 gUnk_0201C1A8;
-extern s32 gUnk_0201C1AC; /* credits: BG0 horizontal scroll, 16.16 */
+extern u8 gCreditsTextPage;
+extern s32 gCreditsTextScrollX; /* credits: BG0 horizontal scroll, 16.16 */
 extern u8 gUnk_0201C1B0; /* credits: current demo scene */
-extern s32 gUnk_0201C1B4; /* credits: scroll since the last page copy, 1/16 pixel */
+extern s32 gCreditsTextPageScroll; /* credits: scroll since the last page copy, 1/16 pixel */
 
 /* IWRAM */
 extern u16 gUnk_030014F0[];

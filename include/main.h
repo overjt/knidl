@@ -53,7 +53,7 @@ extern u32 gCopyQueueRead; /* copy-request queue read pointer */
 extern vs32 gBg2ScrollX; /* BG2HOFS shadow (16.16) */
 extern void (*gUnk_03000F90)(void);
 extern vu16 gPlayerHeldKeys[]; /* per-player keys held */
-extern vu32 gUnk_03000FA0;
+extern vu32 gIsrSavedSp;
 extern u32 gVBlankCallback;
 extern vs32 gBg3ScrollY; /* BG3VOFS shadow (16.16) */
 extern vu16 gVBlankCount;

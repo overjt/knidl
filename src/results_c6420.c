@@ -49,7 +49,7 @@ void FinalResultsScreen(void)
                 LoadGfxSet(56);
             else
                 LoadGfxSet(58);
-            DrawScoreToBgMap(gPlayerScores[gUnk_02000028], 22, 0);
+            DrawScoreToBgMap(gPlayerScores[gEndingLocalPlayer], 22, 0);
         } else {
             LoadGfxSet(55);
             DrawClockToBgMap(gHudClock, 22, 18);

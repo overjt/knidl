@@ -467,7 +467,7 @@ void sub_08033414(void)
     struct Task *t;
     struct PlayerState *p;
 
-    if (gCurTask->player->requestedAction > 31 && gUnk_02007CF0 == 1)
+    if (gCurTask->player->requestedAction > 31 && gRoomExitKind == 1)
         gCurTask->player->requestedAction = 0;
     switch (gCurTask->hitKind)
     {

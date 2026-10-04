@@ -149,7 +149,7 @@ void sub_08077cd4(void)
 void BigSwitchStartPress(void)
 {
     DisablePause();
-    gUnk_02004B64 = 1;
+    gBigSwitchPressActive = 1;
     PlaySfx(226);
     RequestScreenShake(4);
     sub_08077cd4();
@@ -173,7 +173,7 @@ void BigSwitchRefillHealth(void)
     FadeInSfx(16);
     TaskYieldTrampoline(15);
     RequestScreenShake(4);
-    gUnk_02004B64 = 0;
+    gBigSwitchPressActive = 0;
     for (i = 0; i < gPlayerCount; i++)
     {
         if ((gActivePlayerMask >> i) & 1)
@@ -223,7 +223,7 @@ void BigSwitchWait(void)
 
 void BigSwitchWaitUpdate(void)
 {
-    if (gUnk_02004B64 == 0 && ActorCheckHits() && (u8)sub_08077ca4())
+    if (gBigSwitchPressActive == 0 && ActorCheckHits() && (u8)sub_08077ca4())
         BigSwitchStartPress();
 }
 

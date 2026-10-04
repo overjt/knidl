@@ -29,7 +29,7 @@
    gUnk_03000F90 and gUnk_030023A8 differs (lesson 3.517). */
 extern vu16 gUnk_03001004;
 extern const u32 gIntrTableTemplate[];
-extern vu32 gUnk_03000FA0;
+extern vu32 gIsrSavedSp;
 extern vu16 gFrameCount;
 extern vu16 gVBlankCount;
 extern vu16 gFrameInProgress;
@@ -157,7 +157,7 @@ void AgbInit(void)
     gUnk_03001004 |= 0x4014;
     REG_WAITCNT = gUnk_03001004;
 
-    gUnk_03000FA0 = zeroA;
+    gIsrSavedSp = zeroA;
 
     CpuSet(gIntrTableTemplate, (void *)(IWRAM_START + 0x4B0), 28);
     /* 0x08000108 is crt0's MasterIsr, the ROM image of the ISR copied to

@@ -21,11 +21,11 @@
    and gUnk_020060CC differs (lesson 3.517). */
 extern u8 gUnk_02000020;
 extern u16 gPlayerAbilities[];
-extern u8 gUnk_02004B64;
+extern u8 gBigSwitchPressActive;
 extern s16 gMaxHealth;
 extern s16 gPlayerHealth[];
 extern u8 gUnk_020060CC;
-extern u8 gUnk_02007CF0;
+extern u8 gRoomExitKind;
 extern s16 gPlayerLives[];
 extern vs16 gSavedPlayerAbilityUses[];
 extern u16 gSavedPlayerAbilities[];
@@ -114,7 +114,7 @@ void sub_0800b5dc(void)
     s32 i;
 
     sub_08022f98();
-    gUnk_02007CF0 = 0;
+    gRoomExitKind = 0;
     for (i = 0; i < gPlayerCount; i++) {
         gUnk_02005E00.unk08[i] = 0;
         InitPlayerState(i);
@@ -153,7 +153,7 @@ void StageInit(void)
     LoadGfxSet(0);
     sub_08008c7c();
     gUnk_02007F50 = -1;
-    if (gUnk_02004B64 == 0)
+    if (gBigSwitchPressActive == 0)
         LoadRoom();
     else
         sub_080233e0();
@@ -162,7 +162,7 @@ void StageInit(void)
     /* The ROM loads these four addresses before the clear loop below; only
      * pointer locals assigned here reproduce that order. */
     q1 = &gUnk_020061E0;
-    q2 = &gUnk_02006160;
+    q2 = &gBoardedWarpStarSlot;
     q3 = &gCannonFuseState;
     q4 = &gUnk_020060CC;
     b = gUnk_02007FB8;
@@ -181,7 +181,7 @@ void StageInit(void)
     gLinkCommand = 0;
     gPauseDisabled = 0;
     gScreenAttackActive = 0;
-    gUnk_02007CF0 = 0;
+    gRoomExitKind = 0;
     gUnk_02008010 = -1;
     gUnk_020055C4 = 0;
     for (i = 0; i < 4; i++)

@@ -159,7 +159,7 @@ void PlayerActionDie(void)
         CreatePlayerEffect(gCurTask->player->playerIndex, 12, i);
     if (n == 0)
         PlayBgm(3);
-    else if (gUnk_02007CF0 != 1)
+    else if (gRoomExitKind != 1)
         PlaySfx(270);
     PlayerSetMotionYPreset(32);
     gCurTask->unk46 = anim[1];

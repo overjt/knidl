@@ -77,8 +77,8 @@ void CalcHitDamageAndDirection(void)
    the midpoint between the entry and the actor. */
 void sub_0801b9e4(void)
 {
-    gUnk_030023A4 = gColliderBodyBox->unk08 & 0xF0;
-    gUnk_030023D0 = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
+    gHitterColliderClass = gColliderBodyBox->unk08 & 0xF0;
+    gHitterColliderKind = (u32)(gColliderBodyBox->unk08 << 28) >> 28;
     gHitterSlot = gColliderSlot;
     gUnk_03001F24 = gColliderPlayer;
     if (gHitKind == 6 || gHitKind == 8)
@@ -86,6 +86,6 @@ void sub_0801b9e4(void)
     else
         gHitTimer = gAttackHitDuration;
     /* gAttackX/gAttackY are read signed here (ldrsh) */
-    gUnk_03001F04 = (gColliderX + (s16)gAttackX) >> 1;
-    gUnk_03002148 = (gColliderY + (s16)gAttackY) >> 1;
+    gHitMidpointX = (gColliderX + (s16)gAttackX) >> 1;
+    gHitMidpointY = (gColliderY + (s16)gAttackY) >> 1;
 }

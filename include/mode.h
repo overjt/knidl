@@ -40,7 +40,7 @@ extern u32 gUnk_02004000[];
 extern u16 gPausingPlayer;
 extern u8 gExtraModeTitleSeen;
 extern u8 gUnk_02006090;
-extern s8 gUnk_02006160;
+extern s8 gBoardedWarpStarSlot;
 extern u8 gUnk_02007FCC;
 extern u32 gUnk_02028000[];
 extern struct M38LogoObj gUnk_02030000[];

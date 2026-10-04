@@ -15,7 +15,7 @@
 extern u32 gUnk_02000020[];
 extern u32 gUnk_020060CC[];
 extern u8 gUnk_02006A14[];
-extern u8 gUnk_02007CF0;
+extern u8 gRoomExitKind;
 extern u32 gUnk_02008010[];
 extern u16 gUnk_03001570[];
 extern u8 gActivePlayerMask;
@@ -227,7 +227,7 @@ void GoalGameInit(void)
             gPlayerStates[i].ability = 0;
     }
     gPauseDisabled = 1;
-    gUnk_02007CF0 = 0;
+    gRoomExitKind = 0;
     *(s8 *)gUnk_02008010 = -1;
     *(s8 *)gStageRequest = 0;
     q = gUnk_02007FB8;

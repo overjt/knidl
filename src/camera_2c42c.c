@@ -13,7 +13,7 @@
  * gCameraAnchorX/gCameraAnchorY clamped to the room bounds gRoomBounds
  * (when gActivePlayerCount is set).  sub_0802c550, sub_0802c680, sub_0802c7f4
  * and CameraSnapToFocus follow the player (gCameraFocusX/gCameraFocusY, the
- * task gUnk_02007D38 or the multiplayer group of camera_29c74.c) inside
+ * task gCameraFocusPlayer or the multiplayer group of camera_29c74.c) inside
  * the bounds gCameraBounds and write the 16.16 target
  * gCameraCenterX/gCameraCenterY and the visible rectangle gViewRect.
  * StopScreenShake clears and UpdateScreenShake steps the screen shake
@@ -148,8 +148,8 @@ void sub_0802c680(void)
     {
         s32 i;
 
-        x = gTasks[gUnk_02007D38].pixelX;
-        y = gTasks[gUnk_02007D38].pixelY;
+        x = gTasks[gCameraFocusPlayer].pixelX;
+        y = gTasks[gCameraFocusPlayer].pixelY;
         if (x < gCameraBounds[0])
             x = gCameraBounds[0];
         if (x > gCameraBounds[1])

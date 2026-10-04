@@ -259,10 +259,10 @@ void PlayRoomBgm(void)
         {
             StopBgm();
         }
-        else if (gUnk_020055C8 == 0)
+        else if (gRoomBgmStarted == 0)
         {
             PlayBgm(bgm);
-            gUnk_020055C8 = 1;
+            gRoomBgmStarted = 1;
         }
         else
         {
