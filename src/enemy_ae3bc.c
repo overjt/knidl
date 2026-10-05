@@ -580,7 +580,7 @@ void NightmarePowerOrbDash(void)
 
 void NightmarePowerOrbReturnDown(void)
 {
-    NightmarePowerOrbStartAnim((u32)gUnk_0874B0A0);
+    NightmarePowerOrbStartAnim((u32)gNightmarePowerOrbReturnAnim);
     gCurTask->updateState = 3;
     gCurTask->velX = 128 << 10;
     gCurTask->velY = 128 << 10;
@@ -673,7 +673,7 @@ void NightmarePowerOrbReturnUp(void)
     struct Task *q18;
     struct Task *q19;
 
-    NightmarePowerOrbStartAnim((u32)gUnk_0874B0A0);
+    NightmarePowerOrbStartAnim((u32)gNightmarePowerOrbReturnAnim);
     c = &gCurTask;
     t = *c;
     z = 0;

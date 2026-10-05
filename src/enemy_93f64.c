@@ -237,25 +237,25 @@ void GrandWheelieUpdateAttackBoxes(void)
         if (t->grandWheelieDefeatPhase == 0 && t->velY < 0) {
             v = t->frame;
             if (v >= 4 && v <= 9) {
-                ActorSetAttackBox(gUnk_08744A20);
+                ActorSetAttackBox(gGrandWheelieAltAttackBoxFrames4To9);
                 ActorSetExtraAttackBox(gUnk_08744A04);
             } else if (v >= 10 && v <= 19) {
-                ActorSetAttackBox(gUnk_08744A74);
+                ActorSetAttackBox(gGrandWheelieAltAttackBoxFrames10To19);
                 ActorSetExtraAttackBox(gUnk_08744A58);
             } else if (v >= 20 && v <= 27) {
-                ActorSetAttackBox(gUnk_08744AC8);
+                ActorSetAttackBox(gGrandWheelieAltAttackBoxFrames20To27);
                 ActorSetExtraAttackBox(gUnk_08744AAC);
             } else if (v >= 28 && v <= 31) {
-                ActorSetAttackBox(gUnk_08744B54);
+                ActorSetAttackBox(gGrandWheelieAltAttackBoxFrames28To31);
                 ActorSetExtraAttackBox(gUnk_08744B38);
             } else if (v >= 32 && v <= 35) {
-                ActorSetAttackBox(gUnk_08744BA8);
+                ActorSetAttackBox(gGrandWheelieAltAttackBoxFrames32To35);
                 ActorSetExtraAttackBox(gUnk_08744B8C);
             } else if (v >= 36 && v <= 47) {
-                ActorSetAttackBox(gUnk_08744C34);
+                ActorSetAttackBox(gGrandWheelieAltAttackBoxFrames36To47);
                 ActorSetExtraAttackBox(gUnk_08744C18);
             } else {
-                ActorSetAttackBox(gUnk_08744C88);
+                ActorSetAttackBox(gGrandWheelieAltAttackBoxOtherFrames);
                 ActorSetExtraAttackBox(gUnk_08744C6C);
             }
         } else {
@@ -275,9 +275,9 @@ void GrandWheelieUpdateAttackBoxes(void)
     } else {
         v = t->frame;
         if (v >= 4 && v <= 9) {
-            ActorSetAttackBox(gUnk_087449E8);
+            ActorSetAttackBox(gGrandWheelieAttackBoxFrames4To9);
             ActorSetExtraAttackBox(gUnk_08744A04);
-            ActorSetAux(gUnk_0874531C);
+            ActorSetAux(gGrandWheelieAuxFrames4To9);
         } else if (v >= 10 && v <= 19) {
             ActorSetAttackBox(gUnk_08744A3C);
             ActorSetExtraAttackBox(gUnk_08744A58);

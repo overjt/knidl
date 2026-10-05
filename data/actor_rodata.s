@@ -2888,14 +2888,14 @@ gUnk_0874494C:
 	.section .actor_rodata_087449e8, "a"
 	.global	actor_rodata_087449e8
 actor_rodata_087449e8:
-	.global	gUnk_087449E8
-gUnk_087449E8:
+	.global	gGrandWheelieAttackBoxFrames4To9
+gGrandWheelieAttackBoxFrames4To9:
 	.incbin	"baserom.gba", 0x7449E8, 0x1C
 	.global	gUnk_08744A04
 gUnk_08744A04:
 	.incbin	"baserom.gba", 0x744A04, 0x1C
-	.global	gUnk_08744A20
-gUnk_08744A20:
+	.global	gGrandWheelieAltAttackBoxFrames4To9
+gGrandWheelieAltAttackBoxFrames4To9:
 	.incbin	"baserom.gba", 0x744A20, 0x1C
 	.global	gUnk_08744A3C
 gUnk_08744A3C:
@@ -2903,8 +2903,8 @@ gUnk_08744A3C:
 	.global	gUnk_08744A58
 gUnk_08744A58:
 	.incbin	"baserom.gba", 0x744A58, 0x1C
-	.global	gUnk_08744A74
-gUnk_08744A74:
+	.global	gGrandWheelieAltAttackBoxFrames10To19
+gGrandWheelieAltAttackBoxFrames10To19:
 	.incbin	"baserom.gba", 0x744A74, 0x1C
 	.global	gUnk_08744A90
 gUnk_08744A90:
@@ -2912,8 +2912,8 @@ gUnk_08744A90:
 	.global	gUnk_08744AAC
 gUnk_08744AAC:
 	.incbin	"baserom.gba", 0x744AAC, 0x1C
-	.global	gUnk_08744AC8
-gUnk_08744AC8:
+	.global	gGrandWheelieAltAttackBoxFrames20To27
+gGrandWheelieAltAttackBoxFrames20To27:
 	.incbin	"baserom.gba", 0x744AC8, 0x1C
 	.global	gUnk_08744AE4
 gUnk_08744AE4:
@@ -2927,8 +2927,8 @@ gUnk_08744B1C:
 	.global	gUnk_08744B38
 gUnk_08744B38:
 	.incbin	"baserom.gba", 0x744B38, 0x1C
-	.global	gUnk_08744B54
-gUnk_08744B54:
+	.global	gGrandWheelieAltAttackBoxFrames28To31
+gGrandWheelieAltAttackBoxFrames28To31:
 	.incbin	"baserom.gba", 0x744B54, 0x1C
 	.global	gUnk_08744B70
 gUnk_08744B70:
@@ -2936,8 +2936,8 @@ gUnk_08744B70:
 	.global	gUnk_08744B8C
 gUnk_08744B8C:
 	.incbin	"baserom.gba", 0x744B8C, 0x1C
-	.global	gUnk_08744BA8
-gUnk_08744BA8:
+	.global	gGrandWheelieAltAttackBoxFrames32To35
+gGrandWheelieAltAttackBoxFrames32To35:
 	.incbin	"baserom.gba", 0x744BA8, 0x1C
 	.global	gUnk_08744BC4
 gUnk_08744BC4:
@@ -2951,8 +2951,8 @@ gUnk_08744BFC:
 	.global	gUnk_08744C18
 gUnk_08744C18:
 	.incbin	"baserom.gba", 0x744C18, 0x1C
-	.global	gUnk_08744C34
-gUnk_08744C34:
+	.global	gGrandWheelieAltAttackBoxFrames36To47
+gGrandWheelieAltAttackBoxFrames36To47:
 	.incbin	"baserom.gba", 0x744C34, 0x1C
 	.global	gUnk_08744C50
 gUnk_08744C50:
@@ -2960,8 +2960,8 @@ gUnk_08744C50:
 	.global	gUnk_08744C6C
 gUnk_08744C6C:
 	.incbin	"baserom.gba", 0x744C6C, 0x1C
-	.global	gUnk_08744C88
-gUnk_08744C88:
+	.global	gGrandWheelieAltAttackBoxOtherFrames
+gGrandWheelieAltAttackBoxOtherFrames:
 	.incbin	"baserom.gba", 0x744C88, 0x1C
 	.global	gUnk_08744CA4
 gUnk_08744CA4:
@@ -3289,8 +3289,8 @@ gUnk_08745744:
 	.section .actor_rodata_08745868, "a"
 	.global	actor_rodata_08745868
 actor_rodata_08745868:
-	.global	gUnk_08745868
-gUnk_08745868:
+	.global	gMrFrostyAttackBox
+gMrFrostyAttackBox:
 	.incbin	"baserom.gba", 0x745868, 0x1C
 	.global	gUnk_08745884
 gUnk_08745884:
@@ -3316,8 +3316,8 @@ gUnk_0874592C:
 	.global	gUnk_08745948
 gUnk_08745948:
 	.incbin	"baserom.gba", 0x745948, 0x1C
-	.global	gUnk_08745964
-gUnk_08745964:
+	.global	gMrTickTockAttackBox
+gMrTickTockAttackBox:
 	.incbin	"baserom.gba", 0x745964, 0x1C
 	.global	gUnk_08745980
 gUnk_08745980:
@@ -3989,8 +3989,8 @@ gUnk_08747B24:
 	.word	gUnk_08748124
 	.word	gUnk_08748140
 	.word	gUnk_0874815C
-	.global	gUnk_08747B38
-gUnk_08747B38:
+	.global	gJavelinKnightSpinAttackBoxes
+gJavelinKnightSpinAttackBoxes:
 	.word	gUnk_0874800C
 	.word	gUnk_08748028
 	.word	gUnk_08748044

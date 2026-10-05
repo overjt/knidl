@@ -503,7 +503,7 @@ void EndingEpilogueWarpStarEffect(void)
 {
     gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
-    gCurTask->frameTable = gUnk_0874CF28;
+    gCurTask->frameTable = gEndingEffectFrames;
     gCurTask->tileWord = 0;
     for (;;) {
         if (gTasks[gCurTask->parent].endingEpilogueChildGate == 0) {
@@ -655,7 +655,7 @@ void EndingEpilogueTrailStar(void)
     gCurTask->moveCallback = (u32)TaskMove;
     gCurTask->drawCallback = (u32)TaskDrawScreen;
     gCurTask->layer = 12;
-    gCurTask->frameTable = gUnk_0874CF28;
+    gCurTask->frameTable = gEndingEffectFrames;
     gCurTask->tileWord = 0;
     gCurTask->posX = gTasks[gCurTask->parent].pixelX << 16;
     gCurTask->posY = (gTasks[gCurTask->parent].pixelY + RandomRange(16) - 8) << 16;

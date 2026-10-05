@@ -115,14 +115,14 @@ extern const u8 gBugzzyLadybugAttackBox[];
 extern const u8 gBonkersNutTerrainBox[];
 extern const u8 gPoppyBrosSrBombTerrainBox[];
 extern const u8 gBugzzyLadybugTerrainBox[];
-extern const u8 gUnk_087449E8[];
-extern const u8 gUnk_08744A20[];
-extern const u8 gUnk_08744A74[];
-extern const u8 gUnk_08744AC8[];
-extern const u8 gUnk_08744B54[];
-extern const u8 gUnk_08744BA8[];
-extern const u8 gUnk_08744C34[];
-extern const u8 gUnk_08744C88[];
+extern const u8 gGrandWheelieAttackBoxFrames4To9[];
+extern const u8 gGrandWheelieAltAttackBoxFrames4To9[];
+extern const u8 gGrandWheelieAltAttackBoxFrames10To19[];
+extern const u8 gGrandWheelieAltAttackBoxFrames20To27[];
+extern const u8 gGrandWheelieAltAttackBoxFrames28To31[];
+extern const u8 gGrandWheelieAltAttackBoxFrames32To35[];
+extern const u8 gGrandWheelieAltAttackBoxFrames36To47[];
+extern const u8 gGrandWheelieAltAttackBoxOtherFrames[];
 extern const u8 gUnk_08744CDC[];
 extern const u8 gUnk_08744D14[];
 extern const u8 gUnk_08744D68[];
@@ -144,9 +144,9 @@ extern const u8 gPhanPhanTerrainBox[];
 extern const u8 gGrandWheelieMiniWheelieAttackBox[];
 extern const u8 gPhanPhanAppleAttackBox[];
 extern const u8 gGrandWheelieMiniWheelieTerrainBox[];
-extern const u8 gUnk_08745868[];
+extern const u8 gMrFrostyAttackBox[];
 extern const u8 gUnk_087458D8[];
-extern const u8 gUnk_08745964[];
+extern const u8 gMrTickTockAttackBox[];
 extern const u8 gMrFrostyTerrainBox[];
 extern const u8 gMrTickTockTerrainBox[];
 extern const u8 gMrFrostyIceCubeAttackBox[];
@@ -389,7 +389,7 @@ extern struct ActorAux gUnk_0873F8EC;
 extern struct ActorAux gUnk_0874402C;
 extern struct ActorAux gUnk_08744054;
 extern struct ActorAux gUnk_0874406C;
-extern struct ActorAux gUnk_0874531C;
+extern struct ActorAux gGrandWheelieAuxFrames4To9;
 extern struct ActorAux gUnk_08745354;
 extern struct ActorAux gUnk_087453B4;
 extern struct ActorAux gUnk_08745A2C;
@@ -1823,8 +1823,8 @@ struct ActorDef gGrandWheelieDef ACTOR_REC(08744964) = {
     .ability = ABILITY_WHEEL,
     .isItem = 0x0,
     .unk0E = 0x0,
-    .aux = &gUnk_0874531C,
-    .attackBox = (u32)gUnk_087449E8,
+    .aux = &gGrandWheelieAuxFrames4To9,
+    .attackBox = (u32)gGrandWheelieAttackBoxFrames4To9,
     .terrainBox = (s32)gGrandWheelieTerrainBox,
     .terrainHandlers = (u32)&gGrandWheelieTerrainHandlers,
     .hitReactions = (u32)&gGrandWheelieHitReactions,
@@ -1867,40 +1867,40 @@ struct ActorDef gPhanPhanDef ACTOR_REC(08744964) = {
 };
 
 /* ---- 0x0874531C-0x087453BC: 20 record(s), section .actor_rec_0874531c ---- */
-struct ActorAux gUnk_0874531C ACTOR_REC(0874531c) = {
+struct ActorAux gGrandWheelieAuxFrames4To9 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744A20,
+    .altAttackBox = (u32)gGrandWheelieAltAttackBoxFrames4To9,
 };
 struct ActorAux gUnk_08745324 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744A74,
+    .altAttackBox = (u32)gGrandWheelieAltAttackBoxFrames10To19,
 };
 struct ActorAux gUnk_0874532C ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744AC8,
+    .altAttackBox = (u32)gGrandWheelieAltAttackBoxFrames20To27,
 };
 struct ActorAux gUnk_08745334 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744B54,
+    .altAttackBox = (u32)gGrandWheelieAltAttackBoxFrames28To31,
 };
 struct ActorAux gUnk_0874533C ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744BA8,
+    .altAttackBox = (u32)gGrandWheelieAltAttackBoxFrames32To35,
 };
 struct ActorAux gUnk_08745344 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744C34,
+    .altAttackBox = (u32)gGrandWheelieAltAttackBoxFrames36To47,
 };
 struct ActorAux gUnk_0874534C ACTOR_REC(0874531c) = {
     .hitDuration = 32,
     .filler01 = { 0x0, 0x0, 0x0 },
-    .altAttackBox = (u32)gUnk_08744C88,
+    .altAttackBox = (u32)gGrandWheelieAltAttackBoxOtherFrames,
 };
 struct ActorAux gUnk_08745354 ACTOR_REC(0874531c) = {
     .hitDuration = 32,
@@ -2015,7 +2015,7 @@ struct ActorDef gMrFrostyDef ACTOR_REC(08745810) = {
     .isItem = 0x0,
     .unk0E = 0x0,
     .aux = &gUnk_08745A2C,
-    .attackBox = (u32)gUnk_08745868,
+    .attackBox = (u32)gMrFrostyAttackBox,
     .terrainBox = (s32)gMrFrostyTerrainBox,
     .terrainHandlers = (u32)&gMrFrostyTerrainHandlers,
     .hitReactions = (u32)&gMrFrostyHitReactions,
@@ -2032,7 +2032,7 @@ struct ActorDef gMrTickTockDef ACTOR_REC(08745810) = {
     .isItem = 0x0,
     .unk0E = 0x0,
     .aux = &gUnk_08745A2C,
-    .attackBox = (u32)gUnk_08745964,
+    .attackBox = (u32)gMrTickTockAttackBox,
     .terrainBox = (s32)gMrTickTockTerrainBox,
     .terrainHandlers = (u32)&gMrTickTockTerrainHandlers,
     .hitReactions = (u32)&gMrTickTockHitReactions,

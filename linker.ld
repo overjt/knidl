@@ -4145,7 +4145,7 @@ SECTIONS
     ASSERT(!MATCHING || actor_rodata_087448e4 == 0x087448E4, "MATCHING: actor_rodata_087448e4 moved")
     ASSERT(!MATCHING || gGrandWheelieDef == 0x08744964, "MATCHING: actor_rec_08744964 moved")
     ASSERT(!MATCHING || actor_rodata_087449e8 == 0x087449E8, "MATCHING: actor_rodata_087449e8 moved")
-    ASSERT(!MATCHING || gUnk_0874531C == 0x0874531C, "MATCHING: actor_rec_0874531c moved")
+    ASSERT(!MATCHING || gGrandWheelieAuxFrames4To9 == 0x0874531C, "MATCHING: actor_rec_0874531c moved")
     ASSERT(!MATCHING || gGrandWheelieTerrainHandlers == 0x087453BC, "MATCHING: actor_tbl_087453bc moved")
     ASSERT(!MATCHING || actor_rodata_087453bc == 0x08745458, "MATCHING: actor_rodata_087453bc moved")
     ASSERT(!MATCHING || gGrandWheelieMiniWheelieDef == 0x08745530, "MATCHING: actor_rec_08745530 moved")

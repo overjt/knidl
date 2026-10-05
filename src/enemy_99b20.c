@@ -369,7 +369,7 @@ void MrTickTockUpdateAttackBoxes(void)
         ActorSetExtraAttackBox(gUnk_087459F0);
         break;
     default:
-        ActorSetAttackBox(gUnk_08745964);
+        ActorSetAttackBox(gMrTickTockAttackBox);
         ActorSetExtraAttackBox(gUnk_08745980);
         break;
     }

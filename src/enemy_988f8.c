@@ -319,7 +319,7 @@ void MrFrostyUpdateAttackBoxes(void)
         ActorSetAttackBox(gUnk_0874592C);
         ActorSetExtraAttackBox(gUnk_08745948);
     default:
-        ActorSetAttackBox(gUnk_08745868);
+        ActorSetAttackBox(gMrFrostyAttackBox);
         ActorSetExtraAttackBox(gUnk_08745884);
         break;
     }

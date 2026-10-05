@@ -3352,12 +3352,12 @@ u32 gUnk_0874CEE8[] FRAME_TABLE = {
     (u32)gUnk_080DBDE8,
 };
 
-/* gUnk_0874CF28.  Consumers: EndingEpilogueWarpStarEffect (src/ending_c6c64.c:506),
+/* gEndingEffectFrames.  Consumers: EndingEpilogueWarpStarEffect (src/ending_c6c64.c:506),
  * EndingEpilogueTrailStar (src/ending_c6c64.c:658), EndingStarRodReturnBurstStar
  * (src/ending_c9004.c:615).  27 words, OAM template streams; extent: the
  * span to the next label, every word such a target (pointer_tables
  * 0x0874CF28-0x0874CF94).  Declared include/ending.h:56. */
-u32 gUnk_0874CF28[] FRAME_TABLE = {
+u32 gEndingEffectFrames[] FRAME_TABLE = {
     (u32)gUnk_080DBDF0,
     (u32)gUnk_080DBE18,
     (u32)gUnk_080DBE48,

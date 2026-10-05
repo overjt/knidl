@@ -565,7 +565,7 @@ void JavelinKnightJumpUpdate(void)
     t = gCurTask;
     v = t->frame;
     if ((u16)(v - 17) <= 7)
-        ActorCheckHitsWithBox(gUnk_08747B38[t->frame - 17]);
+        ActorCheckHitsWithBox(gJavelinKnightSpinAttackBoxes[t->frame - 17]);
 }
 
 void JavelinKnightLandFromJump(void)
@@ -708,7 +708,7 @@ void JavelinKnightBounceUpdate(void)
     }
     ActorCheckHits();
     ActorReactToHit();
-    ActorCheckHitsWithBox(gUnk_08747B38[gCurTask->frame - 17]);
+    ActorCheckHitsWithBox(gJavelinKnightSpinAttackBoxes[gCurTask->frame - 17]);
 }
 
 void JavelinKnightPickHop(void)

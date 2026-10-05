@@ -2927,7 +2927,7 @@ u32 gUnk_0874B07C[9] ACTOR_TBL(0874ad74) = {
     -2,
 };
 /* include/enemy.h; NightmarePowerOrbStartAnim installs it as Actor.animScript, NightmarePowerOrbStepAnim runs it: 9 words up to its -2 (restart) */
-u32 gUnk_0874B0A0[9] ACTOR_TBL(0874ad74) = {
+u32 gNightmarePowerOrbReturnAnim[9] ACTOR_TBL(0874ad74) = {
     4, 4,
     5, 4,
     6, 4,

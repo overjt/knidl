@@ -612,7 +612,7 @@ void EndingStarRodReturnBurstStar(void)
         TaskYieldTrampoline(12);
         break;
     case 3:
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 24;
         gCurTask->velX = 0x14000;
         gCurTask->velY = -0x40000;
@@ -660,7 +660,7 @@ void EndingStarRodReturnBurstStar(void)
         TaskYieldTrampoline(12);
         break;
     case 6:
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 26;
         gCurTask->velX = -0x40000;
         gCurTask->velY = -0x14000;
@@ -677,7 +677,7 @@ void EndingStarRodReturnBurstStar(void)
         break;
     case 7:
         TaskYieldTrampoline(2);
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 26;
         gCurTask->velX = 0xA000;
         gCurTask->velY = -0x1E000;
@@ -728,7 +728,7 @@ void EndingStarRodReturnBurstStar(void)
         break;
     case 10:
         TaskYieldTrampoline(4);
-        gCurTask->frameTable = gUnk_0874CF28;
+        gCurTask->frameTable = gEndingEffectFrames;
         gCurTask->frame = 24;
         gCurTask->velX = -0x1E000;
         gCurTask->velY = -0xA000;

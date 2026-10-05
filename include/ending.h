@@ -53,7 +53,7 @@ extern u32 gUnk_085E2CE0[];
 extern u32 gUnk_085E4064[];
 extern u32 gUnk_085E5BC4[];
 extern u32 gUnk_0874CEE8[];
-extern u32 gUnk_0874CF28[];
+extern u32 gEndingEffectFrames[];
 extern u32 gUnk_0874CF94[];
 extern u32 gGameOverKnockedOutPlayersFrames[];
 extern u32 gUnk_087548B8[];
