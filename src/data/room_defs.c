@@ -42,13 +42,13 @@ extern u16 gUnk_0835D60C[];
 extern u16 gUnk_0835D710[];
 extern u16 gUnk_0835D814[];
 extern u16 gUnk_0835D918[];
-extern u16 gUnk_0848ADA0[];
-extern u16 gUnk_0849096C[];
+extern u16 gLevel6Stage3Bg3Palette[];
+extern u16 gLevel4Stage4Bg3Palette[];
 extern u16 gUnk_08497C74[];
 extern u16 gUnk_0849A52C[];
 extern u16 gUnk_0849A5F0[];
 extern u16 gUnk_0849A6B4[];
-extern u16 gUnk_0849A778[];
+extern u16 gLevel3Stage5Room1Bg2Palette[];
 extern u16 gUnk_0849A83C[];
 extern u16 gUnk_0849A940[];
 extern u16 gUnk_0849AA04[];
@@ -59,28 +59,28 @@ extern u16 gUnk_084B57E8[];
 extern u16 gLevel2Stage5Room5Bg2Palette[];
 extern u16 gLevel4Stage6Room0Bg2Palette[];
 extern u16 gLevel4Stage2Room4Bg3Palette[];
-extern u16 gUnk_084BACD8[];
+extern u16 gLevel3Stage5Room1Bg3Palette[];
 extern u16 gLevel2Stage5Room5Bg3Palette[];
-extern u16 gUnk_084BAEE0[];
+extern u16 gLevel3Stage5Room0Bg2Palette[];
 extern u16 gUnk_084BAFA4[];
 extern u16 gUnk_084BB068[];
-extern u16 gUnk_084BB16C[];
-extern u16 gUnk_084BB270[];
+extern u16 gLevel4Stage3Room1Bg2Palette[];
+extern u16 gLevel3Stage3Room0Bg2Palette[];
 extern u16 gLevel5Stage6Room0Bg2Palette[];
-extern u16 gUnk_084BB438[];
-extern u16 gUnk_084BB4FC[];
+extern u16 gLevel6Stage1Room1Bg2Palette[];
+extern u16 gLevel6Stage1Room0Bg2Palette[];
 extern u16 gUnk_084BB5C0[];
-extern u16 gUnk_084BB600[];
+extern u16 gLevel7Stage0Room0Bg3Palette[];
 extern u16 gLevel7Stage0Room1Bg3Palette[];
-extern u16 gUnk_084BB808[];
+extern u16 gLevel7Stage0Room0Bg2Palette[];
 extern u16 gLevel2Stage6Room2Bg3Palette[];
 extern u16 gLevel2Stage6Room0Bg3Palette[];
-extern u16 gUnk_084CE684[];
+extern u16 gLevel3Stage3Room0Bg3Palette[];
 extern u16 gUnk_084D50EC[];
 extern u16 gLevel6Stage1Room4Bg3Palette[];
-extern u16 gUnk_084D52B4[];
+extern u16 gLevel6Stage1Room3Bg3Palette[];
 extern u16 gLevel6Stage1Room5Bg3Palette[];
-extern u16 gUnk_084D54BC[];
+extern u16 gLevel5Stage1Room1Bg3Palette[];
 extern u16 gLevel8Stage0Room2Bg3Palette[];
 extern u16 gLevel8Stage1Room3Bg3Palette[];
 extern u16 gLevel8Stage2Room3Bg3Palette[];
@@ -94,44 +94,44 @@ extern u16 gLevel8Stage7Room0Bg2Palette[];
 extern u16 gLevel5Stage6Room0Bg3Palette[];
 extern u16 gLevel4Stage2Room2Bg2Palette[];
 extern u16 gLevel8Stage7Room0Bg3Palette[];
-extern u16 gUnk_084FEE04[];
+extern u16 gLevel4Stage3Room1Bg3Palette[];
 extern u16 gUnk_08505A1C[];
 extern u16 gUnk_08505B20[];
 extern u16 gUnk_0850A9A8[];
 extern u16 gUnk_0850AA6C[];
 extern u16 gUnk_0850AB70[];
 extern u16 gUnk_08510B9C[];
-extern u16 gUnk_08510CA0[];
-extern u16 gUnk_08510DA4[];
+extern u16 gLevel5Stage2Room0Bg3Palette[];
+extern u16 gLevel4Stage2Room1Bg2Palette[];
 extern u16 gLevel5Stage1Room0Bg2Palette[];
-extern u16 gUnk_08510FAC[];
-extern u16 gUnk_08511070[];
+extern u16 gLevel2Stage5Room0Bg2Palette[];
+extern u16 gLevel2Stage4Room0Bg2Palette[];
 extern u16 gUnk_08511134[];
-extern u16 gUnk_085111F8[];
+extern u16 gLevel2Stage1Room0Bg2Palette[];
 extern u16 gUnk_085112BC[];
 extern u16 gLevel3Stage3Room2Bg3Palette[];
-extern u16 gUnk_08524FEC[];
+extern u16 gLevel4Stage6Bg3Palette[];
 extern u16 gUnk_0852BB78[];
 extern u16 gLevel1Stage0Room1Bg2Palette[];
 extern u16 gUnk_0852BD00[];
 extern u16 gUnk_0852BDC4[];
-extern u16 gUnk_0852BEC8[];
-extern u16 gUnk_0852BFCC[];
-extern u16 gUnk_0852C0D0[];
-extern u16 gUnk_0852D088[];
-extern u16 gUnk_0852D18C[];
-extern u16 gUnk_0852D250[];
-extern u16 gUnk_0852D314[];
+extern u16 gLevel5Stage1Room0Bg3Palette[];
+extern u16 gLevel4Stage2Room2Bg3Palette[];
+extern u16 gLevel4Stage2Room0Bg3Palette[];
+extern u16 gLevel4Stage4Room0Bg2Palette[];
+extern u16 gLevel4Stage5Room1Bg2Palette[];
+extern u16 gLevel4Stage4Room3Bg2Palette[];
+extern u16 gLevel3Stage4Bg2Palette[];
 extern u16 gUnk_0852D3D8[];
 extern u16 gUnk_0852D49C[];
 extern u16 gUnk_0852D560[];
-extern u16 gUnk_0852D624[];
+extern u16 gLevel3Stage2Room2Bg2Palette[];
 extern u16 gUnk_0852D6E8[];
-extern u16 gUnk_0852D7AC[];
+extern u16 gLevel3Stage2Room1Bg2Palette[];
 extern u16 gUnk_08539BA4[];
-extern u16 gUnk_08539C88[];
-extern u16 gUnk_08539D8C[];
-extern u16 gUnk_0853C698[];
+extern u16 gLevel8Stage2Room0Bg2Palette[];
+extern u16 gLevel8Stage3Room0Bg2Palette[];
+extern u16 gLevel7Stage2Bg2Palette[];
 extern u16 gUnk_0853C6BC[];
 extern u16 gUnk_0853C7C0[];
 extern u16 gUnk_0853C8C4[];
@@ -139,39 +139,39 @@ extern u16 gUnk_0853C9C8[];
 extern u16 gUnk_0853CACC[];
 extern u16 gLevel4Stage0Room1Bg3Palette[];
 extern u16 gLevel6Stage1Room2Bg3Palette[];
-extern u16 gUnk_0853CDD8[];
+extern u16 gLevel6Stage1Room6Bg3Palette[];
 extern u16 gUnk_0853CEDC[];
-extern u16 gUnk_0853CFE0[];
+extern u16 gLevel6Stage1Room0Bg3Palette[];
 extern u16 gUnk_0853D0E4[];
-extern u16 gUnk_0853D108[];
+extern u16 gLevel8Stage5Room0Bg3Palette[];
 extern u16 gUnk_0853D12C[];
-extern u16 gUnk_0853D230[];
-extern u16 gUnk_0853D334[];
-extern u16 gUnk_0853D438[];
+extern u16 gLevel3Stage5Room0Bg3Palette[];
+extern u16 gLevel3Stage5Room2Bg3Palette[];
+extern u16 gLevel3Stage1Room1Bg3Palette[];
 extern u16 gUnk_0853D53C[];
-extern u16 gUnk_0853D600[];
-extern u16 gUnk_0853D6C4[];
-extern u16 gUnk_0853D7C8[];
-extern u16 gUnk_0853D8CC[];
-extern u16 gUnk_0853D9D0[];
+extern u16 gLevel8Stage0Room0Bg2Palette[];
+extern u16 gLevel8Stage1Room0Bg2Palette[];
+extern u16 gLevel8Stage4Room0Bg2Palette[];
+extern u16 gLevel8Stage5Room0Bg2Palette[];
+extern u16 gLevel8Stage6Room0Bg2Palette[];
 extern u16 gUnk_0853DAB4[];
 extern u16 gUnk_0853DBB8[];
 extern u16 gLevel1Stage5Room0Bg2Palette[];
 extern u16 gUnk_0853DD00[];
-extern u16 gUnk_0853DE04[];
+extern u16 gLevel1Stage1Room3Bg3Palette[];
 extern u16 gUnk_0853DF08[];
 extern u16 gUnk_0853E00C[];
-extern u16 gUnk_0853E110[];
-extern u16 gUnk_0853E214[];
+extern u16 gLevel1Stage2Room0Bg3Palette[];
+extern u16 gLevel1Stage3Bg3Palette[];
 extern u16 gUnk_0853E318[];
 extern u16 gUnk_0853E41C[];
 extern u16 gUnk_0853E520[];
 extern u16 gUnk_0853E624[];
 extern u16 gUnk_0853E728[];
-extern u16 gUnk_0853E7EC[];
+extern u16 gLevel6Stage5Bg2Palette[];
 
 /* bg2Tiles, bg3Tiles: LZ77 tiles (RequestCopy mode 8, the same functions) */
-extern u8 gUnk_083D1380[];
+extern u8 gLevel7Stage2Bg2Tiles[];
 extern u8 gUnk_083D1FD8[];
 extern u8 gUnk_083D4E14[];
 extern u8 gUnk_083DB044[];
@@ -181,38 +181,38 @@ extern u8 gUnk_083E6548[];
 extern u8 gUnk_083EB890[];
 extern u8 gUnk_083EE8B4[];
 extern u8 gLevel6Stage1Room2Bg3Tiles[];
-extern u8 gUnk_083F7470[];
+extern u8 gLevel6Stage1Room6Bg3Tiles[];
 extern u8 gUnk_083F9FC8[];
 extern u8 gUnk_083FE694[];
 extern u8 gUnk_08401D3C[];
-extern u8 gUnk_08407278[];
+extern u8 gLevel6Stage1Room0Bg3Tiles[];
 extern u8 gUnk_0840CAAC[];
 extern u8 gUnk_0840F3A8[];
-extern u8 gUnk_0840F56C[];
-extern u8 gUnk_0840F754[];
-extern u8 gUnk_0840F99C[];
-extern u8 gUnk_0840FB54[];
+extern u8 gLevel8Stage3Room0Bg3Tiles[];
+extern u8 gLevel8Stage4Room0Bg3Tiles[];
+extern u8 gLevel8Stage5Room0Bg3Tiles[];
+extern u8 gLevel8Stage6Room0Bg3Tiles[];
 extern u8 gUnk_0840FCD8[];
 extern u8 gUnk_08412BD8[];
 extern u8 gLevel8Stage7Room0Bg2Tiles[];
-extern u8 gUnk_0841AD98[];
-extern u8 gUnk_08421338[];
-extern u8 gUnk_084278D8[];
+extern u8 gLevel3Stage5Room0Bg3Tiles[];
+extern u8 gLevel3Stage5Room1Bg3Tiles[];
+extern u8 gLevel3Stage1Room1Bg3Tiles[];
 extern u8 gUnk_0842E1C0[];
-extern u8 gUnk_08430A34[];
-extern u8 gUnk_08431740[];
-extern u8 gUnk_08432FCC[];
-extern u8 gUnk_08434EFC[];
-extern u8 gUnk_08436318[];
-extern u8 gUnk_08437924[];
-extern u8 gUnk_08439268[];
+extern u8 gLevel8Stage0Room0Bg2Tiles[];
+extern u8 gLevel8Stage1Room0Bg2Tiles[];
+extern u8 gLevel8Stage2Room0Bg2Tiles[];
+extern u8 gLevel8Stage3Room0Bg2Tiles[];
+extern u8 gLevel8Stage4Room0Bg2Tiles[];
+extern u8 gLevel8Stage5Room0Bg2Tiles[];
+extern u8 gLevel8Stage6Room0Bg2Tiles[];
 extern u8 gUnk_0843A824[];
 extern u8 gUnk_0843D610[];
 extern u8 gUnk_0843FC10[];
 extern u8 gLevel1Stage5Room0Bg2Tiles[];
 extern u8 gUnk_08442F18[];
 extern u8 gUnk_0844619C[];
-extern u8 gUnk_0844B2FC[];
+extern u8 gLevel1Stage1Room3Bg3Tiles[];
 extern u8 gUnk_0844F9D0[];
 extern u8 gUnk_08454A70[];
 extern u8 gUnk_0845A054[];
@@ -225,9 +225,9 @@ extern u8 gUnk_08479B7C[];
 extern u8 gUnk_0847E4B4[];
 extern u8 gUnk_084809DC[];
 extern u8 gUnk_08487704[];
-extern u8 gUnk_08489D58[];
-extern u8 gUnk_0848B7C0[];
-extern u8 gUnk_0849138C[];
+extern u8 gLevel6Stage5Bg2Tiles[];
+extern u8 gLevel6Stage3Bg3Tiles[];
+extern u8 gLevel4Stage4Bg3Tiles[];
 extern u8 gUnk_084985B0[];
 extern u8 gUnk_0849BE08[];
 extern u8 gUnk_084A33B8[];
@@ -237,10 +237,10 @@ extern u8 gUnk_084B37B0[];
 extern u8 gUnk_084B5F90[];
 extern u8 gLevel4Stage6Room0Bg2Tiles[];
 extern u8 gUnk_084BB5F4[];
-extern u8 gUnk_084BFECC[];
+extern u8 gLevel7Stage0Room0Bg3Tiles[];
 extern u8 gLevel7Stage0Room1Bg3Tiles[];
-extern u8 gUnk_084CB360[];
-extern u8 gUnk_084CF0A8[];
+extern u8 gLevel7Stage0Room0Bg2Tiles[];
+extern u8 gLevel3Stage3Room0Bg3Tiles[];
 extern u8 gUnk_084D8E30[];
 extern u8 gUnk_084DEE4C[];
 extern u8 gUnk_084E6184[];
@@ -248,33 +248,33 @@ extern u8 gUnk_084EB4F4[];
 extern u8 gLevel1Stage5Room0Bg3Tiles[];
 extern u8 gLevel5Stage6Room0Bg3Tiles[];
 extern u8 gLevel8Stage7Room0Bg3Tiles[];
-extern u8 gUnk_084FF824[];
+extern u8 gLevel4Stage3Room1Bg3Tiles[];
 extern u8 gUnk_08506F4C[];
 extern u8 gUnk_0850B598[];
 extern u8 gUnk_08511CDC[];
-extern u8 gUnk_08518880[];
+extern u8 gLevel4Stage2Room2Bg3Tiles[];
 extern u8 gUnk_0851EF74[];
-extern u8 gUnk_08525A0C[];
+extern u8 gLevel4Stage6Bg3Tiles[];
 extern u8 gUnk_0852F948[];
-extern u8 gUnk_08531C38[];
+extern u8 gLevel3Stage2Room2Bg2Tiles[];
 extern u8 gUnk_08534160[];
-extern u8 gUnk_08536548[];
+extern u8 gLevel3Stage2Room1Bg2Tiles[];
 
 /* metatileTiles: LZ77 metatile tables (LoadRoom, src/room_reset_level_load_room.c) */
-extern u8 gUnk_083A862C[];
+extern u8 gLevel7Stage2MetatileTiles[];
 extern u8 gUnk_083A8B50[];
 extern u8 gUnk_083AA000[];
 extern u8 gUnk_083AAAB0[];
 extern u8 gUnk_083AB444[];
 extern u8 gLevel8Stage7Room0MetatileTiles[];
 extern u8 gUnk_083ACDCC[];
-extern u8 gUnk_083AD728[];
-extern u8 gUnk_083ADC20[];
-extern u8 gUnk_083AE5A4[];
-extern u8 gUnk_083AEBB4[];
-extern u8 gUnk_083AF1FC[];
-extern u8 gUnk_083AF7E0[];
-extern u8 gUnk_083AFFE4[];
+extern u8 gLevel8Stage0Room0MetatileTiles[];
+extern u8 gLevel8Stage1Room0MetatileTiles[];
+extern u8 gLevel8Stage2Room0MetatileTiles[];
+extern u8 gLevel8Stage3Room0MetatileTiles[];
+extern u8 gLevel8Stage4Room0MetatileTiles[];
+extern u8 gLevel8Stage5Room0MetatileTiles[];
+extern u8 gLevel8Stage6Room0MetatileTiles[];
 extern u8 gUnk_083B0700[];
 extern u8 gUnk_083B1058[];
 extern u8 gUnk_083B18FC[];
@@ -283,19 +283,19 @@ extern u8 gUnk_083B2254[];
 extern u8 gUnk_083B282C[];
 extern u8 gUnk_083B39C4[];
 extern u8 gUnk_083B4738[];
-extern u8 gUnk_083B4D78[];
+extern u8 gLevel6Stage5MetatileTiles[];
 extern u8 gUnk_08497D38[];
 extern u8 gUnk_084AF93C[];
 extern u8 gUnk_084B3060[];
 extern u8 gUnk_084B58AC[];
 extern u8 gLevel4Stage6Room0MetatileTiles[];
 extern u8 gUnk_084BB5E4[];
-extern u8 gUnk_084BB8CC[];
+extern u8 gLevel7Stage0Room0MetatileTiles[];
 extern u8 gUnk_084E57E0[];
 extern u8 gUnk_0852D870[];
-extern u8 gUnk_0852E06C[];
+extern u8 gLevel3Stage2Room2MetatileTiles[];
 extern u8 gUnk_0852E7CC[];
-extern u8 gUnk_0852F03C[];
+extern u8 gLevel3Stage2Room1MetatileTiles[];
 
 /* bg3Map: struct BgMap (SelectBg3MapShape and LoadBg3Map,
  * src/room_camera_init.c:321-340; DrawBg3Tile, src/camera_draw_bg_map.c) */
@@ -306,24 +306,24 @@ extern struct BgMap gUnk_083B708C;
 extern struct BgMap gUnk_083B7994;
 extern struct BgMap gUnk_083B82B0;
 extern struct BgMap gLevel6Stage1Room2Bg3Map;
-extern struct BgMap gUnk_083B954C;
+extern struct BgMap gLevel6Stage1Room6Bg3Map;
 extern struct BgMap gUnk_083B9C18;
 extern struct BgMap gUnk_083BA534;
 extern struct BgMap gUnk_083BADEC;
-extern struct BgMap gUnk_083BB70C;
-extern struct BgMap gUnk_083BC030;
-extern struct BgMap gUnk_083BD638;
-extern struct BgMap gUnk_083BF8C0;
-extern struct BgMap gUnk_083C0E48;
-extern struct BgMap gUnk_083C2DD0;
-extern struct BgMap gUnk_083C5058;
-extern struct BgMap gUnk_083C72E0;
+extern struct BgMap gLevel6Stage1Room0Bg3Map;
+extern struct BgMap gLevel8Stage0Room0Bg3Map;
+extern struct BgMap gLevel8Stage1Room0Bg3Map;
+extern struct BgMap gLevel8Stage2Room0Bg3Map;
+extern struct BgMap gLevel8Stage3Room0Bg3Map;
+extern struct BgMap gLevel8Stage4Room0Bg3Map;
+extern struct BgMap gLevel8Stage5Room0Bg3Map;
+extern struct BgMap gLevel8Stage6Room0Bg3Map;
 extern struct BgMap gUnk_083C89E8;
-extern struct BgMap gUnk_083C93D8;
-extern struct BgMap gUnk_083C9CFC;
-extern struct BgMap gUnk_083CA620;
+extern struct BgMap gLevel3Stage5Room0Bg3Map;
+extern struct BgMap gLevel3Stage5Room1Bg3Map;
+extern struct BgMap gLevel3Stage1Room1Bg3Map;
 extern struct BgMap gUnk_083CAF40;
-extern struct BgMap gUnk_083CB85C;
+extern struct BgMap gLevel1Stage1Room3Bg3Map;
 extern struct BgMap gUnk_083CC17C;
 extern struct BgMap gUnk_083CCA9C;
 extern struct BgMap gUnk_083CD3B8;
@@ -333,14 +333,14 @@ extern struct BgMap gUnk_083CEF10;
 extern struct BgMap gUnk_083CF82C;
 extern struct BgMap gUnk_083D0148;
 extern struct BgMap gUnk_083D0A64;
-extern struct BgMap gUnk_0848AEA4;
-extern struct BgMap gUnk_08490A70;
+extern struct BgMap gLevel6Stage3Bg3Map;
+extern struct BgMap gLevel4Stage4Bg3Map;
 extern struct BgMap gUnk_0849ABCC;
 extern struct BgMap gUnk_0849B4E8;
 extern struct BgMap gUnk_084A7CFC;
 extern struct BgMap gLevel7Stage0Room0Bg3Map;
 extern struct BgMap gLevel7Stage0Room1Bg3Map;
-extern struct BgMap gUnk_084CE788;
+extern struct BgMap gLevel3Stage3Room0Bg3Map;
 extern struct BgMap gLevel8Stage0Room2Bg3Map;
 extern struct BgMap gLevel8Stage1Room3Bg3Map;
 extern struct BgMap gLevel8Stage2Room3Bg3Map;
@@ -351,13 +351,13 @@ extern struct BgMap gUnk_084E5928;
 extern struct BgMap gLevel1Stage5Room0Bg3Map;
 extern struct BgMap gLevel5Stage6Room0Bg3Map;
 extern struct BgMap gLevel8Stage7Room0Bg3Map;
-extern struct BgMap gUnk_084FEF08;
+extern struct BgMap gLevel4Stage3Room1Bg3Map;
 extern struct BgMap gUnk_08505C24;
 extern struct BgMap gUnk_0850AC74;
 extern struct BgMap gUnk_085113C0;
-extern struct BgMap gUnk_085175E4;
+extern struct BgMap gLevel4Stage2Room2Bg3Map;
 extern struct BgMap gUnk_08517F00;
-extern struct BgMap gUnk_085250F0;
+extern struct BgMap gLevel4Stage6Bg3Map;
 extern struct BgMap gUnk_0852C1D4;
 extern struct BgMap gUnk_0852C930;
 extern struct BgMap gLevel8Stage7Room1Bg3Map;
@@ -1627,9 +1627,9 @@ struct RoomDef gLevel1Stage1Room3 ROOM_DEF(08364a38) = {
     .metatileTiles = gUnk_083AAAB0,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853DE04,
-    .bg3Tiles = gUnk_0844B2FC,
-    .bg3Map = &gUnk_083CB85C,
+    .bg3Palette = gLevel1Stage1Room3Bg3Palette,
+    .bg3Tiles = gLevel1Stage1Room3Bg3Tiles,
+    .bg3Map = &gLevel1Stage1Room3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -1670,9 +1670,9 @@ struct RoomDef gLevel1Stage1Room4 ROOM_DEF(08365558) = {
     .metatileTiles = gUnk_083AAAB0,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0853DE04,
-    .bg3Tiles = gUnk_0844B2FC,
-    .bg3Map = &gUnk_083CB85C,
+    .bg3Palette = gLevel1Stage1Room3Bg3Palette,
+    .bg3Tiles = gLevel1Stage1Room3Bg3Tiles,
+    .bg3Map = &gLevel1Stage1Room3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -1713,7 +1713,7 @@ struct RoomDef gLevel1Stage2Room0 ROOM_DEF(083657c0) = {
     .metatileTiles = gUnk_083A8B50,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0853E110,
+    .bg3Palette = gLevel1Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -1799,7 +1799,7 @@ struct RoomDef gLevel1Stage2Room2 ROOM_DEF(0836663c) = {
     .metatileTiles = gUnk_083B282C,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E110,
+    .bg3Palette = gLevel1Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -1842,7 +1842,7 @@ struct RoomDef gLevel1Stage2Room3 ROOM_DEF(08366974) = {
     .metatileTiles = gUnk_083B282C,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0853E110,
+    .bg3Palette = gLevel1Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -1885,7 +1885,7 @@ struct RoomDef gLevel1Stage2Room4 ROOM_DEF(08366b98) = {
     .metatileTiles = gUnk_083A8B50,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E110,
+    .bg3Palette = gLevel1Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -1928,7 +1928,7 @@ struct RoomDef gLevel1Stage2Room5 ROOM_DEF(08366d1c) = {
     .metatileTiles = gUnk_083B282C,
     .borderX = 24,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E110,
+    .bg3Palette = gLevel1Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -1971,7 +1971,7 @@ struct RoomDef gLevel1Stage3Room0 ROOM_DEF(08367274) = {
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0853E214,
+    .bg3Palette = gLevel1Stage3Bg3Palette,
     .bg3Tiles = gUnk_08460458,
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
@@ -2014,7 +2014,7 @@ struct RoomDef gLevel1Stage3Room1 ROOM_DEF(0836753c) = {
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E214,
+    .bg3Palette = gLevel1Stage3Bg3Palette,
     .bg3Tiles = gUnk_08460458,
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
@@ -2057,7 +2057,7 @@ struct RoomDef gLevel1Stage3Room2 ROOM_DEF(083677f4) = {
     .metatileTiles = gUnk_083B282C,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E214,
+    .bg3Palette = gLevel1Stage3Bg3Palette,
     .bg3Tiles = gUnk_08460458,
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
@@ -2100,7 +2100,7 @@ struct RoomDef gLevel1Stage3Room3 ROOM_DEF(08367a50) = {
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E214,
+    .bg3Palette = gLevel1Stage3Bg3Palette,
     .bg3Tiles = gUnk_08460458,
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
@@ -2143,7 +2143,7 @@ struct RoomDef gLevel1Stage3Room4 ROOM_DEF(08367e8c) = {
     .metatileTiles = gUnk_083B282C,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E214,
+    .bg3Palette = gLevel1Stage3Bg3Palette,
     .bg3Tiles = gUnk_08460458,
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
@@ -2186,7 +2186,7 @@ struct RoomDef gLevel1Stage3Room5 ROOM_DEF(083684d4) = {
     .metatileTiles = gUnk_083AAAB0,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0853E214,
+    .bg3Palette = gLevel1Stage3Bg3Palette,
     .bg3Tiles = gUnk_08460458,
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
@@ -2229,7 +2229,7 @@ struct RoomDef gLevel1Stage3Room6 ROOM_DEF(08368710) = {
     .metatileTiles = gUnk_083B39C4,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853E214,
+    .bg3Palette = gLevel1Stage3Bg3Palette,
     .bg3Tiles = gUnk_08460458,
     .bg3Map = &gUnk_083CDCD4,
     .bg3BorderX = 8,
@@ -2867,7 +2867,7 @@ struct RoomDef gLevel2Stage1Room0 ROOM_DEF(0836bc70) = {
     .blockMetatiles = gLevel2Stage1Room0BlockMetatiles,
     .width = 16,
     .height = 24,
-    .bg2Palette = gUnk_085111F8,
+    .bg2Palette = gLevel2Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -2953,7 +2953,7 @@ struct RoomDef gLevel2Stage1Room2 ROOM_DEF(0836c50c) = {
     .blockMetatiles = gLevel2Stage1Room2BlockMetatiles,
     .width = 16,
     .height = 36,
-    .bg2Palette = gUnk_085111F8,
+    .bg2Palette = gLevel2Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -2996,7 +2996,7 @@ struct RoomDef gLevel2Stage1Room3 ROOM_DEF(0836ca98) = {
     .blockMetatiles = gLevel2Stage1Room3BlockMetatiles,
     .width = 32,
     .height = 23,
-    .bg2Palette = gUnk_085111F8,
+    .bg2Palette = gLevel2Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3039,7 +3039,7 @@ struct RoomDef gLevel2Stage1Room4 ROOM_DEF(0836cda8) = {
     .blockMetatiles = gLevel2Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 13,
-    .bg2Palette = gUnk_085111F8,
+    .bg2Palette = gLevel2Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3082,7 +3082,7 @@ struct RoomDef gLevel2Stage1Room5 ROOM_DEF(0836d19c) = {
     .blockMetatiles = gLevel2Stage1Room5BlockMetatiles,
     .width = 51,
     .height = 11,
-    .bg2Palette = gUnk_085111F8,
+    .bg2Palette = gLevel2Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3125,7 +3125,7 @@ struct RoomDef gLevel2Stage1Room6 ROOM_DEF(0836d334) = {
     .blockMetatiles = gLevel2Stage1Room6BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_085111F8,
+    .bg2Palette = gLevel2Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3168,7 +3168,7 @@ struct RoomDef gLevel2Stage1Room7 ROOM_DEF(0836d4fc) = {
     .blockMetatiles = gLevel2Stage1Room7BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_085111F8,
+    .bg2Palette = gLevel2Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3682,7 +3682,7 @@ struct RoomDef gLevel2Stage4Room0 ROOM_DEF(0836f9b0) = {
     .blockMetatiles = gLevel2Stage4Room0BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_08511070,
+    .bg2Palette = gLevel2Stage4Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3768,7 +3768,7 @@ struct RoomDef gLevel2Stage4Room2 ROOM_DEF(08370000) = {
     .blockMetatiles = gLevel2Stage4Room2BlockMetatiles,
     .width = 32,
     .height = 11,
-    .bg2Palette = gUnk_08511070,
+    .bg2Palette = gLevel2Stage4Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3811,7 +3811,7 @@ struct RoomDef gLevel2Stage4Room3 ROOM_DEF(083702fc) = {
     .blockMetatiles = gLevel2Stage4Room3BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_08511070,
+    .bg2Palette = gLevel2Stage4Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3854,7 +3854,7 @@ struct RoomDef gLevel2Stage4Room4 ROOM_DEF(083704e4) = {
     .blockMetatiles = gLevel2Stage4Room4BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_08511070,
+    .bg2Palette = gLevel2Stage4Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3897,7 +3897,7 @@ struct RoomDef gLevel2Stage5Room0 ROOM_DEF(08370684) = {
     .blockMetatiles = gLevel2Stage5Room0BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_08510FAC,
+    .bg2Palette = gLevel2Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3940,7 +3940,7 @@ struct RoomDef gLevel2Stage5Room1 ROOM_DEF(08370af4) = {
     .blockMetatiles = gLevel2Stage5Room1BlockMetatiles,
     .width = 48,
     .height = 11,
-    .bg2Palette = gUnk_08510FAC,
+    .bg2Palette = gLevel2Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -3983,7 +3983,7 @@ struct RoomDef gLevel2Stage5Room2 ROOM_DEF(08370e08) = {
     .blockMetatiles = gLevel2Stage5Room2BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_08510FAC,
+    .bg2Palette = gLevel2Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -4153,7 +4153,7 @@ struct RoomDef gLevel2Stage5Room6 ROOM_DEF(0837181c) = {
     .blockMetatiles = gLevel2Stage5Room6BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_08510FAC,
+    .bg2Palette = gLevel2Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -4239,7 +4239,7 @@ struct RoomDef gLevel2Stage5Room8 ROOM_DEF(08372040) = {
     .blockMetatiles = gLevel2Stage5Room8BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_08510FAC,
+    .bg2Palette = gLevel2Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -4282,7 +4282,7 @@ struct RoomDef gLevel2Stage5Room9 ROOM_DEF(08372240) = {
     .blockMetatiles = gLevel2Stage5Room9BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_08510FAC,
+    .bg2Palette = gLevel2Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -4755,9 +4755,9 @@ struct RoomDef gLevel3Stage1Room1 ROOM_DEF(083742cc) = {
     .metatileTiles = gUnk_08497D38,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D438,
-    .bg3Tiles = gUnk_084278D8,
-    .bg3Map = &gUnk_083CA620,
+    .bg3Palette = gLevel3Stage1Room1Bg3Palette,
+    .bg3Tiles = gLevel3Stage1Room1Bg3Tiles,
+    .bg3Map = &gLevel3Stage1Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -4798,9 +4798,9 @@ struct RoomDef gLevel3Stage1Room2 ROOM_DEF(083747d0) = {
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D438,
-    .bg3Tiles = gUnk_084278D8,
-    .bg3Map = &gUnk_083CA620,
+    .bg3Palette = gLevel3Stage1Room1Bg3Palette,
+    .bg3Tiles = gLevel3Stage1Room1Bg3Tiles,
+    .bg3Map = &gLevel3Stage1Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -4841,9 +4841,9 @@ struct RoomDef gLevel3Stage1Room3 ROOM_DEF(08374b28) = {
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D438,
-    .bg3Tiles = gUnk_084278D8,
-    .bg3Map = &gUnk_083CA620,
+    .bg3Palette = gLevel3Stage1Room1Bg3Palette,
+    .bg3Tiles = gLevel3Stage1Room1Bg3Tiles,
+    .bg3Map = &gLevel3Stage1Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5008,9 +5008,9 @@ struct RoomDef gLevel3Stage2Room1 ROOM_DEF(083761d0) = {
     .blockMetatiles = gLevel3Stage2Room1BlockMetatiles,
     .width = 120,
     .height = 28,
-    .bg2Palette = gUnk_0852D7AC,
-    .bg2Tiles = gUnk_08536548,
-    .metatileTiles = gUnk_0852F03C,
+    .bg2Palette = gLevel3Stage2Room1Bg2Palette,
+    .bg2Tiles = gLevel3Stage2Room1Bg2Tiles,
+    .metatileTiles = gLevel3Stage2Room1MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_08539BA4,
@@ -5051,9 +5051,9 @@ struct RoomDef gLevel3Stage2Room2 ROOM_DEF(08376b24) = {
     .blockMetatiles = gLevel3Stage2Room2BlockMetatiles,
     .width = 128,
     .height = 13,
-    .bg2Palette = gUnk_0852D624,
-    .bg2Tiles = gUnk_08531C38,
-    .metatileTiles = gUnk_0852E06C,
+    .bg2Palette = gLevel3Stage2Room2Bg2Palette,
+    .bg2Tiles = gLevel3Stage2Room2Bg2Tiles,
+    .metatileTiles = gLevel3Stage2Room2MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_08539BA4,
@@ -5180,9 +5180,9 @@ struct RoomDef gLevel3Stage2Room5 ROOM_DEF(08377144) = {
     .blockMetatiles = gLevel3Stage2Room5BlockMetatiles,
     .width = 16,
     .height = 13,
-    .bg2Palette = gUnk_0852D7AC,
-    .bg2Tiles = gUnk_08536548,
-    .metatileTiles = gUnk_0852F03C,
+    .bg2Palette = gLevel3Stage2Room1Bg2Palette,
+    .bg2Tiles = gLevel3Stage2Room1Bg2Tiles,
+    .metatileTiles = gLevel3Stage2Room1MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_08539BA4,
@@ -5223,9 +5223,9 @@ struct RoomDef gLevel3Stage2Room6 ROOM_DEF(08377334) = {
     .blockMetatiles = gLevel3Stage2Room6BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_0852D624,
-    .bg2Tiles = gUnk_08531C38,
-    .metatileTiles = gUnk_0852E06C,
+    .bg2Palette = gLevel3Stage2Room2Bg2Palette,
+    .bg2Tiles = gLevel3Stage2Room2Bg2Tiles,
+    .metatileTiles = gLevel3Stage2Room2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_08539BA4,
@@ -5266,14 +5266,14 @@ struct RoomDef gLevel3Stage3Room0 ROOM_DEF(08377af0) = {
     .blockMetatiles = gLevel3Stage3Room0BlockMetatiles,
     .width = 64,
     .height = 18,
-    .bg2Palette = gUnk_084BB270,
+    .bg2Palette = gLevel3Stage3Room0Bg2Palette,
     .bg2Tiles = gUnk_0840FCD8,
     .metatileTiles = gUnk_083AB444,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_084CE684,
-    .bg3Tiles = gUnk_084CF0A8,
-    .bg3Map = &gUnk_084CE788,
+    .bg3Palette = gLevel3Stage3Room0Bg3Palette,
+    .bg3Tiles = gLevel3Stage3Room0Bg3Tiles,
+    .bg3Map = &gLevel3Stage3Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5309,14 +5309,14 @@ struct RoomDef gLevel3Stage3Room1 ROOM_DEF(08377fbc) = {
     .blockMetatiles = gLevel3Stage3Room1BlockMetatiles,
     .width = 64,
     .height = 11,
-    .bg2Palette = gUnk_084BB270,
+    .bg2Palette = gLevel3Stage3Room0Bg2Palette,
     .bg2Tiles = gUnk_0840FCD8,
     .metatileTiles = gUnk_083AB444,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_084CE684,
-    .bg3Tiles = gUnk_084CF0A8,
-    .bg3Map = &gUnk_084CE788,
+    .bg3Palette = gLevel3Stage3Room0Bg3Palette,
+    .bg3Tiles = gLevel3Stage3Room0Bg3Tiles,
+    .bg3Map = &gLevel3Stage3Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5481,7 +5481,7 @@ struct RoomDef gLevel3Stage4Room0 ROOM_DEF(08379b84) = {
     .blockMetatiles = gLevel3Stage4Room0BlockMetatiles,
     .width = 97,
     .height = 23,
-    .bg2Palette = gUnk_0852D314,
+    .bg2Palette = gLevel3Stage4Bg2Palette,
     .bg2Tiles = gUnk_083E0A24,
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
@@ -5524,7 +5524,7 @@ struct RoomDef gLevel3Stage4Room1 ROOM_DEF(08379e60) = {
     .blockMetatiles = gLevel3Stage4Room1BlockMetatiles,
     .width = 32,
     .height = 11,
-    .bg2Palette = gUnk_0852D314,
+    .bg2Palette = gLevel3Stage4Bg2Palette,
     .bg2Tiles = gUnk_083E0A24,
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
@@ -5567,7 +5567,7 @@ struct RoomDef gLevel3Stage4Room2 ROOM_DEF(0837a0cc) = {
     .blockMetatiles = gLevel3Stage4Room2BlockMetatiles,
     .width = 30,
     .height = 11,
-    .bg2Palette = gUnk_0852D314,
+    .bg2Palette = gLevel3Stage4Bg2Palette,
     .bg2Tiles = gUnk_083E0A24,
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
@@ -5610,7 +5610,7 @@ struct RoomDef gLevel3Stage4Room3 ROOM_DEF(0837a52c) = {
     .blockMetatiles = gLevel3Stage4Room3BlockMetatiles,
     .width = 64,
     .height = 11,
-    .bg2Palette = gUnk_0852D314,
+    .bg2Palette = gLevel3Stage4Bg2Palette,
     .bg2Tiles = gUnk_083E0A24,
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
@@ -5653,7 +5653,7 @@ struct RoomDef gLevel3Stage4Room4 ROOM_DEF(0837ab88) = {
     .blockMetatiles = gLevel3Stage4Room4BlockMetatiles,
     .width = 57,
     .height = 27,
-    .bg2Palette = gUnk_0852D314,
+    .bg2Palette = gLevel3Stage4Bg2Palette,
     .bg2Tiles = gUnk_083E0A24,
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
@@ -5696,7 +5696,7 @@ struct RoomDef gLevel3Stage4Room5 ROOM_DEF(0837ad38) = {
     .blockMetatiles = gLevel3Stage4Room5BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_0852D314,
+    .bg2Palette = gLevel3Stage4Bg2Palette,
     .bg2Tiles = gUnk_083E0A24,
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
@@ -5739,7 +5739,7 @@ struct RoomDef gLevel3Stage4Room6 ROOM_DEF(0837af10) = {
     .blockMetatiles = gLevel3Stage4Room6BlockMetatiles,
     .width = 18,
     .height = 12,
-    .bg2Palette = gUnk_0852D314,
+    .bg2Palette = gLevel3Stage4Bg2Palette,
     .bg2Tiles = gUnk_083E0A24,
     .metatileTiles = gUnk_083AA000,
     .borderX = 24,
@@ -5782,14 +5782,14 @@ struct RoomDef gLevel3Stage5Room0 ROOM_DEF(0837b7cc) = {
     .blockMetatiles = gLevel3Stage5Room0BlockMetatiles,
     .width = 32,
     .height = 23,
-    .bg2Palette = gUnk_084BAEE0,
+    .bg2Palette = gLevel3Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_084985B0,
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D230,
-    .bg3Tiles = gUnk_0841AD98,
-    .bg3Map = &gUnk_083C93D8,
+    .bg3Palette = gLevel3Stage5Room0Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room0Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5825,14 +5825,14 @@ struct RoomDef gLevel3Stage5Room1 ROOM_DEF(0837bb9c) = {
     .blockMetatiles = gLevel3Stage5Room1BlockMetatiles,
     .width = 64,
     .height = 13,
-    .bg2Palette = gUnk_0849A778,
+    .bg2Palette = gLevel3Stage5Room1Bg2Palette,
     .bg2Tiles = gUnk_084985B0,
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_084BACD8,
-    .bg3Tiles = gUnk_08421338,
-    .bg3Map = &gUnk_083C9CFC,
+    .bg3Palette = gLevel3Stage5Room1Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room1Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5871,9 +5871,9 @@ struct RoomDef gLevel3Stage5Room2 ROOM_DEF(0837bc90) = {
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D334,
-    .bg3Tiles = gUnk_08421338,
-    .bg3Map = &gUnk_083C9CFC,
+    .bg3Palette = gLevel3Stage5Room2Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room1Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5914,9 +5914,9 @@ struct RoomDef gLevel3Stage5Room3 ROOM_DEF(0837bfa8) = {
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D230,
-    .bg3Tiles = gUnk_0841AD98,
-    .bg3Map = &gUnk_083C93D8,
+    .bg3Palette = gLevel3Stage5Room0Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room0Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5952,14 +5952,14 @@ struct RoomDef gLevel3Stage5Room4 ROOM_DEF(0837c288) = {
     .blockMetatiles = gLevel3Stage5Room4BlockMetatiles,
     .width = 16,
     .height = 23,
-    .bg2Palette = gUnk_084BAEE0,
+    .bg2Palette = gLevel3Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_084985B0,
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D230,
-    .bg3Tiles = gUnk_0841AD98,
-    .bg3Map = &gUnk_083C93D8,
+    .bg3Palette = gLevel3Stage5Room0Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room0Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -5995,14 +5995,14 @@ struct RoomDef gLevel3Stage5Room5 ROOM_DEF(0837c424) = {
     .blockMetatiles = gLevel3Stage5Room5BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_0849A778,
+    .bg2Palette = gLevel3Stage5Room1Bg2Palette,
     .bg2Tiles = gUnk_084985B0,
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084BACD8,
-    .bg3Tiles = gUnk_08421338,
-    .bg3Map = &gUnk_083C9CFC,
+    .bg3Palette = gLevel3Stage5Room1Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room1Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -6041,9 +6041,9 @@ struct RoomDef gLevel3Stage5Room6 ROOM_DEF(0837c520) = {
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D334,
-    .bg3Tiles = gUnk_08421338,
-    .bg3Map = &gUnk_083C9CFC,
+    .bg3Palette = gLevel3Stage5Room2Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room1Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -6079,14 +6079,14 @@ struct RoomDef gLevel3Stage5Room7 ROOM_DEF(0837c698) = {
     .blockMetatiles = gLevel3Stage5Room7BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_084BAEE0,
+    .bg2Palette = gLevel3Stage5Room0Bg2Palette,
     .bg2Tiles = gUnk_084985B0,
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D230,
-    .bg3Tiles = gUnk_0841AD98,
-    .bg3Map = &gUnk_083C93D8,
+    .bg3Palette = gLevel3Stage5Room0Bg3Palette,
+    .bg3Tiles = gLevel3Stage5Room0Bg3Tiles,
+    .bg3Map = &gLevel3Stage5Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -6684,7 +6684,7 @@ struct RoomDef gLevel4Stage2Room0 ROOM_DEF(08380cfc) = {
     .metatileTiles = gUnk_083A8B50,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0852C0D0,
+    .bg3Palette = gLevel4Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0851EF74,
     .bg3Map = &gUnk_08517F00,
     .bg3BorderX = 8,
@@ -6722,12 +6722,12 @@ struct RoomDef gLevel4Stage2Room1 ROOM_DEF(083811a8) = {
     .blockMetatiles = gLevel4Stage2Room1BlockMetatiles,
     .width = 16,
     .height = 43,
-    .bg2Palette = gUnk_08510DA4,
+    .bg2Palette = gLevel4Stage2Room1Bg2Palette,
     .bg2Tiles = gUnk_0843A824,
     .metatileTiles = gUnk_083B0700,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0852C0D0,
+    .bg3Palette = gLevel4Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0851EF74,
     .bg3Map = &gUnk_08517F00,
     .bg3BorderX = 8,
@@ -6770,9 +6770,9 @@ struct RoomDef gLevel4Stage2Room2 ROOM_DEF(08381ccc) = {
     .metatileTiles = gUnk_083AB444,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0852BFCC,
-    .bg3Tiles = gUnk_08518880,
-    .bg3Map = &gUnk_085175E4,
+    .bg3Palette = gLevel4Stage2Room2Bg3Palette,
+    .bg3Tiles = gLevel4Stage2Room2Bg3Tiles,
+    .bg3Map = &gLevel4Stage2Room2Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -6808,14 +6808,14 @@ struct RoomDef gLevel4Stage2Room3 ROOM_DEF(083821bc) = {
     .blockMetatiles = gLevel4Stage2Room3BlockMetatiles,
     .width = 64,
     .height = 13,
-    .bg2Palette = gUnk_08510DA4,
+    .bg2Palette = gLevel4Stage2Room1Bg2Palette,
     .bg2Tiles = gUnk_0843A824,
     .metatileTiles = gUnk_083B0700,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0852BFCC,
-    .bg3Tiles = gUnk_08518880,
-    .bg3Map = &gUnk_085175E4,
+    .bg3Palette = gLevel4Stage2Room2Bg3Palette,
+    .bg3Tiles = gLevel4Stage2Room2Bg3Tiles,
+    .bg3Map = &gLevel4Stage2Room2Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -6980,14 +6980,14 @@ struct RoomDef gLevel4Stage3Room1 ROOM_DEF(08383b28) = {
     .blockMetatiles = gLevel4Stage3Room1BlockMetatiles,
     .width = 123,
     .height = 14,
-    .bg2Palette = gUnk_084BB16C,
+    .bg2Palette = gLevel4Stage3Room1Bg2Palette,
     .bg2Tiles = gUnk_0843A824,
     .metatileTiles = gUnk_083B0700,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_084FEE04,
-    .bg3Tiles = gUnk_084FF824,
-    .bg3Map = &gUnk_084FEF08,
+    .bg3Palette = gLevel4Stage3Room1Bg3Palette,
+    .bg3Tiles = gLevel4Stage3Room1Bg3Tiles,
+    .bg3Map = &gLevel4Stage3Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7066,14 +7066,14 @@ struct RoomDef gLevel4Stage3Room3 ROOM_DEF(083847b4) = {
     .blockMetatiles = gLevel4Stage3Room3BlockMetatiles,
     .width = 16,
     .height = 81,
-    .bg2Palette = gUnk_084BB16C,
+    .bg2Palette = gLevel4Stage3Room1Bg2Palette,
     .bg2Tiles = gUnk_0843A824,
     .metatileTiles = gUnk_083B0700,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084FEE04,
-    .bg3Tiles = gUnk_084FF824,
-    .bg3Map = &gUnk_084FEF08,
+    .bg3Palette = gLevel4Stage3Room1Bg3Palette,
+    .bg3Tiles = gLevel4Stage3Room1Bg3Tiles,
+    .bg3Map = &gLevel4Stage3Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7152,14 +7152,14 @@ struct RoomDef gLevel4Stage3Room5 ROOM_DEF(08384cb0) = {
     .blockMetatiles = gLevel4Stage3Room5BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_084BB16C,
+    .bg2Palette = gLevel4Stage3Room1Bg2Palette,
     .bg2Tiles = gUnk_0843A824,
     .metatileTiles = gUnk_083B0700,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084FEE04,
-    .bg3Tiles = gUnk_084FF824,
-    .bg3Map = &gUnk_084FEF08,
+    .bg3Palette = gLevel4Stage3Room1Bg3Palette,
+    .bg3Tiles = gLevel4Stage3Room1Bg3Tiles,
+    .bg3Map = &gLevel4Stage3Room1Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7238,14 +7238,14 @@ struct RoomDef gLevel4Stage4Room0 ROOM_DEF(08385964) = {
     .blockMetatiles = gLevel4Stage4Room0BlockMetatiles,
     .width = 80,
     .height = 25,
-    .bg2Palette = gUnk_0852D088,
+    .bg2Palette = gLevel4Stage4Room0Bg2Palette,
     .bg2Tiles = gUnk_0840FCD8,
     .metatileTiles = gUnk_083AB444,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7281,14 +7281,14 @@ struct RoomDef gLevel4Stage4Room1 ROOM_DEF(08385fcc) = {
     .blockMetatiles = gLevel4Stage4Room1BlockMetatiles,
     .width = 80,
     .height = 11,
-    .bg2Palette = gUnk_0852D088,
+    .bg2Palette = gLevel4Stage4Room0Bg2Palette,
     .bg2Tiles = gUnk_0840FCD8,
     .metatileTiles = gUnk_083AB444,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7328,9 +7328,9 @@ struct RoomDef gLevel4Stage4Room2 ROOM_DEF(08386348) = {
     .metatileTiles = gUnk_084B58AC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7366,14 +7366,14 @@ struct RoomDef gLevel4Stage4Room3 ROOM_DEF(08386700) = {
     .blockMetatiles = gLevel4Stage4Room3BlockMetatiles,
     .width = 48,
     .height = 12,
-    .bg2Palette = gUnk_0852D250,
+    .bg2Palette = gLevel4Stage4Room3Bg2Palette,
     .bg2Tiles = gUnk_084985B0,
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7409,14 +7409,14 @@ struct RoomDef gLevel4Stage4Room4 ROOM_DEF(08386bc0) = {
     .blockMetatiles = gLevel4Stage4Room4BlockMetatiles,
     .width = 64,
     .height = 11,
-    .bg2Palette = gUnk_0852D088,
+    .bg2Palette = gLevel4Stage4Room0Bg2Palette,
     .bg2Tiles = gUnk_0840FCD8,
     .metatileTiles = gUnk_083AB444,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7452,14 +7452,14 @@ struct RoomDef gLevel4Stage4Room5 ROOM_DEF(08386f80) = {
     .blockMetatiles = gLevel4Stage4Room5BlockMetatiles,
     .width = 48,
     .height = 12,
-    .bg2Palette = gUnk_0852D250,
+    .bg2Palette = gLevel4Stage4Room3Bg2Palette,
     .bg2Tiles = gUnk_084985B0,
     .metatileTiles = gUnk_08497D38,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7500,9 +7500,9 @@ struct RoomDef gLevel4Stage4Room6 ROOM_DEF(08387308) = {
     .metatileTiles = gUnk_083B39C4,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7543,9 +7543,9 @@ struct RoomDef gLevel4Stage4Room7 ROOM_DEF(08387498) = {
     .metatileTiles = gUnk_083AB444,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0849096C,
-    .bg3Tiles = gUnk_0849138C,
-    .bg3Map = &gUnk_08490A70,
+    .bg3Palette = gLevel4Stage4Bg3Palette,
+    .bg3Tiles = gLevel4Stage4Bg3Tiles,
+    .bg3Map = &gLevel4Stage4Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7624,7 +7624,7 @@ struct RoomDef gLevel4Stage5Room1 ROOM_DEF(083881d4) = {
     .blockMetatiles = gLevel4Stage5Room1BlockMetatiles,
     .width = 81,
     .height = 14,
-    .bg2Palette = gUnk_0852D18C,
+    .bg2Palette = gLevel4Stage5Room1Bg2Palette,
     .bg2Tiles = gUnk_083D1FD8,
     .metatileTiles = gUnk_083A8B50,
     .borderX = 8,
@@ -7752,7 +7752,7 @@ struct RoomDef gLevel4Stage5Room4 ROOM_DEF(08388bb8) = {
     .blockMetatiles = gLevel4Stage5Room4BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_0852D18C,
+    .bg2Palette = gLevel4Stage5Room1Bg2Palette,
     .bg2Tiles = gUnk_083D1FD8,
     .metatileTiles = gUnk_083A8B50,
     .borderX = 8,
@@ -7799,9 +7799,9 @@ struct RoomDef gLevel4Stage6Room0 ROOM_DEF(0838928c) = {
     .metatileTiles = gLevel4Stage6Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_08524FEC,
-    .bg3Tiles = gUnk_08525A0C,
-    .bg3Map = &gUnk_085250F0,
+    .bg3Palette = gLevel4Stage6Bg3Palette,
+    .bg3Tiles = gLevel4Stage6Bg3Tiles,
+    .bg3Map = &gLevel4Stage6Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -7841,9 +7841,9 @@ struct RoomDef gLevel4Stage6Room1 ROOM_DEF(083893dc) = {
     .metatileTiles = gUnk_083A8B50,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_08524FEC,
-    .bg3Tiles = gUnk_08525A0C,
-    .bg3Map = &gUnk_085250F0,
+    .bg3Palette = gLevel4Stage6Bg3Palette,
+    .bg3Tiles = gLevel4Stage6Bg3Tiles,
+    .bg3Map = &gLevel4Stage6Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -8142,7 +8142,7 @@ struct RoomDef gLevel5Stage1Room0 ROOM_DEF(0838af20) = {
     .metatileTiles = gUnk_083B0700,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0852BEC8,
+    .bg3Palette = gLevel5Stage1Room0Bg3Palette,
     .bg3Tiles = gUnk_0846697C,
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
@@ -8185,7 +8185,7 @@ struct RoomDef gLevel5Stage1Room1 ROOM_DEF(0838b394) = {
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084D54BC,
+    .bg3Palette = gLevel5Stage1Room1Bg3Palette,
     .bg3Tiles = gUnk_083E6548,
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
@@ -8228,7 +8228,7 @@ struct RoomDef gLevel5Stage1Room2 ROOM_DEF(0838b744) = {
     .metatileTiles = gUnk_083B2254,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0852BEC8,
+    .bg3Palette = gLevel5Stage1Room0Bg3Palette,
     .bg3Tiles = gUnk_0846697C,
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
@@ -8271,7 +8271,7 @@ struct RoomDef gLevel5Stage1Room3 ROOM_DEF(0838bb74) = {
     .metatileTiles = gUnk_083B282C,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0852BEC8,
+    .bg3Palette = gLevel5Stage1Room0Bg3Palette,
     .bg3Tiles = gUnk_0846697C,
     .bg3Map = &gUnk_083CE5F4,
     .bg3BorderX = 8,
@@ -8400,7 +8400,7 @@ struct RoomDef gLevel5Stage1Room6 ROOM_DEF(0838c068) = {
     .metatileTiles = gUnk_083AA000,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084D54BC,
+    .bg3Palette = gLevel5Stage1Room1Bg3Palette,
     .bg3Tiles = gUnk_083E6548,
     .bg3Map = &gUnk_083B708C,
     .bg3BorderX = 8,
@@ -8443,7 +8443,7 @@ struct RoomDef gLevel5Stage2Room0 ROOM_DEF(0838c574) = {
     .metatileTiles = gUnk_0852E7CC,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8486,7 +8486,7 @@ struct RoomDef gLevel5Stage2Room1 ROOM_DEF(0838cb58) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8529,7 +8529,7 @@ struct RoomDef gLevel5Stage2Room2 ROOM_DEF(0838d190) = {
     .metatileTiles = gUnk_0852E7CC,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8572,7 +8572,7 @@ struct RoomDef gLevel5Stage2Room3 ROOM_DEF(0838d7fc) = {
     .metatileTiles = gUnk_0852E7CC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8615,7 +8615,7 @@ struct RoomDef gLevel5Stage2Room4 ROOM_DEF(0838dbec) = {
     .metatileTiles = gUnk_083B282C,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8657,7 +8657,7 @@ struct RoomDef gLevel5Stage2Room5 ROOM_DEF(0838dd58) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8700,7 +8700,7 @@ struct RoomDef gLevel5Stage2Room6 ROOM_DEF(0838dec4) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8743,7 +8743,7 @@ struct RoomDef gLevel5Stage2Room7 ROOM_DEF(0838e038) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8786,7 +8786,7 @@ struct RoomDef gLevel5Stage2Room8 ROOM_DEF(0838e2c8) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8829,7 +8829,7 @@ struct RoomDef gLevel5Stage2Room9 ROOM_DEF(0838e478) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -8872,7 +8872,7 @@ struct RoomDef gLevel5Stage2Room10 ROOM_DEF(0838e688) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 16,
     .borderY = 24,
-    .bg3Palette = gUnk_08510CA0,
+    .bg3Palette = gLevel5Stage2Room0Bg3Palette,
     .bg3Tiles = gUnk_0845A054,
     .bg3Map = &gUnk_083CD3B8,
     .bg3BorderX = 8,
@@ -10110,14 +10110,14 @@ struct RoomDef gLevel6Stage1Room0 ROOM_DEF(08395450) = {
     .blockMetatiles = gLevel6Stage1Room0BlockMetatiles,
     .width = 16,
     .height = 11,
-    .bg2Palette = gUnk_084BB4FC,
+    .bg2Palette = gLevel6Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0843FC10,
     .metatileTiles = gUnk_083B18FC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853CFE0,
-    .bg3Tiles = gUnk_08407278,
-    .bg3Map = &gUnk_083BB70C,
+    .bg3Palette = gLevel6Stage1Room0Bg3Palette,
+    .bg3Tiles = gLevel6Stage1Room0Bg3Tiles,
+    .bg3Map = &gLevel6Stage1Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -10152,14 +10152,14 @@ struct RoomDef gLevel6Stage1Room1 ROOM_DEF(0839570c) = {
     .blockMetatiles = gLevel6Stage1Room1BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853CFE0,
-    .bg3Tiles = gUnk_08407278,
-    .bg3Map = &gUnk_083BB70C,
+    .bg3Palette = gLevel6Stage1Room0Bg3Palette,
+    .bg3Tiles = gLevel6Stage1Room0Bg3Tiles,
+    .bg3Map = &gLevel6Stage1Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -10194,7 +10194,7 @@ struct RoomDef gLevel6Stage1Room2 ROOM_DEF(083959c8) = {
     .blockMetatiles = gLevel6Stage1Room2BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -10236,12 +10236,12 @@ struct RoomDef gLevel6Stage1Room3 ROOM_DEF(08395c90) = {
     .blockMetatiles = gLevel6Stage1Room3BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084D52B4,
+    .bg3Palette = gLevel6Stage1Room3Bg3Palette,
     .bg3Tiles = gUnk_083EE8B4,
     .bg3Map = &gUnk_083B82B0,
     .bg3BorderX = 8,
@@ -10278,7 +10278,7 @@ struct RoomDef gLevel6Stage1Room4 ROOM_DEF(08395f34) = {
     .blockMetatiles = gLevel6Stage1Room4BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -10320,7 +10320,7 @@ struct RoomDef gLevel6Stage1Room5 ROOM_DEF(083961e4) = {
     .blockMetatiles = gLevel6Stage1Room5BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
@@ -10362,14 +10362,14 @@ struct RoomDef gLevel6Stage1Room6 ROOM_DEF(083964ac) = {
     .blockMetatiles = gLevel6Stage1Room6BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853CDD8,
-    .bg3Tiles = gUnk_083F7470,
-    .bg3Map = &gUnk_083B954C,
+    .bg3Palette = gLevel6Stage1Room6Bg3Palette,
+    .bg3Tiles = gLevel6Stage1Room6Bg3Tiles,
+    .bg3Map = &gLevel6Stage1Room6Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -10404,14 +10404,14 @@ struct RoomDef gLevel6Stage1Room7 ROOM_DEF(08396754) = {
     .blockMetatiles = gLevel6Stage1Room7BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853CFE0,
-    .bg3Tiles = gUnk_08407278,
-    .bg3Map = &gUnk_083BB70C,
+    .bg3Palette = gLevel6Stage1Room0Bg3Palette,
+    .bg3Tiles = gLevel6Stage1Room0Bg3Tiles,
+    .bg3Map = &gLevel6Stage1Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -10446,12 +10446,12 @@ struct RoomDef gLevel6Stage1Room8 ROOM_DEF(08396a00) = {
     .blockMetatiles = gLevel6Stage1Room8BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084D52B4,
+    .bg3Palette = gLevel6Stage1Room3Bg3Palette,
     .bg3Tiles = gUnk_083EE8B4,
     .bg3Map = &gUnk_083B82B0,
     .bg3BorderX = 8,
@@ -10488,14 +10488,14 @@ struct RoomDef gLevel6Stage1Room9 ROOM_DEF(08396cb8) = {
     .blockMetatiles = gLevel6Stage1Room9BlockMetatiles,
     .width = 16,
     .height = 22,
-    .bg2Palette = gUnk_084BB438,
+    .bg2Palette = gLevel6Stage1Room1Bg2Palette,
     .bg2Tiles = gUnk_0842E1C0,
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853CDD8,
-    .bg3Tiles = gUnk_083F7470,
-    .bg3Map = &gUnk_083B954C,
+    .bg3Palette = gLevel6Stage1Room6Bg3Palette,
+    .bg3Tiles = gLevel6Stage1Room6Bg3Tiles,
+    .bg3Map = &gLevel6Stage1Room6Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -10531,7 +10531,7 @@ struct RoomDef gLevel6Stage1Room10 ROOM_DEF(0839706c) = {
     .blockMetatiles = gLevel6Stage1Room10BlockMetatiles,
     .width = 16,
     .height = 60,
-    .bg2Palette = gUnk_084BB4FC,
+    .bg2Palette = gLevel6Stage1Room0Bg2Palette,
     .bg2Tiles = gUnk_0843FC10,
     .metatileTiles = gUnk_083B18FC,
     .borderX = 8,
@@ -10665,9 +10665,9 @@ struct RoomDef gLevel6Stage1Room13 ROOM_DEF(08397680) = {
     .metatileTiles = gUnk_083ACDCC,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853CFE0,
-    .bg3Tiles = gUnk_08407278,
-    .bg3Map = &gUnk_083BB70C,
+    .bg3Palette = gLevel6Stage1Room0Bg3Palette,
+    .bg3Tiles = gLevel6Stage1Room0Bg3Tiles,
+    .bg3Map = &gLevel6Stage1Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -10708,9 +10708,9 @@ struct RoomDef gLevel6Stage1Room14 ROOM_DEF(08397804) = {
     .metatileTiles = gUnk_0852D870,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853CFE0,
-    .bg3Tiles = gUnk_08407278,
-    .bg3Map = &gUnk_083BB70C,
+    .bg3Palette = gLevel6Stage1Room0Bg3Palette,
+    .bg3Tiles = gLevel6Stage1Room0Bg3Tiles,
+    .bg3Map = &gLevel6Stage1Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11352,9 +11352,9 @@ struct RoomDef gLevel6Stage3Room0 ROOM_DEF(0839a214) = {
     .metatileTiles = gUnk_084AF93C,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0848ADA0,
-    .bg3Tiles = gUnk_0848B7C0,
-    .bg3Map = &gUnk_0848AEA4,
+    .bg3Palette = gLevel6Stage3Bg3Palette,
+    .bg3Tiles = gLevel6Stage3Bg3Tiles,
+    .bg3Map = &gLevel6Stage3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11395,9 +11395,9 @@ struct RoomDef gLevel6Stage3Room1 ROOM_DEF(0839a4c8) = {
     .metatileTiles = gUnk_084AF93C,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_0848ADA0,
-    .bg3Tiles = gUnk_0848B7C0,
-    .bg3Map = &gUnk_0848AEA4,
+    .bg3Palette = gLevel6Stage3Bg3Palette,
+    .bg3Tiles = gLevel6Stage3Bg3Tiles,
+    .bg3Map = &gLevel6Stage3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11438,9 +11438,9 @@ struct RoomDef gLevel6Stage3Room2 ROOM_DEF(0839a774) = {
     .metatileTiles = gUnk_084AF93C,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_0848ADA0,
-    .bg3Tiles = gUnk_0848B7C0,
-    .bg3Map = &gUnk_0848AEA4,
+    .bg3Palette = gLevel6Stage3Bg3Palette,
+    .bg3Tiles = gLevel6Stage3Bg3Tiles,
+    .bg3Map = &gLevel6Stage3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11481,9 +11481,9 @@ struct RoomDef gLevel6Stage3Room3 ROOM_DEF(0839aa40) = {
     .metatileTiles = gUnk_084AF93C,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_0848ADA0,
-    .bg3Tiles = gUnk_0848B7C0,
-    .bg3Map = &gUnk_0848AEA4,
+    .bg3Palette = gLevel6Stage3Bg3Palette,
+    .bg3Tiles = gLevel6Stage3Bg3Tiles,
+    .bg3Map = &gLevel6Stage3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11524,9 +11524,9 @@ struct RoomDef gLevel6Stage3Room4 ROOM_DEF(0839ad18) = {
     .metatileTiles = gUnk_084AF93C,
     .borderX = 16,
     .borderY = 8,
-    .bg3Palette = gUnk_0848ADA0,
-    .bg3Tiles = gUnk_0848B7C0,
-    .bg3Map = &gUnk_0848AEA4,
+    .bg3Palette = gLevel6Stage3Bg3Palette,
+    .bg3Tiles = gLevel6Stage3Bg3Tiles,
+    .bg3Map = &gLevel6Stage3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11567,9 +11567,9 @@ struct RoomDef gLevel6Stage3Room5 ROOM_DEF(0839b260) = {
     .metatileTiles = gUnk_084AF93C,
     .borderX = 8,
     .borderY = 24,
-    .bg3Palette = gUnk_0848ADA0,
-    .bg3Tiles = gUnk_0848B7C0,
-    .bg3Map = &gUnk_0848AEA4,
+    .bg3Palette = gLevel6Stage3Bg3Palette,
+    .bg3Tiles = gLevel6Stage3Bg3Tiles,
+    .bg3Map = &gLevel6Stage3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11610,9 +11610,9 @@ struct RoomDef gLevel6Stage3Room6 ROOM_DEF(0839bb28) = {
     .metatileTiles = gUnk_084AF93C,
     .borderX = 24,
     .borderY = 24,
-    .bg3Palette = gUnk_0848ADA0,
-    .bg3Tiles = gUnk_0848B7C0,
-    .bg3Map = &gUnk_0848AEA4,
+    .bg3Palette = gLevel6Stage3Bg3Palette,
+    .bg3Tiles = gLevel6Stage3Bg3Tiles,
+    .bg3Map = &gLevel6Stage3Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 0,
     .driftObjectIndex = 0xFFFF,
@@ -11863,9 +11863,9 @@ struct RoomDef gLevel6Stage5Room0 ROOM_DEF(0839d254) = {
     .blockMetatiles = gLevel6Stage5Room0BlockMetatiles,
     .width = 80,
     .height = 13,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_0853E624,
@@ -11906,9 +11906,9 @@ struct RoomDef gLevel6Stage5Room1 ROOM_DEF(0839d5b4) = {
     .blockMetatiles = gLevel6Stage5Room1BlockMetatiles,
     .width = 50,
     .height = 11,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853E624,
@@ -11949,9 +11949,9 @@ struct RoomDef gLevel6Stage5Room2 ROOM_DEF(0839d8bc) = {
     .blockMetatiles = gLevel6Stage5Room2BlockMetatiles,
     .width = 46,
     .height = 11,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853E624,
@@ -11992,9 +11992,9 @@ struct RoomDef gLevel6Stage5Room3 ROOM_DEF(0839dafc) = {
     .blockMetatiles = gLevel6Stage5Room3BlockMetatiles,
     .width = 32,
     .height = 11,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853E624,
@@ -12035,9 +12035,9 @@ struct RoomDef gLevel6Stage5Room4 ROOM_DEF(0839ded4) = {
     .blockMetatiles = gLevel6Stage5Room4BlockMetatiles,
     .width = 64,
     .height = 13,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_0853E624,
@@ -12078,9 +12078,9 @@ struct RoomDef gLevel6Stage5Room5 ROOM_DEF(0839e190) = {
     .blockMetatiles = gLevel6Stage5Room5BlockMetatiles,
     .width = 33,
     .height = 12,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853E624,
@@ -12121,9 +12121,9 @@ struct RoomDef gLevel6Stage5Room6 ROOM_DEF(0839e590) = {
     .blockMetatiles = gLevel6Stage5Room6BlockMetatiles,
     .width = 48,
     .height = 13,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_0853E624,
@@ -12164,9 +12164,9 @@ struct RoomDef gLevel6Stage5Room7 ROOM_DEF(0839e944) = {
     .blockMetatiles = gLevel6Stage5Room7BlockMetatiles,
     .width = 16,
     .height = 38,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_0853E624,
@@ -12207,9 +12207,9 @@ struct RoomDef gLevel6Stage5Room8 ROOM_DEF(0839ebb4) = {
     .blockMetatiles = gLevel6Stage5Room8BlockMetatiles,
     .width = 16,
     .height = 25,
-    .bg2Palette = gUnk_0853E7EC,
-    .bg2Tiles = gUnk_08489D58,
-    .metatileTiles = gUnk_083B4D78,
+    .bg2Palette = gLevel6Stage5Bg2Palette,
+    .bg2Tiles = gLevel6Stage5Bg2Tiles,
+    .metatileTiles = gLevel6Stage5MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853E624,
@@ -12291,13 +12291,13 @@ struct RoomDef gLevel7Stage0Room0 ROOM_DEF(0839f3d8) = {
     .blockMetatiles = gLevel7Stage0Room0BlockMetatiles,
     .width = 16,
     .height = 68,
-    .bg2Palette = gUnk_084BB808,
-    .bg2Tiles = gUnk_084CB360,
-    .metatileTiles = gUnk_084BB8CC,
+    .bg2Palette = gLevel7Stage0Room0Bg2Palette,
+    .bg2Tiles = gLevel7Stage0Room0Bg2Tiles,
+    .metatileTiles = gLevel7Stage0Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084BB600,
-    .bg3Tiles = gUnk_084BFECC,
+    .bg3Palette = gLevel7Stage0Room0Bg3Palette,
+    .bg3Tiles = gLevel7Stage0Room0Bg3Tiles,
     .bg3Map = &gLevel7Stage0Room0Bg3Map,
     .bg3BorderX = 0,
     .bg3BorderY = 8,
@@ -12375,13 +12375,13 @@ struct RoomDef gLevel7Stage0Room2 ROOM_DEF(0839fc40) = {
     .blockMetatiles = gLevel7Stage0Room2BlockMetatiles,
     .width = 16,
     .height = 68,
-    .bg2Palette = gUnk_084BB808,
-    .bg2Tiles = gUnk_084CB360,
-    .metatileTiles = gUnk_084BB8CC,
+    .bg2Palette = gLevel7Stage0Room0Bg2Palette,
+    .bg2Tiles = gLevel7Stage0Room0Bg2Tiles,
+    .metatileTiles = gLevel7Stage0Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_084BB600,
-    .bg3Tiles = gUnk_084BFECC,
+    .bg3Palette = gLevel7Stage0Room0Bg3Palette,
+    .bg3Tiles = gLevel7Stage0Room0Bg3Tiles,
     .bg3Map = &gLevel7Stage0Room2Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
@@ -12418,9 +12418,9 @@ struct RoomDef gLevel7Stage2Room0 ROOM_DEF(083a0058) = {
     .blockMetatiles = gLevel7Stage2Room0BlockMetatiles,
     .width = 80,
     .height = 12,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853E624,
@@ -12461,9 +12461,9 @@ struct RoomDef gLevel7Stage2Room1 ROOM_DEF(083a0370) = {
     .blockMetatiles = gLevel7Stage2Room1BlockMetatiles,
     .width = 64,
     .height = 12,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853DD00,
@@ -12504,9 +12504,9 @@ struct RoomDef gLevel7Stage2Room2 ROOM_DEF(083a06dc) = {
     .blockMetatiles = gLevel7Stage2Room2BlockMetatiles,
     .width = 64,
     .height = 12,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853DD00,
@@ -12547,9 +12547,9 @@ struct RoomDef gLevel7Stage2Room3 ROOM_DEF(083a0aa0) = {
     .blockMetatiles = gLevel7Stage2Room3BlockMetatiles,
     .width = 32,
     .height = 12,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853DD00,
@@ -12590,9 +12590,9 @@ struct RoomDef gLevel7Stage2Room4 ROOM_DEF(083a0d2c) = {
     .blockMetatiles = gLevel7Stage2Room4BlockMetatiles,
     .width = 48,
     .height = 11,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853DD00,
@@ -12632,9 +12632,9 @@ struct RoomDef gLevel7Stage2Room5 ROOM_DEF(083a0f00) = {
     .blockMetatiles = gLevel7Stage2Room5BlockMetatiles,
     .width = 32,
     .height = 11,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853DD00,
@@ -12675,9 +12675,9 @@ struct RoomDef gLevel7Stage2Room6 ROOM_DEF(083a142c) = {
     .blockMetatiles = gLevel7Stage2Room6BlockMetatiles,
     .width = 22,
     .height = 29,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0852BDC4,
@@ -12717,9 +12717,9 @@ struct RoomDef gLevel7Stage2Room7 ROOM_DEF(083a1644) = {
     .blockMetatiles = gLevel7Stage2Room7BlockMetatiles,
     .width = 41,
     .height = 13,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 24,
     .bg3Palette = gUnk_0852BDC4,
@@ -12760,9 +12760,9 @@ struct RoomDef gLevel7Stage2Room8 ROOM_DEF(083a17cc) = {
     .blockMetatiles = gLevel7Stage2Room8BlockMetatiles,
     .width = 31,
     .height = 11,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0852BDC4,
@@ -12801,9 +12801,9 @@ struct RoomDef gLevel7Stage2Room9 ROOM_DEF(083a1b64) = {
     .blockMetatiles = gLevel7Stage2Room9BlockMetatiles,
     .width = 50,
     .height = 16,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0852BDC4,
@@ -12842,9 +12842,9 @@ struct RoomDef gLevel7Stage2Room10 ROOM_DEF(083a1fd8) = {
     .blockMetatiles = gLevel7Stage2Room10BlockMetatiles,
     .width = 100,
     .height = 13,
-    .bg2Palette = gUnk_0853C698,
-    .bg2Tiles = gUnk_083D1380,
-    .metatileTiles = gUnk_083A862C,
+    .bg2Palette = gLevel7Stage2Bg2Palette,
+    .bg2Tiles = gLevel7Stage2Bg2Tiles,
+    .metatileTiles = gLevel7Stage2MetatileTiles,
     .borderX = 8,
     .borderY = 20,
     .bg3Palette = gUnk_0852BDC4,
@@ -12884,14 +12884,14 @@ struct RoomDef gLevel8Stage0Room0 ROOM_DEF(083a24f0) = {
     .blockMetatiles = gLevel8Stage0Room0BlockMetatiles,
     .width = 32,
     .height = 22,
-    .bg2Palette = gUnk_0853D600,
-    .bg2Tiles = gUnk_08430A34,
-    .metatileTiles = gUnk_083AD728,
+    .bg2Palette = gLevel8Stage0Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage0Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage0Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
     .bg3Tiles = gUnk_0840F3A8,
-    .bg3Map = &gUnk_083BC030,
+    .bg3Map = &gLevel8Stage0Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -12925,14 +12925,14 @@ struct RoomDef gLevel8Stage0Room1 ROOM_DEF(083a2578) = {
     .blockMetatiles = gLevel8Stage0Room1BlockMetatiles,
     .width = 2,
     .height = 2,
-    .bg2Palette = gUnk_0853D600,
-    .bg2Tiles = gUnk_08430A34,
-    .metatileTiles = gUnk_083AD728,
+    .bg2Palette = gLevel8Stage0Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage0Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage0Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
     .bg3Tiles = gUnk_0840F3A8,
-    .bg3Map = &gUnk_083BC030,
+    .bg3Map = &gLevel8Stage0Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13094,14 +13094,14 @@ struct RoomDef gLevel8Stage1Room0 ROOM_DEF(083a32bc) = {
     .blockMetatiles = gLevel8Stage1Room0BlockMetatiles,
     .width = 48,
     .height = 23,
-    .bg2Palette = gUnk_0853D6C4,
-    .bg2Tiles = gUnk_08431740,
-    .metatileTiles = gUnk_083ADC20,
+    .bg2Palette = gLevel8Stage1Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage1Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage1Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
     .bg3Tiles = gUnk_0840F3A8,
-    .bg3Map = &gUnk_083BD638,
+    .bg3Map = &gLevel8Stage1Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13135,14 +13135,14 @@ struct RoomDef gLevel8Stage1Room1 ROOM_DEF(083a3344) = {
     .blockMetatiles = gLevel8Stage1Room1BlockMetatiles,
     .width = 2,
     .height = 2,
-    .bg2Palette = gUnk_0853D6C4,
-    .bg2Tiles = gUnk_08431740,
-    .metatileTiles = gUnk_083ADC20,
+    .bg2Palette = gLevel8Stage1Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage1Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage1Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
     .bg3Tiles = gUnk_0840F3A8,
-    .bg3Map = &gUnk_083BD638,
+    .bg3Map = &gLevel8Stage1Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13347,14 +13347,14 @@ struct RoomDef gLevel8Stage2Room0 ROOM_DEF(083a3ff4) = {
     .blockMetatiles = gLevel8Stage2Room0BlockMetatiles,
     .width = 16,
     .height = 47,
-    .bg2Palette = gUnk_08539C88,
-    .bg2Tiles = gUnk_08432FCC,
-    .metatileTiles = gUnk_083AE5A4,
+    .bg2Palette = gLevel8Stage2Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage2Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage2Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
     .bg3Tiles = gUnk_0840F3A8,
-    .bg3Map = &gUnk_083BF8C0,
+    .bg3Map = &gLevel8Stage2Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13388,14 +13388,14 @@ struct RoomDef gLevel8Stage2Room1 ROOM_DEF(083a407c) = {
     .blockMetatiles = gLevel8Stage2Room1BlockMetatiles,
     .width = 2,
     .height = 2,
-    .bg2Palette = gUnk_08539C88,
-    .bg2Tiles = gUnk_08432FCC,
-    .metatileTiles = gUnk_083AE5A4,
+    .bg2Palette = gLevel8Stage2Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage2Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage2Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
     .bg3Tiles = gUnk_0840F3A8,
-    .bg3Map = &gUnk_083BF8C0,
+    .bg3Map = &gLevel8Stage2Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13600,14 +13600,14 @@ struct RoomDef gLevel8Stage3Room0 ROOM_DEF(083a4d80) = {
     .blockMetatiles = gLevel8Stage3Room0BlockMetatiles,
     .width = 48,
     .height = 23,
-    .bg2Palette = gUnk_08539D8C,
-    .bg2Tiles = gUnk_08434EFC,
-    .metatileTiles = gUnk_083AEBB4,
+    .bg2Palette = gLevel8Stage3Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage3Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage3Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
-    .bg3Tiles = gUnk_0840F56C,
-    .bg3Map = &gUnk_083C0E48,
+    .bg3Tiles = gLevel8Stage3Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage3Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13641,14 +13641,14 @@ struct RoomDef gLevel8Stage3Room1 ROOM_DEF(083a4e08) = {
     .blockMetatiles = gLevel8Stage3Room1BlockMetatiles,
     .width = 2,
     .height = 2,
-    .bg2Palette = gUnk_08539D8C,
-    .bg2Tiles = gUnk_08434EFC,
-    .metatileTiles = gUnk_083AEBB4,
+    .bg2Palette = gLevel8Stage3Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage3Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage3Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
-    .bg3Tiles = gUnk_0840F56C,
-    .bg3Map = &gUnk_083C0E48,
+    .bg3Tiles = gLevel8Stage3Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage3Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13853,14 +13853,14 @@ struct RoomDef gLevel8Stage4Room0 ROOM_DEF(083a5be8) = {
     .blockMetatiles = gLevel8Stage4Room0BlockMetatiles,
     .width = 48,
     .height = 23,
-    .bg2Palette = gUnk_0853D7C8,
-    .bg2Tiles = gUnk_08436318,
-    .metatileTiles = gUnk_083AF1FC,
+    .bg2Palette = gLevel8Stage4Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage4Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage4Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
-    .bg3Tiles = gUnk_0840F754,
-    .bg3Map = &gUnk_083C2DD0,
+    .bg3Tiles = gLevel8Stage4Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage4Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -13894,14 +13894,14 @@ struct RoomDef gLevel8Stage4Room1 ROOM_DEF(083a5c70) = {
     .blockMetatiles = gLevel8Stage4Room1BlockMetatiles,
     .width = 2,
     .height = 2,
-    .bg2Palette = gUnk_0853D7C8,
-    .bg2Tiles = gUnk_08436318,
-    .metatileTiles = gUnk_083AF1FC,
+    .bg2Palette = gLevel8Stage4Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage4Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage4Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
-    .bg3Tiles = gUnk_0840F754,
-    .bg3Map = &gUnk_083C2DD0,
+    .bg3Tiles = gLevel8Stage4Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage4Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -14106,14 +14106,14 @@ struct RoomDef gLevel8Stage5Room0 ROOM_DEF(083a6ae0) = {
     .blockMetatiles = gLevel8Stage5Room0BlockMetatiles,
     .width = 48,
     .height = 23,
-    .bg2Palette = gUnk_0853D8CC,
-    .bg2Tiles = gUnk_08437924,
-    .metatileTiles = gUnk_083AF7E0,
+    .bg2Palette = gLevel8Stage5Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage5Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage5Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D108,
-    .bg3Tiles = gUnk_0840F99C,
-    .bg3Map = &gUnk_083C5058,
+    .bg3Palette = gLevel8Stage5Room0Bg3Palette,
+    .bg3Tiles = gLevel8Stage5Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage5Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -14147,14 +14147,14 @@ struct RoomDef gLevel8Stage5Room1 ROOM_DEF(083a6b68) = {
     .blockMetatiles = gLevel8Stage5Room1BlockMetatiles,
     .width = 2,
     .height = 2,
-    .bg2Palette = gUnk_0853D8CC,
-    .bg2Tiles = gUnk_08437924,
-    .metatileTiles = gUnk_083AF7E0,
+    .bg2Palette = gLevel8Stage5Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage5Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage5Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
-    .bg3Palette = gUnk_0853D108,
-    .bg3Tiles = gUnk_0840F99C,
-    .bg3Map = &gUnk_083C5058,
+    .bg3Palette = gLevel8Stage5Room0Bg3Palette,
+    .bg3Tiles = gLevel8Stage5Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage5Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -14359,14 +14359,14 @@ struct RoomDef gLevel8Stage6Room0 ROOM_DEF(083a77c4) = {
     .blockMetatiles = gLevel8Stage6Room0BlockMetatiles,
     .width = 32,
     .height = 23,
-    .bg2Palette = gUnk_0853D9D0,
-    .bg2Tiles = gUnk_08439268,
-    .metatileTiles = gUnk_083AFFE4,
+    .bg2Palette = gLevel8Stage6Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage6Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage6Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
-    .bg3Tiles = gUnk_0840FB54,
-    .bg3Map = &gUnk_083C72E0,
+    .bg3Tiles = gLevel8Stage6Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage6Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
@@ -14400,14 +14400,14 @@ struct RoomDef gLevel8Stage6Room1 ROOM_DEF(083a784c) = {
     .blockMetatiles = gLevel8Stage6Room1BlockMetatiles,
     .width = 2,
     .height = 2,
-    .bg2Palette = gUnk_0853D9D0,
-    .bg2Tiles = gUnk_08439268,
-    .metatileTiles = gUnk_083AFFE4,
+    .bg2Palette = gLevel8Stage6Room0Bg2Palette,
+    .bg2Tiles = gLevel8Stage6Room0Bg2Tiles,
+    .metatileTiles = gLevel8Stage6Room0MetatileTiles,
     .borderX = 8,
     .borderY = 8,
     .bg3Palette = gUnk_0853D0E4,
-    .bg3Tiles = gUnk_0840FB54,
-    .bg3Map = &gUnk_083C72E0,
+    .bg3Tiles = gLevel8Stage6Room0Bg3Tiles,
+    .bg3Map = &gLevel8Stage6Room0Bg3Map,
     .bg3BorderX = 8,
     .bg3BorderY = 8,
     .driftObjectIndex = 0xFFFF,
