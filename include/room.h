@@ -20,7 +20,7 @@ struct BgMap
     /*0x06*/ u16 unk6[0];
 };
 
-/* M08's per-player camera positions (src/camera_28b8c.c) */
+/* M08's per-player camera positions (src/room_camera_init.c) */
 struct CamPos { u16 x, y; };
 
 struct CamRect { s16 x0, x1, y0, y1; };
@@ -43,7 +43,7 @@ struct MapCell
     /*0x03*/ u8 collisionTile;
 };
 
-/* M08's view of a map cell (src/bgmap_2a9cc.c): the metatile index is a u16 */
+/* M08's view of a map cell (src/camera_draw_bg_map.c): the metatile index is a u16 */
 struct MapTile
 {
     /*0x00*/ u16 metatile;
@@ -225,9 +225,9 @@ extern u16 gBgPaletteBank8[];
 extern s16 gCameraAnchorY;
 extern u32 gUnk_03001F10;
 extern s8 gCurStage;
-extern s32 gUnk_03001F2C; /* boot_091ac.c spelling */
+extern s32 gUnk_03001F2C; /* mode_boot_sequence.c spelling */
 extern u8 gMetaKnightmareMode; /* set only by the mode list's fifth row
-                                       (src/menu_0ca10.c); not link play */
+                                       (src/menu_mode_list.c); not link play */
 extern u32 gUnk_03002160;
 extern u8 gActivePlayerMask;
 extern s32 gUnk_03002344;
@@ -695,7 +695,7 @@ extern struct RoomDef *const gLevel8Stage7Rooms[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/level_2296c.c */
+/* src/room_reset_level_load_room.c */
 void ResetLevelStateAtHub(void);
 void ResetLevelStateForContinue(void);
 void BossEnduranceSetStart(void);
@@ -705,7 +705,7 @@ void LoadRoom(void);
 void LoadRoomAfterBigSwitchView(void);
 void CreateRoomTask(s32 a);
 
-/* src/roomtask_23618.c */
+/* src/room_task.c */
 void Task_Room(void);
 void RoomTaskStageInit(void);
 void RoomTaskDraw(void);
@@ -717,7 +717,7 @@ void RoomTaskLateUpdateBg23HBlank(void);
 void RoomTaskLateUpdateBg23RowsHBlank(void);
 void RoomTaskLateUpdateBg3AutoScroll(void);
 
-/* src/level_23948.c */
+/* src/room_hub.c */
 void LoadHubRoom(void);
 void LoadBigSwitchViewRoom(void);
 void RoomTaskHubInit(void);
@@ -729,7 +729,7 @@ void RoomTaskHubLateUpdateBg123(void);
 void RoomTaskBigSwitchViewLateUpdate(void);
 void LoadGoalGameRoom(void);
 
-/* src/level_242d0.c */
+/* src/room_enter_exit.c */
 void RoomTaskGoalGameInit(void);
 void LoadCutsceneRoom(void);
 void RoomTaskCutsceneInit(void);
@@ -758,7 +758,7 @@ s32 ExitOnWarpStar(void);
 s32 PickWarpStarArrivalFlight(void);
 s32 ExitByCannon(void);
 
-/* src/stage_261c0.c */
+/* src/room_stage_helpers.c */
 s32 CreateBlockBreakEffect(s32 x, s32 y);
 s32 TaskCreateHighSlot(s32 type);
 void SetCameraFocus(s32 x, s32 y);
@@ -782,12 +782,12 @@ u32 WhispyWoodsCheckScrollLock(void);
 u32 KrackoCheckScrollLock(void);
 u32 KingDededeCheckScrollLock(void);
 
-/* src/door_26b60.c */
+/* src/room_doors.c */
 void SetDoorsOpenNearRoomEntry(void);
 void UpdateDoors(void);
 void DrawDoors(void);
 
-/* src/stage_270d0.c */
+/* src/room_stop_pause.c */
 void RestartRoomBgm(void);
 void StopRoomAndApplyExitFlags(void);
 void StopRoom(void);
@@ -799,7 +799,7 @@ void PauseSaveBgPalette(void);
 void PauseRestoreRoomGraphics(void);
 void ReturnToHubStageDoor(void);
 
-/* src/stage_273a0.c */
+/* src/room_restart_point.c */
 void ReturnToRestartPoint(void);
 void sub_08027548(void);
 s32 sub_08027588(void);
@@ -814,23 +814,23 @@ void CameraStartPlayersAtAnchor(void);
 s32 ArePlayerCamerasDoneGliding(void);
 void CameraResumeFollowFocus(void);
 
-/* src/level_27a6c.c */
+/* src/room_hub_map.c */
 void LoadHubRoomMap(void);
 
-/* src/room_27e28.c */
+/* src/room_bg_layout.c */
 void InitRoomBgLayout(void);
 void InitRoomBgLayoutAfterBigSwitchView(void);
 void InitEndingRoomBgLayout(s32 a);
 void StartRoomBlockAnims(void);
 
-/* src/room_28320.c */
+/* src/room_spawn_door_objects.c */
 void SpawnDoorObjects(void);
 void CalcBg3Parallax(void);
 void CalcRoomBounds(void);
 void CameraResetBoundsToGroup(void);
 void CameraResetBounds(void);
 
-/* src/camera_28b8c.c */
+/* src/room_camera_init.c */
 void CameraResetRoomView(void);
 void CalcRoomAndCameraBounds(void);
 void SetRoomEntryPoint(void);

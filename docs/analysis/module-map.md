@@ -120,7 +120,7 @@ two issues, and the detail blocks say so.
 
 `0x0872FF30` holds 8-byte entries `{u8 class; u8 pad[3]; u32 entry}`.  #32
 read the second word as a flag word (`struct TaskType.unk04`, see
-`src/early_58e4.c`); it is in fact the **task body's Thumb entry point**.
+`src/task_move.c`); it is in fact the **task body's Thumb entry point**.
 Every one of the 266 entries is a bit-0-set pointer to a function accepted by
 the symbol DB, and the table stops dead at the first word that is not
 (`0x00130018` at `0x08730780`).  All 266 entry points land inside this issue's
@@ -131,7 +131,7 @@ range.
   `gap_sram_driver_fn_table_asset_metadata_index` and ending inside
   `asset_metadata_index`.  #36 phase 2 carved it out: the `task_types`
   segment, C in `src/data/task_types.c` (`gTaskTypes[266]`).
-* Class histogram (the priority group of `src/early_4fec.c`'s 5 groups):
+* Class histogram (the priority group of `src/task_init.c`'s 5 groups):
   class 0 x3, class 1 x24, class 2 x38, class 3 x132, class 4 x69.
 * The three class-0 types (#0, #1, #2) all live in M02 — the top-level
   game-mode tasks.  The 22 consecutive class-4 types #238-#259 all live in M03
@@ -371,7 +371,7 @@ and start-adjacent carves keep `segments.txt` tidy (see #35's carve note).
 ## 6. Per-module detail
 
 Cross-references use module ids. "Depends on" and "Called from" are `bl` call
-counts; segment names (`early_*`, `sdk_libc`, …) are the already decompiled
+counts; segment names (`main_*`, `task_*`, `link_*`, `sdk_libc`, …) are the already decompiled
 early zone and the SDK tails. "Pool references" counts literal-pool words, so
 `asset_metadata_index x252` means 252 pool words pointing into the asset zone.
 ### M02 `0x080075B8-0x0800B91F` - game-state bodies, boot/title sequence, screen loaders, pause screen and HUD - **landed (#96)**
@@ -383,26 +383,26 @@ below is the pre-decompilation one, kept for the record.
 * **Landed as** eleven files, all 109 functions byte-exact under the `--newpb`
   recipe, 108 new `split_config.json` `data_symbols`, `make progress` reports 0
   asm code bytes in the range:
-  `src/mode_075b8.c` (`0x080075B8-0x08007B68`, 4 fns),
-  `src/mode_07b68.c` (`0x08007B68-0x080082D0`, 5),
-  `src/mode_082d0.c` (`0x080082D0-0x08008664`, 7),
-  `src/mode_08664.c` (`0x08008664-0x08008B8C`, 3),
-  `src/gfx_08b8c.c` (`0x08008B8C-0x080091AC`, 13),
-  `src/boot_091ac.c` (`0x080091AC-0x080099FC`, 13),
-  `src/hud_099fc.c` (`0x080099FC-0x0800A130`, 17),
-  `src/hud_0a130.c` (`0x0800A130-0x0800AAD0`, 19),
-  `src/hud_0aad0.c` (`0x0800AAD0-0x0800B318`, 14),
-  `src/hud_0b318.c` (`0x0800B318-0x0800B44C`, 6),
-  `src/mode_0b44c.c` (`0x0800B44C-0x0800B920`, 8).
+  `src/mode_hub_stage.c` (`0x080075B8-0x08007B68`, 4 fns),
+  `src/mode_extra_mode_title.c` (`0x08007B68-0x080082D0`, 5),
+  `src/mode_extra_mode_title_sprites.c` (`0x080082D0-0x08008664`, 7),
+  `src/mode_pause_boss_endurance.c` (`0x08008664-0x08008B8C`, 3),
+  `src/mode_gfx_loaders.c` (`0x08008B8C-0x080091AC`, 13),
+  `src/mode_boot_sequence.c` (`0x080091AC-0x080099FC`, 13),
+  `src/hud_init_counters.c` (`0x080099FC-0x0800A130`, 17),
+  `src/hud_hp_bars.c` (`0x0800A130-0x0800AAD0`, 19),
+  `src/hud_draw.c` (`0x0800AAD0-0x0800B318`, 14),
+  `src/hud_tilemap.c` (`0x0800B318-0x0800B44C`, 6),
+  `src/mode_hub_stage_init.c` (`0x0800B44C-0x0800B920`, 8).
   `sub_08009640` carried a zero-byte `asm("" ::: "r0")` clobber (lessons-learned
   3.370) until the natural-C campaign (#154) wrote its shared store in both
   arms (3.506); there are no `register` pins and no `asm` statements.
 * **What it turned out to be** the code `AgbMain` (`src/main.c`) dispatches
   into, in five parts:
-  * **The per-frame bodies of the game states** (`src/mode_075b8.c`,
-    `src/mode_08664.c`): states 5 (`sub_08007624`), 9 (`sub_0800783c`),
+  * **The per-frame bodies of the game states** (`src/mode_hub_stage.c`,
+    `src/mode_pause_boss_endurance.c`): states 5 (`sub_08007624`), 9 (`sub_0800783c`),
     8/17/18/19 (`sub_0800791c`) and 20 (`sub_08008a00`) each run a setup
-    helper from `src/mode_0b44c.c` (`sub_0800b788`/`sub_0800b87c`/
+    helper from `src/mode_hub_stage_init.c` (`sub_0800b788`/`sub_0800b87c`/
     `sub_0800b648`), fade in, then pump the frame driver until the
     **stage-request byte** `gUnk_03002438` asks for something: 1-4 switch the
     game state, 5 opens the **pause screen** `sub_08008664` (raised by
@@ -411,14 +411,14 @@ below is the pre-decompilation one, kept for the record.
     player has lives left), 7/8/12 go to states 11/10/17 and 9-14 enter one
     of six extra modes (`gUnk_02006090` 0-5; the first visit goes through
     state 13, later ones straight to states 14-19).
-  * **AgbMain state 13, the extra modes' title screen** (`src/mode_07b68.c`,
+  * **AgbMain state 13, the extra modes' title screen** (`src/mode_extra_mode_title.c`,
     `sub_08007f9c`): the mode's picture, two task-#265 decorations and a
     level select (`gUnk_02006168`, 0-2) for the first three modes.  In
     single-pak link play it first stages a multiboot image at `0x02020000`
     (`sub_08007e04`, a common blob plus one of three per-mode chunk sets),
     sends it and runs the `0x5503` SIO handshake (`sub_08007b68`/
     `sub_08007c5c`); `sub_08007d4c` is the failure prompt.
-  * **The boot and title sequence** (`src/boot_091ac.c`): state 1's
+  * **The boot and title sequence** (`src/mode_boot_sequence.c`): state 1's
     `sub_080091ac`/`sub_08009200` is the skippable logo sequence
     (`sub_08009398(n)` waits n frames and returns 1 on A/B/START; task type
     **#0** `sub_080093fc`, spawned there, calls `sub_080caab8` every frame), state 3's `sub_080096e0`
@@ -427,10 +427,10 @@ below is the pre-decompilation one, kept for the record.
     `sub_080095c0` spawns ten sprite children in two rows of five,
     `sub_08009640`) with the nine-scene intro
     story `sub_080098a8`, each scene a task-**#237** picture (`sub_080099fc`).
-    Task type **#265** (`src/mode_082d0.c`, two instances from
+    Task type **#265** (`src/mode_extra_mode_title_sprites.c`, two instances from
     `sub_080082d0` on the state-13 title screen) runs one of the four
     effect scripts of the anchor table `0x0873078C`.
-  * **The screen/asset loaders** (`src/gfx_08b8c.c`): LZ77/Huffman
+  * **The screen/asset loaders** (`src/mode_gfx_loaders.c`): LZ77/Huffman
     decompression of palettes, tiles and maps into VRAM from the ROM tables at
     `0x08731980-0x08731BA8`; `sub_08008c4c(i)` (palette set) and
     `sub_08008c64(i)` (VRAM transfer node) are called ROM-wide, and
@@ -457,8 +457,8 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** BG/fade/blend reset x83, frame driver + RNG + blend x52, VRAM transfer queue + sprite buckets x42, sound/SE x13, SIO multi-play x10, SIO multiboot x9.
 * **Named helpers** LZ77UnCompVram x21, CpuSet x13, TaskYieldTrampoline x13, HuffUnComp x6, Div x4, LZ77UnCompWram x2.
 * **Called from** M03 x57, M34 x47, M07 x39, M38 x31, M01 x18.
-* **Depends on** early_1fd0 x83, early_2b04 x52, sdk_swi_wrappers x46, early_1518 x42, M07 x18.
-* **Pool references** IWRAM x333, EWRAM x316, compressed_graphics x75, VRAM x39, asset_metadata_index x25, game_code_and_rodata x9, song_tail_misc_audio x8, early_58e4 x2.
+* **Depends on** main_fade_requests x83, link_run_frames x52, sdk_swi_wrappers x46, main_copy_queue x42, M07 x18.
+* **Pool references** IWRAM x333, EWRAM x316, compressed_graphics x75, VRAM x39, asset_metadata_index x25, game_code_and_rodata x9, song_tail_misc_audio x8, task_move x2.
 * **Known RAM cells touched** current game state (main dispatch) x25, DISPCNT shadow x20, requested/next game state x10, per-player keys pressed x8, BG3HOFS shadow (16.16) x7, BG3VOFS shadow (16.16) x7.
 * **Suggested batches** `0x080075B8` (7 fns), `0x08007E04` (41 fns), `0x08009AA0` (62 fns).
 
@@ -471,16 +471,16 @@ below is the pre-decompilation one, kept for the record.
 * **Landed as** ten files, all 79 functions byte-exact under the `--newpb`
   recipe, 83 new `split_config.json` `data_symbols`, `make progress` reports 0
   asm code bytes in the range:
-  `src/menu_0b920.c` (`0x0800B920-0x0800C09C`, 6 fns),
-  `src/menu_0c09c.c` (`0x0800C09C-0x0800CA10`, 6),
-  `src/menu_0ca10.c` (`0x0800CA10-0x0800D450`, 9),
-  `src/menu_0d450.c` (`0x0800D450-0x0800DAF8`, 5),
-  `src/menutask_0daf8.c` (`0x0800DAF8-0x0800E314`, 12),
-  `src/menutask_0e314.c` (`0x0800E314-0x0800EA0C`, 10),
-  `src/menutask_0ea0c.c` (`0x0800EA0C-0x0800F180`, 8),
-  `src/menutask_0f180.c` (`0x0800F180-0x0800FCBC`, 10),
-  `src/bgscroll_0fcbc.c` (`0x0800FCBC-0x080100AC`, 11),
-  `src/mode_100ac.c` (`0x080100AC-0x08010358`, 2).
+  `src/menu_main_save_slots.c` (`0x0800B920-0x0800C09C`, 6 fns),
+  `src/menu_file_select.c` (`0x0800C09C-0x0800CA10`, 6),
+  `src/menu_mode_list.c` (`0x0800CA10-0x0800D450`, 9),
+  `src/menu_sound_test_link_play.c` (`0x0800D450-0x0800DAF8`, 5),
+  `src/menu_file_select_tasks.c` (`0x0800DAF8-0x0800E314`, 12),
+  `src/menu_panel_tasks.c` (`0x0800E314-0x0800EA0C`, 10),
+  `src/menu_sound_test_tasks.c` (`0x0800EA0C-0x0800F180`, 8),
+  `src/menu_link_play_tasks.c` (`0x0800F180-0x0800FCBC`, 10),
+  `src/menu_bg_scroll.c` (`0x0800FCBC-0x080100AC`, 11),
+  `src/cutscene_main.c` (`0x080100AC-0x08010358`, 2).
   `sub_0800f408` carried a zero-byte `asm("" ::: "r6")` clobber (a
   global-alloc priority tie) until the natural-C campaign (#154) found the
   cause, a `vu8` declaration of `gUnk_0200EBC0` (3.509); there are no
@@ -503,7 +503,7 @@ below is the pre-decompilation one, kept for the record.
     the mode list (#245-#248), the link-play screen (#249-#253), the sound
     test (#254/#255), the menu title sprite (#256), the BG scroll animator
     (#257) and two background palette cycles (#258/#259).
-  * **The BG scroll animator** (`src/bgscroll_0fcbc.c`), up to eight scrolls
+  * **The BG scroll animator** (`src/menu_bg_scroll.c`), up to eight scrolls
     (one per BG and axis): running bits `gUnk_02004B74`, speeds
     `gUnk_02006070[2][4]`, targets `gUnk_020061B0[2][4]`, and the
     BGnHOFS/BGnVOFS shadows through the pointer tables `gUnk_08731DB0` and
@@ -527,14 +527,14 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** frame driver + RNG + blend x66, VRAM transfer queue + sprite buckets x63, task position/draw x32, BG/fade/blend reset x27, SIO multiboot x7, sound/SE x6.
 * **Named helpers** TaskYieldTrampoline x33, TaskDispatchTrampoline x18, LZ77UnCompWram x3.
 * **Called from** M34 x4, M01 x2.
-* **Depends on** early_2b04 x66, early_1518 x63, M02 x57, sdk_libc x51, game_code_early_080011ac_08002378_08003110 x33.
-* **Pool references** IWRAM x304, EWRAM x262, asset_metadata_index x58, compressed_graphics x37, VRAM x24, game_code_and_rodata x17, early_58e4 x14, early_5c4c x10.
+* **Depends on** link_run_frames x66, main_copy_queue x63, M02 x57, sdk_libc x51, game_code_early_080011ac_08002378_08003110 x33.
+* **Pool references** IWRAM x304, EWRAM x262, asset_metadata_index x58, compressed_graphics x37, VRAM x24, game_code_and_rodata x17, task_move x14, task_draw_screen x10.
 * **Known RAM cells touched** DISPCNT shadow x26, keys newly pressed x20, current game state (main dispatch) x11, BG3VOFS shadow (16.16) x10, decimal digit buffer, [5] = sign/flag x9, auto-repeat first delay (14) x7.
 * **Suggested batches** `0x0800B920` (13 fns), `0x0800CA10` (37 fns), `0x0800EA0C` (33 fns).
 
 ### M04 `0x08010358-0x08017667` - scripted-sequence bank: director + 50 of the 63 scripts - **landed (#82)**
 
-**Decompiled in issue #82** (all 65 functions, no asm left in the range): `src/player_10358.c`, `src/player_109c8.c`, `src/player_10b38.c`.
+**Decompiled in issue #82** (all 65 functions, no asm left in the range): `src/cutscene_director_duel.c`, `src/cutscene_actor_particles.c`, `src/cutscene_scenes.c`.
 
 * **Size** 28.8 KiB (`0x7310`), 65 functions (58 of them reachable only through the dispatch table), mean `0x1c4`, largest `0x7c0`, pool words 7.3% of bytes.
 * **What it is.** The **driver half** of the sequence bank M05 holds the rest of. The 71-entry table at `0x08731FA8` is two tables in one:
@@ -576,10 +576,10 @@ below is the pre-decompilation one, kept for the record.
 ### M05 `0x08017668-0x0801A8C7` - player-character animation bank + collision registry - **landed (#81, #125)**
 
 **Decompiled in issue #81** (20 of 23 functions, 11100 of 12896 bytes):
-`src/player_17668.c`, `src/player_18b84.c`, `src/player_19000.c`,
-`src/player_1a07c.c`, `src/player_1a76c.c`; the straggler campaign (#125)
-landed the last three as plain pin-free C (`src/player_18e14.c`,
-`src/player_19eec.c`, `src/player_1a3e4.c`), so all 23 functions are C.
+`src/cutscene_fountain_kirby_king_dedede.c`, `src/cutscene_fountain_actor_scripts.c`, `src/cutscene_fountain_power_orb_star_rod.c`,
+`src/cutscene_fountain_kirby_draw.c`, `src/collision_collider_lists.c`; the straggler campaign (#125)
+landed the last three as plain pin-free C (`src/cutscene_fountain_sparkles.c`,
+`src/cutscene_fountain_blend.c`, `src/cutscene_fountain_sprite_draw.c`), so all 23 functions are C.
 
 * **Size** 12.6 KiB (`0x3260`), 23 functions (20 reachable only through pointer tables), mean `0x230`, largest `0xdfc`, pool words 7.5% of bytes.
 * **What it is.** Thirteen of its bodies are entries **58-70** of the 71-entry
@@ -627,21 +627,21 @@ below is the pre-decompilation one, kept for the record.
 
 * **Landed as** 22 files, all 55 functions byte-exact under the
   `--newpb` recipe with no `asm` statements and no `register` pins.  PR
-  #131 landed 28 (`src/terrain_1bcac.c`, `terrain_1c30c.c`,
-  `terrain_1c444.c`, `terrain_1c51c.c`, `terrain_1c8dc.c`,
-  `terrain_2069c.c`, `terrain_21130.c`, `terrain_214e0.c`); the second run
-  the other 26: `src/hitbox_1a8c8.c` (`0x0801A8C8-0x0801B24C`, 2 fns),
-  `src/hitbox_1b7dc.c` (`0x0801B7DC-0x0801BAA4`, 3), `src/terrain_1baa4.c`
-  (1), `src/terrain_1c690.c` (2), `src/terrain_1c930.c` (1),
-  `src/terrain_1d394.c` (1), `src/terrain_1d9c8.c` (3),
-  `src/terrain_1e178.c` (1), `src/terrain_1ecd0.c` (1),
-  `src/terrain_1f540.c` (6), `src/terrain_1ff84.c` (2),
-  `src/terrain_207a0.c` (2) and `src/terrain_2136c.c` (1), with 19 new
+  #131 landed 28 (`src/collision_collide_box.c`, `collision_collide_point.c`,
+  `collision_collide_box_tile_edge.c`, `collision_probe_begin_end.c`, `collision_probe_box_top.c`,
+  `collision_probe_point_stop.c`, `collision_probe_water_drift.c`, `collision_query_pixel.c`); the second run
+  the other 26: `src/collision_hit_test_players_class10.c` (`0x0801A8C8-0x0801B24C`, 2 fns),
+  `src/collision_hit_test_helpers.c` (`0x0801B7DC-0x0801BAA4`, 3), `src/collision_player_probe.c`
+  (1), `src/collision_probe_wall_on_ground.c` (2), `src/collision_probe_floor_in_camera_bounds.c` (1),
+  `src/collision_probe_floor.c` (1), `src/collision_probe_wall_in_air_ceiling.c` (3),
+  `src/collision_probe_landing_in_camera_bounds.c` (1), `src/collision_probe_landing.c` (1),
+  `src/collision_probe_no_slope_link.c` (6), `src/collision_probe_along_velocity.c` (2),
+  `src/collision_probe_point_push_out_tile_edge.c` (2) and `src/collision_probe_water.c` (1), with 19 new
   `split_config.json` `data_symbols` (the hit-test cells
   `0x03005294-0x030054F0` and three ROM tables).  The last function,
   `sub_0801b24c` (`0x0801B24C-0x0801B7DC`, 1424 bytes, the hit test
   against the third collider list), parked by #84 at 44 differing bytes,
-  landed in the final campaign as `src/hitbox_1b24c.c` (three more ROM
+  landed in the final campaign as `src/collision_hit_test_class20.c` (three more ROM
   tables named): its player index is read from `gUnk_03005394` at every
   use instead of through a `p` local, and every table mask goes through
   one `u32 m` (lesson 3.492).  The triple-doubled reaching register of
@@ -657,10 +657,10 @@ below is the pre-decompilation one, kept for the record.
   for a box standing on the ground, wall, ceiling and landing probes for
   one in the air), then a room probe and the write-back into the task.  The
   probes move the probe point `gUnk_03005560/gUnk_03005570` out of walls
-  and onto floors through M06's own cell queries (`src/terrain_214e0.c`)
+  and onto floors through M06's own cell queries (`src/collision_query_pixel.c`)
   and the per-tile-set tables `0x087328F0-0x08734FF0`, and fill the result
   block `gUnk_03005530`.  And the actor-vs-collider hit tests M17/M18's
-  actors run (`src/actor_673ec.c`): `sub_0801b7dc` places the actor's
+  actors run (`src/actor_held_player.c`): `sub_0801b7dc` places the actor's
   attack box against the camera rectangle, `sub_0801a8c8`/`sub_0801af14`/
   `sub_0801b24c` test it against the three collider lists M05's
   `sub_0801a828` fills, and `sub_0801b8e4`/`sub_0801b9e4` write the hit
@@ -695,24 +695,24 @@ below is the pre-decompilation one, kept for the record.
 * **Landed as** thirteen files, all 157 functions byte-exact under
   the `--newpb` recipe with no `asm` statements and no `register` pins
   (#93 landed 156 in twelve files with 48 new `split_config.json`
-  `data_symbols`; the final campaign added `src/level_27a6c.c`):
-  `src/terrain_21b18.c` (`0x08021B18-0x0802296C`, 22 fns),
-  `src/level_2296c.c` (`0x0802296C-0x08023618`, 8),
-  `src/roomtask_23618.c` (`0x08023618-0x08023948`, 10),
-  `src/level_23948.c` (`0x08023948-0x080242D0`, 10),
-  `src/level_242d0.c` (`0x080242D0-0x080261C0`, 27),
-  `src/stage_261c0.c` (`0x080261C0-0x08026B60`, 24),
-  `src/door_26b60.c` (`0x08026B60-0x080270D0`, 3),
-  `src/stage_270d0.c` (`0x080270D0-0x080273A0`, 10),
-  `src/stage_273a0.c` (`0x080273A0-0x08027A6C`, 13),
-  `src/level_27a6c.c` (`0x08027A6C-0x08027E28`, 1),
-  `src/room_27e28.c` (`0x08027E28-0x08028320`, 4),
-  `src/room_28320.c` (`0x08028320-0x08028B8C`, 5),
-  `src/camera_28b8c.c` (`0x08028B8C-0x080296A0`, 20).
-  `level_242d0.c` holds both the part-3 loaders and the doors: split at
+  `data_symbols`; the final campaign added `src/room_hub_map.c`):
+  `src/collision_terrain_init.c` (`0x08021B18-0x0802296C`, 22 fns),
+  `src/room_reset_level_load_room.c` (`0x0802296C-0x08023618`, 8),
+  `src/room_task.c` (`0x08023618-0x08023948`, 10),
+  `src/room_hub.c` (`0x08023948-0x080242D0`, 10),
+  `src/room_enter_exit.c` (`0x080242D0-0x080261C0`, 27),
+  `src/room_stage_helpers.c` (`0x080261C0-0x08026B60`, 24),
+  `src/room_doors.c` (`0x08026B60-0x080270D0`, 3),
+  `src/room_stop_pause.c` (`0x080270D0-0x080273A0`, 10),
+  `src/room_restart_point.c` (`0x080273A0-0x08027A6C`, 13),
+  `src/room_hub_map.c` (`0x08027A6C-0x08027E28`, 1),
+  `src/room_bg_layout.c` (`0x08027E28-0x08028320`, 4),
+  `src/room_spawn_door_objects.c` (`0x08028320-0x08028B8C`, 5),
+  `src/room_camera_init.c` (`0x08028B8C-0x080296A0`, 20).
+  `room_enter_exit.c` holds both the part-3 loaders and the doors: split at
   `0x08024E40`, `sub_08025024` and `sub_080258e0` only match with the
-  loaders in front of them in the same translation unit, and `stage_270d0.c`
-  / `stage_273a0.c` are two files for the opposite reason
+  loaders in front of them in the same translation unit, and `room_stop_pause.c`
+  / `room_restart_point.c` are two files for the opposite reason
   (`docs/lessons-learned.md` 4.79, 4.86).  The last function,
   `sub_08027a6c` (`0x08027A6C-0x08027E28`, 956 bytes), which builds the
   second map buffer `gUnk_02006AA0` for `sub_08023948`/`sub_08023ca0`, was
@@ -724,26 +724,26 @@ below is the pre-decompilation one, kept for the record.
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): the half of
   the level engine that decides WHICH room is on screen, one subsystem with
   M08 (the camera and map streaming), which it drives.
-  * **The room loaders** (`level_*.c`), one per game state: look the room
+  * **The room loaders** (`room_*.c`), one per game state: look the room
     header up in `gUnk_087E1D58[level][stage][room]`, copy its size, origin
     and palettes into the camera cells, load its graphics and metatile maps,
     reset the camera and the players and stream the whole view; plus the two
     level resets that rebuild the door and cleared-stage masks from the save
     flags.
-  * **Task type #3** (`roomtask_23618.c` and the `level_*.c` variants): the
+  * **Task type #3** (`room_task.c` and the `room_*.c` variants): the
     room's per-frame driver, seven variants dispatched through the anchor
     table `0x08732614`, each gated by the flag cell `gUnk_03005624`.
-  * **Doors** (`level_242d0.c`, `door_26b60.c`, `room_28320.c`): the door
+  * **Doors** (`room_enter_exit.c`, `room_doors.c`, `room_spawn_door_objects.c`): the door
     records of the room header, the door objects, finding the door under
     the player and entering it (`sub_08025024`, a 9-way `switch` on the door
     kind that sets the next level/stage/room and the stage request
     `gUnk_03002438`).
-  * **Map and collision queries** (`terrain_21b18.c`), continuing M06.
-  * **Stage helpers** (`stage_*.c`) the rest of the game calls: screen
+  * **Map and collision queries** (`collision_terrain_init.c`), continuing M06.
+  * **Stage helpers** (`room_stage_helpers.c` and its neighbours) the rest of the game calls: screen
     shake, task spawning in the high slots, player / camera placement, the
     looping-room coordinate wrap, the two-player race record and the
     per-player camera modes.
-  * **Camera start-up** (`room_*.c`, `camera_28b8c.c`): room, camera and
+  * **Camera start-up** (`room_*.c`, `room_camera_init.c`): room, camera and
     group bounds, the BG layout of special rooms, the BG3 parallax factors
     and the BG3 streaming glue.
 * **Census fixes** 157 functions, not 154: four dead exports added
@@ -767,7 +767,7 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** VRAM transfer queue + sprite buckets x25, sprite draw/update x12, sound/BGM x8, BG/fade/blend reset x4, sound/SE x4, task engine x3.
 * **Named helpers** CpuSet x13, CpuFastSet x12, Div x2.
 * **Called from** M19 x64, M18 x30, M10 x29, M11 x28, M25 x25.
-* **Depends on** M08 x195, M02 x39, sdk_swi_wrappers x27, early_1518 x25, M06 x21.
+* **Depends on** M08 x195, M02 x39, sdk_swi_wrappers x27, main_copy_queue x25, M06 x21.
 * **Pool references** IWRAM x957, EWRAM x537, asset_metadata_index x57, game_code_and_rodata x52, sample_set_index x21, VRAM x16, level_graphics_palettes x3.
 * **Known RAM cells touched** current game state (main dispatch) x6, per-player keys held x4, per-player keys pressed x4, DISPCNT shadow x1.
 * **Suggested batches** `0x08021B18` (36 fns), `0x080238A4` (26 fns), `0x0802589E` (55 fns), `0x08027750` (37 fns).
@@ -782,47 +782,47 @@ below is the pre-decompilation one, kept for the record.
   `--newpb` recipe with no `asm` statements and no `register` pins, 73 new
   `split_config.json` `data_symbols`, `make progress` reports 0 asm code
   bytes in the range:
-  `src/camera_296a0.c` (`0x080296A0-0x08029C74`, 10 fns),
-  `src/camera_29c74.c` (`0x08029C74-0x0802A9CC`, 12),
-  `src/bgmap_2a9cc.c` (`0x0802A9CC-0x0802B2F0`, 22),
-  `src/bgmap_2b2f0.c` (`0x0802B2F0-0x0802B4BC`, 5),
-  `src/camera_2b4bc.c` (`0x0802B4BC-0x0802C42C`, 4),
-  `src/camera_2c42c.c` (`0x0802C42C-0x0802D01C`, 10),
-  `src/camera_2d01c.c` (`0x0802D01C-0x0802D38C`, 12),
-  `src/camtask_2d38c.c` (`0x0802D38C-0x0802EAC8`, 10),
-  `src/obj_2eac8.c` (`0x0802EAC8-0x0802F62C`, 28),
-  `src/obj_2f62c.c` (`0x0802F62C-0x08030238`, 24),
-  `src/obj_30238.c` (`0x08030238-0x080306B4`, 7),
-  `src/obj_306b4.c` (`0x080306B4-0x08030804`, 7).
-  `obj_30238.c`/`obj_306b4.c` are two files because `sub_08030724` only
+  `src/camera_stream_scroll.c` (`0x080296A0-0x08029C74`, 10 fns),
+  `src/camera_player_group.c` (`0x08029C74-0x0802A9CC`, 12),
+  `src/camera_draw_bg_map.c` (`0x0802A9CC-0x0802B2F0`, 22),
+  `src/camera_block_anim_clip.c` (`0x0802B2F0-0x0802B4BC`, 5),
+  `src/camera_scroll_lock.c` (`0x0802B4BC-0x0802C42C`, 4),
+  `src/camera_hub.c` (`0x0802C42C-0x0802D01C`, 10),
+  `src/camera_bg_anims.c` (`0x0802D01C-0x0802D38C`, 12),
+  `src/camera_map_events.c` (`0x0802D38C-0x0802EAC8`, 10),
+  `src/camera_door_signs.c` (`0x0802EAC8-0x0802F62C`, 28),
+  `src/camera_warp_star_station_door.c` (`0x0802F62C-0x08030238`, 24),
+  `src/camera_stage_effect.c` (`0x08030238-0x080306B4`, 7),
+  `src/camera_world_sprite_block_anims.c` (`0x080306B4-0x08030804`, 7).
+  `camera_stage_effect.c`/`camera_world_sprite_block_anims.c` are two files because `sub_08030724` only
   matches without the type-#236 bodies in front of it in the same
   translation unit (`docs/lessons-learned.md` 4.79).  Both neighbours, M07
   and M09, were still asm then; both are C now.
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): one
   subsystem with M07, which calls it every frame.
   * **The camera** (`camera_*.c`): the per-frame updates of the room modes
-    (`camera_2b4bc.c`: follow the player inside the camera bounds
+    (`camera_scroll_lock.c`: follow the player inside the camera bounds
     `gUnk_030055F8`, slide towards the scroll-lock line of
-    `gUnk_03005680`), the multiplayer targets (`camera_29c74.c`: per-player
+    `gUnk_03005680`), the multiplayer targets (`camera_player_group.c`: per-player
     cameras `gUnk_030055D0[4]`, bounds `gUnk_03005640[4]` and modes, the
     group centre, the visible rectangle `gUnk_03002158`), the snaps, the
-    screen shake and the scroll-lock setup (`camera_2c42c.c`), and the glue
+    screen shake and the scroll-lock setup (`camera_hub.c`), and the glue
     that writes the BG1-BG3 16.16 scroll shadows and the sprite camera
-    (`camera_296a0.c`).
-  * **The BG map streaming** (`bgmap_*.c`): metatiles of `gUnk_03005660`
+    (`camera_stream_scroll.c`).
+  * **The BG map streaming** (`camera_draw_bg_map.c`, `camera_block_anim_clip.c`): metatiles of `gUnk_03005660`
     (2x2 tiles of `gUnk_0200B080`) into the maps at `0x06001800`,
     `0x06002000` and `0x06003000`, one tile, row, column or 36x26-tile window
     at a time, plus the edge tiles built from the solid flags.
-  * **Task type #4** (`camtask_2d38c.c`, dispatched by `sub_0802d370` in
-    `camera_2d01c.c` through the anchor table `0x087328A0`): seven map-event
+  * **Task type #4** (`camera_map_events.c`, dispatched by `sub_0802d370` in
+    `camera_bg_anims.c` through the anchor table `0x087328A0`): seven map-event
     coroutines - passage openers, metatile breakers, room palette fades and
-    two scripted camera pans.  `camera_2d01c.c` also runs the ten BG
+    two scripted camera pans.  `camera_bg_anims.c` also runs the ten BG
     animation script slots `gUnk_02007D70[]`.
-  * **Task types #221-#236** (`obj_*.c`): each class-3 type #221-#235 is a
+  * **Task types #221-#236** (`camera_door_signs.c`, `camera_warp_star_station_door.c`, `camera_stage_effect.c`, `camera_world_sprite_block_anims.c`): each class-3 type #221-#235 is a
     spawner (`s32 f(x, y, ...)` -> `sub_08005904(type, 32, 63)`), an init
     body with a `TaskYieldTrampoline` animation, and draw / tile-upload
     callbacks; #236 (class 4) runs the six sprite effects of the anchor
-    table `0x087328D8`.  `obj_306b4.c` holds the on-screen OAM draw helper
+    table `0x087328D8`.  `camera_world_sprite_block_anims.c` holds the on-screen OAM draw helper
     `sub_080306b4` and the setters of the per-frame stage hook
     `gUnk_030004A0` (one of three M09 routines).
 * **Census fixes** 151 functions, not 153: three rows removed
@@ -844,8 +844,8 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** VRAM transfer queue + sprite buckets x19, task position/draw x18, sprite draw/update x14, frame driver + RNG + blend x13.
 * **Named helpers** TaskYieldTrampoline x190, TaskDispatchTrampoline x18.
 * **Called from** M07 x195, M09 x4, M33 x3.
-* **Depends on** sdk_libc x208, early_1518 x19, early_58e4 x18, M09 x15, early_5d9c x14.
-* **Pool references** IWRAM x765, EWRAM x67, asset_metadata_index x46, game_code_and_rodata x27, VRAM x23, early_58e4 x21, early_5d9c x11, compressed_graphics x6.
+* **Depends on** sdk_libc x208, main_copy_queue x19, task_move x18, M09 x15, task_draw_world x14.
+* **Pool references** IWRAM x765, EWRAM x67, asset_metadata_index x46, game_code_and_rodata x27, VRAM x23, task_move x21, task_draw_world x11, compressed_graphics x6.
 * **Known RAM cells touched** BG3VOFS shadow (16.16) x5, BG2VOFS shadow (16.16) x4, BG3HOFS shadow (16.16) x4, BG2HOFS shadow (16.16) x3, BG1HOFS shadow (16.16) x2, BG1VOFS shadow (16.16) x2.
 * **Suggested batches** `0x080296A0` (50 fns), `0x0802B62C` (25 fns), `0x0802D38C` (30 fns), `0x0802F38C` (48 fns).
 
@@ -858,17 +858,17 @@ below is the pre-decompilation one, kept for the record.
 * **Landed as** six files, all 63 functions byte-exact under the `--newpb`
   recipe with no `asm` statements and no `register` pins, 35 new
   `split_config.json` `data_symbols`:
-  `src/block_30804.c` (`0x08030804-0x080318B4`, 15 fns),
-  `src/block_318b4.c` (`0x080318B4-0x08032688`, 19),
-  `src/player_32688.c` (`0x08032688-0x080337F4`, 5),
-  `src/player_337f4.c` (`0x080337F4-0x080343C0`, 10),
-  `src/player_343c0.c` (`0x080343C0-0x08034F8C`, 9),
-  `src/player_34f8c.c` (`0x08034F8C-0x08036280`, 5).
-  `player_34f8c.c` was carved first, so M10's asm segment is named after its
+  `src/player_break_blocks.c` (`0x08030804-0x080318B4`, 15 fns),
+  `src/player_block_anims.c` (`0x080318B4-0x08032688`, 19),
+  `src/player_task.c` (`0x08032688-0x080337F4`, 5),
+  `src/player_stand_walk.c` (`0x080337F4-0x080343C0`, 10),
+  `src/player_run_jump.c` (`0x080343C0-0x08034F8C`, 9),
+  `src/player_fall_float.c` (`0x08034F8C-0x08036280`, 5).
+  `player_fall_float.c` was carved first, so M10's asm segment is named after its
   own start (`..._08030804_08036280`, lesson 4.74).
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): not a
   "stage manager" but two subsystems.
-  * **Breakable blocks** (`block_*.c`): the per-metatile block layers
+  * **Breakable blocks** (`player_break_blocks.c`, `player_block_anims.c`): the per-metatile block layers
     `gUnk_02008160[]` and `gUnk_02004CA0[]`, the attack hit-box scans and
     their six wrappers, the break test `sub_0803111c` and spawner
     `sub_08031374`, the 64-record animation state `gUnk_020061F0[]` /
@@ -910,7 +910,7 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x89, frame driver + RNG + blend x7, sound/BGM x1, task engine x1.
 * **Named helpers** TaskYieldTrampoline x159.
 * **Called from** M14 x16, M08 x15, M13 x4, M18 x4, M07 x2.
-* **Depends on** sdk_libc x159, M11 x151, early_5d9c x89, M10 x23, M07 x15.
+* **Depends on** sdk_libc x159, M11 x151, task_draw_world x89, M10 x23, M07 x15.
 * **Pool references** IWRAM x297, EWRAM x138, asset_metadata_index x74, game_code_and_rodata x39, VRAM x9, level_object_tables x2, sample_set_index x1.
 * **Known RAM cells touched** current game state (main dispatch) x2, per-player keys held x1.
 * **Suggested batches** `0x08030804` (33 fns), `0x08032688` (13 fns), `0x080343C0` (14 fns).
@@ -924,13 +924,13 @@ below is the pre-decompilation one, kept for the record.
 * **Landed as** seven files, all 39 functions byte-exact under the `--newpb`
   recipe with no `asm` statements and no `register` pins, 20 new
   `split_config.json` `data_symbols`:
-  `src/player_36280.c` (`0x08036280-0x08036C94`, 5 fns),
-  `src/player_36c94.c` (`0x08036C94-0x08037ED8`, 8),
-  `src/player_37ed8.c` (`0x08037ED8-0x0803919C`, 2),
-  `src/player_3919c.c` (`0x0803919C-0x08039C24`, 3),
-  `src/player_39c24.c` (`0x08039C24-0x0803AA64`, 2),
-  `src/player_3aa64.c` (`0x0803AA64-0x0803BDE8`, 14),
-  `src/player_3bde8.c` (`0x0803BDE8-0x0803CD60`, 5).
+  `src/player_duck_slide.c` (`0x08036280-0x08036C94`, 5 fns),
+  `src/player_ladder_inhale.c` (`0x08036C94-0x08037ED8`, 8),
+  `src/player_hurt.c` (`0x08037ED8-0x0803919C`, 2),
+  `src/player_die_enter_door.c` (`0x0803919C-0x08039C24`, 3),
+  `src/player_exit_door.c` (`0x08039C24-0x0803AA64`, 2),
+  `src/player_water.c` (`0x0803AA64-0x0803BDE8`, 14),
+  `src/player_share_item.c` (`0x0803BDE8-0x0803CD60`, 5).
   With it `0x08021B18-0x08040B40` (M07 through the start of M11) is C
   (M07's last function landed in the final campaign).
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): not a "stage
@@ -971,7 +971,7 @@ below is the pre-decompilation one, kept for the record.
 * **How** Phase A (census, harness, 17 small bodies by the coordinator as
   the module's templates, all matching on the first or second build), then
   four subagents on disjoint carve files while the coordinator did
-  `player_3aa64`; three mid-run handovers through `variants.sh`, and the
+  `player_water`; three mid-run handovers through `variants.sh`, and the
   last function, `sub_08037ed8`, was raced by two agents in parallel.
 
 * **Size** 26.7 KiB (`0x6ae0`), 41 functions (35 reachable only through pointer tables), mean `0x297`, largest `0x1000`, pool words 7.6% of bytes.
@@ -981,7 +981,7 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x167, task engine x14, sound/SE x8, VRAM transfer queue + sprite buckets x3, frame driver + RNG + blend x1, sound/BGM x1.
 * **Named helpers** TaskYieldTrampoline x355, LZ77UnCompWram x1, TaskDispatchTrampoline x1.
 * **Called from** M09 x23.
-* **Depends on** sdk_libc x356, M11 x266, early_5d9c x167, M07 x29, M16 x27.
+* **Depends on** sdk_libc x356, M11 x266, task_draw_world x167, M07 x29, M16 x27.
 * **Pool references** IWRAM x393, asset_metadata_index x50, game_code_and_rodata x39, EWRAM x31, VRAM x2, level_object_tables x2.
 * **Known RAM cells touched** DISPCNT shadow x4, current game state (main dispatch) x1, frames left to wait x1.
 * **Suggested batches** `0x08036280` (6 fns), `0x080371F0` (10 fns), `0x08038FE8` (8 fns), `0x0803AFCC` (17 fns).
@@ -989,8 +989,8 @@ below is the pre-decompilation one, kept for the record.
 ### M11 `0x0803CD60-0x080449C7` - player mode/state machine + stage support services - **landed (#85)**
 
 **Decompiled in issue #85** (119 of 121 functions, 28940 of 31848 bytes):
-`src/stage_3cd60.c`, `src/stage_413a4.c`, `src/stage_43654.c`; the straggler
-campaign landed the last two (`src/stage_40b40.c`, `src/stage_4335c.c`), so
+`src/player_helpers.c`, `src/player_meta_knight_actions.c`, `src/player_meta_knight_slash.c`; the straggler
+campaign landed the last two (`src/player_motion_x_preset.c`, `src/player_meta_knight_swim_update.c`), so
 all 121 functions are C.
 
 * **Size** 31.1 KiB (`0x7c68`), 121 functions, 18 jump-table dispatches - the
@@ -1069,16 +1069,16 @@ below is the pre-decompilation one, kept for the record.
 * **Landed as** seven files, one or more whole action pairs each, all 21
   functions byte-exact under the `--newpb` recipe with no `asm` statements
   and no `register` pins, 34 new `split_config.json` `data_symbols`:
-  `src/player_449c8.c` (`0x080449C8-0x08044D04`, 3 fns),
-  `src/player_44d04.c` (`0x08044D04-0x080455C8`, 2),
-  `src/player_455c8.c` (`0x080455C8-0x08045D34`, 4),
-  `src/player_45d34.c` (`0x08045D34-0x08046330`, 2),
-  `src/player_46330.c` (`0x08046330-0x08046C00`, 2),
-  `src/player_46c00.c` (`0x08046C00-0x080474E8`, 2),
-  `src/player_474e8.c` (`0x080474E8-0x08047FE8`, 6).
+  `src/player_spark_cutter.c` (`0x080449C8-0x08044D04`, 3 fns),
+  `src/player_sword.c` (`0x08044D04-0x080455C8`, 2),
+  `src/player_burning_laser.c` (`0x080455C8-0x08045D34`, 4),
+  `src/player_mike.c` (`0x08045D34-0x08046330`, 2),
+  `src/player_wheel.c` (`0x08046330-0x08046C00`, 2),
+  `src/player_hammer.c` (`0x08046C00-0x080474E8`, 2),
+  `src/player_sleep.c` (`0x080474E8-0x08047FE8`, 6).
   With it `0x08043654-0x08047FE8` (the end of M11 and all of M12) is
   contiguous C, and M13's segment is named after its own start
-  (`..._08047fe8`, lesson 4.74: `player_474e8` was carved before the files
+  (`..._08047fe8`, lesson 4.74: `player_sleep` was carved before the files
   in front of it).
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): not an
   actor bank but the third part of M09's **player action machine**: "enter"
@@ -1109,7 +1109,7 @@ below is the pre-decompilation one, kept for the record.
 * **How** Phase A (census, harness, 13 small and medium bodies by the
   coordinator as the module's templates, ten of them first-try matches),
   then three subagents on six of the eight large bodies, grouped by carve
-  file, while the coordinator did the other two (`player_474e8`); five of
+  file, while the coordinator did the other two (`player_sleep`); five of
   the eight matched on the first build, and no function needed a
   handover.
 
@@ -1120,7 +1120,7 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x89, frame driver + RNG + blend x3, sound/SE x2.
 * **Named helpers** TaskYieldTrampoline x244.
 * **Called from** M11 x1.
-* **Depends on** sdk_libc x244, M11 x165, early_5d9c x89, M16 x41, M07 x14.
+* **Depends on** sdk_libc x244, M11 x165, task_draw_world x89, M16 x41, M07 x14.
 * **Pool references** IWRAM x145, asset_metadata_index x46, EWRAM x18, game_code_and_rodata x12, level_graphics_palettes x2.
 * **Known RAM cells touched** DISPCNT shadow x1.
 * **Suggested batches** `0x080449C8` (13 fns), `0x0804676C` (9 fns).
@@ -1135,18 +1135,18 @@ below is the pre-decompilation one, kept for the record.
   two shared tile loaders), all 24 functions byte-exact under the `--newpb`
   recipe with no `asm` statements and no `register` pins, 31 new
   `split_config.json` `data_symbols`:
-  `src/player_47fe8.c` (`0x08047FE8-0x08049738`, 2 fns),
-  `src/player_49738.c` (`0x08049738-0x08049B48`, 2),
-  `src/player_49b48.c` (`0x08049B48-0x08049F98`, 4),
-  `src/player_49f98.c` (`0x08049F98-0x0804A54C`, 2),
-  `src/player_4a54c.c` (`0x0804A54C-0x0804AB70`, 4),
-  `src/player_4ab70.c` (`0x0804AB70-0x0804B5B4`, 4),
-  `src/player_4b5b4.c` (`0x0804B5B4-0x0804B858`, 2),
-  `src/player_4b858.c` (`0x0804B858-0x0804C64C`, 2),
-  `src/player_4c64c.c` (`0x0804C64C-0x0804CC7C`, 2).
+  `src/player_get_ability.c` (`0x08047FE8-0x08049738`, 2 fns),
+  `src/player_ability_tiles.c` (`0x08049738-0x08049B48`, 2),
+  `src/player_ice_freeze.c` (`0x08049B48-0x08049F98`, 4),
+  `src/player_hi_jump.c` (`0x08049F98-0x0804A54C`, 2),
+  `src/player_beam_stone.c` (`0x0804A54C-0x0804AB70`, 4),
+  `src/player_tornado_crash.c` (`0x0804AB70-0x0804B5B4`, 4),
+  `src/player_light.c` (`0x0804B5B4-0x0804B858`, 2),
+  `src/player_backdrop_hold.c` (`0x0804B858-0x0804C64C`, 2),
+  `src/player_throw_hold.c` (`0x0804C64C-0x0804CC7C`, 2).
   With it `0x08043654-0x0804CC7C` (the end of M11, M12 and M13) is
   contiguous C, and M14's segment is named after its own start
-  (`..._0804cc7c`, lesson 4.74: `player_4c64c` was carved first).
+  (`..._0804cc7c`, lesson 4.74: `player_throw_hold` was carved first).
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): not an
   actor bank but the fourth part of M09's **player action machine**:
   "enter" coroutines 29, 44-48 and 50-54 of `gUnk_0873A748[62]` and
@@ -1171,7 +1171,7 @@ below is the pre-decompilation one, kept for the record.
 * **How** Phase A (census, harness, the two shared helpers and eight small
   bodies by the coordinator, M11/M12 twins cloned first try), then three
   subagents grouped by carve file (one per big body, one for two files of
-  mid-size bodies) while the coordinator did `player_4c64c`; the two
+  mid-size bodies) while the coordinator did `player_throw_hold`; the two
   agents that finished first took the coordinator's remaining files
   (handovers), and the last function (`sub_0804af54`) was raced by two
   agents through `variants.sh` (lesson 4.91); its owner matched it.
@@ -1183,7 +1183,7 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x144, VRAM transfer queue + sprite buckets x35, frame driver + RNG + blend x7, palette fade x2, task engine x2.
 * **Named helpers** TaskYieldTrampoline x317.
 * **Called from** M18 x7, M09 x4, M10 x3, M14 x1.
-* **Depends on** sdk_libc x317, M11 x171, early_5d9c x144, M16 x76, early_1518 x35.
+* **Depends on** sdk_libc x317, M11 x171, task_draw_world x144, M16 x76, main_copy_queue x35.
 * **Pool references** IWRAM x216, asset_metadata_index x27, level_graphics_palettes x24, game_code_and_rodata x13, VRAM x9, EWRAM x8, level_object_tables x4.
 * **Known RAM cells touched** DISPCNT shadow x1.
 * **Suggested batches** `0x08047FE8` (10 fns), `0x08049F98` (13 fns), `0x0804B8A0` (4 fns).
@@ -1194,25 +1194,25 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** thirteen files around PR #133's `src/sub_0804e3a0.c`
+* **Landed as** thirteen files around PR #133's `src/player_throw_update.c`
   (`0x0804E3A0-0x0804E5A4`, handler 28, left as it was), all 81 functions
   byte-exact under the `--newpb` recipe with no `asm` statements and no
   `register` pins, 79 new `split_config.json` `data_symbols`:
-  `src/player_4cc7c.c` (`0x0804CC7C-0x0804DC08`, 2 fns),
-  `src/player_4dc08.c` (`0x0804DC08-0x0804E3A0`, 3),
-  `src/player_4e5a4.c` (`0x0804E5A4-0x0804E78C`, 3),
-  `src/player_4e78c.c` (`0x0804E78C-0x0804EE08`, 8),
-  `src/player_4ee08.c` (`0x0804EE08-0x0804F614`, 10),
-  `src/player_4f614.c` (`0x0804F614-0x0804F948`, 5),
-  `src/player_4f948.c` (`0x0804F948-0x0804FFDC`, 7),
-  `src/player_4ffdc.c` (`0x0804FFDC-0x080507BC`, 10),
-  `src/plobj_507bc.c` (`0x080507BC-0x080509EC`, 3),
-  `src/plobj_509ec.c` (`0x080509EC-0x080514F8`, 8),
-  `src/plobj_514f8.c` (`0x080514F8-0x0805239C`, 8),
-  `src/plobj_5239c.c` (`0x0805239C-0x08052F6C`, 5),
-  `src/plobj_52f6c.c` (`0x08052F6C-0x08053AF4`, 9).
+  `src/player_ufo.c` (`0x0804CC7C-0x0804DC08`, 2 fns),
+  `src/player_backdrop_throw.c` (`0x0804DC08-0x0804E3A0`, 3),
+  `src/player_ball.c` (`0x0804E5A4-0x0804E78C`, 3),
+  `src/player_ball_roll.c` (`0x0804E78C-0x0804EE08`, 8),
+  `src/player_ball_jump.c` (`0x0804EE08-0x0804F614`, 10),
+  `src/player_ball_helpers.c` (`0x0804F614-0x0804F948`, 5),
+  `src/player_star_rod.c` (`0x0804F948-0x0804FFDC`, 7),
+  `src/player_star_rod_flight.c` (`0x0804FFDC-0x080507BC`, 10),
+  `src/player_object_task.c` (`0x080507BC-0x080509EC`, 3),
+  `src/player_object_air_puff.c` (`0x080509EC-0x080514F8`, 8),
+  `src/player_object_laser_beam.c` (`0x080514F8-0x0805239C`, 8),
+  `src/player_object_ice_breath.c` (`0x0805239C-0x08052F6C`, 5),
+  `src/player_object_ufo_shot.c` (`0x08052F6C-0x08053AF4`, 9).
   With it `0x08043654-0x08053AF4` (the end of M11 through M14) is
-  contiguous C.  `plobj_52f6c` was carved first, so M15's segment is
+  contiguous C.  `player_object_ufo_shot` was carved first, so M15's segment is
   named after its own start (`..._0804e5a4_08053af4`, lesson 4.74), and
   the leftover `0x08053AF4-0x08054538` run now comes out of `make modmap`
   as its own module under `MODULE_NAMES[0x08053AF4]` ("link multiplayer
@@ -1260,8 +1260,8 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x140, frame driver + RNG + blend x15, SIO multi-play x9, VRAM transfer queue + sprite buckets x8, task position/draw x4.
 * **Named helpers** TaskYieldTrampoline x399, TaskDispatchTrampoline x9, Div x2.
 * **Called from** M13 x15, M10 x13, M09 x2, M11 x2, M12 x2.
-* **Depends on** sdk_libc x408, M11 x159, early_5d9c x140, M05 x21, M16 x18.
-* **Pool references** IWRAM x373, asset_metadata_index x116, game_code_and_rodata x62, EWRAM x21, early_58e4 x16, early_5d9c x16, VRAM x4, early_5c4c x3.
+* **Depends on** sdk_libc x408, M11 x159, task_draw_world x140, M05 x21, M16 x18.
+* **Pool references** IWRAM x373, asset_metadata_index x116, game_code_and_rodata x62, EWRAM x21, task_move x16, task_draw_world x16, VRAM x4, task_draw_screen x3.
 * **Known RAM cells touched** current game state (main dispatch) x1.
 * **Suggested batches** `0x0804CC7C` (10 fns), `0x0804E78C` (39 fns), `0x080506DC` (22 fns), `0x0805268C` (13 fns).
 
@@ -1274,25 +1274,25 @@ below is the pre-decompilation one, kept for the record.
 * **Landed as** twelve files, all 84 functions byte-exact under the
   `--newpb` recipe with no `asm` statements and no `register` pins,
   50 new `split_config.json` `data_symbols`:
-  `src/effect_53af4.c` (`0x08053AF4-0x08054330`, 12 fns: the body and
-  variants 0-6), `src/effect_54330.c` (`0x08054330-0x08054A80`, 8:
-  variants 7-11), `src/effect_54a80.c` (`0x08054A80-0x08055460`, 7:
-  12-15), `src/effect_55460.c` (`0x08055460-0x08055B24`, 8: 16-21),
-  `src/effect_55b24.c` (`0x08055B24-0x08056448`, 8: 22-25),
-  `src/effect_56448.c` (`0x08056448-0x08056DD4`, 4: 26-28),
-  `src/effect_56dd4.c` (`0x08056DD4-0x08057494`, 5: 29-31),
-  `src/effect_57494.c` (`0x08057494-0x08057CE0`, 5: 32-34),
-  `src/effect_57ce0.c` (`0x08057CE0-0x08058810`, 7: 35-39),
-  `src/effect_58810.c` (`0x08058810-0x08059570`, 4: 40-41),
-  `src/effect_59570.c` (`0x08059570-0x0805A358`, 6: 42-44),
-  `src/effect_5a358.c` (`0x0805A358-0x0805AFAC`, 10: 45-48).  With it
+  `src/effect_skid_dust.c` (`0x08053AF4-0x08054330`, 12 fns: the body and
+  variants 0-6), `src/effect_slide_dust.c` (`0x08054330-0x08054A80`, 8:
+  variants 7-11), `src/effect_death_star_ring_ability.c` (`0x08054A80-0x08055460`, 7:
+  12-15), `src/effect_dance_star_burst.c` (`0x08055460-0x08055B24`, 8: 16-21),
+  `src/effect_hurt_flames_sparks.c` (`0x08055B24-0x08056448`, 8: 22-25),
+  `src/effect_ability_puffs.c` (`0x08056448-0x08056DD4`, 4: 26-28),
+  `src/effect_fire_breath_spark_aura.c` (`0x08056DD4-0x08057494`, 5: 29-31),
+  `src/effect_burning_flames_wheel.c` (`0x08057494-0x08057CE0`, 5: 32-34),
+  `src/effect_mike_attack.c` (`0x08057CE0-0x08058810`, 7: 35-39),
+  `src/effect_ice_breath_freeze_aura.c` (`0x08058810-0x08059570`, 4: 40-41),
+  `src/effect_hi_jump_ball.c` (`0x08059570-0x0805A358`, 6: 42-44),
+  `src/effect_crash_blast.c` (`0x0805A358-0x0805AFAC`, 10: 45-48).  With it
   `0x08043654-0x080B566F` (the end of M11 through the head of M33) is one
   contiguous C run; no module boundary outside M15 moved, and the frozen
   keys `0x08054538`/`0x08057CE0`/`0x0805AF80` in
   `FROZEN_MODULE_BOUNDARIES` now fall inside `c_code` rows.
 * **What it turned out to be** (`docs/analysis/rom-map.md` §9): not the
-  link mode.  The census's "SIO multi-play (early_6464) x162" counted
-  every call into `src/early_6464.c`, and 149 of them are the random-range
+  link mode.  The census's "SIO multi-play (link_driver) x162" counted
+  every call into `src/link_driver.c`, and 149 of them are the random-range
   helpers `sub_080064ac`/`sub_080064dc` (the rest its in-view test and
   task skip-mask helpers); nothing here reaches the link driver.  The
   range is **task type #7** (class 1, body `sub_08053af4`): the effect
@@ -1327,19 +1327,19 @@ below is the pre-decompilation one, kept for the record.
 * **Size** 29.2 KiB (`0x74b8`), 86 functions (78 reachable only through pointer tables), mean `0x15b`, largest `0x670`, pool words 8.8% of bytes.
 * **Difficulty** 3/6 - 24 distinct RAM cells, 5 jump-table dispatches, 17 functions >= `0x200`.
 * **Seam cost** 0 in / 7 out (local `bl` edges crossing the boundary).
-* **Why** SIO multi-play (early_6464) x162 - by far the heaviest link user in the bulk; task type #7 (class 1); 49-entry anchor table @0x0873B928.
+* **Why** SIO multi-play (link_driver) x162 - by far the heaviest link user in the bulk; task type #7 (class 1); 49-entry anchor table @0x0873B928.
 * **Task types** 1 (class 1 x1): #7.
 * **Anchor tables** `0x0873B928` 49 entries -> `0x08053B40-0x0805AE94`.
 * **Calls into the decompiled early zone** sprite draw/update x163, SIO multi-play x162, VRAM transfer queue + sprite buckets x16, frame driver + RNG + blend x14, task engine x6, palette fade x2.
 * **Named helpers** TaskYieldTrampoline x592, TaskDispatchTrampoline x51, CpuSet x1.
-* **Depends on** sdk_libc x643, early_5d9c x163, early_6464 x162, game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654 x20, early_1518 x16.
-* **Pool references** IWRAM x222, asset_metadata_index x92, early_58e4 x61, early_5d9c x50, game_code_and_rodata x50, EWRAM x30, VRAM x8, level_graphics_palettes x2.
+* **Depends on** sdk_libc x643, task_draw_world x163, link_driver x162, game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654 x20, main_copy_queue x16.
+* **Pool references** IWRAM x222, asset_metadata_index x92, task_move x61, task_draw_world x50, game_code_and_rodata x50, EWRAM x30, VRAM x8, level_graphics_palettes x2.
 * **Known RAM cells touched** DISPCNT shadow x3.
 * **Suggested batches** `0x08053AF4` (12 fns), `0x08054330` (25 fns), `0x0805614C` (18 fns), `0x08057CE0` (17 fns), `0x08059C28` (14 fns).
 
 ### M16 `0x0805AFAC-0x08062583` - effect spawner + two-level state machine (task types #81-#90) - **landed (#83)**
 
-**Decompiled in issue #83** (all 89 functions, no asm left in the range): `src/effect_5afac.c`.
+**Decompiled in issue #83** (all 89 functions, no asm left in the range): `src/effect_goal_game_dance.c`.
 
 * **Size** 29.5 KiB (`0x75d8`), 89 functions (53 reachable only through pointer tables), mean `0x156`, largest `0x924`, pool words 7.9% of bytes.
 * **The spawner.** `sub_0805afac(s8 band, u8 id, s32 payload)` is the
@@ -1387,10 +1387,10 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as four `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/actor_62584.c` (`0x08062584-0x08063698`, 2 fns),
-  `src/actor_63698.c` (`0x08063698-0x080653EC`, 107 fns),
-  `src/actor_653ec.c` (`0x080653EC-0x080673EC`, 86 fns) and
-  `src/actor_673ec.c` (`0x080673EC-0x080692FC`, 49 fns); shared data model in
+* **Landed as** `src/player_dance.c` (`0x08062584-0x08063698`, 2 fns),
+  `src/actor.c` (`0x08063698-0x080653EC`, 107 fns),
+  `src/actor_helpers.c` (`0x080653EC-0x080673EC`, 86 fns) and
+  `src/actor_held_player.c` (`0x080673EC-0x080692FC`, 49 fns); shared data model in
   `include/task.h`. `make progress` reports 0 asm code bytes in the range.
 * **What it turned out to be** the field API over `gUnk_03002490` (the running
   `struct Task *`) and the 64-entry `gUnk_03002790[]` table: spawn/free, 16.16
@@ -1409,8 +1409,8 @@ census below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x127, VRAM transfer queue + sprite buckets x21, frame driver + RNG + blend x10, task engine x7, SIO multi-play x2, sound/BGM x2.
 * **Named helpers** TaskYieldTrampoline x301, TaskDispatchTrampoline x6, ArcTan2 x2, _call_via_r0 x2, _call_via_r1 x2, CpuSet x1.
 * **Called from** M20 x385, M23 x350, M26 x313, M29 x208, M21 x191.
-* **Depends on** sdk_libc x311, early_5d9c x127, early_1518 x21, game_code_early_080011ac_08002378_08003110 x17, M06 x14.
-* **Pool references** IWRAM x511, EWRAM x58, asset_metadata_index x54, game_code_and_rodata x38, level_graphics_palettes x4, VRAM x2, gap_sram_driver_fn_table_asset_metadata_index x2, early_58e4 x1.
+* **Depends on** sdk_libc x311, task_draw_world x127, main_copy_queue x21, game_code_early_080011ac_08002378_08003110 x17, M06 x14.
+* **Pool references** IWRAM x511, EWRAM x58, asset_metadata_index x54, game_code_and_rodata x38, level_graphics_palettes x4, VRAM x2, gap_sram_driver_fn_table_asset_metadata_index x2, task_move x1.
 * **Known RAM cells touched** current game state (main dispatch) x3.
 * **Batches as landed** `0x08062584` (2 fns), `0x08063698` (107 fns), `0x080653EC` (86 fns), `0x080673EC` (49 fns).
 
@@ -1420,16 +1420,16 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as ten `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/actor_692fc.c` (`0x080692FC-0x0806A344`, 32 fns),
-  `src/actor_6a344.c` (`0x0806A344-0x0806AD18`, 37),
-  `src/actor_6ad18.c` (`0x0806AD18-0x0806B2E4`, 19),
-  `src/actor_6b2e4.c` (`0x0806B2E4-0x0806C2A4`, 39),
-  `src/actor_6c2a4.c` (`0x0806C2A4-0x0806CD40`, 19),
-  `src/actor_6cd40.c` (`0x0806CD40-0x0806D22C`, 7),
-  `src/actor_6d22c.c` (`0x0806D22C-0x0806E0F0`, 31),
-  `src/actor_6e0f0.c` (`0x0806E0F0-0x0806EF5C`, 29),
-  `src/actor_6ef5c.c` (`0x0806EF5C-0x0806FF24`, 13) and
-  `src/actor_6ff24.c` (`0x0806FF24-0x08070EC0`, 30); shared data model in
+* **Landed as** `src/actor_collision.c` (`0x080692FC-0x0806A344`, 32 fns),
+  `src/actor_defeat.c` (`0x0806A344-0x0806AD18`, 37),
+  `src/actor_boss_defeat.c` (`0x0806AD18-0x0806B2E4`, 19),
+  `src/actor_attached.c` (`0x0806B2E4-0x0806C2A4`, 39),
+  `src/actor_attached_throw_star_flash.c` (`0x0806C2A4-0x0806CD40`, 19),
+  `src/actor_dust.c` (`0x0806CD40-0x0806D22C`, 7),
+  `src/actor_burst_effects.c` (`0x0806D22C-0x0806E0F0`, 31),
+  `src/actor_hit_effects.c` (`0x0806E0F0-0x0806EF5C`, 29),
+  `src/player_warp_star_ride.c` (`0x0806EF5C-0x0806FF24`, 13) and
+  `src/player_meta_knight_warp_star_ride.c` (`0x0806FF24-0x08070EC0`, 30); shared data model in
   `include/task.h`. `make progress` reports 0 asm code bytes in the range.
 * **What it turned out to be** the class-1 task bodies the player's own tasks
   run, layered on the M17 field API. In address order: the input-probe
@@ -1469,8 +1469,8 @@ census below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x201, SIO multi-play x26, frame driver + RNG + blend x23, VRAM transfer queue + sprite buckets x6, task engine x4, sound/SE x2.
 * **Named helpers** TaskYieldTrampoline x386, TaskDispatchTrampoline x24, _call_via_r0 x17.
 * **Called from** M20 x80, M23 x63, M24 x48, M21 x44, M26 x40.
-* **Depends on** sdk_libc x427, early_5d9c x201, M17 x137, M07 x30, early_6464 x26.
-* **Pool references** IWRAM x473, asset_metadata_index x146, game_code_and_rodata x125, early_58e4 x19, EWRAM x9, VRAM x1, early_5c4c x1, level_graphics_palettes x1.
+* **Depends on** sdk_libc x427, task_draw_world x201, M17 x137, M07 x30, link_driver x26.
+* **Pool references** IWRAM x473, asset_metadata_index x146, game_code_and_rodata x125, task_move x19, EWRAM x9, VRAM x1, task_draw_screen x1, level_graphics_palettes x1.
 * **Known RAM cells touched** DISPCNT shadow x3, current game state (main dispatch) x2.
 * **Batches as landed** `0x080692FC` (32 fns), `0x0806A344` (37), `0x0806AD18` (19), `0x0806B2E4` (39), `0x0806C2A4` (19), `0x0806CD40` (7), `0x0806D22C` (31), `0x0806E0F0` (29), `0x0806EF5C` (13), `0x0806FF24` (30).
 
@@ -1481,10 +1481,10 @@ The range is decompiled and carved out of the split asm, so it now appears in
 census below is the pre-decompilation one, kept for the record (it counts 218
 functions; the sweep of #79 corrected that to 220, see below).
 
-* **Landed as** `src/actor_70ec0.c` (`0x08070EC0-0x08072D8C`, 42 fns),
-  `src/actor_72d8c.c` (`0x08072D8C-0x08074C0C`, 48), `src/actor_74c0c.c`
-  (`0x08074C0C-0x080763E8`, 12), `src/actor_763e8.c`
-  (`0x080763E8-0x08077AE0`, 63) and `src/actor_77ae0.c`
+* **Landed as** `src/cutscene_warp_star.c` (`0x08070EC0-0x08072D8C`, 42 fns),
+  `src/cutscene_warp_star_flights.c` (`0x08072D8C-0x08074C0C`, 48), `src/cutscene_nightmare_power_orb_escape.c`
+  (`0x08074C0C-0x080763E8`, 12), `src/cutscene_cannon.c`
+  (`0x080763E8-0x08077AE0`, 63) and `src/cutscene_big_switch_room_particles.c`
   (`0x08077AE0-0x08078B68`, 55).  All 220 functions are C and `make progress`
   counts 0 asm code bytes in the range.
 * **Census** the 218-row census was wrong in eight places, all found by the
@@ -1550,8 +1550,8 @@ functions; the sweep of #79 corrected that to 220, see below).
 * **Calls into the decompiled early zone** sprite draw/update x172, frame driver + RNG + blend x48, VRAM transfer queue + sprite buckets x25, sound/SE x12, task position/draw x3, sound/BGM x2.
 * **Named helpers** TaskYieldTrampoline x691, TaskDispatchTrampoline x21, CpuSet x4, LZ77UnCompWram x2, Div x1.
 * **Called from** M09 x2, M18 x2, M07 x1, M17 x1.
-* **Depends on** sdk_libc x712, early_5d9c x172, M17 x87, M07 x64, game_code_early_080011ac_08002378_08003110 x54.
-* **Pool references** IWRAM x429, asset_metadata_index x90, game_code_and_rodata x85, EWRAM x79, VRAM x10, early_58e4 x10, level_graphics_palettes x3, m4a_songs x3.
+* **Depends on** sdk_libc x712, task_draw_world x172, M17 x87, M07 x64, game_code_early_080011ac_08002378_08003110 x54.
+* **Pool references** IWRAM x429, asset_metadata_index x90, game_code_and_rodata x85, EWRAM x79, VRAM x10, task_move x10, level_graphics_palettes x3, m4a_songs x3.
 * **Known RAM cells touched** DISPCNT shadow x3, per-player keys held x1, per-player keys pressed x1.
 * **Batches as landed** `0x08070EC0` (42 fns), `0x08072D8C` (48), `0x08074C0C` (12), `0x080763E8` (63), `0x08077AE0` (55).
 
@@ -1562,9 +1562,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 census below is the pre-decompilation one, kept for the record (it counts 390
 functions; the reachability sweep of #77 corrected that to 414, see below).
 
-* **Landed as** `src/enemy_78b68.c` (`0x08078B68-0x0807AA5C`, 131 fns),
-  `src/enemy_7aa5c.c` (`0x0807AA5C-0x0807D3B0`, 170) and
-  `src/enemy_7d3b0.c` (`0x0807D3B0-0x0807F044`, 113).  All 414 functions are C
+* **Landed as** `src/enemy_sparky.c` (`0x08078B68-0x0807AA5C`, 131 fns),
+  `src/enemy_sword_and_blade_knight.c` (`0x0807AA5C-0x0807D3B0`, 170) and
+  `src/enemy_rocky.c` (`0x0807D3B0-0x0807F044`, 113).  All 414 functions are C
   and `make progress` counts 0 asm code bytes in the range.
 * **Census** the 390-row census was wrong in 24 places, all found by the
   reachability walk over the module's annotated listing (code inside a
@@ -1653,9 +1653,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 census below is the pre-decompilation one, kept for the record (it counts 188
 functions; the reachability sweep of #71 corrected that to 200, see below).
 
-* **Landed as** `src/enemy_7f044.c` (`0x0807F044-0x08080B70`, 81 fns),
-  `src/enemy_80b70.c` (`0x08080B70-0x080820B8`, 70) and
-  `src/enemy_820b8.c` (`0x080820B8-0x08082E68`, 49).  All 200 functions are C
+* **Landed as** `src/enemy_kabu.c` (`0x0807F044-0x08080B70`, 81 fns),
+  `src/enemy_starman_poppy_bros_jr.c` (`0x08080B70-0x080820B8`, 70) and
+  `src/enemy_poppy_bros_jr_wheelie.c` (`0x080820B8-0x08082E68`, 49).  All 200 functions are C
   and `make progress` counts 0 asm code bytes in the range.
 * **Census** the 188-row census was wrong in 22 places (commit "Fix
   twenty-two M21 census defects"): five phantom rows the rom-pointer
@@ -1712,7 +1712,7 @@ functions; the reachability sweep of #71 corrected that to 200, see below).
 * **Anchor tables** `0x08741380` 22 entries -> `0x0807F044-0x0807FBCC`; `0x08741488` 27 entries -> `0x0807FD34-0x08080B28`; `0x08741544` 26 entries -> `0x08080E10-0x08081810`; `0x087415B8` 9 entries -> `0x080819F4-0x08081DB4`; `0x08741604` 8 entries -> `0x080820B8-0x08082548`; `0x08741640` 16 entries -> `0x08082718-0x08082C58` (+4 more).
 * **Calls into the decompiled early zone** sprite draw/update x182, frame driver + RNG + blend x86.
 * **Named helpers** TaskYieldTrampoline x116, ArcTan2 x1.
-* **Depends on** M17 x191, early_5d9c x182, sdk_libc x116, early_2b04 x86, M18 x44.
+* **Depends on** M17 x191, task_draw_world x182, sdk_libc x116, link_run_frames x86, M18 x44.
 * **Pool references** IWRAM x299, asset_metadata_index x141, game_code_and_rodata x86, EWRAM x1.
 * **Suggested batches** `0x0807F044` (80 fns), `0x08080B70` (64 fns), `0x080820B8` (44 fns).
 
@@ -1722,9 +1722,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as three `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/enemy_82e68.c` (`0x08082E68-0x080844C4`, 48 fns),
-  `src/enemy_844c4.c` (`0x080844C4-0x08084D14`, 25) and
-  `src/enemy_84d14.c` (`0x08084D14-0x080860F8`, 52).  All 125 functions are C
+* **Landed as** `src/enemy_flamer.c` (`0x08082E68-0x080844C4`, 48 fns),
+  `src/enemy_noddy.c` (`0x080844C4-0x08084D14`, 25) and
+  `src/enemy_waddle_doo.c` (`0x08084D14-0x080860F8`, 52).  All 125 functions are C
   and `make progress` counts 0 asm code bytes in the range.  The two that took
   longest, `sub_08083d28` and `sub_0808451c`, both fell to structural reads
   rather than to source shapes: the first needed a non-`void` return type
@@ -1804,8 +1804,8 @@ census below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x0874176C` 18 entries -> `0x08082E68-0x08083A44`; `0x08741E7C` 6 entries -> `0x080840A4-0x080843F8`; `0x08741F70` 13 entries -> `0x080844C4-0x08084A74`; `0x08741FB8` 22 entries -> `0x08084D14-0x08085CD8`; `0x08742030` 8 entries -> `0x080858FC-0x08085C10`; `0x08742CF0` 4 entries -> `0x08084BC0-0x08084CB8` (+2 more).
 * **Calls into the decompiled early zone** sprite draw/update x185, frame driver + RNG + blend x38.
 * **Named helpers** TaskYieldTrampoline x188, TaskDispatchTrampoline x2, ArcTan2 x1.
-* **Depends on** sdk_libc x190, early_5d9c x185, M17 x132, early_2b04 x38, M18 x29.
-* **Pool references** IWRAM x211, asset_metadata_index x124, game_code_and_rodata x64, early_58e4 x1, early_5d9c x1.
+* **Depends on** sdk_libc x190, task_draw_world x185, M17 x132, link_run_frames x38, M18 x29.
+* **Pool references** IWRAM x211, asset_metadata_index x124, game_code_and_rodata x64, task_move x1, task_draw_world x1.
 * **Suggested batches** `0x08082E68` (44 fns), `0x080844C4` (24 fns), `0x08084D14` (51 fns).
 
 ### M23 `0x080860F8-0x0808CCE7` - enemy/object behaviour bank 4 (fourteen three-table scripts + two bosses) - **landed (#80)**
@@ -1814,9 +1814,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as three `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/enemy_860f8.c` (`0x080860F8-0x08088000`, 81 fns),
-  `src/enemy_88000.c` (`0x08088000-0x0808AA68`, 137) and
-  `src/enemy_8aa68.c` (`0x0808AA68-0x0808CCE8`, 79).  All 297 functions are C
+* **Landed as** `src/enemy_bronto_burt_twizzy.c` (`0x080860F8-0x08088000`, 81 fns),
+  `src/enemy_slippy.c` (`0x08088000-0x0808AA68`, 137) and
+  `src/enemy_blipper_gip.c` (`0x0808AA68-0x0808CCE8`, 79).  All 297 functions are C
   and `make progress` counts 0 asm code bytes in the range.
 * **Census** the module really has **297** functions, not the 285 the sweep
   counted: sixteen rows were wrong, in both directions (issue #80).  Fourteen
@@ -1889,8 +1889,8 @@ census below is the pre-decompilation one, kept for the record.
 * **Task types** 10 (class 2 x1, class 3 x9): #24, #28, #30, #33, #34, #35, #47, #104, #218, #219.
 * **Calls into the decompiled early zone** sprite draw/update x511, frame driver + RNG + blend x108.
 * **Named helpers** TaskYieldTrampoline x340, TaskDispatchTrampoline x2, Div x1.
-* **Depends on** early_5d9c x511, M17 x350, sdk_libc x342, early_2b04 x108, M18 x63.
-* **Pool references** IWRAM x463, asset_metadata_index x239, game_code_and_rodata x175, early_58e4 x3, early_5d9c x2.
+* **Depends on** task_draw_world x511, M17 x350, sdk_libc x342, link_run_frames x108, M18 x63.
+* **Pool references** IWRAM x463, asset_metadata_index x239, game_code_and_rodata x175, task_move x3, task_draw_world x2.
 
 ### M24 `0x0808CCE8-0x0809000B` - enemy/object behaviour bank 5 (six three-table scripts) - **landed (#70)**
 
@@ -1898,9 +1898,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as three `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/enemy_8cce8.c` (`0x0808CCE8-0x0808E404`, 53 fns),
-  `src/enemy_8e404.c` (`0x0808E404-0x0808F41C`, 56) and
-  `src/enemy_8f41c.c` (`0x0808F41C-0x0809000C`, 49).  All 158 functions are C
+* **Landed as** `src/enemy_broom_hatter.c` (`0x0808CCE8-0x0808E404`, 53 fns),
+  `src/enemy_shotzo.c` (`0x0808E404-0x0808F41C`, 56) and
+  `src/enemy_shotzo_coner.c` (`0x0808F41C-0x0809000C`, 49).  All 158 functions are C
   and `make progress` counts 0 asm code bytes in the range.
 * **Census** the module really has **158** functions, not the 157 the sweep
   counted: seven rows were wrong, in both directions (issue #70).  The
@@ -1954,9 +1954,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as three `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/enemy_9000c.c` (`0x0809000C-0x0809113C`, 35 fns),
-  `src/enemy_9113c.c` (`0x0809113C-0x08091F9C`, 24) and
-  `src/enemy_91f9c.c` (`0x08091F9C-0x08093F64`, 58).  All 120 functions are C
+* **Landed as** `src/enemy_bonkers.c` (`0x0809000C-0x0809113C`, 35 fns),
+  `src/enemy_poppy_bros_sr.c` (`0x0809113C-0x08091F9C`, 24) and
+  `src/enemy_bugzzy.c` (`0x08091F9C-0x08093F64`, 58).  All 120 functions are C
   and `make progress` counts 0 asm code bytes in the range.  The last one to
   fall, `sub_08091e18`, needed an empty `asm` statement to hold a dead value
   live so the register allocator reproduces the ROM's scratch registers
@@ -2021,8 +2021,8 @@ census below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x08743848` 23 entries -> `0x08090090-0x08090DE4`; `0x08743984` 15 entries -> `0x0809113C-0x0809191C`; `0x08743ADC` 27 entries -> `0x08091F9C-0x08093488`; `0x087441A4` 5 entries -> `0x08093C30-0x08093E54`.
 * **Calls into the decompiled early zone** sprite draw/update x263, frame driver + RNG + blend x32.
 * **Named helpers** TaskYieldTrampoline x206, TaskDispatchTrampoline x3, Div x1.
-* **Depends on** early_5d9c x263, sdk_libc x209, M17 x184, M18 x34, early_2b04 x32.
-* **Pool references** IWRAM x275, asset_metadata_index x89, game_code_and_rodata x66, EWRAM x19, level_graphics_palettes x9, early_58e4 x1.
+* **Depends on** task_draw_world x263, sdk_libc x209, M17 x184, M18 x34, link_run_frames x32.
+* **Pool references** IWRAM x275, asset_metadata_index x89, game_code_and_rodata x66, EWRAM x19, level_graphics_palettes x9, task_move x1.
 * **Suggested batches** `0x0809000C` (36 fns), `0x0809113C` (28 fns), `0x08091F9C` (57 fns).
 
 ### M26 `0x08093F64-0x080988F7` - enemy/object behaviour bank 7 (four three-table scripts + two companions) - **landed (#75)**
@@ -2031,9 +2031,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/enemy_93f64.c` (`0x08093F64-0x080957BC`, 50 fns),
-  `src/enemy_957bc.c` (`0x080957BC-0x080970C4`, 47), `src/enemy_970c4.c`
-  (`0x080970C4-0x080974C8`, 1) and `src/enemy_974c8.c` (`0x080974C8-0x080988F8`,
+* **Landed as** `src/enemy_grand_wheelie.c` (`0x08093F64-0x080957BC`, 50 fns),
+  `src/enemy_fire_lion.c` (`0x080957BC-0x080970C4`, 47), `src/enemy_fire_lion_flame.c`
+  (`0x080970C4-0x080974C8`, 1) and `src/enemy_phan_phan.c` (`0x080974C8-0x080988F8`,
   50) - all 148 functions, no asm left in the range.
 * **What it turned out to be** four independent scripted enemies in the same
   three-table shape M22 and M25 use, plus two companion tasks and one
@@ -2070,7 +2070,7 @@ below is the pre-decompilation one, kept for the record.
   `gUnk_0200D120[Task.unk44 - 32]`, follows its `+0x48` pointer to a six-byte
   `s8` box and picks a random 16.16 target inside it into `Task.unk4C` /
   `Task.unk50`, choosing corner, mid-edge or centre from `Task.unk73`. It is
-  the module's own file (`src/enemy_970c4.c`) because it was the last function
+  the module's own file (`src/enemy_fire_lion_flame.c`) because it was the last function
   to fall: the four switch arms only allocate registers the way the ROM does
   when each arm gets its own set of locals (`docs/lessons-learned.md` 3.186).
 * **Census fixes** eight curated `EXTRA_THUMB_ENTRIES` in `tools/symdb.py`, so
@@ -2097,8 +2097,8 @@ below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x08744440` 23 entries -> `0x08094220-0x08095484`; `0x087444E4` 9 entries -> `0x0809595C-0x08096B7C`; `0x08744564` 12 entries -> `0x080959E8-0x08096D20`; `0x0874489C` 18 entries -> `0x08097694-0x080983A0`.
 * **Calls into the decompiled early zone** sprite draw/update x339, frame driver + RNG + blend x39, sound/SE x7.
 * **Named helpers** TaskYieldTrampoline x192.
-* **Depends on** early_5d9c x339, M17 x313, sdk_libc x192, M18 x40, early_2b04 x39.
-* **Pool references** IWRAM x300, asset_metadata_index x199, game_code_and_rodata x67, EWRAM x18, level_graphics_palettes x4, early_58e4 x1, early_5d9c x1.
+* **Depends on** task_draw_world x339, M17 x313, sdk_libc x192, M18 x40, link_run_frames x39.
+* **Pool references** IWRAM x300, asset_metadata_index x199, game_code_and_rodata x67, EWRAM x18, level_graphics_palettes x4, task_move x1, task_draw_world x1.
 * **Suggested batches** `0x08093F64` (48 fns), `0x080957BC` (47 fns), `0x080974F8` (45 fns).
 
 ### M27 `0x080988F8-0x0809BA43` - mid-boss behaviour bank (two scripts + three companions) - **landed (#68)**
@@ -2107,8 +2107,8 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as two `c_code` rows instead of one clusterable module; the
 census below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/enemy_988f8.c` (`0x080988F8-0x08099B20`, 54 fns) and
-  `src/enemy_99b20.c` (`0x08099B20-0x0809BA44`, 91).  All 145 functions are C
+* **Landed as** `src/enemy_mr_frosty.c` (`0x080988F8-0x08099B20`, 54 fns) and
+  `src/enemy_mr_tick_tock.c` (`0x08099B20-0x0809BA44`, 91).  All 145 functions are C
   and `make progress` counts 0 asm code bytes in the range.
 * **What it turned out to be** the same "scripted enemy" skeleton M25 uses,
   twice, plus three small companion tasks.  Each script is four layers:
@@ -2177,7 +2177,7 @@ census below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x08745630` 38 entries -> `0x08098ED4-0x08099A7C`; `0x0874574C` 48 entries -> `0x0809A118-0x0809B408`; `0x08745AE4` 10 entries -> `0x0809B57C-0x0809B964`.
 * **Calls into the decompiled early zone** sprite draw/update x270, frame driver + RNG + blend x36, sound/SE x3.
 * **Named helpers** TaskYieldTrampoline x195.
-* **Depends on** early_5d9c x270, sdk_libc x195, M17 x160, early_2b04 x36, M18 x29.
+* **Depends on** task_draw_world x270, sdk_libc x195, M17 x160, link_run_frames x36, M18 x29.
 * **Pool references** IWRAM x208, game_code_and_rodata x70, asset_metadata_index x66, level_graphics_palettes x8, EWRAM x4.
 * **Known RAM cells touched** decimal digit buffer, [5] = sign/flag x2.
 * **Suggested batches** `0x080988F8` (53 fns), `0x08099B20` (87 fns).
@@ -2188,18 +2188,18 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/enemy_9ba44.c` (`0x0809BA44-0x0809C028`, 11 fns),
-  `src/enemy_9c028.c` (`0x0809C028-0x0809C0A8`, 1), `src/enemy_9c0a8.c`
-  (`0x0809C0A8-0x0809CB90`, 19), `src/enemy_9cb90.c`
-  (`0x0809CB90-0x0809CC24`, 1), `src/enemy_9cc24.c`
-  (`0x0809CC24-0x0809D994`, 33), `src/enemy_9d994.c`
-  (`0x0809D994-0x0809DA1C`, 1), `src/enemy_9da1c.c`
-  (`0x0809DA1C-0x0809F2F4`, 55), `src/enemy_9f2f4.c`
-  (`0x0809F2F4-0x0809F37C`, 1), `src/enemy_9f37c.c`
-  (`0x0809F37C-0x0809F9DC`, 23), `src/enemy_9f9dc.c`
-  (`0x0809F9DC-0x0809FBD0`, 2), `src/enemy_9fbd0.c`
-  (`0x0809FBD0-0x080A00EC`, 11), `src/enemy_a00ec.c`
-  (`0x080A00EC-0x080A0274`, 1) and `src/enemy_a0274.c`
+* **Landed as** `src/enemy_meta_knights.c` (`0x0809BA44-0x0809C028`, 11 fns),
+  `src/enemy_meta_knights_lineup.c` (`0x0809C028-0x0809C0A8`, 1), `src/enemy_axe_knight.c`
+  (`0x0809C0A8-0x0809CB90`, 19), `src/enemy_axe_knight_slash_loop_update.c`
+  (`0x0809CB90-0x0809CC24`, 1), `src/enemy_javelin_knight.c`
+  (`0x0809CC24-0x0809D994`, 33), `src/enemy_javelin_knight_overlay.c`
+  (`0x0809D994-0x0809DA1C`, 1), `src/enemy_mace_knight_trident_knight.c`
+  (`0x0809DA1C-0x0809F2F4`, 55), `src/enemy_trident_knight_overlay.c`
+  (`0x0809F2F4-0x0809F37C`, 1), `src/enemy_meta_knights_knight.c`
+  (`0x0809F37C-0x0809F9DC`, 23), `src/enemy_meta_knights_knight_palette.c`
+  (`0x0809F9DC-0x0809FBD0`, 2), `src/enemy_king_dedede_damage.c`
+  (`0x0809FBD0-0x080A00EC`, 11), `src/enemy_king_dedede_inhale_particles.c`
+  (`0x080A00EC-0x080A0274`, 1) and `src/enemy_king_dedede.c`
   (`0x080A0274-0x080A1590`, 45) - **all 204 functions, no asm left in the
   range**.  `sub_080A00EC` was the last to fall; see *The last function*
   below for what it took.
@@ -2275,7 +2275,7 @@ below is the pre-decompilation one, kept for the record.
   and hangs in `while (1);` on an out-of-range slot (so the slot index is a
   hard 0-3 invariant); `sub_0809E8B0` (x9) and `sub_080A0B10` (x15) are the
   two `sub_08002E98` re-dispatchers.
-* **The last function** `sub_080A00EC` (392 bytes, `src/enemy_a00ec.c`) is the
+* **The last function** `sub_080A00EC` (392 bytes, `src/enemy_king_dedede_inhale_particles.c`) is the
   three-star burst stepper and cost more than the other 203 together.  Getting
   to size-exact needed `docs/lessons-learned.md` 3.249-3.255: the ROM
   strength-reduces **three** offset induction variables out of its
@@ -2296,7 +2296,7 @@ below is the pre-decompilation one, kept for the record.
   instrument, not more sweeping, is the escalation that works.
 * **Natural C (#154).** The ten functions that still carried `register`
   pins or `asm("")` levers are plain C, `sub_080A00EC` included: it is a transcription of its landed twin `sub_08018e14`
-  (`src/player_18e14.c`) with a 2-D `s16 gUnk_08748268[2][16]` start table,
+  (`src/cutscene_fountain_sparkles.c`) with a 2-D `s16 gUnk_08748268[2][16]` start table,
   no offset locals and a pointer local for ONE of its two globals (lesson
   3.513).  The only lever left in the range is four of the seven
   `BLOCK_CROSS_JUMP`s of `sub_0809fe10`, which mark tails the ROM really
@@ -2331,13 +2331,13 @@ below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x08745B1C` 5 entries -> `0x0809BA44-0x0809BBD4`; `0x08747AA4` 27 entries -> `0x0809C4D0-0x0809D7A4`; `0x08747BCC` 22 entries -> `0x0809DCBC-0x0809F120`; `0x08747C6C` 5 entries -> `0x0809F478-0x0809F508`; `0x0874844C` 21 entries -> `0x080A0B30-0x080A14E4`.
 * **Calls into the decompiled early zone** sprite draw/update x487, frame driver + RNG + blend x35, VRAM transfer queue + sprite buckets x8, sound/SE x3, task engine x3, task position/draw x1.
 * **Named helpers** TaskYieldTrampoline x452, TaskDispatchTrampoline x2.
-* **Depends on** early_5d9c x487, sdk_libc x454, M17 x190, M18 x38, early_2b04 x35.
-* **Pool references** IWRAM x353, game_code_and_rodata x85, asset_metadata_index x76, EWRAM x41, level_graphics_palettes x15, early_58e4 x6, VRAM x1, level_object_tables x1.
+* **Depends on** task_draw_world x487, sdk_libc x454, M17 x190, M18 x38, link_run_frames x35.
+* **Pool references** IWRAM x353, game_code_and_rodata x85, asset_metadata_index x76, EWRAM x41, level_graphics_palettes x15, task_move x6, VRAM x1, level_object_tables x1.
 * **Suggested batches** `0x0809BA44` (13 fns), `0x0809C404` (58 fns), `0x0809DCBC` (74 fns), `0x0809FCA4` (53 fns).
 
 ### M29 `0x080A1590-0x080A5643` - enemy/object behaviour bank 10 - **landed (#76)**
 
-* **Decompiled** into `src/enemy_a1590.c` (226 functions incl. census additions, all byte-matched; `make compare` ROM-identical).
+* **Decompiled** into `src/enemy_mr_shine_and_mr_bright.c` (226 functions incl. census additions, all byte-matched; `make compare` ROM-identical).
 * **Natural C (#154).** The three functions that still carried `register` pins (`sub_080a21a0`, `sub_080a22d4`, `sub_080a4814`) are plain C: the file has no `register ... asm` pin and no `asm` statement left (lessons 3.495-3.512). Same guard+body script shape as M25/M27 over the 80-entry anchor table `0x08748624`; four-slot EWRAM state in `gUnk_02007D00[]`, companion actors via `gUnk_03002790[]`.
 * **Size** 16.2 KiB (`0x40b4`), 221 functions (153 reachable only through pointer tables), mean `0x4a`, largest `0x100`, pool words 15.4% of bytes.
 * **Difficulty** 2/6 - 21 distinct RAM cells, 0 jump-table dispatches, 0 functions >= `0x200`.
@@ -2347,13 +2347,13 @@ below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x087484C4` 8 entries -> `0x080A1590-0x080A472C`; `0x08748624` 80 entries -> `0x080A3184-0x080A46C0`; `0x087489D4` 11 entries -> `0x080A4BA8-0x080A5188`; `0x08748A28` 4 entries -> `0x080A4F40-0x080A503C`; `0x08748A54` 11 entries -> `0x080A510C-0x080A55AC`.
 * **Calls into the decompiled early zone** sprite draw/update x222, frame driver + RNG + blend x41, VRAM transfer queue + sprite buckets x6, sound/SE x2.
 * **Named helpers** TaskYieldTrampoline x91, TaskDispatchTrampoline x1.
-* **Depends on** early_5d9c x222, M17 x208, sdk_libc x92, early_2b04 x41, M18 x22.
-* **Pool references** IWRAM x327, asset_metadata_index x102, game_code_and_rodata x78, EWRAM x66, early_58e4 x5, level_graphics_palettes x5, VRAM x1.
+* **Depends on** task_draw_world x222, M17 x208, sdk_libc x92, link_run_frames x41, M18 x22.
+* **Pool references** IWRAM x327, asset_metadata_index x102, game_code_and_rodata x78, EWRAM x66, task_move x5, level_graphics_palettes x5, VRAM x1.
 * **Suggested batches** `0x080A1590` (49 fns), `0x080A2814` (119 fns), `0x080A4808` (53 fns).
 
 ### M30 `0x080A5644-0x080AA337` - enemy/object behaviour bank 11 - **landed (#72, complete: 130/130)**
 
-* **Decompiled** into `src/enemy_a5644.c`, `enemy_a78a0.c`, `enemy_a7998.c`, `enemy_a860c.c`, `enemy_a87c8.c`, `enemy_a932c.c`, `enemy_a93ec.c` (all 130 functions byte-matched; `make clean && make compare` ROM-identical, zero asm bytes in the range). The 3 former terminals first fell to the zero-byte hard-liveness levers (3.275-3.278); the natural-C campaign (#154) rewrote all of them as plain C, so the range has no pin and no `asm` statement left: `sub_080A78A0`'s r7 temporary is a narrowed 16-bit multiply over a `s16` table the old header declared `u16` (lesson 3.508), `sub_080A860C`'s "four rotation phases" were the pins (an inline table index decides which load loop.c hoists, 3.510), and `sub_080A932C` is plain as well; `sub_080a6aac`, `sub_080a7438` and `sub_080a8d1c` lost their pins the same way.
+* **Decompiled** into `src/enemy_meta_knight.c`, `enemy_meta_knight_sword_hit_box.c`, `enemy_kracko_jr.c`, `enemy_kracko_jr_transform_update.c`, `enemy_kracko.c`, `enemy_kracko_jr_clamp_to_view.c`, `enemy_kracko_cloud_lightning.c` (all 130 functions byte-matched; `make clean && make compare` ROM-identical, zero asm bytes in the range). The 3 former terminals first fell to the zero-byte hard-liveness levers (3.275-3.278); the natural-C campaign (#154) rewrote all of them as plain C, so the range has no pin and no `asm` statement left: `sub_080A78A0`'s r7 temporary is a narrowed 16-bit multiply over a `s16` table the old header declared `u16` (lesson 3.508), `sub_080A860C`'s "four rotation phases" were the pins (an inline table index decides which load loop.c hoists, 3.510), and `sub_080A932C` is plain as well; `sub_080a6aac`, `sub_080a7438` and `sub_080a8d1c` lost their pins the same way.
 
 * **Size** 19.2 KiB (`0x4cf4`), 130 functions (110 reachable only through pointer tables), mean `0x97`, largest `0x5ac`, pool words 12.0% of bytes.
 * **Difficulty** 1/6 - 30 distinct RAM cells, 2 jump-table dispatches, 7 functions >= `0x200`.
@@ -2363,14 +2363,14 @@ below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x08748EB8` 53 entries -> `0x080A5644-0x080A787C`; `0x08749150` 20 entries -> `0x080A7D98-0x080A9304`.
 * **Calls into the decompiled early zone** sprite draw/update x198, frame driver + RNG + blend x44, VRAM transfer queue + sprite buckets x11, sound/SE x2, BG/fade/blend reset x1, sound/BGM x1.
 * **Named helpers** TaskYieldTrampoline x233, TaskDispatchTrampoline x6, ArcTan2 x1.
-* **Depends on** sdk_libc x239, early_5d9c x198, M17 x173, early_2b04 x44, M07 x16.
-* **Pool references** IWRAM x337, EWRAM x93, asset_metadata_index x86, game_code_and_rodata x53, level_graphics_palettes x7, early_58e4 x4, VRAM x3.
+* **Depends on** sdk_libc x239, task_draw_world x198, M17 x173, link_run_frames x44, M07 x16.
+* **Pool references** IWRAM x337, EWRAM x93, asset_metadata_index x86, game_code_and_rodata x53, level_graphics_palettes x7, task_move x4, VRAM x3.
 * **Known RAM cells touched** BG2CNT shadow x2, BG3CNT shadow x2, MOSAIC lo shadow x1, per-player keys held x1.
 * **Suggested batches** `0x080A5644` (68 fns), `0x080A7438` (12 fns), `0x080A7D98` (38 fns), `0x080A99A0` (12 fns).
 
 ### M31 `0x080AA338-0x080AE3BB` - enemy/object behaviour bank 12 - **landed (#78)**
 
-* **Decompiled** into `src/enemy_aa338.c` (123 functions, all byte-matched; `make clean && make compare` ROM-identical). Last straggler `sub_080ADA20` (3 bytes) closed via the dropped-pseudo address-reload form (lessons 3.258/3.273).
+* **Decompiled** into `src/enemy_nightmare_wizard_heavy_mole.c` (123 functions, all byte-matched; `make clean && make compare` ROM-identical). Last straggler `sub_080ADA20` (3 bytes) closed via the dropped-pseudo address-reload form (lessons 3.258/3.273).
 * **Natural C (#154).** All 18 functions that carried pins or levers (73 pins, 9 levers) are plain C, `sub_080ADA20` included (cells read at every use and a `while (1)` loop; the AND mask of its index is `& 255`, lesson 3.504): the file has no pin and no `asm` statement left.
 
 * **Size** 16.1 KiB (`0x4084`), 121 functions (96 reachable only through pointer tables), mean `0x88`, largest `0x378`, pool words 14.3% of bytes.
@@ -2381,14 +2381,14 @@ below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x087493F4` 25 entries -> `0x080AA338-0x080AB46C`; `0x08749B8C` 8 entries -> `0x080AC868-0x080ACC18`.
 * **Calls into the decompiled early zone** sprite draw/update x151, frame driver + RNG + blend x22, task engine x5, task position/draw x1.
 * **Named helpers** TaskYieldTrampoline x191, Div x5, TaskDispatchTrampoline x5.
-* **Depends on** sdk_libc x196, M17 x169, early_5d9c x151, early_2b04 x22, game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654 x14.
-* **Pool references** IWRAM x285, asset_metadata_index x112, game_code_and_rodata x78, EWRAM x76, early_5d9c x8, early_58e4 x6, level_graphics_palettes x2.
+* **Depends on** sdk_libc x196, M17 x169, task_draw_world x151, link_run_frames x22, game_code_early_080011ac_08002378_08003110_08003888_08004000_08004fec_08005654 x14.
+* **Pool references** IWRAM x285, asset_metadata_index x112, game_code_and_rodata x78, EWRAM x76, task_draw_world x8, task_move x6, level_graphics_palettes x2.
 * **Known RAM cells touched** current game state (main dispatch) x3.
 * **Suggested batches** `0x080AA338` (50 fns), `0x080AC30C` (21 fns), `0x080ACC9C` (22 fns), `0x080AD4B8` (28 fns).
 
 ### M32 `0x080AE3BC-0x080B2FE7` - enemy/object behaviour bank 13 - **landed (#73)**
 
-* **Decompiled** into `src/enemy_ae3bc.c` (135 functions, all byte-matched; `make clean && make compare` ROM-identical).
+* **Decompiled** into `src/enemy_nightmare_power_orb.c` (135 functions, all byte-matched; `make clean && make compare` ROM-identical).
 * **Natural C (#154).** The 37 functions that carried pins or levers (206 pins, 28 levers, a third of the campaign) are plain C with no stand-ins: literals written at every use, the draw-callback table element read twice with typed tables (3.505), and the afdf0/aff40/b0144/b0338 quartet's two task pointers (3.507).  The file has no pin and no `asm` statement left.
 
 * **Size** 19.0 KiB (`0x4c2c`), 129 functions (96 reachable only through pointer tables), mean `0x97`, largest `0x320`, pool words 11.9% of bytes.
@@ -2399,14 +2399,14 @@ below is the pre-decompilation one, kept for the record.
 * **Anchor tables** `0x0874AD34` 4 entries -> `0x080AF114-0x080AF1C8`; `0x0874B1DC` 12 entries -> `0x080AF38C-0x080AFD9C`; `0x0874B540` 8 entries -> `0x080B0DE4-0x080B14AC`; `0x0874B5E4` 12 entries -> `0x080B1A1C-0x080B2228`; `0x0874C12C` 11 entries -> `0x080B2A74-0x080B2F34`.
 * **Calls into the decompiled early zone** sprite draw/update x155, frame driver + RNG + blend x29, VRAM transfer queue + sprite buckets x10, sound/SE x4, task position/draw x3, sound/BGM x2.
 * **Named helpers** TaskYieldTrampoline x412, Div x8, TaskDispatchTrampoline x7, _call_via_r0 x2.
-* **Depends on** sdk_libc x421, M17 x179, early_5d9c x155, early_2b04 x29, game_code_early_080011ac_08002378_08003110 x17.
-* **Pool references** IWRAM x230, asset_metadata_index x129, game_code_and_rodata x70, EWRAM x24, early_5d9c x8, level_graphics_palettes x6, early_58e4 x3, VRAM x2.
+* **Depends on** sdk_libc x421, M17 x179, task_draw_world x155, link_run_frames x29, game_code_early_080011ac_08002378_08003110 x17.
+* **Pool references** IWRAM x230, asset_metadata_index x129, game_code_and_rodata x70, EWRAM x24, task_draw_world x8, level_graphics_palettes x6, task_move x3, VRAM x2.
 * **Suggested batches** `0x080AE3BC` (47 fns), `0x080B0338` (52 fns), `0x080B22F8` (30 fns).
 
 ### M33 `0x080B2FE8-0x080B6153` - HUD / overlay effects? - **landed (#97)**
 
-* **Natural C (#154).** 33 of the 34 functions that carried pins or levers (including `sub_080B4EA8`, `sub_080B5D84` with 51 pins, and the file-scope r9-r11 register globals of `hud_b4ea8.c`) are plain C: real cell types instead of the old `u32 []` header, `struct PointPair` bit-fields, the DMA0 io_reg.h macros, listed empty switch cases and `* 2` for a narrowed argument (lessons 3.508, 3.511).  `sub_080b38f0` keeps its 10 pins and 6 levers (best plain attempt 7 bytes off, a local-alloc order, lesson 3.514); `sub_080b55d8` has one commented stand-in (a volatile read).
-* **Decompiled** into `src/hud_b2fe8.c`, `hud_b4ea8.c`, `hud_b5024.c`, `hud_b5670.c`, `hud_b5840.c` (all 108 functions; no asm left in the range). `sub_080B4EA8` (the 3.274 r7 "web-split" terminal) matched via pre-switch n3/n7 + file-scope register globals r9-r11 + per-arm unique asm barriers + natural caller-save + a deliberately-mergeable duplicate case-5 tail whose reload chains advance the rotation before jump2 folds it away (lessons 3.275-3.281). The last one, `sub_080B5670` (464 B, parked at 34 differing bytes with a pinned candidate), fell in the straggler campaign as plain pin-free C: it is the room-object graphics loader `sub_080b4ea8` calls per kind-1 entry of `gUnk_020055D8` (shared or new graphics slot in `gUnk_020060A0[]`, tiles through `sub_080b5628`, palette group `gUnk_0873EF48[kind]`), `sub_08065dbc` takes three arguments, the VRAM base is a dropped pointer local (lesson 3.258) and the `[sp, #4]` byte slot is the compiler's own copy of `gUnk_02006130[i]` (lesson 3.474).
+* **Natural C (#154).** 33 of the 34 functions that carried pins or levers (including `sub_080B4EA8`, `sub_080B5D84` with 51 pins, and the file-scope r9-r11 register globals of `room_object_gfx.c`) are plain C: real cell types instead of the old `u32 []` header, `struct PointPair` bit-fields, the DMA0 io_reg.h macros, listed empty switch cases and `* 2` for a narrowed argument (lessons 3.508, 3.511).  `sub_080b38f0` keeps its 10 pins and 6 levers (best plain attempt 7 bytes off, a local-alloc order, lesson 3.514); `sub_080b55d8` has one commented stand-in (a volatile read).
+* **Decompiled** into `src/actor_whispy_woods_items.c`, `room_object_gfx.c`, `room_spawn_objects.c`, `room_enemy_gfx.c`, `room_gfx_spawns.c` (all 108 functions; no asm left in the range). `sub_080B4EA8` (the 3.274 r7 "web-split" terminal) matched via pre-switch n3/n7 + file-scope register globals r9-r11 + per-arm unique asm barriers + natural caller-save + a deliberately-mergeable duplicate case-5 tail whose reload chains advance the rotation before jump2 folds it away (lessons 3.275-3.281). The last one, `sub_080B5670` (464 B, parked at 34 differing bytes with a pinned candidate), fell in the straggler campaign as plain pin-free C: it is the room-object graphics loader `sub_080b4ea8` calls per kind-1 entry of `gUnk_020055D8` (shared or new graphics slot in `gUnk_020060A0[]`, tiles through `sub_080b5628`, palette group `gUnk_0873EF48[kind]`), `sub_08065dbc` takes three arguments, the VRAM base is a dropped pointer local (lesson 3.258) and the `[sp, #4]` byte slot is the compiler's own copy of `gUnk_02006130[i]` (lesson 3.474).
 
 * **Size** 12.4 KiB (`0x316c`), 108 functions (69 reachable only through pointer tables), mean `0x75`, largest `0x380`, pool words 14.2% of bytes.
 * **Difficulty** 3/6 - 58 distinct RAM cells, 5 jump-table dispatches, 4 functions >= `0x200`.
@@ -2417,18 +2417,18 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x104, frame driver + RNG + blend x33, VRAM transfer queue + sprite buckets x20.
 * **Named helpers** TaskYieldTrampoline x105, LZ77UnCompVram x6, CpuSet x3, _call_via_r0 x1.
 * **Called from** M10 x6, M07 x5, M08 x4, M17 x4, M18 x3.
-* **Depends on** sdk_libc x106, early_5d9c x104, M17 x59, early_2b04 x33, early_1518 x20.
-* **Pool references** IWRAM x185, EWRAM x102, asset_metadata_index x69, game_code_and_rodata x42, VRAM x10, early_58e4 x5.
+* **Depends on** sdk_libc x106, task_draw_world x104, M17 x59, link_run_frames x33, main_copy_queue x20.
+* **Pool references** IWRAM x185, EWRAM x102, asset_metadata_index x69, game_code_and_rodata x42, VRAM x10, task_move x5.
 * **Suggested batches** `0x080B2FE8` (19 fns), `0x080B37EC` (32 fns), `0x080B447C` (37 fns), `0x080B4E40` (20 fns).
 
 ### M34 `0x080B6154-0x080B9D0B` - save file / SRAM records + options - **landed (#94)**
 
-* **Decompiled** into 21 files, `src/save_b6154.c`, `save_b6290.c`,
-  `save_b63a4.c`, `save_b6474.c`, `save_b6a90.c`, `save_b6b08.c`,
-  `save_b6c40.c`, `save_b6d04.c`, `save_b6e44.c`, `save_b6f38.c`,
-  `save_b72bc.c`, `save_b75a4.c`, `save_b77d4.c`, `save_b79b8.c`,
-  `save_b7a9c.c`, `save_b7df4.c`, `save_b7e14.c`, `save_b8694.c`,
-  `save_b8888.c`, `save_b8918.c` and `save_b8ea0.c`: **all 105 functions**,
+* **Decompiled** into 21 files, `src/main_hblank_bands_in_blend.c`, `main_hblank_bands_out_blend.c`,
+  `main_hblank_bands_out.c`, `main_hblank_bands_in_link_play.c`, `main_room_hblank_scroll.c`, `main_hblank_row_scroll.c`,
+  `main_hblank_uniform_scroll.c`, `main_hblank_row_scroll_reverse.c`, `main_hblank_scroll.c`, `save_input_recorder_start.c`,
+  `save_input_recorder_restore.c`, `save_input_recorder_frame.c`, `save_init_slots.c`, `save_completion_percent.c`,
+  `save_write_slot.c`, `save_slot_checksum.c`, `save_store_progress.c`, `save_receive_link_slots.c`,
+  `save_exchange_link_slots.c`, `save_merge_link_slots.c` and `player_life_request.c`: **all 105 functions**,
   no asm left in the range.  PR #130 landed 97; the last eight (the wavy-scroll
   drivers `sub_080b6154`, `sub_080b6474`, `sub_080b6570`, `sub_080b67dc` and
   `sub_080b6b08`, the input recorder pair `sub_080b75a4`/`sub_080b76a8` and
@@ -2480,7 +2480,7 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x11, SRAM save x7, frame driver + RNG + blend x5, BG/fade/blend reset x2, VRAM transfer queue + sprite buckets x2.
 * **Named helpers** WriteSramEx x5, Div x4, TaskYieldTrampoline x4, Mod x2, ReadSram x2, TaskDispatchTrampoline x1.
 * **Called from** M03 x29, M02 x13, M07 x9, M38 x5, M09 x3.
-* **Depends on** M02 x47, early_5d9c x11, sram_driver x7, sdk_libc x6, sdk_swi_wrappers x6.
+* **Depends on** M02 x47, task_draw_world x11, sram_driver x7, sdk_libc x6, sdk_swi_wrappers x6.
 * **Pool references** IWRAM x366, EWRAM x239, compressed_graphics x19, asset_metadata_index x10, game_code_and_rodata x10, SRAM x6, lib_misc x1.
 * **Known RAM cells touched** BG1HOFS shadow (16.16) x13, per-player keys pressed x8, BLDALPHA hi shadow x7, BLDALPHA lo shadow x7, BG2HOFS shadow (16.16) x6, BG3HOFS shadow (16.16) x6.
 * **Suggested batches** `0x080B6154` (19 fns), `0x080B6F38` (35 fns), `0x080B8EA0` (52 fns).
@@ -2491,15 +2491,15 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/subgame_b9d0c.c` (`0x080B9D0C-0x080BA774`, 27 fns),
-  `src/subgame_ba774.c` (`0x080BA774-0x080BB528`, 55), `src/subgame_bb528.c`
-  (`0x080BB528-0x080BC0CC`, 42), `src/subgame_bc0cc.c`
-  (`0x080BC0CC-0x080BD9E8`, 70) and `src/subgame_bd9e8.c`
+* **Landed as** `src/subgame.c` (`0x080B9D0C-0x080BA774`, 27 fns),
+  `src/subgame_quick_draw.c` (`0x080BA774-0x080BB528`, 55), `src/subgame_quick_draw_results.c`
+  (`0x080BB528-0x080BC0CC`, 42), `src/subgame_quick_draw_objects.c`
+  (`0x080BC0CC-0x080BD9E8`, 70) and `src/subgame_bomb_rally_main.c`
   (`0x080BD9E8-0x080BDA2C`, 2): all 196 functions byte-exact under the
   `--newpb` recipe, no `register`/`asm` pins, 62 new `split_config.json`
   `data_symbols`.  `make progress` reports 0 asm code bytes in the range.
 * **What it turned out to be** the code `AgbMain` runs for its sub-game state
-  plus one complete sub-game.  The framework (`src/subgame_b9d0c.c`) is
+  plus one complete sub-game.  The framework (`src/subgame.c`) is
   shared by all three sub-games: `gUnk_02007FCC` selects the game and indexes
   the display-layout / VRAM-list / init-hook / task-body tables
   `0x087562A8`/`0x087562C0`/`0x087562CC`/`0x087562D8` (game 1 is M36's
@@ -2531,8 +2531,8 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x73, frame driver + RNG + blend x21, task position/draw x19, BG/fade/blend reset x18, VRAM transfer queue + sprite buckets x9, SIO multi-play x4.
 * **Named helpers** TaskYieldTrampoline x60, TaskDispatchTrampoline x4, LZ77UnCompWram x1, _call_via_r0 x1.
 * **Called from** M36 x5, M37 x5, M01 x1.
-* **Depends on** early_5d9c x73, sdk_libc x65, early_2b04 x21, early_58e4 x19, early_1fd0 x18.
-* **Pool references** IWRAM x379, asset_metadata_index x74, EWRAM x71, game_code_and_rodata x40, early_5c4c x8, early_58e4 x4, VRAM x1.
+* **Depends on** task_draw_world x73, sdk_libc x65, link_run_frames x21, task_move x19, main_fade_requests x18.
+* **Pool references** IWRAM x379, asset_metadata_index x74, EWRAM x71, game_code_and_rodata x40, task_draw_screen x8, task_move x4, VRAM x1.
 * **Known RAM cells touched** DISPCNT shadow x12, requested/next game state x7, frames left to wait x6, per-player keys pressed x5, link session state, high byte = command x4, BLDCNT lo shadow x3.
 * **Suggested batches** `0x080B9D0C` (101 fns), `0x080BBC04` (92 fns).
 
@@ -2542,9 +2542,9 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/subgame_bda2c.c` (`0x080BDA2C-0x080BF994`, 57 fns),
-  `src/subgame_bf994.c` (`0x080BF994-0x080C0DE8`, 24) and
-  `src/subgame_c0de8.c` (`0x080C0DE8-0x080C1FFC`, 36); 81 new
+* **Landed as** `src/subgame_bomb_rally.c` (`0x080BDA2C-0x080BF994`, 57 fns),
+  `src/subgame_bomb_rally_bomb.c` (`0x080BF994-0x080C0DE8`, 24) and
+  `src/subgame_bomb_rally_star_burst.c` (`0x080C0DE8-0x080C1FFC`, 36); 81 new
   `split_config.json` `data_symbols`. `make progress` reports 0 asm code bytes
   in the range.
 * **What it turned out to be** the sub-game M35 launches as task type #95: a
@@ -2578,8 +2578,8 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x160, frame driver + RNG + blend x28, task position/draw x14, VRAM transfer queue + sprite buckets x10, sound/BGM x4, BG/fade/blend reset x2.
 * **Named helpers** TaskYieldTrampoline x204, TaskDispatchTrampoline x17, Div x1.
 * **Called from** M35 x4.
-* **Depends on** sdk_libc x221, early_5d9c x160, early_2b04 x28, early_58e4 x14, early_1518 x10.
-* **Pool references** IWRAM x319, asset_metadata_index x153, EWRAM x36, game_code_and_rodata x29, early_58e4 x9, early_5c4c x5, early_5d9c x1.
+* **Depends on** sdk_libc x221, task_draw_world x160, link_run_frames x28, task_move x14, main_copy_queue x10.
+* **Pool references** IWRAM x319, asset_metadata_index x153, EWRAM x36, game_code_and_rodata x29, task_move x9, task_draw_screen x5, task_draw_world x1.
 * **Known RAM cells touched** BG3VOFS shadow (16.16) x16, BG3HOFS shadow (16.16) x13, per-player keys pressed x8, DISPCNT shadow x2, frames left to wait x2, requested/next game state x2.
 * **Suggested batches** `0x080BDA2C` (57 fns), `0x080BF994` (24 fns), `0x080C0DE8` (36 fns).
 
@@ -2589,16 +2589,16 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/subgame_c1ffc.c` (`0x080C1FFC-0x080C243C`, 6 fns),
-  `src/subgame_c243c.c` (`0x080C243C-0x080C2FF8`, 8), `src/subgame_c2ff8.c`
-  (`0x080C2FF8-0x080C3648`, 5), `src/subgame_c3648.c`
-  (`0x080C3648-0x080C3F44`, 10), `src/subgame_c3f44.c`
-  (`0x080C3F44-0x080C4630`, 9), `src/subgame_c4630.c`
-  (`0x080C4630-0x080C4D08`, 20), `src/subgame_c4d08.c`
-  (`0x080C4D08-0x080C5284`, 7), `src/subgame_c5284.c`
-  (`0x080C5284-0x080C623C`, 10), `src/subgame_c623c.c`
-  (`0x080C623C-0x080C6258`, 1) and `src/mode_c6260.c`
-  (`0x080C6260-0x080C6420`, 5), around PR #133's `src/sub_080c6258.c`
+* **Landed as** `src/subgame_air_grind.c` (`0x080C1FFC-0x080C243C`, 6 fns),
+  `src/subgame_air_grind_results_sky.c` (`0x080C243C-0x080C2FF8`, 8), `src/subgame_air_grind_racer.c`
+  (`0x080C2FF8-0x080C3648`, 5), `src/subgame_air_grind_racer_steps.c`
+  (`0x080C3648-0x080C3F44`, 10), `src/subgame_air_grind_effects.c`
+  (`0x080C3F44-0x080C4630`, 9), `src/subgame_air_grind_scenery.c`
+  (`0x080C4630-0x080C4D08`, 20), `src/subgame_air_grind_sprites.c`
+  (`0x080C4D08-0x080C5284`, 7), `src/subgame_air_grind_course.c`
+  (`0x080C5284-0x080C623C`, 10), `src/subgame_air_grind_depth_scale.c`
+  (`0x080C623C-0x080C6258`, 1) and `src/ending_main.c`
+  (`0x080C6260-0x080C6420`, 5), around PR #133's `src/subgame_air_grind_half_depth.c`
   (`0x080C6258-0x080C6260`, untouched): all 81 functions to write,
   byte-exact under the `--newpb` recipe with no `asm` statements and no
   `register` pins, 51 new `split_config.json` `data_symbols` in #98 and
@@ -2607,7 +2607,7 @@ below is the pre-decompilation one, kept for the record.
   bytes (byte-exact only with 37 empty `asm("")` statements that gave
   gcse's expression hash table another size, lesson 4.105); the final
   campaign matched it from natural source appended to
-  `src/subgame_c5284.c`: its PRE spill slots follow the hash buckets of
+  `src/subgame_air_grind_course.c`: its PRE spill slots follow the hash buckets of
   its locals' pseudo numbers (declaration order) and of the pool label of
   `&gUnk_0201B0E0`, which is numbered after that file's 40 earlier ones
   (lesson 3.493).
@@ -2634,7 +2634,7 @@ below is the pre-decompilation one, kept for the record.
   `sub_080c2d38` and copied by HBlank DMA0, which the VBlank hook
   `sub_080c2fb8` re-arms.  The census name came from the pool references
   into `0x080CFE20-0x080D0000`: those tables are this game's rodata.
-  `0x080C6260-0x080C641F` (`src/mode_c6260.c`) is `AgbMain` state 11, the
+  `0x080C6260-0x080C641F` (`src/ending_main.c`) is `AgbMain` state 11, the
   set-up for M38's sequence (state 12 runs `sub_080c6420`): two scenes
   directed by M38's task types #100 and #101.  The frozen boundary
   `0x080C6420` is kept; `MODULE_NAMES` names the two parts separately.
@@ -2654,7 +2654,7 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** frame driver + RNG + blend x17, VRAM transfer queue + sprite buckets x10, sound/SE x7, sound/BGM x6, BG/fade/blend reset x5, sprite draw/update x5.
 * **Named helpers** TaskYieldTrampoline x12, Div x10, __divsi3 x5, Mod x4, CpuSet x1, __umodsi3 x1.
 * **Called from** M01 x1, M35 x1.
-* **Depends on** sdk_libc x18, early_2b04 x17, sdk_swi_wrappers x15, game_code_early_080011ac_08002378_08003110 x12, early_1518 x10.
+* **Depends on** sdk_libc x18, link_run_frames x17, sdk_swi_wrappers x15, game_code_early_080011ac_08002378_08003110 x12, main_copy_queue x10.
 * **Pool references** EWRAM x183, IWRAM x135, game_code_and_rodata x29, lib_misc x22, asset_metadata_index x20, level_object_tables x9, VRAM x8, lib_rodata_fir_tables x7.
 * **Known RAM cells touched** per-player keys pressed x9, requested/next game state x4, DISPCNT shadow x2, number of linked players x2, per-player keys held x2, 128 8-byte free-list entries x1.
 * **Suggested batches** `0x080C1FFC` (19 fns), `0x080C3648` (46 fns), `0x080C5284` (17 fns).
@@ -2665,24 +2665,24 @@ The range is decompiled and carved out of the split asm, so it now appears in
 `module-map.csv` as `c_code` rows instead of one clusterable module; the census
 below is the pre-decompilation one, kept for the record.
 
-* **Landed as** `src/results_c6420.c` (`0x080C6420-0x080C6C64`, 7 fns),
-  `src/ending_c6c64.c` (`0x080C6C64-0x080C7E4C`, 8), `src/ending_c7e4c.c`
-  (`0x080C7E4C-0x080C9004`, 12), `src/ending_c9004.c`
-  (`0x080C9004-0x080CAA3C`, 21), `src/boot_caa3c.c`
-  (`0x080CAA3C-0x080CAAB8`, 1), `src/boot_caab8.c`
-  (`0x080CAAB8-0x080CACF0`, 1, final campaign), `src/gameover_cacf0.c`
-  (`0x080CACF0-0x080CB354`, 13), `src/gameover_cb354.c`
-  (`0x080CB354-0x080CB64C`, 8), `src/gameover_cb64c.c`
-  (`0x080CB64C-0x080CBED4`, 6), `src/gameover_cbed4.c`
-  (`0x080CBED4-0x080CCD4C`, 18), `src/gameover_ccd4c.c`
-  (`0x080CCD4C-0x080CD330`, 10) and `src/credits_cd330.c`
+* **Landed as** `src/ending_final_results.c` (`0x080C6420-0x080C6C64`, 7 fns),
+  `src/ending_epilogue.c` (`0x080C6C64-0x080C7E4C`, 8), `src/ending_epilogue_kirby.c`
+  (`0x080C7E4C-0x080C9004`, 12), `src/ending_star_rod_return.c`
+  (`0x080C9004-0x080CAA3C`, 21), `src/boot_logo_init_objects.c`
+  (`0x080CAA3C-0x080CAAB8`, 1), `src/boot_logo_update_objects.c`
+  (`0x080CAAB8-0x080CACF0`, 1, final campaign), `src/game_over_screen.c`
+  (`0x080CACF0-0x080CB354`, 13), `src/game_over_tasks.c`
+  (`0x080CB354-0x080CB64C`, 8), `src/game_over_player.c`
+  (`0x080CB64C-0x080CBED4`, 6), `src/game_over_choice.c`
+  (`0x080CBED4-0x080CCD4C`, 18), `src/game_over_objects.c`
+  (`0x080CCD4C-0x080CD330`, 10) and `src/ending_credits.c`
   (`0x080CD330-0x080CD89C`, 5): all 110 functions byte-exact under the
   `--newpb` recipe, and 77 new `split_config.json` `data_symbols` in #100
   (one more in the final campaign).  #100 landed 109 with no `asm`
   statements and no `register` pins; the boot logo objects' command
   interpreter `sub_080caab8` (`0x080CAAB8-0x080CACEF`, 568 bytes), parked
   there at 33 differing bytes, landed in the final campaign as
-  `src/boot_caab8.c`: natural dead initializers give gcse the insn count
+  `src/boot_logo_update_objects.c`: natural dead initializers give gcse the insn count
   that orders its two PRE spill slots, and the off-screen switch-off keeps
   two commented zero-byte `asm` levers, because combine folds the ROM's
   `orrs` of the all-ones store away when it knows the PRE-loaded old
@@ -2690,7 +2690,7 @@ below is the pre-decompilation one, kept for the record.
   It was the last unstarted bulk module of #35.
 * **What it turned out to be** not an intro: the game's ending and its
   game-over screen, which `AgbMain` states 11, 12 and 22 run (rom-map §4).
-  State 11 (M37's `src/mode_c6260.c`) plays two scenes directed by task
+  State 11 (M37's `src/ending_main.c`) plays two scenes directed by task
   types **#100** (class 3, body `sub_080c6c64`, variants
   `gUnk_08757330[11]`) and **#101** (class 3, body `sub_080c9004`,
   `gUnk_087573F4[12]`): linear `TaskYieldTrampoline` scripts, M19's style,
@@ -2728,8 +2728,8 @@ below is the pre-decompilation one, kept for the record.
 * **Calls into the decompiled early zone** sprite draw/update x187, frame driver + RNG + blend x67, VRAM transfer queue + sprite buckets x45, BG/fade/blend reset x35, task position/draw x26, sound/BGM x7.
 * **Named helpers** TaskYieldTrampoline x826, TaskDispatchTrampoline x13, LZ77UnCompWram x8, CpuSet x1, Mod x1.
 * **Called from** M02 x5, M01 x3, M03 x1.
-* **Depends on** sdk_libc x839, early_5d9c x187, early_2b04 x67, early_1518 x45, early_1fd0 x35.
-* **Pool references** IWRAM x379, EWRAM x83, asset_metadata_index x76, compressed_graphics x28, game_code_and_rodata x27, early_58e4 x21, VRAM x20, m4a_songs x12.
+* **Depends on** sdk_libc x839, task_draw_world x187, link_run_frames x67, main_copy_queue x45, main_fade_requests x35.
+* **Pool references** IWRAM x379, EWRAM x83, asset_metadata_index x76, compressed_graphics x28, game_code_and_rodata x27, task_move x21, VRAM x20, m4a_songs x12.
 * **Known RAM cells touched** DISPCNT shadow x14, BG3HOFS shadow (16.16) x10, BG3VOFS shadow (16.16) x10, current game state (main dispatch) x7, BLDALPHA hi shadow x6, BLDALPHA lo shadow x6.
 * **Suggested batches** `0x080C6420` (15 fns), `0x080C7E4C` (15 fns), `0x080C9114` (20 fns), `0x080CACF0` (18 fns), `0x080CB5C4` (37 fns), `0x080CD330` (5 fns).
 
@@ -2745,10 +2745,10 @@ and reproducible. The **names are inference**, at three confidence levels:
 * M20-M32 — enemy/object behaviour banks: no callers, table-dispatched, tiny
   functions, sprite + RNG + yield, ~136 anchor tables between them.
 * M34 — save/records: the only `WriteSramEx`/`ReadSram` caller in the bulk.
-* M15 — link multiplayer mode: 162 calls into `early_6464` (SIO MULTI-PLAY),
+* M15 — link multiplayer mode: 162 calls into `link_driver` (SIO MULTI-PLAY),
   five times more than the rest of the range put together.  **Wrong
   (#89):** 149 of those calls are the random-range helpers
-  `sub_080064ac`/`sub_080064dc` that `early_6464` also holds; M15 is task
+  `sub_080064ac`/`sub_080064dc` that `link_driver` also holds; M15 is task
   type #7, the player's effect objects, and never touches the link driver.
 * M03 — UI/menu bank: owns all 22 consecutive class-4 task types #238-#259 and
   the key auto-repeat + decimal-digit cells.
@@ -2814,10 +2814,10 @@ Other loose ends this pass surfaced:
    carved into its own segment with symbolic entry names — a natural companion
    to #36 (typed extraction of data zones).  *Done in #36 phase 2:*
    `src/data/task_types.c`.
-2. `rom-map.md` §6 / `src/early_58e4.c` describe `TaskType.unk04` as a flag
+2. `rom-map.md` §6 / `src/task_move.c` describe `TaskType.unk04` as a flag
    word; it is an entry point. Worth fixing in both places when the task
    subsystem is next touched.  *Done:* `struct TaskType` in `include/task.h`
-   and `src/early_58e4.c` call it `entry`.
+   and `src/task_move.c` call it `entry`.
 3. 3,288 of 5,045 functions have **no BL caller at all** — they are only
    reachable through tables. Any future "dead code?" analysis must not treat
    `rom-pointer`-only evidence as suspicious.

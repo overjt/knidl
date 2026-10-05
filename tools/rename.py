@@ -21,9 +21,9 @@ A name lives in these places, and the tool updates all of them:
     run since #36 phase 2 run 3; section names and object paths are not
     symbols) and the hand-written asm (asm/*.s without split.py's
     "Auto-generated" header), and tools/constants.py's family rules.
-    sub_/gUnk_ names match with either hex case.  A name used as
-    a file name (`src/sub_0804e3a0.c`, `.sub_0804e3a0` sections) is not a
-    symbol and is left alone.
+    sub_/gUnk_ names match with either hex case.  A name that is
+    also a file name (`src/<name>.c` and its `.<name>` section; none since
+    #182) is not a symbol there and is left alone.
   * docs/analysis/renames.csv gets one `old,new,kind,evidence,issue` row
     per rename.  It is the alias table: the lessons, rom-map and
     module-map keep the names of their time.
@@ -156,7 +156,7 @@ def strip_comments(text, is_asm):
 
 
 def file_stems():
-    """Names that are also file names (src/sub_0804e3a0.c): not symbols there."""
+    """Names that are also file names (none since #182): not symbols there."""
     stems = set()
     for d in TEXT_DIRS + ("asm", "data"):
         for base, _, files in os.walk(os.path.join(ROOT, d)):

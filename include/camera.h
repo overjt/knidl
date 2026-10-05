@@ -59,7 +59,7 @@ extern struct BreakingBlock gBg1BreakingBlocks[];
 extern s32 gHBlankScrollBaseX;
 
 /* IWRAM */
-/* Actor-vs-player hit test cells (M17's src/actor_673ec.c widths). */
+/* Actor-vs-player hit test cells (M17's src/actor_held_player.c widths). */
 extern s16 gViewRect[]; /* camera rectangle: left, right, top, bottom */
 extern struct Unk03004B00 gUnk_03004B00;
 
@@ -139,7 +139,7 @@ extern struct BgAnimCmd gRoomBgAnimSet11Script0[];
 
 struct BgAnimTileFrame;
 
-/* src/camera_296a0.c */
+/* src/camera_stream_scroll.c */
 void StreamBg2MapLooping(void);
 void StreamBg123Maps(void);
 void StreamBg23Maps(void);
@@ -151,7 +151,7 @@ void CameraWriteScrollBg123(void);
 void sub_08029b30(void);
 void SpawnRoomObjectsScrolledIn(void);
 
-/* src/camera_29c74.c */
+/* src/camera_player_group.c */
 void UpdatePlayerGroupCenter(void);
 void SetCameraBoundsToGroup(void);
 void SetCameraBoundsToGroupInScrollLock(void);
@@ -165,7 +165,7 @@ void SetViewRectToPlayersInScrollLock(void);
 void LockPlayersPastScrollLine(void);
 void SpawnRoomObjectsInRect(s32 x0, s32 x1, s32 y0, s32 y1);
 
-/* src/bgmap_2a9cc.c */
+/* src/camera_draw_bg_map.c */
 void DrawBg2View(s32 px, s32 py);
 void DrawBg2Row(s32 x0, s32 x1, s32 y);
 void DrawBg2Column(s32 x, s32 y0, s32 y1);
@@ -189,20 +189,20 @@ void DrawBg2EdgeTile(s32 x, s32 y);
 void RestoreMapColumn(s32 x);
 void RestoreMapCell(s32 x, s32 y);
 
-/* src/bgmap_2b2f0.c */
+/* src/camera_block_anim_clip.c */
 void SetBlockAnimClipRect(void);
 void SetBg1BlockAnimClipRect(void);
 void SetBlockAnimClipRectWithEdges(void);
 void SetBg23ScreenSize(u16 a);
 void SetBg3ScreenSize(u16 a);
 
-/* src/camera_2b4bc.c */
+/* src/camera_scroll_lock.c */
 void CameraFollowFocus(void);
 void CameraSlideToScrollLock(void);
 void CameraFollowScrollLocked(void);
 void CameraSlideFromScrollLock(void);
 
-/* src/camera_2c42c.c */
+/* src/camera_hub.c */
 void CameraHoldAnchor(void);
 void HubCameraFollowFocus(void);
 void HubCameraFollowFocusPlayer(void);
@@ -214,7 +214,7 @@ void StopScreenShake(void);
 void UpdateScreenShake(void);
 void StartScrollLock(s32 x0, s32 x1, s32 y0, s32 y1);
 
-/* src/camera_2d01c.c */
+/* src/camera_bg_anims.c */
 void CameraLeaveScrollLock(void);
 void CameraStartHoldAnchor(void);
 void sub_0802d0c4(void);
@@ -228,7 +228,7 @@ void BgAnimStop(struct BgAnim *p);
 s32 CreateMapEvent(s32 a);
 void Task_MapEvent(void);
 
-/* src/camtask_2d38c.c */
+/* src/camera_map_events.c */
 void MapEventMidBossFight(void);
 s32 CreateMapEventBreakTwoBlocks(s32 x, s32 y);
 void MapEventBreakTwoBlocks(void);
@@ -240,7 +240,7 @@ void sub_0802da8c(void);
 void MapEventStageUnlockPan(void);
 void MapEventBigSwitchUnlockPan(void);
 
-/* src/obj_2eac8.c */
+/* src/camera_door_signs.c */
 s32 CreateArenaDoorSign(s32 x, s32 y, s32 a);
 void Task_ArenaDoorSign(void);
 void ArenaDoorSignUpdate(void);
@@ -270,7 +270,7 @@ s32 CreateStageDoorSign(s32 x, s32 y, s32 a, s32 b);
 s32 CreateClearedStageDoorSign(s32 x, s32 y, s32 a, s32 b);
 s32 CreateCompletedStageDoorSign(s32 x, s32 y, s32 a, s32 b);
 
-/* src/obj_2f62c.c */
+/* src/camera_warp_star_station_door.c */
 void Task_StageDoorSign(void);
 void StageDoorSignBlinkSignAndDoor(void);
 void StageDoorSignBlinkDoor(void);
@@ -296,7 +296,7 @@ s32 CreateMuseumAbilitySign(u8 a, s32 b);
 void Task_MuseumAbilitySign(void);
 s32 CreateStageEffect(s32 a, s32 x, s32 y);
 
-/* src/obj_30238.c */
+/* src/camera_stage_effect.c */
 void Task_StageEffect(void);
 void sub_08030254(void);
 void sub_080302cc(void);
@@ -305,7 +305,7 @@ void sub_080304ec(void);
 void sub_08030580(void);
 void sub_08030604(void);
 
-/* src/obj_306b4.c */
+/* src/camera_world_sprite_block_anims.c */
 s32 QueueWorldSprite(u8 a, s32 b, u16 c, u16 d, s16 x, s16 y);
 void ResetBlockAnims(void);
 void ResumeBlockAnims(void);

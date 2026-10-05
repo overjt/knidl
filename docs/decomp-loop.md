@@ -93,7 +93,7 @@ The default is the Makefile's recipe for all of `src/` (`CFLAGS` carries
 `-fprologue-bugfix`, lesson 3.75).  Until #170 the bare default omitted that
 flag and the game zone needed `--newpb`, which older notes still pass (it is
 accepted and means the default); without the flag a file with a leaf that
-branches mismatches (`src/early_6464.c`: 119 differing bytes, `--nopb` keeps
+branches mismatches (`src/link_driver.c`: 119 differing bytes, `--nopb` keeps
 that recipe for experiments).
 
 - `MATCH (N bytes ...)` = the file will be byte-identical once landed.

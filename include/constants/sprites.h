@@ -4,8 +4,8 @@
 /*
  * Sprite flags (#155 run 7, the owner's decision R3). Task.spriteFlags is
  * the first halfword of the 12-byte sprite record QueueSprite queues
- * (src/early_1518.c, its third argument) and BuildOam turns into OAM
- * (src/early_1b08.c): bit 15 makes BuildOam take each OAM template entry's
+ * (src/main_copy_queue.c, its third argument) and BuildOam turns into OAM
+ * (src/main_build_oam.c): bit 15 makes BuildOam take each OAM template entry's
  * second, mirrored attr1 word (TaskUpdateFlip sets it when the task faces
  * left); bits 14-13 are a priority that replaces the template's attr2
  * priority when non-zero; bits 11-10 are OR'd into attr0 (OBJ mode). Only
@@ -14,7 +14,7 @@
  * in docs/analysis/constants.csv.
  */
 
-/* Sprite flags - Task.spriteFlags, the first halfword of the sprite record QueueSprite queues (src/early_1518.c) and BuildOam reads (src/early_1b08.c). Left as numbers: the priority field 0x6000 (bits 14-13, a 2-bit value that replaces the template's attr2 priority when non-zero) and the OBJ-mode bits 0xC00 (OR'd into attr0; no site) */
+/* Sprite flags - Task.spriteFlags, the first halfword of the sprite record QueueSprite queues (src/main_copy_queue.c) and BuildOam reads (src/main_build_oam.c). Left as numbers: the priority field 0x6000 (bits 14-13, a 2-bit value that replaces the template's attr2 priority when non-zero) and the OBJ-mode bits 0xC00 (OR'd into attr0; no site) */
 #define SPRITE_FLAG_FLIP_X  0x8000 /* the sprite is mirrored horizontally */
 
 #endif // GUARD_CONSTANTS_SPRITES_H

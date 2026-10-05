@@ -221,8 +221,8 @@ boottest-roms: $(ROM) $(BOOTTEST_SYMS)
 
 # BOOTTEST_RAM_ALLOW: RAM words allowed to differ, each with its evidence.
 # gHBlankDmaCnt/gHBlankDmaSrc (0x03001184, 0x03001EF0): the fade driver
-# sub_080b6154 (src/save_b6154.c) falls off its end without a return value
-# on its last frame, so UpdateHBlankScroll (src/hud_b5840.c) takes the
+# sub_080b6154 (src/main_hblank_bands_in_blend.c) falls off its end without a return value
+# on its last frame, so UpdateHBlankScroll (src/room_gfx_spawns.c) takes the
 # function's own address (still in r0) as the DMA count: the ROM's own
 # undefined behaviour, layout-dependent by nature (docs/data.md 8.4).
 BOOTTEST_RAM_ALLOW := 0x03001184,0x03001EF0

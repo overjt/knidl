@@ -33,6 +33,15 @@ committed tree only), so CI runs it on every push.  The checks:
      zone, each category with its reason.  The generated summary lives in
      docs/naming.md between the `audit:placeholders` markers; the audit
      fails when the committed summary is stale (regenerate with `--write`).
+  7. Source file names (#182, docs/naming.md section 8): every row of
+     docs/analysis/file-renames.csv has its new file and not its old one,
+     no old file name is left outside that table (word-boundary scan of
+     the tracked tree), every prefix is in the closed vocabulary (the game
+     headers' names plus `boot` and `game_over`), every row whose prefix is
+     not its header's carries a deviation, and no `src/*.c` outside the
+     table is named by an address or a placeholder (only the SDK/runtime
+     names `main.c`, `agb_init.c`, `agb_sram.c` and `m4a_*.c` stay).
+     tools/rename_tu.py's check() does the work.
 
 Usage:
   python3 tools/audit.py            # check; exit 1 on any failure
@@ -568,7 +577,7 @@ REASONS = {
     "fn-engine": "tracked by #155: engine-zone helpers whose role is not settled",
     "fn-lib": "runtime and library code with no upstream name: the m4a `bx r3` shims, the task-done hang helper, the ARM halves of the task trampolines and the veneer (docs/analysis/rom-map.md sections 6 and 8)",
     "ram": "tracked by #155: role not proven; many are proven shared scratch or hold two encodings",
-    "io": "none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and early_4734.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_*",
+    "io": "none left: the four I/O registers kept as symbols (the m4a_1 and SoftReset asm pools, and link_block_main.c's IME, where REG_IME changes the allocation, lesson 3.523) are named gRegVcount, gRegSound1CntL, gRegDma1Sad and gRegIme (#170); the rest of the C spells REG_*",
     "rom-asset": "asset label, unnamed by policy until a consumer gives it a role (docs/naming.md section 5, docs/data.md)",
     "rom-data": "tracked by #155: functional data whose consumer does not settle a name",
     "rom-position": "documented by position: the record's slot in a consumer-proven table (docs/naming.md section 2.4)",
@@ -578,7 +587,7 @@ REASONS = {
     "field-local": "local struct copies and module-local records: tracked by #155 (tools/rename_field.py `copies`)",
     "loc": "none left: the code is C",
     "field-player-scratch": "struct PlayerState's per-action scratch: each player action keeps its own value there, named per action by the aliases in include/task_vars.h (#155 run 7; the member keeps its unk name)",
-    "field-task-family-local": "the per-family registers in the task engine's local copies of struct Task (src/early_58e4.c, early_5c4c.c): named per family by the aliases of include/task_vars.h, which the engine never uses",
+    "field-task-family-local": "the per-family registers in the task engine's local copies of struct Task (src/task_move.c, task_draw_screen.c): named per family by the aliases of include/task_vars.h, which the engine never uses",
     # ROM labels by their referrers (#155 run 7, mechanical)
     "rom-shared": "shared: two or more slots, records or consumers point at it, so no single slot or role is its identity (docs/naming.md section 2.4)",
     "rom-via-unnamed": "reached only through a record or consumer that is itself unnamed (a `gUnk_` record, a `sub_*`): it is named with that referrer",
@@ -1068,6 +1077,33 @@ def check_census(rep, write):
 
 
 # ---------------------------------------------------------------------------
+# 7. Source file names (#182)
+
+
+def check_file_names(rep):
+    spec = importlib.util.spec_from_file_location(
+        "rename_tu", os.path.join(ROOT, "tools", "rename_tu.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    rows = mod.load_table()
+    errors = mod.check(rows)
+    for e in errors:
+        rep.fail("file names: " + e)
+    vocab = mod.vocabulary()
+    by_prefix = {}
+    deviations = 0
+    for r in rows:
+        p = mod.prefix_of(r["new"], vocab) or "?"
+        by_prefix[p] = by_prefix.get(p, 0) + 1
+        deviations += bool(r["deviation"].strip())
+    lines = ["%-12s %4d" % (p + "_", n) for p, n in sorted(by_prefix.items())]
+    lines.append("%d files named after their content, %d with a reason the prefix"
+                 " is not their header's (docs/analysis/file-renames.csv)" % (len(rows), deviations))
+    rep.section("7. Source file names", lines)
+    return {"renamed": len(rows), "deviations": deviations, "errors": len(errors)}
+
+
+# ---------------------------------------------------------------------------
 
 
 def main():
@@ -1084,6 +1120,7 @@ def main():
         "raw_addresses": check_raw_addresses(rep, args.list),
         "exceptions": check_exceptions(rep, args.list),
         "placeholders": check_census(rep, args.write),
+        "file_names": check_file_names(rep),
     }
     for title, lines in rep.sections:
         print(title)

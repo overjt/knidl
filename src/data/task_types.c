@@ -2,7 +2,7 @@
 #include "task.h"
 
 /* The task-type table gTaskTypes[266] (0x0872FF30-0x0873077F, issue #36
- * phase 2).  TaskCreate (src/early_5654.c) indexes it by task type:
+ * phase 2).  TaskCreate (src/task.c) indexes it by task type:
  * taskClass is the class list the new task joins (0-4) and entry the body
  * it copies into gTaskResumeAddrs[], which the ARM task switcher at
  * 0x08000234 enters with `bx` (docs/analysis/rom-map.md section 6), so every

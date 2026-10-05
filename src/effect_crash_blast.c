@@ -1,0 +1,543 @@
+#include "gba/gba.h"
+#include "global.h"
+#include "task.h"
+#include "main.h"
+#include "link.h"
+#include "room.h"
+#include "player.h"
+#include "effect.h"
+#include "actor.h"
+
+/* effect_crash_blast.c (0x0805A358-0x0805AFAB, issue #89).
+ *
+ * Task type #7 (the player's effect objects, see src/effect_skid_dust.c):
+ * variants 45-48.  Variant 45 (PlayerEffectTornadoDust, M13) rides on its spawner
+ * through three sub-states (gPlayerEffectTornadoDustFrames); PlayerEffectTornadoDustUpdate kills it once the
+ * player leaves mode 13.  Variant 46 (PlayerEffectCrashBlast, M13) is the twin of
+ * variant 37 (src/effect_mike_attack.c): the same stop and release of the tasks of
+ * kinds 1, 2, 7 and 8 through gScreenAttackTasks and the task skip mask, around a
+ * palette effect - it saves the palette buffer (CpuSet of gObjPaletteBank8 into
+ * gObjPaletteBlendBase) and calls M11's sub_0803f834/ FreezeOtherTasks, M17's
+ * LockAllActorPalettes and a VRAM transfer.  Its callbacks are PlayerEffectCrashBlastUpdate, which
+ * blends the saved palette towards gUnk_0873BC3E (while gInHub is
+ * set) or gUnk_0873BB7E with BlendColors (80 or 96 colours by
+ * gUnk_02007D64), raising the ratio Task.unk2C by 10 up to 0x100 in state 1
+ * (with the collider row gUnk_0873C2B4 at the player's camera position
+ * gPlayerCameraPos) and lowering it by 46 to 0 in state 2 (then calling M17's
+ * ClearActorPaletteOverrides), and the draw hook PlayerEffectCrashBlastDraw.  Variant 47 (sub_0805acec,
+ * M13) is an animation in world space; its callback sub_0805ae00 clears
+ * Task.unk28 in sub-state 0 when the player leaves mode 13 or the spawner's
+ * Task.variant is not 4 (and copies the spawner's facing), and in the other
+ * sub-states tests the block hit-box set gUnk_0873CF8C (TaskBreakBlocksAt) at the
+ * spawner's position offset by PlayerState.pixelOffsetX/unk26 (8.8).  Variant 48
+ * (PlayerEffectUFOChargeSparkle, M14's action 55) rides on its spawner with the draw hook
+ * sub_0805af80 (shared with variant 34: M11's PlayerDrawWorldLoadTilesAndPalette in player mode
+ * 13, otherwise the task dies) and the callback PlayerEffectUFOChargeSparkleUpdate, which kills it
+ * once the player leaves mode 13 or releases both A and B. */
+
+/* M09's hit-box set (src/player_break_blocks.c); only a pointer is passed here */
+struct HitBoxSet;
+u32 BeginFade(u16 steps, s16 delta, u16 *mask);   /* callers pass -4 as movs/negs (src/player_get_ability.c spells it s16 too) */
+void RequestCopy(u32 mode, void *src, void *dst, u32 size);   /* main_copy_queue; effect_goal_game_dance's pointer spelling */
+s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, u32 e, s16 f);   /* callers pass f sign-extended (lsls/asrs #16); the main_copy_queue definition says u16 */
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
+s32 DrawAffineSprite(s32 a, s16 b, s16 c, s32 d);
+void BlendColors(u16 *src, u16 *dst, s32 ratio, s32 count, u16 *out);
+void TaskFree(s32 id);                         /* kill task (M09+ spelling, 49 landed files) */
+u32 IsWorldPosOnScreen(s16 a, s16 b);   /* the ROM tests r0 unnarrowed (src callers spell u32) */
+void RegisterCollider(u8 a, s16 x, s16 y, void *p);   /* M11's caller spelling */
+u16 TaskBreakBlocksAt(struct HitBoxSet *p, s32 x, s32 y, s32 e);
+
+void PlayerEffectTornadoDust(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
+    gCurTask->drawCallback = (u32)TaskDrawWorld;
+    gCurTask->updateCallback = (u32)PlayerEffectTornadoDustUpdate;
+    gCurTask->layer = 5;
+    t = gCurTask;
+    t->frameTable = gPlayerEffectTornadoDustFrames;
+    switch (t->playerEffectSpawnWord & 15)
+    {
+    case 0:
+        t->posX = 0;
+        t->posY = -0x80000;
+        t->frame = 0xFFFF;
+        TaskYieldTrampoline(6);
+        gCurTask->frame = 0;
+        TaskYieldTrampoline(1);
+        gCurTask->playerEffectLoopCount = 0;
+        do
+        {
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
+        u = gCurTask;
+        u->posX = 0;
+        u->posY = -0x180000;
+        u->frame = 0;
+        TaskYieldTrampoline(1);
+        gCurTask->playerEffectLoopCount = 0;
+        do
+        {
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
+        break;
+    case 1:
+        t->posX = 0;
+        t->posY = 0;
+        t->frame = 0;
+        TaskYieldTrampoline(1);
+        gCurTask->playerEffectLoopCount = 0;
+        do
+        {
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
+        u = gCurTask;
+        u->posX = 0;
+        u->posY = -0x100000;
+        u->frame = 0;
+        TaskYieldTrampoline(1);
+        gCurTask->playerEffectLoopCount = 0;
+        do
+        {
+            gCurTask->frame++;
+            TaskYieldTrampoline(1);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
+        break;
+    case 2:
+        t->posX = 0;
+        t->posY = -0x180000;
+        t->frame = 0xFFFF;
+        TaskYieldTrampoline(20);
+        gCurTask->frame = 14;
+        TaskYieldTrampoline(2);
+        gCurTask->playerEffectLoopCount = 0;
+        do
+        {
+            gCurTask->frame++;
+            TaskYieldTrampoline(2);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 5);
+        break;
+    }
+    TaskExitTrampoline();
+}
+
+void PlayerEffectTornadoDustUpdate(void)
+{
+    if (gCurTask->player->mode != 13)
+        TaskFree(gCurTaskIdx);
+}
+
+void PlayerEffectCrashBlast(void)
+{
+    struct Task *t = gCurTask;
+    struct Task *u;
+    struct Task *v;
+    struct Task *w;
+    struct Task *q;
+    s32 i;
+    s32 n;
+    s32 k;
+    s32 o;
+    s32 m;
+    s32 r;
+    u16 x0;
+    u16 y0;
+
+    switch (t->playerEffectSpawnWord & 15)
+    {
+    case 0:
+        t->moveCallback = (u32)TaskMoveRelativeToParent;
+        t->drawCallback = (u32)TaskDrawWorldInView;
+        t->layer = 8;
+        u = gCurTask;
+        u->frameTable = gPlayerEffectCrashBlastFrames;
+        u->tileWord = (u->u8C.parentTask)->tileWord | 0xF008;
+        u->posX = 0;
+        u->posY = 0;
+        u->frame = 0xFFFF;
+        TaskYieldTrampoline(18);
+        gCurTask->frame = 6;
+        TaskYieldTrampoline(2);
+        gCurTask->frame++;
+        TaskYieldTrampoline(2);
+        gCurTask->frame++;
+        TaskYieldTrampoline(2);
+        gCurTask->frame = 3;
+        TaskYieldTrampoline(2);
+        gCurTask->frame++;
+        TaskYieldTrampoline(2);
+        gCurTask->frame++;
+        TaskYieldTrampoline(2);
+        gCurTask->frame = -1;
+        TaskYieldTrampoline(12);
+        if (gCurTask->pixelY <= 60)
+        {
+            gCurTask->frame = 9;
+            TaskYieldTrampoline(3);
+            gCurTask->frame |= -1;
+            TaskYieldTrampoline(12);
+            gCurTask->frame = 10;
+            TaskYieldTrampoline(3);
+        }
+        else
+        {
+            gCurTask->frame = 1;
+            TaskYieldTrampoline(3);
+            gCurTask->frame |= -1;
+            TaskYieldTrampoline(12);
+            gCurTask->frame = 2;
+            TaskYieldTrampoline(3);
+        }
+        o = ((gCurTask->u8C.parentTask)->tileWord & 0x7FF) << 5;
+        RequestCopy(1, gUnk_082030D8, (void *)(o + (OBJ_VRAM0 + 0x80)), 0x180);
+        RequestCopy(1, gUnk_082030D8 + 0x180, (void *)(o + (OBJ_VRAM0 + 0x480)), 0x180);
+        RequestCopy(1, gUnk_082030D8 + 0x300, (void *)(o + (OBJ_VRAM0 + 0x880)), 0x180);
+        RequestCopy(1, gUnk_082030D8 + 0x480, (void *)(o + (OBJ_VRAM0 + 0xC80)), 0x180);
+        break;
+    case 1:
+        t->moveCallback = 0;
+        t->drawCallback = (u32)PlayerEffectCrashBlastDraw;
+        t->updateCallback = (u32)PlayerEffectCrashBlastUpdate;
+        t->layer = 15;
+        w = gCurTask;
+        w->frameTable = gPlayerEffectCrashBlastFrames;
+        w->tileWord = ((w->u8C.parentTask)->tileWord + 0x800) | 4;
+        x0 = gPlayerCameraPos[w->parent].x;
+        x0 -= 120;
+        y0 = gPlayerCameraPos[w->parent].y - 80;
+        w->pixelX = (w->u8C.parentTask)->pixelX - gSpriteCameraX;
+        w->pixelY = (w->u8C.parentTask)->pixelY - gSpriteCameraY;
+        w->posX = (w->u8C.parentTask)->pixelX;
+        w->posY = (w->u8C.parentTask)->pixelY;
+        sub_0803f834(w->player->playerIndex, gUnk_0873BB3E);
+        if (gUnk_02007D64 == 2 || gUnk_02007D64 == 3)
+            gUnk_02007F60[29] = 0;
+        v = gCurTask;
+        v->playerEffectBlastFade = 0;
+        v->playerEffectBlastBlend = 0;
+        LockAllActorPalettes();
+        CpuSet(gObjPaletteBank8, gObjPaletteBlendBase, 96);
+        gCurTask->frame = 0;
+        gCurTask->playerEffectLoopCount = 0;
+        do
+        {
+            if ((s16)gCurTask->playerEffectLoopCount == 10)
+                BeginFade(6, 5, gUnk_02007F60);
+            if ((s16)gCurTask->playerEffectLoopCount == 4)
+                gCurTask->playerEffectBlastFade = 1;
+            TaskYieldTrampoline(4);
+            gCurTask->playerEffectLoopCount++;
+        } while ((s16)gCurTask->playerEffectLoopCount <= 10);
+        gCurTask->frame = 0xFFFF;
+        TaskYieldTrampoline(1);
+        gScreenAttackActive = 0;
+        for (i = 0; i < 20; i++)
+            gScreenAttackTasks[i] |= -1;
+        k = 0;
+        for (i = 0; i <= 62; i++)
+        {
+            if (gInHub == 0 && gTaskSlotTypes[i] != -1)
+            {
+                switch (gTasks[i].actorKind)
+                {
+                case ACTOR_KIND_MID_BOSS:
+                case ACTOR_KIND_BOSS:
+                case ACTOR_KIND_BOSS_CHILD_TASK:
+                case ACTOR_KIND_MID_BOSS_CHILD_TASK:
+                    gScreenAttackTasks[k++] = i;
+                    break;
+                }
+            }
+        }
+        m = 0;
+        n = 0;
+        while ((s16)gScreenAttackTasks[n] != -1 && n != 20)
+        {
+            gScreenAttackActive = 1;
+            TaskRestoreSkipMask((s16)gScreenAttackTasks[n++]);
+            m++;
+        }
+        TaskYieldTrampoline(1);
+        while (n != 0)
+        {
+            n--;
+            switch (gTasks[(s16)gScreenAttackTasks[n]].actorKind)
+            {
+            case ACTOR_KIND_MID_BOSS:
+            case ACTOR_KIND_BOSS:
+            case ACTOR_KIND_BOSS_CHILD_TASK:
+            case ACTOR_KIND_MID_BOSS_CHILD_TASK:
+                TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
+                break;
+            default:
+                gTasks[(s16)gScreenAttackTasks[n]].skipMask = 0;
+                TaskSaveSkipMask((s16)gScreenAttackTasks[n]);
+                break;
+            }
+            TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), (s16)gScreenAttackTasks[n]);
+        }
+        if (m != 0)
+            TaskYieldTrampoline(3);
+        gScreenAttackActive = 0;
+        for (i = 32; i <= 62; i++)
+        {
+            if (gInHub != 0)
+                continue;
+            if (gTaskSlotTypes[i] == -1)
+                continue;
+            q = &gTasks[i];
+            if (q->skipMask == 0)
+                continue;
+            if (q->drawCallback == 0)
+                continue;
+            if (q->pixelX >= (s16)x0 && q->pixelX < (s16)x0 + 240
+                && q->pixelY >= (s16)y0 && q->pixelY < (s16)y0 + 160)
+                gScreenAttackActive = 1;
+            switch (gTasks[i].actorKind)
+            {
+            case ACTOR_KIND_OBJECT:
+                r = 0;
+                if (gTasks[i].u76.subtype == 2)
+                {
+                    TaskRestoreSkipMask(i);
+                    TaskYieldTrampoline(1);
+                    r = 1;
+                }
+                break;
+            case ACTOR_KIND_ITEM:
+                r = 0;
+                if (gTasks[i].u76.subtype != 5)
+                {
+                    TaskRestoreSkipMask(i);
+                    TaskYieldTrampoline(1);
+                    r = 1;
+                }
+                break;
+            case ACTOR_KIND_ENEMY:
+            case 3:
+            case ACTOR_KIND_CHILD:
+            case 9:
+                TaskRestoreSkipMask(i);
+                TaskYieldTrampoline(2);
+                r = 2;
+                break;
+            default:
+                continue;
+            }
+            if (r != 0)
+            {
+                TaskSaveSkipMask(i);
+                TaskSetSkipMask((TASK_SKIP_COROUTINE | TASK_SKIP_MOVE | TASK_SKIP_UPDATE | TASK_SKIP_LATE_UPDATE), i);
+                TaskYieldTrampoline(2);
+                gScreenAttackActive = 0;
+            }
+        }
+        gScreenAttackActive = 0;
+        gCurTask->player->playerCrashBlastPhase = 0;
+        while (gCurTask->player->terrainBox == 0)
+            TaskYieldTrampoline(1);
+        TaskYieldTrampoline(10);
+        gCurTask->playerEffectBlastFade = 2;
+        BeginFade(7, -4, gUnk_02007F60);
+        TaskYieldTrampoline(8);
+        gBrightness = 0;
+        FreezeOtherTasks(0);
+        gPauseDisabled = 0;
+        break;
+    }
+    TaskExitTrampoline();
+}
+
+void PlayerEffectCrashBlastUpdate(void)
+{
+    s32 n;
+    struct Task *t;
+    struct Task *u;
+
+    n = 6;
+    if (gUnk_02007D64 == 2 || gUnk_02007D64 == 3)
+        n = 5;
+    switch (gCurTask->playerEffectBlastFade)
+    {
+    case 0:
+        break;
+    case 1:
+        if (gInHub != 0)
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BC3E, (u16)gCurTask->playerEffectBlastBlend, n << 4, gObjPaletteBank8);
+        else
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BB7E, (u16)gCurTask->playerEffectBlastBlend, n << 4, gObjPaletteBank8);
+        t = gCurTask;
+        if (t->playerEffectBlastBlend != 0x100)
+        {
+            t->playerEffectBlastBlend += 10;
+            if (t->playerEffectBlastBlend > 0x100)
+                t->playerEffectBlastBlend = 0x100;
+        }
+        RegisterCollider((u8)gCurTaskIdx, gPlayerCameraPos[gCurTask->player->playerIndex].x,
+                     gPlayerCameraPos[gCurTask->player->playerIndex].y, gUnk_0873C2B4);
+        break;
+    case 2:
+        if (gInHub != 0)
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BC3E, (u16)gCurTask->playerEffectBlastBlend, n << 4, gObjPaletteBank8);
+        else
+            BlendColors(gObjPaletteBlendBase, gUnk_0873BB7E, (u16)gCurTask->playerEffectBlastBlend, n << 4, gObjPaletteBank8);
+        u = gCurTask;
+        if (u->playerEffectBlastBlend != 0)
+        {
+            u->playerEffectBlastBlend -= 46;
+            if (u->playerEffectBlastBlend < 0)
+                u->playerEffectBlastBlend = 0;
+        }
+        else
+        {
+            u->playerEffectBlastFade = 0;
+            ClearActorPaletteOverrides();
+        }
+        break;
+    }
+}
+
+void PlayerEffectCrashBlastDraw(void)
+{
+    struct Task *t;
+    s32 g;
+    s16 x;
+
+    if (gCurTask->frame != -1 && IsInView(gCurTask->posX, gCurTask->posY)
+        && IsWorldPosOnScreen(gCurTask->posX, gCurTask->posY))
+    {
+        x = gUnk_0873BB26[(s16)gCurTask->playerEffectLoopCount];
+        g = DrawAffineSprite(*gCurTask->frameTable, x, x, 0);
+        t = gCurTask;
+        QueueSprite(t->layer, g, t->spriteFlags, t->tileWord, t->pixelX, t->pixelY);
+    }
+}
+
+void sub_0805acec(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+
+    t = gCurTask;
+    if ((t->playerEffectSpawnWord & 15) == 0)
+    {
+        t->moveCallback = (u32)TaskMove;
+        t->drawCallback = (u32)TaskDrawWorld;
+        t->updateCallback = (u32)sub_0805ae00;
+        t->layer = 5;
+        u = gCurTask;
+        u->frameTable = gUnk_0874C600;
+        u->playerEffectActive = 1;
+        do
+        {
+            v = gCurTask;
+            if ((v->u8C.parentTask)->onGround != 0)
+            {
+                v->posY = ((v->u8C.parentTask)->pixelY + 10) << 16;
+                if (v->facing == 1)
+                    v->posX = ((v->u8C.parentTask)->pixelX - 8) << 16;
+                else
+                    v->posX = ((v->u8C.parentTask)->pixelX + 8) << 16;
+                TaskStop();
+                TaskSetMotionXFacing(-0x30000, 0x6000);
+                gCurTask->velY = -0x20000;
+                gCurTask->accelY = 0x4000;
+                TaskSetFrameByFacing(0);
+                TaskYieldTrampoline(4);
+                TaskSetFrameByFacing(10);
+                TaskYieldTrampoline(2);
+                gCurTask->frame += 2;
+                TaskYieldTrampoline(2);
+            }
+            else
+            {
+                v->frame = 0xFFFF;
+                TaskYieldTrampoline(1);
+            }
+        } while (gCurTask->playerEffectActive != 0);
+    }
+    else
+    {
+        t->moveCallback = 0;
+        t->drawCallback = 0;
+        t->lateUpdateCallback = (u32)sub_0805ae00;
+        TaskYieldTrampoline(6);
+    }
+    TaskExitTrampoline();
+}
+
+void sub_0805ae00(void)
+{
+    struct Task *t = gCurTask;
+    s32 s = t->playerEffectSpawnWord & 15;
+
+    if (s == 0)
+    {
+        if (t->playerEffectActive != 0 && (t->player->mode != 13 || (t->u8C.parentTask)->variant != 4))
+            t->playerEffectActive = 0;
+        gCurTask->facing = (gCurTask->u8C.parentTask)->facing;
+    }
+    else
+    {
+        TaskBreakBlocksAt((struct HitBoxSet *)gUnk_0873CF8C,
+                     (t->u8C.parentTask)->pixelX + ((s16)t->player->pixelOffsetX >> 8),
+                     (t->u8C.parentTask)->pixelY + ((s16)t->player->pixelOffsetY >> 8), t->parent);
+    }
+}
+
+void PlayerEffectUFOChargeSparkle(void)
+{
+    struct Task *t;
+
+    gCurTask->moveCallback = (u32)TaskMoveRelativeToParent;
+    gCurTask->drawCallback = (u32)sub_0805af80;
+    gCurTask->updateCallback = (u32)PlayerEffectUFOChargeSparkleUpdate;
+    gCurTask->layer = 5;
+    t = gCurTask;
+    t->frameTable = gPlayerEffectUFOChargeSparkleFrames;
+    t->tileWord = (t->u8C.parentTask)->tileWord | 0xF004;
+    t->posX = 0;
+    t->posY = 0;
+    t->frame = 0;
+    TaskYieldTrampoline(1);
+    gCurTask->frame++;
+    TaskYieldTrampoline(1);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(1);
+    gCurTask->frame++;
+    TaskYieldTrampoline(1);
+    TaskExitTrampoline();
+}
+
+void PlayerEffectUFOChargeSparkleUpdate(void)
+{
+    struct PlayerState *p = gCurTask->player;
+
+    if (p->mode != 13 || !(gLatchedHeldKeys[p->playerIndex] & 3))
+        TaskFree(gCurTaskIdx);
+}
+
+void sub_0805af80(void)
+{
+    if (gCurTask->player->mode != 13)
+        TaskFree(gCurTaskIdx);
+    else
+        PlayerDrawWorldLoadTilesAndPalette();
+}

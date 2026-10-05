@@ -25,6 +25,7 @@ python3 tools/audit.py --write  # regenerate docs/naming.md's census
 | raw addresses in C | no ROM (0x08-0x0D), SRAM (0x0E), EWRAM (0x02), IWRAM (0x03), I/O (0x04), palette (0x05), VRAM (0x06) or OAM (0x07) address as a bare number in `src/` or the game headers `include/*.h`: a symbol, a region macro (`include/gba/defines.h`) or a `REG_*` macro (`include/gba/io_reg.h`), or a `raw:` comment on the same line or the line above; the last argument of `CpuSet`/`CpuFastSet` is a control word, not an address | the comment |
 | code exceptions | every `register ... asm("rN")` pin, `asm(...)` statement, `BLOCK_CROSS_JUMP` and `while (0)` in `src/` is a row of section 3, and every row still points at its site | section 3 |
 | placeholders | `sub_*` functions, `gUnk_*` RAM, I/O and ROM symbols, `unk*` struct fields and `loc_*` labels counted by kind, category and zone, each category with its reason; since #155 run 7 every `sub_*`, `gUnk_` RAM cell and `unk*` field must have a reason row in `docs/analysis/unnamed.csv` (no row, a stale row or an unknown code fails) and the functional ROM labels are classed by their referrers; the generated table in docs/naming.md section 5 must be current | docs/naming.md section 5.1 |
+| source file names | every row of `docs/analysis/file-renames.csv` (#182) has its new `src/*.c` and not its old one; no old file name is left anywhere else in the tracked tree; every prefix is a game header's name or `boot_` / `game_over_`, and a row whose prefix is not its header's carries a deviation; every other `src/*.c` is `main.c`, `agb_init.c`, `agb_sram.c` or `m4a_*.c` (`tools/rename_tu.py --check`) | docs/naming.md section 8, the table's `deviation` and `evidence` columns |
 
 ## 2. The sanctioned asm
 
@@ -61,24 +62,24 @@ A row names `file:line` or `file:first-last`.
 
 | site | function | kind | reason |
 |---|---|---|---|
-| `src/hud_b2fe8.c:679-680` | `WhispyWoodsLeavesFillTrail` | zero-code | #37: two nested `do { } while (0)` around the `unk70` store weight its address's use x3 (1 + 3 = 4 refs), which ranks the address above the `&gCurTask` pool value in local allocation, as the ROM's r3/r4 show (lesson 3.524); replaced #154's ten pins and six levers |
-| `src/boot_caab8.c:137-142` | `BootLogoUpdateObjects` | lever | #152's two approved zero-byte levers (`sub_080caab8` before #155): an opaque `0xFFFF` and a live mask at one store (lessons 3.457, 3.494).  Sanctioned and final since #169, which measured why the plain store folds: gcse's reaching register for the old id has two sets, so combine uses its first scan's union (0xFFFF); with one set the plain source gives the ROM's `orrs`, and the only route left is unnatural (lesson 3.527).  The plain store is 40 bytes off (#100) |
-| `src/enemy_9fbd0.c:189-216` | `KingDededeReactToDamage` | cross-jump | `BLOCK_CROSS_JUMP` (`include/global.h`, a pret idiom) at four tails that the ROM really duplicates instead of cross-jumping (#154) |
-| `src/early_4734.c:56` | (file scope) | alias | the `MultiBoot` SWI thunk declared int-returning under a local name, as the ROM keeps the untruncated result (lesson 3.481) |
-| `src/early_4d6c.c:45` | (file scope) | alias | the same alias in the second MultiBoot unit |
-| `src/early_4d6c.c:199-213` | `MultiBootWaitCycles` | inline-asm | the SDK's own inline asm: pokeemerald's `src/multiboot.c` `MultiBootWaitCycles` is the same asm |
+| `src/actor_whispy_woods_items.c:679-680` | `WhispyWoodsLeavesFillTrail` | zero-code | #37: two nested `do { } while (0)` around the `unk70` store weight its address's use x3 (1 + 3 = 4 refs), which ranks the address above the `&gCurTask` pool value in local allocation, as the ROM's r3/r4 show (lesson 3.524); replaced #154's ten pins and six levers |
+| `src/boot_logo_update_objects.c:137-142` | `BootLogoUpdateObjects` | lever | #152's two approved zero-byte levers (`sub_080caab8` before #155): an opaque `0xFFFF` and a live mask at one store (lessons 3.457, 3.494).  Sanctioned and final since #169, which measured why the plain store folds: gcse's reaching register for the old id has two sets, so combine uses its first scan's union (0xFFFF); with one set the plain source gives the ROM's `orrs`, and the only route left is unnatural (lesson 3.527).  The plain store is 40 bytes off (#100) |
+| `src/enemy_king_dedede_damage.c:189-216` | `KingDededeReactToDamage` | cross-jump | `BLOCK_CROSS_JUMP` (`include/global.h`, a pret idiom) at four tails that the ROM really duplicates instead of cross-jumping (#154) |
+| `src/link_block_main.c:56` | (file scope) | alias | the `MultiBoot` SWI thunk declared int-returning under a local name, as the ROM keeps the untruncated result (lesson 3.481) |
+| `src/link_multiboot.c:45` | (file scope) | alias | the same alias in the second MultiBoot unit |
+| `src/link_multiboot.c:199-213` | `MultiBootWaitCycles` | inline-asm | the SDK's own inline asm: pokeemerald's `src/multiboot.c` `MultiBootWaitCycles` is the same asm |
 | `src/m4a_c1.c:293` | `MusicPlayerJumpTableCopy` | inline-asm | a dead SDK export that is one `swi 0x2A` in inline asm, as in katam's SDK |
-| `src/camera_2d01c.c:256` | `UpdateBgAnims` | zero-code | its loop notes weight the body's references one loop level deeper, which puts the slot pointer in r4 and the command pointer in r5 as in the ROM (comment at the function) |
-| `src/enemy_a1590.c:847` | `MrShineAndMrBrightPickGroundMove` | zero-code | #154's commented stand-in: the loop note ranks `acc` (r2) above `r` (r3) in global allocation |
-| `src/player_37ed8.c:728` | `PlayerActionHurtUpdate` | zero-code | an empty loop whose loop-end note stops cse1 from following a jump into the block (comment at the site) |
-| `src/player_3aa64.c:307` | `PlayerActionSwimUpdate` | zero-code | counts case 1's references one loop level deeper, so the key mask wins its register ahead of the switch value (lessons 3.383, 3.412) |
-| `src/player_4c64c.c:105` | `PlayerActionThrowHold` | zero-code | #88's priority lever around one call (lesson 3.424) |
-| `src/player_4c64c.c:242-243` | `PlayerActionThrowHoldUpdate` | zero-code | #88's nested priority levers around one store |
-| `src/stage_4335c.c:85` | `MetaKnightActionSwimUpdate` | zero-code | the lever of its M10 twin `PlayerActionSwimUpdate` (lessons 3.383, 3.412) |
-| `src/hud_b2fe8.c:664` | `WhispyWoodsLeavesFillTrail` | stand-in | #37: an unused read of `unk70`, zero code, which computes the `unk70` address first (`adds r3, #112` before the first `ldrh`, lesson 3.524) |
-| `src/hud_b5024.c:384` | `AllocObjTilesAndPalettes` | stand-in | #154's volatile read: the ROM loads the palette cursor twice, and a plain read lets cse reuse the first load |
-| `src/player_109c8.c:51-54` | `sub_080109c8` | stand-in | #82's two commented `volatile` placeholder re-reads (the ROM re-reads `unk00` and `unk04`) |
-| `src/player_3bde8.c:476-479` | `sub_0803c9b4` | stand-in | the twin of `sub_080109c8`'s two `volatile` re-reads |
-| `src/early_2378.c:139` | `LinkSyncRandom` | stand-in | the always-true conjunct `gUnk_03001EFC == 0`, zero code, which keeps the branch two-way until cse1 (lesson 3.488) |
-| `src/early_6d28.c:134` | `SerialCB` | stand-in | the dead `i = 4;` before a `break`, which keeps jump.c's else-arm swap out of the passes before register allocation (lessons 3.490, 3.491) |
-| `src/stage_4335c.c:55-56` | `MetaKnightActionSwimUpdate` | stand-in | the `m` and `tp` locals, stand-ins for an address copy gcse cannot place here (the function's header comment) |
+| `src/camera_bg_anims.c:256` | `UpdateBgAnims` | zero-code | its loop notes weight the body's references one loop level deeper, which puts the slot pointer in r4 and the command pointer in r5 as in the ROM (comment at the function) |
+| `src/enemy_mr_shine_and_mr_bright.c:847` | `MrShineAndMrBrightPickGroundMove` | zero-code | #154's commented stand-in: the loop note ranks `acc` (r2) above `r` (r3) in global allocation |
+| `src/player_hurt.c:728` | `PlayerActionHurtUpdate` | zero-code | an empty loop whose loop-end note stops cse1 from following a jump into the block (comment at the site) |
+| `src/player_water.c:307` | `PlayerActionSwimUpdate` | zero-code | counts case 1's references one loop level deeper, so the key mask wins its register ahead of the switch value (lessons 3.383, 3.412) |
+| `src/player_throw_hold.c:105` | `PlayerActionThrowHold` | zero-code | #88's priority lever around one call (lesson 3.424) |
+| `src/player_throw_hold.c:242-243` | `PlayerActionThrowHoldUpdate` | zero-code | #88's nested priority levers around one store |
+| `src/player_meta_knight_swim_update.c:85` | `MetaKnightActionSwimUpdate` | zero-code | the lever of its M10 twin `PlayerActionSwimUpdate` (lessons 3.383, 3.412) |
+| `src/actor_whispy_woods_items.c:664` | `WhispyWoodsLeavesFillTrail` | stand-in | #37: an unused read of `unk70`, zero code, which computes the `unk70` address first (`adds r3, #112` before the first `ldrh`, lesson 3.524) |
+| `src/room_spawn_objects.c:384` | `AllocObjTilesAndPalettes` | stand-in | #154's volatile read: the ROM loads the palette cursor twice, and a plain read lets cse reuse the first load |
+| `src/cutscene_actor_particles.c:51-54` | `sub_080109c8` | stand-in | #82's two commented `volatile` placeholder re-reads (the ROM re-reads `unk00` and `unk04`) |
+| `src/player_share_item.c:476-479` | `sub_0803c9b4` | stand-in | the twin of `sub_080109c8`'s two `volatile` re-reads |
+| `src/link_sync_random.c:139` | `LinkSyncRandom` | stand-in | the always-true conjunct `gUnk_03001EFC == 0`, zero code, which keeps the branch two-way until cse1 (lesson 3.488) |
+| `src/link_serial_cb.c:134` | `SerialCB` | stand-in | the dead `i = 4;` before a `break`, which keeps jump.c's else-arm swap out of the passes before register allocation (lessons 3.490, 3.491) |
+| `src/player_meta_knight_swim_update.c:55-56` | `MetaKnightActionSwimUpdate` | stand-in | the `m` and `tp` locals, stand-ins for an address copy gcse cannot place here (the function's header comment) |

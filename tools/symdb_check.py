@@ -44,7 +44,7 @@ def landed_symbols():
     verifies byte-for-byte against it - which is far stronger evidence than any
     prologue pattern.  Without this, every census change reshuffles the random
     spot-check sample and eventually lands on a decompiled function whose entry
-    is not `push {lr}` (0x080A0588 in src/enemy_a0274.c opens
+    is not `push {lr}` (0x080A0588 in src/enemy_king_dedede.c opens
     `ldr r0, [pc, #8]`), producing a failure that says nothing about the DB.
     """
     import json

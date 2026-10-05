@@ -121,20 +121,20 @@ extern u8 gUnk_087C0A4C[];
 
 /* Functions (defined in the files named above each group). */
 
-/* src/mode_075b8.c */
+/* src/mode_hub_stage.c */
 void CheckPauseButton(void);
 void HubMain(void);
 void BigSwitchViewMain(void);
 void StageMain(void);
 
-/* src/mode_07b68.c */
+/* src/mode_extra_mode_title.c */
 s32 SendLinkBlockAndVerify(u32 *src, u32 *dst, u32 size);
 s32 ExtraModeTitleSendModeData(void);
 void ExtraModeTitleLinkErrorScreen(void);
 void ExtraModeTitleLoadMultiBootImage(void);
 void ExtraModeTitleMain(void);
 
-/* src/mode_082d0.c */
+/* src/mode_extra_mode_title_sprites.c */
 void CreateExtraModeTitleSprites(void);
 void Task_ExtraModeTitleSprite(void);
 void ExtraModeTitleSpriteUpdate(void);
@@ -143,12 +143,12 @@ void ExtraModeTitleTransferIconUpdate(void);
 void ExtraModeTitleLevelBar(void);
 void ExtraModeTitleLevelBarUpdate(void);
 
-/* src/mode_08664.c */
+/* src/mode_pause_boss_endurance.c */
 void PauseScreen(void);
 void PauseScreenLoadChoicePalette(s32 n);
 void BossEnduranceMain(void);
 
-/* src/gfx_08b8c.c */
+/* src/mode_gfx_loaders.c */
 void LinkErrorScreen(void);
 void LoadBgLayout(s32 layout);
 void LoadGfxSet(u16 set);
@@ -163,7 +163,7 @@ void HudLoadAbilityPicture(s32 a0);
 void LoadMuseumAbilitySignGfx(s32 a0);
 void PauseScreenLoadGraphics(s32 a0, s32 a1);
 
-/* src/boot_091ac.c */
+/* src/mode_boot_sequence.c */
 void BootLogoMain(void);
 s32 PlayBootLogo(void);
 s32 BootLogoWait(s32 n);
@@ -178,7 +178,7 @@ s32 TitleScreen(void);
 void IntroStory(void);
 s32 IntroStoryWait(s32 n);
 
-/* src/mode_0b44c.c */
+/* src/mode_hub_stage_init.c */
 void ResetGameSession(void);
 void ResetScoresAndMaxHealth(void);
 void ResetPlayerRecords(void);

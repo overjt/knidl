@@ -5,9 +5,9 @@
  * phase 2): levels 0-8 (8 = the hub), eight stages each, every entry a
  * stage's room list (src/data/room_lists.c) or NULL.  The room loaders
  * read gRoomTable[level][stage][room] into gCurRoomDef (LoadHubRoom,
- * LoadBigSwitchViewRoom and LoadGoalGameRoom in src/level_23948.c, and src/level_242d0.c)
+ * LoadBigSwitchViewRoom and LoadGoalGameRoom in src/room_hub.c, and src/room_enter_exit.c)
  * and the camera tasks read the next room's palettes through it
- * (src/camtask_2d38c.c).
+ * (src/camera_map_events.c).
  * Carved by tools/carve_data.py. */
 
 struct RoomDef *const *const gRoomTable[9][8] = {

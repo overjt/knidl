@@ -31,7 +31,7 @@ struct ThrowVelocity
 /* Seven-entry handler table hanging off Actor.terrainHandlers (and
    ActorDef.terrainHandlers); every entry is a u8 (*)(void) that returns 1 when
    it consumed the frame.  ActorCollideTerrain, ActorCollideTerrainInCameraBounds and ActorCollideTerrainFloor
-   (src/actor_692fc.c) walk it. */
+   (src/actor_collision.c) walk it. */
 struct ActorHandlers
 {
     /*0x00*/ u32 landCallback;
@@ -45,7 +45,7 @@ struct ActorHandlers
 
 /* Block Actor.hitReactions (and ActorDef.hitReactions) points at: two s8 mode
    bytes and two u8 (*)(void) hooks (ActorReactToDamage, ActorReactToDefeat,
-   src/actor_692fc.c).  Compare struct ActorAux, which is the Actor.aux
+   src/actor_collision.c).  Compare struct ActorAux, which is the Actor.aux
    block. */
 struct ActorVt
 {
@@ -327,11 +327,11 @@ extern u32 gCannonSmokeFrames[];
 
 struct TerrainCollisionBox;
 
-/* src/actor_62584.c */
+/* src/player_dance.c */
 void PlayerDance12(void);
 void PlayerDance13(void);
 
-/* src/actor_63698.c */
+/* src/actor.c */
 s32 TaskCreatePausedInScreenAttack(u32 type, s32 start);
 void ActorInitSlot(u32 i);
 void ActorBindDefSlot(u32 i);
@@ -414,7 +414,7 @@ void ActorDrawWorldInViewOrDestroy(void);
 void ActorDrawWorldNearView(void);
 void ActorDrawWorldNearViewOrDestroy(void);
 
-/* src/actor_653ec.c */
+/* src/actor_helpers.c */
 void ActorDrawStreamedFrameNearViewOrDestroy(void);
 void ActorDrawStreamedFrameNearView(void);
 void ActorDrawStreamedFrame(void);
@@ -503,7 +503,7 @@ void InhalableStarState0(void);
 void InhalableStarState0Update(void);
 void HeldPlayerInit(void);
 
-/* src/actor_673ec.c */
+/* src/actor_held_player.c */
 void HeldPlayerEnterState(void);
 void HeldPlayerUpdate(void);
 void HeldPlayerSwallow(void);
@@ -548,7 +548,7 @@ void PlayerResumeControl(s32 i, u16 b, u8 c, u8 d);
 u32 ActorTestColliders(u8 a);
 void ActorStoreHit(u8 a);
 
-/* src/actor_692fc.c */
+/* src/actor_collision.c */
 u32 sub_080694e0(void);
 u32 ActorCollideTerrainCeilingAndFloor(void);
 u32 ActorCollideTerrainWalls(void);
@@ -574,7 +574,7 @@ void ActorStartDrown(s32 a);
 void PickupCollect(void);
 u32 ActorReactToDefeat(void);
 
-/* src/actor_6a344.c */
+/* src/actor_defeat.c */
 void ActorDie(void);
 void ActorDefeatByEffect(void);
 void ActorDefeatKnockAway(void);
@@ -612,7 +612,7 @@ void ActorDefeat4(void);
 void ActorDefeat4Update(void);
 void ActorDefeatAbilityStar(void);
 
-/* src/actor_6ad18.c */
+/* src/actor_boss_defeat.c */
 void ActorShakeVertically(void);
 void MidBossDefeatScreenFlash(void);
 void MidBossDefeatFlash(void);
@@ -633,7 +633,7 @@ s32 ActorDrownLand(void);
 void ActorDrownInit(void);
 void ActorDrownUpdate(void);
 
-/* src/actor_6b2e4.c */
+/* src/actor_attached.c */
 void ActorDrownEnterState(void);
 void ActorDrownSink(void);
 void ActorDrownSinkUpdate(void);
@@ -674,7 +674,7 @@ void ActorAttachedBackdropHeldLateUpdate(void);
 void ActorAttachedBackdropFlight(void);
 void ActorAttachedBackdropFlightUpdate(void);
 
-/* src/actor_6c2a4.c */
+/* src/actor_attached_throw_star_flash.c */
 void ActorAttachedBackdropBounceOff(void);
 void ActorAttachedBackdropBounceOffUpdate(void);
 void ActorAttachedPullIn(void);
@@ -695,7 +695,7 @@ void StarFlashFollowParent(void);
 s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d);
 void CreateDustPuff(void);
 
-/* src/actor_6cd40.c */
+/* src/actor_dust.c */
 void Task_DustTrail(void);
 void Task_DustPuff(void);
 void Task_BackwardDustPuff(void);
@@ -704,7 +704,7 @@ void CreateLandingDustFacing(s16 a, s16 b, s16 c);
 void Task_LandingDust(void);
 s32 CreateDustBurst(s16 a, s16 b);
 
-/* src/actor_6d22c.c */
+/* src/actor_burst_effects.c */
 void Task_DustBurst(void);
 void DustBurstCheckParent(void);
 void CreateBurstEffect(u32 a, s32 b);
@@ -737,7 +737,7 @@ void ActorUpdateAttachedEffect(void);
 void ActorAttachEffect(s32 a, s32 b);
 void Task_HitFrost(void);
 
-/* src/actor_6e0f0.c */
+/* src/actor_hit_effects.c */
 void HitFrostCheckParent(void);
 void Task_HitFlames(void);
 void HitFlamesCheckParent(void);
@@ -768,7 +768,7 @@ void PlayerWarpStarRideInit(void);
 void PlayerWarpStarRideUpdate(void);
 void PlayerWarpStarRideEnterState(void);
 
-/* src/actor_6ef5c.c */
+/* src/player_warp_star_ride.c */
 void PlayerWarpStarRideState2(void);
 void PlayerWarpStarRideState2Update(void);
 void PlayerWarpStarRideState1(void);
@@ -783,7 +783,7 @@ void PlayerWarpStarRideState6(void);
 void PlayerWarpStarRideState6Update(void);
 void PlayerWarpStarRideState7(void);
 
-/* src/actor_6ff24.c */
+/* src/player_meta_knight_warp_star_ride.c */
 void PlayerWarpStarRideState7Update(void);
 void PlayerWarpStarRideDraw(void);
 void PlayerSetWarpStarRideFrame(void);

@@ -25,7 +25,7 @@
  * operands are numbers, as in the data file).  Every table is
  * defined with the element type its declaration gives (the line above it
  * names the declaring header and the consumer): most are u32 [] because their
- * consumers pass them to CallTableEntry(index, count, table) (src/early_2b04.c,
+ * consumers pass them to CallTableEntry(index, count, table) (src/link_run_frames.c,
  * `if (index < count) table[index]();`), whose count is the table's length
  * unless the line says otherwise.  Every word is a function by its name
  * (the function-entry rule of docs/data.md section 5) or 0/NULL, exactly

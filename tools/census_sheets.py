@@ -62,29 +62,29 @@ def _next_label(labels, a):
 
 
 # ---- 1. consumer-read LZ77 sources ------------------------------------------
-# u32 gUnk_087319C8[][3] (include/mode.h:103): sub_08008d98 (src/gfx_08b8c.c:
+# u32 gUnk_087319C8[][3] (include/mode.h:103): sub_08008d98 (src/mode_gfx_loaders.c:
 # 109-111) copies [0] as a 64-byte BG palette (RequestCopy(2, [0], gBgPalette,
 # 64)) and LZ77UnCompVram-s [1] (tiles) and [2] (map).  Rows: the span to the
 # next label (a next-label pointer table, docs/data.md 5.1).
 PICTURE_TABLE = 0x087319C8
-# u32 gUnk_08731980[][2][2] (include/mode.h:101): sub_08008d10 (src/gfx_08b8c.c:
+# u32 gUnk_08731980[][2][2] (include/mode.h:101): sub_08008d10 (src/mode_gfx_loaders.c:
 # 96-100) LZ77UnCompWram-s every non-zero element.
 OBJ_LZ_TABLE = 0x08731980
 # struct GfxHeader *const gUnk_08731F78[] (include/cutscene.h:62): sub_080102c0
-# (src/mode_100ac.c:88-93) LZ77UnCompWram-s h->tiles and uses tileCount << 5
+# (src/cutscene_main.c:88-93) LZ77UnCompWram-s h->tiles and uses tileCount << 5
 # bytes of it, and copies paletteBankCount << 5 bytes of h->palette.
 STAGE_GFX = 0x08731F78
 # struct TransferNode *gUnk_0873185C[] (include/mode.h:100, LoadGfxSet
-# src/gfx_08b8c.c:67): RequestCopyList (src/early_1518.c:104) walks {cmd =
+# src/mode_gfx_loaders.c:67): RequestCopyList (src/main_copy_queue.c:104) walks {cmd =
 # size << 8 | mode, src, dst} until cmd == 0; mode 8 LZ77UnCompVram-s src
 # (l.203-204).  census_rooms.py covers the raw-copy modes 1-5.
 GFX_SETS = 0x0873185C
 DIRECT_LZ77 = {
-    0x085CCB58: "LZ77UnCompVram(gUnk_085CCB58, 0x06001800) sub_08008d98 src/gfx_08b8c.c:112-113",
-    0x085E0090: "LZ77UnCompWram(gUnk_085E0090, ..) src/ending_c9004.c:90, sub_080102c0 src/mode_100ac.c:98-99",
-    0x085E2CE0: "LZ77UnCompWram(gUnk_085E2CE0, ..) src/gameover_cacf0.c:260",
-    0x085E4064: "LZ77UnCompWram(gUnk_085E4064, ..) src/gameover_cacf0.c:262",
-    0x085E5BC4: "LZ77UnCompWram(gUnk_085E5BC4, ..) src/gameover_cacf0.c:265",
+    0x085CCB58: "LZ77UnCompVram(gUnk_085CCB58, 0x06001800) sub_08008d98 src/mode_gfx_loaders.c:112-113",
+    0x085E0090: "LZ77UnCompWram(gUnk_085E0090, ..) src/ending_star_rod_return.c:90, sub_080102c0 src/cutscene_main.c:98-99",
+    0x085E2CE0: "LZ77UnCompWram(gUnk_085E2CE0, ..) src/game_over_screen.c:260",
+    0x085E4064: "LZ77UnCompWram(gUnk_085E4064, ..) src/game_over_screen.c:262",
+    0x085E5BC4: "LZ77UnCompWram(gUnk_085E5BC4, ..) src/game_over_screen.c:265",
 }
 
 
@@ -96,27 +96,27 @@ def _lz77_sources(rom, labels):
         for j in (1, 2):
             v = _u32(rom, a + 4 * j)
             if v:
-                out.append((v, "gUnk_087319C8[%d][%d], LZ77UnCompVram sub_08008d98 src/gfx_08b8c.c:%d"
+                out.append((v, "gUnk_087319C8[%d][%d], LZ77UnCompVram sub_08008d98 src/mode_gfx_loaders.c:%d"
                             % (i, j, 109 + j), None))
     end = _next_label(labels, OBJ_LZ_TABLE)
     for k, a in enumerate(range(OBJ_LZ_TABLE, end, 4)):
         v = _u32(rom, a)
         if v:
-            out.append((v, "gUnk_08731980[%d][%d][%d], LZ77UnCompWram sub_08008d10 src/gfx_08b8c.c:96-100"
+            out.append((v, "gUnk_08731980[%d][%d][%d], LZ77UnCompWram sub_08008d10 src/mode_gfx_loaders.c:96-100"
                         % (k // 4, k // 2 % 2, k % 2), None))
     end = _next_label(labels, STAGE_GFX)
     for i, a in enumerate(range(STAGE_GFX, end, 4)):
         h = _u32(rom, a)
         if h:
             out.append((_u32(rom, h + 12), "gUnk_08731F78[%d]->tiles (GfxHeader 0x%08X), LZ77UnCompWram "
-                        "sub_080102c0 src/mode_100ac.c:91" % (i, h), _u16(rom, h + 2) * 32))
+                        "sub_080102c0 src/cutscene_main.c:91" % (i, h), _u16(rom, h + 2) * 32))
     end = _next_label(labels, GFX_SETS)
     for lst in sorted(set(_u32(rom, a) for a in range(GFX_SETS, end, 4) if _u32(rom, a))):
         a = lst
         while _u32(rom, a):
             if _u32(rom, a) & 0xF == 8:
                 out.append((_u32(rom, a + 4), "TransferNode 0x%08X {mode 8} source, LZ77UnCompVram "
-                            "(RequestCopyList src/early_1518.c:203)" % a, None))
+                            "(RequestCopyList src/main_copy_queue.c:203)" % a, None))
             a += 12
     for v, why in sorted(DIRECT_LZ77.items()):
         out.append((v, why, None))
@@ -125,42 +125,42 @@ def _lz77_sources(rom, labels):
 
 # ---- 1b. palettes and raw tile blocks whose size the consumer gives ----------
 SIZED = [
-    (0x085E0070, 32, "palette", "RequestCopy(2, gUnk_085E0070, .., 32) src/ending_c9004.c:89, src/player_19000.c:490/535/575"),
-    (0x085E2920, 256, "palette", "BlendColors(gUnk_085E2920, .., 128 colours) src/ending_c9004.c:428-440, src/player_19eec.c:55-70"),
-    (0x085E2A20, 256, "palette", "BlendColors(.., gUnk_085E2A20, 128 colours) src/ending_c9004.c:440, src/player_19eec.c:55-63"),
-    (0x085E2B20, 256, "palette", "BlendColors(.., gUnk_085E2B20, 128 colours) src/ending_c9004.c:428-434, src/player_19eec.c:70"),
-    (0x085E2C20, 192, "palette", "RequestCopy(2, gUnk_085E2C20, .., 192) src/gameover_cacf0.c:258"),
+    (0x085E0070, 32, "palette", "RequestCopy(2, gUnk_085E0070, .., 32) src/ending_star_rod_return.c:89, src/cutscene_fountain_power_orb_star_rod.c:490/535/575"),
+    (0x085E2920, 256, "palette", "BlendColors(gUnk_085E2920, .., 128 colours) src/ending_star_rod_return.c:428-440, src/cutscene_fountain_blend.c:55-70"),
+    (0x085E2A20, 256, "palette", "BlendColors(.., gUnk_085E2A20, 128 colours) src/ending_star_rod_return.c:440, src/cutscene_fountain_blend.c:55-63"),
+    (0x085E2B20, 256, "palette", "BlendColors(.., gUnk_085E2B20, 128 colours) src/ending_star_rod_return.c:428-434, src/cutscene_fountain_blend.c:70"),
+    (0x085E2C20, 192, "palette", "RequestCopy(2, gUnk_085E2C20, .., 192) src/game_over_screen.c:258"),
     (0x081BE6BC, 512, "palette",
      "gUnk_081BE6BC[playerIndex * 128 + 0..127]: BlendColors of 16 colours from +0/+32/+64/+96 "
-     "(src/player_47fe8.c:742-759, src/player_449c8.c:66-67) and RequestCopy(2, .., 32) from +0 "
-     "(src/stage_3cd60.c:771); playerIndex is InitPlayerState's slot (src/stage_3cd60.c:188, callers loop "
-     "i <= 3, src/mode_0b44c.c:70), gPlayerStates holds 4 records of 116 bytes (0x03002170-0x03002340)"),
-    (0x081F1AE0, 512, "raw-tiles", "RequestCopy(1, gUnk_081F1AE0 + k * 128, .., 128), k = 0..3 src/player_49738.c:91-94"),
-    (0x081CC328, 1024, "raw-tiles", "RequestCopy(1, gUnk_081CC328 + k * 256, .., 256), k = 0..3 src/player_49738.c:51-54"),
-    (0x081AC358, 32, "palette", "RequestCopy(2, gUnk_081AC358, gObjPalette, 32) src/player_10358.c:248"),
-    (0x081AC378, 512, "raw-tiles", "RequestCopy(1, gUnk_081AC378 + k * 128, .., 128), k = 0..3 src/player_10358.c:244-247"),
-    (0x08334480, 64, "palette", "BlendColors(gUnk_08334480, gUnk_08334480 + 16, .., 16 colours, ..) src/enemy_a93ec.c:565/568"),
-    (0x083344C0, 64, "palette", "RequestCopy(2, gUnk_083344C0 + (((gFrameCount >> 1) & 1) << 5), .., 32) src/enemy_a93ec.c:569/593/636"),
+     "(src/player_get_ability.c:742-759, src/player_spark_cutter.c:66-67) and RequestCopy(2, .., 32) from +0 "
+     "(src/player_helpers.c:771); playerIndex is InitPlayerState's slot (src/player_helpers.c:188, callers loop "
+     "i <= 3, src/mode_hub_stage_init.c:70), gPlayerStates holds 4 records of 116 bytes (0x03002170-0x03002340)"),
+    (0x081F1AE0, 512, "raw-tiles", "RequestCopy(1, gUnk_081F1AE0 + k * 128, .., 128), k = 0..3 src/player_ability_tiles.c:91-94"),
+    (0x081CC328, 1024, "raw-tiles", "RequestCopy(1, gUnk_081CC328 + k * 256, .., 256), k = 0..3 src/player_ability_tiles.c:51-54"),
+    (0x081AC358, 32, "palette", "RequestCopy(2, gUnk_081AC358, gObjPalette, 32) src/cutscene_director_duel.c:248"),
+    (0x081AC378, 512, "raw-tiles", "RequestCopy(1, gUnk_081AC378 + k * 128, .., 128), k = 0..3 src/cutscene_director_duel.c:244-247"),
+    (0x08334480, 64, "palette", "BlendColors(gUnk_08334480, gUnk_08334480 + 16, .., 16 colours, ..) src/enemy_kracko_cloud_lightning.c:565/568"),
+    (0x083344C0, 64, "palette", "RequestCopy(2, gUnk_083344C0 + (((gFrameCount >> 1) & 1) << 5), .., 32) src/enemy_kracko_cloud_lightning.c:569/593/636"),
     (0x0826A668, 32, "palette",
-     "ActorFlashPalette(&gUnk_0826A668, 16) (src/enemy_9000c.c:128/637) -> ActorLoadPalette(src, 16 << 1, 1) "
-     "-> RequestCopy(2, src, .., 32) (src/actor_653ec.c:1033/1281)"),
+     "ActorFlashPalette(&gUnk_0826A668, 16) (src/enemy_bonkers.c:128/637) -> ActorLoadPalette(src, 16 << 1, 1) "
+     "-> RequestCopy(2, src, .., 32) (src/actor_helpers.c:1033/1281)"),
 ]
 # struct M12Fade gUnk_0873B510[] (include/player.h:47-52): BlendColors(f->unk0,
 # f->unk4, .., 16 colours, ..) for f = &gUnk_0873B510[Task.unk2C]
-# (src/player_455c8.c:217-221), Task.unk2C in {0, 1, 2} (l.77-125) or -1.
+# (src/player_burning_laser.c:217-221), Task.unk2C in {0, 1, 2} (l.77-125) or -1.
 FADE_TABLE, FADE_ROWS = 0x0873B510, 3
 # Palette-variant records {u32 pal[4]; u32 offset; u32 count;} (config entry
-# 0x0873EF74's targets): sub_08065d44 (src/actor_653ec.c:584-627) copies, for
+# 0x0873EF74's targets): sub_08065d44 (src/actor_helpers.c:584-627) copies, for
 # actorKind 0, count << 1 bytes from pal[level - 1] + (offset << 1), level
 # 1..3 (l.605-626).
 VARIANT0_TABLE = 0x0873EF74
-# actorKind 1: gUnk_0873F118[unk76] (src/actor_653ec.c:559/599/810), with the
-# colour count Actor.paletteColorCount (src/actor_6b2e4.c:409), which
+# actorKind 1: gUnk_0873F118[unk76] (src/actor_helpers.c:559/599/810), with the
+# colour count Actor.paletteColorCount (src/actor_attached.c:409), which
 # ActorLoadPalette sets to the byte count >> 1 of the frame's TaskGfx palette
-# (src/actor_653ec.c:1031, 1282).  Row 0 is Bonkers': for actorKind 1 the same
-# unk76 picks gMidBossGfx[unk76] (src/actor_653ec.c:843-844), and
+# (src/actor_helpers.c:1031, 1282).  Row 0 is Bonkers': for actorKind 1 the same
+# unk76 picks gMidBossGfx[unk76] (src/actor_helpers.c:843-844), and
 # gMidBossGfx[0] is gBonkersGfx, whose task draws gBonkersFrames
-# (src/enemy_9000c.c:73).
+# (src/enemy_bonkers.c:73).
 VARIANT1_TABLE, BONKERS_ROW, BONKERS_FRAMES = 0x0873F118, 0, 0x08752ED8
 MIDBOSS_GFX, BONKERS_GFX = 0x0873F0E4, 0x0826A654
 
@@ -169,12 +169,12 @@ MIDBOSS_GFX, BONKERS_GFX = 0x0873F0E4, 0x0826A654
 # (field offset, size in bytes from the header) per consumer.
 RAW_HEADERS = {
     0x0824A9E4: ("struct GfxSrc gUnk_0824A9E4 (include/actor.h:16/58): RequestCopy(2, .unk08, .., unk00 << 5) "
-                 "and RequestCopy(3, .unk0C, .., unk02 << 5) src/actor_6ff24.c:446-450", "banks"),
-    0x082FEFF4: ("sub_080ae4c4 src/enemy_ae3bc.c:150-152: RequestCopy(4, q[3], .., q[1] << 5) and "
+                 "and RequestCopy(3, .unk0C, .., unk02 << 5) src/player_meta_knight_warp_star_ride.c:446-450", "banks"),
+    0x082FEFF4: ("sub_080ae4c4 src/enemy_nightmare_power_orb.c:150-152: RequestCopy(4, q[3], .., q[1] << 5) and "
                  "RequestCopy(2, q[2], .., q[0] << 5)", "banks"),
-    0x082FFDF0: ("sub_080b0b04 src/enemy_ae3bc.c:2306-2308: RequestCopy(4, q[3], .., q[1] << 5) and "
+    0x082FFDF0: ("sub_080b0b04 src/enemy_nightmare_power_orb.c:2306-2308: RequestCopy(4, q[3], .., q[1] << 5) and "
                  "RequestCopy(2, q[2], .., 32)", 32),
-    0x08334DC0: ("sub_08066f78 src/actor_653ec.c:1670-1673: RequestCopy(4, h->tiles, .., h->tileCount << 5) "
+    0x08334DC0: ("sub_08066f78 src/actor_helpers.c:1670-1673: RequestCopy(4, h->tiles, .., h->tileCount << 5) "
                  "(its palette comes from gUnk_0873E264[gLevelIndex])", None),
 }
 # The palette entry says how many bytes of .palette the consumer copies:
@@ -182,12 +182,12 @@ RAW_HEADERS = {
 
 # ---- 2. OAM streams of QueueSprite tables -----------------------------------
 # u32 [] tables whose element QueueSprite stores as the OAM template stream
-# BuildOam reads (src/early_1518.c:361, src/early_1b08.c:65).  Both are read
+# BuildOam reads (src/main_copy_queue.c:361, src/main_build_oam.c:65).  Both are read
 # with the same index d: 0, then 2 or 3 by facing, then + 2 while d <= 9
-# (src/player_3bde8.c:490-500, src/player_109c8.c:39/61-64), so d <= 11.
+# (src/player_share_item.c:490-500, src/cutscene_actor_particles.c:39/61-64), so d <= 11.
 QUEUE_TABLES = {
-    0x08732104: "gUnk_08732104[d] QueueSprite source, sub_080109c8 src/player_109c8.c:71",
-    0x0873A964: "gUnk_0873A964[d] QueueSprite source, src/player_3bde8.c:511",
+    0x08732104: "gUnk_08732104[d] QueueSprite source, sub_080109c8 src/cutscene_actor_particles.c:71",
+    0x0873A964: "gUnk_0873A964[d] QueueSprite source, src/player_share_item.c:511",
 }
 QUEUE_COUNT = 12
 
@@ -232,14 +232,14 @@ def provide(rom, cfg, segs):
         v = _u32(rom, a)
         if v and inzone(v):
             claim(v, v + 64, "palette", "gUnk_087319C8[%d][0], RequestCopy(2, .., gBgPalette, 64) sub_08008d98 "
-                  "src/gfx_08b8c.c:109" % i)
+                  "src/mode_gfx_loaders.c:109" % i)
     end = _next_label(labels, STAGE_GFX)
     for i, a in enumerate(range(STAGE_GFX, end, 4)):
         h = _u32(rom, a)
         if h and _u32(rom, h + 8) and inzone(_u32(rom, h + 8)):
             p = _u32(rom, h + 8)
             claim(p, p + 32 * _u16(rom, h), "palette", "gUnk_08731F78[%d]->palette (GfxHeader 0x%08X), "
-                  "paletteBankCount << 5 bytes, sub_080102c0 src/mode_100ac.c:93" % (i, h))
+                  "paletteBankCount << 5 bytes, sub_080102c0 src/cutscene_main.c:93" % (i, h))
     for s, n, kind, why in SIZED:
         claim(s, s + n, kind, why)
     for k in range(FADE_ROWS):
@@ -248,7 +248,7 @@ def provide(rom, cfg, segs):
             p = _u32(rom, r + off)
             if p and inzone(p):
                 claim(p, p + 32, "palette", "gUnk_0873B510[%d].unk%d, BlendColors 16 colours "
-                      "src/player_455c8.c:217-221" % (k, off))
+                      "src/player_burning_laser.c:217-221" % (k, off))
     end = _next_label(labels, VARIANT0_TABLE)
     for a in range(VARIANT0_TABLE, end, 4):
         r = _u32(rom, a)
@@ -260,7 +260,7 @@ def provide(rom, cfg, segs):
             if p and n and inzone(p):
                 claim(p + off, p + off + n, "palette",
                       "palette-variant record 0x%08X (gUnk_0873EF74 row 0x%X) pal[%d]: sub_08065d44 copies "
-                      "count << 1 = %d bytes from pal[level - 1] + (offset << 1) (src/actor_653ec.c:605-627)"
+                      "count << 1 = %d bytes from pal[level - 1] + (offset << 1) (src/actor_helpers.c:605-627)"
                       % (r, (a - VARIANT0_TABLE) // 4, k, n))
     # Bonkers' variant palettes: every palette gBonkersFrames' records name
     # has the same byte count, so paletteColorCount << 1 is that count
@@ -283,8 +283,8 @@ def provide(rom, cfg, segs):
             if p and inzone(p):
                 claim(p, p + n, "palette",
                       "palette-variant record 0x%08X (gUnk_0873F118[%d], Bonkers) pal[%d]: sub_08065d44 / "
-                      "ActorLoadPalette copy paletteColorCount << 1 = %d bytes (src/actor_653ec.c:1279, "
-                      "src/actor_6b2e4.c:409), the byte count of every palette of gBonkersFrames' records"
+                      "ActorLoadPalette copy paletteColorCount << 1 = %d bytes (src/actor_helpers.c:1279, "
+                      "src/actor_attached.c:409), the byte count of every palette of gBonkersFrames' records"
                       % (r, BONKERS_ROW, k, n))
     # 1c. the raw-tiles sheet headers the code reads
     for h, (why, palsize) in sorted(RAW_HEADERS.items()):
@@ -310,7 +310,7 @@ def provide(rom, cfg, segs):
                 n = strict_oam_len(rom, v)
                 if n is None:
                     raise ValueError("%s: entry %d (0x%08X) is no OAM stream" % (why, i, v))
-                claim(v, v + n, "oam", "BuildOam template stream (src/early_1b08.c): %s, entry %d (d <= 11), "
+                claim(v, v + n, "oam", "BuildOam template stream (src/main_build_oam.c): %s, entry %d (d <= 11), "
                       "strict parse" % (why, i))
 
     # 3a. record blocks: a run of struct TaskGfx records followed by a u32
@@ -396,6 +396,6 @@ def provide(rom, cfg, segs):
         if not streams or not pad_end:
             continue
         for a, b in streams:
-            claim(a, b, "oam", "format only: BuildOam template stream (src/early_1b08.c), strict parse; "
+            claim(a, b, "oam", "format only: BuildOam template stream (src/main_build_oam.c), strict parse; "
                   "the streams 0x%08X-0x%08X tile the bytes between two proven objects exactly" % (s, p))
     return {"coincidence": coin, "pointer": sorted(pointer.items())}

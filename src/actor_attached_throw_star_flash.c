@@ -1,0 +1,566 @@
+/* game_code_and_rodata 0x0806C2A4-0x0806CD40 (issue #64, module M18 batch 4).
+ *
+ * RECIPE: agbcc -O2 -mthumb-interwork -fprologue-bugfix
+ *   ./tools/fnmatch.sh 0x0806C2A4 0x0806CD40 src/actor_attached_throw_star_flash.c --newpb
+ *
+ * Class-1 task bodies for the vehicle/ride actors: the launch-and-fall pair
+ * (ActorAttachedBackdropBounceOff / ActorAttachedThrowBounceOff set Task.velX/unk58 from the sign in unk43
+ * and hand control to ActorMove), the star-ride state machine
+ * (ActorAttachedThrowFlight / ActorAttachedThrowFlightUpdate / ActorAttachedThrowFlightLateUpdate - a nine-step animation
+ * switch over Task.unk46, the gUnk_0873EAC0 speed table and the
+ * gUnk_0873EAF0 drift table), and the short spawn-effect bodies that only
+ * walk Task.frame through a gfx list (gSplashFrames / gStarFlashFrames) before
+ * TaskExitTrampoline.  CreateStarFlash and CreateDustTrail are the two helper
+ * spawners that fix up Task.facing (facing) on the task they created.
+ *
+ * ActorAttachedThrowFlightLateUpdate was the hardest function in M18: instruction-identical to the
+ * ROM but 34 bytes of a three-way register rotation, caused by a preference
+ * exclusion in the allocator rather than a wrong shape.  Its `ka`, `kb`,
+ * `tbl` and `p` locals are load-bearing - see the commit message and
+ * docs/lessons-learned.md.
+ */
+
+#include "gba/gba.h"
+#include "global.h"
+#include "task.h"
+#include "main.h"
+#include "link.h"
+#include "actor.h"
+
+extern void TaskSetEntry(void *fn, s32 i);
+/* Declared here, not through a header: the calls in this file pass other
+   types than the definition takes (lessons 3.428, 3.517). */
+extern void RegisterCollider(u8 a, s16 x, s16 y, void *p);
+extern void ActorSetState(u8 v);
+extern void ActorSetTerrainHandlers(u32 v);
+
+extern void ActorSetTerrainBox(u32 v);
+
+/* Not from collision.h: this file's view of gTerrainResult differs (lesson
+   3.517). */
+extern u8 gTerrainResult[];
+extern s32 QueueSprite(u32 a, u32 b, u32 c, u32 d, s32 e, s32 f);
+extern u32 IsWorldPosOnScreen(s16 x, s16 y);
+extern void PlaySfx(u32 a);
+extern void RequestScreenShake(u32 a);
+extern void TaskBreakBlocks(void *p, s16 v);
+extern void ActorCollideTerrain(void);
+extern s16 RandomSpreadFacing(s32 a, u32 b, u32 c);
+extern s32 RandomSpread(s32 a, u32 b, u32 c);
+
+void ActorAttachedBackdropBounceOff(void)
+{
+    struct Task *t;
+    s32 v;
+    s32 w;
+
+    t = gCurTask;
+    t->moveCallback = (u32)ActorMove;
+    t->updateCallback = (u32)ActorAttachedBackdropBounceOffUpdate;
+    t->lateUpdateCallback = 0;
+    t->actorBounceEnded = 0;
+    v = t->velX >> 1;
+    if (v < 0)
+        v = -v;
+    t->velX = t->facing * v;
+    w = t->velY >> 1;
+    if (w < 0)
+        w = -w;
+    t->velY = -w;
+    t->hitKind = HIT_KIND_NONE;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
+    TaskYieldTrampoline(12);
+    gCurTask->actorBounceEnded = 1;
+    TaskSleepForever();
+}
+
+void ActorAttachedBackdropBounceOffUpdate(void)
+{
+    if (gCurTask->actorBounceEnded != 0)
+        ActorAttachedDie();
+}
+
+void ActorAttachedPullIn(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    t = gCurTask;
+    t->moveCallback = (u32)TaskMoveRelativeToParent;
+    t->lateUpdateCallback = (u32)ActorAttachedPullInLateUpdate;
+    ActorSetTerrainHandlers((u32)gNullTerrainHandlers);
+    TaskSetPosRelativeToParent();
+    u = gCurTask;
+    u->actorMouthFull = 0;
+    u->layer = 6;
+    while (TaskIsParentWithinX(18) == 0)
+    {
+        ActorAttachedPullInStep();
+        TaskYieldTrampoline(1);
+    }
+    sub_0806bc9c();
+    ActorSetState(ACTOR_ATTACHED_STATE_THROW_HELD);
+    TaskSleepForever();
+}
+
+void ActorAttachedPullInLateUpdate(void)
+{
+    struct Task *t;
+
+    ActorAttachedRestorePalette();
+    ActorAttachedDieUnlessInhaling();
+    t = gCurTask;
+    if (t->actorMouthFull == 1)
+        ActorAttachedDie();
+    else if (t->state != ACTOR_ATTACHED_STATE_PULL_IN)
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
+    ActorAttachedCheckScreenAttack();
+}
+
+void ActorAttachedThrowHeld(void)
+{
+    struct Task *t;
+
+    t = gCurTask;
+    t->moveCallback = (u32)TaskMoveRelativeToParent;
+    t->updateCallback = (u32)ActorAttachedThrowHeldUpdate;
+    t->lateUpdateCallback = (u32)ActorAttachedThrowHeldLateUpdate;
+    t->posY = 0;
+    t->posX = 0;
+    t->actorCarriedX = t->pixelX;
+    t->actorCarriedY = t->pixelY;
+    t->taskClass = 1;
+    ActorSetTerrainHandlers((u32)gNullTerrainHandlers);
+    TaskSleepForever();
+}
+
+void ActorAttachedThrowHeldUpdate(void)
+{
+    struct Task *t;
+
+    gCurTask->health = 127;
+    ActorAttachedRestorePalette();
+    ActorAttachedThrowHeldFollowCarrier();
+    t = gCurTask;
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedThrowMidBossCollider);
+    else
+        RegisterCollider((u8)gCurTaskIdx, t->pixelX, t->pixelY, gActorAttachedThrowCollider);
+}
+
+void ActorAttachedThrowHeldLateUpdate(void)
+{
+    ActorAttachedHeldAddPlayerOffset();
+    ActorAttachedCheckScreenAttack();
+}
+
+void ActorAttachedThrowFlight(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+    struct Task *w;
+    struct Task *x;
+    s32 i;
+
+    t = gCurTask;
+    t->moveCallback = (u32)ActorMove;
+    t->updateCallback = (u32)ActorAttachedThrowFlightUpdate;
+    t->lateUpdateCallback = (u32)ActorAttachedThrowFlightLateUpdate;
+    t->layer = 11;
+    if (gUnk_0300244C != 0 && gCurTask->u8C.actor->terrainBox == 0)
+        ActorSetTerrainBox((u32)gUnk_0873F894);
+    u = gCurTask;
+    i = (s16)u->unk70 - 3;
+    u->unk70 = i;
+    u->actorThrowWobbleStep = 0;
+    TaskSetMotionXFacing(gUnk_0873EAC0[i].velX, 0x5A5A5A5A);
+    v = gCurTask;
+    v->velY = gUnk_0873EAC0[i].velY;
+    v->hitKind = HIT_KIND_NONE;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
+    w = gCurTask;
+    w->actorThrowTrailStep = 0;
+    w->actorThrowTrailDriftX = 0;
+    w->actorThrowTrailDriftY = 0;
+    if (w->actorKind != ACTOR_KIND_MID_BOSS)
+    {
+        while (1)
+        {
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
+        gCurTask->frame = 2;
+        TaskYieldTrampoline(4);
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
+        TaskYieldTrampoline(4);
+        gCurTask->spriteFlags &= ~SPRITE_FLAG_FLIP_X;
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
+        gCurTask->frame = 3;
+        TaskYieldTrampoline(4);
+        gCurTask->spriteFlags |= SPRITE_FLAG_FLIP_X;
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
+        TaskYieldTrampoline(4);
+        }
+    }
+    while (1)
+    {
+        CreateChildTaskHere(TASK_TRAIL_FLASH, 0);
+        TaskYieldTrampoline(4);
+    }
+}
+
+void ActorAttachedThrowFlightUpdate(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+
+    t = gCurTask;
+    t->health = 127;
+    if (t->actorKind == ACTOR_KIND_MID_BOSS)
+        TaskBreakBlocks(gUnk_0873F8DC, t->parent);
+    else
+        TaskBreakBlocks(gUnk_0873F8CC, t->parent);
+    ActorCollideTerrain();
+    if ((*(u32 *)gTerrainResult & 0x00FFFFFF) != 0)
+    {
+        if (gTerrainResult[1] != 0)
+            gCurTask->actorBounceSurface = 0;
+        if (gTerrainResult[2] != 0)
+            gCurTask->actorBounceSurface = 1;
+        if (gTerrainResult[0] != 0)
+            gCurTask->actorBounceSurface = 2;
+        if (gTerrainResult[4] != 0)
+            gCurTask->actorBounceSurface = 2;
+        PlaySfx(237);
+        RequestScreenShake(2);
+        gCurTask->lateUpdateCallback = 0;
+        ActorSetState(ACTOR_ATTACHED_STATE_THROW_BOUNCE_OFF);
+        TaskSetEntry(ActorAttachedRunState, gCurTaskIdx);
+    }
+    else
+    {
+        u = gCurTask;
+        if ((u->waterFlags & 1) != 0)
+        {
+            if ((u->velX & 0xFFFF0000) != 0)
+                TaskSetMotionXFacing(0x5A5A5A5A, 0xFFFFE800);
+            gCurTask->accelY = 0x1000;
+        }
+        v = gCurTask;
+        if (v->actorKind != ACTOR_KIND_MID_BOSS)
+        {
+            v->pixelX += gUnk_0873EAF0[v->actorThrowWobbleStep * 2];
+            v->pixelY += (&gUnk_0873EAF0[1])[v->actorThrowWobbleStep * 2];
+            v->actorThrowWobbleStep = (v->actorThrowWobbleStep + 1) & 15;
+        }
+        if (v->actorKind == ACTOR_KIND_MID_BOSS)
+            RegisterCollider((u8)gCurTaskIdx, gCurTask->pixelX,
+                         gCurTask->pixelY, gActorAttachedThrowMidBossCollider);
+        else
+            RegisterCollider((u8)gCurTaskIdx, v->pixelX, v->pixelY, gActorAttachedThrowCollider);
+    }
+}
+
+void ActorAttachedThrowFlightLateUpdate(void)
+{
+    struct Task *t;
+    struct Task *u;
+    struct Task *v;
+    struct Task *w;
+    struct Task *x;
+    struct Task *y;
+    struct Task *z;
+    struct Task *p;
+    u32 *tbl;
+    s16 dx;
+    s16 dy;
+    u32 k;
+    u32 ka;
+    u32 kb;
+
+    switch (gCurTask->actorThrowTrailStep)
+    {
+    case 0:
+        t = gCurTask;
+        dx = t->posX >> 16;
+        dy = t->posY >> 16;
+        if (t->actorKind == ACTOR_KIND_MID_BOSS)
+            k = 8;
+        else
+            k = 0;
+        if (t->facing == 1)
+            t->actorThrowTrailAnchorX = dx - (ka = k + 8);
+        else
+            t->actorThrowTrailAnchorX = dx + (kb = k + 8);
+        u = gCurTask;
+        u->actorThrowTrailAnchorY = dy;
+        u->actorThrowTrailFrame = -1;
+        break;
+    case 1:
+        gCurTask->actorThrowTrailFrame = 1;
+        break;
+    case 2:
+        gCurTask->actorThrowTrailFrame = 2;
+        break;
+    case 3:
+        gCurTask->actorThrowTrailFrame = 3;
+        break;
+    case 4:
+        gCurTask->actorThrowTrailFrame = 4;
+        break;
+    case 5:
+        gCurTask->actorThrowTrailFrame = 5;
+        break;
+    case 6:
+        gCurTask->actorThrowTrailFrame = 6;
+        break;
+    case 7:
+        gCurTask->actorThrowTrailFrame = 7;
+        break;
+    case 8:
+        v = gCurTask;
+        v->actorThrowTrailFrame = -1;
+        v->actorThrowTrailDriftX = 0;
+        v->actorThrowTrailDriftY = 0;
+        break;
+    }
+    w = gCurTask;
+    if (w->actorThrowTrailFrame != -1)
+    {
+        if (w->actorThrowTrailStep != 0)
+        {
+            if (w->facing == 1)
+                w->actorThrowTrailDriftX = w->actorThrowTrailDriftX - 2;
+            else
+                w->actorThrowTrailDriftX = w->actorThrowTrailDriftX + 2;
+            x = gCurTask;
+            switch ((s16)x->unk70)
+            {
+            case 0:
+                x->actorThrowTrailDriftY = x->actorThrowTrailDriftY + 2;
+                break;
+            case 2:
+                x->actorThrowTrailDriftY = x->actorThrowTrailDriftY - 2;
+                break;
+            }
+        }
+        y = gCurTask;
+        if (IsWorldPosOnScreen((s16)(y->actorThrowTrailAnchorX + y->actorThrowTrailDriftX),
+                         (s16)(y->actorThrowTrailAnchorY + y->actorThrowTrailDriftY)) != 0)
+        {
+            tbl = gTrailFlashFrames;
+            z = gCurTask;
+            QueueSprite(z->layer, tbl[z->actorThrowTrailFrame], 0, 0,
+                         z->actorThrowTrailAnchorX + z->actorThrowTrailDriftX - gSpriteCameraX,
+                         (s16)(z->actorThrowTrailAnchorY + z->actorThrowTrailDriftY - gSpriteCameraY));
+        }
+    }
+    p = gCurTask;
+    p->actorThrowTrailStep++;
+    if (p->actorThrowTrailStep > 8)
+        p->actorThrowTrailStep = 0;
+}
+
+void ActorAttachedThrowBounceOff(void)
+{
+    struct Task *t;
+    s32 v;
+    s32 w;
+
+    t = gCurTask;
+    t->moveCallback = (u32)ActorMove;
+    t->updateCallback = (u32)ActorAttachedThrowBounceOffUpdate;
+    t->lateUpdateCallback = 0;
+    t->actorBounceEnded = 0;
+    v = t->velX >> 1;
+    if (v < 0)
+        v = -v;
+    t->velX = t->facing * v;
+    switch (t->actorBounceSurface)
+    {
+    case 0:
+        w = t->velY >> 1;
+        if (w < 0)
+            w = -w;
+        t->velY = w;
+        break;
+    case 1:
+        w = t->velY >> 1;
+        if (w < 0)
+            w = -w;
+        t->velY = -w;
+        break;
+    case 2:
+        v = t->velX >> 1;
+        if (v < 0)
+            v = -v;
+        t->velX = -t->facing * v;
+        TaskSetMotionY(0xFFFE0000, 0x4000, 0x20000);
+        break;
+    }
+    gCurTask->hitKind = HIT_KIND_NONE;
+    gCurTask->u80.attackAbility = ABILITY_NORMAL;
+    TaskYieldTrampoline(12);
+    gCurTask->actorBounceEnded = 1;
+    TaskSleepForever();
+}
+
+void ActorAttachedThrowBounceOffUpdate(void)
+{
+    if (gCurTask->actorBounceEnded != 0)
+        ActorAttachedDie();
+}
+
+void Task_ActorSplash(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    t = gCurTask;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
+    t->layer = 10;
+    u = gCurTask;
+    u->frameTable = gSplashFrames;
+    u->frame = 11;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    gCurTask->frame--;
+    TaskYieldTrampoline(2);
+    gCurTask->frame = 13;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    TaskExitTrampoline();
+}
+
+s16 CreateStarFlash(u8 kind, s32 dx, s32 dy)
+{
+    struct Task *t;
+    s32 starFlashSlot;
+    u16 r;
+
+    switch (kind)
+    {
+    case 0:
+        r = CreateChildTaskAtOffsetFacing(TASK_STAR_FLASH, (s16)dx, (s16)dy, 0);
+        break;
+    case 1:
+        starFlashSlot = CreateChildTaskHere(TASK_STAR_FLASH_ON_PARENT, 0);
+        r = starFlashSlot;
+        if ((s16)starFlashSlot != -1)
+        {
+            t = &gTasks[(s16)starFlashSlot];
+            t->starFlashOnParentOffsetX = gCurTask->facing * dx;
+            t->starFlashOnParentOffsetY = dy;
+        }
+        break;
+    }
+    return r;
+}
+
+void Task_StarFlash(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    t = gCurTask;
+    t->moveCallback = (u32)ActorMove;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
+    t->layer = 10;
+    u = gCurTask;
+    u->frameTable = gStarFlashFrames;
+    TaskFaceLikeParent();
+    gCurTask->frame = 0;
+    TaskYieldTrampoline(2);
+    gCurTask->frame++;
+    TaskYieldTrampoline(2);
+    TaskExitTrampoline();
+}
+
+void Task_StarFlashOnParent(void)
+{
+    struct Task *t;
+    struct Task *u;
+
+    t = gCurTask;
+    t->moveCallback = 0;
+    t->drawCallback = (u32)ActorDrawWorldInViewOrDestroy;
+    t->layer = 10;
+    u = gCurTask;
+    u->frameTable = gStarFlashFrames;
+    u->updateCallback = (u32)StarFlashFollowParent;
+    TaskFaceLikeParent();
+    gCurTask->starFlashOnParentLoopCount = 0;
+    do
+    {
+        gCurTask->frame = 0;
+        TaskYieldTrampoline(2);
+        gCurTask->frame++;
+        TaskYieldTrampoline(2);
+    } while (++*(s16 *)&gCurTask->starFlashOnParentLoopCount <= 7);
+    TaskExitTrampoline();
+}
+
+void StarFlashFollowParent(void)
+{
+    struct Task *t;
+    struct Task *p;
+    s32 i;
+
+    if (gTaskSlotTypes[i = gCurTask->parent] != -1 && TaskHasSameSerial(i) == 1)
+    {
+        t = gCurTask;
+        p = &gTasks[t->parent];
+        t->pixelX = p->pixelX + t->starFlashOnParentOffsetX
+                 + gUnk_0873EB30[*(s16 *)&t->starFlashOnParentLoopCount] * t->facing;
+        t->pixelY = p->pixelY + t->starFlashOnParentOffsetY + gUnk_0873EB38[*(s16 *)&t->starFlashOnParentLoopCount];
+    }
+    else
+    {
+        TaskFree(gCurTaskIdx);
+    }
+}
+
+s16 CreateDustTrail(u8 flag, u16 vx, s32 c, s32 d)
+{
+    struct Task *p;
+    s32 dustTrailSlot;
+    u16 r;
+
+    dustTrailSlot = CreateChildTaskAtOffsetFacing(TASK_DUST_TRAIL, (s16)c, (s16)d, 0);
+    r = dustTrailSlot;
+    if ((s16)dustTrailSlot != -1)
+    {
+        p = &gTasks[(s16)dustTrailSlot];
+        p->dustTrailPuffCount = vx;
+        if (flag == 0)
+        {
+            if (gCurTask->facing == 1)
+                p->facing = 0xFF;
+            else
+                p->facing = 1;
+        }
+        else
+        {
+            p->facing = gCurTask->facing;
+        }
+        p->dustTrailOffsetX = gCurTask->facing * c;
+        p->dustTrailOffsetY = d;
+    }
+    return r;
+}
+
+void CreateDustPuff(void)
+{
+    CreateChildTaskHere(TASK_DUST_PUFF, 0);
+}

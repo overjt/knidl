@@ -82,23 +82,23 @@ extern u8 gSendBufferEmpty;
 /* Per-client probe response cache (3 halfwords). */
 extern u16 gMultiBootClientData[];
 
-/* REG_IME as a symbol.  raw: src/early_4734.c's GIME needs the symbol, the
+/* REG_IME as a symbol.  raw: src/link_block_main.c's GIME needs the symbol, the
  * io_reg.h REG_IME changes its allocation (lesson 3.523) */
 extern vu16 gRegIme; /* REG_IME */
 
 
 /* Functions (defined in the files named above each group). */
 
-/* src/early_2378.c */
+/* src/link_sync_random.c */
 void LinkSyncRandom(void);
 
-/* src/early_2668.c */
+/* src/link_sync_clock.c */
 void LinkSyncClock(void);
 
-/* src/early_293c.c */
+/* src/link_disconnect.c */
 void DisconnectLink(void);
 
-/* src/early_2b04.c */
+/* src/link_run_frames.c */
 void FillSendCmd(void);
 void UpdatePlayerKeys(void);
 void RunLinkFrame(void);
@@ -114,10 +114,10 @@ u32 Random(void);
 void IntToDigits(s16 n);
 u16 BlendColor(u16 a, u16 b, u16 ratio);
 
-/* src/early_3888.c */
+/* src/link_setup_init.c */
 void LinkSetupInit(void);
 
-/* src/early_3964.c */
+/* src/link_setup.c */
 void LinkSetupStop(void);
 void MultiBootSetParams(u8 *start, u8 *end);
 void MultiBootInitWithParams(u8 *start, u8 *end);
@@ -126,7 +126,7 @@ void LinkSetupDetect(void);
 void LinkSetupMultiCart(void);
 void LinkSetupMultiBoot(void);
 
-/* src/early_4000.c */
+/* src/link_setup_intr_block.c */
 void LinkSetupMain(u16 a);
 void LinkSetupIntr(void);
 u32 LinkBroadcastWordStep(void);
@@ -137,14 +137,14 @@ void LinkBlockParentIntr(void);
 void LinkBlockChildIntr(void);
 u32 IsLinkBlockDone(void);
 
-/* src/early_4734.c */
+/* src/link_block_main.c */
 void LinkBlockMain(void);
 void MultiBootInit(struct MultiBootParam *mp);
 
-/* src/early_4984.c */
+/* src/link_multiboot_main.c */
 u32 MultiBootMain(struct MultiBootParam *mp);
 
-/* src/early_4d6c.c */
+/* src/link_multiboot.c */
 int MultiBootSend(struct MultiBootParam *mp, u16 data);
 void MultiBootStartProbe(struct MultiBootParam *mp);
 int MultiBootCheckComplete(struct MultiBootParam *mp);
@@ -152,7 +152,7 @@ int MultiBootHandShake(struct MultiBootParam *mp);
 void MultiBootWaitCycles(s32 cycles);
 void MultiBootWaitSendDone(void);
 
-/* src/early_6464.c */
+/* src/link_driver.c */
 u32 IsInView(s16 x, s16 y);
 void TaskFreezeOrThawOthers(u16 val, s32 idx);
 void TaskRestoreSkipMask(u32 idx);
@@ -164,26 +164,26 @@ void ResetSerial(void);
 void CheckMasterOrSlave(void);
 void InitTimer(void);
 
-/* src/early_6ac8.c */
+/* src/link_cmd_queue.c */
 void EnqueueSendCmd(u16 *p);
 void DequeueRecvCmds(u16 (*p)[4]);
 
-/* src/early_6cd4.c */
+/* src/link_vsync.c */
 void LinkVSync(void);
 
-/* src/early_6d18.c */
+/* src/link_timer3_intr.c */
 void Timer3Intr(void);
 
-/* src/early_6d28.c */
+/* src/link_serial_cb.c */
 void SerialCB(void);
 
-/* src/early_6e8c.c */
+/* src/link_start_transfer.c */
 void StartTransfer(void);
 
-/* src/early_6e9c.c */
+/* src/link_do_recv.c */
 void DoRecv(void);
 
-/* src/early_7004.c */
+/* src/link_send_connect.c */
 void DoSend(void);
 void StopTimer(void);
 void SendRecvDone(void);
