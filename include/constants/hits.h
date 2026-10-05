@@ -14,6 +14,7 @@
 #define HIT_KIND_DAMAGE     2
 #define HIT_KIND_INHALE     3 /* inhaled by a player */
 #define HIT_KIND_GRAB       4 /* grabbed and held by a player (Throw, Backdrop) */
+#define HIT_KIND_SLIDE      5 /* a slide kick (class-0x20 kind 4) */
 #define HIT_KIND_NO_DAMAGE  6 /* no damage on either side: the target is immune to the attack */
 #define HIT_KIND_CATCH      8 /* an actor's catch box caught a player */
 

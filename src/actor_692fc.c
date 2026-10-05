@@ -532,7 +532,7 @@ u32 PickupReactToHit(void)
     {
     case HIT_KIND_DEFEAT:
     case HIT_KIND_DAMAGE:
-    case 5:
+    case HIT_KIND_SLIDE:
     case 7:
         /* PickupCollect is void in the ROM but its result is consumed here:
            the original had no prototype in scope at this point, so the
