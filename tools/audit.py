@@ -33,6 +33,15 @@ committed tree only), so CI runs it on every push.  The checks:
      zone, each category with its reason.  The generated summary lives in
      docs/naming.md between the `audit:placeholders` markers; the audit
      fails when the committed summary is stale (regenerate with `--write`).
+  7. Source file names (#182, docs/naming.md section 8): every row of
+     docs/analysis/file-renames.csv has its new file and not its old one,
+     no old file name is left outside that table (word-boundary scan of
+     the tracked tree), every prefix is in the closed vocabulary (the game
+     headers' names plus `boot` and `game_over`), every row whose prefix is
+     not its header's carries a deviation, and no `src/*.c` outside the
+     table is named by an address or a placeholder (only the SDK/runtime
+     names `main.c`, `agb_init.c`, `agb_sram.c` and `m4a_*.c` stay).
+     tools/rename_tu.py's check() does the work.
 
 Usage:
   python3 tools/audit.py            # check; exit 1 on any failure
@@ -1068,6 +1077,33 @@ def check_census(rep, write):
 
 
 # ---------------------------------------------------------------------------
+# 7. Source file names (#182)
+
+
+def check_file_names(rep):
+    spec = importlib.util.spec_from_file_location(
+        "rename_tu", os.path.join(ROOT, "tools", "rename_tu.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    rows = mod.load_table()
+    errors = mod.check(rows)
+    for e in errors:
+        rep.fail("file names: " + e)
+    vocab = mod.vocabulary()
+    by_prefix = {}
+    deviations = 0
+    for r in rows:
+        p = mod.prefix_of(r["new"], vocab) or "?"
+        by_prefix[p] = by_prefix.get(p, 0) + 1
+        deviations += bool(r["deviation"].strip())
+    lines = ["%-12s %4d" % (p + "_", n) for p, n in sorted(by_prefix.items())]
+    lines.append("%d files named after their content, %d with a reason the prefix"
+                 " is not their header's (docs/analysis/file-renames.csv)" % (len(rows), deviations))
+    rep.section("7. Source file names", lines)
+    return {"renamed": len(rows), "deviations": deviations, "errors": len(errors)}
+
+
+# ---------------------------------------------------------------------------
 
 
 def main():
@@ -1084,6 +1120,7 @@ def main():
         "raw_addresses": check_raw_addresses(rep, args.list),
         "exceptions": check_exceptions(rep, args.list),
         "placeholders": check_census(rep, args.write),
+        "file_names": check_file_names(rep),
     }
     for title, lines in rep.sections:
         print(title)
